@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# ──────────────────────────────────────────────────────────────────────────────
+# 论文全文下载工具 — 快捷入口
+#
+# 从搜索结果 JSON 中批量下载论文全文，转为 markdown。
+# 降级链：arXiv HTML → arXiv LaTeX+Pandoc → arXiv PDF → OA PDF → Unpaywall。
+#
+# 用法:
+#   ./tools/download search-archive/xxx.json                     # 批量下载
+#   ./tools/download xxx.json --only L001,L003                   # 指定 ID
+#   ./tools/download xxx.json --dry-run                          # 只打印计划
+#   ./tools/download --arxiv 2405.17150                          # 单篇（arXiv）
+#   ./tools/download --doi 10.1109/TWC.2024.3406952              # 单篇（DOI）
+#   ./tools/download xxx.json --force                             # 强制重新下载
+#   ./tools/download xxx.json --quality high                     # 高质量 PDF 转 md
+#
+# 下载通道（按优先级）:
+#   arXiv HTML      arxiv.org/html/{id}       质量最高，非所有论文可用
+#   arXiv LaTeX     arxiv.org/e-print/{id}    + pandoc 转 md
+#   arXiv PDF       arxiv.org/pdf/{id}        + pymupdf4llm 转 md
+#   OA PDF          搜索结果 pdf_url          + pymupdf4llm 转 md
+#   Unpaywall       unpaywall.org API         OA 论文 PDF 查找
+#
+# PDF 转 md 质量:
+#   fast        pymupdf4llm（默认，极快但公式全丢）
+#   standard    marker（待集成）
+#   high        docling（待集成，需 ~1GB 模型）
+#
+# 环境变量（写在 research-protocol/v2/.env 中）:
+#   UNPAYWALL_EMAIL   Unpaywall 邮箱（免费，提高速率）
+# ──────────────────────────────────────────────────────────────────────────────
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+VENV_DIR="$HOME/.venvs/torch"
+
+if [ -x "$VENV_DIR/bin/python" ] && [ -s "$VENV_DIR/bin/python" ]; then
+    exec "$VENV_DIR/bin/python" "$SCRIPT_DIR/paper_download.py" "$@"
+else
+    exec python3 "$SCRIPT_DIR/paper_download.py" "$@"
+fi

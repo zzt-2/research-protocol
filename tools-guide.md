@@ -1,0 +1,342 @@
+# 工具链指南
+
+> 研究协议 v2 Groundwork 阶段工具链。纯 Python、CLI、轻量优先。
+> 工具脚本都有 `--help`，详细参数不在这里列举。
+
+## 1. 工具总览
+
+| 工具 | 入口 | 用途 |
+|------|------|------|
+| 搜索 | `./tools/search "关键词"` | 七源聚合搜索，自动路由，存档 |
+| blit | `./tools/blit "关键词" --source ieee` | 浏览器文献检索（IEEE/万方/CNKI cbpt），Playwright 驱动 |
+| 下载 | `./tools/download <json\|arxiv\|doi>` | 批量/单篇下载 + PDF 转 markdown |
+| 转换 | `./tools/convert source.pdf` | PDF → markdown，支持分章节输出、图片提取、MinerU 高质量转换 |
+
+所有脚本统一使用 `~/.venvs/torch/bin/python`（含 torch + MinerU + pymupdf + 搜索依赖）。
+
+### 调用方式（重要）
+
+`tools/search`、`tools/download`、`tools/convert` 都是 **bash shell wrapper**，不是 Python 文件。必须从项目根目录调用：
+
+```bash
+# 正确 ✅ — 从项目根目录调用
+cd /mnt/d/code/study/research-protocol && ./tools/search "LEO satellite"
+cd /mnt/d/code/study/research-protocol && bash tools/search "LEO satellite"
+
+# 错误 ❌ — 用 python 跑 shell 脚本
+python tools/search "..."        # shell wrapper，不是 .py
+python tools/literature_search.py "..."  # 缺少依赖路径
+```
+
+## 2. 论文检索
+
+```bash
+# 基本搜索
+./tools/search "LEO satellite channel prediction"
+
+# 按文档类型路由（自动选最优源 + 注入查询修饰词）
+./tools/search "3GPP NTN specification" --doc-types standard
+./tools/search "reinforcement learning patent" --doc-types patent
+./tools/search "知识蒸馏 大语言模型" --doc-types chinese_journal
+./tools/search "LLM fine-tuning" --doc-types code
+./tools/search "NVIDIA revenue 2025" --doc-types financial
+
+# 指定模式/策略
+./tools/search "beamforming" --mode academic --preset scenario-method
+
+# 手动指定源
+./tools/search "5G NR" --sources exa firecrawl
+
+# Exa 模式选择
+./tools/search "..." --sources exa --exa-mode neural    # 纯语义
+./tools/search "..." --sources exa --exa-mode keyword   # 纯关键词
+./tools/search "..." --sources exa --exa-mode auto      # 默认，双跑去重
+
+# 相似论文（从 URL 找相关文献）
+./tools/search --find-similar https://arxiv.org/abs/1706.03762
+
+# 引用图谱（OpenAlex，无限额）
+./tools/search --citations 10.1109/TWC.2024.3406952
+./tools/search --citations 10.1109/TWC.2024.3406952 --citations-direction backward
+./tools/search --citations 10.1109/TWC.2024.3406952 --citations-depth 2
+
+# 发文趋势
+./tools/search "LEO satellite handover" --trend
+./tools/search "transformer attention" --trend --trend-years 10
+
+# 展开引用链
+./tools/search "channel prediction" --refs 2
+
+# 合并历史结果
+./tools/search "beamforming" --merge search-archive/old-results.json
+
+# 输出格式
+./tools/search "..." --format json     # 默认，结构化
+./tools/search "..." --format markdown # 可读表格
+./tools/search "..." --format brief    # 每行一条
+```
+
+### 中文查询格式（重要）
+
+中文关键词**用空格分隔**，让工具正确拆词做相关性评分：
+
+```bash
+# 正确 ✅ — 空格分隔，每个词独立参与相关性匹配
+./tools/search "针灸 偏头痛 随机对照试验"
+./tools/search "个人信息保护法 司法适用 判例"
+./tools/search "混合式教学 学习成效 meta分析"
+
+# 效果差 ❌ — 连写整句，工具无法正确拆分语义单元
+./tools/search "针灸治疗偏头痛随机对照试验"
+```
+
+工具内部有 jieba 分词兜底，但空格分隔的粒度由调用方控制，效果更可控。
+
+| 模式 | 触发条件 | 搜索源 |
+|------|---------|--------|
+| academic（默认） | 英文查询 | S2 + OpenAlex + arXiv + SerpAPI + **Exa** |
+| chinese | 中文字符 | **Exa** + SerpAPI + **Firecrawl** |
+| standard | 含 standard/ITU-R/3GPP | **Firecrawl** + **Exa** + SerpAPI + Tavily |
+| broad | 手动指定 | **七源全开** |
+
+### 文档类型路由（`--doc-types`）
+
+指定文档类型后，自动路由到最优源并注入查询修饰词：
+
+| 类型 | 最优源 | 自动修饰 | 典型场景 |
+|------|--------|---------|---------|
+| journal | Exa + FC | — | 期刊论文 |
+| conference | Exa + FC | — | 会议论文 |
+| preprint | Exa + FC | `site:arxiv.org` | arXiv 预印本 |
+| standard | FC + Exa | `3GPP ETSI specification` | 3GPP/ETSI 标准 |
+| patent | FC + Exa | — | Google Patents |
+| policy | FC + Exa | — | 政府政策 |
+| financial | Exa + FC | — | 财报/SEC/IR |
+| industry_report | FC + Exa | `Gartner McKinsey report` | 行业报告 |
+| whitepaper | FC + Exa | `technical report` | 白皮书 |
+| code | Exa | — | GitHub（category=github） |
+| dataset | Exa | — | HuggingFace |
+| news | Exa | — | 新闻（category=news） |
+| blog | FC + Exa | — | 技术博客 |
+| book | Exa + FC | — | 书籍 |
+| chinese_journal | Exa + FC | — | 中文学术期刊 |
+| thesis | OpenAlex | — | 学位论文 |
+
+多个类型可组合：`--doc-types journal conference preprint`
+
+### 预设策略
+
+| 预设 | 用途 |
+|------|------|
+| `--preset scenario-method` | 拆分查询为子查询，分别搜索再合并 |
+| `--preset problem-driven` | 全源搜索，不限制年份 |
+| `--preset comparison` | 追加 survey/review/benchmark 关键词 |
+| `--preset implementation` | 找代码/实现 |
+
+### 搜索源
+
+| 源 | 能力 | 权重 |
+|----|------|------|
+| S2 (Semantic Scholar) | 学术论文元数据、引用数 | 1.0 |
+| SerpAPI (Google Scholar) | 学术搜索、中文支持 | 0.9 |
+| **Exa** | **语义搜索 (neural)、关键词搜索、find_similar、category 过滤** | **0.85** |
+| arXiv | 预印本搜索 | 0.8 |
+| OpenAlex | 学术搜索、引用图谱、趋势分析 | 0.6 |
+| **Firecrawl** | **网页搜索（标准/专利/政策/博客）、全文抓取** | **0.6** |
+| Tavily | 通用网页搜索 | 0.5 |
+
+### 发表状态判断
+
+搜索结果 JSON 中每条结果会包含 `publication_status` 字段（由后处理自动标注）：
+- `published`：有正式 DOI（非 arXiv）或有正式期刊 venue
+- `preprint`：DOI 为 arXiv（10.48550）或 venue 含 "arxiv"
+- `unknown`：无法判断
+
+如需补充正式发表文献，可用 `tools/blit`（浏览器检索工具）：
+```bash
+bash tools/blit "LEO satellite handover" --source ieee        # IEEE Xplore
+bash tools/blit "低轨卫星 切换" --source wanfang               # 万方（中文期刊）
+bash tools/blit "关键词" --source cbpt --journal wxdg          # CNKI 单刊
+```
+
+注意：blit 使用 Playwright 渲染，限速严格（IEEE 50次/会话，万方 10次/会话），适合低频补充检索。
+
+### 排序权重
+
+S2(1.0) > SerpAPI(0.9) > Exa(0.85) > arXiv(0.8) > OpenAlex(0.6) ≈ Firecrawl(0.6) > Tavily(0.5)
+
+每次搜索自动存档到 `search-archive/{date}-{slug}.json`。
+
+## 3. 论文下载
+
+```bash
+# 批量（从搜索结果 JSON）
+./tools/download search-archive/xxx.json
+
+# 单篇
+./tools/download --arxiv 2405.17150
+./tools/download --doi 10.1109/TWC.2024.3406952
+
+# 预览 / 只下指定 / 强制重下
+./tools/download xxx.json --dry-run
+./tools/download xxx.json --only L001,L003
+./tools/download xxx.json --force
+```
+
+### 下载通道（按优先级）
+
+1. arXiv HTML（官方 LaTeXML，公式表格完美）
+2. arXiv LaTeX（Pandoc 转，公式保留 LaTeX 语法）
+3. arXiv PDF → pymupdf4llm 转 md（公式丢失）
+4. OA PDF 直链 → pymupdf4llm
+5. Unpaywall API
+6. **Firecrawl Scrape**（CNKI 期刊/IEEE OA 全文，43-82KB markdown）
+
+### PDF 转 Markdown 质量
+
+| 级别 | 工具 | 说明 |
+|------|------|------|
+| fast（默认） | pymupdf4llm | 极快，公式全丢，纯文本够用 |
+| standard | MinerU pipeline | 公式+表格保留，需 torch venv + GPU |
+
+## 3.5 PDF 转换
+
+```bash
+# 单篇转换（fast 模式，默认）
+./tools/convert source.pdf
+
+# 高质量转换（保留公式、表格）
+./tools/convert source.pdf --quality standard
+
+# 分章节输出
+./tools/convert source.pdf --chunk
+
+# 提取图片
+./tools/convert source.pdf --figures
+
+# 组合使用
+./tools/convert source.pdf --quality standard --chunk --figures -o output/
+
+# 批量转换（每篇输出到各自子目录，互不覆盖）
+./tools/convert paper-archive/xxx/ --batch --quality standard
+
+# 多篇并行转换（必须各自指定 -o，否则会互相覆盖 content.md）
+./tools/convert a.pdf -o output/a/ &
+./tools/convert b.pdf -o output/b/ &
+wait
+```
+
+### 输出结构
+
+单篇模式：`content.md`（完整 markdown）
+分章节模式：`content_meta.md` / `content_intro.md` / `content_method.md` 等
+图片目录：`figures/`
+
+> **注意**：多篇 PDF 并行转换时，默认输出到 PDF 同目录的 `content.md`，会互相覆盖。
+> 解决方法：(1) 每篇用 `-o` 指定不同输出目录；(2) 用 `--batch` 批量模式（自动按文件名建子目录）。
+
+### MinerU 环境
+
+`--quality standard` 需要独立 torch venv（GPU 加速）：
+
+```bash
+# 创建 torch venv（仅需一次）
+uv venv ~/.venvs/torch
+~/.venvs/torch/bin/pip install torch torchvision --index-url https://download.pytorch.org/whl/cu126
+~/.venvs/torch/bin/pip install "mineru[pipeline]"
+```
+
+超时可通过环境变量调整：`MINERU_TIMEOUT=600`（默认 300 秒）。
+
+### 存储
+
+```
+paper-archive/{batch}/
+  _manifest.json
+  L001/
+    metadata.json    # 下载状态和方法
+    source.html      # 或 .tar.gz / .pdf
+    content.md       # 转换后的 markdown
+```
+
+已下载的自动跳过，`--force` 强制重下。
+
+### 下载现实
+
+通信领域 IEEE/Elsevier 付费墙是常态（50-70%）。arXiv 预印本是最可靠的免费通道。大部分论文需用户手动获取（机构 VPN、作者主页）。
+
+### 跳过规则
+
+- 中文论文 → `manual_required`（有 URL 时尝试 Firecrawl Scrape）
+- GitHub/标准文档/网页 → `skipped`
+- IEEE PDF 直链 → 跳过（反爬拦截）
+- DOI 重定向 URL → 跳过 OA，转 Unpaywall
+
+## 4. 浏览器文献检索（blit）
+
+Playwright 驱动的浏览器爬取工具，用于 API 无法覆盖的学术平台。限速策略内置，低频使用。
+
+```bash
+# IEEE 英文论文检索（主力，稳定）
+./tools/blit "LEO satellite handover" --source ieee
+
+# 万方中文论文（低频，单次 ≤10 请求，间隔 6s）
+./tools/blit "针灸 偏头痛 随机对照试验" --source wanfang
+
+# CNKI cbpt 期刊子站（单刊检索，稳）
+./tools/blit "针灸 偏头痛" --source cbpt --journal wxdg
+./tools/blit "对外汉语 偏误分析" --source cbpt --journal sdzy
+
+# 单篇元数据提取
+./tools/blit --extract https://sdzy.cbpt.cnki.net/.../paper/xxx
+```
+
+### 源特性
+
+| 源 | 结果量 | 元数据 | 反爬 | 限速 |
+|----|--------|--------|------|------|
+| IEEE | 50次无拦截 | 标题/作者/会议/年份/被引数 | 无 | 50次/会话, 1s间隔 |
+| wanfang | 1410条/关键词 | 标题/作者/摘要/关键词/期刊/年份/被引数/质量标签 | IP封禁(>16次无间隔) | 10次/会话, 6s间隔 |
+| cbpt | 单刊 | 标题/作者/作者单位/摘要/关键词/期刊/年份/DOI | 无 | 30次/会话, 3s间隔 |
+
+### 使用策略
+
+- **英文论文**：IEEE 主力
+- **中文论文**：cbpt 逐刊检索（慢但稳），万方低频补充
+- **IP 被封**：停止使用，等自然解封（万方 ~15min+）
+- 下载均需机构权限，blit 只做元数据提取
+
+## 5. 内容处理原则
+
+- LaTeX 源文件（arXiv e-print）：公式表格完美，强制首选
+- **不要整篇喂 agent**：精读阶段按章节拆分，title+abstract 用于初筛
+
+## 6. 安装
+
+```bash
+# 单一 venv（搜索 + 下载 + 转换 + MinerU）
+uv venv ~/.venvs/torch
+~/.venvs/torch/bin/pip install torch torchvision --index-url https://download.pytorch.org/whl/cu126
+~/.venvs/torch/bin/pip install "mineru[pipeline]"
+~/.venvs/torch/bin/pip install -i https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple \
+  requests google-search-results tavily-python pymupdf pymupdf4llm
+```
+
+环境检查：
+
+```bash
+~/.venvs/torch/bin/python -c "import requests, pymupdf, pymupdf4llm, serpapi, tavily" && echo "OK"
+~/.venvs/torch/bin/mineru --version
+```
+
+### API Key
+
+`.env` 文件（已 gitignore）：
+
+```
+S2_API_KEY=xxx
+SERPAPI_KEY=key1,key2,key3        # 多 key 逗号分隔
+TAVILY_KEY=key1,key2              # 多 key 逗号分隔
+FIRECRAWL_API_KEY=xxx
+EXA_API_KEY=xxx
+```

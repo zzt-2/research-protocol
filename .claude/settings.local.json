@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(.venv/bin/python *)",
+      "Bash(python3 *)",
+      "Bash(./tools/convert *)",
+      "Bash(~/.venvs/research-protocol/bin/pip list *)"
+    ]
+  }
+}

@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# ──────────────────────────────────────────────────────────────────────────────
+# 文献搜索与发现工具 v2 — 快捷入口
+#
+# 七源聚合搜索（S2 + OpenAlex + arXiv + SerpAPI + Tavily + Firecrawl + Exa），
+# 支持自动模式检测、文档类型路由、语义搜索、引用图谱和趋势分析。
+#
+# 基本用法:
+#   ./search "LEO satellite channel prediction deep learning"
+#   ./search "卫星通信 随机接入 深度学习"                        # 中文自动检测
+#   ./search "3GPP NTN specification" --doc-types standard       # 按文档类型路由
+#   ./search "知识蒸馏 大语言模型" --doc-types chinese_journal   # 中文学术
+#
+# 高级用法:
+#   ./search "beamforming" --preset scenario-method              # 预设策略
+#   ./search "massive MIMO" --top 20 --format markdown -o out.md
+#   ./search "5G NR" --sources exa firecrawl                     # 手动指定源
+#   ./search --find-similar https://arxiv.org/abs/1706.03762     # 相似论文
+#   ./search --citations 10.1109/TWC.2024.3406952                # 引用图谱
+#   ./search "LEO satellite" --trend                              # 发文趋势
+#
+# 搜索模式（不指定 --mode 时自动检测）:
+#   academic    英文学术搜索（S2 + OpenAlex + arXiv + SerpAPI + Exa）
+#   chinese     中文论文搜索（Exa + SerpAPI + Firecrawl）
+#   standard    标准/规范文档（Firecrawl + Exa + SerpAPI + Tavily）
+#   broad       全源搜索（所有七个源）
+#
+# 文档类型（--doc-types 自动路由到最优源）:
+#   journal conference preprint standard patent policy financial
+#   industry_report whitepaper code dataset news blog book
+#   chinese_journal thesis
+#
+# Exa 模式（--exa-mode）:
+#   auto      默认，keyword + neural 并跑去重
+#   neural    仅语义搜索（中英文都强）
+#   keyword   仅关键词搜索
+#
+# 环境变量（写在 research-protocol/v2/.env 中）:
+#   S2_API_KEY          Semantic Scholar API key
+#   SERPAPI_KEY         SerpAPI key（逗号分隔支持多个）
+#   TAVILY_KEY          Tavily key（逗号分隔支持多个）
+#   FIRECRAWL_API_KEY   Firecrawl API key
+#   EXA_API_KEY         Exa API key
+# ──────────────────────────────────────────────────────────────────────────────
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+VENV_DIR="$HOME/.venvs/torch"
+
+if [ -x "$VENV_DIR/bin/python" ] && [ -s "$VENV_DIR/bin/python" ]; then
+    exec "$VENV_DIR/bin/python" "$SCRIPT_DIR/literature_search.py" "$@"
+else
+    exec python3 "$SCRIPT_DIR/literature_search.py" "$@"
+fi

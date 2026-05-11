@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+# ──────────────────────────────────────────────────────────────────────────────
+# PDF → Markdown 转换工具 — 快捷入口
+#
+# 独立转换入口，支持分章节输出、图片提取、批量转换。
+#
+# 用法:
+#   ./tools/convert source.pdf                         # 单篇转换
+#   ./tools/convert source.pdf --chunk                 # 分章节输出
+#   ./tools/convert source.pdf --figures               # 提取图片
+#   ./tools/convert source.pdf -o output/              # 指定输出目录
+#   ./tools/convert paper-archive/xxx/ --batch         # 批量转换
+#   ./tools/convert source.pdf --quality fast          # 质量等级
+#
+# 转换质量:
+#   fast        pymupdf4llm（默认，极快但公式全丢）
+#   standard    MinerU pipeline（公式+表格保留，需 torch venv）
+#   high        MinerU vlm-engine（待集成）
+#
+# 分章节输出（--chunk）:
+#   按论文结构拆分为 content_meta.md / content_method.md 等文件，
+#   agent 可按需读取单个章节，节省上下文。
+# ──────────────────────────────────────────────────────────────────────────────
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PYTHON="$HOME/.venvs/torch/bin/python"
+
+if [ -x "$PYTHON" ]; then
+    exec "$PYTHON" "$SCRIPT_DIR/pdf_convert.py" "$@"
+else
+    exec python3 "$SCRIPT_DIR/pdf_convert.py" "$@"
+fi

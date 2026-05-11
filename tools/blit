@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# ──────────────────────────────────────────────────────────────────────────────
+# 浏览器文献检索工具 — IEEE / 万方 / cbpt
+#
+# 用 Playwright 渲染 SPA 页面提取元数据，限速策略内置。
+# 适合低频使用，不适合批量自动化。
+#
+# 用法 (从 v2/ 目录调用):
+#   bash tools/blit "LEO satellite handover" --source ieee
+#   bash tools/blit "低轨卫星 切换" --source wanfang
+#   bash tools/blit "低轨卫星 切换" --source cbpt --journal wxdg
+#   bash tools/blit --extract https://sdzy.cbpt.cnki.net/.../paper/xxx
+#
+# 限速:
+#   IEEE:   50次/会话, 1s间隔
+#   万方:   10次/会话, 6s间隔 (触发封禁后需等待解封)
+#   cbpt:   30次/会话, 3s间隔
+# ──────────────────────────────────────────────────────────────────────────────
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+VENV_DIR="$HOME/.venvs/torch"
+
+if [ -x "$VENV_DIR/bin/python" ] && [ -s "$VENV_DIR/bin/python" ]; then
+    exec "$VENV_DIR/bin/python" "$SCRIPT_DIR/blit.py" "$@"
+else
+    exec python3 "$SCRIPT_DIR/blit.py" "$@"
+fi
