@@ -2,6 +2,7 @@
 
 import json
 import re
+import time
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
@@ -204,6 +205,20 @@ def _apply_preset(query: str, preset: str) -> tuple[str, dict]:
     return modified_query, strategy
 
 
+def _merge_abstract(keep: dict, other: dict) -> None:
+    """合并摘要：保留更长更完整的那条（snippet ~180 chars vs 真实摘要 >500）。"""
+    keep_abs = keep.get("abstract", "") or ""
+    other_abs = other.get("abstract", "") or ""
+    if len(other_abs) > len(keep_abs):
+        keep["abstract"] = other_abs
+
+
+def _merge_dedup_winner(winner: dict, loser: dict) -> None:
+    """去重合并：winner 为主，从 loser 补充摘要和 source_api。"""
+    winner["source_api"] = f"{winner.get('source_api', '')}+{loser.get('source_api', '')}"
+    _merge_abstract(winner, loser)
+
+
 def deduplicate(results: list[dict]) -> list[dict]:
     seen_doi: dict[str, int] = {}
     seen_title: dict[str, int] = {}
@@ -216,16 +231,18 @@ def deduplicate(results: list[dict]) -> list[dict]:
         if doi and doi in seen_doi:
             idx = seen_doi[doi]
             if r.get("citation_count", 0) > unique[idx].get("citation_count", 0):
+                _merge_dedup_winner(r, unique[idx])
                 unique[idx] = r
             else:
-                unique[idx]["source_api"] = f"{unique[idx].get('source_api', '')}+{r.get('source_api', '')}"
+                _merge_dedup_winner(unique[idx], r)
             continue
         if title_key and title_key in seen_title:
             idx = seen_title[title_key]
             if r.get("citation_count", 0) > unique[idx].get("citation_count", 0):
+                _merge_dedup_winner(r, unique[idx])
                 unique[idx] = r
             else:
-                unique[idx]["source_api"] = f"{unique[idx].get('source_api', '')}+{r.get('source_api', '')}"
+                _merge_dedup_winner(unique[idx], r)
             continue
 
         idx = len(unique)
@@ -236,6 +253,117 @@ def deduplicate(results: list[dict]) -> list[dict]:
         unique.append(r)
 
     return unique
+
+
+_SNIPPET_THRESHOLD = 300  # 低于此长度视为 snippet，需要补全
+
+
+def enrich_abstracts(
+    results: list[dict],
+    *,
+    api_key: Optional[str] = None,
+    batch_size: int = 20,
+) -> list[dict]:
+    """对 snippet 级摘要（<300 chars）批量查 S2 补全完整摘要。"""
+    needs_enrich = [
+        r for r in results
+        if len(r.get("abstract", "") or "") < _SNIPPET_THRESHOLD
+    ]
+    if not needs_enrich:
+        return results
+
+    print(f"[摘要补全] {len(needs_enrich)} 条结果摘要过短，尝试补全...")
+
+    import requests
+    from .search_config import REQUEST_TIMEOUT
+
+    # 按 DOI 批量查 S2
+    doi_map: dict[str, dict] = {}  # doi -> result
+    for r in needs_enrich:
+        doi = r.get("doi")
+        if doi:
+            doi_map[doi] = r
+
+    enriched = 0
+
+    # 批量 DOI 查询
+    if doi_map:
+        dois = list(doi_map.keys())
+        for i in range(0, len(dois), batch_size):
+            batch = dois[i:i + batch_size]
+            try:
+                resp = requests.post(
+                    "https://api.semanticscholar.org/graph/v1/paper/batch",
+                    json={"ids": [f"DOI:{d}" for d in batch]},
+                    params={"fields": "title,abstract,externalIds"},
+                    headers={"User-Agent": "research-protocol/1.0"},
+                    timeout=REQUEST_TIMEOUT,
+                )
+                if resp.status_code == 429:
+                    print("  [摘要补全] S2 限速，跳过剩余批量查询", file=sys.stderr)
+                    break
+                resp.raise_for_status()
+                papers = resp.json()
+                for paper in papers:
+                    if not paper:
+                        continue
+                    abstract = paper.get("abstract") or ""
+                    if len(abstract) < _SNIPPET_THRESHOLD:
+                        continue
+                    # 匹配回原结果
+                    ext = paper.get("externalIds") or {}
+                    p_doi = ext.get("DOI")
+                    if p_doi and p_doi in doi_map:
+                        doi_map[p_doi]["abstract"] = abstract
+                        enriched += 1
+            except Exception as e:
+                print(f"  [摘要补全] S2 batch 失败: {e}", file=sys.stderr)
+            time.sleep(1)
+
+    # 无 DOI 或 DOI 未命中的：用 OpenAlex 按标题查（速率限制宽松）
+    remaining = [
+        r for r in needs_enrich
+        if len(r.get("abstract", "") or "") < _SNIPPET_THRESHOLD
+    ]
+    if remaining:
+        from .search_config import OPENALEX_WORKS_URL
+        from .search_sources import _openalex_restore_abstract
+        for r in remaining:
+            title = r.get("title", "")
+            if not title:
+                continue
+            try:
+                resp = requests.get(
+                    OPENALEX_WORKS_URL,
+                    params={
+                        "search": title,
+                        "per_page": 1,
+                        "select": "title,abstract_inverted_index",
+                    },
+                    headers={"User-Agent": "research-protocol/1.0"},
+                    timeout=REQUEST_TIMEOUT,
+                )
+                if resp.status_code == 429:
+                    time.sleep(3)
+                    continue
+                resp.raise_for_status()
+                works = resp.json().get("results", [])
+                if works:
+                    abstract = _openalex_restore_abstract(
+                        works[0].get("abstract_inverted_index")
+                    )
+                    if len(abstract) >= _SNIPPET_THRESHOLD:
+                        r["abstract"] = abstract
+                        enriched += 1
+            except Exception:
+                pass
+            time.sleep(1)
+
+    if enriched:
+        print(f"[摘要补全] 成功补全 {enriched}/{len(needs_enrich)} 条摘要")
+    else:
+        print(f"[摘要补全] 未能补全（S2 可能无对应记录）")
+    return results
 
 
 def filter_results(

@@ -13,23 +13,50 @@
 ├── templates.md         # 文档模板
 ├── overview.md          # 框架总览
 ├── tools-guide.md       # 工具使用指南
-├── papers/              # 论文归档
-│   ├── downloads/       # 手动下载的 PDF（按日期子目录）
-│   └── manual/          # 手动管理的论文（转换后 markdown）
-├── search-archive/      # 搜索结果缓存（按日期子目录）
-├── tools/               # 辅助脚本（pdf_convert.py 等）
-└── projects/{name}/     # 具体研究项目
-    ├── config.py        # 仿真参数
-    ├── decision_log.md  # 决策记录
+├── papers/              # 共享论文库（所有项目共用）
+│   ├── arxiv/{id}/      # arXiv 论文（id 如 2405.17150）
+│   │   ├── source.html  #   原始文件（.html / .tar.gz / .pdf）
+│   │   └── content.md   #   转换后 markdown
+│   ├── doi/{doi_path}/  # DOI 论文（doi_path 如 10.1109_tmc.2025.3645456）
+│   │   ├── source.pdf
+│   │   └── content.md
+│   ├── manual/{slug}/   # 无 arxiv/DOI 的论文（slug 如 cai-jsac-gdrl）
+│   └── index.json       # 全局论文索引
+├── search-archive/{date}/  # 检索缓存（date 如 2026-05-12）
+├── reference/           # 参考实现代码
+├── tools/               # 辅助脚本
+└── projects/{name}/     # 独立研究项目（全部项目级产物在此）
+    ├── decision_log.md
     ├── literature_notes.md
-    ├── feasibility_report.md  # 方向可行性评估（Step 5 产出）
-    ├── competitor_notes/      # 竞争者精读摘要（Contract 阶段产出）
+    ├── feasibility_report.md
+    ├── competitor_notes/
     ├── baseline_report.md
-    ├── simulator/       # 仿真器代码
-    ├── baselines/       # baseline 实现
-    ├── results/         # 实验结果
-    └── verify/          # 验证脚本
+    ├── search-archive/   # 项目专属检索记录（Contract 阶段等）
+    ├── simulator/
+    ├── baselines/
+    ├── results/
+    └── verify/
 ```
+
+## 文件路径规则（禁止自作主张）
+
+每类文件有且仅有一个存放位置，不允许在根目录随意创建目录或文件。
+
+| 产物 | 生成方式 | 存放路径 |
+|------|----------|----------|
+| 检索结果 JSON | `tools/search` 自动保存 | `search-archive/{YYYY-MM-DD}/{slug}.json` |
+| 论文下载（arXiv） | `tools/download` | `papers/arxiv/{arxiv_id}/source.{html,tar.gz,pdf}` + `content.md` |
+| 论文下载（DOI） | `tools/download` | `papers/doi/{doi_path}/source.pdf` + `content.md` |
+| 论文下载（无 ID） | `tools/download` | `papers/manual/{slug}/source.pdf` + `content.md` |
+| PDF 转 markdown | `tools/convert` | 输出到 PDF 同目录，文件名 `{pdf_stem}.md` |
+| 手动下载的 PDF | 用户操作 | 放入 `papers/downloads/{date}/`，之后用 `tools/convert` 转换 |
+| 参考实现代码 | 手动管理 | `reference/{name}/` |
+
+**禁止事项：**
+- 不在根目录创建新的论文目录（如 `my-download-paper/`）
+- 不在根目录创建 `literature_notes.md`（属于项目目录）
+- 不在 `search-archive/` 根级放文件（必须按日期入子目录）
+- 不手动创建 `papers/` 下的任意命名目录（走 `tools/download` 自动建路径）
 
 ## 框架文件是执行规范
 
@@ -84,6 +111,6 @@
 
 遇到 PDF 转 markdown 需求时，**必须用 `tools/convert`**，不要自己写 pymupdf/pymupdf4llm 调用代码。
 
-**多篇并行转换必须各自用 `-o` 指定不同输出目录**，否则默认写同目录的 `content.md` 会互相覆盖。批量转换用 `--batch`（自动按文件名建子目录）。
+多篇并行转换默认输出 `{pdf_stem}.md`（按 PDF 文件名命名，互不覆盖）。批量转换用 `--batch`（自动按文件名建子目录）。
 
 用法详见 `tools-guide.md` §3.5。

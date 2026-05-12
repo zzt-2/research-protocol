@@ -258,12 +258,13 @@ def convert_single(
     elif quality == "standard":
         fig_count = len(list((output_dir / "figures").glob("*"))) if (output_dir / "figures").exists() else 0
 
-    # 输出
+    # 输出（用 PDF 文件名作为 md 文件名，避免同目录多 PDF 互相覆盖）
+    out_name = f"{pdf_path.stem}.md"
     if chunk:
         chunks = chunk_markdown(md_text)
         if len(chunks) == 1 and "content" in chunks:
-            (output_dir / "content.md").write_text(md_text, encoding="utf-8")
-            print("  未检测到章节结构，输出完整 content.md")
+            (output_dir / out_name).write_text(md_text, encoding="utf-8")
+            print(f"  未检测到章节结构，输出完整 {out_name}")
         else:
             for fname in sorted(chunks):
                 (output_dir / f"{fname}.md").write_text(chunks[fname], encoding="utf-8")
@@ -272,7 +273,7 @@ def convert_single(
                 print(f"  {fname}.md  ({lc} 行, {cc} 字符)")
         _print_stats(md_text, len(chunks))
     else:
-        (output_dir / "content.md").write_text(md_text, encoding="utf-8")
+        (output_dir / out_name).write_text(md_text, encoding="utf-8")
         _print_stats(md_text, 1)
 
     if fig_count > 0:

@@ -19,6 +19,7 @@ from litsearch.search_pipeline import (
     assign_ids,
     assign_publication_status,
     deduplicate,
+    enrich_abstracts,
     filter_results,
     sort_results,
 )
@@ -231,6 +232,9 @@ def main():
     all_results = deduplicate(all_results)
     print(f"[汇总] 去重后: {len(all_results)} 条")
 
+    s2_key = args.s2_api_key or os.environ.get("S2_API_KEY")
+    all_results = enrich_abstracts(all_results, api_key=s2_key)
+
     all_results = _compute_relevance(all_results, args.query)
     all_results = _filter_by_relevance(all_results)
     all_results = _filter_by_domain(all_results)
@@ -259,6 +263,7 @@ def main():
             print(f"[引用] 展开得到 {len(expanded)} 条额外结果")
             all_results.extend(expanded)
             all_results = deduplicate(all_results)
+            all_results = enrich_abstracts(all_results, api_key=s2_key)
             all_results = _compute_relevance(all_results, args.query)
             all_results = _filter_by_relevance(all_results)
             all_results = _filter_by_domain(all_results)

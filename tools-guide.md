@@ -220,20 +220,19 @@ S2(1.0) > SerpAPI(0.9) > Exa(0.85) > arXiv(0.8) > OpenAlex(0.6) ≈ Firecrawl(0.
 # 批量转换（每篇输出到各自子目录，互不覆盖）
 ./tools/convert paper-archive/xxx/ --batch --quality standard
 
-# 多篇并行转换（必须各自指定 -o，否则会互相覆盖 content.md）
-./tools/convert a.pdf -o output/a/ &
-./tools/convert b.pdf -o output/b/ &
+# 多篇并行转换（默认输出 {pdf_stem}.md，互不覆盖）
+./tools/convert a.pdf -o output/ &
+./tools/convert b.pdf -o output/ &
 wait
 ```
 
 ### 输出结构
 
-单篇模式：`content.md`（完整 markdown）
+单篇模式：`{pdf_stem}.md`（以 PDF 文件名命名，同目录多 PDF 互不覆盖）
 分章节模式：`content_meta.md` / `content_intro.md` / `content_method.md` 等
 图片目录：`figures/`
 
-> **注意**：多篇 PDF 并行转换时，默认输出到 PDF 同目录的 `content.md`，会互相覆盖。
-> 解决方法：(1) 每篇用 `-o` 指定不同输出目录；(2) 用 `--batch` 批量模式（自动按文件名建子目录）。
+> **注意**：`tools/download` 管线内部仍使用 `content.md`（每篇论文独占目录，不存在冲突）。
 
 ### MinerU 环境
 
