@@ -165,13 +165,13 @@ bash tools/blit "关键词" --source cbpt --journal wxdg          # CNKI 单刊
 
 S2(1.0) > SerpAPI(0.9) > Exa(0.85) > arXiv(0.8) > OpenAlex(0.6) ≈ Firecrawl(0.6) > Tavily(0.5)
 
-每次搜索自动存档到 `search-archive/{date}-{slug}.json`。
+每次搜索自动存档到 `search-archive/{date}/{slug}.json`。
 
 ## 3. 论文下载
 
 ```bash
 # 批量（从搜索结果 JSON）
-./tools/download search-archive/xxx.json
+./tools/download search-archive/{date}/xxx.json
 
 # 单篇
 ./tools/download --arxiv 2405.17150

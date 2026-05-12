@@ -2,6 +2,7 @@
 
 ## 入参
 - `literature_notes.md`（含每篇论文的"使用的 Baseline 方法"字段）
+- `feasibility_report.md`（方向已通过 Go/No-Go，来自 gw-feasibility.md）
 
 ## 出参
 - Baseline 候选评估表（面向用户）

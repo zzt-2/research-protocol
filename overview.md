@@ -14,10 +14,17 @@ research-protocol/
 ├── domain-comms.md      # 通信领域定制（指标、仿真、反模式、多模型）
 ├── stages/
 │   ├── groundwork.md    # Groundwork 执行手册
+│   ├── gw-search.md     # Step 1: 文献检索
+│   ├── gw-acquire.md    # Step 2: 论文获取
+│   ├── gw-read.md       # Step 3: 文献精读
+│   ├── gw-feasibility.md # Step 4: 方向可行性预判
+│   ├── gw-validate.md    # Step 5: Baseline 候选选定
+│   ├── gw-experiment.md # Step 6-7: 仿真器设计 + Baseline 复现
 │   ├── contract.md      # Contract 执行手册
 │   └── execute.md       # Execute 执行手册
 ├── templates.md         # 文档模板集
-└── tools-guide.md       # 工具链指南
+├── tools-guide.md       # 工具链指南
+└── tools-scenarios.md   # 工具使用场景速查
 ```
 
 | 文件 | 职责 | 何时读 |
@@ -76,6 +83,11 @@ AI 的优势是效率，不是创新。人定义问题，AI 验证问题。[MUST
 | 实验数据 + 结果 | results/*.md |
 | 文献记录 | literature_notes.md |
 | Baseline 信息 | baseline_report.md |
+| 方向可行性评估 | feasibility_report.md |
+
+### 方向验证先行
+
+新颖性 ≠ 可行性。"没人做过"不等于"值得做"。[MUST] 在投入仿真器搭建和 baseline 复现前，通过结构优势论证、仿真条件推理和最小可行实验验证方向可行性（`stages/gw-feasibility.md`）。Go/No-Go 决策经用户确认后方可继续。
 
 ---
 

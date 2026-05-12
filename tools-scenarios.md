@@ -87,7 +87,7 @@ bash tools/search "3GPP NTN specification" --doc-types standard --mode standard
 bash tools/search "关键词" --preset implementation
 ```
 
-适用：寻找开源代码、GitHub 实现、复现代码；Groundwork Step 6 baseline 复现阶段。
+适用：寻找开源代码、GitHub 实现、复现代码；Groundwork Step 7 baseline 复现阶段。
 注意：`implementation` 预设路由到 Exa（category=github），优先返回代码仓库。找到后用 `--find-similar` 可继续扩展相关实现。
 
 ---

@@ -1,7 +1,7 @@
 # 下载 + 转换 + 质量门（gw-acquire）
 
 ## 入参
-- `search-archive/{slug}.json` 中的"必读"+"建议读"论文列表
+- `search-archive/{date}/{slug}.json` 中的"必读"+"建议读"论文列表
 - 已有论文：`papers/{arxiv|doi}/{id}/content.md`（跳过已下载的）
 
 ## 出参

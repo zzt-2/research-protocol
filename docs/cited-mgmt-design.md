@@ -29,7 +29,7 @@
 
 ```bash
 # 增量检索示例
-bash tools/search "LEO satellite handover DRL" --since 2026-04-01 --merge search-archive/2026-05-10-leo-satellite-handover-drl.json
+bash tools/search "LEO satellite handover DRL" --since 2026-04-01 --merge search-archive/2026-05-10/leo-satellite-handover-drl.json
 ```
 
 #### 流程改动
@@ -143,7 +143,7 @@ bash tools/search "LEO satellite handover DRL" --since 2026-04-01 --merge search
 bash tools/bib projects/leo-ntn-handover-drl/literature_notes.md -o references.bib
 
 # 从搜索结果 JSON 生成
-bash tools/bib search-archive/2026-05-10-leo-satellite.json -o refs.bib
+bash tools/bib search-archive/2026-05-10/leo-satellite.json -o refs.bib
 
 # 单篇
 bash tools/bib --doi 10.1109/TWC.2024.3406952

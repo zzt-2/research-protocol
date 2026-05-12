@@ -13,14 +13,17 @@
 ├── templates.md         # 文档模板
 ├── overview.md          # 框架总览
 ├── tools-guide.md       # 工具使用指南
-├── papers/              # 论文归档（按日期+主题）
-├── search-archive/      # 搜索结果缓存
+├── papers/              # 论文归档
+│   ├── downloads/       # 手动下载的 PDF（按日期子目录）
+│   └── manual/          # 手动管理的论文（转换后 markdown）
+├── search-archive/      # 搜索结果缓存（按日期子目录）
 ├── tools/               # 辅助脚本（pdf_convert.py 等）
 └── projects/{name}/     # 具体研究项目
     ├── config.py        # 仿真参数
     ├── decision_log.md  # 决策记录
     ├── literature_notes.md
-    ├── simulator_design.md
+    ├── feasibility_report.md  # 方向可行性评估（Step 5 产出）
+    ├── competitor_notes/      # 竞争者精读摘要（Contract 阶段产出）
     ├── baseline_report.md
     ├── simulator/       # 仿真器代码
     ├── baselines/       # baseline 实现
@@ -56,11 +59,12 @@
 
 以下高风险规则的完整定义见对应框架文件，此处仅作索引：
 
-- **奖励函数归一化和用户审查**：`domain-comms.md` §1.5 + `groundwork.md` Step 5
-- **Baseline 学术合法性和复现定义**：`groundwork.md` Step 4-6
+- **奖励函数归一化和用户审查**：`domain-comms.md` §1.5 + `groundwork.md` Step 6
+- **Baseline 学术合法性和复现定义**：`groundwork.md` Step 4-7
+- **方向可行性预判**：`gw-feasibility.md`（五个维度 + Go/No-Go）
 - **文献检索、验证和 URL 校验**：`contract.md` Step 0 + `domain-comms.md` §1
 - **子对话调度和上下文预算**：`contract.md` Step 0.2-0.4 + `overview.md` "上下文管理策略"
-- **仿真器验证标准**：`groundwork.md` Step 6 Part A
+- **仿真器验证标准**：`groundwork.md` Step 7 Part A
 
 ## 状态恢复
 
@@ -68,8 +72,9 @@
 
 1. 项目记忆文件: `~/.claude/projects/-mnt-d-code-study-research-protocol/memory/project_{name}.md`
 2. `decision_log.md`（阶段摘要行）
-3. `baseline_report.md`（如已到 Step 6）
-4. 对应阶段框架文件
+3. `feasibility_report.md`（如已到 Step 4）
+4. `baseline_report.md`（如已到 Step 7）
+5. 对应阶段框架文件
 
 ## 工具调用
 

@@ -11,7 +11,9 @@
 
 ## 输入
 
-Groundwork 全部产出（literature_notes.md + baseline_report.md + decision_log.md）
+Groundwork 全部产出（literature_notes.md + baseline_report.md + feasibility_report.md + decision_log.md）
+
+[MUST] `feasibility_report.md` 中 Go/No-Go 决策为 Go 方可进入 Contract 阶段。
 
 ## 输出
 
@@ -37,7 +39,7 @@ Groundwork 全部产出（literature_notes.md + baseline_report.md + decision_lo
 
 ```bash
 bash tools/search "LEO satellite handover attention DQN" \
-  --preset scenario-method --top 30 --year-from 2024 -o search-archive/contract-xxx.json
+  --preset scenario-method --top 30 --year-from 2024 -o search-archive/{date}/contract-xxx.json
 ```
 
 每个候选方案至少 3 组关键词。推荐预设：`scenario-method`（拆分场景+方法）。

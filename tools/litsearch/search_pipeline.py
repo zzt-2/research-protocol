@@ -324,8 +324,9 @@ def assign_ids(results: list[dict], start_id: int = 1) -> list[dict]:
 def _auto_save(results: list[dict], query: str, sources: list[str]) -> None:
     from .search_output import to_json
 
-    archive_dir = Path(__file__).resolve().parent.parent.parent / "search-archive"
-    archive_dir.mkdir(exist_ok=True)
+    date_str = datetime.now().strftime('%Y-%m-%d')
+    archive_dir = Path(__file__).resolve().parent.parent.parent / "search-archive" / date_str
+    archive_dir.mkdir(parents=True, exist_ok=True)
     if query.startswith(('http://', 'https://')):
         from urllib.parse import urlparse
         parsed = urlparse(query)
@@ -334,8 +335,7 @@ def _auto_save(results: list[dict], query: str, sources: list[str]) -> None:
         slug = "doi-" + re.sub(r'[^a-z0-9]+', '-', query.lower()).strip('-')[:50]
     else:
         slug = re.sub(r'[^a-z0-9]+', '-', query.lower()).strip('-')[:60] or "search"
-    date_str = datetime.now().strftime('%Y-%m-%d')
-    archive_file = archive_dir / f"{date_str}-{slug}.json"
+    archive_file = archive_dir / f"{slug}.json"
     counter = 1
     while archive_file.exists():
         archive_file = archive_dir / f"{date_str}-{slug}-{counter}.json"

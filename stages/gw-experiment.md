@@ -3,6 +3,7 @@
 ## 入参
 - Baseline 候选评估表（来自 gw-validate.md）
 - `literature_notes.md`（论文的实验设置和实现关键细节）
+- `feasibility_report.md`（方向可行性已确认，来自 gw-feasibility.md）
 - `decision_log.md`（Baseline 选择理由）
 
 ## 出参

@@ -5,7 +5,7 @@
 - `search-archive/` 目录下已有的搜索结果（如有）
 
 ## 出参
-- `search-archive/{slug}.json`（脚本自动存档）
+- `search-archive/{date}/{slug}.json`（脚本自动存档）
 - 面向用户的候选列表（用 `--format markdown` 生成可读表格）
 
 ## 操作
