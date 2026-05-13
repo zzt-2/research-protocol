@@ -10,7 +10,7 @@
 - **Success**: 保留率 ≥80% + 与 Dijkstra 差距 ≤20% + PE 贡献 ≥8pp（3 条同时满足）
 - **Failure**: 同规模 GNN >1.5x Dijkstra / 跨规模 >1.8x 同规模 / PE 贡献 <3pp（任一条）
 - **Baseline**: B1 Dijkstra + B2 GRLR(必须复现) + B3 GraphPR(推荐)
-- **实验**: E01-E09，P0-E03 必做
+- **实验**: E01-E09，P0 有 E01/E02/E03
 
 ## 关键上下文
 - 新颖性确认：6 组检索 + 3 篇精读 + 2 组定向检索，size generalization for LEO routing 空白
@@ -18,12 +18,15 @@
 - Size Transferability (arXiv'26) 提供 RPEARL PE 理论，技术借鉴价值高
 - GRLR 无开源代码，需自实现 + 论文图表验证（最耗时）
 - 奖励函数需在仿真器设计确认时经用户审查（domain-comms §1.5）
+- MVE 脚本在 `projects/leo-mega-constellation-gnn-routing/mve/mve_size_gen.py`，可参考
 
 ## 文件索引
 - Contract: `projects/leo-mega-constellation-gnn-routing/contract.md` (frozen)
 - 竞争者摘要: `projects/leo-mega-constellation-gnn-routing/competitor_notes/` (3 文件)
-- 检索存档: `search-archive/2026-05-13/contract-*.json` (8 文件)
+- 精读产出: `projects/leo-mega-constellation-gnn-routing/literature_notes.md` (L01-L25 + T01-T02)
+- 可行性报告: `projects/leo-mega-constellation-gnn-routing/feasibility_report.md`
 - 决策日志: `projects/leo-mega-constellation-gnn-routing/decision_log.md` (D001-D013)
+- 检索存档: `search-archive/2026-05-13/contract-*.json` (8 文件)
 
 ## 下一步：Execute 阶段
 1. 读 `stages/execute.md`（框架流程）

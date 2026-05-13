@@ -3,7 +3,7 @@
 ## 阶段摘要
 - [Groundwork] Step 2-5 + Step 4a/4b 全部完成，**Go 已确认**，待进入 Contract
 - [Contract] Step 0-3 完成，Contract 已冻结（用户确认 2026-05-13），待 Execute
-- [Execute] 待定
+- [Execute] Step 1 完成（实验设计审查通过），参数核实完成，开始 Step 2
 
 ## 决策记录
 [D001] 选定方向：GNN-based routing for LEO mega-constellation | 理由: 蓝海（5年~38篇）、与导师ISL方向吻合、GNN天然适配图结构、仿真负担轻 | 阶段: GW
@@ -19,3 +19,7 @@
 [D011] TELGEN威胁评估：中等，可差异化 | 理由: ①TELGEN做TE(LP流量拆分)非路由(每跳决策) ②WAN非卫星 ③无位置编码 ④无动态拓扑 ⑤最大测试5K节点非mega-constellation | 阶段: Contract
 [D012] 假设确定：GNN+Orbital PE+多尺度训练，66→720(11x)零样本泛化，保留率≥80% | 理由: MVE 83-87%保持率校准，PE贡献≥8pp为技术创新证据 | 阶段: Contract
 [D013] Contract冻结，用户确认通过 | 理由: 压力测试4问无致命信号，Baseline共识性强 | 阶段: Contract
+[D014] Execute Step 1 实验设计审查通过 | 理由: E03/E05消融维度问题用零向量修复（保持输入维度一致），流量强度待smoke test验证，无信息泄露 | 阶段: Execute
+[D015] ISL容量模型修正：Shannon + B=1 GHz（原 B=500 MHz 无出处） | 理由: 子agent查证3篇论文+web搜索，B=500MHz无任何论文使用；L03 DuJo基于Starlink真实TLE数据用B=1GHz；用户确认采用此方案 | 阶段: Execute
+[D016] ISL距离修正：实时轨道力学计算 + 5000km断链逻辑（原固定值~2700/~5500km错误） | 理由: 计算显示四个配置的ISL距离差异巨大（轨内1086-4277km，轨间1963-5694km），固定值不适用任何配置；L02 Starfield §2.2确认5000km断链阈值；66星配置部分轨间ISL会断链 | 阶段: Execute
+[D017] ISL类型确认为激光（非RF），Shannon模型为简化近似 | 理由: L02/L03明确optical laser link(1550nm)；Starlink实际~100Gbps/链路；Shannon模型需在论文中标注为简化 | 阶段: Execute
