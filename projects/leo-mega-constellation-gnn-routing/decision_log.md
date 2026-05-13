@@ -2,7 +2,7 @@
 
 ## 阶段摘要
 - [Groundwork] Step 2-5 + Step 4a/4b 全部完成，**Go 已确认**，待进入 Contract
-- [Contract] 待定
+- [Contract] Step 0-3 完成，Contract 已冻结（用户确认 2026-05-13），待 Execute
 - [Execute] 待定
 
 ## 决策记录
@@ -15,3 +15,7 @@
 [D007] MVE结果：GNN路由策略规模无关（83-87%保持率），支持Go | 理由: 均匀权重100%同规模→83%跨16x；异质权重70%同规模→56%跨16x；17%跨规模退化有改善路径 | 阶段: GW
 [D008] Baseline选定：Dijkstra(必须) + GRLR复现(必须) + GraphPR(推荐) | 理由: Dijkstra为领域共识(19篇+田野15/40)；GRLR 44引用为GNN+RL标杆，同架构对比确保结论干净 | 阶段: GW
 [D009] Step 4b 决策建议：Go | 理由: C仿真条件可行(异质性需注意但无致命障碍)，D已通过MVE(83-87%保持率)，E资源风险比例合理(有3个可回收产出路径) | 阶段: GW
+[D010] Contract Step 0 新颖性确认：4组关键词检索+3篇精读+2组定向检索，GNN size generalization for LEO satellite routing 仍为空白 | 理由: 最接近竞争者TELGEN(IEEE/TON'25)做WAN TE不做卫星路由；Size Transferability(arXiv'26)提供PE理论但做Graph Transformer非GNN路由；Scaling Swarm(AI'25)确认零样本迁移可行但仅3x简单场景 | 阶段: Contract
+[D011] TELGEN威胁评估：中等，可差异化 | 理由: ①TELGEN做TE(LP流量拆分)非路由(每跳决策) ②WAN非卫星 ③无位置编码 ④无动态拓扑 ⑤最大测试5K节点非mega-constellation | 阶段: Contract
+[D012] 假设确定：GNN+Orbital PE+多尺度训练，66→720(11x)零样本泛化，保留率≥80% | 理由: MVE 83-87%保持率校准，PE贡献≥8pp为技术创新证据 | 阶段: Contract
+[D013] Contract冻结，用户确认通过 | 理由: 压力测试4问无致命信号，Baseline共识性强 | 阶段: Contract

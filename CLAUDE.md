@@ -67,7 +67,15 @@
 - `templates.md` — 文档模板中的 `[MUST]` 和 `{占位符}` 规则
 - `domain-comms.md` — 通信领域定制（非通信项目跳过）
 
-开始任何阶段前，先读对应框架文件，按步骤执行。不要凭记忆或通用经验跳步。
+**[MUST] 转阶段/转步骤必须先读对应框架文件。**
+
+不允许凭记忆、凭上下文中的摘要、或凭"之前读过"跳过阅读。判断标准：本轮上下文中没有该文件的明确阅读证据（如本轮通过 Read 工具读过），视为未读。
+
+具体要求：
+- 进入新阶段（如 GW → Contract）→ 必须读 `stages/{stage}.md`
+- 进入新步骤（如 GW Step 3 → Step 3.5）→ 必须读该步骤的职责文件（如 `gw-supplement.md`）
+- 跨对话续接、上下文压缩后恢复 → 同样必须重读
+- 对话中如果涉及运行时机制（仿真器、processor 等），还要额外读对应 spec
 
 ### 文档职责边界
 
@@ -89,11 +97,49 @@
 
 - **奖励函数归一化和用户审查**：`domain-comms.md` §1.5 + `groundwork.md` Step 6
 - **Baseline 学术合法性和复现定义**：`groundwork.md` Step 4-7
-- **方向可行性预判**：`gw-feasibility.md`（分两段：4a 方向根基验证 + 4b 执行可行性验证）
+- **方向可行性预判**：`gw-feasibility.md`（分两段：4a 方向根基+MVE 验证 + 4b 仿真条件+资源风险验证）
 - **文献检索、验证和 URL 校验**：`contract.md` Step 0 + `domain-comms.md` §1
 - **子对话调度和上下文预算**：`contract.md` Step 0.2-0.4 + `overview.md` "上下文管理策略"
 - **仿真器验证标准**：`groundwork.md` Step 7 Part A
 - **参数来源验证**：所有仿真参数、网络模型参数、信道模型参数必须有论文出处（标注论文 ID + 表格/公式编号）。无法溯源的标注 `[ASSUMPTION]` 并在 `feasibility_report.md` 中标记为待验证项。禁止编造数值。
+
+## 上下文管理规则（跨步骤强制）
+
+以下规则适用于所有阶段的所有步骤，不写在各步骤文档里以避免重复和漂移。
+
+### 子 agent 强制委托
+
+以下操作必须在子 agent 中执行，主对话只接收结构化摘要：
+
+1. **论文全文精读**（gw-read）→ 子 agent 读 content.md，返回按模板提取的结构化数据
+2. **web search / webReader 获取的信息**（gw-supplement 等）→ 子 agent 消化，返回 ≤500 词/篇的摘要
+3. **引用链批量筛查**（≥10 篇的列表逐一查 abstract）→ 子 agent 执行，返回筛选后的候选列表
+4. **MVE 实验执行**（gw-feasibility 维度 D）→ 子 agent 跑脚本，返回结果数字和分析
+
+主对话负责：目标设定、边界框定、结果集成、最终判断。不负责大量文本的逐行消化。
+
+### web 事实性交叉验证
+
+当 web search / webReader 对某论文做出功能/贡献断言时（如"论文 X 实现了 size generalization"）：
+
+- **[MUST]** 用 Semantic Scholar API 或 DOI 直接查该论文 abstract 做交叉验证
+- abstract 不支持该断言 → 标记为"AI 推断，未验证"，不作为 Go/No-Go 决策依据
+- 记录到 `decision_log.md`
+- **禁止**用 webReader 抓 ResearchGate / Google Scholar 页面替代 API 验证——会往上下文灌入大量无关 HTML
+
+### 单对话步骤上限
+
+单对话执行超过 **3 个步骤**时，主动建议分对话。写入 handoff 后由用户在新对话继续。
+
+### 步骤间 handoff 强制写入
+
+每完成一个步骤，必须更新 handoff 文件（`projects/{name}/sessions/{date}-handoff.md`）：
+- 当前步骤产出文件路径
+- 关键结论（1-3 句）
+- 未决问题（如有）
+- 下一步操作（引用具体文件路径）
+
+目的：context overflow 恢复后只需读 handoff，不需重跑已完成步骤。
 
 ## 跨对话协作
 
