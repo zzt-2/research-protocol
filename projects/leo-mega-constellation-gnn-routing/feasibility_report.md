@@ -65,6 +65,6 @@ GNN size generalization for LEO mega-constellation routing — 在小星座上�
 - 无致命信号
 
 ## Go/No-Go 决策
-- 决策：Go（待用户确认）
+- 决策：Go
 - 理由：Size generalization 在 LEO GNN 路由中完全空白，拓扑规则性提供有利条件，技术窗口期 2025-2026
-- 用户确认：[留空]
+- 用户确认：✅ 2026-05-13

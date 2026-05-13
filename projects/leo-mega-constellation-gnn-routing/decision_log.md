@@ -1,7 +1,7 @@
 # Decision Log — GNN-based LEO Mega-Constellation Routing
 
 ## 阶段摘要
-- [Groundwork] Step 2-3 完成：12篇精读+6篇摘要验证；Step 3.5 定向补充检索完成；Step 4a Go/No-Go 待确认
+- [Groundwork] Step 2-3 完成；Step 3.5 定向补充检索完成；Step 4a **Go 已确认**
 - [Contract] 待定
 - [Execute] 待定
 
