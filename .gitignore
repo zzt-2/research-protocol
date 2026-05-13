@@ -2,8 +2,9 @@
 archive/
 search-archive/
 .omc
-projects/
 papers/
 reference/
 batches/
 __pycache__/
+results*/
+*.pyc
