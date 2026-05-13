@@ -32,6 +32,7 @@ class DAGTask:
     output_data: float      # bytes
     cycles: float           # CPU cycles
     deadline: float         # seconds
+    owning_iotd: int = 0
     predecessors: list[int] = field(default_factory=list)
     successors: list[int] = field(default_factory=list)
 
@@ -233,3 +234,64 @@ def compute_err_priority(dag: DAG) -> dict[int, float]:
         rank[tid] = w_i + (max(succ_ranks) if succ_ranks else 0.0)
 
     return rank
+
+
+class MultiDAGBundle:
+    """Container for N_IOTD independent DAGs with globally unique task IDs.
+
+    Task IDs: iotd_idx * tasks_per_iotd + local_task_id.
+    Each task stores its owning IoTD index.
+    """
+
+    def __init__(self, n_iotd: int, tasks_per_iotd: int = N_TASKS,
+                 fat: float = DAGGEN_FAT, density: float = DAGGEN_DENSITY,
+                 regular: float = DAGGEN_REGULAR, jump: int = DAGGEN_JUMP):
+        self.n_iotd = n_iotd
+        self.tasks_per_iotd = tasks_per_iotd
+        self.total_tasks = n_iotd * tasks_per_iotd
+        self._gen = DAGGenerator(
+            n_tasks=tasks_per_iotd,
+            fat=fat, density=density, regular=regular, jump=jump,
+        )
+
+    def generate(self, rng: np.random.Generator) -> tuple[list[DAGTask], dict[int, float]]:
+        """Generate all DAGs. Returns (all_tasks, err_ranks)."""
+        all_tasks: list[DAGTask] = [None] * self.total_tasks
+        all_edges: list[tuple[int, int]] = []
+        err_ranks: dict[int, float] = {}
+
+        for iotd_idx in range(self.n_iotd):
+            dag = self._gen.generate(rng)
+            offset = iotd_idx * self.tasks_per_iotd
+
+            # Compute ERR with local IDs before remapping
+            local_ranks = compute_err_priority(dag)
+
+            for t in dag.tasks:
+                local_id = t.task_id
+                global_id = offset + local_id
+                err_ranks[global_id] = local_ranks[local_id]
+                t.task_id = global_id
+                t.owning_iotd = iotd_idx
+                t.predecessors = [offset + p for p in t.predecessors]
+                t.successors = [offset + s for s in t.successors]
+                all_tasks[global_id] = t
+
+            all_edges.extend(
+                (offset + src, offset + dst) for src, dst in dag.edges
+            )
+
+        return all_tasks, err_ranks
+
+
+def get_ready_tasks_multi(
+    all_tasks: list[DAGTask], completed_mask: np.ndarray,
+) -> list[int]:
+    """Return globally unique task IDs whose predecessors are all completed."""
+    ready: list[int] = []
+    for t in all_tasks:
+        if completed_mask[t.task_id]:
+            continue
+        if all(completed_mask[p] for p in t.predecessors):
+            ready.append(t.task_id)
+    return ready

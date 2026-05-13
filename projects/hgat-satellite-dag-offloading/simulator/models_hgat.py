@@ -18,17 +18,12 @@ from config import (
     HGAT_HEADS,
     HGAT_HIDDEN,
     HGAT_LAYERS,
-    N_TASKS,
     NODE_TYPES,
 )
 from ppo import BaseActorCritic
 
 # Per-node-type input feature dimensions (from environment._build_graph)
 NODE_FEAT_DIMS = {"task": 8, "iotd": 4, "uav": 5, "leo": 5, "cs": 2}
-
-# Total number of compute nodes: iotd(1) + uav(4) + leo(8) + cs(1) = 14
-N_NODES = 14
-N_ACTIONS = N_TASKS * N_NODES
 
 # Sentinel value for masking invalid actions (matches ppo._MASK_VALUE)
 _MASK_VALUE = -1e8
@@ -48,11 +43,12 @@ class HGATActorCritic(BaseActorCritic):
     """
 
     def __init__(self, hidden_dim: int = HGAT_HIDDEN, n_heads: int = HGAT_HEADS,
-                 n_layers: int = HGAT_LAYERS) -> None:
+                 n_layers: int = HGAT_LAYERS, n_actions: int = 280) -> None:
         super().__init__()
         self.hidden_dim = hidden_dim
         self.n_heads = n_heads
         self.n_layers = n_layers
+        self.n_actions = n_actions
         head_dim = hidden_dim // n_heads
 
         # --- 1. Per-type input projections ---
@@ -82,11 +78,11 @@ class HGATActorCritic(BaseActorCritic):
                 for ntype in NODE_TYPES
             }))
 
-        # --- 3. Policy head: hidden_dim → N_ACTIONS ---
+        # --- 3. Policy head: hidden_dim → n_actions ---
         self.policy_head = nn.Sequential(
             nn.Linear(hidden_dim, hidden_dim),
             nn.ReLU(),
-            nn.Linear(hidden_dim, N_ACTIONS),
+            nn.Linear(hidden_dim, n_actions),
         )
 
         # --- 4. Value head: hidden_dim → 1 ---

@@ -13,7 +13,7 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from config import N_TASKS, PPO_LR, PPO_ENTROPY_COEF
+from config import N_IOTD, N_TASKS, PPO_LR, PPO_ENTROPY_COEF
 from environment import SatelliteDAGEnv
 from ppo import PPO, RolloutBuffer
 
@@ -45,19 +45,19 @@ class RewardNormalizer:
         return np.clip(normed, -self._clip, self._clip).tolist()
 
 
-def _make_model(model_type: str, device: str):
+def _make_model(model_type: str, device: str, n_actions: int):
     if model_type == "hgat":
         from models_hgat import HGATActorCritic
-        return HGATActorCritic().to(device)
+        return HGATActorCritic(n_actions=n_actions).to(device)
     if model_type == "graphsage":
         from models_homo import GraphSAGEActorCritic
-        return GraphSAGEActorCritic().to(device)
+        return GraphSAGEActorCritic(n_actions=n_actions).to(device)
     if model_type == "gcn":
         from models_homo import GCNActorCritic
-        return GCNActorCritic().to(device)
+        return GCNActorCritic(n_actions=n_actions).to(device)
     if model_type == "mlp":
         from models_homo import MLPActorCritic
-        return MLPActorCritic().to(device)
+        return MLPActorCritic(n_actions=n_actions).to(device)
     raise ValueError(f"Unknown model: {model_type}")
 
 
@@ -69,9 +69,10 @@ def train_drl(model_type: str, n_episodes: int, seed: int,
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(seed)
 
-    model = _make_model(model_type, device)
-    ppo = PPO(model, lr=lr, entropy_coef=entropy_coef, device=device)
     env = SatelliteDAGEnv(seed=seed)
+    n_actions = env.action_space.n
+    model = _make_model(model_type, device, n_actions)
+    ppo = PPO(model, lr=lr, entropy_coef=entropy_coef, device=device)
 
     episode_rewards = []
     all_metrics = []

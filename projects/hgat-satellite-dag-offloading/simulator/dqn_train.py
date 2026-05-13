@@ -12,7 +12,6 @@ from pathlib import Path
 import numpy as np
 import torch
 
-from config import N_TASKS
 from dqn import DQNAgent
 from environment import SatelliteDAGEnv
 
@@ -25,7 +24,8 @@ def train_dqn(n_episodes: int, seed: int, device: str, results_dir: Path,
         torch.cuda.manual_seed_all(seed)
 
     env = SatelliteDAGEnv(seed=seed)
-    agent = DQNAgent(lr=lr, device=device)
+    n_actions = env.action_space.n
+    agent = DQNAgent(n_actions=n_actions, lr=lr, device=device)
 
     episode_rewards = []
     all_metrics = []

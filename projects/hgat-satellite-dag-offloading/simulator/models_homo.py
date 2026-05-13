@@ -11,7 +11,7 @@ from torch.distributions import Categorical
 from torch_geometric.data import Data, HeteroData
 from torch_geometric.nn import GCNConv, SAGEConv
 
-from config import HGAT_HIDDEN, N_TASKS, N_UAV, N_LEO
+from config import HGAT_HIDDEN
 
 # Node-type feature dimensions (must match environment.py _build_graph)
 _IN_DIMS = {"task": 8, "iotd": 4, "uav": 5, "leo": 5, "cs": 2}
