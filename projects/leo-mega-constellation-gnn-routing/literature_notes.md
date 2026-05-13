@@ -1,9 +1,9 @@
 # Literature Notes — GNN-based LEO Mega-Constellation Routing
 
-> 方向：GNN-based routing optimization for LEO mega-constellation networks
-> 精读论文数：12 篇精读 + 6 篇摘要验证（L13-L18）
-> 检索存档：`search-archive/2026-05-13/` 下 8+ 个 JSON 文件
-> 最后更新：2026-05-13（Step 3.5 定向补充检索完成）
+> 方向：GNN size generalization for LEO mega-constellation routing
+> 精读论文数：12 篇精读 + 13 篇摘要验证（L13-L25）+ 2 篇理论背景（T01-T02）
+> 检索存档：`search-archive/2026-05-13/` 下 15+ 个 JSON 文件
+> 最后更新：2026-05-13（Step 3.5 补充检索完成）
 
 ---
 
@@ -451,6 +451,67 @@
 - 实验设置：288 颗卫星 Walker 星座
 - 与本研究关系：**直接竞争者** — 域划分+GAT+PPO 混合架构有参考价值，域划分思想可与 GNN 规模泛化结合。**未涉及 size generalization**。为 GRLR 的引用者。
 
+### [L19] Duality-Guided Graph Learning for Real-Time Joint Connectivity and Routing in LEO Mega-Constellations
+- arXiv：arXiv:2601.21921
+- **发表状态**：预印本（2026年1月）
+- 年份：2026
+- 核心贡献：联合 LISL 连接建立 + 流量路由 + 流速率分配。Lagrangian 双分解将每链路对偶变量解释为拥塞价格，训练 GNN 单次前向推理输出拥塞价格（DeepLaDu 框架）。
+- 实验设置：Starlink-like 星座（光学 ISL + 异构流量）
+- 关键结果：比非联合/启发式 baseline 吞吐量高 20%，匹配迭代对偶优化性能但计算快数个数量级
+- 与本研究关系：GRLR 和 GraphPR 引用链中均出现。**未涉及 size generalization** — 聚焦联合优化问题。
+
+### [L20] GNN-ASSSP: Attention Mechanism Driven Dynamic Routing for LEO Satellite Networks
+- **发表状态**：Aerospace Science and Technology, Vol. 178（2026年4月）
+- 年份：2026
+- 核心贡献：注意力机制 + GNN 驱动的动态路由算法。注意力提取多维网络特征（拓扑状态、流量负载、链路质量）优化路由。
+- 与本研究关系：GNN-ASSSP 关注注意力驱动的最短路径路由。**未涉及 size generalization**。HIT 团队。
+
+### [L21] ST-GNN ToN 2026 (ADRLRM): Age-Oriented Distributed Routing via Spatio-Temporal GNN
+- DOI：10.1109/TON.2025.3597928
+- **发表状态**：IEEE Transactions on Networking, 2026
+- 年份：2026
+- 核心贡献：ST-GNN + DRL 最小化信息年龄（AoI）。对比 GraphPR。时空图编码捕获卫星运动规律。
+- 与本研究关系：GraphPR 引用链中发现。**未涉及 size generalization** — 聚焦 AoI 而非规模泛化。
+
+### [L22] FGRLR: Federated Graph Reinforcement Learning Routing (WCL 2025)
+- DOI：10.1109/LWC.2025.3593508
+- **发表状态**：IEEE Wireless Communications Letters, 2025
+- 年份：2025
+- 核心贡献：联邦学习 + GNN + RL 路由。分布式训练避免集中数据汇聚。
+- 与本研究关系：GRLR 引用链中发现。**未涉及 size generalization** — 聚焦联邦训练范式。
+
+### [L23] DGA-IES: Deep Graph Attention + Incremental Evolutionary RL (IoTJ 2025)
+- **发表状态**：IEEE Internet of Things Journal, 2025
+- 年份：2025 | 引用：5
+- 核心贡献：深度图注意力拓扑感知 + 增量进化策略替代 PPO 的顺序交互。E2E 时延降低 10.3%-58.1%。
+- 与本研究关系：**未涉及 size generalization** — 聚焦进化策略加速收敛。
+
+### [L24] DLBR: Dynamic Load-Balancing Routing via GCN+LSTM Traffic Prediction (TAES 2025)
+- **发表状态**：IEEE Trans. Aerospace and Electronic Systems, 2025
+- 年份：2025 | 引用：12
+- 核心贡献：GCN+LSTM+Attention 时空流量预测 + 多 agent Dueling DQN 负载均衡路由。全分布式。
+- 与本研究关系：**未涉及 size generalization** — 聚焦流量预测驱动的负载均衡。
+
+### [L25] Transformer-MIX: Distributed Routing via Multiagent Transformer (IoTJ 2025)
+- **发表状态**：IEEE Internet of Things Journal, 2025
+- 年份：2025 | 引用：8
+- 核心贡献：Multiagent Transformer-MIX 架构，统一负载均衡奖励的集中训练。ISL 故障率 18% 下 E2E 时延降低 13.6%。
+- 与本研究关系：**未涉及 size generalization** — 聚焦 Transformer 多 agent 协作。
+
+---
+
+## GNN Size Generalization 理论背景
+
+### [T01] Enhancing Size Generalization in GNNs through Disentangled Representation Learning
+- **发表状态**：ICML 2024（Poster #35203）
+- 核心贡献：GNN 在大于训练图规模的图上分类性能下降。提出解耦表示学习将大小相关和大小无关特征分离，提升跨规模泛化。
+- 与本研究关系：**核心理论基础** — 证明 GNN size generalization 问题存在且有解法。卫星拓扑的规则结构（恒定度数）有利于解耦。
+
+### [T02] Towards a Theory for Size Generalization
+- **发表状态**：NeurIPS 2025（Poster #118775）
+- 核心贡献：统一框架分析 ML 模型处理可变大小输入的泛化能力。证明当神经网络与目标函数对齐时，size generalization 可证明成立。
+- 与本研究关系：**核心理论基础** — 为 GNN 在卫星路由中的跨规模泛化提供理论支撑。Walker-Delta 恒定度数结构可能满足"对齐"条件。
+
 ---
 
 ## 综合分析
@@ -473,6 +534,13 @@
 - **GDRL-SFCR (L16)**：GCN + PPO，**6048 星**（GNN+LEO 最大规模），SFC 约束，NTN 架构。单一规模训练测试。
 - **GAT-LSTM-DQN (L17)**：GAT+LSTM+DQN 时空路由，45 星，主动拥塞避免。规模极小。
 - **DTAR (L18)**：GAT + Action-masked PPO，288 星 Walker，域划分+在线路由。混合架构。
+- **DeepLaDu (L19)**：Lagrangian 对偶引导 GNN，联合 LISL 连接+路由+流分配，单次前向推理。
+- **GNN-ASSSP (L20)**：注意力机制驱动 GNN 动态路由，多维网络特征提取。
+- **ADRLRM (L21)**：ST-GNN+DRL 最小化 AoI，时空图编码。
+- **FGRLR (L22)**：联邦学习 + GNN + RL，分布式训练。
+- **DGA-IES (L23)**：深度图注意力 + 进化策略替代 PPO，加速收敛。
+- **DLBR (L24)**：GCN+LSTM 时空流量预测 + Dueling DQN 负载均衡。
+- **Transformer-MIX (L25)**：Transformer 多 agent 架构，统一负载均衡奖励。
 - **DRL-MPCR**（IEEE IoTJ 2025）：DRL 多路径协作路由，**非 GNN**，水填充调度。
 
 **C. GNN 方法（非 LEO 专用）**
@@ -548,10 +616,18 @@
 | L16 (GDRL-SFCR) | 6048 星 | ❌ | 最大规模，但训练测试同规模 |
 | L17 (GAT-LSTM-DQN) | 45 星 | ❌ | 极小规模 |
 | L18 (DTAR) | 288 星 | ❌ | 域划分+GAT+PPO，单一规模 |
+| L19 (DeepLaDu) | Starlink-like | ❌ | 联合 LISL+routing+flow，Lagrangian 对偶引导 GNN |
+| L20 (GNN-ASSSP) | 未注明 | ❌ | 注意力驱动动态路由 |
+| L21 (ADRLRM) | 未注明 | ❌ | ST-GNN+DRL 最小化 AoI |
+| L22 (FGRLR) | 未注明 | ❌ | 联邦学习+GNN+RL 路由 |
+| L23 (DGA-IES) | 未注明 | ❌ | 深度图注意力+进化 RL |
+| L24 (DLBR) | 未注明 | ❌ | GCN+LSTM 流量预测+DQN 路由 |
+| L25 (Transformer-MIX) | 未注明 | ❌ | Transformer 多 agent 路由 |
 
 **结论**：
-- GNN size generalization 在 LEO/satellite routing 领域**完全空白**——经 12 篇精读 + 6 篇定向检索验证
+- GNN size generalization 在 LEO/satellite routing 领域**完全空白**——经 12 篇精读 + 13 篇定向检索验证（共 25 篇论文）
 - 唯一的跨规模实验是 L06 (30→50 节点合成图) 和 L10 (传统方法 1156→10000 星)，均不涉及 GNN 模型跨规模泛化
+- GRLR (44 cites) 和 GraphPR (19 cites) 引用链共 63 篇论文筛查，无一篇涉及 size generalization
 - L02 (Starfield) 的密度分析暗示 400+ 规模边际收益递减，但这是对路由性能的观察，非对 GNN 泛化能力的研究
 - **核心创新空间完全成立**：首次在卫星拓扑上系统研究 GNN 的跨规模泛化能力
 
@@ -601,22 +677,23 @@
 
 ### 8. 创新空间确认
 
-经过 12 篇精读 + 6 篇定向检索验证（共 18 篇），**核心创新点重新定位**：
+经过 12 篇精读 + 13 篇定向检索验证（共 25 篇 + 2 篇理论背景），**核心创新点重新定位**：
 
 | 创新点 | 现状 | 差异化空间 |
 |--------|------|-----------|
-| **GNN size generalization** | **完全空白** — 6 篇 GNN+RL LEO 论文（L13-L18）无一涉及。L06 仅 30→50 合成图，L01 仅理论分析 | **核心创新**：首次在卫星拓扑上系统研究 GNN 跨规模泛化（小星座训练→大星座部署） |
+| **GNN size generalization** | **完全空白** — 13 篇 GNN+RL LEO 论文（L13-L25）无一涉及。GRLR+GraphPR 引用链 63 篇筛查确认。L06 仅 30→50 合成图，L01 仅理论分析 | **核心创新**：首次在卫星拓扑上系统研究 GNN 跨规模泛化（小星座训练→大星座部署） |
 | GNN+RL 端到端 LEO 路由 | **已有 6 篇论文**（L13-L18），非创新点 | 不再作为独立创新点，但 size generalization 使其具有工程实用价值 |
 | 全分布式 vs 集中式 | GraphPR (L14) 已做全分布式 POMDP | 可作为架构选择而非创新点 |
 | 动态路由 vs 静态路由 | L10/L11/L18 通过分段/聚类/域划分处理时变拓扑 | GNN 在线推理仍有优势，但非核心创新 |
 
 **创新定位调整**：
 - **之前的定位**："GNN+RL for LEO routing"（Step 2-3 初期，仅知 L08 一篇）
-- **现在的定位**："GNN size generalization for satellite routing"（Step 3.5 后，确认 6 篇竞争对手均未涉及）
+- **现在的定位**："GNN size generalization for satellite routing"（Step 3.5 后，确认 13 篇竞争对手均未涉及）
 - 核心叙事：GNN+RL for LEO routing 已被验证可行（GRLR 44 引用），但**训练与部署必须同规模**这一限制严重制约了实用价值（训练 6000+ 星星座的计算成本极高）。本研究首次解决 GNN 跨规模泛化问题，使小星座训练→大星座部署成为可能。
 
 **风险评估**：
-- ✅ Size generalization 在 LEO 路由中**零竞争**（经 Semantic Scholar API 验证）
-- ✅ GNN size generalization 在其他领域已有理论基础（ICML 2024 解耦表示学习、KDD 2023 谱方法），可迁移
+- ✅ Size generalization 在 LEO 路由中**零竞争**（经 Semantic Scholar API 验证 25 篇论文 + 63 篇引用链筛查）
+- ✅ GNN size generalization 在 ML 理论侧已有坚实基础：ICML 2024 解耦表示学习（T01）、NeurIPS 2025 统一理论框架（T02）、ICML 2025 多篇跟进
+- ✅ 补充检索覆盖 6 个维度：GAT/GraphSAGE 卫星变体、GNN 可扩展性/迁移学习、GRLR 引用链（44 篇）、GraphPR 引用链（19 篇）、联邦 GRL、GNN 归纳泛化理论
 - ⚠️ 需验证卫星网格拓扑的特殊性（规则结构、时变性）是否有利于或不利于泛化
 - ⚠️ GRLR (44 引用) 是强竞争者，如果其后续工作加入 size generalization，时间窗口有限

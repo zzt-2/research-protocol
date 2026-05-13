@@ -31,14 +31,16 @@ GNN size generalization for LEO mega-constellation routing — 在小星座上�
 
 ### 新颖性论据（事实判断，已确认）
 
-经 12 篇精读 + 6 篇定向检索（共 18 篇），Semantic Scholar API 验证：
+经 12 篇精读 + 13 篇定向检索（共 25 篇），Semantic Scholar API + Web Search 验证：
 
 - **GNN size generalization in LEO/satellite routing**：**完全空白**
-  - 6 篇 GNN+RL LEO 路由论文（L13-L18）无一涉及跨规模泛化
+  - 13 篇 GNN+RL LEO 路由论文（L13-L25）无一涉及跨规模泛化
   - L16 (GDRL-SFCR) 在 6048 星训练测试（最大规模但同规模）
   - L13 (GRLR, 44 引用) 经双版摘要验证无提及
   - Web 搜索声称 GRLR 涉及 size generalization 系 AI 幻觉（已通过 Semantic Scholar API 纠正）
-- GNN size generalization 在其他领域有理论基础：ICML 2024 解耦表示学习、KDD 2023 谱方法
+  - GRLR+GraphPR 引用链共 63 篇引用筛查，无一篇涉及 size generalization
+  - 补充检索覆盖 6 个维度：GAT/GraphSAGE 变体、GNN 可扩展性、引用链、联邦 GRL、归纳泛化理论
+- GNN size generalization 理论基础在 ML 顶会活跃：ICML 2024 解耦表示学习（T01）、NeurIPS 2025 统一理论框架（T02）、ICML 2025 多篇跟进
 
 ### 可行性论据（预测）
 
@@ -61,7 +63,7 @@ GNN size generalization for LEO mega-constellation routing — 在小星座上�
 
 理由：
 - 维度 A：结构性优势明确（GNN 局部聚合 vs Dijkstra 全局重计算 + 负载信息利用）
-- 维度 B：新颖性确凿（18 篇论文零覆盖），可行性有强论据（拓扑规则性 + 跨领域实证 + 技术限制刚解除）
+- 维度 B：新颖性确凿（25 篇论文 + 63 篇引用链零覆盖），可行性有强论据（拓扑规则性 + 跨领域实证 + 技术限制刚解除 + ML 理论基础坚实）
 - 无致命信号
 
 ## Go/No-Go 决策
