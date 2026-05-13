@@ -1,7 +1,7 @@
 # Decision Log — GNN-based LEO Mega-Constellation Routing
 
 ## 阶段摘要
-- [Groundwork] Step 2-3 完成；Step 3.5 补充检索完成（25篇+63篇引用链）；Step 4a Go 已确认；MVE 完成（83-87%保持率）；Step 5 Baseline 已选定
+- [Groundwork] Step 2-5 + Step 4a/4b 全部完成，**Go 已确认**，待进入 Contract
 - [Contract] 待定
 - [Execute] 待定
 
@@ -14,3 +14,4 @@
 [D006] Step 3.5 补充检索完成：25篇论文+63篇引用链确认size generalization空白 | 理由: 6维度覆盖，ML理论基础（ICML 2024 T01 + NeurIPS 2025 T02）坚实 | 阶段: GW
 [D007] MVE结果：GNN路由策略规模无关（83-87%保持率），支持Go | 理由: 均匀权重100%同规模→83%跨16x；异质权重70%同规模→56%跨16x；17%跨规模退化有改善路径 | 阶段: GW
 [D008] Baseline选定：Dijkstra(必须) + GRLR复现(必须) + GraphPR(推荐) | 理由: Dijkstra为领域共识(19篇+田野15/40)；GRLR 44引用为GNN+RL标杆，同架构对比确保结论干净 | 阶段: GW
+[D009] Step 4b 决策建议：Go | 理由: C仿真条件可行(异质性需注意但无致命障碍)，D已通过MVE(83-87%保持率)，E资源风险比例合理(有3个可回收产出路径) | 阶段: GW
