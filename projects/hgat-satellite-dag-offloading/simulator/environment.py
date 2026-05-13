@@ -93,6 +93,7 @@ class SatelliteDAGEnv(gym.Env):
         self._step_rewards: list[float] = []
         self._e_max: float = 0.0
         self._mean_deadline: float = 1.0
+        self._episode_counter: int = 0
 
     # ------------------------------------------------------------------
     # Gym interface
@@ -179,14 +180,19 @@ class SatelliteDAGEnv(gym.Env):
 
         task = self.dag.tasks[task_id]
 
-        # Compute transfer time (sum over completed predecessors on different nodes)
+        # Compute transfer time
         transfer_time = 0.0
+        # Predecessor output_data transfer
         for pred_id in task.predecessors:
             pred_node = int(self._task_nodes[pred_id])
             if pred_node != node_id:
                 rate = self._get_link_rate(pred_node, node_id)
                 data_bytes = self.dag.tasks[pred_id].output_data
                 transfer_time += data_bytes / rate if rate > 0 else 0.0
+        # Entry tasks: upload input_data from IoTD to target node
+        if not task.predecessors and node_id != _NODE_IOTD:
+            rate = self._get_link_rate(_NODE_IOTD, node_id)
+            transfer_time += task.input_data / rate if rate > 0 else 0.0
 
         # Compute time
         freq = self._get_node_freq(node_id)
@@ -300,7 +306,7 @@ class SatelliteDAGEnv(gym.Env):
 
             # Otherwise route through the first visible LEO
             if not self._visible_leos:
-                return 1.0  # fallback: no visible LEO
+                return 0.0  # no visible LEO → unreachable
             relay_leo_idx = self._visible_leos[0]
             relay_node = _NODE_LEO_START + relay_leo_idx
 
@@ -340,7 +346,7 @@ class SatelliteDAGEnv(gym.Env):
             dist = self._leo_distances[leo_node - _NODE_LEO_START]
             return self._cm.u2s_rate(dist, TX_POWER_UAV)
 
-        return 1.0  # fallback
+        return 0.0  # unreachable link
 
     # ------------------------------------------------------------------
     # Graph construction
@@ -583,7 +589,9 @@ class SatelliteDAGEnv(gym.Env):
     # ------------------------------------------------------------------
 
     def run_random_episode(self) -> dict:
-        obs, info = self.reset(seed=self._seed)
+        seed = (self._seed or 0) + self._episode_counter
+        self._episode_counter += 1
+        obs, info = self.reset(seed=seed)
         total_reward = 0.0
         done = False
         while not done:
@@ -601,7 +609,9 @@ class SatelliteDAGEnv(gym.Env):
         }
 
     def run_greedy_episode(self) -> dict:
-        obs, info = self.reset(seed=self._seed)
+        seed = (self._seed or 0) + self._episode_counter
+        self._episode_counter += 1
+        obs, info = self.reset(seed=seed)
         total_reward = 0.0
         done = False
         while not done:
@@ -627,6 +637,9 @@ class SatelliteDAGEnv(gym.Env):
                         if pn != node_id:
                             rate = self._get_link_rate(pn, node_id)
                             tt += self.dag.tasks[pred_id].output_data / rate if rate > 0 else 0.0
+                    if not task.predecessors and node_id != _NODE_IOTD:
+                        rate = self._get_link_rate(_NODE_IOTD, node_id)
+                        tt += task.input_data / rate if rate > 0 else 0.0
                     if ct + tt < best_time:
                         best_time = ct + tt
                         best_action = act
