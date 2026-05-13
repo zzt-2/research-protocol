@@ -108,7 +108,7 @@ def _compute_relevance(results: list[dict], query: str) -> list[dict]:
     return results
 
 
-def _filter_by_relevance(results: list[dict], threshold: float = 0.3) -> list[dict]:
+def _filter_by_relevance(results: list[dict], threshold: float = 0.15) -> list[dict]:
     filtered = [r for r in results if r.get("relevance_score", 0) >= threshold]
     removed = len(results) - len(filtered)
     if removed > 0:

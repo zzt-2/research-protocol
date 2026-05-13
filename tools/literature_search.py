@@ -1,6 +1,7 @@
 # CLI 入口：argparse + 主流程编排
 
 import argparse
+import concurrent.futures
 import json
 import os
 import sys
@@ -202,19 +203,36 @@ def main():
                 active_sources = _resolve_sources(strategy["mode"], None)
                 print(f"[预设] 源切换为: {', '.join(active_sources)}")
 
-    # ---- 搜索 ----
+    # ---- 搜索（并行）----
     all_results: list[dict] = []
+
+    search_tasks: list[tuple[str, str]] = []
     for q in queries:
-        # 对 doc_type 注入查询修饰词（只取第一个有修饰词的类型）
         modified_q = q
         if args.doc_types:
             for dt in args.doc_types:
                 modified_q = _apply_query_modifier(modified_q, dt)
                 if modified_q != q:
                     break
-
         for source in active_sources:
-            all_results.extend(_search_source(source, modified_q, args))
+            search_tasks.append((source, modified_q))
+
+    if search_tasks:
+        print(f"[搜索] {len(search_tasks)} 个任务并行执行...", file=sys.stderr)
+        with concurrent.futures.ThreadPoolExecutor(
+            max_workers=min(len(search_tasks), 10)
+        ) as executor:
+            future_to_task = {
+                executor.submit(_search_source, src, q, args): (src, q)
+                for src, q in search_tasks
+            }
+            for future in concurrent.futures.as_completed(future_to_task):
+                src, q = future_to_task[future]
+                try:
+                    results = future.result()
+                    all_results.extend(results)
+                except Exception as e:
+                    print(f"  [ERROR] {src} 搜索失败: {e}", file=sys.stderr)
 
     # ---- 合并历史结果 ----
     if args.merge:
