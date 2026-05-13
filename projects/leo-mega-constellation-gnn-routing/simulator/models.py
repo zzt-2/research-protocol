@@ -108,3 +108,36 @@ class RoutingGNNActorCritic(nn.Module):
         action_logits = self.actor(x)       # (N, 4)
         value = self.critic(x).mean()       # scalar
         return action_logits, value
+
+
+class RoutingActorCritic(nn.Module):
+    """GAT routing with Actor-Critic heads. Uses precomputed PE (same format as RoutingGNN).
+
+    Node input: [is_dest(1), own_PE, dest_PE] — precomputed by snapshot_to_pyg.
+    """
+    def __init__(self, node_dim=33, edge_dim=2, hidden=128,
+                 n_layers=3, heads=4, n_directions=4):
+        super().__init__()
+        self.convs = nn.ModuleList()
+        self.convs.append(GATConv(node_dim, hidden // heads, heads=heads, edge_dim=edge_dim))
+        for _ in range(n_layers - 1):
+            self.convs.append(GATConv(hidden, hidden // heads, heads=heads, edge_dim=edge_dim))
+
+        self.actor = nn.Sequential(
+            nn.Linear(hidden, hidden),
+            nn.ReLU(),
+            nn.Linear(hidden, n_directions),
+        )
+        self.critic = nn.Sequential(
+            nn.Linear(hidden, hidden),
+            nn.ReLU(),
+            nn.Linear(hidden, 1),
+        )
+
+    def forward(self, data):
+        x = data.x
+        for conv in self.convs:
+            x = F.elu(conv(x, data.edge_index, data.edge_attr))
+        logits = self.actor(x)          # (N, 4)
+        value = self.critic(x).mean()   # scalar
+        return logits, value

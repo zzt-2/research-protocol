@@ -3,7 +3,7 @@
 ## 阶段摘要
 - [Groundwork] Step 2-5 + Step 4a/4b 全部完成，**Go 已确认**，待进入 Contract
 - [Contract] Step 0-3 完成，Contract 已冻结（用户确认 2026-05-13），待 Execute
-- [Execute] Step 1 完成（实验设计审查通过），参数核实完成，开始 Step 2
+- [Execute] Step 1 完成（实验设计审查通过），参数核实完成，Step 2 核心实验进行中
 
 ## 决策记录
 [D001] 选定方向：GNN-based routing for LEO mega-constellation | 理由: 蓝海（5年~38篇）、与导师ISL方向吻合、GNN天然适配图结构、仿真负担轻 | 阶段: GW
@@ -23,3 +23,7 @@
 [D015] ISL容量模型修正：Shannon + B=1 GHz（原 B=500 MHz 无出处） | 理由: 子agent查证3篇论文+web搜索，B=500MHz无任何论文使用；L03 DuJo基于Starlink真实TLE数据用B=1GHz；用户确认采用此方案 | 阶段: Execute
 [D016] ISL距离修正：实时轨道力学计算 + 5000km断链逻辑（原固定值~2700/~5500km错误） | 理由: 计算显示四个配置的ISL距离差异巨大（轨内1086-4277km，轨间1963-5694km），固定值不适用任何配置；L02 Starfield §2.2确认5000km断链阈值；66星配置部分轨间ISL会断链 | 阶段: Execute
 [D017] ISL类型确认为激光（非RF），Shannon模型为简化近似 | 理由: L02/L03明确optical laser link(1550nm)；Starlink实际~100Gbps/链路；Shannon模型需在论文中标注为简化 | 阶段: Execute
+[D018] 监督预训练结果：RoutingActorCritic(3层GAT,h=128)→方向精度97.6%(train)/66.8%(target)，retention 71% | 理由: 150 epochs, 7320 samples (20 snapshots × 3 configs), CE loss | 阶段: Execute
+[D019] 贪心推理路径成功率极低（train 22-30%, target 1.7%），不满足实用要求 | 理由: 路径成功=逐跳精度之积，97.6%^10≈78%理论上限但实际更低；某些目的地方向精度仅~46%拉低整体 | 阶段: Execute
+[D020] GNN加权Dijkstra推理策略确定：weight=delay+relu(best_logit-logit)，成功率100%，median stretch 1.5-1.8 | 理由: 4种权重公式测试(softmax概率/2-prob/exp(-logit)/加性惩罚)均给mean stretch 2.1-2.6，根因是某些episode方向精度低(~46%)导致尾部拉高(P95=5-7) | 阶段: Execute
+[D021] PPO微调无效结论：无论greedy reward还是weighted Dijkstra reward，PPO均无法改善监督baseline | 理由: ①greedy reward太稀疏(99%路径失败)②weighted reward action-reward解耦(改单节点logits不影响整条路径)③两种方案80轮PPO后stretch持平或恶化 | 阶段: Execute
