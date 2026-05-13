@@ -32,6 +32,7 @@
     ├── competitor_notes/
     ├── baseline_report.md
     ├── search-archive/   # 项目专属检索记录（Contract 阶段等）
+    ├── sessions/         # 跨对话交接记录（handoff）
     ├── simulator/
     ├── baselines/
     ├── results/
@@ -88,20 +89,58 @@
 
 - **奖励函数归一化和用户审查**：`domain-comms.md` §1.5 + `groundwork.md` Step 6
 - **Baseline 学术合法性和复现定义**：`groundwork.md` Step 4-7
-- **方向可行性预判**：`gw-feasibility.md`（五个维度 + Go/No-Go）
+- **方向可行性预判**：`gw-feasibility.md`（分两段：4a 方向根基验证 + 4b 执行可行性验证）
 - **文献检索、验证和 URL 校验**：`contract.md` Step 0 + `domain-comms.md` §1
 - **子对话调度和上下文预算**：`contract.md` Step 0.2-0.4 + `overview.md` "上下文管理策略"
 - **仿真器验证标准**：`groundwork.md` Step 7 Part A
+- **参数来源验证**：所有仿真参数、网络模型参数、信道模型参数必须有论文出处（标注论文 ID + 表格/公式编号）。无法溯源的标注 `[ASSUMPTION]` 并在 `feasibility_report.md` 中标记为待验证项。禁止编造数值。
+
+## 跨对话协作
+
+### 交接机制（handoff）
+
+跨对话推进同一项目时，使用 `projects/{name}/sessions/` 管理交接：
+
+- 每次对话结束前（包括上下文溢出导致压缩时），写 handoff 文件到 `projects/{name}/sessions/`
+- handoff 文件名格式：`{YYYY-MM-DD}-handoff.md`（同一天多次用 `-handoff-2.md` 递增）
+- 新对话恢复项目时，先读 handoff 再读其他文件
+- handoff 不重复项目正式文档内容，只补充跨对话上下文和待办
+
+### handoff 格式
+
+```markdown
+# Handoff {YYYY-MM-DD}
+
+## 当前进度
+- 阶段：{GW/Contract/Execute} Step {N}
+- 状态：{进行中/阻塞/完成}
+- 本轮完成：{具体做了什么，引用文件路径}
+
+## 关键上下文
+- 正在处理的问题：{如果有}
+- 未解决决策：{如果有}
+- 需要注意的坑：{如果有}
+
+## 下一步
+1. {具体操作，引用文件路径}
+```
+
+### 写入时机
+
+- 用户说"新对话继续"或"给我提示词"时
+- 上下文即将压缩时
+- 切换子 agent 执行长任务前
 
 ## 状态恢复
 
 新对话恢复项目时，按以下优先级读取：
 
 1. 项目记忆文件: `~/.claude/projects/-mnt-d-code-study-research-protocol/memory/project_{name}.md`
-2. `decision_log.md`（阶段摘要行）
-3. `feasibility_report.md`（如已到 Step 4）
-4. `baseline_report.md`（如已到 Step 7）
-5. 对应阶段框架文件
+2. `projects/{name}/sessions/` 下最新的 handoff 文件
+3. `decision_log.md`（阶段摘要行）
+4. `feasibility_report.md`（如已到 Step 4）
+5. `baseline_report.md`（如已到 Step 7）
+6. 对应阶段框架文件
 
 ## 工具调用
 

@@ -167,3 +167,4 @@ bash tools/search "LEO satellite handover attention DQN" \
 - [ ] 压力测试 4 问已回答，无致命风险信号
 - [ ] decision_log 包含假设形成的关键决策
 - [ ] **用户已确认 Contract**
+- [ ] **路径合规**：competitor_notes 在 `projects/{name}/competitor_notes/`，检索结果在 `search-archive/{date}/` 或 `projects/{name}/search-archive/`

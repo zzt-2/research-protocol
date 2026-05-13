@@ -19,8 +19,9 @@
 | Step 1 | [gw-search.md](gw-search.md) | search-archive/{date}/{slug}.json + 候选列表 | 否 |
 | Step 2 | [gw-acquire.md](gw-acquire.md) | papers/{arxiv|doi}/{id}/content.md + 覆盖面缺口报告 | 是（缺口确认）|
 | Step 3 | [gw-read.md](gw-read.md) | literature_notes.md | 否（可触发迭代） |
-| Step 4 | [gw-feasibility.md](gw-feasibility.md) | feasibility_report.md | 是（Go/No-Go）|
+| Step 4a | [gw-feasibility.md](gw-feasibility.md) §4a | feasibility_report.md（初步） | 是（方向根基 Go/No-Go）|
 | Step 5 | [gw-validate.md](gw-validate.md) | Baseline 候选评估表 | 是（Baseline 确认）|
+| Step 4b | [gw-feasibility.md](gw-feasibility.md) §4b | feasibility_report.md（完整） | 是（执行可行性 Go/No-Go）|
 | Step 6 | [gw-experiment.md](gw-experiment.md) §sim | 仿真器设计规格 | 是（设计确认）|
 | Step 7 | [gw-experiment.md](gw-experiment.md) §impl | baseline_report.md | 否 |
 
@@ -54,9 +55,10 @@ Step 1→2→3 是基础线性流程。当 Step 3 精读后发现以下情况时
 各步骤通过文件路径传递数据，不依赖上下文记忆：
 - Step 1 → Step 2：`search-archive/{date}/{slug}.json`
 - Step 2 → Step 3：`papers/{arxiv|doi}/{id}/content.md`
-- Step 3 → Step 4：`literature_notes.md`
-- Step 4 → Step 5：`feasibility_report.md` + `decision_log.md`
-- Step 5 → Step 6：Baseline 候选评估表 + `decision_log.md`
+- Step 3 → Step 4a：`literature_notes.md`
+- Step 4a → Step 5：`feasibility_report.md`（初步）+ `decision_log.md`
+- Step 5 → Step 4b：Baseline 候选评估表 + `decision_log.md`
+- Step 4b → Step 6：`feasibility_report.md`（完整）+ `decision_log.md`
 - Step 6 → Step 7：仿真器设计规格（见 gw-experiment.md）
 
 ## 完成条件

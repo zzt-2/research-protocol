@@ -17,7 +17,7 @@ research-protocol/
 │   ├── gw-search.md     # Step 1: 文献检索
 │   ├── gw-acquire.md    # Step 2: 论文获取
 │   ├── gw-read.md       # Step 3: 文献精读
-│   ├── gw-feasibility.md # Step 4: 方向可行性预判
+│   ├── gw-feasibility.md # Step 4a+4b: 方向可行性预判（分两段）
 │   ├── gw-validate.md    # Step 5: Baseline 候选选定
 │   ├── gw-experiment.md # Step 6-7: 仿真器设计 + Baseline 复现
 │   ├── contract.md      # Contract 执行手册
@@ -152,3 +152,13 @@ Contract 的特殊效力见 `stages/contract.md` 末节（不可修改、变更�
 - 实验执行 → `results/*.md`（结果 + 数据）
 
 主线程只读摘要，不读原始输出。
+
+### 压缩/续接后的强制重读
+
+上下文压缩（`/compact`）或跨对话续接后，以下文件必须重新读取，不能用"之前读过"或"大概记得"替代：
+
+1. 当前阶段的 stage 文件（如正在 Groundwork Step 5 → 读 `gw-validate.md`）
+2. `decision_log.md`（最新决策状态）
+3. `projects/{name}/sessions/` 下最新的 handoff 文件（如有）
+
+判定标准：本轮上下文里没有新鲜的阅读证据（如本轮明确读过对应文件），视为未读，必须补读后才能继续规划或实施。

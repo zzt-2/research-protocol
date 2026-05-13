@@ -142,3 +142,4 @@ Contract + Groundwork 产出
 - [ ] 所有结果与 Contract 无矛盾
 - [ ] 达标判定通过
 - [ ] 所有实验在同一数据集上执行
+- [ ] **路径合规**：结果在 `projects/{name}/results/`，不在其他位置
