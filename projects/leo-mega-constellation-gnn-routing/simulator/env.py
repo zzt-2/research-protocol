@@ -12,9 +12,6 @@ from snapshot import build_snapshot, get_orbital_pe_tensors, snapshot_to_pyg
 from topology import build_adjacency
 from routing import dijkstra, dijkstra_all_pairs
 
-OPPOSITE_DIR = {0: 1, 1: 0, 2: 3, 3: 2}
-
-
 class RoutingEnv:
     """Episode generator for PPO training."""
 
@@ -201,6 +198,9 @@ class RoutingEnv:
         return reward, info
 
 
+OPPOSITE_DIR = {0: 1, 1: 0, 2: 3, 3: 2}
+
+
 def _build_neighbor_map(snap, S, P):
     nmap = {}
     for e in range(snap['edge_index'].shape[1]):
@@ -212,6 +212,7 @@ def _build_neighbor_map(snap, S, P):
         else:
             d = 2 if dp == (sp + 1) % P else 3
         nmap[(u, d)] = (v, snap['edge_delay'][e])
+        nmap[(v, OPPOSITE_DIR[d])] = (u, snap['edge_delay'][e])
     return nmap
 
 

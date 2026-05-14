@@ -27,3 +27,7 @@
 [D019] 贪心推理路径成功率极低（train 22-30%, target 1.7%），不满足实用要求 | 理由: 路径成功=逐跳精度之积，97.6%^10≈78%理论上限但实际更低；某些目的地方向精度仅~46%拉低整体 | 阶段: Execute
 [D020] GNN加权Dijkstra推理策略确定：weight=delay+relu(best_logit-logit)，成功率100%，median stretch 1.5-1.8 | 理由: 4种权重公式测试(softmax概率/2-prob/exp(-logit)/加性惩罚)均给mean stretch 2.1-2.6，根因是某些episode方向精度低(~46%)导致尾部拉高(P95=5-7) | 阶段: Execute
 [D021] PPO微调无效结论：无论greedy reward还是weighted Dijkstra reward，PPO均无法改善监督baseline | 理由: ①greedy reward太稀疏(99%路径失败)②weighted reward action-reward解耦(改单节点logits不影响整条路径)③两种方案80轮PPO后stretch持平或恶化 | 阶段: Execute
+[D022] _build_neighbor_map bug修复：之前只注册单向映射(1440/2880条)，评估只能用2/4方向(intra_bwd和inter_l缺失)，导致stretch被严重高估 | 理由: edge_index存储每条ISL单方向，但neighbor_map未添加反向条目；修复后所有方法stretch大幅改善 | 阶段: Execute
+[D023] 修复后加权Dijkstra评估结果(720星)：mean stretch 1.097, median 1.056, P95 1.315, ≤1.2x optimal 85.1%, ≤1.5x optimal 98.9% | 理由: 10 snapshots × 5 TMs × 100 flows, seed=123, 100%成功率 | 阶段: Execute
+[D024] GRLR baseline复现完成(6节点局部图GAT+Actor-Critic, 加权Dijkstra推理)：mean stretch 1.008, 100% ≤1.2x optimal, delay 60.32ms | 理由: 2000 episodes训练, γ=0.95, lr=5e-4, β=0.1; 同规模(720)训练近乎最优 | 阶段: Execute
+[D025] Baseline对比结论：时延保留率90.3%(GRLR同规模60.32ms / 我们跨规模66.77ms)，vs Dijkstra差距9.9%，Contract两项核心指标达标 | 理由: 我们用66+100+200训练零样本迁移到720，代价~10%额外时延；跨规模能力是GRLR完全不具备的 | 阶段: Execute
