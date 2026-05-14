@@ -31,6 +31,7 @@
 [D023] 修复后加权Dijkstra评估结果(720星)：mean stretch 1.097, median 1.056, P95 1.315, ≤1.2x optimal 85.1%, ≤1.5x optimal 98.9% | 理由: 10 snapshots × 5 TMs × 100 flows, seed=123, 100%成功率 | 阶段: Execute
 [D024] GRLR baseline复现完成(6节点局部图GAT+Actor-Critic, 加权Dijkstra推理)：mean stretch 1.008, 100% ≤1.2x optimal, delay 60.32ms | 理由: 2000 episodes训练, γ=0.95, lr=5e-4, β=0.1; 同规模(720)训练近乎最优 | 阶段: Execute
 [D025] Baseline对比结论：时延保留率90.3%(GRLR同规模60.32ms / 我们跨规模66.77ms)，vs Dijkstra差距9.9%，Contract两项核心指标达标 | 理由: 我们用66+100+200训练零样本迁移到720，代价~10%额外时延；跨规模能力是GRLR完全不具备的 | 阶段: Execute
+[D029] 同规模消融（720→720）：训练精度98.82%，stretch 1.000(完美)，delay开销0.0% | 理由: 架构本身同规模可达最优，9.7pp stretch差距完全来自跨规模迁移；消融实验四项全部完成，Contract两项核心指标达标(时延保留率90.3%≥80%, vs Dijkstra差距9.9%≤20%) | 阶段: Execute
 [D028] 消融A3（无PE+单尺度train_100）：训练精度40.16%(≈随机)，stretch 1.049, ≤1.2x 93.6%, delay开销3.6% | 理由: 确认PE是学习必要条件——无论单/多尺度，无PE均无法学习；A3 stretch(1.049)介于A1(1.002)和A2(1.120)之间，表明更少训练样本导致略差的Dijkstra近似 | 阶段: Execute
 [D027] 消融A2（仅train_100单尺度训练）：训练精度97.70%，720星评估 stretch 1.120, median 1.073, ≤1.2x 81.1%, delay开销12.3% | 理由: 单尺度训练精度与主实验相当(97.7% vs 97.6%)，但跨尺度迁移略差；多尺度训练贡献：stretch -2.3pp, ≤1.2x +4pp, delay开销 -2.4pp；贡献方向符合预期但幅度(2-4pp)小于Contract预期(5-8pp) | 阶段: Execute
 [D026] 消融A1（移除Orbital PE）：训练精度39.66%（≈随机25%），无法学习方向路由；weighted Dijkstra stretch 1.002（≈纯Dijkstra）| 理由: 无PE时模型仅靠is_dest(1bit)无法区分节点位置，无法学习方向偏好；weighted Dijkstra退化为delay-only权重=纯Dijkstra；PE是模型学习的必要条件而非可选增强，Contract假设"PE贡献≥8pp stretch"需修正为"PE是模型可学习性的前提" | 阶段: Execute
