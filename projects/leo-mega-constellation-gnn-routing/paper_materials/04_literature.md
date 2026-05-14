@@ -1,7 +1,7 @@
 # 文献定位
 
 > 方向：GNN size generalization for LEO mega-constellation routing
-> 文献基座：12 篇精读 + 13 篇摘要验证 + 2 篇理论背景 + 3 篇竞品深度分析 = 共 30 篇
+> 文献基座：12 篇精读 + 13 篇摘要验证 + 2 篇理论背景 + 3 篇竞品深度分析 + 30 篇背景引用 = 共 60 篇
 > 核心结论：GNN size generalization 在 LEO/satellite routing 领域完全空白
 
 ---
@@ -449,3 +449,86 @@
 - **无 ID**: 3 篇（L18, L20, T01/T02 会议投稿号）
 - **时间分布**: 2023(1) → 2024(5) → 2025(14) → 2026(10)
 - **引用链覆盖**: GRLR 44 篇 + GraphPR 19 篇 = 63 篇引用链筛查，无一篇涉及 size generalization
+
+---
+
+## 7. 背景引用（论文写作辅助引用）
+
+> 以下论文非项目核心文献，但论文写作时必须引用作为方法基础、领域背景和理论支撑。
+
+### 7.1 GNN 基础方法（方法章必引）
+
+| # | 标题 | 第一作者 | 年份 | 来源 | 标识符 | 引用理由 |
+|---|------|---------|------|------|--------|---------|
+| R01 | Graph Attention Networks | Velickovic | 2018 | ICLR 2018 | arXiv:1710.10903 | 我们 GAT 编码器的架构基础 |
+| R02 | Semi-Supervised Classification with Graph Convolutional Networks | Kipf | 2017 | ICLR 2017 | arXiv:1609.02907 | GCN 基础，多篇 baseline (L08, L24) 的架构来源 |
+| R03 | Neural Message Passing for Quantum Chemistry | Gilmer | 2017 | ICML 2017 | arXiv:1704.01212 | 消息传递框架统一所有 GNN 方法 |
+| R04 | Fast Graph Representation Learning with PyTorch Geometric | Fey | 2019 | ICLR Workshop | arXiv:1903.02428 | 实现框架 |
+| R05 | Inductive Representation Learning on Large Graphs (GraphSAGE) | Hamilton | 2017 | NeurIPS 2017 | arXiv:1706.02216 | 归纳式 GNN 范式，支持不可见图泛化 |
+
+### 7.2 LEO 卫星网络综述（引言章必引）
+
+| # | 标题 | 第一作者 | 年份 | 来源 | 标识符 | 引用理由 |
+|---|------|---------|------|------|--------|---------|
+| R06 | Dynamic Routings in Satellite Networks: An Overview | Liu | 2022 | Wireless Comm. & Mobile Computing | DOI:10.1155/2022/5471480 | 卫星路由全面综述（快照/虚拟节点/DT-DVTR 分类） |
+| R07 | Large Satellite Constellations: Challenges and Impact | CNES/ONERA | 2024 | HAL Science Report | hal-04626677 | mega-constellation 挑战最全面的 2024 报告 |
+| R08 | Satellite Constellations and Connectivity from Space | ITU | 2024 | ITU Journal Vol.5(2) | ITU:S-JNL-VOL5.ISSUE2-2024 | 星座连接性和 5G/6G 集成的官方 ITU 视角 |
+| R09 | Internetworking with Satellite Constellations | Wood | 2001 | PhD Thesis, Univ. Surrey | — | 提出 +Grid ISL 拓扑，被 L02/L04/L05 引用 |
+
+### 7.3 GNN Size Generalization / Transferability 理论（补充 T01/T02）
+
+| # | 标题 | 第一作者 | 年份 | 来源 | 标识符 | 引用理由 |
+|---|------|---------|------|------|--------|---------|
+| R10 | Graphon Neural Networks and the Transferability of GNNs | Ruiz | 2020 | NeurIPS 2020 | arXiv:2006.03548 | 基于 Graphon 极限的 GNN 可迁移性奠基理论 |
+| R11 | Transferability of Spectral Graph Convolutional Neural Networks | Levie | 2021 | JMLR 22 | arXiv:1907.12972 | 证明谱图 CNN 在同离散化图间可迁移 |
+| R12 | From Local Structures to Size Generalization in GNNs | Yehudai | 2021 | ICML 2021 | proceedings.mlr.press/v139/yehudai21a | 分析 size generalization 失败案例，局部结构匹配改善泛化 |
+
+### 7.4 图位置编码方法（方法章 PE 设计）
+
+| # | 标题 | 第一作者 | 年份 | 来源 | 标识符 | 引用理由 |
+|---|------|---------|------|------|--------|---------|
+| R13 | Attention Is All You Need | Vaswani | 2017 | NeurIPS 2017 | arXiv:1706.03762 | sin/cos 位置编码的原始出处，我们 Orbital PE 的灵感来源 |
+| R14 | A Generalization of Transformer Networks to Graphs | Dwivedi | 2020 | AAAI 2021 Workshop | arXiv:2012.09699 | 将 Laplacian PE 引入图 Transformer |
+| R15 | Rethinking Graph Transformers with Spectral Attention (SAN) | Kreuzer | 2021 | NeurIPS 2021 | arXiv:2106.03893 | 从完整 Laplacian 谱学习 PE，谱注意力理论 |
+| R16 | Benchmarking Graph Neural Networks | Dwivedi | 2022 | JMLR 24 | jmlr.org/papers/v24/22-0567 | Laplacian 特征向量 PE 作为标准 benchmark 组件 |
+
+### 7.5 光学 ISL / 星座设计（系统模型）
+
+| # | 标题 | 第一作者 | 年份 | 来源 | 标识符 | 引用理由 |
+|---|------|---------|------|------|--------|---------|
+| R17 | Satellite Constellations | Walker | 1984 | J. British Interplanetary Society 37:559-571 | — | Walker 星座设计原始论文，定义 Walker-Delta 参数化 |
+| R18 | Free Space Optical Communication for ISL | IEEE Comm. Magazine | 2023 | IEEE Comm. Magazine | DOI:10.1109/MCOM.002.2300024 | FSO ISL 架构和趋势权威综述 |
+| R19 | Inter-Satellite Link Technologies and Applications in LEO | — | 2025 | — | DOI:10.1016/j.icl.2026.01.001 | RF 和 FSO ISL 类型综述 |
+
+### 7.6 多尺度学习 / GNN 迁移学习
+
+| # | 标题 | 第一作者 | 年份 | 来源 | 标识符 | 引用理由 |
+|---|------|---------|------|------|--------|---------|
+| R20 | Hierarchical Graph Representation Learning with Differentiable Pooling | Ying | 2018 | NeurIPS 2018 | arXiv:1806.08804 | 可微分分层池化，多尺度图表示 |
+| R21 | Strategies for Pre-training Graph Neural Networks | Hu | 2020 | ICLR 2020 | OpenReview:HJlWWJSFDH | GNN 预训练策略（节点级/图级），迁移学习范式 |
+| R22 | GPT-GNN: Generative Pre-Training of GNNs | Hu | 2020 | KDD 2020 | arXiv:2006.15437 | 自监督图生成预训练 |
+
+### 7.7 DRL 基础方法
+
+| # | 标题 | 第一作者 | 年份 | 来源 | 标识符 | 引用理由 |
+|---|------|---------|------|------|--------|---------|
+| R23 | Proximal Policy Optimization Algorithms | Schulman | 2017 | arXiv | arXiv:1707.06347 | PPO 算法，RL baseline 的训练基础 |
+| R24 | High-Dimensional Continuous Control Using GAE | Schulman | 2016 | ICLR 2016 | arXiv:1506.02438 | GAE 平衡策略梯度偏差-方差 |
+| R25 | ML for Combinatorial Optimization: a Methodological Tour d'Horizon | Bengio | 2021 | European J. Operational Research | arXiv:1811.06128 | 路由组合优化 ML 权威综述 |
+| R26 | Attention, Learn to Solve Routing Problems! | Kool | 2019 | ICLR 2019 | OpenReview:ByxBFsRqYm | Transformer 路由，注意力解决路由 CO 问题 |
+
+### 7.8 经典卫星路由方法
+
+| # | 标题 | 第一作者 | 年份 | 来源 | 标识符 | 引用理由 |
+|---|------|---------|------|------|--------|---------|
+| R27 | A Note on Two Problems in Connexion with Graphs | Dijkstra | 1959 | Numerische Mathematik 1:269-271 | DOI:10.1007/BF01386390 | 最短路径算法原始论文，我们推理阶段和 baseline |
+| R28 | A Distributed Routing Algorithm for Datagram Traffic in LEO Satellite Networks | Ekici | 2001 | IEEE/ACM ToN 9(2) | — | 经典分布式 LEO 数据报路由，基于位置路由 baseline |
+| R29 | A Dynamic Routing Concept for ATM-Based Satellite PCN | Werner | 1997 | IEEE JSAC 15(2):163-171 | — | 首个快照动态路由 (DT-DVTR) 概念 |
+| R30 | Reinforcement Learning for Combinatorial Optimization: A Survey | Mazyavkina | 2021 | Computers & Operations Research | arXiv:2003.03600 | RL 组合优化全面综述 |
+
+### 7.9 统计
+
+- **背景引用总计**: 30 篇（R01-R30）
+- **类别分布**: GNN基础(5) / LEO综述(4) / 泛化理论(3) / 图PE(4) / ISL星座(3) / 多尺度迁移(3) / DRL基础(4) / 经典路由(4)
+- **时间分布**: 1959(1) → 1997-2001(3) → 2017-2019(7) → 2020-2022(12) → 2023-2025(7)
+- **全部文献总计**: 60 篇（L01-L25 + C01-C03 + T01-T02 + R01-R30）
