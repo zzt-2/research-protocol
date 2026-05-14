@@ -21,7 +21,9 @@ research-protocol/
 │   ├── gw-validate.md    # Step 5: Baseline 候选选定
 │   ├── gw-experiment.md # Step 6-7: 仿真器设计 + Baseline 复现
 │   ├── contract.md      # Contract 执行手册
-│   └── execute.md       # Execute 执行手册
+│   ├── execute.md       # Execute 执行手册
+│   ├── thesis-materials.md # 学位论文材料准备指南
+│   └── paper-materials-workflow.md # 论文素材提取工作流（通用版）
 ├── templates.md         # 文档模板集
 ├── tools-guide.md       # 工具链指南
 └── tools-scenarios.md   # 工具使用场景速查
@@ -31,8 +33,10 @@ research-protocol/
 |------|------|--------|
 | `overview.md` | 协议身份、核心原则、文档系统、变更分级、上下文管理 | 每个新对话必读 |
 | `stages/groundwork.md` | Groundwork 7 步执行流程 | Groundwork 阶段 |
-| `stages/contract.md` | Contract 3 步执行流程 | Contract 阶段 |
-| `stages/execute.md` | Execute 6 步执行流程 | Execute 阶段 |
+| `stages/contract.md` | Contract 7 步执行流程（Step 0-6） | Contract 阶段 |
+| `stages/execute.md` | Execute 7 步执行流程（Step 0-6） | Execute 阶段 |
+| `stages/thesis-materials.md` | 学位论文材料准备：多子问题组织 + 材料包清单 + 记录钩子 | 准备学位论文时 |
+| `stages/paper-materials-workflow.md` | 论文素材提取工作流（通用版） | 提取 paper_materials 时 |
 | `domain-comms.md` | 通信领域定制内容 | 通信领域研究必读 |
 | `templates.md` | contract / decision_log / experiment_result / literature_notes 模板 | 创建/填写文档时读 |
 | `tools-guide.md` | 搜索、下载、内容处理工具链 | 使用工具时读 |
@@ -53,7 +57,7 @@ Groundwork ──→ Contract ──→ Execute
 | 阶段 | 目标 | 核心产出 | 人介入 |
 |------|------|---------|--------|
 | Groundwork | 建立可靠研究起点 | literature_notes + baseline_report + decision_log | 覆盖面缺口确认、baseline 确认、仿真器设计确认、完成审查 |
-| Contract | 冻结假设和实验方案 | contract.md | **最关键**：冻结前必须用户确认 |
+| Contract | 冻结经验证的假设和实验方案 | contract.md + data-flow.md + parameter_provenance | **最关键**：冻结前必须用户确认 |
 | Execute | 按 Contract 执行实验 | results/*.md | FAIL/MARGINAL 判定时 |
 
 ---
@@ -79,6 +83,8 @@ AI 的优势是效率，不是创新。人定义问题，AI 验证问题。[MUST
 | 信息类型 | 唯一拥有者 |
 |---------|-----------|
 | 假设 + 实验方案 | contract.md |
+| 参数溯源 | contract.md §parameter_provenance |
+| 端到端数据流 | data-flow.md |
 | 决策及理由 | decision_log.md |
 | 实验数据 + 结果 | results/*.md |
 | 文献记录 | literature_notes.md |

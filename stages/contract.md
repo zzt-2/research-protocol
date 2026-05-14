@@ -1,13 +1,13 @@
 # Contract（冻结）
 
-> 冻结研究假设和实验方案。Contract 写好后 Execute 阶段不允许修改。
+> 冻结研究假设和实验方案。Contract 冻结后 Execute 阶段不允许修改假设/signal/fairness rules（事实性参数修正见 Amendment 机制）。
 > 通信领域研究：额外阅读 `domain-comms.md` 中的指标体系和推荐技术栈。
 
 ---
 
 ## 目标
 
-冻结研究假设和实验方案，为 Execute 阶段提供不可变的执行基准。
+冻结经过验证的研究假设和实验方案，为 Execute 阶段提供不可变的执行基准。"经过验证"指参数已溯源、数据流已推演、反模式已排查。
 
 ## 输入
 
@@ -17,7 +17,7 @@ Groundwork 全部产出（literature_notes.md + baseline_report.md + feasibility
 
 ## 输出
 
-`contract.md`（核心工件）+ `decision_log.md`（追加）
+`contract.md`（核心工件）+ `data-flow.md`（端到端推演）+ `decision_log.md`（追加）
 
 ## 人介入点
 
@@ -83,7 +83,7 @@ bash tools/search "LEO satellite handover attention DQN" \
 
 ---
 
-## Step 2：冻结 Research Contract
+## Step 2：起草 Contract（draft 状态）
 
 [MUST] 按 `templates.md` 中 contract 模板填写所有字段。
 
@@ -103,6 +103,7 @@ bash tools/search "LEO satellite handover attention DQN" \
 - **ablation_plan**：每个 ablation 消融什么、预期影响方向和大小
 - **metrics**：评价指标列表（通信领域参考 `domain-comms.md` 中的指标体系）
 - **simulation_config**：信道模型 + 参数 + 评估条件 + 数据集规模 + DL 配置
+- **parameter_provenance**：每个仿真/DL 参数的出处（见 Step 3）
 
 ### Simulation Config 必填字段
 
@@ -118,11 +119,98 @@ bash tools/search "LEO satellite handover attention DQN" \
 
 粒度原则：足够让未参与研究的人复现实验，但不需要逐参数列举所有 ITU-R 输入。
 
+### 数据集设计（自建数据集时必填）
+
+如果研究需要自建数据集（非使用公开数据集），[MUST] 在 Contract 中包含"数据集设计"节（模板见 `templates.md` §contract），包含：
+- 参数空间表：每个参数的取值范围和文献溯源
+- 数据规模和划分方式
+- 标注方案（如适用）
+
+数据集设计直接支撑论文各章的实验设置节。参数溯源要求同 Simulation Config（每个参数需文献溯源/计算验证/设计选择三选一）。
+
+> 注意：此步骤产出的 Contract 状态为 draft。Step 3-5 验证通过后才冻结。
+
 ---
 
-## Step 3：选题压力测试
+## Step 3：实现性验算
 
-[MUST] 回答以下 4 问，无致命风险信号才能通过：
+> 起源：leo-mega-constellation-gnn-routing 项目中，Contract 冻结时 ISL 距离/模型/带宽三个参数错误，Execute 阶段才发现，导致仿真器重写。根源是 `[ASSUMPTION]` 标记的参数未经核实就冻进了 Contract。
+
+**目的**：在冻结前，用最低成本（检索+计算）验证 Contract 中每个参数的真实性。
+
+[MUST] 对 Simulation Config 中每一个涉及具体数值的参数，执行以下三选一：
+
+| 验证方式 | 适用场景 | 输出 |
+|---------|---------|------|
+| **文献溯源** | 参数有论文出处 | `[来源: L{序号} §{章节}]` 或 `[来源: {论文} Table/Fig {N}]` |
+| **计算验证** | 参数可从公式推导 | `[计算: {公式} 代入 {值}]` — 用子 agent 或 5 行 Python 验算 |
+| **设计选择** | 无文献也无公式，属研究者的建模决策 | `[设计选择: {理由}]` — 必须附一段合理理由 |
+
+**输出**：Contract 的 `parameter_provenance` 表更新，消除所有 `[ASSUMPTION]` 标记。模板见 `templates.md`。
+
+### 执行方式
+
+1. 列出 Simulation Config 中所有数值参数
+2. 标注每个参数的当前状态（有来源 / `[ASSUMPTION]` / 未标注）
+3. 对 `[ASSUMPTION]` 和未标注参数，派子 agent 并行核实（文献检索 + 计算）
+4. 汇总核实结果，更新 parameter_provenance 表
+5. 发现矛盾时（如文献值与 Contract 值不一致），标记为待决策项
+
+### 门控条件
+
+- [ ] 所有参数已消除 `[ASSUMPTION]`，每项有来源/计算/设计选择三选一
+- [ ] 矛盾项已列出并经用户决策
+
+> 为什么不直接冻假设再验参数：因为参数错误会导致假设本身不成立。ISL 距离算错 → 断链率算错 → 网络拓扑与假设不符 → 实验方案需要重来。先验参数再冻假设，成本更低。
+
+---
+
+## Step 4：端到端推演
+
+> 起源：leo-mega-constellation-gnn-routing 项目中，Quick Test 暴露了三个设计遗漏：①模型缺少目的地 PE（不知道往哪走）②66 星配置 34.8% ISL 断链③混合 batch 不同配置导致 PE 维度不匹配。这些问题在纸笔推演中就能发现。
+
+**目的**：不写代码，用纸笔走一遍"一个训练/推理样本从生成到评估的完整路径"，发现设计断层。
+
+[MUST] 按以下顺序推演，每步检查"输入是否已在前面产出？维度/类型/范围是否匹配？"
+
+```
+1. 星座/网络配置 → 生成节点坐标/位置 → 计算连接关系 → 链路距离/容量
+2. 流量/数据生成 → 选源/目的 → 构造需求
+3. 状态构造：每个智能体/节点看到什么特征？→ 列出每个特征的维度和来源
+4. 模型输入：网络收到什么？→ 画出 data flow（特征拼接/聚合/输出）
+5. 模型输出：决策 → 如何映射到动作空间
+6. 奖励/损失计算：用什么指标 → 如何从环境获取
+7. 评估：M1-M5 怎么算 → 需要记录什么中间量
+8. 跨规模泛化：训练配置 vs 推理配置，哪些维度变化（节点数/边数/特征维度）→ 模型如何处理
+```
+
+**输出**：`data-flow.md`（模板见 `templates.md`），记录每步的输入→处理→输出。
+
+### 常见断层检查
+
+| 断层类型 | 典型症状 | 本次起源 |
+|---------|---------|---------|
+| 特征缺失 | 模型缺少做决策所需的关键输入 | 缺少目的地 PE |
+| 维度不匹配 | 消融实验移除某特征后维度坍缩 | E03/E05 消融维度问题 |
+| 配置矛盾 | 某参数值在特定配置下产生矛盾 | 5000km 断链 vs 5500km 轨间距离 |
+| 跨规模断裂 | 训练和推理的输入维度不一致 | 混合 batch PE 维度问题 |
+
+### 执行方式
+
+1. 主对话在纸面推演，必要时派子 agent 验算特定步骤（如"66 星配置轨间距离均值是多少"）
+2. 发现断层时，立即修正 Contract draft 对应字段
+3. 推演完成后产出 `data-flow.md`
+
+### 门控条件
+
+- [ ] 8 步推演全部完成，每步有明确的输入→输出记录
+- [ ] 所有断层已修正或标记为已知限制
+
+---
+
+## Step 5：压力测试 + 反模式审查
+
+[MUST] 回答以下 5 问（前 4 问为选题压力测试，第 5 问为反模式审查），无致命风险信号才能通过：
 
 1. **结构性优势**：核心方法 vs 最简 baseline 的结构性优势在哪？
    - 如果只是"用 DL 替代传统方法"而没有解释为什么 DL 适合这个问题 → 高风险
@@ -137,21 +225,65 @@ bash tools/search "LEO satellite handover attention DQN" \
    - 交叉验证数据：被几篇论文使用、是否有代码
    - 如果 baseline 是某篇论文自创的对比方法而非领域通用方法 → 需要额外论证
 
+5. **反模式排查**（详细案例见 `domain-comms.md` §5）：
+
+   | # | 反模式 | 检查内容 | 状态 |
+   |---|--------|---------|------|
+   | 1 | 信息泄露 | 处理组和对照组状态维度相同？消融实验维度一致（用零向量而非删除）？ | ☐ |
+   | 2 | 仿真过于简化 | 仿真器是否包含目标方法所擅长处理的信号特征？流量强度是否足以产生差异化？ | ☐ |
+   | 3 | 确定性信道 + DL 强行优越 | GNN 优势来源是否明确（负载均衡/全局协调 vs 预测量）？低流量下是否有退化预案？ | ☐ |
+   | 4 | 跨实验数据不一致 | 所有实验是否共用同一组拓扑快照和流量矩阵？ | ☐ |
+
+   [MUST] 反模式排查应在 Step 4 端到端推演的 `data-flow.md` 基础上进行，而非凭空想象。
+
+> 为什么反模式审查从 Execute 前移到 Contract：反模式本质是实验设计缺陷，应该在设计阶段（Contract）发现并修复，而非等代码写完再回头。Execute 阶段只需做实现级验证（代码是否忠实实现了设计）。
+
 > 为什么加第 4 问：首次试跑中 baseline 选择完全缺乏交叉验证，选出的是单篇论文的特有对比方法而非领域共识。这个教训说明 baseline 的学术合法性也需要显式检查。
+
+---
+
+## Step 6：冻结
+
+[MUST] 以上 Step 0-5 全部通过后，Contract 状态从 draft → frozen。
+
+冻结操作：
+1. 更新 contract.md 头部 `status: frozen`
+2. 用户确认（最关键的人介入点）
+3. 写 handoff 记录 Contract 冻结，列出 Execute 阶段入口
 
 ---
 
 ## Contract 的效力
 
-- 实验开始后 Contract 不可修改
-- 确需修正 → 创建 `contract_v2.md`，写清改了什么、为什么，旧版本保留
-- [MUST NOT] 事后调整 success_signal 配合结果
+### 冻结后的不可变与可变
 
-**例外**：仿真环境缺陷导致结论不可靠 → 允许修复后重跑，但 [MUST] 记录变更提案并经用户确认
+**不可变**（修改需创建 `contract_v2.md` + 用户确认）：
+- hypothesis、success_signal、failure_signal
+- fairness_rules、ablation_plan
+- experiment_list 的核心/对比/消融结构
 
-> 为什么这么严格：社区经验——"如果你不在实验之前把这些确定，模型一定会在结果出来以后帮你合理化。做科研最忌讳的就是先看到结果再编故事"。Contract 是防"事后编故事"的第一道防线。
+**可修正**（通过 Contract Amendment 机制，无需新建版本）：
+- Simulation Config 中的参数值（如发现物理参数计算错误）
+- 修正流程：记录到 decision_log + contract.md 中加 amendment 注解 + 用户确认
 
-### 变更提案格式
+[MUST NOT] 事后调整 success_signal 配合结果。
+
+### Contract Amendment 格式
+
+在 contract.md 对应字段旁加行内注解：
+
+```
+## Simulation Config
+ISL bandwidth: B = 1 GHz  <!-- AMENDMENT: 原 500 MHz 无出处，修正为 L03 DuJo 值。D015 -->
+```
+
+同时在 decision_log 记录：
+
+```
+[D{序号}][AMENDMENT] {参数名}: {旧值} → {新值} | 理由: {核实发现} | 来源: {L{序号}/计算} | 用户确认: {留空}
+```
+
+### 变更提案格式（不可变字段的修改）
 
 内嵌在 decision_log 中，不独立成文件：
 
@@ -159,12 +291,18 @@ bash tools/search "LEO satellite handover attention DQN" \
 [D{序号}][CHANGE-PROPOSAL] {变什么} | 理由: {为什么} | 影响: {哪些结果会作废} | 用户决定: {留空}
 ```
 
+**例外**：仿真环境缺陷导致结论不可靠 → 允许修复后重跑，但 [MUST] 记录变更提案并经用户确认
+
+> 为什么这么严格：社区经验——"如果你不在实验之前把这些确定，模型一定会在结果出来以后帮你合理化。做科研最忌讳的就是先看到结果再编故事"。Contract 是防"事后编故事"的第一道防线。
+
 ---
 
 ## 完成条件
 
 - [ ] contract.md 已创建且所有字段已填写
-- [ ] 压力测试 4 问已回答，无致命风险信号
-- [ ] decision_log 包含假设形成的关键决策
-- [ ] **用户已确认 Contract**
+- [ ] parameter_provenance 表已填写，所有 `[ASSUMPTION]` 已消除
+- [ ] data-flow.md 端到端推演已完成，断层已修正
+- [ ] 压力测试 5 问已回答（含反模式排查），无致命风险信号
+- [ ] decision_log 包含假设形成的关键决策 + 参数核实记录
+- [ ] **用户已确认 Contract 冻结**
 - [ ] **路径合规**：competitor_notes 在 `projects/{name}/competitor_notes/`，检索结果在 `search-archive/{date}/` 或 `projects/{name}/search-archive/`

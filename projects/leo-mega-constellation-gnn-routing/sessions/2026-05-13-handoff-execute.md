@@ -1,14 +1,14 @@
 # Handoff 2026-05-13 (Execute Step 1-2 进行中)
 
 ## 当前进度
-- **阶段：Execute Step 2（核心实验）**
-- 状态：仿真器核心完成，quick test 进行中
+- **阶段：Execute Step 2（核心实验 — quick test 完成，待 RL 训练）**
+- 状态：仿真器 + 监督 quick test 完成，准备实现 RL
 - 本轮完成：
-  - Step 1 实验设计审查通过（E03/E05 维度问题用零向量修复）
-  - 参数核实：3 个子 agent 并行验证，修正 3 个参数错误
-  - 仿真器核心模块全部完成（6 文件）
-  - Smoke test 通过：星座物理模型正确，Dijkstra 在所有配置工作
-  - Quick test v1：destination PE 修复 + 方向 mask 修复，训练精度 89%，目标 53%
+  - Step 1 实验设计审查通过
+  - 参数核实（3 子 agent 并行）+ 3 个参数修正（D015-D017）
+  - 仿真器 9 个模块完成（constellation/topology/channel/traffic/routing/snapshot/models/smoke_test/quick_test）
+  - Smoke test 通过
+  - Quick test 监督训练验证：**3 层 GAT h=128 PE=16 → 保留率 70.2%**
 
 ## 关键上下文
 
@@ -53,11 +53,12 @@ v2（2 层, h=64, 80 epochs）结果：
 - 路径追踪需要每跳都正确，单跳精度需要 95%+ 才有合理成功率
 
 ## 下一步
-1. 检查 v2 quick test 结果（3 层, h=128, 200 epochs）
-2. 如果保留率仍 <80%，考虑：增加 PE 维度 / 更多训练数据 / RL 训练
-3. 达到 quick test 目标后，实现完整 RL 环境（env.py + train.py with PPO）
-4. 实现 GRLR baseline 复现
-5. 跑完整实验 E01-E09
+1. **实现 RL 环境**（`env.py`）：封装仿真器为 PPO 兼容接口，状态/动作/奖励
+2. **实现 PPO 训练**（`train.py`）：多尺度混合训练 + Actor-Critic
+3. **Quick RL test**：小规模验证 RL 训练能跑通，对比监督 baseline
+4. 如果 RL 保留率仍 <80%，尝试：4 层 GAT / h=256 / 更多训练数据
+5. 实现 GRLR baseline 复现（需先读论文全文提取架构细节）
+6. 跑完整实验 E01-E09
 
 ## 文件索引
 - 仿真器：`projects/leo-mega-constellation-gnn-routing/simulator/`（9 个 .py 文件）

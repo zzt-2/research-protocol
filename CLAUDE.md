@@ -99,9 +99,11 @@
 - **Baseline 学术合法性和复现定义**：`groundwork.md` Step 4-7
 - **方向可行性预判**：`gw-feasibility.md`（分两段：4a 方向根基+MVE 验证 + 4b 仿真条件+资源风险验证）
 - **文献检索、验证和 URL 校验**：`contract.md` Step 0 + `domain-comms.md` §1
+- **参数溯源审计**：`contract.md` Step 3（冻结前所有 `[ASSUMPTION]` 必须消除，每项需文献溯源/计算验证/设计选择三选一）
 - **子对话调度和上下文预算**：`contract.md` Step 0.2-0.4 + `overview.md` "上下文管理策略"
 - **仿真器验证标准**：`groundwork.md` Step 7 Part A
-- **参数来源验证**：所有仿真参数、网络模型参数、信道模型参数必须有论文出处（标注论文 ID + 表格/公式编号）。无法溯源的标注 `[ASSUMPTION]` 并在 `feasibility_report.md` 中标记为待验证项。禁止编造数值。
+- **Contract Amendment 机制**：Execute 阶段发现参数错误时可修正参数值（不可修正假设/signal），见 `stages/contract.md` "Contract 的效力"
+- **反模式审查位置**：在 Contract Step 5 执行（不在 Execute Step 1），见 `stages/contract.md` Step 5
 
 ## 上下文管理规则（跨步骤强制）
 
@@ -160,6 +162,7 @@
 ## 当前进度
 - 阶段：{GW/Contract/Execute} Step {N}
 - 状态：{进行中/阻塞/完成}
+- Contract 状态：{draft/frozen/amended}
 - 本轮完成：{具体做了什么，引用文件路径}
 
 ## 关键上下文
@@ -186,7 +189,8 @@
 3. `decision_log.md`（阶段摘要行）
 4. `feasibility_report.md`（如已到 Step 4）
 5. `baseline_report.md`（如已到 Step 7）
-6. 对应阶段框架文件
+6. `data-flow.md`（如已到 Contract Step 4）
+7. 对应阶段框架文件
 
 ## 工具调用
 
