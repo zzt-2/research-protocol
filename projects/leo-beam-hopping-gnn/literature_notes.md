@@ -1,7 +1,7 @@
 # Literature Notes — Beam Hopping + GNN
 
 > 项目: leo-beam-hopping-gnn | 方向: 多波束LEO卫星Beam Hopping + GNN建模波束间空间干扰耦合
-> 更新: 2026-05-15 | 精读: 8篇
+> 更新: 2026-05-15 | 精读: 8篇 | Step 3.5 定向补充检索: 完成（4组检索+引用链分析，53条新增候选）
 
 ---
 
@@ -282,3 +282,71 @@
 - 用GNN替代扁平MLP(QPLEX/PPO)编码波束间空间关系
 - 图构建借鉴L01(节点=波束/边=干扰)或L02(超边=同频干扰组)或L04(精确干扰足迹)
 - 分层框架参考L03(上层关联+下层调度)
+
+---
+
+## Step 3.5 定向补充检索（2026-05-15）
+
+> 基于精读发现的定向深搜。3组关键词检索 + 引用链分析。
+
+### 检索矩阵
+
+| 组合 | 关键词 | 结果 |
+|------|--------|------|
+| GNN × scheduling × wireless | graph neural network scheduling resource allocation wireless | 20条 |
+| HeteroGNN × beam × satellite | heterogeneous graph neural network beam scheduling satellite | 20条 |
+| GNN × interference × scalable | graph neural network interference management scalable beamforming | 20条 |
+| Follow-up | hybrid graph RL beam hopping satellite | IEEE 1条 |
+| 引用链 | Gong TWC 2026 + Zhang TWC 2025 双向 | 61条→8条筛选 |
+
+去重后新增 53 条候选，筛选出 12 篇精读候选 + 16 篇浅读候选。
+
+### 核心结论（不变）
+
+**GNN for Beam Hopping = 零篇论文确认**（四组检索 + 引用链全覆盖后仍为零）。蓝海定位进一步强化。
+
+### 新增高优先候选
+
+**最接近竞争者（需精读）：**
+
+| # | 标题 | DOI | 年份 | 关键理由 |
+|---|------|-----|------|---------|
+| P1 | Hybrid Graph-RL for Beam Management in 6G Satellite Networks | arnumber 11421640 | 2026 | **Graph-DDPG 联合优化 BH 波束管理+功率分配，最接近方向** |
+| P2 | GNN-based secrecy rate optimization in multi-satellite collaborative systems | arnumber 11417820 | 2026 | 异构图+同构图两阶段做多星波束赋形+功率 |
+| P3 | Interference-Suppressed Joint Channel/Power: Dynamic Hypergraph NN | DOI 10.1109/TWC.2025.3586230 | 2025 | 动态超图GNN卫星下行干扰抑制（已在L02精读） |
+| P8 | Joint Resource Management and Load Balancing in Multi-Satellite BH with Interference Suppression | DOI 10.1109/TWC.2025.3635684 | 2026 | TWC顶刊，多星BH联合资源管理+干扰抑制 |
+| P9 | Graph-Aware Temporal Encoder for Service Migration and RA in Satellite Networks | DOI 10.1109/TWC.2025.3636875 | 2025 | ✅已下载(arxiv 2511.16011)。图方法+卫星RA |
+
+**方法可迁移（浅读）：**
+
+| # | 标题 | 关键理由 |
+|---|------|---------|
+| S3 | ENGNN: Edge-Update GNN for Radio Resource Management (TWC 2023, 37引) | GNN架构设计参考 |
+| S5 | GNN for Scalable Radio Resource Management (2020, 461引) | GNN无线RA奠基工作 |
+| S9 | ICGNN: Scalable Beamforming for MISO Interference (2025, 12引) | 两阶段GNN(方向+功率分离) |
+| S16 | Framework for Joint Beam Scheduling and RA in BH-Based Satellite (Electronics 2025) | BH四维联合优化框架 |
+
+### 更新后的综合分析
+
+**1. 现有方法分类（更新）**
+
+A. DRL-based BH调度（核心竞品）
+- QPLEX分层MADRL [L03] / MA3C+MADDPG [L05] / PPO混合动作 [L08]
+- **新增**: TWC 2026多星BH联合资源管理+干扰抑制 [P8]
+
+B. 图论/优化方法（传统基线）
+- 动态图着色 [L04] / 势博弈+内点法 [L07]
+
+C. GNN方法（方法借鉴，非BH）
+- GNN+元学习功率分配 [L01] / 动态超图NN [L02] / 3D-GNN调度 [L06]
+- **新增**: Graph-Aware时间编码器+卫星RA [P9] / 异构图多维资源耦合 [P4]
+
+D. **图+RL混合（新兴，最需关注）**
+- **新增**: Hybrid Graph-RL BH波束管理 [P1] — **最接近方向**，Graph-DDPG框架
+- **新增**: Graph-Aware时间编码器 [P9] — 图感知+卫星资源管理
+
+**3. 趋势（更新）**
+
+- 2025-2026: GNN在卫星通信中快速渗透（功率分配→信道分配→用户调度→**波束管理**），但BH pattern设计仍是GNN盲区
+- 新兴趋势：Graph+RL混合框架出现（P1），但尚未用于BH调度
+- BH方向论文密度高（2025-2026新增≥10篇），但全部基于DRL/传统优化
