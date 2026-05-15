@@ -28,11 +28,15 @@ from simulator import config
 
 class GridFixedBaseline:
     def __init__(self, n_planes=None, sats_per_plane=None, altitude=None,
-                 inclination_deg=None, tau=None, episode_steps=None, seed=42):
+                 inclination_deg=None, tau=None, episode_steps=None, seed=42,
+                 multipath=False, k_paths=4, n_lct=None):
         self.seed = seed
         self.rng = np.random.default_rng(seed)
         self.tau = tau or config.TAU
         self.episode_steps = episode_steps or config.EPISODE_STEPS
+        self.multipath = multipath
+        self.k_paths = k_paths
+        self.n_lct = n_lct
 
         self.orbit = OrbitPropagator(n_planes, sats_per_plane, altitude, inclination_deg)
         self.channel = ChannelModel()
@@ -46,6 +50,8 @@ class GridFixedBaseline:
         self.spp = self.orbit.sats_per_plane
 
         self._fixed_edges = self._build_grid_topology()
+        if self.n_lct is not None:
+            self._fixed_edges = self._prune_to_lct(self._fixed_edges)
 
     def _sat_id(self, plane, pos):
         return plane * self.spp + pos
@@ -81,6 +87,25 @@ class GridFixedBaseline:
                         edges[key] = 'inter'
 
         return edges
+
+    def _prune_to_lct(self, edges):
+        """Prune edges so each satellite has at most n_lct connections (keep shortest)."""
+        # Build per-satellite edge list with distances
+        positions = self.orbit.propagate(0)
+        sat_edges = defaultdict(list)
+        for (i, j), etype in edges.items():
+            d = np.linalg.norm(positions[i] - positions[j])
+            sat_edges[i].append((d, (i, j), etype))
+            sat_edges[j].append((d, (i, j), etype))
+
+        # Determine which edges to keep
+        keep = set()
+        for sat, elist in sat_edges.items():
+            elist.sort()
+            for _, key, etype in elist[:self.n_lct]:
+                keep.add(key)
+
+        return {k: v for k, v in edges.items() if k in keep}
 
     def _get_available_edges(self, positions):
         """Return available fixed edges with distances (vectorized)."""
@@ -138,7 +163,12 @@ class GridFixedBaseline:
             flows = self.traffic.generate(lat, lon, alt)
 
             active_keys = list(cap_map.keys())
-            routing = self.router.route(active_keys, dist_map, cap_map, flows, self.n_sats)
+            if self.multipath:
+                routing = self.router.route_multipath(
+                    active_keys, dist_map, cap_map, flows, self.n_sats,
+                    k_paths=self.k_paths)
+            else:
+                routing = self.router.route(active_keys, dist_map, cap_map, flows, self.n_sats)
 
             reward_dict = self.reward_calc.compute(routing, 0, 0, [], len(active_keys))
             reward_dict['_n_changed'] = 0
