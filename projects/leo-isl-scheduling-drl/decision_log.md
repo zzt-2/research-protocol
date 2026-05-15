@@ -22,3 +22,5 @@
 [D014] Contract Step 5 压力测试全部通过, 无致命风险 | 理由: Q1结构性优势明确(GNN拓扑感知+DRL时序学习), Q2边际结果可支撑消融研究, Q3信号独立(性能/架构/工程三维度), Q4 baseline为领域共识, 反模式4项全部Pass | 阶段: CT
 [D015][AUTO] config.py N_LCT=2→3 已更新 (D012甜点) | 阶段: EX
 [D016][AUTO] model_gat.py 验证通过: scores(E,)∈[0.44,0.48], value标量, params=67,971; get_action/evaluate_actions/obs_to_data/buffer_GAE/normalizer 全部通过 | 阶段: EX
+[D017] Quick Test 24×20 结果: (1) 无active_bias → M1=0.003, M3=16.7(随机水平); (2) 加active_bias=3+std=0.018 → M1=0.078(75% of B1), M3=0.10(稳定拓扑); (3) PPO更新过激进导致策略退化(100ep M1降至0.057); (4) GATv2Conv edge_dim=64→66.7ms/层,去掉edge_dim→4.4ms/层,改用decoder端注入边特征; (5) 批处理evaluate_actions: 4.3ms/obs(vs逐条320ms) | 瓶颈分析: env.step 0.18s/步(轨道+路由), model forward 0.073s/步 | 阶段: EX
+[D018] 训练策略调整: PPO直接从随机初始化学习失败(冷启动问题), 需要先行为克隆B1再PPO微调 | 理由: active_bias解决了ISL稳定性但初始拓扑质量差; PPO在无好起点时梯度信号不足以学到有效策略; v2只训15ep的eval比v4训100ep更好说明过更新有害 | 阶段: EX
