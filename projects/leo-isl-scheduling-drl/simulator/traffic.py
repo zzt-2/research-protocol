@@ -93,6 +93,8 @@ class TrafficGenerator:
     def find_visible_sats(self, sat_lat, sat_lon, sat_alt):
         """Find visible satellites for each GS (elevation > min_elev).
 
+        Vectorized: O(n_gs × n_sats) via numpy broadcasting.
+
         Args:
             sat_lat, sat_lon: (n_sats,) in radians.
             sat_alt: (n_sats,) altitude in km.
@@ -100,26 +102,18 @@ class TrafficGenerator:
         Returns:
             gs_to_sat: (n_gs,) int array, index of best visible satellite (-1 if none).
         """
-        n_sats = len(sat_lat)
-        gs_to_sat = np.full(self.n_gs, -1, dtype=int)
-        best_elev = np.full(self.n_gs, -np.inf)
-
         sat_ecef = self._lla_to_ecef(sat_lat, sat_lon) * ((config.RE + sat_alt) / config.RE)[:, None]
 
-        for g in range(self.n_gs):
-            gs = self.gs_ecef[g]
-            for s in range(n_sats):
-                sat = sat_ecef[s]
-                d = sat - gs
-                dist = np.linalg.norm(d)
-                gs_norm = np.linalg.norm(gs)
-                sin_elev = (np.dot(gs, d)) / (gs_norm * dist)
-                # sin_elev > 0 means satellite is above horizon
-                elev = np.arcsin(np.clip(sin_elev, -1, 1))
-                if elev > best_elev[g]:
-                    best_elev[g] = elev
-                    gs_to_sat[g] = s
+        # Broadcasting: (n_gs, 1, 3) - (1, n_sats, 3) → (n_gs, n_sats, 3)
+        d = sat_ecef[None, :, :] - self.gs_ecef[:, None, :]
+        dist = np.linalg.norm(d, axis=2)
+        gs_norm = np.linalg.norm(self.gs_ecef, axis=1)
 
+        sin_elev = np.sum(self.gs_ecef[:, None, :] * d, axis=2) / (gs_norm[:, None] * dist)
+        elev = np.arcsin(np.clip(sin_elev, -1, 1))
+
+        gs_to_sat = np.argmax(elev, axis=1)
+        best_elev = elev[np.arange(self.n_gs), gs_to_sat]
         gs_to_sat[best_elev < self.min_elev] = -1
         return gs_to_sat
 

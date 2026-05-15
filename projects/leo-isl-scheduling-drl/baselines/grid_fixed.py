@@ -83,20 +83,36 @@ class GridFixedBaseline:
         return edges
 
     def _get_available_edges(self, positions):
-        """Return available fixed edges with distances: {(i,j): (distance, type)}."""
+        """Return available fixed edges with distances (vectorized)."""
+        edges = list(self._fixed_edges.keys())
+        types = list(self._fixed_edges.values())
+        n_edges = len(edges)
+        if n_edges == 0:
+            return {}
+
+        ei = np.array([e[0] for e in edges])
+        ej = np.array([e[1] for e in edges])
+        seg = positions[ej] - positions[ei]  # (n_edges, 3)
+        d = np.linalg.norm(seg, axis=1)
+
+        # Distance filter
+        mask = (d < config.Z_MAX) & (d > 1.0)
+        if not np.any(mask):
+            return {}
+
+        # LoS check (vectorized)
+        pi = positions[ei[mask]]
+        s = seg[mask]
+        ds = d[mask] ** 2
+        t = np.clip(-np.sum(pi * s, axis=1) / ds, 0.0, 1.0)
+        closest = pi + t[:, np.newaxis] * s
+        los = np.sum(closest ** 2, axis=1) > config.RE ** 2
+
+        # Build result
+        idx = np.where(mask)[0][los]
         available = {}
-        for (i, j), etype in self._fixed_edges.items():
-            diff = positions[j] - positions[i]
-            d = np.linalg.norm(diff)
-            if d > config.Z_MAX or d < 1.0:
-                continue
-            # LoS check
-            diff_sq = np.dot(diff, diff)
-            t = max(0.0, min(1.0, -np.dot(positions[i], diff) / diff_sq))
-            closest = positions[i] + t * diff
-            if np.dot(closest, closest) <= config.RE ** 2:
-                continue
-            available[(i, j)] = (d, etype)
+        for k in idx:
+            available[(int(ei[k]), int(ej[k]))] = (float(d[k]), types[k])
         return available
 
     def run_episode(self, verbose=False):
