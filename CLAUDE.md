@@ -106,7 +106,7 @@
 - **反模式审查位置**：在 Contract Step 5 执行（不在 Execute Step 1），见 `stages/contract.md` Step 5
 - **预印本→正式发表验证**：精读预印本时 [SHOULD] 用 S2 API 检查是否已有正式发表版本；素材提取时逐篇验证并更新引用目标，见 `gw-read.md` + `paper-materials-workflow.md` Step 5
 - **学位论文引用质量**：引用需覆盖中英文，预印本率有上限，见 `thesis-materials.md` §引用质量要求
-- **检索操作必须用项目工具**：文献检索/补充/验证使用 `tools/search`、`tools/blit`，不使用通用 web search。中文论文搜索用 `--source cnki`（校园网 cookie 认证，支持 `--download` 自动下载 PDF）。见 `tools-guide.md` + `paper-materials-workflow.md` 各步骤
+- **检索操作必须用项目工具**：文献检索/补充/验证使用 `tools/search`、`tools/blit`，不使用通用 web search。IEEE 下载用 `--source ieee --download DIR`（校园网 IP 自动机构认证），中文论文搜索用 `--source cnki`（校园网 cookie 认证，支持 `--download` 自动下载 PDF）。见 `tools-guide.md` + `paper-materials-workflow.md` 各步骤
 
 ## 上下文管理规则（跨步骤强制）
 

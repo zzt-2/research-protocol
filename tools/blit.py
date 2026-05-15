@@ -4,14 +4,15 @@
 独立于 API 搜索管线，用 Playwright 渲染 SPA 页面提取元数据。
 限速策略内置，适合低频使用。
 
-CNKI 源使用校园网 IP + cookie 认证。cookie 过期时自动弹窗让用户验证。
+IEEE/CNKI 支持 --download 自动下载 PDF（校园网 IP 机构认证）。
+CNKI 源额外需要 cookie 认证，过期时自动弹窗让用户验证。
 
 用法:
   python blit.py "LEO satellite handover" --source ieee
+  python blit.py "beam hopping DRL" --source ieee --download papers/downloads/
   python blit.py "低轨卫星 切换" --source wanfang
   python blit.py "混合式教学 实证" --source cnki
-  python blit.py "混合式教学 实证" --source cnki --download papers/downloads/2026-05-15/
-  python blit.py --extract https://xxx.cbpt.cnki.net/.../paper/xxx
+  python blit.py "混合式教学 实证" --source cnki --download papers/downloads/
 """
 
 import argparse
@@ -145,6 +146,70 @@ async def ieee_search(query: str, max_results: int = 25) -> list[dict]:
         })
     print(f"  获取 {len(results)} 条")
     return results
+
+
+# ──────────── IEEE 下载 ────────────
+
+async def _ieee_download_paper(ctx, arnumber: str, save_dir: Path) -> Path | None:
+    """下载单篇 IEEE 论文 PDF。需要校园网 IP 机构认证。"""
+    pdf_url = f"https://ieeexplore.ieee.org/stampPDF/getPDF.jsp?tp=&arnumber={arnumber}"
+    try:
+        resp = await ctx.request.get(pdf_url)
+        if resp.status != 200:
+            print(f"    ❌ {arnumber}: HTTP {resp.status}", file=sys.stderr)
+            return None
+        body = await resp.body()
+        if not body or len(body) < 1024 or body[:4] != b'%PDF':
+            print(f"    ❌ {arnumber}: 响应非有效 PDF ({len(body)} bytes)", file=sys.stderr)
+            return None
+        save_path = save_dir / f"{arnumber}.pdf"
+        save_path.write_bytes(body)
+        print(f"    ✅ {arnumber}.pdf ({len(body):,} bytes)")
+        return save_path
+    except Exception as e:
+        print(f"    ❌ {arnumber}: {e}", file=sys.stderr)
+        return None
+
+
+async def ieee_download(results: list[dict], save_dir: str) -> list[Path]:
+    """批量下载 IEEE 搜索结果的 PDF。"""
+    save_path = Path(save_dir)
+    save_path.mkdir(parents=True, exist_ok=True)
+
+    page = await get_page()
+    ctx = page.context
+
+    # 建立会话（访问任意 IEEE 页面激活机构认证）
+    print("[IEEE] 建立会话...")
+    await page.goto("https://ieeexplore.ieee.org/", wait_until="domcontentloaded", timeout=30000)
+    await asyncio.sleep(2)
+    try:
+        await page.click('button:has-text("Accept")', timeout=3000)
+    except Exception:
+        pass
+
+    downloaded = []
+    for i, r in enumerate(results, 1):
+        url = r.get("url", "")
+        # 提取 arnumber
+        m = re.search(r'/document/(\d+)', url)
+        if not m:
+            print(f"    ⏭️ [{i}] 无 arnumber: {r.get('title', '')[:50]}", file=sys.stderr)
+            continue
+        arnumber = m.group(1)
+        target = save_path / f"{arnumber}.pdf"
+        if target.exists():
+            print(f"    ⏭️ [{i}] 已存在: {arnumber}.pdf")
+            downloaded.append(target)
+            continue
+        print(f"  [{i}/{len(results)}] {r.get('title', '')[:60]}")
+        result = await _ieee_download_paper(ctx, arnumber, save_path)
+        if result:
+            downloaded.append(result)
+        await asyncio.sleep(1)  # 礼貌延迟
+
+    print(f"\n[IEEE] 下载完成: {len(downloaded)}/{len(results)} 篇")
+    return downloaded
 
 
 # ──────────── 万方 ────────────
@@ -623,7 +688,7 @@ async def async_main():
     parser.add_argument("--max", type=int, default=20, help="最大结果数 (默认 20)")
     parser.add_argument("--format", "-f", default="markdown", choices=["json", "markdown"], help="输出格式")
     parser.add_argument("--output", "-o", default=None, help="输出文件路径")
-    parser.add_argument("--download", "-d", default=None, metavar="DIR", help="CNKI: 下载 PDF 到指定目录")
+    parser.add_argument("--download", "-d", default=None, metavar="DIR", help="下载 PDF 到指定目录 (ieee/cnki)")
 
     args = parser.parse_args()
 
@@ -639,6 +704,8 @@ async def async_main():
             parser.error("需要 query 参数（或使用 --extract）")
         elif args.source == "ieee":
             results = await ieee_search(args.query, args.max)
+            if results and args.download:
+                await ieee_download(results, args.download)
         elif args.source == "wanfang":
             results = await wanfang_search(args.query, args.max)
         elif args.source == "cbpt":
