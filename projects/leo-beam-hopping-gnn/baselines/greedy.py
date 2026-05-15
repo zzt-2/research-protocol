@@ -1,11 +1,15 @@
-"""Greedy baselines: Random, DemandGreedy, OptGreedy (C(N,K) enumeration)."""
+"""Greedy baselines: Random, DemandGreedy, OptGreedy, ApproxGreedy."""
 import sys
 sys.path.insert(0, "projects/leo-beam-hopping-gnn")
 
 import numpy as np
 from itertools import combinations
+from math import comb
 from simulator.channel import compute_sinr
 from simulator.env import BHEnv
+from simulator.config import SimConfig
+
+MAX_COMBINATIONS = 1_000_000  # skip OptGreedy above this
 
 
 def random_policy(env, obs):
@@ -18,10 +22,16 @@ def demand_greedy_policy(env, obs):
 
 
 def opt_greedy_policy(env, obs):
-    """Enumerate C(N,K), pick best immediate served throughput (per-slot optimal)."""
+    """Enumerate C(N,K), pick best immediate served throughput (per-slot optimal).
+
+    Skipped when C(N,K) > MAX_COMBINATIONS (e.g. N>37).
+    """
+    n, k = env.N, env.K
+    if comb(n, k) > MAX_COMBINATIONS:
+        return approx_greedy_policy(env, obs)
     total_demand = env.demands + env.queues
     best_served, best_active = -1.0, None
-    for combo in combinations(range(env.N), env.K):
+    for combo in combinations(range(n), k):
         active = np.array(combo)
         sinr = compute_sinr(env.gain_matrix, active, env.config, env.fading)
         cap = env.config.bandwidth_hz * np.log2(1.0 + sinr) / 1e6
@@ -30,6 +40,36 @@ def opt_greedy_policy(env, obs):
             best_served, best_active = served, combo
     scores = np.full(env.N, -1e9)
     for i in best_active:
+        scores[i] = 1.0
+    return scores
+
+
+def approx_greedy_policy(env, obs):
+    """Greedy beam-by-beam selection maximizing marginal throughput.
+
+    Scalable alternative to OptGreedy for large N. Each step picks the beam
+    that maximizes total served throughput given already-selected beams.
+    """
+    total_demand = env.demands + env.queues
+    selected = []
+    remaining = set(range(env.N))
+
+    for _ in range(env.K):
+        best_beam, best_served = -1, -1.0
+        for b in remaining:
+            trial = selected + [b]
+            active = np.array(trial)
+            sinr = compute_sinr(env.gain_matrix, active, env.config, env.fading)
+            cap = env.config.bandwidth_hz * np.log2(1.0 + sinr) / 1e6
+            served = np.minimum(cap, total_demand[active]).sum()
+            if served > best_served:
+                best_served = served
+                best_beam = b
+        selected.append(best_beam)
+        remaining.discard(best_beam)
+
+    scores = np.full(env.N, -1e9)
+    for i in selected:
         scores[i] = 1.0
     return scores
 
@@ -50,8 +90,8 @@ def run_episode(env, policy_fn, seed=42):
     return {'total': total_reward, **components}
 
 
-def run_baseline(policy_fn, n_episodes=30, seed_start=0):
-    env = BHEnv()
+def run_baseline(policy_fn, n_episodes=30, seed_start=0, config=None):
+    env = BHEnv(config=config)
     results = []
     for ep in range(n_episodes):
         r = run_episode(env, policy_fn, seed=seed_start + ep * 100)
@@ -70,10 +110,17 @@ def summarize(results, name=""):
 
 
 if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--scale', default='small', choices=['small', 'medium', 'large'])
+    args = parser.parse_args()
+
+    cfg = SimConfig.preset(args.scale)
     N_EP = 30
-    print("=== Greedy Baselines ===")
+    print(f"=== Greedy Baselines (N={cfg.n_beams}, K={cfg.k_active}) ===")
     for name, fn in [("Random", random_policy),
                      ("DemandGreedy", demand_greedy_policy),
+                     ("ApproxGreedy", approx_greedy_policy),
                      ("OptGreedy", opt_greedy_policy)]:
-        results = run_baseline(fn, n_episodes=N_EP)
+        results = run_baseline(fn, n_episodes=N_EP, config=cfg)
         summarize(results, name)

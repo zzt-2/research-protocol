@@ -75,3 +75,18 @@ class SimConfig:
     @staticmethod
     def _count_hex_nodes(n_rings: int) -> int:
         return 3 * n_rings * (n_rings + 1) + 1
+
+    @classmethod
+    def preset(cls, scale: str = 'small') -> 'SimConfig':
+        """Create config for different problem scales.
+
+        K/N ratio kept ~26% for fair cross-scale comparison.
+        """
+        presets = {
+            'small':  {'n_rings': 2, 'k_active': 5},    # N=19,  K=5
+            'medium': {'n_rings': 3, 'k_active': 10},    # N=37,  K=10
+            'large':  {'n_rings': 4, 'k_active': 16},    # N=61,  K=16
+        }
+        if scale not in presets:
+            raise ValueError(f"Unknown scale '{scale}', choose from {list(presets)}")
+        return cls(**presets[scale])

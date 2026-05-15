@@ -1,9 +1,10 @@
 # Decision Log
 
 ## 阶段摘要
-- [Groundwork] Step 3.5完成, Step 4a Conditional Go, Step 5 Baseline选定, Step 4b Go, Step 6 仿真器设计确认
-- [Contract] 待进入
-- [Execute] 待进入
+- [Groundwork] Step 3.5完成, Step 4a Conditional Go, Step 5 Baseline选定, Step 4b Go, Step 6 仿真器设计确认, Step 7 完成
+- [结论] **归档** — 6种学习方法全部失败，问题不适合GNN学习
+- [Contract] 未进入
+- [Execute] 未进入
 
 ## 决策记录
 [D001] 确认GNN+BH为蓝海方向 | 理由: 4组关键词+引用链分析确认零直接竞品，最接近者P1仍以RL为主 | 阶段: GW
@@ -18,3 +19,4 @@
 [D010] Baseline 复现结果：PPO+MLP ≈ Random (+0.2%)，GraphColoring > Random (+1.8%)，OptGreedy > Random (+10.5%) | 理由: (1)PPO+MLP扁平MLP无法学习波束间空间干扰耦合，Gaussian policy的top-K机制导致梯度稀疏，fairness(~82%)主导奖励信号；(2)GraphColoring通过HEAD着色分3组降低35.7%干扰但受固定分组约束；(3)干扰惩罚是核心区分因子：OptGreedy intf=0.50 vs Random intf=4.70，贡献~70% reward gap；(4)PPO+MLP < GC 不是失败而是支持GNN必要性——扁平DRL不够需图编码器 | 阶段: GW
 [D011] PPO+GNN 初试结果：5.94 (vs PPO+MLP 5.86, +1.4%)，干扰从4.89降到4.37 (-10.6%) | 理由: GNN编码器确实有效(消融成立)，但提升幅度有限，未超过传统GraphColoring(5.96)。根因分析：(1)方法选择有根本问题——成功GNN论文(L01/L02/L06)全用无监督/监督学习非RL，RL论文(L03/L05)用Q-learning系非Gaussian policy；(2)Gaussian policy + top-K机制导致信用分配稀疏(19维输出仅5维有梯度)；(3)fairness占82%奖励几乎不可学，可学信号(interference)仅占7%；(4)D002判断"REINFORCE训练不稳定PPO可解决"是错的——问题不在算法稳定性而在action space设计 | 阶段: GW
 [D012] 方向待决 | 理由: 三条路径：(A)调参(加大interference权重)快速验证但改问题定义；(B)换方法(模仿L01无监督学习)需2-3天重写但最接近成功论文；(C)换方向(ISL/Handover)。需用户决策 | 阶段: GW
+[D013] 规模扩展实验(N=37) + 6种学习方法全部失败 | 理由: (1)扩展到N=37(K=10)，OptGreedy不可用(C(37,10)=3.5亿)，新增ApproxGreedy作为可扩展近似；(2)PPO+GNN@N=37 total=4.937 intf=12.74(比Random更差)，确认方法缺陷不随规模消失；(3)DiffGNN v1(soft weights,raw loss)total=4.636≈Random；(4)DiffGNN v2(soft weights,env-matched reward)total=4.597≈Random；(5)REINFORCE+softmax total=4.727 intf=11.67≈Random；(6)改为γ=0.7(干扰主导)后REINFORCE total=-6.33仍比Random(-6.21)差；(7)根因：top-K离散选择+图结构干扰关系无法从标量奖励梯度学到，干扰是beam pair物理关系需直接计算(ApproxGreedy intf=8.72 vs Random intf=11.64，差距100%来自直接物理计算) | 阶段: GW→归档

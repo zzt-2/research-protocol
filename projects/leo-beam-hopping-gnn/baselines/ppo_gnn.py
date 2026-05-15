@@ -11,6 +11,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from simulator.env import BHEnv
+from simulator.config import SimConfig
 from baselines.ppo_mlp import RunningNormalizer, compute_gae
 
 # ---------------------------------------------------------------------------
@@ -194,8 +195,8 @@ def collect_episode(env, actor, obs_norm, seed):
 # ---------------------------------------------------------------------------
 # Training
 # ---------------------------------------------------------------------------
-def train():
-    env = BHEnv()
+def train(config=None):
+    env = BHEnv(config=config)
     N = env.N
     obs_dim = 4  # per-node features
     A_norm = build_adjacency(env)
@@ -261,8 +262,8 @@ def train():
 # ---------------------------------------------------------------------------
 # Evaluation
 # ---------------------------------------------------------------------------
-def evaluate(actor, obs_norm, n_episodes=EVAL_EPISODES, seed_start=10000):
-    env = BHEnv()
+def evaluate(actor, obs_norm, n_episodes=EVAL_EPISODES, seed_start=10000, config=None):
+    env = BHEnv(config=config)
     results = []
     for ep in range(n_episodes):
         obs, _ = env.reset(seed=seed_start + ep * 13)
@@ -299,20 +300,27 @@ def summarize(results, name=""):
 # Main
 # ---------------------------------------------------------------------------
 if __name__ == "__main__":
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--scale', default='small', choices=['small', 'medium', 'large'])
+    args = parser.parse_args()
+
+    cfg = SimConfig.preset(args.scale)
+    tag = f"N={cfg.n_beams}_K={cfg.k_active}"
     print("=" * 60)
-    print("PPO+GNN — Beam Hopping (GCN encoder)")
+    print(f"PPO+GNN — Beam Hopping ({tag})")
     print(f"Batch={BATCH_EPISODES} eps/update, Updates={TRAIN_UPDATES}")
     print("=" * 60)
 
     print(f"\nTraining ...")
-    actor, critic, obs_norm, train_rewards = train()
+    actor, critic, obs_norm, train_rewards = train(config=cfg)
 
     print(f"\nEvaluating for {EVAL_EPISODES} episodes ...")
-    eval_results = evaluate(actor, obs_norm)
-    eval_totals = summarize(eval_results, "PPO+GNN")
+    eval_results = evaluate(actor, obs_norm, config=cfg)
+    eval_totals = summarize(eval_results, f"PPO+GNN({tag})")
 
     # Save
-    model_path = "projects/leo-beam-hopping-gnn/results/ppo_gnn_model.pt"
+    model_path = f"projects/leo-beam-hopping-gnn/results/ppo_gnn_{tag}_model.pt"
     torch.save({
         'actor': actor.state_dict(),
         'A_norm': actor.A_norm,
@@ -320,7 +328,7 @@ if __name__ == "__main__":
     }, model_path)
     print(f"\nModel saved to {model_path}")
 
-    out_path = "projects/leo-beam-hopping-gnn/results/ppo_gnn_training.npz"
+    out_path = f"projects/leo-beam-hopping-gnn/results/ppo_gnn_{tag}_training.npz"
     np.savez(out_path, episode_rewards=train_rewards,
              eval_mean=np.array([eval_totals.mean()]))
     print(f"Training curve saved to {out_path}")
