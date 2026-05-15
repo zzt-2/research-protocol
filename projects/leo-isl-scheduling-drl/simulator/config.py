@@ -16,7 +16,7 @@ INCLINATION_DEG = 53.0  # degrees
 # ISL
 Z_MAX = 3000.0  # km, max ISL range [L01 §III-A]
 FOR_ANGLE_DEG = 60.0  # degrees [L01 §III-A]
-N_LCT = 2  # laser terminals per satellite [L01/L02]
+N_LCT = 3  # laser terminals per satellite [L01/L02, D012]
 
 # Channel (Gaussian beam [L01 §II-C])
 WAVELENGTH = 1.55e-6  # m (1.55 μm)

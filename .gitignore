@@ -3,7 +3,6 @@ archive/
 search-archive/
 .omc
 papers/
-reference/
 batches/
 __pycache__/
 results*/

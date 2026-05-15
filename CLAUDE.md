@@ -201,9 +201,10 @@
 
 新对话恢复项目时，按以下优先级读取：
 
-1. 项目记忆文件: `~/.claude/projects/-mnt-d-code-study-research-protocol/memory/project_{name}.md`
-2. `.session/*-{project}/` 下最新的 HANDOFF 文件（按编号排序取最大）
-3. `decision_log.md`（阶段摘要行）
+1. `projects-overview.md`（跨项目状态汇总，了解全局后再深入具体项目）
+2. 项目记忆文件: `~/.claude/projects/-mnt-d-code-study-research-protocol/memory/project_{name}.md`
+3. `.session/*-{project}/` 下最新的 HANDOFF 文件（按编号排序取最大）
+4. `decision_log.md`（阶段摘要行）
 4. `feasibility_report.md`（如已到 Step 4）
 5. `baseline_report.md`（如已到 Step 7）
 6. `data-flow.md`（如已到 Contract Step 4）

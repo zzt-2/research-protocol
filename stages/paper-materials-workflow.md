@@ -115,6 +115,21 @@ projects/{name}/paper_materials/
 
 **格式要求**：每篇论文结构化条目；索引表按 ID 排序；标注精读/浅读状态。
 
+**预印本→正式发表验证**（[MUST]）：
+1. 统计所有预印本（`publication_status = preprint`）的数量和占比
+2. 对每篇预印本，用 S2 API 或 `tools/search --citations {id}` 检查是否有正式发表版本
+3. 已有正式版本 → 更新发表状态和发表渠道（引用目标标正式 venue）
+4. 更新后重新计算预印本率，目标：核心引用 ≤30%，全部引用 ≤40%
+5. 记录验证结果：哪些确认仍为预印本、哪些已更新
+
+**引用语言多样性检查**（学位论文 [MUST]）：
+1. 统计中文学术期刊引用数量（不含学位论文、不含 arXiv 中文预印本）
+2. 目标：≥ 10 篇中文期刊引用
+3. 不达标 → 用 `tools/search --doc-types chinese_journal` 或 `tools/blit --source wanfang` 补充检索
+4. 补充方向参考 `thesis-materials.md` §引用质量要求
+
+**推荐工具**：`tools/search`（七源检索）、`tools/blit --source ieee`（IEEE 正式发表验证）、`tools/search --citations`（引用图谱查发表状态）
+
 ### Step 6: 提取局限性 → `05_limitations.md`
 
 **输入**：literature_notes §已知局限, contract.md, decision_log, Execute 阶段逐步追加的局限性记录
@@ -155,16 +170,16 @@ projects/{name}/paper_materials/
 
 ## 执行策略
 
-| 步骤 | 执行者 | 可并行 |
-|------|--------|--------|
-| Step 1 | 主线程 | — |
-| Step 2 | 子 agent | ✅ |
-| Step 3 | 子 agent | ✅ |
-| Step 4 | 子 agent | ✅ |
-| Step 5 | 子 agent | ✅ |
-| Step 6 | 子 agent | ✅ |
-| Step 7 | 主线程 | 依赖 Step 3 |
-| Step 8 | 主线程 | 依赖全部 |
+| 步骤 | 执行者 | 推荐工具 | 可并行 |
+|------|--------|---------|--------|
+| Step 1 | 主线程 | — | — |
+| Step 2 | 子 agent | — | ✅ |
+| Step 3 | 子 agent | — | ✅ |
+| Step 4 | 子 agent | — | ✅ |
+| Step 5 | 子 agent | `tools/search --citations`、`tools/search --doc-types chinese_journal`、`tools/blit --source ieee` | ✅ |
+| Step 6 | 子 agent | — | ✅ |
+| Step 7 | 主线程 | — | 依赖 Step 3 |
+| Step 8 | 主线程 | — | 依赖全部 |
 
 并行限制：一次最多 3 个子 agent。推荐批次：Step 2+3+4 并行 → Step 5+6 并行 → Step 7 → Step 8。
 
@@ -182,3 +197,7 @@ projects/{name}/paper_materials/
 - [ ] 无未标注的数据矛盾
 - [ ] 04_literature.md 包含适配性分析汇总（适配点/不适配点/改进方向）
 - [ ] 05_limitations.md 包含 Execute 阶段积累的局限性记录
+- [ ] 预印本状态已验证：每篇预印本已检查是否有正式发表版本，结果已更新
+- [ ] 学位论文场景：中文期刊引用 ≥ 10 篇（不含学位论文和中文预印本）
+- [ ] 学位论文场景：核心引用预印本率 ≤ 30%，全部引用预印本率 ≤ 40%
+- [ ] 检索操作使用了项目工具（`tools/search`/`tools/blit`），非通用 web search

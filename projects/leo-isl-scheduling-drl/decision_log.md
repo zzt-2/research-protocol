@@ -20,3 +20,5 @@
 [D012] 问题重设定: 强制 N_LCT 终端约束, 解决"B1过强 DRL无空间"困境（用户已确认） | 理由: 原B1无限ISL(4752边/6.0每星)M1=28.19%, 多路径路由仅+5.3%确认瓶颈在拓扑非路由; 加N_LCT约束后: N_LCT=4 gap仅1.9%(不够), N_LCT=3 gap=11.1%(甜点), N_LCT=2 gap=20.0%(太极端); 参数扫描(demand×Z_MAX×N_GS)9/9配置gap>5%, 平均gap=11.3%, 方向鲁棒; Z_MAX对gap无影响(3条最短ISL始终在范围内) | 阶段: GW
 [D013] Contract 奖励函数修正: w₃从M5(公平性)改为C_setup(建链延迟成本) | 理由: (1)实现已用C_setup反映L04的setup delay物理约束, 公平性作奖励项导致训练不稳定; (2)M5保留为评估指标; (3)仿真器已验证三项归一化后量级匹配 | 阶段: CT
 [D014] Contract Step 5 压力测试全部通过, 无致命风险 | 理由: Q1结构性优势明确(GNN拓扑感知+DRL时序学习), Q2边际结果可支撑消融研究, Q3信号独立(性能/架构/工程三维度), Q4 baseline为领域共识, 反模式4项全部Pass | 阶段: CT
+[D015][AUTO] config.py N_LCT=2→3 已更新 (D012甜点) | 阶段: EX
+[D016][AUTO] model_gat.py 验证通过: scores(E,)∈[0.44,0.48], value标量, params=67,971; get_action/evaluate_actions/obs_to_data/buffer_GAE/normalizer 全部通过 | 阶段: EX
