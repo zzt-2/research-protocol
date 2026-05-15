@@ -422,17 +422,20 @@ def search_serpapi_scholar(
         try:
             search = GoogleSearch({**params, "api_key": key})
             data = search.get_dict()
+            if "error" in data:
+                print(f"  [SerpAPI Scholar] key {i+1}/{len(keys)} 错误: {data['error'][:80]}", file=sys.stderr)
+                data = None
+                continue
             break
         except Exception as e:
-            print(f"  [SerpAPI] key {i+1}/{len(keys)} 失败: {e}", file=sys.stderr)
-            if i < len(keys) - 1:
-                print(f"  [SerpAPI] 切换到下一个 key...", file=sys.stderr)
+            print(f"  [SerpAPI Scholar] key {i+1}/{len(keys)} 异常: {e}", file=sys.stderr)
 
     if data is None:
+        print("  [SerpAPI Scholar] 所有 key 均失败", file=sys.stderr)
         return []
 
     organic = data.get("organic_results") or []
-    print(f"  [SerpAPI] 返回 {len(organic)} 条结果")
+    print(f"  [SerpAPI Scholar] 返回 {len(organic)} 条结果")
 
     results = []
     for item in organic:
@@ -591,13 +594,16 @@ def search_serpapi_web(
         try:
             search = GoogleSearch({**params, "api_key": key})
             data = search.get_dict()
+            if "error" in data:
+                print(f"  [SerpAPI-Web] key {i+1}/{len(keys)} 错误: {data['error'][:80]}", file=sys.stderr)
+                data = None
+                continue
             break
         except Exception as e:
-            print(f"  [SerpAPI-Web] key {i+1}/{len(keys)} 失败: {e}", file=sys.stderr)
-            if i < len(keys) - 1:
-                print(f"  [SerpAPI-Web] 切换到下一个 key...", file=sys.stderr)
+            print(f"  [SerpAPI-Web] key {i+1}/{len(keys)} 异常: {e}", file=sys.stderr)
 
     if data is None:
+        print("  [SerpAPI-Web] 所有 key 均失败", file=sys.stderr)
         return []
 
     organic = data.get("organic_results") or []

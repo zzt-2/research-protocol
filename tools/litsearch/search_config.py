@@ -49,7 +49,7 @@ REQUEST_TIMEOUT = 30
 
 MODE_SOURCES = {
     "academic": ["s2", "openalex", "arxiv", "serpapi", "exa"],
-    "chinese":  ["exa", "serpapi", "firecrawl"],
+    "chinese":  ["serpapi"],
     "standard": ["firecrawl", "exa", "serpapi", "tavily"],
     "broad":    ["s2", "openalex", "arxiv", "serpapi", "tavily", "firecrawl", "exa"],
 }
@@ -80,7 +80,7 @@ DOC_TYPE_SOURCE_MAP = {
     "news":             ["exa"],
     "blog":             ["firecrawl", "exa"],
     "book":             ["exa", "firecrawl"],
-    "chinese_journal":  ["exa", "firecrawl"],
+    "chinese_journal":  ["serpapi"],
     "cnki":             ["serpapi_web"],
     "thesis":           ["openalex"],
 }

@@ -8,7 +8,7 @@
 | 工具 | 入口 | 用途 |
 |------|------|------|
 | 搜索 | `./tools/search "关键词"` | 七源聚合搜索，自动路由，存档 |
-| blit | `./tools/blit "关键词" --source ieee` | 浏览器文献检索（IEEE/万方/CNKI cbpt），Playwright 驱动 |
+| blit | `./tools/blit "关键词" --source cnki` | 浏览器文献检索（IEEE/万方/CNKI），Playwright 驱动，支持 PDF 下载 |
 | 下载 | `./tools/download <json\|arxiv\|doi>` | 批量/单篇下载 + PDF 转 markdown |
 | 转换 | `./tools/convert source.pdf` | PDF → markdown，支持分章节输出、图片提取、MinerU 高质量转换 |
 
@@ -282,12 +282,14 @@ Playwright 驱动的浏览器爬取工具，用于 API 无法覆盖的学术平�
 # 万方中文论文（低频，单次 ≤10 请求，间隔 6s）
 ./tools/blit "针灸 偏头痛 随机对照试验" --source wanfang
 
-# CNKI cbpt 期刊子站（单刊检索，稳）
-./tools/blit "针灸 偏头痛" --source cbpt --journal wxdg
-./tools/blit "对外汉语 偏误分析" --source cbpt --journal sdzy
+# CNKI 主站搜索（校园网 IP + cookie 认证）
+./tools/blit "混合式教学 实证研究" --source cnki
 
-# 单篇元数据提取
-./tools/blit --extract https://sdzy.cbpt.cnki.net/.../paper/xxx
+# CNKI 搜索 + 自动下载 PDF
+./tools/blit "混合式教学 实证研究" --source cnki --download papers/downloads/2026-05-15/
+
+# CNKI cookie 获取（首次使用或过期时）
+~/.venvs/torch/bin/python tools/cnki_login.py
 ```
 
 ### 源特性
@@ -296,14 +298,26 @@ Playwright 驱动的浏览器爬取工具，用于 API 无法覆盖的学术平�
 |----|--------|--------|------|------|
 | IEEE | 50次无拦截 | 标题/作者/会议/年份/被引数 | 无 | 50次/会话, 1s间隔 |
 | wanfang | 1410条/关键词 | 标题/作者/摘要/关键词/期刊/年份/被引数/质量标签 | IP封禁(>16次无间隔) | 10次/会话, 6s间隔 |
-| cbpt | 单刊 | 标题/作者/作者单位/摘要/关键词/期刊/年份/DOI | 无 | 30次/会话, 3s间隔 |
+| cnki | 全库搜索 | 标题/作者/来源/年份/被引数 | cookie 过期需验证 | 30次/会话, 3s间隔 |
+
+### CNKI cookie 管理
+
+CNKI 源依赖校园网 IP 认证。首次使用需获取 cookie：
+
+1. 运行 `~/.venvs/torch/bin/python tools/cnki_login.py`，弹出浏览器
+2. 完成 CNKI 安全验证（拖动滑块）
+3. Cookie 自动保存到 `cnki_cookies.json`
+
+Cookie 有效期通常 1-2 天。过期时 blit 会自动弹窗让用户重新验证。
+
+**注意**：`cnki_cookies.json` 包含会话信息，不应提交到 git。
 
 ### 使用策略
 
 - **英文论文**：IEEE 主力
-- **中文论文**：cbpt 逐刊检索（慢但稳），万方低频补充
-- **IP 被封**：停止使用，等自然解封（万方 ~15min+）
-- 下载均需机构权限，blit 只做元数据提取
+- **中文论文**：CNKI 主力（搜索+下载），万方低频补充
+- **cbpt 已废弃**：CNKI 接口变更，cbpt 期刊子站不再可用
+- **IP 被封**：停止使用万方，等自然解封（~15min+）
 
 ## 5. 内容处理原则
 

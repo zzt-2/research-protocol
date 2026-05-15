@@ -8,3 +8,4 @@ batches/
 __pycache__/
 results*/
 *.pyc
+cnki_cookies.json

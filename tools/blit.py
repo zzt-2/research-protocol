@@ -1,13 +1,16 @@
 """
-浏览器文献检索工具 — IEEE / 万方 / cbpt
+浏览器文献检索工具 — IEEE / 万方 / cbpt / CNKI
 
 独立于 API 搜索管线，用 Playwright 渲染 SPA 页面提取元数据。
 限速策略内置，适合低频使用。
 
+CNKI 源使用校园网 IP + cookie 认证。cookie 过期时自动弹窗让用户验证。
+
 用法:
   python blit.py "LEO satellite handover" --source ieee
   python blit.py "低轨卫星 切换" --source wanfang
-  python blit.py "低轨卫星 切换" --source cbpt --journal wxdg
+  python blit.py "混合式教学 实证" --source cnki
+  python blit.py "混合式教学 实证" --source cnki --download papers/downloads/2026-05-15/
   python blit.py --extract https://xxx.cbpt.cnki.net/.../paper/xxx
 """
 
@@ -25,12 +28,14 @@ RATE_LIMITS = {
     "ieee":    {"max": 50, "interval": 1},
     "wanfang": {"max": 10, "interval": 6},
     "cbpt":    {"max": 30, "interval": 3},
+    "cnki":    {"max": 30, "interval": 3},
 }
 
 _session_counts = {k: 0 for k in RATE_LIMITS}
 _browser = None
 _context = None
 _page = None
+_cookie_file = Path(__file__).resolve().parent.parent / "cnki_cookies.json"
 
 
 # ──────────── 浏览器管理 ────────────
@@ -46,6 +51,7 @@ async def get_page():
         user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
         locale="zh-CN",
         viewport={"width": 1920, "height": 1080},
+        accept_downloads=True,
     )
     _page = await _context.new_page()
     return _page
@@ -338,6 +344,237 @@ async def cbpt_journal_search(journal: str, query: str, max_results: int = 20) -
     return results
 
 
+# ──────────── CNKI ────────────
+
+async def _load_cnki_cookies() -> list[dict] | None:
+    if not _cookie_file.exists():
+        return None
+    try:
+        return json.loads(_cookie_file.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return None
+
+
+async def _save_cnki_cookies(cookies: list[dict]):
+    _cookie_file.write_text(json.dumps(cookies, ensure_ascii=False, indent=2), encoding="utf-8")
+
+
+async def _refresh_cnki_cookies():
+    """cookie 过期时弹有头浏览器，让用户完成验证后保存 cookie。"""
+    print("[CNKI] Cookie 过期，弹出浏览器请完成验证...", file=sys.stderr)
+    from playwright.async_api import async_playwright
+    pw = await async_playwright().start()
+    browser = await pw.chromium.launch(headless=False)
+    ctx = await browser.new_context(
+        user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
+        locale="zh-CN",
+        viewport={"width": 1280, "height": 800},
+    )
+    page = await ctx.new_page()
+    await page.goto("https://kns.cnki.net/", timeout=60000)
+
+    for _ in range(300):
+        await asyncio.sleep(1)
+        title = await page.title()
+        if "安全验证" not in title and len(title) > 0:
+            break
+    else:
+        await browser.close()
+        return False
+
+    await asyncio.sleep(2)
+    cookies = await ctx.cookies()
+    await _save_cnki_cookies(cookies)
+    print(f"[CNKI] Cookie 已刷新 ({len(cookies)} 条)", file=sys.stderr)
+    await browser.close()
+    return True
+
+
+async def _cnki_ensure_cookies(ctx) -> bool:
+    """确保 context 有有效的 CNKI cookie，必要时弹窗刷新。"""
+    cookies = await _load_cnki_cookies()
+    if cookies:
+        await ctx.add_cookies(cookies)
+        return True
+    return await _refresh_cnki_cookies()
+
+
+async def _cnki_check_captcha(page) -> bool:
+    """检查是否被安全验证拦截。返回 True 表示需要刷新 cookie。"""
+    title = await page.title()
+    return "安全验证" in title
+
+
+async def cnki_search(query: str, max_results: int = 20, download_dir: str | None = None) -> list[dict]:
+    global _browser, _context, _page
+
+    if not check_rate("cnki"):
+        return []
+
+    print(f"[CNKI] 搜索: {query}")
+
+    # 启动浏览器并加载 cookie
+    from playwright.async_api import async_playwright
+    pw = await async_playwright().start()
+
+    need_refresh = False
+    cookies = await _load_cnki_cookies()
+    if not cookies:
+        need_refresh = True
+
+    _browser = await pw.chromium.launch(headless=True)
+    _context = await _browser.new_context(
+        user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+        locale="zh-CN",
+        viewport={"width": 1920, "height": 1080},
+        accept_downloads=True,
+    )
+
+    if not need_refresh:
+        await _context.add_cookies(cookies)
+
+    _page = await _context.new_page()
+
+    # 访问搜索页
+    encoded_query = query.replace(" ", "+")
+    search_url = f"https://kns.cnki.net/kns8s/defaultresult/index?kw={encoded_query}"
+    await _page.goto(search_url, timeout=45000)
+    await _page.wait_for_load_state("domcontentloaded", timeout=30000)
+    await asyncio.sleep(3)  # 等 JS 渲染搜索结果
+
+    # 检查验证码
+    if await _cnki_check_captcha(_page):
+        await _browser.close()
+        _browser = _context = _page = None
+        print("[CNKI] Cookie 已过期，需要刷新...", file=sys.stderr)
+        if not await _refresh_cnki_cookies():
+            print("[CNKI] Cookie 刷新失败", file=sys.stderr)
+            return []
+        # 刷新后重试
+        _browser = await pw.chromium.launch(headless=True)
+        _context = await _browser.new_context(
+            user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+            locale="zh-CN",
+            viewport={"width": 1920, "height": 1080},
+            accept_downloads=True,
+        )
+        new_cookies = await _load_cnki_cookies()
+        await _context.add_cookies(new_cookies)
+        _page = await _context.new_page()
+        await _page.goto(search_url, timeout=45000)
+        await _page.wait_for_load_state("domcontentloaded", timeout=30000)
+        await asyncio.sleep(3)
+        if await _cnki_check_captcha(_page):
+            print("[CNKI] 刷新后仍被拦截，放弃", file=sys.stderr)
+            return []
+
+    record("cnki")
+
+    # 提取搜索结果
+    items = await _page.evaluate(r"""() => {
+        const rows = document.querySelectorAll('.result-table-list tbody tr');
+        return Array.from(rows).map(row => {
+            const nameEl = row.querySelector('.name a');
+            const title = nameEl?.innerText?.trim() || '';
+            const href = nameEl?.href || '';
+            const authorEls = row.querySelectorAll('.author span');
+            const authors = Array.from(authorEls).map(a => a.innerText.trim()).filter(a => a && a.length < 20);
+            const sourceEl = row.querySelector('.source');
+            const source = sourceEl?.innerText?.trim() || '';
+            const dateEl = row.querySelector('.date');
+            const date = dateEl?.innerText?.trim() || '';
+            const citeEl = row.querySelector('.quote');
+            const cite = citeEl?.innerText?.trim() || '0';
+            const dbid = nameEl?.getAttribute('data-dbname') || '';
+            return { title, href, authors, source, date, cite: parseInt(cite) || 0, dbid };
+        }).filter(r => r.title.length > 3);
+    }""")
+
+    results = []
+    for item in items[:max_results]:
+        year = None
+        if item.get("date"):
+            ym = re.match(r"(\d{4})", item["date"])
+            year = int(ym.group(1)) if ym else None
+
+        results.append({
+            "title": item["title"],
+            "authors": item.get("authors", []),
+            "abstract": "",
+            "year": year,
+            "venue": item.get("source", ""),
+            "citation_count": item.get("cite", 0),
+            "doi": "",
+            "url": item.get("href", ""),
+            "source": "cnki",
+        })
+
+    print(f"  获取 {len(results)} 条")
+
+    # 下载 PDF
+    if download_dir and results:
+        dl_path = Path(download_dir)
+        dl_path.mkdir(parents=True, exist_ok=True)
+        print(f"\n[CNKI] 开始下载 PDF → {dl_path}")
+
+        for i, r in enumerate(results):
+            if not r.get("url"):
+                continue
+            try:
+                pdf_path = await _cnki_download_paper(r["url"], dl_path, r["title"])
+                if pdf_path:
+                    r["pdf_path"] = str(pdf_path)
+                    print(f"  [{i+1}/{len(results)}] ✓ {r['title'][:40]}")
+                else:
+                    print(f"  [{i+1}/{len(results)}] ✗ {r['title'][:40]} (无下载按钮)")
+                await asyncio.sleep(RATE_LIMITS["cnki"]["interval"])
+            except Exception as e:
+                print(f"  [{i+1}/{len(results)}] ✗ {r['title'][:40]} ({e})", file=sys.stderr)
+
+    return results
+
+
+async def _cnki_download_paper(detail_url: str, save_dir: Path, title: str) -> Path | None:
+    """从 CNKI 论文详情页下载 PDF。"""
+    detail = await _context.new_page()
+    try:
+        await detail.goto(detail_url, timeout=30000)
+        await detail.wait_for_load_state("domcontentloaded", timeout=20000)
+        await asyncio.sleep(2)
+
+        # 检查验证码
+        if await _cnki_check_captcha(detail):
+            return None
+
+        # 查找 PDF 下载按钮
+        pdf_btn = await detail.query_selector('a[id*="pdf"], a[id*="PDF"], a.btn-dlpdf')
+        if not pdf_btn:
+            pdf_btn = await detail.query_selector('a:has-text("PDF下载"), a:has-text("下载")')
+
+        if not pdf_btn:
+            return None
+
+        # 点击下载
+        try:
+            async with detail.expect_download(timeout=30000) as download_info:
+                await pdf_btn.click()
+            download = await download_info.value
+        except Exception:
+            return None
+
+        # 保存文件
+        suggested = download.suggested_filename or "paper.pdf"
+        safe_name = re.sub(r'[<>:"/\\|?*]', '_', suggested)
+        save_path = save_dir / safe_name
+        await download.save_as(save_path)
+
+        if save_path.exists() and save_path.stat().st_size > 1024:
+            return save_path
+        return None
+    finally:
+        await detail.close()
+
+
 # ──────────── CLI ────────────
 
 def print_results(results: list[dict], fmt: str = "markdown"):
@@ -378,14 +615,15 @@ def print_results(results: list[dict], fmt: str = "markdown"):
 
 
 async def async_main():
-    parser = argparse.ArgumentParser(description="浏览器文献检索工具 (IEEE/万方/cbpt)")
+    parser = argparse.ArgumentParser(description="浏览器文献检索工具 (IEEE/万方/cbpt/CNKI)")
     parser.add_argument("query", nargs="?", default=None, help="搜索关键词")
-    parser.add_argument("--source", "-s", required=True, choices=["ieee", "wanfang", "cbpt"], help="检索源")
+    parser.add_argument("--source", "-s", required=True, choices=["ieee", "wanfang", "cbpt", "cnki"], help="检索源")
     parser.add_argument("--journal", "-j", default=None, help="cbpt 期刊子域名 (如 wxdg, sdzy)")
     parser.add_argument("--extract", default=None, help="直接提取 cbpt 论文页 URL")
     parser.add_argument("--max", type=int, default=20, help="最大结果数 (默认 20)")
     parser.add_argument("--format", "-f", default="markdown", choices=["json", "markdown"], help="输出格式")
     parser.add_argument("--output", "-o", default=None, help="输出文件路径")
+    parser.add_argument("--download", "-d", default=None, metavar="DIR", help="CNKI: 下载 PDF 到指定目录")
 
     args = parser.parse_args()
 
@@ -407,6 +645,8 @@ async def async_main():
             if not args.journal:
                 parser.error("cbpt 源需要 --journal 参数 (如 --journal wxdg)")
             results = await cbpt_journal_search(args.journal, args.query, args.max)
+        elif args.source == "cnki":
+            results = await cnki_search(args.query, args.max, download_dir=args.download)
     finally:
         await cleanup()
         await asyncio.sleep(0.3)
