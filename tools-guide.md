@@ -169,6 +169,11 @@ S2(1.0) > SerpAPI(0.9) > Exa(0.85) > arXiv(0.8) > OpenAlex(0.6) ≈ Firecrawl(0.
 
 ## 3. 论文下载
 
+> **下载工具分工**：
+> - `tools/litdownload/`（通过 `tools/download` 调用）：处理 arXiv、OA PDF、Unpaywall。自动写入全局索引、生成 metadata.json 和 content.md。
+> - `tools/blit --download`：处理 IEEE（校园网 IP）和 CNKI（Cookie 认证）。不写全局索引，不自动生成 content.md，需手动运行 `tools/convert` 转换。
+> - 如果 blit 下载了 IEEE/CNKI 论文，应手动将信息追加到 `papers/index.json`。
+
 ```bash
 # 批量（从搜索结果 JSON）
 ./tools/download search-archive/{date}/xxx.json

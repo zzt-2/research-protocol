@@ -318,6 +318,10 @@ def main():
     args = parser.parse_args()
     input_path = Path(args.input)
 
+    if input_path.suffix.lower() == '.caj':
+        print("[ERROR] CAJ 格式不支持自动转换。请用 CAJ Viewer 或 CNKI 在线阅读器转为 PDF 后重试。")
+        sys.exit(1)
+
     if input_path.is_file():
         out = Path(args.output) if args.output else None
         ok = convert_single(input_path, out, args.quality, args.chunk, args.figures)

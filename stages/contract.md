@@ -29,6 +29,13 @@ Groundwork 全部产出（literature_notes.md + baseline_report.md + feasibility
 
 [MUST] 在形成假设前，必须确认候选方案的新颖性。流程：
 
+### 复用条件
+
+如果 Groundwork 阶段已完成（literature_notes 含 ≥8 篇精读 + Step 3.5 已完成）：
+- **跳过 0.1 系统检索**，直接复用 GW 检索结果
+- **简化 0.2 竞品精读**，仅补充 GW 未覆盖的 Contract 特有竞品（如相同方法在不同场景的应用）
+- **保留 0.3 二轮定向检索**，但范围收窄到 Contract 特有的新颖性验证
+
 [MUST NOT] 浅搜后直接派设计子对话。必须走完 0.1→0.2→0.3 三步后，再派设计子对话。
 
 [通用] 所有写入文件的论文 URL 必须先验证标题匹配，错误的 URL 会浪费子对话上下文。
