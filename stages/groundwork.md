@@ -18,7 +18,7 @@
 |------|---------|------|--------|
 | Step 1 | [gw-search.md](gw-search.md) | search-archive/{date}/{slug}.json + 候选列表 | 否 |
 | Step 2 | [gw-acquire.md](gw-acquire.md) | papers/{arxiv|doi}/{id}/content.md + 覆盖面缺口报告 | 是（缺口确认）|
-| Step 3 | [gw-read.md](gw-read.md) | literature_notes.md | 否 |
+| Step 3 | [gw-read.md](gw-read.md) | literature_notes.md（含 2-3 篇标杆论文写作架构提取） | 否 |
 | Step 3.5 | [gw-supplement.md](gw-supplement.md) | 补充论文 + 更新 literature_notes | 否 |
 | Step 4a | [gw-feasibility.md](gw-feasibility.md) §4a | feasibility_report.md（A/B/D 维度） | 是（方向+可行性 Go/No-Go）|
 | Step 5 | [gw-validate.md](gw-validate.md) | Baseline 候选评估表 | 是（Baseline 确认）|
