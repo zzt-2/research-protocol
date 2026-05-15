@@ -80,7 +80,7 @@ DOC_TYPE_SOURCE_MAP = {
     "news":             ["exa"],
     "blog":             ["firecrawl", "exa"],
     "book":             ["exa", "firecrawl"],
-    "chinese_journal":  ["exa", "firecrawl", "serpapi"],
+    "chinese_journal":  ["exa"],
     "cnki":             ["serpapi_web"],
     "thesis":           ["openalex"],
 }
