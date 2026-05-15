@@ -26,9 +26,23 @@
 | `decision_log.md` | [D013] 奖励修正 + [D014] 压力测试通过 |
 
 ## 下一步：Execute 阶段
-1. 读 `stages/execute.md`
-2. 读 `code-quality.md` + `reference/sim-template/` 模板
-3. 更新 config.py: N_LCT=2→3
-4. 实现 GNN 模型（GATv2 + edge decoder + actor-critic）
-5. 实现 PPO 训练循环（使用 sim-template/train_ppo.py 模板）
-6. 训练 + 评估
+
+恢复文件（按顺序）：
+1. 本文件（HANDOFF-013）
+2. `projects/leo-isl-scheduling-drl/contract.md`（frozen）
+3. `projects/leo-isl-scheduling-drl/data-flow.md`（8步推演）
+4. `stages/execute.md`（Execute 阶段流程）
+5. `code-quality.md`（必做清单）
+6. `reference/sim-template/`（model_gnn.py + train_ppo.py 模板）
+
+Execute Step 0 任务：
+1. 更新 `simulator/config.py`: N_LCT=2→3
+2. 实现 GATv2ActorCritic 模型：GATv2 4-head 64-dim × 3层 + edge decoder(128→64→32→1) + shared backbone，继承 BaseActorCritic 接口
+3. 实现 PPO 训练循环：GAE + advantage norm + grad clip(0.5) + LR decay + reward norm(Welford) + wandb + early stopping + save/load best model
+4. 注意：环境已实现（environment.py），obs 返回 node_feat(N,6) + edge_feat(E,7) + candidate_edges，action 接收 scores(E,) → top-3
+
+关键设计（来自 data-flow.md）：
+- 模型输入：PyG Data(node_feat, edge_feat, edge_index)
+- Actor: GNN edge scoring → sigmoid → top-N_LCT per satellite
+- Critic: global_mean_pool → MLP → value
+- 奖励：1.0·R_tput − 0.3·C_switch − 0.2·C_setup
