@@ -13,3 +13,5 @@
 [D005] 不选QPLEX的理由 | 理由: 分层MADRL全栈实现需3-4周，PPO+MLP已覆盖"与主流DRL对比"需求。若审稿人要求SOTA对比可在revision阶段补充 | 阶段: GW
 [D006] Step 4b Go | 理由: C维度无致命信号（全频复用+真实天线方向图→非均匀干扰→GNN优势条件充分，"过于平滑"风险有缓解路径）；E维度无致命信号（全部自实现但PPO/Greedy标准，失败沉没成本有多条回收路径） | 阶段: GW
 [D007] 仿真器设计确认 | 理由: 单星多波束(19/37/61), Ku 11.45GHz, Bessel天线, 全频复用, PPO+GNN。参数溯源16项仅1项[ASSUMPTION](K=5)。奖励 α·throughput(0.6)+β·fairness(0.3)-γ·interference(0.1)。用户确认2026-05-15 | 阶段: GW
+[D008] 仿真器实现物理修正(3项) | 理由: (1)噪声功率：-97dBm为总噪声功率而非PSD，不应乘带宽，否则SINR虚低~60dB；(2)路径损耗：应用轨道高度550km而非slant_range 2704km，否则多算14dB；(3)干扰惩罚：原公式max(0,SINR-thr)惩罚高SINR(好选择)方向反了，改为max(0,thr-SINR)惩罚低SINR(差选择) | 阶段: GW
+[D009] 吞吐量归一化修正 | 理由: 原R_throughput=served/total_demand_all_N归一化分母含全部19波束需求，K=5时信号仅~5%，被fairness(~85%)淹没。改为served_active/demand_active(仅计算被服务波束)，吞吐量占比升至~15-18%，三项分量均可见 | 阶段: GW
