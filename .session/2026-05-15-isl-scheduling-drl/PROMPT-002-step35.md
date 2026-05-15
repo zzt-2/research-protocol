@@ -16,13 +16,11 @@
 
 ### 1. 竞品精读（Step 3 补充）
 
-已下载就位的竞品：
+已下载并转换就位的 4 篇竞品（全部可直接精读）：
+- **Wang TCOM 2024**（MADRL 激光 ISL 调度）：`papers/manual/wang-tcom-2024-madrl-laser-isl/content.md`（713 行）
+- **Guo TWC 2024**（分布式拓扑优化）：`papers/manual/guo-twc-2024-distributed-topo/content.md`（772 行）
+- **Wang TWC 2024**（联邦 RL 激光 ISL）：`papers/manual/wang-twc-2024-federated-rl-isl/content.md`（715 行）
 - **Pi ICC 2022**（MADDPG ISL 规划）：`papers/manual/pi-icc-2022-maddpg-isl/content.md`（325 行）
-
-缺失竞品（如用户已补充到 `papers/downloads/2026-05-15/` 或 `papers/manual/`，用 `tools/convert` 转换后精读）：
-- Wang TCOM 2024（MADRL 激光 ISL 调度）— DOI: 10.1109/TCOMM.2023.3347775
-- Guo TWC 2024（分布式拓扑优化）— DOI: 10.1109/TWC.2023.3309379
-- Wang TWC 2024 联邦RL（DOI: 10.1109/TWC.2024.3411169）
 
 精读按 `gw-read.md` 模板提取，追加到 `literature_notes.md` 的"待补充论文"部分。
 

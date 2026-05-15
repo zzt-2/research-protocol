@@ -23,6 +23,13 @@
 │   ├── manual/{slug}/   # 无 arxiv/DOI 的论文（slug 如 cai-jsac-gdrl）
 │   └── index.json       # 全局论文索引
 ├── search-archive/{date}/  # 检索缓存（date 如 2026-05-12）
+├── .session/              # 会话管理（跨对话状态集中存放）
+│   ├── {YYYY-MM-DD}-{project-slug}/  # 按项目/日期建文件夹
+│   │   ├── HANDOFF-{NNN}-{slug}.md   # 跨对话交接记录
+│   │   ├── PROMPT-{NNN}-{slug}.md    # 新对话提示词
+│   │   └── LOG-{NNN}-{slug}.md       # 操作日志
+│   └── framework-evolution/           # 框架演进专题（跨项目）
+│       └── LOG-{NNN}-{slug}.md       # 框架问题日志
 ├── reference/           # 参考实现代码
 ├── tools/               # 辅助脚本
 └── projects/{name}/     # 独立研究项目（全部项目级产物在此）
@@ -32,7 +39,6 @@
     ├── competitor_notes/
     ├── baseline_report.md
     ├── search-archive/   # 项目专属检索记录（Contract 阶段等）
-    ├── sessions/         # 跨对话交接记录（handoff）
     ├── simulator/
     ├── baselines/
     ├── results/
@@ -138,7 +144,7 @@
 
 ### 步骤间 handoff 强制写入
 
-每完成一个步骤，必须更新 handoff 文件（`projects/{name}/sessions/{date}-handoff.md`）：
+每完成一个步骤，必须更新 handoff 文件（`.session/{date}-{project}/HANDOFF-{NNN}-{slug}.md`）：
 - 当前步骤产出文件路径
 - 关键结论（1-3 句）
 - 未决问题（如有）
@@ -150,12 +156,13 @@
 
 ### 交接机制（handoff）
 
-跨对话推进同一项目时，使用 `projects/{name}/sessions/` 管理交接：
+跨对话推进同一项目时，使用 `.session/{date}-{project}/` 管理交接：
 
-- 每次对话结束前（包括上下文溢出导致压缩时），写 handoff 文件到 `projects/{name}/sessions/`
-- handoff 文件名格式：`{YYYY-MM-DD}-handoff.md`（同一天多次用 `-handoff-2.md` 递增）
-- 新对话恢复项目时，先读 handoff 再读其他文件
+- 每次对话结束前（包括上下文溢出导致压缩时），写 handoff 文件到 `.session/{date}-{project}/`
+- handoff 文件名格式：`HANDOFF-{NNN}-{slug}.md`（NNN 三位编号递增，slug 简述内容）
+- 新对话恢复项目时，先读最新 HANDOFF 再读其他文件
 - handoff 不重复项目正式文档内容，只补充跨对话上下文和待办
+- **[MUST]** 每份 handoff 必须自包含恢复所需最小信息（关键下载 URL、竞品列表、参数选择依据），不假设读者已读前轮 handoff
 
 ### handoff 格式
 
@@ -188,7 +195,7 @@
 新对话恢复项目时，按以下优先级读取：
 
 1. 项目记忆文件: `~/.claude/projects/-mnt-d-code-study-research-protocol/memory/project_{name}.md`
-2. `projects/{name}/sessions/` 下最新的 handoff 文件
+2. `.session/*-{project}/` 下最新的 HANDOFF 文件（按编号排序取最大）
 3. `decision_log.md`（阶段摘要行）
 4. `feasibility_report.md`（如已到 Step 4）
 5. `baseline_report.md`（如已到 Step 7）
