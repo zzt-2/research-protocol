@@ -3,7 +3,7 @@
 ## 阶段摘要
 - [Groundwork] Step 1-3.5 完成（检索+精读+补充检索），Step 4a Go/No-Go 通过
 - [Contract] Step 0-5 完成，已冻结（用户确认 2026-05-15）
-- [Execute] 待执行
+- [Execute] Step 0-1 完成（模型+训练+Quick Test 5轮诊断），**PPO 未超越先验，需方向决策**
 
 ## 决策记录
 [D001] Go/No-Go 决策：Go（用户已确认 2026-05-15） | 理由: A/B无致命信号 + MVE Pass (GNN 97.3% vs FC 79.5%) | 阶段: GW
@@ -24,3 +24,7 @@
 [D016][AUTO] model_gat.py 验证通过: scores(E,)∈[0.44,0.48], value标量, params=67,971; get_action/evaluate_actions/obs_to_data/buffer_GAE/normalizer 全部通过 | 阶段: EX
 [D017] Quick Test 24×20 结果: (1) 无active_bias → M1=0.003, M3=16.7(随机水平); (2) 加active_bias=3+std=0.018 → M1=0.078(75% of B1), M3=0.10(稳定拓扑); (3) PPO更新过激进导致策略退化(100ep M1降至0.057); (4) GATv2Conv edge_dim=64→66.7ms/层,去掉edge_dim→4.4ms/层,改用decoder端注入边特征; (5) 批处理evaluate_actions: 4.3ms/obs(vs逐条320ms) | 瓶颈分析: env.step 0.18s/步(轨道+路由), model forward 0.073s/步 | 阶段: EX
 [D018] 训练策略调整: PPO直接从随机初始化学习失败(冷启动问题), 需要先行为克隆B1再PPO微调 | 理由: active_bias解决了ISL稳定性但初始拓扑质量差; PPO在无好起点时梯度信号不足以学到有效策略; v2只训15ep的eval比v4训100ep更好说明过更新有害 | 阶段: EX
+[D019] 架构优化: GATv2Conv 去掉 edge_dim, 边特征改为 decoder 端注入 | 理由: (1) edge_dim=64时单层66.7ms vs 无edge_dim 4.4ms(15x提速); (2) 边特征(距离/状态/中断率)在 decoder 端直接可用,不需要在消息传递中; (3) decoder输入=concat(src_emb, dst_emb, edge_feat) 135维 → MLP 128→64→1; (4) params 67,971→54,020 | 阶段: EX
+[D020] 模型先验设计: active_bias=3 + distance_bias=2 跳跃连接 | 理由: (1) active_bias让模型天然倾向保持活跃ISL(sigmoid(3)≈0.95),解决切换率问题(M3从16.7→0.03); (2) distance_bias让模型偏好短距离ISL(1-dist/Z_MAX),模拟B1的最近邻拓扑; (3) 两项都是可学习参数,PPO可调整; (4) 未经训练的纯先验策略M1=0.077已达B1的75% | 阶段: EX
+[D021] Quick Test v5 最终结果: 先验策略M1=0.0774, PPO微调30ep后M1=0.0780(+0.0006), B1=0.1035 | 理由: (1) PPO几乎无法超越先验; (2) KL在小std(0.018)下必然爆炸(Δμ/σ²效应),大std(0.14)又退回随机; (3) 训练reward=-3.3但eval reward=+0.78,差距来自探索噪声破坏拓扑稳定; (4) **根本问题: 连续分数+Normal分布+top-K选择→PPO不适配这个动作空间** | 待决策: 换算法(ES/SAC)/换动作空间(离散keep-drop-swap)/监督学习/继续调参 | 阶段: EX
+[D022] 全规模(24×66=1584)性能测量 | 候选边65,664条(12x于24×20的5,328); env.step=0.60s/步(3.3x于24×20); model forward ~300ms; 50ep估计25min; PPO批处理32 obs时edge decoder输入~283MB,可能接近RTX 4070 8GB显存上限 | 待决策: 候选边预筛选(如限制每星最多20个候选)/分层决策/局部决策 | 阶段: EX
