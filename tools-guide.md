@@ -329,12 +329,72 @@ Cookie 有效期通常 1-2 天。过期时 blit 会自动弹窗让用户重新�
 - **cbpt 已废弃**：CNKI 接口变更，cbpt 期刊子站不再可用
 - **IP 被封**：停止使用万方，等自然解封（~15min+）
 
-## 5. 内容处理原则
+## 5. 中文检索策略
+
+中文文献检索依赖 **blit（CNKI/万方）** 而非 API 管线（tools/search）。两者分工明确：
+
+| 工具 | 用途 | 适用场景 |
+|------|------|---------|
+| `tools/search --mode chinese` | API 源中文搜索 | 快速概览、英文为主的混合检索 |
+| `tools/blit --source cnki` | CNKI 全库搜索+下载 | 中文期刊主力，搜索+PDF 一步完成 |
+| `tools/blit --source wanfang` | 万方搜索 | CNKI 未覆盖时的低频补充 |
+
+### CNKI 初始化
+
+首次使用或 cookie 过期时需先获取认证 cookie：
+
+```bash
+~/.venvs/torch/bin/python tools/cnki_login.py
+# 浏览器弹出后完成安全验证（拖动滑块），cookie 自动保存到 cnki_cookies.json
+```
+
+Cookie 有效期约 1-2 天。过期时 blit 会自动弹窗让用户重新验证。
+
+### 期刊论文 vs 学位论文
+
+CNKI 默认搜索所有文献类型。用 `--type journal` 过滤掉学位论文（默认行为）：
+
+```bash
+# 仅期刊论文（默认）
+./tools/blit "低轨卫星 切换" --source cnki
+
+# 包含学位论文
+./tools/blit "低轨卫星 切换" --source cnki --type all
+
+# 搜索 + 自动下载 PDF
+./tools/blit "混合式教学 实证研究" --source cnki --download papers/downloads/2026-05-15/
+```
+
+### CAJ 格式处理
+
+CNKI 部分论文下载后为 CAJ 格式（非 PDF）：
+
+1. **转换工具不支持 CAJ**：`tools/convert` 会检测并拒绝 CAJ 文件
+2. **处理方法**：用 CAJ Viewer（Windows）手动转为 PDF，再用 `tools/convert` 转 markdown
+3. **建议**：CNKI 下载时优先选择 PDF 格式（如有选项）
+
+### CSSCI 核心期刊验证
+
+确认中文期刊级别时：
+
+1. 在 CNKI 搜索结果中查看期刊名旁的标签（北大核心/CSSCI/CSCD）
+2. 或在万方结果中查看 `quality_labels` 字段（`北大核心`、`CSCD`、`EI`）
+3. CSSCI 来源期刊目录：[cssci.nju.edu.cn](https://cssci.nju.edu.cn/)
+
+### 结果合并
+
+blit 和 tools/search 的结果格式不同（blit 无 `source_api` 字段，用 `source` 字段）。合并时：
+
+1. blit 结果中 `source` 字段为 `cnki`/`wanfang`/`ieee`/`cbpt`
+2. search 结果中 `source_api` 字段为 `semantic_scholar`/`openalex`/`exa` 等
+3. 手动合并时按 title 去重，保留信息更完整的一条
+
+## 6. 内容处理原则
 
 - LaTeX 源文件（arXiv e-print）：公式表格完美，强制首选
 - **不要整篇喂 agent**：精读阶段按章节拆分，title+abstract 用于初筛
 
-## 6. 安装
+## 7. 安装
 
 ```bash
 # 单一 venv（搜索 + 下载 + 转换 + MinerU）

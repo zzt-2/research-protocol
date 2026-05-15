@@ -235,6 +235,11 @@ def convert_single(
         print(f"[ERROR] 文件不存在: {pdf_path}", file=sys.stderr)
         return False
 
+    if pdf_path.suffix.lower() == ".caj":
+        print(f"[ERROR] CAJ 格式不支持自动转换: {pdf_path.name}", file=sys.stderr)
+        print("  请用 CAJ Viewer 手动转为 PDF，再用本工具转换。", file=sys.stderr)
+        return False
+
     if output_dir is None:
         output_dir = pdf_path.parent
     output_dir.mkdir(parents=True, exist_ok=True)

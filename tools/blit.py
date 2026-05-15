@@ -470,7 +470,7 @@ async def _cnki_check_captcha(page) -> bool:
     return "安全验证" in title
 
 
-async def cnki_search(query: str, max_results: int = 20, download_dir: str | None = None) -> list[dict]:
+async def cnki_search(query: str, max_results: int = 20, download_dir: str | None = None, doc_type: str = "journal") -> list[dict]:
     global _browser, _context, _page
 
     if not check_rate("cnki"):
@@ -502,7 +502,8 @@ async def cnki_search(query: str, max_results: int = 20, download_dir: str | Non
 
     # 访问搜索页
     encoded_query = query.replace(" ", "+")
-    search_url = f"https://kns.cnki.net/kns8s/defaultresult/index?kw={encoded_query}"
+    db_filter = "&dbPrefix=CJFD" if doc_type == "journal" else ""
+    search_url = f"https://kns.cnki.net/kns8s/defaultresult/index?kw={encoded_query}{db_filter}"
     await _page.goto(search_url, timeout=45000)
     await _page.wait_for_load_state("domcontentloaded", timeout=30000)
     await asyncio.sleep(3)  # 等 JS 渲染搜索结果
@@ -689,6 +690,7 @@ async def async_main():
     parser.add_argument("--format", "-f", default="markdown", choices=["json", "markdown"], help="输出格式")
     parser.add_argument("--output", "-o", default=None, help="输出文件路径")
     parser.add_argument("--download", "-d", default=None, metavar="DIR", help="下载 PDF 到指定目录 (ieee/cnki)")
+    parser.add_argument("--type", default="journal", choices=["all", "journal"], help="CNKI 文献类型过滤 (默认: journal，过滤学位论文)")
 
     args = parser.parse_args()
 
@@ -713,7 +715,7 @@ async def async_main():
                 parser.error("cbpt 源需要 --journal 参数 (如 --journal wxdg)")
             results = await cbpt_journal_search(args.journal, args.query, args.max)
         elif args.source == "cnki":
-            results = await cnki_search(args.query, args.max, download_dir=args.download)
+            results = await cnki_search(args.query, args.max, download_dir=args.download, doc_type=args.type)
     finally:
         await cleanup()
         await asyncio.sleep(0.3)
