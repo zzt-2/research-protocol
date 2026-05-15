@@ -31,6 +31,8 @@
 │   └── framework-evolution/           # 框架演进专题（跨项目）
 │       └── LOG-{NNN}-{slug}.md       # 框架问题日志
 ├── reference/           # 参考实现代码
+│   └── sim-template/    # 代码模板（config/env/model/train/reward/verify 最佳实践）
+├── code-quality.md      # 代码质量经验积累（写代码前必读）
 ├── tools/               # 辅助脚本
 └── projects/{name}/     # 独立研究项目（全部项目级产物在此）
     ├── decision_log.md
@@ -58,6 +60,8 @@
 | PDF 转 markdown | `tools/convert` | 输出到 PDF 同目录，文件名 `{pdf_stem}.md` |
 | 手动下载的 PDF | 用户操作 | 放入 `papers/downloads/{date}/`，之后用 `tools/convert` 转换 |
 | 参考实现代码 | 手动管理 | `reference/{name}/` |
+| 代码质量经验 | 自动生成 | `code-quality.md` |
+| 代码模板 | 从最佳项目提取 | `reference/sim-template/` |
 
 **禁止事项：**
 - 不在根目录创建新的论文目录（如 `my-download-paper/`）
@@ -93,6 +97,8 @@
 | 阶段流程 | `stages/*.md` | 该阶段的完整操作流程 |
 | 领域定制 | `domain-comms.md` | 领域特定技术栈、指标、反模式 |
 | 模板定义 | `templates.md` | 文档模板和字段规则 |
+| 代码质量 | `code-quality.md` | 代码经验积累、必做清单、常见缺陷、各维度最佳来源 |
+| 代码模板 | `reference/sim-template/` | config/env/model/train/reward/verify 骨架代码 |
 | 本文件 | `CLAUDE.md` | 环境配置、目录结构、规则索引（不重复框架文件内容） |
 
 ## 跨阶段护栏
@@ -202,6 +208,17 @@
 5. `baseline_report.md`（如已到 Step 7）
 6. `data-flow.md`（如已到 Contract Step 4）
 7. 对应阶段框架文件
+
+## 代码质量强制规范
+
+**[MUST]** 准备 baseline、搭建仿真器、实现训练代码前，必须先读 `code-quality.md` 和 `reference/sim-template/` 中的对应模板。
+
+具体要求：
+- 新建 simulator 时，对照 `code-quality.md` 的必做清单逐项检查
+- GNN 模型必须继承 `BaseActorCritic` 接口模式（`reference/sim-template/model_gnn.py`）
+- 训练循环必须集成 wandb/tensorboard 和 early stopping（之前 6 个项目全部缺失，模板已补上）
+- save/load 必须包含 optimizer + step_count，支持 resume
+- 不重复已知缺陷（见 `code-quality.md` 常见缺陷表）
 
 ## 工具调用
 
