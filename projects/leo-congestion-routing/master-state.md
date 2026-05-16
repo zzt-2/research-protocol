@@ -6,7 +6,7 @@
 - **项目名**: leo-congestion-routing
 - **方向**: GNN 拥塞感知路由 + 负载均衡 for LEO 卫星星座
 - **阶段**: Groundwork
-- **当前步骤**: Step 3 完成 → Step 3.5（定向补充检索）
+- **当前步骤**: Step 3.5 完成 → Step 4a（可行性预判）
 - **方法类型**: [DRL] + [监督]
 
 ## 进度追踪
@@ -16,7 +16,7 @@
 | Step 1 检索+初筛 | ✅ | search-archive/2026-05-16/gnn-congestion-*.json 等 9 个文件 |
 | Step 2 论文获取 | ✅ | 10 篇论文 content.md 已就绪 |
 | Step 3 精读 | ✅ | literature_notes.md（10 篇精读 + 3 篇写作架构 + 综合分析） |
-| Step 3.5 定向补充 | ⬜ | literature_notes.md 更新 |
+| Step 3.5 定向补充 | ✅ | L11 TELGEN + 4 篇新竞品发现 + 定位修订 |
 | Step 4a 可行性预判 | ⬜ | feasibility_report.md |
 | Step 5 Baseline选定 | ⬜ | decision_log.md 更新 |
 | Step 4b 执行可行性 | ⬜ | feasibility_report.md 更新 |
@@ -33,7 +33,8 @@
 
 ## 核心风险
 1. **[高] GNN ≈ MLP 风险**: resilient-routing MVE 两次证明路由决策 GNN 无优势。新方向赌拥塞/负载信息需全局聚合，需 Step 4a MVE 验证
-2. **[中] 论文池竞争**: GNN-ASSSP/GMR/DTAR 等近期竞品活跃，需精读确认差异化空间
+2. **[高] TELGEN 竞品风险**: Zhou 2025 ToN 已做完整 GNN+TE+size gen（20x 泛化）。差异化必须聚焦 LEO 时变拓扑（TELGEN future work）。纯 size gen for TE 不再是空白
+3. **[中] 论文池竞争**: GNN-ASSSP/DeepLaDu/GRL-RR 等近期竞品活跃，需 DeepLaDu 精读确认差异化空间
 3. **[低] Size gen 可行性**: 无先例将 size gen 应用于拥塞路由，可能需要新的泛化机制
 
 ## Thesis 一致性

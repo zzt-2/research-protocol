@@ -9,7 +9,7 @@
 | Step 1 检索+初筛 | ✅ 完成 | 2026-05-16 | TBD |
 | Step 2 论文获取 | ✅ 完成 | 2026-05-16 | TBD |
 | Step 3 精读 | ✅ 完成 | 2026-05-16 | TBD |
-| Step 3.5 定向补充 | ⬜ | | |
+| Step 3.5 定向补充 | ✅ 完成 | 2026-05-16 | TBD |
 | Step 4a 可行性预判 | ⬜ | | |
 | Step 5 Baseline选定 | ⬜ | | |
 | Step 4b 执行可行性 | ⬜ | | |
@@ -349,7 +349,82 @@
 
 ---
 
-## Step 3 综合分析
+## Step 3.5 定向补充检索
+
+### 检索执行
+
+**关键词矩阵** (3 方法变体 × 2 问题+规模 = 6 组合):
+1. GIN + routing + load balancing + scalability (S2) ✅
+2. GAT edge features + per-link traffic splitting + congestion (S2) ✅
+3. MPNN + cross-topology generalization + TE zero-shot (S2) ✅
+4. GMR 双向引用链分析 (Semantic Scholar + OpenAlex) ✅
+5. 竞品共引 10 篇存在性验证 ✅
+
+**搜索源**: S2 (Semantic Scholar) + OpenAlex, ≥2 源满足
+
+**收敛性**: 第 1 轮发现 TELGEN + 4 篇高优新竞品，需第 2 轮精读 DeepLaDu 确认收敛
+
+### 新发现论文
+
+#### [L11] TELGEN: Traffic Engineering in Large-scale Networks with Generalizable GNNs
+
+- DOI/来源: arXiv:2503.24203v2
+- **发表状态**: 已被 IEEE/ACM ToN 接收
+- **发表渠道**: IEEE/ACM ToN（计算机网络顶刊）
+- 年份/会议: 2025 (Zhou, Liu, Liu, Yu, Xue — NCSU/ASU)
+- 核心贡献: 将 TE LP 问题转化为二部图（path/constraint/objective vertices），GNN 直接在 LP 结构上做消息传递。双循环 GNN（K=8~16 外循环对齐 IPM 迭代，J=2 内循环近似 Newton step），逐步强监督训练。训练在 20~100 节点，推理泛化到 200~5000 节点（20x），optimality gap < 3%。
+- 方法概述: LP 变量/约束/目标→四类顶点→六种消息传递方向。双循环 GCN 架构，跨外循环参数共享。Loss = variable loss + constraint loss + objective loss（含 discount factor）。推理时 readout 从 path vertices 读出流量分配比。
+- 实验设置: ER 20~2000, Waxman 200~5000, ASN 553/1739, B4(12); 最大 5000 节点/3.6M links; A100 GPU
+- 使用的 Baseline 方法:
+  - TEAL (SIGCOMM 2023): GNN+MARL+ADMM
+  - HARP (SIGCOMM 2024): GNN+Transformer+RAU
+  - SciPy IPM / Gurobi: 最优基线
+- 关键结论: optimality gap 0.3%~2.99%（远优于 TEAL 26%+ / HARP 73%+）；推理 1.52ms；训练 4h；跨需求分布泛化 OGap 波动仅 ±0.03%
+- 与本研究关系: **最直接竞品** — GNN+TE+size generalization 已被做完整。差异化必须聚焦：(1) LEO 时变拓扑（TELGEN future work）；(2) per-link 负载均衡 vs per-path 流量分割；(3) DRL 在线适应 vs SL 离线训练
+- 实现关键细节: MLP encoder(180/360) + 双循环 GCN(K=8~16, J=2) + MLP readout(360/720) + ReLU + Residual；150 epoch；基于 IPM-GNN codebase；Yen's k-shortest paths 预计算
+- 开源代码: 引用 github.com/chendiqian/IPM_MPNN，TELGEN 本身未明确开源
+
+**结构化提取**:
+1. **状态空间**: 网络 G=(N,L,C), SD 对, 预定义路径集 P; 无 RL 状态空间概念（SL 方法）
+2. **动作空间**: per-path 流量分配比 R(p)∈[0,1]；readout 从 path vertices 读出+ReLU
+3. **奖励函数**: 无 RL；训练 loss = ρ1·L_p(variable) + ρ2·L_dl(constraint) + ρ3·L_o(objective)，含 discount
+4. **建模假设**: 有向图静态快照；预定义 k-shortest paths；集中式 SDN；链路容量固定；单时间快照无时序；自述局限：(1)不适用无线干扰场景 (2)未利用时序信息 (3)集中式设计
+5. **网络架构**: MLP enc(2层,180/360) → 双循环 GCN(K=8~16外循环×J=2内循环 GCN) → MLP readout(2层,360/720) + ReLU + Residual
+6. **适配性分析**: 适配: size generalization 20x 泛化范式、双循环 GNN 算法对齐思路、LEO 列为目标场景 | 不适配: 静态快照无时序（LEO 最关键的时变性完全缺失）、per-path 决策需预计算路径、SL 需离线 IPM label | **核心差异化**: LEO 时变拓扑 + per-link 在线负载均衡决策
+
+#### 其他高优先级新发现（待精读）
+
+| # | 论文 | 来源 | 优先级 | 关键点 |
+|---|------|------|--------|--------|
+| 1 | **DeepLaDu** (Gu 2026, arXiv:2601.21921) | GMR 前向引用 | 高 | GNN 推断 per-link congestion prices，Lagrangian dual 框架，与本研究 per-link 最接近。**已下载** |
+| 2 | **ALIDT/ADRLRM** (Gao 2025/2026, TMC/ToN) | GMR 前向引用 | 高 | STGNN 做卫星路由，声称超越 GMR。同一团队两篇 |
+| 3 | **GRL-RR** (Bai 2025, Computer Networks) | GMR 前向引用 | 高 | GNN+DRL LEO 弹性路由 |
+| 4 | **Fan 2026 TAES** (DOI:10.1109/TAES.2026.3652971) | GMR 前向引用 | 高 | GNN+RL 多路径流量拆分（与 L07 不同论文）。**下载失败** |
+| 5 | HARP (SIGCOMM 2024) | 新检索 | 中 | cross-topology TE 神经方法，98% 场景 MLU 仅高 11% |
+
+### 缺失论文状态
+
+| 论文 | 下载尝试 | 状态 |
+|------|---------|------|
+| GNN-ASSSP (ScienceDirect) | tools/download | 付费墙，需用户手动 |
+| DLBR (IEEE TAES) | tools/download | 付费墙，需用户手动 |
+| LARRI (IEEE ToN) | tools/download | 付费墙，需用户手动 |
+| FlexSATE (IEEE GLOBECOM) | tools/download | 付费墙，需用户手动 |
+| CA-GAR (MDPI Symmetry) | tools/download | 失败（OA 但下载失败） |
+| Fan 2026 TAES (IEEE TAES) | tools/download | 付费墙，需用户手动 |
+| DeepLaDu (arXiv) | tools/download | ✅ 已下载 |
+
+### 检索充分性判据
+
+- [x] 关键词矩阵覆盖：3 方法变体 × 2 组合 = 6 组合已执行
+- [x] 搜索源覆盖：S2 + OpenAlex (≥2)
+- [x] 引用链分析：GMR 双向引用链已完成
+- [ ] 收敛性：第 1 轮发现 4 篇高优新竞品，需 DeepLaDu 精读后确认
+- [x] 上限：第 1 轮完成，需进入第 2 轮
+
+---
+
+## Step 3 综合分析（含 Step 3.5 更新）
 
 ### 1. 现有方法分类
 
@@ -398,7 +473,17 @@ MAPPO+GAT，每节点 G/G/1/K 队列建模最精细，但 per-packet 粒度太�
 3. 大规模星座的可扩展性（从 48 星到 1584+ 星的泛化）
 4. 奖励设计的理论保证（避免 reward shaping 的随意性）
 
-**本研究定位**: 在 GNN+RL LEO 路由的演进中，本研究填补"per-link 负载均衡 + size generalization"的空白。核心贡献点是：(1) GNN 在拥塞信息聚合维度是否优于 MLP（MVE 验证）；(2) per-link 流量分配决策（非预计算路径的端到端方案）；(3) 跨星座规模的零样本泛化。
+**本研究定位**（Step 3.5 更新）:
+
+TELGEN (Zhou 2025, ToN) 已将"GNN + TE + size generalization"做完整（20x 泛化，<3% gap）。纯 size generalization for TE 已不再是空白。
+
+**差异化必须聚焦 LEO 时变场景**（TELGEN 的明确 future work）：
+1. **LEO 时变拓扑 TE**：利用轨道力学确定性+周期性，做跨时间步的增量 TE（TELGEN 静态快照无法处理）
+2. **per-link 负载均衡决策**：LEO 拓扑频繁变化导致预计算路径失效，per-link 决策比 per-path 更灵活
+3. **DRL 在线适应**：时变场景下 DRL 可在线调整，TELGEN 的 SL 需要离线预计算每个快照的 IPM 解
+4. **LEO 特有约束**：ISL 可用性受限（纬度/极区）、传播时延、地面站接入选择
+
+核心贡献点修订为：(1) LEO 时变拓扑下的 GNN 拥塞感知 TE（vs TELGEN 静态快照）；(2) per-link 在线负载均衡决策（vs per-path 预计算分割）；(3) 跨星座规模的时序泛化（vs 跨静态拓扑泛化）。
 
 ---
 
