@@ -3,7 +3,9 @@
 ## 阶段摘要
 - [Groundwork] Step 1-3.5 完成（检索+精读+补充检索），Step 4a Go/No-Go 通过
 - [Contract] Step 0-5 完成，已冻结（用户确认 2026-05-15）
-- [Execute] Step 0-1 完成（模型+训练+Quick Test 5轮诊断），**PPO/REINFORCE 均未超越先验，swap 诊断确认先验近最优，待方向回顾**
+- [Execute] Step 0-1 完成（模型+训练+Quick Test 5轮诊断），PPO/REINFORCE 均未超越先验
+- [Execute] 方向修正 D026→D030: DRL→监督预训练+离散RL微调，ILP标签→路由感知标签
+- [Execute] Phase A Grid 标签完成: GNN 完美学习 grid 拓扑(F1=1.0)，评估与 B1(N_LCT=4) 完全匹配(ratio=1.000, 零切换)，**Execute 暂停**
 
 ## 决策记录
 [D001] Go/No-Go 决策：Go（用户已确认 2026-05-15） | 理由: A/B无致命信号 + MVE Pass (GNN 97.3% vs FC 79.5%) | 阶段: GW
@@ -36,3 +38,6 @@
 [D028] 离散动作空间设计: 每条候选边3-way {AS-IS, FORCE-ON, FORCE-OFF} | 理由: (1) AS-IS=默认走预训练策略(稳定); FORCE-ON=1.0/FORCE-OFF=0.0覆盖; (2) 大部分边不需RL决策→维度降低; (3) Categorical分布替代Normal→绕开KL爆炸; (4) wrapper保持env.step(scores)接口不变→零环境改动 | 阶段: EX
 [D029] Phase A(ILP监督)完成: GNN完美拟合ILP解(F1=0.9998)但实际M1=0.079远低于B1的0.174 | 理由: (1) ILP不建模路由→最大化加权容量≠高吞吐量; (2) ILP无时序一致性→每步独立求解→M3=0.044(频繁切换)→大量setup delay; (3) B1固定拓扑零切换零setup，grid结构保证路由连通性; (4) 根因: ILP标签是代理目标(容量)非真实目标(吞吐量) | 阶段: EX
 [D030] 方向修正: ILP标签→路由感知标签 + N_LCT=3→4（用户确认） | 理由: (1) ILP标签已被D029证明是代理目标，继续用无意义; (2) 路由感知标签: 用B1 grid作初始拓扑，贪心局部搜索(替换ISL→计算路由吞吐量→保留改善)，标签直接优化真实目标; (3) N_LCT从3提到4与B1公平对比(B1有4条固定ISL); (4) 方向1(路由感知标签)最可能突破，方向3(公平对比)作为保底 | 阶段: EX
+[D031] 路由感知贪心搜索不可行，改用 grid 标签直接训练（用户确认） | 理由: (1) 24×20 grid 是完美 4-正则图(960边)，N_LCT=4 阻塞所有单边替换;(2) 路由计算 146ms/次×2600 试验/轮=386s/轮，全数据集>100h;(3) D024 已证 grid 在此规模近最优;(4) 采用方向3(公平对比): grid 标签直接训练 | 阶段: EX
+[D032] B1 基线数据修正: handoff M1=0.174 是未剪枝 B1(6 edges/sat, 1440边)，正确 B1(N_LCT=4) M1=0.115(4 edges/sat, 960边) | 理由: GridFixedBaseline 默认 n_lct=None 不剪枝，导致 edges_per_sat=6; 与 N_LCT=4 的 DRL 对比不公平 | 阶段: EX
+[D033] Phase A Grid 标签训练完成: F1=1.0, acc=1.0, 与 B1(N_LCT=4) 完全匹配 ratio=1.000, 零切换 | 理由: (1) GNN 完美学习 grid 拓扑; (2) 预激活 grid 边后评估: M1=0.1154=B1(N_LCT=4), M3=0.0000; (3) 验证了 GNN 架构和训练管线正确性; (4) 24×20 规模 grid 已是最优，无法超越; (5) Execute 暂停，待决定下一步(Phase B/全规模/归档) | 阶段: EX
