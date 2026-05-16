@@ -6,7 +6,7 @@
 - **项目名**: leo-congestion-routing
 - **方向**: GNN 拥塞感知路由 + 负载均衡 for LEO 卫星星座
 - **阶段**: Groundwork
-- **当前步骤**: Step 4b 完成 → Step 6（仿真器设计）
+- **当前步骤**: Step 6 完成 → Step 7（Baseline 复现 + 仿真器搭建）
 - **方法类型**: [DRL] + [监督]
 
 ## 进度追踪
@@ -20,7 +20,7 @@
 | Step 4a 可行性预判 | ✅ MVE Pass | mve_env.py, mve_train.py, mve_66.py（D4 决策记录）|
 | Step 5 Baseline选定 | ✅ | SP+ECMP+MLP+DTAR+GMR(D8) |
 | Step 4b 执行可行性 | ✅ | feasibility_report.md (D9) |
-| Step 6 仿真器设计 | ⬜ | 设计规格 |
+| Step 6 仿真器设计 | ✅ | simulator-design.md (D10) |
 | Step 7 Baseline复现 | ⬜ | baseline_report.md |
 
 ## 关键决策

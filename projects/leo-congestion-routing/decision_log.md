@@ -35,6 +35,22 @@
 - **关键洞察**: 24节点小拓扑中 ECMP 足够好（等价路径多），但链路故障打破等价路径后，ECMP 盲目轮询失效，GNN 全局负载感知胜出
 - **Go 条件**: 后续仿真器必须包含链路故障场景（验证 GNN 在更广泛条件下的优势）
 
+### D10: Step 6 仿真器设计确认 (2026-05-16)
+- **决策**: 设计确认，进入 Step 7 实现
+- **核心设计**:
+  - MDP: 集中式 SDN，per-link weight 动作 (连续)，加权最短路路由
+  - 星座: 66 节点训练 (6×11)，48/288/720 泛化测试
+  - 奖励: r_t = -(MLU_t - MLU_{t-1})，MLU = max(load/capacity)
+  - GNN: GAT 2层4头64维 + LN + Residual (对齐 DTAR 最佳实践)
+  - RL: PPO + GAE + wandb + early stopping + save/load
+- **防坑措施**:
+  - C1: 单奖励分量-MLU，无量级失衡风险
+  - C2: 720节点显存预算可控 (~2880 边 × GAT(64) < 2GB)
+  - 6/6 缺失项: wandb/early stopping/save-load/config dataclass/gymnasium/共享 backbone 全部列入必做
+- **[ASSUMPTION]** 占比 12% < 30% → 通过
+- **仿真三要素**: 非均匀流量 + 链路故障 + 突发模式
+- **设计文件**: projects/leo-congestion-routing/simulator-design.md
+
 ### D9: Step 4b 执行可行性 Go (2026-05-16)
 - **决策**: Go
 - **维度 C 仿真条件**: ✅ MVE 已验证非均匀流量+链路故障为 GNN 优势激活条件。正式仿真器需确保三要素（非均匀流量+链路故障+时变拓扑）
