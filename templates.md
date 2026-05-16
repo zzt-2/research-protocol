@@ -145,7 +145,15 @@ version: 1
 [D004][CHANGE-PROPOSAL] {变什么} | 理由: {为什么} | 影响: {哪些结果会作废} | 用户决定: {留空}
 ```
 
-格式规则：单条 ≤3 行。阶段摘要行永远加载。标记类型：`[AUTO]` 低风险自决、`[CHANGE-PROPOSAL]` 高风险变更提案、`[SUPERSEDED by D{N}]` 被推翻。
+格式规则：单条 ≤3 行。阶段摘要行永远加载。标记类型：`[AUTO]` 低风险自决、`[CHANGE-PROPOSAL]` 高风险变更提案、`[SUPERSEDED by D{N}]` 被推翻、`[DEAD_END]` 防死胡同触发（见 `stages/execute.md` Step 4.5）。
+
+### `[DEAD_END]` 格式
+
+```
+[D{N}][DEAD_END] 连续{N}次迭代核心指标改善<{X}%，暂停执行 | 已尝试: {v1结果→v2结果→v3结果} | 根因: {一句话} | 跨项目先例: {项目名 D{N} 类似情况} | 交接: `.session/.../PROMPT-xxx.md`
+```
+
+触发条件见 `stages/execute.md` Step 4.5。触发后必须写的字段：已尝试方案及指标、根因判断、跨项目先例引用、交接文件路径。
 
 ---
 

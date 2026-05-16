@@ -55,40 +55,19 @@
 
 ## 跨项目教训
 
-### 方向选择
-- "蓝海"需区分"没人做"和"不值得做"：Beam Hopping零GNN竞争是后者，ISL仅2篇ML是真蓝海
-- MVE是判断蓝海真伪的最有效工具：mega-constellation 83-87%保持率=真蓝海，beam-hopping训练不稳定=红旗
-- 叙事转向可救活项目（handover），但需系统性实验重新支撑
+详细记录统一在 `code-quality.md`，本文件不重复。按以下维度组织：
 
-### 方法选择
-- RL+GNN组合中，GNN编码器通常有效（+0.8%~10.6%），但不是决定性因素
-- top-K离散动作空间与图结构信号不匹配（beam-hopping教训）
-- A2C不够→需TD3/SAC（RIS竞品撤稿证实）
-- 位置编码可能是图问题的必要条件而非增强（mega-constellation）
-
-### 仿真器
-- 物理模型错误代价高：ISL三项修正、HGAT奖励权重失衡均为教训
-- 性能优化需前置：向量化6-63x加速，否则全规模实验不可行
-- MDP试运行（3-5 episodes）可在正式训练前暴露奖励设计缺陷
-- 详见 `code-quality.md` 必做清单
-
-### 训练
-- 6个项目全部缺失 early stopping → 已在模板中修复
-- save/load 必须含 optimizer + step_count
-- 奖励函数需归一化+试运行验证（handover η_t教训、ISL吞吐量被淹没教训）
-- wandb/tensorboard 集成不能省
-
-### Baseline
-- 领域共识 baseline 必须有（如 ISL 的 FixedGrid、BH 的 GraphColoring）
-- 竞品论文复现困难时（无代码），先在测试规模验证再全规模
-- Baseline 报告要先于方法实现完成（防止调方法"欺负"弱 baseline）
+- **失败模式记录**：A(RL 训练) / B(方向判断) / C(仿真器实现) / D(其他)，共 14 个模式 20 条案例
+- **方法论适配性矩阵 + 已验证失败组合**：图结构 × 动作空间 × 学习范式
+- **必做清单**：Simulator/ML/训练三层检查项
+- **物理量语义检查**：高频混淆项及踩坑案例
 
 ## 使用场景
 
-1. **选新方向前** → 先读 `directions-registry.md`（所有已探索/已排除方向）+ 看"方向选择"教训 + 已有项目覆盖范围
-2. **设计 baseline 前** → 看"Baseline"模式 + 同领域项目的 baseline_report.md
-3. **搭仿真器前** → 读 `code-quality.md` + `reference/sim-template/` + 看"仿真器"教训
-4. **选学习方法前** → 看"方法选择"教训，特别是 beam-hopping 失败案例
+1. **选新方向前** → 先读 `directions-registry.md`（所有已探索/已排除方向）+ `code-quality.md` 失败模式 B 类
+2. **设计 baseline 前** → `code-quality.md` 必做清单 + 同领域项目的 baseline_report.md
+3. **搭仿真器前** → `code-quality.md` 必做清单 + `reference/sim-template/`
+4. **选学习方法前** → `code-quality.md` 方法论适配性矩阵 + 已验证失败组合
 5. **跨对话恢复** → 先读本文件了解全局，再读具体项目 handoff
 6. **归档/转阶段时** → 更新本文档对应项目条目
 

@@ -290,6 +290,8 @@ Playwright 驱动的浏览器爬取工具，用于 API 无法覆盖的学术平�
 
 # CNKI 主站搜索（校园网 IP + cookie 认证）
 ./tools/blit "混合式教学 实证研究" --source cnki
+./tools/blit "低轨卫星 深度强化学习" --source cnki --doc-type phd    # 搜博士论文
+./tools/blit "低轨卫星 资源管理" --source cnki --doc-type master       # 搜硕士论文
 
 # CNKI 搜索 + 自动下载 PDF
 ./tools/blit "混合式教学 实证研究" --source cnki --download papers/downloads/2026-05-15/
@@ -339,9 +341,11 @@ Cookie 有效期通常 1-2 天。过期时 blit 会自动弹窗让用户重新�
 中文文献用 **blit**（CNKI/万方）而非 API 管线。`tools/search --mode chinese` 仅作快速概览。
 
 ```bash
-# CNKI 期刊论文搜索（默认过滤学位论文）
+# CNKI 搜索（默认搜期刊论文）
 ./tools/blit "低轨卫星 切换" --source cnki
-./tools/blit "关键词" --source cnki --type all                  # 含学位论文
+./tools/blit "关键词" --source cnki --doc-type phd                # 博士学位论文
+./tools/blit "关键词" --source cnki --doc-type master             # 硕士学位论文
+./tools/blit "关键词" --source cnki --doc-type journal,phd        # 期刊+博士组合
 ./tools/blit "关键词" --source cnki --download papers/downloads/  # 搜索+下载
 ./tools/blit "关键词" --source wanfang                            # 万方补充
 ```

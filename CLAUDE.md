@@ -101,24 +101,42 @@
 | 代码模板 | `reference/sim-template/` | config/env/model/train/reward/verify 骨架代码 |
 | 本文件 | `CLAUDE.md` | 环境配置、目录结构、规则索引（不重复框架文件内容） |
 
+### 文档更新流程
+
+每条内容有且仅有一个拥有者文件。新增内容时：
+
+1. **先写拥有者文件**（完整定义），再更新索引文件（一行引用）
+2. **CLAUDE.md 只加索引行**：规则名 + 文件路径，不解释内容
+3. **code-quality.md 是教训唯一来源**：其他文件不重复教训内容
+
+| 新增场景 | 拥有者（写这里） | 需同步更新 |
+|---------|-----------------|-----------|
+| 失败模式/教训 | `code-quality.md` | 无（projects-overview.md 已引用） |
+| 执行规则 | `stages/execute.md` | CLAUDE.md 护栏表加索引行 |
+| 跨阶段规则 | 对应阶段文件 | CLAUDE.md 护栏表加索引行 |
+| 项目状态变更 | `projects-overview.md` | `directions-registry.md`（如涉及方向） |
+| 代码质量检查项 | `code-quality.md` | 无 |
+
 ## 跨阶段护栏
 
-核心原则在 `overview.md` 中有完整说明（Baseline-first / Human-in-the-loop / 单一事实源）。
+核心原则见 `overview.md`。以下规则定义见对应文件，此处仅索引：
 
-以下高风险规则的完整定义见对应框架文件，此处仅作索引：
-
-- **奖励函数归一化和用户审查**：`domain-comms.md` §1.5 + `groundwork.md` Step 6
-- **Baseline 学术合法性和复现定义**：`groundwork.md` Step 4-7
-- **方向可行性预判**：`gw-feasibility.md`（分两段：4a 方向根基+MVE 验证 + 4b 仿真条件+资源风险验证）
-- **文献检索、验证和 URL 校验**：`contract.md` Step 0 + `domain-comms.md` §1
-- **参数溯源审计**：`contract.md` Step 3（冻结前所有 `[ASSUMPTION]` 必须消除，每项需文献溯源/计算验证/设计选择三选一）
-- **子对话调度和上下文预算**：`contract.md` Step 0.2-0.4 + `overview.md` "上下文管理策略"
-- **仿真器验证标准**：`groundwork.md` Step 7 Part A
-- **Contract Amendment 机制**：Execute 阶段发现参数错误时可修正参数值（不可修正假设/signal），见 `stages/contract.md` "Contract 的效力"
-- **反模式审查位置**：在 Contract Step 5 执行（不在 Execute Step 1），见 `stages/contract.md` Step 5
-- **预印本→正式发表验证**：精读预印本时 [SHOULD] 用 S2 API 检查是否已有正式发表版本；素材提取时逐篇验证并更新引用目标，见 `gw-read.md` + `paper-materials-workflow.md` Step 5
-- **学位论文引用质量**：引用需覆盖中英文，预印本率有上限，见 `thesis-materials.md` §引用质量要求
-- **检索操作必须用项目工具**：文献检索/补充/验证使用 `tools/search`、`tools/blit`，不使用通用 web search。IEEE 下载用 `--source ieee --download DIR`（校园网 IP 自动机构认证），中文论文搜索用 `--source cnki`（校园网 cookie 认证，支持 `--download` 自动下载 PDF）。见 `tools-guide.md` + `paper-materials-workflow.md` 各步骤
+| 规则 | 定义所在 |
+|------|----------|
+| 奖励归一化审查 | `domain-comms.md` §1.5, `groundwork.md` S6 |
+| Baseline 合法性 | `groundwork.md` S4-7 |
+| 方向可行性预判 | `gw-feasibility.md` |
+| 文献检索验证 | `contract.md` S0, `domain-comms.md` §1 |
+| 参数溯源审计 | `contract.md` S3 |
+| 子对话调度预算 | `contract.md` S0.2-0.4, `overview.md` |
+| 仿真器验证标准 | `groundwork.md` S7A |
+| Contract 修正 | `stages/contract.md` |
+| 反模式审查位置 | `stages/contract.md` S5 |
+| 预印本验证 | `gw-read.md`, `paper-materials-workflow.md` S5 |
+| 论文引用质量 | `thesis-materials.md` |
+| 检索用项目工具 | `tools-guide.md` |
+| 防死胡同 | `stages/execute.md` S4.5 |
+| 先验基线测试 | `stages/execute.md` S0.5 |
 
 ## 上下文管理规则（跨步骤强制）
 
@@ -135,6 +153,15 @@
 5. **子 agent 时间上限**：单次子 agent 执行不超过 15 分钟（约 900s）。任务拆分应确保单个子 agent 的工作量在此范围内。如果预计需要更长时间，必须拆分为多个子 agent 分批执行。
 
 主对话负责：目标设定、边界框定、结果集成、最终判断。不负责大量文本的逐行消化。
+
+### 主对话严禁 WebSearch / webReader
+
+**[MUST]** 主对话（包括顶层和任何非子 agent 上下文）绝对不允许直接调用 WebSearch 或 `mcp__web_reader__webReader`。每次调用都会往上下文灌入大量 HTML，导致上下文爆炸。
+
+- 文献检索 → 用 `tools/search`（脚本，结果结构化可控）
+- 中文论文检索 → 用 `tools/search --source cnki` 或 `tools/blit --source cnki`（`--doc-type phd/master` 搜学位论文）
+- 实在需要 web 查询 → **必须在子 agent 中执行**，子 agent 消化后返回 ≤500 词摘要
+- 违反此规则的后果：上下文被撑满、有效信息被压缩丢失、对话提前终止
 
 ### web 事实性交叉验证
 

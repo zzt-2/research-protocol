@@ -36,8 +36,6 @@ Execute 阶段发现 Contract 参数事实性错误时，按 `stages/contract.md
 
 ## Step 0：仿真器开发（逐模块验证）
 
-> 起源：leo-mega-constellation-gnn-routing 项目中，6 个仿真器模块全部写完才做 smoke test，积累了 4 个 bug（方向 mask 单向、batch PE 维度错误等）。逐模块验证能更早发现，不增加总验证时间。
-
 按 `data-flow.md` 的模块划分逐步实现。每个模块写完后立即验证，不攒到一起。
 
 ### 逐模块验证节奏
@@ -70,6 +68,31 @@ Execute 阶段发现 Contract 参数事实性错误时，按 `stages/contract.md
 
 ---
 
+## Step 0.5：先验策略基线测试
+
+写 RL 代码之前，先测 trivial policy（最近邻/随机+简单规则）的表现。
+
+### 测试方法
+
+在仿真器 smoke test 通过后、写 RL 模型之前：
+1. 实现最简单的启发式策略（贪心/最近邻/随机+简单规则）
+2. 跑 3-5 episodes 记录核心指标
+3. 计算 trivial policy 与 Contract success_signal 的比率
+
+### 风险判定
+
+| trivial policy 达标率 | 判定 | 动作 |
+|----------------------|------|------|
+| < 30% | 正常 | 继续写 RL 代码 |
+| 30% - 70% | 需关注 | 检查 trivial policy 是否恰好命中了问题结构，评估 RL 增量空间 |
+| ≥ 70% | 高风险 | RL 大概率无法显著超越先验，需重新评估 RL 价值主张或调整叙事方向 |
+
+先例：ISL active_bias 达 B1 的 75%（PPO 仅 +0.6%）；Routing 贪心推理 97.6% 方向精度；Handover top-K 压缩做主功。
+
+[MUST] 基线测试结果记录到 decision_log。
+
+---
+
 ## Step 1：Quick Test + MVE 对比
 
 仿真器集成 smoke test 通过后，跑小规模 Quick Test 验证核心假设方向。
@@ -87,8 +110,6 @@ Execute 阶段发现 Contract 参数事实性错误时，按 `stages/contract.md
 - 差异 ≥10pp：**必须**写一段差异分析（可能原因：监督 vs RL？特征设计不同？评估口径不同？）再继续
 - 差异分析记录到 decision_log
 
-> 起源：leo-mega-constellation-gnn-routing 项目中，MVE 报告 83-87% 保留率，Quick Test 只有 62-70%。13pp 差异未分析就继续推进，导致后续对 RL 突破 80% 的预期缺乏依据。
-
 ---
 
 ## Step 2：核心实验
@@ -100,6 +121,16 @@ Execute 阶段发现 Contract 参数事实性错误时，按 `stages/contract.md
 - **full**：完整数据出发表级结果
 
 各级时间预算由研究者根据仿真复杂度自定，不设硬性上限。卫星系统级仿真单次可达小时级，时间限制不现实。
+
+### 实验执行纪律
+
+[MUST] 每次跑实验前遵守以下三条：
+
+1. **报时间预估**：跑之前先算 `单步耗时 × 步数 × episode 数 = 预计 X 分钟`。单步耗时用已测过的数据（如上一次对话的 env.step 计时）。如果预估 >30 分钟，告知用户并建议用 `run_in_background`。
+
+2. **先跑 1-2 episode 烟雾测试**：确认代码能跑通（无 import 错误、维度不匹配、OOM）再跑完整实验。不要写完全部代码后一次性跑完整实验——bug 修起来浪费时间翻倍。
+
+3. **后台长任务用 `run_in_background`**：预估 >5 分钟的实验用 Bash 的 `run_in_background` 参数，不要用 `timeout=600000` 前台阻塞。后台任务用 TaskOutput 读取结果。
 
 ### 随机种子要求
 
@@ -129,8 +160,6 @@ Execute 阶段发现 Contract 参数事实性错误时，按 `stages/contract.md
 - "条件边界分析"：什么条件下 DL 有优势
 - "对比基准"：系统对比 DL vs 传统方法
 
-> isl-acm-pred 教训：同轨面 ISL SNR 标准差仅 0.30 dB，滑动平均 MAE 0.25 dB 优于 GRU 0.45 dB。这不是方法失败，而是信道本身太确定性。
-
 [MUST] FAIL 或 MARGINAL 判定时通知用户，等待决策。
 
 ---
@@ -147,7 +176,44 @@ Execute 阶段发现 Contract 参数事实性错误时，按 `stages/contract.md
 
 ---
 
-## Step 5：结果自检
+## Step 4.5：防死胡同检测（穿插于 Step 1-3）
+
+### 触发条件
+
+连续 3 次迭代（调参/修复/bias 注入等）后，核心指标改善 <5%，即触发。
+
+核心指标定义：Contract 中 success_signal 对应的指标（如 M1 吞吐量、reward、准确率等）。
+
+### 触发后必须做的事
+
+1. **暂停当前实验**，不再继续调参
+2. **写 decision_log 分析**，包含：
+   - 已尝试的方案列表和每次的核心指标值
+   - 根因判断（RL 信号太弱 / 问题建模错误 / 仿真器缺陷 / 其他）
+   - 跨项目类似失败检索（读 `projects-overview.md` 的"跨项目教训"段 + 其他项目的 decision_log）
+   - 当前最佳结果与 Contract 目标的差距
+3. **写 PROMPT 文件**到 `.session/`，交接给新对话做深度调研：
+   - 文献调研：竞品论文的 RL 设计（action space / reward / 训练策略）具体是怎么做的
+   - 跨项目失败模式匹配：哪些项目遇到过类似问题，怎么解决的
+   - 替代方案提出：至少 2 个不同的解决方向（不是调参，是换思路）
+4. **通知用户**，说明当前状况和交接安排
+
+### 不做的事
+
+- 不在当前对话继续调参（上下文已被失败尝试污染）
+- 不自行宣布"方法不可行"（交给新对话调研后判断）
+- 不跳过 decision_log 直接开新对话（新对话需要分析记录作为输入）
+
+### 典型死胡同模式
+
+| 模式 | 表现 | 先例 |
+|------|------|------|
+| RL 梯度信号太弱 | 手写先验 > RL 学习，PPO 更新反而损害策略 | ISL scheduling, beam-hopping |
+| 探索破坏稳定解 | 大噪声导致每步都改变决策，无法建立稳定策略 | ISL scheduling v1 |
+| 规模扩展失败 | 小规模有效但全规模崩溃（维度/内存/速度） | ISL scheduling 全规模 import 错误 |
+| KL 约束与学习的矛盾 | KL 限制太严学不动，太松策略崩溃 | ISL scheduling v2-v4 |
+
+
 
 [MUST] 每个实验完成后回答 4 问：
 
@@ -157,8 +223,6 @@ Execute 阶段发现 Contract 参数事实性错误时，按 `stages/contract.md
 4. 实验设计是否存在信息泄露？
 
 每完成 3 个实验，额外检查：当前方法是否偏离 Contract 定义（方法论漂移检测）。
-
-> 为什么需要漂移检测：leo-iot-ra 在 E003 失败后重设计 E003-v2，属于必要的方法论修正而非漂移。但如果没有这个检查，容易滑入无计划的"看到结果后改方法"。
 
 ### 局限性与未来方向记录
 
@@ -197,3 +261,21 @@ Execute 过程中发现的局限性和未探索方向，[MUST] 追加到 `paper_
 - [ ] 所有实验在同一数据集上执行
 - [ ] MVE 对比已完成（如适用）
 - [ ] **路径合规**：结果在 `projects/{name}/results/`，不在其他位置
+
+---
+
+## 设计决策记录
+
+> 以下段落记录框架规则的设计背景，供理解"为什么这样规定"。不影响执行。
+
+**Step 0 逐模块验证**：leo-mega-constellation-gnn-routing 项目中，6 个仿真器模块全部写完才做 smoke test，积累了 4 个 bug（方向 mask 单向、batch PE 维度错误等）。逐模块验证能更早发现，不增加总验证时间。
+
+**Step 1 MVE 对比**：leo-mega-constellation-gnn-routing 项目中，MVE 报告 83-87% 保留率，Quick Test 只有 62-70%。13pp 差异未分析就继续推进，导致后续对 RL 突破 80% 的预期缺乏依据。
+
+**Step 2 实验执行纪律**：leo-isl-scheduling-drl REINFORCE 方案测试，写完 model+train+test 后直接跑完整 20 episode，结果超时/OOM 被杀，来回 5 轮任务管理才定位问题。如果先跑 1-2 episode 就能提前发现。
+
+**Step 3 简单方法优于 DL**：isl-acm-pred 教训——同轨面 ISL SNR 标准差仅 0.30 dB，滑动平均 MAE 0.25 dB 优于 GRU 0.45 dB。这不是方法失败，而是信道本身太确定性。
+
+**Step 4.5 防死胡同检测**：leo-isl-scheduling-drl Execute 阶段，agent 在"PPO 无法改善手写先验"的根本性瓶颈上迭代 v1→v2→v4→v5 共 1000+ 行对话，每次仅边际改善。类似模式在 beam-hopping（6种方法全部失败）中也曾出现。
+
+**方法论漂移检测**：leo-iot-ra 在 E003 失败后重设计 E003-v2，属于必要的方法论修正而非漂移。但如果没有这个检查，容易滑入无计划的"看到结果后改方法"。

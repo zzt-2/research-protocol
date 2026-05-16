@@ -12,7 +12,8 @@ CNKI 源额外需要 cookie 认证，过期时自动弹窗让用户验证。
   python blit.py "beam hopping DRL" --source ieee --download papers/downloads/
   python blit.py "低轨卫星 切换" --source wanfang
   python blit.py "混合式教学 实证" --source cnki
-  python blit.py "混合式教学 实证" --source cnki --download papers/downloads/
+  python blit.py "混合式教学 实证" --source cnki --doc-type phd
+  python blit.py "混合式教学 实证" --source cnki --doc-type journal,phd --download papers/downloads/
 """
 
 import argparse
@@ -501,8 +502,12 @@ async def cnki_search(query: str, max_results: int = 20, download_dir: str | Non
     _page = await _context.new_page()
 
     # 访问搜索页
+    CNKI_DB_MAP = {"journal": "CJFD", "phd": "CDFD", "master": "CMFD"}
+    types = [t.strip() for t in doc_type.split(",")]
+    db_prefixes = [CNKI_DB_MAP[t] for t in types if t in CNKI_DB_MAP]
+    db_filter = "".join(f"&dbPrefix={p}" for p in db_prefixes) if db_prefixes else ""
+
     encoded_query = query.replace(" ", "+")
-    db_filter = "&dbPrefix=CJFD" if doc_type == "journal" else ""
     search_url = f"https://kns.cnki.net/kns8s/defaultresult/index?kw={encoded_query}{db_filter}"
     await _page.goto(search_url, timeout=45000)
     await _page.wait_for_load_state("domcontentloaded", timeout=30000)
@@ -677,7 +682,7 @@ def print_results(results: list[dict], fmt: str = "markdown"):
             abs_text = r["abstract"][:200] + ("..." if len(r["abstract"]) > 200 else "")
             print(f"  摘要: {abs_text}")
         if r.get("url"):
-            print(f"  链接: {r['url'][:80]}")
+            print(f"  链接: {r['url']}")
 
 
 async def async_main():
@@ -690,7 +695,7 @@ async def async_main():
     parser.add_argument("--format", "-f", default="markdown", choices=["json", "markdown"], help="输出格式")
     parser.add_argument("--output", "-o", default=None, help="输出文件路径")
     parser.add_argument("--download", "-d", default=None, metavar="DIR", help="下载 PDF 到指定目录 (ieee/cnki)")
-    parser.add_argument("--type", default="journal", choices=["all", "journal"], help="CNKI 文献类型过滤 (默认: journal，过滤学位论文)")
+    parser.add_argument("--doc-type", default="journal", help="CNKI 文献类型: journal/phd/master，逗号分隔可组合 (默认: journal)")
 
     args = parser.parse_args()
 
@@ -715,7 +720,7 @@ async def async_main():
                 parser.error("cbpt 源需要 --journal 参数 (如 --journal wxdg)")
             results = await cbpt_journal_search(args.journal, args.query, args.max)
         elif args.source == "cnki":
-            results = await cnki_search(args.query, args.max, download_dir=args.download, doc_type=args.type)
+            results = await cnki_search(args.query, args.max, download_dir=args.download, doc_type=args.doc_type)
     finally:
         await cleanup()
         await asyncio.sleep(0.3)
