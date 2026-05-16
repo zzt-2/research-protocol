@@ -28,8 +28,10 @@
 │   │   ├── HANDOFF-{NNN}-{slug}.md   # 跨对话交接记录
 │   │   ├── PROMPT-{NNN}-{slug}.md    # 新对话提示词
 │   │   └── LOG-{NNN}-{slug}.md       # 操作日志
-│   └── framework-evolution/           # 框架演进专题（跨项目）
-│       └── LOG-{NNN}-{slug}.md       # 框架问题日志
+│   ├── framework-evolution/           # 框架演进专题（跨项目）
+│   │   └── LOG-{NNN}-{slug}.md       # 框架问题日志
+│   ├── direction-scouting/            # 方向侦察/项目盘点（长期，不按日期另开）
+│   └── thesis-structure-research/     # 论文结构研究（长期，不按日期另开）
 ├── reference/           # 参考实现代码
 │   └── sim-template/    # 代码模板（config/env/model/train/reward/verify 最佳实践）
 ├── code-quality.md      # 代码质量经验积累（写代码前必读）

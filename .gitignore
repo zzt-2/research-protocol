@@ -8,3 +8,4 @@ __pycache__/
 results*/
 *.pyc
 cnki_cookies.json
+**/worker-tasks/
