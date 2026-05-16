@@ -84,6 +84,55 @@ current_stage: {GW|Contract|Execute}
 | FR-06 | 工具集成：新工具/数据源操作链路是否已写入 tools-guide.md？ | 任意 | 未文档化 → 阻塞，先更新文档 |
 | FR-07 | 方法类型：确认 [DRL]/[监督]/[优化]/[通用]，跳过不适用规则 | 初始化 | 跳过时记录到 decision_log |
 | FR-08 | 范式对齐：算法选择是否与领域 top-3 成功论文范式一致？ | 4a (A), 6 | 偏离须论证为何偏离+为何仍可行 |
+| FR-09 | GNN 冗余：mixer 有全局状态时 GNN encoder 是否有增量信息？ | 4a (A), 6 | 无法论证增量 → 不用 GNN encoder |
+| FR-10 | 空间隔离约束：是否需要显式执行（顺序选择+遮蔽）而非 RL 隐式学习？ | 4a (A), 6 | 空间隔离约束 → 优先顺序选择/mask |
+
+### §4b 已验证失败组合
+
+选算法前对照，命中任一组合直接排除：
+
+| 动作空间特征 | 算法 | 失败原因 | 验证项目 |
+|-------------|------|----------|----------|
+| 连续分数 + top-K 选择 | PPO (Normal 分布) | top-K 不可微切断梯度 | ISL, BH |
+| 离散选择 + 图结构信号 | Gaussian policy | 信用分配稀疏，噪声破坏稳定 | BH |
+| 高维连续 (100+ 维) | A2C | 能力不足，训练不稳定 | RIS(竞品撤稿) |
+| 空间隔离约束 + 同时决策 | 任意 RL | agent 看不到邻居动作意图 | BH(×2) |
+| GNN encoder + 全局状态 mixer | QMIX/QPLEX | 信息冗余，GNN 无增益 | BH |
+
+### §4c 症状→模式索引
+
+收到 Worker 结果后快速匹配：
+
+| 症状 | 可能的模式 | 参考 |
+|------|-----------|------|
+| PPO 训练完全不收敛 | A1 (top-K), A3 (方法不匹配) | beam-hopping, isl-scheduling |
+| RL 无法超越简单先验 | A1, A2 (信号不足) | isl-scheduling, mega-constellation |
+| 多算法全部失败 | A3 (问题-方法不匹配), A5 (信息冗余) | beam-hopping (×2) |
+| GNN encoder 不如 FC | A5 (mixer 全局状态冗余) | beam-hopping |
+| 空间隔离约束 RL 学不会 | A3, FR-10 | beam-hopping |
+| 奖励被单一分量主导 | C1 (分量失衡) | 4/6 项目 |
+| 小规模有效全规模崩溃 | C2 (规模), C5 (buffer) | isl-scheduling, ntn-handover |
+| "零竞争"但感觉不对 | B1 (假蓝海) | beam-hopping |
+| 创新点搜到竞争论文 | B2 (创新点被推翻) | mega-constellation, ris-phase |
+| 仿真器跑出离谱数值 | C3 (边界 bug) | hgat, mega-constellation |
+| GNN 消融几乎无贡献 | B3 (规模不匹配), A2 | ntn-handover |
+
+### §4d 推理协议
+
+Master 在两个时间点执行模式匹配：
+
+**派遣前（预检）**：
+1. 确认当前方法的图结构类型和动作空间类型
+2. 查§4b 已验证失败组合：命中 → 排除该算法，换方案
+3. 查§4a FR-08：方法是否在方法论适配性矩阵的"推荐范式"列？不在 → 需论证
+4. 在 Task 文件中提醒 Worker 注意匹配到的风险模式
+
+**接收 Worker 结果后（后检）**：
+1. 读 Worker structured summary
+2. 用§4c 症状→模式索引匹配：Worker 报告的异常是否匹配已知模式？
+3. 匹配到 → 在 decision_log 记录模式 ID，按模式建议处理
+4. 未匹配到 → 报告用户："已知模式已全部排除，可能是新问题"
+5. Worker log 的"框架反馈"章节可能记录新的失败模式 → 如果发现新模式，提议更新§4b/§4c
 
 ## §5 决策权限
 
