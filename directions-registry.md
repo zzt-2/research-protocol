@@ -9,7 +9,7 @@
 | # | 方向 | 项目 | 阶段 | 关键技术 | 一句话定位 |
 |---|------|------|------|----------|-----------|
 | 1 | LEO 路由 Size Generalization | leo-mega-constellation-gnn-routing | Execute | GNN+PE+多尺度训练 | 小星座训练→Starlink级零样本泛化 |
-| 2 | LEO 切换 Size Generalization | leo-ntn-handover-drl | Execute→Contract重冻 | 二部图GNN+DDQN | 20UE训练→100UE零样本泛化 |
+| 2 | LEO 切换 Size Generalization | leo-ntn-handover-drl | Contract冻结+素材提取→写作 | 二部图GNN+DDQN | 20UE训练→100UE零样本泛化 |
 | 3 | 卫星 DAG 任务卸载 | hgat-satellite-dag-offloading | GW-S7 | HGAT+DRL | 异构图注意力+DAG依赖任务 |
 | 4 | RIS 相移优化 | ris-phase-drl | GW-S4a→S5 | TD3/SAC | 大规模RIS(100+元素)连续相移 |
 | 5 | GNN 拥塞感知路由 + 负载均衡 | leo-congestion-routing | GW-S1→S2 | GNN+全局负载聚合 | per-link负载均衡决策+size gen |

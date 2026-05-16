@@ -14,10 +14,11 @@
 
 ### leo-ntn-handover-drl
 - **方向**: 二部图GNN+DDQN实现LEO切换size generalization
-- **阶段**: Execute 完成 → Contract 叙事转向后重新冻结
+- **阶段**: Contract 冻结(v2) + 素材提取完成 → 论文写作
 - **关键技术**: 二部图GNN + DDQN + top-K动作压缩
 - **关键结论**: GNN从20UE迁移到100UE reward 35,699（正），MLP迁移崩溃-9,710；top-K压缩是决定性改进（reward 2x），GNN仅+0.8%
 - **教训**: 初始叙事（GNN提升绝对性能）在小规模不成立，及时转向size generalization救活项目；叙事转向需系统性实验支撑
+- **素材包**: paper_materials/ 6文件共~95K，含18篇中文引用+预印本验证
 - **handoff**: 无专用session目录（决策记录在项目目录内）
 
 ### hgat-satellite-dag-offloading
