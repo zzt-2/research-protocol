@@ -10,8 +10,8 @@
 | Step 2 论文获取 | ✅ 完成 | 2026-05-16 | TBD |
 | Step 3 精读 | ✅ 完成 | 2026-05-16 | TBD |
 | Step 3.5 定向补充 | ✅ 完成 | 2026-05-16 | TBD |
-| Step 4a 可行性预判 | ⬜ | | |
-| Step 5 Baseline选定 | ⬜ | | |
+| Step 4a 可行性预判 | ✅ 完成 | 2026-05-16 | TBD |
+| Step 5 Baseline选定 | ✅ 完成 | 2026-05-16 | TBD |
 | Step 4b 执行可行性 | ⬜ | | |
 | Step 6 仿真器设计 | ⬜ | | |
 | Step 7 Baseline复现 | ⬜ | | |
