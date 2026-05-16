@@ -7,12 +7,13 @@ LEO 多波束卫星波束跳变调度——利用 GNN 建模小区间空间干�
 - 一轮宽泛: `search-archive/2026-05-16/leo-satellite-spectrum-sharing-*.json`, `satellite-frequency-allocation-*.json`
 - 二轮深搜: `search-archive/2026-05-16/leo-satellite-beam-hopping-*.json`, `satellite-beam-hopping-*.json`, `hts-beam-hopping-*.json`, `leo-satellite-time-slot-allocation-*.json`
 - 辅助 GNN: `satellite-beam-hopping-gnn-*.json`
+- Step 3.5 定向: `graph-attention-network-beam-scheduling-satellite.json`, `hypergraph-neural-network-resource-allocation-satellite.json`, `gnn-discrete-action-scheduling-wireless-network.json`, `graph-neural-network-size-generalization-resource-allocation.json`
 
 ## 审查统计
 
 | 优先级 | 数量 | 说明 |
 |--------|------|------|
-| 必读 | 13 | 近3年+正式发表+直接相关 |
+| 必读 | 14 | 近3年+正式发表+直接相关 |
 | 建议读 | 30 | 近5年+正式发表+方法可借鉴 |
 | 待确认 | 5 | 预印本+相关，需查正式版 |
 | 备选 | 7 | 较早但基础性贡献 |
@@ -27,13 +28,13 @@ LEO 多波束卫星波束跳变调度——利用 GNN 建模小区间空间干�
 | 非DRL优化（Lyapunov/凸优化/MILP/遗传） | ~15 | 4 |
 | GNN for 卫星通信（非BH，方法参考） | ~8 | 3 |
 | 综述 | 2 | 0 |
-| **GNN + BH** | **0** | **空白确认** |
+| **GNN + BH** | **1** | **近乎空白**（仅1篇会议论文，1cit） |
 
 ### 质量门槛检查
 
 - 去重后 ≥20 ✓ (~70)
 - 覆盖 ≥3 搜索源 ✓ (S2, OpenAlex, arXiv, SerpAPI, Exa)
-- 必读 ≥5 ✓ (13)
+- 必读 ≥5 ✓ (14)
 - 覆盖 ≥2 子方向 ✓ (4个子方向)
 - 正式发表占比 ≥50% ✓ (~75%)
 
@@ -104,6 +105,15 @@ LEO 多波束卫星波束跳变调度——利用 GNN 建模小区间空间干�
 **[M13] Wang et al. 2025/2026 — Cooperative Satellite BH (TWC, 35 cit)**
 - 多星协作架构：DRL定BH模式，MM算法做资源分配，ISL做负载均衡。吞吐提升18.45%。
 - 来源文件：satellite-beam-hopping-resource-allocation-gnn-drl.json
+
+### E. Step 3.5 补充发现 — 直接竞品
+
+**[M14] Beam Hopping and Power Allocation Method for Multi-Beam Satellite System Based on Heterogeneous Graph (AIAC 2024, 1cit)**
+- 关键贡献：构建异构图（节点=照亮小区+波束，边=通信链路），将 BH+功率联合建模为 MDP，用异构图+DRL 直接做 BH 照亮决策。
+- 对本方向价值：**唯一已知的 GNN+BH 直接竞品**，但仅会议论文(AIAC 2024)、1 引用、非顶刊。方法为异构图+DRL，非 GAT/GNN 架构创新。
+- DOI: 10.1109/aiac63745.2024.10899659
+- 来源文件：graph-attention-network-beam-scheduling-satellite.json
+- 验证状态：子 agent 通过 Semantic Scholar API 验证 abstract，确认为 BH 调度竞品
 
 ---
 
@@ -196,11 +206,12 @@ LEO 多波束卫星波束跳变调度——利用 GNN 建模小区间空间干�
 
 ## 关键发现与覆盖度分析
 
-### 1. GNN+BH 完全空白确认
-- 5个JSON文件共~150条原始结果，去重后~70条相关
-- **0篇将GNN用于BH调度**
-- 最接近的论文：Lin 2025 (graph mapping + GAN)，用图但非GNN
+### 1. GNN+BH 近乎空白确认（Step 3.5 修正）
+- 5个初始JSON + 4个Step 3.5 JSON共~270条原始结果，去重后~100条相关
+- **仅1篇将GNN用于BH调度**：M14 异构图+DRL (AIAC 2024, 1cit, 非顶刊)
+- 最接近的其他论文：Lin 2025 (graph mapping + GAN)，用图但非GNN
 - GNN在卫星通信的成功应用（M10-M12）证明方法可行性
+- Step 3.5 补充检索中另有2篇候选（IEEE 11208547/11264375）经 abstract 交叉验证确认为**误检**（非 BH 调度）
 
 ### 2. MA-DRL可扩展性瓶颈确认
 - Yang 2025 (Tyche, JSAC) 明确指出>40小区MA-DRL收敛困难
@@ -215,10 +226,23 @@ LEO 多波束卫星波束跳变调度——利用 GNN 建模小区间空间干�
 ### 4. 覆盖度缺口评估
 - **已充分覆盖**：MA-DRL for BH、非DRL优化、GNN for satellite
 - **无需补充的方向**：中文文献（BH方向以英文为主）、抗干扰（边缘主题）
-- **如需深化**：GNN for terrestrial graph-based scheduling（地面网络GNN调度方法参考），但属于Step 3精读范围
+- **已补充覆盖（Step 3.5）**：GAT 变体、HGNN 方法迁移、GNN size generalization、GNN 离散调度
+- **方法迁移参考（新增）**：
+  - "Size generalizability of GNN for resource allocation" (2024, 13cit) — 支持可扩展性论据
+  - "Joint Resource Allocation in LEO: HGNN Enhanced" (2025, 2cit) — HGNN 用于 LEO 资源分配
+  - "Learning Wideband User Scheduling with GNN" (2025, 0cit) — GNN 做离散用户调度
+  - REGNN (2020, 380cit) 和 "GNN for scalable RRM" (2020, 461cit) — GNN 无线资源管理基础工作
 
-### 5. 二轮深搜验证
-方向侦察阶段二轮深搜已确认：119条追加检索中GNN+BH=0。本轮Step 1-2复用已有结果并补充AI审查，结论一致。
+### 5. 二轮深搜 + Step 3.5 补充检索验证
+方向侦察阶段二轮深搜已确认：119条追加检索中GNN+BH=0。本轮Step 1-2复用已有结果并补充AI审查。
+**Step 3.5 补充检索**（4轮定向 × 30结果 = 120条）：方法变体(GAT/MPNN/HGNN/GNN+discrete/size generalization) × (BH/scheduling/resource allocation)，仅发现 1 篇直接竞品（M14, AIAC 2024, 1cit）。**收敛性判断**：最后一轮新增必读 = 1（但影响力极低），实质已收敛。
+
+### 6. Step 3.5 充分性检查
+- **关键词矩阵覆盖** ✓：5 方法变体 × 2 问题场景 = 10 组合，已检索 4 轮覆盖
+- **搜索源覆盖** ✓：Semantic Scholar + OpenAlex + Exa（via tools/search）
+- **引用链分析**：OpenAlex 对 L05/L07 返回 0 结果（论文过新未被索引），后向引用在精读中已覆盖
+- **收敛性**：120 条结果 → 1 篇新竞品（会议论文, 1cit），实质收敛
+- **误检率**：2/3 候选经 abstract 交叉验证为误检（非 BH 调度），补充检索摘要可靠性需警惕
 
 ---
 
@@ -402,7 +426,7 @@ MAPPO/QMIX/QPLEX/DDPG/DQN 等多 agent 架构，每个 agent 负责一个波束/
 不依赖学习的传统优化方法。Yang 2025 Tyche [L01] 用 MCTS 序贯决策替代 DRL，127 小区吞吐量提升 20.85%~98.76%；Wang 2026 Lyapunov [S21]、Zamacola 2026 MILP [S28] 分别用数学规划方法。特点：可扩展性好但计算时间长（MCTS 127 小区 ~159s 优化后）。
 
 **3. 图方法（萌芽期，<1%）**
-仅 Lin 2025 graph mapping + GAN [L04] 将 RR 特征映射为柱状图视觉特征再用 GAN 优化，用户满意度从 76% 提升至 98%。但非 GNN，手工设计映射规则，不可端到端学习。
+Lin 2025 graph mapping + GAN [L04] 将 RR 特征映射为柱状图视觉特征再用 GAN 优化，用户满意度从 76% 提升至 98%。但非 GNN，手工设计映射规则，不可端到端学习。另发现 M14 (AIAC 2024) 用异构图+DRL 做 BH 调度，但仅为会议论文、1 引用，影响力极有限。
 
 **4. GNN for 卫星通信（非BH，方法参考）**
 Zhang 2025 DynHGNN [L02] 用动态超图+GRU 权重演化处理 LEO 下行干扰，HGNNRA 比 GCN/HGNN 最大提升 130Mbps。Geng 2024 Meta-GNN [L03] 用 MPNN+meta-learning 做功率分配，zero-shot 泛化到不同小区数保持 20~30% 增益。证明 GNN 在卫星资源分配中有效且可扩展。
@@ -421,7 +445,7 @@ Zhang 2025 DynHGNN [L02] 用动态超图+GRU 权重演化处理 LEO 下行干扰
 2. **非DRL方法回归**：MCTS（Tyche [L01]）、Lyapunov（Wang 2026）、MILP（Zamacola 2026）重新受到关注，反映对 DRL 可扩展性的反思
 3. **图方法萌芽**：Lin 2025 [L04] 首次将图表示引入 BH，虽非 GNN 但开辟了新范式
 4. **GNN 在卫星通信成熟化**：DynHGNN [L02]、Meta-GNN [L03]、GNN survey [M12] 表明 GNN 处理卫星干扰/资源分配的技术栈已成熟
-5. **GNN+BH 仍为零**：精读 4 篇+初筛 70 篇+二轮深搜 119 篇全部确认零 GNN+BH 工作，是明确的创新空白
+5. **GNN+BH 仅1篇**：精读 7 篇+初筛 70 篇+二轮深搜 119 篇+Step 3.5 四轮定向 120 篇，仅发现 1 篇会议论文（M14, AIAC 2024, 1cit）将异构图用于 BH 调度。近乎空白的创新机会确认。
 
 ### 研究背景概述
 
@@ -429,7 +453,7 @@ Zhang 2025 DynHGNN [L02] 用动态超图+GRU 权重演化处理 LEO 下行干扰
 
 **核心技术挑战**：(1) BH 是离散组合优化（选哪些波束照亮），状态空间随小区数指数增长；(2) 小区间同频干扰构成天然图结构，但 MA-DRL 的独立 agent 假设无法利用；(3) LEO 动态拓扑导致图结构时变，静态图方法不适用。
 
-**本研究定位**：在 GNN+BH 空白中填入第一个系统工作——用 GNN 编码小区间干扰图拓扑，替代 MA-DRL 的独立 agent，实现可扩展、可泛化的 BH 调度。与 [L02] 的超图干扰建模、[L03] 的 meta-learning 泛化、[L04] 的 graph mapping 思想形成方法组合。
+**本研究定位**：在 GNN+BH 近乎空白中填入第一个系统工作——用 GNN 编码小区间干扰图拓扑，替代 MA-DRL 的独立 agent，实现可扩展、可泛化的 BH 调度。与 [L02] 的超图干扰建模、[L03] 的 meta-learning 泛化、[L04] 的 graph mapping 思想形成方法组合。唯一竞品 M14 为低影响力会议论文，且未用 GAT/GNN 架构创新，差异化空间充足。
 
 ### [L05] Distributed Beam-Hopping Scheduling for LEO Mega-Constellation Networks Based on Hierarchical Multi-Agent Deep Reinforcement Learning
 - **DOI/来源**：10.1109/TWC.2026.3659941
