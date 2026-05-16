@@ -5,7 +5,9 @@
 - [Contract] Step 0-5 完成，已冻结（用户确认 2026-05-15）
 - [Execute] Step 0-1 完成（模型+训练+Quick Test 5轮诊断），PPO/REINFORCE 均未超越先验
 - [Execute] 方向修正 D026→D030: DRL→监督预训练+离散RL微调，ILP标签→路由感知标签
-- [Execute] Phase A Grid 标签完成: GNN 完美学习 grid 拓扑(F1=1.0)，评估与 B1(N_LCT=4) 完全匹配(ratio=1.000, 零切换)，**Execute 暂停**
+- [Execute] Phase A Grid 标签完成: GNN 完美学习 grid 拓扑(F1=1.0)，评估与 B1(N_LCT=4) 完全匹配(ratio=1.000, 零切换)
+- [Execute] 方向决策 D034: 静态场景 grid 已最优无法超越→转向动态场景(边失效)+Phase B 离散 RL，**进行中**
+- [Execute] D035-D037: 边失效机制+edge_dim 7→8+Phase B 训练完成，Phase B 无效(RL未学到有意义的策略)，待方向决策
 
 ## 决策记录
 [D001] Go/No-Go 决策：Go（用户已确认 2026-05-15） | 理由: A/B无致命信号 + MVE Pass (GNN 97.3% vs FC 79.5%) | 阶段: GW
@@ -41,3 +43,7 @@
 [D031] 路由感知贪心搜索不可行，改用 grid 标签直接训练（用户确认） | 理由: (1) 24×20 grid 是完美 4-正则图(960边)，N_LCT=4 阻塞所有单边替换;(2) 路由计算 146ms/次×2600 试验/轮=386s/轮，全数据集>100h;(3) D024 已证 grid 在此规模近最优;(4) 采用方向3(公平对比): grid 标签直接训练 | 阶段: EX
 [D032] B1 基线数据修正: handoff M1=0.174 是未剪枝 B1(6 edges/sat, 1440边)，正确 B1(N_LCT=4) M1=0.115(4 edges/sat, 960边) | 理由: GridFixedBaseline 默认 n_lct=None 不剪枝，导致 edges_per_sat=6; 与 N_LCT=4 的 DRL 对比不公平 | 阶段: EX
 [D033] Phase A Grid 标签训练完成: F1=1.0, acc=1.0, 与 B1(N_LCT=4) 完全匹配 ratio=1.000, 零切换 | 理由: (1) GNN 完美学习 grid 拓扑; (2) 预激活 grid 边后评估: M1=0.1154=B1(N_LCT=4), M3=0.0000; (3) 验证了 GNN 架构和训练管线正确性; (4) 24×20 规模 grid 已是最优，无法超越; (5) Execute 暂停，待决定下一步(Phase B/全规模/归档) | 阶段: EX
+[D034] 方向决策: 静态场景转向动态场景(边失效) + Phase B 离散 RL | 理由: (1) 静态场景 grid 已数学最优(D024+D031证明4-正则图无改进空间); (2) 边失效是 GNN+DRL 的设计初衷(文献空白); (3) 静态 grid 无法自适应→被动等待恢复，GNN 可重选拓扑; (4) 最小可行路径: 边失效机制 + Phase A 预训练初始化 + Phase B 离散 RL 微调; (5) 补充: 全规模24×66+动态 baseline(B2)作为后续强化证据 | 阶段: EX
+[D035] 边失效机制实现: 环境和基线均支持 link failure | 理由: (1) config.py 新增 FAILURE_PROB/DURATION 参数(默认禁用); (2) environment.py 每步随机失效活跃边，失效边不可被 LCT 选择和路由; (3) grid_fixed.py 同样支持失效; (4) 冒烟测试验证: p=0.1 时 grid 吞吐量降 13.2% | 阶段: EX
+[D036] 边特征维度 7→8(加失效标志) + Phase A 权重 padding | 理由: (1) Phase A 在 p=0.03 失效下 M3=0.286(疯狂切换)，因模型看不到哪些边失效; (2) 新增第8维 edge_feat[7]=1.0 if failed; (3) model edge_dim 从 7→8，新增 load_backbone_with_padding() 函数自动补零列; (4) 验证: padded 8-dim 输出与 7-dim 完全一致(max diff=0.0) | 阶段: EX
+[D037] Phase B 训练无效: RL 未学到有意义的策略 | 理由: (1) 无 AS-IS 偏置: reward=-20(随机 FORCE-OFF 毁拓扑); (2) 有 AS-IS 偏置(bias=5.0): reward=-10.3(vs Phase A 的 -12.4)，但 Phase B 评估结果 = Phase A(M1=0.109, M3=0.164); (3) 根因: AS-IS 偏置太强+失效边仅占 2%(100/5400)→PPO 信用分配无法从稀疏信号中学习; (4) Phase A 在失效下 ≈ Grid(吞吐量恢复 ≈ 切换惩罚损失); (5) 24×20 规模替代边质量不够好，无法补偿切换成本 | 待方向决策: 更激进失效/换叙事/全规模 | 阶段: EX

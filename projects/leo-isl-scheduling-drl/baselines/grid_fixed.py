@@ -29,7 +29,8 @@ from simulator import config
 class GridFixedBaseline:
     def __init__(self, n_planes=None, sats_per_plane=None, altitude=None,
                  inclination_deg=None, tau=None, episode_steps=None, seed=42,
-                 multipath=False, k_paths=4, n_lct=None):
+                 multipath=False, k_paths=4, n_lct=None,
+                 failure_prob=None, failure_duration_min=None, failure_duration_max=None):
         self.seed = seed
         self.rng = np.random.default_rng(seed)
         self.tau = tau or config.TAU
@@ -37,6 +38,9 @@ class GridFixedBaseline:
         self.multipath = multipath
         self.k_paths = k_paths
         self.n_lct = n_lct
+        self.failure_prob = failure_prob if failure_prob is not None else config.FAILURE_PROB
+        self.failure_dur_min = failure_duration_min or config.FAILURE_DURATION_MIN
+        self.failure_dur_max = failure_duration_max or config.FAILURE_DURATION_MAX
 
         self.orbit = OrbitPropagator(n_planes, sats_per_plane, altitude, inclination_deg)
         self.channel = ChannelModel()
@@ -144,12 +148,33 @@ class GridFixedBaseline:
         """Run one episode with fixed grid topology. Returns (metrics, total_reward)."""
         self.metrics.reset()
         total_reward = 0.0
+        failed_edges = {}  # key -> remaining steps
 
         for step in range(self.episode_steps):
             t = step * self.tau
             positions = self.orbit.propagate(t)
 
             available = self._get_available_edges(positions)
+
+            # Inject link failures
+            if self.failure_prob > 0:
+                # Recover expired
+                recovered = [k for k, v in failed_edges.items() if v <= 1]
+                for k in recovered:
+                    del failed_edges[k]
+                for k in list(failed_edges.keys()):
+                    if k not in recovered:
+                        failed_edges[k] -= 1
+
+                # Fail active edges
+                avail_keys = list(available.keys())
+                for key in avail_keys:
+                    if key not in failed_edges and self.rng.random() < self.failure_prob:
+                        dur = self.rng.integers(self.failure_dur_min, self.failure_dur_max + 1)
+                        failed_edges[key] = dur
+
+                # Remove failed from available
+                available = {k: v for k, v in available.items() if k not in failed_edges}
 
             dist_map = {}
             cap_map = {}
@@ -179,7 +204,8 @@ class GridFixedBaseline:
             if verbose and step % 10 == 0:
                 print(f"  Step {step}: reward={reward_dict['total']:.4f} "
                       f"R_tput={reward_dict['R_tput']:.3f} "
-                      f"n_active={len(active_keys)}/{len(self._fixed_edges)}")
+                      f"n_active={len(active_keys)}/{len(self._fixed_edges)} "
+                      f"n_failed={len(failed_edges)}")
 
         return self.metrics.compute(), total_reward
 

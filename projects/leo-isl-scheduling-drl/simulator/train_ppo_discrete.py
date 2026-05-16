@@ -21,9 +21,10 @@ import numpy as np
 import torch
 import torch.nn as nn
 
-from .model_gat import GATv2Backbone, DiscreteRLGNN
+from .model_gat import GATv2Backbone, DiscreteRLGNN, load_backbone_with_padding
 from .environment import ISLEnvironment
 from .discrete_wrapper import DiscreteActionWrapper, obs_to_data
+from .generate_dataset import build_grid_topology
 from . import config
 
 
@@ -117,6 +118,7 @@ def evaluate_model(
     model: DiscreteRLGNN,
     n_episodes: int = 5,
     device: str = "cpu",
+    warm_start: bool = True,
 ) -> dict[str, float]:
     """Run episodes with deterministic policy, return averaged metrics."""
     wrapper = DiscreteActionWrapper(env, model, device=device)
@@ -124,6 +126,10 @@ def evaluate_model(
 
     for ep in range(n_episodes):
         obs, _ = wrapper.reset(seed=9999 + ep)
+        if warm_start:
+            grid_edges = build_grid_topology(env)
+            env.set_isl_configuration(set(grid_edges.keys()))
+            obs = env._build_obs()
         done = False
         while not done:
             data = obs_to_data(obs).to(device)
@@ -164,6 +170,10 @@ def train_ppo_discrete(
     device: str = "cpu",
     results_dir: str = "results/phase_b",
     seed: int = 42,
+    failure_prob: float = 0.0,
+    failure_duration_min: int = 2,
+    failure_duration_max: int = 5,
+    warm_start: bool = True,
 ) -> dict[str, Any]:
     """Phase B discrete PPO fine-tuning.
 
@@ -175,17 +185,10 @@ def train_ppo_discrete(
     os.makedirs(results_dir, exist_ok=True)
 
     # ------------------------------------------------------------------
-    # 1. Build model and load Phase A backbone
+    # 1. Build model and load Phase A backbone (with 7→8 dim padding)
     # ------------------------------------------------------------------
-    backbone = GATv2Backbone()
+    backbone = load_backbone_with_padding(phase_a_checkpoint, device=str(device))
     model = DiscreteRLGNN(backbone).to(device)
-
-    ckpt = torch.load(phase_a_checkpoint, map_location=device, weights_only=False)
-    if "backbone" in ckpt:
-        model.backbone.load_state_dict(ckpt["backbone"])
-    else:
-        # Assume the checkpoint *is* the backbone state dict
-        model.backbone.load_state_dict(ckpt)
     print(f"[Phase B] Loaded backbone from {phase_a_checkpoint}")
 
     # ------------------------------------------------------------------
@@ -195,6 +198,9 @@ def train_ppo_discrete(
         n_planes=n_planes,
         sats_per_plane=sats_per_plane,
         seed=seed,
+        failure_prob=failure_prob,
+        failure_duration_min=failure_duration_min,
+        failure_duration_max=failure_duration_max,
     )
     wrapper = DiscreteActionWrapper(env, model, device=device)
 
@@ -226,6 +232,10 @@ def train_ppo_discrete(
 
     for ep in range(n_episodes):
         obs, _ = wrapper.reset(seed=seed + ep)
+        if warm_start:
+            grid_edges = build_grid_topology(env)
+            env.set_isl_configuration(set(grid_edges.keys()))
+            obs = env._build_obs()
         episode_reward = 0.0
         done = False
 
@@ -368,7 +378,7 @@ def train_ppo_discrete(
     # 5. Final evaluation
     # ------------------------------------------------------------------
     print("[Phase B] Running final evaluation ...")
-    final_metrics = evaluate_model(env, model, n_episodes=5, device=device)
+    final_metrics = evaluate_model(env, model, n_episodes=5, device=device, warm_start=warm_start)
     elapsed = time.time() - t_start
 
     # Save final model
@@ -404,6 +414,8 @@ def train_ppo_discrete(
                     "backbone_freeze_updates": backbone_freeze_updates,
                     "backbone_lr_scale": backbone_lr_scale,
                     "seed": seed,
+                    "failure_prob": failure_prob,
+                    "warm_start": warm_start,
                 },
                 "log": log_entries,
                 "best_reward": best_reward,
@@ -462,6 +474,10 @@ if __name__ == "__main__":
     parser.add_argument("--device", default="cpu")
     parser.add_argument("--results-dir", default="results/phase_b")
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--failure-prob", type=float, default=config.FAILURE_PROB)
+    parser.add_argument("--failure-dur-min", type=int, default=config.FAILURE_DURATION_MIN)
+    parser.add_argument("--failure-dur-max", type=int, default=config.FAILURE_DURATION_MAX)
+    parser.add_argument("--no-warm-start", action="store_true")
     args = parser.parse_args()
 
     train_ppo_discrete(
@@ -480,4 +496,8 @@ if __name__ == "__main__":
         device=args.device,
         results_dir=args.results_dir,
         seed=args.seed,
+        failure_prob=args.failure_prob,
+        failure_duration_min=args.failure_dur_min,
+        failure_duration_max=args.failure_dur_max,
+        warm_start=not args.no_warm_start,
     )

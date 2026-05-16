@@ -71,3 +71,8 @@ PHASE_B_GAE_LAMBDA = 0.95
 
 # Discrete action space
 N_DISCRETE_ACTIONS = 3     # AS-IS=0, FORCE-ON=1, FORCE-OFF=2
+
+# Link failure (dynamic scenario) — 0 = disabled
+FAILURE_PROB = 0.03        # probability per active edge per step
+FAILURE_DURATION_MIN = 2   # minimum failure duration in steps
+FAILURE_DURATION_MAX = 5   # maximum failure duration in steps

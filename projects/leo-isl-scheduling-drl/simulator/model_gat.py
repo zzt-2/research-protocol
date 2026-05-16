@@ -23,7 +23,7 @@ class GATv2ActorCritic(nn.Module):
     def __init__(
         self,
         node_dim: int = 6,
-        edge_dim: int = 7,
+        edge_dim: int = 8,
         hidden_dim: int = 64,
         n_heads: int = 4,
         n_layers: int = 3,
@@ -210,7 +210,7 @@ class GATv2Backbone(nn.Module):
     def __init__(
         self,
         node_dim: int = 6,
-        edge_dim: int = 7,
+        edge_dim: int = 8,
         hidden_dim: int = 64,
         n_heads: int = 4,
         n_layers: int = 3,
@@ -302,7 +302,7 @@ class DiscreteRLGNN(nn.Module):
         self,
         backbone: GATv2Backbone,
         node_dim: int = 6,
-        edge_dim: int = 7,
+        edge_dim: int = 8,
         hidden_dim: int = 64,
     ) -> None:
         super().__init__()
@@ -315,6 +315,11 @@ class DiscreteRLGNN(nn.Module):
             nn.ReLU(),
             nn.Linear(hidden_dim, 3),
         )
+
+        # Initialize AS-IS bias: untrained model defaults to keeping backbone scores
+        nn.init.zeros_(self.action_head[-1].weight)
+        nn.init.zeros_(self.action_head[-1].bias)
+        self.action_head[-1].bias.data[0] = 5.0  # strong AS-IS prior
 
         # Critic
         self.critic_head = nn.Sequential(
@@ -405,3 +410,28 @@ class DiscreteRLGNN(nn.Module):
             )
             scores = torch.sigmoid(raw)
         return scores.cpu().numpy()
+
+
+def load_backbone_with_padding(checkpoint_path: str, device: str = "cpu") -> GATv2Backbone:
+    """Load Phase A backbone, padding weights for edge_dim 7→8 if needed."""
+    backbone = GATv2Backbone()
+    ckpt = torch.load(checkpoint_path, map_location=device, weights_only=False)
+
+    # Extract state dict
+    if "model_state_dict" in ckpt:
+        sd = ckpt["model_state_dict"]
+    elif "backbone" in ckpt:
+        sd = ckpt["backbone"]
+    else:
+        sd = ckpt
+
+    # Check if padding is needed (old 7-dim → new 8-dim)
+    decoder_key = "edge_decoder.0.weight"
+    if decoder_key in sd and sd[decoder_key].shape[1] == 135:  # 2*64+7=135
+        old_w = sd[decoder_key]
+        new_w = torch.zeros(128, 136)  # 2*64+8=136
+        new_w[:, :135] = old_w
+        sd[decoder_key] = new_w
+
+    backbone.load_state_dict(sd, strict=True)
+    return backbone

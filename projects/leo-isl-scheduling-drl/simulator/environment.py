@@ -31,11 +31,15 @@ class ISLEnvironment:
     """ISL scheduling environment (gym-like API without strict gym spaces)."""
 
     def __init__(self, n_planes=None, sats_per_plane=None, altitude=None,
-                 inclination_deg=None, tau=None, episode_steps=None, seed=42):
+                 inclination_deg=None, tau=None, episode_steps=None, seed=42,
+                 failure_prob=None, failure_duration_min=None, failure_duration_max=None):
         self.seed = seed
         self.rng = np.random.default_rng(seed)
         self.tau = tau or config.TAU
         self.episode_steps = episode_steps or config.EPISODE_STEPS
+        self.failure_prob = failure_prob if failure_prob is not None else config.FAILURE_PROB
+        self.failure_dur_min = failure_duration_min or config.FAILURE_DURATION_MIN
+        self.failure_dur_max = failure_duration_max or config.FAILURE_DURATION_MAX
 
         # Modules
         self.orbit = OrbitPropagator(n_planes, sats_per_plane, altitude, inclination_deg)
@@ -56,6 +60,7 @@ class ISLEnvironment:
         self._isl_state = {}       # (min_i, max_j) -> 'inactive'|'in_setup'|'active'
         self._setup_remaining = {} # (min_i, max_j) -> seconds
         self._active_duration = {} # (min_i, max_j) -> seconds
+        self._failed_edges = {}    # (min_i, max_j) -> remaining steps
         self._prev_active_count = 0
         self._flows = []
 
@@ -69,6 +74,7 @@ class ISLEnvironment:
         self._isl_state.clear()
         self._setup_remaining.clear()
         self._active_duration.clear()
+        self._failed_edges.clear()
         self._prev_active_count = 0
         self.metrics.reset()
 
@@ -99,6 +105,9 @@ class ISLEnvironment:
 
         # 2. Update ISL states
         n_new, n_changed, setup_delays = self._update_states(selected)
+
+        # 2.5. Inject link failures (if enabled)
+        n_failed = self._inject_failures()
 
         # 3. Advance time
         self._t += self.tau
@@ -170,11 +179,14 @@ class ISLEnvironment:
         return obs, reward_dict['total'], terminated, False, info
 
     def _apply_lct(self, scores):
-        """LCT constraint: top-N_LCT edges per satellite by score."""
+        """LCT constraint: top-N_LCT edges per satellite by score. Skips failed edges."""
         scores = np.asarray(scores)
         sat_scores = defaultdict(list)
 
         for idx, (i, j, _) in enumerate(self._candidate_edges):
+            key = (min(i, j), max(i, j))
+            if key in self._failed_edges:
+                continue
             s = float(scores[idx]) if idx < len(scores) else 0.0
             sat_scores[i].append((s, j))
             sat_scores[j].append((s, i))
@@ -225,6 +237,40 @@ class ISLEnvironment:
 
         return n_new, n_changed, setup_delays
 
+    def _inject_failures(self):
+        """Randomly fail active edges and recover expired failures.
+
+        Returns number of newly failed edges this step.
+        """
+        if self.failure_prob <= 0:
+            return 0
+
+        # Recover expired failures
+        recovered = [k for k, v in self._failed_edges.items() if v <= 1]
+        for k in recovered:
+            del self._failed_edges[k]
+            self._isl_state[k] = 'inactive'
+        for k in list(self._failed_edges.keys()):
+            if k not in recovered:
+                self._failed_edges[k] -= 1
+
+        # Inject new failures on active edges
+        active_keys = [k for k, v in self._isl_state.items() if v == 'active']
+        if not active_keys:
+            return 0
+
+        n_failed = 0
+        for key in active_keys:
+            if self.rng.random() < self.failure_prob:
+                dur = self.rng.integers(self.failure_dur_min, self.failure_dur_max + 1)
+                self._failed_edges[key] = dur
+                self._isl_state[key] = 'inactive'
+                self._active_duration.pop(key, None)
+                self._setup_remaining.pop(key, None)
+                n_failed += 1
+
+        return n_failed
+
     def _find_distance(self, key):
         """Find distance for an edge key from candidate edges."""
         i, j = key
@@ -268,9 +314,9 @@ class ISLEnvironment:
             n_setup / config.N_LCT,
         ], axis=1)
 
-        # Edge features
+        # Edge features (8-dim: cap, dist, active, in_setup, setup_rem, dur, pout, failed)
         n_cand = len(self._candidate_edges)
-        edge_feat = np.zeros((n_cand, 7))
+        edge_feat = np.zeros((n_cand, 8))
 
         if n_cand > 0:
             dists = np.array([d for _, _, d in self._candidate_edges])
@@ -289,6 +335,7 @@ class ISLEnvironment:
                 dur = self._active_duration.get(key, 0)
                 edge_feat[idx, 5] = np.log1p(dur) / np.log1p(max_dur)
                 edge_feat[idx, 6] = pouts[idx]
+                edge_feat[idx, 7] = 1.0 if key in self._failed_edges else 0.0
 
         return {
             'node_features': node_feat,
