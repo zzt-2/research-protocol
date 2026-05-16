@@ -1,6 +1,6 @@
 # 项目总览
 
-> 最后更新: 2026-05-15 | 活跃: 5 | 已归档: 1 | 总计: 6
+> 最后更新: 2026-05-16 | 活跃: 5 | 已归档: 3 | 总计: 8
 
 ## 活跃项目
 
@@ -28,13 +28,27 @@
 - **教训**: 组合新颖性不可跳过MVE；奖励权重平衡需试运行验证；MinerU可解决PDF表格渲染问题
 - **handoff**: `.session/2026-05-13-hgat-satellite-dag-offloading/HANDOFF-001-initial.md`
 
+### leo-congestion-routing
+- **方向**: GNN 拥塞感知路由 + 负载均衡 for LEO 卫星星座
+- **阶段**: GW Step 1 完成 → Step 2 论文获取
+- **关键技术**: GNN message passing + 全局负载聚合 + per-link 负载均衡决策
+- **关键结论**: Step 1 检索 87 条候选（必读15），GNN+拥塞+LEO 三角交集有论文但无 per-link 竞品；size gen × 拥塞路由交叉为真空
+- **风险**: resilient-routing MVE 证明 GNN ≈ MLP for routing，新方向需验证拥塞/负载信息的全局聚合优势
+- **handoff**: 无（项目刚启动）
+
+### leo-resilient-routing
+- **方向**: LEO故障感知抗毁路由（GNN→MARL+课程学习+主动预路由）
+- **归档原因**: MVE三轮失败：(1) GNN不优于MLP(18/60节点); (2) MARL课程学习+2.2%未达门槛; (3) 主动预路由反而更差(-1.3%); 与beam-hopping/ISL-scheduling同模式：网格拓扑正则→启发式够用→ML无优化空间
+- **关键失败教训**: Walker星座网格拓扑太规则，贪心路由92%投递率，RL仅5%；LEO路由/调度/波束跳三个子方向全部归档，信号一致：物理约束主导问题不适合ML
+- **handoff**: `.session/2026-05-16-leo-resilient-routing/HANDOFF-004-step4a-pivot.md`
+
 ### leo-isl-scheduling-drl
 - **方向**: GNN拓扑编码+DRL用于LEO巨型星座ISL细粒度三态调度
-- **阶段**: Execute Step 0-1 → **死胡同，待方向回顾**（3种RL方法+swap诊断均未超越先验）
-- **关键技术**: GNN + DRL（图匹配建模）
-- **关键结论**: MVE 97.3%最优匹配质量；B1基线吞吐量28.2%（72%流量阻塞说明优化空间大）；三项物理模型修正（噪声/路径损耗/干扰惩罚）
-- **教训**: 仿真器性能优化关键（visibility 6.4x, traffic 63x）；奖励函数需MDP试运行验证；B2复现困难（无代码，测试规模不足）
-- **handoff**: `.session/2026-05-15-isl-scheduling-drl/HANDOFF-011-gw-complete.md`
+- **阶段**: **归档** — 7种方法全部未超越先验
+- **归档原因**: (1) grid拓扑在24×20/24×66均近最优(swap改善<噪声); (2) PPO/REINFORCE/离散RL均无法超越先验; (3) ILP标签是代理目标; (4) 动态场景(边失效)RL信用分配失败; (5) 与beam-hopping同一失败模式: 物理结构决定性能
+- **关键结论**: GNN可完美学习专家拓扑(F1=1.0)，但无法超越; 24×66跨轨候选8.5个/sat(vs 24×20仅3个)，仍不足以产生优化空间
+- **教训**: 物理约束主导的问题(grid拓扑)不适合RL优化; 全局reward vs 逐边动作的credit assignment与规模无关; ILP标签最大化容量≠最大化吞吐量
+- **handoff**: `.session/2026-05-16-isl-scheduling-drl/HANDOFF-018-dynamic-scenario-stuck.md`
 
 ### ris-phase-drl
 - **方向**: DRL优化大规模RIS(100+元素)连续相移
@@ -45,6 +59,12 @@
 - **handoff**: `.session/2026-05-13-ris-phase-drl/HANDOFF-002-step2.md`
 
 ## 已归档项目
+
+### leo-isl-scheduling-drl
+- **方向**: GNN拓扑编码+DRL用于LEO巨型星座ISL细粒度三态调度
+- **归档原因**: 7种方法(PPO/REINFORCE/swap/ILP标签/grid标签/动态场景RL/全规模swap)全部未超越先验; grid拓扑在24×20和24×66均近最优; 物理结构决定性能与beam-hopping同模式
+- **关键失败教训**: 物理约束主导的问题不适合RL; 全局reward+逐边动作的credit assignment与规模无关; ILP标签是代理目标(容量≠吞吐量)
+- **handoff**: `.session/2026-05-16-isl-scheduling-drl/HANDOFF-018-dynamic-scenario-stuck.md`
 
 ### leo-beam-hopping-gnn
 - **方向**: GNN建模多波束LEO卫星Beam Hopping波束间空间干扰耦合
