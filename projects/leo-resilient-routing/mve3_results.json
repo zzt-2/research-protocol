@@ -1,0 +1,38 @@
+{
+  "part_a": {
+    "curriculum_avg": 0.06360000000000002,
+    "direct_avg": 0.042,
+    "delta": 0.021600000000000015,
+    "verdict": "CONDITIONAL",
+    "per_scenario": {
+      "easy_2f": {
+        "curr": 0.05800000000000001,
+        "direct": 0.032
+      },
+      "med_5f": {
+        "curr": 0.066,
+        "direct": 0.046000000000000006
+      },
+      "hard_8f": {
+        "curr": 0.05800000000000001,
+        "direct": 0.052000000000000005
+      },
+      "vhard_12f": {
+        "curr": 0.06200000000000001,
+        "direct": 0.04
+      },
+      "correlated": {
+        "curr": 0.074,
+        "direct": 0.04
+      }
+    }
+  },
+  "part_b": {
+    "proactive": 0.9212499999999999,
+    "reactive": 0.9337500000000001,
+    "delta": -0.012500000000000178,
+    "verdict": "FAIL"
+  },
+  "overall": "CONDITIONAL",
+  "elapsed_s": 685.1984131336212
+}

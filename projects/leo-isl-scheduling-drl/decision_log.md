@@ -8,6 +8,7 @@
 - [Execute] Phase A Grid 标签完成: GNN 完美学习 grid 拓扑(F1=1.0)，评估与 B1(N_LCT=4) 完全匹配(ratio=1.000, 零切换)
 - [Execute] 方向决策 D034: 静态场景 grid 已最优无法超越→转向动态场景(边失效)+Phase B 离散 RL，**进行中**
 - [Execute] D035-D037: 边失效机制+edge_dim 7→8+Phase B 训练完成，Phase B 无效(RL未学到有意义的策略)，待方向决策
+- [Execute] D038: 全规模 24×66 swap 诊断未超出噪声→**归档**，7 种方法全部未超越先验
 
 ## 决策记录
 [D001] Go/No-Go 决策：Go（用户已确认 2026-05-15） | 理由: A/B无致命信号 + MVE Pass (GNN 97.3% vs FC 79.5%) | 阶段: GW
@@ -46,4 +47,5 @@
 [D034] 方向决策: 静态场景转向动态场景(边失效) + Phase B 离散 RL | 理由: (1) 静态场景 grid 已数学最优(D024+D031证明4-正则图无改进空间); (2) 边失效是 GNN+DRL 的设计初衷(文献空白); (3) 静态 grid 无法自适应→被动等待恢复，GNN 可重选拓扑; (4) 最小可行路径: 边失效机制 + Phase A 预训练初始化 + Phase B 离散 RL 微调; (5) 补充: 全规模24×66+动态 baseline(B2)作为后续强化证据 | 阶段: EX
 [D035] 边失效机制实现: 环境和基线均支持 link failure | 理由: (1) config.py 新增 FAILURE_PROB/DURATION 参数(默认禁用); (2) environment.py 每步随机失效活跃边，失效边不可被 LCT 选择和路由; (3) grid_fixed.py 同样支持失效; (4) 冒烟测试验证: p=0.1 时 grid 吞吐量降 13.2% | 阶段: EX
 [D036] 边特征维度 7→8(加失效标志) + Phase A 权重 padding | 理由: (1) Phase A 在 p=0.03 失效下 M3=0.286(疯狂切换)，因模型看不到哪些边失效; (2) 新增第8维 edge_feat[7]=1.0 if failed; (3) model edge_dim 从 7→8，新增 load_backbone_with_padding() 函数自动补零列; (4) 验证: padded 8-dim 输出与 7-dim 完全一致(max diff=0.0) | 阶段: EX
-[D037] Phase B 训练无效: RL 未学到有意义的策略 | 理由: (1) 无 AS-IS 偏置: reward=-20(随机 FORCE-OFF 毁拓扑); (2) 有 AS-IS 偏置(bias=5.0): reward=-10.3(vs Phase A 的 -12.4)，但 Phase B 评估结果 = Phase A(M1=0.109, M3=0.164); (3) 根因: AS-IS 偏置太强+失效边仅占 2%(100/5400)→PPO 信用分配无法从稀疏信号中学习; (4) Phase A 在失效下 ≈ Grid(吞吐量恢复 ≈ 切换惩罚损失); (5) 24×20 规模替代边质量不够好，无法补偿切换成本 | 待方向决策: 更激进失效/换叙事/全规模 | 阶段: EX
+[D037] Phase B 训练无效: RL 未学到有意义的策略 | 理由: (1) 无 AS-IS 偏置: reward=-20(随机 FORCE-OFF 毁拓扑); (2) 有 AS-IS 偏置(bias=5.0): reward=-10.3(vs Phase A 的 -12.4)，但 Phase B 评估结果 = Phase A(M1=0.109, M3=0.164); (3) 根因: AS-IS 偏置太强+失效边仅占 2%(100/5400)→PPO 信用分配无法从稀疏信号中学习; (4) Phase A 在失效下 ≈ Grid(吞吐量恢复 ≈ 切换惩罚损失); (5) 24×20 规模替代边质量不够好，无法补偿切换成本 | 阶段: EX
+[D038] 归档决策: 全规模 24×66 验证后归档 | 理由: (1) 24×66 swap 诊断: best Δ=+0.004(1.7%)在种子间噪声(±0.013)范围内，12 次试验仅 2 次为正; (2) failure gap 仅 7.3%(比 24×20 的 12.6%更小); (3) grid edges/sat=5.27>N_LCT=4(不公平优势); (4) 7 种方法(PPO/REINFORCE/swap/ILP标签/grid标签/动态场景离散RL/全规模swap)全部未超越先验; (5) 与 beam-hopping 同一失败模式: 物理结构决定性能，学习无法超越; (6) 根本问题(credit assignment)与规模无关 | 归档 | 阶段: EX

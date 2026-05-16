@@ -28,7 +28,7 @@
 │   │   ├── HANDOFF-{NNN}-{slug}.md   # 跨对话交接记录
 │   │   ├── PROMPT-{NNN}-{slug}.md    # 新对话提示词
 │   │   └── LOG-{NNN}-{slug}.md       # 操作日志
-│   ├── framework-evolution/           # 框架演进专题（跨项目）
+│   ├── framework-evolution/           # 框架演进专题（跨项目，长期，不按日期另开）
 │   │   └── LOG-{NNN}-{slug}.md       # 框架问题日志
 │   ├── direction-scouting/            # 方向侦察/项目盘点（长期，不按日期另开）
 │   └── thesis-structure-research/     # 论文结构研究（长期，不按日期另开）
@@ -200,6 +200,18 @@
 目的：context overflow 恢复后只需读 handoff，不需重跑已完成步骤。
 
 ## 跨对话协作
+
+### 长期专题目录
+
+`.session/` 下有三个不带日期的长期专题目录，跨项目持续使用，**禁止按日期另建同名目录**：
+
+| 目录 | 用途 |
+|------|------|
+| `framework-evolution/` | 框架规则改进、流程问题日志 |
+| `direction-scouting/` | 方向侦察、项目状态盘点 |
+| `thesis-structure-research/` | 论文结构设计、导师要求记录 |
+
+新对话涉及这些专题时，直接往对应目录写文件，不开 `{date}-{topic}/`。
 
 ### 交接机制（handoff）
 
