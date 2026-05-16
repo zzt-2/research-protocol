@@ -12,7 +12,7 @@
 | Step 3.5 定向补充 | ✅ 完成 | 2026-05-16 | TBD |
 | Step 4a 可行性预判 | ✅ 完成 | 2026-05-16 | TBD |
 | Step 5 Baseline选定 | ✅ 完成 | 2026-05-16 | TBD |
-| Step 4b 执行可行性 | ⬜ | | |
+| Step 4b 执行可行性 | ✅ 完成 | 2026-05-16 | TBD |
 | Step 6 仿真器设计 | ⬜ | | |
 | Step 7 Baseline复现 | ⬜ | | |
 
@@ -392,27 +392,164 @@
 5. **网络架构**: MLP enc(2层,180/360) → 双循环 GCN(K=8~16外循环×J=2内循环 GCN) → MLP readout(2层,360/720) + ReLU + Residual
 6. **适配性分析**: 适配: size generalization 20x 泛化范式、双循环 GNN 算法对齐思路、LEO 列为目标场景 | 不适配: 静态快照无时序（LEO 最关键的时变性完全缺失）、per-path 决策需预计算路径、SL 需离线 IPM label | **核心差异化**: LEO 时变拓扑 + per-link 在线负载均衡决策
 
-#### 其他高优先级新发现（待精读）
+#### [L12] DeepLaDu: Duality-Guided Graph Learning for Real-Time Joint Connectivity and Routing in LEO Mega-Constellations
 
-| # | 论文 | 来源 | 优先级 | 关键点 |
-|---|------|------|--------|--------|
-| 1 | **DeepLaDu** (Gu 2026, arXiv:2601.21921) | GMR 前向引用 | 高 | GNN 推断 per-link congestion prices，Lagrangian dual 框架，与本研究 per-link 最接近。**已下载** |
-| 2 | **ALIDT/ADRLRM** (Gao 2025/2026, TMC/ToN) | GMR 前向引用 | 高 | STGNN 做卫星路由，声称超越 GMR。同一团队两篇 |
-| 3 | **GRL-RR** (Bai 2025, Computer Networks) | GMR 前向引用 | 高 | GNN+DRL LEO 弹性路由 |
-| 4 | **Fan 2026 TAES** (DOI:10.1109/TAES.2026.3652971) | GMR 前向引用 | 高 | GNN+RL 多路径流量拆分（与 L07 不同论文）。**下载失败** |
-| 5 | HARP (SIGCOMM 2024) | 新检索 | 中 | cross-topology TE 神经方法，98% 场景 MLU 仅高 11% |
+- DOI/来源: arXiv:2601.21921
+- **发表状态**: arXiv 预印本（2026年1月）
+- **发表渠道**: 预印本阶段
+- 年份/会议: 2026 (Gu, Zhou)
+- 核心贡献: GATv2 一次前向推理输出 per-link Lagrange 乘子（拥塞价格），替代迭代式次梯度下降，实现 ISL 连接建立+路由+流率分配联合实时优化
+- 方法概述: MIP → Lagrangian 松弛 → 三子问题分解(MWM+Dijkstra+LP)。GATv2 输出拥塞价格，次梯度训练（非 RL）。收敛性有理论保证(Theorem 1)
+- 实验设置: Starlink TLEs, I=1000 卫星, N'=2 LCT/星, FOR=60°, 光学链路; RTX 5090
+- Baseline: PG, DDPG, LaDu(迭代次梯度), MRate, +Grid, Rand, SaTE
+- 关键结论: 比启发式提升 20%~100% 吞吐量；LaDu-100 性能相当但计算仅 10^-4；推理十毫秒级（< Starlink 相干时间 0.52s）
+- 与本研究关系: **间接相关**。问题不同（拓扑设计 vs 固定拓扑负载均衡），但 Lagrangian 对偶+per-edge 梯度反馈思路可借鉴
+- 实现关键细节: GATv2(4头,64隐), NEF/EEF 单层线性(64), ROF 3层MLP(64), sigmoid[0,1]; 次梯度 δ=sum(qx)-sum(rc); lr=1e-3, β=0.7 衰减
+- 开源代码: 声明将公开(github.com/zhouyou-gu)，尚未发布
 
-### 缺失论文状态
+**结构化提取**:
+1. **状态空间**: 节点 s_i=[Q_i,D_i] 2维; 边 R_ij=可连接 LCT 对容量之和 1维
+2. **动作空间**: 连续 per-edge λ_{i,j}∈[0,1]; 维度=|L|（邻接卫星对数）
+3. **奖励函数**: 非RL；次梯度 δ_{i,j}=Σ(q·x)-Σ(r·c)（容量违反度）；sigmoid 约束[0,1]
+4. **GNN 架构**: GATv2 L层, 4头, 64隐; 注意力=(w_src·h_i+w_dst·h_j+w_edg·e); ROF 3层MLP输出 per-edge 乘子
+5. **训练配置**: 自定义次梯度下降, lr=1e-3/k^0.7, ~400 迭代收敛
+6. **规模泛化**: I=100~1000 测试一致优于基线; GATv2 天然支持变规模; Starlink+OneWeb 两星座验证
+7. **时变处理**: quasi-static 快照; 学习状态→乘子映射泛化不同时间点; 推理远小于相干时间
+8. **计算开销**: 推理十毫秒级; 约为 LaDu-100 的 10^-4; 理论复杂度多项式
 
-| 论文 | 下载尝试 | 状态 |
-|------|---------|------|
-| GNN-ASSSP (ScienceDirect) | tools/download | 付费墙，需用户手动 |
-| DLBR (IEEE TAES) | tools/download | 付费墙，需用户手动 |
-| LARRI (IEEE ToN) | tools/download | 付费墙，需用户手动 |
-| FlexSATE (IEEE GLOBECOM) | tools/download | 付费墙，需用户手动 |
-| CA-GAR (MDPI Symmetry) | tools/download | 失败（OA 但下载失败） |
-| Fan 2026 TAES (IEEE TAES) | tools/download | 付费墙，需用户手动 |
-| DeepLaDu (arXiv) | tools/download | ✅ 已下载 |
+#### [L13] GNN-ASSSP: A Study of an Attention Mechanism Driven Dynamic Routing Algorithm for LEO Satellite Networks
+
+- DOI/来源: 10.1016/j.ast.2026.112361
+- **发表状态**: 已发表 (Aerospace Science and Technology, Vol.178, 2026, SCI Q1)
+- 年份/会议: 2026 (He et al.)
+- 核心贡献: 两阶段框架 — (1) ST-GNN Transformer 预测动态拓扑(F1=0.958)；(2) 层次化图注意力学习拥塞感知多目标边权重 + 递归划分 SSSP
+- 方法概述: Stage1: 3层 TransformerConv+自注意力预测 ISL 存在性+距离。Stage2: 4层 HierarchicalGraphAttention(8头) 预测多维边权重 → RP-A* 路径搜索
+- 实验设置: Starlink Phase-1, 1584 星, 72面×22星, 550km; RTX 4090; 10 seeds
+- Baseline: Dijkstra-SPF, OSPF-TE, Q-Routing, GNN-DQN; 拓扑预测: Supervised ISL, BO-FCNN, RNN-RM, GCN-GRU
+- 关键结论: 延迟降50.5%, 丢包降39.4%, 带宽升57.1%; 20%链路故障下100%路由成功率(vs 23-31%); 拓扑预测F1=0.958
+- 与本研究关系: **最直接竞品** — per-edge weight learning for LEO。但纯SL(非DRL)，只做路径选择不做per-link流量分配，无在线适应
+- 实现关键细节: Stage1: SeparableGraphConv(192,4头,dropout=0.3), AdamW(1e-4), cosine annealing, Focal+Dice loss; Stage2: HierarchicalGraphAttention(128,8头,edge_dim=16,dropout=0.1), Adam(1e-3), MSE loss
+- 开源代码: 无
+
+**结构化提取**:
+1. **状态空间**: Stage1: [位置,速度,轨道元素,轨道面编号,时间编码]; Stage2: 边特征[距离,拥塞,方位角,带宽] d_e=16
+2. **动作空间**: 无DRL动作空间；GNN 输出连续边权重 → SSSP 确定路径
+3. **奖励函数**: 无；SL 损失 L_w+0.5·L_q (MSE)
+4. **GNN 架构**: Stage1: SeparableGraphConv(192,4头); Stage2: HierarchicalGraphAttention(128,8头,16维边特征)
+5. **训练配置**: Stage1: AdamW(1e-4,wd=1e-5); Stage2: Adam(1e-3,wd=1e-5); 窗口 T=16 步
+6. **规模泛化**: 拓扑预测 N=100~8000, 推理28.6ms~1227.1ms; 路由 N=480,1584; **未测试 GNN 模型跨规模泛化**
+7. **时变处理**: 核心设计 — ST-GNN 预测未来拓扑(t+Δt); ~9.56min 更新拓扑; 20 时间步(~2 轨道周期)评估
+8. **计算开销**: GNN 前向一次/快照, 摊薄后<3ms/查询; 单查询 264.65ms@1000请求; 拓扑预测 53.2ms
+
+#### [L14] LARRI: Learning-Based Adaptive Range Routing for Traffic Engineering With Graph Neural Networks
+
+- DOI/来源: 10.1109/TON.2025.3607939 (会议版: IEEE INFOCOM 2023)
+- **发表状态**: 已正式发表 (IEEE/ACM ToN, Vol.34, 2026)
+- 年份/会议: 2026 期刊版 / 2023 INFOCOM (Ye et al.)
+- 核心贡献: 首次提出直接预测面向未来流量范围的 range routing 策略的 ML 框架，GNN 架构实现可扩展性
+- 方法概述: 监督学习框架。离线 LP 生成 target routing → GNN(LSTM+多头注意力) 直接预测 per-SD 的 K 路径 split ratios
+- 实验设置: 6 个真实拓扑(6~42 节点, 12~156 链路); Tesla V100
+- Baseline: MCF, SMORE, TMP, COPE, ROR, OOR, ECMP
+- 关键结论: BRAIN worst-case MLU ratio 提升 43.3%; 6 拓扑 near-optimal; 推理 <2s(42 节点)
+- 与本研究关系: GNN+TE 但纯 SL 模仿 LP expert，固定拓扑，不适配 LEO 时变场景
+- 实现关键细节: LSTM+多头注意力(H=网络最大跳数, ω=8头, d_h=128, d_f=256), SGD(1e-4), KLD+MAE+L2 loss, batch=512/64
+- 开源代码: 未提及
+
+**结构化提取**:
+1. **状态空间**: L=5 历史 TM 序列 + 拓扑连接矩阵; embedding d_h=128
+2. **动作空间**: 连续 per-SD 的 K=4 路径 split ratios, pairwise softmax
+3. **奖励函数**: 无(SL)；loss = KLD + MAE + L2(λ=0.001)
+4. **GNN 架构**: LSTM(时序) + H 层多头注意力(8头, d_h=128, d_f=256) + GELU + skip+LN
+5. **训练配置**: SGD lr=1e-4, batch 512/64, dropout=0.1, early stopping, V100, <40min/网络
+6. **规模泛化**: 6 拓扑(6~42 节点)各自单独训练，**未测试跨拓扑泛化**
+7. **时变处理**: 仅处理流量时变(LSTM 编码); 拓扑固定不变; 完全不适配 LEO 时变拓扑
+8. **计算开销**: 推理 0.01s(6节点)~1.45s(42节点); Target LP: 0.02s~36.5min
+
+#### [L15] DLBR: Dynamic Load-Balancing Routing Strategy for LEO Satellite Networks Based on Spatio-Temporal Traffic Prediction
+
+- DOI/来源: 10.1109/TAES.2025.3571400
+- **发表状态**: 已正式发表 (IEEE TAES, Vol.61, No.5, 2025)
+- 年份/会议: 2025 (Chen et al., Xidian)
+- 核心贡献: GCN-LSTM-Attention(GLA)时空流量预测 + 多智能体 D3QN 分布式负载均衡路由
+- 方法概述: GLA 预测未来流量矩阵 → D3QN 逐跳选择下一跳(基于当前+预测带宽利用率)。附带局部负载平均化+拥塞规避
+- 实验设置: 自建极轨星座 10×10=100 星, 300Mbps ISL; STK+Mininet
+- Baseline: Dijkstra, Dijkstra-BU, DQN, LSTM-ACO; 预测: CNN-LSTM, SVR, GCN, LSTM, GCN-LSTM
+- 关键结论: 最大链路利用率降13%, 平均降18%; 加预测后额外降11%/34%; 推理 1.04ms
+- 与本研究关系: 高度相关 — LEO 负载均衡+DRL，但路由模块是纯 MLP(D3QN)，GNN 仅用于预测；逐跳离散选择 vs 本研究 per-link 连续决策
+- 实现关键细节: GCN 2层(流量预测); D3QN MLP(路由); 状态=[目的地,跳数,链路延迟,带宽,QoS约束,综合利用率]; 奖励=ρ1·r_QoS+ρ2·r_load+ρ3·r_path
+- 开源代码: 未提及
+
+**结构化提取**:
+1. **状态空间**: [目的地二值向量, 当前/邻居跳数, 链路延迟, 带宽, QoS约束, α·当前利用率+β·预测利用率]; min-max 归一化(预测模块)
+2. **动作空间**: 离散，维度=邻居数(最多4)，选下一跳
+3. **奖励函数**: r = ρ1·r_QoS + ρ2·r_load + ρ3·r_path (三部分加权, 具体系数未给)
+4. **GNN 架构**: GCN 2层(仅预测模块); 路由决策用 D3QN(MLP, 非 GNN)
+5. **训练配置**: D3QN 框架, 动态 ε-greedy, 经验回放; 具体 lr/batch 未给
+6. **规模泛化**: 预测在 26/66/100 节点测试; 路由仅在 100 星测试
+7. **时变处理**: GLA 预测未来流量; 极轨逆缝+极区中断; 每 15s 更新; 无显式拓扑相位建模
+8. **计算开销**: 推理 1.04ms; GLA 更新每 15s
+
+#### [L16] FlexSATE: Flexible and Distributed Traffic Engineering with Supervised Learning in Ultra-Dense LEO Satellite Networks
+
+- DOI/来源: 10.1109/GLOBECOM52923.2024.10901096
+- **发表状态**: 已发表 (IEEE GLOBECOM 2024, 4 页会议论文)
+- 年份/会议: 2024 (Liu et al.)
+- 核心贡献: 集中式 MHBT k-segment 路径选择 + 分布式 GNN 速率自适应，离线模仿全局 MCF 最优解
+- 方法概述: MHBT 生成多路径候选 → GNN(Transformer 注意力, 4层, 128维, 4头) 输出 per-flow split ratios → 分布式部署
+- 实验设置: 720 星, 36 面, 570km, Walker-delta; ISL 11Gbps; 100~1100 流
+- Baseline: Top-K, ECMP, Greedy, KMCF(最优参照)
+- 关键结论: MLU CDF 优于所有 baseline; 推理几十毫秒(vs 分钟级 LP); 分布式并行可扩展
+- 与本研究关系: 高度相关 — LEO TE + GNN + 分布式，但纯 SL 模仿 MCF，per-flow split ratio 非 per-link 决策
+- 实现关键细节: Transformer attention(128,4头,256FF,4层); batch=64, lr=1e-4; 星座对称性利用(标签0编号, 模型共享)
+- 开源代码: 未提及
+
+**结构化提取**:
+1. **状态空间**: TM + 邻接矩阵; 节点特征=每节点发起的流量需求
+2. **动作空间**: 连续 per-flow per-path split ratio, softmax
+3. **奖励函数**: 无(SL); 标签由 Gurobi MCF 求解
+4. **GNN 架构**: Transformer attention 4层, 4头, 128维, 256FF; graph-level pooling
+5. **训练配置**: batch=64, lr=1e-4, 离线集中训练
+6. **规模泛化**: 仅 720 星单一规模; 未测试跨规模泛化
+7. **时变处理**: 链路中断时重算路径; GNN 不编码时序; 周期性离线重训练
+8. **计算开销**: 推理几十毫秒; LP 求解分钟级
+
+#### [L17] GRL-TE: A Service-Oriented Multipath Routing Scheme Based on GNN and RL for Multilayer Satellite Networks
+
+- DOI/来源: 10.1109/TAES.2026.3652971
+- **发表状态**: 已正式发表 (IEEE TAES, Vol.62, 2026)
+- 年份/会议: 2026 (Fan et al.)
+- 核心贡献: 多层卫星网络(LEO+MEO+GEO)面向服务多路径路由，MPNN-GNN + Actor-Critic DRL(DDPG) 动态分配路径流量比例
+- 方法概述: CLSP 域头卫星离线路径规划 → GNN(MPNN path-edge-node 三层消息传递+GRU) 评估路径质量 → DDPG 输出各路径流量比 → SDN(GEO 控制器)下发
+- 实验设置: LEO 6×11=66 星 + MEO 2×5=10 星 + GEO 3 星; 5 种服务类型; STK; 66 时间片/24h
+- Baseline: WRR-LB, SLSQP, DQN-TE, DDPG-TD
+- 关键结论: reward 稳定~1300, 收敛 150.7s; 网络利用率提升 11.4%~14.6%; 推理 3.8ms; PLR 降 32.4%; Jain 公平指数升 44.7%
+- 与本研究关系: GNN+DRL 卫星路由，方法范式重叠，但多层场景+per-path 流量比 vs 本研究 LEO 单层+per-link 负载均衡
+- 实现关键细节: MPNN(path-edge-node 三层+GRU), GCN 2层, DDPG+OU噪声; 状态=[路径矩阵, 5维节点特征, 4维链路特征]; 奖励=加权对数网络利用率(贝叶斯优化权重)
+- 开源代码: 未提及
+
+**结构化提取**:
+1. **状态空间**: 路径矩阵(M×s)×p_max; 节点特征 5 维(计算/缓存/感知/通信/安全); 链路特征 4 维(时延/丢包率/剩余连接时间/可用带宽); min-max 归一化
+2. **动作空间**: 连续, 各路径流量分配比例, Softmax 归一化
+3. **奖励函数**: 加权对数网络利用率 U = ΣΣ[λ1·log(ξ+p_ld)+λ2·log(ξ+p_plr)+λ3·log(ξ+p_rct)+λ4·log(ξ+p_ab)], λ=(0.085,0.055,0.456,0.404)贝叶斯优化; γ=0.99
+4. **GNN 架构**: MPNN path-edge-node 三层消息传递 + GRU 更新; 2层 GCN; 全局平均池化
+5. **训练配置**: DDPG+OU噪声+经验回放+软更新; 收敛 150.7s; 前 10 时间片训练
+6. **规模泛化**: **未测试**; 仅 66+10+3 固定星座; 论文自承未来需大规模验证
+7. **时变处理**: 66 时间片快照, 每片 1min; 拓扑切换适应 ~20ms; GNN 天然支持变路径数
+8. **计算开销**: 推理 3.8ms; 切换适应 20ms; CPU<5%, 存储<3MB
+
+### 缺失论文状态（已更新）
+
+| 论文 | 状态 | 精读编号 |
+|------|------|---------|
+| DeepLaDu (arXiv) | ✅ 已下载+精读 | L12 |
+| GNN-ASSSP (ScienceDirect) | ✅ 用户手动+精读 | L13 |
+| LARRI (IEEE ToN) | ✅ 用户手动+精读 | L14 |
+| DLBR (IEEE TAES) | ✅ 用户手动+精读 | L15 |
+| FlexSATE (IEEE GLOBECOM) | ✅ 用户手动+精读 | L16 |
+| Fan 2026 TAES (IEEE TAES) | ✅ 用户手动+精读 | L17 |
+| CA-GAR (MDPI Symmetry) | 下载失败 | — |
+| ALIDT/ADRLRM (Gao 2025/2026) | 待获取 | — |
+| GRL-RR (Bai 2025) | 待获取 | — |
 
 ### 检索充分性判据
 
