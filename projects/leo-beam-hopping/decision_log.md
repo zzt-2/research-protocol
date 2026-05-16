@@ -2,9 +2,24 @@
 
 ## 阶段摘要
 - [Direction Scouting] 方向侦察完成，作为备选第二研究方向
-- [Groundwork] Step 1-2 检索+初筛完成，Step 3 精读完成（7 篇），Step 3.5 补充检索完成，待 Step 4a Go/No-Go
+- [Groundwork] Step 1-2 检索+初筛完成，Step 3 精读完成（7 篇），Step 3.5 补充检索完成，Step 4a Conditional Go（待用户确认）
 
 ## 决策记录
+
+### D005: Step 4a Go/No-Go 可行性判断 (2026-05-16)
+- **输入**: literature_notes.md (14 篇必读), feasibility_report.md
+- **结论**: **Conditional Go**
+- **A0 问题-方法适配性**: 5/5 全部通过（性能间隙≥30%, 4/4 结构适配, ≥4 先例, MDP 非平凡, 无负面证据）
+- **A 结构优势**: 空间干扰建模 + 独立 agent 信息损失 + 可扩展性（L03 zero-shot 19→61 cells）
+- **B 新颖性-可行性解耦**: 空白="没人想到"+"技术壁垒刚解除"，可行性有 4 篇强先例支撑
+- **D MVE 结果**: FAIL（GNN 排名最差），但关键发现：
+  - IA-Greedy >> Greedy 50%，**干扰拓扑重要性确认**
+  - GNN+REINFORCE 训练不稳定（高方差），非架构问题
+  - 19 cells 太小，GNN 可扩展优势无法体现
+- **改善路径**: PPO 替代 REINFORCE + reward shaping + 更大规模环境
+- **风险**: GNN 在小规模训练不稳定，需在正式仿真器验证
+- **产物**: `feasibility_report.md`, `mve_gnn_vs_fc.py`
+- **用户确认**: （待确认）
 
 ### D004: Step 3.5 补充检索完成 (2026-05-16)
 - **输入**: 4 轮定向检索（GAT+BH, HGNN+卫星, GNN+离散调度, GNN+size generalization）, 引用链分析（L05/L07）
