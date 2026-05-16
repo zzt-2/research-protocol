@@ -22,7 +22,7 @@ research-protocol/
 │   ├── gw-experiment.md # Step 6-7: 仿真器设计 + Baseline 复现
 │   ├── contract.md      # Contract 执行手册
 │   ├── execute.md       # Execute 执行手册
-│   ├── thesis-materials.md # 学位论文材料准备指南
+│   ├── thesis-materials.md # 学位论文：§0 章节方向决策 + §1-§5 材料准备
 │   └── paper-materials-workflow.md # 论文素材提取工作流（通用版）
 ├── templates.md         # 文档模板集
 ├── tools-guide.md       # 工具链指南
@@ -35,7 +35,7 @@ research-protocol/
 | `stages/groundwork.md` | Groundwork 7 步执行流程 | Groundwork 阶段 |
 | `stages/contract.md` | Contract 7 步执行流程（Step 0-6） | Contract 阶段 |
 | `stages/execute.md` | Execute 7 步执行流程（Step 0-6） | Execute 阶段 |
-| `stages/thesis-materials.md` | 学位论文材料准备：多子问题组织 + 材料包清单 + 记录钩子 | 准备学位论文时 |
+| `stages/thesis-materials.md` | 学位论文材料准备：章节方向决策 + 多子问题组织 + 材料包清单 + 记录钩子 | ≥2 方向完成 GW Step 4 时读 §0；准备论文时读 §1-§5 |
 | `stages/paper-materials-workflow.md` | 论文素材提取工作流（通用版） | 提取 paper_materials 时 |
 | `domain-comms.md` | 通信领域定制内容 | 通信领域研究必读 |
 | `templates.md` | contract / decision_log / experiment_result / literature_notes 模板 | 创建/填写文档时读 |
