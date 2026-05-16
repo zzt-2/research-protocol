@@ -1,7 +1,11 @@
 # 方向可行性报告
 
 ## 研究方向
-GNN 编码小区间干扰图拓扑，替代 MA-DRL 独立 agent，实现可扩展、可泛化的 LEO 多波束卫星 BH 调度。
+GNN encoder + QMIX/QPLEX 多 agent 强化学习，替代 MA-DRL 中的 FC encoder，实现可扩展、可泛化的 LEO 多波束卫星 BH 调度。
+
+## Pivot 记录
+- **v1 (已放弃)**: GNN 策略网络 + REINFORCE/PPO + top-K 动作空间 → MVE v1-v3 全败，前一轮项目 D011/D013 证伪
+- **v2 (当前)**: MA-DRL + GNN encoder + QMIX mixing + per-cell binary action → 对齐成功论文范式（L05/L06）
 
 ---
 
@@ -65,128 +69,136 @@ GNN 编码小区间干扰图拓扑，替代 MA-DRL 独立 agent，实现可扩�
 
 ## A. 结构优势论证
 
-### GNN vs FC-based MA-DRL 的结构性优势
+### GNN encoder vs FC encoder in QMIX framework
 
-**1. 空间干扰建模**
+> [FR-08] 方法论对齐：top-3 成功 BH 论文（L05 QPLEX, L06 QMIX, L07 MAPPO）均用 Q-learning 系 + per-cell binary action。本方案跟随此范式，仅替换 encoder 从 FC → GNN。
 
-BH 调度的核心约束是空间隔离：同时照亮的相邻小区会产生同频干扰（CCI）。MA-DRL 的独立 agent 架构中，每个 agent 只看到自己的队列和 CSI，无法感知其他 agent 的决策对干扰的影响。GNN 通过消息传递聚合邻居信息，天然捕获干扰拓扑。
+**1. 空间干扰建模的信息损失**
 
-- L06 QMIX-BH 专门设计"空间隔离 BH pattern"来枚举不冲突的组合，但需要预计算且不灵活
-- L07 用 per-cell Q-value + top-Nb 避免组合爆炸，但 FC 网络无法学习小区间干扰关系
-- L02 DynHGNN 证明超图建模比成对图（GCN）更精确，HGNNRA 最大提升 130Mbps
+BH 的核心约束是空间隔离：同时照亮的相邻小区产生同频干扰。在 QMIX 框架中：
+- **FC encoder**：每个 agent 只看自己的 (queue, ttl, csi) → Q_i(a_i) 基于纯局部信息
+- **GNN encoder**：通过 L 层消息传递聚合邻居状态 → Q_i(a_i) 包含 L-hop 干扰感知
 
-**2. 独立 agent 假设的信息损失**
+关键区别：QMIX 的 mixing network 能做全局信用分配，但**不能弥补 agent 输入端的信息损失**。如果 agent 看不到邻居是否被照亮、邻居的队列积压，mixing network 也无法推断干扰拓扑。
 
-MA-DRL（QMIX/QPLEX/MAPPO）的 agent 只观察局部状态 o_t^n ∈ R^d，需要通过 mixing network 间接协调。这个协调只在训练时存在（CTDE），执行时各 agent 独立决策。当小区间干扰强（全频复用场景）时，独立决策无法保证空间隔离。
+**2. QMIX 保留的优势 + GNN 补充的能力**
 
-GNN 的消息传递在每层都显式交换邻居状态，执行时仍然保留空间感知能力。这是结构性的区别，不是简单的"参数更多"。
+| 能力 | FC+QMIX | GNN+QMIX |
+|------|---------|----------|
+| 全局信用分配 | ✅ mixing network | ✅ 同 |
+| 局部决策 | 只看自己 | L-hop 邻居聚合 |
+| 空间隔离感知 | ❌ 隐式（需 mixing 推断） | ✅ 显式（消息传递） |
+| 可扩展性 | 需重训（agent 数=小区数） | 直接部署（参数共享） |
+| 泛化到新规模 | 差（L01: >40 小区失败） | 强（L03: 19→61 zero-shot） |
 
-**3. 可扩展性**
+**3. 实证证据**
 
-| 方法 | 扩展到新小区数 | 机制 | 证据 |
-|------|---------------|------|------|
-| FC MA-DRL | 需重新训练（agent 数=小区数） | 固定维度输入 | L01: >40小区失败 |
-| GNN | 直接部署 | 参数共享，不随节点数变化 | L03: 19→7/37/61 保持增益 |
+- IA-Greedy >> Greedy 50%（MVE v3）：**干扰拓扑感知带来巨大增益**
+- L02 DynHGNN：超图干扰建模比 GCN 提升 130Mbps（卫星干扰管理）
+- L03 Meta-GNN：GNN 参数共享实现 19→61 小区 zero-shot 部署，FNN 崩溃
+- QMIX-GNN (2025, 6cit)：GNN+QMIX 组合在通用 MARL 已验证可行
+- TapFinger (2023, 58cit)：GNN+MARL 调度任务在通信领域已成熟
 
-L03 Meta-GNN 实证：在 19 小区训练后 zero-shot 部署到 7/19/37/61 小区，保持 20-30% 增益。FNN 在规模变化时性能崩溃。这是 GNN 的结构性优势。
+**4. 为什么这次不同于前一轮失败**
 
-**4. 具体条件下的信息损失量化**
+前一轮用 GNN 策略网络 + REINFORCE/PPO + top-K 动作空间，失败根因（D011/D013）：
+- top-K 不可微 → 梯度稀疏 → 信用分配失败
+- REINFORCE 高方差 → 训练不稳定
+- 单 agent 标量奖励 → 无法区分各小区贡献
 
-在全频复用 + N 小区场景中，FC agent 的有效信息 = 局部观察维度（~10-30 维）。GNN 经过 L 层消息传递后，每个节点的感受野覆盖 L-hop 邻居，有效信息 = 局部 + L-hop 邻居特征。当干扰范围 ≤ L-hop（典型 2-3 跳），GNN 看到了决策所需的全部干扰信息，而 FC agent 看不到。
+新方案逐项修复：
+- Per-cell binary action + Q-value 排序 → 标准 QMIX-BH 动作空间（L06 验证）
+- QMIX mixing network → 信用分配（值分解 + 单调性约束）
+- DQN 训练（replay buffer + target network）→ 稳定训练
 
 ---
 
 ## B. 新颖性-可行性解耦
 
 ### 新颖性论据（事实判断）
-- GNN+BH 方向经 Step 1-3 + Step 3.5 共 9 轮检索（~270 条原始结果）确认：仅 1 篇低影响力会议论文（M14, AIAC 2024, 1cit）
-- 创新空白坚实：近乎零竞争者
+
+经 Step 1-3 + Step 3.5 + pivot 补充检索共 14 轮检索确认：
+
+| 组合 | 竞品数 | 代表论文 | 领域 |
+|------|--------|----------|------|
+| GNN + QMIX | 3 篇（低引） | QMIX-GNN(2025,6cit), Graph-QMIX(2022,0cit), SVMIX(2023,4cit) | 游戏/交通，非通信 |
+| GNN + QPLEX | **0** | — | — |
+| GNN + MARL + 卫星 BH | **0** | 7 篇 MARL-BH 全用 MLP，无一用 GNN | — |
+| GNN + MARL + 通信调度 | 成熟范式 | TapFinger(58cit), 综述(48cit), 11+ 篇 | 通信领域验证 |
+
+**创新空白坚实**：在卫星 BH 具体应用场景下，GNN encoder + QMIX/QPLEX 为零竞品。
 
 ### 可行性论据（预测判断）
 
 | 论据类型 | 内容 | 置信度 |
 |----------|------|--------|
-| 直接类比 | GNN 在卫星干扰管理（L02）和功率分配（L03）中已成功 | 高 |
-| 结构相似 | BH 调度与功率分配共享同一干扰图结构（小区=节点，干扰=边）| 高 |
-| 离散化可行性 | GNN + 离散动作空间 RL 在地面网络已有成功案例（GFlow, GNN user scheduling）| 中 |
-| 可扩展性保障 | GNN 参数共享机制已证明可跨规模部署（L03 zero-shot）| 高 |
+| 直接类比 | GNN+QMIX 在通用 MARL 已验证（QMIX-GNN 2025）| 高 |
+| 领域迁移 | GNN+MARL 调度在通信领域成熟（TapFinger 58cit）| 高 |
+| 结构相似 | BH 与功率分配共享干扰图结构（L02/L03 已验证）| 高 |
+| 范式对齐 | 跟随 top-3 BH 论文的 Q-learning + per-cell action 范式 | 高 |
+| 可扩展性 | GNN 参数共享（L03: 19→61 zero-shot）| 高 |
 
 ### 空白原因分析
 
 | 可能原因 | 判断 | 证据 |
 |----------|------|------|
-| 没人想到 | **主要原因** | MA-DRL 研究者聚焦算法变体（2024-2025 年 30+ 篇堆叠 MAPPO/QPLEX），未见任何讨论 GNN 替代 FC 的论文 |
-| 试过效果不好 | 不太可能 | 唯一的尝试（M14）是 2024 年且结果正面（只是影响力低） |
-| 技术限制刚解除 | **次要原因** | GNN + 离散动作空间 RL 的组合在 2023-2024 年才成熟（GNN-DRL 框架、combinatorial action selection） |
+| 没人想到 | **主要原因** | MA-DRL BH 研究者聚焦算法变体（QMIX/QPLEX/MAPPO 堆叠），未见讨论 GNN 替代 FC encoder |
+| 技术限制刚解除 | **次要原因** | GNN+MARL 在通信领域 2023-2024 年才成熟，尚未扩散到卫星 BH 子领域 |
+| 试过效果不好 | 无证据 | 前一轮失败（D011/D013）是 action space/训练方法问题，非 GNN 架构问题 |
 
-**结论**：空白主要因"没人想到" + "技术壁垒刚解除"。这是最有利的空白类型——可行性高，无需解释"为什么别人失败了我们的方法不同"。
+**结论**：空白因"没人想到" + "技术壁垒刚解除"，最有利的空白类型。
 
 ---
 
 ## D. 最小可行实验（MVE）
 
-### 假设
-GNN 策略网络能捕获小区间干扰拓扑的空间隔离约束，在相同参数预算下产生优于 FC 策略网络的 BH 调度决策。
+### v1 MVE（GNN+REINFORCE，已失败）
 
-### 最小实例
-- 19 小区六边形网格（中心 + 2 环）
-- K=4 波束/时隙
-- 自由空间信道 + 全频复用 + 同频干扰
-- 随机流量需求（均匀/非均匀）
-- 200 个训练 episode × 50 时隙/episode
+见前版 feasibility_report，三版均 FAIL。关键遗留价值：IA-Greedy >> Greedy 50%，证明干扰拓扑感知有效。
 
-### pass/fail 标准
-- **Pass**: GNN 平均吞吐量 > FC ≥5%，且 GNN > 贪心 ≥10%
-- **Conditional**: GNN > FC 但差距 <5%，或 GNN ≈ 贪心
-- **Fail**: GNN ≤ FC 或 GNN ≤ 贪心
+### v2 MVE（GNN+QMIX，进行中）
 
-### 结果
+**假设**: GNN encoder + QMIX mixing network 能捕获小区间干扰拓扑，在相同 QMIX 框架下产生优于 FC encoder 的 BH 调度决策。
 
-**执行日期**: 2026-05-16
+**最小实例**: 19 小区六边形网格, K=3 波束, 同一干扰模型
 
-**环境参数**: 19 小区六边形网格, K=3 波束, signal=1.0, noise=0.1, interf_per_neighbor=0.5
+**架构**:
+- GNN+QMIX: 共享 GCN encoder(2层, h=32) → per-agent Q-head → QMIX mixing network
+- FC+QMIX: 共享 MLP encoder(2层, h=32) → per-agent Q-head → 同一 mixer
+- 关键隔离：mixer 完全相同，仅 encoder 不同
 
-**SINR 分析**:
-| 干扰邻居数 | SINR | 吞吐量 (bits/s/Hz) |
-|-----------|------|-------------------|
-| 0 | 10.00 | 3.46 |
-| 1 | 1.67 | 1.42 |
-| 2 | 0.91 | 0.93 |
-| 3 | 0.63 | 0.70 |
+**动作空间**: per-cell binary (每个小区独立 on/off)，执行时选 Q-value 最大的 K 个小区
 
-**评估结果** (3 seeds 平均):
+**训练**: 1000 episodes × 50 steps, replay buffer 10000, target network, ε-greedy 1.0→0.05
 
-| 方法 | Reward | Throughput |
-|------|--------|------------|
-| GNN (GCN+REINFORCE) | -3331.7 ±170 | 6.31 ±0.78 |
-| FC (MLP+REINFORCE) | -3295.5 ±48 | 8.48 ±0.36 |
-| Greedy (top-K queue) | -3257.8 ±58 | 6.92 ±0.04 |
-| IA-Greedy (spatial isolation) | -2791.1 ±57 | **10.38 ±0.00** |
-| Random | -2910.4 ±61 | 7.61 ±0.06 |
+**pass/fail 标准**:
+- **Pass**: GNN+QMIX throughput > FC+QMIX ≥5%, 且 GNN+QMIX > Greedy ≥10%
+- **Conditional**: GNN+QMIX > FC+QMIX 但 <5%
+- **Fail**: GNN+QMIX ≤ FC+QMIX
 
-**MVE Verdict**: FAIL（GNN 排名最差，< FC 和 Greedy）
+**结果** (2026-05-16):
 
-**关键发现**:
-1. **干扰拓扑确实关键**: IA-Greedy 比 Greedy 高 50%，证明空间隔离约束显著影响 BH 性能
-2. **GNN+REINFORCE 训练不稳定**: 高方差（±170），300 episode REINFORCE 对 C(19,3)=969 动作空间不够
-3. **Random 排第二**: 说明 RL 训练根本未收敛，非 GNN 架构问题
+| 方法 | Throughput | vs FC |
+|------|-----------|-------|
+| GNN+QMIX | 6.58 ±0.15 | -11.4% |
+| FC+QMIX | 7.42 ±0.55 | baseline |
+| Random | 7.63 | — |
+| IA-Greedy | **10.38** | — |
 
-**失败归因与改善路径**:
-- **问题不在 GNN 架构**: IA-Greedy 证明干扰感知至关重要（+50%），GNN 的归纳偏置方向正确
-- **训练方法需改进**: REINFORCE 方差大，应换 PPO/SAC；需 reward shaping 引导干扰回避
-- **规模需增大**: 19 节点太小，GNN 的可扩展性优势无法体现。实际场景（L05: 648 cells）才是 GNN 的优势区间
-- **下一步**: 在 Step 5 baseline 选定后，用正式仿真器（更大规模、PPO、reward shaping）验证
+**MVE Verdict**: FAIL — GNN+QMIX < FC+QMIX，且两者均 < Random
+
+**根因**: QMIX mixer 已有全局状态输入，GNN encoder 的邻居信息冗余；空间隔离约束需显式执行（IA-Greedy），不能通过 RL+GNN 隐式学习。
 
 ---
 
 ## Go/No-Go 决策
 
-- 决策：**Conditional Go**
+- 决策：**Kill**
 - 理由：
-  1. A0 5/5 全部通过，无致命信号
-  2. A/B 论据充分（结构优势明确、空白原因可解释）
-  3. MVE 部分验证：**干扰拓扑重要性确认**（IA-Greedy >> Greedy 50%），但 GNN+REINFORCE 在小规模上训练不稳定
-  4. 改善路径明确：PPO 替代 REINFORCE + reward shaping + 更大规模环境
-  5. MVE 规模（19 cells）不是 GNN 的优势区间，实际场景（100-600+ cells）才是
-- 风险记录：GNN 在小规模训练不稳定，需在 Step 5 baseline 选定时用更大规模验证
-- 用户确认：
+  1. v1 MVE (GNN+REINFORCE): FAIL × 3 版
+  2. v2 MVE (GNN+QMIX): FAIL — GNN < FC < Random
+  3. 前一轮项目 6 种方法全部失败（D011/D013）
+  4. 累计：2 项目 × 4 算法 × 2 规模 = 一致失败
+  5. 根因确认：空间隔离约束需显式执行，RL+GNN 无法隐式学习
+- 教训已写入 code-quality.md: A3(更新), A5(新增), B1(更新), FR-09, FR-10
+- 用户确认：✅ (2026-05-16)

@@ -34,12 +34,17 @@
 │   └── sim-template/    # 代码模板（config/env/model/train/reward/verify 最佳实践）
 ├── code-quality.md      # 代码质量经验积累（写代码前必读）
 ├── tools/               # 辅助脚本
+├── templates/           # 模板文件
+│   └── master-state-template.md  # Master prompt 模板
 └── projects/{name}/     # 独立研究项目（全部项目级产物在此）
+    ├── master-state.md  # Master 编排状态（每步后更新，恢复时首选读取）
     ├── decision_log.md
     ├── literature_notes.md
     ├── feasibility_report.md
     ├── competitor_notes/
     ├── baseline_report.md
+    ├── worker-logs/      # Worker 执行日志（审计+框架反馈）
+    ├── worker-tasks/     # Worker 任务文件（ephemeral，不提交）
     ├── search-archive/   # 项目专属检索记录（Contract 阶段等）
     ├── simulator/
     ├── baselines/
@@ -62,6 +67,9 @@
 | 参考实现代码 | 手动管理 | `reference/{name}/` |
 | 代码质量经验 | 自动生成 | `code-quality.md` |
 | 代码模板 | 从最佳项目提取 | `reference/sim-template/` |
+| Master 编排状态 | Master agent 每步后更新 | `projects/{name}/master-state.md` |
+| Worker 执行日志 | Worker 执行结束时写入 | `projects/{name}/worker-logs/step-{N}-{slug}.md` |
+| Worker 任务文件 | Master 派遣前写入（ephemeral） | `projects/{name}/worker-tasks/` |
 
 **禁止事项：**
 - 不在根目录创建新的论文目录（如 `my-download-paper/`）
@@ -135,6 +143,8 @@
 | 预印本验证 | `gw-read.md`, `paper-materials-workflow.md` S5 |
 | 论文引用质量 | `thesis-materials.md` |
 | 可行性防坑规则 FR-01~08 | `stages/gw-feasibility.md` A0§1/§6, A', A, D; `tools-guide.md` §8; `stages/groundwork.md` 方法类型标注; `code-quality.md` 方法论适配性矩阵 |
+| GNN 信息冗余检查 FR-09 | `code-quality.md` 方法论适配性矩阵 |
+| 空间隔离约束决策模式 FR-10 | `code-quality.md` 方法论适配性矩阵 |
 | 检索用项目工具 | `tools-guide.md` |
 | 防死胡同 | `stages/execute.md` S4.5 |
 | 先验基线测试 | `stages/execute.md` S0.5 |
@@ -230,12 +240,13 @@
 新对话恢复项目时，按以下优先级读取：
 
 1. `projects-overview.md`（跨项目状态汇总，了解全局后再深入具体项目）
-2. 项目记忆文件: `~/.claude/projects/-mnt-d-code-study-research-protocol/memory/project_{name}.md`
-3. `.session/*-{project}/` 下最新的 HANDOFF 文件（按编号排序取最大）
-4. `decision_log.md`（阶段摘要行）
-4. `feasibility_report.md`（如已到 Step 4）
-5. `baseline_report.md`（如已到 Step 7）
-6. `data-flow.md`（如已到 Contract Step 4）
+2. `projects/{name}/master-state.md`（Master 编排状态，当前步骤+已完成步骤+关键决策+FR 检查清单）
+3. 项目记忆文件: `~/.claude/projects/-mnt-d-code-study-research-protocol/memory/project_{name}.md`
+4. `.session/*-{project}/` 下最新的 HANDOFF 文件（按编号排序取最大）
+5. `decision_log.md`（阶段摘要行）
+6. `feasibility_report.md`（如已到 Step 4）
+7. `baseline_report.md`（如已到 Step 7）
+8. `data-flow.md`（如已到 Contract Step 4）
 7. 对应阶段框架文件
 
 ## 代码质量强制规范

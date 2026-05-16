@@ -119,6 +119,10 @@
 
 踩坑案例：beam-hopping 用 Gaussian policy + top-K 选择导致 3/5 seeds 崩溃（成功论文全用监督学习）。
 
+**[FR-09] GNN encoder 与全局状态 mixer 信息冗余检查**：当 mixing network（QMIX/QPLEX 等）已接收全局状态作为输入时，GNN encoder 的邻居消息传递提供的信息可能完全冗余甚至引入噪声。选 GNN encoder 前 must 验证：(a) mixer 是否有全局状态？(b) 若有，GNN 提供什么增量信息？(c) 邻居状态是否能预测邻居动作（干扰）？无法回答 → GNN encoder 可能无效。踩坑案例：BH QMIX+GNN 在 2 个项目 × 4 种算法 × 2 种规模上全部失败，GNN 始终不如 FC。
+
+**[FR-10] 同时决策 vs 顺序决策的约束传播**：空间隔离类约束（"不照亮邻居"）需要显式执行（顺序选择 + 遮蔽邻居），不能通过 RL 隐式学习。原因是同时决策场景下 agent 看到邻居状态但看不到邻居决策意图，而干扰取决于邻居动作不取决于邻居状态。需显式约束时，优先考虑：(a) 顺序选择 + 遮蔽（IA-Greedy 模式）；(b) 将约束编码到动作空间（mask invalid actions）；(c) 监督学习从最优解学习。踩坑案例：BH 方向 IA-Greedy（顺序选择）比所有 RL 方法（同时决策）高 30-50%，6 种 RL 方法全部 ≤ Random。
+
 ### 已验证失败组合
 
 选算法前对照，命中任一组合直接排除：
@@ -128,6 +132,8 @@
 | 连续分数 + top-K 选择 | PPO (Normal 分布) | top-K 不可微切断梯度 | ISL(D017), BH(D011) | A1 |
 | 离散选择 + 图结构信号 | Gaussian policy | 信用分配稀疏，噪声破坏稳定 | BH(D011) | A1, A3 |
 | 高维连续 (100+ 维) | A2C | 能力不足，训练不稳定 | RIS(D007, 竞品撤稿) | D1 |
+| 空间隔离约束 + 同时决策 | 任意 RL | agent 看不到邻居动作意图，无法避免干扰 | BH(D011,D013,D007) | A3, A5 |
+| GNN encoder + 全局状态 mixer | QMIX/QPLEX | 信息冗余，GNN 引入噪声无增益 | BH(D007) | A5 |
 
 ## reward balance gate 标准
 
@@ -166,14 +172,14 @@
 | 根因 | 路径级 reward vs 逐节点 action 的 credit assignment 困难；greedy reward 太稀疏（99% 路径失败） |
 | 教训 | 路径级决策问题优先监督学习 + 启发式推理；设计 RL reward 时确保 action-reward 局部对应 |
 
-#### A3. 方法与问题根本不匹配 [×1 项目]
+#### A3. 方法与问题根本不匹配 [×2 项目]
 
 | 维度 | 内容 |
 |------|------|
-| 项目 | beam-hopping (D011, D013) [致命] |
-| 表现 | 6 种学习方法全败，无法超越 GraphColoring |
-| 根因 | 干扰是 beam pair 物理关系需直接计算；成功论文全用监督学习非 RL；fairness 占 82% 奖励可学信号仅 7% |
-| 教训 | MVE 训练崩溃必须深究根因（算法稳定性 vs 问题-方法不匹配），不能假设"换个算法就好"；选方法前检查成功论文方法谱系 |
+| 项目 | beam-hopping (D011, D013) [致命], leo-beam-hopping (D007) [致命] |
+| 表现 | 前一轮：6 种学习方法（PPO+GNN, DiffGNN v1/v2, REINFORCE+softmax, REINFORCE γ=0.7）全败；第二轮：QMIX+GNN 再次失败，GNN(tp=6.58) < FC(tp=7.42) < Random(tp=7.63)，IA-Greedy(tp=10.38) 远超所有方法 |
+| 根因 | 干扰是 beam pair 物理关系需直接计算；成功论文全用监督学习非 RL；空间隔离约束需顺序选择+遮蔽（IA-Greedy），同时决策的 RL agent 看不到邻居动作意图；GNN 邻居状态（队列/TTL）不预测邻居决策（是否照亮） |
+| 教训 | MVE 训练崩溃必须深究根因（算法稳定性 vs 问题-方法不匹配），不能假设"换个算法就好"；选方法前检查成功论文方法谱系；空间隔离约束类问题优先顺序选择+显式遮蔽或监督学习 |
 
 #### A4. 逐跳贪心推理误差累积 [×1 项目]
 
@@ -184,6 +190,15 @@
 | 根因 | 逐跳精度之积累积（97.6%^10 ≈ 78% 上限） |
 | 教训 | 多跳路径问题引入全局推理（加权 Dijkstra），不用逐跳贪心 |
 
+#### A5. GNN encoder 与全局状态 mixer 信息冗余 [×1 项目]
+
+| 维度 | 内容 |
+|------|------|
+| 项目 | leo-beam-hopping (D007) [致命] |
+| 表现 | QMIX+GNN(tp=6.58) < QMIX+FC(tp=7.42) < Random(tp=7.63)；IA-Greedy(tp=10.38) 远超所有 RL 方法；GNN 在 2 层 GCN、独立 DQN、reward shaping 等多种变体中始终不如 FC |
+| 根因 | QMIX mixer 已接收全局状态（所有 cell 状态拼接），GNN 的邻居消息传递提供的信息完全冗余；GNN 通过带噪声的队列状态反而引入额外噪声；同时决策场景下邻居状态不预测邻居动作（干扰取决于动作不取决于状态） |
+| 教训 | 加 GNN encoder 前必须检查 mixer 是否已有全局状态输入；若有，GNN 的信息增益为零甚至为负；空间隔离约束需显式执行（顺序选择+遮蔽），不能通过 RL+GNN 隐式学习 |
+
 ### B. 方向判断失败
 
 #### B1. 假蓝海 / 浅搜误判 [×2 项目]
@@ -191,9 +206,9 @@
 | 维度 | 内容 |
 |------|------|
 | 项目 | beam-hopping [致命], mega-constellation (D003) [严重] |
-| 表现 | beam-hopping 零 GNN 竞争实为"不值得做"；mega Step 3.5 发现 6 篇直接竞争者 |
-| 根因 | 初始检索深度不足 |
-| 教训 | MVE 是判断蓝海真伪的最有效工具；"零竞争"可能是问题不适合的信号 |
+| 表现 | beam-hopping 零 GNN 竞争经 2 个项目 × 4 种 RL 算法 × 2 种规模全部验证为"不值得做"；mega Step 3.5 发现 6 篇直接竞争者 |
+| 根因 | "零竞争"的空白有结构性原因（空间隔离约束不适合 RL 隐式学习），不是机会 |
+| 教训 | MVE 是判断蓝海真伪的最有效工具；"零竞争"可能是问题不适合的信号；多算法失败后应果断 Pivot/Kill 而非继续尝试 |
 
 #### B2. 创新点被推翻需重新定位 [×2 项目]
 
@@ -289,9 +304,12 @@
 |------|-----------|------|
 | PPO 训练完全不收敛 | A1 (top-K), A3 (方法不匹配) | beam-hopping, isl-scheduling |
 | RL 无法超越简单先验 | A1, A2 (信号不足) | isl-scheduling, mega-constellation |
+| 多算法全部失败 | A3 (问题-方法不匹配), A5 (信息冗余) | beam-hopping (×2 项目) |
+| GNN encoder 不如 FC encoder | A5 (mixer 全局状态冗余) | leo-beam-hopping (D007) |
+| 空间隔离约束 RL 学不会 | A3, FR-10 (需显式约束) | beam-hopping (IA-Greedy >> RL) |
 | 奖励被单一分量主导 | C1 (分量失衡) | 4/6 项目 |
 | 小规模有效全规模崩溃 | C2 (规模), C5 (buffer) | isl-scheduling, ntn-handover |
 | "零竞争"但感觉不对 | B1 (假蓝海) | beam-hopping |
 | 创新点搜到竞争论文 | B2 (创新点被推翻) | mega-constellation, ris-phase |
 | 仿真器跑出离谱数值 | C3 (边界 bug) | hgat, mega-constellation |
-| GNN 消融几乎无贡献 | B3 (规模不匹配), A2 | ntn-handover |
+| GNN 消融几乎无贡献 | B3 (规模不匹配), A2, A5 | ntn-handover, beam-hopping |
