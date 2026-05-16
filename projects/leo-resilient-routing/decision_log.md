@@ -12,7 +12,11 @@
   - 4 篇待确认论文全部验证：FCRMJ 确认正式发表(CISCE 2026)，GDRL-SFCR/GROGU/QueueMARL 均已确认
   - L04-DLNoConv (JOCN) 无法自动下载，标记为后续补充
   - 综合分析完成：GNN+故障恢复方法空白再次确认，FCRMJ 为最直接竞品（MLP 无拓扑感知）
-- [Groundwork] Step 3.5 补充待启动
+- [Groundwork Step 3.5] 定向补充检索完成 (2026-05-16)
+  - 4 组定向检索(GraphSAGE/GNN容错/时序GNN/MARL) + FCRMJ 双向引用链
+  - R1 新增 7 篇建议读，R2 新增 0 篇→收敛
+  - 核心结论不变：GNN+专有故障恢复+LEO路由方法空白最终确认
+  - 方法可迁移参考：GDAPS(GNN+MARL容错，SDN领域)、Iris(DRL增量训练容错)
 
 ## 决策记录
 

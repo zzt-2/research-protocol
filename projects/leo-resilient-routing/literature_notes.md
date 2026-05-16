@@ -17,7 +17,7 @@ LEO 巨型星座故障感知抗毁路由——利用 GNN 拓扑感知能力实�
 | 1 检索 | ✅ | 2026-05-16 | 7 JSON, 210 条 |
 | 2 获取 | ✅ | 2026-05-16 | 10/11 篇下载成功，L04(JOCN)未获取 |
 | 3 精读 | ✅ | 2026-05-16 | 6 必读+1竞品(FCRMJ) |
-| 3.5 补充 | ⬜ | | |
+| 3.5 补充 | ✅ | 2026-05-16 | 4组定向检索+FCRMJ引用链，7篇新建议读，核心空白确认 |
 | 4a 可行性 | ⬜ | | |
 
 ## 检索来源
@@ -314,3 +314,58 @@ LEO 巨型星座故障感知抗毁路由——利用 GNN 拓扑感知能力实�
 4. 实时性约束（星上推理延迟 ≤ ms 级）
 
 **本研究定位**：填补 GNN+DRL 路由与故障恢复之间的空白——利用 GNN 的拓扑感知和消息传递能力实现故障无关泛化性恢复策略，区别于 FCRMJ 的 MLP+手工风险评分方法。
+
+---
+
+## Step 3.5 定向补充检索 (2026-05-16)
+
+### 检索矩阵
+
+| 方法变体 | 问题场景 | 搜索源 |
+|----------|---------|--------|
+| GraphSAGE/MPNN | satellite routing + RL | S2, OpenAlex, arXiv, SerpAPI, Exa |
+| GNN | fault recovery + rerouting + topology | 同上 |
+| temporal GNN | satellite + failure + resilience | 同上 |
+| MARL | fault tolerant + satellite routing | 同上 |
+
+补充检索 JSON：`search-archive/2026-05-16/graphsage-mpnn-*.json`, `gnn-graph-neural-network-fault-*.json`, `temporal-graph-neural-network-*.json`, `multi-agent-reinforcement-learning-fault-*.json`
+
+### 引用链分析
+
+- **FCRMJ 前向引用**：0 篇（2026 会议论文，尚无被引）
+- **FCRMJ 后向引用**：9 篇，其中 5 篇高相关（Iris, ReISL, GDAPS, DGA-IES, LOA-DRL）
+
+### 新增建议读论文
+
+| 编号 | 论文 | 年份/渠道 | 引用 | 相关性判断 |
+|------|------|----------|------|-----------|
+| S1 | GNN-enabled multipath routing for spatial-temporal LEO (Huang) | 2023, IEEE | 56 | GNN 多路径 LEO 路由，故障弹性为附带属性 |
+| S2 | Iris: Intelligent Reliable Routing for SDSN (Wei) | 2024, TCOM | 30 | DRL 容错卫星路由(MLP)，增量训练 |
+| S3 | GDAPS: GNN-enabled MARL Adaptive Path Selection (Feng) | 2025, TNSE | 6 | GNN+MARL 容错路由(SDN 领域) |
+| S4 | DGA-IES: Deep Graph Attention + Evolutionary RL (Rao) | 2025, IoT Journal | 7 | 图注意力+进化 RL LEO 路由 |
+| S5 | G-DQN: GraphSAGE+DQN LEO routing (Li) | 2025, ISPA | 0 | GraphSAGE 多目标 LEO 路由 |
+| S6 | ReISL: ISL re-planning under link failures (Chen) | 2024, VTC-Fall | 6 | MARL ISL 重规划抗链路故障(MLP) |
+| S7 | Path-based GNN robust/resilient routing (Ye) | 2025, IEEE | 11 | GNN 容错路由(流量工程) |
+
+### 补充检索充分性
+
+| 条件 | 状态 | 说明 |
+|------|------|------|
+| 关键词矩阵覆盖 | ✅ | 4 方法变体 × 2+ 问题场景 = 4 组 |
+| 搜索源 ≥2 | ✅ | 5 源(S2, OpenAlex, arXiv, SerpAPI, Exa) |
+| 引用链分析 | ✅ | FCRMJ 双向分析完成 |
+| 收敛性 | ✅ | R1 新增 7 建议读，R2 新增 0→收敛 |
+| 轮次上限 | 2/3 | R2 已收敛 |
+
+R2 补充检索（`search-archive/2026-05-16/graph-neural-network-link-failure-recovery-leo-*.json`, `gnn-fault-tolerant-routing-satellite-mega-*.json`）：返回论文均为已知方法或非 GNN 传统方法（冗余多路径、motif 图算法等），无新增高相关候选。**空白最终确认。**
+
+### 补充检索后空白再确认
+
+新增论文的定位分析：
+
+- **S1 (GNN multipath LEO, 56cit)**：最接近空白点的论文。GNN 用于 LEO 多路径路由，"resilience to failure" 是多路径的附带属性，未设计专用故障检测/恢复机制。**不填补空白。**
+- **S2 (Iris, 30cit)**：DRL 容错路由，增量训练逐步增加场景复杂度。方法有启发性（训练策略可借鉴），但 MLP 无 GNN。**不填补空白。**
+- **S3 (GDAPS, 6cit)**：GNN+MARL 处理 DDoS/链路故障导致拓扑变化。方法高度可迁移（GNN 拓扑感知+MARL 协作恢复），但 SDN 领域非卫星。**不填补卫星空白，但方法可迁移。**
+- **S4-S7**：分别从 GraphSAGE LEO 路由、MARL ISL 故障重规划、GNN 容错路由角度补充了外围工作。**均不直接填补 GNN+故障恢复+LEO 路由空白。**
+
+**结论**：经定向补充检索，GNN + 专有故障恢复 + LEO 卫星路由方法空白 **再次确认**。S3(GDAPS) 是方法可迁移性最强的非卫星参考。
