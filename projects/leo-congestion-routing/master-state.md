@@ -6,7 +6,7 @@
 - **项目名**: leo-congestion-routing
 - **方向**: GNN 拥塞感知路由 + 负载均衡 for LEO 卫星星座
 - **阶段**: Groundwork
-- **当前步骤**: Step 1 完成 → Step 2（论文获取）
+- **当前步骤**: Step 3 完成 → Step 3.5（定向补充检索）
 - **方法类型**: [DRL] + [监督]
 
 ## 进度追踪
@@ -15,7 +15,7 @@
 |------|------|----------|
 | Step 1 检索+初筛 | ✅ | search-archive/2026-05-16/gnn-congestion-*.json 等 9 个文件 |
 | Step 2 论文获取 | ✅ | 10 篇论文 content.md 已就绪 |
-| Step 3 精读 | ⬜ | literature_notes.md 更新 |
+| Step 3 精读 | ✅ | literature_notes.md（10 篇精读 + 3 篇写作架构 + 综合分析） |
 | Step 3.5 定向补充 | ⬜ | literature_notes.md 更新 |
 | Step 4a 可行性预判 | ⬜ | feasibility_report.md |
 | Step 5 Baseline选定 | ⬜ | decision_log.md 更新 |
@@ -27,6 +27,9 @@
 - D1: R1+R2 搜索策略，87 条候选，覆盖充分
 - D2: 差异化定位 = per-link 负载均衡决策（vs 现有 per-flow/per-path）
 - D3: 继承 resilient-routing 失败教训，MVE 必须含非均匀流量场景
+- D4: 10 篇精读完成，GMR(L02)架构最接近本研究（MPNN+DDPG per-path 流量分割+跨拓扑泛化）
+- D5: 研究定位确认：per-link 负载均衡 + size generalization 填补空白
+- D6: 竞品共引文献 10 篇待 Step 3.5 定向补充（RouteNet, DRL-TE, GNN-ASSSP 等）
 
 ## 核心风险
 1. **[高] GNN ≈ MLP 风险**: resilient-routing MVE 两次证明路由决策 GNN 无优势。新方向赌拥塞/负载信息需全局聚合，需 Step 4a MVE 验证
