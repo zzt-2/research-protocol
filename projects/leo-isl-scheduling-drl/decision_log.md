@@ -3,7 +3,7 @@
 ## 阶段摘要
 - [Groundwork] Step 1-3.5 完成（检索+精读+补充检索），Step 4a Go/No-Go 通过
 - [Contract] Step 0-5 完成，已冻结（用户确认 2026-05-15）
-- [Execute] Step 0-1 完成（模型+训练+Quick Test 5轮诊断），**PPO 未超越先验，需方向决策**
+- [Execute] Step 0-1 完成（模型+训练+Quick Test 5轮诊断），**PPO/REINFORCE 均未超越先验，swap 诊断确认先验近最优，待方向回顾**
 
 ## 决策记录
 [D001] Go/No-Go 决策：Go（用户已确认 2026-05-15） | 理由: A/B无致命信号 + MVE Pass (GNN 97.3% vs FC 79.5%) | 阶段: GW
@@ -28,3 +28,6 @@
 [D020] 模型先验设计: active_bias=3 + distance_bias=2 跳跃连接 | 理由: (1) active_bias让模型天然倾向保持活跃ISL(sigmoid(3)≈0.95),解决切换率问题(M3从16.7→0.03); (2) distance_bias让模型偏好短距离ISL(1-dist/Z_MAX),模拟B1的最近邻拓扑; (3) 两项都是可学习参数,PPO可调整; (4) 未经训练的纯先验策略M1=0.077已达B1的75% | 阶段: EX
 [D021] Quick Test v5 最终结果: 先验策略M1=0.0774, PPO微调30ep后M1=0.0780(+0.0006), B1=0.1035 | 理由: (1) PPO几乎无法超越先验; (2) KL在小std(0.018)下必然爆炸(Δμ/σ²效应),大std(0.14)又退回随机; (3) 训练reward=-3.3但eval reward=+0.78,差距来自探索噪声破坏拓扑稳定; (4) **根本问题: 连续分数+Normal分布+top-K选择→PPO不适配这个动作空间** | 待决策: 换算法(ES/SAC)/换动作空间(离散keep-drop-swap)/监督学习/继续调参 | 阶段: EX
 [D022] 全规模(24×66=1584)性能测量 | 候选边65,664条(12x于24×20的5,328); env.step=0.60s/步(3.3x于24×20); model forward ~300ms; 50ep估计25min; PPO批处理32 obs时edge decoder输入~283MB,可能接近RTX 4070 8GB显存上限 | 待决策: 候选边预筛选(如限制每星最多20个候选)/分层决策/局部决策 | 阶段: EX
+[D023] REINFORCE + argmax 验证(24×20, 20ep) | 先验M1=0.0859→训练后M1=0.0827(-3.7%); train_reward=-10 vs eval_reward=+1.8; noise_std=0.08 | 结论: FAIL; 与PPO相同根因——探索噪声破坏拓扑稳定; REINFORCE无KL约束但噪声本身即致命 | 阶段: EX
+[D024] Swap 诊断: 单星/多星随机ISL swap能否改善M1 | (1) 单星swap 20 trials: 改善5%, max +0.0011; (2) 多星swap(n=1,5,10)各10 trials: max +0.0015; (3) 所有改善均在±0.002噪声范围内 | 结论: 先验策略(keep active + shortest ISL)在24×20规模已接近最优; 与beam-hopping模式A3一致——物理结构决定性能，学习无法显著超越 | 待决策: 全规模验证/流量感知定向swap/归档 | 阶段: EX
+[D025] Execute 死胡同判定: 3种RL方法(PPO/REINFORCE/噪声探索)全部未超越先验，swap诊断确认先验近最优 | 理由: (1) PPO D021: KL爆炸+先验做主功; (2) REINFORCE D023: 噪声毁拓扑; (3) Swap诊断 D024: 随机swap改善≤0.0015(噪声级); (4) 跨项目模式匹配: beam-hopping A3(物理关系不可学习)+A2(先验>RL); (5) 命中code-quality A1(连续+top-K×2项目)和A2(先验>学习×2项目) | 待方向回顾 | 阶段: EX
