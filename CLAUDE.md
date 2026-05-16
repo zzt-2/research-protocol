@@ -134,6 +134,7 @@
 | 反模式审查位置 | `stages/contract.md` S5 |
 | 预印本验证 | `gw-read.md`, `paper-materials-workflow.md` S5 |
 | 论文引用质量 | `thesis-materials.md` |
+| 可行性防坑规则 FR-01~08 | `stages/gw-feasibility.md` A0§1/§6, A', A, D; `tools-guide.md` §8; `stages/groundwork.md` 方法类型标注; `code-quality.md` 方法论适配性矩阵 |
 | 检索用项目工具 | `tools-guide.md` |
 | 防死胡同 | `stages/execute.md` S4.5 |
 | 先验基线测试 | `stages/execute.md` S0.5 |
