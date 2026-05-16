@@ -299,6 +299,70 @@ class ISLEnvironment:
             'time': self._t,
         }
 
+    def set_isl_configuration(self, edge_set):
+        """Directly set active ISLs to match edge_set.
+
+        Bypasses the score->LCT pipeline. Used by ILP dataset generator
+        to create supervised training samples.
+
+        Args:
+            edge_set: set of (min_i, max_j) edges to make active.
+                      Must be subset of current candidate_edges.
+        """
+        candidate_set = {(min(i, j), max(i, j)) for i, j, _ in self._candidate_edges}
+
+        for key in edge_set:
+            if key not in candidate_set:
+                continue
+            state = self._isl_state.get(key, 'inactive')
+            if state == 'inactive':
+                self._isl_state[key] = 'active'
+                self._active_duration[key] = 0.0
+            elif state == 'in_setup':
+                self._isl_state[key] = 'active'
+                self._active_duration[key] = 0.0
+                self._setup_remaining.pop(key, None)
+
+        for key in list(self._isl_state.keys()):
+            if key not in edge_set and self._isl_state[key] != 'inactive':
+                self._isl_state[key] = 'inactive'
+                self._setup_remaining.pop(key, None)
+                self._active_duration.pop(key, None)
+
+    def get_candidate_info(self):
+        """Return candidate edges with channel/traffic info for ILP.
+
+        Returns:
+            list of dict with keys: i, j, distance, capacity, supply_i,
+            demand_i, supply_j, demand_j
+        """
+        n = self.n_sats
+        supply = np.zeros(n)
+        demand = np.zeros(n)
+        for src, dst, dem in self._flows:
+            if 0 <= src < n and 0 <= dst < n:
+                supply[src] += dem
+                demand[dst] += dem
+
+        result = []
+        dists = np.array([d for _, _, d in self._candidate_edges])
+        if len(dists) > 0:
+            caps, _, _ = self.channel.compute(dists)
+        else:
+            caps = np.array([])
+
+        for idx, (i, j, d) in enumerate(self._candidate_edges):
+            result.append({
+                'i': i, 'j': j,
+                'distance': d,
+                'capacity': float(caps[idx]),
+                'supply_i': float(supply[i]),
+                'demand_i': float(demand[i]),
+                'supply_j': float(supply[j]),
+                'demand_j': float(demand[j]),
+            })
+        return result
+
     def run_episode(self, policy_fn, verbose=False):
         """Run a full episode with a given policy function.
 

@@ -190,3 +190,218 @@ class GATv2ActorCritic(nn.Module):
     @property
     def n_params(self) -> int:
         return sum(p.numel() for p in self.parameters())
+
+
+# ---------------------------------------------------------------------------
+# Refactored components: backbone, supervised head, discrete RL head
+# ---------------------------------------------------------------------------
+
+import numpy as np
+
+
+class GATv2Backbone(nn.Module):
+    """Shared GATv2 encoder for ISL edge-level tasks.
+
+    Mirrors the encoder from GATv2ActorCritic but exposes encode/decode_edges
+    as public methods.  The edge decoder has **no** active/distance bias —
+    those are learned from ILP supervision instead.
+    """
+
+    def __init__(
+        self,
+        node_dim: int = 6,
+        edge_dim: int = 7,
+        hidden_dim: int = 64,
+        n_heads: int = 4,
+        n_layers: int = 3,
+    ) -> None:
+        super().__init__()
+        self.hidden_dim = hidden_dim
+        self.node_dim = node_dim
+        self.edge_dim = edge_dim
+
+        head_dim = hidden_dim // n_heads
+        assert hidden_dim % n_heads == 0
+
+        # Node projection
+        self.node_proj = nn.Linear(node_dim, hidden_dim)
+
+        # GATv2 layers — no edge_dim for speed (same as GATv2ActorCritic)
+        self.convs = nn.ModuleList()
+        self.norms = nn.ModuleList()
+        for _ in range(n_layers):
+            self.convs.append(GATv2Conv(
+                (hidden_dim, hidden_dim), head_dim,
+                heads=n_heads, edge_dim=None,
+                add_self_loops=True,
+            ))
+            self.norms.append(nn.LayerNorm(hidden_dim))
+
+        # Edge decoder: no bias terms — raw scores only
+        self.edge_decoder = nn.Sequential(
+            nn.Linear(2 * hidden_dim + edge_dim, 128),
+            nn.ReLU(),
+            nn.Linear(128, 64),
+            nn.ReLU(),
+            nn.Linear(64, 1),
+        )
+
+    def encode(self, data: Data) -> Tensor:
+        """GATv2 message passing → node embeddings (N, hidden_dim)."""
+        x = self.node_proj(data.x)
+        edge_index = data.edge_index
+
+        for conv, norm in zip(self.convs, self.norms):
+            residual = x
+            out = conv(x, edge_index)
+            out = norm(out)
+            x = F.relu(out) + residual
+
+        return x
+
+    def decode_edges(
+        self,
+        node_emb: Tensor,
+        edge_index: Tensor,
+        edge_attr: Tensor,
+    ) -> Tensor:
+        """Concat(src_emb, dst_emb, edge_feat) → MLP → raw scores (E,)."""
+        src, dst = edge_index
+        h = torch.cat([node_emb[src], node_emb[dst], edge_attr], dim=-1)
+        return self.edge_decoder(h).squeeze(-1)
+
+
+class SupervisedGNN(nn.Module):
+    """Phase A: backbone + sigmoid edge classifier for ILP label prediction."""
+
+    def __init__(self, backbone: GATv2Backbone) -> None:
+        super().__init__()
+        self.backbone = backbone
+
+    def forward(self, data: Data) -> Tensor:
+        """Returns edge probabilities (E,) in [0, 1]."""
+        node_emb = self.backbone.encode(data)
+        raw = self.backbone.decode_edges(node_emb, data.edge_index, data.edge_attr)
+        return torch.sigmoid(raw)
+
+    def predict_scores(self, data: Data) -> np.ndarray:
+        """Returns edge scores (E,) as numpy for env.step(). No grad."""
+        self.eval()
+        with torch.no_grad():
+            probs = self.forward(data)
+        return probs.cpu().numpy()
+
+
+class DiscreteRLGNN(nn.Module):
+    """Phase B: pretrained backbone + 3-way discrete action head + critic.
+
+    Actions per edge: AS-IS(0), FORCE-ON(1), FORCE-OFF(2).
+    """
+
+    def __init__(
+        self,
+        backbone: GATv2Backbone,
+        node_dim: int = 6,
+        edge_dim: int = 7,
+        hidden_dim: int = 64,
+    ) -> None:
+        super().__init__()
+        self.backbone = backbone
+        self.hidden_dim = hidden_dim
+
+        # 3-way action head per edge
+        self.action_head = nn.Sequential(
+            nn.Linear(2 * hidden_dim + edge_dim, hidden_dim),
+            nn.ReLU(),
+            nn.Linear(hidden_dim, 3),
+        )
+
+        # Critic
+        self.critic_head = nn.Sequential(
+            nn.Linear(hidden_dim, hidden_dim // 2),
+            nn.ReLU(),
+            nn.Linear(hidden_dim // 2, 1),
+        )
+
+    def _get_edge_input(
+        self,
+        node_emb: Tensor,
+        edge_index: Tensor,
+        edge_attr: Tensor,
+    ) -> Tensor:
+        src, dst = edge_index
+        return torch.cat([node_emb[src], node_emb[dst], edge_attr], dim=-1)
+
+    def forward(self, data: Data) -> tuple[Tensor, Tensor]:
+        """Returns (action_logits (E, 3), value scalar)."""
+        node_emb = self.backbone.encode(data)
+        h = self._get_edge_input(node_emb, data.edge_index, data.edge_attr)
+        logits = self.action_head(h)  # (E, 3)
+        value = self.critic_head(node_emb.mean(dim=0))  # scalar
+        return logits, value
+
+    def get_action(
+        self,
+        data: Data,
+        deterministic: bool = False,
+    ) -> tuple[Tensor, Tensor, Tensor]:
+        """Sample discrete actions per edge.
+
+        Returns:
+            actions: (E,) int tensor in {0, 1, 2}
+            log_prob: scalar
+            value: scalar
+        """
+        logits, value = self.forward(data)
+        dist = torch.distributions.Categorical(logits=logits)
+        if deterministic:
+            actions = logits.argmax(dim=-1)
+        else:
+            actions = dist.sample()
+        log_prob = dist.log_prob(actions).sum()
+        return actions, log_prob, value
+
+    def evaluate_actions(
+        self,
+        data_list: list[Data],
+        actions_list: list[Tensor],
+    ) -> tuple[Tensor, Tensor, Tensor]:
+        """Batched PPO re-evaluation.
+
+        Returns:
+            log_probs: (batch_size,) tensor
+            values: (batch_size,) tensor
+            entropies: (batch_size,) tensor
+        """
+        all_log_probs = []
+        all_values = []
+        all_entropies = []
+
+        for data, actions in zip(data_list, actions_list):
+            logits, value = self.forward(data)
+            dist = torch.distributions.Categorical(logits=logits)
+            log_prob = dist.log_prob(actions).sum()
+            entropy = dist.entropy().sum()
+            all_log_probs.append(log_prob)
+            all_values.append(value.squeeze())
+            all_entropies.append(entropy)
+
+        return (
+            torch.stack(all_log_probs),
+            torch.stack(all_values),
+            torch.stack(all_entropies),
+        )
+
+    def get_base_scores(self, data: Data) -> np.ndarray:
+        """Get base scores from backbone's edge decoder (for DiscreteActionWrapper).
+
+        Returns sigmoid scores (E,) as numpy.
+        """
+        self.eval()
+        with torch.no_grad():
+            node_emb = self.backbone.encode(data)
+            raw = self.backbone.decode_edges(
+                node_emb, data.edge_index, data.edge_attr,
+            )
+            scores = torch.sigmoid(raw)
+        return scores.cpu().numpy()

@@ -46,3 +46,28 @@ W_SETUP = 0.2
 
 # Routing
 HOP_DELAY = 0.001  # s (1 ms/hop [L04])
+
+# ILP Solver
+ILP_TIME_LIMIT = 60       # seconds, max solve time per snapshot
+ILP_GAP_TOL = 0.01        # 1% optimality gap tolerance
+
+# Phase A (Supervised Pretraining)
+PHASE_A_LR = 1e-3
+PHASE_A_EPOCHS = 100
+PHASE_A_BATCH_SIZE = 32
+PHASE_A_EARLY_STOP = 15
+PHASE_A_N_SNAPSHOTS = 500
+
+# Phase B (Discrete RL Fine-tuning)
+PHASE_B_LR = 1e-4
+PHASE_B_EPISODES = 200
+PHASE_B_UPDATE_INTERVAL = 5
+PHASE_B_PPO_EPOCHS = 4
+PHASE_B_ENTROPY_COEF = 0.05
+PHASE_B_FREEZE_UPDATES = 2
+PHASE_B_CLIP_EPS = 0.2
+PHASE_B_GAMMA = 0.99
+PHASE_B_GAE_LAMBDA = 0.95
+
+# Discrete action space
+N_DISCRETE_ACTIONS = 3     # AS-IS=0, FORCE-ON=1, FORCE-OFF=2

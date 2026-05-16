@@ -1,0 +1,3508 @@
+{
+  "n_snapshots": 500,
+  "n_planes": 24,
+  "sats_per_plane": 20,
+  "tau_sample": 50.0,
+  "stats": [
+    {
+      "idx": 0,
+      "n_candidates": 5328,
+      "n_selected": 94,
+      "ilp_objective": 200508.7807572631,
+      "ilp_time": 0.0461
+    },
+    {
+      "idx": 1,
+      "n_candidates": 5664,
+      "n_selected": 89,
+      "ilp_objective": 182139.49445829663,
+      "ilp_time": 0.0466
+    },
+    {
+      "idx": 2,
+      "n_candidates": 5808,
+      "n_selected": 90,
+      "ilp_objective": 195230.7471367981,
+      "ilp_time": 0.0514
+    },
+    {
+      "idx": 3,
+      "n_candidates": 5616,
+      "n_selected": 92,
+      "ilp_objective": 207694.47586870118,
+      "ilp_time": 0.0435
+    },
+    {
+      "idx": 4,
+      "n_candidates": 5760,
+      "n_selected": 95,
+      "ilp_objective": 191480.95754521652,
+      "ilp_time": 0.0453
+    },
+    {
+      "idx": 5,
+      "n_candidates": 5520,
+      "n_selected": 93,
+      "ilp_objective": 192519.98551958796,
+      "ilp_time": 0.0411
+    },
+    {
+      "idx": 6,
+      "n_candidates": 5448,
+      "n_selected": 97,
+      "ilp_objective": 198291.36867621614,
+      "ilp_time": 0.0405
+    },
+    {
+      "idx": 7,
+      "n_candidates": 5712,
+      "n_selected": 89,
+      "ilp_objective": 188265.44781011602,
+      "ilp_time": 0.0407
+    },
+    {
+      "idx": 8,
+      "n_candidates": 5664,
+      "n_selected": 90,
+      "ilp_objective": 193994.96102910818,
+      "ilp_time": 0.0423
+    },
+    {
+      "idx": 9,
+      "n_candidates": 5712,
+      "n_selected": 90,
+      "ilp_objective": 204074.95225159772,
+      "ilp_time": 0.0421
+    },
+    {
+      "idx": 10,
+      "n_candidates": 5760,
+      "n_selected": 91,
+      "ilp_objective": 187338.3341702894,
+      "ilp_time": 0.0436
+    },
+    {
+      "idx": 11,
+      "n_candidates": 5544,
+      "n_selected": 96,
+      "ilp_objective": 197827.96384678237,
+      "ilp_time": 0.0409
+    },
+    {
+      "idx": 12,
+      "n_candidates": 5496,
+      "n_selected": 94,
+      "ilp_objective": 199481.2318126837,
+      "ilp_time": 0.0411
+    },
+    {
+      "idx": 13,
+      "n_candidates": 5760,
+      "n_selected": 92,
+      "ilp_objective": 189117.39111638072,
+      "ilp_time": 0.044
+    },
+    {
+      "idx": 14,
+      "n_candidates": 5664,
+      "n_selected": 96,
+      "ilp_objective": 203705.1490962176,
+      "ilp_time": 0.0488
+    },
+    {
+      "idx": 15,
+      "n_candidates": 5712,
+      "n_selected": 91,
+      "ilp_objective": 195320.9248325324,
+      "ilp_time": 0.0474
+    },
+    {
+      "idx": 16,
+      "n_candidates": 5712,
+      "n_selected": 89,
+      "ilp_objective": 186381.7199707776,
+      "ilp_time": 0.0411
+    },
+    {
+      "idx": 17,
+      "n_candidates": 5400,
+      "n_selected": 92,
+      "ilp_objective": 202064.87881189407,
+      "ilp_time": 0.0422
+    },
+    {
+      "idx": 18,
+      "n_candidates": 5568,
+      "n_selected": 96,
+      "ilp_objective": 192315.2389108839,
+      "ilp_time": 0.0415
+    },
+    {
+      "idx": 19,
+      "n_candidates": 5760,
+      "n_selected": 95,
+      "ilp_objective": 193830.01864486776,
+      "ilp_time": 0.0505
+    },
+    {
+      "idx": 20,
+      "n_candidates": 5664,
+      "n_selected": 86,
+      "ilp_objective": 208184.37164251998,
+      "ilp_time": 0.1662
+    },
+    {
+      "idx": 21,
+      "n_candidates": 5808,
+      "n_selected": 95,
+      "ilp_objective": 195302.62231259787,
+      "ilp_time": 0.0533
+    },
+    {
+      "idx": 22,
+      "n_candidates": 5664,
+      "n_selected": 91,
+      "ilp_objective": 186512.23032804107,
+      "ilp_time": 0.042
+    },
+    {
+      "idx": 23,
+      "n_candidates": 5352,
+      "n_selected": 95,
+      "ilp_objective": 209537.1613340975,
+      "ilp_time": 0.0431
+    },
+    {
+      "idx": 24,
+      "n_candidates": 5712,
+      "n_selected": 95,
+      "ilp_objective": 192902.1750247663,
+      "ilp_time": 0.0435
+    },
+    {
+      "idx": 25,
+      "n_candidates": 5760,
+      "n_selected": 96,
+      "ilp_objective": 199203.46952257154,
+      "ilp_time": 0.0474
+    },
+    {
+      "idx": 26,
+      "n_candidates": 5616,
+      "n_selected": 90,
+      "ilp_objective": 203371.28679956507,
+      "ilp_time": 0.0402
+    },
+    {
+      "idx": 27,
+      "n_candidates": 5712,
+      "n_selected": 103,
+      "ilp_objective": 202791.61730025255,
+      "ilp_time": 0.0451
+    },
+    {
+      "idx": 28,
+      "n_candidates": 5544,
+      "n_selected": 91,
+      "ilp_objective": 191119.4723336553,
+      "ilp_time": 0.0438
+    },
+    {
+      "idx": 29,
+      "n_candidates": 5544,
+      "n_selected": 97,
+      "ilp_objective": 203785.06586472288,
+      "ilp_time": 0.0417
+    },
+    {
+      "idx": 30,
+      "n_candidates": 5760,
+      "n_selected": 99,
+      "ilp_objective": 191991.12305497215,
+      "ilp_time": 0.0459
+    },
+    {
+      "idx": 31,
+      "n_candidates": 5712,
+      "n_selected": 96,
+      "ilp_objective": 195759.28574405736,
+      "ilp_time": 0.0443
+    },
+    {
+      "idx": 32,
+      "n_candidates": 5712,
+      "n_selected": 92,
+      "ilp_objective": 202185.9870613667,
+      "ilp_time": 0.0455
+    },
+    {
+      "idx": 33,
+      "n_candidates": 5760,
+      "n_selected": 101,
+      "ilp_objective": 192263.989516273,
+      "ilp_time": 0.1601
+    },
+    {
+      "idx": 34,
+      "n_candidates": 5544,
+      "n_selected": 96,
+      "ilp_objective": 204847.43360211217,
+      "ilp_time": 0.0429
+    },
+    {
+      "idx": 35,
+      "n_candidates": 5544,
+      "n_selected": 93,
+      "ilp_objective": 199671.3302945793,
+      "ilp_time": 0.044
+    },
+    {
+      "idx": 36,
+      "n_candidates": 5736,
+      "n_selected": 96,
+      "ilp_objective": 186056.52123119112,
+      "ilp_time": 0.0563
+    },
+    {
+      "idx": 37,
+      "n_candidates": 5616,
+      "n_selected": 96,
+      "ilp_objective": 198233.6351815245,
+      "ilp_time": 0.0456
+    },
+    {
+      "idx": 38,
+      "n_candidates": 5712,
+      "n_selected": 91,
+      "ilp_objective": 196549.4096383589,
+      "ilp_time": 0.0471
+    },
+    {
+      "idx": 39,
+      "n_candidates": 5712,
+      "n_selected": 99,
+      "ilp_objective": 196534.4061267849,
+      "ilp_time": 0.0461
+    },
+    {
+      "idx": 40,
+      "n_candidates": 5400,
+      "n_selected": 100,
+      "ilp_objective": 206857.08933895282,
+      "ilp_time": 0.1624
+    },
+    {
+      "idx": 41,
+      "n_candidates": 5616,
+      "n_selected": 93,
+      "ilp_objective": 192837.18585415417,
+      "ilp_time": 0.0426
+    },
+    {
+      "idx": 42,
+      "n_candidates": 5808,
+      "n_selected": 94,
+      "ilp_objective": 192115.5226470051,
+      "ilp_time": 0.0439
+    },
+    {
+      "idx": 43,
+      "n_candidates": 5664,
+      "n_selected": 94,
+      "ilp_objective": 206311.2687130003,
+      "ilp_time": 0.0461
+    },
+    {
+      "idx": 44,
+      "n_candidates": 5760,
+      "n_selected": 91,
+      "ilp_objective": 190751.40232911872,
+      "ilp_time": 0.0473
+    },
+    {
+      "idx": 45,
+      "n_candidates": 5568,
+      "n_selected": 97,
+      "ilp_objective": 197608.82730130953,
+      "ilp_time": 0.046
+    },
+    {
+      "idx": 46,
+      "n_candidates": 5400,
+      "n_selected": 93,
+      "ilp_objective": 201093.1094878037,
+      "ilp_time": 0.0441
+    },
+    {
+      "idx": 47,
+      "n_candidates": 5712,
+      "n_selected": 92,
+      "ilp_objective": 188727.61958648002,
+      "ilp_time": 0.0452
+    },
+    {
+      "idx": 48,
+      "n_candidates": 5712,
+      "n_selected": 94,
+      "ilp_objective": 203325.65899068542,
+      "ilp_time": 0.0445
+    },
+    {
+      "idx": 49,
+      "n_candidates": 5616,
+      "n_selected": 93,
+      "ilp_objective": 199551.38437820875,
+      "ilp_time": 0.0417
+    },
+    {
+      "idx": 50,
+      "n_candidates": 5760,
+      "n_selected": 91,
+      "ilp_objective": 188652.10375432132,
+      "ilp_time": 0.0579
+    },
+    {
+      "idx": 51,
+      "n_candidates": 5544,
+      "n_selected": 93,
+      "ilp_objective": 196057.39834297996,
+      "ilp_time": 0.0406
+    },
+    {
+      "idx": 52,
+      "n_candidates": 5544,
+      "n_selected": 97,
+      "ilp_objective": 194135.99399508475,
+      "ilp_time": 0.0416
+    },
+    {
+      "idx": 53,
+      "n_candidates": 5760,
+      "n_selected": 88,
+      "ilp_objective": 186769.39240729323,
+      "ilp_time": 0.0431
+    },
+    {
+      "idx": 54,
+      "n_candidates": 5712,
+      "n_selected": 90,
+      "ilp_objective": 204881.45718725197,
+      "ilp_time": 0.0417
+    },
+    {
+      "idx": 55,
+      "n_candidates": 5712,
+      "n_selected": 97,
+      "ilp_objective": 197307.22569709265,
+      "ilp_time": 0.0439
+    },
+    {
+      "idx": 56,
+      "n_candidates": 5760,
+      "n_selected": 89,
+      "ilp_objective": 185288.52705462402,
+      "ilp_time": 0.0453
+    },
+    {
+      "idx": 57,
+      "n_candidates": 5496,
+      "n_selected": 100,
+      "ilp_objective": 207670.4434638751,
+      "ilp_time": 0.0413
+    },
+    {
+      "idx": 58,
+      "n_candidates": 5496,
+      "n_selected": 90,
+      "ilp_objective": 187550.37476826602,
+      "ilp_time": 0.0431
+    },
+    {
+      "idx": 59,
+      "n_candidates": 5760,
+      "n_selected": 93,
+      "ilp_objective": 188077.31574078317,
+      "ilp_time": 0.046
+    },
+    {
+      "idx": 60,
+      "n_candidates": 5616,
+      "n_selected": 88,
+      "ilp_objective": 204915.2923745384,
+      "ilp_time": 0.0421
+    },
+    {
+      "idx": 61,
+      "n_candidates": 5808,
+      "n_selected": 98,
+      "ilp_objective": 188779.62168915157,
+      "ilp_time": 0.0443
+    },
+    {
+      "idx": 62,
+      "n_candidates": 5640,
+      "n_selected": 94,
+      "ilp_objective": 184033.39202616108,
+      "ilp_time": 0.0428
+    },
+    {
+      "idx": 63,
+      "n_candidates": 5352,
+      "n_selected": 94,
+      "ilp_objective": 205795.9294805119,
+      "ilp_time": 0.0424
+    },
+    {
+      "idx": 64,
+      "n_candidates": 5664,
+      "n_selected": 94,
+      "ilp_objective": 194298.795538978,
+      "ilp_time": 0.0429
+    },
+    {
+      "idx": 65,
+      "n_candidates": 5808,
+      "n_selected": 92,
+      "ilp_objective": 195755.04174801038,
+      "ilp_time": 0.0422
+    },
+    {
+      "idx": 66,
+      "n_candidates": 5616,
+      "n_selected": 92,
+      "ilp_objective": 202730.25020715705,
+      "ilp_time": 0.0419
+    },
+    {
+      "idx": 67,
+      "n_candidates": 5760,
+      "n_selected": 97,
+      "ilp_objective": 189193.70203119927,
+      "ilp_time": 0.0438
+    },
+    {
+      "idx": 68,
+      "n_candidates": 5520,
+      "n_selected": 87,
+      "ilp_objective": 186276.25923140557,
+      "ilp_time": 0.0436
+    },
+    {
+      "idx": 69,
+      "n_candidates": 5448,
+      "n_selected": 89,
+      "ilp_objective": 204365.08147465793,
+      "ilp_time": 0.0452
+    },
+    {
+      "idx": 70,
+      "n_candidates": 5712,
+      "n_selected": 96,
+      "ilp_objective": 183990.0983341429,
+      "ilp_time": 0.0446
+    },
+    {
+      "idx": 71,
+      "n_candidates": 5712,
+      "n_selected": 87,
+      "ilp_objective": 202045.55446739253,
+      "ilp_time": 0.0444
+    },
+    {
+      "idx": 72,
+      "n_candidates": 5664,
+      "n_selected": 88,
+      "ilp_objective": 201135.20032582985,
+      "ilp_time": 0.0449
+    },
+    {
+      "idx": 73,
+      "n_candidates": 5760,
+      "n_selected": 98,
+      "ilp_objective": 190158.94374869106,
+      "ilp_time": 0.0473
+    },
+    {
+      "idx": 74,
+      "n_candidates": 5496,
+      "n_selected": 88,
+      "ilp_objective": 194292.5985800409,
+      "ilp_time": 0.042
+    },
+    {
+      "idx": 75,
+      "n_candidates": 5496,
+      "n_selected": 89,
+      "ilp_objective": 206310.33907638304,
+      "ilp_time": 0.0427
+    },
+    {
+      "idx": 76,
+      "n_candidates": 5760,
+      "n_selected": 93,
+      "ilp_objective": 186638.57965933683,
+      "ilp_time": 0.0431
+    },
+    {
+      "idx": 77,
+      "n_candidates": 5664,
+      "n_selected": 86,
+      "ilp_objective": 194853.29536830046,
+      "ilp_time": 0.0443
+    },
+    {
+      "idx": 78,
+      "n_candidates": 5712,
+      "n_selected": 83,
+      "ilp_objective": 194417.72803411653,
+      "ilp_time": 0.0435
+    },
+    {
+      "idx": 79,
+      "n_candidates": 5712,
+      "n_selected": 100,
+      "ilp_objective": 192272.63877698212,
+      "ilp_time": 0.0454
+    },
+    {
+      "idx": 80,
+      "n_candidates": 5448,
+      "n_selected": 100,
+      "ilp_objective": 196670.42461234986,
+      "ilp_time": 0.0415
+    },
+    {
+      "idx": 81,
+      "n_candidates": 5520,
+      "n_selected": 92,
+      "ilp_objective": 193699.15180050232,
+      "ilp_time": 0.0429
+    },
+    {
+      "idx": 82,
+      "n_candidates": 5760,
+      "n_selected": 91,
+      "ilp_objective": 188032.54779808133,
+      "ilp_time": 0.043
+    },
+    {
+      "idx": 83,
+      "n_candidates": 5616,
+      "n_selected": 95,
+      "ilp_objective": 208084.00616408823,
+      "ilp_time": 0.0423
+    },
+    {
+      "idx": 84,
+      "n_candidates": 5808,
+      "n_selected": 84,
+      "ilp_objective": 189702.03949353695,
+      "ilp_time": 0.0432
+    },
+    {
+      "idx": 85,
+      "n_candidates": 5664,
+      "n_selected": 94,
+      "ilp_objective": 188214.60642159657,
+      "ilp_time": 0.0436
+    },
+    {
+      "idx": 86,
+      "n_candidates": 5352,
+      "n_selected": 102,
+      "ilp_objective": 204269.382372562,
+      "ilp_time": 0.0423
+    },
+    {
+      "idx": 87,
+      "n_candidates": 5664,
+      "n_selected": 98,
+      "ilp_objective": 205605.58024818054,
+      "ilp_time": 0.0438
+    },
+    {
+      "idx": 88,
+      "n_candidates": 5808,
+      "n_selected": 93,
+      "ilp_objective": 195236.52767238644,
+      "ilp_time": 0.0433
+    },
+    {
+      "idx": 89,
+      "n_candidates": 5616,
+      "n_selected": 96,
+      "ilp_objective": 202940.87204256377,
+      "ilp_time": 0.043
+    },
+    {
+      "idx": 90,
+      "n_candidates": 5712,
+      "n_selected": 87,
+      "ilp_objective": 181079.3473077742,
+      "ilp_time": 0.044
+    },
+    {
+      "idx": 91,
+      "n_candidates": 5496,
+      "n_selected": 93,
+      "ilp_objective": 193411.36032188922,
+      "ilp_time": 0.0436
+    },
+    {
+      "idx": 92,
+      "n_candidates": 5544,
+      "n_selected": 95,
+      "ilp_objective": 201330.99266211945,
+      "ilp_time": 0.0439
+    },
+    {
+      "idx": 93,
+      "n_candidates": 5712,
+      "n_selected": 103,
+      "ilp_objective": 193538.9405388193,
+      "ilp_time": 0.045
+    },
+    {
+      "idx": 94,
+      "n_candidates": 5712,
+      "n_selected": 100,
+      "ilp_objective": 201812.08652549496,
+      "ilp_time": 0.0492
+    },
+    {
+      "idx": 95,
+      "n_candidates": 5712,
+      "n_selected": 86,
+      "ilp_objective": 198307.68159045858,
+      "ilp_time": 0.0446
+    },
+    {
+      "idx": 96,
+      "n_candidates": 5760,
+      "n_selected": 87,
+      "ilp_objective": 181765.2288203614,
+      "ilp_time": 0.0441
+    },
+    {
+      "idx": 97,
+      "n_candidates": 5544,
+      "n_selected": 98,
+      "ilp_objective": 201509.68980309996,
+      "ilp_time": 0.0434
+    },
+    {
+      "idx": 98,
+      "n_candidates": 5496,
+      "n_selected": 89,
+      "ilp_objective": 194989.67030370267,
+      "ilp_time": 0.0424
+    },
+    {
+      "idx": 99,
+      "n_candidates": 5808,
+      "n_selected": 101,
+      "ilp_objective": 193614.7798807134,
+      "ilp_time": 0.0454
+    },
+    {
+      "idx": 100,
+      "n_candidates": 5616,
+      "n_selected": 90,
+      "ilp_objective": 206187.5455105428,
+      "ilp_time": 0.0432
+    },
+    {
+      "idx": 101,
+      "n_candidates": 5712,
+      "n_selected": 92,
+      "ilp_objective": 193204.84712151292,
+      "ilp_time": 0.0448
+    },
+    {
+      "idx": 102,
+      "n_candidates": 5712,
+      "n_selected": 94,
+      "ilp_objective": 197573.09812059195,
+      "ilp_time": 0.0449
+    },
+    {
+      "idx": 103,
+      "n_candidates": 5400,
+      "n_selected": 100,
+      "ilp_objective": 202822.3187563284,
+      "ilp_time": 0.043
+    },
+    {
+      "idx": 104,
+      "n_candidates": 5568,
+      "n_selected": 91,
+      "ilp_objective": 197506.8942625447,
+      "ilp_time": 0.0426
+    },
+    {
+      "idx": 105,
+      "n_candidates": 5808,
+      "n_selected": 98,
+      "ilp_objective": 197728.31974063852,
+      "ilp_time": 0.0457
+    },
+    {
+      "idx": 106,
+      "n_candidates": 5664,
+      "n_selected": 92,
+      "ilp_objective": 210646.4067076152,
+      "ilp_time": 0.0436
+    },
+    {
+      "idx": 107,
+      "n_candidates": 5808,
+      "n_selected": 93,
+      "ilp_objective": 200505.88402897667,
+      "ilp_time": 0.044
+    },
+    {
+      "idx": 108,
+      "n_candidates": 5568,
+      "n_selected": 96,
+      "ilp_objective": 201558.95328205885,
+      "ilp_time": 0.0487
+    },
+    {
+      "idx": 109,
+      "n_candidates": 5400,
+      "n_selected": 100,
+      "ilp_objective": 200825.2128501984,
+      "ilp_time": 0.0423
+    },
+    {
+      "idx": 110,
+      "n_candidates": 5712,
+      "n_selected": 95,
+      "ilp_objective": 193516.84036531622,
+      "ilp_time": 0.044
+    },
+    {
+      "idx": 111,
+      "n_candidates": 5688,
+      "n_selected": 97,
+      "ilp_objective": 201260.06459847352,
+      "ilp_time": 0.0434
+    },
+    {
+      "idx": 112,
+      "n_candidates": 5616,
+      "n_selected": 86,
+      "ilp_objective": 204115.26914350764,
+      "ilp_time": 0.0423
+    },
+    {
+      "idx": 113,
+      "n_candidates": 5760,
+      "n_selected": 93,
+      "ilp_objective": 194160.1850455796,
+      "ilp_time": 0.06
+    },
+    {
+      "idx": 114,
+      "n_candidates": 5496,
+      "n_selected": 92,
+      "ilp_objective": 199810.41630534217,
+      "ilp_time": 0.0411
+    },
+    {
+      "idx": 115,
+      "n_candidates": 5544,
+      "n_selected": 93,
+      "ilp_objective": 199276.65242111488,
+      "ilp_time": 0.0438
+    },
+    {
+      "idx": 116,
+      "n_candidates": 5760,
+      "n_selected": 98,
+      "ilp_objective": 186779.3345731983,
+      "ilp_time": 0.0448
+    },
+    {
+      "idx": 117,
+      "n_candidates": 5712,
+      "n_selected": 94,
+      "ilp_objective": 205748.16099325204,
+      "ilp_time": 0.0435
+    },
+    {
+      "idx": 118,
+      "n_candidates": 5712,
+      "n_selected": 84,
+      "ilp_objective": 199967.8874594794,
+      "ilp_time": 0.0429
+    },
+    {
+      "idx": 119,
+      "n_candidates": 5712,
+      "n_selected": 96,
+      "ilp_objective": 191396.74877467006,
+      "ilp_time": 0.0482
+    },
+    {
+      "idx": 120,
+      "n_candidates": 5544,
+      "n_selected": 88,
+      "ilp_objective": 203462.16149539826,
+      "ilp_time": 0.0417
+    },
+    {
+      "idx": 121,
+      "n_candidates": 5496,
+      "n_selected": 92,
+      "ilp_objective": 193451.18375631276,
+      "ilp_time": 0.0432
+    },
+    {
+      "idx": 122,
+      "n_candidates": 5712,
+      "n_selected": 91,
+      "ilp_objective": 189081.71503336675,
+      "ilp_time": 0.0444
+    },
+    {
+      "idx": 123,
+      "n_candidates": 5616,
+      "n_selected": 97,
+      "ilp_objective": 206842.74445955726,
+      "ilp_time": 0.0432
+    },
+    {
+      "idx": 124,
+      "n_candidates": 5760,
+      "n_selected": 87,
+      "ilp_objective": 193271.31742880377,
+      "ilp_time": 0.0432
+    },
+    {
+      "idx": 125,
+      "n_candidates": 5688,
+      "n_selected": 94,
+      "ilp_objective": 197573.2133088972,
+      "ilp_time": 0.0441
+    },
+    {
+      "idx": 126,
+      "n_candidates": 5352,
+      "n_selected": 91,
+      "ilp_objective": 202403.95427346617,
+      "ilp_time": 0.0421
+    },
+    {
+      "idx": 127,
+      "n_candidates": 5664,
+      "n_selected": 91,
+      "ilp_objective": 184308.6486416897,
+      "ilp_time": 0.0448
+    },
+    {
+      "idx": 128,
+      "n_candidates": 5808,
+      "n_selected": 84,
+      "ilp_objective": 191899.5313084688,
+      "ilp_time": 0.044
+    },
+    {
+      "idx": 129,
+      "n_candidates": 5616,
+      "n_selected": 92,
+      "ilp_objective": 201125.7477533128,
+      "ilp_time": 0.0432
+    },
+    {
+      "idx": 130,
+      "n_candidates": 5760,
+      "n_selected": 91,
+      "ilp_objective": 185087.69223934258,
+      "ilp_time": 0.0445
+    },
+    {
+      "idx": 131,
+      "n_candidates": 5544,
+      "n_selected": 91,
+      "ilp_objective": 198149.55914562053,
+      "ilp_time": 0.043
+    },
+    {
+      "idx": 132,
+      "n_candidates": 5400,
+      "n_selected": 91,
+      "ilp_objective": 206543.77138958793,
+      "ilp_time": 0.0441
+    },
+    {
+      "idx": 133,
+      "n_candidates": 5712,
+      "n_selected": 90,
+      "ilp_objective": 187774.86870562224,
+      "ilp_time": 0.0424
+    },
+    {
+      "idx": 134,
+      "n_candidates": 5712,
+      "n_selected": 87,
+      "ilp_objective": 193010.09815911532,
+      "ilp_time": 0.0447
+    },
+    {
+      "idx": 135,
+      "n_candidates": 5664,
+      "n_selected": 93,
+      "ilp_objective": 197568.4556770584,
+      "ilp_time": 0.0478
+    },
+    {
+      "idx": 136,
+      "n_candidates": 5760,
+      "n_selected": 95,
+      "ilp_objective": 183178.79789548862,
+      "ilp_time": 0.0449
+    },
+    {
+      "idx": 137,
+      "n_candidates": 5496,
+      "n_selected": 92,
+      "ilp_objective": 200641.74736611077,
+      "ilp_time": 0.0435
+    },
+    {
+      "idx": 138,
+      "n_candidates": 5544,
+      "n_selected": 90,
+      "ilp_objective": 194047.34879887584,
+      "ilp_time": 0.0435
+    },
+    {
+      "idx": 139,
+      "n_candidates": 5760,
+      "n_selected": 89,
+      "ilp_objective": 183898.2063875315,
+      "ilp_time": 0.0456
+    },
+    {
+      "idx": 140,
+      "n_candidates": 5712,
+      "n_selected": 87,
+      "ilp_objective": 194612.1898525583,
+      "ilp_time": 0.0451
+    },
+    {
+      "idx": 141,
+      "n_candidates": 5712,
+      "n_selected": 96,
+      "ilp_objective": 196476.87751163615,
+      "ilp_time": 0.0461
+    },
+    {
+      "idx": 142,
+      "n_candidates": 5712,
+      "n_selected": 89,
+      "ilp_objective": 185063.56918247577,
+      "ilp_time": 0.0434
+    },
+    {
+      "idx": 143,
+      "n_candidates": 5448,
+      "n_selected": 98,
+      "ilp_objective": 198752.1069518635,
+      "ilp_time": 0.0476
+    },
+    {
+      "idx": 144,
+      "n_candidates": 5520,
+      "n_selected": 91,
+      "ilp_objective": 194286.18917349656,
+      "ilp_time": 0.0432
+    },
+    {
+      "idx": 145,
+      "n_candidates": 5760,
+      "n_selected": 91,
+      "ilp_objective": 185913.30551264473,
+      "ilp_time": 0.0466
+    },
+    {
+      "idx": 146,
+      "n_candidates": 5616,
+      "n_selected": 90,
+      "ilp_objective": 209019.61706055244,
+      "ilp_time": 0.0412
+    },
+    {
+      "idx": 147,
+      "n_candidates": 5808,
+      "n_selected": 93,
+      "ilp_objective": 189105.86262005047,
+      "ilp_time": 0.0451
+    },
+    {
+      "idx": 148,
+      "n_candidates": 5664,
+      "n_selected": 93,
+      "ilp_objective": 191358.17210773155,
+      "ilp_time": 0.0452
+    },
+    {
+      "idx": 149,
+      "n_candidates": 5352,
+      "n_selected": 96,
+      "ilp_objective": 202415.90087559845,
+      "ilp_time": 0.0427
+    },
+    {
+      "idx": 150,
+      "n_candidates": 5664,
+      "n_selected": 89,
+      "ilp_objective": 193967.84879497168,
+      "ilp_time": 0.0447
+    },
+    {
+      "idx": 151,
+      "n_candidates": 5808,
+      "n_selected": 92,
+      "ilp_objective": 192735.35173335954,
+      "ilp_time": 0.0446
+    },
+    {
+      "idx": 152,
+      "n_candidates": 5616,
+      "n_selected": 96,
+      "ilp_objective": 212786.2078999274,
+      "ilp_time": 0.0445
+    },
+    {
+      "idx": 153,
+      "n_candidates": 5784,
+      "n_selected": 85,
+      "ilp_objective": 186191.57531379466,
+      "ilp_time": 0.0436
+    },
+    {
+      "idx": 154,
+      "n_candidates": 5496,
+      "n_selected": 93,
+      "ilp_objective": 190695.16060212106,
+      "ilp_time": 0.0448
+    },
+    {
+      "idx": 155,
+      "n_candidates": 5496,
+      "n_selected": 98,
+      "ilp_objective": 204141.54206911454,
+      "ilp_time": 0.0448
+    },
+    {
+      "idx": 156,
+      "n_candidates": 5712,
+      "n_selected": 93,
+      "ilp_objective": 195950.9611121284,
+      "ilp_time": 0.0452
+    },
+    {
+      "idx": 157,
+      "n_candidates": 5688,
+      "n_selected": 91,
+      "ilp_objective": 196171.570155352,
+      "ilp_time": 0.0449
+    },
+    {
+      "idx": 158,
+      "n_candidates": 5712,
+      "n_selected": 95,
+      "ilp_objective": 207657.0745910075,
+      "ilp_time": 0.0455
+    },
+    {
+      "idx": 159,
+      "n_candidates": 5760,
+      "n_selected": 88,
+      "ilp_objective": 186779.29801300316,
+      "ilp_time": 0.047
+    },
+    {
+      "idx": 160,
+      "n_candidates": 5544,
+      "n_selected": 90,
+      "ilp_objective": 199789.9325966587,
+      "ilp_time": 0.0474
+    },
+    {
+      "idx": 161,
+      "n_candidates": 5496,
+      "n_selected": 94,
+      "ilp_objective": 196794.9341715531,
+      "ilp_time": 0.0453
+    },
+    {
+      "idx": 162,
+      "n_candidates": 5760,
+      "n_selected": 98,
+      "ilp_objective": 192367.94438281804,
+      "ilp_time": 0.0461
+    },
+    {
+      "idx": 163,
+      "n_candidates": 5616,
+      "n_selected": 96,
+      "ilp_objective": 206096.05730440558,
+      "ilp_time": 0.0438
+    },
+    {
+      "idx": 164,
+      "n_candidates": 5712,
+      "n_selected": 97,
+      "ilp_objective": 202139.4560975572,
+      "ilp_time": 0.0464
+    },
+    {
+      "idx": 165,
+      "n_candidates": 5712,
+      "n_selected": 86,
+      "ilp_objective": 183786.73729590778,
+      "ilp_time": 0.0436
+    },
+    {
+      "idx": 166,
+      "n_candidates": 5400,
+      "n_selected": 94,
+      "ilp_objective": 200669.8313728187,
+      "ilp_time": 0.0433
+    },
+    {
+      "idx": 167,
+      "n_candidates": 5568,
+      "n_selected": 93,
+      "ilp_objective": 197093.94577392165,
+      "ilp_time": 0.0446
+    },
+    {
+      "idx": 168,
+      "n_candidates": 5760,
+      "n_selected": 101,
+      "ilp_objective": 199321.2320784508,
+      "ilp_time": 0.0606
+    },
+    {
+      "idx": 169,
+      "n_candidates": 5664,
+      "n_selected": 93,
+      "ilp_objective": 208143.75455962832,
+      "ilp_time": 0.0457
+    },
+    {
+      "idx": 170,
+      "n_candidates": 5808,
+      "n_selected": 99,
+      "ilp_objective": 190700.65329674853,
+      "ilp_time": 0.0504
+    },
+    {
+      "idx": 171,
+      "n_candidates": 5664,
+      "n_selected": 89,
+      "ilp_objective": 187227.48530341923,
+      "ilp_time": 0.0448
+    },
+    {
+      "idx": 172,
+      "n_candidates": 5400,
+      "n_selected": 98,
+      "ilp_objective": 205219.08791352584,
+      "ilp_time": 0.0441
+    },
+    {
+      "idx": 173,
+      "n_candidates": 5712,
+      "n_selected": 95,
+      "ilp_objective": 199194.49089684658,
+      "ilp_time": 0.0468
+    },
+    {
+      "idx": 174,
+      "n_candidates": 5712,
+      "n_selected": 101,
+      "ilp_objective": 200714.7446650408,
+      "ilp_time": 0.0468
+    },
+    {
+      "idx": 175,
+      "n_candidates": 5616,
+      "n_selected": 85,
+      "ilp_objective": 203557.72509646424,
+      "ilp_time": 0.0417
+    },
+    {
+      "idx": 176,
+      "n_candidates": 5712,
+      "n_selected": 103,
+      "ilp_objective": 191523.4564710524,
+      "ilp_time": 0.0471
+    },
+    {
+      "idx": 177,
+      "n_candidates": 5544,
+      "n_selected": 91,
+      "ilp_objective": 197285.20577520886,
+      "ilp_time": 0.043
+    },
+    {
+      "idx": 178,
+      "n_candidates": 5544,
+      "n_selected": 91,
+      "ilp_objective": 200511.7555933012,
+      "ilp_time": 0.0417
+    },
+    {
+      "idx": 179,
+      "n_candidates": 5760,
+      "n_selected": 96,
+      "ilp_objective": 195353.807030947,
+      "ilp_time": 0.0483
+    },
+    {
+      "idx": 180,
+      "n_candidates": 5712,
+      "n_selected": 99,
+      "ilp_objective": 201945.92306795748,
+      "ilp_time": 0.0447
+    },
+    {
+      "idx": 181,
+      "n_candidates": 5712,
+      "n_selected": 90,
+      "ilp_objective": 201352.39291921383,
+      "ilp_time": 0.0436
+    },
+    {
+      "idx": 182,
+      "n_candidates": 5760,
+      "n_selected": 102,
+      "ilp_objective": 196137.45560651523,
+      "ilp_time": 0.0454
+    },
+    {
+      "idx": 183,
+      "n_candidates": 5544,
+      "n_selected": 96,
+      "ilp_objective": 198736.5289043213,
+      "ilp_time": 0.0436
+    },
+    {
+      "idx": 184,
+      "n_candidates": 5544,
+      "n_selected": 93,
+      "ilp_objective": 200852.13956112514,
+      "ilp_time": 0.0441
+    },
+    {
+      "idx": 185,
+      "n_candidates": 5736,
+      "n_selected": 94,
+      "ilp_objective": 197087.08807962938,
+      "ilp_time": 0.0551
+    },
+    {
+      "idx": 186,
+      "n_candidates": 5616,
+      "n_selected": 95,
+      "ilp_objective": 206487.4663200283,
+      "ilp_time": 0.0461
+    },
+    {
+      "idx": 187,
+      "n_candidates": 5712,
+      "n_selected": 88,
+      "ilp_objective": 189147.6117606357,
+      "ilp_time": 0.0487
+    },
+    {
+      "idx": 188,
+      "n_candidates": 5712,
+      "n_selected": 97,
+      "ilp_objective": 196434.83344541496,
+      "ilp_time": 0.0483
+    },
+    {
+      "idx": 189,
+      "n_candidates": 5400,
+      "n_selected": 99,
+      "ilp_objective": 204940.7848653335,
+      "ilp_time": 0.0453
+    },
+    {
+      "idx": 190,
+      "n_candidates": 5664,
+      "n_selected": 90,
+      "ilp_objective": 189927.02672744586,
+      "ilp_time": 0.0457
+    },
+    {
+      "idx": 191,
+      "n_candidates": 5808,
+      "n_selected": 95,
+      "ilp_objective": 193998.012564209,
+      "ilp_time": 0.0445
+    },
+    {
+      "idx": 192,
+      "n_candidates": 5664,
+      "n_selected": 100,
+      "ilp_objective": 210917.97168101152,
+      "ilp_time": 0.046
+    },
+    {
+      "idx": 193,
+      "n_candidates": 5760,
+      "n_selected": 86,
+      "ilp_objective": 187673.18119911518,
+      "ilp_time": 0.0453
+    },
+    {
+      "idx": 194,
+      "n_candidates": 5568,
+      "n_selected": 95,
+      "ilp_objective": 202168.74365680985,
+      "ilp_time": 0.0432
+    },
+    {
+      "idx": 195,
+      "n_candidates": 5400,
+      "n_selected": 99,
+      "ilp_objective": 200459.09674639392,
+      "ilp_time": 0.0451
+    },
+    {
+      "idx": 196,
+      "n_candidates": 5712,
+      "n_selected": 94,
+      "ilp_objective": 192113.4596975348,
+      "ilp_time": 0.045
+    },
+    {
+      "idx": 197,
+      "n_candidates": 5712,
+      "n_selected": 90,
+      "ilp_objective": 197298.03438979774,
+      "ilp_time": 0.0465
+    },
+    {
+      "idx": 198,
+      "n_candidates": 5616,
+      "n_selected": 96,
+      "ilp_objective": 197624.41707521013,
+      "ilp_time": 0.0438
+    },
+    {
+      "idx": 199,
+      "n_candidates": 5760,
+      "n_selected": 88,
+      "ilp_objective": 184912.1584422306,
+      "ilp_time": 0.0602
+    },
+    {
+      "idx": 200,
+      "n_candidates": 5496,
+      "n_selected": 96,
+      "ilp_objective": 206914.03427370545,
+      "ilp_time": 0.1693
+    },
+    {
+      "idx": 201,
+      "n_candidates": 5544,
+      "n_selected": 91,
+      "ilp_objective": 197004.1331173249,
+      "ilp_time": 0.045
+    },
+    {
+      "idx": 202,
+      "n_candidates": 5760,
+      "n_selected": 91,
+      "ilp_objective": 188106.60132664847,
+      "ilp_time": 0.0653
+    },
+    {
+      "idx": 203,
+      "n_candidates": 5712,
+      "n_selected": 88,
+      "ilp_objective": 200102.56529744202,
+      "ilp_time": 0.0452
+    },
+    {
+      "idx": 204,
+      "n_candidates": 5688,
+      "n_selected": 96,
+      "ilp_objective": 198714.34873263823,
+      "ilp_time": 0.0456
+    },
+    {
+      "idx": 205,
+      "n_candidates": 5712,
+      "n_selected": 89,
+      "ilp_objective": 186339.0760637276,
+      "ilp_time": 0.0435
+    },
+    {
+      "idx": 206,
+      "n_candidates": 5496,
+      "n_selected": 99,
+      "ilp_objective": 214158.9196229543,
+      "ilp_time": 0.0451
+    },
+    {
+      "idx": 207,
+      "n_candidates": 5496,
+      "n_selected": 91,
+      "ilp_objective": 199037.8510871863,
+      "ilp_time": 0.0435
+    },
+    {
+      "idx": 208,
+      "n_candidates": 5784,
+      "n_selected": 91,
+      "ilp_objective": 188309.870810438,
+      "ilp_time": 0.0451
+    },
+    {
+      "idx": 209,
+      "n_candidates": 5616,
+      "n_selected": 88,
+      "ilp_objective": 203989.10590080213,
+      "ilp_time": 0.0446
+    },
+    {
+      "idx": 210,
+      "n_candidates": 5808,
+      "n_selected": 93,
+      "ilp_objective": 191346.1335914617,
+      "ilp_time": 0.0445
+    },
+    {
+      "idx": 211,
+      "n_candidates": 5664,
+      "n_selected": 87,
+      "ilp_objective": 182631.6200434028,
+      "ilp_time": 0.0448
+    },
+    {
+      "idx": 212,
+      "n_candidates": 5352,
+      "n_selected": 97,
+      "ilp_objective": 209660.26310218472,
+      "ilp_time": 0.0419
+    },
+    {
+      "idx": 213,
+      "n_candidates": 5664,
+      "n_selected": 90,
+      "ilp_objective": 184460.70725622153,
+      "ilp_time": 0.0491
+    },
+    {
+      "idx": 214,
+      "n_candidates": 5808,
+      "n_selected": 90,
+      "ilp_objective": 192067.90040856504,
+      "ilp_time": 0.0442
+    },
+    {
+      "idx": 215,
+      "n_candidates": 5616,
+      "n_selected": 95,
+      "ilp_objective": 206198.91926441077,
+      "ilp_time": 0.0422
+    },
+    {
+      "idx": 216,
+      "n_candidates": 5760,
+      "n_selected": 93,
+      "ilp_objective": 190925.51586355295,
+      "ilp_time": 0.0477
+    },
+    {
+      "idx": 217,
+      "n_candidates": 5520,
+      "n_selected": 90,
+      "ilp_objective": 185220.0657748232,
+      "ilp_time": 0.0445
+    },
+    {
+      "idx": 218,
+      "n_candidates": 5448,
+      "n_selected": 93,
+      "ilp_objective": 201277.83469711908,
+      "ilp_time": 0.0432
+    },
+    {
+      "idx": 219,
+      "n_candidates": 5712,
+      "n_selected": 94,
+      "ilp_objective": 183612.5398985878,
+      "ilp_time": 0.047
+    },
+    {
+      "idx": 220,
+      "n_candidates": 5712,
+      "n_selected": 91,
+      "ilp_objective": 194702.9182570704,
+      "ilp_time": 0.0456
+    },
+    {
+      "idx": 221,
+      "n_candidates": 5712,
+      "n_selected": 88,
+      "ilp_objective": 202317.97854103975,
+      "ilp_time": 0.0455
+    },
+    {
+      "idx": 222,
+      "n_candidates": 5760,
+      "n_selected": 96,
+      "ilp_objective": 190420.00211052035,
+      "ilp_time": 0.0465
+    },
+    {
+      "idx": 223,
+      "n_candidates": 5544,
+      "n_selected": 95,
+      "ilp_objective": 197664.72392553155,
+      "ilp_time": 0.0441
+    },
+    {
+      "idx": 224,
+      "n_candidates": 5496,
+      "n_selected": 94,
+      "ilp_objective": 204535.9501600902,
+      "ilp_time": 0.0447
+    },
+    {
+      "idx": 225,
+      "n_candidates": 5760,
+      "n_selected": 91,
+      "ilp_objective": 196299.35954195235,
+      "ilp_time": 0.0484
+    },
+    {
+      "idx": 226,
+      "n_candidates": 5664,
+      "n_selected": 92,
+      "ilp_objective": 204051.92011593422,
+      "ilp_time": 0.0458
+    },
+    {
+      "idx": 227,
+      "n_candidates": 5712,
+      "n_selected": 89,
+      "ilp_objective": 199318.2875581814,
+      "ilp_time": 0.0457
+    },
+    {
+      "idx": 228,
+      "n_candidates": 5712,
+      "n_selected": 91,
+      "ilp_objective": 187570.0146633316,
+      "ilp_time": 0.045
+    },
+    {
+      "idx": 229,
+      "n_candidates": 5400,
+      "n_selected": 97,
+      "ilp_objective": 198387.10066918645,
+      "ilp_time": 0.0448
+    },
+    {
+      "idx": 230,
+      "n_candidates": 5568,
+      "n_selected": 95,
+      "ilp_objective": 201348.83678740976,
+      "ilp_time": 0.0483
+    },
+    {
+      "idx": 231,
+      "n_candidates": 5760,
+      "n_selected": 94,
+      "ilp_objective": 200013.1055433714,
+      "ilp_time": 0.0469
+    },
+    {
+      "idx": 232,
+      "n_candidates": 5640,
+      "n_selected": 96,
+      "ilp_objective": 204957.92897001866,
+      "ilp_time": 0.0449
+    },
+    {
+      "idx": 233,
+      "n_candidates": 5808,
+      "n_selected": 94,
+      "ilp_objective": 190531.3666359336,
+      "ilp_time": 0.0465
+    },
+    {
+      "idx": 234,
+      "n_candidates": 5664,
+      "n_selected": 89,
+      "ilp_objective": 189644.10537427606,
+      "ilp_time": 0.045
+    },
+    {
+      "idx": 235,
+      "n_candidates": 5352,
+      "n_selected": 93,
+      "ilp_objective": 205476.4387529358,
+      "ilp_time": 0.0435
+    },
+    {
+      "idx": 236,
+      "n_candidates": 5688,
+      "n_selected": 102,
+      "ilp_objective": 199504.68285073206,
+      "ilp_time": 0.0449
+    },
+    {
+      "idx": 237,
+      "n_candidates": 5760,
+      "n_selected": 98,
+      "ilp_objective": 200528.2241367154,
+      "ilp_time": 0.0467
+    },
+    {
+      "idx": 238,
+      "n_candidates": 5616,
+      "n_selected": 89,
+      "ilp_objective": 199729.49584202425,
+      "ilp_time": 0.0434
+    },
+    {
+      "idx": 239,
+      "n_candidates": 5712,
+      "n_selected": 94,
+      "ilp_objective": 192529.48383484926,
+      "ilp_time": 0.0457
+    },
+    {
+      "idx": 240,
+      "n_candidates": 5496,
+      "n_selected": 91,
+      "ilp_objective": 191331.98691251248,
+      "ilp_time": 0.0432
+    },
+    {
+      "idx": 241,
+      "n_candidates": 5544,
+      "n_selected": 94,
+      "ilp_objective": 207040.32276544537,
+      "ilp_time": 0.0451
+    },
+    {
+      "idx": 242,
+      "n_candidates": 5712,
+      "n_selected": 105,
+      "ilp_objective": 195621.80855546822,
+      "ilp_time": 0.0484
+    },
+    {
+      "idx": 243,
+      "n_candidates": 5712,
+      "n_selected": 100,
+      "ilp_objective": 204153.20147488656,
+      "ilp_time": 0.045
+    },
+    {
+      "idx": 244,
+      "n_candidates": 5712,
+      "n_selected": 90,
+      "ilp_objective": 203504.1075963536,
+      "ilp_time": 0.0459
+    },
+    {
+      "idx": 245,
+      "n_candidates": 5760,
+      "n_selected": 99,
+      "ilp_objective": 202497.8562340747,
+      "ilp_time": 0.0473
+    },
+    {
+      "idx": 246,
+      "n_candidates": 5544,
+      "n_selected": 98,
+      "ilp_objective": 202150.4121739968,
+      "ilp_time": 0.0502
+    },
+    {
+      "idx": 247,
+      "n_candidates": 5496,
+      "n_selected": 93,
+      "ilp_objective": 203730.43436545134,
+      "ilp_time": 0.0438
+    },
+    {
+      "idx": 248,
+      "n_candidates": 5760,
+      "n_selected": 101,
+      "ilp_objective": 196111.6557264038,
+      "ilp_time": 0.0651
+    },
+    {
+      "idx": 249,
+      "n_candidates": 5616,
+      "n_selected": 99,
+      "ilp_objective": 204352.8391129988,
+      "ilp_time": 0.0472
+    },
+    {
+      "idx": 250,
+      "n_candidates": 5688,
+      "n_selected": 92,
+      "ilp_objective": 203469.77173151844,
+      "ilp_time": 0.0436
+    },
+    {
+      "idx": 251,
+      "n_candidates": 5712,
+      "n_selected": 93,
+      "ilp_objective": 194153.47029040646,
+      "ilp_time": 0.046
+    },
+    {
+      "idx": 252,
+      "n_candidates": 5400,
+      "n_selected": 99,
+      "ilp_objective": 204409.40919884792,
+      "ilp_time": 0.0455
+    },
+    {
+      "idx": 253,
+      "n_candidates": 5568,
+      "n_selected": 92,
+      "ilp_objective": 192318.71603768945,
+      "ilp_time": 0.0439
+    },
+    {
+      "idx": 254,
+      "n_candidates": 5808,
+      "n_selected": 95,
+      "ilp_objective": 197116.12801614555,
+      "ilp_time": 0.0485
+    },
+    {
+      "idx": 255,
+      "n_candidates": 5664,
+      "n_selected": 93,
+      "ilp_objective": 205112.54291173004,
+      "ilp_time": 0.0468
+    },
+    {
+      "idx": 256,
+      "n_candidates": 5784,
+      "n_selected": 94,
+      "ilp_objective": 194681.51735647084,
+      "ilp_time": 0.0454
+    },
+    {
+      "idx": 257,
+      "n_candidates": 5568,
+      "n_selected": 93,
+      "ilp_objective": 193774.92067991858,
+      "ilp_time": 0.0445
+    },
+    {
+      "idx": 258,
+      "n_candidates": 5400,
+      "n_selected": 96,
+      "ilp_objective": 200897.55677333646,
+      "ilp_time": 0.0434
+    },
+    {
+      "idx": 259,
+      "n_candidates": 5712,
+      "n_selected": 93,
+      "ilp_objective": 190709.52207440595,
+      "ilp_time": 0.0483
+    },
+    {
+      "idx": 260,
+      "n_candidates": 5712,
+      "n_selected": 91,
+      "ilp_objective": 193301.8984317699,
+      "ilp_time": 0.0464
+    },
+    {
+      "idx": 261,
+      "n_candidates": 5616,
+      "n_selected": 91,
+      "ilp_objective": 204539.70296219428,
+      "ilp_time": 0.0445
+    },
+    {
+      "idx": 262,
+      "n_candidates": 5808,
+      "n_selected": 94,
+      "ilp_objective": 194811.9666781458,
+      "ilp_time": 0.0592
+    },
+    {
+      "idx": 263,
+      "n_candidates": 5496,
+      "n_selected": 91,
+      "ilp_objective": 205412.18338698277,
+      "ilp_time": 0.0438
+    },
+    {
+      "idx": 264,
+      "n_candidates": 5544,
+      "n_selected": 97,
+      "ilp_objective": 195530.9835292356,
+      "ilp_time": 0.0441
+    },
+    {
+      "idx": 265,
+      "n_candidates": 5760,
+      "n_selected": 93,
+      "ilp_objective": 185117.7697382902,
+      "ilp_time": 0.0474
+    },
+    {
+      "idx": 266,
+      "n_candidates": 5712,
+      "n_selected": 90,
+      "ilp_objective": 202226.835366908,
+      "ilp_time": 0.0474
+    },
+    {
+      "idx": 267,
+      "n_candidates": 5712,
+      "n_selected": 91,
+      "ilp_objective": 201091.36050652107,
+      "ilp_time": 0.0471
+    },
+    {
+      "idx": 268,
+      "n_candidates": 5736,
+      "n_selected": 90,
+      "ilp_objective": 192819.15352431723,
+      "ilp_time": 0.0475
+    },
+    {
+      "idx": 269,
+      "n_candidates": 5544,
+      "n_selected": 93,
+      "ilp_objective": 201910.43682804715,
+      "ilp_time": 0.0439
+    },
+    {
+      "idx": 270,
+      "n_candidates": 5496,
+      "n_selected": 90,
+      "ilp_objective": 190211.4744819297,
+      "ilp_time": 0.0434
+    },
+    {
+      "idx": 271,
+      "n_candidates": 5712,
+      "n_selected": 87,
+      "ilp_objective": 185214.54246631876,
+      "ilp_time": 0.044
+    },
+    {
+      "idx": 272,
+      "n_candidates": 5616,
+      "n_selected": 89,
+      "ilp_objective": 207115.52763925624,
+      "ilp_time": 0.0435
+    },
+    {
+      "idx": 273,
+      "n_candidates": 5808,
+      "n_selected": 98,
+      "ilp_objective": 195455.2029428755,
+      "ilp_time": 0.0473
+    },
+    {
+      "idx": 274,
+      "n_candidates": 5664,
+      "n_selected": 89,
+      "ilp_objective": 189498.4800052313,
+      "ilp_time": 0.1622
+    },
+    {
+      "idx": 275,
+      "n_candidates": 5352,
+      "n_selected": 91,
+      "ilp_objective": 213171.8840258736,
+      "ilp_time": 0.0422
+    },
+    {
+      "idx": 276,
+      "n_candidates": 5664,
+      "n_selected": 88,
+      "ilp_objective": 185029.4638613974,
+      "ilp_time": 0.047
+    },
+    {
+      "idx": 277,
+      "n_candidates": 5808,
+      "n_selected": 90,
+      "ilp_objective": 191628.4698609223,
+      "ilp_time": 0.0452
+    },
+    {
+      "idx": 278,
+      "n_candidates": 5616,
+      "n_selected": 93,
+      "ilp_objective": 203173.51943573495,
+      "ilp_time": 0.0443
+    },
+    {
+      "idx": 279,
+      "n_candidates": 5760,
+      "n_selected": 99,
+      "ilp_objective": 188737.41944508086,
+      "ilp_time": 0.0468
+    },
+    {
+      "idx": 280,
+      "n_candidates": 5520,
+      "n_selected": 92,
+      "ilp_objective": 190497.6595623651,
+      "ilp_time": 0.0443
+    },
+    {
+      "idx": 281,
+      "n_candidates": 5448,
+      "n_selected": 89,
+      "ilp_objective": 205587.46670019804,
+      "ilp_time": 0.0451
+    },
+    {
+      "idx": 282,
+      "n_candidates": 5712,
+      "n_selected": 94,
+      "ilp_objective": 189010.14993783835,
+      "ilp_time": 0.0452
+    },
+    {
+      "idx": 283,
+      "n_candidates": 5712,
+      "n_selected": 90,
+      "ilp_objective": 198593.74501981732,
+      "ilp_time": 0.0539
+    },
+    {
+      "idx": 284,
+      "n_candidates": 5664,
+      "n_selected": 93,
+      "ilp_objective": 194598.6544244619,
+      "ilp_time": 0.0447
+    },
+    {
+      "idx": 285,
+      "n_candidates": 5760,
+      "n_selected": 95,
+      "ilp_objective": 192351.69694776591,
+      "ilp_time": 0.0463
+    },
+    {
+      "idx": 286,
+      "n_candidates": 5496,
+      "n_selected": 87,
+      "ilp_objective": 191312.0088890737,
+      "ilp_time": 0.0466
+    },
+    {
+      "idx": 287,
+      "n_candidates": 5496,
+      "n_selected": 91,
+      "ilp_objective": 199494.06480403675,
+      "ilp_time": 0.0448
+    },
+    {
+      "idx": 288,
+      "n_candidates": 5760,
+      "n_selected": 94,
+      "ilp_objective": 185083.34764535906,
+      "ilp_time": 0.0475
+    },
+    {
+      "idx": 289,
+      "n_candidates": 5664,
+      "n_selected": 83,
+      "ilp_objective": 200735.22095570157,
+      "ilp_time": 0.0445
+    },
+    {
+      "idx": 290,
+      "n_candidates": 5712,
+      "n_selected": 90,
+      "ilp_objective": 195192.18572481963,
+      "ilp_time": 0.0462
+    },
+    {
+      "idx": 291,
+      "n_candidates": 5712,
+      "n_selected": 94,
+      "ilp_objective": 182539.8971434472,
+      "ilp_time": 0.048
+    },
+    {
+      "idx": 292,
+      "n_candidates": 5448,
+      "n_selected": 93,
+      "ilp_objective": 193430.2402179773,
+      "ilp_time": 0.0446
+    },
+    {
+      "idx": 293,
+      "n_candidates": 5520,
+      "n_selected": 90,
+      "ilp_objective": 197464.2195820611,
+      "ilp_time": 0.0462
+    },
+    {
+      "idx": 294,
+      "n_candidates": 5760,
+      "n_selected": 93,
+      "ilp_objective": 186712.56055681297,
+      "ilp_time": 0.0458
+    },
+    {
+      "idx": 295,
+      "n_candidates": 5616,
+      "n_selected": 94,
+      "ilp_objective": 209618.256066332,
+      "ilp_time": 0.0445
+    },
+    {
+      "idx": 296,
+      "n_candidates": 5808,
+      "n_selected": 85,
+      "ilp_objective": 191770.66212518,
+      "ilp_time": 0.046
+    },
+    {
+      "idx": 297,
+      "n_candidates": 5664,
+      "n_selected": 98,
+      "ilp_objective": 190974.62262292873,
+      "ilp_time": 0.0466
+    },
+    {
+      "idx": 298,
+      "n_candidates": 5352,
+      "n_selected": 102,
+      "ilp_objective": 214190.57165551928,
+      "ilp_time": 0.0447
+    },
+    {
+      "idx": 299,
+      "n_candidates": 5640,
+      "n_selected": 95,
+      "ilp_objective": 195195.67381998242,
+      "ilp_time": 0.0451
+    },
+    {
+      "idx": 300,
+      "n_candidates": 5808,
+      "n_selected": 90,
+      "ilp_objective": 195070.0458141918,
+      "ilp_time": 0.0462
+    },
+    {
+      "idx": 301,
+      "n_candidates": 5616,
+      "n_selected": 92,
+      "ilp_objective": 204463.82661082834,
+      "ilp_time": 0.0433
+    },
+    {
+      "idx": 302,
+      "n_candidates": 5760,
+      "n_selected": 85,
+      "ilp_objective": 185512.34736581362,
+      "ilp_time": 0.0459
+    },
+    {
+      "idx": 303,
+      "n_candidates": 5496,
+      "n_selected": 94,
+      "ilp_objective": 193072.2430211224,
+      "ilp_time": 0.0437
+    },
+    {
+      "idx": 304,
+      "n_candidates": 5496,
+      "n_selected": 94,
+      "ilp_objective": 200302.92162786203,
+      "ilp_time": 0.0444
+    },
+    {
+      "idx": 305,
+      "n_candidates": 5760,
+      "n_selected": 101,
+      "ilp_objective": 200587.22540892573,
+      "ilp_time": 0.0494
+    },
+    {
+      "idx": 306,
+      "n_candidates": 5712,
+      "n_selected": 94,
+      "ilp_objective": 202003.53771234478,
+      "ilp_time": 0.0494
+    },
+    {
+      "idx": 307,
+      "n_candidates": 5712,
+      "n_selected": 91,
+      "ilp_objective": 204072.14496383187,
+      "ilp_time": 0.0477
+    },
+    {
+      "idx": 308,
+      "n_candidates": 5760,
+      "n_selected": 85,
+      "ilp_objective": 184100.63451943238,
+      "ilp_time": 0.0473
+    },
+    {
+      "idx": 309,
+      "n_candidates": 5544,
+      "n_selected": 93,
+      "ilp_objective": 199985.73177438794,
+      "ilp_time": 0.0444
+    },
+    {
+      "idx": 310,
+      "n_candidates": 5544,
+      "n_selected": 91,
+      "ilp_objective": 200742.62132869317,
+      "ilp_time": 0.0463
+    },
+    {
+      "idx": 311,
+      "n_candidates": 5760,
+      "n_selected": 104,
+      "ilp_objective": 198284.91533841754,
+      "ilp_time": 0.0481
+    },
+    {
+      "idx": 312,
+      "n_candidates": 5616,
+      "n_selected": 92,
+      "ilp_objective": 202342.81798227158,
+      "ilp_time": 0.044
+    },
+    {
+      "idx": 313,
+      "n_candidates": 5712,
+      "n_selected": 92,
+      "ilp_objective": 196366.8628333275,
+      "ilp_time": 0.0455
+    },
+    {
+      "idx": 314,
+      "n_candidates": 5712,
+      "n_selected": 90,
+      "ilp_objective": 189463.00498224486,
+      "ilp_time": 0.048
+    },
+    {
+      "idx": 315,
+      "n_candidates": 5400,
+      "n_selected": 98,
+      "ilp_objective": 200308.1965898433,
+      "ilp_time": 0.0462
+    },
+    {
+      "idx": 316,
+      "n_candidates": 5568,
+      "n_selected": 90,
+      "ilp_objective": 193694.49361217095,
+      "ilp_time": 0.0448
+    },
+    {
+      "idx": 317,
+      "n_candidates": 5760,
+      "n_selected": 102,
+      "ilp_objective": 194092.7380735347,
+      "ilp_time": 0.0619
+    },
+    {
+      "idx": 318,
+      "n_candidates": 5664,
+      "n_selected": 91,
+      "ilp_objective": 208117.78078634274,
+      "ilp_time": 0.0531
+    },
+    {
+      "idx": 319,
+      "n_candidates": 5808,
+      "n_selected": 103,
+      "ilp_objective": 194782.98687500219,
+      "ilp_time": 0.0467
+    },
+    {
+      "idx": 320,
+      "n_candidates": 5616,
+      "n_selected": 96,
+      "ilp_objective": 199636.21284026335,
+      "ilp_time": 0.0473
+    },
+    {
+      "idx": 321,
+      "n_candidates": 5400,
+      "n_selected": 99,
+      "ilp_objective": 205333.41676965443,
+      "ilp_time": 0.0451
+    },
+    {
+      "idx": 322,
+      "n_candidates": 5712,
+      "n_selected": 90,
+      "ilp_objective": 192049.63547595293,
+      "ilp_time": 0.0464
+    },
+    {
+      "idx": 323,
+      "n_candidates": 5712,
+      "n_selected": 99,
+      "ilp_objective": 202276.23818311212,
+      "ilp_time": 0.0481
+    },
+    {
+      "idx": 324,
+      "n_candidates": 5616,
+      "n_selected": 83,
+      "ilp_objective": 200631.08541117323,
+      "ilp_time": 0.0466
+    },
+    {
+      "idx": 325,
+      "n_candidates": 5736,
+      "n_selected": 97,
+      "ilp_objective": 202801.59405179624,
+      "ilp_time": 0.0449
+    },
+    {
+      "idx": 326,
+      "n_candidates": 5520,
+      "n_selected": 94,
+      "ilp_objective": 199847.80760031505,
+      "ilp_time": 0.0451
+    },
+    {
+      "idx": 327,
+      "n_candidates": 5544,
+      "n_selected": 93,
+      "ilp_objective": 194803.18321442572,
+      "ilp_time": 0.0447
+    },
+    {
+      "idx": 328,
+      "n_candidates": 5760,
+      "n_selected": 101,
+      "ilp_objective": 189419.57705976648,
+      "ilp_time": 0.0488
+    },
+    {
+      "idx": 329,
+      "n_candidates": 5712,
+      "n_selected": 98,
+      "ilp_objective": 202186.79863606495,
+      "ilp_time": 0.0472
+    },
+    {
+      "idx": 330,
+      "n_candidates": 5712,
+      "n_selected": 85,
+      "ilp_objective": 196028.5648750986,
+      "ilp_time": 0.0468
+    },
+    {
+      "idx": 331,
+      "n_candidates": 5760,
+      "n_selected": 97,
+      "ilp_objective": 197428.30260230895,
+      "ilp_time": 0.0477
+    },
+    {
+      "idx": 332,
+      "n_candidates": 5544,
+      "n_selected": 92,
+      "ilp_objective": 206332.29052518014,
+      "ilp_time": 0.0441
+    },
+    {
+      "idx": 333,
+      "n_candidates": 5544,
+      "n_selected": 91,
+      "ilp_objective": 196511.03869820834,
+      "ilp_time": 0.0459
+    },
+    {
+      "idx": 334,
+      "n_candidates": 5712,
+      "n_selected": 99,
+      "ilp_objective": 190583.3621754174,
+      "ilp_time": 0.0448
+    },
+    {
+      "idx": 335,
+      "n_candidates": 5616,
+      "n_selected": 94,
+      "ilp_objective": 210441.4599734291,
+      "ilp_time": 0.0446
+    },
+    {
+      "idx": 336,
+      "n_candidates": 5760,
+      "n_selected": 83,
+      "ilp_objective": 192386.79295746237,
+      "ilp_time": 0.0449
+    },
+    {
+      "idx": 337,
+      "n_candidates": 5712,
+      "n_selected": 98,
+      "ilp_objective": 197723.92118344962,
+      "ilp_time": 0.0452
+    },
+    {
+      "idx": 338,
+      "n_candidates": 5352,
+      "n_selected": 98,
+      "ilp_objective": 201938.37376085063,
+      "ilp_time": 0.0412
+    },
+    {
+      "idx": 339,
+      "n_candidates": 5664,
+      "n_selected": 93,
+      "ilp_objective": 189367.65770234627,
+      "ilp_time": 0.0432
+    },
+    {
+      "idx": 340,
+      "n_candidates": 5808,
+      "n_selected": 92,
+      "ilp_objective": 195595.69861648075,
+      "ilp_time": 0.0463
+    },
+    {
+      "idx": 341,
+      "n_candidates": 5664,
+      "n_selected": 96,
+      "ilp_objective": 209445.0665948238,
+      "ilp_time": 0.0454
+    },
+    {
+      "idx": 342,
+      "n_candidates": 5760,
+      "n_selected": 89,
+      "ilp_objective": 185587.88000022728,
+      "ilp_time": 0.0449
+    },
+    {
+      "idx": 343,
+      "n_candidates": 5568,
+      "n_selected": 97,
+      "ilp_objective": 200405.10117398956,
+      "ilp_time": 0.0461
+    },
+    {
+      "idx": 344,
+      "n_candidates": 5400,
+      "n_selected": 97,
+      "ilp_objective": 202876.84429409166,
+      "ilp_time": 0.0425
+    },
+    {
+      "idx": 345,
+      "n_candidates": 5712,
+      "n_selected": 92,
+      "ilp_objective": 186952.29359180402,
+      "ilp_time": 0.0437
+    },
+    {
+      "idx": 346,
+      "n_candidates": 5712,
+      "n_selected": 85,
+      "ilp_objective": 198445.32208668222,
+      "ilp_time": 0.0445
+    },
+    {
+      "idx": 347,
+      "n_candidates": 5664,
+      "n_selected": 93,
+      "ilp_objective": 200503.8977862902,
+      "ilp_time": 0.0454
+    },
+    {
+      "idx": 348,
+      "n_candidates": 5760,
+      "n_selected": 92,
+      "ilp_objective": 185265.92216002164,
+      "ilp_time": 0.0439
+    },
+    {
+      "idx": 349,
+      "n_candidates": 5496,
+      "n_selected": 98,
+      "ilp_objective": 200476.84420144281,
+      "ilp_time": 0.0448
+    },
+    {
+      "idx": 350,
+      "n_candidates": 5544,
+      "n_selected": 90,
+      "ilp_objective": 193559.4626033144,
+      "ilp_time": 0.1557
+    },
+    {
+      "idx": 351,
+      "n_candidates": 5760,
+      "n_selected": 92,
+      "ilp_objective": 189145.56509370625,
+      "ilp_time": 0.046
+    },
+    {
+      "idx": 352,
+      "n_candidates": 5712,
+      "n_selected": 88,
+      "ilp_objective": 196909.6113649125,
+      "ilp_time": 0.0477
+    },
+    {
+      "idx": 353,
+      "n_candidates": 5664,
+      "n_selected": 88,
+      "ilp_objective": 197185.57329123613,
+      "ilp_time": 0.0472
+    },
+    {
+      "idx": 354,
+      "n_candidates": 5712,
+      "n_selected": 94,
+      "ilp_objective": 188110.52212466413,
+      "ilp_time": 0.0468
+    },
+    {
+      "idx": 355,
+      "n_candidates": 5448,
+      "n_selected": 96,
+      "ilp_objective": 207497.71841914026,
+      "ilp_time": 0.0448
+    },
+    {
+      "idx": 356,
+      "n_candidates": 5520,
+      "n_selected": 89,
+      "ilp_objective": 188276.86891971025,
+      "ilp_time": 0.0442
+    },
+    {
+      "idx": 357,
+      "n_candidates": 5760,
+      "n_selected": 88,
+      "ilp_objective": 187699.48862656715,
+      "ilp_time": 0.0457
+    },
+    {
+      "idx": 358,
+      "n_candidates": 5616,
+      "n_selected": 91,
+      "ilp_objective": 200709.44532240034,
+      "ilp_time": 0.0445
+    },
+    {
+      "idx": 359,
+      "n_candidates": 5808,
+      "n_selected": 95,
+      "ilp_objective": 190428.02183063902,
+      "ilp_time": 0.0475
+    },
+    {
+      "idx": 360,
+      "n_candidates": 5664,
+      "n_selected": 87,
+      "ilp_objective": 187251.80887104792,
+      "ilp_time": 0.0453
+    },
+    {
+      "idx": 361,
+      "n_candidates": 5352,
+      "n_selected": 95,
+      "ilp_objective": 201861.50211274336,
+      "ilp_time": 0.0415
+    },
+    {
+      "idx": 362,
+      "n_candidates": 5664,
+      "n_selected": 88,
+      "ilp_objective": 191046.8101976906,
+      "ilp_time": 0.0445
+    },
+    {
+      "idx": 363,
+      "n_candidates": 5808,
+      "n_selected": 94,
+      "ilp_objective": 193356.8645412286,
+      "ilp_time": 0.0445
+    },
+    {
+      "idx": 364,
+      "n_candidates": 5616,
+      "n_selected": 95,
+      "ilp_objective": 202864.78943341272,
+      "ilp_time": 0.1632
+    },
+    {
+      "idx": 365,
+      "n_candidates": 5760,
+      "n_selected": 91,
+      "ilp_objective": 184018.1686133536,
+      "ilp_time": 0.0477
+    },
+    {
+      "idx": 366,
+      "n_candidates": 5520,
+      "n_selected": 92,
+      "ilp_objective": 195682.46172855026,
+      "ilp_time": 0.0472
+    },
+    {
+      "idx": 367,
+      "n_candidates": 5448,
+      "n_selected": 98,
+      "ilp_objective": 197538.8181789919,
+      "ilp_time": 0.0444
+    },
+    {
+      "idx": 368,
+      "n_candidates": 5712,
+      "n_selected": 90,
+      "ilp_objective": 192061.8703458707,
+      "ilp_time": 0.0475
+    },
+    {
+      "idx": 369,
+      "n_candidates": 5664,
+      "n_selected": 93,
+      "ilp_objective": 196251.88440390368,
+      "ilp_time": 0.0449
+    },
+    {
+      "idx": 370,
+      "n_candidates": 5712,
+      "n_selected": 92,
+      "ilp_objective": 206164.14873838608,
+      "ilp_time": 0.0501
+    },
+    {
+      "idx": 371,
+      "n_candidates": 5760,
+      "n_selected": 90,
+      "ilp_objective": 186098.1935136802,
+      "ilp_time": 0.0469
+    },
+    {
+      "idx": 372,
+      "n_candidates": 5544,
+      "n_selected": 92,
+      "ilp_objective": 199775.10927956415,
+      "ilp_time": 0.0453
+    },
+    {
+      "idx": 373,
+      "n_candidates": 5496,
+      "n_selected": 96,
+      "ilp_objective": 199923.66085379274,
+      "ilp_time": 0.0448
+    },
+    {
+      "idx": 374,
+      "n_candidates": 5760,
+      "n_selected": 97,
+      "ilp_objective": 193935.4066586351,
+      "ilp_time": 0.0473
+    },
+    {
+      "idx": 375,
+      "n_candidates": 5664,
+      "n_selected": 93,
+      "ilp_objective": 199601.16123246946,
+      "ilp_time": 0.0441
+    },
+    {
+      "idx": 376,
+      "n_candidates": 5712,
+      "n_selected": 92,
+      "ilp_objective": 203883.10483754895,
+      "ilp_time": 0.0459
+    },
+    {
+      "idx": 377,
+      "n_candidates": 5712,
+      "n_selected": 86,
+      "ilp_objective": 187703.65541331575,
+      "ilp_time": 0.0466
+    },
+    {
+      "idx": 378,
+      "n_candidates": 5400,
+      "n_selected": 92,
+      "ilp_objective": 198119.2594264152,
+      "ilp_time": 0.0433
+    },
+    {
+      "idx": 379,
+      "n_candidates": 5568,
+      "n_selected": 97,
+      "ilp_objective": 197405.78646815472,
+      "ilp_time": 0.0468
+    },
+    {
+      "idx": 380,
+      "n_candidates": 5760,
+      "n_selected": 95,
+      "ilp_objective": 199280.93428145495,
+      "ilp_time": 0.0456
+    },
+    {
+      "idx": 381,
+      "n_candidates": 5664,
+      "n_selected": 84,
+      "ilp_objective": 201868.099767584,
+      "ilp_time": 0.0448
+    },
+    {
+      "idx": 382,
+      "n_candidates": 5808,
+      "n_selected": 100,
+      "ilp_objective": 196510.12210199222,
+      "ilp_time": 0.0561
+    },
+    {
+      "idx": 383,
+      "n_candidates": 5664,
+      "n_selected": 88,
+      "ilp_objective": 189111.7210979573,
+      "ilp_time": 0.047
+    },
+    {
+      "idx": 384,
+      "n_candidates": 5352,
+      "n_selected": 96,
+      "ilp_objective": 200888.0835502774,
+      "ilp_time": 0.0418
+    },
+    {
+      "idx": 385,
+      "n_candidates": 5712,
+      "n_selected": 94,
+      "ilp_objective": 191204.49143698416,
+      "ilp_time": 0.0461
+    },
+    {
+      "idx": 386,
+      "n_candidates": 5760,
+      "n_selected": 100,
+      "ilp_objective": 195461.06286127807,
+      "ilp_time": 0.0443
+    },
+    {
+      "idx": 387,
+      "n_candidates": 5616,
+      "n_selected": 89,
+      "ilp_objective": 208392.06917571556,
+      "ilp_time": 0.0454
+    },
+    {
+      "idx": 388,
+      "n_candidates": 5712,
+      "n_selected": 100,
+      "ilp_objective": 202326.32015092153,
+      "ilp_time": 0.0454
+    },
+    {
+      "idx": 389,
+      "n_candidates": 5544,
+      "n_selected": 91,
+      "ilp_objective": 189770.22347524235,
+      "ilp_time": 0.0534
+    },
+    {
+      "idx": 390,
+      "n_candidates": 5544,
+      "n_selected": 94,
+      "ilp_objective": 199959.38075995925,
+      "ilp_time": 0.0446
+    },
+    {
+      "idx": 391,
+      "n_candidates": 5760,
+      "n_selected": 98,
+      "ilp_objective": 198781.07098166514,
+      "ilp_time": 0.0458
+    },
+    {
+      "idx": 392,
+      "n_candidates": 5712,
+      "n_selected": 94,
+      "ilp_objective": 197101.4038729742,
+      "ilp_time": 0.0455
+    },
+    {
+      "idx": 393,
+      "n_candidates": 5712,
+      "n_selected": 91,
+      "ilp_objective": 203166.5811357626,
+      "ilp_time": 0.0452
+    },
+    {
+      "idx": 394,
+      "n_candidates": 5760,
+      "n_selected": 102,
+      "ilp_objective": 194915.49874524557,
+      "ilp_time": 0.047
+    },
+    {
+      "idx": 395,
+      "n_candidates": 5544,
+      "n_selected": 91,
+      "ilp_objective": 202446.35442239096,
+      "ilp_time": 0.0467
+    },
+    {
+      "idx": 396,
+      "n_candidates": 5544,
+      "n_selected": 93,
+      "ilp_objective": 198408.91684826926,
+      "ilp_time": 0.0455
+    },
+    {
+      "idx": 397,
+      "n_candidates": 5712,
+      "n_selected": 96,
+      "ilp_objective": 191229.4185827531,
+      "ilp_time": 0.0594
+    },
+    {
+      "idx": 398,
+      "n_candidates": 5616,
+      "n_selected": 102,
+      "ilp_objective": 204447.49263436085,
+      "ilp_time": 0.0459
+    },
+    {
+      "idx": 399,
+      "n_candidates": 5712,
+      "n_selected": 89,
+      "ilp_objective": 198086.2279842636,
+      "ilp_time": 0.0452
+    },
+    {
+      "idx": 400,
+      "n_candidates": 5712,
+      "n_selected": 100,
+      "ilp_objective": 197754.37493992917,
+      "ilp_time": 0.045
+    },
+    {
+      "idx": 401,
+      "n_candidates": 5400,
+      "n_selected": 104,
+      "ilp_objective": 208375.76962724177,
+      "ilp_time": 0.0445
+    },
+    {
+      "idx": 402,
+      "n_candidates": 5616,
+      "n_selected": 93,
+      "ilp_objective": 194389.95816906382,
+      "ilp_time": 0.0433
+    },
+    {
+      "idx": 403,
+      "n_candidates": 5808,
+      "n_selected": 91,
+      "ilp_objective": 191944.70463101892,
+      "ilp_time": 0.0439
+    },
+    {
+      "idx": 404,
+      "n_candidates": 5664,
+      "n_selected": 100,
+      "ilp_objective": 206397.75773421116,
+      "ilp_time": 0.0459
+    },
+    {
+      "idx": 405,
+      "n_candidates": 5760,
+      "n_selected": 91,
+      "ilp_objective": 190338.8344554262,
+      "ilp_time": 0.0506
+    },
+    {
+      "idx": 406,
+      "n_candidates": 5568,
+      "n_selected": 96,
+      "ilp_objective": 195915.36939239828,
+      "ilp_time": 0.0449
+    },
+    {
+      "idx": 407,
+      "n_candidates": 5400,
+      "n_selected": 97,
+      "ilp_objective": 201198.01291580513,
+      "ilp_time": 0.044
+    },
+    {
+      "idx": 408,
+      "n_candidates": 5712,
+      "n_selected": 89,
+      "ilp_objective": 188383.5393486043,
+      "ilp_time": 0.0455
+    },
+    {
+      "idx": 409,
+      "n_candidates": 5712,
+      "n_selected": 94,
+      "ilp_objective": 199628.34538220684,
+      "ilp_time": 0.048
+    },
+    {
+      "idx": 410,
+      "n_candidates": 5616,
+      "n_selected": 95,
+      "ilp_objective": 199060.33536534046,
+      "ilp_time": 0.161
+    },
+    {
+      "idx": 411,
+      "n_candidates": 5760,
+      "n_selected": 88,
+      "ilp_objective": 186799.65420749885,
+      "ilp_time": 0.0601
+    },
+    {
+      "idx": 412,
+      "n_candidates": 5544,
+      "n_selected": 94,
+      "ilp_objective": 202551.11224645848,
+      "ilp_time": 0.046
+    },
+    {
+      "idx": 413,
+      "n_candidates": 5544,
+      "n_selected": 95,
+      "ilp_objective": 195614.35006638977,
+      "ilp_time": 0.0447
+    },
+    {
+      "idx": 414,
+      "n_candidates": 5760,
+      "n_selected": 92,
+      "ilp_objective": 186177.53611459088,
+      "ilp_time": 0.0447
+    },
+    {
+      "idx": 415,
+      "n_candidates": 5712,
+      "n_selected": 91,
+      "ilp_objective": 201956.0831042016,
+      "ilp_time": 0.0465
+    },
+    {
+      "idx": 416,
+      "n_candidates": 5712,
+      "n_selected": 97,
+      "ilp_objective": 192983.79851562274,
+      "ilp_time": 0.046
+    },
+    {
+      "idx": 417,
+      "n_candidates": 5736,
+      "n_selected": 88,
+      "ilp_objective": 182464.4893358947,
+      "ilp_time": 0.0476
+    },
+    {
+      "idx": 418,
+      "n_candidates": 5496,
+      "n_selected": 100,
+      "ilp_objective": 208208.68529894564,
+      "ilp_time": 0.0438
+    },
+    {
+      "idx": 419,
+      "n_candidates": 5496,
+      "n_selected": 88,
+      "ilp_objective": 187830.7940708439,
+      "ilp_time": 0.0449
+    },
+    {
+      "idx": 420,
+      "n_candidates": 5760,
+      "n_selected": 90,
+      "ilp_objective": 189679.26736493804,
+      "ilp_time": 0.0537
+    },
+    {
+      "idx": 421,
+      "n_candidates": 5616,
+      "n_selected": 89,
+      "ilp_objective": 201797.9769059562,
+      "ilp_time": 0.0481
+    },
+    {
+      "idx": 422,
+      "n_candidates": 5808,
+      "n_selected": 96,
+      "ilp_objective": 199343.4068394463,
+      "ilp_time": 0.0495
+    },
+    {
+      "idx": 423,
+      "n_candidates": 5664,
+      "n_selected": 89,
+      "ilp_objective": 191047.12998709478,
+      "ilp_time": 0.045
+    },
+    {
+      "idx": 424,
+      "n_candidates": 5352,
+      "n_selected": 97,
+      "ilp_objective": 211637.13867845834,
+      "ilp_time": 0.0546
+    },
+    {
+      "idx": 425,
+      "n_candidates": 5664,
+      "n_selected": 91,
+      "ilp_objective": 186314.72470993892,
+      "ilp_time": 0.0471
+    },
+    {
+      "idx": 426,
+      "n_candidates": 5808,
+      "n_selected": 92,
+      "ilp_objective": 194652.26745251424,
+      "ilp_time": 0.0464
+    },
+    {
+      "idx": 427,
+      "n_candidates": 5616,
+      "n_selected": 94,
+      "ilp_objective": 204890.3374710531,
+      "ilp_time": 0.0444
+    },
+    {
+      "idx": 428,
+      "n_candidates": 5760,
+      "n_selected": 95,
+      "ilp_objective": 191940.77605478425,
+      "ilp_time": 0.0461
+    },
+    {
+      "idx": 429,
+      "n_candidates": 5520,
+      "n_selected": 85,
+      "ilp_objective": 183878.62393259065,
+      "ilp_time": 0.0429
+    },
+    {
+      "idx": 430,
+      "n_candidates": 5448,
+      "n_selected": 93,
+      "ilp_objective": 203429.65121600954,
+      "ilp_time": 0.0449
+    },
+    {
+      "idx": 431,
+      "n_candidates": 5712,
+      "n_selected": 92,
+      "ilp_objective": 183367.7065009188,
+      "ilp_time": 0.0462
+    },
+    {
+      "idx": 432,
+      "n_candidates": 5712,
+      "n_selected": 87,
+      "ilp_objective": 192339.6519734915,
+      "ilp_time": 0.0467
+    },
+    {
+      "idx": 433,
+      "n_candidates": 5664,
+      "n_selected": 86,
+      "ilp_objective": 199226.10607245628,
+      "ilp_time": 0.0459
+    },
+    {
+      "idx": 434,
+      "n_candidates": 5760,
+      "n_selected": 99,
+      "ilp_objective": 189408.86622208598,
+      "ilp_time": 0.0479
+    },
+    {
+      "idx": 435,
+      "n_candidates": 5496,
+      "n_selected": 95,
+      "ilp_objective": 191142.70674462794,
+      "ilp_time": 0.0458
+    },
+    {
+      "idx": 436,
+      "n_candidates": 5496,
+      "n_selected": 90,
+      "ilp_objective": 206475.89497330773,
+      "ilp_time": 0.0443
+    },
+    {
+      "idx": 437,
+      "n_candidates": 5760,
+      "n_selected": 94,
+      "ilp_objective": 184772.11617599954,
+      "ilp_time": 0.0464
+    },
+    {
+      "idx": 438,
+      "n_candidates": 5664,
+      "n_selected": 92,
+      "ilp_objective": 201431.6272532084,
+      "ilp_time": 0.0482
+    },
+    {
+      "idx": 439,
+      "n_candidates": 5712,
+      "n_selected": 84,
+      "ilp_objective": 200061.15505430312,
+      "ilp_time": 0.0449
+    },
+    {
+      "idx": 440,
+      "n_candidates": 5712,
+      "n_selected": 94,
+      "ilp_objective": 189937.7088773755,
+      "ilp_time": 0.0535
+    },
+    {
+      "idx": 441,
+      "n_candidates": 5424,
+      "n_selected": 97,
+      "ilp_objective": 199633.15273849975,
+      "ilp_time": 0.0494
+    },
+    {
+      "idx": 442,
+      "n_candidates": 5520,
+      "n_selected": 97,
+      "ilp_objective": 201869.56473236557,
+      "ilp_time": 0.0454
+    },
+    {
+      "idx": 443,
+      "n_candidates": 5760,
+      "n_selected": 92,
+      "ilp_objective": 186979.56326431764,
+      "ilp_time": 0.0463
+    },
+    {
+      "idx": 444,
+      "n_candidates": 5616,
+      "n_selected": 96,
+      "ilp_objective": 205841.62351504533,
+      "ilp_time": 0.044
+    },
+    {
+      "idx": 445,
+      "n_candidates": 5808,
+      "n_selected": 84,
+      "ilp_objective": 191773.30401075067,
+      "ilp_time": 0.0447
+    },
+    {
+      "idx": 446,
+      "n_candidates": 5664,
+      "n_selected": 92,
+      "ilp_objective": 190571.64521948292,
+      "ilp_time": 0.0473
+    },
+    {
+      "idx": 447,
+      "n_candidates": 5352,
+      "n_selected": 101,
+      "ilp_objective": 207422.66039375003,
+      "ilp_time": 0.0432
+    },
+    {
+      "idx": 448,
+      "n_candidates": 5664,
+      "n_selected": 98,
+      "ilp_objective": 203930.90613695583,
+      "ilp_time": 0.0481
+    },
+    {
+      "idx": 449,
+      "n_candidates": 5808,
+      "n_selected": 99,
+      "ilp_objective": 197962.6143954676,
+      "ilp_time": 0.0469
+    },
+    {
+      "idx": 450,
+      "n_candidates": 5616,
+      "n_selected": 91,
+      "ilp_objective": 201037.6220543464,
+      "ilp_time": 0.1631
+    },
+    {
+      "idx": 451,
+      "n_candidates": 5712,
+      "n_selected": 87,
+      "ilp_objective": 187587.18573954678,
+      "ilp_time": 0.0461
+    },
+    {
+      "idx": 452,
+      "n_candidates": 5496,
+      "n_selected": 93,
+      "ilp_objective": 189887.23246464523,
+      "ilp_time": 0.0447
+    },
+    {
+      "idx": 453,
+      "n_candidates": 5544,
+      "n_selected": 96,
+      "ilp_objective": 203484.42862246532,
+      "ilp_time": 0.0451
+    },
+    {
+      "idx": 454,
+      "n_candidates": 5712,
+      "n_selected": 104,
+      "ilp_objective": 199440.54588582116,
+      "ilp_time": 0.0474
+    },
+    {
+      "idx": 455,
+      "n_candidates": 5712,
+      "n_selected": 101,
+      "ilp_objective": 207444.18653449742,
+      "ilp_time": 0.0479
+    },
+    {
+      "idx": 456,
+      "n_candidates": 5712,
+      "n_selected": 87,
+      "ilp_objective": 198768.52761066615,
+      "ilp_time": 0.0463
+    },
+    {
+      "idx": 457,
+      "n_candidates": 5760,
+      "n_selected": 93,
+      "ilp_objective": 191045.49800267545,
+      "ilp_time": 0.0473
+    },
+    {
+      "idx": 458,
+      "n_candidates": 5544,
+      "n_selected": 99,
+      "ilp_objective": 199255.31485054205,
+      "ilp_time": 0.0465
+    },
+    {
+      "idx": 459,
+      "n_candidates": 5496,
+      "n_selected": 90,
+      "ilp_objective": 193766.57065931926,
+      "ilp_time": 0.0474
+    },
+    {
+      "idx": 460,
+      "n_candidates": 5808,
+      "n_selected": 101,
+      "ilp_objective": 195186.1987007302,
+      "ilp_time": 0.0471
+    },
+    {
+      "idx": 461,
+      "n_candidates": 5616,
+      "n_selected": 90,
+      "ilp_objective": 203390.23697699924,
+      "ilp_time": 0.0439
+    },
+    {
+      "idx": 462,
+      "n_candidates": 5712,
+      "n_selected": 92,
+      "ilp_objective": 201801.32963052744,
+      "ilp_time": 0.0466
+    },
+    {
+      "idx": 463,
+      "n_candidates": 5712,
+      "n_selected": 96,
+      "ilp_objective": 196780.59460989333,
+      "ilp_time": 0.0471
+    },
+    {
+      "idx": 464,
+      "n_candidates": 5400,
+      "n_selected": 103,
+      "ilp_objective": 207008.05451745025,
+      "ilp_time": 0.0452
+    },
+    {
+      "idx": 465,
+      "n_candidates": 5568,
+      "n_selected": 93,
+      "ilp_objective": 195011.09384974142,
+      "ilp_time": 0.0459
+    },
+    {
+      "idx": 466,
+      "n_candidates": 5808,
+      "n_selected": 99,
+      "ilp_objective": 201075.791847146,
+      "ilp_time": 0.0471
+    },
+    {
+      "idx": 467,
+      "n_candidates": 5664,
+      "n_selected": 92,
+      "ilp_objective": 208160.05264779902,
+      "ilp_time": 0.0456
+    },
+    {
+      "idx": 468,
+      "n_candidates": 5808,
+      "n_selected": 95,
+      "ilp_objective": 196896.2325037146,
+      "ilp_time": 0.046
+    },
+    {
+      "idx": 469,
+      "n_candidates": 5568,
+      "n_selected": 94,
+      "ilp_objective": 199587.36418950316,
+      "ilp_time": 0.0448
+    },
+    {
+      "idx": 470,
+      "n_candidates": 5400,
+      "n_selected": 97,
+      "ilp_objective": 196808.42384127222,
+      "ilp_time": 0.0463
+    },
+    {
+      "idx": 471,
+      "n_candidates": 5712,
+      "n_selected": 94,
+      "ilp_objective": 190892.0851312079,
+      "ilp_time": 0.0473
+    },
+    {
+      "idx": 472,
+      "n_candidates": 5712,
+      "n_selected": 94,
+      "ilp_objective": 202112.77220325806,
+      "ilp_time": 0.046
+    },
+    {
+      "idx": 473,
+      "n_candidates": 5616,
+      "n_selected": 87,
+      "ilp_objective": 203273.73560093073,
+      "ilp_time": 0.0432
+    },
+    {
+      "idx": 474,
+      "n_candidates": 5784,
+      "n_selected": 94,
+      "ilp_objective": 195704.69687796407,
+      "ilp_time": 0.0564
+    },
+    {
+      "idx": 475,
+      "n_candidates": 5496,
+      "n_selected": 90,
+      "ilp_objective": 203833.9048274952,
+      "ilp_time": 0.0429
+    },
+    {
+      "idx": 476,
+      "n_candidates": 5544,
+      "n_selected": 96,
+      "ilp_objective": 196750.71227304175,
+      "ilp_time": 0.0452
+    },
+    {
+      "idx": 477,
+      "n_candidates": 5760,
+      "n_selected": 94,
+      "ilp_objective": 188453.04022994154,
+      "ilp_time": 0.1604
+    },
+    {
+      "idx": 478,
+      "n_candidates": 5712,
+      "n_selected": 89,
+      "ilp_objective": 199163.04459987994,
+      "ilp_time": 0.0451
+    },
+    {
+      "idx": 479,
+      "n_candidates": 5712,
+      "n_selected": 88,
+      "ilp_objective": 197574.7819453624,
+      "ilp_time": 0.0467
+    },
+    {
+      "idx": 480,
+      "n_candidates": 5712,
+      "n_selected": 95,
+      "ilp_objective": 194343.79062011087,
+      "ilp_time": 0.0502
+    },
+    {
+      "idx": 481,
+      "n_candidates": 5544,
+      "n_selected": 89,
+      "ilp_objective": 196279.2088407408,
+      "ilp_time": 0.0437
+    },
+    {
+      "idx": 482,
+      "n_candidates": 5496,
+      "n_selected": 94,
+      "ilp_objective": 194302.18375119453,
+      "ilp_time": 0.0456
+    },
+    {
+      "idx": 483,
+      "n_candidates": 5712,
+      "n_selected": 89,
+      "ilp_objective": 183140.62172007724,
+      "ilp_time": 0.0471
+    },
+    {
+      "idx": 484,
+      "n_candidates": 5616,
+      "n_selected": 95,
+      "ilp_objective": 208718.04803198657,
+      "ilp_time": 0.0464
+    },
+    {
+      "idx": 485,
+      "n_candidates": 5760,
+      "n_selected": 90,
+      "ilp_objective": 190659.33278382412,
+      "ilp_time": 0.0459
+    },
+    {
+      "idx": 486,
+      "n_candidates": 5688,
+      "n_selected": 90,
+      "ilp_objective": 199469.74013082532,
+      "ilp_time": 0.0449
+    },
+    {
+      "idx": 487,
+      "n_candidates": 5352,
+      "n_selected": 93,
+      "ilp_objective": 202598.4191839803,
+      "ilp_time": 0.0447
+    },
+    {
+      "idx": 488,
+      "n_candidates": 5664,
+      "n_selected": 90,
+      "ilp_objective": 193833.42389392958,
+      "ilp_time": 0.0442
+    },
+    {
+      "idx": 489,
+      "n_candidates": 5808,
+      "n_selected": 87,
+      "ilp_objective": 188904.15724862745,
+      "ilp_time": 0.0464
+    },
+    {
+      "idx": 490,
+      "n_candidates": 5616,
+      "n_selected": 91,
+      "ilp_objective": 204655.85222979536,
+      "ilp_time": 0.0447
+    },
+    {
+      "idx": 491,
+      "n_candidates": 5760,
+      "n_selected": 92,
+      "ilp_objective": 186312.67960961125,
+      "ilp_time": 0.0469
+    },
+    {
+      "idx": 492,
+      "n_candidates": 5520,
+      "n_selected": 93,
+      "ilp_objective": 191011.05730952142,
+      "ilp_time": 0.0443
+    },
+    {
+      "idx": 493,
+      "n_candidates": 5400,
+      "n_selected": 90,
+      "ilp_objective": 199481.4312142823,
+      "ilp_time": 0.044
+    },
+    {
+      "idx": 494,
+      "n_candidates": 5712,
+      "n_selected": 88,
+      "ilp_objective": 187076.53578063304,
+      "ilp_time": 0.0561
+    },
+    {
+      "idx": 495,
+      "n_candidates": 5712,
+      "n_selected": 89,
+      "ilp_objective": 194709.87944485171,
+      "ilp_time": 0.0459
+    },
+    {
+      "idx": 496,
+      "n_candidates": 5664,
+      "n_selected": 96,
+      "ilp_objective": 200050.96075507026,
+      "ilp_time": 0.0458
+    },
+    {
+      "idx": 497,
+      "n_candidates": 5760,
+      "n_selected": 93,
+      "ilp_objective": 185987.04430557837,
+      "ilp_time": 0.0491
+    },
+    {
+      "idx": 498,
+      "n_candidates": 5496,
+      "n_selected": 91,
+      "ilp_objective": 190870.5875352352,
+      "ilp_time": 0.0452
+    },
+    {
+      "idx": 499,
+      "n_candidates": 5544,
+      "n_selected": 90,
+      "ilp_objective": 194384.33338252374,
+      "ilp_time": 0.0475
+    }
+  ]
+}
