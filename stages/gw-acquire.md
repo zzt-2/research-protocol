@@ -37,9 +37,14 @@
 
 下载失败是常态，不是异常。严格遵守以下流程：
 
-1. **第一轮**：用 `tools/download` 批量下载
-2. **第二轮（仅一轮）**：为第一轮失败的论文搜索 arXiv 版本，再次尝试下载
-3. **停止**：两轮后仍然失败的论文 → 进入覆盖面缺口报告
+1. **第一轮**：用 `tools/download` 批量下载（处理 arXiv、OA PDF、Unpaywall）
+2. **第二轮**：为第一轮失败的论文搜索 arXiv 版本，再次尝试下载
+3. **第三轮（IEEE/CNKI 专用）**：用 `tools/blit --download` 下载 IEEE（校园网 IP）和 CNKI（Cookie 认证）论文
+   ```bash
+   bash tools/blit --download --doi 10.1109/TVT.2024.3471658
+   ```
+   blit 下载后需手动 `tools/convert` 转 markdown，并追加到 `papers/index.json`
+4. **停止**：三轮后仍然失败的论文 → 进入覆盖面缺口报告
 
 **绝对禁止**：
 - 用 web reader、网页抓取等工具获取论文全文——会往上下文灌入大量 HTML，撑爆上下文

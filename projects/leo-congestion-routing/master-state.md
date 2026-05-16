@@ -14,7 +14,7 @@
 | 步骤 | 状态 | 产出文件 |
 |------|------|----------|
 | Step 1 检索+初筛 | ✅ | search-archive/2026-05-16/gnn-congestion-*.json 等 9 个文件 |
-| Step 2 论文获取 | ⬜ | papers/ 目录 |
+| Step 2 论文获取 | ✅ | 10 篇论文 content.md 已就绪 |
 | Step 3 精读 | ⬜ | literature_notes.md 更新 |
 | Step 3.5 定向补充 | ⬜ | literature_notes.md 更新 |
 | Step 4a 可行性预判 | ⬜ | feasibility_report.md |

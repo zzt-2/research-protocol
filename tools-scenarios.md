@@ -92,6 +92,35 @@ bash tools/search "关键词" --preset implementation
 
 ---
 
+## 下载场景
+
+### D1：arXiv / OA PDF 下载
+
+```bash
+bash tools/download --arxiv 2405.17150
+bash tools/download --doi 10.3390/s25041232
+bash tools/download search-archive/2026-05-16/results.json
+```
+
+适用：arXiv 论文、MDPI/Frontiers 等 OA 期刊、Unpaywall 有 OA 版本的 DOI 论文。
+注意：自动写入 `papers/` 全局索引、生成 metadata.json 和 content.md。批量下载可传入搜索结果 JSON。
+
+### D2：IEEE / CNKI 论文下载（校园网）
+
+```bash
+bash tools/blit --download --doi 10.1109/TVT.2024.3471658
+bash tools/blit --download --doi 10.1109/JSAC.2025.3528815
+```
+
+适用：IEEE Xplore 付费墙论文（需校园网 IP）、CNKI 论文（需 Cookie 认证）。
+注意：`tools/download` 对 IEEE DOI 会 FAIL（Unpaywall 无 OA 版本），必须用 blit 下载。blit 不写全局索引，不自动生成 content.md，下载后需：
+1. `bash tools/convert papers/downloads/{date}/{pdf_file}.pdf` 转 markdown
+2. 手动将信息追加到 `papers/index.json`
+
+**决策流程**：`tools/download` → FAIL → 检查是否 IEEE DOI → 是 → 用 `blit --download` 重试。
+
+---
+
 ## 浏览器检索场景（tools/blit）
 
 ### B1：IEEE 正式发表检索

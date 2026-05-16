@@ -8,6 +8,13 @@
   - 质量门槛全部通过
   - R2 定向检索确认: size generalization × 拥塞路由交叉为真空
   - GNN + 拥塞感知路由 + LEO 三角交集有论文但无 per-link 负载均衡竞品
+- [Groundwork Step 2] 论文获取完成 (2026-05-16)
+  - 成功获取 10 篇 content.md（arXiv 3 + DOI OA 2 + blit IEEE 4 + 已存在 1）
+  - 必读覆盖：#4 GDRL-SFCR, #5 GMR, #8 Fan, #14 DTAR, #3 GRLR, #11 POMAP, #16 PathGNN
+  - 建议读覆盖：ST-QoS routing
+  - 待确认覆盖：PRIMAL, QueueMARL
+  - 下载失败：GNN-ASSSP(ScienceDirect), DLBR(IEEE TAES搜索未匹配), LARRI(IEEE ToN未下载), FlexSATE, CA-GAR(MDPI)
+  - 修复：gw-acquire.md 和 tools-scenarios.md 补充了 blit --download 作为 IEEE 下载 fallback
 
 ## 决策记录
 
