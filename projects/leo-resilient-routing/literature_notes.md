@@ -18,7 +18,7 @@ LEO 巨型星座故障感知抗毁路由——利用 GNN 拓扑感知能力实�
 | 2 获取 | ✅ | 2026-05-16 | 10/11 篇下载成功，L04(JOCN)未获取 |
 | 3 精读 | ✅ | 2026-05-16 | 6 必读+1竞品(FCRMJ) |
 | 3.5 补充 | ✅ | 2026-05-16 | 4组定向检索+FCRMJ引用链，7篇新建议读，核心空白确认 |
-| 4a 可行性 | ⬜ | | |
+| 4a 可行性 | ⚠️ Pivot | 2026-05-16 | MVE 两轮失败(GNN 不优于 MLP)，Pivot 至 MARL+课程学习 |
 
 ## 检索来源
 - 一轮检索: `search-archive/2026-05-16/satellite-network-resilience-fault-recovery-*.json`, `leo-satellite-fault-tolerant-*.json`
@@ -369,3 +369,86 @@ R2 补充检索（`search-archive/2026-05-16/graph-neural-network-link-failure-r
 - **S4-S7**：分别从 GraphSAGE LEO 路由、MARL ISL 故障重规划、GNN 容错路由角度补充了外围工作。**均不直接填补 GNN+故障恢复+LEO 路由空白。**
 
 **结论**：经定向补充检索，GNN + 专有故障恢复 + LEO 卫星路由方法空白 **再次确认**。S3(GDAPS) 是方法可迁移性最强的非卫星参考。
+
+---
+
+## Step 4a Pivot 补充 (2026-05-16)
+
+> GNN 方法 MVE 失败后 Pivot 至 MARL+课程学习方向，补充定向检索+精读。
+
+### 新增精读论文
+
+#### [S2] Iris: Intelligent Reliable Routing for SDSN (Wei 2024, TCOM, 40cit)
+- **核心**：DRL + 增量训练（逐步增加场景复杂度）实现卫星可靠路由
+- **增量训练**：从简单拓扑开始训练，逐步引入复杂拓扑变化和故障场景——课程学习最近先例
+- **局限**：MLP 无拓扑感知，单 agent，SDSN 集中式架构
+- **可借鉴**：增量训练的方法论设计思路
+
+#### [S3] GDAPS: GNN-Enabled MARL Adaptive Path Selection (Feng 2026, TNSE, 8cit)
+- **核心**：MPNN + 层次化 MARL(DDPG) 实现多域 SDN 容错路径选择
+- **架构**：Domain Agent（域内）+ Root Agent（全局协调），GNN 感知拓扑变化
+- **故障模型**：随机删除链路/节点 15-45%，模拟 DDoS
+- **关键结论**：45% 故障率下延迟降低 39.74%（vs SPF）
+- **局限**：SDN 领域非卫星，拓扑规模小（6-48 节点），无课程学习
+- **可借鉴**：层次化 MARL 架构（域 agent + 全局 agent）对 LEO 多轨道场景有参考价值
+
+#### [S6] ReISL: ISL Re-Planning under Link Failures (Chen 2024, VTC-Fall, 5cit)
+- **核心**：MADRL(DDQN) 实现 LEO ISL 重规划，联合最大化系统容量+最小化切换代价
+- **架构**：每星独立 DDQN agent，同轨道面轮询决策避免冲突
+- **故障模型**：转发器故障概率 0-3%，持续 5-50min
+- **关键结论**：吞吐量提升 58.09%（vs 其他动态规划）
+- **局限**：仅 ISL 拓扑规划非路由层，故障模型简单（随机概率），无课程学习
+- **可借鉴**：同轨轮询协调机制
+
+#### [P4] QueueMARL: Queue-Aware Resilient Routing (arXiv 2605.04448, 2026)
+- **核心**：DDQN 每星独立 agent，队列感知+resilience score 联合优化
+- **架构**：集中训练分布部署 + 在线学习，4 方向离散动作
+- **故障模型**：极简化——仅 Nakagami-m 统计 resilience score，无显式故障注入
+- **关键结论**：延迟 49.31ms（vs Dijkstra 38.54ms），计算开销约 Dijkstra 50%
+- **局限**：无显式故障注入实验，baseline 太弱（仅 Dijkstra+SARSA），无课程学习
+- **可借鉴**：队列感知奖励设计
+
+#### [S8] MAA-Shunts: MARL Adaptive Resilient ISL Routing (2025, TechRxiv) — 最直接竞品
+- **核心**：SAC + GAT(3层32头) + CTDE + 参数共享，概率转发负载均衡 + 利他奖励 + 动作掩码避障
+- **架构**：每星共享策略网络，观测 1-2 跳邻居信息表(NIT)
+- **故障模型**：LISL Poisson 断裂（均值 20s），事件驱动广播 + DST 清除强制重路由
+- **实验**：Starlink S1（1584 星），自研 ns-3 CNS 仿真器
+- **关键结论**：丢包率 Grid ~2-3%（最低），推理 4ms/次（6.1MB 模型）
+- **与 P1 重叠度 ~70%**：相同问题域（LEO 路由+MARL）、相同架构（GAT+SAC+CTDE）、相同故障处理（动作掩码）
+- **核心差异空间**：**无课程学习**、无跨拓扑泛化、无主动故障预测预路由
+- **局限**：固定星座、简化流量、2-hop 视野、被动响应式（无预测）、仿真器不开源
+- **content.md**：`papers/downloads/2026-05-16/techrxiv.175355456.63865201_v1.md`
+
+### 补充检索结果 (2026-05-16)
+
+#### 课程学习 + DRL 路由
+- 检索 JSON：`search-archive/2026-05-16/curriculum-learning-*.json`, `progressive-training-*.json`
+- 40 条结果，**0 篇组合课程学习 + DRL + 故障容忍卫星路由**
+- 最近先例：Genet (SIGCOMM 2022, 88cit) 自动课程生成用于 RL 网络优化
+- **课程学习用于故障容忍卫星路由 = 真空白**
+
+#### MARL + 故障恢复路由
+- 36 条去重结果
+- MARL + 故障恢复 + 卫星路由 三重交叉仅 2-3 篇（均为 2025-2026 预印本，0 正式引用）
+- **开放利基**
+
+### Pivot 后竞争格局
+
+| 论文 | 领域 | MARL | 故障模型 | 课程学习 | 主动预测 |
+|------|------|------|---------|---------|---------|
+| MAA-Shunts | LEO 路由 | SAC+GAT ✅ | Poisson ISL 断裂 | ✗ | ✗（被动响应） |
+| QueueMARL | LEO 路由 | DDQN ✅ | 统计 resilience | ✗ | ✗ |
+| GDAPS | SDN 路由 | DDPG+GNN ✅ | 随机删除 | ✗ | ✗ |
+| ReISL | LEO ISL 规划 | DDQN ✅ | 转发器故障 | ✗ | ✗ |
+| Iris | SDSN 路由 | 单 agent ✗ | 增量训练 | 部分 | ✗ |
+| FCRMJ | LEO 路由 | 单 agent ✗ | 静态 1-5% | ✗ | ✗ |
+| **本研究 P1** | **LEO 路由** | **MARL ✅** | **动态注入+课程** | **✅ 核心** | **✅ 轨道预测预路由** |
+
+### P1 最终定位
+
+**研究定位**：MARL + 自适应课程学习 + 主动故障预测预路由，实现 LEO 星座故障感知抗毁路由。
+
+**核心创新点**（vs MAA-Shunts 等）：
+1. **自适应课程学习**：从无故障→单故障→多故障→关联故障→动态注入/恢复渐进训练（MAA-Shunts 完全没有）
+2. **主动预路由**：利用 LEO 轨道可预测性（ISL contact plan 已知），在 ISL 断开前主动迁移流量（MAA-Shunts 是被动响应式）
+3. **跨拓扑泛化**：不同星座规模/类型验证（MAA-Shunts 固定 Starlink S1）
