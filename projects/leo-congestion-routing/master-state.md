@@ -6,7 +6,7 @@
 - **项目名**: leo-congestion-routing
 - **方向**: GNN 拥塞感知路由 + 负载均衡 for LEO 卫星星座
 - **阶段**: Execute (Contract Amendment)
-- **当前步骤**: Execute Step 2 → E01 完成 (MARGINAL), 准备 E04 泛化验证 + E01 重跑
+- **当前步骤**: 实验全部完成，**暂停推进** — 漏洞审计发现 5 个致命问题，优先修复
 - **方法类型**: [DRL] + [监督]
 
 ## 进度追踪
@@ -45,6 +45,12 @@
 | E06 泛化720 | ✅ PASS | GNN/ECMP=0.948 (10.9× scale), MLP/ECMP=0.996 (≈ECMP) |
 | E08 故障率消融 | ✅ | 0%=ECMP赢, 5-10%=GNN赢(7-20%), 15%=7.8% 甜点8-10% |
 | E09 流量消融 | ✅ | 均匀=GNN赢11%, 中等=ECMP赢, 重型=GNN赢18% |
+| Execute Step 3 假设判定 | ✅ PASS | D19: 三维 Success Signal 全部满足，Failure Signal 全部未触发 |
+| Execute Step 6 可视化 | ✅ | simulator/figures/fig1-10, simulator/visualize_results.py |
+| 训练曲线实验 | ✅ | training_curves.json (GNN 500ep + MLP 300ep) |
+| 密集消融实验 | ✅ | dense_ablation_results.json (故障率8点+流量8点+规模7点) |
+| E10 层数消融 | ✅ | e10_e11_results.json, L3最优(0.803)但差异<3% |
+| E11 头数消融 | ✅ | e10_e11_results.json, 差异<1.5pp，架构鲁棒 |
 
 ## 关键决策
 - D1: R1+R2 搜索策略，87 条候选，覆盖充分
@@ -62,6 +68,14 @@
 2. **[高] TELGEN 竞品风险**: Zhou 2025 ToN 已做完整 GNN+TE+size gen（20x 泛化）。差异化必须聚焦 LEO 时变拓扑（TELGEN future work）。纯 size gen for TE 不再是空白
 3. **[中] 论文池竞争**: GNN-ASSSP/DeepLaDu/GRL-RR 等近期竞品活跃，需 DeepLaDu 精读确认差异化空间
 3. **[低] Size gen 可行性**: 无先例将 size gen 应用于拥塞路由，可能需要新的泛化机制
+
+## 致命漏洞（2026-05-17 审计发现）
+- **F1: surge 始终激活** — Contract 写"无 surge"但代码默认 surge_factor=5.0，所有结果可能有误
+- **F2: GNN 正常条件劣于 ECMP** — 优势窗口仅 6-12% 故障率
+- **F3: ECMP 实现不标准** — 只用 K=4 候选路径，非真正 ECMP
+- **F4: 泛化声称有误导** — 所有拓扑 4-正则同构，非真正泛化
+- **F5: 消融全用单 seed** — seed 敏感性已知 ±12%
+- 详见 `.session/2026-05-17-leo-congestion-routing/HANDOFF-012-vulnerability-audit.md`
 
 ## Thesis 一致性
 - Ch1: GNN routing size gen (leo-mega-constellation-gnn-routing, Execute 完成)

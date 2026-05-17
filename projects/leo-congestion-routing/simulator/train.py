@@ -408,6 +408,7 @@ def train(config: SimConfig | None = None, seed: int = 42) -> dict:
     results_dir.mkdir(exist_ok=True, parents=True)
 
     episode_rewards: list[float] = []
+    episode_mlus: list[float] = []
     all_metrics: list[dict] = []
     best_reward = -float("inf")
     buf = RolloutBuffer()
@@ -418,6 +419,7 @@ def train(config: SimConfig | None = None, seed: int = 42) -> dict:
         obs, info = env.reset()
         done = False
         ep_reward = 0.0
+        last_info = info
 
         while not done:
             action, log_prob, value = model.get_action(obs)
@@ -436,8 +438,10 @@ def train(config: SimConfig | None = None, seed: int = 42) -> dict:
             )
             obs = next_obs
             ep_reward += reward
+            last_info = info
 
         episode_rewards.append(ep_reward)
+        episode_mlus.append(last_info.get("final_mlu", last_info.get("mlu", 0.0)))
 
         # Periodic PPO update
         if (ep + 1) % cfg.update_interval == 0:
@@ -499,6 +503,7 @@ def train(config: SimConfig | None = None, seed: int = 42) -> dict:
     # Save final results
     final_results = {
         "episode_rewards": episode_rewards,
+        "episode_mlus": episode_mlus,
         "n_episodes": len(episode_rewards),
         "best_reward": best_reward,
         "seed": seed,

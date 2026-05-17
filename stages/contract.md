@@ -201,6 +201,35 @@ bash tools/search "LEO satellite handover attention DQN" \
 | 维度不匹配 | 消融实验移除某特征后维度坍缩 | E03/E05 消融维度问题 |
 | 配置矛盾 | 某参数值在特定配置下产生矛盾 | 5000km 断链 vs 5500km 轨间距离 |
 | 跨规模断裂 | 训练和推理的输入维度不一致 | 混合 batch PE 维度问题 |
+| **表达力不足** | **模型动作空间严格弱于某个 baseline** | **单路径路由 vs ECMP 多路径分流** |
+
+### [FR-13] 动作空间表达力下界审计
+
+> 起源：leo-congestion-routing 项目中，Contract 假设"GNN ≥10% 优于 ECMP"，但 GNN 输出 per-edge 权重走单路径 Dijkstra，ECMP 走多路径分流。模型表达力严格低于 baseline，假设从结构上不可达。data-flow.md 检查了维度和特征完整性，但没检查行为语义。
+
+[MUST] data-flow.md 必须包含"动作空间表达力审计"节，逐 baseline 检查模型的决策空间是否覆盖 baseline 的决策空间：
+
+```markdown
+### 动作空间表达力审计
+
+| Baseline | Baseline 能做什么决策 | 模型能做什么决策 | 模型 ≥ Baseline？ |
+|----------|---------------------|----------------|-----------------|
+| B1: {名} | {baseline的决策能力描述} | {模型的决策能力描述} | {≥ / < } |
+| B2: {名} | ... | ... | ... |
+```
+
+**判断标准**：
+- 模型的决策空间**包含** baseline 的决策空间（模型能做 baseline 能做的一切，还能做更多）→ ≥
+- 模型的决策空间与 baseline **不同但可比** → 需论证为什么在 success signal 的评估场景下模型仍能超越
+- 模型的决策空间**严格弱于** baseline → <
+
+**门控条件**：
+- 全部 ≥ → 通过
+- 任一 < → **必须**在 Contract 中标注为已知限制，并满足以下全部条件：
+  1. 指出具体条件：在什么场景下模型仍能超越（如"当故障率 ≥5% 时等价路径不存在"）
+  2. 该条件与 success signal 的评估场景一致
+  3. 如果条件过于狭窄（如仅极端场景），考虑引入补偿机制（如 K-path splitting）或调整 success signal
+- 无法满足上述条件 → 调整设计或调整假设
 
 ### 执行方式
 
@@ -212,6 +241,7 @@ bash tools/search "LEO satellite handover attention DQN" \
 
 - [ ] 8 步推演全部完成，每步有明确的输入→输出记录
 - [ ] 所有断层已修正或标记为已知限制
+- [ ] [FR-13] 动作空间表达力审计已完成，模型 < baseline 的项已标注为已知限制或已修正设计
 
 ---
 

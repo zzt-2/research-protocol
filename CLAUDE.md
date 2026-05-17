@@ -147,6 +147,9 @@
 | 可行性防坑规则 FR-01~08 | `stages/gw-feasibility.md` A0§1/§6, A', A, D; `tools-guide.md` §8; `stages/groundwork.md` 方法类型标注; `code-quality.md` 方法论适配性矩阵 |
 | GNN 信息冗余检查 FR-09 | `code-quality.md` 方法论适配性矩阵 |
 | 空间隔离约束决策模式 FR-10 | `code-quality.md` 方法论适配性矩阵 |
+| MVE 架构溯源 FR-11 | `stages/gw-feasibility.md` §D — MVE 结果必须包含架构摘要（动作空间/决策粒度/对比范式/奖励语义） |
+| MVE→Formal 架构差异门控 FR-12 | `stages/gw-feasibility.md` §D — GW Step 6 必须与 MVE 架构比对，差异影响对比机制则重验证 |
+| 动作空间表达力下界审计 FR-13 | `stages/contract.md` Step 4 — data-flow.md 必须审计模型决策空间是否覆盖每个 baseline |
 | 检索用项目工具 | `tools-guide.md` |
 | 防死胡同 | `stages/execute.md` S4.5 |
 | 先验基线测试 | `stages/execute.md` S0.5 |
