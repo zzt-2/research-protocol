@@ -5,8 +5,8 @@
 ## 基本信息
 - **项目名**: leo-congestion-routing
 - **方向**: GNN 拥塞感知路由 + 负载均衡 for LEO 卫星星座
-- **阶段**: Contract
-- **当前步骤**: Contract 冻结完成 → Execute 阶段待启动
+- **阶段**: Execute (Contract Amendment)
+- **当前步骤**: Execute Step 2 → K-path Quick Test PASS, 准备 E01 全量训练
 - **方法类型**: [DRL] + [监督]
 
 ## 进度追踪
@@ -29,6 +29,13 @@
 | Contract Step 4 端到端推演 | ✅ | data-flow.md（1 个已知限制：log_std 维度固定） |
 | Contract Step 5 压力测试 | ✅ | decision_log D13（5 问+4 反模式全通过） |
 | Contract Step 6 冻结 | ✅ | contract.md (frozen), 用户确认 2026-05-17 |
+| Execute Step 1 Quick Test | ✅ | worker-logs/step1-quick-test.md |
+| Execute Step 2 E01 seed 0 | ⚠️ MARGINAL | GNN/ECMP=1.07 FAIL, GNN/MLP=0.84 PASS |
+| 根因分析 | ✅ | MVE 用 K-path, 正式模型用 per-edge weight，架构不一致 |
+| 范式迁移决策 D15 | ✅ | 迁移到 K-path 范式, 需 Contract amendment |
+| Contract Amendment | ✅ | 动作空间 K-path + 奖励 delta MLU (D16) |
+| K-path 迁移执行 | ✅ | env/model/train/baselines/verify 全部完成 (D16) |
+| K-path Quick Test | ✅ PASS | GNN/ECMP=0.77 (23.4% 改善), 100ep, 163s GPU |
 
 ## 关键决策
 - D1: R1+R2 搜索策略，87 条候选，覆盖充分

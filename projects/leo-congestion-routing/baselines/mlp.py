@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""MLP ablation baseline: same routing task as GNN but without message passing.
+"""MLP ablation baseline: K-path discrete selection with local features only.
 
-Architecture mirrors RoutingActorCritic (model.py) but replaces GATEncoder
-with a per-node independent Linear projection (no GNN layers).
-Trained with self-contained PPO loop.
+Uses mlp_feat (src/dst node features + 1-hop loads + path lengths) instead of
+GNN message passing. Same Categorical policy over K paths as GNN model.
+Trained with self-contained PPO loop (matching MVE MLPActorCritic).
 """
 
 from __future__ import annotations
@@ -15,9 +15,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch import Tensor
-from torch.distributions import Normal
-from torch_geometric.data import Data
+from torch.distributions import Categorical
 
 _PROJECT = Path(__file__).resolve().parent.parent
 if str(_PROJECT) not in sys.path:
@@ -33,166 +31,64 @@ from simulator.env import RoutingEnv
 
 
 class MLPActorCritic(nn.Module):
-    """MLP actor-critic: independent per-node projection, no message passing.
+    """MLP actor-critic: local features only, no message passing.
 
-    Architecture:
-      - Node encoder: Linear(node_dim, hidden) -> ReLU -> Linear(hidden, hidden)
-      - Edge decoder: same EdgeWeightDecoder as model.py (MLP over emb_u || emb_v || edge_feat)
-      - Critic: Linear(hidden, hidden) -> ReLU -> Linear(hidden, 1) on mean-pooled embeddings
-      - Gaussian policy with learned log_std
-
-    Args:
-        node_dim: Node feature dimension (default 6).
-        edge_dim: Edge feature dimension (default 4).
-        hidden_dim: Hidden dimension.
-        n_edges: Number of directed edges (for log_std parameter).
+    Uses mlp_feat from env obs: src_feat(6) + dst_feat(6) + src_nbr(4) +
+    dst_nbr(4) + demand(1) + path_lens(K) = 21 + K dimensions.
     """
 
-    def __init__(
-        self,
-        node_dim: int = 6,
-        edge_dim: int = 4,
-        hidden_dim: int = 64,
-        n_edges: int = 264,
-    ) -> None:
+    def __init__(self, mlp_feat_dim: int, k_paths: int = 4, hidden: int = 128) -> None:
         super().__init__()
-        self.node_encoder = nn.Sequential(
-            nn.Linear(node_dim, hidden_dim),
+        self.K = k_paths
+        self.backbone = nn.Sequential(
+            nn.Linear(mlp_feat_dim, hidden),
             nn.ReLU(),
-            nn.Linear(hidden_dim, hidden_dim),
-        )
-        self.edge_decoder = nn.Sequential(
-            nn.Linear(hidden_dim * 2 + edge_dim, hidden_dim),
+            nn.Linear(hidden, hidden),
             nn.ReLU(),
-            nn.Linear(hidden_dim, 1),
         )
-        self.critic = nn.Sequential(
-            nn.Linear(hidden_dim, hidden_dim),
-            nn.ReLU(),
-            nn.Linear(hidden_dim, 1),
-        )
-        self.log_std = nn.Parameter(torch.zeros(n_edges))
+        self.actor = nn.Linear(hidden, k_paths)
+        self.critic = nn.Linear(hidden, 1)
 
-    def forward(self, data: Data) -> tuple[Tensor, Tensor]:
-        """Forward pass.
-
-        Args:
-            data: PyG Data with x, edge_index, edge_attr.
-
-        Returns:
-            (edge_weights_mean, value) — shapes (E,) and scalar.
-        """
-        data = data.to(self.device)
-        h = self.node_encoder(data.x)  # (N, hidden) — no message passing
-
-        # Edge weights: MLP(emb_u || emb_v || edge_feat) -> softplus
-        src, dst = data.edge_index[0], data.edge_index[1]
-        edge_input = torch.cat([h[src], h[dst], data.edge_attr], dim=-1)
-        raw = self.edge_decoder(edge_input).squeeze(-1)
-        weights_mean = F.softplus(raw) + 1e-6
-
-        value = self.critic(h.mean(dim=0)).squeeze(-1)
-        return weights_mean, value
+    def _forward(self, obs: dict) -> tuple[torch.Tensor, torch.Tensor]:
+        x = torch.as_tensor(obs["mlp_feat"], dtype=torch.float32)
+        h = self.backbone(x)
+        logits = self.actor(h)
+        # Mask invalid actions
+        n_valid = obs["n_valid"]
+        mask = torch.full_like(logits, -1e9)
+        mask[:n_valid] = logits[:n_valid]
+        value = self.critic(h).squeeze()
+        return mask, value
 
     @torch.no_grad()
-    def get_action(
-        self, data: Data, deterministic: bool = False,
-    ) -> tuple[Tensor, Tensor, Tensor]:
-        """Sample action from Gaussian policy.
-
-        Returns:
-            (action, log_prob, value).
-        """
-        mean, value = self.forward(data)
+    def get_action(self, obs: dict, deterministic: bool = False):
+        logits, value = self._forward(obs)
         if deterministic:
-            action = mean.clone()
-            log_prob = torch.tensor(0.0, device=self.device)
+            action = logits.argmax()
+            log_prob = torch.tensor(0.0)
         else:
-            std = self.log_std.exp()
-            dist = Normal(mean, std)
+            dist = Categorical(logits=logits)
             action = dist.sample()
-            action = torch.where(torch.isnan(action), mean, action)
-            log_prob = dist.log_prob(action).sum()
+            log_prob = dist.log_prob(action)
         return action, log_prob, value
 
-    def evaluate_actions(
-        self, data_list: list[Data], actions: Tensor,
-    ) -> tuple[Tensor, Tensor, Tensor]:
-        """Re-evaluate actions for PPO update.
-
-        Returns:
-            (log_probs, values, entropies) — each shape (B,).
-        """
-        log_probs_list: list[Tensor] = []
-        values_list: list[Tensor] = []
-        entropies_list: list[Tensor] = []
-        for i, data in enumerate(data_list):
-            mean, value = self.forward(data)
-            std = self.log_std.exp()
-            dist = Normal(mean, std)
-            log_probs_list.append(dist.log_prob(actions[i]).sum())
-            values_list.append(value.squeeze())
-            entropies_list.append(dist.entropy().sum())
-        return (
-            torch.stack(log_probs_list),
-            torch.stack(values_list),
-            torch.stack(entropies_list),
-        )
-
-    @property
-    def device(self) -> torch.device:
-        return next(self.parameters()).device
+    def evaluate_actions(self, obs_list: list[dict], actions: torch.Tensor):
+        log_probs, values, entropies = [], [], []
+        for i, obs in enumerate(obs_list):
+            logits, value = self._forward(obs)
+            dist = Categorical(logits=logits)
+            log_probs.append(dist.log_prob(actions[i]))
+            values.append(value.squeeze())
+            entropies.append(dist.entropy())
+        return torch.stack(log_probs), torch.stack(values), torch.stack(entropies)
 
 
 # ---------------------------------------------------------------------------
-# Rollout buffer
+# PPO training (minimal inline version)
 # ---------------------------------------------------------------------------
 
 
-class _RolloutBuffer:
-    """Simple PPO rollout buffer."""
-
-    def __init__(self) -> None:
-        self.data_list: list[Data] = []
-        self.actions: list[np.ndarray] = []
-        self.log_probs: list[float] = []
-        self.rewards: list[float] = []
-        self.values: list[float] = []
-        self.dones: list[bool] = []
-
-    def push(
-        self,
-        data: Data,
-        action: np.ndarray,
-        log_prob: float,
-        reward: float,
-        value: float,
-        done: bool,
-    ) -> None:
-        self.data_list.append(data)
-        self.actions.append(action)
-        self.log_probs.append(log_prob)
-        self.rewards.append(reward)
-        self.values.append(value)
-        self.dones.append(done)
-
-    def __len__(self) -> int:
-        return len(self.rewards)
-
-
-# ---------------------------------------------------------------------------
-# PPO training
-# ---------------------------------------------------------------------------
-
-
-def _compute_gae(
-    rewards: list[float],
-    values: list[float],
-    dones: list[bool],
-    gamma: float = 0.99,
-    lam: float = 0.95,
-) -> tuple[np.ndarray, np.ndarray]:
-    """Generalized Advantage Estimation."""
+def _compute_gae(rewards, values, dones, gamma=0.99, lam=0.95):
     n = len(rewards)
     advantages = np.zeros(n, dtype=np.float32)
     returns = np.zeros(n, dtype=np.float32)
@@ -212,72 +108,47 @@ def _compute_gae(
     return advantages, returns
 
 
-def _ppo_update(
-    model: MLPActorCritic,
-    optimizer: torch.optim.Optimizer,
-    buf: _RolloutBuffer,
-    clip_eps: float = 0.2,
-    entropy_coef: float = 0.01,
-    value_coef: float = 0.5,
-    max_grad_norm: float = 0.5,
-    n_epochs: int = 4,
-) -> None:
-    """PPO clipped surrogate update over rollout buffer."""
-    advantages, returns = _compute_gae(buf.rewards, buf.values, buf.dones)
-    actions_t = torch.tensor(np.array(buf.actions), dtype=torch.float32)
-    old_log_probs_t = torch.tensor(buf.log_probs, dtype=torch.float32)
-    adv_t = torch.tensor(advantages, dtype=torch.float32)
-    ret_t = torch.tensor(returns, dtype=torch.float32)
-
-    for _ in range(n_epochs):
-        log_probs, values, entropies = model.evaluate_actions(buf.data_list, actions_t)
-        ratio = (log_probs - old_log_probs_t).exp()
-        surr1 = ratio * adv_t
-        surr2 = torch.clamp(ratio, 1 - clip_eps, 1 + clip_eps) * adv_t
-        actor_loss = -torch.min(surr1, surr2).mean()
-        critic_loss = F.mse_loss(values, ret_t)
-        entropy_loss = -entropies.mean()
-
-        loss = actor_loss + value_coef * critic_loss + entropy_coef * entropy_loss
-
-        optimizer.zero_grad()
-        loss.backward()
-        nn.utils.clip_grad_norm_(model.parameters(), max_grad_norm)
-        optimizer.step()
-
-
-def _train_mlp(
-    env: RoutingEnv,
-    model: MLPActorCritic,
-    n_episodes: int = 300,
-    lr: float = 3e-4,
-    seed: int = 0,
-    update_interval: int = 10,
-) -> list[float]:
-    """Train MLP baseline with PPO. Returns per-episode final MLU list."""
+def _train_mlp(env, model, n_episodes=300, lr=3e-4, seed=0):
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
     rng = np.random.default_rng(seed)
     episode_mlus: list[float] = []
 
     for ep in range(n_episodes):
-        buf = _RolloutBuffer()
+        obs_list, actions, rewards, values, logprobs, dones = [], [], [], [], [], []
         obs, info = env.reset(seed=int(rng.integers(0, 2**31)))
         done = False
-        last_info: dict = info
+        last_info = info
 
         while not done:
-            action_tensor, log_prob, value = model.get_action(obs)
-            action_np = action_tensor.cpu().numpy()
-            # Clamp to positive — Dijkstra requires non-negative weights
-            action_np = np.maximum(action_np, 1e-3)
-            obs, reward, terminated, truncated, info = env.step(action_np)
+            action, log_prob, value = model.get_action(obs)
+            obs, reward, terminated, truncated, info = env.step(action.item())
             done = terminated or truncated
-            buf.push(obs, action_np, log_prob.item(), reward, value.item(), done)
+            obs_list.append(obs)
+            actions.append(action.item())
+            rewards.append(reward)
+            values.append(value.item())
+            logprobs.append(log_prob.item())
+            dones.append(done)
             last_info = info
 
-        _ppo_update(model, optimizer, buf)
-        episode_mlus.append(last_info.get("mlu", 0.0))
+        advantages, returns = _compute_gae(rewards, values, dones)
+        actions_t = torch.tensor(actions, dtype=torch.long)
+        old_lp = torch.tensor(logprobs, dtype=torch.float32)
+        adv_t = torch.tensor(advantages, dtype=torch.float32)
+        ret_t = torch.tensor(returns, dtype=torch.float32)
 
+        for _ in range(4):
+            new_lp, vals, ent = model.evaluate_actions(obs_list, actions_t)
+            ratio = (new_lp - old_lp).exp()
+            surr1 = ratio * adv_t
+            surr2 = torch.clamp(ratio, 0.8, 1.2) * adv_t
+            loss = -torch.min(surr1, surr2).mean() + 0.5 * F.mse_loss(vals, ret_t) - 0.01 * ent.mean()
+            optimizer.zero_grad()
+            loss.backward()
+            nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+            optimizer.step()
+
+        episode_mlus.append(last_info.get("final_mlu", last_info["mlu"]))
         if (ep + 1) % 50 == 0:
             recent = episode_mlus[-50:]
             print(f"  Ep {ep+1:4d}: MLU = {np.mean(recent):.4f} +/- {np.std(recent):.4f}")
@@ -297,44 +168,29 @@ def run_mlp(
     n_episodes: int = 300,
     seed_offset: int = 300000,
 ) -> dict[str, float]:
-    """Train MLP baseline and evaluate.
-
-    Args:
-        env_config: SimConfig (uses defaults if None).
-        n_eval: Number of evaluation episodes.
-        seed: Training seed.
-        n_episodes: PPO training episodes.
-        seed_offset: Base seed for evaluation.
-
-    Returns:
-        {"mean": mean MLU, "std": std MLU} across evaluation episodes.
-    """
+    """Train MLP baseline and evaluate."""
     config = env_config or SimConfig()
     env = RoutingEnv(config, seed=seed)
 
-    model = MLPActorCritic(
-        node_dim=config.node_feat_dim,
-        edge_dim=config.edge_feat_dim,
-        hidden_dim=config.hidden_dim,
-        n_edges=env._E,
-    )
+    # Compute mlp_feat dimension from a sample obs
+    sample_obs, _ = env.reset(seed=0)
+    mlp_feat_dim = sample_obs["mlp_feat"].shape[0]
+
+    model = MLPActorCritic(mlp_feat_dim=mlp_feat_dim, k_paths=config.k_paths)
 
     print(f"[MLP seed={seed}] Training for {n_episodes} episodes...")
     _train_mlp(env, model, n_episodes=n_episodes, seed=seed)
 
-    # Evaluate with deterministic policy
+    # Evaluate with greedy policy
     mlus: list[float] = []
     for i in range(n_eval):
         obs, info = env.reset(seed=seed_offset + i)
         done = False
-        step_mlus: list[float] = []
         while not done:
             action, _, _ = model.get_action(obs, deterministic=True)
-            action_np = np.maximum(action.cpu().numpy(), 1e-3)
-            obs, _, terminated, truncated, info = env.step(action_np)
+            obs, _, terminated, truncated, info = env.step(action.item())
             done = terminated or truncated
-            step_mlus.append(info["mlu"])
-        mlus.append(float(np.mean(step_mlus)))
+        mlus.append(info.get("final_mlu", info["mlu"]))
 
     result = {"mean": float(np.mean(mlus)), "std": float(np.std(mlus))}
     print(f"[MLP seed={seed}] Eval: MLU = {result['mean']:.4f} +/- {result['std']:.4f}")

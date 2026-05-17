@@ -2,6 +2,17 @@
 created: 2026-05-17
 status: frozen
 version: 1
+amendment:
+  date: 2026-05-17
+  reason: "MVE 用 K-path 逐流路由 beat ECMP 12%，正式模型偏离为 per-edge 同时路由导致 GNN/ECMP=1.07 FAIL。修正正式模型与 MVE 对齐。"
+  changes:
+    - "动作空间: per-edge continuous weights (E=264维) → per-flow discrete K-path selection (K=4)"
+    - "路由方式: 同时路由所有流 → 逐流顺序路由"
+    - "奖励: -MLU (绝对) → -(MLU_after - MLU_before) (增量)"
+    - "模型输出: EdgeWeightDecoder → PathScoringHead (Categorical)"
+    - "Episode: t_slots=20步 → n_flows=40步 (每步路由一条流)"
+  unchanged: ["hypothesis 目标值", "success_signal", "failure_signal", "fairness_rules", "ablation_plan"]
+  user_confirmed: true
 ---
 
 # Research Contract: leo-congestion-routing
@@ -121,8 +132,8 @@ version: 1
 
 - Encoder: GAT, 2 层, 4 注意力头, hidden_dim = 64 [来源: L06 DTAR §IV GAT+LN+Residual]
 - Normalization: LayerNorm + Residual connection [来源: L06 DTAR]
-- Readout: Global mean pooling → FC decoder
-- 输出: per-directed-edge weight (E 维连续向量), 加权最短路路由
+- Readout: PathScoringHead (mean path emb → MLP → K scores → Categorical)
+- 输出: K 个候选路径的离散选择概率 (K=4, Categorical 分布)
 - 激活: ELU [来源: L06 DTAR]
 
 ### RL 训练配置
@@ -134,6 +145,7 @@ version: 1
 - Discount factor γ: 0.99 [来源: 标准]
 - GAE λ: 0.95 [来源: 标准]
 - Optimizer: Adam
+- Episode 结构: 逐流顺序路由, 每步路由一条流, 共 n_flows 步 [来源: MVE K-path 范式]
 - Episodes: 500 [设计选择: MVE 150 → 增大]
 - Seeds: ≥3 [设计选择: 统计显著性]
 - 评估 episodes: 50 [设计选择: MVE 20 → 增大]

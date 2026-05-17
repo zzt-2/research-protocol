@@ -64,45 +64,47 @@
 
 ## 5. 模型输入
 
-- **输入**：PyG Data(x=(N,6), edge_index=(2,E), edge_attr=(E,4))
+- **输入**：obs dict {node_feat(N,6), edge_index(2,E), edge_feat(E,4), paths, flow, n_valid}
 - **处理**：
   1. GATEncoder.in_proj: Linear(6, 64) → h=(N, 64)
-  2. GAT Layer ×2: GATConv(h, edge_index, edge_attr) → LayerNorm → ReLU + Residual → h=(N, 64)
-  3. EdgeWeightDecoder: MLP(emb_u∥emb_v∥edge_feat) = MLP(64+64+4=132 → 64 → 1) → softplus → weight=(E,)
-  4. ValueHead: mean_pool(h, dim=0) → FC(64,64) → ReLU → FC(64,1) → scalar
+  2. GAT Layer ×2: GATConv(h, edge_index, edge_attr) → LayerNorm → ELU + Residual → h=(N, 64)
+  3. PathScoringHead: 对每条候选路径 path ∈ paths[:n_valid]:
+     mean(node_emb[path_nodes]) → MLP(64→32→1) → scalar score
+     n_valid < K 的位置填充 -1e9 (无效动作 mask)
+  4. ValueHead: cat(node_emb[src], node_emb[dst]) → FC(128→64→1) → scalar
 
-- **输出**：mean_weights=(E,), value=scalar
+- **输出**：logits=(K,) 用于 Categorical 分布, value=scalar
 
 **参数量**：
 - GATEncoder: in_proj(6×64=384) + 2×GATConv(~16K each) + 2×LN(128) ≈ 33K
-- EdgeWeightDecoder: MLP(132×64+64+64×1) ≈ 8.5K + 8.5K ≈ 9K
-- ValueHead: 64×64+64+64×1 ≈ 4.2K
-- log_std: 264
-- **总计 ≈ 47K 参数**
+- PathScoringHead: MLP(64×32+32+32×1) ≈ 2.1K
+- ValueHead: FC(128×64+64+64×1) ≈ 8.3K
+- **总计 ≈ 43K 参数**（无 log_std，离散动作空间不需要）
 
 ## 6. 模型输出 → 动作 → 路由
 
-- **模型输出**：mean=(E,) 正权重（softplus 保证 >0）
-- **训练时动作**：sample ~ Normal(mean, exp(log_std))，clamp > 1e-6
-- **推理时动作**：deterministic=True，直接用 mean
+- **模型输出**：logits=(K,) 候选路径评分
+- **训练时动作**：sample ~ Categorical(logits)，返回 int ∈ [0, K)
+- **推理时动作**：deterministic=True，直接 argmax(logits)
 - **路由**：
-  1. 构建 nx.DiGraph，action[i] 为边 i 的权重
-  2. 故障边权重设为 1e9（等效不可达）
-  3. 对每条 flow (src, dst, demand)：Dijkstra 最短路，累加 link_load
-  4. MLU = max(link_load_e / capacity_e)
-- **输出**：link_load dict, MLU float, n_overflow int
+  1. 取第 action 条候选路径 path = paths[action]
+  2. 对 path 中每条边 (u,v)：link_load[(u,v)] += demand, link_load[(v,u)] += demand
+  3. MLU = max(link_load.values()) / capacity
+- **Episode**：逐流顺序路由，共 n_flows=40 步，每步路由一条流
 
-**关键设计**：所有流用**同一组权重同时路由**（非逐流），符合 SDN 集中控制器范式。
+**关键设计**：逐流顺序路由，每步从 K=4 条候选路径中选择一条。候选路径由 nx.shortest_simple_paths 在去掉故障边的无向图上生成。
 
 ## 7. 奖励/损失计算
 
-- **奖励**：r_t = -MLU_t（单分量，无量级失衡风险）
+- **奖励**：r_t = -(MLU_after - MLU_before)，增量式，鼓励每步最小化 MLU 增量
 - **回报**：G_t = Σ_{k=0}^{T-t} γ^k · r_{t+k}
 - **优势**：A_t = GAE(δ_t, λ=0.95)，δ_t = r_t + γ·V(s_{t+1}) - V(s_t)
 - **PPO 损失**：
   - actor: -min(ratio·A, clip(ratio, 0.8, 1.2)·A) - 0.01·entropy
   - critic: 0.5·(V_pred - G)^2
   - 总计: L_actor + 0.5·L_critic
+
+**与 per-edge 范式的区别**：奖励从绝对 -MLU 改为增量 -(MLU_after - MLU_before)。增量奖励更适合逐流路由：每步的奖励直接反映该步路由决策的质量。
 
 ## 8. 跨规模泛化
 
@@ -117,31 +119,31 @@
 
 ### 泛化流程
 
-1. 创建目标规模 SimConfig → RoutingEnv → obs=(N_new, 6), edge_index=(2, E_new), edge_attr=(E_new, 4)
+1. 创建目标规模 SimConfig → RoutingEnv → obs with new N, E
 2. 加载 66 节点训练的模型
 3. **GATEncoder**：Linear(6→64) 维度无关 ✓；GATConv 操作任意大小图 ✓
-4. **EdgeWeightDecoder**：per-edge MLP(emb_u∥emb_v∥edge_feat) 与边数无关 ✓
-5. **ValueHead**：mean_pool → FC，维度无关 ✓
-6. **log_std**：固定 264 维 → **不能用于 E≠264 的图** → 泛化必须用 deterministic=True ✓
-7. Dijkstra 路由在 env 内完成，模型只输出权重，拓扑无关 ✓
+4. **PathScoringHead**：per-path MLP(mean(node_emb[path])) 与图规模无关 ✓
+5. **ValueHead**：cat(src_emb, dst_emb) → FC，维度无关 ✓
+6. **无 log_std**：离散动作空间，无需固定维度参数 ✓（解决了 per-edge 范式的泛化限制）
+7. 候选路径由 env 的 nx.shortest_simple_paths 生成，模型只做评分选择 ✓
 
 ### 泛化时的特征一致性
 
-- 节点特征 (N, 6)：全部归一化（/capacity 或 /max_degree），与规模无关 ✓
+- 节点特征 (N, 6)：全部归一化（/capacity），与规模无关 ✓
 - 边特征 (E, 4)：同上，全部归一化 ✓
 - 流量：按 0.6 × N_nodes 缩放，demand 范围不变 ✓
 
 ### 已知限制
 
-1. **log_std 维度固定**：训练时 E=264 → log_std 是 nn.Parameter(264)。泛化到其他规模必须用 deterministic 模式，不能做随机采样。这意味着泛化评估没有探索策略，只评估贪心策略。
-2. **极地间隙未实现**：config 有 polar_gap_lat=70° 但 topology/failures 未使用。真实 LEO 星座在高纬度断开 inter-plane ISL。当前简化模型通过随机故障近似此效果。
-3. **distance_km=1.0**：所有链路距离相同，模型无法学习距离感知路由。per-link weight 方案不依赖物理距离，但若未来引入距离相关特征需修正。
+1. **极地间隙未实现**：config 有 polar_gap_lat=70° 但 topology/failures 未使用。真实 LEO 星座在高纬度断开 inter-plane ISL。当前简化模型通过随机故障近似此效果。
+2. **distance_km=1.0**：所有链路距离相同，模型无法学习距离感知路由。
+3. **路径缓存**：K 候选路径缓存于 (src, dst) 对，不跨 episode。大规模图路径生成可能成为瓶颈。
 
 ## 断层检查
 
 | # | 检查项 | 状态 | 说明 |
 |---|--------|------|------|
-| 1 | 特征缺失 | ✅ 无断层 | 模型有 demand_as_dst 和 is_hotspot 提供目的地信息；有 utilization 提供负载信息 |
-| 2 | 维度不匹配 | ✅ 无断层 | GNN 模型全部维度无关；消融实验 MLP 与 GNN 共享接口；log_std 固定维度已记录为已知限制 |
-| 3 | 配置矛盾 | ✅ 无断层 | demand/capacity 比率在 MVE 验证范围内（MLU 0.8-1.5）；故障率 8% 与 MVE-2 一致 |
-| 4 | 跨规模断裂 | ⚠ 已记录 | log_std 维度固定 → 泛化必须 deterministic，已记录。其余模块全部维度无关 |
+| 1 | 特征缺失 | ✅ 无断层 | 模型有 is_current_src/dst 和 is_hotspot 提供当前流信息；有 utilization 提供负载信息 |
+| 2 | 维度不匹配 | ✅ 无断层 | GNN + PathScoringHead 全部维度无关；消融实验 MLP 与 GNN 共享 env obs 接口 |
+| 3 | 配置矛盾 | ✅ 无断层 | demand/capacity 比率在 MVE 验证范围内；故障率 8% 与 MVE-2 一致 |
+| 4 | 跨规模断裂 | ✅ 已解决 | K-path 离散动作空间无需 log_std，泛化无需 deterministic 限制 |

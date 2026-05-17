@@ -1,10 +1,10 @@
-"""PPO training loop for LEO congestion-aware routing (continuous action space).
+"""PPO training loop for LEO congestion-aware routing (discrete K-path action space).
 
-Adapted from reference/sim-template/train_ppo.py.
-Key difference: continuous Normal distribution instead of discrete Categorical.
-  - Buffer.actions: list[np.ndarray] (E-dim vectors)
-  - No action_masks
-  - actions_t dtype: float32, shape (batch, E)
+Key differences from continuous variant:
+  - Buffer.actions: list[int] (discrete path selection)
+  - Categorical distribution instead of Normal
+  - No log_std parameter
+  - actions_t dtype: long, shape (batch,)
 """
 
 from __future__ import annotations
@@ -18,7 +18,6 @@ import numpy as np
 import torch
 import torch.nn as nn
 from torch import Tensor
-from torch_geometric.data import Data
 
 from .config import SimConfig
 from .env import RoutingEnv
@@ -34,19 +33,15 @@ except ImportError:
 
 
 # ---------------------------------------------------------------------------
-# RolloutBuffer — on-policy buffer, continuous action space, no masks
+# RolloutBuffer — on-policy buffer, discrete action space
 # ---------------------------------------------------------------------------
 
 class RolloutBuffer:
-    """On-policy buffer for PPO with continuous actions.
-
-    Stores PyG Data observations and E-dimensional action vectors.
-    No action_masks (continuous action space).
-    """
+    """On-policy buffer for PPO with discrete actions."""
 
     def __init__(self) -> None:
-        self.obs: list[Data] = []
-        self.actions: list[np.ndarray] = []
+        self.obs: list[dict] = []
+        self.actions: list[int] = []
         self.log_probs: list[float] = []
         self.rewards: list[float] = []
         self.dones: list[bool] = []
@@ -58,8 +53,8 @@ class RolloutBuffer:
 
     def add(
         self,
-        obs: Data,
-        action: np.ndarray,
+        obs: dict,
+        action: int,
         log_prob: float,
         reward: float,
         done: bool,
@@ -79,11 +74,7 @@ class RolloutBuffer:
     def compute_returns_and_advantages(
         self, last_value: float, gamma: float, gae_lambda: float,
     ) -> None:
-        """GAE(lambda) advantage estimation.
-
-        delta_t = r_t + gamma * V(s_{t+1}) * (1 - d_t) - V(s_t)
-        A_t = sum_{l>=0} (gamma*lambda)^l * delta_{t+l}
-        """
+        """GAE(lambda) advantage estimation."""
         n = self.size
         rewards = torch.tensor(self.rewards, dtype=torch.float32)
         values = torch.tensor(self.values, dtype=torch.float32)
@@ -102,19 +93,18 @@ class RolloutBuffer:
 
     def get_batches(
         self, batch_size: int,
-    ) -> Generator[tuple[list[Data], Tensor, Tensor, Tensor, Tensor], None, None]:
+    ) -> Generator[tuple[list[dict], Tensor, Tensor, Tensor, Tensor], None, None]:
         """Yield shuffled mini-batches.
 
         Returns:
             (obs_batch, actions, old_log_probs, returns, advantages)
-            No action_masks.
         """
         n = self.size
         indices = np.arange(n)
         np.random.shuffle(indices)
 
-        # Continuous: stack (E,) arrays -> (N, E) tensor, dtype float32
-        actions_t = torch.tensor(np.stack(self.actions), dtype=torch.float32)
+        # Discrete: stack ints -> (N,) long tensor
+        actions_t = torch.tensor(self.actions, dtype=torch.long)
         old_log_probs_t = torch.tensor(self.log_probs, dtype=torch.float32)
 
         for start in range(0, n, batch_size):
@@ -133,11 +123,7 @@ class RolloutBuffer:
 # ---------------------------------------------------------------------------
 
 class RewardNormalizer:
-    """Running Z-score normalization for rewards (Welford online algorithm).
-
-    Maintains running mean/var, output clipped to [-clip, +clip].
-    Supports state_dict for save/load.
-    """
+    """Running Z-score normalization for rewards."""
 
     def __init__(self, clip: float = 5.0, eps: float = 1e-8) -> None:
         self._mean = 0.0
@@ -175,16 +161,11 @@ class RewardNormalizer:
 
 
 # ---------------------------------------------------------------------------
-# PPO — continuous action space variant
+# PPO — discrete action space variant
 # ---------------------------------------------------------------------------
 
 class PPO:
-    """Proximal Policy Optimization with clipped surrogate (continuous actions).
-
-    Key differences from discrete PPO:
-      - No action_masks in evaluate_actions
-      - actions are float tensors, not long
-    """
+    """Proximal Policy Optimization with clipped surrogate (discrete actions)."""
 
     def __init__(
         self,
@@ -232,7 +213,6 @@ class PPO:
         }
 
         for _epoch in range(self.epochs):
-            # Continuous: 5-tuple from get_batches (no masks)
             for obs_batch, actions, old_log_probs, returns, adv_batch in (
                 buffer.get_batches(self.batch_size)
             ):
@@ -241,7 +221,6 @@ class PPO:
                 returns = returns.to(self.device)
                 adv_batch = adv_batch.to(self.device)
 
-                # evaluate_actions(data_list, actions) — no masks
                 log_probs, values, entropy = self.model.evaluate_actions(
                     obs_batch, actions,
                 )
@@ -381,11 +360,7 @@ class EarlyStopping:
 # ---------------------------------------------------------------------------
 
 def train(config: SimConfig | None = None, seed: int = 42) -> dict:
-    """PPO training main loop for LEO congestion-aware routing.
-
-    Creates env and model internally from SimConfig.
-    Runs multi-episode on-policy collection with periodic PPO updates.
-    Saves model checkpoint and training metrics on completion.
+    """PPO training main loop for K-path LEO congestion-aware routing.
 
     Args:
         config: Simulation configuration. Uses defaults if None.
@@ -410,7 +385,7 @@ def train(config: SimConfig | None = None, seed: int = 42) -> dict:
         hidden_dim=cfg.hidden_dim,
         n_layers=cfg.n_layers,
         n_heads=cfg.n_heads,
-        n_edges=env._E,
+        k_paths=cfg.k_paths,
     ).to(cfg.device)
 
     ppo = PPO(
@@ -445,16 +420,15 @@ def train(config: SimConfig | None = None, seed: int = 42) -> dict:
         ep_reward = 0.0
 
         while not done:
-            # Continuous action: no mask
-            action, log_prob, value = model.get_action(obs.to(cfg.device))
-            action_np = action.cpu().numpy()
+            action, log_prob, value = model.get_action(obs)
+            action_int = action.item()
 
-            next_obs, reward, terminated, truncated, info = env.step(action_np)
+            next_obs, reward, terminated, truncated, info = env.step(action_int)
             done = terminated or truncated
 
             buf.add(
                 obs,
-                action_np,
+                action_int,
                 log_prob.item(),
                 reward,
                 done,
@@ -472,7 +446,7 @@ def train(config: SimConfig | None = None, seed: int = 42) -> dict:
 
             # Bootstrap value for last obs
             with torch.no_grad():
-                _, last_val = model(obs.to(cfg.device))
+                _, last_val = model._encode_obs(obs)
                 last_val = last_val.squeeze().item()
 
             buf.compute_returns_and_advantages(last_val, cfg.gamma, cfg.gae_lambda)
@@ -572,10 +546,10 @@ def evaluate(
         obs, _ = env.reset(seed=seed_offset + i)
         done = False
         while not done:
-            action, _, _ = model.get_action(obs.to(device), deterministic=True)
-            obs, _, terminated, truncated, info = env.step(action.cpu().numpy())
+            action, _, _ = model.get_action(obs, deterministic=True)
+            obs, _, terminated, truncated, info = env.step(action.item())
             done = terminated or truncated
-        mlus.append(info["mlu"])
+        mlus.append(info.get("final_mlu", info["mlu"]))
 
     result = {
         "mean": float(np.mean(mlus)),
@@ -601,7 +575,7 @@ def main() -> None:
         wandb.init(
             project="leo-congestion-routing",
             config=vars(cfg),
-            name=f"ppo_{cfg.hidden_dim}h_{cfg.n_layers}l",
+            name=f"ppo_kpath{cfg.k_paths}_{cfg.hidden_dim}h_{cfg.n_layers}l",
         )
 
     all_eval_results: list[dict] = []
@@ -620,7 +594,7 @@ def main() -> None:
             hidden_dim=cfg.hidden_dim,
             n_layers=cfg.n_layers,
             n_heads=cfg.n_heads,
-            n_edges=env._E,
+            k_paths=cfg.k_paths,
         ).to(cfg.device)
 
         # Load best model

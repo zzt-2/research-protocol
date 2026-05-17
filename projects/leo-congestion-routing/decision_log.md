@@ -1,6 +1,67 @@
 # Decision Log: leo-congestion-routing
 
 ## 阶段摘要
+- [Execute Step 2] K-path 迁移执行完成 + Quick Test 进行中 (2026-05-17)
+  - Contract amendment 用户确认通过
+  - env.py/model.py/train.py/baselines 全部重写为 K-path 范式
+  - verify 套件 28/28 PASS（含新增 Episode 结构验证）
+  - Quick Test (100ep) 运行中，等待结果
+- [Execute Step 1→2] 根因定位 + 范式迁移决策 (2026-05-17)
+  - Quick Test PASS，E01 seed 0 结果 MARGINAL（GNN/ECMP=1.07, GNN/MLP=0.84）
+  - **根因**: MVE 用 K-path 离散选择（逐流路由），Contract 设计为 per-edge 连续权重（同时路由）。单路径加权 Dijkstra 表达力 < ECMP 多路径分流
+  - **决策 D15**: 迁移到 K-path 范式，需 Contract amendment
+  - **框架漏洞**: MVE→Contract 无架构对齐门控，写入 framework-evolution/LOG-008
+- [Execute Step 1] Quick Test 完成 + MVE 差异分析 (2026-05-17)
+  - Smoke test PASS，管线畅通
+  - Quick training (1 seed × 100ep): GNN MLU=2.07, GNN/ECMP=1.05, GNN/MLP=0.82
+  - MVE 差异: GNN/MLP 2pp ✅; GNN/ECMP 17pp ⚠️（100ep 欠训练导致，非架构问题）
+  - 结论: 架构正确（message passing 优势 18% 接近 MVE 20%），进入 E01 全量训练
+
+## 决策记录
+
+### D16: K-path 迁移执行 (2026-05-17)
+- **触发**: D15 范式迁移决策，用户确认 Contract amendment
+- **执行内容**:
+  - config.py: 新增 k_paths=4，t_slots=1 (legacy)
+  - env.py: 完全重写，逐流顺序路由，K 候选路径由 nx.shortest_simple_paths 生成，奖励改为 delta MLU
+  - model.py: PathScoringHead 替代 EdgeWeightDecoder，Categorical 替代 Normal，ValueHead 改为 src‖dst→FC
+  - train.py: RolloutBuffer 存储 int actions，PPO evaluate_actions 使用 Categorical
+  - baselines: SP(action=0), ECMP(round-robin among equal-cost paths), MLP(local features + Categorical)
+  - verify: 28/28 PASS，新增 Episode 结构验证（40 步 + MLU 非递减）
+  - data-flow.md: §5-8 全部更新为 K-path 范式
+- **泛化优势**: 离散动作空间无需 log_std，跨规模泛化无限制（解决了 per-edge 范式的已知限制）
+- **观察**: 顺序路由中 Random 可能 beat SP（贪心最短路不为未来流考虑），属于正常现象
+- **Quick Test 结果** (1 seed × 100ep):
+  - GNN MLU=1.954, ECMP MLU=2.552, SP MLU=2.586
+  - **GNN/ECMP = 0.766 (PASS, 改善 23.4%)**，远超 target ≤ 0.90
+  - GNN/SP = 0.756
+  - MVE 对比: MVE-2 GNN/ECMP=0.88(12%), Quick Test 0.77(23%), **改善 11pp 优于 MVE**
+  - 差异原因: GATEncoder(LN+Residual) + PPO(GAE+adv norm) 比裸 MVE 更强
+  - 100ep 训练时间 163s (GPU), 估计 E01 全量 500ep×3seeds ≈ 2.5h
+
+### D15: 范式迁移 — per-edge weight → K-path selection (2026-05-17)
+- **触发**: E01 seed 0 GNN/ECMP=1.07（FAIL），根因追溯发现 MVE 和正式模型架构完全不同
+- **根因**: MVE 用 K-path 离散选择（逐流顺序路由，delta MLU 奖励），Contract 设计 per-edge 连续权重（同时路由，绝对 MLU）。加权 Dijkstra 单路径无法超越 ECMP 多路径分流——表达力结构性不足
+- **决策**: 迁移到 K-path 范式（已由 MVE 验证有效）
+- **影响**:
+  - Contract amendment: 动作空间从连续 E 维改为离散 K 维
+  - env.py 重写: 逐流路由替代同时路由
+  - model.py: 保留 GATEncoder，新增 PathScoringHead 替代 EdgeWeightDecoder
+  - 奖励: -MLU → -(MLU_after - MLU_before)
+  - GNN/MLP=0.84 仍然有效（message passing 优势与路由范式无关）
+- **框架教训**: MVE→Contract 无架构对齐门控，需新增 FR-11/12/13（见 framework-evolution/LOG-008）
+
+### D14: Execute Step 1 Quick Test + MVE 差异分析 (2026-05-17)
+- **Quick Test 结果** (1 seed × 100ep): GNN MLU=2.07, ECMP=1.97, MLP=2.52, SP=2.37
+- **MVE-2 对比**:
+  - GNN/MLP: Quick=0.82 vs MVE=0.80 → 差异 2pp ✅（正常范围）
+  - GNN/ECMP: Quick=1.05 vs MVE=0.88 → 差异 17pp ⚠️
+- **差异分析** (GNN/ECMP 17pp):
+  - **根因**: 100ep 严重欠训练（设计 500ep 的 1/5），std=0.87 说明策略未稳定
+  - **证据**: GNN/MLP=0.82 已接近 MVE=0.80（2pp），证明 message passing 架构正确，只是整体训练不充分
+  - **MVE 参考**: MVE 用更简单训练设置可能更快收敛；正式训练有 GAE+advantage norm+LR decay 更稳定
+- **判定**: 差异可解释，非架构缺陷。进入 E01 全量训练（3 seeds × 500ep）
+- **产出**: worker-logs/step1-quick-test.md
 - [Contract Step 0] 新颖性确认通过 (2026-05-17)
   - 复用 GW 检索（87 候选，17 篇精读，Step 3.5 补充检索），确认 per-link 负载均衡 + LEO 时变 + size gen 三角空白
   - 最接近竞品 TELGEN(L11) 仅覆盖 GNN+TE+size gen 静态快照，GMR(L02) 仅覆盖 per-path 分割

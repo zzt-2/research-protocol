@@ -33,8 +33,9 @@ class SimConfig:
     failure_rate: float = 0.08
     failure_mode: str = "random"      # random / regional
 
-    # Episode
-    t_slots: int = 20
+    # Episode (K-path sequential routing)
+    k_paths: int = 4                  # candidate paths per flow (MVE validated)
+    t_slots: int = 1                  # legacy: kept for traffic.py compat (unused in K-path mode)
 
     # GNN
     gnn_type: str = "gat"
