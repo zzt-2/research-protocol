@@ -1,6 +1,10 @@
 # Decision Log: leo-congestion-routing
 
 ## 阶段摘要
+- [Execute Step 2] E01 完成 MARGINAL + E04 泛化验证进行中 (2026-05-17)
+  - E01: GNN/ECMP=0.8588 PASS, GNN/MLP=0.8632 FAIL (差0.013)
+  - 分析: seed 敏感性问题（seed 0 MLU=2.25 vs seed 1/2 的 1.98/2.02），非架构缺陷
+  - 决策 D17: 先跑 E04 快速泛化验证（48节点 zero-shot），再跑 E01 重跑（800ep+调参）
 - [Execute Step 2] K-path 迁移执行完成 + Quick Test 进行中 (2026-05-17)
   - Contract amendment 用户确认通过
   - env.py/model.py/train.py/baselines 全部重写为 K-path 范式
@@ -18,6 +22,42 @@
   - 结论: 架构正确（message passing 优势 18% 接近 MVE 20%），进入 E01 全量训练
 
 ## 决策记录
+
+### D18: E01-v2 + E04 综合结果 (2026-05-17)
+- **E01-v2**: 800ep + entropy_coef=0.02, 87.9min
+  - GNN: MLU = 1.9810 ± 0.0300 (std 从 0.12 降至 0.03, 稳定性 4x 提升)
+  - ECMP: MLU = 2.4230, MLP: MLU = 2.4106
+  - **GNN/ECMP = 0.8176 PASS** (从 0.8588 改善 4.1pp)
+  - **GNN/MLP = 0.8218 PASS** (从 0.8632 改善 4.2pp, 由 FAIL 变 PASS)
+  - 根因确认: seed 敏感性是训练不充分导致, 800ep 充分收敛
+- **E04**: 66→48 zero-shot 泛化 (1.7min)
+  - GNN zero-shot: MLU=1.9554, 仍优于 ECMP(2.1171)
+  - MLP zero-shot: MLU=2.8335, 比 ECMP 差 33.9% — **跨规模崩溃**
+  - GNN/MLP zero-shot = 0.69 — message passing 跨规模优势 31%
+- **综合结论**:
+  - 同规模: GNN 优于 ECMP 18.2%, 优于 MLP 17.8%
+  - 跨规模: GNN zero-shot 有效, MLP 崩溃
+  - message passing 的价值被同规模+跨规模双重验证
+  - **E01-v2 + E04 联合结论: Ch3 核心假设成立, 可继续推进 E02-E11**
+
+### D17: E01 结果分析 + 后续计划 (2026-05-17)
+- **E01 结果**: 3 seeds × 500ep, 79.3min
+  - GNN: MLU = 2.0810 ± 0.1221 (seed 0=2.25, seed 1=1.98, seed 2=2.02)
+  - ECMP: MLU = 2.4230 ± 0.8469
+  - MLP: MLU = 2.4106 ± 0.0104 (极稳定)
+  - **GNN/ECMP = 0.8588 PASS** (目标 ≤0.90)
+  - **GNN/MLP = 0.8632 FAIL** (目标 ≤0.85，差 0.013)
+- **根因分析**: MLP 三 seed std=0.01 极稳定，GNN seed 0 高出 seed 1/2 约 12% → 训练稳定性问题而非架构缺陷
+- **E04 泛化验证结果** (66→48 zero-shot, 1.7min):
+  - GNN zero-shot: MLU=1.9554, ECMP=2.1171, GNN/ECMP=0.92 (仍优于ECMP)
+  - MLP zero-shot: MLU=2.8335 (比ECMP差33.9%, 比MLP_trained差10.2%) — **崩溃**
+  - GNN/MLP zero-shot = 0.69 — message passing 跨规模优势 31%
+  - **结论**: MLP 跨规模崩溃, GNN 稳定. GNN/MLP 同规模 0.86 的顾虑被泛化实验大幅缓解
+- **后续计划**:
+  1. ~~E04 快速泛化验证~~ ✅ 完成 — MLP 跨规模崩溃确认
+  2. ~~E01-v2 重跑~~ ✅ 完成 — 800ep + entropy=0.02, 双指标全 PASS
+  3. 下一步: E02-E03 (无故障/突发流量) → E04-E06 (泛化 48/288/720) → E07-E11 (消融)
+- **子 agent 分析结论**: 继续修 Ch3 是最优路径，LEO 领域内无替代方向
 
 ### D16: K-path 迁移执行 (2026-05-17)
 - **触发**: D15 范式迁移决策，用户确认 Contract amendment

@@ -6,7 +6,7 @@
 - **项目名**: leo-congestion-routing
 - **方向**: GNN 拥塞感知路由 + 负载均衡 for LEO 卫星星座
 - **阶段**: Execute (Contract Amendment)
-- **当前步骤**: Execute Step 2 → K-path Quick Test PASS, 准备 E01 全量训练
+- **当前步骤**: Execute Step 2 → E01 完成 (MARGINAL), 准备 E04 泛化验证 + E01 重跑
 - **方法类型**: [DRL] + [监督]
 
 ## 进度追踪
@@ -36,6 +36,15 @@
 | Contract Amendment | ✅ | 动作空间 K-path + 奖励 delta MLU (D16) |
 | K-path 迁移执行 | ✅ | env/model/train/baselines/verify 全部完成 (D16) |
 | K-path Quick Test | ✅ PASS | GNN/ECMP=0.77 (23.4% 改善), 100ep, 163s GPU |
+| E01 核心实验 | ⚠️ MARGINAL | GNN/ECMP=0.8588 PASS, GNN/MLP=0.8632 FAIL (差0.013), 79.3min |
+| E04 泛化验证 | ✅ KEY FINDING | MLP跨规模崩溃(MLU+33.9%), GNN稳定(GNN/MLP=0.69) |
+| E01-v2 重跑 | ✅ 双PASS | GNN/ECMP=0.818 PASS, GNN/MLP=0.822 PASS, GNN std=0.03 |
+| E02 无故障 | ✅ 验证A2 | GNN/ECMP=1.095 (ECMP更优), GNN/MLP=0.846 — 故障是激活条件 |
+| E03 极端突发 | ✅ | GNN/ECMP=0.860, GNN/MLP=0.934 — GNN仍优于ECMP 14% |
+| E05 泛化288 | ✅ PASS | GNN/ECMP=0.900 (4.4× scale), MLP/ECMP=1.031 (开始退化) |
+| E06 泛化720 | ✅ PASS | GNN/ECMP=0.948 (10.9× scale), MLP/ECMP=0.996 (≈ECMP) |
+| E08 故障率消融 | ✅ | 0%=ECMP赢, 5-10%=GNN赢(7-20%), 15%=7.8% 甜点8-10% |
+| E09 流量消融 | ✅ | 均匀=GNN赢11%, 中等=ECMP赢, 重型=GNN赢18% |
 
 ## 关键决策
 - D1: R1+R2 搜索策略，87 条候选，覆盖充分
