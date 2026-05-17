@@ -1,6 +1,21 @@
 # Decision Log: leo-congestion-routing
 
 ## 阶段摘要
+- [Contract Step 0] 新颖性确认通过 (2026-05-17)
+  - 复用 GW 检索（87 候选，17 篇精读，Step 3.5 补充检索），确认 per-link 负载均衡 + LEO 时变 + size gen 三角空白
+  - 最接近竞品 TELGEN(L11) 仅覆盖 GNN+TE+size gen 静态快照，GMR(L02) 仅覆盖 per-path 分割
+  - 跳过 0.1 系统检索，简化 0.2 竞品精读，保留 0.3 待后续定向确认
+- [Contract Step 1] 假设形成 (2026-05-17)
+  - 假设: GNN per-link 负载均衡 ≥10% 优于 ECMP, ≥15% 优于 MLP, 泛化退化 <10%
+  - 依据: MVE-2 GNN/ECMP=0.88, GNN/MLP=0.80
+  - Success: 三维全满足; Failure: 任一维满足即失败（独立定义）
+- [Contract Step 2] Contract 草案完成 (2026-05-17)
+  - contract.md (draft), 含全部必填字段
+  - 5 baseline, 5 metrics, 12 实验, 2 [ASSUMPTION] 待 Step 3 核实
+- [Contract Step 3] 参数溯源完成 (2026-05-17)
+  - ISL 容量 10 Gbps: [设计选择] 光学 ISL 量级, 绝对值不影响相对对比, MVE 验证 MLU 合理
+  - 区域故障 10%: [设计选择] 极端消融场景, 模拟太阳风暴/碎片事件
+  - 所有 [ASSUMPTION] 已消除, contract.md 零残留
 - [Groundwork Step 1] 检索+初筛完成 (2026-05-16)
   - R1: 7个JSON文件 180条原始 + R2: 2个JSON文件 50条
   - 去重后 87 条独立候选
@@ -17,6 +32,46 @@
   - 修复：gw-acquire.md 和 tools-scenarios.md 补充了 blit --download 作为 IEEE 下载 fallback
 
 ## 决策记录
+
+### D12: Contract Step 4 端到端推演 (2026-05-17)
+- **决策**: 通过，1 个已知限制
+- **已知限制**: log_std = nn.Parameter(264) 固定维度，泛化到其他规模必须用 deterministic=True。不影响泛化评估（deterministic 是标准评估模式）
+- **断层检查**: 4 项全部无断层（特征完整、维度匹配、配置无矛盾、跨规模仅 log_std 已记录）
+- **产出**: data-flow.md
+
+### D13: Contract Step 5 压力测试 + 反模式审查 (2026-05-17)
+
+**Q1 结构性优势**：GNN 的优势来源明确——多跳 message passing 聚合全局负载状态 → per-edge weight。激活条件清晰：链路故障打破 ECMP 等价路径 + 非均匀流量制造拥塞热点。非"用 DL 替代传统方法"的空泛声明，MVE 已验证具体激活条件（MVE-1 无故障 GNN≈ECMP，MVE-2 有故障 GNN>ECMP 12%）。✅
+
+**Q2 边际结果**：若 GNN 改善 ECMP <5%（failure signal），论文仍有部分价值：(1) ablation 证明 message passing 必要性（MLP 已证明 < SP）；(2) 跨规模泛化能力独立于绝对改善。但核心贡献（≥10% 改善）将不成立，需降级为"分析性论文"。风险中等，可接受。✅
+
+**Q3 信号独立性**：Failure 2（GNN>0.95×MLP，结构优势）和 Failure 3（泛化>1.20×ECMP）独立于 Success 信号。Failure 1（改善<5%）与 Success 1（改善≥10%）之间有 5% 灰色区间，但 gray zone 明确定义了"边际但非失败"。✅
+
+**Q4 Baseline 共识性**：SP（11/22 篇使用，绝对共识）✅；ECMP（L02/L04/L16 使用，负载均衡标准）✅；MLP（L01/L07 均使用 FC ablation）✅；DTAR（288 星域间路由标杆，有代码，但域间路由与 per-link 粒度不同需论文说明）✅。GMR-simplified（P4 风险，退守策略为放弃此 baseline）。✅
+
+**Q5 反模式审查**：
+
+| # | 反模式 | 状态 | 证据 |
+|---|--------|------|------|
+| 1 | 信息泄露 | ✅ | GNN/MLP 相同输入（node 6-dim, edge 4-dim），差异仅在架构（GAT vs 独立 Linear）。消融用零向量替代删除，维度一致。 |
+| 2 | 仿真过于简化 | ✅ | 仿真含三要素（非均匀流量+链路故障+时变），MLU≈2.0-2.5 充分拥塞。data-flow.md 确认模型输入含 utilization + demand 信息。 |
+| 3 | 确定性信道+DL 强行优越 | ✅ | GNN 优势来源明确（全局负载聚合），低流量无故障场景自然退化（MVE-1 GNN≈ECMP）。非预测确定性信号。 |
+| 4 | 跨实验数据不一致 | ✅ | 所有实验共用同一拓扑/流量/故障生成器，fairness rule 1 要求相同 seed 组合。 |
+
+**结论**: 5 问均无致命风险信号，Step 5 通过。
+
+### D11: Part A-checkpoint MDP 试运行 (2026-05-17)
+- **决策**: 通过（附分析），进入 Part B
+- **奖励分解**: 单分量 -MLU，无失衡风险（by design）
+- **贪心 vs 随机**: naive load-aware (util+1) 仅好 3.8%（10 episodes 平均），未达 >10% 门限
+- **根因**: Walker delta 规则拓扑下，负载感知绕路反而增加路径长度，导致更多拥塞。所有变体（linear5/10, exp, square）均不如 uniform(SP)
+- **策略排序**: uniform(+7.1% vs random) > random > 所有 load-aware 贪心
+- **不阻断理由**:
+  1. 门限本意是抓奖励尺度失衡，-MLU 无此问题
+  2. 策略区分度存在（SP > random 7.1%）
+  3. MVE 已证明 GNN 在故障场景下 >ECMP 12%（D4），DRL 价值在全局优化非局部贪心
+  4. 若 DRL 训练后不敌 SP，到时自然暴露
+- **对 Part B 的启示**: SP 是此拓扑下强 baseline，DRL 需在故障+时变流量场景下证明优势
 
 ### D4: MVE 验证 — GNN vs MLP 拥塞路由 (2026-05-16)
 - **决策**: MVE Pass → Go

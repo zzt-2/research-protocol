@@ -14,7 +14,7 @@
 | Step 5 Baseline选定 | ✅ 完成 | 2026-05-16 | TBD |
 | Step 4b 执行可行性 | ✅ 完成 | 2026-05-16 | TBD |
 | Step 6 仿真器设计 | ✅ 完成 | 2026-05-16 | TBD |
-| Step 7 Baseline复现 | ⬜ | | |
+| Step 7 Baseline复现 | ✅ 完成 | 2026-05-17 | 28/28 verify pass |
 
 ## Step 1 检索结果摘要
 
