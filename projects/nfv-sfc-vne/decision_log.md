@@ -63,4 +63,14 @@
 - **决策**: Step 4b 建议通过，进入 Step 6（仿真器设计）
 - **来源**: feasibility_report.md §C/§E
 - **原因**: C 仿真条件可行（SFC约束为中等工程量扩展），E 风险可控（Baseline 全部 Virne 内置，失败有兜底），无致命信号
-- **条件**: 待用户确认
+- **条件**: 用户已确认 Go（2026-05-19）
+
+## D013 | 2026-05-19 | Step 6 仿真器设计 — VNR 拓扑保持 random graph
+- **决策**: VNR 拓扑保持 random graph + SFC 约束叠加层，不改为纯 chain
+- **原因**: 纯 chain 拓扑过简单，GNN 优势会消失（B3 模式：小规模场景复杂组件退化）。Chain 10 节点仅 9 边，random graph ~22 边，拓扑复杂度差距大。MVE 验证的是 random graph 上的 GNN 优势，改为 chain 使证据失效。
+- **影响**: FR-12 架构差异从 3 项"是"降至 2 项，最大风险项（VNR 拓扑变更）消除
+
+## D014 | 2026-05-19 | Step 6 仿真器设计 — 沿用 fixed_intermediate 奖励
+- **决策**: 不添加 SFC 奖励分量，沿用 Virne fixed_intermediate (0.1) + episode R2C
+- **原因**: (1) SFC 约束由环境强制执行（action masking），无需奖励学习；(2) 避免 C1 奖励失衡风险（4/6 项目中招）；(3) 所有 solver 使用相同奖励确保公平对比
+- **影响**: SFC 差异通过 SFC-IR 指标体现，不通过奖励

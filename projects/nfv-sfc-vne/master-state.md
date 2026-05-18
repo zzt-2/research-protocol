@@ -33,7 +33,7 @@ current_stage: GW
 
 ### 当前位置
 - 阶段：GW
-- 步骤：Step 5 完成（Baseline 选定），进入 Step 4b（仿真条件+资源风险验证）
+- 步骤：Step 6 已确认（仿真器设计 Go），进入 Step 7（实现）
 - Contract 状态：not started
 - 方法类型：DRL
 
@@ -48,7 +48,10 @@ current_stage: GW
   - B: 新颖性确认(0篇精确交叉) 可行性强(SizeShiftReg+Virne) 空白原因=技术刚解锁
 - Step 3.5 (supplement): 2026-05-18，Round 1 收敛。新增 8 篇论文（GraphVNE/FlagVNE/CONAL/GPG-VNFE/ReViNE/ICC2025-SFC/DRL-BSFC + 1篇下载错误）。关键发现：(1) GraphVNE graph matching 非真正 assignment；(2) FlagVNE 仅跨 VNR size 不跨 PN；(3) SFC 依赖链+matching 无直接竞品。差异化空间确认。
 - Step 4a D (MVE): 2026-05-18，已完成。MVE PASS。GNN(DualGAT) epoch1: AC=0.966, R2C=0.748 > MLP(30ep) AC=0.942, R2C=0.682 > GRC AC=0.880, R2C=0.543。R2C GNN vs MLP +9.7%。feasibility_report.md 已创建。
-- Step 4a: A0/A'/A/B/D 全通过，建议 Go，待用户确认。
+- Step 4a: A0/A'/A/B/D 全通过，Go 已确认（2026-05-18）
+- Step 5 (validate): 2026-05-18，Baseline B1-B5 选定，用户已确认
+- Step 4b (sim-feasibility): 2026-05-18，C/E 无致命信号，Go 已确认（2026-05-19）
+- Step 6 (sim-design): 2026-05-19，仿真器设计规格完成。关键决策：(1) 基于 Virne 扩展；(2) VNR 拓扑保持 random graph + SFC 约束叠加层（非纯 chain）；(3) MatchingGAT 跨图注意力 + SFC 位置编码；(4) 沿用 fixed_intermediate 奖励。simulator-design.md 已创建。待用户确认。
 
 ### 关键决策（最近 10 条）
 - D001: 方向侦察 Go 决策：#1 NFV/SFC 双层图匹配 + SFC 依赖链 | 原因: A0/A'/A/B 全通过，空白确认(0篇精确交叉)
@@ -62,10 +65,14 @@ current_stage: GW
 - D009: 核心差异化 = SFC 依赖链约束 + matching-style GNN（vs GraphVNE 特征增强）| 原因: GraphVNE IPFP 不可微且仅提取标量分数；FlagVNE/CONAL 不处理 SFC；跨规模作为辅助亮点
 - D010: Step 4a Go 建议 | 原因: A0/A'/A/B/D 全通过，MVE 实证 GNN vs MLP R2C +9.7%，待用户确认
 - D011: Baseline 选定 | 原因: B1 GRC(启发式)+B2 PPO-DualGAT+(SOTA)+B3 pg_mlp(MLP消融)+B4 CONAL(约束竞品)+B5 PPO-DualGCN(GNN变体)，全部 Virne 内置
+- D012: Step 4b Go | 原因: C/E 无致命信号，Baseline 全部 Virne 内置，用户确认 2026-05-19
+- D013: VNR 拓扑保持 random graph + SFC 叠加层 | 原因: 纯 chain 太简单导致 GNN 优势消失（B3 模式）
+- D014: 沿用 fixed_intermediate 奖励不加 SFC 分量 | 原因: SFC 约束由环境强制，避免 C1 奖励失衡
 
 ### 活跃文件
 - literature_notes.md: projects/nfv-sfc-vne/literature_notes.md ✅（13篇精读+11篇浅读+补充检索更新+Baseline交叉验证）
-- feasibility_report.md: projects/nfv-sfc-vne/feasibility_report.md ✅（A0/A'/A/B/D 全维度评估完成，MVE PASS）
+- feasibility_report.md: projects/nfv-sfc-vne/feasibility_report.md ✅（A0/A'/A/B/D/C/E 全维度评估完成，MVE PASS，Step 4b Go 已确认）
+- simulator-design.md: projects/nfv-sfc-vne/simulator-design.md ✅（Step 6 设计规格，待用户确认）
 - baseline_report.md: projects/nfv-sfc-vne/baseline_report.md（待创建）
 - decision_log.md: projects/nfv-sfc-vne/decision_log.md ✅（D001-D007）
 - worker-logs/: projects/nfv-sfc-vne/worker-logs/
@@ -82,7 +89,7 @@ current_stage: GW
 | 4a feasibility | gw-feasibility.md | literature_notes.md, domain-comms.md, code-quality.md | feasibility_report.md (A/B/D) | 是（Go/No-Go） | A0/A'/A/B/D✅ 待用户确认Go |
 | 5 validate | gw-validate.md | literature_notes.md, feasibility_report.md | Baseline 候选评估表 | 是（Baseline 确认） | ✅ B1-B5选定 |
 | 4b sim-feasibility | gw-feasibility.md §4b | feasibility_report.md, baseline 表 | feasibility_report.md (C/E) | 是（Go/No-Go） | ✅ C/E无致命，Go待确认 |
-| 6 sim-design | gw-experiment.md §sim | literature_notes.md, baseline 表, code-quality.md, reference/sim-template/ | 仿真器设计规格 | 是（设计确认） | 待开始 |
+| 6 sim-design | gw-experiment.md §sim | literature_notes.md, baseline 表, code-quality.md, reference/sim-template/ | 仿真器设计规格 | 是（设计确认） | ✅ 用户已确认 Go |
 | 7 implement | gw-experiment.md §impl | sim spec, code-quality.md, reference/sim-template/ | baseline_report.md | 否 | 待开始 |
 
 ## §4 FR 防坑检查清单
