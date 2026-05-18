@@ -123,7 +123,7 @@ def main() -> None:
     print(f"\n{'='*60}")
     print("  MLP trained on 48-node")
     print(f"{'='*60}")
-    mlp_48_trained = run_mlp(CFG_48, n_eval=50, seed=0, n_episodes=300)
+    mlp_48_trained = run_mlp(CFG_48, n_eval=50, seed=0, n_episodes=CFG_48.total_episodes)
     results["mlp_48_trained"] = mlp_48_trained
 
     # ── Summary ─────────────────────────────────────────────────────────

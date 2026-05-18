@@ -21,7 +21,7 @@ from .sp import run_sp
 def run_all_baselines(
     config: SimConfig | None = None,
     n_eval: int = 50,
-    n_episodes: int = 300,
+    n_episodes: int = 800,
 ) -> dict[str, dict[str, float]]:
     """Run SP, ECMP, MLP baselines and return results.
 
@@ -46,24 +46,31 @@ def run_all_baselines(
 
     print("[1/3] Shortest Path...")
     sp = run_sp(env, n_eval=n_eval)
-    print(f"       SP: MLU = {sp['mean']:.4f} +/- {sp['std']:.4f}\n")
+    print(f"       SP: MLU={sp['mean']:.4f}+/-{sp['std']:.4f}, "
+          f"CV={sp['cv_mean']:.4f}, Overflow={sp['overflow_ratio_mean']:.4f}\n")
 
     print("[2/3] ECMP...")
     ecmp = run_ecmp(env, n_eval=n_eval)
-    print(f"       ECMP: MLU = {ecmp['mean']:.4f} +/- {ecmp['std']:.4f}\n")
+    print(f"       ECMP: MLU={ecmp['mean']:.4f}+/-{ecmp['std']:.4f}, "
+          f"CV={ecmp['cv_mean']:.4f}, Overflow={ecmp['overflow_ratio_mean']:.4f}\n")
 
     print("[3/3] MLP (training required)...")
     mlp = run_mlp(config, n_eval=n_eval, n_episodes=n_episodes)
     print()
 
     # Comparison table
-    print("-" * 55)
-    print(f"{'Baseline':<12} {'MLU Mean':>10} {'MLU Std':>10} {'vs SP':>10}")
-    print("-" * 55)
+    print("-" * 75)
+    print(f"{'Baseline':<12} {'MLU Mean':>10} {'MLU Std':>10} {'CV Mean':>10} "
+          f"{'Overflow':>10} {'vs SP':>10}")
+    print("-" * 75)
     for name, res in [("SP", sp), ("ECMP", ecmp), ("MLP", mlp)]:
         ratio = res["mean"] / sp["mean"] if sp["mean"] > 0 else float("nan")
-        print(f"{name:<12} {res['mean']:>10.4f} {res['std']:>10.4f} {ratio:>9.2%}")
-    print("-" * 55)
+        print(
+            f"{name:<12} {res['mean']:>10.4f} {res['std']:>10.4f} "
+            f"{res.get('cv_mean', 0):>10.4f} "
+            f"{res.get('overflow_ratio_mean', 0):>10.4f} {ratio:>9.2%}"
+        )
+    print("-" * 75)
 
     return {"sp": sp, "ecmp": ecmp, "mlp": mlp}
 

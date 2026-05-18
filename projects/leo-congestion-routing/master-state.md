@@ -6,7 +6,7 @@
 - **项目名**: leo-congestion-routing
 - **方向**: GNN 拥塞感知路由 + 负载均衡 for LEO 卫星星座
 - **阶段**: Execute (Contract Amendment)
-- **当前步骤**: 实验全部完成，**暂停推进** — 漏洞审计发现 5 个致命问题，优先修复
+- **当前步骤**: 漏洞修复 Batch 1 完成，E01-v2 全量重跑通过。待重跑 E02-E09 (surge=1.0)
 - **方法类型**: [DRL] + [监督]
 
 ## 进度追踪
@@ -38,13 +38,17 @@
 | K-path Quick Test | ✅ PASS | GNN/ECMP=0.77 (23.4% 改善), 100ep, 163s GPU |
 | E01 核心实验 | ⚠️ MARGINAL | GNN/ECMP=0.8588 PASS, GNN/MLP=0.8632 FAIL (差0.013), 79.3min |
 | E04 泛化验证 | ✅ KEY FINDING | MLP跨规模崩溃(MLU+33.9%), GNN稳定(GNN/MLP=0.69) |
-| E01-v2 重跑 | ✅ 双PASS | GNN/ECMP=0.818 PASS, GNN/MLP=0.822 PASS, GNN std=0.03 |
-| E02 无故障 | ✅ 验证A2 | GNN/ECMP=1.095 (ECMP更优), GNN/MLP=0.846 — 故障是激活条件 |
-| E03 极端突发 | ✅ | GNN/ECMP=0.860, GNN/MLP=0.934 — GNN仍优于ECMP 14% |
-| E05 泛化288 | ✅ PASS | GNN/ECMP=0.900 (4.4× scale), MLP/ECMP=1.031 (开始退化) |
-| E06 泛化720 | ✅ PASS | GNN/ECMP=0.948 (10.9× scale), MLP/ECMP=0.996 (≈ECMP) |
-| E08 故障率消融 | ✅ | 0%=ECMP赢, 5-10%=GNN赢(7-20%), 15%=7.8% 甜点8-10% |
-| E09 流量消融 | ✅ | 均匀=GNN赢11%, 中等=ECMP赢, 重型=GNN赢18% |
+| E01-v2 重跑 (surge=5.0) | ✅ 双PASS | GNN/ECMP=0.818, GNN/MLP=0.822 |
+| E01-v3 重跑 (surge=1.0) | ✅ **双PASS更强** | GNN/ECMP=0.778, GNN/MLP=0.808, std=0.012, 统计显著 p<0.0001 |
+| E02 无故障 (surge=1.0) | ✅ **F2反转** | GNN/ECMP=0.845 — 无故障GNN仍赢ECMP(旧surge=5.0=1.095) |
+| E03 surge鲁棒性 | ✅ | GNN/ECMP=0.767 — 无surge训练模型在surge=5下仍赢23% |
+| E04 48节点 (surge=1.0) | ✅ PASS | GNN/ECMP=0.801 (0.7× scale) |
+| E05 288节点 (surge=1.0) | ✅ PASS | GNN/ECMP=1.014 (4.4× scale) ≤ 1.10 |
+| E06 720节点 (surge=1.0) | ✅ PASS | GNN/ECMP=0.932 (10.9× scale) ≤ 1.10 |
+| E08 故障率消融 (surge=1.0) | ✅ | 全部GNN赢: 0%=0.845, 5%=0.855, 8%=0.797, 10%=0.881, 15%=0.837 |
+| E09 流量消融 (surge=1.0) | ✅ 全GNN赢 | 均匀=0.857, 中等=0.811, 默认=0.797, 重型=0.843 |
+| E10 层数消融 (surge=1.0) | ✅ <2%差异 | L1=0.777, L2=0.795, L3=0.792 |
+| E11 头数消融 (surge=1.0) | ✅ <1%差异 | H2=0.771, H4=0.775, H8=0.779 |
 | Execute Step 3 假设判定 | ✅ PASS | D19: 三维 Success Signal 全部满足，Failure Signal 全部未触发 |
 | Execute Step 6 可视化 | ✅ | simulator/figures/fig1-10, simulator/visualize_results.py |
 | 训练曲线实验 | ✅ | training_curves.json (GNN 500ep + MLP 300ep) |
@@ -69,13 +73,20 @@
 3. **[中] 论文池竞争**: GNN-ASSSP/DeepLaDu/GRL-RR 等近期竞品活跃，需 DeepLaDu 精读确认差异化空间
 3. **[低] Size gen 可行性**: 无先例将 size gen 应用于拥塞路由，可能需要新的泛化机制
 
-## 致命漏洞（2026-05-17 审计发现）
-- **F1: surge 始终激活** — Contract 写"无 surge"但代码默认 surge_factor=5.0，所有结果可能有误
-- **F2: GNN 正常条件劣于 ECMP** — 优势窗口仅 6-12% 故障率
-- **F3: ECMP 实现不标准** — 只用 K=4 候选路径，非真正 ECMP
-- **F4: 泛化声称有误导** — 所有拓扑 4-正则同构，非真正泛化
-- **F5: 消融全用单 seed** — seed 敏感性已知 ±12%
-- 详见 `.session/2026-05-17-leo-congestion-routing/HANDOFF-012-vulnerability-audit.md`
+## 漏洞审计与修复（2026-05-17）
+
+| 漏洞 | 状态 | 修复结果 |
+|------|------|----------|
+| F1: surge 始终激活 | ✅ 已修复 | surge=1.0 结果更好(GNN/ECMP=0.778 vs 旧0.818) |
+| F2: GNN 正常条件劣于 ECMP | 📝 叙事调整 | 定位为"弹性路由"而非通用负载均衡，需论文层面调整 |
+| F3: ECMP 不标准 | ✅ 已修复 | True ECMP(BFS全最短路)仅好1.35%，旧结果可信 |
+| F4: 泛化声称误导 | ✅ 分析完成 | 推荐"Walker delta族内scale gen"+极地间隙测试(可选) |
+| F5: 消融单seed | ⏳ 待修复 | 需GPU重跑消融(1-2天) |
+| M2: MLP不公平 | ✅ 已修复 | 800ep/LR decay/奖励归一化/hidden=64 |
+| M3: 无统计检验 | ✅ 已修复 | bootstrap p<0.0001, Cohen's d=-0.86 vs ECMP |
+| m4: 只有MLU指标 | ✅ 已修复 | M1-M5全实现，env暴露per-link数据 |
+
+详见 H012(审计) + H013(修复) + analysis_f4_generalization.md
 
 ## Thesis 一致性
 - Ch1: GNN routing size gen (leo-mega-constellation-gnn-routing, Execute 完成)

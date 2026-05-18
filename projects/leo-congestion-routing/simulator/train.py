@@ -21,6 +21,12 @@ from torch import Tensor
 
 from .config import SimConfig
 from .env import RoutingEnv
+from .metrics import (
+    aggregate_metrics,
+    compute_convergence_speed,
+    compute_episode_metrics,
+    compute_generalization_gap,
+)
 from .model import RoutingActorCritic
 
 # wandb conditional import
@@ -542,10 +548,11 @@ def evaluate(
         device: Compute device.
 
     Returns:
-        dict with mean, std, mlus list.
+        dict with per-metric mean/std (mlu, cv, overflow_ratio, mean_util)
+        plus backward-compatible 'mean' and 'std' for MLU, and 'mlus' list.
     """
     model.eval()
-    mlus: list[float] = []
+    episode_metrics: list[dict] = []
 
     for i in range(n_eval):
         obs, _ = env.reset(seed=seed_offset + i)
@@ -554,18 +561,30 @@ def evaluate(
             action, _, _ = model.get_action(obs, deterministic=True)
             obs, _, terminated, truncated, info = env.step(action.item())
             done = terminated or truncated
-        mlus.append(info.get("final_mlu", info["mlu"]))
 
-    result = {
-        "mean": float(np.mean(mlus)),
-        "std": float(np.std(mlus)),
-        "mlus": mlus,
-    }
+        # Extract link-level data from final info
+        link_load = info.get("link_load", {})
+        capacity = info.get("capacity", env._capacity)
+        n_total_edges = info.get("n_total_edges", env._E)
+        final_mlu = info.get("final_mlu", info["mlu"])
+
+        ep_m = compute_episode_metrics(link_load, capacity, n_total_edges, final_mlu)
+        episode_metrics.append(ep_m)
+
+    aggregated = aggregate_metrics(episode_metrics)
+    mlus = [m["mlu"] for m in episode_metrics]
+
+    # Backward-compatible keys
+    aggregated["mean"] = aggregated["mlu_mean"]
+    aggregated["std"] = aggregated["mlu_std"]
+    aggregated["mlus"] = mlus
+
     print(
-        f"  [Eval] n={n_eval}, MLU mean={result['mean']:.4f} "
-        f"std={result['std']:.4f}"
+        f"  [Eval] n={n_eval}, MLU={aggregated['mlu_mean']:.4f}+/-{aggregated['mlu_std']:.4f}, "
+        f"CV={aggregated['cv_mean']:.4f}, "
+        f"Overflow={aggregated['overflow_ratio_mean']:.4f}"
     )
-    return result
+    return aggregated
 
 
 # ---------------------------------------------------------------------------
@@ -623,23 +642,39 @@ def main() -> None:
     print(f"\n{'='*60}")
     print(f"  Summary across {cfg.n_seeds} seeds")
     print(f"  MLU: {np.mean(all_mlus):.4f} +/- {np.std(all_mlus):.4f}")
+
+    # Convergence speed (M5) from training MLUs
+    conv_ep = compute_convergence_speed(episode_mlus)
+    print(f"  Convergence (M5): ep={conv_ep}" if conv_ep >= 0 else "  Convergence (M5): not reached")
+
     for r in all_eval_results:
-        print(f"    seed={r['seed']}: MLU={r['mean']:.4f} +/- {r['std']:.4f}")
+        print(
+            f"    seed={r['seed']}: "
+            f"MLU={r['mean']:.4f}+/-{r['std']:.4f}, "
+            f"CV={r.get('cv_mean', 0):.4f}, "
+            f"Overflow={r.get('overflow_ratio_mean', 0):.4f}"
+        )
     print(f"{'='*60}")
 
     # Save summary
     results_dir = Path("projects/leo-congestion-routing/simulator/results")
     summary_path = results_dir / "eval_summary.json"
+    summary = {
+        "seeds": all_eval_results,
+        "overall_mean": float(np.mean(all_mlus)),
+        "overall_std": float(np.std(all_mlus)),
+        "convergence_episode": conv_ep,
+    }
+
+    # Generalization gap (M4)
+    train_mlu_mean = float(np.mean(episode_mlus)) if episode_mlus else 0.0
+    test_mlu_mean = float(np.mean(all_mlus))
+    gen_gap = compute_generalization_gap(train_mlu_mean, test_mlu_mean)
+    summary["generalization_gap"] = gen_gap
+    print(f"  Generalization Gap (M4): {gen_gap:.4f}")
+
     with open(summary_path, "w") as f:
-        json.dump(
-            {
-                "seeds": all_eval_results,
-                "overall_mean": float(np.mean(all_mlus)),
-                "overall_std": float(np.std(all_mlus)),
-            },
-            f,
-            indent=2,
-        )
+        json.dump(summary, f, indent=2)
 
     if _WANDB and wandb.run is not None:
         wandb.finish()

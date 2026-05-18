@@ -25,7 +25,7 @@ class SimConfig:
     heavy_demand_range: tuple = (3.0, 5.0)    # Gbps
     light_demand_range: tuple = (0.1, 1.0)    # Gbps
     n_popular: int = 3                         # hotspot destination count
-    surge_factor: float = 5.0                  # DTAR surge
+    surge_factor: float = 1.0                  # DTAR surge (1.0 = no surge, per contract main eval)
     time_varying: bool = True                  # NHPP intensity modulation
     tv_amplitude: float = 0.3                  # NHPP amplitude
 

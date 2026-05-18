@@ -1,13 +1,22 @@
 # Decision Log: leo-congestion-routing
 
 ## 阶段摘要
+- [漏洞修复 Batch 1] F1/F3/M2/M3/m4/F4 全部修复+验证 (2026-05-17)
+  - **D20**: E01-v3 全量重跑(surge=1.0) GNN/ECMP=0.778 PASS, GNN/MLP=0.808 PASS
+  - **F1 已修复**: surge=1.0 结果更好（0.778 vs 旧0.818），旧结果方向正确
+  - **F3 已修复**: True ECMP(BFS全最短路)仅好1.35%，K=4未显著削弱baseline
+  - **M2 已修复**: MLP公平化(800ep/LR decay/奖励归一化/hidden=64)
+  - **M3 已修复**: bootstrap p<0.0001, Cohen's d=-0.86 vs ECMP
+  - **m4 已修复**: M1-M5指标全实现
+  - **F4 分析完成**: 推荐"Walker delta族内scale gen"定位，可选加极地间隙测试
+  - 详见 H013
 - [漏洞审计] 全面审查发现 5 个致命 + 5 个重大问题 (2026-05-17)
   - **F1**: surge 始终激活，Contract 写"无 surge"但代码 surge_factor=5.0 — **全部结果可能作废**
   - **F2**: GNN 正常条件劣于 ECMP (GNN/ECMP=1.095)，优势窗口仅 6-12% 故障率
   - **F3**: ECMP 实现不标准（只 K=4 候选路径），可能人为削弱 baseline
   - **F4**: 泛化声称误导（所有拓扑 4-正则同构，非真正泛化测试）
   - **F5**: 消融全用单 seed（seed 敏感性 ±12% 已知）
-  - 详见 HANDOFF-012, LOG-009
+  - 详见 H012, LOG-009
 - [Execute Step 3] 假设判定 PASS — Contract 三维全部满足 (2026-05-17)
   - Success 1: GNN/ECMP=0.818 ≤ 0.90 ✅
   - Success 2: GNN/MLP=0.822 ≤ 0.85 ✅

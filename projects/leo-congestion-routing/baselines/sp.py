@@ -14,6 +14,7 @@ if str(_PROJECT) not in sys.path:
 
 from simulator.config import SimConfig
 from simulator.env import RoutingEnv
+from simulator.metrics import aggregate_metrics, compute_episode_metrics
 
 
 def run_sp(
@@ -26,9 +27,10 @@ def run_sp(
     Always selects action=0 (first candidate path, which is the shortest).
 
     Returns:
-        {"mean": mean MLU, "std": std MLU} across episodes.
+        Aggregated metrics dict with mean/std for mlu, cv, overflow_ratio,
+        plus backward-compatible 'mean' and 'std' for MLU.
     """
-    mlus: list[float] = []
+    episode_metrics: list[dict] = []
 
     for i in range(n_eval):
         obs, info = env.reset(seed=seed_offset + i)
@@ -36,9 +38,21 @@ def run_sp(
         while not done:
             obs, reward, terminated, truncated, info = env.step(0)
             done = terminated or truncated
-        mlus.append(info.get("final_mlu", info["mlu"]))
 
-    return {"mean": float(np.mean(mlus)), "std": float(np.std(mlus))}
+        link_load = info.get("link_load", {})
+        capacity = info.get("capacity", env._capacity)
+        n_total_edges = info.get("n_total_edges", env._E)
+        final_mlu = info.get("final_mlu", info["mlu"])
+        episode_metrics.append(
+            compute_episode_metrics(link_load, capacity, n_total_edges, final_mlu)
+        )
+
+    result = aggregate_metrics(episode_metrics)
+    mlus = [m["mlu"] for m in episode_metrics]
+    result["mean"] = result["mlu_mean"]
+    result["std"] = result["mlu_std"]
+    result["mlus"] = mlus
+    return result
 
 
 if __name__ == "__main__":

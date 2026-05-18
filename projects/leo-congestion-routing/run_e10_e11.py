@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """E10 + E11: Architecture ablation — GNN layers and attention heads.
 
-E10: n_layers ∈ {1, 2, 3} (default=2)
-E11: n_heads  ∈ {2, 4, 8} (default=4)
+E10: n_layers in {1, 2, 3} (default=2)
+E11: n_heads  in {2, 4, 8} (default=4)
 
-Each config: 1 seed × 500ep training + 50 eval episodes.
+Each config: 1 seed x 800ep training + 50 eval episodes. Checkpoints saved separately.
 
 Run from project root:
     cd /mnt/d/code/study/research-protocol
@@ -35,7 +35,7 @@ RESULTS_DIR.mkdir(exist_ok=True, parents=True)
 def run_single_config(
     n_layers: int = 2,
     n_heads: int = 4,
-    n_episodes: int = 500,
+    n_episodes: int = 800,
     n_eval: int = 50,
     tag: str = "",
 ) -> dict:
@@ -59,6 +59,13 @@ def run_single_config(
     # Train
     train_result = train(cfg, seed=0)
 
+    # Save checkpoint with unique name to avoid overwriting E01-v3
+    src = RESULTS_DIR / "ppo_best.pt"
+    dst = RESULTS_DIR / f"ppo_{tag}.pt"
+    if src.exists():
+        import shutil
+        shutil.copy2(src, dst)
+
     # Load best model
     env = RoutingEnv(cfg, seed=0)
     model = RoutingActorCritic(
@@ -66,7 +73,7 @@ def run_single_config(
         cfg.n_layers, cfg.n_heads, cfg.k_paths,
     ).to(cfg.device)
     ckpt = torch.load(
-        str(RESULTS_DIR / "ppo_best.pt"),
+        str(src),
         map_location=cfg.device, weights_only=False,
     )
     model.load_state_dict(ckpt["model"])
@@ -83,8 +90,9 @@ def run_single_config(
         "train_episodes": train_result["n_episodes"],
         "train_episode_mlus": train_result.get("episode_mlus", []),
         "elapsed_seconds": elapsed,
+        "ckpt_path": str(dst),
     }
-    print(f"  → MLU = {eval_result['mean']:.4f} ± {eval_result['std']:.4f} "
+    print(f"  -> MLU = {eval_result['mean']:.4f} +/- {eval_result['std']:.4f} "
           f"({elapsed/60:.1f} min, {train_result['n_episodes']} ep)")
     return result
 
@@ -143,6 +151,13 @@ def main() -> None:
               f"GNN/ECMP = {r['gnn_ecmp_ratio']:.4f}")
     print(f"\nTotal time: {(time.time() - t0)/60:.1f} min")
     print(f"Saved to {out_path}")
+
+    # Restore E01-v3 default checkpoint (L2_H4 was trained last, overwrite ppo_best)
+    default_bak = RESULTS_DIR / "ppo_E10-L2.pt"
+    if default_bak.exists():
+        import shutil
+        shutil.copy2(default_bak, RESULTS_DIR / "ppo_best.pt")
+        print("Restored ppo_best.pt from E10-L2 (default config)")
 
 
 if __name__ == "__main__":

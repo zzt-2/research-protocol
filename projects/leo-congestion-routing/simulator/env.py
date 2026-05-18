@@ -171,6 +171,10 @@ class RoutingEnv(gym.Env):
         info["step"] = self._step_idx
         if terminated:
             info["final_mlu"] = mlu_after
+            # Expose per-link data for extended metrics (M2, M3)
+            info["link_load"] = dict(self._link_load)
+            info["capacity"] = self._capacity
+            info["n_total_edges"] = self._E
 
         return obs, float(reward), terminated, False, info
 

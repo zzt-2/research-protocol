@@ -70,13 +70,13 @@ def main() -> None:
         ev["seed"] = seed
         gnn_eval.append(ev)
 
-    # ── MLP (3 seeds x 300ep) ──────────────────────────────────────────
+    # ── MLP (3 seeds, same episodes as GNN) ────────────────────────────────
     print(f"\n{'='*60}")
     print("  MLP Baseline")
     print(f"{'='*60}")
     mlp_eval: list[dict] = []
     for seed in range(cfg.n_seeds):
-        mr = run_mlp(cfg, n_eval=cfg.n_eval, seed=seed, n_episodes=300)
+        mr = run_mlp(cfg, n_eval=cfg.n_eval, seed=seed, n_episodes=cfg.total_episodes)
         mlp_eval.append(mr)
 
     # ── Summary ─────────────────────────────────────────────────────────
