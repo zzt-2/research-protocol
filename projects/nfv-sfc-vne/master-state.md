@@ -4,8 +4,8 @@ direction: GNN 双层图匹配 + SFC 依赖链约束的虚拟网络嵌入联合�
 method_type: DRL
 domain: comms
 created: 2026-05-18
-updated: 2026-05-18
-current_step: GW-Step-4a
+updated: 2026-05-19
+current_step: GW-Step-7-PartA
 current_stage: GW
 ---
 
@@ -33,7 +33,7 @@ current_stage: GW
 
 ### 当前位置
 - 阶段：GW
-- 步骤：Step 6 已确认（仿真器设计 Go），进入 Step 7（实现）
+- 步骤：Step 7 Part A 完成（SFC 环境 + 验证 + MDP trial + GRC baseline），待 Part B（全 baseline 训练）
 - Contract 状态：not started
 - 方法类型：DRL
 
@@ -51,7 +51,14 @@ current_stage: GW
 - Step 4a: A0/A'/A/B/D 全通过，Go 已确认（2026-05-18）
 - Step 5 (validate): 2026-05-18，Baseline B1-B5 选定，用户已确认
 - Step 4b (sim-feasibility): 2026-05-18，C/E 无致命信号，Go 已确认（2026-05-19）
-- Step 6 (sim-design): 2026-05-19，仿真器设计规格完成。关键决策：(1) 基于 Virne 扩展；(2) VNR 拓扑保持 random graph + SFC 约束叠加层（非纯 chain）；(3) MatchingGAT 跨图注意力 + SFC 位置编码；(4) 沿用 fixed_intermediate 奖励。simulator-design.md 已创建。待用户确认。
+- Step 6 (sim-design): 2026-05-19，仿真器设计规格完成。关键决策：(1) 基于 Virne 扩展；(2) VNR 拓扑保持 random graph + SFC 约束叠加层（非纯 chain）；(3) MatchingGAT 跨图注意力 + SFC 位置编码；(4) 沿用 fixed_intermediate 奖励。用户已确认 Go。
+- Step 7 Part A (implement): 2026-05-19，完成。实现内容：
+  - M1: SFC VNR 生成器（sfc_chain.py + sfc_vnr_generator.py），验证 17/17 PASS
+  - M2: SFC 约束环境（SFCJointPRStepInstanceRLEnv），action masking + SFC 节点排序
+  - M6: 验证套件（verify_sfc.py + run_grc_baseline.py + run_mdp_trial.py）
+  - GRC baseline: AC=0.96, R2C=0.55（50 VNRs, SFC ratio=0.6）
+  - MDP trial: Gate 1 PASS(无独占), Gate 2 边界(8.45% vs 10%), Gate 3 PASS(可优化), 多尺寸 PASS
+  - 待完成：Part B（全 baseline 训练 + MatchingGAT policy）
 
 ### 关键决策（最近 10 条）
 - D001: 方向侦察 Go 决策：#1 NFV/SFC 双层图匹配 + SFC 依赖链 | 原因: A0/A'/A/B 全通过，空白确认(0篇精确交叉)
@@ -90,7 +97,8 @@ current_stage: GW
 | 5 validate | gw-validate.md | literature_notes.md, feasibility_report.md | Baseline 候选评估表 | 是（Baseline 确认） | ✅ B1-B5选定 |
 | 4b sim-feasibility | gw-feasibility.md §4b | feasibility_report.md, baseline 表 | feasibility_report.md (C/E) | 是（Go/No-Go） | ✅ C/E无致命，Go待确认 |
 | 6 sim-design | gw-experiment.md §sim | literature_notes.md, baseline 表, code-quality.md, reference/sim-template/ | 仿真器设计规格 | 是（设计确认） | ✅ 用户已确认 Go |
-| 7 implement | gw-experiment.md §impl | sim spec, code-quality.md, reference/sim-template/ | baseline_report.md | 否 | 待开始 |
+| 7 implement Part A | gw-experiment.md §impl | sim spec, code-quality.md, reference/sim-template/ | 验证通过的 SFC 环境 | 否 | ✅ Part A 完成 |
+| 7 implement Part B | gw-experiment.md §impl | Part A 产出, baseline 配置 | baseline_report.md | 否 | 待开始 |
 
 ## §4 FR 防坑检查清单
 
