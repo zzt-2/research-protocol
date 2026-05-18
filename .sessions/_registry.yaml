@@ -105,8 +105,8 @@ topics:
     description: GW Step 1-2 完成，7 篇必读，已归档
 
   - slug: 2026-05-17-leo-congestion-routing
-    title: LEO 拥塞路由（Contract 阶段）
-    status: active
+    title: LEO 拥塞路由（Execute 收尾）
+    status: dormant
     created: "2026-05-17"
-    last_updated: "2026-05-17"
-    description: Contract Step 3 完成，12 组实验设计，漏洞审计完成
+    last_updated: "2026-05-18"
+    description: P0-P3 全部完成，实验+可视化+论文材料就绪，可进入正式写作

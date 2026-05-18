@@ -1,6 +1,6 @@
-# 专题：LEO 拥塞路由（Execute 阶段 — 漏洞修复完成）
+# 专题：LEO 拥塞路由（Execute 收尾 — 实验完备+可视化+论文材料就绪）
 
-> 创建：2026-05-17 | 状态：active | 最近更新：2026-05-18
+> 创建：2026-05-17 | 状态：dormant | 最近更新：2026-05-18
 > 注册表：`_registry.yaml` slug `2026-05-17-leo-congestion-routing`
 
 ## 进展线索
@@ -44,13 +44,43 @@ Tier 1 自检完成（3 子 agent 并行审计）。Tier 1: 3/6 通过，Tier 2:
 5. 泛化全部 PASS Contract 门控（≤1.10），E05(288节点)GNN/ECMP=1.014
 6. 架构高度鲁棒（层数/头数变化<2%）
 
-## 未决项
+### H015-visualize-paper-materials
+P2 可视化 + P3 论文叙事完成。12 张图用 SciencePlots science 样式重做（600 DPI, 统一配色, 无冗余标注）。论文叙事材料 paper-materials.md 包含：A+B 框架章节叙事大纲（Introduction→System Model→Method→Experiments→Conclusion）、DTAR Related Work 讨论文本+粒度对比表、TELGEN 方法特性对比表+差异化论证、Baseline 讨论文本、核心数据摘要 4 张表、图表规划。master-state 更新至 P2/P3 完成。
 
-1. **P0 必做**: 复杂度报告(参数量+推理延迟+O()) + 训练曲线更新(800ep)
-2. **P1 应做**: MLP 泛化评估(E04/E05/E06) + 清理旧结果文件 + 故障响应时间对比
-3. **P2 可选**: 可视化重生成 + E10/E11补seed(F5) + E12故障模式
-4. **P3 论文**: 按 A+B 框架重写叙事 + DTAR Related work 讨论 + TELGEN 对比表
+## 已确认结论
+
+1. K-path 离散选择（逐流路由）范式优于 per-edge 连续权重范式
+2. **surge=1.0 下 GNN 在所有条件（含无故障/均匀流量）都赢 ECMP**，旧"F2 正常条件弱"结论是 surge=5.0 假象
+3. True ECMP(BFS全最短路)比 K=4 ECMP 仅好 1.35%，旧结果可信
+4. GNN/ECMP=0.778, GNN/MLP=0.808, 统计显著 p<0.0001
+5. 泛化全部 PASS Contract 门控（≤1.10），E05(288节点)GNN/ECMP=1.014
+6. 架构高度鲁棒（层数/头数变化<2%）
+7. **MLP 跨规模崩溃**（E04 MLP/ECMP=1.021, E05=1.118），GNN 在所有泛化规模赢 MLP（7.8%-25.6%）
+8. 定位：Online Fault-Resilient Per-Flow Routing，三级贡献递进（故障弹性→在线逐流→跨规模部署）
+
+## 未决项（可选补强，不阻断论文写作）
+
+1. **E10/E11 多 seed** — F5 消融补 seed（差异<2%，可选，4-6h GPU）
+2. **E12 故障模式对比** — 可降级为"未来工作"
+3. **可视化精简** — 12 张图建议论文保留 6-8 张，其余放附录（见 paper-materials.md §6）
+4. **中文标签** — 如需中文论文，图标签/图例需改为中文
 
 ## 当前位置
 
-Tier 1 自检完成，Contract 已修正，A+B 定位确认。下轮执行 P0（复杂度报告+训练曲线）。
+P0-P3 全部完成。实验+可视化+论文材料就绪，可进入正式论文写作阶段。
+
+### 续接必读
+
+1. `projects/leo-congestion-routing/master-state.md` — 全局进度+自检结果
+2. `projects/leo-congestion-routing/paper-materials.md` — 论文叙事大纲+竞品讨论+数据表
+3. `projects/leo-congestion-routing/contract.md` — 已冻结 Contract（含修正）
+4. `projects/leo-congestion-routing/literature_notes.md` — 文献精读笔记
+5. `projects/leo-congestion-routing/simulator/results/` — 实验数据
+6. `projects/leo-congestion-routing/simulator/figures/` — 12 张图（600 DPI）
+7. 本文件 — 完整进展线索+已确认结论
+
+### 续接方向
+
+- **写论文**：按 paper-materials.md 叙事大纲展开，12 张图选 6-8 张
+- **补实验**：E10/E11 多 seed（可选）、时变拓扑实验（博士级）
+- **答辩准备**：准备 DTAR 粒度差异话术、288 节点泛化解释、单拓扑族局限性应对
