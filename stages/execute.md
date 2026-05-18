@@ -34,7 +34,27 @@ Execute 阶段发现 Contract 参数事实性错误时，按 `stages/contract.md
 
 ---
 
-## Step 0：仿真器开发（逐模块验证）
+## Step 0：Contract 审计 + 仿真器开发
+
+### Step 0-前提：实验完备性审计
+
+> 目的：在开始代码实现前，确认 Contract 的声称-证据映射和实验完备性自检清单已就绪。
+> 此检查点防止"实验计划不完整就开始编码"导致 Execute 阶段返工。
+
+[MUST] 逐项确认：
+
+1. **声称-证据映射已建立**：Contract Step 2 的 Hermes 三列表是否已填写完整？每个 claimed contribution 是否有对应实验行？
+2. **experiment_completeness_checklist.md Tier 1 全 pass**：Contract Step 5 的对标检查是否已完成？如有 fail 项，是否已修正？
+3. **通信特有维度已覆盖**（如适用）：信道模型溯源、拓扑多样性、复杂度报告是否已纳入实验计划？
+
+**检查结果**：
+- 全部通过 → 继续 Step 0 仿真器开发
+- 有未通过项 → **退回 Contract** 修正，不进入实现阶段
+- 修正后重新审计通过方可继续
+
+---
+
+### Step 0-仿真器开发（逐模块验证）
 
 按 `data-flow.md` 的模块划分逐步实现。每个模块写完后立即验证，不攒到一起。
 

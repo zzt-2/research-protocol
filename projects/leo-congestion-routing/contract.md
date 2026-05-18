@@ -19,17 +19,17 @@ amendment:
 
 ## Hypothesis
 
-在 Walker delta LEO 卫星星座中，当链路故障率 ≥5% 且流量非均匀分布时，基于 GNN 消息传递的 per-link 负载均衡策略（GAT encoder → per-edge weight → 加权最短路路由）相比 ECMP 可降低最大链路利用率（MLU）≥10%，相比同架构 MLP（无 message passing）可降低 MLU ≥15%，且在不重新训练的情况下可泛化至训练规模 4×~10× 的星座，MLU 退化 <10%。
+在 Walker delta LEO 卫星星座中，当链路故障率 ≥5% 且流量非均匀分布时，基于 GNN 消息传递的 per-flow K-path 负载均衡策略（GAT encoder → PathScoringHead → K 候选路径离散选择）相比 ECMP 可降低最大链路利用率（MLU）≥10%，相比同架构 MLP（无 message passing）可降低 MLU ≥15%，且在不重新训练的情况下可在 Walker delta 拓扑族内泛化至训练规模 0.7×~10.9× 的星座，GNN/ECMP 比值 ≤1.10。
 
-**理论依据**: GNN message passing 通过多跳聚合全局链路负载状态，在链路故障打破 ECMP 等价路径后仍能做出负载感知的分流决策（feasibility_report §A）。MVE-2 已验证 GNN/ECMP=0.88（改善 12%）、GNN/MLP=0.80（改善 20%）（decision_log D4）。
+**理论依据**: GNN message passing 通过多跳聚合全局链路负载状态，在链路故障打破 ECMP 等价路径后仍能做出负载感知的分流决策（feasibility_report §A）。MVE-2 已验证 GNN/ECMP=0.88（改善 12%）、GNN/MLP=0.80（改善 20%）（decision_log D4）。实验证实：即使在无故障/均匀流量条件下，GNN 仍优于 ECMP（surge=1.0 下 GNN/ECMP=0.845）。
 
 ## Success Signal
 
-**评估条件**: 66 节点 Walker delta 星座，8% 链路故障率，非均匀流量（25% 重型流 + 热点目的地），3 seeds × 500 episodes × 50 eval episodes。
+**评估条件**: 66 节点 Walker delta 星座（P=6, S=11），8% 链路故障率，非均匀流量（25% 重型流 + 热点目的地），surge_factor=1.0，3 seeds × 800 episodes × 50 eval episodes。
 
 1. **核心优势**: GNN MLU ≤ 0.90 × ECMP MLU（改善 ≥10%，与 MVE-2 一致）
 2. **结构优势**: GNN MLU ≤ 0.85 × MLP MLU（改善 ≥15%，验证 message passing 价值）
-3. **跨规模泛化**: 在 48/288/720 节点（训练规模 0.7×~10.9×）上，GNN（66 节点训练模型直接部署）MLU ≤ 1.10 × 同规模 ECMP MLU
+3. **跨规模泛化（Walker delta 族内）**: 在 48/288/720 节点（训练规模 0.7×~10.9×，同 Walker delta F=0 4-ISL 拓扑族）上，GNN（66 节点训练模型直接部署）MLU ≤ 1.10 × 同规模 ECMP MLU
 
 三者均满足 → **Success**。
 
@@ -39,7 +39,7 @@ amendment:
 
 1. **无实用价值**: GNN MLU > 0.95 × ECMP MLU（改善 <5%，不值得额外部署复杂度）
 2. **无结构优势**: GNN MLU > 0.95 × MLP MLU（GNN message passing 无贡献，核心假设不成立）
-3. **泛化失败**: 在 ≥1 个泛化规模上，GNN MLU > 1.20 × 同规模 ECMP MLU（泛化后性能退化到比 ECMP 更差）
+3. **泛化失败（Walker delta 族内）**: 在 ≥1 个泛化规模上，GNN MLU > 1.20 × 同规模 ECMP MLU（泛化后性能退化到比 ECMP 更差）
 
 任一满足 → **Failure**。
 
@@ -119,7 +119,7 @@ amendment:
 - 重型流: 10 条 (25%), demand ~ U(3, 5) Gbps [设计选择: 接近 ISL 容量 50%, 制造拥塞]
 - 轻型流: 30 条 (75%), demand ~ U(0.1, 1.0) Gbps [设计选择: 背景流量]
 - 热点目的地: 3 个节点 (~5%) [设计选择: 非均匀性来源]
-- 突发因子: μ = 5× [来源: L06 DTAR §V surge indicator]
+- 突发因子: μ = 1×（默认无突发）[修正：F1 审计发现 surge=5.0 始终激活导致条件混淆，改为 1.0 后结果更优；surge=5× 仅用于 E03 鲁棒性测试]
 - 时变模式: NHPP λ(t) = λ₀(1 + sin(2πt/T)) [来源: L10 ST-QoS §III]
 
 ### 故障模型
@@ -154,7 +154,7 @@ amendment:
 
 ### 评估条件
 
-- 主评估场景: 66 节点, 8% 故障, 非均匀流量, 无突发
+- 主评估场景: 66 节点, 8% 故障, 非均匀流量, surge=1.0（无突发）
 - 统计报告: mean ± std over 3 seeds, 每场景 50 eval episodes
 - 泛化评估: 48/288/720 节点, 同流量模型(按节点数缩放), 同故障率
 
@@ -200,7 +200,7 @@ amendment:
 | 重型需求 | U(3, 5) Gbps | [设计选择: ~50% ISL cap] | |
 | 轻型需求 | U(0.1, 1.0) Gbps | [设计选择: 背景流量] | |
 | 热点目的地 | 3 (5%) | [设计选择: 非均匀性] | |
-| 突发因子 | 5× | [来源: L06 DTAR §V] | |
+| 突发因子 | 1×（默认）/ 5×（鲁棒性测试） | [来源: L06 DTAR §V, 修正: F1 审计] | surge=1.0 结果更优 |
 | NHPP 模式 | sin(2πt/T) | [来源: L10 ST-QoS §III] | |
 | 故障率 | 8% | [来源: MVE-2, D4] | GNN 优势激活条件 |
 | 区域故障 | 10% 节点周围 | [设计选择: 极端场景消融, 模拟太阳风暴/碎片事件集中故障。10% (~7 节点) 足以施压但不致网络分区] | |

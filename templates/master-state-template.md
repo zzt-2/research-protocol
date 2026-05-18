@@ -335,13 +335,13 @@ Worker 结束时写入 `projects/{name}/worker-logs/step-{N}-{slug}.md`：
 ### Master 上下文溢出
 1. 完成当前步骤（尽量不中断）
 2. 更新 master-state.md
-3. 写 handoff 到 .session/{date}-{project}/HANDOFF-{NNN}-{slug}.md（记录派遣历史、失败详情、用户偏好）
+3. 写 handoff 到 .session/{date}-{project}/H{NNN}-{slug}.md（记录派遣历史、失败详情、用户偏好）
 4. 提交
 5. 告知用户："上下文即将满。请开新对话，说 'resume project {name}'"
 
 ### 恢复流程
 新 Master 对话按以下优先级读取：
 1. master-state.md（本文件）
-2. .session/ 下最新 HANDOFF
+2. .session/ 下最新 H{NNN} handoff
 3. 当前步骤的 stage file
 4. decision_log.md（最近决策）

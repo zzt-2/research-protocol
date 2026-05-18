@@ -1,0 +1,112 @@
+# .sessions/_registry.yaml
+# 全局专题注册表 — 新开专题前必须查重
+
+topics:
+  # === 长期专题（不按日期） ===
+
+  - slug: framework-evolution
+    title: 框架演进与问题追踪
+    status: active
+    created: "2026-05-15"
+    last_updated: "2026-05-18"
+    description: 框架规则改进、流程问题日志（20+ issues P0/P1/P2），实验完备性缺口调研中
+
+  - slug: direction-scouting
+    title: 方向侦察与项目盘点
+    status: active
+    created: "2026-05-16"
+    last_updated: "2026-05-17"
+    description: 系统性候选方向评估，3 批次完成
+
+  - slug: thesis-structure-research
+    title: 论文结构研究
+    status: dormant
+    created: "2026-05-16"
+    last_updated: "2026-05-17"
+    description: 基于中文卫星网络学位论文的结构设计，34 篇分析
+
+  - slug: master-worker-orchestration
+    title: Master-Worker 编排系统
+    status: dormant
+    created: "2026-05-16"
+    last_updated: "2026-05-17"
+    description: 三层编排架构设计与端到端验证
+
+  # === 研究项目专题（按日期） ===
+
+  - slug: 2026-05-13-mega-constellation-gnn-routing
+    title: GNN 星座路由（Size Generalization）
+    status: dormant
+    created: "2026-05-13"
+    last_updated: "2026-05-17"
+    description: GW 完成+Contract 进入，创新点定位为 GNN size generalization，25 篇精读
+
+  - slug: 2026-05-13-hgat-satellite-dag-offloading
+    title: HGAT 卫星 DAG 任务卸载
+    status: dormant
+    created: "2026-05-13"
+    last_updated: "2026-05-17"
+    description: GW Step 3 完成，8 篇精读，待 Step 4a Go/No-Go
+
+  - slug: 2026-05-13-ris-phase-drl
+    title: RIS 相移优化 DRL
+    status: dormant
+    created: "2026-05-13"
+    last_updated: "2026-05-17"
+    description: GW Step 3 完成，8 篇精读，待 Step 4a
+
+  - slug: 2026-05-15-beam-hopping-gnn
+    title: GNN 波束跳跃（方向 B）
+    status: closed
+    created: "2026-05-15"
+    last_updated: "2026-05-17"
+    description: GW Step 3 完成，确认 GNN+Beam Hopping 零竞争但方向已归档
+
+  - slug: 2026-05-15-isl-scheduling-drl
+    title: ISL 调度 DRL（阶段 1）
+    status: closed
+    created: "2026-05-15"
+    last_updated: "2026-05-17"
+    description: ILP 标签失败后转向 route-aware labeling，续接至 05-16 目录
+
+  - slug: 2026-05-15-second-direction-search
+    title: 第二研究方向搜索
+    status: closed
+    created: "2026-05-15"
+    last_updated: "2026-05-17"
+    description: 候选方向系统评估，A(ISL)+B(波束跳跃)均归档
+
+  - slug: 2026-05-16-isl-scheduling-drl
+    title: ISL 调度 DRL（阶段 2）
+    status: closed
+    created: "2026-05-16"
+    last_updated: "2026-05-17"
+    description: Route-aware labeling 实现，N_LCT=4 决策，7 种方法未超越先验→归档
+
+  - slug: 2026-05-16-leo-beam-hopping
+    title: LEO 波束跳跃（续）
+    status: closed
+    created: "2026-05-16"
+    last_updated: "2026-05-17"
+    description: MVE 失败，战略转向
+
+  - slug: 2026-05-16-leo-congestion-routing
+    title: LEO 拥塞路由（GW 阶段）
+    status: closed
+    created: "2026-05-16"
+    last_updated: "2026-05-17"
+    description: GW Step 2 完成，10 篇论文获取，续接至 05-17 目录
+
+  - slug: 2026-05-16-leo-resilient-routing
+    title: LEO 弹性路由
+    status: closed
+    created: "2026-05-16"
+    last_updated: "2026-05-17"
+    description: GW Step 1-2 完成，7 篇必读，已归档
+
+  - slug: 2026-05-17-leo-congestion-routing
+    title: LEO 拥塞路由（Contract 阶段）
+    status: active
+    created: "2026-05-17"
+    last_updated: "2026-05-17"
+    description: Contract Step 3 完成，12 组实验设计，漏洞审计完成

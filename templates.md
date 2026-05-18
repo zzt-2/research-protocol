@@ -382,3 +382,85 @@ contract_ref: {contract.md}
 - 理由：{一句话}
 - 用户确认：{留空}
 ```
+
+---
+
+## 实验完备性提取模板（gw-read 用）
+
+> 精读时对每篇论文提取实验完备性维度，对标 Tier 1-2 检查项。
+> 提取结果写入 `literature_notes.md` 文献条目的"实验完备性"子节。
+> 控制篇幅：≤20 行/篇。
+
+```markdown
+### 实验完备性
+- **声称清单**：{intro/conclusion 中的 main claims，编号 C1/C2/...}
+- **声称 scope**：{bounded（"up to X%"） / universal（"all/practical"） / 混合}
+- **统计规范性**：seeds={N} | error bar={有/无，类型} | 统计检验={有/无} | 运行次数={N}
+- **Baseline 矩阵**：数量={N} | 类型={经典/DL/DRL/启发式/消融} | 来源声明={有/无} | 公平调参={有/无}
+- **消融设计**：对象={逐模块/整块/参数扫描} | 方式={删除/替换/零化}
+- **信道模型**：{模型名 + 参数来源（3GPP/ITU-T/理想化）}
+- **拓扑多样性**：{单一配置 / 多配置（列出）}
+- **复杂度报告**：{理论 O() / 推理延迟 / 无}
+- **VVUQ**：V={1-3} V'={1-3} U={1-3}
+```
+
+---
+
+## 声称-证据映射表（Contract Step 2/5 用）
+
+> Hermes 三列表格式，从 Contract 声称出发倒推实验需求。
+> Step 2 建立初步映射，Step 5 完善并做 scope 审计。
+
+```markdown
+### 声称-证据映射
+
+| Claim | Type | Evidence (实验/表/图) | Scope Match |
+|-------|------|---------------------|-------------|
+| C1: {声称内容} | bounded ("up to X%") | {Table 1: 性能对比} | ✅ match / ⚠️ overclaim / ❌ underclaim |
+| C2: {声称内容} | universal ("泛化到...") | {Fig 3: 仅同类拓扑} | ⚠️ overclaim |
+| ... | ... | ... | ... |
+
+**Scope 判定规则**：
+- ✅ match：声称范围 ≤ 证据覆盖范围
+- ⚠️ overclaim：声称范围 > 证据覆盖范围（如"所有场景"但仅测了单一拓扑）
+- ❌ underclaim：声称范围 < 证据覆盖范围（可适当扩大声称）
+```
+
+---
+
+## 实验完备性自检清单（Contract Step 5 / Execute 前审计用）
+
+> Tier 1 为门控条件（必须 pass），Tier 2-3 为建议。
+> 数据来源：LOG-011 调研（24 篇 LEO 卫星通信论文实证分析）。
+
+```markdown
+### 实验完备性自检清单
+
+#### Tier 1: 必做（门控条件）
+| # | 维度 | 要求 | 状态 | 说明 |
+|---|------|------|------|------|
+| T1-1 | 多 seed + error bar | ≥3 seeds, mean±std 或 CI | ☐ pass / ☐ fail | |
+| T1-2 | Baseline 来源声明 | 每个 baseline 标注实现来源 | ☐ pass / ☐ fail | |
+| T1-3 | Baseline 公平调参 | 声明调参预算/方式 | ☐ pass / ☐ fail | |
+| T1-4 | 逐模块消融 | 逐一移除/替换，非参数扫描 | ☐ pass / ☐ fail | |
+| T1-5 | 信道模型溯源 | 参数引用 3GPP/ITU-T 标准 | ☐ pass / ☐ fail | |
+| T1-6 | 声称 scope 控制 | 用 bounded 限定词，非 universal | ☐ pass / ☐ fail | |
+
+#### Tier 2: 应做
+| # | 维度 | 要求 | 状态 | 说明 |
+|---|------|------|------|------|
+| T2-1 | 统计显著性检验 | 配对 t / Wilcoxon, 报告 p | ☐ pass / ☐ fail / ☐ NA | |
+| T2-2 | Alt-explanation 排除 | 排除至少 1 个替代解释 | ☐ pass / ☐ fail / ☐ NA | |
+| T2-3 | 声称-证据审计 | 每个 claim 有对应实验 | ☐ pass / ☐ fail / ☐ NA | |
+| T2-4 | 跨拓扑验证 | ≥2 种星座/拓扑配置 | ☐ pass / ☐ fail / ☐ NA | |
+| T2-5 | 复杂度报告 | 推理延迟或理论 O() | ☐ pass / ☐ fail / ☐ NA | |
+
+#### Tier 3: 加分
+| # | 维度 | 要求 | 状态 | 说明 |
+|---|------|------|------|------|
+| T3-1 | Red-teaming | 自找漏洞并讨论 | ☐ pass / ☐ NA | |
+| T3-2 | 真实数据验证 | 与实测/公开数据对比 | ☐ pass / ☐ NA | |
+| T3-3 | 因果分析 | causal probing / 机制分析 | ☐ pass / ☐ NA | |
+| T3-4 | 最优解对比 | DP/理论下界 | ☐ pass / ☐ NA | |
+| T3-5 | 极端条件测试 | 边界场景 stress test | ☐ pass / ☐ NA | |
+```

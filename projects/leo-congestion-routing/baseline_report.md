@@ -66,7 +66,7 @@ DTAR 和 GMR 属竞品 baseline，在 Contract 阶段或 Execute 阶段补充。
 
 ## 框架合规
 
-- [x] 仿真器验证清单全部通过（Part A, HANDOFF-004）
+- [x] 仿真器验证清单全部通过（Part A, H004）
 - [x] MDP 试运行通过（Part A-checkpoint, D11）
 - [x] 至少 1 个 baseline 成功复现（3/3 核心baseline完成）
 - [x] 路径合规：simulator/, baselines/, results/

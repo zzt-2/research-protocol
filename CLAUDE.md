@@ -25,7 +25,7 @@
 ├── search-archive/{date}/  # 检索缓存（date 如 2026-05-12）
 ├── .session/              # 会话管理（跨对话状态集中存放）
 │   ├── {YYYY-MM-DD}-{project-slug}/  # 按项目/日期建文件夹
-│   │   ├── HANDOFF-{NNN}-{slug}.md   # 跨对话交接记录
+│   │   ├── H{NNN}-{slug}.md          # 跨对话交接记录
 │   │   ├── PROMPT-{NNN}-{slug}.md    # 新对话提示词
 │   │   └── LOG-{NNN}-{slug}.md       # 操作日志
 │   ├── framework-evolution/           # 框架演进专题（跨项目，长期，不按日期另开）
@@ -150,6 +150,7 @@
 | MVE 架构溯源 FR-11 | `stages/gw-feasibility.md` §D — MVE 结果必须包含架构摘要（动作空间/决策粒度/对比范式/奖励语义） |
 | MVE→Formal 架构差异门控 FR-12 | `stages/gw-feasibility.md` §D — GW Step 6 必须与 MVE 架构比对，差异影响对比机制则重验证 |
 | 动作空间表达力下界审计 FR-13 | `stages/contract.md` Step 4 — data-flow.md 必须审计模型决策空间是否覆盖每个 baseline |
+| 实验完备性对标检查 | `stages/contract.md` S5, `templates.md` 自检清单, `domain-comms.md` §7 |
 | 检索用项目工具 | `tools-guide.md` |
 | 防死胡同 | `stages/execute.md` S4.5 |
 | 先验基线测试 | `stages/execute.md` S0.5 |
@@ -192,65 +193,9 @@
 
 单对话执行超过 **3 个步骤**时，主动建议分对话。写入 handoff 后由用户在新对话继续。
 
-### 步骤间 handoff 强制写入
+### 步骤间 handoff
 
-每完成一个步骤，必须更新 handoff 文件（`.session/{date}-{project}/HANDOFF-{NNN}-{slug}.md`）：
-- 当前步骤产出文件路径
-- 关键结论（1-3 句）
-- 未决问题（如有）
-- 下一步操作（引用具体文件路径）
-
-目的：context overflow 恢复后只需读 handoff，不需重跑已完成步骤。
-
-## 跨对话协作
-
-### 长期专题目录
-
-`.session/` 下有三个不带日期的长期专题目录，跨项目持续使用，**禁止按日期另建同名目录**：
-
-| 目录 | 用途 |
-|------|------|
-| `framework-evolution/` | 框架规则改进、流程问题日志 |
-| `direction-scouting/` | 方向侦察、项目状态盘点 |
-| `thesis-structure-research/` | 论文结构设计、导师要求记录 |
-
-新对话涉及这些专题时，直接往对应目录写文件，不开 `{date}-{topic}/`。
-
-### 交接机制（handoff）
-
-跨对话推进同一项目时，使用 `.session/{date}-{project}/` 管理交接：
-
-- 每次对话结束前（包括上下文溢出导致压缩时），写 handoff 文件到 `.session/{date}-{project}/`
-- handoff 文件名格式：`HANDOFF-{NNN}-{slug}.md`（NNN 三位编号递增，slug 简述内容）
-- 新对话恢复项目时，先读最新 HANDOFF 再读其他文件
-- handoff 不重复项目正式文档内容，只补充跨对话上下文和待办
-- **[MUST]** 每份 handoff 必须自包含恢复所需最小信息（关键下载 URL、竞品列表、参数选择依据），不假设读者已读前轮 handoff
-
-### handoff 格式
-
-```markdown
-# Handoff {YYYY-MM-DD}
-
-## 当前进度
-- 阶段：{GW/Contract/Execute} Step {N}
-- 状态：{进行中/阻塞/完成}
-- Contract 状态：{draft/frozen/amended}
-- 本轮完成：{具体做了什么，引用文件路径}
-
-## 关键上下文
-- 正在处理的问题：{如果有}
-- 未解决决策：{如果有}
-- 需要注意的坑：{如果有}
-
-## 下一步
-1. {具体操作，引用文件路径}
-```
-
-### 写入时机
-
-- 用户说"新对话继续"或"给我提示词"时
-- 上下文即将压缩时
-- 切换子 agent 执行长任务前
+每完成一个步骤更新 handoff（格式、写入时机、自包含要求见全局 CLAUDE.md `.sessions/ 专题管理` 节）。路径：`.session/{date}-{project}/H{NNN}-{slug}.md`。
 
 ## 状态恢复
 
@@ -259,7 +204,7 @@
 1. `projects-overview.md`（跨项目状态汇总，了解全局后再深入具体项目）
 2. `projects/{name}/master-state.md`（Master 编排状态，当前步骤+已完成步骤+关键决策+FR 检查清单）
 3. 项目记忆文件: `~/.claude/projects/-mnt-d-code-study-research-protocol/memory/project_{name}.md`
-4. `.session/*-{project}/` 下最新的 HANDOFF 文件（按编号排序取最大）
+4. `.session/*-{project}/` 下最新的 H{NNN} 文件（按编号排序取最大）
 5. `decision_log.md`（阶段摘要行）
 6. `feasibility_report.md`（如已到 Step 4）
 7. `baseline_report.md`（如已到 Step 7）

@@ -95,6 +95,10 @@ AI 的优势是效率，不是创新。人定义问题，AI 验证问题。[MUST
 
 新颖性 ≠ 可行性。"没人做过"不等于"值得做"。[MUST] 在投入仿真器搭建和 baseline 复现前，通过结构优势论证、仿真条件推理和最小可行实验验证方向可行性（`stages/gw-feasibility.md`）。Go/No-Go 决策经用户确认后方可继续。
 
+### 实验完备性对标
+
+每个 claimed contribution 必须有对应实验，声称 scope 必须匹配证据覆盖范围。[MUST] Contract Step 2 建立声称-证据初步映射，Step 5 做完备性对标检查（Tier 1 全 pass 才能冻结）。提取模板见 `templates.md`，通信特有维度见 `domain-comms.md` §7。Execute 前审计确认清单已就绪。
+
 ---
 
 ## 文档系统

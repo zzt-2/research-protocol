@@ -185,6 +185,6 @@ claude -p \
 
 ### 恢复流程
 1. master-state.md
-2. .session/ 最新 HANDOFF
+2. .session/ 最新 H{NNN} handoff
 3. 当前步骤 stage file
 4. decision_log.md

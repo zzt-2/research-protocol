@@ -135,6 +135,21 @@ bash tools/search "LEO satellite handover attention DQN" \
 
 数据集设计直接支撑论文各章的实验设置节。参数溯源要求同 Simulation Config（每个参数需文献溯源/计算验证/设计选择三选一）。
 
+### 声称-证据初步映射（Step 2 增加输出）
+
+> 目的：在贡献声明起草阶段就建立 claimed contribution → planned experiment → expected evidence 的映射雏形。避免到 Execute 阶段才发现声称没有实验支撑。
+
+[MUST] 按 Hermes 三列表格式建立初步映射（模板见 `templates.md` "声称-证据映射表"）：
+
+| Claim | Type (bounded/universal) | Planned Experiment | Expected Evidence |
+|-------|-------------------------|-------------------|-------------------|
+| C1: {从贡献声明提取} | {bounded/universal} | {计划跑什么实验} | {预期产出什么表/图/指标} |
+
+**规则**：
+- 每个 claimed contribution 必须有对应实验行
+- Claim 的 scope 标注为 bounded（"up to X%"）或 universal（"all/practical"）
+- 此阶段为初步映射，Step 5 完善并做 scope 审计
+
 > 注意：此步骤产出的 Contract 状态为 draft。Step 3-5 验证通过后才冻结。
 
 ---
@@ -245,7 +260,7 @@ bash tools/search "LEO satellite handover attention DQN" \
 
 ---
 
-## Step 5：压力测试 + 反模式审查
+## Step 5：压力测试 + 反模式审查 + 实验完备性对标
 
 [MUST] 回答以下 5 问（前 4 问为选题压力测试，第 5 问为反模式审查），无致命风险信号才能通过：
 
@@ -272,6 +287,30 @@ bash tools/search "LEO satellite handover attention DQN" \
    | 4 | 跨实验数据不一致 | 所有实验是否共用同一组拓扑快照和流量矩阵？ | ☐ |
 
    [MUST] 反模式排查应在 Step 4 端到端推演的 `data-flow.md` 基础上进行，而非凭空想象。
+
+### 实验完备性对标检查
+
+> 目的：在实验设计阶段（Contract）对标竞品论文的实验维度，确保自身实验计划覆盖领域必要维度。
+> 对标来源：gw-read 阶段"实验完备性提取"汇总（`literature_notes.md` "实验完备性对标汇总"节）。
+> 数据基础：LOG-011 调研（24 篇 LEO 卫星通信论文实证分析）。
+
+[MUST] 按 `templates.md` "实验完备性自检清单" 逐项检查，产出 `experiment_completeness_checklist.md`：
+
+**对标 Tier 1 维度（门控条件，全部 pass 才能 Proceed）：**
+
+1. **声称-实验对应**：Step 2 的每个 claimed contribution 是否有对应实验？（对照声称-证据映射表）
+2. **Scope 控制**：声称 scope 是否匹配实验覆盖范围？bounded 声称 ≤ 证据范围，universal 声称需多场景验证
+3. **统计规范性**：是否计划多 seed（≥3）+ error bar？
+4. **Baseline 合规**：选择是否合理？是否声明来源和公平调参？（对照 Step 1 baselines 字段）
+5. **消融完备性**：是否覆盖每个核心组件的逐模块消融？（非参数扫描冒充）
+6. **通信特有**：信道模型参数是否可溯源？拓扑是否多样（≥2 种）？复杂度是否报告？（详细标准见 `domain-comms.md` §7）
+
+**门控条件**：
+- Tier 1 全部 pass → Proceed 到 Step 6（冻结）
+- Tier 1 有 fail → **必须修正后才能冻结**，修正记录到 `decision_log.md`
+- Tier 2/3 为建议项，不阻塞但记录到 checklist
+
+> 为什么在 Contract 而非 Execute 做此检查：实验设计缺陷在设计阶段修复成本最低。Execute 阶段再补消融/加 seed = 重跑全部实验。对标竞品实验维度还能发现自身遗漏的实验角度。
 
 > 为什么反模式审查从 Execute 前移到 Contract：反模式本质是实验设计缺陷，应该在设计阶段（Contract）发现并修复，而非等代码写完再回头。Execute 阶段只需做实现级验证（代码是否忠实实现了设计）。
 
@@ -340,6 +379,7 @@ ISL bandwidth: B = 1 GHz  <!-- AMENDMENT: 原 500 MHz 无出处，修正为 L03 
 - [ ] parameter_provenance 表已填写，所有 `[ASSUMPTION]` 已消除
 - [ ] data-flow.md 端到端推演已完成，断层已修正
 - [ ] 压力测试 5 问已回答（含反模式排查），无致命风险信号
+- [ ] experiment_completeness_checklist.md 已创建，Tier 1 项全部 pass
 - [ ] decision_log 包含假设形成的关键决策 + 参数核实记录
 - [ ] **用户已确认 Contract 冻结**
 - [ ] **路径合规**：competitor_notes 在 `projects/{name}/competitor_notes/`，检索结果在 `search-archive/{date}/` 或 `projects/{name}/search-archive/`
