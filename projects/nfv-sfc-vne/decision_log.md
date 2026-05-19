@@ -118,3 +118,28 @@
   3. 增加 E6 SFC ratio 灵敏度实验 (Tier 3 red-teaming)
   4. 增加"已知风险与缓解"节，记录 R1-R5
 - **依据**: B3 失败模式(ntn-handover: 15 UE 时 GNN +0.8%)，GEANT 23 节点结构类似
+
+## D021 | 2026-05-19 | Execute 阶段启动 + seed=0 风险发现
+- **决策**: 进入 Execute 阶段，启动 E1 主对比实验（9 DRL runs + GRC）
+- **风险发现**: seed=0 验证结果显示 DualGAT+ R2C=0.8006 **优于** MatchingGAT R2C=0.7898（差 -1.3%），与 GW 训练指标（MatchingGAT 0.790 > DualGAT+ 0.756）方向相反
+- **原因分析**: MatchingGAT AC=0.968 > DualGAT+ AC=0.958（接受更多 VNR），但嵌入效率更低（R2C 下降）。验证与训练指标差异可能因为：(1) 训练 R2C 是 epoch 平均值，(2) DualGAT+ 验证泛化更好
+- **行动**: 按 Contract 纪律不改 success signal，执行完整 3-seed E1 实验后再做判定
+- **脚本**: run_e1.sh (E1), run_e2.py (E2), run_e3.sh (E3) + summarize 脚本已创建
+- **影响**: E1 后台运行中，预计 ~15h 完成
+
+## D022 | 2026-05-19 | MatchingGAT 架构缺陷诊断
+- **决策**: 暂停 E1，修复架构后重新跑全部实验
+- **缺陷**: `matching_policy.py:119-123` — cross-attention 输出 `curr_cross` 通过 `p_node_dense + curr_cross.unsqueeze(1)` 统一加到所有 substrate 节点上，无法创建 per-(v_node, p_node) 亲和度信号
+- **现象**: AC 高 (0.968 > 0.958) 但 R2C 低 (0.7898 < 0.8006)，说明模型能找到可行放置但无法区分放置效率
+- **原因**: 所有 p_node 获得相同的附加向量，打分函数 `lin(p_node_dense)` 难以有效排序 substrate 节点
+- **修复方向**: 将统一加法改为逐节点交互（element-wise multiply 或 dot-product affinity），使每个 (v_node, p_node) 对有不同的亲和度分数
+- **Contract 影响**: 模型架构属实现细节，不涉及 hypothesis/signal/fairness_rules，无需 Amendment。消融组件（SFC PE / cross-attn / edge attrs）保留不变
+- **下一步**: (1) 停 E1 后台任务 b93rnid2l, (2) 修复 matching_policy.py, (3) 5ep 快速验证, (4) 重跑 E1+E3
+
+## D023 | 2026-05-20 | MatchingGAT 架构修复 + 5ep 验证通过
+- **决策**: 采用方案 B（加法+乘法混合交互），修复完成，启动全量 E1
+- **修复内容**: `matching_policy.py:123` 从 `p_node_dense + curr_cross.unsqueeze(1)` 改为 `p_node_dense + p_node_dense * curr_cross.unsqueeze(1)`
+- **5ep 验证结果**: 训练 R2C 趋势 0.48→0.56→0.65→0.69→0.75（陡升），eval R2C=0.762, AC=0.958
+- **对比旧版**: 旧版 buggy 30ep eval R2C=0.7898，新版仅 5ep 已达 0.762 且趋势未收敛，30ep 预期 >0.82
+- **E1 任务**: task `bmg45bmjh`，保留 MLP seed=0 和 DualGAT+ seed=0 旧结果，删除 buggy MatchingGAT seed=0，重跑其余 7 个 DRL runs + GRC
+- **预计时间**: ~19h

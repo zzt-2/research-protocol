@@ -4,9 +4,9 @@ direction: GNN 双层图匹配 + SFC 依赖链约束的虚拟网络嵌入联合�
 method_type: DRL
 domain: comms
 created: 2026-05-18
-updated: 2026-05-19
-current_step: Contract-Step-2
-current_stage: Contract
+updated: 2026-05-20
+current_step: Execute-E1-running-fixed
+current_stage: Execute
 ---
 
 # Master Agent: nfv-sfc-vne
@@ -32,10 +32,14 @@ current_stage: Contract
 ## §2 项目状态
 
 ### 当前位置
-- 阶段：Contract
-- 步骤：Contract 已冻结，待进入 Execute 阶段
+- 阶段：Execute
+- 步骤：**E1 全量运行中**（修复后）
 - Contract 状态：frozen
 - 方法类型：DRL
+- **架构修复已完成**：matching_policy.py:123 从 `p + curr_cross` 改为 `p + p * curr_cross`（方案 B：加法+乘法混合交互）
+- **5ep 验证通过**：R2C 趋势 0.48→0.75（5ep），eval R2C=0.762，趋势陡升，30ep 预期 >0.82
+- **E1 后台任务**：task `bmg45bmjh`，~19h 预计完成
+- E1 后台任务 ID: b93rnid2l（需停掉）
 
 ### 已完成步骤
 - Step 1 (search): 复用方向侦察搜索结果（2026-05-16/17/18），25+ 搜索文件覆盖 NFV/SFC/VNE，满足质量门槛
@@ -79,7 +83,7 @@ current_stage: Contract
     - 训练曲线持续上升，logprob 仍在下降，未收敛
   - baseline_report.md 已更新
   - 待完成：更多 epoch 训练 + 消融实验 + 多拓扑验证
-- Step 7 Part D (消融+完整训练): 2026-05-19，进行中
+- Step 7 Part D (消融+完整训练): 2026-05-19，已完成（但发现架构缺陷）
   - 消融实验代码：matching_policy.py 添加 ablation_mode 参数（no_sfc_pe / no_cross_attn / no_edge_attr）
   - 3 个消融 solver 已注册：sfc_ppo_ablation_no_sfc_pe / no_cross_attn / no_edge_attr
   - 消融训练脚本：verify/run_ablation.py + verify/run_training_queue.sh
