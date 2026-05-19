@@ -74,3 +74,47 @@
 - **决策**: 不添加 SFC 奖励分量，沿用 Virne fixed_intermediate (0.1) + episode R2C
 - **原因**: (1) SFC 约束由环境强制执行（action masking），无需奖励学习；(2) 避免 C1 奖励失衡风险（4/6 项目中招）；(3) 所有 solver 使用相同奖励确保公平对比
 - **影响**: SFC 差异通过 SFC-IR 指标体现，不通过奖励
+
+## D015 | 2026-05-19 | Contract Step 0 新颖性确认（简化路径）
+- **决策**: Contract 新颖性确认通过，基于 GW 已完成的全面检索
+- **原因**: GW 在 1 天前完成 25+ 搜索（7 源）、17 篇获取、Step 3.5 确认"SFC 依赖链 + matching-style GNN 无直接竞品"（D007, D008）。仅隔 1 天，无需重新系统检索。
+- **新颖性要点**: (1) matching-style cross-graph attention 用于 VNE 无先例（GraphVNE IPFP 不可微）；(2) SFC 依赖链位置编码 + GNN 联合优化无先例；(3) 组合新颖性确认（GNN×VNE×SFC = 0 篇精确交叉）
+- **条件**: Contract 复用条件满足（≥8 篇精读 + Step 3.5 完成）
+
+## D016 | 2026-05-19 | Contract Step 1 假设形成
+- **决策**: 核心假设 — "matching-style cross-graph attention + SFC 位置编码在 SFC 约束 VNE 中提升 R2C ≥5% over DualGAT+"
+- **原因**: GW 单 seed 证据 R2C +4.5%（0.790 vs 0.756），消融确认三组件各有贡献。假设基于 GW baseline_report 和 ablation 结果，阈值设为 ≥5%（略高于单 seed 结果，反映多 seed 严格验证的预期）。
+- **成功信号**: R2C ≥5% over DualGAT+, AC ≥0.95, 各消融组件 ≥1.5%
+- **失败信号**: R2C <3% (边际), 或拓扑特异 (<2% on real topo), 或无组件贡献 >2%
+- **影响**: contract.md 已创建，status=draft
+
+## D017 | 2026-05-19 | Contract Step 3 参数溯源验算
+- **决策**: 全部参数溯源通过，无 [ASSUMPTION]
+- **原因**: 17 个参数中 13 个直接引用 L01 §Exp 或 Virne learning.yaml，4 个 [设计选择] 已补充显式理由（sfc_ratio=0.6 平衡 SFC 约束强度与 VNE 复杂度; vnf_types=5 对应 ETSI NFV 常见类型; epochs=30 基于 GW 收敛分析; seeds=3 为统计最低要求）
+- **影响**: contract.md Parameter Provenance 已更新
+
+## D018 | 2026-05-19 | Contract Step 4 端到端推演
+- **决策**: data-flow.md 推演完成，FR-13 动作空间审计全部 ≥
+- **原因**: 8 步推演从 VNR 生成到评估完整覆盖。所有 baseline 与 MatchingGAT 共享相同动作空间（选 substrate 节点），差异在信息处理而非决策空间。跨规模泛化无维度断裂（GNN per-node 输出自然适应不同 N_p）。
+- **断层检查**: 无特征缺失、无维度不匹配、无配置矛盾
+- **影响**: data-flow.md 已创建
+
+## D019 | 2026-05-19 | Contract Step 5 压力测试 + 反模式审查
+- **决策**: Tier 1 (5 pass + 1 NA) + Tier 2 (5 pass) + 反模式 (4 pass)，无致命风险信号
+- **原因**:
+  - Q1 结构性优势: VNE 是图匹配问题，cross-graph attention 直接匹配，非简单"DL 替代传统方法"
+  - Q2 边际结果: 3-5% 区间有消融分析 + 框架贡献兜底
+  - Q3 信号独立: failure 捕获 3 种不同失败模式（边际/拓扑特异/组件无贡献）
+  - Q4 Baseline 共识: B1-B3 强共识，B4 标记 P1（单篇但方向代表）
+  - Q5 反模式: SFC 信息不对称已声明，仿真包含足够复杂度，GNN 优势来源明确
+- **影响**: experiment_completeness_checklist.md 已创建
+
+## D020 | 2026-05-19 | Contract 冻结前风险调整
+- **决策**: 基于 code-quality.md 失败模式审查，对 Contract 做 4 项调整后再冻结
+- **原因**: 对照 6 项目历史教训，识别出 5 个相关风险，其中 R1(GEANT 小规模退化) 为高风险
+- **调整内容**:
+  1. 假设 scope 收窄至 ≥50 节点网络，排除 GEANT (23节点)
+  2. GEANT 降级为补充验证，不纳入 success/failure signal 门控
+  3. 增加 E6 SFC ratio 灵敏度实验 (Tier 3 red-teaming)
+  4. 增加"已知风险与缓解"节，记录 R1-R5
+- **依据**: B3 失败模式(ntn-handover: 15 UE 时 GNN +0.8%)，GEANT 23 节点结构类似

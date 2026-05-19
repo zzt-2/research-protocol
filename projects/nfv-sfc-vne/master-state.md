@@ -5,8 +5,8 @@ method_type: DRL
 domain: comms
 created: 2026-05-18
 updated: 2026-05-19
-current_step: GW-Step-7-PartC
-current_stage: GW
+current_step: Contract-Step-2
+current_stage: Contract
 ---
 
 # Master Agent: nfv-sfc-vne
@@ -32,9 +32,9 @@ current_stage: GW
 ## §2 项目状态
 
 ### 当前位置
-- 阶段：GW
-- 步骤：Step 7 Part D（消融实验 + 完整训练），DualGAT+ 30ep 训练中
-- Contract 状态：not started
+- 阶段：Contract
+- 步骤：Contract 已冻结，待进入 Execute 阶段
+- Contract 状态：frozen
 - 方法类型：DRL
 
 ### 已完成步骤
