@@ -5,7 +5,7 @@ method_type: DRL
 domain: comms
 created: 2026-05-18
 updated: 2026-05-19
-current_step: GW-Step-7-PartA
+current_step: GW-Step-7-PartB
 current_stage: GW
 ---
 
@@ -33,7 +33,7 @@ current_stage: GW
 
 ### 当前位置
 - 阶段：GW
-- 步骤：Step 7 Part A 完成（SFC 环境 + 验证 + MDP trial + GRC baseline），待 Part B（全 baseline 训练）
+- 步骤：Step 7 Part B 完成（全 baseline 训练 + baseline_report.md），待 MatchingGAT policy（M3）
 - Contract 状态：not started
 - 方法类型：DRL
 
@@ -59,6 +59,16 @@ current_stage: GW
   - GRC baseline: AC=0.96, R2C=0.55（50 VNRs, SFC ratio=0.6）
   - MDP trial: Gate 1 PASS(无独占), Gate 2 边界(8.45% vs 10%), Gate 3 PASS(可优化), 多尺寸 PASS
   - 待完成：Part B（全 baseline 训练 + MatchingGAT policy）
+- Step 7 Part B (baseline training): 2026-05-19，完成。实现内容：
+  - SFC baseline solver 注册：sfc_pg_mlp, sfc_ppo_dual_gat+, sfc_ppo_dual_gcn
+  - 训练脚本：verify/run_sfc_baselines.py（可配置 solver/epochs/VNRs）
+  - Baseline 结果（500 VNRs/epoch, SFC ratio=0.6）：
+    - GRC: AC=0.836, R2C=0.543
+    - pg_mlp (30ep): AC=0.908, R2C=0.599
+    - PPO-DualGAT+ (5ep): AC=0.918, R2C=0.676
+  - 趋势验证通过：DualGAT+ > MLP > GRC (R2C: +12.8%, +10.3%)
+  - baseline_report.md 已创建
+  - 待完成：MatchingGAT policy（M3，核心创新）
 
 ### 关键决策（最近 10 条）
 - D001: 方向侦察 Go 决策：#1 NFV/SFC 双层图匹配 + SFC 依赖链 | 原因: A0/A'/A/B 全通过，空白确认(0篇精确交叉)
@@ -80,7 +90,7 @@ current_stage: GW
 - literature_notes.md: projects/nfv-sfc-vne/literature_notes.md ✅（13篇精读+11篇浅读+补充检索更新+Baseline交叉验证）
 - feasibility_report.md: projects/nfv-sfc-vne/feasibility_report.md ✅（A0/A'/A/B/D/C/E 全维度评估完成，MVE PASS，Step 4b Go 已确认）
 - simulator-design.md: projects/nfv-sfc-vne/simulator-design.md ✅（Step 6 设计规格，待用户确认）
-- baseline_report.md: projects/nfv-sfc-vne/baseline_report.md（待创建）
+- baseline_report.md: projects/nfv-sfc-vne/baseline_report.md ✅（B1 GRC + B3 pg_mlp + B2 DualGAT+，趋势验证通过）
 - decision_log.md: projects/nfv-sfc-vne/decision_log.md ✅（D001-D007）
 - worker-logs/: projects/nfv-sfc-vne/worker-logs/
 - search-archive: 复用 search-archive/2026-05-{16,17,18}/ 中 NFV/SFC/VNE 相关文件
@@ -98,7 +108,7 @@ current_stage: GW
 | 4b sim-feasibility | gw-feasibility.md §4b | feasibility_report.md, baseline 表 | feasibility_report.md (C/E) | 是（Go/No-Go） | ✅ C/E无致命，Go待确认 |
 | 6 sim-design | gw-experiment.md §sim | literature_notes.md, baseline 表, code-quality.md, reference/sim-template/ | 仿真器设计规格 | 是（设计确认） | ✅ 用户已确认 Go |
 | 7 implement Part A | gw-experiment.md §impl | sim spec, code-quality.md, reference/sim-template/ | 验证通过的 SFC 环境 | 否 | ✅ Part A 完成 |
-| 7 implement Part B | gw-experiment.md §impl | Part A 产出, baseline 配置 | baseline_report.md | 否 | 待开始 |
+| 7 implement Part B | gw-experiment.md §impl | Part A 产出, baseline 配置 | baseline_report.md | 否 | ✅ 趋势验证通过 |
 
 ## §4 FR 防坑检查清单
 
