@@ -160,7 +160,9 @@ def train_baseline(config):
 def main():
     parser = argparse.ArgumentParser(description='SFC baseline training')
     parser.add_argument('--solver', type=str, default='sfc_pg_mlp',
-                        choices=['sfc_pg_mlp', 'sfc_ppo_dual_gat+', 'sfc_ppo_dual_gcn'],
+                        choices=['sfc_pg_mlp', 'sfc_ppo_dual_gat+', 'sfc_ppo_dual_gcn', 'sfc_ppo_matching_gat',
+                                 'sfc_ppo_ablation_no_sfc_pe', 'sfc_ppo_ablation_no_cross_attn',
+                                 'sfc_ppo_ablation_no_edge_attr'],
                         help='Solver to train')
     parser.add_argument('--epochs', type=int, default=30, help='Number of training epochs')
     parser.add_argument('--vnr', type=int, default=2000, help='Number of VNRs per epoch')

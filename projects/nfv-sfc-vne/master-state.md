@@ -5,7 +5,7 @@ method_type: DRL
 domain: comms
 created: 2026-05-18
 updated: 2026-05-19
-current_step: GW-Step-7-PartB
+current_step: GW-Step-7-PartC
 current_stage: GW
 ---
 
@@ -33,7 +33,7 @@ current_stage: GW
 
 ### 当前位置
 - 阶段：GW
-- 步骤：Step 7 Part B 完成（全 baseline 训练 + baseline_report.md），待 MatchingGAT policy（M3）
+- 步骤：Step 7 Part D（消融实验 + 完整训练），DualGAT+ 30ep 训练中
 - Contract 状态：not started
 - 方法类型：DRL
 
@@ -58,7 +58,6 @@ current_stage: GW
   - M6: 验证套件（verify_sfc.py + run_grc_baseline.py + run_mdp_trial.py）
   - GRC baseline: AC=0.96, R2C=0.55（50 VNRs, SFC ratio=0.6）
   - MDP trial: Gate 1 PASS(无独占), Gate 2 边界(8.45% vs 10%), Gate 3 PASS(可优化), 多尺寸 PASS
-  - 待完成：Part B（全 baseline 训练 + MatchingGAT policy）
 - Step 7 Part B (baseline training): 2026-05-19，完成。实现内容：
   - SFC baseline solver 注册：sfc_pg_mlp, sfc_ppo_dual_gat+, sfc_ppo_dual_gcn
   - 训练脚本：verify/run_sfc_baselines.py（可配置 solver/epochs/VNRs）
@@ -68,7 +67,27 @@ current_stage: GW
     - PPO-DualGAT+ (5ep): AC=0.918, R2C=0.676
   - 趋势验证通过：DualGAT+ > MLP > GRC (R2C: +12.8%, +10.3%)
   - baseline_report.md 已创建
-  - 待完成：MatchingGAT policy（M3，核心创新）
+- Step 7 Part C (MatchingGAT): 2026-05-19，实现+训练完成。实现内容：
+  - matching_policy.py: MatchingGATBaseModel（跨图 matching attention + VNF type embedding + SFC chain position embedding）
+  - sfc_matching_env.py: SFCMatchingInstanceRLEnv（注入 sfc_vnf_types + sfc_positions 到 obs dict）
+  - sfc_baselines.py 更新：注册 sfc_ppo_matching_gat solver
+  - 自定义 tensor convertor：obs_as_tensor_for_matching_gat（SFC metadata 作为 PyG Data 属性）
+  - 训练结果（500 VNRs/epoch, SFC ratio=0.6, 5 epochs）：
+    - MatchingGAT: AC=0.986, R2C=0.789（16.5 min）
+    - 对比 DualGAT+ (5ep): R2C +16.7%（0.789 vs 0.676）
+    - 对比 GRC: R2C +45.2%（0.789 vs 0.543）
+    - 训练曲线持续上升，logprob 仍在下降，未收敛
+  - baseline_report.md 已更新
+  - 待完成：更多 epoch 训练 + 消融实验 + 多拓扑验证
+- Step 7 Part D (消融+完整训练): 2026-05-19，进行中
+  - 消融实验代码：matching_policy.py 添加 ablation_mode 参数（no_sfc_pe / no_cross_attn / no_edge_attr）
+  - 3 个消融 solver 已注册：sfc_ppo_ablation_no_sfc_pe / no_cross_attn / no_edge_attr
+  - 消融训练脚本：verify/run_ablation.py + verify/run_training_queue.sh
+  - DualGAT+ 30ep: ✅ 完成，R2C=0.756, AC=0.912 (101.3 min)
+  - MatchingGAT 30ep: ✅ 完成，R2C=0.790, AC=0.968 (106.5 min)，领先 DualGAT+ +4.5%
+  - 消融 5ep: ✅ 完成，方差过大无法区分组件（Full 0.746, 消融 0.755-0.767）
+  - 消融 10ep: ✅ 完成，三个组件均有正向贡献（Edge Attr -4.4%, Cross-Attn -2.2%, SFC PE -1.8%）
+  - GW Step 7 全部完成，可进入 Contract 阶段
 
 ### 关键决策（最近 10 条）
 - D001: 方向侦察 Go 决策：#1 NFV/SFC 双层图匹配 + SFC 依赖链 | 原因: A0/A'/A/B 全通过，空白确认(0篇精确交叉)
@@ -91,6 +110,8 @@ current_stage: GW
 - feasibility_report.md: projects/nfv-sfc-vne/feasibility_report.md ✅（A0/A'/A/B/D/C/E 全维度评估完成，MVE PASS，Step 4b Go 已确认）
 - simulator-design.md: projects/nfv-sfc-vne/simulator-design.md ✅（Step 6 设计规格，待用户确认）
 - baseline_report.md: projects/nfv-sfc-vne/baseline_report.md ✅（B1 GRC + B3 pg_mlp + B2 DualGAT+，趋势验证通过）
+- matching_policy.py: projects/nfv-sfc-vne/Virne/virne/solver/learning/sfc_solver/matching_policy.py ✅（MatchingGAT 核心：跨图 attention + SFC PE，集成测试 PASS）
+- sfc_matching_env.py: projects/nfv-sfc-vne/Virne/virne/solver/learning/sfc_solver/sfc_matching_env.py ✅（SFC obs 注入）
 - decision_log.md: projects/nfv-sfc-vne/decision_log.md ✅（D001-D007）
 - worker-logs/: projects/nfv-sfc-vne/worker-logs/
 - search-archive: 复用 search-archive/2026-05-{16,17,18}/ 中 NFV/SFC/VNE 相关文件
@@ -109,6 +130,8 @@ current_stage: GW
 | 6 sim-design | gw-experiment.md §sim | literature_notes.md, baseline 表, code-quality.md, reference/sim-template/ | 仿真器设计规格 | 是（设计确认） | ✅ 用户已确认 Go |
 | 7 implement Part A | gw-experiment.md §impl | sim spec, code-quality.md, reference/sim-template/ | 验证通过的 SFC 环境 | 否 | ✅ Part A 完成 |
 | 7 implement Part B | gw-experiment.md §impl | Part A 产出, baseline 配置 | baseline_report.md | 否 | ✅ 趋势验证通过 |
+| 7 implement Part C | gw-experiment.md §impl | Part B 产出, simulator-design.md §M3 | MatchingGAT policy + 训练结果 | 否 | ✅ R2C=0.789 > DualGAT+ 0.676 (+16.7%) |
+| 7 implement Part D | gw-experiment.md §impl | Part C 产出, ablation code | 消融实验 + 完整训练对比 | 否 | ✅ MatchingGAT 30ep=0.790, 消融确认三组件均有贡献 |
 
 ## §4 FR 防坑检查清单
 
