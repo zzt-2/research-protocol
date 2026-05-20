@@ -26,6 +26,8 @@ class TD3Agent:
         noise_clip: float = 0.5,
         policy_delay: int = 2,
         device: str = "cuda",
+        actor: nn.Module | None = None,
+        critic: nn.Module | None = None,
     ):
         self.device = torch.device(device if torch.cuda.is_available() else "cpu")
         self.act_dim = act_dim
@@ -36,11 +38,17 @@ class TD3Agent:
         self.policy_delay = policy_delay
         self.update_count = 0
 
-        self.actor = Actor(obs_dim, act_dim, hidden).to(self.device)
+        if actor is not None:
+            self.actor = actor.to(self.device)
+        else:
+            self.actor = Actor(obs_dim, act_dim, hidden).to(self.device)
         self.actor_target = copy.deepcopy(self.actor)
         self.actor_optimizer = torch.optim.Adam(self.actor.parameters(), lr=lr)
 
-        self.critic = Critic(obs_dim, act_dim, hidden).to(self.device)
+        if critic is not None:
+            self.critic = critic.to(self.device)
+        else:
+            self.critic = Critic(obs_dim, act_dim, hidden).to(self.device)
         self.critic_target = copy.deepcopy(self.critic)
         self.critic_optimizer = torch.optim.Adam(self.critic.parameters(), lr=lr)
 

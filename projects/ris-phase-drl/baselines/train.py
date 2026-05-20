@@ -24,12 +24,13 @@ from simulator.env import RISPhaseEnv
 from simulator.beamforming import zf_beamforming
 from simulator.reward import compute_sum_rate
 
-from baselines.networks import ReplayBuffer
+from baselines.networks import ReplayBuffer, Critic
 from baselines.td3 import TD3Agent
 from baselines.sac import SACAgent
 from baselines.ddpg import DDPGAgent
 from baselines.pso import PSOOptimizer
 from baselines.simple import RandomPolicy, FixedPolicy
+from baselines.ccan import CCANActor, CCANCritic
 
 
 # ---------------------------------------------------------------------------
@@ -67,7 +68,8 @@ def _pso_fitness(phases: np.ndarray, H1: np.ndarray, H2: np.ndarray,
 
 def _train_drl(algo_name: str, agent, env: RISPhaseEnv, buffer: ReplayBuffer,
                n_episodes: int, batch_size: int, base_seed: int,
-               use_wandb: bool, save_dir: str, cfg: SimConfig):
+               use_wandb: bool, save_dir: str, cfg: SimConfig,
+               no_early_stop: bool = False):
     """Generic DRL training loop (TD3/SAC/DDPG)."""
     import wandb
 
@@ -123,7 +125,7 @@ def _train_drl(algo_name: str, agent, env: RISPhaseEnv, buffer: ReplayBuffer,
                   f"reward={ep_reward:.2f} | avg100={avg:.2f} | best={best_reward:.2f}")
 
         # Early stopping: 100-episode average change < 1%
-        if len(recent_rewards) == 100:
+        if not no_early_stop and len(recent_rewards) == 100:
             first_half = list(recent_rewards)[:50]
             second_half = list(recent_rewards)[50:]
             avg1 = np.mean(first_half)
@@ -253,8 +255,14 @@ def _train_simple(policy, algo_name: str, env: RISPhaseEnv, n_episodes: int,
 def main():
     parser = argparse.ArgumentParser(description="Train RIS phase-shift baselines")
     parser.add_argument("--algo", type=str, required=True,
-                        choices=["td3", "sac", "ddpg", "pso", "random", "fixed"],
+                        choices=["td3", "sac", "ddpg", "pso", "random", "fixed",
+                                 "ccan_td3"],
                         help="Algorithm to train")
+    parser.add_argument("--ablation", type=str, default=None,
+                        choices=["a1", "a2", "a3"],
+                        help="CCAN ablation: a1=w/o attention, a2=w/o sharing, a3=w/o encoder")
+    parser.add_argument("--no-early-stop", action="store_true",
+                        help="Disable early stopping")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--N", type=int, default=100, help="RIS elements")
     parser.add_argument("--M", type=int, default=8, help="BS antennas")
@@ -310,25 +318,52 @@ def main():
                          device=args.device)
         buffer = ReplayBuffer(obs_dim, act_dim, args.buffer_size)
         _train_drl("td3", agent, env, buffer, args.episodes, args.batch_size,
-                   args.seed, use_wandb, save_dir, cfg)
+                   args.seed, use_wandb, save_dir, cfg,
+                   no_early_stop=args.no_early_stop)
 
     elif args.algo == "sac":
         agent = SACAgent(obs_dim, act_dim, hidden, args.lr, args.tau, args.gamma,
                          device=args.device)
         buffer = ReplayBuffer(obs_dim, act_dim, args.buffer_size)
         _train_drl("sac", agent, env, buffer, args.episodes, args.batch_size,
-                   args.seed, use_wandb, save_dir, cfg)
+                   args.seed, use_wandb, save_dir, cfg,
+                   no_early_stop=args.no_early_stop)
 
     elif args.algo == "ddpg":
         agent = DDPGAgent(obs_dim, act_dim, hidden, args.lr, args.tau, args.gamma,
                           device=args.device)
         buffer = ReplayBuffer(obs_dim, act_dim, args.buffer_size)
         _train_drl("ddpg", agent, env, buffer, args.episodes, args.batch_size,
-                   args.seed, use_wandb, save_dir, cfg)
+                   args.seed, use_wandb, save_dir, cfg,
+                   no_early_stop=args.no_early_stop)
 
     elif args.algo == "pso":
         _train_pso(env, args.episodes, args.seed, use_wandb, save_dir, cfg,
                    args.pso_particles)
+
+    elif args.algo == "ccan_td3":
+        ablation_flags = dict(use_attention=True, use_sharing=True, use_encoder=True)
+        critic_ablation = dict(use_attention=True, use_encoder=True)
+        if args.ablation == "a1":
+            ablation_flags["use_attention"] = False
+            critic_ablation["use_attention"] = False
+        elif args.ablation == "a2":
+            ablation_flags["use_sharing"] = False
+        elif args.ablation == "a3":
+            ablation_flags["use_encoder"] = False
+            critic_ablation["use_encoder"] = False
+
+        ccan_actor = CCANActor(obs_dim, act_dim, args.N, args.M, args.K,
+                               **ablation_flags)
+        ccan_critic = CCANCritic(obs_dim, act_dim, args.N, args.M, args.K,
+                                 hidden=hidden, **critic_ablation)
+        agent = TD3Agent(obs_dim, act_dim, hidden, args.lr, args.tau, args.gamma,
+                         device=args.device, actor=ccan_actor, critic=ccan_critic)
+        buffer = ReplayBuffer(obs_dim, act_dim, args.buffer_size)
+        _train_drl("ccan_td3" + (f"_{args.ablation}" if args.ablation else ""),
+                   agent, env, buffer, args.episodes, args.batch_size,
+                   args.seed, use_wandb, save_dir, cfg,
+                   no_early_stop=args.no_early_stop)
 
     elif args.algo == "random":
         policy = RandomPolicy(args.N)

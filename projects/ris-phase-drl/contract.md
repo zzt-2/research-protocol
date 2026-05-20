@@ -92,8 +92,30 @@ CCAN+TD3 在 N=100、M=8、K=4、κ=10dB 场景下：
 ### DL 架构（CCAN）
 - Channel Encoder：per-element attention, d_model=64, n_heads=4
 - Phase Decoder：shared MLP (128→N)，输入 (channel_embed, cos θ, sin θ)
-- RL 算法：TD3（hidden=(400,300) for critic）
+- RL 算法：TD3
 - Actor 参数量：≤ 2× MLP Actor（~1M params 上限）
+- **Critic**：~~标准 Twin-Critic MLP (2700→400→300→1) × 2~~ → CCAN-aware Critic（见 Amendment 1）
+
+### Contract Amendments
+
+#### Amendment 1 — Critic 架构修改 (2026-05-20)
+
+**修改范围**：Simulation Config > DL 架构 > Critic（可修正项）
+
+**原设计**：标准 Twin-Critic MLP，输入 concat(obs, action) → (2700→400→300→1) × 2
+
+**问题**：Execute Step 1-2 实证发现 Critic 瓶颈。Critic 输入 2700 维首层压缩到 400，压缩比 6.75:1，与 MLP Actor 有相同的信道特征丢失问题。CCAN Actor 能找到优秀策略（best=1670 > PSO=1554），但 Critic 无法准确评估不同信道下的动作质量，策略梯度信号太弱，导致 avg 停在 Fixed 水平（~1290）。详见 D018, D019。
+
+**新设计**：CCAN-aware Twin-Critic
+- Critic 共享 Actor 的 CCAN Channel Encoder（冻结或共享梯度）
+- Q 网络输入：concat(channel_embed, action) 而非 concat(flat_obs, action)
+- channel_embed: (N, d_model=64) → flatten → (N×64=6400,) 或 mean-pool → (64,)
+- Q 网络：concat(embed, action) → MLP → Q 值
+- 参数量约束：Critic 总参数量 ≤ 2× MLP Critic（~2M params 上限）
+
+**不变项**：hypothesis / success_signal / failure_signal / fairness_rules / RL 超参 / 评估 protocol
+
+**用户确认**：2026-05-20
 
 ### 训练配置
 - Episodes：2000（early stopping: 100-ep avg 变化 <1%）

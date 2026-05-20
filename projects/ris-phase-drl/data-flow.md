@@ -69,14 +69,18 @@
   7. sum_rate = Σ log₂(1 + SINR_k) → scalar
 - 输出：next_obs (2600,), reward=sum_rate (float), terminated=bool, info={sum_rate, sinrs}
 
-## 5. Critic 前向传播
+## 5. Critic 前向传播（Amendment 1: CCAN-aware Critic）
 
 - 输入：obs (2600,), action (N,)
-- 处理：标准 Twin-Critic MLP
-  - concat(obs, action) → (2600+N,) = (2700,)
-  - Q1: MLP(2700, 400, 300, 1)
-  - Q2: MLP(2700, 400, 300, 1)
+- 处理：
+  1. 共享 Actor 的 CCAN Channel Encoder 提取信道特征（与 Actor 共享梯度）
+     - obs → reshape (N, 26) → input_proj → attention → FFN → channel_embed (N, 64)
+     - mean-pool over N → (64,)
+  2. concat(channel_embed_pooled, action) → (64+N,) = (164,)
+  3. Q1: MLP(164, 400, 300, 1)
+  4. Q2: MLP(164, 400, 300, 1)
 - 输出：Q1, Q2 各一个标量
+- **变更理由**：原 MLP Critic 输入 2700→400 压缩比 6.75:1，丢失信道特征，无法准确评估不同信道下的动作质量（D018, D019）。新 Critic 输入仅 164 维，压缩比 2.4:1，信息保留充分。
 
 ## 6. 训练更新 (TD3)
 
@@ -119,7 +123,7 @@
 | action 范围匹配 env | ✅ tanh ∈ [-1,1] = env.action_space |
 | reward 标量 | ✅ sum_rate 单分量 |
 | N 变化时维度一致性 | ✅ per-element reshape 自适应 |
-| Critic 输入维度 | ✅ obs_dim + act_dim = 2600 + N |
+| Critic 输入维度 | ✅ channel_embed(64) + act_dim(N) = 164 (原 2700→400 已修正) |
 
 ## 动作空间表达力审计 [FR-13]
 

@@ -3,7 +3,7 @@
 ## 阶段摘要
 - [Groundwork] 完成 — Step 7 baseline 训练+评估完毕，baseline_report.md 已生成
 - [Contract] 冻结 — CCAN+TD3 方案，用户确认 2026-05-20
-- [Execute] 待开始
+- [Execute] **归档** — CCAN+TD3 4 轮验证 avg 停在 Fixed 水平，D3 失败模式，方向归档
 
 ## 决策记录
 [D001] 研究方向确定为 RIS/IRS 辅助通信中的相移优化 + DRL 方法 | 理由: 用户指定 | 阶段: GW
@@ -23,3 +23,7 @@
 [D015] Step 6 仿真器设计：(1) 仅优化相移（不联合波束赋形），ZF 预编码作为固定 beamforming；(2) Rician κ=10dB 块衰落 + 直连阻断 + 多步 50 步 episode；(3) 奖励为 sum rate 单组件，无需归一化；(4) FR-12 架构差异对照：全部"否"通过（MVE→Formal 仅规模扩展，结构不变）；(5) 5 场景 × 6 方法 × ≥3 seeds 实验矩阵；(6) [ASSUMPTION] 参数 5/22=23%<30% 门槛 | 理由: 框架要求用户确认后进入 Step 7 | 阶段: GW Step 6
 [D016] Step 7 Baseline 关键发现：MLP-based DRL (TD3/SAC/DDPG) 确定性评估 ≈ Fixed(θ=π)，未学到信道自适应策略。TD3 avg=1281 ≈ Fixed avg=1292，差距仅 -0.9%。但 PSO avg=1554 显著优于 Fixed +20.2%，证明信道自适应优化有价值。DRL 退化原因：obs_dim=2600 过大+MLP 表达力不足+Rician LoS 主导。研究机会：需信道感知架构使 DRL 超越 Fixed 并接近 PSO | 理由: baseline_report 核心结论 | 阶段: GW Step 7
 [D017] Contract 冻结：CCAN (Channel-Conditioned Attention Network) + TD3。核心假设：CCAN 使 TD3 学到信道自适应相移策略，avg sum rate ≥1.10× MLP-TD3 (≥1419 bps/Hz)。架构：per-element attention (d_model=64, n_heads=4) + shared MLP decoder。[ASSUMPTION] 0/22 全消除。FR-13 动作空间审计通过。5 个 bounded claimed contributions 对应 8 个实验。用户确认冻结 2026-05-20 | 理由: Contract Step 0-6 全部完成 | 阶段: Contract
+[D018] Execute Step 1 Quick Test + Step 2 训练结果：CCAN+TD3 seed 0, (a) early stopping 版：ep 142 early stop, avg=1301, best=1576; (b) 无 early stopping 版：训练至 ep~1500(WSL 崩溃), avg 在 1275-1315 震荡(Fixed 水平), best=1670(>PSO=1554)。确定性评估 avg=1275 < MLP-TD3=1281 < Fixed=1292。**结论**：CCAN 架构有足够容量（best=1670 远超 PSO=1554），但 RL 训练无法稳定输出好策略 | 理由: 核心实验数据 | 阶段: Execute
+[D019] Critic 瓶颈诊断 + Contract Amendment：根因分析——Critic 输入 (obs 2600 + action 100)=2700 维，首层 2700→400 压缩比 6.75:1，与 MLP Actor 有相同的信道特征丢失问题。Critic 无法准确评估不同信道条件下的动作质量，给 CCAN Actor 的策略梯度信号太弱。Actor 偶然通过探索发现好策略（best=1670），但 Critic 无法强化这些发现。**修复方案**：Critic 也使用 CCAN encoder 提取信道特征，替代 raw flat obs。这是 Contract Amendment（修改 Simulation Config 中 Critic 架构），不修改 hypothesis/success_signal/failure_signal/fairness_rules。用户确认 2026-05-20 | 理由: Execute 阶段发现的实现级瓶颈，需 Amendment 才能继续 | 阶段: Execute
+[D020] CCANCritic Amendment 验证失败：使用 CCANCritic 替代 MLP Critic 后，训练结果完全相同（ep 142 early stop, avg=1301, best=1576）。**Critic 瓶颈假设被推翻**——问题不在 Critic 质量，而在 TD3 训练动力学本身。真正根因：(1) κ=10dB LoS 主导下最优策略接近 Fixed，信道自适应空间仅来自 NLoS 分量；(2) TD3 探索噪声 0.1 std 偶然发现好策略但频率极低；(3) Replay buffer 中好策略样本被大量 Fixed 水平样本稀释，Actor update 取 mean Q 信号太弱。**已尝试 4 轮**（MLP Critic early stop / MLP Critic no-early-stop / CCANCritic early stop / CCANCritic no-early-stop），avg 均在 1275-1315（Fixed 水平），改善 <1% | 理由: 4 轮迭代确认方向瓶颈 | 阶段: Execute
+[D021] **方向归档**：ris-phase-drl Execute 阶段归档。CCAN+TD3 方案被验证为"架构有容量（best=1670 > PSO=1554）但 TD3 训练动力学无法利用"——典型的 D3 失败模式。核心教训：注意力架构创新 ≠ RL 可学习性，先验证 RL 能否超越简单先验再投入架构设计。产出已记录到 code-quality.md D3 模式。用户决定归档并切换方向 | 理由: 4 轮 <1% 改善，触发防死胡同检测 | 阶段: Execute

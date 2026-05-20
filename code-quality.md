@@ -296,6 +296,16 @@
 | 表现 | 100ep M1 从 0.078 降至 0.057；v2 训 15ep 比 v4 训 100ep 更好 |
 | 教训 | 先验有效时减少更新次数比调学习率更有效 |
 
+#### D3. 注意力架构有容量但 TD3 训练动力学无法利用 [×1 项目]
+
+| 维度 | 内容 |
+|------|------|
+| 项目 | ris-phase (D018-D020) [致命] |
+| 表现 | CCAN Actor best episode=1670 远超 PSO=1554（+7.5%），但 avg=1301 停在 Fixed=1292 水平（+0.7%）。4 轮迭代（MLP/CCAN Critic × early-stop/no-early-stop）avg 均 <1% 改善。确定性评估 avg=1275 < Fixed=1292 |
+| 根因 | (1) Rician κ=10dB LoS 主导，Fixed 策略是强吸引子，信道自适应空间仅来自 NLoS 分量（~24% 功率占比）；(2) TD3 探索噪声（0.1 std）偶然发现好策略但频率极低（~1/1000 episode）；(3) Replay buffer 中好样本被大量 Fixed 水平样本稀释，mean Q 梯度信号被噪声淹没；(4) Critic 质量不是瓶颈（CCANCritic vs MLP Critic 结果完全相同），问题在 TD3 的 mean-based actor update 无法从稀疏好信号中学习 |
+| 教训 | 注意力/架构创新≠RL 可学习性。验证架构容量（best episode）和验证 RL 可学习性（avg episode）是两个独立问题。当先验策略（Fixed）已是强吸引子时，off-policy RL 的探索效率不足以逃离。应先验证 "TD3 能否超越 Fixed" 再投入架构设计 |
+| 跨项目印证 | 与 A2 模式（先验 > RL）一致：ISL scheduling 手写先验 > PPO，beam-hopping IA-Greedy >> 全部 RL。共性：当确定性先验已接近 LoS 主导场景的最优时，RL 的随机探索是劣势而非优势 |
+
 ### 模式检索索引
 
 遇到问题时的快速查表：
@@ -313,3 +323,5 @@
 | 创新点搜到竞争论文 | B2 (创新点被推翻) | mega-constellation, ris-phase |
 | 仿真器跑出离谱数值 | C3 (边界 bug) | hgat, mega-constellation |
 | GNN 消融几乎无贡献 | B3 (规模不匹配), A2, A5 | ntn-handover, beam-hopping |
+| 架构 best 远超 baseline 但 avg 停在先验 | D3 (容量≠可学习性), A2 | ris-phase (CCAN best=1670 >> PSO) |
+| 多轮迭代改善 <1% | D3, A2 (先验吸引子) | ris-phase (4 轮), isl-scheduling (v1-v5) |
