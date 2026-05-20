@@ -1,0 +1,127 @@
+"""TD3 (Twin Delayed DDPG) agent."""
+
+from __future__ import annotations
+
+import copy
+import numpy as np
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+from .networks import Actor, Critic
+
+
+class TD3Agent:
+    """Standard TD3 with delayed policy update and target smoothing."""
+
+    def __init__(
+        self,
+        obs_dim: int,
+        act_dim: int,
+        hidden: tuple = (400, 300),
+        lr: float = 1e-3,
+        tau: float = 1e-3,
+        gamma: float = 0.99,
+        policy_noise: float = 0.2,
+        noise_clip: float = 0.5,
+        policy_delay: int = 2,
+        device: str = "cuda",
+    ):
+        self.device = torch.device(device if torch.cuda.is_available() else "cpu")
+        self.act_dim = act_dim
+        self.tau = tau
+        self.gamma = gamma
+        self.policy_noise = policy_noise
+        self.noise_clip = noise_clip
+        self.policy_delay = policy_delay
+        self.update_count = 0
+
+        self.actor = Actor(obs_dim, act_dim, hidden).to(self.device)
+        self.actor_target = copy.deepcopy(self.actor)
+        self.actor_optimizer = torch.optim.Adam(self.actor.parameters(), lr=lr)
+
+        self.critic = Critic(obs_dim, act_dim, hidden).to(self.device)
+        self.critic_target = copy.deepcopy(self.critic)
+        self.critic_optimizer = torch.optim.Adam(self.critic.parameters(), lr=lr)
+
+        # Metrics for logging
+        self.last_actor_loss = 0.0
+        self.last_critic_loss = 0.0
+
+    @torch.no_grad()
+    def select_action(self, obs: np.ndarray) -> np.ndarray:
+        obs_t = torch.FloatTensor(obs).unsqueeze(0).to(self.device)
+        return self.actor(obs_t).cpu().numpy()[0]
+
+    @torch.no_grad()
+    def select_action_exploration(self, obs: np.ndarray, noise_std: float = 0.1) -> np.ndarray:
+        action = self.select_action(obs)
+        noise = np.random.normal(0, noise_std, size=self.act_dim)
+        return np.clip(action + noise, -1.0, 1.0)
+
+    def update(self, buffer, batch_size: int = 256):
+        batch = buffer.sample_batch(batch_size)
+        obs = torch.FloatTensor(batch["obs"]).to(self.device)
+        obs2 = torch.FloatTensor(batch["obs2"]).to(self.device)
+        act = torch.FloatTensor(batch["act"]).to(self.device)
+        rew = torch.FloatTensor(batch["rew"]).unsqueeze(1).to(self.device)
+        done = torch.FloatTensor(batch["done"]).unsqueeze(1).to(self.device)
+
+        # --- Critic update ---
+        with torch.no_grad():
+            noise = (torch.randn_like(act) * self.policy_noise).clamp(
+                -self.noise_clip, self.noise_clip
+            )
+            smoothed_act = (self.actor_target(obs2) + noise).clamp(-1.0, 1.0)
+            q1_target, q2_target = self.critic_target(obs2, smoothed_act)
+            q_target = rew + self.gamma * (1 - done) * torch.min(q1_target, q2_target)
+
+        q1, q2 = self.critic(obs, act)
+        critic_loss = F.mse_loss(q1, q_target) + F.mse_loss(q2, q_target)
+        self.last_critic_loss = critic_loss.item()
+
+        self.critic_optimizer.zero_grad()
+        critic_loss.backward()
+        nn.utils.clip_grad_norm_(self.critic.parameters(), 1.0)
+        self.critic_optimizer.step()
+
+        # --- Delayed Actor update ---
+        self.update_count += 1
+        if self.update_count % self.policy_delay == 0:
+            actor_loss = -self.critic.q1_forward(obs, self.actor(obs)).mean()
+            self.last_actor_loss = actor_loss.item()
+
+            self.actor_optimizer.zero_grad()
+            actor_loss.backward()
+            nn.utils.clip_grad_norm_(self.actor.parameters(), 1.0)
+            self.actor_optimizer.step()
+
+            # Soft update targets
+            self._soft_update(self.critic, self.critic_target)
+            self._soft_update(self.actor, self.actor_target)
+
+    def _soft_update(self, source: nn.Module, target: nn.Module):
+        for p, tp in zip(source.parameters(), target.parameters()):
+            tp.data.copy_(self.tau * p.data + (1 - self.tau) * tp.data)
+
+    def save(self, path: str):
+        torch.save({
+            "actor": self.actor.state_dict(),
+            "actor_optimizer": self.actor_optimizer.state_dict(),
+            "critic": self.critic.state_dict(),
+            "critic_optimizer": self.critic_optimizer.state_dict(),
+            "update_count": self.update_count,
+        }, path)
+
+    def load(self, path: str):
+        ckpt = torch.load(path, map_location=self.device, weights_only=True)
+        self.actor.load_state_dict(ckpt["actor"])
+        self.actor_optimizer.load_state_dict(ckpt["actor_optimizer"])
+        self.critic.load_state_dict(ckpt["critic"])
+        self.critic_optimizer.load_state_dict(ckpt["critic_optimizer"])
+        self.update_count = ckpt["update_count"]
+        # Sync targets
+        for p, tp in zip(self.actor.parameters(), self.actor_target.parameters()):
+            tp.data.copy_(p.data)
+        for p, tp in zip(self.critic.parameters(), self.critic_target.parameters()):
+            tp.data.copy_(p.data)

@@ -366,3 +366,174 @@ $r_t = \sum_{k=1}^{K} \log_2(1 + \text{SINR}_k)$；归一化 [NOT_FOUND]；无�
 | B3: DDQN+GA | L06 | 无，需自实现 | 2 | 离散相移优化 SOTA，动作空间压缩方案有创新，网络架构+超参较完整 |
 | B4: SAC | F4 | 无，需自实现 | 3 | 最大熵框架，Actor lr=1e-3/Critic lr=3e-4 有参考值 |
 | B5: Random phase | 通用 | 无需代码 | 4 | 最基础对照，3 篇论文使用 |
+
+### 已确认 Baseline 方案（Step 5，用户确认 2026-05-19）
+
+基于实验完备性 Baseline 矩阵（8 篇论文）+ 田野调查（45 篇）综合选定。
+
+| 编号 | 方法 | 角色 | 理由 |
+|------|------|------|------|
+| B1 | DDPG | 主 DRL baseline | 领域强共识 40%，F3/F4 均用作 baseline，连续动作空间标准方案 |
+| B2 | SAC | 次 DRL baseline | 田野 22%，F4 核心算法，最大熵框架对比 TD3 确定性策略 |
+| B3 | Random Phase | 下界 | 3/8 通用，零成本，MVE 已验证 TD3=40×Random |
+| B4 | Fixed Phase (θ=0) | 零优化对照 | L06 的 Flat baseline，展示任何优化都优于不优化 |
+| B5 | PSO | 启发式上界 | L06 使用，4/8 竞品含传统方法；N≥100 可离线跑作参考上界 |
+
+---
+
+## 实验完备性提取（逐篇）
+
+### [L01] 实验完备性
+- **声称清单**：C1: LSTM-DDQN > DDQN (universal); C2: 联合优化 > 部分; C3: ~1200 episodes 收敛 (bounded); C4: NOMA > OMA (bounded)
+- **统计规范性**：seeds=[NOT_FOUND] | error bar=无 | 统计检验=无 | 运行次数=单次(10000 episodes)
+- **Baseline 矩阵**：数量=5 | 类型=DRL(4)+随机(1) | 来源声明=无 | 公平调参=无
+- **消融设计**：对象=逐模块(LSTM+NOMA+RIS) | 方式=删除/替换/零化
+- **信道模型**：FSO Gamma-Gamma + RF Rice | 参数来源=自述无引用标准
+- **拓扑多样性**：单一(GEO→HAP→UAV→IoT)
+- **复杂度报告**：理论 O(Io(KL))，无实测
+- **VVUQ**：V=1 / V'=2 / U=1
+
+### [L02] 实验完备性
+- **声称清单**：C1: 长期CSI DDPG > 瞬时CSI (bounded); C2: 复杂度远低; C3: ~1000 episodes 收敛
+- **统计规范性**：seeds=[NOT_FOUND] | error bar=无 | 统计检验=无 | 运行次数=[NOT_FOUND]
+- **Baseline 矩阵**：数量=1 | 类型=传统优化(瞬时CSI) | 来源=引用[@Chongwen2020;@keming2020] | 公平调参=[NOT_FOUND]
+- **消融设计**：[NOT_FOUND]
+- **信道模型**：Rician | 参数来源=自述(δ=2.2,ε_k=3.75,η_k=2.2)
+- **拓扑多样性**：单一固定(BS/RIS/User 位置固定)
+- **复杂度报告**：有 Fig 对比，无 O()
+- **VVUQ**：V=1 / V'=1 / U=1
+
+### [L05] 实验完备性
+- **声称清单**：C1: Active RIS+NOMA +33% sum rate (bounded); C2: 能效+20% (bounded); C3: 中断概率0.20 (bounded)
+- **统计规范性**：seeds=[NOT_FOUND] | error bar=无 | 统计检验=无 | 运行次数=1000 independent realizations
+- **Baseline 矩阵**：数量=5+ | 类型=传统(OMA,BF)+DRL+消融 | 来源=自实现 | 公平调参=部分(同框架)
+- **消融设计**：对象=RIS类型(Passive vs Active) | 方式=替换
+- **信道模型**：Rayleigh+Rician 混合 | 参数来源=[NOT_FOUND]
+- **拓扑多样性**：单一urban，1000 次位置随机
+- **复杂度报告**：无
+- **VVUQ**：V=2 / V'=1 / U=1
+
+### [L06] 实验完备性
+- **声称清单**：C1: DDQN-GA > DQN +30% (bounded); C2: > DDQN +24% (bounded); C3: 动作空间指数→√N (universal); C4: 可扩展至50×50 (bounded)
+- **统计规范性**：seeds=[NOT_FOUND] | error bar=无(smoothed average) | 统计检验=无 | 运行次数=multiple(未声明)
+- **Baseline 矩阵**：数量=5 | 类型=零基准+随机+DRL(2)+启发式(PSO) | 来源=引用 | 公平调参=无
+- **消融设计**：对象=DRL结构+累积动作 | 方式=替换/组合 + 参数扫描(T)
+- **信道模型**：Rician(ε=5)+ITU P.1238-12 室内 LoS | 参数来源=引用标准
+- **拓扑多样性**：单一indoor(8×8×6m)，多场景setups
+- **复杂度报告**：理论 O(IT∑(n_l n_{l-1})) + O(ITPV)
+- **VVUQ**：V=2 / V'=2 / U=2
+
+### [F1] 实验完备性
+- **声称清单**：C1: PER-TDDQN 提升 EE; C2: 联合优化 > 部分; C3: 双 DDQN > 单 DDQN/DQN
+- **统计规范性**：seeds=[NOT_FOUND] | error bar=无(CDF) | 统计检验=无 | 运行次数=未声明
+- **Baseline 矩阵**：数量=5 | 类型=系统配置(2)+DRL(3) | 来源=自实现/引用 | 公平调参=无
+- **消融设计**：对象=RIS+波束成形+PER+双DDQN | 方式=系统配置对比+算法对比
+- **信道模型**：路径损失模型 | 参数来源=[NOT_FOUND]
+- **拓扑多样性**：固定 1500m×1500m×300m
+- **复杂度报告**：理论(双DDQN降低空间维度)，无实测
+- **VVUQ**：V=1 / V'=1 / U=1
+
+### [F3] 实验完备性
+- **声称清单**：C1: AB-TD3 光谱效率优于 DRL baseline (bounded); C2: self-attention 提升特征表示 (bounded); C3: BN 加速收敛 (bounded)
+- **统计规范性**：seeds=[NOT_FOUND] | error bar=无 | 统计检验=无 | 运行次数=未报告
+- **Baseline 矩阵**：数量=3 | 类型=消融(B-TD3)+DRL(TD3,DDPG) | 来源=引用 | 公平调参=无
+- **消融设计**：对象=self-attention | 方式=删除(AB-TD3→B-TD3); 隐含消融 BN
+- **信道模型**：Rician(κ=15dB) | 参数来源=声明与[12][13]一致，未引具体标准
+- **拓扑多样性**：3 组(M×N×K: 8×32×8, 8×64×8, 12×32×12)
+- **复杂度报告**：无
+- **VVUQ**：V=1 / V'=0 / U=0
+
+### [F4] 实验完备性
+- **声称清单**：C1: 机载 RIS 优于固定 RIS (universal); C2: SAC 优于 DDPG; C3: 联合优化有效
+- **统计规范性**：seeds=未声明 | error bar=无 | 统计检验=无 | 运行次数=单次(5000 episodes)
+- **Baseline 矩阵**：数量=2 | 类型=DRL(DDPG)+传统(Fixed RIS) | 来源=引用/自实现 | 公平调参=无
+- **消融设计**：对象=RIS 部署方式 | 方式=系统级对比
+- **信道模型**：Rician(LoS→∞) | 参数来源=经典路径损耗[7]
+- **拓扑多样性**：单一(GU 沿 y 轴运动)
+- **复杂度报告**：无
+- **VVUQ**：V=1 / V'=1 / U=1
+
+### [F7] 实验完备性
+- **声称清单**：C1: AF-DRL 提升 EE; C2: RSMA > NOMA (bounded); C3: 联邦 > 中心化
+- **统计规范性**：seeds=未声明 | error bar=无 | 统计检验=无 | 运行次数=20000 episodes
+- **Baseline 矩阵**：数量=2 | 类型=传统(MRT)+随机(Random) | 来源=引用/自实现 | 公平调参=无
+- **消融设计**：对象=AF-DRL vs MRT vs Random | 方式=算法级对比
+- **信道模型**：FSO/RF 混合 | 参数来源="随机生成"[13][14]
+- **拓扑多样性**：固定 1000m×1000m
+- **复杂度报告**：无
+- **VVUQ**：V=1 / V'=1 / U=1
+
+---
+
+## 实验完备性对标汇总
+
+### 统计规范性
+| 维度 | 8 篇平均 | 领域惯例 | 本项目目标 |
+|------|---------|---------|-----------|
+| Seeds | 0/8 声明 | 无声明 | ≥3 seeds |
+| Error bar | 0/8 | 无 | mean±std |
+| 统计检验 | 0/8 | 无 | 配对 t / Wilcoxon |
+| 多次运行 | 1/8 (L05:1000次) | 单次为主 | ≥3 runs |
+
+**领域盲点**：统计规范性普遍缺失。本项目做统计检验即超越多数竞品。
+
+### Baseline 合规性
+| 维度 | 竞品范围 | 中位数 | 本项目 |
+|------|---------|--------|--------|
+| Baseline 数量 | 1-5+ | 3-5 | 5 |
+| 含传统方法 | 4/8 | — | 是(PSO) |
+| 含启发式 | 1/8 (PSO) | — | 是(PSO) |
+| 公平调参声明 | 0/8 | 无 | 待确认 |
+
+### 消融设计
+| 类型 | 论文数 | 代表 |
+|------|--------|------|
+| 逐模块 | 2/8 | L01, F3 |
+| 系统级对比 | 4/8 | F1, F4, F7, L05 |
+| 参数扫描 | 1/8 | L06 |
+| 无 | 1/8 | L02 |
+
+### 复杂度报告
+- 理论 O()：3/8 (L01, L06, F1)
+- 实测：1/8 (L02)
+- 无：5/8
+
+### VVUQ 均值
+- Verification: 1.25/3
+- Validation: 1.13/3
+- Uncertainty: 1.0/3
+
+### 对标结论
+竞品在统计规范性上普遍薄弱（0/8 做统计检验，0/8 声明 seeds）。本项目在 Contract 阶段应：≥3 seeds + error bar + 配对 t 检验，即可超越 8/8 竞品。消融设计参考 F3 的逐模块模式。复杂度报告至少做理论 O() + 实测推理延迟。
+
+---
+
+## 写作架构参考
+
+### 标杆论文选择
+- **F3 (AB-TD3)**：最直接竞品，ICC 2025，TD3+attention+BN 架构与本研究方法同源
+- **L06 (DDQN+GA)**：最佳 Baseline 覆盖（5 个含 PSO），实验组织最完整
+
+### F3 实验组织模式
+- **Baseline 数量**：3 个（B-TD3 消融 + TD3 + DDPG），全部 DRL，无传统方法
+- **消融**：逐模块（self-attention），隐含消融 BN
+- **评价指标**：sum spectral efficiency (主) + 收敛速度 (辅)
+- **图表**：性能对比柱状图(N变化) + 收敛曲线(30k步) + 参数扫描(M/K/N变化)
+- **复杂度**：无
+- **拓扑**：3 组参数配置 (8×32×8, 8×64×8, 12×32×12)
+
+### L06 实验组织模式
+- **Baseline 数量**：5 个（Flat + Random + DQN + DDQN + PSO），含启发式
+- **消融**：参数扫描(T) + 整块替换(GA vs 无GA)
+- **评价指标**：sum rate + action space + convergence
+- **图表**：训练曲线 + Baseline 对比柱状图 + 参数扫描折线图 + 可扩展性折线图
+- **复杂度**：有理论 O()
+- **拓扑**：单一indoor + 可扩展性测试(10×10 至 20×20)
+
+### 共性模式总结
+- **章节结构**：System Model → Problem Formulation → Algorithm Design → Simulation Results
+- **实验组织**：收敛曲线 + 参数变化性能对比 + Baseline 对比，3 个子实验为标配
+- **Baseline 选择**：DRL baseline 必含(DDPG/TD3/SAC 中至少 1 个)；简单对照必含(Random/Flat)；传统方法 50% 竞品包含
+- **参数展示**：Table 集中展示仿真参数（载频、带宽、天线数、RIS 元素数、用户数、功率、噪声）
+- **公式使用**：变量引入后紧跟"其中"定义段；推导以结果为主，不完整展开
+- **图表清单**：系统模型图 + 收敛曲线 + 性能对比柱状图 + 参数扫描折线图 = 4 图标配
