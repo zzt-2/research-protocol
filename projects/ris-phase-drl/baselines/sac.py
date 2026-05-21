@@ -30,6 +30,8 @@ class SACAgent:
         gamma: float = 0.99,
         alpha: float = 0.2,
         device: str = "cuda",
+        actor: nn.Module | None = None,
+        critic: nn.Module | None = None,
     ):
         self.device = torch.device(device if torch.cuda.is_available() else "cpu")
         self.act_dim = act_dim
@@ -37,10 +39,16 @@ class SACAgent:
         self.gamma = gamma
         self.alpha = alpha
 
-        self.actor = Actor(obs_dim, act_dim, hidden).to(self.device)
+        if actor is not None:
+            self.actor = actor.to(self.device)
+        else:
+            self.actor = Actor(obs_dim, act_dim, hidden).to(self.device)
         self.actor_optimizer = torch.optim.Adam(self.actor.parameters(), lr=lr)
 
-        self.critic = Critic(obs_dim, act_dim, hidden).to(self.device)
+        if critic is not None:
+            self.critic = critic.to(self.device)
+        else:
+            self.critic = Critic(obs_dim, act_dim, hidden).to(self.device)
         self.critic_target = copy.deepcopy(self.critic)
         self.critic_optimizer = torch.optim.Adam(self.critic.parameters(), lr=lr)
 

@@ -9,6 +9,7 @@
 在卫星通信大类下完成了大规模文献检索（2026-05-13），识别出 3 个候选方向。经用户确认，选定**方向 1：GNN-based routing for LEO mega-constellation**。
 
 核心判断依据：
+
 - **蓝海**：5 年仅 ~38 篇相关论文，2025-2026 增速显著
 - **与导师方向高度吻合**：ISL + LEO 链路层，从 ISL ACM 延伸到 ISL 网络层 routing
 - **仿真负担轻**：网络层问题，不需要复杂信道模型，NumPy + PyTorch Geometric 即可
@@ -16,7 +17,7 @@
 
 ## 方向详情
 
-读 `.session/DIRECTION-CANDIDATES.md` 中"方向 1"的完整分析，包含代表文献列表和趋势数据。
+读 `.sessions/DIRECTION-CANDIDATES.md` 中"方向 1"的完整分析，包含代表文献列表和趋势数据。
 
 ## 项目设置
 
@@ -35,9 +36,10 @@
 
 ### Step 1：获取必读论文
 
-从 `.session/DIRECTION-CANDIDATES.md` 方向 1 的代表文献开始：
+从 `.sessions/DIRECTION-CANDIDATES.md` 方向 1 的代表文献开始：
 
 **最高优先级（必读）**：
+
 - (2024) GNN-Based Routing for Link Reliability Optimization in SD-LEO Satellite Networks, doi:10.1109/NFV-SDN61811.2024.10807492
 - (2026) Geographic-Based Auxiliary Routing Scheme in SDN-Based Mega Constellation Networks, IEEE IoTJ, doi:10.1109/JIOT.2025.3638842
 - (2025) Multi-Attribute Consistency Segment Resilient Routing, IEEE TMC, doi:10.1109/TMC.2025.3570670
@@ -45,6 +47,7 @@
 - (2025) A Scalable Multicontroller SDN Framework, IEEE IoTJ, doi:10.1109/JIOT.2025.3576912
 
 **补充检索**：用 `--find-similar` 和 `--citations` 从上述论文扩展引用链，确保覆盖：
+
 - GNN 在无线网络中的 size generalization 工作（历史检索中已有相关结果）
 - 传统 LEO 路由方法（OSPF-based、snapshot-based、DTN-based）
 - GNN for wireless 系列经典工作（Shen et al., Kim et al.）
@@ -54,6 +57,7 @@
 ### Step 2：精读
 
 按 `gw-read.md` 模板对每篇论文提取：
+
 - 研究问题和方法
 - 星座模型参数（卫星数、轨道面数、ISL 类型、轨道高度）
 - 路由算法详情（目标函数、约束、求解方法）
@@ -64,6 +68,7 @@
 ### Step 3：综合分析
 
 在 `literature_notes.md` 中写综合分析，重点关注：
+
 1. **GNN 架构选择**：现有工作用 GCN/GAT/GraphSAGE 哪种？各自优劣？
 2. **Size generalization 现状**：是否有人做过星座规模泛化？效果如何？
 3. **仿真工具链**：大家用什么做路由仿真？自建？NS-3？SNS3？

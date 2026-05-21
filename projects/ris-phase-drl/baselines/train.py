@@ -256,7 +256,7 @@ def main():
     parser = argparse.ArgumentParser(description="Train RIS phase-shift baselines")
     parser.add_argument("--algo", type=str, required=True,
                         choices=["td3", "sac", "ddpg", "pso", "random", "fixed",
-                                 "ccan_td3"],
+                                 "ccan_td3", "ccan_sac"],
                         help="Algorithm to train")
     parser.add_argument("--ablation", type=str, default=None,
                         choices=["a1", "a2", "a3"],
@@ -361,6 +361,30 @@ def main():
                          device=args.device, actor=ccan_actor, critic=ccan_critic)
         buffer = ReplayBuffer(obs_dim, act_dim, args.buffer_size)
         _train_drl("ccan_td3" + (f"_{args.ablation}" if args.ablation else ""),
+                   agent, env, buffer, args.episodes, args.batch_size,
+                   args.seed, use_wandb, save_dir, cfg,
+                   no_early_stop=args.no_early_stop)
+
+    elif args.algo == "ccan_sac":
+        ablation_flags = dict(use_attention=True, use_sharing=True, use_encoder=True)
+        critic_ablation = dict(use_attention=True, use_encoder=True)
+        if args.ablation == "a1":
+            ablation_flags["use_attention"] = False
+            critic_ablation["use_attention"] = False
+        elif args.ablation == "a2":
+            ablation_flags["use_sharing"] = False
+        elif args.ablation == "a3":
+            ablation_flags["use_encoder"] = False
+            critic_ablation["use_encoder"] = False
+
+        ccan_actor = CCANActor(obs_dim, act_dim, args.N, args.M, args.K,
+                               **ablation_flags)
+        ccan_critic = CCANCritic(obs_dim, act_dim, args.N, args.M, args.K,
+                                 hidden=hidden, **critic_ablation)
+        agent = SACAgent(obs_dim, act_dim, hidden, args.lr, args.tau, args.gamma,
+                         device=args.device, actor=ccan_actor, critic=ccan_critic)
+        buffer = ReplayBuffer(obs_dim, act_dim, args.buffer_size)
+        _train_drl("ccan_sac" + (f"_{args.ablation}" if args.ablation else ""),
                    agent, env, buffer, args.episodes, args.batch_size,
                    args.seed, use_wandb, save_dir, cfg,
                    no_early_stop=args.no_early_stop)

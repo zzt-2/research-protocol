@@ -52,6 +52,7 @@ def build_config(num_v_nets=2000, seed=0, solver_name='sfc_pg_mlp',
         config.training.num_train_epochs = num_epochs
         config.training.use_cuda = use_cuda
         config.training.gpu_id = gpu_id
+        config.training.batch_size = 256
         config.experiment.run_id = f'sfc_{solver_name}'
         config.experiment.seed = seed
         config.logger.backends = ['console']
@@ -61,6 +62,7 @@ def build_config(num_v_nets=2000, seed=0, solver_name='sfc_pg_mlp',
         config.rl.reward_calculator.intermediate_reward = 0.1
         config.rl.if_use_negative_sample = False
         config.rl.if_use_baseline_solver = False
+        config.rl.repeat_times = 4
         # SFC config
         config.sfc = {
             'sfc_ratio': 0.6,

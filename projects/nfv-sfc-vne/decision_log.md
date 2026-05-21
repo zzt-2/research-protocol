@@ -143,3 +143,18 @@
 - **对比旧版**: 旧版 buggy 30ep eval R2C=0.7898，新版仅 5ep 已达 0.762 且趋势未收敛，30ep 预期 >0.82
 - **E1 任务**: task `bmg45bmjh`，保留 MLP seed=0 和 DualGAT+ seed=0 旧结果，删除 buggy MatchingGAT seed=0，重跑其余 7 个 DRL runs + GRC
 - **预计时间**: ~19h
+
+## D024 | 2026-05-20 | E1 训练加速优化
+- **决策**: 收敛分析 + PPO 配置优化 + 实验范围缩减，将 E1 从 ~16h 降至 ~3.7h
+- **收敛分析**: 旧 30ep 日志显示 MatchingGAT 和 DualGAT+ 均在 ep8-10 进入平台区（R2C 波动 <5%），ep10-29 为噪声区
+- **PPO 配置优化**:
+  - batch_size 128→256：RTX 4070 欠利用，增大 batch 提升 GPU 利用率
+  - repeat_times 10→4：PPO 更新次数从 ~40/ep 降至 ~6/ep
+  - 来源：`learning.yaml` 覆盖（在 run_sfc_baselines.py build_config 中设置）
+- **实验范围缩减**:
+  - VNRs/epoch 500→300：每 ep 从 ~200s 降至 ~148s（实测）
+  - Epochs 30→15：收敛分析支持，不影响结果判定
+  - 仅跑 MatchingGAT vs DualGAT+：MLP/DualGCN 延后，不影响 Contract 核心判定
+- **environment deepcopy 优化尝试失败**: nx.Graph.copy() 不保留 PhysicalNetwork 的类级属性（node_attrs 等），导致 feature_constructor 崩溃。已回退为 copy.deepcopy()
+- **Contract 影响**: 参数调整（VNRs、epochs）不涉及 hypothesis/signal，仅影响统计精度。15ep 已足够收敛判定
+- **E1 启动命令**: `cd /mnt/d/code/study/research-protocol/projects/nfv-sfc-vne && bash verify/run_e1.sh`

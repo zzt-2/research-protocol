@@ -27,35 +27,40 @@
 1. `projects/nfv-sfc-vne/master-state.md` — 全局状态
 2. `projects/nfv-sfc-vne/literature_notes.md` — 13篇精读+11篇浅读
 3. `stages/gw-feasibility.md` §D — MVE 设计要求
-4. `.session/direction-scouting/S002-2026-05-18.md` — Go 决策详情
+4. `.sessions/direction-scouting/S002-2026-05-18.md` — Go 决策详情
 
 ## 下一轮
 
 ### MVE 完成（最优先）
 
 **方案 A（推荐）**: 用 Virne 论文已发表数据作为 MVE 主要证据
+
 - PPO-DualGAT RAC=78.1% vs PPO-MLP 71.9% on WX100（相对提升 +8.6%）
 - PPO-DualGAT 在大 VN(size≥6)上优势更明显，小 VN(size≤3)与 MLP 接近
 - 我们的验证运行确认 Virne 仿真器可在 RTX 4070 上正常工作
 - 补充：修复 pg_mlp 特征维度问题并跑完整 30 epochs 验证
 
 **方案 B**: 修复 MLP + 跑完整实验
+
 - pg_mlp 报错：输入18维特征，MLP期望21维
 - 可能需要调整 `learning.yaml` 中 `feature_constructor` 配置
 - 或改用 `ppo_att`（attention-based，非 GNN）作为 MLP 替代对比
 
 **MVE 架构摘要**（FR-11，待写入 feasibility_report.md）:
+
 - 动作空间: 离散节点选择（双向：先选虚拟节点再选物理节点）
 - 决策粒度: per-VNR（逐请求处理，每请求内逐节点放置）
 - 对比范式: PPO-DualGAT（GNN跨图编码）vs PPO-MLP（全连接网络）vs GRC（启发式排序）
 - 奖励语义: fixed intermediate reward (0.1) + episode-level R2C
 
 ### MVE 通过后
+
 - 写 feasibility_report.md（含 A0/A'/A/B/D 全部维度）
 - 用户确认 Go/No-Go
 - 进入 Step 5 (Baseline 选定)
 
 ### 关键差异化总结（Step 3.5 确认）
+
 1. **SFC 依赖链约束 + matching-style GNN**: 无人做过（GraphVNE 仅特征增强，FlagVNE/CONAL 不处理 SFC）
 2. **跨 PN 规模泛化**: 无人做过（FlagVNE 仅跨 VNR size）
 3. **端到端可微 matching**: GraphVNE 的 IPFP 不可微

@@ -114,6 +114,8 @@
    - 没人想到 → 可行性较高，但需确认不是"想到后发现不好"
    - 试过效果不好 → 需解释本研究条件为什么不同
    - 技术限制刚解除 → 论据较强
+4. **空白零假设检查** [MUST]：列出至少 3 个空白存在的结构性/技术性原因（不只是"没人想到"），逐一反驳。如果 ≥1 个原因暗示方法在结构上可能不适用（如"约束被环境吸收使模型冗余"、"简单方法已是强吸引子"），升级为致命信号。
+   - 先例：nfv-sfc-vne 发现 GNN×VNE×SFC=0 篇，实际原因是 SFC 约束被 action masking 吸收，模型级 SFC encoding 是冗余信息
 
 **致命信号**：仅靠"没人做过"论证，无法回答"为什么做了会更好"。
 
@@ -130,6 +132,9 @@
 5. **时间预算**：≤1 天（可用临时脚本，不需正式仿真环境）
 6. **执行方式**：在子 agent 中执行（见 CLAUDE.md "上下文管理规则"），主对话只接收结果数字和分析
 7. **[FR-11] MVE 架构摘要**：MVE 结果必须包含以下架构信息，作为 feasibility_report.md §D 的一部分。缺少架构摘要 → Step 4a 不算完成。
+8. **[FR-14] MVE 先验对照要求**：MVE 必须包含至少一个简单确定性先验 baseline（如 Fixed/Heuristic/Greedy），pass 标准必须包含 "DRL > 最强简单先验" 的条件。仅 "DRL >> Random" 不充分——Random 在很多场景下本身就是稻草人（先验策略可能已经 3-10× Random）。MVE 结果中必须记录：先验 baseline 名称、先验得分、DRL 得分、DRL/先验 比值。
+9. **[FR-15] MVE 贡献目标基线对照**：MVE 必须包含 Contract 假设中指定的具体 baseline（贡献声称要超越的对手）作为比较对象。pass 标准必须包含"提出方法 > 目标 baseline"。如果目标 baseline 在 MVE 阶段未实现，需用最接近的可用 baseline 近似并记录差距。仅通过 "方法 > 弱 baseline" 不等于验证了贡献声称。
+   - 先例：nfv-sfc-vne 的 MVE 测试了 GNN>MLP（弱对比），但贡献声称是 MatchingGAT>DualGAT+（强对比），Execute 阶段才发现声称未经验证
 
 ```markdown
 ### MVE 架构摘要
@@ -137,7 +142,7 @@
 - 决策粒度: {per-flow / per-link / per-node / 全局}
 - 对比范式: {模型如何与baseline对比，如"逐流K选1 vs baseline round-robin" / "全局权重 vs ECMP多路径分流" / ...}
 - 奖励语义: {增量delta / 绝对值 / episode-level}
-```
+- 先验对照: {最强简单先验名称 + 得分 + DRL得分 + DRL/先验比值}
 
 > 起源：leo-congestion-routing 项目中，MVE 用 K-path 离散选择 beat ECMP 12%，但正式设计改用 per-edge 连续权重（单路径路由），表达力低于 ECMP 多路径分流。MVE 结果被直接用于支持 Contract 假设，但 MVE 验证的架构和正式架构完全不同。根因是 MVE 只记录了 ratio，不记录架构，后续阶段无法追溯证据的有效条件。
 
@@ -177,6 +182,7 @@
 | 决策粒度 | ... | ... | ... |
 | 对比范式 | ... | ... | ... |
 | 奖励语义 | ... | ... | ... |
+| 先验强度 | {MVE: DRL/先验 比值} | {Formal: 预期先验强度变化} | {是/否 + 理由} |
 ```
 
 **门控条件**：

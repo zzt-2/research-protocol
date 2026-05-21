@@ -16,7 +16,7 @@
 
 - **H005-step4a** — Round 5。GW Step 4b + Step 5 完成。Baseline 选定：B1=+Grid/Fixed（领域共识），B2=Wang TCOM MADRL（最直接 DRL 竞品）。仿真条件(C)+资源风险(E)评估完成，全维度 Go。
 
-- **H006-step4a-2** — Round 6。GW Step 6 sim 完成。仿真器设计规格产出：8 模块、28 参数溯源（0 ASSUMPTION）、奖励函数 r = 1.0*R_tput - 0.3*C_switch - 0.2*C_setup、跨规模泛化设计。B2 路由从 LP 改为 Dijkstra（D006）。待用户确认。
+- **H006-step4a-2** — Round 6。GW Step 6 sim 完成。仿真器设计规格产出：8 模块、28 参数溯源（0 ASSUMPTION）、奖励函数 r = 1.0*R_tput - 0.3*C_switch - 0.2\*C_setup、跨规模泛化设计。B2 路由从 LP 改为 Dijkstra（D006）。待用户确认。
 
 - **H007-step6-sim** — Round 7。GW Step 6 sim 用户已确认。仿真器核心参数锁定：Starlink 1584 (24x66), LISL 3000km, Gaussian beam + Rayleigh jitter, GHS-POP 100 GS, Setup delay Uniform(2,30)s, 决策间隔 10s。准备 Step 7 impl。
 
@@ -76,4 +76,4 @@
 
 ## 当前位置
 
-项目已完成 GW Step 1-7 + Contract 冻结 + Execute Step 0-1（Quick Test），在 Execute 阶段确认死胡同（PPO/REINFORCE/噪声探索三方法均无法超越先验），需要方向决策——归档 ISL 调度或尝试替代方案。最终决策在 `.session/2026-05-16-isl-scheduling-drl/` 续接。
+项目已完成 GW Step 1-7 + Contract 冻结 + Execute Step 0-1（Quick Test），在 Execute 阶段确认死胡同（PPO/REINFORCE/噪声探索三方法均无法超越先验），需要方向决策——归档 ISL 调度或尝试替代方案。最终决策在 `.sessions/2026-05-16-isl-scheduling-drl/` 续接。

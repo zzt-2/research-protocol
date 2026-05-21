@@ -7,8 +7,9 @@
 ## 状态恢复
 
 按以下优先级读取：
+
 1. 项目记忆：`~/.claude/projects/-mnt-d-code-study-research-protocol/memory/project_leo-isl-scheduling-drl.md`
-2. 最新 handoff：`.session/2026-05-15-isl-scheduling-drl/HANDOFF-007-step6-sim.md`
+2. 最新 handoff：`.sessions/2026-05-15-isl-scheduling-drl/HANDOFF-007-step6-sim.md`
 3. **仿真器设计规格**：`projects/leo-isl-scheduling-drl/simulator_spec.md`（核心参考，对着写代码）
 4. 文献证据：`projects/leo-isl-scheduling-drl/literature_notes.md`（信道模型参数）
 5. 框架文件：`stages/gw-experiment.md`（§impl Part A 验证清单 + Part A-checkpoint）
@@ -57,6 +58,7 @@
 8. **M8: MetricsCollector** — M1-M5 评估指标
 
 **技术栈**：
+
 - Python: `~/.venvs/torch/bin/python`
 - 依赖：`sgp4`, `numpy`, `scipy`, `torch`, `gymnasium`
 - 安装：`pip install sgp4 gymnasium -i https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple`
@@ -73,28 +75,29 @@
 ### 4. MDP 试运行（Part A-checkpoint）
 
 验证通过后执行：
+
 1. 跑 1 episode 随机策略 + 1 episode 贪心策略
 2. 奖励分解表：各项绝对值占比
 3. 硬性门槛：无单一项 >95%，贪心 vs 随机差距 >10%
 
 ### 5. 更新 handoff
 
-完成后写 handoff 到 `.session/2026-05-15-isl-scheduling-drl/HANDOFF-008-step7-impl.md`。
+完成后写 handoff 到 `.sessions/2026-05-15-isl-scheduling-drl/HANDOFF-008-step7-impl.md`。
 
 ## 关键参数（预加载，避免重读文献）
 
-| 参数 | 值 | 来源 |
-|------|-----|------|
-| 星座 | 1584 星 (24×66), 550km, 53° | L04 |
-| LISL 范围 z_max | 3000km | L01 §III-A |
-| FOR 角 θ | 60° | L01 §III-A |
-| 激光 λ | 1.55μm, W₀=9.87×10⁻³m, P₀=20W, B=1GHz | L01 §II-C |
-| 接收 A=0.01m², Ψ=0.5A/W, σ_N=3×10⁻⁷A | L01 §II-C |
-| 指向抖动 σ_J=10μrad, 中断 ε=10⁻³ | L01 §II-B, L02 |
-| GS 数 100, GHS-POP | L01 |
-| Setup delay Uniform(2, 30)s | L04 |
-| 决策间隔 τ=10s, Episode 50 步 | 设计选择 |
-| 奖励 w₁=1.0, w₂=0.3, w₃=0.2 | 用户已确认 |
+| 参数                                 | 值                                    | 来源       |
+| ------------------------------------ | ------------------------------------- | ---------- |
+| 星座                                 | 1584 星 (24×66), 550km, 53°           | L04        |
+| LISL 范围 z_max                      | 3000km                                | L01 §III-A |
+| FOR 角 θ                             | 60°                                   | L01 §III-A |
+| 激光 λ                               | 1.55μm, W₀=9.87×10⁻³m, P₀=20W, B=1GHz | L01 §II-C  |
+| 接收 A=0.01m², Ψ=0.5A/W, σ_N=3×10⁻⁷A | L01 §II-C                             |
+| 指向抖动 σ_J=10μrad, 中断 ε=10⁻³     | L01 §II-B, L02                        |
+| GS 数 100, GHS-POP                   | L01                                   |
+| Setup delay Uniform(2, 30)s          | L04                                   |
+| 决策间隔 τ=10s, Episode 50 步        | 设计选择                              |
+| 奖励 w₁=1.0, w₂=0.3, w₃=0.2          | 用户已确认                            |
 
 ## 约束
 

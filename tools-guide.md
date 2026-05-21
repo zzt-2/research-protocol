@@ -308,6 +308,8 @@ Playwright 驱动的浏览器爬取工具，用于 API 无法覆盖的学术平�
 | wanfang | 1410条/关键词 | 标题/作者/摘要/关键词/期刊/年份/被引数/质量标签 | ❌ | IP封禁(>16次无间隔) | 10次/会话, 6s间隔 |
 | cnki | 全库搜索 | 标题/作者/来源/年份/被引数 | ✅ `--download` 校园网+cookie | cookie 过期需验证 | 30次/会话, 3s间隔 |
 
+CNKI 来源字段因文档类型不同：期刊 → 期刊名（如"中国针灸"），博士/硕士论文 → 学位授予单位（如"北京科技大学"）。`--doc-type phd/master` 通过 `crossDbcodes` 参数限定到 CDFD/CMFD 数据库。
+
 ### IEEE 下载
 
 IEEE 下载利用校园网 IP 自动获得机构认证（无需登录）。下载原理：
@@ -328,6 +330,20 @@ CNKI 源依赖校园网 IP 认证。首次使用需获取 cookie：
 Cookie 有效期通常 1-2 天。过期时 blit 会自动弹窗让用户重新验证。
 
 **注意**：`cnki_cookies.json` 包含会话信息，不应提交到 git。
+
+### CAJ 转 PDF
+
+CNKI 博士论文下载后通常是 CAJ 格式，需转换后才能用 `tools/convert` 转 markdown。
+
+```bash
+# 单篇转换
+~/.venvs/torch/bin/python ~/.local/share/caj2pdf/caj2pdf convert input.caj -o output.pdf
+
+# 批量转换（shell 目录下所有 .caj）
+for f in *.caj; do ~/.venvs/torch/bin/python ~/.local/share/caj2pdf/caj2pdf convert "$f" -o "${f%.caj}.pdf"; done
+```
+
+安装位置：`~/.local/share/caj2pdf/`（从 GitHub 克隆），依赖 PyPDF2 + imagesize 已包含在 torch venv 中。
 
 ### 使用策略
 

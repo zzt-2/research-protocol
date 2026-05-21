@@ -15,15 +15,15 @@ topics:
     title: 方向侦察与项目盘点
     status: active
     created: "2026-05-16"
-    last_updated: "2026-05-17"
-    description: 系统性候选方向评估，3 批次完成
+    last_updated: "2026-05-21"
+    description: 系统性候选方向评估，4 批次+深度验证完成，转为卫星×任意ML定向搜索
 
   - slug: thesis-structure-research
     title: 论文结构研究
-    status: dormant
+    status: active
     created: "2026-05-16"
-    last_updated: "2026-05-17"
-    description: 基于中文卫星网络学位论文的结构设计，34 篇分析
+    last_updated: "2026-05-21"
+    description: 基于中文卫星网络学位论文的结构设计，34 篇分析；当前 S003 三章全面审查
 
   - slug: master-worker-orchestration
     title: Master-Worker 编排系统

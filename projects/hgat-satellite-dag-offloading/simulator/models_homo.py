@@ -1,25 +1,22 @@
-"""Homogeneous GNN encoders (GraphSAGE / GCN) with Actor-Critic heads.
+"""Homogeneous GNN encoders (GraphSAGE / GCN) with bilinear policy heads.
 
-Converts the heterogeneous HeteroData observation to a flat homogeneous graph,
-then applies standard message-passing GNN layers.
+Converts HeteroData → flat homogeneous graph via per-type projection,
+then applies standard message-passing GNN layers. Bilinear policy for fair
+comparison with HGAT.
 """
 
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.distributions import Categorical
 from torch_geometric.data import Data, HeteroData
 from torch_geometric.nn import GCNConv, SAGEConv
 
-from config import HGAT_HIDDEN
+from config import SimConfig
+from model_gnn import BaseActorCritic
 
-# Node-type feature dimensions (must match environment.py _build_graph)
 _IN_DIMS = {"task": 8, "iotd": 4, "uav": 5, "leo": 5, "cs": 2}
-
-# Canonical node order in the homogeneous graph
 _NODE_TYPES = ["task", "iotd", "uav", "leo", "cs"]
-
-# Edge types present in the environment's _build_graph output
+_COMPUTE_TYPES = ["iotd", "uav", "leo", "cs"]
 _HETERO_EDGE_TYPES = [
     ("task", "dep", "task"),
     ("task", "to_iotd", "iotd"),
@@ -30,9 +27,7 @@ _HETERO_EDGE_TYPES = [
 
 
 def _node_offsets(data: HeteroData) -> dict[str, int]:
-    """Compute global index offset for each node type."""
-    offsets = {}
-    offset = 0
+    offsets, offset = {}, 0
     for ntype in _NODE_TYPES:
         offsets[ntype] = offset
         x = data[ntype].x
@@ -41,68 +36,27 @@ def _node_offsets(data: HeteroData) -> dict[str, int]:
 
 
 def hetero_to_homo(data: HeteroData, proj_layers: dict[str, nn.Linear]) -> Data:
-    """Convert HeteroData to homogeneous PyG Data.
-
-    Each node type's features are projected to a common dimension via the
-    corresponding linear layer in *proj_layers*.  Nodes are concatenated in
-    canonical order: task, iotd, uav, leo, cs.  All heterogeneous edges are
-    remapped to a single edge_index.
-
-    Args:
-        data: Heterogeneous observation from the environment.
-        proj_layers: Mapping node-type name -> Linear(in_dim, hidden_dim).
-
-    Returns:
-        Homogeneous Data with x (total_nodes x hidden_dim) and edge_index.
-    """
+    """Convert HeteroData to homogeneous PyG Data via per-type projection."""
     offsets = _node_offsets(data)
+    x_parts = [proj_layers[ntype](data[ntype].x) for ntype in _NODE_TYPES]
+    x = torch.cat(x_parts, dim=0)
 
-    # Project and concatenate node features
-    x_parts = []
-    for ntype in _NODE_TYPES:
-        feat = data[ntype].x  # (N_i, in_dim_i)
-        x_parts.append(proj_layers[ntype](feat))
-    x = torch.cat(x_parts, dim=0)  # (34, hidden_dim)
-
-    # Remap edges
     edge_rows = []
     for src_type, rel_type, dst_type in _HETERO_EDGE_TYPES:
-        key = (src_type, rel_type, dst_type)
-        ei = data.edge_index_dict.get(key)
+        ei = data.edge_index_dict.get((src_type, rel_type, dst_type))
         if ei is None or ei.numel() == 0:
             continue
-        src_offset = offsets[src_type]
-        dst_offset = offsets[dst_type]
-        remapped = torch.stack([
-            ei[0] + src_offset,
-            ei[1] + dst_offset,
-        ])
-        edge_rows.append(remapped)
+        edge_rows.append(torch.stack([ei[0] + offsets[src_type], ei[1] + offsets[dst_type]]))
 
-    if edge_rows:
-        edge_index = torch.cat(edge_rows, dim=1)
-    else:
-        # 不会出现，但防御性处理
-        edge_index = torch.empty(2, 0, dtype=torch.long, device=x.device)
-
+    edge_index = torch.cat(edge_rows, dim=1) if edge_rows else torch.empty(2, 0, dtype=torch.long)
     return Data(x=x, edge_index=edge_index)
 
 
-def _batch_hetero_to_homo(
-    obs_list: list[HeteroData],
-    proj_layers: dict[str, nn.Linear],
-) -> Data:
-    """Batch-convert a list of HeteroData into a single disconnected-graph Data.
-
-    Each observation is converted independently then merged into one large
-    graph where observations form disconnected components.  A *batch* vector
-    is added so that global pooling can be done per-observation.
-    """
-    data_list = [hetero_to_homo(o, proj_layers) for o in obs_list]
-    # 手动拼 batch，避免 to_data_list 反弹开销
-    xs, eis, batch_vec = [], [], []
-    ptr = 0
-    for i, d in enumerate(data_list):
+def _batch_hetero_to_homo(obs_list: list[HeteroData], proj_layers: dict[str, nn.Linear]) -> Data:
+    """Batch-convert list of HeteroData into disconnected-graph Data."""
+    xs, eis, batch_vec, ptr = [], [], [], 0
+    for i, o in enumerate(obs_list):
+        d = hetero_to_homo(o, proj_layers)
         xs.append(d.x)
         if d.edge_index.numel() > 0:
             eis.append(d.edge_index + ptr)
@@ -110,245 +64,211 @@ def _batch_hetero_to_homo(
         ptr += d.x.size(0)
     x = torch.cat(xs, dim=0)
     edge_index = torch.cat(eis, dim=1) if eis else torch.empty(2, 0, dtype=torch.long, device=x.device)
-    batch = torch.cat(batch_vec, dim=0)
-    return Data(x=x, edge_index=edge_index, batch=batch)
+    return Data(x=x, edge_index=edge_index, batch=torch.cat(batch_vec))
 
 
-class _HomoActorCritic(nn.Module):
-    """Shared backbone for homogeneous GNN actor-critics.
-
-    Subclasses supply *conv_fn* to choose the message-passing layer
-    (SAGEConv / GCNConv).
-    """
-
-    # Subclass sets this to SAGEConv or GCNConv
+class _HomoActorCritic(BaseActorCritic):
     _conv_cls = None
 
-    def __init__(self, hidden_dim: int = HGAT_HIDDEN, n_actions: int = 280,
-                 n_gnn_layers: int = 2):
-        super().__init__()
-        self.hidden_dim = hidden_dim
-        self.n_actions = n_actions
+    def __init__(self, config: SimConfig, n_actions: int, n_gnn_layers: int = 2):
+        hidden = config.hgat_hidden
+        assert n_actions == config.total_tasks * config.n_nodes
+        super().__init__(hidden, n_actions)
 
-        # Per-node-type projection: raw features -> hidden_dim
-        self.proj = nn.ModuleDict({
-            ntype: nn.Linear(_IN_DIMS[ntype], hidden_dim)
-            for ntype in _NODE_TYPES
+        self._n_tasks = config.total_tasks
+        self._n_nodes = config.n_nodes
+        self._node_type_sizes = {
+            "task": config.total_tasks,
+            "iotd": config.n_iotd,
+            "uav": config.n_uav,
+            "leo": config.n_leo,
+            "cs": 1,
+        }
+
+        self.proj = nn.ModuleDict({ntype: nn.Linear(_IN_DIMS[ntype], hidden) for ntype in _NODE_TYPES})
+        self.convs = nn.ModuleList([self._conv_cls(hidden, hidden) for _ in range(n_gnn_layers)])
+
+        # Learnable type bias before GNN — gives message passing explicit type signal
+        self.type_bias = nn.ParameterDict({
+            ntype: nn.Parameter(torch.zeros(hidden)) for ntype in _NODE_TYPES
         })
 
-        # GNN layers
-        self.convs = nn.ModuleList()
-        for _ in range(n_gnn_layers):
-            self.convs.append(self._conv_cls(hidden_dim, hidden_dim))
+        # Per-type output projection to recover type info after homo message passing
+        self.type_proj = nn.ModuleDict({ntype: nn.Linear(hidden, hidden) for ntype in _NODE_TYPES})
 
-        # Policy head
-        self.policy = nn.Sequential(
-            nn.Linear(hidden_dim, hidden_dim),
-            nn.ReLU(),
-            nn.Linear(hidden_dim, n_actions),
-        )
+        # Bilinear policy
+        self.task_proj = nn.Linear(hidden, hidden)
+        self.node_proj = nn.Linear(hidden, hidden)
 
         # Value head
-        self.value = nn.Sequential(
-            nn.Linear(hidden_dim, hidden_dim),
-            nn.ReLU(),
-            nn.Linear(hidden_dim, 1),
-        )
-
-    # ------------------------------------------------------------------
-    # Helpers
-    # ------------------------------------------------------------------
-
-    def _proj_layers(self) -> dict[str, nn.Linear]:
-        return {ntype: self.proj[ntype] for ntype in _NODE_TYPES}
+        self.value_head = nn.Sequential(nn.Linear(hidden, hidden), nn.ReLU(), nn.Linear(hidden, 1))
 
     def _encode_single(self, obs: HeteroData) -> torch.Tensor:
-        """Run GNN on one observation, return graph embedding (hidden_dim,)."""
         device = next(self.parameters()).device
-        homo = hetero_to_homo(obs.to(device), self._proj_layers())
-        x, ei = homo.x, homo.edge_index
+        obs = obs.to(device)
+        offsets, offset = {}, 0
+        x_parts = []
+        for ntype in _NODE_TYPES:
+            projected = self.proj[ntype](obs[ntype].x) + self.type_bias[ntype]
+            x_parts.append(projected)
+            offsets[ntype] = offset
+            offset += projected.size(0)
+        x = torch.cat(x_parts, dim=0)
+
+        edge_rows = []
+        for src_type, rel_type, dst_type in _HETERO_EDGE_TYPES:
+            ei = obs.edge_index_dict.get((src_type, rel_type, dst_type))
+            if ei is None or ei.numel() == 0:
+                continue
+            edge_rows.append(torch.stack([ei[0] + offsets[src_type], ei[1] + offsets[dst_type]]))
+        edge_index = torch.cat(edge_rows, dim=1) if edge_rows else torch.empty(2, 0, dtype=torch.long, device=device)
+
         for conv in self.convs:
-            x = conv(x, ei)
-            x = F.relu(x)
-        return x.mean(dim=0)
+            x = F.relu(conv(x, edge_index))
+        return x
 
     def _encode_batch(self, obs_list: list[HeteroData]) -> torch.Tensor:
-        """Run GNN on a batch, return per-obs graph embeddings (B, hidden_dim)."""
         device = next(self.parameters()).device
-        obs_on_device = [o.to(device) for o in obs_list]
-        homo = _batch_hetero_to_homo(obs_on_device, self._proj_layers())
-        x, ei = homo.x, homo.edge_index
+        xs, eis, batch_vec, ptr = [], [], [], 0
+        for i, obs in enumerate(obs_list):
+            obs = obs.to(device)
+            offsets, off = {}, 0
+            x_parts = []
+            for ntype in _NODE_TYPES:
+                projected = self.proj[ntype](obs[ntype].x) + self.type_bias[ntype]
+                x_parts.append(projected)
+                offsets[ntype] = off
+                off += projected.size(0)
+            x = torch.cat(x_parts, dim=0)
+            xs.append(x)
+            edge_rows = []
+            for src_type, rel_type, dst_type in _HETERO_EDGE_TYPES:
+                ei = obs.edge_index_dict.get((src_type, rel_type, dst_type))
+                if ei is None or ei.numel() == 0:
+                    continue
+                edge_rows.append(torch.stack([ei[0] + offsets[src_type], ei[1] + offsets[dst_type]]))
+            if edge_rows:
+                eis.append(torch.cat(edge_rows, dim=1) + ptr)
+            batch_vec.append(torch.full((x.size(0),), i, dtype=torch.long, device=device))
+            ptr += x.size(0)
+        x = torch.cat(xs, dim=0)
+        edge_index = torch.cat(eis, dim=1) if eis else torch.empty(2, 0, dtype=torch.long, device=device)
         for conv in self.convs:
-            x = conv(x, ei)
-            x = F.relu(x)
-        # Mean-pool per observation
-        batch = homo.batch
+            x = F.relu(conv(x, edge_index))
+        batch = torch.cat(batch_vec)
         out = torch.zeros(batch.max().item() + 1, self.hidden_dim, device=x.device)
         count = torch.zeros(batch.max().item() + 1, 1, device=x.device)
         out.scatter_add_(0, batch.unsqueeze(1).expand_as(x), x)
         count.scatter_add_(0, batch.unsqueeze(1), torch.ones_like(x[:, :1]))
-        out = out / count.clamp(min=1)
-        return out
+        return out / count.clamp(min=1)
 
-    # ------------------------------------------------------------------
-    # Public API (matches BaseActorCritic contract)
-    # ------------------------------------------------------------------
+    def _split_homo_embs_single(self, homo_embs: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
+        """Split flat homo embeddings into task_embs and compute_node_embs."""
+        sizes = [self._node_type_sizes[t] for t in _NODE_TYPES]
+        splits = torch.split(homo_embs, sizes)
+        task_embs = splits[0]
+        # compute nodes: iotd + uav + leo + cs
+        node_embs = torch.cat(splits[1:], dim=0)
+        return task_embs, node_embs
+
+    def _split_homo_embs_batch(self, homo_embs: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
+        """Split batched homo embeddings. homo_embs: [B, hidden]. Not applicable — need per-node."""
+        raise NotImplementedError("Batch bilinear requires per-node splits")
 
     def forward(self, obs: HeteroData):
-        """Return (logits, value) for a single observation.
+        homo_embs = self._encode_single(obs)
+        # Apply per-type projection to recover type info after homo message passing
+        sizes = [self._node_type_sizes[t] for t in _NODE_TYPES]
+        splits = torch.split(homo_embs, sizes)
+        typed_splits = [self.type_proj[t](s) for t, s in zip(_NODE_TYPES, splits)]
+        task_embs = typed_splits[0]
+        node_embs = torch.cat(typed_splits[1:], dim=0)
 
-        Args:
-            obs: HeteroData from the environment.
+        # Bilinear policy
+        logits = (self.task_proj(task_embs) @ self.node_proj(node_embs).T).flatten()
 
-        Returns:
-            logits: (n_actions,) unnormalized action preferences.
-            value:  scalar state-value estimate.
-        """
-        emb = self._encode_single(obs)
-        return self.policy(emb), self.value(emb).squeeze(-1)
+        # Value: mean pool
+        global_emb = homo_embs.mean(dim=0)
+        value = self.value_head(global_emb).squeeze(-1)
 
-    @torch.no_grad()
-    def get_action(self, obs: HeteroData, action_mask: torch.Tensor):
-        """Sample a single action, return action info for PPO buffer.
+        return logits, value
 
-        Args:
-            obs: HeteroData observation.
-            action_mask: boolean tensor (n_actions,).
-
-        Returns:
-            action:     int
-            log_prob:   float tensor (scalar)
-            value:      float tensor (scalar)
-            entropy:    float tensor (scalar)
-        """
-        logits, value = self.forward(obs)
-        mask = torch.as_tensor(action_mask, dtype=torch.bool, device=logits.device)
-        logits = logits.masked_fill(~mask, -1e8)
-        dist = Categorical(logits=logits)
-        action = dist.sample()
-        return (
-            action.item(),
-            dist.log_prob(action),
-            value,
-            dist.entropy(),
-        )
-
-    def evaluate_actions(
-        self,
-        obs_list: list[HeteroData],
-        actions: torch.Tensor,
-        action_masks: torch.Tensor,
-    ):
-        """Evaluate log-prob, value, entropy for a batch of transitions.
-
-        Used during PPO update.
-
-        Args:
-            obs_list:     list of HeteroData, length B.
-            actions:      (B,) long tensor of taken actions.
-            action_masks: (B, n_actions) boolean tensor.
-
-        Returns:
-            log_probs: (B,)
-            values:    (B,)
-            entropy:   (B,)
-        """
-        embs = self._encode_batch(obs_list)  # (B, hidden_dim)
-        logits = self.policy(embs)            # (B, n_actions)
-        values = self.value(embs).squeeze(-1) # (B,)
-
-        logits = logits.masked_fill(~action_masks, -1e8)
-        dist = Categorical(logits=logits)
-        log_probs = dist.log_prob(actions)
-        entropy = dist.entropy()
-
-        return log_probs, values, entropy
+    def evaluate_actions(self, obs_list, actions, action_masks):
+        embs = self._encode_batch(obs_list)
+        # For batch, we need per-node embs per graph — use single-obs forward
+        log_probs, values, entropies = [], [], []
+        from model_gnn import apply_mask
+        from torch.distributions import Categorical
+        for i, obs in enumerate(obs_list):
+            logits, value = self.forward(obs)
+            logits = apply_mask(logits, action_masks[i])
+            dist = Categorical(logits=logits)
+            log_probs.append(dist.log_prob(actions[i]))
+            values.append(value.squeeze())
+            entropies.append(dist.entropy())
+        return torch.stack(log_probs), torch.stack(values), torch.stack(entropies)
 
 
 class GraphSAGEActorCritic(_HomoActorCritic):
-    """GraphSAGE encoder with PPO actor-critic heads."""
     _conv_cls = SAGEConv
 
-    def __init__(self, hidden_dim: int = HGAT_HIDDEN, n_actions: int = 280,
-                 n_gnn_layers: int = 2):
-        super().__init__(hidden_dim=hidden_dim, n_actions=n_actions,
-                         n_gnn_layers=n_gnn_layers)
+    def __init__(self, config: SimConfig, n_actions: int, n_gnn_layers: int = 2):
+        super().__init__(config, n_actions, n_gnn_layers)
 
 
 class GCNActorCritic(_HomoActorCritic):
-    """GCN encoder with PPO actor-critic heads."""
     _conv_cls = GCNConv
 
-    def __init__(self, hidden_dim: int = HGAT_HIDDEN, n_actions: int = 280,
-                 n_gnn_layers: int = 2):
-        super().__init__(hidden_dim=hidden_dim, n_actions=n_actions,
-                         n_gnn_layers=n_gnn_layers)
+    def __init__(self, config: SimConfig, n_actions: int, n_gnn_layers: int = 2):
+        super().__init__(config, n_actions, n_gnn_layers)
 
 
-class MLPActorCritic(nn.Module):
-    """No-GNN baseline: project + mean-pool + FC, same interface as GNN models.
+class MLPActorCritic(BaseActorCritic):
+    """No-GNN baseline: project + bilinear scoring."""
 
-    Keeps per-node-type projection layers (matching GNN models), but replaces
-    message-passing with a 2-layer MLP over the pooled graph embedding.
-    """
+    def __init__(self, config: SimConfig, n_actions: int):
+        hidden = config.hgat_hidden
+        assert n_actions == config.total_tasks * config.n_nodes
+        super().__init__(hidden, n_actions)
 
-    def __init__(self, hidden_dim: int = HGAT_HIDDEN, n_actions: int = 280):
-        super().__init__()
-        self.hidden_dim = hidden_dim
-        self.n_actions = n_actions
+        self._n_tasks = config.total_tasks
+        self._n_nodes = config.n_nodes
+        self._node_type_sizes = {
+            "task": config.total_tasks,
+            "iotd": config.n_iotd,
+            "uav": config.n_uav,
+            "leo": config.n_leo,
+            "cs": 1,
+        }
 
-        self.proj = nn.ModuleDict({
-            ntype: nn.Linear(_IN_DIMS[ntype], hidden_dim)
-            for ntype in _NODE_TYPES
+        self.proj = nn.ModuleDict({ntype: nn.Linear(_IN_DIMS[ntype], hidden) for ntype in _NODE_TYPES})
+        self.trunk = nn.Sequential(nn.Linear(hidden, hidden), nn.ReLU(),
+                                   nn.Linear(hidden, hidden), nn.ReLU())
+        # Learnable type bias
+        self.type_bias = nn.ParameterDict({
+            ntype: nn.Parameter(torch.zeros(hidden)) for ntype in _NODE_TYPES
         })
-
-        self.trunk = nn.Sequential(
-            nn.Linear(hidden_dim, hidden_dim),
-            nn.ReLU(),
-            nn.Linear(hidden_dim, hidden_dim),
-            nn.ReLU(),
-        )
-
-        self.policy = nn.Sequential(
-            nn.Linear(hidden_dim, hidden_dim),
-            nn.ReLU(),
-            nn.Linear(hidden_dim, n_actions),
-        )
-
-        self.value = nn.Sequential(
-            nn.Linear(hidden_dim, hidden_dim),
-            nn.ReLU(),
-            nn.Linear(hidden_dim, 1),
-        )
+        # Per-type output projection
+        self.type_proj = nn.ModuleDict({ntype: nn.Linear(hidden, hidden) for ntype in _NODE_TYPES})
+        self.task_proj = nn.Linear(hidden, hidden)
+        self.node_proj = nn.Linear(hidden, hidden)
+        self.value_head = nn.Sequential(nn.Linear(hidden, hidden), nn.ReLU(), nn.Linear(hidden, 1))
 
     def _encode_single(self, obs: HeteroData) -> torch.Tensor:
         device = next(self.parameters()).device
-        parts = [self.proj[ntype](obs[ntype].x.to(device)) for ntype in _NODE_TYPES]
-        x = torch.cat(parts, dim=0).mean(dim=0)  # (hidden_dim,)
-        return self.trunk(x)
-
-    def _encode_batch(self, obs_list: list[HeteroData]) -> torch.Tensor:
-        embs = [self._encode_single(o) for o in obs_list]
-        return torch.stack(embs)  # (B, hidden_dim)
+        parts = [self.trunk(self.proj[ntype](obs[ntype].x.to(device)) + self.type_bias[ntype])
+                 for ntype in _NODE_TYPES]
+        return torch.cat(parts, dim=0)
 
     def forward(self, obs: HeteroData):
-        emb = self._encode_single(obs)
-        return self.policy(emb), self.value(emb).squeeze(-1)
+        embs = self._encode_single(obs)
+        # Per-type projection to recover type info
+        sizes = [self._node_type_sizes[t] for t in _NODE_TYPES]
+        splits = torch.split(embs, sizes)
+        typed_splits = [self.type_proj[t](s) for t, s in zip(_NODE_TYPES, splits)]
+        task_embs, node_embs = typed_splits[0], torch.cat(typed_splits[1:], dim=0)
 
-    @torch.no_grad()
-    def get_action(self, obs: HeteroData, action_mask):
-        logits, value = self.forward(obs)
-        mask = torch.as_tensor(action_mask, dtype=torch.bool, device=logits.device)
-        logits = logits.masked_fill(~mask, -1e8)
-        dist = Categorical(logits=logits)
-        action = dist.sample()
-        return action.item(), dist.log_prob(action), value, dist.entropy()
-
-    def evaluate_actions(self, obs_list: list[HeteroData], actions: torch.Tensor,
-                         action_masks: torch.Tensor):
-        embs = self._encode_batch(obs_list)
-        logits = self.policy(embs)
-        values = self.value(embs).squeeze(-1)
-        logits = logits.masked_fill(~action_masks, -1e8)
-        dist = Categorical(logits=logits)
-        return dist.log_prob(actions), values, dist.entropy()
+        logits = (self.task_proj(task_embs) @ self.node_proj(node_embs).T).flatten()
+        global_emb = embs.mean(dim=0)
+        value = self.value_head(global_emb).squeeze(-1)
+        return logits, value

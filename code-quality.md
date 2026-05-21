@@ -279,6 +279,26 @@
 | 表现 | 50 UE 时 buffer=50K 仅存 1.4 episode，GNN reward 崩溃至 -4,857 |
 | 教训 | buffer_size >= min_episodes × (num_agents × steps_per_episode)，规模变化前主动检查 |
 
+### B5. 空白陷阱 — 零交叉论文因组合增量不足 [×1 项目]
+
+| 维度 | 内容 |
+|------|------|
+| 项目 | nfv-sfc-vne (D001-D024) [致命] |
+| 表现 | 方向侦察发现 GNN×VNE×SFC=0 篇，判断为空白机会。3 轮架构尝试（uniform add / multiplicative gate / concat+MLP）全部未超越 DualGAT+ baseline。SFC encoding 也无显著帮助（环境 action masking 已强制执行 SFC 约束） |
+| 根因 | (1) 空白存在是因为组合增量太小——DualGAT+ 的加法融合对 VNE 已足够，cross-attention 不带来新信息；(2) SFC 约束被环境吸收（action masking），模型无需学习；(3) MVE 测试的是 GNN>MLP（弱对比），从未验证 cross-attention>DualGAT+（强对比） |
+| 教训 | 零交叉论文≠好方向。方向侦察必须做"空白原因分析"：列出至少 3 个空白存在的可能原因（不只是"没人想到"），逐一反驳。MVE 必须包含贡献声称要超越的具体 baseline 作为对照组 |
+| 跨项目印证 | 与 B1（假蓝海）同源：beam-hopping 零 GNN 竞争经验证为"不值得做"。共性：空白可能是结构性不适合的信号 |
+
+#### B6. 架构信息增量为零 — 机制对所有决策选项产生相同信号 [×1 项目]
+
+| 维度 | 内容 |
+|------|------|
+| 项目 | nfv-sfc-vne (D022-D024) [致命] |
+| 表现 | Cross-attention output `curr_cross` 通过 gather 提取为单一向量后，uniform 加法/乘法/concat 到所有 substrate 节点。所有 p_node 获得相同的附加信号，per-(v_node, p_node) 亲和度区分力为零。3 种交互方式（p+cross, p+p*cross, concat+MLP）均未超越 DualGAT+ |
+| 根因 | Cross-attention 计算了 per-(v,p) attention weights 但通过 softmax+加权求和压缩为单向量后，per-p_node 区分信息被丢弃。架构设计的 intent（matching）与实现（uniform modulation）不匹配 |
+| 教训 | 每个架构组件必须通过"信息增量审计"：用两个不同的输入示例，验证组件是否产生不同输出。如果对所有输入产生相同信号，该组件无信息增量。此检查应在 Contract 阶段完成，不应拖到 Execute |
+| 检测方法 | 前向传播两个不同 v_node 的 obs，检查 modulated p_node_dense 是否有 per-node 差异。无差异 → 机制失效 |
+
 ### D. 其他模式
 
 #### D1. 竞争论文撤稿揭示算法风险 [×1 项目]
@@ -296,15 +316,26 @@
 | 表现 | 100ep M1 从 0.078 降至 0.057；v2 训 15ep 比 v4 训 100ep 更好 |
 | 教训 | 先验有效时减少更新次数比调学习率更有效 |
 
-#### D3. 注意力架构有容量但 TD3 训练动力学无法利用 [×1 项目]
+#### D3. 注意力架构有容量但 TD3 训练动力学无法利用 [×1 项目，SAC 确认]
 
 | 维度 | 内容 |
 |------|------|
-| 项目 | ris-phase (D018-D020) [致命] |
-| 表现 | CCAN Actor best episode=1670 远超 PSO=1554（+7.5%），但 avg=1301 停在 Fixed=1292 水平（+0.7%）。4 轮迭代（MLP/CCAN Critic × early-stop/no-early-stop）avg 均 <1% 改善。确定性评估 avg=1275 < Fixed=1292 |
-| 根因 | (1) Rician κ=10dB LoS 主导，Fixed 策略是强吸引子，信道自适应空间仅来自 NLoS 分量（~24% 功率占比）；(2) TD3 探索噪声（0.1 std）偶然发现好策略但频率极低（~1/1000 episode）；(3) Replay buffer 中好样本被大量 Fixed 水平样本稀释，mean Q 梯度信号被噪声淹没；(4) Critic 质量不是瓶颈（CCANCritic vs MLP Critic 结果完全相同），问题在 TD3 的 mean-based actor update 无法从稀疏好信号中学习 |
-| 教训 | 注意力/架构创新≠RL 可学习性。验证架构容量（best episode）和验证 RL 可学习性（avg episode）是两个独立问题。当先验策略（Fixed）已是强吸引子时，off-policy RL 的探索效率不足以逃离。应先验证 "TD3 能否超越 Fixed" 再投入架构设计 |
+| 项目 | ris-phase (D018-D020, D022) [致命] |
+| 表现 | CCAN Actor best episode=1670 远超 PSO=1554（+7.5%），但 avg=1301 停在 Fixed=1292 水平（+0.7%）。4 轮 TD3 迭代（MLP/CCAN Critic × early-stop/no-early-stop）avg 均 <1% 改善。CCAN+SAC avg=1273（-1.5% vs Fixed），熵正则化同样无法逃离。确定性评估 avg=1275 < Fixed=1292 |
+| 根因 | (1) Rician κ=10dB LoS 主导，Fixed 策略是强吸引子，信道自适应空间仅来自 NLoS 分量（~24% 功率占比）；(2) TD3 探索噪声（0.1 std）偶然发现好策略但频率极低（~1/1000 episode）；(3) Replay buffer 中好样本被大量 Fixed 水平样本稀释，mean Q 梯度信号被噪声淹没；(4) Critic 质量不是瓶颈（CCANCritic vs MLP Critic 结果完全相同）；(5) SAC 熵正则化也无法克服——探索能覆盖更多动作但 LoS 梯度仍主导更新方向 |
+| 教训 | 注意力/架构创新≠RL 可学习性。验证架构容量（best episode）和验证 RL 可学习性（avg episode）是两个独立问题。当先验策略（Fixed）已是强吸引子时，off-policy RL 的探索效率不足以逃离。应先验证 "TD3 能否超越 Fixed" 再投入架构设计。SAC 的主动探索不改变结论——问题是梯度方向而非探索范围 |
 | 跨项目印证 | 与 A2 模式（先验 > RL）一致：ISL scheduling 手写先验 > PPO，beam-hopping IA-Greedy >> 全部 RL。共性：当确定性先验已接近 LoS 主导场景的最优时，RL 的随机探索是劣势而非优势 |
+
+#### D4. MVE 成功信号遗漏最强先验对照 [×1 项目]
+
+| 维度 | 内容 |
+|------|------|
+| 项目 | ris-phase (D010 vs D016-D022) [致命] |
+| 表现 | MVE v3 通过（TD3=40× Random），但 Execute 阶段 TD3=1281≈Fixed=1292（仅 3× Random）。MVE 看似 40× 实际只 3×——多出的倍数来自 Fixed 先验而非 RL 学习 |
+| 根因 | MVE 成功信号是 "TD3 >> Random"，没有包含 Fixed baseline 对照。Rician LoS 主导下 Fixed 本身就是 3× Random，RL 轻松学到 Fixed 水平就被梯度"满足"。MVE 验证了"RL 能学"但没验证"RL 能学得比强先验好" |
+| 教训 | **MVE 必须包含最强简单先验作为对照组**。成功信号应该是 "DRL > 最强简单先验" 而非 "DRL >> Random"。如果 MVE 阶段就发现 TD3 打不过 Fixed，根本不该进入 Contract。这是 FR-12（MVE→Formal 架构差异门控）的盲区——它检查架构结构差异，不检查问题难度缩放 |
+| 框架影响 | 建议在 gw-feasibility.md §D 的 MVE 通过条件中增加：(1) 必须包含 Fixed/heuristic 先验 baseline；(2) 通过条件为 DRL > 先验（非仅 > Random） |
+| 跨项目印证 | ISL scheduling MVE 也只对比 Random（grid=0.996 接近最优但没与 optimal 对比）；如果当时就对比 optimal，可能更早发现 RL 无法超越先验 |
 
 ### 模式检索索引
 
@@ -324,4 +355,22 @@
 | 仿真器跑出离谱数值 | C3 (边界 bug) | hgat, mega-constellation |
 | GNN 消融几乎无贡献 | B3 (规模不匹配), A2, A5 | ntn-handover, beam-hopping |
 | 架构 best 远超 baseline 但 avg 停在先验 | D3 (容量≠可学习性), A2 | ris-phase (CCAN best=1670 >> PSO) |
-| 多轮迭代改善 <1% | D3, A2 (先验吸引子) | ris-phase (4 轮), isl-scheduling (v1-v5) |
+| 多轮迭代改善 <1% | D3, A2 (先验吸引子) | ris-phase (4 轮 TD3 + SAC), isl-scheduling (v1-v5) |
+| MVE 通过但 Execute 失败 | D4 (成功信号缺先验对照) | ris-phase (MVE: 40× Random, Execute: ≈Fixed) |
+| 零交叉论文但架构不 work | B5 (空白陷阱), B6 (信息增量零) | nfv-sfc-vne (3 轮架构全败) |
+| 架构机制对所有输入相同 | B6 (信息增量零) | nfv-sfc-vne (uniform cross-attn modulation) |
+| SFC/约束被环境吸收 | B5 (空白陷阱) | nfv-sfc-vne (action masking 使 SFC encoding 冗余) |
+| MVE 测试弱对手非目标 baseline | B5, D4 | nfv-sfc-vne (MVE: GNN>MLP, 实际需: MatchingGAT>DualGAT+) |
+| 异构 GNN peak 与同构相当 | D5 (架构创新无性能差) | hgat (HGAT best≈GCN best≈-12) |
+| 给 baseline 加补丁后追平 | D5 | hgat (type_bias+type_proj 让 GCN 匹配 HGAT) |
+| 泛化测试核心假设被推翻 | D5 | hgat (GCN 泛化 -79 优于 HGAT -118 @50 IoTD) |
+
+#### D5. 架构创新的性能/泛化优势均不成立 [×1 项目]
+
+| 维度 | 内容 |
+|------|------|
+| 项目 | hgat-satellite-dag-offloading (D018-D020) [致命] |
+| 表现 | (1) Peak 性能：HGAT avg_best=-11.79, GCN avg_best=-11.67, GraphSAGE avg_best=-11.83, MLP avg_best=-11.70，4 模型几乎相同。(2) 稳定性：HGAT avg_mean=-138 >> GraphSAGE=-219 >> GCN=-289 >> MLP=-331（HGAT 最好但不影响最终策略质量）。(3) 零样本泛化（10→50 IoTD）：GCN=-79 优于 HGAT=-118，HGAT 假设被推翻 |
+| 根因 | (1) 给同构模型加 type_bias（GNN 前）+ type_proj（GNN 后）后，同构模型能恢复足够的类型信息匹配 HGAT 的 peak 性能；(2) GCN 的谱卷积产生更平滑的 embedding，反而泛化更好；(3) HGAT 的 attention 机制在更大图上注意力权重不稳定，导致高方差（std=100 vs GCN std<1） |
+| 教训 | **架构创新必须验证两个独立假设：(a) 创新带来性能差；(b) 性能差在新场景保持**。HGAT 两个都没通过。当同构模型可以通过简单补丁（type-aware projection）追平时，说明问题的异构性需求不够强——异构信息可以被同构架构近似恢复 |
+| 跨项目印证 | 与 ntn-handover 一致：GNN 绝对性能仅 +0.8%，优势全在泛化。但 HGAT 连泛化优势都没有——说明并非所有异构图问题都需要异构 GNN |

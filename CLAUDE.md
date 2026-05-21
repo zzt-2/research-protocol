@@ -23,7 +23,7 @@
 │   ├── manual/{slug}/   # 无 arxiv/DOI 的论文（slug 如 cai-jsac-gdrl）
 │   └── index.json       # 全局论文索引
 ├── search-archive/{date}/  # 检索缓存（date 如 2026-05-12）
-├── .session/              # 会话管理（跨对话状态集中存放）
+├── .sessions/              # 会话管理（跨对话状态集中存放）
 │   ├── {YYYY-MM-DD}-{project-slug}/  # 按项目/日期建文件夹
 │   │   ├── H{NNN}-{slug}.md          # 跨对话交接记录
 │   │   ├── PROMPT-{NNN}-{slug}.md    # 新对话提示词
@@ -58,22 +58,23 @@
 
 每类文件有且仅有一个存放位置，不允许在根目录随意创建目录或文件。
 
-| 产物 | 生成方式 | 存放路径 |
-|------|----------|----------|
-| 检索结果 JSON | `tools/search` 自动保存 | `search-archive/{YYYY-MM-DD}/{slug}.json` |
-| 论文下载（arXiv） | `tools/download` | `papers/arxiv/{arxiv_id}/source.{html,tar.gz,pdf}` + `content.md` |
-| 论文下载（DOI） | `tools/download` | `papers/doi/{doi_path}/source.pdf` + `content.md` |
-| 论文下载（无 ID） | `tools/download` | `papers/manual/{slug}/source.pdf` + `content.md` |
-| PDF 转 markdown | `tools/convert` | 输出到 PDF 同目录，文件名 `{pdf_stem}.md` |
-| 手动下载的 PDF | 用户操作 | 放入 `papers/downloads/{date}/`，之后用 `tools/convert` 转换 |
-| 参考实现代码 | 手动管理 | `reference/{name}/` |
-| 代码质量经验 | 自动生成 | `code-quality.md` |
-| 代码模板 | 从最佳项目提取 | `reference/sim-template/` |
-| Master 编排状态 | Master agent 每步后更新 | `projects/{name}/master-state.md` |
-| Worker 执行日志 | Worker 执行结束时写入 | `projects/{name}/worker-logs/step-{N}-{slug}.md` |
-| Worker 任务文件 | Master 派遣前写入（ephemeral） | `projects/{name}/worker-tasks/` |
+| 产物              | 生成方式                       | 存放路径                                                          |
+| ----------------- | ------------------------------ | ----------------------------------------------------------------- |
+| 检索结果 JSON     | `tools/search` 自动保存        | `search-archive/{YYYY-MM-DD}/{slug}.json`                         |
+| 论文下载（arXiv） | `tools/download`               | `papers/arxiv/{arxiv_id}/source.{html,tar.gz,pdf}` + `content.md` |
+| 论文下载（DOI）   | `tools/download`               | `papers/doi/{doi_path}/source.pdf` + `content.md`                 |
+| 论文下载（无 ID） | `tools/download`               | `papers/manual/{slug}/source.pdf` + `content.md`                  |
+| PDF 转 markdown   | `tools/convert`                | 输出到 PDF 同目录，文件名 `{pdf_stem}.md`                         |
+| 手动下载的 PDF    | 用户操作                       | 放入 `papers/downloads/{date}/`，之后用 `tools/convert` 转换      |
+| 参考实现代码      | 手动管理                       | `reference/{name}/`                                               |
+| 代码质量经验      | 自动生成                       | `code-quality.md`                                                 |
+| 代码模板          | 从最佳项目提取                 | `reference/sim-template/`                                         |
+| Master 编排状态   | Master agent 每步后更新        | `projects/{name}/master-state.md`                                 |
+| Worker 执行日志   | Worker 执行结束时写入          | `projects/{name}/worker-logs/step-{N}-{slug}.md`                  |
+| Worker 任务文件   | Master 派遣前写入（ephemeral） | `projects/{name}/worker-tasks/`                                   |
 
 **禁止事项：**
+
 - 不在根目录创建新的论文目录（如 `my-download-paper/`）
 - 不在根目录创建 `literature_notes.md`（属于项目目录）
 - 不在 `search-archive/` 根级放文件（必须按日期入子目录）
@@ -92,6 +93,7 @@
 不允许凭记忆、凭上下文中的摘要、或凭"之前读过"跳过阅读。判断标准：本轮上下文中没有该文件的明确阅读证据（如本轮通过 Read 工具读过），视为未读。
 
 具体要求：
+
 - 进入新阶段（如 GW → Contract）→ 必须读 `stages/{stage}.md`
 - 进入新步骤（如 GW Step 3 → Step 3.5）→ 必须读该步骤的职责文件（如 `gw-supplement.md`）
 - 跨对话续接、上下文压缩后恢复 → 同样必须重读
@@ -101,15 +103,15 @@
 
 每条约束只有一个拥有者（完整定义所在文件），其他文件只引用。文档层级：
 
-| 层级 | 文件 | 职责 |
-|------|------|------|
-| 通用原则 | `overview.md` | 核心原则、文档系统概览 |
-| 阶段流程 | `stages/*.md` | 该阶段的完整操作流程 |
-| 领域定制 | `domain-comms.md` | 领域特定技术栈、指标、反模式 |
-| 模板定义 | `templates.md` | 文档模板和字段规则 |
-| 代码质量 | `code-quality.md` | 代码经验积累、必做清单、常见缺陷、各维度最佳来源 |
-| 代码模板 | `reference/sim-template/` | config/env/model/train/reward/verify 骨架代码 |
-| 本文件 | `CLAUDE.md` | 环境配置、目录结构、规则索引（不重复框架文件内容） |
+| 层级     | 文件                      | 职责                                               |
+| -------- | ------------------------- | -------------------------------------------------- |
+| 通用原则 | `overview.md`             | 核心原则、文档系统概览                             |
+| 阶段流程 | `stages/*.md`             | 该阶段的完整操作流程                               |
+| 领域定制 | `domain-comms.md`         | 领域特定技术栈、指标、反模式                       |
+| 模板定义 | `templates.md`            | 文档模板和字段规则                                 |
+| 代码质量 | `code-quality.md`         | 代码经验积累、必做清单、常见缺陷、各维度最佳来源   |
+| 代码模板 | `reference/sim-template/` | config/env/model/train/reward/verify 骨架代码      |
+| 本文件   | `CLAUDE.md`               | 环境配置、目录结构、规则索引（不重复框架文件内容） |
 
 ### 文档更新流程
 
@@ -119,41 +121,47 @@
 2. **CLAUDE.md 只加索引行**：规则名 + 文件路径，不解释内容
 3. **code-quality.md 是教训唯一来源**：其他文件不重复教训内容
 
-| 新增场景 | 拥有者（写这里） | 需同步更新 |
-|---------|-----------------|-----------|
-| 失败模式/教训 | `code-quality.md` | 无（projects-overview.md 已引用） |
-| 执行规则 | `stages/execute.md` | CLAUDE.md 护栏表加索引行 |
-| 跨阶段规则 | 对应阶段文件 | CLAUDE.md 护栏表加索引行 |
-| 项目状态变更 | `projects-overview.md` | `directions-registry.md`（如涉及方向） |
-| 代码质量检查项 | `code-quality.md` | 无 |
+| 新增场景       | 拥有者（写这里）       | 需同步更新                             |
+| -------------- | ---------------------- | -------------------------------------- |
+| 失败模式/教训  | `code-quality.md`      | 无（projects-overview.md 已引用）      |
+| 执行规则       | `stages/execute.md`    | CLAUDE.md 护栏表加索引行               |
+| 跨阶段规则     | 对应阶段文件           | CLAUDE.md 护栏表加索引行               |
+| 项目状态变更   | `projects-overview.md` | `directions-registry.md`（如涉及方向） |
+| 代码质量检查项 | `code-quality.md`      | 无                                     |
 
 ## 跨阶段护栏
 
 核心原则见 `overview.md`。以下规则定义见对应文件，此处仅索引：
 
-| 规则 | 定义所在 |
-|------|----------|
-| 奖励归一化审查 | `domain-comms.md` §1.5, `groundwork.md` S6 |
-| Baseline 合法性 | `groundwork.md` S4-7 |
-| 方向可行性预判 | `gw-feasibility.md` |
-| 文献检索验证 | `contract.md` S0, `domain-comms.md` §1 |
-| 参数溯源审计 | `contract.md` S3 |
-| 子对话调度预算 | `contract.md` S0.2-0.4, `overview.md` |
-| 仿真器验证标准 | `groundwork.md` S7A |
-| Contract 修正 | `stages/contract.md` |
-| 反模式审查位置 | `stages/contract.md` S5 |
-| 预印本验证 | `gw-read.md`, `paper-materials-workflow.md` S5 |
-| 论文引用质量 | `thesis-materials.md` |
-| 可行性防坑规则 FR-01~08 | `stages/gw-feasibility.md` A0§1/§6, A', A, D; `tools-guide.md` §8; `stages/groundwork.md` 方法类型标注; `code-quality.md` 方法论适配性矩阵 |
-| GNN 信息冗余检查 FR-09 | `code-quality.md` 方法论适配性矩阵 |
-| 空间隔离约束决策模式 FR-10 | `code-quality.md` 方法论适配性矩阵 |
-| MVE 架构溯源 FR-11 | `stages/gw-feasibility.md` §D — MVE 结果必须包含架构摘要（动作空间/决策粒度/对比范式/奖励语义） |
-| MVE→Formal 架构差异门控 FR-12 | `stages/gw-feasibility.md` §D — GW Step 6 必须与 MVE 架构比对，差异影响对比机制则重验证 |
-| 动作空间表达力下界审计 FR-13 | `stages/contract.md` Step 4 — data-flow.md 必须审计模型决策空间是否覆盖每个 baseline |
-| 实验完备性对标检查 | `stages/contract.md` S5, `templates.md` 自检清单, `domain-comms.md` §7 |
-| 检索用项目工具 | `tools-guide.md` |
-| 防死胡同 | `stages/execute.md` S4.5 |
-| 先验基线测试 | `stages/execute.md` S0.5 |
+| 规则                          | 定义所在                                                                                                                                   |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| 奖励归一化审查                | `domain-comms.md` §1.5, `groundwork.md` S6                                                                                                 |
+| Baseline 合法性               | `groundwork.md` S4-7                                                                                                                       |
+| 方向可行性预判                | `gw-feasibility.md`                                                                                                                        |
+| 文献检索验证                  | `contract.md` S0, `domain-comms.md` §1                                                                                                     |
+| 参数溯源审计                  | `contract.md` S3                                                                                                                           |
+| 子对话调度预算                | `contract.md` S0.2-0.4, `overview.md`                                                                                                      |
+| 仿真器验证标准                | `groundwork.md` S7A                                                                                                                        |
+| Contract 修正                 | `stages/contract.md`                                                                                                                       |
+| 反模式审查位置                | `stages/contract.md` S5                                                                                                                    |
+| 预印本验证                    | `gw-read.md`, `paper-materials-workflow.md` S5                                                                                             |
+| 论文引用质量                  | `thesis-materials.md`                                                                                                                      |
+| 可行性防坑规则 FR-01~08       | `stages/gw-feasibility.md` A0§1/§6, A', A, D; `tools-guide.md` §8; `stages/groundwork.md` 方法类型标注; `code-quality.md` 方法论适配性矩阵 |
+| GNN 信息冗余检查 FR-09        | `code-quality.md` 方法论适配性矩阵                                                                                                         |
+| 空间隔离约束决策模式 FR-10    | `code-quality.md` 方法论适配性矩阵                                                                                                         |
+| MVE 架构溯源 FR-11            | `stages/gw-feasibility.md` §D — MVE 结果必须包含架构摘要（动作空间/决策粒度/对比范式/奖励语义）                                            |
+| MVE→Formal 架构差异门控 FR-12 | `stages/gw-feasibility.md` §D — GW Step 6 必须与 MVE 架构比对，差异影响对比机制则重验证                                                    |
+| 动作空间表达力下界审计 FR-13  | `stages/contract.md` Step 4 — data-flow.md 必须审计模型决策空间是否覆盖每个 baseline                                                       |
+| MVE 先验对照要求 FR-14        | `stages/gw-feasibility.md` §D — MVE 必须包含最强简单先验 baseline，pass 标准为 DRL > 先验（非仅 > Random）                                 |
+| MVE 贡献目标基线对照 FR-15    | `stages/gw-feasibility.md` §D — MVE 必须包含 Contract 假设中指定的 baseline（贡献声称要超越的对手），pass 标准含"提出方法 > 目标 baseline" |
+| 架构信息增量审计 FR-16        | `stages/contract.md` Step 2 — 每个核心组件必须用两个不同输入验证产生不同输出；相同输出则无信息增量                                         |
+| 空白零假设检查                | `stages/gw-feasibility.md` §B — 零交叉论文必须列出≥3个空白存在的结构性原因并逐一反驳                                                       |
+| 瓶颈诊断                      | `stages/contract.md` Step 1 — 架构设计前必须诊断 baseline 性能瓶颈（表达力/学习效率/天花板）                                               |
+| 信号方向熔断                  | `stages/execute.md` — 首次执行结果与 MVE/GW 预测方向相反时，必须做组件级信息流追踪                                                         |
+| 实验完备性对标检查            | `stages/contract.md` S5, `templates.md` 自检清单, `domain-comms.md` §7                                                                     |
+| 检索用项目工具                | `tools-guide.md`                                                                                                                           |
+| 防死胡同                      | `stages/execute.md` S4.5                                                                                                                   |
+| 先验基线测试                  | `stages/execute.md` S0.5                                                                                                                   |
 
 ## 上下文管理规则（跨步骤强制）
 
@@ -195,7 +203,7 @@
 
 ### 步骤间 handoff
 
-每完成一个步骤更新 handoff（格式、写入时机、自包含要求见全局 CLAUDE.md `.sessions/ 专题管理` 节）。路径：`.session/{date}-{project}/H{NNN}-{slug}.md`。
+每完成一个步骤更新 handoff（格式、写入时机、自包含要求见全局 CLAUDE.md `.sessions/ 专题管理` 节）。路径：`.sessions/{date}-{project}/H{NNN}-{slug}.md`。
 
 ## 状态恢复
 
@@ -204,18 +212,19 @@
 1. `projects-overview.md`（跨项目状态汇总，了解全局后再深入具体项目）
 2. `projects/{name}/master-state.md`（Master 编排状态，当前步骤+已完成步骤+关键决策+FR 检查清单）
 3. 项目记忆文件: `~/.claude/projects/-mnt-d-code-study-research-protocol/memory/project_{name}.md`
-4. `.session/*-{project}/` 下最新的 H{NNN} 文件（按编号排序取最大）
+4. `.sessions/*-{project}/` 下最新的 H{NNN} 文件（按编号排序取最大）
 5. `decision_log.md`（阶段摘要行）
 6. `feasibility_report.md`（如已到 Step 4）
 7. `baseline_report.md`（如已到 Step 7）
 8. `data-flow.md`（如已到 Contract Step 4）
-7. 对应阶段框架文件
+9. 对应阶段框架文件
 
 ## 代码质量强制规范
 
 **[MUST]** 准备 baseline、搭建仿真器、实现训练代码前，必须先读 `code-quality.md` 和 `reference/sim-template/` 中的对应模板。
 
 具体要求：
+
 - 新建 simulator 时，对照 `code-quality.md` 的必做清单逐项检查
 - GNN 模型必须继承 `BaseActorCritic` 接口模式（`reference/sim-template/model_gnn.py`）
 - 训练循环必须集成 wandb/tensorboard 和 early stopping（之前 6 个项目全部缺失，模板已补上）

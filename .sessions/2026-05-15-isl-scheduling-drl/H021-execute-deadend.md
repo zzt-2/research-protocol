@@ -5,6 +5,7 @@
 leo-isl-scheduling-drl 项目 Execute 阶段陷入死胡同：PPO 无法超越手写先验。
 
 当前状态：
+
 - 纯先验策略（active_bias + distance_bias）M1=0.0774，已达 B1(0.1035) 的 75%
 - PPO 微调 30ep 后 M1=0.0780，仅 +0.0006，几乎无改善
 - 根因：连续分数 + Normal 分布 + top-K 选择 → PPO 不适配这个动作空间
@@ -18,7 +19,7 @@ leo-isl-scheduling-drl 项目 Execute 阶段陷入死胡同：PPO 无法超越�
 2. `code-quality.md` 末尾"失败模式记录"段 — A1、A2 模式及先例
 3. `projects-overview.md` 跨项目教训 — 方法选择段
 4. `projects/leo-beam-hopping-gnn/decision_log.md` — D011-D013（类似失败案例，参考其处理方式）
-5. `.session/2026-05-15-isl-scheduling-drl/HANDOFF-014-*.md` — 最新 handoff（如果有）
+5. `.sessions/2026-05-15-isl-scheduling-drl/HANDOFF-014-*.md` — 最新 handoff（如果有）
 
 ## 核心问题
 
@@ -29,6 +30,7 @@ leo-isl-scheduling-drl 项目 Execute 阶段陷入死胡同：PPO 无法超越�
 ### Step 1: 确认根因
 
 读 decision_log D017-D022，确认死胡同的根因分类：
+
 - 是方法问题（PPO 不适配，换算法可解）？
 - 是问题建模问题（连续分数+top-K 本身有缺陷，需要重新设计动作空间）？
 - 是方向问题（ISL 调度本身不适合 DRL，需要换方向）？
@@ -40,15 +42,18 @@ leo-isl-scheduling-drl 项目 Execute 阶段陷入死胡同：PPO 无法超越�
 针对每个可能的根因，评估替代方案：
 
 **如果是方法问题：**
+
 - 换离散动作空间（keep/drop/swap 三选一）→ 与 D012 的 N_LCT 约束是否兼容？
 - 换算法（ES/SAC/行为克隆）→ beam-hopping 用监督学习有效（D011），ISL 能否类似？
 - 分层决策（先选候选集，再逐链路决策）→ 能否解决 65664 候选边问题？
 
 **如果是问题建模问题：**
+
 - 重设计 MDP（状态/动作/奖励）→ 成本多大？需要回到 Contract 吗？
 - 把"先验策略"本身作为贡献 → 类似 handover 项目的叙事转向经验
 
 **如果是方向问题：**
+
 - 归档，转入方向 A（路由+ISL+抗毁）的其他子问题
 - 参考学位论文结构要求（1方向→3问题），路由已有结果，ISL 如果做不了，找替代子问题
 

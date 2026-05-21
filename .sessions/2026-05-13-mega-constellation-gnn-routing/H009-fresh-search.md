@@ -6,7 +6,7 @@
 
 ## 背景
 
-读 `.session/STRATEGY.md` 了解完整上下文。核心要点：
+读 `.sessions/STRATEGY.md` 了解完整上下文。核心要点：
 
 - 用户是研究生，导师给的初始方向是 **"LEO 卫星链路"**，参考方向是 ISL ACM 预测
 - 之前在这个方向下做过 4 个项目（见 archive/studies/archive/），但验证不到位，结论不可信
@@ -34,6 +34,7 @@
 - **角度 E：AI/ML 方法在卫星通信中的应用**（DRL、GNN、Transformer 等）
 
 每组关键词用 `tools/search` 执行，参数建议：
+
 ```bash
 cd /mnt/d/code/study/research-protocol && ./tools/search "关键词" --mode academic --preset scenario-method
 ```
@@ -54,12 +55,13 @@ cd /mnt/d/code/study/research-protocol && ./tools/search "关键词" --mode acad
 ### 5. 输出
 
 - 搜索结果 JSON：`search-archive/{date}/{slug}.json`（脚本自动存档）
-- 候选方向分析：写入 `.session/DIRECTION-CANDIDATES.md`，格式：
+- 候选方向分析：写入 `.sessions/DIRECTION-CANDIDATES.md`，格式：
 
 ```markdown
 # 候选方向分析
 
 ## 方向 1：{名称}
+
 - 核心问题：{一句话}
 - 与导师方向关联度：高/中/低
 - 论文密度：{高/中/低}，近年趋势
@@ -72,6 +74,7 @@ cd /mnt/d/code/study/research-protocol && ./tools/search "关键词" --mode acad
 ## 方向 3：...
 
 ## 综合推荐排序
+
 1. ...
 ```
 

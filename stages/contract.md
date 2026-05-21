@@ -88,6 +88,19 @@ bash tools/search "LEO satellite handover attention DQN" \
 - 从 baseline 复现中确认改进空间确实存在
 - 从仿真环境验证中确认实验条件能支撑假设
 
+### 瓶颈诊断 [MUST]
+
+在提出架构解决方案之前，必须诊断 baseline 的性能瓶颈：
+
+1. **识别瓶颈**：success_signal 中指定的 baseline，哪个具体机制限制了其性能？
+   - 表达力瓶颈：GNN 无法捕获某种结构信息 → 架构创新有帮助
+   - 学习效率瓶颈：RL 无法有效训练已有架构 → 架构创新反加重负担
+   - 天花板瓶颈：问题本身的最优解接近 baseline → 任何架构改动都没用
+2. **天花板估算**：估算 baseline 距理论上界有多远（贪心上界/松弛下界/穷举小实例）
+3. **解决方案匹配**：proposed component 如何精确解决已识别的瓶颈？
+
+> 先例：nfv-sfc-vne 跳过了瓶颈诊断，直接设计 cross-attention。DualGAT+ 的 R2C=0.80 可能已接近天花板，cross-attention 解决的是"表达力瓶颈"但实际瓶颈可能是"天花板"或"学习效率"。3 轮架构尝试全部失败。
+
 ---
 
 ## Step 2：起草 Contract（draft 状态）
@@ -149,6 +162,28 @@ bash tools/search "LEO satellite handover attention DQN" \
 - 每个 claimed contribution 必须有对应实验行
 - Claim 的 scope 标注为 bounded（"up to X%"）或 universal（"all/practical"）
 - 此阶段为初步映射，Step 5 完善并做 scope 审计
+
+### [FR-16] 架构信息增量审计
+
+> 起源：nfv-sfc-vne 的 cross-attention output 对所有 substrate 节点产生相同信号，信息增量为零。3 种交互方式全部失败。
+
+每个核心架构组件必须通过信息增量审计，在 Contract 冻结前完成：
+
+[MUST] 对每个 proposed component，用两个具体不同的输入示例验证：
+1. 选择两个不同的输入 A 和 B（如：不同的 v_node 放置决策、不同的网络拓扑状态）
+2. 追踪 component 对 A 和 B 的输出
+3. 如果输出相同 → component 无信息增量，冻结前必须修复
+
+示例格式：
+```
+组件: cross-attention modulation
+输入 A: v_node=0 的 obs → curr_cross = [0.1, 0.3, ...] → p_node_0 和 p_node_1 各自的 modulated embedding
+输入 B: v_node=1 的 obs → curr_cross = [0.2, -0.1, ...] → p_node_0 和 p_node_1 各自的 modulated embedding
+检查: p_node_0 和 p_node_1 的 modulation 是否有 per-node 差异？
+  → A 中: p_node_0 获得与 p_node_1 相同的 modulation（均为 curr_cross）→ ❌ 信息增量为零
+```
+
+> 注意：FR-13 审计的是动作空间覆盖（模型能否执行 baseline 能做的所有事），FR-16 审计的是信息判别性（模型是否有足够信息区分不同决策的优劣）。两者互补，不能互相替代。
 
 > 注意：此步骤产出的 Contract 状态为 draft。Step 3-5 验证通过后才冻结。
 

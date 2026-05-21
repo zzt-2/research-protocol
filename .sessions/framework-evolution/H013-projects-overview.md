@@ -3,6 +3,7 @@
 ## 背景
 
 目前有多个并行推进的研究项目（leo-gnn-routing、leo-isl-scheduling-drl、leo-beam-hopping-gnn、hgat-dag-offloading、ris-phase-drl 等），分散在不同对话中推进。缺乏一个统一的项目状态视图，导致：
+
 - 选新方向时无法快速参考已有项目的教训
 - 设计 baseline/仿真器时重复犯同类错误
 - 跨对话恢复时需要读多个 handoff 才能了解全局
@@ -21,12 +22,13 @@
 1. **decision_log.md** — 读阶段摘要行和最新决策
 2. **feasibility_report.md** — 如存在，读结论段
 3. **baseline_report.md** — 如存在，读评估结果
-4. **.session/*-{project}/HANDOFF-*.md** — 读最新 handoff
+4. **.sessions/_-{project}/HANDOFF-_.md** — 读最新 handoff
 5. **simulator/ 目录** — 如存在，说明已进入实现阶段
 6. **results/ 目录** — 如存在，看有哪些结果文件
 7. **git log** — 最近 3-5 个 commit 了解进度
 
 每个子 agent 返回结构化摘要：
+
 ```
 项目名: xxx
 方向: 一句话描述
@@ -76,12 +78,13 @@
 ## 活跃项目
 
 ### [项目名]
+
 - **方向**: 一句话
 - **状态**: active | 阶段: GW-StepX
 - **关键技术**: GNN/DRL/...
 - **关键结论**: 1-2 句
 - **教训**: 跨项目可复用经验
-- **最新 handoff**: `.session/.../HANDOFF-XXX.md`
+- **最新 handoff**: `.sessions/.../HANDOFF-XXX.md`
 
 ## 已归档项目
 
@@ -90,18 +93,27 @@
 ## 跨项目教训
 
 ### 方向选择
+
 - ...
+
 ### 方法选择
+
 - ...
+
 ### 仿真器
+
 - ...
+
 ### 训练
+
 - ...
 
 ## 使用场景
+
 （Step 3 的内容）
 
 ## 框架改进待办
+
 （Step 4 的内容）
 ```
 

@@ -1,18 +1,20 @@
 # 项目总览
 
-> 最后更新: 2026-05-16 | 活跃: 5 | 已归档: 3 | 总计: 8
+> 最后更新: 2026-05-21 | 活跃: 5 | 已归档: 5 | 总计: 10
 
 ## 活跃项目
 
 ### leo-mega-constellation-gnn-routing
+
 - **方向**: GNN size generalization — 小星座训练零样本泛化到Starlink级路由
 - **阶段**: Execute 完成 → 论文素材提取
 - **关键技术**: GNN (GraphSAGE) + 位置编码 + 多尺度训练
 - **关键结论**: 跨规模时延保留率90.3%，PE是学习必要条件（无PE≈随机），9.7pp stretch差距纯来自跨规模迁移
 - **教训**: MVE 83-87%保持率为后续投入奠基；消融设计有效隔离泛化来源
-- **handoff**: `.session/2026-05-13-mega-constellation-gnn-routing/H008-0514-step5.md`
+- **handoff**: `.sessions/2026-05-13-mega-constellation-gnn-routing/H008-0514-step5.md`
 
 ### leo-ntn-handover-drl
+
 - **方向**: 二部图GNN+DDQN实现LEO切换size generalization
 - **阶段**: Contract 冻结(v2) + 素材提取完成 → 论文写作
 - **关键技术**: 二部图GNN + DDQN + top-K动作压缩
@@ -22,57 +24,62 @@
 - **handoff**: 无专用session目录（决策记录在项目目录内）
 
 ### hgat-satellite-dag-offloading
+
 - **方向**: HGAT增强的卫星-地面协同边缘计算DAG依赖任务卸载
-- **阶段**: GW Stage 7 — 仿真器搭建+Baseline复现
-- **关键技术**: 异构图注意力网络(HGAT) + DRL
-- **关键结论**: MVE通过（HGAT vs GraphSAGE +10.7%）；多IoTD环境重写完成；奖励权重η_t=0.5导致E_norm占97.9%需试运行验证
-- **教训**: 组合新颖性不可跳过MVE；奖励权重平衡需试运行验证；MinerU可解决PDF表格渲染问题
-- **handoff**: `.session/2026-05-13-hgat-satellite-dag-offloading/H001-initial.md`
+- **阶段**: GW Stage 7 完成 — 待评估是否继续
+- **关键技术**: 异构图注意力网络(HGAT) + PPO
+- **关键结论**: 4模型×3seed全部收敛但peak相当(-11.6~-12.0)；HGAT仅训练稳定性领先(mean -138 vs MLP -331)；零样本泛化(10→50 IoTD) GCN(-79)优于HGAT(-118)，核心假设被推翻
+- **教训**: type_bias+type_proj补丁让同构模型追平HGAT；GCN谱卷积泛化优于HGAT attention；异构性需求不够强，同构架构可近似恢复类型信息
+- **handoff**: `.sessions/2026-05-20-hgat-dag-offloading/H001-simulator-training-status.md`
 
 ### leo-congestion-routing
+
 - **方向**: GNN 拥塞感知路由 + 负载均衡 for LEO 卫星星座
-- **阶段**: GW Step 1 完成 → Step 2 论文获取
-- **关键技术**: GNN message passing + 全局负载聚合 + per-link 负载均衡决策
-- **关键结论**: Step 1 检索 87 条候选（必读15），GNN+拥塞+LEO 三角交集有论文但无 per-link 竞品；size gen × 拥塞路由交叉为真空
-- **风险**: resilient-routing MVE 证明 GNN ≈ MLP for routing，新方向需验证拥塞/负载信息的全局聚合优势
-- **handoff**: 无（项目刚启动）
+- **阶段**: Execute Step 6 完成 → 论文写作
+- **关键技术**: GNN message passing + per-link 负载均衡权重决策 + K-path 路由范式
+- **关键结论**: GNN vs ECMP +18.2%（GNN/ECMP=0.818），GNN vs MLP +17.8%（GNN/MLP=0.822），跨规模泛化 ≤5% 退化（0.7×~10.9×）。全部消融实验完成（故障率×流量×规模×架构），12 张可视化图已生成
+- **教训**: K-path 范式迁移（D15）是关键架构决策——从 per-flow 路由改为 per-edge 权重；TELGEN (Zhou'25 ToN) 是最强竞品，差异化靠 LEO 时变拓扑
+- **handoff**: 无（项目可直接进入论文写作）
 
-### leo-resilient-routing
-- **方向**: LEO故障感知抗毁路由（GNN→MARL+课程学习+主动预路由）
-- **归档原因**: MVE三轮失败：(1) GNN不优于MLP(18/60节点); (2) MARL课程学习+2.2%未达门槛; (3) 主动预路由反而更差(-1.3%); 与beam-hopping/ISL-scheduling同模式：网格拓扑正则→启发式够用→ML无优化空间
-- **关键失败教训**: Walker星座网格拓扑太规则，贪心路由92%投递率，RL仅5%；LEO路由/调度/波束跳三个子方向全部归档，信号一致：物理约束主导问题不适合ML
-- **handoff**: `.session/2026-05-16-leo-resilient-routing/H004-step4a-pivot.md`
+### nfv-sfc-vne
 
-### leo-isl-scheduling-drl
-- **方向**: GNN拓扑编码+DRL用于LEO巨型星座ISL细粒度三态调度
-- **阶段**: **归档** — 7种方法全部未超越先验
-- **归档原因**: (1) grid拓扑在24×20/24×66均近最优(swap改善<噪声); (2) PPO/REINFORCE/离散RL均无法超越先验; (3) ILP标签是代理目标; (4) 动态场景(边失效)RL信用分配失败; (5) 与beam-hopping同一失败模式: 物理结构决定性能
-- **关键结论**: GNN可完美学习专家拓扑(F1=1.0)，但无法超越; 24×66跨轨候选8.5个/sat(vs 24×20仅3个)，仍不足以产生优化空间
-- **教训**: 物理约束主导的问题(grid拓扑)不适合RL优化; 全局reward vs 逐边动作的credit assignment与规模无关; ILP标签最大化容量≠最大化吞吐量
-- **handoff**: `.session/2026-05-16-isl-scheduling-drl/H018-dynamic-scenario-stuck.md`
-
-### ris-phase-drl
-- **方向**: DRL优化大规模RIS(100+元素)连续相移
-- **阶段**: GW Step 4a Go 通过 → 待 Step 5 Baseline选定
-- **关键技术**: TD3/SAC（A2C能力不足已被撤稿证实）
-- **关键结论**: 空白真实存在；最直接竞争者已撤稿；100维连续动作空间是核心挑战
-- **教训**: 补充检索发现关键竞争论文（已撤稿）避免重复失败；所有精读论文无开源代码，复现复杂度高
-- **handoff**: `.session/2026-05-13-ris-phase-drl/H002-step2.md`
+- **方向**: 双层图匹配(MatchingGAT) + SFC 依赖链约束的跨规模 VNE
+- **阶段**: Execute E1 待重跑（架构 bug 修复后）
+- **关键技术**: MatchingGAT（逐节点交互 cross-attention）+ Node-Edge 联合嵌入
+- **关键结论**: MVE 确认 GNN > MLP +9.7%（R2C），GNN > 启发式 +37.8%；GW baseline MatchingGAT R2C=0.790 > DualGAT+ 0.756（+4.5%）；架构 bug 修复后 5ep 验证趋势向好
+- **风险**: E1 完整实验尚未用修复后架构跑；+4.5% 接近 +5% 假设门槛；TELGEN 竞品存在
+- **handoff**: 无
 
 ## 已归档项目
 
+### leo-resilient-routing
+
+- **方向**: LEO故障感知抗毁路由（GNN→MARL+课程学习+主动预路由）
+- **归档原因**: MVE三轮失败：(1) GNN不优于MLP(18/60节点); (2) MARL课程学习+2.2%未达门槛; (3) 主动预路由反而更差(-1.3%); 与beam-hopping/ISL-scheduling同模式：网格拓扑正则→启发式够用→ML无优化空间
+- **关键失败教训**: Walker星座网格拓扑太规则，贪心路由92%投递率，RL仅5%；LEO路由/调度/波束跳三个子方向全部归档，信号一致：物理约束主导问题不适合ML
+- **handoff**: `.sessions/2026-05-16-leo-resilient-routing/H004-step4a-pivot.md`
+
+### ris-phase-drl
+
+- **方向**: DRL优化大规模RIS(100+元素)连续相移
+- **归档原因**: CCAN+TD3/SAC 四轮验证 avg 全部停在 Fixed(θ=π) 水平（<1.5% 改善）。根因：Rician LoS 主导(κ=10dB)下最优策略≈Fixed，NLoS 自适应空间极小；off-policy RL 的 replay buffer 稀释好策略样本。Best=1670 远超 PSO=1554 说明架构容量够，但训练无法稳定输出好策略。
+- **关键失败教训**: 物理约束（LoS 主导）决定最优策略≈固定值的问题不适合 RL；MVE 通过（TD3=40×Random）但 formal 训练失败说明 MVE→Formal 差距可能致命；Critic 瓶颈假设被推翻（换 CCANCritic 结果相同），问题在训练动力学而非架构
+- **handoff**: `.sessions/direction-scouting/H013-ris-phase-drl-status.md`
+
 ### leo-isl-scheduling-drl
+
 - **方向**: GNN拓扑编码+DRL用于LEO巨型星座ISL细粒度三态调度
 - **归档原因**: 7种方法(PPO/REINFORCE/swap/ILP标签/grid标签/动态场景RL/全规模swap)全部未超越先验; grid拓扑在24×20和24×66均近最优; 物理结构决定性能与beam-hopping同模式
 - **关键失败教训**: 物理约束主导的问题不适合RL; 全局reward+逐边动作的credit assignment与规模无关; ILP标签是代理目标(容量≠吞吐量)
-- **handoff**: `.session/2026-05-16-isl-scheduling-drl/H018-dynamic-scenario-stuck.md`
+- **handoff**: `.sessions/2026-05-16-isl-scheduling-drl/H018-dynamic-scenario-stuck.md`
 
 ### leo-beam-hopping-gnn
+
 - **方向**: GNN建模多波束LEO卫星Beam Hopping波束间空间干扰耦合
 - **阶段**: 归档 — 6种方法全部失败
 - **归档原因**: 干扰是beam pair物理关系，无法从标量奖励通过梯度学习；action space(top-K离散选择)与图结构干扰关系根本不匹配
 - **关键失败教训**: Gaussian policy + top-K→信用分配稀疏（19维仅5维有梯度）；奖励被fairness主导82%可学信号仅7%；成功GNN论文均用监督学习非RL；MVE训练不稳定是预警信号
-- **handoff**: `.session/2026-05-15-beam-hopping-gnn/H009-archive.md`
+- **handoff**: `.sessions/2026-05-15-beam-hopping-gnn/H009-archive.md`
 
 ## 跨项目教训
 

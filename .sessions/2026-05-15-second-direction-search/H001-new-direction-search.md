@@ -10,20 +10,20 @@
 
 ### 已完成的搜索资产（可直接复用）
 
-2026-05-13 已做过大规模卫星通信领域检索（6 组关键词、180+ 候选、5 个子方向），存档在 `search-archive/2026-05-13/` 下。`.session/DIRECTION-CANDIDATES.md` 中有完整的方向分析和排序。
+2026-05-13 已做过大规模卫星通信领域检索（6 组关键词、180+ 候选、5 个子方向），存档在 `search-archive/2026-05-13/` 下。`.sessions/DIRECTION-CANDIDATES.md` 中有完整的方向分析和排序。
 
 ### 已占用/排除的方向
 
-| 方向 | 状态 | 理由 |
-|------|------|------|
-| GNN-based LEO routing | **已完成**（leo-mega-constellation-gnn-routing，Execute 阶段） | 当前主项目 |
-| LEO handover + DRL | **已完成**（leo-ntn-handover-drl） | 50+ 篇，过度饱和 |
-| RIS phase shift + DRL | **已完成**（ris-phase-drl） | 当前活跃项目 |
-| ISL ACM prediction | **负面结果**（isl-acm-prediction） | ISL 信道太确定性，DL 无优势 |
-| Grant-free RA for satellite IoT | **排除** | 5 年 1700+ 篇，红海 |
-| HGAT satellite DAG offloading | **已完成**（hgat-satellite-dag-offloading） | 边缘计算卸载 |
-| AI-driven beam hopping (方向 2) | **候选**，未深入 | 论文密度中等，与导师方向高关联 |
-| NTN-terrestrial integration (方向 3) | **候选**，未深入 | 竞争激烈（200 篇/年），需收窄 |
+| 方向                                 | 状态                                                           | 理由                           |
+| ------------------------------------ | -------------------------------------------------------------- | ------------------------------ |
+| GNN-based LEO routing                | **已完成**（leo-mega-constellation-gnn-routing，Execute 阶段） | 当前主项目                     |
+| LEO handover + DRL                   | **已完成**（leo-ntn-handover-drl）                             | 50+ 篇，过度饱和               |
+| RIS phase shift + DRL                | **已完成**（ris-phase-drl）                                    | 当前活跃项目                   |
+| ISL ACM prediction                   | **负面结果**（isl-acm-prediction）                             | ISL 信道太确定性，DL 无优势    |
+| Grant-free RA for satellite IoT      | **排除**                                                       | 5 年 1700+ 篇，红海            |
+| HGAT satellite DAG offloading        | **已完成**（hgat-satellite-dag-offloading）                    | 边缘计算卸载                   |
+| AI-driven beam hopping (方向 2)      | **候选**，未深入                                               | 论文密度中等，与导师方向高关联 |
+| NTN-terrestrial integration (方向 3) | **候选**，未深入                                               | 竞争激烈（200 篇/年），需收窄  |
 
 ### 第二个方向的选择标准
 
@@ -44,7 +44,8 @@
 
 ### Step 1：评估现有搜索资产
 
-读 `.session/DIRECTION-CANDIDATES.md`，评估：
+读 `.sessions/DIRECTION-CANDIDATES.md`，评估：
+
 - 方向 2（beam hopping）和方向 3（NTN）是否仍然可行
 - 现有搜索数据的覆盖度是否足够（按 gw-search.md 复用规则检查）
 - 是否需要新的搜索角度
@@ -65,7 +66,8 @@
 
 ### Step 3：方向分析和推荐
 
-产出 ≥2 个候选方向的详细分析（格式参考 `.session/DIRECTION-CANDIDATES.md`），每个方向包含：
+产出 ≥2 个候选方向的详细分析（格式参考 `.sessions/DIRECTION-CANDIDATES.md`），每个方向包含：
+
 - 核心问题（1-2 句）
 - 与导师方向关联度（高/中/低）
 - 论文密度和趋势（蓝海/中等/红海）

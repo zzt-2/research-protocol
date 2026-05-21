@@ -4,7 +4,7 @@
 
 读以下文件恢复上下文（按顺序）：
 
-1. `.session/2026-05-15-isl-scheduling-drl/HANDOFF-012-lct-constraint.md` — 最新交接
+1. `.sessions/2026-05-15-isl-scheduling-drl/HANDOFF-012-lct-constraint.md` — 最新交接
 2. `projects/leo-isl-scheduling-drl/decision_log.md` — 全部决策记录（注意 [D012] 问题重设定）
 3. `projects/leo-isl-scheduling-drl/baseline_report.md` — B1+B2 结果
 4. `projects/leo-isl-scheduling-drl/literature_notes.md` — 文献精读
@@ -52,4 +52,4 @@
 - 子 agent 委托规则：论文精读、web 检索结果、MVE 实验在子 agent 执行
 - 代码用新模板，不要从零手搓
 - 完成一个阶段/步骤后立即 commit
-- 跨对话 handoff：每完成一个步骤写 HANDOFF 文件到 `.session/2026-05-15-isl-scheduling-drl/`
+- 跨对话 handoff：每完成一个步骤写 HANDOFF 文件到 `.sessions/2026-05-15-isl-scheduling-drl/`

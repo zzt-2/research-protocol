@@ -14,6 +14,7 @@ CNKI 源额外需要 cookie 认证，过期时自动弹窗让用户验证。
   python blit.py "混合式教学 实证" --source cnki
   python blit.py "混合式教学 实证" --source cnki --doc-type phd
   python blit.py "混合式教学 实证" --source cnki --doc-type journal,phd --download papers/downloads/
+  python blit.py "民族文化" --source cnki --doc-type phd --institution "清华大学"
 """
 
 import argparse
@@ -471,13 +472,77 @@ async def _cnki_check_captcha(page) -> bool:
     return "安全验证" in title
 
 
-async def cnki_search(query: str, max_results: int = 20, download_dir: str | None = None, doc_type: str = "journal") -> list[dict]:
+async def _cnki_grid_api_search(page, query: str, institution: str, doc_type: str, max_results: int) -> list[dict]:
+    """通过 grid API POST 按学位授予单位 (LY 字段) 过滤搜索。"""
+    CNKI_DB_MAP = {"journal": "CJFD", "phd": "CDFD", "master": "CMFD"}
+    # doc_type → CNKI grid API Resource / Classid 映射
+    RESOURCE_MAP = {
+        "phd":    {"Resource": "DISSERTATION", "Classid": "RMJLXHZ3"},
+        "master": {"Resource": "DISSERTATION", "Classid": "RMJLXHZ3"},
+        "journal": {"Resource": "", "Classid": ""},
+    }
+    types = [t.strip() for t in doc_type.split(",")]
+    # 取第一个匹配的类型映射（通常只传一种）
+    res_info = next((RESOURCE_MAP[t] for t in types if t in RESOURCE_MAP), {"Resource": "", "Classid": ""})
+
+    query_items = [
+        {"Field": "SU", "Value": query, "Operator": "TOPRANK", "Logic": 0, "Title": "主题"},
+    ]
+    if institution:
+        query_items.append({"Field": "LY", "Value": institution, "Operator": "TOPRANK", "Logic": 0, "Title": "学位授予单位"})
+    qj = json.dumps({
+        "Platform": "", "Products": "",
+        **res_info,
+        "QNode": {"QGroup": [{"Key": "Subject", "Title": "", "Logic": 0,
+                              "Items": query_items, "ChildItems": []}]},
+        "ExScope": 1, "SearchType": 2, "Rlang": "Chinese",
+        "KuaKuCode": "", "Expands": {}, "SearchFrom": 1,
+    }, ensure_ascii=False)
+
+    items = await page.evaluate("""async (p) => {
+        const fd = new URLSearchParams();
+        fd.set('boolSearch', 'true');
+        fd.set('QueryJson', p.qj);
+        fd.set('pageNum', '1');
+        fd.set('pageSize', String(p.max));
+        fd.set('dstyle', 'listmode');
+        fd.set('aside', p.inst ? '主题：' + p.query + '　学位授予单位：' + p.inst : '主题：' + p.query);
+        fd.set('CurPage', '1');
+        if (p.dbPrefix) fd.set('dbPrefix', p.dbPrefix);
+        try {
+            const r = await fetch('/kns8s/brief/grid', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: fd.toString()
+            });
+            const html = await r.text();
+            const doc = new DOMParser().parseFromString(html, 'text/html');
+            const rows = doc.querySelectorAll('.result-table-list tbody tr');
+            return Array.from(rows).map(row => {
+                const a = row.querySelector('.name a');
+                const hr = a?.getAttribute('href') || '';
+                return {
+                    title: a?.innerText?.trim() || '',
+                    href: hr ? new URL(hr, 'https://kns.cnki.net').href : '',
+                    authors: Array.from(row.querySelectorAll('.author span')).map(x => x.innerText.trim()).filter(x => x && x.length < 20),
+                    source: row.querySelector('.source')?.innerText?.trim() || '',
+                    date: row.querySelector('.date')?.innerText?.trim() || '',
+                    cite: parseInt(row.querySelector('.quote')?.innerText?.trim()) || 0,
+                    dbid: a?.getAttribute('data-dbname') || ''
+                };
+            }).filter(r => r.title.length > 3);
+        } catch (e) { return []; }
+    }""", {"qj": qj, "max": max_results, "query": query, "inst": institution, "dbPrefix": CNKI_DB_MAP.get(types[0], "") if types else ""})
+    return items or []
+
+
+async def cnki_search(query: str, max_results: int = 20, download_dir: str | None = None, doc_type: str = "journal", institution: str | None = None) -> list[dict]:
     global _browser, _context, _page
 
     if not check_rate("cnki"):
         return []
 
-    print(f"[CNKI] 搜索: {query}")
+    print(f"[CNKI] 搜索: {query}" + (f" | 学位授予单位: {institution}" if institution else ""))
 
     # 启动浏览器并加载 cookie
     from playwright.async_api import async_playwright
@@ -504,11 +569,14 @@ async def cnki_search(query: str, max_results: int = 20, download_dir: str | Non
     # 访问搜索页
     CNKI_DB_MAP = {"journal": "CJFD", "phd": "CDFD", "master": "CMFD"}
     types = [t.strip() for t in doc_type.split(",")]
-    db_prefixes = [CNKI_DB_MAP[t] for t in types if t in CNKI_DB_MAP]
-    db_filter = "".join(f"&dbPrefix={p}" for p in db_prefixes) if db_prefixes else ""
-
+    db_codes = [CNKI_DB_MAP[t] for t in types if t in CNKI_DB_MAP]
+    # 博士/硕士论文需要 crossDbcodes 参数才能正确限定数据库
     encoded_query = query.replace(" ", "+")
-    search_url = f"https://kns.cnki.net/kns8s/defaultresult/index?kw={encoded_query}{db_filter}"
+    if db_codes and db_codes != ["CJFD"]:
+        cross_db = "".join(db_codes)
+        search_url = f"https://kns.cnki.net/kns8s/defaultresult/index?kw={encoded_query}&classid=RMJLXHZ3&crossDbcodes={cross_db}&korder=SU"
+    else:
+        search_url = f"https://kns.cnki.net/kns8s/defaultresult/index?kw={encoded_query}"
     await _page.goto(search_url, timeout=45000)
     await _page.wait_for_load_state("domcontentloaded", timeout=30000)
     await asyncio.sleep(3)  # 等 JS 渲染搜索结果
@@ -541,25 +609,30 @@ async def cnki_search(query: str, max_results: int = 20, download_dir: str | Non
 
     record("cnki")
 
-    # 提取搜索结果
-    items = await _page.evaluate(r"""() => {
-        const rows = document.querySelectorAll('.result-table-list tbody tr');
-        return Array.from(rows).map(row => {
-            const nameEl = row.querySelector('.name a');
-            const title = nameEl?.innerText?.trim() || '';
-            const href = nameEl?.href || '';
-            const authorEls = row.querySelectorAll('.author span');
-            const authors = Array.from(authorEls).map(a => a.innerText.trim()).filter(a => a && a.length < 20);
-            const sourceEl = row.querySelector('.source');
-            const source = sourceEl?.innerText?.trim() || '';
-            const dateEl = row.querySelector('.date');
-            const date = dateEl?.innerText?.trim() || '';
-            const citeEl = row.querySelector('.quote');
-            const cite = citeEl?.innerText?.trim() || '0';
-            const dbid = nameEl?.getAttribute('data-dbname') || '';
-            return { title, href, authors, source, date, cite: parseInt(cite) || 0, dbid };
-        }).filter(r => r.title.length > 3);
-    }""")
+    # 提取搜索结果：grid API 仅用于 institution 过滤，其余走 DOM
+    if institution:
+        items = await _cnki_grid_api_search(_page, query, institution or "", doc_type, max_results)
+    else:
+        items = await _page.evaluate(r"""(maxRows) => {
+            const rows = document.querySelectorAll('.result-table-list tbody tr');
+            return Array.from(rows).slice(0, maxRows).map(row => {
+                const nameEl = row.querySelector('.name a');
+                const title = nameEl?.innerText?.trim() || '';
+                const href = nameEl?.href || '';
+                // 作者：优先 <a>，兜底 <span>
+                const authorEls = row.querySelectorAll('.author a, .author span');
+                const authors = Array.from(authorEls).map(a => a.innerText.trim()).filter(a => a && a.length < 20);
+                // 来源：期刊用 .source，学位论文用 .unit（学位授予单位）
+                const sourceEl = row.querySelector('.source');
+                const unitEl = row.querySelector('.unit');
+                const source = (sourceEl?.innerText?.trim() || unitEl?.innerText?.trim() || '');
+                const dateEl = row.querySelector('.date');
+                const date = dateEl?.innerText?.trim() || '';
+                const citeEl = row.querySelector('.quote');
+                const cite = citeEl?.innerText?.trim() || '0';
+                return { title, href, authors, source, date, cite: parseInt(cite) || 0 };
+            }).filter(r => r.title.length > 3);
+        }""", max_results)
 
     results = []
     for item in items[:max_results]:
@@ -696,6 +769,7 @@ async def async_main():
     parser.add_argument("--output", "-o", default=None, help="输出文件路径")
     parser.add_argument("--download", "-d", default=None, metavar="DIR", help="下载 PDF 到指定目录 (ieee/cnki)")
     parser.add_argument("--doc-type", default="journal", help="CNKI 文献类型: journal/phd/master，逗号分隔可组合 (默认: journal)")
+    parser.add_argument("--institution", "-i", default=None, help="CNKI 学位授予单位过滤 (如 清华大学)")
 
     args = parser.parse_args()
 
@@ -720,7 +794,7 @@ async def async_main():
                 parser.error("cbpt 源需要 --journal 参数 (如 --journal wxdg)")
             results = await cbpt_journal_search(args.journal, args.query, args.max)
         elif args.source == "cnki":
-            results = await cnki_search(args.query, args.max, download_dir=args.download, doc_type=args.doc_type)
+            results = await cnki_search(args.query, args.max, download_dir=args.download, doc_type=args.doc_type, institution=args.institution)
     finally:
         await cleanup()
         await asyncio.sleep(0.3)
