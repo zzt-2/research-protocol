@@ -1,6 +1,6 @@
 """Link failure injector for LEO constellation topology.
 
-Supports random independent and regional failure modes.
+Supports random independent, regional, and cascading failure modes.
 Extended from mve_env.py RoutingEnv66.reset().
 """
 
@@ -39,6 +39,8 @@ class FailureInjector:
             failed = self._inject_random(G, rng)
         elif cfg.failure_mode == "regional":
             failed = self._inject_regional(G, rng)
+        elif cfg.failure_mode == "cascading":
+            failed = self._inject_cascading(G, rng)
 
         return G, failed
 
@@ -65,10 +67,13 @@ class FailureInjector:
     def _inject_regional(
         self, G: nx.DiGraph, rng: np.random.Generator
     ) -> set[tuple[int, int]]:
-        """Remove all edges around a randomly chosen node (regional outage)."""
+        """Remove all edges around randomly chosen nodes (regional outage).
+
+        Number of center nodes scales with failure_rate.
+        """
         cfg = self._config
         n_nodes = cfg.n_nodes
-        n_regional = max(1, int(n_nodes * 0.1))
+        n_regional = max(1, int(n_nodes * cfg.failure_rate))
         centers = rng.choice(n_nodes, size=n_regional, replace=False)
 
         failed: set[tuple[int, int]] = set()
@@ -81,6 +86,55 @@ class FailureInjector:
                 if G.has_edge(nb, center):
                     G.remove_edge(nb, center)
                     failed.add((nb, center))
+        return failed
+
+    def _inject_cascading(
+        self, G: nx.DiGraph, rng: np.random.Generator
+    ) -> set[tuple[int, int]]:
+        """Cascading failure: initial random failures propagate to neighbors.
+
+        Initial failures at half the normal rate, then each failed edge's
+        adjacent edges fail with probability cascade_prob (0.5). Propagation
+        runs for up to max_rounds (3) iterations.
+        """
+        cfg = self._config
+        cascade_prob = 0.5
+        max_rounds = 3
+        initial_rate = cfg.failure_rate * 0.5
+
+        # Phase 1: seed failures (fewer than pure random)
+        undirected_edges = list({tuple(sorted(e)) for e in G.edges()})
+        n_seed = max(1, int(len(undirected_edges) * initial_rate))
+        seed_idx = rng.choice(len(undirected_edges), size=n_seed, replace=False)
+
+        failed: set[tuple[int, int]] = set()
+        failed_undirected: set[tuple[int, int]] = set()
+
+        for idx in seed_idx:
+            u, v = undirected_edges[idx]
+            for a, b in [(u, v), (v, u)]:
+                if G.has_edge(a, b):
+                    G.remove_edge(a, b)
+                    failed.add((a, b))
+            failed_undirected.add((u, v))
+
+        # Phase 2: cascading propagation
+        for _ in range(max_rounds):
+            new_undirected: set[tuple[int, int]] = set()
+            for u, v in failed_undirected:
+                for node in (u, v):
+                    for nb in list(G.neighbors(node)):
+                        edge_key = tuple(sorted((node, nb)))
+                        if edge_key not in failed_undirected and rng.random() < cascade_prob:
+                            for a, b in [(node, nb), (nb, node)]:
+                                if G.has_edge(a, b):
+                                    G.remove_edge(a, b)
+                                    failed.add((a, b))
+                            new_undirected.add(edge_key)
+            if not new_undirected:
+                break
+            failed_undirected |= new_undirected
+
         return failed
 
 

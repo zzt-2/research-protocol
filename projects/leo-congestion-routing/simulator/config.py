@@ -31,7 +31,7 @@ class SimConfig:
 
     # Failures
     failure_rate: float = 0.08
-    failure_mode: str = "random"      # random / regional
+    failure_mode: str = "random"      # random / regional / cascading
 
     # Episode (K-path sequential routing)
     k_paths: int = 4                  # candidate paths per flow (MVE validated)
