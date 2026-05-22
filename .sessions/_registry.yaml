@@ -109,7 +109,7 @@ topics:
     status: active
     created: "2026-05-22"
     last_updated: "2026-05-22"
-    description: Ch1-3 系统性质量审计：新颖性、实验完备性、指标完整性、跨章一致性、数据自洽
+    description: Ch1-3 系统性质量审计。三章独立审计已完成(S002-S004)，待跨章一致性检查(H004)
     depends_on:
       - slug: thesis-structure-research
         reason: S003 审查结论为审计起点

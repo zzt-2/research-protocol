@@ -52,6 +52,22 @@ Ch3 质量审计执行指南。核心风险：TELGEN 泛化指标领先、DTAR/G
 
 三章独立审计完成后的跨章检查指南。Phase 1 三 agent 并行（参数/符号/实验设置一致性），Phase 2 Ch1 vs Ch3 差异化压力测试，Phase 3 竞品统一处理，Phase 4 最终汇总。
 
+### S002-ch1-audit.md — Ch1 质量审计报告（2026-05-22）
+
+Ch1 全面审计完成。新颖性 SAFE（4/4 核心声称无竞争），实验完备性 54%（14/26，低于 80% 阈值），指标完整性 PARTIAL（核心覆盖，统计严谨性缺失），数据自洽性 WARN（核心 PASS+3 处 LOW 矛盾）。3 项 P0（多 seed/p-value/M2 链路利用率），7 项 P1（E06/E07/E08/E09/推理延迟/CDF/收敛曲线）。6 个子 agent 并行执行。
+
+### S003-ch2-audit.md — Ch2 切换 Size Gen 质量审计报告（2026-05-22）
+
+Ch2 全面审计完成。新颖性 SAFE（310篇扫描，四要素组合无先例），实验完备性 WEAK（结构80%+但统计量/可视化缺失），指标完整性 FAIL（M3部分/M4缺失→60%），数据自洽性 FAIL（2 HIGH+2 MEDIUM矛盾）。GNN叙事三级递进方案。修复行动清单 P0-P4 共 19 项（~16h+6h GPU），分 3 个对话执行。**等待统一规划**。
+
+### S004-ch3-audit.md — Ch3 拥塞/故障弹性路由质量审计报告（2026-05-22）
+
+Ch3 全面审计完成。新颖性 SAFE（6组检索零覆盖，故障弹性+跨规模泛化组合仍为空白），实验完备性 8.0/10（12实验全有数据，E12未纳入paper-materials），指标完整性 7.5/10（CV/Overflow零成本可补），数据自洽性 6/10（3个必须修复的数字错误：E03表格数据错误、E12未纳入、E10"0.803"不可复现）。Ch1差异化 PASS（六维差异经得起追问）。TELGEN对比策略：正面讨论+互补定位。DTAR/GMR降级合理。6 个子 agent 并行。
+
+### S005-consolidation.md — 跨章一致性 & 最终汇总审计报告（2026-05-22）
+
+Phase 1-4 全部完成 + 代码验证。参数一致性 FAIL（Ch3 是纯抽象网格，无轨道力学；Ch1/Ch2 有完整轨道力学）。**关键代码验证发现**：Ch3 config.py 的 `altitude_km=780.0 # Iridium` 从未被代码引用，topology.py 全部 `distance_km=1.0`；Ch1 config.py 的 `GNN_LAYERS=2` 是过时值，实际训练用 3 层（train.py AC_LAYERS=3）。符号一致性 WARN（4 HIGH）。差异化 CONDITIONAL PASS。竞品处理 PASS。9 个子 agent + 主线程 7 项代码验证。
+
 ## 已确认结论
 
 （从前置专题 thesis-structure-research / S003 继承的结论）
@@ -70,9 +86,17 @@ Ch3 质量审计执行指南。核心风险：TELGEN 泛化指标领先、DTAR/G
 ## 未决项
 
 1. Ch2 是否补 N=30-40 拐点数据（可跳过，Limitations 中承认）
-2. 每章文献新鲜度未知（最后检索时间各异，需逐一验证）
-3. 三章符号体系/术语是否已统一（写作项目负责，但需审计确认无矛盾）
+2. ~~Ch2 文献新鲜度~~：2026-05-22 检索通过，SAFE（S003）
+3. ~~Ch3 文献新鲜度~~：2026-05-22 检索通过，SAFE（S004）
+4. Ch3 数据修复：E03表格/E12纳入/E10"0.803"（3项必须修复）
+5. Ch3 指标补充：CV+Overflow纳入paper-materials（零成本）
+6. ~~三章符号体系/术语是否已统一~~：审计确认有冲突（S005），需在论文写作时统一
+7. ~~Ch3 Walker F=0 需代码确认~~：✅ 已验证，topology.py 无 F 参数，纯 4-regular 网格
+8. ~~Ch1 GNN_LAYERS=2(config) vs 3层(论文)~~：✅ 已验证，train.py AC_LAYERS=3，config.py 过时
+9. Ch3 config.py 清理：删除误导性 Iridium 注释或标注 unused
+10. Ch3 paper-materials："Walker delta (F=0)" → "4-regular grid（Walker delta F=0 连通模式）"
+11. 拓扑建模深度差异需在论文中声明（Ch1/Ch2 物理仿真 vs Ch3 抽象网格）
 
 ## 当前位置
 
-交接文档编写完成（S001 + H001-H004）。**下一步：开新对话，读 H001，执行 Ch1 审计。**
+审计专题全部完成（含代码验证）。S001 专题建立 → H001-H004 交接 → S002 Ch1 审计 → S003 Ch2 审计 → S004 Ch3 审计 → **S005 跨章汇总+代码验证完成**。9 个子 agent + 主线程 7 项代码验证。**下一步：各章修复执行（新专题或回归各项目 master-state），建议专题状态转 closed。**
