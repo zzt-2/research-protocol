@@ -299,7 +299,7 @@ $$w(u, v) = \delta_{\text{delay}}(u, v) + \text{relu}\big(\max_d\ o_{u,d} - o_{u
 | Edge transform (per layer) | $2 \times 32 \times 4 \times 3 = 768$ | edge_dim=2, shared per layer |
 | Actor head | $128 \times 128 + 128 + 128 \times 4 + 4 = 16,516$ | FC(128→128→4) |
 | Critic head | $128 \times 128 + 128 + 128 \times 1 + 1 = 16{,}513$ | FC(128→128→1) |
-| **总计** | **~71K** | |
+| **总计** | **72,965** | |
 
 > 精确参数量由 `sum(p.numel() for p in model.parameters())` 给出，含 bias 项。
 
@@ -313,7 +313,7 @@ $$w(u, v) = \delta_{\text{delay}}(u, v) + \text{relu}\big(\max_d\ o_{u,d} - o_{u
 | 注意力头 | 1 | 4 |
 | 感受野 | 6 节点局部图 | 全局图 |
 | 位置编码 | 无 | Orbital PE (16 dim) |
-| 参数量级 | ~5K | ~71K |
+| 参数量级 | ~5K | 72,965 |
 | 训练方式 | PPO (RL) | 监督 (Dijkstra labels) |
 | 推理方式 | 加权 Dijkstra | 加权 Dijkstra |
 

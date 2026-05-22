@@ -18,13 +18,13 @@
      ▼
 ┌──────────────┐
 │  GNN Encoder │  T=2 MPNN-E, d=64
-│  ~15K params │
+│  13,120 params│
 └──────┬───────┘
        │  h_ue(N×64), h_sat(≤N×6 ×64), h_edge(≤N×6 ×32)
        ▼
 ┌──────────────┐
 │  Dueling Q   │  分解式: V(s) + A(s,a) - mean(A)
-│  ~14K params │
+│  12,738 params│
 └──────┬───────┘
        │  Q(UE_i, sat_j), j ∈ candidates
        ▼
@@ -186,7 +186,7 @@ $$\mathbf{h}_{ue}' = \text{LayerNorm}\!\Big(\text{MLP}_{project}(\mathbf{h}_{ue}
 
 ### 4.1 动机
 
-标准 Dueling DDQN 对每个 UE 输出 $|A|=396$ 个 Q 值（每颗卫星一个），输出层参数量巨大（$\sim$700K），且 99% 的动作为无效卫星（不在可见范围内）。即使使用 Q mask 将无效动作设为 $-\infty$，探索效率仍然极低。
+标准 Dueling DDQN 对每个 UE 输出 $|A|=396$ 个 Q 值（每颗卫星一个），输出层参数量巨大（$\sim$490K），且 99% 的动作为无效卫星（不在可见范围内）。即使使用 Q mask 将无效动作设为 $-\infty$，探索效率仍然极低。
 
 分解式 Q 函数将 $Q(UE_i, sat_j)$ 拆解为状态价值 $V$ 和卫星选择优势 $A$，利用 GNN 已有的结构化嵌入，将输出维度从 396 降至 top-K 个候选。
 
@@ -286,10 +286,10 @@ $$\mathcal{L}_{aux} = \text{BCE}(block\_pred,\ block\_true) + \text{MSE}(\Delta 
 | 决策编号 | 选择 | 理由 | 排除的替代方案 |
 |---------|------|------|--------------|
 | D010 | 边条件化 MPNN（MPNN-E）作为 GNN 层 | 边特征（SINR, elevation）是切换决策的主要信息源，GCN/GAT 原生不支持 | GCN（忽略边特征）、GAT（需魔改才能加入边条件化注意力） |
-| D011 | 分解式 Q 函数 | 参数量 ~14K vs flat Q ~700K；天然支持变长候选集；是 MPNN 边级嵌入到动作空间的最直接映射 | Flat 396-action Q（输出层巨大）、Per-UE 独立 Q 网络 |
+| D011 | 分解式 Q 函数 | 参数量 12,738 vs flat Q ~490K；天然支持变长候选集；是 MPNN 边级嵌入到动作空间的最直接映射 | Flat 396-action Q（输出层巨大）、Per-UE 独立 Q 网络 |
 | D012 | top-K=6 候选压缩 | 仿真统计 avg 4.4 可见卫星，K=6 零信息损失；396→6 使图规模可控 | Zero-padding 到固定 N（浪费计算，Dueling advantage 中心化偏差） |
 | D013 | 两阶段训练 | 缓解 GNN+DRL 联合训练不稳定风险（R5）；预训练强制 GNN 学会负载相关编码 | 端到端直接训练（GNN 初期噪声编码导致 DRL 不稳定） |
-| D014 | 方案 C（GNN+DRL）作为主攻 | 新颖性优势（三元组合无人占据）；故事更清晰；参数效率 29K vs 712K；top-K 从方案 A 并入 | 方案 A LA-DDQN（与 ARTHF 差异窄，D021 验证 DLA 无效后方案 A 死亡） |
+| D014 | 方案 C（GNN+DRL）作为主攻 | 新颖性优势（三元组合无人占据）；故事更清晰；参数效率 25,858 vs 490,125；top-K 从方案 A 并入 | 方案 A LA-DDQN（与 ARTHF 差异窄，D021 验证 DLA 无效后方案 A 死亡） |
 | D025 | Contract 叙事转向 size generalization | 三阶段递进：(1) 20 UE 基线 GNN≈MLP，(2) 50-100 UE GNN>>MLP，(3) 小规模训练直接大规模部署 | "GNN 提升绝对性能"叙事（15 UE 下 GNN 仅 +0.8%，不够显著） |
 
 来源：decision_log.md D010-D014, D025。
@@ -300,12 +300,12 @@ $$\mathcal{L}_{aux} = \text{BCE}(block\_pred,\ block\_true) + \text{MSE}(\Delta 
 
 | 组件 | 参数量 | 说明 |
 |------|--------|------|
-| GNN Encoder | ~15K | 4 个小 MLP + LayerNorm，参数在所有 UE/sat 对间共享 |
-| `MLP_v`（状态价值） | ~4K | $64 \to 64 \to 1$ |
-| `MLP_a`（优势） | ~10K | $(64+64+32)=160 \to 64 \to 1$ |
-| **C 总计** | **~29K** | |
-| **B2 DDQN（对比）** | **~712K** | $1585 \times 256 + 256 \times 128 + 128 \times 396$ |
-| **压缩比** | **25×** | |
+| GNN Encoder | 13,120 | 4 个小 MLP + LayerNorm，参数在所有 UE/sat 对间共享（源码实测） |
+| `MLP_v`（状态价值） | 4,225 | $64 \to 64 \to 1$ |
+| `MLP_a`（优势） | 8,513 | $(64+64+3)=131 \to 64 \to 1$ |
+| **C 总计** | **25,858** | |
+| **B2 DDQN（对比）** | **~490K** | $1585 \times 256 + 256 \times 128 + 128 \times 396$（含偏置 = 490,125） |
+| **压缩比** | **19×** | |
 
 参数效率来源：(1) GNN 参数在所有 UE/sat 对间**共享**（permutation equivariance），(2) 分解式 Q 避免了 396 维巨大输出层。
 
@@ -337,7 +337,7 @@ $$\mathcal{L}_{aux} = \text{BCE}(block\_pred,\ block\_true) + \text{MSE}(\Delta 
 | Experience replay | 100% | Buffer + 采样逻辑完全复用 |
 | $\varepsilon$-greedy 调度 | 100% | 衰减策略复用 |
 | Q-network（Dueling 部分） | 部分 | $V(s)$ 复用 Dueling 结构，$A(s,a)$ 改为分解式 |
-| GNN 编码器 | **新增** | MPNN-E 编码器，约 15K 参数 |
+| GNN 编码器 | **新增** | MPNN-E 编码器，13,120 参数 |
 | Graph builder | **新增** | top-K 候选选择、二部图构建 |
 | 预训练循环 | **新增** | Phase 1 监督学习循环 |
 

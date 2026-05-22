@@ -11,8 +11,8 @@ class SimConfig:
     # Walker delta constellation
     n_planes: int = 6
     sats_per_plane: int = 11          # 66 nodes for training
-    altitude_km: float = 780.0        # Iridium
-    inclination_deg: float = 86.4
+    altitude_km: float = 780.0        # placeholder, unused in abstract grid model
+    inclination_deg: float = 86.4     # placeholder, unused in abstract grid model
 
     # ISL
     isl_capacity_gbps: float = 10.0   # [ASSUMPTION]

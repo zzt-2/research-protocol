@@ -91,12 +91,34 @@ def compute_pe(plane_ids, sat_ids, P, S, pe_dim=16):
     return torch.stack(parts, dim=-1)
 
 
-def snapshot_to_pyg(snap, dest_idx, plane_ids, sat_ids, P, S, pe_dim=16):
+def compute_random_pe(N, pe_dim=16, seed=None):
+    """Generate random PE vectors with same dimensionality as Orbital PE.
+
+    Used as a control in ablation experiments to validate that Orbital PE
+    provides structurally meaningful information beyond mere dimensionality.
+
+    Args:
+        N: number of nodes
+        pe_dim: must match Orbital PE dimension
+        seed: optional random seed for reproducibility
+    Returns:
+        (N, pe_dim) float tensor
+    """
+    gen = torch.Generator()
+    if seed is not None:
+        gen.manual_seed(seed)
+    return torch.randn(N, pe_dim, generator=gen)
+
+
+def snapshot_to_pyg(snap, dest_idx, plane_ids, sat_ids, P, S, pe_dim=16, pe_mode='orbital'):
     """Convert snapshot dict to PyG Data object with precomputed PEs.
 
     Node features: [is_dest(1), own_PE(16), dest_PE(16)] = 33 dim
     Edge features: [delay_ms(1), dist_km(1)] = 2 dim
     Also computes direction availability mask (4 dirs per node).
+
+    Args:
+        pe_mode: 'orbital' (default) or 'random' for ablation control
     """
     N = snap['N']
     edge_index = torch.tensor(snap['edge_index'], dtype=torch.long)
@@ -105,8 +127,11 @@ def snapshot_to_pyg(snap, dest_idx, plane_ids, sat_ids, P, S, pe_dim=16):
         dtype=torch.float32
     )
 
-    # Precompute all PEs
-    all_pe = compute_pe(plane_ids, sat_ids, P, S, pe_dim)
+    # Compute PEs based on mode
+    if pe_mode == 'random':
+        all_pe = compute_random_pe(N, pe_dim)
+    else:
+        all_pe = compute_pe(plane_ids, sat_ids, P, S, pe_dim)
     dest_pe = all_pe[dest_idx].unsqueeze(0).expand(N, -1)
 
     is_dest = torch.zeros(N, 1)

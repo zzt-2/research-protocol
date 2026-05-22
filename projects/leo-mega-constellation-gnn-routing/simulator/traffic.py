@@ -2,12 +2,13 @@
 import numpy as np
 
 
-def generate_traffic(N, mode='uniform', positions=None, total_demand=1.0, rng=None):
+def generate_traffic(N, mode='uniform', positions=None, total_demand=1.0, rng=None,
+                     hotspot_ratio=0.1, hotspot_intensity=3.0):
     """Generate traffic demand matrix (N, N). Diagonal is zero.
 
     Modes:
         uniform: equal probability per pair
-        hotspot: 10% nodes produce 50% traffic
+        hotspot: configurable hotspot traffic (hotspot_ratio/intensity params)
         distance: probability inversely proportional to node distance
     """
     if rng is None:
@@ -17,10 +18,10 @@ def generate_traffic(N, mode='uniform', positions=None, total_demand=1.0, rng=No
         tm = rng.random((N, N))
     elif mode == 'hotspot':
         tm = rng.random((N, N))
-        n_hot = max(1, int(0.1 * N))
+        n_hot = max(1, int(hotspot_ratio * N))
         hot = rng.choice(N, n_hot, replace=False)
-        tm[hot, :] *= 3.0
-        tm[:, hot] *= 3.0
+        tm[hot, :] *= hotspot_intensity
+        tm[:, hot] *= hotspot_intensity
     elif mode == 'distance':
         if positions is None:
             raise ValueError("distance mode requires satellite positions")

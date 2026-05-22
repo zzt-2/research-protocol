@@ -218,11 +218,11 @@ reward = w_r · R_norm + w_l · L_norm - w_b · B - w_h · H
 
 | 指标 | GNN (E4-20) | MLP (C6-20) | gap | 来源 |
 |------|------------|------------|-----|------|
-| Reward gap | — | — | **+0.3%** | contract.md S4 |
+| Reward（3-seed 均值） | 13,632 | 13,650 | **-0.13%** | results/E4-20-c25, C6-20-c25 |
 
-评估配置：3 seeds，50 episodes 训练（20 UE 档位），3 seeds 评估。
+评估配置：3 seeds，100 episodes 训练（20 UE 档位），3 seeds 评估。
 
-结论：GNN 与 MLP 在 20 UE 下性能接近（gap +0.3%），符合文献预期——GNN 优势在 N>20-30 时才显现（Lee 2023, Shen 2019）。
+结论：GNN 与 MLP 在 20 UE 下性能接近（gap -0.13%），符合文献预期——GNN 优势在 N>20-30 时才显现（Lee 2023, Shen 2019）。
 
 ---
 
@@ -257,7 +257,7 @@ reward = w_r · R_norm + w_l · L_norm - w_b · B - w_h · H
 
 | 指标 | GNN 迁移 | MLP 迁移 | gap | 来源 |
 |------|---------|---------|-----|------|
-| Reward gap | — | — | **GNN +61.5%** | contract.md S2 / D029 |
+| Reward（3-seed 均值） | 31,275 | 19,361 | **GNN +61.5%** | results/phase5_generalize.json / D029 |
 
 来源：contract.md S2 阈值 ≥15%，实测 +61.5%。
 
@@ -265,10 +265,10 @@ reward = w_r · R_norm + w_l · L_norm - w_b · B - w_h · H
 
 | 指标 | GNN 迁移 | MLP 迁移 | gap | 来源 |
 |------|---------|---------|-----|------|
-| GNN 迁移 reward | 35,699（正 reward） | — | — | contract.md S3 / D029 |
-| MLP 迁移 reward | — | -9,710（完全崩溃） | — | D029 |
-| MLP 迁移阻塞率 | — | 71.5% | — | D029 |
-| GNN vs MLP gap | — | — | **+467%** | contract.md A5 / D029 |
+| GNN 迁移 reward | 35,699（正 reward，std=4,398） | — | — | results/phase5_generalize.json / D029 |
+| MLP 迁移 reward | — | -9,710（完全崩溃，std=90） | — | results/phase5_generalize.json / D029 |
+| MLP 迁移阻塞率 | — | 71.5% | — | results/phase5_generalize.json / D029 |
+| GNN vs MLP gap | — | — | **绝对差 45,409（GNN 35,699 vs MLP -9,710）** | contract.md A5 / D029 |
 
 来源：decision_log D029, contract.md A5。
 
@@ -291,12 +291,12 @@ reward = w_r · R_norm + w_l · L_norm - w_b · B - w_h · H
 | 编号 | 消融目标 | 预期影响方向 | 实际结果 | 结论 | 来源 |
 |------|---------|-------------|---------|------|------|
 | A1 | top-K 压缩（B2→C6） | reward 大幅提升 | ✓ B2 25% → C6 0% 阻塞 | top-K 压缩是决定性改进（396→6 动作空间，reward 4866→9857） | contract.md / D022 |
-| A2 | GNN 消息传递（C6→E4） | reward 小幅提升 | ✓ +0.8% at 15 UE（+77 reward over C6） | GNN 有效但增量有限，真正决定性改进来自 top-K | D022 |
+| A2 | GNN 消息传递（C6→E4） | reward 小幅提升 | ✓ +0.8% at 15 UE（+77 reward over C6）；20 UE 实测 gap ≈ 0% | GNN 有效但增量有限，真正决定性改进来自 top-K | D022 |
 | A3 | GNN 深度 T=2 vs T=1 | reward 下降 | ✓ -1.8% | T=2 消息传递是最关键 GNN 组件 | contract.md / D022 |
 | A4 | orbit_phase 编码 | reward 轻微下降 | ✓ -0.4% | orbit_phase 有轻微正面贡献 | contract.md |
-| A5 | size generalization（20UE→100UE） | GNN 保持，MLP 崩溃 | ✓ GNN reward 35,699，MLP reward -9,710，gap +467% | size generalization 是 GNN 决定性优势 | contract.md / D029 |
+| A5 | size generalization（20UE→100UE） | GNN 保持，MLP 崩溃 | ✓ GNN reward 35,699，MLP reward -9,710（绝对差 45,409） | size generalization 是 GNN 决定性优势 | contract.md / D029 |
 
-注：A1-A5 为 contract.md 记录的已完成消融。方案 A 的消融（A1 flat FC vs LA-DDQN）见 execution_report.md，属于方案 A 体系，非方案 C 消融。
+注：A1-A5 为 contract.md 记录的已完成消融，属于方案 C 消融链。消融路径：B2（flat 396-action DDQN）→A1 top-K 压缩→C6（flat MLP+topK）→A2 GNN 消息传递→E4（GNN+DDQN）；A3/A4 为 E4 组件消融；A5 为 size generalization 验证。方案 A 的消融（A1 flat FC vs LA-DDQN）见 execution_report.md，属于方案 A 体系，非方案 C 消融。
 
 ---
 
@@ -347,7 +347,7 @@ GNN (E4) vs MLP (C6) 超参对比表：
 | S1: 同规模 100 UE | GNN vs MLP reward gap | ≥15% | **+34%** | ✓ |
 | S2: Size generalization 50 UE | GNN 迁移 reward gap | ≥15% | **+61.5%** | ✓ |
 | S3: Size generalization 100 UE | GNN 迁移保持正 reward | 正值 | **35,699** | ✓ |
-| S4: 20 UE 基线 | GNN ≈ MLP | gap <5% | **+0.3%** | ✓ |
+| S4: 20 UE 基线 | GNN ≈ MLP | gap <5% | **-0.13%** | ✓ |
 
 ### 12.2 失败信号 (F1-F3)
 
@@ -356,7 +356,7 @@ GNN (E4) vs MLP (C6) 超参对比表：
 | 条件 | 触发条件 | 状态 | 说明 |
 |------|---------|------|------|
 | F1: 50 UE 同规模 | GNN vs MLP gap <5% | **未触发** | MLP 略优 +4.9%，但在 size gen 场景 GNN +61.5% |
-| F2: Size gen 无差异 | GNN 迁移 ≈ MLP 迁移 | **未触发** | GNN +467% at 100 UE |
+| F2: Size gen 无差异 | GNN 迁移 ≈ MLP 迁移 | **未触发** | GNN 35,699 vs MLP -9,710 at 100 UE |
 | F3: 训练不稳定 | GNN 无法收敛 | **未触发** | 100 UE 训练 loss 稳定下降 |
 
 ---
@@ -370,9 +370,9 @@ GNN (E4) vs MLP (C6) 超参对比表：
 | 记录位置 | 描述 | 数值 |
 |---------|------|------|
 | D022 | GNN 在 top-K 基础上仅 +0.8%（+77 reward over C6） | +0.8% at 15 UE |
-| contract.md S4 | 20 UE 基线 GNN ≈ MLP | gap +0.3% at 20 UE |
+| 本文档 §6 (20 UE 实测) | 20 UE 基线 GNN ≈ MLP | gap -0.13% at 20 UE |
 
-**说明**：D022 报告 +0.8% 对应 15 UE（Groundwork 阶段 UE 数量），contract.md S4 报告 +0.3% 对应 20 UE（Contract 调整后的 UE 数量）。UE 数量不同，数值差异合理。
+**说明**：D022 报告 +0.8% 对应 15 UE（Groundwork 阶段 UE 数量），20 UE 实测 gap 为 -0.13%（GNN 略低但基本持平）。UE 数量不同，数值差异合理。两档位结论一致：GNN 与 MLP 在小规模下性能相当。
 
 ### 13.2 D022 中 T=2 消融贡献
 

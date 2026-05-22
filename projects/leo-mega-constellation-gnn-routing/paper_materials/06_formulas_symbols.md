@@ -127,7 +127,7 @@ $$\text{retention} = \frac{\text{delay}_{\text{GRLR, same-scale}}}{\text{delay}_
 | Edge transform | 2 | 32×4 | — | ~0.8K/layer |
 | Actor head (方向预测) | 128 | 128 | 4 | ~16.5K |
 | Critic head | 128 | 128 | 1 | ~16.5K |
-| **总计** | | | | **~71K** |
+| **总计** | | | | **72,965** |
 
 ### vs GRLR Baseline
 
@@ -139,7 +139,7 @@ $$\text{retention} = \frac{\text{delay}_{\text{GRLR, same-scale}}}{\text{delay}_
 | 注意力头 | 1 | 4 |
 | 感受野 | 6 节点局部图 | 全局图 |
 | 位置编码 | 无 | Orbital PE (16 dim) |
-| **参数量** | **~5K** | **~71K** |
+| **参数量** | **~5K** | **72,965** |
 
 来源：models.py; grlr_model.py; D024 (GRLR复现)。
 

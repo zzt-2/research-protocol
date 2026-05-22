@@ -304,6 +304,7 @@ def evaluate(env, network, seed):
     obs = env.reset(seed=seed)
     throughputs, blockings = [], []
     ho_count = 0
+    ue_throughput = np.zeros(env.num_ues)
     done = False
 
     while not done:
@@ -322,12 +323,16 @@ def evaluate(env, network, seed):
         throughputs.append(float(info['total_throughput_bps']))
         blockings.append(float(info['blocking_rate']))
         ho_count += int(info['handover_count'])
+        ue_throughput += info['throughput_bps']
 
+    jain = float(np.sum(ue_throughput) ** 2 /
+                 (env.num_ues * np.sum(ue_throughput ** 2) + 1e-12))
     network.train()
     return {
         'mean_throughput_bps': float(np.mean(throughputs)),
         'mean_blocking_rate': float(np.mean(blockings)),
         'total_handover_count': ho_count,
+        'jain_fairness': jain,
     }
 
 

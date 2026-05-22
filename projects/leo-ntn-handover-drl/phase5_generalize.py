@@ -180,6 +180,7 @@ def eval_gnn(env, net, seed):
     prev = np.full(env.num_ues, -1, dtype=int)
     blk = np.zeros(env.num_ues, dtype=bool)
     total_r, ho, blk_s, steps = 0.0, 0, 0.0, 0
+    ue_throughput = np.zeros(env.num_ues)
     done = False
     while not done:
         graphs = [build_graph(obs[u], env._step, prev[u], blk[u]) for u in range(env.num_ues)]
@@ -199,11 +200,15 @@ def eval_gnn(env, net, seed):
         total_r += float(rews.sum())
         ho += int(info['handover_count'])
         blk_s += float(info['blocking_rate'])
+        ue_throughput += info['throughput_bps']
         steps += 1
         prev = g_act.copy()
         blk = info['throughput_bps'] == 0
+    jain = float(np.sum(ue_throughput) ** 2 /
+                 (env.num_ues * np.sum(ue_throughput ** 2) + 1e-12))
     net.train()
-    return {'reward': total_r, 'blocking': blk_s / steps, 'handovers': ho}
+    return {'reward': total_r, 'blocking': blk_s / steps, 'handovers': ho,
+            'jain_fairness': jain}
 
 
 def eval_mlp(env, net, seed):
@@ -212,6 +217,7 @@ def eval_mlp(env, net, seed):
     prev = np.full(env.num_ues, -1, dtype=int)
     blk = np.zeros(env.num_ues, dtype=bool)
     total_r, ho, blk_s, steps = 0.0, 0, 0.0, 0
+    ue_throughput = np.zeros(env.num_ues)
     done = False
     while not done:
         flats, masks, topks = [], [], []
@@ -232,11 +238,15 @@ def eval_mlp(env, net, seed):
         total_r += float(rews.sum())
         ho += int(info['handover_count'])
         blk_s += float(info['blocking_rate'])
+        ue_throughput += info['throughput_bps']
         steps += 1
         prev = g_act.copy()
         blk = info['throughput_bps'] == 0
+    jain = float(np.sum(ue_throughput) ** 2 /
+                 (env.num_ues * np.sum(ue_throughput ** 2) + 1e-12))
     net.train()
-    return {'reward': total_r, 'blocking': blk_s / steps, 'handovers': ho}
+    return {'reward': total_r, 'blocking': blk_s / steps, 'handovers': ho,
+            'jain_fairness': jain}
 
 
 # ── Main ────────────────────────────────────────────────────────────────────

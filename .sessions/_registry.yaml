@@ -109,7 +109,17 @@ topics:
     status: active
     created: "2026-05-22"
     last_updated: "2026-05-22"
-    description: Ch1-3 系统性质量审计。三章独立审计已完成(S002-S004)，待跨章一致性检查(H004)
+    description: Ch1-3 系统性质量审计。全部完成(S002-S005)，专题已关闭。
+
+  - slug: thesis-chapter-fixes
+    title: 三章审计修复执行
+    status: active
+    created: "2026-05-22"
+    last_updated: "2026-05-22"
+    description: 基于审计发现的三章小改动统一修复（无GPU项优先，GPU项后置）
+    depends_on:
+      - slug: chapter-quality-audit
+        reason: 修复项全部来自审计报告 S002-S005
     depends_on:
       - slug: thesis-structure-research
         reason: S003 审查结论为审计起点

@@ -183,7 +183,7 @@ xeoverse (L05)、Hypatia、StarryNet 均为静态路由仿真器，GNN 路由需
 
 | 方法 | Mean Stretch | <=1.2x Optimal | Delay (ms) | 保留率 |
 |------|-------------|----------------|------------|--------|
-| Dijkstra | 1.000 | 100% | 60.32 | — |
+| Dijkstra | 1.000 | 100% | 60.77 | — |
 | **Ours** | **1.097** | **85.1%** | **66.77** | **90.3%** |
 | GRLR (同规模) | 1.008 | 100% | 60.32 | 100% |
 
@@ -261,7 +261,7 @@ LEO mega-constellation 路由面临规模爆炸与拓扑时变的双重挑战。
 | <=1.5x Optimal | 98.9% | D023 |
 | Delay (Ours) | 66.77 ms | D025 |
 | Delay (GRLR 同规模) | 60.32 ms | D024 |
-| Delay (Dijkstra) | 60.32 ms | D024 |
+| Delay (Dijkstra) | 60.77 ms | D023 |
 | 时延保留率 | 90.3% | D025 |
 | vs Dijkstra 差距 | 9.9% | D025 |
 | 消融 A1 (无 PE) 精度 | 39.66% | D026 |

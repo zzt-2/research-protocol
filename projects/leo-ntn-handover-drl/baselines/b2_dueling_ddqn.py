@@ -235,6 +235,7 @@ def evaluate(env, network, seed):
     throughputs = []
     blocking_rates = []
     handover_count = 0
+    ue_throughput = np.zeros(env.num_ues)
     done = False
 
     while not done:
@@ -251,13 +252,17 @@ def evaluate(env, network, seed):
         throughputs.append(float(info['total_throughput_bps']))
         blocking_rates.append(float(info['blocking_rate']))
         handover_count += int(info['handover_count'])
+        ue_throughput += info['throughput_bps']
 
+    jain = float(np.sum(ue_throughput) ** 2 /
+                 (env.num_ues * np.sum(ue_throughput ** 2) + 1e-12))
     network.train()
     return {
         'episode_reward': float(ep_reward),
         'mean_throughput_bps': float(np.mean(throughputs)),
         'mean_blocking_rate': float(np.mean(blocking_rates)),
         'total_handover_count': handover_count,
+        'jain_fairness': jain,
     }
 
 

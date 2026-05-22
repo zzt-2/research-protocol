@@ -47,14 +47,15 @@
 | E06 720节点 (surge=1.0) | ✅ PASS | GNN/ECMP=0.932 (10.9× scale) ≤ 1.10 |
 | E08 故障率消融 (surge=1.0) | ✅ | 全部GNN赢: 0%=0.845, 5%=0.855, 8%=0.797, 10%=0.881, 15%=0.837 |
 | E09 流量消融 (surge=1.0) | ✅ 全GNN赢 | 均匀=0.857, 中等=0.811, 默认=0.797, 重型=0.843 |
-| E10 层数消融 (surge=1.0) | ✅ <2%差异 | L1=0.777, L2=0.795, L3=0.792 |
-| E11 头数消融 (surge=1.0) | ✅ <1%差异 | H2=0.771, H4=0.775, H8=0.779 |
+| E10 层数消融 (surge=1.0) | ✅ <2%差异 | L1=0.773, L2=0.775, L3=0.783（3 seeds）|
+| E11 头数消融 (surge=1.0) | ✅ <1.5%差异 | H2=0.771, H4=0.782, H8=0.778（3 seeds）|
+| E12 故障模式对比 | ✅ 10/12 赢ECMP | random/regional/cascading × 4故障率，3 模式全评估 |
 | Execute Step 3 假设判定 | ✅ PASS | D19: 三维 Success Signal 全部满足，Failure Signal 全部未触发 |
 | Execute Step 6 可视化 | ✅ | simulator/figures/fig1-10, simulator/visualize_results.py |
 | 训练曲线实验 | ✅ | training_curves.json (GNN 500ep + MLP 300ep) |
 | 密集消融实验 | ✅ | dense_ablation_results.json (故障率8点+流量8点+规模7点) |
-| E10 层数消融 | ✅ | e10_e11_results.json, L3最优(0.803)但差异<3% |
-| E11 头数消融 | ✅ | e10_e11_results.json, 差异<1.5pp，架构鲁棒 |
+| E10 层数消融 | ✅ | e10_e11_multiseed_results.json, 3 seeds, 差异<3% |
+| E11 头数消融 | ✅ | e10_e11_multiseed_results.json, 3 seeds, 差异<1.5pp，架构鲁棒 |
 
 ## 关键决策
 - D1: R1+R2 搜索策略，87 条候选，覆盖充分
@@ -81,7 +82,7 @@
 | F2: GNN 正常条件劣于 ECMP | ✅ 叙事反转 | surge=1.0 下无故障 GNN/ECMP=0.845，GNN 在所有条件下均赢 ECMP |
 | F3: ECMP 不标准 | ✅ 已修复 | True ECMP(BFS全最短路)仅好1.35%，旧结果可信 |
 | F4: 泛化声称误导 | ✅ 分析完成 | 推荐"Walker delta族内scale gen"+极地间隙测试(可选) |
-| F5: 消融单seed | ⏳ 待修复 | 需GPU重跑消融(1-2天) |
+| F5: 消融单seed | ✅ 已修复 | E10/E11 已补 3 seeds，e10_e11_multiseed_results.json |
 | M2: MLP不公平 | ✅ 已修复 | 800ep/LR decay/奖励归一化/hidden=64 |
 | M3: 无统计检验 | ✅ 已修复 | bootstrap p<0.0001, Cohen's d=-0.86 vs ECMP |
 | m4: 只有MLU指标 | ✅ 已修复 | M1-M5全实现，env暴露per-link数据 |
@@ -90,13 +91,13 @@
 
 ## 实验完备性自检（2026-05-18）
 
-### Tier 1 (必做): 3/6 通过
+### Tier 1 (必做): 5/6 通过
 | 项 | 状态 | 备注 |
 |----|------|------|
-| T1-1 多 seed | ⚠️ E01 达标(3 seeds)；E08/E09/E10/E11 单 seed | F5 待修 |
+| T1-1 多 seed | ✅ E01 达标(3 seeds)；E10/E11 已补 3 seeds；E08/E09 单 seed | F5 已修 |
 | T1-2 Baseline 来源 | ✅ | 5 个 baseline 全标注 |
 | T1-3 Baseline 公平 | ✅ | MLP 完全匹配 GNN 配置 |
-| T1-4 逐模块消融 | ⚠️ A1-A5 完成，E12 缺失，E10/E11 单 seed | |
+| T1-4 逐模块消融 | ✅ A1-A5 完成，E12 已完成，E10/E11 已补 3 seeds | |
 | T1-5 信道溯源 | ✅ | 每参数有文献溯源 |
 | T1-6 Scope 控制 | ✅ Contract 已修正 | per-flow K-path + Walker delta 族内 |
 
@@ -116,8 +117,8 @@
 4. ~~**清理旧文件**~~ ✅ — 8 个旧文件移入 legacy/
 5. ~~**可视化重生成**~~ ✅ — 12 张图全部用 surge=1.0 数据重生成
 6. ~~**论文叙事材料**~~ ✅ — paper-materials.md (A+B 框架 + DTAR 讨论 + TELGEN 对比表)
-7. **E10/E11 多 seed** — F5 消融补 seed (可选, 4-6h GPU)
-8. **E12 故障模式对比** — 降级或补做 (可选)
+7. ~~**E10/E11 多 seed**~~ ✅ — F5 消融已补 3 seeds
+8. ~~**E12 故障模式对比**~~ ✅ — 3 模式 × 4 故障率 = 12 组数据已补齐
 
 ## Thesis 一致性
 - Ch1: GNN routing size gen (leo-mega-constellation-gnn-routing, Execute 完成)

@@ -133,10 +133,10 @@ $$\mathcal{L}_{aux} = \text{BCE}(\hat{b}_i, b_i) + \text{MSE}(\hat{\Delta l}_j, 
 
 | 网络 | 参数量 | 说明 |
 |------|--------|------|
-| B2 DDQN (flat 396-action) | ~712K | 1585×256 + 256×128 + 128×396 |
-| C GNN Encoder | ~15K | 4 个小 MLP + LayerNorm |
-| C Dueling Q | ~14K | MLP_v + MLP_a |
-| **C 总计** | **~29K** | **比 B2 少 25×** |
+| B2 DDQN (flat 396-action) | ~490K | 1585×256 + 256×128 + 128×396（含偏置 = 490,125） |
+| C GNN Encoder | 13,120 | 4 个小 MLP + LayerNorm（源码实测） |
+| C Dueling Q | 12,738 | MLP_v + MLP_a（源码实测） |
+| **C 总计** | **25,858** | **比 B2 少 19×** |
 
 来源：design_C.md §4.3。
 

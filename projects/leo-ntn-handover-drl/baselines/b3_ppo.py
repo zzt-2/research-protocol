@@ -360,6 +360,7 @@ def evaluate(env: LEOSatHandoverEnv, model: ActorCritic, seed: int) -> dict:
     blocking_rates = []
     handover_counts = []
     throughputs = []
+    ue_throughput = np.zeros(env.num_ues)
 
     done = False
     while not done:
@@ -376,12 +377,16 @@ def evaluate(env: LEOSatHandoverEnv, model: ActorCritic, seed: int) -> dict:
         blocking_rates.append(float(info["blocking_rate"]))
         handover_counts.append(int(info["handover_count"]))
         throughputs.append(float(info["total_throughput_bps"]))
+        ue_throughput += info['throughput_bps']
 
+    jain = float(np.sum(ue_throughput) ** 2 /
+                 (env.num_ues * np.sum(ue_throughput ** 2) + 1e-12))
     return {
         "mean_step_reward": float(np.mean(step_rewards)),
         "mean_throughput_bps": float(np.mean(throughputs)),
         "mean_blocking_rate": float(np.mean(blocking_rates)),
         "total_handover_count": int(np.sum(handover_counts)),
+        "jain_fairness": jain,
     }
 
 

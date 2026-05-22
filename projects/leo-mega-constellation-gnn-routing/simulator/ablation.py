@@ -104,7 +104,13 @@ def train_epoch(model, loader, opt, device):
 
 def eval_weighted_dijkstra(model, config_name, use_pe=True,
                            n_snapshots=10, n_tms=5, n_flows=100, seed=123):
-    """Weighted Dijkstra evaluation matching main experiment protocol (D023)."""
+    """Weighted Dijkstra evaluation matching main experiment protocol (D023).
+
+    Returns dict with routing metrics plus:
+      - link_utilization: {mean, max, std, per_edge} edge load statistics
+      - inference_time_ms: total model inference wall-clock time
+      - per_flow_stretches: list of per-flow stretch values
+    """
     rng = np.random.default_rng(seed)
     cfg = CONFIGS[config_name]
     walker = WalkerDelta(cfg['P'], cfg['S'], cfg['F'], cfg['alt'], cfg['inc'])
@@ -115,6 +121,10 @@ def eval_weighted_dijkstra(model, config_name, use_pe=True,
     all_stretches = []
     all_gnn_delays = []
     all_djk_delays = []
+    total_inference_ms = 0.0
+
+    # A1: Track per-edge flow count for link utilization
+    edge_load = {}  # (u, v) -> flow count
 
     for snap_i in range(n_snapshots):
         t = rng.uniform(0, walker.period)
@@ -130,8 +140,11 @@ def eval_weighted_dijkstra(model, config_name, use_pe=True,
                 data.x = torch.cat([data.x[:, :1], torch.zeros(N, PE_DIM * 2)], dim=-1)
             data = data.to(DEVICE)
 
+            # A2: Time model inference
+            t_inf_start = time.perf_counter()
             with torch.no_grad():
                 logits, _ = model(data)
+            total_inference_ms += (time.perf_counter() - t_inf_start) * 1000.0
             logits_np = logits.cpu().numpy()
 
             # Build weighted adjacency: weight = delay + relu(best_logit - logit)
@@ -172,6 +185,8 @@ def eval_weighted_dijkstra(model, config_name, use_pe=True,
                         break
                     _, hop_delay = nmap[(u, edge_dir[(u, v)])]
                     actual_delay += hop_delay
+                    # A1: Count this edge usage
+                    edge_load[(u, v)] = edge_load.get((u, v), 0) + 1
                 if not valid:
                     continue
 
@@ -187,6 +202,19 @@ def eval_weighted_dijkstra(model, config_name, use_pe=True,
 
     stretches = np.array(all_stretches)
     n_attempted = n_snapshots * n_tms * n_flows
+
+    # A1: Compute link utilization statistics
+    if edge_load:
+        loads = np.array(list(edge_load.values()), dtype=np.float64)
+        link_utilization = dict(
+            mean=float(np.mean(loads)),
+            max=float(np.max(loads)),
+            std=float(np.std(loads)),
+            per_edge={f"{k[0]}-{k[1]}": int(v) for k, v in edge_load.items()},
+        )
+    else:
+        link_utilization = dict(mean=0.0, max=0.0, std=0.0, per_edge={})
+
     return dict(
         n_flows=len(stretches),
         success_rate=len(stretches) / n_attempted if n_attempted else 0,
@@ -197,6 +225,9 @@ def eval_weighted_dijkstra(model, config_name, use_pe=True,
         le15=float(np.mean(stretches <= 1.5) * 100) if len(stretches) else 0,
         mean_gnn_delay=float(np.mean(all_gnn_delays)) if all_gnn_delays else float('inf'),
         mean_djk_delay=float(np.mean(all_djk_delays)) if all_djk_delays else float('inf'),
+        link_utilization=link_utilization,
+        inference_time_ms=total_inference_ms,
+        per_flow_stretches=[float(s) for s in all_stretches],
     )
 
 
@@ -268,9 +299,25 @@ def run_ablation(ablation_type):
     )
     print(f"  Evaluation time: {time.time()-t0:.1f}s")
 
-    # Save model
+    # Save model and results
     save_path = os.path.join(os.path.dirname(__file__), f'ablation_{ablation_type}.pt')
     torch.save(model.state_dict(), save_path)
+    import json
+    results_dir = os.path.join(os.path.dirname(__file__), 'results')
+    os.makedirs(results_dir, exist_ok=True)
+    results_path = os.path.join(results_dir, f'ablation_{ablation_type}.json')
+    # Omit per_edge dict from JSON to keep file small
+    json_results = {k: v for k, v in results.items()
+                    if k not in ('link_utilization',)}
+    json_results['link_utilization_summary'] = {
+        'mean': results['link_utilization']['mean'],
+        'max': results['link_utilization']['max'],
+        'std': results['link_utilization']['std'],
+        'n_edges': len(results['link_utilization']['per_edge']),
+    }
+    with open(results_path, 'w') as f:
+        json.dump(json_results, f, indent=2)
+    print(f"  Results saved:  {results_path}")
 
     # Print results
     print(f"\n{'='*60}")
@@ -287,6 +334,13 @@ def run_ablation(ablation_type):
     print(f"  Djk delay:      {results['mean_djk_delay']:.2f} ms")
     delay_overhead = (results['mean_gnn_delay'] / results['mean_djk_delay'] - 1) * 100
     print(f"  Delay overhead: {delay_overhead:.1f}%")
+    # A1: Link utilization
+    lu = results['link_utilization']
+    print(f"  Link util mean: {lu['mean']:.1f}  max: {lu['max']}  std: {lu['std']:.1f}")
+    # A2: Inference time
+    print(f"  Inference time: {results['inference_time_ms']:.1f} ms total")
+    # A3: Per-flow stretches count
+    print(f"  Per-flow data:  {len(results['per_flow_stretches'])} stretch values")
     print(f"  Total time:     {time.time()-t_start:.1f}s")
     print(f"  Model saved:    {save_path}")
     print(f"{'='*60}")

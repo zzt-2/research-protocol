@@ -5,7 +5,9 @@ weighted Dijkstra stretch as reward (dense signal).
 """
 import sys
 import os
+import json
 import time
+import argparse
 import numpy as np
 import torch
 import torch.nn.functional as F
@@ -152,12 +154,25 @@ def evaluate(model, config_name, n_episodes=20, n_flows=100, seed=123):
 
 
 def main():
+    parser = argparse.ArgumentParser(description='PPO fine-tuning with GNN-weighted Dijkstra reward')
+    parser.add_argument('--seed', type=int, default=42,
+                        help='Random seed for training (default: 42)')
+    parser.add_argument('--suffix', type=str, default='',
+                        help='Optional suffix for output files (e.g. seed number)')
+    args = parser.parse_args()
+
+    seed = args.seed
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    suffix = f'_{args.suffix}' if args.suffix else ''
+
     print("=" * 60)
     print("PPO + WEIGHTED DIJKSTRA FINE-TUNING")
     print("=" * 60)
     print(f"Device: {DEVICE}")
+    print(f"Seed: {seed}")
 
-    env = RoutingEnv(TRAIN_CONFIGS, n_sources=30, pe_dim=PE_DIM, seed=42)
+    env = RoutingEnv(TRAIN_CONFIGS, n_sources=30, pe_dim=PE_DIM, seed=seed)
 
     node_dim = 1 + PE_DIM * 2
     model = RoutingActorCritic(
@@ -188,6 +203,9 @@ def main():
     optimizer = torch.optim.Adam(model.parameters(), lr=PPO_LR)
     t0 = time.time()
 
+    # A4: Loss history tracking
+    loss_history = {'epochs': [], 'train_loss': [], 'entropy': []}
+
     for it in range(N_ITERATIONS):
         batch = collect_batch(env, model, BATCH_SIZE, DEVICE)
         metrics = ppo_update(model, optimizer, batch, DEVICE)
@@ -197,6 +215,11 @@ def main():
         mean_st = np.mean([b['info']['mean_stretch']
                           if b['info']['mean_stretch'] < float('inf') else 5.0
                           for b in batch])
+
+        # A4: Record loss per iteration
+        loss_history['epochs'].append(it + 1)
+        loss_history['train_loss'].append(float(metrics['policy_loss'] + metrics['value_loss']))
+        loss_history['entropy'].append(float(metrics['entropy']))
 
         if (it + 1) % 10 == 0 or it == 0:
             elapsed = time.time() - t0
@@ -223,9 +246,18 @@ def main():
         print(f"  {cfg:16s}: success={r['success_rate']:.1%}  "
               f"stretch={r['mean_stretch']:.3f}  [{tag}]")
 
-    save_path = os.path.join(os.path.dirname(__file__), 'ppo_finetuned.pt')
+    save_path = os.path.join(os.path.dirname(__file__), f'ppo_finetuned{suffix}.pt')
     torch.save(model.state_dict(), save_path)
     print(f"\nSaved: {save_path}")
+
+    # A4: Save loss history as JSON
+    results_dir = os.path.join(os.path.dirname(__file__), 'results')
+    os.makedirs(results_dir, exist_ok=True)
+    loss_path = os.path.join(results_dir, f'loss_history{suffix}.json')
+    with open(loss_path, 'w') as f:
+        json.dump(loss_history, f, indent=2)
+    print(f"Loss history: {loss_path}")
+
     print(f"Total: {time.time() - t0:.0f}s")
     print("=" * 60)
 
