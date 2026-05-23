@@ -1,0 +1,71 @@
+{
+  "A1": {
+    "seeds": [
+      123
+    ],
+    "mean_stretch": {
+      "mean": 1.0091129398414747,
+      "std": 0.0,
+      "values": [
+        1.0091129398414747
+      ]
+    },
+    "mean_delay": {
+      "mean": 61.316717615628555,
+      "std": 0.0,
+      "values": [
+        61.316717615628555
+      ]
+    },
+    "le12": {
+      "mean": 99.98,
+      "std": 0.0,
+      "values": [
+        99.98
+      ]
+    },
+    "per_seed_results": [
+      {
+        "n_flows": 5000,
+        "success_rate": 1.0,
+        "mean_stretch": 1.0091129398414747,
+        "median_stretch": 1.0,
+        "p95_stretch": 1.0472109893932497,
+        "le12": 99.98,
+        "le15": 100.0,
+        "mean_gnn_delay": 61.316717615628555,
+        "mean_djk_delay": 60.78204124191741,
+        "link_util_mean": 25.724991162955106,
+        "link_util_max": 141.0,
+        "link_util_std": 22.019561687238898,
+        "inference_time_ms": 263.02035697881365,
+        "experiment": "A1",
+        "train_seed": 123,
+        "eval_seed": 123,
+        "train_configs": [
+          "train_66",
+          "train_100",
+          "train_200"
+        ],
+        "use_pe": false,
+        "random_pe": false,
+        "train_loss": 1.2137417303208708,
+        "train_accuracy": 0.4026264122985738,
+        "data_gen_time_s": 22.296133756637573,
+        "train_time_s": 306.21323919296265,
+        "eval_time_s": 20.95719027519226,
+        "total_time_s": 349.4885022640228
+      }
+    ]
+  },
+  "_meta": {
+    "total_time_s": 349.4888517856598,
+    "seeds": [
+      123
+    ],
+    "experiments": [
+      "A1"
+    ],
+    "timestamp": "2026-05-23 22:53:21"
+  }
+}
