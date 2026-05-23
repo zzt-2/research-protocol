@@ -34,7 +34,7 @@ model = RoutingActorCritic(
     hidden_dim=cfg.hidden_dim,
     n_layers=cfg.n_layers,
     n_heads=cfg.n_heads,
-    n_edges=env._E,
+    k_paths=cfg.k_paths,
 ).to(cfg.device)
 
 results_dir = Path("projects/leo-congestion-routing/simulator/results")
@@ -57,18 +57,10 @@ eval_path = results_dir / f"eval_seed{SEED}.json"
 with open(eval_path, "w") as f:
     json.dump(eval_result, f, indent=2)
 
-# Reference baselines
-ECMP_MLU = 1.9664
-SP_MLU = 2.3674
-MLP_MLU = 2.5249
-
 # Summary
 print(f"\n{'='*60}")
 print(f"Seed {SEED} Summary:")
 print(f"  Train: {result['n_episodes']} eps in {result['elapsed_seconds']:.1f}s")
 print(f"  Best reward: {result['best_reward']:.4f}")
 print(f"  Eval MLU: {eval_result['mean']:.4f} +/- {eval_result['std']:.4f}")
-print(f"  GNN/ECMP: {eval_result['mean']/ECMP_MLU:.4f}")
-print(f"  GNN/MLP:  {eval_result['mean']/MLP_MLU:.4f}")
-print(f"  GNN/SP:   {eval_result['mean']/SP_MLU:.4f}")
 print(f"{'='*60}")

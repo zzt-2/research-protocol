@@ -21,6 +21,10 @@ from .failures import FailureInjector
 from .topology import TopologyData, build_walker_delta
 from .traffic import TrafficGenerator
 
+# Physical constants
+SPEED_OF_LIGHT_KM_S = 299792.458  # km/s (free space, for ISL propagation delay)
+CONGESTION_DELAY_CAP = 100.0      # max delay factor for overloaded links (util >= 1)
+
 
 class RoutingEnv(gym.Env):
     """GNN-based congestion-aware routing on Walker delta LEO constellation.
@@ -44,6 +48,15 @@ class RoutingEnv(gym.Env):
         self._N: int = self.config.n_nodes
         self._capacity: float = self.config.isl_capacity_gbps
         self._K: int = self.config.k_paths
+        self._max_degree: int = self.config.max_degree
+
+        # Base degree for node features (structural, unaffected by faults)
+        self._base_degree: np.ndarray = self._base_topo.degree  # (N,)
+
+        # Edge distances for propagation delay computation: {(u,v): distance_km}
+        self._edge_distances: dict[tuple[int, int], float] = {}
+        for u, v, d in self._base_nx.edges(data=True):
+            self._edge_distances[(u, v)] = float(d.get("distance_km", 0.0))
 
         # Remap edge features from topology layout [cap_norm, etype, dist_km, 0.0]
         # to spec layout [utilization, edge_type, is_failed, capacity_norm]
@@ -78,6 +91,7 @@ class RoutingEnv(gym.Env):
         self._flows: list[tuple[int, int, float]] = []
         self._link_load: dict[tuple[int, int], float] = defaultdict(float)
         self._current_edge_feat: np.ndarray = np.empty((0, 4), dtype=np.float32)
+        self._flow_delays: list[float] = []  # propagation delay per flow (seconds)
         self._popular_dests: list[int] = []
         self._routing_graph: nx.Graph = nx.Graph()
         self._path_cache: dict[tuple[int, int], list[list[int]]] = {}
@@ -97,6 +111,7 @@ class RoutingEnv(gym.Env):
         self._step_idx = 0
         self._link_load = defaultdict(float)
         self._path_cache = {}
+        self._flow_delays = []
 
         # Inject failures on base DiGraph to get failed edge set
         _, self._failed_edges = self._failure_injector.inject(
@@ -152,10 +167,27 @@ class RoutingEnv(gym.Env):
         if paths:
             a = min(action, len(paths) - 1)
             path = paths[a]
+            # Compute delay BEFORE updating loads (uses current congestion state)
+            path_delay = 0.0
+            for i in range(len(path) - 1):
+                u, v = path[i], path[i + 1]
+                dist = self._edge_distances.get((u, v), 0.0)
+                prop_delay = dist / SPEED_OF_LIGHT_KM_S
+                util = self._link_load.get((u, v), 0.0) / self._capacity
+                # M/M/1 queuing: delay_factor = 1/(1-util), capped for overload
+                if util >= 1.0:
+                    cong_factor = CONGESTION_DELAY_CAP
+                else:
+                    cong_factor = 1.0 / (1.0 - util)
+                path_delay += prop_delay * cong_factor
+            # Update link loads
             for i in range(len(path) - 1):
                 u, v = path[i], path[i + 1]
                 self._link_load[(u, v)] += demand
                 self._link_load[(v, u)] += demand
+            self._flow_delays.append(path_delay)
+        else:
+            self._flow_delays.append(0.0)
 
         mlu_after = self._get_mlu()
         reward = -(mlu_after - mlu_before)
@@ -175,6 +207,11 @@ class RoutingEnv(gym.Env):
             info["link_load"] = dict(self._link_load)
             info["capacity"] = self._capacity
             info["n_total_edges"] = self._E
+            # Propagation delay statistics (ms)
+            delays_ms = [d * 1000.0 for d in self._flow_delays]
+            info["avg_delay_ms"] = float(np.mean(delays_ms)) if delays_ms else 0.0
+            info["max_delay_ms"] = float(np.max(delays_ms)) if delays_ms else 0.0
+            info["flow_delays_ms"] = delays_ms
 
         return obs, float(reward), terminated, False, info
 
@@ -203,12 +240,12 @@ class RoutingEnv(gym.Env):
         return max(self._link_load.values()) / self._capacity
 
     def _node_features(self) -> np.ndarray:
-        """Compute (N, 6) node features.
+        """Compute (N, 7) node features.
 
         Columns: [in_load_norm, out_load_norm, is_current_src,
-                  is_current_dst, current_demand_norm, is_hotspot]
+                  is_current_dst, current_demand_norm, is_hotspot, degree_norm]
         """
-        feat = np.zeros((self._N, 6), dtype=np.float32)
+        feat = np.zeros((self._N, 7), dtype=np.float32)
         cap = self._capacity
 
         # in_load / out_load from accumulated link_load
@@ -228,6 +265,9 @@ class RoutingEnv(gym.Env):
         for node_id in self._popular_dests:
             feat[node_id, 5] = 1.0
 
+        # Degree norm (structural property, not affected by faults)
+        feat[:, 6] = self._base_degree / self._max_degree
+
         return feat
 
     def _edge_features(self) -> np.ndarray:
@@ -244,22 +284,24 @@ class RoutingEnv(gym.Env):
     def _mlp_features(self) -> np.ndarray:
         """Local features for MLP baseline: src + dst + 1-hop loads + path lengths."""
         K = self._K
+        nd = self.config.node_feat_dim  # 7
         if self._step_idx >= len(self._flows):
-            return np.zeros(6 + 6 + 4 + 4 + 1 + K, dtype=np.float32)
+            return np.zeros(nd * 2 + 4 + 4 + 1 + K, dtype=np.float32)
 
         src, dst, demand = self._flows[self._step_idx]
         nf = self._node_features()
 
-        src_feat = nf[src]   # (6,)
-        dst_feat = nf[dst]   # (6,)
+        src_feat = nf[src]   # (nd,)
+        dst_feat = nf[dst]   # (nd,)
 
-        # 1-hop neighbor loads (padded to 4)
-        src_nbr_loads = np.zeros(4, dtype=np.float32)
-        for i, n in enumerate(self._adj.get(src, [])[:4]):
+        # 1-hop neighbor loads (padded to max_degree)
+        max_deg = self._max_degree
+        src_nbr_loads = np.zeros(max_deg, dtype=np.float32)
+        for i, n in enumerate(self._adj.get(src, [])[:max_deg]):
             src_nbr_loads[i] = nf[n, 1]  # out_load of neighbor
 
-        dst_nbr_loads = np.zeros(4, dtype=np.float32)
-        for i, n in enumerate(self._adj.get(dst, [])[:4]):
+        dst_nbr_loads = np.zeros(max_deg, dtype=np.float32)
+        for i, n in enumerate(self._adj.get(dst, [])[:max_deg]):
             dst_nbr_loads[i] = nf[n, 1]
 
         # Path lengths

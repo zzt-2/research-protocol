@@ -145,8 +145,8 @@ def main() -> None:
     if e01v2_path.exists():
         with open(e01v2_path) as f:
             e01v2 = json.load(f)
-        print(f"  E01-v2 (default):   GNN/ECMP={e01v2['ratios']['gnn_ecmp']:.4f}, "
-              f"GNN/MLP={e01v2['ratios']['gnn_mlp']:.4f}")
+        print(f"  E01-v2 (default):   GNN/ECMP={e01v2['ratios'].get('gnn_ecmp', e01v2['ratios'].get('gnn_ecmp_mlu', 0)):.4f}, "
+              f"GNN/MLP={e01v2['ratios'].get('gnn_mlp', e01v2['ratios'].get('gnn_mlp_mlu', 0)):.4f}")
     for name, res in all_results.items():
         print(f"  {name}: GNN/ECMP={res['ratios']['gnn_ecmp']:.4f}, "
               f"GNN/MLP={res['ratios']['gnn_mlp']:.4f}")

@@ -17,6 +17,8 @@ def compute_episode_metrics(
     capacity: float,
     n_total_edges: int,
     final_mlu: float | None = None,
+    avg_delay_ms: float = 0.0,
+    max_delay_ms: float = 0.0,
 ) -> dict[str, float]:
     """Compute all per-episode metrics from raw link load data.
 
@@ -27,9 +29,12 @@ def compute_episode_metrics(
         n_total_edges: Total number of directed edges |E| in the topology.
         final_mlu: Pre-computed MLU if available; computed from link_load
             otherwise.
+        avg_delay_ms: Average E2E propagation delay across all flows (ms).
+        max_delay_ms: Maximum E2E propagation delay across all flows (ms).
 
     Returns:
-        Dict with keys: mlu, cv, overflow_ratio, mean_util, std_util.
+        Dict with keys: mlu, cv, overflow_ratio, mean_util, std_util,
+        avg_delay_ms, max_delay_ms.
     """
     loads = np.array(list(link_load.values()), dtype=np.float64) if link_load else np.array([0.0])
 
@@ -45,8 +50,6 @@ def compute_episode_metrics(
     cv = std_util / mean_util if mean_util > 0 else 0.0
 
     # M3: Overflow Ratio = count(load > capacity) / |E|
-    # Use directed edges as the denominator for consistency with the
-    # graph representation (edge_index rows).
     overflow_count = int(np.sum(loads > capacity))
     overflow_ratio = overflow_count / n_total_edges if n_total_edges > 0 else 0.0
 
@@ -56,6 +59,8 @@ def compute_episode_metrics(
         "overflow_ratio": overflow_ratio,
         "mean_util": mean_util,
         "std_util": std_util,
+        "avg_delay_ms": avg_delay_ms,
+        "max_delay_ms": max_delay_ms,
     }
 
 
@@ -72,7 +77,7 @@ def aggregate_metrics(episode_metrics: list[dict[str, float]]) -> dict[str, floa
     if not episode_metrics:
         return {}
 
-    keys = ["mlu", "cv", "overflow_ratio", "mean_util", "std_util"]
+    keys = ["mlu", "cv", "overflow_ratio", "mean_util", "std_util", "avg_delay_ms", "max_delay_ms"]
     result: dict[str, float] = {"n_episodes": float(len(episode_metrics))}
 
     for key in keys:

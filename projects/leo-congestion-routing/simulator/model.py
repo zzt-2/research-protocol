@@ -114,7 +114,7 @@ class RoutingActorCritic(nn.Module):
 
     def __init__(
         self,
-        node_dim: int = 6,
+        node_dim: int = 7,
         edge_dim: int = 4,
         hidden_dim: int = 64,
         n_layers: int = 2,

@@ -22,6 +22,9 @@ from simulator.config import SimConfig
 from simulator.env import RoutingEnv
 from simulator.metrics import aggregate_metrics, compute_episode_metrics
 
+SPEED_OF_LIGHT_KM_S = 299792.458  # km/s (free space)
+CONGESTION_DELAY_CAP = 100.0      # must match env.py
+
 
 def _all_shortest_paths_bfs(
     graph: "nx.Graph",  # noqa: F821
@@ -92,7 +95,7 @@ def _route_episode_ecmp(
 
     Returns:
         (final_mlu, stats, link_load) where stats includes equal-cost path
-        count info and link_load is the per-edge load dict for metrics.
+        count info, delay stats, and link_load is the per-edge load dict.
     """
     obs, info = env.reset(seed=seed)
 
@@ -100,6 +103,7 @@ def _route_episode_ecmp(
     routing_graph = env._routing_graph
     flows = env._flows
     capacity = env._capacity
+    edge_distances = env._edge_distances
 
     # Accumulate link loads (same logic as env)
     link_load: dict[tuple[int, int], float] = defaultdict(float)
@@ -108,6 +112,7 @@ def _route_episode_ecmp(
     ecmp_cache: dict[tuple[int, int], list[list[int]]] = {}
 
     n_paths_per_flow: list[int] = []
+    flow_delays: list[float] = []  # propagation delays in seconds
     step_idx = 0
 
     for src, dst, demand in flows:
@@ -122,10 +127,27 @@ def _route_episode_ecmp(
         if paths:
             # Round-robin among all equal-cost paths
             path = paths[step_idx % n_paths]
+            # Compute delay BEFORE updating loads (uses current congestion state)
+            path_delay = 0.0
+            for i in range(len(path) - 1):
+                u, v = path[i], path[i + 1]
+                dist = edge_distances.get((u, v), 0.0)
+                prop_delay = dist / SPEED_OF_LIGHT_KM_S
+                util = link_load.get((u, v), 0.0) / capacity
+                # M/M/1 queuing: delay_factor = 1/(1-util), capped for overload
+                if util >= 1.0:
+                    cong_factor = CONGESTION_DELAY_CAP
+                else:
+                    cong_factor = 1.0 / (1.0 - util)
+                path_delay += prop_delay * cong_factor
+            # Update loads
             for i in range(len(path) - 1):
                 u, v = path[i], path[i + 1]
                 link_load[(u, v)] += demand
                 link_load[(v, u)] += demand
+            flow_delays.append(path_delay)
+        else:
+            flow_delays.append(0.0)
 
         step_idx += 1
 
@@ -135,11 +157,18 @@ def _route_episode_ecmp(
     else:
         final_mlu = 0.0
 
+    # Delay stats (ms)
+    delays_ms = [d * 1000.0 for d in flow_delays]
+    avg_delay_ms = float(np.mean(delays_ms)) if delays_ms else 0.0
+    max_delay_ms = float(np.max(delays_ms)) if delays_ms else 0.0
+
     stats = {
         "n_paths_min": min(n_paths_per_flow) if n_paths_per_flow else 0,
         "n_paths_mean": float(np.mean(n_paths_per_flow)) if n_paths_per_flow else 0.0,
         "n_paths_max": max(n_paths_per_flow) if n_paths_per_flow else 0,
         "n_flows": len(flows),
+        "avg_delay_ms": avg_delay_ms,
+        "max_delay_ms": max_delay_ms,
     }
 
     return final_mlu, stats, dict(link_load)
@@ -166,6 +195,8 @@ def run_ecmp(
         final_mlu, stats, link_load = _route_episode_ecmp(env, seed=seed_offset + i)
         ep_m = compute_episode_metrics(
             link_load, env._capacity, env._E, final_mlu,
+            avg_delay_ms=stats["avg_delay_ms"],
+            max_delay_ms=stats["max_delay_ms"],
         )
         episode_metrics.append(ep_m)
 

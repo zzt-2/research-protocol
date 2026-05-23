@@ -371,7 +371,11 @@ def run_mlp(
         n_total_edges = info.get("n_total_edges", env._E)
         final_mlu = info.get("final_mlu", info["mlu"])
         episode_metrics.append(
-            compute_episode_metrics(link_load, capacity, n_total_edges, final_mlu)
+            compute_episode_metrics(
+                link_load, capacity, n_total_edges, final_mlu,
+                avg_delay_ms=info.get("avg_delay_ms", 0.0),
+                max_delay_ms=info.get("max_delay_ms", 0.0),
+            )
         )
 
     result = aggregate_metrics(episode_metrics)

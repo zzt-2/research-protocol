@@ -38,16 +38,16 @@ CFG_66 = SimConfig(
 )
 
 # E05: 288 nodes (4.4× scale) — scale flows proportionally
-CFG_288 = SimConfig(
-    n_planes=24, sats_per_plane=12,          # 288 nodes
+CFG_288 = SimConfig.from_n_nodes(
+    288,
     n_flows=175, n_heavy=44,                 # scaled from 40/10
     total_episodes=800, n_seeds=1, n_eval=50, device="cuda",
     entropy_coef=0.02, early_stop_patience=80,
 )
 
 # E06: 720 nodes (10.9× scale) — cap flows at 200 for tractability
-CFG_720 = SimConfig(
-    n_planes=36, sats_per_plane=20,          # 720 nodes
+CFG_720 = SimConfig.from_n_nodes(
+    720,
     n_flows=200, n_heavy=50,                 # scaled but capped
     total_episodes=800, n_seeds=1, n_eval=50, device="cuda",
     entropy_coef=0.02, early_stop_patience=80,

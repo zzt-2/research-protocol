@@ -1,23 +1,39 @@
 """SimConfig dataclass for LEO Walker delta congestion-aware routing simulator.
 
-Parameters sourced from simulator-design.md §3.
+Orbital parameters matched to Ch1 (leo-mega-constellation-gnn-routing) for cross-chapter consistency.
 """
+from dataclasses import dataclass, field
 
-from dataclasses import dataclass
+
+# Physical constants (shared with constellation.py)
+MU_EARTH = 398600.4418   # km^3/s^2
+R_EARTH = 6371.0         # km
+
+# ISL link budget
+ISL_MAX_DISTANCE = 5000.0  # km, disconnect threshold (polar gap emerges naturally)
+
+# Walker-Delta configs per experiment size: n_nodes -> (P, S)
+SIZE_CONFIGS = {
+    48:  (4, 12),
+    66:  (6, 11),
+    288: (12, 24),
+    720: (18, 40),
+}
 
 
 @dataclass
 class SimConfig:
-    # Walker delta constellation
+    # Walker delta constellation (matched to Ch1)
     n_planes: int = 6
     sats_per_plane: int = 11          # 66 nodes for training
-    altitude_km: float = 780.0        # placeholder, unused in abstract grid model
-    inclination_deg: float = 86.4     # placeholder, unused in abstract grid model
+    altitude_km: float = 550.0        # km (Starlink-like, matches Ch1)
+    inclination_deg: float = 86.4     # degrees (Iridium-like, enables polar gap)
+    walker_delta_F: int = 1           # Walker-Delta phasing factor
+    polar_gap_lat: float = 70.0       # latitude threshold for inter-plane ISL disable
 
     # ISL
     isl_capacity_gbps: float = 10.0   # [ASSUMPTION]
     isl_bandwidth_mhz: float = 500.0  # L06 DTAR
-    polar_gap_lat: float = 70.0       # [ASSUMPTION] latitude threshold for inter-plane ISL disable
 
     # Traffic
     n_flows: int = 40
@@ -67,14 +83,23 @@ class SimConfig:
     n_edges: int = 0
     node_feat_dim: int = 0
     edge_feat_dim: int = 0
+    max_degree: int = 0
 
     def __post_init__(self) -> None:
         self.n_nodes = self.n_planes * self.sats_per_plane
-        # n_edges updated after topology construction
-        self.node_feat_dim = 6   # in_load, out_load, demand_as_src, demand_as_dst, is_hotspot, degree
+        self.node_feat_dim = 7   # in_load, out_load, demand_as_src, demand_as_dst, is_hotspot, degree_norm, (reserved)
         self.edge_feat_dim = 4   # utilization, edge_type, is_failed, capacity_norm
+        self.max_degree = 4      # +Grid max possible degree (2 intra + 2 inter)
 
         assert self.n_planes > 0 and self.sats_per_plane > 0
         assert 0 <= self.failure_rate < 0.5
         assert self.isl_capacity_gbps > 0
         assert self.t_slots > 0
+
+    @classmethod
+    def from_n_nodes(cls, n_nodes: int, **overrides) -> "SimConfig":
+        """Create config for a specific node count using SIZE_CONFIGS mapping."""
+        if n_nodes not in SIZE_CONFIGS:
+            raise ValueError(f"No SIZE_CONFIG for {n_nodes} nodes. Available: {list(SIZE_CONFIGS.keys())}")
+        P, S = SIZE_CONFIGS[n_nodes]
+        return cls(n_planes=P, sats_per_plane=S, **overrides)

@@ -567,8 +567,13 @@ def evaluate(
         capacity = info.get("capacity", env._capacity)
         n_total_edges = info.get("n_total_edges", env._E)
         final_mlu = info.get("final_mlu", info["mlu"])
+        avg_delay_ms = info.get("avg_delay_ms", 0.0)
+        max_delay_ms = info.get("max_delay_ms", 0.0)
 
-        ep_m = compute_episode_metrics(link_load, capacity, n_total_edges, final_mlu)
+        ep_m = compute_episode_metrics(
+            link_load, capacity, n_total_edges, final_mlu,
+            avg_delay_ms=avg_delay_ms, max_delay_ms=max_delay_ms,
+        )
         episode_metrics.append(ep_m)
 
     aggregated = aggregate_metrics(episode_metrics)

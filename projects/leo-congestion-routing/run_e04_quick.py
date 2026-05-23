@@ -29,8 +29,8 @@ from simulator.train import evaluate
 RESULTS_DIR = Path(__file__).resolve().parent / "simulator" / "results"
 RESULTS_DIR.mkdir(exist_ok=True, parents=True)
 
-# 48-node topology: 6 planes × 8 sats = 48
-CFG_48 = SimConfig(n_planes=6, sats_per_plane=8, total_episodes=500, n_seeds=1, n_eval=50, device="cuda")
+# 48-node topology: 4 planes × 12 sats (Walker-Delta SIZE_CONFIGS)
+CFG_48 = SimConfig.from_n_nodes(48, total_episodes=500, n_seeds=1, n_eval=50, device="cuda")
 CFG_66 = SimConfig(total_episodes=500, n_seeds=3, n_eval=50, device="cuda")
 
 
