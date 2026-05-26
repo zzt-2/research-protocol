@@ -87,7 +87,7 @@ class SimConfig:
 
     def __post_init__(self) -> None:
         self.n_nodes = self.n_planes * self.sats_per_plane
-        self.node_feat_dim = 7   # in_load, out_load, demand_as_src, demand_as_dst, is_hotspot, degree_norm, (reserved)
+        self.node_feat_dim = 7   # in_load_norm, out_load_norm, is_current_src, is_current_dst, current_demand_norm, is_hotspot, degree_norm
         self.edge_feat_dim = 4   # utilization, edge_type, is_failed, capacity_norm
         self.max_degree = 4      # +Grid max possible degree (2 intra + 2 inter)
 

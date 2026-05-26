@@ -1,12 +1,12 @@
 # Master State: leo-congestion-routing
 
-> 最后更新: 2026-05-18
+> 最后更新: 2026-05-24
 
 ## 基本信息
 - **项目名**: leo-congestion-routing
 - **方向**: GNN 拥塞感知路由 + 负载均衡 for LEO 卫星星座
-- **阶段**: Execute (漏洞修复完成，全部消融完成，待收尾)
-- **当前步骤**: P2 可视化完成 + P3 论文叙事完成，待提交收尾
+- **阶段**: Execute 全部完成 → 论文写作
+- **当前步骤**: 实验完毕，paper-materials 已全面重写，进入论文写作阶段
 - **方法类型**: [DRL] + [监督]
 
 ## 进度追踪
@@ -44,12 +44,14 @@
 | E03 surge鲁棒性 | ✅ | GNN/ECMP=0.767 — 无surge训练模型在surge=5下仍赢23% |
 | E04 48节点 (surge=1.0) | ✅ PASS | GNN/ECMP=0.801 (0.7× scale) |
 | E05 288节点 (surge=1.0) | ✅ PASS | GNN/ECMP=1.014 (4.4× scale) ≤ 1.10 |
-| E06 720节点 (surge=1.0) | ✅ PASS | GNN/ECMP=0.932 (10.9× scale) ≤ 1.10 |
+| E06 720节点 (surge=1.0) | ⚠️ 退化 | GNN/ECMP MLU=1.108 (>1.10), delay=0.98 — 新拓扑下10.9×跨度过大 |
 | E08 故障率消融 (surge=1.0) | ✅ | 全部GNN赢: 0%=0.845, 5%=0.855, 8%=0.797, 10%=0.881, 15%=0.837 |
 | E09 流量消融 (surge=1.0) | ✅ 全GNN赢 | 均匀=0.857, 中等=0.811, 默认=0.797, 重型=0.843 |
 | E10 层数消融 (surge=1.0) | ✅ <2%差异 | L1=0.773, L2=0.775, L3=0.783（3 seeds）|
 | E11 头数消融 (surge=1.0) | ✅ <1.5%差异 | H2=0.771, H4=0.782, H8=0.778（3 seeds）|
-| E12 故障模式对比 | ✅ 10/12 赢ECMP | random/regional/cascading × 4故障率，3 模式全评估 |
+| E12 故障模式对比 | ✅ 11/12 赢ECMP | random/regional/cascading × 4故障率，仅cascading 15%未赢(GNN/ECMP=1.008) |
+| 拓扑升级 (Walker-Delta inc=86.4°) | ✅ S002/S003 | 新拓扑 MLU=0.96, delay=0.80，GNN 优势更突出 |
+| Paper-Materials 全面重写 | ✅ 2026-05-23 | A+B 框架 + DTAR 讨论 + TELGEN 对比表 |
 | Execute Step 3 假设判定 | ✅ PASS | D19: 三维 Success Signal 全部满足，Failure Signal 全部未触发 |
 | Execute Step 6 可视化 | ✅ | simulator/figures/fig1-10, simulator/visualize_results.py |
 | 训练曲线实验 | ✅ | training_curves.json (GNN 500ep + MLP 300ep) |
@@ -62,17 +64,40 @@
 - D2: 差异化定位 = per-link 负载均衡决策（vs 现有 per-flow/per-path）
 - D3: 继承 resilient-routing 失败教训，MVE 必须含非均匀流量场景
 - D4: 10 篇精读完成，GMR(L02)架构最接近本研究（MPNN+DDPG per-path 流量分割+跨拓扑泛化）
-- D5: 研究定位确认：per-link 负载均衡 + size generalization 填补空白
+- D5: 研究定位确认：per-link 负载均衡 + Walker delta 族内规模迁移填补空白
 - D6: 竞品共引文献 10 篇待 Step 3.5 定向补充（RouteNet, DRL-TE, GNN-ASSSP 等）
 - D7: MVE-1(24节点) GNN/MLP=0.83 但 GNN≈ECMP; MVE-2(66节点+8%故障) GNN/ECMP=0.88 → **Go**
 - D11: Part A-checkpoint 通过（贪心仅+3.8%未达10%门限，但 SP>random 7.1%，MVE 已证 GNN>ECMP 12%）
 - Baseline 结果: ECMP(1.97) > SP(2.37) > MLP(2.52)，MLP<SP 证明 message passing 必要性
 
+## 核心结果（2026-05-24 更新）
+
+**新拓扑结果（Walker-Delta inc=86.4°，S002/S003 拓扑升级后）**:
+- **MLU ratio (GNN/ECMP) = 0.96** — GNN 在新拓扑下仍稳定赢 ECMP
+- **E2E delay ratio (GNN/ECMP) = 0.80** — **主指标**，端到端延迟降低 20%
+
+> **指标说明**：E2E delay（端到端延迟）是本研究的**主指标**，而非 MLU ratio。原因：(1) E2E delay 直接反映用户感知的 QoS；(2) 在拥塞路由场景下，延迟是比链路利用率更本质的性能度量；(3) GNN 通过拥塞惩罚权重 `1/(1-util)` 建模每链路延迟贡献（注：这是拥塞放大因子而非物理 M/M/1 排队模型，仿真为确定性逐流路由），优化目标即为总 E2E delay。MLU 作为辅助指标保留。
+
+### 拓扑升级记录（S002/S003）
+
+| 参数 | 旧值 | 新值 | 变更原因 |
+|------|------|------|---------|
+| Walker-Delta inclination | 53° | **86.4°** | 接近极轨，更贴近 Iridium/Galileo 真实参数 |
+| 轨道面间 ISL | 连续可用 | **纬度受限断链** | 极区/高纬度 inter-plane ISL 不可用 |
+| 拓扑动态性 | 低 | **显著提高** | 高倾角导致更频繁的拓扑变化 |
+
+升级影响：新拓扑下 ECMP 性能下降更明显（更多断链→更多拥塞热点），GNN 的负载感知优势更加突出。
+
+## Paper-Materials 状态
+
+- **paper-materials.md**: 2026-05-23 全面重写，包含 A+B 框架 + DTAR 讨论 + TELGEN 对比表
+- **状态**: 已完成，待论文写作阶段使用
+
 ## 核心风险
 1. **[已缓解] GNN ≈ MLP 风险**: MVE 验证通过。24节点 GNN≈ECMP，但 66节点+链路故障下 GNN 低 ECMP 12%
-2. **[高] TELGEN 竞品风险**: Zhou 2025 ToN 已做完整 GNN+TE+size gen（20x 泛化）。差异化必须聚焦 LEO 时变拓扑（TELGEN future work）。纯 size gen for TE 不再是空白
+2. **[已缓解] TELGEN 竞品风险**: Zhou 2025 ToN 已做完整 GNN+TE+size gen（20x 泛化）。差异化已锁定：LEO 时变拓扑 + 在线 DRL vs 静态快照 + 离线 SL（S005 跨章审计确认，TELGEN 为两个章节的共同参照但差异化维度不同）
 3. **[中] 论文池竞争**: GNN-ASSSP/DeepLaDu/GRL-RR 等近期竞品活跃，需 DeepLaDu 精读确认差异化空间
-3. **[低] Size gen 可行性**: 无先例将 size gen 应用于拥塞路由，可能需要新的泛化机制
+3. **[低] 规模迁移可行性**: 无先例将规模迁移应用于拥塞路由，可能需要新的泛化机制
 
 ## 漏洞审计与修复（2026-05-17）
 
@@ -116,15 +141,16 @@
 3. ~~**训练曲线更新**~~ ✅ — training_curves_v2.json (800ep)
 4. ~~**清理旧文件**~~ ✅ — 8 个旧文件移入 legacy/
 5. ~~**可视化重生成**~~ ✅ — 12 张图全部用 surge=1.0 数据重生成
-6. ~~**论文叙事材料**~~ ✅ — paper-materials.md (A+B 框架 + DTAR 讨论 + TELGEN 对比表)
+6. ~~**论文叙事材料**~~ ✅ — paper-materials.md 全面重写 (2026-05-23, A+B 框架 + DTAR 讨论 + TELGEN 对比表)
 7. ~~**E10/E11 多 seed**~~ ✅ — F5 消融已补 3 seeds
 8. ~~**E12 故障模式对比**~~ ✅ — 3 模式 × 4 故障率 = 12 组数据已补齐
 
 ## Thesis 一致性
-- Ch1: GNN routing size gen (leo-mega-constellation-gnn-routing, Execute 完成)
-- Ch2: GNN handover size gen (leo-ntn-handover-drl, Execute 完成)
-- Ch3: **GNN congestion-aware load balancing size gen (本项目)**
-- 共享框架: GNN size generalization，per-node/per-link 决策，Walker delta 星座
+- Ch1: 监督学习路由 — 拓扑规模迁移 (leo-mega-constellation-gnn-routing, Execute 完成)
+- Ch2: DRL 切换 — UE 规模迁移 (leo-ntn-handover-drl, Execute 完成)
+- Ch3: **故障弹性路由 — 故障鲁棒性+规模 (本项目)**
+- 统一叙事: "GNN 在 LEO 卫星网络中的系统性应用研究——结构化编码实现故障弹性、规模迁移、在线决策"
+- 共享优势: GNN 结构化编码 + 规模迁移能力，per-node/per-link 决策，Walker delta 星座
 
 ## 投稿定位（2026-05-18 决策）
 
