@@ -287,6 +287,8 @@ Playwright 驱动的浏览器爬取工具，用于 API 无法覆盖的学术平�
 
 # 万方中文论文（低频，单次 ≤10 请求，间隔 6s）
 ./tools/blit "针灸 偏头痛 随机对照试验" --source wanfang
+./tools/blit "深度强化学习 资源调度" --source wanfang --doc-type phd     # 万方搜博士论文
+./tools/blit "企业管理" --source wanfang --doc-type master                # 万方搜硕士论文
 
 # CNKI 主站搜索（校园网 IP + cookie 认证）
 ./tools/blit "混合式教学 实证研究" --source cnki
@@ -305,10 +307,12 @@ Playwright 驱动的浏览器爬取工具，用于 API 无法覆盖的学术平�
 | 源 | 结果量 | 元数据 | 下载 | 反爬 | 限速 |
 |----|--------|--------|------|------|------|
 | IEEE | 50次无拦截 | 标题/作者/会议/年份/被引数 | ✅ `--download` 校园网机构认证 | 无 | 50次/会话, 1s间隔 |
-| wanfang | 1410条/关键词 | 标题/作者/摘要/关键词/期刊/年份/被引数/质量标签 | ❌ | IP封禁(>16次无间隔) | 10次/会话, 6s间隔 |
+| wanfang | 1410条/关键词 | 标题/作者/摘要/关键词/期刊/年份/被引数/质量标签/学位类型 | ❌ | IP封禁(>16次无间隔) | 10次/会话, 6s间隔 |
 | cnki | 全库搜索 | 标题/作者/来源/年份/被引数 | ✅ `--download` 校园网+cookie | cookie 过期需验证 | 30次/会话, 3s间隔 |
 
-CNKI 来源字段因文档类型不同：期刊 → 期刊名（如"中国针灸"），博士/硕士论文 → 学位授予单位（如"北京科技大学"）。`--doc-type phd/master` 通过 `crossDbcodes` 参数限定到 CDFD/CMFD 数据库。
+CNKI 来源字段因文档类型不同：期刊 → 期刊名（如"中国针灸"），博士/硕士论文 → 学位授予单位（如"北京科技大学"）。`--doc-type phd/master` 通过 grid API 的 `Classid` 参数区分学位级别（博士=RMJLXHZ3，硕士=JQIRZIYA），URL 参数 `crossDbcodes`/`KuaKuCode` 无实际过滤效果。
+
+万方 `--doc-type phd/master` 支持：自动切换 `/thesis` 搜索路径，并按 `essay-type` 字段后过滤博士/硕士。本科论文无公开检索平台（CNKI/万方均不收录，维普可能有少量覆盖）。
 
 ### IEEE 下载
 
@@ -343,7 +347,7 @@ CNKI 博士论文下载后通常是 CAJ 格式，需转换后才能用 `tools/co
 for f in *.caj; do ~/.venvs/torch/bin/python ~/.local/share/caj2pdf/caj2pdf convert "$f" -o "${f%.caj}.pdf"; done
 ```
 
-安装位置：`~/.local/share/caj2pdf/`（从 GitHub 克隆），依赖 PyPDF2 + imagesize 已包含在 torch venv 中。
+安装位置：`~/.local/share/caj2pdf/`（从 GitHub 克隆），依赖 PyPDF2 + imagesize 已包含在 torch venv 中。已 patch 支持 pymupdf fallback：无 `mutool` 时自动用 `fitz` (pymupdf) 修复 xref，无需 sudo 安装 mupdf-tools。
 
 ### 使用策略
 
@@ -366,7 +370,9 @@ for f in *.caj; do ~/.venvs/torch/bin/python ~/.local/share/caj2pdf/caj2pdf conv
 ./tools/blit "关键词" --source wanfang                            # 万方补充
 ```
 
-CNKI 初始化见 §4 "CNKI cookie 管理"。CAJ 格式不支持自动转换，需 CAJ Viewer 手动转 PDF。
+CNKI 初始化见 §4 "CNKI cookie 管理"。CAJ→PDF 转换见 §4 "CAJ 转 PDF"。
+
+万方 `--doc-type phd/master` 支持学位论文检索（自动切换 `/thesis` 路径 + 按学位类型后过滤）。本科论文无公开检索平台。
 
 ## 6. 内容处理原则
 

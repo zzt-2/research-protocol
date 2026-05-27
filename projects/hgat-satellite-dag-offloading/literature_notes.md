@@ -10,6 +10,7 @@
 
 ### [K1] Wu et al. 2025 — Dependency-Aware Task Offloading via HGAT and DRL
 - DOI: 10.1109/JIOT.2024.3514108
+- **注意**: 此 DOI 可能为早期访问版。M06 (DOI:10.1109/JIOT.2025.3549441, Vol.12 No.13, July 2025) 为同一论文的正式发表版，内容完全一致。引用时优先使用 M06 DOI。
 - **发表状态**: 正式发表
 - **发表渠道**: IEEE Internet of Things Journal
 - **核心贡献**: 提出 HGAT-PPO 框架，在车联网场景中用异构图注意力网络编码器解决 DAG 依赖任务卸载。设计双图编码器：Task Encoder（GAT 处理 DAG 有向图）+ Server Encoder（修改版 GAT 处理服务器竞争无向图，边特征增强注意力），PPO 做策略优化。

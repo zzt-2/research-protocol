@@ -162,6 +162,9 @@
 | 检索用项目工具                | `tools-guide.md`                                                                                                                           |
 | 防死胡同                      | `stages/execute.md` S4.5                                                                                                                   |
 | 先验基线测试                  | `stages/execute.md` S0.5                                                                                                                   |
+| 领域指标约定审计 FR-17        | `stages/contract.md` S2 — 冻结指标前必须验证所选指标是该子领域的首选通行指标（抽查 ≥5 篇同子领域论文）                                    |
+| 环境保真度竞争格局分析 FR-18  | `stages/gw-feasibility.md` §D FR-12后 + `stages/execute.md` S1 — 环境升级时分析对所有方法竞争格局的影响，不只看主方法                     |
+| 指标模型假设敏感性 FR-19      | `stages/contract.md` S2 + `stages/execute.md` S4 — 指标依赖模型假设时记录假设+做替代假设对比                                             |
 
 ## 上下文管理规则（跨步骤强制）
 

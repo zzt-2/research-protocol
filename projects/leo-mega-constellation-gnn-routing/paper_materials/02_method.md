@@ -2,7 +2,7 @@
 
 ## 1. 架构总览
 
-本文提出一种基于轨道位置编码（Orbital Positional Encoding, Orbital PE）和多尺度混合训练的 GNN 路由框架，实现 LEO mega-constellation 跨规模零样本路由泛化。核心思路：在小规模星座（66-200星）上监督训练 GAT 编码器，推理时直接部署到 720 星目标星座，通过加权 Dijkstra 推理生成近最优路径。
+本文设计并验证了一种基于轨道位置编码（Orbital Positional Encoding, Orbital PE）和多尺度混合训练的 GNN 路由框架，实现 LEO mega-constellation 跨规模零样本路由泛化。核心思路：在小规模星座（66-200星）上监督训练 GAT 编码器，推理时直接部署到 720 星目标星座，通过加权 Dijkstra 推理生成近最优路径。
 
 **端到端流程**：
 
@@ -125,6 +125,8 @@ $$\text{SNR}(d) = \text{SNR}_{\text{ref}} \cdot \left(\frac{d_{\text{ref}}}{d}\r
 
 ## 3. Orbital Positional Encoding
 
+> **设计定位**：利用卫星轨道参数（轨道面编号 $p$、面内编号 $k$）作为节点位置特征，是 LEO 网络建模中的常用做法（R13 Vaswani 2017 的 sin/cos 编码范式在图结构数据中的直接应用）。本文采用此标准方法，选择其因为归一化坐标天然规模无关，适配跨规模部署需求。
+
 ### 3.1 编码公式
 
 Walker-Delta 星座中，每颗卫星由 $(p, k)$ 唯一确定轨道位置。Orbital PE 将 $(p, k)$ 归一化后用多频率 sin/cos 编码：
@@ -172,7 +174,7 @@ $$\mathbf{h}_u^{(l+1)} = \text{ELU}\left( \bigg\|_{m=1}^{M} \sum_{v \in \mathcal
 
 **注意力系数**（含边特征）：
 
-$$\alpha_{uv} = \frac{\exp(\text{LeakyReLU}(\mathbf{a}^\top [\mathbf{W}\mathbf{h}_u \| \mathbf{W}\mathbf{h}_v \| \mathbf{W}_e \mathbf{e}_{uv}]))}{\sum_{w \in \mathcal{N}(u)} \exp(\text{LeakyReLU}(\mathbf{a}^\top [\mathbf{W}\mathbf{h}_w \| \mathbf{W}\mathbf{h}_v \| \mathbf{W}_e \mathbf{e}_{uw}]))}$$
+$$\alpha_{uv} = \frac{\exp(\text{LeakyReLU}(\mathbf{a}^\top [\mathbf{W}\mathbf{h}_u \| \mathbf{W}\mathbf{h}_v \| \mathbf{W}_e \mathbf{e}_{uv}]))}{\sum_{w \in \mathcal{N}(u)} \exp(\text{LeakyReLU}(\mathbf{a}^\top [\mathbf{W}\mathbf{h}_u \| \mathbf{W}\mathbf{h}_w \| \mathbf{W}_e \mathbf{e}_{uw}]))}$$
 
 边特征 $\mathbf{e}_{uv} = [\delta_{\text{delay}}, d]$ 通过独立的边变换矩阵 $\mathbf{W}_e$ 参与注意力计算（PyG `GATConv` 的 `edge_dim` 参数）。
 
@@ -240,6 +242,8 @@ $$\hat{o}_{u,d} = \begin{cases} o_{u,d} & \text{if direction } d \text{ has acti
 
 ## 6. 加权 Dijkstra 推理
 
+> **设计定位**：GNN 输出指导 Dijkstra 推理的范式已有先例（GDDR, GNN-guided Dijkstra Routing, 2021）。本文在此范式基础上，针对 LEO 星座场景的 4 方向 ISL 拓扑设计了加性惩罚权重方案，利用 GNN 方向 logits 与 ISL 时延的简洁组合实现软引导。
+
 ### 6.1 权重公式
 
 GNN 输出每节点 4 个方向的 logits $\mathbf{o}_u \in \mathbb{R}^4$。推理时，将 logits 转化为边权重，运行 Dijkstra 最短路：
@@ -260,7 +264,7 @@ $$w(u, v) = \delta_{\text{delay}}(u, v) + \text{relu}\big(\max_d\ o_{u,d} - o_{u
 | 路径成功率（train） | 22-30% | **100%** |
 | 路径成功率（target 720） | 1.7% | **100%** |
 | 根因 | 逐跳精度之积衰减（$0.976^{10} \approx 78\%$ 理论上限），低精度节点进一步拉低 | 全局优化，单跳错误可被后续路径修正 |
-| mean stretch | N/A（大量失败） | 1.097 |
+| mean stretch | N/A（大量失败） | **1.083 ± 0.015** (3 seed) |
 | $\leq 1.2\times$ optimal | N/A | 85.1% |
 | $\leq 1.5\times$ optimal | N/A | 98.9% |
 
@@ -281,7 +285,7 @@ $$w(u, v) = \delta_{\text{delay}}(u, v) + \text{relu}\big(\max_d\ o_{u,d} - o_{u
 | D016 | 实时轨道力学距离 + 5000 km 断链 | 四配置 ISL 距离差异巨大（1086-5694 km），固定值不适用 | 固定距离（错误，不适用任何配置） |
 | D017 | ISL 类型为激光 | L02/L03 确认 optical laser link 1550 nm | RF ISL（与文献不符） |
 | D019 | 不使用贪心推理 | 成功率极低（1.7%-30%），逐跳误差累积 | 逐跳 argmax（失败率过高） |
-| D020 | 加权 Dijkstra | 成功率 100%，stretch 1.097，计算可行 | 纯贪心、beam search |
+| D020 | 加权 Dijkstra | 成功率 100%，stretch 1.083 (3 seed)，计算可行 | 纯贪心、beam search |
 | D021 | 不使用 PPO 微调 | reward 太稀疏或 action-reward 解耦，80 轮无改善 | PPO fine-tuning（无效） |
 | D022 | neighbor_map 双向注册 | 修复前只注册单方向，评估缺失 2/4 方向 | 单向映射（bug） |
 

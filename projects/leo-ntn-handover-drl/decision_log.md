@@ -84,7 +84,7 @@
 
 | 论文 | 核心方法 | 缺失要素 | 威胁 |
 |------|---------|---------|------|
-| Lee 2025 (ICT Express, DOI:10.1016/j.icte.2025.01.009) | GNN + 分布式 LEO 切换 + 负载均衡 | 无 DRL、非二部图、可扩展性声明基于 GNN 固有性质非显式实验 | 低-中 |
+| Lee & Lim 2025 (ICT Express, DOI:10.1016/j.icte.2025.01.009) | GNN + 分布式 LEO 切换 + 负载均衡（使用 UE-卫星二部图） | 无 DRL（GNN softmax 分布式决策）、无 size generalization 实验 | 低-中（**最直接竞争者**：二部图 GNN 先例） |
 | Eydian 2025 (IEEE OJCOMS, DOI:10.1109/OJCOMS.2025.3541962) | 加权二部图匹配 + 滞后余量做 LEO 切换 | 无 GNN、无 RL、经典优化 | 低 |
 | Chou 2026 (arXiv:2605.02416) | Dueling DDQN 多目标 LEO 切换 | 无 GNN、无二部图、无 size generalization | 低-中 |
 | Kim 2022 (arXiv:2207.05364, IEEE TWC) | 二部图 GNN (BGNN) 波束赋形 + 跨规模可扩展 | 非切换场景、无 DRL | 低-中(理论先驱) |
@@ -94,3 +94,14 @@
 IEEE Xplore 补充检索通过（7 组 site:ieeexplore.ieee.org + OpenAlex，覆盖 TWC/OJCOMS/CommLet/IoT Journal/VTC）。新发现 1 篇中等重叠：Wiriya 2025 (IEEE doc:11431740) 二部图+D2C卫星切换，传统图匹配非 GNN/DRL。其余新发现均为低重叠（Lee C. 2025 MADQN切换/Mendonca 2025 DQN频谱共存/Zhang 2025超图GNN资源分配/Sheng 2026图基础模型/Yang 2026多层图IoT切换）。IEEE 检索确认无新竞争者。
 
 **结论**："二部图 GNN + DDQN + size generalization + LEO 切换"四要素组合在现有文献中无完全先例。各要素分别有相关工作但无人整合。size generalization 是项目最核心的差异化壁垒——Lee 2025 的可扩展性仅为 GNN 固有性质声明，Wu 2022 仅提供理论分析且非切换场景。| 阶段: CT
+
+---
+
+## 审计阶段决策（2026-05-22）
+
+[D033] **审计完成 + M4 Jain 修复** | 理由: 三章质量审计统一执行。M4 Jain 公平性指标修复完成（代码中 c_gnn_ddqn.py, b2_topk.py, baselines 已更新）。审计发现 2 CRITICAL + 3 IMPORTANT 数据矛盾，待修复。待补实验：多 seed 验证、N=30/40 规模、乒乓切换率指标。审计估 ~6h 补实验（但 Ch1 经验表明可能偏高 10x，需实测）| 阶段: Post-EX
+
+[D034] **paper-materials 审计问题待修** | 理由: S003-ch2-audit P0 数据修正清单。6 项数据修正待执行（参数量核实/标注修正/数值统一），4 项指标补齐待执行（M3切换次数/M4 Jain等），5 张可视化图待生成。需要在补实验完成后统一更新。状态：未开始 | 阶段: Post-EX
+
+[D035] **写法规范 + 贡献定位修正**（2026-05-24）| 理由: R003 审计确认 Ch2 贡献需重新定位。(1) 二部图 GNN 建模不是创新（Lee & Lim 2025 有直接先例），定位为"采用二部图 GNN 编码器"而非"提出"；(2) top-K 动作压缩是工程选择，不是方法论创新；(3) DDQN 是标准做法，不构成贡献；(4) Jain's fairness 降级为辅助指标（切换领域通行率仅 17%，属资源分配领域）；(5) 贡献重新定位为"集中式 DRL 架构 + 系统性评估"——核心差异是集中式 DDQN（时序信用分配）vs Lee & Lim 的分布式 softmax（监督学习）。已修正文件：04_literature.md、01_research_context.md、contract.md、decision_log.md、master-state.md。 | 阶段: Post-EX
+[D036] **eps_decay 修复：per-episode 随机化暴露训练协议问题**（2026-05-24/25）| 理由: 多 seed 实验发现 GNN 全面输给 MLP。根因：原始代码 `run_ep(seed=42)` 每个 episode 相同环境（单场景记忆），修改后 `run_ep(seed=train_seed+ep)` 真实多样场景训练。eps_decay=5 对固定场景够用（15 ep 后停止探索），对多样场景远远不够。修复方案：eps_decay=20。**全量结果（2026-05-25）**：同规模 4 配置×3 seed=12 轮全部完成。50UE GNN 29262 vs MLP 23476（+24.7% reward, blocking 0.16% vs 9.15% 低 57 倍）。100UE 同规模失败（reward -19218, blocking 81%），但领域文献最多到 50UE（Lee & Lim 2025），不影响论文。**Size gen**：20→50 retention 223%（blocking 0.89%），20→100 retention 329%（blocking 14.5%）。⚠️ 模型文件名未含 seed 后缀，size gen 仅用单模型，需修复后重跑。Ch1/Ch3 不受影响。 | 阶段: Post-EX

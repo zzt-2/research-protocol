@@ -94,14 +94,15 @@
 
 ## 3. 竞品精确区分
 
-### 3.1 Lee et al. 2025 (ICT Express)
+### 3.1 Lee & Lim 2025 (ICT Express) — **最直接竞争者**
 
 - **标题**: Handover strategy for LEO satellite communication using graph neural network
 - **DOI**: 10.1016/j.icte.2025.01.009
 - **完整方法描述**: UE-卫星二部图建模，分布式 GNN（T=2 层 FCN 消息传递），softmax 输出选星概率，卫星侧 ACK 负载控制（超过容量拒绝连接）。训练 50 UE × 9600 samples，Adam lr=1e-5，batch=4，损失函数 L = -1/|B| Σ[p·log₂(1+SINR)] + ω·Σ(ReLU(Σp - P))。仿真 22×72=1584 星 + STK，建边条件 elevation ≥ 25°。
 - **与本研究重叠要素**: UE-卫星二部图结构、GNN 编码、多 UE 联合决策、负载均衡目标
-- **缺失要素**: (1) 无 DRL——纯 GNN softmax 选星，无 Q 值或策略梯度学习；(2) 无 size generalization 实验或理论分析——可扩展性声明仅基于 GNN 固有置换不变性；(3) 无切换惩罚——奖励函数不含切换成本项；(4) 全文未获取，架构细节未完全确认
-- **威胁级别**: 低-中。图结构重叠但决策机制根本不同（监督学习 vs DRL），可扩展性仅为声明而非实验贡献
+- **缺失要素**: (1) 无 DRL——纯 GNN softmax 选星（分布式决策），无 Q 值或策略梯度学习；(2) 无 size generalization 实验或理论分析——可扩展性声明仅基于 GNN 固有置换不变性；(3) 无切换惩罚——奖励函数不含切换成本项；(4) 全文未获取，架构细节未完全确认
+- **与本研究的关键差异**: (1) **决策机制**: Lee & Lim 采用分布式 softmax 监督学习，每个 UE 独立通过 GNN 输出选星概率；本研究采用集中式 Dueling DDQN，中心控制器统一决策，具备时序信用分配能力；(2) **学习范式**: 监督学习 vs 强化学习——本研究通过 reward 信号端到端优化切换策略（含阻塞惩罚和切换惩罚），Lee & Lim 的损失函数仅优化 SINR+负载；(3) **可扩展性验证**: 本研究提供 size generalization 实验验证（20→100 UE），Lee & Lim 仅为 GNN 固有性质声明
+- **威胁级别**: 低-中（最直接竞争者：二部图 GNN 先例）。图结构重叠但决策机制根本不同（分布式监督学习 vs 集中式 DRL），可扩展性仅为声明而非实验贡献
 
 ### 3.2 Eydian et al. 2025 (IEEE OJCOMS)
 
@@ -196,7 +197,7 @@
 
 | 论文 | 核心方法 | 缺失要素 | 威胁级别 |
 |------|---------|---------|---------|
-| **Lee 2025** (ICT Express, DOI:10.1016/j.icte.2025.01.009) | GNN + 分布式 LEO 切换 + 负载均衡 | 无 DRL、非二部图（UE-卫星二部图但无 DRL）、size gen 仅声明 | 低-中 |
+| **Lee 2025** (ICT Express, DOI:10.1016/j.icte.2025.01.009) | GNN + 分布式 LEO 切换 + 负载均衡（使用 UE-卫星二部图） | 无 DRL（softmax 监督学习）、size gen 仅声明（无实验验证） | **低-中（最直接竞争者：二部图 GNN 先例，差异在决策机制）** |
 | **Eydian 2025** (IEEE OJCOMS, DOI:10.1109/OJCOMS.2025.3541962) | 加权二部图匹配 + 滞后余量 LEO 切换 | 无 GNN、无 RL、经典优化 | 低 |
 | **Chou 2026** (arXiv:2605.02416) | Dueling DDQN 多目标 LEO 切换 | 无 GNN、无二部图、无 size generalization | 低-中 |
 | **Kim 2022** (arXiv:2207.05364, IEEE TWC) | 二部图 GNN (BGNN) 波束赋形 + 跨规模可扩展 | 非切换场景、无 DRL | 低-中（理论先驱） |
@@ -268,7 +269,7 @@ LEO 切换 + DRL 领域**零开源代码论文**。核心 6 篇前向引用中 0
 | L024 | — | 2023 | Handover Protocol Learning for LEO Satellite Networks: Access Delay and Collision Minimization | 10.1109/TWC.2023.3342975 | — | 精读 |
 | L029 | Chou | 2026 | Dueling DDQN-Based Adaptive Multi-Objective Handover Optimization for LEO Satellite | arXiv:2605.02416v1 | https://arxiv.org/abs/2605.02416 | 精读 |
 | C-ARTHF | Fan | 2025 | Joint Traffic Prediction and Handover Design for LEO Satellite Networks with LSTM and Attention-Enhanced Rainbow DQN | 10.3390/electronics14153040 | https://www.mdpi.com/2079-9292/14/15/3040 | 精读 |
-| C-Lee | Lee | 2025 | Handover strategy for LEO satellite communication using graph neural network | 10.1016/j.icte.2025.01.009 | https://www.sciencedirect.com/science/article/pii/S259015442500062X | 粗读（全文未获取） |
+| C-Lee | Lee & Lim | 2025 | Handover strategy for LEO satellite communication using graph neural network | 10.1016/j.icte.2025.01.009 | https://www.sciencedirect.com/science/article/pii/S259015442500062X | 粗读（全文未获取） |
 | C-Yu | Yu | 2024 | A Graph Reinforcement Learning-Based Handover Strategy for LEO Satellites under Power Grid Scenarios | 10.3390/aerospace11070511 | https://www.mdpi.com/2226-4310/11/7/511 | 精读 |
 | C-Kim | Kim | 2022 | BGNN: Bipartite Graph Neural Network for Beamforming | arXiv:2207.05364 | — | 仅检索 |
 | C-Eydian | Eydian | 2025 | Bipartite Graph + Hysteresis Margin LEO Handover | 10.1109/OJCOMS.2025.3541962 | — | 仅检索 |

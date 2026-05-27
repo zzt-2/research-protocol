@@ -1,5 +1,7 @@
 # Literature Notes: leo-congestion-routing
 
+> 最后更新: 2026-05-24 — 核心空白定位更新（加入 TELGEN 差异化）
+>
 > GNN 拥塞感知路由 + 负载均衡 for LEO 卫星星座
 
 ## 步骤进度
@@ -32,17 +34,20 @@
 
 ### 核心空白确认
 
-**"GNN + 拥塞感知路由 + LEO"三角交集区**：有论文但无直接竞品做 per-link 负载均衡决策。
+**"LEO 时变拓扑 + 在线 DRL 拥塞弹性路由"差异化定位**：
+
+TELGEN (Zhou 2025, ToN) 已将"GNN + TE + size generalization"做完整（20x 泛化，<3% gap），但其局限为：(1) 静态快照，无法处理 LEO 时变拓扑；(2) 离线监督学习，需每个快照预计算 IPM 解；(3) per-path 流量分割，依赖预计算路径集。本研究差异化聚焦：(1) LEO 时变拓扑在线适应；(2) per-link 负载均衡决策；(3) DRL 在线学习 vs SL 离线训练。
 
 最接近竞品：
 | 论文 | 方法 | 与本研究的差异 |
 |------|------|---------------|
+| **TELGEN (Zhou 2025, ToN)** | **双循环 GCN + SL，20x size gen** | **静态快照 + 离线 SL + per-path 分割，无 LEO 时变** |
 | GNN-ASSSP (He 2026) | GAT+Transformer, congestion-aware edge weights | per-edge weight learning，非 per-link 负载均衡决策 |
 | GMR (Huang 2024, TVT, 41cit) | GNN multipath TE | per-path traffic splitting，非 per-link |
 | DTAR (Zhou 2026) | GAT+PPO domain routing | 域间路由，非全网 per-link |
 | DLBR (Ju 2025, TAES) | GCN+LSTM+DRL load balancing | GNN 仅用于流量预测，非路由决策 |
 
-**Size generalization × 拥塞路由交叉**：完全真空。无任何论文同时涉及 GNN size generalization 和拥塞感知路由/TE。这是 thesis 框架一致性的关键空白，也是潜在核心贡献。
+> **TELGEN 差异化说明（S005 跨章审计确认）**：TELGEN 在 Ch1（size generalization for routing）和 Ch3（congestion-aware routing）中均有相关性。Ch1 与 TELGEN 的差异在于拓扑类型（mega-constellation vs ER/Waxman）和决策粒度；Ch3 与 TELGEN 的差异在于在线 DRL vs 离线 SL、时变拓扑 vs 静态快照。两个章节的差异化维度不同，不构成重复。
 
 ### 关键风险
 
@@ -610,9 +615,9 @@ MAPPO+GAT，每节点 G/G/1/K 队列建模最精细，但 per-packet 粒度太�
 3. 大规模星座的可扩展性（从 48 星到 1584+ 星的泛化）
 4. 奖励设计的理论保证（避免 reward shaping 的随意性）
 
-**本研究定位**（Step 3.5 更新）:
+**本研究定位**（Step 3.5 更新，2026-05-24 修订）:
 
-TELGEN (Zhou 2025, ToN) 已将"GNN + TE + size generalization"做完整（20x 泛化，<3% gap）。纯 size generalization for TE 已不再是空白。
+TELGEN (Zhou 2025, ToN) 已将"GNN + TE + size generalization"做完整（20x 泛化，<3% gap）。纯 size generalization for TE 已不再是空白。核心空白从"size generalization × 拥塞路由完全真空"修订为"LEO 时变拓扑 + 在线 DRL 拥塞弹性路由差异化"。
 
 **差异化必须聚焦 LEO 时变场景**（TELGEN 的明确 future work）：
 1. **LEO 时变拓扑 TE**：利用轨道力学确定性+周期性，做跨时间步的增量 TE（TELGEN 静态快照无法处理）

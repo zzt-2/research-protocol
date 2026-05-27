@@ -1,6 +1,6 @@
 # 专题：三章论文全面质量审计
 
-> 创建: 2026-05-22 | 状态: active
+> 创建: 2026-05-22 | 状态: dormant（审计核心完成，修复执行转至 thesis-chapter-fixes 专题）
 > 对三章论文（Ch1路由/Ch2切换/Ch3拥塞路由）做系统性质量审计，确保新颖性、实验完备性、指标完整性、跨章一致性均达标
 
 ## 审计维度
@@ -35,6 +35,12 @@
 ### S001-setup.md — 专题建立与交接文档编写（2026-05-22）
 
 建立审计专题，派 3 个 opus 子 agent 并行收集三章核心信息（paper-materials / literature_notes / contract / master-state），编写 4 份交接文档。
+
+**Ch1 修复执行**：A1-A7 代码改造 ✅（thesis-chapter-fixes S001），P0 多 seed GPU 重跑 ✅（thesis-chapter-fixes S004，实测 ~6 min/seed vs 审计估 2h/seed，差 10x）。paper-materials 重写待进行。
+
+**Ch2 修复执行**：M4 Jain 修复 ✅（thesis-chapter-fixes S001）。其他 P0-P3 修复项未开始 → 移至 thesis-chapter-fixes。
+
+**Ch3 修复执行**：审计小改动(E03/E10/E12/CV+Overflow) ✅（thesis-chapter-fixes S001），拓扑升级 ✅（S002），GPU 重跑 E01-E12 ✅（S003），paper-materials 全面重写 ✅。Ch3 修复全部完成。
 
 ### H001-ch1-handoff.md — Ch1 路由 Size Gen 审计交接
 
@@ -85,18 +91,25 @@ Phase 1-4 全部完成 + 代码验证。参数一致性 FAIL（Ch3 是纯抽象�
 
 ## 未决项
 
-1. Ch2 是否补 N=30-40 拐点数据（可跳过，Limitations 中承认）
+1. Ch2 是否补 N=30-40 拐点数据（可跳过，Limitations 中承认）→ 移至 thesis-chapter-fixes
 2. ~~Ch2 文献新鲜度~~：2026-05-22 检索通过，SAFE（S003）
 3. ~~Ch3 文献新鲜度~~：2026-05-22 检索通过，SAFE（S004）
-4. Ch3 数据修复：E03表格/E12纳入/E10"0.803"（3项必须修复）
-5. Ch3 指标补充：CV+Overflow纳入paper-materials（零成本）
-6. ~~三章符号体系/术语是否已统一~~：审计确认有冲突（S005），需在论文写作时统一
+4. ~~Ch3 数据修复~~：✅ E03/E10/E12 小改动已修复（thesis-chapter-fixes S001）
+5. ~~Ch3 指标补充~~：✅ CV+Overflow 已纳入（thesis-chapter-fixes S001）
+6. ~~三章符号体系/术语是否已统一~~：审计确认有冲突（S005），需在论文写作时统一 → 移至 thesis-chapter-fixes
 7. ~~Ch3 Walker F=0 需代码确认~~：✅ 已验证，topology.py 无 F 参数，纯 4-regular 网格
 8. ~~Ch1 GNN_LAYERS=2(config) vs 3层(论文)~~：✅ 已验证，train.py AC_LAYERS=3，config.py 过时
-9. Ch3 config.py 清理：删除误导性 Iridium 注释或标注 unused
-10. Ch3 paper-materials："Walker delta (F=0)" → "4-regular grid（Walker delta F=0 连通模式）"
-11. 拓扑建模深度差异需在论文中声明（Ch1/Ch2 物理仿真 vs Ch3 抽象网格）
+9. ~~Ch3 config.py 清理~~：✅ 拓扑升级后已解决（thesis-chapter-fixes S002）
+10. ~~Ch3 paper-materials~~：✅ 全面重写，含"4-regular grid（Walker delta F=0 连通模式）"（thesis-chapter-fixes S003 后续）
+11. ~~拓扑建模深度差异~~：Ch3 已升级为 Walker-Delta 物理仿真（thesis-chapter-fixes S002），声明仍需写入论文 → 移至 thesis-chapter-fixes
 
 ## 当前位置
 
-审计专题全部完成（含代码验证）。S001 专题建立 → H001-H004 交接 → S002 Ch1 审计 → S003 Ch2 审计 → S004 Ch3 审计 → **S005 跨章汇总+代码验证完成**。9 个子 agent + 主线程 7 项代码验证。**下一步：各章修复执行（新专题或回归各项目 master-state），建议专题状态转 closed。**
+审计专题全部完成（含代码验证）。S001 专题建立 → H001-H004 交接 → S002 Ch1 审计 → S003 Ch2 审计 → S004 Ch3 审计 → S005 跨章汇总+代码验证完成。9 个子 agent + 主线程 7 项代码验证。
+
+**修复执行已转至 thesis-chapter-fixes 专题**：
+- Ch1：A1-A7 ✅, P0 多 seed ✅, paper-materials 待重写
+- Ch2：M4 Jain ✅, P0-P3 未开始
+- Ch3：全部修复完成（小改动+拓扑升级+GPU 重跑+paper-materials 重写）
+
+本专题转 dormant，如需回溯审计发现可随时激活。

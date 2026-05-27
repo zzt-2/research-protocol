@@ -22,8 +22,8 @@ topics:
     title: 论文结构研究
     status: active
     created: "2026-05-16"
-    last_updated: "2026-05-21"
-    description: 基于中文卫星网络学位论文的结构设计，34 篇分析；当前 S003 三章全面审查
+    last_updated: "2026-05-24"
+    description: 基于中文卫星网络学位论文的结构设计，34 篇分析+贡献声称写法规范(R003)
 
   - slug: master-worker-orchestration
     title: Master-Worker 编排系统
@@ -130,3 +130,15 @@ topics:
     created: "2026-05-17"
     last_updated: "2026-05-18"
     description: P0-P3 全部完成，实验+可视化+论文材料就绪，可进入正式写作
+
+  - slug: thesis-final-review
+    title: 学位论文终审
+    status: active
+    created: "2026-05-25"
+    last_updated: "2026-05-25"
+    description: 最后一轮全面审查，7对话~40子agent，确保三章无遗漏隐患叙事合规
+    depends_on:
+      - slug: chapter-quality-audit
+        reason: 终审基于审计结论
+      - slug: thesis-chapter-fixes
+        reason: 修复后的 paper-materials 为审查基线

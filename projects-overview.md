@@ -1,26 +1,27 @@
 # 项目总览
 
-> 最后更新: 2026-05-21 | 活跃: 5 | 已归档: 5 | 总计: 10
+> 最后更新: 2026-05-24 | 活跃: 5 | 已归档: 5 | 总计: 10
 
 ## 活跃项目
 
 ### leo-mega-constellation-gnn-routing
 
-- **方向**: GNN size generalization — 小星座训练零样本泛化到Starlink级路由
-- **阶段**: Execute 完成 → 论文素材提取
+- **方向**: GNN 在 LEO 路由中的场景适配与实证验证 — 小星座训练零样本泛化到Starlink级路由
+- **阶段**: Execute P0 完成 → paper-materials 待重写 → 跨章交叉整理
 - **关键技术**: GNN (GraphSAGE) + 位置编码 + 多尺度训练
-- **关键结论**: 跨规模时延保留率90.3%，PE是学习必要条件（无PE≈随机），9.7pp stretch差距纯来自跨规模迁移
-- **教训**: MVE 83-87%保持率为后续投入奠基；消融设计有效隔离泛化来源
+- **关键结论**: 3-seed P0 实验完成（stretch=1.099±0.012, delay=66.84ms, ≤1.2x%=86.2%，训练精度97.5%）。消融验证：PE是学习必要条件（无PE≈随机40%），多尺度有贡献（+2pp）。同规模完美（stretch=1.000）。Delay retention=109.9%
+- **领域验证**: Size generalization 是 GNN 理论问题非 LEO 路由领域挑战，叙事改为"跨领域迁移"。Li 2026 排除（子agent幻觉）
+- **待补**: random_pe (~20min), E06/E08 (P1), paper-materials重写
 - **handoff**: `.sessions/2026-05-13-mega-constellation-gnn-routing/H008-0514-step5.md`
 
 ### leo-ntn-handover-drl
 
-- **方向**: 二部图GNN+DDQN实现LEO切换size generalization
-- **阶段**: Contract 冻结(v2) + 素材提取完成 → 论文写作
+- **方向**: GNN-DRL 在 LEO 切换中的集中式架构设计与评估 — 二部图GNN+DDQN实现切换规模迁移
+- **阶段**: Execute 完成 → 审计完成(S003) → 待补实验(多seed+N=30/40+乒乓切换率)
 - **关键技术**: 二部图GNN + DDQN + top-K动作压缩
-- **关键结论**: GNN从20UE迁移到100UE reward 35,699（正），MLP迁移崩溃-9,710；top-K压缩是决定性改进（reward 2x），GNN仅+0.8%
-- **教训**: 初始叙事（GNN提升绝对性能）在小规模不成立，及时转向size generalization救活项目；叙事转向需系统性实验支撑
-- **素材包**: paper_materials/ 6文件共~95K，含18篇中文引用+预印本验证
+- **关键结论**: 二部图GNN+DDQN，top-K压缩是决定性改进。M4 Jain已修复
+- **待补**: 多seed验证(~6h，但Ch1经验表明可能偏高10x)、N=30/40规模实验、乒乓切换率指标
+- **教训**: 初始叙事（GNN提升绝对性能）在小规模不成立，及时转向规模迁移救活项目；叙事转向需系统性实验支撑
 - **handoff**: 无专用session目录（决策记录在项目目录内）
 
 ### hgat-satellite-dag-offloading
@@ -34,10 +35,11 @@
 
 ### leo-congestion-routing
 
-- **方向**: GNN 拥塞感知路由 + 负载均衡 for LEO 卫星星座
-- **阶段**: Execute Step 6 完成 → 论文写作
-- **关键技术**: GNN message passing + per-link 负载均衡权重决策 + K-path 路由范式
-- **关键结论**: GNN vs ECMP +18.2%（GNN/ECMP=0.818），GNN vs MLP +17.8%（GNN/MLP=0.822），跨规模泛化 ≤5% 退化（0.7×~10.9×）。全部消融实验完成（故障率×流量×规模×架构），12 张可视化图已生成
+- **方向**: GNN 在 LEO 故障弹性路由中的鲁棒性验证 — 拥塞感知路由+负载均衡 for LEO 卫星星座
+- **阶段**: Execute 全部完成（拓扑升级+GPU重跑+paper-materials重写）→ 论文写作
+- **关键技术**: Walker-Delta 物理仿真(alt=550km, inc=86.4°, polar_gap=70°) + M/M/1排队延迟模型 + GNN message passing
+- **关键结论**: GNN/ECMP delay=0.80, MLU=0.96, GNN/MLP delay=0.37。E2E delay为主指标（非MLU ratio）。E12故障模式11/12赢。学位论文章节够用
+- **待补(可选)**: delay敏感性分析+DRL baseline (投期刊时)
 - **教训**: K-path 范式迁移（D15）是关键架构决策——从 per-flow 路由改为 per-edge 权重；TELGEN (Zhou'25 ToN) 是最强竞品，差异化靠 LEO 时变拓扑
 - **handoff**: 无（项目可直接进入论文写作）
 

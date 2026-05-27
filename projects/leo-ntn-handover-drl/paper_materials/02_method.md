@@ -273,7 +273,7 @@ $$\mathcal{L}_{aux} = \text{BCE}(block\_pred,\ block\_true) + \text{MSE}(\Delta 
 | GNN 梯度裁剪 | max_norm = 0.5 | |
 | 全局梯度裁剪 | max_norm = 1.0 | |
 | Target network 更新 | 每 3000 步 | |
-| $\varepsilon$-greedy | $1.0 \to 0.01$ 指数衰减 | eps_decay=40 |
+| $\varepsilon$-greedy | $0.5 \to 0.05$ 指数衰减 | eps_decay=20 |
 | 训练 episodes | 100（50+ UE）/ 50（15-20 UE） | |
 | 评估 seeds | 3（100, 200, 300） | |
 

@@ -35,3 +35,44 @@
 [D028] 消融A3（无PE+单尺度train_100）：训练精度40.16%(≈随机)，stretch 1.049, ≤1.2x 93.6%, delay开销3.6% | 理由: 确认PE是学习必要条件——无论单/多尺度，无PE均无法学习；A3 stretch(1.049)介于A1(1.002)和A2(1.120)之间，表明更少训练样本导致略差的Dijkstra近似 | 阶段: Execute
 [D027] 消融A2（仅train_100单尺度训练）：训练精度97.70%，720星评估 stretch 1.120, median 1.073, ≤1.2x 81.1%, delay开销12.3% | 理由: 单尺度训练精度与主实验相当(97.7% vs 97.6%)，但跨尺度迁移略差；多尺度训练贡献：stretch -2.3pp, ≤1.2x +4pp, delay开销 -2.4pp；贡献方向符合预期但幅度(2-4pp)小于Contract预期(5-8pp) | 阶段: Execute
 [D026] 消融A1（移除Orbital PE）：训练精度39.66%（≈随机25%），无法学习方向路由；weighted Dijkstra stretch 1.002（≈纯Dijkstra）| 理由: 无PE时模型仅靠is_dest(1bit)无法区分节点位置，无法学习方向偏好；weighted Dijkstra退化为delay-only权重=纯Dijkstra；PE是模型学习的必要条件而非可选增强，Contract假设"PE贡献≥8pp stretch"需修正为"PE是模型可学习性的前提" | 阶段: Execute
+
+---
+
+### D030: 领域验证结论 — Size generalization 非LEO路由领域问题
+**日期**: 2026-05-24
+**上下文**: S004-ch1-domain-verify, 3个子agent并行调研
+**决策**:
+1. Size generalization 是 GNN 理论问题，非 LEO 路由领域公认挑战。LEO 路由综述未列出此问题。→ 叙事必须改为"将 GNN 技术迁移到 LEO 路由场景"
+2. Stretch 指标在 LEO 路由中合法但非主指标（E2E delay 为主）→ stretch 作为辅助指标
+3. Delay retention rate 为自造指标，无文献先例 → 标注为新提出指标
+4. Orbital PE 是标准领域特征工程 → 降级为"工程选择"而非核心贡献
+5. 加权 Dijkstra 推理有先例（GDDR 2021）→ 增量创新
+
+**原因**: 子 agent 调研 3 组文献确认。Li 2026 子agent 幻觉事件进一步证明必须做领域归属验证。
+
+---
+
+### D031: P0 多 seed 实验完成
+**日期**: 2026-05-24
+**上下文**: run_experiments.py 批量运行，审计估 2h/seed 实测 ~6 min/seed
+**决策**: P0 核心实验 14 轮完成（full/A1/A2/A3 各 3 seed, same 2 seed），数据极稳定（stretch std=0.012），消融故事完整。P0 PASS。
+
+**关键数据**:
+| 实验 | Stretch | Delay(ms) | ≤1.2x% | 训练精度 |
+|------|---------|-----------|--------|---------|
+| full | 1.099±0.012 | 66.84 | 86.2 | 97.5% |
+| A1(无PE) | 1.006±0.002 | 61.13 | 99.9 | 40.2%≈随机 |
+| A2(单尺度) | 1.106±0.018 | 67.66 | 84.0 | 97.7% |
+| A3(双消融) | 1.058±0.002 | 63.32 | 92.2 | 40.2%≈随机 |
+| same | 1.000±0.000 | 60.80 | 100.0 | 98.6% |
+
+**影响**: delay retention=109.9%（跨规模多~10%延迟开销），数据可用于论文写作。
+
+---
+
+### D032: Li 2026 竞品排除
+**日期**: 2026-05-24
+**上下文**: 子agent声称 Li 2026 (arXiv:2604.07264) 做 size generalization
+**决策**: Li 2026 非竞品。实际论文做意图编译（LLM→约束IR→验证），GNN仅用于同规模Dijkstra蒸馏加速。Abstract中无 size generalization 或 zero-shot transfer。新颖性维持 SAFE。
+
+**原因**: 子agent基于 GNN+Dijkstra+LEO 表面相似性幻觉了功能。经 abstract 交叉验证排除。

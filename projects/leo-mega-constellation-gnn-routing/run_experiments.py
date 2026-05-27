@@ -377,10 +377,7 @@ def main():
             "le12": dict(mean=float(np.mean(le12s)),
                          std=float(np.std(le12s)),
                          values=le12s),
-            "per_seed_results": [{
-                k: v for k, v in r.items()
-                if k not in ("per_flow_stretches", "loss_history")
-            } for r in exp_results],
+            "per_seed_results": exp_results,
         }
 
     # Summary table
@@ -396,12 +393,12 @@ def main():
         print(f"{exp:<12} {s['mean']:>10.3f} {s['std']:>8.3f} {d['mean']:>10.2f} {d['std']:>8.2f} {l['mean']:>7.1f}%")
     print()
 
-    # Retention rate (full vs same)
+    # Retention rate (same/cross, consistent with 06_formulas §7)
     if "full" in all_results and "same" in all_results:
         full_delay = all_results["full"]["mean_delay"]["mean"]
         same_delay = all_results["same"]["mean_delay"]["mean"]
-        retention = full_delay / same_delay if same_delay > 0 else 0
-        print(f"Delay retention (full/same): {retention:.3f} ({retention*100:.1f}%)")
+        retention = same_delay / full_delay if full_delay > 0 else 0
+        print(f"Delay retention (same/cross): {retention:.3f} ({retention*100:.1f}%)")
 
     elapsed = time.time() - t_total
     all_results["_meta"] = dict(

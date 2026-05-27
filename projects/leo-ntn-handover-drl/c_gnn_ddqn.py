@@ -40,6 +40,7 @@ parser.add_argument('--T', type=int, default=2)
 parser.add_argument('--no_orbit', action='store_true', help='Disable orbit_phase feature')
 parser.add_argument('--num_ues', type=int, default=cfg.NUM_UES, help='Number of UEs')
 parser.add_argument('--sat_capacity', type=int, default=cfg.SAT_CAPACITY, help='Satellite capacity')
+parser.add_argument('--train_seed', type=int, default=42, help='Training random seed')
 args = parser.parse_args()
 
 K = args.K
@@ -287,6 +288,8 @@ def evaluate(env, net, gb, seed):
     blk_steps = 0
     step_count = 0
     ue_throughput = np.zeros(env.num_ues)
+    sat_history = {u: [] for u in range(env.num_ues)}
+    pp_count = 0
     done = False
 
     while not done:
@@ -314,6 +317,15 @@ def evaluate(env, net, gb, seed):
         ue_throughput += info['throughput_bps']
         step_count += 1
 
+        # Ping-pong detection: UE returns to recently-used satellite
+        for u in range(env.num_ues):
+            if prev[u] != -1 and g_act[u] != prev[u]:
+                if g_act[u] in sat_history[u][-3:]:
+                    pp_count += 1
+            sat_history[u].append(int(g_act[u]))
+            if len(sat_history[u]) > 5:
+                sat_history[u].pop(0)
+
         obs = nxt_obs
         prev = g_act.copy()
         blk = (info['throughput_bps'] == 0)
@@ -330,13 +342,16 @@ def evaluate(env, net, gb, seed):
         'mean_throughput_mbps': float(ue_throughput.mean() / step_count / 1e6),
         'jain_fairness': jain,
         'steps': step_count,
+        'ping_pong_rate': float(pp_count / max(ho_count, 1)),
     }
 
 
 # ── Training ──────────────────────────────────────────────────────────────────
 def main():
     print(f"Device: {DEVICE}")
-    env = LEOSatHandoverEnv(num_ues=args.num_ues, sat_capacity=args.sat_capacity, seed=42)
+    torch.manual_seed(args.train_seed)
+    np.random.seed(args.train_seed)
+    env = LEOSatHandoverEnv(num_ues=args.num_ues, sat_capacity=args.sat_capacity, seed=args.train_seed)
     gb = GraphBuilder()
 
     net = GNNQNetwork().to(DEVICE)
@@ -361,7 +376,7 @@ def main():
 
     for ep in range(NUM_TRAIN_EP):
         eps = EPS_END + (EPS_START - EPS_END) * np.exp(-ep / EPS_DECAY)
-        trans, ep_r = run_ep(env, net, gb, eps, seed=42)
+        trans, ep_r = run_ep(env, net, gb, eps, seed=args.train_seed + ep)
         r_log.append(ep_r)
 
         for t in trans:
@@ -432,15 +447,16 @@ def main():
                     'gnn_lr': GNN_LR, 'drl_lr': DRL_LR, 'gamma': GAMMA,
                     'eps_decay': EPS_DECAY, 'target_update': TARGET_UPDATE,
                     'episodes': NUM_TRAIN_EP, 'name': EXP_NAME,
-                    'num_ues': args.num_ues, 'sat_capacity': args.sat_capacity},
+                    'num_ues': args.num_ues, 'sat_capacity': args.sat_capacity,
+                    'train_seed': args.train_seed},
     }
-    out = PROJECT_ROOT / 'results' / f'{EXP_NAME}_results.json'
+    out = PROJECT_ROOT / 'results' / f'{EXP_NAME}_s{args.train_seed}_results.json'
     out.parent.mkdir(exist_ok=True)
     with open(out, 'w') as f:
         json.dump(res, f, indent=2)
 
     # Save model checkpoint
-    ckpt = PROJECT_ROOT / 'results' / f'{EXP_NAME}_model.pt'
+    ckpt = PROJECT_ROOT / 'results' / f'{EXP_NAME}_s{args.train_seed}_model.pt'
     torch.save({'net': net.state_dict(), 'config': res['config']}, ckpt)
     print(f"Model saved to {ckpt}")
 

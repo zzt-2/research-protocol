@@ -62,7 +62,7 @@ $$\mathbf{h}_u^{(l+1)} = \text{ELU}\left( \bigg\|_{m=1}^{M} \sum_{v \in \mathcal
 
 注意力系数（边条件化）：
 
-$$\alpha_{uv} = \frac{\exp(\text{LeakyReLU}(\mathbf{a}^\top [\mathbf{W}\mathbf{h}_u \| \mathbf{W}\mathbf{h}_v \| \mathbf{W}_e \mathbf{e}_{uv}]))}{\sum_{w \in \mathcal{N}(u)} \exp(\text{LeakyReLU}(\mathbf{a}^\top [\mathbf{W}\mathbf{h}_w \| \mathbf{W}\mathbf{h}_v \| \mathbf{W}_e \mathbf{e}_{uw}]))}$$
+$$\alpha_{uv} = \frac{\exp(\text{LeakyReLU}(\mathbf{a}^\top [\mathbf{W}\mathbf{h}_u \| \mathbf{W}\mathbf{h}_v \| \mathbf{W}_e \mathbf{e}_{uv}]))}{\sum_{w \in \mathcal{N}(u)} \exp(\text{LeakyReLU}(\mathbf{a}^\top [\mathbf{W}\mathbf{h}_u \| \mathbf{W}\mathbf{h}_w \| \mathbf{W}_e \mathbf{e}_{uw}]))}$$
 
 方向预测头（两层 MLP）：
 
@@ -101,15 +101,25 @@ $$w(u, v) = \delta_{\text{delay}}(u, v) + \text{relu}\big(\max_d\ o_{u,d} - o_{u
 
 ## 7. 评估指标
 
-### Stretch（路径最优性比）
+### Stretch（路径最优性比，辅助指标）
 
 $$\text{stretch}_p = \frac{\text{delay}_p}{\text{delay}_p^*}$$
 
-其中 $\text{delay}_p^*$ 为 Dijkstra 最短路径时延。
+其中 $\text{delay}_p^*$ 为 Dijkstra 最短路径时延。值域 $[1, +\infty)$，1.0 表示最优。
 
-### 时延保留率
+### E2E Delay（端到端时延，主指标）
 
-$$\text{retention} = \frac{\text{delay}_{\text{GRLR, same-scale}}}{\text{delay}_{\text{ours, cross-scale}}}$$
+$$\text{delay}_p = \sum_{(u,v) \in p} \delta_{\text{delay}}(u,v)$$
+
+路径 $p$ 上所有 ISL 传播时延之和。LEO 路由领域主流评估指标（L10, L11, L13 均以时延为核心）。
+
+### 时延保留率（本文提出指标，无文献先例）
+
+$$\text{retention} = \frac{\text{delay}_{\text{same-scale}}}{\text{delay}_{\text{cross-scale}}}$$
+
+**值域**：$(0, +\infty)$。1.0 表示跨规模与同规模性能一致；$< 1$ 表示跨规模时延更高（有退化）；$> 1$ 表示跨规模时延更低（罕见）。本文实验中 retention = 60.32 / 65.92 = 0.915（即 91.5%, 3 seed），表示跨规模部署额外时延开销约 8.5%。
+
+> **论文写法建议**：首次引入时标注"本文提出的评估指标"，说明无已知文献使用此指标定义跨规模性能退化。值域为 $(0, +\infty)$，retention = delay_same / delay_cross，值越接近 1.0 表示跨规模退化越小。
 
 来源：contract.md §Metrics (M4)。
 
@@ -147,34 +157,34 @@ $$\text{retention} = \frac{\text{delay}_{\text{GRLR, same-scale}}}{\text{delay}_
 
 ## 9. 符号约定表
 
-| 符号 | 含义 | 范围/单位 | 首现章节 |
-|------|------|----------|---------|
-| $N$ | 卫星总数 | — | 系统模型 |
-| $P$ | 轨道面数 | — | 系统模型 |
-| $S$ | 每面卫星数 | — | 系统模型 |
-| $h$ | 轨道高度 | 550 km | 系统模型 |
-| $i$ | 轨道倾角 | 53° | 系统模型 |
-| $F$ | Walker 相位因子 | 1 | 系统模型 |
-| $(p, k)$ | 卫星轨道位置 | $p \in [0,P),\ k \in [0,S)$ | 系统模型 |
-| $d_{\max}$ | ISL 断链阈值 | 5000 km | 系统模型 |
-| $B$ | ISL 带宽 | 1 GHz | 系统模型 |
-| $\delta_{\text{delay}}$ | ISL 传播时延 | ms | 系统模型 |
-| $d_{u,v}$ | ISL 几何距离 | km | 系统模型 |
-| $\text{PE}(p,k)$ | Orbital 位置编码 | $\mathbb{R}^{16}$ | 方法-PE |
-| $d_{\text{PE}}$ | PE 输出维度 | 16 | 方法-PE |
-| $n_{\text{freq}}$ | PE 频率数 | 4 | 方法-PE |
-| $\mathbf{x}_u$ | 节点 $u$ 输入特征 | $\mathbb{R}^{33}$ | 方法-特征 |
-| $\mathbf{e}_{uv}$ | 边 $(u,v)$ 特征 | $\mathbb{R}^{2}$ | 方法-特征 |
-| $\mathbf{h}_u^{(l)}$ | 节点 $u$ 第 $l$ 层嵌入 | $\mathbb{R}^{128}$ | 方法-GAT |
-| $M$ | 注意力头数 | 4 | 方法-GAT |
-| $L$ | GAT 层数 | 3 | 方法-GAT |
-| $\alpha_{uv}$ | 注意力系数 | $[0,1]$ | 方法-GAT |
-| $\mathbf{o}_u$ | 方向 logits | $\mathbb{R}^4$ | 方法-预测头 |
-| $y_u$ | 方向标签 | $\{0,1,2,3\}$ | 方法-训练 |
-| $\mathcal{V}_{\text{valid}}$ | 有效标签节点集 | — | 方法-训练 |
-| $w(u,v)$ | 加权 Dijkstra 边权 | ms | 方法-推理 |
-| $\text{stretch}_p$ | 路径最优性比 | $\geq 1.0$ | 实验评估 |
-| $\text{delay}_p^*$ | Dijkstra 最优路径时延 | ms | 实验评估 |
-| retention | 时延保留率 | $[0,1]$ | 实验评估 |
+| 符号 | 含义 | 范围/单位 | 首现章节 | 备注 |
+|------|------|----------|---------|------|
+| $N$ | 卫星总数（本章） | — | 系统模型 | 跨章统一为 $N_{\text{sat}}$ |
+| $P$ | 轨道面数 | — | 系统模型 | |
+| $S$ | 每面卫星数 | — | 系统模型 | |
+| $h$ | 轨道高度 | 550 km | 系统模型 | |
+| $i$ | 轨道倾角 | 53° | 系统模型 | |
+| $F$ | Walker 相位因子 | 1 | 系统模型 | |
+| $(p, k)$ | 卫星轨道位置 | $p \in [0,P),\ k \in [0,S)$ | 系统模型 | |
+| $d_{\max}$ | ISL 断链阈值 | 5000 km | 系统模型 | |
+| $B$ | ISL 带宽 | 1 GHz | 系统模型 | 跨章统一加下标 $B_{\text{ISL}}$ |
+| $\delta_{\text{delay}}$ | ISL 传播时延 | ms | 系统模型 | |
+| $d_{u,v}$ | ISL 几何距离 | km | 系统模型 | |
+| $\text{PE}(p,k)$ | Orbital 位置编码 | $\mathbb{R}^{16}$ | 方法-PE | |
+| $d_{\text{PE}}$ | PE 输出维度 | 16 | 方法-PE | |
+| $n_{\text{freq}}$ | PE 频率数 | 4 | 方法-PE | |
+| $\mathbf{x}_u$ | 节点 $u$ 输入特征 | $\mathbb{R}^{33}$ | 方法-特征 | |
+| $\mathbf{e}_{uv}$ | 边 $(u,v)$ 特征 $[\delta_{\text{delay}}, d]$ | $\mathbb{R}^{2}$ | 方法-特征 | |
+| $\mathbf{h}_u^{(l)}$ | 节点 $u$ 第 $l$ 层嵌入 | $\mathbb{R}^{128}$ | 方法-GAT | |
+| $M$ | 注意力头数 | 4 | 方法-GAT | |
+| $L$ | GAT 层数 | 3 | 方法-GAT | |
+| $\alpha_{uv}$ | 注意力系数 | $[0,1]$ | 方法-GAT | |
+| $\mathbf{o}_u$ | 方向 logits | $\mathbb{R}^4$ | 方法-预测头 | |
+| $y_u$ | 方向标签 | $\{0,1,2,3\}$ | 方法-训练 | |
+| $\mathcal{V}_{\text{valid}}$ | 有效标签节点集 | — | 方法-训练 | |
+| $w(u,v)$ | 加权 Dijkstra 边权 | ms | 方法-推理 | |
+| $\text{stretch}_p$ | 路径最优性比 | $\geq 1.0$ | 实验评估 | |
+| $\text{delay}_p^*$ | Dijkstra 最优路径时延 | ms | 实验评估 | |
+| retention | 时延保留率（本文新提出指标） | $(0, +\infty)$，1.0=无退化 | 实验评估 | |
 
 来源：contract.md; models.py; config.py。

@@ -216,13 +216,16 @@ async def ieee_download(results: list[dict], save_dir: str) -> list[Path]:
 
 # ──────────── 万方 ────────────
 
-async def wanfang_search(query: str, max_results: int = 20) -> list[dict]:
+async def wanfang_search(query: str, max_results: int = 20, doc_type: str = "journal") -> list[dict]:
     page = await get_page()
     if not check_rate("wanfang"):
         return []
 
-    url = f"https://s.wanfangdata.com.cn/paper?q={query}"
-    print(f"[万方] 搜索: {query}")
+    is_thesis = any(t.strip() in ("phd", "master") for t in doc_type.split(","))
+    base_path = "thesis" if is_thesis else "paper"
+    url = f"https://s.wanfangdata.com.cn/{base_path}?q={query}"
+    label = "学位论文" if is_thesis else ""
+    print(f"[万方] 搜索: {query}" + (f" | {label}" if label else ""))
 
     resp = await safe_goto(page, url)
     if not resp:
@@ -279,6 +282,18 @@ async def wanfang_search(query: str, max_results: int = 20) -> list[dict]:
             if org_text:
                 affiliations_map[idx] = org_text
 
+    # 按学位级别后过滤（essay-type 字段：硕士论文/博士论文）
+    type_filter = None
+    if "phd" in [t.strip() for t in doc_type.split(",")] and "master" not in [t.strip() for t in doc_type.split(",")]:
+        type_filter = "博士"
+    elif "master" in [t.strip() for t in doc_type.split(",")] and "phd" not in [t.strip() for t in doc_type.split(",")]:
+        type_filter = "硕士"
+    if type_filter:
+        before = len(papers)
+        papers = [p for p in papers if type_filter in p.get("docType", "")]
+        if len(papers) < before:
+            print(f"  [过滤] 学位级别限定后保留 {len(papers)}/{before} 条", file=sys.stderr)
+
     results = []
     for p in papers[:max_results]:
         results.append({
@@ -292,7 +307,7 @@ async def wanfang_search(query: str, max_results: int = 20) -> list[dict]:
             "url": url,
             "source": "wanfang",
             "keywords": p.get("keywords", []),
-            "doc_type": "thesis" if "硕士" in p.get("docType", "") else "journal",
+            "doc_type": "thesis" if "论文" in p.get("docType", "") else "journal",
             "quality_labels": p.get("labels", []),
             "download_count": p.get("downloads", 0),
         })
@@ -473,17 +488,16 @@ async def _cnki_check_captcha(page) -> bool:
 
 
 async def _cnki_grid_api_search(page, query: str, institution: str, doc_type: str, max_results: int) -> list[dict]:
-    """通过 grid API POST 按学位授予单位 (LY 字段) 过滤搜索。"""
-    CNKI_DB_MAP = {"journal": "CJFD", "phd": "CDFD", "master": "CMFD"}
-    # doc_type → CNKI grid API Resource / Classid 映射
-    RESOURCE_MAP = {
-        "phd":    {"Resource": "DISSERTATION", "Classid": "RMJLXHZ3"},
-        "master": {"Resource": "DISSERTATION", "Classid": "RMJLXHZ3"},
-        "journal": {"Resource": "", "Classid": ""},
-    }
+    """通过 grid API POST 搜索（学位论文按 Classid 区分硕/博）。"""
+    # Classid 映射（抓包验证）：硕士=JQIRZIYA, 博士=RMJLXHZ3
+    CLASSID_MAP = {"phd": "RMJLXHZ3", "master": "JQIRZIYA"}
     types = [t.strip() for t in doc_type.split(",")]
-    # 取第一个匹配的类型映射（通常只传一种）
-    res_info = next((RESOURCE_MAP[t] for t in types if t in RESOURCE_MAP), {"Resource": "", "Classid": ""})
+    primary = types[0] if types else "journal"
+
+    if primary in CLASSID_MAP:
+        resource, classid = "DISSERTATION", CLASSID_MAP[primary]
+    else:
+        resource, classid = "CROSSDB", "WD0FTY92"
 
     query_items = [
         {"Field": "SU", "Value": query, "Operator": "TOPRANK", "Logic": 0, "Title": "主题"},
@@ -492,10 +506,10 @@ async def _cnki_grid_api_search(page, query: str, institution: str, doc_type: st
         query_items.append({"Field": "LY", "Value": institution, "Operator": "TOPRANK", "Logic": 0, "Title": "学位授予单位"})
     qj = json.dumps({
         "Platform": "", "Products": "",
-        **res_info,
+        "Resource": resource, "Classid": classid,
         "QNode": {"QGroup": [{"Key": "Subject", "Title": "", "Logic": 0,
                               "Items": query_items, "ChildItems": []}]},
-        "ExScope": 1, "SearchType": 2, "Rlang": "Chinese",
+        "ExScope": 1, "SearchType": 2, "Rlang": "CHINESE",
         "KuaKuCode": "", "Expands": {}, "SearchFrom": 1,
     }, ensure_ascii=False)
 
@@ -532,7 +546,7 @@ async def _cnki_grid_api_search(page, query: str, institution: str, doc_type: st
                 };
             }).filter(r => r.title.length > 3);
         } catch (e) { return []; }
-    }""", {"qj": qj, "max": max_results, "query": query, "inst": institution, "dbPrefix": CNKI_DB_MAP.get(types[0], "") if types else ""})
+    }""", {"qj": qj, "max": max_results, "query": query, "inst": institution})
     return items or []
 
 
@@ -540,6 +554,10 @@ async def cnki_search(query: str, max_results: int = 20, download_dir: str | Non
     global _browser, _context, _page
 
     if not check_rate("cnki"):
+        return []
+
+    if "bachelor" in [t.strip() for t in doc_type.split(",")]:
+        print("[CNKI] 错误：知网不收录本科论文。万方同样不收录。维普(https://www.cqvip.com/)可能有少量覆盖。", file=sys.stderr)
         return []
 
     print(f"[CNKI] 搜索: {query}" + (f" | 学位授予单位: {institution}" if institution else ""))
@@ -566,15 +584,14 @@ async def cnki_search(query: str, max_results: int = 20, download_dir: str | Non
 
     _page = await _context.new_page()
 
-    # 访问搜索页
-    CNKI_DB_MAP = {"journal": "CJFD", "phd": "CDFD", "master": "CMFD"}
+    # 访问搜索页建立 session
     types = [t.strip() for t in doc_type.split(",")]
-    db_codes = [CNKI_DB_MAP[t] for t in types if t in CNKI_DB_MAP]
-    # 博士/硕士论文需要 crossDbcodes 参数才能正确限定数据库
     encoded_query = query.replace(" ", "+")
-    if db_codes and db_codes != ["CJFD"]:
-        cross_db = "".join(db_codes)
-        search_url = f"https://kns.cnki.net/kns8s/defaultresult/index?kw={encoded_query}&classid=RMJLXHZ3&crossDbcodes={cross_db}&korder=SU"
+    # 学位论文用 classid 参数（Classid 映射见 _cnki_grid_api_search）
+    CLASSID_MAP = {"phd": "RMJLXHZ3", "master": "JQIRZIYA"}
+    primary = types[0] if types else "journal"
+    if primary in CLASSID_MAP:
+        search_url = f"https://kns.cnki.net/kns8s/defaultresult/index?kw={encoded_query}&classid={CLASSID_MAP[primary]}&korder=SU"
     else:
         search_url = f"https://kns.cnki.net/kns8s/defaultresult/index?kw={encoded_query}"
     await _page.goto(search_url, timeout=45000)
@@ -609,8 +626,9 @@ async def cnki_search(query: str, max_results: int = 20, download_dir: str | Non
 
     record("cnki")
 
-    # 提取搜索结果：grid API 仅用于 institution 过滤，其余走 DOM
-    if institution:
+    # 提取搜索结果：学位论文必须走 grid API（URL 参数过滤无效）
+    is_thesis = any(t in ("phd", "master") for t in types)
+    if institution or is_thesis:
         items = await _cnki_grid_api_search(_page, query, institution or "", doc_type, max_results)
     else:
         items = await _page.evaluate(r"""(maxRows) => {
@@ -630,7 +648,7 @@ async def cnki_search(query: str, max_results: int = 20, download_dir: str | Non
                 const date = dateEl?.innerText?.trim() || '';
                 const citeEl = row.querySelector('.quote');
                 const cite = citeEl?.innerText?.trim() || '0';
-                return { title, href, authors, source, date, cite: parseInt(cite) || 0 };
+                return { title, href, authors, source, date, cite: parseInt(cite) || 0, dbid: nameEl?.getAttribute('data-dbname') || '' };
             }).filter(r => r.title.length > 3);
         }""", max_results)
 
@@ -768,7 +786,7 @@ async def async_main():
     parser.add_argument("--format", "-f", default="markdown", choices=["json", "markdown"], help="输出格式")
     parser.add_argument("--output", "-o", default=None, help="输出文件路径")
     parser.add_argument("--download", "-d", default=None, metavar="DIR", help="下载 PDF 到指定目录 (ieee/cnki)")
-    parser.add_argument("--doc-type", default="journal", help="CNKI 文献类型: journal/phd/master，逗号分隔可组合 (默认: journal)")
+    parser.add_argument("--doc-type", default="journal", help="文献类型: journal/phd/master，逗号分隔可组合 (默认: journal)。cnki/wanfang 均支持 phd/master 过滤")
     parser.add_argument("--institution", "-i", default=None, help="CNKI 学位授予单位过滤 (如 清华大学)")
 
     args = parser.parse_args()
@@ -788,7 +806,7 @@ async def async_main():
             if results and args.download:
                 await ieee_download(results, args.download)
         elif args.source == "wanfang":
-            results = await wanfang_search(args.query, args.max)
+            results = await wanfang_search(args.query, args.max, doc_type=args.doc_type)
         elif args.source == "cbpt":
             if not args.journal:
                 parser.error("cbpt 源需要 --journal 参数 (如 --journal wxdg)")

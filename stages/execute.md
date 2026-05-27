@@ -134,6 +134,16 @@ Execute 阶段发现 Contract 参数事实性错误时，按 `stages/contract.md
 - 差异 ≥10pp：**必须**写一段差异分析（可能原因：监督 vs RL？特征设计不同？评估口径不同？）再继续
 - 差异分析记录到 decision_log
 
+### [FR-18] 环境保真度竞争格局检查
+
+如果仿真环境已从 MVE 简化版升级到正式版（拓扑真实化、流量模型复杂化等），[MUST] 在 MVE 对比时额外检查：
+
+1. MVE 中各方法的相对排名是否在正式环境中保持？
+2. 如果 baseline 在正式环境中变强了 → 分析原因（如简化环境人为限制了 baseline 的发挥）
+3. 如果主方法优势来源是简化环境的结构性偏差 → 必须在 decision_log 中记录，并重新评估贡献叙事
+
+> 先例：leo-congestion-routing Ch3 拓扑从 4-regular 抽象网格升级为 Walker-Delta 物理仿真后，ECMP 因极地间隙减少路由选择空间反而变强（GNN/ECMP MLU 从 0.78 变为 0.96）。MVE 阶段没有分析简化拓扑对 baseline 竞争力的影响。
+
 ### 信号方向熔断
 
 [MUST] 如果首次完整执行 run 的结果与 MVE 或 GW 预测方向相反（如 MVE 显示新方法 > baseline，但 Execute 显示 baseline > 新方法），必须停止并做组件级信息流追踪：
@@ -206,6 +216,7 @@ Execute 阶段发现 Contract 参数事实性错误时，按 `stages/contract.md
 - **消融实验**：按 Contract 中的 ablation_plan（必要）
 - **鲁棒性验证**：参数敏感性、场景泛化（按需）
 - **可视化论证**：消融实验除定量结果外，[SHOULD] 准备可解释性图表（SHAP 特征重要性、Grad-CAM 热力图、案例分析图等），路径记录在 experiment_result 的"可视化"字段
+- **[FR-19] 指标模型假设敏感性测试**：如果评估指标依赖模型假设（如排队模型、传播模型），必须做至少一组替代假设的对比，证明结论稳健或声明条件范围（定义见 `contract.md` Step 2 FR-19）
 - **达标即停**：核心 + 对比 + 消融完成 → 停止
 
 [MUST] 补充实验范围变更需用户确认。

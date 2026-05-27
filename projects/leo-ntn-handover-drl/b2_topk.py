@@ -29,6 +29,7 @@ parser.add_argument('--episodes', type=int, default=50)
 parser.add_argument('--K', type=int, default=6)
 parser.add_argument('--buffer', type=int, default=50_000)
 parser.add_argument('--eps_decay', type=int, default=20)
+parser.add_argument('--train_seed', type=int, default=42, help='Training random seed')
 args = parser.parse_args()
 
 K = args.K
@@ -186,6 +187,8 @@ def evaluate(env, net, seed):
     blk_s = 0.0
     steps = 0
     ue_throughput = np.zeros(env.num_ues)
+    sat_history = {u: [] for u in range(env.num_ues)}
+    pp_count = 0
     done = False
     while not done:
         flats, masks, topks = [], [], []
@@ -208,18 +211,33 @@ def evaluate(env, net, seed):
         blk_s += float(info['blocking_rate'])
         ue_throughput += info['throughput_bps']
         steps += 1
+
+        # Ping-pong detection: UE returns to recently-used satellite
+        for u in range(env.num_ues):
+            if prev[u] != -1 and g_act[u] != prev[u]:
+                if g_act[u] in sat_history[u][-3:]:
+                    pp_count += 1
+            sat_history[u].append(int(g_act[u]))
+            if len(sat_history[u]) > 5:
+                sat_history[u].pop(0)
+
         prev = g_act.copy()
         blk = info['throughput_bps'] == 0
     jain = float(np.sum(ue_throughput) ** 2 /
                  (env.num_ues * np.sum(ue_throughput ** 2) + 1e-12))
     net.train()
     return {'reward': total_r, 'blocking': blk_s / steps, 'handovers': ho,
-            'jain_fairness': jain}
+            'jain_fairness': jain,
+            'mean_throughput_mbps': float(ue_throughput.mean() / steps / 1e6),
+            'steps': steps,
+            'ping_pong_rate': float(pp_count / max(ho, 1))}
 
 
 def main():
     print(f"Device: {DEVICE} | obs_dim={FLAT_DIM} | K={K} | UEs={args.num_ues} | cap={args.sat_capacity}")
-    env = LEOSatHandoverEnv(num_ues=args.num_ues, sat_capacity=args.sat_capacity, seed=42)
+    torch.manual_seed(args.train_seed)
+    np.random.seed(args.train_seed)
+    env = LEOSatHandoverEnv(num_ues=args.num_ues, sat_capacity=args.sat_capacity, seed=args.train_seed)
     net = DuelingNet().to(DEVICE)
     tgt = DuelingNet().to(DEVICE)
     tgt.load_state_dict(net.state_dict()); tgt.eval()
@@ -234,7 +252,7 @@ def main():
 
     for ep in range(NUM_EP):
         eps = EPS_END + (EPS_START - EPS_END) * np.exp(-ep / EPS_DECAY)
-        trans, ep_r = run_ep(env, net, eps, seed=42)
+        trans, ep_r = run_ep(env, net, eps, seed=args.train_seed + ep)
         r_log.append(ep_r)
         for t in trans:
             buf.push(*t)
@@ -287,13 +305,14 @@ def main():
            'eval': ev, 'config': {'K': K, 'flat_dim': FLAT_DIM, 'hidden': HIDDEN,
                                    'target_update': TARGET_UPDATE, 'eps_decay': EPS_DECAY,
                                    'num_ues': args.num_ues, 'sat_capacity': args.sat_capacity,
+                                   'train_seed': args.train_seed,
                                    'name': args.name}}
-    out = PROJECT_ROOT / 'results' / f'{args.name}_results.json'
+    out = PROJECT_ROOT / 'results' / f'{args.name}_s{args.train_seed}_results.json'
     out.parent.mkdir(exist_ok=True)
     with open(out, 'w') as f:
         json.dump(res, f, indent=2)
     # Save model checkpoint
-    ckpt = PROJECT_ROOT / 'results' / f'{args.name}_model.pt'
+    ckpt = PROJECT_ROOT / 'results' / f'{args.name}_s{args.train_seed}_model.pt'
     torch.save({'net': net.state_dict(), 'config': res['config']}, ckpt)
     print(f"Model saved to {ckpt}")
     print(f"\n{'='*50}\n{args.name} B2+topK Summary\n{'='*50}")

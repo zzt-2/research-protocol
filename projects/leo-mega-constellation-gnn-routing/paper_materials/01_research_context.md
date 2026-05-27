@@ -125,12 +125,12 @@ xeoverse (L05)、Hypatia、StarryNet 均为静态路由仿真器，GNN 路由需
 
 ### 4.1 要素组合
 
-本研究的核心创新是以下要素的**首次组合**：
+本研究将以下已有要素**系统性组合**并验证其在 LEO mega-constellation 路由跨规模部署中的有效性：
 
-1. **Orbital Positional Encoding (PE)**：基于轨道力学的位置编码（sin/cos dim 16），使 GNN 获得空间方向感
-2. **多尺度混合训练**：在 66+100+200 星三个规模上联合训练，增强跨规模鲁棒性
-3. **加权 Dijkstra 推理**：GNN 输出方向偏好加权 Dijkstra，保证 100% 路径成功率
-4. **零样本跨规模部署**：训练最大规模 200 星，零样本部署到 720 星（11x 扩展）
+1. **Orbital Positional Encoding (PE)**：基于轨道力学的 sin/cos 位置编码（dim 16），采用 Transformer 位置编码 [R13] 的标准范式应用于卫星轨道坐标。类似的位置编码思想在 Graph Transformer 文献中已有研究（RPEARL [C02]、Laplacian PE [R14]）
+2. **多尺度混合训练**：在 66+100+200 星三个规模上联合训练。多尺度/多任务训练是 GNN 领域的标准增强策略 [R20, R21]，本文将其适配到星座路由场景
+3. **加权 Dijkstra 推理**：GNN 输出方向偏好加权 Dijkstra。GNN-guided Dijkstra 推理范式有先例（GDDR [GRLR L13]，同为加权 Dijkstra），本文针对 LEO 4 方向 ISL 拓扑设计了加性惩罚权重方案
+4. **零样本跨规模部署**：训练最大规模 200 星，零样本部署到 720 星（11x 扩展）。跨规模泛化在 GNN 理论中有系统研究 [T01, T02, R10-R12]，但尚未应用于卫星路由
 
 ### 4.2 竞品排除记录
 
@@ -146,14 +146,14 @@ xeoverse (L05)、Hypatia、StarryNet 均为静态路由仿真器，GNN 路由需
 
 > 来源：D010, D011; competitor_notes/telgen_2025.md, competitor_notes/porras-valenzuela_2026.md, competitor_notes/swarm-scaling_2025.md
 
-### 4.3 新颖性检索通过的证据
+### 4.3 差异化定位的检索支撑
 
 - 4 组关键词检索（GNN size generalization satellite / GNN scalable LEO routing / position encoding GNN routing / zero-shot GNN network）
 - 3 篇竞品精读（TELGEN, Size Transferability, Scaling Swarm）
 - 2 组定向检索（GNN 归纳泛化理论 + GNN 可扩展性）
 - GRLR+GraphPR 63 篇引用链筛查
 
-**结论**：GNN size generalization for LEO satellite routing 仍为空白。
+**结论**：上述要素的系统性组合及其在 LEO satellite routing 跨规模部署中的验证仍为空白。
 
 > 来源：D010; feasibility_report §B
 
@@ -184,22 +184,22 @@ xeoverse (L05)、Hypatia、StarryNet 均为静态路由仿真器，GNN 路由需
 | 方法 | Mean Stretch | <=1.2x Optimal | Delay (ms) | 保留率 |
 |------|-------------|----------------|------------|--------|
 | Dijkstra | 1.000 | 100% | 60.77 | — |
-| **Ours** | **1.097** | **85.1%** | **66.77** | **90.3%** |
+| **Ours** | **1.083±0.015** (3 seed) | **90.3±4.0%** (3 seed) | **65.92±1.01** (3 seed) | **91.7%** |
 | GRLR (同规模) | 1.008 | 100% | 60.32 | 100% |
 
-> 来源：D023, D024, D025
+> 来源：D023, D024, D025, D031
 
 ### Level 2：组件贡献（为什么有效？）
 
 **消融实验 A1-A3**
 
-| 消融 | 变量 | 训练精度 | Stretch | <=1.2x | 结论 |
+| 消融 | 变量 | 训练精度 | Stretch (3 seed) | <=1.2x (3 seed) | 结论 |
 |------|------|----------|---------|--------|------|
-| A1 | 移除 Orbital PE | 39.66% | 1.002 | — | PE 是学习必要条件 |
-| A2 | 单尺度训练 (train_100) | 97.70% | 1.120 | 81.1% | 多尺度贡献 2-4pp |
-| A3 | 无 PE + 单尺度 | 40.16% | 1.049 | 93.6% | 确认 PE 不可替代 |
+| A1 | 移除 Orbital PE | 39.66% | 1.006±0.002 | 99.9% | PE 是学习必要条件 |
+| A2 | 单尺度训练 (train_100) | 97.70% | 1.106±0.015 | 84.0±3.2% | 多尺度贡献 2-4pp |
+| A3 | 无 PE + 单尺度 | 40.16% | 1.058±0.002 | 92.2% | 确认 PE 不可替代 |
 
-**同规模消融**：720->720 训练，stretch 1.000（完美），证实 9.7pp stretch 差距完全来自跨规模迁移。
+**同规模消融**：720->720 训练，stretch 1.000（2 seed 完美），证实 ~8pp stretch 差距完全来自跨规模迁移。
 
 > 来源：D026, D027, D028, D029
 
@@ -216,7 +216,7 @@ xeoverse (L05)、Hypatia、StarryNet 均为静态路由仿真器，GNN 路由需
 
 LEO mega-constellation 路由面临规模爆炸与拓扑时变的双重挑战。尽管 GNN+RL 路由已在卫星网络中验证可行（GRLR, GraphPR），现有 13 篇工作全部在单一规模上训练和测试，跨规模泛化能力完全未被探索（25 篇论文 + 63 篇引用链筛查确认空白 [D006, D010]）。然而，Walker-Delta 星座的规则网格结构（每星恒定 4 ISL）为 GNN 的 message-passing 提供了天然一致的局部环境——训练 66 星和推理 720 星的邻居结构完全相同，使 size generalization 成为工程可行的问题。
 
-本研究提出 Orbital PE + 多尺度混合训练的 GNN 路由框架，在 66+100+200 星上联合训练后零样本部署到 720 星（11x 扩展）。消融实验证实：位置编码是模型学习的必要条件（移除后精度降至随机水平 [D026]），多尺度训练贡献 2-4 pp 性能提升 [D027]。核心实验表明跨规模部署时延保留率 90.3%（vs 同规模 GRLR），代价仅 9.9% 额外时延 [D025]。这是 GNN size generalization 在卫星路由领域的首次实证。
+本研究设计并验证了 Orbital PE + 多尺度混合训练的 GNN 路由框架，在 66+100+200 星上联合训练后零样本部署到 720 星（11x 扩展）。消融实验证实：位置编码是模型学习的必要条件（移除后精度降至随机水平 [D026]），多尺度训练贡献 2-4 pp 性能提升 [D027]。核心实验（3 seed 验证 [D031]）表明跨规模部署时延保留率 91.7%（vs 同规模 GRLR），代价仅 ~8.5% 额外时延。这是 GNN size generalization 在卫星路由领域的首次系统性验证，证实了将 GNN 理论成果迁移到 LEO 路由场景的可行性。
 
 ---
 
@@ -225,11 +225,11 @@ LEO mega-constellation 路由面临规模爆炸与拓扑时变的双重挑战。
 | Gap | 方法组件 | 结论回应 | 数据证据 |
 |-----|----------|----------|----------|
 | GNN 路由无法跨规模部署 | Orbital PE (sin/cos dim 16) | PE 是学习必要条件，使 GNN 获得空间方向感 | A1: 无 PE 精度 39.66%, 有 PE 97.6% [D026] |
-| 单一训练规模泛化不足 | 多尺度混合训练 (66+100+200) | 多尺度联合训练贡献 2-4 pp stretch 改善 | A2: 单尺度 stretch 1.120, 多尺度 1.097 [D027] |
+| 单一训练规模泛化不足 | 多尺度混合训练 (66+100+200) | 多尺度联合训练贡献 2-4 pp stretch 改善 | A2: 单尺度 stretch 1.106, 多尺度 1.083 (3 seed) [D027, D031] |
 | 贪心推理路径成功率低 | 加权 Dijkstra 推理 | 保证 100% 路径成功率，stretch 可控 | D020: 贪心 1.7% 成功率, 加权 Dijkstra 100% |
-| 跨规模部署性能损失未知 | 11x 零样本实验 (66-200->720) | 保留率 90.3%, vs Dijkstra 差距 9.9% | D025: mean stretch 1.097, delay 66.77ms |
-| 同规模 vs 跨规模差距来源 | 同规模消融 (720->720) | 9.7pp 差距完全来自跨规模迁移，非架构限制 | D029: 同规模 stretch 1.000（完美） |
-| 空白领域首次验证 | MVE (96->384->1536) + 完整实验 | GNN 跨规模泛化在卫星路由中可行 | D007: MVE 83-87% 保持率; D023: 完整实验 |
+| 跨规模部署性能损失未知 | 11x 零样本实验 (66-200->720) | 保留率 91.5%, vs Dijkstra 差距 ~8.5% (3 seed) | D031: mean stretch 1.083±0.015, delay 65.92±1.01ms |
+| 同规模 vs 跨规模差距来源 | 同规模消融 (720->720) | ~8pp 差距完全来自跨规模迁移，非架构限制 | D029: 同规模 stretch 1.000 (2 seed) |
+| 理论到实践的系统性验证 | MVE (96->384->1536) + 完整实验 | GNN 跨规模泛化在卫星路由中可行 | D007: MVE 83-87% 保持率; D031: 完整实验 (3 seed) |
 
 ---
 
@@ -254,20 +254,20 @@ LEO mega-constellation 路由面临规模爆炸与拓扑时变的双重挑战。
 |------|------|------|
 | 训练规模 | 66+100+200 星 | D012 |
 | 目标规模 | 720 星 (11x) | D012 |
-| Mean Stretch | 1.097 | D023 |
+| Mean Stretch | 1.083±0.015 (3 seed) | D031 |
 | Median Stretch | 1.056 | D023 |
 | P95 Stretch | 1.315 | D023 |
-| <=1.2x Optimal | 85.1% | D023 |
-| <=1.5x Optimal | 98.9% | D023 |
-| Delay (Ours) | 66.77 ms | D025 |
+| <=1.2x Optimal | 90.3±4.0% (3 seed) | D031 |
+| <=1.5x Optimal | 98.9% | D031 |
+| Delay (Ours) | 65.92±1.01 ms (3 seed) | D031 |
 | Delay (GRLR 同规模) | 60.32 ms | D024 |
 | Delay (Dijkstra) | 60.77 ms | D023 |
-| 时延保留率 | 90.3% | D025 |
-| vs Dijkstra 差距 | 9.9% | D025 |
-| 消融 A1 (无 PE) 精度 | 39.66% | D026 |
-| 消融 A2 (单尺度) Stretch | 1.120 | D027 |
-| 消融 A3 (无 PE+单尺度) 精度 | 40.16% | D028 |
-| 同规模消融 Stretch | 1.000 | D029 |
+| 时延保留率 | 91.5% (60.32/65.92, 3 seed) | D031 |
+| vs Dijkstra 差距 | 8.5% ((65.92-60.77)/60.77, 3 seed) | D031 |
+| 消融 A1 (无 PE) Stretch | 1.006±0.002 (3 seed) | D031 |
+| 消融 A2 (单尺度) Stretch | 1.106±0.015 (3 seed) | D031 |
+| 消融 A3 (无 PE+单尺度) Stretch | 1.058±0.002 (3 seed) | D031 |
+| 同规模消融 Stretch | 1.000 (2 seed) | D029, D031 |
 | GNN 架构 | GAT 3 层 h=128 | Contract |
 | PE 维度 | sin/cos dim 16 | Contract |
 | 评估样本 | 10 snapshots x 5 TMs x 100 flows | D023 |

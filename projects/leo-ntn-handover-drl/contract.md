@@ -44,7 +44,8 @@ flat MLP 方法因固定输入维度无法泛化，迁移后性能急剧退化�
 - M1: Total episode reward — 所有 UE 在一个 episode 的累积奖励之和 — 越高越好
 - M2: Mean blocking rate — 被 capacity 拒绝的 UE 占比（episode 平均） — 越低越好
 - M3: Total handover count — 一个 episode 内总切换次数 — 越低越好（避免乒乓切换）
-- M4: Jain's fairness index — UE 间吞吐量公平性 — 越接近 1 越好
+- M4: Jain's fairness index（辅助指标）— UE 间吞吐量公平性 — 越接近 1 越好。注：Jain's fairness index 在 LEO 切换领域通行率仅 17%（2/12 篇 surveyed papers），属资源分配领域标准指标，本研究作为辅助指标报告以补充公平性视角
+- M5: System throughput — 全系统总吞吐量（Mbps）— 需独立报告以与文献对比（代码已有输出，需在结果中补充报告）
 
 ## Fairness Rules
 

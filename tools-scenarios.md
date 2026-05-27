@@ -141,7 +141,28 @@ bash tools/blit "针灸 偏头痛 随机对照试验" --source wanfang
 适用：中文论文、万方数据库、中文学术期刊、北大核心期刊；中文领域研究补充。
 注意：10 次/会话，6s 间隔，严格限速。超过 16 次无间隔会 IP 封禁（~15min 自然解封）。关键词用空格分隔。返回标题/作者/摘要/关键词/期刊/年份/被引数/质量标签。
 
-### B3：单刊定向检索
+### B2.5：万方学位论文检索
+
+```bash
+bash tools/blit "深度强化学习 资源调度" --source wanfang --doc-type phd
+bash tools/blit "企业管理" --source wanfang --doc-type master
+```
+
+适用：万方学位论文检索（博士/硕士）。
+注意：`--doc-type phd` 只返回博士论文，`--doc-type master` 只返回硕士论文。万方自动切换到 `/thesis` 搜索路径并按 `essay-type` 后过滤。限速同 B2。本科论文万方不收录。
+
+### B3：CNKI 学位论文检索
+
+```bash
+bash tools/blit "低轨卫星 深度强化学习" --source cnki --doc-type phd
+bash tools/blit "低轨卫星 资源管理" --source cnki --doc-type master
+bash tools/blit "混合式教学" --source cnki --doc-type phd --institution "清华大学"
+```
+
+适用：CNKI 博士/硕士学位论文检索。
+注意：通过 grid API 的 `Classid` 参数区分学位级别（博士=RMJLXHZ3，硕士=JQIRZIYA），自动触发 grid API 搜索模式。可配合 `--institution` 过滤学位授予单位。下载为 CAJ 格式，需用 caj2pdf 转 PDF（见 tools-guide.md §4）。本科论文 CNKI 不收录。
+
+### B4：单刊定向检索
 
 ```bash
 bash tools/blit "对外汉语 偏误分析" --source cbpt --journal sdzy
