@@ -135,8 +135,8 @@ topics:
     title: 学位论文终审
     status: active
     created: "2026-05-25"
-    last_updated: "2026-05-25"
-    description: 最后一轮全面审查，7对话~40子agent，确保三章无遗漏隐患叙事合规
+    last_updated: "2026-05-28"
+    description: 最后一轮全面审查+开题报告写作提示词调优，7对话~46子agent，S017含v1-v3+6agent全审查记录
     depends_on:
       - slug: chapter-quality-audit
         reason: 终审基于审计结论
