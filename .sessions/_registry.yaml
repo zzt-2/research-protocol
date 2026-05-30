@@ -152,6 +152,18 @@ topics:
       - projects/thesis-figures/simulation/sim_direction_a.py
       - projects/thesis-figures/simulation/sim_ch3_precomp.py
 
+  - slug: thesis-sim-exploration
+    title: 仿真穷举探索：系统性寻找创新点
+    status: active
+    created: "2026-05-30"
+    last_updated: "2026-05-30"
+    description: "系统化仿真探索：枚举方向/方法/参数假设，逐个仿真验证，记录增益数据，定位创新点。持续更新。"
+    depends_on:
+      - slug: thesis-direction-pivot
+        reason: 基于已确定的论文框架和Ch3/Ch4推导
+    produces:
+      - projects/thesis-figures/simulation/sim_exp_*.py
+
   - slug: 2026-05-30-ch3-direction-exploration
     title: Ch3 新章节方向探索（Groundwork）
     status: active
