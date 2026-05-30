@@ -132,13 +132,32 @@ topics:
     description: P0-P3 全部完成，实验+可视化+论文材料就绪，可进入正式写作
 
   - slug: thesis-final-review
-    title: 学位论文终审
-    status: active
+    title: 学位论文终审（已废弃）
+    status: closed
     created: "2026-05-25"
-    last_updated: "2026-05-28"
-    description: 最后一轮全面审查+开题报告写作提示词调优，7对话~46子agent，S017含v1-v3+6agent全审查记录
+    last_updated: "2026-05-29"
+    description: "方向已推翻：导师要求从路由/GNN方向切换至激光通信。17轮对话工作全部作废。"
+
+  - slug: thesis-direction-pivot
+    title: 论文方向切换：激光通信方向确定与开题
+    status: active
+    created: "2026-05-29"
+    last_updated: "2026-05-30"
+    description: "S018 R1全流程完成: 165篇文献+148条bib全部匹配，citekey列已加，CNKI 9/11 OCR完成。"
+    conflicts_with:
+      - slug: thesis-final-review
+        reason: 旧方向已废弃，不可续接
+    produces:
+      - .sessions/thesis-direction-pivot/
+      - projects/thesis-figures/simulation/sim_direction_a.py
+      - projects/thesis-figures/simulation/sim_ch3_precomp.py
+
+  - slug: 2026-05-30-ch3-direction-exploration
+    title: Ch3 新章节方向探索（Groundwork）
+    status: active
+    created: "2026-05-30"
+    last_updated: "2026-05-30"
+    description: "导师决定合并原Ch3到Ch2，新增Ch3方向TBD。按Groundwork检索+可行性评估候选方向。"
     depends_on:
-      - slug: chapter-quality-audit
-        reason: 终审基于审计结论
-      - slug: thesis-chapter-fixes
-        reason: 修复后的 paper-materials 为审查基线
+      - slug: thesis-direction-pivot
+        reason: 需要论文全貌和已有技术积累
