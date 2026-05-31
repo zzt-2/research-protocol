@@ -8,11 +8,18 @@
 ```
 毕设/
 ├── master-state.md          ← 本文件（每次对话必读）
-├── 写作材料/                 ← 规范+草稿+公式+文献（写作核心目录）
-├── 表格模板/                 ← 开题报告表格+培养办法等官方模板
-├── 开题PPT/                  ← 答辩PPT（v2~fulltest）+ 模板 + 素材
+├── TERMS.md                 ← 术语规范（唯一真相源）
+├── symbol-conventions.md    ← 数学符号约定
+├── design-decisions.md      ← 设计决策记录（56条+14否决）
+├── thesis-framework.md      ← 框架草稿 v2
+├── thesis-status.md         ← 状态看板（目录/决策/仿真/风险）
+├── thesis-preparation-checklist.md ← 准备清单+缺口分析
+├── 写作材料/                 ← 公式+文献（每章写作时的参考资料）
+├── 开题报告/                 ← 开题草稿+写作素材（draft-s1.*）
+├── 表格模板/                 ← 官方表格+培养办法
+├── 开题PPT/                  ← 答辩PPT各版本+模板+素材
 ├── graduate-thesis/          ← LaTeX 模板（bithesis）
-└── 旧本科代码/               ← 本科毕设代码+PSK.zip
+└── 旧本科代码/               ← 归档
 ```
 
 ## 论文信息
