@@ -1,0 +1,240 @@
+{
+  "params": {
+    "Ns": 10000,
+    "gamma_bar": 100,
+    "n_seeds": 30,
+    "turbs": [
+      "weak",
+      "moderate",
+      "strong"
+    ],
+    "n_pilots": 5
+  },
+  "D3_standard": {
+    "weak": 0.00015964912280701756,
+    "moderate": 0.0016210526315789476,
+    "strong": 0.018075438596491227
+  },
+  "D3_aware": {
+    "weak": 0.00015964912280701756,
+    "moderate": 0.001726315789473684,
+    "strong": 0.030782456140350876
+  },
+  "D3_improvement_dB": {
+    "weak": 0.0,
+    "moderate": -0.27323127211234743,
+    "strong": -2.3121442519676645
+  },
+  "D4_kf": {
+    "weak": 0.00015964912280701756,
+    "moderate": 0.001726315789473684,
+    "strong": 0.030782456140350876
+  },
+  "D4_ekf": {
+    "weak": 0.00015964912280701756,
+    "moderate": 0.001726315789473684,
+    "strong": 0.030782456140350876
+  },
+  "D4_ukf": {
+    "weak": 0.026766666666666664,
+    "moderate": 0.021166666666666667,
+    "strong": 0.04432280701754386
+  },
+  "D5_extreme_turb": {
+    "turb=strong, Q=strong": {
+      "kf_pilot": 0.030782456140350876,
+      "fixed": 0.19779666666666665,
+      "improvement_dB": 8.079156991018507
+    },
+    "turb=extreme, Q=strong": {
+      "kf_pilot": 0.07852982456140349,
+      "fixed": 0.33024333333333333,
+      "improvement_dB": 6.2379943199071555
+    },
+    "turb=extreme, Q=weak": {
+      "kf_pilot": 0.05326140350877193,
+      "fixed": 0.33024333333333333,
+      "improvement_dB": 7.9242145272330555
+    }
+  },
+  "D5_low_snr": {
+    "SNR=0dB_weak": {
+      "snr_db": 0,
+      "turb": "weak",
+      "kf_pilot": 0.23437368421052626,
+      "fixed": 0.47764333333333325,
+      "improvement_dB": 3.091948735748675
+    },
+    "SNR=0dB_strong": {
+      "snr_db": 0,
+      "turb": "strong",
+      "kf_pilot": 0.26571228070175434,
+      "fixed": 0.4839816666666667,
+      "improvement_dB": 2.6041728366887575
+    },
+    "SNR=3dB_weak": {
+      "snr_db": 3,
+      "turb": "weak",
+      "kf_pilot": 0.12922456140350877,
+      "fixed": 0.4481216666666666,
+      "improvement_dB": 5.400508757246994
+    },
+    "SNR=3dB_strong": {
+      "snr_db": 3,
+      "turb": "strong",
+      "kf_pilot": 0.20132105263157893,
+      "fixed": 0.4730983333333333,
+      "improvement_dB": 3.7106222559325004
+    },
+    "SNR=5dB_weak": {
+      "snr_db": 5,
+      "turb": "weak",
+      "kf_pilot": 0.08264210526315789,
+      "fixed": 0.41171500000000005,
+      "improvement_dB": 6.973953178526038
+    },
+    "SNR=5dB_strong": {
+      "snr_db": 5,
+      "turb": "strong",
+      "kf_pilot": 0.16602456140350877,
+      "fixed": 0.4462916666666666,
+      "improvement_dB": 4.2944643598699646
+    },
+    "SNR=10dB_weak": {
+      "snr_db": 10,
+      "turb": "weak",
+      "kf_pilot": 0.0187719298245614,
+      "fixed": 0.2194983333333333,
+      "improvement_dB": 10.67922304948636
+    },
+    "SNR=10dB_strong": {
+      "snr_db": 10,
+      "turb": "strong",
+      "kf_pilot": 0.10096315789473684,
+      "fixed": 0.3971133333333333,
+      "improvement_dB": 5.947515431804662
+    },
+    "SNR=15dB_weak": {
+      "snr_db": 15,
+      "turb": "weak",
+      "kf_pilot": 0.002187719298245614,
+      "fixed": 0.054961666666666666,
+      "improvement_dB": 14.000682960627957
+    },
+    "SNR=15dB_strong": {
+      "snr_db": 15,
+      "turb": "strong",
+      "kf_pilot": 0.05461228070175438,
+      "fixed": 0.3312683333333333,
+      "improvement_dB": 7.828896089131854
+    },
+    "SNR=20dB_weak": {
+      "snr_db": 20,
+      "turb": "weak",
+      "kf_pilot": 0.00015964912280701756,
+      "fixed": 0.014743333333333334,
+      "improvement_dB": 19.65429148001339
+    },
+    "SNR=20dB_strong": {
+      "snr_db": 20,
+      "turb": "strong",
+      "kf_pilot": 0.030782456140350876,
+      "fixed": 0.19779666666666665,
+      "improvement_dB": 8.079156991018507
+    }
+  },
+  "D5_large_foe": {
+    "normal_strong": {
+      "f_res": 1000000.0,
+      "f_dot": 150000000.0,
+      "turb": "strong",
+      "kf_pilot": 0.030782456140350876,
+      "fixed": 0.19779666666666665,
+      "improvement_dB": 8.079156991018507
+    },
+    "f_res=5MHz_strong": {
+      "f_res": 5000000.0,
+      "f_dot": 150000000.0,
+      "turb": "strong",
+      "kf_pilot": 0.031428070175438604,
+      "fixed": 0.23169999999999996,
+      "improvement_dB": 8.676083195840231
+    },
+    "f_res=10MHz_strong": {
+      "f_res": 10000000.0,
+      "f_dot": 150000000.0,
+      "turb": "strong",
+      "kf_pilot": 0.030050877192982453,
+      "fixed": 0.22448666666666664,
+      "improvement_dB": 8.733333975920942
+    },
+    "f_res=20MHz_strong": {
+      "f_res": 20000000.0,
+      "f_dot": 150000000.0,
+      "turb": "strong",
+      "kf_pilot": 0.032391228070175436,
+      "fixed": 0.2085816666666667,
+      "improvement_dB": 8.088487193372156
+    },
+    "f_dot=500MHz/s_strong": {
+      "f_res": 1000000.0,
+      "f_dot": 500000000.0,
+      "turb": "strong",
+      "kf_pilot": 0.030357894736842105,
+      "fixed": 0.20982500000000007,
+      "improvement_dB": 8.395855810265996
+    },
+    "f_dot=1GHz/s_strong": {
+      "f_res": 1000000.0,
+      "f_dot": 1000000000.0,
+      "turb": "strong",
+      "kf_pilot": 0.03072280701754386,
+      "fixed": 0.21755166666666667,
+      "improvement_dB": 8.501015218908067
+    }
+  },
+  "D5_large_lw": {
+    "lw=10kHz_strong": {
+      "linewidth": 10000.0,
+      "turb": "strong",
+      "kf_pilot": 0.030782456140350876,
+      "fixed": 0.19779666666666665,
+      "improvement_dB": 8.079156991018507
+    },
+    "lw=100kHz_strong": {
+      "linewidth": 100000.0,
+      "turb": "strong",
+      "kf_pilot": 0.030107017543859648,
+      "fixed": 0.24943666666666664,
+      "improvement_dB": 9.182925585738108
+    },
+    "lw=500kHz_strong": {
+      "linewidth": 500000.0,
+      "turb": "strong",
+      "kf_pilot": 0.03299649122807018,
+      "fixed": 0.39608000000000004,
+      "improvement_dB": 10.79315152879036
+    },
+    "lw=1000kHz_strong": {
+      "linewidth": 1000000.0,
+      "turb": "strong",
+      "kf_pilot": 0.03442280701754386,
+      "fixed": 0.43853333333333333,
+      "improvement_dB": 11.051563279889029
+    },
+    "lw=5000kHz_strong": {
+      "linewidth": 5000000.0,
+      "turb": "strong",
+      "kf_pilot": 0.05045964912280701,
+      "fixed": 0.4671566666666666,
+      "improvement_dB": 9.665183246536538
+    },
+    "lw=10000kHz_strong": {
+      "linewidth": 10000000.0,
+      "turb": "strong",
+      "kf_pilot": 0.08847017543859649,
+      "fixed": 0.47195333333333334,
+      "improvement_dB": 7.271021693020476
+    }
+  }
+}

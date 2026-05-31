@@ -1,0 +1,350 @@
+{
+  "timestamp": "2026-05-31 18:59:34",
+  "total_elapsed_s": 76.8074722290039,
+  "summary": {
+    "pass": 4,
+    "fail": 7,
+    "error": 0
+  },
+  "results": [
+    {
+      "dim": "F1",
+      "name": "Meijer-G Stability",
+      "status": "FAIL",
+      "fail_items": [
+        "weak snr=30dB n=9: |bn-1/pi|=0.0123 > 0.01",
+        "weak snr=30dB n=10: |bn-1/pi|=0.0150 > 0.01",
+        "moderate snr=30dB n=7: |bn-1/pi|=0.0124 > 0.01",
+        "moderate snr=30dB n=8: |bn-1/pi|=0.0158 > 0.01",
+        "moderate snr=30dB n=9: |bn-1/pi|=0.0194 > 0.01",
+        "moderate snr=30dB n=10: |bn-1/pi|=0.0232 > 0.01",
+        "strong snr=30dB n=3: |bn-1/pi|=0.0121 > 0.01",
+        "strong snr=30dB n=4: |bn-1/pi|=0.0177 > 0.01",
+        "strong snr=30dB n=5: |bn-1/pi|=0.0236 > 0.01",
+        "strong snr=30dB n=6: |bn-1/pi|=0.0296 > 0.01",
+        "strong snr=30dB n=7: |bn-1/pi|=0.0358 > 0.01",
+        "strong snr=30dB n=8: |bn-1/pi|=0.0420 > 0.01",
+        "strong snr=30dB n=9: |bn-1/pi|=0.0482 > 0.01",
+        "strong snr=30dB n=10: |bn-1/pi|=0.0543 > 0.01",
+        "strong snr=35dB n=5: |bn-1/pi|=0.0110 > 0.01",
+        "strong snr=35dB n=6: |bn-1/pi|=0.0141 > 0.01",
+        "strong snr=35dB n=7: |bn-1/pi|=0.0173 > 0.01",
+        "strong snr=35dB n=8: |bn-1/pi|=0.0206 > 0.01",
+        "strong snr=35dB n=9: |bn-1/pi|=0.0239 > 0.01",
+        "strong snr=35dB n=10: |bn-1/pi|=0.0273 > 0.01",
+        "strong snr=40dB n=9: |bn-1/pi|=0.0112 > 0.01",
+        "strong snr=40dB n=10: |bn-1/pi|=0.0129 > 0.01",
+        "extreme snr=30dB n=1: |bn-1/pi|=0.0463 > 0.01",
+        "extreme snr=30dB n=2: |bn-1/pi|=0.0689 > 0.01",
+        "extreme snr=30dB n=3: |bn-1/pi|=0.0853 > 0.01",
+        "extreme snr=30dB n=4: |bn-1/pi|=0.0985 > 0.01",
+        "extreme snr=30dB n=5: |bn-1/pi|=0.1097 > 0.01",
+        "extreme snr=30dB n=6: |bn-1/pi|=0.1195 > 0.01",
+        "extreme snr=30dB n=7: |bn-1/pi|=0.1283 > 0.01",
+        "extreme snr=30dB n=8: |bn-1/pi|=0.1362 > 0.01",
+        "extreme snr=30dB n=9: |bn-1/pi|=0.1434 > 0.01",
+        "extreme snr=30dB n=10: |bn-1/pi|=0.1500 > 0.01",
+        "extreme snr=35dB n=1: |bn-1/pi|=0.0339 > 0.01",
+        "extreme snr=35dB n=2: |bn-1/pi|=0.0509 > 0.01",
+        "extreme snr=35dB n=3: |bn-1/pi|=0.0636 > 0.01",
+        "extreme snr=35dB n=4: |bn-1/pi|=0.0740 > 0.01",
+        "extreme snr=35dB n=5: |bn-1/pi|=0.0829 > 0.01",
+        "extreme snr=35dB n=6: |bn-1/pi|=0.0909 > 0.01",
+        "extreme snr=35dB n=7: |bn-1/pi|=0.0980 > 0.01",
+        "extreme snr=35dB n=8: |bn-1/pi|=0.1046 > 0.01",
+        "extreme snr=35dB n=9: |bn-1/pi|=0.1106 > 0.01",
+        "extreme snr=35dB n=10: |bn-1/pi|=0.1162 > 0.01",
+        "extreme snr=40dB n=1: |bn-1/pi|=0.0246 > 0.01",
+        "extreme snr=40dB n=2: |bn-1/pi|=0.0373 > 0.01",
+        "extreme snr=40dB n=3: |bn-1/pi|=0.0468 > 0.01",
+        "extreme snr=40dB n=4: |bn-1/pi|=0.0548 > 0.01",
+        "extreme snr=40dB n=5: |bn-1/pi|=0.0617 > 0.01",
+        "extreme snr=40dB n=6: |bn-1/pi|=0.0679 > 0.01",
+        "extreme snr=40dB n=7: |bn-1/pi|=0.0736 > 0.01",
+        "extreme snr=40dB n=8: |bn-1/pi|=0.0788 > 0.01",
+        "extreme snr=40dB n=9: |bn-1/pi|=0.0836 > 0.01",
+        "extreme snr=40dB n=10: |bn-1/pi|=0.0881 > 0.01",
+        "extreme snr=45dB n=1: |bn-1/pi|=0.0178 > 0.01",
+        "extreme snr=45dB n=2: |bn-1/pi|=0.0271 > 0.01",
+        "extreme snr=45dB n=3: |bn-1/pi|=0.0342 > 0.01",
+        "extreme snr=45dB n=4: |bn-1/pi|=0.0402 > 0.01",
+        "extreme snr=45dB n=5: |bn-1/pi|=0.0454 > 0.01",
+        "extreme snr=45dB n=6: |bn-1/pi|=0.0501 > 0.01",
+        "extreme snr=45dB n=7: |bn-1/pi|=0.0545 > 0.01",
+        "extreme snr=45dB n=8: |bn-1/pi|=0.0585 > 0.01",
+        "extreme snr=45dB n=9: |bn-1/pi|=0.0622 > 0.01",
+        "extreme snr=45dB n=10: |bn-1/pi|=0.0658 > 0.01",
+        "extreme snr=50dB n=1: |bn-1/pi|=0.0128 > 0.01",
+        "extreme snr=50dB n=2: |bn-1/pi|=0.0196 > 0.01",
+        "extreme snr=50dB n=3: |bn-1/pi|=0.0248 > 0.01",
+        "extreme snr=50dB n=4: |bn-1/pi|=0.0292 > 0.01",
+        "extreme snr=50dB n=5: |bn-1/pi|=0.0331 > 0.01",
+        "extreme snr=50dB n=6: |bn-1/pi|=0.0367 > 0.01",
+        "extreme snr=50dB n=7: |bn-1/pi|=0.0399 > 0.01",
+        "extreme snr=50dB n=8: |bn-1/pi|=0.0429 > 0.01",
+        "extreme snr=50dB n=9: |bn-1/pi|=0.0458 > 0.01",
+        "extreme snr=50dB n=10: |bn-1/pi|=0.0485 > 0.01",
+        "very_weak snr=30dB n=10: |bn-1/pi|=0.0107 > 0.01"
+      ],
+      "details": {
+        "total": 2750,
+        "failures": 73,
+        "elapsed_s": 7.9348649978637695
+      }
+    },
+    {
+      "dim": "F2",
+      "name": "Fourier Series Convergence",
+      "status": "FAIL",
+      "fail_items": [
+        "sigma=3 snr=20dB N=20: rel_err=1.8340 > 5%",
+        "sigma=3 snr=30dB N=20: rel_err=243.4681 > 5%",
+        "sigma=5 snr=20dB N=20: rel_err=0.6191 > 1%",
+        "sigma=5 snr=20dB N=20: rel_err=0.6191 > 5%",
+        "sigma=5 snr=30dB N=20: rel_err=82.9492 > 1%",
+        "sigma=5 snr=30dB N=20: rel_err=82.9492 > 5%",
+        "sigma=8 snr=20dB N=20: rel_err=0.0390 > 1%",
+        "sigma=8 snr=30dB N=20: rel_err=5.1848 > 1%",
+        "sigma=8 snr=30dB N=20: rel_err=5.1848 > 5%",
+        "sigma=10 snr=30dB N=20: rel_err=0.3140 > 1%",
+        "sigma=10 snr=30dB N=20: rel_err=0.3140 > 5%"
+      ],
+      "details": {
+        "convergence_map": {
+          "1": 10,
+          "2": 10,
+          "3": 10,
+          "5": 10,
+          "8": 10,
+          "10": 10,
+          "15": 10,
+          "20": 10,
+          "25": 5
+        },
+        "elapsed_s": 6.3533995151519775
+      }
+    },
+    {
+      "dim": "F3",
+      "name": "Phase Avg Integration Accuracy",
+      "status": "FAIL",
+      "fail_items": [
+        "sigma=5 gamma=100: rel_err=0.970010 > 0.1%",
+        "sigma=5 gamma=100: rel_err=0.970010 > 1%",
+        "sigma=10 gamma=10: rel_err=0.003248 > 0.1%",
+        "sigma=10 gamma=100: rel_err=0.529765 > 0.1%",
+        "sigma=10 gamma=100: rel_err=0.529765 > 1%",
+        "sigma=10 gamma=1000: rel_err=0.999908 > 1%",
+        "sigma=15 gamma=10: rel_err=0.002153 > 0.1%",
+        "sigma=15 gamma=100: rel_err=0.015356 > 0.1%",
+        "sigma=15 gamma=100: rel_err=0.015356 > 1%",
+        "sigma=15 gamma=1000: rel_err=0.020767 > 1%",
+        "sigma=20 gamma=100: rel_err=0.002116 > 0.1%"
+      ],
+      "details": {
+        "elapsed_s": 0.0479276180267334
+      }
+    },
+    {
+      "dim": "F4",
+      "name": "GG CDF Extreme Parameters",
+      "status": "FAIL",
+      "fail_items": [
+        "strong h=1e-10: F=1.82e-08 > 1e-8"
+      ],
+      "details": {
+        "N_mc": 10000000,
+        "elapsed_s": -1.7800686359405518
+      }
+    },
+    {
+      "dim": "F5",
+      "name": "BER Floor Large sigma_phi",
+      "status": "FAIL",
+      "fail_items": [
+        "sigma=5: Q vs MC err=100.00% > 5%",
+        "sigma=5: Series vs MC err=100.00% > 5%",
+        "sigma=5: Q vs MC err=100.00% > 10%",
+        "sigma=8: Q vs MC err=97.54% > 5%",
+        "sigma=8: Series vs MC err=97.54% > 5%",
+        "sigma=8: Q vs MC err=97.54% > 10%",
+        "sigma=10: Q vs MC err=15.21% > 5%",
+        "sigma=10: Series vs MC err=15.21% > 5%",
+        "sigma=10: Q vs MC err=15.21% > 10%",
+        "sigma=12: Q vs MC err=12.46% > 5%",
+        "sigma=12: Series vs MC err=12.46% > 5%",
+        "sigma=12: Q vs MC err=12.46% > 10%",
+        "sigma=45: MC=0.1605, dev from 0.25 = 35.8% > 20%"
+      ],
+      "details": {
+        "N_mc": 2000000,
+        "elapsed_s": 2.9344754219055176
+      }
+    },
+    {
+      "dim": "F6",
+      "name": "P_s/2 Approximation Bias",
+      "status": "FAIL",
+      "fail_items": [
+        "weak_s5 SNR=20dB: bias=7.48% > 5%",
+        "weak_s5 SNR=22dB: bias=103.42% > 15%",
+        "weak_s5 SNR=22dB: bias=103.42% > 5%",
+        "weak_s5 SNR=24dB: bias=168.53% > 15%",
+        "weak_s5 SNR=24dB: bias=168.53% > 5%",
+        "weak_s5 SNR=26dB: bias=118.94% > 15%",
+        "weak_s5 SNR=26dB: bias=118.94% > 5%",
+        "weak_s5 SNR=28dB: bias=115.42% > 15%",
+        "weak_s5 SNR=28dB: bias=115.42% > 5%",
+        "weak_s5 SNR=30dB: bias=117.07% > 15%",
+        "weak_s5 SNR=30dB: bias=117.07% > 5%",
+        "weak_s5 SNR=32dB: bias=119.24% > 15%",
+        "weak_s5 SNR=32dB: bias=119.24% > 5%",
+        "weak_s5 SNR=34dB: bias=121.07% > 15%",
+        "weak_s5 SNR=34dB: bias=121.07% > 5%",
+        "weak_s5 SNR=36dB: bias=122.45% > 15%",
+        "weak_s5 SNR=36dB: bias=122.45% > 5%",
+        "weak_s5 SNR=38dB: bias=123.42% > 15%",
+        "weak_s5 SNR=38dB: bias=123.42% > 5%",
+        "weak_s5 SNR=40dB: bias=124.10% > 15%",
+        "weak_s5 SNR=40dB: bias=124.10% > 5%",
+        "moderate_s5 SNR=24dB: bias=6.63% > 5%",
+        "moderate_s5 SNR=26dB: bias=38.24% > 15%",
+        "moderate_s5 SNR=26dB: bias=38.24% > 5%",
+        "moderate_s5 SNR=28dB: bias=394.83% > 15%",
+        "moderate_s5 SNR=28dB: bias=394.83% > 5%",
+        "moderate_s5 SNR=30dB: bias=222.88% > 15%",
+        "moderate_s5 SNR=30dB: bias=222.88% > 5%",
+        "moderate_s5 SNR=32dB: bias=145.88% > 15%",
+        "moderate_s5 SNR=32dB: bias=145.88% > 5%",
+        "moderate_s5 SNR=34dB: bias=130.20% > 15%",
+        "moderate_s5 SNR=34dB: bias=130.20% > 5%",
+        "moderate_s5 SNR=36dB: bias=125.66% > 15%",
+        "moderate_s5 SNR=36dB: bias=125.66% > 5%",
+        "moderate_s5 SNR=38dB: bias=124.42% > 15%",
+        "moderate_s5 SNR=38dB: bias=124.42% > 5%",
+        "moderate_s5 SNR=40dB: bias=124.26% > 15%",
+        "moderate_s5 SNR=40dB: bias=124.26% > 5%",
+        "strong_s5 SNR=20dB: bias=11.19% > 5%",
+        "strong_s5 SNR=22dB: bias=10.97% > 5%",
+        "strong_s5 SNR=24dB: bias=10.70% > 5%",
+        "strong_s5 SNR=26dB: bias=10.31% > 5%",
+        "strong_s5 SNR=28dB: bias=9.70% > 5%",
+        "strong_s5 SNR=30dB: bias=8.74% > 5%",
+        "strong_s5 SNR=32dB: bias=7.21% > 5%",
+        "strong_s5 SNR=38dB: bias=5.40% > 5%",
+        "strong_s5 SNR=40dB: bias=16.04% > 15%",
+        "strong_s5 SNR=40dB: bias=16.04% > 5%",
+        "strong_s10 SNR=20dB: bias=10.60% > 5%",
+        "strong_s10 SNR=22dB: bias=10.45% > 5%",
+        "strong_s10 SNR=24dB: bias=10.32% > 5%",
+        "strong_s10 SNR=26dB: bias=10.23% > 5%",
+        "strong_s10 SNR=28dB: bias=10.15% > 5%",
+        "strong_s10 SNR=30dB: bias=10.09% > 5%",
+        "strong_s10 SNR=32dB: bias=10.05% > 5%",
+        "strong_s10 SNR=34dB: bias=10.01% > 5%",
+        "strong_s10 SNR=36dB: bias=9.98% > 5%",
+        "strong_s10 SNR=38dB: bias=9.94% > 5%",
+        "strong_s10 SNR=40dB: bias=9.91% > 5%",
+        "strong_s15 SNR=20dB: bias=8.78% > 5%",
+        "strong_s15 SNR=22dB: bias=8.35% > 5%",
+        "strong_s15 SNR=24dB: bias=7.90% > 5%",
+        "strong_s15 SNR=26dB: bias=7.43% > 5%",
+        "strong_s15 SNR=28dB: bias=6.90% > 5%",
+        "strong_s15 SNR=30dB: bias=6.31% > 5%",
+        "strong_s15 SNR=32dB: bias=5.65% > 5%"
+      ],
+      "details": {
+        "contour_10pct": {
+          "weak_s5": "2",
+          "weak_s10": "2",
+          "weak_s15": "2",
+          "moderate_s5": "6",
+          "moderate_s10": "6",
+          "moderate_s15": "4",
+          "strong_s5": "28",
+          "strong_s10": "36",
+          "strong_s15": "16"
+        },
+        "elapsed_s": 14.30779242515564
+      }
+    },
+    {
+      "dim": "F7",
+      "name": "Outage Binary Search Robustness",
+      "status": "PASS",
+      "fail_items": [],
+      "details": {
+        "elapsed_s": 0.00484156608581543
+      }
+    },
+    {
+      "dim": "F8",
+      "name": "DPLL h-independence",
+      "status": "PASS",
+      "fail_items": [],
+      "details": {
+        "B0": 88622692.54527579,
+        "sigma_dpll_rad": 0.013313353638003896,
+        "sigma_dpll_deg": 0.7627989746227637,
+        "elapsed_s": 0.0005567073822021484
+      }
+    },
+    {
+      "dim": "F10",
+      "name": "SNR Penalty Turbulence Independence",
+      "status": "PASS",
+      "fail_items": [],
+      "details": {
+        "elapsed_s": 1.252187967300415
+      }
+    },
+    {
+      "dim": "F11",
+      "name": "Estimation Error Deep Fading",
+      "status": "PASS",
+      "fail_items": [],
+      "details": {
+        "N": 2000000,
+        "elapsed_s": 2.38118052482605
+      }
+    },
+    {
+      "dim": "F9",
+      "name": "Closed-form vs MC Sweep",
+      "status": "FAIL",
+      "fail_items": [
+        "weak s=2 snr=18dB BER=4.80e-04 err=17.4% > 10%",
+        "weak s=5 snr=22dB BER=5.68e-05 err=52.4% > 20%",
+        "weak s=12 snr=28dB BER=1.06e-04 err=15.8% > 10%",
+        "weak s=12 snr=34dB BER=7.70e-05 err=23.3% > 20%",
+        "moderate s=2 snr=20dB BER=1.63e-03 err=9.5% > 5%",
+        "moderate s=2 snr=22dB BER=7.68e-04 err=27.3% > 10%",
+        "moderate s=2 snr=24dB BER=3.72e-04 err=83.0% > 10%",
+        "moderate s=5 snr=26dB BER=1.85e-04 err=29.2% > 10%",
+        "moderate s=5 snr=28dB BER=8.56e-05 err=78.9% > 20%",
+        "strong s=2 snr=26dB BER=6.47e-03 err=5.7% > 5%",
+        "strong s=2 snr=28dB BER=4.49e-03 err=8.2% > 5%",
+        "strong s=2 snr=30dB BER=3.06e-03 err=11.3% > 5%",
+        "strong s=2 snr=32dB BER=2.22e-03 err=22.5% > 5%",
+        "strong s=2 snr=34dB BER=1.50e-03 err=31.6% > 5%",
+        "strong s=2 snr=36dB BER=1.04e-03 err=48.8% > 5%",
+        "strong s=2 snr=38dB BER=7.39e-04 err=74.3% > 10%",
+        "strong s=5 snr=34dB BER=1.56e-03 err=6.2% > 5%",
+        "strong s=5 snr=36dB BER=1.05e-03 err=6.5% > 5%",
+        "strong s=5 snr=38dB BER=7.74e-04 err=16.3% > 10%",
+        "strong s=5 snr=40dB BER=5.10e-04 err=18.6% > 10%"
+      ],
+      "details": {
+        "total_tests": 441,
+        "N_mc": 500000,
+        "bias_direction": {
+          "over": 55,
+          "under": 70,
+          "neutral": 274
+        },
+        "total_fails": 20,
+        "elapsed_s": 43.361894607543945
+      }
+    }
+  ]
+}

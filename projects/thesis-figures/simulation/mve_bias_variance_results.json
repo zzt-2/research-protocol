@@ -1,0 +1,50 @@
+{
+  "weak_low": {
+    "fixed": 0.012424999999999999,
+    "fixed_gain": 0.0,
+    "old_adapt": 0.013975,
+    "old_adapt_gain": 0.0,
+    "bv_adapt": 0.012633333333333331,
+    "bv_adapt_gain": 0.0
+  },
+  "weak_high": {
+    "fixed": 0.012424999999999999,
+    "fixed_gain": 0.0,
+    "old_adapt": 0.013973333333333334,
+    "old_adapt_gain": 0.0,
+    "bv_adapt": 0.012633333333333331,
+    "bv_adapt_gain": 0.0
+  },
+  "moderate_low": {
+    "fixed": 0.038181666666666655,
+    "fixed_gain": 0.0,
+    "old_adapt": 0.040011666666666675,
+    "old_adapt_gain": 0.0,
+    "bv_adapt": 0.038031666666666665,
+    "bv_adapt_gain": 0.017095238733633396
+  },
+  "moderate_high": {
+    "fixed": 0.03817833333333333,
+    "fixed_gain": 0.0,
+    "old_adapt": 0.04001333333333333,
+    "old_adapt_gain": 0.0,
+    "bv_adapt": 0.038016666666666664,
+    "bv_adapt_gain": 0.018429305492562834
+  },
+  "strong_low": {
+    "fixed": 0.19799333333333333,
+    "fixed_gain": 0.0,
+    "old_adapt": 0.19410333333333335,
+    "old_adapt_gain": 0.08617573721165271,
+    "bv_adapt": 0.1985016666666667,
+    "bv_adapt_gain": 0.0
+  },
+  "strong_high": {
+    "fixed": 0.193285,
+    "fixed_gain": 0.0,
+    "old_adapt": 0.18939,
+    "old_adapt_gain": 0.08841107601817827,
+    "bv_adapt": 0.19380833333333333,
+    "bv_adapt_gain": 0.0
+  }
+}

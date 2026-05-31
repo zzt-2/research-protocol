@@ -1,0 +1,64 @@
+{
+  "mve": {
+    "weak_low": {
+      "fixed_ber": 0.012515999999999998,
+      "adapt_ber": 0.030417999999999997,
+      "gain_db": 0.0,
+      "scenario": "('weak', 'low', 150000000.0)"
+    },
+    "weak_high": {
+      "fixed_ber": 0.012514999999999998,
+      "adapt_ber": 0.030415,
+      "gain_db": 0.0,
+      "scenario": "('weak', 'high', 30000000.0)"
+    },
+    "moderate_low": {
+      "fixed_ber": 0.045296,
+      "adapt_ber": 0.149615,
+      "gain_db": 0.0,
+      "scenario": "('moderate', 'low', 150000000.0)"
+    },
+    "moderate_high": {
+      "fixed_ber": 0.045294,
+      "adapt_ber": 0.15320000000000003,
+      "gain_db": 0.0,
+      "scenario": "('moderate', 'high', 30000000.0)"
+    },
+    "strong_low": {
+      "fixed_ber": 0.20107299999999997,
+      "adapt_ber": 0.349314,
+      "gain_db": 0.0,
+      "scenario": "('strong', 'low', 150000000.0)"
+    },
+    "strong_high": {
+      "fixed_ber": 0.20117199999999996,
+      "adapt_ber": 0.35733100000000007,
+      "gain_db": 0.0,
+      "scenario": "('strong', 'high', 30000000.0)"
+    }
+  },
+  "ablation": {
+    "Fixed (all)": 0.28320833333333334,
+    "FOE only": 0.28499166666666664,
+    "VV only": 0.3372716666666667,
+    "DPLL only": 0.2890666666666667,
+    "All adaptive": 0.34040666666666664
+  },
+  "block_analysis": {
+    "h<0.3 (deep)": {
+      "fixed": 0.4175335968379447,
+      "adapt": 0.5152964426877471,
+      "gain_db": 0
+    },
+    "0.3\u2264h<1": {
+      "fixed": 0.4356964892412231,
+      "adapt": 0.5331313703284258,
+      "gain_db": 0
+    },
+    "h\u22651 (good)": {
+      "fixed": 0.43002347417840375,
+      "adapt": 0.524518779342723,
+      "gain_db": 0
+    }
+  }
+}
