@@ -1,0 +1,184 @@
+{
+  "meta": {
+    "title": "星地激光通信信号处理关键技术研究",
+    "subtitle": "硕士学位论文开题报告",
+    "author": "张哲铜",
+    "advisor": "XXX 教授",
+    "date": "2026年6月"
+  },
+  "toc": [
+    "研究背景与意义",
+    "国内外研究现状",
+    "研究内容与方案",
+    "预期成果与创新点",
+    "研究计划与进度安排"
+  ],
+  "slides": [
+    {"type": "section", "title": "研究背景与意义"},
+
+    {
+      "type": "content",
+      "layout": "一段一图",
+      "title": "研究背景",
+      "image": "毕设/test_images/channel_model.png",
+      "card_title": "星地激光通信面临的挑战",
+      "points": [
+        "激光通信带宽高、抗干扰，但受大气湍流严重影响",
+        "湍流导致光束漂移、光强闪烁和相位畸变",
+        "信道建模→均衡→同步是三个核心问题"
+      ]
+    },
+
+    {
+      "type": "content",
+      "layout": "三个观点",
+      "title": "研究意义",
+      "cards": [
+        {"title": "理论意义", "desc": "建立高精度大气激光信道统计模型，丰富信道建模理论体系"},
+        {"title": "实际意义", "desc": "提升星地链路可靠性与传输速率，推动激光通信实用化"},
+        {"title": "方法意义", "desc": "探索AI在物理层信号处理中的应用，提供数据驱动新思路"}
+      ]
+    },
+
+    {"type": "section", "title": "国内外研究现状"},
+
+    {
+      "type": "content",
+      "layout": "四个观点",
+      "title": "四个关键技术方向研究现状",
+      "cards": [
+        {"title": "信道建模", "desc": "Gamma-Gamma模型为事实标准，涵盖弱到强湍流全范围"},
+        {"title": "信道估计", "desc": "LS/MMSE成熟，DNN在低SNR下有1-3dB增益"},
+        {"title": "信道均衡", "desc": "DFE+MMSE弱湍流最优，DL在中强湍流BER改善10-55%"},
+        {"title": "载波同步", "desc": "VV/BPS为相干主流，AI辅助联合频偏相位补偿有潜力"}
+      ]
+    },
+
+    {
+      "type": "content",
+      "layout": "观点对比",
+      "title": "传统方法 vs 深度学习方法",
+      "cards": [
+        {"title": "传统方法", "desc": "理论成熟，复杂度低，弱湍流下近最优。但需信道先验，强湍流性能退化明显"},
+        {"title": "深度学习", "desc": "数据驱动，自适应强，中强湍流优势显著。但需大量训练数据，泛化性待验证"}
+      ]
+    },
+
+    {
+      "type": "content",
+      "layout": "一段一图",
+      "title": "信道估计方法对比",
+      "image": "毕设/test_images/ber_curve.png",
+      "card_title": "LS / MMSE / DNN 性能对比",
+      "points": [
+        "LS复杂度最低但噪声放大严重",
+        "MMSE最优线性估计，需信道先验",
+        "DNN数据驱动，SNR<10dB时增益2-3dB"
+      ]
+    },
+
+    {
+      "type": "content",
+      "layout": "一段一图",
+      "title": "信道均衡研究进展",
+      "image": "毕设/test_images/equalizer_perf.png",
+      "card_title": "DFE / CNN / LSTM 均衡性能",
+      "points": [
+        "传统均衡在弱湍流下已接近最优",
+        "DL均衡在中强湍流下BER改善10-55%",
+        "FSO用IM/DD实值信号，需特殊设计"
+      ]
+    },
+
+    {"type": "section", "title": "研究内容与方案"},
+
+    {
+      "type": "content",
+      "layout": "框架图",
+      "title": "总体研究框架",
+      "subtitle": "信道建模 → 信道估计 → 信道均衡 → 载波同步 → 性能评估",
+      "image": "毕设/test_images/framework.png"
+    },
+
+    {
+      "type": "content",
+      "layout": "一段一图",
+      "title": "Ch2: 大气湍流信道建模与特征估计",
+      "image": "毕设/test_images/bar_compare.png",
+      "card_title": "信道建模与估计方案",
+      "points": [
+        "建立Gamma-Gamma信道模型",
+        "对比LS、MMSE、DNN三种估计方法",
+        "在不同湍流强度下评估性能差异"
+      ]
+    },
+
+    {
+      "type": "content",
+      "layout": "一段一图",
+      "title": "Ch3: 信道均衡算法研究",
+      "image": "毕设/test_images/constellation.png",
+      "card_title": "均衡方案设计",
+      "points": [
+        "DFE+MMSE作为传统基线",
+        "CNN/LSTM均衡器补偿湍流畸变",
+        "OOK调制下对比传统与DL性能"
+      ]
+    },
+
+    {
+      "type": "content",
+      "layout": "一段一图",
+      "title": "Ch4: 载波同步与相位恢复",
+      "image": "毕设/test_images/ber_curve.png",
+      "card_title": "同步算法方案",
+      "points": [
+        "VV/BPS/Pilot系统对比作为基线",
+        "RNN/GRU联合频偏+相位恢复方案",
+        "相干检测+QPSK体制下评估"
+      ]
+    },
+
+    {"type": "section", "title": "预期成果与创新点"},
+
+    {
+      "type": "content",
+      "layout": "四个观点",
+      "title": "预期研究成果",
+      "cards": [
+        {"title": "信道模型", "desc": "完整GG信道模型+三种估计方法系统对比"},
+        {"title": "均衡方案", "desc": "FSO实值信号DL均衡，中强湍流BER改善10-55%"},
+        {"title": "同步算法", "desc": "AI辅助联合频偏相位恢复，提升同步鲁棒性"},
+        {"title": "系统评估", "desc": "端到端仿真验证，量化各模块贡献"}
+      ]
+    },
+
+    {
+      "type": "content",
+      "layout": "三个观点",
+      "title": "主要创新点",
+      "cards": [
+        {"title": "系统性", "desc": "DL方法覆盖估计、均衡、同步三个环节，形成完整方案"},
+        {"title": "场景适配", "desc": "针对IM/DD实值信号设计DL均衡，区别于RF复值均衡"},
+        {"title": "联合设计", "desc": "联合频偏+相位恢复，解决LEO多普勒频移挑战"}
+      ]
+    },
+
+    {"type": "section", "title": "研究计划与进度安排"},
+
+    {
+      "type": "content",
+      "layout": "一段一图",
+      "title": "进度安排",
+      "image": "毕设/test_images/timeline.png",
+      "card_title": "研究阶段划分",
+      "points": [
+        "2026.06-08: 文献调研+信道建模与估计",
+        "2026.09-11: 信道均衡算法研究",
+        "2026.12-2027.02: 载波同步算法研究",
+        "2027.03-04: 系统集成验证",
+        "2027.05-06: 论文撰写与修改"
+      ]
+    }
+  ]
+}
