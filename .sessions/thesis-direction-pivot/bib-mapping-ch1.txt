@@ -1,0 +1,88 @@
+Ch1 绪论（57篇）bib 条目映射
+生成时间: 2026-05-30
+说明: 所有57篇论文均在 references.bib 中找到对应条目，无需新建 bib 条目
+
+=== 1.1 研究背景与意义（22篇）===
+
+行号 | citekey | 论文标题前40字
+1    | khalighi2014            | Survey on Free Space Optical Communication
+2    | kaushal2016             | Optical communication in space: Challenges
+3    | edwards2016lcrd         | Overview and status of the laser communicatio
+4    | israel2017lcrd          | Laser Communications Relay Demonstration (LCR
+5    | boroson2022lcrd         | Challenges, Lessons Learned from the LCRD Op
+6    | pollock2022laserspace   | A Survey on Laser Space Network: Terminals,
+7    | heine2015edrs           | LCT for EDRS: LEO to GEO optical communicat
+8    | sommerkorn2020edrs      | EDRS-C – The second node of the European Da
+9    | fields2014edrs          | The European Data Relay System, high speed
+10   | cornwell2019nasa        | Optical communications systems for NASA's hu
+11   | altakhaineh2025outdoor  | Outdoor Free Space Optical Systems: Motivati
+12   | pathak2024revolutionizing | Revolutionizing Free-Space Optics: Survey of
+13   | zhangdai2018            | 星地相干激光通信大气信道特征及信号处理
+14   | zhaoyun2025             | 星地激光通信研究现状与前沿技术
+15   | yuanrenzhi2024          | 面向星地融合的激光通信：研究现状、关键
+16   | zhaosixiao2026          | 卫星激光通信技术研究现状与发展趋势
+17   | wangjiayi2026           | 星地激光链路高可用关键技术与未来展望
+18   | qiaoyuanzhe2025         | 面向星地融合的光通信：激光通信终端研究
+19   | capeleti2023linkbudget  | Link budget calculation in optical LEO satel
+20   | xingdi2023freq          | 星地激光通信频偏估计应用技术研究
+21   | bpskqpsk2024switch      | 面向空间激光通信的BPSK/QPSK码型切换技
+22   | fsoadaptive2025         | 非理想信道下FSO自适应调制相干检测性能
+
+=== 1.2.1 大气湍流信道估计研究现状（12篇）===
+
+行号 | citekey | 论文标题前40字
+23   | amirabadi2020           | Deep learning for channel estimation in FSO
+24   | elfiky2024              | Symbol Detection and CE for SOC Using NN an
+25   | rustum2026iet           | Hybrid STA with FNN/CNN for robust CE in tu
+26   | mohammed2026            | Free space optical turbulent channel estima
+27   | han2022joint            | Joint Impact of Channel Estimation Errors a
+28   | param2021gg             | Parameter estimation of Gamma–Gamma fading
+29   | perf2020gg              | Performance analysis of FSO over GG with p
+30   | lixueliang2018          | 大气激光通信数字相干探测关键技术研究
+31   | yanxu2022               | 星地自由相干光通信系统中信号处理与补偿
+32   | fsocelprediction2024    | 自由空间光通信系统中的信道预测技术研究
+33   | chenyan2024             | 自由空间光通信系统中大气湍流抑制关键技
+34   | guanluyang2024          | 空间激光通信系统中高阶调制信号损伤抑制
+
+=== 1.2.2 低轨卫星激光通信载波同步研究现状（14篇）===
+
+行号 | citekey | 论文标题前40字
+35   | paillier2020            | Space-Ground Coherent Optical Links: Ground
+36   | liu2023                 | Carrier recovery for sat-to-ground coheren
+37   | wang2025a               | Real-Time Doppler Shift Tracking for LEO Sa
+38   | zhao2025                | Joint Doppler and Phase Noise Compensatio
+39   | fernandes2023           | Digitally mitigating Doppler shift in coher
+40   | almonacil2020           | Digital Pre-Compensation of Doppler in Coh
+41   | chen2025dsp             | Review and Analysis of DSP Algorithms for C
+42   | wang2024oe              | Enhanced frame sync and carrier recovery in
+43   | magarini2012pilot       | Pilot-Symbols-Aided CPR for 100-G PM-QPSK
+44   | improved2012pilot       | Improved Pilot-Aided Optical Carrier Phase
+45   | le2012dpll              | Digital PLL based frequency offset compensa
+46   | zibar2020ukf            | Pilot-symbols-aided unscented Kalman filte
+47   | lihuagui2023            | 相干光通信消相位模糊载波同步算法
+48   | baijiajun2021qpsk       | 相干光通信系统中QPSK调制解调研究与实
+
+=== 1.2.3 现有研究不足与本文切入点（5篇）===
+
+行号 | citekey | 论文标题前40字
+49   | brandao2024             | 100G FSO field trial with transmitter power
+50   | safi2019                | Adaptive Channel Coding and Power Control f
+51   | correia2026             | Reciprocity-Driven Power Adaptation (EDFA
+52   | nguyen2024              | Adaptive Rate/Power Control with ML Channe
+53   | seimetz2023flex         | Flexible Phase Synchronization for Wireless
+
+=== 支撑其他章节（4篇）===
+
+行号 | citekey | 论文标题前40字
+54   | xu2025                  | Satellite-to-ground optical comm under orbi
+55   | almogahed2022           | Performance improvement of MDM-FSO with DF
+56   | zhaoyuanfan2024         | 空间相干激光通信信道均衡算法研究
+57   | zouxinhang2025fpga      | 高速光通信系统的并行定点信号处理技术研
+
+=== 备注 ===
+
+1. #11 材料清单写 "Esmail et al. (2025)"，实际 bib 条目第一作者为 Altakhaineh，标题匹配
+2. #27 材料清单写 "Trinh et al. (2022)"，实际 bib 条目第一作者为 Han (han2022joint)，标题+期刊匹配
+3. #43 材料清单写 "Tao et al. (2012)"，实际 bib 条目第一作者为 Magarini (magarini2012pilot)，标题+期刊匹配
+4. #47 存在重复条目：carrier2023sync（无作者）和 lihuagui2023（有完整作者），建议使用 lihuagui2023 并删除 carrier2023sync
+5. 所有57篇论文均已找到对应 bib 条目，bib-new-ch1.bib 不需要创建

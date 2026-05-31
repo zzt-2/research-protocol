@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Ch3 方向验证：GG 湍流 + 高斯相位误差联合下 QPSK BER 蒙特卡洛仿真
    验证目标：
-   1. BER floor = 2Q(π/(4σ_φ))（高 SNR 渐近界）
+   1. BER floor = Q(π/(4σ_φ))（高 SNR 渐近界）
    2. 平均 BER over GG fading + Gaussian phase error
    3. 不同湍流强度和相位误差方差的 BER 曲线
 """
@@ -44,20 +44,19 @@ def ber_qpsk_awgn(snr_lin):
     return q_func(np.sqrt(2 * snr_lin))
 
 def ber_floor_theory(sigma_phi):
-    """高 SNR BER floor: P(|φ| > π/4) = 2Q(π/(4σ_φ))"""
-    return 2 * q_func(np.pi / (4 * sigma_phi))
+    """高 SNR BER floor: Q(π/(4σ_φ))"""
+    return q_func(np.pi / (4 * sigma_phi))
 
 def ber_qpsk_conditional(gamma, phi):
     """条件 BER: QPSK 在瞬时 SNR=γ 和相位误差=φ 下的 BER
 
-    Gray-coded QPSK, 判决域为 ±π/4 象限:
-    P_b ≈ Q(√(2γ) cos(φ+π/4)) + Q(√(2γ) cos(φ-π/4))
+    Gray-coded QPSK: P_b = (P_I + P_Q)/2
+    P_I = Q(√(2γ) cos(φ+π/4)), P_Q = Q(√(2γ) cos(φ-π/4))
     """
     sqrt2g = np.sqrt(2 * np.maximum(gamma, 0))
     c1 = np.cos(phi + np.pi/4)
     c2 = np.cos(phi - np.pi/4)
-    # 当 cos 值为负时 Q 值很大，对应相位误差严重时判决错误
-    p = q_func(sqrt2g * c1) + q_func(sqrt2g * c2)
+    p = 0.5 * (q_func(sqrt2g * c1) + q_func(sqrt2g * c2))
     return np.clip(p, 0, 1)
 
 # ─── 蒙特卡洛仿真 ──────────────────────────────────────────
@@ -66,7 +65,7 @@ def mc_ber(avg_snr_db, alpha, beta, sigma_phi, N=N_SYM):
     snr_lin = 10 ** (avg_snr_db / 10)
     h = gg_channel(N, alpha, beta)       # 信道增益
     phi = np.random.normal(0, sigma_phi, N)  # 相位误差
-    gamma = snr_lin * h ** 2             # 瞬时 SNR
+    gamma = snr_lin * h               # 瞬时 SNR (coherent: γ = γ̄·h)
     ber = np.mean(ber_qpsk_conditional(gamma, phi))
     return ber
 
@@ -74,7 +73,7 @@ def ber_gg_only(avg_snr_db, alpha, beta, N=N_SYM):
     """仅 GG 衰落（无相位误差）的 BER，作为基准"""
     snr_lin = 10 ** (avg_snr_db / 10)
     h = gg_channel(N, alpha, beta)
-    gamma = snr_lin * h ** 2
+    gamma = snr_lin * h
     return np.mean(ber_qpsk_awgn(gamma))
 
 # ─── 实验 1：BER floor 验证 ────────────────────────────────

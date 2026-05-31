@@ -1,0 +1,74 @@
+# Ch2 + Ch3 论文清单与 bib citekey 对应表
+# 生成日期: 2026-05-30
+# Ch2: 22篇, Ch3: 35篇, 合计57篇
+# 格式: Ch | 行号 | citekey | 论文标题前40字
+
+Ch2 |  1 | caominghua2020 | Gamma-Gamma大气湍流下超奈奎斯特光通信系统性能
+Ch2 |  2 | sunjing2018 | Gamma-Gamma大气湍流下相干光通信分集接收技术
+Ch2 |  3 | lixiaoyan2017 | GG大气湍流下零判决门限差分探测FSO系统误码率
+Ch2 |  4 | hanliqiang2011 | Gamma-gamma大气湍流下自由空间光通信的性能
+Ch2 |  5 | xu2025 | Satellite-to-ground optical comm under orbital devi
+Ch2 |  6 | czerwinski2025 | Optical Downlink Modeling for LEO/MEO under turbul
+Ch2 |  7 | stotts2023 | Coherent Laser Ground-to-Satellite with atmospheri
+Ch2 |  8 | khalighi2014 | Survey on Free Space Optical Communication: A Comm
+Ch2 |  9 | madongtang2004 | 大气激光通信中多光束传输性能分析和信道建模
+Ch2 | 10 | zhouhaijun2020 | 相干激光通信中零差相干接收及传输信道研究
+Ch2 | 11 | alhabash2001 | Mathematical Model for the Irradiance PDF of a Las
+Ch2 | 12 | andrews2005 | Laser Beam Propagation through Random Media
+Ch2 | 13 | proakis2008 | Digital Communications
+Ch2 | 14 | dongyi2025 | 基于科斯塔斯环的零差相干光接收技术
+Ch2 | 15 | yixiang2012 | 基于分集接收技术的相干大气激光通信系统性能分析
+Ch2 | 16 | chenmu2018 | 无线光相干通信中的信道噪声及其对相干检测性能影
+Ch2 | 17 | liuyutao2025 | 星地动态大气湍流中的激光传输数值模拟
+Ch2 | 18 | guoqian2025 | 平顶光束在大气湍流信道中传输研究进展
+Ch2 | 19 | chenyan2024 | 自由空间光通信系统中大气湍流抑制关键技术研究
+Ch2 | 20 | fuyulong2025 | 非柯湍流对星地激光通信分集接收系统性能影响
+Ch2 | 21 | maning2025a | 气象数据融合的星地激光链路多物理场损耗分析
+Ch2 | 22 | maning2025b | 基于气象参数的星地激光链路传输损耗分析及预测
+
+Ch3 |  1 | amirabadi2020 | Deep learning for channel estimation in FSO commun
+Ch3 |  2 | elfiky2024 | Symbol Detection and CE for SOC Using NN and Autoe
+Ch3 |  3 | rustum2026iet | Hybrid STA with FNN/CNN for robust CE in turbulen
+Ch3 |  4 | mohammed2026 | Free space optical turbulent channel estimation base
+Ch3 |  5 | zhou2024 | Meta-learning for estimating atmospheric turbulence
+Ch3 |  6 | dabiri2017 | FSO channel estimation for OOK with APD receiver o
+Ch3 |  7 | chen2024ao | Joint estimation model for FSO channel parameters b
+Ch3 |  8 | selvaraj2025 | SWALNet: sparse wavelength aware learning for robus
+Ch3 |  9 | kim2025 | Moment-based estimation for gamma-gamma fading para
+Ch3 | 10 | phasync2024 | Phase and Channel Estimation for Phase-Asynchronous
+Ch3 | 11 | wuying2026 | 基于DNN信道估计的自适应概率整形FSO系统
+Ch3 | 12 | gaoyue2023 | 探测噪声与湍流信道参数联合估计方法研究
+Ch3 | 13 | ndiaye2023 | FSO channel estimation based on DL algorithms (DNN/
+Ch3 | 14 | luan2025 | Robust CE for OWC using Neural Network
+Ch3 | 15 | brandao2024 | 100G FSO field trial with transmitter power adaptab
+Ch3 | 16 | safi2019 | Adaptive Channel Coding and Power Control for Pract
+Ch3 | 17 | correia2026 | Reciprocity-Driven Power Adaptation (EDFA APC)
+Ch3 | 18 | nguyen2024 | Adaptive Rate/Power Control with ML Channel Predict
+Ch3 | 19 | lognone2023 | Pre-compensation Phase for GEO Feeder Uplinks
+Ch3 | 20 | cheng2025 | Simulated 1000km LEO using 1.8km OWC
+Ch3 | 21 | seifi2026 | Beam Power Optimization FSO Using RL+SLM
+Ch3 | 22 | almogahed2022 | MDM-FSO improvement through various atmospheric con
+Ch3 | 23 | tumma2025 | Deep learning-based pilot-free channel estimation o
+Ch3 | 24 | zhouluxia2025 | 深度学习辅助的无线光通信联合信道估计与检测技术
+Ch3 | 25 | rustum2026elsevier | Clustering-assisted channel estimation for FSO sate
+Ch3 | 26 | caominghua2026b | 数据驱动DBLNet无线光OOFDM信号接收算法
+Ch3 | 27 | caominghua2025 | 注意力和LSTM辅助的残差FTN-FSO端到端通信系统
+Ch3 | 28 | guoxinglan2016 | 空间光通信大气湍流信道自适应均衡算法研究
+Ch3 | 29 | guanluyang2024 | 空间激光通信系统中高阶调制信号损伤抑制算法研
+Ch3 | 30 | han2022jlt | Joint Impact of CE Errors and Pointing Errors on FS
+Ch3 | 31 | chenhui2021 | Parameter Estimation of GG Fading Channel in Free S
+Ch3 | 32 | yaseen2024 | Signal-Dependent Shot and RIN in Channel Estimation
+Ch3 | 33 | liu2022twc | Blind and Semi-Blind CE for Poisson Channels in OWC
+Ch3 | 34 | wohlgemuth2025 | Robust Coherent FSO Using Dynamic Coherent Detecti
+Ch3 | 35 | malik2025 | CE Errors in FSO Over High Turbulence: Negative Ex
+
+# 跨章重复论文:
+# Ch2#5(xu2025) = Ch1#54, Ch2#8(khalighi2014) = Ch1#1, Ch2#11(alhabash2001)=经典, Ch2#12(andrews2005)=经典, Ch2#13(proakis2008)=经典
+# Ch3#1(amirabadi2020)=Ch1#23, Ch3#2(elfiky2024)=Ch1#24, Ch3#3(rustum2026iet)=Ch1#25, Ch3#4(mohammed2026)=Ch1#26
+# Ch3#15(brandao2024)=Ch1#49, Ch3#16(safi2019)=Ch1#50, Ch3#17(correia2026)=Ch1#51, Ch3#18(nguyen2024)=Ch1#52
+# Ch3#22(almogahed2022)=Ch1#55
+# Ch2#19(chenyan2024)=Ch1#33, Ch3#29(guanluyang2024)=Ch1#34
+# Ch2#14(dongyi2025)和Ch3#29(guanluyang2024)均为Ch1 R1c补充中文硕论
+
+# 缺失统计: 0 MISSING (全部57篇均已在 references.bib 中找到对应条目)
+# 无需创建新 bib 条目，bib-new-ch2ch3.bib 为空文件

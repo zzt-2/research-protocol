@@ -173,3 +173,15 @@ topics:
     depends_on:
       - slug: thesis-direction-pivot
         reason: 需要论文全貌和已有技术积累
+
+  - slug: thesis-simulation-consolidation
+    title: 仿真体系统一化
+    status: active
+    created: "2026-05-31"
+    last_updated: "2026-05-31"
+    description: "合并规范文档、统一评估方法、升级公共模块、建立新项目目录。继承 S022-S024 所有仿真工作。"
+    depends_on:
+      - slug: thesis-direction-pivot
+        reason: 继承 S022-S024 的所有仿真工作和结论
+    produces:
+      - projects/simulation/

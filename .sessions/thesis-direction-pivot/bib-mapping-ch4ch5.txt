@@ -1,0 +1,75 @@
+Ch4-5 Bib Mapping | 2026-05-30 | 51 papers (33+18)
+======================================================
+
+Ch4 低轨星地载波同步算法（33篇）
+----------------------------------------------
+Ch4 | #1  | liu2023           | Carrier recovery for satellite-to-ground coherent laser comm
+Ch4 | #2  | paillier2020      | Space-Ground Coherent Optical Links: Ground Receiver Performa
+Ch4 | #3  | zhao2025          | Joint Doppler and Phase Noise Compensation for Inter-Satellit
+Ch4 | #4  | wang2025a         | Real-Time Doppler Shift Tracking Scheme for LEO Satellite-Gro
+Ch4 | #5  | wang2024oe        | Enhanced frame synchronization and carrier recovery in cohere
+Ch4 | #6  | hu2025            | A noise-tolerant carrier phase recovery method for inter-sate
+Ch4 | #7  | tang2023          | A low-complexity joint compensation scheme of carrier recovery
+Ch4 | #8  | fernandes2023     | Digitally mitigating Doppler shift in high-capacity coherent
+Ch4 | #9  | yang2025          | Low-complexity carrier phase estimation algorithms for space
+Ch4 | #10 | shi2025           | Recurrent neural network enabled adaptive carrier phase recove
+Ch4 | #11 | blatter2025       | Transparent Carrier Phase Recovery Based on ANN
+Ch4 | #12 | almonacil2020     | Digital pre-compensation of Doppler frequency shift in cohere
+Ch4 | #13 | neves2023         | Carrier-phase recovery for coherent optical systems: Algorith
+Ch4 | #14 | xuwenjing2021     | 相干光通信载波相位恢复算法研究
+Ch4 | #15 | guanhaijun2019    | 基于数字相位恢复算法的QPSK自由空间相干光通信系统
+Ch4 | #16 | xiangjinsong2011  | 空间相干光通信中基于DSP的多普勒频移补偿技术
+Ch4 | #17 | wang2023pj        | Carrier FOE Scheme Based on FSTS in Spatial Diversity PM Cohe
+Ch4 | #18 | fpgaafe2024       | Real-time FPGA prototyping of Doppler frequency shift compen
+Ch4 | #19 | viterbi1983       | Nonlinear Estimation of PSK-Modulated Carrier Phase with Appl
+Ch4 | #20 | pfau2009          | Hardware-Efficient Coherent Digital Receiver Concept With Fee
+Ch4 | #21 | ip2007            | Feedforward Carrier Recovery for Coherent Optical Communica
+Ch4 | #22 | fatadin2009       | Blind Equalization and Carrier Phase Recovery in a 16-QAM Op
+Ch4 | #23 | lihuagui2023      | 相干光通信消相位模糊载波同步算法
+Ch4 | #24 | denghao2025       | 超奈奎斯特相干光通信系统中的盲载波相位恢复方法
+Ch4 | #25 | gaoyuan2025       | 先进调制相干光通信系统载波恢复算法研究
+Ch4 | #26 | zhangsiqi2025     | 高阶调制相干空间光通信系统载波恢复算法研究
+Ch4 | #27 | dongfan2024       | 低复杂度相干光通信载波恢复算法研究与实现
+Ch4 | #28 | wanghongen2019    | 相干光通信系统中载波频偏和相位恢复算法研究
+Ch4 | #29 | liutianrui2024    | 基于半导体激光器注入锁定载波恢复技术的星间相干激光通信
+Ch4 | #30 | qinyingkai2022    | 超奈奎斯特相干光传输系统载波恢复DSP算法研究
+Ch4 | #31 | taylor2009        | Phase Estimation Methods for Optical Coherent Detection Using
+Ch4 | #32 | fang2024nc        | Overcoming Laser Phase Noise for Low-Cost Coherent Optical C
+Ch4 | #33 | panasiewicz2023   | An All-Digital Optical Phase-Locked Loop Suitable for Satell
+
+Ch5 接收端信号处理链FPGA设计与实现（18篇）
+----------------------------------------------
+Ch5 | #1  | wang2025a         | Real-Time Doppler Shift Tracking Scheme for LEO Satellite-Gro  [NOTE: same as Ch4#4]
+Ch5 | #2  | fpga16qam2022     | Real-time FPGA prototyping of 15GBaud SP-16QAM coherent rece
+Ch5 | #3  | fpgaqam2023       | Real-time 15GBaud QPSK and 16QAM Flexible Coherent Optical R
+Ch5 | #4  | fpgadiversity2023 | Real-time low-complexity diversity combining for free space c
+Ch5 | #5  | fpgadpqpsk2023    | Low-Complexity FPGA Implementation of 106.24Gbps DP-QPSK Coh
+Ch5 | #6  | cprhw2022         | A Low-latency Carrier Phase Recovery Hardware for Coherent O
+Ch5 | #7  | fpgaclock2025     | Real-Time Demonstration of Digital Interpolator-Free Clock R
+Ch5 | #8  | alltiming2019     | All-Digital Timing Recovery for FSO Signals With Large Dynam
+Ch5 | #9  | chen2025dsp       | Review and Analysis of DSP Algorithms for Coherent Optical S
+Ch5 | #10 | gardner1986       | A BPSK/QPSK Timing-Error Detector for Sampled Receivers
+Ch5 | #11 | zouxinhang2025    | 高速光通信系统的并行定点信号处理技术研究
+Ch5 | #12 | tangxinyu2023     | 空间相干激光通信系统DSP算法研究
+Ch5 | #13 | guoxinyu2025      | 面向大气激光信道的动态可变接收技术
+Ch5 | #14 | cardenas2013      | Fixed Point and Power Consumption Analysis of a Coherent Rec
+Ch5 | #15 | song2023ptl       | Low-Complexity FPGA Implementation of 106.24Gbps DP-QPSK wi
+Ch5 | #16 | borjeson2020      | VLSI Implementations of Carrier Phase Recovery Algorithms fo
+Ch5 | #17 | luo2019ofc        | Demonstration of Bidirectional Real-Time 100Gb/s DP-QPSK C
+Ch5 | #18 | vaithianathan2024 | FPGA Prototyping of DSP Algorithms for Wireless Communicati
+
+======================================================
+MATCH SUMMARY
+======================================================
+Total papers: 51 (Ch4: 33 + Ch5: 18)
+Matched:      51
+MISSING:      0
+Cross-chapter duplicates (same bib entry used in both chapters):
+  - wang2025a: Ch4#4 = Ch5#1
+
+Notes:
+1. fpgadpqpsk2023 (Ch5#5) and song2023ptl (Ch5#15) are likely the same paper
+   published in different venues (JLT vs PTL) — mapped per literature list.
+2. zouxinhang2025 appears as duplicate bib entry in references.bib:
+   line 840 as zouxinhang2025fpga and line 1086 as zouxinhang2025.
+   Using zouxinhang2025 (the R1c entry).

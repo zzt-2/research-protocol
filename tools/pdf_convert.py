@@ -15,7 +15,7 @@ import tempfile
 from pathlib import Path
 
 MINERU_CLI = Path.home() / ".venvs/torch/bin/mineru"
-MINERU_TIMEOUT = int(os.environ.get("MINERU_TIMEOUT", "300"))
+MINERU_TIMEOUT = int(os.environ.get("MINERU_TIMEOUT", "600"))
 
 
 # ---------- PDF → Markdown ----------
@@ -50,11 +50,11 @@ def _convert_mineru(pdf_path: Path, output_dir: Path | None) -> str:
         mineru_out = Path(tmpdir) / "output"
         mineru_out.mkdir()
 
-        print(f"  MinerU 转换中 (pipeline)...")
+        print(f"  MinerU 转换中 (pipeline, ocr)...")
         result = subprocess.run(
             [
                 str(MINERU_CLI), "-p", str(pdf_path.resolve()),
-                "-o", str(mineru_out), "--backend", "pipeline",
+                "-o", str(mineru_out), "--backend", "pipeline", "--method", "ocr",
             ],
             capture_output=True, text=True, timeout=MINERU_TIMEOUT,
             env={**os.environ, "MINERU_MODEL_SOURCE": os.environ.get("MINERU_MODEL_SOURCE", "modelscope")},
@@ -67,13 +67,15 @@ def _convert_mineru(pdf_path: Path, output_dir: Path | None) -> str:
                 print(f"    {line}", file=sys.stderr)
             return ""
 
-        # MinerU 输出结构: <output>/<stem>/auto/<stem>.md + images/
+        # MinerU 输出结构: <output>/<stem>/ocr/<stem>.md + images/  或  <output>/<stem>/auto/<stem>.md + images/
         stem = pdf_path.stem
-        auto_dir = mineru_out / stem / "auto"
-        md_file = auto_dir / f"{stem}.md"
-        images_src = auto_dir / "images"
-
-        if not md_file.exists():
+        for subdir in ("ocr", "auto"):
+            candidate = mineru_out / stem / subdir / f"{stem}.md"
+            if candidate.exists():
+                md_file = candidate
+                images_src = candidate.parent / "images"
+                break
+        else:
             # 尝试 rglob 兜底
             md_candidates = list(mineru_out.rglob("*.md"))
             if not md_candidates:
