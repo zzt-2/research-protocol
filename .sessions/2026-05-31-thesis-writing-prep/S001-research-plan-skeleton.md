@@ -9,6 +9,7 @@
 > - `writing-patterns-derivation.md`（325行）：推导链句法59条（公式引入+推导衔接+假设近似+参数解释）
 > - `writing-patterns-ch4-sentence-level.md`：仿真+物理意义+复杂度+引言/小结82条
 > 2026-06-01 续接：Task B3完成（Ch5 FPGA段落结构提取+句级句式+结构决策，761行）
+> 2026-06-01 续接：H001 Phase 2 — formulas-master Ch3/Ch4 章节重构 + 决策表公式名/图表映射
 > - `writing-patterns-ch5.md`（761行）：范文筛选+10类段落级模式卡+35条句级精选+Ch5段落级结构决策表
 > - `/tmp/ch5-sentences-dingshuang.md`（447行）：丁爽47条句级提取
 > - `/tmp/ch5-sentences-dongfan.md`（272行）：董凡35条句级提取
@@ -589,3 +590,42 @@ C-d 详情：
 - 旧文件均在 `archive/` 目录中
 
 **Phase A+B+C 全部完成。** 写作材料统一化项目结束。
+
+### Phase 2（H001 接续）：formulas-master 重构 + 决策表增强
+
+**日期**: 2026-06-01
+
+**任务来源**: H001-writing-materials-phase2.md
+
+#### 任务2: formulas-master.md 章节重构
+
+问题: formulas-master Ch3/Ch4 章节标题与 thesis-framework v2 不一致（方向切换前的旧结构）。
+
+Ch3 重构:
+- 标题: "大气湍流信道下 QPSK 相干检测链路性能分析" → "大气湍流信道估计技术"
+- 新建 §3.2-§3.6 结构对齐 thesis-framework（顶部映射表）
+- F3.1-F3.3 → §3.2（问题建模）
+- F3.18 + F3.21 → §3.4（级联影响分析）
+- F3.19-F3.20 → §3.5（仿真结果）
+- §3.3 标记 ⚠️待补充（LS/MMSE/KF 公式缺失）
+- BER 公式 (F3.4-F3.17) 归档至"旧方向"区域
+
+Ch4 重构:
+- §4.3: "湍流自适应频偏估计算法" → "频偏估计算法"
+- §4.4: "湍流自适应载波相位恢复算法" → "载波相位恢复算法"
+- §4.5: "仿真参数" → "仿真结果与分析"
+
+辅助更新:
+- 跨章依赖图更新为准确版本
+- formulas-index.md Ch3/Ch4 标题同步
+
+#### 任务1: 决策表加公式名+图表映射
+
+4 张决策表（paragraph.md 附录B）各添加:
+- **公式名映射**脚注: 每节对应的公式名称列表（用名称不用编号）
+- **图表映射**脚注（Ch3/Ch4/Ch5）: 来自 figure-table-plan.md 的逐节图表编号
+
+#### 已知残留
+
+- Ch3 §3.3 缺 LS/MMSE/KF 公式（需从参考文献或仿真代码提取）
+- Ch5 决策表子节仍为旧 KF 模块（未改为 FOE/DPLL）
