@@ -14,7 +14,7 @@
   - 各节完成度：§3.1概述✅ §3.2系统模型(充实)✅ §3.3信道估计+级联(核心贡献)✅ §3.4载波同步(充实)✅ §3.5 FPGA(骨架)✅ §3.6可行性✅
 - PROMPT-005 → 文献清单更新+bib同步 → 产出: material-chapter-literature.md 扩充 + references.bib 同步（✅ 已完成）
 - PROMPT-006 → 写前提取与规划 → 产出: formula-inventory / writing-patterns / writing-phrases / figure-table-plan（Task 0 ✅ 已完成，其余待执行）
-- PROMPT-007 → 全链路一致性验证 → 产出: verification-report.md（找错，不修改）
+- PROMPT-007 → 仿真正确性验证 → 产出: verification-report.md（先建理论预期→跑仿真对照→偏离调查→文档一致性→汇总。~50-100 agents，5 phases，每15个压缩。TL-20驱动）
 
 ## 不变量
 
