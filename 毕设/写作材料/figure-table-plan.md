@@ -363,7 +363,7 @@ fig_kf_stress_A1A2A3.png ~ fig_kf_stress_D3D4D5.png（8组对照实验）
 | plot_ch2_gg_pdf.py | 图2-3(GG曲线) | P0 | 简单，~20行 |
 | plot_ch2_link_budget.py | 图2-6(SNR vs 仰角) | P1 | 参数已有 |
 | plot_ch4_doppler.py | 图4-1(多普勒曲线) | P1 | 物理模型简单 |
-| plot_ch4_failure_rate.py | 图4-11(Nw参数敏感性) | P1 | 从现有100种子数据提取，对比Nw=64 vs Nw=256 |
+| plot_ch4_failure_rate.py | 图4-11(Nw参数敏感性) | P1 | 从现有10种子数据提取，对比Nw=64 vs Nw=256 |
 | plot_ch5_fixed_point.py | 图5-5(定点化BER) | P1 | 依赖FPGA开发 |
 
 ### 需要手工绘制的图
