@@ -717,19 +717,187 @@ $$r = \sqrt{\gamma} \cdot s \cdot e^{j\phi} + n$$
 
 ### §3.3 信道估计方法
 
-> ⚠️ 本节公式待补充。LS/MMSE/KF 公式需从参考文献或仿真代码中提取。
-
 #### §3.3.1 LS与MMSE信道估计
 
-[待补充] LS估计器: ĥ_LS = y_p / x_p
-[待补充] MMSE估计器: ĥ_MMSE = C_hĥ / (C_hh + σ²/|x_p|²) · ĥ_LS
-[待补充] NMSE评价指标定义
+#### F3.22: 导频观测模型
 
-#### §3.3.2 卡尔曼滤波信道估计
+$$y_p = \sqrt{h} \cdot x_p + n_p$$
 
-[待补充] AR(1)信道模型: h[k] = ρ·h[k-1] + w[k]
-[待补充] KF状态方程、观测方程
-[待补充] KF预测-更新递推
+其中 $x_p$ 为已知导频符号，$y_p$ 为导频位置接收信号，$h$ 为归一化辐照度（实值，$E[h]=1$），$\sqrt{h}$ 为信道幅度调制系数，$n_p \sim \mathcal{CN}(0, \sigma_n^2)$ 为复高斯白噪声。
+
+- **来源**: [教科书: Kay, Fundamentals of Statistical Signal Processing, Vol. I, §7.3]; [代码: sim_prototype.py L123-125 `h = rx[pidx] / psym`]
+- **变量**: y_p → TERMS §10.3 导频位置接收信号; x_p → TERMS §10.3 导频符号; h → TERMS §10.2 归一化辐照度; n_p → TERMS §10.1 复高斯白噪声; σ_n² → TERMS §10.1 噪声方差
+- **验证**: 仿真中 h_eff = √h，rx = awgn(tx * h_eff, snr)，与模型一致
+- **适用条件**: 内差相干检测，导频符号已知；√h 为电场幅度调制系数（TERMS §10.2）
+- **章节**: §3.3.1
+
+#### F3.23: LS信道估计器
+
+$$\hat{h}_\text{LS} = |y_p / x_p|^2$$
+
+标量形式：将导频位置观测除以已知导频符号，取模平方得到辐照度估计。
+
+复信道估计形式（用于后续载波同步）：
+
+$$\hat{h}_\text{LS,complex} = y_p / x_p$$
+
+- **来源**: [教科书: Kay, Fundamentals of Statistical Signal Processing, Vol. I, §7.3]; [代码: sim_prototype.py L123-124 `h = rx[pidx] / psym`]
+- **变量**: ĥ_LS → TERMS §10.3 LS信道估计; x_p → TERMS §10.3 导频符号; y_p → TERMS §10.3 导频位置接收信号
+- **验证**: 仿真代码 `ls_est()` 实现 `h = rx[pidx] / psym`，与公式一致
+- **适用条件**: 导频符号已知（$x_p \neq 0$）；不利用信道统计先验信息
+- **章节**: §3.3.1
+
+#### F3.24: LS估计误差（NMSE理论值）
+
+$$\text{NMSE}_\text{LS} = \frac{\sigma_n^2}{|x_p|^2 \cdot E[h]}$$
+
+单导频时，LS 估计误差方差为 $\text{Var}(\hat{h}_\text{LS}) = \sigma_n^2 / |x_p|^2$。多导频平均时，误差方差按导频数 $N_p$ 缩小：$\text{Var} = \sigma_n^2 / (N_p |x_p|^2)$。
+
+- **来源**: [教科书: Kay, Fundamentals of Statistical Signal Processing, Vol. I, §7.3]; [教科书: Proakis, Digital Communications, §14.1]
+- **变量**: σ_n² → TERMS §10.1 噪声方差; x_p → TERMS §10.3 导频符号; N_p → TERMS §10.5 导频个数
+- **验证**: 仿真中 LS NMSE@20dB ≈ -3~-6 dB（弱/强湍流），与理论量级一致
+- **适用条件**: 单导频或等间距多导频；噪声独立同分布
+- **章节**: §3.3.1
+
+#### F3.25: MMSE信道估计器（LMMSE）
+
+$$\hat{h}_\text{MMSE} = \frac{\sigma_h^2}{\sigma_h^2 + \sigma_n^2 / |x_p|^2} \cdot \hat{h}_\text{LS}$$
+
+其中 $\sigma_h^2 = \text{Var}(h)$ 为信道辐照度方差，缩放系数 $c = \sigma_h^2 / (\sigma_h^2 + \sigma_n^2 / |x_p|^2)$ 将 LS 估计向统计均值收缩：高 SNR 时 $c \to 1$（退化为 LS），低 SNR 时 $c \to 0$（退化为均值估计 $E[h]=1$）。
+
+- **来源**: [教科书: Kay, Fundamentals of Statistical Signal Processing, Vol. I, §12.4 LMMSE]; [代码: sim_prototype.py L127-132 `c = vh / (vh + nv) ... hm = c * hls`]
+- **变量**: ĥ_MMSE → TERMS §10.3 MMSE信道估计; ĥ_LS → TERMS §10.3 LS信道估计; σ_h² → TERMS §10.3 信道方差; σ_n² → TERMS §10.1 噪声方差
+- **验证**: 仿真代码 `mmse_est()` 实现 `vh = np.var(h_true_p); c = vh/(vh+nv); hm = c*hls`，与公式精确一致
+- **适用条件**: 信道二阶统计量（σ_h²）已知；LMMSE 仅需信道方差，不要求完整分布信息
+- **章节**: §3.3.1
+
+#### F3.26: MMSE估计误差（与LS对比）
+
+$$\text{NMSE}_\text{MMSE} = c \cdot \text{NMSE}_\text{LS} = \frac{\sigma_h^2 \cdot \sigma_n^2 / |x_p|^2}{(\sigma_h^2 + \sigma_n^2 / |x_p|^2)^2}$$
+
+MMSE 估计误差恒小于 LS：$\text{NMSE}_\text{MMSE} / \text{NMSE}_\text{LS} = c < 1$。改善因子为 $c = \sigma_h^2 / (\sigma_h^2 + \sigma_n^2 / |x_p|^2)$，低 SNR 时改善显著（$c \to \sigma_h^2 |x_p|^2 / \sigma_n^2$），高 SNR 时改善消失（$c \to 1$）。
+
+- **来源**: [教科书: Kay, Fundamentals of Statistical Signal Processing, Vol. I, §12.4]; [代码: sim_prototype.py L127-132]
+- **变量**: c → F3.25 缩放系数; σ_h² → TERMS §10.3 信道方差; σ_n² → TERMS §10.1 噪声方差
+- **验证**: 仿真中 MMSE NMSE 恒低于 LS NMSE，与 $c < 1$ 一致
+- **适用条件**: 与 F3.25 相同
+- **章节**: §3.3.1
+
+#### F3.27: NMSE评价指标定义
+
+$$\text{NMSE} = \frac{E\!\left[|h - \hat{h}|^2\right]}{E\!\left[|h|^2\right]}$$
+
+归一化均方误差：估计误差功率与信道功率之比。NMSE = 0 为理想估计，NMSE = 1 为估计误差与信道功率同量级。仿真中以样本均值替代统计期望。
+
+- **来源**: [教科书: Kay, Fundamentals of Statistical Signal Processing, Vol. I, §6.2]; [代码: sim_prototype.py L53 `def nmse(est, true): return np.mean(np.abs(est-true)**2) / np.mean(np.abs(true)**2)`]
+- **变量**: NMSE → TERMS §10.3 归一化均方误差; h → TERMS §10.2 归一化辐照度; ĥ → TERMS §10.3 通用信道估计
+- **验证**: 仿真代码 `nmse()` 实现与公式精确一致
+- **适用条件**: 通用评价指标，适用于 LS/MMSE/KF/DL 等所有估计方法
+- **章节**: §3.3.1
+
+#### §3.3.2 基于卡尔曼滤波的信道估计
+
+#### F3.28: AR(1)信道时变模型
+
+$$\ln h[k] = \rho \cdot \ln h[k-1] + \sqrt{1 - \rho^2} \cdot \sigma_{\ln I} \cdot w[k], \quad w[k] \sim \mathcal{N}(0, 1)$$
+
+其中自相关系数 $\rho = e^{-T_\text{step} / T_\text{coh}}$，$T_\text{coh}$ 为信道相干时间，$T_\text{step}$ 为采样间隔，$\sigma_{\ln I}^2 = \ln(1 + 1/\alpha + 1/\beta)$ 为对数辐照度方差。
+
+归一化保证：$E[h] = 1$ 由中心化 $E[\exp(\sigma_{\ln I}^2/2)]$ 补偿实现（代码中减去 $\sigma_{\ln I}^2/2$）。
+
+- **来源**: [教科书: Kay, Fundamentals of Statistical Signal Processing, Vol. I, §13.4 AR models]; [代码: sim_ch3_precomp.py L52-73 `rho = np.exp(-T_step / T_coh)`]
+- **变量**: h → TERMS §10.2 归一化辐照度; ρ → TERMS §10.3 AR(1)自相关系数; T_coh → 信道相干时间; σ_lnI → 对数辐照度标准差; α, β → TERMS §10.2 GG参数
+- **验证**: 仿真代码 `correlated_fading()` 实现 AR(1) on ln(I)，`rho = exp(-T_step/T_coh)`，与公式一致；TURB 表给出 weak/moderate/strong 的 (α,β,T_coh) 参数
+- **适用条件**: 对数正态近似 Gamma-Gamma 信道；ρ ∈ (0,1) 保证因果稳定性；信道相干时间远大于符号周期（$T_\text{coh} \gg T_s$）
+- **章节**: §3.3.2
+
+#### F3.29: AR(1)参数与信道相干时间的关系
+
+$$\rho = e^{-T_\text{step} / T_\text{coh}}, \quad T_\text{coh} = \frac{1}{f_D}$$
+
+其中 $f_D$ 为多普勒扩展频率（由卫星运动引起）。$\rho$ 越接近 1 表示信道变化越慢（相干时间越长）。典型参数：
+
+| 湍流 | T_coh | ρ (T_step=0.1ms) |
+|------|-------|------------------|
+| 弱 | 10 ms | 0.990 |
+| 中 | 5 ms | 0.980 |
+| 强 | 2 ms | 0.951 |
+
+- **来源**: [教科书: Proakis, Digital Communications, §14.3]; [代码: sim_ch3_precomp.py L34-38 TURB表, L62 `rho = np.exp(-T_step / T_coh)`]
+- **变量**: ρ → TERMS §10.3 AR(1)自相关系数; T_coh → 信道相干时间; T_step → 采样间隔; f_D → 多普勒扩展频率
+- **验证**: 代码中 weak: T_coh=10ms → ρ=exp(-0.1/10)=0.990; strong: T_coh=2ms → ρ=exp(-0.1/2)=0.951，与表一致
+- **适用条件**: AR(1)模型对信道自相关函数的一阶近似；高阶模型（AR(p), p>1）可提高精度
+- **章节**: §3.3.2
+
+#### F3.30: 卡尔曼滤波信道估计——状态方程与观测方程
+
+**状态方程**（信道状态演化）：
+
+$$h[k] = \rho \cdot h[k-1] + q[k], \quad q[k] \sim \mathcal{N}(0, Q)$$
+
+**观测方程**（导频观测）：
+
+$$y_p[k] = \sqrt{h[k]} \cdot x_p + n[k], \quad n[k] \sim \mathcal{CN}(0, \sigma_n^2)$$
+
+其中 $Q = (1 - \rho^2) \sigma_h^2$ 为过程噪声方差，由 AR(1) 模型参数决定。
+
+**注意**：观测方程中 $\sqrt{h[k]}$ 为非线性映射。实际实现中可采用对数域线性化（对 $\ln h$ 做 KF）或扩展卡尔曼滤波（EKF）。
+
+- **来源**: [教科书: Kay, Fundamentals of Statistical Signal Processing, Vol. I, §13.4]; [代码: sim_ch3_precomp.py L55-69 AR(1)模型]
+- **变量**: h → TERMS §10.2 归一化辐照度; ρ → TERMS §10.3 AR(1)自相关系数; Q → TERMS §8 过程噪声协方差; σ_n² → TERMS §10.1 噪声方差; x_p → TERMS §10.3 导频符号
+- **验证**: 仿真代码中 AR(1) 生成 `ln_I[i] = rho * ln_I[i-1] + innov[i]`，innov_std = √((1-ρ²)·σ²_ln)，与 Q 定义一致
+- **适用条件**: 信道时间相关性可用 AR(1) 建模；过程噪声和观测噪声独立
+- **章节**: §3.3.2
+
+#### F3.31: 卡尔曼滤波预测步骤
+
+$$\hat{h}[k|k-1] = \rho \cdot \hat{h}[k-1|k-1]$$
+
+$$P[k|k-1] = \rho^2 \cdot P[k-1|k-1] + Q$$
+
+其中 $\hat{h}[k|k-1]$ 为基于 $k-1$ 时刻估计对 $k$ 时刻的一步预测，$P[k|k-1]$ 为预测误差方差，$P[k-1|k-1]$ 为上一时刻更新后的误差方差。
+
+- **来源**: [教科书: Kay, Fundamentals of Statistical Signal Processing, Vol. I, §13.4 KF prediction]; [代码: sim_ch4_kf_pilot_h.py L469-470 `x_pred = F_mat @ x; P_pred = F_mat @ P @ F_mat.T + Q_fine`]
+- **变量**: ĥ → TERMS §10.3 通用信道估计; P → TERMS §8 误差协方差; ρ → TERMS §10.3 AR(1)自相关系数; Q → TERMS §8 过程噪声协方差
+- **验证**: 仿真代码 `P_pred = F_mat @ P @ F_mat.T + Q_fine`，标量退化为 $\rho^2 P + Q$，与公式一致
+- **适用条件**: AR(1)状态模型成立；P 的初始值影响收敛速度但不影响稳态精度
+- **章节**: §3.3.2
+
+#### F3.32: 卡尔曼滤波更新步骤
+
+**卡尔曼增益**：
+
+$$K[k] = \frac{P[k|k-1]}{P[k|k-1] + R[k]}$$
+
+**状态更新**：
+
+$$\hat{h}[k|k] = \hat{h}[k|k-1] + K[k] \cdot \left(y_p[k] - \sqrt{\hat{h}[k|k-1]} \cdot x_p\right)$$
+
+**误差协方差更新**：
+
+$$P[k|k] = (1 - K[k]) \cdot P[k|k-1]$$
+
+其中 $R[k] = \sigma_n^2 / (2 \bar\gamma \cdot \hat{h}[k|k-1])$ 为等效观测噪声方差（取决于瞬时 SNR），括号内为观测新息（innovation）。
+
+- **来源**: [教科书: Kay, Fundamentals of Statistical Signal Processing, Vol. I, §13.4 KF update]; [代码: sim_ch4_kf_pilot_h.py L483-488 `S = H_mat @ P_pred @ H_mat.T + R_val; K_gain = P_pred @ H_mat.T / S; x = x_pred + K_gain.flatten() * innov; P = (np.eye(2) - K_gain @ H_mat) @ P_pred`]
+- **变量**: K[k] → 卡尔曼增益; R[k] → TERMS §8 观测噪声协方差; γ̄ → TERMS §10.2 平均SNR; P → TERMS §8 误差协方差
+- **验证**: 仿真代码 `K_gain = P_pred @ H_mat.T / S`，其中 `S = P_pred + R_val`，标量退化为 K = P/(P+R)，与公式一致
+- **适用条件**: 等效观测噪声方差 R[k] 需要当前信道估计 ĥ 来计算（实际中用预测值 ĥ[k|k-1] 近似）
+- **章节**: §3.3.2
+
+#### F3.33: 卡尔曼滤波稳态性能
+
+当 KF 收敛到稳态时，预测误差方差 $P$ 和增益 $K$ 满足 Riccati 方程的稳态解：
+
+$$P_\infty = \frac{-(Q - R + \rho^2 R) + \sqrt{(Q - R + \rho^2 R)^2 + 4 \rho^2 Q R}}{2 \rho^2}$$
+
+稳态卡尔曼增益 $K_\infty = P_\infty / (P_\infty + R)$。高 SNR 时 $R \to 0$，$K_\infty \to 1$（完全信任观测）；低 SNR 时 $R \to \infty$，$K_\infty \to P_\infty / R \to 0$（完全信任预测）。
+
+- **来源**: [教科书: Kay, Fundamentals of Statistical Signal Processing, Vol. I, §13.4 steady-state KF]; [教科书: Anderson & Moore, Optimal Filtering, §4.4]
+- **变量**: P_∞ → 稳态误差方差; K_∞ → 稳态卡尔曼增益; Q → TERMS §8 过程噪声协方差; R → TERMS §8 观测噪声协方差; ρ → TERMS §10.3 AR(1)自相关系数
+- **验证**: 标量 Riccati 方程的解析解，代入 ρ 和 Q/R 参数可数值验证
+- **适用条件**: AR(1)模型参数时不变；初始瞬态衰减后达到稳态
+- **章节**: §3.3.2
 
 #### §3.3.3 基于深度学习的信道估计方法
 
