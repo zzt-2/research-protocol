@@ -50,7 +50,7 @@ def reverse_engineer_coefficients():
     N_fixed = 1024
     M_fixed = 64
     wn_fixed = 8e6  # omega_n fixed
-    B_L_fixed = wn_fixed * 1.06  # ~8.48 MHz
+    B_L_fixed = wn_fixed * 0.53  # ~8.48 MHz
 
     print(f"\nFixed baseline: N={N_fixed}, M={M_fixed}, omega_n={wn_fixed/1e6:.1f} MHz, B_L={B_L_fixed/1e6:.2f} MHz")
     print(f"gamma_bar = {gamma_bar}")
@@ -140,7 +140,7 @@ def adaptive_params_tuned(h_est, gamma_bar_db, C_foe, K_M, B0):
 
     # DPLL
     B_L = np.clip(B0 * h_safe, 0.5e6, 20e6)
-    omega_n = B_L / 1.06
+    omega_n = B_L / 0.53  # omega_n = B_L / 0.53, since B_L = 0.53*omega_n when zeta=sqrt(2)/2
 
     return N_fft, M_vv, omega_n
 
@@ -222,7 +222,7 @@ def sweep_coefficients():
     gamma_bar = 10 ** (gamma_bar_db / 10)
     B0_original = np.sqrt(np.pi * LASER_LW * gamma_bar / T_S)
     # 固定B0到几个合理值: 原始, /2, 匹配fixed@h=0.5, 匹配fixed@h=0.3
-    B_L_fixed = FIXED_CFG['omega_n'] * 1.06
+    B_L_fixed = FIXED_CFG['omega_n'] * 0.53
     B0_values = {
         'original': B0_original,
         'match_h0.5': B_L_fixed / 0.5,
@@ -272,7 +272,7 @@ def sweep_coefficients():
                 # 算典型参数 (h=0.5)
                 h_typ = 0.5
                 N_typ, M_typ, wn_typ = adaptive_params_tuned(h_typ, gamma_bar_db, C_foe, K_M, B0)
-                BL_typ = wn_typ * 1.06 / 1e6
+                BL_typ = wn_typ * 0.53 / 1e6
 
                 results.append({
                     'C_foe': C_foe, 'foe_ratio': foe_r,
@@ -554,8 +554,8 @@ def per_component_analysis():
         ('Original (80, 0.94, orig B0)', 80, orig_KM, B0_orig, True),
         ('FOE x320 only (VV/DPLL orig)', 25600, orig_KM, B0_orig, True),
         ('FOE x320 + VV x50', 25600, orig_KM * 50, B0_orig, True),
-        ('FOE x320 + B0 match h0.5', 25600, orig_KM, FIXED_CFG['omega_n'] * 1.06 / 0.5, True),
-        ('FOE x320 + VV x50 + B0 h0.5', 25600, orig_KM * 50, FIXED_CFG['omega_n'] * 1.06 / 0.5, True),
+        ('FOE x320 + B0 match h0.5', 25600, orig_KM, FIXED_CFG['omega_n'] * 0.53 / 0.5, True),
+        ('FOE x320 + VV x50 + B0 h0.5', 25600, orig_KM * 50, FIXED_CFG['omega_n'] * 0.53 / 0.5, True),
         ('FOE x100', 8000, orig_KM, B0_orig, True),
         ('FOE x100 + VV x20', 8000, orig_KM * 20, B0_orig, True),
         ('FOE x100 + B0/4', 8000, orig_KM, B0_orig / 4, True),
@@ -607,7 +607,7 @@ if __name__ == '__main__':
             (25600, orig_KM * 50, B0_orig / 4, "extreme1"),
             (25600, orig_KM * 100, B0_orig / 8, "extreme2"),
             (40000, orig_KM * 100, B0_orig / 4, "extreme3"),
-            (40000, orig_KM * 50, FIXED_CFG['omega_n'] * 1.06 / 0.3, "extreme4"),
+            (40000, orig_KM * 50, FIXED_CFG['omega_n'] * 0.53 / 0.3, "extreme4"),
         ]
 
         Ns, n_trials = 5000, 20

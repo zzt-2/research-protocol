@@ -411,7 +411,7 @@ def exp3_cpr_params(Ns=10000, n_trials=30, gamma_bar_db=20):
 
     # 3b: DPLL 带宽扫描
     bl_mhz = [0.5, 1, 2, 4, 8, 16, 32]
-    wn_vals = [bl * 1e6 * 1.06 for bl in bl_mhz]  # B_L → omega_n
+    wn_vals = [bl * 1e6 / 0.53 for bl in bl_mhz]  # B_L → omega_n (B_L = 0.53*omega_n at zeta=sqrt(2)/2)
     dpll_results = {}
     for cond in conditions:
         print(f"\n  DPLL sweep, {cond}")
@@ -422,7 +422,7 @@ def exp3_cpr_params(Ns=10000, n_trials=30, gamma_bar_db=20):
                 rx, bits = generate_signal(Ns, cond, gamma_bar_db, seed=3000+t)
                 bers.append(run_method('FOE+DPLL', rx, bits, omega_n=wn))
             dpll_results[cond].append(np.mean(bers))
-            print(f"    B_L={wn/1.06/1e6:5.1f}MHz: BER={dpll_results[cond][-1]:.4e}")
+            print(f"    B_L={wn*0.53/1e6:5.1f}MHz: BER={dpll_results[cond][-1]:.4e}")
 
     # 3c: BPS 窗口扫描
     nw_bps_vals = [11, 21, 41, 61, 81, 121]
@@ -460,8 +460,8 @@ def exp3_cpr_params(Ns=10000, n_trials=30, gamma_bar_db=20):
         ts = TURB_STYLE[cond]
         ax.semilogy(bl_mhz, dpll_results[cond], color=ts['color'], marker='s',
                    label=ts['label'], ms=5, lw=1.2)
-    ax.axvline(DEF_WN/1.06/1e6, color='gray', ls=':', alpha=0.5,
-              label=f'Default ({DEF_WN/1.06/1e6:.1f}MHz)')
+    ax.axvline(DEF_WN*0.53/1e6, color='gray', ls=':', alpha=0.5,
+              label=f'Default ({DEF_WN*0.53/1e6:.1f}MHz)')
     ax.set_xlabel('DPLL Bandwidth $B_L$ (MHz)')
     ax.set_ylabel('BER')
     ax.set_title('FOE+DPLL: BER vs Loop Bandwidth')

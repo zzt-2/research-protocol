@@ -206,7 +206,7 @@ def vv_cpr(rx, Nw=64):
         raised[mask] = raised[mask] / amp[mask] * clip_val
     ker = np.ones(Nw) / Nw
     avg = np.convolve(raised, ker, mode='same')
-    pe = np.unwrap(np.angle(avg) * M) / M
+    pe = np.unwrap(np.angle(avg)) / M
     return rx * np.exp(-1j * pe), pe
 
 # ═══════════════════════════════════════════════════════════════
@@ -233,14 +233,14 @@ def adaptive_params(h_est, gamma_bar_db=20, f_dot=DOPPLER_HIGH):
     # VV: M_opt = K_M * gamma^{-1/5} * (delta_f_res * T_s)^{-2/5}
     K_M = (3/4)**0.2
     df_norm = F_RESIDUAL * T_S  # 残余频偏归一化
-    M_vv = int(np.clip(K_M * gamma**(-0.2) * df_norm**(-0.4), 16, 256))
-    M_vv = max(8, M_vv | 1) - 1  # 确保奇数，最小9
+    M_vv = int(np.clip(K_M * gamma**(-0.2) * df_norm**(-0.4), 9, 255))
+    M_vv = max(9, M_vv | 1)  # 确保奇数，最小9
 
     # DPLL: B_L_opt = B0 * h  (设计选择: 线性缩放，非Wiener最优)
     # Wiener最优为 B_L ∝ h^{1/2}，但线性缩放在工程上更稳定
     B0 = np.sqrt(np.pi * LASER_LW * gamma_bar / T_S)
     B_L = np.clip(B0 * h_safe, 0.5e6, 20e6)  # 更保守的上限：20MHz
-    omega_n = B_L / 1.06
+    omega_n = B_L / 0.53  # omega_n = B_L / 0.53, since B_L = 0.53*omega_n when zeta=sqrt(2)/2
 
     return N_fft, M_vv, omega_n
 

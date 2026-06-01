@@ -74,7 +74,7 @@
 
 | 文件名 | 内容 | 可用性 |
 |--------|------|--------|
-| fig_ch4_ber_vs_snr.png | VV/BPS/DPLL BER vs SNR（三档湍流）| ★ 核心，直接用 |
+| fig_ch4_ber_vs_snr.png | VV/BPS/DPLL BER vs SNR（三档湍流，VV 使用 formula A 即 4θ unwrap）| ★ 核心，直接用 |
 | fig_ch4_foe_window.png | FOE窗口长度对比（三档湍流） | ✅ 直接用 |
 | fig_ch4_cpr_params.png | CPR参数（VV窗口/DPLL带宽） | ✅ 直接用 |
 | fig_ch4_turbulence_summary.png | 湍流方法适用性汇总 | ✅ 直接用 |
@@ -149,7 +149,7 @@ fig_kf_stress_A1A2A3.png ~ fig_kf_stress_D3D4D5.png（8组对照实验）
 | 图3-7 | BER floor vs 相位误差标准差 | σ_φ从0.01到0.5的BER floor变化 | 已有(fig_ch3_floor_vs_sigma) | — | P1 |
 | 图3-8 | 中断概率 vs SNR阈值 | 三档湍流下中断概率曲线 | 已有(fig_ch3_outage) | — | P1 |
 | 图3-9 | SNR惩罚热力图 | 横轴:湍流强度, 纵轴:相位误差, 颜色:SNR惩罚(dB) | 已有(fig_ch3_snr_penalty_heatmap) | — | P0 |
-| 图3-10 | 级联灵敏度：估计误差对BER的影响 | 横轴:NMSE, 纵轴:BER退化(dB)，标注鲁棒区间 | 已有(fig_ch3_estimation_robustness) | — | P0 |
+| 图3-10 | 级联灵敏度：估计误差对BER的影响 | 横轴:NMSE, 纵轴:BER退化(dB)，标注鲁棒区间；**注：NMSE 对 QPSK BER 无影响（仅 QPSK）** | 已有(fig_ch3_estimation_robustness) | — | P0 |
 | 图3-11 | 各估计方法NMSE vs SNR | LS/MMSE/KF/DL在不同SNR下的NMSE | 待仿真(补充信道估计算法仿真) | — | P1 |
 | 图3-12 | 设计准则可视化 | 分湍流的设计参数建议 | 已有(fig_ch3_design_tables)→转表 | — | P1 |
 
@@ -183,11 +183,11 @@ fig_kf_stress_A1A2A3.png ~ fig_kf_stress_D3D4D5.png（8组对照实验）
 | 图4-4 | VV载波相位恢复原理框图 | M次幂→平滑→相角提取→模糊消除 | 手绘 | 董凡图2-11, 闫佳欣图2-5 | P1 |
 | 图4-5 | BPS算法原理框图 | 测试相位→度量计算→最优相位选择 | 手绘 | 董凡图2-12(BCPE) | P1 |
 | 图4-6 | 二阶DPLL框图 | 鉴相器→环路滤波器→NCO，反馈结构 | 手绘 | 丁爽图3-1 | P1 |
-| 图4-7 | VV/BPS/DPLL BER vs SNR | 三档湍流下三种方法BER对比 | 已有(fig_ch4_ber_vs_snr) ★核心 | 董凡图4-3, 丁爽图3-32 | P0 |
+| 图4-7 | VV/BPS/DPLL BER vs SNR | 三档湍流下三种方法BER对比（VV 采用 formula A/4θ unwrap） | 已有(fig_ch4_ber_vs_snr) ★核心 | 董凡图4-3, 丁爽图3-32 | P0 |
 | 图4-8 | FOE窗口长度对BER的影响 | 不同N_FOE下三种方法BER，三档湍流 | 已有(fig_ch4_foe_window) | 董凡图4-2 | P0 |
 | 图4-9 | VV平滑窗口/DPLL带宽参数优化 | M_vv和ω_n的最优值搜索 | 已有(fig_ch4_cpr_params) | 董凡图4-6, 丁爽 | P0 |
 | 图4-10 | 湍流方法适用性汇总图 | 弱/中/强湍流下各方法的推荐度/适用区间 | 已有(fig_ch4_turbulence_summary) | — | P1 |
-| 图4-11 | 相位展开失败率统计 | 100种子下VV/BPS的失败率 vs 湍流强度 | 新仿真(从现有数据提取) | — | P1 |
+| 图4-11 | VV/BPS 参数敏感性：Nw 对失败率的影响 | Nw=64 vs Nw=256 下 VV/BPS 失败率对比，说明中湍流失败属 Nw=64 参数问题非固有缺陷 | 新仿真(从现有数据提取) | — | P1 |
 | 图4-12 | DPLL跟踪轨迹示例 | 强湍流下DPLL跟踪相位 vs 真实相位 | 已有(fig_kf_tracking_*.pdf选一) | — | P2 |
 
 #### 表
@@ -200,7 +200,9 @@ fig_kf_stress_A1A2A3.png ~ fig_kf_stress_D3D4D5.png（8组对照实验）
 
 **Ch4 合计：7-10图 + 2-3表（P0: 4图+2表）**
 
-> **核心图**: 图4-7(BER对比)是论文最重要的结果图。图4-8/4-9是参数优化支撑。图4-11(失败率)是核心发现的可视化。
+> **核心图**: 图4-7(BER对比)是论文最重要的结果图。图4-8/4-9是参数优化支撑。图4-11(Nw参数敏感性)是核心发现的可视化。
+>
+> **已验证结论备忘**：VV 正确公式为 formula A（4θ unwrap）；级联增益修正值 +0.49~1.09dB（Nw=256 消除中湍流失败）；NMSE 对 QPSK BER 无影响（仅 QPSK）；DPLL 强湍流最优（BER 1.88% vs VV/BPS 3.83%）；KF 优势仅中湍流；BPS 与 VV 同量级无优势。
 
 ---
 
@@ -277,7 +279,7 @@ fig_kf_stress_A1A2A3.png ~ fig_kf_stress_D3D4D5.png（8组对照实验）
 | 18 | **P1** | 图3-5 | 不同湍流强度BER曲线 | Ch3 | 性能曲线 | 已有仿真 | — |
 | 19 | **P1** | 图3-8 | 中断概率曲线 | Ch3 | 性能曲线 | 已有仿真 | — |
 | 20 | **P1** | 图4-1 | LEO多普勒频偏曲线 | Ch4 | 性能曲线 | 新仿真 | — |
-| 21 | **P1** | 图4-11 | 相位展开失败率统计（100种子） | Ch4 | 性能曲线 | 新仿真 | — |
+| 21 | **P1** | 图4-11 | VV/BPS 参数敏感性：Nw 对失败率的影响 | Ch4 | 性能曲线 | 新仿真 | — |
 | 22 | **P1** | 图4-10 | 湍流方法适用性汇总图 | Ch4 | 性能曲线 | 已有仿真 | — |
 | 23 | **P1** | 图5-1 | 接收端DSP总体架构框图 | Ch5 | 系统框图 | 手绘 | 图3.1(框架图) |
 | 24 | **P1** | 表5-1 | FPGA器件资源预估表 | Ch5 | 参数表 | 整理 | 表2.4(参数) |
@@ -361,7 +363,7 @@ fig_kf_stress_A1A2A3.png ~ fig_kf_stress_D3D4D5.png（8组对照实验）
 | plot_ch2_gg_pdf.py | 图2-3(GG曲线) | P0 | 简单，~20行 |
 | plot_ch2_link_budget.py | 图2-6(SNR vs 仰角) | P1 | 参数已有 |
 | plot_ch4_doppler.py | 图4-1(多普勒曲线) | P1 | 物理模型简单 |
-| plot_ch4_failure_rate.py | 图4-11(失败率统计) | P1 | 从现有100种子数据提取 |
+| plot_ch4_failure_rate.py | 图4-11(Nw参数敏感性) | P1 | 从现有100种子数据提取，对比Nw=64 vs Nw=256 |
 | plot_ch5_fixed_point.py | 图5-5(定点化BER) | P1 | 依赖FPGA开发 |
 
 ### 需要手工绘制的图
@@ -435,7 +437,7 @@ fig_kf_stress_A1A2A3.png ~ fig_kf_stress_D3D4D5.png（8组对照实验）
 
 **新建仿真**：
 22. 新仿真 图4-1(多普勒曲线)
-23. 新仿真 图4-11(失败率统计)
+23. 新仿真 图4-11(Nw参数敏感性)
 
 **整理**：
 24. 整理 表5-1(FPGA器件资源预估)

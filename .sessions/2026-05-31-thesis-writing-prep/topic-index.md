@@ -14,7 +14,11 @@
   - 各节完成度：§3.1概述✅ §3.2系统模型(充实)✅ §3.3信道估计+级联(核心贡献)✅ §3.4载波同步(充实)✅ §3.5 FPGA(骨架)✅ §3.6可行性✅
 - PROMPT-005 → 文献清单更新+bib同步 → 产出: material-chapter-literature.md 扩充 + references.bib 同步（✅ 已完成）
 - PROMPT-006 → 写前提取与规划 → 产出: formula-inventory / writing-patterns / writing-phrases / figure-table-plan（Task 0 ✅ 已完成，其余待执行）
-- PROMPT-007 → 仿真正确性验证 → 产出: verification-report.md（先建理论预期→跑仿真对照→偏离调查→文档一致性→汇总。~50-100 agents，5 phases，每15个压缩。TL-20驱动）
+- PROMPT-007 → 仿真正确性验证 → **全部完成**（42 agents）。核心结论不变。产出: `毕设/写作材料/verification/verification-report.md` + SNR曲线PDF + BPS移植+10种子扫描
+  - Phase 1+2+复验+10种子稳定验证+3深度调查+BPS移植+SNR曲线
+  - 15 条已确认结论，BPS 行为与 VV 同量级（无优势）
+  - 文档同步完成：6个文件修改（thesis-framework/03-研究方案/section-outline/figure-table-plan/thesis-status/formulas-ch4-kf），验证 PASS
+  - 剩余缺口: Ch3 NMSE vs BER 曲线（建议补）、thesis-status 数字更新（✅已完成）
 
 ## 不变量
 

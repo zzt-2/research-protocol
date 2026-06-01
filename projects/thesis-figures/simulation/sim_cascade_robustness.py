@@ -145,7 +145,7 @@ def carrier_recovery(rx, h_est_scalar, snr_db, adaptive=True):
         gamma_bar = 10**(snr_db/10)
         B0 = np.sqrt(np.pi*LASER_LW*gamma_bar/T_S)
         h_safe = max(h_est_scalar, 0.01)
-        omega_n = np.clip(B0*h_safe, 0.5e6, 100e6) / 1.06
+        omega_n = np.clip(B0*h_safe, 0.5e6, 100e6) / 0.53
     else:
         omega_n = FIXED_CFG['omega_n']
     rx_p, _ = dpll_track(rx_c, omega_n, FIXED_CFG['zeta'])

@@ -141,7 +141,7 @@ def vv_cpr(rx, Nw=64):
         raised[mask] = raised[mask] / amp[mask] * 1e8
     ker = np.ones(Nw) / Nw
     avg = np.convolve(raised, ker, mode='same')
-    pe = np.unwrap(np.angle(avg) * M) / M
+    pe = np.unwrap(np.angle(avg)) / M
     return rx * np.exp(-1j * pe), pe
 
 def adaptive_params(h_est, gamma_bar_db=20, f_dot=DOPPLER_HIGH):
@@ -156,7 +156,7 @@ def adaptive_params(h_est, gamma_bar_db=20, f_dot=DOPPLER_HIGH):
     M_vv = max(8, M_vv | 1) - 1
     B0 = np.sqrt(np.pi * LASER_LW * gamma_bar / T_S)
     B_L = np.clip(B0 * h_safe, 0.5e6, 20e6)
-    omega_n = B_L / 1.06
+    omega_n = B_L / 0.53  # omega_n = B_L / 0.53, since B_L = 0.53*omega_n when zeta=sqrt(2)/2
     return N_fft, M_vv, omega_n
 
 def carrier_recovery_fixed(rx, cfg=FIXED_CFG):

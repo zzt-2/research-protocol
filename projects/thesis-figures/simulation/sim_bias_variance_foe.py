@@ -160,7 +160,7 @@ def vv_cpr(rx, Nw=64):
         raised[mask] = raised[mask] / amp[mask] * clip_val
     ker = np.ones(Nw) / Nw
     avg = np.convolve(raised, ker, mode='same')
-    pe = np.unwrap(np.angle(avg) * M) / M
+    pe = np.unwrap(np.angle(avg)) / M
     return rx * np.exp(-1j * pe), pe
 
 # ═══════════════════════════════════════════════════════════════

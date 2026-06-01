@@ -1,7 +1,7 @@
 # 学位论文 Master State
 
 > **每次 thesis 相关对话开始时必须读此文件**
-> 最后更新: 2026-06-01
+> 最后更新: 2026-06-01（PROMPT-007 文档同步完成后更新）
 
 ## 毕设目录结构
 
@@ -32,12 +32,16 @@
 ## 当前状态
 
 **正在进行的对话**:
-- 写作材料统一化对话（本对话）: Phase A→D 全部完成
+- 无（Task 0~E + PROMPT-007验证+文档同步 全部完成，等待开 Task F 写初稿）
 
 **最近的完成项**:
+- [x] PROMPT-006 Task E: section-outline.md（867行，Ch2-Ch5 各节详细写作大纲）
+- [x] PROMPT-006 Task A: formula-inventory.md（101条公式盘点+Ch4缺口分析）
+- [x] PROMPT-006 Task B: writing-patterns-paragraph.md（1448行段落模式）+ writing-patterns-sentence.md（1019行句式库）
+- [x] PROMPT-006 Task C: writing-phrases.md（写作用语库）
+- [x] PROMPT-006 Task D: figure-table-plan.md（27张开题图表+夏兆宇对标）
+- [x] PROMPT-006 Task 0: 丁爽/张思齐/吴志航转换+评估
 - [x] 写作材料统一化（5文件→2文件，Phase A/B/C/D 全完成）
-- [x] writing-patterns-paragraph.md（1448行）— 段落级+4附录
-- [x] writing-patterns-sentence.md（1019行）— 句级+速查表
 - [x] 8-agent 审查（2参数+6术语）→ TERMS.md 建立
 - [x] design-decisions.md（56条决策+14条否决方案）
 - [x] symbol-conventions.md
@@ -82,6 +86,7 @@
 | **句级句式（统一）** | `写作材料/writing-patterns-sentence.md` | ✅ 1019行 | Ch2-Ch5句式库189条+速查表 |
 | **写作用语库** | `写作材料/writing-phrases.md` | ✅ | 公式引入/衔接/结果描述 |
 | **图表规划** | `写作材料/figure-table-plan.md` | ✅ | 逐章图表+开题20+清单+夏兆宇对标 |
+| **各节写作大纲** | `写作材料/section-outline.md` | ✅ | Ch2-Ch5每节详细大纲（公式/图表/句式/衔接） |
 | S1.2写作参考 | `写作材料/writing-reference-s1.2.md` | ✅ | §1.2写作素材 |
 | 旧文件（5个） | `写作材料/archive/` | 归档 | B1/B2/B3原始提取文件 |
 
@@ -91,7 +96,7 @@
 |------|------|------|
 | §1.1 v3（最佳） | `写作材料/draft-s1.1-v3.md` | ✅ DeepSeek 92分 |
 | §1.2 v2 | `写作材料/draft-s1.2-v2.md` | ✅ 最新版 |
-| 开题报告研究方案 | `写作材料/开题报告/03-研究方案.md` | ❌ 待创建（PROMPT-004） |
+| 开题报告研究方案 | `开题报告/03-研究方案.md` | ✅ 骨架(12.2K字)，待按section-outline深化 |
 
 ### 文献类
 
@@ -109,7 +114,7 @@
 
 | 专题 | 路径 | 状态 | 说明 |
 |------|------|------|------|
-| thesis-writing-prep | `.sessions/2026-05-31-thesis-writing-prep/` | **active** | 4个提示词，写作规范准备 |
+| thesis-writing-prep | `.sessions/2026-05-31-thesis-writing-prep/` | **active** | Task 0~E全完成，待开Task F写初稿 |
 | thesis-direction-pivot | `.sessions/thesis-direction-pivot/` | active | 方向探索主专题 |
 | thesis-simulation-consolidation | `.sessions/thesis-simulation-consolidation/` | active | 仿真代码整合 |
 | thesis-final-review | `.sessions/thesis-final-review/` | active | 8-agent审查 |
@@ -124,15 +129,29 @@
 
 ## 仿真代码
 
-全部在 `projects/thesis-figures/simulation/` 下。
+### 主仿真库
+
+`projects/simulation/` 下（common.py + experiments/）。
 
 | 文件 | 用途 | 状态 |
 |------|------|------|
-| `sim_ch3_ber_closed_form.py` | BER闭合解验证 | ✅ |
-| `sim_ch3_strengthening.py` | 设计准则+鲁棒性 | ✅ |
-| `sim_cascade_robustness.py` | 级联灵敏度（6/6 PASS） | ✅ |
-| `sim_ch4_systematic_analysis.py` | VV/BPS/DPLL对比 | ✅ |
-| `sim_ch3_ber_bounds.py` | BER界分析 | ✅ |
+| `common.py` | 核心函数库（VV/BPS/DPLL/KF/Fixed + 信道生成） | ✅ 含BPS |
+| `experiments/multi_seed_sweep.py` | 多种子 SNR-BER 扫描（10种子×5方法×3湍流） | ✅ |
+| `experiments/plot_snr_curves.py` | SNR 曲线绘图（5方法含BPS） | ✅ |
+| `experiments/sim_nmse_vs_ber.py` | NMSE 灵敏度曲线（QPSK下无影响） | ✅ |
+
+### 探索与验证脚本
+
+`projects/thesis-figures/simulation/` 下（26个文件）。
+
+| 类别 | 关键文件 | 用途 |
+|------|---------|------|
+| Ch3 BER | `sim_ch3_ber_closed_form.py`, `sim_ch3_ber_bounds.py` | 闭合解+界分析 |
+| Ch3 设计 | `sim_ch3_strengthening.py`, `sim_cascade_robustness.py`, `sim_cascade_corrected.py` | 设计准则+级联 |
+| Ch4 系统分析 | `sim_ch4_systematic_analysis.py` | VV/BPS/DPLL/KF对比 |
+| Ch4 KF | `sim_ch4_kf_*.py`（5个） | KF各维度验证 |
+| KF 应力测试 | `sim_kf_stress_*.py`（8个） | A1-D5全维度 |
+| 其他 | `sim_bias_variance_foe.py`, `sim_direction_a.py`, `sim_tune_coefficients.py` | FOE/参数调优 |
 
 ---
 
@@ -142,13 +161,24 @@
 
 | # | 部分 | 状态 | 负责对话 |
 |---|------|------|---------|
-| 一 | 选题依据 | §1.1✅ §1.2进行中 | 写作对话 |
-| 二 | 研究内容 | 待写（短，类似摘要） | 写作对话 |
-| **三** | **研究方案** | **❌ 最大缺口** | PROMPT-004 |
-| 四 | 进度安排 | 待写（半页纸） | 写作对话 |
-| 五 | 预期成果 | 待写 | 写作对话 |
-| 六 | 创新之处 | framework有草稿 | 写作对话 |
-| 七 | 研究基础 | 待写 | 写作对话 |
+| 一 | 选题依据 | §1.1✅ §1.2 v2完成 | 待精修 |
+| 二 | 研究内容 | 待写（短，类似摘要） | Task F |
+| **三** | **研究方案** | **骨架✅(12.2K字) 待按section-outline深化** | Task F |
+| 四 | 进度安排 | 待写（半页纸） | Task F |
+| 五 | 预期成果 | 待写 | Task F |
+| 六 | 创新之处 | framework有草稿 | Task F |
+| 七 | 研究基础 | 待写 | Task F |
+
+### 写作前置材料就绪状态
+
+| 前置任务 | 产出 | 状态 |
+|---------|------|------|
+| Task 0: 论文转换 | 丁爽/张思齐/吴志航 markdown | ✅ |
+| Task A: 公式盘点 | formula-inventory.md | ✅ Ch4缺口已标注 |
+| Task B: 段落模式 | paragraph(1448行)+sentence(1019行) | ✅ |
+| Task C: 写作用语 | writing-phrases.md | ✅ |
+| Task D: 图表规划 | figure-table-plan.md（27张开题） | ✅ P0=15张 |
+| Task E: 各节大纲 | section-outline.md（867行） | ✅ Ch2-Ch5全覆盖 |
 
 ### 待验证项
 

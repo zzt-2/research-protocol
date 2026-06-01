@@ -60,6 +60,9 @@ FIXED_CFG_OPTIMAL = {
 
 GAMMA_BAR_DEFAULT = 100  # 20 dB
 
+DEF_B_BPS = 32
+DEF_NW_BPS = 61
+
 # ═══════════════════════════════════════════════════════════════
 # 信号原语
 # ═══════════════════════════════════════════════════════════════
@@ -168,6 +171,33 @@ def vv_cpr(rx, Nw=64):
     ker = np.ones(Nw) / Nw
     avg = np.convolve(raised, ker, mode='same')
     pe = np.unwrap(np.angle(avg)) / M
+    return rx * np.exp(-1j * pe), pe
+
+def bps_cpr(rx, B=DEF_B_BPS, Nw=DEF_NW_BPS):
+    """Blind Phase Search (Pfau 2009, JLT)
+
+    B 个测试相位，Nw 符号滑动窗口平均距离度量。
+    使用 M=4 相位模糊展开解决 QPSK 模糊。
+    """
+    N = len(rx)
+    phases = 2 * np.pi * np.arange(B) / B
+
+    # 向量化计算所有测试相位的距离度量
+    rotated = rx[np.newaxis, :] * np.exp(-1j * phases[:, np.newaxis])
+    dec = (np.sign(np.real(rotated)) + 1j * np.sign(np.imag(rotated))) / np.sqrt(2)
+    metrics = np.abs(rotated - dec)**2
+
+    # 滑动窗口平均
+    ker = np.ones(Nw) / Nw
+    for b in range(B):
+        metrics[b] = np.convolve(metrics[b], ker, mode='same')
+
+    best_b = np.argmin(metrics, axis=0)
+    pe_raw = phases[best_b]
+
+    # M=4 相位模糊展开：乘 4 → unwrap 2π 跳变 → 除 4
+    pe = np.unwrap(4 * pe_raw) / 4
+
     return rx * np.exp(-1j * pe), pe
 
 def carrier_recovery_fixed(rx, cfg=None):
@@ -566,6 +596,19 @@ def run_kf_pilot(shared, n_pilots=5, eq_mode='oracle', **kf_kwargs):
     return corrected, data_idx, data_bits, h_est
 
 
+def run_bps(shared, eq_mode='oracle'):
+    """BPS 载波恢复（FOE + BPS）"""
+    if eq_mode == 'oracle':
+        rx_eq = equalize_oracle(shared)
+    else:
+        rx_eq = equalize_hmed(shared)
+    fo_est = fft_foe(rx_eq)
+    k = np.arange(len(rx_eq))
+    rx_foc = rx_eq * np.exp(-1j * fo_est * k)
+    rx_cpr, _ = bps_cpr(rx_foc)
+    return rx_cpr
+
+
 # ═══════════════════════════════════════════════════════════════
 # 辅助
 # ═══════════════════════════════════════════════════════════════
@@ -605,5 +648,9 @@ def run_trial_shared(Ns, gamma_bar, turb_name, f_dot, seed,
     if 'kf_pilot' in schemes:
         corrected, data_idx, data_bits, _ = run_kf_pilot(shared, n_pilots, eq_mode)
         results['kf_pilot'] = ber_eval(data_bits, corrected[data_idx], mode=eval_mode)
+
+    if 'bps' in schemes:
+        rx_bps = run_bps(shared, eq_mode)
+        results['bps'] = ber_eval(shared['bits'], rx_bps, mode=eval_mode)
 
     return results

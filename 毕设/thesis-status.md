@@ -150,10 +150,14 @@ Ch5 FPGA → 硬件映射验证
 - 有大量文献支撑：VV/BPS 在光纤中成熟，搬到湍流场景做对比；DPLL 在 LEO 星地相干光通信中可行（Paillier 2019）
 - 支撑仿真：S002 审计重验 + systematic_analysis 4 组实验
   - **VV 弱/中湍流有效**（0.015%/0.15% BER），仅强湍流不如 DPLL（旧结论"VV 全湍流有害"已被修正 VV 公式推翻）
-  - **DPLL 强湍流最优**（BER 1.9%，0% 失败率 vs VV/BPS 40-45%）
+  - **DPLL 强湍流最优**（BER 1.88%，0% 失败率 vs VV/BPS 3.83%）
   - Fixed 基线参数优化重要（M_vv=256, ω_n=20MHz，改善 4.6-8.9×）
   - FOE+DPLL 组合是最稳方案（D2 消融确认）
   - KF pilot 增益在修正 VV 公式后消失（0/-0.7/-2.5 dB），不作为主贡献（S002 重验）
+  - **VV 正确公式为 formula A（4θ unwrap）**，旧公式导致"VV 全湍流有害"错误结论
+  - **级联增益修正值 +0.49~1.09dB**（Nw=64→256 消除中湍流失败，属参数问题非固有缺陷）
+  - **NMSE 对 QPSK BER 无影响**（仅 QPSK 调制下成立）
+  - **BPS 与 VV 同量级，无明显优势**
 
 **（3）FPGA 设计与实现验证**
 
@@ -215,8 +219,8 @@ Ch5 FPGA → 硬件映射验证
 | Ch2 承载过重（建模+估计） | 中 | 估计部分压缩为流水账，详细分析在 Ch3 | ✅ v5已压缩为§2.4三节 |
 | BER floor 是 RF 经典结果 | 低-中 | 不声称新颖，强调 FSO 场景特殊性 | 已定位 |
 | **Ch4 GG非高斯性 vs KF高斯假设** | ~~已降级~~ | KF方案已降级为备选，系统性分析路线不受此约束 | D013 |
-| **Ch4 VV相位展开在强湍流下灾难性失败** | **中** | 35%种子失败率；论文中报告此现象作为系统性分析发现 | S023验证 |
-| **Ch4 BPS在强湍流下失败率更高** | **中** | 50%种子失败率；论文中与VV对比分析 | S023验证 |
+| **Ch4 VV相位展开在强湍流下失败（Nw=64）** | **中** | Nw=64 时强湍流种子失败率~35%；Nw=256 消除中湍流失败，属参数问题非固有缺陷；论文中报告 Nw 选择对性能的影响 | S023验证 |
+| **Ch4 BPS在强湍流下与VV同量级失败** | **中** | BPS 与 VV 性能同量级，无明显优势；论文中与 VV 对比分析 | S023验证 |
 | 线性化 DPLL 模型局限 | 中 | clip 区域外不成立，论文中讨论适用范围 | 待写 |
 | 4 篇未验证论文 | 低 | 需用户确认 | 待确认 |
 | 11 篇 bib 元数据错误 | 低 | 待写入 references.bib | 待办 |
@@ -295,6 +299,12 @@ kaushal2016, pollock2022laserspace, pathak2024revolutionizing, capeleti2023linkb
 | `毕设/写作材料/material-chapter-literature.md` | 文献清单（165 篇） |
 | `毕设/写作材料/references.bib` | 参考文献库（146 条） |
 | `毕设/写作材料/thesis-framework.md` | 框架草稿（**v2 已更新**，修正 Ch4 方向+创新点+Ch3→Ch4 衔接） |
+| `毕设/写作材料/formula-inventory.md` | **公式盘点**（Task A：101条分布+Ch4缺口+参考论文对比） |
+| `毕设/写作材料/figure-table-plan.md` | **图表规划**（Task D：逐章图表+开题20+清单+夏兆宇对标） |
+| `毕设/写作材料/writing-patterns-ch2ch3.md` | 段落模式 Ch2/Ch3（Task B1） |
+| `毕设/写作材料/writing-patterns-ch4.md` | 段落模式 Ch4（Task B2） |
+| `毕设/写作材料/writing-patterns-ch5.md` | 段落模式 Ch5（Task B3） |
+| `毕设/写作材料/writing-phrases.md` | 写作用语库（Task C） |
 | `毕设/写作材料/formulas-ch3ch4-sync.md` | Ch4 自适应公式 |
 | `毕设/写作材料/formulas-ch2-system-model.md` | Ch2 符号参数 |
 | `毕设/写作材料/literature-notes-ch1-ch2.md` | R2 精读笔记（776 行，85 条） |

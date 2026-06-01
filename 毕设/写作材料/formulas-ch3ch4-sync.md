@@ -129,6 +129,56 @@ $$\hat{I}_{pred} = \exp\left(\hat{\ln I} + \frac{\sigma_{pred}^2}{2} - \frac{\si
 - **与前后公式关系**: F3.8的预测形式，是3.4.2节"预补偿+AR预测"的核心公式
 - **参数**: $k = \tau / T_{step}$，$\tau$为反馈延迟（ms）
 
+#### F3.9K Kalman滤波——状态空间模型
+
+$$h[k] = a \cdot h[k-1] + w[k], \quad w[k] \sim \mathcal{N}(0, Q)$$
+
+$$y[k] = x[k] \cdot h[k] + n[k], \quad n[k] \sim \mathcal{N}(0, R)$$
+
+- **来源**: 标准Kalman滤波理论，F3.8的线性化版本
+- **物理意义**: 状态方程描述信道h的一阶自回归演化（$a$为自相关系数），观测方程描述导频位置的线性观测。$Q$为过程噪声方差（信道变化率），$R$为观测噪声方差（与SNR相关）
+- **参数**: $a = \rho = e^{-T_s/T_{coh}}$，$Q = (1-a^2)\sigma_h^2$，$R = \sigma_n^2 = 1/\bar\gamma$
+
+#### F3.9L Kalman滤波——预测步骤
+
+$$\hat{h}[k|k-1] = a \cdot \hat{h}[k-1]$$
+
+$$P[k|k-1] = a^2 \cdot P[k-1] + Q$$
+
+- **来源**: Kalman滤波标准预测方程
+- **物理意义**: 基于上一时刻估计做一步外推。预测误差协方差$P[k|k-1]$包含模型不确定性($Q$)和上一时刻估计误差的传播($a^2 P[k-1]$)
+
+#### F3.9M Kalman滤波——更新步骤与Kalman增益
+
+$$K[k] = \frac{P[k|k-1] \cdot |x[k]|^2}{|x[k]|^2 \cdot P[k|k-1] + R}$$
+
+$$\hat{h}[k] = \hat{h}[k|k-1] + K[k] \cdot (y[k] - x[k] \cdot \hat{h}[k|k-1])$$
+
+$$P[k] = (1 - K[k] \cdot |x[k]|^2) \cdot P[k|k-1]$$
+
+- **来源**: Kalman滤波标准更新方程
+- **物理意义**: Kalman增益$K[k]$平衡预测与观测的置信度——SNR高时$K \to 1$（信任观测），SNR低时$K \to 0$（信任预测）。新息$y[k] - x[k]\hat{h}[k|k-1]$驱动修正
+- **与前文关系**: F3.7的MMSE估计可视为KF的稳态特例（$a=1, Q=0$时退化为静态MMSE）
+
+#### F3.9N Kalman滤波——稳态分析
+
+$$K_\infty = \frac{-R + \sqrt{R^2 + 4R \cdot Q/a^2}}{2}$$
+
+$$P_\infty = K_\infty \cdot R / |x|^2$$
+
+- **来源**: Riccati方程稳态解
+- **物理意义**: 当信道统计特性不变时，Kalman增益收敛到固定值，此时KF等效为最优线性时不变滤波器。可用于设计固定系数的低复杂度估计器
+
+#### F3.9P 基于深度学习的信道估计
+
+$$\hat{h} = f_\theta(\mathbf{y}_{\text{pilot}})$$
+
+$$\mathcal{L}(\theta) = \frac{1}{N}\sum_{i=1}^{N} |\hat{h}_i - h_i|^2$$
+
+- **来源**: 通用DL信道估计框架
+- **物理意义**: $f_\theta$为参数化神经网络（FC/1D-CNN等），输入为导频位置观测向量，输出为信道估计值。损失函数为MSE。与LS/MMSE/KF不同，DL方法无需显式统计先验，但需要大量训练数据
+- **说明**: 正文写作时可简化描述，重点在于与LS/MMSE/KF的性能对比，不展开网络结构细节
+
 ### 3.4 估计精度对下游信号处理的影响分析
 
 #### F3.10 信道估计噪声注入模型
