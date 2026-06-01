@@ -22,11 +22,11 @@
 | 5 | edwards2022lcrd | Challenges, Lessons Learned from the LCRD Optical Links | Boroson et al. (2022), Proc. SPIE | 19 | **LCRD经验教训**：AO+湍流补偿 | ⬚ |
 | 6 | pollock2022laserspace | A Survey on Laser Space Network: Terminals, Links, and Architectures | Pollock et al. (2022), IEEE Access | 78 | **激光空间网络综述**：覆盖LCRD+EDRS | ⬚ |
 | 7 | heine2015edrs | LCT for EDRS: LEO to GEO optical communications at 1.8 Gbps | Heine et al. (2015), Proc. SPIE | 56 | **EDRS星间激光**：1.8Gbps实测 | ⬚ |
-| 8 | sommerkorn2020edrs | EDRS-C – The second node of the European Data Relay System | Sommerkorn et al. (2020), Proc. SPIE | 38 | **EDRS-C在轨验证** | ⬚ |
+| 8 | calzolaio2020edrs | EDRS-C – The second node of the European Data Relay System | Sommerkorn et al. (2020), Proc. SPIE | 38 | **EDRS-C在轨验证** | ⬚ |
 | 9 | heine2014edrs | The European Data Relay System, high speed laser based data links | Fields et al. (2014), Acta Astronautica | 51 | **EDRS系统概述** | ⬚ |
 | 10 | lesh2019nasa | Optical communications systems for NASA's human space flight | Cornwell (2019), Proc. SPIE | 20 | NASA载人航天光通信路线图 | ⬚ |
 | 11 | altakhaineh2025outdoor | Outdoor Free Space Optical Systems: Motivations, Challenges | Esmail et al. (2025), IEEE COMST | 12 | **最新FSO综述**：2025年全维度 | ⬚ |
-| 12 | pathak2024revolutionizing | Revolutionizing Free-Space Optics: Survey of Enabling Technologies | Pathak et al. (2024), IEEE COMST | 55 | **FSO使能技术**：ML/DL/AO全覆盖 | ⬚ |
+| 12 | alimi2024revolutionizing | Revolutionizing Free-Space Optics: Survey of Enabling Technologies | Pathak et al. (2024), IEEE COMST | 55 | **FSO使能技术**：ML/DL/AO全覆盖 | ⬚ |
 | 13 | zhangdai2018 | 星地相干激光通信大气信道特征及信号处理技术研究 | 张岱 (2018), 国防科技大学博士 | 8 | 星地相干+大气信道+信号处理 | ✅全文 |
 | 14 | zhaoyun2025 | 星地激光通信研究现状与前沿技术 | 赵云等 (2025), 空间科学学报 | - | 星地激光通信最新中文综述 | ✅ |
 | 15 | yuanrenzhi2024 | 面向星地融合的激光通信：研究现状、关键技术与未来展望 | 袁仁智等 (2024), 天地一体化信息网络 | - | 星地融合激光通信中文综述 | ❌ |
@@ -58,7 +58,7 @@
 | 41 | jain2025satelliteRFfso | RF+FSO混合系统综述 | Jain et al. (2025), J. Optics | 4 | RF vs FSO vs 混合对比 | ⬚ |
 | 42 | liu2025spaceLaserNetworking | 空间激光组网技术进展 | 刘等 (2025), 中国光学 | 7 | 中文综述，国内激光组网现状 | ⬚ |
 | 43 | boroson2026overview | FSO技术最新总览 | Boroson & Hemmati (2026), IEEE | 1 | Boroson+Hemmati权威短综述 | ⬚ |
-| 44 | liu2025sdrOpticalISL | SDR+光通信ISL综述 | Liu et al. (2026), CEAS Space | 0 | 可重构光-射频一体化卫星网络 | ⬚ |
+| 44 | naskar2025sdrOpticalISL | SDR+光通信ISL综述 | Liu et al. (2026), CEAS Space | 0 | 可重构光-射频一体化卫星网络 | ⬚ |
 
 ### 1.2.1 大气湍流信道估计研究现状（23篇）
 
@@ -102,7 +102,7 @@
 | 8 | wang2024oe | Enhanced frame sync and carrier recovery in coherent FSO | Wang et al. (2024), Optics Express | 2 | FSO湍流帧同步+载波恢复联合 | ⬚ |
 | 9 | magarini2012pilot | Pilot-Symbols-Aided CPR for 100-G PM-QPSK Digital Coherent | Tao et al. (2012), JLT | 94 | **Pilot-aided CPR经典论文** | ⬚ |
 | 10 | improved2012pilot | Improved Pilot-Aided Optical Carrier Phase Recovery for M-QAM | (2012), IEEE PTL | 26 | 改进型Pilot-aided CPR | ⬚ |
-| 11 | xie2012dpll | Digital PLL based frequency offset compensation and carrier phase estimation | Le et al. (2012), OFC | 15 | DPLL载波恢复经典参考 | ⬚ |
+| 11 | tanimura2012dpll | Digital PLL based frequency offset compensation and carrier phase estimation | Le et al. (2012), OFC | 15 | DPLL载波恢复经典参考 | ⬚ |
 | 12 | zibar2020ukf | Pilot-symbols-aided unscented Kalman filter for carrier phase recovery | Zibar et al. (2020), Optics Comm. | 3 | Pilot+UKF载波相位恢复 | ⬚ |
 | 13 | lihuagui2023 | 相干光通信消相位模糊载波同步算法 | (2023), 光学学报 | 2 | 中文载波同步+消相位模糊 | ⬚ |
 | 14 | baijiajun2021qpsk | 相干光通信系统中QPSK调制解调研究与实现 | 白佳俊 (2021), 西安理工大学硕士 | 11 | QPSK相干检测调制解调中文研究 | ⬚ |
@@ -143,7 +143,7 @@
 | 3 | zouxinhang2025 | 高速光通信系统的并行定点信号处理技术研究 | 邹欣航 (2025), 北京邮电大学硕士 | 0 | 光通信定点化FPGA处理（Ch5） | ⬚ |
 | 4 | valjus2025 | 相干光卫星链路DSP算法综述 | Valjus et al. (2025), Satellite | 9 | **直接相关**：卫星场景DSP（Ch5） | ⬚ |
 | 5 | alhosani2025optical | FSO空间光通信综述 | Alhosani et al. (2025), IJIT | 8 | 2025年最新FSO综述（Ch2） | ⬚ |
-| 6 | liu2024optical | 2018年空间光学终端设计 | Liu et al. (2024), Proc. SPIE | 1 | 已完成星地+星间双向验证（Ch2） | ⬚ |
+| 6 |  | 2018年空间光学终端设计 | Liu et al. (2024), Proc. SPIE | 1 | 已完成星地+星间双向验证（Ch2） | ⬚ |
 | 7 | alimi2024revolutionizing | FSO使能技术全景综述 | Alimi et al. (2024), Sensors | 64 | 5G/B5G场景FSO权威综述（Ch2） | ⬚ |
 
 ---
@@ -183,7 +183,7 @@
 | 27 | zhou2014clock | 时钟+载波恢复算法系统综述 | Zhou et al. (2014), JLT | 78 | 2.2 DSP基础 | FOE/CPR分类与选择依据 | ⬚ |
 | 28 | stotts2023tutorial | 湍流信道BER/fade概率教程 | Stotts et al. (2023), Optics Express | 9 | 2.3 湍流模型 | 高SNR下闪烁钉BER | ⬚ |
 | 29 | wang2020progress | 中国空间激光通信进展综述 | Wang et al. (2020), CAE | 31 | 2.1 系统概述 | 中国星地/星间/空地发展历程 | ⬚ |
-| 30 | liu2024optical | 2018年空间光学终端设计 | Liu et al. (2024), Proc. SPIE | 1 | 2.1 系统概述 | 已完成星地+星间双向验证 | ⬚ |
+| 30 |  | 2018年空间光学终端设计 | Liu et al. (2024), Proc. SPIE | 1 | 2.1 系统概述 | 已完成星地+星间双向验证 | ⬚ |
 | 31 | alhosani2025optical | FSO空间光通信综述 | Alhosani et al. (2025), IJIT | 8 | 2.1 系统概述 | 2025年最新 | ⬚ |
 | 32 | chen2025multisystem | LEO星间激光6终端BER<1e-6 | Chen et al. (2025), Proc. SPIE | 0 | 2.1 工程验证 | 中国LEO星间在轨验证 | ⬚ |
 | 33 | wang2024fsoISL | FSO星间链路综述 | Wang et al. (2024), IEEE | 114 | 2.1 系统概述 | APT+调制+安全全覆盖 | ⬚ |
@@ -293,7 +293,7 @@
 | 44 | pech2025 | 混合ODPLL Z变换建模+FPGA延迟 | Pech et al. (2025), IEEE ICSOS | 0 | 4.3 DPLL | DPLL数字实现精确模型 | ⬚ |
 | 45 | li2019 | VV block length effect在高相位噪声下损失 | Li et al. (2019), IEEE TCOM | 17 | 4.4 VV退化 | VV固定窗口退化的理论依据 | ⬚ |
 | 46 | xiang2018 | AKF自适应Q优于固定Q EKF | Xiang et al. (2018), Optics Express | 0 | 4.4 自适应 | 固定参数Kalman在宽范围退化 | ⬚ |
-| 47 | xu2002 | 自适应滤波器增益替代VV固定窗口 | Xu et al. (2002), IEEE ICCS | 0 | 4.4 自适应 | 自适应窗口理论支撑 | ⬚ |
+| 47 |  | 自适应滤波器增益替代VV固定窗口 | Xu et al. (2002), IEEE ICCS | 0 | 4.4 自适应 | 自适应窗口理论支撑 | ⬚ |
 | 48 | xiang2015 | BPS块长度优化准则 | Xiang et al. (2015), Optics Express | 20 | 4.4 BPS优化 | 块长度选错导致BPS性能退化 | ⬚ |
 | 49 | martins2021cpr | 双级CPR硬件优化 | Martins et al. (2021), OSA Continuum | 9 | 4.4+Ch5 | BPS测试相位数降90%+ | ⬚ |
 | 50 | zhang2025dpll | DPLL低SNR鉴相+CORDIC | Zhang et al. (2025), EFTF | 0 | 4.3 DPLL | DPLL低SNR实现 | ⬚ |
