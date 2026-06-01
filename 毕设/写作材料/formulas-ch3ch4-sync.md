@@ -7,10 +7,10 @@
 
 ## 第三章 大气湍流信道估计技术
 
-> **废弃声明 (2026-05-30)**：原第三章"信道估计"已合并至 Ch2 §2.4。
-> 以下公式 F3.1-F3.14 中信号模型和 SNR 定义仍使用旧约定（γ=γ̄·|h|²），
-> 需结合 D011 决策更新为 γ=γ̄·h。新 Ch3 方向为"链路性能分析"，公式见
-> `formulas-ch3-link-performance.md`。
+> **部分废弃声明 (2026-05-30, 更新 2026-06-01)**：原第三章"信道估计"已合并至 Ch2 §2.4。
+> F3.1 信号模型使用 √h 系数（与新 Ch3 的 √γ 版本归一化约定不同）；
+> F3.5 和 F4.5 等已更新为新约定 γ=γ̄·h。新 Ch3 方向为"链路性能分析"，公式见
+> `formulas-master.md` Ch3 部分（F3.1-F3.21）。
 
 ### 3.2 湍流信道估计问题建模
 
@@ -46,7 +46,7 @@ $$h[k] = h_b, \quad k \in [b \cdot B_s, (b+1) \cdot B_s - 1]$$
 
 - **来源**: sim_prototype.py:33-36, sim_direction_a.py:57-62
 - **前文**: "由于FSO信道相干时间远大于符号周期，采用块衰落模型"
-- **物理意义**: 每个块内信道增益不变（相干时间假设），块间独立变化。块大小 $B_s$ 由相干时间决定
+- **物理意义**: 每个块内归一化辐照度不变（相干时间假设），块间独立变化。块大小 $B_s$ 由相干时间决定
 - **与前后公式关系**: 简化F3.2的逐符号衰落为逐块衰落，使导频设计和信道估计可操作
 - **参数**: $B_s = 100$ 符号/块（仿真代码硬编码）
 
@@ -136,7 +136,7 @@ $$\hat{I}_{pred} = \exp\left(\hat{\ln I} + \frac{\sigma_{pred}^2}{2} - \frac{\si
 $$\hat{h} = |h + n_h|, \quad n_h \sim \mathcal{N}\left(0, |h|^2 \cdot 10^{-\text{NMSE}_{dB}/20}\right)$$
 
 - **来源**: sim_cascade_robustness.py:59-64 (`add_h_noise`)
-- **前文**: "为分析估计精度对下游模块的影响，在真实信道增益上叠加可控NMSE的高斯噪声"
+- **前文**: "为分析估计精度对下游模块的影响，在真实归一化辐照度上叠加可控NMSE的高斯噪声"
 - **物理意义**: 构造指定NMSE水平的信道估计值。噪声标准差与h幅度成正比（相对误差模型）
 - **与前后公式关系**: 连接Ch3（估计方法输出NMSE）与Ch4（输入含噪h到载波同步），是级联分析的核心接口
 - **参数**: NMSE级别: -5, -10, -15, -20 dB（100代表完美估计无噪声）
@@ -194,6 +194,8 @@ $$\bar{\text{BER}} = E_h\left[\text{BER}(\bar\gamma \cdot h)\right]$$
 
 ### 4.2 载波同步系统模型
 
+> **F4.1-F4.14 主从声明**：本文件 F4.1-F4.14 为 `formulas-master.md` 中对应公式的副本，以 `formulas-master.md` 为权威版本。本处保留供 Ch3/Ch4 联合阅读参考。
+
 #### F4.1 总载波相位模型
 
 $$\phi[k] = 2\pi f_{res} \cdot kT_s + \pi \dot{f}_D \cdot (kT_s)^2 + \theta_L[k]$$
@@ -229,12 +231,12 @@ $$\omega_F \approx \omega_S - \omega_E \cos(i_S)$$
 
 #### F4.3 接收符号相位分解（四次方FOE基础）
 
-$$\theta_r[k] = \theta_s[k] + \Delta\omega \cdot kT_s + \theta_n[k] + \theta_a[k]$$
+$$\theta_r[k] = \theta_s[k] + \Delta\omega \cdot kT_s + \theta_L[k] + \theta_a[k]$$
 
-- **来源**: 闫佳欣 式(2-24)
+- **来源**: 闫佳欣 式(2-24)，符号已统一为本文约定（原文用 $\theta_n$ 表示激光相位噪声，本文统一用 $\theta_L$，见 F4.1）
 - **前文**: "接收符号的相位由调制相位、频偏引起的相位、激光相位噪声和其他噪声组成"
-- **物理意义**: 将接收相位分解为四个分量：$\theta_s[k]$为QPSK调制相位，$\Delta\omega \cdot kT$为频偏线性相移，$\theta_n$为激光相位噪声（慢变），$\theta_a$为其他噪声
-- **与前后公式关系**: F4.1的QPSK特化形式。四次方运算可消除 $\theta_s$（因为QPSK $s^4 = -1$），共轭差分可消除 $\theta_n$
+- **物理意义**: 将接收相位分解为四个分量：$\theta_s[k]$为QPSK调制相位，$\Delta\omega \cdot kT$为频偏线性相移，$\theta_L$为激光相位噪声（即F4.1中的维纳过程，慢变），$\theta_a$为其他噪声
+- **与前后公式关系**: F4.1的QPSK特化形式。四次方运算可消除 $\theta_s$（因为QPSK $s^4 = -1$），共轭差分可消除 $\theta_L$
 
 ### 4.3 湍流自适应频偏估计算法
 
@@ -307,9 +309,9 @@ $$c_1 = 2\zeta\omega_n T_s, \quad c_2 = (\omega_n T_s)^2$$
 
 #### F4.8 Viterbi-Viterbi载波相位恢复（CPR）
 
-$$\hat\theta}[k] = \frac{1}{M}\text{unwrap}\left(\angle\left(\sum_{i=k-M/2}^{k+M/2} r[i]^4\right)\right)$$
+$$\hat\phi_\text{raw}[k] = \frac{1}{M}\text{unwrap}\left(\angle\left(\sum_{i=k-M/2}^{k+M/2} r[i]^4\right)\right)$$
 
-$$r_{comp}[k] = r[k] \cdot e^{-j\hat\theta}[k]}$$
+$$r_{comp}[k] = r[k] \cdot e^{-j\hat\phi_\text{raw}[k]}$$
 
 - **来源**: sim_direction_a.py:197-210 (`vv_cpr`), sim_prototype.py:284-298 (`vv`), 闫佳欣 式(2-28)-(2-29), Liu 2023 Section 2
 - **前文**: "VV算法对QPSK信号四次方取滑动平均，提取载波相位噪声估计"
@@ -345,6 +347,8 @@ $$B_{L,opt}(h) = B_0 \cdot h$$
 $$B_0 = \sqrt{\frac{\pi \Delta\nu_L \bar\gamma}{T_s}}$$
 
 $$\omega_{n,opt} = \frac{B_{L,opt}}{0.53}$$
+
+> **单位说明**：$B_0$ 的量纲为 Hz（$\sqrt{\text{Hz}^2}$），$B_L$ 单位为 Hz。严格来说 $B_L = 0.53 f_n$（$f_n = \omega_n/(2\pi)$ 为自然频率的 Hz 值），代码中 `omega_n` 变量实际存储的是 $f_n$（Hz），因此 `omega_n = B_L/0.53` 在代码内自洽。论文正文中建议写为 $f_{n,opt} = B_{L,opt}/0.53$ 以避免 rad/s 与 Hz 混淆。
 
 - **来源**: sim_direction_a.py:236-238 (`adaptive_params`), sim_cascade_robustness.py:145-148, R016推导3, 内容卡片 4.4
 - **前文**: "DPLL最优带宽在相位噪声跟踪和噪声抑制间取折中——带宽正比于瞬时SNR的平方根"
@@ -497,7 +501,7 @@ Ch2 系统模型
 
 2. **F3.15 Rytov方差与GG参数的关系** — $\sigma_R^2 = 1.23 C_n^2 k^{7/6} L^{11/6}$，以及 $\alpha, \beta$ 与 $\sigma_R^2$ 的映射（内容卡片 2.3.3 提到但未展开）
 
-3. **F4.5 SNR₄的完整推导** — 代码和内容卡片给出结论 $\text{SNR}_4 = \bar\gamma \cdot h^2/8$，但分子"80"和除数"8"的推导过程需补入（来自R016推导1）
+3. **F4.5 SNR₄的完整推导** — 代码和内容卡片给出结论 $\text{SNR}_4 = \bar\gamma \cdot h/8$，但分子"80"和除数"8"的推导过程需补入（来自R016推导1）
 
 4. **F4.9 M_opt的完整推导** — 5次根号定律的MSE最小化推导过程（来自R016推导2，未展开）
 
@@ -524,3 +528,368 @@ Ch2 系统模型
 2. **闫佳欣 论文中的并行化FOE/VV实现** — FPGA实时实现的结构设计，对Ch5有参考价值
 
 3. **张岱2018 的波前校正+自差探测** — 与本文的零差/外差方案不同，但偏振/相位恢复部分可交叉参考
+
+---
+
+## 第四章补充公式（Task A 缺口补全）
+
+> 补充时间: 2026-06-01
+> 来源: 丁爽(北邮), 张思齐(北邮), 董凡(电子科大), DPLL教材(Gardner/Rice/Robertson), FFT理论(Rife & Boorstyn 1974/Gasior & Gonzalez 2004)
+
+### 4.2 补充 — 激光器相位噪声模型
+
+#### F4.15 激光器相位噪声（Wiener过程）
+
+$$\theta_L[k] = \theta_L[k-1] + w[k], \quad w[k] \sim \mathcal{N}(0, \sigma_{\theta,L}^2)$$
+
+- **来源**: 丁爽 式(4-8), 董凡 式(2-27)
+- **前文**: "激光相位噪声可建模为离散时间Wiener过程（随机游走）"
+- **物理意义**: 相邻符号间相位噪声增量为零均值高斯，方差由激光线宽决定。这是VVPE均值滤波的理论基础——相邻符号相位近似不变（慢变假设）
+- **与前后公式关系**: 定义F4.1中θ_L的统计特性，是DPLL/VV/BPS所有相位恢复算法的共同噪声源
+- **参数**: σ_{θ,L}² 由 F4.16 确定
+
+#### F4.16 相位噪声方差与线宽关系
+
+$$\sigma_{\theta,L}^2 = 2\pi \Delta\nu_L \cdot T_s$$
+
+- **来源**: 丁爽 式(4-8), 标准公式（Gardner *Phaselock Techniques*）
+- **物理意义**: 相位噪声方差正比于联合线宽和符号周期。Δν_L = Δν_tx + Δν_LO（收发激光线宽之和）
+- **参数**: 典型值 Δν_L = 10 kHz, T_s = 0.4 ns (2.5 Gsps) → σ_{θ,L}² ≈ 2.5×10⁻⁵ rad²
+- **设计约束**: 块平均长度 M ≤ π/(4σ_{θ,L}) ≈ 157（否则相位漂移超出估计范围）
+
+### 4.3 补充 — FFT频偏估计理论基础
+
+#### F4.17 N点DFT定义
+
+$$S[m] = \sum_{k=0}^{N-1} r[k] \cdot e^{-j 2\pi mk / N}, \quad m = 0, 1, \ldots, N-1$$
+
+- **来源**: 标准DSP（Proakis & Manolakis）, Gasior & Gonzalez 2004 Eq.(2)
+- **前文**: "对观测窗口内接收信号做N点DFT，将时域信号分解为N个正交频率分量"
+- **物理意义**: 第m个频率bin对应频率 f_m = m·f_s/N。频偏估计通过四次方预处理后DFT峰值位置确定
+
+#### F4.18 频率分辨率与观测窗口
+
+$$\Delta f_{\text{grid}} = \frac{f_s}{N} = \frac{1}{N \cdot T_s}$$
+
+- **来源**: Gasior & Gonzalez 2004 Eq.(3)
+- **物理意义**: 相邻DFT bin频率间隔 = 观测时长倒数。N增大 → 分辨率提高但捕获时间增长
+- **设计约束**: 要求 Δf_grid < 最小频偏精度需求 → 确定 N 下界
+
+#### F4.19 频偏估计Cramér-Rao下界
+
+$$\mathrm{var}(\hat{\Delta f}) \geq \frac{6}{(2\pi)^2 \cdot \mathrm{SNR} \cdot N(N^2 - 1) \cdot T_s^2}$$
+
+当 $N \gg 1$ 时近似为：
+
+$$\mathrm{var}(\hat{\Delta f}) \geq \frac{6}{(2\pi)^2 \cdot \mathrm{SNR} \cdot N^3 \cdot T_s^2}$$
+
+- **来源**: Rife & Boorstyn 1974, IEEE Trans. Info. Theory
+- **物理意义**: 任何无偏频偏估计器的方差下界。随样本数N³和SNR反比下降。ML估计器在高SNR下渐近达到此界
+- **使用条件**: 复单频信号 + AWGN, SNR在门限以上（~10-15 dB）
+
+#### F4.20 四次方消除QPSK调制的数学证明
+
+QPSK发送符号 $s[k] \in \{(±1 ± j)/\sqrt{2}\}$，调制相位 $\theta_s[k] \in \{\pi/4, 3\pi/4, 5\pi/4, 7\pi/4\}$。
+
+$$s^4[k] = |s|^4 \cdot e^{j \cdot 4\theta_s[k]} = e^{j \cdot \pi(2n+1)} = -1 \quad (n \in \mathbb{Z})$$
+
+故四次方后调制相位消除，但引入常数 $\pi$ 相位偏移（$s^4 = -1$）：
+
+$$r^4[k] \approx -e^{j(4 \cdot 2\pi \Delta f \cdot kT_s + 4\phi[k])} + \text{噪声项}$$
+
+- **来源**: Proakis *Digital Communications* Ch.6, 丁爽 式(3-11), 董凡 式(2-26)
+- **物理意义**: QPSK所有调制相位乘以4后均为 $\pi$ 的奇数倍（$4\theta_s \in \{\pi, 3\pi, 5\pi, 7\pi\}$），$s^4=-1$ 引入常数 $\pi$ 相位。后续 F4.28 块平均相位提取中通过 $-\pi$ 修正消除此偏移。剩余信号频率变为原始频偏的4倍
+- **代价**: SNR退化因子 F4.5（SNR₄ ≈ SNR/8），频偏范围缩至1/4
+
+#### F4.21 四次方后频偏估计范围
+
+$$|\Delta f| < \frac{R_s}{2 \cdot 4} = \frac{R_s}{8}$$
+
+- **来源**: Proakis Ch.6, M-PSK载波恢复通用结论（M=4 for QPSK）
+- **物理意义**: 四次方使频率乘以4，可无模糊估计的频偏范围相应缩小4倍（类比Nyquist定理：4Δf < R_s/2 → Δf < R_s/8）
+- **设计影响**: 需确保实际Doppler频偏不超过此范围，否则需先用粗频偏估计缩小残余
+
+#### F4.22 抛物线插值精细化
+
+设DFT幅度谱最大bin索引为 $m_{\max}$，相邻三个bin幅度 $S_{m-} = |S[m_{\max}-1]|$, $S_{m} = |S[m_{\max}]|$, $S_{m+} = |S[m_{\max}+1]|$，则亚bin频率修正量：
+
+$$\delta = \frac{1}{2} \cdot \frac{S_{m-} - S_{m+}}{S_{m-} - 2S_{m} + S_{m+}}, \quad \delta \in [-1/2, +1/2]$$
+
+$$\hat{\Delta f} = (m_{\max} + \delta) \cdot \frac{\Delta f_{\text{grid}}}{4}$$
+
+（除以4恢复四次方引入的倍频）
+
+- **来源**: Gasior & Gonzalez 2004 Eq.(10)
+- **物理意义**: 用DFT峰值附近三个bin拟合抛物线，顶点给出亚bin精度频率估计。Hanning窗下插值增益G≈9.5（误差从Δf/2降至~5%Δf）
+- **使用条件**: 需窗函数使主瓣宽度≥3 bin（Hanning窗满足）
+
+#### F4.23 Hanning窗定义
+
+$$w[k] = 0.5\left(1 - \cos\frac{2\pi k}{N-1}\right), \quad k = 0, 1, \ldots, N-1$$
+
+- **来源**: Harris 1978, Proc. IEEE
+- **关键指标**: 最高旁瓣 -31.5 dB（vs 矩形窗 -13.3 dB），主瓣宽度4 bins，ENBW = 1.5 bins
+- **选择理由**: 四次方后SNR已退化~12 dB，需强旁瓣抑制防止频谱泄漏干扰峰值检测
+
+### 4.4 补充 — 低复杂度Viterbi-Viterbi推导链
+
+> 以下推导链给出VVPE的完整数学过程，使用绝对值近似替代复数乘法以降低计算复杂度。
+
+#### F4.24 信号I/Q分解
+
+$$r[k] = I_k + jQ_k, \quad I_k = |r[k]|\cos\phi_k, \quad Q_k = |r[k]|\sin\phi_k$$
+
+其中 $\phi_k = \theta_s[k] + 2\pi\Delta f \cdot kT_s + \theta_L[k] + \theta_a[k]$ 为总瞬时相位。
+
+- **来源**: 丁爽 式(3-2)
+
+#### F4.25 绝对值近似（二倍角核心）
+
+$$\cos^2\varphi \approx |\cos\varphi|, \quad \sin^2\varphi \approx |\sin\varphi|$$
+
+$$\cos(2\varphi) = \cos^2\varphi - \sin^2\varphi \approx |I_k| - |Q_k|$$
+
+$$\sin(2\varphi) \approx |I_k + Q_k| - |I_k - Q_k|$$
+
+- **来源**: 丁爽 式(3-3)~(3-7), 张思齐 式(2-6)~(2-12)
+- **物理意义**: 利用三角恒等式将复数乘法简化为绝对值+加减法，避免乘法器。这是低复杂度的数学基础
+- **精度**: 高SNR下近似误差可忽略；低SNR时绝对值法不引入交叉噪声项（丁爽 式4-9/4-10分析）
+
+#### F4.26 二倍角结果
+
+$$I'_k = \sqrt{2}(|I_k| - |Q_k|), \quad Q'_k = |I_k + Q_k| - |I_k - Q_k|$$
+
+$$r^{(2)}[k] = I'_k + jQ'_k = \sqrt{2} \cdot r[k]^2 / |r[k]|$$
+
+- **来源**: 丁爽 式(3-7)/(3-8), 张思齐 式(2-11)~(2-14)
+- **物理意义**: 二倍角操作后信号相位变为2φ_k，幅值乘√2平衡
+
+#### F4.27 四倍角结果（等效四次方去调制）
+
+在二倍角基础上再次应用绝对值近似：
+
+$$I''_k = |I'_k| - |Q'_k|, \quad Q''_k = |I'_k + Q'_k| - |I'_k - Q'_k|$$
+
+$$r^{(4)}[k] = I''_k + jQ''_k \propto e^{j \cdot (4(2\pi\Delta f \cdot kT_s + \theta_L[k] + \theta_a[k]) + \pi)} + \text{噪声}$$
+
+QPSK调制相位已被消除（$4\theta_s[k] = 2\pi n$）。注意 $s^4=-1$ 引入额外的π相位因子。
+
+- **来源**: 丁爽 式(3-9)~(3-11), 张思齐 式(2-15)~(2-17)
+- **物理意义**: 两次迭代完成四次方操作，消除QPSK调制。结果仅含4倍频偏、4倍相位噪声、4倍大气扰动和常数π偏移
+- **关键性质**: 绝对值法不产生信号-噪声交叉乘法项（丁爽 式4-9/4-10证明），优于传统复数四次方
+- **π因子影响**: 该常数偏移在F4.28中产生π/4估计偏移，使QPSK星座旋转π/4（从{π/4,3π/4,5π/4,7π/4}旋转至{0,π/2,π,3π/2}），对判决无害
+
+#### F4.28 块平均相位提取
+
+$$\hat{\phi}_\text{raw} = \frac{1}{4}\left[\arg\left(\frac{1}{M}\sum_{k=0}^{M-1} r^{(4)}[k]\right) - \pi\right]$$
+
+- **来源**: 丁爽 式(3-12)/(3-13), 张思齐 式(2-18), Viterbi & Viterbi 1983
+- **物理意义**: M个符号的四次方信号取平均（抑制零均值AWGN），取角度减去s⁴=-1引入的π偏移后除以4。减π消除F4.27中的常数相位偏移
+- **参数**: M为平均窗口长度，与F4.9自适应窗口公式对应
+- **设计约束**: M受相位噪声方差约束——M太大使相位漂移超出(-π/4, π/4]范围
+
+#### F4.29 相位补偿
+
+$$\hat{r}[k] = r[k] \cdot e^{-j\hat{\phi}_\text{raw}}$$
+
+- **来源**: 丁爽 式(3-14), 张思齐 式(3-29)
+
+### 4.4 补充 — BPS（Blind Phase Search）算法
+
+#### F4.30 BPS测试相位构造
+
+$$\phi_b = \frac{\pi b}{2B}, \quad b = -B/2, \ldots, 0, \ldots, B/2-1$$
+
+B个均匀分布测试相位覆盖范围 $(-\pi/2, \pi/2]$。
+
+- **来源**: 董凡 式(2-30), 丁爽 式(4-1), Pfau 2009
+- **参数**: B = 32（董凡推荐值），QPSK时对称区间为π/2（M=4→2π/M = π/2）
+
+#### F4.31 欧氏距离度量
+
+$$|d_{k,b}|^2 = |r[k] \cdot e^{-j\phi_b} - \hat{s}_{k,b}|^2$$
+
+其中 $\hat{s}_{k,b}$ 为补偿后符号对应的最近理想星座点。
+
+- **来源**: 董凡 式(2-32), 丁爽 式(4-2)
+- **物理意义**: 对每个测试相位φ_b，计算补偿后符号与最近星座点的欧氏距离。最小距离对应的φ_b为最优相位估计
+
+#### F4.32 块内距离累加（窗口平滑）
+
+$$S_{k,b} = \sum_{i=k-N_w}^{k+N_w} |d_{i,b}|^2$$
+
+- **来源**: 董凡 式(2-33), 丁爽 式(4-3)
+- **物理意义**: 2N_w+1个符号窗口内累加距离度量，平滑AWGN干扰。窗口长度N_w与BPS性能直接相关
+- **参数**: N_w = 32（董凡实测最优值，平衡跟踪速度与估计精度）
+
+#### F4.33 ML精估计（BPS第二级）
+
+$$\hat{\varphi}_\text{ML} = \arg\left(\sum_{k} r[k] \cdot \hat{s}_k^*\right)$$
+
+- **来源**: 董凡 式(2-35)
+- **物理意义**: 用BPS粗估计的判决符号$\hat{s}_k$与原始接收信号做相关（决策导向），提取精估计相位。计算量仅相当于BPS中2个测试角度的计算量
+- **优势**: 双级结构（BPS粗估计+ML精估计）显著降低总复杂度，同时保持高精度
+
+### 4.4 补充 — 相位模糊消除
+
+#### F4.34 相位跳变检测（π/2模糊消除）
+
+四次方操作引入π/2整数倍相位模糊。消除方法——基于相邻块相位差的跳变检测：
+
+$$\Phi[k] = \begin{cases} \Phi[k-1] + \pi/2, & \text{if } (\hat\phi_\text{raw}[k] - \hat\phi_\text{raw}[k-1]) < -\pi/4 \\ \Phi[k-1] - \pi/2, & \text{if } (\hat\phi_\text{raw}[k] - \hat\phi_\text{raw}[k-1]) > \pi/4 \\ \Phi[k-1], & \text{otherwise} \end{cases}$$
+
+- **来源**: 张思齐 式(3-27), 丁爽 §3.2（FSM模块）, 董凡 式(2-29)/(2-30)
+- **物理意义**: 四次方操作使真实相位估计范围缩至(-π/4, π/4]。当真实相位变化超过此范围时产生跳变，通过检测相邻块相位差补偿π/2整数倍偏移
+- **初始值**: Φ[1] = 0
+
+#### F4.35 修正后相位估计
+
+$$\hat{\phi}_\text{final}[k] = \hat{\phi}_\text{raw}[k] + \Phi[k]$$
+
+- **来源**: 张思齐 式(3-28)
+- **物理意义**: 原始相位估计 + 累计跳变补偿 = 最终无模糊相位估计
+
+### 4.4 补充 — 二阶DPLL稳定性分析
+
+> 以下公式为二阶Type-2 DPLL的标准理论结果，用于§4.4 DPLL部分的深度展开。
+
+#### F4.36 连续时间闭环传递函数
+
+$$H(s) = \frac{\theta_\text{out}}{\theta_\text{in}} = \frac{2\zeta\omega_n s + \omega_n^2}{s^2 + 2\zeta\omega_n s + \omega_n^2}$$
+
+- **来源**: Gardner *Phaselock Techniques* 3rd Ed. §2.2.3, Rice Appendix C.1.3
+- **物理意义**: 描述DPLL输出相位跟踪输入相位的能力。分子含一个零点（导致阶跃响应过冲）
+- **参数**: ζ（阻尼比）, ω_n（自然频率）。ζ=1/√2为工程标准设计点
+
+#### F4.37 误差传递函数
+
+$$H_e(s) = 1 - H(s) = \frac{s^2}{s^2 + 2\zeta\omega_n s + \omega_n^2}$$
+
+- **来源**: Gardner §2.2.3
+- **物理意义**: 分子s²的阶数=2 = PLL类型数。Type-2系统可零稳态误差跟踪相位阶跃和频率阶跃
+
+#### F4.38 环路滤波器系数（PI结构）
+
+比例-积分环路滤波器 $F(z) = \alpha_\text{DPLL} + \beta_\text{DPLL}/(1-z^{-1})$ 的系数：
+
+$$\alpha_\text{DPLL} = \frac{2\zeta\omega_n T_s}{K_p K_\text{nco}}, \quad \beta_\text{DPLL} = \frac{(\omega_n T_s)^2}{K_p K_\text{nco}}$$
+
+- **来源**: Robertson DSPRelated 2016 Eq.(3-4), Rice Appendix C
+- **物理意义**: α_DPLL控制跟踪速度（比例增益），β_DPLL消除频率阶跃稳态误差（积分增益）
+- **注意**: 下标DPLL避免与GG参数α,β混淆（见symbol-conventions.md §13消歧策略）
+- **参数**: K_p为鉴相增益，K_nco为NCO增益，T_s为采样/符号周期
+
+#### F4.39 离散闭环传递函数
+
+$$H_\text{CL}(z) = \frac{G_1(z)}{1+G_1(z)}$$
+
+其中 $G_1(z) = \frac{K_p \alpha_\text{DPLL} K_\text{nco}}{z-1} + \frac{K_p \beta_\text{DPLL} K_\text{nco}}{(z-1)^2}$
+
+- **来源**: Robertson DSPRelated 2016 Eq.(5)
+- **使用条件**: ω_n/f_s << 1/(2π)（环路自然频率远小于采样频率）
+
+#### F4.40 噪声带宽与自然频率关系
+
+$$B_L = \frac{\omega_n}{2}\left(\zeta + \frac{1}{4\zeta}\right)$$
+
+ζ = 1/√2 时：
+
+$$B_L \approx 0.53\,\omega_n$$
+
+- **来源**: Gardner *Phaselock Techniques* §2.3（经典公式）
+- **物理意义**: B_L是DPLL的等效噪声带宽，决定对输入相位噪声的抑制能力。B_L↓→噪声抑制好但跟踪慢；B_L↑→跟踪快但噪声大
+- **单位说明**: 当ω_n以rad/s为单位时，B_L以rad/s为单位；换算为Hz需除以2π。本文后续统一使用Hz单位，即 $f_n = \omega_n/(2\pi)$，$B_L[\text{Hz}] \approx 0.53 f_n = 0.53 \omega_n/(2\pi)$。F4.10中ω_n = B_L/0.53隐含了此约定
+- **与自适应公式关系**: F4.10中 $B_{L,opt} = B_0 \cdot h$，代入此式可得 $\omega_n = B_L / 0.53$
+
+#### F4.41 稳态相位误差（频率斜升输入）
+
+$$\theta_e(\infty) = \frac{2\pi \dot{f}_d}{\omega_n^2} \quad \text{(rad)}$$
+
+- **来源**: Georgia Tech ECE 6440 Lecture 090
+- **物理意义**: 对频率斜升（Doppler变化率ḟ_d），Type-2二阶环存在有限稳态误差。误差反比于ω_n²
+- **设计约束**: 要求 $\theta_e(\infty) < \pi/4$（QPSK判决裕量）→ 确定ω_n下界
+- **注**: 对频率阶跃，稳态误差为0（Type-2系统的优势）
+
+#### F4.42 收敛时间常数
+
+$$\tau = \frac{1}{\zeta\omega_n} \quad \text{(s)}, \quad T_L = \frac{2\pi}{\omega_n} \quad \text{(s, 锁定时间)}$$
+
+- **来源**: Gardner §2.2, Georgia Tech ECE 6440
+- **物理意义**: 瞬态响应约4τ~5τ后衰减到稳态值2%以内。锁定时间约为一个自然频率周期
+
+#### F4.43 离散稳定性条件
+
+极点位于：$z_{1,2} = e^{-\zeta\omega_n T_s}\left[\cos(\omega_d T_s) \pm j\sin(\omega_d T_s)\right]$，其中 $\omega_d = \omega_n\sqrt{1-\zeta^2}$。
+
+稳定性要求极点模值 $r = e^{-\zeta\omega_n T_s} < 1$（ζ > 0时自动满足），但工程安全裕量要求：
+
+$$\omega_n T_s < 0.1 \sim 0.5 \quad \Longleftrightarrow \quad f_n / f_s < 0.016 \sim 0.08$$
+
+- **来源**: Robertson Appendix C, TI SLYT169
+- **物理意义**: 保证s→(z-1)/T_s近似有效，离散化不引入额外不稳定性
+
+### 4.4 补充 — 载波恢复级联流程
+
+#### F4.44 频偏补偿后信号
+
+$$r'[k] = r[k] \cdot \exp\!\left(-j \cdot 2\pi \hat{\Delta f} \cdot kT_s\right)$$
+
+- **来源**: 张思齐 式(2-21)/(3-23), 丁爽 §3.1
+- **物理意义**: FOE阶段输出频偏估计后，对接收信号做共轭乘法补偿频偏
+
+#### F4.45 四次方信号频偏补偿（数据复用）
+
+$$r^{(4)'}[k] = r^{(4)}[k] \cdot \exp\!\left(-j \cdot 4 \cdot 2\pi \hat{\Delta f} \cdot kT_s\right)$$
+
+- **来源**: 张思齐 式(3-24)（核心创新点）
+- **物理意义**: 频偏阶段产生的四次方信号不丢弃，补偿4倍频偏后直接送入CPR阶段复用。避免CPR阶段重复四次方运算，节省约50%计算量
+
+#### F4.46 完整级联链信号流
+
+$$\underbrace{r[k]}_{\text{接收}} \xrightarrow{\times 4} \underbrace{r^{(4)}[k]}_{\text{四次方}} \xrightarrow{\text{FFT峰值}} \hat{\Delta f} \xrightarrow{\text{补偿}} r'[k],\; r^{(4)'}[k]$$
+
+$$\xrightarrow{\text{块平均}} \hat{\phi}_\text{raw} \xrightarrow{+\Phi[k]} \hat{\phi}_\text{final} \xrightarrow{\text{补偿}} \hat{r}[k] \xrightarrow{\text{判决}} \hat{s}[k]$$
+
+- **来源**: 综合张思齐 §3.2 + 我们的sim_direction_a.py实现
+- **物理意义**: 完整的FOE→CPR级联链，核心优化是四次方数据在两个阶段间复用
+
+---
+
+## 补充公式编号索引
+
+| 编号 | 内容 | 来源 | 对应章节 |
+|------|------|------|---------|
+| F4.15 | 激光器相位噪声Wiener过程 | 丁爽 | §4.2 |
+| F4.16 | 相位噪声方差 σ²=2πΔνT_s | 丁爽/标准 | §4.2 |
+| F4.17 | N点DFT定义 | 标准DSP | §4.3 |
+| F4.18 | 频率分辨率 | Gasior 2004 | §4.3 |
+| F4.19 | 频偏估计CRB | Rife & Boorstyn 1974 | §4.3 |
+| F4.20 | 四次方消除QPSK调制 | Proakis/丁爽/董凡 | §4.3 |
+| F4.21 | 四次方后频偏范围 | Proakis | §4.3 |
+| F4.22 | 抛物线插值精细化 | Gasior 2004 | §4.3 |
+| F4.23 | Hanning窗定义 | Harris 1978 | §4.3 |
+| F4.24 | 信号I/Q分解 | 丁爽 | §4.4 |
+| F4.25 | 绝对值近似（二倍角） | 丁爽/张思齐 | §4.4 |
+| F4.26 | 二倍角结果 | 丁爽/张思齐 | §4.4 |
+| F4.27 | 四倍角（等效四次方） | 丁爽/张思齐 | §4.4 |
+| F4.28 | 块平均相位提取 | Viterbi 1983/丁爽 | §4.4 |
+| F4.29 | 相位补偿 | 丁爽/张思齐 | §4.4 |
+| F4.30 | BPS测试相位构造 | 董凡/Pfau 2009 | §4.4 |
+| F4.31 | 欧氏距离度量 | 董凡/丁爽 | §4.4 |
+| F4.32 | 块内距离累加 | 董凡/丁爽 | §4.4 |
+| F4.33 | ML精估计 | 董凡 | §4.4 |
+| F4.34 | 相位跳变检测（π/2模糊） | 张思齐/丁爽 | §4.4 |
+| F4.35 | 修正后相位估计 | 张思齐 | §4.4 |
+| F4.36 | DPLL闭环传递函数 | Gardner/Rice | §4.4 |
+| F4.37 | DPLL误差传递函数 | Gardner | §4.4 |
+| F4.38 | DPLL环路滤波器系数 | Robertson/Rice | §4.4 |
+| F4.39 | DPLL离散闭环传递函数 | Robertson | §4.4 |
+| F4.40 | DPLL噪声带宽 B_L=0.53ωn | Gardner | §4.4 |
+| F4.41 | DPLL稳态误差（频率斜升） | Georgia Tech | §4.4 |
+| F4.42 | DPLL收敛时间常数 | Gardner | §4.4 |
+| F4.43 | DPLL离散稳定性条件 | Robertson/TI | §4.4 |
+| F4.44 | 频偏补偿后信号 | 张思齐 | §4.4 |
+| F4.45 | 四次方信号频偏补偿（复用） | 张思齐 | §4.4 |
+| F4.46 | 完整级联链信号流 | 综合 | §4.4 |
+
+**Ch4公式总量**: F4.1-F4.14（原有）+ F4.15-F4.46（补充）= **46条**

@@ -38,7 +38,7 @@
 
 | 符号 | 含义 | 单位 | 首现章节 | 歧义标注 |
 |------|------|------|---------|---------|
-| $h[k]$ | 等效信道复增益（第 $k$ 个符号时刻） | — | Ch2 | — |
+| $h[k]$ | 归一化辐照度（实值，$E[h]=1$，$h \geq 0$） | — | Ch2 | 不是"信道增益"（射频含义） |
 | $h$ | 信道衰落系数（稳态） | — | Ch2 | 与蝶形均衡器抽头 $h_{xx}$ 等含义不同 → 后者始终带下标，不冲突 |
 | $X, Y$ | Gamma-Gamma 模型的大/小尺度分量 | — | Ch2 | 与偏振分量 $E_{rx,X}, E_{rx,Y}$ 不同 → 偏振始终用 $E_{rx,x}, E_{rx,y}$ 小写下标 |
 | $\alpha$ | GG 模型大尺度参数（与 $C_n^2$ 相关） | — | Ch2 | — |
@@ -67,14 +67,15 @@
 | $n[k]$ | 复高斯噪声（第 $k$ 个符号时刻） | — | Ch2 | $n[k] \sim \mathcal{CN}(0, \sigma^2)$ |
 | $\sigma^2$ | 噪声方差 | W | Ch2 | — |
 | $\sigma_n^2$ | 噪声方差（显式下标） | W | Ch2 | 与 $\sigma^2$ 等价，本文统一用 $\sigma^2$ |
-| $\gamma[k]$ | 瞬时信噪比 | — | Ch2 | $\gamma = \|h\|^2 E_s / \sigma^2$ |
-| $\bar\gamma$ | 平均信噪比 | — | Ch2 | $\bar\gamma = E[\|h\|^2] E_s / \sigma^2$ |
+| $\gamma[k]$ | 瞬时信噪比 | — | Ch2 | $\gamma = \bar\gamma \cdot h$（相干检测线性，非 $h^2$） |
+| $\bar\gamma$ | 平均信噪比 | — | Ch2 | $\bar\gamma = E_s / \sigma^2$（$E[h]=1$） |
 | $\text{OSNR}$ | 光信噪比 | dB | Ch2 | — |
 | $\text{SNR}$ | 电域信噪比 | dB | Ch2 | — |
 | $\text{BER}$ | 误码率 | — | Ch1 | — |
 | $\text{NMSE}$ | 归一化均方误差 | dB | Ch3 | $\text{NMSE} = E[\|h - \hat{h}\|^2] / E[\|h\|^2]$ |
 | $\text{MSE}$ | 均方误差 | — | Ch3 | — |
 | $N_0$ | 噪声功率谱密度 | W/Hz | Ch2 | — |
+| $\sigma_{\theta,L}^2$ | 激光相位噪声方差 | rad² | Ch4 | $= 2\pi\Delta\nu_L \cdot T_s$ |
 
 ---
 
@@ -107,6 +108,8 @@
 | $P(d)$ | Schmidl 定时度量函数中的相关项 | — | Ch5 | 与功率 $P$ 不同 → 始终带参数 $(d)$ |
 | $R_1(d)$ | Schmidl 能量归一化项 | — | Ch5 | — |
 | $M_1(d)$ | Schmidl 时间度量函数 | — | Ch5 | — |
+| $S[m]$ | DFT 输出（第 $m$ 个频率 bin） | — | Ch4 | $m = 0, 1, \ldots, N-1$ |
+| $\Delta f_\text{grid}$ | DFT 频率分辨率 | Hz | Ch4 | $\Delta f_\text{grid} = R_s/N = 1/(NT_s)$ |
 
 ---
 
@@ -116,11 +119,16 @@
 |------|------|------|---------|---------|
 | $\varphi[k]$ | 载波相位（含频偏+相噪） | rad | Ch2 | — |
 | $\Delta\varphi(t)$ | 收发激光器相位噪声差 | rad | Ch2 | — |
-| $\theta_n(k)$ | 激光器线宽引起的相位噪声 | rad | Ch4 | — |
+| $\theta_n(k)$ | 激光器线宽引起的相位噪声（$\theta_L$ 的别名，仅引用外部来源时保留） | rad | Ch4 | 优先使用 $\theta_L$（见 F4.1 定义） |
 | $\theta_a(k)$ | 其他噪声引起的相位扰动 | rad | Ch4 | — |
-| $M$ | V-V 算法平滑窗口长度 | — | Ch4 | — |
+| $M$ | VV 平均窗口长度 | — | Ch4 | — |
 | $M_\text{opt}$ | 自适应 V-V 窗口最优长度 | — | Ch4 | $M_\text{opt} = K_M (\bar\gamma h)^{-1/5} (\Delta f T_s)^{-2/5}$ |
 | $K_M$ | V-V 窗口公式的归一化常数 | — | Ch4 | — |
+| $\Phi[k]$ | 相位跳变累计修正量 | rad | Ch4 | $\pi/2$ 模糊消除用 |
+| $\hat\phi_\text{raw}$ | VV 原始相位估计 | rad | Ch4 | 块平均后除以4 |
+| $\hat\phi_\text{final}$ | 最终无模糊相位估计 | rad | Ch4 | $= \hat\phi_\text{raw} + \Phi[k]$ |
+| $N_w$ | BPS 窗口半长 | 符号 | Ch4 | 典型值 32 |
+| $B$ | BPS 测试相位数 | — | Ch4 | 典型值 32；与带宽 $B_L$ 不同 |
 
 ---
 
@@ -135,6 +143,11 @@
 | $\beta_{DPLL}$ | DPLL 环路滤波器系数（二阶） | — | Ch5 | 加下标 DPLL 避免与 $\beta$ (GG 参数) 冲突 |
 | $\mu$ | 步长参数 / PADE 环路系数 | — | Ch4/Ch5 | Ch4 用于 CMA/LMS 步长，Ch5 用于反馈环路 → 上下文明确 |
 | $\sigma_1, \sigma_2$ | Liu 2023 双反馈环路滤波系数 | — | Ch5 | 仅 Ch5 引用 Liu 2023 时使用 |
+| $K_p$ | 鉴相器增益 | — | Ch4 | 归一化为1时 $c_1 = \alpha_\text{DPLL}$ |
+| $K_\text{nco}$ | NCO 增益 | — | Ch4 | 归一化为1时 $c_2 = \beta_\text{DPLL}$ |
+| $\omega_d$ | 阻尼自然频率 | rad/s | Ch4 | $= \omega_n\sqrt{1-\zeta^2}$ |
+| $\tau$ | 收敛时间常数 | s | Ch4 | $= 1/(\zeta\omega_n)$ |
+| $T_L$ | 锁定时间 | s | Ch4 | $\approx 2\pi/\omega_n$ |
 
 ---
 
@@ -214,9 +227,9 @@
 
 | 符号 | 冲突含义 | 消歧策略 |
 |------|---------|---------|
-| $h$ | Ch2-4: 信道增益；Ch2 蝶形: 抽头系数 | 蝶形抽头始终写 $h_{xx}$ 等带下标形式 |
+| $h$ | Ch2-4: 归一化辐照度；Ch2 蝶形: 抽头系数 | 蝶形抽头始终写 $h_{xx}$ 等带下标形式 |
 | $P$ | 功率 / 并行度 / Schmidl 相关项 | 功率用 $P_t, P_S, P_{LO}$ 带下标；并行度用 $P$（仅 Ch5）；Schmidl 用 $P(d)$ 带参数 |
-| $N$ | FOE 窗口长度 / FFT 点数 / 子载波数 | FOE 窗口用 $N$（Ch4）；FFT 点数用 $N_\text{FFT}$（Ch5） |
+| $N$ | FOE 窗口长度 / FFT 点数 / 子载波数 / Fourier 截断阶数 | FOE 窗口用 $N$（Ch4）；FFT 点数用 $N_\text{FFT}$（Ch5）；Fourier 截断用 $N$（Ch3）— 上下文区分 |
 | $\alpha, \beta$ | GG 模型参数 / DPLL 环路系数 | DPLL 系数加下标 $\alpha_\text{DPLL}, \beta_\text{DPLL}$ |
 | $T$ | 符号周期 / 采样周期 / OFDM 周期 | 各章首段定义，Ch2: $T_s$ 为符号周期，Ch5: $T$ 为采样周期 |
 | $L$ | 传播距离 / OFDM 符号数 | 传播距离改用 $d_\text{link}$，$L$ 留给 OFDM 符号数 |
@@ -224,6 +237,13 @@
 | $R$ | 响应度 / 相关运算 | 响应度改用 $\mathcal{R}$，Schmidl 相关用 $P(d), R_1(d)$ |
 | $M$ | V-V 窗口 / OFDM 帧数 / 滤波器抽头 | 各自章节内定义，$M_\text{opt}$ 特指自适应窗口 |
 | $k$ | 符号索引 / 波数 | 索引 $k$ 由 $[k]$ 括号标识；波数 $k = 2\pi/\lambda$ 无括号 |
+| $B$ | BPS 测试数 / 带宽前缀 | BPS 用 $B$（§4.4），带宽用 $B_L$（§4.4），上下文区分 |
+| $h$ | 归一化辐照度 / 海拔高度 | 正文用 $h$ 为辐照度（E[h]=1）；HV 模型海拔改用 $z$；普朗克常数用数值代入 |
+| $\alpha, \beta$ | GG 参数 / 大气散射系数 | 正文用 $\alpha,\beta$ 为 GG 参数（§2.3）；大气散射系数加下标 $\sigma_a, \sigma_s$ |
+| $L$ | 传播距离 / OFDM 符号数 | 传播距离改用 $d_\text{link}$（§2.3 已部分执行，F28/F30/F33 待更新） |
+| $\eta$ | 量子效率 / 天线效率 | 量子效率用 $\eta$（§10.2）；天线效率用 $\eta_a$（§2.4 链路预算） |
+| $T$ | 符号周期 / 温度 | $T_s$ 为符号周期；温度用 $T_K$ 或首次出现注明 |
+| $R$ / $\mathcal{R}$ | 响应度 / 相关运算 | 响应度统一用 $\mathcal{R}$；公式待统一 |
 
 ---
 

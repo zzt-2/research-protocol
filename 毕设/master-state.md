@@ -14,7 +14,8 @@
 ├── thesis-framework.md      ← 框架草稿 v2
 ├── thesis-status.md         ← 状态看板（目录/决策/仿真/风险）
 ├── thesis-preparation-checklist.md ← 准备清单+缺口分析
-├── 写作材料/                 ← 公式+文献（每章写作时的参考资料）
+├── formulas-master.md        ← 公式总表（101条，Ch2-Ch5）
+├── formulas-index.md         ← 公式索引（快速查找）
 ├── 开题报告/                 ← 开题草稿+写作素材（draft-s1.*）
 ├── 表格模板/                 ← 官方表格+培养办法
 ├── 开题PPT/                  ← 答辩PPT各版本+模板+素材
@@ -67,7 +68,8 @@
 | Ch3/Ch4 同步 | `写作材料/formulas-ch3ch4-sync.md` | ✅ 旧格式 |
 | Ch4 KF | `写作材料/formulas-ch4-kf.md` | ✅ |
 | Ch5 FPGA | `写作材料/formulas-ch5-fpga.md` | ✅ |
-| **公式总表** | `写作材料/formulas-master.md` | ❌ 待创建（PROMPT-002） |
+| **公式总表** | `formulas-master.md` | ✅ 101条（Ch2:38 + Ch3:21 + Ch4:14 + Ch5:28） |
+| **公式索引** | `formulas-index.md` | ✅ 快速查找 |
 
 ### 写作草稿
 

@@ -9,7 +9,7 @@
 开题报告的"研究方案"是**主体部分**（导师原话："从第二章开始就是研究方案"，"比如他最后写了160页，现在这个有60页"）。这不是简单的"写个实验方案"，而是**毕业论文第2-5章的缩水版**——需要包含模型描述、公式推导、算法原理、实验设计。
 
 本对话的目标**不是写完研究方案**，而是：
-1. 研究别人怎么写研究方案
+1. **研究别人怎么写研究方案**（这是最重要的前置步骤）
 2. 确定我们的研究方案应该怎么写
 3. 搭好骨架和写作模板
 4. 尽量多写（能写多少写多少）
@@ -18,7 +18,7 @@
 ## 产出
 
 **本对话产出**:
-1. `毕设/写作材料/开题报告/03-研究方案.md` — 研究方案草稿（写到哪算哪）
+1. `毕设/开题报告/03-研究方案.md` — 研究方案草稿（写到哪算哪）
 2. `.sessions/2026-05-31-thesis-writing-prep/S001-research-plan-progress.md` — 进度记录+手接材料
 
 **最终目标**（可能需要 3-5 个对话）:
@@ -55,41 +55,63 @@
 
 ## 必读
 
-### 了解"研究方案该怎么写"
+### 了解"研究方案该怎么写"（最重要的部分）
+
+**核心原则：先研究别人怎么写，再决定自己怎么写。至少精读 3 篇同领域论文的研究方案/对应章节，量化分析后才开始搭骨架。**
+
 1. `projects/thesis-figures/开题报告.md` — **旧方向**开题报告（只参考**格式和写法**，不参考内容）
-2. `毕设/写作材料/新录音.txt` — 导师关于研究方案定位的原话（170-173行、191行）
-3. **需要搜索**: 找 2-3 篇同领域（FSO/激光通信/信号处理）硕士/博士开题报告，参考其研究方案写法
+2. **方法论参考**: `/home/zzt/code/thesis-platform/.sessions/2026-05-29-writing-template-workflow/S006-cnki-985-thesis-analysis.md` — 量化结构分析方法论（先检索同领域论文，下载后做量化分析：字数/段落数/引用数/技术数据点/逻辑模式/空洞占比，再适配自己的论文）
+3. **同领域毕业论文**（研究方案 = 毕业论文缩水版，必须看别人怎么写的）:
+   - **闫佳欣**（130K，最相关）: `papers/downloads/2026-05-31-cnki-985/yanjiaxin/面向空间激光通信的实时信号处理算法研究与实现_闫佳欣.md`
+   - **曾嘉**（135K，相干光通信定时同步）: `papers/downloads/2026-05-31-cnki-985/zengjia/并行结构下无线相干光通信的IQ失衡补偿与定时同步策略_曾嘉.md`
+   - **董凡**（部分章节）: `papers/downloads/2026-05-31-cnki-985/dongfan/`
+   - **涂亦聪**（有完整结论）: `papers/downloads/2026-05-31-cnki-985/tuyicong/`
+   - **夏煜**（部分章节）: `papers/downloads/2026-05-31-cnki-985/xiayu/`
+   - ⚠️ **夏兆宇论文未下载**，如果后续获取到应优先参考（导师指定）
 
 ### 论文内容来源
-4. `毕设/写作材料/thesis-framework.md` — 全文框架（各章摘要）
-5. `毕设/写作材料/thesis-status.md` — 目录 v4 + 递进关系 + 仿真代码索引
-6. `毕设/写作材料/TERMS.md` — 术语规范（写作用词）
+
+4. `毕设/thesis-framework.md` — 全文框架（各章摘要）
+5. `毕设/thesis-status.md` — 目录 v4 + 递进关系 + 仿真代码索引
+6. `毕设/TERMS.md` — 术语规范（写作用词）
 7. `.sessions/thesis-direction-pivot/R003-kaiti-strategy.md` — 防御性写作策略
 
 ### Ch2 参考
+
 8. `毕设/写作材料/formulas-ch2-system-model.md` — Ch2 参数
 9. `projects/thesis-figures/simulation/SPEC.md` — 仿真参数（三档湍流数值）
 
 ### Ch3 参考
+
 10. `.sessions/2026-05-30-ch3-direction-exploration/S002-ber-closed-form-derivation.md` — BER推导
 11. `毕设/写作材料/formulas-ch3ch4-sync.md` — Ch3/Ch4 公式
-12. `projects/thesis-figures/simulation/sim_ch3_ber_closed_form.py` — BER仿真
-13. `projects/thesis-figures/simulation/sim_ch3_strengthening.py` — 设计准则仿真
-14. `projects/thesis-figures/simulation/sim_cascade_robustness.py` — 级联鲁棒性仿真
+12. `毕设/写作材料/formulas-ch3-link-performance.md` — Ch3 链路性能公式
+13. `projects/thesis-figures/simulation/sim_ch3_ber_closed_form.py` — BER仿真
+14. `projects/thesis-figures/simulation/sim_ch3_strengthening.py` — 设计准则仿真
+15. `projects/thesis-figures/simulation/sim_cascade_robustness.py` — 级联鲁棒性仿真
 
 ### Ch4 参考
-15. `.sessions/thesis-direction-pivot/S030-ch4-kf-deep-search.md` — Ch4文献调研
-16. `projects/thesis-figures/simulation/sim_ch4_systematic_analysis.py` — 系统性分析仿真
-17. `.sessions/thesis-simulation-consolidation/PROMPT-002-ch3-ch4-bridge-experiment.md` — 桥接实验
+
+16. `.sessions/thesis-direction-pivot/S030-ch4-kf-deep-search.md` — Ch4文献调研
+17. `projects/thesis-figures/simulation/sim_ch4_systematic_analysis.py` — 系统性分析仿真
+18. `.sessions/thesis-simulation-consolidation/PROMPT-002-ch3-ch4-bridge-experiment.md` — 桥接实验
 
 ### Ch5 参考
-18. `毕设/写作材料/TERMS.md` §6.2 — Ch5 目录（S012 结论）
+
+19. `毕设/TERMS.md` §6.2 — Ch5 目录（S012 结论）
+20. `毕设/写作材料/formulas-ch5-fpga.md` — Ch5 公式
+
+### 公式总表（已建）
+
+21. `毕设/写作材料/formulas-master.md` — 公式总表（已创建，可能需要补充）
 
 ## 子 Agent 策略（自适应，分阶段）
 
 **核心原则: 先探索再规划，不要一开始定死所有 agent。**
 
-### Phase 1: 研究别人怎么写（3-4 个 agent）
+### Phase 1: 研究别人怎么写（3-4 个 agent，这是最关键的一步）
+
+**⚠️ 这一步不能跳过、不能压缩。** 没有看过 3+ 篇同领域论文的研究方案/对应章节之前，不允许开始写骨架。
 
 **方法论参考**: `/home/zzt/code/thesis-platform/.sessions/2026-05-29-writing-template-workflow/S006-cnki-985-thesis-analysis.md` 展示了一套论文结构分析方法论——先检索同领域论文，下载后做量化结构分析（字数/段落数/引用数/技术数据点/逻辑模式/空洞占比），再适配自己的论文。本 Phase 应遵循类似方法。
 
@@ -101,17 +123,14 @@
 - 总字数、段落数、公式数、引用数
 - 总结: 一份"研究方案写作模式量化分析"
 
-**Agent R2**: 精读**毕业论文**（非开题报告），重点是：
-- 夏兆宇（北理工硕士）的论文结构——导师指定参考
-  - 搜索位置: `/mnt/d/code/study/research-protocol/papers/downloads/2026-05-31-cnki-985/` 或 CNKI
-  - 如果找不到夏兆宇论文，搜索同目录下已有的董凡、夏煜、曾嘉、闫佳欣论文
-- 分析其第2-5章各章写法（因为研究方案 = 毕业论文缩水版）：
-  - 每章的公式密度（公式数/千字）
-  - 算法描述深度（伪代码 vs 文字描述 vs 流程图）
-  - 实验设计格式（参数表 vs 叙述）
-  - 图表数量和类型
-  - 章节之间的衔接写法
-- 总结: 一份"毕业论文各章结构量化分析"
+**Agent R2**: 精读**毕业论文**（非开题报告），重点是闫佳欣和曾嘉的论文（文件见上方路径）。分析：
+- 每章的公式密度（公式数/千字）
+- 算法描述深度（伪代码 vs 文字描述 vs 流程图）
+- 实验设计格式（参数表 vs 叙述）
+- 图表数量和类型
+- 章节之间的衔接写法
+- **关键问题**: 开题报告的研究方案如果是毕业论文缩水版，那缩到什么程度？哪些保留？哪些砍？
+- 总结: 一份"毕业论文各章结构量化分析 + 开题缩水策略"
 
 **Agent R3**: 搜索 2-3 篇同领域开题报告（FSO/激光通信/载波同步/信道估计方向），分析其研究方案写法。重点关注：
 - 硕士论文开题 vs 博士论文开题的深度差异
@@ -177,6 +196,7 @@
 - 不要试图在一个对话里写完所有章节
 - 不要出现旧方向的任何内容（GNN/路由/切换/故障弹性）
 - 不要在一开始就定死所有子 agent
+- **不要跳过 Phase 1 直接开始写**（先看别人怎么写）
 
 ## 手接要求
 
