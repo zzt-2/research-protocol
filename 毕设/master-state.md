@@ -1,7 +1,7 @@
 # 学位论文 Master State
 
 > **每次 thesis 相关对话开始时必须读此文件**
-> 最后更新: 2026-05-31
+> 最后更新: 2026-06-01
 
 ## 毕设目录结构
 
@@ -32,16 +32,18 @@
 ## 当前状态
 
 **正在进行的对话**:
-- 写作对话: §1.2 国内外研究现状（另一对话在写，已到 v2）
-- 规范对话（本对话）: 准备规范文档，已产出提示词
+- 写作材料统一化对话（本对话）: Phase A→D 全部完成
 
 **最近的完成项**:
+- [x] 写作材料统一化（5文件→2文件，Phase A/B/C/D 全完成）
+- [x] writing-patterns-paragraph.md（1448行）— 段落级+4附录
+- [x] writing-patterns-sentence.md（1019行）— 句级+速查表
 - [x] 8-agent 审查（2参数+6术语）→ TERMS.md 建立
-- [x] design-decisions.md（56条决策+14条否决方案，另一对话完成）
-- [x] symbol-conventions.md（另一对话完成）
+- [x] design-decisions.md（56条决策+14条否决方案）
+- [x] symbol-conventions.md
 - [x] §1.1 初稿 v3（董凡风格+夏兆宇结构适配，最佳版本）
 - [x] §1.2 初稿 v1-v2
-- [x] formulas-ch5-fpga.md（另一对话创建）
+- [x] formulas-ch5-fpga.md
 - [x] 4 个写作准备提示词（PROMPT-001~004）
 
 ---
@@ -65,11 +67,23 @@
 |------|------|------|
 | Ch2 系统模型 | `写作材料/formulas-ch2-system-model.md` | ✅ 旧格式 |
 | Ch3 链路性能 | `写作材料/formulas-ch3-link-performance.md` | ✅ |
-| Ch3/Ch4 同步 | `写作材料/formulas-ch3ch4-sync.md` | ✅ 旧格式 |
+| Ch3/Ch4 同步 | `写作材料/formulas-chulas-ch3ch4-sync.md` | ✅ 旧格式 |
 | Ch4 KF | `写作材料/formulas-ch4-kf.md` | ✅ |
 | Ch5 FPGA | `写作材料/formulas-ch5-fpga.md` | ✅ |
 | **公式总表** | `formulas-master.md` | ✅ 101条（Ch2:38 + Ch3:21 + Ch4:14 + Ch5:28） |
 | **公式索引** | `formulas-index.md` | ✅ 快速查找 |
+| **公式盘点** | `写作材料/formula-inventory.md` | ✅ Task A：对比表+Ch4缺口分析 |
+
+### 写作准备类（统一化完成）
+
+| 文档 | 路径 | 状态 | 用途 |
+|------|------|------|------|
+| **段落级模式（统一）** | `写作材料/writing-patterns-paragraph.md` | ✅ 1448行 | Ch2-Ch5段落结构+4附录（量化/决策/顺序/映射） |
+| **句级句式（统一）** | `写作材料/writing-patterns-sentence.md` | ✅ 1019行 | Ch2-Ch5句式库189条+速查表 |
+| **写作用语库** | `写作材料/writing-phrases.md` | ✅ | 公式引入/衔接/结果描述 |
+| **图表规划** | `写作材料/figure-table-plan.md` | ✅ | 逐章图表+开题20+清单+夏兆宇对标 |
+| S1.2写作参考 | `写作材料/writing-reference-s1.2.md` | ✅ | §1.2写作素材 |
+| 旧文件（5个） | `写作材料/archive/` | 归档 | B1/B2/B3原始提取文件 |
 
 ### 写作草稿
 
