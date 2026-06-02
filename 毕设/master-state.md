@@ -1,7 +1,7 @@
 # 学位论文 Master State
 
 > **每次 thesis 相关对话开始时必须读此文件**
-> 最后更新: 2026-06-01（PROMPT-007 文档同步完成后更新）
+> 最后更新: 2026-06-02（语言禁忌+事实性审查完成后更新）
 
 ## 毕设目录结构
 
@@ -32,9 +32,11 @@
 ## 当前状态
 
 **正在进行的对话**:
-- 无（Task 0~E + PROMPT-007验证+文档同步 全部完成，等待开 Task F 写初稿）
+- 无（Task 0~E + PROMPT-007验证+文档同步+语言审查 全部完成，等待开 Task F 写初稿）
 
 **最近的完成项**:
+- [x] 语言禁忌+事实性审查（2026-06-02）：12个文件~71处修改（旧VV数据/NMSE升级/FPGA违规/术语统一/措辞禁忌）
+- [x] TERMS.md 术语规范更新（VV平均窗口+归一化辐照度全文统一）
 - [x] PROMPT-006 Task E: section-outline.md（867行，Ch2-Ch5 各节详细写作大纲）
 - [x] PROMPT-006 Task A: formula-inventory.md（101条公式盘点+Ch4缺口分析）
 - [x] PROMPT-006 Task B: writing-patterns-paragraph.md（1448行段落模式）+ writing-patterns-sentence.md（1019行句式库）

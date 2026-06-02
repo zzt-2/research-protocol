@@ -316,7 +316,7 @@ $$N_\text{opt} = \frac{80}{\bar\gamma \cdot h^2}$$
 
 $$M_\text{opt} = K_M \cdot (\bar\gamma \cdot h)^{-1/5} \cdot (\Delta f \cdot T_s)^{-2/5}$$
 
-- 平滑窗口长度动态调整
+- 平均窗口长度动态调整
 - 需要数据缓存大小适配最大窗口
 
 ### 6.4 DPLL 环路带宽自适应

@@ -19,6 +19,13 @@
   - 15 条已确认结论，BPS 行为与 VV 同量级（无优势）
   - 文档同步完成：6个文件修改（thesis-framework/03-研究方案/section-outline/figure-table-plan/thesis-status/formulas-ch4-kf），验证 PASS
   - 剩余缺口: Ch3 NMSE vs BER 曲线（建议补）、thesis-status 数字更新（✅已完成）
+- **语言禁忌+事实性审查**（2026-06-02，6 agents）
+  - 方法：按结论维度派 3 审查 agent（Ch3/Ch4/通用），每 agent 持 SPEC grep 全文件
+  - 发现 ~65 条问题：旧VV公式数据(17处) + NMSE描述升级(14处) + FPGA违规(14处) + 术语(15处) + 措辞(11处)
+  - 额外调查：analyst 验证"VV平滑窗口"和"信道增益"禁忌合理性 → 确认合理（全文统一用词）
+  - 修复：3 修复 agent + 主线程直修，共 12 个文件 ~71 处修改
+  - TERMS.md 更新：恢复"VV平均窗口"和"归一化辐照度"为全文统一用语，section 9 添加混用速查说明
+  - **未修**：成品文档（draft-s1.*.md、正文/Ch2-*.md）待后续处理
 
 ## 不变量
 

@@ -12,7 +12,7 @@
 $$r[k] = \sqrt{h[k]} \cdot s[k] \cdot e^{j\phi[k]} + n[k]$$
 
 - $s[k] \in \{(\pm 1 \pm j)/\sqrt{2}\}$：QPSK 符号
-- $h[k]$：GG 湍流信道增益（块衰落，块长 $N_{block}$ = 100 符号）
+- $h[k]$：GG 湍流归一化辐照度（块衰落，块长 $N_{block}$ = 100 符号）
 - $\phi[k] = 2\pi f_{res} kT_s + \pi \dot{f}_D (kT_s)^2 + \theta_L[k]$：载波相位
 - $n[k] \sim \mathcal{CN}(0, \sigma^2)$，$\sigma^2 = 1/\gamma_{avg}$
 
@@ -68,7 +68,7 @@ $$v[k] \sim \mathcal{N}(0, R[k])$$
 
 $$R[k] = \frac{1}{2 \gamma_{avg} \cdot h[k]}$$
 
-**关键特性**：$R[k]$ 随瞬时信道增益 $h[k]$ 自适应变化：
+**关键特性**：$R[k]$ 随瞬时归一化辐照度 $h[k]$ 自适应变化：
 - $h[k]$ 大（强信号）→ $R[k]$ 小 → KF 信任观测 → 等效大带宽快速跟踪
 - $h[k]$ 小（深衰落）→ $R[k]$ 大 → KF 信任预测 → 等效小带宽抑制噪声
 
