@@ -192,7 +192,7 @@ Ch5 FPGA → 方案设计与可行性分析
 | D008 | Ch4 主攻方向切换为湍流感知 KF 统一载波同步 | 三公式自适应仿真失败（FOE/VV 全面更差），仅 DPLL +4.8dB 存活；22 agent 深入检索确认 KF 方向新颖性/空白/可行性/差异化全部 PASS | 已锁定 |
 | D013 | Ch4 战略转向系统性分析路线（VV/BPS/DPLL） | 导师反馈 KF 结果"不要全信"，代码审查确认 3 个中等问题；系统性分析路线稳妥、有文献支撑、无原创算法风险 | 已锁定 |
 | D009 | 三公式工作保留为对比基线 | DPLL adaptive +4.8dB 是硬数据，作为 KF vs baseline 对照 | 已锁定 |
-| D012 | Ch4 确认导频辅助 KF 方向（5%导频+2-state KF） | 三公式物理不可行；DD 正向反馈崩溃；导频辅助在全湍流等级公平验证 +9~+17 dB | **已被 S002 重验推翻**（修正 VV 后增益消失 0/-0.7/-2.5 dB） |
+| D012 | Ch4 确认导频辅助 KF 方向（5%导频+2-state KF） | 三公式物理不可行；DD 正向反馈崩溃；导频辅助在全湍流等级公平验证 +9~+17 dB | **已被 S002/PROMPT-008 重验推翻**（修正 VV 后增益消失 0/-0.7/-2.5 dB，实际 KF 在强湍流劣于 Fixed） |
 | D014 | Ch4 KF 不作为主贡献，确认系统性分析路线 | S002 重验：修正 VV 公式后 Fixed 基线大幅改善，KF 增益消失；VV 弱/中有效（旧结论推翻）；DPLL 强湍流最优不变 | 已锁定 |
 
 ---
@@ -258,7 +258,7 @@ kaushal2016, pollock2022laserspace, pathak2024revolutionizing, capeleti2023linkb
 |------|------|------|
 | `sim_ch3_ber_closed_form.py` | BER 闭合解验证（6 实验） | ✅ 完成 |
 | `sim_ch3_strengthening.py` | 设计准则 + 估计误差鲁棒性 | ✅ 完成 |
-| `sim_direction_a.py` | Ch4 自适应载波同步 MVE | ✅ 完成 |
+| `sim_direction_a.py` | Ch4 载波同步性能分析 MVE | ✅ 完成 |
 | `sim_cascade_robustness.py` | 级联鲁棒性验证（6/6 PASS） | ✅ 完成 |
 | `sim_ch3_precomp.py` | 功率预补偿 MVE（已放弃） | ⚠️ 不再使用 |
 | `sim_ch4_kf_carrier_sync.py` | **KF统一载波同步仿真（新增）** | ✅ 完成 |

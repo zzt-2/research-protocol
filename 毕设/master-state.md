@@ -1,7 +1,7 @@
 # 学位论文 Master State
 
 > **每次 thesis 相关对话开始时必须读此文件**
-> 最后更新: 2026-06-02（语言禁忌+事实性审查完成后更新）
+> 最后更新: 2026-06-02（创新点+结论+数据全面对齐，~179处修改/25文件）
 
 ## 毕设目录结构
 
@@ -31,26 +31,31 @@
 
 ## 当前状态
 
+**当前优先级**: 文档对齐 > PPT（PPT 太慢，先补材料）
+
+**创新点已定稿（v5，2026-06-02）**：
+- IP1 (Ch3): 信道估计误差对载波同步性能的级联影响分析 → 估计精度设计准则
+- IP2 (Ch4): 载波同步性能分析框架 → 分湍流条件的方法选择与参数设计准则
+- FPGA (Ch5): 工程验证章节，不是创新点
+- 措辞策略: 对标 Petkovic 2023 的"分析框架 + 设计准则"模式，不用"提出新方法"
+- 详细记录: `毕设/innovation-points.md`
+
 **正在进行的对话**:
-- 无（Task 0~E + PROMPT-007验证+文档同步+语言审查 全部完成，等待开 Task F 写初稿）
+- 无（创新点+数据对齐完成，下一步: 继续深扫 → 补缺页）
 
 **最近的完成项**:
-- [x] 语言禁忌+事实性审查（2026-06-02）：12个文件~71处修改（旧VV数据/NMSE升级/FPGA违规/术语统一/措辞禁忌）
+- [x] 创新点 v5 定稿（2026-06-02）：IP1/IP2 统一为"分析框架+设计准则"模式，4个否决方案完整记录
+- [x] 创新点 4 轮迭代（v1→v5）：否决自适应/省VV/解析自适应/设计与优化方法，确定分析框架定位
+- [x] S005 创新点重组决策 + PROMPT-009 PPT指导 + PROMPT-010 后续总提示词
+- [x] 语言禁忌+事实性审查（2026-06-02）：12个文件~71处修改
+- [x] 创新点+结论+数据全面对齐（2026-06-02续）：25个文件~108处修改（创新点3→2/自适应清理/FPGA/揭示/ω_n/旧数据/种子数/归档标注）
 - [x] TERMS.md 术语规范更新（VV平均窗口+归一化辐照度全文统一）
-- [x] PROMPT-006 Task E: section-outline.md（867行，Ch2-Ch5 各节详细写作大纲）
-- [x] PROMPT-006 Task A: formula-inventory.md（101条公式盘点+Ch4缺口分析）
-- [x] PROMPT-006 Task B: writing-patterns-paragraph.md（1448行段落模式）+ writing-patterns-sentence.md（1019行句式库）
-- [x] PROMPT-006 Task C: writing-phrases.md（写作用语库）
-- [x] PROMPT-006 Task D: figure-table-plan.md（27张开题图表+夏兆宇对标）
-- [x] PROMPT-006 Task 0: 丁爽/张思齐/吴志航转换+评估
-- [x] 写作材料统一化（5文件→2文件，Phase A/B/C/D 全完成）
-- [x] 8-agent 审查（2参数+6术语）→ TERMS.md 建立
+- [x] PROMPT-007 仿真正确性验证全部完成（42 agents，15条确认结论）
+- [x] PROMPT-008 仿真缺口全部填补（NMSE/DPLL扫参/Nw低SNR）
+- [x] CONCLUSIONS.md 结论注册表建立（9条可写+4条纯理论+待重验）
+- [x] PROMPT-006 Task 0~E 全部完成
+- [x] 8-agent 审查 → TERMS.md 建立
 - [x] design-decisions.md（56条决策+14条否决方案）
-- [x] symbol-conventions.md
-- [x] §1.1 初稿 v3（董凡风格+夏兆宇结构适配，最佳版本）
-- [x] §1.2 初稿 v1-v2
-- [x] formulas-ch5-fpga.md
-- [x] 4 个写作准备提示词（PROMPT-001~004）
 
 ---
 
@@ -116,7 +121,7 @@
 
 | 专题 | 路径 | 状态 | 说明 |
 |------|------|------|------|
-| thesis-writing-prep | `.sessions/2026-05-31-thesis-writing-prep/` | **active** | Task 0~E全完成，待开Task F写初稿 |
+| thesis-writing-prep | `.sessions/2026-05-31-thesis-writing-prep/` | **active** | S005创新点定稿+PROMPT-009 PPT指导+PROMPT-010后续总提示 |
 | thesis-direction-pivot | `.sessions/thesis-direction-pivot/` | active | 方向探索主专题 |
 | thesis-simulation-consolidation | `.sessions/thesis-simulation-consolidation/` | active | 仿真代码整合 |
 | thesis-final-review | `.sessions/thesis-final-review/` | active | 8-agent审查 |
@@ -206,8 +211,18 @@
 
 ## 关键约束
 
+- **创新点 2 个**（不是 3 个）：IP1(Ch3级联分析+精度准则) + IP2(Ch4性能分析框架+参数设计准则)
+- **FPGA 不是创新点**：Ch5 是工程验证章节，对标曾嘉论文（FPGA 是验证不是创新）
+- **IP2 措辞用"分析框架+设计准则"**：不用"设计与优化方法"（过度承诺），不用"自适应"（与 TL-03 矛盾）
+- **对标 Petkovic 2023**："analytical framework + design criterion"模式，非"propose new method"
 - Ch5 只有 2 个模块（FOE+DPLL，无符号定时同步）
-- Ch4 不绑定具体算法（防御性写作 R003）
 - ω_n 单位 rad/s（不是 MHz）
 - h 是实值归一化辐照度（不是复信道系数）
 - 禁止"首次"/"填补空白"/"oracle CSI"
+- 03-研究方案.md 是方向参考初稿，不是最终文档（质量差，仅参考方向）
+
+## 下一步（PROMPT-010 规划）
+
+1. **对话1**: PPT 图规格设计（6 张图的内容规格，尤其是 F6 论文架构图）
+2. **对话2**: PPT 文字内容 + 研究现状补早期文献（2000-2017 经典工作）
+3. **对话3**: 文档批量对齐（11 个文件 + 3 项新写内容，PPT 定稿后执行）

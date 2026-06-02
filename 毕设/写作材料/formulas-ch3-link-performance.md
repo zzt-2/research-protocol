@@ -291,9 +291,9 @@ $\sigma_\phi$ 导致的 SNR 惩罚与湍流强度无关（均为 +4.2 dB @ $\sig
 
 **关键发现**：DPLL 自适应带宽 $B_L = B_0 \hat{h}$ 使 $\sigma_\phi^2$ 与 $h$ 无关（$B_L \propto h$ 与 $\gamma \propto h$ 精确抵消），因此估计误差对平均 BER 的影响可忽略（ratio = 1.000 @ NMSE = -5 dB）。
 
-**物理解释**：自适应载波同步对信道估计误差天然鲁棒——$B_L \propto h$ 和 $\gamma \propto h$ 形成对消，$\sigma_\phi$ 与信道状态无关。
+**物理解释**：载波同步对信道估计误差天然鲁棒——$B_L \propto h$ 和 $\gamma \propto h$ 形成对消，$\sigma_\phi$ 与信道状态无关。
 
-**对论文意义**：解释了为什么 Ch4 自适应算法在 Ch2 估计不完美时仍能正常工作（与 sim_cascade_robustness.py 6/6 PASS 一致）。
+**对论文意义**：解释了为什么 Ch4 载波同步算法在 Ch2 估计不完美时仍能正常工作（与 sim_cascade_robustness.py 6/6 PASS 一致）。
 
 **文献定位**: H002 确认：未见于 FSO 文献，但代数消元"显而易见"。定位为**设计洞察而非理论创新**。
 
