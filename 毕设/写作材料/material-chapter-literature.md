@@ -2,7 +2,7 @@
 
 > 2026-05-31 | 学位论文v4结构（6章）v2
 > 来源：R004-R007, R012-R016, S006-S010, literature_notes.md, S002文献更新
-> 上一版165篇，本版扩展至261篇（含跨章重复）：Ch1=110, Ch2=35, Ch3=40, Ch4=51, Ch5=25
+> 上一版165篇，本版扩展至274篇（含跨章重复）：Ch1=124, Ch2=35, Ch3=40, Ch4=51, Ch5=25
 > 说明：一篇论文跨章出现时各算独立条目；Ch6不引用独立文献
 
 ---
@@ -88,7 +88,10 @@
 | 22 | elamassie2023fso6g | 6G NTN-FSO回传综述 | Elamassie et al. (2023), Photonics | 65 | IM/DD vs 相干设计原则+链路预算教程 | ⬚ |
 | 23 | wang2024fsoISL | FSO星间链路综述 | Wang et al. (2024), IEEE | 114 | APT+调制+安全全覆盖 | ⬚ |
 
-### 1.2.2 低轨卫星激光通信载波同步研究现状（28篇）
+### 1.2.2 湍流下相干接收端信号处理研究现状（42篇）
+
+> v3 更新（2026-06-03）：标题从"载波同步"扩展为"信号处理"，新增 L2（分析框架+设计方法）+ L3（优化方向）9 篇文献。
+> v4 更新（2026-06-03）：L2/L3 扩充 +5 篇（petkovic2022/fatadin2016/castrillon2015/li2022/zhang2024jfso）。
 
 | # | citekey | 论文名 | 作者(年份), 期刊 | 引用 | 支撑论点 | 状态 |
 |---|---------|--------|-----------------|------|---------|------|
@@ -102,7 +105,7 @@
 | 8 | wang2024oe | Enhanced frame sync and carrier recovery in coherent FSO | Wang et al. (2024), Optics Express | 2 | FSO湍流帧同步+载波恢复联合 | ⬚ |
 | 9 | magarini2012pilot | Pilot-Symbols-Aided CPR for 100-G PM-QPSK Digital Coherent | Tao et al. (2012), JLT | 94 | **Pilot-aided CPR经典论文** | ⬚ |
 | 10 | improved2012pilot | Improved Pilot-Aided Optical Carrier Phase Recovery for M-QAM | (2012), IEEE PTL | 26 | 改进型Pilot-aided CPR | ⬚ |
-| 11 | tanimura2012dpll | Digital PLL based frequency offset compensation and carrier phase estimation | Le et al. (2012), OFC | 15 | DPLL载波恢复经典参考 | ⬚ |
+| 11 | paillier2020 | Space-Ground Coherent Optical Links: Ground Receiver Performance With AO | Paillier et al. (2020), JLT | 53 | DPLL+AO星地相干链路实验 | ✅ |
 | 12 | zibar2020ukf | Pilot-symbols-aided unscented Kalman filter for carrier phase recovery | Zibar et al. (2020), Optics Comm. | 3 | Pilot+UKF载波相位恢复 | ⬚ |
 | 13 | lihuagui2023 | 相干光通信消相位模糊载波同步算法 | (2023), 光学学报 | 2 | 中文载波同步+消相位模糊 | ⬚ |
 | 14 | baijiajun2021qpsk | 相干光通信系统中QPSK调制解调研究与实现 | 白佳俊 (2021), 西安理工大学硕士 | 11 | QPSK相干检测调制解调中文研究 | ⬚ |
@@ -120,6 +123,24 @@
 | 26 | guiomar2022coherent | 相干FSO 800Gbps 48h实验挑战综述 | Guiomar et al. (2022), JLT | 235 | 相干FSO挑战权威参考（跨章重复1.1） | ⬚ |
 | 27 | walsh2022leotracking | 100Gbps coherent FSO with LEO tracking rate | Sasaki et al. (2022), SciRep | 0 | 相干检测支撑LEO星地链路（跨章重复1.1） | ⬚ |
 | 28 | stotts2021 | AO仅弱湍流<10km有效 | Stotts et al. (2021), Optics Express | 41 | AO中强湍流无增益，DSP路线依据（跨章重复1.1） | ⬚ |
+| --- | *L2 性能分析与设计方法（新增 2026-06-03）* | | | | | |
+| 29 | petkovic2023 | M-ary PSK FSO with imperfect CSI over Málaga turbulence | Petković et al. (2023), Mathematics | 20 | **分析框架→设计准则标杆**：可容忍σ_φ→PLL设计参数 | ✅本地库 |
+| 30 | gardner1979 | Phaselock Techniques (2nd ed.) | Gardner (1979), Wiley | 教材 | AWGN PLL设计经典：环路带宽-跟踪误差折中原始出处 | ✅经典 |
+| 31 | moeneclaey1994 | Optimal Averaging Window for VV Phase Estimator | Moeneclaey et al. (1994), GLOBECOM | 30 | AWGN+Wiener下VV最优窗口闭合公式 | ⬚ |
+| --- | *L3 信号处理优化方向（新增 2026-06-03）* | | | | | |
+| 32 | oh2001 | Joint Decoding and Carrier Phase Recovery for Turbo Coded FSK | Oh & Cheun (2001), IEEE Commun. Lett. | 80 | **code-aided载波恢复奠基**：Turbo迭代+相位估计 | ⬚ |
+| 33 | lottici2004 | Embedding Carrier Phase Recovery into Turbo Iterative Decoding | Lottici & Luise (2004), IEEE Trans. Commun. | 120 | code-aided完整理论框架（EM算法推导） | ⬚ |
+| 34 | wu2012 | Iterative Carrier Phase Recovery for Coded Linear Modulations | Wu et al. (2012), IET Commun. | 15 | code-aided性能分析+收敛条件 | ⬚ |
+| 35 | yuan2017 | Iterative Carrier Recovery with FEC for Optical Coherent Comm. | Yuan & Igarashi (2017), OECC | 0 | **光通信code-aided唯一先例**（光纤，会议论文） | ⬚ |
+| 36 | oezbilgin2025 | PLL Carrier Recovery over Atmospheric Turbulence Channels | Ozbilgin et al. (2025), IEEE TCOM | 0 | PLL+湍流级联PEP闭合表达式（单源相位噪声） | ⬚ |
+| 37 | nguyen2020 | ABER with Phase Error+Turbulence+Pointing Error | Nguyen et al. (2020), IEEE Access | 35 | 弱湍流下相位误差主导BER退化（跨章重复Ch3/4） | ⬚ |
+| --- | *L2 扩充（2026-06-03）* | | | | | |
+| 38 | petkovic2022 | Error Probability of Coherent M-ary PSK FSO with Phase Noise | Petković et al. (2023), Mathematics | 0 | 同团队早期工作：Málaga+相位噪声SEP框架→PLL设计准则 | ⬚ |
+| 39 | fatadin2016 | Estimation of BER from EVM for Optical Coherent | Fatadin (2016), Photonics | 20 | EVM→BER映射，给定目标BER反推可容忍相位噪声参数 | ⬚ |
+| --- | *L3 扩充（2026-06-03）* | | | | | |
+| 40 | castrillon2015 | JIDD in Coherent Optical with Laser Phase Noise | Castrillon et al. (2015), JLT | 50 | 光纤相干JIDD验证，code-aided在光域又一先例 | ⬚ |
+| 41 | li2022 | Pointing Error Effect on Laser Linewidth Tolerance | Li et al. (2022), Optics Express | 0 | 激光线宽容限+指向误差联合BER闭合表达式 | ⬚ |
+| 42 | zhang2024jfso | Joint Freq Offset+Phase Noise Mitigation in Turbulent FSO | Zhang et al. (2024) | 0 | **唯一直接在湍流FSO中联合补偿多源相位噪声** | ⬚ |
 
 ### 1.2.3 现有研究不足与本文切入点（8篇）
 
@@ -141,7 +162,7 @@
 | 1 | xu2025 | Satellite-to-ground optical comm under orbital deviations and turbulence | Xu et al. (2025), Optics Express | 16 | 星地链路GG+指向误差建模（Ch2） | ⬚ |
 | 2 | zhaoyuanfan2024 | 空间相干激光通信信道均衡算法研究 | 赵远帆 (2024), 青岛大学硕士 | 1 | 空间相干激光通信DL均衡（Ch3） | ⬚ |
 | 3 | zouxinhang2025 | 高速光通信系统的并行定点信号处理技术研究 | 邹欣航 (2025), 北京邮电大学硕士 | 0 | 光通信定点化FPGA处理（Ch5） | ⬚ |
-| 4 | valjus2025 | 相干光卫星链路DSP算法综述 | Valjus et al. (2025), Satellite | 9 | **直接相关**：卫星场景DSP（Ch5） | ⬚ |
+| 4 | valjus2025dsp | 相干光卫星链路DSP算法综述 | Valjus et al. (2025), IJSCN | 9 | **直接相关**：卫星场景DSP（Ch5） | ⬚ |
 | 5 | alhosani2025optical | FSO空间光通信综述 | Alhosani et al. (2025), IJIT | 8 | 2025年最新FSO综述（Ch2） | ⬚ |
 | 6 |  | 2018年空间光学终端设计 | Liu et al. (2024), Proc. SPIE | 1 | 已完成星地+星间双向验证（Ch2） | ⬚ |
 | 7 | alimi2024revolutionizing | FSO使能技术全景综述 | Alimi et al. (2024), Sensors | 64 | 5G/B5G场景FSO权威综述（Ch2） | ⬚ |
@@ -188,7 +209,7 @@
 | 32 | chen2025multisystem | LEO星间激光6终端BER<1e-6 | Chen et al. (2025), Proc. SPIE | 0 | 2.1 工程验证 | 中国LEO星间在轨验证 | ⬚ |
 | 33 | wang2024fsoISL | FSO星间链路综述 | Wang et al. (2024), IEEE | 114 | 2.1 系统概述 | APT+调制+安全全覆盖 | ⬚ |
 | 34 | elamassie2023fso6g | 6G NTN-FSO回传综述 | Elamassie et al. (2023), Photonics | 65 | 2.1 链路预算 | IM/DD vs 相干设计原则+链路预算教程 | ⬚ |
-| 35 | valjus2025 | 相干光卫星链路DSP算法综述 | Valjus et al. (2025), Satellite | 9 | 2.2 DSP基础 | **直接相关**：卫星场景DSP | ⬚ |
+| 35 | valjus2025dsp | 相干光卫星链路DSP算法综述 | Valjus et al. (2025), IJSCN | 9 | 2.2 DSP基础 | **直接相关**：卫星场景DSP | ⬚ |
 
 ---
 
@@ -330,7 +351,7 @@
 | 21 | ge2026opll | FPGA OPLL抑制高频干扰 | Ge et al. (2026), SPIE | 0 | 5.2 FPGA DPLL | FPGA DPLL最新 | ⬚ |
 | 22 | martins2021cpr | 双级CPR硬件优化 | Martins et al. (2021), OSA Continuum | 9 | 5.3 CPR实现 | BPS测试相位数降90%+ | ⬚ |
 | 23 | borjeson2021 | CPR电路实现参数权衡 | Borjeson et al. (2021), JLT | 12 | 5.3 CPR实现 | mVV/BPS/PCPE定点精度影响0.6dB | ⬚ |
-| 24 | valjus2025 | 相干光卫星链路DSP算法综述 | Valjus et al. (2025), Satellite | 9 | 5.1 DSP架构 | **直接相关**：卫星场景DSP | ⬚ |
+| 24 | valjus2025dsp | 相干光卫星链路DSP算法综述 | Valjus et al. (2025), IJSCN | 9 | 5.1 DSP架构 | **直接相关**：卫星场景DSP | ⬚ |
 | 25 | zhou2014clock | 时钟+载波恢复算法系统综述 | Zhou et al. (2014), JLT | 78 | 5.1 DSP基础 | FOE/CPR分类与选择依据 | ⬚ |
 
 ---
@@ -339,12 +360,12 @@
 
 | 章 | 目标篇数 | 实际篇数 | ✅全文/经典 | ⬚摘要 | ❌未获取 | ⬇降级 | 全文率 |
 |---|---------|---------|-----------|-------|---------|------|--------|
-| Ch1 绪论 | 100-120 | **110** | 25 | 68 | 10 | 7 | 23% |
+| Ch1 绪论 | 100-120 | **119** | 26 | 74 | 10 | 7 | 22% |
 | Ch2 系统与信道模型 | 25-30 | **35** | 9 | 16 | 9 | 2 | 26% |
 | Ch3 信道估计+级联 | 30-33 | **40** | 11 | 21 | 5 | 4 | 28% |
 | Ch4 载波同步 | 35-45 | **50** | 11 | 27 | 5 | 3 | 22% |
 | Ch5 FPGA | 20-25 | **25** | 3 | 16 | 5 | 0 | 12% |
-| **合计** | **~230** | **260** | **59** | **148** | **34** | **16** | **23%** |
+| **合计** | **~230** | **269** | **60** | **155** | **34** | **16** | **22%** |
 
 去重后独立论文约180篇（Ch1与Ch2/3/4有约40篇跨章重复，Ch3/4/5有约15篇跨章重复）。
 中文文献约50篇（占总数20%），英文约210篇。

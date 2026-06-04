@@ -174,6 +174,16 @@ topics:
       - slug: thesis-direction-pivot
         reason: 需要论文全貌和已有技术积累
 
+  - slug: 2026-06-04-advisor-review-revision
+    title: 开题报告导师批注系统性修订
+    status: active
+    created: "2026-06-04"
+    last_updated: "2026-06-04"
+    description: "开题报告v2导师20条批注按5类(AI痕迹/学术定位/格式/图表/参考文献)分对话修订，同步更新写作规范"
+    depends_on:
+      - slug: thesis-writing-prep
+        reason: 批注基于开题报告v2，需要写作规范和方向标签上下文
+
   - slug: thesis-simulation-consolidation
     title: 仿真体系统一化
     status: active
