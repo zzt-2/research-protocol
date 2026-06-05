@@ -1,0 +1,160 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36 Edg/148.0.0.0" version="29.6.4">
+  <diagram name="企业级 SaaS 平台及工作流引擎" id="28AH5R-a9O9MrVNR57UK">
+    <mxGraphModel dx="-449" dy="-436" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-834" parent="1" style="html=1;whiteSpace=wrap;rounded=1;arcSize=8;strokeWidth=1.5;shadow=0;align=center;verticalAlign=middle;fontFamily=Microsoft YaHei;fontSize=24;fontColor=#000000;fontStyle=1;fillColor=#FFECA8;strokeColor=#D2B96A;" value="星地激光通信信号处理关键技术研究" vertex="1">
+          <mxGeometry height="50" width="930" x="2060" y="2210" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-835" parent="1" style="html=1;whiteSpace=wrap;rounded=1;arcSize=6;strokeWidth=1.5;shadow=0;align=center;verticalAlign=middle;fontFamily=Microsoft YaHei;fontSize=1;fontColor=#000000;fillColor=#F7FFF3;strokeColor=#333333;" value="" vertex="1">
+          <mxGeometry height="100" width="840" x="2150" y="2276" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-836" parent="1" style="html=1;whiteSpace=wrap;rounded=1;arcSize=6;strokeWidth=1.5;shadow=0;align=center;verticalAlign=middle;fontFamily=Microsoft YaHei;fontSize=1;fontColor=#000000;fillColor=#F6E1CF;strokeColor=#333333;" value="" vertex="1">
+          <mxGeometry height="120" width="840" x="2150" y="2386" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-837" parent="1" style="html=1;whiteSpace=wrap;rounded=1;arcSize=6;strokeWidth=1.5;shadow=0;align=center;verticalAlign=middle;fontFamily=Microsoft YaHei;fontSize=1;fontColor=#000000;fillColor=#DCE6F6;strokeColor=#333333;" value="" vertex="1">
+          <mxGeometry height="165" width="840" x="2150" y="2516" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-838" parent="1" style="html=1;whiteSpace=wrap;rounded=1;arcSize=6;strokeWidth=1.5;shadow=0;align=center;verticalAlign=middle;fontFamily=Microsoft YaHei;fontSize=1;fontColor=#000000;fillColor=#E8F4DF;strokeColor=#333333;" value="" vertex="1">
+          <mxGeometry height="230" width="840" x="2150" y="2701" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-839" parent="1" style="html=1;whiteSpace=wrap;rounded=1;arcSize=6;strokeWidth=1.5;shadow=0;align=center;verticalAlign=middle;fontFamily=Microsoft YaHei;fontSize=1;fontColor=#000000;fillColor=#FFF8D6;strokeColor=#333333;" value="" vertex="1">
+          <mxGeometry height="130" width="819" x="2161" y="2791" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-840" parent="1" style="html=1;whiteSpace=wrap;rounded=0;strokeWidth=1.5;shadow=0;align=center;verticalAlign=middle;fontFamily=Microsoft YaHei;fontSize=18;fontColor=#000000;fontStyle=1;fillColor=#E6E6E6;strokeColor=#8A8A8A;" value="研究&lt;br&gt;背景" vertex="1">
+          <mxGeometry height="65" width="80" x="2060" y="2275" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-841" parent="1" style="html=1;whiteSpace=wrap;rounded=0;strokeWidth=1.5;shadow=0;align=center;verticalAlign=middle;fontFamily=Microsoft YaHei;fontSize=18;fontColor=#000000;fontStyle=1;fillColor=#E6E6E6;strokeColor=#8A8A8A;" value="挑战&lt;br&gt;难题" vertex="1">
+          <mxGeometry height="85" width="80" x="2060" y="2385" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-842" parent="1" style="html=1;whiteSpace=wrap;rounded=0;strokeWidth=1.5;shadow=0;align=center;verticalAlign=middle;fontFamily=Microsoft YaHei;fontSize=18;fontColor=#000000;fontStyle=1;fillColor=#E6E6E6;strokeColor=#8A8A8A;" value="理论&lt;br&gt;支撑&lt;br&gt;+&lt;br&gt;研究&lt;br&gt;思路" vertex="1">
+          <mxGeometry height="135" width="80" x="2060" y="2515" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-843" parent="1" style="html=1;whiteSpace=wrap;rounded=0;strokeWidth=1.5;shadow=0;align=center;verticalAlign=middle;fontFamily=Microsoft YaHei;fontSize=18;fontColor=#000000;fontStyle=1;fillColor=#E6E6E6;strokeColor=#8A8A8A;" value="关键&lt;br&gt;技术" vertex="1">
+          <mxGeometry height="84" width="80" x="2060" y="2700" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-844" parent="1" style="html=1;whiteSpace=wrap;rounded=0;strokeWidth=1.5;shadow=0;align=center;verticalAlign=middle;fontFamily=Microsoft YaHei;fontSize=18;fontColor=#000000;fontStyle=1;fillColor=#E6E6E6;strokeColor=#8A8A8A;" value="研究&lt;br&gt;内容" vertex="1">
+          <mxGeometry height="100" width="80" x="2060" y="2830" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-845" parent="1" style="shape=singleArrow;direction=south;whiteSpace=wrap;html=1;fillColor=#F2F2F2;strokeColor=#8A8A8A;strokeWidth=1.5;arrowWidth=0.5555562337239643;arrowSize=0.2499994220155641;" value="" vertex="1">
+          <mxGeometry height="44" width="25" x="2087.5" y="2786" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-846" parent="1" style="html=1;whiteSpace=wrap;rounded=1;arcSize=8;strokeWidth=1.5;shadow=0;align=center;verticalAlign=middle;fontFamily=Microsoft YaHei;fontSize=14;fontColor=#000000;fillColor=#FFFFFF;strokeColor=#BFBFBF;" value="&lt;b&gt;&lt;font color=&quot;#D00000&quot;&gt;应用需求&lt;/font&gt;&lt;/b&gt;&lt;br&gt;低轨星座高速星地&lt;br&gt;激光回传链路需求增长" vertex="1">
+          <mxGeometry height="70" width="240" x="2191.5" y="2291" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-847" parent="1" style="html=1;whiteSpace=wrap;rounded=1;arcSize=8;strokeWidth=1.5;shadow=0;align=center;verticalAlign=middle;fontFamily=Microsoft YaHei;fontSize=14;fontColor=#000000;fillColor=#FFFFFF;strokeColor=#BFBFBF;" value="&lt;b&gt;&lt;font color=&quot;#D00000&quot;&gt;技术前沿&lt;/font&gt;&lt;/b&gt;&lt;br&gt;相干探测 · 高速DSP&lt;br&gt;数字补偿与信号处理发展" vertex="1">
+          <mxGeometry height="70" width="240" x="2711.5" y="2291" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-848" parent="1" style="shape=singleArrow;direction=south;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=default;strokeWidth=1.5;labelBorderColor=none;rounded=0;" value="" vertex="1">
+          <mxGeometry height="80" width="36" x="2553" y="2330.5" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-849" parent="1" style="shape=doubleArrow;direction=east;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#333333;strokeWidth=1.5;arrowWidth=0.34693794509991804;arrowSize=0.0777776227678578;" value="" vertex="1">
+          <mxGeometry height="36" width="240" x="2451" y="2317.5" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-850" parent="1" style="html=1;whiteSpace=wrap;rounded=1;arcSize=8;strokeWidth=1.5;shadow=0;align=center;verticalAlign=middle;fontFamily=Microsoft YaHei;fontSize=13;fontColor=#000000;fillColor=#FFFFFF;strokeColor=#C7B8A6;" value="&lt;b&gt;典型场景&lt;/b&gt;&lt;br&gt;LEO 动态过境 · 大气湍流 · 多普勒频移" vertex="1">
+          <mxGeometry height="48" width="350" x="2191.5" y="2397" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-851" parent="1" style="html=1;whiteSpace=wrap;rounded=1;arcSize=8;strokeWidth=1.5;shadow=0;align=center;verticalAlign=middle;fontFamily=Microsoft YaHei;fontSize=13;fontColor=#000000;fillColor=#FFFFFF;strokeColor=#C7B8A6;" value="&lt;b&gt;信号特点&lt;/b&gt;&lt;br&gt;光强起伏 · 相位扰动 · 频偏时变" vertex="1">
+          <mxGeometry height="48" width="350" x="2601.5" y="2397" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-852" parent="1" style="html=1;whiteSpace=wrap;rounded=1;arcSize=8;strokeWidth=1.5;shadow=0;align=center;verticalAlign=middle;fontFamily=Microsoft YaHei;fontSize=14;fontColor=#000000;fillColor=#FFFFFF;strokeColor=#C7B8A6;" value="&lt;b&gt;课题聚焦：&lt;/b&gt;&lt;div&gt;湍流信道建模 · 信道估计&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));&quot;&gt; &lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));&quot;&gt;·&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));&quot;&gt; &lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));&quot;&gt;载波同步设计分析&lt;/span&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="38" width="760" x="2189.5" y="2457" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-853" parent="1" style="text;html=1;strokeColor=none;fillColor=none;whiteSpace=wrap;rounded=0;fontFamily=Microsoft YaHei;fontSize=18;fontColor=#000000;fontStyle=1;align=center;verticalAlign=middle;" value="相关理论基础" vertex="1">
+          <mxGeometry height="28" width="840" x="2148" y="2527" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-854" parent="1" style="html=1;whiteSpace=wrap;rounded=1;arcSize=8;strokeWidth=1.5;shadow=0;align=center;verticalAlign=middle;fontFamily=Microsoft YaHei;fontSize=13;fontColor=#000000;fontStyle=1;fillColor=#FFFFFF;strokeColor=#A6B6CC;" value="Gamma-Gamma 统计建模" vertex="1">
+          <mxGeometry height="48" width="240" x="2173.5" y="2555" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-855" parent="1" style="html=1;whiteSpace=wrap;rounded=1;arcSize=8;strokeWidth=1.5;shadow=0;align=center;verticalAlign=middle;fontFamily=Microsoft YaHei;fontSize=13;fontColor=#000000;fontStyle=1;fillColor=#FFFFFF;strokeColor=#A6B6CC;" value="湍流参数分档 · 链路预算" vertex="1">
+          <mxGeometry height="48" width="240" x="2172" y="2629" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-856" parent="1" style="html=1;whiteSpace=wrap;rounded=1;arcSize=8;strokeWidth=1.5;shadow=0;align=center;verticalAlign=middle;fontFamily=Microsoft YaHei;fontSize=13;fontColor=#000000;fontStyle=1;fillColor=#FFFFFF;strokeColor=#A6B6CC;" value="信道估计方法&lt;br&gt;LS / MMSE / KF" vertex="1">
+          <mxGeometry height="48" width="240" x="2452.5" y="2556" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-857" parent="1" style="html=1;whiteSpace=wrap;rounded=1;arcSize=8;strokeWidth=1.5;shadow=0;align=center;verticalAlign=middle;fontFamily=Microsoft YaHei;fontSize=13;fontColor=#000000;fontStyle=1;fillColor=#FFFFFF;strokeColor=#A6B6CC;" value="接收性能影响分析" vertex="1">
+          <mxGeometry height="48" width="240" x="2452" y="2629" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-858" parent="1" style="html=1;whiteSpace=wrap;rounded=1;arcSize=8;strokeWidth=1.5;shadow=0;align=center;verticalAlign=middle;fontFamily=Microsoft YaHei;fontSize=13;fontColor=#000000;fontStyle=1;fillColor=#FFFFFF;strokeColor=#A6B6CC;" value="载波同步方法&lt;br&gt;VV / BPS / DPLL" vertex="1">
+          <mxGeometry height="48" width="240" x="2730.5" y="2555" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-859" parent="1" style="html=1;whiteSpace=wrap;rounded=1;arcSize=8;strokeWidth=1.5;shadow=0;align=center;verticalAlign=middle;fontFamily=Microsoft YaHei;fontSize=13;fontColor=#000000;fontStyle=1;fillColor=#FFFFFF;strokeColor=#A6B6CC;" value="湍流性能建模 · 参数敏感性 · 方法探索" vertex="1">
+          <mxGeometry height="48" width="240" x="2730.5" y="2628" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-860" parent="1" style="shape=singleArrow;direction=south;whiteSpace=wrap;html=1;fillColor=#9DC3E6;strokeColor=#4472C4;strokeWidth=1.5;arrowWidth=0.49861302169850724;arrowSize=0.28748507578904015;" value="" vertex="1">
+          <mxGeometry height="25" width="28" x="2273.5" y="2604" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-861" parent="1" style="text;html=1;strokeColor=none;fillColor=none;whiteSpace=wrap;rounded=0;fontFamily=Microsoft YaHei;fontSize=13;fontColor=#D00000;fontStyle=1;align=center;verticalAlign=middle;" value="相干接收线性衰落模型" vertex="1">
+          <mxGeometry height="30" width="172" x="2281.5" y="2599" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-862" parent="1" style="text;html=1;strokeColor=none;fillColor=none;whiteSpace=wrap;rounded=0;fontFamily=Microsoft YaHei;fontSize=13;fontColor=#D00000;fontStyle=1;align=center;verticalAlign=middle;" value="估计误差传播边界" vertex="1">
+          <mxGeometry height="30" width="164" x="2561.5" y="2599.5" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-863" parent="1" style="text;html=1;strokeColor=none;fillColor=none;whiteSpace=wrap;rounded=0;fontFamily=Microsoft YaHei;fontSize=13;fontColor=#D00000;fontStyle=1;align=center;verticalAlign=middle;" value="深衰落相位滑移" vertex="1">
+          <mxGeometry height="28" width="172" x="2824" y="2600" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-864" parent="1" style="text;html=1;strokeColor=none;fillColor=none;whiteSpace=wrap;rounded=0;fontFamily=Microsoft YaHei;fontSize=13;fontColor=#D00000;fontStyle=1;align=center;verticalAlign=middle;" value="DPLL 稳定性边界" vertex="1">
+          <mxGeometry height="24" width="172" x="2688" y="2602" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-865" parent="1" style="html=1;whiteSpace=wrap;rounded=1;arcSize=8;strokeWidth=1.5;shadow=0;align=center;verticalAlign=middle;fontFamily=Microsoft YaHei;fontSize=13;fontColor=#000000;fontStyle=1;fillColor=#FFFFFF;strokeColor=#7EAD5C;" value="多湍流强度下&lt;br&gt;信道建模与链路预算分析" vertex="1">
+          <mxGeometry height="56" width="240" x="2172" y="2715" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-866" parent="1" style="html=1;whiteSpace=wrap;rounded=1;arcSize=8;strokeWidth=1.5;shadow=0;align=center;verticalAlign=middle;fontFamily=Microsoft YaHei;fontSize=13;fontColor=#000000;fontStyle=1;fillColor=#FFFFFF;strokeColor=#7EAD5C;" value="湍流信道估计精度与&lt;br&gt;接收性能影响分析" vertex="1">
+          <mxGeometry height="56" width="240" x="2455" y="2715" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-867" parent="1" style="html=1;whiteSpace=wrap;rounded=1;arcSize=8;strokeWidth=1.5;shadow=0;align=center;verticalAlign=middle;fontFamily=Microsoft YaHei;fontSize=13;fontColor=#000000;fontStyle=1;fillColor=#FFFFFF;strokeColor=#7EAD5C;" value="Gamma-Gamma 湍流下&lt;br&gt;载波同步性能分析与方法探索" vertex="1">
+          <mxGeometry height="56" width="240" x="2732" y="2715" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-868" parent="1" style="shape=singleArrow;direction=east;whiteSpace=wrap;html=1;fillColor=#A9D18E;strokeColor=#6AA84F;strokeWidth=1.5;arrowWidth=0.6482442764037494;arrowSize=0.3102053896281907;" value="" vertex="1">
+          <mxGeometry height="21" width="30" x="2422" y="2734.5" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-869" parent="1" style="html=1;whiteSpace=wrap;rounded=1;arcSize=6;strokeWidth=1.5;shadow=0;align=left;verticalAlign=top;fontFamily=Microsoft YaHei;fontSize=12;fontColor=#000000;fillColor=#FFFDF0;strokeColor=#B7A967;spacing=8;flipH=0;legacyAnchorPoints=0;" value="&lt;div style=&quot;text-align:center&quot;&gt;&lt;b&gt;第二章 大气湍流信道建模&lt;/b&gt;&lt;/div&gt;&lt;br&gt;• GG 模型参数确定与湍流强度分档&lt;br&gt;• 星地链路预算与 SNR 工作范围&lt;br&gt;• 相干检测信号模型" vertex="1">
+          <mxGeometry height="100" width="240" x="2172" y="2811" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-870" parent="1" style="html=1;whiteSpace=wrap;rounded=1;arcSize=6;strokeWidth=1.5;shadow=0;align=left;verticalAlign=top;fontFamily=Microsoft YaHei;fontSize=12;fontColor=#000000;fillColor=#FFFDF0;strokeColor=#B7A967;spacing=8;flipH=0;legacyAnchorPoints=0;" value="&lt;div style=&quot;text-align:center&quot;&gt;&lt;b&gt;第三章 大气湍流信道估计与接收性能影响分析&lt;/b&gt;&lt;/div&gt;&lt;br&gt;• LS / MMSE / KF 精度对比与适用边界&lt;br&gt;• 估计误差 → BER 性能影响建模&lt;br&gt;• 面向载波同步的信道估计精度设计准则" vertex="1">
+          <mxGeometry height="100" width="240" x="2452" y="2811" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-871" parent="1" style="html=1;whiteSpace=wrap;rounded=1;arcSize=6;strokeWidth=1.5;shadow=0;align=left;verticalAlign=top;fontFamily=Microsoft YaHei;fontSize=12;fontColor=#000000;fillColor=#FFFDF0;strokeColor=#B7A967;spacing=8;flipH=0;legacyAnchorPoints=0;" value="&lt;div style=&quot;text-align:center&quot;&gt;&lt;b&gt;第四章 湍流下相干接收端信号处理方法研究&lt;/b&gt;&lt;/div&gt;&lt;br&gt;• VV / BPS / DPLL 湍流下性能对比分析&lt;br&gt;• 分湍流强度的方法选择与参数设计准则&lt;br&gt;• 分析准则 → 参数设计 → 联合处理" vertex="1">
+          <mxGeometry height="100" width="240" x="2732" y="2811" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-872" parent="1" style="html=1;whiteSpace=wrap;rounded=1;arcSize=8;strokeWidth=1.5;shadow=0;align=center;verticalAlign=middle;fontFamily=Microsoft YaHei;fontSize=22;fontColor=#000000;fontStyle=1;fillColor=#FFECA8;strokeColor=#D2B96A;" value="建立湍流下的星地激光通信信号处理分析与设计框架" vertex="1">
+          <mxGeometry height="42" width="930" x="2058" y="2940" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-873" parent="1" style="shape=singleArrow;direction=south;whiteSpace=wrap;html=1;fillColor=#F4B183;strokeColor=#C55A11;strokeWidth=1.5;arrowWidth=0.6355555555555535;arrowSize=0.23976665296052152;" value="" vertex="1">
+          <mxGeometry height="28" width="15" x="2359" y="2443" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-874" parent="1" style="shape=singleArrow;direction=south;whiteSpace=wrap;html=1;fillColor=#F4B183;strokeColor=#C55A11;strokeWidth=1.5;arrowWidth=0.6355555555555535;arrowSize=0.23976665296052152;" value="" vertex="1">
+          <mxGeometry height="28" width="15" x="2769" y="2443" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-875" parent="1" style="shape=singleArrow;direction=south;whiteSpace=wrap;html=1;fillColor=#9DC3E6;strokeColor=#4472C4;strokeWidth=1.5;arrowWidth=0.49861302169850724;arrowSize=0.28748507578904015;" value="" vertex="1">
+          <mxGeometry height="25" width="28" x="2554" y="2604" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-876" parent="1" style="shape=singleArrow;direction=south;whiteSpace=wrap;html=1;fillColor=#9DC3E6;strokeColor=#4472C4;strokeWidth=1.5;arrowWidth=0.49861302169850724;arrowSize=0.28748507578904015;" value="" vertex="1">
+          <mxGeometry height="25" width="28" x="2832" y="2603" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-877" parent="1" style="shape=singleArrow;direction=south;whiteSpace=wrap;html=1;fillColor=#F2F2F2;strokeColor=#8A8A8A;strokeWidth=1.5;arrowWidth=0.5555562337239643;arrowSize=0.2499994220155641;" value="" vertex="1">
+          <mxGeometry height="44" width="25" x="2087.5" y="2341" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-878" parent="1" style="shape=singleArrow;direction=south;whiteSpace=wrap;html=1;fillColor=#F2F2F2;strokeColor=#8A8A8A;strokeWidth=1.5;arrowWidth=0.5555562337239643;arrowSize=0.2499994220155641;" value="" vertex="1">
+          <mxGeometry height="44" width="25" x="2087.5" y="2471" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-879" parent="1" style="shape=singleArrow;direction=south;whiteSpace=wrap;html=1;fillColor=#F2F2F2;strokeColor=#8A8A8A;strokeWidth=1.5;arrowWidth=0.5555562337239643;arrowSize=0.2499994220155641;" value="" vertex="1">
+          <mxGeometry height="50" width="25" x="2087.5" y="2650" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-880" parent="1" style="shape=singleArrow;direction=east;whiteSpace=wrap;html=1;fillColor=#A9D18E;strokeColor=#6AA84F;strokeWidth=1.5;arrowWidth=0.6482442764037494;arrowSize=0.3102053896281907;" value="" vertex="1">
+          <mxGeometry height="21" width="30" x="2699.5" y="2734.5" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-881" parent="1" style="shape=singleArrow;direction=south;whiteSpace=wrap;html=1;fillColor=#9DC3E6;strokeColor=#4472C4;strokeWidth=1.5;arrowWidth=0.49861302169850724;arrowSize=0.28748507578904015;" value="" vertex="1">
+          <mxGeometry height="25" width="28" x="2273.5" y="2677" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-882" parent="1" style="shape=singleArrow;direction=south;whiteSpace=wrap;html=1;fillColor=#9DC3E6;strokeColor=#4472C4;strokeWidth=1.5;arrowWidth=0.49861302169850724;arrowSize=0.28748507578904015;" value="" vertex="1">
+          <mxGeometry height="25" width="28" x="2554" y="2676" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-883" parent="1" style="shape=singleArrow;direction=south;whiteSpace=wrap;html=1;fillColor=#9DC3E6;strokeColor=#4472C4;strokeWidth=1.5;arrowWidth=0.49861302169850724;arrowSize=0.28748507578904015;" value="" vertex="1">
+          <mxGeometry height="25" width="28" x="2832" y="2677" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

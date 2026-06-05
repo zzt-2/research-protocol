@@ -1,0 +1,160 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36 Edg/148.0.0.0" version="29.6.4">
+  <diagram name="企业级 SaaS 平台及工作流引擎" id="28AH5R-a9O9MrVNR57UK">
+    <mxGraphModel dx="-1213" dy="-397" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-683" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;strokeWidth=1.3;" value="" vertex="1">
+          <mxGeometry height="140" width="170" x="2820" y="2060" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-644" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fad7ac;strokeColor=#b46504;strokeWidth=1.3;" value="" vertex="1">
+          <mxGeometry height="140" width="360" x="3150" y="2060" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-645" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f2f7ff;strokeColor=#9db4d0;strokeWidth=1.3;" value="" vertex="1">
+          <mxGeometry height="240" width="690" x="2820" y="2210" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-646" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#607080;fontSize=16;fontStyle=1;fontFamily=Microsoft YaHei;" value="GG 信道参数" vertex="1">
+          <mxGeometry height="42" width="150" x="2830" y="2070" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-647" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#607080;fontSize=16;fontStyle=1;fontFamily=Microsoft YaHei;" value="导频图案设计" vertex="1">
+          <mxGeometry height="42" width="150" x="2830" y="2150" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-648" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b0e3e6;strokeColor=#0e8088;fontSize=16;fontStyle=1;fontFamily=Microsoft YaHei;" value="估计输出" vertex="1">
+          <mxGeometry height="42" width="150" x="3345" y="2150" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-649" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff7e6;strokeColor=#607080;fontSize=16;fontStyle=1;fontFamily=Microsoft YaHei;" value="NMSE 评估" vertex="1">
+          <mxGeometry height="42" width="150" x="3155" y="2150" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-650" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff7e6;strokeColor=#607080;fontSize=16;fontStyle=1;fontFamily=Microsoft YaHei;" value="BER 灵敏度分析" vertex="1">
+          <mxGeometry height="42" width="150" x="3155" y="2070" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-651" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff7e6;strokeColor=#607080;fontSize=16;fontStyle=1;fontFamily=Microsoft YaHei;" value="精度设计准则" vertex="1">
+          <mxGeometry height="42" width="150" x="3350" y="2070" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-652" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#edf7f0;strokeColor=#607080;fontSize=16;fontStyle=1;fontFamily=Microsoft YaHei;" value="LS" vertex="1">
+          <mxGeometry height="42" width="86" x="2835" y="2230" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-653" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#edf7f0;strokeColor=#607080;fontSize=16;fontStyle=1;fontFamily=Microsoft YaHei;" value="导频相除" vertex="1">
+          <mxGeometry height="42" width="145" x="2970" y="2230" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-654" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#edf7f0;strokeColor=#607080;fontSize=16;fontStyle=1;fontFamily=Microsoft YaHei;" value="估计输出" vertex="1">
+          <mxGeometry height="42" width="145" x="3160" y="2230" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-655" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#edf7f0;strokeColor=#607080;fontSize=16;fontStyle=1;fontFamily=Microsoft YaHei;" value="误差序列" vertex="1">
+          <mxGeometry height="42" width="145" x="3350" y="2230" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-656" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff7e6;strokeColor=#607080;fontSize=16;fontStyle=1;fontFamily=Microsoft YaHei;" value="MMSE" vertex="1">
+          <mxGeometry height="42" width="86" x="2835" y="2315" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-657" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff7e6;strokeColor=#607080;fontSize=16;fontStyle=1;fontFamily=Microsoft YaHei;" value="协方差建模" vertex="1">
+          <mxGeometry height="42" width="145" x="2970" y="2315" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-658" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff7e6;strokeColor=#607080;fontSize=16;fontStyle=1;fontFamily=Microsoft YaHei;" value="加权滤波" vertex="1">
+          <mxGeometry height="42" width="145" x="3160" y="2315" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-659" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff7e6;strokeColor=#607080;fontSize=16;fontStyle=1;fontFamily=Microsoft YaHei;" value="估计输出" vertex="1">
+          <mxGeometry height="42" width="145" x="3350" y="2315" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-660" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eef5ff;strokeColor=#607080;fontSize=16;fontStyle=1;fontFamily=Microsoft YaHei;" value="KF" vertex="1">
+          <mxGeometry height="42" width="86" x="2835" y="2400" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-661" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eef5ff;strokeColor=#607080;fontSize=16;fontStyle=1;fontFamily=Microsoft YaHei;" value="AR 递推" vertex="1">
+          <mxGeometry height="42" width="145" x="2970" y="2400" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-662" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eef5ff;strokeColor=#607080;fontSize=16;fontStyle=1;fontFamily=Microsoft YaHei;" value="导频更新" vertex="1">
+          <mxGeometry height="42" width="145" x="3160" y="2400" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-663" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#eef5ff;strokeColor=#607080;fontSize=16;fontStyle=1;fontFamily=Microsoft YaHei;" value="状态估计" vertex="1">
+          <mxGeometry height="42" width="145" x="3350" y="2400" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-664" edge="1" parent="1" source="bdf1DORzeTP_LHPK1cLC-646" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#263238;strokeWidth=1.8;" target="bdf1DORzeTP_LHPK1cLC-647" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-665" edge="1" parent="1" source="bdf1DORzeTP_LHPK1cLC-652" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#3d4b57;strokeWidth=1.4;" target="bdf1DORzeTP_LHPK1cLC-653" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-666" edge="1" parent="1" source="bdf1DORzeTP_LHPK1cLC-653" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#3d4b57;strokeWidth=1.4;" target="bdf1DORzeTP_LHPK1cLC-654" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-667" edge="1" parent="1" source="bdf1DORzeTP_LHPK1cLC-654" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#3d4b57;strokeWidth=1.4;" target="bdf1DORzeTP_LHPK1cLC-655" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-668" edge="1" parent="1" source="bdf1DORzeTP_LHPK1cLC-656" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#3d4b57;strokeWidth=1.4;" target="bdf1DORzeTP_LHPK1cLC-657" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-669" edge="1" parent="1" source="bdf1DORzeTP_LHPK1cLC-657" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#3d4b57;strokeWidth=1.4;" target="bdf1DORzeTP_LHPK1cLC-658" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-670" edge="1" parent="1" source="bdf1DORzeTP_LHPK1cLC-658" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#3d4b57;strokeWidth=1.4;" target="bdf1DORzeTP_LHPK1cLC-659" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-671" edge="1" parent="1" source="bdf1DORzeTP_LHPK1cLC-660" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#3d4b57;strokeWidth=1.4;" target="bdf1DORzeTP_LHPK1cLC-661" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-672" edge="1" parent="1" source="bdf1DORzeTP_LHPK1cLC-661" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#3d4b57;strokeWidth=1.4;" target="bdf1DORzeTP_LHPK1cLC-662" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-673" edge="1" parent="1" source="bdf1DORzeTP_LHPK1cLC-662" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#3d4b57;strokeWidth=1.4;" target="bdf1DORzeTP_LHPK1cLC-663" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-674" edge="1" parent="1" source="bdf1DORzeTP_LHPK1cLC-647" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#263238;strokeWidth=1.8;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="bdf1DORzeTP_LHPK1cLC-652" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2810" y="2171" />
+              <mxPoint x="2810" y="2251" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-675" edge="1" parent="1" source="bdf1DORzeTP_LHPK1cLC-647" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#263238;strokeWidth=1.8;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="bdf1DORzeTP_LHPK1cLC-656" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2810" y="2171" />
+              <mxPoint x="2810" y="2336" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-676" edge="1" parent="1" source="bdf1DORzeTP_LHPK1cLC-647" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#263238;strokeWidth=1.8;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" target="bdf1DORzeTP_LHPK1cLC-660" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2810" y="2171" />
+              <mxPoint x="2810" y="2421" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-677" edge="1" parent="1" source="bdf1DORzeTP_LHPK1cLC-655" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#263238;strokeWidth=1.8;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="bdf1DORzeTP_LHPK1cLC-648" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="3520" y="2251" />
+              <mxPoint x="3520" y="2171" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-678" edge="1" parent="1" source="bdf1DORzeTP_LHPK1cLC-659" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#263238;strokeWidth=1.8;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="bdf1DORzeTP_LHPK1cLC-648" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="3520" y="2336" />
+              <mxPoint x="3520" y="2171" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-679" edge="1" parent="1" source="bdf1DORzeTP_LHPK1cLC-663" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#263238;strokeWidth=1.8;" target="bdf1DORzeTP_LHPK1cLC-648" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="3520" y="2421" />
+              <mxPoint x="3520" y="2171" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-680" edge="1" parent="1" source="bdf1DORzeTP_LHPK1cLC-648" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#263238;strokeWidth=1.8;" target="bdf1DORzeTP_LHPK1cLC-649" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-681" edge="1" parent="1" source="bdf1DORzeTP_LHPK1cLC-649" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#263238;strokeWidth=1.8;" target="bdf1DORzeTP_LHPK1cLC-650" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bdf1DORzeTP_LHPK1cLC-682" edge="1" parent="1" source="bdf1DORzeTP_LHPK1cLC-650" style="endArrow=block;html=1;rounded=0;edgeStyle=orthogonalEdgeStyle;strokeColor=#263238;strokeWidth=1.8;" target="bdf1DORzeTP_LHPK1cLC-651" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
