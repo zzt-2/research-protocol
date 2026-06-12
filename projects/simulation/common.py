@@ -22,7 +22,7 @@ from scipy.stats import gamma as gamma_dist
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import os, json, time
+import os, json, time, hashlib, subprocess, datetime
 
 OUT = os.path.dirname(os.path.abspath(__file__))
 
@@ -92,6 +92,81 @@ def resolve_qpsk(rx, tx_bits):
         if b < best: best = b
     return best
 
+def qam16_mod(bits):
+    """16-QAM modulation: 4 bits/symbol, avg power normalized to 1.
+    Gray mapping: 00→-3, 01→-1, 11→+1, 10→+3 per axis.
+    """
+    ns = len(bits) // 4
+    bits = bits[:ns*4]
+    bi = 2*bits[0::4] + bits[1::4]  # 2-bit I index
+    bq = 2*bits[2::4] + bits[3::4]  # 2-bit Q index
+    # Gray decode: 00→-3, 01→-1, 11→+1, 10→+3
+    gray_map = np.array([-3, -1, +3, +1])
+    si = gray_map[bi]
+    sq = gray_map[bq]
+    # Normalize: E[|s|²] = (9+1+1+9)/4 * 2 = 10, so divide by sqrt(10)
+    return (si + 1j * sq) / np.sqrt(10)
+
+def qam16_demod(s):
+    """16-QAM demodulation with Gray mapping."""
+    s = s * np.sqrt(10)  # undo normalization
+    si = np.real(s)
+    sq = np.imag(s)
+    # Slice to {-3, -1, +1, +3}
+    di = np.clip(np.round((si + 3) / 2) * 2 - 3, -3, 3).astype(int)
+    dq = np.clip(np.round((sq + 3) / 2) * 2 - 3, -3, 3).astype(int)
+    # Gray encode: -3→00, -1→01, +1→11, +3→10
+    gray_enc = {-3: (0,0), -1: (0,1), 1: (1,1), 3: (1,0)}
+    ns = len(s)
+    bits = np.zeros(4*ns, dtype=int)
+    for k in range(ns):
+        b0, b1 = gray_enc.get(int(di[k]), (0,0))
+        b2, b3 = gray_enc.get(int(dq[k]), (0,0))
+        bits[4*k]   = b0
+        bits[4*k+1] = b1
+        bits[4*k+2] = b2
+        bits[4*k+3] = b3
+    return bits
+
+def ber_count_qam16(tx_bits, rx):
+    return np.mean(tx_bits != qam16_demod(rx))
+
+def resolve_qam16(rx, tx_bits):
+    """QAM16 resolve: try 8 π/4 rotations, pick lowest BER."""
+    best = 1.0
+    for r in np.arange(0, 2*np.pi, np.pi/4):
+        b = ber_count_qam16(tx_bits, rx * np.exp(-1j*r))
+        if b < best: best = b
+    return best
+
+def dpll_track_dd(rx, omega_n=8e6, zeta=np.sqrt(2)/2, mod='qpsk'):
+    """DD (decision-directed) DPLL for QPSK and 16-QAM.
+    Uses hard decision to remove modulation instead of 4th-power."""
+    wT = min(omega_n * T_S, 0.5)
+    c1 = 2 * zeta * wT
+    c2 = wT**2
+    N = len(rx)
+    phi_est = np.zeros(N)
+    integrator = 0.0
+    vco_phase = 0.0
+    for k in range(N):
+        rotated = rx[k] * np.exp(-1j * vco_phase)
+        # DD: hard decision
+        if mod == 'qpsk':
+            dec = (np.sign(np.real(rotated)) + 1j * np.sign(np.imag(rotated))) / np.sqrt(2)
+        else:  # qam16
+            s = rotated * np.sqrt(10)
+            di = np.clip(np.round((np.real(s)+3)/2)*2-3, -3, 3)
+            dq = np.clip(np.round((np.imag(s)+3)/2)*2-3, -3, 3)
+            dec = (di + 1j * dq) / np.sqrt(10)
+        # Phase error from decision
+        pd_out = np.angle(rx[k] * np.exp(-1j * vco_phase) * np.conj(dec))
+        integrator += c2 * pd_out
+        freq_out = c1 * pd_out + integrator
+        vco_phase += freq_out
+        phi_est[k] = vco_phase
+    return rx * np.exp(-1j * phi_est), phi_est
+
 def ber_eval(tx_bits, rx, mode='direct'):
     """统一 BER 评估。
 
@@ -111,6 +186,16 @@ def amp_limit(rx, thresh=3.0):
     out = rx.copy()
     out[mask] = rx[mask] / amp[mask] * thresh
     return out
+
+def hard_decision(z, mod='qpsk'):
+    """Hard decision for QPSK or 16-QAM. Works with scalars and arrays."""
+    if mod == 'qpsk':
+        return (np.sign(np.real(z)) + 1j * np.sign(np.imag(z))) / np.sqrt(2)
+    s = z * np.sqrt(10)
+    di = np.clip(np.round((np.real(s) + 3) / 2) * 2 - 3, -3, 3)
+    dq = np.clip(np.round((np.imag(s) + 3) / 2) * 2 - 3, -3, 3)
+    return (di + 1j * dq) / np.sqrt(10)
+
 
 def doppler_phase(N, f_res=F_RESIDUAL, f_dot=DOPPLER_HIGH, lw=LASER_LW):
     k = np.arange(N)
@@ -173,19 +258,21 @@ def vv_cpr(rx, Nw=64):
     pe = np.unwrap(np.angle(avg)) / M
     return rx * np.exp(-1j * pe), pe
 
-def bps_cpr(rx, B=DEF_B_BPS, Nw=DEF_NW_BPS):
+def bps_cpr(rx, B=DEF_B_BPS, Nw=DEF_NW_BPS, mod='qpsk'):
     """Blind Phase Search (Pfau 2009, JLT)
 
     B 个测试相位，Nw 符号滑动窗口平均距离度量。
     使用 M=4 相位模糊展开解决 QPSK 模糊。
+    mod: 'qpsk' or 'qam16' decision function.
     """
     N = len(rx)
     phases = 2 * np.pi * np.arange(B) / B
 
     # 向量化计算所有测试相位的距离度量
     rotated = rx[np.newaxis, :] * np.exp(-1j * phases[:, np.newaxis])
-    dec = (np.sign(np.real(rotated)) + 1j * np.sign(np.imag(rotated))) / np.sqrt(2)
-    metrics = np.abs(rotated - dec)**2
+    dec = hard_decision(rotated, mod=mod)
+    dist = np.abs(rotated - dec)**2
+    metrics = dist / (np.abs(dec)**2 + 1e-10) if mod != 'qpsk' else dist
 
     # 滑动窗口平均
     ker = np.ones(Nw) / Nw
@@ -228,7 +315,7 @@ def design_Q(turb_name='strong', f_dot=DOPPLER_HIGH):
     return Q
 
 def kf_unified(rx_block, h_block, gamma_bar, Q, phi_init=None,
-               df_init=0.0, P_init=None):
+               df_init=0.0, P_init=None, mod='qpsk'):
     """2状态KF（单块），P 跨块传递（TL-09）"""
     N = len(rx_block)
     F = np.array([[1.0, T_S], [0.0, 1.0]])
@@ -254,8 +341,7 @@ def kf_unified(rx_block, h_block, gamma_bar, Q, phi_init=None,
         P_pred = F @ P @ F.T + Q
 
         rx_rotated = rx_block[k] * np.exp(-1j * x_pred[0])
-        s_hat = ((np.sign(np.real(rx_rotated))) +
-                 1j * (np.sign(np.imag(rx_rotated)))) / np.sqrt(2)
+        s_hat = hard_decision(rx_rotated, mod=mod)
         y = rx_block[k] * np.conj(s_hat)
         z_obs = np.angle(y)
 
@@ -389,7 +475,7 @@ def equalize_hmed(shared):
 # KF 载波恢复变体
 # ═══════════════════════════════════════════════════════════════
 def kf_oracle_recovery(rx, h, gamma_bar, turb_name, f_dot=DOPPLER_HIGH,
-                       Q_fine_df=(50e3)**2):
+                       Q_fine_df=(50e3)**2, mod='qpsk'):
     """KF oracle-h：逐块真实 h"""
     N = len(rx)
     k = np.arange(N)
@@ -411,7 +497,7 @@ def kf_oracle_recovery(rx, h, gamma_bar, turb_name, f_dot=DOPPLER_HIGH,
         phi_init = phi_full[s-1] if i > 0 else None
         phi_est, df_est, P_final = kf_unified(
             rx_foc[s:e], h_val, gamma_bar, Q_fine,
-            phi_init=phi_init, df_init=prev_df, P_init=prev_P)
+            phi_init=phi_init, df_init=prev_df, P_init=prev_P, mod=mod)
         phi_full[s:e] = phi_est
         prev_df = df_est
         prev_P = P_final
@@ -420,7 +506,7 @@ def kf_oracle_recovery(rx, h, gamma_bar, turb_name, f_dot=DOPPLER_HIGH,
 
 
 def kf_frame_h_recovery(rx, h_med, gamma_bar, turb_name, f_dot=DOPPLER_HIGH,
-                        Q_fine_df=(50e3)**2):
+                        Q_fine_df=(50e3)**2, mod='qpsk'):
     """KF frame-level h"""
     N = len(rx)
     k = np.arange(N)
@@ -442,7 +528,7 @@ def kf_frame_h_recovery(rx, h_med, gamma_bar, turb_name, f_dot=DOPPLER_HIGH,
         phi_init = phi_full[s-1] if i > 0 else None
         phi_est, df_est, P_final = kf_unified(
             rx_foc[s:e], h_val, gamma_bar, Q_fine,
-            phi_init=phi_init, df_init=prev_df, P_init=prev_P)
+            phi_init=phi_init, df_init=prev_df, P_init=prev_P, mod=mod)
         phi_full[s:e] = phi_est
         prev_df = df_est
         prev_P = P_final
@@ -452,7 +538,7 @@ def kf_frame_h_recovery(rx, h_med, gamma_bar, turb_name, f_dot=DOPPLER_HIGH,
 
 def kf_pilot_recovery(rx, gamma_bar, turb_name, n_pilots, h_med,
                       f_dot=DOPPLER_HIGH, block_size=BLOCK,
-                      alpha_ema=0.5, Q_fine_df=(50e3)**2):
+                      alpha_ema=0.5, Q_fine_df=(50e3)**2, mod='qpsk'):
     """导频辅助 KF 载波恢复"""
     N = len(rx)
     k = np.arange(N)
@@ -514,8 +600,7 @@ def kf_pilot_recovery(rx, gamma_bar, turb_name, n_pilots, h_med,
             x_pred = F_mat @ x
             P_pred = F_mat @ P @ F_mat.T + Q_fine
             rx_rotated = rx_foc[k_idx] * np.exp(-1j * x_pred[0])
-            s_hat = ((np.sign(np.real(rx_rotated))) +
-                     1j * (np.sign(np.imag(rx_rotated)))) / np.sqrt(2)
+            s_hat = hard_decision(rx_rotated, mod=mod)
             y = rx_foc[k_idx] * np.conj(s_hat)
             z_obs = np.angle(y)
             innov = z_obs - x_pred[0]
@@ -535,8 +620,7 @@ def kf_pilot_recovery(rx, gamma_bar, turb_name, n_pilots, h_med,
             x_pred = F_mat @ x
             P_pred = F_mat @ P @ F_mat.T + Q_fine
             rx_rotated = rx_foc[k_idx] * np.exp(-1j * x_pred[0])
-            s_hat = ((np.sign(np.real(rx_rotated))) +
-                     1j * (np.sign(np.imag(rx_rotated)))) / np.sqrt(2)
+            s_hat = hard_decision(rx_rotated, mod=mod)
             y = rx_foc[k_idx] * np.conj(s_hat)
             z_obs = np.angle(y)
             innov = z_obs - x_pred[0]
@@ -654,3 +738,32 @@ def run_trial_shared(Ns, gamma_bar, turb_name, f_dot, seed,
         results['bps'] = ber_eval(shared['bits'], rx_bps, mode=eval_mode)
 
     return results
+
+
+def save_results(data, filepath, script_name):
+    """保存结果 JSON 并自动注入元数据（TL-25 rule 6）。
+
+    Args:
+        data: 要保存的 dict（会被原地修改，加入 _meta 键）
+        filepath: 输出路径（如 'results/sweep.json'）
+        script_name: 脚本名（如 'multi_seed_sweep'）
+    """
+    with open(__file__, 'rb') as f:
+        chash = hashlib.md5(f.read()).hexdigest()[:8]
+    try:
+        commit = subprocess.run(
+            ['git', 'rev-parse', '--short', 'HEAD'],
+            capture_output=True, text=True, cwd=os.path.dirname(__file__)
+        ).stdout.strip()
+    except Exception:
+        commit = 'unknown'
+    data['_meta'] = {
+        'script': script_name,
+        'common_md5': chash,
+        'git_commit': commit,
+        'timestamp': datetime.datetime.now().isoformat(timespec='seconds'),
+    }
+    os.makedirs(os.path.dirname(filepath) or '.', exist_ok=True)
+    with open(filepath, 'w') as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
+    print(f"Results saved to {filepath} [common@{chash}, git@{commit}]")
