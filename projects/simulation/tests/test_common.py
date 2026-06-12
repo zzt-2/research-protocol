@@ -26,12 +26,6 @@ import warnings
 import numpy as np
 import pytest
 
-# 确保 common.py 可导入
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-SIM_DIR = os.path.dirname(SCRIPT_DIR)
-if SIM_DIR not in sys.path:
-    sys.path.insert(0, SIM_DIR)
-
 from common import (
     # 系统参数
     R_SYM, T_S, F_CARRIER, LASER_LW, BLOCK,
