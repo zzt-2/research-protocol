@@ -1,3 +1,4 @@
+<!-- maturity: accumulation -->
 # 学位论文公式推导
 
 > 创建: 2026-05-31 | 与 TERMS.md 符号约定保持一致
@@ -223,27 +224,27 @@ $$\mathcal{R} = \frac{e\eta}{h_P\nu} = \frac{\eta\lambda}{h_P c/e}$$
 
 #### F17: Beer-Lambert 定律（大气透过率）
 
-$$I(H) = I_0 \exp(-\gamma H \sec\theta)$$
+$$I(H) = I_0 \exp\!\bigl(-(\sigma_a + \sigma_s)\, H \sec\theta\bigr)$$
 
 - **来源**: [引用: 王锋式(2.3); 张岱2018 §2.4.1]
-- **变量**: γ_atm → TERMS §10.2 大气衰减系数; λ → TERMS §10.2 工作波长; d → TERMS §10.2 传播距离; I_0 = 发射光强; I(H) = 接收光强; θ = 天顶角
+- **变量**: σ_a → TERMS §10.2 大气吸收系数; σ_s → TERMS §10.2 大气散射系数; λ → TERMS §10.2 工作波长; I_0 = 发射光强; I(H) = 接收光强; H = 大气信道垂直高度; θ = 天顶角
 - **验证**: 标准教科书公式（大气光学基本定律）
 - **适用条件**: 准直光源经大气信道传输的透过率，指数衰减模型
 - **章节**: §2.3.1
 
-#### F18: 大气衰减系数
+#### F18: 大气吸收与散射系数分解
 
-$$\gamma = \sigma_a + \sigma_s = (\sigma_{a,mol} + \sigma_{a,ae}) + (\sigma_{s,mol} + \sigma_{s,ae})$$
+$$\sigma_a = \sigma_{a,\text{mol}} + \sigma_{a,\text{ae}}, \quad \sigma_s = \sigma_{s,\text{mol}} + \sigma_{s,\text{ae}}$$
 
-- **来源**: [引用: 王锋式(2.4)~(2.5); 符号按 §13 消歧策略，加下标区别于 GG α,β]
-- **变量**: γ_atm → TERMS §10.2; σ_{a,mol} = 分子吸收系数; σ_{a,ae} = 气溶胶吸收系数; σ_{s,mol} = 分子散射系数; σ_{s,ae} = 气溶胶散射系数
+- **来源**: [引用: 王锋式(2.4)~(2.5); 符号按 §13 消歧策略，避免与 GG α,β 冲突]
+- **变量**: σ_{a,mol} = 分子吸收系数; σ_{a,ae} = 气溶胶吸收系数; σ_{s,mol} = 分子散射系数; σ_{s,ae} = 气溶胶散射系数
 - **验证**: 标准教科书公式
-- **适用条件**: 大气衰减系数是吸收系数与散射系数之和，包含分子和气溶胶四个来源
+- **适用条件**: 大气衰减为吸收与散射之和，二者分别包含分子和气溶胶四个来源
 - **章节**: §2.3.1
 
 #### F19: Rayleigh 散射系数
 
-$$\beta_{Rayleigh} = C/\lambda^4$$
+$$\sigma_{s,\text{Rayleigh}} = C/\lambda^4$$
 
 - **来源**: [引用: 王锋式(2.1)]
 - **变量**: λ → TERMS §10.2 工作波长; C = 与散射元密度、退偏振因子相关的常量
@@ -446,7 +447,8 @@ $$A_{FS}(\text{dB}) = 20\log_{10}\left(\frac{4\pi d}{\lambda}\right)$$
 | 参数 | 符号 | 典型值 | 来源 |
 |------|------|--------|------|
 | 工作波长 | λ | 1550 nm | 王锋、闫佳欣 |
-| 大气衰减系数 | γ | 0.2~10 dB/km（取决于天气） | 王锋 |
+| 大气吸收系数 | σ_a | 与天气/波长相关 | 王锋 |
+| 大气散射系数 | σ_s | 与天气/波长相关 | 王锋 |
 | 折射率结构常数（地面） | C_n² | 10⁻¹⁶~10⁻¹³ m^{−2/3} | 张岱、王锋 |
 | 弱湍流 | C_n² | < 10⁻¹⁶ m^{−2/3} | 张岱 |
 | 中等湍流 | C_n² | 10⁻¹⁶~10⁻¹⁴ m^{−2/3} | 张岱 |
@@ -1517,6 +1519,232 @@ omega_n = B_L / 0.53  # ω_n 单位 rad/s
 - **验证**: 三公式代码实现 + 参考文献双重交叉验证
 - **适用条件**: 三种 h 依赖覆盖从激进(h⁻²)到温和(h¹)的完整自适应频谱
 - **章节**: §4.5
+
+---
+
+### §4.2 补充 — 激光相位噪声模型
+
+#### F4.15: 激光器相位噪声（Wiener过程）
+
+$$\theta_L[k] = \theta_L[k-1] + w[k], \quad w[k] \sim \mathcal{N}(0, \sigma_{\theta,L}^2)$$
+
+- **来源**: 丁爽 式(4-8), 董凡 式(2-27)
+
+#### F4.16: 相位噪声方差与线宽关系
+
+$$\sigma_{\theta,L}^2 = 2\pi \Delta\nu_L \cdot T_s$$
+
+- **来源**: 丁爽 式(4-8), Gardner *Phaselock Techniques*
+
+---
+
+### §4.3 补充 — FFT频偏估计理论基础
+
+#### F4.17: N点DFT定义
+
+$$S[m] = \sum_{k=0}^{N-1} r[k] \cdot e^{-j 2\pi mk / N}, \quad m = 0, 1, \ldots, N-1$$
+
+- **来源**: Proakis & Manolakis, Gasior & Gonzalez 2004
+
+#### F4.18: 频率分辨率与观测窗口
+
+$$\Delta f_{\text{grid}} = \frac{f_s}{N} = \frac{1}{N \cdot T_s}$$
+
+- **来源**: Gasior & Gonzalez 2004 Eq.(3)
+
+#### F4.19: 频偏估计Cramér-Rao下界
+
+$$\mathrm{var}(\hat{\Delta f}) \geq \frac{6}{(2\pi)^2 \cdot \mathrm{SNR} \cdot N(N^2 - 1) \cdot T_s^2}$$
+
+- **来源**: Rife & Boorstyn 1974, IEEE Trans. Info. Theory
+
+#### F4.20: 四次方消除QPSK调制证明
+
+$$s^4[k] = e^{j \cdot 4\theta_s[k]} = -1 \quad \Rightarrow \quad r^4[k] \approx -e^{j(4 \cdot 2\pi \Delta f \cdot kT_s + 4\phi[k])} + \text{noise}$$
+
+- **来源**: Proakis Ch.6, 丁爽 式(3-11)
+
+#### F4.21: 四次方后频偏估计范围
+
+$$|\Delta f| < \frac{R_s}{2 \cdot 4} = \frac{R_s}{8}$$
+
+- **来源**: Proakis Ch.6
+
+#### F4.22: 抛物线插值精细化
+
+$$\delta = \frac{1}{2} \cdot \frac{S_{m-} - S_{m+}}{S_{m-} - 2S_{m} + S_{m+}}, \quad \hat{\Delta f} = (m_{\max} + \delta) \cdot \frac{\Delta f_{\text{grid}}}{4}$$
+
+- **来源**: Gasior & Gonzalez 2004 Eq.(10)
+
+#### F4.23: Hanning窗定义
+
+$$w[k] = 0.5\left(1 - \cos\frac{2\pi k}{N-1}\right), \quad k = 0, 1, \ldots, N-1$$
+
+- **来源**: Harris 1978, 最高旁瓣 -31.5 dB
+
+---
+
+### §4.4 补充 — 低复杂度VVPE推导链
+
+#### F4.24: 信号I/Q分解
+
+$$r[k] = I_k + jQ_k, \quad I_k = |r[k]|\cos\phi_k, \quad Q_k = |r[k]|\sin\phi_k$$
+
+- **来源**: 丁爽 式(3-2)
+
+#### F4.25: 绝对值近似（二倍角核心）
+
+$$\cos(2\varphi) \approx |I_k| - |Q_k|, \quad \sin(2\varphi) \approx |I_k + Q_k| - |I_k - Q_k|$$
+
+- **来源**: 丁爽 式(3-3)~(3-7), 张思齐 式(2-6)~(2-12)
+
+#### F4.26: 二倍角结果
+
+$$I'_k = \sqrt{2}(|I_k| - |Q_k|), \quad Q'_k = |I_k + Q_k| - |I_k - Q_k|$$
+
+- **来源**: 丁爽 式(3-7)/(3-8)
+
+#### F4.27: 四倍角结果（等效四次方去调制）
+
+$$I''_k = |I'_k| - |Q'_k|, \quad Q''_k = |I'_k + Q'_k| - |I'_k - Q'_k|, \quad r^{(4)}[k] \propto e^{j(4\phi[k] + \pi)}$$
+
+- **来源**: 丁爽 式(3-9)~(3-11)
+
+#### F4.28: 块平均相位提取
+
+$$\hat{\phi}_\text{raw} = \frac{1}{4}\left[\arg\left(\frac{1}{M}\sum_{k=0}^{M-1} r^{(4)}[k]\right) - \pi\right]$$
+
+- **来源**: 丁爽 式(3-12)/(3-13), Viterbi & Viterbi 1983
+
+#### F4.29: 相位补偿
+
+$$\hat{r}[k] = r[k] \cdot e^{-j\hat{\phi}_\text{raw}}$$
+
+- **来源**: 丁爽 式(3-14)
+
+---
+
+### §4.4 补充 — BPS（Blind Phase Search）算法
+
+#### F4.30: BPS测试相位构造
+
+$$\phi_b = \frac{\pi b}{2B}, \quad b = -B/2, \ldots, 0, \ldots, B/2-1$$
+
+- **来源**: 董凡 式(2-30), Pfau 2009
+
+#### F4.31: 欧氏距离度量
+
+$$|d_{k,b}|^2 = |r[k] \cdot e^{-j\phi_b} - \hat{s}_{k,b}|^2$$
+
+- **来源**: 董凡 式(2-32)
+
+#### F4.32: 块内距离累加（窗口平滑）
+
+$$S_{k,b} = \sum_{i=k-N_w}^{k+N_w} |d_{i,b}|^2$$
+
+- **来源**: 董凡 式(2-33)
+
+#### F4.33: ML精估计（BPS第二级）
+
+$$\hat{\varphi}_\text{ML} = \arg\left(\sum_{k} r[k] \cdot \hat{s}_k^*\right)$$
+
+- **来源**: 董凡 式(2-35)
+
+---
+
+### §4.4 补充 — 相位模糊消除
+
+#### F4.34: 相位跳变检测（π/2模糊消除）
+
+$$\Phi[k] = \begin{cases} \Phi[k-1] + \pi/2, & \text{if } (\hat\phi_\text{raw}[k] - \hat\phi_\text{raw}[k-1]) < -\pi/4 \\ \Phi[k-1] - \pi/2, & \text{if } (\hat\phi_\text{raw}[k] - \hat\phi_\text{raw}[k-1]) > \pi/4 \\ \Phi[k-1], & \text{otherwise} \end{cases}$$
+
+- **来源**: 张思齐 式(3-27), 丁爽 §3.2
+
+#### F4.35: 修正后相位估计
+
+$$\hat{\phi}_\text{final}[k] = \hat{\phi}_\text{raw}[k] + \Phi[k]$$
+
+- **来源**: 张思齐 式(3-28)
+
+---
+
+### §4.4 补充 — DPLL稳定性分析
+
+#### F4.36: 连续时间闭环传递函数
+
+$$H(s) = \frac{2\zeta\omega_n s + \omega_n^2}{s^2 + 2\zeta\omega_n s + \omega_n^2}$$
+
+- **来源**: Gardner *Phaselock Techniques* §2.2.3
+
+#### F4.37: 误差传递函数
+
+$$H_e(s) = 1 - H(s) = \frac{s^2}{s^2 + 2\zeta\omega_n s + \omega_n^2}$$
+
+- **来源**: Gardner §2.2.3
+
+#### F4.38: 环路滤波器系数（PI结构）
+
+$$\alpha_\text{DPLL} = \frac{2\zeta\omega_n T_s}{K_p K_\text{nco}}, \quad \beta_\text{DPLL} = \frac{(\omega_n T_s)^2}{K_p K_\text{nco}}$$
+
+- **来源**: Robertson DSPRelated 2016, Rice Appendix C
+
+#### F4.39: 离散闭环传递函数
+
+$$H_\text{CL}(z) = \frac{G_1(z)}{1+G_1(z)}, \quad G_1(z) = \frac{K_p \alpha_\text{DPLL} K_\text{nco}}{z-1} + \frac{K_p \beta_\text{DPLL} K_\text{nco}}{(z-1)^2}$$
+
+- **来源**: Robertson DSPRelated 2016
+
+#### F4.40: 噪声带宽与自然频率关系
+
+$$B_L = \frac{\omega_n}{2}\left(\zeta + \frac{1}{4\zeta}\right), \quad \zeta = 1/\sqrt{2} \Rightarrow B_L \approx 0.53\,\omega_n$$
+
+- **来源**: Gardner §2.3
+
+#### F4.41: 稳态相位误差（频率斜升输入）
+
+$$\theta_e(\infty) = \frac{2\pi \dot{f}_d}{\omega_n^2} \quad \text{(rad)}$$
+
+- **来源**: Georgia Tech ECE 6440
+
+#### F4.42: 收敛时间常数
+
+$$\tau = \frac{1}{\zeta\omega_n}, \quad T_L = \frac{2\pi}{\omega_n}$$
+
+- **来源**: Gardner §2.2
+
+#### F4.43: 离散稳定性条件
+
+$$\omega_n T_s < 0.1 \sim 0.5 \quad \Longleftrightarrow \quad f_n / f_s < 0.016 \sim 0.08$$
+
+- **来源**: Robertson Appendix C, TI SLYT169
+
+---
+
+### §4.4 补充 — 载波恢复级联流程
+
+#### F4.44: 频偏补偿后信号
+
+$$r'[k] = r[k] \cdot \exp\!\left(-j \cdot 2\pi \hat{\Delta f} \cdot kT_s\right)$$
+
+- **来源**: 张思齐 式(2-21)/(3-23)
+
+#### F4.45: 四次方信号频偏补偿（数据复用）
+
+$$r^{(4)'}[k] = r^{(4)}[k] \cdot \exp\!\left(-j \cdot 4 \cdot 2\pi \hat{\Delta f} \cdot kT_s\right)$$
+
+- **来源**: 张思齐 式(3-24)（核心创新：跨阶段复用）
+
+#### F4.46: 完整级联链信号流
+
+$$r[k] \xrightarrow{\times 4} r^{(4)}[k] \xrightarrow{\text{FFT}} \hat{\Delta f} \xrightarrow{\text{comp}} r'[k],\; r^{(4)'}[k] \xrightarrow{\text{avg}} \hat{\phi}_\text{raw} \xrightarrow{+\Phi} \hat{\phi}_\text{final} \xrightarrow{\text{comp}} \hat{r}[k]$$
+
+- **来源**: 综合张思齐 §3.2 + sim_direction_a.py
+
+---
+
+### §4.4 补充 — Kalman滤波载波同步（F4.K1-F4.K13）
+
+> KF 13条公式（状态空间模型 F4.K1-K3、噪声设计 F4.K4-K7、递推方程 F4.K8-K9、性能分析 F4.K10-K13）完整推导见 `写作材料/archive/formulas-dedup-backup/formulas-ch4-kf.md`
 
 ---
 

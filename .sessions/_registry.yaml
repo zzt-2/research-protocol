@@ -6,21 +6,21 @@ topics:
 
   - slug: framework-evolution
     title: 框架演进与问题追踪
-    status: active
+    status: closed
     created: "2026-05-15"
     last_updated: "2026-05-18"
     description: 框架规则改进、流程问题日志（20+ issues P0/P1/P2），实验完备性缺口调研中
 
   - slug: direction-scouting
     title: 方向侦察与项目盘点
-    status: active
+    status: closed
     created: "2026-05-16"
     last_updated: "2026-05-21"
     description: 系统性候选方向评估，4 批次+深度验证完成，转为卫星×任意ML定向搜索
 
   - slug: thesis-structure-research
     title: 论文结构研究
-    status: active
+    status: closed
     created: "2026-05-16"
     last_updated: "2026-05-24"
     description: 基于中文卫星网络学位论文的结构设计，34 篇分析+贡献声称写法规范(R003)
@@ -36,21 +36,21 @@ topics:
 
   - slug: 2026-05-13-mega-constellation-gnn-routing
     title: GNN 星座路由（Size Generalization）
-    status: dormant
+    status: closed
     created: "2026-05-13"
     last_updated: "2026-05-17"
     description: GW 完成+Contract 进入，创新点定位为 GNN size generalization，25 篇精读
 
   - slug: 2026-05-13-hgat-satellite-dag-offloading
     title: HGAT 卫星 DAG 任务卸载
-    status: dormant
+    status: closed
     created: "2026-05-13"
     last_updated: "2026-05-17"
     description: GW Step 3 完成，8 篇精读，待 Step 4a Go/No-Go
 
   - slug: 2026-05-13-ris-phase-drl
     title: RIS 相移优化 DRL
-    status: dormant
+    status: closed
     created: "2026-05-13"
     last_updated: "2026-05-17"
     description: GW Step 3 完成，8 篇精读，待 Step 4a
@@ -106,27 +106,26 @@ topics:
 
   - slug: chapter-quality-audit
     title: 三章论文全面质量审计
-    status: active
+    status: closed
     created: "2026-05-22"
     last_updated: "2026-05-22"
     description: Ch1-3 系统性质量审计。全部完成(S002-S005)，专题已关闭。
 
   - slug: thesis-chapter-fixes
     title: 三章审计修复执行
-    status: active
+    status: closed
     created: "2026-05-22"
     last_updated: "2026-05-22"
     description: 基于审计发现的三章小改动统一修复（无GPU项优先，GPU项后置）
     depends_on:
       - slug: chapter-quality-audit
         reason: 修复项全部来自审计报告 S002-S005
-    depends_on:
       - slug: thesis-structure-research
         reason: S003 审查结论为审计起点
 
   - slug: 2026-05-17-leo-congestion-routing
     title: LEO 拥塞路由（Execute 收尾）
-    status: dormant
+    status: closed
     created: "2026-05-17"
     last_updated: "2026-05-18"
     description: P0-P3 全部完成，实验+可视化+论文材料就绪，可进入正式写作
@@ -140,7 +139,7 @@ topics:
 
   - slug: thesis-direction-pivot
     title: 论文方向切换：激光通信方向确定与开题
-    status: active
+    status: dormant
     created: "2026-05-29"
     last_updated: "2026-05-30"
     description: "S018 R1全流程完成: 165篇文献+148条bib全部匹配，citekey列已加，CNKI 9/11 OCR完成。"
@@ -154,7 +153,7 @@ topics:
 
   - slug: thesis-sim-exploration
     title: 仿真穷举探索：系统性寻找创新点
-    status: active
+    status: dormant
     created: "2026-05-30"
     last_updated: "2026-05-30"
     description: "系统化仿真探索：枚举方向/方法/参数假设，逐个仿真验证，记录增益数据，定位创新点。持续更新。"
@@ -166,7 +165,7 @@ topics:
 
   - slug: 2026-05-30-ch3-direction-exploration
     title: Ch3 新章节方向探索（Groundwork）
-    status: active
+    status: dormant
     created: "2026-05-30"
     last_updated: "2026-05-30"
     description: "导师决定合并原Ch3到Ch2，新增Ch3方向TBD。按Groundwork检索+可行性评估候选方向。"
@@ -176,7 +175,7 @@ topics:
 
   - slug: 2026-06-04-advisor-review-revision
     title: 开题报告导师批注系统性修订
-    status: active
+    status: dormant
     created: "2026-06-04"
     last_updated: "2026-06-04"
     description: "开题报告v2导师20条批注按5类(AI痕迹/学术定位/格式/图表/参考文献)分对话修订，同步更新写作规范"
@@ -184,9 +183,33 @@ topics:
       - slug: thesis-writing-prep
         reason: 批注基于开题报告v2，需要写作规范和方向标签上下文
 
+  - slug: 2026-06-10-research-direction-exploration
+    title: 研究方向系统探索（开题后深度扫描）
+    status: active
+    created: "2026-06-10"
+    last_updated: "2026-06-10"
+    description: "开题完成后重新系统性扫描全领域，8角度全覆盖+综述三层检索+MVE验证，找到2-3个可行研究方向"
+    depends_on:
+      - slug: thesis-direction-pivot
+        reason: 继承开题阶段的仿真结论和文献积累
+      - slug: 2026-06-04-advisor-review-revision
+        reason: 开题报告批注修订完成，方向探索不受其影响
+
+  - slug: 2026-06-12-simulation-foundation-rebuild
+    title: 仿真基础设施重建（代码+文档+验证体系）
+    status: active
+    created: "2026-06-12"
+    last_updated: "2026-06-12"
+    description: "从历史问题出发重新设计仿真基础设施：代码重构（模块化）、文档体系（抗膨胀）、验证机制（强制执行）。6大根因→6条设计原则→18子agent深度分析→方案设计"
+    depends_on:
+      - slug: 2026-06-10-research-direction-exploration
+        reason: 继承22个候选方向和仿真审计结论
+      - slug: thesis-simulation-consolidation
+        reason: 继承已有仿真代码和规范
+
   - slug: thesis-simulation-consolidation
     title: 仿真体系统一化
-    status: active
+    status: dormant
     created: "2026-05-31"
     last_updated: "2026-05-31"
     description: "合并规范文档、统一评估方法、升级公共模块、建立新项目目录。继承 S022-S024 所有仿真工作。"
@@ -195,3 +218,26 @@ topics:
         reason: 继承 S022-S024 的所有仿真工作和结论
     produces:
       - projects/simulation/
+
+  # === 补注册历史专题 ===
+
+  - slug: 2026-05-31-thesis-writing-prep
+    title: 学位论文写作准备
+    status: closed
+    created: "2026-05-31"
+    last_updated: "2026-05-31"
+    description: "论文写作规范、范文分析、写作纪律建立"
+
+  - slug: 2026-05-31-thesis-writing
+    title: 学位论文写作执行
+    status: closed
+    created: "2026-05-31"
+    last_updated: "2026-05-31"
+    description: "论文章节写作执行，含开题报告初稿"
+
+  - slug: 2026-06-04-citation-verification
+    title: 参考文献格式验证
+    status: closed
+    created: "2026-06-04"
+    last_updated: "2026-06-04"
+    description: "GB7714-2015参考文献格式修正与验证"

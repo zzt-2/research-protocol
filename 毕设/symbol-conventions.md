@@ -1,3 +1,4 @@
+<!-- maturity: anchor -->
 # 跨章统一符号约定表
 
 > 覆盖范围：Ch1-Ch6 全文符号。来源包括 thesis-framework.md、

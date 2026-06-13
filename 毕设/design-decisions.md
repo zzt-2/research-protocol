@@ -1,3 +1,4 @@
+<!-- maturity: accumulation -->
 # 设计决策记录
 
 > 提取自 thesis-status.md、S002/S012/S024/S030 等 session notes
