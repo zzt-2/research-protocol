@@ -187,8 +187,8 @@ topics:
     title: 研究方向系统探索（开题后深度扫描）
     status: active
     created: "2026-06-10"
-    last_updated: "2026-06-10"
-    description: "开题完成后重新系统性扫描全领域，8角度全覆盖+综述三层检索+MVE验证，找到2-3个可行研究方向"
+    last_updated: "2026-06-14"
+    description: "开题完成后重新系统性扫描全领域，8角度全覆盖+综述三层检索+MVE验证，找到2-3个可行研究方向。R002产出22候选，评判框架已定(D001)待筛R002"
     depends_on:
       - slug: thesis-direction-pivot
         reason: 继承开题阶段的仿真结论和文献积累
