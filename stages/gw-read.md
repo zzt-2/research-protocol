@@ -13,7 +13,7 @@
 
 | # | 必含项目 | 来源章节 | 说明 |
 |---|---------|---------|------|
-| 1 | **标准条目模板**（13+ 字段） | 下方"操作"节 + `templates.md` literature_notes 模板 | 核心贡献≥2句、实现关键细节含具体数值、适配性分析 |
+| 1 | **标准条目模板**（14+ 字段，含源文件路径） | 下方"操作"节 + `templates.md` literature_notes 模板 | 核心贡献≥2句、实现关键细节含具体数值、适配性分析、源文件路径 |
 | 2 | **结构化提取 6 子表** | 下方"结构化提取（[MUST]）"节 | 状态空间/动作空间/奖励函数/建模假设/网络架构/适配性分析，奖励公式必须内联 LaTeX |
 | 3 | **实验完备性提取** | 下方"实验完备性提取"节 + `templates.md` "实验完备性提取模板" | 对 3-5 篇核心竞品论文提取：声称清单+scope、统计规范性、Baseline 矩阵、消融设计、信道模型、拓扑多样性、复杂度报告、VVUQ。≤20行/篇 |
 | 4 | **写作架构提取**（选做） | 下方"写作架构提取"节 | 对 2-3 篇标杆论文提取章节结构、图表模式、叙述模式等 |
@@ -22,15 +22,32 @@
 
 **派遣前自检**：Worker prompt 是否包含上表所有适用项？如果 Worker 一次只读 1-2 篇论文，项目 #3（实验完备性）可以限定只提取该论文的维度，由 Master 在全部精读完成后选 3-5 篇做对标汇总。
 
+| # | 必含项目 | 来源章节 | 说明 |
+|---|---------|---------|------|
+| 7 | **派遣标题**（[MUST]） | 本节"步骤 0" | Worker prompt 必须显式带上论文标题，供步骤 0 title 自检比对。标题来自搜索结果元数据，不是 DOI/arXiv ID |
+
 ## 操作
 
 **必须读 content.md，不允许只读搜索元数据。**
+
+### 步骤 0：源文件 title 自检（精读前强制，abort 协议）
+
+> **背景**：下载流水线偶尔抓错页面（firecrawl 误抓 MDPI 导航页、PDF 转换抓到封面 banner），导致 metadata 标题与 content.md 实际内容完全无关（典型案例：DOI 10.3390/photonics10080914 metadata 说是"OPLL 卫星论文"，content.md 实际是"石墨烯纳米二聚体"）。对着一篇错配论文精读 = 浪费一轮 Worker + 产出污染 literature_notes。
+
+打开 content.md，取第一个非导航 H1/H2 标题（跳过 `Journals`/`Information`/`Introduction`/`Abstract` 等 nav 词，方法见 `tools/litdownload/title_verify.py`），与派遣标题做词重叠比对：
+
+- **重叠 ≥ 0.4**（去停用词后 token Jaccard）→ 继续 step 1，正常精读
+- **重叠 < 0.4** → **ABORT，不产 L01 笔记**。回报：`[paper_id] TITLE-MISMATCH: 派遣《{派遣标题}》实际 content.md 是《{真标题}》(overlap={x.xx})`，记入 read-log，由 Master 决定补下载或换源
+- **提取不到标题**（arxiv_latex 类 / content.md 损坏 / 极短）→ 标注 `title-unverifiable`，按派遣标题继续精读但需人工抽检 content.md 前 20 行确认主题一致
+
+快捷判断：可先查 metadata.json 的 `title_check` 字段（下载流水线已自动算好）——若为 `mismatch` 直接 abort，无需 Worker 重算；若为 `unverifiable` 或字段缺失才走上面的手工提取。
 
 对每篇已下载的论文，读其 `content.md` 的 method + experiment 部分（introduction 和 related work 可跳过，这些信息已从搜索元数据获得），按以下结构提取（模板见 `templates.md`）：
 
 ```
 ### [L01] {论文标题}
 - DOI/来源：{实际 DOI / arXiv ID / "无 DOI（来源：{数据源名}）"}
+- 源文件路径：papers/{type}/{id}/content.md **[MUST]**（type ∈ arxiv|doi|manual，{id} 取 papers/{type}/{id}/ 目录名字面值）
 - **发表状态**：{正式发表 | 预印本 | 已录用待刊 | 未知}
 - **发表渠道**：{**引用目标**，不是下载来源。正式发表的期刊/会议名 + 等级，如 "IEEE JSAC (SCI Q1)"。即使只下到 arXiv PDF，若已确认被 IEEE 接收，仍标 IEEE。仅无正式版本的纯预印本才填 "arXiv preprint"}
 - 年份/会议：{年份 + 出版 venue}
@@ -168,10 +185,12 @@
 ## 质量门槛
 
 - ≥5 篇论文完成精读提取
+- **标题一致**：步骤 0 abort 的论文（title-mismatch）不计入 ≥5 篇下限，必须补派替代论文；abort 原因记入 read-log
 - 每篇的"使用的 Baseline 方法"不为空（无对比实验的除外）
 - 每篇的"核心贡献"≥2 句，不是搜索摘要的复制粘贴
 - 综合分析三个小节都有实质内容
 - **路径合规**：`literature_notes.md` 在 `projects/{name}/` 下，不在根目录
+- **源文件路径** [MUST]：每条精读条目 `源文件路径` 不为空，格式 `papers/{type}/{id}/content.md`；精读产出全局 `papers/_read_notes/{paper_id}.md` 并在对应项目（或探索期专题）的 `read-log.md` 追加一条（字段：paper_id | 源文件路径 | 笔记路径 | 首读日期 | 重读次数 | 用于方向 | alt_ids(可选)）
 
 ## 不达标时
 

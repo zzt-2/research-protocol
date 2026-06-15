@@ -25,6 +25,43 @@ import sys
 import time
 from pathlib import Path
 
+# 标题一致性校验（P0-B）：复用 litdownload.title_verify 的 token 重叠逻辑。
+# blit 只下裸 PDF、不走 litdownload 流水线，故单独在下载后校验 PDF 首页标题，
+# 结果写进同目录 {pdf_stem}.meta.json（轻量 sidecar，不接入 papers/index.json）。
+try:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    from litdownload.title_verify import verify_pdf_title
+    _TITLE_VERIFY_AVAILABLE = True
+except Exception:
+    _TITLE_VERIFY_AVAILABLE = False
+
+
+def _save_title_meta(pdf_path: Path, expected_title: str) -> None:
+    """下载后校验 PDF 首页标题，把结果写进 {pdf_stem}.meta.json。
+
+    失败静默——校验不可用或异常都不阻断下载。sidecar 字段与
+    litdownload metadata.json 的 title_check 三字段对齐，便于统一 grep。
+    """
+    if not _TITLE_VERIFY_AVAILABLE or not pdf_path.exists():
+        return
+    try:
+        check = verify_pdf_title(pdf_path, expected_title)
+        meta = {
+            "expected_title": expected_title,
+            "real_title": check.get("real_title"),
+            "title_check": check.get("status"),
+            "title_overlap": check.get("overlap"),
+            "checked_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
+        }
+        meta_path = pdf_path.with_suffix(".meta.json")
+        meta_path.write_text(json.dumps(meta, ensure_ascii=False, indent=2),
+                             encoding="utf-8")
+        if check.get("status") == "mismatch":
+            print(f"    ⚠️  TITLE-MISMATCH: 实际是《{(check.get('real_title') or '')[:50]}》"
+                  f"(overlap={check.get('overlap'):.2f})", file=sys.stderr)
+    except Exception as e:
+        print(f"    [title_check skip] {e}", file=sys.stderr)
+
 # ──────────── 限速配置 ────────────
 
 RATE_LIMITS = {
@@ -152,7 +189,7 @@ async def ieee_search(query: str, max_results: int = 25) -> list[dict]:
 
 # ──────────── IEEE 下载 ────────────
 
-async def _ieee_download_paper(ctx, arnumber: str, save_dir: Path) -> Path | None:
+async def _ieee_download_paper(ctx, arnumber: str, save_dir: Path, expected_title: str = "") -> Path | None:
     """下载单篇 IEEE 论文 PDF。需要校园网 IP 机构认证。"""
     pdf_url = f"https://ieeexplore.ieee.org/stampPDF/getPDF.jsp?tp=&arnumber={arnumber}"
     try:
@@ -167,6 +204,9 @@ async def _ieee_download_paper(ctx, arnumber: str, save_dir: Path) -> Path | Non
         save_path = save_dir / f"{arnumber}.pdf"
         save_path.write_bytes(body)
         print(f"    ✅ {arnumber}.pdf ({len(body):,} bytes)")
+        # P0-B：下载后校验 PDF 首页标题（失败静默，不阻断下载）
+        if expected_title:
+            _save_title_meta(save_path, expected_title)
         return save_path
     except Exception as e:
         print(f"    ❌ {arnumber}: {e}", file=sys.stderr)
@@ -205,7 +245,8 @@ async def ieee_download(results: list[dict], save_dir: str) -> list[Path]:
             downloaded.append(target)
             continue
         print(f"  [{i}/{len(results)}] {r.get('title', '')[:60]}")
-        result = await _ieee_download_paper(ctx, arnumber, save_path)
+        result = await _ieee_download_paper(ctx, arnumber, save_path,
+                                            expected_title=r.get("title", ""))
         if result:
             downloaded.append(result)
         await asyncio.sleep(1)  # 礼貌延迟
@@ -731,6 +772,8 @@ async def _cnki_download_paper(detail_url: str, save_dir: Path, title: str) -> P
         await download.save_as(save_path)
 
         if save_path.exists() and save_path.stat().st_size > 1024:
+            # P0-B：下载后校验 PDF 首页标题（失败静默，不阻断下载）
+            _save_title_meta(save_path, title)
             return save_path
         return None
     finally:

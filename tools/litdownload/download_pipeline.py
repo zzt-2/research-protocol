@@ -19,6 +19,23 @@ from .download_channels import (
 )
 from .download_config import DownloadResult
 from .download_output import _print_summary, _save_batch_manifest, _save_metadata
+from .title_verify import classify_mismatch, extract_real_title
+
+
+def _compute_title_check(paper: dict, result: DownloadResult, dest: Path) -> dict | None:
+    """下载成功后算标题一致性校验。
+
+    content.md 不存在（失败下载 / content_file 为空）→ 返回 None（metadata
+    里三字段写 null）。提取/比对异常也吞掉返回 None，绝不阻断下载流程。
+    """
+    if not result.success or not result.content_file:
+        return None
+    content_md = dest / result.content_file
+    try:
+        real_info = extract_real_title(content_md, result.method)
+        return classify_mismatch(paper.get("title", ""), real_info)
+    except Exception:
+        return None
 
 
 def _paper_key(paper: dict) -> Optional[str]:
@@ -231,14 +248,17 @@ def _download_batch(args) -> None:
         print(f"  [{pid}] 下载中...  {title}")
         email = args.unpaywall_email or os.environ.get("UNPAYWALL_EMAIL", "")
         result = download_paper(paper, paper_dest, quality=args.quality, force=args.force, unpaywall_email=email)
-        _save_metadata(paper, result, paper_dest)
+        title_check = _compute_title_check(paper, result, paper_dest)
+        _save_metadata(paper, result, paper_dest, title_check=title_check)
 
         if result.success:
             rel = paper_dest.relative_to(output_base)
-            print(f"  [{pid}] OK ({result.method})  → {rel} ({result.content_quality})")
+            tag = f" {title_check['status'].upper()}" if title_check and title_check.get("status") == "mismatch" else ""
+            print(f"  [{pid}] OK ({result.method})  → {rel} ({result.content_quality}){tag}")
             results.append({
                 "id": pid, "status": "success", "method": result.method,
                 "title": title, "content_quality": result.content_quality,
+                "title_check": title_check.get("status") if title_check else None,
             })
         else:
             print(f"  [{pid}] FAIL ({result.method})  {title}")
@@ -255,6 +275,8 @@ def _download_batch(args) -> None:
                 "title": paper.get("title", ""),
                 "status": "success" if result.success else "failed",
                 "batches": batches,
+                # 仅标题校验状态入 index.json（real_title 留 metadata.json，避免膨胀）
+                "title_check": title_check.get("status") if title_check else None,
             }
             paper_ids.append(paper_key)
 
@@ -314,10 +336,12 @@ def _download_single(args) -> None:
 
     email = args.unpaywall_email or os.environ.get("UNPAYWALL_EMAIL", "")
     result = download_paper(paper, paper_dest, quality=args.quality, force=args.force, unpaywall_email=email)
-    _save_metadata(paper, result, paper_dest)
+    title_check = _compute_title_check(paper, result, paper_dest)
+    _save_metadata(paper, result, paper_dest, title_check=title_check)
 
     if result.success:
-        print(f"[OK] {result.method} → {paper_dest / 'content.md'} ({result.content_quality})")
+        tag = f" [{title_check['status'].upper()}]" if title_check and title_check.get("status") == "mismatch" else ""
+        print(f"[OK] {result.method} → {paper_dest / 'content.md'} ({result.content_quality}){tag}")
     else:
         print(f"[FAIL] {result.method}")
 
@@ -328,6 +352,7 @@ def _download_single(args) -> None:
             "title": paper.get("title", ""),
             "status": "success" if result.success else "failed",
             "batches": [],
+            "title_check": title_check.get("status") if title_check else None,
         }
         _save_index(index, output_base)
 

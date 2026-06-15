@@ -1,11 +1,24 @@
 import json
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Optional
 
 from .download_config import DownloadResult
 
 
-def _save_metadata(paper: dict, result: DownloadResult, dest: Path) -> None:
+def _save_metadata(
+    paper: dict,
+    result: DownloadResult,
+    dest: Path,
+    title_check: Optional[dict] = None,
+) -> None:
+    """写 metadata.json。
+
+    title_check（可选）：title_verify.classify_mismatch 的返回 dict，含
+    status/overlap/real_title。下载成功且 content.md 存在时由调用方算好传入；
+    失败或 content.md 缺失时传 None（字段写 null，下游视为不可校验）。
+    字段向后兼容：旧 metadata.json 无这 3 个字段，读取方用 .get() 即可。
+    """
     meta = {
         "storage_version": 2,
         "id": paper.get("id", ""),
@@ -18,6 +31,10 @@ def _save_metadata(paper: dict, result: DownloadResult, dest: Path) -> None:
         "content_quality": result.content_quality,
         "content_file": result.content_file,
         "downloaded_at": datetime.now(timezone.utc).astimezone().isoformat(),
+        # 标题一致性校验（P0）。mismatch 只标记不阻断下载。
+        "real_title": title_check.get("real_title") if title_check else None,
+        "title_check": title_check.get("status") if title_check else None,
+        "title_overlap": title_check.get("overlap") if title_check else None,
     }
     (dest / "metadata.json").write_text(
         json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8",
