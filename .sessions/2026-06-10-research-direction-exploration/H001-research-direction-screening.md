@@ -33,6 +33,7 @@
 - **❌ 不要碰论文写作** —— 用户明确"一时半会不推进"。
 - **❌ 不要把 GPU/FPGA 当难度门槛** —— 用户 FPGA 熟练、有 RTX4070，D 轴资源门槛已取消。只有"工程完全不可实现"（D001 五类排除列：实测数据/专用硬件/超算训练/物理闭环/数月采集）才是门槛。
 - **❌ ML 方向不要排除** —— 用户明确"ML 一定要看"，是偏好点（同分优先）不是难度项。
+- **❌ 不要跳过 Groundwork 前置直接跑 MVE** —— 候选筛出 ≠ 可 MVE。正确链：D001 筛 → Groundwork 前置（该方向论文精读 gw-read / 综述补全 / baseline 合法性 groundwork S4-7 / 空白零假设 gw-feasibility §B）→ 合规 MVE（gw-feasibility §D，必含 FR-11~15）→ Contract → Execute。sim-preflight skill 只在 Execute 接管，MVE 前置不归它管。
 
 ## 必读（按优先级）
 
@@ -78,6 +79,12 @@
 ## 下一轮（具体可执行）
 
 1. 读 D001 + R002 + 导师批注
-2. 用 D001 四条标准逐个筛 22 候选，输出表：`方向 | E(过几条) | D(是否排除列) | C1 | ML相关 | 留/砍/存疑`
-3. 留 2-3 个进 MVE（最小可行验证）
-4. MVE 通过的方向 → 才考虑做 sigma2_turb 推导（B 任务）和落地到 Ch3/Ch4/Ch5
+2. 用 D001 四条标准逐个筛 22 候选，输出表：`方向 | E(过几条) | D(是否排除列) | C1 | ML相关 | 留/砍/存疑`，留 2-3 个
+3. 【关键·勿跳步】每个留选方向**先走 Groundwork 前置**（不是直接 MVE）：
+   - 该方向论文精读（`stages/gw-read.md`）
+   - 综述补全（确认非陷阱空白，TL-04）
+   - baseline 合法性（`stages/groundwork.md` S4-7）
+   - 空白零假设检查（`stages/gw-feasibility.md` §B）
+4. 前置通过 → 合规 MVE（`stages/gw-feasibility.md` §D，必含 FR-11~15：架构溯源/先验对照/目标baseline对照）
+5. MVE 通过 → Contract（瓶颈诊断/参数溯源/动作空间/信息增量）→ Execute（sim-preflight 在此接管）
+6. sigma2_turb 推导（B 任务）等方向选定 + 确认沿用同步框架后再做

@@ -187,13 +187,23 @@ topics:
     title: 研究方向系统探索（开题后深度扫描）
     status: active
     created: "2026-06-10"
-    last_updated: "2026-06-14"
-    description: "开题完成后重新系统性扫描全领域，8角度全覆盖+综述三层检索+MVE验证，找到2-3个可行研究方向。R002产出22候选，评判框架已定(D001)待筛R002"
+    last_updated: "2026-06-16"
+    description: "开题后系统性扫描找真正能做下去的方向。R002产22候选；D001评判框架+D002(凑创新点抛弃,现有框架降级为代码资产)；S002粗筛。R003精读E三检验判定。R004 B1分治事实确认→H004 TL-22降级。S003:B1物理可行性预检FAIL(D003)+R005出井重扫合并(留4砍9)。R006大规模补盲扫描(按Paillier主导损伤重组+5盲区):5子agent撞harness 600s超时→salvage→15 JSON ~180 hits,净增N1+强化A3+负发现(可行解空间窄)。S004策略收敛(发散→先验能做出来)。S005(续4)A3/N1物理可行性预检:A3倾向PASS/N1存疑(D005锚点纠正:cite=81是R006误判,N1锚Elzanaty blind;相干FSO PCS gain数据缺失=门控)。S006/D006(续5)A3进Groundwork §B判定PASS:机制定位锁定(前馈pilot CPE替代VV/AGC,幅度归AGC)+§4a维度B空白零假设检查通过+Phase B补检索无直接先例。3边界约束(BC-1 PASC区分/BC-2 VV失效MVE验证/BC-3 residual carrier baseline)待维度A/D处理。A3可进§4a维度A/A'/D,N1对话乙并行门控中。未到MVE"
     depends_on:
       - slug: thesis-direction-pivot
         reason: 继承开题阶段的仿真结论和文献积累
       - slug: 2026-06-04-advisor-review-revision
         reason: 开题报告批注修订完成，方向探索不受其影响
+
+  - slug: 2026-06-15-read-traceability
+    title: 论文精读溯源机制改进（框架改动）
+    status: active
+    created: "2026-06-15"
+    last_updated: "2026-06-15"
+    description: "精读笔记全局集中(papers/_read_notes/{paper_id}.md)+项目级适配日志(read-log.md)+源文件路径溯源字段。解决溯源双向断/命名join key缺。改 templates.md+gw-read.md+CLAUDE.md。框架改动,architect评估后executor实施"
+    depends_on:
+      - slug: 2026-06-10-research-direction-exploration
+        reason: 精读溯源需求来自方向探索阶段即将开始的6方向精读工作
 
   - slug: 2026-06-12-simulation-foundation-rebuild
     title: 仿真基础设施重建（代码+文档+验证体系）
@@ -241,3 +251,15 @@ topics:
     created: "2026-06-04"
     last_updated: "2026-06-04"
     description: "GB7714-2015参考文献格式修正与验证"
+
+  - slug: 2026-06-14-proposal-log-distillation
+    title: 开题报告写作日志蒸馏
+    status: completed
+    created: "2026-06-14"
+    last_updated: "2026-06-16"
+    description: "从开题写作过程产出的~300个.md日志/规范文件蒸馏可注入paper-eval/paper-write的真实素材，A痛点/B评估/C范例/D工作流四维全选分批。跨repo produces给thesis-platform。只读不改原文，不直接实施下游(S033)。专题已完成(S005, 2026-06-15)：四维定稿210条(A28 B55 C62 D65, 2组合并去重) + 5类次一级产物(检测器17/规则库11/few-shot15目标/rubric 12已有+8新维度族/流程蓝图16模块) + 跨repo PRODUCES声明。verifier交叉验证source_ref 24/24有效, 语义近邻10组判断(2合并+8互补)。D005(2026-06-16): distilled/16文件物理拷贝到thesis-platform .sessions/distilled/(只读镜像，research-protocol为单一真相源)。"
+    conflicts_with: []
+    produces:
+      - "thesis-platform repo: ~/code/thesis-platform/.sessions/distilled/ (D005 物理镜像，16文件，只读)"
+      - "thesis-platform repo: .sessions/2026-05-15-paper-evaluation/ (A→S033 detector-rewrite, B→S025-S028 eval盲区)"
+      - "thesis-platform repo: workflows/paper-write/ (D→写作管线改进)"
