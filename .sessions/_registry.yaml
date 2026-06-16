@@ -1,4 +1,4 @@
-# .sessions/_registry.yaml
+﻿# .sessions/_registry.yaml
 # 全局专题注册表 — 新开专题前必须查重
 
 topics:
@@ -188,7 +188,7 @@ topics:
     status: active
     created: "2026-06-10"
     last_updated: "2026-06-16"
-    description: "开题后系统性扫描找真正能做下去的方向。R002产22候选；D001评判框架+D002(凑创新点抛弃,现有框架降级为代码资产)；S002粗筛。R003精读E三检验判定。R004 B1分治事实确认→H004 TL-22降级。S003:B1物理可行性预检FAIL(D003)+R005出井重扫合并(留4砍9)。R006大规模补盲扫描(按Paillier主导损伤重组+5盲区):5子agent撞harness 600s超时→salvage→15 JSON ~180 hits,净增N1+强化A3+负发现(可行解空间窄)。S004策略收敛(发散→先验能做出来)。S005(续4)A3/N1物理可行性预检:A3倾向PASS/N1存疑(D005锚点纠正:cite=81是R006误判,N1锚Elzanaty blind;相干FSO PCS gain数据缺失=门控)。S006/D006(续5)A3进Groundwork §B判定PASS:机制定位锁定(前馈pilot CPE替代VV/AGC,幅度归AGC)+§4a维度B空白零假设检查通过+Phase B补检索无直接先例。3边界约束(BC-1 PASC区分/BC-2 VV失效MVE验证/BC-3 residual carrier baseline)待维度A/D处理。A3可进§4a维度A/A'/D,N1对话乙并行门控中。未到MVE"
+    description: "开题后系统性扫描找真正能做下去的方向。R002产22候选；D001评判框架+D002(凑创新点抛弃,现有框架降级为代码资产)；S002粗筛。R003精读E三检验判定。R004 B1分治事实确认→H004 TL-22降级。S003:B1物理可行性预检FAIL(D003)+R005出井重扫合并(留4砍9)。R006大规模补盲扫描(按Paillier主导损伤重组+5盲区):5子agent撞harness 600s超时→salvage→15 JSON ~180 hits,净增N1+强化A3+负发现(可行解空间窄)。S004策略收敛(发散→先验能做出来)。S005(续4)A3/N1物理可行性预检:A3倾向PASS/N1存疑(D005锚点纠正:cite=81是R006误判,N1锚Elzanaty blind;相干FSO PCS gain数据缺失=门控)。S006/D006(续5)A3进Groundwork §B判定PASS:机制定位锁定(前馈pilot CPE替代VV/AGC,幅度归AGC)+§4a维度B空白零假设检查通过+Phase B补检索无直接先例。3边界约束(BC-1 PASC区分/BC-2 VV失效MVE验证/BC-3 residual carrier baseline)待维度A/D处理。A3可进§4a维度A/A'/D。R007/S007(续5对话乙)N1相干FSO PCS gain门控解除:Tian 2021(MDPI DOI 10.3390/app11219805)正文报1.3dB(post-FEC BER)/1.5dB(SER)vs uniform,过D005≥1dB阈值。N1从存疑升级倾向PASS可进Groundwork。4限制(gain随SNR递减/AIR远低于BER/强湍流未隔离/单一来源)须§B复核。cite=35降级方法参考。H005两对话回传+S008汇总:门控解除不等于§B PASS(N1只回答数据存不存在,§4a维度B空白零假设检查未做)。互锁三章物理可行性基础增强但未锁,取决于N1 §B——A3已立/2.2保底/N1上行期权(关键风险#3强湍流未隔离)。未到MVE。S009/D006续6(对话甲)A3 §4a维度A0(DSP适配版,用户确认跳ML专属项)/A'/A全过:A0性能间隙2.3dB[实证]+负面证据无针对A3失败+FR-01不触发;A'创新只建维度1;A结构优势4/5通过(A-4 FR-03增强基线债务留MVE)。新增BC-4(前馈CPE通用phase unwrap cycle slip失效边界Ip-Kahn2009/Li2019/Wang2019,pilot CPE同样适用,A3须含PAPU类应对)。修正BC-2(不迁移仅指VV M-次方块边界,cycle slip是共享边界不豁免)。A3现在A0/A'/A/B四维度全过,下一步=维度D MVE(H006交接)。4边界约束(BC-1/BC-2/BC-3/BC-4)待MVE处理"
     depends_on:
       - slug: thesis-direction-pivot
         reason: 继承开题阶段的仿真结论和文献积累

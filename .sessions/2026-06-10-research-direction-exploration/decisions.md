@@ -318,7 +318,7 @@ R006 把 "Adaptive probabilistic shaped modulation for high-capacity free-space 
 - 补检索确认相干 FSO PCS gain <0.5dB 或无显著 gain → N1 降级，回 D004 切法 ⑦⑧ 深挖（与 S005 下一步映射一致）
 - 导师明确不要 PCS 方向 → N1 整体否决
 
-## D006: A3 进 Groundwork §B 判定 PASS + 机制定位边界锁定（前馈 pilot CPE 替代 VV/AGC）+ 3 条边界约束
+## D006: A3 进 Groundwork §B 判定 PASS + 机制定位边界锁定（前馈 pilot CPE 替代 VV/AGC）+ 4 条边界约束（续 6 增 BC-4 cycle slip）
 
 - **status**: active
 - **supersedes**: 无（推进 A3 从 S005"倾向 PASS"到 §B 正式 PASS；不否决任何前置决策）
@@ -340,13 +340,14 @@ H005 任务块 A3 要求：先收窄机制定位（闭合点1，需用户确认�
 - 增量论点：AGC 放大信号也放大噪声（Paillier `content.md:177`）→ deep fade 瞬态 SNR 不改善 → PLL 可能跌破 critical SNR 失锁；**前馈导频 CPE 无环路稳定性约束、无 critical SNR 失锁风险**——这是 A3 真正增量价值，非冗余
 - **不是**"导频补幅度衰减本身"（与 AGC 冗余=存疑，已排除）
 
-**3. 三条边界约束（TENTATIVE，须在 §4a 维度 A/D + Contract 处理）**：
+**3. 四条边界约束（TENTATIVE，须在 §4a 维度 A/D + Contract 处理）**：
 
 | # | 约束 | 来源 | 须在何时处理 |
 |---|---|---|---|
 | BC-1 | **PASC 路线显式区分**：Zhou 2022/2023 + McDonald 2025 已在湍流 FSO 大量用频域连续 pilot tone（self-coherent 模态补偿）。A3 必须在论文显式区分"数字前馈 CPE"vs"PASC 自动共轭补偿"，否则被审稿人指为重做 | 闭合点3 子agent 检索 | §4a 维度 A（结构优势论证）须把 baseline 设为含 PASC 路线 |
-| BC-2 | **VV 失效模式不迁移需 MVE 验证**：TL-18 记录 VV 在湍流块边界相位跳变失效（BER 10-13%→27-30%）。A3 是导频驱动前馈非 VV 盲估计，失效机制不同——但这是推断，必须 MVE 实证 | 闭合点2 原因4 + TL-18 | §4a 维度 D（MVE）必含 VV 在 deep fade 失效 vs 导频 CPE 不失效的对比 |
+| BC-2 | **VV M-次方盲估计失效不迁移需 MVE 验证**：TL-18 记录 VV 在湍流块边界相位跳变失效（BER 10-13%→27-30%）。A3 是导频驱动前馈非 VV 盲估计——但这是推断，必须 MVE 实证 | 闭合点2 原因4 + TL-18 | §4a 维度 D（MVE）必含 VV 在 deep fade 失效 vs 导频 CPE 不失效的对比 |
 | BC-3 | **residual carrier 竞争方案纳入 baseline**：Deng 2026 提出 residual carrier 替代 pilot tone 做 phase recovery。A3 须在 baseline 设计时纳入此对照 | 闭合点3 子agent 检索 | Contract 阶段 baseline 选择 + §4a 维度 A 增量论证 |
+| BC-4 | **前馈 CPE 通用 cycle slip 失效边界须论证覆盖（2026-06-16 续 6 新增）**：A0-5 负面证据搜索发现**前馈 CPE 通用失效边界 = low SNR + 深衰落 → phase unwrap cycle slip**（Ip&Kahn 2009 JLT; Li 2019 Appl. Sci.; Wang 2019 IEEE 8793073）。**此失效对 pilot 前馈 CPE 同样适用**——若 deep fade 使 pilot 自身 SNR 跌破 unwrap 阈值，pilot 前馈 CPE 也会 cycle slip。修正 BC-2："不迁移"仅指 VV 的 M-次方块边界失效机制；phase unwrap cycle slip 是前馈 CPE 族的**共享失效边界**，不豁免。A3 必须含 cycle slip 应对设计（PAPU 类——Li 2019 的 pilot-aided phase unwrap，0.78% pilot 救回 3dB POST-FEC），并在维度 D MVE 验证 deep fade 下不触发 cycle slip | S007 A0-5 子agent（Ip&Kahn 2009 / Li 2019 / Wang 2019，abstract+PDF 直证，S2 交叉验证因超时未完成标未验证） | §4a 维度 A（须含 cycle slip 应对设计论证）+ 维度 D（MVE 验证 deep fade 下 cycle slip 不触发）|
 
 ### 核心证据（§4a 维度 B 空白零假设检查 4 原因全反驳/降级）
 
