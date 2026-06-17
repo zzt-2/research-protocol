@@ -401,3 +401,118 @@ H005 任务块 A3 要求：先收窄机制定位（闭合点1，需用户确认�
 - MVE（BC-2）发现导频 CPE 在 deep fade 同样失效（VV 失效机制实际迁移）→ A3 FAIL，回 D004 切法
 - 导师明确不要 pilot tone 方向（倾向 residual carrier / self-coherent）→ A3 整体否决
 - Contract baseline 选择发现 A3 增量 <0.5dB（薄增益，TL-05）→ A3 降级
+
+## D007: N1 §4a 维度 D MVE FAIL——"离线单一 MB 分布 on 16-QAM"化身永久排除 + 互锁三章不成立
+
+- **status**: active
+- **supersedes**: 无（终结 S010 §B 的 CONDITIONAL GO AMBIGUOUS 项；不否决 D005 门控——门控结论"Tian 1.3dB 存在"仍成立，只是 N1 化身拿不到）
+- **superseded_by**: 无
+- **date**: 2026-06-17 续 7
+- **强度**: DECIDED（MVE FAIL + 化身 Kill）/ TENTATIVE（"PCS 方向整体"不否决，Pivot 路径留待下轮）
+
+### 背景
+
+S010 §4a 维度 B 判定 N1 CONDITIONAL GO——5 空白候选原因 0 致命，但原因#1（低 SNR gain 坍缩）幅度 AMBIGUOUS，留"强湍流幅度须 §D MVE 闭合"。本轮（S012）执行 §4a 维度 D MVE 闭合此变量。
+
+### 决策
+
+**1. N1 = "离线单一 Maxwell-Boltzmann 分布 on 16-QAM"化身永久排除（DECIDED）。** §4a 维度 D MVE FAIL：全 18 个 (湍流,γ̄) 组合，离线 ν 搜索（7 候选）最优永远是 ν=0（=均匀），AIR gain @ 3.0 工作点 weak=0.0dB / moderate=-0.007dB / strong 未达工作点。连 oracle（完美 CSI）也无优势。核心假设"MB 有整形增益"结构性不成立。
+
+**2. 互锁三章（A3+N1+2.2）不成立（DECIDED）。** S010 判"互锁取决于 N1 §D MVE"，本轮 MVE FAIL 给出否定答案。N1 腿断。A3（§B PASS 待 §D）+ 2.2（保底）仍在，地板不变。第三腿待议（用户选下轮再议，不预设）。
+
+**3. "PCS 方向整体"不否决（TENTATIVE）。** Kill 的只是 MB 族 + 16-QAM + AIR 指标的组合。Pivot 路径未测：Tian PSO 自由 PMF（非 MB）/ 64-QAM（更高阶整形空间）/ post-FEC BER 指标（含 LDPC 协同）。但本轮不议替代。
+
+### 核心失败机制（已验证，非估计器 bug）
+
+**MB 分布族在 16-QAM 上 BMD rate 无整形空间**。证据链：
+
+1. **优化器自证**：离线 ν 搜索在 18 个组合全部选 ν=0。若 MB 有任何正 gain 区，优化器会选非零 ν。它没有 → MB 族在 16-QAM 全 SNR 无正 gain
+2. **AWGN 控制实验同结论**：MB 全 SNR < uniform（0dB ν=0.2→0.510 vs uniform 0.899）
+3. **估计器已三法交叉验证可靠**（后验积分法 vs LLR熵 vs Y分箱，对照 Shannon 合理），排除估计器 bug
+
+**物理根因**：
+- 16-QAM 阶数太低，PS 整形空间不足（文献已知，PS gain 主要在 64/256-QAM）
+- MB 集中概率到内圈点（±1±1），其 Gray 标签高度相似 → bit 相关性↑ → H(b_k)↓ → I(b_k;Y) 上限↓，抗噪增益不补偿
+- 与 Tian 1.3dB 不矛盾：Tian 用 PSO 自由 PMF（L509 直证，非 MB）+ post-FEC BER（非 AIR），其 AIR 仅 0.3-0.4dB（R007 限制#2）
+
+### 否决了什么（做法排除）
+
+- ❌ N1 锚定"离线单一 MB 分布"在 16-QAM 相干 FSO 上——MVE 实证无增益，永久排除此化身
+- ❌ 把 Tian 的 1.3dB 当 N1 可继承的既得 gain——Tian 的 gain 来自 PSO 自由 PMF + post-FEC BER，N1 的 MB + AIR 拿不到
+- ❌ 在 MB on 16-QAM 已 FAIL 后强行 Pivot 到 MB on GG（湍流混合救不了分布族根本不匹配，AWGN 已证）
+- ❌ 锁定"互锁三章破产"叙事——只 N1 腿断，A3+2.2 仍在，第三腿待议
+
+### 可复用部分
+
+- **可靠 AIR 估计器**（后验积分法）：`projects/simulation/explore/n1-pcs-gain/n1_pcs_gain_mve.py:bmd_air`，经三法交叉验证。后续任何 PCS/调制方向 MVE 可复用
+- **MVE 工作流模板**：SPEC（假设/TL-20预期/pass-fail/FR-04）+ 锚点检查（AWGN 对照 Shannon）+ 超时防护 + JSON 元数据。`explore/n1-pcs-gain/` 作后续 explore/ MVE 的目录范式
+- **负发现"16-QAM PS 整形空间不足"**：后续任何 PCS 方向若仍用 16-QAM，需先论证阶数足够（或直接上 64-QAM）
+- **D005 门控结论不变**：Tian 1.3dB 存在（gain 数据存在性门控通过）。门控与化身可行性是两层，门控通过不保证化身可行
+
+### 具体数据（MVE 结果，JSON: explore/n1-pcs-gain/n1_pcs_gain_mve_results.json）
+
+| 量 | 值 | 来源 |
+|---|---|---|
+| AWGN uniform AIR@0dB / Shannon | 0.902 / 1.000 | MVE 锚点（<Shannon ✓）|
+| AWGN uniform AIR@12dB / Shannon | 3.578 / 4.075 | MVE 锚点 |
+| AWGN MB(ν=0.2)@0dB vs uniform | 0.510 vs 0.899（**负 gain**）| AWGN 控制实验 |
+| GG weak gain@AIR=3.0 | 0.0 dB，offline ν=0 | MVE |
+| GG moderate gain@AIR=3.0 | -0.007 dB，offline ν=0 | MVE |
+| GG strong max AIR（两方案）| 2.713（未达 3.0 工作点）| MVE |
+| 离线 ν 搜索结果（18 组合）| 全部选 ν=0（均匀）| MVE 决定性信号 |
+
+### 影响范围
+
+- **对 N1 候选**：MB on 16-QAM 化身 Kill。N1 候选状态从 S010"倾向 PASS（§B CONDITIONAL GO）"→ "**§D MVE FAIL，化身排除**"。PCS 方向整体 TENTATIVE（Pivot 路径未测）
+- **对 D004 互锁三章主轴**：**不成立**。A3+N1+2.2 → A3+2.2（两章）。主轴需重组或另寻第三腿
+- **对 D005**：门控结论不变（Tian gain 存在），但门控解除 ≠ 化身可行——本轮实证了这层区分（S008 早预警）
+- **对 A3**：无影响（A3 §B PASS 独立，H006 待 §D MVE）
+- **对 2.2 保底**：无影响（纯解析）
+
+### 触发原话
+
+无（技术推导——S010 §B CONDITIONAL GO 明确要求 §D MVE 闭合 AMBIGUOUS 项，本轮执行得到 FAIL。非用户 voice 触发决策，但用户 AskUserQuestion 选"先记录 FAIL，下轮再议替代"确认了处理方式）。
+
+### 否决条件（F3）
+
+- 下轮用户选 N1 Pivot（Tian PSO-PMF / 64-QAM）且新 MVE PASS → 本决策的"化身 Kill"对原 MB-16QAM 化身仍生效（不复活），但 N1 候选以新化身重生
+- 导师明确不要 PCS 方向 → PCS 整体否决（含 Pivot 路径）
+- 下轮选定第三腿（切法⑦⑧ 或其他）→ 互锁主轴重组，本决策的"互锁不成立"结论不变（N1 腿确实断了）
+
+
+## D008: A3 §4a 维度 D MVE Go——频域 tone pilot CPE 通过 + pilot 形态选 M1b
+
+- **status**: active
+- **supersedes**: 无（验证 D006 A3 机制成立，不否决任何决策）
+- **superseded_by**: 无
+- **date**: 2026-06-17 续 8
+- **强度**: DECIDED（MVE Go + 形态选型）/ TENTATIVE（M1b 具体参数 sp=4 可在 Contract 阶段优化）
+
+### 背景
+
+S011 完成 A3 MVE 准备（假设表 v3 + PAPU 三篇精读 + Cheng 2013 Eq.5 公式完整）。本轮（S013）执行 §4a 维度 D MVE，验证导频前馈 CPE 在 deep fade + AO 残余相位下优于 AGC+DPLL，数据决定 pilot 形态选型。
+
+### 决策
+
+**1. A3 §4a 维度 D MVE Go（DECIDED）。** 90 点全扫描（3 湍流 × 6 SNR × 5 seed），strong 湍流 γ=10dB：M1b BER=0.041 vs raw=0.369（8.9× 改善）vs oracle=0.022。gap_fill（raw→oracle 差距填充率）88-99%。BC-2（VV 复现失效 PASS）、BC-4（CS rate=0.006 <1e-2 PASS）、FR-14（M1b>>M2 PASS）、FR-15（M1b<M4 更优 PASS）全 PASS。
+
+**2. pilot 形态选 M1b 频域连续 tone（DECIDED）。** M1b 完胜 M1a（frame-header pilot）：M1a CS rate=0.73（frame 间 AO 相位变化 >π/2 致 unwrap 失效），M1b CS rate≈0（密集 pilot sp=4 间距 AO 变化 0.17 rad <<π/2）。
+
+**3. D006 BC-4 修订：cycle slip 应对 = Cheng 2013 Eq.(5)（精确化，TENTATIVE）。** 原 D006 BC-4 描述"PAPU 类"不够精确。本轮 MVE 实测：Cheng 2013 Eq.(5) 在频域 tone（N_data→0 极限）迁移有效，M1b CS rate≈0 验证。BC-4 正式表述更新为"Cheng 2013 Eq.(5) CS 修正"。
+
+### 关键证据
+
+- M1b gap_fill 88-99%（strong），CS rate 5e-4~7e-3（BC-4 PASS）
+- VV strong BER=0.40 复现 TL-18 失效（管道自检 PASS）
+- oracle 插值 BER≈oracle（补偿公式正确，pilot 估计是唯一变量）
+- Cheng 2013 Eq.(5) 在频域 tone 迁移性 MVE 验证（非平凡性来源）
+
+### 触发原话
+
+用户 AskUserQuestion 连续决策（TL-22 红线处理路径）：先修 DPLL bug → 加 AO 残余相位重跑 → 换精频偏估计器。详见 voice.md 2026-06-17 续 8。
+
+### 否决条件（F3）
+
+- Contract 阶段发现 M1b 频域 tone 功率预算不可接受 → 重选形态
+- 真实化信道下 M1b 优势消失 → 重验
+- 导师明确不要 pilot CPE 方向 → A3 否决（MVE Go 结论本身不变）

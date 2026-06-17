@@ -51,3 +51,20 @@
 - "DSP 适配版（推荐）"（AskUserQuestion 选 A0 对非 ML 方法的处理——跳过 ML 专属项 MDP/跨域先例/范式对齐，保留方法论无关的通用检查性能间隙/负面证据/先验覆盖；在 S009 记跳过原因）→ S009 A0 适配裁定
 - "继续"（推进 A3 进 §4a 维度 A，本轮超额完成 A0/A'/A 三维度 + 新增 BC-4 cycle slip）
 - 态度延续：用户不替框架适配细节过度纠结，选推荐项即放行 agent 推进；本轮 A0-5 负面证据搜索发现 cycle slip 共享失效边界（BC-4）是 agent 主动挖出的风险，非用户指定——再次兑现"靠 agent 用证据判断"
+
+## 2026-06-17 续 7（S011 A3 MVE 前置 + PAPU 三篇精读）
+- "方案B，不过你得确保写到一个/explore/xxxx/ 下面，同时附带完整说明，哪怕完全没有上下文也能进行不同实验代码的整合。后续如果需要进行整理还能做一做"（AskUserQuestion #1 选 MVE 物理保真度方案 B + 显式要求代码自包含 + explore 目录）→ S011 explore/a3-pilot-cpe-mve/ 建立
+- "先派子 agent 精读 Li 2019（推荐）"（AskUserQuestion #1 选 PAPU 处理方式——TL-22 红线先验证再 MVE）→ S011 三篇精读链启动
+- "MVE 做形态对照实验"（AskUserQuestion #2 选 pilot 形态——数据决定，不锁死频域 tone 设想）→ S011 MVE 假设表 v3 M1a/M1b 对照
+- "再派子 agent 查 Cheng 2013 原文"（AskUserQuestion #2 选 PAPU 公式获取途径——TL-22 严格满足，连续两缺后第三次查证）→ S011 Cheng 2013 公式获取，TL-22 红线解除
+- "先写 S011（推荐）"（AskUserQuestion #2 选文档同步时机——治理先于 MVE 执行）→ S011 写入
+- "我打算压缩之后再做。没问题吧？"（预告压缩，要求确认安全）→ 本轮收尾 + 治理同步（topic-index + voice + registry）
+- 态度延续：用户持续不替细分技术拍板（pilot 形态让数据决定 / PAPU 公式让 agent 查），但明确介入工程纪律要求（代码自包含 + explore 目录）——与续 3 "不替细分技术拍板，靠 agent 用证据判断"一致
+
+
+## 2026-06-17 续 8（S013 A3 §4a 维度 D MVE 执行 + Go）
+- "a"（AskUserQuestion 选本轮方向——三路 A3 §D MVE / N1 替代 / 治理修复中选推进 A3）→ S013 A3 MVE 执行
+- "先修 DPLL bug"（AskUserQuestion #1 选 TL-22 红线处理——先排除实现 bug 再定物理前提）→ 4 个 DPLL bug 修复 + 决定性测试确认物理前提问题
+- "加 AO 残余相位重跑"（AskUserQuestion #2 选信道修复——物理依据 Paillier §IV-A/B 主导损伤）→ a3_channel.py 加 ao_residual_phase，A3 物理前提成立（raw>>oracle 14x）
+- "换精频偏估计器"（AskUserQuestion #3 选 pilot CPE 失效处理——fft_foe 多普勒残余 3.75rad）→ Kay/M&L estimator 实现，最终定位 pilot 注入 bug
+- 态度延续：用户全程不替细分实现拍板（bug 修法/信道参数/估计器选型让 agent 诊断），只在 TL-22 红线节点做路径选择——与续 3/续 7 一致。本轮 4 次 AskUserQuestion 全是"给路径选项让用户选方向"，不是"问技术细节"
