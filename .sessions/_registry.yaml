@@ -185,15 +185,25 @@ topics:
 
   - slug: 2026-06-10-research-direction-exploration
     title: 研究方向系统探索（开题后深度扫描）
-    status: active
+    status: dormant
     created: "2026-06-10"
     last_updated: "2026-06-17"
-    description: "开题后系统性扫描找真正能做下去的方向。R002产22候选；D001评判框架+D002(凑创新点抛弃,现有框架降级为代码资产)；S002粗筛。R003精读E三检验判定。R004 B1分治事实确认→H004 TL-22降级。S003:B1物理可行性预检FAIL(D003)+R005出井重扫合并(留4砍9)。R006大规模补盲扫描(按Paillier主导损伤重组+5盲区):5子agent撞harness 600s超时→salvage→15 JSON ~180 hits,净增N1+强化A3+负发现(可行解空间窄)。S004策略收敛(发散→先验能做出来)。S005(续4)A3/N1物理可行性预检:A3倾向PASS/N1存疑(D005锚点纠正:cite=81是R006误判,N1锚Elzanaty blind;相干FSO PCS gain数据缺失=门控)。S006/D006(续5)A3进Groundwork §B判定PASS:机制定位锁定(前馈pilot CPE替代VV/AGC,幅度归AGC)+§4a维度B空白零假设检查通过+Phase B补检索无直接先例。3边界约束(BC-1 PASC区分/BC-2 VV失效MVE验证/BC-3 residual carrier baseline)待维度A/D处理。A3可进§4a维度A/A'/D。R007/S007(续5对话乙)N1相干FSO PCS gain门控解除:Tian 2021(MDPI DOI 10.3390/app11219805)正文报1.3dB(post-FEC BER)/1.5dB(SER)vs uniform,过D005≥1dB阈值。N1从存疑升级倾向PASS可进Groundwork。4限制(gain随SNR递减/AIR远低于BER/强湍流未隔离/单一来源)须§B复核。cite=35降级方法参考。H005两对话回传+S008汇总:门控解除不等于§B PASS(N1只回答数据存不存在,§4a维度B空白零假设检查未做)。互锁三章物理可行性基础增强但未锁,取决于N1 §B——A3已立/2.2保底/N1上行期权(关键风险#3强湍流未隔离)。未到MVE。S009/D006续6(对话甲)A3 §4a维度A0(DSP适配版,用户确认跳ML专属项)/A'/A全过:A0性能间隙2.3dB[实证]+负面证据无针对A3失败+FR-01不触发;A'创新只建维度1;A结构优势4/5通过(A-4 FR-03增强基线债务留MVE)。新增BC-4(前馈CPE通用phase unwrap cycle slip失效边界Ip-Kahn2009/Li2019/Wang2019,pilot CPE同样适用,A3须含PAPU类应对)。修正BC-2(不迁移仅指VV M-次方块边界,cycle slip是共享边界不豁免)。A3现在A0/A'/A/B四维度全过,下一步=维度D MVE(H006交接)。4边界约束(BC-1/BC-2/BC-3/BC-4)待MVE处理。S010: N1 §4a 维度 B 判定 CONDITIONAL GO（5 候选原因 0 致命：低SNR坍缩方向被Tian反驳但幅度AMBIGUOUS / PS被CPE吸收→正交反驳 / 强吸引子→1.3dB证伪 / 仅光纤→多FSO论文反驳 / 单源→部分缓解；强湍流幅度须§D MVE闭合）。互锁判定细化：取决于N1 §D MVE。A3+N1 均过分析门待MVE，2.2保底不变。S011: A3 MVE 前置准备。PAPU 三篇精读（Li 2019/Cheng 2014 公式都缺，Cheng 2013 原始文 OE 21(19) DOI 10.1364/OE.21.022166 5 公式完整获取，TL-22 红线解除）。核心 Eq.(5) CS 修正公式可机械迁移 A3 频域 tone。用户决策：方案B（Paillier 复现）+ MVE 做形态对照实验（M1a 时域 frame-header pilot + PAPU vs M1b 频域 tone + PAPU 迁移）+ 代码自包含放 explore/a3-pilot-cpe-mve/。 S012/D007(续7对话乙)N1 §4a维度D MVE FAIL:MB on 16-QAM全18个(湍流,γ̄)组合离线ν搜索最优永远ν=0(=均匀),gain@AIR=3.0 weak=0.0/moderate=-0.007/strong未达,oracle也无优势。估计器三法交叉验证可靠(后验积分法)。根因:16-QAM阶数太低整形空间不足+MB破坏Gray bit独立性;与Tian 1.3dB不矛盾(PSO自由PMF非MB+post-FEC BER非AIR)。N1 MB化身Kill,互锁三章不成立(N1腿断),A3+2.2地板不变,第三腿待议。用户选先记录FAIL下轮再议替代。 S013/D008(续8)A3 §4a维度D MVE Go:M1b频域tone pilot CPE 90点全扫描strong γ=10dB BER=0.041 vs raw=0.369(8.9x改善)gap_fill 88-99% CS rate=0.006(BC-4 PASS)。M1b完胜M1a(frame间CS失效)。D006 BC-4修订为Cheng2013 Eq.5。A3过§4a全维度,进入Contract/Formal阶段。"
+    description: "开题后系统性扫描找真正能做下去的方向。9轮探索，三条方法腿（A3/N1/③）全部 FAIL：N1 MB on 16-QAM gain≈0（S012/D007）、③ MCS 排程 oracle 上界 0.09dB（S014/D009）、A3 §D MVE Go 被推翻因 AO 残余参数偏大 1885×（S015/D010）。殊途同归实证：当前信道设定（星地相干 FSO + AO 校正 + LEO + 16-QAM）下信号处理增量窄。产出可复用资产：A3 MVE 工程代码（explore/a3-pilot-cpe-mve/）、防坑方法学（TL-26/27/28/29 + FR-20/21，已缝框架）、oracle 上界门控方法、估计器三法、2.2 解析保底。dormant 原因：方向判定阶段结束，后续重定向转到 2026-06-17-thesis-method-redirection。保留：本专题 S###/D### 作为复盘输入，需要 A3/N1/③ 细节时回去查。"
     depends_on:
       - slug: thesis-direction-pivot
         reason: 继承开题阶段的仿真结论和文献积累
       - slug: 2026-06-04-advisor-review-revision
         reason: 开题报告批注修订完成，方向探索不受其影响
+
+  - slug: 2026-06-17-thesis-method-redirection
+    title: 论文方法方向重新定位（复盘 → 定方向）
+    status: active
+    created: "2026-06-17"
+    last_updated: "2026-06-17"
+    description: "前序专题（2026-06-10-research-direction-exploration）9 轮三条方法腿全断后，本专题使命：复盘前序产出 + 在开题标题（星地湍流信道激光通信处理技术研究）允许的设定空间里定至少 1 个能让指标涨的方法方向。老师约束（硬）：得有 xx 方法 + 指标提升，纯分析/负结果不行。关键认知：开题标题未锁 AO/相干/16-QAM（设定可动）；前序实证当前设定增量窄 → 设定若动须重评。结构偏离：按候选方向聚合（candidates/{slug}/notes.md）而非 S### 平铺，解决前专题 15 个 S 散乱难拼的痛点。S001 复盘+定框完成，下一步列候选清单。只管定方向，不做 MVE/Contract。"
+    depends_on:
+      - slug: 2026-06-10-research-direction-exploration
+        reason: 复盘需要前序专题的三条腿死法/可复用资产/教训作为输入
 
   - slug: 2026-06-15-read-traceability
     title: 论文精读溯源机制改进（框架改动）
