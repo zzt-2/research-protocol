@@ -29,13 +29,16 @@ F_RESIDUAL = 100e6  # 多普勒残余频偏 100 MHz（Paillier §IV-C）
 T_S = 1e-9          # symbol 时间 1 ns（~1 Gbaud，Paillier 10 Gbaud 的简化）
 LASER_LW = 1e3      # 激光线宽 1 kHz（相干检测典型，远小于多普勒）
 # AO 残余活塞相位等效线宽（Paillier §IV-A/B 主导损伤）。
-# AO 校正后残余 piston 抖动等效一个大的相位 Wiener 过程。
-# 1 kHz 激光线宽可忽略（std 0.057 rad），AO 残余等效 ~300 kHz-1 MHz 才是主导。
-# 这里用三档对应湍流强度（strong 湍流 AO 残余更大）。
+# AO 校正后残余 piston 抖动等效一个相位 Wiener 过程。
+# **文献依据（Paillier 2020 §II verified）**：相干时间 τ_c ~ 1 ms（"of the order of 1 ms"）。
+# Wiener 过程 τ_c = 1/(2π·Δν) → Δν ≈ 159 Hz（strong）。
+# 三档对应湍流强度（强湍流 AO 校正残余更大 → τ_c 更短）：
+#   weak: τ_c=10ms → Δν=16Hz；moderate: τ_c=3ms → 53Hz；strong: τ_c=1ms → 159Hz。
+# 历史教训：初版误用 30k/100k/300k Hz（大 188-1885x），致 MVE 虚高，已修正。
 AO_RESIDUAL_LW = {
-    'weak':     3e4,    # 30 kHz（AO 校正好，残余小）
-    'moderate': 1e5,    # 100 kHz
-    'strong':   3e5,    # 300 kHz（强湍流 AO 残余大）—— 主导损伤
+    'weak':     16,      # τ_c ≈ 10 ms（AO 校正好，残余小且慢）
+    'moderate': 53,      # τ_c ≈ 3 ms
+    'strong':   159,     # τ_c ≈ 1 ms（对标 Paillier Fig.4 实测）
 }
 
 

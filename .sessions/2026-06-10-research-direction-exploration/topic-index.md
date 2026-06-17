@@ -1,6 +1,6 @@
 # 专题: research-direction-exploration
 
-> 状态: active | 创建: 2026-06-10 | 最后更新: 2026-06-17 续 8（对话乙 S012 N1 §4a 维度 D MVE 判定 FAIL——MB on 16-QAM 全 SNR gain≈0/-，离线 ν 搜索自选均匀（=无整形空间），估计器三法交叉验证可靠。N1 MB 化身 Kill（D007），互锁三章不成立（N1 腿断），A3+2.2 地板不变，第三腿待议。用户选'先记录 FAIL，下轮再议替代'。A3 §D MVE 仍待 H006）；对话乙 S010 N1 §4a 维度 B 判定 CONDITIONAL GO——结构无致命原因，强湍流幅度须 §D MVE 闭合。互锁判定细化：取决于 N1 §D MVE。A3+N1 均过分析门待 MVE，2.2 保底不变）
+> 状态: active | 创建: 2026-06-10 | 最后更新: 2026-06-17 续 9（对话乙 S014 第三腿候选 ③ 过境 MCS 排程前置门控 FAIL——oracle 上界估算（N=200000，完美 CSI+零开销）12 个(σ²_R_zenith,γ̄)组合最大 0.09dB，8/12 case=0.00dB（全程最优固定=仰角感知无需切换），判据 <0.5dB → ③ 砍掉（D009）。根因与 N1 同家族（16-QAM 量级参数空间窄）。坑2文献预检 AMBIGUOUS：ESA/DLR 占 VDR/速率切换/交织维度化，FSO 领域 MCS/编码率/PCS/导频密度空白；③ 化身死≠空白区被填。坑3量化 Go：CSI 反馈 ρ(RTT) 强湍流<0.03/弱湍流0.42-0.69，仰角预测有独立增益空间，但 MCS 化身吃不到。互锁三章彻底放弃（N1 腿断 D007 + ③ 腿断 D009），论文结构回 A3+2.2 两章+待定第三腿。A3 §D MVE 已 PASS（S013/D008，腿立住）。剩余第三腿候选 ⑦/⑧ 未验或可选不强求第三腿）；
 > 目标: 系统性扫描星地湍流信道激光通信信号处理全领域，找到2-3个可行研究方向，为硕士论文提供充分支撑
 
 ## 进展线索
@@ -41,6 +41,10 @@
 - **D008**（新建 2026-06-17 续 8）A3 §4a 维度 D MVE **Go** + pilot 形态选 M1b 频域 tone：90 点全扫描，strong γ=10dB M1b BER=0.041 vs raw=0.369（8.9× 改善），gap_fill 88-99%，CS rate=0.006（BC-4 PASS）。M1b 完胜 M1a（M1a CS=0.73 frame 间失效）。D006 BC-4 修订为"Cheng 2013 Eq.(5)"。调试教训：pilot 位置必须注入已知 pilot_sym（核心 bug，曾误判物理前提问题）。A3 通过 §4a 全维度。详见 decisions.md / `S013-a3-mve-section-D-pass.md` / `explore/a3-pilot-cpe-mve/`
 - **S013**（新建 2026-06-17 续 8）A3 §4a 维度 D MVE 执行 + Go 判定：经历 TL-22 红线两次触发（缺 AO 残余相位 → 加 AO；pilot CPE 失效 → 定位 pilot 注入 bug），最终 M1b gap_fill 88-99% 通过。详见 `S013-a3-mve-section-D-pass.md`
 
+- **S014**（新建 2026-06-17 续 9，对话乙）第三腿候选 ③ 过境 MCS 排程前置门控 FAIL：N1 腿断（D007）+ A3 §D PASS（S013/D008）后第三腿只剩找新切法。四候选（⑦/③/⑧/N1 Pivot）横向对比，③ 物理基础最强（仰角变化 10-88 倍实算+与 A3 时间尺度正交+能复用 N1 工具链）。*坑2文献预检*（论文库 273 篇 8 LEO+scheduling 全网络层 + Explore agent FSO 全局查证）：**AMBIGUOUS**——ESA/DLR（Arapoglou/Mazzali/Shrestha）已占 VDR/速率切换/交织维度化，FSO 领域 MCS/编码率/PCS/导频密度空白。③ 命题须落空白区。*坑3量化*（CSI 延迟解析）：**Go**——T_c=1-10ms 区间 ρ(RTT) 强湍流<0.03/弱湍流0.42-0.69，仰角预测有独立增益空间。踩 TL-20 bug（球面斜程负值，修正为标准公式天顶=h=550km）。*坑6前置门控*（用户"做吧"）：纯解析 oracle outage 上界，**FAIL**——12 组合最大 0.09dB，8/12=0.00dB（全程最优固定=仰角感知无需切换）。TL-20 偏差检查抓 N=20000 采样噪声虚高（0.11→0.09）+ 反常选择（N=200k 消失）。根因与 N1 同家族（16-QAM 量级参数空间窄）。**③ 砍掉（D009）**。互锁三章彻底放弃。治理冲突发现：S013/D008 已被 A3 对话占用（编号冲突第 4 次），本轮改用 S014/D009。详见 S014-direction-3-mcs-scheduling-upperbound-fail.md
+- **D009**（新建 2026-06-17 续 9）第三腿 ③ MCS/调制阶数排程前置门控 FAIL + 方向砍掉：oracle 上界 0.09dB（N=200000 完美 CSI+零开销）<0.5dB 阈值，12/12 case 不达标。根因三层：MCS 切换空间物理窄（oracle 只切 2-3 次）/ 全程最优固定已聪明 / 与 N1 同根（16-QAM 量级参数空间窄）。否决"MCS/编码率/调制阶数排程"化身永久排除 + "仰角变化大→排程有增益"直觉（物理可行≠工程价值）+ "③ 复用 N1 工具链低风险"论证（N1 命题死，③ 是新命题非 Pivot）。D004 切法③ 类型未整体否决（导频/交织排程未验但 ESA/DLR 擦边占据）。详见 decisions.md
+- **D010**（新建 2026-06-17 续 9 对话甲，supersede D008）A3 §4a 维度 D MVE **Kill**：D008 Go 用的 AO 残余参数（300kHz）比 Paillier 实测（τ_c~1ms→159Hz）大 **1885 倍**，Go 作废。修正参数重验 gap 缩 136 倍，pilot CPE gap_fill 负。挣扎两口子全堵（AO negligible + 时变多普勒 8.2μs 序列太短）。**A3 pilot CPE 化身 Kill**。与 N1(D007)+③(D009)同构——三腿全 Kill，只剩 2.2 地板。详见 decisions.md / `S015-a3-mve-section-D-kill.md`
+- **S015**（新建 2026-06-17 续 9 对话甲）A3 §D MVE Kill 核实 + 挣扎 + 教训沉淀。详见 `S015-a3-mve-section-D-kill.md`
 ## 已有基础（开题阶段产出）
 
 ### 论文框架
@@ -127,6 +131,7 @@
 - **N1 §4a 维度 D MVE FAIL / MB 化身 Kill（S012/D007，2026-06-17 续 7，DECIDED）**：D005 门控（Tian 1.3dB 存在）仍成立，但 §D MVE 实证 N1='离线单一 MB 分布 on 16-QAM'化身在全 18 个(湍流,γ̄)组合 gain≈0/-（离线 ν 搜索自选均匀=无整形空间），永久排除。估计器三法交叉验证可靠（后验积分法对照 Shannon）。根因：16-QAM 阶数太低整形空间不足 + MB 破坏 Gray bit 独立性；与 Tian 1.3dB 不矛盾（Tian 用 PSO 自由 PMF 非 MB + post-FEC BER 非 AIR，其 AIR 仅 0.3-0.4dB）。**互锁三章不成立**（N1 腿断，A3+2.2 地板不变，第三腿待议）。PCS 方向整体 TENTATIVE 不否决（Pivot 路径未测，下轮再议）
 - **N1 相干 FSO PCS gain 门控解除（R007/S007，2026-06-16 续 5，DECIDED）**：D005 门控阈值（≥1dB）满足——Tian 2021（DOI 10.3390/app11219805，相干 FSO + 16-QAM + GG 湍流 + PS）正文报 1.3 dB（post-FEC BER）/ 1.5 dB（SER）vs uniform，经子 agent 精读 + 主对话 grep 交叉验证。**N1 从"存疑（门控）"升级"倾向 PASS（门控解除，可进 Groundwork）"**。cite=35（Rode 2023 fiber 非 FSO）降级为 PCS+CPE 方法参考。**4 个限制须 N1 Groundwork §B 复核**：① gain 随 SNR 递减（高 SNR 弱湍流趋零）② AIR 0.3-0.4dB 远低于 BER 1.3dB（报 gain 应报 SER/post-FEC BER 非 AIR）③ 强湍流 σ²_R>1 未单独列表 ④ Tian 单一来源（长春光机所）需 Elzanaty blind 框架独立复现。**§4a 维度 B 判定 CONDITIONAL GO（S010，2026-06-17 续 6）：5 空白候选原因 0 致命（低SNR坍缩方向被Tian反驳但幅度AMBIGUOUS需MVE / PS被CPE吸收→正交反驳 / 强吸引子→1.3dB证伪 / 仅光纤→多FSO论文反驳 / 单源→部分缓解）。强湍流幅度须§D MVE闭合。互锁判定细化：取决于N1 §D MVE**
 
+- **③ 过境 MCS/调制阶数排程前置门控 FAIL（S014/D009，2026-06-17 续 9，DECIDED）**：D004 切法③ 的 MCS/编码率/调制阶数排程化身经 oracle 上界估算砍掉。12 个(σ²_R_zenith,γ̄)组合最大 0.09dB（N=200000 完美 CSI+零开销），8/12 case=0.00dB（全程最优固定=仰角感知无需切换）。根因与 N1 同家族（16-QAM 量级参数空间窄，无论整形 N1 还是排程 ③）。坑2文献 AMBIGUOUS：ESA/DLR 占 VDR/速率切换/交织维度化，FSO MCS/编码率/PCS/导频密度空白——③ 化身死≠空白区被填。坑3量化 Go：CSI 反馈 ρ(RTT) 显著过时，仰角预测有独立增益空间，但 MCS 化身吃不到。**互锁三章彻底放弃**（N1 腿断 D007 + ③ 腿断 D009）。论文结构回 A3+2.2 两章+待定第三腿。D004 切法③ 类型未整体否决（导频/交织排程未验但优先级低）
 ### 其他结论
 - 几乎所有 FSO 信号处理基于 IM/DD，相干 QPSK + GG 湍流几乎空白（但需警惕是否为陷阱空白）
 - 10 个候选方向（C1-C10）已列出，但用户认为太少

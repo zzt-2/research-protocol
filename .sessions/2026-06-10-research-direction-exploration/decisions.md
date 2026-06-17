@@ -1,4 +1,4 @@
-# Decisions — 2026-06-10-research-direction-exploration
+﻿# Decisions — 2026-06-10-research-direction-exploration
 
 > D### 决策记录：架构决策、方向选择、路线失败记录
 > 每条有取代/被取代字段形成血缘链。旧决策标 superseded 不删。
@@ -482,7 +482,7 @@ S010 §4a 维度 B 判定 N1 CONDITIONAL GO——5 空白候选原因 0 致命�
 
 ## D008: A3 §4a 维度 D MVE Go——频域 tone pilot CPE 通过 + pilot 形态选 M1b
 
-- **status**: active
+- **status**: superseded（D010 Kill，AO 残余参数偏大 1885x 致 Go 结论作废）
 - **supersedes**: 无（验证 D006 A3 机制成立，不否决任何决策）
 - **superseded_by**: 无
 - **date**: 2026-06-17 续 8
@@ -516,3 +516,141 @@ S011 完成 A3 MVE 准备（假设表 v3 + PAPU 三篇精读 + Cheng 2013 Eq.5 �
 - Contract 阶段发现 M1b 频域 tone 功率预算不可接受 → 重选形态
 - 真实化信道下 M1b 优势消失 → 重验
 - 导师明确不要 pilot CPE 方向 → A3 否决（MVE Go 结论本身不变）
+
+---
+
+## D009: 第三腿候选 ③「过境 MCS/调制阶数排程」前置门控 FAIL — 方向砍掉
+
+> status: active
+> date: 2026-06-17 续 9
+> 取代：无
+> 被取代：无
+
+### 决策
+
+D004 切法③「过境仰角感知排程」的具体化身——**MCS 级别/编码率/调制阶数排程**——经坑6 前置门控（oracle 上界估算）FAIL，**方向砍掉**。不进 Groundwork。
+
+注意：砍的是"③ 的这个具体化身"（MCS/调制阶数排程）。D004 切法③「过境仰角感知排程」作为**切法类型**未整体否决——导频密度/交织深度排程（坑2 显示 ESA/DLR 已擦边占据）未单独验上界，但已被文献预检标记为"需精读 SPIE 10.1117/12.2599661 确认是否被占"。
+
+### 核心失败机制
+
+**低阶调制参数空间天然窄，与 N1 同根**。DVB-S2 标准 8 阶 MCS（QPSK-1/4 ~ 32APSK-9/10）在一次 LEO 过境（10°→90°→10°，19 段）中，即便 oracle 完美 CSI + 零开销切换，整个过境只切换 2-3 次（最强 case：低仰角 8PSK + 高仰角 16APSK，跨 1 个调制阶数）。
+
+oracle 上界增益：12 个 (σ²_R_zenith, γ̄) 组合最大 **0.09 dB**，8/12 case 增益 = 0.00 dB（全程最优固定 = 仰角感知，无需切换）。判据（上界 <0.5dB → 砍）远低于阈值。
+
+根因三层：
+1. MCS 切换空间物理窄（oracle 下只切 2-3 次）
+2. 全程最优固定 MCS 已经"聪明"（argmax 加权平均），仰角感知只能微调
+3. 与 N1（S012/D007）同家族——16-QAM 量级调制的参数空间不足，无论是整形（N1）还是排程（③）
+
+### 否决了什么
+
+- **③ 的 MCS 级别/编码率/调制阶数排程化身**：永久排除。上界 0.09dB，现实只会更低。
+- **"仰角变化大（10-88 倍）→ 排程有增益"的直觉**：仰角变化真实存在（坑3 验证），但不蕴含 MCS 排程有工程价值。物理可行性 ≠ 工程价值。
+- **"③ 可复用 N1 工具链所以低风险"的论证**：N1 命题已死（D007），③ 是新命题非 N1 Pivot。工具链可复用不等于命题可行。
+
+### 可复用部分
+
+1. **坑3 量化结论**（CSI 反馈延迟损失）：T_c=1-10ms 区间，ρ(RTT) 强湍流<0.03 / 弱湍流 0.42-0.69。仰角确定性预测有独立增益空间——**这个物理事实不变**，只是 MCS 排程这个化身吃不到。其他化身（如 ⑦ 不确定性建模）可能吃到。证据存 `projects/simulation/explore/mcs-gain-upperbound/_csi_delay_vs_elev.md`。
+2. **坑2 文献边界**：ESA/DLR 占据 VDR/速率切换/交织维度化；FSO 领域 MCS/编码率/PCS/导频密度空白。**空白区仍空白**——③ 化身死不意味空白区被填。
+3. **MCS 排程上界估算脚本**：`projects/simulation/explore/mcs-gain-upperbound/mcs_gain_upperbound.py`，纯解析 outage 容量，复用 `_channel.py:gg_block` 思想。可作为后续方向"参数空间是否足够"的快速预检模板。
+4. **TL-20 锚点检查方法论**：本轮抓住两个 bug（球面几何斜程负值 + 采样噪声虚高增益），都是 TL-20 锚点（物理量级不对就查）的胜利。强化"动手前先写预期"的纪律。
+
+### 具体数据
+
+oracle 上界（N=200000，完美 CSI + 零开销切换 + 精确仰角-统计映射）：
+
+| σ²_R_zenith | γ̄ | fixed best MCS | gain dB | gain % |
+|---|---|---|---|---|
+| 0.1 | 5dB | QPSK-3/4 | 0.00 | 0.0% |
+| 0.1 | 10dB | 8PSK-3/4 | 0.07 | 1.7% |
+| 0.1 | 15dB | 32APSK-3/4 | **0.09** | 2.1% |
+| 0.1 | 20dB | 32APSK-9/10 | 0.00 | 0.0% |
+| 0.5 | 5dB | QPSK-3/4 | 0.00 | 0.0% |
+| 0.5 | 10dB | 8PSK-3/4 | 0.00 | 0.0% |
+| 0.5 | 15dB | 16APSK-5/6 | 0.08 | 1.8% |
+| 0.5 | 20dB | 32APSK-9/10 | 0.01 | 0.2% |
+| 1.0 | 5dB | QPSK-3/4 | 0.00 | 0.0% |
+| 1.0 | 10dB | 8PSK-3/4 | 0.00 | 0.0% |
+| 1.0 | 15dB | 16APSK-3/4 | 0.00 | 0.0% |
+| 1.0 | 20dB | 32APSK-9/10 | 0.01 | 0.3% |
+
+Max 0.09 dB | Mean 0.02 dB | 12/12 <0.5dB。
+
+调试轨迹：N=20000 初版最大 0.11dB + 高仰角反选低阶 MCS 反常 → TL-20 偏差检查 → N=200000 确认采样噪声虚高 + 反常消失 → 真实上界 0.09dB。
+
+### 影响范围
+
+- **D004 切法③**：具体化身（MCS 排程）砍掉，切法类型降级为"仅导频/交织排程未验，且 ESA/DLR 擦边占据，优先级低"。
+- **第三腿候选**：③ 出局。剩余 ⑦（不确定性建模，未验）/ ⑧（反向设计，未验）/ N1 Pivot（不推荐）/ 不强求第三腿（A3+2.2 两章）。
+- **互锁三章**：本就不成立（D007 N1 腿断）。③ 曾被视为"最可能救活互锁"的候选，现在也断。互锁叙事彻底放弃，论文结构回 A3+2.2 两章 + 待定第三腿。
+- **A3**：不受影响（S013/D008 已 PASS，腿立住）。
+- **2.2**：不受影响（保底）。
+- **代码资产**：`projects/simulation/explore/mcs-gain-upperbound/` 保留作为预检模板 + 失败证据。`n1-pcs-gain/` 不受影响。
+
+### 来源
+
+S014（本轮 session note）+ 坑6 前置门控数据（`projects/simulation/explore/mcs-gain-upperbound/mcs_gain_upperbound_results.json`）+ 坑2 agent 查证（FSO 领域文献边界）+ 坑3 解析估算（CSI 延迟损失）。
+
+### 触发原话
+
+用户"压缩之后再议"（启动本轮）→ "先看证据再选"（AskUserQuestion 选横向对比）→ "可以"（启动双预检）→ "做吧"（启动坑6 前置门控）。详见 voice.md 2026-06-17 续 9。
+
+### 否决条件（F3）
+
+本决策是失败路线记录，本身已是否决。若后续有人重新提议"LEO 过境 MCS 排程"方向，**治理 skill 应检测到与 D009 冲突并阻断**，要求显式论证"为什么这次不同"（如：换 256-QAM + 细粒度 MCS 集 + 跨层联合编码率+调制阶数，且新上界估算 >0.5dB）。
+
+
+
+## D010: A3 §4a 维度 D MVE Kill——AO 残余参数修正后 pilot CPE 无增量（supersede D008）
+
+- **status**: active
+- **supersedes**: D008（D008 Go 结论作废，基于偏大 1885x 的 AO 残余参数）
+- **superseded_by**: 无
+- **date**: 2026-06-17 续 9
+- **强度**: DECIDED（MVE Kill + 物理量级坐实，两个挣扎口子全堵）
+
+### 背景
+
+D008 判 A3 §D MVE Go，但 AO 残余等效线宽参数（strong=300kHz）是"为了让 pilot CPE 有相位可补"拍的，无文献依据。本轮核实发现严重偏差，挣扎失败。
+
+### 关键证据（Paillier 2020 §II-IV，本地 content.md verified）
+
+1. **AO 残余相干时间 τ_c ~ 1 ms**（Paillier Fig.4 原话："the coherence time of the fluctuations are of the order of 1 ms"）。Wiener 换算 Δν = 1/(2π·τ_c) ≈ 159 Hz。
+2. **D008 用的 strong=300kHz 比 Paillier 大 1885 倍**（weak=30kHz 大 188 倍，moderate=100kHz 大 628 倍）。MVE 的 14× raw→oracle gap 主要是这个虚高参数造的。
+3. **Paillier §V 原话**："turbulent phase noise has negligible impact on the carrier synchronization process" + "DPLL is able to maintain the lock and accurately track the residual phase fluctuations even in the presence of turbulence"。在真实参数下 PLL 不失锁，相位噪声 negligible。
+
+### 修正参数重验结果（strong 湍流）
+
+AO 参数改到 Paillier 量级（strong=159Hz）后：
+- raw→oracle gap 从 0.34 缩到 0.0025（**缩小 136 倍**）
+- M1b pilot CPE gap_fill 大面积为负（strong γ=10dB = -697%，pilot 反而加噪声）
+- AO 相位 64-symbol 块漂移仅 0.008 rad，pilot 估计噪声（CRLB ~0.08-0.25 rad）远大于要追的相位
+
+### 挣扎失败记录（两个口子全堵）
+
+**口子1（已堵）**：补 AO 残余相位本身——Paillier 实测 negligible，死。
+
+**口子2（本轮试，堵）**：加时变多普勒（LEO 多普勒斜率）强制 PLL 动态跟踪，赌 deep fade 瞬态 PLL 失锁。物理量级核算：MVE 序列 N=8192 symbol × T_S=1ns = 8.2μs，在 8.2μs 内即使多普勒斜率 1MHz/s（很大），序列内频偏变化仅 8.2Hz，累积相位误差 ~0。**要让 fft_foe 失效需斜率 >7.4 GHz/s**（非真实残余多普勒量级，LEO 残余顶多 MHz/s）。MVE 时间尺度太短，时变多普勒来不及变化。
+
+**判定**：A3 在 MVE 能模拟的时间尺度（μs 级）和真实 AO 残余参数下，**信道里没有 pilot CPE 能补的时变相位损伤**。与 N1 MVE FAIL（D007）同构——"信道里没有方法能补的损伤"。
+
+### 决策
+
+**1. A3 §4a 维度 D MVE Kill（DECIDED）。** D008 Go 作废。pilot 前馈 CPE 在星地相干 FSO + 真实 AO 残余参数下无增量。
+
+**2. D008 superseded。** D008 的 pilot 形态选型（M1b）、Cheng 2013 Eq.5 迁移、调试教训（pilot 注入 bug）仍有效作为工程资产保留（见 explore/a3-pilot-cpe-mve/），但 Go 结论作废。
+
+**3. A3 方向整体 TENTATIVE 不否决。** 本轮只 Kill"pilot CPE 补 AO 残余相位"这个化身。A3 的 D006 机制（pilot 替代 PLL 相位估计角色）在更极端信道（如无 AO 校正的弱湍流、或 deep fade 更频繁的场景）可能仍成立，但需重新论证物理前提。留待下轮与第三腿重整一并议。
+
+### 触发原话
+
+用户连续两次定调：
+- "查"（要求核实 AO 残余参数文献依据）→ 本轮核实发现严重偏差
+- "写吧。然后，想一想有什么教训能留给后面"（接受 Kill，要求沉淀教训）
+
+### 否决条件（F3）
+
+- 找到真实场景下 AO 残余相位显著 > Paillier 报的 159Hz（如无 AO 校正、或极端湍流 Cn²）→ A3 化身可重生重验
+- 改攻击点（不补 AO 残余，补别的时变相位源）且新源经物理量级验证显著 → A3 重生
+- 导师明确不要 pilot CPE 方向 → A3 整体否决

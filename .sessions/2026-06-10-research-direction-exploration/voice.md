@@ -68,3 +68,11 @@
 - "加 AO 残余相位重跑"（AskUserQuestion #2 选信道修复——物理依据 Paillier §IV-A/B 主导损伤）→ a3_channel.py 加 ao_residual_phase，A3 物理前提成立（raw>>oracle 14x）
 - "换精频偏估计器"（AskUserQuestion #3 选 pilot CPE 失效处理——fft_foe 多普勒残余 3.75rad）→ Kay/M&L estimator 实现，最终定位 pilot 注入 bug
 - 态度延续：用户全程不替细分实现拍板（bug 修法/信道参数/估计器选型让 agent 诊断），只在 TL-22 红线节点做路径选择——与续 3/续 7 一致。本轮 4 次 AskUserQuestion 全是"给路径选项让用户选方向"，不是"问技术细节"
+
+## 2026-06-17 续 9（S014 第三腿 ③ 过境 MCS 排程前置门控 FAIL）
+- "2"（AskUserQuestion 选本轮方向——提交/议第三腿/查论文中选议第三腿）→ S014 第三腿讨论
+- "先看证据再选"（AskUserQuestion 选第三腿形态——四候选⑦/③/⑧/Pivot 横向对比）→ 四候选横向对比 + 6 坑分析
+- "可以"（启动 ③ 坑2文献预检 + 坑3量化预检）→ 双预检执行（坑2 AMBIGUOUS 画出差异化边界 / 坑3 Go）
+- "做吧"（启动 ③ 坑6 前置门控 MVE）→ oracle 上界估算 FAIL（0.09dB <0.5dB），③ 砍掉（D009）
+- 态度延续：用户连续 3 次"先证据后决策"（压缩前 N1 MVE 阈值/指标选择 → 本轮第三腿形态/双预检/坑6门控），不替方向拍板让数据说话——与续 3/续 7/续 8 一致。本轮 0 次技术细节 AskUserQuestion，全是"要不要查/要不要算"路径选择
+
