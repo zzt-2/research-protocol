@@ -1,0 +1,36 @@
+{
+  "tang_ber_data": {
+    "1e-16": 2.1e-06,
+    "1e-15": 6.5e-06,
+    "1e-14": 7.3e-05
+  },
+  "powerlaw_fit": {
+    "a": 3612117.8467421923,
+    "b": 0.7705517826932679,
+    "coeffs": [
+      0.7705517826932679,
+      6.5577619108980985
+    ]
+  },
+  "fit_residual_log10_max": 0.1865718138562249,
+  "starground_Cn2_range": [
+    7.485776264872557e-17,
+    5.351498658742861e-16
+  ],
+  "Lburst_range": [
+    59.88621011898046,
+    428.1198926994288
+  ],
+  "B_star_range": [
+    2,
+    15
+  ],
+  "B27_capacity": 810,
+  "overflow_elev_count": 0,
+  "ber_static_27_avg_weighted": 2.9174939951011543e-06,
+  "verdict_ber_dimension": {
+    "gain_db": 0.0,
+    "kill": true,
+    "reason": "唐承茂 B=27 设计余量覆盖星地全部仰角, BER 由 Cn2 决定不由 B 决定"
+  }
+}

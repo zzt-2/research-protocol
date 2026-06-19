@@ -1,0 +1,232 @@
+{
+  "timestamp": "2026-06-19T16:44:27",
+  "param_sources": {
+    "Cn2_ground": [
+      "1.7e-14 m^-2/3",
+      "HV 白天标准 (Hufnagel 1978 / Andrews Ch12)"
+    ],
+    "lambda": [
+      "1.55e-6 m",
+      "唐承茂 2025 表 4-1"
+    ],
+    "Polar_N": [
+      1024,
+      "唐承茂 2025 表 4-3"
+    ],
+    "Polar_R": [
+      0.5,
+      "唐承茂 2025 表 4-3"
+    ],
+    "thandle_bits": [
+      30,
+      "唐承茂 3.2.4 (3GPP TS 38.212 估算)"
+    ],
+    "Lburst_at_Cn2_1e-15": [
+      800,
+      "唐承茂 L1081-1088 (L=200km 空空反推)"
+    ],
+    "static_B": [
+      27,
+      "唐承茂 2025 表 4-3"
+    ],
+    "static_D": [
+      38,
+      "唐承茂 2025 表 4-3 (D=N/B=1024/27)"
+    ],
+    "H_sat_km": [
+      550,
+      "LEO 标准 (Starlink-like), 未验证 Le 2021"
+    ],
+    "elev_range_deg": [
+      [
+        20,
+        90
+      ],
+      "LEO 过境典型, 未验证 Le 2021"
+    ],
+    "rate_Mbps": [
+      200,
+      "唐承茂 2025 表 4-1"
+    ],
+    "N_mc": [
+      200000,
+      "TL-27 要求 >=100000, 取 2x 安全"
+    ]
+  },
+  "results": {
+    "S1_waterfall": {
+      "steep_2.0": {
+        "ber_adaptive": 0.43212201097784086,
+        "vs_static_db": {
+          "tang_27": -8.761658508094985,
+          "opt_global_6": -0.45052492695406143,
+          "median_5": 0.18560926862725383,
+          "high_15": -4.802139531789203,
+          "very_high_30": -9.553621291607202
+        }
+      },
+      "steep_4.0": {
+        "ber_adaptive": 0.37245326351227515,
+        "vs_static_db": {
+          "tang_27": -14.878869448087794,
+          "opt_global_6": -0.18219116145945607,
+          "median_5": 0.5705833199507221,
+          "high_15": -6.513865159962337,
+          "very_high_30": -16.617838531423104
+        }
+      },
+      "steep_8.0": {
+        "ber_adaptive": 0.28561003323979806,
+        "vs_static_db": {
+          "tang_27": -25.315476802471753,
+          "opt_global_6": 0.8533429369316248,
+          "median_5": 1.5956548337235592,
+          "high_15": -6.9968494771399765,
+          "very_high_30": -28.96162288392425
+        }
+      },
+      "steep_16.0": {
+        "ber_adaptive": 0.1899939125400326,
+        "vs_static_db": {
+          "tang_27": -45.83379104705051,
+          "opt_global_6": 2.588696934628176,
+          "median_5": 3.3437488888444014,
+          "high_15": -6.6018613108454085,
+          "very_high_30": -53.15485851395835
+        }
+      }
+    },
+    "S2_Cn2_span": {
+      "eta_h_0.1": {
+        "Cn2_span_orders": 0.854238578149885,
+        "B_star_range": [
+          1,
+          5
+        ],
+        "B_static_optimal": 2,
+        "gain_vs_opt_static_db": 3.0210351894858443
+      },
+      "eta_h_0.3": {
+        "Cn2_span_orders": 0.8542385781498851,
+        "B_star_range": [
+          2,
+          15
+        ],
+        "B_static_optimal": 6,
+        "gain_vs_opt_static_db": 0.8533429369316248
+      },
+      "eta_h_0.5": {
+        "Cn2_span_orders": 0.8542385781498851,
+        "B_star_range": [
+          4,
+          24
+        ],
+        "B_static_optimal": 10,
+        "gain_vs_opt_static_db": -0.1616383794624454
+      },
+      "eta_h_1.0": {
+        "Cn2_span_orders": 0.8542385781498851,
+        "B_star_range": [
+          7,
+          48
+        ],
+        "B_static_optimal": 19,
+        "gain_vs_opt_static_db": -0.8309125130199058
+      }
+    },
+    "S3_extreme": {
+      "elev_min_20.0_cn2g_1.7e-14": {
+        "Cn2_span_orders": 0.8542385781498851,
+        "B_star_range": [
+          2,
+          15
+        ],
+        "B_static_optimal": 6,
+        "gain_vs_opt_static_db": 0.8533429369316248
+      },
+      "elev_min_20.0_cn2g_5.0e-14": {
+        "Cn2_span_orders": 0.8542385781498851,
+        "B_star_range": [
+          6,
+          42
+        ],
+        "B_static_optimal": 17,
+        "gain_vs_opt_static_db": -0.5586367227924149
+      },
+      "elev_min_10.0_cn2g_1.7e-14": {
+        "Cn2_span_orders": 1.393937911645399,
+        "B_star_range": [
+          2,
+          50
+        ],
+        "B_static_optimal": 16,
+        "gain_vs_opt_static_db": -0.2145150063103671
+      },
+      "elev_min_10.0_cn2g_5.0e-14": {
+        "Cn2_span_orders": 1.393937911645399,
+        "B_star_range": [
+          6,
+          146
+        ],
+        "B_static_optimal": 47,
+        "gain_vs_opt_static_db": -1.2300313284942017
+      },
+      "elev_min_5.0_cn2g_1.7e-14": {
+        "Cn2_span_orders": 1.9427906513947795,
+        "B_star_range": [
+          2,
+          175
+        ],
+        "B_static_optimal": 59,
+        "gain_vs_opt_static_db": -1.1984332197869771
+      },
+      "elev_min_5.0_cn2g_5.0e-14": {
+        "Cn2_span_orders": 1.9427906513947795,
+        "B_star_range": [
+          6,
+          515
+        ],
+        "B_static_optimal": 172,
+        "gain_vs_opt_static_db": -1.8661815595917517
+      }
+    }
+  },
+  "verdict": {
+    "max_gain_fair_comparison": 3.3437488888444014,
+    "scenarios_over_0p5dB": [
+      [
+        "S1_steep_4.0_median_5",
+        0.5705833199507221
+      ],
+      [
+        "S1_steep_8.0_opt_global_6",
+        0.8533429369316248
+      ],
+      [
+        "S1_steep_8.0_median_5",
+        1.5956548337235592
+      ],
+      [
+        "S1_steep_16.0_opt_global_6",
+        2.588696934628176
+      ],
+      [
+        "S1_steep_16.0_median_5",
+        3.3437488888444014
+      ],
+      [
+        "S2_eta_h_0.1",
+        3.0210351894858443
+      ],
+      [
+        "S2_eta_h_0.3",
+        0.8533429369316248
+      ],
+      [
+        "S3_elev_min_20.0_cn2g_1.7e-14",
+        0.8533429369316248
+      ]
+    ],
+    "kill_robust": false
+  }
+}
