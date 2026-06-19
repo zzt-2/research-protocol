@@ -206,14 +206,19 @@ topics:
         reason: 复盘需要前序专题的三条腿死法/可复用资产/教训作为输入
 
   - slug: 2026-06-19-4b1-adaptive-interleaving-groundwork
-    title: 4b#1 信道感知自适应交织 Groundwork 执行
+    title: 4b#1 信道感知自适应交织 Groundwork 执行（Kill 后重定方向探索）
     status: active
     created: "2026-06-19"
     last_updated: "2026-06-19"
-    description: "执行专题，接续定方向专题（2026-06-17-thesis-method-redirection 已 closed）。方向已定（D006）：4b#1 星地 GG 湍流信道感知自适应交织（开环形态）。本轮目标：Groundwork §A0/A'/A 可行性预判（FR-20 参数溯源 + FR-21 oracle 上界门控 + 空白零假设）+ §D MVE（验 GG-LCR/AFD→B/D 解析可行性，推不出退半解析/数值优化；pass 标准自适应>静态>0.5dB）+ 仿真链路搭建（sim-template + wandb + early stopping）。范围：只做 Groundwork，不做 Contract/Execute。明确不含：不重新定方向、不做完整训练、不做 FPGA 实现。上游 Le 2021 卫星-UAV FSO GG+指向 LCR/AFD 闭式就绪。"
+    description: "**active — Kill 后重定方向探索进行中（S002）**。原执行专题接 D006 4b#1，§A0/FR-20/FR-21 三版门控后 D001 Kill 4b#1（BER 增益 0dB + 时延无中文硕论先例）。**S002 转向重定方向**：用户澄清标题/体制约束（处理技术=只要相关都行，相干/IM/DD 都开放）推翻死局判断。子 agent 调研发现译码改进候选 (c) GG-LLR 译码（王秋悦/唐承茂亲口留缝未接 GG，Jiang 2023 同族先例 0.96-1.66dB，绕开 4b#1 Lburst 天花板）。候选 (c) 待精读验证。殊途同归精化：共同根因是'星地 LEO 中弱湍流 Cn² 跨度窄'不是体制问题。可复用资产：FR-21 三版门控方法学 + 唐承茂参数溯源 + HV slant-path 模型 + 4b#1 物理天花板量化。"
     depends_on:
       - slug: 2026-06-17-thesis-method-redirection
-        reason: 方向由该专题 D006 裁定，本专题只执行不重新定方向
+        reason: 方向由该专题 D006 裁定，本专题 D001 推翻该方向执行（D006 本身不动）
+    produces:
+      - projects/thesis-figures/simulation/fr21_ub_adaptive_vs_static_interleaving.py
+      - projects/thesis-figures/simulation/fr21_sensitivity.py
+      - projects/thesis-figures/simulation/fr21_calibrated.py
+      - projects/thesis-figures/simulation/fr21_*_results.json
 
   - slug: 2026-06-15-read-traceability
     title: 论文精读溯源机制改进（框架改动）
