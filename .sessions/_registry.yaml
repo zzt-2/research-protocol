@@ -206,11 +206,11 @@ topics:
         reason: 复盘需要前序专题的三条腿死法/可复用资产/教训作为输入
 
   - slug: 2026-06-19-4b1-adaptive-interleaving-groundwork
-    title: 4b#1 信道感知自适应交织 Groundwork 执行（Kill 后重定方向探索）
-    status: active
+    title: 4b#1 信道感知自适应交织 Groundwork 执行（Kill 后重定方向探索 + 框架加固）
+    status: closed
     created: "2026-06-19"
-    last_updated: "2026-06-19"
-    description: "**active — Kill 后重定方向探索进行中（S002）**。原执行专题接 D006 4b#1，§A0/FR-20/FR-21 三版门控后 D001 Kill 4b#1（BER 增益 0dB + 时延无中文硕论先例）。**S002 转向重定方向**：用户澄清标题/体制约束（处理技术=只要相关都行，相干/IM/DD 都开放）推翻死局判断。子 agent 调研发现译码改进候选 (c) GG-LLR 译码（王秋悦/唐承茂亲口留缝未接 GG，Jiang 2023 同族先例 0.96-1.66dB，绕开 4b#1 Lburst 天花板）。候选 (c) 待精读验证。殊途同归精化：共同根因是'星地 LEO 中弱湍流 Cn² 跨度窄'不是体制问题。可复用资产：FR-21 三版门控方法学 + 唐承茂参数溯源 + HV slant-path 模型 + 4b#1 物理天花板量化。"
+    last_updated: "2026-06-20"
+    description: "**closed — 使命结案，转重定方向 v2**。原执行专题接 D006 4b#1，§A0/FR-20/FR-21 三版门控后 D001 Kill 4b#1。S002-S003 候选 (c) GG-LLR 译码亦 Kill（D002/V002），5 次殊途同归。S004 元层复盘定根因 = C1+C2+C3 三轴锁死。**2026-06-20 关键转折**：问老师收到方向性反馈（按问题找/对标 2019+ 顶刊/每章 1-2 对比算法/3 章 3 问题/删 PCS 和 GG-LLR/先做一个别老换方向/论文不是项目有指标展望没必要看）。agent 连犯 3 错（空白当问题/定义太宽/章节标题当问题）被用户纠正。**框架加固**：thesis-lessons 加 TL-30（框架强制规范）+ TL-31（教训复现第 3 次）；AGENTS.md 护栏表加 FR-22（GW 流程强制门控）/ FR-23（增量改进非填补空白）/ FR-24（方法论/教训强制重读）+ 禁止跳框架禁令段。**定稿问题四判据**（具体技术矛盾 + 有方法产出形态 + 有 2019+ baseline + 能做对比）。**确认路径 A**：回 GW Step 3 精读（5 次失败根因是跳过 Step 3-4a，literature_notes 进度表全 ⬜），方法形态从精读浮出不从开题报告反推。H002 handoff 已写。下一专题 = 2026-06-20-problem-driven-redirection（待开）。"
     depends_on:
       - slug: 2026-06-17-thesis-method-redirection
         reason: 方向由该专题 D006 裁定，本专题 D001 推翻该方向执行（D006 本身不动）
