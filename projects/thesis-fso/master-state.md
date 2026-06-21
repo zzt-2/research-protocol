@@ -1,6 +1,6 @@
 ---
 project: thesis-fso
-direction: 星地湍流激光通信（FSO）——载波同步/信道估计/资源调度方向待精读后从问题清单浮出
+direction: 星地激光通信（FSO）——子地带由地勘（S003 方法论 Step 0）全景表分类后选定，不预设
 method_type: 待定（精读后根据问题方法产出形态确定，见 glossary 判据 2）
 domain: comms
 created: 2026-06-21
@@ -23,7 +23,7 @@ current_stage: GW
 ### 当前位置
 
 - 阶段：GW
-- 步骤：Step 2（论文获取）—— **下一步实际是回到 Step 3 精读**（见 H002 路径 A，但 Step 2 尚未完成，需先补获取）
+- 步骤：Step 2（论文获取）—— **下一步实际是地勘（Step 0，S003 方法论迭代后）**：大范围检索产 `landscape.md` 全景表，再选地进批评汇总。见 `.sessions/2026-06-20-problem-driven-redirection/H002`
 - Contract 状态：not started
 - 方法类型：待定
 
@@ -73,14 +73,31 @@ current_stage: GW
 
 见 `templates/master-state-template.md` §3 / §4。本文件不再重复。
 
-## §8 下一步（路径 A，H002）
+## §8 下一步（路径 A，H002 — S003 方法论迭代后）
 
-1. 读 `stages/gw-read.md`（FR-22，进 Step 3 必先读）+ `stages/glossary.md`（问题四判据）
-2. **批评汇总先于精读**（见 `.sessions/2026-06-20-problem-driven-redirection/` H001/S001）：派子 agent 用 `tools/search` 汇总星地 FSO 物理层链路 + 目标函数两轴的批评信息（批评维度 / 被批方法 / 时效检查三层）
-3. **精读对象由批评汇总结果决定，不由开题线索反推**——Paillier 2020 等开题 4 线索（VV窗口/DPLL/SEP/编码辅助）已降级为事后验证对照（见 S001 第四步 + 不变量 3）
-4. Step 3 精读：子 agent 读 content.md，按 gw-read.md 结构化提取 7 子表（含问题提取 M/C/A+四判据）
-5. 精读 2-3 篇后：问题清单 Q# 从精读浮出 → 过四判据 → 选 1 个进 Step 4a
-6. 同步更新本文件 GW Progress 表 + literature_notes 进度表
+> **S003 迭代（2026-06-21）**：方法论从"批评汇总作为第一步"升级为"**地勘前置，批评汇总降为地勘后第二步**"。范围从"物理层 DSP 锁死"放开为"**星地激光通信全谱**"（标题对得上即可，湍流可去、处理技术是宽义）。完整脉络见 `.sessions/2026-06-20-problem-driven-redirection/S003`。
+
+**方法论链路（定盘）**：
+
+```
+地勘（大范围检索，产 landscape.md 全景表，全留拉表分类）
+  → 看分类，选一块"🟢 有缝潜力"的地（判据 A 初筛）
+    → 进这块地，批评汇总（框法乙，找问题候选 Q#）
+      → 四判据筛 Q#
+        → FR-21 oracle 上界量化缝宽（<0.5dB Kill）
+          → Q# 进 Step 4a
+```
+
+**执行步骤**：
+
+1. 读 `stages/glossary.md`（问题四判据）+ `.sessions/2026-06-20-problem-driven-redirection/H002`（地勘执行规范 + 偏航检查清单 A-E）+ topic-index 不变量段（8 条，S003 更新）
+2. **地勘先于批评汇总先于精读**：派子 agent 用 `tools/search` 做大范围检索（检索词 = 星地激光通信大背景，**方法中性不锁模块**，年份 2019+），全留拉表到 `projects/thesis-fso/landscape.md`
+3. 主线看全景表分类（🟢有缝 / 🟡不确定 / 🔴死地含 5 次失败轴 + 载波同步/自适应交织/GG-LLR/MCS/信道估计拥挤赛道），**先评估产出质量再选地**
+4. **批评汇总（地勘选定地之后）**：在选定地内用框法乙找问题候选 Q#
+5. **精读对象由批评汇总结果决定，不由开题线索反推**——Paillier 2020 等开题 4 线索（VV窗口/DPLL/SEP/编码辅助）已降级为事后验证对照（见 S001 第四步 + 不变量 3）
+6. Step 3 精读（进 Step 3 前读 `stages/gw-read.md`，FR-22）：子 agent 读 content.md，按 gw-read.md 结构化提取 7 子表（含问题提取 M/C/A+四判据）
+7. 精读 2-3 篇后：问题清单 Q# 从精读浮出 → 过四判据 → FR-21 验缝 → 选 1 个进 Step 4a
+8. 同步更新本文件 GW Progress 表 + literature_notes 进度表
 
 ## §9 失败恢复
 
