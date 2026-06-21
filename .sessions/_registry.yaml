@@ -8,7 +8,7 @@ topics:
     title: 框架演进与问题追踪
     status: active
     created: "2026-05-15"
-    last_updated: "2026-06-20"
+    last_updated: "2026-06-21"
     description: "跨项目长期专题。**2026-06-20 重新激活**——thesis-fso 5 次殊途同归 + agent 连犯 3 错暴露框架根本缺陷（未定义'问题/方法/空白'概念，contract.md L86-88 把空白当假设来源是制度性缺陷）。LOG-001 新建，三改造方案待执行（glossary.md 定义问题 + GW 问题清单产出 + master-state.md 强制化）。历史：2026-05-15~18 处理 20+ P0/P1/P2 issues。"
 
   - slug: direction-scouting
@@ -286,5 +286,18 @@ topics:
     conflicts_with: []
     produces:
       - "thesis-platform repo: ~/code/thesis-platform/.sessions/distilled/ (D005 物理镜像，16文件，只读)"
-      - "thesis-platform repo: .sessions/2026-05-15-paper-evaluation/ (A→S033 detector-rewrite, B→S025-S028 eval盲区)"
+      - "thesis-platform repo: .sessions/2026-05-15-paper-evaluation/ (A→S033 detector-rewrite, B→S032-S028 eval盲区)"
       - "thesis-platform repo: workflows/paper-write/ (D→写作管线改进)"
+
+  - slug: 2026-06-20-problem-driven-redirection
+    title: 问题驱动方法论首次实战验证（批评汇总找种子）
+    status: active
+    created: "2026-06-20"
+    last_updated: "2026-06-21"
+    description: "framework-evolution 三改造（定义问题/Q#链/跨Step门控）落地后的首次实战验证。**根本目的不是'推进论文'，是'验证新方法论能不能产出可行的东西'**——5 次殊途同归全 Kill 后重建的找问题方法，第一次跑一遍看行不行。打法：批评汇总（汇总领域怎么批别人+被批方法+是否已补）找种子，而非从开题报告线索/物理直觉找。范围=星地 FSO 物理层链路内（含目标函数可质疑），背景锁死星地 FSO，不做 pointing/networking。颗粒无收好过凑数——放水一次方法论就废。框架前置已完成（glossary 四判据/Q# Problem Reference/§A0 §0 前置/master-state GW Progress）。**S002 执行结果（2026-06-21）**：英文批评汇总组合格（128 去重→9 高置信批评实例），但揭示尴尬——批评热点（传统CE/静态均衡/PLL/理想-CSI）全在 5 次失败的死轴C3且部分补（拥挤赛道）；C 组中文检索失败被砍（张岱2018旧论文）；Xie 独立性假设候选 Kill（D001，孤立建模改进不触DSP）；剩 'Are PLLs dead?' 1 候选背三风险（R1全文不可得/R2场景跑题/R3死轴）悬而未决。方法论本身按S001成功判据算过（没滑回先有方法、没放水），但领域特性逼出颗粒无收临界。用户暂停做跨对话思考。"
+    depends_on:
+      - slug: 2026-06-19-4b1-adaptive-interleaving-groundwork
+        reason: 继承 H002 路径 A、问题四判据、5 次失败根因（C1+C2+C3 三轴锁死）、导师反馈
+      - slug: framework-evolution
+        reason: LOG-001 三改造是本次方法论的前置框架（glossary/Q#链/门控）
+    conflicts_with: []
