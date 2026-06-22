@@ -78,6 +78,41 @@ _page = None
 _cookie_file = Path(__file__).resolve().parent.parent / "cnki_cookies.json"
 
 
+def _detect_proxy() -> dict | None:
+    """探测可用的 HTTP 代理，供 chromium.launch(proxy=...) 使用。
+
+    优先级（PROMPT-001 诊断结论：用户日常浏览器走系统代理 127.0.0.1:7897
+    能稳定访问 IEEE，Playwright 默认不继承，必须显式传）：
+      1. 环境变量 HTTPS_PROXY/HTTP_PROXY（显式覆盖）
+      2. Windows 注册表 HKCU Internet Settings ProxyServer（系统代理）
+      3. 探测常见本地端口 7897/7890/10809/1080
+    返回 {'server': 'http://host:port'} 或 None。
+    """
+    import os
+    for env_key in ("HTTPS_PROXY", "https_proxy", "HTTP_PROXY", "http_proxy"):
+        v = os.environ.get(env_key)
+        if v:
+            return {"server": v}
+    try:
+        import winreg
+        with winreg.OpenKey(
+            winreg.HKEY_CURRENT_USER,
+            r"Software\Microsoft\Windows\CurrentVersion\Internet Settings",
+        ) as key:
+            enabled, _ = winreg.QueryValueEx(key, "ProxyEnable")
+            if enabled:
+                server, _ = winreg.QueryValueEx(key, "ProxyServer")
+                # ProxyServer 可能是 "host:port" 或 "http=host:port;https=..."
+                first = server.split(";")[0]
+                if "=" in first:
+                    first = first.split("=", 1)[1]
+                if first and ":" in first:
+                    return {"server": f"http://{first}"}
+    except Exception:
+        pass
+    return None
+
+
 # ──────────── 浏览器管理 ────────────
 
 async def get_page():
@@ -86,7 +121,12 @@ async def get_page():
         return _page
     from playwright.async_api import async_playwright
     pw = await async_playwright().start()
-    _browser = await pw.chromium.launch(headless=True)
+    proxy = _detect_proxy()
+    launch_kwargs = {"headless": True}
+    if proxy:
+        print(f"  [proxy] 使用代理 {proxy['server']}", file=sys.stderr)
+        launch_kwargs["proxy"] = proxy
+    _browser = await pw.chromium.launch(**launch_kwargs)
     _context = await _browser.new_context(
         user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
         locale="zh-CN",
@@ -116,14 +156,37 @@ def record(source: str):
     _session_counts[source] += 1
 
 
-async def safe_goto(page, url, timeout=25000):
-    try:
-        resp = await page.goto(url, timeout=timeout)
-        await asyncio.sleep(2)
-        return resp
-    except Exception as e:
-        print(f"  请求失败: {e}", file=sys.stderr)
-        return None
+async def safe_goto(page, url, timeout=25000, wait_until="load",
+                   wait_for_selector: str | None = None, retries: int = 0):
+    """导航 + 可选等待选择器 + 可选重试。
+
+    wait_until 默认沿用 "load" 以保持向后兼容；IEEE 等 SPA 页面的 window.onload
+    因长轮询/keep-alive 连接永不触发，必须显式传 "domcontentloaded"，否则 goto
+    必然 timeout（PROMPT-001 诊断结论）。
+
+    wait_for_selector 用于 SPA 异步渲染兜底：DOM ready 后内容未必渲染完，
+    显式等结果容器出现。retries 为重试次数，应对 IEEE 反爬瞬态限流。
+    """
+    for attempt in range(retries + 1):
+        try:
+            resp = await page.goto(url, timeout=timeout, wait_until=wait_until)
+            if wait_for_selector:
+                try:
+                    await page.wait_for_selector(wait_for_selector, timeout=15000)
+                except Exception:
+                    pass
+            await asyncio.sleep(2)
+            return resp
+        except Exception as e:
+            if attempt < retries:
+                wait_s = 8 * (attempt + 1)
+                print(f"  请求失败（第{attempt+1}次，{wait_s}s 后重试）: {e}",
+                      file=sys.stderr)
+                await asyncio.sleep(wait_s)
+                continue
+            print(f"  请求失败: {e}", file=sys.stderr)
+            return None
+    return None
 
 
 # ──────────── IEEE ────────────
@@ -137,7 +200,16 @@ async def ieee_search(query: str, max_results: int = 25) -> list[dict]:
     url = f"https://ieeexplore.ieee.org/search/searchresult.jsp?queryText={encoded}"
     print(f"[IEEE] 搜索: {query}")
 
-    resp = await safe_goto(page, url)
+    # IEEE 搜索是 SPA + 反爬瞬态限流。PROMPT-001 诊断：
+    #   - wait_until=load 永远超时（onload 不触发）→ 用 domcontentloaded
+    #   - DOM ready 时结果项未必渲染完 → 叠加 wait_for_selector
+    #   - 同一 IP 连续访问偶发被临时拉黑 → 失败重试 1 次，间隔 8s
+    resp = await safe_goto(
+        page, url,
+        wait_until="domcontentloaded", timeout=45000,
+        wait_for_selector="div[class*='List-results'], xpl-results-list, .result-item",
+        retries=1,
+    )
     if not resp:
         return []
     record("ieee")
@@ -224,6 +296,7 @@ async def ieee_download(results: list[dict], save_dir: str) -> list[Path]:
     # 建立会话（访问任意 IEEE 页面激活机构认证）
     print("[IEEE] 建立会话...")
     await page.goto("https://ieeexplore.ieee.org/", wait_until="domcontentloaded", timeout=30000)
+    # 注：此行原本就已是 domcontentloaded；保留并明确注释，与 ieee_search 修复策略对齐。
     await asyncio.sleep(2)
     try:
         await page.click('button:has-text("Accept")', timeout=3000)
