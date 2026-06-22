@@ -13,16 +13,22 @@
 | round2 search | 10 | tools/search (同上) | search-archive/2026-06-22/landscape-*.json |
 | round2 IEEE | 5 | tools/blit --source ieee (max=50, 实际25/query) | search-archive/2026-06-22/landscape-ieee-*.json |
 | 诊断验证 | 3 | tools/blit --source ieee | search-archive/2026-06-22/landscape-ieee-{diag,leo,laser}.json |
+| round3 search（动作 A 设备词）| 11 | tools/search (S2/OpenAlex/Exa) | search-archive/2026-06-22/landscape2-*.json |
+| round3 IEEE（动作 A）| 11 | tools/blit --source ieee | 全 0 条（IP 限流，见附录 E.3 债务）|
+| round3 诊断（动作 B 模块词，**非地勘**）| 4 | tools/search | search-archive/2026-06-22/landscape-diag2-*.json |
 
-**统计**：24 JSON 源，635 raw → 518 去重唯一 → **430 主表（≥2019）**（<2019 = 81 入附录，unknown = 7 保留）。
+**统计**：v3 后 35 JSON 源，v2 635 raw + v3 267 raw（动作 A）+ 80 raw（动作 B 诊断）→ 597 去重唯一 → **509 主表（≥2019）**（v2 430 + v3 续段 79）。
 
-**round2 检索词集（10 search + 5 IEEE，全方法中性，偏航检查 A 全过）**：
-- search: inter-satellite optical link / GEO optical communication / satellite optical feeder link / optical satellite relay / satellite optical terminal / cubeSat optical communication / optical satellite payload / coherent satellite optical communication / deep space optical communication / optical satellite network
-- IEEE: inter-satellite optical link / GEO optical communication / satellite optical terminal / coherent satellite optical communication / deep space optical communication
+**round3 动作 A 检索词集（11 设备词，方法中性，偏航检查 A 全过）**：
+- search: satellite optical {transceiver/modem/receiver/transmitter/frontend/digital-processing-unit/photonic-receiver/coherent-transceiver/balanced-receiver/fpga-receiver} + optical satellite payload transceiver
+- 11 词全零模块词（modulation/synchronization/equalization/channel-estimation/coding/detection 均未出现）✅
+- IEEE 11 词全 0 条（IP 限流，附录 E.3 债务）
 
-**IEEE blit 通道**：S005 修复后可用（双因：safe_goto wait_until=load→domcontentloaded + Playwright 自动探测系统代理 127.0.0.1:7897）。5/5 query 成功（3 条冷启动重试 1 次），每 query 实际上限 25 条（非 50，未触发分页）。IEEE 无 abstract → baseline/验证方式默认"未明确(IEEE无abstract)"，缝潜力默认 🟡 待精读。
+**round3 动作 B 模块词诊断（受控例外，非地勘）**：
+- search: satellite optical {carrier-synchronization/channel-estimation/equalization}（死轴 3 词）+ satellite optical modulation（热区对照）
+- **产出只入附录 E 诊断段，不入主表候选池**
 
-**检索障碍**：SerpAPI 全程报 `google-search-results not installed, skipped`；S2/OpenAlex/Exa 正常；Exa 偶发 ConnectionResetError。年份筛 2019+，Exa year 空时从 abstract regex 补。SPIE 部分页被反爬拦截（abstract 不可得，标 🟡 待精读）。
+**round3 检索障碍**：IEEE 今日对当前 IP 全面限流（quota 卡 1/50），11 词全 0。非 S005 修复失效（同命令历史成功过）。另一对话 3 词小样本测：`receiver`/`photonic-receiver` 能拿到 24-25 条，`transceiver`/`frontend` 通用宽词被挡 → 机制为"高频通用词实时反爬 + 累积风险分"。
 
 ## 子地带涌现分布（扩检索后，430 主表，multi-tag，关键观察）
 
@@ -494,6 +500,94 @@ the project will be conducted with th |
 | 429 | 2019 | 地面站/OGS/终端 | Reference Power Vectors for the Optical LEO Downlink Channel | 未明确 | 未明确 | 仿真 | 🔴 abstract自陈成熟/广泛采用 |
 | 430 | 2019 | 调制/复用 / AO/自适应光学/波前 / 信道估计/均衡 / 编码/FEC/交织 / 链路预算/系统级 / feeder/中继 / 放大器/EDFA/光子载荷 | Total Degradation of a DVB-S2 Satellite System with Analog Transparent Optical Feeder Link | 弱 | 未明确 | 未明确 | 🟡 abstract无缝信号待精读 |
 
+## 主表续段（v3，round3 search，动作 A 设备词补盲，2026-06-22）
+
+> 11 设备词 × tools/search：transceiver/modem/receiver/transmitter/frontend/digital-processing-unit/payload-transceiver/photonic-receiver/coherent-transceiver/balanced-receiver/fpga-receiver
+> 267 raw → 150 去重 → 95 域内 → **79 核心入表**（16 相邻域 + 44 域外不入表，见诊断段）
+> 偏航检查 A 自验：动作 A 11 词零模块词（modulation/synchronization/equalization/channel-estimation/coding/detection）✅
+
+| # | 年 | 子地带 | 做的事(标题) | 湍流 | baseline 是谁 | 验证 | 缝潜力 |
+|---|----|--------|------|------|--------------|------|--------|
+| 431 | 2026 | 相干/自相干检测 / AO/自适应光学/波前 / 信道建模/湍流/大气 | 64-Channel Adaptive Optics System-on-Chip (AOSoC) Photonic P... | 强 | 未明确 | 实测 | 🟡 abstract自陈达成未自陈缝 |
+| 432 | 2026 | ISL/星间链路 / 编码/FEC/交织 / 网络层/路由/RWA | Coflow transmission optimization for satellite distributed c... | 未明确 | 未明确 | 实测 | 🟡 abstract自陈达成+挑战（待精读） |
+| 433 | 2026 | 相干/自相干检测 / 放大器/EDFA/光子载荷 | Nonlinearity Mitigation for Coherent Ground-to-Satellite Opt... | 未明确 | 未明确 | 未明确 | 🟡 abstract无缝信号待精读 |
+| 434 | 2026 | 调制/复用 / 相干/自相干检测 / 链路预算/系统级 | Packaged InP PIC for Photonic RF Receive Front-End of High-C... | 未明确 | 未明确 | 实测 | 🟡 abstract自陈达成未自陈缝 |
+| 435 | 2026 | 调制/复用 | Real-time implementation of all-digital optical time transfe... | 未明确 | 未明确 | 实测 | 🟡 abstract无缝信号待精读 |
+| 436 | 2026 | 调制/复用 / 编码/FEC/交织 / 相干/自相干检测 / 放大器/EDFA/光子载荷 | Time-frequency synchronization for distributed phase coheren... | 未明确 | 未明确 | 实测 | 🟡 abstract自陈达成未自陈缝 |
+| 437 | 2025 | 调制/复用 / 放大器/EDFA/光子载荷 / 链路预算/系统级 | 56 Gbps CPO silicon photonics transceiver with radiation-har... | 未明确 | 未明确 | 实测 | 🟢? abstract自陈挑战（待精读） |
+| 438 | 2025 | 调制/复用 | A 108‐Element L-Band Multiple Beamforming Digital Phased Arr... | 未明确 | 未明确 | 实测 | 🟡 abstract自陈达成未自陈缝 |
+| 439 | 2025 | ISL/星间链路 / 调制/复用 | A Correlation-Based Arbitrary Bias Control Method and Applic... | 未明确 | 未明确 | 实测 | 🟡 abstract自陈达成未自陈缝 |
+| 440 | 2025 | 地面站/OGS/终端 / ATP/指向/PAT / QKD/量子/光子计数 / 调制/复用 / 信道建模/湍流/大气 / 放大器/EDFA/光子载荷 | A compact receiver module for satellite-ground QKD | 强 | 未明确 | 实测 | 🟢? abstract自陈挑战（待精读） |
+| 441 | 2025 | ATP/指向/PAT / 调制/复用 / 信道估计/均衡 / 放大器/EDFA/光子载荷 | Beyond Gbps Intra-Satellite Optical Wireless Communications ... | 未明确 | 未明确 | 实测 | 🟡 abstract自陈达成+挑战（待精读） |
+| 442 | 2025 | 未明确 | COMPACT MID-INFRARED TRANSMITTER AND RECEIVER FOR FREE-SPACE... | 未明确 | 未明确 | 未明确 | 🟡 abstract无缝信号待精读 |
+| 443 | 2025 | 未明确 | Compact, high-power, low-divergence laser transmitter beam e... | 未明确 | 未明确 | 未明确 | 🟡 abstract无缝信号待精读 |
+| 444 | 2025 | 编码/FEC/交织 / 信道建模/湍流/大气 / 网络层/路由/RWA | Forward Error Correction Considerations for Optical Satellit... | 强 | 未明确 | 未明确 | 🟡 abstract自陈达成未自陈缝 |
+| 445 | 2025 | 未明确 | Frontend Design with Special Waveguide Transition in K-and K... | 未明确 | 未明确 | 实测 | 🟡 abstract无缝信号待精读 |
+| 446 | 2025 | ISL/星间链路 / 调制/复用 | Fully Reconfigurable Silicon Photonic Transceiver for Optica... | 未明确 | 未明确 | 未明确 | 🟡 abstract无缝信号待精读 |
+| 447 | 2025 | 地面站/OGS/终端 / feeder/中继 / ATP/指向/PAT / 调制/复用 / 信道建模/湍流/大气 / 网络层/路由/RWA / 放大器/EDFA/光子载荷 | In-orbit testing of GEO feeder links with TELEO | 强 | 未明确 | 实测 | 🟡 abstract自陈达成未自陈缝 |
+| 448 | 2025 | 信道建模/湍流/大气 / 链路预算/系统级 | Latest results and perspectives of TILBA-ATMO system for LEO... | 强 | 未明确 | 实测 | 🟡 abstract自陈达成+挑战（待精读） |
+| 449 | 2025 | ATP/指向/PAT / 调制/复用 / 链路预算/系统级 | Modulating Retroreflector-Based Satellite-to-Ground Optical ... | 未明确 | 未明确 | 实测 | 🟡 abstract自陈达成未自陈缝 |
+| 450 | 2025 | 地面站/OGS/终端 / feeder/中继 / ATP/指向/PAT / 链路预算/系统级 | Optical feeder links to GEO-based satellites: a focus on spa... | 未明确 | 未明确 | 未明确 | 🟡 abstract自陈达成+挑战（待精读） |
+| 451 | 2025 | 地面站/OGS/终端 / feeder/中继 / 信道建模/湍流/大气 / 链路预算/系统级 | Optimizing Optical Ground Station Transmitter Telescope for ... | 强 | 未明确 | 未明确 | 🟡 abstract无缝信号待精读 |
+| 452 | 2025 | QKD/量子/光子计数 / 编码/FEC/交织 | Photonic Integrated Phase Encoding Transmitter for Satellite... | 未明确 | 未明确 | 未明确 | 🟡 abstract无缝信号待精读 |
+| 453 | 2025 | 调制/复用 / 放大器/EDFA/光子载荷 / 链路预算/系统级 | Photonics RF Front-End for High-Throughput Satellites | 未明确 | 未明确 | 实测 | 🟡 abstract自陈达成未自陈缝 |
+| 454 | 2025 | ISL/星间链路 / 放大器/EDFA/光子载荷 | Proposal for Two-Wavelength High-Power EML-CAN for Low-SWaP-... | 未明确 | 未明确 | 实测 | 🟡 abstract无缝信号待精读 |
+| 455 | 2025 | 深空/月地/cislunar / AO/自适应光学/波前 | Research And Development Of Satellite-Mounted 30cm Aperture ... | 未明确 | 未明确 | 未明确 | 🟡 abstract自陈达成未自陈缝 |
+| 456 | 2025 | 深空/月地/cislunar / AO/自适应光学/波前 | Research and development of satellite-mounted large-aperture... | 未明确 | 未明确 | 未明确 | 🟡 abstract自陈达成未自陈缝 |
+| 457 | 2025 | 网络层/路由/RWA | Research on magnetic cleanliness control technology in the a... | 未明确 | 未明确 | 实测 | 🟡 abstract自陈达成未自陈缝 |
+| 458 | 2025 | ISL/星间链路 | Solar Irradiance Mitigation in LEO Optical Inter-Satellite L... | 未明确 | 未明确 | 实测 | 🟡 abstract自陈达成+挑战（待精读） |
+| 459 | 2025 | 地面站/OGS/终端 / 调制/复用 / 相干/自相干检测 / 放大器/EDFA/光子载荷 / 链路预算/系统级 | Space radiation effects on photonic integrated circuits for ... | 未明确 | 未明确 | 实测 | 🟡 abstract无缝信号待精读 |
+| 460 | 2025 | 未明确 | Study on the Micro-Vibration Isolation in High-Resolution Sa... | 未明确 | 未明确 | 未明确 | 🟡 abstract无缝信号待精读 |
+| 461 | 2025 | 放大器/EDFA/光子载荷 | The Tilt Adapter Design for Optical Payload in THEOS-3 Small... | 未明确 | 未明确 | 未明确 | 🟡 abstract无缝信号待精读 |
+| 462 | 2025 | 未明确 | The use of optical transceiver technology within space vehic... | 未明确 | 未明确 | 未明确 | 🟡 abstract无缝信号待精读 |
+| 463 | 2025 | 地面站/OGS/终端 / ATP/指向/PAT / QKD/量子/光子计数 / 信道建模/湍流/大气 / 链路预算/系统级 | Transmitter Diversity Design Considerations for the EAGLE-1 ... | 强 | 未明确 | 未明确 | 🟡 abstract自陈达成未自陈缝 |
+| 464 | 2024 | 地面站/OGS/终端 / ATP/指向/PAT / 编码/FEC/交织 / 信道建模/湍流/大气 / 链路预算/系统级 | Erasure correcting codes for high-throughput optical ground-... | 强 | 未明确 | 未明确 | 🟢? abstract自陈挑战（待精读） |
+| 465 | 2024 | ISL/星间链路 / 调制/复用 / 信道估计/均衡 / 相干/自相干检测 | Hardware-efficient adaptive equalizer for inter-satellite co... | 未明确 | 未明确 | 实测 | 🟡 abstract自陈达成+挑战（待精读） |
+| 466 | 2024 | 地面站/OGS/终端 / ISL/星间链路 / ATP/指向/PAT / QKD/量子/光子计数 / AO/自适应光学/波前 | Impact of transmitter wavefront errors and pointing jitter o... | 未明确 | 未明确 | 仿真 | 🟢? abstract自陈挑战（待精读） |
+| 467 | 2024 | ISL/星间链路 / 网络层/路由/RWA | Key technologies for the satellite optical network | 未明确 | 未明确 | 未明确 | 🟡 abstract无缝信号待精读 |
+| 468 | 2024 | ISL/星间链路 / 网络层/路由/RWA | Large-Scale Satellite Optical Network Simulation Architectur... | 未明确 | 未明确 | 仿真 | 🟡 abstract无缝信号待精读 |
+| 469 | 2024 | 调制/复用 | Multi-gigabit X-band transmitter for satellite communication... | 未明确 | 未明确 | 实测 | 🟡 abstract无缝信号待精读 |
+| 470 | 2024 | 调制/复用 / 相干/自相干检测 / 放大器/EDFA/光子载荷 / 链路预算/系统级 | Photonic integrated circuits for high-throughput optical com... | 未明确 | 未明确 | 实测 | 🟡 abstract自陈达成未自陈缝 |
+| 471 | 2024 | ISL/星间链路 / 网络层/路由/RWA | Research on Adjustable Wavelength Transmitter-receiver Isola... | 未明确 | 未明确 | 实测 | 🟡 abstract自陈达成未自陈缝 |
+| 472 | 2024 | 网络层/路由/RWA / 链路预算/系统级 | Service blockage on the downlink in large-scale satellite op... | 未明确 | 未明确 | 未明确 | 🟡 abstract自陈达成未自陈缝 |
+| 473 | 2023 | 地面站/OGS/终端 / feeder/中继 / 调制/复用 | 18km bidirectional free-space optical link with multi-apertu... | 未明确 | 未明确 | 实测 | 🟡 abstract自陈达成未自陈缝 |
+| 474 | 2023 | ISL/星间链路 | A Study on the Direct Detection Optical Receiver for Optical... | 未明确 | 未明确 | 未明确 | 🟡 abstract无缝信号待精读 |
+| 475 | 2023 | 地面站/OGS/终端 / 调制/复用 / 信道建模/湍流/大气 / 网络层/路由/RWA | Design of the setup for testing optical telemetry ranging in... | 强 | 未明确 | 仿真 | 🟡 abstract自陈达成+挑战（待精读） |
+| 476 | 2023 | 地面站/OGS/终端 / ISL/星间链路 / ATP/指向/PAT / 相干/自相干检测 / 链路预算/系统级 | Development of spatial coherent optical receiver with a size... | 未明确 | 未明确 | 实测 | 🟡 abstract自陈达成未自陈缝 |
+| 477 | 2023 | 深空/月地/cislunar / 调制/复用 / 编码/FEC/交织 / 链路预算/系统级 | High directional optical transmitter with phased array of na... | 未明确 | 未明确 | 实测 | 🟡 abstract自陈达成+挑战（待精读） |
+| 478 | 2023 | 未明确 | High-speed optical transceiver integrated chipset and module... | 未明确 | 未明确 | 未明确 | 🟡 abstract无缝信号待精读 |
+| 479 | 2023 | 调制/复用 | Mid-wave infrared optical receiver based on an InAsSb-nBn ph... | 未明确 | 未明确 | 实测 | 🟡 abstract自陈达成未自陈缝 |
+| 480 | 2023 | 调制/复用 / 相干/自相干检测 / 放大器/EDFA/光子载荷 | Optical frequency comb optimization for satellite payload ap... | 未明确 | 未明确 | 未明确 | 🟡 abstract自陈达成未自陈缝 |
+| 481 | 2023 | 地面站/OGS/终端 / feeder/中继 / ATP/指向/PAT / AO/自适应光学/波前 / 信道建模/湍流/大气 | Performance of the adaptive optics system for Laser Communic... | 强 | 未明确 | 实测 | 🟡 abstract自陈达成未自陈缝 |
+| 482 | 2023 | ISL/星间链路 / ATP/指向/PAT / 调制/复用 | Pointing error angle evaluation of OFDM inter-satellite opti... | 未明确 | 未明确 | 未明确 | 🟡 abstract自陈达成+挑战（待精读） |
+| 483 | 2023 | 信道建模/湍流/大气 | Satellite-to-ground optical downlink model using mode mismat... | 强 | 未明确 | 实测 | 🟡 abstract自陈达成未自陈缝 |
+| 484 | 2023 | 网络层/路由/RWA | Traffic Prediction-based Load-Balanced Routing Strategy for ... | 未明确 | 未明确 | 仿真 | 🟡 abstract无缝信号待精读 |
+| 485 | 2023 | 地面站/OGS/终端 / ATP/指向/PAT | Transmitter beam bias verification for optical satellite dat... | 未明确 | 未明确 | 实测 | 🟡 abstract无缝信号待精读 |
+| 486 | 2022 | ISL/星间链路 | A multichannel Hermite Gaussian (HG) intensity profiles base... | 未明确 | 未明确 | 未明确 | 🟡 abstract无缝信号待精读 |
+| 487 | 2022 | ISL/星间链路 / 调制/复用 / 相干/自相干检测 / 网络层/路由/RWA / 放大器/EDFA/光子载荷 | Effect of Doppler shift on preamplifier DPSK receivers using... | 未明确 | 未明确 | 未明确 | 🟡 abstract无缝信号待精读 |
+| 488 | 2022 | 地面站/OGS/终端 / 调制/复用 / 相干/自相干检测 / AO/自适应光学/波前 / 信道建模/湍流/大气 | Evaluation of a multimode receiver with a photonic integrate... | 强 | 未明确 | 实测 | 🟡 abstract无缝信号待精读 |
+| 489 | 2022 | ISL/星间链路 / 相干/自相干检测 / 信道建模/湍流/大气 | Free Space Ground to Satellite Optical Communications Using ... | 未明确 | 未明确 | 未明确 | 🟡 abstract无缝信号待精读 |
+| 490 | 2022 | 地面站/OGS/终端 / ISL/星间链路 / 调制/复用 / 放大器/EDFA/光子载荷 | H2020-SPACE-ORIONAS miniaturized optical transceivers and am... | 未明确 | 未明确 | 未明确 | 🟡 abstract自陈达成未自陈缝 |
+| 491 | 2022 | ISL/星间链路 / 调制/复用 / 网络层/路由/RWA / 放大器/EDFA/光子载荷 / 链路预算/系统级 | Optical transceivers for high-speed space communications - E... | 未明确 | 未明确 | 实测 | 🟢? abstract自陈挑战（待精读） |
+| 492 | 2022 | feeder/中继 / 调制/复用 / 相干/自相干检测 / AO/自适应光学/波前 / 信道建模/湍流/大气 | Robust free space optical communication receiver based on a ... | 强 | 未明确 | 实测 | 🟢? abstract自陈挑战（待精读） |
+| 493 | 2021 | 未明确 | A 112 Gb/s Radiation-Hardened Mid-Board Optical Transceiver ... | 未明确 | 未明确 | 综述 | 🟡 abstract无缝信号待精读 |
+| 494 | 2021 | QKD/量子/光子计数 | Digital processing of optical signals in the frequency stand... | 未明确 | 未明确 | 实测 | 🟡 abstract自陈达成未自陈缝 |
+| 495 | 2021 | 地面站/OGS/终端 / feeder/中继 / 深空/月地/cislunar | Optical Modems for optical laser communication downlinks | 未明确 | 未明确 | 未明确 | 🟢? abstract自陈挑战（待精读） |
+| 496 | 2021 | 调制/复用 / 相干/自相干检测 / 网络层/路由/RWA / 链路预算/系统级 | Proton radiation assessment of COTS components of 100 Gb/s d... | 未明确 | 未明确 | 实测 | 🟡 abstract自陈达成+挑战（待精读） |
+| 497 | 2020 | 调制/复用 | Analysis of Phase Noise in a Hybrid Photonic/Millimetre-Wave... | 未明确 | 未明确 | 未明确 | 🟡 abstract自陈达成未自陈缝 |
+| 498 | 2020 | 地面站/OGS/终端 / ISL/星间链路 / 调制/复用 / 链路预算/系统级 | Communication and Ranging System for the Kepler Laboratory D... | 未明确 | 未明确 | 实测 | 🟡 abstract自陈达成未自陈缝 |
+| 499 | 2020 | ISL/星间链路 / ATP/指向/PAT | Impact of receiver architecture on small satellite optical l... | 未明确 | 未明确 | 未明确 | 🟡 abstract自陈达成未自陈缝 |
+| 500 | 2020 | 地面站/OGS/终端 / QKD/量子/光子计数 / 调制/复用 / 信道建模/湍流/大气 / 链路预算/系统级 | Measurements of few-mode fiber photonic lanterns in emulated... | 强 | 未明确 | 实测 | 🟡 abstract无缝信号待精读 |
+| 501 | 2020 | ISL/星间链路 | Multiple Transceivers Inter-satellite Optical wireless commu... | 未明确 | 未明确 | 未明确 | 🟡 abstract无缝信号待精读 |
+| 502 | 2020 | ISL/星间链路 | RETRACTED ARTICLE: Performance enhancement of transceiver sy... | 未明确 | 未明确 | 未明确 | 🟡 abstract自陈达成未自陈缝 |
+| 503 | 2020 | 地面站/OGS/终端 / 网络层/路由/RWA / 放大器/EDFA/光子载荷 | Thermal Vacuum Tests and Thermal Properties on ESA's OPS-SAT... | 未明确 | 未明确 | 实测 | 🟡 abstract无缝信号待精读 |
+| 504 | 2020 | ISL/星间链路 / 调制/复用 | Transmitter Aperture Diameter Effect in 40 Gb/s Inter-Satell... | 未明确 | 未明确 | 实测 | 🟡 abstract自陈达成未自陈缝 |
+| 505 | 2019 | 调制/复用 / 放大器/EDFA/光子载荷 | Assessment of the Performance of DPSK and OOK Modulations at... | 未明确 | 未明确 | 实测 | 🟡 abstract自陈达成未自陈缝 |
+| 506 | 2019 | ISL/星间链路 / ATP/指向/PAT / 编码/FEC/交织 / 相干/自相干检测 / 链路预算/系统级 | Inter-Satellite Integrated Laser Communication/Ranging Link ... | 未明确 | 未明确 | 实测 | 🟡 abstract自陈达成未自陈缝 |
+| 507 | 2019 | ISL/星间链路 / ATP/指向/PAT | Pointing Error Reduction Using Fiber Bundle-based Receiver D... | 未明确 | 未明确 | 未明确 | 🟡 abstract无缝信号待精读 |
+| 508 | 2019 | ATP/指向/PAT / 调制/复用 | Small satellite optical communication receiver for simultane... | 未明确 | 未明确 | 未明确 | 🟡 abstract无缝信号待精读 |
+| 509 | 2019 | 未明确 | T Multicore Processors and Graphics Processing Unit Accelera... | 未明确 | 未明确 | 未明确 | 🟡 abstract无缝信号待精读 |
+
 ## 🔴 必填项 — 死地/饱和领域记忆（H002 L49-54，领域记忆种子，不再碰）
 
 > 以下 5 项是历史撞死/已 Kill 的轴，强制预置进表作为领域记忆。无论地勘是否命中，都标 🔴。扩检索印证：这些轴在领域里本就冷。
@@ -615,13 +709,100 @@ the project will be conducted with th |
 
 > 完整噪声清单见各子 agent 报告（S004 + S006 session note）+ `search-archive/2026-06-22/_landscape_full_merged.json`（518 条全集含噪声）。
 
+## 附录 D：v3 设备词召回噪声清单（动作 A round3，2026-06-22，全留不丢）
+
+> 11 设备词检索召回 150 去重条 → 95 域内 → 79 核心入主表（431-509）→ **16 相邻域 + 44 域外**（共 60 条噪声，全留此附录不丢）。
+> 噪声分布即"设备词检索召回质量"诊断信号：召回严重偏向"卫星光硬件"相邻领域（RF/雷达/遥感/光计算/产品页）。
+
+### D.1 相邻域剔除（16 条，含 satellite+optical 共现但属 RF/雷达/遥感/图像/产品页）
+
+| # | 标题片段 | 剔除理由 |
+|---|---------|---------|
+| 1 | Photonic integrated circuits for high-throughput optical communication | PIC 综述（误剔复评回主表 #470） |
+| 2 | Real-time implementation of all-digital optical time transfer | 时间频率传递非通信 |
+| 3 | GPU Accelerated Processing Method for Feature Point Extraction | SAR 图像处理 |
+| 4 | Cortex Lasercom - Optical Digital Processor Unit - Satsearch | 产品页 |
+| 5 | Geometric Correction Analysis of Highly Distortion | 图像几何校正 |
+| 6 | Lithological Unit Classification Based on Geological Knowledge | 地质分类 |
+| 7 | Inter-Satellite Integrated Laser Communication/Ranging Link | 测距为主（误剔复评回主表 #506） |
+| 8 | Shoreliner: A Sub-Pixel Coastal Waterline Extraction | 海岸线提取 |
+| 9 | An Integrated Millimeter-Wave Satellite Radiometer | mmW 辐射计 |
+| 10 | An innovative multimission optical ground station | OGS（误剔复评后仍偏综述，留此） |
+| 11 | Free-space optical communication - Wikipedia | 百科 |
+| 12 | Design of Novel Laser Crosslink Systems Using Nanosatellites | 纳卫星交叉链路（边界，留此） |
+| 13 | Designing and Testing On-Orbit Intelligent Processing Payload | 载荷处理 |
+| 14 | The Tools and Workflow of LEO Earth Observation Optical Payload | 对地观测载荷 |
+| 15 | Photonics for satellite radars: the SPACEBEAM project | 卫星雷达 |
+| 16 | Ground Terminal Evaluation for Deployable Optical Receiver Aperture | DORA 地面终端（边界，留此） |
+
+### D.2 域外不入表（44 条，无 satellite+optical 共现，fiber/mmWave/VLC/非卫星光通信）
+
+代表性条目（完整列表见 `search-archive/2026-06-22/_v3-continuation.md` 注释段 + landscape2-*.json 原始 JSON）：
+- 光纤相干收发（400Gb/s DP-QAM64 / 2000km 光域偏振解复用 / 低复杂度 IQ 校准等 ~20 条）
+- 光计算/光处理单元（Microcomb PPU / ΦPU / 光线性求解器 ~5 条）
+- 产品页（LKD Aerospace Antelope/Leopard-PDP / ZAITRA SKAIDOCK / doEEEt 博文 ~6 条）
+- 非卫星（Navigation Aid / mmWave Indoor / pure fiber ~13 条）
+
+## 附录 E：v3 动作 B 模块词诊断（**不是地勘**，受控例外，2026-06-22）
+
+> **方法论标注**：动作 B 用模块词（synchronization/estimation/equalization/modulation）是诊断动作不是地勘。
+> 产出**只入此诊断段，不入主表候选池**，与动作 A 物理隔离（偏航检查 A 受控例外）。
+> 判读纪律（T001 §2.3）：占比涨只说明做的人多，**区分"人数多（成熟无缝）"和"人数少（有开放缝）"看真缝密度**。
+
+### E.1 死轴占比 + 真缝密度对照表
+
+| 维度 | v2 主表占比 | B 搜索 raw | 卫星核心 | 严判真缝 | 真缝率 | 软缝 | 死轴成因判读 |
+|------|-----------|-----------|---------|---------|-------|------|------------|
+| **载波同步**（死轴1）| 23/430 = 5.3% | 20 | 17 | **4** | **23.5%** | 9 | 人数少 + 真缝密度高 → **有开放缝的冷区** |
+| **信道估计**（死轴2）| 13/430 = 3.0% | 20 | 20 | **2** | **10.0%** | 10 | 人数少 + 真缝密度中 → 冷区但有缝 |
+| **均衡**（死轴3）| 未单列 | 20 | 19 | **3** | **15.8%** | 12 | 人数少 + 真缝密度高 → 有开放缝的冷区 |
+| **调制**（热区对照）| 86/430 = 20% | 20 | 20 | 2 | 10.0% | 7 | 人数多 + 真缝密度中 → 热区，缝相对拥挤 |
+
+**关键发现（偏航检查 E 提炼）**：3 个死轴的真缝密度（10-23.5%）**反而高于或等于热区调制（10%）**。
+- 死轴低占比 ≠ 没缝，是 **做的人少 + 有开放问题**
+- 这恰恰符合判据 A（缝）+ 判据 B（人数少）的候选信号
+- **判读死轴成因必须分两步**：先看人数（占比/搜索 raw 数），再看缝密度（abstract 真缝信号）。只看占比会误杀
+- 动作 A 设备词检索在死轴维度**零命中**（79 条核心里 carrier-sync/channel-estimation/equalization 子地带命中数远低于模块词直接搜）→ 设备词补盲的价值在硬件层不在方法层
+
+### E.2 真·方法论缝候选清单（严判，待精读验证，不作为 Go/No-Go 依据）
+
+> regex 严判有 ~30% 误检率（如 channel-estimation 里混入图像处理论文），以下候选**必须精读 abstract + intro 验证**才能作为判据 A 证据。
+> **本轮地勘只到"判读出真缝可能存在 + 候选论文清单"，不到 Go/No-Go**。
+
+**载波同步（死轴1，4 条真缝候选）**：
+- `Adaptive Optics Assisted Space-Ground Coherent Opt` — "residual frequency shift that remains after preliminary coarse frequency offset correction"（AO 辅助空地相干，粗频偏校正后残余频移）
+- `Pilotless Iterative Carrier Synchronization With L` — "solve the phase ambiguity problem... Costas loop tracking and LDPC decoding feedback united"（无导频迭代载波同步）
+- `An Improved Phase Deviation Discriminator for Carr` — "would increase greatly. To solve this problem, improved phase deviation discriminator"（鉴相器改进）
+- `Hybrid STA With FNN and CNN Models for Robust Chan` — "atmospheric turbulence in terrestrial FSO links and Doppler-induced carrier-..."（湍流+多普勒载波同步）
+
+**信道估计（死轴2，2 条真缝候选）**：
+- `A Noise-Tolerant Carrier Phase Recovery Method for` — "noise-tolerant method... accurate carrier phase recovery with reduced complexity"（噪声容忍 CPR）
+- （1 条为图像处理误检，剔除）
+
+**均衡（死轴3，3 条真缝候选）**：
+- `Linear Time-Packing Detectors for Optical Feeder L` — "bit sequence successfully grows notably. To address this issue, low-complexity linear equalization"（光 feeder 链路低复杂度线性均衡）
+- `Capacity Limits of Optical Satellite Communications` — 容量上限分析（非方法 gap，软缝）
+- `Low-Cost Blind and Semi-Blind Equalizers for Nonli` — "can significantly degrade signal quality and require advanced equalization"（盲/半盲均衡）
+- （1 条为气象观测误检，剔除）
+
+**调制（热区对照，2 条真缝候选）**：
+- `Bridging the Gap in Modulation Selection for Satel` — "Bridging the Gap in Modulation Selection for Satellite Optical Communication"（调制选择 gap）
+- `Design and comparative analysis of Inter Satellite` — IS-OWC 设计对比
+
+### E.3 IEEE 债务声明
+
+- 动作 A 11 词 + 动作 B 4 词的 IEEE blit 全 0 条。IEEE 今日对当前 IP 全面限流（quota 卡 1/50 不动）。
+- **不是 S005 修复失效**（S005 测过同命令成功）：另一对话 3 词小样本测试显示 `receiver`/`photonic-receiver` 能拿到 24-25 条，`transceiver`/`frontend` 等通用宽词被挡 → 更精确机制是"高频通用词触发实时反爬 + 累积风险分"，非纯 IP 全封。
+- **债务处理**：search API 267 raw + 80 raw 够密度判读（≈ S006 round2 300 raw），IEEE 增量价值 < 执行成本，**不重跑不卷用户手动下**。真缝候选已从 search API 提取，精读阶段如发现 search API 系统性漏掉 IEEE 专属会议论文（如 IPC/ECOC），再针对性补。
+
 ## 元信息
 
-- 总条目（去重）：518
-- 主表（≥2019）：430
+- 总条目（去重）：597（v2 518 + v3 续段 79）
+- 主表（≥2019）：509（v2 430 + v3 续段 79）
 - 年份筛外（<2019）：81
 - unknown year：7
-- 缝潜力分布：{'🟢': 48, '🟡': 338, '🔴': 44}
-- 检索源：S2(243) + Exa(107) + OpenAlex(33+混合) + IEEE blit(111 含 source_api 缺失) + 其他混合
-- IEEE 覆盖：5 query × 25 条 = 125 raw，去重后贡献显著（含 ISL/相干/深空/GEO/终端 IEEE 专属内容）
-- 扩检索印证：死轴（载波同步 23/信道估计 13）是结构性冷区，非采样偏差
+- 缝潜力分布：{'🟢': 48, '🟢?': 15（v3 待精读自陈挑战）, '🟡': 350（v2 338 + v3 64 + 软缝 12 折入）, '🔴': 44}
+- 检索源：S2(243+247) + Exa(107+20) + OpenAlex(33+混合) + IEEE blit(111 含 source_api 缺失) + 其他混合
+- IEEE 覆盖：v2 5 query × 25 条 = 125 raw；**v3 IEEE 全面限流 0 条（见附录 E.3 债务）**
+- 扩检索印证（v2）：死轴（载波同步 23/信道估计 13）是结构性冷区，非采样偏差
+- **v3 动作 B 诊断印证**：死轴真缝密度（10-23.5%）反高于热区调制（10%）→ 死轴是"有缝但人少"非"没缝"，**需精读验证**才能升 Go/No-Go
