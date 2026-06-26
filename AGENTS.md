@@ -117,6 +117,7 @@
 | 层级     | 文件                      | 职责                                               |
 | -------- | ------------------------- | -------------------------------------------------- |
 | 通用原则 | `overview.md`             | 核心原则、文档系统概览                             |
+| 核心术语 | `stages/glossary.md`      | 问题/空白/研究主题的定义与判据（问题四判据的唯一拥有者） |
 | 阶段流程 | `stages/*.md`             | 该阶段的完整操作流程                               |
 | 领域定制 | `domain-comms.md`         | 领域特定技术栈、指标、反模式                       |
 | 模板定义 | `templates.md`            | 文档模板和字段规则                                 |
@@ -178,9 +179,11 @@
 | 指标模型假设敏感性 FR-19      | `stages/contract.md` S2 + `stages/execute.md` S4 — 指标依赖模型假设时记录假设+做替代假设对比                                             |
 | MVE 关键参数溯源 FR-20        | `stages/gw-feasibility.md` §D 维度 D step 4 + `thesis-lessons.md` TL-26 — MVE 每个关键物理参数必须标文献来源，禁止"为了让方法有用"拍参数 |
 | oracle 上界前置门控 FR-21     | `stages/gw-feasibility.md` §D 维度 D step 5 + `thesis-lessons.md` TL-27 — 可解析上界的增益先算上界，<0.5dB 直接 Kill 不跑 MVE            |
-| GW 流程强制门控 FR-22         | `stages/groundwork.md` 全文 + `thesis-lessons.md` TL-30 — 任何"试新方法/新方向"动作必须先回答"当前在 GW 哪一步"，指不到具体 Step = 跳框架禁止开跑；Step 3（精读）+ Step 4a（可行性 Go/No-Go）是硬门控不可跳过，literature_notes 进度表任一项 ⬜ 时禁止进 MVE/Contract |
-| 增量改进非填补空白 FR-23      | `.sessions/2026-06-17-thesis-method-redirection/decisions.md` D005 + `thesis-lessons.md` TL-04/TL-12/TL-31 — 研究起点 = 找 2019+ 顶刊/baseline 指出其具体不足（问题），不是找"没人做过 X"（空白）；空白只是新颖性证据，必须转译成"现有 M 在 C 下失效"才是问题 |
+| GW 流程强制门控 FR-22         | `stages/groundwork.md` 全文（含"跨 Step 硬门控"段）+ `templates/master-state-template.md` GW Progress 表 + `thesis-lessons.md` TL-30 — 任何"试新方法/新方向"动作必须先查 master-state.md 的 GW Progress 表回答"当前在 GW 哪一步"，指不到具体 Step = 跳框架禁止开跑；Step 3（精读）+ Step 4a（可行性 Go/No-Go）是硬门控不可跳过，GW Progress 表/literature_notes 进度表任一上游项 ⬜ 时禁止进 MVE/Contract |
+| 增量改进非填补空白 FR-23      | `stages/glossary.md`（问题/空白/研究主题定义 + 问题四判据，唯一拥有者）+ `.sessions/2026-06-17-thesis-method-redirection/decisions.md` D005 + `thesis-lessons.md` TL-04/TL-12/TL-31 — 研究起点 = 找 baseline 指出其具体不足（问题 = "M 在 C 下因 A 失效"，过四判据），不是找"没人做过 X"（空白）；空白只是新颖性证据，须转译成 M-C-A 才是问题 |
 | 方法论/教训强制重读 FR-24     | `thesis-lessons.md` TL-31 — 涉及方法论、方向判断、创新定位、问题定义的输出，动笔前必须 Read 当前专题 decisions.md + thesis-lessons.md；发现自己要写"新方法论"时先 grep 是否已覆盖，已覆盖复用编号不新建；"我感觉/我记得"不是证据 |
+| Go/Kill 对手标准分离 FR-25    | `thesis-lessons.md` TL-32 + `.sessions/2026-06-20-problem-driven-redirection/decisions.md` D004-a — Step 3 精读 + Step 4a 维度 A 的对手**默认=传统未优化 baseline**（跟同门学位论文套路对齐）；oracle 上界（FR-21）**只做 Step 4a 维度 D 收尾 Kill 工具**（TL-27 原意），**禁当 Go 判据**；Go 标准（赢传统 baseline）与 Kill 标准（oracle 上界<0.5dB 或 MVE FAIL）必须分离；FR-21 只在 Step 3 走完+判据 A 成立后才触发 |
+| 证据链强制 FR-26              | `thesis-lessons.md` TL-33 + `.sessions/2026-06-20-problem-driven-redirection/decisions.md` D004-c — 宣称"当前在 Step X"/"已读/已下载/已确认 Y"必须附**证据指针**（文件+行号/路径/meta.json 来源），没有=未走；用 papers/ 下文件做"外部输入"判断前必查 meta.json 来源，不能只看日期目录联想；用户纠正事实错误即停核查 PDF 原文，不脑补理由；"我以为查过了"不是证据 |
 
 ## 上下文管理规则（跨步骤强制）
 
@@ -229,7 +232,7 @@
 新对话恢复项目时，按以下优先级读取：
 
 1. `projects-overview.md`（跨项目状态汇总，了解全局后再深入具体项目）
-2. `projects/{name}/master-state.md`（Master 编排状态，当前步骤+已完成步骤+关键决策+FR 检查清单）
+2. `projects/{name}/master-state.md`（Master 编排状态，当前步骤+已完成步骤+关键决策+FR 检查清单+**GW Progress 表（FR-22 跨 Step 门控唯一可查状态）**）
 3. 项目记忆文件: `~/.Codex/projects/-mnt-d-code-study-research-protocol/memory/project_{name}.md`
 4. `.sessions/*-{project}/` 下最新的 H{NNN} 文件（按编号排序取最大）
 5. `decision_log.md`（阶段摘要行）
