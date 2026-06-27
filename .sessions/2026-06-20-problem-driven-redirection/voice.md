@@ -120,3 +120,13 @@
 
 - "我希望做的是和同门类似的那种东西。以及，最好多挑点？" → H004 选样返工（方法产出形态=同门 DSP 范式 + 扩大候选池）
 - "感觉你挑的不好呢?" → H004 选样返工（#4/#5/#7 剔出候选，#1/#2/#3/#6 保留，补检索补精读）
+
+## 2026-06-27（块D Step 3.5 定向补检索轮）
+
+- [AskUserQuestion 回答，检索源] "只用tools/search(Semantic Scholar)，IEEE留债（推荐）" → 块D检索方案（S008 IEEE 限流债务原则继承，本轮不碰 IEEE）
+- [AskUserQuestion 回答，盲区C] "不做，聚焦A/B盲区（推荐）" → 块D范围（聚焦盲区A核心+盲区B基础文献，C引用链留块E）
+- [AskUserQuestion 回答，A检索词] "A1-A4全跑，不改" → 块D检索词（4条场景词方法中性全跑）
+- [AskUserQuestion 回答，下载范围] "全部5篇优先精读（推荐）" → 块D下载（盲区A 4篇三现象联合+Valjus综述全精读）
+- [AskUserQuestion 回答，盲区B处理] "Tang 2024精读+Viterbi浅读（推荐）" → 块D盲区B（Tang2024核对[50]+Viterbi经典浅读）
+- [AskUserQuestion 回答，已有资产] "召回Pech/Valjus入本轮Q#清单+重新评估（推荐）" → 块D重大修正（**主线发现 Pech2025+Valjus2025+Paillier2019conf 已在库有笔记被 H004 选样漏召，用户拍板纠正召回 + D005务实标准重评**。这是 S013/S014 同型问题复发——已有资产被遗忘导致误判）
+- [AskUserQuestion 回答，剩余下载] "全下（Paillier+Rustum优先，其余按能否下到）（推荐）" → 块D下载（5篇剩余全下，Paillier2020JLT奠基+Rustum2026独立DL路径优先）

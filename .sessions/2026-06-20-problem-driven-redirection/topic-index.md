@@ -1,7 +1,7 @@
 # Topic Index: 问题驱动方法论实战验证（地勘前置迭代后）
 
 > slug: 2026-06-20-problem-driven-redirection
-> status: active | created 2026-06-20 | last_updated 2026-06-26（块B补精读完成，候选池扩到10篇6篇四判据全过，块C综合分析就绪。下载障碍用blit绕过，发现papers/doi/库存11篇光通信DSP未精读金矿。下一步：块C综合分析产Q#清单）
+> status: active | created 2026-06-20 | last_updated 2026-06-27（块D Step 3.5检索+召回完成。盲区A/B定向补检索完成(search-archive/2026-06-27/ 7 JSON)，🔴发现并纠正H004选样漏召——Pech2025+Valjus2025+Paillier2019conf三篇旧B1资产早在2026-06-16已下载精读被路径依赖排除，已召回入Q#清单为Q11/Q12/Q13(D005标准重评)。master-state Step 3.5 🔄部分。下一步：下载债务待清(5篇IEEE/SPIE源blit难点)→块E Step 4a Go/No-Go）
 
 ## 专题定位（一句话）
 
@@ -114,22 +114,23 @@ framework-evolution 三改造（定义问题/Q#链/跨Step门控）落地后的�
 
 ## 当前位置
 
-**块 B 精读全部完成（H004 7篇 + H005 6篇，候选池 10 篇 6 篇四判据全过），块 C 综合分析就绪**。
+**块 D Step 3.5 检索+召回完成（2026-06-27 S016）**：盲区 A/B 定向补检索完成（search-archive/2026-06-27/ 7 JSON），🔴**纠正 H004 选样漏召**——召回 Pech2025+Valjus2025+Paillier2019conf 三篇旧 B1 资产入 Q# 清单为 Q11/Q12/Q13（D005 标准重评）。literature_notes.md Q# 清单 Q1-Q10 → **Q1-Q13**，master-state GW Progress 表 Step 3.5 ⬜ → 🔄部分。
 
-**本轮（2026-06-26 H005）完成**：
-- 方案 A 定向补检索 8 词 32 条召回
-- 下载障碍 → blit 绕过（tools/download urllib 不走代理，blit Playwright 走代理 7897 成功）
-- 发现 papers/doi/ 库存 11 篇光通信 DSP 未精读金矿
-- 精读 6 篇强候选（非 PS 3 + PS 3），子 agent 精读 + 主线 grep 核查全 PASS
-- 候选池扩到 10 篇，6 篇四判据全过，达 gw-read.md ≥5 篇门槛
+**本轮（2026-06-27 S016）完成**：
+- H006 handoff 接收（3 条事实核查全 PASS）+ 框架文件强制重读（gw-supplement.md Step 3.5 / gw-read.md H 节 / groundwork.md:33）
+- 检索方案过用户审（盲区 A 4 词场景中性 + 盲区 B 3 词按名定向；用户决策只用 tools/search 不碰 IEEE + 盲区 C 不做 + A 词全跑）
+- 派 2 子 agent 并行检索（盲区 A+B 各一批，全 `bash tools/search` 零 WebSearch/webReader），主线独立核查核心 DOI（Pech2025/Paillier2020JLT/Rustum2026/Viterbi1983 全 PASS，Yokomura 标题/abstract 错配判断正确）
+- 🔴**发现 H004 选样漏召旧 B1 资产**（S013/S014 同型问题第 3 次复现）：Pech2025+Valjus2025+Paillier2019conf 三篇早在 2026-06-16 已下载精读（73-84 行笔记标方向 B1），B1 Kill 后被路径依赖排除。literature_notes 第 130 行自己都写了"本批没有联合"但没召回。**盲区 A 真实性质修正**：不是蓝海，是分治架构成熟但联合建模空白的稀疏前沿
+- 召回 Q11/Q12/Q13 入 Q# 清单 + D005 务实标准重评：Q11（Pech Z 变换 ODPLL）部分过 D⚠️、Q12（Paillier 分治架构）全过 E 三检验 3/3、Q13（Valjus 综述）支撑型
+- 偏航检查 A-E 全过（⚠️召回 Q11-Q13 有滑回 B1 风险，已标注"警惕 B1 换皮"）
 
-**下一步（下个对话 = 块 C 综合分析）**：
-1. 按 gw-read.md 综合分析节撰写：方法分类 / 已知局限 / 2-3年趋势 / 研究背景概述 / **研究问题清单 Q#**
-2. Q# 清单：10 篇 M-C-A 汇总，逐条过四判据（D005 修正判据 A）
-3. 重写 literature_notes.md（旧文件过时）— 把 10 篇精读条目统一写入
-4. Q# 清单非空且至少 1 条四判据全过 → 进块 D（Step 3.5 定向补检索）→ 块 E（Step 4a Go/No-Go）
+**下一步（下个对话 = 直接进块 E Step 4a Go/No-Go）**：
+1. **块 E（Step 4a）启动**：Q# 清单 Q1-Q13 已非空（远超门槛），3 篇下不到的债务不阻塞。对 Q1-Q13 每个 Q# 走 gw-feasibility A0/A'/A/B/D。**重点 Q12（Paillier 分治→条件性改进，JLT精读后务实切入点明确：针对其假设不适用条件做改进赢几dB，⚠️警惕B1换皮）+ Q8（PCS+Rs 同门范式）**。务实标准 D005（传统 baseline 对手，FR-21 仅参考）。至少 1 个 Q# Go 才进块 F（Step 5-7 baseline 复现）
+2. **PS N1 同构核查**（块 E 必做）：Q8/Q9/Q10 的 PS 增益是否依赖时变信道
+3. **Step 4a 前必读**：gw-feasibility.md 全文 + TL-30/31（FR-22/24）+ decisions.md D004-c（FR-26）+ D005（务实路线 INVARIANT）
+4. **可选补债**：Rustum2026（DL对比视角，块E按需）/ Tang2024[50]核对（读新2原文references替代）
 
-**核心教训（H005 新）**：①tools/download 的 urllib 不走系统代理是下载障碍根因（blit 的 _detect_proxy S005 修过，download 没修）；②papers/doi/ 有大量跨专题历史下载可复用（先查库存再下新的）；③PS 方向跟 N1 同构性要分情况：纯 PS gain（固定信道）≈N1 无效，PS+另一机制治具体失效（如新4 符号率适配）才有戏。
+**核心教训（S016 新）**：①**已有资产被遗忘是反复复现的失败模式**（S013/S014/S016 第 3 次）——papers/_read_notes/ 里有笔记但决策时没召回，根因是选样流程无"历史方向资产召回"步骤。根因修复待定；②核查机制必须应用到所有层级（S012 已证）——本轮核查抓出 H004 漏召，且发现自己第一次 grep 脚本 break 太早误判（核查脚本本身也要核查）；③**盲区诊断的 A/B 分离要诚实 + gap 判断要随精读细化**——盲区 A 初判"领域没人做联合建模"，但 Paillier JLT 精读后发现是"分治够用但条件性"，gap 从"无人做"细化为"Paillier 假设不适用的条件"——**性质判断随精读深化，影响 Go/No-Go 标准（蓝海 vs 条件性改进，对手/baseline 不同）**。
 
 ## 进展线索
 
@@ -155,3 +156,5 @@ framework-evolution 三改造（定义问题/Q#链/跨Step门控）落地后的�
 - **D005** 学位定位翻转——务实路线（2026-06-26，**INVARIANT 级，最高优先级**）。从"找真缝/真创新宁可颗粒无收"→"先能写出东西毕业，接受赢传统 baseline 几 dB 作贡献"。承认学术生存≠理论最优（"领域 tm 多少人在造垃圾继续"），过度严苛代价（写不出东西/毕不了业）比"发增量"严重。标准重置：Go 判据=能赢传统 baseline（参考同门 2-4dB 量级）；oracle 上界 FR-21 从硬 Kill 门**降级为参考**；Step 3 精读目标从"找真缝"变"找改进空间"；MVE 改快速试错。**底线仍守**：不接受孤证凑数（Q#-A 禁）/不接受标题联想（TL-30 有效）/要导师同意（S007 有效）/方法必须指标提升。导师已确认接受增量。对 6 次 Kill 诚实重评：大概率没几个能救（③0.09dB/4b#1 BER堵/(c)信息论硬约束/N1 gain≈0/A3场景不匹配/Q#-A孤证），务实路线价值在让接下来选样不再严苛砍自己，不画饼救旧。**用户原话**："对比baseline别太严，不然咱们根本写不出东西。你也知道这个领域tm有多少人在造垃圾继续"。详见 decisions.md D005。
 - **H004 块A选样+批次1精读**（2026-06-26，续接 H003）。块A按务实标准从683条landscape选7篇代表性论文（用户放行），Step2下载7篇全文（OA 2+IEEE 5），精读批次1完成3篇（两阶段KF/CPR北理工/Time-Packing MMSE，grep核查全过）。**更新段：块B精读7/7全完成 + 选样返工**——用户反馈"感觉你挑的不好呢"+"希望和同门类似+多挑点"，#4/#5/#7剔出候选（光学架构/系统设计/机制分析非DSP），真实有效候选=#1/#2/#3（+#6边缘）=3-4篇。根因：覆盖驱动>质量驱动+只验baseline显式没验对称性+没预区分DSP vs 光学架构。详见 H004。
 - **H005 块B补精读完成 + 候选池充实**（2026-06-26，续接 H004）。**用户放行PS方向精读"总得弄出点东西"**。本轮5件事：①方案A定向补检索8词32条召回存档search-archive/2026-06-26/；②下载障碍tools/download全fail（urllib不走代理），用blit(Playwright走代理7897)下3篇IEEE全文+转md；③发现papers/doi/库存11篇光通信DSP未精读金矿；④精读6篇强候选（非PS 3篇：11350922 Doppler跟踪BUPT/10155111 LEO-LEO调制SP c=33/ACCESS.2025.3535789自相干；PS 3篇：JLT.2023.3281082 PCS+Rs治Doppler=landscape#580/LPT.2025.3647750 PS+RCM治湍流/app11219805 PS-QAM理论），子agent精读+主线grep核查全PASS无造假；⑤voice.md补登H004选样返工触发原话。**候选池扩到10篇，6篇四判据全过（#1/#2/#3/新2/新4/新6），达gw-read.md≥5篇门槛**。**PS方向N1同构性核查**：新6(PS-QAM理论)高度同构N1(高SNR>16dB uniform反超PS趋零)，新5(PS+RCM)部分同构(消融不全)，新4(PCS+Rs)不同构(增益来自符号率适配非PS)。详见 H005。**下一步：块C综合分析产Q#清单**。
+- **S015 块C综合分析完成 + literature_notes.md重写 + Q#清单Q1-Q10浮出**（2026-06-26，续接 H005）。**GW Step 3 完成标志达成（literature_notes 含 Q# 清单非空）**。五步：①H005 handoff接收（3条事实核查全PASS：6篇笔记/read-log 13条/blit 3篇md）+ 框架文件强制重读（gw-read.md综合分析节/glossary.md四判据/TL-30-33/templates.md，本轮Read记录为证FR-26）；②派3 Explore agent并行核查10篇精读笔记结构化信息（问题提取子表/baseline对称性/增益归因/局限），Agent 2诚实纠正"新2不是PS方向是DSP全电子DS补偿"（核查机制中性双向，S012同构）；③按gw-read.md综合分析5节撰写（方法分类5类/已知局限6条/2-3年趋势5条/研究背景概述/**研究问题清单Q1-Q10**）；④Q#清单**6篇四判据全过**（Q1/Q2/Q3/Q7/Q8/Q10，全部带⚠️：链路LEO-LEO/GEO/地面/feeder、利益相关BIT、同构N1 Q10高SNR趋零）+ **4篇部分不过**（Q4 C⚠️/Q5 C❌D❌/Q6 B部分/Q9 D⚠️）作方法借鉴；⑤master-state GW Progress表Step 2/3 ⬜→✅（FR-22门控释放）。**gw-read.md质量门槛全过**（≥5篇/核心贡献≥2句/综合分析实质/Q#非空远超1条门槛/路径合规/源文件路径不空）。**Q#浮出观察（线索非结论，不塞方向）**：Q8(PCS+Rs治Doppler)同门范式味最浓但增益来自Rs适配非PS；PS三篇同构性梯度Q8>Q9>Q10；链路匹配缺口=星地LEO+湍流+Doppler三者联合端到端Q#本批没有（块D补检索盲区）。**已知债务清偿**：literature_notes旧文件债务(H004/H005列)+master-state Step 2/3 ⬜债务(FR-22)。本轮无新建D###（综合分析+文档重写非架构决策，Q#清单是块E输入）。详见 S015。**下一步：块D Step 3.5定向补检索→块E Step 4a Go/No-Go**。
+- **S016 块D Step 3.5定向补检索 + 旧B1资产召回**（2026-06-27，续接 H006）。四步：①H006接收(3条事实核查全PASS)+检索方案过用户审(盲区A 4词场景中性+盲区B 3词按名定向，用户决策只用tools/search不碰IEEE+盲区C不做+A词全跑)；②派2子agent并行检索(盲区A+B各一批，全bash tools/search零WebSearch)，主线独立核查核心DOI(Pech2025/Paillier2020JLT/Rustum2026/Viterbi1983全PASS，Yokomura标题/abstract错配判断正确)；③🔴**发现H004选样漏召旧B1资产**——Pech2025+Valjus2025+Paillier2019conf三篇早在2026-06-16已下载精读(73-84行笔记标方向B1)，B1 Kill后被路径依赖排除。用户拍板召回+D005标准重评，召回入Q#清单为Q11/Q12/Q13。盲区A真实性质=分治架构成熟但联合建模空白的稀疏前沿(非蓝海)；④偏航检查A-E全过(⚠️召回Q11-Q13有滑回B1风险已标注警惕B1换皮)。**债务**：5篇论文(Paillier2020JLT/Rustum2026/Tang2024/Mosnier2025/Viterbi1983)下载遇IEEE/SPIE难点未完成。本轮无新建D###(执行+召回非架构决策)。voice.md登记6条用户决策。详见 S016。**下一步：清下载债务→块E Step 4a**。

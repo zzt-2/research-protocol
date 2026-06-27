@@ -290,11 +290,11 @@ topics:
       - "thesis-platform repo: workflows/paper-write/ (D→写作管线改进)"
 
   - slug: 2026-06-20-problem-driven-redirection
-    title: 问题驱动方法论首次实战验证（批评汇总 → 地勘前置迭代 → 地勘执行 → Step 3 精读）
+    title: 问题驱动方法论首次实战验证（批评汇总 → 地勘前置迭代 → 地勘执行 → Step 3 精读 → 综合分析）
     status: active
     created: "2026-06-20"
-    last_updated: "2026-06-26"
-    description: "framework-evolution 三改造落地后的首次实战验证。**根本目的不是'推进论文'，是'验证新方法论能不能产出可行的东西'**。方法论链路（S003 定盘）：地勘全景→选地→批评汇总→四判据→FR-21验缝→4a。范围从'物理层 DSP 锁死'放开为'星地激光通信全谱'。**D005 学位定位翻转=务实路线（INVARIANT 级）**：先能写出东西毕业，接受赢传统 baseline 几 dB 作贡献，FR-21 降级为参考，底线仍守（不接受孤证/标题联想/伪命题）。**S004-S010 地勘五轮**：landscape.md 683 主表落盘，死轴冷区结论加固后细化（载波同步/信道估计'有缝但人少'非'没缝'），abstract 工具错位诊断（判据 A 移全文层判），S007 处理技术边界确认（ATP/feeder/ISL系统级/QKD/深空不算处理）。**S011-S012 Q#-A 验证 Kill**：批3造假发现（grep核查抓出）+ PROMPT §1.1 自身误判纠正，Q#-A 确认孤证+2篇独立反驳判不过判据A。**R001/D003 方法论起点校正**：6次Kill共性=都没走完Step3→4a完整发现链条，回Step3多候选发现禁单假设验证。**D004 找角度范式校正**：对手显式化(传统baseline)+motivation结构字段+证据链强制(框架待验证)。**H004 块A选样+块B精读7/7 + 选样返工**：用户反馈'挑的不好'+要'同门类似DSP+多挑'，#4/#5/#7剔出候选(非DSP)，真实有效候选缩到3-4篇。**H005 块B补精读完成**：方案A补检索8词32条 + blit绕过下载障碍(tools/download urllib不走代理) + 发现papers/doi库存11篇金矿 + 精读6篇强候选(非PS3+PS3，用户放行PS'总得弄出点东西')，子agent精读+主线grep核查全PASS。**候选池扩到10篇，6篇四判据全过(#1/#2/#3/新2 LEO-LEO调制SP/新4 PCS+Rs治Doppler/新6 PS-QAM理论)，达gw-read.md≥5篇门槛**。PS方向N1同构性核查：新6高度同构N1(高SNR PS趋零)、新5部分同构、新4不同构(增益来自符号率适配)。**下一步：块C综合分析产Q#清单→块D Step3.5定向补检索→块E Step4a Go/No-Go**。"
+    last_updated: "2026-06-27"
+    description: "framework-evolution 三改造落地后的首次实战验证。**根本目的不是'推进论文'，是'验证新方法论能不能产出可行的东西'**。方法论链路（S003 定盘）：地勘全景→选地→批评汇总→四判据→FR-21验缝→4a。范围从'物理层 DSP 锁死'放开为'星地激光通信全谱'。**D005 学位定位翻转=务实路线（INVARIANT 级）**：先能写出东西毕业，接受赢传统 baseline 几 dB 作贡献，FR-21 降级为参考，底线仍守（不接受孤证/标题联想/伪命题）。**S004-S010 地勘五轮**：landscape.md 683 主表落盘，死轴冷区结论加固后细化，abstract 工具错位诊断，S007 处理技术边界确认。**S011-S012 Q#-A 验证 Kill**：批3造假发现+PROMPT §1.1 自身误判纠正，Q#-A 确认孤证判不过判据A。**R001/D003 方法论起点校正**：6次Kill共性=都没走完Step3→4a完整发现链条。**D004 找角度范式校正**：对手显式化+motivation结构字段+证据链强制(框架待验证)。**H004 块A选样+块B精读7/7 + 选样返工**：用户反馈'挑的不好'要'同门类似DSP+多挑'。**H005 块B补精读完成**：候选池扩到10篇6篇四判据全过，达gw-read.md≥5篇门槛。**S015 块C综合分析完成**：literature_notes.md 重写完成（10篇L##+综合分析5节+**研究问题清单Q1-Q10**，6篇全过4篇部分不过），master-state GW Progress表Step 2/3 ✅。**S016 块D Step 3.5检索+召回完成**：盲区A/B定向补检索(search-archive/2026-06-27/ 7 JSON)，🔴纠正H004选样漏召——召回Pech2025+Valjus2025+Paillier2019conf三篇旧B1资产入Q#清单Q11/Q12/Q13(D005标准重评)，盲区A真实性质=分治架构成熟但联合建模空白的稀疏前沿(非蓝海)。master-state Step 3.5 🔄部分。**下一步：清下载债务(5篇IEEE/SPIE源)→块E Step 4a Go/No-Go**。"
     depends_on:
       - slug: 2026-06-19-4b1-adaptive-interleaving-groundwork
         reason: 继承 H002 路径 A、问题四判据、5 次失败根因（C1+C2+C3 三轴锁死）、导师反馈

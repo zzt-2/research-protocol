@@ -40,10 +40,10 @@ current_stage: GW
 
 | Step | 状态 | 完成日期 | commit | 关键产出 | 下游门控 |
 | ---- | ---- | -------- | ------ | -------- | -------- |
-| 1 search | ✅ | 2026-05-29 | — | search-archive + literature_notes 检索统计 | — |
-| 2 acquire | ⬜ | | | papers/*/content.md | 进 Step 3 前 Step 1 必 ✅（已满足）|
-| 3 read | ⬜ | | | literature_notes.md（含**研究问题清单 Q#**） | **进 Step 3.5/4a 前必 ✅，且 Q# 清单非空** |
-| 3.5 supplement | ⬜ | | | 更新 literature_notes.md | 进 Step 4a 前必 ✅ |
+| 1 search | ✅ | 2026-05-29 | — | search-archive + landscape.md 683 主表（S003-S010 五轮地勘） | — |
+| 2 acquire | ✅ | 2026-06-26 | — | 块 A 7 篇 + 块 B 6 篇全文（OA + IEEE blit），papers/_read_notes/ 10 篇笔记 | 进 Step 3 前 Step 1 必 ✅（已满足）|
+| 3 read | ✅ | 2026-06-26 | — | literature_notes.md 重写（10 篇 L## + 综合分析 + **Q# 清单 6 篇全过 4 篇部分不过**） | **进 Step 3.5/4a 前必 ✅，且 Q# 清单非空 ✅（已满足）** |
+| 3.5 supplement | 🔄 部分 | 2026-06-27 | — | 块 D：盲区 A/B 定向补检索完成（search-archive/2026-06-27/ 7 JSON）+ **召回 Pech2025/Valjus2025/Paillier2019conf 入 Q# 清单（Q11/Q12/Q13，旧 B1 资产 H004 漏召纠正）** + **Paillier2020JLT 下载成功(arXiv LaTeX)+精读完成（条件性细化 Q12 gap）**。Viterbi1983 blit 元数据获（浅读够）。**债务**：Rustum2026(IET非OA)/Tang2024+Mosnier2025(SPIE无源)下不到 | 进 Step 4a 前必 ✅（当前 🔄，Q# 清单 Q1-Q13 已非空，债务清完再 ✅ 或直接进块E） |
 | 4a feasibility | ⬜ | | | feasibility_report.md | **进 Step 5/Contract/MVE 前必 ✅（Go 决策已记录）** |
 | 5 validate | ⬜ | | | Baseline 候选表 | 进 Step 4b 前必 ✅ |
 | 4b sim-feasibility | ⬜ | | | feasibility_report.md (C/E) | 进 Step 6 前必 ✅ |
@@ -64,7 +64,7 @@ current_stage: GW
 
 ### 活跃文件
 
-- literature_notes.md: projects/thesis-fso/literature_notes.md（Step 1 进度表已填，Step 2/3/3.5 ⬜；研究问题清单 Q# 待精读后产出）
+- literature_notes.md: projects/thesis-fso/literature_notes.md（**已重写 2026-06-26，块 D 召回更新 2026-06-27**：Step 1-3 ✅，Step 3.5 🔄；含 10 篇 L## + 综合分析 + **Q# 清单 Q1-Q13**，6 篇全过（Q1/2/3/7/8/10）+ 4 篇部分不过作方法借鉴 + **3 篇块 D 召回（Q11/Q12/Q13，旧 B1 资产）**）
 - thesis-framework.md / cnki-thesis-survey.md: projects/thesis-fso/
 - decision_log.md: 待创建
 - feasibility_report.md / baseline_report.md: 未创建
