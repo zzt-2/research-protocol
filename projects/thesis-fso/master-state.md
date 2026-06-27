@@ -43,8 +43,8 @@ current_stage: GW
 | 1 search | ✅ | 2026-05-29 | — | search-archive + landscape.md 683 主表（S003-S010 五轮地勘） | — |
 | 2 acquire | ✅ | 2026-06-26 | — | 块 A 7 篇 + 块 B 6 篇全文（OA + IEEE blit），papers/_read_notes/ 10 篇笔记 | 进 Step 3 前 Step 1 必 ✅（已满足）|
 | 3 read | ✅ | 2026-06-26 | — | literature_notes.md 重写（10 篇 L## + 综合分析 + **Q# 清单 6 篇全过 4 篇部分不过**） | **进 Step 3.5/4a 前必 ✅，且 Q# 清单非空 ✅（已满足）** |
-| 3.5 supplement | 🔄 部分 | 2026-06-27 | — | 块 D：盲区 A/B 定向补检索完成（search-archive/2026-06-27/ 7 JSON）+ **召回 Pech2025/Valjus2025/Paillier2019conf 入 Q# 清单（Q11/Q12/Q13，旧 B1 资产 H004 漏召纠正）** + **Paillier2020JLT 下载成功(arXiv LaTeX)+精读完成（条件性细化 Q12 gap）**。Viterbi1983 blit 元数据获（浅读够）。**债务**：Rustum2026(IET非OA)/Tang2024+Mosnier2025(SPIE无源)下不到 | 进 Step 4a 前必 ✅（当前 🔄，Q# 清单 Q1-Q13 已非空，债务清完再 ✅ 或直接进块E） |
-| 4a feasibility | ⬜ | | | feasibility_report.md | **进 Step 5/Contract/MVE 前必 ✅（Go 决策已记录）** |
+| 3.5 supplement | ✅ | 2026-06-27 | — | 块 D：盲区 A/B 定向补检索完成（search-archive/2026-06-27/ 7 JSON）+ **召回 Pech2025/Valjus2025/Paillier2019conf 入 Q# 清单（Q11/Q12/Q13，旧 B1 资产 H004 漏召纠正）** + **Paillier2020JLT 下载成功(arXiv LaTeX)+精读完成（条件性细化 Q12 gap）**。Viterbi1983 blit 元数据获（浅读够）。**债务**：Rustum2026(IET非OA)/Tang2024+Mosnier2025(SPIE无源)下不到（不阻塞，Q# 清单非空） | 进 Step 4a 前必 ✅（**已 ✅，Q# 清单 Q1-Q13 非空远超门槛**） |
+| 4a feasibility | 🔄 进行中 | 2026-06-27 | — | **Q12 评估完成=Kill（D006，B1换皮+旧B1 S024证伪+Paillier JLT佐证，6维度致命）**。feasibility_report.md 已建。**剩余 Q1-Q11/Q13 待评**（下轮，建议 Q8>Q1>Q7 优先）。DSP 适配版（跳过 ML 专用项） | **进 Step 5/Contract/MVE 前必 ✅（至少 1 个 Q# Go）** |
 | 5 validate | ⬜ | | | Baseline 候选表 | 进 Step 4b 前必 ✅ |
 | 4b sim-feasibility | ⬜ | | | feasibility_report.md (C/E) | 进 Step 6 前必 ✅ |
 | 6 sim-design | ⬜ | | | 仿真器设计规格 | 进 Step 7 前必 ✅ |

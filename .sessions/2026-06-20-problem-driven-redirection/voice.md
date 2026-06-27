@@ -130,3 +130,6 @@
 - [AskUserQuestion 回答，盲区B处理] "Tang 2024精读+Viterbi浅读（推荐）" → 块D盲区B（Tang2024核对[50]+Viterbi经典浅读）
 - [AskUserQuestion 回答，已有资产] "召回Pech/Valjus入本轮Q#清单+重新评估（推荐）" → 块D重大修正（**主线发现 Pech2025+Valjus2025+Paillier2019conf 已在库有笔记被 H004 选样漏召，用户拍板纠正召回 + D005务实标准重评**。这是 S013/S014 同型问题复发——已有资产被遗忘导致误判）
 - [AskUserQuestion 回答，剩余下载] "全下（Paillier+Rustum优先，其余按能否下到）（推荐）" → 块D下载（5篇剩余全下，Paillier2020JLT奠基+Rustum2026独立DL路径优先）
+- [AskUserQuestion 回答，框架适配] "DSP 适配版：保留通用判据，跳过 ML 专用项（推荐）" → 块E Step 4a（gw-feasibility 的 A0/D 维度是 ML/DRL 专用，Q# 全是纯 DSP，跳过 ML 专用项 A0§2/§3/§4 + 维度D DRL先验对照，保留 A0§0/§1/§5/§6 + 维度A/B/C/E）
+- [AskUserQuestion 回答，本轮范围] "只评估 Q12（重点+示范）（推荐）" → 块E范围（Q12 重点+示范，剩余 Q# 下轮批量）
+- [AskUserQuestion 回答，Q12 Kill] "确认Kill Q12（推荐）" → D006（Q12 与旧B1同构+旧B1被S024证伪+Paillier JLT佐证，6维度致命，Kill 确认）
