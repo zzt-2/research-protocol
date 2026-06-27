@@ -114,22 +114,21 @@ framework-evolution 三改造（定义问题/Q#链/跨Step门控）落地后的�
 
 ## 当前位置
 
-**块 E Step 4a 启动，Q12 评估=Kill（2026-06-27 S016）**：Step 3.5 ✅（检索+召回+Paillier JLT 精读完成），Step 4a 🔄进行中（Q12 Kill=D006，剩余 Q# 待评）。master-state GW Progress 表 Step 3.5 ⬜→✅、Step 4a ⬜→🔄。
+**块 E Step 4a 进行中，Q12 Kill + Q8 切入点 2 Kill（2026-06-27 S017）**：Step 3.5 ✅，Step 4a 🔄（Q12 Kill=D006，Q8 通过 Step 4a 但切入点 2 深化后 MVE FAIL Kill）。master-state GW Progress 表 Step 4a 🔄。
 
-**本轮（2026-06-27 S016）完成**：
-- H006 handoff 接收（3 条事实核查全 PASS）+ 框架文件强制重读（gw-supplement.md / gw-read.md / groundwork.md:33 / gw-feasibility.md）
-- 检索方案过用户审 + 派 2 子 agent 并行检索（全 `bash tools/search` 零 WebSearch/webReader），主线独立核查核心 DOI 全 PASS
-- 🔴**发现 H004 选样漏召旧 B1 资产**（S013/S014 同型问题第 3 次复现）：召回 Q11/Q12/Q13
-- Paillier2020JLT 下载成功 + 精读完成（条件性细化 Q12 gap）
-- 块 E Step 4a 启动（DSP 适配版，用户拍板跳过 ML 专用项）+ **Q12 评估=Kill（D006）**：🔴B1 换皮核查发现 Q12 高度同构旧 B1（湍流感知 Kalman CPR），旧 B1 已被 S024 证伪 + Paillier JLT 佐证，6 维度致命
+**本轮（2026-06-27 S017）完成**：
+- H008 handoff 接收（4 条事实核查全 PASS：D006/feasibility Q8/master-state/advisor-brief）+ 框架文件重读（gw-feasibility 维度 D / FR-20/21）
+- Q8 切入点深化：4 候选检索（10 JSON 存 search-archive/2026-06-27/）+ 2 子 agent digest + 主线核查关键 DOI（OTFS/NTN-UAV/staircase 全 PASS）
+- 🔴**事实修正**：精读笔记 L08 "FEC 假设理想"不准，核对 Fernandes L189 实为 NGMI=0.88 经验阈值已含 coding gap
+- 用户选切入点 2 → Step 4b MVE 设计（方案2反推，Fernandes 式10 公式图省略）→ **MVE FAIL → 切入点 2 Kill**（剩余增量 0.1-0.3dB < FR-21，散布机制跟信道无关 K≈1）
 
-**下一步（下个对话 = 继续 Step 4a 评估剩余 Q#）**：
-1. 评估 Q8（PCS+Rs 治 Doppler）：先查 thesis-direction-pivot 有无 PCS/Rs 同构方向被 Kill + 维度 B 空白零假设 + D005 务实标准
-2. 若 Q8 Go → Q1/Q7 继续评；若 Q8 Kill → Q1/Q7 优先。至少 1 个 Q# Go 才进块 F（Step 5-7 baseline 复现）
-3. **PS N1 同构核查**（块 E 必做）：Q8/Q9/Q10 的 PS 增益是否依赖时变信道
-4. **Step 4a 前必读**：gw-feasibility.md（本轮已读 DSP 适配版）/ TL-30/31 / decisions.md D004-c（FR-26）/ D005（务实 INVARIANT）/ D006（Q12 Kill 教训）
+**下一步（下个对话 = Q8 剩余切入点 or 转 Q1）**：
+1. Q8 剩余可行切入点：1（指向×Doppler 踩 S007 边界）/ 4B（湍流时变×Doppler 调度不撞界）。深化 1 或 4B 选定 Q8 主增量
+2. 或转评估 Q1（TS-KF 两阶段解耦 Doppler，四判据全过无旧 Kill 史）作对比
+3. **⚠️ 待决**：MVE Kill 依据"散布跟信道无关 K≈1"是物理推理未经独立文献验证——若要更硬证据需补检索"时变信道 NGMI 散布"文献，或接受物理判断
+4. 至少 1 个 Q# Go 才进块 F（Step 5-7）
 
-**核心教训（S016 新，Q12 Kill 后补充）**：①**已有资产被遗忘反复复现**（S013/S014/S016 第 3 次）；②核查机制应用到所有层级（S012 已证）；③盲区诊断 A/B 分离要诚实 + gap 判断随精读细化；④**[新] B1 换皮核查应前置**——Q12 走到 Step 4a 才 Kill，本可块 D 召回时就查 thesis-direction-pivot 旧 B1 Kill 记录更早 Kill。**召回 ≠ 可行**（块 D 召回纠正了漏召，但 Q12 评估揭示漏召方向本身已被证伪）；⑤**[新] D005 务实路线救不了"赢不了传统 baseline"的方向**——Q12 连 Paillier 分治 DPLL 都赢不了（旧 B1 已证），务实标准下也 Kill。
+**核心教训（S017 新）**：①**精读笔记判读需核对原文（FR-26 第 N 次复现）**——L08"FEC 假设理想"核对后不准（Fernandes 已用经验阈值），若不核对会基于错误前提推进 MVE；②**FR-21 oracle 上界前置 + 物理机制判读比盲目跑 MVE 高效**——散布跟信道无关的物理判读直接 Kill 省了复现 Fernandes 仿真器的成本；③**"赌 X 放大"前先验证放大机制是否跟变量相关**——切入点 2"赌 LEO 放大散布"但散布是 FEC 解码器特性跟信道无关，放大前提不成立；④**检索深化多切入点后再选最硬的是正确节奏**——4 切入点并行查后切入点 2 最硬，但最硬的也 Kill 说明 Q8 整体增量空间窄。
 
 ## 进展线索
 
@@ -157,3 +156,4 @@ framework-evolution 三改造（定义问题/Q#链/跨Step门控）落地后的�
 - **H005 块B补精读完成 + 候选池充实**（2026-06-26，续接 H004）。**用户放行PS方向精读"总得弄出点东西"**。本轮5件事：①方案A定向补检索8词32条召回存档search-archive/2026-06-26/；②下载障碍tools/download全fail（urllib不走代理），用blit(Playwright走代理7897)下3篇IEEE全文+转md；③发现papers/doi/库存11篇光通信DSP未精读金矿；④精读6篇强候选（非PS 3篇：11350922 Doppler跟踪BUPT/10155111 LEO-LEO调制SP c=33/ACCESS.2025.3535789自相干；PS 3篇：JLT.2023.3281082 PCS+Rs治Doppler=landscape#580/LPT.2025.3647750 PS+RCM治湍流/app11219805 PS-QAM理论），子agent精读+主线grep核查全PASS无造假；⑤voice.md补登H004选样返工触发原话。**候选池扩到10篇，6篇四判据全过（#1/#2/#3/新2/新4/新6），达gw-read.md≥5篇门槛**。**PS方向N1同构性核查**：新6(PS-QAM理论)高度同构N1(高SNR>16dB uniform反超PS趋零)，新5(PS+RCM)部分同构(消融不全)，新4(PCS+Rs)不同构(增益来自符号率适配非PS)。详见 H005。**下一步：块C综合分析产Q#清单**。
 - **S015 块C综合分析完成 + literature_notes.md重写 + Q#清单Q1-Q10浮出**（2026-06-26，续接 H005）。**GW Step 3 完成标志达成（literature_notes 含 Q# 清单非空）**。五步：①H005 handoff接收（3条事实核查全PASS：6篇笔记/read-log 13条/blit 3篇md）+ 框架文件强制重读（gw-read.md综合分析节/glossary.md四判据/TL-30-33/templates.md，本轮Read记录为证FR-26）；②派3 Explore agent并行核查10篇精读笔记结构化信息（问题提取子表/baseline对称性/增益归因/局限），Agent 2诚实纠正"新2不是PS方向是DSP全电子DS补偿"（核查机制中性双向，S012同构）；③按gw-read.md综合分析5节撰写（方法分类5类/已知局限6条/2-3年趋势5条/研究背景概述/**研究问题清单Q1-Q10**）；④Q#清单**6篇四判据全过**（Q1/Q2/Q3/Q7/Q8/Q10，全部带⚠️：链路LEO-LEO/GEO/地面/feeder、利益相关BIT、同构N1 Q10高SNR趋零）+ **4篇部分不过**（Q4 C⚠️/Q5 C❌D❌/Q6 B部分/Q9 D⚠️）作方法借鉴；⑤master-state GW Progress表Step 2/3 ⬜→✅（FR-22门控释放）。**gw-read.md质量门槛全过**（≥5篇/核心贡献≥2句/综合分析实质/Q#非空远超1条门槛/路径合规/源文件路径不空）。**Q#浮出观察（线索非结论，不塞方向）**：Q8(PCS+Rs治Doppler)同门范式味最浓但增益来自Rs适配非PS；PS三篇同构性梯度Q8>Q9>Q10；链路匹配缺口=星地LEO+湍流+Doppler三者联合端到端Q#本批没有（块D补检索盲区）。**已知债务清偿**：literature_notes旧文件债务(H004/H005列)+master-state Step 2/3 ⬜债务(FR-22)。本轮无新建D###（综合分析+文档重写非架构决策，Q#清单是块E输入）。详见 S015。**下一步：块D Step 3.5定向补检索→块E Step 4a Go/No-Go**。
 - **S016 块D Step 3.5定向补检索 + 旧B1资产召回 + Q12 Step4a评估=Kill**（2026-06-27，续接 H006）。五步：①H006接收(3条事实核查全PASS)+检索方案过用户审(盲区A 4词场景中性+盲区B 3词按名定向，用户决策只用tools/search不碰IEEE+盲区C不做+A词全跑)；②派2子agent并行检索(盲区A+B各一批，全bash tools/search零WebSearch)，主线独立核查核心DOI(Pech2025/Paillier2020JLT/Rustum2026/Viterbi1983全PASS，Yokomura标题/abstract错配判断正确)；③🔴**发现H004选样漏召旧B1资产**——Pech2025+Valjus2025+Paillier2019conf三篇早在2026-06-16已下载精读(73-84行笔记标方向B1)，B1 Kill后被路径依赖排除。用户拍板召回+D005标准重评，召回入Q#清单为Q11/Q12/Q13。盲区A真实性质=分治架构成熟但联合建模空白的稀疏前沿(非蓝海)；④**Paillier2020JLT(companion[9]完整版)下载成功(arXiv LaTeX)+精读完成**——条件性细化Q12 gap：Paillier证明"湍流相位对载波同步可忽略"但依赖特定条件(BPSK+10GBaud+理想timing+AGC恒幅+piston~1ms慢于符号率)，是"事后经验性验证"非"事前联合建模"；⑤**块E Step4a启动+Q12评估=Kill(D006)**——🔴**B1换皮核查**：Q12(联合建模进DPLL)高度同构旧B1(thesis-direction-pivot/S022湍流感知Kalman CPR)，物理假设完全相同(都假设主动建模湍流相位带来同步增益)，仅数学工具不同(控制理论vs KF)。旧B1已被S024 KF压力测试证伪(弱中湍流增益消失0/-0.7/-2.5dB+B2消融证明增益来自跟踪而非湍流感知+强湍流输给最优Fixed)。Paillier JLT独立佐证。**6维度致命信号汇聚Kill**（B1换皮/A0§5负面证据/A0§6先验覆盖/维度A结构优势无法论证/维度B空白零假设3原因都暗示冗余/维度C-E强湍流已被证伪+无回收价值）。偏航检查A-E全过。**债务**：3篇下不到(Rustum2026 IET非OA/Tang2024+Mosnier2025 SPIE无源)，Viterbi1983 blit元数据够浅读。voice.md登记本轮决策(含Q12 Kill确认)。详见 S016 + feasibility_report.md + D006。**下一步：继续Step4a评估剩余Q#（Q8>Q1>Q7优先，每个必做B1换皮核查+维度B空白零假设）**。
+- **S017 Q8切入点深化 + 切入点2 MVE FAIL Kill**（2026-06-27，续接 H008）。六步：①H008接收(4条事实核查全PASS：D006/feasibility Q8/master-state/advisor-brief line9"自适应载波同步"非泛指)+框架文件重读(gw-feasibility维度D MVE 8步/FR-20参数溯源/FR-21 oracle上界前置)；②**Q8切入点深化**——主线tools/search跑10组检索词存search-archive/2026-06-27/(指向×Doppler 3组/真实SD-FEC 3组/DWDM 2组/湍流-Doppler耦合2组)，2子agent并行digest+主线独立核查关键DOI(OTFS 10.1109/LPT.2025.3545920确认IM-DD非PCS/NTN-UAV确认建模非处理/staircase FSO 11443140确认非相干无PS全PASS)；③**4切入点状态**：1(指向×Doppler)空白可做踩S007边界/2(真实SD-FEC)方法论成熟+场景空白/3(DWDM)增量绑定移植/4A(湍流相位进同步算法)撞死D006/4B(湍流时变×Doppler调度)空白可做不撞界；④用户拍板"全部4个都查"→"选切入点2"→"赌LEO放大跑MVE"；⑤🔴**事实修正(FR-26)**：精读笔记L08"FEC假设理想"不准，核对Fernandes L189原文实为NGMI=0.88"practical SD-FEC with 20% overhead"经验阈值(0.88>R_FEC=5/6=0.833已含coding gap)，切入点2剩余增量=码型特异散布非"理想vs真实"全gap；⑥**Step 4b MVE设计+执行(方案2反推)**：Fernandes式10公式图被blit省略无法精确复现→改用物理推理反推。**MVE FAIL→切入点2 Kill**：光纤侧散布0.1-0.3dB(Post-FEC BER §480)<0.5dB FR-21≪2dB D005务实；且散布机制(比特映射+SD-FEC码型内部特性,L480)跟信道时变无关→LEO放大因子K≈1物理上不成立。**Q8剩余可行切入点**：1(踩边界)/4B(不撞界)。**核心教训**：①精读笔记判读需核对原文(FR-26第N次)；②FR-21+物理机制判读比盲目跑MVE高效；③"赌X放大"前先验证放大机制跟变量相关性；④最硬切入点也Kill说明Q8整体增量窄。**债务**：MVE Kill依据"散布跟信道无关K≈1"是物理推理未经独立文献验证(可选补检索)。本轮无新建D###(切入点Kill记feasibility_report非decisions.md，因非架构决策级；如需正式D###下轮补)。详见 S017 + feasibility_report.md。**下一步：Q8深化切入点1/4B 或转Q1对比**。

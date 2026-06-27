@@ -241,14 +241,126 @@
 
 ---
 
+## Q8 切入点深化（2026-06-27 续，块 E Step 4a 收尾）
+
+> 用户拍板"全部 4 个都查"（2026-06-27）。主线 tools/search 跑 10 组检索词存 search-archive/2026-06-27/，2 子 agent digest + 主线独立核查关键 DOI（OTFS/NTN-UAV/staircase FSO 全 PASS）。
+
+### 4 切入点状态（核查后）
+
+| 切入点 | 状态 | 关键发现 | 撞界 |
+|---|---|---|---|
+| **1. 指向误差×Doppler** | 🟢 空白可做（限定信号处理侧） | 最接近 OTFS（IM-DD 不同路线）+ NTN-UAV（建模非处理）。Fernandes 忽略指向的口子无人补 | ⚠️ 限定"指向对 DSP/符号率调度影响"不撞 S007；纯 pointing/ATP 补偿撞 |
+| **2. 真实 SD-FEC 替代理想** | 🟡 部分相关，方法论成熟+场景空白 | 光纤侧 5 篇 JLT 共识"NGMI_th=R_FEC 不严谨"；LEO-FSO 论文全 OOK 无 PS 无 Doppler。典型迁移结构 | ✅ 不撞任何边界 |
+| **3. DWDM 扩展** | 🟡 部分相关，增量绑定移植 | 地面/室内 DWDM 饱和；唯一 LEO+WDM（Marlina 2024）走 IM/DD NRZ。纯 DWDM 无新意 | ✅ 不撞 |
+| **4A. 湍流相位纳入同步算法** | 🔴 撞死 D006 | A1/A2 turbulence-aware 相位估计撞 D006 Kill 范围 | 🔴 撞 D006 |
+| **4B. 湍流时变×Doppler 对符号率调度** | 🟢 空白可做 | B1 光频计量非通信，B2 多尺度建模不含符号率调度。Fernandes 独立 SNR 叠加待改进 | ✅ 不撞 D006（改调度不改同步） |
+
+### 核查中发现的 3 个 nuance
+
+- TS-KF (10.1364/oe.553709) 被切入点 1 检索召回 = Q1（已在候选池），Q1 是 LEO-LEO 星间真空非星地指向
+- Spectral Segmented Linear Regression CFOE（无 DOI）"low-symbol-rate + large CFO"直接描述 Q8 场景替代方法，注意但无 DOI 可能预印本
+- HCS polar-coded DMT FSO (10.1109/LPT.2024.3434993) 切入点 2 相关，用 polar 非主流 SD-FEC，DMT 非 PCS
+
+### 🔴 关键诚实判读：切入点 2 的"增量"性质
+
+**这不是"方法创新"，是"假设修正+量化偏差"**——Fernandes 报 100Gbps 增益里有多少是理想 FEC 假设虚增的？真实 SD-FEC 下还剩多少？
+
+- **务实路线 D005 视角**：这符合"赢传统 baseline 几 dB"——传统 baseline = Fernandes（理想 FEC 上界），Q8 改进 = Fernandes 换真实 SD-FEC，增益论证 = "真实增益 vs 理想增益的差"
+- **但风险**：如果理想 FEC 假设带来的高估很小（<0.5dB），增量枯竭 → 触发 **FR-21 oracle 上界前置门控**（见 Step 4b MVE 设计）
+- **不撞边界**：切入点 2 不改同步算法（不撞 D006），不动指向（不撞 S007），在星地激光大背景内（不撞不变量 6）
+
 ## Q8 决策汇总
 
 - **Step 4a 评估**：✅ 通过（无致命信号），方向合法
-- **进入 Step 4b 前条件**：精确定义增量切入点（4 候选：指向误差耦合/真实FEC/多波长/湍流-Doppler耦合）
-- **待下轮**：① 继续评估 Q1/Q7（其他全过 Q#）② 或先深化 Q8 切入点定义
+- **切入点深化（2026-06-27）**：4 候选检索完成，**用户选定切入点 2（真实 SD-FEC 替代理想 FEC）**作为 Q8 主增量。3 个合法候选（1/2/4B）中 2 最硬（不撞边界 + 增量论证结构清晰）
+- **进入 Step 4b**：定义 MVE 验证"真实 SD-FEC 下 Fernandes 理想 FEC 假设的高估量"。**FR-21 oracle 上界前置**：先解析估算"理想 vs 真实 SD-FEC"在 LEO PCS+Doppler 场景下的增益差上界，<0.5dB 直接 Kill 不跑 MVE
 
 ## 下轮评估范围（更新）
 
 剩余 Q# 待评：Q1/Q2/Q3/Q7/Q10（5 篇四判据全过）+ Q4/Q5/Q6/Q9/Q11/Q13。
-Q8 已评=方向合法待定义切入点。建议下轮：**先深化 Q8 切入点（查 4 候选有无已做）** 或 **评估 Q1（TS-KF 全过，无旧 Kill 史）**。
+Q8 已定切入点 2，进 Step 4b MVE 定义。backup：若 Q8 Step 4b Kill（FR-21 上界<0.5dB），转评估 Q1（TS-KF 全过无旧 Kill 史）。
+
+---
+
+## Step 4b 维度 D：Q8 切入点 2 MVE 设计（2026-06-27）
+
+> FR-21 oracle 上界前置已做：光纤侧代理上界 0.1-0.3dB（Post-FEC BER §480）< 0.5dB 阈值。但用户拍板"赌 LEO 时变信道放大 gap"（Post-FEC BER L569 暗示非高斯退化下基准误差更大），跑 MVE 拿真实数据。**严格说这不违反 FR-21**——FR-21 适用条件是"增益可通过纯解析上界估算"，而切入点 2 的 LEO 场景放大效应**不可纯解析估算**（需数值实验），故 FR-21 不直接 Kill，MVE 合法。
+
+### 🔴 事实修正（FR-26，2026-06-27 核对 Fernandes 原文）
+
+精读笔记 L08 旧判读"FEC 假设理想（NGMI_th=R_FEC）"**不准确**。核对 Fernandes L189 原文：用 **NGMI=0.88** 作为"practical SD-FEC with 20% overhead"的典型阈值，**已考虑 coding gap**（0.88 > R_FEC=5/6=0.833）。切入点 2 的剩余增量 = "通用 0.88 阈值 vs 具体 SD-FEC 码型精确阈值"的差异散布，**不是"理想 vs 真实"全 gap**。此修正降低增量预期但保留 LEO 场景放大的不确定性。
+
+### MVE 8 步设计（gw-feasibility.md 维度 D）
+
+**1. 假设**：LEO 时变信道（Doppler 频移 + Gamma-Gamma 湍流时变）下，"通用 NGMI=0.88 阈值"与"具体 SD-FEC 码型精确阈值"在最优 Rs/H 调度下的 ABR 增益差 > 0.5dB 等效（即 LEO 放大效应使光纤侧 0.1-0.3dB 散布放大到 >0.5dB）
+
+**2. 最小实例**（方案 2，敏感性反推，因 Fernandes 式10 公式图被 blit 省略无法精确复现）：不直接测 LEO 场景散布，**反推 LEO 要放大多少倍才值得做**。
+- 已知光纤侧散布 Δ_fiber = 0.1-0.3 dB（Post-FEC BER §480）
+- LEO 放大因子 K = Δ_LEO / Δ_fiber
+- 反推：K 要多大才让 Δ_LEO > 0.5dB（FR-21 阈值）或 > 2dB（D005 务实标准同门量级）？
+- 再判：K 的物理上界（LEO 时变信道相对光纤静态信道的散布放大）合理吗？
+
+**3. [FR-04] 实例保真度**：方案 2 不复现 Fernandes 精确调度（式10 公式图省略），改用物理推理 + Post-FEC BER 已知散布量。**保真度说明**：这是"上界反推"非"精确测量"，结论是"K 在物理上是否可能达到阈值"，不是"LEO 真实散布是多少"。若反推判 K 物理不可能达到 → Kill 省更贵 MVE；若 K 物理可能 → 才需要 Fernandes 精确复现 MVE（届时需重新获取公式，用 arXiv LaTeX 版或重转 PDF）
+
+**4. [FR-20] 关键物理参数溯源**（执行前强制）：
+| 参数 | 值 | 来源 |
+|---|---|---|
+| Doppler 范围 | ±15GHz | Fernandes L87/Fig.1 |
+| Rs 离散集 | {65,70,75,80} Gbaud | Fernandes L209 |
+| Rb 固定 | 600 Gbps | Fernandes 式9 |
+| NGMI 通用阈值 | 0.88 | Fernandes L189 |
+| SD-FEC 阈值散布 | staircase~0.89 / LDPC~0.87 | Post-FEC BER Tab.5 (koike_jlt_2017) |
+| 湍流 σ_l² | {0.03,0.1,0.3,1} | Fernandes L221 |
+| 非对称滤波模型 | TIA/ADC 40-45GHz BW 单边 | Fernandes L145-173 |
+| R_FEC | 5/6 (20% OH) | Fernandes L183 |
+⚠️ NGMI-SNR-熵关系式10 的精确系数 Fernandes 未在 abstract/精读段完全展开，MVE 需从 Fernandes Fig.6/7 反推或用 PCS 标准公式（Cho 2019）
+
+**5. [FR-21] oracle 上界前置**：已做（见上）。光纤侧代理 0.1-0.3dB < 0.5dB，但 LEO 放大效应不可纯解析估，MVE 合法。
+
+**6. pass/fail 标准**：
+- **PASS**：LEO 场景下 |ABR_A - ABR_B|_dB > 0.5dB（切入点 2 有实质增量，进 Step 4b 正式 MVE + Contract）
+- **FAIL**：≤ 0.5dB（LEO 放大效应不显著，切入点 2 Kill，Q8 回选其他切入点或转 Q1）
+- 附加记录：不同湍流强度下的增益差分布（看放大效应是否随湍流增强）
+
+### 🔴 MVE 反推执行结果（2026-06-27，方案 2 分析）
+
+**反推计算**：
+- Δ_fiber = 0.1-0.3 dB（光纤侧散布）
+- 达 FR-21 阈值 0.5dB 需 K = 1.67×-5×（放大因子）
+- 达 D005 务实 2dB 需 K = 6.67×-20×
+
+**K 的物理判读（Kill 的物理依据）**：
+Post-FEC BER 散布来源是**比特映射效应 + SD-FEC 码型内部特性**（L480 明确），这个散布机制**跟信道是否时变无关**——它是 FEC 解码器对给定 NGMI 输入的响应特性。LEO 时变信道影响的是 NGMI 的**绝对值**（信号质量，需符号率适配应对），**不是 NGMI 阈值的散布宽度**。
+- 散布 = "给定 NGMI 值，不同码型/比特映射的 post-FEC BER 差异"——这是解码器特性，信道给定 NGMI 后散布就定了
+- LEO 让 NGMI 绝对值波动（需 Rs 适配），但给定每个 NGMI 值的散布仍是光纤侧的 0.1-0.3dB
+- **K ≈ 1，LEO 不放大散布**
+
+**MVE 结果**：**FAIL**。Δ_LEO ≈ Δ_fiber = 0.1-0.3 dB < 0.5dB FR-21 阈值 ≪ 2dB D005 务实标准。
+
+### 🔴 Q8 切入点 2 Kill（MVE FAIL）
+
+**Kill 理由**：
+1. MVE FAIL：LEO 放大效应物理上不成立（K≈1），散布机制跟信道无关
+2. Fernandes 已用 NGMI=0.88 经验阈值（非纯理想），剩余增量 = 码型特异散布 0.1-0.3dB
+3. FR-21 oracle 上界 < 0.5dB
+4. D005 务实标准需 2-4dB，差距 7-40×
+
+**可回收教训**：
+1. "赌 LEO 放大"的物理基础需先验证散布机制是否跟信道相关——本次发现散布是 FEC 解码器特性跟信道无关，"放大"前提不成立
+2. FR-21 oracle 上界前置 + 物理机制判读，比直接跑 MVE 省成本（不用复现 Fernandes 仿真器就 Kill）
+3. 精读笔记判读需核对原文（FR-26）——L08 "FEC 假设理想"判读不准，核对后是"已用经验阈值"
+
+**Q8 切入点 2 排除**：不进 Contract。Q8 整体还有切入点 1（指向×Doppler，踩 S007 边界）和 4B（湍流时变×Doppler 调度，不撞界）可行。
+
+**7. 时间预算**：≤1 天，临时 Python 脚本（numpy/scipy），不需正式仿真环境
+
+**8. 执行方式**：子 agent 执行，主对话接收结果数字和分析
+
+**9. [FR-11] MVE 架构摘要**（结果返回后填）：
+- 动作空间：离散 Rs∈{65,70,75,80}Gbaud × 连续熵 H（PCS 单参控）
+- 决策粒度：per-Doppler-湍流状态（查表调度）
+- 对比范式：通用阈值调度 vs 码型特异阈值调度（同 Rs/H 空间不同阈值线）
+- 奖励语义：ABR 最大化（Rb=600Gbps 约束下）
+
+**10-11. [FR-14/15] DRL 先验对照**：不适用（DSP 适配版，Q8 非 ML/DRL 方向，用户上轮拍板跳过 ML 专用项）
 
