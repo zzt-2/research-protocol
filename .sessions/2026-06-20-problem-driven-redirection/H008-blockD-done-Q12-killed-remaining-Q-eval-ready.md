@@ -6,49 +6,60 @@
 
 ## 到哪了（状态）
 
-**块 D Step 3.5 完成** + **块 E Step 4a 启动，Q12 评估=Kill**。
+**块 D Step 3.5 完成** + **块 E Step 4a：Q12 Kill + Q8 通过**。
 
-- Step 3.5 ✅（master-state 已更新）：检索+召回+Paillier JLT 精读完成，Q# 清单 Q1-Q13
-- Step 4a 🔄进行中：**Q12 评估完成=Kill（D006）**，feasibility_report.md 已建（DSP 适配版）
+- Step 3.5 ✅：检索+召回+Paillier JLT 精读完成，Q# 清单 Q1-Q13
+- Step 4a 🔄进行中：
+  - **Q12 评估=Kill（D006）**：B1 换皮（同构旧 B1 湍流感知 Kalman CPR）+ 旧 B1 已被 S024 证伪 + Paillier JLT 佐证，6 维度致命
+  - **Q8 评估=通过 Step 4a（无致命信号）**：增益 100Gbps 硬 / 空白零假设无冗余 / B1 换皮核查澄清 advisor-brief 误读（导师没否决自适应大类）+ 不同构 N1 + 旧砍理由已被 Fernandes 2023 推翻。**Q8 唯一软肋：增量切入点未定义**
 
-### 🔴 Q12 Kill 的核心教训（对剩余 Q# 评估最重要）
+### 🔴 本轮两个关键澄清（对剩余评估最重要）
 
-**Q12 高度同构被证伪的旧 B1（湍流感知 Kalman CPR），是 B1 换皮。** Q12 用环路传递函数，旧 B1 用 KF，但**物理假设完全相同**（都假设主动建模湍流相位带来同步增益）。旧 B1 已被 S024 KF 压力测试证伪（增益消失 0/-0.7/-2.5dB + B2 消融证明增益来自跟踪而非湍流感知）。
+1. **advisor-brief 误读纠正**：advisor-brief line 9"自适应不可行"是学生写给导师的汇报稿，针对的是"自适应载波同步"（频率估计窗口/相位恢复窗口/锁相环带宽跟湍流调），不是泛指自适应。**导师没有否决"自适应"大类**。用户确认。后续 Q# 涉及"自适应"不必再被 advisor-brief 这句话吓退，但要区分时间尺度（湍流快 vs Doppler 慢）。
+2. **B1 换皮核查应前置**：Q12 走到 Step 4a 才 Kill，本可块 D 召回时就查。Q8 这次先做换皮核查再评估，效率高很多。
 
-**对剩余 Q# 的纪律（每个 Q# 都要做 B1 换皮核查）**：
-1. 评估每个 Q# 前先查 thesis-direction-pivot/ 有无同构方向被证伪
-2. Kill 理由要诚实——D005 务实路线救不了"赢不了传统 baseline"的方向（Q12 连 Paillier 分治 DPLL 都赢不了）
+### Q8 状态：方向合法，但切入点需定义
+
+Q8 通过 Step 4a，但 Fernandes 2023 已做核心工作，硕士论文的**增量切入点**必须精确定义。4 候选（Fernandes 自述未做）：
+1. 指向误差与 Doppler 耦合
+2. 真实 SD-FEC 替代理想 FEC
+3. 多波长/波分复用扩展
+4. 湍流与 Doppler 的相互作用（Fernandes 把湍流当独立 SNR 衰减叠加）
+
+切入点定后 → Step 4b 定义 MVE。
 
 ## 下一步干什么
 
-**继续 Step 4a 评估剩余 Q#**，建议优先级：
-1. **Q8（PCS+Rs 治 Doppler）**——同门范式最浓，增益 ~100Gbps 硬，但增益来自 Rs 非 PS
-2. **Q1（TS-KF 两阶段解耦 Doppler）**——四判据全过
-3. **Q7（两阶段 CFE）**——四判据全过
+**两条路（二选一或组合）**：
 
-**评估流程（DSP 适配版，用户拍板）**：
-- 读 `projects/thesis-fso/feasibility_report.md`（Q12 评估是模板）
-- 跳过 ML 专用项（A0§2 问题结构适配/§3 跨域 ML 先例/§4 MDP 非平凡性 + 维度 D DRL 先验对照）
-- 保留：A0§0（问题合法性）/§1（性能间隙）/§5（负面证据搜索，**最重要**）/§6（先验覆盖）+ 维度 A（结构优势）/B（空白零假设，**致命项**）/C（仿真条件）/E（资源风险）
-- 每个 Q# 必做：① B1 换皮核查（查 thesis-direction-pivot/）② D005 务实标准（赢传统 baseline 几 dB）③ 四判据不可放水
+### 路径 A：深化 Q8 切入点（推荐，因为 Q8 是目前最干净的方向）
+1. 查 4 个候选切入点是否已有论文做过（避免又撞已做）——派子 agent 检索
+2. 重新精读 Fernandes 2023 future work 段（L281）确认扩展空间
+3. 选定 1-2 个切入点 → Step 4b 定义 MVE
 
-**Step 4a 前必读**：gw-feasibility.md（本轮已读，DSP 适配版）/ TL-30/31（FR-22/24）/ decisions.md D005（务实 INVARIANT）+ D004-c（FR-26）/ D006（Q12 Kill 教训）。
+### 路径 B：继续评估其他全过 Q#
+- Q1（TS-KF 两阶段解耦 Doppler，四判据全过，无旧 Kill 史）
+- Q7（两阶段 CFE，四判据全过）
+- 评估流程同 Q8/Q12（先 B1 换皮核查 + 导师边界，再 6 维度）
+
+**建议**：Q8 是目前唯一通过 Step 4a 的方向，优先深化它的切入点定义，把"增量在哪"这个问题先解决。如果切入点定义后仍有戏，Q8 可能就是 Go 方向。其他 Q# 并行评估作为 backup。
 
 ## 纪律（和下一步直接相关的约束）
 
-1. **D005 务实路线 INVARIANT**：Go=赢传统未优化 baseline 几 dB。FR-21 oracle 上界降为参考不当 Kill 门。FR-25 Go/Kill 对手标准分离
-2. **B1 换皮核查（本轮 Q12 教训）**：每个 Q# 评估前必查 thesis-direction-pivot/ 有无同构方向。Q12 就是因为没查漏了"旧 B1 已证伪"才走到 Step 4a 才 Kill（如果块 D 召回时就查，能更早 Kill）
-3. **维度 B 空白零假设是致命项**：3 个结构性原因都暗示方法冗余 → Kill。这是 Q12 Kill 的关键维度
+1. **D005 务实路线 INVARIANT**：Go=赢传统未优化 baseline 几 dB。FR-21 oracle 上界降为参考。FR-25 Go/Kill 对手标准分离
+2. **B1 换皮核查前置**：每个 Q# 评估前先查 thesis-direction-pivot 有无同构方向 + 查 advisor-brief 真实含义（不误读）
+3. **维度 B 空白零假设是致命项**：3 个结构性原因都暗示冗余 → Kill（Q12 的教训）
 4. **四判据不可放水**（topic-index 不变量 3）
-5. **FR-26 证据链**：声称必附证据指针
+5. **FR-26 证据链**：声称必附证据指针。advisor-brief 这种转述要核对原话，不脑补
 
 ---
 ## 接收方验证（续接对话时必须完成）
 - [ ] 已读取 topic-index 不变量段落（8 条，D005 务实路线最高优先级）
 - [ ] 已验证至少 3 条关键事实声称：
-  - [ ] Q12 Kill 已记录在 decisions.md D006（核查 `grep "## D006" .sessions/2026-06-20-problem-driven-redirection/decisions.md`）
-  - [ ] feasibility_report.md 存在且含 Q12 评估（核查 `ls projects/thesis-fso/feasibility_report.md` + grep Q12）
-  - [ ] master-state Step 4a = 🔄 进行中 + Q12 Kill（核查 `grep "4a feasibility" projects/thesis-fso/master-state.md`）
+  - [ ] Q12 Kill 在 decisions.md D006（核查 `grep "## D006" .sessions/2026-06-20-problem-driven-redirection/decisions.md`）
+  - [ ] Q8 通过在 feasibility_report.md（核查 `grep "Q8 决策" projects/thesis-fso/feasibility_report.md`）
+  - [ ] master-state Step 4a 🔄 含 Q12 Kill + Q8 通过（核查 `grep "4a feasibility" projects/thesis-fso/master-state.md`）
+  - [ ] advisor-brief line 9 原文（核查 `sed -n '7,11p' .sessions/thesis-direction-pivot/advisor-brief.md`）确认是"自适应载波同步"非泛指
 - [ ] 已检查 _registry.yaml depends_on/conflicts_with
 - [ ] 已确认当前范围未违反"明确不含"
 
@@ -56,12 +67,14 @@
 
 | 债务 | 原则 | 当前状态 | 触发解决条件 |
 |------|------|---------|-------------|
-| 3 篇论文下不到（Rustum2026/Tang2024/Mosnier2025）| Step 3.5 补充 | SPIE/IET 非 OA 确认下不到 | 块 E 按需（Rustum DL 对比/Tang[50]核对读新2原文 references）|
-| H004 选样漏召根因 | D003 多候选不应路径过滤 | 已纠正 Q11-Q13 召回，根因（选样无历史资产召回步骤）未修流程 | 下次选样加检查步骤 |
-| **B1 换皮核查应前置**（Q12 教训） | 块 D 召回时就该查 thesis-direction-pivot | Q12 走到 Step 4a 才 Kill（本可块 D 就 Kill） | 下次召回/评估前先查旧方向 Kill 记录 |
+| 3 篇论文下不到（Rustum2026/Tang2024/Mosnier2025）| Step 3.5 补充 | SPIE/IET 非 OA | 块 E 按需 |
+| H004 选样漏召根因 | D003 多候选不应路径过滤 | 已纠正 Q11-Q13 召回，根因未修流程 | 下次选样加检查步骤 |
+| B1 换皮核查应前置 | Q12/Q8 教训 | 已写入纪律，下次评估前必查 | 持续执行 |
+| Q8 增量切入点未定义 | Step 4b 前置条件 | 4 候选待定 | 深化 Q8 时查候选有无已做 |
 
 ## 下一轮
 
-1. 读 H008 + feasibility_report.md（Q12 模板）+ D006（Q12 Kill 教训）
-2. 评估 Q8（PCS+Rs 治 Doppler）：先查 thesis-direction-pivot 有无 PCS/Rs 同构方向被 Kill + 维度 B 空白零假设 + D005 务实标准
-3. 若 Q8 Go → Q1/Q7 继续评；若 Q8 Kill → Q1/Q7 优先。至少 1 个 Q# Go 才进块 F（Step 5-7 baseline 复现）
+1. 读 H008 + feasibility_report.md（Q12 Kill + Q8 通过）
+2. **深化 Q8**：查 4 候选切入点有无已做论文（派子 agent 检索）+ 精读 Fernandes future work 段 → 选定切入点 → Step 4b 定义 MVE
+3. 或并行评估 Q1（TS-KF 全过，无旧 Kill 史）作 backup
+4. Q8 切入点定后有戏 → 可能就是 Go 方向 → 进块 F（Step 5-7 baseline 复现）
