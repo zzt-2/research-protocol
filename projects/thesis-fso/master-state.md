@@ -44,7 +44,7 @@ current_stage: GW
 | 2 acquire | ✅ | 2026-06-26 | — | 块 A 7 篇 + 块 B 6 篇全文（OA + IEEE blit），papers/_read_notes/ 10 篇笔记 | 进 Step 3 前 Step 1 必 ✅（已满足）|
 | 3 read | ✅ | 2026-06-26 | — | literature_notes.md 重写（10 篇 L## + 综合分析 + **Q# 清单 6 篇全过 4 篇部分不过**） | **进 Step 3.5/4a 前必 ✅，且 Q# 清单非空 ✅（已满足）** |
 | 3.5 supplement | ✅ | 2026-06-27 | — | 块 D：盲区 A/B 定向补检索完成（search-archive/2026-06-27/ 7 JSON）+ **召回 Pech2025/Valjus2025/Paillier2019conf 入 Q# 清单（Q11/Q12/Q13，旧 B1 资产 H004 漏召纠正）** + **Paillier2020JLT 下载成功(arXiv LaTeX)+精读完成（条件性细化 Q12 gap）**。Viterbi1983 blit 元数据获（浅读够）。**债务**：Rustum2026(IET非OA)/Tang2024+Mosnier2025(SPIE无源)下不到（不阻塞，Q# 清单非空） | 进 Step 4a 前必 ✅（**已 ✅，Q# 清单 Q1-Q13 非空远超门槛**） |
-| 4a feasibility | 🔄 进行中 | 2026-06-28 | — | **Q12=Kill（D006）**。**Q8 切入点 2=Kill（S017，MVE FAIL 散布 0.1-0.3dB）**。**Q8 切入点 4B=Kill（D008，2026-06-28）**：D007 重定义为"仰角驱动 σ² 慢包络自适应 PCS/Rs 调度"，三查坐实物理 gap（σ² 过顶变化 1-2 量级，Fernandes 当链路静态场景），**但 FR-21 数值显示 ABR 对 σ² 平缓，性能 gap 趋零**（vs 中档折中 +0.01dB，A2 指标敏感+A3 增量量级双重硬门槛失败）。**🔴 立「靠谱方向 checklist」v1（D009）**：A1 轻化（可验证处理贡献不锁"DSP 链路"）+ A2（指标敏感，4B 教训新提炼）+ A3（增量≥同门~2-4dB）+ B1/B2/B3 + C1/C2/C3。**Q8 剩余切入点 1（指向×Doppler 踩 S007 边界）+ Q1（TS-KF）+ Q2/Q3/Q7/Q10 待评**。feasibility_report.md 含 Q12+Q8+切入点2+切入点4B Kill 段 | **进 Step 5/Contract/MVE 前必 ✅（至少 1 个 Q# Go，暂 0 Go）** |
+| 4a feasibility | 🔄 进行中 | 2026-06-28 | — | **Q12=Kill（D006）**。**Q8 切入点 2=Kill（S017，MVE FAIL 散布 0.1-0.3dB）**。**Q8 切入点 4B=Kill（D008，2026-06-28）**：D007 重定义为"仰角驱动 σ² 慢包络自适应 PCS/Rs 调度"，三查坐实物理 gap（σ² 过顶变化 1-2 量级，Fernandes 当链路静态场景），**但 FR-21 数值显示 ABR 对 σ² 平缓，性能 gap 趋零**（vs 中档折中 +0.01dB，A2 指标敏感+A3 增量量级双重硬门槛失败）。**🔴 立「靠谱方向 checklist」v1（D009）**：A1 轻化（可验证处理贡献不锁"DSP 链路"）+ A2（指标敏感，4B 教训新提炼）+ A3（增量≥同门~2-4dB）+ B1/B2/B3 + C1/C2/C3。**Q1=Kill（D010，2026-06-28）**：D009 checklist 首次实战。**范围双重出界**（不变量6星地 + S007 ISL排除 + 真空无湍流）+ **A1 方法归属错位**（产出形态=论文自己的 TS-KF）+ **C3 堵死抢救**（搬星地撞 Q12/B1 换皮 D006）。A2 在 Q1 自身 ISL 场景反而过（Doppler 真硬动态）。论文 TS-KF **降级 baseline 参考**（未来星地 Doppler 对照）。**Q2=Kill（D011，2026-06-28）**：死因=Q1复刻（范围双重出界ISL+无湍流+A1归属错位+C3撞Q12/B1换皮）。论文降级**方法借鉴+同实验室前作**（二阶DPLL+前馈/ωn-N准则可复用）。**登记「16-QAM CPR扩展」为待回看种子**（Q2自承仅QPSK未扩展16-QAM，未被D006堵死，Step4a全评完后独立评估）。**Q3=Kill（D012，2026-06-28）**：范围双重出界（feeder系统级撞S007+无湍流建模，feeder辨析物理经大气但S007排系统级架构）+A1归属错位（产出形态=论文adaptive MMSE）。**C3未撞旧Kill**（Q3跟Q1/Q2唯一差别）但不构成salvage（A1+范围已双重硬门槛，"没撞旧Kill"≠可救）。论文降级**方法借鉴**（time-packing+MMSE检测框架+SINR-BER闭式可复用）。**🔴 候选池近清零**：四判据全过6候选已Kill 3（Q1/Q2/Q3），D010预测被Q2/Q3连续验证，实质在范围+未死候选仍然只剩Q10（高度同构N1）。**待评**：Q8 切入点 1（指向×Doppler 踩 S007 边界）+ Q7/Q10。feasibility_report.md 含 Q12+Q8+切入点2+切入点4B Kill 段 | **进 Step 5/Contract/MVE 前必 ✅（至少 1 个 Q# Go，暂 0 Go）** |
 | 5 validate | ⬜ | | | Baseline 候选表 | 进 Step 4b 前必 ✅ |
 | 4b sim-feasibility | ⬜ | | | feasibility_report.md (C/E) | 进 Step 6 前必 ✅ |
 | 6 sim-design | ⬜ | | | 仿真器设计规格 | 进 Step 7 前必 ✅ |
@@ -64,7 +64,7 @@ current_stage: GW
 
 ### 活跃文件
 
-- literature_notes.md: projects/thesis-fso/literature_notes.md（**已重写 2026-06-26，块 D 召回更新 2026-06-27**：Step 1-3 ✅，Step 3.5 🔄；含 10 篇 L## + 综合分析 + **Q# 清单 Q1-Q13**，6 篇全过（Q1/2/3/7/8/10）+ 4 篇部分不过作方法借鉴 + **3 篇块 D 召回（Q11/Q12/Q13，旧 B1 资产）**）
+- literature_notes.md: projects/thesis-fso/literature_notes.md（**已重写 2026-06-26，块 D 召回更新 2026-06-27，Q1 Kill 标注更新 2026-06-28**：Step 1-3 ✅，Step 3.5 ✅，Step 4a 🔄；含 10 篇 L## + 综合分析 + **Q# 清单 Q1-Q13**，原 6 篇全过中 **Q1 已 Kill（D010 范围+A1归属+C3）降级 baseline 参考**，Q2/Q3/Q7/Q8/Q10 待评 + 4 篇部分不过作方法借鉴 + **3 篇块 D 召回（Q11/Q12/Q13，旧 B1 资产，Q12 已 Kill D006）**）
 - thesis-framework.md / cnki-thesis-survey.md: projects/thesis-fso/
 - decision_log.md: 待创建
 - feasibility_report.md / baseline_report.md: 未创建

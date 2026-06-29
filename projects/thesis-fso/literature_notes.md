@@ -23,7 +23,7 @@
 | 2 获取        | ✅   | 2026-06-26 | H004 块 A 7 篇 + H005 块 B 6 篇，OA + IEEE(blit) |
 | 3 精读        | ✅   | 2026-06-26 | **本轮块 C 完成**：10 篇精读 + 综合分析 + Q# 清单 |
 | 3.5 补充      | 🔄部分 | 2026-06-27 | 检索✅+召回Q11-Q13✅，下载精读债务（Paillier2020JLT/Rustum2026/Tang2024/Mosnier2025/Viterbi1983）| 块 D：盲区A/B定向补检索 + 召回旧B1资产 |
-| 4a 可行性     | ⬜   |          | 块 E：每个 Q# 走 gw-feasibility A0/A'/A/B/D |
+| 4a 可行性     | 🔄部分 | 2026-06-28 | 块 E：每个 Q# 走 gw-feasibility A0/A'/A/B/D。**Q12 Kill(D006) / Q8切入点2 Kill(S017) / Q8切入点4B Kill(D008) / Q1 Kill(D010)**。暂 0 Go。待评：Q8切入点1/Q2/Q3/Q7/Q10 |
 | 5 Baseline    | ⬜   |          | 块 F：Go 的 Q# 进 baseline 复现 |
 | 4b 仿真可行性 | ⬜   |          | |
 | 6 仿真器      | ⬜   |          | |
@@ -107,9 +107,9 @@
 
 | Q#   | M（失效/不足的现有方法） | C（条件） | A（失效假设） | 方法产出形态 | 判据1 矛盾 | 判据2 产出形态 | 判据3 近期baseline | 判据4 可量化对标 | 四判据 | 来源 |
 |------|------|------|------|------|------|------|------|------|------|------|
-| Q1 | 单阶段 KF / VV-BPS（固定单一 Q 配置） | LEO-LEO 相干 ISL，突发达 10 GHz + 慢漂 151 MHz/s，OSNR 18 dB | 单一 Q 不能同时兼顾"捕获期突发快变"（需大 Q）和"锁定期精调相位"（需小 Q 固定 ω）；VV-BPS 在 5/10GHz 突发下无法解调 | 递归 DSP 估计器（两阶段 KF + 参数设计准则） | ✅ M/C/A 明确 | ✅ 算法+准则 | ✅ VV-BPS（自实现同平台）+ Tang 2023 | ✅ BER-vs-OSNR、复杂度 ratio | **全过** ⚠️链路（LEO-LEO 星间） | #1 §L131-135 |
-| Q2 | Diff-4th（differential fourth-power）全前馈 CPR | 星间相干低 SNR（Eb/N0≤5.2 dB / ≤−39 dBm） | 全前馈平滑在低 SNR 下因 phase cycle slip 产生突发错误，D(Δθ̂) 超阈值，星座旋转 BER→0.5 | CPR 算法（二阶 DPLL+前馈级）+ ωn-N 选型准则 | ✅ M/C/A 明确 | ✅ 算法+准则 | ✅ Diff-4th[Leven 2007/Huang 2012/Tang 2023]（自实现） | ✅ LRMSE↔MCRLB、BER、复杂度三维 | **全过** ⚠️利益相关（同实验室 BIT）⚠️收敛慢仅 QPSK | #2 §L39-40/278-284/371 |
-| Q3 | 受限复杂度 Viterbi（Ns=4096）/ truncated MMSE（信道截断） | 光 feeder link IM/DD，time-packed M-PAM（M≥4，重叠 δ≥0.25） | 检测器复杂度受限 → 残余 ISI 无法消除 → error floor（Viterbi 受 trellis states 截断、truncated MMSE 受信道截断） | low-complexity linear detector 配置准则 + 性能曲线族 | ✅ M/C/A 明确 | ✅ 准则+曲线族 | ✅ M-PAM without overlapping(δ=0) + Viterbi[8/7]+MMSE[14]（自实现） | ✅ BER-SINR + throughput-cloud attenuation 曲线族 | **全过** ⚠️链路（feeder link，S007 边界待判） | #3 §L235/237 |
+| Q1 | 单阶段 KF / VV-BPS（固定单一 Q 配置） | LEO-LEO 相干 ISL，突发达 10 GHz + 慢漂 151 MHz/s，OSNR 18 dB | 单一 Q 不能同时兼顾"捕获期突发快变"（需大 Q）和"锁定期精调相位"（需小 Q 固定 ω）；VV-BPS 在 5/10GHz 突发下无法解调 | 递归 DSP 估计器（两阶段 KF + 参数设计准则） | ✅ M/C/A 明确 | ✅ 算法+准则 | ✅ VV-BPS（自实现同平台）+ Tang 2023 | ✅ BER-vs-OSNR、复杂度 ratio | **❌ Kill（D010，2026-06-28）**：范围双重出界（不变量6星地 + S007 ISL排除 + 真空无湍流）+ A1 方法归属错位（产出形态=论文自己的 TS-KF）+ C3 堵死抢救（搬星地撞 Q12/B1 换皮 D006）。A2 在 Q1 自身 ISL 场景反而过（Doppler 真硬动态）。**论文 TS-KF 降级 baseline 参考**（未来星地 Doppler 对照）。详见 decisions.md D010 | #1 §L131-135 |
+| Q2 | Diff-4th（differential fourth-power）全前馈 CPR | 星间相干低 SNR（Eb/N0≤5.2 dB / ≤−39 dBm） | 全前馈平滑在低 SNR 下因 phase cycle slip 产生突发错误，D(Δθ̂) 超阈值，星座旋转 BER→0.5 | CPR 算法（二阶 DPLL+前馈级）+ ωn-N 选型准则 | ✅ M/C/A 明确 | ✅ 算法+准则 | ✅ Diff-4th[Leven 2007/Huang 2012/Tang 2023]（自实现） | ✅ LRMSE↔MCRLB、BER、复杂度三维 | **❌ Kill（D011，2026-06-28）**：死因=D010/Q1复刻——范围双重出界（不变量6星地+S007 ISL排除+无湍流）+ A1方法归属错位（产出形态=论文自己的二阶DPLL+前馈）+ C3撞Q12/B1换皮（KF替代loop filter搬星地=D006）。论文降级**方法借鉴+同实验室前作**（二阶DPLL+前馈结构/ωn-N准则可复用）。**登记「16-QAM CPR扩展」为待回看种子**（Q2自承仅QPSK未扩展16-QAM，未被D006堵死，留Step4a全评完后独立评估）。详见 decisions.md D011 | #2 §L39-40/278-284/371 |
+| Q3 | 受限复杂度 Viterbi（Ns=4096）/ truncated MMSE（信道截断） | 光 feeder link IM/DD，time-packed M-PAM（M≥4，重叠 δ≥0.25） | 检测器复杂度受限 → 残余 ISI 无法消除 → error floor（Viterbi 受 trellis states 截断、truncated MMSE 受信道截断） | low-complexity linear detector 配置准则 + 性能曲线族 | ✅ M/C/A 明确 | ✅ 准则+曲线族 | ✅ M-PAM without overlapping(δ=0) + Viterbi[8/7]+MMSE[14]（自实现） | ✅ BER-SINR + throughput-cloud attenuation 曲线族 | **❌ Kill（D012，2026-06-28）**：范围双重出界（feeder系统级撞S007 + 无湍流建模，feeder辨析物理经大气但S007排系统级架构）+ A1方法归属错位（产出形态=论文自己的adaptive MMSE）。**C3未撞旧Kill**（Q3跟Q1/Q2唯一差别）但不构成salvage（A1+范围已双重硬门槛）。论文降级**方法借鉴**（time-packing+MMSE检测框架+SINR-BER闭式可复用）。详见 decisions.md D012 | #3 §L235/237 |
 | Q4 | CMA 盲均衡 / BPS（单格式 DSP 管线） | 低 SNR 多格式（DP-4QAM 100Gb/s / DP-16QAM 200Gb/s）星地相关 FSO | 盲均衡与调制格式耦合，低 SNR 下失效；单格式管线无法跨格式复用 | 经典离线 DSP 均衡器算法（多格式 data-aided） | ✅ M/C/A 明确 | ✅ DSP 管线 | ⚠️ CMA/BPS 仅概念论证**无直接 head-to-head BER 对标**（仅内部 ZF/MMSE + AWGN 理论） | ✅ outage 阈值（仿真 0dB/实测 −1.2/−1.8 dB） | **未过**（C⚠️缺直接对标）作方法借鉴 | #6 §L29/113 |
 | Q5 | 传统 VV 单四次方 CFR（固定 ±Rs/2 范围） | LEO 星地，高 DFS（±8 GHz，33-120 MHz/s），功率波动≥20dB | ±Rs/2（1.25GBaud 时 ±625 MHz）≪ GHz 级 DFS；ADC 带宽太窄无法过 GHz 偏移信号 | DSP 算法（实时 FPGA）+ 系统设计（AFC 闭环） | ✅ M/C/A 明确 | ✅ 算法+系统 | ❌ **无 BER-vs-baseline**（仅绝对灵敏度+资源表+定性） | ❌ 无 BER-vs-baseline 曲线 | **未过**（C❌D❌）作方法借鉴（BUPT 同国别，闭环 AFC 架构可复用） | 新1 §I/II |
 | Q6 | 两 PD 双偏振自相干检测 | 星地/地星/星星 FSO，35000km，大气湍流致偏振旋转 θch | H_eff,2PD 在 θ=45°/135°/225°/315° 奇异（eq18），退化为单方程两未知，BER>0.1 | DSP 算法（信道估计/均衡/偏振解复用）+ 光学架构（三 PD） | ✅ M/C/A 明确 | ✅(部分) DSP 成分达标，含光学架构硬件改动 | ✅ DP-coherent（自实现同链路）+ 两 PD 自实现 | ✅ BER-vs-OSNR、BER-vs-透镜直径、BER-vs-旋转角 | **部分过**（B 部分）⚠️链路（GEO 非 LEO）作机制借鉴 | 新3 §III.B.2/D |
@@ -162,7 +162,7 @@
 - **与本研究关系**：方法可借鉴（两阶段解耦范式）
 - **实现关键细节**：Q1=diag[1e-10,1e-4]，Q2=diag[0,1e-4]，R=diag[1e-1,1e-3]，L1+L2=2¹⁶，60 Gbaud PDM-QPSK，OSNR 18dB
 - **适配性分析**：不适配=假设 Q/R 平稳 + 圆轨道 + v≪c，机动/椭圆/相对论场景需重建模；Q2_ω=0 对快变信道（如湍流附加相位）不鲁棒。改进方向=RL/自适应在线调整 Q,R（论文 L131 自承 Q,R 显著影响性能）
-- **问题提取**：见 Q1（全过，⚠️链路 LEO-LEO 星间）
+- **问题提取**：见 Q1（**❌ Kill D010**：范围双重出界 + A1 归属错位 + C3 撞 Q12/B1 换皮；论文降级 baseline 参考）
 - **开源代码**：无
 - **验证状态**：grep 核查 PASS（H005）
 
@@ -181,7 +181,7 @@
 - **与本研究关系**：直接相关 + ⚠️**利益相关**（作者 Hu Chunyuan/Lin Yujie 为用户同实验室 BIT，既是 baseline 候选也是可借鉴前作，客观性需留意）
 - **实现关键细节**：Kd=4，ωn=20 Mrad/s，N=64，ξ=√2/2，约束 ωnT≪1；Eb/N0≤5.2dB；10 MHz/s 跟踪；FPGA 验证
 - **适配性分析**：不适配=收敛慢不适配突发/短帧；仅 QPSK，高阶调制 cycle slip 更复杂。改进方向=变 ωn 自适应 / KF[18] / 粒子滤波[19] 替代 loop filter
-- **问题提取**：见 Q2（全过，⚠️利益相关 + 收敛慢仅 QPSK）
+- **问题提取**：见 Q2（**❌ Kill D011**：范围双重出界+A1归属错位+C3撞Q12/B1换皮，死因=Q1复刻；论文降级方法借鉴+同实验室前作；**登记16-QAM CPR扩展为待回看种子**）
 - **开源代码**：无
 - **验证状态**：grep 核查 PASS（H004）
 
@@ -200,7 +200,7 @@
 - **与本研究关系**：方法可借鉴（adaptive MMSE 范式）
 - **实现关键细节**：feeder link IM/DD，M-PAM (M≥4)，δ≥0.25，ρ=0.15；Ns=4096；LMS 自适应
 - **适配性分析**：不适配=光 feeder link 链路预算与射频不通用；Ns=4096 是本文 Viterbi 特例不能外推。改进方向=adaptive MMSE 的 L_w/µ/训练序列手工固定，可自适应/数据驱动选抽头
-- **问题提取**：见 Q3（全过，⚠️链路 feeder link S007 边界待判）
+- **问题提取**：见 Q3（**❌ Kill D012**：范围双重出界feeder系统级+无湍流建模 + A1归属错位 + C3未撞旧Kill但不构成salvage；论文降级方法借鉴）
 - **开源代码**：无
 - **验证状态**：grep 核查 PASS（H004）
 
