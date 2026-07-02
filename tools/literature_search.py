@@ -162,8 +162,9 @@ def main():
                         help="引用扩展深度 (默认: 1)")
     parser.add_argument("--citations-source", default="openalex",
                         choices=["openalex", "s2", "both"],
-                        help="引用图谱数据源: openalex(默认)/s2(Semantic Scholar)/both(双源去重 union，"
-                             "推荐——单源会漏，S2 新文/预印本强，OpenAlex 期刊/老经典强)")
+                        help="引用图谱数据源: openalex(默认，严格引用图，干净)/"
+                             "s2(Semantic Scholar，召回更广但含假阳性相关论文，需逐条核验)/"
+                             "both(双源 union——S2-only 条目未验证，谨慎用)")
     parser.add_argument("--trend-years", type=int, default=5,
                         help="趋势分析年数 (默认: 5)")
 

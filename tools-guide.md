@@ -82,9 +82,9 @@ python tools/literature_search.py "..."  # 缺少依赖路径
 ```
 
 **cited-by 数据源选哪个？**（`--citations-source`）
-- `both`（**推荐**）：OpenAlex + Semantic Scholar 双源去重 union。两源强互补——单源会漏（实测 TWC2024 单源漏 4-17 条），S2 独占多为预印本/会议扩展版，OpenAlex 独占多为 OA 期刊版
-- `openalex`：期刊索引全、无限额、支持 depth 2 展开 + backward。新文（<1 年）略滞后
-- `s2`：新文/预印本召回强（自有爬虫 + arXiv 跟踪），仅支持 forward（`/paper/{id}/citations`），无 key 限速严（~100 次/15min）
+- `openalex`（**默认，推荐主用**）：严格引用图（`cites:` filter），干净无假阳性。期刊索引全、无限额、支持 depth 2 展开 + backward。新文（<1 年）略滞后
+- `s2`：召回更广（含预印本/会议扩展版），**但含假阳性**——S2 `/paper/{id}/citations` 会把"相关论文"也当成 citing paper（实测含时间逻辑不可能的脏数据，如 2019 论文"引用"2020 论文）。仅作补充召回候选，**每条需独立核验**（查该论文 references 真含不含目标）
+- `both`：双源 union 去重，召回最广，但 S2-only 条目未验证、需判读前逐条核验——**谨慎用**
 - 召回仍不够时降级：Lens.org Scholar API（免费 5000/月，token）→ SerpAPI Google Scholar（付费）→ GS 自爬（仅人工核验，反爬封 IP 24-48h）
 ./tools/search "..." --format markdown # 可读表格
 ./tools/search "..." --format brief    # 每行一条
