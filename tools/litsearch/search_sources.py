@@ -1012,6 +1012,29 @@ def _resolve_s2_paper_id(result: dict) -> Optional[str]:
 # ---------- OpenAlex 引用图谱 & 趋势 ----------
 
 
+def _openalex_resolve_work_id(
+    doi: str,
+    *,
+    email: Optional[str] = None,
+) -> Optional[str]:
+    """DOI → OpenAlex Work ID（W...）。
+
+    用 `filter=doi:{doi}` 查询（不是 `/works/doi:{doi}` 直连，后者对部分 DOI 404）。
+    返回形如 `W2990621879` 的 ID，失败返回 None。
+    """
+    params: dict[str, Any] = {"filter": f"doi:{doi}", "select": "id"}
+    if email:
+        params["mailto"] = email
+    resp = _retry_request("GET", OPENALEX_WORKS_URL, params=params)
+    if not resp:
+        return None
+    results = resp.json().get("results", []) or []
+    if not results:
+        return None
+    raw_id = results[0].get("id", "")  # 形如 https://openalex.org/W2990621879
+    return raw_id.split("/")[-1] if raw_id else None
+
+
 def openalex_citations(
     doi: str,
     *,
@@ -1021,9 +1044,17 @@ def openalex_citations(
 ) -> list[dict[str, Any]]:
     print(f"[OpenAlex] citations ({direction}): {doi}")
 
+    # 先把 DOI 解析成 OpenAlex Work ID（W...）。
+    # 注意：OpenAlex 的 `cites:` filter 只接受 Work ID，不接受 `DOI:` 前缀——
+    # 传 `cites:DOI:10.xxx` 会静默返空（不报错），曾导致 S024 forward cited-by=0 误判。
+    work_id = _openalex_resolve_work_id(doi, email=email)
+    if not work_id:
+        print(f"  [OpenAlex] DOI 未解析到 Work ID，返回空: {doi}")
+        return []
+
     if direction == "backward":
         # 这篇引用了谁 — 先查这篇的引用列表
-        ref_url = f"{OPENALEX_WORKS_URL}/doi:{doi}"
+        ref_url = f"{OPENALEX_WORKS_URL}/{work_id}"
         params: dict[str, Any] = {"select": "referenced_works"}
         if email:
             params["mailto"] = email
@@ -1043,8 +1074,8 @@ def openalex_citations(
             return []
         works = resp.json().get("results", [])
     else:
-        # 谁引用了这篇
-        params = {"filter": f"cites:DOI:{doi}", "per_page": 50}
+        # 谁引用了这篇 — cites: 必须用 Work ID
+        params = {"filter": f"cites:{work_id}", "per_page": 50}
         if email:
             params["mailto"] = email
         resp = _retry_request("GET", OPENALEX_WORKS_URL, params=params)

@@ -6,6 +6,7 @@ import json
 import os
 import sys
 from pathlib import Path
+from typing import Optional
 
 from litsearch.search_pipeline import (
     _apply_preset,
@@ -42,6 +43,48 @@ from litsearch.search_sources import (
     openalex_trend,
 )
 from litsearch.search_config import EXA_CATEGORY_MAP, VALID_DOC_TYPES
+
+
+def _run_citations(
+    doi: str,
+    *,
+    direction: str,
+    depth: int,
+    source: str,
+    email: Optional[str],
+    s2_key: Optional[str],
+) -> list[dict]:
+    """统一调度 cited-by 拉取（openalex / s2 / both）。
+
+    - openalex：老经典期刊强，depth 支持 2 层展开
+    - s2：新文/预印本强，仅支持 forward（S2 /paper/{id}/citations 接口语义）
+    - both：双源 union 去重，推荐——单源会漏（S026 实测 TWC2024 单源漏 4-17 条）
+    """
+    results: list[dict] = []
+
+    if source in ("openalex", "both"):
+        oa = openalex_citations(doi, direction=direction, depth=depth, email=email)
+        for r in oa:
+            r.setdefault("source_api", "openalex_citations")
+        results.extend(oa)
+
+    if source in ("s2", "both"):
+        if direction == "backward":
+            # S2 的 /paper/{id}/citations 是 forward 语义（谁引用了），没有等价的单步 backward。
+            # backward 走 OpenAlex 即可；这里不重复（both+backward 已由 OpenAlex 覆盖）。
+            print("[S2-cites] backward 方向由 OpenAlex 覆盖，S2 跳过")
+        else:
+            s2_id = f"DOI:{doi}" if not doi.lower().startswith("arxiv") else f"ArXiv:{doi}"
+            s2 = get_s2_citations(s2_id, max_results=100, api_key=s2_key)
+            for r in s2:
+                r.setdefault("source_api", "s2_citations")
+            results.extend(s2)
+
+    # both 时按 DOI/title 去重（两源对同一篇可能用不同 DOI 前缀或标题微差）
+    if source == "both":
+        from litsearch.search_pipeline import deduplicate
+        results = deduplicate(results)
+    return results
 
 
 def main():
@@ -109,7 +152,7 @@ def main():
     parser.add_argument("--find-similar", type=str, metavar="URL",
                         help="查找与指定 URL 相似的文献 (Exa)")
     parser.add_argument("--citations", type=str, metavar="DOI",
-                        help="查看指定 DOI 的引用图谱 (OpenAlex)")
+                        help="查看指定 DOI 的引用图谱（forward=谁引用了/backward=引用了谁）")
     parser.add_argument("--trend", action="store_true",
                         help="查看查询关键词的发文趋势 (OpenAlex)")
     parser.add_argument("--citations-direction", default="forward",
@@ -117,6 +160,10 @@ def main():
                         help="引用方向: forward(谁引用了)/backward(引用了谁)")
     parser.add_argument("--citations-depth", type=int, default=1,
                         help="引用扩展深度 (默认: 1)")
+    parser.add_argument("--citations-source", default="openalex",
+                        choices=["openalex", "s2", "both"],
+                        help="引用图谱数据源: openalex(默认)/s2(Semantic Scholar)/both(双源去重 union，"
+                             "推荐——单源会漏，S2 新文/预印本强，OpenAlex 期刊/老经典强)")
     parser.add_argument("--trend-years", type=int, default=5,
                         help="趋势分析年数 (默认: 5)")
 
@@ -138,17 +185,19 @@ def main():
         return
 
     if args.citations:
-        results = openalex_citations(
-            args.citations,
+        results = _run_citations(
+            doi=args.citations,
             direction=args.citations_direction,
             depth=args.citations_depth,
+            source=args.citations_source,
             email=args.openalex_email,
+            s2_key=args.s2_api_key or os.environ.get("S2_API_KEY"),
         )
         results = assign_ids(results, args.start_id)
         results = assign_publication_status(results)
         print_summary(results)
-        _output_results(results, args, ["openalex_citations"])
-        _auto_save(results, args.citations, ["openalex_citations"])
+        _output_results(results, args, [f"citations_{args.citations_source}"])
+        _auto_save(results, args.citations, [f"citations_{args.citations_source}"])
         return
 
     if args.trend:
