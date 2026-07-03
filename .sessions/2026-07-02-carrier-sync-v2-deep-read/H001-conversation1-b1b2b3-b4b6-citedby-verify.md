@@ -20,19 +20,38 @@
 
 ## 下一步干什么
 
-**新对话打开后第一件事**（对话 1 = B1/B2/B3 综述背书 + B4/B6 补验证表）：
+**新对话打开后**（对话 1 = **先补下 v1 量级缺口** → 再评 B1/B2/B3+B4/B6）：
 
-1. **报到**（Trigger 1+5）：读 topic-index（不变量 9 条）+ S001 v2 规划 + **S002**（cited-by 池 + 下载状态 + 批量下全文清单）+ 本 H001 + gw-read.md（14 字段+7 项笔记标准）+ 原专题 H020（总表+排优先级）
-2. **B1/B2/B3 各派 1 子 agent**（并发 ≤3）精读 ≤5 篇 + 写/补 gw-read 笔记。**全文已备齐**（见 S002 §4.1）：
-   - **B1 pilot 窗口**：sat.1553 L440 段 + **[58] Martins 全文（已落盘 430 行）** + **[60] Leven 全文（已落盘 179 行）** + Spalvieri[57] cited-by（oe.564097 已落盘 428 行 / ICCWorkshops DL Phase Noise 已落盘 327 行）
-   - **B2 deep fade 冻结**：sat.1553 L558/L582 段 + **[79] Matsuda 摘要（机制已坐实）** + Panasiewicz 博士论文（已有旧笔记）
-   - **B3 子系统协同**：sat.1553 L788 段 + 张思齐学位论文（已有）+ LCOMM.2026.3651445 + jphot FSTS + oe.520452（**全已落盘**）
-3. **B4/B6 补 cited-by 验证表**（已有扎实笔记不重读全文）：B4 用 S002 §2.2 B4 候选（DTAT-FSO/oe.564097/jocn.503484/photonics10050493 全已落盘或摘要）/ B6 用 S002 §2.2 B6 候选（acp66871 ECL 已落盘 / 12.3041354 待用户下）
-4. **主线 grep 核查**每子 agent 关键声称（§7.2 防造假）
-5. **复用 sat.1553 旧笔记但删 L70 撞 D006 段**（原专题 S028 警告）
+### 步骤 0（优先）：补下 v1 量级缺口 ~13 篇（S002 §5.2 清单）
+
+本对话已下 ~28 篇全文，用户要求扩到 40-50 篇。**先按 S002 §5.2 补下载清单下完再评点**：
+
+**A. B6/B7 backward refs 11 篇**（S002 §5.2 表，去已落盘 [60]Leven/Paillier）：
+- IEEE 经典 4 篇（Gardner TED 1986 / Carrier sync 1992 / Noisy Phase 1974 / Pilot-Carrier LEO 2012）—— blit 可下
+- IEEE 近期 2 篇（access.2023 OISL / mwp54208 OPLL satellite）—— blit 可下
+- Optica 4 篇（ol.42.002173 / ao.57.007915 / oe.16.000818 + D5 ao.434807）—— Playwright 过 JS
+- IEICE/Chinese Opt Lett 2 篇（elex.18.20210078 / col202018）—— 半 OA 试 tools/download
+- IEEE D7 1 篇（LPT.2025.3644328）—— blit 可下
+
+派 2 子 agent 并发（IEEE 5 篇 blit 一批 / Optica+其他 6 篇一批），下完转 md。
+
+**B. Paillier池 B4/B5 + Spalvieri池 B1 多筛 3-5 篇**：重读 search-archive/2026-07-02/paillier-2020-jlt-forward-citedby.json + pilot-spalvieri-forward-both.json，放宽 ≤5 限制挑星地光+载波同步相关的 3-5 篇，补下。
+
+### 步骤 1 起：B1/B2/B3 综述背书 + B4/B6 补验证表（全文齐后）
+
+1. **报到**（Trigger 1+5）：读 topic-index（不变量 9 条）+ S001 v2 + **S002**（cited-by 池 + 下载状态 + §5 扩范围清单）+ 本 H001 + gw-read.md + 原专题 H020
+2. **B1/B2/B3 各派 1 子 agent**（并发 ≤3）精读 ≤5 篇 + 写/补 gw-read 笔记（全文已备齐见 S002 §4.1 + §5 补充）：
+   - **B1 pilot 窗口**：sat.1553 L440 + [58] Martins(430行) + [60] Leven(179行) + Spalvieri cited-by（oe.564097 / ICCWorkshops DL）+ §5B 多筛
+   - **B2 deep fade**：sat.1553 L558/L582 + [79] Matsuda 摘要（机制坐实）+ Panasiewicz 旧笔记
+   - **B3 子系统协同**：sat.1553 L788 + 张思齐 + LCOMM.2026 + jphot + oe.520452（全落盘）
+3. **B4/B6 补 cited-by 验证表**（不重读全文）：B4 用 §2.2 候选 / B6 用 §2.2 候选 + §5.2 backward refs（ Gardner TED 1986 / Z-domain OPLL 等）
+4. **主线 grep 核查**（§7.2 防造假）
+5. **复用 sat.1553 旧笔记删 L70 撞 D006 段**
 6. **本轮不判 Go/Kill**（D018 中性提取）
 
-**产出**：B1/B2/B3 各 1 份 gw-read 结构化笔记（14 字段+7 项含 M-C-A 问题提取）+ B4/B6 cited-by 验证表 + 每点 ≤5 篇支撑表
+**产出**：B1/B2/B3 各 1 份 gw-read 笔记（14字段+7项含 M-C-A）+ B4/B6 cited-by 验证表 + 每点 ≤5 篇支撑表
+
+**守 3 步上限提醒**：步骤 0 补下 + 步骤 1-6 评点会超 3 步。建议对话 1 先只做步骤 0（补下）+ B1/B2/B3 评点，B4/B6 验证表 + 剩余评点交对话 2。
 
 ## 纪律（和下一步直接相关的约束）
 

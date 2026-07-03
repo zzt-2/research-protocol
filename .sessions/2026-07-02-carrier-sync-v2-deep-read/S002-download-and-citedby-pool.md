@@ -158,13 +158,11 @@ S001 假设 B5/B7 可能是 DLR（Carl Valjus）团队论文——**子 agent �
   3. `10.23919/oecc/psc62146.2025.11109607` | MAP Phase Recovery 256-QAM（2025 OECC/PSC）| 中（相位恢复+高阶 QAM 理论契合）| openalex **需核验**（会议）
 - 入池判定：3 篇够
 
-### 范围变更记录（2026-07-03 用户纠偏）
+### 范围变更记录（2026-07-03 用户两次纠偏扩范围）
 
-- **日期**：2026-07-03
-- **触发**：用户原话"怎么才这么点？不是打算几十篇吗？我想还是全下下来之后再看比较好吧？不然很容易又偏了"
-- **变更内容**：S002 原范围只备 cited-by 候选 DOI 池（步骤 1-3），**扩大为批量下 ~25 篇 cited-by 候选全文 + 转 md**（步骤 4）
-- **原因**：用户准确识别 profile 第 7 次"急于推进"风险——只下几个锚就开始评容易偏，正确做法是先把池子里全文下完再开评点
-- **scope boundary 影响**：仍在"备料不评点不判 Go/Kill"边界内（扩的是备料深度，不是评点动作），不违反"明确不含"
+- **2026-07-03 扩范围 1**：触发用户原话"怎么才这么点？不是打算几十篇吗？我想还是全下下来之后再看比较好吧？不然很容易又偏了"。S002 原范围只备 cited-by 候选 DOI 池（步骤 1-3），扩大为批量下 ~25 篇 cited-by 候选全文 + 转 md（步骤 4）。原因：profile 第 7 次"急于推进"风险——只下几个锚就开始评容易偏。
+- **2026-07-03 扩范围 2**：触发用户原话"感觉还是不太够吧？我当时想着几十篇的"。AskUserQuestion 拍板"扩到 40-50 篇（v1 量级）"+ "B6/B7 用 backward refs 补"。步骤 4 后 ~28 篇，扩范围到 v1 量级 40-50 篇（步骤 5）：B6/B7 backward refs + 每点放宽 ≤5 多筛 + D 档星地光补充。原因：用户印象是 S001 v1 的 36-60 量级，v2 修订时缩到 22-32 没强调，现回扩。
+- **scope boundary 影响**：两次扩范围仍在"备料不评点不判 Go/Kill"边界内（扩的都是备料深度，不进评点动作），不违反"明确不含"。但已超 3 步上限——用户明确要求扩范围触发，已记。
 
 ---
 
@@ -232,8 +230,60 @@ S001 假设 B5/B7 可能是 DLR（Carl Valjus）团队论文——**子 agent �
 
 1. **B5** `10.1016/j.optcom.2024.130981`——B5 切入点锚，有 VPN 就下（青岛大学 Jiamin Fan 等）
 2. **ao.581648** `10.1364/ao.581648`——B10 高相关（PS-64QAM KRLS 承接 pilot-RLS），Optica 订阅
-3. **apn.3.3.036007** `10.1117/1.apn.3.3.036007`——B9 DRE 核心技术，**Gold OA 浏览器手动免费下**（最该下）
+3. **apn.3.3.036007** `10.1117/1.apn.3.036007`——B9 DRE 核心技术，**Gold OA 浏览器手动免费下**（最该下）
 4. 其余 3 篇（OECC/DEStech/SPIE）信号弱或边缘相关，可不下
+
+### 步骤 5：扩到 v1 量级 40-50 篇（用户第 2 次纠偏扩范围）
+
+**触发**：用户原话"感觉还是不太够吧？我当时想着几十篇的"。AskUserQuestion 拍板"扩到 40-50 篇（v1 量级）"+ "B6/B7 用 backward refs 补"。
+
+**当时盘点**：步骤 4 后落盘 ~28 篇全文，距 40-50 缺口 12-22 篇。补的方向：① B6/B7 backward refs（用户指定）② 每点放宽 ≤5 限制多筛几篇（Paillier 43/Spalvieri 85 池只筛了 2-4 篇）③ D 档星地光剩余候选。
+
+#### 5.1 B6/B7 backward refs 拉取（已派子 agent 完成）
+
+派子 agent 拉 3 锚 backward refs（citations-direction backward），结果：
+- **B7 ofc.2026.w2a.62 backward**：union 5（OpenAlex），**5 篇全相关**含 Gardner TED 1986 原文（理论根基）
+- **B6 ICSOS66026.2025.11443174 backward**：**union 0**（该论文太新 ICSOS 2025，OpenAlex/S2 均未索引其 refs）——此锚 backward 当前无法补，需待 2026 下半年重拉或手动从 PDF refs 抽
+- **B6 OPLL photonics10121312 backward**：union 29，筛 8 篇（OPLL/载波同步/FSO 相干/经典锚，含 Z 变换建模直接根基 `10.1587/elex.18.20210078`）
+
+JSON 落 `search-archive/2026-07-03/`（ofc2026-w2a-62-backward / photonics10121312-opll-backward）。
+
+#### 5.2 补下载清单（去重后待下，交下一对话执行）
+
+**【A. B6/B7 backward refs 新增 11 篇】**（去已落盘 [60]Leven/Paillier）
+
+| # | DOI | 标题简 | publisher | 关联 |
+|---|---|---|---|---|
+| 1 | `10.1109/tcom.1986.1096561` | A BPSK/QPSK Timing-Error Detector (Gardner TED 1986 **原文**) | IEEE TCOM 经典 | **B7 理论根基** |
+| 2 | `10.1109/jlt.2012.2204037` | Pilot-Carrier Coherent LEO-to-Ground Downlink OPLL | IEEE JLT | B7/B6 星地光 |
+| 3 | `10.1109/access.2023.3287501` | Modulation & SP for LEO-LEO OISL | IEEE Access | B7 星间光 |
+| 4 | `10.1587/elex.18.20210078` | Z-domain modeling homodyne digital OPLL | IEICE Japan | **B6 Z-ODPLL 根基** |
+| 5 | `10.1109/mwp54208.2022.9997784` | All-Digital OPLL satellite under Turbulence | IEEE MWP | B6 星地光+OPLL |
+| 6 | `10.3788/col202018.090602` | Digital-analog hybrid OPLL QPSK | Chinese Opt Lett | B6 OPLL |
+| 7 | `10.1364/ol.42.002173` | Intradyne BPSK optical FSO GEO uplink | Optica OL | B6/D5 FSO |
+| 8 | `10.1364/ao.57.007915` | Homodyne coherent receiver intersatellite | Optica AO | B6 星间 |
+| 9 | `10.1109/50.202807` | Carrier sync homodyne/heterodyne QPSK (1992) | JLT/OSA 经典 | **B6 经典锚** |
+| 10 | `10.1109/tcom.1974.1092337` | Effect of Noisy Phase Reference (1974) | IEEE TCOM 经典 | **B6 经典锚** |
+| 11 | `10.1364/oe.16.000818` | Optical Phase Locking techniques overview 2008 | Optica OE | B6 OPLL 综述 |
+
+**【B. D 档星地光补充 3 篇】**
+
+| # | DOI | 标题简 | publisher | 关联 |
+|---|---|---|---|---|
+| 12 | `10.1364/ao.434807` | Inter-satellite laser-ranging intradyne coherent | Optica AO | D5 星间 |
+| 13 | `10.1109/LPT.2025.3644328` | OFDM-FSO Triple Autocorrelation (D7) | IEEE PTL | D3/D7 |
+| 14 | `10.1016/j.optcom.2021.126958` | Sat-to-ground downlink aperture/mode diversity | Elsevier | D5（付费墙）|
+
+**【C. Paillier 池 B4/B5 + Spalvieri 池 B1 多筛 ~3-5 篇】**（下一对话重读 paillier-2020-jlt-forward-citedby.json / pilot-spalvieri-forward-both.json 放宽筛）
+
+#### 5.3 扩范围后总量预估
+
+- 当前全文 ~28 篇 + 上述 A/B 共 13 篇可下（11 backward + 2 D5 OA，1 Elsevier 付费墙）+ C 池 3-5 篇 ≈ **44-46 篇全文**，落在 40-50 区间
+- 加上待你手动下的 6 篇付费墙，**总量 50+ 篇覆盖**
+
+#### 5.4 执行建议（交下一对话）
+
+本对话已超 3 步上限 + 上下文饱满（profile 第 7 次"急于推进"教训：上下文饱满时执行质量下降）。**补下载 13 篇 + Paillier/Spalvieri 池多筛**交对话 1 第一步执行，下完再开评点。H001 已更新含补下载清单。
 
 ## 决策引用
 
