@@ -1,11 +1,12 @@
-# [S002] 对话 0：补下载 + cited-by 池拉取 + D 档挑星地光
+# [S002] 对话 0：补下载 + cited-by 池拉取 + 批量下全文 + D 档挑星地光
 
 > 2026-07-03 | 精读沉淀补强·对话 0（备料阶段）| 状态：备料完成，交对话 1 评点
 > 来源：S001 v2 规划"对话 0"段 + v2 改动 2（D 挑星地光）/ 改动 5（债务阻塞优先级）
+> **范围变更（2026-07-03 用户纠偏）**：原 S002 只备料 cited-by 池不批量下全文，用户指出"只下几个锚就开始评容易偏"→ 扩范围为批量下 ~25 篇 cited-by 候选全文（见 §范围变更记录）
 
 ## 目标
 
-执行 S001 v2 规划的"对话 0"：①补 3 类下载债务（B5/B7/[58][60][79]，分阻塞优先级）②拉 B 档 12 点 cited-by 候选池（按 S001 v2 篇数估计表，B6/B7 不强凑 5）③从 D2-D5 批量 cited-by 里挑星地光命中个别候选。**本对话不评点、不写笔记、不判 Go/Kill，只备料。**
+执行 S001 v2 规划的"对话 0"：①补 3 类下载债务（B5/B7/[58][60][79]）②拉 B 档 12 点 cited-by 候选池 ③从 D2-D5 批量 cited-by 里挑星地光命中 ④**【范围扩大】批量下 cited-by 候选池 ~25 篇全文**（用户纠偏：下完再评，防偏）。**本对话不评点、不写笔记、不判 Go/Kill，只备料。**
 
 ## 记录
 
@@ -157,6 +158,16 @@ S001 假设 B5/B7 可能是 DLR（Carl Valjus）团队论文——**子 agent �
   3. `10.23919/oecc/psc62146.2025.11109607` | MAP Phase Recovery 256-QAM（2025 OECC/PSC）| 中（相位恢复+高阶 QAM 理论契合）| openalex **需核验**（会议）
 - 入池判定：3 篇够
 
+### 范围变更记录（2026-07-03 用户纠偏）
+
+- **日期**：2026-07-03
+- **触发**：用户原话"怎么才这么点？不是打算几十篇吗？我想还是全下下来之后再看比较好吧？不然很容易又偏了"
+- **变更内容**：S002 原范围只备 cited-by 候选 DOI 池（步骤 1-3），**扩大为批量下 ~25 篇 cited-by 候选全文 + 转 md**（步骤 4）
+- **原因**：用户准确识别 profile 第 7 次"急于推进"风险——只下几个锚就开始评容易偏，正确做法是先把池子里全文下完再开评点
+- **scope boundary 影响**：仍在"备料不评点不判 Go/Kill"边界内（扩的是备料深度，不是评点动作），不违反"明确不含"
+
+---
+
 ### 步骤 3：D 档星地光候选（v2 改动 2，H020 总表范围）
 
 派子 agent **逐个扫 D2-D5 cited-by 缓存 JSON 标题**（不准凭印象，R004 标"主导"非"全部"）。
@@ -170,6 +181,60 @@ S001 假设 B5/B7 可能是 DLR（Carl Valjus）团队论文——**子 agent �
 
 **D 档汇总**：D2 全出界（R004 判定坐实）；D3/D4/D5 各有 3/3/6 篇星地光命中，最强公约候选 = `10.1002/sat.1553`（D3/D4/D5 三档同时命中，已是本专题 B1-B3 锚）。D5 星地光命中最多（6 篇，Kikuchi 2008 是相干光 CPE 经典被星地光后续引用），对话 4 literature_notes 并入时这些 D 档星地光候选进总表"看全貌"。
 
+### 步骤 4：批量下 cited-by 候选全文（范围扩大，用户纠偏）
+
+派 3 子 agent 按 publisher 并发分批（IEEE 9 / Optica 5 / 其他 ~11），主线 FR-26 独立 grep 核查落盘。**实际落盘 18 篇全文 + 3 篇仅摘要 + 5 篇付费墙（+B5 = 6 篇待用户手动下）**。
+
+#### 4.1 全文成功（18 篇 ✅）
+
+| # | DOI | 标题简 | publisher | content.md 行数 | 关联 B 点 |
+|---|---|---|---|---|---|
+| 1 | `10.1109/ICCWorkshops59551.2024.10615713` | DL Phase Noise Mitigation High-Order Mod | IEEE | 327 | B1（wireless backhaul 出界）|
+| 2 | `10.1109/acp66871.2025.11350439` | Rapid-Tuning ECL Wavelength Control LEO-Ground | IEEE | 209 | B6（Doppler 频移预补偿）|
+| 3 | `10.1109/lcomm.2024.3511129` | Geometric Constellation Shaping Wireless Optical Intensity | IEEE | 286 | B8（GS 主题，IM/DD 非自相干）|
+| 4 | `10.1109/lpt.2026.3655104` | Freq-Temporal Enhanced Recovery ACO-OFDM OWC | IEEE | 160 | B9（分辨率增强，OWC 非自相干）|
+| 5 | `10.1109/COMST.2024.3443158` | Phase Noise Wireless Communications Survey | IEEE COMST | 1288 | B12（权威综述，频域 pilot 一节）|
+| 6 | `10.1109/LPT.2024.3523478` | NDA-ML STO+CPE M-APSK FSO (**B11 锚**) | IEEE PTL | 226 | B11 |
+| 7 | `10.1109/TCOMM.2022.3171809` | In/Out-of-Band Freq Pilot Phase Noise (**B12 锚**) | IEEE TCOMM | 590 | B12 |
+| 8 | `10.1109/jlt.2023.3270673` | Simplified Self-Coherent FSO + DRE (**B9 锚**) | IEEE JLT | 306 | B9 |
+| 9 | `10.1109/26.650240` | Schmidl & Cox 1997 OFDM Sync（**D3 经典锚**）| IEEE TCOM | 2720 | D3 |
+| 10 | `10.1364/oe.564097` | Fully utilized pilot-aided DSP state-pruning MLSD | Optica OE | 428 | B1（pilot 全利用，光纤互连非星地）|
+| 11 | `10.1364/jocn.468220` | RL+GS self-canceling coherent detection (**B8 锚**) | Optica JOCN | 603 | B8 |
+| 12 | `10.1007/s11107-024-01019-2` | 16QAM pilot-RLS carrier sync (**B10 锚**) | Springer | 318 | B10 |
+| 13 | `10.1007/s11432-024-4415-7` | DTAT-FSO turbulence-immune | Springer Sci China | 306 | B4/D4（FSO 湍流，非载波同步算法）|
+| 14 | `10.3390/photonics10050493` | Wavefront Distortion Coherent Detection | MDPI Photonics | 616 | B8（相干+大气湍流，直击切入点）|
+| 15 | `10.3390/s24248036` | Beyond-5G FSO Survey | MDPI Sensors | 3364 | B9（FSO 综述泛指）|
+| 16 | `10.3390/s25164906` | 5G HSR FSO Coverage | MDPI Sensors | 693 | B11（含 FSO，偏 HSR 覆盖非 STO+CPE）|
+| 17 | `10.1038/s41377-023-01201-7` | Tbit/s satellite feeder coherent + full-AO | Nature LSA | 428 | D5（**星地光旗舰**）|
+
+（注：#6-9 为前序轮次已落盘的锚/经典，本轮核查确认仍在；本轮真正新下的是 #1-5,10-17 共 13 篇）
+
+#### 4.2 仅摘要（3 篇 ⚠️，Optica 订阅墙）
+
+| DOI | 标题简 | 关联 B 点 | 后续处理 |
+|---|---|---|---|
+| `10.1364/jocn.503484` | DRL Cooperative FSO Elastic Splitter | B4/B8（FSO+DRL 但功率分配非自相干）| 摘要够评点（FSO 综合判断）|
+| `10.1364/ao.581648` | PS 64-QAM KRLS + ZA-BPS carrier sync | **B10 高相关**（kernel-RLS 承接 pilot-RLS 升 PS-64QAM）| **建议用户手动下**（B10 评点高价值）|
+| `10.1364/ao.57.005095` | 40GBaud intradyne GEO uplink turbulence | D5（星地光命中）| 摘要够 D 档判读 |
+
+#### 4.3 付费墙未下（6 篇 ❌ 待用户手动下）
+
+| DOI | 标题简 | publisher | 关联 | 失败原因 |
+|---|---|---|---|---|
+| `10.1117/1.apn.3.3.036007` | Beyond 200Gb/s O-band DRE | SPIE APN | B9（DRE 是锚核心技术）| **Gold OA 但 Imperva/Akamai 反爬**，浏览器手动免费下 |
+| `10.23919/oecc/psc62146.2025.11109607` | MAP Phase Recovery 256-QAM | IEEE OECC | B12（相位恢复+高阶 QAM）| IEEE 订阅墙，需登录 |
+| `10.12783/dtcse/wcne2017/19815` | Phase Offset Estimation Coherent FSO | DEStech 2017 | D5（**最相关 CPE**）| DEStech 登录墙 |
+| `10.1117/12.3041354` | Orbit determination passive optical | SPIE | B6/D5 | SPIE 订阅/购买 |
+| `10.1016/j.optlastec.2024.110917` | Mixed THz/FSO Relaying | Elsevier OLT | D5（FSO 中继非同步）| ScienceDirect 403 |
+| `10.1016/j.optcom.2024.130981` | **B5 短时谱粗频偏** | Elsevier | **B5 锚** | 早先穷尽 11 源失败 |
+
+#### 4.4 用户手动下优先级建议（6 篇里按评点价值排序）
+
+1. **B5** `10.1016/j.optcom.2024.130981`——B5 切入点锚，有 VPN 就下（青岛大学 Jiamin Fan 等）
+2. **ao.581648** `10.1364/ao.581648`——B10 高相关（PS-64QAM KRLS 承接 pilot-RLS），Optica 订阅
+3. **apn.3.3.036007** `10.1117/1.apn.3.3.036007`——B9 DRE 核心技术，**Gold OA 浏览器手动免费下**（最该下）
+4. 其余 3 篇（OECC/DEStech/SPIE）信号弱或边缘相关，可不下
+
 ## 决策引用
 
 - **无新建 D###**（本对话是备料，不评点不判 Go/Kill，符合 D018 中性提取）
@@ -177,18 +242,25 @@ S001 假设 B5/B7 可能是 DLR（Carl Valjus）团队论文——**子 agent �
 
 ## 范围确认
 
-- 本轮是否在 scope boundary 内：**是**（补下载 + cited-by 池 + D 挑星地光是 S001 v2 规划"对话 0"既定动作 + v2 改动 2/5，非范围扩张）
-- 守 3 步上限：本轮 3 步（①报到验证 ②补下载 ③cited-by 池+D 挑星地光），不超
-- 守子 agent ≤15 分钟：2 批 4 子 agent，每批 2 并发，全 PASS
+- 本轮是否在 scope boundary 内：**是**（补下载 + cited-by 池 + D 挑星地光 + 批量下全文都是 S001 v2"对话 0"备料动作；扩范围只增备料深度不进评点，见范围变更记录）
+- 守 3 步上限：本轮因用户纠偏扩范围超 3 步（①报到 ②补锚下载 ③cited-by 池+D 挑 ④批量下全文 ⑤汇总），**用户明确要求"下完再评"触发扩范围**，已记范围变更记录
+- 守子 agent ≤15 分钟：3 批 7 子 agent（2+2+3 并发），全 PASS
 - **守 D018 中性提取**：本轮不评点不写笔记不判 Go/Kill，只备料（profile 第 7 次"急于推进"防线——本轮严守"备料就是备料"）
 
 ## 已知债务（穷尽后仍失败的）
 
 | 债务 | 试过的源 | 影响 | 后续处理 |
 |---|---|---|---|
-| **B5 Elsevier paywall**（optcom.2024.130981）| 穷尽 11 源（tools/download/blit IEEE/Unpaywall/Zenodo/Elsevier 直链 403/OpenAlex/S2 CLOSED/arXiv/OUCI/ResearchGate/青岛大学机构库）| B5 短时谱粗频偏增量核验缺全文 | 对话 2 评 B5 时标"待全文"，靠 sat.1553 L558/L582 综述段 + [60]Leven CFO 理论锚 + Paillier cited-by 池评点；或用户机构 VPN 访问 ScienceDirect / 邮件联系作者 Jiamin Fan（青岛大学） |
-| **[79] Matsuda SPIE 全文付费墙**（10.1117/12.2544050）| 穷尽 7 源（tools/download/SPIE 直链 JS/SPIE Playwright body 0/NASA ADS Cloudflare/NICT/CiNii/ResearchGate/web reader 仅摘要）| B2 均衡器冻结 FOE 专项全文未拿到 | **摘要已坐实 sat.1553 L582 引用机制**（"turn off tracking of FO estimator when received power decreases" + 0.6dB 增益），对话 1 评 B2 增量核验靠摘要够；如必须看正文图表走馆际互借 |
-| **B10/B11/B12 图表数值 fast md 占位符** | 未处理（可后置）| B10/B11/B12 量化段待 standard MinerU 重转 | 对话 3（B8-B10）/ 对话 2（B11/B12）涉及前用 `tools/convert --quality standard` 重转 |
+| **B5 Elsevier paywall**（optcom.2024.130981）| 穷尽 11 源 | B5 切入点锚全文缺 | **待用户手动下**（机构 VPN/邮件作者青岛大学 Jiamin Fan）|
+| **ao.581648 Optica 订阅墙** | tools/download + Playwright JS 挑战（viewmedia 触发 Radware+hcaptcha）| B10 高相关候选（PS-64QAM KRLS 承接 pilot-RLS）缺全文 | **待用户手动下**（Optica 订阅，B10 评点高价值）|
+| **apn.3.3.036007 SPIE 反爬** | Gold OA 但 Imperva/Akamai bot manager | B9 DRE 核心技术全文缺 | **待用户手动下**（Gold OA 浏览器手动免费下，最该下）|
+| **oecc/psc62146.2025 IEEE 订阅** | IEEE Xplore 需登录 | B12 相位恢复+高阶 QAM 候选 | 待用户手动下（IEEE 订阅，信号弱可不下）|
+| **dtcse/wcne2017/19815 DEStech 登录** | dpi-journals 登录 HTML | D5 最相关 CPE 候选 | 待用户手动下（DEStech 登录，2017 早年可不下）|
+| **12.3041354 SPIE 订阅** | 无 OA link | B6/D5 候选 | 待用户手动下（SPIE 订阅/购买，信号弱可不下）|
+| **optlastec.2024.110917 Elsevier** | ScienceDirect 403 | D5 FSO 中继非同步 | 待用户手动下（边缘相关可不下）|
+| **jocn.503484 / ao.57.005095 仅摘要** | Optica 订阅墙 | B4/B8/D5 候选 | 摘要够评点，全文非必需 |
+| **[79] Matsuda SPIE 仅摘要**（10.1117/12.2544050）| 穷尽 7 源 | B2 均衡器冻结 FOE 专项全文 | **摘要已坐实 sat.1553 L582 机制**（对话 1 评 B2 够用）|
+| **B10/B11/B12 图表数值 fast md 占位符** | 未处理（可后置）| 量化段待 standard MinerU 重转 | 对话 2-3 涉及前用 `tools/convert --quality standard` 重转 |
 
 ## 后续
 

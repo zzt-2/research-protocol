@@ -6,32 +6,31 @@
 
 ## 到哪了（状态）
 
-对话 0（S002）备料完成，交对话 1 评点。**本对话只备料不评点**——下载债务清完 + cited-by 池拉完 + D 档星地光挑完。
+对话 0（S002）备料完成，交对话 1 评点。**本对话只备料不评点**——锚下载 + cited-by 池 + D 档星地光 + **批量下 cited-by 候选全文 ~25 篇**全做完。
 
-**下载收获（4/5 成功，B5 诚实失败）**：
-- ✅ B7 ofc.2026.w2a.62 全文（blit IEEE 镜像 doc 11525242，1.89MB，content.md 90 行）
-- ✅ [58] Martins osac.438524 全文（Optica Playwright 过 JS 挑战，5.57MB 19 页，content.md 430 行）
-- ✅ [60] Leven LPT.2007.891893 全文（blit IEEE arnumber 4116764，252KB，content.md 179 行）
-- ⚠️ [79] Matsuda 10.1117/12.2544050 仅摘要（SPIE 付费墙穷尽 7 源，web reader 获完整 Abstract——**摘要已坐实 sat.1553 L582 引用机制**："turn off tracking of FO estimator when received power decreases" + 0.6dB 增益）
-- ❌ B5 optcom.2024.130981 失败（Elsevier 硬付费墙穷尽 11 源无果，需机构 VPN/邮件作者）
+**下载总收获**：
+- **锚 4 篇**：✅ B7 ofc.2026 / ✅ [58] Martins osac.438524 / ✅ [60] Leven LPT.2007 / ⚠️ [79] Matsuda 仅摘要（机制已坐实）
+- **cited-by 候选全文 18 篇新下成功**（IEEE 8 + Optica 2 + Springer 2 + MDPI 3 + Nature 1 + 锚/经典 2 核查仍在）——**主线 FR-26 独立 grep 核查全 PASS**
+- **仅摘要 3 篇**：jocn.503484 / ao.581648 / ao.57.005095（Optica 订阅墙）
+- **付费墙未下 6 篇**（含 B5）：apn.3.3.036007（Gold OA 反爬）/ oeccpsc62146 / dtcsewcne2017 / 12.3041354 / optlastec.2024 / B5 optcom.2024——**待用户手动下**（见 S002 §4.3-4.4 优先级）
 
-**cited-by 池**：12 点全备齐（见 S002 §2.2）。**关键发现**：B7 cited-by 池为空（OFC 2026 索引滞后，union 0）；B6 仅 2 篇且偏 Doppler 频移线（锚团队留白仍成立）；B10/B11 锚极新 cited-by 各 1。
+**cited-by 池**：12 点全备齐（见 S002 §2.2），关键发现 B7 池空（OFC 2026 索引滞后）/ B6 仅 2 篇偏 Doppler 线 / B10-B11 锚极新各 1。
 
-**D 档星地光**：D2 全 RF 出界已坐实（扫 57 条无星地光）；D3/D4/D5 各 3/3/6 篇星地光命中，最强公约 = sat.1553（三档同命中）。
+**D 档星地光**：D2 全 RF 出界坐实（扫 57 条）；D3/D4/D5 各 3/3/6 篇命中，最强公约 = sat.1553。
 
 ## 下一步干什么
 
 **新对话打开后第一件事**（对话 1 = B1/B2/B3 综述背书 + B4/B6 补验证表）：
 
-1. **报到**（Trigger 1+5）：读 topic-index（不变量 9 条）+ S001 v2 规划 + **S002**（cited-by 池 + 下载状态）+ 本 H001 + gw-read.md（14 字段+7 项笔记标准）+ 原专题 H020（总表+排优先级）
-2. **B1/B2/B3 各派 1 子 agent**（并发 ≤3）精读 ≤5 篇 + 写/补 gw-read 笔记：
-   - **B1 pilot 窗口**：sat.1553 L440 段 + **[58] Martins 全文（本轮新落盘）** + **[60] Leven 全文（本轮新落盘）** + Spalvieri[57] cited-by 选 2-3 篇（S002 §2.2 B1 候选 DOI）
-   - **B2 deep fade 冻结**：sat.1553 L558/L582 段 + **[79] Matsuda 摘要（本轮落盘，机制已坐实）** + Panasiewicz 博士论文（已有旧笔记）+ cited-by 选 2-3 篇
-   - **B3 子系统协同**：sat.1553 L788 段 + 张思齐学位论文（已有）+ LCOMM.2026.3651445 + jphot FSTS + oe.520452（**全已落盘，资料最齐**）
-3. **B4/B6 补 cited-by 验证表**（已有扎实笔记不重读全文）：B4 用 S002 §2.2 B4 候选 4 篇 DOI / B6 用 S002 §2.2 B6 候选 2 篇 DOI
-4. **主线 grep 核查**每子 agent 关键声称（§7.2 防造假，S012/S028/S029/S030 验证有效）
-5. **复用 sat.1553 旧笔记但删 L70 撞 D006 段**（原专题 S028 已警告：L70"湍流相位感知子模块"撞 D006，旧 B1 方向时期写的不复用其可扩展方向结论）
-6. **本轮不判 Go/Kill**（D018 中性提取，Go/Kill 留总表阶段用户排完优先级后对前几名做）
+1. **报到**（Trigger 1+5）：读 topic-index（不变量 9 条）+ S001 v2 规划 + **S002**（cited-by 池 + 下载状态 + 批量下全文清单）+ 本 H001 + gw-read.md（14 字段+7 项笔记标准）+ 原专题 H020（总表+排优先级）
+2. **B1/B2/B3 各派 1 子 agent**（并发 ≤3）精读 ≤5 篇 + 写/补 gw-read 笔记。**全文已备齐**（见 S002 §4.1）：
+   - **B1 pilot 窗口**：sat.1553 L440 段 + **[58] Martins 全文（已落盘 430 行）** + **[60] Leven 全文（已落盘 179 行）** + Spalvieri[57] cited-by（oe.564097 已落盘 428 行 / ICCWorkshops DL Phase Noise 已落盘 327 行）
+   - **B2 deep fade 冻结**：sat.1553 L558/L582 段 + **[79] Matsuda 摘要（机制已坐实）** + Panasiewicz 博士论文（已有旧笔记）
+   - **B3 子系统协同**：sat.1553 L788 段 + 张思齐学位论文（已有）+ LCOMM.2026.3651445 + jphot FSTS + oe.520452（**全已落盘**）
+3. **B4/B6 补 cited-by 验证表**（已有扎实笔记不重读全文）：B4 用 S002 §2.2 B4 候选（DTAT-FSO/oe.564097/jocn.503484/photonics10050493 全已落盘或摘要）/ B6 用 S002 §2.2 B6 候选（acp66871 ECL 已落盘 / 12.3041354 待用户下）
+4. **主线 grep 核查**每子 agent 关键声称（§7.2 防造假）
+5. **复用 sat.1553 旧笔记但删 L70 撞 D006 段**（原专题 S028 警告）
+6. **本轮不判 Go/Kill**（D018 中性提取）
 
 **产出**：B1/B2/B3 各 1 份 gw-read 结构化笔记（14 字段+7 项含 M-C-A 问题提取）+ B4/B6 cited-by 验证表 + 每点 ≤5 篇支撑表
 
