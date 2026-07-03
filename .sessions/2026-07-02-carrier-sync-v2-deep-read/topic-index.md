@@ -1,7 +1,7 @@
 # Topic Index: 载波同步 v2 精读沉淀
 
 > slug: 2026-07-02-carrier-sync-v2-deep-read
-> status: active | created 2026-07-02 | last_updated 2026-07-02（S001 规划文档落盘——S030 后用户戳穿两个硬伤：①B8-B12 五篇零篇 gw-read 精读笔记 ②B 档 12 点每点只读 1 篇切入论文，D017 步骤 4 每点 ≤5 篇验证没做。本专题补强：全 12 点每点 ≤5 篇 cited-by 验证 + 12 份 gw-read 结构化笔记 + literature_notes 载波同步 v2 章节并入。拆 5 执行对话，用户审同意后才开。详见 S001）
+> status: active | created 2026-07-02 | last_updated 2026-07-03（S002 对话 0 备料完成——补下载 4/5 成功【B7/[58]/[60] 全文 + [79] 摘要，B5 Elsevier 硬付费墙穷尽 11 源失败】+ cited-by 池 12 点全备齐【B7 池空 OFC 2026 索引滞后 / B6 仅 2 篇 / B10/B11 锚极新各 1】+ D 档星地光挑完【D2 全 RF 出界坐实扫 57 条 / D3-D5 各 3/3/6 篇命中】。交对话 1 评 B1/B2/B3+B4/B6 验证表。详见 S002 + H001）
 
 ## 专题定位（一句话）
 
@@ -66,10 +66,14 @@
 
 ## 当前位置
 
-**🟡 S001 规划文档落盘，待用户审同意后开对话 0 执行**（2026-07-02）。S001 定了拆分方案（5 对话）+ 验收标准 + 纪律。用户审同意 → 开对话 0（补下载 + cited-by 池拉取）→ 对话 1-4 依次执行。
+**🟢 S002 对话 0 备料完成，交对话 1 评点（2026-07-03）**。S002 执行 S001 v2 规划"对话 0"：①补下载 5 篇阻塞债务——**4/5 成功**（B7 blit IEEE 镜像 / [58] Martins Optica Playwright / [60] Leven blit IEEE 全文 / [79] Matsuda web reader 摘要坐实机制），**B5 Elsevier 硬付费墙穷尽 11 源失败**诚实标；②cited-by 池 12 点全备齐（B1-B6 复用 search-archive/2026-07-02/ 缓存 + B7-B12 新拉 6 JSON）——**关键发现**：B7 cited-by 池空（OFC 2026 索引滞后 union 0）/ B6 仅 2 篇偏 Doppler 频移线（锚团队留白仍成立）/ B10/B11 锚极新 cited-by 各 1；③D 档挑星地光——D2 全 RF 出界坐实（扫 57 条无星地光，R004 判定成立）/ D3-D5 各 3/3/6 篇星地光命中，最强公约 = sat.1553（三档同命中）。守 D018 中性提取不评点不写笔记不判 Go/Kill。详见 S002 + H001。
+
+**下一步**：对话 1 评 B1/B2/B3 综述背书（每点 ≤5 篇精读，cited-by 池已备齐）+ B4/B6 补 cited-by 验证表（已有扎实笔记不重读全文）。**本轮下载收获**：[58]/[60] 全文 + [79] 摘要 → B1/B2 增量核验素材备齐。
 
 **上游来源**：原专题 `2026-06-20-problem-driven-redirection` S030（判读层收尾 + 总表落盘）+ 用户纠偏（"读了就读了啥也没留下"+"每点只有 1 篇？"→"开个新专题好好规划"）。
 
 ## 进展线索
+
+- **S002 对话 0 补下载 + cited-by 池 + D 挑星地光（2026-07-03，备料不评点）**。执行 S001 v2"对话 0"：①**补下载 5 篇阻塞债务**——派 2 子 agent 穷尽降级源，**4/5 成功**（B7 ofc.2026.w2a.62 blit IEEE 镜像 doc11525242 1.89MB + content.md 90 行 / [58] Martins osac.438524 Optica Playwright 过 JS 挑战 5.57MB 19 页 + content.md 430 行 / [60] Leven LPT.2007.891893 blit IEEE arnumber4116764 252KB + content.md 179 行 / [79] Matsuda 10.1117/12.2544050 web reader 仅摘要——**摘要坐实 sat.1553 L582 FO 估计器冻结机制**），**B5 optcom.2024.130981 Elsevier 硬付费墙穷尽 11 源失败**（诚实标，建议机构 VPN/邮件作者青岛大学 Jiamin Fan）；②**cited-by 池 12 点全备齐**——B1-B6 复用 search-archive/2026-07-02/ 缓存（sat1553/paillier/kikuchi/opll-photonics/spalvieri/martins/schmidl-cox/twc2024 + carrier-sync-forward-citedby-summary.md），B7-B12 新拉 6 JSON（ofc2026-w2a-62/jocn-468220/jlt-2023-3270673/s11107-2024-01019-2/lpt-2024-3523478/tcomm-2022-3171809），主线独立 grep 核查 6 JSON 落盘 PASS。**关键发现**：B7 cited-by 池空（OFC 2026 索引滞后 union 0，对话 2 用 backward refs 补）/ B6 仅 2 篇且偏 Doppler 频移线非 OPLL sin 鉴相器（锚团队留白仍成立）/ B10/B11 锚极新 cited-by 各 1；③**D 档挑星地光**——逐个扫 D2-D5 cited-by JSON 标题（不准凭印象），D2 全 RF 出界坐实（扫 57 条无星地光，R004 判定成立）/ D3-D5 各 3/3/6 篇星地光命中，最强公约 = sat.1553（三档同命中），D5 Kikuchi 2008 命中最多（6 篇星地光相干载波）。守 D018 中性提取不评点不写笔记不判 Go/Kill（严守"备料就是备料"，profile 第 7 次"急于推进"防线）。**事实修正**：S001 假设 B5/B7 是 DLR 团队——实际 B5 青岛大学 / B7 北邮。**S001 原估 B7 cited-by 1-2 篇偏乐观，实测池空（OFC 2026 太新）**。本轮无新建 D###。详见 S002 + H001。**下一步：对话 1 评 B1/B2/B3 综述背书 + B4/B6 补 cited-by 验证表**。
 
 - **S001 载波同步 v2 精读沉淀规划（2026-07-02，本专题首 session，只规划不执行）**。规划补强 D017 步骤 4"每点 ≤5 篇验证" + gw-read 精读笔记沉淀。**现状盘点**：B1/B4/B6 已有扎实笔记（68-84 行）+ B5/B7 薄（25/29 行需补厚）+ B8-B12 零篇需新写 + 每点 ≤5 篇验证全没做。**拆分方案 5 对话**：对话 0 补下载（B5/B7 blit + [58][60][79] sat.1553 引文）+ cited-by 池拉取 → 对话 1 B1/B2/B3 综述背书（每点 ≤5 篇）→ 对话 2 B4/B5/B6/B7 CFO（每点 ≤5 篇 + 补厚 B5/B7）→ 对话 3 B8/B9/B10 自相干+16-QAM（每点 ≤5 篇 + 新笔记 + 自相干辨析 + 16-QAM 种子联读）→ 对话 4 B11/B12 + literature_notes.md 并入。**验收**：每点 ≤5 篇 cited-by 支撑 + 12 份 gw-read 14字段+7项结构化笔记 + literature_notes 载波同步 v2 章节含综合分析+Q# 候选。**纪律**：守 3 步上限 + 子 agent 不看太多 + 主线 grep 核查 + D018 中性提取不判 Go/Kill + D006/范围硬门保留。**用户审同意后才执行**。详见 S001。**下一步：用户审 S001 规划 → 同意则开对话 0 执行**。

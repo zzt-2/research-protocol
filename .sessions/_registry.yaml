@@ -293,7 +293,7 @@ topics:
     title: 载波同步 v2 精读沉淀（每点 ≤5 篇验证 + gw-read 结构化笔记 + literature_notes 并入）
     status: active
     created: "2026-07-02"
-    last_updated: "2026-07-02（S001 规划文档落盘——原专题 S030 判读收尾后用户戳穿两个硬伤：B8-B12 五篇零篇 gw-read 精读笔记 + B 档 12 点每点只读 1 篇切入论文。本专题补强 D017 步骤 4 每点 ≤5 篇验证 + gw-read 14字段+7项结构化笔记沉淀 + literature_notes 载波同步 v2 章节并入。拆 5 执行对话，用户审 S001 同意后开对话 0）"
+    last_updated: "2026-07-03（S002 对话 0 备料完成——补下载 4/5 成功【B7/[58]/[60] 全文 + [79] 摘要，B5 Elsevier 硬付费墙穷尽 11 源失败】+ cited-by 池 12 点全备齐【B7 池空 OFC 2026 索引滞后 / B6 仅 2 篇 / B10/B11 锚极新各 1】+ D 档星地光挑完【D2 全 RF 出界坐实扫 57 条 / D3-D5 各 3/3/6 篇命中】。交对话 1 评 B1/B2/B3+B4/B6 验证表。详见 S002 + H001）"
     description: "承接原专题 2026-06-20-problem-driven-redirection S030 判读层收尾。载波同步 v2 B 档 12 候选虽判完拉了总表，但每点只读 1 篇切入论文、B8-B12 五篇零精读笔记。本专题补扎实：全 12 点每点 ≤5 篇 cited-by 验证 + 12 份 gw-read 结构化笔记（B8-B12 新写/B5-B7 补厚/B1-B6 复用）+ literature_notes 载波同步 v2 章节含综合分析+Q# 候选。让总表每行有结构化沉淀支撑。守 D017/D018/D006/D005/D009 降级 + D018 中性提取不判 Go/Kill。拆 5 对话：补下载+cited-by池 → B1/B2/B3 → B4-B7 → B8-B10 → B11/B12+literature_notes。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
