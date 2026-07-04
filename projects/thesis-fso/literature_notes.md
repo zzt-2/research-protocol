@@ -22,7 +22,7 @@
 | 1 检索        | ✅   | 2026-05-29 + S003-S010 地勘五轮（landscape 683 主表） | 早期 21+6 条 + 地勘 683 主表 |
 | 2 获取        | ✅   | 2026-06-26 | H004 块 A 7 篇 + H005 块 B 6 篇，OA + IEEE(blit) |
 | 3 精读        | ✅   | 2026-06-26 | **本轮块 C 完成**：10 篇精读 + 综合分析 + Q# 清单 |
-| 3.5 补充      | 🔄部分 | 2026-06-27 | 检索✅+召回Q11-Q13✅，下载精读债务（Paillier2020JLT/Rustum2026/Tang2024/Mosnier2025/Viterbi1983）| 块 D：盲区A/B定向补检索 + 召回旧B1资产 |
+| 3.5 补充      | 🔄部分 | 2026-06-27 + **2026-07-04 载波同步 v2 精读沉淀补强** | 检索✅+召回Q11-Q13✅，下载精读债务（Paillier2020JLT/Rustum2026/Tang2024/Mosnier2025/Viterbi1983）+ **B 档 12 候选精读沉淀补强（B1-B12 每点 ≤5 篇 cited-by + gw-read 14 字段+7 项笔记 + 35 Q# 过四判据，详见"载波同步 v2 精读沉淀"节）**| 块 D：盲区A/B定向补检索 + 召回旧B1资产 + **载波同步 v2 判读层 D017/D018 补强（专题 2026-07-02-carrier-sync-v2-deep-read）**|
 | 4a 可行性     | 🔄部分 | 2026-06-28 | 块 E：每个 Q# 走 gw-feasibility A0/A'/A/B/D。**Q12 Kill(D006) / Q8切入点2 Kill(S017) / Q8切入点4B Kill(D008) / Q1 Kill(D010)**。暂 0 Go。待评：Q8切入点1/Q2/Q3/Q7/Q10 |
 | 5 Baseline    | ⬜   |          | 块 F：Go 的 Q# 进 baseline 复现 |
 | 4b 仿真可行性 | ⬜   |          | |
@@ -385,3 +385,347 @@
 - **统计规范性平均**：低（领域惯例无 seeds/error bar，本研究 Contract 阶段应补 ≥3 seeds + error bar 超越领域惯例）
 - **Baseline 合规性平均**：中（多数自实现同平台对称，但 #6/#新1 缺直接对标是反面教材）
 - **消融设计平均**：中高（逐参数是惯例，#新5 消融不全是陷阱，本研究必须做完整消融归因 TL-15）
+
+---
+
+## 载波同步 v2 精读沉淀（2026-07-04，B 档 12 候选补强）
+
+> **来源专题**：`.sessions/2026-07-02-carrier-sync-v2-deep-read/`（承接原专题 S030 判读层收尾）
+> **目的**：原块 A/B/C/D 的 10 篇精读 + Q1-Q13 已在 Step 4a 评过（Q1/Q2/Q3/Q8切入点2/4B/Q12 Kill）。本节是**载波同步子领域 B 档 12 候选的精读沉淀补强**——D017/D018 判读层虽拉了总表但每点只读 1 篇切入论文、B8-B12 五篇零精读笔记。本节补扎实：12 份 gw-read 14 字段+7 项结构化笔记 + 每点 ≤5 篇 cited-by 验证 + 综合分析。
+> **守 D018 中性提取**：Q# 只标 D006/D005/范围三维，**不判 Go/Kill**（Go/Kill 留总表阶段用户排完优先级后对前几名做）。
+> **35 Q# 计数修正**：S005 原报"26 Q#"是计数 bug（B1-B7=20 + B8 主判定+2=3 + B9×3 + B10×3 = 29，非 26）。本轮 +B11×3 +B12×3 = **35 Q#**。
+
+### 载波同步 v2 综合分析
+
+#### 现有方法分类（B 档 12 候选，按技术路线 6 类）
+
+1. **DSP 前馈 FOE/CPE（5 篇，主热区）**：B5 短时谱粗 CFO（正负功率谱面积比，optcom 2024，±4.5GHz 覆盖 LEO Doppler）/ B7 Gardner TED 复用 FOE（TED 增益周期相关，OFC 2026，0.6dB+1.9×范围）/ B11 NDA-ML 联合 STO+CPE（升 M₀ 次幂盲去调制→单正弦 ML 闭式，PTL 2025，+2dB vs DA ML）/ B12 锚频域 CW pilot（in-band/out-of-band + improved 估计器≈MVU，TCOMM 2022）/ B10 pilot-RLS 联合 CFO+PN（h1→CFO/h0→PN，s11107 2024，高 CFO 10GHz 鲁棒）。共同范式：**前馈 DSP 处理，无环路 TF，不撞 D006**。
+
+2. **OPLL 硬件锁相（2 篇）**：B6 Z-ODPLL（atan2 鉴相器 KD 与 Ps 解耦，全湍流态保锁 σ=2.6°/0.42dB/容 30ns）/ B4 双反馈环（外环 PADE 大动态 + 内环 V-V RFO 精补 + 前馈 V-V 相位，optcom 2023）。共同范式：**环路锁相，撞 D006 边界**（若环路 TF 联合建模则撞，只标不砍）。
+
+3. **自相干架构绕过载波同步（2 篇，B8 特例）**：B8 RL+GS 自相干（square-law+LPF 自消除 CFO/相位噪声，PAM4 直接判决，**载波同步被绕过**）/ B9 虚拟载波自相干+DRE（数字域 DSP 插入 carrier tone，DRE 把量化噪声挤出带外，~3dB @ 3PNOB）。共同范式：**用架构消除载波恢复需求**，与 B1-B7/B10-B12 改进载波恢复正交。
+
+4. **pilot-aided 高阶 QAM CPE（2 篇）**：B10 pilot-RLS（16-QAM，D011 种子"16-QAM CPR 扩展"落地）/ B12 MAP（256-QAM MAP Phase Recovery，OECC 2025，MAP vs PA 差 3.5dB）。共同范式：**pilot 驱动 + 高阶 QAM 相位估计**，D011 种子延伸。
+
+5. **子系统协同（1 篇）**：B3 一套 FPT 跨 FOE+CPE+RSOP（jphot+oe 合并 +2~3dB 强湍 4 支路 / LCOMM B3 视角 +0.9dB Q）。范式：**跨子系统共享 pilot + 依赖解耦联合协同**。
+
+6. **NDA-ML 盲估计（1 篇）**：B11 升 M₀ 次幂盲去调制（无 pilot 保留频谱效率）+ Wang[13] 单正弦 ML 闭式。范式：**NDA 盲估计**，区别于 pilot-aided。
+
+#### 已知局限（领域级空白原料，**非问题**，须经 Q# 转译）
+
+> 注意：本节按 glossary.md 是空白（领域级新颖性原料），不能直接当研究起点。
+
+B 档 12 篇的共同不足：
+
+1. **D006 边界模式重复 7 次**（B3-Q3/B6-Q2/B7-Q2/B9-Q3/B10-Q2/B11-Q2/B12-Q3）——"前馈/工具层不撞，环路 TF 联合建模则撞"是潜在一致性研究方向（湍流相位建模边界）。**这是 B 档最重要的结构性发现**。
+2. **dB 增益集中第一梯队仅 3 个**（B3-Q2 +2~3dB / B9-Q1 ~3dB / B11-Q1 +2dB），其中 B9-Q1 baseline 是内部 w/o DRE 对照非传统相干载波同步，B11-Q1 仅 (8,8)-16APSK 成立。D005"赢传统 baseline 几 dB"硬达标的不多。
+3. **范围 out 比例高**（35 Q# 中 ~9 个 out：B3-Q1 光纤 DSCM / B5-Q2 光纤 intradyne / B8×3 地面 FSO / B10-Q1/Q3 光纤 / B12-Q1/Q2 光纤 DCI）——星地 in/in 倾向是主体（~24/35 ≈ 69%）但 out 比例较块 A/B（Q1/Q7 LEO-LEO）更高。
+4. **B8 特例"载波同步冗余"**——自相干绕过载波同步，与 B1-B7/B9-B12 改进载波恢复本质正交。提示"自相干架构替代传统载波同步链"是另一条潜在路线（B9 也走这条路 Q2），但 B8/B9 主场景都非星地。
+5. **D011 种子"16-QAM CPR 扩展"落地**——B10（16-QAM pilot-RLS）+ B12 MAP（256-QAM MAP）+ ao.581648（PS-64QAM KRLS 承接，同作者团队 Deka/Krishnamurthy），pilot-RLS→KRLS 是核方法非线性升级。三者都光纤 out，迁移星地是 Q# 维度。
+6. **统计严谨性普遍不足**：12 篇无一报告 seeds 数/error bar/统计检验（同块 A/B 领域惯例盲点）。
+7. **多数未涉大气湍流**：B5/B7/B11/B12 锚全文无湍流建模（仅 Doppler/AWGN+激光线宽）；B4/B6/B3 含湍流但简化（Gamma-Gamma 数值叠加非真实大气）。湍流相位扰动对载波同步算法的影响是 open gap。
+
+#### 2-3 年趋势（从 B 档发表年份 2022-2026 推断）
+
+1. **DSP 前馈替代 OPLL 硬件**：B5/B7/B10/B11/B12 都是 DSP 前馈 FOE/CPE（2022-2026），仅 B4/B6 保留 OPLL 硬件锁相。趋势与块 A/B 一致（全数字 DSP 替代光学硬件）。
+2. **NDA 盲估计兴起**：B11 NDA-ML（2025）保留频谱效率，区别于 pilot-aided（B10/B12）。2024-2026 年 NDA 方法开始系统化（Wu[11]/Hu[12] 经典理论锚 + B11 闭式解）。
+3. **自相干架构成熟**：B8（JOCN 2023）+ B9（JLT 2023）+ apn DRE（2026）形成"自相干绕过载波同步"技术线，2023-2026 持续演进（DRE 量化噪声整形 + 虚拟载波）。
+4. **高阶 QAM CPE 升级**：B10 pilot-RLS（2024）→ B12 MAP（2025）→ ao.581648 KRLS（PS-64QAM），pilot-RLS→MAP→KRLS 是"线性→贝叶斯→核方法"的估计器升级链，2024-2026 活跃。
+5. **D006 边界模式持续出现**：7 次"前馈/工具层不撞，环路 TF 联合建模则撞"在 B 档重复，预示**湍流相位建模边界**是潜在一致性研究方向（但 Go/Kill 留用户）。
+
+#### 研究背景概述（载波同步子领域时间线 + 核心挑战 + 本研究定位）
+
+**时间线脉络**：
+
+- **1980s-2000s**：经典 OPLL/Costas loop/V-V CPR 主导（Gardner TED 1986 / Viterbi-Viterbi 1983 / Leven M-th power 2007）。硬件锁相 + 前馈四次方是两大范式。
+- **2010s-2020**：DSP 数字 FOE 兴起（PSA FOE Vieira 2023 / M-th power 两阶段 Diniz / Spalvieri pilot-aided）。OPLL 仍用于硬件锁相（Shoji OIPLL 2012 / Paillier AO+DPLL 2020 分治架构）。
+- **2022-2026**：①DSP 前馈 FOE 系统化（B5 短时谱 / B7 Gardner TED 复用 / B11 NDA-ML 闭式 / B12 频域 CW pilot 理论框架）；②自相干架构绕过载波同步（B8 square-law+LPF / B9 虚拟载波+DRE）；③高阶 QAM CPE 升级（B10 pilot-RLS / B12 MAP / ao.581648 KRLS）；④子系统协同（B3 跨 FOE+CPE+RSOP）。
+
+**核心技术挑战**（从 12 篇精读归纳）：
+
+1. LEO 星地链路 Doppler 频移大（±GHz 级）+ 变化率高（MHz/s 量级），传统 ±Rs/2 范围不足（B5 ±4.5GHz / B7 0-23GHz / B4 ±920MHz@0.5dB）。
+2. 大气湍流致幅相联合损伤，但多数载波同步算法未建模湍流相位（B5/B7/B11/B12 全文无湍流，仅 Doppler/AWGN+激光线宽）。
+3. 高阶调制（16-QAM/256-QAM）+ 高 CFO + 高线宽下传统 BPS/V-V 失效（B10/B12 MAP 的切入点）。
+4. D006 边界：湍流相位纳入环路 TF 联合建模被证伪（Q12 Paillier 分治够用条件性），但前馈层处理不撞——**7 次"前馈不撞/环路撞"模式**是潜在一致性研究方向。
+
+**本研究定位**（务实路线 D005）：在星地激光通信载波同步子领域，B 档 12 候选 35 Q# 中找"现有传统未优化方法 M 在具体条件 C 下因假设 A 不够好"的改进空间。**第一梯队 dB 达标候选**（B3-Q2 +2~3dB / B9-Q1 ~3dB / B11-Q1 +2dB）是 Go 判据的硬证据候选，但各有条件性（B9 baseline 内部对照 / B11 仅 (8,8)-16APSK / B3-Q2 范围 in 但分集增益不可全迁）。**D006 边界模式 7 次**是潜在一致性研究方向（湍流相位建模边界）。Go/Kill 留总表阶段用户排完优先级后对前几名做。
+
+#### 研究问题清单 [MUST]（B 档 35 Q# 汇总，过 glossary 四判据）
+
+> 问题定义见 `stages/glossary.md`（问题 = "现有方法 M 在条件 C 下因假设 A 失效/不足"，四判据）。
+> 本表是 Contract Step 1 假设的**唯一合法引用来源**（每个假设引用一个 Q#）。
+> **D018 中性提取**：本表只标 D006/D005/范围三维 + 四判据逐条，**不判 Go/Kill**。Go/Kill 留总表阶段用户排完优先级后对前几名做。
+> **判据 A（D005 修正）**：baseline 在具体条件下不够好 + 有改进空间（不要求"致命失效"）。
+> **链路匹配标注**：标题"星地"为范围约束。出范围（光纤/地面 FSO/ISL）标 ⚠️链路。
+> **dB 量级参考**：同门学位论文 2-4dB 区间。第一梯队 +2~3dB（B3-Q2/B9-Q1/B11-Q1）/ 第二梯队 +0.6~1dB+结构性优势 / 第三梯队待定量锚。
+
+> **35 Q# 全表见 `.sessions/2026-07-02-carrier-sync-v2-deep-read/S006-conversation4-b11b12-eval.md` §B1-B12 全 12 点总表**（本表只列四判据全过 + 边际够格的候选，其余标"未过"记录筛掉理由防复现）。
+
+**四判据全过候选**（D005 够格 + 范围 in/in 倾向 + 四判据 ✅）：
+
+| Q# | M（失效/不足的现有方法） | C（条件） | A（失效假设） | 方法产出形态 | 判据1 | 判据2 | 判据3 | 判据4 | 来源 |
+|----|------|------|------|------|------|------|------|------|------|
+| **B3-Q2** | 传统分立 FOE+CPE+RSOP 管线（多套 pilot 独立） | 强湍流 FSO 4 支路分集 | 多套 pilot 独立致开销高+联合信息未利用 | DSP 联合协同算法（一套 TS 多 FOE+MRC） | ✅ | ✅ 算法 | ✅ 分立管线自实现 | ✅ +2~3dB / 复杂度降 75% | B3 jphot+oe |
+| **B9-Q1** | w/o DRE 自相干 FSO（量化噪声未整形） | 地面 FSO 42m + 低分辨率 DAC（3 PNOB） | 低分辨率 DAC 量化噪声致 SNR 退化 | TX 侧量化噪声整形算法（DRE 动态量化+Viterbi） | ✅ | ✅ 算法 | ✅ w/o DRE 内部对照 | ✅ ~3dB @ 3PNOB（行 243/253）⚠️baseline 内部对照非传统相干载波同步 | B9 jlt.2023.3270673 ⚠️地面 FSO 待迁移星地 |
+| **B11-Q1** | DA ML（单 pilot 符号 decision-aided，高星座密度判决错误传播）+ PA（频域 pilot subcarrier，无 STO 能力） | CO-OFDM M-APSK (8,8)-16APSK，25 GBaud，CLW 扫至 500kHz，7% HD-FEC | DA ML 高星座密度判决错误传播；PA 频谱效率低且无 STO | DSP 盲估计算法（NDA-ML 升 M₀ 次幂+单正弦 ML 闭式） | ✅ | ✅ 算法+闭式 | ✅ DA ML[10]+PA[8] 自实现 | ✅ +2dB SNR gain @ (8,8)-16APSK（行 181/191）⚠️仅 (8,8)-16APSK 成立，CLW 容限付 1dB cost；声明 FSO 但仿真未建模 FSO 信道 | B11 lpt.2024.3523478 ⚠️声明 in 仿真未验证 |
+
+**边际够格候选**（D005 边际够格 + 范围 in 或结构性优势）：
+
+| Q# | M-C-A 浓缩 | D005 | 范围 | 四判据 | 来源 |
+|----|-----------|------|------|--------|------|
+| **B1-Q1** | 自适应 window N（sat.1553 固定 + [60] N∝SNR；强湍 SNR 波动）| +1dB（pilot vs VV+diff）倾向够格但有风险 | in | 判据1-4 ✅（理论锚 [60] 背书）| B1 sat.1553 |
+| **B2-Q2** | FOE freeze + pilot 双模切换（[79] blind freeze；fade 恢复期需快速重捕获）| +1dB（pilot 在 fade）倾向够格增量未量化 | in | 判据1-4 ✅ | B2 [79]+sat.1553 |
+| **B7-Q1** | Gardner TED 复用 FOE（TED 增益周期相关，扫频+双候选+TED2 判决）| 0.6dB @ BER 2e-2 + 1.9×范围（0-23GHz）+ OSNR 10dB 边际够格 | in（星地 COSC）| 判据1-4 ✅（baseline PSA FOE 明确）| B7 ofc.2026.w2a.62 |
+| **B10-Q1** | Pilot-RLS 联合 CFO+PN（h1→CFO/h0→PN，替代 BPS+4OPM；高 CFO 10GHz/高线宽 1.45MHz 鲁棒）| 无统一 dB gain，优势在范围/鲁棒性边际够格 | ⚠️out 光纤/待迁移星地 | 判据1-3 ✅ 判据4 ⚠️（无统一 dB）| B10 s11107-024 |
+| **B5-Q1** | 短时谱粗 CFO（正负功率谱面积比，全文核验升级）| dB 维度不够格 / 范围结构性优势（±4.5GHz 覆盖 LEO Doppler）| in（星地 LEO 下行确证）| 判据1-3 ✅ 判据4 ⚠️（无 vs baseline dB）| B5 optcom.2024.130981 |
+| **B6-Q1** | atan2 鉴相器 KD 与 Ps 解耦（全湍流态保锁，容 30ns 延迟）| 定性保锁 σ=2.6°/0.42dB + 容 30ns 边际够格（非几 dB）| in | 判据1-4 ✅（定性保锁是维度）| B6 Photonics2023 |
+| **B12-Q2** | MAP 联合 ML/MAP 相位估计（256-QAM + AOPN + block-wise 并行）迁移星地高阶 QAM | MAP vs PA 差 3.5dB / vs PA ML 差 1dB 边际够格（同族 dB）| ⚠️out 光纤 DCI/待迁移星地 | 判据1-3 ✅ 判据4 ⚠️（同族 dB 非传统 V-V/BPS）| B12 MAP oecc-psc62146 |
+
+**D006 边界候选**（7 次"前馈不撞/环路 TF 联合建模则撞"模式，只标不砍）：
+
+| Q# | 边界描述 | D005 | 范围 | 来源 |
+|----|---------|------|------|------|
+| B3-Q3 | sat.1553 L790 跨子系统联合协同（若环路 TF 联合建模则撞）| 待定量锚（借 +0.9~3dB）| in | B3 |
+| B6-Q2 | Z-ODPLL H(z) 建模（固定 Kd 掩盖 Ps 波动；Z 域纳入湍流则撞）| 不够格（工具）| N/A | B6 |
+| B7-Q2 | TED 增益↔Doppler 映射湍流鲁棒性（环路 TF 联合建模则撞）| 待定量锚（借 0.42~0.66dB）| in | B7 |
+| B9-Q3 | DRE 与载波同步正交性反向利用（纳入环路 H(z) 则撞）| 不够格 | in | B9 |
+| B10-Q2 | Pilot-RLS 湍流鲁棒性（RLS 状态方程联合建模则撞）| 待定量锚 | in（星地 COSC 湍流）| B10 |
+| **B11-Q2** | 湍流相位纳入 ML 似然（前馈不撞；环路 H(z) 联合建模则撞）| 待定量锚 | in（星地 FSO 湍流）| B11 |
+| **B12-Q3** | 频域 CW pilot + MAP 时域 pilot 联合架构（联合状态方程纳入湍流+多普勒则撞）| 待定量锚 | in（星地 COSC 湍流）| B12 |
+
+**未过四判据候选**（记录筛掉理由防复现，glossary.md 常见误用 1）：
+
+| Q# | 未过理由 | 来源 |
+|----|---------|------|
+| B1-Q2 | sat.1553 自承"same pilot rate performs similarly"负面证据（判据4 ❌）| B1 |
+| B2-Q1 | 0.6dB 陷阱（[79] vs 无 freeze 非增量）；≥1dB 存疑待全文（判据4 ⚠️）| B2 |
+| B4-Q1 | optcom.2023 双反馈环无外部 dB 增量（判据4 ⚠️）| B4 |
+| B4-Q3 | sat.1553 feedback open problem 无直接实例（判据2 ⚠️）| B4 |
+| B5-Q2 | [60] Leven Mth-power 理论锚 范围 out 光纤 intradyne（范围硬门 ❌）| B5 |
+| B5-Q3 | sat.1553 L558 粗 CFO 精度边界 待定量锚（判据4 ⚠️）| B5 |
+| B5-Q4 | jlt.2023 频谱扫描视角参考 维度错位（判据4 ⚠️）| B5 |
+| B6-Q3 | sin 鉴相器幅度衰落跨论文空白 待定量锚（判据4 ⚠️）| B6 |
+| B7-Q3 | 双候选判决强噪声可靠性 鲁棒性证明非性能改进（判据2 ❌）| B7 |
+| **B8 主判定** | **本篇无核心 Q#**：自相干绕过载波同步（载波同步冗余），与 B1-B7/B9-B12 正交（判据1-4 全 ❌ 不适用）| B8 |
+| B8-Q1 | SCD mixing efficiency 前提失效 不够格/待定量（判据4 ❌）+ 范围 out 地面 FSO | B8 |
+| B8-Q2 | SCD 调制格式边界 适用域边界非性能改进（判据2 ❌）+ 范围 out | B8 |
+| B9-Q2 | 虚拟载波自相干湍流稳健性 待定量锚（判据4 ⚠️）| B9 |
+| B10-Q3 | KRLS PS-64QAM ao.581648 待全文核验（摘要 4dB 无法溯源）| B10 |
+| B11-Q3 | "FSO 适用"仿真验证缺口 验证范围非性能改进（判据2 ❌）| B11 |
+| B12-Q1 | 频域 CW pilot 无 vs baseline dB gain（判据4 ❌ dB 维度）/ 结构性理论增量 | B12 锚 |
+
+**Q# 清单判定（B 档 35 Q#）**：
+
+- **四判据全过 3 个**（B3-Q2 / B9-Q1 / B11-Q1）—— 第一梯队 dB 达标（+2~3dB），但各有条件性（B9 baseline 内部对照 / B11 仅 (8,8)-16APSK + 仿真未建模 FSO / B3-Q2 范围 in 但分集增益不可全迁）。
+- **边际够格 7 个**（B1-Q1 / B2-Q2 / B7-Q1 / B10-Q1 / B5-Q1 / B6-Q1 / B12-Q2）—— 第二梯队 dB 偏小或结构性优势，Go/Kill 留用户。
+- **D006 边界 7 个**（B3-Q3/B6-Q2/B7-Q2/B9-Q3/B10-Q2/B11-Q2/B12-Q3）—— "前馈不撞/环路 TF 联合建模则撞"模式，潜在一致性研究方向（湍流相位建模边界），Go/Kill 留用户。
+- **未过 18 个**（含 B8 主判定"无核心 Q#"）—— 记录筛掉理由防复现。
+
+**Q# 综合观察线索（仅供用户排优先级参考，非结论，不塞方向给用户）**：
+
+1. **第一梯队 dB 达标 3 个但各有条件性**：B3-Q2（+2~3dB 范围 in 但分集增益不可全迁）/ B9-Q1（~3dB 但 baseline 内部 w/o DRE 对照非传统相干载波同步）/ B11-Q1（+2dB 但仅 (8,8)-16APSK + 仿真未建模 FSO）。D005"赢传统 baseline 几 dB"硬达标，但 Go 判据要诚实评条件性。
+2. **D006 边界模式 7 次是潜在一致性研究方向**——"湍流相位建模边界"（前馈层处理不撞，环路 TF 联合建模则撞）在 B 档 12 点中重复 7 次，是块 A/B/C/D（Q11/Q12 Paillier 分治）的延续。但 Go/Kill 留用户，本节只标模式。
+3. **B8 特例"载波同步冗余"**——自相干绕过载波同步，提示"自相干架构替代传统载波同步链"是另一条潜在路线（B9 也走这条路 Q2），但 B8/B9 主场景都非星地。
+4. **范围 out 比例较块 A/B 高**（~9/35 ≈ 26%）——B8×3 地面 FSO + B10×2/B12×2 光纤 + B3-Q1/B5-Q2 光纤。星地 in/in 倾向仍是主体（~24/35 ≈ 69%）。
+5. **D011 种子"16-QAM CPR 扩展"落地**——B10（16-QAM pilot-RLS）+ B12 MAP（256-QAM）+ ao.581648（PS-64QAM KRLS），pilot-RLS→MAP→KRLS 升级链，但三者都光纤 out。
+
+**诚实预期（总表阶段前置，非结论）**：
+
+- 务实路线下 Go 判据 = 赢传统未优化 baseline 几 dB。B3-Q2/B9-Q1/B11-Q1 dB 达标，**形式上够 Go 门槛**。
+- 但每个都有条件性（baseline 内部对照 / 仅特定调制 / 仿真未建模 FSO），用户排完优先级后对前几名判 Go/Kill 时要逐条诚实判定。
+- D006 边界模式 7 次是潜在一致性研究方向，但 Go/Kill 留用户（本节守 D018 中性不判）。
+
+### 载波同步 v2 文献条目（B 档 12 篇精简版）
+
+> 每篇详细结构化提取（14+ 字段 + 7 子表）见 `papers/_read_notes/_B{N}-*.md`。
+
+#### [L11] B1 pilot 窗口（sat.1553 + [60] Leven + [58] Martins）
+
+- **DOI/来源**：10.1109/JLT.2024.3447553（sat.1553）+ 10.1109/LPT.2007.891893（[60] Leven）+ 10.1364/osac.438524（[58] Martins）
+- **核心贡献**：sat.1553 LEO 星地相干 OSL pilot-aided 载波恢复（固定 phase-estimation window N）；[60] Leven Mth-power 理论锚（最优 N∝SNR）；[58] Martins 静态 pilot-rate×linewidth 优化。
+- **关键 dB**：+1dB（sat.1553 pilot 场景4 vs VV+diff）/ 0.5dB 阈值（B1-Q2）
+- **Q#**：B1-Q1（自适应 window N，倾向够格）/ B1-Q2（自适应 pilot rate，风险偏高）
+- **笔记**：`papers/_read_notes/_B1-pilot-window-increment.md`（S003）
+
+#### [L12] B2 deep fade 冻结（[79] Matsuda + sat.1553）
+
+- **DOI/来源**：10.1117/12.2544050（[79] Matsuda SPIE 2020）+ sat.1553
+- **核心贡献**：[79] FOE freeze 静态功率阈值 gate FOE（上行强湍 deep fade）；sat.1553 L440 自承"完全冻结在 SOP 漂移大时丢跟踪"。
+- **关键 dB**：0.6dB（[79] vs 无 freeze 非增量，陷阱）/ +1dB（pilot 在 fade）
+- **Q#**：B2-Q1（FOE freeze 自适应阈值，≥1dB 存疑）/ B2-Q2（freeze+pilot 双模切换，倾向够格）
+- **笔记**：`papers/_read_notes/_B2-deep-fade-freeze-increment.md`（S003）
+
+#### [L13] B3 子系统协同（LCOMM + jphot+oe + sat.1553 L790）
+
+- **DOI/来源**：10.1109/JLT.2024.3447553（sat.1553 L790）+ 10.1364/jphot（jphot）+ 10.1364/oe（oe 合并）
+- **核心贡献**：跨子系统共享 pilot + 依赖解耦联合协同（FOE+CPE+RSOP 一套 FPT）。jphot+oe 合并 +2~3dB 强湍 4 支路；LCOMM B3 视角 +0.9dB Q（光纤 DSCM out）。
+- **关键 dB**：+2~3dB（jphot+oe）/ +0.9dB（LCOMM，范围 out 光纤 DSCM）
+- **Q#**：B3-Q1（LCOMM 视角，够格但 out）/ B3-Q2（jphot+oe 合并，够格第一梯队）/ B3-Q3（sat.1553 L790 open problem，D006 边界）
+- **笔记**：`papers/_read_notes/_B3-subsystem-coordination-increment.md`（S003）
+
+#### [L14] B4 双反馈环（optcom.2023 + jlt.2023 PCS + sat.1553）
+
+- **DOI/来源**：10.1364/optcom（optcom.2023 双反馈环）+ 10.1109/jlt.2023.3281082（jlt.2023 PCS）+ sat.1553
+- **核心贡献**：optcom.2023 外环 PADE 大动态 + 内环 V-V RFO 精补 + 前馈 V-V 相位（±920MHz @ 0.5dB）；jlt.2023 PCS+符号率自适应（+70~100 Gbps 维度错位）。
+- **关键 dB**：±920MHz @ 0.5dB / MSE 4×（optcom.2023）/ +70~100 Gbps（jlt.2023 维度错位）
+- **Q#**：B4-Q1（双反馈环本体，部分）/ B4-Q2（jlt.2023 PCS 维度错位，够格）/ B4-Q3（sat.1553 feedback open problem，待定量）
+- **笔记**：`papers/_read_notes/_B4-dual-feedback-loop-increment.md`（S003）
+
+#### [L15] B5 短时谱粗 CFO（optcom.2024 全文核验 + [60] Leven + sat.1553 + jlt.2023）
+
+- **DOI/来源**：10.1016/j.optcom.2024.130981（B5 锚 optcom 2024，全文 252 行）+ 10.1109/LPT.2007.891893（[60]）+ sat.1553 + jlt.2023
+- **核心贡献**：分块 FFT + 正负功率谱面积比（式 2-4）+ 星历预测调 LO；盲估无 pilot 不依赖 MIMO DSP。全文核验升级：±4.5GHz 覆盖 LEO Doppler + 残频 <140MHz + 灵敏度 −48dBm@BER 1e-3。
+- **关键 dB**：±4.5GHz（范围覆盖结构性优势）/ 残频 <140MHz / −48dBm@BER 1e-3 / 无 vs baseline dB（dB 维度不够格）
+- **Q#**：B5-Q1（本体，范围结构性优势 in 星地 LEO 下行）/ B5-Q2（[60] Leven 理论锚，out 光纤）/ B5-Q3（sat.1553 粗 CFO 精度边界，待定量）/ B5-Q4（jlt.2023 视角参考，维度错位）
+- **笔记**：`papers/_read_notes/_B5-short-time-spectrum-cfo-increment.md`（S003+全文核验段）
+
+#### [L16] B6 Z-ODPLL（Photonics2023 + col202018 + IEICE Z-domain）
+
+- **DOI/来源**：10.3390/photonics10050493（B6 锚 Photonics 2023）+ col202018（混合 OPLL）+ IEICE Z-domain Z-ODPLL 根基
+- **核心贡献**：atan2 鉴相器 KD 与 Ps 解耦（全湍流态保锁 σ=2.6°/0.42dB + 容 30ns 延迟 vs sin 仅 6ns）；Z-ODPLL H(z) 建模（固定 Kd 掩盖 Ps 波动）。
+- **关键 dB**：σ=2.6°/0.42dB + 容 30ns 延迟（定性保锁非几 dB）
+- **Q#**：B6-Q1（atan2 鉴相器解耦，边际够格）/ B6-Q2（Z-ODPLL H(z) 建模，D006 边界工具 N/A）/ B6-Q3（sin 鉴相器跨论文空白，待定量）
+- **笔记**：`papers/_read_notes/_B6-z-odpll-increment.md`（S003）
+
+#### [L17] B7 Gardner TED（ofc.2026.w2a.62 + Gardner 1986 + backward refs 5）
+
+- **DOI/来源**：10.1364/ofc.2026.w2a.62（B7 OFC 2026 poster，全文 90 行）+ 10.1109/tcom.1986.1096561（Gardner TED 1986）+ backward refs 5 篇
+- **核心贡献**：Gardner TED 增益随符号净相位旋转量周期变化作 Doppler 指纹，扫频+双候选试补偿+TED2 标准差判决。0.6dB @ BER 2e-2 + 1.9×范围(0-23GHz) + OSNR 10dB 可解调。baseline = PSA FOE（Vieira 2023）。
+- **关键 dB**：0.6dB @ BER 2e-2 / 1.9×范围（0-23GHz vs PSA FOE 0-12GHz）/ OSNR 10dB 可解调（常规失败点）
+- **Q#**：B7-Q1（Gardner TED 复用 FOE，边际够格）/ B7-Q2（TED 增益湍流鲁棒性，D006 边界）/ B7-Q3（双候选判决可靠性，不够格）
+- **笔记**：`papers/_read_notes/_B7-gardner-ted-increment.md`（S004）
+
+#### [L18] B8 RL+GS 自相干（jocn.468220，载波同步冗余特例）
+
+- **DOI/来源**：10.1364/jocn.468220（B8 JOCN 2023，全文 604 行）
+- **核心贡献**：heterodyne + square-law + LPF 使 CFO/相位噪声自消除（Eq.6），PAM4 直接判决，**载波同步需求被绕过**（行 119 linewidth 不敏感）。与 B1-B7/B9-B12 本质正交。
+- **关键 dB**：无 vs baseline dB gain（性能以 BER orders of magnitude 表达）
+- **Q#**：**B8 主判定"无核心 Q#"**（载波同步冗余）+ B8-Q1（mixing efficiency 前提失效，不够格 out）/ B8-Q2（调制格式边界，不够格 out）
+- **笔记**：`papers/_read_notes/_B8-rl-gs-self-coherent-increment.md`（S005）
+
+#### [L19] B9 虚拟载波自相干+DRE（jlt.2023.3270673 + apn.3.3.036007）
+
+- **DOI/来源**：10.1109/jlt.2023.3270673（B9 锚 JLT 2023，306 行）+ 10.1364/apn.3.3.036007（DRE Gold OA，用户手动下 440 行）
+- **核心贡献**：DRE = Digital Resolution Enhancer（TX 侧动态量化+block-wise Viterbi 把量化噪声挤出带外）；虚拟载波 = 数字域 DSP 插入 carrier tone。自相干架构**用架构"绕开"传统载波同步链**。~3dB @ 3PNOB（行 243/253 四处一致）与 B3-Q2 +2~3dB 同量级第一梯队，但 baseline 是内部 w/o DRE 对照。
+- **关键 dB**：~3dB @ 3PNOB / ~1dB @ 4 PNOB / ~0.5dB @ 5 PNOB / ~0.8dB long-term 含湍流（行 243/253）
+- **Q#**：B9-Q1（DRE 迁移自相干 FSO 深湍流，够格量级达标 baseline 内部对照）/ B9-Q2（自相干绕开载波同步湍流稳健性，待定量）/ B9-Q3（DRE 正交性反向利用，D006 边界）
+- **笔记**：`papers/_read_notes/_B9-virtual-carrier-dre-increment.md`（S005）
+
+#### [L20] B10 16-QAM pilot-RLS（s11107-024 + ao.581648 D011 种子）
+
+- **DOI/来源**：10.1007/s11107-024-01019-2（B10 锚 2024，318 行）+ 10.1364/ao.581648（ao.581648 PS-64QAM KRLS，Optica AO 订阅墙仍缺全文）
+- **核心贡献**：导频驱动 RLS 把 CFO+PN 塞进同一线性回归（h1→CFO/h0→PN），128 pilot 训练后切 decision-directed 反馈环，替代 BPS+4OPM。高 CFO(10GHz)/高线宽(1.45MHz) 鲁棒。D011 种子"16-QAM CPR 扩展"落地，ao.581648 PS-64QAM KRLS 承接（同作者团队 Deka/Krishnamurthy）。
+- **关键 dB**：复杂度 20RM+12RA/symbol（无统一 vs baseline dB gain）
+- **Q#**：B10-Q1（Pilot-RLS 联合 CFO+PN，边际够格 out 光纤待迁移）/ B10-Q2（湍流鲁棒性，D006 边界）/ B10-Q3（ao.581648 KRLS，待全文核验摘要 4dB）
+- **笔记**：`papers/_read_notes/_B10-16qam-pilot-rls-increment.md`（S005）
+
+#### [L21] B11 NDA-ML STO+CPE（lpt.2024.3523478）
+
+- **DOI/来源**：10.1109/LPT.2024.3523478（B11 PTL 2025，全文 226 行）
+- **核心贡献**：NDA-ML 联合估计 STO+CPE 闭式解——升 M₀ 次幂盲去调制相位→STO+CPE 化为单正弦 freq+phase→Wang[13] ML 闭式 τ̂/φ̂。+2dB SNR gain @ (8,8)-16APSK @ 7% HD-FEC vs DA ML（行 181/191）。**前馈闭式 ML 无环路 TF 不撞 D006**。声明 FSO 但仿真未建模 FSO 信道（行 33 假设湍流/Doppler 已补偿）。
+- **关键 dB**：+2dB SNR gain @ (8,8)-16APSK（行 181/191 双处一致）/ 1dB SNR cost 换 CLW 容限 / >2× PN variance tolerance / STO 概率 1 @ −10dB SNR
+- **Q#**：B11-Q1（NDA-ML 联合 STO+CPE，够格量级达标下沿+2dB，条件性强仅 (8,8)-16APSK + 仿真未建模 FSO）/ B11-Q2（湍流相位纳入 ML 似然，D006 边界）/ B11-Q3（"FSO 适用"仿真验证缺口，不够格验证范围维度）
+- **笔记**：`papers/_read_notes/_B11-nda-ml-sto-cpe-increment.md`（本轮 S006）
+
+#### [L22] B12 频域 pilot（TCOMM.2022.3171809 + MAP oecc-psc62146）
+
+- **DOI/来源**：10.1109/TCOMM.2022.3171809（B12 锚 TCOMM 2022，全文 590 行，"In-Band and Out-of-Band Frequency Domain Pilots"）+ 10.23919/oecc-psc62146.2025.11109607（MAP OECC/PSC 2025，用户 2026-07-04 手动下 150 行）
+- **核心贡献**：B12 锚频域 CW pilot 前馈相位估计（in-band/out-of-band + improved 估计器≈MVU + 最优 SPR 解析，Chalmers Eriksson 团队）；MAP 联合 ML/MAP 相位估计（256-QAM + AOPN + block-wise 并行，BNU-HKBU Kam 团队）。MAP 是 B12 锚的 citer/对照方向（pilot-aided 大类下时域 vs 频域机制独立）。两篇均 out（通用/光纤 DCI），迁移星地是 Q# 维度。
+- **关键 dB**：B12 锚无 vs baseline dB gain（仅内部估计器 vs CRLB；SPR 失效点 −10/10dB 行 429；18-19dB OSNR 仿真条件 行 517）/ MAP SNR penalty 4dB @ 100GBaud/150kHz vs PA ML 5dB / PA 7.5dB（行 115）
+- **Q#**：B12-Q1（频域 CW pilot 迁移星地，dB 不够格/结构性理论增量 out）/ B12-Q2（MAP 迁移星地高阶 QAM，边际够格同族 dB out）/ B12-Q3（频域+时域 pilot 联合架构，D006 边界 in 星地湍流）
+- **笔记**：`papers/_read_notes/_B12-freq-domain-pilot-increment.md`（本轮 S006）
+
+### 载波同步 v2 B1-B12 全 12 点总表（35 Q#，D018 中性不判 Go/Kill）
+
+> **🔴 守 D018 中性提取**——本表只标 D006/D005/范围三维，**不判 Go/Kill**。Go/Kill 是用户的，排完优先级后对前几名做。
+> **35 Q# 计数修正**：S005 原报"26"是 bug，实际 B1-B10=29（B8 主判定+2=3 非"主+2=2"），+B11×3+B12×3=35。
+> 详细 M-C-A + 三维判定见各 B 点笔记 `papers/_read_notes/_B{N}-*.md`。
+
+| B 点 | Q# | M-C-A 浓缩 | 撞 D006 | D005 够格 | 范围 | 关键 dB/量级 |
+|------|-----|-----------|--------|----------|------|------------|
+| **B1 pilot 窗口** | B1-Q1 | 自适应 window N | 不撞 | 倾向够格（+1dB 有风险）| in | +1dB |
+| | B1-Q2 | 自适应 pilot rate | 不撞 | 风险偏高（负面证据）| in | 0.5dB 阈值 |
+| **B2 deep fade 冻结** | B2-Q1 | FOE freeze 自适应阈值 | 不撞 | ≥1dB 存疑待全文 | in | 0.6dB 陷阱 |
+| | B2-Q2 | freeze+pilot 双模切换 | 不撞 | 倾向够格增量未量化 | in | +1dB |
+| **B3 子系统协同** | B3-Q1 | LCOMM B3 视角 | 不撞 | 够格（+0.9dB）| **out 光纤 DSCM** | +0.9dB Q |
+| | **B3-Q2** | jphot+oe 合并 | 不撞 | **够格（+2~3dB 第一梯队）**| in | **+2~3dB** |
+| | B3-Q3 | sat.1553 L790 跨子系统 | **边界** | 待定量锚 | in | 借 +0.9~3dB |
+| **B4 双反馈环** | B4-Q1 | optcom.2023 双反馈环本体 | 不撞（边界）| 部分 | in | ±920MHz@0.5dB |
+| | B4-Q2 | jlt.2023 PCS+符号率自适应 | 不撞 | 够格（维度错位）| in | +70~100 Gbps |
+| | B4-Q3 | sat.1553 feedback open problem | 不撞 | 待定量锚 | in（含 ISL 边界）| 无直接实例 |
+| **B5 短时谱粗 CFO** | B5-Q1 | B5 本体短时谱粗 CFO（全文核验升级）| 否（前馈功率比全文无湍流）| 不够格 dB / 范围结构性优势 | **in 星地 LEO 下行确证** | ±4.5GHz / 残频<140MHz / −48dBm |
+| | B5-Q2 | [60] Leven Mth-power 理论锚 | 不撞 | 够格 | **out 光纤 intradyne** | 7dB penalty |
+| | B5-Q3 | sat.1553 L558 粗 CFO 精度边界 | 不撞 | 待定量锚 | in | 残频 10⁻³fs |
+| | B5-Q4 | jlt.2023 频谱扫描 Doppler 视角 | 不撞 | 够格（维度错位）| in | +70~100 Gbps |
+| **B6 Z-ODPLL** | B6-Q1 | atan2 鉴相器 KD 与 Ps 解耦 | 不撞 | 边际够格（定性保锁非几 dB）| in | σ=2.6°/0.42dB/容 30ns |
+| | B6-Q2 | Z-ODPLL H(z) 建模 | **边界（只标不砍）**| 不够格（工具）| N/A | — |
+| | B6-Q3 | sin 鉴相器幅度衰落跨论文空白 | 不撞 | 待定量锚 | in | 无 |
+| **B7 Gardner TED** | B7-Q1 | Gardner TED 复用 FOE | 否 | 边际够格（0.6dB+1.9×范围/10dB）| in | 0.6dB@BER 2e-2 / 1.9×范围 |
+| | B7-Q2 | TED 增益湍流鲁棒性 | **边界（只标不砍）**| 待定量锚 | in | 借 0.42~0.66dB |
+| | B7-Q3 | 双候选判决强噪声可靠性 | 否 | 不够格 | in | 无 |
+| **🔵 B8 RL+GS 自相干** | 🔵 **B8 主判定** | **本篇无核心 Q#**（载波同步被绕过）| 否（开环前馈）| **不适用** | **out 地面 FSO** | 无 vs baseline dB |
+| | 🔵 B8-Q1 | SCD mixing efficiency 前提失效 | 否 | 不够格/待定量 | out 地面 FSO | 无 B8 dB |
+| | 🔵 B8-Q2 | SCD 调制格式边界 | 否 | 不够格（适用域边界）| out 地面 FSO | 无 |
+| **🔵 B9 虚拟载波自相干+DRE** | 🔵 **B9-Q1（核心）** | DRE 迁移自相干 FSO 深湍流 | 否（TX 预处理）| **够格（~3dB 第一梯队，baseline 内部对照）**| in 倾向→待迁移星地 | **~3dB** @ 3PNOB（行 243/253）|
+| | 🔵 B9-Q2 | 自相干绕开载波同步湍流稳健性 | 否（自相干无 OPLL）| 待定量锚 | in 倾向→待迁移 | 无 |
+| | 🔵 B9-Q3 | DRE 与载波同步正交性反向利用 | **边界** | 不够格 | in | 无 |
+| **🔵 B10 16-QAM pilot-RLS** | 🔵 **B10-Q1（核心）** | Pilot-RLS 联合 CFO+PN | 否（DSP 自适应滤波）| 边际够格（范围/鲁棒性）| **out 光纤/待迁移星地** | 复杂度 20RM+12RA/symbol |
+| | 🔵 B10-Q2 | Pilot-RLS 湍流鲁棒性 | **边界** | 待定量锚 | in（星地 COSC 湍流）| 无 |
+| | 🔵 B10-Q3 | KRLS PS-64QAM ao.581648 | 否（待全文核验）| 待全文核验（摘要 4dB）| out 光纤/待迁移 | 4dB OSNR（摘要待核验）|
+| **🔵 B11 NDA-ML STO+CPE** | 🔵 **B11-Q1（核心）** | NDA-ML 联合 STO+CPE 闭式估计 | 否（前馈闭式 ML 无环路 TF，行 33 假设湍流已补偿）| **够格（+2dB 下沿，与 B3-Q2 同量级）**——条件性强（仅 (8,8)-16APSK + CLW 容限付 1dB cost）| in 倾向（声明 FSO）→ 仿真未建模 FSO 信道 | **+2dB** SNR gain @ (8,8)-16APSK（行 181/191）|
+| | 🔵 B11-Q2 | 湍流相位纳入 ML 似然 | **边界**（前馈不撞；环路 H(z) 联合建模则撞）| 待定量锚 | in（星地 FSO 湍流）—— 候选维度 | 无 |
+| | 🔵 B11-Q3 | "FSO 适用"仿真验证缺口 | 否（验证范围维度）| 不够格（验证缺口非性能改进）| in 倾向→待验证 | 无新增 dB |
+| **🔵 B12 频域 pilot** | 🔵 **B12-Q1（锚核心）** | 频域 CW pilot 前馈相位估计迁移星地 | 否（前馈频域处理）| 不够格 dB / 结构性理论增量（improved≈MVU + 最优 SPR 解析）| **out 通用模型/待迁移星地** | 无 vs baseline dB（SPR 失效点 −10/10dB 行 429）|
+| | 🔵 B12-Q2（MAP 核心） | MAP 联合 ML/MAP 256-QAM 迁移星地高阶 QAM | 否（前馈时域 pilot+块并行）| 边际够格（同族 dB：MAP vs PA 差 3.5dB / vs PA ML 差 1dB）| **out 光纤 DCI/待迁移星地** | MAP SNR penalty 4dB @ 100GBaud/150kHz vs PA ML 5dB / PA 7.5dB（行 115）|
+| | 🔵 B12-Q3 | 频域+时域 pilot 联合架构 | **边界**（前馈级联不撞；联合状态方程/环路 H(z) 纳入湍流+多普勒则撞）| 待定量锚 | in（星地 COSC 湍流）—— 候选维度 | 无 |
+
+#### 总表统计（B 档 35 Q#，修正 S005 计数 bug）
+
+| 维度 | 计数 | Q# 编号 |
+|------|------|---------|
+| **总 Q# 数** | **35** | B1-B7 原 20 + B8 主判定+2=3 + B9×3 + B10×3 + **🔵 B11×3 + B12×3** |
+| **撞 D006 明确撞** | **0** | （sat.1553 L70 旧扩展归档不计）|
+| **撞 D006 边界（只标不砍）** | **7** | B3-Q3 / B6-Q2 / B7-Q2 / B9-Q3 / B10-Q2 / **🔵 B11-Q2 / B12-Q3** |
+| **D005 倾向够格** | **10** | B1-Q1 / B2-Q2 / B3-Q1 / **B3-Q2** / B4-Q2 / B5-Q2 / B5-Q4 / B6-Q1 + **🔵 B9-Q1 / B11-Q1** |
+| **D005 边际够格** | **4** | B7-Q1 / B5-Q1 + **🔵 B10-Q1 / B12-Q2** |
+| **D005 待定量锚** | **8** | B2-Q1 / B3-Q3 / B4-Q1（部分）/ B4-Q3 / B5-Q3 / B6-Q3 / B7-Q2 / B9-Q2 / B10-Q2 + **🔵 B11-Q2 / B12-Q3** |
+| **D005 不够格/不适用/待全文** | **13** | B1-Q2 / B5-Q1 dB 维度 / B6-Q2 / B7-Q3 + **🔵 B8 主判定不适用 / B8-Q1 / B8-Q2 / B9-Q3 / B10-Q3 待全文 / B11-Q3 / B12-Q1** |
+| **范围 out** | **9** | B3-Q1（光纤 DSCM）/ B5-Q2（光纤 intradyne）/ B6-Q2（N/A）+ **🔵 B8 主判定/Q1/Q2（地面 FSO）/ B10-Q1（光纤）/ B10-Q3（光纤）/ B12-Q1（通用）/ B12-Q2（光纤 DCI）** |
+| **范围 in / in 倾向** | **26** | 其余（含 in 倾向待迁移 B9-Q1/Q2 + B10-Q1/B11-Q1/B12-Q2 候选维度）|
+
+#### D005 够格梯度（中性排序，供用户排优先级参考，**不判 Go/Kill**）
+
+> 本梯度只按"D005 够格"程度的客观证据强度排，**不判 Go/Kill**。Go/Kill 是用户的，排完优先级后对前几名做。
+
+**第一梯队（有明确 dB 增益 + 范围 in/in 倾向，+2~3dB 同门达标）**：
+- **B3-Q2**（+2~3 dB 强湍 4 支路，复杂度降 75%）—— dB 最高，范围 in
+- **🔵 B9-Q1**（~3dB @ 3 PNOB DRE）—— **dB 与 B3-Q2 同量级**，但 baseline 是内部 w/o DRE 对照非传统相干载波同步，in 倾向待迁移星地深湍流
+- **🔵 B11-Q1**（+2dB SNR gain @ (8,8)-16APSK vs DA ML）—— **dB 达标下沿**，条件性强（仅 (8,8)-16APSK + CLW 容限付 1dB cost + 仿真未建模 FSO），声明 in 但仿真未验证
+- B3-Q1（+0.9 dB Q）—— 范围 out（光纤 DSCM 待迁移论证）
+- B1-Q1 / B2-Q2（+1dB）—— in
+- B5-Q2（7dB penalty）—— 范围 out（光纤 intradyne 待迁移）
+
+**第二梯队（结构性优势，dB 偏小或维度错位）**：
+- B7-Q1（0.6dB + 1.9× 范围 0–23GHz + OSNR 10dB 极限）—— in
+- **🔵 B10-Q1**（无统一 dB gain，优势在范围/鲁棒性 BPS+4OPM 失效区）—— out 光纤 / 待迁移星地 in 候选
+- **🔵 B12-Q2**（MAP vs PA 差 3.5dB / vs PA ML 差 1dB 同族 dB）—— out 光纤 DCI / 待迁移星地 in 候选
+- B4-Q2 / B5-Q4（+70~100 Gbps 吞吐维度错位）—— in
+- B5-Q1（±4.5GHz 覆盖 LEO Doppler）—— in
+- B6-Q1（定性保锁 σ=2.6°/0.42dB + 30ns）—— in
+
+**第三梯队（待定量锚 / open problem 级 / 待全文）**：
+- B2-Q1 / B3-Q3 / B4-Q1 / B4-Q3 / B5-Q3 / B6-Q3 / B7-Q2 / B9-Q2 / B10-Q2 + **🔵 B11-Q2 / B12-Q3** + **🔵 B10-Q3 待全文（摘要 4dB）**
+
+**第四梯队（风险偏高/不够格/不适用）**：
+- B1-Q2 / B6-Q2 / B7-Q3 / B9-Q3 / B11-Q3 / B12-Q1 + **🔵 B8 主判定（无核心 Q# 自相干绕过载波同步）/ B8-Q1 / B8-Q2**
+
+#### 关键观察（中性，辅助用户排优先级）
+
+1. **🔵 B11-Q1 +2dB 跻身第一梯队**——继 B9-Q1 后**第二个达第一梯队量级**的非 B3 候选（+2dB vs DA ML @ 7% HD-FEC，行 181/191 双处一致）。与 B3-Q2 +2~3dB / B9-Q1 ~3dB 同量级，但条件性强（仅 (8,8)-16APSK + CLW 容限付 1dB cost + 声明 FSO 但仿真未建模 FSO 信道）。
+2. **🔵 D006 边界模式扩展到 7 次**（原 5 + B11-Q2 + B12-Q3）——"前馈/工具层不撞，环路 TF 联合建模则撞"模式在 B 档 12 点中重复出现 7 次，是潜在一致性研究方向（湍流相位建模边界），与块 A/B/C/D（Q11/Q12 Paillier 分治）延续。
+3. **🔵 B12 双视角**（锚 TCOMM 2022 + MAP OECC 2025）——B12 锚是频域 CW pilot 理论框架（improved 估计器≈MVU + 最优 SPR 解析），MAP 是时域 pilot-aided 256-QAM（MAP vs PA 差 3.5dB 同族 dB）。两篇 pilot-aided 大类下时域 vs 频域机制独立，MAP 是 B12 锚的 citer 非直接延伸。
+4. **B8 特例"载波同步冗余"持续成立**——B8 自相干绕过载波同步（载波同步需求被整体消除），与 B1-B7/B9-B12 改进载波恢复正交。提示"自相干架构替代传统载波同步链"是另一条潜在路线，但 B8/B9 主场景都非星地。
+5. **范围 out 比例较 S005 统计微调**（7→9/35 ≈ 26%）——新增 B12-Q1（通用模型 out）/ B12-Q2（光纤 DCI out）。星地 in/in 倾向仍是主体（26/35 ≈ 74%）。
+6. **dB 量级 vs 同门学位论文**：同门 2-4dB 区间，本表第一梯队 B3-Q2 +2~3dB / B9-Q1 ~3dB / B11-Q1 +2dB 达标，B1-Q1/B2-Q2 +1dB 偏下沿，B7-Q1 0.6dB 偏低。**0.5dB 阈值**（D008 FR-21 参考）下，B6-Q1/B7-Q1 的 0.6dB 级刚过线。
+
+---

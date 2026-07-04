@@ -293,7 +293,7 @@ topics:
     title: 载波同步 v2 精读沉淀（每点 ≤5 篇验证 + gw-read 结构化笔记 + literature_notes 并入）
     status: active
     created: "2026-07-02"
-    last_updated: "2026-07-04（S005 对话 3 完成 B8/B9/B10 三点并发评点 + B1-B10 总表续填 26 Q#。纠正对话 2 B5 主线自读违规（本轮 3 子 agent 委托率 100%）。B8 主判定无核心 Q#（自相干绕过载波同步），B9-Q1 ~3dB 跻身第一梯队，B10 D011 种子落地。撞 D006 0 明确撞/5 边界，倾向够格 9 + 边际够格 3。范围 out 7/in 18。交对话 4 B11/B12 + literature_notes 并入。详见 S005 + H004）"
+    last_updated: "2026-07-04（S006 对话 4 完成 B11/B12 评点 + literature_notes 载波同步 v2 章节并入 + B1-B12 全 12 点总表最终合并 35 Q#。**专题使命达成**。B11-Q1 +2dB 跻身第一梯队（与 B3-Q2/B9-Q1 同量级），B12 锚+MAP 双视角。修正 S005 计数 bug 26→29→35。撞 D006 0 明确撞/7 边界（+B11-Q2/B12-Q3），倾向够格 10（+B11-Q1）+ 边际够格 4（+B12-Q2）。范围 out 9/in 26。literature_notes 综合分析 5 节 + 35 Q# 过四判据 + 12 篇文献条目 L11-L22 全并入。交用户排优先级 + 对前几名判 Go/Kill。详见 S006 + H005）"
     description: "承接原专题 2026-06-20-problem-driven-redirection S030 判读层收尾。载波同步 v2 B 档 12 候选虽判完拉了总表，但每点只读 1 篇切入论文、B8-B12 五篇零精读笔记。本专题补扎实：全 12 点每点 ≤5 篇 cited-by 验证 + 12 份 gw-read 结构化笔记（B8-B12 新写/B5-B7 补厚/B1-B6 复用）+ literature_notes 载波同步 v2 章节含综合分析+Q# 候选。让总表每行有结构化沉淀支撑。守 D017/D018/D006/D005/D009 降级 + D018 中性提取不判 Go/Kill。拆 5 对话：补下载+cited-by池 → B1/B2/B3 → B4-B7 → B8-B10 → B11/B12+literature_notes。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
