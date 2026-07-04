@@ -232,3 +232,33 @@ B4+B5 子 agent 内部 download + 读 + 写笔记。**`10.1109/jlt.2023.3281082`
 4. **v1 量级达成**：S003 后全文 39 篇 + jlt.2023.3281082 = 40 篇 + 用户手动下 6 篇付费墙 = 46 篇，落 v1 量级 40-50 区间。**对话 2/3 不必再扩补料**
 5. **B7 独立性强**：B7 cited-by 池空（OFC 2026 索引滞后）+ backward refs 独立（Gardner TED 是定时误差检测算法层，跟 B6 OPLL 架构层不同），单独做更扎实——这是本轮没把 B7 合并做的原因
 6. **用户手动下优先级仍有效**（S002 §4.4）：①B5 optcom.2024.130981（VPN）②ao.581648（B10 高相关）③apn.3.3.036007（Gold OA 免费下，B9 DRE）
+
+---
+
+### 步骤 2 续：用户手动下 3 篇全文到位（2026-07-04，状态修正）
+
+**用户原话**："手动下的放到哪？直接在用户/Downloads下面你自己找吧？而且你给我能直接跳转的url。" → "只下到三篇，在 C:\Users\zzt\Downloads"。
+
+**FR-26 主线核验 3 篇 PDF 真实身份**（pymupdf 读首页前 600 字符）+ 挪到规范路径 + tools/convert 转 md + 挪到正式 papers/doi/ 位：
+
+| # | 用户下到 Downloads 的文件名 | 真实身份 | 对应清单 | 落盘位置 |
+|---|---|---|---|---|
+| 1 | `1-s2.0-S0030401824007181-main.pdf`（7 页）| **Fan Jiamin 等青岛大学，Coarse CFO based on short-time spectrum analysis in FSO** | **① B5 锚全文**（ScienceDirect 文章号 7181 是最终发表版，原 metadata 981 是 preprint DOI）| `papers/doi/10.1016_j.optcom.2024.130981/` source.pdf(2.9MB)+content.md(252行) |
+| 2 | `Beyond 200-Gb_s...Qi Wu.pdf`（10 页）| **Qi Wu 等彭城实验室，O-band IM/DD + LUT + DRE** | **③ apn.3.3.036007 B9 DRE Gold OA** | `papers/doi/10.1117_1.apn.3.3.036007/` source.pdf(1.3MB)+content.md(440行) |
+| 3 | `Maximum_a_Posteriori...256-QAM.pdf`（4 页）| **Ma Wenqiang 等，MAP Phase Recovery 256-QAM OECC/PSC 2025** | **④ OECC/PSC B12 候选**（原标"低优先级可不下"也下到了）| `papers/doi/10.23919_oecc-psc62146.2025.11109607/` source.pdf(0.6MB)+content.md(150行) |
+
+**重大利好（B5/B9/B12 三点后续评点全文到位）**：
+- **B5 锚全文到位**——S003 §1.8 B5 评点原来标的"B5 本体全文失败穷尽 11 源"+"Q1 待全文核验"现在可以补全文增量。对话 2 评 B5 时优先级提升（不再"待全文"）
+- **B9 DRE 全文到位**——B9 锚 apn.3.3.036007 原来 Gold OA 反爬失败（穷尽 7 源）现在补全，B9 评点（对话 3）素材大补
+- **B12 MAP Phase Recovery 全文到位**——B12 候选 OECC/PSC 2025 补强（原标"IEEE 订阅墙待用户下"）
+
+**没下到的 2 篇**（剩余付费墙）：
+- **② ao.581648**（B10 高相关 PS-64QAM KRLS）—— Optica AO 订阅墙，B10 评点会缺全文靠摘要+原 B10 锚 s11107
+- **⑤ dtcse/wcne2017/19815**（D5 最相关 CPE DEStech 2017）+ **⑥ 12.3041354**（B6/D5 SPIE）—— 信号弱可不下
+
+**状态修正**：
+- **S002 §4.3-4.4 用户手动下清单**：①②③ 三档已完成 ①③（②B10 仍缺），④⑤⑥ 三档完成 ④
+- **S003 §1.8 B5 评点 Q1**：状态从"待全文核验"可升级，对话 2 评 B5 时用全文
+- **当前全文 43 篇 + 用户手动下 3 篇 = 46 篇**（原计 49 是把 6 篇付费墙都算上，实际只 3 篇到位）
+
+**后续动作**：B5 全文已到位，对话 2 评 B7 时可顺手补 B5 全文增量核验（读 252 行 content.md 验证短时谱 CFO 算法 + 增量 dB），把 B5-Q1 从"待全文核验"升级为有全文支撑的 Q#。
