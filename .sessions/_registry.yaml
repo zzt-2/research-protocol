@@ -293,7 +293,7 @@ topics:
     title: 载波同步 v2 精读沉淀（每点 ≤5 篇验证 + gw-read 结构化笔记 + literature_notes 并入）
     status: active
     created: "2026-07-02"
-    last_updated: "2026-07-04（S003 对话 1 完成+用户手动下 3 篇全文到位【B5 锚 252 行/B9 DRE 440 行/B12 MAP 150 行】。B1-B6 六点评点 17 个 Q# 候选全标 D006/D005/范围，撞 D006 0 个明确撞，倾向够格 8 个。当前全文 46 篇落 v1 量级。交对话 2 B7+B5 全文增量+总表。详见 S003 + H002）"
+    last_updated: "2026-07-04（S004 对话 2 完成 B7 评点 + B5 全文核验 + B1-B7 总表 20 Q# 落盘交用户排优先级。B7 新增 3 Q#（边际够格 1 + 边界 1 + 不够格 1），B5-Q1 升级（dB 不够格但范围结构性优势 in）。撞 D006 0 明确撞/3 边界，倾向够格 8 + 边际够格 2。交对话 3 B8/B9/B10。详见 S004 + H003）"
     description: "承接原专题 2026-06-20-problem-driven-redirection S030 判读层收尾。载波同步 v2 B 档 12 候选虽判完拉了总表，但每点只读 1 篇切入论文、B8-B12 五篇零精读笔记。本专题补扎实：全 12 点每点 ≤5 篇 cited-by 验证 + 12 份 gw-read 结构化笔记（B8-B12 新写/B5-B7 补厚/B1-B6 复用）+ literature_notes 载波同步 v2 章节含综合分析+Q# 候选。让总表每行有结构化沉淀支撑。守 D017/D018/D006/D005/D009 降级 + D018 中性提取不判 Go/Kill。拆 5 对话：补下载+cited-by池 → B1/B2/B3 → B4-B7 → B8-B10 → B11/B12+literature_notes。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
