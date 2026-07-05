@@ -291,7 +291,7 @@ topics:
 
   - slug: 2026-07-05-carrier-sync-v2-cut-pattern
     title: 载波同步 v2 切法地图分析（拆"从大点切小点"的动作本身）
-    status: active
+    status: closed
     created: "2026-07-05"
     last_updated: "2026-07-05（S003 对话 3 完成 B6-B12 七点切法提取 + 完整切法地图定稿 B1-B12 全 12 点，专题使命达成。3 批子 agent 并发 425s/381s/284s 全远离上限。三类稀池模式归纳：①细分独占赛道（B6/B7/B10/B11）②自相干绕开孤点（B8/B9 0/7 follow）③双视角稀池（B12）。完整定稿 _cut-map-final-b1-b12.md 6 节落盘。用户'会议就行'门槛放宽登记 voice.md。守 D018 中性提取扩展 + profile 第 7 次防线。交用户审决定专题收尾或转 Step 4a。详见 S003 + H003 + _cut-map-final-b1-b12.md）"
     description: "拆解载波同步 v2 B1-B12 主切入 + cited-by 池里'别人怎么从大点切小点'的动作本身。产出'切法地图'：哪些大点被反复切（安全区）/ 切法角度分布 / dB 增益形态分布 / 横向多样性 / 动机叙事 / 实现复杂度。给 D005 务实路线'水一篇'提供可复现模板参照系。**不是拆方法配方、不是排 Go/Kill、不是判 Q# 优先级**——是 Step 3 到 Step 4a 之间的参照系校准。用户拍 3 点判断：6 维提取（4 维 + 动机叙事 + 实现复杂度）/ 扩 Paillier 43 + 聚焦 B1-B5 / 团队维度降为元数据字段。拆 3-4 对话：对话 1 B1-B5 切法提取 → 对话 2-3 B6-B12 + 跨大点模式归纳 → 对话 4 切法地图定稿。"
@@ -311,11 +311,26 @@ topics:
         reason: 继承 B 档 12 候选清单（S030 总表）+ D017/D018 判读框架 + papers/doi 已落盘全文 + 已有 5 篇精读笔记（B1/B4/B5/B6/B7）
     conflicts_with: []
 
+  - slug: 2026-07-06-step4a-mve-execution
+    title: Step 4a 维度 D MVE 执行（B11/B7/B3 oracle 上界门控 + MVE + 架构差异）
+    status: active
+    created: "2026-07-06"
+    last_updated: "2026-07-06"
+    description: "承接上游 2026-06-20-problem-driven-redirection S031 排优先级（B11/B3/B7 三个 Conditional Go）+ 切法地图专题参照系。守 FR-21 oracle 上界前置门控（先算 CRB 下界 <0.5dB 直接砍不跑 MVE）+ TL-20 先建理论预期 + TL-26 参数溯源 + FR-18 竞争格局 + FR-12 MVE→Formal 架构差异。复用 projects/simulation/common/ 基建（GG+Doppler+phase noise 信道 + VV/BPS/DPLL/KF 载波恢复），增量扩 M-APSK 调制 + DA ML/NDA-ML/Gardner TED/FOE 估计器（B11+B3+B7 共用）+ params 扩 CLW/HD-FEC/LEO Doppler rate（全标 source）。explore/ 模式每候选一子目录（*-MVE-SPEC.md 契约 + _crb_lower_bound.py + mve 脚本 + results.json），MVE 通过后转 experiments/。拆对话：①基建扩充+B11 oracle 上界 ②B11 MVE 或 B7 全流程 ③B3 架构决策（多孔径阵列 vs 单链路）+ 视情况。"
+    depends_on:
+      - slug: 2026-06-20-problem-driven-redirection
+        reason: 继承 S031 排优先级（B11/B3/B7 Conditional Go）+ 切法地图参照系（饱和池/稀池路径）+ D005 务实路线 + D006 红线 + 5 个口径警示
+      - slug: 2026-07-05-carrier-sync-v2-cut-pattern
+        reason: 继承切法地图定稿（B1-B12 全 12 点切法模式 + 别人咋水四条路径 + 思想体会），作为 MVE 执行的参照系
+      - slug: 2026-07-02-carrier-sync-v2-deep-read
+        reason: 继承 35 Q# 总表 + 12 份 B 点 gw-read 结构化笔记（B11/B3/B7 锚方法 + baseline 详情）
+    conflicts_with: []
+
   - slug: 2026-06-20-problem-driven-redirection
     title: 问题驱动方法论首次实战验证（批评汇总 → 地勘前置迭代 → 地勘执行 → Step 3 精读 → 综合分析 → 判地专项）
     status: active
     created: "2026-06-20"
-    last_updated: "2026-07-02（S031 迁出为新专题 2026-07-02-carrier-sync-v2-deep-read S001——用户指出精读沉淀是独立多对话工作流应开新专题，原专题 28S+20H=48 编号文件已膨胀。S030 判读层收尾 B 档 12 篇全摸完+总表落盘交用户排优先级。精读沉淀补强转新专题执行）"
+    last_updated: "2026-07-06（S031 Step 4a 排优先级 + 前 5 名 Go/Kill 评估完成交用户拍板。用户选 B11/B3/B7 进 MVE，转新专题 2026-07-06-step4a-mve-execution 执行 Step 4a 维度 D。原 S031 描述保留：S031 迁出为新专题 2026-07-02-carrier-sync-v2-deep-read S001——用户指出精读沉淀是独立多对话工作流应开新专题，原专题 28S+20H=48 编号文件已膨胀。S030 判读层收尾 B 档 12 篇全摸完+总表落盘交用户排优先级。精读沉淀补强转新专题执行）"
     description: "framework-evolution 三改造落地后的首次实战验证。**根本目的不是'推进论文'，是'验证新方法论能不能产出可行的东西'**。**D005 学位定位翻转=务实路线（INVARIANT 级）**：先能写出东西毕业，接受赢传统 baseline 几 dB 作贡献，FR-21 降级为参考。**S004-S012 地勘五轮**：landscape.md 683 主表落盘，死轴冷区结论加固。**S011-S012 Q#-A 验证 Kill**：批3造假发现。**R001/D003 方法论起点校正**：6次Kill共性=都没走完Step3→4a完整发现链条。**S015 块C综合分析完成**：literature_notes.md 重写（10篇L##+综合分析+**研究问题清单Q1-Q10**，6篇全过4篇部分不过）。**S016 块D检索+召回+Q12 Kill**：🔴纠正H004选样漏召(Pech/Valjus/Paillier召回Q11-Q13旧B1资产)，Paillier2020JLT下载+精读完成，块E Step4a启动+Q12评估=Kill(D006 B1换皮6维度致命)。**S017 Q8切入点2 MVE FAIL Kill**（散布0.1-0.3dB<0.5dB FR-21）。**S018 Q8切入点4B Kill+checklist立轮**：D007重定义4B(湍流×Doppler→σ²慢包络,三查坐实物理gap)，但D008 FR-21数值显示ABR对σ²平缓性能gap趋零(vs中档+0.01dB,A2+A3双重硬门槛失败)；**D009立「靠谱方向checklist」v1**(A1轻化+A2指标敏感4B教训新提炼+A3增量≥同门~2-4dB+B/C类)，回应用户诉求2'先定标准别样样松'。**S019 Q1 checklist首次实战=Kill(D010)**：范围双重出界(不变量6星地+S007 ISL排除+无湍流)+A1方法归属错位(产出形态=论文自己的TS-KF)+C3堵死抢救(搬星地撞Q12/B1换皮D006)。A2在Q1自身ISL场景反而过(Doppler真硬动态)。论文TS-KF降级baseline参考。**🔴系统性发现**：四判据全过6候选里Q1(ISL)/Q3(feeder)/Q7(OISL)都带⚠️链路撞S007，范围硬门一卡候选池收缩明显。**S019续 Q2 Kill(D011)**：死因=Q1复刻(范围双重出界+A1归属+C3撞Q12/B1换皮)。论文降级方法借鉴+同实验室前作，**登记「16-QAM CPR扩展」为待回看种子**(Q2自承仅QPSK未扩展16-QAM，未被D006堵死)。回应用户'没办法挣扎吗'拆三层salvage分析(方向候选/方法借鉴/启发种子)。**S019续2 Q3 Kill(D012)**：范围双重出界(feeder系统级+无湍流建模)+A1归属错位(产出形态=论文adaptive MMSE)。**C3未撞旧Kill**(Q3跟Q1/Q2唯一差别)但不构成salvage(A1+范围已双重硬门槛)。feeder辨析(物理经大气但S007排系统级架构)。论文降级方法借鉴(time-packing+MMSE检测框架+SINR-BER闭式可复用)。**🔴候选池近清零**：四判据全过6候选已Kill 3(Q1/Q2/Q3)，D010预测被Q2/Q3连续验证，实质在范围+未死候选仍然只剩Q10。**暂0Go**：Q12/切入点2/4B/Q1/Q2/Q3全Kill。**🔴S019续3 重心转折(D013)**：用户直觉'方向可能歪了'+'找不出来是不是我菜'+'ISL/LEO/星地难度对比'戳中盲区——9天19session全在逐个Kill候选0Go，但**Kill候选≠判地**，全Kill只证明'这几个不行'证明不了'地没缝'。abstract报不出判据A(S010工具错位,0.6%真信号)。**转块F判地专项**：判星地湍流处理范围内有没有D005够格的缝(三选一:A真没缝/B有缝但选样错过/C窄缝可救)。判据不对称(用户拍板'最怕A,B/C好说'):A需排假阴性(覆盖度核查+死轴必验+综述充分),B/C有信号即成立。三轴判读(物理有缝/范围内/够D005)+~25篇全文精读(综述8-10+湍流子地带10-15)+已有13篇=~38篇底座,4批subagent并行+grep核查(§7.2防造假)。**判地结论前禁立Q#**。详见H011+R002(待写)。**S020 块F判地第1对话完成**：选样36篇判地底座落盘（28已精读+7补精读+1综述，用户拍板"只判已落盘不补检索"）+批1（综述+系统级7篇）+批2（死轴验证8篇）精读+grep核查全PASS无造假。🔴**死轴验证核心结论:载波同步子地带="有缝但人少"非"真死地"**（不对称判据A第2重防漏看已验:范围内4篇全有baseline失效信号0篇饱和,但增量普遍<1dB/靠分集/孤证,够格硬证据集中在ISL出界,精确gap仍空）。载波同步不能判A。覆盖度债务:信道估计偏薄(2.8 paywall)+综述偏薄(landscape 91综述仅1篇落盘)。**下一步:新对话执行H012（批3调制/检测+批4 AO+补充+三轴判读+R002三选一）**。"
     depends_on:
       - slug: 2026-06-19-4b1-adaptive-interleaving-groundwork
