@@ -289,6 +289,17 @@ topics:
       - "thesis-platform repo: .sessions/2026-05-15-paper-evaluation/ (A→S033 detector-rewrite, B→S032-S028 eval盲区)"
       - "thesis-platform repo: workflows/paper-write/ (D→写作管线改进)"
 
+  - slug: 2026-07-05-carrier-sync-v2-cut-pattern
+    title: 载波同步 v2 切法地图分析（拆"从大点切小点"的动作本身）
+    status: active
+    created: "2026-07-05"
+    last_updated: "2026-07-05（S001 对话 1 完成 B1-B5 切法元数据提取 + 切法地图草稿。3 批子 agent 并发 26 篇样本，主线跨批次归纳 9 节草稿。关键横切发现 5 条：①sat.1553 不是真正子大点，TS-FOE/Park/QPSK 分圈线才是 ②Paillier 安全区恰恰是 dB 最难出区 ③协同角度越宽硬件越弱 ④'X 已被研究但 Y 未覆盖'绝对主流叙事 ~35% ⑤团队自切密度 Spalvieri>Pallilier>B3。守 D018 中性提取扩展 + profile 第 7 次防线 + 用户纠正'不是同门'。交用户审决定对话 2 范围。详见 S001 + H001 + _cut-map-draft-b1-b5.md）"
+    description: "拆解载波同步 v2 B1-B12 主切入 + cited-by 池里'别人怎么从大点切小点'的动作本身。产出'切法地图'：哪些大点被反复切（安全区）/ 切法角度分布 / dB 增益形态分布 / 横向多样性 / 动机叙事 / 实现复杂度。给 D005 务实路线'水一篇'提供可复现模板参照系。**不是拆方法配方、不是排 Go/Kill、不是判 Q# 优先级**——是 Step 3 到 Step 4a 之间的参照系校准。用户拍 3 点判断：6 维提取（4 维 + 动机叙事 + 实现复杂度）/ 扩 Paillier 43 + 聚焦 B1-B5 / 团队维度降为元数据字段。拆 3-4 对话：对话 1 B1-B5 切法提取 → 对话 2-3 B6-B12 + 跨大点模式归纳 → 对话 4 切法地图定稿。"
+    depends_on:
+      - slug: 2026-07-02-carrier-sync-v2-deep-read
+        reason: 继承 12 份 B 点笔记 + cited-by 池规模实测 + literature_notes 综合分析（切法提取的原料）
+    conflicts_with: []
+
   - slug: 2026-07-02-carrier-sync-v2-deep-read
     title: 载波同步 v2 精读沉淀（每点 ≤5 篇验证 + gw-read 结构化笔记 + literature_notes 并入）
     status: active
