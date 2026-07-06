@@ -1,7 +1,7 @@
 # Topic Index: Step 4a 维度 D MVE 执行
 
 > slug: 2026-07-06-step4a-mve-execution
-> status: active | created 2026-07-06 | last_updated 2026-07-06（S004 执行 H003——SC-NDA-ML MVE PASS Go 判定。公平对照 fair gain @ HD-FEC 全 ≥0.5dB：AWGN +0.704 / weak +1.199 / moderate +1.922 / strong 物理不可达但工作区(≥15dB)全赢 DA（per-point +1.19~+2.62dB）。TL-20 预期 5 项全 PASS 0 DEVIATION。NDA-vs-oracle gap 全 <3dB。主线独立 grep 核查 6 项 MVE 纪律全落实。新建 D005 Go 判定。下一步=写 feasibility_report.md 进 Step 5）
+> status: active | created 2026-07-06 | last_updated 2026-07-06（S004 续接——写 `projects/simulation/feasibility_report.md`（Step 4a 出参，4a 全维度 A0/A'/A/B/D 汇总 + Go 决策，C/E 维度 4b 待 Step 5 后补）。本轮 MVE PASS + feasibility_report 落盘。新建 D005 Go 判定。下一步=交用户确认 Go + Step 5 Baseline 选定（gw-validate））
 
 ## 专题定位（一句话）
 
@@ -143,7 +143,7 @@ projects/simulation/
 
 ## 当前位置
 
-**🟢 S004 SC-NDA-ML MVE PASS Go 判定（2026-07-06）**：执行 H003 三步。**步骤 1 报到+框架重读**：session-governance Trigger 1/5 + gw-feasibility §D + TL-20/22/23/26 + SPEC 9 节 + common 接口验证，Handoff 3 条关键声称核查全 PASS。**步骤 2 派子 agent 跑 MVE**：子 agent 写 `sc_nda_ml_mve.py`（薄包装复用 `_time_domain_crlb.py`）+ 跑 15.9s，输出 `_mve_results.json`。**步骤 3 主线核查+判定**：grep 核查 6 项 MVE 纪律全落实（per-block h 行 250-282 / 公平对照 PILOT_OVERHEAD_DB 行 124 / 两阶段 FOE 行 285-297 / resolve blockwise 行 167-300 / 共用信道 行 411 / N=102400），确认底层 MVE 代码合格→结论有效。TL-20 预期 5 项全 PASS 0 DEVIATION。**判定 Go (§D PASS)**：公平对照 fair gain @ HD-FEC AWGN +0.704 / weak +1.199 / moderate +1.922 dB 全 ≥0.5dB，strong 物理不可达但工作区全赢 DA。新建 D005。下一步=写 feasibility_report.md 进 Step 5（Baseline 选定）。
+**🟢 S004 SC-NDA-ML MVE PASS Go 判定 + feasibility_report 写完（2026-07-06）**：执行 H003 三步。**步骤 1 报到+框架重读**：session-governance Trigger 1/5 + gw-feasibility §D + TL-20/22/23/26 + SPEC 9 节 + common 接口验证，Handoff 3 条关键声称核查全 PASS。**步骤 2 派子 agent 跑 MVE**：子 agent 写 `sc_nda_ml_mve.py`（薄包装复用 `_time_domain_crlb.py`）+ 跑 15.9s，输出 `_mve_results.json`。**步骤 3 主线核查+判定**：grep 核查 6 项 MVE 纪律全落实（per-block h 行 250-282 / 公平对照 PILOT_OVERHEAD_DB 行 124 / 两阶段 FOE 行 285-297 / resolve blockwise 行 167-300 / 共用信道 行 411 / N=102400），确认底层 MVE 代码合格→结论有效。TL-20 预期 5 项全 PASS 0 DEVIATION。**判定 Go (§D PASS)**：公平对照 fair gain @ HD-FEC AWGN +0.704 / weak +1.199 / moderate +1.922 dB 全 ≥0.5dB，strong 物理不可达但工作区全赢 DA。新建 D005。**续接（用户授权"接着做"）**：写 `projects/simulation/feasibility_report.md`（Step 4a 出参，A0/A'/A/B/D 全维度汇总 + Go 决策，数字用 Python json.load 从 JSON 提取守 TL-21）。下一步=交用户确认 Go + Step 5 Baseline 选定（gw-validate，需 literature_notes baseline 频率统计 + ≥10 篇田野调查，留待下对话）。
 
 ## 进展线索
 

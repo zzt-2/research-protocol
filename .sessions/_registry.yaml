@@ -315,7 +315,7 @@ topics:
     title: Step 4a 维度 D MVE 执行（B11/B7/B3 oracle 上界门控 + MVE + 架构差异）
     status: active
     created: "2026-07-06"
-    last_updated: "2026-07-06（S004 执行 H003——SC-NDA-ML MVE PASS Go 判定。公平对照 fair gain @ HD-FEC 实测 AWGN +0.704 / weak +1.199 / moderate +1.922 dB 全 ≥0.5dB（SPEC §5 Go 门），strong 物理不可达但工作区(≥15dB)全赢 DA（per-point +1.19~+2.62dB）。TL-20 预期 5 项全 PASS 0 DEVIATION。NDA-vs-oracle gap 全 <3dB。主线独立 grep 核查 6 项 MVE 纪律全落实。新建 D005（Go 判定进 Step 5）。下一步=写 feasibility_report.md 进 Step 5（Baseline 选定：DA ML pilot sp=4 锁 FR-15 目标 baseline，NDA-ML 锁提出方法））"
+    last_updated: "2026-07-06（S004 执行 H003——SC-NDA-ML MVE PASS Go 判定 + 续接写 feasibility_report.md。公平对照 fair gain @ HD-FEC 实测 AWGN +0.704 / weak +1.199 / moderate +1.922 dB 全 ≥0.5dB（SPEC §5 Go 门），strong 物理不可达但工作区(≥15dB)全赢 DA（per-point +1.19~+2.62dB）。TL-20 预期 5 项全 PASS 0 DEVIATION。NDA-vs-oracle gap 全 <3dB。主线独立 grep 核查 6 项 MVE 纪律全落实。新建 D005（Go 判定）。写 `projects/simulation/feasibility_report.md`（Step 4a 出参，A0/A'/A/B/D 全维度汇总）。下一步=交用户确认 Go + Step 5 Baseline 选定（gw-validate，需 literature_notes baseline 频率统计 + ≥10 篇田野调查，留待下对话））"
     description: "承接上游 2026-06-20-problem-driven-redirection S031 排优先级（B11/B3/B7 三个 Conditional Go）+ 切法地图专题参照系。守 FR-21 oracle 上界前置门控（先算 CRB 下界 <0.5dB 直接砍不跑 MVE）+ TL-20 先建理论预期 + TL-26 参数溯源 + FR-18 竞争格局 + FR-12 MVE→Formal 架构差异。复用 projects/simulation/common/ 基建（GG+Doppler+phase noise 信道 + VV/BPS/DPLL/KF 载波恢复），增量扩 M-APSK 调制 + DA ML/NDA-ML/Gardner TED/FOE 估计器（B11+B3+B7 共用）+ params 扩 CLW/HD-FEC/LEO Doppler rate（全标 source）。explore/ 模式每候选一子目录（*-MVE-SPEC.md 契约 + _crb_lower_bound.py + mve 脚本 + results.json），MVE 通过后转 experiments/。拆对话：①基建扩充+B11 oracle 上界 ②B11 MVE 或 B7 全流程 ③B3 架构决策（多孔径阵列 vs 单链路）+ 视情况。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
