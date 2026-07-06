@@ -90,10 +90,29 @@
 
 **数字提取守 TL-21**：所有 fair gain / gap / min_ber 用 Python json.load 从 `_mve_results.json` + `_crlb_results.json` 提取，不手抄。核查机制中性双向满足。
 
+## 续接 2：Step 5 Baseline 选定（轻量版）
+
+用户选路径 A 进 Step 5。守 gw-validate.md，Step 5 完整工作流 = 频率统计 + ≥10 篇田野调查 + 候选评估表 + 选定。本轮做轻量版（literature_notes 现有 ~22 篇精读统计 + 候选评估表 + decision_log），田野调查 ≥10 篇留 H005 子 agent（守 3 步上限）。
+
+**literature_notes baseline 频率统计**（区分角色，守 F5 教训）：
+- B 档 12 篇 + 块 A/B/C/D ~10 篇 = ~22 篇 ≥ 8 篇门槛，不降级
+- B 档条目是精简版无"使用的 Baseline 方法"字段，从"核心贡献"+"关键 dB"提取 baseline 提及
+- **DA ML 作为对比方法**：1 篇（B11 主对比 +2dB vs DA ML）—— 频率低但正是 NDA-ML 天然对照
+- **pilot-aided 大类作为核心方法**：B10/B11/B12（3 篇）—— pilot-aided 是载波同步主流范式
+- DA ML 是 pilot-aided 大类下近最优实现（pilot sp=4 充分时）
+
+**Baseline 候选评估表**（7 候选，详见 decision_log.md D-S5-01）：DA ML（选定，优先级 1）/ pilot-aided RLS（3）/ 频域 CW pilot（4）/ Gardner TED+FOE（2，B7 方向）/ 短时谱（5）/ Diff-4th（6）/ VV CFR（7）。
+
+**选定 DA ML（pilot sp=4）= FR-15 目标 baseline**（D-S5-01）：①领域共识（B11 自选 NDA-ML 天然对照）②FR-14 最强简单先验（pilot sp=4 近最优）③FR-15 贡献目标（MVE D005 已验证赢之 +0.704~+1.922dB）④代码状态良好（common/_recovery.py:da_ml_recovery）⑤算法描述详细（B11 行 181/191 闭式）。
+
+**置信度中高**：DA ML 是 NDA-ML 天然对照有强先验，田野调查大概率确认。但需补做以守 gw-validate 严格性（H005 待办）。
+
+**产出**：`projects/simulation/decision_log.md`（D-S5-01 baseline 选定 + D-4a-01/02 引用）。
+
 ## 后续
 
-1. **交用户确认 Go**（gw-feasibility §D [MUST] Go/No-Go 决策必须用户确认）+ 决定下一步路径（A 进 Step 5-7 / B 开 B7 MVE / C 做 B3 架构决策）
-2. **Step 5 Baseline 选定**（gw-validate.md，留待下对话）：literature_notes 载波同步 v2 章节统计"使用的 Baseline 方法"频率 + ≥10 篇田野调查 + 候选评估表。初步锁定（D005，待 Step 5 正式确认）：DA ML pilot sp=4 = FR-15 目标 baseline
+1. **交用户确认 Go + baseline 选定**（gw-feasibility §D + gw-validate [MUST] 用户审查）
+2. **H005 下对话**：①Step 5 田野调查（子 agent 检索 ≥10 篇 abstract 扫实验设置）②Step 4b（C/E 维度，依赖 baseline 参数）③视情况 Step 6（仿真器设计，守 FR-12 MVE→Formal 架构差异门控）
 3. **B7 Gardner TED FOE 处理**（D004 已说"B7 待 NDA-ML MVE 完后视情况开"，现 NDA-ML Go，B7 可作并行第二候选或后置）
 4. **B3 架构决策**（多孔径阵列 vs 单链路，最后做）
-5. **债务提示**：①单载波 DA ML 近最优（pilot sp=4）vs B11 论文 DA ML（decision-feedback）不对等，MVE 验证后视情况补 decision-feedback DA ML 对照 ②时域升 M₀ 次幂噪声放大无 DFT 增益抵消，MVE 已验证 NDA-vs-oracle gap 0.38-2.58dB（可接受）③B11 genie-aided 解卷绕非可实现，MVE 用 resolve_m16apsk_blockwise（非 oracle）已落实 ④子 agent MVE 脚本是 `_time_domain_crlb.py` 薄包装，Step 6 正式仿真器需独立实现
+5. **债务提示**：①单载波 DA ML 近最优（pilot sp=4）vs B11 论文 DA ML（decision-feedback）不对等，Step 6 视情况补 decision-feedback DA ML 对照 ②子 agent MVE 脚本是 `_time_domain_crlb.py` 薄包装，Step 6 正式仿真器需独立实现 ③B11 genie-aided 解卷绕非可实现，MVE 用 resolve_m16apsk_blockwise（非 oracle）已落实
