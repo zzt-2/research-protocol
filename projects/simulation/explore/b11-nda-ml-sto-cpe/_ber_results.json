@@ -1,0 +1,604 @@
+{
+  "meta": {
+    "task": "B11 NDA-ML STO+CPE BER-layer oracle upper bound vs DA ML (star-ground turb)",
+    "source": "B11 IEEE PTL 2025 doi:10.1109_LPT.2024.3523478",
+    "redo_reason": "上一轮 CRB 层 FR-21 物理量错配: B11 +2dB 是 BER @ HD-FEC 不是相位 CRB; DA ML 劣势是 decision-aided 实现缺陷非信息论下界. 本轮 BER 层重做.",
+    "metric": "BER @ (8,8)-16APSK, M0-fold ambiguity resolved by resolve_m16apsk (8 rotations)",
+    "methodology_decisions": {
+      "A_block_recovery": "逐块恢复 Nblock=256=B11 DFT_SIZE. 全帧恢复因 Wiener PN 累积漂移 (LW=10kHz, ~0.9rad rms over 1e5 sym) 失效. B11 原文即按 DFT_SIZE=256 块处理 (行 155).",
+      "B_amplitude": "(8,8)-16APSK 解调对 sqrt(h) 幅度敏感; DA/NDA 只估相位. 跑两套: h_med=h_med MMSE+amp_limit(3.0) (真实公平非oracle); oracle=rx/sqrt(h) (隔离相位,三方案同公平).",
+      "C_hdfec_unreachable": "GG 块衰落+h_med 残差致 BER floor, 三方案 20dB 弱湍流仍 ~4e-2, 达不到 0.0038 HD-FEC 阈值. 改用多工作点 BER 趋势 + 可达 BER 水平等效 SNR 差."
+    },
+    "N_per_point": 102400,
+    "N_blocks": 400,
+    "N_per_block": 256,
+    "M0": 8,
+    "pilot_spacing": 32,
+    "snr_points_dB": [
+      0.0,
+      4.0,
+      8.0,
+      12.0,
+      16.0,
+      20.0
+    ],
+    "turb_levels": [
+      "weak",
+      "moderate",
+      "strong"
+    ],
+    "amp_modes": [
+      "h_med",
+      "oracle"
+    ],
+    "hdfec_ber": 0.0038,
+    "verdict_thresholds": {
+      "go_mve": ">=0.5 dB (NDA-ML 优于 DA ML)",
+      "conditional": "0.3-0.5 dB (薄增益)",
+      "kill": "<0.3 dB (或 NDA-ML 劣于 DA ML)"
+    },
+    "elapsed_sec": 15.343235969543457
+  },
+  "expected_TL20": {
+    "weak": "1-3 dB (近 B11 +2dB, NDA 全帧积分优势)",
+    "moderate": "0.5-2 dB (DA pilot 受 fade 决策错误传播放大)",
+    "strong": "AMBIGUOUS -1~1 dB (deep fade + 升幂噪声放大)",
+    "deviation_rules": [
+      "weak gain < 0.5 → 可疑",
+      "任一湍流 gain > 4 → 可疑",
+      "strong gain < -2 → B11 星地迁移失效"
+    ]
+  },
+  "turbulence": {
+    "h_med": {
+      "weak": [
+        {
+          "snr_db": 0.0,
+          "nda_ml_ber": 0.45115478515625,
+          "da_ml_ber": 0.38068359375,
+          "oracle_ber": 0.32937255859375,
+          "ratio_nda_over_da": 1.185117490123647,
+          "ratio_nda_over_oracle": 1.3697400508483373
+        },
+        {
+          "snr_db": 4.0,
+          "nda_ml_ber": 0.40986328125,
+          "da_ml_ber": 0.29107666015625,
+          "oracle_ber": 0.2442431640625,
+          "ratio_nda_over_da": 1.4080939400293562,
+          "ratio_nda_over_oracle": 1.6780952000159932
+        },
+        {
+          "snr_db": 8.0,
+          "nda_ml_ber": 0.3133203125,
+          "da_ml_ber": 0.19446044921875,
+          "oracle_ber": 0.164345703125,
+          "ratio_nda_over_da": 1.6112289864534028,
+          "ratio_nda_over_oracle": 1.9064709727256521
+        },
+        {
+          "snr_db": 12.0,
+          "nda_ml_ber": 0.15591552734375,
+          "da_ml_ber": 0.11740966796875,
+          "oracle_ber": 0.1022705078125,
+          "ratio_nda_over_da": 1.327961572851469,
+          "ratio_nda_over_oracle": 1.5245404631176893
+        },
+        {
+          "snr_db": 16.0,
+          "nda_ml_ber": 0.08706298828125,
+          "da_ml_ber": 0.06838134765625,
+          "oracle_ber": 0.06275634765625,
+          "ratio_nda_over_da": 1.2731979006747833,
+          "ratio_nda_over_oracle": 1.3873176424820073
+        },
+        {
+          "snr_db": 20.0,
+          "nda_ml_ber": 0.067275390625,
+          "da_ml_ber": 0.045302734375,
+          "oracle_ber": 0.04286865234375,
+          "ratio_nda_over_da": 1.4850183229144212,
+          "ratio_nda_over_oracle": 1.5693376615980408
+        }
+      ],
+      "moderate": [
+        {
+          "snr_db": 0.0,
+          "nda_ml_ber": 0.4519580078125,
+          "da_ml_ber": 0.39247314453125,
+          "oracle_ber": 0.34138916015625,
+          "ratio_nda_over_da": 1.151564162058262,
+          "ratio_nda_over_oracle": 1.3238791987585192
+        },
+        {
+          "snr_db": 4.0,
+          "nda_ml_ber": 0.411376953125,
+          "da_ml_ber": 0.31274658203125,
+          "oracle_ber": 0.26329833984375,
+          "ratio_nda_over_da": 1.3153683421675084,
+          "ratio_nda_over_oracle": 1.5623985831780207
+        },
+        {
+          "snr_db": 8.0,
+          "nda_ml_ber": 0.320517578125,
+          "da_ml_ber": 0.2275048828125,
+          "oracle_ber": 0.18931640625,
+          "ratio_nda_over_da": 1.4088382375034876,
+          "ratio_nda_over_oracle": 1.6930258949757555
+        },
+        {
+          "snr_db": 12.0,
+          "nda_ml_ber": 0.19196533203125,
+          "da_ml_ber": 0.15088623046875,
+          "oracle_ber": 0.12970703125,
+          "ratio_nda_over_da": 1.272252156044205,
+          "ratio_nda_over_oracle": 1.4799917181147417
+        },
+        {
+          "snr_db": 16.0,
+          "nda_ml_ber": 0.11778076171875,
+          "da_ml_ber": 0.0984814453125,
+          "oracle_ber": 0.0893798828125,
+          "ratio_nda_over_da": 1.1959690614309089,
+          "ratio_nda_over_oracle": 1.3177547118273696
+        },
+        {
+          "snr_db": 20.0,
+          "nda_ml_ber": 0.0905126953125,
+          "da_ml_ber": 0.06892578125,
+          "oracle_ber": 0.0655810546875,
+          "ratio_nda_over_da": 1.313190705582318,
+          "ratio_nda_over_oracle": 1.3801652892561984
+        }
+      ],
+      "strong": [
+        {
+          "snr_db": 0.0,
+          "nda_ml_ber": 0.45365234375,
+          "da_ml_ber": 0.4094580078125,
+          "oracle_ber": 0.3575830078125,
+          "ratio_nda_over_da": 1.1079337443505015,
+          "ratio_nda_over_oracle": 1.2686630344243714
+        },
+        {
+          "snr_db": 4.0,
+          "nda_ml_ber": 0.41492919921875,
+          "da_ml_ber": 0.344296875,
+          "oracle_ber": 0.29318359375,
+          "ratio_nda_over_da": 1.2051494781030179,
+          "ratio_nda_over_oracle": 1.4152538138698287
+        },
+        {
+          "snr_db": 8.0,
+          "nda_ml_ber": 0.32795654296875,
+          "da_ml_ber": 0.27649169921875,
+          "oracle_ber": 0.230947265625,
+          "ratio_nda_over_da": 1.1861352217640462,
+          "ratio_nda_over_oracle": 1.4200494735506786
+        },
+        {
+          "snr_db": 12.0,
+          "nda_ml_ber": 0.23305419921875,
+          "da_ml_ber": 0.2146875,
+          "oracle_ber": 0.17718017578125,
+          "ratio_nda_over_da": 1.0855508551673945,
+          "ratio_nda_over_oracle": 1.3153514392404888
+        },
+        {
+          "snr_db": 16.0,
+          "nda_ml_ber": 0.17005615234375,
+          "da_ml_ber": 0.160107421875,
+          "oracle_ber": 0.13596435546875,
+          "ratio_nda_over_da": 1.0621378469045442,
+          "ratio_nda_over_oracle": 1.2507406941875707
+        },
+        {
+          "snr_db": 20.0,
+          "nda_ml_ber": 0.132431640625,
+          "da_ml_ber": 0.120498046875,
+          "oracle_ber": 0.107880859375,
+          "ratio_nda_over_da": 1.0990355782478323,
+          "ratio_nda_over_oracle": 1.2275730967683536
+        }
+      ]
+    },
+    "oracle": {
+      "weak": [
+        {
+          "snr_db": 0.0,
+          "nda_ml_ber": 0.443388671875,
+          "da_ml_ber": 0.37253173828125,
+          "oracle_ber": 0.31912109375,
+          "ratio_nda_over_da": 1.1902037499426563,
+          "ratio_nda_over_oracle": 1.3894057163841116
+        },
+        {
+          "snr_db": 4.0,
+          "nda_ml_ber": 0.4151708984375,
+          "da_ml_ber": 0.28099853515625,
+          "oracle_ber": 0.2317724609375,
+          "ratio_nda_over_da": 1.477484208971563,
+          "ratio_nda_over_oracle": 1.7912865780436935
+        },
+        {
+          "snr_db": 8.0,
+          "nda_ml_ber": 0.351591796875,
+          "da_ml_ber": 0.1760693359375,
+          "oracle_ber": 0.14353271484375,
+          "ratio_nda_over_da": 1.9968939793116836,
+          "ratio_nda_over_oracle": 2.4495586059090675
+        },
+        {
+          "snr_db": 12.0,
+          "nda_ml_ber": 0.2026806640625,
+          "da_ml_ber": 0.08806640625,
+          "oracle_ber": 0.07119384765625,
+          "ratio_nda_over_da": 2.301452650255045,
+          "ratio_nda_over_oracle": 2.8468845375672984
+        },
+        {
+          "snr_db": 16.0,
+          "nda_ml_ber": 0.07123046875,
+          "da_ml_ber": 0.03331787109375,
+          "oracle_ber": 0.0274072265625,
+          "ratio_nda_over_da": 2.137905766835202,
+          "ratio_nda_over_oracle": 2.598966684482451
+        },
+        {
+          "snr_db": 20.0,
+          "nda_ml_ber": 0.036396484375,
+          "da_ml_ber": 0.00958740234375,
+          "oracle_ber": 0.007685546875,
+          "ratio_nda_over_da": 3.796282149223326,
+          "ratio_nda_over_oracle": 4.735705209656925
+        }
+      ],
+      "moderate": [
+        {
+          "snr_db": 0.0,
+          "nda_ml_ber": 0.446259765625,
+          "da_ml_ber": 0.3847802734375,
+          "oracle_ber": 0.33137939453125,
+          "ratio_nda_over_da": 1.159778181033717,
+          "ratio_nda_over_oracle": 1.3466732482152464
+        },
+        {
+          "snr_db": 4.0,
+          "nda_ml_ber": 0.4186572265625,
+          "da_ml_ber": 0.3025048828125,
+          "oracle_ber": 0.2508935546875,
+          "ratio_nda_over_da": 1.3839684922441207,
+          "ratio_nda_over_oracle": 1.6686647334721598
+        },
+        {
+          "snr_db": 8.0,
+          "nda_ml_ber": 0.36927490234375,
+          "da_ml_ber": 0.20811279296875,
+          "oracle_ber": 0.166669921875,
+          "ratio_nda_over_da": 1.7743978977745973,
+          "ratio_nda_over_oracle": 2.215606140505068
+        },
+        {
+          "snr_db": 12.0,
+          "nda_ml_ber": 0.2555712890625,
+          "da_ml_ber": 0.11751953125,
+          "oracle_ber": 0.0938427734375,
+          "ratio_nda_over_da": 2.174713312281868,
+          "ratio_nda_over_oracle": 2.72339872001665
+        },
+        {
+          "snr_db": 16.0,
+          "nda_ml_ber": 0.1281201171875,
+          "da_ml_ber": 0.054091796875,
+          "oracle_ber": 0.043642578125,
+          "ratio_nda_over_da": 2.36856833363423,
+          "ratio_nda_over_oracle": 2.935667934660998
+        },
+        {
+          "snr_db": 20.0,
+          "nda_ml_ber": 0.05576171875,
+          "da_ml_ber": 0.0200146484375,
+          "oracle_ber": 0.0166845703125,
+          "ratio_nda_over_da": 2.7860453769212,
+          "ratio_nda_over_oracle": 3.3421129645888206
+        }
+      ],
+      "strong": [
+        {
+          "snr_db": 0.0,
+          "nda_ml_ber": 0.4505224609375,
+          "da_ml_ber": 0.4039990234375,
+          "oracle_ber": 0.34771484375,
+          "ratio_nda_over_da": 1.1151573018769867,
+          "ratio_nda_over_oracle": 1.2956664607088693
+        },
+        {
+          "snr_db": 4.0,
+          "nda_ml_ber": 0.427705078125,
+          "da_ml_ber": 0.33521484375,
+          "oracle_ber": 0.28089599609375,
+          "ratio_nda_over_da": 1.2759133018703026,
+          "ratio_nda_over_oracle": 1.5226456911911697
+        },
+        {
+          "snr_db": 8.0,
+          "nda_ml_ber": 0.391005859375,
+          "da_ml_ber": 0.2589111328125,
+          "oracle_ber": 0.209365234375,
+          "ratio_nda_over_da": 1.5101933050447902,
+          "ratio_nda_over_oracle": 1.8675777788143104
+        },
+        {
+          "snr_db": 12.0,
+          "nda_ml_ber": 0.32049072265625,
+          "da_ml_ber": 0.18364501953125,
+          "oracle_ber": 0.14250732421875,
+          "ratio_nda_over_da": 1.7451642493452626,
+          "ratio_nda_over_oracle": 2.248942111665039
+        },
+        {
+          "snr_db": 16.0,
+          "nda_ml_ber": 0.22953125,
+          "da_ml_ber": 0.11691650390625,
+          "oracle_ber": 0.08895751953125,
+          "ratio_nda_over_da": 1.963206581887281,
+          "ratio_nda_over_oracle": 2.580234377144112
+        },
+        {
+          "snr_db": 20.0,
+          "nda_ml_ber": 0.14716064453125,
+          "da_ml_ber": 0.0671728515625,
+          "oracle_ber": 0.0511669921875,
+          "ratio_nda_over_da": 2.190775605146471,
+          "ratio_nda_over_oracle": 2.8760855043420173
+        }
+      ]
+    }
+  },
+  "gain_analysis": {
+    "h_med": {
+      "weak": {
+        "gap_nda_vs_da": [
+          [
+            0.0,
+            5.09986198556208,
+            5.09986198556208
+          ],
+          [
+            4.0,
+            8.422055481169611,
+            4.422055481169611
+          ],
+          [
+            8.0,
+            10.733854499330024,
+            2.7338544993300236
+          ],
+          [
+            12.0,
+            13.94716752270475,
+            1.9471675227047491
+          ],
+          [
+            16.0,
+            19.747040699418022,
+            3.7470406994180223
+          ]
+        ],
+        "gap_nda_vs_da_mean_db": 3.5899960376368965,
+        "gap_nda_vs_da_at_minber_db": 3.7470406994180223,
+        "gap_nda_vs_oracle_mean_db": 4.8191103105019675,
+        "gain_at_hdfec_db": null,
+        "hdfec_reachable": false,
+        "equiv_gain_at_achievable_db": -3.8415905332729814,
+        "min_nda_ber": 0.067275390625,
+        "note": "gap_nda_vs_da > 0 = NDA 劣 (NDA 需更高 SNR 达 DA 同 BER). gain_at_hdfec 符号相反: >0 = NDA 赢."
+      },
+      "moderate": {
+        "gap_nda_vs_da": [
+          [
+            0.0,
+            4.753957727582087,
+            4.753957727582087
+          ],
+          [
+            4.0,
+            8.1915164358456,
+            4.1915164358456
+          ],
+          [
+            8.0,
+            10.674603905431571,
+            2.674603905431571
+          ],
+          [
+            12.0,
+            13.971698546861903,
+            1.9716985468619033
+          ],
+          [
+            16.0,
+            18.7183155489778,
+            2.718315548977799
+          ]
+        ],
+        "gap_nda_vs_da_mean_db": 3.2620184329397914,
+        "gap_nda_vs_da_at_minber_db": 2.718315548977799,
+        "gap_nda_vs_oracle_mean_db": 4.961831675568126,
+        "gain_at_hdfec_db": null,
+        "hdfec_reachable": false,
+        "equiv_gain_at_achievable_db": -3.054158256543424,
+        "min_nda_ber": 0.0905126953125,
+        "note": "gap_nda_vs_da > 0 = NDA 劣 (NDA 需更高 SNR 达 DA 同 BER). gain_at_hdfec 符号相反: >0 = NDA 赢."
+      },
+      "strong": {
+        "gap_nda_vs_da": [
+          [
+            0.0,
+            4.225714906359229,
+            4.225714906359229
+          ],
+          [
+            4.0,
+            7.173169268766925,
+            3.173169268766925
+          ],
+          [
+            8.0,
+            9.998773751825649,
+            1.9987737518256488
+          ],
+          [
+            12.0,
+            13.04191085165009,
+            1.0419108516500906
+          ],
+          [
+            16.0,
+            16.964299895747676,
+            0.9642998957476756
+          ]
+        ],
+        "gap_nda_vs_da_mean_db": 2.2807737348699137,
+        "gap_nda_vs_da_at_minber_db": 0.9642998957476756,
+        "gap_nda_vs_oracle_mean_db": 4.602995294130762,
+        "gain_at_hdfec_db": null,
+        "hdfec_reachable": false,
+        "equiv_gain_at_achievable_db": -1.3290534782299694,
+        "min_nda_ber": 0.132431640625,
+        "note": "gap_nda_vs_da > 0 = NDA 劣 (NDA 需更高 SNR 达 DA 同 BER). gain_at_hdfec 符号相反: >0 = NDA 赢."
+      }
+    },
+    "oracle": {
+      "weak": {
+        "gap_nda_vs_da": [
+          [
+            0.0,
+            6.6078303384003405,
+            6.6078303384003405
+          ],
+          [
+            4.0,
+            9.627490472146292,
+            5.627490472146292
+          ],
+          [
+            8.0,
+            12.538404150278255,
+            4.5384041502782555
+          ],
+          [
+            12.0,
+            15.18841634842541,
+            3.1884163484254096
+          ]
+        ],
+        "gap_nda_vs_da_mean_db": 4.990535327312574,
+        "gap_nda_vs_da_at_minber_db": 3.1884163484254096,
+        "gap_nda_vs_oracle_mean_db": 6.263173256565507,
+        "gain_at_hdfec_db": null,
+        "hdfec_reachable": false,
+        "equiv_gain_at_achievable_db": -4.363697599916231,
+        "min_nda_ber": 0.036396484375,
+        "note": "gap_nda_vs_da > 0 = NDA 劣 (NDA 需更高 SNR 达 DA 同 BER). gain_at_hdfec 符号相反: >0 = NDA 赢."
+      },
+      "moderate": {
+        "gap_nda_vs_da": [
+          [
+            0.0,
+            6.689165278202561,
+            6.689165278202561
+          ],
+          [
+            4.0,
+            10.167633478731116,
+            6.167633478731116
+          ],
+          [
+            8.0,
+            13.189927998195044,
+            5.189927998195044
+          ],
+          [
+            12.0,
+            16.41526964860326,
+            4.41526964860326
+          ]
+        ],
+        "gap_nda_vs_da_mean_db": 5.615499100932995,
+        "gap_nda_vs_da_at_minber_db": 4.41526964860326,
+        "gap_nda_vs_oracle_mean_db": 7.314287517455032,
+        "gain_at_hdfec_db": null,
+        "hdfec_reachable": false,
+        "equiv_gain_at_achievable_db": -4.156742789637256,
+        "min_nda_ber": 0.05576171875,
+        "note": "gap_nda_vs_da > 0 = NDA 劣 (NDA 需更高 SNR 达 DA 同 BER). gain_at_hdfec 符号相反: >0 = NDA 赢."
+      },
+      "strong": {
+        "gap_nda_vs_da": [
+          [
+            0.0,
+            6.542440042654377,
+            6.542440042654377
+          ],
+          [
+            4.0,
+            11.096525398556004,
+            7.096525398556004
+          ],
+          [
+            8.0,
+            14.556733406948535,
+            6.556733406948535
+          ],
+          [
+            12.0,
+            18.006995007696432,
+            6.006995007696432
+          ]
+        ],
+        "gap_nda_vs_da_mean_db": 6.550673463963837,
+        "gap_nda_vs_da_at_minber_db": 6.006995007696432,
+        "gap_nda_vs_oracle_mean_db": 9.589262479187834,
+        "gain_at_hdfec_db": null,
+        "hdfec_reachable": false,
+        "equiv_gain_at_achievable_db": -6.038024722364792,
+        "min_nda_ber": 0.14716064453125,
+        "note": "gap_nda_vs_da > 0 = NDA 劣 (NDA 需更高 SNR 达 DA 同 BER). gain_at_hdfec 符号相反: >0 = NDA 赢."
+      }
+    }
+  },
+  "overall_verdict": {
+    "verdict": "KILL",
+    "basis": "主判据: amp_mode=h_med, 三湍流最小 gain (保守), gain = -(NDA-vs-DA 等效SNR gap @ 最高SNR工作点)",
+    "gains_dB": {
+      "weak": -3.7470406994180223,
+      "moderate": -2.718315548977799,
+      "strong": -0.9642998957476756
+    },
+    "min_gain_dB": -3.7470406994180223,
+    "note": "gain > 0 = NDA-ML 优于 DA ML. 主判据取最高 SNR 工作点的等效 SNR gap (接近 B11 论文 15-20dB 区, 避开低 SNR 估计器失效区)."
+  },
+  "tl20_deviation_check": [
+    "weak: gain=-3.75dB < TL-20 下限 +0.5dB → NDA 劣于预期, 与 B11 +2dB 论文值不符 (但符合 CRB 层 M0² 升幂惩罚物理) → DEVIATION",
+    "moderate: gain=-2.72dB < TL-20 下限 +0.5dB → NDA 劣于预期, 与 B11 +2dB 论文值不符 (但符合 CRB 层 M0² 升幂惩罚物理) → DEVIATION",
+    "strong: gain=-0.96dB ∈ TL-20 [-1.0,+1.0] → PASS"
+  ],
+  "robustness_crosscheck": {
+    "weak": {
+      "gain_h_med_db": -3.7470406994180223,
+      "gain_oracle_amp_db": -3.1884163484254096,
+      "consistent": true
+    },
+    "moderate": {
+      "gain_h_med_db": -2.718315548977799,
+      "gain_oracle_amp_db": -4.41526964860326,
+      "consistent": true
+    },
+    "strong": {
+      "gain_h_med_db": -0.9642998957476756,
+      "gain_oracle_amp_db": -6.006995007696432,
+      "consistent": true
+    }
+  }
+}

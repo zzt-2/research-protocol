@@ -1,0 +1,103 @@
+{
+  "params": {
+    "N_DFT": 256,
+    "CP_LEN": 32,
+    "BAUD_RATE": 25000000000.0,
+    "CLW": 500000.0,
+    "M0": 8,
+    "SIGMA2_P": 0.0001256637061435917,
+    "N_BLOCKS": 400,
+    "sym_per_point": 102400,
+    "HDFEC": 0.0038,
+    "DA_PILOT_SPACING": 4
+  },
+  "curves": {
+    "5.0": {
+      "snr_db": 5.0,
+      "nda_ml_global": 0.4178173828125,
+      "nda_ml_blockwise": 0.393740234375,
+      "nda_ml_fixed": 0.18678466796875,
+      "da_ml": 0.247490234375,
+      "oracle": 0.17611328125
+    },
+    "8.0": {
+      "snr_db": 8.0,
+      "nda_ml_global": 0.39306640625,
+      "nda_ml_blockwise": 0.32912109375,
+      "nda_ml_fixed": 0.10969482421875,
+      "da_ml": 0.1244873046875,
+      "oracle": 0.10491943359375
+    },
+    "10.0": {
+      "snr_db": 10.0,
+      "nda_ml_global": 0.36814208984375,
+      "nda_ml_blockwise": 0.18517822265625,
+      "nda_ml_fixed": 0.070830078125,
+      "da_ml": 0.0733447265625,
+      "oracle": 0.06728515625
+    },
+    "12.0": {
+      "snr_db": 12.0,
+      "nda_ml_global": 0.3552587890625,
+      "nda_ml_blockwise": 0.07443359375,
+      "nda_ml_fixed": 0.04203369140625,
+      "da_ml": 0.04173095703125,
+      "oracle": 0.03925048828125
+    },
+    "14.0": {
+      "snr_db": 14.0,
+      "nda_ml_global": 0.3471435546875,
+      "nda_ml_blockwise": 0.0521142578125,
+      "nda_ml_fixed": 0.02397705078125,
+      "da_ml": 0.0228173828125,
+      "oracle": 0.02160888671875
+    },
+    "16.0": {
+      "snr_db": 16.0,
+      "nda_ml_global": 0.3279052734375,
+      "nda_ml_blockwise": 0.042412109375,
+      "nda_ml_fixed": 0.01235595703125,
+      "da_ml": 0.01084716796875,
+      "oracle": 0.00998046875
+    },
+    "18.0": {
+      "snr_db": 18.0,
+      "nda_ml_global": 0.30198486328125,
+      "nda_ml_blockwise": 0.03312744140625,
+      "nda_ml_fixed": 0.00525390625,
+      "da_ml": 0.0040673828125,
+      "oracle": 0.003466796875
+    },
+    "20.0": {
+      "snr_db": 20.0,
+      "nda_ml_global": 0.36796142578125,
+      "nda_ml_blockwise": 0.02730224609375,
+      "nda_ml_fixed": 0.00206787109375,
+      "da_ml": 0.001044921875,
+      "oracle": 0.0006591796875
+    }
+  },
+  "analysis": {
+    "nda_fixed": {
+      "snr_nda_at_hdfec": 18.69487909744189,
+      "snr_da_at_hdfec": 18.10006740098578,
+      "snr_oracle_at_hdfec": 17.826423154388653,
+      "gain_nda_vs_da_dB": -0.5948116964561123,
+      "gain_nda_vs_oracle_dB": 0.8684559430532381
+    },
+    "nda_blockwise": {
+      "snr_nda_at_hdfec": 20.0,
+      "snr_da_at_hdfec": 18.10006740098578,
+      "snr_oracle_at_hdfec": 17.826423154388653,
+      "gain_nda_vs_da_dB": -1.899932599014221,
+      "gain_nda_vs_oracle_dB": 2.173576845611347
+    },
+    "nda_global": {
+      "snr_nda_at_hdfec": 20.0,
+      "snr_da_at_hdfec": 18.10006740098578,
+      "snr_oracle_at_hdfec": 17.826423154388653,
+      "gain_nda_vs_da_dB": -1.899932599014221,
+      "gain_nda_vs_oracle_dB": 2.173576845611347
+    }
+  }
+}

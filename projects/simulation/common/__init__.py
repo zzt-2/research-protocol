@@ -16,19 +16,28 @@ from ._config import (
 )
 
 # Channel
-from ._channel import gg_block, doppler_phase, generate_shared_realization
+from ._channel import (
+    gg_block, doppler_phase,
+    generate_shared_realization, generate_shared_realization_apsk,
+)
 
 # Modulation
 from ._modulation import (
     qpsk_mod, qpsk_demod, ber_count, resolve_qpsk,
     qam16_mod, qam16_demod, ber_count_qam16, resolve_qam16,
     ber_eval, hard_decision,
+    apsk8_mod, apsk8_demod, ber_count_apsk8, resolve_apsk8,
+    resolve_apsk8_blockwise,
+    m16apsk_mod, m16apsk_demod, ber_count_m16apsk, resolve_m16apsk,
+    resolve_m16apsk_blockwise,
 )
 
 # Recovery
 from ._recovery import (
     fft_foe, dpll_track, dpll_track_dd,
     vv_cpr, bps_cpr, carrier_recovery_fixed,
+    da_ml_recovery, nda_ml_recovery,
+    gardner_ted_recovery, psa_foe_recovery,
 )
 
 # KF

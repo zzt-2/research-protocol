@@ -450,6 +450,198 @@ class ExperimentParams(BaseModel):
     model_config = ConfigDict(frozen=True)
 
 
+class B11Params(BaseModel):
+    """B11 NDA-ML STO+CPE 参数族 (10.1109/LPT.2024.3523478)
+
+    用于 Step 4a 维度 D (CPE/FOE 链) MVE 评估。
+    概念独立性: CLW=combined linewidth, 与 SystemParams.LASER_LW (单端激光器)
+    概念不同, 可独立保留。"""
+    CLW: float = Field(
+        500e3,
+        description="combined laser linewidth (收发两端线宽之和)",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B11 (10.1109/LPT.2024.3523478) 行 143/155：combined laser linewidth 扫至 500 kHz",
+            "symbol": "Δν_CLW",
+            "unit": "Hz",
+            "audit_flag": AuditFlag.OK,
+        },
+    )
+    HD_FEC_THRESHOLD: float = Field(
+        7e-2,
+        description="7% HD-FEC overhead 对应 BER 阈值",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B11 行 181/191：7% HD-FEC threshold (BER=3.8e-3 软判决 7% 开销)",
+            "symbol": "BER_HD-FEC",
+            "audit_flag": AuditFlag.OK,
+        },
+    )
+    BAUD_RATE: float = Field(
+        25e9,
+        description="波特率 25 GBaud",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B11 行 143/155：25 GBaud",
+            "symbol": "R_B",
+            "unit": "sym/s",
+            "audit_flag": AuditFlag.OK,
+        },
+    )
+    DFT_SIZE: int = Field(
+        256,
+        description="DFT 窗长度",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B11 行 155：DFT size N=256",
+            "symbol": "N_DFT",
+            "audit_flag": AuditFlag.OK,
+        },
+    )
+    CP_LEN: int = Field(
+        32,
+        description="循环前缀长度",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B11 行 155：CP=32 sample",
+            "symbol": "N_CP",
+            "unit": "sample",
+            "audit_flag": AuditFlag.OK,
+        },
+    )
+    M0_POWER: int = Field(
+        8,
+        description="(8,8)-16APSK 升 M₀ 次幂去调制阶数",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B11 行 75-77：(8,8)-16APSK 升 M₀=8 次幂去调制, M₀=K·M₀/M=M₀ 对 K=2 M=16 M₀=8",
+            "symbol": "M₀",
+            "audit_flag": AuditFlag.OK,
+        },
+    )
+    SNR_WORKING_POINT: float = Field(
+        15.0,
+        description="相位跟踪工作点 SNR",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B11 Fig.3 行 143：15 dB SNR 相位跟踪工作点",
+            "symbol": "SNR",
+            "unit": "dB",
+            "audit_flag": AuditFlag.OK,
+        },
+    )
+    PN_VARIANCE: float = Field(
+        2 * np.pi * 500e3 * (1 / 25e9),
+        description="Wiener 激光相位噪声方差 = 2π·Δν_CLW·T_S",
+        json_schema_extra={
+            "source_type": SourceType.derived,
+            "source": "B11 行 51：σp²=2πΔνTs Wiener laser phase noise",
+            "symbol": "σ²_p",
+            "unit": "rad²",
+            "audit_flag": AuditFlag.OK,
+            "derived_from": ["CLW", "T_S"],
+            "note": "数值用 CLW 与 BAUD_RATE 倒数(代替 T_S)计算",
+        },
+    )
+
+    model_config = ConfigDict(frozen=True)
+
+
+class B7Params(BaseModel):
+    """B7 Gardner TED FOE 参数族 (B7 OFC 2026)
+
+    注意: B7 论文是 OFC 2026 会议, 其 Doppler range 0-23 GHz 来自地面 fiber 场景。
+    B7 主线任务即"搬星地", 故部分参数为"原 paper 声明 + 星地迁移待验证"。"""
+    DOPPLER_RANGE: float = Field(
+        23e9,
+        description="Doppler 频偏范围 (0-23 GHz)",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B7 OFC 2026：Doppler range 0-23 GHz",
+            "symbol": "Δf_max",
+            "unit": "Hz",
+            "audit_flag": AuditFlag.WARNING,
+            "note": "原 paper 为 fiber 场景声明值, 星地迁移待验证",
+        },
+    )
+    LEO_DOPPLER_RATE: float = Field(
+        30e3,
+        description="LEO Doppler 变化率上界",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "Paillier 2020 JLT / IEEE sat.1553：LEO Doppler rate ~30 kHz/s（保守上界）",
+            "symbol": "dḟ",
+            "unit": "Hz/s",
+            "audit_flag": AuditFlag.WARNING,
+            "note": "Paillier/sat.1553 为 ISL/feeder 场景值, 星地场景可能不同",
+        },
+    )
+    OSNR_WORKING_POINT: float = Field(
+        10.0,
+        description="OSNR 工作点",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B7 OFC 2026：OSNR 10 dB 工作点",
+            "symbol": "OSNR",
+            "unit": "dB",
+            "audit_flag": AuditFlag.OK,
+        },
+    )
+    GARDNER_SPS: int = Field(
+        2,
+        description="Gardner TED 每符号采样数",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "Gardner 1986 paper：每符号 2 采样（经典配置）",
+            "symbol": "SPS",
+            "audit_flag": AuditFlag.OK,
+        },
+    )
+    GARDNER_GAIN: float = Field(
+        0.01,
+        description="Gardner TED 环路增益",
+        json_schema_extra={
+            "source_type": SourceType.typical,
+            "source": "Gardner TED loop gain 典型值 0.01（不要求精确，MVE 阶段）",
+            "symbol": "K_p",
+            "audit_flag": AuditFlag.WARNING,
+            "note": "典型值而非文献精确值, MVE 阶段近似",
+        },
+    )
+    PSA_PILOT_SPACING: int = Field(
+        32,
+        description="PSA FOE pilot 间距",
+        json_schema_extra={
+            "source_type": SourceType.assumption,
+            "source": "PSA FOE pilot 间距假设 32 符号（DVB-S2 标准 pilot pattern 近似，B7 未明确给）",
+            "symbol": "N_p",
+            "unit": "symbol",
+            "audit_flag": AuditFlag.WARNING,
+            "note": "B7 未明确给出, 用 DVB-S2 标准 pilot pattern 近似",
+        },
+    )
+
+    model_config = ConfigDict(frozen=True)
+
+
+class B3Params(BaseModel):
+    """B3 子系统协同联合估计参数族 — 架构未决占位（B3 多孔径阵列 vs 单链路未拍板）。
+    待对话 3 B3 架构决策后补全。"""
+    NUM_BRANCHES_DIVERSITY: int = Field(
+        4,
+        description="4 支路分集配置（jphot+oe A1 已做联合）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "jphot+oe A1：4 支路地面 FSO 分集",
+            "symbol": "N_branch",
+            "audit_flag": AuditFlag.WARNING,
+            "note": "架构未决，单链路 vs 多孔径阵列待对话 3 拍板",
+        },
+    )
+
+    model_config = ConfigDict(frozen=True)
+
+
 # ─── 聚合配置 ─────────────────────────────────────────────────
 
 class SimulationConfig(BaseModel):
@@ -462,6 +654,9 @@ class SimulationConfig(BaseModel):
     vv: VVParams = Field(default_factory=VVParams)
     bps: BPSParams = Field(default_factory=BPSParams)
     experiment: ExperimentParams = Field(default_factory=ExperimentParams)
+    b11: B11Params = Field(default_factory=B11Params)
+    b7: B7Params = Field(default_factory=B7Params)
+    b3: B3Params = Field(default_factory=B3Params)
 
     model_config = ConfigDict(frozen=True)
 

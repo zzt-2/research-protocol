@@ -315,7 +315,7 @@ topics:
     title: Step 4a 维度 D MVE 执行（B11/B7/B3 oracle 上界门控 + MVE + 架构差异）
     status: active
     created: "2026-07-06"
-    last_updated: "2026-07-06"
+    last_updated: "2026-07-06（S002 执行 H001 完成基建扩充 + B11 路径重定位方案 C。**关键转折**：步骤 3 误把已发表 B11 baseline 当增量方法做 FR-21 被用户叫停（M6 + profile 第 8 次防线），5 个子 agent 综合诊断（修 bug + OFDM 评估 + 星地调研）后用户拍板方案 C：B11 作理论参考，做单载波时域 NDA-ML 改进。基建扩充完成（M-APSK + DA ML/NDA-ML/Gardner TED/PSA FOE + B11/B7/B3 参数族 + shared_realization_apsk）。nda_ml_recovery 修 2 bug（D003）。新建 D001（baseline 复现优先）/D002（B11 重定位）/D003（bug 修复）。下一步=新对话执行 H002 单载波时域 NDA-ML 改进 MVE-SPEC 设计 + 时域 CRLB 推导）"
     description: "承接上游 2026-06-20-problem-driven-redirection S031 排优先级（B11/B3/B7 三个 Conditional Go）+ 切法地图专题参照系。守 FR-21 oracle 上界前置门控（先算 CRB 下界 <0.5dB 直接砍不跑 MVE）+ TL-20 先建理论预期 + TL-26 参数溯源 + FR-18 竞争格局 + FR-12 MVE→Formal 架构差异。复用 projects/simulation/common/ 基建（GG+Doppler+phase noise 信道 + VV/BPS/DPLL/KF 载波恢复），增量扩 M-APSK 调制 + DA ML/NDA-ML/Gardner TED/FOE 估计器（B11+B3+B7 共用）+ params 扩 CLW/HD-FEC/LEO Doppler rate（全标 source）。explore/ 模式每候选一子目录（*-MVE-SPEC.md 契约 + _crb_lower_bound.py + mve 脚本 + results.json），MVE 通过后转 experiments/。拆对话：①基建扩充+B11 oracle 上界 ②B11 MVE 或 B7 全流程 ③B3 架构决策（多孔径阵列 vs 单链路）+ 视情况。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
