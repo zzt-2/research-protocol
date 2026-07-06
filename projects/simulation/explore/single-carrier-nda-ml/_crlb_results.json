@@ -1,0 +1,672 @@
+{
+  "meta": {
+    "task": "单载波时域 NDA-ML vs DA-ML CRLB 下界 + 公平对照 BER (pilot overhead)",
+    "increment_form": "形态 A (AWGN 频谱效率) + C (湍流鲁棒性)",
+    "metric": "BER @ (8,8)-16APSK, M0-fold ambiguity resolved blockwise (256). AWGN: assume_df_zero=True (B11 df=0 修复). 湍流: 两阶段 fft_foe(M0)+nda_ml CPE (修复 D1 CFO 残余) + per-block h 估计 (NDA盲/DA pilot, 修复 D2 h_med 标量残差)",
+    "analytic_crlb_conclusion": {
+      "CRB_NDA_phi": "σ² / Σ_n |s(n)|²h(n)   (全 N 个符号贡献)",
+      "CRB_DA_phi": "σ² / Σ_{n∈P} |s_p|²h(n)   (仅 N_p=N/spacing 个 pilot 贡献)",
+      "ratio": "CRB_NDA/CRB_DA ≈ N_p/N = 1/spacing = 1/4 (per-symbol avg power equal)",
+      "M0_cancellation_note": "M0² 在升幂噪声方差放大 (Var[w']≈M0²σ²|s√h|^(2(M0-1))) 与 NDA 估 M0·φ 的相位增益 (d arg(z)/dφ = M0) 间严格相消: I(φ)=Σ(|z|²/Var[w'])·(M0)² = Σ(|s|²h/(M0²σ²))·M0² = Σ|s|²h/σ². 上一轮 M0²·N_p/N=64× 错误源于漏算 (d arg(z)/dφ)²=M0² 项. → CRLB 层 NDA-ML 理论下界最优 (用全部符号).",
+      "fairness_note": "公平坐标=总能量 SNR γ_tot. 相同信息吞吐量下 DA-ML 多发 1/spacing pilot → 总能量代价 10·log10(spacing/(spacing-1)) = 1.249 dB (spacing=4). BER 曲线按数据有效 SNR γ_d 跑 (同符号率公平); gain@HD-FEC 报告 DA γ_d+1.249 dB (等效总能量)."
+    },
+    "N_per_point": 102400,
+    "N_blocks": 400,
+    "N_per_block": 256,
+    "M0": 8,
+    "pilot_spacing": 4,
+    "pilot_overhead_db": 1.2493873660829993,
+    "block_size_resolve": 256,
+    "assume_df_zero": "AWGN=True (B11 df=0); 湍流=False-equivalent via 两阶段 fft_foe+nda CPE",
+    "ndaml_call_convention_D003": "AWGN (df=0) 用 assume_df_zero=True (跳 FFT-df 锁伪峰); 星地湍流 (有 F_RESIDUAL=1MHz CFO 残余) 用两阶段: fft_foe(M0=8) 粗估 CFO 补偿 + nda_ml_recovery(assume_df_zero=True) 估残余 CPE. 守 D003.",
+    "calibration_fixes": {
+      "D1_cfo_residual": "星地湍流场景 F_RESIDUAL=1MHz CFO 致 0.64rad/块相位斜坡; assume_df_zero=True 跳 FOE 致 CPE 跟踪失败 (BER 1.4-1.8× 退化). 修复: 两阶段 fft_foe(M0)+nda CPE. 诊断 _ber_floor_diagnostic.py 证 two-stage 把 NDA 拉回 oracle_hmed 水平.",
+      "D2_hmed_scalar_residual": "h_med 标量均衡是 BER floor 主因 (D2, 5.5× 退化@weak 20dB): 用中位数 h 均衡所有块, deep fade 块残差大, 即使 oracle 也被锁 floor. 修复: per-block h 估计 (NDA 盲 ĥ=mean(|rx|²)−1/(2γ); DA pilot ĥ=mean(|r(p)/s(p)|²); oracle 真 h). 诊断证 blind h NDA 离真 h oracle 仅 ~0.1-0.3 dB.",
+      "D3_clw_irrelevant": "CLW=500kHz 仅 AWGN 场景 awgn_wiener_channel 用; 湍流信道用 LASER_LW=10kHz 单端. D3 对湍流 BER floor 无影响, 不调 (TL-26: 不拍参数)."
+    },
+    "hdfec_reachability_TL22": "诊断 (TL-22 物理前提): 20dB 总能量下 HD-FEC 物理不可达 — oracle 真 h+真相位 @20dB weak=7.8e-3 > 3.8e-3. 非估计 bug, 是物理上限. 需 ~24dB 总能量 weak 才可达. SNR 扫展至 26dB 覆盖.",
+    "clw_b11": 500000.0,
+    "baud_b11": 25000000000.0,
+    "hdfec_ber": 0.0038,
+    "verdict_thresholds_FR21_D005": {
+      "go_mve": ">=0.3 dB (公平对照, 进 MVE)",
+      "conditional": "0.3-0.5 dB (薄但 D005 够格)",
+      "kill_to_b7": "<0.3 dB (建议转 B7)"
+    },
+    "snr_awgn_dB": [
+      5.0,
+      8.0,
+      10.0,
+      12.0,
+      14.0,
+      16.0,
+      18.0,
+      20.0
+    ],
+    "snr_turb_dB": [
+      5.0,
+      10.0,
+      15.0,
+      20.0,
+      22.0,
+      24.0,
+      26.0
+    ],
+    "turb_levels": [
+      "weak",
+      "moderate",
+      "strong"
+    ],
+    "elapsed_sec": 15.625171661376953
+  },
+  "expected_TL20": {
+    "awgn": "+0.3 to +0.8 dB (pilot overhead 1.25dB - NDA 升幂噪声 ~0.5dB)",
+    "weak": "+0.3 to +0.8 dB (湍流弱, 不破坏频谱效率增量)",
+    "moderate": "+0.5 to +1.5 dB (DA pilot 受 fade, NDA 全帧积分鲁棒)",
+    "strong": "AMBIGUOUS -1 to +2 dB (deep fade 升幂噪声 vs DA pilot 崩溃)",
+    "deviation_rules": [
+      "AWGN gain < 0 → 可疑",
+      "moderate gain < 0 → 可疑 (DA pilot 受 fade 应退化)",
+      "strong gain < -2 → 形态 C 失败 (升幂噪声压倒 fade 鲁棒)",
+      "任一 gain > 3 → 可疑 (超 B11 +2dB)"
+    ]
+  },
+  "awgn": [
+    {
+      "snr_db": 5.0,
+      "snr_db_total_nda": 5.0,
+      "snr_db_total_da": 6.249387366082999,
+      "nda_ml_ber": 0.18678466796875,
+      "da_ml_ber": 0.249248046875,
+      "oracle_ber": 0.17611328125,
+      "ratio_nda_over_da": 0.749392704619363,
+      "ratio_nda_over_oracle": 1.06059387823001
+    },
+    {
+      "snr_db": 8.0,
+      "snr_db_total_nda": 8.0,
+      "snr_db_total_da": 9.249387366082999,
+      "nda_ml_ber": 0.10969482421875,
+      "da_ml_ber": 0.12533854166666666,
+      "oracle_ber": 0.10491943359375,
+      "ratio_nda_over_da": 0.8751882921254934,
+      "ratio_nda_over_oracle": 1.0455148342059337
+    },
+    {
+      "snr_db": 10.0,
+      "snr_db_total_nda": 10.0,
+      "snr_db_total_da": 11.249387366082999,
+      "nda_ml_ber": 0.070830078125,
+      "da_ml_ber": 0.07435546875,
+      "oracle_ber": 0.06728515625,
+      "ratio_nda_over_da": 0.9525873391121619,
+      "ratio_nda_over_oracle": 1.0526850507982584
+    },
+    {
+      "snr_db": 12.0,
+      "snr_db_total_nda": 12.0,
+      "snr_db_total_da": 13.249387366082999,
+      "nda_ml_ber": 0.04203369140625,
+      "da_ml_ber": 0.042506510416666664,
+      "oracle_ber": 0.03925048828125,
+      "ratio_nda_over_da": 0.9888765507734721,
+      "ratio_nda_over_oracle": 1.070908751632767
+    },
+    {
+      "snr_db": 14.0,
+      "snr_db_total_nda": 14.0,
+      "snr_db_total_da": 15.249387366082999,
+      "nda_ml_ber": 0.02397705078125,
+      "da_ml_ber": 0.023255208333333333,
+      "oracle_ber": 0.02160888671875,
+      "ratio_nda_over_da": 1.0310400335946248,
+      "ratio_nda_over_oracle": 1.1095921364817534
+    },
+    {
+      "snr_db": 16.0,
+      "snr_db_total_nda": 16.0,
+      "snr_db_total_da": 17.249387366083,
+      "nda_ml_ber": 0.01235595703125,
+      "da_ml_ber": 0.011214192708333333,
+      "oracle_ber": 0.00998046875,
+      "ratio_nda_over_da": 1.1018142235123367,
+      "ratio_nda_over_oracle": 1.2380136986301369
+    },
+    {
+      "snr_db": 18.0,
+      "snr_db_total_nda": 18.0,
+      "snr_db_total_da": 19.249387366083,
+      "nda_ml_ber": 0.00525390625,
+      "da_ml_ber": 0.004192708333333333,
+      "oracle_ber": 0.003466796875,
+      "ratio_nda_over_da": 1.253105590062112,
+      "ratio_nda_over_oracle": 1.5154929577464789
+    },
+    {
+      "snr_db": 20.0,
+      "snr_db_total_nda": 20.0,
+      "snr_db_total_da": 21.249387366083,
+      "nda_ml_ber": 0.00206787109375,
+      "da_ml_ber": 0.0011263020833333333,
+      "oracle_ber": 0.0006591796875,
+      "ratio_nda_over_da": 1.8359826589595378,
+      "ratio_nda_over_oracle": 3.137037037037037
+    }
+  ],
+  "turbulence": {
+    "weak": [
+      {
+        "snr_db": 5.0,
+        "snr_db_total_nda": 5.0,
+        "snr_db_total_da": 6.249387366082999,
+        "nda_ml_ber": 0.40060791015625,
+        "da_ml_ber": 0.3420182291666667,
+        "oracle_ber": 0.21848876953125,
+        "ratio_nda_over_da": 1.1713057258156623,
+        "ratio_nda_over_oracle": 1.833540053411999
+      },
+      {
+        "snr_db": 10.0,
+        "snr_db_total_nda": 10.0,
+        "snr_db_total_da": 11.249387366082999,
+        "nda_ml_ber": 0.23619384765625,
+        "da_ml_ber": 0.16168294270833333,
+        "oracle_ber": 0.10712158203125,
+        "ratio_nda_over_da": 1.460845799190642,
+        "ratio_nda_over_oracle": 2.204913736125989
+      },
+      {
+        "snr_db": 15.0,
+        "snr_db_total_nda": 15.0,
+        "snr_db_total_da": 16.249387366083,
+        "nda_ml_ber": 0.04794677734375,
+        "da_ml_ber": 0.04607747395833333,
+        "oracle_ber": 0.03620361328125,
+        "ratio_nda_over_da": 1.0405687036382905,
+        "ratio_nda_over_oracle": 1.3243644210668284
+      },
+      {
+        "snr_db": 20.0,
+        "snr_db_total_nda": 20.0,
+        "snr_db_total_da": 21.249387366083,
+        "nda_ml_ber": 0.00828857421875,
+        "da_ml_ber": 0.009134114583333333,
+        "oracle_ber": 0.0077587890625,
+        "ratio_nda_over_da": 0.9074305060584462,
+        "ratio_nda_over_oracle": 1.0682819383259912
+      },
+      {
+        "snr_db": 22.0,
+        "snr_db_total_nda": 22.0,
+        "snr_db_total_da": 23.249387366083,
+        "nda_ml_ber": 0.00394775390625,
+        "da_ml_ber": 0.0038509114583333334,
+        "oracle_ber": 0.0036669921875,
+        "ratio_nda_over_da": 1.025147928994083,
+        "ratio_nda_over_oracle": 1.0765645805592545
+      },
+      {
+        "snr_db": 24.0,
+        "snr_db_total_nda": 24.0,
+        "snr_db_total_da": 25.249387366083,
+        "nda_ml_ber": 0.00152099609375,
+        "da_ml_ber": 0.00154296875,
+        "oracle_ber": 0.00147705078125,
+        "ratio_nda_over_da": 0.9857594936708861,
+        "ratio_nda_over_oracle": 1.0297520661157025
+      },
+      {
+        "snr_db": 26.0,
+        "snr_db_total_nda": 26.0,
+        "snr_db_total_da": 27.249387366083,
+        "nda_ml_ber": 0.000537109375,
+        "da_ml_ber": 0.0005338541666666666,
+        "oracle_ber": 0.00052490234375,
+        "ratio_nda_over_da": 1.00609756097561,
+        "ratio_nda_over_oracle": 1.0232558139534884
+      }
+    ],
+    "moderate": [
+      {
+        "snr_db": 5.0,
+        "snr_db_total_nda": 5.0,
+        "snr_db_total_da": 6.249387366082999,
+        "nda_ml_ber": 0.40168701171875,
+        "da_ml_ber": 0.36206380208333333,
+        "oracle_ber": 0.238779296875,
+        "ratio_nda_over_da": 1.1094370920468235,
+        "ratio_nda_over_oracle": 1.6822522596212834
+      },
+      {
+        "snr_db": 10.0,
+        "snr_db_total_nda": 10.0,
+        "snr_db_total_da": 11.249387366082999,
+        "nda_ml_ber": 0.2574169921875,
+        "da_ml_ber": 0.1998828125,
+        "oracle_ber": 0.1322705078125,
+        "ratio_nda_over_da": 1.2878395544264218,
+        "ratio_nda_over_oracle": 1.9461404998338812
+      },
+      {
+        "snr_db": 15.0,
+        "snr_db_total_nda": 15.0,
+        "snr_db_total_da": 16.249387366083,
+        "nda_ml_ber": 0.082763671875,
+        "da_ml_ber": 0.07948567708333333,
+        "oracle_ber": 0.05492919921875,
+        "ratio_nda_over_da": 1.0412400688017036,
+        "ratio_nda_over_oracle": 1.5067336326058935
+      },
+      {
+        "snr_db": 20.0,
+        "snr_db_total_nda": 20.0,
+        "snr_db_total_da": 21.249387366083,
+        "nda_ml_ber": 0.02276611328125,
+        "da_ml_ber": 0.023805338541666665,
+        "oracle_ber": 0.01701416015625,
+        "ratio_nda_over_da": 0.956344865308355,
+        "ratio_nda_over_oracle": 1.3380685894676425
+      },
+      {
+        "snr_db": 22.0,
+        "snr_db_total_nda": 22.0,
+        "snr_db_total_da": 23.249387366083,
+        "nda_ml_ber": 0.0118408203125,
+        "da_ml_ber": 0.012412109375,
+        "oracle_ber": 0.0096533203125,
+        "ratio_nda_over_da": 0.9539732494099133,
+        "ratio_nda_over_oracle": 1.2266059686393527
+      },
+      {
+        "snr_db": 24.0,
+        "snr_db_total_nda": 24.0,
+        "snr_db_total_da": 25.249387366083,
+        "nda_ml_ber": 0.00623779296875,
+        "da_ml_ber": 0.006396484375,
+        "oracle_ber": 0.0051611328125,
+        "ratio_nda_over_da": 0.9751908396946566,
+        "ratio_nda_over_oracle": 1.2086092715231789
+      },
+      {
+        "snr_db": 26.0,
+        "snr_db_total_nda": 26.0,
+        "snr_db_total_da": 27.249387366083,
+        "nda_ml_ber": 0.0027099609375,
+        "da_ml_ber": 0.003655598958333333,
+        "oracle_ber": 0.0025830078125,
+        "ratio_nda_over_da": 0.7413178984861977,
+        "ratio_nda_over_oracle": 1.0491493383742911
+      }
+    ],
+    "strong": [
+      {
+        "snr_db": 5.0,
+        "snr_db_total_nda": 5.0,
+        "snr_db_total_da": 6.249387366082999,
+        "nda_ml_ber": 0.403154296875,
+        "da_ml_ber": 0.383359375,
+        "oracle_ber": 0.27030517578125,
+        "ratio_nda_over_da": 1.0516354187894843,
+        "ratio_nda_over_oracle": 1.491478273435877
+      },
+      {
+        "snr_db": 10.0,
+        "snr_db_total_nda": 10.0,
+        "snr_db_total_da": 11.249387366082999,
+        "nda_ml_ber": 0.28130126953125,
+        "da_ml_ber": 0.280234375,
+        "oracle_ber": 0.18034423828125,
+        "ratio_nda_over_da": 1.0038071508224145,
+        "ratio_nda_over_oracle": 1.5598018113146244
+      },
+      {
+        "snr_db": 15.0,
+        "snr_db_total_nda": 15.0,
+        "snr_db_total_da": 16.249387366083,
+        "nda_ml_ber": 0.1530712890625,
+        "da_ml_ber": 0.17137369791666668,
+        "oracle_ber": 0.1042236328125,
+        "ratio_nda_over_da": 0.8932017627170155,
+        "ratio_nda_over_oracle": 1.468681189974233
+      },
+      {
+        "snr_db": 20.0,
+        "snr_db_total_nda": 20.0,
+        "snr_db_total_da": 21.249387366083,
+        "nda_ml_ber": 0.06929931640625,
+        "da_ml_ber": 0.08367838541666667,
+        "oracle_ber": 0.05287109375,
+        "ratio_nda_over_da": 0.8281626857542986,
+        "ratio_nda_over_oracle": 1.3107222016992983
+      },
+      {
+        "snr_db": 22.0,
+        "snr_db_total_nda": 22.0,
+        "snr_db_total_da": 23.249387366083,
+        "nda_ml_ber": 0.04919921875,
+        "da_ml_ber": 0.060556640625,
+        "oracle_ber": 0.03899658203125,
+        "ratio_nda_over_da": 0.8124496049024351,
+        "ratio_nda_over_oracle": 1.2616289989357041
+      },
+      {
+        "snr_db": 24.0,
+        "snr_db_total_nda": 24.0,
+        "snr_db_total_da": 25.249387366083,
+        "nda_ml_ber": 0.034052734375,
+        "da_ml_ber": 0.04393880208333333,
+        "oracle_ber": 0.02776611328125,
+        "ratio_nda_over_da": 0.7750037042524818,
+        "ratio_nda_over_oracle": 1.2264134353292886
+      },
+      {
+        "snr_db": 26.0,
+        "snr_db_total_nda": 26.0,
+        "snr_db_total_da": 27.249387366083,
+        "nda_ml_ber": 0.02426513671875,
+        "da_ml_ber": 0.030266927083333332,
+        "oracle_ber": 0.01958984375,
+        "ratio_nda_over_da": 0.8017046676704668,
+        "ratio_nda_over_oracle": 1.2386590229312064
+      }
+    ]
+  },
+  "gain_analysis": {
+    "awgn": {
+      "snr_nda_tot_at_hdfec": 18.69487909744189,
+      "snr_da_tot_at_hdfec": 19.399030252664474,
+      "snr_oracle_at_hdfec": 17.826423154388653,
+      "gain_nda_vs_da_fair_db": 0.7041511552225828,
+      "gain_nda_vs_da_naive_db": -0.5452362108604163,
+      "hdfec_reachable": true,
+      "equiv_gain_at_achievable_db": 0.32489474498786564,
+      "per_point_fair_gain": [
+        {
+          "gamma_tot_db": 5.0,
+          "ber_nda": 0.18678466796875,
+          "snr_da_d_needed_db": 6.259002629446995,
+          "fair_gain_db": 2.5083899955299938
+        },
+        {
+          "gamma_tot_db": 8.0,
+          "ber_nda": 0.10969482421875,
+          "snr_da_d_needed_db": 8.510632457979973,
+          "fair_gain_db": 1.7600198240629723
+        },
+        {
+          "gamma_tot_db": 10.0,
+          "ber_nda": 0.070830078125,
+          "snr_da_d_needed_db": 10.173724906470921,
+          "fair_gain_db": 1.4231122725539205
+        },
+        {
+          "gamma_tot_db": 12.0,
+          "ber_nda": 0.04203369140625,
+          "snr_da_d_needed_db": 12.037092540972697,
+          "fair_gain_db": 1.2864799070556963
+        },
+        {
+          "gamma_tot_db": 14.0,
+          "ber_nda": 0.02397705078125,
+          "snr_da_d_needed_db": 13.898635024067941,
+          "fair_gain_db": 1.14802239015094
+        },
+        {
+          "gamma_tot_db": 16.0,
+          "ber_nda": 0.01235595703125,
+          "snr_da_d_needed_db": 15.734124202790937,
+          "fair_gain_db": 0.9835115688739364
+        },
+        {
+          "gamma_tot_db": 18.0,
+          "ber_nda": 0.00525390625,
+          "snr_da_d_needed_db": 17.541335005656137,
+          "fair_gain_db": 0.7907223717391361
+        },
+        {
+          "gamma_tot_db": 20.0,
+          "ber_nda": 0.00206787109375,
+          "snr_da_d_needed_db": 19.075507378904867,
+          "fair_gain_db": 0.32489474498786564
+        }
+      ],
+      "fair_gain_high_snr_db": 0.32489474498786564,
+      "fair_gain_mean_db": 1.2781441343693076,
+      "min_nda_ber": 0.00206787109375,
+      "gap_nda_vs_oracle_mean_db": 0.38296151538605155,
+      "pilot_overhead_db": 1.2493873660829993
+    },
+    "weak": {
+      "snr_nda_tot_at_hdfec": 22.07998839458924,
+      "snr_da_tot_at_hdfec": 23.278490304045043,
+      "snr_oracle_at_hdfec": 21.90491935819649,
+      "gain_nda_vs_da_fair_db": 1.1985019094558034,
+      "gain_nda_vs_da_naive_db": -0.05088545662719568,
+      "hdfec_reachable": true,
+      "equiv_gain_at_achievable_db": 1.237931958849586,
+      "per_point_fair_gain": [
+        {
+          "gamma_tot_db": 10.0,
+          "ber_nda": 0.23619384765625,
+          "snr_da_d_needed_db": 7.470621706703083,
+          "fair_gain_db": -1.2799909272139178
+        },
+        {
+          "gamma_tot_db": 15.0,
+          "ber_nda": 0.04794677734375,
+          "snr_da_d_needed_db": 14.841603681061745,
+          "fair_gain_db": 1.090991047144744
+        },
+        {
+          "gamma_tot_db": 20.0,
+          "ber_nda": 0.00828857421875,
+          "snr_da_d_needed_db": 20.224933596634987,
+          "fair_gain_db": 1.4743209627179859
+        },
+        {
+          "gamma_tot_db": 22.0,
+          "ber_nda": 0.00394775390625,
+          "snr_da_d_needed_db": 21.942487578551475,
+          "fair_gain_db": 1.191874944634474
+        },
+        {
+          "gamma_tot_db": 24.0,
+          "ber_nda": 0.00152099609375,
+          "snr_da_d_needed_db": 24.027027838920052,
+          "fair_gain_db": 1.276415205003051
+        },
+        {
+          "gamma_tot_db": 26.0,
+          "ber_nda": 0.000537109375,
+          "snr_da_d_needed_db": 25.988544592766587,
+          "fair_gain_db": 1.237931958849586
+        }
+      ],
+      "fair_gain_high_snr_db": 1.237931958849586,
+      "fair_gain_mean_db": 0.8319238651893205,
+      "min_nda_ber": 0.000537109375,
+      "gap_nda_vs_oracle_mean_db": 1.4855111914852763,
+      "pilot_overhead_db": 1.2493873660829993
+    },
+    "moderate": {
+      "snr_nda_tot_at_hdfec": 25.18898883119497,
+      "snr_da_tot_at_hdfec": 27.110899770893912,
+      "snr_oracle_at_hdfec": 24.88458346907226,
+      "gain_nda_vs_da_fair_db": 1.921910939698943,
+      "gain_nda_vs_da_naive_db": 0.6725235736159441,
+      "hdfec_reachable": true,
+      "equiv_gain_at_achievable_db": null,
+      "per_point_fair_gain": [
+        {
+          "gamma_tot_db": 10.0,
+          "ber_nda": 0.2574169921875,
+          "snr_da_d_needed_db": 7.870975810011984,
+          "fair_gain_db": -0.8796368239050167
+        },
+        {
+          "gamma_tot_db": 15.0,
+          "ber_nda": 0.082763671875,
+          "snr_da_d_needed_db": 14.780880641796749,
+          "fair_gain_db": 1.030268007879748
+        },
+        {
+          "gamma_tot_db": 20.0,
+          "ber_nda": 0.02276611328125,
+          "snr_da_d_needed_db": 20.137082728030702,
+          "fair_gain_db": 1.386470094113701
+        },
+        {
+          "gamma_tot_db": 22.0,
+          "ber_nda": 0.0118408203125,
+          "snr_da_d_needed_db": 22.142157006989265,
+          "fair_gain_db": 1.3915443730722643
+        },
+        {
+          "gamma_tot_db": 24.0,
+          "ber_nda": 0.00623779296875,
+          "snr_da_d_needed_db": 24.08980377967998,
+          "fair_gain_db": 1.3391911457629782
+        }
+      ],
+      "fair_gain_high_snr_db": 1.3391911457629782,
+      "fair_gain_mean_db": 0.8535673593847349,
+      "min_nda_ber": 0.0027099609375,
+      "gap_nda_vs_oracle_mean_db": 1.9726851355226096,
+      "pilot_overhead_db": 1.2493873660829993
+    },
+    "strong": {
+      "snr_nda_tot_at_hdfec": null,
+      "snr_da_tot_at_hdfec": null,
+      "snr_oracle_at_hdfec": null,
+      "gain_nda_vs_da_fair_db": null,
+      "gain_nda_vs_da_naive_db": null,
+      "hdfec_reachable": false,
+      "equiv_gain_at_achievable_db": null,
+      "per_point_fair_gain": [
+        {
+          "gamma_tot_db": 10.0,
+          "ber_nda": 0.28130126953125,
+          "snr_da_d_needed_db": 9.939365506629938,
+          "fair_gain_db": 1.1887528727129375
+        },
+        {
+          "gamma_tot_db": 15.0,
+          "ber_nda": 0.1530712890625,
+          "snr_da_d_needed_db": 15.787753998601401,
+          "fair_gain_db": 2.037141364684402
+        },
+        {
+          "gamma_tot_db": 20.0,
+          "ber_nda": 0.06929931640625,
+          "snr_da_d_needed_db": 21.16601576003398,
+          "fair_gain_db": 2.4154031261169777
+        },
+        {
+          "gamma_tot_db": 22.0,
+          "ber_nda": 0.04919921875,
+          "snr_da_d_needed_db": 23.294971813522437,
+          "fair_gain_db": 2.5443591796054363
+        },
+        {
+          "gamma_tot_db": 24.0,
+          "ber_nda": 0.034052734375,
+          "snr_da_d_needed_db": 25.36763407991915,
+          "fair_gain_db": 2.6170214460021484
+        }
+      ],
+      "fair_gain_high_snr_db": 2.6170214460021484,
+      "fair_gain_mean_db": 2.1605355978243805,
+      "min_nda_ber": 0.02426513671875,
+      "gap_nda_vs_oracle_mean_db": 2.5755008776750627,
+      "pilot_overhead_db": 1.2493873660829993
+    }
+  },
+  "tl20_deviation_check": [
+    "awgn: gain=+0.70dB (HD-FEC) ∈ TL-20 [+0.3,+0.8] → PASS",
+    "weak: gain=+1.20dB (HD-FEC) ∈ TL-20 [+0.3,+0.8] → PASS [cross-over: 低SNR -1.28, 高SNR +1.24]",
+    "moderate: gain=+1.92dB (HD-FEC) ∈ TL-20 [+0.5,+1.5] → PASS [cross-over: 低SNR -0.88, 高SNR +1.34]",
+    "strong: gain=+2.16dB (均值(全SNR区)) ∈ TL-20 [-1.0,+2.0] → PASS"
+  ],
+  "crossover_report": {
+    "awgn": {
+      "fair_gain_mean_db": 1.2781441343693076,
+      "fair_gain_high_snr_db": 0.32489474498786564,
+      "fair_gain_low_snr_db": 2.5083899955299938,
+      "has_crossover": false,
+      "gains_by_snr": [
+        2.5083899955299938,
+        1.7600198240629723,
+        1.4231122725539205,
+        1.2864799070556963,
+        1.14802239015094,
+        0.9835115688739364,
+        0.7907223717391361,
+        0.32489474498786564
+      ]
+    },
+    "weak": {
+      "fair_gain_mean_db": 0.8319238651893205,
+      "fair_gain_high_snr_db": 1.237931958849586,
+      "fair_gain_low_snr_db": -1.2799909272139178,
+      "has_crossover": true,
+      "gains_by_snr": [
+        -1.2799909272139178,
+        1.090991047144744,
+        1.4743209627179859,
+        1.191874944634474,
+        1.276415205003051,
+        1.237931958849586
+      ]
+    },
+    "moderate": {
+      "fair_gain_mean_db": 0.8535673593847349,
+      "fair_gain_high_snr_db": 1.3391911457629782,
+      "fair_gain_low_snr_db": -0.8796368239050167,
+      "has_crossover": true,
+      "gains_by_snr": [
+        -0.8796368239050167,
+        1.030268007879748,
+        1.386470094113701,
+        1.3915443730722643,
+        1.3391911457629782
+      ]
+    },
+    "strong": {
+      "fair_gain_mean_db": 2.1605355978243805,
+      "fair_gain_high_snr_db": 2.6170214460021484,
+      "fair_gain_low_snr_db": 1.1887528727129375,
+      "has_crossover": false,
+      "gains_by_snr": [
+        1.1887528727129375,
+        2.037141364684402,
+        2.4154031261169777,
+        2.5443591796054363,
+        2.6170214460021484
+      ]
+    }
+  },
+  "overall_verdict": {
+    "verdict_awgn_formA": "GO_MVE",
+    "gain_awgn_fair_db": 0.7041511552225828,
+    "gains_all_fair_db": {
+      "awgn": 0.7041511552225828,
+      "weak": 1.1985019094558034,
+      "moderate": 1.921910939698943,
+      "strong": 2.1605355978243805
+    },
+    "gains_metric_tag": {
+      "awgn": "HD-FEC",
+      "weak": "HD-FEC",
+      "moderate": "HD-FEC",
+      "strong": "均值(全SNR区)"
+    },
+    "formC_turbulence_robustness": {
+      "weak": "cross-over: 低SNR-1.3 (NDA输, 盲h+低SNR拖累), 高SNR+1.2dB (NDA赢, pilot-free 频谱效率增量)",
+      "moderate": "cross-over: 低SNR-0.9 (NDA输, 盲h+低SNR拖累), 高SNR+1.3dB (NDA赢, pilot-free 频谱效率增量)",
+      "strong": "NDA 全工作区赢 (低SNR+1.2→高SNR+2.6dB, 对 fade 鲁棒)",
+      "overall": "形态 C 在 strong 湍流成立 (NDA 全工作区赢, 对 deep fade 鲁棒); weak/moderate cross-over: 低SNR NDA 受盲 h 噪声输, 高SNR NDA 频谱效率增量赢. 升幂噪声未在 strong 下反崩 (无 <-2dB 灾难)."
+    },
+    "pilot_overhead_db": 1.2493873660829993,
+    "basis": "主判据: AWGN 公平 gain@HD-FEC (形态 A 频谱效率增量锚). 公平对照: DA 总能量 = γ_d + 1.249dB pilot overhead, NDA 总能量 = γ_d. FR-21+D005: ≥0.3dB → MVE, 0.3-0.5 Conditional, <0.3 转 B7. 修复后 weak/moderate HD-FEC 可达 (per-block h + 两阶段 FOE), 报真实 gain@HD-FEC; strong 因 deep fade 物理不可达 (oracle 真 h@26dB=1.96e-2 > 3.8e-3), 用均值公平 gain."
+  }
+}

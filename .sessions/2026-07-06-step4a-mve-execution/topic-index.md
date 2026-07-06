@@ -1,7 +1,7 @@
 # Topic Index: Step 4a 维度 D MVE 执行
 
 > slug: 2026-07-06-step4a-mve-execution
-> status: active | created 2026-07-06 | last_updated 2026-07-06（S002 执行 H001——基建扩充完成 + B11 路径重定位为方案 C 单载波时域 NDA-ML 改进）
+> status: active | created 2026-07-06 | last_updated 2026-07-06（S003 执行 H002——单载波时域 NDA-ML CRLB GO_MVE 判定 + 信道校准修复 + SC-NDA-ML-MVE-SPEC.md 写完）
 
 ## 专题定位（一句话）
 
@@ -128,23 +128,29 @@ projects/simulation/
 - **D001** baseline 复现优先于增量评估（方法论纠偏）：已发表 baseline 必须先复现立住再做增量评估，FR-21 oracle 上界是评估"我们自己的增量方法"的上界不是评估已发表 baseline 的（2026-07-06 新建）
 - **D002** B11 角色重定位 = 理论参考（非直接对标 baseline）：B11 在论文里定位为"NDA 升 M₀ 次幂 + ML"思想源头，不作直接对标 baseline。我们的增量 = 单载波时域下的 NDA-ML 改进（架构诚实，贴星地主流单载波）。（2026-07-06 新建）
 - **D003** nda_ml_recovery 两 bug 修复：加 assume_df_zero 参数（B11 行 33 场景跳 FFT-df）+ resolve_m16apsk_blockwise（逐块解 M₀-fold 模糊）。（2026-07-06 新建）
+- **D004** 单载波时域 NDA-ML 改进 GO_MVE + 公平对照框架确立（2026-07-06 新建）：
+  - **D004-a** CRB 层：CRB_NDA/CRB_DA ≈ N_p/N = 1/4（M₀² 严格相消），NDA-ML 理论下界优于 DA ML
+  - **D004-b** 公平对照 gain @ HD-FEC：AWGN +0.70 / weak +1.20 / moderate +1.92 / strong 物理不可达但 NDA 全工作区赢（形态 A+C 双增量叙事）
 
 ## 悬而未决
 
-1. **单载波时域 NDA-ML 改进的具体形态**：吸收 B11"升 M₀ 次幂"思想到时域（B11 是频域），需独立推导时域 CRLB + 重新锚定增量 dB。**待 H002 后下轮展开**。
-2. **B7/B3 是否仍走原 H001 计划**：B7 单载波+FOE 基建已就绪（Gardner TED/PSA FOE 已加），可并行。B3 架构决策待最后。
+1. **SC-NDA-ML MVE 实跑结果**：契约已写（SC-NDA-ML-MVE-SPEC.md 9 节），下轮跑 MVE 验证契约预期。**待 H003 后下轮展开**。
+2. **B7/B3 处理**：B7 后置（单载波 NDA-ML MVE 完后视情况）。B3 架构决策待最后（多孔径阵列 vs 单链路）。
 3. **B11 作理论参考的具体叙事方式**：论文里如何引用 B11（背景 / 思想源头 / 对比锚？）待写作阶段定。
 
 ## 当前位置
 
-**🟡 S002 基建扩充 + B11 路径重定位（2026-07-06）**：执行 H001 完成 2/3 步（报到+框架重读 ✅ / 基建扩充 ✅ / B11 oracle 上界 → 改路径）。**基建扩充完成**：_modulation 加 M-APSK（8PSK + (8,8)-16APSK）+ _recovery 加估计器（DA ML / NDA-ML / Gardner TED / PSA FOE）+ params 加 B11/B7/B3 参数族 + _channel 加 generate_shared_realization_apsk。**步骤 3 路径偏离被用户叫停**（M6 + profile 第 8 次防线）：误把已发表 B11 baseline 当我们增量方法做 FR-21 oracle 上界评估（CRB 层 + BER 层 + AWGN 诊断三轮），用户原话"我们是在复现啥？一般不是复现顶刊当 baseline 然后再继续我们自己的吗？"。**纠正路径**：派 5 个子 agent 综合调研（修 bug + OFDM 评估 + 星地链路调研）→ 结论：星地 FSO 主流单载波（DVB-S2/DLR/CCSDS 三重证据）+ B11 是 OFDM 频域 ML 与单载波时域架构性不等价 + B11 团队定位非星地主流。**用户拍板方案 C**：B11 作理论参考，做单载波时域 NDA-ML 改进（D002）。**bug 修复**：nda_ml_recovery 加 assume_df_zero + resolve_m16apsk_blockwise（D003，修复后 AWGN 18dB BER 从灾难性 → 5.25e-3 接近 DA ML 4.07e-3）。下一步=写 H002 交接下轮（单载波时域 NDA-ML 改进的 MVE-SPEC 设计 + 时域 CRLB 推导）。
+**🟢 S003 单载波时域 NDA-ML GO_MVE + MVE-SPEC 写完（2026-07-06）**：执行 H002 三步。**步骤 2 形态拍板**：用户选形态 A+C（AWGN 频谱效率 + 星地湍流鲁棒性双增量）。**步骤 3 时域 CRLB + 公平对照**：派子 agent 推导，结论 GO_MVE——CRB 层 NDA-ML 优于 DA ML（M₀² 严格相消，比值 N_p/N=1/4），公平对照 gain @ HD-FEC：AWGN +0.70 / weak +1.20 / moderate +1.92 / strong 物理不可达但 NDA 全工作区赢。**信道校准修复**：派子 agent 诊断 BER floor 根因（主因 h_med 标量均衡残差 + 次因 CFO 残余），修复 per-block h 均衡 + 两阶段 fft_foe+nda_ml，重跑全 PASS（weak/moderate HD-FEC 可达）。**步骤 4 写 SC-NDA-ML-MVE-SPEC.md**（9 节契约，仿 N1-MVE-SPEC.md）。下一步=新对话执行 H003 跑 MVE（守 FR-11 架构摘要 + FR-14/15 baseline 对照 + FR-18 竞争格局）。
 
 ## 进展线索
 
 - **S001** 专题开题 + 仿真基建盘点 + 组织方案定稿（2026-07-06）
 - **H001** 交接给新对话（基建扩充 + B11 oracle 上界）（2026-07-06）
-- **S002** 执行 H001：基建扩充完成 + B11 路径重定位方案 C（单载波时域 NDA-ML 改进）（2026-07-06，本对话产出）
+- **S002** 执行 H001：基建扩充完成 + B11 路径重定位方案 C（单载波时域 NDA-ML 改进）（2026-07-06）
 - **D001** baseline 复现优先于增量评估（方法论纠偏）（2026-07-06，S002 新建）
 - **D002** B11 角色重定位 = 理论参考（2026-07-06，S002 新建）
 - **D003** nda_ml_recovery 两 bug 修复（2026-07-06，S002 新建）
-- **H002** 交接给新对话（单载波时域 NDA-ML 改进 MVE-SPEC 设计）（2026-07-06，本对话产出，待写）
+- **H002** 交接给新对话（单载波时域 NDA-ML 改进 MVE-SPEC 设计）（2026-07-06）
+- **S003** 执行 H002：时域 CRLB GO_MVE + 信道校准修复 + SC-NDA-ML-MVE-SPEC 写完（2026-07-06，本对话产出）
+- **D004** 单载波时域 NDA-ML GO_MVE + 公平对照框架（2026-07-06，S003 新建）
+- **H003** 交接给新对话（跑 SC-NDA-ML MVE）（2026-07-06，本对话产出，待写）

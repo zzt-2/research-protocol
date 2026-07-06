@@ -1,0 +1,126 @@
+{
+  "meta": {
+    "N_per_point": 102400,
+    "M0": 8,
+    "F_RESIDUAL_Hz": 1000000.0,
+    "DOPPLER_HIGH_Hz_s": 150000000.0,
+    "LASER_LW_Hz": 10000.0,
+    "cfo_phase_ramp_per_256blk_rad": 0.6433981754551896,
+    "diagnoses": {
+      "D1": "assume_df_zero=True 跳过 FOE, 残余 CFO (1MHz) 斜坡 0.64rad/块 致 CPE 失败",
+      "D2": "h_med 标量均衡 deep fade 块残差 (oracle 也有 floor)",
+      "D3": "CLW=500kHz 仅 AWGN 场景, 湍流用 LASER_LW=10kHz → 对湍流 BER floor 无影响"
+    },
+    "elapsed_sec": 11.915079116821289
+  },
+  "points": [
+    {
+      "turb": "weak",
+      "snr_db": 15.0,
+      "ber": {
+        "oracle_hmed": 0.070751953125,
+        "oracle_trueh": 0.03620361328125,
+        "nda_df0": 0.100654296875,
+        "nda_fftdf": 0.0970849609375,
+        "nda_twostage": 0.07341552734375,
+        "da_hmed": 0.076240234375,
+        "fix_nda_twostage_blindh": 0.04794677734375,
+        "fix_nda_twostage_trueh": 0.05156982421875,
+        "fix_da_piloth": 0.04607747395833333
+      },
+      "foe_est_mhz_mean": 0.5658278585573361,
+      "foe_est_mhz_std": 7.151299916063999,
+      "true_cfo_mhz": 1.0
+    },
+    {
+      "turb": "weak",
+      "snr_db": 20.0,
+      "ber": {
+        "oracle_hmed": 0.04286865234375,
+        "oracle_trueh": 0.0077587890625,
+        "nda_df0": 0.07829345703125,
+        "nda_fftdf": 0.067275390625,
+        "nda_twostage": 0.04341064453125,
+        "da_hmed": 0.043916015625,
+        "fix_nda_twostage_blindh": 0.00828857421875,
+        "fix_nda_twostage_trueh": 0.0089501953125,
+        "fix_da_piloth": 0.009134114583333333
+      },
+      "foe_est_mhz_mean": 1.0031243455713157,
+      "foe_est_mhz_std": 0.2032976916055836,
+      "true_cfo_mhz": 1.0
+    },
+    {
+      "turb": "moderate",
+      "snr_db": 15.0,
+      "ber": {
+        "oracle_hmed": 0.09740234375,
+        "oracle_trueh": 0.05492919921875,
+        "nda_df0": 0.1234423828125,
+        "nda_fftdf": 0.12618896484375,
+        "nda_twostage": 0.106240234375,
+        "da_hmed": 0.11491536458333333,
+        "fix_nda_twostage_blindh": 0.082763671875,
+        "fix_nda_twostage_trueh": 0.08614501953125,
+        "fix_da_piloth": 0.07948567708333333
+      },
+      "foe_est_mhz_mean": 0.761409385495188,
+      "foe_est_mhz_std": 16.794740616981887,
+      "true_cfo_mhz": 1.0
+    },
+    {
+      "turb": "moderate",
+      "snr_db": 20.0,
+      "ber": {
+        "oracle_hmed": 0.0655810546875,
+        "oracle_trueh": 0.01701416015625,
+        "nda_df0": 0.09733154296875,
+        "nda_fftdf": 0.0905126953125,
+        "nda_twostage": 0.06809326171875,
+        "da_hmed": 0.07038736979166667,
+        "fix_nda_twostage_blindh": 0.02276611328125,
+        "fix_nda_twostage_trueh": 0.02195068359375,
+        "fix_da_piloth": 0.023805338541666665
+      },
+      "foe_est_mhz_mean": 0.9881275549857562,
+      "foe_est_mhz_std": 4.088271080399109,
+      "true_cfo_mhz": 1.0
+    },
+    {
+      "turb": "strong",
+      "snr_db": 15.0,
+      "ber": {
+        "oracle_hmed": 0.14485595703125,
+        "oracle_trueh": 0.1042236328125,
+        "nda_df0": 0.1670361328125,
+        "nda_fftdf": 0.1835009765625,
+        "nda_twostage": 0.1677099609375,
+        "da_hmed": 0.202626953125,
+        "fix_nda_twostage_blindh": 0.1530712890625,
+        "fix_nda_twostage_trueh": 0.15358642578125,
+        "fix_da_piloth": 0.17137369791666668
+      },
+      "foe_est_mhz_mean": 1.5459328012344318,
+      "foe_est_mhz_std": 24.58749906106747,
+      "true_cfo_mhz": 1.0
+    },
+    {
+      "turb": "strong",
+      "snr_db": 20.0,
+      "ber": {
+        "oracle_hmed": 0.107880859375,
+        "oracle_trueh": 0.05287109375,
+        "nda_df0": 0.135283203125,
+        "nda_fftdf": 0.132431640625,
+        "nda_twostage": 0.11480712890625,
+        "da_hmed": 0.13255859375,
+        "fix_nda_twostage_blindh": 0.06929931640625,
+        "fix_nda_twostage_trueh": 0.0697314453125,
+        "fix_da_piloth": 0.08367838541666667
+      },
+      "foe_est_mhz_mean": -0.31136037756703355,
+      "foe_est_mhz_std": 15.702472909639486,
+      "true_cfo_mhz": 1.0
+    }
+  ]
+}

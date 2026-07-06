@@ -128,3 +128,52 @@ S002 + 调研 _star_ground_link_survey.md + 验证 _awgn_repro_results.json + cr
 ### 来源
 
 S002 + 子 agent 诊断（_awgn_repro_diagnostic.py Variant B）+ 验证 _awgn_repro_results.json
+
+## D004: 单载波时域 NDA-ML 改进 GO_MVE + 公平对照框架确立
+
+> status: active
+> date: 2026-07-06
+> 取代：无
+> 被取代：无
+> 依据: 调查 _crlb_results.json（解析 CRB + 信道校准修复后公平对照）+ 用户原话 voice 2026-07-06（"形态 A+C：频谱效率 + 湍流鲁棒性"）+ 调查 _ber_floor_diagnostic.json
+
+### 决策
+
+**单载波时域 NDA-ML 改进（形态 A+C）通过 FR-21 oracle 上界前置门控，GO_MVE 进 MVE。公平对照框架确立：DA ML 含 pilot overhead 1.25dB 总能量代价，NDA-ML 纯数据，比较在相同总功率/相同信息率下。**
+
+**核心数学结论（D004-a，CRB 层）**：CRB_NDA(φ)/CRB_DA(φ) ≈ N_p/N = 1/4（per-symbol avg power equal）。M₀² 在升幂噪声方差放大（分母）和相位参数增益（分子）严格相消。**CRLB 层 NDA-ML 理论下界优于 DA ML**（用全 N 符号 vs 仅 N_p pilot）。上一轮 CRB 层子 agent 的 "M₀²·N_p/N=64×" 推导错误源于漏算 (d arg(z)/dφ)²=M₀² 项。
+
+**公平对照 gain @ HD-FEC**（D004-b，信道校准修复后）：
+- AWGN **+0.70 dB**（形态 A 频谱效率增量锚）
+- weak **+1.20 dB**（形态 A+C）
+- moderate **+1.92 dB**（形态 A+C 叠加）
+- strong HD-FEC 不可达（物理上限，oracle@26dB=1.96e-2 也不可达），但 NDA 全工作区赢 DA（形态 C 鲁棒性，DA pilot 在 deep fade 崩溃）
+
+### 理由
+
+1. **CRB 层理论支撑**：M₀² 严格相消，NDA-ML 用全 N 符号估 CPE 信息量 > DA ML 仅 N_p pilot
+2. **公平对照物理依据**：DA ML pilot overhead 1.25dB 是真实能量代价（相同总功率下 DA 信息符号有效 SNR 低 1.25dB）
+3. **形态 A（AWGN）**：pilot overhead 1.25dB − NDA 升幂噪声/resolve 残差 ~0.5dB = 净 +0.7dB
+4. **形态 C（湍流）**：DA pilot 在 deep fade 处 BER 崩溃（5dB weak 0.38 vs NDA 0.29），NDA 全帧积分对单点 fade 鲁棒
+5. **信道校准修复**（关键，避免 BER floor 假象）：
+   - 主因 D2（h_med 标量均衡残差）→ 修复 per-block h（NDA 盲 / DA pilot / oracle 真）
+   - 次因 D1（CFO 残余 assume_df_zero=True 误用）→ 修复两阶段 fft_foe + nda_ml_recovery
+   - 修复后 weak/moderate HD-FEC 可达（min BER 5.37e-4 / 2.71e-3）
+
+### 排除的替代方案
+
+- "用 naive 对照（不计 pilot overhead）"：否决。naive gain AWGN -0.55dB 误导（DA 总能量没算 pilot 代价），公平对照才反映真实系统对比
+- "strong 湍流 HD-FEC 不可达判 fail"：否决。oracle 也不可达 = 物理上限（deep fade 主导），非估计器缺陷。NDA 全工作区赢 DA 即形态 C 成立
+- "B7 并行开 MVE-SPEC"：后置。单载波 NDA-ML 已 GO，集中资源，B7 待 NDA-ML MVE 完后视情况开
+
+### 影响范围
+
+- **下一步**：跑 SC-NDA-ML MVE（H003 交接下轮，契约见 `explore/single-carrier-nda-ml/SC-NDA-ML-MVE-SPEC.md`）
+- **baseline 对照框架**：所有后续 NDA vs DA 比较必须用公平对照（DA 含 pilot overhead 总能量代价）
+- **信道校准**：所有后续 MVE 必须用 per-block h 均衡 + 两阶段 FOE+CPE（avoid BER floor 假象）
+- **CRLB 数学**：上一轮 "M₀²·N_p/N=64×" 错误已澄清，后续升幂 ML 分析用正确 CRB_NDA/CRB_DA = N_p/N
+- **形态 A+C 双增量叙事**：论文叙事框架（AWGN 频谱效率 + 星地湍流鲁棒性）
+
+### 来源
+
+S003 + 验证 _crlb_results.json + 调研 _ber_floor_diagnostic.json + 用户原话 voice 2026-07-06（"形态 A+C"）
