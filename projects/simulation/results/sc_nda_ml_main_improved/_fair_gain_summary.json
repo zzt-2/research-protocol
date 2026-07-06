@@ -1,0 +1,86 @@
+{
+  "meta": {
+    "task": "improved fair gain @ HD-FEC (5 seed)",
+    "gain_definition": "(DA gamma_tot@HD-FEC)-(NDA gamma_tot@HD-FEC); pos=NDA wins"
+  },
+  "fair_gain": {
+    "awgn": {
+      "scene": "awgn",
+      "gain_mean_db": 1.4828026697087033,
+      "gain_std_db": 0.023641144165871927,
+      "gain_ci95_db": [
+        1.4534483121215953,
+        1.5121570272958114
+      ],
+      "per_seed_gain_db": [
+        1.4986808646242373,
+        1.513418043918513,
+        1.4696565475645684,
+        1.4787255715716014,
+        1.4535323208645963
+      ],
+      "mve_single_seed_db": 0.7041511552225828,
+      "n_valid_seeds": 5
+    },
+    "weak": {
+      "scene": "weak",
+      "gain_mean_db": 1.529331023052898,
+      "gain_std_db": 0.3208023917608348,
+      "gain_ci95_db": [
+        1.1310022426658097,
+        1.9276598034399863
+      ],
+      "per_seed_gain_db": [
+        1.1985019094558034,
+        1.3261458321797441,
+        1.8239128775033926,
+        1.9187527875049284,
+        1.3793417086206219
+      ],
+      "mve_single_seed_db": 1.1985019094558034,
+      "n_valid_seeds": 5
+    },
+    "moderate": {
+      "scene": "moderate",
+      "gain_mean_db": 1.7120252378644247,
+      "gain_std_db": 0.249856381588209,
+      "gain_ci95_db": [
+        1.3144479786459486,
+        2.109602497082901
+      ],
+      "per_seed_gain_db": [
+        1.921910939698943,
+        1.8837878092556615,
+        null,
+        1.6642090438062525,
+        1.378193158696842
+      ],
+      "mve_single_seed_db": 1.921910939698943,
+      "n_valid_seeds": 4
+    },
+    "strong": {
+      "scene": "strong",
+      "gain_mean_db": null,
+      "gain_std_db": null,
+      "gain_ci95_db": [
+        null,
+        null
+      ],
+      "per_seed_gain_db": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "mve_single_seed_db": null,
+      "n_valid_seeds": 0,
+      "workregion_grand_mean_db": 2.5147502941193722,
+      "workregion_grand_std_db": 0.5547270925558735,
+      "workregion_grand_ci95_db": [
+        2.238891000902808,
+        2.7906095873359367
+      ]
+    }
+  }
+}

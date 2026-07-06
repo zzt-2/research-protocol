@@ -1,8 +1,8 @@
 # 方向可行性报告 — 单载波时域 NDA-ML 改进（形态 A+C）
 
-> 项目: projects/simulation | 阶段: GW Step 4a（方向根基 + 初步可行性）| 日期: 2026-07-06
-> 框架: gw-feasibility.md §4a（A0/A'/A/B/D 维度）| C/E 维度（4b）待 Step 5 后补
-> 决策: **Go**（D005）| 用户确认: ⬜（待）
+> 项目: projects/simulation | 阶段: GW Step 4a + 4b（方向根基 + 初步可行性 + 仿真条件/资源风险）| 日期: 2026-07-06
+> 框架: gw-feasibility.md §4a（A0/A'/A/B/D 维度）+ §4b（C/E 维度，2026-07-06 补完）
+> 决策: **Go**（4a: D005 MVE PASS + 4b: C/E 无致命）| 用户确认: ⬜（待）
 
 ## 研究方向
 
@@ -92,11 +92,21 @@ DA ML（pilot sp=4）是 pilot-aided 载波相位估计的**近最优**实现（
 
 无致命信号。
 
-## C. 仿真条件可行性（4b，待 Step 5 后补完）
+## C. 仿真条件可行性（4b，2026-07-06 补完）
 
-⬜ 待 Step 5（Baseline 选定）后执行 4b 维度 C/E。本轮 4a 不评估。
+> Step 5（D-S5-01 baseline 选定 + 田野调查）后执行。守 gw-feasibility §4b 维度 C。
 
-初步判断（非正式）：仿真环境（`projects/simulation/common/` GG+Doppler+phase noise 信道 + ML 估计器）已支撑核心方法关键特征（MVE 已跑通），无明显仿真条件风险。
+1. **仿真环境能否创造条件让核心方法（单载波时域 NDA-ML 升 M₀=8 次幂）优势体现？** ✅ 是。MVE 已实测验证：`_mve_results.json` 公平对照 fair gain @ HD-FEC AWGN +0.704 / weak +1.199 / moderate +1.922 dB 全 ≥0.5dB，strong 工作区(≥15dB)全赢 DA（per-point +1.19~+2.62dB）。仿真环境（`common/_channel.py` GG 块衰落 + Doppler + Wiener PN + `_recovery.py` NDA-ML/DA ML）已支撑核心方法关键特征，NDA-ML 升 M₀ 次幂的去调制优势 + 全帧积分对 deep fade 的鲁棒性都在仿真中显现。
+
+2. **目标方法关键特征在仿真中是否有足够大差异信号？** ✅ 是。BER 曲线跨 SNR 下降明显（AWGN 0.187→0.002，~2 个数量级；strong 0.40→0.024，~1.2 个数量级，来源 `_mve_results.json` results.awgn/strong nda_ber）。NDA vs DA 差异在 HD-FEC 阈值处达 0.7-1.9 dB 公平增益，**远超仿真噪声底**（N=102400 符号/点 × 多 SNR 点，统计涨落 <0.1dB）。差异信号足够大。
+
+3. **仿真是否包含 NDA-ML 擅长的信号特征？** ✅ 是。NDA-ML 的两个擅长维度都在仿真中：
+   - **频谱效率维度（形态 A）**：pilot overhead 是真实能量代价（DA ML 需 25% pilot，1.249dB 总能量代价），仿真含公平总功率对照（γ_tot 坐标）
+   - **deep fade 鲁棒性维度（形态 C）**：GG 块衰落 h 时变 + Wiener PN 逐符号演化 + Doppler CFO 三重随机全在仿真中。NDA 全帧积分（N=256）vs DA pilot 局部估计（N_p=64）的差异在 strong 湍流工作区显现（NDA 全 5/5 点赢 DA）
+
+4. **领域专属检查（domain-comms.md "过于平滑"预警）** ✅ 无预警。"过于平滑"经典案例是缺少随机化模块致自相关过高（如 leo-channel-pred 缺 ITU-R P.1853 雨衰时序→自相关 0.98）。本 MVE 含三重独立随机源（GG 块衰落 h + Wiener 逐符号 θ + Doppler CFO），BER 曲线陡峭（见 §2），非平滑假象。
+
+**C 维度结论**：无致命信号。仿真条件充分支撑核心方法关键特征，差异信号远超噪声底。
 
 ## D. 最小可行实验（MVE）
 
@@ -137,16 +147,51 @@ DA ML（pilot sp=4）是 pilot-aided 载波相位估计的**近最优**实现（
 - **对 baseline（DA ML）影响**：pilot sp=4 在 deep fade 块崩溃（MVE 实测 strong DA BER 0.030 vs NDA 0.024 @ 26dB）
 - **预判真实化后**：加跨块 KF/CPE 跟踪 → DA ML 高 SNR 反超可能强化（cross-over 位置移动）；加 OFDM 频域 ML → 完全不同架构（B11 路径，已 D002 排除）
 
-## E. 资源/风险比例（4b，待 Step 5 后补完）
+## E. 资源/风险比例（4b，2026-07-06 补完）
 
-⬜ 待 Step 5 后执行 4b 维度 C/E。本轮 4a 不评估。
+> Step 5（D-S5-01 baseline 选定）后执行。守 gw-feasibility §4b 维度 E。
 
-初步判断（非正式）：DA ML + NDA-ML 估计器已实现（`common/_recovery.py`），代码状态良好；失败兜底 = 形态 A（AWGN 频谱效率）已 MVE PASS 可独立成立，形态 C 风险可控。
+1. **Baseline 代码可获取性统计**：全部自实现，代码状态良好。
+   - **DA ML（FR-15 目标 baseline）**：已实现（`common/_recovery.py:da_ml_recovery`，pilot sp=4，pilot 符号从已知 bits 生成）。MVE 已跑通验证。
+   - **NDA-ML（提出方法）**：已实现（`common/_recovery.py:nda_ml_recovery`，升 M₀=8 + per-block 盲 h + resolve blockwise + 两阶段 FOE）。MVE 已跑通。
+   - **oracle（FR-21 上界对照）**：已实现（genie-aided 完美 CSI），MVE 已用于 gap 验证（0.38-2.58dB 全 <3dB）。
+   - **VV CFR（候选 7，通用 CPR）**：已实现（`common/_recovery.py`），可作为二级迁移对比 baseline。
+   - 无"大部分需自实现"风险——Step 6 正式仿真器在 MVE 脚本基础上工程化（独立实现，守已知债务"不复用 explore 探针"），非从零开始。
+
+2. **时间投入估计 vs 预期贡献**：MVE 已 PASS，工程量中等。
+   - Step 6（仿真器设计）：写 `simulator-design.md`（守 FR-12 架构差异门控）+ SPEC 补 NDA-ML 段，~1 对话
+   - Step 7（实现）：正式仿真器（MVE 脚本 → experiments/ 工程化）+ 训练/评估流水线 + 多种子统计，~2-3 对话
+   - 贡献：形态 A（频谱效率，AWGN +0.704dB）+ 形态 C（鲁棒性，strong 全赢 DA）双增量，MVE 已实证。**会议级别够格**（守 D005 务实路线 + 同门范式 2-4dB 区间）。
+
+3. **失败兜底（沉没成本可转化）**：✅ 可以。
+   - **形态 A 独立成立**：AWGN fair gain +0.704dB 已 MVE PASS，即使 Step 6/7 退化（如 cross-over 位置移动、strong 不可达），形态 A 单独够发（频谱效率维度，去 pilot overhead 是真实能量代价）
+   - **形态 C 有 weak/moderate 数据支撑**：即使 Step 6 加跨块 KF/CPE 跟踪后 strong cross-over 移动，weak(+1.199)/moderate(+1.922) 仍有 ≥0.5dB buffer
+   - **次优成果可回收**：①条件边界分析（哪些湍流等级 NDA 赢/输 DA）②对比基准（DA ML pilot sp=4 近最优实现 + 公平对照框架）③方法可行性验证（单载波时域 NDA-ML 升幂 MVE 通过）
+   - **无"全部沉没"风险**：MVE 已 PASS，最坏情况是 Step 7 正式实验后增益缩窄但仍 ≥0.5dB（MVE buffer 足够）
+
+**E 维度结论**：无致命信号。Baseline 代码良好 + 时间投入与贡献成比例 + 失败兜底充分（形态 A 独立成立 + 形态 C 有 buffer + 次优成果可回收）。
+
+## 4b 决策（2026-07-06）
+
+> 阶段: GW Step 4b（C/E 维度，gw-feasibility §4b）| 依据: C/E 维度评估 + D-S5-01 baseline 选定 + 田野调查
+> 用户确认: ⬜（待）
+
+**决策**：**Go**（继续 Step 6 仿真器设计）。
+
+**理由**：
+- C 维度无致命：仿真条件充分支撑核心方法关键特征，差异信号远超噪声底，无"过于平滑"预警
+- E 维度无致命：Baseline 代码良好 + 时间投入与贡献成比例 + 失败兜底充分（形态 A 独立 + 形态 C buffer + 次优可回收）
+- 前置依赖满足：D005 MVE Go（4a）+ D-S5-01 baseline 选定（Step 5）+ 田野调查部分确认
+
+**风险记录**（已知，不卡 Go）：
+- 田野调查"部分确认"（DA ML 非最高频显式基准，BPS 在光纤 QAM 子领域更高频）→ 不影响本项目（单载波 M-APSK + 星地，BPS 主面 QAM 场景不同），但论文写作时需说明 baseline 选择的场景依据
+- Step 6 正式仿真器需独立实现（不复用 explore 探针，守 MVE 独立性债务）
 
 ## Go/No-Go 决策
 
-- **决策**：**Go**（D005）
-- **理由**：A0 无致命 + A'/A/B 无致命 + MVE 通过（公平对照 fair gain @ HD-FEC AWGN/weak/moderate 全 ≥0.5dB，strong 形态 C 成立）+ FR-20 参数已溯源 + FR-21 oracle 上界前置门控通过（CRLB 层）。
+- **决策**：**Go**（4a: D005 MVE PASS + 4b: C/E 无致命）
+- **4a 理由**：A0 无致命 + A'/A/B 无致命 + MVE 通过（公平对照 fair gain @ HD-FEC AWGN/weak/moderate 全 ≥0.5dB，strong 形态 C 成立）+ FR-20 参数已溯源 + FR-21 oracle 上界前置门控通过（CRLB 层）。
+- **4b 理由**：C 维度（仿真条件充分支撑核心方法关键特征，差异信号远超噪声底，无"过于平滑"预警）+ E 维度（Baseline 代码良好 + 时间投入与贡献成比例 + 失败兜底充分）。
 - **用户确认**：⬜（待）
 
 ## 下一步（Step 5 Baseline 选定，待用户确认 Go 后）

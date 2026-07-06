@@ -1,0 +1,610 @@
+{
+  "meta": {
+    "task": "SC-NDA-ML Formal 仿真器 Step 7 Part A",
+    "increment_form": "A+C (AWGN 频谱效率 + 湍流鲁棒性)",
+    "metric": "BER @ HD-FEC=3.8e-3, MVE 一致性验证 (§4.5 正确性锚点)",
+    "M0": 8,
+    "pilot_spacing": 4,
+    "pilot_overhead_db": 1.2493873660829993,
+    "N_per_point": 102400,
+    "N_blocks": 400,
+    "seed_awgn": 20240701,
+    "seed_turb0": 2000,
+    "hdfec": 0.0038,
+    "algorithm_source": "common/ (nda_ml_recovery/da_ml_recovery/generate_shared_realization_apsk/m16apsk_*/mmse_equalize/amp_limit/fft_foe)",
+    "no_explore_import": true,
+    "tolerance": {
+      "relative": 0.05,
+      "absolute": 0.0001
+    },
+    "python": "C:\\Users\\zzt\\scoop\\apps\\python311\\current\\python.exe",
+    "numpy_version": "2.4.3",
+    "elapsed_sec": 18.17111039161682,
+    "traced_params": {
+      "N_DFT": [
+        256,
+        "B11 行 155"
+      ],
+      "M0": [
+        8,
+        "B11 行 75-77"
+      ],
+      "BITS_PER_SYM": [
+        4,
+        "(8,8)-16APSK"
+      ],
+      "CLW_B11": [
+        500000.0,
+        "B11 行 143/155"
+      ],
+      "BAUD_B11": [
+        25000000000.0,
+        "B11 行 143/155"
+      ],
+      "SIGMA2_P_B11": [
+        0.0001256637061435917,
+        "derived 2π·CLW·T_S (Viterbi 1963, B11 行 51)"
+      ],
+      "HDFEC": [
+        0.0038,
+        "B11 行 181/191"
+      ],
+      "DA_PILOT_SPACING": [
+        4,
+        "D-S5-01 + B11"
+      ],
+      "PILOT_OVERHEAD_DB": [
+        1.2493873660829993,
+        "derived 10·log10(4/3)"
+      ],
+      "TURB_ALPHA_BETA": [
+        {
+          "weak": [
+            4.0,
+            3.0
+          ],
+          "moderate": [
+            2.5,
+            1.8
+          ],
+          "strong": [
+            1.5,
+            0.8
+          ]
+        },
+        "SPEC §1.4"
+      ],
+      "N_BLOCKS": [
+        400,
+        "FR-21 N≥1e5"
+      ],
+      "SEED_AWGN": [
+        20240701,
+        "MVE sc_nda_ml_mve.py:53"
+      ],
+      "SEED_TURB0": [
+        2000,
+        "MVE sc_nda_ml_mve.py:54"
+      ]
+    }
+  },
+  "consistency_check": {
+    "scenarios": {
+      "awgn": {
+        "points": [
+          {
+            "snr_db": 5.0,
+            "formal_nda": 0.18678466796875,
+            "mve_nda": 0.18678466796875,
+            "rel_err_nda": 0.0,
+            "ok_nda": true,
+            "formal_da": 0.249248046875,
+            "mve_da": 0.249248046875,
+            "rel_err_da": 0.0,
+            "ok_da": true,
+            "formal_oracle": 0.17611328125,
+            "mve_oracle": 0.17611328125,
+            "rel_err_oracle": 0.0,
+            "ok_oracle": true,
+            "pass": true
+          },
+          {
+            "snr_db": 8.0,
+            "formal_nda": 0.10969482421875,
+            "mve_nda": 0.10969482421875,
+            "rel_err_nda": 0.0,
+            "ok_nda": true,
+            "formal_da": 0.12533854166666666,
+            "mve_da": 0.12533854166666666,
+            "rel_err_da": 0.0,
+            "ok_da": true,
+            "formal_oracle": 0.10491943359375,
+            "mve_oracle": 0.10491943359375,
+            "rel_err_oracle": 0.0,
+            "ok_oracle": true,
+            "pass": true
+          },
+          {
+            "snr_db": 10.0,
+            "formal_nda": 0.070830078125,
+            "mve_nda": 0.070830078125,
+            "rel_err_nda": 0.0,
+            "ok_nda": true,
+            "formal_da": 0.07435546875,
+            "mve_da": 0.07435546875,
+            "rel_err_da": 0.0,
+            "ok_da": true,
+            "formal_oracle": 0.06728515625,
+            "mve_oracle": 0.06728515625,
+            "rel_err_oracle": 0.0,
+            "ok_oracle": true,
+            "pass": true
+          },
+          {
+            "snr_db": 12.0,
+            "formal_nda": 0.04203369140625,
+            "mve_nda": 0.04203369140625,
+            "rel_err_nda": 0.0,
+            "ok_nda": true,
+            "formal_da": 0.042506510416666664,
+            "mve_da": 0.042506510416666664,
+            "rel_err_da": 0.0,
+            "ok_da": true,
+            "formal_oracle": 0.03925048828125,
+            "mve_oracle": 0.03925048828125,
+            "rel_err_oracle": 0.0,
+            "ok_oracle": true,
+            "pass": true
+          },
+          {
+            "snr_db": 14.0,
+            "formal_nda": 0.02397705078125,
+            "mve_nda": 0.02397705078125,
+            "rel_err_nda": 0.0,
+            "ok_nda": true,
+            "formal_da": 0.023255208333333333,
+            "mve_da": 0.023255208333333333,
+            "rel_err_da": 0.0,
+            "ok_da": true,
+            "formal_oracle": 0.02160888671875,
+            "mve_oracle": 0.02160888671875,
+            "rel_err_oracle": 0.0,
+            "ok_oracle": true,
+            "pass": true
+          },
+          {
+            "snr_db": 16.0,
+            "formal_nda": 0.01235595703125,
+            "mve_nda": 0.01235595703125,
+            "rel_err_nda": 0.0,
+            "ok_nda": true,
+            "formal_da": 0.011214192708333333,
+            "mve_da": 0.011214192708333333,
+            "rel_err_da": 0.0,
+            "ok_da": true,
+            "formal_oracle": 0.00998046875,
+            "mve_oracle": 0.00998046875,
+            "rel_err_oracle": 0.0,
+            "ok_oracle": true,
+            "pass": true
+          },
+          {
+            "snr_db": 18.0,
+            "formal_nda": 0.00525390625,
+            "mve_nda": 0.00525390625,
+            "rel_err_nda": 0.0,
+            "ok_nda": true,
+            "formal_da": 0.004192708333333333,
+            "mve_da": 0.004192708333333333,
+            "rel_err_da": 0.0,
+            "ok_da": true,
+            "formal_oracle": 0.003466796875,
+            "mve_oracle": 0.003466796875,
+            "rel_err_oracle": 0.0,
+            "ok_oracle": true,
+            "pass": true
+          },
+          {
+            "snr_db": 20.0,
+            "formal_nda": 0.00206787109375,
+            "mve_nda": 0.00206787109375,
+            "rel_err_nda": 0.0,
+            "ok_nda": true,
+            "formal_da": 0.0011263020833333333,
+            "mve_da": 0.0011263020833333333,
+            "rel_err_da": 0.0,
+            "ok_da": true,
+            "formal_oracle": 0.0006591796875,
+            "mve_oracle": 0.0006591796875,
+            "rel_err_oracle": 0.0,
+            "ok_oracle": true,
+            "pass": true
+          }
+        ],
+        "pass": true,
+        "max_rel_err": 0.0
+      },
+      "weak": {
+        "points": [
+          {
+            "snr_db": 5.0,
+            "formal_nda": 0.40060791015625,
+            "mve_nda": 0.40060791015625,
+            "rel_err_nda": 0.0,
+            "ok_nda": true,
+            "formal_da": 0.3420182291666667,
+            "mve_da": 0.3420182291666667,
+            "rel_err_da": 0.0,
+            "ok_da": true,
+            "formal_oracle": 0.21848876953125,
+            "mve_oracle": 0.21848876953125,
+            "rel_err_oracle": 0.0,
+            "ok_oracle": true,
+            "pass": true
+          },
+          {
+            "snr_db": 10.0,
+            "formal_nda": 0.23619384765625,
+            "mve_nda": 0.23619384765625,
+            "rel_err_nda": 0.0,
+            "ok_nda": true,
+            "formal_da": 0.16168294270833333,
+            "mve_da": 0.16168294270833333,
+            "rel_err_da": 0.0,
+            "ok_da": true,
+            "formal_oracle": 0.10712158203125,
+            "mve_oracle": 0.10712158203125,
+            "rel_err_oracle": 0.0,
+            "ok_oracle": true,
+            "pass": true
+          },
+          {
+            "snr_db": 15.0,
+            "formal_nda": 0.04794677734375,
+            "mve_nda": 0.04794677734375,
+            "rel_err_nda": 0.0,
+            "ok_nda": true,
+            "formal_da": 0.04607747395833333,
+            "mve_da": 0.04607747395833333,
+            "rel_err_da": 0.0,
+            "ok_da": true,
+            "formal_oracle": 0.03620361328125,
+            "mve_oracle": 0.03620361328125,
+            "rel_err_oracle": 0.0,
+            "ok_oracle": true,
+            "pass": true
+          },
+          {
+            "snr_db": 20.0,
+            "formal_nda": 0.00828857421875,
+            "mve_nda": 0.00828857421875,
+            "rel_err_nda": 0.0,
+            "ok_nda": true,
+            "formal_da": 0.009134114583333333,
+            "mve_da": 0.009134114583333333,
+            "rel_err_da": 0.0,
+            "ok_da": true,
+            "formal_oracle": 0.0077587890625,
+            "mve_oracle": 0.0077587890625,
+            "rel_err_oracle": 0.0,
+            "ok_oracle": true,
+            "pass": true
+          },
+          {
+            "snr_db": 22.0,
+            "formal_nda": 0.00394775390625,
+            "mve_nda": 0.00394775390625,
+            "rel_err_nda": 0.0,
+            "ok_nda": true,
+            "formal_da": 0.0038509114583333334,
+            "mve_da": 0.0038509114583333334,
+            "rel_err_da": 0.0,
+            "ok_da": true,
+            "formal_oracle": 0.0036669921875,
+            "mve_oracle": 0.0036669921875,
+            "rel_err_oracle": 0.0,
+            "ok_oracle": true,
+            "pass": true
+          },
+          {
+            "snr_db": 24.0,
+            "formal_nda": 0.00152099609375,
+            "mve_nda": 0.00152099609375,
+            "rel_err_nda": 0.0,
+            "ok_nda": true,
+            "formal_da": 0.00154296875,
+            "mve_da": 0.00154296875,
+            "rel_err_da": 0.0,
+            "ok_da": true,
+            "formal_oracle": 0.00147705078125,
+            "mve_oracle": 0.00147705078125,
+            "rel_err_oracle": 0.0,
+            "ok_oracle": true,
+            "pass": true
+          },
+          {
+            "snr_db": 26.0,
+            "formal_nda": 0.000537109375,
+            "mve_nda": 0.000537109375,
+            "rel_err_nda": 0.0,
+            "ok_nda": true,
+            "formal_da": 0.0005338541666666666,
+            "mve_da": 0.0005338541666666666,
+            "rel_err_da": 0.0,
+            "ok_da": true,
+            "formal_oracle": 0.00052490234375,
+            "mve_oracle": 0.00052490234375,
+            "rel_err_oracle": 0.0,
+            "ok_oracle": true,
+            "pass": true
+          }
+        ],
+        "pass": true,
+        "max_rel_err": 0.0
+      },
+      "moderate": {
+        "points": [
+          {
+            "snr_db": 5.0,
+            "formal_nda": 0.40168701171875,
+            "mve_nda": 0.40168701171875,
+            "rel_err_nda": 0.0,
+            "ok_nda": true,
+            "formal_da": 0.36206380208333333,
+            "mve_da": 0.36206380208333333,
+            "rel_err_da": 0.0,
+            "ok_da": true,
+            "formal_oracle": 0.238779296875,
+            "mve_oracle": 0.238779296875,
+            "rel_err_oracle": 0.0,
+            "ok_oracle": true,
+            "pass": true
+          },
+          {
+            "snr_db": 10.0,
+            "formal_nda": 0.2574169921875,
+            "mve_nda": 0.2574169921875,
+            "rel_err_nda": 0.0,
+            "ok_nda": true,
+            "formal_da": 0.1998828125,
+            "mve_da": 0.1998828125,
+            "rel_err_da": 0.0,
+            "ok_da": true,
+            "formal_oracle": 0.1322705078125,
+            "mve_oracle": 0.1322705078125,
+            "rel_err_oracle": 0.0,
+            "ok_oracle": true,
+            "pass": true
+          },
+          {
+            "snr_db": 15.0,
+            "formal_nda": 0.082763671875,
+            "mve_nda": 0.082763671875,
+            "rel_err_nda": 0.0,
+            "ok_nda": true,
+            "formal_da": 0.07948567708333333,
+            "mve_da": 0.07948567708333333,
+            "rel_err_da": 0.0,
+            "ok_da": true,
+            "formal_oracle": 0.05492919921875,
+            "mve_oracle": 0.05492919921875,
+            "rel_err_oracle": 0.0,
+            "ok_oracle": true,
+            "pass": true
+          },
+          {
+            "snr_db": 20.0,
+            "formal_nda": 0.02276611328125,
+            "mve_nda": 0.02276611328125,
+            "rel_err_nda": 0.0,
+            "ok_nda": true,
+            "formal_da": 0.023805338541666665,
+            "mve_da": 0.023805338541666665,
+            "rel_err_da": 0.0,
+            "ok_da": true,
+            "formal_oracle": 0.01701416015625,
+            "mve_oracle": 0.01701416015625,
+            "rel_err_oracle": 0.0,
+            "ok_oracle": true,
+            "pass": true
+          },
+          {
+            "snr_db": 22.0,
+            "formal_nda": 0.0118408203125,
+            "mve_nda": 0.0118408203125,
+            "rel_err_nda": 0.0,
+            "ok_nda": true,
+            "formal_da": 0.012412109375,
+            "mve_da": 0.012412109375,
+            "rel_err_da": 0.0,
+            "ok_da": true,
+            "formal_oracle": 0.0096533203125,
+            "mve_oracle": 0.0096533203125,
+            "rel_err_oracle": 0.0,
+            "ok_oracle": true,
+            "pass": true
+          },
+          {
+            "snr_db": 24.0,
+            "formal_nda": 0.00623779296875,
+            "mve_nda": 0.00623779296875,
+            "rel_err_nda": 0.0,
+            "ok_nda": true,
+            "formal_da": 0.006396484375,
+            "mve_da": 0.006396484375,
+            "rel_err_da": 0.0,
+            "ok_da": true,
+            "formal_oracle": 0.0051611328125,
+            "mve_oracle": 0.0051611328125,
+            "rel_err_oracle": 0.0,
+            "ok_oracle": true,
+            "pass": true
+          },
+          {
+            "snr_db": 26.0,
+            "formal_nda": 0.0027099609375,
+            "mve_nda": 0.0027099609375,
+            "rel_err_nda": 0.0,
+            "ok_nda": true,
+            "formal_da": 0.003655598958333333,
+            "mve_da": 0.003655598958333333,
+            "rel_err_da": 0.0,
+            "ok_da": true,
+            "formal_oracle": 0.0025830078125,
+            "mve_oracle": 0.0025830078125,
+            "rel_err_oracle": 0.0,
+            "ok_oracle": true,
+            "pass": true
+          }
+        ],
+        "pass": true,
+        "max_rel_err": 0.0
+      },
+      "strong": {
+        "points": [
+          {
+            "snr_db": 5.0,
+            "formal_nda": 0.403154296875,
+            "mve_nda": 0.403154296875,
+            "rel_err_nda": 0.0,
+            "ok_nda": true,
+            "formal_da": 0.383359375,
+            "mve_da": 0.383359375,
+            "rel_err_da": 0.0,
+            "ok_da": true,
+            "formal_oracle": 0.27030517578125,
+            "mve_oracle": 0.27030517578125,
+            "rel_err_oracle": 0.0,
+            "ok_oracle": true,
+            "pass": true
+          },
+          {
+            "snr_db": 10.0,
+            "formal_nda": 0.28130126953125,
+            "mve_nda": 0.28130126953125,
+            "rel_err_nda": 0.0,
+            "ok_nda": true,
+            "formal_da": 0.280234375,
+            "mve_da": 0.280234375,
+            "rel_err_da": 0.0,
+            "ok_da": true,
+            "formal_oracle": 0.18034423828125,
+            "mve_oracle": 0.18034423828125,
+            "rel_err_oracle": 0.0,
+            "ok_oracle": true,
+            "pass": true
+          },
+          {
+            "snr_db": 15.0,
+            "formal_nda": 0.1530712890625,
+            "mve_nda": 0.1530712890625,
+            "rel_err_nda": 0.0,
+            "ok_nda": true,
+            "formal_da": 0.17137369791666668,
+            "mve_da": 0.17137369791666668,
+            "rel_err_da": 0.0,
+            "ok_da": true,
+            "formal_oracle": 0.1042236328125,
+            "mve_oracle": 0.1042236328125,
+            "rel_err_oracle": 0.0,
+            "ok_oracle": true,
+            "pass": true
+          },
+          {
+            "snr_db": 20.0,
+            "formal_nda": 0.06929931640625,
+            "mve_nda": 0.06929931640625,
+            "rel_err_nda": 0.0,
+            "ok_nda": true,
+            "formal_da": 0.08367838541666667,
+            "mve_da": 0.08367838541666667,
+            "rel_err_da": 0.0,
+            "ok_da": true,
+            "formal_oracle": 0.05287109375,
+            "mve_oracle": 0.05287109375,
+            "rel_err_oracle": 0.0,
+            "ok_oracle": true,
+            "pass": true
+          },
+          {
+            "snr_db": 22.0,
+            "formal_nda": 0.04919921875,
+            "mve_nda": 0.04919921875,
+            "rel_err_nda": 0.0,
+            "ok_nda": true,
+            "formal_da": 0.060556640625,
+            "mve_da": 0.060556640625,
+            "rel_err_da": 0.0,
+            "ok_da": true,
+            "formal_oracle": 0.03899658203125,
+            "mve_oracle": 0.03899658203125,
+            "rel_err_oracle": 0.0,
+            "ok_oracle": true,
+            "pass": true
+          },
+          {
+            "snr_db": 24.0,
+            "formal_nda": 0.034052734375,
+            "mve_nda": 0.034052734375,
+            "rel_err_nda": 0.0,
+            "ok_nda": true,
+            "formal_da": 0.04393880208333333,
+            "mve_da": 0.04393880208333333,
+            "rel_err_da": 0.0,
+            "ok_da": true,
+            "formal_oracle": 0.02776611328125,
+            "mve_oracle": 0.02776611328125,
+            "rel_err_oracle": 0.0,
+            "ok_oracle": true,
+            "pass": true
+          },
+          {
+            "snr_db": 26.0,
+            "formal_nda": 0.02426513671875,
+            "mve_nda": 0.02426513671875,
+            "rel_err_nda": 0.0,
+            "ok_nda": true,
+            "formal_da": 0.030266927083333332,
+            "mve_da": 0.030266927083333332,
+            "rel_err_da": 0.0,
+            "ok_da": true,
+            "formal_oracle": 0.01958984375,
+            "mve_oracle": 0.01958984375,
+            "rel_err_oracle": 0.0,
+            "ok_oracle": true,
+            "pass": true
+          }
+        ],
+        "pass": true,
+        "max_rel_err": 0.0
+      }
+    },
+    "overall_pass": true
+  },
+  "degradation_tests": {
+    "turb_off_h_eq_1": {
+      "status": "AWGN 场景 (awgn_wiener_channel) 本身即 h≡1, 已由 AWGN 一致性验证覆盖"
+    },
+    "wiener_off_sigma2p_zero": {
+      "ber_nda": 0.01025390625,
+      "ber_da": 0.010286458333333333,
+      "ber_oracle": 0.0107421875,
+      "nda_over_oracle": 0.9545454545454546,
+      "converged_within_2x": true,
+      "status": "PASS (NDA/DA/oracle 收敛, 相位恒定无估计负担)"
+    },
+    "doppler_off_fdot_zero": {
+      "fft_foe_omega_est": -0.0002831609832050866,
+      "near_zero": true,
+      "status": "PASS (fft_foe 输出≈0, 无 CFO 漂移)"
+    }
+  },
+  "autocorrelation": {
+    "h_lag1_autocorr": 0.9901635578984408,
+    "theta_lag1_autocorr": 0.9993906711574788,
+    "h_below_0.95": false,
+    "theta_note": "Wiener PN cumsum lag-1 自相关预期接近 1 (随机游走物理特性), 非\"过于平滑\" bug; 块内 h 恒定致 h 序列自相关受块结构影响",
+    "status": "CHECK (h 自相关高, 检查块结构)"
+  },
+  "ber_curves_png": "D:\\code\\study\\research-protocol\\projects\\simulation\\simulator\\_formal_ber_curves.png"
+}

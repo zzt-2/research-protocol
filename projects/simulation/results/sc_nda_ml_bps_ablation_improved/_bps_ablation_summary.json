@@ -1,0 +1,197 @@
+{
+  "meta": {
+    "task": "BPS M-APSK 迁移消融 fair gain 汇总 (5 seed)",
+    "ci_method": "t-distribution 95% CI, df=n-1 (5 seed→df=4, t=2.7764)",
+    "gain_definition": {
+      "bps_vs_nda": "fair_gain = (BPS γ_d @ HD-FEC) − (NDA γ_d @ HD-FEC); 正=NDA赢BPS",
+      "bps_vs_da": "fair_gain = (DA γ_tot @ HD-FEC) − (BPS γ_tot @ HD-FEC); 正=BPS赢DA"
+    },
+    "pilot_overhead_db": 1.2493873660829993,
+    "scenes_done": [
+      "awgn",
+      "weak",
+      "moderate",
+      "strong"
+    ],
+    "partial_run": false,
+    "B_test_phases": 64,
+    "M0_unwrap": 8,
+    "common_recovery_modified": false,
+    "elapsed_sec": 270.05092549324036
+  },
+  "fair_gain": {
+    "awgn": {
+      "scene": "awgn",
+      "gain_bps_vs_nda_mean_db": 0.17518481518067547,
+      "gain_bps_vs_nda_std_db": 0.028099232652498533,
+      "gain_bps_vs_nda_ci95_db": [
+        0.1402950096189164,
+        0.21007462074243455
+      ],
+      "per_seed_gain_bps_vs_nda_db": [
+        0.20649091662802732,
+        0.1645714281189612,
+        0.13694812647424115,
+        0.19895032843012572,
+        0.1689632762520219
+      ],
+      "gain_bps_vs_da_mean_db": 1.307617854528028,
+      "gain_bps_vs_da_std_db": 0.031120034679034608,
+      "gain_bps_vs_da_ci95_db": [
+        1.268977227844218,
+        1.3462584812118379
+      ],
+      "per_seed_gain_bps_vs_da_db": [
+        1.29218994799621,
+        1.3488466157995518,
+        1.3327084210903273,
+        1.2797752431414757,
+        1.2845690446125744
+      ],
+      "n_valid_nda": 5,
+      "n_valid_da": 5
+    },
+    "weak": {
+      "scene": "weak",
+      "gain_bps_vs_nda_mean_db": 0.04721960392115818,
+      "gain_bps_vs_nda_std_db": 0.100615252165277,
+      "gain_bps_vs_nda_ci95_db": [
+        -0.07771073236265957,
+        0.17214994020497595
+      ],
+      "per_seed_gain_bps_vs_nda_db": [
+        -0.08237767846835453,
+        0.001394305732919321,
+        0.038883447047496134,
+        0.18729219836402322,
+        0.09090574692970677
+      ],
+      "gain_bps_vs_da_mean_db": 1.48211141913174,
+      "gain_bps_vs_da_std_db": 0.25332829426493153,
+      "gain_bps_vs_da_ci95_db": [
+        1.1675627964166053,
+        1.7966600418468746
+      ],
+      "per_seed_gain_bps_vs_da_db": [
+        1.280879587924158,
+        1.3247515264468248,
+        1.7850294304558965,
+        1.7314605891409052,
+        1.2884359616909151
+      ],
+      "n_valid_nda": 5,
+      "n_valid_da": 5
+    },
+    "moderate": {
+      "scene": "moderate",
+      "gain_bps_vs_nda_mean_db": 0.05721663596178743,
+      "gain_bps_vs_nda_std_db": 0.02835892657593836,
+      "gain_bps_vs_nda_ci95_db": [
+        0.022004377804740828,
+        0.09242889411883404
+      ],
+      "per_seed_gain_bps_vs_nda_db": [
+        0.04516471971735214,
+        0.01995653182507695,
+        0.04974396601819464,
+        0.08837118106191966,
+        0.08284678118639377
+      ],
+      "gain_bps_vs_da_mean_db": 1.652940434416739,
+      "gain_bps_vs_da_std_db": 0.2759119989009715,
+      "gain_bps_vs_da_ci95_db": [
+        1.2139028736738195,
+        2.0919779951596587
+      ],
+      "per_seed_gain_bps_vs_da_db": [
+        1.876746219981591,
+        1.8638312774305845,
+        null,
+        1.5758378627443328,
+        1.2953463775104481
+      ],
+      "n_valid_nda": 5,
+      "n_valid_da": 4
+    },
+    "strong": {
+      "scene": "strong",
+      "gain_bps_vs_nda_mean_db": null,
+      "gain_bps_vs_nda_std_db": null,
+      "gain_bps_vs_nda_ci95_db": [
+        null,
+        null
+      ],
+      "per_seed_gain_bps_vs_nda_db": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "gain_bps_vs_da_mean_db": null,
+      "gain_bps_vs_da_std_db": null,
+      "gain_bps_vs_da_ci95_db": [
+        null,
+        null
+      ],
+      "per_seed_gain_bps_vs_da_db": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "n_valid_nda": 0,
+      "n_valid_da": 0,
+      "note": "HD-FEC 物理不可达 (oracle 也不可达); 用工作区 (γ_d≥15dB) per-point",
+      "workregion_bps_vs_nda_grand_mean_db": 0.10611380989228181,
+      "workregion_bps_vs_nda_grand_std_db": 0.04855262643747172,
+      "workregion_bps_vs_nda_grand_ci95_db": [
+        0.08339048125002038,
+        0.12883713853454323
+      ],
+      "workregion_bps_vs_nda_per_point": [
+        {
+          "gamma_d_db": 15.0,
+          "n_seeds": 5,
+          "bps_vs_nda_gain_mean_db": 0.07558206153695508,
+          "bps_vs_nda_gain_std_db": 0.012447370257650676,
+          "bps_vs_nda_gain_ci95_db": [
+            0.060126610015717924,
+            0.09103751305819224
+          ]
+        },
+        {
+          "gamma_d_db": 20.0,
+          "n_seeds": 5,
+          "bps_vs_nda_gain_mean_db": 0.10426057714883825,
+          "bps_vs_nda_gain_std_db": 0.03135271874264456,
+          "bps_vs_nda_gain_ci95_db": [
+            0.06533103504028812,
+            0.1431901192573884
+          ]
+        },
+        {
+          "gamma_d_db": 22.0,
+          "n_seeds": 5,
+          "bps_vs_nda_gain_mean_db": 0.09414957898875045,
+          "bps_vs_nda_gain_std_db": 0.02773912340980187,
+          "bps_vs_nda_gain_ci95_db": [
+            0.05970690810906823,
+            0.12859224986843268
+          ]
+        },
+        {
+          "gamma_d_db": 24.0,
+          "n_seeds": 5,
+          "bps_vs_nda_gain_mean_db": 0.15046302189458344,
+          "bps_vs_nda_gain_std_db": 0.07404753456728307,
+          "bps_vs_nda_gain_ci95_db": [
+            0.058520864066639325,
+            0.24240517972252756
+          ]
+        }
+      ]
+    }
+  }
+}

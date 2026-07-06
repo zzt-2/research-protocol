@@ -168,7 +168,8 @@ def da_ml_recovery(rx, pilot_idx, pilot_sym, mod='m16apsk'):
     return rx_comp, phi_est, df_est
 
 
-def nda_ml_recovery(rx, M0, mod='m16apsk', N_fft=None, assume_df_zero=False):
+def nda_ml_recovery(rx, M0, mod='m16apsk', N_fft=None, assume_df_zero=False,
+                    intra_block_tracking='none'):
     """NDA-ML 估计器（盲, 升 M₀ 次幂去调制 + 单正弦 ML）— B11 锚方法.
 
     来源: B11 (10.1109_LPT.2024.3523478) 行 75-121 + Wang 2022 T-SP [B11 ref 13] 单正弦 ML。
@@ -193,6 +194,14 @@ def nda_ml_recovery(rx, M0, mod='m16apsk', N_fft=None, assume_df_zero=False):
         df_est≈188 kHz, 本应 0）, 该伪 df 经线性回归 φ 步骤拟合留下块内残余相位斜坡
         → BER 损失; 故 df=0 场景应跳过 FFT-df, 直接估常相位 CPE（B11 场景单常相位足够）。
         If False (default, 未来星地 Doppler 残余场景), keep FFT-df logic（Wang 2022 单正弦 ML）。
+    intra_block_tracking : str
+        块内相位跟踪模式 (仅 assume_df_zero=True 分支生效; per-scenario 自适应).
+        - 'none' (默认): 整块 mean-angle → 块常数 CPE. 湍流场景用此 (sandbox 显示
+          segK8 在 strong 湍流有害). 向后兼容.
+        - 'segmented': segK8 块内分段跟踪 (sandbox 验证 NDA-segK8). 切 K=8 段 (256/8=32
+          符号/段) 每段独立升幂 mean-angle, 段间 unwrap + 线性插值得逐符号相位轨迹.
+          AWGN 场景用此 (sandbox: AWGN @18dB 反超 BPS ~1dB). 数学 bit-exact 复制自
+          explore/nda-awgn-tracking-sandbox/experiment.py:nda_ml_segmented.
     """
     rx = np.asarray(rx, dtype=complex)
     N = len(rx)
@@ -201,10 +210,27 @@ def nda_ml_recovery(rx, M0, mod='m16apsk', N_fft=None, assume_df_zero=False):
         # Variant B (修复 Bug 1): 跳 FFT-df, 纯升幂 mean-angle 估常相位 CPE.
         # 来源: 诊断脚本 _awgn_repro_diagnostic.py nda_ml_fixed_ber (Variant B).
         # B11 行 33 假设 CFO 已补偿 → 真 df=0 → FFT 找频率会锁噪声伪峰 → 残余相位斜坡.
-        # 改用 rx^M0 的全块 mean-angle 直接估 M₀·φ（无频率项）→ /M₀ 得常相位.
         raised = rx ** M0
-        phi_raised = np.angle(raised.mean())
-        phi_est = phi_raised / M0
+        if intra_block_tracking == 'segmented':
+            # segK8 块内跟踪 (sandbox 验证): 切 K 段每段独立 mean-angle, 段间 unwrap+线性插值.
+            # 数学 bit-exact 复制自 explore/nda-awgn-tracking-sandbox/experiment.py:nda_ml_segmented.
+            # 追块内 Wiener PN 漂移 (σ²_φ=2π·CLW·T_S·N_block≈0.032 rad/块 → high-SNR BER floor).
+            K = 8  # 溯源: sandbox 实验最优, 256/8=32 符号/段
+            seg_len = N // K
+            seg_phi = np.empty(K)
+            seg_center = np.empty(K)
+            for k in range(K):
+                lo, hi = k * seg_len, (k + 1) * seg_len
+                seg_phi[k] = np.angle(raised[lo:hi].mean())    # 段内常相位近似
+                seg_center[k] = (lo + hi) / 2.0
+            seg_phi_unw = np.unwrap(seg_phi)                    # 段间可能跨 2π
+            t = np.arange(N)
+            phi_raised = np.interp(t, seg_center, seg_phi_unw)  # 逐符号相位轨迹
+            phi_est = phi_raised / M0
+        else:
+            # 原版: 整块 mean-angle → 块常数 CPE (intra_block_tracking='none' 默认, 向后兼容).
+            phi_raised = np.angle(raised.mean())
+            phi_est = phi_raised / M0
         df_est = 0.0           # B11 行 33: 真 df=0, 不估频率
         tau_est = 0.0
         rx_comp = rx * np.exp(-1j * phi_est)

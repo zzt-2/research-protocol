@@ -1,0 +1,253 @@
+{
+  "meta": {
+    "task": "VV CFR M-APSK 迁移消融 fair gain 汇总 (5 seed)",
+    "ci_method": "t-distribution 95% CI, df=n-1 (5 seed→df=4, t=2.7764)",
+    "gain_definition": {
+      "vv_vs_nda": "fair_gain = (VV γ_d @ HD-FEC) − (NDA γ_d @ HD-FEC); 正=NDA赢VV",
+      "vv_vs_da": "fair_gain = (DA γ_tot @ HD-FEC) − (VV γ_tot @ HD-FEC); 正=VV赢DA"
+    },
+    "pilot_overhead_db": 1.2493873660829993,
+    "scenes_done": [
+      "awgn",
+      "weak",
+      "moderate",
+      "strong"
+    ],
+    "partial_run": false,
+    "Nw_window": 64,
+    "M0_unwrap": 8,
+    "common_recovery_modified": false,
+    "consistency_all_pass": true,
+    "elapsed_sec": 114.27386474609375
+  },
+  "fair_gain": {
+    "awgn": {
+      "scene": "awgn",
+      "gain_vv_vs_nda_mean_db": 0.016783867780873863,
+      "gain_vv_vs_nda_std_db": 0.021588295110111906,
+      "gain_vv_vs_nda_ci95_db": [
+        -0.010021541039950455,
+        0.04358927660169818
+      ],
+      "per_seed_gain_vv_vs_nda_db": [
+        0.04840728249767068,
+        0.0018055836640726852,
+        -0.0013266145501553694,
+        0.029981803200460178,
+        0.00505128409232114
+      ],
+      "gain_vv_vs_da_mean_db": 1.4660188019278295,
+      "gain_vv_vs_da_std_db": 0.02719070838216204,
+      "gain_vv_vs_da_ci95_db": [
+        1.4322570782440416,
+        1.4997805256116175
+      ],
+      "per_seed_gain_vv_vs_da_db": [
+        1.4502735821265667,
+        1.5116124602544403,
+        1.4709831621147238,
+        1.4487437683711413,
+        1.4484810367722751
+      ],
+      "n_valid_nda": 5,
+      "n_valid_da": 5
+    },
+    "weak": {
+      "scene": "weak",
+      "gain_vv_vs_nda_mean_db": -0.003797249078541398,
+      "gain_vv_vs_nda_std_db": 0.047641791952651606,
+      "gain_vv_vs_nda_ci95_db": [
+        -0.06295234695606271,
+        0.05535784879897991
+      ],
+      "per_seed_gain_vv_vs_nda_db": [
+        -0.017724826962112417,
+        -0.03423209441048769,
+        -0.05670085847986428,
+        0.059491341042573254,
+        0.030180193417184142
+      ],
+      "gain_vv_vs_da_mean_db": 1.5331282721314394,
+      "gain_vv_vs_da_std_db": 0.31273871996615443,
+      "gain_vv_vs_da_ci95_db": [
+        1.144811862705137,
+        1.921444681557742
+      ],
+      "per_seed_gain_vv_vs_da_db": [
+        1.2162267364179158,
+        1.3603779265902318,
+        1.8806137359832569,
+        1.8592614464623551,
+        1.3491615152034377
+      ],
+      "n_valid_nda": 5,
+      "n_valid_da": 5
+    },
+    "moderate": {
+      "scene": "moderate",
+      "gain_vv_vs_nda_mean_db": -0.0035690280389488295,
+      "gain_vv_vs_nda_std_db": 0.00840792885542351,
+      "gain_vv_vs_nda_ci95_db": [
+        -0.014008850598186785,
+        0.006870794520289125
+      ],
+      "per_seed_gain_vv_vs_nda_db": [
+        -0.0016652167666144635,
+        -0.015980281476672076,
+        -0.0020892145871656,
+        -0.005464990329890895,
+        0.0073545629655988876
+      ],
+      "gain_vv_vs_da_mean_db": 1.7159642192663194,
+      "gain_vv_vs_da_std_db": 0.2569961458163505,
+      "gain_vv_vs_da_ci95_db": [
+        1.3070260019036206,
+        2.1249024366290183
+      ],
+      "per_seed_gain_vv_vs_da_db": [
+        1.9235761564655576,
+        1.8997680907323335,
+        null,
+        1.6696740341361433,
+        1.370838595731243
+      ],
+      "n_valid_nda": 5,
+      "n_valid_da": 4
+    },
+    "strong": {
+      "scene": "strong",
+      "gain_vv_vs_nda_mean_db": null,
+      "gain_vv_vs_nda_std_db": null,
+      "gain_vv_vs_nda_ci95_db": [
+        null,
+        null
+      ],
+      "per_seed_gain_vv_vs_nda_db": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "gain_vv_vs_da_mean_db": null,
+      "gain_vv_vs_da_std_db": null,
+      "gain_vv_vs_da_ci95_db": [
+        null,
+        null
+      ],
+      "per_seed_gain_vv_vs_da_db": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "n_valid_nda": 0,
+      "n_valid_da": 0,
+      "note": "HD-FEC 物理不可达 (oracle 也不可达); 用工作区 (γ_d≥15dB) per-point",
+      "workregion_vv_vs_nda_grand_mean_db": 0.10935891879831923,
+      "workregion_vv_vs_nda_grand_std_db": 0.04711017155873331,
+      "workregion_vv_vs_nda_grand_ci95_db": [
+        0.08731067981991808,
+        0.13140715777672038
+      ],
+      "workregion_vv_vs_nda_per_point": [
+        {
+          "gamma_d_db": 15.0,
+          "n_seeds": 5,
+          "vv_vs_nda_gain_mean_db": 0.06139089241098326,
+          "vv_vs_nda_gain_std_db": 0.0207707181251163,
+          "vv_vs_nda_gain_ci95_db": [
+            0.035600639498187966,
+            0.08718114532377855
+          ]
+        },
+        {
+          "gamma_d_db": 20.0,
+          "n_seeds": 5,
+          "vv_vs_nda_gain_mean_db": 0.11895254932229449,
+          "vv_vs_nda_gain_std_db": 0.03979682523610877,
+          "vv_vs_nda_gain_ci95_db": [
+            0.0695382641838112,
+            0.16836683446077777
+          ]
+        },
+        {
+          "gamma_d_db": 22.0,
+          "n_seeds": 5,
+          "vv_vs_nda_gain_mean_db": 0.10791783688425056,
+          "vv_vs_nda_gain_std_db": 0.029705357400861467,
+          "vv_vs_nda_gain_ci95_db": [
+            0.07103376404582515,
+            0.14480190972267598
+          ]
+        },
+        {
+          "gamma_d_db": 24.0,
+          "n_seeds": 5,
+          "vv_vs_nda_gain_mean_db": 0.1491743965757486,
+          "vv_vs_nda_gain_std_db": 0.05166220189321533,
+          "vv_vs_nda_gain_ci95_db": [
+            0.08502730041700877,
+            0.21332149273448842
+          ]
+        }
+      ]
+    }
+  },
+  "consistency_checks": {
+    "vv_ge_oracle": {
+      "awgn": {
+        "pass": true,
+        "n_violations": 0,
+        "violations": []
+      },
+      "weak": {
+        "pass": true,
+        "n_violations": 0,
+        "violations": []
+      },
+      "moderate": {
+        "pass": true,
+        "n_violations": 0,
+        "violations": []
+      },
+      "strong": {
+        "pass": true,
+        "n_violations": 0,
+        "violations": []
+      }
+    },
+    "vv_ge_nda": {
+      "awgn": {
+        "pass": true,
+        "n_violations": 0,
+        "violations": []
+      },
+      "weak": {
+        "pass": true,
+        "n_violations": 0,
+        "violations": []
+      },
+      "moderate": {
+        "pass": true,
+        "n_violations": 0,
+        "violations": []
+      },
+      "strong": {
+        "pass": true,
+        "n_violations": 0,
+        "violations": []
+      }
+    },
+    "vv_at_18db_awgn": {
+      "value": 0.0036464843749999996,
+      "expected_range": [
+        0.003,
+        0.005
+      ],
+      "pass": true
+    },
+    "all_pass": true
+  }
+}
