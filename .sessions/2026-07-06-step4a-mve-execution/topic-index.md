@@ -1,7 +1,7 @@
 # Topic Index: Step 4a 维度 D MVE 执行
 
 > slug: 2026-07-06-step4a-mve-execution
-> status: active | created 2026-07-06 | last_updated 2026-07-06（S003 执行 H002——单载波时域 NDA-ML CRLB GO_MVE 判定 + 信道校准修复 + SC-NDA-ML-MVE-SPEC.md 写完）
+> status: active | created 2026-07-06 | last_updated 2026-07-06（S004 执行 H003——SC-NDA-ML MVE PASS Go 判定。公平对照 fair gain @ HD-FEC 全 ≥0.5dB：AWGN +0.704 / weak +1.199 / moderate +1.922 / strong 物理不可达但工作区(≥15dB)全赢 DA（per-point +1.19~+2.62dB）。TL-20 预期 5 项全 PASS 0 DEVIATION。NDA-vs-oracle gap 全 <3dB。主线独立 grep 核查 6 项 MVE 纪律全落实。新建 D005 Go 判定。下一步=写 feasibility_report.md 进 Step 5）
 
 ## 专题定位（一句话）
 
@@ -131,16 +131,19 @@ projects/simulation/
 - **D004** 单载波时域 NDA-ML 改进 GO_MVE + 公平对照框架确立（2026-07-06 新建）：
   - **D004-a** CRB 层：CRB_NDA/CRB_DA ≈ N_p/N = 1/4（M₀² 严格相消），NDA-ML 理论下界优于 DA ML
   - **D004-b** 公平对照 gain @ HD-FEC：AWGN +0.70 / weak +1.20 / moderate +1.92 / strong 物理不可达但 NDA 全工作区赢（形态 A+C 双增量叙事）
+- **D005** SC-NDA-ML MVE PASS → Go（2026-07-06 新建）：公平对照 fair gain @ HD-FEC 实测 AWGN +0.704 / weak +1.199 / moderate +1.922 dB 全 ≥0.5dB（SPEC §5 Go 门），strong 物理不可达但工作区(≥15dB)全赢 DA（per-point +1.19~+2.62dB）。TL-20 预期 5 项全 PASS 0 DEVIATION。NDA-vs-oracle gap 全 <3dB（0.38/1.49/1.97/2.58dB，升幂实现正确）。主线独立 grep 核查 6 项 MVE 纪律全落实（per-block h / 公平对照 / 两阶段 FOE / resolve blockwise / 共用信道 / N≥1e5）。进 Step 5（Baseline 选定：DA ML pilot sp=4 锁 FR-15 目标 baseline，NDA-ML 锁提出方法）
 
 ## 悬而未决
 
-1. **SC-NDA-ML MVE 实跑结果**：契约已写（SC-NDA-ML-MVE-SPEC.md 9 节），下轮跑 MVE 验证契约预期。**待 H003 后下轮展开**。
-2. **B7/B3 处理**：B7 后置（单载波 NDA-ML MVE 完后视情况）。B3 架构决策待最后（多孔径阵列 vs 单链路）。
-3. **B11 作理论参考的具体叙事方式**：论文里如何引用 B11（背景 / 思想源头 / 对比锚？）待写作阶段定。
+1. **写 feasibility_report.md 进 Step 5**：D005 Go 判定后的下一步。本轮 MVE PASS 是 §D 维度 D 的实证，待写进 feasibility_report.md（守 TL-23 验证完再写——本轮已验证完，可写）
+2. **B7 处理**：D004 已说"B7 待 NDA-ML MVE 完后视情况开"，现 NDA-ML Go，B7 可作并行第二候选或后置。视用户意图定
+3. **B3 架构决策**：多孔径阵列 vs 单链路，最后做
+4. **B11 作理论参考的具体叙事方式**：论文里如何引用 B11（背景 / 思想源头 / 对比锚？）待写作阶段定
+5. **债务提示**：①单载波 DA ML 近最优（pilot sp=4）vs B11 论文 DA ML（decision-feedback）不对等，MVE 验证后视情况补 decision-feedback DA ML 对照 ②B11 genie-aided 解卷绕非可实现，MVE 用 resolve_m16apsk_blockwise（非 oracle）已落实
 
 ## 当前位置
 
-**🟢 S003 单载波时域 NDA-ML GO_MVE + MVE-SPEC 写完（2026-07-06）**：执行 H002 三步。**步骤 2 形态拍板**：用户选形态 A+C（AWGN 频谱效率 + 星地湍流鲁棒性双增量）。**步骤 3 时域 CRLB + 公平对照**：派子 agent 推导，结论 GO_MVE——CRB 层 NDA-ML 优于 DA ML（M₀² 严格相消，比值 N_p/N=1/4），公平对照 gain @ HD-FEC：AWGN +0.70 / weak +1.20 / moderate +1.92 / strong 物理不可达但 NDA 全工作区赢。**信道校准修复**：派子 agent 诊断 BER floor 根因（主因 h_med 标量均衡残差 + 次因 CFO 残余），修复 per-block h 均衡 + 两阶段 fft_foe+nda_ml，重跑全 PASS（weak/moderate HD-FEC 可达）。**步骤 4 写 SC-NDA-ML-MVE-SPEC.md**（9 节契约，仿 N1-MVE-SPEC.md）。下一步=新对话执行 H003 跑 MVE（守 FR-11 架构摘要 + FR-14/15 baseline 对照 + FR-18 竞争格局）。
+**🟢 S004 SC-NDA-ML MVE PASS Go 判定（2026-07-06）**：执行 H003 三步。**步骤 1 报到+框架重读**：session-governance Trigger 1/5 + gw-feasibility §D + TL-20/22/23/26 + SPEC 9 节 + common 接口验证，Handoff 3 条关键声称核查全 PASS。**步骤 2 派子 agent 跑 MVE**：子 agent 写 `sc_nda_ml_mve.py`（薄包装复用 `_time_domain_crlb.py`）+ 跑 15.9s，输出 `_mve_results.json`。**步骤 3 主线核查+判定**：grep 核查 6 项 MVE 纪律全落实（per-block h 行 250-282 / 公平对照 PILOT_OVERHEAD_DB 行 124 / 两阶段 FOE 行 285-297 / resolve blockwise 行 167-300 / 共用信道 行 411 / N=102400），确认底层 MVE 代码合格→结论有效。TL-20 预期 5 项全 PASS 0 DEVIATION。**判定 Go (§D PASS)**：公平对照 fair gain @ HD-FEC AWGN +0.704 / weak +1.199 / moderate +1.922 dB 全 ≥0.5dB，strong 物理不可达但工作区全赢 DA。新建 D005。下一步=写 feasibility_report.md 进 Step 5（Baseline 选定）。
 
 ## 进展线索
 
@@ -151,6 +154,8 @@ projects/simulation/
 - **D002** B11 角色重定位 = 理论参考（2026-07-06，S002 新建）
 - **D003** nda_ml_recovery 两 bug 修复（2026-07-06，S002 新建）
 - **H002** 交接给新对话（单载波时域 NDA-ML 改进 MVE-SPEC 设计）（2026-07-06）
-- **S003** 执行 H002：时域 CRLB GO_MVE + 信道校准修复 + SC-NDA-ML-MVE-SPEC 写完（2026-07-06，本对话产出）
+- **S003** 执行 H002：时域 CRLB GO_MVE + 信道校准修复 + SC-NDA-ML-MVE-SPEC 写完（2026-07-06）
 - **D004** 单载波时域 NDA-ML GO_MVE + 公平对照框架（2026-07-06，S003 新建）
-- **H003** 交接给新对话（跑 SC-NDA-ML MVE）（2026-07-06，本对话产出，待写）
+- **H003** 交接给新对话（跑 SC-NDA-ML MVE）（2026-07-06）
+- **S004** 执行 H003：SC-NDA-ML MVE PASS Go 判定（2026-07-06，本对话产出）
+- **D005** SC-NDA-ML MVE PASS → Go（2026-07-06，S004 新建）

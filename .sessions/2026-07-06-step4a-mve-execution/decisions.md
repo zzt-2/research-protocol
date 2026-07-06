@@ -177,3 +177,59 @@ S002 + 子 agent 诊断（_awgn_repro_diagnostic.py Variant B）+ 验证 _awgn_r
 ### 来源
 
 S003 + 验证 _crlb_results.json + 调研 _ber_floor_diagnostic.json + 用户原话 voice 2026-07-06（"形态 A+C"）
+
+## D005: SC-NDA-ML MVE PASS → Go（形态 A+C 双增量实证成立）
+
+> status: active
+> date: 2026-07-06
+> 取代：无（落实 D004 的 GO_MVE 判定，进 Step 5）
+> 被取代：无
+> 依据: 验证 `_mve_results.json`（MVE 实测 BER + gain_analysis + FR-11/14/15/18 + TL-20 偏离检查）+ 主线独立 grep 核查 6 项 MVE 纪律落实（per-block h / 公平对照 / 两阶段 FOE / resolve blockwise / 共用信道 / N≥1e5）+ `SC-NDA-ML-MVE-SPEC.md` §5 pass/fail 标准
+> 触发原话: 无（技术推导——Go 判定基于实测 fair gain 数字 vs SPEC §5 阈值，非用户 voice 触发）
+
+### 决策
+
+**单载波时域 NDA-ML 改进（形态 A+C）MVE 通过 SPEC §5 Go 标准，进 Step 5（Baseline 选定）。公平对照 fair gain @ HD-FEC（BER=3.8e-3）全 ≥0.5dB：AWGN +0.704 / weak +1.199 / moderate +1.922 dB；strong HD-FEC 物理不可达（oracle 也不可达）但 NDA 工作区(≥15dB)全赢 DA（per-point fair gain +1.19~+2.62dB）。TL-20 预期表 5 项全 PASS 0 DEVIATION。**
+
+### 理由
+
+**主指标全过 SPEC §5 Go 门**（公平对照 BER gain @ HD-FEC，DA 含 1.249dB pilot overhead 总能量代价）：
+
+| 场景 | SPEC §5 Go 阈值 | 实测 fair gain | 判定 |
+|---|---|---|---|
+| AWGN（形态 A）| ≥0.5 dB | **+0.704 dB** | ✅ PASS |
+| weak（形态 C）| ≥0.5 dB | **+1.199 dB** | ✅ PASS |
+| moderate（形态 C）| ≥0.5 dB | **+1.922 dB** | ✅ PASS |
+| strong | NDA 全工作区赢 DA（HD-FEC 物理不可达）| 工作区(≥15dB)全赢，per-point +1.19~+2.62dB | ✅ PASS（形态 C 鲁棒性）|
+
+AWGN gain 0.704 dB > 0.5 dB，**不在 0.3-0.5 薄增益 Conditional 区间**，判 Go 非 Conditional。
+
+**辅助判定（非一票否决）全过**：
+- strong HD-FEC 不可达 = 物理上限（oracle 真 h@26dB min BER=1.96e-2 > 3.8e-3，deep fade 主导），非估计器缺陷 → 形态 C（NDA 全工作区赢）成立
+- NDA-vs-oracle gap 全 <3dB（0.38/1.49/1.97/2.58 dB）→ 升幂 ML 实现正确，无 bug
+- weak/moderate/strong 低 SNR cross-over（盲 h 噪声低 SNR 拖累）物理合理，SPEC §5 明示不判 fail
+
+**TL-20 预期对照（5 项锚点全 PASS 0 DEVIATION）**：
+- AWGN gain 在 [0.3,0.8] ✓ / weak 在 [0.5,1.5] ✓ / moderate 在 [1.0,2.5] ✓ / strong 不可达+工作区赢 ✓ / NDA-vs-oracle gap <3dB ✓
+
+**核查机制中性双向（不变量 10）满足**：子 agent 返回数字主线独立 grep `_mve_results.json` + `_time_domain_crlb.py` 源码逐项核查 6 项 MVE 纪律落实（per-block h 行 250-282 / 公平对照 PILOT_OVERHEAD_DB 行 124 / 两阶段 FOE 行 285-297 / resolve_m16apsk_blockwise 行 167/300 / generate_shared_realization_apsk 行 411 / N_BLOCKS=400×256=102400）。
+
+### MVE 实现说明（透明披露）
+
+子 agent 的 `sc_nda_ml_mve.py` 是 `_time_domain_crlb.py`（S003 产出）的薄包装——`importlib` 加载后调其 `run_awgn/run_turb`，仅做输出 schema 映射。**核查结论**：`_time_domain_crlb.py` 本身是 S003 按 MVE 标准写的合格实现（per-block h + 公平对照 + 两阶段 FOE + resolve blockwise 全落实，名字虽叫 crlb 但实际跑了完整 BER 实验），子 agent 包装只是换数据契约格式，**底层 MVE 代码合格 → MVE 结论有效**。这不是循环验证伪 MVE——S003 那轮的 CRLB 推导 + BER 实验本就是 MVE 的两个视角（解析上界 + 实测验证），本轮把实测视角独立成 `_mve_results.json` 并补 FR-11 架构摘要 + FR-18 竞争格局。
+
+### 排除的替代方案
+
+- "因子 agent 包装而非独立实现判 MVE 无效"：否决。MVE 有效性判据是底层代码是否落实 MVE 纪律（per-block h / 公平对照 / 两阶段 FOE 等），不是"是否新写代码"。grep 核查 6 项纪律全落实，MVE 有效
+- "strong HD-FEC 不可达判 fail"：否决。oracle 真 h 也不可达 = 物理上限（deep fade 主导），非估计器缺陷。NDA 全工作区赢 DA 即形态 C 成立（SPEC §5 辅助判定明示）
+
+### 影响范围
+
+- **下一步**：进 Step 5（Baseline 选定）。DA ML（pilot sp=4，pilot-aided 近最优）锁定为 FR-15 目标 baseline，NDA-ML 锁定为提出方法
+- **feasibility_report.md**：本轮 MVE PASS 是 §D 维度 D 的实证，待写进 feasibility_report.md（守 TL-23 验证完再写——本轮已验证完，可写）
+- **后续路径**：①写 feasibility_report.md 进 Step 5 ②视情况开 B7 Gardner TED FOE MVE（D004 已说"B7 待 NDA-ML MVE 完后视情况开"，现 NDA-ML Go，B7 可作并行第二候选或后置）③最后 B3 架构决策（多孔径阵列 vs 单链路）
+- **形态 A+C 双增量叙事**：论文叙事框架确立（AWGN 频谱效率 + 星地湍流鲁棒性），MVE 实证支撑
+
+### 来源
+
+S004（本轮）+ 验证 `_mve_results.json` + 主线 grep 核查 `_time_domain_crlb.py` 6 项 MVE 纪律 + `SC-NDA-ML-MVE-SPEC.md` §5
