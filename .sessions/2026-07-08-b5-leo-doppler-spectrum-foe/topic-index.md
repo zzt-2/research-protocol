@@ -1,7 +1,7 @@
 # Topic Index: B5-Q1 LEO Doppler 短时谱 FOE 第四候选
 
 > slug: 2026-07-08-b5-leo-doppler-spectrum-foe
-> status: active | created 2026-07-08 | last_updated 2026-07-08（S003 阶段 0.3-0.6 完成——前馈归一化路径定死不撞 D006 + 范围优势三项验证 PASS + 公平对照框架 baseline=传统 FFT FOE + B5Params 20 字段全溯源 + short_time_spectrum_foe 接口定义。阶段 0 六项规约全收尾，可进 sandbox，交对话 3）
+> status: active | created 2026-07-08 | last_updated 2026-07-08（S004 阶段 1 sandbox 三方对照完成——路径 C sandbox PASS：范围扩展 14.4× + 湍流下残频 σ max 16.20MHz << 140MHz（裕度 123.8MHz）+ 收敛性 19/19。B5 短时谱 FOE + [60] Leven Mth-power 实现 + 三方对照脚本 + 3 结果 JSON + B5Params 落盘 params.py。可进 MVE，H004 交对话 4）
 
 ## 专题定位（一句话）
 
@@ -100,10 +100,11 @@ B5-Q1（LEO Doppler 短时谱 FOE，正负功率谱面积比）第四候选 MVE 
 
 ## 当前位置
 
-**🟢 S003 阶段 0.3-0.6 完成（2026-07-08）**：前馈归一化路径定死不撞 D006 + 范围优势三项验证 PASS（不转 Kill）+ 公平对照框架（baseline=传统 FFT FOE + [60] Leven 祖师爷 + fair gain 二维 + 双工作点 + B5/B7/B4 正交）+ B5Params 20 字段全溯源 + short_time_spectrum_foe 接口定义。**阶段 0 六项规约全收尾，可进 sandbox**。下一步=新对话（工作对话）执行阶段 1 sandbox 三方对照。H003 已交接。
+**🟢 S004 阶段 1 sandbox 三方对照完成（2026-07-08）**：路径 C sandbox PASS——范围扩展 14.4×（B5 ±4.5GHz / 传统 FFT FOE ±312.5MHz，≥10× 门控 PASS）+ 湍流下残频 σ max 16.20MHz << 140MHz 门控（裕度 123.8MHz，27 点全 PASS）+ 收敛性 19/19 全收敛。B5 短时谱 FOE + [60] Leven Mth-power 实现 + 三方对照脚本 + 3 结果 JSON + B5Params 落盘 params.py。**可进 MVE**。下一步=新对话（工作对话）执行阶段 2-3 MVE + consistency。H004 已交接。
 
 ## 进展线索
 
 - **S001** 开题 + B5 特殊风险 + 阶段 0 六项规约设计 + 复用基建清单（2026-07-08，主控对话）
 - **S002** 阶段 0.1-0.2 执行——够格路径验证（路径 C 鲁棒性维度够格）+ dB/范围溯源核查（20 字段全溯源 + [60] Leven 7dB penalty 溯源到原文 L123 + 残频上限公式溯源到 sat.1553 引 [60] Leven 公式 27）（2026-07-08，工作对话对话 1）
 - **S003** 阶段 0.3-0.6 执行——架构定性（前馈归一化路径定死不撞 D006 + 范围优势三项验证 PASS：捕获范围确定/残频理论成立带 sandbox 确认/收敛性成立应提升）+ 公平对照框架（baseline=传统 FFT FOE 主 + [60] Leven 祖师爷 + fair gain 二维 + 双工作点 BER 1e-3+HD-FEC + B5/B7/B4 机制正交）+ B5Params 20 字段全溯源 + short_time_spectrum_foe 接口定义（参考 fft_foe_m0_omega 起点骨架 + 下游引用同步清单）。阶段 0 六项规约全收尾可进 sandbox（2026-07-08，工作对话对话 2）
+- **S004** 阶段 1 sandbox 三方对照执行——B5 短时谱 FOE（short_time_spectrum_foe，598 行，分块 FFT + Rp-n + 星历预测 + 迭代收敛 + normalize_mode 三方案）+ [60] Leven Mth-power（leven_mthpower_foe，290 行）实现 + 三方对照 sandbox 脚本 + 3 结果 JSON + B5Params 落盘 params.py。路径 C sandbox PASS：范围扩展 14.4× + 湍流下残频 σ max 16.20MHz << 140MHz + 收敛性 19/19。主线独立核查（V5）全数字一致。关键发现：α=6×10⁸ 暗 ratio 模式 + block≡ratio + 星历预测预补偿覆盖 ±4.5GHz 全量程。可进 MVE（2026-07-08，工作对话对话 3）

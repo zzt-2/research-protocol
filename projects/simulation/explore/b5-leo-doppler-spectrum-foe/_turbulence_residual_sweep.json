@@ -1,0 +1,461 @@
+{
+  "meta": {
+    "task": "B5-Q1 湍流下残频 σ 扫描 (路径 C 核心前提, 0.3b 验证 2)",
+    "purpose": "验证 B5 湍流下残频 σ <140MHz (路径 C 核心前提不崩塌)",
+    "params": {
+      "f_offsets_hz": [
+        500000000.0,
+        1000000000.0,
+        2000000000.0
+      ],
+      "SNR_DB_LIST": [
+        6.0,
+        13.0,
+        20.0
+      ],
+      "TURB_LEVELS": [
+        "weak",
+        "moderate",
+        "strong"
+      ],
+      "n_seeds": 20,
+      "RESIDUAL_STD_TARGET_Hz": 140000000.0
+    },
+    "pathC_gate": "B5 residual_std < 140MHz per point",
+    "pathC_pass_points": 27,
+    "pathC_total_points": 27,
+    "architecture": "前馈开环不撞 D006 (normalize_mode=ratio)",
+    "timestamp": "2026-07-08T00:12:24"
+  },
+  "sweep": {
+    "weak": {
+      "6.0": {
+        "0.5GHz": {
+          "B5": {
+            "residual_std_hz": 9246330.252667977,
+            "residual_abs_mean_hz": 9344624.241316725
+          },
+          "fft_foe": {
+            "residual_std_hz": 67041.80410415864,
+            "residual_abs_mean_hz": 623983970.9148858
+          },
+          "leven": {
+            "residual_std_hz": 37998287.72463202,
+            "residual_abs_mean_hz": 613944658.3822008
+          },
+          "B5_pathC_gate": true
+        },
+        "1.0GHz": {
+          "B5": {
+            "residual_std_hz": 9246330.252667945,
+            "residual_abs_mean_hz": 9344624.241316695
+          },
+          "fft_foe": {
+            "residual_std_hz": 67071.48649274085,
+            "residual_abs_mean_hz": 1248984000.5441425
+          },
+          "leven": {
+            "residual_std_hz": 37998287.72463239,
+            "residual_abs_mean_hz": 1238944658.382201
+          },
+          "B5_pathC_gate": true
+        },
+        "2.0GHz": {
+          "B5": {
+            "residual_std_hz": 9246330.252667978,
+            "residual_abs_mean_hz": 9344624.241316628
+          },
+          "fft_foe": {
+            "residual_std_hz": 67068.94973766904,
+            "residual_abs_mean_hz": 1873983988.2384408
+          },
+          "leven": {
+            "residual_std_hz": 37998287.72463311,
+            "residual_abs_mean_hz": 1863944658.3822017
+          },
+          "B5_pathC_gate": true
+        }
+      },
+      "13.0": {
+        "0.5GHz": {
+          "B5": {
+            "residual_std_hz": 10044692.333166081,
+            "residual_abs_mean_hz": 9183496.396614503
+          },
+          "fft_foe": {
+            "residual_std_hz": 64912.3492718155,
+            "residual_abs_mean_hz": 623980002.5274718
+          },
+          "leven": {
+            "residual_std_hz": 2349458.3175809314,
+            "residual_abs_mean_hz": 625580332.894892
+          },
+          "B5_pathC_gate": true
+        },
+        "1.0GHz": {
+          "B5": {
+            "residual_std_hz": 10044692.333166117,
+            "residual_abs_mean_hz": 9183496.39661454
+          },
+          "fft_foe": {
+            "residual_std_hz": 64974.19759667815,
+            "residual_abs_mean_hz": 1248980019.8441648
+          },
+          "leven": {
+            "residual_std_hz": 2349458.3175809425,
+            "residual_abs_mean_hz": 1250580332.8948922
+          },
+          "B5_pathC_gate": true
+        },
+        "2.0GHz": {
+          "B5": {
+            "residual_std_hz": 10044692.333166098,
+            "residual_abs_mean_hz": 9183496.39661454
+          },
+          "fft_foe": {
+            "residual_std_hz": 64969.999658236055,
+            "residual_abs_mean_hz": 1873980016.6855984
+          },
+          "leven": {
+            "residual_std_hz": 2349458.3175808955,
+            "residual_abs_mean_hz": 1875580332.8948913
+          },
+          "B5_pathC_gate": true
+        }
+      },
+      "20.0": {
+        "0.5GHz": {
+          "B5": {
+            "residual_std_hz": 10333994.609889776,
+            "residual_abs_mean_hz": 8976831.043931376
+          },
+          "fft_foe": {
+            "residual_std_hz": 66489.31461523926,
+            "residual_abs_mean_hz": 623978759.9697655
+          },
+          "leven": {
+            "residual_std_hz": 820262.0960328607,
+            "residual_abs_mean_hz": 623994752.2999481
+          },
+          "B5_pathC_gate": true
+        },
+        "1.0GHz": {
+          "B5": {
+            "residual_std_hz": 10333994.609889772,
+            "residual_abs_mean_hz": 8976831.043931395
+          },
+          "fft_foe": {
+            "residual_std_hz": 66563.44058831283,
+            "residual_abs_mean_hz": 1248978771.6966023
+          },
+          "leven": {
+            "residual_std_hz": 820262.0960329047,
+            "residual_abs_mean_hz": 1248994752.2999477
+          },
+          "B5_pathC_gate": true
+        },
+        "2.0GHz": {
+          "B5": {
+            "residual_std_hz": 10333994.609889781,
+            "residual_abs_mean_hz": 8976831.0439314
+          },
+          "fft_foe": {
+            "residual_std_hz": 66541.8629890668,
+            "residual_abs_mean_hz": 1873978770.4841332
+          },
+          "leven": {
+            "residual_std_hz": 820262.0960329917,
+            "residual_abs_mean_hz": 1873994752.2999477
+          },
+          "B5_pathC_gate": true
+        }
+      }
+    },
+    "moderate": {
+      "6.0": {
+        "0.5GHz": {
+          "B5": {
+            "residual_std_hz": 10363844.310134925,
+            "residual_abs_mean_hz": 9696213.14629652
+          },
+          "fft_foe": {
+            "residual_std_hz": 70618.00939325686,
+            "residual_abs_mean_hz": 623994062.352381
+          },
+          "leven": {
+            "residual_std_hz": 53827594.1751958,
+            "residual_abs_mean_hz": 612184528.0958588
+          },
+          "B5_pathC_gate": true
+        },
+        "1.0GHz": {
+          "B5": {
+            "residual_std_hz": 10363844.310134936,
+            "residual_abs_mean_hz": 9696213.146296525
+          },
+          "fft_foe": {
+            "residual_std_hz": 70621.673128204,
+            "residual_abs_mean_hz": 1248994058.4369605
+          },
+          "leven": {
+            "residual_std_hz": 117294282.92312025,
+            "residual_abs_mean_hz": 1205934528.095858
+          },
+          "B5_pathC_gate": true
+        },
+        "2.0GHz": {
+          "B5": {
+            "residual_std_hz": 10363844.310134951,
+            "residual_abs_mean_hz": 9696213.14629655
+          },
+          "fft_foe": {
+            "residual_std_hz": 70632.65736706136,
+            "residual_abs_mean_hz": 1873994093.0914752
+          },
+          "leven": {
+            "residual_std_hz": 53827594.17518073,
+            "residual_abs_mean_hz": 1862184528.0958562
+          },
+          "B5_pathC_gate": true
+        }
+      },
+      "13.0": {
+        "0.5GHz": {
+          "B5": {
+            "residual_std_hz": 12214373.346984467,
+            "residual_abs_mean_hz": 10932217.006668055
+          },
+          "fft_foe": {
+            "residual_std_hz": 57660.11104839793,
+            "residual_abs_mean_hz": 623981846.1811489
+          },
+          "leven": {
+            "residual_std_hz": 3902641.502414047,
+            "residual_abs_mean_hz": 623884872.8006868
+          },
+          "B5_pathC_gate": true
+        },
+        "1.0GHz": {
+          "B5": {
+            "residual_std_hz": 12214373.34698444,
+            "residual_abs_mean_hz": 10932217.006668007
+          },
+          "fft_foe": {
+            "residual_std_hz": 57693.568135812195,
+            "residual_abs_mean_hz": 1248981835.2740417
+          },
+          "leven": {
+            "residual_std_hz": 3902641.502413641,
+            "residual_abs_mean_hz": 1248884872.8006868
+          },
+          "B5_pathC_gate": true
+        },
+        "2.0GHz": {
+          "B5": {
+            "residual_std_hz": 12214373.346984474,
+            "residual_abs_mean_hz": 10932217.006668031
+          },
+          "fft_foe": {
+            "residual_std_hz": 57690.72351134385,
+            "residual_abs_mean_hz": 1873981870.3963096
+          },
+          "leven": {
+            "residual_std_hz": 3902641.502412769,
+            "residual_abs_mean_hz": 1873884872.8006866
+          },
+          "B5_pathC_gate": true
+        }
+      },
+      "20.0": {
+        "0.5GHz": {
+          "B5": {
+            "residual_std_hz": 13028652.459475677,
+            "residual_abs_mean_hz": 11264246.168903058
+          },
+          "fft_foe": {
+            "residual_std_hz": 57859.79587906709,
+            "residual_abs_mean_hz": 623980188.7324817
+          },
+          "leven": {
+            "residual_std_hz": 670437.2838228283,
+            "residual_abs_mean_hz": 623971717.7798331
+          },
+          "B5_pathC_gate": true
+        },
+        "1.0GHz": {
+          "B5": {
+            "residual_std_hz": 13028652.459475676,
+            "residual_abs_mean_hz": 11264246.168903058
+          },
+          "fft_foe": {
+            "residual_std_hz": 57884.01793769795,
+            "residual_abs_mean_hz": 1248980161.134609
+          },
+          "leven": {
+            "residual_std_hz": 670437.2838228003,
+            "residual_abs_mean_hz": 1248971717.7798328
+          },
+          "B5_pathC_gate": true
+        },
+        "2.0GHz": {
+          "B5": {
+            "residual_std_hz": 13028652.459475663,
+            "residual_abs_mean_hz": 11264246.168903042
+          },
+          "fft_foe": {
+            "residual_std_hz": 57867.64576935383,
+            "residual_abs_mean_hz": 1873980172.7863183
+          },
+          "leven": {
+            "residual_std_hz": 670437.2838227857,
+            "residual_abs_mean_hz": 1873971717.7798328
+          },
+          "B5_pathC_gate": true
+        }
+      }
+    },
+    "strong": {
+      "6.0": {
+        "0.5GHz": {
+          "B5": {
+            "residual_std_hz": 13762638.84810133,
+            "residual_abs_mean_hz": 12037669.570911014
+          },
+          "fft_foe": {
+            "residual_std_hz": 93756.47748405306,
+            "residual_abs_mean_hz": 624010584.8637229
+          },
+          "leven": {
+            "residual_std_hz": 91678692.61815698,
+            "residual_abs_mean_hz": 593572146.5101663
+          },
+          "B5_pathC_gate": true
+        },
+        "1.0GHz": {
+          "B5": {
+            "residual_std_hz": 13762638.848101316,
+            "residual_abs_mean_hz": 12037669.570910996
+          },
+          "fft_foe": {
+            "residual_std_hz": 93749.24325704075,
+            "residual_abs_mean_hz": 1249010608.04588
+          },
+          "leven": {
+            "residual_std_hz": 91678692.61815378,
+            "residual_abs_mean_hz": 1218572146.5101657
+          },
+          "B5_pathC_gate": true
+        },
+        "2.0GHz": {
+          "B5": {
+            "residual_std_hz": 13762638.848101273,
+            "residual_abs_mean_hz": 12037669.570910955
+          },
+          "fft_foe": {
+            "residual_std_hz": 93595.85091895814,
+            "residual_abs_mean_hz": 1874010607.1986153
+          },
+          "leven": {
+            "residual_std_hz": 61783222.58464906,
+            "residual_abs_mean_hz": 1874822146.5101647
+          },
+          "B5_pathC_gate": true
+        }
+      },
+      "13.0": {
+        "0.5GHz": {
+          "B5": {
+            "residual_std_hz": 15790929.6468285,
+            "residual_abs_mean_hz": 13694287.428470325
+          },
+          "fft_foe": {
+            "residual_std_hz": 77020.54288034255,
+            "residual_abs_mean_hz": 624003716.6183214
+          },
+          "leven": {
+            "residual_std_hz": 6652255.305004812,
+            "residual_abs_mean_hz": 623442862.8050728
+          },
+          "B5_pathC_gate": true
+        },
+        "1.0GHz": {
+          "B5": {
+            "residual_std_hz": 15790929.64682849,
+            "residual_abs_mean_hz": 13694287.428470314
+          },
+          "fft_foe": {
+            "residual_std_hz": 77023.76648141952,
+            "residual_abs_mean_hz": 1249003668.6040943
+          },
+          "leven": {
+            "residual_std_hz": 6652255.3050063355,
+            "residual_abs_mean_hz": 1248442862.8050723
+          },
+          "B5_pathC_gate": true
+        },
+        "2.0GHz": {
+          "B5": {
+            "residual_std_hz": 15790929.646828506,
+            "residual_abs_mean_hz": 13694287.428470338
+          },
+          "fft_foe": {
+            "residual_std_hz": 76964.72688388116,
+            "residual_abs_mean_hz": 1874003693.5858872
+          },
+          "leven": {
+            "residual_std_hz": 6652255.305009336,
+            "residual_abs_mean_hz": 1873442862.8050723
+          },
+          "B5_pathC_gate": true
+        }
+      },
+      "20.0": {
+        "0.5GHz": {
+          "B5": {
+            "residual_std_hz": 16204773.206739489,
+            "residual_abs_mean_hz": 13931153.223648805
+          },
+          "fft_foe": {
+            "residual_std_hz": 73628.85784526386,
+            "residual_abs_mean_hz": 624001482.4345174
+          },
+          "leven": {
+            "residual_std_hz": 2281595.154465776,
+            "residual_abs_mean_hz": 625639446.708842
+          },
+          "B5_pathC_gate": true
+        },
+        "1.0GHz": {
+          "B5": {
+            "residual_std_hz": 16204773.20673947,
+            "residual_abs_mean_hz": 13931153.223648781
+          },
+          "fft_foe": {
+            "residual_std_hz": 73638.20677615087,
+            "residual_abs_mean_hz": 1249001500.3494663
+          },
+          "leven": {
+            "residual_std_hz": 2281595.1544660353,
+            "residual_abs_mean_hz": 1250639446.7088418
+          },
+          "B5_pathC_gate": true
+        },
+        "2.0GHz": {
+          "B5": {
+            "residual_std_hz": 16204773.206739469,
+            "residual_abs_mean_hz": 13931153.223648787
+          },
+          "fft_foe": {
+            "residual_std_hz": 73603.75634336151,
+            "residual_abs_mean_hz": 1874001493.3226802
+          },
+          "leven": {
+            "residual_std_hz": 2281595.1544665447,
+            "residual_abs_mean_hz": 1875639446.708842
+          },
+          "B5_pathC_gate": true
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,483 @@
+{
+  "meta": {
+    "task": "B5-Q1 Doppler ±4.5GHz 全量程扫描 (验证捕获范围)",
+    "purpose": "fair gain 维度 1: 范围扩展. B5星历+迭代 vs baselines单次估",
+    "params": {
+      "n_seeds": 5,
+      "gamma_bar": 19.952623149688797,
+      "turb": "weak",
+      "PRECISE_RANGE_Hz": 312500000.0,
+      "DOPPLER_RANGE_Hz": 4500000000.0
+    },
+    "convergence_criterion": "|residual| < 312.5MHz (PRECISE_RANGE_B5)",
+    "architecture": "前馈开环不撞 D006",
+    "timestamp": "2026-07-08T00:12:24"
+  },
+  "f_true_list_ghz": [
+    -4.5,
+    -4.0,
+    -3.5,
+    -3.0,
+    -2.5,
+    -2.0,
+    -1.5,
+    -1.0,
+    -0.5,
+    0.0,
+    0.5,
+    1.0,
+    1.5,
+    2.0,
+    2.5,
+    3.0,
+    3.5,
+    4.0,
+    4.5
+  ],
+  "points": [
+    {
+      "f_true_hz": -4500000000.0,
+      "B5": {
+        "residual_abs_mean_hz": 7936808.189730453,
+        "converged": true,
+        "folded": false
+      },
+      "B5_pure": {
+        "residual_abs_mean_hz": 4847167714.061841,
+        "converged": false,
+        "folded": false
+      },
+      "fft_foe": {
+        "residual_abs_mean_hz": 4375974456.711348,
+        "converged": false,
+        "folded": true
+      },
+      "leven": {
+        "residual_abs_mean_hz": 4376660645.458956,
+        "converged": false,
+        "folded": true
+      }
+    },
+    {
+      "f_true_hz": -4000000000.0,
+      "B5": {
+        "residual_abs_mean_hz": 7936808.189730262,
+        "converged": true,
+        "folded": false
+      },
+      "B5_pure": {
+        "residual_abs_mean_hz": 4877368283.027052,
+        "converged": false,
+        "folded": false
+      },
+      "fft_foe": {
+        "residual_abs_mean_hz": 3750974513.791368,
+        "converged": false,
+        "folded": true
+      },
+      "leven": {
+        "residual_abs_mean_hz": 3751660645.45895,
+        "converged": false,
+        "folded": true
+      }
+    },
+    {
+      "f_true_hz": -3500000000.0,
+      "B5": {
+        "residual_abs_mean_hz": 7936808.189730262,
+        "converged": true,
+        "folded": false
+      },
+      "B5_pure": {
+        "residual_abs_mean_hz": 4882485055.24184,
+        "converged": false,
+        "folded": false
+      },
+      "fft_foe": {
+        "residual_abs_mean_hz": 3750974490.7850432,
+        "converged": false,
+        "folded": true
+      },
+      "leven": {
+        "residual_abs_mean_hz": 3751660645.4589515,
+        "converged": false,
+        "folded": true
+      }
+    },
+    {
+      "f_true_hz": -3000000000.0,
+      "B5": {
+        "residual_abs_mean_hz": 7936808.189730262,
+        "converged": true,
+        "folded": false
+      },
+      "B5_pure": {
+        "residual_abs_mean_hz": 3094075856.3973684,
+        "converged": false,
+        "folded": false
+      },
+      "fft_foe": {
+        "residual_abs_mean_hz": 3125974456.894992,
+        "converged": false,
+        "folded": true
+      },
+      "leven": {
+        "residual_abs_mean_hz": 3126660645.4589524,
+        "converged": false,
+        "folded": true
+      }
+    },
+    {
+      "f_true_hz": -2500000000.0,
+      "B5": {
+        "residual_abs_mean_hz": 7936808.189730262,
+        "converged": true,
+        "folded": false
+      },
+      "B5_pure": {
+        "residual_abs_mean_hz": 2349625879.857576,
+        "converged": false,
+        "folded": false
+      },
+      "fft_foe": {
+        "residual_abs_mean_hz": 2500974537.5056148,
+        "converged": false,
+        "folded": true
+      },
+      "leven": {
+        "residual_abs_mean_hz": 2501660645.458952,
+        "converged": false,
+        "folded": true
+      }
+    },
+    {
+      "f_true_hz": -2000000000.0,
+      "B5": {
+        "residual_abs_mean_hz": 7936808.189730358,
+        "converged": true,
+        "folded": false
+      },
+      "B5_pure": {
+        "residual_abs_mean_hz": 881642928.4523723,
+        "converged": false,
+        "folded": false
+      },
+      "fft_foe": {
+        "residual_abs_mean_hz": 1875974456.7113488,
+        "converged": false,
+        "folded": true
+      },
+      "leven": {
+        "residual_abs_mean_hz": 1876660645.4589505,
+        "converged": false,
+        "folded": true
+      }
+    },
+    {
+      "f_true_hz": -1500000000.0,
+      "B5": {
+        "residual_abs_mean_hz": 7936808.189730358,
+        "converged": true,
+        "folded": false
+      },
+      "B5_pure": {
+        "residual_abs_mean_hz": 315833099.0757576,
+        "converged": false,
+        "folded": false
+      },
+      "fft_foe": {
+        "residual_abs_mean_hz": 1250974513.7913685,
+        "converged": false,
+        "folded": true
+      },
+      "leven": {
+        "residual_abs_mean_hz": 1251660645.4589517,
+        "converged": false,
+        "folded": true
+      }
+    },
+    {
+      "f_true_hz": -1000000000.0,
+      "B5": {
+        "residual_abs_mean_hz": 7936808.189730358,
+        "converged": true,
+        "folded": false
+      },
+      "B5_pure": {
+        "residual_abs_mean_hz": 313822577.6419067,
+        "converged": false,
+        "folded": false
+      },
+      "fft_foe": {
+        "residual_abs_mean_hz": 1250974490.7850432,
+        "converged": false,
+        "folded": true
+      },
+      "leven": {
+        "residual_abs_mean_hz": 1251660645.4589508,
+        "converged": false,
+        "folded": true
+      }
+    },
+    {
+      "f_true_hz": -500000000.0,
+      "B5": {
+        "residual_abs_mean_hz": 7936808.189730394,
+        "converged": true,
+        "folded": false
+      },
+      "B5_pure": {
+        "residual_abs_mean_hz": 260753944.5123321,
+        "converged": true,
+        "folded": false
+      },
+      "fft_foe": {
+        "residual_abs_mean_hz": 625974456.8949912,
+        "converged": false,
+        "folded": true
+      },
+      "leven": {
+        "residual_abs_mean_hz": 626660645.458951,
+        "converged": false,
+        "folded": true
+      }
+    },
+    {
+      "f_true_hz": 0.0,
+      "B5": {
+        "residual_abs_mean_hz": 7936808.1897303965,
+        "converged": true,
+        "folded": false
+      },
+      "B5_pure": {
+        "residual_abs_mean_hz": 7936808.1897303965,
+        "converged": true,
+        "folded": false
+      },
+      "fft_foe": {
+        "residual_abs_mean_hz": 974537.5056149192,
+        "converged": true,
+        "folded": false
+      },
+      "leven": {
+        "residual_abs_mean_hz": 1660645.4589510416,
+        "converged": true,
+        "folded": false
+      }
+    },
+    {
+      "f_true_hz": 500000000.0,
+      "B5": {
+        "residual_abs_mean_hz": 7936808.189730394,
+        "converged": true,
+        "folded": false
+      },
+      "B5_pure": {
+        "residual_abs_mean_hz": 152832285.93814984,
+        "converged": true,
+        "folded": false
+      },
+      "fft_foe": {
+        "residual_abs_mean_hz": 624025543.2886512,
+        "converged": false,
+        "folded": true
+      },
+      "leven": {
+        "residual_abs_mean_hz": 623339354.5410489,
+        "converged": false,
+        "folded": true
+      }
+    },
+    {
+      "f_true_hz": 1000000000.0,
+      "B5": {
+        "residual_abs_mean_hz": 7936808.189730453,
+        "converged": true,
+        "folded": false
+      },
+      "B5_pure": {
+        "residual_abs_mean_hz": 122631716.97293201,
+        "converged": true,
+        "folded": false
+      },
+      "fft_foe": {
+        "residual_abs_mean_hz": 1249025486.208632,
+        "converged": false,
+        "folded": true
+      },
+      "leven": {
+        "residual_abs_mean_hz": 1248339354.5410488,
+        "converged": false,
+        "folded": true
+      }
+    },
+    {
+      "f_true_hz": 1500000000.0,
+      "B5": {
+        "residual_abs_mean_hz": 7936808.189730406,
+        "converged": true,
+        "folded": false
+      },
+      "B5_pure": {
+        "residual_abs_mean_hz": 117514944.7581524,
+        "converged": true,
+        "folded": false
+      },
+      "fft_foe": {
+        "residual_abs_mean_hz": 1249025509.2149568,
+        "converged": false,
+        "folded": true
+      },
+      "leven": {
+        "residual_abs_mean_hz": 1248339354.5410495,
+        "converged": false,
+        "folded": true
+      }
+    },
+    {
+      "f_true_hz": 2000000000.0,
+      "B5": {
+        "residual_abs_mean_hz": 7936808.189730406,
+        "converged": true,
+        "folded": false
+      },
+      "B5_pure": {
+        "residual_abs_mean_hz": 1905924143.602623,
+        "converged": false,
+        "folded": false
+      },
+      "fft_foe": {
+        "residual_abs_mean_hz": 1874025543.1050086,
+        "converged": false,
+        "folded": true
+      },
+      "leven": {
+        "residual_abs_mean_hz": 1873339354.5410485,
+        "converged": false,
+        "folded": true
+      }
+    },
+    {
+      "f_true_hz": 2500000000.0,
+      "B5": {
+        "residual_abs_mean_hz": 7936808.189730262,
+        "converged": true,
+        "folded": false
+      },
+      "B5_pure": {
+        "residual_abs_mean_hz": 2650374120.1424522,
+        "converged": false,
+        "folded": false
+      },
+      "fft_foe": {
+        "residual_abs_mean_hz": 2499025462.4943852,
+        "converged": false,
+        "folded": true
+      },
+      "leven": {
+        "residual_abs_mean_hz": 2498339354.54105,
+        "converged": false,
+        "folded": true
+      }
+    },
+    {
+      "f_true_hz": 3000000000.0,
+      "B5": {
+        "residual_abs_mean_hz": 7936808.189730262,
+        "converged": true,
+        "folded": false
+      },
+      "B5_pure": {
+        "residual_abs_mean_hz": 4118357071.547633,
+        "converged": false,
+        "folded": false
+      },
+      "fft_foe": {
+        "residual_abs_mean_hz": 3124025543.2886515,
+        "converged": false,
+        "folded": true
+      },
+      "leven": {
+        "residual_abs_mean_hz": 3123339354.54105,
+        "converged": false,
+        "folded": true
+      }
+    },
+    {
+      "f_true_hz": 3500000000.0,
+      "B5": {
+        "residual_abs_mean_hz": 7936808.189730262,
+        "converged": true,
+        "folded": false
+      },
+      "B5_pure": {
+        "residual_abs_mean_hz": 4684166900.924239,
+        "converged": false,
+        "folded": false
+      },
+      "fft_foe": {
+        "residual_abs_mean_hz": 3749025486.208632,
+        "converged": false,
+        "folded": true
+      },
+      "leven": {
+        "residual_abs_mean_hz": 3748339354.541049,
+        "converged": false,
+        "folded": true
+      }
+    },
+    {
+      "f_true_hz": 4000000000.0,
+      "B5": {
+        "residual_abs_mean_hz": 7936808.189730262,
+        "converged": true,
+        "folded": false
+      },
+      "B5_pure": {
+        "residual_abs_mean_hz": 4686177422.358084,
+        "converged": false,
+        "folded": false
+      },
+      "fft_foe": {
+        "residual_abs_mean_hz": 3749025509.2149568,
+        "converged": false,
+        "folded": true
+      },
+      "leven": {
+        "residual_abs_mean_hz": 3748339354.5410485,
+        "converged": false,
+        "folded": true
+      }
+    },
+    {
+      "f_true_hz": 4500000000.0,
+      "B5": {
+        "residual_abs_mean_hz": 7936808.189730453,
+        "converged": true,
+        "folded": false
+      },
+      "B5_pure": {
+        "residual_abs_mean_hz": 4739246055.487664,
+        "converged": false,
+        "folded": false
+      },
+      "fft_foe": {
+        "residual_abs_mean_hz": 4374025543.105009,
+        "converged": false,
+        "folded": true
+      },
+      "leven": {
+        "residual_abs_mean_hz": 4373339354.541053,
+        "converged": false,
+        "folded": true
+      }
+    }
+  ],
+  "summary": {
+    "B5_converged_points": 19,
+    "B5_pure_converged_points": 5,
+    "fft_foe_converged_points": 1,
+    "leven_converged_points": 1,
+    "total_points": 19
+  }
+}

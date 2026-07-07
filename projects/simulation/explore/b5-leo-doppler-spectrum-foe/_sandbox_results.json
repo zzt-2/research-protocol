@@ -1,0 +1,307 @@
+{
+  "meta": {
+    "task": "B5-Q1 sandbox 三方对照 (阶段 1)",
+    "purpose": "fair gain 二维报告: 范围扩展 + 残频/BER 三方对比 + 路径 C 判定",
+    "three_way": {
+      "B5": "B5 短时谱 FOE (short_time_spectrum_foe_iterate, ratio, α=6e8, 2-sps fs=5e9): 分块FFT→Rp-n→星历预测调LO→迭代收敛",
+      "fft_foe": "传统 FFT FOE (common.fft_foe, 4次幂blind QPSK找谱峰, 1-sps fs=2.5e9): 主 baseline, 捕获±312.5MHz",
+      "leven": "[60] Leven Mth-power (leven_mthpower_foe, M=4, N_sum=500, 1-sps fs=2.5e9): 祖师爷对照, 捕获±312.5MHz"
+    },
+    "params": {
+      "N_FFT": 16,
+      "N_BLOCKS": 1024,
+      "ALPHA": 600000000.0,
+      "PRECISE_RANGE_Hz": 312500000.0,
+      "RESIDUAL_STD_TARGET_Hz": 140000000.0,
+      "DOPPLER_RANGE_Hz": 4500000000.0,
+      "FS_ADC_B5": 5000000000.0,
+      "FS_SYM": 2500000000.0,
+      "SPS": 2,
+      "BER_TARGET": 0.001,
+      "HD_FEC": 0.0038,
+      "N_SYM": 8256,
+      "SNR_DB_LIST": [
+        6.0,
+        13.0,
+        20.0
+      ],
+      "TURB_LEVELS": [
+        "weak",
+        "moderate",
+        "strong"
+      ],
+      "N_SEEDS_MAIN": 20,
+      "N_SEEDS_RANGE": 5,
+      "N_SEEDS_TURB": 20
+    },
+    "fairness": {
+      "channel": "generate_shared_realization 共用实现 (TL-13, QPSK+GG湍流+Doppler)",
+      "normalization": "三方法都前馈归一化: B5 ratio / fft_foe 4次幂(幅度不敏感) / leven ratio",
+      "ber_path": "三方法各供 fest, rx_comp=rx_raw*exp(-j·fest·k), 同一 1-sps 路径 (公平隔离 FOE 质量)",
+      "doppler_range": "三方法扫同一 ±4.5GHz 全量程 (0.4.1 公平性保证)",
+      "work_points": "双工作点 BER 1e-3 (B5Params.BER_TARGET_B5) + HD-FEC 3.8e-3 (B5Params.HD_FEC_THRESHOLD_B5)"
+    },
+    "architecture": "前馈开环不撞 D006: B5 normalize_mode=ratio (归一化是前馈信号预处理, 不把湍流相位纳入环路 TF)",
+    "pathC_verdict": "PASS",
+    "elapsed_s": 9.605085372924805,
+    "timestamp": "2026-07-08T00:12:24"
+  },
+  "results": {
+    "range_table": {
+      "B5": {
+        "capture_range_hz": 4500000000.0,
+        "capture_range_ghz": 4.5,
+        "capture_theoretical": "±4.5GHz (星历预测预补偿 + FFT迭代, content.md L117/L143)",
+        "doppler_rate_track_hz_per_s": 56000000.0,
+        "converged_points": 19,
+        "residual_std_weak_snr13_hz": 6469876.728212967
+      },
+      "B5_pure_no_ephemeris": {
+        "capture_range_hz": 1184210526.3157895,
+        "capture_range_ghz": 1.1842105263157894,
+        "capture_theoretical": "±fs/2=±2.5GHz (纯FFT迭代无星历)",
+        "converged_points": 5
+      },
+      "fft_foe": {
+        "capture_range_hz": 236842105.26315787,
+        "capture_range_ghz": 0.23684210526315788,
+        "capture_theoretical": "±fs/(2M)=±312.5MHz (1-sps M=4)",
+        "doppler_rate_track": "无 (静态频偏设计)",
+        "converged_points": 1,
+        "residual_std_weak_snr13_hz": 97193.52594162818
+      },
+      "leven": {
+        "capture_range_hz": 236842105.26315787,
+        "capture_range_ghz": 0.23684210526315788,
+        "capture_theoretical": "±fs/(2M)=±312.5MHz (1-sps M=4)",
+        "doppler_rate_track": "无 (WDM静态频偏)",
+        "converged_points": 1,
+        "residual_std_weak_snr13_hz": 2901943.568612653
+      }
+    },
+    "residual_ber_table": {
+      "weak": {
+        "6.0": {
+          "B5": {
+            "residual_std_hz": 6953158.922030668,
+            "residual_mean_hz": -1644872.2263973535,
+            "residual_abs_mean_hz": 5804271.47719875,
+            "ber_mean": 0.2934295654296875,
+            "n_seeds": 20
+          },
+          "fft_foe": {
+            "residual_std_hz": 119741.09806255875,
+            "residual_mean_hz": 1249015314.220744,
+            "residual_abs_mean_hz": 1249015314.220744,
+            "ber_mean": 0.48182373046875,
+            "n_seeds": 20
+          },
+          "leven": {
+            "residual_std_hz": 21147520.298079602,
+            "residual_mean_hz": 1247610865.6759565,
+            "residual_abs_mean_hz": 1247610865.6759565,
+            "ber_mean": 0.4809661865234375,
+            "n_seeds": 20
+          }
+        },
+        "13.0": {
+          "B5": {
+            "residual_std_hz": 6469876.728212967,
+            "residual_mean_hz": -446222.23082567455,
+            "residual_abs_mean_hz": 5442030.613676703,
+            "ber_mean": 0.2560882568359375,
+            "n_seeds": 20
+          },
+          "fft_foe": {
+            "residual_std_hz": 97193.52594162818,
+            "residual_mean_hz": 1249001059.3075337,
+            "residual_abs_mean_hz": 1249001059.3075337,
+            "ber_mean": 0.4902740478515625,
+            "n_seeds": 20
+          },
+          "leven": {
+            "residual_std_hz": 2901943.568612653,
+            "residual_mean_hz": 1249009840.2228293,
+            "residual_abs_mean_hz": 1249009840.2228293,
+            "ber_mean": 0.4887664794921875,
+            "n_seeds": 20
+          }
+        },
+        "20.0": {
+          "B5": {
+            "residual_std_hz": 6447110.114503228,
+            "residual_mean_hz": 46408.978635126354,
+            "residual_abs_mean_hz": 5320656.020326597,
+            "ber_mean": 0.229730224609375,
+            "n_seeds": 20
+          },
+          "fft_foe": {
+            "residual_std_hz": 92732.76419155506,
+            "residual_mean_hz": 1248996673.2098782,
+            "residual_abs_mean_hz": 1248996673.2098782,
+            "ber_mean": 0.49444580078125,
+            "n_seeds": 20
+          },
+          "leven": {
+            "residual_std_hz": 444975.54943687556,
+            "residual_mean_hz": 1248951430.6157372,
+            "residual_abs_mean_hz": 1248951430.6157372,
+            "ber_mean": 0.4938995361328125,
+            "n_seeds": 20
+          }
+        }
+      },
+      "moderate": {
+        "6.0": {
+          "B5": {
+            "residual_std_hz": 7563949.329576901,
+            "residual_mean_hz": 4416736.671479762,
+            "residual_abs_mean_hz": 6997522.894844592,
+            "ber_mean": 0.3159637451171875,
+            "n_seeds": 20
+          },
+          "fft_foe": {
+            "residual_std_hz": 96505.13580973854,
+            "residual_mean_hz": 1249010107.6454003,
+            "residual_abs_mean_hz": 1249010107.6454003,
+            "ber_mean": 0.4813232421875,
+            "n_seeds": 20
+          },
+          "leven": {
+            "residual_std_hz": 39835557.83655227,
+            "residual_mean_hz": 1235828382.3548455,
+            "residual_abs_mean_hz": 1235828382.3548455,
+            "ber_mean": 0.48045654296875,
+            "n_seeds": 20
+          }
+        },
+        "13.0": {
+          "B5": {
+            "residual_std_hz": 8120616.759324754,
+            "residual_mean_hz": 2941400.727979696,
+            "residual_abs_mean_hz": 6780729.00233072,
+            "ber_mean": 0.2819580078125,
+            "n_seeds": 20
+          },
+          "fft_foe": {
+            "residual_std_hz": 88401.68915319613,
+            "residual_mean_hz": 1249009847.642238,
+            "residual_abs_mean_hz": 1249009847.642238,
+            "ber_mean": 0.487786865234375,
+            "n_seeds": 20
+          },
+          "leven": {
+            "residual_std_hz": 3133612.161080919,
+            "residual_mean_hz": 1247860677.9997568,
+            "residual_abs_mean_hz": 1247860677.9997568,
+            "ber_mean": 0.4878387451171875,
+            "n_seeds": 20
+          }
+        },
+        "20.0": {
+          "B5": {
+            "residual_std_hz": 8215001.249422452,
+            "residual_mean_hz": 1997802.8451966941,
+            "residual_abs_mean_hz": 6651007.523606246,
+            "ber_mean": 0.264556884765625,
+            "n_seeds": 20
+          },
+          "fft_foe": {
+            "residual_std_hz": 87831.91153132895,
+            "residual_mean_hz": 1249010547.578343,
+            "residual_abs_mean_hz": 1249010547.578343,
+            "ber_mean": 0.49354248046875,
+            "n_seeds": 20
+          },
+          "leven": {
+            "residual_std_hz": 750513.5131932275,
+            "residual_mean_hz": 1248767512.5425391,
+            "residual_abs_mean_hz": 1248767512.5425391,
+            "ber_mean": 0.493914794921875,
+            "n_seeds": 20
+          }
+        }
+      },
+      "strong": {
+        "6.0": {
+          "B5": {
+            "residual_std_hz": 13275524.706852969,
+            "residual_mean_hz": 1636632.036143607,
+            "residual_abs_mean_hz": 10968034.583646864,
+            "ber_mean": 0.373095703125,
+            "n_seeds": 20
+          },
+          "fft_foe": {
+            "residual_std_hz": 186193.10374790846,
+            "residual_mean_hz": 1248997433.9457068,
+            "residual_abs_mean_hz": 1248997433.9457068,
+            "ber_mean": 0.4787750244140625,
+            "n_seeds": 20
+          },
+          "leven": {
+            "residual_std_hz": 204335100.2235445,
+            "residual_mean_hz": 1143547779.5642967,
+            "residual_abs_mean_hz": 1143547779.5642967,
+            "ber_mean": 0.4780914306640625,
+            "n_seeds": 20
+          }
+        },
+        "13.0": {
+          "B5": {
+            "residual_std_hz": 14138251.67521082,
+            "residual_mean_hz": 2825892.390765637,
+            "residual_abs_mean_hz": 11519879.388674397,
+            "ber_mean": 0.339105224609375,
+            "n_seeds": 20
+          },
+          "fft_foe": {
+            "residual_std_hz": 142759.50140380443,
+            "residual_mean_hz": 1249005627.5047648,
+            "residual_abs_mean_hz": 1249005627.5047648,
+            "ber_mean": 0.4850555419921875,
+            "n_seeds": 20
+          },
+          "leven": {
+            "residual_std_hz": 32528808.01451165,
+            "residual_mean_hz": 1240595485.8600698,
+            "residual_abs_mean_hz": 1240595485.8600698,
+            "ber_mean": 0.4837890625,
+            "n_seeds": 20
+          }
+        },
+        "20.0": {
+          "B5": {
+            "residual_std_hz": 14203535.686559048,
+            "residual_mean_hz": 3311361.016457164,
+            "residual_abs_mean_hz": 11703886.465935051,
+            "ber_mean": 0.3266021728515625,
+            "n_seeds": 20
+          },
+          "fft_foe": {
+            "residual_std_hz": 135888.76955302522,
+            "residual_mean_hz": 1249007779.971447,
+            "residual_abs_mean_hz": 1249007779.971447,
+            "ber_mean": 0.4905181884765625,
+            "n_seeds": 20
+          },
+          "leven": {
+            "residual_std_hz": 1399993.7344628102,
+            "residual_mean_hz": 1248365390.3817556,
+            "residual_abs_mean_hz": 1248365390.3817556,
+            "ber_mean": 0.4903656005859375,
+            "n_seeds": 20
+          }
+        }
+      }
+    },
+    "fair_gain": {
+      "B5_vs_fft_foe_range_extension": 14.4,
+      "B5_vs_leven_range_extension": 14.4,
+      "B5_max_residual_sigma_turb_hz": 16204773.206739489,
+      "B5_max_residual_sigma_turb_mhz": 16.20477320673949,
+      "pathC_range_ok": true,
+      "pathC_sigma_ok": true,
+      "pathC_verdict": "PASS"
+    }
+  }
+}
