@@ -152,6 +152,7 @@ DA ML（pilot sp=4）是 pilot-aided 载波相位估计的**近最优**实现（
 - **对主方法（NDA-ML）影响**：升幂噪声放大无 DFT 增益抵消，deep fade 处不利（MVE 已实测，strong 低 SNR cross-over）
 - **对 baseline（DA ML）影响**：pilot sp=4 在 deep fade 块崩溃（MVE 实测 strong DA BER 0.030 vs NDA 0.024 @ 26dB）
 - **预判真实化后**：加跨块 KF/CPE 跟踪 → DA ML 高 SNR 反超可能强化（cross-over 位置移动）；加 OFDM 频域 ML → 完全不同架构（B11 路径，已 D002 排除）
+- **消融后置状态（2026-07-07 更新）**：DD-KF 跨块跟踪消融（更强跟踪看 NDA 优势是否反转）+ BPS 迁移对比 + decision-feedback DA ML 三项标"论文写作前补"。**不影响核心结论**（主实验 5 seed 已 PASS + SD-FEC 阈值验证增益稳健，见 `results/sc_nda_ml_sdfec_eval/`）。CCISP 截稿 2026-07-20 剩 13 天紧，若时间不够 DD-KF 消融作"未来工作"写（审稿人可能问，但有 FR-18 预判 + 主结论不依赖跨块跟踪）。代码基建 `simulator/run_kf_ablation.py` / `run_dd_kf_ablation.py` 已就位可随时跑。
 
 ## E. 资源/风险比例（4b，2026-07-06 补完）
 

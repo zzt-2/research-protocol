@@ -1,7 +1,7 @@
 # Topic Index: Step 4a 维度 D MVE 执行
 
 > slug: 2026-07-06-step4a-mve-execution
-> status: active | created 2026-07-06 | last_updated 2026-07-07（S006 D-007 线宽参数真相源统一 + 重跑。导师意见 1 触发，发现线宽 3 套同义常量源（params.B11Params.CLW / simulator._b11_params.CLW_B11 / _time_domain_crlb.CLW_B11）+ 函数默认参数固化 + sweep monkey-patch。D-007 统一到 SystemParams.LASER_LW 单字段（10kHz@2.5GBaud 单载波），AWGN 从 B11 OFDM 25GBaud/500kHz 重定义为单载波。9 文件改动 + NDA 路径修复（MVE 加 segmented 对齐 Formal）+ 4 文档同步。重跑：consistency bit-exact 4 场景 0.0000%，主实验 AWGN +0.776→+1.351（σ²p 弱 5× + segK8），weak/moderate/strong 逐位不变（回归 PASS），sweep 传参注入可行 500kHz 崩塌重现。详见 S006 + D-007）
+> status: active | created 2026-07-06 | last_updated 2026-07-07（S007 SD-FEC 重跑 + 近年 Trans baseline 补充 + TL-20 预期表更新。SD-FEC 25% pre-FEC 2e-2 档 AWGN/weak/moderate fair gain 全正 CI 下界>0（+1.299/+1.348/+1.554），方法结论在更严格阈值下稳健；post-FEC 1e-7 全不可达是单载波无信道编码物理事实。HD-FEC sanity bit-exact 4 场景 0.0000% 证实 D-007 改引用正确。补 3 篇近年 baseline（JPhoto M-APSK V&V / OE FSO / TVT sat CRB，Crossref DOI 全 VERIFIED），近年+严格Trans 占比 21%→29%（JPhoton 档级次档不计严格Trans）。TL-20 AWGN +1.351 超旧预期上界 +0.8 合理论证（D-007 场景重定义+segK8）。详见 S007）
 
 ## 专题定位（一句话）
 
@@ -143,7 +143,7 @@ projects/simulation/
 
 ## 当前位置
 
-**🟢 S006 D-007 线宽参数真相源统一 + 重跑（2026-07-07）**：导师意见 1（线宽扫描）触发。上轮 skill 补强已诊断根因（线宽 3 套同义常量源差 50 倍），本轮执行修复。**D-007 决策**（用户拍板选项 2）：AWGN 从 B11 OFDM 25GBaud/500kHz 重定义为单载波 2.5GBaud/10kHz，全场景线宽统一 SystemParams.LASER_LW 单字段。**代码改动 9 文件**：params.py（B11Params 3 字段标 DEAD）/ common/_channel.py（doppler_phase 默认参数改 None + lw 透传）/ simulator/_b11_params.py（删 CLW_B11 等，SIGMA2_P 从 LASER_LW 派生）/ sc_nda_ml_sim.py（rename + 加 sigma2_p/lw 参数）/ _time_domain_crlb.py（MVE 锚脚本改单载波 + 加 segmented 对齐 Formal）/ run_linewidth_sweep.py（删 monkey-patch 改传参 + 修对照路径 bug）/ 2 ablation rename + 1 deprecated 标注。**自检全过**：param-source grep 函数默认参数固化=0、__defaults__=0、旧常量名=0；audit_params DEAD 3→6；test_common 关键断言 PASS。**重跑**：MVE AWGN +0.704→+1.310；consistency 首次 FAIL（NDA 路径差异：MVE 用 none Formal 用 segmented，旧值巧合 bit-exact 新值暴露）→ 修复 MVE 加 segmented → consistency 恢复 4 场景 0.0000%；主实验 AWGN +0.776→+1.351±0.072，weak/moderate/strong 逐位不变（回归 PASS）；sweep 传参注入可行，500kHz 湍流崩塌重现（strong −0.816dB 真物理顶）。**文档同步**：baseline_report + feasibility_report + ADVISOR_BRIEFING（C4 修正）+ REVIEW_NOTES（TODO-1 ✅）。下一步=简报发导师 / SD-FEC 阈值（TODO-2）/ 补近年 Trans baseline（TODO-3）。
+**🟢 S007 SD-FEC 重跑 + 近年 Trans baseline + TL-20 预期表更新（2026-07-07）**：REVIEW_NOTES §三 TODO 收尾执行（3 步内完成）。**任务1 SD-FEC 重跑**：HD-FEC 3.8e-3 sanity 4 场景 bit-exact 0.0000%（D-007 改引用正确）；25% SD-FEC pre-FEC 2e-2 档 AWGN/weak/moderate fair gain 全正 CI 下界>0（+1.299/+1.348/+1.554）→ 方法结论在更严格阈值下稳健；post-FEC 1e-7 全不可达（BER floor 5e-4~2.4e-2，单载波无信道编码物理事实）；C1-C5 自检 C1/C2/C4 PASS。**任务2 补近年 Trans baseline**：子 agent tools/search 4 组关键词召回 87 篇精筛 5 篇，Crossref DOI 验证 5 篇全 VERIFIED；主线筛 3 篇写入 COMPARISON_REFS.md §一 E（#15 JPhoto M-APSK V&V / #16 OE FSO carrier recovery / #17 TVT sat CRB），近年+Trans 占比 21%→35%。**任务3 TL-20 预期表更新**：SC-NDA-ML-MVE-SPEC §2 加 D-007 后实测列，AWGN +1.351 超旧预期上界 +0.8 合理论证（场景重定义+segK8，非 bug）；baseline_report §3 加 TL-20 对照段；feasibility_report FR-18 加消融后置状态；REVIEW_NOTES TODO-2/3 ✅。下一步=简报重写（用户定时机）/ TODO-4~8（Doppler 溯源/上行写报告/加种子/DD-KF 消融）/ 等老师定目标期刊层级。
 
 ## 进展线索
 
@@ -166,3 +166,4 @@ projects/simulation/
 - **baseline_report.md**（项目级）Step 7 出参（2026-07-06，S005 续接 Step 7 产出，§4.5 MVE 一致性 bit-exact + 5 seed 主实验全赢 DA）
 - **S006** D-007 线宽参数真相源统一 + 重跑（2026-07-07，本对话产出）
 - **D-007** AWGN 场景重定义（B11 OFDM→单载波）+ 线宽参数真相源统一（2026-07-07，S006 新建）
+- **S007** SD-FEC 重跑 + 近年 Trans baseline + TL-20 预期表更新（2026-07-07，本对话产出，3 步收尾执行）

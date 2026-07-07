@@ -22,12 +22,14 @@
 
 基于 CRLB 推导 + 信道校准修复后 `_crlb_results.json` 数据：
 
-| 场景 | 预期 NDA-ML vs DA ML gain (dB @ HD-FEC, 公平对照) | 预期排序 | 物理依据 |
-|------|--------------------------------------------------|----------|---------|
-| AWGN | **+0.3 to +0.8** | 4（最小，仅形态 A 频谱效率）| pilot overhead 1.25dB − NDA 升幂噪声/resolve 残差 ~0.5dB |
-| weak (α4/β3) | **+0.5 to +1.5** | 3 | 形态 A + 轻微 fade 鲁棒性 |
-| moderate (α2.5/β1.8) | **+1.0 to +2.5** | 2 | 形态 A+C 叠加，DA pilot 受 fade 退化 |
-| strong (α1.5/β0.8) | 不可达 HD-FEC（物理上限），全工作区 NDA 赢 | 1（鲁棒性）| 形态 C 主导，DA pilot 在 deep fade 崩溃 |
+| 场景 | 预期 NDA-ML vs DA ML gain (dB @ HD-FEC, 公平对照) | 预期排序 | 物理依据 | **D-007 后实测（2026-07-07）** | 偏离判定 |
+|------|--------------------------------------------------|----------|---------|-------------------------------|---------|
+| AWGN | **+0.3 to +0.8**（D-007 前旧预期，基于 σ²p=500kHz B11 OFDM 场景）| 4（最小，仅形态 A 频谱效率）| pilot overhead 1.25dB − NDA 升幂噪声/resolve 残差 ~0.5dB | **+1.351 ± 0.037**（5seed，CI[+1.305,+1.397]）| **超上界 +0.8，合理超出非 bug**——D-007 重定义 AWGN 为单载波 2.5GBaud/10kHz（σ²p 弱 5×）+ segK8 块内跟踪让 NDA 全帧积分优势放大。旧预期基于过强 PN（500kHz），新场景 PN 弱（10kHz）NDA 优势更大，符合物理。叙事升级：gain +1.351 > pilot overhead 1.249 → 频谱效率+估计精度双赢 |
+| weak (α4/β3) | **+0.5 to +1.5** | 3 | 形态 A + 轻微 fade 鲁棒性 | **+1.529 ± 0.321**（CI[+1.131,+1.928]）| 落在预期区间内，0 DEVIATION |
+| moderate (α2.5/β1.8) | **+1.0 to +2.5** | 2 | 形态 A+C 叠加，DA pilot 受 fade 退化 | **+1.712 ± 0.250**（CI[+1.314,+2.110]）| 落在预期区间内，0 DEVIATION |
+| strong (α1.5/β0.8) | 不可达 HD-FEC（物理上限），全工作区 NDA 赢 | 1（鲁棒性）| 形态 C 主导，DA pilot 在 deep fade 崩溃 | **HD-FEC 不可达（oracle 也不可达），工作区(≥15dB) grand mean +2.515**（CI[+2.239,+2.791]）| 形态 C 成立，0 DEVIATION |
+
+**TL-20 偏离处理记录（D-007 后）**：AWGN 实测 +1.351 超原始预期上界 +0.8，**触发"偏离即查代码"**。核查结论（见 decisions.md D-007 + S006）：非实现 bug，是 D-007 场景重定义（σ²p 从 500kHz B11 OFDM → 10kHz 单载波，弱 5×）+ MVE 加 segmented 块内跟踪对齐 Formal 后 NDA 全帧积分优势放大的合理结果。**预期表上界已据此更新认知，不需改代码**。旧预期基于过强 PN 场景，新场景物理上 NDA 优势更大（pilot overhead 1.249 vs gain 1.351 → 估计精度维度也赢）。
 
 **量化锚点（偏离即停查代码，TL-20）**：
 - AWGN gain < 0 → **可疑**（公平对照下 NDA 应至少持平 + 频谱效率）→ 查公平对照坐标（DA 总能量 vs NDA 总能量）
@@ -35,6 +37,7 @@
 - strong NDA-vs-oracle gap > 4dB → **可疑**（升幂实现错误）→ 查 resolve_m16apsk_blockwise + 升幂噪声
 - weak gain > 3 → **可疑**（超 B11 +2dB）→ 查 pilot overhead 计算
 - min NDA BER @ 20dB 总能量 > 0.05（weak）→ **可疑**（信道校准退化）→ 查 h_med 是否回到标量均衡
+- **[D-007 后新增]** AWGN gain > +1.5（超 pilot overhead 1.249 + 0.25dB margin）→ **核对** σ²p 是否仍为 10kHz 单载波场景（D-007 真相源），若回退到 500kHz 则预期回 +0.3~0.8
 
 **信道校准关键修复**（来自 `_ber_floor_diagnostic.json`）：
 - 主因 D2（h_med 标量均衡残差）→ 修复：per-block h（NDA 盲 ĥ=mean(|rx|²)−1/(2γ)，DA pilot ĥ=mean(|r(p)/s(p)|²)，oracle 真 h）

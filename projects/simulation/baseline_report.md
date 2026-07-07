@@ -53,6 +53,8 @@ gw-experiment §impl Part B"复现成功 = DRL baseline 在关键指标上结构
 
 **辅助：NDA-ML vs oracle gap**（升幂实现正确性）：0.38-2.58 dB 全 <3dB（TL-22 锚点），5 seed 下保持。
 
+**TL-20 理论预期对照**（见 SC-NDA-ML-MVE-SPEC.md §2 预期表）：weak/moderate/strong 三场景实测均落在预期区间（0 DEVIATION）。AWGN 实测 +1.351 超 D-007 前旧预期上界 +0.8——**合理超出非 bug**，因 D-007 重定义场景（σ²p 从 500kHz→10kHz 弱 5×）+ segK8 块内跟踪让 NDA 全帧积分优势放大。旧预期基于过强 PN，新场景 NDA 优势更大（gain 1.351 > pilot overhead 1.249 → 估计精度维度也赢 DA）。详见 MVE-SPEC §2 偏离处理记录 + decisions.md D-007。
+
 **复现判定**：**PASS**。提出方法（NDA-ML）在 4 场景全结构性优于目标 baseline（DA ML），CI 下界全 ≥0.5dB（SPEC §5 Go 门），strong 工作区全赢无反转。oracle 上界合理（gap <3dB）。
 
 ---

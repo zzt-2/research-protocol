@@ -33,6 +33,31 @@
 |---|---|---|---|---|---|
 | 5 | OSL DSP 算法地图综述(4 场景信道模型 ISL/下行/上行弱湍/上行强湍) | Carl Valjus, Raphael Wolf, Juraj Poliak. "Review and Analysis of Digital Signal Processing Algorithms for Coherent Optical Satellite Links." **International Journal of Satellite Communications and Networking (Wiley)**, vol. 43, no. 3, pp. 229–250, 2025. DOI: 10.1002/sat.1553 | **Wiley 期刊(Transactions 级,非 IEEE)** | **2025(近年)** | 够格,场景模型依据 |
 
+### E. 近年 Transactions 并列 baseline 补充(2026-07-07 补,老师意见 3 触发)
+
+> 检索方法：`tools/search` 4 组关键词 + Crossref DOI 真实性交叉验证（5 篇全 VERIFIED，无幻觉）。原始检索结果在 `search-archive/2026-07-07/`。
+
+| # | 角色 | 完整引用 | 期刊档级 | 年份 | 评价 |
+|---|---|---|---|---|---|
+| 15 | **M-APSK V&V 载波相位估计**(主题最贴合,VV 是我们经典 baseline) | Qian Wang, Wenqiang Ma, Li Ping Qian, et al. "Viterbi-Viterbi Carrier Phase Estimation for Multi-Ring M-APSK With Wiener Carrier Phase Noise and Its Performance." **IEEE Photonics Journal**, vol. 16, no. 3, pp. 1–7, June 2024. DOI: 10.1109/JPHOT.2024.3415635 | **IEEE Photonics Journal(IEEE 旗下,档级介于 Trans 和 Letters 之间,IF~2.1)** | **2024(近年)** | M-APSK + VV(我们 baseline #4) + Wiener PN(我们信道),LMMSE 改进 V&V。**主题极度贴合,强烈推荐**。档级诚实标注:JPhoton 低于 JLT/TCOM 但高于 PTL Letters,作"近年+主题贴合"对照够格,但严格 Trans 级应只算 #16/#17。 |
+| 16 | **相干 FSO 载波恢复**(场景最贴合) | Liqian Wang, Kunfeng Liu, Siqi Zhang, Shuang Ding. "Enhanced frame synchronization and carrier recovery in coherent FSO communication: a pseudo-random and cyclic QPSK approach." **Optics Express**, vol. 32, no. 6, pp. 9870–9885, 2024. DOI: 10.1364/OE.520452 | **Optics Express(Optica,Transactions 级)** | **2024(近年)** | 相干 FSO + 帧同步 + 载波恢复 + 抗大气湍流,场景和方法双贴合。用训练序列(QPSK cyclic)做 FOE,我们用 NDA-ML 升幂——**方法论可对比**。档级够 Trans(OE 是 Optica 旗舰)。 |
+| 17 | **卫星载波同步 CRB 理论**(理论锚 + 卫星场景) | Zhongyang Yu, Jixun Gao, Li He, et al. "Joint Physical Layer Frame Optimization and Carrier Synchronization for Satellite Communications." **IEEE Transactions on Vehicular Technology**, vol. 72, no. 4, pp. 5231–5245, April 2023. DOI: 10.1109/TVT.2022.3218937 | **IEEE TVT(Transactions 级)** | **2023(近年)** | 推导 S-PSAM 卫星帧的 DA&NDA Cramér-Rao 界 + 并行频相估计算法。**理论锚(CRB)+ 卫星场景 + DA/NDA 双口径**,跟我们公平对照框架(NDA vs DA)对齐。虽非 FSO(是 RF 卫星),但载波同步理论可直接对照。 |
+
+**补充后覆盖度更新**（诚实档级标注）：
+
+| 维度 | 补充前 | 补充后 | 说明 |
+|---|---|---|---|
+| 近年(2020+) | 9/14 (64%) | 12/17 (71%) | +3 篇全 2023+ |
+| IEEE Transactions 严格级（JLT/TCOM/TIT/OE/TVT）| 5/14 (36%) | **7/17 (41%)** | +2 篇严格 Trans（#16 OE / #17 TVT），#15 JPhoton 档级次档不计入 |
+| **近年 + 严格 Transactions 级** | **3/14 (21%)** | **5/17 (29%)** | +2 篇（#16 OE 2024 / #17 TVT 2023），改善但未过半 |
+| 近年 + 次档 IEEE（含 JPhoton）| — | 6/17 (35%) | 若放宽到 JPhoton 档级 |
+
+**诚实评估**：近年+严格Trans 占比从 21% 升到 29%（严格档级口径），仍未过半。**核心瓶颈仍是方法来源 Du PTL 2025 是 Letters 级**——要提到 Trans 级方法,需要更扎实的理论(CRLB 紧致性证明)+ 多场景验证(SD-FEC 阈值已补,见 `results/sc_nda_ml_sdfec_eval/`)+ 上行场景(已跑,见 `results/sc_nda_ml_uplink/`)。当前对照够投 Letters 级或国内会议(CCISP 7/20 截稿),投 IEEE Trans 需补强方法本身深度。
+
+**未实现的候选(备选)**:
+- Zhang et al. Optics Communications 2024 "Joint mitigation of frequency offset and phase noise..."(DOI: 10.1016/j.optcom.2023.130071)——主题贴合相干 FSO 湍流,但 OptComm 是 Elsevier 中档,档级不够 Trans,作备选。
+- Matalla et al. JLT 2025 "Joint NDA Clock Recovery for SDM"(DOI: 10.1109/JLT.2025.3546721)——JLT Trans 级 + NDA 主题,但场景是 SDM 光纤非卫星 FSO,方法论参照而非直接对照。
+
 ---
 
 ## 二、后续候选方向的来源文献(§七 候选,8 篇)
@@ -57,18 +82,18 @@
 
 **老师担心的核心**:对比参考文献够不够"近年(2020+)+ IEEE Transactions 级"。
 
-### 现状盘点(诚实)
+### 现状盘点(诚实,2026-07-07 补充近年 Trans baseline 后)
 
-| 维度 | 数量 | 占比 | 说明 |
+| 维度 | 补充前(14篇) | **补充后(17篇)** | 说明 |
 |---|---|---|---|
-| **近年(2020+)** | 9/14 | 64% | #1/#2/#5/#6/#7/#8/#11/#12/#13/#14 都是 2020+,够近年 |
-| **IEEE Transactions 级** | 5/14 | 36% | #3(JLT)/#4(TIT)/#5(Wiley Trans 级)/#6(JPHOT)/#7(JLT) |
-| **近年 + Transactions 级** | **3/14** | **21%** | #5(sat.1553,2025 Wiley)/#6(JPHOT 2023)/#7(JLT 2023) |
+| **近年(2020+)** | 9/14 (64%) | **12/17 (71%)** | +3 篇(#15/#16/#17)全 2023-2024 |
+| **IEEE Transactions 严格级** | 5/14 (36%) | **7/17 (41%)** | +2 篇严格 Trans(#16 OE/#17 TVT),#15 JPhoton 档级次档不计入 |
+| **近年 + 严格 Transactions 级** | **3/14 (21%)** | **5/17 (29%)** | +2 篇,改善但未过半 |
 
-**核心差距**:
-1. **当前方法来源(#1 Du PTL 2025)是 Letters 不是 Transactions**——这是老师"达不到?"担心的主因。如果要把方法本身提到 Transactions 级,需要更扎实的理论 + 实验工作(CRLB 紧致性证明、多场景验证、SD-FEC 阈值等)
-2. **经典 baseline(BPS 2009 / VV 1983)够格但年份老**——这是领域事实(BPS 和 VV 就是这个领域最经典的两个,所有论文都引),但确实不是"近年"。**通常补 1-2 篇近年 NDA-ML/盲估计论文作并列对照更稳**
-3. **近年 + Transactions 的只有 3 篇**——偏少
+**核心差距(补充后)**:
+1. **当前方法来源(#1 Du PTL 2025)仍是 Letters 不是 Transactions**——这是老师"达不到?"担心的**主因,补充 baseline 不能解决,只能靠方法本身深度**(CRLB 紧致性证明 + 多场景验证 + SD-FEC 阈值等)
+2. **经典 baseline(BPS 2009 / VV 1983)够格但年份老**——领域事实(所有论文都引),现已并列 3 篇近年(#15 JPhoton M-APSK / #16 OE FSO / #17 TVT sat)做对照
+3. **近年 + 严格 Trans 占比 29%**——从 21% 改善 8 个百分点,但仍偏少。继续补的边际收益递减,核心瓶颈在方法深度不在 baseline 数量
 
 ### 我的判断(待老师确认)
 
@@ -84,8 +109,8 @@
 
 ## 四、需老师指示
 
-1. **目标期刊层级**:投 IEEE Transactions(需要补近年 Trans 级对照),还是 PTL/Letters 级(当前对照够),还是国内会议(CCISP/ICECAI 级,当前对照绰绰有余)?
+1. **目标期刊层级**:投 IEEE Transactions(需要补方法深度:CRLB 紧致性证明 + 多场景验证,SD-FEC 阈值已补),还是 PTL/Letters 级(当前对照够),还是国内会议(CCISP 7/20 截稿,当前对照绰绰有余)?
 
-2. **如果补近年 Transactions 对照**:有没有老师推荐的近年(2022+)载波同步/盲估计论文?(我们自己也会检索,但老师有推荐更准)
+2. **补近年 Trans baseline 已完成**:见 §一 E 段 3 篇(#15 JPhoto M-APSK / #16 OE FSO / #17 TVT sat)。如老师有推荐的近年(2022+)载波同步/盲估计论文,可继续补。
 
-3. **BPS/VV 经典老论文是否还要保留作对照**:我觉得必须保留(领域共识),但近年 Trans 论文要不要并列?老师意见?
+3. **BPS/VV 经典老论文是否还要保留作对照**:我觉得必须保留(领域共识),现已并列近年 Trans(#15/#16/#17)。老师意见?
