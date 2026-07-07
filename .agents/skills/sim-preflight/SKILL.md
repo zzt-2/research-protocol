@@ -1,8 +1,8 @@
 ---
 name: sim-preflight
 description: 仿真前必看流程。触发场景：跑仿真/实验脚本、改实验参数、加新算法（载波恢复/KF/DPLL/VV/BPS/均衡）、验证 BER 或相位估计结果、为论文引用仿真数字、修改 common/ 或 params.py、新对话恢复仿真工作。强制按文档纪律操作，防止文档体系崩溃。遗漏即中断。
-version: 1.2.0
-last_updated: 2026-07-07
+version: 1.3.0
+last_updated: 2026-07-08
 changelog: ./CHANGELOG.md
 ---
 
@@ -50,6 +50,20 @@ changelog: ./CHANGELOG.md
 
 **C1/C2 是"实验设计扎实性"，C3 是"学术定位扎实性"，C4/C5 是"场景严谨性"。** 本项目 2026-07-07 的线宽根因正是 C1（单点 500kHz 当通用）+ C4（简报写 500kHz 但湍流实为 10kHz）双重违反。
 
+## 1.6 算法正确性自检（C6-C8，MVE/sandbox/对照实验前必过）
+
+> 来源：NDA-ML D-007~D-009 教训（consistency PASS 但算法错 / vs 祖师爷持平当合理 / 参数变更掩盖 bug）。这三条是"算法层正确性"通用要求，跟 C1-C5 的"实验设计扎实性"正交。详见 `rules/mve-validation.md`。
+
+| # | 维度 | 自检问题 | 触发时机 |
+|---|------|---------|---------|
+| **C6** | 公式来源逐项核对，禁靠文字重建 | 核心公式是否从原 PDF 核对并标页码+公式号？PDF→md 转换把公式转 picture omitted 时是否标红不硬磕？ | MVE-SPEC 设计 / 实现算法时 |
+| **C7** | MVE/sandbox 必含三方对照（消融+祖师爷） | 验证是否含"我们的方法 / naive消融 / 祖师爷经典"三方？缺任一方归因不可信 | MVE / sandbox 设计时 |
+| **C8** | "vs 祖师爷方法持平"即警报 | 结果跟领域经典方法（VV 1983/Gardner 1986/BPS）持平时，是否立即查数学同族性？是否当"合理结果"默默接受？ | 任何 vs 经典方法对照出结果时 |
+
+**C6 是"实现忠实原文"，C7 是"消融+对照完备性"，C8 是"创新性警报"。** 本项目 NDA-ML D-008 三重违反：C6（漏读 B11 Eq.16 ML 加权）/ C7（sandbox 只两方无祖师爷）/ C8（vs VV 持平当合理接受长达 2 session）。
+
+**强制触发**：MVE PASS 判 Go 前，C6-C8 必须全过（详见 `rules/mve-validation.md` V1-V6 清单）。
+
 ## 2. 场景路由
 
 ```
@@ -81,6 +95,7 @@ changelog: ./CHANGELOG.md
 | 硬约束 | `rules/constraints.md` | 任何场景开始前 |
 | 技术规则 | `rules/tech.md` | 写代码前 |
 | **参数真相源（v1.2.0）** | `rules/param-source.md` | **写信道函数 / 写 sweep 脚本 / 跨场景比较前** |
+| **MVE 算法正确性（v1.3.0）** | `rules/mve-validation.md` | **MVE 设计/sandbox 验证/对照实验/参数变更重跑前** |
 | 文档纪律 | `rules/doc-discipline.md` | 改任何 .md 前 |
 | 中断协议 | `rules/interrupt.md` | 怀疑违规时 |
 | 归档流程 | `rules/archive.md` | formulas-master 接近上限时 |
@@ -132,6 +147,24 @@ grep -rn "LASER_LW\|CLW\b\|R_SYM\|BAUD\b" projects/simulation/ --include="*.py" 
 # 使用日志验证（事后审计，B 方案）
 LOG=.sessions/sim-preflight-log/usage-$(date +%Y-%m).md
 test -f "$LOG" && echo "本月已写日志" || echo "⚠️ 本月无日志，可能漏写（见 usage-log.md）"
+```
+
+## 5.1 算法正确性自检（C6-C8，v1.3.0）
+
+```bash
+# C6: 核心公式是否标页码+公式号（无标注 → 补核对）
+grep -rE "Eq\.|equation|p\.[0-9]|公式" projects/simulation/explore/*/  --include="*.py" --include="*.md" | grep -E "[0-9]" | head
+
+# C7: MVE/sandbox 是否含三方对照（不足 3 个 → 补消融或祖师爷）
+grep -rE "from common import|from common._recovery import" projects/simulation/explore/*/  --include="*.py" | grep -oE "(vv_cpr|bps_cpr|nda_ml|da_ml|gardner|dpll|kf_)" | sort -u
+
+# C8: 最近 results 是否有 vs 祖师爷方法持平（|gain|<0.05dB 或 BER ratio [0.95,1.05]）
+grep -rE "gain.*0\.0[0-9]|ratio.*0\.9[5-9]|ratio.*1\.0[0-5]" projects/simulation/results/ projects/simulation/explore/*/  2>/dev/null | head
+# 如有 vs VV/BPS/Gardner 持平 → 查数学同族性（见 interrupt.md 第 10 条）
+
+# V4: 参数变更是否触发算法重审（查最近 params.py 改动）
+git diff HEAD~3 -- projects/simulation/params.py | grep -E "^\-.*[0-9]|^\+.*[0-9]" | grep -iE "lw|linewidth|baud|r_sym|sigma2|kappa"
+# 如有 CRITICAL 参数改动 → 检查同 commit 是否同时改算法或跑 sandbox
 ```
 
 ## 6. 维护原则（强制）

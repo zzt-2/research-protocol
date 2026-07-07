@@ -311,9 +311,28 @@ topics:
         reason: 继承 B 档 12 候选清单（S030 总表）+ D017/D018 判读框架 + papers/doi 已落盘全文 + 已有 5 篇精读笔记（B1/B4/B5/B6/B7）
     conflicts_with: []
 
-  - slug: 2026-07-06-step4a-mve-execution
-    title: Step 4a 维度 D MVE 执行（B11/B7/B3 oracle 上界门控 + MVE + 架构差异）
+  - slug: 2026-07-08-b7-gardner-ted-foe
+    title: B7 Gardner TED 复用 FOE 第二候选（与 NDA-ML 并行，NDA-ML 卡 D-008~D-009 期间推进）
     status: active
+    created: "2026-07-08"
+    last_updated: "2026-07-08"
+    description: "承接上游 2026-06-20-problem-driven-redirection S031 排优先级（B7-Q1 Conditional Go 会议最稳）+ step4a-mve-execution 切法地图参照系。NDA-ML 单载波候选（step4a-mve-execution 专题）卡在 D-008 双 bug + D-009 线宽选择 + vs VV 持平陷阱，用户决策同时跑第二候选 B7 分散风险。B7 锚论文 OFC 2026 poster（Gardner TED 复用 FOE，0.6dB+1.9×范围+OSNR 10dB），baseline PSA FOE。**B7 特殊风险**：①锚论文 90 行很薄（公式重建风险高于 B11）②Gardner TED 1986 是祖师爷（持平警报最严）③反馈环架构可能撞 D006 ④公平对照框架不能照搬 NDA-ML。**流程规划前置**（阶段 0 不写代码先定规约）防重蹈 NDA-ML 混乱（参数反复/算法 bug/验证失效/方向重定位/文件混乱/文献引用 6 类）。守 sim-preflight v1.3.0 新增 C6-C8（公式核对/三方对照/祖师爷警报）+ interrupt 10-12 条。拆对话：①阶段 0 前置规约（公式完整性/数学同族性/架构定性/公平对照框架/参数真相源/文件组织）②sandbox 三方对照（Gardner TED 改进版/1986 原版祖师爷/PSA FOE baseline）③MVE + consistency。"
+    depends_on:
+      - slug: 2026-06-20-problem-driven-redirection
+        reason: 继承 S031 B7-Q1 Conditional Go 判定 + D005 务实路线 + D006 红线 + 5 个口径警示
+      - slug: 2026-07-05-carrier-sync-v2-cut-pattern
+        reason: 继承切法地图定稿（B7 稀池 1 细分独占赛道模式 + OFC 2026 会议样本），作为 MVE 执行参照系
+      - slug: 2026-07-02-carrier-sync-v2-deep-read
+        reason: 继承 B7 gw-read 结构化笔记（_B7-gardner-ted-increment.md，锚方法+baseline 详情）
+      - slug: 2026-07-06-step4a-mve-execution
+        reason: 继承 NDA-ML 执行链教训（D-007~D-009 六类混乱模式 + sim-preflight v1.3.0 补强），防重蹈覆辙
+    conflicts_with: []
+
+  - slug: 2026-07-06-step4a-mve-execution
+    title: Step 4a 维度 D MVE 执行（B11 单载波 NDA-ML 主推 + B7/B3 待开）
+    status: dormant
+    created: "2026-07-06"
+    last_updated: "2026-07-08（S008 VV/BPS ablation + D-008 双 bug + D-009 线宽选择待用户拍板。NDA-ML vs DA-ML 稳赢 +1.3~2.5dB 主结论不受影响，但 vs VV/BPS ablation 待 sandbox 重判 + 线宽 10kHz 疑似选错待修正回 Valjus 区间。用户决策同时跑 B7 分散风险，本专题转 dormant 等 B7 出结果或 NDA-ML 线宽/方向拍板后回来）"
     created: "2026-07-06"
     last_updated: "2026-07-08（S008 LMMSE 复现失败 + VV/BPS 经典 baseline 实测对照。LMMSE 因 PDF→md 公式丢失复现失败，用户选方案 C 切 VV/BPS。VV/BPS 重跑 D-007 后真相源：NDA-ML vs VV 持平，NDA-ML vs BPS 稳赢。会议级对照矩阵已齐。详见 S008）"
     description: "承接上游 2026-06-20-problem-driven-redirection S031 排优先级（B11/B3/B7 三个 Conditional Go）+ 切法地图专题参照系。守 FR-21 oracle 上界前置门控（先算 CRB 下界 <0.5dB 直接砍不跑 MVE）+ TL-20 先建理论预期 + TL-26 参数溯源 + FR-18 竞争格局 + FR-12 MVE→Formal 架构差异。复用 projects/simulation/common/ 基建（GG+Doppler+phase noise 信道 + VV/BPS/DPLL/KF 载波恢复），增量扩 M-APSK 调制 + DA ML/NDA-ML/Gardner TED/FOE 估计器（B11+B3+B7 共用）+ params 扩 CLW/HD-FEC/LEO Doppler rate（全标 source）。explore/ 模式每候选一子目录（*-MVE-SPEC.md 契约 + _crb_lower_bound.py + mve 脚本 + results.json），MVE 通过后转 experiments/。拆对话：①基建扩充+B11 oracle 上界 ②B11 MVE 或 B7 全流程 ③B3 架构决策（多孔径阵列 vs 单链路）+ 视情况。"

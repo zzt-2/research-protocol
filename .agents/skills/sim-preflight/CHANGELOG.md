@@ -7,6 +7,46 @@
 
 ---
 
+## [2026-07-08] v1.3.0
+
+### 重大改动：算法正确性验证补强（consistency ≠ 算法对错）
+
+**背景**：NDA-ML 单载波候选执行链（S002-S008 + D-007~D-009）暴露 consistency bit-exact 0.0000% PASS 但算法是错的（MVE 和 Formal 都漏同一 ML 加权 bug）。consistency 锚点只查实现同步，查不了算法对错——需要补"算法正确性验证"层。
+
+### 新增规则：MVE 算法正确性验证（区别于 consistency）
+
+- **新增 `rules/mve-validation.md`**：6 条验证清单（V1-V6）
+  - V1 公式来源逐项核对（禁靠文字重建，PDF→md 公式转 picture omitted 时标红不硬磕）
+  - V2 三方对照（消融 + 祖师爷，缺任一方归因不可信）
+  - V3 祖师爷持平警报（vs VV/Gardner 1986/BPS 持平即查数学同族性）
+  - V4 参数变更触发算法重审（参数选择和算法验证耦合）
+  - V5 子 agent 归因独立核查（只信原始数字不信归因）
+  - V6 FR-26 读原文数值（不只引位置）
+- **SKILL.md §1.6 新增 C6-C8 算法正确性自检**：从 D-007~D-009 抽取的通用清单（公式核对/三方对照/祖师爷警报），跟 C1-C5 实验设计扎实性正交
+- **interrupt.md 加第 10-12 条**：
+  - 第 10 条 "vs 祖师爷方法持平"警报（NDA-ML D-008 vs VV 持平被当合理接受）
+  - 第 11 条 参数变更后未触发算法重审（D-008 教训 4 + D-009 教训 7，低线宽掩盖加权 bug）
+  - 第 12 条 MVE/sandbox 缺三方对照（D-008 教训 1，sandbox 只两方没祖师爷）
+- **SKILL.md §3 子文件索引**：新增 `rules/mve-validation.md` 行
+- **SKILL.md §5.1 快速自检命令**：加 C6-C8 算法正确性自检 grep
+
+### 触发证据（来自 NDA-ML D-007~D-009，已 grep + 原 BER 核实）
+
+1. **D-008 双 bug**：`common/_recovery.py:nda_ml_recovery` 漏 ML 加权（B11 Eq.16）+ 升幂未归一化（B11 Eq.5），导致 NDA-ML 数学上跟 VV 同族（都是等权 mean-angle），vs VV 持平是 bug 必然非物理真实
+2. **consistency 假 PASS**：D-007 consistency 0.0000% 是因为 MVE `_time_domain_crlb.py` 和 Formal `sc_nda_ml_sim.py` 都漏同一加权（都等权），"两者一致"只证明实现一致不证明符合 B11
+3. **参数掩盖 bug**：D-007 选 10kHz 低线宽后，ML 加权收益退化（低线宽下样本 SNR 均匀加权≈等权），bug 不易暴露
+4. **sandbox 缺三方**：`explore/nda-awgn-tracking-sandbox` 只验证 segK8 vs none（都是等权变体），没验证 vs B11 真 ML（加权版）
+5. **子 agent 归因错**：D-009 sandbox 子 agent 报"加权拉开 VV"，主线独立重算发现真因是 segmented 跟踪非加权
+6. **FR-26 引位置没读数值**：D-007 引"Valjus sat.1553 §4.2 L438"但没读 L438 原文"0.1-1MHz typical"
+
+### 影响的规则编号
+
+- SKILL.md §1.6（新增 C6-C8）/ §3（新增 mve-validation.md 索引）/ §5.1（新增 C6-C8 自检命令）
+- interrupt.md（新增第 10-12 条中断，总数 9→12）
+- rules/mve-validation.md（新增文件）
+
+---
+
 ## [2026-07-07] v1.2.0
 
 ### 重大改动：搬家 + 参数真相源统一补强
