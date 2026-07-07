@@ -64,12 +64,27 @@ PILOT_OVERHEAD_DB = 10.0 * np.log10(DA_PILOT_SPACING / (DA_PILOT_SPACING - 1))
 # =============================================================================
 # 湍流等级 (design.md §3.3, Gamma-Gamma α/β; SPEC §1.4)
 # =============================================================================
+# 注: TURB_LEVELS 仅含下行 weak/moderate/strong — consistency_check 遍历此列表与 MVE 对照
+# (MVE 只有这三档), 不得加入上行档 (否则 MVE 对照 KeyError). 上行档单独 UPLINK_LEVELS.
 TURB_LEVELS = ['weak', 'moderate', 'strong']
 # 从 _CFG 取 (params TurbulenceParams, 与 common._config TURB 同源)
 TURB_ALPHA_BETA = {
     'weak': (_CFG.turbulence.turb_weak_alpha, _CFG.turbulence.turb_weak_beta),         # (4.0, 3.0)
     'moderate': (_CFG.turbulence.turb_moderate_alpha, _CFG.turbulence.turb_moderate_beta),  # (2.5, 1.8)
     'strong': (_CFG.turbulence.turb_strong_alpha, _CFG.turbulence.turb_strong_beta),   # (1.5, 0.8)
+}
+
+# --- 上行(地面→卫星)湍流场景 (sat.1553 Valjus 2025 综述 Table 1) ---
+# 设计选择: 参考 sat.1553 上行 Rytov 方差 σ²_R=0.15(上行弱)/0.25(上行强), 远大于下行 0.029.
+# 大气湍流主要在低空, 上行信号发射即受扰. 严格 σ²_R→α/β 映射是另一研究方向, 此处务实选
+# 两组比现有 strong(α1.5/β0.8)更极端的 α/β 代表对应强度区间. 新增档, 不改 TURB_LEVELS.
+# 信道 generate_shared_realization_apsk 经 common.TURB 自动识别 (params.get_turb_dict 已含).
+UPLINK_LEVELS = ['uplink_moderate', 'uplink_strong']
+UPLINK_ALPHA_BETA = {
+    'uplink_moderate': (_CFG.turbulence.turb_uplink_moderate_alpha,   # (1.2, 0.9) ≈ σ²_R 0.15
+                        _CFG.turbulence.turb_uplink_moderate_beta),
+    'uplink_strong': (_CFG.turbulence.turb_uplink_strong_alpha,       # (1.0, 0.7) ≈ σ²_R 0.25, deep fade
+                      _CFG.turbulence.turb_uplink_strong_beta),
 }
 
 

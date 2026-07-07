@@ -154,6 +154,50 @@ class TurbulenceParams(BaseModel):
             "audit_flag": AuditFlag.WARNING,
         },
     )
+    # --- 上行(地面→卫星)湍流场景 (sat.1553 Valjus 2025 综述 Table 1) ---
+    # 设计选择: sat.1553 给 Rytov 方差 σ²_R=0.15(上行弱)/0.25(上行强), 远大于下行 0.029
+    # (大气湍流主要在低空, 上行信号发射即受扰). 严格 σ²_R→α/β 映射是另一研究方向,
+    # 此处务实选两组比现有 strong(α1.5/β0.8)更极端的 α/β 代表对应强度区间.
+    turb_uplink_moderate_alpha: float = Field(
+        1.2,
+        description="上行中湍流 GG α (比 strong 略强, 对应 σ²_R≈0.15)",
+        json_schema_extra={
+            "source_type": SourceType.assumption,
+            "source": "设计选择: 参考 sat.1553 上行 σ²_R=0.15, 选对应强度区间 Gamma-Gamma α/β",
+            "symbol": "α (uplink_moderate)",
+            "audit_flag": AuditFlag.WARNING,
+        },
+    )
+    turb_uplink_moderate_beta: float = Field(
+        0.9,
+        description="上行中湍流 GG β (比 strong 略强)",
+        json_schema_extra={
+            "source_type": SourceType.assumption,
+            "source": "设计选择: 参考 sat.1553 上行 σ²_R=0.15, 选对应强度区间 Gamma-Gamma α/β",
+            "symbol": "β (uplink_moderate)",
+            "audit_flag": AuditFlag.WARNING,
+        },
+    )
+    turb_uplink_strong_alpha: float = Field(
+        1.0,
+        description="上行强湍流 GG α (明显比 strong 强, 接近 deep fade, 对应 σ²_R≈0.25)",
+        json_schema_extra={
+            "source_type": SourceType.assumption,
+            "source": "设计选择: 参考 sat.1553 上行 σ²_R=0.25, 选对应强度区间 Gamma-Gamma α/β",
+            "symbol": "α (uplink_strong)",
+            "audit_flag": AuditFlag.WARNING,
+        },
+    )
+    turb_uplink_strong_beta: float = Field(
+        0.7,
+        description="上行强湍流 GG β (明显比 strong 强, 接近 deep fade)",
+        json_schema_extra={
+            "source_type": SourceType.assumption,
+            "source": "设计选择: 参考 sat.1553 上行 σ²_R=0.25, 选对应强度区间 Gamma-Gamma α/β",
+            "symbol": "β (uplink_strong)",
+            "audit_flag": AuditFlag.WARNING,
+        },
+    )
 
     model_config = ConfigDict(frozen=True)
 
@@ -162,6 +206,9 @@ class TurbulenceParams(BaseModel):
             "weak": (self.turb_weak_alpha, self.turb_weak_beta),
             "moderate": (self.turb_moderate_alpha, self.turb_moderate_beta),
             "strong": (self.turb_strong_alpha, self.turb_strong_beta),
+            # 上行场景 (设计选择, 参考 sat.1553 上行 σ²_R=0.15/0.25)
+            "uplink_moderate": (self.turb_uplink_moderate_alpha, self.turb_uplink_moderate_beta),
+            "uplink_strong": (self.turb_uplink_strong_alpha, self.turb_uplink_strong_beta),
         }
 
 

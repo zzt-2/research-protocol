@@ -1,0 +1,69 @@
+{
+  "meta": {
+    "task": "上行湍流 fair gain 汇总 (5 seed)",
+    "ci_method": "t-distribution 95% CI, df=n-1 (5 seed→df=4, t=2.7764)",
+    "gain_definition": "fair_gain@HD-FEC = (DA γ_tot @ HD-FEC) − (NDA γ_tot @ HD-FEC); 正=NDA赢",
+    "pilot_overhead_db": 1.2493873660829993,
+    "comparison": "主实验改进版下行 strong 工作区 gain ≈ +2.51 dB (参考)"
+  },
+  "fair_gain": {
+    "uplink_moderate": {
+      "scene": "uplink_moderate",
+      "alpha_beta": [
+        1.2,
+        0.9
+      ],
+      "gain_mean_db": null,
+      "gain_std_db": null,
+      "gain_ci95_db": [
+        null,
+        null
+      ],
+      "per_seed_gain_db": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "n_valid_seeds": 0,
+      "hdfec_reachable": false,
+      "note": "HD-FEC 物理不可达 (上行 deep fade); 用工作区 (γ_tot≥15dB) per-point fair gain",
+      "workregion_grand_mean_db": 2.4792244006457813,
+      "workregion_grand_std_db": 0.43794662347388275,
+      "workregion_grand_ci95_db": [
+        2.274259071617044,
+        2.6841897296745185
+      ]
+    },
+    "uplink_strong": {
+      "scene": "uplink_strong",
+      "alpha_beta": [
+        1.0,
+        0.7
+      ],
+      "gain_mean_db": null,
+      "gain_std_db": null,
+      "gain_ci95_db": [
+        null,
+        null
+      ],
+      "per_seed_gain_db": [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "n_valid_seeds": 0,
+      "hdfec_reachable": false,
+      "note": "HD-FEC 物理不可达 (上行 deep fade); 用工作区 (γ_tot≥15dB) per-point fair gain",
+      "workregion_grand_mean_db": 3.067456522030165,
+      "workregion_grand_std_db": 0.45298231836432895,
+      "workregion_grand_ci95_db": [
+        2.8260792828740993,
+        3.3088337611862304
+      ]
+    }
+  }
+}
