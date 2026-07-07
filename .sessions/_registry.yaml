@@ -315,7 +315,7 @@ topics:
     title: B7 Gardner TED 复用 FOE 第二候选（与 NDA-ML 并行，NDA-ML 卡 D-008~D-009 期间推进）
     status: active
     created: "2026-07-08"
-    last_updated: "2026-07-08（S003 阶段 0.2+0.3 通过 D002+D003——B7 弱同族 (B) 机制实测成立 + 架构 FOE 前馈化不撞 D006，进 0.4）"
+    last_updated: "2026-07-08（S004 阶段 0.4-0.6 全部通过 D004+D005——fair gain 二维报告 + B7Params 修正版 15 字段全溯源 + 阶段 0 六项规约全收尾，可进 sandbox）"
     description: "承接上游 2026-06-20-problem-driven-redirection S031 排优先级（B7-Q1 Conditional Go 会议最稳）+ step4a-mve-execution 切法地图参照系。NDA-ML 单载波候选（step4a-mve-execution 专题）卡在 D-008 双 bug + D-009 线宽选择 + vs VV 持平陷阱，用户决策同时跑第二候选 B7 分散风险。B7 锚论文 OFC 2026 poster（Gardner TED 复用 FOE，0.6dB+1.9×范围+OSNR 10dB），baseline PSA FOE。**B7 特殊风险**：①锚论文 90 行很薄（公式重建风险高于 B11）②Gardner TED 1986 是祖师爷（持平警报最严）③反馈环架构可能撞 D006 ④公平对照框架不能照搬 NDA-ML。**流程规划前置**（阶段 0 不写代码先定规约）防重蹈 NDA-ML 混乱（参数反复/算法 bug/验证失效/方向重定位/文件混乱/文献引用 6 类）。守 sim-preflight v1.3.0 新增 C6-C8（公式核对/三方对照/祖师爷警报）+ interrupt 10-12 条。拆对话：①阶段 0 前置规约（公式完整性/数学同族性/架构定性/公平对照框架/参数真相源/文件组织）②sandbox 三方对照（Gardner TED 改进版/1986 原版祖师爷/PSA FOE baseline）③MVE + consistency。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
@@ -343,6 +343,23 @@ topics:
         reason: 继承 B2 gw-read 结构化笔记（_B2-deep-fade-freeze-increment.md，M-C-A + 锚方法详情）
       - slug: 2026-07-06-step4a-mve-execution
         reason: 继承 NDA-ML 执行链教训（D-007~D-009 六类混乱防重蹈）+ step4a 实测反证数据（decisions.md:150, 157 DA pilot 在 fade BER 0.38 vs NDA 0.29）+ 复用基建（common/_recovery.py 4 估计器 + DA pilot overhead 1.25dB 公平对照框架）
+    conflicts_with: []
+
+  - slug: 2026-07-08-b5-leo-doppler-spectrum-foe
+    title: B5-Q1 LEO Doppler 短时谱 FOE 第四候选（主控对话开题，首验证范围优势够格路径）
+    status: active
+    created: "2026-07-08"
+    last_updated: "2026-07-08（S001 开题 + 阶段 0 六项规约设计完成 D001——首验证范围优势够格路径策略。B5-Q1 不是 dB 增量是范围优势（±4.5GHz vs 传统 ±312.5MHz，15× 范围扩展），D005 赢 baseline 几 dB 标尺下不够格（本体无 vs baseline 改善 X dB 对比），靠范围维度够格（BUPT Arria 10 FPGA demo 会议模板）。S003 已做 D006/D005/范围三维判定但未做 A1/复用，本专题补 A1+复用详评。H001 交接工作对话执行 0.1-0.6）"
+    description: "承接上游 2026-06-20-problem-driven-redirection S031 排优先级（B5-Q2 第二档 #6 边际够格，范围 in 星地 LEO 下行）+ 切法地图参照系（B5 饱和池 §A 跟 B4 共锚 Paillier 43 篇大池，BUPT Arria 10 FPGA demo 会议级模板）。主控对话开题（不自己执行），派工作对话执行阶段 0.1-0.6。**B5 特殊风险**：①不是 dB 增量是范围优势（D005 标尺下不够格）②饱和池大池竞争（Paillier 43 篇）③D006 边界残留（湍流致功率波动归一化前馈合法/环路 TF 撞）④代码新增需求（short_time_spectrum_foe 需新写，fft_foe_m0_omega 作起点骨架）⑤论文外改进空间窄。**LEO Doppler 主题机制正交**：B5（频域功率比）/ B7（定时域 TED 增益）/ B4（双反馈环）是 LEO Doppler 大动态三种正交解法无撞车。锚论文 optcom.2024.130981 已发期刊（Optics Communications 572 (2024)，青岛大学+CETC 34 所）。守 sim-preflight v1.3.0 + D005 务实路线 + D006 红线。拆对话：①阶段 0 前置规约（够格路径/dB 范围溯源/架构定性/公平对照/参数真相源/文件组织）②sandbox 三方对照（B5 短时谱/[60] Leven/传统 FFT FOE）③MVE + consistency。"
+    depends_on:
+      - slug: 2026-06-20-problem-driven-redirection
+        reason: 继承 S031 B5-Q1 第二档排序 + D005 务实路线 + D006 红线 + 5 个口径警示
+      - slug: 2026-07-05-carrier-sync-v2-cut-pattern
+        reason: 继承切法地图定稿（B5 饱和池 §A 定位 + Paillier 大池 + BUPT Arria 10 FPGA demo 会议模板 + _cut-b4b5-verify.md 范围优势核验），作为 MVE 执行参照系
+      - slug: 2026-07-02-carrier-sync-v2-deep-read
+        reason: 继承 B5 gw-read 结构化笔记（_B5-short-time-spectrum-cfo-increment.md L100-167 全文增量核验段 S003 已做三维判定，本专题补 A1/复用）
+      - slug: 2026-07-06-step4a-mve-execution
+        reason: 继承 NDA-ML 执行链教训（D-007~D-009 六类混乱防重蹈）+ 复用基建（common/_channel.py 信道 + fft_foe_m0_omega 作 short_time_spectrum_foe 起点骨架 + B7Params 参数族模板参考扩 B5Params）+ LEO Doppler 已建模但是残余级（F_RESIDUAL=1MHz），不是 B5 ±4.5GHz 全量程
     conflicts_with: []
 
   - slug: 2026-07-06-step4a-mve-execution

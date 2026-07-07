@@ -1,7 +1,7 @@
 # Topic Index: B7 Gardner TED 复用 FOE 第二候选
 
 > slug: 2026-07-08-b7-gardner-ted-foe
-> status: active | created 2026-07-08 | last_updated: 2026-07-08（S003 阶段 0.2+0.3 通过 D002+D003——B7 弱同族 (B) 机制实测成立 + 架构 FOE 前馈化不撞 D006，进 0.4）
+> status: active | created 2026-07-08 | last_updated: 2026-07-08（S004 阶段 0.4-0.6 全部通过 D004+D005——fair gain 二维报告 + B7Params 修正版 15 字段全溯源 + 阶段 0 六项规约全收尾，可进 sandbox）
 
 ## 专题定位（一句话）
 
@@ -85,9 +85,11 @@ B7-Q1（Gardner TED 复用 FOE）第二候选 MVE 执行。与 NDA-ML 单载波�
 
 ## 已确认决策
 
-- **D001**（2026-07-08，S002）：Gardner TED 1986 公式源 = 用户本地 Matlab 代码（`毕设/旧本科代码/PSKTimingErrDetector.m` + `Tx2Rx.m` L176-214），不切降级方案。B7 "TED 增益↔Doppler 映射"解析式缺失但可数值重建。阶段 0.1 通过，进 0.2。
+- **D001**（2026-07-08，S002）：Gardner TED 1986 公式源 = 用户本地 Matlab 代码（`毕设/旧本科代码/PSKTimingErrDetector.m` + `Tx2Rx.m` L176-214 定时环），不切降级方案。B7 "TED 增益↔Doppler 映射"解析式缺失但可数值重建。阶段 0.1 通过，进 0.2。
 - **D002**（2026-07-08，S003）：B7 数学同族性 = 弱同族 (B) + 机制数值验证成立。G(f_D) 以 baud rate 25 GHz 周期（铁证 G(0)=0.132142，FFT 主频能量 >90%）；B7 vs 1986 共享 TED 公式但任务正交（FOE vs STR）；B7 vs VV/BPS 非同族（无 NDA-ML 陷阱路径）。阶段 0.2 通过，进 0.3。残留风险：B7 未给 TED_gain(f_D) 解析式，sandbox 前补解析推导 + Leven 对比。
 - **D003**（2026-07-08，S003）：B7-Q1 架构定性 = FOE 前馈扫频 + Gardner TR 保留反馈环（跟踪 τ 不是 φ_T）+ 载波同步禁建模湍流相位。不撞 D006（B7 不涉湍流 + FOE 前馈无环路 TF + TR 是定时环非载波同步环）。阶段 0.3 通过，进 0.4。
+- **D004**（2026-07-08，S004）：B7 fair gain = 二维报告（BER gain @ 双工作点 HD-FEC 主+BER 2e-2 锚校验 + Doppler 范围比 1.9×）+ PSA FOE baseline 必须 sandbox 重写（谱不对称法，非 pilot-aided）。阶段 0.4 通过，进 0.5。common `_recovery.py:435` psa_foe_recovery 概念错债务登记。
+- **D005**（2026-07-08，S004）：B7Params 修正版草稿（15 字段全溯源 content.md 行号，修正 LEO_DOPPLER_RATE 30e3→1e9，删 PSA_PILOT_SPACING，补 7 新字段）+ B7 锚论文原参数 25GBaud/1.8kHz 不跟 NDA-ML 统一（用户决策，防 D-007 覆辙）+ explore 目录结构落盘。阶段 0.5+0.6 通过，**阶段 0 六项规约全收尾**。
 
 ## 悬而未决
 
@@ -95,15 +97,18 @@ B7-Q1（Gardner TED 复用 FOE）第二候选 MVE 执行。与 NDA-ML 单载波�
 2. ~~Gardner TED 1986 数学同族性结论~~ → **已解决（S003/D002）**：弱同族 (B)，非 NDA-ML 陷阱
 3. ~~B7 机制（周期相关）是否真实~~ → **已解决（S003/D002）**：数值验证成立，周期=baud rate
 4. ~~架构定性结论~~ → **已解决（S003/D003）**：FOE 前馈化 + Gardner TR 保留反馈环，不撞 D006
-5. **公平对照框架**：阶段 0.4 设计（fair gain @ BER 2e-2 还是 HD-FEC，PSA FOE 怎么公平对照）
-6. **B7 TED_gain(f_D) 解析式**：poster 未给，sandbox 前补解析推导 + 显式对比 Leven M-th-power FOE [7]（排除强同族 (C) 的残留风险）
+5. ~~公平对照框架~~ → **已解决（S004/D004）**：二维报告 + 双工作点 + PSA FOE 重写债务
+6. ~~符号率/线宽场景统一决策~~ → **已解决（S004/D005 + 用户决策）**：B7 锚论文原参数不统一
+7. **B7 TED_gain(f_D) 解析式**：poster 未给，sandbox 前补解析推导 + 显式对比 Leven M-th-power FOE [7]（排除强同族 (C) 的残留风险，带进 sandbox）
+8. **sandbox 阶段执行**：B7Params 回写 params.py + PSA FOE baseline 重写 + TED_gain 解析推导 + CRB 下界 + 三方对照 + MVE
 
 ## 当前位置
 
-**🟡 S003 阶段 0.2+0.3 完成（2026-07-08）**：阶段 0.2 数学同族性 + 机制数值重建通过（D002），阶段 0.3 架构定性通过（D003，FOE 前馈化不撞 D006）。B7 机制数值验证成立 + 弱同族 (B) 非 NDA-ML 陷阱 + 架构定性。下一步=0.4 公平对照框架 + 0.5-0.6。
+**🟢 S004 阶段 0.4-0.6 完成（2026-07-08）**：阶段 0 六项规约全收尾（0.1 公式完整性 / 0.2 数学同族性 / 0.3 架构定性 / 0.4 公平对照框架 / 0.5 参数真相源 / 0.6 文件组织）。fair gain 二维报告定死 + B7Params 15 字段全溯源 + PSA FOE baseline 重写债务登记。**下一步=sandbox 三方对照（B7 proposed / Gardner 1986 TR / PSA FOE）**，profile 第 9 次防线解除（阶段 0 全做完才进 sandbox）。
 
 ## 进展线索
 
 - **S001** 专题开题 + 流程规划前置 + H001 交接（2026-07-08）
 - **S002** 阶段 0.1 公式完整性核查 + D001（2026-07-08）：用户本地 Matlab 代码作 Gardner TED 1986 公式源，B7 映射靠数值重建，不切降级
 - **S003** 阶段 0.2+0.3 + D002+D003（2026-07-08）：0.2 子 agent 数值重建 + 同族性分析判弱同族 (B) + 主线 V5 独立重算；0.3 架构定性 FOE 前馈化 + Gardner TR 保留反馈环不撞 D006
+- **S004** 阶段 0.4-0.6 + D004+D005（2026-07-08）：0.4 fair gain 二维报告（HD-FEC 主+BER 2e-2 锚+范围比 1.9×）+ PSA FOE 概念错债务登记；0.5 B7Params 修正版 15 字段全溯源 content.md 行号 + B7 锚论文原参数不统一（用户决策）；0.6 explore 目录结构落盘 + 下游引用同步清单。**阶段 0 全收尾，可进 sandbox**
