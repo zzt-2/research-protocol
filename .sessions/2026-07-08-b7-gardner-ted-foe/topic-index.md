@@ -1,7 +1,7 @@
 # Topic Index: B7 Gardner TED 复用 FOE 第二候选
 
 > slug: 2026-07-08-b7-gardner-ted-foe
-> status: active | created 2026-07-08 | last_updated: 2026-07-08（S005 sandbox 前半 3 步 + 步骤 4 CRB 完成 D006——B7Params 15 字段回写 + PSA FOE 谱不对称法 baseline 重写（coarse-only 线性区 ~1GHz 限制登记）+ TED_gain 解析式 G(f_D)=K_max·|cos(πf_D/B)| + Leven 对比 D002 残留风险闭合弱同族 B 不降级 C + CRB 下界 59.42kHz << 扫频间隔 1GHz（精度瓶颈是量化非 CRB，FR-21 不卡）。剩 2 步：三方对照主脚本 + MVE）
+> status: active | created 2026-07-08 | last_updated: 2026-07-08（S006 三方对照主脚本 + MVE-SPEC + smoke test 完成——b7_gardner_ted_mve.py 三方（B7 proposed FOE 前馈扫频 + Gardner 1986 TR 反馈环 + PSA FOE 谱不对称法）+ B7-MVE-SPEC.md 契约 + smoke test PASS（修 3 bug：BER 符号对齐/单边扫频/PSA 残余 FOE 清理），B7 est 全准 BER~1e-2，V3 祖师爷警报不触发，PSA >12GHz 退化符合 D006。剩对话 7：正式 MVE 跑数 + Go/Kill 判断）
 
 ## 专题定位（一句话）
 
@@ -83,6 +83,14 @@ B7-Q1（Gardner TED 复用 FOE）第二候选 MVE 执行。与 NDA-ML 单载波�
 | E. 文件混乱 | MVE 薄包装 + 双套参数共存 + 两 results 目录 | 阶段 0.6 文件组织规约 + 下游引用同步清单 |
 | F. 文献引用 | D-007 引 Valjus 位置没读原文数值 | V6 FR-26 读原文数值（v1.3.0）|
 
+### S006 sandbox 实现发现（对话 7 正式 MVE 警示，暂不升 D###）
+
+| 发现 | 内容 | 对话 7 警惕 |
+|------|------|------------|
+| A. B7 候选消歧边界 | `content.md:37` "TED2 std 判决"内在限制：TED2 std 小 ≠ BER 低（residual≈整数倍 baud rate 时 TR 收敛但 BER 爆）。实现：单峰清晰（第二峰<70%主峰）直接 argmax 不触发消歧 | 若正式 MVE B7 est 系统性偏到 baud rate 整数倍外，查这个消歧逻辑 |
+| B. PSA 需 MP FOC 残余清理 | MVE 简化省略 MP FOC 对 PSA 不公平（PSA 谱不对称法对 f_D=0 有偏置，补偿后残余 ~0.3GHz 让 TR 失效）。修复：三方补偿后都加 M=4 次方残余 FOE 清理（对齐 `content.md:47` MP FOC）。D006 PSA coarse-only 弱扩展：不仅线性区窄，估准后还有残余偏置需清理 | fair gain BER gain 标为上界（D006），正式 MVE 的 PSA BER 可能因 MP FOC 清理能力受限而偏高 |
+| C. BER 符号对齐 | TR loop 输出 vs 参考符号差整数 lag（依赖 loop 初始化）。`qpsk_hard_decision_ber` 自动扫 lag -4..+4 找最佳对齐 | 若 BER 系统性 0.25（QPSK 随机+1/4 偏移），查 lag 对齐 |
+
 ## 已确认决策
 
 - **D001**（2026-07-08，S002）：Gardner TED 1986 公式源 = 用户本地 Matlab 代码（`毕设/旧本科代码/PSKTimingErrDetector.m` + `Tx2Rx.m` L176-214 定时环），不切降级方案。B7 "TED 增益↔Doppler 映射"解析式缺失但可数值重建。阶段 0.1 通过，进 0.2。
@@ -101,11 +109,11 @@ B7-Q1（Gardner TED 复用 FOE）第二候选 MVE 执行。与 NDA-ML 单载波�
 5. ~~公平对照框架~~ → **已解决（S004/D004）**：二维报告 + 双工作点 + PSA FOE 重写债务
 6. ~~符号率/线宽场景统一决策~~ → **已解决（S004/D005 + 用户决策）**：B7 锚论文原参数不统一
 7. ~~B7 TED_gain(f_D) 解析式 + Leven 对比~~ → **已解决（S005/D006）**：G(f_D)=K_max·|cos(πf_D/B)| 解析成立，弱同族 B 不降级 C
-8. **sandbox 后半 + MVE 执行**：CRB 下界 + 三方对照主脚本 + MVE + consistency（对话 6）
+8. **sandbox 后半 + MVE 执行**：~~CRB 下界 + 三方对照主脚本 + MVE + consistency（对话 6）~~ → 脚本+SPEC+smoke test 完成（S006），剩正式 MVE 跑数 + Go/Kill 判断（对话 7）
 
 ## 当前位置
 
-**🟢 S005 sandbox 前半 3 步完成（2026-07-08）**：B7Params 回写 params.py（15 字段，0 DEAD/CRITICAL）+ PSA FOE baseline 重写（谱不对称法，coarse-only 线性区 ~1GHz 限制登记）+ TED_gain 解析推导（G(f_D)=K_max·|cos(πf_D/B)|，D002 残留风险闭合弱同族 B 不降级 C）。**下一步=对话 6 sandbox 后半 + MVE**（CRB 下界 + 三方对照主脚本 C7+V2 + MVE + consistency）。
+**🟢 S006 三方对照主脚本 + MVE-SPEC + smoke test 完成（2026-07-08）**：b7_gardner_ted_mve.py 三方（B7 proposed FOE 前馈扫频 + Gardner 1986 TR 反馈环 Python 重写 + PSA FOE 谱不对称法 import）+ B7-MVE-SPEC.md 契约 + smoke test PASS（修 3 bug：BER 符号对齐/单边扫频/PSA 残余 FOE 清理）。B7 est 全准 BER~1e-2，V3 祖师爷警报不触发（1986 全爆），PSA >12GHz 退化符合 D006。**下一步=对话 7 正式 MVE 跑数 + Go/Kill 判断**。
 
 ## 进展线索
 
@@ -113,4 +121,5 @@ B7-Q1（Gardner TED 复用 FOE）第二候选 MVE 执行。与 NDA-ML 单载波�
 - **S002** 阶段 0.1 公式完整性核查 + D001（2026-07-08）：用户本地 Matlab 代码作 Gardner TED 1986 公式源，B7 映射靠数值重建，不切降级
 - **S003** 阶段 0.2+0.3 + D002+D003（2026-07-08）：0.2 子 agent 数值重建 + 同族性分析判弱同族 (B) + 主线 V5 独立重算；0.3 架构定性 FOE 前馈化 + Gardner TR 保留反馈环不撞 D006
 - **S004** 阶段 0.4-0.6 + D004+D005（2026-07-08）：0.4 fair gain 二维报告（HD-FEC 主+BER 2e-2 锚+范围比 1.9×）+ PSA FOE 概念错债务登记；0.5 B7Params 修正版 15 字段全溯源 content.md 行号 + B7 锚论文原参数不统一（用户决策）；0.6 explore 目录结构落盘 + 下游引用同步清单。**阶段 0 全收尾，可进 sandbox**
-- **S005** sandbox 前半 3 步 + 步骤 4 CRB + D006（2026-07-08）：步骤 1 B7Params 回写 params.py（15 字段 14 OK + 1 WARNING，0 DEAD/CRITICAL，下游无断链）；步骤 2 PSA FOE 谱不对称法 baseline 重写（Vieira 2023 L343-347 Δf̂=α·ln(P+/P−)/2，α_calib=0.953GHz，coarse-only 线性区 ~1GHz 限制登记非 bug）；步骤 3 TED_gain 解析 G(f_D)=K_max·|cos(πf_D/B)| + Leven 2007 对比（DOI 修正 891597→891893，三层运算不等价判弱同族 B 不降级 C，D002 残留风险闭合）；步骤 4 CRB 下界（N=1024 OSNR=17dB CRB std=59.42kHz << 扫频间隔 1GHz，精度瓶颈是量化非 CRB，FR-21 不卡）。主线 V5 独立核查全 PASS。**剩 2 步：三方对照主脚本 + MVE**
+- **S005** sandbox 前半 3 步 + 步骤 4 CRB + D006（2026-07-08）：步骤 1 B7Params 回写 params.py（15 字段 14 OK + 1 WARNING，0 DEAD/CRITICAL，下游无断链）；步骤 2 PSA FOE 谱不对称法 baseline 重写（Vieira 2023 L343-347 Δf̂=α·ln(P+/P−)/2，α_calib=0.953GHz，coarse-only 线性区 ~1GHz 限制登记非 bug）；步骤 3 TED_gain 解析 G(f_D)=K_max·|cos(πf_D/B)| + Leven 2007 对比（DOI 修正 891597→891893，三层运算不等价判弱同族 B 不降级 C，D002 残留风险闭合）；步骤 4 CRB 下界（N=1024 OSNR=17dB CRB std=59.42kHz << 扫频间隔 1GHz，精度瓶颈是量化非 CRB，FR-21 不卡）。主线 V5 独立核查全 PASS
+- **S006** 对话 6 三方对照主脚本 + MVE-SPEC + smoke test（2026-07-08）：b7_gardner_ted_mve.py 三方实现（B7 proposed FOE 前馈扫频 + Gardner 1986 TR Python 重写 + PSA FOE 谱不对称法 import）+ B7-MVE-SPEC.md 契约（10 节，仿 SC-NDA-ML SPEC）+ smoke test PASS（n_sym=4096×1seed×5f_D×OSNR17dB，14.4s）。systematic-debugging 修 3 bug：① BER 符号对齐（make_tx 直接返回 QPSK 符号作参考，不从 rx 重建）② 单边扫频 0-23GHz（poster content.md:49，避免跨 baud 周期模糊）③ PSA 残余 FOE 清理（M=4 次方 MP FOC，对齐 poster content.md:47 DSP 链）。B7 est 全准 err=0，B7 BER~1e-2 稳定，1986 全爆（V3 祖师爷警报不触发），PSA >12GHz 退化（D006 体现）。**剩对话 7：正式 MVE 跑数 + Go/Kill 判断**

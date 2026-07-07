@@ -1,0 +1,116 @@
+{
+  "meta": {
+    "baud_Hz": 25000000000.0,
+    "roll_off": 0.1,
+    "sps_gen": 16,
+    "sps_rx": 2,
+    "n_sym": 4096,
+    "n_seed": 1,
+    "osnr_list_dB": [
+      17.0
+    ],
+    "f_d_grid_GHz": [
+      0.0,
+      5.0,
+      12.0,
+      15.0,
+      23.0
+    ],
+    "alpha_psa_GHz": 12.378965634724207,
+    "scan_grid_GHz": [
+      0.0,
+      1.0,
+      2.0,
+      3.0,
+      4.0,
+      5.0,
+      6.0,
+      7.0,
+      8.0,
+      9.0,
+      10.0,
+      11.0,
+      12.0,
+      13.0,
+      14.0,
+      15.0,
+      16.0,
+      17.0,
+      18.0,
+      19.0,
+      20.0,
+      21.0,
+      22.0,
+      23.0
+    ],
+    "source_B7": "content.md L37 (CV multiplier 1 scan + 2 cand + TED2 std)",
+    "source_gardner1986": "user Tx2Rx.m L176-214 + PSKTimingErrDetector.m L11-12",
+    "source_psa": "Vieira 2023 VI, ./_psa_foe_asymmetry.py (S005 rewrite)",
+    "tl20_expectation": "see _fair_comparison_framework.md \u00a75",
+    "elapsed_s": 14.4
+  },
+  "curves": {
+    "osnr17dB": [
+      {
+        "f_D_true_GHz": 0.0,
+        "ber_B7_mean": 0.009231604670105892,
+        "ber_B7_std": 0.0,
+        "ber_Gardner1986_mean": 0.024300841705131686,
+        "ber_PSA_mean": 0.025115395058376323,
+        "f_D_est_B7_GHz": 0.0,
+        "f_D_est_PSA_GHz": 0.437,
+        "foe_err_B7_GHz": 0.0,
+        "foe_err_PSA_GHz": 0.437,
+        "V3_gap_B7_vs_1986_BER": 0.015069237035025794
+      },
+      {
+        "f_D_true_GHz": 5.0,
+        "ber_B7_mean": 0.014254683681781156,
+        "ber_B7_std": 0.0,
+        "ber_Gardner1986_mean": 0.4714906326364377,
+        "ber_PSA_mean": 0.03339668748303014,
+        "f_D_est_B7_GHz": 5.0,
+        "f_D_est_PSA_GHz": 5.143,
+        "foe_err_B7_GHz": 0.0,
+        "foe_err_PSA_GHz": 0.143,
+        "V3_gap_B7_vs_1986_BER": 0.4572359489546565
+      },
+      {
+        "f_D_true_GHz": 12.0,
+        "ber_B7_mean": 0.007466739071409177,
+        "ber_B7_std": 0.0,
+        "ber_Gardner1986_mean": 0.48683138745587834,
+        "ber_PSA_mean": 0.06896551724137931,
+        "f_D_est_B7_GHz": 12.0,
+        "f_D_est_PSA_GHz": 17.271,
+        "foe_err_B7_GHz": 0.0,
+        "foe_err_PSA_GHz": 5.271,
+        "V3_gap_B7_vs_1986_BER": 0.4793646483844692
+      },
+      {
+        "f_D_true_GHz": 15.0,
+        "ber_B7_mean": 0.01615530817268531,
+        "ber_B7_std": 0.0,
+        "ber_Gardner1986_mean": 0.477464023893565,
+        "ber_PSA_mean": 0.02945967960901439,
+        "f_D_est_B7_GHz": 15.0,
+        "f_D_est_PSA_GHz": 12.444,
+        "foe_err_B7_GHz": 0.0,
+        "foe_err_PSA_GHz": 2.556,
+        "V3_gap_B7_vs_1986_BER": 0.4613087157208797
+      },
+      {
+        "f_D_true_GHz": 23.0,
+        "ber_B7_mean": 0.01004615802335053,
+        "ber_B7_std": 0.0,
+        "ber_Gardner1986_mean": 0.48615259299484115,
+        "ber_PSA_mean": 0.1701058919359218,
+        "f_D_est_B7_GHz": 23.0,
+        "f_D_est_PSA_GHz": 1.526,
+        "foe_err_B7_GHz": 0.0,
+        "foe_err_PSA_GHz": 21.474,
+        "V3_gap_B7_vs_1986_BER": 0.47610643497149063
+      }
+    ]
+  }
+}
