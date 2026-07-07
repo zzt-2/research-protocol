@@ -1,0 +1,381 @@
+{
+  "params": {
+    "baud_GHz": 25.0,
+    "roll_off": 0.1,
+    "alpha_naive_GHz": 13.750000000000002,
+    "alpha_calibrated_GHz": 0.9534322747209679,
+    "alpha_calibration": "1-point slope fit df_est/(ln(P+/P-)/2) at f_D=1 GHz noiseless (Vieira-style sequential search replaced by single linear fit).",
+    "fft_n": 4096,
+    "n_sym": 131072,
+    "half_baud_GHz": 12.5,
+    "source": "Vieira 2023 \u00a7VI (spectral-asymmetry CFE); formula recovered from content.md L347 prose (equation image omitted L345)."
+  },
+  "no_noise": [
+    {
+      "f_D_true_GHz": 0.0,
+      "df_est_GHz": -0.0,
+      "abs_err_GHz": 0.0,
+      "fail_A_err_gt_0p5GHz": false,
+      "fail_B_drift_to_zero": false
+    },
+    {
+      "f_D_true_GHz": 1.0,
+      "df_est_GHz": 1.0,
+      "abs_err_GHz": 0.0,
+      "fail_A_err_gt_0p5GHz": false,
+      "fail_B_drift_to_zero": false
+    },
+    {
+      "f_D_true_GHz": 2.0,
+      "df_est_GHz": 1.0475,
+      "abs_err_GHz": 0.9525,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": false
+    },
+    {
+      "f_D_true_GHz": 3.0,
+      "df_est_GHz": 1.0984,
+      "abs_err_GHz": 1.9016,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": false
+    },
+    {
+      "f_D_true_GHz": 4.0,
+      "df_est_GHz": 1.1566,
+      "abs_err_GHz": 2.8434,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 5.0,
+      "df_est_GHz": 1.2203,
+      "abs_err_GHz": 3.7797,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 6.0,
+      "df_est_GHz": 1.2928,
+      "abs_err_GHz": 4.7072,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 7.0,
+      "df_est_GHz": 1.3779,
+      "abs_err_GHz": 5.6221,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 8.0,
+      "df_est_GHz": 1.4819,
+      "abs_err_GHz": 6.5181,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 9.0,
+      "df_est_GHz": 1.6064,
+      "abs_err_GHz": 7.3936,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 10.0,
+      "df_est_GHz": 1.7741,
+      "abs_err_GHz": 8.2259,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 11.0,
+      "df_est_GHz": 2.0108,
+      "abs_err_GHz": 8.9892,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 12.0,
+      "df_est_GHz": 2.435,
+      "abs_err_GHz": 9.565,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 13.0,
+      "df_est_GHz": 2.4286,
+      "abs_err_GHz": 10.5714,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 14.0,
+      "df_est_GHz": 2.0073,
+      "abs_err_GHz": 11.9927,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 15.0,
+      "df_est_GHz": 1.7716,
+      "abs_err_GHz": 13.2284,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 16.0,
+      "df_est_GHz": 1.6045,
+      "abs_err_GHz": 14.3955,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 17.0,
+      "df_est_GHz": 1.4806,
+      "abs_err_GHz": 15.5194,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 18.0,
+      "df_est_GHz": 1.3768,
+      "abs_err_GHz": 16.6232,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 19.0,
+      "df_est_GHz": 1.2919,
+      "abs_err_GHz": 17.7081,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 20.0,
+      "df_est_GHz": 1.2195,
+      "abs_err_GHz": 18.7805,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 21.0,
+      "df_est_GHz": 1.1558,
+      "abs_err_GHz": 19.8442,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 22.0,
+      "df_est_GHz": 1.0979,
+      "abs_err_GHz": 20.9021,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 23.0,
+      "df_est_GHz": 1.047,
+      "abs_err_GHz": 21.953,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 24.0,
+      "df_est_GHz": 0.9995,
+      "abs_err_GHz": 23.0005,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 25.0,
+      "df_est_GHz": -0.5342,
+      "abs_err_GHz": 25.5342,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    }
+  ],
+  "osnr17dB": [
+    {
+      "f_D_true_GHz": 0.0,
+      "df_est_GHz": 0.0001,
+      "abs_err_GHz": 0.0001,
+      "fail_A_err_gt_0p5GHz": false,
+      "fail_B_drift_to_zero": false
+    },
+    {
+      "f_D_true_GHz": 1.0,
+      "df_est_GHz": 0.9623,
+      "abs_err_GHz": 0.0377,
+      "fail_A_err_gt_0p5GHz": false,
+      "fail_B_drift_to_zero": false
+    },
+    {
+      "f_D_true_GHz": 2.0,
+      "df_est_GHz": 1.0104,
+      "abs_err_GHz": 0.9896,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": false
+    },
+    {
+      "f_D_true_GHz": 3.0,
+      "df_est_GHz": 1.0569,
+      "abs_err_GHz": 1.9431,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": false
+    },
+    {
+      "f_D_true_GHz": 4.0,
+      "df_est_GHz": 1.1107,
+      "abs_err_GHz": 2.8893,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 5.0,
+      "df_est_GHz": 1.167,
+      "abs_err_GHz": 3.833,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 6.0,
+      "df_est_GHz": 1.2293,
+      "abs_err_GHz": 4.7707,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 7.0,
+      "df_est_GHz": 1.3022,
+      "abs_err_GHz": 5.6978,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 8.0,
+      "df_est_GHz": 1.3875,
+      "abs_err_GHz": 6.6125,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 9.0,
+      "df_est_GHz": 1.4847,
+      "abs_err_GHz": 7.5153,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 10.0,
+      "df_est_GHz": 1.6071,
+      "abs_err_GHz": 8.3929,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 11.0,
+      "df_est_GHz": 1.7668,
+      "abs_err_GHz": 9.2332,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 12.0,
+      "df_est_GHz": 1.9704,
+      "abs_err_GHz": 10.0296,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 13.0,
+      "df_est_GHz": 1.9713,
+      "abs_err_GHz": 11.0287,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 14.0,
+      "df_est_GHz": 1.7631,
+      "abs_err_GHz": 12.2369,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 15.0,
+      "df_est_GHz": 1.6053,
+      "abs_err_GHz": 13.3947,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 16.0,
+      "df_est_GHz": 1.4808,
+      "abs_err_GHz": 14.5192,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 17.0,
+      "df_est_GHz": 1.3845,
+      "abs_err_GHz": 15.6155,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 18.0,
+      "df_est_GHz": 1.302,
+      "abs_err_GHz": 16.698,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 19.0,
+      "df_est_GHz": 1.2287,
+      "abs_err_GHz": 17.7713,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 20.0,
+      "df_est_GHz": 1.1657,
+      "abs_err_GHz": 18.8343,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 21.0,
+      "df_est_GHz": 1.108,
+      "abs_err_GHz": 19.892,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 22.0,
+      "df_est_GHz": 1.0564,
+      "abs_err_GHz": 20.9436,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 23.0,
+      "df_est_GHz": 1.009,
+      "abs_err_GHz": 21.991,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 24.0,
+      "df_est_GHz": 0.962,
+      "abs_err_GHz": 23.038,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    },
+    {
+      "f_D_true_GHz": 25.0,
+      "df_est_GHz": -0.5205,
+      "abs_err_GHz": 25.5205,
+      "fail_A_err_gt_0p5GHz": true,
+      "fail_B_drift_to_zero": true
+    }
+  ]
+}

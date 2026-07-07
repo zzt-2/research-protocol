@@ -604,76 +604,487 @@ class B11Params(BaseModel):
 
 
 class B7Params(BaseModel):
-    """B7 Gardner TED FOE 参数族 (B7 OFC 2026)
+    """B7 Gardner TED FOE 参数族 (B7 OFC 2026, ofc.2026.w2a.62)
 
-    注意: B7 论文是 OFC 2026 会议, 其 Doppler range 0-23 GHz 来自地面 fiber 场景。
-    B7 主线任务即"搬星地", 故部分参数为"原 paper 声明 + 星地迁移待验证"。"""
-    DOPPLER_RANGE: float = Field(
-        23e9,
-        description="Doppler 频偏范围 (0-23 GHz)",
+    场景参数跟 NDA-ML (SystemParams) 不统一——B7 锚论文工作点在 25GBaud/1.8kHz，
+    0.6dB 增量在此场景实测。复现 B7 锚方法必须用 B7 场景参数。
+    跨候选可比性通过 fair gain 维度统一（都报 HD-FEC），不通过场景参数统一。
+    用户决策：2026-07-08 对话 4，B7 用锚论文原参数。
+
+    所有 literature 字段 source 精确到 content.md 行号（FR-26 V6 读原文数值）。
+    """
+
+    # === 锚论文场景参数（content.md 行号溯源，FR-26 V6）===
+    R_SYM_B7: float = Field(
+        25e9,
+        description="符号率 25 GBaud（B7 锚论文场景，跟 NDA-ML 2.5GBaud 不统一）",
         json_schema_extra={
             "source_type": SourceType.literature,
-            "source": "B7 OFC 2026：Doppler range 0-23 GHz",
+            "source": "B7 OFC 2026 content.md L21/L25/L47「25-Gbaud DP-QPSK」",
+            "symbol": "R_SYM_B7",
+            "unit": "sym/s",
+            "audit_flag": AuditFlag.OK,
+            "note": "用户决策（2026-07-08）：B7 用锚论文原参数，不跟 NDA-ML 统一。复现 B7 0.6dB 增量必须用 25GBaud",
+        },
+    )
+    LASER_LW_B7: float = Field(
+        1800.0,
+        description="激光线宽 1.8 kHz（NL-FT-DFB 激光器 Lorentzian 线宽，B7 锚论文场景）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B7 OFC 2026 content.md L47「Lorentzian linewidth of 1.8 kHz」",
+            "symbol": "Δν_B7",
+            "unit": "Hz",
+            "audit_flag": AuditFlag.OK,
+            "note": "跟 NDA-ML LASER_LW=10kHz 不统一（B7 锚论文场景）",
+        },
+    )
+    ROLL_OFF: float = Field(
+        0.1,
+        description="RRC 成型 roll-off 0.1",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B7 OFC 2026 content.md L47「roll-off factor is set to 0.1」",
+            "symbol": "α_RRC",
+            "audit_flag": AuditFlag.OK,
+        },
+    )
+    RX_BW_GHZ: float = Field(
+        36.75e9,
+        description="接收电带宽 36.75 GHz",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B7 OFC 2026 content.md L47/L49「receiver bandwidth of 36.75 GHz」",
+            "symbol": "BW_RX",
+            "unit": "Hz",
+            "audit_flag": AuditFlag.OK,
+        },
+    )
+    SPS_RX: float = Field(
+        2.94,
+        description="接收采样率 2.94 sps（FOE 前降采样到 2 sps）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B7 OFC 2026 content.md L47/L49「sampling rate of 2.94 sps, downsampled to 2 sps before entering the FOE algorithms」",
+            "symbol": "sps",
+            "unit": "sample/sym",
+            "audit_flag": AuditFlag.OK,
+        },
+    )
+
+    # === Doppler 扫频参数 ===
+    DOPPLER_RANGE: float = Field(
+        23e9,
+        description="Doppler 频偏扫描范围上限（0-23 GHz）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B7 OFC 2026 content.md L49「scan range is set to 0 GHz–23 GHz and the interval is 1 GHz」",
             "symbol": "Δf_max",
             "unit": "Hz",
-            "audit_flag": AuditFlag.WARNING,
-            "note": "原 paper 为 fiber 场景声明值, 星地迁移待验证",
+            "audit_flag": AuditFlag.OK,
+        },
+    )
+    DOPPLER_INTERVAL: float = Field(
+        1e9,
+        description="Doppler 扫频间隔 1 GHz",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B7 OFC 2026 content.md L49「interval is 1 GHz」",
+            "symbol": "Δf_step",
+            "unit": "Hz",
+            "audit_flag": AuditFlag.OK,
+        },
+    )
+    LEO_DOPPLER_EXCURSION: float = Field(
+        100e6,
+        description="LEO Doppler 频偏幅度 ±100 MHz（三角波模拟参数）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B7 OFC 2026 content.md L47「periodic frequency excursion of ±100 MHz at a variation rate of 1 GHz/s」",
+            "symbol": "Δf_LEO",
+            "unit": "Hz",
+            "audit_flag": AuditFlag.OK,
+            "note": "原 LEO_DOPPLER_RATE=30e3 错误，B7 原文给的是 ±100MHz@1GHz/s",
         },
     )
     LEO_DOPPLER_RATE: float = Field(
-        30e3,
-        description="LEO Doppler 变化率上界",
+        1e9,
+        description="LEO Doppler 变化率 1 GHz/s（三角波斜率）",
         json_schema_extra={
             "source_type": SourceType.literature,
-            "source": "Paillier 2020 JLT / IEEE sat.1553：LEO Doppler rate ~30 kHz/s（保守上界）",
-            "symbol": "dḟ",
+            "source": "B7 OFC 2026 content.md L47「variation rate of 1 GHz/s」",
+            "symbol": "ḟ_LEO",
             "unit": "Hz/s",
-            "audit_flag": AuditFlag.WARNING,
-            "note": "Paillier/sat.1553 为 ISL/feeder 场景值, 星地场景可能不同",
+            "audit_flag": AuditFlag.OK,
         },
     )
-    OSNR_WORKING_POINT: float = Field(
+
+    # === 工作点参数 ===
+    OSNR_WORKING_POINT_LOW: float = Field(
         10.0,
-        description="OSNR 工作点",
+        description="OSNR 低 SNR 极限工作点 10 dB（B7 可解调，PSA FOE 失败）",
         json_schema_extra={
             "source_type": SourceType.literature,
-            "source": "B7 OFC 2026：OSNR 10 dB 工作点",
-            "symbol": "OSNR",
+            "source": "B7 OFC 2026 content.md L21/L69「OSNR of 10 dB, which is where conventional algorithms fail」",
+            "symbol": "OSNR_low",
             "unit": "dB",
             "audit_flag": AuditFlag.OK,
         },
     )
-    GARDNER_SPS: int = Field(
-        2,
-        description="Gardner TED 每符号采样数",
+    OSNR_WORKING_POINT_MAIN: float = Field(
+        17.0,
+        description="OSNR 主测点 17 dB（poster Fig.3a 主测条件）",
         json_schema_extra={
             "source_type": SourceType.literature,
-            "source": "Gardner 1986 paper：每符号 2 采样（经典配置）",
+            "source": "B7 OFC 2026 content.md L49「under an OSNR of 17 dB」",
+            "symbol": "OSNR_main",
+            "unit": "dB",
+            "audit_flag": AuditFlag.OK,
+        },
+    )
+
+    # === Gardner TED 参数 ===
+    GARDNER_SPS: int = Field(
+        2,
+        description="Gardner TED 每符号采样数（FOE 前降采样后）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B7 OFC 2026 content.md L47「downsampled to 2 sps before entering the FOE algorithms」+ Gardner 1986 经典配置",
             "symbol": "SPS",
             "audit_flag": AuditFlag.OK,
         },
     )
     GARDNER_GAIN: float = Field(
         0.01,
-        description="Gardner TED 环路增益",
+        description="Gardner TED 环路增益（典型值，MVE 阶段近似）",
         json_schema_extra={
             "source_type": SourceType.typical,
-            "source": "Gardner TED loop gain 典型值 0.01（不要求精确，MVE 阶段）",
+            "source": "Gardner TED loop gain 典型值（B7 锚论文未明确给精确值）",
             "symbol": "K_p",
             "audit_flag": AuditFlag.WARNING,
-            "note": "典型值而非文献精确值, MVE 阶段近似",
+            "note": "典型值而非文献精确值，MVE 阶段近似",
         },
     )
-    PSA_PILOT_SPACING: int = Field(
-        32,
-        description="PSA FOE pilot 间距",
+
+    # === FEC 阈值（跨候选可比，跟 NDA-ML 对齐）===
+    HD_FEC_THRESHOLD: float = Field(
+        3.8e-3,
+        description="7% HD-FEC BER 阈值（跨候选主判据，跟 NDA-ML 对齐）",
         json_schema_extra={
-            "source_type": SourceType.assumption,
-            "source": "PSA FOE pilot 间距假设 32 符号（DVB-S2 标准 pilot pattern 近似，B7 未明确给）",
-            "symbol": "N_p",
-            "unit": "symbol",
-            "audit_flag": AuditFlag.WARNING,
-            "note": "B7 未明确给出, 用 DVB-S2 标准 pilot pattern 近似",
+            "source_type": SourceType.literature,
+            "source": "B11 行 181/191（跟 NDA-ML 共用 FEC 阈值定义）+ B7 content.md 用 BER 2e-2（本字段是跨候选主判据补充）",
+            "symbol": "BER_HD-FEC",
+            "audit_flag": AuditFlag.OK,
+            "note": "B7 锚论文用 BER 2e-2，本字段为跨候选可比补充（0.4 双工作点决策）",
+        },
+    )
+    BER_SENSITIVITY_THRESHOLD: float = Field(
+        2e-2,
+        description="BER 2e-2 锚论文一致性校验工作点（receiver sensitivity）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B7 OFC 2026 content.md L21/L65/L69「receiver sensitivity by 0.6 dB at a BER of 2×10⁻²」",
+            "symbol": "BER_sens",
+            "audit_flag": AuditFlag.OK,
+            "note": "锚论文一致性校验用，B7 实测 0.6dB @ 此工作点",
+        },
+    )
+
+    model_config = ConfigDict(frozen=True)
+
+
+class B5Params(BaseModel):
+    """B5 LEO Doppler 短时谱 FOE 参数族 (B5 锚 optcom.2024.130981)
+
+    场景参数跟 NDA-ML (SystemParams) 部分一致（2.5GBaud 巧合）但线宽/调制不同。
+    复现 B5 锚方法必须用 B5 场景参数。
+    跨候选可比性通过 fair gain 维度统一（都报 BER 1e-3 + HD-FEC），不通过场景参数统一。
+    用户决策：2026-07-08 对话 2，B5 用锚论文原参数（跟 B7 同模式）。
+
+    所有 literature 字段 source 精确到 content.md 行号（FR-26 V6 读原文数值）。
+    来源: S003 阶段 0.5 B5Params 草稿（_b5_params_draft.md），sandbox 对话 3 落盘。
+    """
+
+    # === 锚论文场景参数（content.md 行号溯源，FR-26 V6）===
+
+    R_SYM_B5: float = Field(
+        2.5e9,
+        description="符号率 2.5 GBaud（B5 锚论文场景，跟 NDA-ML 2.5GBaud 一致）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B5 锚 optcom.2024.130981 content.md L23/L47/L89/L91/L93/L109/L167「2.5-GBaud PM-QPSK」",
+            "symbol": "R_SYM_B5",
+            "unit": "sym/s",
+            "audit_flag": AuditFlag.OK,
+            "note": "B5 锚论文场景。跟 NDA-ML R_SYM=2.5e9 一致（巧合），跟 B7 R_SYM_B7=25e9 不一致",
+        },
+    )
+
+    T_S_B5: float = Field(
+        1 / 2.5e9,
+        description="符号周期（derived from R_SYM_B5）",
+        json_schema_extra={
+            "source_type": SourceType.derived,
+            "source": "T_S_B5 = 1 / R_SYM_B5",
+            "symbol": "T_S_B5",
+            "unit": "s",
+            "audit_flag": AuditFlag.OK,
+            "derived_from": ["R_SYM_B5"],
+        },
+    )
+
+    F_CARRIER_B5: float = Field(
+        1.934e14,
+        description="光载波频率（1550 nm，B5 锚波长 1550.32nm）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B5 锚 content.md L23「1550-nm wavelength」+ L93「wavelength... 1550.32 nm」",
+            "symbol": "F_CARRIER_B5",
+            "unit": "Hz",
+            "audit_flag": AuditFlag.OK,
+            "note": "B5 锚 1550.32nm（TTX1995 激光），换算频率 c/λ",
+        },
+    )
+
+    LASER_LW_B5: float = Field(
+        20e3,
+        description="激光线宽 20 kHz（TTX1995 激光器，B5 锚论文场景）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B5 锚 content.md L93「linewidth of... 20 KHz」（TTX1995）",
+            "symbol": "Δν_B5",
+            "unit": "Hz",
+            "audit_flag": AuditFlag.OK,
+            "note": "跟 NDA-ML LASER_LW=10kHz 不一致（B5 锚 20kHz），跟 B7 LASER_LW_B7=1800Hz 不一致。三个候选线宽各异——各自锚论文场景",
+        },
+    )
+
+    MODULATION_B5: str = Field(
+        "pm-qpsk",
+        description="调制格式 PM-QPSK（B5 锚论文场景）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B5 锚 content.md L23/L47/L89/L91/L93「PM-QPSK」",
+            "symbol": "MOD_B5",
+            "unit": "-",
+            "audit_flag": AuditFlag.OK,
+            "note": "B5 锚 PM-QPSK。跟 NDA-ML 16-APSK / B7 DP-QPSK 不同",
+        },
+    )
+
+    ORBIT_ALT_B5: float = Field(
+        600e3,
+        description="LEO 轨道高度 600 km（NEO 卫星，B5 锚建模自 Ref [6] Shoji）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B5 锚 content.md L143「NEO satellite orbit altitude at 600 km」（建模自 Ref [6] Shoji JLT 2012 OIPLL）",
+            "symbol": "h_B5",
+            "unit": "m",
+            "audit_flag": AuditFlag.OK,
+            "note": "B5 锚 NEO 600km 轨道。Doppler ±4.5GHz + 56MHz/s 变化率均基于此轨道",
+        },
+    )
+
+    # === B5 核心算法参数（B5 锚特有，short_time_spectrum_foe 用）===
+
+    DOPPLER_RANGE_B5: float = Field(
+        4.5e9,
+        description="Doppler 频偏范围 ±4.5 GHz（B5 捕获范围，覆盖 LEO Doppler 全量程）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B5 锚 content.md L23（abstract，两次）/ L29（intro）/ L47（intro）/ L143（experiment）/ L149（results）五处一致",
+            "symbol": "Δf_Doppler_B5",
+            "unit": "Hz",
+            "audit_flag": AuditFlag.OK,
+            "note": "B5 核心范围优势。conclusion L167 不含此数字。vs 传统 ±312.5MHz = 15× 范围扩展",
+        },
+    )
+
+    DOPPLER_RATE_B5: float = Field(
+        56e6,
+        description="Doppler 变化率最大 56 MHz/s（NEO 600km 过顶）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B5 锚 content.md L147「the maximum rate of change reaches 56 MHz/s」",
+            "symbol": "df_Doppler_B5",
+            "unit": "Hz/s",
+            "audit_flag": AuditFlag.OK,
+            "note": "B5 锚 NEO 600km 过顶最大变化率。B5 跟踪能力指标",
+        },
+    )
+
+    ALPHA_B5: float = Field(
+        6e8,
+        description="系数 α=6×10⁸（正负功率谱面积比转频偏估计的转换系数，B5 锚式 2）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B5 锚 content.md L85「the value of α is 6 × 10⁸」",
+            "symbol": "α_B5",
+            "unit": "Hz",
+            "audit_flag": AuditFlag.OK,
+            "note": "B5 核心算法参数。影响收敛速度（L87 too large → 残频抖动大）。short_time_spectrum_foe 必须用此值",
+        },
+    )
+
+    FFT_BLOCKS_B5: int = Field(
+        1024,
+        description="均值滤波 FFT 组数 1024（M 组 FFT 数据均值滤波）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B5 锚 content.md L87「1024 sets of 16-point FFT data for mean filtering」",
+            "symbol": "M_B5",
+            "unit": "blocks",
+            "audit_flag": AuditFlag.OK,
+            "note": "B5 锚均值滤波组数。跟 FFT_POINTS_B5=16 组合",
+        },
+    )
+
+    FFT_POINTS_B5: int = Field(
+        16,
+        description="FFT 点数 16（每块 16 点 FFT，2 的幂次）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B5 锚 content.md L87「16-point FFT」+ L141「16 points」",
+            "symbol": "N_FFT_B5",
+            "unit": "samples",
+            "audit_flag": AuditFlag.OK,
+            "note": "B5 锚 FFT 点数。块长 16 点 = 6.4ns（@2.5GBaud），远短于湍流相干时间 ~1ms（0.3b 验证 2 依据）",
+        },
+    )
+
+    # === B5 残频/性能指标（锚论文报告值，sandbox 验证目标）===
+
+    RESIDUAL_FREQ_COARSE_STD_B5: float = Field(
+        140e6,
+        description="粗补偿后残频标准差 σ<140 MHz（B5 锚报告值，sandbox 验证目标）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B5 锚 content.md L23/L47「standard deviation... less than 140 MHz」",
+            "symbol": "σ_res_coarse_B5",
+            "unit": "Hz",
+            "audit_flag": AuditFlag.OK,
+            "note": "B5 锚报告值。sandbox 路径 C 验证目标（湍流下前馈归一化后是否仍 <140MHz）",
+        },
+    )
+
+    RESIDUAL_FREQ_COARSE_MAX_B5: float = Field(
+        250e6,
+        description="粗补偿后残频最大值 250 MHz（含激光 250MHz 抖动 + 算法误差）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B5 锚 content.md L149/L167「maximum value... is 250 MHz... laser will have a 250 MHz frequency jitter, and secondly, the algorithmic compensation has errors」",
+            "symbol": "res_max_B5",
+            "unit": "Hz",
+            "audit_flag": AuditFlag.OK,
+            "note": "B5 锚诚实标注：250MHz 含激光抖动非纯算法误差。湍流场景需重测",
+        },
+    )
+
+    RESIDUAL_FREQ_FINE_B5: float = Field(
+        5e6,
+        description="精确补偿后残频 <5 MHz（B5 锚报告值，精确补偿级）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B5 锚 content.md L149「residual frequency offset... approximately less than 5 MHz [20]」（引 [20] Liu 2023 PADE 精补偿）",
+            "symbol": "res_fine_B5",
+            "unit": "Hz",
+            "audit_flag": AuditFlag.OK,
+            "note": "B5 锚精确补偿残频。属后续 DSP（PADE），非 B5 短时谱粗估任务",
+        },
+    )
+
+    PRECISE_RANGE_B5: float = Field(
+        312.5e6,
+        description="精估范围 ±312.5 MHz（=B/8=2.5Gbaud/8，传统 FOE 标准范围）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B5 锚 content.md L57/L95/L149/L167「[−B/8, +B/8]... [−312.5MHz, +312.5MHz]」",
+            "symbol": "Δf_precise_B5",
+            "unit": "Hz",
+            "audit_flag": AuditFlag.OK,
+            "note": "B5 粗估任务边界 = 残频落此范围即完成任务。跟 [60] Leven 公式 27 Δfm=fs/8N 同族（N=1）",
+        },
+    )
+
+    BER_TARGET_B5: float = Field(
+        1e-3,
+        description="BER 工作点 1e-3（B5 锚 + sat.1553 + [60] Leven 三者一致，主工作点）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B5 锚 content.md L149「BER of 1 × 10⁻³」+ sat.1553 L353 + [60] Leven L121",
+            "symbol": "BER_B5",
+            "unit": "-",
+            "audit_flag": AuditFlag.OK,
+            "note": "主工作点。跨候选可比另报 HD-FEC 3.8e-3（0.4.3 决策）",
+        },
+    )
+
+    RX_SENSITIVITY_DBM_B5: float = Field(
+        -48.0,
+        description="BER 1e-3 接收灵敏度 −48 dBm（B5 锚报告值）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B5 锚 content.md L149「BER of 1 × 10⁻³ can be obtained at a receiver sensitivity of −48 dBm」",
+            "symbol": "P_rx_B5",
+            "unit": "dBm",
+            "audit_flag": AuditFlag.OK,
+            "note": "B5 锚接收灵敏度。测试区间 −51~−10 dBm（L93/L127），最优光功率 −25 dBm（L93 ATT2）",
+        },
+    )
+
+    # === 硬件/采样参数（B5 锚 FPGA 实验配置）===
+
+    ADC_RATE_B5: float = Field(
+        5e9,
+        description="ADC 采样率 5 GSa/s（B5 锚 FPGA 实验）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B5 锚 content.md L93「sampling rate of 5 GSa/s」",
+            "symbol": "f_s_ADC_B5",
+            "unit": "samples/s",
+            "audit_flag": AuditFlag.OK,
+            "note": "B5 锚 ADC 采样率。8bit 分辨率（L93）",
+        },
+    )
+
+    FPGA_CLOCK_B5: float = Field(
+        312.5e6,
+        description="FPGA DSP 核时钟 312.5 MHz（B5 锚 Intel Arria 10）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B5 锚 content.md L95「DSP core driven by a 312.5 MHz clock frequency」",
+            "symbol": "f_FPGA_B5",
+            "unit": "Hz",
+            "audit_flag": AuditFlag.OK,
+            "note": "B5 锚 FPGA 时钟。Intel Arria 10（L93/L95）",
+        },
+    )
+
+    CYCLE_PERIOD_B5: float = Field(
+        3.0,
+        description="3s 循环周期（B5 锚外层迭代重估周期，前馈开环）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "B5 锚 content.md L93「The process cycles every 3 s」",
+            "symbol": "T_cycle_B5",
+            "unit": "s",
+            "audit_flag": AuditFlag.OK,
+            "note": "B5 锚外层迭代重估周期。3s 周期重估是前馈重复执行（0.3a 确认），非闭环 TF",
+        },
+    )
+
+    # === FEC 阈值（跨候选可比，跟 B7/NDA-ML 对齐）===
+
+    HD_FEC_THRESHOLD_B5: float = Field(
+        3.8e-3,
+        description="7% HD-FEC BER 阈值（跨候选可比补充工作点，0.4.3 决策）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "sat.1553 L440 + D005 会议门槛 + 跨候选统一叙事（B7Params HD_FEC_THRESHOLD 同源）",
+            "symbol": "BER_HD-FEC_B5",
+            "unit": "-",
+            "audit_flag": AuditFlag.OK,
+            "note": "B5 锚论文用 BER 1e-3，本字段为跨候选可比补充（0.4.3 双工作点决策）",
         },
     )
 

@@ -261,3 +261,62 @@ S004（本轮 0.4 执行）+ NDA-ML fair gain 框架 + B7 锚论文量化 + comm
 ### 来源
 
 S004（本轮 0.5+0.6 执行）+ B7 content.md 参数行号溯源 + params.py 现有 B7Params 核查 + D-007 教训 + 用户决策
+
+## D006: PSA FOE coarse-only 线性区 ~1GHz 限制登记 + Leven DOI 修正（sandbox 步骤 2-3 诚实发现）
+
+> status: active
+> date: 2026-07-08
+> 取代：无（D004 PSA FOE baseline 债务的执行收尾 + D002 残留风险的闭合确认）
+> 被取代：无
+> 依据: 子 agent PSA FOE 重写（`_psa_foe_asymmetry.py` + `_psa_foe_asymmetry_results.json` + `_psa_foe_asymmetry_summary.md`）+ 子 agent TED_gain 解析推导（`_ted_gain_analytic.py` + `_ted_gain_analytic_results.json` + `_ted_gain_analytic_summary.md`）+ 主线 V5 独立核查（G(0) bit-exact + 周期三角恒等式 + Leven 同族三层运算不等价 + PSA 线性区物理一致）+ Vieira 2023 原文（`papers/doi/10.1109_access.2023.3287501/content.md` L343-347）+ Leven 2007 原文（`papers/doi/10.1109_lpt.2007.891893/content.md` L33-65）
+> 触发原话: 无（技术推导——sandbox 执行的诚实发现，非用户 voice 触发；PSA 弱发现是子 agent 主动报告 + 主线独立核查确认）
+
+### 决策
+
+**sandbox 步骤 2-3 产出登记（3 项）**：
+
+1. **PSA FOE coarse-only baseline 线性区 ~1GHz 限制**（步骤 2 诚实发现）：
+   - 单-α 谱不对称法在 25GBaud/β=0.1 场景线性区仅 ~1GHz，f_D≥2GHz 全 failA（|Δf̂−f_D|>0.5GHz）
+   - 物理根因：β=0.1 RRC 谱尖边缘，ln(P+/P−) 在 f_D 超过谱边缘带宽 ~1.25GHz 后饱和；aliasing 上界半 baud 12.5GHz 是"不混叠"上界不是"线性估准"上界
+   - 跟 B7 poster content.md L19 "fails beyond 12 GHz" 不冲突——poster 只给 aliasing 上界，没给线性区下界实测；子 agent 测的 ~1GHz 是更保守的真实测量
+   - **不是 bug，不是红线警报**。登记为 sandbox 已知限制
+2. **fair gain 含义修正**：PSA coarse-only 太弱 → B7 vs PSA 的 BER gain 是**上界**（baseline 弱则候选显得强），不是紧下界。三方对照（对话 6）记录此限制。可选补 fine CFE stage 作双方对称增强（V3 公平性），但不强制（B7 本就是 coarse 扫频，fair 比较）
+3. **Leven 2007 DOI 修正**：B7 poster ref[7] Leven PTL 2007 正确 DOI = **10.1109/LPT.2007.891893**（非 task brief 笔误的 891597）。论文已落盘 `papers/doi/10.1109_lpt.2007.891893/`，作者 Leven/Kaneda/Koc/Chen，PTL vol.19 no.6 pp.366-368
+
+**D002 残留风险闭合确认**（步骤 3）：B7 跟 Leven = 弱同族 (B)，不降级 (C)。
+- G(f_D) = K_max·|cos(π·f_D/B)| 解析成立（f_D 依赖性解耦为余弦因子，与脉冲形状无关）
+- Leven 是时域 phase-increment mean-angle（`y_k·conj(y_{k-1})` → `^4` → mean-angle），非频域 FFT 谱峰
+- 三层运算不等价（乘积结构/非线性/聚合）→ 不满足 (C) "核心运算层等价"判据
+
+### 理由
+
+1. **PSA 弱发现必须诚实登记而非隐藏**：profile「质量标准 - 没有新鲜验证证据不宣称完成」+「急于推进」防线。子 agent 主动报告 PSA baseline 弱是诚实信号，主线若当作"baseline 实现问题"忽略会重蹈 NDA-ML D-008 覆辙（接受弱 baseline 让候选显得强）。登记为已知限制 + fair gain 上界含义修正，让后续 MVE 结论带 caveat。
+
+2. **PSA 弱不阻断 sandbox 推进**：D005 务实路线（INVARIANT 最高优先级）下，B7 贡献是"赢传统 baseline 几 dB"。PSA coarse-only 弱 → B7 赢它不费吹灰之力，但这不否定 B7 的范围优势（1.9×）和低 SNR 鲁棒性（OSNR 10dB）——这两个维度跟 PSA 弱无关。MVE 报告时区分"BER gain 上界（vs 弱 PSA）"和"范围/鲁棒性结构性优势"。
+
+3. **Leven 同族判定用解析证据不用直觉**：D-009 教训 6「只信原始数字不信归因」。本决策的同族判定不是凭"B7 时域 Leven 频域"直觉，而是基于 G(f_D) 解析式 + Leven 公式提取后的三层运算逐项对比（乘积结构/非线性/聚合），每层都有具体公式证据。
+
+### 排除的替代方案
+
+- **"PSA 线性区 ~1GHz 是实现 bug，重写修正"**：否决。主线 V5 独立核查确认 β=0.1 谱边缘 ~1.25GHz 跟线性区 ~1GHz 物理一致，且子 agent 的 α 标定方法忠实复现 Vieira 的 sequential search。这是真实物理限制不是实现问题。
+- **"PSA 弱触发 B7-Q1 重新评估或 Kill"**：否决。D005 务实路线 + profile「务实可毕业」。PSA 弱是 baseline 选择问题不是 B7 方法问题。B7 的范围/鲁棒性优势独立成立。
+- **"B7 vs Leven 强同族 (C)，重新定位贡献"**：否决。步骤 3 解析推导 + 三层运算对比确认 (B) 弱同族，D002 残留风险闭合。
+- **"补 fine CFE stage 给 PSA 作公平对照"**：可选非强制。留到对话 6 三方对照时按 fair-comparison framework 决定（若补，双方对称补，不只给 PSA 补）。
+
+### 影响范围
+
+- **对话 6 三方对照（C7+V2）**：PSA FOE baseline 用 `_psa_foe_asymmetry.py`（谱不对称法，非 pilot-aided）。记录 PSA coarse-only 弱限制，BER gain 标为上界
+- **MVE 报告叙事**：B7 贡献分两维报告——① BER gain vs PSA（上界，因 PSA coarse-only 弱）② 范围 1.9× + OSNR 10dB 鲁棒性（结构性优势，跟 PSA 弱无关）
+- **D002 残留风险闭合**：sandbox 步骤 3 完成，弱同族 (B) 确认。INVARIANT 11 不变（Gardner 1986 祖师爷警报仍在，对话 6 V3 红线）
+- **论文引用**：Leven 2007 DOI 用 10.1109/LPT.2007.891893（修正笔误）
+- **B7 锚方法解析式资产**：G(f_D) = K_max·|cos(πf_D/B)| 可进论文 §2 原理推导（poster 缺这个解析式，本 sandbox 补上，是论文增量）
+
+### 教训
+
+1. **子 agent 诚实报告"反常发现"要重点核查而非忽略**：步骤 2 子 agent 主动报"PSA 线性区 ~1GHz 远低于声称 12.5GHz"是诚实信号。主线 V5 独立核查物理机制（β=0.1 谱边缘）后确认非 bug。若主线当作"实现问题"忽略，会在对话 6 三方对照时得到虚高的 BER gain，重蹈 NDA-ML D-008（接受弱/错 baseline 让候选显得强）覆辙。
+2. **C6 公式核对 PDF→md omitted 要标降级但区分"显示公式丢"vs"推导丢"**：Vieira content.md L345 显示公式 omitted 但 L347 prose 完整，read-note 记录闭合形式 → 非降级。Leven content.md L39-53 多个公式 omitted 但 L33-65 THEORY 文字描述清晰 → 半降级（公式形式靠文字+标准理论恢复）。区分两类 omitted 避免一刀切判"公式不全切降级"。
+3. **DOI 笔误要核查真实落盘**：task brief 写 Leven DOI `891597`，子 agent 发现实际是 `891893`（差一个数字）。FR-26 证据链要求不只信 brief 写的，要核查论文真实落盘。
+
+### 来源
+
+S005（本轮 sandbox 步骤 1-3 执行）+ 子 agent PSA FOE 重写产出 + 子 agent TED_gain 解析推导产出 + 主线 V5 独立核查 + Vieira 2023 原文 + Leven 2007 原文

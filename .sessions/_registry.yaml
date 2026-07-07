@@ -315,7 +315,7 @@ topics:
     title: B7 Gardner TED 复用 FOE 第二候选（与 NDA-ML 并行，NDA-ML 卡 D-008~D-009 期间推进）
     status: active
     created: "2026-07-08"
-    last_updated: "2026-07-08（S004 阶段 0.4-0.6 全部通过 D004+D005——fair gain 二维报告 + B7Params 修正版 15 字段全溯源 + 阶段 0 六项规约全收尾，可进 sandbox）"
+    last_updated: "2026-07-08（S005 sandbox 前半 3 步完成 D006——B7Params 15 字段回写 params.py 无 DEAD/CRITICAL + PSA FOE 谱不对称法 baseline 重写（coarse-only 线性区 ~1GHz 限制登记）+ TED_gain 解析式 G(f_D)=K_max·|cos(πf_D/B)| + Leven 对比 D002 残留风险闭合弱同族 B 不降级 C。进对话 6 sandbox 后半 + MVE）"
     description: "承接上游 2026-06-20-problem-driven-redirection S031 排优先级（B7-Q1 Conditional Go 会议最稳）+ step4a-mve-execution 切法地图参照系。NDA-ML 单载波候选（step4a-mve-execution 专题）卡在 D-008 双 bug + D-009 线宽选择 + vs VV 持平陷阱，用户决策同时跑第二候选 B7 分散风险。B7 锚论文 OFC 2026 poster（Gardner TED 复用 FOE，0.6dB+1.9×范围+OSNR 10dB），baseline PSA FOE。**B7 特殊风险**：①锚论文 90 行很薄（公式重建风险高于 B11）②Gardner TED 1986 是祖师爷（持平警报最严）③反馈环架构可能撞 D006 ④公平对照框架不能照搬 NDA-ML。**流程规划前置**（阶段 0 不写代码先定规约）防重蹈 NDA-ML 混乱（参数反复/算法 bug/验证失效/方向重定位/文件混乱/文献引用 6 类）。守 sim-preflight v1.3.0 新增 C6-C8（公式核对/三方对照/祖师爷警报）+ interrupt 10-12 条。拆对话：①阶段 0 前置规约（公式完整性/数学同族性/架构定性/公平对照框架/参数真相源/文件组织）②sandbox 三方对照（Gardner TED 改进版/1986 原版祖师爷/PSA FOE baseline）③MVE + consistency。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
@@ -332,7 +332,7 @@ topics:
     title: B2-Q2 Fade-Freeze + Pilot-Aided Fallback 双模切换第三候选（主控对话开题，首验证 step4a 实测反证张力）
     status: active
     created: "2026-07-08"
-    last_updated: "2026-07-08（S002 阶段 0.1-0.6 六项规约全完成——张力验证 4 维度分解 / dB 溯源限定 sat.1553 +1dB=PE vs VV+diff / 架构定性前馈化 INVARIANT 不撞 D006 建议升 D002 / 公平对照 baseline=纯blind freeze[79]+双测度+ρ_fade摊薄+多维够格 / 参数真相源 σ²_pN vs GG α/β 严格区分 + ref[58]=Martins dual-stage 修正叙事 / 文件组织防 D-007 混乱。7 份产出落盘 explore/b2-fade-freeze-pilot-fallback/。核心结论：张力可分解不直接 Kill，增量在动态恢复时间维度，维度 C2 红线 sandbox 必答。阶段 0 满足可进 sandbox，H002 交阶段 1 三方对照。用户授权'先接着做吧'一次做完六项）"
+    last_updated: "2026-07-08（S003 阶段 1 sandbox 三方对照完成——参数实测发现功率分布右偏σ标准化失效改用ρ_fade=0.15反推γ_th / 三方对照C2红线解除(da_ml多数赢blind)但动态恢复结构性失效(前馈架构A≈C,架构-测度不匹配) / Go/Kill三Go全FAIL(动态恢复/范围扩展/稳态BER)+Kill2/Kill3部分成立 / executor建议Kill待主控+用户定夺(H003交接)。7份新产出落盘explore/b2-fade-freeze-pilot-fallback/)。S002 阶段 0.1-0.6 六项规约全完成（张力验证4维度分解/dB溯源限定sat.1553+1dB=PE vs VV+diff/架构定性前馈化INVARIANT不撞D006建议升D002/公平对照baseline=纯blind freeze[79]+双测度+ρ_fade摊薄+多维够格/参数真相源σ²_pN vs GG α/β严格区分+ref[58]=Martins dual-stage修正叙事/文件组织防D-007混乱）。核心结论：张力可分解不直接Kill，增量在动态恢复时间维度，维度C2红线sandbox必答。"
     description: "承接上游 2026-06-20-problem-driven-redirection S031 排优先级（B2-Q2 第二档 #7 边际够格，范围 in 星地）+ 切法地图参照系（B2 饱和池 §A 小池 3 篇锚无大点）。主控对话开题（不自己执行），派工作对话执行阶段 0.1-0.6。**B2 特殊风险**：①核心命题被 step4a 实测反证（DA pilot 在 fade 崩溃 vs NDA 鲁棒）②sat.1553 +1dB 口径错位（PE vs VV+diff 不是 FOE freeze 增量）③饱和池 dB 难出区④跟 NDA-ML fade 鲁棒性叙事撞车。**复用基建完整**：common/_recovery.py 4 估计器全有（fft_foe/nda_ml/da_ml/psa_foe），双模切换 = (blind + 功率阈值 gating) ↔ (pilot) 模式切换。守 sim-preflight v1.3.0 + D005 务实路线 + D006 红线（双模切换是估计器选择不纳入环路 TF，前馈化合法不撞）。拆对话：①阶段 0 前置规约（张力验证/dB 溯源/架构定性/公平对照/参数真相源/文件组织）②sandbox 三方对照（双模切换/纯 blind freeze/纯 pilot-aided）③MVE + consistency。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
