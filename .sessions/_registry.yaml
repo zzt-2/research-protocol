@@ -332,7 +332,7 @@ topics:
     title: B2-Q2 Fade-Freeze + Pilot-Aided Fallback 双模切换第三候选（主控对话开题，首验证 step4a 实测反证张力）
     status: active
     created: "2026-07-08"
-    last_updated: "2026-07-08（S001 开题 + 阶段 0 六项规约设计完成 D001——首验证 step4a 实测反证张力策略。B2-Q2 核心命题 pilot-aided fallback 在 fade 比 blind freeze 更优 vs step4a 实测 DA pilot 在 fade 崩溃（BER 0.38 vs NDA 0.29）直接打架。阶段 0.1 = 设计 fair comparison 消化张力，不直接搬 sat.1553 +1dB。H001 交接工作对话执行 0.1-0.6）"
+    last_updated: "2026-07-08（S002 阶段 0.1-0.2 完成——张力验证设计 4 维度分解 [A pilot 配置 / B 触发条件 / C pilot-aided 类型 / D 信道场景] + dB 溯源限定 [sat.1553 +1dB = PE vs VV+diff 口径锁定，B2-Q2 不能搬]。核心结论：张力可分解不直接 Kill，B2-Q2 增量在动态恢复时间维度（step4a 没测），维度 C2 红线 [所有 pilot-aided 变体在 fade 是否都输 NDA-ML] sandbox 阶段 1 必答。意外发现 sat.1553 L440 [58] pilot+盲组合 open direction 是 B2-Q2 叙事锚点。H002 交接工作对话执行 0.3-0.6）"
     description: "承接上游 2026-06-20-problem-driven-redirection S031 排优先级（B2-Q2 第二档 #7 边际够格，范围 in 星地）+ 切法地图参照系（B2 饱和池 §A 小池 3 篇锚无大点）。主控对话开题（不自己执行），派工作对话执行阶段 0.1-0.6。**B2 特殊风险**：①核心命题被 step4a 实测反证（DA pilot 在 fade 崩溃 vs NDA 鲁棒）②sat.1553 +1dB 口径错位（PE vs VV+diff 不是 FOE freeze 增量）③饱和池 dB 难出区④跟 NDA-ML fade 鲁棒性叙事撞车。**复用基建完整**：common/_recovery.py 4 估计器全有（fft_foe/nda_ml/da_ml/psa_foe），双模切换 = (blind + 功率阈值 gating) ↔ (pilot) 模式切换。守 sim-preflight v1.3.0 + D005 务实路线 + D006 红线（双模切换是估计器选择不纳入环路 TF，前馈化合法不撞）。拆对话：①阶段 0 前置规约（张力验证/dB 溯源/架构定性/公平对照/参数真相源/文件组织）②sandbox 三方对照（双模切换/纯 blind freeze/纯 pilot-aided）③MVE + consistency。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
