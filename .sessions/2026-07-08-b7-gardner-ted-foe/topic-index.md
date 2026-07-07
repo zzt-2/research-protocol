@@ -1,7 +1,7 @@
 # Topic Index: B7 Gardner TED 复用 FOE 第二候选
 
 > slug: 2026-07-08-b7-gardner-ted-foe
-> status: active | created 2026-07-08 | last_updated: 2026-07-08（S001 专题开题 + 流程规划前置——NDA-ML 卡 D-008~D-009 期间，用户决策同时跑第二候选 B7 分散风险）
+> status: active | created 2026-07-08 | last_updated: 2026-07-08（S002 阶段 0.1 公式完整性核查通过 D001——用户本地 Matlab 代码作 Gardner TED 1986 公式源，B7 映射靠数值重建，不切降级）
 
 ## 专题定位（一句话）
 
@@ -85,19 +85,21 @@ B7-Q1（Gardner TED 复用 FOE）第二候选 MVE 执行。与 NDA-ML 单载波�
 
 ## 已确认决策
 
-- 无新建 D###（首 session，专题开题 + 流程规划，非架构决策）
+- **D001**（2026-07-08，S002）：Gardner TED 1986 公式源 = 用户本地 Matlab 代码（`毕设/旧本科代码/PSKTimingErrDetector.m` + `Tx2Rx.m` L176-214），不切降级方案。B7 "TED 增益↔Doppler 映射"解析式缺失但可数值重建。阶段 0.1 通过，进 0.2。
 
 ## 悬而未决
 
-1. **B7 锚论文 OFC 2026 poster 是否已落盘**：需阶段 0.1 核查（`papers/` 下找 ofc.2026.w2a.62 或 DOI 10.1364/ofc.2026.w2a.62），未落盘则需先下载
-2. **Gardner TED 1986 数学同族性结论**：阶段 0.2 子 agent 深度检查后定（跟 B7 锚方法的关系）
-3. **架构定性结论**：阶段 0.3 定死前馈化 vs 环路（影响是否撞 D006）
+1. ~~B7 锚论文 OFC 2026 poster 是否已落盘~~ → **已解决（S002）**：已落盘 `papers/doi/10.1364_ofc.2026.w2a.62/`，全文 90 行，0 编号公式，4 图 omitted
+2. **Gardner TED 1986 数学同族性结论**：阶段 0.2 检查（跟 B7 锚方法的关系）。D001 初判非同族（B7 复用 TED 增益做 FOE vs 1986 用 TED 检测定时误差，不是同量变体），待 0.2 深度确认
+3. **架构定性结论**：阶段 0.3 定死前馈化 vs 环路（影响是否撞 D006）。用户代码是反馈环，B7 也是反馈环结构，前馈化决策仍需做
 4. **公平对照框架**：阶段 0.4 设计（fair gain @ BER 2e-2 还是 HD-FEC，PSA FOE 怎么公平对照）
+5. **B7 映射数值重建**：用本地 TED 代码扫 Doppler 频偏跑 S-curve 验证周期相关是否存在（0.2 核心动作，重建 poster Fig.1a omitted 的图）
 
 ## 当前位置
 
-**🟢 S001 专题开题 + 流程规划前置（2026-07-08）**：NDA-ML 单载波候选卡 D-008 双 bug + D-009 线宽/vs VV 持平陷阱，用户决策同时跑 B7 分散风险。本专题承接上游 S031 B7-Q1 Conditional Go + step4a-mve-execution NDA-ML 教训。**流程规划前置**：阶段 0 六项规约（公式完整性/数学同族性/架构定性/公平对照框架/参数真相源/文件组织）不写代码先定，防重蹈 NDA-ML 6 类混乱。sim-preflight v1.3.0 已补 C6-C8 + interrupt 10-12 条。下一步=新对话执行 H001（阶段 0 六项规约）。
+**🟡 S002 阶段 0.1 完成（2026-07-08）**：阶段 0.1 公式完整性核查通过（D001）。Gardner TED 1986 公式源 = 用户本地 Matlab 代码（`毕设/旧本科代码/PSKTimingErrDetector.m`，比扫描原文可靠）；B7 OFC 2026 "TED 增益↔Doppler 映射"解析式缺失但可数值重建（0.2 动作）。0.1 报告在 `projects/simulation/explore/b7-gardner-ted-foe/_formula_completeness_check.md`。下一步=新对话执行 0.2 数学同族性检查（含 B7 映射数值重建）+ 0.3-0.6。
 
 ## 进展线索
 
-- **S001** 专题开题 + 流程规划前置 + H001 交接（2026-07-08，本对话产出）
+- **S001** 专题开题 + 流程规划前置 + H001 交接（2026-07-08）
+- **S002** 阶段 0.1 公式完整性核查 + D001（2026-07-08，本对话）：用户本地 Matlab 代码作 Gardner TED 1986 公式源，B7 映射靠数值重建，不切降级
