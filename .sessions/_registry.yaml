@@ -315,7 +315,7 @@ topics:
     title: B7 Gardner TED 复用 FOE 第二候选（与 NDA-ML 并行，NDA-ML 卡 D-008~D-009 期间推进）
     status: active
     created: "2026-07-08"
-    last_updated: "2026-07-08（S002 阶段 0.1 公式完整性核查通过 D001——用户本地 Matlab 代码作 Gardner TED 1986 公式源，B7 映射靠数值重建，不切降级。0.1 报告在 explore/b7-gardner-ted-foe/_formula_completeness_check.md）"
+    last_updated: "2026-07-08（S003 阶段 0.2+0.3 通过 D002+D003——B7 弱同族 (B) 机制实测成立 + 架构 FOE 前馈化不撞 D006，进 0.4）"
     description: "承接上游 2026-06-20-problem-driven-redirection S031 排优先级（B7-Q1 Conditional Go 会议最稳）+ step4a-mve-execution 切法地图参照系。NDA-ML 单载波候选（step4a-mve-execution 专题）卡在 D-008 双 bug + D-009 线宽选择 + vs VV 持平陷阱，用户决策同时跑第二候选 B7 分散风险。B7 锚论文 OFC 2026 poster（Gardner TED 复用 FOE，0.6dB+1.9×范围+OSNR 10dB），baseline PSA FOE。**B7 特殊风险**：①锚论文 90 行很薄（公式重建风险高于 B11）②Gardner TED 1986 是祖师爷（持平警报最严）③反馈环架构可能撞 D006 ④公平对照框架不能照搬 NDA-ML。**流程规划前置**（阶段 0 不写代码先定规约）防重蹈 NDA-ML 混乱（参数反复/算法 bug/验证失效/方向重定位/文件混乱/文献引用 6 类）。守 sim-preflight v1.3.0 新增 C6-C8（公式核对/三方对照/祖师爷警报）+ interrupt 10-12 条。拆对话：①阶段 0 前置规约（公式完整性/数学同族性/架构定性/公平对照框架/参数真相源/文件组织）②sandbox 三方对照（Gardner TED 改进版/1986 原版祖师爷/PSA FOE baseline）③MVE + consistency。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
@@ -326,6 +326,23 @@ topics:
         reason: 继承 B7 gw-read 结构化笔记（_B7-gardner-ted-increment.md，锚方法+baseline 详情）
       - slug: 2026-07-06-step4a-mve-execution
         reason: 继承 NDA-ML 执行链教训（D-007~D-009 六类混乱模式 + sim-preflight v1.3.0 补强），防重蹈覆辙
+    conflicts_with: []
+
+  - slug: 2026-07-08-b2-fade-freeze-pilot-fallback
+    title: B2-Q2 Fade-Freeze + Pilot-Aided Fallback 双模切换第三候选（主控对话开题，首验证 step4a 实测反证张力）
+    status: active
+    created: "2026-07-08"
+    last_updated: "2026-07-08（S001 开题 + 阶段 0 六项规约设计完成 D001——首验证 step4a 实测反证张力策略。B2-Q2 核心命题 pilot-aided fallback 在 fade 比 blind freeze 更优 vs step4a 实测 DA pilot 在 fade 崩溃（BER 0.38 vs NDA 0.29）直接打架。阶段 0.1 = 设计 fair comparison 消化张力，不直接搬 sat.1553 +1dB。H001 交接工作对话执行 0.1-0.6）"
+    description: "承接上游 2026-06-20-problem-driven-redirection S031 排优先级（B2-Q2 第二档 #7 边际够格，范围 in 星地）+ 切法地图参照系（B2 饱和池 §A 小池 3 篇锚无大点）。主控对话开题（不自己执行），派工作对话执行阶段 0.1-0.6。**B2 特殊风险**：①核心命题被 step4a 实测反证（DA pilot 在 fade 崩溃 vs NDA 鲁棒）②sat.1553 +1dB 口径错位（PE vs VV+diff 不是 FOE freeze 增量）③饱和池 dB 难出区④跟 NDA-ML fade 鲁棒性叙事撞车。**复用基建完整**：common/_recovery.py 4 估计器全有（fft_foe/nda_ml/da_ml/psa_foe），双模切换 = (blind + 功率阈值 gating) ↔ (pilot) 模式切换。守 sim-preflight v1.3.0 + D005 务实路线 + D006 红线（双模切换是估计器选择不纳入环路 TF，前馈化合法不撞）。拆对话：①阶段 0 前置规约（张力验证/dB 溯源/架构定性/公平对照/参数真相源/文件组织）②sandbox 三方对照（双模切换/纯 blind freeze/纯 pilot-aided）③MVE + consistency。"
+    depends_on:
+      - slug: 2026-06-20-problem-driven-redirection
+        reason: 继承 S031 B2-Q2 第二档排序 + D005 务实路线 + D006 红线 + 5 个口径警示
+      - slug: 2026-07-05-carrier-sync-v2-cut-pattern
+        reason: 继承切法地图定稿（B2 饱和池 §A 小池定位 + sat.1553 L440 +1dB 口径核验），作为 MVE 执行参照系
+      - slug: 2026-07-02-carrier-sync-v2-deep-read
+        reason: 继承 B2 gw-read 结构化笔记（_B2-deep-fade-freeze-increment.md，M-C-A + 锚方法详情）
+      - slug: 2026-07-06-step4a-mve-execution
+        reason: 继承 NDA-ML 执行链教训（D-007~D-009 六类混乱防重蹈）+ step4a 实测反证数据（decisions.md:150, 157 DA pilot 在 fade BER 0.38 vs NDA 0.29）+ 复用基建（common/_recovery.py 4 估计器 + DA pilot overhead 1.25dB 公平对照框架）
     conflicts_with: []
 
   - slug: 2026-07-06-step4a-mve-execution
