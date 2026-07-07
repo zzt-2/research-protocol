@@ -1,7 +1,7 @@
 # Topic Index: B2-Q2 Fade-Freeze + Pilot-Aided Fallback 双模切换第三候选
 
 > slug: 2026-07-08-b2-fade-freeze-pilot-fallback
-> status: active | created 2026-07-08 | last_updated 2026-07-08（S002 阶段 0.1-0.2 完成——张力验证设计 4 维度分解 + dB 溯源限定，H002 交接）
+> status: active | created 2026-07-08 | last_updated 2026-07-08（S002 阶段 0.1-0.6 六项规约全完成——张力验证/dB 溯源/架构定性/公平对照/参数真相源/文件组织，可进 sandbox）
 
 ## 专题定位（一句话）
 
@@ -92,16 +92,17 @@ B2-Q2（fade-freeze + pilot-aided fallback 双模切换）第三候选 MVE 执�
 ## 悬而未决
 
 1. ~~step4a 实测反证怎么消化~~ ✅ **S002 阶段 0.1 已消化**：张力可分解为 4 维度（A pilot 配置 / B 触发条件 / C pilot-aided 类型 / D 信道场景）。**核心发现**：step4a 测的是稳态 BER，B2-Q2 增量在动态恢复时间（不同测度）。**维度 C2 红线风险**：所有 pilot-aided 变体在 fade 是否都输 NDA-ML，sandbox 阶段 1 必答
-2. ~~sat.1553 +1dB 口径限定~~ ✅ **S002 阶段 0.2 已限定**：+1dB = pilot PE vs VV+diff @ QPSK+AWGN PN scenario 4。五重口径差异（对比方法/估计对象/调制/场景/测度）→ B2-Q2 不能搬。B2-Q2 增量来源：fade 恢复时间 / 稳态 BER / 工作区扩展，必须 MVE 产出。**意外发现**：sat.1553 L440 [58] "pilot+盲组合 open direction" 是 B2-Q2 叙事锚点
-3. **架构定性**：阶段 0.3 双模切换的前馈化（合法不撞 D006）vs 环路（撞 D006）。盲侧 fft_foe 是前馈，但 pilot 侧 da_ml 在 step4a 是前馈闭式，整体双模切换可前馈化（fade 检测门控+模式切换不纳入环路 TF）
-4. **公平对照框架**：阶段 0.4 设计（baseline = 纯 blind freeze [79]；fair gain 双测度 = 稳态 BER + 动态恢复时间；pilot overhead 摊薄 = fade 占空比 × 25%；叙事用 sat.1553 [58] 锚）。S002 阶段 0.1 已给框架输入，0.4 制度化
-5. **饱和池 dB 难出区对策**：阶段 0.4 + TL-20（B2-Q2 增量可能靠范围维度——strong 湍流纯 blind HD-FEC 不可达，双模切换可能可达）
+2. ~~sat.1553 +1dB 口径限定~~ ✅ **S002 阶段 0.2 已限定**：+1dB = pilot PE vs VV+diff @ QPSK+AWGN PN scenario 4。五重口径差异 → B2-Q2 不能搬。**意外发现**：sat.1553 L440 [58] "pilot+盲组合" = Martins 2021 dual-stage CPR（阶段 0.5 查证修正）
+3. ~~架构定性~~ ✅ **S002 阶段 0.3 已定**：前馈化（INVARIANT 级），4 估计器全前馈闭式 + 门控外部 switch，不撞 D006。建议升 D002（待主控对话确认）
+4. ~~公平对照框架~~ ✅ **S002 阶段 0.4 已制度化**：baseline=纯 blind freeze[79]，双测度（稳态 BER 不退化 + 动态恢复时间核心增量 + 范围扩展辅助），pilot overhead 摊薄 ρ_fade×1.249dB，叙事定位（填补 NDA-ML strong 空白），多维够格不押注稳态 BER dB
+5. ~~饱和池 dB 难出区对策~~ ✅ **S002 阶段 0.4 已定**：多维增量（动态恢复 + 范围扩展 + 鲁棒性），任一够格即 Go
+6. **sandbox 阶段 1 待答**（未决）：①维度 C2 红线（所有 pilot-aided 在 fade 是否都输 NDA-ML）②B2-Q2 动态恢复时间是否优于纯 blind freeze ③γ_th 敏感性 + ρ_fade 实测
 
 ## 当前位置
 
-**🟡 S002 阶段 0.1-0.2 完成（2026-07-08）**：张力验证设计 + dB 溯源核查完成，两份产出落盘（`_tension_validation_design.md` + `_db_sourcing_audit.md`）。核心结论：张力可分解不直接 Kill，B2-Q2 增量在动态恢复时间维度，维度 C2 红线风险 sandbox 必答。下一步=新对话（工作对话）执行阶段 0.3-0.6（H002 交接）。
+**🟢 S002 阶段 0.1-0.6 六项规约全完成（2026-07-08）**：张力验证/dB 溯源/架构定性/公平对照/参数真相源/文件组织全做完，7 份产出落盘。核心结论：张力可分解不直接 Kill，前馈化不撞 D006，B2-Q2 增量在动态恢复时间维度，维度 C2 红线 sandbox 必答。**阶段 0 满足，可进 sandbox**。下一步=新对话执行阶段 1 sandbox 三方对照（H002 交接）。
 
 ## 进展线索
 
 - **S001** 开题 + NDA-ML 实测反证诊断 + B2 特殊风险 + 阶段 0 六项规约设计 + 复用基建清单（2026-07-08，主控对话）
-- **S002** 阶段 0.1 张力验证设计（4 维度分解 + fair comparison 框架）+ 阶段 0.2 dB 溯源核查（sat.1553 +1dB 口径限定 + 叙事锚点 [58] 发现）。产出 3 文件：`_step4a_detail_extract.md`（子 agent）+ `_tension_validation_design.md` + `_db_sourcing_audit.md`。H002 交下一对话执行 0.3-0.6（2026-07-08，工作对话）
+- **S002** 阶段 0.1-0.6 六项规约全完成：①张力验证设计（4 维度分解 + fair comparison）②dB 溯源（sat.1553 +1dB 口径限定）③架构定性（前馈化 INVARIANT 不撞 D006）④公平对照（baseline/双测度/摊薄/叙事/范围）⑤参数真相源（σ²_pN vs GG α/β 严格区分 + ref[58]=Martins dual-stage 修正叙事 + B2Params 草稿）⑥文件组织（目录/命名/下游同步/common 防御）。产出 7 文件在 `explore/b2-fade-freeze-pilot-fallback/`。H002 交下一对话执行阶段 1 sandbox（2026-07-08，工作对话，用户授权"先接着做吧"一次做完六项）

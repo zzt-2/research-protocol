@@ -1,160 +1,168 @@
-# Handoff: 对话 2 — 阶段 0.3-0.6 前置规约（架构定性 + 公平对照 + 参数真相源 + 文件组织）
+# Handoff: 对话 2 — 阶段 1 sandbox 三方对照（双模切换 vs 纯 blind freeze vs 纯 pilot-aided）
 
-> 来源: S002 | 交接目标: 新工作对话执行阶段 0.3-0.6 四项规约
-> 文件名: H002-conversation2-stage0-arch-fair-param-file.md
+> 来源: S002（阶段 0.1-0.6 六项规约全完成）| 交接目标: 新工作对话执行阶段 1 sandbox 三方对照
+> 文件名: H002-conversation2-stage0-arch-fair-param-file.md（原名保留，内容更新为交阶段 1）
 > 日期: 2026-07-08
 
 ## 到哪了（状态）
 
-阶段 0.1（核心命题张力验证设计）+ 阶段 0.2（dB 溯源核查）**完成**。两份产出已落盘：
-- `explore/b2-fade-freeze-pilot-fallback/_tension_validation_design.md`（阶段 0.1，4 维度分解 + fair comparison 框架）
-- `explore/b2-fade-freeze-pilot-fallback/_db_sourcing_audit.md`（阶段 0.2，sat.1553 +1dB 口径限定）
-- `explore/b2-fade-freeze-pilot-fallback/_step4a_detail_extract.md`（子 agent T### 核查 step4a 实测细节，阶段 0.1 输入）
+**阶段 0 六项规约全完成**（S002，用户授权"先接着做吧"一次做完）。7 份产出落盘 `explore/b2-fade-freeze-pilot-fallback/`：
+- `_step4a_detail_extract.md`（子 agent 核查 step4a 实测细节）
+- `_tension_validation_design.md`（阶段 0.1：4 维度分解 + fair comparison）
+- `_db_sourcing_audit.md`（阶段 0.2：sat.1553 +1dB 口径限定）
+- `_architecture_decision.md`（阶段 0.3：前馈化 INVARIANT 不撞 D006）
+- `_fair_comparison_framework.md`（阶段 0.4：baseline/双测度/摊薄/叙事/范围）
+- `_param_truth_source.md`（阶段 0.5：σ²_pN vs GG α/β 严格区分 + ref[58] 查证 + B2Params 草稿）
+- `_file_organization.md`（阶段 0.6：目录/命名/下游同步/common 防御）
 
-**核心结论**：B2-Q2 命题张力**可分解不直接 Kill**。B2-Q2 真正增量可能在**动态恢复时间**（step4a 没测的维度），不是稳态 BER。但维度 C2（pilot-aided 路线在单载波时域根本弱）是红线风险，sandbox 三方对照（阶段 1）必须回答。
+**核心结论**：B2-Q2 命题张力**可分解不直接 Kill**。增量在**动态恢复时间**维度（step4a 没测），**维度 C2 红线风险**（所有 pilot-aided 在 fade 是否都输 NDA-ML）sandbox 必答。前馈化架构不撞 D006（INVARIANT 级，建议升 D002 待主控确认）。
 
-**未写代码，未进 sandbox**（守 profile 第 9 次防线 + INVARIANT 6）。
+**未写代码，未进 sandbox**（守 profile 第 9 次防线 + INVARIANT 6，阶段 0 六项规约全做完才进 sandbox——现已满足）。
 
 ## 不要做什么（踩过的坑、已排除的方向）
 
-1. **不要直接搬 sat.1553 L440 +1dB 当 B2-Q2 的 dB**：阶段 0.2 已确认口径错位（PE vs VV+diff，QPSK+OFDM，不是 FOE freeze 双模切换 vs blind freeze @ 16-APSK 单载波）。B2-Q2 增量必须 MVE 产出
-2. **不要跳阶段 0 直接写代码**：profile 第 9 次"急于推进"防线 + INVARIANT 6。六项规约全做完才进 sandbox。本轮做 0.3-0.6（4 项）
-3. **不要绕过维度 C2 红线风险**：阶段 0.1 发现"所有 pilot-aided 变体在 fade 是否都输 NDA-ML"是 sandbox 必答问题。阶段 0.4 公平对照框架要把这个写进判定门控
-4. **不要把 B2-Q2 当"稳够格"候选**：四重风险（dB 口径错位 + 实测反证 + 饱和池小池 + 叙事撞车）。如果 sandbox 发现 B2-Q2 在动态恢复也打不过纯 blind freeze → 核心命题崩塌转 Kill
-5. **不要自建信道**：B2 从 `common/_channel.py` 导入（TL-13）
-6. **不要污染 common**：explore 阶段探针不直接进 experiments，MVE 通过才转正
-7. **不要用 σp² 名义塞 fade 三档**：阶段 0.1 子 agent 发现 σp² 是 Wiener PN 单值（2.51e-5），weak/moderate/strong 是 GG α/β 块衰落三档（weak α4/β3, moderate α2.5/β1.8, strong α1.5/β0.8）。sat.1553 σp²=0.25 是 Rytov 方差，不同物理量。阶段 0.5 参数真相源要严格区分
+1. **不要直接搬 sat.1553 L440 +1dB 当 B2-Q2 的 dB**：阶段 0.2 已确认口径错位（PE vs VV+diff，QPSK+OFDM），五重口径差异。阶段 0.5 进一步查证 [58]=Martins dual-stage CPR，修正叙事锚点（[58] 是 dual-stage 并行，B2-Q2 是 fade 门控切换，机制不同）
+2. **不要绕过维度 C2 红线**：阶段 0.1 发现"所有 pilot-aided 变体在 fade 是否都输 NDA-ML"是 sandbox 必答问题。如果 sandbox 发现全部输 → 核心命题崩塌转 Kill（合法选项）
+3. **不要把 B2-Q2 当"稳够格"候选**：四重风险（dB 口径错位 + 实测反证 + 饱和池小池 + 叙事撞车）。sandbox 后若动态恢复也打不过纯 blind freeze → 转 Kill
+4. **不要自建信道**：B2 从 `common/_channel.py` 导入（TL-13）
+5. **不要污染 common**：explore 探针不进 experiments，MVE 通过才转正。sandbox 脚本 `_sandbox_three_way.py` 放 explore 目录
+6. **不要用 σp² 名义塞 fade 三档**：阶段 0.5 严格区分——σ²_pN（Wiener PN）= 2.51e-5 单值；GG α/β = fade 三档（weak α4/β3 / moderate α2.5/β1.8 / strong α1.5/β0.8）；sat.1553 σp²=0.25 是 Rytov 方差 σ²_R
+7. **不要用环路架构**：阶段 0.3 前馈化 INVARIANT 级。fade 检测用开环功率阈值 γ_th（不闭环，不用误差驱动）
+8. **不要用"improved"/版本号命名**：阶段 0.6 命名规则强制，禁 NDA-ML D-007 多目录并存混乱
 
 ## 必读（按优先级）
 
-1. **本 H002 + topic-index**（14 不变量，重点 11/12/13/14 B2 特殊）
-2. **S002**（阶段 0.1-0.2 记录 + 4 维度分解结论 + dB 溯源结论）
-3. **阶段 0.1-0.2 产出**（必读，下一对话直接用）：
-   - `explore/b2-fade-freeze-pilot-fallback/_tension_validation_design.md`（4 维度分解 + fair comparison 三方对照矩阵 + 测度分离）
-   - `explore/b2-fade-freeze-pilot-fallback/_db_sourcing_audit.md`（sat.1553 +1dB 口径限定 + B2-Q2 叙事锚点 [58]）
-   - `explore/b2-fade-freeze-pilot-fallback/_step4a_detail_extract.md`（step4a 实测细节，阶段 0.5 参数真相源输入）
-4. **S001 + H001**（开题 + 阶段 0 规约设计 + 复用基建盘点）
-5. **B2-Q2 详情**：`papers/_read_notes/_B2-deep-fade-freeze-increment.md`（M-C-A 主体）
-6. **复用基建**：`projects/simulation/common/_recovery.py`（fft_foe L37 / nda_ml_recovery L171 / da_ml_recovery L136 / psa_foe_recovery L435）
-7. **框架文件**：`stages/gw-feasibility.md` §D 维度 D + thesis-lessons TL-13/20/26
-8. **上游决策链**：`.sessions/2026-06-20-problem-driven-redirection/decisions.md`（D005 务实路线 / D006 红线 / D017/D018 判读框架）
+1. **本 H002 + topic-index**（14 不变量 + 悬而未决全消化 + 当前位置=可进 sandbox）
+2. **S002**（阶段 0.1-0.6 六项规约全记录 + 主控跟进点）
+3. **阶段 0 六项规约产出**（必读，sandbox 直接依据）：
+   - `_fair_comparison_framework.md`（sandbox 判定门控 Go/Kill 标准 + 三方对照矩阵 + 双测度 + ρ_fade 摊薄）
+   - `_architecture_decision.md`（前馈化 INVARIANT + 4 估计器前馈性核查）
+   - `_tension_validation_design.md`（维度 C2 红线 + 动态恢复测度）
+   - `_param_truth_source.md`（B2Params 草稿 + γ_th 扫参范围 + ρ_fade 实测要求）
+   - `_step4a_detail_extract.md`（step4a 实测细节，sandbox 复现依据）
+   - `_db_sourcing_audit.md` + `_file_organization.md`（参考）
+4. **S001 + H001**（开题 + 复用基建盘点）
+5. **复用基建**：`projects/simulation/common/_recovery.py`（fft_foe L37 / nda_ml_recovery L171 / da_ml_recovery L136 / psa_foe_recovery L435，全前馈闭式）
+6. **框架文件**：`stages/gw-feasibility.md` §D 维度 D + thesis-lessons TL-13/20/26
+7. **sim-preflight v1.3.0**：`rules/mve-validation.md` V1-V6 + `rules/interrupt.md` 第 10-12 条 + `SKILL.md` §1.6 C6-C8（尤其 V2 三方对照 + V3 祖师爷警报 [79]）
 
-## 下一步干什么（对话 2 = 阶段 0.3-0.6，不写代码）
+## 下一步干什么（对话 2 = 阶段 1 sandbox 三方对照，写代码）
 
-> **守 profile 第 9 次防线 + INVARIANT 6**：阶段 0 六项规约全做完才进 sandbox。本对话做 0.3-0.6（4 项），不进 sandbox。
-> **守 3 步上限**：0.3+0.4 主线定（架构+公平对照，核心），0.5+0.6 主线定（参数+文件组织，机械）。若超 3 步主动建议分对话。
+> **阶段 0 已满足，可进 sandbox**（profile 第 9 次防线 + INVARIANT 6 满足）
+> **守 V2 三方对照 + V3 祖师爷警报**（[79] Matsuda 是 B2-Q2 祖师爷）
+> **守 3 步上限**：sandbox 实现分步，若超 3 步主动建议分对话
 
 ### 步骤 1：报到 + 重读关键文件 + 接收方验证
 
-报到（session-governance Trigger 1）+ 读必读清单 1-8 + 完成接收方验证（含验证 S002 阶段 0.1-0.2 结论）。
+报到（session-governance Trigger 1）+ 读必读清单 1-7 + 完成接收方验证（含验证 S002 阶段 0.3-0.6 结论）。
 
-### 步骤 2：阶段 0.3 架构定性 + 阶段 0.4 公平对照框架（核心）
+### 步骤 2：sandbox 第一步——参数实测（γ_th 扫参范围 + ρ_fade）
 
-**0.3 架构定性（前馈 vs 环路 TF）**（继承 INVARIANT + D006）：
-- B2-Q2 双模切换 = (fft_foe/nda_ml + 功率阈值 gating) ↔ (da_ml/psa_foe) 模式切换
-- 盲侧 fft_foe 是前馈（`_recovery.py:37`），pilot 侧 da_ml 是前馈闭式（`_recovery.py:136-167` 线性回归），整体双模切换可前馈化
-- 决策：前馈化（合法不撞 D006）还是环路（撞 D006 需单独决策）
-- **建议前馈化**（避免 D006 纠缠），但需论证前馈化后 B2-Q2 的"双模切换"创新是否还成立
-- 输出 `explore/b2-fade-freeze-pilot-fallback/_architecture_decision.md`
+**先行动作**（FR-20/TL-26 不拍参数）：
+- 实测 rx 功率分布 P(|rx|²)（weak/moderate/strong × 各 OSNR 点）
+- 定 γ_th 扫参范围 [γ̄−3σ, γ̄−1σ]
+- 逐点实测 ρ_fade = P(P < γ_th)（每 OSNR × 湍流档）
+- 确认 GG α/β 三档文献来源（params.py audit）+ GammaGammaParams 类存在
 
-**0.4 公平对照框架设计**（INVARIANT 13 B2 特殊饱和池警示 + 阶段 0.1 输入）：
-- **baseline 是纯 blind freeze [79]**（不是 sat.1553 blind gating）—— 阶段 0.1 三方对照矩阵方案 A
-- **fair gain 双测度**（阶段 0.1 结论）：
-  - 稳态 BER（跟 step4a 同测度，确认非 fade 期不退化）
-  - **动态恢复时间**（B2-Q2 最可能增量维度，step4a 没测）
-- **pilot overhead 摊薄**：B2-Q2 pilot 只在 fade 期发，overhead = fade 占空比 × 25%。需定义 fade 占空比（功率阈值 γ_th 以下算 fade）
-- **fair gain 阈值**：稳态 BER 维度跟 NDA-ML HD-FEC 3.8e-3 对齐；动态恢复时间维度定多少符号数算"显著改善"需论证
-- **叙事定位**（B2-Q2 跟 NDA-ML 撞车对策 + 阶段 0.2 发现）：用 sat.1553 L440 [58] "pilot+盲组合 open direction" 作为动机锚，明确双模切换 vs 纯盲的差异化（双模切换的增量是 fade 恢复时间不是稳态 BER）
-- **范围维度**（饱和池 dB 难出区警示）：B2-Q2 增量是 dB 还是范围/鲁棒性维度？strong 湍流下纯 blind HD-FEC 不可达，双模切换可能可达——这是范围维度增量
-- **判定门控**（阶段 0.1 红线）：sandbox 后 B2-Q2 在动态恢复也打不过纯 blind freeze → 核心命题崩塌转 Kill
-- 输出 `explore/b2-fade-freeze-pilot-fallback/_fair_comparison_framework.md`
+### 步骤 3：sandbox 三方对照实现 + 必答两个核心问题
 
-### 步骤 3：阶段 0.5 参数真相源 + 阶段 0.6 文件组织（机械）
+**三方实现**（`_sandbox_three_way.py`）：
+- **方案 A 纯 blind freeze [79]**：fft_foe + 功率阈值 γ_th → fade 期 hold 上一估计 / 非 fade 期正常跟踪
+- **方案 B 纯 pilot-aided**：da_ml_recovery 全程（step4a 已测，复现确认）
+- **方案 C B2-Q2 双模切换**：非 fade 期 fft_foe/nda_ml + fade 期 da_ml/psa_foe（前馈门控）
 
-**0.5 参数真相源前置**（TL-26 + FR-26 读原文数值 + 阶段 0.1 子 agent 发现）：
-- **严格区分 σp²（Wiener PN 单值 2.51e-5）vs GG α/β（fade 三档）**——子 agent 发现的命名混淆必须消除
-- B2 参数一开始进 params.py 单字段：
-  - fade σp²（Wiener PN，2.51e-5，全场景统一 10kHz@2.5GBaud，D-007）
-  - GG α/β（weak α4/β3 / moderate α2.5/β1.8 / strong α1.5/β0.8，从 `params.py:98,108,118,128,138,148`）
-  - OSNR 工作点（SNR_TURB [5,10,15,20,22,24,26]，从 `_time_domain_crlb.py:555`）
-  - 符号率/线宽（2.5GBaud / 10kHz，D-007 统一）
-  - pilot 配置（spacing=4 / 真符号 pilot / 25% overhead，从 step4a；B2-Q2 fade 占空比 × 25% 摊薄待 0.4 定义）
-- 每个参数全标 source_type + source + audit_flag + **读原文具体数值**
-- **附带任务**：查 sat.1553 ref [58] 具体论文（阶段 0.2 发现的 B2-Q2 叙事锚点，content.md reference list 未完整转换）
-- 输出 params.py 的 B2Params 类草稿（不直接写 params.py，先在 explore 里草拟）
+**必答 1（维度 C2 红线）**：所有 pilot-aided 变体（da_ml/psa_foe/power-boosted pilot）在 fade 是否都输 NDA-ML？
+- 全输 → 核心命题崩塌，红线警报转 Kill
+- 有一个赢 → C2 不成立，B2-Q2 命题可继续
 
-**0.6 文件组织规约**：
-- 定死 `explore/b2-fade-freeze-pilot-fallback/` 目录结构（已有 3 文件：_step4a_detail_extract / _tension_validation_design / _db_sourcing_audit）
-- 命名规则：私有文件 `_` 前缀（诊断/核查），正式文件无前缀（SPEC/mve）
-- 下游引用同步清单（D-007 教训 2：参数改后必须同步清理下游引用）
-- 输出 `explore/b2-fade-freeze-pilot-fallback/_file_organization.md`
+**必答 2（动态恢复时间）**：B2-Q2 双模切换 N_recover vs 纯 blind freeze N_recover
+- N_recover,B2Q2 < N_recover,freeze 显著 → 核心增量成立，进 MVE
+- N_recover 无差 → 核心增量不成立，红线警报
+
+**测度实现**（阶段 0.4 §2）：
+- 稳态 BER @ HD-FEC 3.8e-3（复现 step4a 测度 + B2-Q2 三方）
+- 动态恢复时间 N_recover（滑窗 BER vs 距 fade 结束符号数，BER 回稳态 ±10% 所需符号数）
+
+**sandbox 输出**（阶段 0.6 文件组织）：
+- `_sandbox_three_way.py`（脚本，私有 `_` 前缀）
+- `_sandbox_results.json`（结果，meta 字段强制含参数值）
+- `_gamma_th_sweep.json` + `_rho_fade_measure.json`（参数实测）
 
 ## 纪律（和下一步直接相关的约束）
 
-1. **profile 第 9 次"急于推进"防线 + INVARIANT 6**：阶段 0 六项规约全做完才进 sandbox。**禁跳阶段 0 直接写代码**。进入新阶段前先一句话讲清"在干啥+为什么"
-2. **INVARIANT 11 核心命题张力**（阶段 0.1 已消化）：阶段 0.4 公平对照框架必须把维度 C2 红线（所有 pilot-aided 变体在 fade 是否都输 NDA-ML）写进判定门控
-3. **INVARIANT 12 dB 口径错位**（阶段 0.2 已限定）：B2-Q2 增量必须 MVE 产出，不能引 sat.1553 +1dB。阶段 0.4 fair gain 阈值要独立论证
-4. **INVARIANT 13 饱和池 dB 难出区**：B2-Q2 可能靠范围/鲁棒性维度够格（D005 会议门槛放宽允许），阶段 0.4 要明确
-5. **INVARIANT 14 复用基建边界**：step4a DA ML 是单载波近最优（pilot spacing=4 密集真符号 pilot），非 B11 decision-feedback DA ML。psa_foe_recovery（L435）step4a 未调用，B2-Q2 若用需注意
-6. **σp² 命名混淆防线**（阶段 0.1 子 agent 发现）：σp² 是 Wiener PN 单值，weak/moderate/strong 是 GG α/β。阶段 0.5 严格区分，禁用 σp² 名义塞 fade 三档
-7. **sim-preflight v1.3.0 C6-C8 + V1-V6**：公式逐项核对（V1）/ 三方对照（V2+C7）/ 祖师爷警报（V3+C8）/ 参数变更触发算法重审（V4）/ 子 agent 归因独立核查（V5）/ FR-26 读原文数值（V6）
-8. **TL-13 共用同一信道**：B2 从 `common/_channel.py` 导入，禁自建
-9. **核查机制中性双向**（继承）：子 agent 产出 + 主线独立 grep 核查，只信原始数字不信归因
+1. **profile 第 9 次防线 + INVARIANT 6 已满足**：阶段 0 六项规约全做完，可进 sandbox。但每个 sandbox 子步骤前仍先讲清"在干啥+为什么"
+2. **V2 三方对照**（sim-preflight v1.3.0）：三方归因可信，不能只跑 B2-Q2 + 1 个 baseline
+3. **V3 祖师爷警报**：[79] Matsuda 是 B2-Q2 直接祖师爷（sat.1553 L558/L582 引用），方案 A 必须严格实现 [79] freeze 机制（hold 估计，不是别的）
+4. **V4 参数变更触发算法重审**：γ_th 从扫描值定到最优值时，重审算法是否需调整
+5. **V5 子 agent 归因独立核查**：sandbox 若派子 agent 跑，主线独立 grep results JSON 核查
+6. **V6 FR-26 读原文数值**：GG α/β 三档文献来源要读原文数值确认
+7. **INVARIANT 11 维度 C2 红线**：sandbox 必答"所有 pilot-aided 在 fade 是否都输 NDA-ML"，全输 → 转 Kill
+8. **INVARIANT 12 dB 口径**：sandbox 报 fair gain 时不能引 sat.1553 +1dB，B2-Q2 增量是独立实测
+9. **INVARIANT 13 饱和池多维够格**：不押注稳态 BER dB，动态恢复 + 范围扩展 + 鲁棒性任一够格即 Go
+10. **INVARIANT 14 复用基建边界**：step4a DA ML 是 pilot spacing=4 真符号 pilot（非 B11 decision-feedback），复用注意口径
+11. **前馈化 INVARIANT**（阶段 0.3）：fade 检测用开环 γ_th，不闭环
+12. **TL-13 共用信道**：B2 从 `common/_channel.py` 导入
+13. **common 防御**（阶段 0.6）：sandbox 脚本放 explore，不进 common
 
 ## 接口变更（如有代码改动）
 
-无（阶段 0 不写代码，只定规约。核查脚本若写，放 `explore/b2-fade-freeze-pilot-fallback/`，私有 `_` 前缀，不进 experiments/）
+sandbox 阶段写代码（首次）：
+- 新增 `explore/b2-fade-freeze-pilot-fallback/_sandbox_three_way.py`（私有 `_` 前缀，不进 experiments）
+- 新增 `explore/b2-fade-freeze-pilot-fallback/_b2_params_draft.py`（B2Params 草稿落盘）
+- 新增 results JSON（`_sandbox_results.json` / `_gamma_th_sweep.json` / `_rho_fade_measure.json`，meta 字段强制）
+- **不修改** `common/` 任何文件（4 估计器已具备，只 import）
 
 ## 失败数据附录（如涉及路线失败）
 
-无新增路线失败。**阶段 0.1-0.2 结论：张力可分解不直接 Kill**，但维度 C2 红线风险明确（sandbox 阶段 1 必答）。
-
-**继承 NDA-ML 失败数据**作参照（D-008 vs VV 持平是 bug / D-009 线宽 10kHz 疑似选错 / LMMSE 复现失败公式不全）。
-
-**B2-Q2 潜在失败模式**（阶段 0.1 识别，未触发）：
-- sandbox 阶段 1 发现 B2-Q2 在动态恢复也打不过纯 blind freeze → 核心命题崩塌转 Kill
-- 维度 C2 成立（所有 pilot-aided 变体在 fade 都输 NDA-ML）→ 核心命题崩塌转 Kill
+无新增路线失败。**阶段 0.1-0.6 结论：张力可分解不直接 Kill，前馈化不撞 D006**。但 sandbox 阶段 1 可能触发：
+- 维度 C2 红线成立（所有 pilot-aided 在 fade 输 NDA-ML）→ 核心命题崩塌转 Kill
+- 动态恢复时间无差（B2-Q2 N_recover ≈ freeze N_recover）→ 核心增量不成立转 Kill
+- 稳态 BER 退化（B2-Q2 非 fade 期切回 blind 引入损失）→ 架构设计错
 
 ## 已知债务（如原则与现实有差距）
 
 | 债务 | 原则 | 当前状态 | 触发解决条件 |
 |------|------|---------|-------------|
-| B2-Q2 真实增量未量化 | INVARIANT 12 | pending MVE | 阶段 3 MVE 产出 |
-| sat.1553 +1dB 口径限定 | INVARIANT 12 | ✅ 阶段 0.2 已限定 | 本文件 §阶段 0.2 |
-| B2-Q2 跟 NDA-ML 叙事撞车 | INVARIANT 13 | 阶段 0.4 明确差异化（用 sat.1553 [58] 锚）| 0.4 |
-| step4a DA ML 配置口径差异 | INVARIANT 14 | ✅ 阶段 0.1 已核查（spacing=4 真符号 pilot）| 本文件 §阶段 0.1 |
-| ref [58] 具体论文待查 | 阶段 0.2 发现 | pending | 0.5 附带 |
-| fade 占空比定义（pilot overhead 摊薄）| 阶段 0.1 维度 B | pending | 0.4 |
+| B2-Q2 真实增量未量化 | INVARIANT 12 | pending sandbox | 阶段 1 sandbox 产出 |
+| sat.1553 +1dB 口径限定 | INVARIANT 12 | ✅ 阶段 0.2 已限定 | — |
+| 前馈化架构不撞 D006 | 继承 INVARIANT | ✅ 阶段 0.3 已论证（建议升 D002）| 主控对话确认 D002 |
+| B2-Q2 跟 NDA-ML 叙事撞车 | INVARIANT 13 | ✅ 阶段 0.4 已定位（填补 strong 空白）| — |
+| step4a DA ML 配置口径差异 | INVARIANT 14 | ✅ 阶段 0.1 已核查 | — |
+| ref [58] = Martins dual-stage | 阶段 0.2 发现 | ✅ 阶段 0.5 已查证（修正叙事锚点）| — |
+| γ_th / ρ_fade 实测 | FR-20/TL-26 | pending sandbox 第一步 | 阶段 1 步骤 2 |
+| GG α/β 文献来源 | TL-26 | pending | sandbox 前 params.py audit |
 
 ## 验证阈值（如涉及验证体系）
 
 | 验证项 | PASS 标准 | 阈值来源 | 历史通过率 |
 |--------|----------|---------|-----------|
-| 阶段 0.1 张力验证设计 | fair comparison 把 step4a 实测反证分解为配置/触发/类型/场景差异 | INVARIANT 11 | ✅ PASS（本对话，4 维度全可分解）|
-| 阶段 0.2 dB 溯源核查 | sat.1553 +1dB 限定到原始口径（PE vs VV+diff）| INVARIANT 12 + V6 | ✅ PASS（本对话，原口径锁定）|
-| 阶段 0.3 架构定性 | 前馈化合法不撞 D006 | 继承 INVARIANT | 未跑（下一对话）|
-| 阶段 0.4 公平对照框架 | 双测度（稳态 BER + 动态恢复）+ pilot overhead 摊薄 + 叙事定位 | INVARIANT 13 + 阶段 0.1 输入 | 未跑（下一对话）|
-| sandbox 三方对照 | 双模切换/纯 blind freeze/纯 pilot-aided 三方归因可信 + 维度 C2 回答 | V2+C7 (v1.3.0) | 未跑（阶段 1）|
+| 阶段 0.1 张力验证设计 | fair comparison 把 step4a 实测反证分解为 4 维度 | INVARIANT 11 | ✅ PASS（S002）|
+| 阶段 0.2 dB 溯源核查 | sat.1553 +1dB 限定到 PE vs VV+diff | INVARIANT 12 + V6 | ✅ PASS（S002）|
+| 阶段 0.3 架构定性 | 前馈化合法不撞 D006 | 继承 INVARIANT | ✅ PASS（S002）|
+| 阶段 0.4 公平对照框架 | 双测度+摊薄+叙事+范围 | INVARIANT 13 | ✅ PASS（S002）|
+| sandbox 三方对照 | 三方归因可信 + 维度 C2 回答 + 动态恢复测量 | V2+C7 (v1.3.0) | 未跑（阶段 1）|
+| sandbox 维度 C2 | 非全输（至少一个 pilot-aided 变体在 fade 赢或持平 NDA-ML）| INVARIANT 11 红线 | 未跑 |
+| sandbox 动态恢复 | N_recover,B2Q2 < N_recover,freeze 显著 | 阶段 0.4 核心增量 | 未跑 |
 | MVE fair gain | ≥0.5dB @ HD-FEC 或范围/鲁棒性维度够格 | D005 + INVARIANT 13 | 未跑（阶段 3）|
 
 ## 接收方验证（续接对话时必须完成）
 
-- [ ] 已读取 topic-index 的不变量段落（14 条，重点 11/12/13/14 B2 特殊风险）
+- [ ] 已读取 topic-index 的不变量段落（14 条，重点 11/12/13/14 B2 特殊）+ 悬而未决（0.1-0.6 全消化，剩 sandbox 待答 3 项）
 - [ ] 已验证本文件中的至少 3 条关键事实声称：
-  - [ ] 阶段 0.1 张力可分解不直接 Kill（核查 `_tension_validation_design.md` §4.1 结论）
-  - [ ] 阶段 0.2 sat.1553 +1dB 口径=PE vs VV+diff（核查 `_db_sourcing_audit.md` §1.2 + sat.1553 content.md:440 原文）
-  - [ ] 维度 C2 红线风险（所有 pilot-aided 变体在 fade 是否都输 NDA-ML 是 sandbox 必答）（核查 `_tension_validation_design.md` §2 维度 C）
+  - [ ] 阶段 0 六项规约全完成（核查 `explore/b2-fade-freeze-pilot-fallback/` 7 份产出文件存在）
+  - [ ] 前馈化不撞 D006（核查 `_architecture_decision.md` §3.1 + `_recovery.py` 4 估计器前馈性）
+  - [ ] 维度 C2 红线 + 动态恢复测度（核查 `_tension_validation_design.md` §2 维度 C + §3.2 + `_fair_comparison_framework.md` §2）
 - [ ] 已检查 _registry.yaml 中本专题 depends_on（4 依赖全稳定）
 - [ ] 已确认当前范围未违反"明确不含"（不回头救 6 次 Kill / 不判 NDA-ML/B7 决策 / 不改框架 / 不跳框架 / 不推翻 D006 / 不污染 common）
 
 ## 下一轮
 
-**对话 3**（阶段 0.3-0.6 完成后）：
-- 阶段 1 sandbox 三方对照（双模切换 / 纯 blind freeze [79] / 纯 pilot-aided）
-- 守 sim-preflight v1.3.0 V2 三方对照 + V3 祖师爷警报（[79] Matsuda 是祖师爷）
-- **必答维度 C2**：所有 pilot-aided 变体（da_ml/psa_foe/power-boosted）在 fade 是否都输 NDA-ML
-- **必测动态恢复时间**：B2-Q2 双模切换在 fade 恢复时间上是否优于纯 blind freeze
-- sandbox 发现双模切换打不过纯 blind freeze → 红线警报（核心命题崩塌，阶段 0.1 维度 C2 成立，转 Kill）
+**对话 2**（阶段 1 sandbox，本 H002 交接目标）：
+- sandbox 三方对照（双模切换 / 纯 blind freeze [79] / 纯 pilot-aided）
+- 必答维度 C2 + 必测动态恢复时间 + γ_th 敏感性扫 + ρ_fade 实测
+- 守 V2 三方对照 + V3 祖师爷警报（[79]）
+- sandbox 发现双模切换打不过纯 blind freeze 或维度 C2 成立 → 红线警报转 Kill
 
-**对话 4**（sandbox 通过后）：
+**对话 3**（sandbox 通过后）：
 - 阶段 2 TL-20 理论预期表 + 阶段 3 MVE + consistency
+- 写 `B2-Q2-MVE-SPEC.md`（正式文件无 `_` 前缀）+ `b2q2_mve.py`
