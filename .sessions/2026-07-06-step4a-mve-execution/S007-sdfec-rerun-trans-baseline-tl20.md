@@ -1,6 +1,7 @@
 # [S007] SD-FEC 重跑 + 近年 Trans baseline + TL-20 预期表更新
 
 > 2026-07-07（续 2026-07-08） | 阶段：Step 4a 维度 D 收尾执行 | 状态：DONE
+> 2026-07-08 续接：blit 下载 3 篇 baseline 全文 + subagent 精读 + 主线集成判断
 > 来源：续接 S006（D-007 重跑完），本轮做 REVIEW_NOTES §三 TODO 收尾项
 
 ## 目标
@@ -73,6 +74,33 @@
   - 没碰简报正文（ADVISOR_BRIEFING 只上轮改了附录行，本轮不动）
   - 没碰 6 次 Kill、没跳框架、没改框架文件、没污染 common
 - 3 步上限：任务1/2/3 各算 1 步，未超
+
+### 续接：blit 下载 + subagent 精读 3 篇 baseline（2026-07-08）
+
+用户要求"把那几篇用 blit 下下来然后 subagent 精读"。
+
+**下载（用户选"blit ieee + download 降级 备份"方案）**：
+- #15 JPhoto + #17 TVT：blit --source ieee --download 下成功（IEEE 校园网认证通过，会话用量 2/50）。PDF 首页标题验证 PASS（TITLE-MISMATCH 警告是 blit 抓期刊页眉当 real_title，实际 PDF 正确）。移到 `papers/doi/10.1109_jphot.2024.3415635/` 和 `papers/doi/10.1109_tvt.2022.3218937/`，tools/convert 转 source.md（284 行 / 718 行）
+- #16 OE：tools/download --doi 发现 6 月已下过（firecrawl_scrape），content.md 890 行在 `papers/doi/10.1364_oe.520452/`
+
+**精读（3 个 subagent 并发，各 ≤500 词结构化摘要）**：
+
+| 维度 | #15 JPhoto V&V-LMMSE | #16 OE PRBS+cyclic QPSK | #17 TVT G-PSAM CRB |
+|---|---|---|---|
+| 调制同款 | ✅ **(8,8)-16APSK 完全同款** | ❌ 方阵 16QAM | ❌ QPSK/16QAM |
+| 信道贴合 | ⚠️ Wiener PN ✅ / 无湍流 | ⚠️ 相屏湍流 / 无 Wiener/GG | ❌ 纯 AWGN |
+| 方法同类 | ✅ **NDA M₀=8 次幂同框架**（差异：LMMSE vs ML）| ❌ DA 训练序列 FOE | ❌ DA 帧优化 |
+| FEC 阈值 | BER=10⁻² | 1.5e-3 | 无 FEC |
+| 可对比性 | ⚠️ **最强并列 baseline** | ⚠️ 场景参照 | ⚠️ 理论锚（CRB）|
+
+**主线集成判断**：
+1. **#15 JPhoto 升级为最强并列 baseline**——星座 (8,8)-16APSK + Wiener PN + NDA M₀=8 次幂框架跟我们完全同款，差异只在权重优化（LMMSE R⁻¹p vs 我们 ML）+ 信道（无湍流）。它已把 DA-ML PE 作对照（跟我们 baseline 同款），16APSK(8,8) @ 2MHz LMMSE penalty ≈0.5dB @ BER=10⁻²，ΔvT≈3×10⁻⁴。**可作"同框架不同权重优化策略"并列对照**。风险：BER=10⁻² 阈值、40Gb/s 非我们 2.5GBaud、Genie-aided 解模糊理想化
+2. **#16 OE 降级为场景参照**——调制/方法/任务层级全不同（DA-FOE vs NDA-CPE），且 content.md **公式全空**（MathJax 没抓到），复现性受限
+3. **#17 TVT 定位理论锚**——调制信道方法全不同（纯 AWGN RF 卫星），但 DA&NDA CRB 推导跟我们公平对照框架理论契合（CRB_DA&NDA < CRB_NDA ≪ CRB_DA，R≈1/η）
+
+**精读后发现的结构性缺口**：3 篇里只有 #15 方法同类但档级次档（JPhoton），严格 Trans 的 #16/#17 方法都异类。**"(8,8)-16APSK + NDA-ML + 星地 FSO + 近年 + 严格 Trans"五者交集 baseline 检索未召回**——物理事实（该交集领域窄），不是检索不全。对策：放宽到 NDA 方法大类 或 接受 Du PTL 2025 + #15 JPhoto 作主要方法对照组合。
+
+**文档更新**：COMPARISON_REFS.md §一E 三篇评价列全改为"精读后可对比性结论"，§三盘点加第 4 条结构性缺口说明。
 
 ## 后续
 

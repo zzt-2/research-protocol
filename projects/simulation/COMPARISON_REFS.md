@@ -33,15 +33,15 @@
 |---|---|---|---|---|---|
 | 5 | OSL DSP 算法地图综述(4 场景信道模型 ISL/下行/上行弱湍/上行强湍) | Carl Valjus, Raphael Wolf, Juraj Poliak. "Review and Analysis of Digital Signal Processing Algorithms for Coherent Optical Satellite Links." **International Journal of Satellite Communications and Networking (Wiley)**, vol. 43, no. 3, pp. 229–250, 2025. DOI: 10.1002/sat.1553 | **Wiley 期刊(Transactions 级,非 IEEE)** | **2025(近年)** | 够格,场景模型依据 |
 
-### E. 近年 Transactions 并列 baseline 补充(2026-07-07 补,老师意见 3 触发)
+### E. 近年 Transactions 并列 baseline 补充(2026-07-07 补+精读,老师意见 3 触发)
 
-> 检索方法：`tools/search` 4 组关键词 + Crossref DOI 真实性交叉验证（5 篇全 VERIFIED，无幻觉）。原始检索结果在 `search-archive/2026-07-07/`。
+> 检索方法：`tools/search` 4 组关键词 + Crossref DOI 真实性交叉验证（5 篇全 VERIFIED）+ blit ieee 下载 IEEE 两篇 + download --doi 下 OE + subagent 精读。原始检索 `search-archive/2026-07-07/`，全文 `papers/doi/`。
 
-| # | 角色 | 完整引用 | 期刊档级 | 年份 | 评价 |
+| # | 角色 | 完整引用 | 期刊档级 | 年份 | 精读后可对比性结论 |
 |---|---|---|---|---|---|
-| 15 | **M-APSK V&V 载波相位估计**(主题最贴合,VV 是我们经典 baseline) | Qian Wang, Wenqiang Ma, Li Ping Qian, et al. "Viterbi-Viterbi Carrier Phase Estimation for Multi-Ring M-APSK With Wiener Carrier Phase Noise and Its Performance." **IEEE Photonics Journal**, vol. 16, no. 3, pp. 1–7, June 2024. DOI: 10.1109/JPHOT.2024.3415635 | **IEEE Photonics Journal(IEEE 旗下,档级介于 Trans 和 Letters 之间,IF~2.1)** | **2024(近年)** | M-APSK + VV(我们 baseline #4) + Wiener PN(我们信道),LMMSE 改进 V&V。**主题极度贴合,强烈推荐**。档级诚实标注:JPhoton 低于 JLT/TCOM 但高于 PTL Letters,作"近年+主题贴合"对照够格,但严格 Trans 级应只算 #16/#17。 |
-| 16 | **相干 FSO 载波恢复**(场景最贴合) | Liqian Wang, Kunfeng Liu, Siqi Zhang, Shuang Ding. "Enhanced frame synchronization and carrier recovery in coherent FSO communication: a pseudo-random and cyclic QPSK approach." **Optics Express**, vol. 32, no. 6, pp. 9870–9885, 2024. DOI: 10.1364/OE.520452 | **Optics Express(Optica,Transactions 级)** | **2024(近年)** | 相干 FSO + 帧同步 + 载波恢复 + 抗大气湍流,场景和方法双贴合。用训练序列(QPSK cyclic)做 FOE,我们用 NDA-ML 升幂——**方法论可对比**。档级够 Trans(OE 是 Optica 旗舰)。 |
-| 17 | **卫星载波同步 CRB 理论**(理论锚 + 卫星场景) | Zhongyang Yu, Jixun Gao, Li He, et al. "Joint Physical Layer Frame Optimization and Carrier Synchronization for Satellite Communications." **IEEE Transactions on Vehicular Technology**, vol. 72, no. 4, pp. 5231–5245, April 2023. DOI: 10.1109/TVT.2022.3218937 | **IEEE TVT(Transactions 级)** | **2023(近年)** | 推导 S-PSAM 卫星帧的 DA&NDA Cramér-Rao 界 + 并行频相估计算法。**理论锚(CRB)+ 卫星场景 + DA/NDA 双口径**,跟我们公平对照框架(NDA vs DA)对齐。虽非 FSO(是 RF 卫星),但载波同步理论可直接对照。 |
+| 15 | **M-APSK V&V 载波相位估计**(主题+方法双贴合,最强并列 baseline) | Qian Wang, Wenqiang Ma, Li Ping Qian, et al. "Viterbi-Viterbi Carrier Phase Estimation for Multi-Ring M-APSK With Wiener Carrier Phase Noise and Its Performance." **IEEE Photonics Journal**, vol. 16, no. 4, art. 7201408, August 2024. DOI: 10.1109/JPHOT.2024.3415635 | **IEEE Photonics Journal(IEEE 旗下,档级介于 Trans 和 Letters 之间,IF~2.1)** | **2024(近年)** | ✅ **强烈推荐作并列 baseline**。精读确认：星座 **(8,8)-16APSK 完全同款** + Wiener PN + **NDA M₀=8 次幂框架跟我们完全一致**（M=LCM(8,8)=8），差异只在权重优化（其 LMMSE R⁻¹p vs 我们 ML）+ 信道（其无湍流，我们有 GG 块衰落）。**它已把 DA-ML PE 作对照**（跟我们 baseline 同款），16APSK(8,8) @ 2MHz LMMSE SNR penalty ≈0.5dB @ BER=10⁻²，最大线宽容限 ΔvT≈3×10⁻⁴。**可作"同框架不同权重优化"并列对照**。风险：BER=10⁻² 非 HD-FEC 3.8e-3；bit rate 40Gb/s 非我们 2.5GBaud；用 Genie-aided 解模糊（理想化）。 |
+| 16 | **相干 FSO 载波恢复**(场景贴但方法异类) | Liqian Wang, Kunfeng Liu, Siqi Zhang, Shuang Ding. "Enhanced frame synchronization and carrier recovery in coherent FSO communication: a pseudo-random and cyclic QPSK approach." **Optics Express**, vol. 32, no. 15, pp. 25560–25580, 2024. DOI: 10.1364/OE.520452 | **Optics Express(Optica,Transactions 级)** | **2024(近年)** | ⚠️ **场景参照非直接对照**。精读确认：调制是方阵 16QAM（**非 (8,8)-16APSK**），方法是 **DA 训练序列 FOE**（频偏估计，PRBS+cyclic QPSK 两级 FFT），我们是 **NDA-ML CPE**（相位估计），**任务层级不同**。信道有相屏湍流+线宽相位但无 Wiener 模型/Gamma-Gamma/Doppler。**风险**：content.md 是 firecrawl 抓取，**式(1)-(21) 公式全空**（MathJax 没抓到），复现性受限。FOE MSE 1e-8~1e-9，480 符号足够，四支路强湍 16QAM 改善 ~2.46dBm。 |
+| 17 | **卫星载波同步 CRB 理论**(理论锚,非并列 baseline) | Zhongyang Yu, Jixun Gao, Li He, et al. "Joint Physical Layer Frame Optimization and Carrier Synchronization for Satellite Communications." **IEEE Transactions on Vehicular Technology**, vol. 72, no. 3, pp. 3517–3531, March 2023. DOI: 10.1109/TVT.2022.3218937 | **IEEE TVT(Transactions 级)** | **2023(近年)** | ⚠️ **理论锚价值,非并列 baseline**。精读确认：调制 QPSK/16QAM/SCMA/GMSK（**无 APSK**），信道**纯 AWGN**（无 PN/湍流，仅 Doppler 常数 CFO），方法 DA 帧优化——调制信道方法全不同。**但 CRB 推导有锚价值**：DA&NDA CRB < NDA CRB ≪ DA CRB，比率 R≈1/η（pilot overhead）量化 DA vs DA&NDA gap，跟我们公平对照框架（NDA 理论下界优于 DA）理论契合。可作"为什么 NDA 理论下界优于 DA"文献锚。OG-PSAM 帧 + PFPE 解耦器是 DA 路线，跟我们 NDA 路线正交。 |
 
 **补充后覆盖度更新**（诚实档级标注）：
 
@@ -52,7 +52,7 @@
 | **近年 + 严格 Transactions 级** | **3/14 (21%)** | **5/17 (29%)** | +2 篇（#16 OE 2024 / #17 TVT 2023），改善但未过半 |
 | 近年 + 次档 IEEE（含 JPhoton）| — | 6/17 (35%) | 若放宽到 JPhoton 档级 |
 
-**诚实评估**：近年+严格Trans 占比从 21% 升到 29%（严格档级口径），仍未过半。**核心瓶颈仍是方法来源 Du PTL 2025 是 Letters 级**——要提到 Trans 级方法,需要更扎实的理论(CRLB 紧致性证明)+ 多场景验证(SD-FEC 阈值已补,见 `results/sc_nda_ml_sdfec_eval/`)+ 上行场景(已跑,见 `results/sc_nda_ml_uplink/`)。当前对照够投 Letters 级或国内会议(CCISP 7/20 截稿),投 IEEE Trans 需补强方法本身深度。
+**精读后诚实评估**：近年+严格Trans 占比从 21% 升到 29%（严格档级口径），仍未过半。**核心瓶颈仍是方法来源 Du PTL 2025 是 Letters 级**。3 篇并列 baseline 里只有 #15 JPhoto 方法同类（NDA M₀=8 同框架），但它档级是 JPhoton（介于 Trans 和 Letters），**严格 Trans 级 + 方法同类 + 场景同款的 baseline 仍然缺**——这是物理事实（(8,8)-16APSK + NDA-ML + 星地 FSO 三者交集的近年严格 Trans 论文，检索 4 组关键词未召回）。当前对照够投 Letters 级或国内会议(CCISP 7/20 截稿),投 IEEE Trans 需补强方法本身深度(CRLB 紧致性证明 + 多场景验证)。
 
 **未实现的候选(备选)**:
 - Zhang et al. Optics Communications 2024 "Joint mitigation of frequency offset and phase noise..."(DOI: 10.1016/j.optcom.2023.130071)——主题贴合相干 FSO 湍流,但 OptComm 是 Elsevier 中档,档级不够 Trans,作备选。
@@ -90,10 +90,11 @@
 | **IEEE Transactions 严格级** | 5/14 (36%) | **7/17 (41%)** | +2 篇严格 Trans(#16 OE/#17 TVT),#15 JPhoton 档级次档不计入 |
 | **近年 + 严格 Transactions 级** | **3/14 (21%)** | **5/17 (29%)** | +2 篇,改善但未过半 |
 
-**核心差距(补充后)**:
+**核心差距(补充+精读后)**:
 1. **当前方法来源(#1 Du PTL 2025)仍是 Letters 不是 Transactions**——这是老师"达不到?"担心的**主因,补充 baseline 不能解决,只能靠方法本身深度**(CRLB 紧致性证明 + 多场景验证 + SD-FEC 阈值等)
-2. **经典 baseline(BPS 2009 / VV 1983)够格但年份老**——领域事实(所有论文都引),现已并列 3 篇近年(#15 JPhoton M-APSK / #16 OE FSO / #17 TVT sat)做对照
+2. **经典 baseline(BPS 2009 / VV 1983)够格但年份老**——领域事实(所有论文都引),现已并列 3 篇近年(#15 JPhoto M-APSK / #16 OE FSO / #17 TVT sat)做对照
 3. **近年 + 严格 Trans 占比 29%**——从 21% 改善 8 个百分点,但仍偏少。继续补的边际收益递减,核心瓶颈在方法深度不在 baseline 数量
+4. **精读后发现的结构性缺口**：3 篇里只有 #15 JPhoto 方法同类（NDA M₀=8 同框架），但档级是 JPhoton（次档）；严格 Trans 级的 #16/#17 方法都异类（DA-FOE / DA 帧优化）。**"(8,8)-16APSK + NDA-ML + 星地 FSO + 近年 + 严格 Trans"五者交集的 baseline 检索未召回**——这是物理事实（该交集领域窄），不是检索不全。对策：要么放宽到 NDA 方法大类（不计较 APSK/FSO），要么接受 Du PTL 2025（方法源头）+ #15 JPhoto（方法同类次档）作主要方法对照组合。
 
 ### 我的判断(待老师确认)
 

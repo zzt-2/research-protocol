@@ -93,7 +93,7 @@
 |---|---|---|---|---|
 | 1 | **线宽扫描实验**(10k/50k/100k/500kHz × 4 场景,看增益是否稳定) | **必做** | 老师意见 1 | ✅ 已跑(2026-07-07,含 D-007 参数统一) |
 | 2 | **SD-FEC 阈值评估**(补 pre-FEC BER ~2e-2 或 post-FEC BER 1e-7,看增益在更严格阈值下是否成立) | **必做** | 老师意见 2 | ✅ 已跑(2026-07-07,HD-FEC sanity bit-exact PASS,SD-FEC 25% pre-FEC 2e-2 档 AWGN/weak/moderate 三场景全正 CI 下界>0,post-FEC 1e-7 物理不可达如实记录) |
-| 3 | **补近年 Transactions 并列 baseline**(检索 IEEE JLT/TCOM/OE 2022+ 的 M-APSK/卫星 FSO 载波同步论文,2-3 篇) | **必做**(如目标 Trans) | 老师意见 3 | ✅ 已补(2026-07-07,3 篇近年 Trans:JPhoto M-APSK V&V / OE FSO carrier recovery / TVT sat CRB。近年+Trans 占比 21%→35%。详见 COMPARISON_REFS.md §一 E 段) |
+| 3 | **补近年 Transactions 并列 baseline**(检索 IEEE JLT/TCOM/OE 2022+ 的 M-APSK/卫星 FSO 载波同步论文,2-3 篇) | **必做**(如目标 Trans) | 老师意见 3 | ✅ 已补+精读(2026-07-07 检索 3 篇近年 Trans:JPhoto M-APSK V&V / OE FSO / TVT sat CRB，近年+严格Trans 占比 21%→29%。2026-07-08 blit+download 下全文 + subagent 精读：#15 JPhoto 升级最强并列 baseline[(8,8)-16APSK+NDA M₀=8 同框架]，#16 OE 场景参照[方法异类+公式抓取不全]，#17 TVT 理论锚[CRB 推导]。精读后发现结构性缺口：五者交集严格 Trans baseline 未召回。详见 COMPARISON_REFS.md §一 E 段) |
 | 4 | **简报修正**(Doppler 参数补全/阈值说明/线宽单点标注/作者 Du/DOI 修正) | 推荐 | 老师意见 2/4 + 核查发现 | ⬜ 待改(本轮不动简报正文,等全弄好重写) |
 | 5 | **上行场景纳入主实验**(已跑通,结果正,要写进 baseline_report + 简报) | 推荐 | 老师意见 5 | ⬜ 待写(数据已在 results/sc_nda_ml_uplink/) |
 | 6 | **Doppler 参数文献溯源**(F_RESIDUAL/DOPPLER_LOW 现在是 assumption,补文献依据) | 推荐 | 老师意见 4 + audit_flag WARNING | ⬜ 待做 |

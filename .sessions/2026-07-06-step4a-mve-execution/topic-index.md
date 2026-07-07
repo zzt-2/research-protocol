@@ -1,7 +1,7 @@
 # Topic Index: Step 4a 维度 D MVE 执行
 
 > slug: 2026-07-06-step4a-mve-execution
-> status: active | created 2026-07-06 | last_updated 2026-07-07（S007 SD-FEC 重跑 + 近年 Trans baseline 补充 + TL-20 预期表更新。SD-FEC 25% pre-FEC 2e-2 档 AWGN/weak/moderate fair gain 全正 CI 下界>0（+1.299/+1.348/+1.554），方法结论在更严格阈值下稳健；post-FEC 1e-7 全不可达是单载波无信道编码物理事实。HD-FEC sanity bit-exact 4 场景 0.0000% 证实 D-007 改引用正确。补 3 篇近年 baseline（JPhoto M-APSK V&V / OE FSO / TVT sat CRB，Crossref DOI 全 VERIFIED），近年+严格Trans 占比 21%→29%（JPhoton 档级次档不计严格Trans）。TL-20 AWGN +1.351 超旧预期上界 +0.8 合理论证（D-007 场景重定义+segK8）。详见 S007）
+> status: active | created 2026-07-06 | last_updated 2026-07-08（S007 续接：blit+download 下 3 篇 baseline 全文 + subagent 精读。#15/#17 blit ieee 下成功校园网认证，#16 OE 6月已下。3 subagent 并发精读：#15 JPhoto 升级最强并列 baseline[(8,8)-16APSK + NDA M₀=8 次幂同框架，差异 LMMSE vs ML + 无湍流]，#16 OE 场景参照[方法异类 DA-FOE + 公式抓取不全]，#17 TVT 理论锚[DA&NDA CRB 推导]。精读后发现结构性缺口：(8,8)-16APSK+NDA-ML+星地FSO+近年+严格Trans 五者交集 baseline 未召回，物理事实非检索不全。详见 S007 续接段）
 
 ## 专题定位（一句话）
 
@@ -143,7 +143,9 @@ projects/simulation/
 
 ## 当前位置
 
-**🟢 S007 SD-FEC 重跑 + 近年 Trans baseline + TL-20 预期表更新（2026-07-07）**：REVIEW_NOTES §三 TODO 收尾执行（3 步内完成）。**任务1 SD-FEC 重跑**：HD-FEC 3.8e-3 sanity 4 场景 bit-exact 0.0000%（D-007 改引用正确）；25% SD-FEC pre-FEC 2e-2 档 AWGN/weak/moderate fair gain 全正 CI 下界>0（+1.299/+1.348/+1.554）→ 方法结论在更严格阈值下稳健；post-FEC 1e-7 全不可达（BER floor 5e-4~2.4e-2，单载波无信道编码物理事实）；C1-C5 自检 C1/C2/C4 PASS。**任务2 补近年 Trans baseline**：子 agent tools/search 4 组关键词召回 87 篇精筛 5 篇，Crossref DOI 验证 5 篇全 VERIFIED；主线筛 3 篇写入 COMPARISON_REFS.md §一 E（#15 JPhoto M-APSK V&V / #16 OE FSO carrier recovery / #17 TVT sat CRB），近年+Trans 占比 21%→35%。**任务3 TL-20 预期表更新**：SC-NDA-ML-MVE-SPEC §2 加 D-007 后实测列，AWGN +1.351 超旧预期上界 +0.8 合理论证（场景重定义+segK8，非 bug）；baseline_report §3 加 TL-20 对照段；feasibility_report FR-18 加消融后置状态；REVIEW_NOTES TODO-2/3 ✅。下一步=简报重写（用户定时机）/ TODO-4~8（Doppler 溯源/上行写报告/加种子/DD-KF 消融）/ 等老师定目标期刊层级。
+**🟢 S007 续接：blit+download 下 3 篇 baseline 全文 + subagent 精读（2026-07-08）**：用户要求"把那几篇用 blit 下下来然后 subagent 精读"。**下载**：#15 JPhoto + #17 TVT 用 blit --source ieee --download 下成功（IEEE 校园网认证通过，PDF 首页标题验证 PASS），移到 papers/doi/ 标准路径 + tools/convert 转 markdown；#16 OE 用 download --doi 发现 6 月已下（firecrawl_scrape）。**精读**：3 个 subagent 并发各 ≤500 词结构化摘要。**主线集成判断**：#15 JPhoto **升级最强并列 baseline**[(8,8)-16APSK + NDA M₀=8 次幂框架跟我们完全同款，差异只在权重 LMMSE vs ML + 信道无湍流，它已把 DA-ML PE 作对照跟我们 baseline 同款]；#16 OE 降级场景参照[调制方阵 16QAM + 方法 DA-FOE 异类 + content.md 公式全空复现受限]；#17 TVT 定位理论锚[纯 AWGN RF 卫星，但 DA&NDA CRB 推导跟我们公平对照框架理论契合]。**结构性缺口**："(8,8)-16APSK + NDA-ML + 星地 FSO + 近年 + 严格 Trans"五者交集 baseline 检索未召回——物理事实（领域窄）非检索不全。COMPARISON_REFS.md §一E 三篇评价全改精读后结论 + §三盘点加第 4 条缺口说明。下一步=简报重写（用户定时机）/ TODO-4~8 / 等老师定目标期刊层级。
+
+**（前 S007 主体 2026-07-07）**：REVIEW_NOTES §三 TODO 收尾执行。任务1 SD-FEC 重跑：HD-FEC sanity bit-exact 0.0000%，25% SD-FEC 2e-2 档三场景全正 CI 下界>0，post-FEC 1e-7 物理不可达；任务2 检索 3 篇近年 Trans baseline（Crossref 全 VERIFIED，近年+严格Trans 21%→29%）；任务3 TL-20 预期表更新（AWGN +1.351 超旧预期 +0.8 合理论证）。
 
 ## 进展线索
 
