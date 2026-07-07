@@ -11,8 +11,10 @@
   - uplink_strong  : α=1.0, β=0.7 (≈σ²_R 0.25, 明显比 strong 强, 接近 deep fade)
 
 薄包装 (守 §2.3 纪律 2: 不改 sc_nda_ml_sim.py 核心逻辑). 仅调用 S.run_turb:
-  湍流场景用 ber_nda_turb (intra_block_tracking='none' 默认, 即改进版的湍流分支不变).
-  → 与主实验改进版 (sc_nda_ml_main_improved) 的湍流分支完全一致 (信道实现复用, TL-13).
+  湍流场景用 ber_nda_turb (intra_block_tracking='none' 默认, 即湍流分支不变).
+  → 与主实验 (sc_nda_ml_main) 的湍流分支完全一致 (信道实现复用, TL-13).
+  注: D-007 (2026-07-07) 后主实验真相源从 sc_nda_ml_main_improved 迁到 sc_nda_ml_main.
+      湍流路径 D-007 只改读法没改数值, 故 uplink 结果仍有效 (无需重跑).
 
 种子策略 (§2.3 纪律 1/3, 同主实验湍流):
   湍流: seed0_i = SEED_TURB0 + i*N_BLOCKS (i=0..4, N_BLOCKS=400)

@@ -133,6 +133,12 @@
 - `verify/`(核查脚本)
 - `params.py`(当前参数,但含旧方向遗留字段)
 
+### D-007 后新增的 results 目录债务（2026-07-07 红旗3）
+
+- **`results/sc_nda_ml_main_improved/` 已废弃**（D-007 后 AWGN 从 25GBaud/500kHz 改 2.5GBaud/10kHz，旧 +1.483dB 失效）。新真相源 `results/sc_nda_ml_main/`（+1.351dB）。本地有 `_DEPRECATED.md` 标记（results/ 被 gitignore，标记文件不进版本控制，故记此条）。脚本引用已全改（`run_sdfec_eval.py` / `run_uplink_experiment.py` / `ADVISOR_BRIEFING.md` 附录）。
+- **`results/sc_nda_ml_sdfec_eval/` STALE**（基于旧 `_improved` 数据跑的，AWGN SD-FEC 数字过期）。`run_sdfec_eval.py` 已改指新源，**重跑 `python simulator/run_sdfec_eval.py` 即可刷新**（~1 分钟纯后处理）。本地有 `_STALE_D007.md`。
+- **彻底整理时机**：仍是"本方向跑完 + 投稿后"，不提前做。但下个对话若跑 SD-FEC，记得先重跑 sdfec_eval 刷新数据。
+
 ### 规划目标(跑完后做)
 
 **核心诉求**:后续要撑得住一大堆方向(B11-Q1/B7/B3/B9...)同时共存,代码干净,文件夹不乱。

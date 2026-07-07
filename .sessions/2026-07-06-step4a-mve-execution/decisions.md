@@ -283,3 +283,13 @@ S004（本轮）+ 验证 `_mve_results.json` + 主线 grep 核查 `_time_domain_
 ### 来源
 
 S005 续接（本轮参数统一+重跑）+ 用户原话 voice 2026-07-07（选项 2 拍板 + 反问戳穿根因）+ sim-preflight `rules/param-source.md` v1.2.0 + 子 agent 文献查证 Valjus sat.1553 §4.2
+
+### 教训补充（2026-07-07 红旗核查发现）
+
+D-007 执行中发现两个**同源问题**，属 param-source.md 规则精神的延伸，记录防复发：
+
+1. **MVE-Formal 算法路径也算"真相源"**：执行中暴露 MVE `_time_domain_crlb.ber_nda_awgn` 用 `intra_block_tracking='none'`，Formal `sc_nda_ml_sim.ber_nda_awgn` 用 `'segmented'`，两者算法路径不统一。旧 σ²p 下差异恰好 <5% 一致性容差被掩盖（被当成"巧合 bit-exact"），新 σ²p 下差异放大到暴露才修。**这不是巧合，是 MVE-Formal 算法路径不统一的真 bug**。`param-source.md` 管"参数真相源统一"，**算法路径统一是其同源延伸**——consistency_check 的 5% 容差会放过路径差异，必须靠人工保证 MVE 和 Formal 用同一套估计器开关。
+
+2. **结果目录"各写各的"是参数问题的下游**：发现 `sc_nda_ml_main`（D-007 新）和 `sc_nda_ml_main_improved`（旧）两目录并存且 AWGN 数字不同，且 `run_sdfec_eval.py` / `run_uplink_experiment.py` 仍引用旧目录 → 若跑 SD-FEC 会用旧 +1.483 数据得出错结论。已修引用 + 旧目录加 `_DEPRECATED.md`。**教训：参数真相源统一后，下游引用（脚本路径、results 目录、文档数字）必须同步清理，否则"统一"只做了一半。**
+
+两条都已纳入 `usage-log 2026-07`。后续若新方向出现"MVE-Formal 路径差异"或"多 results 目录并存"，按 param-source.md 精神处理（统一 + 清理下游引用）。

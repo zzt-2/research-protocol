@@ -53,7 +53,11 @@ N/A（本方向是**信号处理估计算法**，不是 RL/MDP）。A0 §4 针�
 
 ### §6 先验覆盖检查 [FR-01]
 
-DA ML（pilot sp=4）是 pilot-aided 载波相位估计的**近最优**实现（pilot 充分时），覆盖"有 pilot 可用"场景 ≥90% 最优。但 **NDA-ML 的竞争维度不是"比 DA ML 更准"而是"无 pilot 下达到近 DA ML 性能"**（频谱效率维度）+ "deep fade 鲁棒性"（形态 C 维度）——这两个维度 DA ML 不覆盖。主指标（BER@HD-FEC 公平对照）未被简单策略覆盖，次指标（频谱效率 + 鲁棒性）DA ML 不竞争。
+DA ML（pilot sp=4）是 pilot-aided 载波相位估计的**近最优**实现（pilot 充分时），覆盖"有 pilot 可用"场景 ≥90% 最优。**NDA-ML 的竞争维度分场景**（D-007 后叙事更新）：
+- **AWGN 场景**：NDA 不仅省 pilot（频谱效率，形态 A），在 σ²p 弱（10kHz@2.5GBaud）下公平对照 gain +1.351dB **超过 pilot overhead 1.249dB**，说明 NDA 全帧积分估计精度**也优于** DA pilot 局部估计（D-007 前旧 σ²p=500kHz 下 gain +0.776 < overhead，旧叙事"NDA 不竞争绝对精度"已过时）。
+- **湍流场景（形态 C）**：NDA 靠"deep fade 鲁棒性"赢（全帧积分 vs DA pilot 局部估计在 fade 块崩溃），此维度 DA 不覆盖；NDA-vs-oracle gap 仍存在（0.38-2.58dB），绝对精度略逊 oracle。
+
+主指标（BER@HD-FEC 公平对照）未被简单策略覆盖，次指标（频谱效率 + 鲁棒性，AWGN 再加估计精度）DA 不竞争。
 
 **A0 结论**：6 项无致命信号，进 A'。
 
@@ -63,9 +67,9 @@ DA ML（pilot sp=4）是 pilot-aided 载波相位估计的**近最优**实现（
 |---|---|---|---|
 | **频谱效率（形态 A）**| 低（DA 需 25% pilot overhead，1.249dB 总能量代价）| ≥5%（MVE 实测 +1.310dB @ AWGN）| 无 pilot 保留全频谱效率 |
 | **湍流鲁棒性（形态 C）**| 低（DA pilot 在 deep fade 块崩溃，BER floor）| ≥5%（MVE 实测 +1.19~+2.62dB @ strong 工作区）| NDA 全帧积分对单点 fade 鲁棒 |
-| 绝对 BER 精度 | 高（pilot sp=4 近最优）| <5%（NDA-vs-oracle gap 0.38-2.58dB）| NDA 略逊 oracle 但公平对照赢 DA |
+| 绝对 BER 精度 | 高（pilot sp=4 近最优）| AWGN: NDA fair gain +1.351 > overhead 1.249 → 估计精度也赢 DA；湍流: NDA-vs-oracle gap 0.38-2.58dB（略逊 oracle 但公平对照赢 DA）| AWGN 全维度赢；湍流靠鲁棒性赢 |
 
-**创新声称建立在"频谱效率 + 鲁棒性"两个先验覆盖度低 + ML 改善空间 ≥5% 的维度上**，不是建在 DA ML 最强的"绝对 BER 精度"维度。✅ 满足 A'。
+**创新声称建立在"频谱效率 + 鲁棒性"两个先验覆盖度低 + ML 改善空间 ≥5% 的维度上**（D-007 后 AWGN 再加"估计精度"维度）。✅ 满足 A'。
 
 ## A. 结构优势论证
 

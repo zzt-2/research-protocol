@@ -233,7 +233,7 @@ AWGN @阈值处的 BER 绝对值排名(5 种子均值,越小越好):
 
 - `projects/simulation/baseline_report.md` — baseline 复现 + 主实验完整结果
 - `projects/simulation/feasibility_report.md` — 方向可行性论证
-- `projects/simulation/results/sc_nda_ml_main_improved/` — 改进版主实验数据(5 种子)
+- `projects/simulation/results/sc_nda_ml_main/` — 主实验数据(5 种子, D-007 后真相源; `sc_nda_ml_main_improved/` 已废弃见其 `_DEPRECATED.md`)
 - `projects/simulation/results/sc_nda_ml_bps_ablation_improved/` — 改进版 vs BPS
 - `projects/simulation/results/sc_nda_ml_vv_ablation_improved/` — 改进版 vs VV
 - `projects/simulation/explore/nda-awgn-tracking-sandbox/` — 块内跟踪改进的 sandbox 验证
