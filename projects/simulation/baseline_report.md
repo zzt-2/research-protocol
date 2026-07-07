@@ -57,6 +57,39 @@ gw-experiment §impl Part B"复现成功 = DRL baseline 在关键指标上结构
 
 **复现判定**：**PASS**。提出方法（NDA-ML）在 4 场景全结构性优于目标 baseline（DA ML），CI 下界全 ≥0.5dB（SPEC §5 Go 门），strong 工作区全赢无反转。oracle 上界合理（gap <3dB）。
 
+### 1.1 NDA 同类经典 baseline 对照（VV / BPS，D-007 后重跑，2026-07-08）
+
+> 守 FR-14（先验对照）。VV (Viterbi-Viterbi 1983) 和 BPS (Blind Phase Search, Pfau 2009) 是 NDA 载波同步经典方法，所有 NDA-ML 论文都引。两者从 `common/_recovery.py` 导入（VV 适配 M₀=8 升幂，BPS 用 Nw=64 窗），共用主实验信道（守 TL-13），5 seed 统计。结果在 `results/sc_nda_ml_{vv,bps}_ablation/`。
+
+| 场景 | NDA-ML vs VV (dB) | 95% CI | NDA-ML vs BPS (dB) | 95% CI |
+|---|---|---|---|---|
+| AWGN | **+0.006**（持平）| [−0.017, +0.029] | **+0.117**（稳赢）| [+0.091, +0.144] |
+| weak | −0.004（持平）| [−0.063, +0.055] | +0.047（CI 跨 0，弱赢）| [−0.078, +0.172] |
+| moderate | −0.004（持平）| [−0.014, +0.007] | **+0.057**（稳赢）| [+0.022, +0.092] |
+| strong（工作区 γ≥15dB）| +0.109 | — | +0.106 | — |
+
+> 正 = NDA-ML 赢该 baseline。CI 下界 > 0 = 统计显著。
+
+**核心解读**：
+1. **NDA-ML vs VV 基本持平**（AWGN +0.006，weak/moderate −0.004，CI 全跨 0）——物理上合理：NDA-ML = 升幂+单正弦 ML 闭式，VV = 升幂+滑窗 mean-angle，在低 PN（10kHz@2.5GBaud，σ²_p=2.5e-5）下 ML 闭式 vs mean-angle 差异极小。**"NDA-ML 不输经典 VV"成立**（会议级卖点）。
+2. **NDA-ML vs BPS 稳赢**（AWGN +0.117 CI[+0.091,+0.144]，moderate +0.057 CI[+0.022,+0.092]，CI 下界 > 0；weak CI 跨 0 是强湍流波动大）。BPS 是光纤 CPR 事实标准（所有相干光论文引），NDA-ML 在单载波 M-APSK 场景赢它。
+3. **VV/BPS 都稳赢 DA**（VV vs DA AWGN +1.345 CI[+1.30,+1.39]，BPS vs DA AWGN +1.234）——印证"NDA 类方法公平对照赢 DA"结论稳健（不止我们方法，经典 NDA 也赢 DA）。
+4. 一致性自检：VV/BPS 全场景 ≥ oracle（PASS，无超越信息论上界的 bug）。
+
+**对论文对照组合的意义**：会议级（CCISP）的 baseline 矩阵已齐——DA-ML（稳赢 +1.35~+2.5dB）+ VV（持平，证明不输经典）+ BPS（稳赢，证明赢光纤 CPR 标准）。LMMSE (#15 JPhoto) 因 PDF 转 md 公式丢失复现失败（见 §1.2），改作"文献定性引用"（引论文 penalty 数据，不实测）。
+
+### 1.2 LMMSE (#15 JPhoto) 复现失败记录（教训，2026-07-08）
+
+**尝试**：实现 `common/_recovery.py:lmmse_recovery`（average-energy 简化版，σ²_ε=N₀/2E_s 全程常数）。8PSK smoke test RMSE 0.024rad @20dB 看似对，但 16APSK(8,8) AWGN 信道高 SNR 严重 BER floor（@20dB LMMSE BER 0.018 vs NDA-ML 7.5e-4，差 24 倍）。调 4 种公式变体（R 对角 AOPN 倍数 ×4 + 归一化/不归一化）均不对。
+
+**根因**：#15 论文（DOI 10.1109/JPHOT.2024.3415635）PDF→md 转换把 eq(5)(6)(7)（R 矩阵、p 向量、AOPN 方差的闭式）转成 `picture intentionally omitted`。靠文字描述+物理推导重建的 R/p 缺关键细节（可能是 AOPN 方差在升幂后的精确表达，或 p 向量的噪声修正项）。
+
+**决策**（用户 2026-07-08）：放弃 LMMSE 实测，切方案 C 用 VV/BPS 经典 baseline（见 §1.1）。`lmmse_recovery` 函数标 DEPRECATED 保留作教训（不准调用），如要恢复需先下 [13] Wang 2022 T-SP 拿原始 R/p 闭式。
+
+**教训**：PDF 转 md 丢公式是常见质量缺陷，**复现文献算法前先确认公式完整性**，否则盲调耗时且不可靠（TL-20 偏离即查的延伸：不只查"好结果"物理前提，也查"坏结果"实现前提）。
+
+**对 COMPARISON_REFS #15 的处理**：从"最强并列 baseline（待实测）"降级为"文献定性引用"——引论文 Fig.7 16APSK(8,8) @ 2MHz LMMSE penalty ≈0.5dB @ BER=10⁻²（跟 DA-ML 持平），诚实标注"未实测，据文献"。
+
 ---
 
 ## 2. 仿真环境验证（gw-experiment §impl Part A 清单）

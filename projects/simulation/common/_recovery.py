@@ -273,6 +273,112 @@ def nda_ml_recovery(rx, M0, mod='m16apsk', N_fft=None, assume_df_zero=False,
     return rx_comp, tau_est, phi_est, df_est
 
 
+def lmmse_recovery(rx, snr_db, M0=8, L=5, sigma2_p=None, mod='m16apsk',
+                   assume_df_zero=True):
+    """LMMSE 载波相位估计 (average-energy 简化版) — #15 JPhoto baseline.
+
+    ⚠️ DEPRECATED (2026-07-08): 复现验证发现高 SNR BER floor (LMMSE @20dB BER 0.018
+    vs NDA-ML 7.5e-4, 差 24 倍). 根因: #15 论文 PDF→md 转换把 eq(5)(6)(7) 的 R/p 闭式
+    公式丢了 (picture intentionally omitted), 此处 R/p 矩阵靠文字描述+物理推导重建,
+    缺关键细节 (AOPN 方差升幂后精确表达 / p 向量噪声修正项). 调 4 种变体均不对.
+    用户决策 (2026-07-08): 放弃 LMMSE 实测, 切方案 C 用 VV/BPS 经典 baseline. 本函数
+    保留作教训, 不准调用. 如要恢复, 先查 [13] Wang 2022 T-SP 原始 LMMSE 公式拿 R/p 闭式.
+    详见 verify/lmmse_repro_check.py + decisions.md D-008 (待建).
+    """
+    # ⚠️ DEPRECATED: 见 docstring 警告
+    """LMMSE 载波相位估计 (average-energy 简化版) — #15 JPhoto baseline.
+
+    来源: Wang et al. 2024 IEEE Photonics J "V&V Carrier Phase Estimation for
+          Multi-Ring M-APSK with Wiener Phase Noise and Its Performance"
+          DOI: 10.1109/JPHOT.2024.3415635, eq (3)-(4)+(10)-(12) avg-energy 版.
+    核心方法: 升 M₀ 次幂去调制 + 窗 2L+1 内 LMMSE 权重 w=R⁻¹p (针对 Wiener PN
+              + AWGN 双统计优化). 与 nda_ml_recovery 同属 NDA M₀ 次幂框架,
+              差异: nda_ml 用 mean-angle (块常数), LMMSE 用 R⁻¹p 加权窗
+              (针对 Wiener PN 的近最优权重). avg-energy 简化: AOPN 方差
+              σ²_ε = N₀/(2E_s) 全程常数 → R/p 预算一次 O(W³), 滑窗 O(W·N).
+
+    数学:
+      升幂归一化: yM(k) = (r(k)/|r(k)|)^M₀ = exp(jM₀θ(k)) + 升幂噪声
+      窗 2L+1 观测: yM_win = [yM(k-L), ..., yM(k+L)]^T
+      LMMSE 估计: V̂M(k) = w^H · yM_win,  θ̂(k) = angle(V̂M(k))/M₀
+      权重: w = R⁻¹·p
+        R 自相关 (W×W), (x,y) 元素:
+          d = |x-y|
+          R[x,y] = exp(-M₀²·σ²_p·d/2) · (1 + σ²_ε·M₀²·δ_{d,0})
+          (Wiener 相位差 d 步衰减 + 升幂后 AWGN 在同点 M₀² 倍方差)
+        p 互相关 (W×1), l 元素 (中心=L):
+          p[l] = exp(-M₀²·σ²_p·|l-L|/2)  (中心=1 向两侧衰减)
+        σ²_p = 2π·Δν·T_s (Wiener PN 每符号方差, params SIGMA2_P)
+        σ²_ε = 1/(2·10^(snr_db/10))  (avg-energy AOPN, 论文 eq 12)
+
+    边界处理: k<L 或 k>N-1-L 用 edge-padding (复制边缘样本).
+
+    参数溯源:
+      M₀=8: (8,8)-16APSK LCM(8,8)=8 (同 nda_ml, 论文 line 79)
+      L=5: 论文推荐 memory length (Fig.3-8 主用, line 223 "L=5 更适于多环")
+      σ²_p: 默认 None → 从 _b11_params.SIGMA2_P 取 (params LASER_LW 派生)
+
+    与 nda_ml_recovery 接口对齐: 返回 (rx_comp, tau_est, phi_est, df_est).
+    assume_df_zero=True (默认): 跳 FFT-df, 纯 CPE 估计 (对齐主实验调用约定).
+
+    References
+    ----------
+    [15] Q. Wang et al., "V&V CPE for Multi-Ring M-APSK with Wiener PN,"
+         IEEE Photonics J., vol. 16, no. 4, art. 7201408, Aug. 2024.
+    [13] (LMMSE M-PSK 原始推导, [15] 引用) Wang 2022 IEEE T-SP.
+    """
+    rx = np.asarray(rx, dtype=complex)
+    N = len(rx)
+
+    # --- 参数解析 ---
+    if sigma2_p is None:
+        # 从 _b11_params 取 (守 D-007 单一真相源), 延迟 import 避免循环
+        try:
+            from ..simulator._b11_params import SIGMA2_P as _S2P
+            sigma2_p = float(_S2P)
+        except Exception:
+            sigma2_p = 2.51e-5  # fallback: 10kHz@2.5GBaud 派生值 (params.py)
+
+    snr_lin = 10.0 ** (snr_db / 10.0)
+    sigma2_eps = 1.0 / (2.0 * snr_lin)            # avg-energy AOPN, 论文 eq(12)
+    W = 2 * L + 1                                  # 窗长
+
+    # --- 预算 R/p (avg-energy 全程常数, 算一次) ---
+    idx = np.arange(W)
+    d = np.abs(idx[:, None] - idx[None, :])        # (W,W) 距离矩阵
+    # R[x,y]: Wiener 衰减 × (1 + 升幂 AWGN 在 d=0 加项)
+    R = np.exp(-M0**2 * sigma2_p * d / 2.0)
+    R[np.diag_indices(W)] *= (1.0 + sigma2_eps * M0**2)
+    # p[l]: 中心(L)到两侧的 Wiener 衰减
+    p = np.exp(-M0**2 * sigma2_p * np.abs(idx - L) / 2.0)
+    # 权重 w = R⁻¹ p (复数权, R 实对称正定)
+    w = np.linalg.solve(R, p)
+    # 注: 论文 w 为 F(|r|²) 实权重 (optimal nonlinearity), 此处实数实现.
+
+    # --- 升幂归一化 + 滑窗加权 ---
+    # yM(k) = (r(k)/|r(k)|)^M₀, 边界 edge-pad (保持窗长)
+    rx_n = rx / np.abs(rx)                          # 单位相位项
+    yM = rx_n ** M0                                 # 升幂去调制 (含升幂噪声)
+    # edge-padding: 左右各补 L 个边缘值
+    yM_pad = np.concatenate([np.full(L, yM[0]), yM, np.full(L, yM[-1])])
+    # 滑窗提取 (k 从 0..N-1, 窗 [k, k+W) in padded coords)
+    # V̂M(k) = sum_l w[l]·yM_pad[k+l]
+    # 用卷积实现: V̂M = (yM_pad * w_rev)[L:L+N], 但 w 实数且对称窗 → 直接矩阵乘
+    VhatM = np.empty(N, dtype=complex)
+    for k in range(N):
+        VhatM[k] = np.dot(w, yM_pad[k:k + W])      # w^H · yM_win (w 实数)
+
+    phi_est = np.angle(VhatM) / M0                  # 逐符号相位轨迹 (解 M₀ 缩放)
+
+    # --- 相位补偿 ---
+    df_est = 0.0                                    # assume_df_zero: 纯 CPE, 不估频率
+    tau_est = 0.0
+    rx_comp = rx * np.exp(-1j * phi_est)
+    # 注: 逐符号 phi_est, 不像 nda_ml 块常数. M₀-fold 模糊由 resolve_m16apsk_blockwise 消除
+    #     (跟 nda_ml 同, 调用方负责, 此处仅返回相位补偿后信号).
+    return rx_comp, tau_est, phi_est, df_est
+
+
 def gardner_ted_recovery(rx, sps=2, mod='qpsk', gain=0.01, damping=np.sqrt(2)/2):
     """Gardner TED 定时恢复 — B7 锚方法.
 

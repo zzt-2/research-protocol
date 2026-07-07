@@ -98,7 +98,7 @@
 | 5 | **上行场景纳入主实验**(已跑通,结果正,要写进 baseline_report + 简报) | 推荐 | 老师意见 5 | ⬜ 待写(数据已在 results/sc_nda_ml_uplink/) |
 | 6 | **Doppler 参数文献溯源**(F_RESIDUAL/DOPPLER_LOW 现在是 assumption,补文献依据) | 推荐 | 老师意见 4 + audit_flag WARNING | ⬜ 待做 |
 | 7 | **加种子到 10+**(现在 5 个,统计上站得住但可更稳) | 可选 | 原有 TODO | ⬜ 待做 |
-| 8 | **改进版 + DD-KF 消融**(更强跟踪,看是否反转) | 可选 | 原有 TODO | ⬜ 待跑(CCISP 紧→若时间不够作"未来工作",基建 run_kf_ablation.py/run_dd_kf_ablation.py 已就位可随时跑;不影响核心结论) |
+| 8 | **改进版 + DD-KF 消融**(更强跟踪,看是否反转) | 可选 | 原有 TODO | ✅ VV/BPS 消融已跑(2026-07-08,D-007 后重跑)：NDA-ML vs VV 持平(AWGN +0.006 CI跨0)，NDA-ML vs BPS 稳赢(AWGN +0.117 CI[+0.091,+0.144]，moderate +0.057 CI[+0.022,+0.092])。DD-KF 消融(run_dd_kf_ablation.py)仍待跑，基建已就位。LMMSE(#15)复现失败改定性引用。详见 baseline_report §1.1/§1.2 |
 
 ### 投稿时间线约束
 
@@ -162,4 +162,6 @@
 - ✅ **线宽扫描(意见 1 触发)**:10k/50k/100k/500kHz × 4 场景 × 5 seed。结果在 `results/sc_nda_ml_linewidth_sweep/`
 - ✅ **参数真相源统一(D-007)**:发现线宽参数各写各的根因(AWGN 用 B11 OFDM 500kHz,湍流用单载波 10kHz,差 50 倍)。统一为全场景单载波 2.5GBaud/10kHz。消灭函数默认参数固化 + monkey-patch `__defaults__` + 跨模块同义常量(3 套源→1 套)。AWGN 重跑 fair gain +0.776→+1.351,湍流不变。详见 decisions.md D-007。
 - ✅ 简报修正(意见 4 C4 + 线宽描述 + 符号率):ADVISOR_BRIEFING §3.1/§4.1 已改全场景统一 10kHz@2.5GBaud
-- ⬜ SD-FEC 阈值评估(意见 2,后续实验)
+- ✅ SD-FEC 阈值评估(意见 2):HD-FEC sanity bit-exact PASS,SD-FEC 25% pre-FEC 2e-2 档三场景全正 CI 下界>0
+- ✅ 补近年 Trans baseline(意见 3):3 篇(JPhoto/OE/TVT)Crossref 全 VERIFIED + 精读
+- ✅ **VV/BPS 经典 NDA baseline 实测对照**(2026-07-08,D-007 后重跑):NDA-ML vs VV 持平(物理合理),NDA-ML vs BPS 稳赢。LMMSE(#15)复现失败改定性引用。对照矩阵已齐:DA-ML(稳赢)+VV(持平)+BPS(稳赢)。详见 `baseline_report.md` §1.1/§1.2

@@ -1,7 +1,7 @@
 # Topic Index: Step 4a 维度 D MVE 执行
 
 > slug: 2026-07-06-step4a-mve-execution
-> status: active | created 2026-07-06 | last_updated 2026-07-08（S007 续接：blit+download 下 3 篇 baseline 全文 + subagent 精读。#15/#17 blit ieee 下成功校园网认证，#16 OE 6月已下。3 subagent 并发精读：#15 JPhoto 升级最强并列 baseline[(8,8)-16APSK + NDA M₀=8 次幂同框架，差异 LMMSE vs ML + 无湍流]，#16 OE 场景参照[方法异类 DA-FOE + 公式抓取不全]，#17 TVT 理论锚[DA&NDA CRB 推导]。精读后发现结构性缺口：(8,8)-16APSK+NDA-ML+星地FSO+近年+严格Trans 五者交集 baseline 未召回，物理事实非检索不全。详见 S007 续接段）
+> status: active | created 2026-07-06 | last_updated 2026-07-08（S008 LMMSE 复现失败 + VV/BPS 经典 baseline 实测对照。用户问"能拿哪个比+效果好吗"，主线分析 3 篇近年 baseline 可比性后用户选方案 C。LMMSE(#15 JPhoto)复现失败：PDF→md 把 eq(5)(6)(7) R/p 矩阵闭式转 picture omitted，靠文字重建公式 16APSK 高 SNR BER floor，调 4 变体均不对，TL-20 偏离即查落实。切 VV/BPS 重跑 D-007 后真相源：NDA-ML vs VV 持平[AWGN+0.006 CI跨0，物理合理]，NDA-ML vs BPS 稳赢[AWGN+0.117 CI(+0.091,+0.144)，moderate+0.057 CI(+0.022,+0.092)]。VV/BPS 都稳赢 DA 印证 NDA 类公平对照稳健。会议级对照矩阵已齐：DA-ML(稳赢)+VV(持平)+BPS(稳赢)+LMMSE(定性引用)。详见 S008）
 
 ## 专题定位（一句话）
 
@@ -143,7 +143,11 @@ projects/simulation/
 
 ## 当前位置
 
-**🟢 S007 续接：blit+download 下 3 篇 baseline 全文 + subagent 精读（2026-07-08）**：用户要求"把那几篇用 blit 下下来然后 subagent 精读"。**下载**：#15 JPhoto + #17 TVT 用 blit --source ieee --download 下成功（IEEE 校园网认证通过，PDF 首页标题验证 PASS），移到 papers/doi/ 标准路径 + tools/convert 转 markdown；#16 OE 用 download --doi 发现 6 月已下（firecrawl_scrape）。**精读**：3 个 subagent 并发各 ≤500 词结构化摘要。**主线集成判断**：#15 JPhoto **升级最强并列 baseline**[(8,8)-16APSK + NDA M₀=8 次幂框架跟我们完全同款，差异只在权重 LMMSE vs ML + 信道无湍流，它已把 DA-ML PE 作对照跟我们 baseline 同款]；#16 OE 降级场景参照[调制方阵 16QAM + 方法 DA-FOE 异类 + content.md 公式全空复现受限]；#17 TVT 定位理论锚[纯 AWGN RF 卫星，但 DA&NDA CRB 推导跟我们公平对照框架理论契合]。**结构性缺口**："(8,8)-16APSK + NDA-ML + 星地 FSO + 近年 + 严格 Trans"五者交集 baseline 检索未召回——物理事实（领域窄）非检索不全。COMPARISON_REFS.md §一E 三篇评价全改精读后结论 + §三盘点加第 4 条缺口说明。下一步=简报重写（用户定时机）/ TODO-4~8 / 等老师定目标期刊层级。
+**🟢 S008 VV/BPS 经典 baseline 实测对照 + LMMSE 复现失败教训（2026-07-08）**：用户问"能拿哪个比+效果好吗"+"只要会议毕业"。**LMMSE(#15)复现失败**：PDF→md 把 eq(5)(6)(7) R/p 矩阵闭式转 picture omitted，靠文字重建公式 16APSK 高 SNR BER floor（@20dB 0.018 vs NDA-ML 7.5e-4），调 4 变体均不对，TL-20 偏离即查落实。用户决策方案 C 切 VV/BPS。**VV/BPS 重跑 D-007 后真相源**：NDA-ML vs VV 持平（AWGN +0.006 CI 跨 0，物理合理因低 PN 下 ML 闭式 vs mean-angle 差异极小），NDA-ML vs BPS 稳赢（AWGN +0.117 CI[+0.091,+0.144]，moderate +0.057 CI[+0.022,+0.092]）。VV/BPS 都稳赢 DA（+1.2~+1.7dB）印证 NDA 类公平对照稳健。一致性 ALL PASS。**会议级对照矩阵已齐**：DA-ML（稳赢）+ VV（持平）+ BPS（稳赢）+ LMMSE（定性引用）。baseline_report §1.1/§1.2 + COMPARISON_REFS #3/#4/#15 + REVIEW_NOTES TODO-8✅。下一步=简报重写（用户定时机）/ TODO-4~7 / 等老师定目标期刊。
+
+**（前 S007 2026-07-07/08）**：SD-FEC 重跑 sanity bit-exact PASS + 25% SD-FEC 档三场景全正；近年 Trans baseline 检索 3 篇 + Crossref VERIFIED + subagent 精读；TL-20 预期表更新。
+
+**（前 S007 主体 2026-07-07）**：REVIEW_NOTES §三 TODO 收尾执行。任务1 SD-FEC 重跑：HD-FEC sanity bit-exact 0.0000%，25% SD-FEC 2e-2 档三场景全正 CI 下界>0，post-FEC 1e-7 物理不可达；任务2 检索 3 篇近年 Trans baseline（Crossref 全 VERIFIED，近年+严格Trans 21%→29%）；任务3 TL-20 预期表更新（AWGN +1.351 超旧预期 +0.8 合理论证）。
 
 **（前 S007 主体 2026-07-07）**：REVIEW_NOTES §三 TODO 收尾执行。任务1 SD-FEC 重跑：HD-FEC sanity bit-exact 0.0000%，25% SD-FEC 2e-2 档三场景全正 CI 下界>0，post-FEC 1e-7 物理不可达；任务2 检索 3 篇近年 Trans baseline（Crossref 全 VERIFIED，近年+严格Trans 21%→29%）；任务3 TL-20 预期表更新（AWGN +1.351 超旧预期 +0.8 合理论证）。
 
@@ -169,3 +173,4 @@ projects/simulation/
 - **S006** D-007 线宽参数真相源统一 + 重跑（2026-07-07，本对话产出）
 - **D-007** AWGN 场景重定义（B11 OFDM→单载波）+ 线宽参数真相源统一（2026-07-07，S006 新建）
 - **S007** SD-FEC 重跑 + 近年 Trans baseline + TL-20 预期表更新（2026-07-07，本对话产出，3 步收尾执行）
+- **S008** VV/BPS 经典 baseline 实测对照 + LMMSE 复现失败教训（2026-07-08，本对话产出）
