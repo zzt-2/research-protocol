@@ -1,7 +1,7 @@
 # Topic Index: Step 4a 维度 D MVE 执行
 
 > slug: 2026-07-06-step4a-mve-execution
-> status: active | created 2026-07-06 | last_updated 2026-07-06（S004 续接 2——Step 5 Baseline 选定轻量版完成。literature_notes ~22 篇精读统计 + Baseline 候选评估表（7 候选）。选定 DA ML pilot sp=4 = FR-15 目标 baseline（D-S5-01，领域共识 + FR-14 最强先验 + FR-15 MVE 已验证 + 代码良好）。写 `projects/simulation/decision_log.md`。田野调查 ≥10 篇待补 H005。本轮 MVE PASS + feasibility_report + baseline 选定全落盘。下一步=交用户确认 + H005 做 Step 5 田野调查 + 4b + Step 6）
+> status: active | created 2026-07-06 | last_updated 2026-07-07（S006 D-007 线宽参数真相源统一 + 重跑。导师意见 1 触发，发现线宽 3 套同义常量源（params.B11Params.CLW / simulator._b11_params.CLW_B11 / _time_domain_crlb.CLW_B11）+ 函数默认参数固化 + sweep monkey-patch。D-007 统一到 SystemParams.LASER_LW 单字段（10kHz@2.5GBaud 单载波），AWGN 从 B11 OFDM 25GBaud/500kHz 重定义为单载波。9 文件改动 + NDA 路径修复（MVE 加 segmented 对齐 Formal）+ 4 文档同步。重跑：consistency bit-exact 4 场景 0.0000%，主实验 AWGN +0.776→+1.351（σ²p 弱 5× + segK8），weak/moderate/strong 逐位不变（回归 PASS），sweep 传参注入可行 500kHz 崩塌重现。详见 S006 + D-007）
 
 ## 专题定位（一句话）
 
@@ -135,15 +135,15 @@ projects/simulation/
 
 ## 悬而未决
 
-1. **写 feasibility_report.md 进 Step 5**：D005 Go 判定后的下一步。本轮 MVE PASS 是 §D 维度 D 的实证，待写进 feasibility_report.md（守 TL-23 验证完再写——本轮已验证完，可写）
-2. **B7 处理**：D004 已说"B7 待 NDA-ML MVE 完后视情况开"，现 NDA-ML Go，B7 可作并行第二候选或后置。视用户意图定
-3. **B3 架构决策**：多孔径阵列 vs 单链路，最后做
+1. **用户拍板下一步方向**（GW Step 4a/4b/5/6/7 全闭合后）：①进 Contract 阶段（落假设+信号+success_signal）②补消融（跨块 KF + BPS 迁移，论文写作前）③B7 Gardner TED FOE MVE（并行第二候选）④B3 架构决策（多孔径阵列 vs 单链路）
+2. **消融后置状态**：跨块 KF（FR-18 预判 cross-over 移动）+ BPS 迁移对比（田野调查候选补充）+ decision-feedback DA ML（债务①）—— 都标"论文写作前补"，主实验已 PASS 不卡
+3. **SPEC.md §8 NDA-ML 段补完**：Step 7 后用实际参数补更准（当前 QPSK §1-7 与 NDA-ML 新参数双套共存）
 4. **B11 作理论参考的具体叙事方式**：论文里如何引用 B11（背景 / 思想源头 / 对比锚？）待写作阶段定
-5. **债务提示**：①单载波 DA ML 近最优（pilot sp=4）vs B11 论文 DA ML（decision-feedback）不对等，MVE 验证后视情况补 decision-feedback DA ML 对照 ②B11 genie-aided 解卷绕非可实现，MVE 用 resolve_m16apsk_blockwise（非 oracle）已落实
+5. **债务提示**：①单载波 DA ML 近最优（pilot sp=4）vs B11 论文 DA ML（decision-feedback）不对等，论文写作前视情况补对照 ②B11 genie-aided 解卷绕非可实现，MVE/Formal 用 resolve_m16apsk_blockwise（非 oracle）已落实 ③田野调查 BPS 候选补充行（光纤 CPR 主流基准，主面 QAM 场景不同），作迁移对比二级 baseline ④MVE 脚本是 `_time_domain_crlb.py` 薄包装，Formal 仿真器已独立实现（simulator/，不复用 explore 探针，§4.5 MVE 一致性 bit-exact 验证）⑤simulator-design.md §4.4 自相关 h lag-1=0.99 是块内恒定物理特性（块间 lag-100=0.0164 非平滑假象），阈值分块内/块间
 
 ## 当前位置
 
-**🟢 S004 SC-NDA-ML MVE PASS Go 判定 + feasibility_report + Step 5 baseline 选定轻量版（2026-07-06）**：执行 H003 三步。**步骤 1 报到+框架重读**：session-governance Trigger 1/5 + gw-feasibility §D + TL-20/22/23/26 + SPEC 9 节 + common 接口验证，Handoff 3 条关键声称核查全 PASS。**步骤 2 派子 agent 跑 MVE**：子 agent 写 `sc_nda_ml_mve.py`（薄包装复用 `_time_domain_crlb.py`）+ 跑 15.9s，输出 `_mve_results.json`。**步骤 3 主线核查+判定**：grep 核查 6 项 MVE 纪律全落实，确认底层 MVE 代码合格→结论有效。TL-20 预期 5 项全 PASS 0 DEVIATION。**判定 Go (§D PASS)**：公平对照 fair gain @ HD-FEC AWGN +0.704 / weak +1.199 / moderate +1.922 dB 全 ≥0.5dB，strong 物理不可达但工作区全赢 DA。新建 D005。**续接（用户授权"接着做"）**：写 `projects/simulation/feasibility_report.md`（Step 4a 出参，A0/A'/A/B/D 全维度汇总 + Go 决策）。**续接 2（用户选路径 A）**：Step 5 Baseline 选定轻量版——literature_notes ~22 篇精读统计 + 候选评估表（7 候选），选定 DA ML pilot sp=4 = FR-15 目标 baseline（D-S5-01），写 `projects/simulation/decision_log.md`。田野调查 ≥10 篇待补 H005。下一步=交用户确认 + H005 做 Step 5 田野调查 + 4b + Step 6。
+**🟢 S006 D-007 线宽参数真相源统一 + 重跑（2026-07-07）**：导师意见 1（线宽扫描）触发。上轮 skill 补强已诊断根因（线宽 3 套同义常量源差 50 倍），本轮执行修复。**D-007 决策**（用户拍板选项 2）：AWGN 从 B11 OFDM 25GBaud/500kHz 重定义为单载波 2.5GBaud/10kHz，全场景线宽统一 SystemParams.LASER_LW 单字段。**代码改动 9 文件**：params.py（B11Params 3 字段标 DEAD）/ common/_channel.py（doppler_phase 默认参数改 None + lw 透传）/ simulator/_b11_params.py（删 CLW_B11 等，SIGMA2_P 从 LASER_LW 派生）/ sc_nda_ml_sim.py（rename + 加 sigma2_p/lw 参数）/ _time_domain_crlb.py（MVE 锚脚本改单载波 + 加 segmented 对齐 Formal）/ run_linewidth_sweep.py（删 monkey-patch 改传参 + 修对照路径 bug）/ 2 ablation rename + 1 deprecated 标注。**自检全过**：param-source grep 函数默认参数固化=0、__defaults__=0、旧常量名=0；audit_params DEAD 3→6；test_common 关键断言 PASS。**重跑**：MVE AWGN +0.704→+1.310；consistency 首次 FAIL（NDA 路径差异：MVE 用 none Formal 用 segmented，旧值巧合 bit-exact 新值暴露）→ 修复 MVE 加 segmented → consistency 恢复 4 场景 0.0000%；主实验 AWGN +0.776→+1.351±0.072，weak/moderate/strong 逐位不变（回归 PASS）；sweep 传参注入可行，500kHz 湍流崩塌重现（strong −0.816dB 真物理顶）。**文档同步**：baseline_report + feasibility_report + ADVISOR_BRIEFING（C4 修正）+ REVIEW_NOTES（TODO-1 ✅）。下一步=简报发导师 / SD-FEC 阈值（TODO-2）/ 补近年 Trans baseline（TODO-3）。
 
 ## 进展线索
 
@@ -159,4 +159,10 @@ projects/simulation/
 - **H003** 交接给新对话（跑 SC-NDA-ML MVE）（2026-07-06）
 - **S004** 执行 H003：SC-NDA-ML MVE PASS Go 判定（2026-07-06，本对话产出）
 - **D005** SC-NDA-ML MVE PASS → Go（2026-07-06，S004 新建）
-- **D-S5-01**（项目级 decision_log.md）Baseline 选定 DA ML pilot sp=4 = FR-15 目标 baseline（2026-07-06，S004 续接 2 新建）
+- **D-S5-01**（项目级 decision_log.md）Baseline 选定 DA ML pilot sp=4 = FR-15 目标 baseline（2026-07-06，S004 续接 2 新建；S005 田野调查补完，维持选定，BPS 补候选补充行）
+- **S005** 执行 H005：Step 5 田野调查补完 + 4b（C/E）Go 决策（2026-07-06，本对话产出）
+- **D-4b-01**（项目级 decision_log.md）4b（C/E 维度）Go 决策（2026-07-06，S005 新建）
+- **simulator-design.md**（项目级）Step 6 仿真器设计规格（2026-07-06，S005 续接 Step 6 产出，FR-12 门控通过主路径全"否"）
+- **baseline_report.md**（项目级）Step 7 出参（2026-07-06，S005 续接 Step 7 产出，§4.5 MVE 一致性 bit-exact + 5 seed 主实验全赢 DA）
+- **S006** D-007 线宽参数真相源统一 + 重跑（2026-07-07，本对话产出）
+- **D-007** AWGN 场景重定义（B11 OFDM→单载波）+ 线宽参数真相源统一（2026-07-07，S006 新建）

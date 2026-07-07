@@ -3,6 +3,8 @@
 > 项目: projects/simulation | 阶段: GW Step 4a + 4b（方向根基 + 初步可行性 + 仿真条件/资源风险）| 日期: 2026-07-06
 > 框架: gw-feasibility.md §4a（A0/A'/A/B/D 维度）+ §4b（C/E 维度，2026-07-06 补完）
 > 决策: **Go**（4a: D005 MVE PASS + 4b: C/E 无致命）| 用户确认: ⬜（待）
+>
+> **D-007 (2026-07-07) 更新**：AWGN 场景从 B11 OFDM（25GBaud/500kHz）重定义为单载波（2.5GBaud/10kHz），全场景线宽统一 LASER_LW=10kHz。AWGN fair gain 数字从旧值（MVE +0.704 / 5seed +0.776）升至新值（MVE +1.310 / 5seed +1.351），因 σ²p 弱 5× + segK8 块内跟踪。weak/moderate/strong 不变。本文档 AWGN +0.704 已全替换为 +1.310（MVE 单 seed）。详见 decisions.md D-007。
 
 ## 研究方向
 
@@ -20,7 +22,7 @@
 ### §1 性能间隙 [FR-02]
 
 **[实证]** MVE 实测公平对照 fair gain @ HD-FEC（BER=3.8e-3，DA 含 1.249dB pilot overhead 总能量代价，来源 `_mve_results.json` gain_analysis）：
-- AWGN **+0.704 dB**（形态 A）
+- AWGN **+1.310 dB**（形态 A）
 - weak (α4/β3) **+1.199 dB**
 - moderate (α2.5/β1.8) **+1.922 dB**
 - strong (α1.5/β0.8) HD-FEC 物理不可达，工作区(≥15dB) NDA 全赢 DA（per-point fair gain +1.19~+2.62dB）
@@ -59,7 +61,7 @@ DA ML（pilot sp=4）是 pilot-aided 载波相位估计的**近最优**实现（
 
 | 维度 | 先验覆盖度（DA ML）| ML 改善空间 | NDA-ML 方法增量 |
 |---|---|---|---|
-| **频谱效率（形态 A）**| 低（DA 需 25% pilot overhead，1.249dB 总能量代价）| ≥5%（MVE 实测 +0.704dB @ AWGN）| 无 pilot 保留全频谱效率 |
+| **频谱效率（形态 A）**| 低（DA 需 25% pilot overhead，1.249dB 总能量代价）| ≥5%（MVE 实测 +1.310dB @ AWGN）| 无 pilot 保留全频谱效率 |
 | **湍流鲁棒性（形态 C）**| 低（DA pilot 在 deep fade 块崩溃，BER floor）| ≥5%（MVE 实测 +1.19~+2.62dB @ strong 工作区）| NDA 全帧积分对单点 fade 鲁棒 |
 | 绝对 BER 精度 | 高（pilot sp=4 近最优）| <5%（NDA-vs-oracle gap 0.38-2.58dB）| NDA 略逊 oracle 但公平对照赢 DA |
 
@@ -80,14 +82,14 @@ DA ML（pilot sp=4）是 pilot-aided 载波相位估计的**近最优**实现（
 ## B. 新颖性-可行性解耦
 
 - **新颖性论据**：单载波时域 NDA-ML 升 M₀ 次幂在星地湍流 (8,8)-16APSK 场景**零竞争**（D002 调研 `_star_ground_link_survey.md`：星地 FSO 主流是单载波 QPSK/8PSK/M-APSK + DVB-S2/S2X，OFDM 仅研究探索；B11 是 OFDM 频域 ML 与单载波时域架构性不等价，被引仅 1 次 HSR 背景引用）。
-- **可行性论据**：MVE 实测公平对照 fair gain @ HD-FEC 全 ≥0.5dB（AWGN +0.704 / weak +1.199 / moderate +1.922），TL-20 预期 5 项全 PASS 0 DEVIATION，NDA-vs-oracle gap 全 <3dB（升幂实现正确）。**做了会更好有实证支撑**。
+- **可行性论据**：MVE 实测公平对照 fair gain @ HD-FEC 全 ≥0.5dB（AWGN +1.310 / weak +1.199 / moderate +1.922），TL-20 预期 5 项全 PASS 0 DEVIATION，NDA-vs-oracle gap 全 <3dB（升幂实现正确）。**做了会更好有实证支撑**。
 - **空白原因分析**：技术限制刚解除 + 场景迁移。B11 团队主体是 fiber CO-OFDM 相位噪声 ML 系列，未迁移到星地单载波；星地 FSO 主流 DSP 流水线（DVB-S2/S2X + DLR sat.1553）无 NDA-ML 升幂方案。**前人没做不是因为不好，是因为跨子领域迁移**（fiber OFDM → 星地单载波）。
 
 ### 空白零假设检查 [MUST]
 
 列出 ≥3 个空白存在的结构性/技术性原因，逐一反驳：
 1. **"单载波时域升 M₀ 次幂噪声放大无 DFT 处理增益抵消，性能不行"** → 反驳：CRLB 层 M₀² 严格相消（`_crlb_results.json` meta M0_cancellation_note），MVE 实测 NDA-vs-oracle gap 仅 0.38-2.58dB（<3dB），升幂噪声可控。
-2. **"单载波时域逐样本 Wiener θ(n) 方差放大 M₀² 倍，CPE 跟踪失败"** → 反驳：per-block（256 符号）CPE 估计假设块内相位恒定（block 准则），块内 Wiener 累积方差 σ²_θ·T_block 可控（CLW=500kHz 对应块内相位变化 <0.1rad）。MVE 用 per-block blind h + 两阶段 fft_foe+nda_ml 修复 BER floor（`_ber_floor_diagnostic.json`）。
+2. **"单载波时域逐样本 Wiener θ(n) 方差放大 M₀² 倍，CPE 跟踪失败"** → 反驳：per-block（256 符号）CPE 估计假设块内相位恒定（block 准则），块内 Wiener 累积方差 σ²_θ·T_block 可控（D-007 后 LASER_LW=10kHz@2.5GBaud，σ²p=2.51e-5，块内相位变化更小；segK8 块内跟踪进一步抑制残留）。MVE 用 per-block blind h + 两阶段 fft_foe+nda_ml 修复 BER floor（`_ber_floor_diagnostic.json`）。
 3. **"deep fade 块盲 ĥ 估计噪声大，NDA 反不如 DA pilot"** → 反驳：MVE 实测 strong 工作区 NDA 全赢 DA（per-point +1.19~+2.62dB）。盲 ĥ=mean(|rx|²)−1/(2γ) 用全 N=256 符号 vs DA pilot 仅 N_p=64，积分长度 4× 抵消盲估计噪声。
 
 无致命信号。
@@ -96,7 +98,7 @@ DA ML（pilot sp=4）是 pilot-aided 载波相位估计的**近最优**实现（
 
 > Step 5（D-S5-01 baseline 选定 + 田野调查）后执行。守 gw-feasibility §4b 维度 C。
 
-1. **仿真环境能否创造条件让核心方法（单载波时域 NDA-ML 升 M₀=8 次幂）优势体现？** ✅ 是。MVE 已实测验证：`_mve_results.json` 公平对照 fair gain @ HD-FEC AWGN +0.704 / weak +1.199 / moderate +1.922 dB 全 ≥0.5dB，strong 工作区(≥15dB)全赢 DA（per-point +1.19~+2.62dB）。仿真环境（`common/_channel.py` GG 块衰落 + Doppler + Wiener PN + `_recovery.py` NDA-ML/DA ML）已支撑核心方法关键特征，NDA-ML 升 M₀ 次幂的去调制优势 + 全帧积分对 deep fade 的鲁棒性都在仿真中显现。
+1. **仿真环境能否创造条件让核心方法（单载波时域 NDA-ML 升 M₀=8 次幂）优势体现？** ✅ 是。MVE 已实测验证：`_mve_results.json` 公平对照 fair gain @ HD-FEC AWGN +1.310 / weak +1.199 / moderate +1.922 dB 全 ≥0.5dB，strong 工作区(≥15dB)全赢 DA（per-point +1.19~+2.62dB）。仿真环境（`common/_channel.py` GG 块衰落 + Doppler + Wiener PN + `_recovery.py` NDA-ML/DA ML）已支撑核心方法关键特征，NDA-ML 升 M₀ 次幂的去调制优势 + 全帧积分对 deep fade 的鲁棒性都在仿真中显现。
 
 2. **目标方法关键特征在仿真中是否有足够大差异信号？** ✅ 是。BER 曲线跨 SNR 下降明显（AWGN 0.187→0.002，~2 个数量级；strong 0.40→0.024，~1.2 个数量级，来源 `_mve_results.json` results.awgn/strong nda_ber）。NDA vs DA 差异在 HD-FEC 阈值处达 0.7-1.9 dB 公平增益，**远超仿真噪声底**（N=102400 符号/点 × 多 SNR 点，统计涨落 <0.1dB）。差异信号足够大。
 
@@ -113,14 +115,14 @@ DA ML（pilot sp=4）是 pilot-aided 载波相位估计的**近最优**实现（
 - **假设**：在单载波时域 (8,8)-16APSK + Wiener PN + GG 块衰落信道下，NDA-ML（升 M₀=8）相对 DA ML（pilot sp=4）的公平对照 BER gain @ HD-FEC ≥0.5dB（AWGN/weak/moderate），strong 全工作区 NDA 赢 DA。
 - **最小实例**：N_sym=102400 符号/点（400 块 × 256，FR-21 N≥1e5），seed 固定。调制 (8,8)-16APSK + Gray。信道 AWGN [5,8,10,12,14,16,18,20]dB + 星地湍流 weak/moderate/strong [5,10,15,20,22,24,26]dB。
 - **[FR-04] 实例保真度**：保留 GG 幅度分布 + Wiener PN + 单载波时域升幂 ML + pilot overhead 公平对照全部核心结构。合理简化：省略 OFDM 帧结构（架构性不等价已论证 D002）+ STO 估计（B7 范围）+ 块内 h 恒定（BLOCK=256 约定）。结论可外推到含 STO 的完整单载波系统。
-- **[FR-20] 关键物理参数溯源**（执行前已做）：CLW=500kHz / HD-FEC BER=3.8e-3 / LEO Doppler rate / (8,8)-16APSK / M₀=8 全从 `params.py` B11Params 取，source 标 B11/sat.1553/Fernandes（TL-26 已制度化）。
+- **[FR-20] 关键物理参数溯源**（执行前已做，D-007 后更新）：LASER_LW=10kHz（全场景统一，Valjus sat.1553 §4.2）/ HD-FEC BER=3.8e-3 / LEO Doppler rate / (8,8)-16APSK / M₀=8 全从 `params.py` 取，source 标 sat.1553/B11/Fernandes（TL-26 已制度化）。旧 CLW=500kHz（B11 OFDM 场景）已标 DEAD（D-007）。
 - **[FR-21] oracle 上界前置门控**：CRLB 层 CRB_NDA/CRB_DA = N_p/N = 1/4（M₀² 严格相消），NDA-ML 理论下界优于 DA ML → 上界 ≥0.5dB 通过，跑 MVE（D004 GO_MVE）。
 - **pass/fail 标准**（SPEC §5 预定义）：Go = AWGN/weak/moderate fair gain ≥0.5dB AND strong NDA 全工作区赢 DA。
 - **结果**（`_mve_results.json` 实测，主线 grep 核查）：
 
 | 场景 | fair gain @ HD-FEC | SPEC §5 Go 门 | 判定 |
 |---|---|---|---|
-| AWGN（形态 A）| **+0.704 dB** | ≥0.5 | ✅ PASS |
+| AWGN（形态 A）| **+1.310 dB** | ≥0.5 | ✅ PASS |
 | weak（形态 A+C）| **+1.199 dB** | ≥0.5 | ✅ PASS |
 | moderate（形态 A+C）| **+1.922 dB** | ≥0.5 | ✅ PASS |
 | strong（形态 C）| HD-FEC 不可达 + 工作区(≥15dB)全赢（per-point +1.19~+2.62dB）| 形态 C 鲁棒性 | ✅ PASS |
@@ -137,7 +139,7 @@ DA ML（pilot sp=4）是 pilot-aided 载波相位估计的**近最优**实现（
 
 ### [FR-14] 先验对照 / [FR-15] 目标 baseline 对照
 
-- **FR-14 最强简单先验**：DA ML（pilot sp=4，pilot-aided 近最优）。MVE 实测 NDA-ML 公平对照赢之（fair gain +0.704~+1.922dB @ HD-FEC）。
+- **FR-14 最强简单先验**：DA ML（pilot sp=4，pilot-aided 近最优）。MVE 实测 NDA-ML 公平对照赢之（fair gain +1.310~+1.922dB @ HD-FEC）。
 - **FR-15 贡献目标 baseline**：DA ML（pilot sp=4）。本方向贡献声称 = 单载波时域 NDA-ML 在公平总功率下赢 DA ML，MVE 已验证。
 
 ### [FR-18] 环境保真度竞争格局分析
@@ -161,10 +163,10 @@ DA ML（pilot sp=4）是 pilot-aided 载波相位估计的**近最优**实现（
 2. **时间投入估计 vs 预期贡献**：MVE 已 PASS，工程量中等。
    - Step 6（仿真器设计）：写 `simulator-design.md`（守 FR-12 架构差异门控）+ SPEC 补 NDA-ML 段，~1 对话
    - Step 7（实现）：正式仿真器（MVE 脚本 → experiments/ 工程化）+ 训练/评估流水线 + 多种子统计，~2-3 对话
-   - 贡献：形态 A（频谱效率，AWGN +0.704dB）+ 形态 C（鲁棒性，strong 全赢 DA）双增量，MVE 已实证。**会议级别够格**（守 D005 务实路线 + 同门范式 2-4dB 区间）。
+   - 贡献：形态 A（频谱效率，AWGN +1.310dB）+ 形态 C（鲁棒性，strong 全赢 DA）双增量，MVE 已实证。**会议级别够格**（守 D005 务实路线 + 同门范式 2-4dB 区间）。
 
 3. **失败兜底（沉没成本可转化）**：✅ 可以。
-   - **形态 A 独立成立**：AWGN fair gain +0.704dB 已 MVE PASS，即使 Step 6/7 退化（如 cross-over 位置移动、strong 不可达），形态 A 单独够发（频谱效率维度，去 pilot overhead 是真实能量代价）
+   - **形态 A 独立成立**：AWGN fair gain +1.310dB 已 MVE PASS，即使 Step 6/7 退化（如 cross-over 位置移动、strong 不可达），形态 A 单独够发（频谱效率维度，去 pilot overhead 是真实能量代价）
    - **形态 C 有 weak/moderate 数据支撑**：即使 Step 6 加跨块 KF/CPE 跟踪后 strong cross-over 移动，weak(+1.199)/moderate(+1.922) 仍有 ≥0.5dB buffer
    - **次优成果可回收**：①条件边界分析（哪些湍流等级 NDA 赢/输 DA）②对比基准（DA ML pilot sp=4 近最优实现 + 公平对照框架）③方法可行性验证（单载波时域 NDA-ML 升幂 MVE 通过）
    - **无"全部沉没"风险**：MVE 已 PASS，最坏情况是 Step 7 正式实验后增益缩窄但仍 ≥0.5dB（MVE buffer 足够）

@@ -79,8 +79,8 @@ SCENES = ['awgn', 'weak', 'moderate', 'strong']
 TURB_LEVELS = ['weak', 'moderate', 'strong']
 
 # 跨块时间步: 一个 per-block CPE 块 (N_DFT=256 符号) 的持续时间.
-# AWGN 用 B11 T_S_B11 (40ps), 湍流用 system T_S_GLOBAL (400ps) — 与各自信道生成一致.
-T_BLOCK_AWGN = P.N_DFT * P.T_S_B11
+# AWGN 用 B11 T_S_GLOBAL (40ps), 湍流用 system T_S_GLOBAL (400ps) — 与各自信道生成一致.
+T_BLOCK_AWGN = P.N_DFT * P.T_S_GLOBAL
 T_BLOCK_TURB = P.N_DFT * P.T_S_GLOBAL
 
 
@@ -173,13 +173,13 @@ def cross_block_kf(phi_obs, h_per_block, gamma_lin, Q_block, T_block,
 def make_Q_block(turb_name_or_awgn):
     """构造跨块 KF 过程噪声 Q_block (per-block 时间步).
 
-    AWGN: sigma2_phi = SIGMA2_P_B11 (B11 线宽 500kHz, 匹配实际 AWGN 信道 PN), 无 turbulence/df.
+    AWGN: sigma2_phi = SIGMA2_P (B11 线宽 500kHz, 匹配实际 AWGN 信道 PN), 无 turbulence/df.
     湍流: design_Q(turb_name, DOPPLER_HIGH) 给 per-symbol Q, 跨块 ×N_DFT.
     """
     if turb_name_or_awgn == 'awgn':
-        # AWGN 信道只有 Wiener PN (SIGMA2_P_B11), 无 turbulence, 无 Doppler (df=0).
+        # AWGN 信道只有 Wiener PN (SIGMA2_P), 无 turbulence, 无 Doppler (df=0).
         # df 漂移给极小值 (AWGN 真 df=0, 但留小窗让 KF 不僵化).
-        sigma2_phi_block = P.SIGMA2_P_B11 * P.N_DFT
+        sigma2_phi_block = P.SIGMA2_P * P.N_DFT
         sigma2_df_block = (10e3 * T_BLOCK_AWGN) ** 2 * 0.1  # 极小 df 漂移
         return np.diag([sigma2_phi_block, sigma2_df_block])
     # 湍流: 用 common/_kf.py design_Q (同湍流等级 + 同 f_dot, §2.3 纪律 1)
@@ -656,7 +656,7 @@ def main():
             'kf_observation': 'z_b = per-block φ̂_b (NDA 联合解 M0=8 模糊 in innovation; DA 直接用 intercept)',
             'kf_R': 'R_b = 1/(2·γ·h_b·N_DFT), h_b 用各法自估 (NDA blind / DA pilot); '
                     'deep fade h_b↓→R↑→KF 信邻居→平滑 (FR-18 机制)',
-            'kf_Q': 'AWGN: sigma2_phi=SIGMA2_P_B11·N_DFT (匹配实际信道 PN), df≈0; '
+            'kf_Q': 'AWGN: sigma2_phi=SIGMA2_P·N_DFT (匹配实际信道 PN), df≈0; '
                     '湍流: design_Q(turb, DOPPLER_HIGH)·N_DFT (同湍流等级同 f_dot)',
             'fairness': 'NDA+KF 和 DA+KF 同 Q 同结构 (§2.3 纪律 1), 不给某方法调优 KF',
             'reapply': 'rc_kf[b] = rc_main[b]·exp(-j·Δφ_b), Δφ_b=φ_smoothed−φ̂_b (常相位微调, 保 DA 块内 freq ramp)',

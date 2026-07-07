@@ -124,11 +124,14 @@ DA_PILOT_SPACING = 4   # DA-ML pilot 间距: 每 4 符号 1 pilot = 25% overhead
 PILOT_OVERHEAD_DB = 10.0 * np.log10(DA_PILOT_SPACING / (DA_PILOT_SPACING - 1))
 BLOCK_SIZE_RESOLVE = 256  # resolve_m16apsk_blockwise block_size (守 D003)
 
-# AWGN 场景 B11 参数 (CLW=500kHz, BAUD=25GBaud)
-CLW_B11 = 500e3        # B11 行 143/155 combined linewidth
-BAUD_B11 = 25e9        # B11 行 143/155
-T_S_B11 = 1.0 / BAUD_B11
-SIGMA2_P_B11 = 2 * np.pi * CLW_B11 * T_S_B11  # Wiener PN 每符号方差 (B11 行 51)
+# AWGN 场景参数 (D-007: 单载波统一, 从 params.py SystemParams 单字段读)
+# 旧 CLW_B11=500kHz/BAUD_B11=25GBaud (B11 OFDM 场景) 已删, 详见 decisions.md D-007.
+_cfg = SimulationConfig()
+LASER_LW = _cfg.system.LASER_LW       # 10e3 Hz (Valjus sat.1553 §4.2, 星地 FSO ECL 典型)
+T_S_AWGN = 1.0 / _cfg.system.R_SYM    # = 4e-10 s (单载波符号周期, 与 T_S_GLOBAL 一致)
+# Wiener PN 每符号方差 σ²_p = 2π·Δν·T_S (Viterbi 1963 标准激光相位噪声模型).
+# D-007: 从 LASER_LW + T_S 派生 (单载波 10kHz@2.5GBaud → 2.51e-5), 不再用 CLW_B11.
+SIGMA2_P = 2 * np.pi * LASER_LW * T_S_AWGN
 
 
 # =============================================================================
@@ -139,7 +142,7 @@ def awgn_wiener_channel(tx, snr_db, seed):
     无 FOE (Δf=0 已补偿), 无湍流, 无 Doppler. φ₀=0."""
     rng = np.random.default_rng(seed)
     N = len(tx)
-    phi = np.cumsum(rng.normal(0.0, np.sqrt(SIGMA2_P_B11), N))
+    phi = np.cumsum(rng.normal(0.0, np.sqrt(SIGMA2_P), N))
     carrier = np.exp(1j * phi)
     signal = tx * carrier
     snr_lin = 10.0 ** (snr_db / 10.0)
@@ -153,7 +156,11 @@ def awgn_wiener_channel(tx, snr_db, seed):
 # =============================================================================
 def ber_nda_awgn(rx, tx_bits, phi_true):
     """NDA-ML AWGN: 逐块升幂 mean-angle 估常相位 CPE (assume_df_zero=True, B11 df=0 修复).
-    逐块 resolve M0-fold 模糊 (守 D003). 返回 (ber, n_err, n_bits)."""
+    逐块 resolve M0-fold 模糊 (守 D003). 返回 (ber, n_err, n_bits).
+
+    D-007 (2026-07-07) 修复: 加 intra_block_tracking='segmented' (segK8 块内跟踪),
+    与 Formal sc_nda_ml_sim.ber_nda_awgn 对齐 (consistency_check bit-exact).
+    segK8 是 sandbox (explore/nda-awgn-tracking-sandbox/) 验证的改进版, AWGN 下反超 BPS ~1dB."""
     N = len(rx)
     n_blk = N // N_DFT
     L = n_blk * N_DFT
@@ -161,7 +168,9 @@ def ber_nda_awgn(rx, tx_bits, phi_true):
     for b in range(n_blk):
         seg = rx[b * N_DFT:(b + 1) * N_DFT]
         # assume_df_zero=True: B11 行 33 真 df=0, 跳 FFT-df 锁伪峰 (守 D003 bug 修复)
-        rc, _, _, _ = nda_ml_recovery(seg, M0, mod='m16apsk', assume_df_zero=True)
+        # intra_block_tracking='segmented': segK8 块内跟踪 (改进版, 与 Formal 对齐)
+        rc, _, _, _ = nda_ml_recovery(seg, M0, mod='m16apsk', assume_df_zero=True,
+                                      intra_block_tracking='segmented')
         rx_comp[b * N_DFT:(b + 1) * N_DFT] = rc
     tb = tx_bits[:L * BITS_PER_SYM]
     resolved = resolve_m16apsk_blockwise(rx_comp, tb, block_size=BLOCK_SIZE_RESOLVE)
@@ -356,7 +365,7 @@ def equiv_snr_gap(snr_list, ber_ref, ber_test):
 def run_awgn(n_blocks, snr_points, seed_base):
     """AWGN 三方案 BER 扫描. 返回 per-snr dict list."""
     N_sym = n_blocks * N_DFT
-    print(f"[AWGN] N_sym={N_sym}/点 ({n_blocks}×{N_DFT}), CLW={CLW_B11/1e3:.0f}kHz, "
+    print(f"[AWGN] N_sym={N_sym}/点 ({n_blocks}×{N_DFT}), LASER_LW={LASER_LW/1e3:.0f}kHz, "
           f"M0={M0}, pilot_spacing={DA_PILOT_SPACING}")
     print(f"{'SNR_dB':>7} {'NDA_BER':>12} {'DA_BER':>12} {'ORACLE':>12} "
           f"{'NDA/DA':>8} {'NDA/Ora':>9}")
@@ -603,16 +612,17 @@ def main():
                                            '修复: per-block h 估计 (NDA 盲 ĥ=mean(|rx|²)−1/(2γ); DA pilot '
                                            'ĥ=mean(|r(p)/s(p)|²); oracle 真 h). 诊断证 blind h NDA 离真 h oracle '
                                            '仅 ~0.1-0.3 dB.',
-                'D3_clw_irrelevant': 'CLW=500kHz 仅 AWGN 场景 awgn_wiener_channel 用; 湍流信道用 LASER_LW='
-                                     '10kHz 单端. D3 对湍流 BER floor 无影响, 不调 (TL-26: 不拍参数).',
+                'D3_clw_irrelevant': 'D-007 (2026-07-07): AWGN 场景已改单载波 (LASER_LW=10kHz @ 2.5GBaud), '
+                                     '不再用 B11 CLW=500kHz. 全场景线宽统一 SystemParams.LASER_LW.',
             },
             'hdfec_reachability_TL22': (
                 '诊断 (TL-22 物理前提): 20dB 总能量下 HD-FEC 物理不可达 — '
                 'oracle 真 h+真相位 @20dB weak=7.8e-3 > 3.8e-3. 非估计 bug, 是物理上限. '
                 '需 ~24dB 总能量 weak 才可达. SNR 扫展至 26dB 覆盖.'
             ),
-            'clw_b11': CLW_B11,
-            'baud_b11': BAUD_B11,
+            'laser_lw_Hz': LASER_LW,
+            'r_sym': _cfg.system.R_SYM,
+            'sc_sigma2_p': SIGMA2_P,
             'hdfec_ber': HDFEC,
             'verdict_thresholds_FR21_D005': {
                 'go_mve': '>=0.3 dB (公平对照, 进 MVE)',

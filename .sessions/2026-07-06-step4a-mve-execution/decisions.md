@@ -233,3 +233,53 @@ AWGN gain 0.704 dB > 0.5 dB，**不在 0.3-0.5 薄增益 Conditional 区间**，
 ### 来源
 
 S004（本轮）+ 验证 `_mve_results.json` + 主线 grep 核查 `_time_domain_crlb.py` 6 项 MVE 纪律 + `SC-NDA-ML-MVE-SPEC.md` §5
+
+## D-007: AWGN 场景重定义（B11 OFDM 参数 → 单载波参数）+ 线宽参数真相源统一
+
+> status: active
+> date: 2026-07-07
+> 取代：无（贯彻 D002 重定位的遗留尾巴，不改 D002/D005 的判定逻辑，但 D005 的 AWGN 具体数字失效需重跑重判）
+> 被取代：无
+> 依据: 用户原话 voice 2026-07-07（"2 吧。这种问题不能留" + "一般来说，这种对比不应该是完全相同吗？怎么还分了俩？谁说的？"）+ D002（B11 重定位为理论参考不对标）+ sim-preflight `rules/param-source.md` v1.2.0（参数真相源统一规则）+ 子 agent 文献查证（Valjus sat.1553 §4.2 L438，存 `papers/doi/10.1002_sat.1553/content.md`）
+
+### 决策
+
+**AWGN 场景从"B11 复现场景（25GBaud/500kHz）"重定义为"我们方法的单载波 AWGN 验证（2.5GBaud/10kHz）"。线宽参数统一到 params.py 单一字段 `SystemParams.LASER_LW=10kHz`，消灭 3 套同义常量源（`_b11_params.CLW_B11` / `_time_domain_crlb.CLW_B11` / `params.B11Params.CLW`）+ 消灭函数默认参数固化（`doppler_phase(..., lw=LASER_LW)`）+ 消灭 sweep monkey-patch `__defaults__`。**
+
+**三选项决策记录**（用户选 2）：
+- 选项 1（双字段，AWGN 保 B11 25GBaud/500kHz，湍流保 10kHz）—— 否决：治标不治本，只把错误标清楚没纠正 D002 重定位没贯彻的根因
+- **选项 2（单字段，AWGN 也改单载波 2.5GBaud/10kHz）—— 采纳**：科学对比要求两路径物理可比；D002 已把 B11 重定位为理论参考，AWGN 场景作为"NDA-ML vs DA ML"对比（都是我们自己的单载波方法）理应用单载波参数
+- 选项 3（双字段，湍流改 50kHz 让 ΔνTs 可比）—— 否决：50kHz@2.5GBaud 典型性需文献论证，且不解决"对比本就该相同"的根本问题
+
+### 理由
+
+1. **D002 重定位的遗留尾巴**：D002 把 B11 从"直接对标 baseline"重定位为"NDA 升 M₀ 次幂思想源头"，我们的方法重定义为单载波时域 NDA-ML。但 D002 只剥离了 B11 的"方法思想"到 common/_recovery.py，**没清理 B11 的"场景参数"（25GBaud/500kHz OFDM）**，这些参数还留在 AWGN 信道（sc_nda_ml_sim.awgn_wiener_channel 读 P.SIGMA2_P_B11）。继续用 B11 场景参数 = 让"我们自己的方法对比"跑在别人论文的场景里，既不是复现 B11（D002 已说不对标），也不是诚实验证。
+
+2. **param-source.md 失败模式 B 教科书案例**：线宽这一个物理量有 3 套数值源：
+   - `params.py:SystemParams.LASER_LW=10e3`（湍流路径，WARNING）
+   - `params.py:B11Params.CLW=500e3 + BAUD_RATE=25e9`（B11 参数族，OK）
+   - `simulator/_b11_params.py:CLW_B11=500e3 + BAUD_B11=25e9`（**抄了一遍**，又标 B11 行号）
+   - `explore/single-carrier-nda-ml/_time_domain_crlb.py:CLW_B11=500e3`（MVE 锚脚本**第 4 处**抄）
+   用户原话戳穿："一般来说，这种对比不应该是完全相同吗？怎么还分了俩？谁说的？"——没人明确说，是 D002 重定位没贯彻的历史遗留。
+
+3. **科学对比基本要求**：AWGN 场景比的是 NDA-ML vs DA ML（两个都是我们自己单载波方法），两路径符号率/线宽必须一致才物理可比。旧设定 AWGN=25GBaud/500kHz（σ²p=1.26e-4）vs 湍流=2.5GBaud/10kHz（σ²p=2.51e-5），相位噪声强度差 5 倍，跨场景结论不可比。
+
+4. **导师意见 4（C4）直接满足**：简报 §3.1 写"激光线宽 500kHz"对 AWGN 成立、对湍流错（C4 违反）。统一后全场景 10kHz@2.5GBaud，前后一致。
+
+5. **物理预期（TL-20）**：σ²p 从 1.26e-4 降到 2.51e-5（相位噪声弱 5 倍），NDA 升幂 ML 噪声方差放大减轻，AWGN fair gain 预期 ≥0.704dB（旧值），可能升至 0.8-1.0dB。pilot overhead 1.25dB 代价不变。**这是预期，必须实测。**
+
+### 排除的替代方案
+
+- "删 params.py 的 B11Params 类"：否决。explore/ 历史探针（_ber_oracle_upperbound/_crb_lower_bound）仍 import cfg.b11.M0_POWER 等。改 B11Params 的 CLW/BAUD_RATE/PN_VARIANCE 三字段标 DEAD 即可（保 import 不破，M0_POWER/HD_FEC_THRESHOLD/DFT_SIZE/CP_LEN 与线宽无关保持 active）。
+- "回头救 500kHz 湍流"：否决。oracle 都不可达（raw BER 已核实），是真物理顶，改参数不影响这条结论。
+
+### 影响范围
+
+- **D005 AWGN fair gain +0.776±0.088 dB（5 seed）失效，需重跑重判**。weak/moderate/strong 不受影响（湍流路径参数没改，只改读法）。
+- **MVE 一致性锚点必须同步重跑**：`_mve_results.json` 的 AWGN BER 用旧 σ²p=1.26e-4 跑的，consistency_check 会 FAIL 除非 MVE 也重跑。执行顺序硬约束：MVE → consistency_check → 主实验。
+- **代码改动 9 文件**：params.py（B11Params 3 字段标 DEAD）/ common/_channel.py（doppler_phase 默认参数改 None）/ simulator/_b11_params.py（删 CLW_B11/BAUD_B11/T_S_B11，SIGMA2_P 从 LASER_LW 派生）/ simulator/sc_nda_ml_sim.py（rename + 加 sigma2_p 参数）/ explore/single-carrier-nda-ml/_time_domain_crlb.py（MVE 锚脚本必须跟）/ explore/single-carrier-nda-ml/sc_nda_ml_mve.py（meta 字段）/ simulator/run_linewidth_sweep.py（删 monkey-patch 改传参）/ simulator/run_kf_ablation.py + run_dd_kf_ablation.py（rename 同步）。
+- **简报 C4 修正**：ADVISOR_BRIEFING.md §3.1/§4.1 线宽从"500kHz"改为"全场景统一 10kHz@2.5GBaud（ECL 典型，Valjus sat.1553 §4.2 L438）"。
+
+### 来源
+
+S005 续接（本轮参数统一+重跑）+ 用户原话 voice 2026-07-07（选项 2 拍板 + 反问戳穿根因）+ sim-preflight `rules/param-source.md` v1.2.0 + 子 agent 文献查证 Valjus sat.1553 §4.2

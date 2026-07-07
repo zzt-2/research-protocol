@@ -62,16 +62,24 @@ from params import SimulationConfig  # noqa: E402
 # AWGN 信道 (B11 原始场景, 无湍流/无 Doppler/无 CFO, 仅 Wiener PN + AWGN)
 # 独立实现, 逻辑等价于 MVE _time_domain_crlb.py:awgn_wiener_channel (B11 行 33/51 信号模型)
 # =============================================================================
-def awgn_wiener_channel(tx, snr_db, seed):
-    """B11 信号模型 (行 33/51): r(k) = s(k)·exp(jθ(k)) + n(k), θ(k)=Wiener 累积 PN.
+def awgn_wiener_channel(tx, snr_db, seed, sigma2_p=None):
+    """单载波 AWGN 信号模型: r(k) = s(k)·exp(jθ(k)) + n(k), θ(k)=Wiener 累积 PN.
 
+    D-007 (2026-07-07): AWGN 场景重定义为单载波 (2.5GBaud/10kHz), 不再用 B11 OFDM 场景
+    (25GBaud/500kHz). 详见 decisions.md D-007.
     无 FOE (Δf=0 已补偿), 无湍流, 无 Doppler. φ₀=0.
-    与 MVE 等价 (同 SIGMA2_P_B11, 同 seed 派生, 同 noise_var=1/(2·γ_lin)).
+    与 MVE 等价 (同 SIGMA2_P, 同 seed 派生, 同 noise_var=1/(2·γ_lin)).
+
+    sigma2_p : float or None
+        Wiener PN 每符号方差. None 时从 P.SIGMA2_P 读 (默认 2π·LASER_LW·T_S).
+        sweep 脚本传参注入不同线宽时用.
     """
     rng = np.random.default_rng(seed)
     N = len(tx)
-    # Wiener PN: θ(k) = cumsum(N(0, σ²_p)) (Viterbi 1963 标准模型, B11 行 51)
-    phi = np.cumsum(rng.normal(0.0, np.sqrt(P.SIGMA2_P_B11), N))
+    if sigma2_p is None:
+        sigma2_p = P.SIGMA2_P
+    # Wiener PN: θ(k) = cumsum(N(0, σ²_p)) (Viterbi 1963 标准模型)
+    phi = np.cumsum(rng.normal(0.0, np.sqrt(sigma2_p), N))
     carrier = np.exp(1j * phi)
     signal = tx * carrier
     snr_lin = 10.0 ** (snr_db / 10.0)
@@ -269,14 +277,20 @@ def ber_oracle_turb(rx_eq, tx_bits, phi_true):
 # =============================================================================
 # SNR 扫描: AWGN + 湍流
 # =============================================================================
-def run_awgn(n_blocks, snr_points, seed_base):
+def run_awgn(n_blocks, snr_points, seed_base, sigma2_p=None):
     """AWGN 三方案 BER 扫描. 与 MVE run_awgn 同 seed/参数派生 (保 §4.5 一致性).
+
+    D-007 (2026-07-07): 加 sigma2_p 参数供 sweep 传参注入 (不再 monkey-patch).
+    sigma2_p=None 时从 P.SIGMA2_P 读 (默认 2π·LASER_LW·T_S).
 
     seed 派生逻辑 (与 MVE _time_domain_crlb.py:run_awgn 完全一致):
       per-snr seed = seed_base + int(snr*1000); bits seed = seed+7; channel seed = seed.
     """
     N_sym = n_blocks * P.N_DFT
-    print(f"[AWGN Formal] N_sym={N_sym}/点 ({n_blocks}×{P.N_DFT}), CLW={P.CLW_B11/1e3:.0f}kHz, "
+    if sigma2_p is None:
+        sigma2_p = P.SIGMA2_P
+    lw_eff = sigma2_p / (2 * np.pi * P.T_S)
+    print(f"[AWGN Formal] N_sym={N_sym}/点 ({n_blocks}×{P.N_DFT}), LW={lw_eff/1e3:.0f}kHz (σ²_p={sigma2_p:.3e}), "
           f"M0={P.M0}, pilot_spacing={P.DA_PILOT_SPACING}")
     print(f"{'SNR_dB':>7} {'NDA_BER':>12} {'DA_BER':>12} {'ORACLE':>12}")
     per_snr = []
@@ -285,7 +299,7 @@ def run_awgn(n_blocks, snr_points, seed_base):
         rng = np.random.default_rng(seed + 7)
         bits = rng.integers(0, 2, N_sym * P.BITS_PER_SYM)
         tx = m16apsk_mod(bits)
-        rx, phi_true = awgn_wiener_channel(tx, snr, seed)
+        rx, phi_true = awgn_wiener_channel(tx, snr, seed, sigma2_p=sigma2_p)
         ne_nda, nb_nda = ber_nda_awgn(rx, bits)
         ne_da, nb_da = ber_da_awgn(rx, bits)
         ne_or, nb_or = ber_oracle_awgn(rx, bits, phi_true)
@@ -302,8 +316,11 @@ def run_awgn(n_blocks, snr_points, seed_base):
     return per_snr
 
 
-def run_turb(turb_name, gamma_bar_points_db, n_blocks, cfg, seed0):
+def run_turb(turb_name, gamma_bar_points_db, n_blocks, cfg, seed0, lw=None):
     """湍流场景三方案 BER 扫描. 用 generate_shared_realization_apsk 共享信道 (守 TL-13).
+
+    D-007 (2026-07-07): 加 lw 参数供 sweep 传参注入 (不再 monkey-patch).
+    lw=None 时 generate_shared_realization_apsk 内部从 params.py SystemParams.LASER_LW 读.
 
     幅度处理 (修复 D2): per-block h 估计替代 h_med 标量均衡:
       - NDA-ML (盲): per-block 硬幅值 ĥ=mean(|rx|²)−1/(2γ) via mmse_equalize+amp_limit(3.0)
@@ -314,7 +331,9 @@ def run_turb(turb_name, gamma_bar_points_db, n_blocks, cfg, seed0):
     seed 派生 (与 MVE _time_domain_crlb.py:run_turb 一致): per-block seed = seed0 + b.
     """
     Ns = P.N_DFT
+    lw_disp = lw if lw is not None else cfg.system.LASER_LW
     print(f"[{turb_name} Formal] N_sym={n_blocks*Ns}/点 ({n_blocks}×{Ns}), "
+          f"LW={lw_disp/1e3:.0f}kHz, "
           f"per-block h 均衡 + amp_limit(3.0), NDA 两阶段 fft_foe+nda CPE")
     print(f"{'γd_dB':>7} {'NDA_BER':>12} {'DA_BER':>12} {'ORACLE':>12}")
     per_snr = []
@@ -325,7 +344,7 @@ def run_turb(turb_name, gamma_bar_points_db, n_blocks, cfg, seed0):
         for b in range(n_blocks):
             r = generate_shared_realization_apsk(
                 Ns, gamma_lin, turb_name, cfg.doppler.DOPPLER_HIGH,
-                mod='m16apsk', seed=seed0 + b)
+                mod='m16apsk', seed=seed0 + b, lw=lw)
             rx_raw = r['rx_raw']
             bits = r['bits']
             phi = r['phi']
@@ -557,6 +576,7 @@ def main():
     print("SC-NDA-ML Formal 仿真器 (Step 7 Part A, 独立实现)")
     print(f"M0={P.M0}, pilot_spacing={P.DA_PILOT_SPACING} (25% overhead), "
           f"pilot_overhead={P.PILOT_OVERHEAD_DB:.3f} dB, HDFEC={P.HDFEC}, "
+          f"LASER_LW={P.LASER_LW/1e3:.0f}kHz (单载波, D-007), "
           f"N_sym={P.N_SYM_PER_POINT}/点")
     print(f"算法来源: common/ (nda_ml_recovery/da_ml_recovery/generate_shared_realization_apsk/m16apsk_*)")
     print("=" * 100)

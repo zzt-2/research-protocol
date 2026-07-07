@@ -8,6 +8,11 @@
 - "B11 行 X" 指 B11 论文 (10.1109_LPT.2024.3523478) 源码行号, 与 MVE `_time_domain_crlb.py`
   注释中的行号引用一致 (MVE 已验证这些 B11 参数).
 - params.py 是本仓库参数真相源 (T_S/BLOCK/DOPPLER via SimulationConfig), 此处 re-export.
+
+**D-007 (2026-07-07) 变更**: 删 CLW_B11/BAUD_B11/T_S_B11 三常量 (B11 OFDM 场景参数,
+25GBaud/500kHz). AWGN 场景改用单载波参数 (SystemParams.LASER_LW=10kHz @ R_SYM=2.5GBaud).
+SIGMA2_P 从 LASER_LW 单字段派生 (2π·10kHz·400ps=2.51e-5, 旧值 1.26e-4).
+详见 .sessions/2026-07-06-step4a-mve-execution/decisions.md D-007.
 """
 import os
 import sys
@@ -34,17 +39,19 @@ BLOCK_SIZE_RESOLVE = 256   # resolve_m16apsk_blockwise block_size (守 D003 修�
 CH_BLOCK = _CFG.experiment.BLOCK    # 信道 h 估计块大小 (params ExperimentParams.BLOCK=100, h 块内恒定).
 
 # =============================================================================
-# 信道参数 (design.md §3.2, B11 行 143/155)
+# 信道参数 (D-007: 单载波统一, 从 params.py SystemParams 单字段读)
 # =============================================================================
-CLW_B11 = 500e3        # B11 行 143/155 combined linewidth (AWGN 场景 awgn_wiener_channel 用).
-BAUD_B11 = 25e9        # B11 行 143/155 符号率 (不同于 system.R_SYM=2.5e9, B11 场景专用).
-T_S_B11 = 1.0 / BAUD_B11   # derived = 1/BAUD_B11 = 40 ps (B11 场景符号周期).
-# Wiener PN 每符号方差 σ²_p = 2π·Δν_CLW·T_S (Viterbi 1963 标准激光相位噪声模型,
-# B11 行 51, MVE _time_domain_crlb.py:131).
-SIGMA2_P_B11 = 2 * np.pi * CLW_B11 * T_S_B11
+# D-007: 激光线宽单一真相源 = params.py SystemParams.LASER_LW (10kHz, Valjus sat.1553 §4.2).
+# 旧 CLW_B11=500kHz (B11 OFDM 25GBaud 场景) 已删, 详见 decisions.md D-007.
+LASER_LW = _CFG.system.LASER_LW       # 10e3 Hz (Valjus sat.1553 §4.2 L438, 星地 FSO ECL 典型)
+R_SYM = _CFG.system.R_SYM             # 2.5e9 sym/s (单载波符号率, design.md §3.1)
+T_S = 1.0 / R_SYM                     # = 4e-10 s (=1/2.5e9), 单载波符号周期
+# Wiener PN 每符号方差 σ²_p = 2π·Δν·T_S (Viterbi 1963 标准激光相位噪声模型, B11 行 51).
+# D-007: 从 LASER_LW + T_S 派生 (单载波 10kHz@2.5GBaud → 2.51e-5), 不再从 CLW_B11 派生.
+SIGMA2_P = 2 * np.pi * LASER_LW * T_S
 
 # 系统 T_S (信道 generate_shared_realization_apsk 用此, params SystemParams).
-T_S_GLOBAL = 1.0 / _CFG.system.R_SYM    # = 4e-10 s (=1/2.5e9), 与 common._config T_S 一致
+T_S_GLOBAL = T_S    # 与 T_S 同 (D-007 统一单载波, 不再有 B11/AWGN 双 T_S)
 
 # Doppler / CFO (params DopplerParams, 湍流信道 generate_shared_realization_apsk 注入)
 DOPPLER_HIGH = _CFG.doppler.DOPPLER_HIGH    # 150e6 Hz/s (LEO 500km 推导, SPEC §1.3)
@@ -108,9 +115,10 @@ def all_traced_params_summary():
         'N_DFT': (N_DFT, 'B11 行 155'),
         'M0': (M0, 'B11 行 75-77'),
         'BITS_PER_SYM': (BITS_PER_SYM, '(8,8)-16APSK'),
-        'CLW_B11': (CLW_B11, 'B11 行 143/155'),
-        'BAUD_B11': (BAUD_B11, 'B11 行 143/155'),
-        'SIGMA2_P_B11': (SIGMA2_P_B11, 'derived 2π·CLW·T_S (Viterbi 1963, B11 行 51)'),
+        'LASER_LW': (LASER_LW, 'D-007: params SystemParams.LASER_LW (Valjus sat.1553 §4.2 L438)'),
+        'R_SYM': (R_SYM, 'D-007: params SystemParams.R_SYM (单载波 2.5GBaud)'),
+        'T_S': (T_S, 'derived 1/R_SYM'),
+        'SIGMA2_P': (SIGMA2_P, 'D-007: derived 2π·LASER_LW·T_S (Viterbi 1963, 单载波)'),
         'HDFEC': (HDFEC, 'B11 行 181/191'),
         'DA_PILOT_SPACING': (DA_PILOT_SPACING, 'D-S5-01 + B11'),
         'PILOT_OVERHEAD_DB': (PILOT_OVERHEAD_DB, 'derived 10·log10(4/3)'),

@@ -44,10 +44,12 @@ gw-experiment §impl Part B"复现成功 = DRL baseline 在关键指标上结构
 
 | 场景 | NDA-ML vs DA ML gain mean (dB) | std | 95% CI (t,df=4) | MVE 单 seed | 趋势 |
 |------|-------------------------------|-----|-----------------|-------------|------|
-| AWGN（形态 A）| **+0.776** | 0.088 | [+0.667, +0.885] | +0.704 | ✅ NDA > DA（CI 下界 >0.5dB SPEC §5 Go 门）|
+| AWGN（形态 A）| **+1.351** | 0.072 | [+1.305, +1.397] | +1.310 | ✅ NDA > DA（CI 下界 >>0.5dB SPEC §5 Go 门）|
 | weak（α4/β3）| **+1.529** | 0.321 | [+1.131, +1.928] | +1.199 | ✅ NDA > DA |
 | moderate（α2.5/β1.8）| **+1.712** | 0.250 | [+1.314, +2.110] | +1.922 | ✅ NDA > DA |
 | strong（α1.5/β0.8）| HD-FEC 不可达（物理上限，oracle 也不可达），工作区 grand mean +2.515±0.555 | 0.555 | — | +1.19~+2.62 | ✅ NDA 全工作区赢 DA（5 seed × 18 工作点无一反转）|
+
+> **D-007 (2026-07-07) 更新**：AWGN 场景从 B11 OFDM（25GBaud/500kHz）重定义为单载波（2.5GBaud/10kHz），与湍流路径统一。AWGN fair gain 从旧 +0.776 升至 +1.351（σ²p 弱 5× + segK8 块内跟踪让 NDA 优势增大）。weak/moderate/strong 不变（湍流路径参数未改，只改读法）。详见 decisions.md D-007。
 
 **辅助：NDA-ML vs oracle gap**（升幂实现正确性）：0.38-2.58 dB 全 <3dB（TL-22 锚点），5 seed 下保持。
 
@@ -63,7 +65,7 @@ gw-experiment §impl Part B"复现成功 = DRL baseline 在关键指标上结构
 | 统计验证 | ✅ | GG 幅度分布 + Wiener 增量正态（common/ 已验证，Formal 复用）|
 | 退化测试 | ✅ | 关湍流（h≡1）/ 关 Wiener（σ²_p=0）/ 关 Doppler（f_dot=0）三场景 BER 退化正确（simulator/_consistency_check.json degradation_tests）|
 | 自相关预警 | ✅（带修订）| h 块间 lag-100=0.0164（非"过于平滑"）；lag-1=0.99 是块内恒定物理特性（simulator-design.md §4.4 已修订）|
-| **§4.5 MVE 一致性** | ✅ **bit-exact** | 87 BER 值全 0.0000% 相对误差（simulator/_consistency_check.json）|
+| **§4.5 MVE 一致性** | ✅ **bit-exact** | 4 场景 × 29 点 × 3 方法 BER 值全 0.0000% 相对误差（D-007 后重跑，含 NDA 路径修复 segK8 对齐，simulator/_consistency_check.json）|
 | MDP 试运行 | N/A | 估计类方法非 RL/MDP（gw-feasibility §A0 §4 判定）|
 
 ---
@@ -74,15 +76,15 @@ gw-experiment §impl Part B"复现成功 = DRL baseline 在关键指标上结构
 
 per-seed 法：每 seed 独立算 gain，再统计 5 个 gain 的 mean ± std。CI = t 分布 df=4，t=2.776。
 
-per-seed gain（dB，5 seed）：
-- AWGN：[0.704, 0.807, 0.906, 0.689, 0.774]（seed 0 = MVE 0.704）
-- weak：[1.199, 1.326, 1.824, 1.919, 1.379]
+per-seed gain（dB，5 seed，D-007 后）：
+- AWGN：[1.310, 1.390, 1.391, 1.333, 1.333]（seed 0 = MVE 1.310，D-007 单载波统一 + segK8）
+- weak：[1.199, 1.326, 1.824, 1.919, 1.379]（不变，湍流路径未改）
 - moderate：[不可达_seed2, ...4 有效...] mean=1.712（seed 2 HD-FEC 不可达，正常涨落）
 - strong：工作区 grand mean +2.515，per-point 15dB +1.77 / 20dB +2.73 / 22dB +2.82 / 24dB +2.90
 
 ### 3.2 参考法（avg-curve 法，交叉验证）
 
-5 seed 平均 BER 曲线算 gain：AWGN +0.778 / weak +1.509 / moderate +1.841。与 per-seed 主法差异 <0.2dB，两法互证。
+5 seed 平均 BER 曲线算 gain：AWGN +1.35 / weak +1.509 / moderate +1.841（D-007 后 AWGN 单载波统一）。与 per-seed 主法差异 <0.2dB，两法互证。
 
 ### 3.3 种子策略（防 CI 被人为缩小）
 

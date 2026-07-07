@@ -20,9 +20,10 @@
     ],
     "ndaml_call_convention_D003": "AWGN assume_df_zero=True (df=0); turbulence two-stage fft_foe(M0=8)+nda_ml_recovery(assume_df_zero=True)",
     "hdfec_ber": 0.0038,
-    "clw_b11_Hz": 500000.0,
-    "baud_b11": 25000000000.0,
-    "sigma2_p_b11": 0.0001256637061435917,
+    "laser_lw_Hz": 10000.0,
+    "r_sym": 2500000000.0,
+    "sc_sigma2_p": 2.5132741228718347e-05,
+    "sc_note": "D-007 (2026-07-07): AWGN 单载波统一 (LASER_LW=10kHz @ 2.5GBaud), 不再用 B11 CLW=500kHz",
     "snr_awgn_dB": [
       5,
       8,
@@ -52,7 +53,7 @@
     "python": "C:\\Users\\zzt\\scoop\\apps\\python311\\current\\python.exe",
     "numpy_version": "2.4.3",
     "estimator_chain_source": "_time_domain_crlb.py (已验证: per-block h MMSE + 两阶段 FOE + resolve blockwise)",
-    "elapsed_sec": 15.869704723358154
+    "elapsed_sec": 12.89733624458313
   },
   "results": {
     "awgn": [
@@ -60,73 +61,73 @@
         "gamma_tot_dB": 5.0,
         "gamma_d_dB": 5.0,
         "gamma_tot_da_dB": 6.249387366082999,
-        "nda_ber": 0.18678466796875,
-        "da_ber": 0.249248046875,
-        "oracle_ber": 0.17611328125,
-        "fair_gain_db_at_point": 2.5083899955299938
+        "nda_ber": 0.20075439453125,
+        "da_ber": 0.2530859375,
+        "oracle_ber": 0.17644287109375,
+        "fair_gain_db_at_point": 2.255629784687999
       },
       {
         "gamma_tot_dB": 8.0,
         "gamma_d_dB": 8.0,
         "gamma_tot_da_dB": 9.249387366082999,
-        "nda_ber": 0.10969482421875,
-        "da_ber": 0.12533854166666666,
-        "oracle_ber": 0.10491943359375,
-        "fair_gain_db_at_point": 1.7600198240629723
+        "nda_ber": 0.12079345703125,
+        "da_ber": 0.12686197916666667,
+        "oracle_ber": 0.105400390625,
+        "fair_gain_db_at_point": 1.4362739669406324
       },
       {
         "gamma_tot_dB": 10.0,
         "gamma_d_dB": 10.0,
         "gamma_tot_da_dB": 11.249387366082999,
-        "nda_ber": 0.070830078125,
-        "da_ber": 0.07435546875,
-        "oracle_ber": 0.06728515625,
-        "fair_gain_db_at_point": 1.4231122725539205
+        "nda_ber": 0.07036376953125,
+        "da_ber": 0.075078125,
+        "oracle_ber": 0.06704345703125,
+        "fair_gain_db_at_point": 1.4594245979157474
       },
       {
         "gamma_tot_dB": 12.0,
         "gamma_d_dB": 12.0,
         "gamma_tot_da_dB": 13.249387366082999,
-        "nda_ber": 0.04203369140625,
-        "da_ber": 0.042506510416666664,
-        "oracle_ber": 0.03925048828125,
-        "fair_gain_db_at_point": 1.2864799070556963
+        "nda_ber": 0.04022705078125,
+        "da_ber": 0.04048828125,
+        "oracle_ber": 0.03936279296875,
+        "fair_gain_db_at_point": 1.2714609245966866
       },
       {
         "gamma_tot_dB": 14.0,
         "gamma_d_dB": 14.0,
         "gamma_tot_da_dB": 15.249387366082999,
-        "nda_ber": 0.02397705078125,
-        "da_ber": 0.023255208333333333,
-        "oracle_ber": 0.02160888671875,
-        "fair_gain_db_at_point": 1.14802239015094
+        "nda_ber": 0.0221240234375,
+        "da_ber": 0.022522786458333333,
+        "oracle_ber": 0.02178955078125,
+        "fair_gain_db_at_point": 1.2934951943914914
       },
       {
         "gamma_tot_dB": 16.0,
         "gamma_d_dB": 16.0,
         "gamma_tot_da_dB": 17.249387366083,
-        "nda_ber": 0.01235595703125,
-        "da_ber": 0.011214192708333333,
-        "oracle_ber": 0.00998046875,
-        "fair_gain_db_at_point": 0.9835115688739364
+        "nda_ber": 0.00982666015625,
+        "da_ber": 0.01001953125,
+        "oracle_ber": 0.0096337890625,
+        "fair_gain_db_at_point": 1.286669798413019
       },
       {
         "gamma_tot_dB": 18.0,
         "gamma_d_dB": 18.0,
         "gamma_tot_da_dB": 19.249387366083,
-        "nda_ber": 0.00525390625,
-        "da_ber": 0.004192708333333333,
-        "oracle_ber": 0.003466796875,
-        "fair_gain_db_at_point": 0.7907223717391361
+        "nda_ber": 0.00341796875,
+        "da_ber": 0.0035319010416666667,
+        "oracle_ber": 0.00328125,
+        "fair_gain_db_at_point": 1.2952904765649613
       },
       {
         "gamma_tot_dB": 20.0,
         "gamma_d_dB": 20.0,
         "gamma_tot_da_dB": 21.249387366083,
-        "nda_ber": 0.00206787109375,
-        "da_ber": 0.0011263020833333333,
+        "nda_ber": 0.0007177734375,
+        "da_ber": 0.0008463541666666667,
         "oracle_ber": 0.0006591796875,
-        "fair_gain_db_at_point": 0.32489474498786564
+        "fair_gain_db_at_point": null
       }
     ],
     "weak": [
@@ -327,67 +328,61 @@
   },
   "gain_analysis": {
     "awgn": {
-      "snr_nda_tot_at_hdfec": 18.69487909744189,
-      "snr_da_tot_at_hdfec": 19.399030252664474,
-      "snr_oracle_at_hdfec": 17.826423154388653,
-      "gain_nda_vs_da_fair_db": 0.7041511552225828,
-      "gain_nda_vs_da_naive_db": -0.5452362108604163,
+      "snr_nda_tot_at_hdfec": 17.799338371204627,
+      "snr_da_tot_at_hdfec": 19.10905016720809,
+      "snr_oracle_at_hdfec": 17.72744752004379,
+      "gain_nda_vs_da_fair_db": 1.3097117960034623,
+      "gain_nda_vs_da_naive_db": 0.060324429920463274,
       "hdfec_reachable": true,
-      "min_nda_ber": 0.00206787109375,
-      "min_da_ber": 0.0011263020833333333,
+      "min_nda_ber": 0.0007177734375,
+      "min_da_ber": 0.0008463541666666667,
       "min_oracle_ber": 0.0006591796875,
-      "gap_nda_vs_oracle_mean_db": 0.38296151538605155,
-      "fair_gain_high_snr_db": 0.32489474498786564,
-      "fair_gain_mean_db": 1.2781441343693076,
-      "equiv_gain_at_achievable_db": 0.32489474498786564,
+      "gap_nda_vs_oracle_mean_db": 0.23425114067825983,
+      "fair_gain_high_snr_db": 1.2952904765649613,
+      "fair_gain_mean_db": 1.4711778205015054,
+      "equiv_gain_at_achievable_db": null,
       "per_point_fair_gain": [
         {
           "gamma_tot_db": 5.0,
-          "ber_nda": 0.18678466796875,
-          "snr_da_d_needed_db": 6.259002629446995,
-          "fair_gain_db": 2.5083899955299938
+          "ber_nda": 0.20075439453125,
+          "snr_da_d_needed_db": 6.006242418605,
+          "fair_gain_db": 2.255629784687999
         },
         {
           "gamma_tot_db": 8.0,
-          "ber_nda": 0.10969482421875,
-          "snr_da_d_needed_db": 8.510632457979973,
-          "fair_gain_db": 1.7600198240629723
+          "ber_nda": 0.12079345703125,
+          "snr_da_d_needed_db": 8.186886600857633,
+          "fair_gain_db": 1.4362739669406324
         },
         {
           "gamma_tot_db": 10.0,
-          "ber_nda": 0.070830078125,
-          "snr_da_d_needed_db": 10.173724906470921,
-          "fair_gain_db": 1.4231122725539205
+          "ber_nda": 0.07036376953125,
+          "snr_da_d_needed_db": 10.210037231832748,
+          "fair_gain_db": 1.4594245979157474
         },
         {
           "gamma_tot_db": 12.0,
-          "ber_nda": 0.04203369140625,
-          "snr_da_d_needed_db": 12.037092540972697,
-          "fair_gain_db": 1.2864799070556963
+          "ber_nda": 0.04022705078125,
+          "snr_da_d_needed_db": 12.022073558513688,
+          "fair_gain_db": 1.2714609245966866
         },
         {
           "gamma_tot_db": 14.0,
-          "ber_nda": 0.02397705078125,
-          "snr_da_d_needed_db": 13.898635024067941,
-          "fair_gain_db": 1.14802239015094
+          "ber_nda": 0.0221240234375,
+          "snr_da_d_needed_db": 14.044107828308492,
+          "fair_gain_db": 1.2934951943914914
         },
         {
           "gamma_tot_db": 16.0,
-          "ber_nda": 0.01235595703125,
-          "snr_da_d_needed_db": 15.734124202790937,
-          "fair_gain_db": 0.9835115688739364
+          "ber_nda": 0.00982666015625,
+          "snr_da_d_needed_db": 16.03728243233002,
+          "fair_gain_db": 1.286669798413019
         },
         {
           "gamma_tot_db": 18.0,
-          "ber_nda": 0.00525390625,
-          "snr_da_d_needed_db": 17.541335005656137,
-          "fair_gain_db": 0.7907223717391361
-        },
-        {
-          "gamma_tot_db": 20.0,
-          "ber_nda": 0.00206787109375,
-          "snr_da_d_needed_db": 19.075507378904867,
-          "fair_gain_db": 0.32489474498786564
+          "ber_nda": 0.00341796875,
+          "snr_da_d_needed_db": 18.045903110481962,
+          "fair_gain_db": 1.2952904765649613
         }
       ],
       "pilot_overhead_db": 1.2493873660829993
@@ -557,13 +552,14 @@
     "predicted_after_realization": "加跨块 KF/CPE 跟踪 → DA ML 高 SNR 反超可能强化（cross-over 移动）；加 OFDM 频域 ML → 完全不同架构（B11 路径，已 D002 排除）"
   },
   "tl20_deviation_check": {
-    "awgn_gain_in_expected_range": true,
+    "awgn_gain_in_expected_range": false,
     "weak_gain_in_expected_range": true,
     "moderate_gain_in_expected_range": true,
     "strong_nda_wins_full_region": false,
     "strong_hdfec_physically_reachable": false,
     "strong_nda_wins_points": "5/7",
     "deviations": [
+      "DEVIATION awgn: fair gain +1.31dB > TL-20 upper +0.8dB (suspicious, >B11 +2dB?)",
       "NOTE strong (not a fault): NDA wins 5/7 absolute-BER points, but wins ALL 5/5 working-SNR (>=15dB) points (low-SNR 5/10dB crossover: blind-h noise at low SNR, ratio NDA/DA 1.00-1.05). Per-point fair gain +1.19~+2.62dB across working region. HD-FEC physically unreachable."
     ],
     "tl20_expected_ranges": {

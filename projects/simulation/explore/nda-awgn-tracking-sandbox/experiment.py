@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
-"""NDA-ML 加块内相位跟踪 vs BPS — sandbox 实验.
+"""[DEPRECATED] NDA-ML 加块内相位跟踪 vs BPS — sandbox 实验.
+
+**D-007 (2026-07-07) 后废弃**: 本脚本引用 P.CLW_B11/P.SIGMA2_P_B11 (B11 OFDM 场景参数),
+这些字段已从 _b11_params.py 删除 (AWGN 改单载波统一 LASER_LW). 脚本不再可运行.
+保留作历史记录 (S002 阶段 segK8 跟踪验证). 结论已沉淀到 sc_nda_ml_sim.ber_nda_awgn
+(intra_block_tracking='segmented'). 详见 decisions.md D-007.
 
 任务 (HANDOFF.md §2): 试 "给 NDA-ML 加逐符号/块内相位跟踪" 能否在 AWGN HD-FEC 段 (18dB)
 追平 BPS. 只改本 sandbox 目录, 不动 common/ / simulator/ (守纪律 1, 2).

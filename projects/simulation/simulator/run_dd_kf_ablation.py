@@ -20,7 +20,7 @@
            - 状态 x=[φ, df], F=[[1, T_S_sym],[0,1]] (per-symbol 时间步, T_S_sym 同信道)
            - 观测 z_k = angle(rx[k] · conj(s_hat)), s_hat = hard_decision_m16apsk(rx[k]·exp(-j·x_pred[0]))
            - 测量噪声 R = 1/(2·γ_bar·h_b) (per-symbol, 同 kf_unified 公式)
-           - 过程噪声 Q_sym: design_Q 同湍流等级 (AWGN 用 SIGMA2_P_B11 per-symbol)
+           - 过程噪声 Q_sym: design_Q 同湍流等级 (AWGN 用 SIGMA2_P per-symbol)
   跨块: P 矩阵从块尾传下一块头 (TL-09), φ_init 用上一块末尾 φ (连续性).
   再施加: rc_ddkf[k] = rx_raw[k] · exp(-j·x[0]) (per-symbol 相位补偿, DD-KF 直出).
   resolve + demod + BER (NDA 用 resolve_m16apsk_blockwise 解 M₀ 模糊; DA 直接 demod data 位置).
@@ -90,8 +90,8 @@ T05_4 = float(stats.t.ppf(0.975, 4))   # 2.7764
 SCENES = ['awgn', 'weak', 'moderate', 'strong']
 TURB_LEVELS = ['weak', 'moderate', 'strong']
 
-# per-symbol 时间步: AWGN 用 B11 T_S_B11 (40ps), 湍流用 system T_S_GLOBAL (400ps) — 与各自信道生成一致.
-T_SYM_AWGN = P.T_S_B11
+# per-symbol 时间步: AWGN 用 B11 T_S_GLOBAL (40ps), 湍流用 system T_S_GLOBAL (400ps) — 与各自信道生成一致.
+T_SYM_AWGN = P.T_S_GLOBAL
 T_SYM_TURB = P.T_S_GLOBAL
 
 
@@ -213,14 +213,14 @@ def kf_unified_dd_apsk(rx_block, h_b, gamma_bar, Q_sym, T_sym,
 def make_Q_sym(turb_name_or_awgn):
     """构造 per-symbol DD-KF 过程噪声 Q_sym (per-symbol 时间步).
 
-    AWGN: sigma2_phi = SIGMA2_P_B11 (B11 线宽 500kHz, 匹配实际 AWGN 信道 PN per-symbol), 无 turbulence/df.
+    AWGN: sigma2_phi = SIGMA2_P (B11 线宽 500kHz, 匹配实际 AWGN 信道 PN per-symbol), 无 turbulence/df.
     湍流: design_Q(turb_name, DOPPLER_HIGH) 直接用 (per-symbol, 同 common/_kf.py).
     公平 (§2.3 纪律 1): NDA+DD-KF 和 DA+DD-KF 同 Q_sym.
     """
     if turb_name_or_awgn == 'awgn':
-        # AWGN 信道只有 Wiener PN (SIGMA2_P_B11 per-symbol), 无 turbulence, 无 Doppler (df=0).
+        # AWGN 信道只有 Wiener PN (SIGMA2_P per-symbol), 无 turbulence, 无 Doppler (df=0).
         # df 漂移给极小值 (AWGN 真 df=0, 但留小窗让 DD-KF 不僵化).
-        sigma2_phi_sym = P.SIGMA2_P_B11
+        sigma2_phi_sym = P.SIGMA2_P
         sigma2_df_sym = (10e3 * T_SYM_AWGN) ** 2 * 0.1  # 极小 df 漂移
         return np.diag([sigma2_phi_sym, sigma2_df_sym])
     # 湍流: 用 common/_kf.py design_Q (同湍流等级 + 同 f_dot, §2.3 纪律 1)
@@ -710,7 +710,7 @@ def main():
             'ddkf_observation': 'z_k = angle(rx[k]·conj(s_hat)); s_hat = pilot_sym (DA pilot 位置 genie) '
                                 '或 hard_decision_m16apsk (decision-directed, m16apsk 最近邻)',
             'ddkf_R': 'R = 1/(2·γ_bar·h_b), per-symbol, 同 kf_unified 公式; h_b 用各法自估 (NDA blind / DA pilot)',
-            'ddkf_Q': 'AWGN: sigma2_phi=SIGMA2_P_B11 per-symbol (匹配实际信道 PN), df≈0; '
+            'ddkf_Q': 'AWGN: sigma2_phi=SIGMA2_P per-symbol (匹配实际信道 PN), df≈0; '
                       '湍流: design_Q(turb, DOPPLER_HIGH) per-symbol (同 common/_kf.py, 同湍流等级同 f_dot)',
             'cross_block_P_transfer': 'P 矩阵从块尾传下一块头 (TL-09); φ/df 用上块尾初始化下块头',
             'fairness': 'NDA+DD-KF 和 DA+DD-KF 同 Q_sym 同结构 (§2.3 纪律 1), 不给某方法调优 DD-KF',

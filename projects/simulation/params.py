@@ -79,14 +79,14 @@ class SystemParams(BaseModel):
     )
     LASER_LW: float = Field(
         10e3,
-        description="激光线宽",
+        description="激光线宽（单端激光器，全场景统一真相源）",
         json_schema_extra={
-            "source_type": SourceType.typical,
-            "source": "窄线宽外腔式半导体激光器典型值 (1-100 kHz)",
+            "source_type": SourceType.literature,
+            "source": "Valjus sat.1553 (doi:10.1002/sat.1553) §4.2 L438：星地 FSO ECL 典型 0.1-1MHz@28GBaud (ΔνTs≈10⁻⁶-10⁻⁵)；单载波 2.5GBaud 配 ECL (1-100kHz) 是典型。10kHz@2.5GBaud → ΔνTs=2.51e-5 落在该区间低端",
             "symbol": "Δν",
             "unit": "Hz",
             "audit_flag": AuditFlag.WARNING,
-            "note": "无特定文献引用",
+            "note": "D-007: 全场景（AWGN + 湍流）线宽单一真相源。Valjus sat.1553 §4.2 L438 (papers/doi/10.1002_sat.1553/content.md)",
         },
     )
 
@@ -501,17 +501,25 @@ class B11Params(BaseModel):
     """B11 NDA-ML STO+CPE 参数族 (10.1109/LPT.2024.3523478)
 
     用于 Step 4a 维度 D (CPE/FOE 链) MVE 评估。
-    概念独立性: CLW=combined linewidth, 与 SystemParams.LASER_LW (单端激光器)
-    概念不同, 可独立保留。"""
+
+    **D-007 (2026-07-07) 变更**：CLW/BAUD_RATE/PN_VARIANCE 三字段标 DEAD。
+    原因：D002 已把 B11 重定位为"理论参考不对标 baseline"，我们方法重定义为单载波
+    时域 NDA-ML。AWGN 场景作为"NDA-ML vs DA ML"对比（都是我们自己的单载波方法），
+    理应用单载波参数（SystemParams.LASER_LW=10kHz @ R_SYM=2.5GBaud），不应继续用
+    B11 的 OFDM 场景参数（500kHz @ 25GBaud）。三字段保留供 explore/ 历史探针 import
+    不破（_ber_oracle_upperbound/_crb_lower_bound 读 cfg.b11.M0_POWER 等），但线宽类
+    字段不再作为仿真真相源——仿真真相源统一为 SystemParams.LASER_LW 单字段。
+    M0_POWER/HD_FEC_THRESHOLD/DFT_SIZE/CP_LEN 与线宽无关，保持 active。"""
     CLW: float = Field(
         500e3,
-        description="combined laser linewidth (收发两端线宽之和)",
+        description="combined laser linewidth (收发两端线宽之和) — B11 论文原始 OFDM 场景值",
         json_schema_extra={
             "source_type": SourceType.literature,
             "source": "B11 (10.1109/LPT.2024.3523478) 行 143/155：combined laser linewidth 扫至 500 kHz",
             "symbol": "Δν_CLW",
             "unit": "Hz",
-            "audit_flag": AuditFlag.OK,
+            "audit_flag": AuditFlag.DEAD,
+            "note": "D-007: B11 OFDM 原始场景参数，Formal 仿真已改用 SystemParams.LASER_LW (单载波 10kHz)。仅供 explore/ 历史探针 import，不作为仿真真相源",
         },
     )
     HD_FEC_THRESHOLD: float = Field(
@@ -526,13 +534,14 @@ class B11Params(BaseModel):
     )
     BAUD_RATE: float = Field(
         25e9,
-        description="波特率 25 GBaud",
+        description="波特率 25 GBaud — B11 论文原始 OFDM 场景值",
         json_schema_extra={
             "source_type": SourceType.literature,
             "source": "B11 行 143/155：25 GBaud",
             "symbol": "R_B",
             "unit": "sym/s",
-            "audit_flag": AuditFlag.OK,
+            "audit_flag": AuditFlag.DEAD,
+            "note": "D-007: B11 OFDM 原始场景参数，Formal 仿真已改用 SystemParams.R_SYM (单载波 2.5GBaud)。仅供 explore/ 历史探针 import",
         },
     )
     DFT_SIZE: int = Field(
@@ -579,15 +588,15 @@ class B11Params(BaseModel):
     )
     PN_VARIANCE: float = Field(
         2 * np.pi * 500e3 * (1 / 25e9),
-        description="Wiener 激光相位噪声方差 = 2π·Δν_CLW·T_S",
+        description="Wiener 激光相位噪声方差 = 2π·Δν_CLW·T_S — B11 论文原始 OFDM 场景值",
         json_schema_extra={
             "source_type": SourceType.derived,
             "source": "B11 行 51：σp²=2πΔνTs Wiener laser phase noise",
             "symbol": "σ²_p",
             "unit": "rad²",
-            "audit_flag": AuditFlag.OK,
+            "audit_flag": AuditFlag.DEAD,
             "derived_from": ["CLW", "T_S"],
-            "note": "数值用 CLW 与 BAUD_RATE 倒数(代替 T_S)计算",
+            "note": "D-007: B11 OFDM 原始场景参数 (2π·500kHz·40ps=1.26e-4)。Formal 仿真已改用 2π·SystemParams.LASER_LW·T_S (2π·10kHz·400ps=2.51e-5)。仅供 explore/ 历史探针 import",
         },
     )
 
