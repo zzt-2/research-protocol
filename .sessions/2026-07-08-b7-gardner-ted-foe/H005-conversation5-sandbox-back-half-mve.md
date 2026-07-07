@@ -1,34 +1,36 @@
-# Handoff: 对话 5 — sandbox 前半 3 步完成，进对话 6 sandbox 后半 + MVE
+# Handoff: 对话 5 — sandbox 前 4 步完成，进对话 6 三方对照 + MVE（剩 2 步）
 
-> 来源: S005 | 交接目标: 新对话执行 sandbox 后半 3 步（CRB + 三方对照 + MVE）
+> 来源: S005 | 交接目标: 新对话执行 sandbox 后半 2 步（三方对照 + MVE）
 > 文件名: H005-conversation5-sandbox-back-half-mve.md
 > 日期: 2026-07-08
+> 续接：用户授权"往下"，追加步骤 4 CRB 下界（独立轻量，本轮做完）。剩步骤 5/6。
 
 ## 到哪了（状态）
 
-**sandbox 前半 3 步全部完成**（S005，D006 新建），profile 第 9 次防线解除后本轮开始写代码，守 sim-preflight v1.3.0 + INVARIANT 6 解除。
+**sandbox 前 4 步完成**（S005，D006 新建），profile 第 9 次防线解除后本轮开始写代码，守 sim-preflight v1.3.0 + INVARIANT 6 解除。剩 2 步（三方对照 + MVE）。
 
 - **步骤 1 B7Params 回写 params.py**（主线程直接做）：`params.py` L606-680 B7Params 整体替换，旧 6 字段 → 新 15 字段。审计 14 OK + 1 WARNING（GARDNER_GAIN 典型值），**0 DEAD/CRITICAL**，全局 SimulationConfig total 55→64（DEAD/CRITICAL 数不变 6/4，未引入新问题）。下游 grep 无断链。
 - **步骤 2 PSA FOE baseline 重写**（子 agent）：4 产出 in `explore/b7-gardner-ted-foe/`（`_psa_foe_asymmetry.py` + `_results.json` + `_curve.png` + `_summary.md`）。Vieira 2023 content.md L343-347 Δf̂=α·ln(P+/P−)/2，α_calib=0.953GHz。**诚实反常发现**：coarse-only 线性区仅 ~1GHz（远低于 poster 半 baud 12.5GHz），主线 V5 核查确认非 bug（β=0.1 谱边缘物理结果），登记为已知限制。
 - **步骤 3 TED_gain 解析推导 + Leven 对比**（子 agent）：4 产出。**G(f_D) = K_max·|cos(πf_D/B)|** 解析成立（f_D 依赖性解耦为余弦因子，跟脉冲形状无关），K_max=0.132142 bit-exact 复现 0.2a 锚点。Leven 2007 对比判**弱同族 (B) 不降级 (C)**（三层运算不等价），**D002 残留风险闭合**。
+- **步骤 4 CRB 下界**（子 agent，续接追加）：4 产出。`var(f_D) ≥ 12/[(2π)²·(E_s/N_0)·T_s²·N·(N²−1)]`（Rife-Boorstijn/Kay/Mengali 溯源）。主测点 N=1024 OSNR=17dB CRB std = **59.42 kHz**，比扫频间隔 1GHz 小 **16830 倍**。结论：**B7 精度瓶颈是 1GHz 扫频量化网格，不是理论 CRB 极限**；CRB 完全不卡 B7，FR-21 不触发 Kill（D005 降级合理）。
 
 **D006 三个登记项**：① PSA coarse-only 弱（fair gain BER gain 标为上界）② Leven DOI 修正 891597→891893 ③ D002 残留风险闭合。
 
 **关键产出**（对话 6 会用到）：
 - `explore/b7-gardner-ted-foe/_psa_foe_asymmetry.py`（PSA FOE baseline，谱不对称法）
 - `explore/b7-gardner-ted-foe/_ted_gain_analytic.py` + `_results.json`（G(f_D) 解析式 + Leven 对比数据）
+- `explore/b7-gardner-ted-foe/_crb_lower_bound.py` + `_results.json`（CRB 数据，N scaling −3/2 验证）
 - `params.py` B7Params 15 字段（对话 6 三方对照主脚本可直接 import）
 - 0.2a `_b7_map_reconstruction.py`（B7 proposed FOE 数值重建，sandbox 三方对照的候选方实现基础）
 
-## 下一步干什么（对话 6 = sandbox 后半 + MVE，3 步）
+## 下一步干什么（对话 6 = 三方对照 + MVE，剩 2 步）
 
 > **守 sim-preflight v1.3.0**：C7 三方对照 / V2 三方归因 / V3 祖师爷红线（B7 vs Gardner 1986 BER gap <0.1dB）/ V5 子 agent 归因主线独立重算 / TL-20 偏离即查。
 
-### sandbox 后半 3 步
+### sandbox 后半 2 步
 
-4. **CRB 下界**（FR-21 参考）：`_crb_lower_bound.py`，B7 FOE 的 CRB。FR-21 在 D005 下降级为参考不当 Kill 门，但 sandbox 仍算作对照。
 5. **三方对照主脚本**（C7+V2）：`b7_gardner_ted_mve.py`，三方 = B7 proposed FOE / Gardner 1986 TR（用户代码祖师爷方）/ PSA FOE（步骤 2 重写的 `_psa_foe_asymmetry.py`），按 `_fair_comparison_framework.md` §4 架构执行。fair gain 二维报告（BER gain @ 双工作点 + 范围比 1.9×）。**注意 PSA coarse-only 弱（D006）**：BER gain 标为上界，范围/鲁棒性优势独立报告。
-6. **MVE + consistency**：`B7-MVE-SPEC.md` 契约（仿 N1/NDA-ML SPEC，TL-20 预期表已在 `_fair_comparison_framework.md` §5 落盘）+ 跑 MVE + consistency 检查。
+6. **MVE + consistency**：`B7-MVE-SPEC.md` 契约（仿 N1/NDA-ML SPEC，TL-20 预期表已在 `_fair_comparison_framework.md` §5 落盘）+ 跑 MVE + consistency 检查。**MVE 结果需用户做 Go/Conditional Go/Kill 判断**（profile 画像：不宜在长上下文一口气塞完）。
 
 ### 红线警报（sandbox 发现立刻停）
 
@@ -97,7 +99,7 @@
 | ~~sandbox 1 B7Params 回写~~ | ~~15 字段 + 0 DEAD/CRITICAL~~ | ~~D005 + TL-26~~ | **PASS（S005）** |
 | ~~sandbox 2 PSA FOE baseline 重写~~ | ~~谱不对称法（非 pilot-aided）~~ | ~~D004 + V6~~ | **PASS（S005，coarse-only 弱限制登记 D006）** |
 | ~~sandbox 3 TED_gain 解析 + Leven 对比~~ | ~~解析式成立 + 弱同族 B 确认~~ | ~~V1 + V3~~ | **PASS（S005/D006）**：G(f_D)=K_max·\|cos(πf_D/B)\|，D002 残留风险闭合 |
-| sandbox 4 CRB 下界 | FR-21 参考值（不当 Kill 门）| D005 降级 | 未跑 |
+| ~~sandbox 4 CRB 下界~~ | ~~FR-21 参考值（不当 Kill 门）~~ | ~~D005 降级~~ | **PASS（S005）**：CRB std=59.42kHz << 扫频间隔 1GHz（小 16830 倍），精度瓶颈是量化非 CRB，FR-21 不卡 |
 | sandbox 5 三方对照 | 改进版/1986 原版/PSA FOE 三方归因可信 | V2+C7 | 未跑 |
 | MVE BER gain @ BER 2e-2 | ≈0.6dB（锚论文一致性）| content.md L21/65/69 | 未跑 |
 | MVE BER gain @ HD-FEC | ≥0.3dB（跨候选主判据）| D004 + SPEC §5 | 未跑 |
@@ -116,8 +118,9 @@
 
 ## 下一轮
 
-**对话 6**（sandbox 后半 + MVE，3 步）：
-- CRB 下界 + 三方对照主脚本 + MVE + consistency
+**对话 6**（三方对照 + MVE，剩 2 步）：
+- 三方对照主脚本 + MVE + consistency
 - 守 sim-preflight v1.3.0 C7+V2+V3（三方归因 + 祖师爷警报）
 - sandbox 发现 B7 vs Gardner 1986 持平 → V3 红线警报（但 0.2 + 步骤 3 解析推导双重确认任务正交，持平可能性低）
 - 注意 D006 PSA coarse-only 弱限制：三方对照 BER gain 标为上界
+- CRB 已完成（步骤 4）：不卡 B7，MVE Go 判据仍按 D005 务实路线（赢传统 baseline 几 dB）

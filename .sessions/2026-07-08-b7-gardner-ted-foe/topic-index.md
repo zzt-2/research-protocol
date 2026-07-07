@@ -1,7 +1,7 @@
 # Topic Index: B7 Gardner TED 复用 FOE 第二候选
 
 > slug: 2026-07-08-b7-gardner-ted-foe
-> status: active | created 2026-07-08 | last_updated: 2026-07-08（S005 sandbox 前半 3 步完成 D006——B7Params 15 字段回写 params.py 无 DEAD/CRITICAL + PSA FOE 谱不对称法 baseline 重写（coarse-only 线性区 ~1GHz 限制登记）+ TED_gain 解析式 G(f_D)=K_max·|cos(πf_D/B)| + Leven 对比 D002 残留风险闭合弱同族 B 不降级 C。进对话 6 sandbox 后半 + MVE）
+> status: active | created 2026-07-08 | last_updated: 2026-07-08（S005 sandbox 前半 3 步 + 步骤 4 CRB 完成 D006——B7Params 15 字段回写 + PSA FOE 谱不对称法 baseline 重写（coarse-only 线性区 ~1GHz 限制登记）+ TED_gain 解析式 G(f_D)=K_max·|cos(πf_D/B)| + Leven 对比 D002 残留风险闭合弱同族 B 不降级 C + CRB 下界 59.42kHz << 扫频间隔 1GHz（精度瓶颈是量化非 CRB，FR-21 不卡）。剩 2 步：三方对照主脚本 + MVE）
 
 ## 专题定位（一句话）
 
@@ -113,4 +113,4 @@ B7-Q1（Gardner TED 复用 FOE）第二候选 MVE 执行。与 NDA-ML 单载波�
 - **S002** 阶段 0.1 公式完整性核查 + D001（2026-07-08）：用户本地 Matlab 代码作 Gardner TED 1986 公式源，B7 映射靠数值重建，不切降级
 - **S003** 阶段 0.2+0.3 + D002+D003（2026-07-08）：0.2 子 agent 数值重建 + 同族性分析判弱同族 (B) + 主线 V5 独立重算；0.3 架构定性 FOE 前馈化 + Gardner TR 保留反馈环不撞 D006
 - **S004** 阶段 0.4-0.6 + D004+D005（2026-07-08）：0.4 fair gain 二维报告（HD-FEC 主+BER 2e-2 锚+范围比 1.9×）+ PSA FOE 概念错债务登记；0.5 B7Params 修正版 15 字段全溯源 content.md 行号 + B7 锚论文原参数不统一（用户决策）；0.6 explore 目录结构落盘 + 下游引用同步清单。**阶段 0 全收尾，可进 sandbox**
-- **S005** sandbox 前半 3 步 + D006（2026-07-08）：步骤 1 B7Params 回写 params.py（15 字段 14 OK + 1 WARNING，0 DEAD/CRITICAL，下游无断链）；步骤 2 PSA FOE 谱不对称法 baseline 重写（Vieira 2023 L343-347 Δf̂=α·ln(P+/P−)/2，α_calib=0.953GHz，coarse-only 线性区 ~1GHz 限制登记非 bug）；步骤 3 TED_gain 解析 G(f_D)=K_max·|cos(πf_D/B)| + Leven 2007 对比（DOI 修正 891597→891893，三层运算不等价判弱同族 B 不降级 C，D002 残留风险闭合）。主线 V5 独立核查全 PASS。**进对话 6 sandbox 后半 + MVE**
+- **S005** sandbox 前半 3 步 + 步骤 4 CRB + D006（2026-07-08）：步骤 1 B7Params 回写 params.py（15 字段 14 OK + 1 WARNING，0 DEAD/CRITICAL，下游无断链）；步骤 2 PSA FOE 谱不对称法 baseline 重写（Vieira 2023 L343-347 Δf̂=α·ln(P+/P−)/2，α_calib=0.953GHz，coarse-only 线性区 ~1GHz 限制登记非 bug）；步骤 3 TED_gain 解析 G(f_D)=K_max·|cos(πf_D/B)| + Leven 2007 对比（DOI 修正 891597→891893，三层运算不等价判弱同族 B 不降级 C，D002 残留风险闭合）；步骤 4 CRB 下界（N=1024 OSNR=17dB CRB std=59.42kHz << 扫频间隔 1GHz，精度瓶颈是量化非 CRB，FR-21 不卡）。主线 V5 独立核查全 PASS。**剩 2 步：三方对照主脚本 + MVE**

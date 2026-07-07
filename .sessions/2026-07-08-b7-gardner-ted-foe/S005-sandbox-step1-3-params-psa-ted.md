@@ -1,7 +1,8 @@
-# [S005] sandbox 前半 3 步：B7Params 回写 + PSA FOE 重写 + TED_gain 解析推导
+# [S005] sandbox 前半 3 步 + 步骤 4：B7Params 回写 + PSA FOE 重写 + TED_gain 解析推导 + CRB 下界
 
-> 2026-07-08 | 阶段 1 sandbox（前半）| 状态: 完成
+> 2026-07-08 | 阶段 1 sandbox（前半 + 步骤 4）| 状态: 完成
 > profile 第 9 次防线已解除（阶段 0 六项全做完），本轮开始写代码。守 sim-preflight v1.3.0 + INVARIANT 6 解除。
+> 2026-07-08 续接：用户授权"往下"，追加步骤 4 CRB 下界（独立、轻量、FR-21 参考）。
 
 ## 目标
 
@@ -114,10 +115,59 @@ G(f_D) = max_τ |S(τ;f_D)| = K_max·|cos(π·f_D/B)|
 **已闭合**：
 - D002 残留风险（TED_gain 解析式 + Leven 对比）——弱同族 (B) 确认，不降级 (C)
 - B7Params 旧字段问题（LEO_DOPPLER_RATE 错 + 缺 5 字段 + PSA_PILOT_SPACING 概念错）——15 字段全溯源回写
-- common psa_foe_recovery 概念错债务——PSA FOE baseline 重写为谱不对称法（旧函数保留不删）
+- common psa_foe_recovery 概念错债务——PSA FOE baseline 重写为谱不对称法（旧函数保留未删）
 
 **带进对话 6（sandbox 后半 + MVE）**：
 - D006 新债务：PSA FOE coarse-only 弱（线性区 ~1GHz）——三方对照时记录为 fair gain 上界，可选补 fine CFE stage 作双方对称增强（V3 公平性）
-- B7Params 回写 params.py 后，对话 6 三方对照主脚本 + CRB + MVE 可直接 import B7Params
-- sandbox 后半 3 步：④ CRB 下界（FR-21 参考）⑤ 三方对照主脚本（C7+V2）⑥ MVE + consistency + B7-MVE-SPEC.md
+- B7Params 回写 params.py 后，对话 6 三方对照主脚本 + MVE 可直接 import B7Params
+- sandbox 后半 2 步（步骤 4 CRB 已本轮做完）：⑤ 三方对照主脚本（C7+V2）⑥ MVE + consistency + B7-MVE-SPEC.md
 - 守 sim-preflight v1.3.0 V3（B7 vs Gardner 1986 BER gap <0.1dB 红线警报）+ TL-20（BER gain @ BER 2e-2 偏离 0.6dB >0.2dB 查 LPF2 + PSA baseline）
+
+---
+
+## 追加：步骤 4 CRB 下界（2026-07-08 续接，用户授权"往下"）
+
+### 步骤 4：CRB 下界（子 agent 执行）
+
+**触发**：用户授权"往下"。步骤 4 独立轻量（CRB 是数值+解析，不依赖三方对照），可本轮做。步骤 5/6（三方对照 + MVE）是重活 + 需用户 Go 判断，留下轮。
+
+**子 agent 产出**（4 文件 in `explore/b7-gardner-ted-foe/`）：
+- `_crb_lower_bound.py`（脚本，自包含）
+- `_crb_results.json`（N×OSNR sweep）
+- `_crb_curve.png`（CRB vs N 曲线 + 1GHz 水平线）
+- `_crb_summary.md`（摘要）
+
+**CRB 公式（C6 溯源）**：`var(f_D) ≥ 12 / [(2π)²·(E_s/N_0)·T_s²·N·(N²−1)]` [Hz²]。来源 Rife-Boorstijn 1974 / Kay 1993 ch.15.7 / Mengali-D'Andrea 1997 §3.7。常数 12 = 频偏+相位同时未知（FOE 现实场景）。DA / 已知 s(t) 绝对下界——B7 是 NDA 间接估计（Gardner TED 增益扫频峰反演），实际方差 ≥ 此 CRB。
+
+**关键数字**（主线 V5 独立重算 bit-exact）：
+- 主测点 N=1024, OSNR=17dB：CRB std = **59.42 kHz = 5.94×10⁻⁵ GHz**
+- N scaling 拟合斜率 = **−1.5000**（理论 −3/2 bit-exact）
+- OSNR→E_s/N_0 转换：(2·12.5GHz)/25GHz = 1.0 ⇒ 25GBaud 下 E_s/N_0_dB = OSNR_dB（巧合约 1）
+- 低 SNR (OSNR=10dB, N=1024)：CRB std = 133 kHz（仍远小于 1 GHz）
+- CRB / 扫频间隔 = 5.94×10⁻⁵（**CRB 比扫频间隔小 16830 倍**）
+
+### 主线 V5 独立核查（步骤 4）
+
+| 核查项 | 子 agent 报告 | 主线独立重算 | 结论 |
+|---|---|---|---|
+| CRB std @ N=1024 OSNR=17dB | 59415.68 Hz | 59415.68 Hz（误差 0.0000%）| **PASS** bit-exact |
+| N scaling 斜率 | −1.500 | −1.5000（理论 −3/2）| **PASS** bit-exact |
+| CRB vs 扫频间隔 | 比值 5.94e-5（小 16830 倍）| 5.94e-5，确认 << 1 | **PASS** |
+| 低 SNR CRB | 133 kHz | 133.02 kHz（误差 0.01%）| **PASS** |
+
+### 步骤 4 结论（FR-21 参考角度，D005 降级非 Kill 门）
+
+**B7 FOE 精度瓶颈是 1 GHz 扫频量化网格，不是理论 CRB 极限**。
+- CRB（59 kHz）比扫频间隔（1 GHz）小 16830 倍——理论空间巨大，B7 缺的是精细扫描不是估计能力
+- CRB 完全不卡 B7，FR-21 不触发 Kill（D005 已降级为参考）
+- 务实启示：若下游需亚 GHz 精度，B7 可窄带重扫（poster Fig.3b 已验证路径——初始 f̂ 确定后窄带扫描降复杂度）
+- B7 的 Go 判据仍是赢传统 baseline 几 dB（D005 务实路线），不是 CRB 精度
+
+### 步骤 4 决策引用
+
+- 无新建 D###（CRB 是参考数值，不构成决策变更）。FR-21 在 D005 已降级，CRB 数值证实降级合理（CRB 远不卡 B7）。
+- D005（沿用）：FR-21 降级为参考，CRB 算出来作对照——步骤 4 执行了这个对照，结论 CRB << 扫频间隔，B7 理论裕量充足
+
+### 步骤 4 范围确认
+
+- 本轮是否在 scope boundary 内：**是**。步骤 4 在阶段 1 sandbox 范围内（H004 sandbox 六步的第 4 步）。未碰"明确不含"。

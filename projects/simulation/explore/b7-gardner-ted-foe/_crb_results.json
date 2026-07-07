@@ -1,0 +1,229 @@
+{
+  "meta": {
+    "task": "B7 Gardner TED FOE CRB lower bound (FR-21 reference, D005 downgraded not Kill gate)",
+    "source": "B7 OFC 2026 doi:10.1364_ofc.2026.w2a.62 + Rife-Boorstijn/Kay/Mengali classic FOE CRB",
+    "crb_formula": {
+      "expression": "var(f_D) >= 12 / [(2*pi)^2 * (E_s/N_0) * T_s^2 * N*(N^2-1)]  [Hz^2]",
+      "std_expression": "std(f_D) >= sqrt(var)  [Hz]",
+      "sources": [
+        "Rife & Boorstijn 1974, IEEE TASSP 22(2): single-tone freq+phase ML estimation CRB",
+        "Kay 1993, Fundamentals of Statistical Signal Processing Vol I, ch.15.7: ML frequency CRB",
+        "Mengali & D'Andrea 1997, Synchronization Techniques for Digital Receivers, Sec.3.7"
+      ],
+      "assumptions": [
+        "Data-aided / known s(t) (absolute lower bound)",
+        "Phase phi unknown (nuisance integrated out) -> constant 12 (not 6)",
+        "AWGN, symbol-rate samples, N symbols observed at interval T_s",
+        "CRB is variance lower bound; std=sqrt(CRB) reported for intuition"
+      ],
+      "scaling": "CRB(std) ~ 1/sqrt(SNR) * 1/N^(3/2)  (large N: N(N^2-1)~N^3)",
+      "caveat": "B7 is NDA INDIRECT estimator (Gardner TED gain-scan peak inversion). Strict CRB is complex. Classic ML CRB used as REFERENCE lower bound. B7 actual variance >= this CRB (B7 suboptimal). NOT a Kill gate (D005)."
+    },
+    "osnr_to_esn0": {
+      "formula": "E_s/N_0 (linear) = OSNR (linear) * (2*B_ref)/R_SYM,  B_ref=12.5 GHz",
+      "factor_25gbaud": 1.0,
+      "factor_25gbaud_dB": 0.0,
+      "note": "For 25 GBaud: factor=1.0 exactly, so E_s/N_0_dB = OSNR_dB (coincidence)."
+    },
+    "params": {
+      "R_SYM_Hz": 25000000000.0,
+      "T_S_s": 4e-11,
+      "roll_off": 0.1,
+      "DOPPLER_INTERVAL_Hz": 1000000000.0,
+      "DOPPLER_RANGE_Hz": 23000000000.0,
+      "B_REF_Hz": 12500000000.0,
+      "K_max": 0.13214186192586033,
+      "B_period_Hz": 25000000000.0
+    },
+    "sweep": {
+      "N_symbols": [
+        256,
+        512,
+        1024,
+        2048,
+        4096
+      ],
+      "OSNR_dB": [
+        10.0,
+        17.0,
+        20.0
+      ]
+    },
+    "fr21_status": "D005 downgraded FR-21 to REFERENCE (not Kill gate). CRB computed as a 'reference ruler': how far is B7 FOE accuracy from theoretical limit. Even if CRB << 1 GHz (huge headroom), B7 NOT killed. Go criteria = win baseline by few dB."
+  },
+  "results": {
+    "osnr_10dB": {
+      "OSNR_dB": 10.0,
+      "EsN0_linear": 10.0,
+      "EsN0_dB": 10.0,
+      "by_N": {
+        "256": {
+          "N": 256,
+          "CRB_variance_Hz2": 1132369745945.5308,
+          "CRB_std_Hz": 1064128.632236503,
+          "CRB_std_MHz": 1.0641286322365031,
+          "CRB_std_GHz": 0.001064128632236503,
+          "CRB_ratio_vs_DOPPLER_INTERVAL": 0.001064128632236503,
+          "obs_window_us": 0.010239999999999999
+        },
+        "512": {
+          "N": 512,
+          "CRB_variance_Hz2": 141544598369.09695,
+          "CRB_std_Hz": 376224.13315615064,
+          "CRB_std_MHz": 0.37622413315615066,
+          "CRB_std_GHz": 0.00037622413315615064,
+          "CRB_ratio_vs_DOPPLER_INTERVAL": 0.00037622413315615064,
+          "obs_window_us": 0.020479999999999998
+        },
+        "1024": {
+          "N": 1024,
+          "CRB_variance_Hz2": 17693024175.79581,
+          "CRB_std_Hz": 133015.12762011625,
+          "CRB_std_MHz": 0.13301512762011625,
+          "CRB_std_GHz": 0.00013301512762011624,
+          "CRB_ratio_vs_DOPPLER_INTERVAL": 0.00013301512762011624,
+          "obs_window_us": 0.040959999999999996
+        },
+        "2048": {
+          "N": 2048,
+          "CRB_variance_Hz2": 2211626440.0944676,
+          "CRB_std_Hz": 47027.932551776794,
+          "CRB_std_MHz": 0.04702793255177679,
+          "CRB_std_GHz": 4.7027932551776796e-05,
+          "CRB_ratio_vs_DOPPLER_INTERVAL": 4.7027932551776796e-05,
+          "obs_window_us": 0.08191999999999999
+        },
+        "4096": {
+          "N": 4096,
+          "CRB_variance_Hz2": 276453255.5781024,
+          "CRB_std_Hz": 16626.88351971296,
+          "CRB_std_MHz": 0.01662688351971296,
+          "CRB_std_GHz": 1.662688351971296e-05,
+          "CRB_ratio_vs_DOPPLER_INTERVAL": 1.662688351971296e-05,
+          "obs_window_us": 0.16383999999999999
+        }
+      }
+    },
+    "osnr_17dB": {
+      "OSNR_dB": 17.0,
+      "EsN0_linear": 50.11872336272722,
+      "EsN0_dB": 17.0,
+      "by_N": {
+        "256": {
+          "N": 256,
+          "CRB_variance_Hz2": 225937468069.60025,
+          "CRB_std_Hz": 475328.79995809245,
+          "CRB_std_MHz": 0.47532879995809246,
+          "CRB_std_GHz": 0.00047532879995809246,
+          "CRB_ratio_vs_DOPPLER_INTERVAL": 0.00047532879995809246,
+          "obs_window_us": 0.010239999999999999
+        },
+        "512": {
+          "N": 512,
+          "CRB_variance_Hz2": 28241860301.326473,
+          "CRB_std_Hz": 168053.14725207165,
+          "CRB_std_MHz": 0.16805314725207166,
+          "CRB_std_GHz": 0.00016805314725207166,
+          "CRB_ratio_vs_DOPPLER_INTERVAL": 0.00016805314725207166,
+          "obs_window_us": 0.020479999999999998
+        },
+        "1024": {
+          "N": 1024,
+          "CRB_variance_Hz2": 3530222437.579871,
+          "CRB_std_Hz": 59415.67501577232,
+          "CRB_std_MHz": 0.05941567501577232,
+          "CRB_std_GHz": 5.941567501577232e-05,
+          "CRB_ratio_vs_DOPPLER_INTERVAL": 5.941567501577232e-05,
+          "obs_window_us": 0.040959999999999996
+        },
+        "2048": {
+          "N": 2048,
+          "CRB_variance_Hz2": 441277489.0709271,
+          "CRB_std_Hz": 21006.605843660873,
+          "CRB_std_MHz": 0.02100660584366087,
+          "CRB_std_GHz": 2.1006605843660872e-05,
+          "CRB_ratio_vs_DOPPLER_INTERVAL": 2.1006605843660872e-05,
+          "obs_window_us": 0.08191999999999999
+        },
+        "4096": {
+          "N": 4096,
+          "CRB_variance_Hz2": 55159676.2705448,
+          "CRB_std_Hz": 7426.956056861034,
+          "CRB_std_MHz": 0.007426956056861034,
+          "CRB_std_GHz": 7.4269560568610344e-06,
+          "CRB_ratio_vs_DOPPLER_INTERVAL": 7.4269560568610344e-06,
+          "obs_window_us": 0.16383999999999999
+        }
+      }
+    },
+    "osnr_20dB": {
+      "OSNR_dB": 20.0,
+      "EsN0_linear": 100.0,
+      "EsN0_dB": 20.0,
+      "by_N": {
+        "256": {
+          "N": 256,
+          "CRB_variance_Hz2": 113236974594.5531,
+          "CRB_std_Hz": 336507.02012670273,
+          "CRB_std_MHz": 0.33650702012670275,
+          "CRB_std_GHz": 0.0003365070201267027,
+          "CRB_ratio_vs_DOPPLER_INTERVAL": 0.0003365070201267027,
+          "obs_window_us": 0.010239999999999999
+        },
+        "512": {
+          "N": 512,
+          "CRB_variance_Hz2": 14154459836.909697,
+          "CRB_std_Hz": 118972.51714959089,
+          "CRB_std_MHz": 0.11897251714959088,
+          "CRB_std_GHz": 0.00011897251714959089,
+          "CRB_ratio_vs_DOPPLER_INTERVAL": 0.00011897251714959089,
+          "obs_window_us": 0.020479999999999998
+        },
+        "1024": {
+          "N": 1024,
+          "CRB_variance_Hz2": 1769302417.579581,
+          "CRB_std_Hz": 42063.07665375395,
+          "CRB_std_MHz": 0.04206307665375395,
+          "CRB_std_GHz": 4.2063076653753955e-05,
+          "CRB_ratio_vs_DOPPLER_INTERVAL": 4.2063076653753955e-05,
+          "obs_window_us": 0.040959999999999996
+        },
+        "2048": {
+          "N": 2048,
+          "CRB_variance_Hz2": 221162644.00944677,
+          "CRB_std_Hz": 14871.53805123891,
+          "CRB_std_MHz": 0.014871538051238909,
+          "CRB_std_GHz": 1.4871538051238909e-05,
+          "CRB_ratio_vs_DOPPLER_INTERVAL": 1.4871538051238909e-05,
+          "obs_window_us": 0.08191999999999999
+        },
+        "4096": {
+          "N": 4096,
+          "CRB_variance_Hz2": 27645325.557810236,
+          "CRB_std_Hz": 5257.882231261008,
+          "CRB_std_MHz": 0.005257882231261008,
+          "CRB_std_GHz": 5.257882231261008e-06,
+          "CRB_ratio_vs_DOPPLER_INTERVAL": 5.257882231261008e-06,
+          "obs_window_us": 0.16383999999999999
+        }
+      }
+    }
+  },
+  "key_findings": {
+    "anchor_N1024_OSNR17dB": {
+      "CRB_variance_Hz2": 3530222437.579871,
+      "CRB_std_Hz": 59415.67501577232,
+      "CRB_std_MHz": 0.05941567501577232,
+      "CRB_std_GHz": 5.941567501577232e-05,
+      "CRB_over_DOPPLER_INTERVAL": 5.941567501577232e-05,
+      "interpretation": "At B7 main test point (N=1024, OSNR=17 dB), the DA ML frequency CRB std is 0.05942 MHz = 5.942e-05 GHz. This is 5.942e-05 of the 1 GHz scan step."
+    },
+    "N_scaling_exponent": {
+      "fitted_alpha": -1.5000008642144216,
+      "expected_large_N": -1.5,
+      "note": "std ∝ N^alpha; large-N theory = -3/2 (since CRB ∝ 1/N^3). Fitted on N>=512 (avoids N(N^2-1) vs N^3 small-N deviation)."
+    },
+    "bottleneck_verdict": "CRB std << 1 GHz (by 16830.6 x). B7 scan quantization (1 GHz) is the FAR dominant accuracy bottleneck, NOT the theoretical CRB limit. B7 could in principle do much finer by shrinking scan interval.",
+    "fr21_reference_conclusion": "CRB provides B7 FOE theoretical accuracy floor (DA ML, optimistic). B7 (NDA indirect estimator) actual variance >= CRB. Since CRB std << 1 GHz scan step, B7's dominant error source is the discrete 1 GHz scan grid, not the fundamental estimation limit. FR-21 REFERENCE only (D005): CRB does NOT kill B7 regardless of magnitude. Practical path: if sub-GHz precision needed, B7 can refine by narrowing scan interval (poster Fig.3b confirms narrow re-scan after initial estimate works)."
+  }
+}
