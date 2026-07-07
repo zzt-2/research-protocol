@@ -293,3 +293,78 @@ D-007 执行中发现两个**同源问题**，属 param-source.md 规则精神�
 2. **结果目录"各写各的"是参数问题的下游**：发现 `sc_nda_ml_main`（D-007 新）和 `sc_nda_ml_main_improved`（旧）两目录并存且 AWGN 数字不同，且 `run_sdfec_eval.py` / `run_uplink_experiment.py` 仍引用旧目录 → 若跑 SD-FEC 会用旧 +1.483 数据得出错结论。已修引用 + 旧目录加 `_DEPRECATED.md`。**教训：参数真相源统一后，下游引用（脚本路径、results 目录、文档数字）必须同步清理，否则"统一"只做了一半。**
 
 两条都已纳入 `usage-log 2026-07`。后续若新方向出现"MVE-Formal 路径差异"或"多 results 目录并存"，按 param-source.md 精神处理（统一 + 清理下游引用）。
+
+## D-008: NDA-ML 漏 ML 加权 + 升幂未归一化（双 bug，vs VV 持平是 bug 非物理）
+
+> status: **pending_fix**（bug 已确认，修复方案已定，sandbox 验证未做）
+> date: 2026-07-08
+> 取代：无（不推翻 D005/D-007 结论，但所有 vs VV/BPS ablation 结果待重判）
+> 被取代：无
+> 依据: 子 agent 精读 B11 PDF（`papers/doi/10.1109_lpt.2024.3523478/source.pdf`）Eq.12/16 + 代码核查 `common/_recovery.py:209-237` + 用户原话"这和 VV 持平真没问题吗？"（戳穿对照无意义）
+
+### 决策（pending）
+
+**Sandbox 验证后再决定全量重跑 or 降叙事。用户拍板：先 sandbox 验证再决定（防白跑）。**
+
+### 双 bug 确认（公式证据）
+
+**Bug 1 漏 ML 加权**：
+- B11 Eq.16（p.561，df=0 τ=0 简化）：`φ̂ = (1/M₀) · 1ᵀΣ⁻¹ψ / 1ᵀΣ⁻¹1`，其中 `Σ⁻¹_{M₀ε} ∝ diag(|R(k)|²)`（p.560 协方差定义）
+- 即 `φ̂ = angle(Σ |R(k)|² · ψ(k)) / M₀`（**加权** mean-angle，权重 = 升幂前接收幅值平方）
+- 我们实现（`common/_recovery.py:232`）：`phi_raised = np.angle(raised.mean())`（**等权**）← 漏加权
+- VV（`vv_cpr`）也是等权 mean-angle → 两者数学同族 → vs VV 持平是 bug 必然，非物理真实
+
+**Bug 2 升幂未归一化**（子 agent 新发现，更隐蔽）：
+- B11 Eq.5（p.560）：`y(k) = (R(k)/|R(k)|)^M₀`（**归一化**升幂，去幅度）
+- 我们实现（`common/_recovery.py:213`）：`raised = rx ** M0`（未归一化，含 `|rx|^M₀` 幅度）
+- 后果：若直接 `(raised * |rx|²).sum()` 补 Bug 1，实际权重变成 `|rx|^{M₀+2}`，**不是 B11 的 `|rx|²`**
+- **两个 bug 必须一起修**，否则补了 Bug 1 也错
+
+### 正确实现（子 agent 给，数学已验证）
+
+```python
+mag = np.abs(rx); mag[mag<1e-12] = 1e-12
+yn = (rx/mag)**M0              # 归一化升幂（对齐 B11 Eq.5，去幅度）
+w = mag**2                      # ML 加权 w_k = |R(k)|²
+phi_est = np.angle((w*yn).sum()) / M0   # B11 Eq.16
+```
+segmented 分支段内同理：`seg_phi[k] = np.angle((w[lo:hi]*yn[lo:hi]).sum())/M0`。
+FFT-df 分支（assume_df_zero=False）升幂步骤也改归一化 `yn`。
+
+### 单载波迁移合法性
+
+子 agent 确认：B11 的 R(k) 是 OFDM 频域子载波，但单载波时域样本 rx(k) 升 M₀ 次幂后相位模型 `y(k)=exp(jM₀(...))` 与 B11 Eq.5/6 同构，AOPN 方差 `σ²_ε(k)=N₀/(2|rx(k)|²)` 同构（高 SNR AWGN 相位近似）。**单载波 R(k)→rx(k)，加权 `w=|rx|²`，不取 DFT**。
+
+### 理论预期（TL-20，sandbox 验证前先建）
+
+ML 加权增益来源：
+1. **(8,8)-16APSK 两环 4× 幅值差**（r1=0.547, r2=1.094，|rx|² 差 4 倍）——即使高 SNR 也存在
+2. 噪声致幅值波动（低 SNR 明显）
+3. 湍流 deep fade 致幅值波动（强湍流明显）
+
+→ 预期加权在 (8,8)-16APSK + 强湍流场景 vs VV 能拉开差距；AWGN 高 SNR 收益可能小（样本 SNR 均匀）。
+**关键不确定性**：当前 10kHz 低线宽下收益是否足够大可见。sandbox 先验证 AWGN + strong 两场景。
+
+### 影响范围（pending sandbox 验证）
+
+- **所有 vs VV/BPS ablation 结果（持平/+0.117）待重判** —— 若 sandbox 验证加权有效，全量重跑；若无效（加权在 10kHz 下收益可忽略），转降叙事
+- **vs DA-ML 结论不受影响**（DA 对照不依赖 ML 加权，去 pilot 是真增量）
+- **feasibility_report A'/§6 叙事再次待修**（D-007 红旗1 改的"AWGN 全维度赢"基于错误 ablation，pending 重判）
+- **不变量**：D005/D-007 主结论（NDA vs DA 稳赢 1.3-2.5dB）不受影响
+
+### 排除的替代方案
+
+- "直接全量改 common/ 重跑"：否决（用户拍 sandbox 先验证，防白跑 + 防重蹈覆辙）
+- "改回 500kHz 高线宽场景让加权收益明显"：否决（用户选先保持 10kHz 验证，且 500kHz@2.5GBaud 不真实 D-007 已定性）
+- "降叙事不修代码"：pending sandbox 结果，若加权无效再走
+
+### 教训（防新对话重蹈覆辙）
+
+1. **sandbox 验证范围必须覆盖 vs 真 ML**：之前 sandbox（`explore/nda-awgn-tracking-sandbox`）只验证了 segK8 vs none（都是等权 mean-angle 变体），**没验证 vs B11 真 ML（加权版）**。新 sandbox 必须含"加权版 vs 等权版 vs VV"三方对照。
+2. **一致性 bit-exact 不等于算法正确**：D-007 consistency 0.0000% PASS 是因为 MVE 和 Formal 都漏了同样的加权（都等权），"两者一致"只证明实现一致，不证明符合 B11。**一致性锚点只能查实现同步，查不了算法对错**。
+3. **"vs 经典 baseline 持平"是高优先警报信号**：VV 是 1983 升幂 mean-angle 祖师爷，NDA-ML 若与它持平，要么数学同族（创新性质疑），要么对照不公平。**任何"与祖师爷方法持平"的结论出现时，必须立即查数学同族性，不能当"合理结果"接受**。
+4. **D-007 选 10kHz 低线宽掩盖了这个 bug**：低线宽下样本 SNR 均匀，加权≈等权，bug 不易暴露。参数选择（D-007）和算法验证（本 D-008）是耦合的——改参数后必须重新审视算法实现是否在新区间仍正确。
+
+### 来源
+
+用户附和性核查"这和 VV 持平真没问题吗"（戳穿对照无意义）+ 子 agent 精读 B11 PDF Eq.12/16（`papers/doi/10.1109_lpt.2024.3523478/source.pdf` p.560-561）+ 代码核查 `common/_recovery.py:209-237`（等权 mean-angle + 未归一化升幂）。
