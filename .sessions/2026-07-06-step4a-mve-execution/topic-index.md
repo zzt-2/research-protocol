@@ -132,6 +132,7 @@ projects/simulation/
   - **D004-a** CRB 层：CRB_NDA/CRB_DA ≈ N_p/N = 1/4（M₀² 严格相消），NDA-ML 理论下界优于 DA ML
   - **D004-b** 公平对照 gain @ HD-FEC：AWGN +0.70 / weak +1.20 / moderate +1.92 / strong 物理不可达但 NDA 全工作区赢（形态 A+C 双增量叙事）
 - **D005** SC-NDA-ML MVE PASS → Go（2026-07-06 新建）：公平对照 fair gain @ HD-FEC 实测 AWGN +0.704 / weak +1.199 / moderate +1.922 dB 全 ≥0.5dB（SPEC §5 Go 门），strong 物理不可达但工作区(≥15dB)全赢 DA（per-point +1.19~+2.62dB）。TL-20 预期 5 项全 PASS 0 DEVIATION。NDA-vs-oracle gap 全 <3dB（0.38/1.49/1.97/2.58dB，升幂实现正确）。主线独立 grep 核查 6 项 MVE 纪律全落实（per-block h / 公平对照 / 两阶段 FOE / resolve blockwise / 共用信道 / N≥1e5）。进 Step 5（Baseline 选定：DA ML pilot sp=4 锁 FR-15 目标 baseline，NDA-ML 锁提出方法）
+- **D-010** 导师确立 baseline 选取标准（5 条）+ 方向/复现源质量门（2026-07-08 新建）：①同场景星地湍流 ②同类型层级（载波/定时/均衡层）不深入子层 ③不找接近方法当 baseline（VV 同族禁主比）④近年+权威（2022+ Trans）⑤找方向/复现只看够好的（避 letter/仿真不全）。工具链核查：老师"trans 不好检索"对我们不成立（search 搜元数据 venue 全 + blit 下全文），blit venue 硬编码空串缺陷已修。候选框架/skill 更新点已标（groundwork S4-7 / code-quality 矩阵 / tools-guide §2），本轮不改守"先测不改协议"。
 
 ## 悬而未决
 
@@ -143,13 +144,23 @@ projects/simulation/
 
 ## 当前位置
 
-**🟢 S008 VV/BPS 经典 baseline 实测对照 + LMMSE 复现失败教训（2026-07-08）**：用户问"能拿哪个比+效果好吗"+"只要会议毕业"。**LMMSE(#15)复现失败**：PDF→md 把 eq(5)(6)(7) R/p 矩阵闭式转 picture omitted，靠文字重建公式 16APSK 高 SNR BER floor（@20dB 0.018 vs NDA-ML 7.5e-4），调 4 变体均不对，TL-20 偏离即查落实。用户决策方案 C 切 VV/BPS。**VV/BPS 重跑 D-007 后真相源**：NDA-ML vs VV 持平（AWGN +0.006 CI 跨 0，物理合理因低 PN 下 ML 闭式 vs mean-angle 差异极小），NDA-ML vs BPS 稳赢（AWGN +0.117 CI[+0.091,+0.144]，moderate +0.057 CI[+0.022,+0.092]）。VV/BPS 都稳赢 DA（+1.2~+1.7dB）印证 NDA 类公平对照稳健。一致性 ALL PASS。**会议级对照矩阵已齐**：DA-ML（稳赢）+ VV（持平）+ BPS（稳赢）+ LMMSE（定性引用）。baseline_report §1.1/§1.2 + COMPARISON_REFS #3/#4/#15 + REVIEW_NOTES TODO-8✅。下一步=简报重写（用户定时机）/ TODO-4~7 / 等老师定目标期刊。
+**🟡 S010 导师电话确立 baseline 选取标准（2026-07-08）**：老师主动来电（简报 v3 未发），确立 baseline 选取 4 条 + 方向/复现源质量门 1 条（D-010）：①同场景星地湍流 ②同类型层级（载波/定时/均衡层）不深入子层 ③不找接近方法当 baseline（VV 同族禁主比）④近年+权威（2022+ Trans）⑤找方向/复现只看够好的（避 letter/仿真不全）。**5 条跟我们已有发现互相印证**：标准3↔D-009 VV 同族持平（VV 不该当主 baseline）、标准2↔子层找不到 baseline（放宽到同步/均衡层候选池变大）、标准4↔B 档 LPT/OE 偏薄需补 Trans、标准5↔S008 LMMSE 复现失败教训。
+
+**工具链核查**：老师"trans 不好检索"对我们不成立——`tools/search`（API 源）venue 字段全有，`tools/blit --source ieee --download` 能下全文。但 blit 的 `ieee_search` venue 硬编码空串缺陷已修（加 description/publisher 元素解析 + fallback 正则），待实测验证。
+
+**候选框架/skill 更新点已标**（用户提"后面可以改协议或 skill 用"）：groundwork S4-7 baseline 合法性段补"baseline 选取 4 条标准" / code-quality 矩阵补"复现源质量门" / tools-guide §2 补"IEEE Trans 检索策略"。**本轮不改守"先测不改协议"不变量**，记录候选点待专题稳定后批量改。
+
+**下一步**：按 D-010 5 条标准建 baseline 池（场景词 satellite-to-ground FSO turbulence + 类型词 carrier synchronization/timing recovery/equalization + 排除近亲 NDA-ML/VV/BPS + 过滤 2022+ IEEE Trans）。工具组合：search 搜元数据 + blit 下全文。路线 A/B 决策跟 baseline 池正交，可并行推进。
+
+**（S010 2026-07-08 续接，baseline 池建设 + 检索精读）**：10 组查询（7 API + 3 blit IEEE）合计召回 ~220 篇。blit venue 修复验证成功（22 条 venue 全非空，实测提取 `Journal of Lightwave Technology` / `IEEE Transactions on Communications`）。4 篇第一梯队精读（C1 Paillier JLT 2020 DPLL / C3 Zhang Photonics J 2023 AKF / C4 Wang OE 2024 帧同步 / C6 Zhou IoT-J 2024 元学习）：**没有一篇是干净 baseline**（都缺要素：C1 BPSK+相位屏+2020 / C3 lognormal+SIMO / C4 非CPR层 / C6 MIMO信道估计非逐符号CPR）。
+
+**关键认知修正**：通信领域 baseline 一般是**自实现**（在自己参数下跑经典方法），不要求别人论文用一样参数。引用文献只证明"方法在该层合法"。所以 baseline 结构 = 自实现（DA-ML主 + DPLL异族 + VV/BPS fellow），文献引用支撑合法性（C1 证 DPLL 在星地FSO有人用 / C6 证星地GG+相位估计有人做）。**已有基建**：common/_recovery.py 有 dpll_track + dpll_track_dd，_kf.py 有 4 变体 KF。**缺口**：dpll_track_dd 不支持 m16apsk（判决写死 qam16），需改用 hard_decision(mod='m16apsk')。下一步跑 DPLL BER 仿真。
+
+**（前 S009 D-008/D-009）**：NDA-ML vs VV 全场景统计显著持平（35 点对等调参 + 5 seed 验证，物理本质 κ=N_seg·σ²_p<<1）。vs DA +dB 主要是 pilot overhead 架构红利（1.25dB 固定 + 纯算法层 0.1~0.5dB）。湍流数据有物理现象（crossover 漂移 / 强湍流递增 / 上行 deep fade +3.07dB）是 B11/B5/B7/B12 全没做的 open gap。简报 v3 `ADVISOR_BRIEFING_2026-07-08_v3_turbulence_pivot.md` 写完未发（老师主动来电）。
+
+**（前 S008 2026-07-08）**：VV/BPS 经典 baseline 实测对照 + LMMSE 复现失败教训。会议级对照矩阵已齐。
 
 **（前 S007 2026-07-07/08）**：SD-FEC 重跑 sanity bit-exact PASS + 25% SD-FEC 档三场景全正；近年 Trans baseline 检索 3 篇 + Crossref VERIFIED + subagent 精读；TL-20 预期表更新。
-
-**（前 S007 主体 2026-07-07）**：REVIEW_NOTES §三 TODO 收尾执行。任务1 SD-FEC 重跑：HD-FEC sanity bit-exact 0.0000%，25% SD-FEC 2e-2 档三场景全正 CI 下界>0，post-FEC 1e-7 物理不可达；任务2 检索 3 篇近年 Trans baseline（Crossref 全 VERIFIED，近年+严格Trans 21%→29%）；任务3 TL-20 预期表更新（AWGN +1.351 超旧预期 +0.8 合理论证）。
-
-**（前 S007 主体 2026-07-07）**：REVIEW_NOTES §三 TODO 收尾执行。任务1 SD-FEC 重跑：HD-FEC sanity bit-exact 0.0000%，25% SD-FEC 2e-2 档三场景全正 CI 下界>0，post-FEC 1e-7 物理不可达；任务2 检索 3 篇近年 Trans baseline（Crossref 全 VERIFIED，近年+严格Trans 21%→29%）；任务3 TL-20 预期表更新（AWGN +1.351 超旧预期 +0.8 合理论证）。
 
 ## 进展线索
 

@@ -218,6 +218,9 @@ async def ieee_search(query: str, max_results: int = 25) -> list[dict]:
         const items = document.querySelectorAll('div[class*="result-item"]:has(h3)');
         if (!items.length) return [];
         const seen = new Set();
+        // venue 提取多策略：IEEE 搜索结果 venue 通常在 description 区域，
+        // 格式 "Year: YYYY | Venue Name | Cited by: Papers (N) | ..."
+        const KNOWN_FIELDS = /^(Year:|Cited by|Pages|Early Access|Conference|Volume|Issue|DOI)/i;
         return Array.from(items).map(el => {
             const text = el.innerText || '';
             const titleEl = el.querySelector('h3, [class*="title"]');
@@ -228,6 +231,24 @@ async def ieee_search(query: str, max_results: int = 25) -> list[dict]:
                 : [];
             const citedM = text.match(/Cited by[:\s]*Papers\s*\((\d+)\)/i);
             const yearM = text.match(/Year:\s*(\d{4})/);
+            // 策略1: description / publisher class 元素（IEEE Xplore 常见）
+            let venue = '';
+            const descEl = el.querySelector('[class*="description"], [class*="publisher"], [class*="parent-pub"]');
+            if (descEl) {
+                const parts = descEl.innerText.split(/\s*\|\s*|\n/);
+                for (const part of parts) {
+                    const p = part.trim();
+                    if (p && !KNOWN_FIELDS.test(p) && p.length > 3) { venue = p; break; }
+                }
+            }
+            // 策略2: 从完整 innerText 正则提取（fallback）
+            if (!venue) {
+                const vm = text.match(/Year:\s*\d{4}\s*[\|\n]\s*([^|\n]+?)(?:\s*[\|\n]|$)/);
+                if (vm) {
+                    const v = vm[1].trim();
+                    if (v && !KNOWN_FIELDS.test(v) && v.length > 3) venue = v;
+                }
+            }
             const link = el.querySelector('a[href*="document"], a[href*="abstract"]');
             const url = link ? link.href : '';
             if (seen.has(url)) return null;
@@ -236,7 +257,7 @@ async def ieee_search(query: str, max_results: int = 25) -> list[dict]:
                 title, authors,
                 citations: citedM ? parseInt(citedM[1]) : 0,
                 year: yearM ? parseInt(yearM[1]) : null,
-                venue: '',
+                venue,
                 url,
             };
         }).filter(p => p && p.title.length > 3);

@@ -368,3 +368,195 @@ ML 加权增益来源：
 ### 来源
 
 用户附和性核查"这和 VV 持平真没问题吗"（戳穿对照无意义）+ 子 agent 精读 B11 PDF Eq.12/16（`papers/doi/10.1109_lpt.2024.3523478/source.pdf` p.560-561）+ 代码核查 `common/_recovery.py:209-237`（等权 mean-angle + 未归一化升幂）。
+
+## D-009: NDA-ML vs VV 体检定论 + D-007 线宽选择复核（交叉验证后：D-007 基本没错，W+ 路径依据不足）
+
+> status: **active**（体检定论已确立；线宽修正路径 W+ 经交叉验证后依据不足，已排除；方法方向 pending 用户）
+> date: 2026-07-08（本对话续接，含交叉验证修正）
+> 取代：无（不修正 D-007，D-007 选 10kHz 跟实测主流一致；不推翻 D005/D-008 主结论）
+> 被取代：无
+> 依据: sandbox 三方对照（`explore/nda-awgn-tracking-sandbox/_ml_weighting_results.json` + `_vv_vs_nda_checkup.json` + unwrap 验证 `_verify_unwrap_order.py`）+ 子 agent 精读 B11 PDF + 子 agent 调研近年单载波 NDA-ML + 主线核查 Valjus §4.2 原文 + **子 agent 星地 FSO 线宽交叉验证（4 篇确切值：22/20/80kHz + Valjus 0.1-1MHz）**
+> 触发原话: 用户 D-008 起点 → "和 VV 有区别吗？别实际上是一个？" → "为啥不直接用 VV？" → "不能是 E 或 Z" → "A. 先查证星地 FSO 线宽分布"
+
+### 决策（pending 用户拍板方法方向）
+
+**体检定论（已确立，不可推翻）**：
+1. **ML 加权（B11 核心）在单载波时域全线无用**（11 扫描点加权 vs 等权 ≤1.7%），加权收益来自频域子载波/多环幅度离散，单载波时域 AWGN 物理机制不存在
+2. **10kHz（实测主流）下 NDA-ML 跟 VV 数值上是一个**（加权/等权 vs VV 全程 |rel|<5%），D-008 教训3 警报成立
+3. **segmented 块内跟踪在 ≥200kHz 拉开 VV -14%~-19%**，但 ≥200kHz 不在实测主流星地 FSO 区间（10-80kHz ECL），所以这个增量在真实场景看不见
+
+**线宽修正路径 W+ 排除**：子 agent 交叉验证 4 篇确切线宽值（22/20/80kHz ECL 实测 + Valjus 0.1-1MHz 设计容限），实测主流星地 FSO 用窄线宽 ECL，不支持改到 100kHz-1MHz。D-007 选 10kHz 跟实测主流一致。
+
+**方法方向 pending**（用户排除 E 找老师 + Z 转系统层，剩 X/其他）：
+- 用户已明确"不能是 E（找老师）或 Z（转系统层）"——要保算法层创新
+- 但体检定论显示：实测主流场景（10-80kHz）下 NDA-ML 算法层跟 VV 同族没增量
+- **[2026-07-08 续接修正]** D-009 原报"segmented 在 ≥200kHz 拉开 VV -14%/-18% 是真增量"被**上行+VV Nw 扫描实验推翻**（见下"层 4 追加"）—— VV 把 Nw 从 64 调到 16 即反超 NDA-segmented（200kHz 赢 14%，500kHz 赢 68%）。segmented 跟踪**也无真增量**，原 D-009 的"高线宽 niche 场景"路径 W 排除。
+- 矛盾：要保算法层创新 vs 实测主流+高线宽+上行场景算法层都没真增量（VV 调参就赢）
+
+### 三层证据链
+
+**层 1: sandbox 体检定论（实测）**
+
+三方对照（加权 vs 等权 vs VV）跨线宽/调制/湍流 3 维度扫描：
+- **ML 加权全线无用**：11 个点加权 vs 等权 BER 差 ≤1.7%（`_vv_vs_nda_checkup.json` sweep1/2/3 加权 vs 等权列）
+- **拉开 VV 的是 segmented 跟踪非加权**：sweep1 线宽扫描 200kHz/500kHz 时加权 vs VV -13.9%/-19.4%，但**等权 vs VV 也 -13.8%/-18.0%**（主线独立从 JSON 原 BER 重算，子 agent 报告未直接给此列，归因"加权拉开"是错的）
+- **拉开只发生在 ≥200kHz**：10-100kHz 全维度三方持平（加权/等权 vs VV 均 |rel|<5%）
+- unwrap 顺序验证（`_verify_unwrap_order.py`）：第一轮 sandbox 报"加权 seg 暴涨 272%"是 brief 公式 unwrap 顺序 bug 伪影（升幂域 unwrap 才对，非还原域），修正后加权 seg 跟等权 seg bit-exact
+
+**层 2: 子 agent 精读 + 调研（文献）**
+
+- **B11 +2dB 来源**（子 agent 1，精读 PDF p.560-562）：B11 是 OFDM 频域，baseline = PA/DA-ML（频域方法），+2dB 是 OFDM 域 NDA-ML vs DA-ML。**B11 未对比加权 vs 等权（VV 形式）**。B11 信道是 AWGN+Wiener PN（**无频率选择性**），加权 |R(k)|² 来源是 APSK 多环幅度离散（非频率选择性）——子 agent 1 戳穿我上轮"加权增益来自频率选择性"的错误推断
+- **近年单载波 NDA-ML 论文**（子 agent 2，12 组 query 召回 80 篇筛 6 篇）：**基本不拿"超 VV"当卖点**。靠 ML 最优性/相位噪声建模/联合估计/免导频/能效等。Wang/Kam 2024（JPhoton，就是 B11 同团队 Kam 的单载波线）改进 VV 靠 Wiener PN 最优 LMMSE 权重（非样本幅度加权）。**(8,8)-16APSK + 单载波 NDA-ML + 星地 FSO 组合文献空白**
+
+**层 3: 主线核查 D-007 依据 + 子 agent 星地 FSO 线宽交叉验证（修正早结论）**
+
+**初判（过早）**：主线读 Valjus §4.2 L438 "In general, a linewidth between 0.1 MHz and 1 MHz could be expected" + L395 "low-cost DFB lasers"，初判 D-007 选 10kHz 选错。
+
+**交叉验证（修正初判）**：派子 agent 查 2020+ 星地 FSO 实测/仿真论文的线宽分布，结果：
+| 论文 | 场景 | 线宽 | 激光器 | DOI |
+|---|---|---|---|---|
+| Naghshvarianjahromi 2022 Sensors | 地↔GEO 仿真 | 22 kHz | ECL | 10.3390/s22093435 |
+| Anon 2023 Opt.Commun.129312 | LEO 星→地 FPGA 实时实验 | 20 kHz | TTX1995 ECL | 10.1016/j.optcom.2023.129312 |
+| 2024 Opt.Express OE.520452 | FSO 20km PM-QAM | 80 kHz | 未明示 | 10.1364/OE.520452 |
+| Valjus 2025 Sat.Commun. | OSL 综述 | 0.1-1 MHz | DFB（低成本设想）| 10.1002/sat.1553 |
+
+**关键修正**：
+- **实测/演示型星地 FSO 主流用 ECL ~20kHz**（3 篇确切值 22/20/80kHz），D-007 的 10kHz 跟实测主流一致
+- **Valjus 的 0.1-1MHz 是"DFB 低成本场景的设计容限预期"**（L438 上下文是讨论"ΔwTs 高时 cycle slips 严重"的设计区间，非主流实测值），L395 "DFB" 是说" terrestrial 用 DFB"的背景，不是"OSL 必须用 DFB"
+- **D-007 选 10kHz 没错**（跟 ECL 实测主流一致），但 D-007 引用 Valjus 时确实没读清"expected"语境（文献引用精度问题，非选错值）
+- 样本局限：4 篇确切值偏少，3 篇付费墙未取（Liu 2025/Walsh 2022/Li 2022），但趋势清晰（实测主流窄线宽 ECL）
+
+**结论修正**：走 W+（修正线宽到 100kHz-1MHz）**依据不足**——实测主流不支持，Valjus 的 0.1-1MHz 是设计容限非典型值。segmented 创新点（要 ≥200kHz）在实测主流场景（10-80kHz）下**仍不成立**。
+
+**层 4 追加（2026-07-08 续接，推翻层 1 的 segmented 增量结论）**
+
+用户追问两问触发：① 高线宽 segmented 增益是不是 VV 也有 ② 上行验证（导师要求）漏了 vs VV/BPS 对照。派子 agent 跑三实验（`_uplink_vv_check.json`），主线独立核查数字属实：
+
+- **实验 1（上行 vs VV/BPS/DA，5 seed 工作区）**：NDA vs VV +0.090/+0.119 dB、NDA vs BPS +0.113/+0.141 dB（**全"中间"档 <0.3dB，持平**）；NDA vs DA +2.48/+3.07 dB（拉开，复现主实验上行方向）
+- **实验 2（AWGN 高线宽 VV Nw 扫描，决定性）**：
+  | 线宽 | NDA-seg | VV Nw64（默认）| VV Nw16（调优）|
+  |---|---|---|---|
+  | 200kHz | 4.62e-3 | 5.36e-3（VV 输 16%）| **3.98e-3（VV 反超 14%）**|
+  | 500kHz | 1.81e-2 | 2.21e-2（VV 输 22%）| **5.89e-3（VV 大赢 68%）**|
+- **实验 3（上行 VV Nw 扫描）**：VV Nw=32/64/128 时追上 NDA-seg（差<5%）
+
+**层 1 推翻**：D-009 原"segmented 在 ≥200kHz 拉开 VV -14%/-18% 是真算法增量"**是错的**——VV 把 Nw 从默认 64 调到 16，立刻反超 NDA-segmented（500kHz 赢 68%）。**segmented 跟踪也无真机制增量**，D-009 的"高线宽 niche"路径 W 排除。原 D-009 层 1 关于 segmented 的归因（"拉开 VV 的是 segmented 跟踪"）数字对但归因错——真因是 VV 默认参数保守，不是 segmented 强。
+
+**最终定论（2026-07-08，覆盖 D-009 层 1-3）**：
+1. ML 加权全线无用（11 点 ≤1.7%，不变）
+2. segmented 跟踪也无真增量（VV Nw=16 即反超）
+3. 上行/下行/AWGN/湍流/低线宽/高线宽，**NDA-ML vs VV/BPS 全场景持平**（0.06-0.14 dB，中间档）
+4. **唯一真实增量 = vs DA-ML 频谱效率**（上行 +2.48/+3.07、下行 +1.35~1.71 dB，pilot overhead 真代价）
+5. NDA-ML 在估计器算法层**全面跟 VV/BPS 同族持平，且 VV 调参就赢**——没有"超经典方法"的硬增量空间
+
+**方法方向现状**（用户排除 E/Z 后）：算法层已证无真增量空间，要保算法层创新 = 必须换方法（X 路线改进 VV，但 D-009 层 4 已证 VV 调参就赢 NDA，改进 VV 也难超 VV 本身）。矛盾未解，pending 用户决策（可能需重新考虑 E/Z）。
+
+### NDA-ML vs VV 精确关系（回答用户"实际上是一个吗"）
+
+| 维度 | 关系 | 10kHz 下 |
+|---|---|---|
+| 算法内核（升幂 mean-angle）| **同族** | 同 |
+| 权重（加权 vs 等权）| 数值不同（数学）但退化（物理）| 退化到等权 |
+| 块结构（逐块+segmented vs 滑窗逐符号）| **真差异** | 不产生 BER 差异 |
+| **数值层（10kHz）** | **实际是一个** | 持平 <5% |
+| 数值层（≥200kHz）| segmented 拉开 VV -14%~-19% | NDA-ML 优 |
+
+### 影响范围（pending 用户拍板）
+
+- **D-007 线宽选择**：10kHz 可能要修正回 Valjus 区间（100kHz-1MHz）。但 D-007 的"参数真相源统一"原则不动（仍单字段 LASER_LW，只是数值改）。需重新论证典型性（Valjus + 其他文献交叉验证，目前主要靠 Valjus 一篇）
+- **D005/D-007 主结论**（vs DA-ML +1.3~2.5dB）：10kHz 下仍成立（DA 对照不依赖加权/segmented）。但若改高线宽，需重跑主实验 + 所有 ablation 重判
+- **D-008 双 bug**：加权补对在数学上正确但物理收益不可见（10kHz 下），代码层补不补 pending
+- **方法方向**：算法层创新 = segmented 块内跟踪（≥200kHz 拉开 VV），不是 ML 加权。走 X（换改进 VV）/ W（segmented + 高线宽）/ 其他 pending 用户
+
+### 排除的替代方案
+
+- "立即全量改线宽重跑"：否决（pending 用户拍板 + 需先补充文献交叉验证 Valjus 的 0.1-1MHz 不是孤证）
+- "坚持 10kHz 承认算法层没创新"：用户明确拒绝（"不管怎么说不能是 E 或 Z"，E=找老师确认方向，Z=转系统层；意味着要保算法层创新）
+- "降叙事写等权近似"：pending，若用户选"保 10kHz 不改"则只能走这条
+
+### 待补充证据（TL-23 验证完再下结论）
+
+1. **Valjus 的 0.1-1MHz 需 2-3 篇其他星地 FSO 文献交叉验证**（目前主要靠 Valjus 一篇 + DFB 常识）。子 agent 文献调研任务已派但未返回，主线 grep 本地文献找到 1911.01585（光纤 100kHz，非星地）。**需要专门查星地 FSO 实测论文的线宽**
+2. **segmented 在 100kHz（非 200kHz）能否拉开 VV**：sweep1 显示 100kHz 加权 vs VV -2.2%（持平），但 200kHz 才 -13.9%。若 Valjus 区间下限 100kHz 仍持平，要走 W 可能需要 200kHz+（ΔνTs=8e-5，需论证）
+
+### 教训（新增）
+
+5. **"已查证文献 X"必须读原文数值不能只引位置**（FR-26 强化）：D-007 引"Valjus sat.1553 §4.2 L438"但没读 L438 原文"0.1-1MHz typical"，锁定 10kHz。证据链断在"引位置"而非"读数值"。
+6. **子 agent 报告的归因要独立核查**：体检子 agent 报"加权拉开 VV"，主线独立算"等权 vs VV"发现等权也拉开，真因是 segmented 非加权。**不能信子 agent 的因果归因，只信其原始数字，归因主线自己做**。
+7. **参数选择和算法验证耦合**（D-008 教训4 延伸）：D-007 选 10kHz 掩盖了所有算法创新（加权/LMMSE/segmented 都要 ≥200kHz）。参数选错 = 算法验证全废。改参数后必须重新审视算法在新区间是否正确 + 是否有增量。
+
+### 来源
+
+主线核查 Valjus sat.1553 §4.2 原文（L387-440）+ sandbox 三个 JSON（`_ml_weighting_results.json` / `_seg_rootcause_2x2.json` / `_vv_vs_nda_checkup.json`）+ unwrap 顺序验证（`_verify_unwrap_order.py`）+ 子 agent 精读 B11 PDF + 子 agent 调研近年单载波 NDA-ML + 用户连串追问（voice 2026-07-08：D-008 起点 → "和 VV 有区别吗" → "为啥不用 VV" → "不能是 E 或 Z"）。
+
+## D-010: 导师确立 baseline 选取标准（5 条）+ 方向/复现源质量门
+
+> status: active
+> date: 2026-07-08
+> 取代：无（确立老师权威标准，不取代 D005/D-007/D-009，但作为后续 baseline 池建设的约束）
+> 被取代：无
+> 依据: 用户转述导师电话原话（voice 2026-07-08 电话段 4 条）+ 用户补充"中心思想就是上面的"
+
+### 决策
+
+导师主动来电确立 baseline 选取 4 条 + 方向/复现源质量门 1 条，共 5 条标准。**这 5 条是后续 baseline 池建设 + 方向锚定的硬约束，执行优先级等同 D005 务实路线。**
+
+#### baseline 选取 4 条（找 baseline 时用）
+
+1. **同场景**：星地湍流信道（satellite-to-ground FSO + 大气湍流）
+2. **同类型层级**：载波同步 / 定时同步 / 均衡这一层（DSP 物理同步层），**不再深入到子层**（钻到"载波相位恢复"子层会找不到 baseline）
+3. **不找接近方法当 baseline**：禁止近亲 baseline（NDA-ML vs VV 数学同族=近亲，VV 不该当主 baseline）
+4. **近年 + 权威**：2022+ 年 + IEEE Trans 级（TWC/TMC/TVT/JLT/JOCN/OL/OE 等）
+
+#### 方向/复现源质量门 1 条（找方向/复现时用）
+
+5. **只看够好的文章**：找方向 + 复现别人时必须挑扎实的权威 Trans，避开 letter/仿真不全/挑弱 baseline 凑数的论文——否则容易搞到假的不可复现
+
+### 理由
+
+老师电话原话明确（voice 2026-07-08 电话段）：
+
+- "找baseline，找相同场景（比如说星地湍流信道）、相同类型（比如说，载波同步、定时同步、均衡这一层）就行，不要再深入了，不然找不到，而且万一出现了麻烦的问题不好解释"
+- "尽量别找接近方法作为baseline"
+- "要找近几年的，足够权威的作为baseline"
+- "找方向的和复现别人时候，一定要看那些够好的，不然容易搞到假的不能复现"
+
+#### 对当前处境的直接含义（5 条跟我们已有发现的互相印证）
+
+- **标准 3（不找接近方法）↔ D-009 NDA-ML vs VV 全场景持平**：VV 是 NDA-ML 同族盲估计，**本来就不该当主 baseline**。这条给路线 A 的 baseline 结构（主比 DA-ML，VV 一句带过）背书。
+- **标准 2（不深入子层）↔ B11 是最接近但偏薄**：之前在"载波相位恢复"子层找 baseline，确实难找（B11 是 CO-OFDM 频域无湍流）。放宽到"载波同步/定时/均衡层"，候选池会大很多。
+- **标准 4（近年权威）↔ B 档 12 篇偏薄**：B 档有 LPT/OE 短文，作候选可以，**作 baseline 偏薄**。baseline 要补 IEEE Trans 级。
+- **标准 5（看够好的）↔ LMMSE 复现失败教训（S008）**：LMMSE（#15 JPhoton）PDF→md 丢公式致复现失败，正是老师说的"搞到假的不能复现"风险。
+- **标准 1（同场景星地湍流）↔ D006 open gap（B5/B7/B11/B12 全无湍流）**：我们要找的 baseline 必须建模星地湍流——而这恰恰是 B 档主流候选都没做的。**这是一个结构性张力**：老师要"同场景星地湍流"的 baseline，但同族近期论文大多没建模湍流。可能需要：(a) 放宽到"有湍流建模的同步/均衡层 Trans"（不限载波相位恢复子层）；(b) 或用"无湍流场景的 baseline + 我们加湍流做场景迁移对照"。
+
+### 工具链现状（回答老师"trans 不好检索"是否成立）
+
+老师电话前提"trans 好像别的源不好检索"——核查后对**我们这套工具不成立**：
+
+| 层 | 工具 | 对 IEEE Trans 覆盖 |
+|---|---|---|
+| 搜元数据 | `tools/search`（S2/OpenAlex/SerpAPI/Exa） | ✅ venue/年份/被引数/DOI 全有，实测返回 "IEEE TMC" 等标注 |
+| 下全文 PDF | `tools/blit --source ieee --download` | ✅ 校园网 IP 机构认证直下，50 次/会话 |
+
+**但 blit 有一个缺陷已修**：`tools/blit.py:ieee_search`（原 217-243 行）venue 字段硬编码空串，搜出来分不清 Trans 还是会议——这可能是"不好检索"体感来源之一。本轮已加 description/publisher 元素解析（多策略 + fallback 正则），venue 现在能提取了。
+
+### 排除的替代方案
+
+- "钻到载波相位恢复子层找精准 baseline"：否决（老师明说"不要再深入了，不然找不到"）
+- "用 VV/BPS 当主 baseline"：否决（老师明说"尽量别找接近方法"，D-009 已证 VV 跟 NDA-ML 同族持平）
+- "用 letter/短文当 baseline"：否决（老师明说"足够权威"，标准 4 要求 Trans 级）
+
+### 影响范围
+
+- **下一步 baseline 池建设**：按 5 条标准检索（场景词 satellite-to-ground FSO turbulence + 类型词 carrier synchronization/timing recovery/equalization + 排除近亲 NDA-ML/VV/BPS + 过滤 2022+ IEEE Trans）
+- **工具链**：blit venue 解析已修，待实测验证（下次跑 blit --source ieee 时确认 venue 字段非空）
+- **路线 A/B 决策**：5 条标准跟两条路线正交（baseline 池是共用基建），不直接定 A/B，但标准 3（不找接近方法）给路线 A 背书，标准 1（同场景湍流）给路线 B 留空间
+- **候选框架/skill 更新点**（用户提"后面可以改协议或者 skill 用"）：
+  - `stages/groundwork.md` S4-7 baseline 合法性段可补"baseline 选取 4 条标准"（同场景/同类型层级/不找接近方法/近年权威）
+  - `code-quality.md` 方法论适配性矩阵可补"复现源质量门"（标准 5：只看够好的，避 letter/仿真不全）
+  - `tools-guide.md` §2 可补"IEEE Trans 检索策略"（search 搜元数据 + blit 下全文两步配合）
+  - 这些更新**本轮不做**（守"先测不改协议"不变量），记录候选点待专题稳定后批量改
+
+### 来源
+
+用户转述导师电话原话（voice 2026-07-08 电话段 4 条原话 + "中心思想就是上面的"确认）+ 工具链核查（tools/blit.py:217-243 venue 硬编码空串 + tools/search venue 字段实测有值）+ D-009 NDA-ML vs VV 持平结论 + D006 open gap（B5/B7/B11/B12 全无湍流）。
