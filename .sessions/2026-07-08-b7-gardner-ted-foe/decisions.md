@@ -320,3 +320,65 @@ S004（本轮 0.5+0.6 执行）+ B7 content.md 参数行号溯源 + params.py �
 ### 来源
 
 S005（本轮 sandbox 步骤 1-3 执行）+ 子 agent PSA FOE 重写产出 + 子 agent TED_gain 解析推导产出 + 主线 V5 独立核查 + Vieira 2023 原文 + Leven 2007 原文
+
+---
+
+## D007: LPF2 不公平 bug 登记 + BER gain 虚高结论 + 范围优势机制本质确认（非 B5 特权假象）
+
+> status: active
+> date: 2026-07-09（对话 7，V5 核查未记录 MVE 数据 + 范围优势公平性审计）
+> 取代：无（D006 PSA 弱限制扩展确认 + B5 D003 先例对 B7 的适用性裁定）
+> 被取代：无
+> 依据: V5 主线独立核查（`_mve_results.json` + `_mve_osnr_sweep_results.json` 原始 JSON 重算）+ systematic-debugging Phase 1-3（`_lpf2_fairness_check.py` + `_lpf2_fairness_results.json`）+ 范围优势公平对照（`_scope_fairness_check.py` + `_scope_fairness_results.json`）+ 4thpow 4 次方数学混叠分析 + B5 D003 先例（`2026-07-08-b5-leo-doppler-spectrum-foe/decisions.md` D003 实验 B）
+> 触发原话: 用户 "我咋感觉这个讨论进行过？然后当时是发现范围也是有问题。你要不翻一翻日志?"（指引翻日志找到 B5 D003 先例，触发 B7 范围优势公平性审计）
+
+### 决策
+
+**3 项登记**：
+
+1. **LPF2 不公平 bug**（b7_gardner_ted_mve.py L851）：B7 下游链加了 `_lpf2`（13.75GHz butter 低通），其他 baseline（PSA/4thpow/Kay）全没有。这是 apples-to-oranges 不公平对照。**根因**：未记录对话（Jul 8 09:45-11:40 跑正式 MVE 那次）改脚本时只给 B7 加了 LPF2（poster content.md:65 说 LPF2 是 B7 的 0.6dB 来源），但 fair comparison 要求隔离 FOE 增量时 LPF2 要么全加要么全不加。
+
+2. **BER gain 虚高结论**：原 MVE 的 +4.08dB（B7 vs PSA @ BER 2e-2, f_D=5GHz）是三重虚高——
+   - ① LPF2 不公平独享 ~0.6-0.8dB（Phase3 验证：全加 LPF2 后 B7 vs 4thpow gain 从 +0.65→+0.03dB）
+   - ② PSA baseline 偏弱 ~2dB（D006 已登记 coarse-only 弱，本轮确认即使加 LPF2 仍弱 +2.49dB）
+   - ③ Kay est_err=1.01GHz 适配问题（线性区内不该偏这么多）
+   - **公平条件下 B7 FOE 方法本身 vs 4thpow gain≈0（+0.03dB）**。BER gain 维度 SPEC §5 FAIL（不满足 D005 "赢传统 baseline 几 dB"）。
+
+3. **范围优势机制本质确认（非 B5 特权假象）**：用户提示翻日志找到 B5 D003 先例（范围优势给 baseline 配同等条件后归零）。B7 做了相同的公平范围对照 + 数学本质分析，结论与 B5 根本不同——
+   - 4thpow 范围限制 = 4 次方数学混叠 ±fs_rx/(2M) = ±6.25GHz（M=4, fs=50GHz），**铁律不可突破**
+   - B7 G(f_D)=K_max·|cos(πf_D/B)| 周期=2B=50GHz，单边扫频 0-25GHz 无模糊（D006 解析式闭合）
+   - 实测印证：4thpow f_D=5GHz（范围内）err=0；f_D=12/15/23GHz 全混叠估错
+   - **B7 范围优势 vs 4thpow 是机制本质差异（TED 周期相关 vs 4 次方混叠），非特权假象**
+
+### 理由
+
+1. **BER gain≈0 是公平对照后的真实结论**：Phase3 最小化验证（全加 LPF2）直接证明 B7 FOE 方法本身在线性区内 vs 4thpow 没有真实 BER 增量。这不是"B7 弱"而是"B7 的贡献不在 BER gain 在范围"——B7 的扫频机制跟 4thpow 在线性区内都能估准 f_D，BER 自然趋同。B7 的差异化在半 baud 外（4thpow 数学上够不着）。
+
+2. **范围优势不能用 B5 D003 逻辑 Kill**：B5 范围优势是特权假象（给 baseline 星历后归零，D003 实验 B 实测）。B7 的 baseline 限制（4thpow 4 次方混叠）是数学铁律，给任何条件都无法突破。两者根因不同——B5 是"人为限制 baseline"，B7 是"baseline 数学本质限制"。
+
+3. **未记录对话的治理问题单独登记**：正式 MVE 在 Jul 8 09:45-11:40 跑完但无 S### 记录、未提交、脚本改 +377 行无审计。本轮 V5 核查发现 LPF2 bug 正是因为核查了未记录的产物。治理教训：MVE 跑数必须同步写 S### + 提交，否则产物不可溯源。
+
+### 排除的替代方案
+
+- **"B7 范围优势是特权假象，按 B5 逻辑 Kill"**：否决。4thpow 4 次方数学混叠是铁律（±6.25GHz），B7 TED 周期相关覆盖全 ±B。公平对照（全加 LPF2）后 4thpow 在 >6.25GHz 仍全爆（数学限制），B7 仍稳定。机制本质差异非特权。
+- **"BER gain≈0 直接 Kill B7"**：否决。范围优势真实（机制本质）+ V3 不触发 + OFC 2026 poster 已发（0.6dB+1.9×范围会议先例）。BER gain 维度 FAIL 但范围维度 PASS，是 Conditional Go 候选非 Kill。最终 Go/Kill 交用户。
+- **"无视 LPF2 bug 直接用 +4.08dB 判 Go"**：否决。profile「质量标准 - 没有新鲜验证证据不宣称完成」+「急于推进」防线。虚高数据判 Go 是自欺。
+- **"立即修脚本重跑拿干净数据"**：pending 用户决策。Phase3 验证已证明公平条件下 gain≈0，重跑全 MVE 只是确认非新信息。
+
+### 影响范围
+
+- **BER gain 叙事**：原 +4.08dB 标为虚高（LPF2 不公平），公平条件下 B7 vs 4thpow gain≈0。MVE 报告 BER gain 维度 FAIL。
+- **范围优势叙事**：2.1× 真实（机制本质 vs 4thpow 4 次方限制），可作 B7 主贡献。但需论证"范围优势单独够不够 D005 会议门槛"。
+- **b7_gardner_ted_mve.py L851 债务**：LPF2 不公平 bug 待修（全加或全不加），修后重跑拿干净 BER gain 数据。修不修 + 重跑不重跑交用户。
+- **B5 D003 先例适用边界**：B5（特权假象→Kill 路径1）vs B7（机制本质→不能用 B5 逻辑 Kill）。后续候选若声称范围优势，公平对照判据 = "baseline 限制是人为还是数学本质"。
+
+### 教训
+
+1. **fair comparison 要审下游链不只审 FOE 估准精度**：本轮 LPF2 bug 在下游链（FOE 补偿后 TR 前的信号预处理），不在 FOE 估准环节。B5 D003 的不公平在采样率/星历（信号生成端）。fair comparison 审计要覆盖全链路（信号生成→FOE 估计→下游预处理→TR→判决），不只看 FOE est err。
+2. **范围优势公平对照判据 = baseline 限制是人为还是数学本质**：B5 baseline 限制是人为（没给星历/采样率）→ 给条件后归零 → 特权假象。B7 baseline 限制是数学本质（4 次方混叠）→ 给任何条件都无法突破 → 机制本质。判范围优势真假先问"baseline 为什么够不着"。
+3. **未记录的 MVE 产物必须 V5 核查不能用**：未记录对话跑了正式 MVE 但无 S### + 未提交 + 脚本改了无审计。主线直接信任会接受 LPF2 不公平的虚高数据。V5「只信原始数字不信归因」扩展为「未记录产物连原始数字都要核查实现公平性」。
+4. **用户记忆比 agent 状态记录可靠**：用户"感觉这个讨论进行过"直接指引找到 B5 D003 先例，避免了主线把 B7 范围优势当真实却不做公平对照的错误。profile「用户不懂 DSP 细节但把握方向」——用户的方向性记忆（"范围也有问题"）比 agent 的技术结论更值得追查。
+
+### 来源
+
+S007（本轮 V5 核查 + Phase3 验证 + 范围公平对照）+ `_mve_results.json` + `_mve_osnr_sweep_results.json`（未记录对话产出）+ `_lpf2_fairness_check.py`/`_results.json` + `_scope_fairness_check.py`/`_results.json` + B5 D003 先例（`2026-07-08-b5-leo-doppler-spectrum-foe/decisions.md`）+ 用户原话 voice 2026-07-09

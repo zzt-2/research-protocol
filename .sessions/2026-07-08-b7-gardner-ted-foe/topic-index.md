@@ -1,7 +1,7 @@
 # Topic Index: B7 Gardner TED 复用 FOE 第二候选
 
 > slug: 2026-07-08-b7-gardner-ted-foe
-> status: active | created 2026-07-08 | last_updated: 2026-07-08（S006 三方对照主脚本 + MVE-SPEC + smoke test 完成——b7_gardner_ted_mve.py 三方（B7 proposed FOE 前馈扫频 + Gardner 1986 TR 反馈环 + PSA FOE 谱不对称法）+ B7-MVE-SPEC.md 契约 + smoke test PASS（修 3 bug：BER 符号对齐/单边扫频/PSA 残余 FOE 清理），B7 est 全准 BER~1e-2，V3 祖师爷警报不触发，PSA >12GHz 退化符合 D006。剩对话 7：正式 MVE 跑数 + Go/Kill 判断）
+> status: active | created 2026-07-08 | last_updated: 2026-07-09（S007 V5 核查未记录 MVE 数据 + LPF2 不公平 bug + 范围优势公平性审计——BER gain +4.08dB 是三重虚高（LPF2 独享+PSA弱+Kay估偏），公平条件下 B7 vs 4thpow gain≈0；范围优势经公平对照确认机制本质（4thpow 4次方混叠±6.25GHz vs B7 TED周期±25GHz），非 B5 D003 特权假象。D007 登记。Go/Kill + B7 价值定性交用户）
 
 ## 专题定位（一句话）
 
@@ -99,6 +99,7 @@ B7-Q1（Gardner TED 复用 FOE）第二候选 MVE 执行。与 NDA-ML 单载波�
 - **D004**（2026-07-08，S004）：B7 fair gain = 二维报告（BER gain @ 双工作点 HD-FEC 主+BER 2e-2 锚校验 + Doppler 范围比 1.9×）+ PSA FOE baseline 必须 sandbox 重写（谱不对称法，非 pilot-aided）。阶段 0.4 通过，进 0.5。common `_recovery.py:435` psa_foe_recovery 概念错债务登记。
 - **D005**（2026-07-08，S004）：B7Params 修正版草稿（15 字段全溯源 content.md 行号，修正 LEO_DOPPLER_RATE 30e3→1e9，删 PSA_PILOT_SPACING，补 7 新字段）+ B7 锚论文原参数 25GBaud/1.8kHz 不跟 NDA-ML 统一（用户决策，防 D-007 覆辙）+ explore 目录结构落盘。阶段 0.5+0.6 通过，**阶段 0 六项规约全收尾**。
 - **D006**（2026-07-08，S005）：sandbox 步骤 1-3 诚实发现登记——① B7Params 回写 params.py 完成（15 字段，14 OK + 1 WARNING，0 DEAD/CRITICAL）② PSA FOE coarse-only baseline 线性区 ~1GHz 限制（25GBaud/β=0.1 物理结果非 bug，fair gain BER gain 标为上界）③ Leven 2007 DOI 修正 891597→891893（论文已落盘）④ D002 残留风险闭合（G(f_D)=K_max·|cos(πf_D/B)| 解析成立，弱同族 B 不降级 C）。
+- **D007**（2026-07-09，S007）：V5 核查未记录 MVE 数据 + LPF2 不公平 bug 登记 + BER gain 虚高结论 + 范围优势机制本质确认。① LPF2（L851）只给 B7 加其他 baseline 全无，apples-to-oranges 不公平 ② +4.08dB 三重虚高（LPF2独享+PSA弱+Kay估偏），公平条件下 B7 vs 4thpow gain≈0（+0.03dB）③ 范围优势经公平对照+数学证明是机制本质（4thpow 4次方混叠±6.25GHz vs B7 TED周期±25GHz），非 B5 D003 特权假象。BER gain 维度 FAIL，范围维度 PASS，Go/Kill 交用户。
 
 ## 悬而未决
 
@@ -109,11 +110,11 @@ B7-Q1（Gardner TED 复用 FOE）第二候选 MVE 执行。与 NDA-ML 单载波�
 5. ~~公平对照框架~~ → **已解决（S004/D004）**：二维报告 + 双工作点 + PSA FOE 重写债务
 6. ~~符号率/线宽场景统一决策~~ → **已解决（S004/D005 + 用户决策）**：B7 锚论文原参数不统一
 7. ~~B7 TED_gain(f_D) 解析式 + Leven 对比~~ → **已解决（S005/D006）**：G(f_D)=K_max·|cos(πf_D/B)| 解析成立，弱同族 B 不降级 C
-8. **sandbox 后半 + MVE 执行**：~~CRB 下界 + 三方对照主脚本 + MVE + consistency（对话 6）~~ → 脚本+SPEC+smoke test 完成（S006），剩正式 MVE 跑数 + Go/Kill 判断（对话 7）
+8. **sandbox 后半 + MVE 执行**：~~CRB 下界 + 三方对照主脚本 + MVE + consistency（对话 6）~~ → 脚本+SPEC+smoke test 完成（S006），正式 MVE 已跑完（未记录对话，S007 V5 核查），**LPF2 不公平 bug + BER gain 虚高 + 范围优势机制本质确认（S007/D007）**。剩：Go/Kill 判断 + B7 价值定性（交用户）+ 可选修脚本重跑拿干净数据
 
 ## 当前位置
 
-**🟢 S006 三方对照主脚本 + MVE-SPEC + smoke test 完成（2026-07-08）**：b7_gardner_ted_mve.py 三方（B7 proposed FOE 前馈扫频 + Gardner 1986 TR 反馈环 Python 重写 + PSA FOE 谱不对称法 import）+ B7-MVE-SPEC.md 契约 + smoke test PASS（修 3 bug：BER 符号对齐/单边扫频/PSA 残余 FOE 清理）。B7 est 全准 BER~1e-2，V3 祖师爷警报不触发（1986 全爆），PSA >12GHz 退化符合 D006。**下一步=对话 7 正式 MVE 跑数 + Go/Kill 判断**。
+**🟡 S007 V5 核查 + LPF2 bug + 范围公平性审计完成（2026-07-09）**：未记录对话的正式 MVE 数据经 V5 主线独立核查，发现 BER gain +4.08dB 是三重虚高（LPF2 不公平独享 + PSA 弱 + Kay 估偏）。systematic-debugging Phase3 验证：公平条件下（全加 LPF2）B7 FOE 方法 vs 4thpow gain≈0（+0.03dB）。用户提示翻日志找到 B5 D003 先例（范围优势特权假象），B7 做了相同公平范围对照 + 数学本质分析，确认范围优势是机制本质（4thpow 4 次方混叠 ±6.25GHz 铁律 vs B7 TED 周期 ±25GHz），**非 B5 特权假象不能用 B5 逻辑 Kill**。D007 登记。**下一步=Go/Kill 判断 + B7 价值定性，交用户**。
 
 ## 进展线索
 
@@ -123,3 +124,13 @@ B7-Q1（Gardner TED 复用 FOE）第二候选 MVE 执行。与 NDA-ML 单载波�
 - **S004** 阶段 0.4-0.6 + D004+D005（2026-07-08）：0.4 fair gain 二维报告（HD-FEC 主+BER 2e-2 锚+范围比 1.9×）+ PSA FOE 概念错债务登记；0.5 B7Params 修正版 15 字段全溯源 content.md 行号 + B7 锚论文原参数不统一（用户决策）；0.6 explore 目录结构落盘 + 下游引用同步清单。**阶段 0 全收尾，可进 sandbox**
 - **S005** sandbox 前半 3 步 + 步骤 4 CRB + D006（2026-07-08）：步骤 1 B7Params 回写 params.py（15 字段 14 OK + 1 WARNING，0 DEAD/CRITICAL，下游无断链）；步骤 2 PSA FOE 谱不对称法 baseline 重写（Vieira 2023 L343-347 Δf̂=α·ln(P+/P−)/2，α_calib=0.953GHz，coarse-only 线性区 ~1GHz 限制登记非 bug）；步骤 3 TED_gain 解析 G(f_D)=K_max·|cos(πf_D/B)| + Leven 2007 对比（DOI 修正 891597→891893，三层运算不等价判弱同族 B 不降级 C，D002 残留风险闭合）；步骤 4 CRB 下界（N=1024 OSNR=17dB CRB std=59.42kHz << 扫频间隔 1GHz，精度瓶颈是量化非 CRB，FR-21 不卡）。主线 V5 独立核查全 PASS
 - **S006** 对话 6 三方对照主脚本 + MVE-SPEC + smoke test（2026-07-08）：b7_gardner_ted_mve.py 三方实现（B7 proposed FOE 前馈扫频 + Gardner 1986 TR Python 重写 + PSA FOE 谱不对称法 import）+ B7-MVE-SPEC.md 契约（10 节，仿 SC-NDA-ML SPEC）+ smoke test PASS（n_sym=4096×1seed×5f_D×OSNR17dB，14.4s）。systematic-debugging 修 3 bug：① BER 符号对齐（make_tx 直接返回 QPSK 符号作参考，不从 rx 重建）② 单边扫频 0-23GHz（poster content.md:49，避免跨 baud 周期模糊）③ PSA 残余 FOE 清理（M=4 次方 MP FOC，对齐 poster content.md:47 DSP 链）。B7 est 全准 err=0，B7 BER~1e-2 稳定，1986 全爆（V3 祖师爷警报不触发），PSA >12GHz 退化（D006 体现）。**剩对话 7：正式 MVE 跑数 + Go/Kill 判断**
+- **S007** 对话 7 V5 核查未记录 MVE + LPF2 bug + 范围公平性审计（2026-07-09）：发现 H005 已被 H006 取代 + 正式 MVE 已在未记录对话跑完（593.4s + osnr_sweep 180.7s，未提交无 S###）。V5 主线独立核查原始 JSON：BER gain +4.08dB vs poster 0.6dB 偏离触发 TL-20。systematic-debugging Phase1-3 定位根因 = LPF2 不公平（L851 只给 B7 加，其他 baseline 全无），Phase3 验证全加 LPF2 后 B7 vs 4thpow gain≈0（+0.03dB，三重虚高：LPF2独享+PSA弱+Kay估偏）。用户提示翻日志找到 B5 D003 先例（范围优势特权假象），B7 做公平范围对照 + 数学本质分析：4thpow 4 次方混叠 ±6.25GHz 铁律 vs B7 TED 周期 ±25GHz，**范围优势机制本质非特权假象**。D007 登记。Go/Kill + B7 价值定性交用户。
+
+### S007 V5 核查发现（Go/Kill 判断材料，带进用户决策）
+
+| 发现 | 内容 | 对判断的影响 |
+|------|------|------------|
+| A. LPF2 不公平 bug | b7_gardner_ted_mve.py L851 只给 B7 加 _lpf2，PSA/4thpow/Kay 全无 → +4.08dB 三重虚高 | BER gain 维度 FAIL（公平条件 gain≈0）；修脚本重跑拿干净数据 pending 用户决策 |
+| B. BER gain 公平后≈0 | 全加 LPF2 后 B7 vs 4thpow +0.03dB（f_D=5GHz 线性区内，都估准时） | B7 FOE 方法本身在线性区内无 BER 增量，贡献不在 BER gain |
+| C. 范围优势机制本质 | 4thpow 4 次方混叠 ±6.25GHz（铁律）vs B7 TED 周期 ±25GHz；公平对照（全加LPF2）后 4thpow >6.25GHz 仍全爆 | 范围优势真实，非 B5 D003 特权假象，不能用 B5 逻辑 Kill |
+| D. B5 D003 先例边界 | B5 范围优势是特权假象（给 baseline 星历后归零）；B7 是机制本质（baseline 数学限制不可突破）| 后续候选声称范围优势时，公平对照判据 = baseline 限制是人为还是数学本质 |
