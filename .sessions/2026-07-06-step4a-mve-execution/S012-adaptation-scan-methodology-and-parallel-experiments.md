@@ -129,43 +129,11 @@ DPLL 的真正价值 = 不吃导频 + 不同族的强 baseline。如果 NDA 赢 
 
 ## 9. A3 组合适配实验结果（2026-07-08 续接）
 
-### 9.1 实验：NDA-ML（前馈升幂）+ DPLL DD（闭环跟踪）混合
+**A3 NDA+DPLL 混合 → FAIL**（无额外增益，组合是冗余非互补）。
 
-**混合算法**：NDA-ML per-block 升幂 mean-angle 估块常数粗相位 → DPLL DD 连续跟踪残余漂移（全数组 VCO 累积）→ resolve M₀-fold 模糊。turb 两阶段先 per-block fft_foe 补 CFO。
+- 混合全场景 ≈ max(NDA, DPLL)，工作区 grand mean 全在 ±0.06dB 内，无任一场景统计显著赢两者
+- strong deep fade 混合**统计显著输 DPLL 0.046dB**（反证互补假设：NDA 在 fade 块估计误差传给 DPLL 反而更差，"避免失锁"变成"引入额外误差"）
+- TL-20 一致性自检 ALL PASS（实现正确，物理上确实无增量）
+- 物理根因：σ²_p=2.51e-5 下两方法处理同族相位变化强项重叠冗余
 
-**参数**：16APSK / 2.5GBaud / 10kHz（σ²_p=2.51e-5）/ M₀=8 / DPLL ω_n=50e6（S011 选定）/ 5 seed × 6 场景（AWGN + weak/moderate/strong 下行 + uplink_moderate/uplink_strong 上行）。脚本 `simulator/run_a3_hybrid_ablation.py`，结果 `explore/nda-awgn-tracking-sandbox/_a3_hybrid_results.json`，报告 `_a3_hybrid_report.md`。
-
-### 9.2 结论：A3 信号 FAIL（无额外增益，组合是冗余非互补）
-
-**TL-20 一致性自检 ALL PASS**（hybrid ≥ oracle / < 3×NDA / < 3×DPLL / @18dB AWGN=3.56e-3 合理）→ 实现正确，物理上确实无增量。
-
-**A3 信号判定 FAIL**（adaptation-scan.md A3 失败信号匹配）：
-- 全场景无统计显著赢两者（CI 全跨 0）
-- **strong 场景混合统计显著输 DPLL 0.046dB**（反证互补假设核心机制）
-- 混合 ≈ max(NDA, DPLL)（冗余叠加），工作区 grand mean 全在 ±0.06dB 内
-
-### 9.3 互补性假设证伪
-
-| 预期机制 | 实测 |
-|---------|------|
-| NDA 粗估减小 DPLL 失锁风险（strong/uplink deep fade） | ❌ strong 混合反输 DPLL 0.046dB（NDA 在 fade 块估计误差大，传给 DPLL 反而更差） |
-| DPLL 精跟补 NDA 无法跨块跟踪（AWGN/weak/mod） | ❌ 持平无显著赢（+0.006~+0.036dB 混合输 NDA，CI 跨 0） |
-
-**物理根因**：当前信道 σ²_p=2.51e-5 下，单块 256 符号内 Wiener PN 漂移标准差 ≈ 0.08 rad，NDA 块常数 mean-angle 估计在此量级已接近最优；DPLL 跟的"残余漂移"跟 DPLL 自身环路噪声同一量级 → 两步串联不产生信息增量（adaptation-scan.md A3 失败信号"两方法强项重叠冗余非互补"匹配）。
-
-### 9.4 4 种适配扫描进度更新
-
-| 适配类型 | 状态 | 结论 |
-|---------|------|------|
-| A1 参数适配 | 已扫（parity_tuning_sweep.py / S009 D-009） | NDA K / VV Nw 对等调参 → 持平 |
-| A2 结构适配 | 已扫（D002 频域→时域 + segK8） | AWGN 有结构适配空间，turb 无 |
-| **A3 组合适配** | **FAIL（本轮）** | **NDA+DPLL 冗余，无额外增益** |
-| A4 条件适配 | 部分扫（crossover 漂移 / uplink） | uplink vs DA +2.48~3.07dB 是 pilot overhead 架构红利非算法 |
-
-**4 种适配扫描基本闭合**：NDA-ML 算法层 A1-A4 全维度无显著增量方向。跟 S009 D-009（vs VV 同族持平）+ S011（vs DPLL 异族持平）一致——NDA-ML 在当前信道下已是"盲 CPR 性能上界"附近。
-
-### 9.5 决策引用
-
-- 无新建 D###（A3 是技术验证结果 FAIL，非方向决策；如要正式 Kill 建议主对话确认后建 D-011）
-- 引用既有：adaptation-scan.md A3（组合适配信号判据 + 失败信号）
-- 引用既有：TL-20（先建理论预期）+ TL-23（验证完再判定）+ TL-13（共用信道 bit-exact）
+**完整数据 + 4 种适配扫描进度表已移到 S013**（适配扫描实验日志，后续 A1/A4 结果也追加到 S013）。脚本 `simulator/run_a3_hybrid_ablation.py`，结果 `explore/nda-awgn-tracking-sandbox/_a3_hybrid_results.json`，报告 `_a3_hybrid_report.md`。

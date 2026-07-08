@@ -196,5 +196,6 @@ projects/simulation/
 - **S010** D-010 baseline 标准 + blit venue 修复 + baseline 池检索精读（2026-07-08）
 - **S011** DPLL DD 异族 baseline 仿真 + baseline 池立住（2026-07-08）
 - **S012** 方法论转向：4 种适配 skill + 3 并行实验方向（2026-07-08，本对话产出）
+- **S013** 4 种适配扫描各方向实验日志（2026-07-08 新建，A3 NDA+DPLL FAIL 首条；后续 A1/A4 结果追加到此，不另开 S###）
 - **S010** D-010 baseline 标准确立 + baseline 池检索精读（2026-07-08，10 组查询 ~220 篇召回 4 篇精读，认知修正：通信 baseline 自实现）
 - **S011** DPLL DD 异族 baseline 仿真 + baseline 池立住（2026-07-08，TL-20 四判据全 PASS，DPLL 连续处理 omega_n=50e6，vs NDA 持平到稍差，异族合规）
