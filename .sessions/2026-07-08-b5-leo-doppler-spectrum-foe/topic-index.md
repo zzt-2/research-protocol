@@ -1,7 +1,7 @@
 # Topic Index: B5-Q1 LEO Doppler 短时谱 FOE 第四候选
 
 > slug: 2026-07-08-b5-leo-doppler-spectrum-foe
-> status: active | created 2026-07-08 | last_updated 2026-07-08（S006 路 2 Step 3 补精读 + 新 M-C-A 构建——Vieira 2023 全文精读 + Diniz 2011 abstract 级（paywall 锁）。精读推翻 H006 多项初稿：Vieira 公式 α·ln 是推断非 verbatim（L345 图片丢失）/ α=17GHz 原文值非 sandbox 自标定 6.12e8 / ±13GHz 是两阶段联合范围非粗估 / Vieira 无多块均值（B5 1024×16 是结构性增量非算子增量）/ Vieira 报 BER penalty 非 σ。路 2 新 M-C-A 构建完成：M=Vieira 对数比 / C=LEO 残频精度 / A=对数比小残频数值噪声（假设待验证）。增量归因 2×2 消融设计（算子×块结构）+ 判定阈值（算子贡献>30% Go / <10% Kill）。H007 交下一对话执行 Step 4a sandbox）
+> status: active | created 2026-07-08 | last_updated 2026-07-08（S007 路 2 Step 4a sandbox 执行 → Kill。2×2 算子×FFT 分辨率消融实测：算子贡献 −1%（<10% Conditional-Kill 阈值），FFT 分辨率贡献 101%。M-C-A 的 A 假设（对数比小残频不稳）证伪：B/A σ 比=1.00，linear-log 相关 0.994。66% σ 差异全部来自 n_fft=16 参数选择（B5 锚公开工程参数，Vieira 可同样采用，非独占）。维度 A0+C 双 FAIL，无 salvage → Kill B5-Q1（D004/V001）。主线 V5 独立重算算子占比 −0.7% 可复现。新发现 experiment_C α 标定 bug（grid C 未为 n_fft=1024 重标 α，σ 14.1 被人为压低，真实 29.0；不影响 Kill 结论但修正 S005 旧归因）。H008 交用户决定候选池下一步）
 
 ## 专题定位（一句话）
 
@@ -45,6 +45,7 @@ B5-Q1（LEO Doppler 短时谱 FOE，正负功率谱面积比）第四候选 MVE 
 ### 范围变更记录
 - **2026-07-08 D002**：撤回 S005 MVE PASS 建议。S005 报"MVE 三项全 PASS 建议判 Go"建立在错误前提上（V3 选错对照对象 [60]Leven→应选同族 Vieira PSA + sandbox 对照不公平 + BER 全 fail 幽灵）。新增"范围优势结实度审计"（3 决定性问题：BER 根因/公平范围对照/同族 PSA 对照），审计结果决定 B5 去留。原因：用户追问"范围优势到底有没有"+ 3 角度并行证伪侧审计发现致命盲点。**D001 不动**（开专题决策仍 active），撤回的是 S005 的 Go 倾向解读
 - **2026-07-08 D003 + S006**：路 2 重定位后的 Step 3 补精读。精读发现 H006 初稿的 M-C-A 多处需修正（见 S006 §2 表格），但**不构成方向变更**（路 2 同族精度改进路线不变，只是 baseline 参数和归因设计更精确）。当前范围仍 = 路 2 Step 4a 重走
+- **2026-07-08 D004 + S007**：路 2 Step 4a 维度 A0+C 双 FAIL → Kill B5-Q1。2×2 消融证伪 M-C-A 核心（算子贡献 −1%，对数比小残频不稳不成立），66% σ 差全部来自 FFT 分辨率参数。范围终止：B5-Q1 不再推进，候选池决策交用户
 
 ## 不变量（动任何一条必须重新讨论）
 
@@ -58,7 +59,7 @@ B5-Q1（LEO Doppler 短时谱 FOE，正负功率谱面积比）第四候选 MVE 
 8. **TL-13 共用同一信道实现**：B5 必须从 `common/_channel.py` 导入，禁自建信道
 9. **TL-20 先建理论预期**：MVE 跑之前必须写明理论预期表，仿 N1-MVE-SPEC.md §2
 10. **核查机制中性双向**：子 agent 产出 + 主线独立 grep 核查，**子 agent 归因必须主线独立重算验证**（D-009 教训 6，只信原始数字不信归因）
-11. **【B5 特殊·INVARIANT，D003 重写+S006 精化】够格路径**：~~原：范围优势（±4.5GHz vs ±312.5MHz，15×）~~ **D003 证伪**：范围优势是星历预补特权功劳（fft_foe 配星历即 19/19 持平，残留 1.00×）。**路 2 重定位**：够格路径转为"同族 PSA 精度增量"——B5 线性归一化比 `(P+-P-)/(P++P-)` vs Vieira 2023 对数比 `α·ln(P+/P-)`（[推断]，L345 图片丢失）。**S006 精读精化**：① Vieira α=17 GHz 是原文值（非 sandbox 自标定 6.12e8）② Vieira 无多块均值（单窗 1024 样本），B5 的 1024×16 是结构性增量非算子增量 ③ ±13GHz 是两阶段联合范围非粗估 ④ 66% σ 差必须拆算子贡献 vs 块结构贡献（2×2 消融，判定算子贡献>30% 才 Go）。此不变量待路 2 Step 4a 维度 D 拆清后最终定
+11. **【B5 特殊·INVARIANT，D003+S006+S007 终判】够格路径 = B5-Q1 Kill**：~~原：范围优势（±4.5GHz vs ±312.5MHz，15×）~~ **D003 证伪**：范围优势是星历预补特权功劳（fft_foe 配星历即 19/19 持平，残留 1.00×）。~~路 2 重定位：同族 PSA 精度增量（B5 线性比 vs Vieira 对数比 σ 好 66%）~~ **D004/S007 证伪**：2×2 算子×FFT 分辨率消融实测算子贡献 **−1%**（<10% Conditional-Kill 阈值），66% σ 差全部来自 FFT 分辨率参数（n_fft=16 是 B5 锚公开工程参数，Vieira 可同样采用，非独占）。M-C-A 的 A 假设（对数比小残频不稳）证伪：B/A σ 比=1.00，linear-log 相关 0.994。维度 A0+C 双 FAIL，无 salvage → **Kill B5-Q1**。两条够格路径（范围优势 / 同族精度增量）双证伪，B5-Q1 不再推进
 12. **【B5 特殊·INVARIANT】饱和池警示 + Paillier 大池竞争**：切法地图 §C 警示"Paillier 安全区恰恰是 dB 最难出区"（Spalvieri 85 同构）。B5 饱和池 §A 跟 B4 共锚 Paillier 星地相干下行 ground receiver（43 篇大池），**B5-Q1 的够格必须独立 MVE 产出**，不能引 Paillier 大池的 dB（B5 是范围优势不是 dB 增量）。**但 BUPT Arria 10 FPGA demo 是会议级模板**（绝对指标够发会议），B5 可走此路径
 13. **【B5 特殊·INVARIANT】D006 边界残留（湍流致功率波动归一化）**：B5 前馈功率比假设信号幅度稳定，湍流致幅度衰落会污染功率比估计（`_B5-...-increment.md:162`）。**若把湍流致功率波动纳入前馈归一化（AGC/归一化功率比）则不撞 D006**；**若纳入环路 TF 联合建模则撞 D006**（边界，只标不砍，与 B6-Q2/B7-Q2 同模式）。阶段 0.3 架构定性必须定死走前馈归一化路径
 14. **【B5 特殊·INVARIANT】代码基建新增需求（short_time_spectrum_foe）**：B5-Q1 核心算法"分块 FFT + 正负功率谱面积比 + 星历预测"common/ **没有**（现有 fft_foe 是 4 次幂 blind QPSK 找谱峰，fft_foe_m0_omega 是 M0 升幂找谱峰，**都不是 B5 的"正负功率谱面积比 Rp-n"机制**）。**需新增 `short_time_spectrum_foe`**，可参考 `fft_foe_m0_omega`（sc_nda_ml_sim.py:137）作起点骨架（分块 FFT 部分复用），但"正负功率谱面积比 Rp-n + 归一化频偏估计 Δfest（系数 α=6×10⁸）"核心算法需新写。信道侧完全复用（TL-13），参数族参考 `B7Params`（params.py:611-628）扩 B5Params
@@ -101,7 +102,7 @@ B5-Q1（LEO Doppler 短时谱 FOE，正负功率谱面积比）第四候选 MVE 
 
 ## 当前位置
 
-**🟡 B5 路 2 Step 3 + M-C-A 完成，待下一对话执行 Step 4a sandbox（S006，2026-07-08 对话 6）**：路 2 同族精度改进重定位后的 Step 3 补精读完成——Vieira 2023 全文精读 + Diniz 2011 abstract 级（paywall 锁）。精读推翻 H006 多项初稿（Vieira 公式非 verbatim / α=17GHz 原文值 / ±13GHz 联合范围 / 无多块均值 / 报 BER 非 σ）。路 2 新 M-C-A 构建完成（M=Vieira 对数比 / C=LEO 残频精度 / A=对数比小残频数值噪声假设）。增量归因 2×2 消融设计完成（算子×块结构，判定算子贡献>30% Go / <10% Kill）。**Step 4a sandbox 维度 A-D + Go/Conditional/Kill 判断留下一对话**（守单对话 3 步上限 + profile 急于推进防线）。H007 交接。
+**🔴 B5-Q1 Kill（D004/S007，2026-07-08 对话 7）**：路 2 Step 4a 维度 A0+C 双 FAIL。2×2 算子×FFT 分辨率消融实测（主线 V5 独立重算可复现）：算子贡献 **−1%**（<10% Conditional-Kill 阈值），FFT 分辨率贡献 101%。M-C-A 的 A 假设（对数比小残频不稳）证伪——B/A σ 比=1.00，linear-log 算子相关 0.994。66% σ 差异全部来自 n_fft=16 参数选择（B5 锚公开工程参数，Vieira 可同样采用，非独占）。Salvage 评估无（既无算子贡献也无独占参数贡献）。守 D003"值得试≠强行 Go"→ Kill。两条够格路径（范围优势 D003 / 同族精度增量 D004）双证伪。新发现 experiment_C α 标定 bug（grid C 未为 n_fft=1024 重标 α，σ 14.1 被压低，真实 29.0；不影响 Kill 结论但修正 S005 旧归因）。H008 交用户决定候选池下一步。专题待转 closed。
 
 ## 进展线索
 
@@ -112,3 +113,4 @@ B5-Q1（LEO Doppler 短时谱 FOE，正负功率谱面积比）第四候选 MVE 
 - **S005** 阶段 2-3 MVE + consistency 执行——B5-MVE-SPEC.md（12 节 MVE 契约 + TL-20 理论预期表 + FR-11 架构摘要）+ mve_b5_short_time_spectrum.py（复用 sandbox + 3 新实验：V3 祖师爷警报/星历残差扫描/consistency）+ 2 结果 JSON。MVE 三项全 PASS：V3 未触发（83.8%>5%）+ 星历残差 max σ 10.03MHz<<140MHz + consistency 三项 0 ulp。V5 主线独立核查全一致。common 转正（short_time_spectrum_foe + leven_mthpower_foe 进 _recovery.py）。**Go 建议后撤回**（D002：V3 选错对照对象 + sandbox 不公平 + BER 幽灵）
 - **S005 续** 范围优势结实度审计（D002/D003）——3 角度并行证伪侧审计发现致命盲点 → 修正版审计 3 决定性问题实测：① BER 根因非 bug（B5 估噪 6.8MHz >> fft_foe 0.05MHz）② **范围优势归零**（fft_foe 配星历 19/19=B5 19/19，残留 1.00×，Kill 级）③ **同族 PSA 增量**（B5 线性 vs Vieira 对数 σ 好 66%，V3 未触发，救命级）。D003：原定位崩塌转路 2 同族精度改进重定位（不 Kill，候选池偏弱+方向稀缺）。H006 交新对话（2026-07-08，对话 4 续）
 - **S006** 路 2 Step 3 补精读 + 新 M-C-A 构建（对话 6）——Vieira 2023 全文精读 + Diniz 2011 abstract 级（paywall 锁，穷尽 6 源失败）。精读推翻 H006 多项初稿：① Vieira 公式 α·ln 是推断非 verbatim（L345 图片 PDF→md 丢失）② α=17GHz 原文值非 sandbox 自标定 6.12e8 ③ ±13GHz 是两阶段联合范围非粗估 ④ Vieira 无多块均值（单窗 1024 样本），B5 1024×16 是结构性增量非算子增量 ⑤ Vieira 报 BER penalty 非 σ。路 2 新 M-C-A 构建（M=Vieira 对数比/C=LEO 残频精度/A=对数比小残频数值噪声假设，过四判据）。增量归因 2×2 消融设计（算子线性/对数 × 块结构单窗/16均值，判定算子贡献>30% Go/<10% Kill）。精读笔记落盘 papers/_read_notes/_vieira2023-diniz2011-psi-same-family.md。H007 交下一对话执行 Step 4a sandbox（守单对话 3 步上限）（2026-07-08，对话 6）
+- **S007** 路 2 Step 4a sandbox 执行 → Kill（对话 7）——2×2 算子×FFT 分辨率消融（修正 H007/S006 的"块结构"误解：sandbox Vieira 已 16 块均值，真实公平轴是算子×n_fft）。实测四格 σ：A 线性 n16=11.4 / B 对数 n16=11.4 / C 线性 n1024=29.0 / D 对数 n1024=28.7 MHz。主线 V5 独立重算：算子贡献 −0.7%（<10% Kill），FFT 分辨率贡献 101%。A0 假设证伪（B/A=1.00，linear-log 相关 0.994）。新发现 experiment_C α 标定 bug（grid C 未为 n_fft=1024 重标 α）。维度 A0+C 双 FAIL，无 salvage → Kill B5-Q1（D004/V001）。66% σ 差全部来自 n_fft=16（B5 锚公开工程参数，非独占）。H008 交用户决定候选池下一步（2026-07-08，对话 7）
