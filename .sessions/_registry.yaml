@@ -366,7 +366,7 @@ topics:
     title: B3-Q2 子系统协同联合估计第三候选（B2 Kill + B11-Q2 放弃后接替，首验证 4 支路迁移）
     status: active
     created: "2026-07-08"
-    last_updated: "2026-07-08（S003 阶段 0.3-0.6 完成 D003——阶段 0 全六项闭合。架构走前馈开环（一套 TS 块估 FS+FOE+CPE+Doppler 逐块前馈不进环路），不撞 D006（三重证据：D006 只禁湍流相位进环路 TF / B3 详评 Q2 判否 / jphot 本身前馈）。公平对照三方矩阵 M1传统/M2 jphot FSTS/M3 B3-Q2，fair gain Go 判据= gain_vs_M2（不用 gain_vs_M1 那是继承），增益归因熔断 gain_vs_M2≤0 转 Kill。消融 M3a/M3b/M3 归因 CPE vs Doppler 各自贡献。参数全标 source grep 核验。5 个新建代码接口定义（MRC/帧同步/多支路预校正/联合管线/多望远镜信道）。BUPT 续作核查：三切口 CPE联合/Doppler/星地 均未被单篇完整吞没，但迫近自吞风险（构件齐全 12 个月内汇合论文概率非低）。H003 交对话 3 进 sandbox）"
+    last_updated: "2026-07-09（S004 对话 3a 完成——sandbox 前置债务 4 项清偿 + 5 接口实现 + smoke test 9/9 PASS + MVE 骨架跑通。f_dot 溯源 56MHz/s（B5 锚 optcom.2024.130981 L147）+ 张思齐 CNKI 硕博 0 条 CPE 切口未吞 + Fried 参数强湍 r0≈2cm 定独立分集间距。5 接口写入正确路径 projects/simulation/explore/b3-joint-estimation/（H003/启动协议写的 explore/ 路径有误）。框架暴露 T_S/baud-rate 保真度问题（common 2.5GBaud vs jphot 10GBaud，Doppler 项 t² 敏感影响物理量级），3b 首要定。SSRN/OECC abstract 仍未亲验（Cloudflare/PDF 拦截，不阻塞）。H004 交对话 3b 跑全量三方对照 + 分层 Go/Kill）"
     description: "B2 Kill + B11-Q2 放弃后接替方向。S031 #1 Conditional Go（+2~3dB 4 支路强湍，dB 最高）。导师'特长场景'标准下是真新方法不是凑数（B11-Q2 是 NDA-ML 验证延伸被用户判凑数放弃）。**B3-Q2 特殊风险**：①4 支路→星地单链路迁移（dB 砍半，星地单孔径难堆叠多望远镜）②A1 归属（jphot+oe BUPT 课题组已完成 FS+FOE+MRC 联合）③D006 边界（前馈开环不撞/环路 TF 撞转 B3-Q3）④代码基建需全新（MRC+帧同步+多支路管线+多望远镜信道）。锚论文 jphot.2023.3265847 + oe.520452（BUPT Liqian Wang 课题组姊妹工作）。守 sim-preflight v1.3.0 + D005 务实路线 + D006 红线。拆对话：①阶段 0 前置规约（4 支路迁移验证/A1 归属核查/架构定性/公平对照/参数真相源/文件组织）②sandbox（联合估计 vs 分立管线三方对照）③MVE + consistency。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
