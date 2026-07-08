@@ -329,10 +329,10 @@ topics:
     conflicts_with: []
 
   - slug: 2026-07-08-b2-fade-freeze-pilot-fallback
-    title: B2-Q2 Fade-Freeze + Pilot-Aided Fallback 双模切换第三候选（主控对话开题，首验证 step4a 实测反证张力）
-    status: active
+    title: B2-Q2 Fade-Freeze + Pilot-Aided Fallback 双模切换第三候选（Killed——闭环版救援 D003 三 Go 全 FAIL + Go1 物理根因证伪）
+    status: closed
     created: "2026-07-08"
-    last_updated: "2026-07-08（S004 主控对话 sandbox V5 核查 + 方向定夺——D002 前馈化降级(阶段0.3过度保守,[79]式闭环hold功率阈值gate不撞D006,D006边界精读修正:Kill的是φ_T纳入算法建模不是任何闭环) + D003 救援路线(不Kill B2-Q2,放松前馈化+加power-boosted pilot,用户推翻主线初始Kill建议)。V5核查修正H003 fair gain口径错:-0.187dB→+0.02dB(C微赢但仍远低于0.5dB阈值)。三Go全FAIL(动态恢复结构性失效+范围扩展无+稳态BER+0.02dB不够格)+Kill2结构性成立。物理根因:前馈架构砍掉[79]闭环环路惯性。H004交阶段1.5重设计(闭环hold+power-boost))"
+    last_updated: "2026-07-08（S005 闭环版 sandbox 救援路线 FAIL + D004/K001 Kill——fade 期 hold 相位误差 0.0515 rad << π/8=0.39 rad，换架构解不了是信道模型物理特性。前馈版 S003 三 Go 全 FAIL + 闭环版 S005 三 Go 全 FAIL + Go1 物理根因证伪。复用基建保留 _closed_loop_freeze.py + power-boost 框架 + n_recover v2 度量供 B11-Q2/B7-Q2 复用）"
     description: "承接上游 2026-06-20-problem-driven-redirection S031 排优先级（B2-Q2 第二档 #7 边际够格，范围 in 星地）+ 切法地图参照系（B2 饱和池 §A 小池 3 篇锚无大点）。主控对话开题（不自己执行），派工作对话执行阶段 0.1-0.6。**B2 特殊风险**：①核心命题被 step4a 实测反证（DA pilot 在 fade 崩溃 vs NDA 鲁棒）②sat.1553 +1dB 口径错位（PE vs VV+diff 不是 FOE freeze 增量）③饱和池 dB 难出区④跟 NDA-ML fade 鲁棒性叙事撞车。**复用基建完整**：common/_recovery.py 4 估计器全有（fft_foe/nda_ml/da_ml/psa_foe），双模切换 = (blind + 功率阈值 gating) ↔ (pilot) 模式切换。守 sim-preflight v1.3.0 + D005 务实路线 + D006 红线（双模切换是估计器选择不纳入环路 TF，前馈化合法不撞）。拆对话：①阶段 0 前置规约（张力验证/dB 溯源/架构定性/公平对照/参数真相源/文件组织）②sandbox 三方对照（双模切换/纯 blind freeze/纯 pilot-aided）③MVE + consistency。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
@@ -345,11 +345,28 @@ topics:
         reason: 继承 NDA-ML 执行链教训（D-007~D-009 六类混乱防重蹈）+ step4a 实测反证数据（decisions.md:150, 157 DA pilot 在 fade BER 0.38 vs NDA 0.29）+ 复用基建（common/_recovery.py 4 估计器 + DA pilot overhead 1.25dB 公平对照框架）
     conflicts_with: []
 
+  - slug: 2026-07-08-b11-nda-ml-turbulence-validation
+    title: B11-Q2 NDA-ML 湍流验证延伸（D006 边界模式 7 Q# 起点，B2 Kill 后接替）— KILLED 伪增量
+    status: closed
+    created: "2026-07-08"
+    last_updated: "2026-07-08（S002 D002/K002 Kill——伪增量：B11-Q1 D005 湍流结果已覆盖（weak/moderate/strong 全测过）+ NDA-ML vs VV/BPS 全场景持平是 step4a 层问题（VV/BPS 同 blind NDA 不吃 pilot 崩溃，pilot-free 鲁棒性非 NDA-ML 独有）。用户两问戳穿：'VV/BPS 也是 blind NDA'+'跟之前有啥区别'+'别凑数'。开题动机'保持三方向一直跑+有点急'是凑数温床。产出保留作教训）"
+    description: "B2 Kill（D004/K001）后接替方向。D006 边界模式 7 Q# 详查后 subagent 主推 B11-Q2（物理缺口真实 + 代码基建最划算 + 跟 NDA-ML 直接协同 + 不撞 D006）。**B11-Q2 是 NDA-ML B11-Q1 的湍流验证延伸**（B11 行 33 假设湍流已补偿是真实物理缺口），不是从零开始的独立候选。复用 common/_recovery.py 的 nda_ml_recovery (L171) + da_ml_recovery (L136) + common/_channel.py 湍流信道组件，不需新建估计器。**核心依赖**：NDA-ML D-008 双 bug 修复（漏 ML 加权 + 升幂未归一化），D-008 修复前禁跑 sandbox。守 sim-preflight v1.3.0 + D005 务实路线 + D006 红线（前馈 ML 不撞 D006，无环路 TF）。拆对话：①阶段 0 前置规约（D-008 耦合门控/B11 行 33 假设核查/架构定性/公平对照/参数真相源/文件组织）②sandbox（NDA-ML 修复版 vs DA-ML 在湍流下三方对照，依赖 D-008 修复）③MVE + consistency。"
+    depends_on:
+      - slug: 2026-06-20-problem-driven-redirection
+        reason: 继承 D005 务实路线 + D006 红线 + D017/D018 判读框架 + S031 D006 边界模式 7 次升优先级
+      - slug: 2026-07-05-carrier-sync-v2-cut-pattern
+        reason: 继承切法地图定稿（D006 边界模式 7 Q# 分治三簇：DSP 前馈估计器簇 B7-Q2/B10-Q2/B11-Q2/B12-Q3 机制相邻可先做一个再扩展）
+      - slug: 2026-07-06-step4a-mve-execution
+        reason: 继承 NDA-ML B11-Q1 执行链（D-008 双 bug 待修 + vs DA-ML +1.35~2.5dB 主结论 + 复用基建 nda_ml/da_ml + 湍流信道组件 + B2 Kill D004/K001 教训）
+      - slug: 2026-07-08-b2-fade-freeze-pilot-fallback
+        reason: B2 Kill 教训（前馈化导致测度失效，对 B11-Q2 前馈 ML 在湍流下是否测度失效有警示）+ 复用基建（_closed_loop_freeze.py + power-boost 框架保留）
+    conflicts_with: []
+
   - slug: 2026-07-08-b5-leo-doppler-spectrum-foe
     title: B5-Q1 LEO Doppler 短时谱 FOE 第四候选（主控对话开题，首验证范围优势够格路径）
     status: active
     created: "2026-07-08"
-    last_updated: "2026-07-08（S004 阶段 1 sandbox 三方对照完成——路径 C sandbox PASS：范围扩展 14.4× + 湍流下残频 σ max 16.20MHz << 140MHz（裕度 123.8MHz）+ 收敛性 19/19。B5 短时谱 FOE + [60] Leven Mth-power 实现 + 三方对照脚本 + 3 结果 JSON + B5Params 落盘 params.py。可进 MVE，H004 交对话 4）"
+    last_updated: "2026-07-08（S005 续 范围优势结实度审计——D003：原定位崩塌转路 2。修正版审计 3 决定性问题实测：① BER 根因非 bug（B5 估噪 6.8MHz >> fft_foe 0.05MHz）② 范围优势归零（fft_foe 配星历 19/19=B5 19/19，残留 1.00×，Kill 级）③ 同族 PSA 增量（B5 线性 vs Vieira 对数 σ 好 66%，V3 未触发，救命级）。B5 不 Kill（候选池偏弱+方向稀缺，用户原话'别的也一般般？方向没那么多'）。转路 2 同族精度改进重定位，H006 交新对话重走 Step 4a）"
     description: "承接上游 2026-06-20-problem-driven-redirection S031 排优先级（B5-Q2 第二档 #6 边际够格，范围 in 星地 LEO 下行）+ 切法地图参照系（B5 饱和池 §A 跟 B4 共锚 Paillier 43 篇大池，BUPT Arria 10 FPGA demo 会议级模板）。主控对话开题（不自己执行），派工作对话执行阶段 0.1-0.6。**B5 特殊风险**：①不是 dB 增量是范围优势（D005 标尺下不够格）②饱和池大池竞争（Paillier 43 篇）③D006 边界残留（湍流致功率波动归一化前馈合法/环路 TF 撞）④代码新增需求（short_time_spectrum_foe 需新写，fft_foe_m0_omega 作起点骨架）⑤论文外改进空间窄。**LEO Doppler 主题机制正交**：B5（频域功率比）/ B7（定时域 TED 增益）/ B4（双反馈环）是 LEO Doppler 大动态三种正交解法无撞车。锚论文 optcom.2024.130981 已发期刊（Optics Communications 572 (2024)，青岛大学+CETC 34 所）。守 sim-preflight v1.3.0 + D005 务实路线 + D006 红线。拆对话：①阶段 0 前置规约（够格路径/dB 范围溯源/架构定性/公平对照/参数真相源/文件组织）②sandbox 三方对照（B5 短时谱/[60] Leven/传统 FFT FOE）③MVE + consistency。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
