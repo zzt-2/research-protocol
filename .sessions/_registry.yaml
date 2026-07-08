@@ -383,7 +383,7 @@ topics:
     title: B5-Q1 LEO Doppler 短时谱 FOE 第四候选（主控对话开题，首验证范围优势够格路径）
     status: active
     created: "2026-07-08"
-    last_updated: "2026-07-08（S007 路 2 Step 4a sandbox 执行 → Kill B5-Q1。2×2 算子×FFT 分辨率消融实测算子贡献 −1%（<10% 阈值），FFT 分辨率贡献 101%。M-C-A 的 A 假设证伪（B/A=1.00，linear-log 相关 0.994）。66% σ 差全部来自 n_fft=16 参数（B5 锚公开工程参数，非独占）。维度 A0+C 双 FAIL，无 salvage → Kill（D004/V001）。主线 V5 独立重算可复现。新发现 experiment_C α 标定 bug（grid C 未为 n_fft=1024 重标 α，σ 14.1 压低，真实 29.0；不影响 Kill 但修正 S005 旧归因）。两条够格路径双证伪。H008 交用户决定候选池下一步）"
+    last_updated: "2026-07-08（S007 §7 Kill 后 salvage 评估——用户追问'能不能挣扎一下'触发 6 类适配扫描（adaptation-scan.md A1/A4/A5/A6）。全无信号：A1 n_fft=16 全条件最优 / A4 无 crossover / A5 outage 全 0 / A6 两法同点失锁。主线 V5 核查可复现。确认 D004 Kill 成立不翻盘。B5 优势 = n_fft=16 块数均值降噪（公开工程参数非独占）。补强 Kill 完备性：6 类适配全无信号才 Kill。D004/V002 收尾，H008 交用户决定候选池下一步）"
     description: "承接上游 2026-06-20-problem-driven-redirection S031 排优先级（B5-Q2 第二档 #6 边际够格，范围 in 星地 LEO 下行）+ 切法地图参照系（B5 饱和池 §A 跟 B4 共锚 Paillier 43 篇大池，BUPT Arria 10 FPGA demo 会议级模板）。主控对话开题（不自己执行），派工作对话执行阶段 0.1-0.6。**B5 特殊风险**：①不是 dB 增量是范围优势（D005 标尺下不够格）②饱和池大池竞争（Paillier 43 篇）③D006 边界残留（湍流致功率波动归一化前馈合法/环路 TF 撞）④代码新增需求（short_time_spectrum_foe 需新写，fft_foe_m0_omega 作起点骨架）⑤论文外改进空间窄。**LEO Doppler 主题机制正交**：B5（频域功率比）/ B7（定时域 TED 增益）/ B4（双反馈环）是 LEO Doppler 大动态三种正交解法无撞车。锚论文 optcom.2024.130981 已发期刊（Optics Communications 572 (2024)，青岛大学+CETC 34 所）。守 sim-preflight v1.3.0 + D005 务实路线 + D006 红线。拆对话：①阶段 0 前置规约（够格路径/dB 范围溯源/架构定性/公平对照/参数真相源/文件组织）②sandbox 三方对照（B5 短时谱/[60] Leven/传统 FFT FOE）③MVE + consistency。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection

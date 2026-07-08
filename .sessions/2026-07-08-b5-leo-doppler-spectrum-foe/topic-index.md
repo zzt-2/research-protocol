@@ -1,7 +1,7 @@
 # Topic Index: B5-Q1 LEO Doppler 短时谱 FOE 第四候选
 
 > slug: 2026-07-08-b5-leo-doppler-spectrum-foe
-> status: active | created 2026-07-08 | last_updated 2026-07-08（S007 路 2 Step 4a sandbox 执行 → Kill。2×2 算子×FFT 分辨率消融实测：算子贡献 −1%（<10% Conditional-Kill 阈值），FFT 分辨率贡献 101%。M-C-A 的 A 假设（对数比小残频不稳）证伪：B/A σ 比=1.00，linear-log 相关 0.994。66% σ 差异全部来自 n_fft=16 参数选择（B5 锚公开工程参数，Vieira 可同样采用，非独占）。维度 A0+C 双 FAIL，无 salvage → Kill B5-Q1（D004/V001）。主线 V5 独立重算算子占比 −0.7% 可复现。新发现 experiment_C α 标定 bug（grid C 未为 n_fft=1024 重标 α，σ 14.1 被人为压低，真实 29.0；不影响 Kill 结论但修正 S005 旧归因）。H008 交用户决定候选池下一步）
+> status: active | created 2026-07-08 | last_updated 2026-07-08（S007 §7 Kill 后 salvage 评估——用户追问"能不能挣扎一下"触发 6 类适配扫描（adaptation-scan.md A1/A4/A5/A6）。结果全无信号：A1 n_fft=16 全条件最优无自适应空间 / A4 无 crossover diff 恒正 / A5 outage 全 0 σ 优势不转化可用性 / A6 两法同点失锁。主线 V5 独立核查归因可复现。**确认 D004 Kill 成立，不翻盘**。B5 全部优势 = n_fft=16 块数均值降噪（公开工程参数，非独占）。补强 Kill 完备性：6 类适配全无信号才 Kill，非只查算子。D004/V002 收尾，H008 交用户决定候选池下一步）
 
 ## 专题定位（一句话）
 

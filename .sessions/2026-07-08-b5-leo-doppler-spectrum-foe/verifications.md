@@ -52,3 +52,37 @@
 ### 来源
 
 `_ablation_2x2_results.json`（子 agent 执行）+ 主线 V5 独立重算 + params.py FFT_POINTS_B5（content.md L87）+ D003 判定阈值
+
+---
+
+## V002: B5 Kill 后 6 类适配扫描 salvage 评估（关联 D004 / S007 §7）
+
+> date: 2026-07-08（对话 7 续，用户追问"能不能挣扎一下"后）
+> 关联: D004（Kill 补强）/ S007 §7（salvage 评估）
+> 方法: adaptation-scan.md 6 类适配扫描（A1/A4/A5/A6，A2 D002 已做/A3 跳过），n_fft∈{16,64,256,1024} × 9 条件（weak/mod/strong × 8/13/18dB），主线 V5 独立核查
+> 数据源: `_adaptation_scan_results.json`
+
+### 验证问题
+
+D004 Kill 只查了"算子贡献"（−1%）。NDA-ML 教训（S013）是算法层无增量但 A4 条件切换出信号。B5 是否在参数/条件/评价维度/失效边界上有 adaptation-scan 信号可翻盘？
+
+### 结果（6 类全无信号）
+
+| 适配类 | 结果 | 关键数据 |
+|---|---|---|
+| A1 参数适配 | FAIL | 9 条件最优 n_fft 全是 16（all_sigma 核查：n_fft=16 全最小）|
+| A4 条件适配 | FAIL | diff_vieira_minus_b5 9 条件全正 [+5.3,+12.5]，无 crossover |
+| A5 评价维度 | FAIL | outage P(|resid|>140MHz) 全 0（两法残频都<140MHz）|
+| A6 失效边界 | FAIL | B5 σ 非单调（Rp-n 饱和噪声尖峰），两法同点失锁 |
+
+### 结论
+
+**PASS（Kill 确认）**——salvage 评估确认 D004 Kill 成立，6 类适配扫描无任何翻盘信号。
+
+B5 全部优势 = n_fft=16 块数均值降噪（公开工程参数，非独占），无任何条件/维度/边界独占性。主线 V5 核查子 agent 归因可复现（A1 每条件 all_sigma / A4 diff 全正）。
+
+补强了 Kill 完备性：现在不是"只查算子就 Kill"，是"6 类适配全无信号才 Kill"。对 D004 的影响 = 确认（不翻盘）。
+
+### 来源
+
+`_adaptation_scan_results.json`（子 agent 执行）+ 主线 V5 独立核查 + adaptation-scan.md 6 类规则 + S013 NDA-ML 适配教训

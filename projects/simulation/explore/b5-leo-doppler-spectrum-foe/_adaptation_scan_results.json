@@ -1,0 +1,340 @@
+{
+  "meta": {
+    "task": "B5 6类适配扫描 salvage 评估",
+    "bias": "证伪优先 (不粉饰, 不硬救, 不重复 D004 算子结论)",
+    "n_seeds_A1A4": 12,
+    "n_seeds_A5": 20,
+    "n_seeds_A6": 12,
+    "fairness": "每 (n_fft, 条件) 格独立 α+bias 校准 (D004 公平强制); 同总样本 16384 (n_blocks=16384/n_fft); TL-13 共用信道",
+    "kill_context": "D003 范围优势=星历特权; D004 算子贡献-1%, n_fft=16 是公开工程参数",
+    "salvage_question": "n_fft=16 优势是否随条件变/crossover/落地可用性/失效边界不同?",
+    "skipped": "A2 (D002 已做结构适配); A3 (B5+其他组合暂无证据)",
+    "environment": "系统 python 3.11.9, numpy 2.4.3",
+    "elapsed_s": 2.4541587829589844,
+    "timestamp": "2026-07-08T23:57:18"
+  },
+  "A1_param_adaptation": {
+    "nfft_optimal_per_condition": {
+      "weak_8dB": {
+        "optimal_nfft": 16,
+        "sigma_mhz": 8.054329835313762,
+        "all_sigma": {
+          "16": 8.054329835313762,
+          "64": 16.648569240308916,
+          "256": 24.154523439415623,
+          "1024": 13.578058377550647
+        }
+      },
+      "weak_13dB": {
+        "optimal_nfft": 16,
+        "sigma_mhz": 7.424794234493632,
+        "all_sigma": {
+          "16": 7.424794234493632,
+          "64": 17.14237689431841,
+          "256": 24.444132203663077,
+          "1024": 13.008966022767412
+        }
+      },
+      "weak_18dB": {
+        "optimal_nfft": 16,
+        "sigma_mhz": 7.112371327772181,
+        "all_sigma": {
+          "16": 7.112371327772181,
+          "64": 17.209575300770688,
+          "256": 24.072683485542978,
+          "1024": 12.688957216876323
+        }
+      },
+      "moderate_8dB": {
+        "optimal_nfft": 16,
+        "sigma_mhz": 9.459278441562889,
+        "all_sigma": {
+          "16": 9.459278441562889,
+          "64": 23.597122871295667,
+          "256": 22.870600838062,
+          "1024": 23.546756615875964
+        }
+      },
+      "moderate_13dB": {
+        "optimal_nfft": 16,
+        "sigma_mhz": 10.210093616934799,
+        "all_sigma": {
+          "16": 10.210093616934799,
+          "64": 23.86600083749867,
+          "256": 23.3400968653862,
+          "1024": 23.387023657917428
+        }
+      },
+      "moderate_18dB": {
+        "optimal_nfft": 16,
+        "sigma_mhz": 10.519267485940146,
+        "all_sigma": {
+          "16": 10.519267485940146,
+          "64": 23.49051234347314,
+          "256": 23.013167522561734,
+          "1024": 22.918531739611424
+        }
+      },
+      "strong_8dB": {
+        "optimal_nfft": 16,
+        "sigma_mhz": 16.964751730382915,
+        "all_sigma": {
+          "16": 16.964751730382915,
+          "64": 21.999675493254557,
+          "256": 31.77653833851989,
+          "1024": 28.923167347804643
+        }
+      },
+      "strong_13dB": {
+        "optimal_nfft": 16,
+        "sigma_mhz": 17.61052005690391,
+        "all_sigma": {
+          "16": 17.61052005690391,
+          "64": 23.300174419859093,
+          "256": 33.50327858400752,
+          "1024": 28.58153120794052
+        }
+      },
+      "strong_18dB": {
+        "optimal_nfft": 16,
+        "sigma_mhz": 17.704721593078048,
+        "all_sigma": {
+          "16": 17.704721593078048,
+          "64": 23.869023950486383,
+          "256": 34.00607098512539,
+          "1024": 28.105734990402937
+        }
+      }
+    },
+    "optimal_nfft_set": [
+      16
+    ],
+    "signal": false,
+    "physical_causation": "若 A1 信号: n_fft 最优值随条件变, 物理机制 = 块数均值降噪 (n_fft 小→块多→σ 小, 1/√n_blocks) vs 频率分辨率 (n_fft 大→bin 细→大残频可分辨) 的权衡随 SNR/湍流变. 低 SNR/强湍流 (块衰落深) 均值降噪更重要→n_fft 小优; 高 SNR/弱湍流 噪声小→频率分辨率主导→n_fft 大可能优. 若 A1 无信号: n_fft=16 全条件最优 (均值降噪恒主导).",
+    "verdict": "A1 FAIL: n_fft=16 全条件最优 (均值降噪恒主导), 无自适应空间"
+  },
+  "A4_condition_adaptation": {
+    "b5_vs_vieira_per_condition": {
+      "weak_8dB": {
+        "b5_n16": 8.054329835313762,
+        "vieira_n1024": 13.620779102438808,
+        "diff_vieira_minus_b5": 5.566449267125046
+      },
+      "weak_13dB": {
+        "b5_n16": 7.424794234493632,
+        "vieira_n1024": 12.847598025000758,
+        "diff_vieira_minus_b5": 5.4228037905071265
+      },
+      "weak_18dB": {
+        "b5_n16": 7.112371327772181,
+        "vieira_n1024": 12.410357981992615,
+        "diff_vieira_minus_b5": 5.297986654220433
+      },
+      "moderate_8dB": {
+        "b5_n16": 9.459278441562889,
+        "vieira_n1024": 21.969560690952868,
+        "diff_vieira_minus_b5": 12.510282249389979
+      },
+      "moderate_13dB": {
+        "b5_n16": 10.210093616934799,
+        "vieira_n1024": 22.406688799655786,
+        "diff_vieira_minus_b5": 12.196595182720987
+      },
+      "moderate_18dB": {
+        "b5_n16": 10.519267485940146,
+        "vieira_n1024": 22.306362632906232,
+        "diff_vieira_minus_b5": 11.787095146966086
+      },
+      "strong_8dB": {
+        "b5_n16": 16.964751730382915,
+        "vieira_n1024": 29.347175249384993,
+        "diff_vieira_minus_b5": 12.382423519002078
+      },
+      "strong_13dB": {
+        "b5_n16": 17.61052005690391,
+        "vieira_n1024": 28.77030681302738,
+        "diff_vieira_minus_b5": 11.15978675612347
+      },
+      "strong_18dB": {
+        "b5_n16": 17.704721593078048,
+        "vieira_n1024": 28.122923878261144,
+        "diff_vieira_minus_b5": 10.418202285183096
+      }
+    },
+    "diff_range_mhz": [
+      5.297986654220433,
+      12.510282249389979
+    ],
+    "b5_vs_vieira_crossover": false,
+    "signal": false,
+    "physical_causation": "若 A4 信号: B5(16) vs Vieira(1024) crossover, 物理机制 = B5 块数优势 (1024 块均值) 在低 SNR/强湍流压噪声赢; Vieira 频率分辨率优势 (1024 bin) 在高 SNR/大残频赢. 若 A4 无信号: B5(16) 全条件赢 (块数优势恒主导).",
+    "verdict": "A4 FAIL: B5(16) 全条件赢 Vieira(1024), 无 crossover"
+  },
+  "A5_eval_dimension": {
+    "dimensions_per_turb": {
+      "weak": {
+        "sigma_b5_mhz": 13.197595410589908,
+        "sigma_vieira_mhz": 25.265323488939128,
+        "outage_b5": 0.0,
+        "outage_vieira": 0.0,
+        "iqr_absresid_b5_mhz": 17.193757768765764,
+        "iqr_absresid_vieira_mhz": 34.531140992329746,
+        "mean_iter_b5": 1.0,
+        "mean_absresid_b5_mhz": 25.383090237752757,
+        "mean_absresid_vieira_mhz": 19.169699372016154
+      },
+      "moderate": {
+        "sigma_b5_mhz": 14.628510513827747,
+        "sigma_vieira_mhz": 23.19193374139173,
+        "outage_b5": 0.0,
+        "outage_vieira": 0.0,
+        "iqr_absresid_b5_mhz": 22.651273028349934,
+        "iqr_absresid_vieira_mhz": 20.39744560756992,
+        "mean_iter_b5": 1.0,
+        "mean_absresid_b5_mhz": 27.75263975624342,
+        "mean_absresid_vieira_mhz": 20.387747267740878
+      },
+      "strong": {
+        "sigma_b5_mhz": 21.420429392734373,
+        "sigma_vieira_mhz": 28.445900362378477,
+        "outage_b5": 0.0,
+        "outage_vieira": 0.0,
+        "iqr_absresid_b5_mhz": 20.457480241651464,
+        "iqr_absresid_vieira_mhz": 30.57286191056968,
+        "mean_iter_b5": 1.0,
+        "mean_absresid_b5_mhz": 26.923494208270927,
+        "mean_absresid_vieira_mhz": 24.539492794652443
+      }
+    },
+    "outage_prob": {
+      "weak": {
+        "b5": 0.0,
+        "vieira": 0.0
+      },
+      "moderate": {
+        "b5": 0.0,
+        "vieira": 0.0
+      },
+      "strong": {
+        "b5": 0.0,
+        "vieira": 0.0
+      }
+    },
+    "sigma_per_turb": {
+      "weak": {
+        "b5": 13.197595410589908,
+        "vieira": 25.265323488939128
+      },
+      "moderate": {
+        "b5": 14.628510513827747,
+        "vieira": 23.19193374139173
+      },
+      "strong": {
+        "b5": 21.420429392734373,
+        "vieira": 28.445900362378477
+      }
+    },
+    "any_outage_nonzero": false,
+    "signal": false,
+    "physical_causation": "σ 维度 B5(16) < Vieira(1024) 是块数均值降噪必然结果 (已知, 非 A5 新发现). A5 看的是 σ 优势在可用性维度 (outage P(|res|>140MHz)) 是否落地. 全 outage=0 → 两方法都\"够好\" (残频<140MHz), σ 优势无可用性意义 → 无信号. outage 分化且 B5 优 → σ 优势落地为通信可用性增益 → 信号.",
+    "verdict": "A5 FAIL: σ 优势无可用性落地 (outage 全 0, 两方法残频都<140MHz都够好)"
+  },
+  "A6_failure_boundary": {
+    "sweep": [
+      {
+        "f_residual_ghz": 0.0,
+        "b5_sigma_mhz": 11.594519002352309,
+        "b5_absmean_resid_mhz": 9.519686041475643,
+        "vieira_sigma_mhz": 15.531801026631888,
+        "vieira_absmean_resid_mhz": 11.07835858705636
+      },
+      {
+        "f_residual_ghz": 0.05,
+        "b5_sigma_mhz": 11.437740057743692,
+        "b5_absmean_resid_mhz": 20.1640818126716,
+        "vieira_sigma_mhz": 13.748171055867292,
+        "vieira_absmean_resid_mhz": 10.13245382745002
+      },
+      {
+        "f_residual_ghz": 0.1,
+        "b5_sigma_mhz": 11.212904604360583,
+        "b5_absmean_resid_mhz": 42.150006895081134,
+        "vieira_sigma_mhz": 12.151685439293294,
+        "vieira_absmean_resid_mhz": 9.560045348370853
+      },
+      {
+        "f_residual_ghz": 0.2,
+        "b5_sigma_mhz": 10.569986778595968,
+        "b5_absmean_resid_mhz": 86.33284323581515,
+        "vieira_sigma_mhz": 9.424170389136687,
+        "vieira_absmean_resid_mhz": 9.072554375235885
+      },
+      {
+        "f_residual_ghz": 0.4,
+        "b5_sigma_mhz": 74.07736623447319,
+        "b5_absmean_resid_mhz": 79.82937752433847,
+        "vieira_sigma_mhz": 13.804469601667797,
+        "vieira_absmean_resid_mhz": 12.433056369117612
+      },
+      {
+        "f_residual_ghz": 0.6,
+        "b5_sigma_mhz": 13.229422756322458,
+        "b5_absmean_resid_mhz": 75.15264129375076,
+        "vieira_sigma_mhz": 16.023930832075123,
+        "vieira_absmean_resid_mhz": 41.35598471997141
+      },
+      {
+        "f_residual_ghz": 0.8,
+        "b5_sigma_mhz": 11.111221807899332,
+        "b5_absmean_resid_mhz": 121.35886650731463,
+        "vieira_sigma_mhz": 21.254457441348084,
+        "vieira_absmean_resid_mhz": 122.67030908754329
+      },
+      {
+        "f_residual_ghz": 1.0,
+        "b5_sigma_mhz": 14.936180168658701,
+        "b5_absmean_resid_mhz": 38.98185334090829,
+        "vieira_sigma_mhz": 26.17872817670038,
+        "vieira_absmean_resid_mhz": 301.1072664099735
+      },
+      {
+        "f_residual_ghz": 1.4,
+        "b5_sigma_mhz": 10.283770300322116,
+        "b5_absmean_resid_mhz": 144.8733125447116,
+        "vieira_sigma_mhz": 24.023867210054433,
+        "vieira_absmean_resid_mhz": 90.54175591940505
+      },
+      {
+        "f_residual_ghz": 1.8,
+        "b5_sigma_mhz": 605.9883378331426,
+        "b5_absmean_resid_mhz": 1239.5489763162234,
+        "vieira_sigma_mhz": 22.8095948938243,
+        "vieira_absmean_resid_mhz": 1037.391190949069
+      },
+      {
+        "f_residual_ghz": 2.2,
+        "b5_sigma_mhz": 11.430538540380336,
+        "b5_absmean_resid_mhz": 2215.928138799339,
+        "vieira_sigma_mhz": 20.72316922914089,
+        "vieira_absmean_resid_mhz": 1915.9295906201394
+      },
+      {
+        "f_residual_ghz": 2.4,
+        "b5_sigma_mhz": 11.709227480231593,
+        "b5_absmean_resid_mhz": 2528.8271090559124,
+        "vieira_sigma_mhz": 14.09622672672953,
+        "vieira_absmean_resid_mhz": 2314.0862224739226
+      }
+    ],
+    "failure_criterion": "tracking lost: |mean resid| > 2·f_true AND >200MHz, OR σ>140MHz",
+    "b5_first_tracking_lost_ghz": 1.8,
+    "vieira_first_tracking_lost_ghz": 2.4,
+    "b5_sigma_nonmonotone": true,
+    "signal": false,
+    "physical_causation": "n_fft=16 bin 宽 = fs/16 = 312.5MHz, Rp-n-vs-f 在 |f|→饱和点(~fs/(2·n_fft)) 非单调. B5 σ 在 0.4GHz 附近飙升 (Rp-n 饱和/翻转致 α 映射抖动) 又在 0.6-1.4GHz 回降 → σ 非单调, 单一 σ 阈值失效点不可靠. 用 |mean resid| 失锁判据 (估计是否跟住 f_true): B5(16)/Vieira(1024) 失锁点相同 (都在 ~1.8GHz 估不准, 都到 2.4GHz 才完全失锁) → 失效边界相同 → 无分化. (注: 非单调 σ 本身说明 B5 在大残频处行为不稳, 但这不构成\"独占创新\" — 是缺陷而非优势.)",
+    "honesty_note": "B5 σ 非单调 (Rp-n 在 0.4GHz 饱和飙升, 1.8GHz spike 又 2.2GHz 回降) → \"first tracking lost\" 是 σ 噪声尖峰的产物, 非单调失效边界. 且高频段 (>1.4GHz) B5/Vieira 都 |res|>>200 发散 → 同点失效, 非\"B5 独占优势边界\". 故 σ 非单调 OR 高频同发散 → A6 降级无信号.",
+    "verdict": "A6 FAIL: 失锁边界相同 (B5 σ 非单调致单一失效点定义不可靠, 但 |mean resid| 失锁判据下两法同点失效)"
+  },
+  "overall_salvage_verdict": "6 类适配全无信号 (A1/A4/A5/A6 全 FAIL; A2 D002 已做, A3 跳过无证据). n_fft=16 全条件碾压 n_fft=1024 (无 crossover), σ 优势不落地为可用性 (outage 全 0), 失效边界相同. B5 的全部优势 = n_fft=16 公开工程参数 (块数均值降噪), 无任何条件/维度/边界独占性. → 确认 Kill 成立.",
+  "honesty_check": "无硬凑嫌疑: A5 用物理意义维度 (outage=通信可用性), 全 FAIL 时诚实报 Kill"
+}
