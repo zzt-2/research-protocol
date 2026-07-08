@@ -109,3 +109,65 @@ S001（本轮）+ Explore agent B3-Q2 详查（6 问题 700 词）+ S031 #1 详�
 ### 来源
 
 S002（本轮阶段 0.1-0.2）+ 0.1a/0.1b 子 agent 产出 + 主线 grep jphot/sat.1553 原文核查
+
+---
+
+## D003: 阶段 0.3-0.6 完成——架构走前馈开环（不撞 D006）+ BUPT 迫近自吞风险登记（非 Kill，timeline 风险）
+
+> status: active
+> date: 2026-07-08（S003 阶段 0.3-0.6 完成）
+> 取代：无（D001/D002 决策不动，本轮是阶段 0 后半执行结论 + 架构方向定死 + 风险登记）
+> 被取代：无
+> 依据: S003 阶段 0.3-0.6 执行 + jphot content.md grep L101/175/208（前馈块估计证据）+ B3 详评 `_B3-...md` L77/L85（D006 边界判定）+ D006（decisions.md L341 禁区定义）+ BUPT 子 agent 产出 `_bupt_followup_audit.md`（三切口覆盖核查）
+> 触发原话: 无（技术推导，本轮 0.3-0.6 是 H002 派发任务的执行结论）
+
+### 决策
+
+**阶段 0.3-0.6 完成，阶段 0 全六项闭合，进 sandbox。** 同时定死架构方向 + 登记 BUPT timeline 风险。
+
+1. **架构走前馈开环**（INVARIANT 13 定死）：B3-Q2 联合估计 = 一套 TS 块估 FS+FOE+CPE+Doppler，逐块前馈不进环路。
+   - D006 边界判定：不撞（三重证据——D006 只禁湍流相位进环路 TF / B3 详评 Q2 判否 / jphot 本身前馈）
+   - Doppler 维度 = 块间 Δf̂_k 序列线性回归 → f_dot 前向补偿（确定性轨道运动，非随机湍流相位，物理本质不同）
+   - 排除形态（撞 D006 转 B3-Q3）：Doppler+湍流相位联合进环路 TF / KF 扩 [ω,f_dot,φ_T] / 湍流相位作 CPE 先验进环路
+
+2. **公平对照框架**（防增益归因，D002 首要风险对策）：
+   - 三方对照：M1 传统分立 TS（祖师爷）/ M2 jphot FSTS（公平基准）/ M3 B3-Q2 联合
+   - fair gain Go 判据 = `gain_vs_M2 > 0`（B3-Q2 vs jphot FSTS 有新增益），不用 gain_vs_M1（含 jphot 继承）
+   - 增益归因熔断：`gain_vs_M2 ≤ 0` → 红线警报转 Kill
+   - 消融归因：CPE 贡献 + Doppler 贡献各自 <10% → B3-Q2 无真实增量转 Kill
+
+3. **BUPT 迫近自吞风险登记**（非 Kill，timeline 风险）：
+   - 三切口（CPE 联合 / Doppler / 星地）**均未被单篇 BUPT 续作完整吞没**
+   - 但 BUPT 构件齐全（JCSCR CPE联合 + TTQP 分集FOE + SSRN/OECC 星地FS+FOE），2025-2026 持续活跃
+   - 12 个月内出现"星地分集+CPE/Doppler联合"汇合论文概率非低
+   - **对策**：sandbox/MVE 加速推进；SSRN/OECC abstract 亲验 + 张思齐 CNKI 核查作为 sandbox 前置债务
+
+### 排除的方向
+
+- **环路 TF 联合建模**：撞 D006（B1/Q12 双重证伪），转 B3-Q3 边界（只标不砍）
+- **baseline 只比传统 TS**：不公平（dB 是 jphot 继承的），必须含 jphot FSTS
+
+### 可复用部分
+
+- 0.3 架构决策文档（前馈开环流程 + D006 边界三重证据）
+- 0.4 三方对照矩阵 + 消融设计（CPE vs Doppler 归因）
+- 0.5 参数表（全标 source，grep 核验）
+- 0.6 五个新建代码接口定义（MRC/帧同步/多支路预校正/联合管线/多望远镜信道）
+- BUPT 审计文档（续作清单 + 三切口覆盖判断）
+
+### 影响范围
+
+- **sandbox 阶段（对话 3）**：按 0.4 三方对照矩阵跑 M1/M2/M3，主场景单链路强湍+Doppler
+- **INVARIANT 13 定死**：前馈开环架构不变（动则重新讨论）
+- **增益归因熔断机制**：sandbox 的 gain_vs_M2 ≤ 0 是硬 Kill 触发条件
+- **债务登记**：Doppler f_dot 溯源 + SSRN/OECC abstract 亲验 + 张思齐 CNKI 核查 + 转录错误修正（D002 遗留）+ 多望远镜间距参数
+
+### 教训
+
+1. **0.4/0.5/0.6 强耦合合并产出合理**：三阶段依赖链（架构→baseline→参数→接口），合并在一个文档避免跨文件不一致。但文档较长（16KB），后续若改某节需注意三节联动
+2. **BUPT 审计的"负证据"判断需克制**：子 agent 对 Doppler"未覆盖"判断基于"已验证 abstract 无一提 Doppler"——这是负证据（absence of evidence），不是证据。主线接受但标注"基于负证据，SSRN/OECC abstract 未亲验是漏洞"
+3. **Doppler 维度的 D006 边界判定靠物理本质区分**：确定性 Doppler（轨道运动可预测）vs 随机湍流相位（D006 禁区）——两者物理本质不同，前馈估计 Doppler 不撞 D006。这个区分是本轮 0.3 的关键判断，需 sandbox 验证前馈外推误差不退化成"等效环路"
+
+### 来源
+
+S003（本轮阶段 0.3-0.6）+ jphot content.md grep + B3 详评 + D006 + BUPT 子 agent 产出 `_bupt_followup_audit.md`
