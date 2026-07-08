@@ -1,8 +1,8 @@
 ---
 name: sim-preflight
 description: 仿真前必看流程。触发场景：跑仿真/实验脚本、改实验参数、加新算法（载波恢复/KF/DPLL/VV/BPS/均衡）、验证 BER 或相位估计结果、为论文引用仿真数字、修改 common/ 或 params.py、新对话恢复仿真工作。强制按文档纪律操作，防止文档体系崩溃。遗漏即中断。
-version: 1.1.0
-last_updated: 2026-06-14
+version: 1.2.0
+last_updated: 2026-07-08
 changelog: ./CHANGELOG.md
 ---
 
@@ -11,6 +11,18 @@ changelog: ./CHANGELOG.md
 本 skill 是 `projects/simulation/` 仿真体系的操作纪律。目的：**防止文档体系崩溃**——一旦文档乱了，后续无法恢复，整个研究报废。
 
 本文件是**索引**。详细规则按场景和类别拆到 `scenarios/` 和 `rules/` 子目录，按需 Read。
+
+## 0. 阶段边界（先判断本 skill 该不该上场）
+
+本 skill **只管 Execute 阶段**——方向已选定、Contract 已冻结、进入仿真实现之后。4 个场景（跑实验/加算法/写论文/恢复）全部假设此前提。
+
+**不该用本 skill 的阶段**（用了 = 越界跳步）：
+- 方向探索/评判筛选 → 专题 `.sessions/2026-06-10-research-direction-exploration/`
+- Groundwork 前置（论文精读/综述/baseline合法性/空白零假设）→ `stages/groundwork.md`, `stages/gw-read.md`
+- MVE 本身 → `stages/gw-feasibility.md` §D（必含 FR-11~15）
+- Contract（瓶颈诊断/参数溯源/动作空间/信息增量）→ `stages/contract.md`
+
+⚠️ **常见跳步**：候选筛出后直接想跑 MVE。正确链 = 筛选 → Groundwork 前置 → 合规 MVE → Contract → Execute（本 skill）。
 
 ## 1. 核心 5 条（任何场景必守）
 
@@ -55,6 +67,7 @@ changelog: ./CHANGELOG.md
 | 文档纪律 | `rules/doc-discipline.md` | 改任何 .md 前 |
 | 中断协议 | `rules/interrupt.md` | 怀疑违规时 |
 | 归档流程 | `rules/archive.md` | formulas-master 接近上限时 |
+| 增量方向扫描 | `rules/adaptation-scan.md` | 跑 MVE/Contract/Execute 实验前找增量方向时 |
 | 使用日志 | `rules/usage-log.md` | 每次任务结束时（强制） |
 | 月度审计 | `rules/audit-skill.md` | 每月维护 skill 时 |
 
