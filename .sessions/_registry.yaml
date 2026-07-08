@@ -332,7 +332,7 @@ topics:
     title: B2-Q2 Fade-Freeze + Pilot-Aided Fallback 双模切换第三候选（Killed——闭环版救援 D003 三 Go 全 FAIL + Go1 物理根因证伪）
     status: closed
     created: "2026-07-08"
-    last_updated: "2026-07-08（S005 闭环版 sandbox 救援路线 FAIL + D004/K001 Kill——fade 期 hold 相位误差 0.0515 rad << π/8=0.39 rad，换架构解不了是信道模型物理特性。前馈版 S003 三 Go 全 FAIL + 闭环版 S005 三 Go 全 FAIL + Go1 物理根因证伪。复用基建保留 _closed_loop_freeze.py + power-boost 框架 + n_recover v2 度量供 B11-Q2/B7-Q2 复用）"
+    last_updated: "2026-07-08（S005 闭环版 sandbox FAIL + 再查发现 Go3 假阳性——用户追问'能大大方方讲吗'后决定性分解实验证伪：Go3 +0.42dB 是 h 均衡口径 bug 假阳性(同h均衡下 fade块 pilot≈blind 0.00330 vs 0.00322)。B2-Q2 无真实提升,核心命题(pilot fallback 优于 blind freeze)在当前信道实证不成立。Go1 论据修正(hold误差实际0.32rad非0.05rad但结论不变:非fade期blind一块锁定无惯性)。H005交主控定夺Kill）"
     description: "承接上游 2026-06-20-problem-driven-redirection S031 排优先级（B2-Q2 第二档 #7 边际够格，范围 in 星地）+ 切法地图参照系（B2 饱和池 §A 小池 3 篇锚无大点）。主控对话开题（不自己执行），派工作对话执行阶段 0.1-0.6。**B2 特殊风险**：①核心命题被 step4a 实测反证（DA pilot 在 fade 崩溃 vs NDA 鲁棒）②sat.1553 +1dB 口径错位（PE vs VV+diff 不是 FOE freeze 增量）③饱和池 dB 难出区④跟 NDA-ML fade 鲁棒性叙事撞车。**复用基建完整**：common/_recovery.py 4 估计器全有（fft_foe/nda_ml/da_ml/psa_foe），双模切换 = (blind + 功率阈值 gating) ↔ (pilot) 模式切换。守 sim-preflight v1.3.0 + D005 务实路线 + D006 红线（双模切换是估计器选择不纳入环路 TF，前馈化合法不撞）。拆对话：①阶段 0 前置规约（张力验证/dB 溯源/架构定性/公平对照/参数真相源/文件组织）②sandbox 三方对照（双模切换/纯 blind freeze/纯 pilot-aided）③MVE + consistency。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
@@ -360,6 +360,23 @@ topics:
         reason: 继承 NDA-ML B11-Q1 执行链（D-008 双 bug 待修 + vs DA-ML +1.35~2.5dB 主结论 + 复用基建 nda_ml/da_ml + 湍流信道组件 + B2 Kill D004/K001 教训）
       - slug: 2026-07-08-b2-fade-freeze-pilot-fallback
         reason: B2 Kill 教训（前馈化导致测度失效，对 B11-Q2 前馈 ML 在湍流下是否测度失效有警示）+ 复用基建（_closed_loop_freeze.py + power-boost 框架保留）
+    conflicts_with: []
+
+  - slug: 2026-07-08-b3-joint-estimation
+    title: B3-Q2 子系统协同联合估计第三候选（B2 Kill + B11-Q2 放弃后接替，首验证 4 支路迁移）
+    status: active
+    created: "2026-07-08"
+    last_updated: "2026-07-08（S001 开题 + 阶段 0 六项规约设计完成 D001——首验证 4 支路迁移策略。B3-Q2 +2~3dB 是 4 支路 MRC 强湍的，单支路 ~1dB，星地单孔径难堆叠多望远镜（jphot 笔记 L56）。jphot+oe BUPT 课题组已完成 FS+FOE+MRC 联合（A1 归属风险）。导师'特长场景'标准下 B3-Q2 特长场景=强湍流分集接收下联合估计 vs 分立管线。阶段 0.1 验证星地多孔径阵列是否真实工程场景 + FR-21 单链路 CRB 上界前置。H001 + PROMPT-001 交接工作对话执行 0.1-0.6）"
+    description: "B2 Kill + B11-Q2 放弃后接替方向。S031 #1 Conditional Go（+2~3dB 4 支路强湍，dB 最高）。导师'特长场景'标准下是真新方法不是凑数（B11-Q2 是 NDA-ML 验证延伸被用户判凑数放弃）。**B3-Q2 特殊风险**：①4 支路→星地单链路迁移（dB 砍半，星地单孔径难堆叠多望远镜）②A1 归属（jphot+oe BUPT 课题组已完成 FS+FOE+MRC 联合）③D006 边界（前馈开环不撞/环路 TF 撞转 B3-Q3）④代码基建需全新（MRC+帧同步+多支路管线+多望远镜信道）。锚论文 jphot.2023.3265847 + oe.520452（BUPT Liqian Wang 课题组姊妹工作）。守 sim-preflight v1.3.0 + D005 务实路线 + D006 红线。拆对话：①阶段 0 前置规约（4 支路迁移验证/A1 归属核查/架构定性/公平对照/参数真相源/文件组织）②sandbox（联合估计 vs 分立管线三方对照）③MVE + consistency。"
+    depends_on:
+      - slug: 2026-06-20-problem-driven-redirection
+        reason: 继承 S031 #1 B3-Q2 Conditional Go + D005 务实路线 + D006 红线 + D017/D018 判读框架
+      - slug: 2026-07-05-carrier-sync-v2-cut-pattern
+        reason: 继承切法地图定稿（B3 饱和池 §A 联合建模子大点 + _cut-b1b2b3-verify.md dB 出处核验）
+      - slug: 2026-07-02-carrier-sync-v2-deep-read
+        reason: 继承 B3 gw-read 结构化笔记（_B3-subsystem-coordination-increment.md + jphot/oe 精读笔记）
+      - slug: 2026-07-08-b2-fade-freeze-pilot-fallback
+        reason: B2 Kill 教训（前馈化测度失效 + 造问题 vs 真实场景判据，对 B3-Q2 星地多孔径阵列真实性验证有警示）
     conflicts_with: []
 
   - slug: 2026-07-08-b5-leo-doppler-spectrum-foe

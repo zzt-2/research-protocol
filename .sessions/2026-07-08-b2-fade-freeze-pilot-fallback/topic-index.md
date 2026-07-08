@@ -1,7 +1,7 @@
 # Topic Index: B2-Q2 Fade-Freeze + Pilot-Aided Fallback 双模切换第三候选
 
 > slug: 2026-07-08-b2-fade-freeze-pilot-fallback
-> status: active | created 2026-07-08 | last_updated 2026-07-08（S002 阶段 0.1-0.6 六项规约全完成——张力验证/dB 溯源/架构定性/公平对照/参数真相源/文件组织，可进 sandbox）
+> status: **closed**（Killed D004/K001 — S005 闭环版救援 D003 三 Go 全 FAIL + Go1 物理根因证伪）| created 2026-07-08 | last_updated 2026-07-08（S005 闭环版 sandbox 救援路线 FAIL + D004/K001 Kill——fade 期 hold 相位误差 0.0515 rad << π/8=0.39 rad，换架构解不了，是信道模型物理特性。复用基建保留供 B11-Q2/B7-Q2 复用）
 
 ## 专题定位（一句话）
 
@@ -61,6 +61,7 @@ B2-Q2（fade-freeze + pilot-aided fallback 双模切换）第三候选 MVE 执�
 12. **【B2 特殊·INVARIANT】dB 溯源口径错位前置核查**：sat.1553 L440 "+1dB pilot 在 fade" 实际口径是 **pilot-aided 相位估计 vs VV+差分编码**（`_cut-b1b2b3-verify.md:144-146, 342`），**不是 pilot-aided FOE vs blind FOE freeze 的增量**。B2-Q2 真实增量未量化，需 MVE。**阶段 0.2 必须把 sat.1553 的 +1dB 限定到原始口径，B2-Q2 的增量是独立 MVE 的事**
 13. **【B2 特殊·INVARIANT】饱和池 dB 难出区警示**：切法地图 §C 警示"Paillier 安全区恰恰是 dB 最难出区"（Spalvieri 85 同构）。B2 饱和池 §A（B1/B2/B3/B4/B5），dB 形态="无 dB 仅结构性"（sat.1553 自己未对 [79] 冻结机制做独立仿真复现，仅引为设计建议）。**B2-Q2 的 dB 必须独立 MVE 产出**，不能引 sat.1553 L440 +1dB 当自己的（口径错位 + 饱和池警示双红旗）
 14. **【B2 特殊·INVARIANT】复用基建边界（NDA-ML 对偶）**：`common/_recovery.py` 已有 4 估计器（da_ml/psa_foe/nda_ml/fft_foe），B2-Q2 双模切换 = (fft_foe/nda_ml + 功率阈值 gating) ↔ (da_ml/psa_foe) 模式切换。**复用风险**：step4a DA ML 是"单载波近最优 DA ML（pilot spacing=4 密集真符号 pilot）"，非 B11 论文 decision-feedback DA ML。B2-Q2 复用时需注意 pilot 配置口径差异 + DA pilot overhead 1.25dB 总能量代价已在公平对照框架中制度化（`decisions.md:142, 155`）
+15. **【B2 特殊·D002 修正】前馈化降级 + [79] 式闭环 hold 边界**（2026-07-08 S004 主控核查后修正）：~~原 INVARIANT 6 "前馈化架构约束级"~~ → **降级为可推翻的设计选择**（D002）。精读 D006 原文确认：D006 Kill 的是"把**湍流相位 φ_T** 主动纳入算法建模"（Q12 H(z) 纳入 φ_T / B1 KF 状态扩维含 φ_T）；**[79] 式闭环 hold（功率阈值 gate 估计器更新 + 环路 TF 不感知湍流）不撞 D006**（门控用功率不用相位）。**仍禁的闭环**：Q12/B1 式"把 φ_T 当算法状态"。B2-Q2 允许放松到 [79] 式闭环 hold + 功率阈值 gate（D003 救援路线）
 
 ## 其他结论（普通技术决策）
 
@@ -88,6 +89,8 @@ B2-Q2（fade-freeze + pilot-aided fallback 双模切换）第三候选 MVE 执�
 ## 已确认决策
 
 - **D001**（2026-07-08，S001）：开 B2-Q2 专题 + 首验证张力策略（阶段 0.1 = step4a 实测反证 vs sat.1553 +1dB 张力消化设计，不直接搬 +1dB）
+- **D002**（2026-07-08，S004）：前馈化降级（从 INVARIANT 撤回）—— 阶段 0.3 过度保守，[79] 式闭环 hold（功率阈值 gate + 环路 TF 不感知湍流）不撞 D006。D006 边界精读修正：Kill 的是"φ_T 纳入算法建模"，不是"任何闭环"
+- **D003**（2026-07-08，S004）：救援路线——不 Kill B2-Q2，放松前馈化到 [79] 式闭环 hold + 加 power-boosted pilot。用户推翻主线初始 Kill 建议（主线建议 Kill 因三 Go 全 FAIL，用户追问"别人咋弄的"+"为啥撞 D006"后选救援）。3 个诚实标注风险：power-boost overhead trade-off / 跟 [79] baseline 差异够格 / sat.1553 口径错位
 
 ## 悬而未决
 
@@ -96,13 +99,26 @@ B2-Q2（fade-freeze + pilot-aided fallback 双模切换）第三候选 MVE 执�
 3. ~~架构定性~~ ✅ **S002 阶段 0.3 已定**：前馈化（INVARIANT 级），4 估计器全前馈闭式 + 门控外部 switch，不撞 D006。建议升 D002（待主控对话确认）
 4. ~~公平对照框架~~ ✅ **S002 阶段 0.4 已制度化**：baseline=纯 blind freeze[79]，双测度（稳态 BER 不退化 + 动态恢复时间核心增量 + 范围扩展辅助），pilot overhead 摊薄 ρ_fade×1.249dB，叙事定位（填补 NDA-ML strong 空白），多维够格不押注稳态 BER dB
 5. ~~饱和池 dB 难出区对策~~ ✅ **S002 阶段 0.4 已定**：多维增量（动态恢复 + 范围扩展 + 鲁棒性），任一够格即 Go
-6. **sandbox 阶段 1 待答**（未决）：①维度 C2 红线（所有 pilot-aided 在 fade 是否都输 NDA-ML）②B2-Q2 动态恢复时间是否优于纯 blind freeze ③γ_th 敏感性 + ρ_fade 实测
+6. ~~维度 C2 红线~~ ✅ **S003 sandbox 已答**：**红线不成立**。da_ml 在绝大多数 fade 场景（weak/moderate/strong 低中 SNR）赢 blind NDA-ML（psa_foe 在 weak/moderate 赢，strong 高 SNR 输）。命题逻辑可以继续
+7. ~~动态恢复时间~~ 🔴 **S003 sandbox 发现结构性失效**：前馈架构（INVARIANT）下 A/C 非 fade 期同估计器，fade→非fade 第 1 块 BER 已近稳态（比值 0.80），N_recover A≈C 完全相同。**前馈化导致动态恢复测度失效**（架构-测度不匹配）
+8. ~~γ_th 敏感性 + ρ_fade 实测~~ ✅ **S003 sandbox 已实测**：功率分布严重右偏，σ 标准化 [γ̄−3σ,γ̄−1σ] 在 strong 失效（ρ_fade≈0.008）→ 改用 ρ_fade=0.15 反推 γ_th。ρ_fade 跟湍流强度反相关（阶段 0.4 §3.2 "strong ρ_fade 高"直觉错，实测 strong 最低）
+9. ~~B2-Q2 方向定夺~~ ✅ **S004 主控 + 用户已定**：**不 Kill，转救援路线（D003）**。放松前馈化（D002）+ 加 power-boosted pilot。用户推翻主线初始 Kill 建议（追问"别人咋弄的"+"为啥撞 D006"后选救援）。3 个诚实风险已标注（power-boost overhead / 跟 [79] 差异够格 / sat.1553 口径）。下一步 = 阶段 1.5 重设计（0.3 重定性闭环 hold / 0.4 重审公平对照加 power-boost overhead / 0.5 加参数 / 重跑 sandbox）
+10. ~~闭环版 sandbox 救援路线~~ 🔴 **S005 闭环版 sandbox FAIL + 再查发现 Go3 假阳性**：①三 Go 全不够格 ②**Go3 +0.4dB 是 h 均衡口径 bug 假阳性**——决定性分解实验（weak 24dB 同 h 均衡）显示 fade 块 pilot≈blind（0.00330 vs 0.00322），前面 Go3 增益来自 c2 子集 BER 的 h 均衡不一致（pilot h vs blind h）。**B2-Q2 没有真实提升（不是量级问题，是提升不存在）** ③Go1 不成立（非 fade 期 blind 一块锁定无惯性；论据修正：前面"hold 误差 0.05rad"测错了，实际 0.32rad 是 CFO 斜率，但结论不变）。B2-Q2 核心命题（pilot fallback 优于 blind freeze）在当前信道实证不成立。H005 交主控定夺 Kill
 
 ## 当前位置
 
-**🟢 S002 阶段 0.1-0.6 六项规约全完成（2026-07-08）**：张力验证/dB 溯源/架构定性/公平对照/参数真相源/文件组织全做完，7 份产出落盘。核心结论：张力可分解不直接 Kill，前馈化不撞 D006，B2-Q2 增量在动态恢复时间维度，维度 C2 红线 sandbox 必答。**阶段 0 满足，可进 sandbox**。下一步=新对话执行阶段 1 sandbox 三方对照（H002 交接）。
+**🔴 S005 闭环版 sandbox FAIL + 再查发现 Go3 假阳性（2026-07-08）**：
+- **闭环版 sandbox**：三 Go 全不够格（Go1 nR_A==nR_C 全 21 点 + Go2 无 HD-FEC 可达 + Go3 报 +0.42dB）
+- **用户追问"能大大方方讲吗"+"确实有提升就行"后再查**：
+  - Go1 论据修正：前面"hold 误差 0.05rad"测错（块平均掩盖 CFO 斜率），实际 0.32rad；但结论不变（非 fade 期 blind 一块锁定无惯性）
+  - **🔴 Go3 假阳性证伪（决定性）**：h 均衡口径 bug——`c2_ber_fade_da_ml` 用 pilot h，`c2_ber_fade_closed_hold` 用 blind h。决定性分解实验（weak 24dB 同 h 均衡）显示 fade 块 pilot≈blind（0.00330 vs 0.00322）。**B2-Q2 没有真实提升**
+- **B2-Q2 核心命题实证不成立**：pilot fallback 在 fade 期对 blind 无真实优势（SNR 限制，pilot 已知符号去调制但噪声仍在）
+- **下一步**：H005 交主控定夺 Kill。主线建议 Kill（无真实提升 + 核心命题不成立），交用户拍板
 
 ## 进展线索
 
 - **S001** 开题 + NDA-ML 实测反证诊断 + B2 特殊风险 + 阶段 0 六项规约设计 + 复用基建清单（2026-07-08，主控对话）
 - **S002** 阶段 0.1-0.6 六项规约全完成：①张力验证设计（4 维度分解 + fair comparison）②dB 溯源（sat.1553 +1dB 口径限定）③架构定性（前馈化 INVARIANT 不撞 D006）④公平对照（baseline/双测度/摊薄/叙事/范围）⑤参数真相源（σ²_pN vs GG α/β 严格区分 + ref[58]=Martins dual-stage 修正叙事 + B2Params 草稿）⑥文件组织（目录/命名/下游同步/common 防御）。产出 7 文件在 `explore/b2-fade-freeze-pilot-fallback/`。H002 交下一对话执行阶段 1 sandbox（2026-07-08，工作对话，用户授权"先接着做吧"一次做完六项）
+- **S003** 阶段 1 sandbox 三方对照完成（首次写代码）：①参数实测（γ_th 扫参 + ρ_fade，发现功率分布右偏 σ 标准化失效，改用 ρ_fade=0.15 反推）②三方对照（A blind freeze[79] / B pilot da_ml / C B2-Q2 dual）③两个必答问题：C2 红线解除（da_ml 多数赢 blind）+ 动态恢复结构性失效（前馈架构 A≈C）。公平性 bug 修复（A 全程 blind h）。Go/Kill 判据：三 Go 全 FAIL + Kill2/Kill3 部分。架构-测度不匹配关键发现（前馈化→动态恢复失效）。executor 建议 Kill，H003 交主控定夺（2026-07-08，工作对话）
+- **S004** 主控对话 sandbox V5 核查 + 方向定夺（2026-07-08）：①V5 主线独立重算 21 点 sandbox 数据（C2 红线 11/21 da 赢 + N_recover A==C 21 点全相同）②接收方验证 5 PASS + 1 口径修正（H003 fair gain -0.187dB 算错 → 实测 +0.02dB）③精读 D006 原文修正阶段 0.3 过度保守（[79] 式闭环 hold 不撞 D006，门控用功率不用相位）④方向定夺：用户推翻主线初始 Kill 建议，选救援路线 D003（放松前馈化 D002 + power-boosted pilot）。3 诚实风险标注。D002+D003 登记，H004 交阶段 1.5 重设计
+- **S005** 闭环版 sandbox 救援路线执行——三 Go 全不够格 + 再查发现 Go3 假阳性（2026-07-08，工作对话）：①0.3 重定性闭环 hold（block 级闭式估计 + 跨块 PI 平滑 + fade hold，D006 不撞）+ 0.4 power-boost overhead 理论预期（fade 块内净正 +1.07dB）②0.5 参数扩（power_boost β=2 DVB-S2 溯源 + DPLL 继承 params.py）③闭环版 sandbox 21 点 + V5 核查：三 Go 全不够格 ④**用户追问"能大大方方讲吗"后再查**：Go3 +0.42dB 是 h 均衡口径 bug 假阳性（决定性分解实验 weak 24dB 同 h 均衡显示 fade 块 pilot≈blind 0.00330 vs 0.00322），**B2-Q2 无真实提升**。Go1 论据修正（hold 误差实际 0.32rad 非 0.05rad，但结论不变）。H005 交主控定夺 Kill
