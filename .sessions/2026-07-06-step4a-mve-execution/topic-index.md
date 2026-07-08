@@ -1,7 +1,7 @@
 # Topic Index: Step 4a 维度 D MVE 执行
 
 > slug: 2026-07-06-step4a-mve-execution
-> status: active | created 2026-07-06 | last_updated 2026-07-08（S012 续接：A3 NDA+DPLL 组合适配实验 FAIL。混合（NDA 粗估+DPLL 连续精跟）全场景 ≈ max(NDA,DPLL)，无额外增益，互补性假设证伪（strong deep fade 混合反输 DPLL 0.046dB，NDA 在 fade 块估计误差传给 DPLL 反而更差）。TL-20 一致性自检 ALL PASS（实现正确）。物理根因：σ²_p=2.51e-5 下两方法处理同族相位变化强项重叠冗余。4 种适配扫描 A1-A4 基本闭合，NDA-ML 算法层无显著增量方向。详见 S012 §9 + _a3_hybrid_report.md）
+> status: active | created 2026-07-06 | last_updated 2026-07-08（S013 续接 A1 参数适配 FAIL。NDA 块长自适应 K 两阶段验证：标定 35 点 4 判据 ρ 全<0.6（J4 unwrap bug 修正后仍 -0.019），验证 8 点 5 seed adaptive-J4 gain vs K16=+0.000dB 退化 always-K16，0/8 点显著赢。oracle 上界仅 -0.474dB 且 -2.46dB 全来自 1000kHz 非主流极端点。D-011 记录 FAIL。前 S012 A3 组合适配亦 FAIL（混合≈max(NDA,DPLL) 互补证伪）。4 种适配扫描进度：A2 已做/A3 FAIL/A1 FAIL/A4 待返回。详见 S013 + D-011 + _a1_adaptive_k_report.md）
 
 ## 专题定位（一句话）
 
@@ -133,6 +133,7 @@ projects/simulation/
   - **D004-b** 公平对照 gain @ HD-FEC：AWGN +0.70 / weak +1.20 / moderate +1.92 / strong 物理不可达但 NDA 全工作区赢（形态 A+C 双增量叙事）
 - **D005** SC-NDA-ML MVE PASS → Go（2026-07-06 新建）：公平对照 fair gain @ HD-FEC 实测 AWGN +0.704 / weak +1.199 / moderate +1.922 dB 全 ≥0.5dB（SPEC §5 Go 门），strong 物理不可达但工作区(≥15dB)全赢 DA（per-point +1.19~+2.62dB）。TL-20 预期 5 项全 PASS 0 DEVIATION。NDA-vs-oracle gap 全 <3dB（0.38/1.49/1.97/2.58dB，升幂实现正确）。主线独立 grep 核查 6 项 MVE 纪律全落实（per-block h / 公平对照 / 两阶段 FOE / resolve blockwise / 共用信道 / N≥1e5）。进 Step 5（Baseline 选定：DA ML pilot sp=4 锁 FR-15 目标 baseline，NDA-ML 锁提出方法）
 - **D-010** 导师确立 baseline 选取标准（5 条）+ 方向/复现源质量门（2026-07-08 新建）：①同场景星地湍流 ②同类型层级（载波/定时/均衡层）不深入子层 ③不找接近方法当 baseline（VV 同族禁主比）④近年+权威（2022+ Trans）⑤找方向/复现只看够好的（避 letter/仿真不全）。工具链核查：老师"trans 不好检索"对我们不成立（search 搜元数据 venue 全 + blit 下全文），blit venue 硬编码空串缺陷已修。候选框架/skill 更新点已标（groundwork S4-7 / code-quality 矩阵 / tools-guide §2），本轮不改守"先测不改协议"。
+- **D-011** A1 参数适配（NDA 块长自适应 K）FAIL（2026-07-08 新建）：自适应-J4 gain vs K16=+0.000dB（退化 always-K16），0/8 点显著赢，oracle 上界仅 -0.474dB 且 -2.46dB 全来自 1000kHz 非主流极端点。3 条失败机制：最优 K 变化范围窄（K∈{8,16,32} K=16 普适 71%）/ 判据层失效（4 判据 ρ<0.6 J4 修正后仍 -0.019）/ 唯一显著点不在主流场景。教训 8-10（"参数随条件变"≠"自适应有空间"需三重检验 / unwrap 对升幂相位不可用第 2 次复发 / 子 agent 映射拟合要核查退化）。
 
 ## 悬而未决
 
@@ -196,6 +197,7 @@ projects/simulation/
 - **S010** D-010 baseline 标准 + blit venue 修复 + baseline 池检索精读（2026-07-08）
 - **S011** DPLL DD 异族 baseline 仿真 + baseline 池立住（2026-07-08）
 - **S012** 方法论转向：4 种适配 skill + 3 并行实验方向（2026-07-08，本对话产出）
-- **S013** 4 种适配扫描各方向实验日志（2026-07-08 新建，A3 NDA+DPLL FAIL 首条；后续 A1/A4 结果追加到此，不另开 S###）
+- **S013** 4 种适配扫描各方向实验日志（2026-07-08 新建，A3 NDA+DPLL FAIL 首条；2026-07-08 续接 A1 参数适配 FAIL 第二条；后续 A4 结果追加到此，不另开 S###）
+- **D-011** A1 参数适配（NDA 块长自适应 K）FAIL（2026-07-08，S013 新建）
 - **S010** D-010 baseline 标准确立 + baseline 池检索精读（2026-07-08，10 组查询 ~220 篇召回 4 篇精读，认知修正：通信 baseline 自实现）
 - **S011** DPLL DD 异族 baseline 仿真 + baseline 池立住（2026-07-08，TL-20 四判据全 PASS，DPLL 连续处理 omega_n=50e6，vs NDA 持平到稍差，异族合规）

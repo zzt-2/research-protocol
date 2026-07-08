@@ -398,11 +398,9 @@ topics:
 
   - slug: 2026-07-06-step4a-mve-execution
     title: Step 4a 维度 D MVE 执行（B11 单载波 NDA-ML 主推 + B7/B3 待开）
-    status: dormant
+    status: active
     created: "2026-07-06"
-    last_updated: "2026-07-08（S008 VV/BPS ablation + D-008 双 bug + D-009 线宽选择待用户拍板。NDA-ML vs DA-ML 稳赢 +1.3~2.5dB 主结论不受影响，但 vs VV/BPS ablation 待 sandbox 重判 + 线宽 10kHz 疑似选错待修正回 Valjus 区间。用户决策同时跑 B7 分散风险，本专题转 dormant 等 B7 出结果或 NDA-ML 线宽/方向拍板后回来）"
-    created: "2026-07-06"
-    last_updated: "2026-07-08（S008 LMMSE 复现失败 + VV/BPS 经典 baseline 实测对照。LMMSE 因 PDF→md 公式丢失复现失败，用户选方案 C 切 VV/BPS。VV/BPS 重跑 D-007 后真相源：NDA-ML vs VV 持平，NDA-ML vs BPS 稳赢。会议级对照矩阵已齐。详见 S008）"
+    last_updated: "2026-07-08（S013 续接 A1 参数适配 FAIL。NDA 块长自适应 K 两阶段验证：标定 35 点 4 判据 ρ 全<0.6（J4 unwrap bug 修正后仍 -0.019），验证 8 点 5 seed adaptive-J4 gain vs K16=+0.000dB 退化 always-K16，0/8 点显著赢。oracle 上界仅 -0.474dB 且 -2.46dB 全来自 1000kHz 非主流极端点。D-011 记录 FAIL + 教训 8-10。4 种适配扫描进度：A2 已做/A3 FAIL/A1 FAIL/A4 待返回。详见 S013 + D-011）"
     description: "承接上游 2026-06-20-problem-driven-redirection S031 排优先级（B11/B3/B7 三个 Conditional Go）+ 切法地图专题参照系。守 FR-21 oracle 上界前置门控（先算 CRB 下界 <0.5dB 直接砍不跑 MVE）+ TL-20 先建理论预期 + TL-26 参数溯源 + FR-18 竞争格局 + FR-12 MVE→Formal 架构差异。复用 projects/simulation/common/ 基建（GG+Doppler+phase noise 信道 + VV/BPS/DPLL/KF 载波恢复），增量扩 M-APSK 调制 + DA ML/NDA-ML/Gardner TED/FOE 估计器（B11+B3+B7 共用）+ params 扩 CLW/HD-FEC/LEO Doppler rate（全标 source）。explore/ 模式每候选一子目录（*-MVE-SPEC.md 契约 + _crb_lower_bound.py + mve 脚本 + results.json），MVE 通过后转 experiments/。拆对话：①基建扩充+B11 oracle 上界 ②B11 MVE 或 B7 全流程 ③B3 架构决策（多孔径阵列 vs 单链路）+ 视情况。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
