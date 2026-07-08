@@ -1,7 +1,7 @@
 ---
 name: sim-preflight
 description: 仿真前必看流程。触发场景：跑仿真/实验脚本、改实验参数、加新算法（载波恢复/KF/DPLL/VV/BPS/均衡）、验证 BER 或相位估计结果、为论文引用仿真数字、修改 common/ 或 params.py、新对话恢复仿真工作。强制按文档纪律操作，防止文档体系崩溃。遗漏即中断。
-version: 1.2.0
+version: 1.2.1
 last_updated: 2026-07-08
 changelog: ./CHANGELOG.md
 ---
