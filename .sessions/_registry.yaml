@@ -366,7 +366,7 @@ topics:
     title: B3-Q2 子系统协同联合估计第三候选（B2 Kill + B11-Q2 放弃后接替，首验证 4 支路迁移）
     status: active
     created: "2026-07-08"
-    last_updated: "2026-07-08（S001 开题 + 阶段 0 六项规约设计完成 D001——首验证 4 支路迁移策略。B3-Q2 +2~3dB 是 4 支路 MRC 强湍的，单支路 ~1dB，星地单孔径难堆叠多望远镜（jphot 笔记 L56）。jphot+oe BUPT 课题组已完成 FS+FOE+MRC 联合（A1 归属风险）。导师'特长场景'标准下 B3-Q2 特长场景=强湍流分集接收下联合估计 vs 分立管线。阶段 0.1 验证星地多孔径阵列是否真实工程场景 + FR-21 单链路 CRB 上界前置。H001 + PROMPT-001 交接工作对话执行 0.1-0.6）"
+    last_updated: "2026-07-08（S002 阶段 0.1-0.2 完成 D002——不 Kill。星地多孔径阵列场景部分成立（Ma 2015 仿真+Geisler 2016 架构，无已部署工程；sat.1553 不提星地分集）+ 单链路 CRB ≈1.0~1.2dB ≥0.5dB（FR-21 不卡）。🔴 修正 4 支路 dB 转录错误（FR-26）：旧'4 支路 +2~3dB'实为 2 支路（jphot-L357/L375/L385 双源确认），4 支路真实=0.7dB(4-QAM)/2.14dB(16-QAM)，单支路 1.17dB≥4 支路。A1 归属：jphot 已 claim 两段式 FOE BL² 降噪，B3-Q2 切口=CPE 联合+Doppler 维度+星地场景。首要风险转移：4 支路迁移→增益归因（baseline 必须含 jphot FSTS）。H002 交对话 2 执行 0.3-0.6）"
     description: "B2 Kill + B11-Q2 放弃后接替方向。S031 #1 Conditional Go（+2~3dB 4 支路强湍，dB 最高）。导师'特长场景'标准下是真新方法不是凑数（B11-Q2 是 NDA-ML 验证延伸被用户判凑数放弃）。**B3-Q2 特殊风险**：①4 支路→星地单链路迁移（dB 砍半，星地单孔径难堆叠多望远镜）②A1 归属（jphot+oe BUPT 课题组已完成 FS+FOE+MRC 联合）③D006 边界（前馈开环不撞/环路 TF 撞转 B3-Q3）④代码基建需全新（MRC+帧同步+多支路管线+多望远镜信道）。锚论文 jphot.2023.3265847 + oe.520452（BUPT Liqian Wang 课题组姊妹工作）。守 sim-preflight v1.3.0 + D005 务实路线 + D006 红线。拆对话：①阶段 0 前置规约（4 支路迁移验证/A1 归属核查/架构定性/公平对照/参数真相源/文件组织）②sandbox（联合估计 vs 分立管线三方对照）③MVE + consistency。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
@@ -383,7 +383,7 @@ topics:
     title: B5-Q1 LEO Doppler 短时谱 FOE 第四候选（主控对话开题，首验证范围优势够格路径）
     status: active
     created: "2026-07-08"
-    last_updated: "2026-07-08（S005 续 范围优势结实度审计——D003：原定位崩塌转路 2。修正版审计 3 决定性问题实测：① BER 根因非 bug（B5 估噪 6.8MHz >> fft_foe 0.05MHz）② 范围优势归零（fft_foe 配星历 19/19=B5 19/19，残留 1.00×，Kill 级）③ 同族 PSA 增量（B5 线性 vs Vieira 对数 σ 好 66%，V3 未触发，救命级）。B5 不 Kill（候选池偏弱+方向稀缺，用户原话'别的也一般般？方向没那么多'）。转路 2 同族精度改进重定位，H006 交新对话重走 Step 4a）"
+    last_updated: "2026-07-08（S005 续 范围优势结实度审计——D003：原定位崩塌转路 2。修正版审计 3 决定性问题实测：① BER 根因非 bug（B5 估噪 6.8MHz >> fft_foe 0.05MHz）② 范围优势归零（fft_foe 配星历 19/19=B5 19/19，残留 1.00×，Kill 级）③ 同族 PSA 增益（B5 线性 vs Vieira 对数 σ 好 66%，V3 未触发，救命级）。B5 不 Kill（候选池偏弱+方向稀缺，用户原话'别的也一般般？方向没那么多'）。转路 2 同族精度改进重定位，H006 交新对话重走 Step 4a）"
     description: "承接上游 2026-06-20-problem-driven-redirection S031 排优先级（B5-Q2 第二档 #6 边际够格，范围 in 星地 LEO 下行）+ 切法地图参照系（B5 饱和池 §A 跟 B4 共锚 Paillier 43 篇大池，BUPT Arria 10 FPGA demo 会议级模板）。主控对话开题（不自己执行），派工作对话执行阶段 0.1-0.6。**B5 特殊风险**：①不是 dB 增量是范围优势（D005 标尺下不够格）②饱和池大池竞争（Paillier 43 篇）③D006 边界残留（湍流致功率波动归一化前馈合法/环路 TF 撞）④代码新增需求（short_time_spectrum_foe 需新写，fft_foe_m0_omega 作起点骨架）⑤论文外改进空间窄。**LEO Doppler 主题机制正交**：B5（频域功率比）/ B7（定时域 TED 增益）/ B4（双反馈环）是 LEO Doppler 大动态三种正交解法无撞车。锚论文 optcom.2024.130981 已发期刊（Optics Communications 572 (2024)，青岛大学+CETC 34 所）。守 sim-preflight v1.3.0 + D005 务实路线 + D006 红线。拆对话：①阶段 0 前置规约（够格路径/dB 范围溯源/架构定性/公平对照/参数真相源/文件组织）②sandbox 三方对照（B5 短时谱/[60] Leven/传统 FFT FOE）③MVE + consistency。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
