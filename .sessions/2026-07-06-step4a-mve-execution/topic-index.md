@@ -1,7 +1,7 @@
 # Topic Index: Step 4a 维度 D MVE 执行
 
 > slug: 2026-07-06-step4a-mve-execution
-> status: active | created 2026-07-06 | last_updated 2026-07-08（S008 LMMSE 复现失败 + VV/BPS 经典 baseline 实测对照。用户问"能拿哪个比+效果好吗"，主线分析 3 篇近年 baseline 可比性后用户选方案 C。LMMSE(#15 JPhoto)复现失败：PDF→md 把 eq(5)(6)(7) R/p 矩阵闭式转 picture omitted，靠文字重建公式 16APSK 高 SNR BER floor，调 4 变体均不对，TL-20 偏离即查落实。切 VV/BPS 重跑 D-007 后真相源：NDA-ML vs VV 持平[AWGN+0.006 CI跨0，物理合理]，NDA-ML vs BPS 稳赢[AWGN+0.117 CI(+0.091,+0.144)，moderate+0.057 CI(+0.022,+0.092)]。VV/BPS 都稳赢 DA 印证 NDA 类公平对照稳健。会议级对照矩阵已齐：DA-ML(稳赢)+VV(持平)+BPS(稳赢)+LMMSE(定性引用)。详见 S008）
+> status: active | created 2026-07-06 | last_updated 2026-07-08（S011 DPLL 异族 baseline 仿真完成 + baseline 池立住。跑 DPLL DD BER 5 seed × 4 场景 181s，TL-20 四判据全 PASS：DPLL≥oracle / <2×NDA / >0.7×NDA / @18dB AWGN=3.64e-3（预期 0.003~0.006）。关键发现：DPLL 必须连续处理（全数组 VCO 累积），per-block 重置 VCO 丢相位连续性致 BER 暴涨（7.5e-3 vs 连续 4.1e-3）。omega_n=50e6。Fair gain：DPLL vs NDA AWGN +0.103±0.007dB（NDA 稍赢），weak/moderate +0.02dB（CI 跨 0 持平），strong 工作区 -0.046dB；vs DA 全场景稳赢 +1.25~+1.68dB。DPLL 是异族（DD 闭环 vs 升幂前馈）D-010 标准 3 合规。baseline 池立住：DA-ML 主 + DPLL 异族 + VV/BPS fellow。详见 S011）
 
 ## 专题定位（一句话）
 
@@ -144,7 +144,9 @@ projects/simulation/
 
 ## 当前位置
 
-**🟡 S010 导师电话确立 baseline 选取标准（2026-07-08）**：老师主动来电（简报 v3 未发），确立 baseline 选取 4 条 + 方向/复现源质量门 1 条（D-010）：①同场景星地湍流 ②同类型层级（载波/定时/均衡层）不深入子层 ③不找接近方法当 baseline（VV 同族禁主比）④近年+权威（2022+ Trans）⑤找方向/复现只看够好的（避 letter/仿真不全）。**5 条跟我们已有发现互相印证**：标准3↔D-009 VV 同族持平（VV 不该当主 baseline）、标准2↔子层找不到 baseline（放宽到同步/均衡层候选池变大）、标准4↔B 档 LPT/OE 偏薄需补 Trans、标准5↔S008 LMMSE 复现失败教训。
+**🟢 S011 DPLL 异族 baseline 仿真完成 + baseline 池立住（2026-07-08）**：跑 DPLL DD BER 仿真（5 seed × 4 场景，181s），TL-20 四判据全 PASS（DPLL≥oracle / <2×NDA / >0.7×NDA / @18dB AWGN=3.64e-3 在预期 0.003~0.006 内）。关键发现：DPLL 必须连续处理（全数组 VCO 累积），per-block 重置 VCO 丢符号间相位连续性致 BER 暴涨。omega_n=50e6。Fair gain：DPLL vs NDA AWGN +0.103dB（NDA 稍赢 CI 不跨 0），weak/moderate +0.02dB（CI 跨 0 持平），strong 工作区 -0.046dB；DPLL vs DA 全场景稳赢 +1.25~+1.68dB。DPLL 是异族（DD 闭环 vs 升幂前馈），D-010 标准 3 合规。**baseline 池立住**：DA-ML 主 + DPLL 异族 + VV/BPS fellow。下一步：用户决定写不写简报 v3 跟老师沟通路线 A/B。
+
+**（前 S010 导师电话确立 baseline 选取标准 2026-07-08）**：老师主动来电（简报 v3 未发），确立 baseline 选取 4 条 + 方向/复现源质量门 1 条（D-010）：①同场景星地湍流 ②同类型层级（载波/定时/均衡层）不深入子层 ③不找接近方法当 baseline（VV 同族禁主比）④近年+权威（2022+ Trans）⑤找方向/复现只看够好的（避 letter/仿真不全）。**5 条跟我们已有发现互相印证**：标准3↔D-009 VV 同族持平（VV 不该当主 baseline）、标准2↔子层找不到 baseline（放宽到同步/均衡层候选池变大）、标准4↔B 档 LPT/OE 偏薄需补 Trans、标准5↔S008 LMMSE 复现失败教训。
 
 **工具链核查**：老师"trans 不好检索"对我们不成立——`tools/search`（API 源）venue 字段全有，`tools/blit --source ieee --download` 能下全文。但 blit 的 `ieee_search` venue 硬编码空串缺陷已修（加 description/publisher 元素解析 + fallback 正则），待实测验证。
 
@@ -154,7 +156,11 @@ projects/simulation/
 
 **（S010 2026-07-08 续接，baseline 池建设 + 检索精读）**：10 组查询（7 API + 3 blit IEEE）合计召回 ~220 篇。blit venue 修复验证成功（22 条 venue 全非空，实测提取 `Journal of Lightwave Technology` / `IEEE Transactions on Communications`）。4 篇第一梯队精读（C1 Paillier JLT 2020 DPLL / C3 Zhang Photonics J 2023 AKF / C4 Wang OE 2024 帧同步 / C6 Zhou IoT-J 2024 元学习）：**没有一篇是干净 baseline**（都缺要素：C1 BPSK+相位屏+2020 / C3 lognormal+SIMO / C4 非CPR层 / C6 MIMO信道估计非逐符号CPR）。
 
-**关键认知修正**：通信领域 baseline 一般是**自实现**（在自己参数下跑经典方法），不要求别人论文用一样参数。引用文献只证明"方法在该层合法"。所以 baseline 结构 = 自实现（DA-ML主 + DPLL异族 + VV/BPS fellow），文献引用支撑合法性（C1 证 DPLL 在星地FSO有人用 / C6 证星地GG+相位估计有人做）。**已有基建**：common/_recovery.py 有 dpll_track + dpll_track_dd，_kf.py 有 4 变体 KF。**缺口**：dpll_track_dd 不支持 m16apsk（判决写死 qam16），需改用 hard_decision(mod='m16apsk')。下一步跑 DPLL BER 仿真。
+**关键认知修正**：通信领域 baseline 一般是**自实现**（在自己参数下跑经典方法），不要求别人论文用一样参数。引用文献只证明"方法在该层合法"。所以 baseline 结构 = 自实现（DA-ML主 + DPLL异族 + VV/BPS fellow），文献引用支撑合法性（C1 证 DPLL 在星地FSO有人用 / C6 证星地GG+相位估计有人做）。**已有基建**：common/_recovery.py 有 dpll_track + dpll_track_dd，_kf.py 有 4 变体 KF。**缺口**：dpll_track_dd 不支持 m16apsk（判决写死 qam16），需脚本内适配 hard_decision_m16apsk（选项 A，同 VV/BPS/DD-KF 先例）。
+
+**（S011 2026-07-08，DPLL 异族 baseline 仿真 + baseline 池立住）**：跑 DPLL DD BER 仿真（5 seed × 4 场景，181s），**TL-20 四判据全 PASS**：DPLL≥oracle / DPLL<2×NDA / DPLL>0.7×NDA / DPLL@18dB AWGN=3.64e-3（预期 0.003~0.006）。关键发现：DPLL 必须连续处理（全数组 VCO 累积），per-block 重置 VCO 会丢符号间相位连续性致 BER 暴涨（7.5e-3 vs 连续 4.1e-3）。omega_n=50e6（扫描 20/50/100e6 选最优）。Fair gain：DPLL vs NDA AWGN +0.103±0.007dB（NDA 稍赢），weak/moderate +0.02dB（CI 跨 0 持平），strong 工作区 -0.046dB（DPLL 稍好）；DPLL vs DA 全场景稳赢 +1.25~+1.68dB（无 pilot overhead）。**DPLL 是异族**（DD 闭环跟踪环 vs NDA/VV/BPS 升幂前馈），跟 NDA 持平是"不同机制相似性能"非"同族退化"→ D-010 标准 3 合规。**baseline 池立住**：DA-ML 主 + DPLL 异族 + VV/BPS fellow。
+
+**（S012 2026-07-08，方法论转向 + 4种适配 skill + 3并行实验）**：DPLL 持平后认知冲击——NDA-ML 算法层 vs VV/BPS/DPLL 全场景持平，唯一赢 DA-ML 靠 pilot overhead 架构红利。用户问"别人会议级创新点有啥"→ 归纳 6 种类型（场景迁移/免XX/联合/鲁棒性/闭式/估计器升级），B 档 12 篇无一是从零设计新算法。**baseline 认知修正**：通信领域 baseline 是自实现的（在自己参数下跑经典方法），引文献证合法性，不照搬别人参数。**4 种适配方法论**（核心产出）：参数适配 A1 / 结构适配 A2 / 组合适配 A3 / 条件适配 A4，从"锁死方法内部找增量"转向"在场景里找方法间优势关系"。落地为 `.claude/skills/sim-preflight/rules/adaptation-scan.md`（v1.2.0，commit 151feb0）。**baseline 结构规则**：创新是适配策略时，baseline = "不做适配的版本"。设计 3 个并行实验（A1 参数自适应 K / A3 NDA+DPLL 混合 / A4 DA/NDA 条件切换），提示词已给用户在 3 个新对话并行跑。用户同时去旧主对话想别的方向。
 
 **（前 S009 D-008/D-009）**：NDA-ML vs VV 全场景统计显著持平（35 点对等调参 + 5 seed 验证，物理本质 κ=N_seg·σ²_p<<1）。vs DA +dB 主要是 pilot overhead 架构红利（1.25dB 固定 + 纯算法层 0.1~0.5dB）。湍流数据有物理现象（crossover 漂移 / 强湍流递增 / 上行 deep fade +3.07dB）是 B11/B5/B7/B12 全没做的 open gap。简报 v3 `ADVISOR_BRIEFING_2026-07-08_v3_turbulence_pivot.md` 写完未发（老师主动来电）。
 
@@ -185,3 +191,8 @@ projects/simulation/
 - **D-007** AWGN 场景重定义（B11 OFDM→单载波）+ 线宽参数真相源统一（2026-07-07，S006 新建）
 - **S007** SD-FEC 重跑 + 近年 Trans baseline + TL-20 预期表更新（2026-07-07，本对话产出，3 步收尾执行）
 - **S008** VV/BPS 经典 baseline 实测对照 + LMMSE 复现失败教训（2026-07-08，本对话产出）
+- **S010** D-010 baseline 标准 + blit venue 修复 + baseline 池检索精读（2026-07-08）
+- **S011** DPLL DD 异族 baseline 仿真 + baseline 池立住（2026-07-08）
+- **S012** 方法论转向：4 种适配 skill + 3 并行实验方向（2026-07-08，本对话产出）
+- **S010** D-010 baseline 标准确立 + baseline 池检索精读（2026-07-08，10 组查询 ~220 篇召回 4 篇精读，认知修正：通信 baseline 自实现）
+- **S011** DPLL DD 异族 baseline 仿真 + baseline 池立住（2026-07-08，TL-20 四判据全 PASS，DPLL 连续处理 omega_n=50e6，vs NDA 持平到稍差，异族合规）
