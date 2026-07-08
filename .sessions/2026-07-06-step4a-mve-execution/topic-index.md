@@ -1,7 +1,7 @@
 # Topic Index: Step 4a 维度 D MVE 执行
 
 > slug: 2026-07-06-step4a-mve-execution
-> status: active | created 2026-07-06 | last_updated 2026-07-08（S011 DPLL 异族 baseline 仿真完成 + baseline 池立住。跑 DPLL DD BER 5 seed × 4 场景 181s，TL-20 四判据全 PASS：DPLL≥oracle / <2×NDA / >0.7×NDA / @18dB AWGN=3.64e-3（预期 0.003~0.006）。关键发现：DPLL 必须连续处理（全数组 VCO 累积），per-block 重置 VCO 丢相位连续性致 BER 暴涨（7.5e-3 vs 连续 4.1e-3）。omega_n=50e6。Fair gain：DPLL vs NDA AWGN +0.103±0.007dB（NDA 稍赢），weak/moderate +0.02dB（CI 跨 0 持平），strong 工作区 -0.046dB；vs DA 全场景稳赢 +1.25~+1.68dB。DPLL 是异族（DD 闭环 vs 升幂前馈）D-010 标准 3 合规。baseline 池立住：DA-ML 主 + DPLL 异族 + VV/BPS fellow。详见 S011）
+> status: active | created 2026-07-06 | last_updated 2026-07-08（S012 续接：A3 NDA+DPLL 组合适配实验 FAIL。混合（NDA 粗估+DPLL 连续精跟）全场景 ≈ max(NDA,DPLL)，无额外增益，互补性假设证伪（strong deep fade 混合反输 DPLL 0.046dB，NDA 在 fade 块估计误差传给 DPLL 反而更差）。TL-20 一致性自检 ALL PASS（实现正确）。物理根因：σ²_p=2.51e-5 下两方法处理同族相位变化强项重叠冗余。4 种适配扫描 A1-A4 基本闭合，NDA-ML 算法层无显著增量方向。详见 S012 §9 + _a3_hybrid_report.md）
 
 ## 专题定位（一句话）
 
@@ -144,7 +144,9 @@ projects/simulation/
 
 ## 当前位置
 
-**🟢 S011 DPLL 异族 baseline 仿真完成 + baseline 池立住（2026-07-08）**：跑 DPLL DD BER 仿真（5 seed × 4 场景，181s），TL-20 四判据全 PASS（DPLL≥oracle / <2×NDA / >0.7×NDA / @18dB AWGN=3.64e-3 在预期 0.003~0.006 内）。关键发现：DPLL 必须连续处理（全数组 VCO 累积），per-block 重置 VCO 丢符号间相位连续性致 BER 暴涨。omega_n=50e6。Fair gain：DPLL vs NDA AWGN +0.103dB（NDA 稍赢 CI 不跨 0），weak/moderate +0.02dB（CI 跨 0 持平），strong 工作区 -0.046dB；DPLL vs DA 全场景稳赢 +1.25~+1.68dB。DPLL 是异族（DD 闭环 vs 升幂前馈），D-010 标准 3 合规。**baseline 池立住**：DA-ML 主 + DPLL 异族 + VV/BPS fellow。下一步：用户决定写不写简报 v3 跟老师沟通路线 A/B。
+**🟡 S012 续接：A3 NDA+DPLL 组合适配实验 FAIL（2026-07-08）**：混合（NDA 粗估 + DPLL 连续精跟）全场景 ≈ max(NDA, DPLL)，**A3 信号 FAIL**（无额外增益，组合是冗余非互补）。TL-20 一致性自检 ALL PASS（实现正确）。**互补性假设证伪**：预期 strong/uplink deep fade 混合赢 DPLL（NDA 粗估避免失锁），实测 strong 混合**统计显著输 DPLL 0.046dB**——NDA 在 fade 块估计误差传给 DPLL 反而更差（"避免失锁"变成"引入额外误差"）。AWGN/weak/moderate 持平无显著赢。**物理根因**：σ²_p=2.51e-5（10kHz@2.5GBaud）下，单块 256 符号内 Wiener PN 漂移标准差 ≈ 0.08 rad，NDA 块常数 mean-angle 已接近最优；DPLL 跟的残余漂移跟自身环路噪声同一量级 → 两步串联无信息增量（adaptation-scan.md A3 失败信号"两方法强项重叠冗余"匹配）。**4 种适配扫描 A1-A4 基本闭合**：NDA-ML 算法层无显著增量方向（A1 持平 / A2 仅 AWGN / A3 FAIL / A4 是 pilot overhead 架构红利非算法）。数据 `explore/nda-awgn-tracking-sandbox/_a3_hybrid_results.json`，报告 `_a3_hybrid_report.md`。下一步：A1（参数自适应 K）/ A4（DA/NDA 条件切换）结果待返回；如全 FAIL 排除适配策略这条路。
+
+**（前 S011 DPLL 异族 baseline 仿真完成 + baseline 池立住 2026-07-08）**：跑 DPLL DD BER 仿真（5 seed × 4 场景，181s），TL-20 四判据全 PASS（DPLL≥oracle / <2×NDA / >0.7×NDA / @18dB AWGN=3.64e-3 在预期 0.003~0.006 内）。关键发现：DPLL 必须连续处理（全数组 VCO 累积），per-block 重置 VCO 丢符号间相位连续性致 BER 暴涨。omega_n=50e6。Fair gain：DPLL vs NDA AWGN +0.103dB（NDA 稍赢 CI 不跨 0），weak/moderate +0.02dB（CI 跨 0 持平），strong 工作区 -0.046dB；DPLL vs DA 全场景稳赢 +1.25~+1.68dB。DPLL 是异族（DD 闭环 vs 升幂前馈），D-010 标准 3 合规。**baseline 池立住**：DA-ML 主 + DPLL 异族 + VV/BPS fellow。
 
 **（前 S010 导师电话确立 baseline 选取标准 2026-07-08）**：老师主动来电（简报 v3 未发），确立 baseline 选取 4 条 + 方向/复现源质量门 1 条（D-010）：①同场景星地湍流 ②同类型层级（载波/定时/均衡层）不深入子层 ③不找接近方法当 baseline（VV 同族禁主比）④近年+权威（2022+ Trans）⑤找方向/复现只看够好的（避 letter/仿真不全）。**5 条跟我们已有发现互相印证**：标准3↔D-009 VV 同族持平（VV 不该当主 baseline）、标准2↔子层找不到 baseline（放宽到同步/均衡层候选池变大）、标准4↔B 档 LPT/OE 偏薄需补 Trans、标准5↔S008 LMMSE 复现失败教训。
 
