@@ -1,6 +1,6 @@
 # [S007] 对话 7 — V5 独立核查未记录 MVE 数据 + LPF2 不公平 bug + 范围优势公平性审计
 
-> 2026-07-09 | sandbox 后半收尾（V5 核查）| 状态：MVE 数据经 V5 核查，发现 LPF2 不公平 bug + BER gain 虚高，范围优势经公平对照确认机制本质。Go/Kill 交用户
+> 2026-07-09 | sandbox 后半收尾（V5 核查）| 状态：D008 Kill B7-Q1（范围优势解决不存在的问题），专题 closed
 > 续接：H006（对话 6 脚本+SPEC+smoke test 完成，剩正式 MVE）
 
 ## 目标
@@ -91,8 +91,9 @@ BER gain +4.08dB vs poster 0.6dB，偏离远超 ±0.2dB 容差 → 触发红线�
 ## 决策引用
 
 - D007（新建）：LPF2 不公平 bug 登记 + BER gain 虚高结论 + 范围优势机制本质确认（非 B5 特权假象）
+- D008（新建，续）：**Kill B7-Q1**——范围优势解决的是不存在的问题（LEO Doppler ±4.8GHz 被 4thpow ±6.25GHz 恰好覆盖），与 B5 D003 殊途同归
 - D006（引用）：PSA coarse-only 弱限制（本轮扩展确认 PSA 即使加 LPF2 仍弱 ~2.5dB，是 baseline 本身弱）
-- B5 D003（跨专题引用）：范围优势特权假象先例，B7 经公平对照排除此风险
+- B5 D003（跨专题引用）：范围优势特权假象先例，B7 经公平对照排除"特权假象"但终因"需求不存在"殊途同归 Kill
 
 ## 范围确认
 
@@ -101,9 +102,14 @@ BER gain +4.08dB vs poster 0.6dB，偏离远超 ±0.2dB 容差 → 触发红线�
 
 ## 后续
 
-**Go/Kill 判断交用户**（profile：技术细节委托主线自带证据链，但 Go/Kill 最终判断用户做）。
+**🔴 续：用户追问"能大多少"触发真实需求核查 → D008 Kill B7-Q1**
 
-待用户定：
-1. 范围优势（机制本质）+ BER gain≈0，D005 会议门槛下够不够 Conditional Go
-2. LPF2 不公平 bug + +4dB 虚高数据，是否修脚本重跑拿干净数据
-3. B7 的"有啥用"——范围优势单独能否撑起会议论文（poster OFC 2026 已发 0.6dB+1.9×范围的先例）
+S007 正文写完后，用户追问"能大多少"——主线核查真实 LEO 光学 Doppler 量级：
+- LEO Doppler 最大 ±4.8GHz（1550nm v=7.5km/s），sat.1553 极端值 10GHz
+- **4thpow ±6.25GHz 恰好覆盖 ±4.8GHz 真实 Doppler**
+- B7 范围优势只在 6.25-25GHz 区间成立，但真实 LEO Doppler 够不着
+- poster 真实动态测试仅 ±100MHz（45GHz 调谐是实验室设定）
+
+**结论**：B7 范围优势解决的是不存在的问题，与 B5 D003 殊途同归。D008 Kill B7-Q1，专题 closed。复用资产保留（Gardner TR Python + PSA 谱不对称法 + 4thpow/Kay + G(f_D) 解析式）作 baseline 库扩展 + 教训素材。
+
+**候选池现状**：NDA-ML dormant（卡 D-008/009）/ B3 active（阶段 0 +2~3dB 最高）/ B2·B5·B7 closed（Killed）。下一候选决策交用户（新对话）。

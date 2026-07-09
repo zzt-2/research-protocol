@@ -382,3 +382,68 @@ S005（本轮 sandbox 步骤 1-3 执行）+ 子 agent PSA FOE 重写产出 + 子
 ### 来源
 
 S007（本轮 V5 核查 + Phase3 验证 + 范围公平对照）+ `_mve_results.json` + `_mve_osnr_sweep_results.json`（未记录对话产出）+ `_lpf2_fairness_check.py`/`_results.json` + `_scope_fairness_check.py`/`_results.json` + B5 D003 先例（`2026-07-08-b5-leo-doppler-spectrum-foe/decisions.md`）+ 用户原话 voice 2026-07-09
+
+---
+
+## D008: Kill B7-Q1——范围优势解决的是不存在的问题（与 B5 D003 殊途同归）
+
+> status: active
+> date: 2026-07-09（对话 7 续，D007 范围优势机制本质确认后，用户追问"能大多少"触发真实需求核查 → Kill）
+> 取代：D007"范围优势机制本质非特权假象，不能用 B5 逻辑 Kill"的隐含"不 Kill"倾向（技术判断本身没错——范围优势确实是机制本质——但漏了"优势解决的问题存不存在"一环）
+> 被取代：无
+> 依据: LEO 光学 Doppler 物理计算（1550nm v=7.5km/s ±4.8GHz）+ sat.1553 综述（`papers/_read_notes/10.1002_sat.1553.md` L17/L48 LEO 最大 10GHz + 残频 MHz 级）+ B7 poster content.md L47（真实动态测试仅 ±100MHz@1GHz/s，45GHz 调谐是实验室设定）+ 4thpow 范围极限 ±6.25GHz（D007 数学证明）+ D007 BER gain 公平条件≈0
+> 触发原话: 用户 "能大多少？"（追问真实 Doppler 量级，戳中"范围优势解决的问题存不存在"要害）+ "那就kill吧。这个对话到这"（Kill 决策）
+
+### 决策
+
+**Kill B7-Q1。三条增量路径全证伪：**
+
+1. **BER gain 路径 FAIL**（D007）：公平条件（全加 LPF2）下 B7 FOE vs 4thpow gain≈0（+0.03dB）。原 +4.08dB 是 LPF2 不公平独享 + PSA 弱 + Kay 估偏三重虚高。不满足 D005 "赢传统 baseline 几 dB" Go 标准。
+
+2. **范围优势路径 FAIL**（本轮，核心 Kill 理由）：B7 范围优势（±25GHz vs 4thpow ±6.25GHz）确实是机制本质（D007 确认非特权假象），**但解决的是不存在的问题**——
+   - LEO 光学 Doppler 最大 ±4.8GHz（1550nm, v=7.5km/s 过顶正对），sat.1553 极端值 10GHz
+   - **4thpow 的 ±6.25GHz 恰好覆盖 ±4.8GHz 真实 LEO Doppler**
+   - B7 范围优势只在 6.25-25GHz 区间成立，但真实 LEO Doppler 够不着这区间
+   - 星历预补后（主流方案）残频 <100MHz（poster L47 真实动态测试 ±100MHz），4thpow/B7/PSA 全绰绰有余
+   - poster 的 0-23GHz 扫频是机制验证上限非真实需求，45GHz 激光器调谐是实验室设定
+
+3. **OFC 已发不构成 Go 理由**：poster 已发是事实，但其叙事建立在 +4.08dB 虚高数据上（LPF2 不公平），且范围优势在真实场景用不上。OFC 接受了不代表增量真实。
+
+### 理由
+
+1. **与 B5 D003 殊途同归（更深层的同构）**：
+   - B5：范围优势真实，但场景里 baseline 配同等条件（星历）就够 → Kill
+   - B7：范围优势真实，但场景里 baseline 的数学极限（±6.25GHz）恰好够 → Kill
+   - 两者根因不同（B5 人为限制 / B7 数学本质），但结论相同：**范围优势在真实场景都因"baseline 够用"而失去意义**
+   - D007 说"B7 范围优势是机制本质不能用 B5 逻辑 Kill"——技术判断对，但漏了"优势解决的问题存不存在"。本轮补上：机制本质的优势若解决不存在的问题，跟特权假象一样不能用
+
+2. **用户追问"能大多少"是决定性的**：profile「用户把握方向不把握 DSP 细节」。用户的方向性直觉（问真实需求量级）直接戳破了"范围优势=有用"的假设。主线沉迷"机制本质 vs 特权假象"的技术辨析时，用户一句话拉回"这玩意到底解决啥"。
+
+3. **候选池约束不救 B7**：D003/D005 务实路线下"方向稀缺值得试"，但"值得试≠强行 Go"。B7 三条路径（BER gain / 范围优势 / OFC 已发）全证伪，跟 B5 一样诚实 Kill。
+
+### 排除的替代方案
+
+- **Conditional Go 水会议**：否决。范围优势用不上 + BER gain≈0，水出来的会议建立在虚高数据上，profile「质量标准 - 没有新鲜验证证据不宣称完成」+ 用户"这么大连我一点都不安心"。OFC poster 能发不代表增量真实。
+- **补星历预补场景验证 B7 在残频下的价值**：否决。残频 <100MHz 时所有方法都够（4thpow/PSA/B7 全覆盖），B7 无差异化。
+- **换更高频段（如 1064nm）让 Doppler 更大凸显 B7 优势**：否决。Doppler ∝ 载波频率，1064nm 只比 1550nm 大 46%，±7GHz 仍在 4thpow ±6.25GHz 附近，且改频段属重定义场景。
+- **回退 D007"范围优势机制本质"**：不回退。D007 技术结论本身正确（范围确实是机制本质），只是"机制本质≠有用"。
+
+### 影响范围
+
+- **B7-Q1 Kill**：不再推进。专题转 closed
+- **复用资产保留**：b7_gardner_ted_mve.py + B7-MVE-SPEC.md + _psa_foe_asymmetry.py + _ted_gain_analytic*.py + _crb_lower_bound.py + _lpf2/scope_fairness 验证脚本 全留 explore 作教训素材 + baseline 库扩展（Gardner 1986 TR Python 重写 + PSA 谱不对称法 + 4thpow/Kay 可复用）
+- **G(f_D)=K_max·|cos(πf_D/B)| 解析式资产**：留作论文 §2 可选推导素材（poster 缺这个），但不再作为 B7 增量论据
+- **LPF2 bug + +4.08dB 虚高教训**：进 code-quality.md / thesis-lessons.md（跨候选教训：fair comparison 审下游链不只审 FOE est err）
+- **候选池**：NDA-ML dormant（卡 D-008/009）/ B3 active（阶段 0 +2~3dB 最高）/ B2·B5·B7 closed（Killed）
+
+### 教训
+
+1. **范围优势要查"解决的问题存不存在"不只查"优势是否真实"**：D007 确认了 B7 范围优势是机制本质（真实），但没查"这个优势解决的问题（>6.25GHz Doppler）在真实场景存不存在"。用户追问"能大多少"才暴露真实 LEO Doppler ±4.8GHz 被 4thpow ±6.25GHz 恰好覆盖。**范围优势审计 = 真实性审计 + 需求存在性审计，两者缺一不可**。
+
+2. **机制本质 vs 特权假象的辨析要落到"有没有用"**：主线在 D007 花大力气辨析"B7 机制本质 ≠ B5 特权假象所以不能 Kill"——技术上对，但这个辨析本身是局部正确的，全局看 B7 跟 B5 一样范围优势用不上。**技术辨析容易陷入局部正确陷阱，要用"这玩意到底解决啥"拉回全局**。
+
+3. **用户方向性追问比 agent 技术结论更接近要害**：用户不懂 DSP 细节（profile 能力边界），但"能大多少"这个方向性追问直接戳中 Kill 要害。主线沉迷技术辨析时，用户的朴素问题（"有啥用""能大多少"）是检查"增量是否真实有用"的最有效工具。
+
+### 来源
+
+D007（BER gain 虚高 + 范围优势机制本质确认）+ LEO 光学 Doppler 物理计算 + sat.1553 综述 L17/L48 + B7 poster content.md L47（真实动态测试 ±100MHz）+ 4thpow ±6.25GHz 数学极限 + 用户原话 voice 2026-07-09（"能大多少" + "那就kill吧"）

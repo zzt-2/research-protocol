@@ -312,10 +312,10 @@ topics:
     conflicts_with: []
 
   - slug: 2026-07-08-b7-gardner-ted-foe
-    title: B7 Gardner TED 复用 FOE 第二候选（与 NDA-ML 并行，NDA-ML 卡 D-008~D-009 期间推进）
-    status: active
+    title: B7 Gardner TED 复用 FOE 第二候选（与 NDA-ML 并行，NDA-ML 卡 D-008~D-009 期间推进）— KILLED 范围优势解决不存在的问题
+    status: closed
     created: "2026-07-08"
-    last_updated: "2026-07-09（S007 V5 核查未记录 MVE + LPF2 不公平 bug + 范围优势公平性审计——BER gain +4.08dB 三重虚高（LPF2独享+PSA弱+Kay估偏），公平条件 B7 vs 4thpow gain≈0；范围优势经公平对照确认机制本质（4thpow 4次方混叠±6.25GHz vs B7 TED周期±25GHz）非 B5 D003 特权假象。D007 登记。Go/Kill + B7 价值定性交用户）"
+    last_updated: "2026-07-09（D008 Kill B7-Q1——范围优势解决的是不存在的问题。LEO 光学 Doppler ±4.8GHz 被 4thpow ±6.25GHz 恰好覆盖，B7 范围优势只在 6.25-25GHz 区间但真实场景够不着；BER gain 公平条件≈0（D007 LPF2 三重虚高）；OFC 已发叙事建立在 +4.08dB 虚高数据上。与 B5 D003 殊途同归——范围优势都因 baseline 在真实场景够用而失去意义。三条增量路径全证伪。复用资产保留作 baseline 库扩展 + 教训素材）"
     description: "承接上游 2026-06-20-problem-driven-redirection S031 排优先级（B7-Q1 Conditional Go 会议最稳）+ step4a-mve-execution 切法地图参照系。NDA-ML 单载波候选（step4a-mve-execution 专题）卡在 D-008 双 bug + D-009 线宽选择 + vs VV 持平陷阱，用户决策同时跑第二候选 B7 分散风险。B7 锚论文 OFC 2026 poster（Gardner TED 复用 FOE，0.6dB+1.9×范围+OSNR 10dB），baseline PSA FOE。**B7 特殊风险**：①锚论文 90 行很薄（公式重建风险高于 B11）②Gardner TED 1986 是祖师爷（持平警报最严）③反馈环架构可能撞 D006 ④公平对照框架不能照搬 NDA-ML。**流程规划前置**（阶段 0 不写代码先定规约）防重蹈 NDA-ML 混乱（参数反复/算法 bug/验证失效/方向重定位/文件混乱/文献引用 6 类）。守 sim-preflight v1.3.0 新增 C6-C8（公式核对/三方对照/祖师爷警报）+ interrupt 10-12 条。拆对话：①阶段 0 前置规约（公式完整性/数学同族性/架构定性/公平对照框架/参数真相源/文件组织）②sandbox 三方对照（Gardner TED 改进版/1986 原版祖师爷/PSA FOE baseline）③MVE + consistency。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
