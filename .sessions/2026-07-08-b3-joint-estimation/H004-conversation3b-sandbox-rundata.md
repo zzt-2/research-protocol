@@ -1,5 +1,7 @@
 # Handoff: 对话 3b — sandbox 三方对照跑数 + 分层 Go/Kill 判定
 
+> ⚠️ **本 H004 已废弃（superseded）**——对话 3b 未跑全量数据，主线做 TL-20 物理量级分析 + TL-22 深查后发现三切口全物理 FAIL，B3-Q2 已 Kill（D004/K001，2026-07-09）。本文件保留作血缘记录，但"下一步跑全量"等内容不再适用。专题 closed，无后续 sandbox。详见 S004 续接段 + D004 + K001。
+
 > 来源: S004 | 交接目标: 新工作对话跑完三方对照（M1/M2/M3 + 消融）+ 分层 Go/Kill，给 Go/Kill 结论
 > 日期: 2026-07-09
 > 文件名: H004-conversation3b-sandbox-rundata.md

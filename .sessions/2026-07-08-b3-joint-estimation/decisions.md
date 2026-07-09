@@ -4,7 +4,7 @@
 
 ## D001: 开 B3-Q2 专题 + 首验证 4 支路迁移策略（阶段 0.1 = 星地多孔径阵列场景验证 + 单链路 CRB 上界前置）
 
-> status: active
+> status: superseded（2026-07-09 被 D004 Kill 推翻——三切口物理 FAIL，但本决策的"阶段 0.1 首验证"执行无错，CRB 上界 1.0-1.2dB PASS 仍有效）
 > date: 2026-07-08
 > 取代：无（开新专题，不推翻 NDA-ML/B7/B5 任何决策）
 > 被取代：无
@@ -55,7 +55,7 @@ S001（本轮）+ Explore agent B3-Q2 详查（6 问题 700 词）+ S031 #1 详�
 
 ## D002: 阶段 0.1-0.2 完成——不 Kill + 修正 4 支路 dB 转录错误 + B3-Q2 增量定位为迁移+维度扩展型
 
-> status: active
+> status: superseded（2026-07-09 被 D004 Kill 推翻——"不 Kill"结论推翻，但"4 支路 dB 转录错误修正"+"A1 归属核查"仍有效）
 > date: 2026-07-08（S002 阶段 0.1-0.2 完成）
 > 取代：部分修正 D001 的 dB 描述（4 支路 +2~3dB → 2 支路 +2~3dB / 4 支路 0.7-2.14dB）；D001 决策本身不动（仍 active）
 > 被取代：无
@@ -114,7 +114,7 @@ S002（本轮阶段 0.1-0.2）+ 0.1a/0.1b 子 agent 产出 + 主线 grep jphot/s
 
 ## D003: 阶段 0.3-0.6 完成——架构走前馈开环（不撞 D006）+ BUPT 迫近自吞风险登记（非 Kill，timeline 风险）
 
-> status: active
+> status: superseded（2026-07-09 被 D004 Kill 推翻——架构前馈开环本身无错且不撞 D006，但"三切口物理成立"的隐含假设被推翻，架构落地点消失。D006 边界判定 + BUPT 审计方法仍有效）
 > date: 2026-07-08（S003 阶段 0.3-0.6 完成）
 > 取代：无（D001/D002 决策不动，本轮是阶段 0 后半执行结论 + 架构方向定死 + 风险登记）
 > 被取代：无
@@ -171,3 +171,85 @@ S002（本轮阶段 0.1-0.2）+ 0.1a/0.1b 子 agent 产出 + 主线 grep jphot/s
 ### 来源
 
 S003（本轮阶段 0.3-0.6）+ jphot content.md grep + B3 详评 + D006 + BUPT 子 agent 产出 `_bupt_followup_audit.md`
+
+---
+
+## D004: Kill B3-Q2——三切口全物理 FAIL（CPE CRB≈0dB + Doppler 物理可忽略 + 星地场景迁移非增量）
+
+> status: active（Kill 决策）
+> date: 2026-07-09（S004 对话 3a→3b 合并执行，物理深查后 Kill）
+> 取代：D001（开题）/ D002（不 Kill）/ D003（架构定死）——三者均基于"三切口物理成立"的隐含假设，本轮深查推翻该假设，D001-D003 标 superseded（不删，保留血缘链）
+> 被取代：无
+> 依据: S004 对话 3a（f_dot 溯源 56MHz/s + 5 接口实现 + smoke test）+ S004 对话 3b 前段（TL-20 物理量级分析 + 子 agent 深查 4 否决条件 0/4 推翻 + 主线独立 grep B5 L147/params.py:904 核查）+ 0.1b CRB 推导（`_stage0_1b_single_link_crb_upper_bound.md` L88/L91 CPE joint-vs-separate ≈ 0 dB）
+> 触发原话: 无（技术推导，TL-20 先建理论预期 + TL-22 查物理前提后，物理双重证据指向 Kill；用户确认"Kill B3-Q2（物理双重证据）"）
+
+### 决策
+
+**Kill B3-Q2 子系统协同联合估计。** 三切口（CPE 联合 / Doppler 维度 / 星地场景）全物理 FAIL，gain_vs_M2 ≈ 0，§0.4.5 分层 Go/Kill 三层（L1/L2/L3）全物理 FAIL。这不是"还没调好"——是 TL-20 理论预期 + TL-22 物理前提核查双重证据指向的物理结论，不是仿真能翻盘的。
+
+1. **① CPE 联合切口 FAIL（理论证死，0.1b CRB）**：
+   - 0.1b CRB 推导 L88："CPE joint-vs-separate CRB 增益 ≈ 0 dB（单链路，等导频长度下 CRB 恒等）"——"CRB 只依赖 N、γ、Δν，不依赖是否共享"
+   - jphot FSTS 本身只做 FS+FOE，CPE 另用"相位噪声估计 + DD-LMS"兜底（jphot-L101/L243），故 CPE 联合实际 ≈ 0 dB
+   - 唯一非零项是"开销受限模型上界 ≤+2.4dB"，但那是开销分配论据非估计理论增益，jphot 结构下不兑现
+
+2. **② Doppler 维度切口 FAIL（物理量级，TL-22 深查确认）**：
+   - B3-Q2 声称"打破 jphot-L208 缓变假设"，但深查证明该假设在 LEO Doppler 下完全成立
+   - 物理量级（f_dot=56 MHz/s，B5 锚 optcom.2024.130981 L147 NEO 600km 过顶最大全 Doppler 斜率）：
+     - 块间（TS=320 符号）频偏跳变 = 7.2 Hz（2.5GBaud）/ 1.8 Hz（10GBaud）
+     - FOE 估计分辨率 = 610 kHz（2.5GBaud）/ 2.4 MHz（10GBaud）
+     - **块间跳变比 FOE 分辨率小 5 个数量级** → FOE 测不出 Doppler 变化
+     - 帧（8192 符号）Doppler 相位 1.9e-3 rad，比激光相位噪声 RMS（~1 rad）小 3-4 个数量级
+   - 要破坏缓变假设需 f_dot ≈ 4768 GHz/s（2.5GBaud）/ 76294 GHz/s（10GBaud）——物理 LEO 最大值的 **8.5 万倍 / 136 万倍**
+   - 深查 4 否决条件 0/4 推翻（子 agent + 主线独立 grep B5 L143-149 核查）：
+     - (a) 残余 f_dot ≤ 全 Doppler f_dot（物理必然，不可能反转）
+     - (b) 56 MHz/s 是 df/dt（频偏变化率）非误用；LEO 文献量级数十 MHz/s（GHz/s 系激光频率不稳定度非轨道斜率）
+     - (c) jphot 从未测过 LEO Doppler，但块尺度上缓变假设站得住（7Hz << 610kHz）
+     - (d) 公式/单位复核无误（π·f_dot·t² ✓，1/(4·N_fft·T_S) ✓）
+   - **关键洞察**：B5 锚 L149 自己的 Doppler 跟踪是"750 measurements lasting ~13 min"——分钟级跨帧。Doppler 斜率只在分钟级跨帧才有意义，单帧 8192 符号（μs 级）完全捕捉不到。B5 自己都不是单 TS 块内处理 Doppler。
+
+3. **③ 星地场景切口非增量（D002 已定性）**：jphot 地面→星地是场景迁移非算法增量，且 jphot 的 dB 优势来自 FOE BL²（已 claim），不是星地场景
+
+4. **gain_vs_M2 ≈ 0（D003 增益归因熔断触发）**：M3 = M2 + CPE(≈0) + Doppler(≈0)，B3-Q2 单链路 1.17dB 全是 jphot 继承（FOE BL²），fair gain 判据 gain_vs_M2 ≈ 0
+
+5. **§0.4.5 分层 Go/Kill 三层全物理 FAIL**：
+   - L1 全条件（gain_vs_M2>0 + CPE/Doppler 各≥10%）：CPE+Doppler 都≈0 → FAIL
+   - L2 Doppler crossover（扫 f_dot）：Doppler 物理可忽略，物理 f_dot 范围内扫不出 crossover → FAIL
+   - L3 失效边界（jphot 高 Doppler 失效）：jphot 缓变假设在 LEO 下成立不失效 → FAIL
+
+### 核心失败机制（不是"没调好"）
+
+**B3-Q2 的增量切口在 TS 块时间尺度下物理不成立。** CPE 联合的 CRB 不依赖"是否共享"（估计理论铁律）；Doppler 斜率在 μs 级单帧内产生的频偏变化（7 Hz）远低于 FOE 分辨率（610 kHz），是物理量级鸿沟不是算法能填的。jphot 的"缓变假设"在它设计的块尺度下本就成立——B3-Q2 试图打破一个在物理上不被破坏的假设。
+
+### 排除的方向（Kill 后失效，防复活）
+
+- **CPE 联合（单链路等导频）**：CRB ≈ 0 dB，估计理论已证。除非找到"非等导频"或"多支路 CPE 联合"的新结构（但后者归多支路分集增益，非 CPE 联合本身）
+- **Doppler 维度（TS 块内/块间）**：物理量级可忽略。Doppler 斜率只在跨帧/过顶（分钟级）才有意义，但那是完全不同的仿真结构（B3-Q3 边界 + D006 需重判）
+- **B3-Q2 整体重启**：三切口全 FAIL，dB 是继承的，无残留切口
+
+### 可复用部分（Kill 后保留，供后续候选/教训用）
+
+1. **5 接口代码 + MVE 框架**（`projects/simulation/explore/b3-joint-estimation/`）：multi_aperture_channel / frame_sync_fsts / mrc_combiner / multi_branch_phase_precorr / joint_estimation_pipeline + b3_joint_mve.py + _smoke_test.py（9/9 PASS）。若后续候选需多支路分集/联合估计管线，可复用作起点
+2. **f_dot 物理量级分析方法**（TL-20 + TL-22 实战）：块间跳变 vs FOE 分辨率的量级比对，可作为"Doppler 切口是否物理成立"的快速预筛工具（不用跑仿真）
+3. **Fried 参数计算**（多望远镜间距判独立分集）：强湍 r0≈2cm，弱湍 r0≈31cm
+4. **f_dot 精确溯源**：56 MHz/s（B5 L147）+ params.py:904 `DOPPLER_RATE_B5=56e6` 已 OK 溯源
+5. **BUPT 续作审计**（`_bupt_followup_audit.md`）：三切口覆盖判断方法可复用
+6. **CRB 推导框架**（`_stage0_1b_single_link_crb_upper_bound.md`）：FOE BL² 26dB 方差域 + CPE ≈0dB 的推导
+
+### 教训（Kill 后提炼）
+
+1. **阶段 0.1b 的 CRB ≈ 0dB 预警被阶段 0.3-0.6 架构设计绕过**：0.1b 已预警"CPE 联合增益 ≈ 0dB"（L88/L91），但 0.3 架构决策（D003）仍把 CPE 联合 + Doppler 作为两个切口推进到 sandbox。**教训：CRB 预警（TL-20 理论预期）应在阶段 0.3 架构决策时作为硬门控——CRB≈0 的切口不该进 sandbox 实现层**。TL-20 不只是"跑仿真前建预期"，还要"建预期后用它筛切口"
+2. **Doppler 切口的物理量级预筛缺失**：D003 架构决策 §2.2 写了"Doppler 斜率前馈回归"，但没做"块间跳变 vs FOE 分辨率"的量级预筛。这是 TL-22"震撼结果先查物理前提"的延伸——**任何"时变/漂移"切口，必须先算它在算法时间窗内的物理量级 vs 估计分辨率，量级差 >3 个数量级直接物理 Kill 不进 sandbox**
+3. **3a 烟雾测试的"L1 FAIL"本该触发物理深查而非"待 3b 跑全量"**：S004 骨架跑数 L1 全条件 FAIL（7/28），gain_vs_M2 ≈ 0 甚至负，当时归因"f_dot_est 是占位 + T_S 问题"待 3b。实际根因是物理量级，骨架数据已经是真实信号（M2≈M3）。**教训：sandbox 骨架的 gain≈0 不要轻易归因"还没接好"，先做 TL-22 物理前提核查**（本轮纠正了这个——用户选"先深查再定"是对的）
+4. **jphot 缓变假设的"缓变"是相对算法时间窗的**：jphot 的 TS 块是 μs 级，"缓变"指"块间频偏近似不变"。LEO Doppler 在 μs 级确实缓变（7Hz 跳变），只在分钟级才显著。B3-Q2 误把"LEO 有 Doppler"等同于"LEO Doppler 在 TS 块尺度不缓变"——两者是不同时间尺度。**教训：时间尺度对齐是时变切口的首要核查项**
+
+### 影响范围
+
+- **B3-Q2 专题状态**：active → closed（Kill 完成，不再推进）
+- **D001/D002/D003 标 superseded**（不删，血缘链保留）
+- **候选池**：B3-Q2 Kill 后，载波同步 v2 池剩余活跃候选 = NDA-ML（dormant）/ B7（active sandbox）/ B5（active §7 Kill 后 salvage 全无信号）。B3-Q2 是 B2 Kill + B11-Q2 放弃后的接替，再 Kill 需主控重新排候选池
+- **5 接口代码保留**：作为多支路分集/联合估计的基建参考，不删
+- **K001 验证记录**：见 verifications.md（物理量级分析作为 Kill 验证证据）
+
+### 来源
+
+S004（对话 3a 补债务 + 5 接口实现 + smoke test，对话 3b TL-20 物理量级分析 + 子 agent 4 否决条件深查 0/4 推翻 + 主线独立 grep 核查）+ 0.1b CRB 推导（L88/L91）+ B5 锚 optcom.2024.130981 L143-149 grep 核查 + params.py:904 核查 + 用户确认"Kill B3-Q2（物理双重证据）"

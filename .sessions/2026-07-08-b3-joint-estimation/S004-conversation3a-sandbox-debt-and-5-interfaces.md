@@ -1,6 +1,7 @@
-# [S004] 对话 3a — sandbox 前置债务清偿 + 5 接口实现 + smoke test
+# [S004] 对话 3a+3b — sandbox 前置债务清偿 + 5 接口实现 + smoke test → 物理深查 Kill
 
 > 2026-07-09 | 阶段 1 sandbox（对话 3a）| 状态：3a 完成，3b 待跑数
+> 2026-07-09 续接（对话 3b）| 状态：3b 物理深查后 Kill，专题 closed
 > 来源: H003 派发（PROMPT-003），本轮 = 对话 3 的前半（补债务 + 实现 + smoke），后半（三方对照跑数 + Go/Kill）拆到 3b
 
 ## 目标
@@ -81,19 +82,52 @@ H003 三条关键事实声称验证全 PASS（架构前馈开环 / fair gain= ga
 
 **3b 需先定**：B3-Q2 是否应用 jphot 10GBaud 的 T_S？这影响 Doppler 物理量级（t² 项对 T_S 敏感）。jphot dB 数字（1.17dB 单支路）是 10GBaud 下测的，若用 2.5GBaud 跑，Doppler 动态范围差 16×（T_S² 比例）。这是 sandbox 保真度问题，不是 bug。
 
+> ⚠️ **3b 续接纠错**：上面"Doppler 动态范围差 16×（T_S² 比例）"的分析**方向反了**——10GBaud 的 T_S 更小 → N·T_S 更小 → Doppler 项 π·f_dot·(N·T_S)² **更小**不是更大。换 10GBaud 救不了 Doppler 切口，T_S 不是根因。根因是物理量级本身可忽略（见续接段 3b 分析）。
+
 ## 决策引用
 
-- 无新建 D###（本轮是 H003 派发任务的执行，技术发现登记到"悬而未决"）
-- 复用 D001/D002/D003（不变量 11-15 全守）
+- **D004（新建，3b Kill）**：Kill B3-Q2——三切口全物理 FAIL（CPE CRB≈0dB + Doppler 物理可忽略 + 星地非增量）
+- D001/D002/D003：superseded by D004（标 superseded 不删）
+- K001（新建）：B3-Q2 Kill 验证 PASS（TL-20 理论预期 + TL-22 物理前提双重证据）
 
 ## 范围确认
 
 - 本轮是否在 scope boundary 内：**是**（阶段 1 sandbox 前半，补债务 + 实现 + smoke，未越界）
 - 未违反"明确不含"（不回头救旧候选 / 不改框架 / 不污染 common / 不跳框架）
 
-## 后续
+## 🔴 续接：对话 3b — TL-20 物理量级分析 + TL-22 深查 → Kill（D004/K001）
 
-1. **对话 3b（首要）**：先定 T_S/baud-rate 保真度问题（10GBaud vs 2.5GBaud），再跑全量 SNR×f_dot 扫值 + 多 seed + 消融归因 + 分层 Go/Kill 判定
-2. **T_S 保真度可能影响架构**：若 10GBaud 下 Doppler 动态显著，f_dot 线性回归才有效；2.5GBaud 下可能需重判 Doppler 切口有效性
-3. SSRN/OECC abstract 亲验仍是已知缺口（不阻塞，人工浏览器补抓）
-4. DopplerParams.DOPPLER_HIGH=150e6 缺文献债（跨专题，不阻塞 B3-Q2）
+用户"你先接着做吧"启动 3b。开跑前主线先**纠正 3a 的一个分析错误**（FR-26 自纠）：S004/H004 写"10GBaud 下 Doppler 动态更大（T_S² 比例）"——**方向反了**。Doppler 相位 = π·f_dot·(N·T_S)²，10GBaud T_S 更小 → N·T_S 更小 → Doppler 项**更小**。T_S 不是根因。
+
+这促使主线先做 TL-20 物理量级分析（不跑全量），核心发现：
+
+**B3-Q2 Doppler 切口在 TS 块时间尺度下物理可忽略**（f_dot=56MHz/s，B5 L147）：
+- 块间（TS=320 符号）频偏跳变 = 7.2Hz（2.5GBaud）/ 1.8Hz（10GBaud）
+- FOE 估计分辨率 = 610kHz（2.5GBaud）/ 2.4MHz（10GBaud）
+- **块间跳变比 FOE 分辨率小 5 个数量级** → FOE 测不出 Doppler 变化
+- 要破坏 jphot 缓变假设需 f_dot ≈ 4768GHz/s = 物理 LEO 最大值的 **8.5 万倍**
+
+用户选"先深查再定"。派子 agent 深查 4 否决条件，主线独立 grep 核查：
+- (a) 残余 f_dot ≤ 全 Doppler（物理必然）→ 不推翻
+- (b) 56MHz/s = df/dt 非误用，LEO 文献数十 MHz/s（GHz/s 系激光不稳度非轨道斜率）→ 不推翻
+- (c) jphot 未测 LEO Doppler，但块尺度缓变假设成立 → 不推翻
+- (d) 公式/单位复核无误 → 不推翻
+- **4 否决条件 0/4 推翻**，主线独立 grep B5 L143-149 + params.py:904 + 0.1b CRB L88 核查全 PASS
+
+关键洞察：B5 L149 自己的 Doppler 跟踪是"750 measurements lasting ~13 min"——分钟级跨帧，Doppler 斜率只在跨帧才有意义，单帧 μs 级捕捉不到。
+
+综合三切口：CPE CRB≈0dB（0.1b L88 已证）+ Doppler 物理可忽略 + 星地非增量（D002）→ gain_vs_M2≈0，§0.4.5 三层全物理 FAIL。
+
+用户确认"Kill B3-Q2（物理双重证据）"。**未跑全量 sandbox**——物理已死跑只确认不翻盘，省算力守 D005。写 D004（Kill）+ K001（验证）+ voice + 标 D001-D003 superseded。
+
+**3a 分析错误教训**：3a 骨架 L1 FAIL（gain_vs_M2≈0）当时归因"f_dot_est 占位 + T_S 问题"待 3b，实际根因是物理量级，骨架数据本就是真实信号。教训：sandbox 骨架 gain≈0 不要轻易归因"还没接好"，先做 TL-22 物理前提核查（本轮纠正了，用户"先深查再定"是对的）。
+
+## 后续（3b Kill 后更新）
+
+B3-Q2 已 Kill（D004/K001），专题 closed。无后续 sandbox 工作。
+
+**Kill 后残留（交主控）**：
+1. **候选池重排**：B3-Q2 Kill 后活跃候选剩 NDA-ML(dormant)/B7(active sandbox)/B5(Kill salvage 全无信号)，需主控重新排候选池决定下一个候选或转向
+2. **跨专题债**：转录错误"4 支路 +2~3dB"未全修（D002 遗留，影响历史准确性不影响 B3-Q2）；DopplerParams.DOPPLER_HIGH=150e6 缺文献（跨专题）
+3. **可复用资产**：5 接口代码 + f_dot 物理量级分析方法（块间跳变 vs FOE 分辨率，可作 Doppler 切口快速预筛工具）+ Fried 参数 + CRB 推导框架 + BUPT 审计方法——供后续候选/教训用
+4. **方法论教训**（D004 已记）：① CRB≈0 的切口不该进 sandbox 实现层（TL-20 应作硬门控筛切口）② 任何"时变/漂移"切口必须先算算法时间窗内物理量级 vs 估计分辨率，差>3 数量级直接物理 Kill 不进 sandbox ③ sandbox 骨架 gain≈0 不要轻易归因"还没接好"，先 TL-22 物理前提核查 ④ 时间尺度对齐是时变切口首要核查项

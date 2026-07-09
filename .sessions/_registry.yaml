@@ -363,10 +363,10 @@ topics:
     conflicts_with: []
 
   - slug: 2026-07-08-b3-joint-estimation
-    title: B3-Q2 子系统协同联合估计第三候选（B2 Kill + B11-Q2 放弃后接替，首验证 4 支路迁移）
-    status: active
+    title: B3-Q2 子系统协同联合估计第三候选（B2 Kill + B11-Q2 放弃后接替）— KILLED 三切口全物理 FAIL
+    status: closed
     created: "2026-07-08"
-    last_updated: "2026-07-09（S004 对话 3a 完成——sandbox 前置债务 4 项清偿 + 5 接口实现 + smoke test 9/9 PASS + MVE 骨架跑通。f_dot 溯源 56MHz/s（B5 锚 optcom.2024.130981 L147）+ 张思齐 CNKI 硕博 0 条 CPE 切口未吞 + Fried 参数强湍 r0≈2cm 定独立分集间距。5 接口写入正确路径 projects/simulation/explore/b3-joint-estimation/（H003/启动协议写的 explore/ 路径有误）。框架暴露 T_S/baud-rate 保真度问题（common 2.5GBaud vs jphot 10GBaud，Doppler 项 t² 敏感影响物理量级），3b 首要定。SSRN/OECC abstract 仍未亲验（Cloudflare/PDF 拦截，不阻塞）。H004 交对话 3b 跑全量三方对照 + 分层 Go/Kill）"
+    last_updated: "2026-07-09（S004 对话 3a+3b 合并，D004/K001 Kill——三切口全物理 FAIL：CPE 联合 CRB≈0dB（0.1b L88 估计理论证死）+ Doppler 切口物理可忽略（块间跳变 7Hz vs FOE 分辨率 610kHz 差 5 数量级，TL-20 物理量级分析 + TL-22 深查 4 否决条件 0/4 推翻，需 f_dot=4768GHz/s 破坏缓变假设是物理 LEO 8.5万倍）+ 星地场景迁移非增量。gain_vs_M2≈0，§0.4.5 三层全物理 FAIL。3a 补债务+5 接口实现+smoke test PASS 后，3b 物理分析直接 Kill 未跑全量（物理已死跑只确认不翻盘，省算力守 D005）。D001/D002/D003 superseded。5 接口代码 + f_dot 量级分析方法 + Fried 参数 + CRB 推导保留作后续候选基建/教训。候选池剩 NDA-ML/B7/B5，需主控重排）"
     description: "B2 Kill + B11-Q2 放弃后接替方向。S031 #1 Conditional Go（+2~3dB 4 支路强湍，dB 最高）。导师'特长场景'标准下是真新方法不是凑数（B11-Q2 是 NDA-ML 验证延伸被用户判凑数放弃）。**B3-Q2 特殊风险**：①4 支路→星地单链路迁移（dB 砍半，星地单孔径难堆叠多望远镜）②A1 归属（jphot+oe BUPT 课题组已完成 FS+FOE+MRC 联合）③D006 边界（前馈开环不撞/环路 TF 撞转 B3-Q3）④代码基建需全新（MRC+帧同步+多支路管线+多望远镜信道）。锚论文 jphot.2023.3265847 + oe.520452（BUPT Liqian Wang 课题组姊妹工作）。守 sim-preflight v1.3.0 + D005 务实路线 + D006 红线。拆对话：①阶段 0 前置规约（4 支路迁移验证/A1 归属核查/架构定性/公平对照/参数真相源/文件组织）②sandbox（联合估计 vs 分立管线三方对照）③MVE + consistency。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection

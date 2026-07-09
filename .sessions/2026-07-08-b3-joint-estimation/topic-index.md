@@ -1,7 +1,7 @@
 # Topic Index: B3-Q2 子系统协同联合估计（4 支路分集强湍）
 
 > slug: 2026-07-08-b3-joint-estimation
-> status: active | created 2026-07-08 | last_updated 2026-07-09（S004 对话 3a 完成：sandbox 前置债务 4 项清偿 + 5 接口实现 + smoke test 全 PASS + MVE 骨架跑通。f_dot 溯源 56MHz/s（B5 L147）+ 张思齐 CNKI 硕博 0 条 CPE 切口未吞 + Fried 参数强湍 r0≈2cm。框架暴露 T_S/baud-rate 保真度问题（2.5GBaud 下 Doppler 影响过小），3b 首要定。SSRN/OECC abstract 仍未亲验不阻塞）
+> status: **closed（2026-07-09 Kill——D004/K001）** | created 2026-07-08 | last_updated 2026-07-09（S004 对话 3a+3b 合并：补债务 + 5 接口实现 + smoke test PASS，随后 TL-20 物理量级分析 + TL-22 深查 4 否决条件 0/4 推翻，三切口全物理 FAIL → Kill。CPE CRB≈0dB + Doppler 物理可忽略 + 星地非增量，gain_vs_M2≈0）
 
 ## 专题定位（一句话）
 
@@ -78,27 +78,29 @@ B3-Q2（子系统协同联合估计）第三候选 MVE 执行（B2 Kill + B11-Q2
 
 ## 已确认决策
 
-- **D001**（2026-07-08，S001）：开 B3-Q2 专题 + 首验证 4 支路迁移策略（阶段 0.1 = 星地多孔径阵列场景验证 + 单链路 CRB 上界前置）
-- **D002**（2026-07-08，S002）：阶段 0.1-0.2 完成，不 Kill + 修正 4 支路 dB 转录错误（2 支路 +2~3dB 非 4 支路；4 支路 0.7-2.14dB；单支路 1.17dB）+ B3-Q2 增量定位为迁移+维度扩展型（jphot 已 claim 两段式 FOE BL²，B3-Q2 切口 = CPE 联合 + Doppler 维度 + 星地场景）
-- **D003**（2026-07-08，S003）：阶段 0.3-0.6 完成 + 架构走前馈开环（不撞 D006，三重证据）+ 公平对照三方矩阵（M1传统/M2 jphot FSTS/M3 B3-Q2，fair gain= gain_vs_M2）+ 增益归因熔断（gain_vs_M2 ≤ 0 转 Kill）+ BUPT 迫近自吞风险登记（非 Kill，timeline 风险，12 个月内汇合论文概率非低）
+- **D001**（2026-07-08，S001，~~active~~ → superseded by D004）：开 B3-Q2 专题 + 首验证 4 支路迁移策略
+- **D002**（2026-07-08，S002，~~active~~ → superseded by D004）：阶段 0.1-0.2 完成，不 Kill + 修正 4 支路 dB 转录错误 + 增量定位为迁移+维度扩展型
+- **D003**（2026-07-08，S003，~~active~~ → superseded by D004）：阶段 0.3-0.6 完成 + 架构前馈开环 + 公平对照三方矩阵 + BUPT 风险登记
+- **D004**（2026-07-09，S004，**active**）：**Kill B3-Q2**——三切口全物理 FAIL（CPE CRB≈0dB + Doppler 物理可忽略 + 星地非增量），gain_vs_M2≈0，§0.4.5 三层全 FAIL。TL-20 理论预期 + TL-22 物理前提（4 否决条件 0/4 推翻）双重证据。D001/D002/D003 superseded。K001 验证 PASS
 
 ## 悬而未决
 
 1. ~~星地多孔径阵列是否真实工程场景~~ → **已答（S002/D002）**：部分成立（有仿真+架构，无已部署工程，sat.1553 不提星地分集），但单链路 CRB 够格（1.0~1.2dB），不依赖多孔径阵列，不 Kill
 2. ~~A1 归属~~ → **已答（S002/D002 + S003/D003 BUPT 审计）**：jphot 已 claim FS+FOE+MRC+BL² 降噪；BUPT 2024+ 续作三切口（CPE 联合/Doppler/星地）均未被单篇完整吞没，但迫近自吞风险（构件齐全，12 个月内汇合论文概率非低）
 3. ~~架构定性（阶段 0.3）~~ → **已答（S003/D003）**：走前馈开环（一套 TS 块估 FS+FOE+CPE+Doppler，逐块前馈不进环路），不撞 D006
-4. **MVE 形态**：单链路强湍（dB 最显著 + 场景对口）为主，多孔径阵列作加分项——sandbox 阶段定
-5. ~~公平对照（阶段 0.4）~~ → **已答（S003/D003）**：三方对照 M1/M2/M3，baseline 含 jphot FSTS，fair gain = gain_vs_M2 @ HD-FEC 3.8e-3
-6. **🔴 转录错误修正**（D002 遗留，仍未修）：note-L36 + `_cut-b1b2b3-verify.md:258-291` + S031 的"4 支路 +2~3dB"需逐处改（待办，跨专题）
-7. **sandbox 前置债务**（S003 登记，S004 部分清偿）：~~Doppler f_dot 溯源补全~~ ✅ S004（56MHz/s B5 L147）/ ~~张思齐 CNKI 核查~~ ✅ S004（硕博 0 条 CPE 未吞）/ ~~多望远镜间距参数设定~~ ✅ S004（Fried 强湍 r0≈2cm）/ **SSRN/OECC abstract 亲验仍欠**（Cloudflare/PDF 拦截，不阻塞，人工浏览器补抓）
+4. ~~MVE 形态~~ → **已答（S004/D004 Kill）**：单链路强湍为主，但物理分析证明 Doppler 切口在 TS 块尺度可忽略 + CPE CRB≈0dB，sandbox 形态无意义，Kill 前未跑全量
+5. ~~公平对照（阶段 0.4）~~ → **已答（S003/D003）**：三方对照 M1/M2/M3，baseline 含 jphot FSTS，fair gain = gain_vs_M2 @ HD-FEC 3.8e-3（D004 Kill 后此框架未实战，但方法论保留）
+6. **🔴 转录错误修正**（D002 遗留，仍未修，跨专题）：note-L36 + `_cut-b1b2b3-verify.md:258-291` + S031 的"4 支路 +2~3dB"需逐处改（Kill 后仍是债，不影响 B3-Q2 但影响历史准确性）
+7. **sandbox 前置债务**（S003 登记，S004 已清偿）：~~Doppler f_dot 溯源~~ ✅ S004（56MHz/s B5 L147）/ ~~张思齐 CNKI~~ ✅ S004（硕博 0 条）/ ~~多望远镜间距~~ ✅ S004（Fried 强湍 r0≈2cm）/ SSRN/OECC abstract 仍欠（不阻塞，Kill 后不再需）
+8. **Kill 后残留**（专题 closed 后）：B3-Q2 Kill，候选池剩 NDA-ML(dormant)/B7(active)/B5(Kill salvage 全无信号)，需主控重新排候选池下一个候选
 
 ## 当前位置
 
-**🟡 S004 对话 3a 完成（2026-07-09）**：sandbox 前置债务 4 项清偿（f_dot 56MHz/s 溯源 + 张思齐 CNKI 硕博 0 条 CPE 切口未吞 + Fried 参数强湍 r0≈2cm；SSRN/OECC abstract 仍未亲验不阻塞）+ 5 接口实现（multi_aperture_channel/frame_sync_fsts/mrc_combiner/multi_branch_phase_precorr/joint_estimation_pipeline，正确路径 projects/simulation/explore/b3-joint-estimation/）+ smoke test 9/9 PASS + MVE 主脚本骨架跑通。**框架暴露 T_S/baud-rate 保真度问题**（common 2.5GBaud vs jphot 10GBaud，Doppler 项 t² 敏感）。下一步=对话 3b 定 T_S + 全量三方对照跑数 + 分层 Go/Kill。
+**🔴 S004 对话 3a+3b 完成，B3-Q2 Kill（D004/K001，2026-07-09）**：对话 3a 补债务 + 5 接口实现 + smoke test PASS；对话 3b TL-20 物理量级分析发现 Doppler 切口在 TS 块尺度可忽略（块间跳变 7Hz vs FOE 分辨率 610kHz 差 5 数量级），TL-22 深查 4 否决条件 0/4 推翻。三切口全物理 FAIL（CPE CRB≈0dB + Doppler 物理可忽略 + 星地非增量），gain_vs_M2≈0，§0.4.5 三层全 FAIL → Kill。用户确认。专题 closed。5 接口代码 + 分析方法保留作后续候选基建/教训。
 
 ## 进展线索
 
 - **S001** 开题 + B3-Q2 特殊风险 + 阶段 0 六项规约设计 + 复用基建盘点（2026-07-08，主控对话）
 - **S002** 阶段 0.1-0.2 执行（星地多孔径场景验证 + 单链路 CRB + A1 归属）+ 修正 4 支路 dB 转录错误（D002）+ 首要风险转移（4 支路迁移→增益归因）（2026-07-08，工作对话 1）
 - **S003** 阶段 0.3-0.6 执行（架构前馈开环 + 公平对照三方矩阵 + 参数真相源 + 文件组织接口）+ BUPT 续作核查（D003，迫近自吞风险登记）（2026-07-08，工作对话 2）
-- **S004** 对话 3a sandbox 前半执行：前置债务 4 项清偿（f_dot 56MHz/s / 张思齐 CNKI / Fried 参数 / SSRN-OECC 未亲验）+ 5 接口实现 + smoke test 9/9 PASS + MVE 骨架跑通 + T_S 保真度问题暴露（2026-07-09，工作对话 3a）
+- **S004** 对话 3a+3b 合并：补债务 + 5 接口实现 + smoke test PASS → TL-20 物理量级分析 + TL-22 深查 4 否决条件 0/4 推翻 → 三切口全物理 FAIL → **D004/K001 Kill**（2026-07-09，工作对话 3）
