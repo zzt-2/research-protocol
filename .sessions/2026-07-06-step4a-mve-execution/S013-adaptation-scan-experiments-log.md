@@ -93,6 +93,60 @@
 
 **注**: 本轮（A1 实验）主线仅补记 A4 已完成的事实保证治理准确性，A4 的深入分析/决策记录由跑 A4 的对话负责。A4 PASS 是 4 种适配扫描唯一出信号的方向，待主对话决定是否追进 Contract/正式实验。
 
+### A4 改进版 — SNR 自适应 CV 阈值 + 敏感性扫描 + 稳定性核查（2026-07-08 续接）
+
+**来源**: S013 续接（用户问"足够稳定吗？大于0.2dB我都算可以"触发本轮）
+**目标**: (1) 消除原版 2 个 FAIL 点（awgn@5 -0.53, weak@10 -0.35）(2) 阈值敏感性扫描证明鲁棒性 (3) 核查稳定性回答用户
+
+**判据改进**: 原版固定 CV_TH=0.85 在低 SNR 误判（AWGN@5dB 理论 CV=0.855，跟阈值重叠）。标定 AWGN 理论 CV 模型 `CV_awgn(snr) = 0.74 + 0.12·exp(-snr/5)`（无衰落基准，从标定数据拟合：SNR=5→0.855, SNR=10→0.787, SNR=15→0.756, SNR=20→0.744）。判据改为 **SNR 自适应归一化 CV**：`CV_norm = CV_measured / CV_awgn(snr)`，CV_norm < margin（1.10）→ 无衰落 → NDA；≥ margin → 按 γ_eff 切换。
+
+**脚本/数据**: `_a4_improved_cv.py` / `_a4_improved_cv_results.json`（3 seed × 5 配置敏感性扫描，199.9s）。
+
+#### 稳定性核查结果（核心结论）
+
+**A4 切换策略稳定性（5 seed 原版 crossover 区 γd=15dB，含 95% CI）**：
+
+| 场景 | SW-max (dB) | 95% CI | CI 下界>0? | 均值>0.2dB? |
+|------|-------------|--------|-----------|-------------|
+| weak | +0.35 | [+0.10, +0.60] | ✓ | ✓ |
+| moderate | +0.46 | [+0.20, +0.72] | ✓ | ✓ |
+| strong | +0.38 | [+0.24, +0.53] | ✓ | ✓ |
+
+→ **全 3 场景均值 >0.2dB（用户阈值），CI 下界全 >0（统计显著超越 max(DA,NDA)）**。weak CI 下界 +0.10 略低于 0.2 阈值（弱湍流单 seed 方差大），moderate/strong CI 下界 ≥0.20。
+
+**改进版（3 seed）敏感性扫描 crossover 区 γd=15dB**：
+
+| 配置 (γ_eff_th, CV_margin) | weak@15 | moderate@15 | strong@15 |
+|------|---------|-------------|-----------|
+| (13, 1.10) 基准 | +0.51 | +0.56 | +0.44 |
+| (11, 1.10) | +0.29 | +0.40 | +0.48 |
+| (15, 1.10) | +0.41 | +0.39 | +0.25 |
+| (13, 1.05) | +0.53 | +0.58 | +0.44 |
+| (13, 1.15) | +0.48 | +0.54 | +0.45 |
+
+→ **5 配置全 >0.2dB（最差 strong@15 geth15 = +0.25）**，crossover 区增益对阈值选择鲁棒（γ_eff_th 11~15 + CV margin 1.05~1.15 都不改变 PASS 结论）。
+
+**FAIL 点改善**：
+- 原版（固定 CV_TH=0.85）2 FAIL: awgn@5 -0.53, weak@10 -0.35
+- 改进版（SNR 自适应 CV, geth13_cvmar1.10）3 FAIL，**全在不可工作区**：awgn@5 -0.37, weak@5 -0.14, weak@10 -0.23。这 3 点 BER ∈ [0.17, 0.40] >> HD-FEC 3.8e-3，系统不会在这运行。**工作区（BER<HD-FEC）内 0 FAIL**。
+- weak@10 从 -0.35 改善到 -0.23（仍 FAIL 但幅度减半）；weak@5 从 -0.09 变 -0.14（略差但在不可工作区无影响）
+
+**剩余 FAIL 根因**：AWGN 低 SNR 的块内功率统计跟弱湍流不可区分（CV 物理本征重叠），任何基于功率统计的判据都无法完全消除。但这不影响实际可用性——低 SNR 非工作区。
+
+#### 物理因果诊断修正（本轮新发现，重要）
+
+任务交接上下文原描述"deep fade → DA pilot 崩溃 → NDA 鲁棒"**不准确**。诊断 2（`_a4_diagnose2_effsnr.py`，按 per-block 有效 SNR γ_eff = γ_bar + 10log10(h) 分桶）发现：所有场景所有 SNR 的赢家切换**汇聚到同一 γ_eff 阈值（12-14 dB）**：
+- γ_eff < 10dB → DA 稳定赢（极低有效 SNR，NDA 升幂 M₀=8 噪声灾难，DA pilot 显式参考可靠）
+- γ_eff > 14dB → NDA 主导赢（高有效 SNR，全 block 积分鲁棒 + DA pilot overhead 纯浪费）
+
+**修正后物理因果**：crossover 由 per-block 有效 SNR 决定，不是单纯 fade 深度。deep fade（低 h）在低全局 SNR 下让 γ_eff 更低（DA 赢）；但在高全局 SNR 下 deep fade 的 γ_eff 仍可能 >14dB（NDA 赢）。"deep fade → DA 崩溃"只在特定 SNR 区间成立。
+
+#### 上行/线宽数据铺开核查（本轮核查既有数据）
+
+**上行 fair_gain 递增链（核查通过）**：awgn(+1.35) → weak(+1.53) → moderate(+1.71) → strong_wr(+2.51) → uplink_moderate(+2.48) → uplink_strong(**+3.07±0.45** dB)。上行 strong 收尾，物理因果清晰。**注**：weak/moderate/strong 之间 CI 有重叠（弱湍流方差大），均值单调但严格统计分离需更多 seed 或合并表述。
+
+**线宽扫描（核查通过）**：双向场景依赖——AWGN 高线宽 NDA 更优（10kHz→+1.35, 100kHz→+1.68）；湍流 strong 高线宽 NDA 崩塌（10kHz→+2.51, 500kHz→**-0.82 转负**）。给 NDA 适用边界（极宽线宽+强湍流是失效区）。
+
 ## 决策引用
 
 - 无新建 D###（A3 FAIL 是技术验证结果，非方向决策；如要正式 Kill 整条适配策略建议主对话确认 A1/A4 后统一建 D-011）
@@ -111,3 +165,47 @@
 1. A4 PASS 是唯一可追方向——主对话决定是否追进 Contract/正式实验（建 D-012 Go 决策）
 2. A1/A3 FAIL 数据保留作防御性材料 + 教训（D-011 教训 8-10）
 3. 若用户决定追 A4：A4 的 crossover 切换策略进 Contract 阶段（落假设+信号+success_signal），需先补 A4 的 D### 决策记录（跑 A4 的对话或主对话补）
+
+### 本轮（A4 改进 + 画图）产出追加
+
+**稳定性结论回答用户**："足够稳定吗？大于 0.2dB 我都算可以" → **够**：
+- A4 crossover 区 5 seed 均值全 >0.2dB（+0.35/+0.46/+0.38），CI 下界全 >0
+- 改进版敏感性扫描 5 配置全 >0.2dB（最差 +0.25），鲁棒
+- fair_gain 递增链均值单调（+1.35→+3.07dB），上行收尾
+
+**画图任务**：6 场景 fair_gain 递增 + A4 切换 BER 曲线（crossover 区切换赢两者的视觉冲击）。图存 `explore/nda-awgn-tracking-sandbox/_adaptation_scan_figures.png`。
+
+### BER 补点实验（导师要求 BER 到 1e-5，5 seed 探索性）
+
+**日期**: 2026-07-09
+**任务来源**: thesis-writing 专题 S002 → 导师要求 BER 展示到 1e-5（现有 30seed 主实验只到 1e-2~1e-4）。回 Step 4a 维度 D 跑（守 FR-22，不在写作专题跑）。
+**配置**: 5 seed × 6 场景，i=0..4（与 30seed 前 5 seed 对齐，方便未来升级）。除 SNR 范围 + seed 数外，一切沿用 run_main_experiment_30seed.py（守 TL-13，common/ 未动）。
+**脚本/数据**: `simulator/run_ber_ext_5seed.py`（第一轮，补到 44/46dB）/ `simulator/run_ber_ext2_5seed.py`（第二轮，strong/uplink 补到 50dB 探边界）/ `results/sc_nda_ml_ber_ext_5seed/_ber_ext_5seed.json` + `_ber_ext2_5seed.json` + `_ber_ext_5seed_report.md` / `figures/fig2_ber_ext_merged.png`。
+
+**两轮补点**：
+- 第一轮（115s）：6 场景补高 SNR 区（awgn 22-30 / weak 28-40 / moderate 28-46 / strong 28-44 / uplink 28-44/46）。验证 brief 预判。
+- 外推分析：log10(BER) vs SNR 线性拟合，strong/uplink 到 1e-5 需 64-81dB（远超实际工作区）。
+- 用户决策（折中）：不强补到无物理意义高 SNR，补到 50dB 探边界。
+- 第二轮（18s）：strong/uplink 补 46/48/50dB，确认"仍在降只是慢"。
+
+**核心结论**：
+1. **3 场景到 1e-5**：awgn/weak（零错饱和，远超）/ moderate（46dB oracle=8.3e-6 刚破 1e-5）。
+2. **3 场景到不了**：strong（50dB oracle=2.0e-4）/ uplink_moderate（1.6e-4）/ uplink_strong（9.8e-4）。外推 1e-5 需 64-81dB。
+3. **关键发现（推翻 brief 预判）**：原预判"strong/uplink 有 deep fade 地板"被实测推翻。BER 28→50dB 全程单调下降（strong 1.76e-2→2.0e-4，~1.9 数量级），衰减率稳定 1.35-1.7×/2dB（无趋平→无地板）。deep fade 正确表征 = "BER 曲线斜率变缓"（~1.4×/2dB vs 轻湍流 ~3×/2dB），非"BER 卡死"（伪地板）。
+4. **TL-23 自检**：单 seed 层面 9 个 NDA<oracle"违例"全在 BER≤1e-4 离散计数涨落区（错误 bit ≤30，泊松统计）；mean 层面算法 NDA≥oracle 成立。30seed 主区间 0 违例。
+
+**守纪律**：守 TL-22（地板如实报告，不为凑 1e-5 硬补无意义高 SNR）/ TL-23（NDA≥oracle）/ TL-13（薄包装复用 run_awgn/run_turb）/ FR-22（回 step4a 跑，不在写作专题跑）。
+
+**决策引用**：无新建 D###（探索性补点验证，非方向决策）。引用既有 TL-22/TL-23/TL-13/FR-22。结果交 thesis-writing 专题 H002 用于主图绘制 + 跟老师汇报。
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：**是**（Step 4a 维度 D 内跑补充实验验证 BER 极限，FR-22 守住）
+- 未跳框架（FR-22）：当前在 Step 4a 维度 D
+
+## 后续
+
+1. 结果回传 thesis-writing 专题 H002（主图绘制数据源就绪）
+2. 待用户决定：主图画 4 子图（下行）还是 6 子图（含上行）；strong/uplink 子图纵轴是否收窄
+3. 若老师要求正式统计 → 升级 30 seed（seed 策略已对齐，可直接扩 N_SEEDS）
+4. deep fade 叙事修正：若写进论文，用"斜率变缓"非"地板"（原伪地板叙事会被审稿人质疑）
