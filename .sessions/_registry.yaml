@@ -415,7 +415,7 @@ topics:
     title: 论文写作专题（自适应 CPR 方向）
     status: active
     created: "2026-07-09"
-    last_updated: "2026-07-10（R004 强湍流 BER 领域调研完成，支撑 D003 解读 B。本地精读 5 篇 + COMPARISON_REFS 17 篇 + Semantic Scholar 4 查询。核心结论：①强湍流 BER 降不到 1e-5 是领域已知现象（Paillier JLT 最强湍流 σ²_I=0.684 也只画到 1e-4）②对齐度最高=照画 BER 不凑 1e-5[Paillier] + post-FEC/锚定 1e-3[sat.1553] ③1e-5=post-FEC 门限，导师原话'在有编译码的情况下'五字锁定 post-FEC。问导师时可带此定心丸。三对话任务：切换修复✅/调研✅/baseline 下载仍⏳。主线等用户问导师回来定主卖点叙事）"
+    last_updated: "2026-07-10（R006 写作流程规划完成——对标10篇会议+6篇期刊定5节骨架+4-6图+散文贡献+素材库(数字全标溯源口径)+5对话拆分。修正R005(6节→5节/列表→散文/ref→10-15)。D1图表+D2中文草稿可并行不等导师，D3等导师3项反馈。简报v4未发等导师定口径+10⁻⁵+主对比文献）"
     description: "自适应载波相位恢复（A4 per-block 有效 SNR 驱动 DA/NDA 切换）方向的论文写作准备专题。在 GW Step 4a 维度 D（A4 PASS 待 Go）阶段内做：材料盘点/缺口识别/数据稳定性验证/论点合理性审查/简报完善。**是写作准备不是进 Contract/Execute**——守 FR-22。step4a-mve-execution 保持 active（Go 决策+消融回那里），本专题只管写作准备。"
     depends_on:
       - slug: 2026-07-06-step4a-mve-execution

@@ -1,0 +1,526 @@
+# [R006] CCISP 2026 会议论文写作流程规划
+
+> 2026-07-10 | 关联：专题 slug 2026-07-09-thesis-writing / 简报 v4 / R002(叙事对标)/R004(BER调研)/R005(初版骨架)/D002(切换降级)/D003(10⁻⁵矛盾)/D004(口径)
+> 目的：规划"怎么写"CCISP 2026 会议论文的流程——对标结论 + 写作骨架 + 素材库 + 多对话拆分。**不写正文**，只给写正文的人/AI 一份可执行的蓝图。
+> 纪律：守 FR-22（写作准备不跑实验）+ external-output skill（正文写时再过 C1-C10）+ 数字口径标溯源（D004 教训）。
+>
+> **⚠️ 修订（2026-07-10 续）**：初版只做了外部对标（会议论文体例），**没查已有内部写作规范积累**——被用户纠偏"你有好好看看之前开题报告咋弄的吗？写作规范文档可没少说相关的"。本版补 §0.5「已有写作规范积累引用」，将历史积累的 4 层写作规范接入本流程规划。写正文时**必须先查这些文件**，不能只用本文件的外部对标结论。
+
+---
+
+## 0. 一句话定位
+
+星地 FSO 强湍流下，盲载波相位估计（NDA-ML）相对导频估计（DA-ML）的净增益量化与归因——**先按 naive 口径写（强湍流 +1.2~1.9dB），切换方法当鲁棒性补丁进正文，BER 画到能到的最低+标注**。
+
+- **三件等导师定的事**（不阻塞骨架搭建，但阻塞标题/主图/参考文献定稿）：
+  1. 10⁻⁵ 底线含义 A/B（D003）→ 决定主图纵轴 + 主卖点成立性
+  2. 增益口径主报 fair/naive（D004）→ 决定标题数字 + 表加粗
+  3. 主对比文献（简报 §3）→ 决定参考文献核心一条
+
+---
+
+## 0.5 已有写作规范积累引用（写正文前必查）
+
+> 来源：学位论文写作积累（thesis-writing-prep / thesis-writing / advisor-review-revision 三个专题）+ `毕设/写作材料/` 目录。
+> 这些是从 6-7 篇同门范文 + 导师批注 + 12 子 agent 文风审查中提炼的**铁律级规范**，远比本文件的外部对标结论更具体、更强制。
+> **写正文时每节必查，不能只用本文件 §Step1-2 的对标结论。**
+
+### 第一层：写作质量规范（铁律级，不可违反）
+
+**文件**：`毕设/写作质量规范.md`（730 行，16 节）
+
+写正文前必读，写完每节后用附录 A 快速检查清单逐项打勾。核心：
+
+| 规范节 | 内容 | 对 CCISP 会议论文的适用性 |
+|---|---|---|
+| §1 范文验证铁律（4 条） | 节首直接切入禁跨节回指 / 符号定义后直接用禁括号节码 / 参数解释"式中/其中"格式 / 符号重用上下文区分 | ✅ 全适用（会议论文更紧凑，回指更不该有） |
+| §2 动词强度控制 | 引用现有模型用"介绍"非"建立" / 仿真结果用"表明"非"揭示" / 性能用"较好"非"最优" | ✅ 全适用（过强动词是审查最高频问题） |
+| §2.5 AI 痕迹判定（5 类） | 翻译腔/清单体/元叙述/数据堆砌/平行罗列 → 出现即判机器语言 | ✅ 全适用（会议论文审稿人也查 AI 痕迹） |
+| §3 措辞禁忌清单 | 禁"首次/填补空白" / 禁破折号 / 禁正文加粗 / 引用放句末句号前 | ✅ 全适用 |
+| §3.3 文献综述自洽规则 | 总结段缺口描述不得与前文引用文献贡献矛盾 | ✅ 适用（Intro 的 related work 段） |
+| §5 结构规则 | 每段 3-8 句 / 公式密集段每段≤2 公式 / 段落结构不雷同 / 节首直接切入 | ✅ 全适用（会议论文段落更短） |
+| §5.5 段内过渡句 | 段尾纯指路句删除 / 禁"下一节将…" / 保留节首总领句 | ✅ 全适用 |
+| §7 审查维度 R1-R8 | 语言质量/论断依据/技术常识/术语合规/符号一致/禁忌内容/图表公式/动词强度 | ✅ 全适用（每节写完过 R1-R8） |
+| §9 子 agent 建议验证流程 | agent 建议"加 X 让读者更清楚"→ 先 grep 范文库，未命中则拒绝 | ✅ 全适用（防 LLM 加过渡加引用倾向） |
+| §12 开题报告特有规则 | 未完成研究用"拟"前缀 / 创新点写含论证链的独立段落非平行编号 | ⚠️ 部分适用（CCISP 已完成研究不用"拟"；贡献表述见下） |
+| §13 参考文献质量门槛 | 主引 IEEE Trans 系列 / 低 IF 期刊逐条评估 | ✅ 全适用 |
+| §15 不顺句模式库 | 6 类模式（搭配不当/语义断裂/元语言/数值范围/术语句式/体例一致） | ✅ 全适用 |
+| §16 公式排版规范 | 长公式用 aligned / 对齐锚点 &= / 续行运算符 &+ | ✅ 全适用 |
+| 附录 A 快速检查清单 | 19 项逐项打勾 | ✅ 每节写完必过 |
+
+### 第二层：句级句式库（写每句话时查）
+
+**文件**：`毕设/写作材料/writing-patterns-sentence.md`（1020 行，17 大类 100+ 条骨架）
+
+每条格式：`> 原文摘录` → `**骨架**：[可替换成分]` → `**用法**：场景说明`。从 7 篇同门范文（董凡/夏煜/丁爽/张思齐/惠佳欣/高悦/管路阳）提取。
+
+**CCISP 论文最相关的句式大类**：
+
+| 句式大类 | 编号范围 | 用在哪节 |
+|---|---|---|
+| §1 公式引入句式（16 条） | 1.1-1.16 | §II System Model（DA-ML/NDA-ML 公式引入） |
+| §2 推导衔接句式（12 条） | 2.1-2.12 | §II/§III（公式间衔接） |
+| §3 假设/近似引入句式（10 条） | 3.1-3.10 | §II（慢变近似/块衰落假设） |
+| §4 参数解释句式（11 条） | 4.1-4.11 | §II（每个公式后的"式中，A为…"） |
+| §5 数值嵌入句式（13 条） | 5.1-5.13 | §IV Results（增益数字怎么写进句子） |
+| §7 方法对比句式（10 条） | 7.1-7.10 | §IV（DA vs NDA 对比、切换 vs 固定对比） |
+| §11 章引言句式（7 条） | 11.1-11.7 | §I Introduction（问题背景→后果→必要性） |
+| §12 章小结句式（8 条） | 12.1-12.8 | §V Conclusion |
+| §14 递进评价链（11 条） | 14.1-14.11 | §I/§III（方法递进论证 A→局限→B） |
+| §15 缺口/不足断言句式（4 条） | 15.1-15.4 | §I Introduction（Gap 声明） |
+
+**贡献条写法**（本文件 §2.3 贡献条表述应参照）：
+- 写作质量规范 §12.7 创新点写法：**每条写成含完整论证链的独立段落（问题→方法→效果）**，差异化各条表述结构，禁"针对X拟Y"模板复制多条
+- 但会议论文体例（§Step1 对标结论）是散文式 3 句不用 bullet list——**两者结合**：会议用散文式，但每句含论证链（问题→方法→效果数字），不用"针对…提出…"模板复制
+
+### 第三层：段落级模式卡（写每段时查）
+
+**文件**：`毕设/写作材料/writing-patterns-paragraph.md`（1460 行）
+
+含：§0 通用段落类型（章引言/章小结/节引言/节间过渡）+ §1-§4 各章段落类型 + §附录A 量化基准 + §附录B 结构决策表 + §附录C 写作顺序 + §附录D 范文映射。
+
+**CCISP 论文最相关的段落类型**：
+
+| 段落类型 | 文件位置 | 用在哪节 |
+|---|---|---|
+| §0.1 章引言段 | paragraph.md §0.1 | §I Introduction（背景→问题→本章内容预告） |
+| §0.3 节引言段 | paragraph.md §0.3 | 每节开头（1-3 句让读者知道本节讲什么） |
+| §0.4 节间过渡段 | paragraph.md §0.4 | 节与节之间（前节效果→剩余问题→后节需求） |
+| §1.1 系统模型引入段 | paragraph.md §1.1 | §II System Model（框图→信号流描述） |
+| §1.2 信号/信道推导段 | paragraph.md §1.2 | §II（GG 湍流信道推导 + DA/NDA 信号模型） |
+| §1.3 概率分布/统计模型段 | paragraph.md §1.3 | §II（GG 分布 PDF 引入） |
+| §2.2 算法推导段 | paragraph.md §2.2 | §III Proposed Method（切换判据推导） |
+| §2.5 仿真结果分析段 | paragraph.md §2.5 | §IV Results（现象→数字→机理三层结构） |
+| §3.4.2 方法对比段 | paragraph.md §3.4.2 | §IV（DA vs NDA 四种对比结构） |
+| §3.4.3 参数优化段 | paragraph.md §3.4.3 | §IV（线宽敏感性扫参） |
+| §0.2 章小结段 | paragraph.md §0.2 | §V Conclusion（两段式：问题+方法→验证+数字） |
+
+**量化基准**（paragraph.md §附录A，7 篇范文统计）：
+- 公式密度：Ch2 均值 3.9/千字，Ch3 均值 4.5/千字 → 会议论文公式密度可对标（但总量少，4-6 页只给 2-3 个核心式）
+- 引用密度：Ch2 均值 3.2/千字，Ch3 均值 1.3/千字 → 会议论文 Intro 引用密度高，Method/Results 低
+- 空洞占比：应控制 ≤5%
+
+### 第四层：各节详细写作大纲（写每节前查）
+
+**文件**：`毕设/写作材料/section-outline.md` + `subsection-content-outline.md`
+
+每节含：段落数 / 每段功能 / 字数 / 公式数 / 图表数 / 模板来源（哪篇范文哪节）/ 句式编号（查 sentence.md 哪条）。
+
+**CCISP 论文映射**（学位论文章节 → 会议论文章节）：
+
+| 会议论文章节 | 对应学位论文章节 | section-outline 参考节 | 段落模式参考 |
+|---|---|---|---|
+| §I Introduction | Ch1 绪论 + Ch4 章引言 | section-outline §1.3 + paragraph §0.1 | sentence §11+§15 |
+| §II System Model | Ch2 系统模型 | section-outline §2.2+§2.3 | paragraph §1.1+§1.2+§1.3 |
+| §III Proposed Method | Ch4 载波同步（算法推导部分） | section-outline §4.2+§4.3 | paragraph §2.2+§3.3 |
+| §IV Results | Ch4 仿真对比（§4.6）+ Ch3 仿真验证（§3.5） | section-outline §4.6+§3.5 | paragraph §2.5+§3.4.2 |
+| §V Conclusion | Ch 章小结 | section-outline 各章 §X.N | paragraph §0.2 + sentence §12 |
+
+### 文献提取规范
+
+**文件**：`毕设/写作材料/literature-notes-ch1-ch2.md` + `material-chapter-literature.md` + `references.bib`
+
+写 related work / 文献综述时：
+- 每篇文献提取：核心贡献 + 与本文关系 + 档级（Trans/顶会/低IF）
+- 综述段用**递进评价**（§14 递进评价链），不平行罗列（§2.5 清单体禁忌）
+- 文献综述自洽规则（写作质量规范 §3.3）：总结段缺口描述不得与前文引用文献贡献矛盾
+- 参考文献质量门槛（§13）：主引 Trans 系列，低 IF 逐条评估
+
+**已有的文献提取积累**（`毕设/写作材料/literature-notes-ch1-ch2.md`）：
+- Ch1-Ch2 文献已提取（旧方向：信道估计+载波同步），含核心贡献+与本文关系
+- CCISP 论文文献清单（本文件 §3.3）应与此对齐，补 FSO 强湍流 + NDA/DA-ML 方向的新文献
+
+### 写作流程方法论（写作质量规范 §11）
+
+逐节循环（每节 5 步）：
+1. 派 3 个写作向导子 agent（结构/公式/语言）并行提取指南 → **查上述 4 层文件**
+2. 主对话写正文
+3. 派 8 个审查子 agent（R1-R8）并行审查
+4. 汇总修正
+5. 下一节
+
+章级顺序：
+1. 先写正文各节（跳过引言和小结）
+2. 写章引言（概括+衔接+预告）
+3. 写章小结（两段式总结+引出下章）
+4. 引言和小结也过 R1-R8
+
+**会议论文适配**：会议论文无"章"概念，但 §I Introduction 最后写、§V Conclusion 最后写的顺序仍然适用（先有正文才能概括）。
+
+---
+
+## Step 1：对标研究——别人怎么写
+
+### 1.1 对标样本来源（三层覆盖）
+
+| 层 | 样本 | 数量 | 覆盖维度 |
+|---|---|---|---|
+| **会议论文**（本次新增） | ICSOS 2025/2019、MWP 2022、OFC 2026、OECC/PSC 2025（本地全文）+ APCCAS 2022、OECC 2024、ICUMT 2015（检索全文）+ OFC 2025、ICWOC 2025（摘要） | 10 篇 | 章节骨架/图数/贡献表述/参考文献数 |
+| **期刊论文**（R002 §B/§C 已有） | Wang 2025 OE / Paillier 2020 JLT / Wang 2024 OE / A 两阶段CPE / E hybrid switching / C format-transparent | 6 篇 | 机制+数字闭环/Complexity收子节/贡献用数字 |
+| **学位论文**（R002 主体，仅供量级对标） | 郭欣宇 / 张思齐 | 2 篇 | 量级对标（不再参考叙事体例） |
+
+### 1.2 会议论文体例核心发现（10 篇实证）
+
+**章节骨架**：
+- 5 页主流 = **5 节**：I Intro → II System/Setup → III Method/Proposed → IV Results → V Conclusion
+- 3 页超短 = **4 节**：Intro → Setup(含 Method) → Results → Conclusion
+- 与期刊差异：**无独立 Related Work 节**（并入 Intro）、**无 Discussion 节**、**Conclusion 仅 1 段**
+- 理论型会多 1-2 节（ICUMT 6 节含非线性分析），工程型更紧凑（APCCAS 5 子模块塞一节）
+
+**贡献表述**：
+- **几乎不用 bullet list**，统一是 Intro 末尾**散文式 3-4 句**，句式 "We propose... It achieves... Additionally..."
+- 会议对贡献措辞容忍度高，可直接写性能数字（"18 clock cycles"、"1-MHz range"）
+- 期刊（R002 §B）则更硬：用数字立贡献，不写 contributions 列表（除非 Frontiers 体例要求）
+
+**图安排**（页数 ↔ 图数经验公式）：
+- 3 页 ≈ 3 图；4 页 ≈ 6-8 图；5 页 ≈ 8-10 图
+- **标配组合**：1 张系统/算法框图（Fig.1，必放）+ 机制图（中段）+ BER/星座图（Results 节）
+- 表可有可无（3-4 张：资源、对比、参数）
+
+**参考文献**：
+- **6-12 篇为主**（3 页 ~10 篇，4 页 ~12 篇，理论型可少到 6 篇）
+- 远少于期刊（25-40 篇），允许混引会议+期刊
+
+**会议 vs 期刊写法差异（关键）**：
+
+| 维度 | 会议（4-6 页） | 期刊（8-12 页） |
+|---|---|---|
+| Related Work | 并入 Intro（3-5 句） | 独立段/章 |
+| 公式推导 | 只给 2-3 个核心式 | 完整推导 |
+| Discussion | 无（并入 Results 或 Conclusion） | 独立节 |
+| Conclusion | 1 段复述贡献+核心数字 | 总结+展望详述 |
+| 致谢 | 简短或省 | 标准段 |
+| 参考文献 | 6-12 篇 | 25-40 篇 |
+
+**省略技巧**：用 inline 公式、图多占版面替文字、Method 揉进 Setup、Intro 只引最核心 3-5 篇。
+
+### 1.3 期刊论文体例核心发现（R002 §B/§C 已有，6 篇实证）
+
+- **机制+数字闭环**：Method 30-45%，每机制点配 dB/% 量级，机制→数字同节闭环
+- **Complexity 收 Results 子节**（不单列章）
+- **贡献用数字不用句式**：abstract+intro 亮数字，不写 contributions 列表
+- **30seed+CI 不能当"更严谨"卖点**（领域惯例不报 CI，6 篇全不报）→ 用"湍流随机性需多 seed 表征分布"正当化
+- **切换型特有 framing**："跨工况可移植性"（跨湍流强度/per-block 有效 SNR 区间）
+
+### 1.4 对标结论——我们该怎么写（会议+期刊混合体例）
+
+CCISP 是 IEEE 会议（4-6 页），但目标是 EI+Scopus 检索，质量要求不低。采用**会议骨架 + 期刊的"机制配数字闭环"纪律**：
+
+1. **5 节骨架**（Intro→Channel Model→Method→Results→Conclusion），无独立 Related Work/Discussion
+2. **Method 30-40%**：讲清 DA-ML/NDA-ML 两法 + 切换判据，每点配 dB 数字
+3. **贡献用散文式 3 句带数字**（会议体例），放 Intro 末段
+4. **Complexity 收 Results 子节**（期刊体例）
+5. **图 4-6 张**：1 系统框图 + 1 机制图 + 2-3 BER/增益曲线 + 0-1 可选
+6. **参考文献 10-15 篇**
+7. **30seed+CI 用"湍流随机性"正当化**，不当主卖点
+8. **公式只给核心 2-3 个**（DA-ML 估相位 + NDA-ML 升幂 + 净增益定义）
+
+---
+
+## Step 2：写作骨架
+
+### 2.1 章节结构（5 节，按 5 页预算，可压到 4 页）
+
+| 节 | 标题 | 篇幅 | 写什么 | 等导师？ |
+|---|---|---|---|---|
+| I | Introduction | ~0.8 页 | 星地FSO背景 + 强湍流挑战 + DA/NDA两法 + Gap(导频在deep fade失效) + 贡献3句 | 贡献句等口径定 |
+| II | System Model | ~0.8 页 | GG湍流信道(3档) + 16APSK信号模型 + 块结构 + DA-ML/NDA-ML公式 + 公平对照坐标γ_tot | σ²_R核对 |
+| III | Proposed Method | ~0.8 页 | 块有效SNR判据 + 切换逻辑 + crossover物理因果 | **整节等导师定切换进不进** |
+| IV | Results & Discussion | ~1.8 页 | BER曲线(6场景) + 净增益表 + 切换vs固定 + 线宽敏感性 + Complexity子节 | 纵轴/口径/子图数 |
+| V | Conclusion | ~0.3 页 | 贡献重述 + 核心数字 + 未来工作 | — |
+| | References | ~0.5 页 | 10-15 篇 | 主对比文献 |
+
+**篇幅弹性**：
+- 若切换**降附录**：III 压缩到一段（0.3 页），IV 扩到 2.3 页
+- 若切换**不提**：III 删，II 扩到 1.1 页（补两法对比分析），IV 扩到 2.3 页
+- 若 4 页版：II+III 合并为 "System Model and Method"（1.2 页），Conclusion 压到 0.2 页
+
+### 2.2 图表清单（4-6 图 + 1-2 表）
+
+| # | 图/表 | 类型 | 内容 | 数据来源 | 状态 |
+|---|---|---|---|---|---|
+| Fig.1 | 系统框图 | 框图 | 星地FSO链路(发射→湍流信道→接收) + DA-ML/NDA-ML两估计器位置 + 切换判据位置 | — | ⏳ 待画（design-paper-figures skill） |
+| Fig.2 | BER vs SNR 主图 | 数据图 | 6子图(无/弱/中/强/上行中/上行强)，每子图3线(DA/NDA/oracle) + HD-FEC线 | 30seed主实验 + H002补点 | 🟡 有初版 `fig2_ber_ext_merged.png`，需重排 |
+| Fig.3 | 净增益 vs 湍流强度 | 数据图 | 横轴=湍流强度(6场景)，纵轴=gain(dB)，双线(naive/fair) + CI带 | `_fair_gain_summary_30seed.json` | ⏳ 待画 |
+| Fig.4 | 切换机制图 | 机制图 | crossover：横轴=块有效SNR，纵轴=DA/NDA BER，切换点~12-14dB汇聚 | 主实验数据 | ⏳ 待画（若切换进正文） |
+| Fig.5 | 线宽敏感性 | 数据图 | 横轴=线宽(kHz)，纵轴=增益(dB)，证10kHz已在最优区间 | `linewidth_sweep_summary.json` | ⏳ 可选 |
+| Tab.1 | 净增益表 | 表 | 6场景×{fair,naive,CI,测法,BER可达} | D004 表 + summary JSON | 🟡 数据齐，待口径定加粗 |
+| Tab.2 | 切换vs固定表 | 表 | 4场景×{vs DA,vs NDA,CI} 选关键SNR点 | `_a4_switch_30seed_fixed.json` | ⏳ 可选（或并Fig.4） |
+
+**导师图方向**（voice.md S003 导师原话）："系统框图可分两个也可合一个...仿真结果图大概三四个...哪个效果好就用哪个"
+
+**⚠️ 等导师定的图相关项**：
+- 子图数 4(下行) vs 6(含上行)——悬而未决 1
+- 强湍流子图纵轴范围（收窄到 1e-4~1e-1 还是统一 1e-5~1e-1）——等 10⁻⁵ 解读
+- 切换图(Fig.4)是否存在——等切换定位
+
+### 2.3 贡献条表述（防御性写法——导师没定的部分用宽描述）
+
+**写法**：Intro 末段散文式 3 句（会议体例），带数字。口径未定处用宽描述不选死。
+**句式参照**：`writing-patterns-sentence.md` §11 章引言句式 + §14 递进评价链 + 写作质量规范 §12.7 创新点写法（含论证链的独立段落，非模板复制）。
+
+**候选草案**（naive 口径版，导师定 fair 后调数字）：
+
+> In this paper, we quantify and attribute the net gain of blind carrier phase estimation (NDA-ML) over pilot-aided estimation (DA-ML) under strong atmospheric turbulence in satellite-to-ground FSO links. Monte Carlo simulations (30 seeds, 95% CI) show that the blind estimator achieves a net gain of +1.2 to +1.9 dB (net of pilot overhead) in strong turbulence and uplink scenarios, where deep fades cause pilot-segment failures while block-wide integration remains robust. Additionally, a block-effective-SNR-based estimator switching scheme is proposed as a robustness complement, ensuring full-operating-region applicability of the blind estimator.
+
+**防御性要点**：
+- "net gain of +1.2 to +1.9 dB (net of pilot overhead)" —— naive 口径，括号标明"net of pilot overhead"。若导师定 fair，改为 "+2.4 to +3.1 dB (including pilot power penalty)"
+- "robustness complement" —— 切换不称"独立增益卖点"，定位是补丁（D002）
+- "ensuring full-operating-region applicability" —— 切换的真实价值（低 SNR 避险）
+- **不写** "first to" / "novel" / "outperform"（R002 §B：期刊用数字不用句式；且切换相对 DA 多数场景输，不能写 outperform）
+
+**若切换不进正文的备选**（删第三句，贡献只留两条）：
+> ...remains robust; in weak turbulence, the gain is statistically insignificant (+0.1 dB, CI overlapping), honestly acknowledging the scenario-dependent nature of the advantage.
+
+**若需第三条补强**（线宽敏感性）：
+> A linewidth sensitivity analysis confirms the gain is robust to laser phase noise at the 10 kHz operating point.
+
+---
+
+## Step 3：写作素材库
+
+### 3.1 数字清单（每个数字标来源+口径+验证状态）
+
+> ⚠️ D004 教训：数字口径必须标加减方向。fair_gain = naive + 1.25dB（fair 是大数，naive 是小数）。
+> 每个数字标注：来源文件 + 计算口径 + 验证状态（✅ 已核查 / ⚠️ 待核查）
+
+#### A. 净增益数字（主卖点）
+
+| 场景 | naive (dB) | fair (dB) | CI95 (naive) | 测法 | BER可达1e-5? | 来源 | 验证 |
+|---|---|---|---|---|---|---|---|
+| 无湍流 AWGN | **+0.09** | +1.34 | [1.327,1.352](fair) | HD-FEC单点 | ✅ | `_fair_gain_summary_30seed.json` L11-21 | ✅ D004核查 |
+| 弱湍流(下行) | **+0.18** | +1.43 | [1.351,1.505](fair) | 单点 | ✅ | 同上 L22-32 | ✅ |
+| 中湍流(下行) | **+0.19** | +1.44 | [1.283,1.596](fair) | 单点(17seed有效) | ✅(46dB刚跨) | 同上 L33-43 | ✅ |
+| **强湍流(下行)** | **+1.26** | +2.51 | [2.415,2.603](工作区) | 工作区均值 | ❌(最低2e-4) | 同上 L44-62 | ✅ |
+| **强湍流(上行中)** | **+1.19** | +2.44 | [2.343,2.543](工作区) | 工作区均值 | ❌(最低1.6e-4) | 同上 L63-81 | ✅ |
+| **强湍流(上行强)** | **+1.85** | +3.10 | [2.989,3.214](工作区) | 工作区均值 | ❌(最低1e-3) | 同上 L82-100 | ✅ |
+
+**口径换算公式**（D004 核查 `fair_comparison.py:109`）：
+- `fair_gain = naive + pilot_overhead_db`，其中 `pilot_overhead_db = 10·log10(4/3) = 1.249 dB`
+- **加减方向**：fair = naive **+** 1.25（fair 是罚了导频 overhead 的系统总账=大数；naive 是剔掉导频水分的纯性能差=小数）
+- naive = fair **−** 1.25
+
+**两种测法**：
+- HD-FEC 单点（前 3 场景）：在 BER=3.8×10⁻³ 处测 γ_tot 差
+- 工作区均值（后 3 场景）：HD-FEC 物理不可达，取 γ_tot≥15dB 区间逐点 fair_gain 的 grand mean
+
+**⚠️ BER→0 增益坍塌**（D003）：naive gain @ 1e-5 插值 = AWGN +0.2 / weak 0 / moderate −0.3 dB（信息论必然，BER→0 时两法都趋零差错）。**"增益在 1e-5 仍显著为正"无论哪个口径都不成立**。
+
+#### B. 切换方法数字（次卖点/鲁棒性补丁）
+
+| 切换 vs | 场景/SNR | 增益(dB) | CI95 | 显著性 | 来源 | 验证 |
+|---|---|---|---|---|---|---|
+| **vs 固定NDA** | 强湍流/上行,低SNR(5-15dB) | **+1.3~+2.3** | CI下界全正 | ✅显著 | `_a4_switch_30seed_fixed.json` | ✅ D002/H003 |
+| vs 固定NDA | 高SNR区 | ≈0 | — | 持平 | 同上 | ✅ |
+| vs 固定DA | 无/弱/中湍流,全段 | **−0.1~−1.2** | CI上界多为负 | ❌切换输 | 同上 | ✅ |
+| vs 固定DA | 强湍流高SNR(15-26dB) | +0.02~+0.20 | 仅strong@24显著(+0.20[+0.1,+0.3]) | 多数不显著 | 同上 | ✅ |
+
+**口径**：net 口径（全块 bit，pilot overhead 在 BER 口径内扣 1.249dB）。vs DA 增益必须用 net 口径。
+**旧数字禁用**：+0.27~0.48dB（switch_vs_max oracle）已永久禁用（D001 不变量 8）。
+
+#### C. BER 补点数字（主图数据）
+
+| 场景 | 最低BER(补到50dB) | 到1e-5? | 衰减率(/2dB) | 来源 | 验证 |
+|---|---|---|---|---|---|
+| 无湍流 | 远超(26dB+全零错) | ✅ | ~3× | `_ber_ext_5seed.json` | ✅ H002 |
+| 弱湍流 | 远超(40dB全零错) | ✅ | ~3× | 同上 | ✅ |
+| 中湍流 | 8.3×10⁻⁶(46dB) | ✅(刚跨) | — | 同上 | ✅ |
+| 强湍流(下行) | 2.0×10⁻⁴ | ❌ | ~1.4× | `_ber_ext2_5seed.json` | ✅ |
+| 强湍流(上行中) | 1.6×10⁻⁴ | ❌ | ~1.4× | 同上 | ✅ |
+| 强湍流(上行强) | 1.0×10⁻³ | ❌ | ~1.4× | 同上 | ✅ |
+
+**deep fade 正确表征**（不变量 5）：BER 斜率变缓（~1.4×/2dB vs 轻湍流 ~3×/2dB），**不是 BER 地板/卡死**。外推 1e-5 需 64-81dB（物理无意义）。
+
+#### D. 线宽敏感性数字
+
+| 线宽 | naive gain(strong) | 来源 | 验证 |
+|---|---|---|---|
+| 10kHz(工作点) | 在NDA最优区间 | `linewidth_sweep_summary.json` | ✅ R003 |
+| 500kHz | 崩溃 −0.82dB | 同上 | ✅ |
+
+**结论**：10kHz 已在 NDA 最优区间，增益非调参花招。
+
+#### E. 仿真参数数字（System Model 节用）
+
+| 参数 | 值 | 来源 | 验证 |
+|---|---|---|---|
+| 符号率 R_SYM | 2.5 Gsps | `params.py` SystemParams | ✅ |
+| 光载波波长 | 1550 nm (C-band) | `params.py` F_CARRIER | ✅ |
+| 激光线宽 Δν | 10 kHz | `params.py` LASER_LW (Valjus sat.1553 §4.2) | ✅ |
+| 调制 | (8,8)-16APSK | `params.py` / `_b11_params.py` | ✅ |
+| 升幂阶数 M₀ | 8 | `_b11_params.py` M0 (B11 行75-77) | ✅ |
+| DFT块大小 N_DFT | 256 | `_b11_params.py` N_DFT (B11 行155) | ✅ |
+| 块数 N_BLOCKS | 400 | `_b11_params.py` (FR-21 N≥1e5) | ✅ |
+| 符号数/点 | 102400 | N_BLOCKS×N_DFT | ✅ |
+| 导频间距 | 4 (每4符号1pilot=25% overhead) | `_b11_params.py` DA_PILOT_SPACING | ✅ |
+| 导频开销 | 1.249 dB | `10·log10(4/3)` derived | ✅ |
+| HD-FEC阈值 | 3.8×10⁻³ | `params.py` HD_FEC_THRESHOLD (B11 行181) | ✅ |
+| 蒙特卡洛seed数 | 30 | 主实验 | ✅ |
+| GG湍流参数(弱) | α=4.0, β=3.0 | `params.py` TurbulenceParams | ⚠️ source标"典型值"无具体文献 |
+| GG湍流参数(中) | α=2.5, β=1.8 | 同上 | ⚠️ 同上 |
+| GG湍流参数(强) | α=1.5, β=0.8 | 同上 | ⚠️ 同上 |
+| GG湍流参数(上行中) | α=1.2, β=0.9 | `params.py` (参考sat.1553 σ²_R≈0.15) | ⚠️ assumption |
+| GG湍流参数(上行强) | α=1.0, β=0.7 | `params.py` (参考sat.1553 σ²_R≈0.25) | ⚠️ assumption |
+
+**⚠️ σ²_R 待核对**（R004 提醒）：我们的湍流强度可能比 Paillier(σ²_I=0.684) 更深。需核对 σ²_R→α/β 映射，避免审稿人质疑工况设定。
+
+### 3.2 公式清单（只给核心 2-3 个，会议体例）
+
+#### 公式 1：DA-ML 导频辅助估计（来源 `_recovery.py:136-168`）
+
+给定 pilot 在位置 $n_p$，接收信号 $r(n_p) = s_p \cdot e^{j(\phi + 2\pi \Delta f \cdot n_p T_s)}$。
+
+多 pilot 时用最小二乘（线性回归相位 vs 时间）闭式估 $(\phi, \Delta f)$：
+
+$$\hat{\theta}_p = \angle\left(\frac{r(n_p)}{s_p}\right) \approx \phi + 2\pi \Delta f \cdot n_p T_s$$
+
+$$\hat{\Delta f} = \frac{\text{Cov}(n, \hat{\theta})}{\text{Var}(n) \cdot 2\pi T_s}, \quad \hat{\phi} = \overline{\hat{\theta}} - 2\pi\hat{\Delta f}\cdot\bar{n}\cdot T_s$$
+
+**来源溯源**：Cao 2012 PTL [B11 ref 10] decision-aided pilot-aided ML。代码 `_recovery.py:136`。
+
+#### 公式 2：NDA-ML 盲估计升幂去调制（来源 `_recovery.py:171-185`）
+
+$$r^{M_0} = |r|^{M_0} \cdot e^{j M_0(2\pi\tau k/N + \phi + 2\pi\Delta f \cdot k T_s)} \cdot \text{noise}$$
+
+其中 $M_0 = 8$（(8,8)-16APSK 升 $M_0$ 次幂去调制，$M_0\xi(k)$ 为 $2\pi$ 整数倍→零相位）。升幂后相位是 $k$ 的线性函数 → 单复正弦的频率+相位估计（FFT 找频率 + 线性回归估相位），解卷绕除以 $M_0$。
+
+**来源溯源**：B11 (10.1109/LPT.2024.3523478) 行 75-121 + Wang 2022 T-SP。代码 `_recovery.py:171`。
+
+#### 公式 3：净增益定义（来源 `fair_comparison.py:109` + D004）
+
+$$\text{fair\_gain} = \gamma_{\text{DA}}^{\text{tot}}\big|_{\text{HD-FEC}} + \text{pilot\_overhead} - \gamma_{\text{NDA}}^{\text{tot}}\big|_{\text{HD-FEC}}$$
+
+$$\text{naive\_gain} = \text{fair\_gain} - \text{pilot\_overhead} = \gamma_{\text{DA}}^{d}\big|_{\text{HD-FEC}} - \gamma_{\text{NDA}}^{d}\big|_{\text{HD-FEC}}$$
+
+其中 $\text{pilot\_overhead} = 10\log_{10}(4/3) = 1.249$ dB，$\gamma^d$ = 数据 SNR（BER 曲线轴），$\gamma^{tot}$ = 总发射 SNR（DA 含导频功率开销）。
+
+**加减方向**（D004 核查）：fair = naive **+** 1.25。fair 是系统总账（大数），naive 是纯性能差（小数）。
+
+**来源溯源**：`fair_comparison.py:109` `gain_hdfec = (s_da_d + pilot_overhead_db) - s_nda_d`。
+
+### 3.3 文献清单（10-15 篇，标角色+状态）
+
+| # | 角色 | 文献 | venue | 状态 | 本地路径 |
+|---|---|---|---|---|---|
+| 1 | 方法源头(DA/NDA-ML) | Du et al. "An Optimum Signal Detection..." | JLT 2021 | ✅有 | `papers/doi/10.1109_JLT.2020.3042546/` |
+| 2 | 强湍流对照(DPLL异族) | Paillier et al. "Space-Ground Coherent..." | JLT 2020 | ✅有 | `papers/doi/10.1109_JLT.2020.3003561/` |
+| 3 | 综述(领域基准) | Valjus et al. "Review and Analysis of DSP..." | IJSCN 2025 | ✅有 | `papers/doi/10.1002_sat.1553/` |
+| 4 | 导频功率理论 | Gävert & Eriksson "Estimation of Phase Noise..." | TCOM 2022 | ✅有 | `papers/doi/10.1109/TCOMM.2022.3171809/` |
+| 5 | 导频类背景 | Zhou et al. "Efficient Joint CFO and PN..." | JLT 2013 | ✅有 | `papers/doi/10.1109/JLT.2013.2257688/` |
+| 6 | 同族盲(V&V) | Viterbi & Viterbi | IEEE TIT 1983 | ✅有(经典) | — |
+| 7 | 同族盲(BPS) | Blind Phase Search | 2009 | ✅有(经典) | — |
+| 8 | B11锚方法 | Cao et al. (16APSK NDA-ML) | PTL 2024(?) | ✅有 | `_b11_params.py` ref |
+| 9 | 强湍流BER+outage | IEEE TCOMM 2020 | TCOM 2020 | ✅R004引 | DOI 10.1109/TCOMM.2020.3008459 |
+| 10 | BER floor立项 | Opt. Express 2026 | OE 2026 | ✅R004引 | DOI 10.1364/oe.596556 |
+| 11 | OFC 2026(FOE相邻) | "Digital Estimation of Doppler..." | OFC 2026 | ✅有 | `papers/doi/10.1364_ofc.2026.w2a.62/` |
+| 12 | OECC/PSC 2025(MAP CPE) | "MAP Phase Recovery..." | OECC 2025 | ✅有 | `papers/doi/10.23919_oecc-psc62146.2025.11109607/` |
+| 13 | ICSOS 2019(AO+DPLL) | Paillier et al. ICSOS 2019 | ICSOS 2019 | ✅有 | `papers/doi/10.1109_icsos45490.2019.8978983/` |
+| 14 | 强湍流BER+outage(TVT) | IEEE TVT 2024 | TVT 2024 | ✅R004引 | DOI 10.1109/TVT.2024.3399408 |
+| **15** | **⏳主对比方法** | **待导师指定** | — | **⏳缺** | R005 补搜候选 L009/L010 |
+
+**缺口**：主对比方法文献（星地FSO场景+近年+导频辅助CPR+可复现）。R005 已补搜 4 候选（L009 JLT 2024 / L010 OE 2024 最契合），但 abstract 级未深核实。**等导师定"主对比要什么类型"再深核实**。
+
+### 3.4 领域惯例参考（R004 调研结论，写 Discussion/Limitations 用）
+
+- **强湍流 BER 降不到 1e-5 是领域已知现象**（Paillier JLT 2020 σ²_I=0.684 也只画到 1e-4）
+- **pre-FEC 通行基准是 1e-3**（sat.1553）/ 1e-4（Paillier），1e-5 = post-FEC 工作门槛
+- **导师原话"在有编译码的情况下，10⁻⁵ 是底线"** → "有编译码"指向 post-FEC（R004 证据支撑解读 B）
+- **呈现做法对齐**：照画 BER 不凑 1e-5（Paillier）+ 锚定 1e-3 工作点（sat.1553）
+
+---
+
+## Step 4：多对话拆分建议
+
+### 4.1 拆分原则
+
+- 每对话 ≤3 步（AGENTS.md 单对话步骤上限）
+- 写正文时必过 external-output skill C1-C10
+- 等导师的 3 项不阻塞前期写作（Intro 背景/System Model/图初版可先做）
+- 中文草稿→英文翻译分对话
+
+### 4.2 对话拆分方案（5 个对话，含等导师节点）
+
+| 对话 | 任务 | 输入 | 产出 | 等导师？ |
+|---|---|---|---|---|
+| **D1: 图表制作** | 画 Fig.1 系统框图 + 重排 Fig.2 BER主图 + 画 Fig.3 净增益图 + Fig.4 机制图 | 本文档图表清单 + 数据文件 | 4 张图初版（PNG） | 否（可并行） |
+| **D2: 中文草稿上** | 写 Intro + System Model | 本文档骨架 §2.1 + 素材库 §3 | §I + §II 中文草稿 | 否 |
+| **⏧ 等导师节点** | 问导师 3 件事：10⁻⁵含义 / 口径 / 主对比文献 | 简报 v4 + R004 定心丸 | 导师反馈 | **是** |
+| **D3: 中文草稿下** | 写 Method + Results + Conclusion（用导师反馈定口径/纵轴/切换定位） | D2 产出 + 导师反馈 + 素材库 | §III + §IV + §V 中文草稿 + 填 Tab.1 | **是**（导师反馈后） |
+| **D4: 过 C1-C10 + 英文翻译** | 中文定稿过 external-output skill 审查 → 翻英文 | D2+D3 中文全稿 | 英文终稿 | 否 |
+| **D5: 排版+终审** | IEEE 模板排版 + 参考文献 IEEE 格式 + 终审 | D4 英文终稿 | 投稿包 | 否 |
+
+### 4.3 关键路径与并行
+
+```
+D1(图表) ──────────────────────────────┐
+D2(Intro+SysModel) ────────────────────┤
+                                        ├──⏧等导师──→ D3(Method+Results+Conclusion)──→ D4(审查+翻译)──→ D5(排版)
+简报v4 + R004(带去问导师) ──→ 导师反馈 ─┘
+```
+
+- D1 和 D2 可**并行**（图表和文字独立）
+- D3 必须等导师反馈（口径/纵轴/切换定位决定 Method 和 Results 怎么写）
+- D3 是最长对话（写 3 节），若超 3 步可拆 D3a(Method) + D3b(Results+Conclusion)
+
+### 4.4 每对话的 handoff 要点
+
+- **D1→D3**：图的纵轴范围和线条标注等 D3 定（导师反馈后）
+- **D2→D3**：Intro 贡献句的口径占位符等 D3 填
+- **D3→D4**：中文全稿 + 导师反馈记录 + 素材库数字溯源
+- **D4→D5**：英文终稿 + C1-C10 审查记录
+
+---
+
+## 5. 风险与预案
+
+| 风险 | 概率 | 影响 | 预案 |
+|---|---|---|---|
+| 导师=解读A(10⁻⁵要增益) | 中 | 主卖点绝症 | 转"工作范围鲁棒性"叙事，但需导师认可；预案见 D003 |
+| 切换降级后卖点不够 CCISP | 中 | 投稿被拒 | 主卖点维持净增益量化归因(不依赖切换)；切换当鲁棒性补丁补全方案完整性 |
+| 主对比文献找不到 | 中 | 参考文献核心缺 | R005 已补搜 4 候选(L009/L010最契)；请导师指 |
+| σ²_R 工况被质疑 | 低 | System Model 被审稿人问 | R004 提醒核对 σ²_R→α/β 映射；§II 标注参数来源 |
+| 7/20 截稿剩 10 天 | 高 | 时间紧 | D1+D2 并行先跑，等导师同时做图和写背景 |
+| 口径搞反（D004 第3次） | 中 | 数字错误 | 素材库 §3.1 已标加减方向+来源代码行；写时必查 `fair_comparison.py:109` |
+
+---
+
+## 6. 等 vs 不等导师清单（更新 R005 §3）
+
+### 必须等导师（3 项，卡标题/主图/主对比）
+
+1. **10⁻⁵ 底线含义 A/B** → 决定主图纵轴 + 主卖点成立性 + Discussion 怎么写
+2. **口径主报 fair/naive** → 决定标题数字 + Tab.1 加粗 + 贡献句数字
+3. **主对比文献** → 决定参考文献核心一条 + Intro 对比方法描述
+
+### 不等导师，现在/并行能做
+
+1. ✅ 本流程规划文档（本文件）
+2. ⏳ 系统框图初版（Fig.1，design-paper-figures skill）
+3. ⏳ BER 主图重排（Fig.2，数据齐）
+4. ⏳ 净增益图画初版（Fig.3，两口径都画，导师定后选）
+5. ⏳ 中文草稿 Intro 背景 + System Model（D2，不涉及口径的段落）
+6. ⏳ 素材库数字溯源核查（本文件 §3.1 已做，写时复用）
+
+---
+
+## 7. 与 R005 初版骨架的差异
+
+R005 是初版骨架（7/10 上午写），本文件 R006 是基于对标研究后的修正版：
+
+| 维度 | R005 初版 | R006 修正版 | 修正依据 |
+|---|---|---|---|
+| 章节数 | 6 节(含独立 Discussion) | **5 节**(Discussion 并入 Results/Conclusion) | 会议体例(10篇实证) |
+| 贡献表述 | 列表式 2-3 条 | **散文式 3 句带数字** | 会议体例(Intro末段散文) |
+| 图数 | 5 图(含线宽可选) | **4-6 图**(含机制图可选) | 会议3页≈3图/4页≈6-8图经验式 |
+| 参考文献 | 15-20 条 | **10-15 条** | 会议体例(6-12篇为主) |
+| 公式 | 未明确数量 | **只给核心 2-3 个** | 会议体例(只给关键式) |
+| 素材库 | 无 | **完整数字/公式/文献清单+溯源** | D004教训(口径标加减方向) |
+| 多对话拆分 | 5 步执行顺序 | **5 对话+并行+等导师节点** | AGENTS.md 3步上限+关键路径 |
+
+---
+
+## 对决策的影响
+
+- **不新建 D###**：本文件是写作流程规划（R### research note），不改方向/架构决策。所有数字口径来自已核查的 D004，骨架基于已确认的 R005+对标研究。
+- **范围确认**：本文件在专题 scope 内（写作准备，不跑实验，不写正式正文）。会议论文结构规划是"写作准备"的合理延伸（topic-index 不变量 2："写作专题定位=GW阶段写作准备辅助"）。
+- **后续**：D1(图表)+D2(Intro+SysModel) 可立即启动（不等导师）；D3 等导师反馈。
