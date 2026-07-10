@@ -18,3 +18,12 @@
 | 10.1109/JLT.2023.3281082 | papers/blit-downloads/2026-06-26/10138358.md | papers/_read_notes/10.1109_JLT.2023.3281082.md | 2026-06-26 | 0 | Step 3 块B补精读（PS方向/Doppler治理，=landscape #580）| IEEE doc 10138358 |
 | 10.1109/LPT.2025.3647750 | papers/doi/10.1109_LPT.2025.3647750/content.md | papers/_read_notes/10.1109_LPT.2025.3647750.md | 2026-06-26 | 0 | Step 3 块B补精读（PS方向/PS+RCM治湍流）| — |
 | 10.3390/app11219805 | papers/doi/10.3390_app11219805/content.md | papers/_read_notes/10.3390_app11219805.md | 2026-06-26 | 0 | Step 3 块B补精读（PS方向/PS-QAM Gamma-Gamma理论）| — |
+| 10.1109_JLT.2023.3276637 | papers/doi/10.1109_JLT.2023.3276637/content.md | papers/_read_notes/10.1109_JLT.2023.3276637.md | 2026-07-10 | 0 | 双偏振OSL-GW Step3批1（A多孔径MIMO 2N×2均衡 Ju团队）| blit IEEE doc 10124997 |
+| 10.1364_oe.498562 | papers/doi/10.1364_oe.498562/content.md | papers/_read_notes/10.1364_oe.498562.md | 2026-07-10 | 0 | 双偏振OSL-GW Step3批1（A多孔径WL 4N×2均衡 Ju团队姊妹篇）| — |
+| 10.1002_sat.1553 | papers/doi/10.1002_sat.1553/content.md | papers/_read_notes/10.1002_sat.1553.md | 2026-07-10 | 1(§6补读) | 双偏振OSL-GW Step3批1（sat.1553 §6偏振解复用层补读，原笔记§1-5不动）| 重读，方向=双偏振 |
+| 10.1109_RPIC59053.2023.10530744 | papers/doi/10.1109_RPIC59053.2023.10530744/content.md | papers/_read_notes/10.1109_RPIC59053.2023.10530744.md | 2026-07-10 | 0 | 双偏振OSL-GW Step3批2（F双偏振FSO 10Gbps相干接收机）| blit IEEE doc 10530744 |
+| 10.1155_jcnc_4243779 | papers/doi/10.1155_jcnc_4243779/content.md | papers/_read_notes/10.1155_jcnc_4243779.md | 2026-07-10 | 0 | 双偏振OSL-GW Step3批2（F双偏振FSO DP-16QAM MIMO性能分析）| — |
+| 10.1109_ICSOS59710.2023.10490279 | papers/doi/10.1109_ICSOS59710.2023.10490279/content.md | papers/_read_notes/10.1109_ICSOS59710.2023.10490279.md | 2026-07-10 | 0 | 双偏振OSL-GW Step3批2（F双偏振FSO 56GBaud GEO feeder DSP）| — |
+| 10.1109_WiSEE61249.2024.10850117 | papers/doi/10.1109_WiSEE61249.2024.10850117/content.md | papers/_read_notes/10.1109_WiSEE61249.2024.10850117.md | 2026-07-10 | 0 | 双偏振OSL-GW Step3批2（F双偏振FSO data-aided多格式DSP）| blit IEEE doc 10850117 |
+| 10.1109_TCCN.2025.3631007 | papers/doi/10.1109_TCCN.2025.3631007/content.md | papers/_read_notes/10.1109_TCCN.2025.3631007.md | 2026-07-10 | 0 | 双偏振OSL-GW Step3批3（G神经网络VAE盲均衡）| blit IEEE doc 11237129 |
+| 10.1109_ACP66871.2025.11350394 | papers/doi/10.1109_ACP66871.2025.11350394/content.md | papers/_read_notes/10.1109_ACP66871.2025.11350394.md | 2026-07-10 | 0 | 双偏振OSL-GW Step3批3（B CMA jitter-resistant）| blit IEEE doc 11350394 |

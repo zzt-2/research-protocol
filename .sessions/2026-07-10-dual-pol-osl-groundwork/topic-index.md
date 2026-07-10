@@ -61,15 +61,17 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 
 ## 当前位置
 
-**S001 检索 + Step 2 下载完成**。GW Step 1 地勘穷举完 + 用户确认全景 + Step 2 下载执行完。
+**GW Step 1-3 完成（双偏振 OSL 子方向）**。检索穷举 + 下载 + 精读全部完成。
 
-- 检索：15 查询 + 综述补搜，去重 43 核心候选（必读16+建议读27）8 子方向，质量门槛全通过
-- 下载：**9 篇成功 + sat.1553 = 10 篇可用于精读**，1 篇登录页外壳，6 篇付费墙未获取（Optica/Elsevier/SAGE）
-- 覆盖面缺口报告已落（S001 末尾），覆盖 A/B/F/G 四子方向
-- **环境补强**：torch venv 新建 + playwright + pymupdf4llm；4 个 wrapper Windows 兼容性修复
+- Step 1：15 查询穷举，43 核心候选 8 子方向
+- Step 2：9 篇成功 + sat.1553 = 10 篇精读
+- Step 3：9 篇精读 + sat.1553 §6 补读 + D002 角度素材 schema 试用（3 批验证通过）+ 综合分析 + **3 个 Q#（Q-DP1/2/3）过四判据**
+- **最强共识缝**：动态 SOP 跟踪（5 篇独立静态建模）+ CMA fade 发散未被分析（sat.1553 点名）
+- **最强根方向**：信道建模层×假设错（9 篇共性准静态假设，SOP-湍流耦合未建模）
+- D002 schema 验证通过，可进 gw-read.md
 
-下一步：**Step 3 精读**（gw-read.md）——10 篇精读 + D002 角度素材 schema 试用（3-5 篇验证有效性）。用户确认覆盖面可接受后进精读。
+下一步：**Step 3.5 定向补充检索**（如需要）→ **Step 4a 可行性 Go/No-Go**（对 Q-DP1/2/3 走 gw-feasibility A/B/D 维度）。
 
 ## 进展线索
 
-- **S001**（2026-07-10）：双偏振 OSL 检索策略规划 → 执行（用户"一直往下做"授权）→ 15 查询穷举 + 综述补搜 + AI 候选审查 + 覆盖度评估 → Step 2 下载（tools/download + blit IEEE 两轮）→ 9 篇成功+sat.1553。核心候选 43 篇 8 子方向，覆盖 A/B/F/G 四子方向。守 D017 穷举门控。详见 `S001-search-strategy-dual-pol-osl.md`
+- **S001**（2026-07-10）：双偏振 OSL 检索策略规划 → 执行（用户"一直往下做"授权）→ 15 查询穷举 + 综述补搜 + AI 候选审查 + 覆盖度评估 → Step 2 下载（tools/download + blit IEEE 两轮）→ 9 篇成功+sat.1553 → Step 3 精读（3 批 9 篇 + sat.1553§6补读 + D002 schema 试用）→ 综合分析 + 3 Q#(Q-DP1/2/3)。核心候选 43 篇 8 子方向。守 D017 穷举门控 + D018 中性提取。详见 `S001-search-strategy-dual-pol-osl.md` + `projects/thesis-fso/literature_notes.md` 双偏振 OSL 沉淀节
