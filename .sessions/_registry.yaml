@@ -415,7 +415,7 @@ topics:
     title: 论文写作专题（自适应 CPR 方向）
     status: active
     created: "2026-07-09"
-    last_updated: "2026-07-10（故事根已定候选A净增益量化归因+简报v5写完待发导师问定位困境+图表包装待专门对话。句式/公式/表格用法全提取完。公式3-5编号式/推导不展开/Tab.2砂已定。等导师定定位方向+v4数据层五问）"
+    last_updated: "2026-07-10（导师反馈4点：两段式结构(影响分析+方法)+无rebuttal+特定条件优异+没有后路。故事根A重排两段式。切换走路1包装层交H004新对话。不再写简报下次给写完论文。等导师v4数据层3问(10⁻⁵/口径/baseline)）"
     description: "自适应载波相位恢复（A4 per-block 有效 SNR 驱动 DA/NDA 切换）方向的论文写作准备专题。在 GW Step 4a 维度 D（A4 PASS 待 Go）阶段内做：材料盘点/缺口识别/数据稳定性验证/论点合理性审查/简报完善。**是写作准备不是进 Contract/Execute**——守 FR-22。step4a-mve-execution 保持 active（Go 决策+消融回那里），本专题只管写作准备。"
     depends_on:
       - slug: 2026-07-06-step4a-mve-execution
