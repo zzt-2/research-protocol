@@ -192,4 +192,173 @@ ISI 均衡在星地场景的核心问题是：**什么物理机制在星地链�
 
 ---
 
-> **下一步**：阶段 2 批次 2（AO-DSP 残余补偿，边界检查前置）→ 阶段 2.5 方法-改进矩阵 → 阶段 3 判地三轴
+## AO-DSP 残余补偿子地带（批次 2，2026-07-10）
+
+> **边界检查前置（PROMPT-002 + H003 + H004 最高优先级）已完成**：Paillier 系（AO + DPLL）DSP 段余 = 载波 PLL（多普勒残频+残余载波相位），**非信号域均衡**，按红线排除。本批只精读**信号域残余补偿**论文。
+
+### 边界检查结论（Paillier 系排除）
+
+基于已有精读笔记 papers/_read_notes/10.1109_jlt.2020.3003561.md（载波同步 v2 阶段读）：
+- **Paillier 2020 JLT**（#34）：AGC + DPLL 分治架构。DPLL 环路传递函数针对**多普勒残频 + 激光相位噪声**设计，不针对湍流相位单独建模。残余 piston 相位进 DPLL（载波域 track）
+- **结论**：Paillier 系 DSP 段余 = **载波 PLL**（载波同步层），**非信号域均衡**。按红线排除（载波同步已完成不回头）
+- Paillier 2019 ICSOS（#35）同 #34 会议先导版，同排除
+
+---
+
+### [L04] Enhanced Atmospheric Turbulence Resiliency With SIC-DSP in MDM FSO
+
+- DOI/来源：10.1109/JLT.2022.3209092（arXiv 2208.00836 OA 全文，197 行）
+- 源文件路径：papers/arxiv/2208.00836/content.md（全文已落盘 §7.2 核查 PASS）
+- **发表状态**：正式发表（IEEE JLT 2022）
+- **发表渠道**：IEEE Journal of Lightwave Technology（SCI Q1 Trans）
+- 年份：2022
+- 核心贡献：实验验证 SIC（successive interference cancellation）MIMO 解码算法在 MDM FSO 中的湍流鲁棒性增强。提出 carrier-asynchronous DSP 结构，分离 MIMO 解码器与相位估计/信道估计/ISI 均衡 [content.md L71]
+- 方法概述：
+  - SIC 逐通道顺序解码，解码第 k 通道前减去已解码前 k-1 通道的干扰贡献（ỹ_k = y - Σĥ_i·s̃_i）[L89-90]
+  - 减除后用修改版 MMSE 接收器 [L93-94]，最优解码序排列抑制误差传播 [L91]
+  - 比 MMSE 多利用自由度（第 k 通道可用 k 维正交补 vs MMSE 的 1 维），SINR 更高 [L107]
+- 实验设置：实验 + SLM 仿真湍流（von Kármán 相位屏，~400-500m 信道）。5 个发射空间模式（LP 模）× 双偏振 = 10 通道；接收 6-mode MSPL 最多 12 通道。DP-QPSK 34.46 GBaud，线速率 689.23 Gbit/s。强湍流 r₀=0.8mm（D/r₀=10.5）/ 弱 r₀=3.0mm（D/r₀=2.8），各 120 相位屏 [L31/L51]
+- 使用的 Baseline 方法：
+  - **MMSE MIMO 均衡器**：传统线性 MIMO 解码 [L17]。弱湍流 penalty ~4.2dB vs SIC ~3dB；强湍流 MMSE 未达 HD-FEC 限 vs SIC ~6.9dB [L139]
+- 关键结论：120 强湍流样本平均 BER MMSE 8.02×10⁻³ → SIC 4.76×10⁻⁴ [L157]；outage 概率 48.3% → 2.5% [L161]。6×12 配置更优：BER 1.56×10⁻⁴→2.86×10⁻⁶，outage 1.67%→0% [L173]
+- 与本研究关系：**⚠ 边界 PASS 但场景架构不匹配**——见下"场景适配"
+- 实现关键细节：carrier-asynchronous DSP 结构 [L71]；RRC 滚降 0.1；训练序列 1680 符号；导频每 9 数据符号 1 个 [L31]；50 GSa/s / 23GHz 示波器 [L35]
+- 开源代码：无
+- 验证状态：全文已 §7.2 核查（信号域/inter-mode/MDM/MMSE 增益全 PASS）
+
+#### 边界判定（最高优先级）
+
+**PASS —— SIC 属信号域（均衡层 IN），非载波同步层**
+
+论文显式提出 carrier-asynchronous DSP 结构"**separate the MIMO decoder from the phase estimation, the channel estimation, and the ISI equalization**" [L71]。载波相位 Φ 由独立 phase estimation 模块处理 [L69-75]；SIC 是其下游的信号域 inter-mode crosstalk 消除。**不撞载波同步红线**。
+
+#### 场景适配性分析
+
+**⚠ 架构不匹配（非边界问题，是场景问题）**：
+1. **SIC 处理 inter-mode crosstalk**（多模 MDM 模间串扰），依赖 N_r ≥ N_t 冗余接收通道分集 [L19/L109]
+2. 本场景**单偏振单孔径单模式** → **无多模式 → 无 inter-mode crosstalk → SIC 无可消除对象**
+3. 湍流在 MDM 中致 inter-mode crosstalk [L13]；在单模中致 scintillation / beam wander / phase fluctuation [L13]——**机制不同构**（空间域串扰 vs 标量幅度/相位起伏）
+4. **降级参考**：SIC 对单模场景无可迁移性（需要多模冗余通道前提）
+
+#### 问题提取（M-C-A）
+
+- **M（方法）**：SIC MIMO 解码（逐通道顺序解码 + 干扰消除）
+- **C（条件）**：MDM FSO 多模链路（5模×双偏振），相干 DP-QPSK，GG 湍流致 inter-mode crosstalk
+- **A（失效原因）**：MMSE 在 fading 信道（信道矩阵非酉）性能退化 [L17]，SIC 利用冗余自由度提升 SINR
+- **四判据初筛**：矛盾✅(MMSE 失效) / 形态✅(SIC) / 2019+ baseline✅(MMSE JLT) / 能对比✅ —— **但场景 out（单模无 inter-mode crosstalk）**
+
+---
+
+### [L05] Digital Turbulence Compensation of FSO with Multimode Optical Amplifier（Fontaine 2019 ECOC）
+
+- DOI/来源：10.1049/cp.2019.1015（**ECOC 2019 会议，paywall 仅 abstract**）
+- 源文件路径：**无全文**（abstract 来自 search-archive/2026-07-10/fontaine-multimode-digital-coherent-reception-turbulence-com.json）
+- **发表状态**：正式发表（ECOC 2019 会议论文）
+- **发表渠道**：European Conference on Optical Communication（顶会，但会议非 Trans）
+- 年份：2019
+- 核心贡献：用 12-spatial mode 数字相干接收 + 多模预放做数字湍流补偿，称"≈ ideal lossless AO" [abstract]
+- 方法概述：12 模数字相干叠加补偿湍流。多模预放提供 6dB 灵敏度提升 [abstract]
+- 实验设置：**abstract 仅**，细节未核验
+- 使用的 Baseline 方法：传统单模检测 [abstract]
+- 关键结论：12 模相干叠加将中位 BER 从 0.1 降到 1×10⁻⁵ [abstract]
+- 与本研究关系：**⚠ 多模架构不匹配**（同 Li 2022，需多模冗余通道）+ **会议非 Trans**（INVARIANT 19 红线：会议不当主 baseline）
+- 实现关键细节：abstract 未给（全文 paywall）
+- 开源代码：未知
+- 验证状态：abstract 已核验（关键声称全在 abstract 文本中）
+
+#### 场景适配性（abstract 层）
+
+**⚠ 双重不匹配**：
+1. **多模架构**：12-spatial mode 数字相干，需多模接收——本场景单模单孔径
+2. **会议非 Trans**（INVARIANT 19 红线）：ECOC 会议，不能当主 baseline，只能当思路来源（DSP 替代 AO 概念）
+
+---
+
+### [L06] Electronic Wavefront Correction for PSK FSO（Kim 2007 EL）
+
+- DOI/来源：**未找到**（Electronics Letters 2007，S2/blit 均未召回，19 年老文）
+- 源文件路径：**无**（landscape #38 标"abstract 缺失，老文"）
+- **发表状态**：正式发表（Electronics Letters，Letters 级）
+- 年份：2007
+- 核心贡献：**相干检测 + DSP 替代 AO 校正波前畸变**（奠基概念），10Gbit/s BPSK 实验 [landscape #38]
+- 方法概述：landscape 转述——DSP 电子域校正波前，替代光学 AO 硬件
+- 与本研究关系：**奠基概念参考**（DSP 替代 AO），但 **Letters 级 + 19 年老文 + abstract 缺失**，按 INVARIANT 19 不当主 baseline
+- 验证状态：**未核验**（论文未下到，信息全部来自 landscape 转述，标"二手 landscape"）
+
+---
+
+## 综合分析（AO-DSP 残余补偿子地带，批次 2）
+
+### 1. 现有方法分类
+
+AO-DSP 残余补偿子地带分三支（landscape §子地带 7 已分，精读后细化）：
+
+| 类别 | 方法 | 代表 | 边界判定 | 场景适配 |
+|---|---|---|---|---|
+| **A 分工式**（AO 校正 + DSP 补残余） | AO + 数字 PLL | Paillier 2020 JLT (#34) | ❌ **载波 PLL 排除** | — |
+| **B 替代式**（DSP 替代 AO 硬件） | 多模数字相干叠加 | Fontaine 2019 ECOC (#37) / Kim 2007 EL (#38) | ✅ 信号域 | ⚠ 多模架构不匹配 |
+| **C MIMO 解码式**（DSP 消 inter-mode crosstalk） | SIC / MMSE MIMO | Li 2022 JLT SIC (#40) | ✅ 信号域 | ⚠ 多模架构不匹配 |
+
+**关键发现**：AO-DSP 子地带的信号域论文（B/C 支）**全是多模架构**（MDM/multi-mode），依赖多模冗余通道。本场景**单偏振单孔径单模**，无 inter-mode crosstalk → B/C 支无可消除对象。**A 支（Paillier 载波 PLL）按红线排除**。
+
+### 2. 已知局限
+
+1. **AO-DSP 信号域 baseline 全是多模架构**：Li 2022 SIC（MDM 5模×双偏振）/ Fontaine 2019（12模数字相干）/ Kim 2007（波前校正）。单模场景无可迁移性
+2. **Paillier 系（A 支）按载波边界排除**：DSP 段余 = 载波 PLL，不是均衡层
+3. **多模 vs 单模的机制差异**：多模中湍流致 inter-mode crosstalk（空间域串扰，SIC 可消）；单模中湍流致 scintillation（标量幅度衰落，无空间域串扰可消）
+
+### 3. baseline 凑池可行性评估（D004 筛选判据 A）
+
+**❌ 凑不齐 D-010 标准 4 篇 Trans**：
+- 信号域论文全是多模架构（Li 2022 JLT SIC ✅ Trans 但场景 out / Fontaine 2019 会议非 Trans / Kim 2007 Letters 老文）
+- 单模场景适配的 AO-DSP 信号域 Trans baseline **零篇**
+- Paillier 系（唯一单模星地 Trans）按载波边界排除
+
+---
+
+## 两子地带对比总结（ISI + AO-DSP，交阶段 2.5 矩阵 + 阶段 3 判读）
+
+> **守 INVARIANT 6 + D018：不判 Go/Kill 不判地，只产观察 + Q# 候选。**
+
+### 对比表
+
+| 维度 | ISI 均衡（批次 1） | AO-DSP 残余补偿（批次 2） |
+|---|---|---|
+| **边界** | ✅ 不撞载波（信号域时域均衡） | A 支❌载波PLL排除 / B+C支✅信号域 |
+| **场景适配** | ❌ Ajam PD/IM-DD + IRS 几何双重不匹配 | ❌ B+C 支全多模架构（单模无可消对象） |
+| **baseline 凑池** | ❌ 凑不齐（Ajam 1篇PD+paywall，光纤迁移全paywall） | ❌ 凑不齐（信号域全多模，单模适配 Trans 零篇） |
+| **物理前提** | ⚠ **晴空湍流致 ISI 未被主流文献建立**（sat.1553 口径：标量衰落无时域展宽） | ⚠ 多模 inter-mode crosstalk 机制成立，但单模不适用 |
+| **B7 风险** | 高（解决不存在的问题——晴空湍流可能不致 ISI） | 中（多模机制真实，但单模场景不匹配） |
+| **Q# 候选** | 4 条（Q1-Q4，共同硬伤 baseline❌） | 见下 |
+
+### AO-DSP 子地带 Q# 候选（初筛，≥3 条）
+
+| Q# | 问题（M-C-A） | 四判据初筛 | 来源 |
+|---|---|---|---|
+| **Q5** | 单模星地相干下，**DSP 替代 AO 校正波前畸变**（Kim 2007 概念迁移到单模 intradyne）可行性？M=电子波前校正 DSP，C=单模 intradyne 相干 + GG 湍流，A=AO 硬件复杂/慢 → DSP 替代。**但 Kim 2007 是 Letters 老文 abstract 缺失，机制待证** | 矛盾❓/形态✅/baseline❌(Kim Letters老文)/对比❌ | Kim 2007 |
+| **Q6** | SIC/MIMO 解码从多模迁移到**单模 + 多时间采样**（用时间分集替代空间分集）？M=时域 SIC，C=单模 + 多时间窗，A=**待证**（时域分集能否替代空间冗余） | 矛盾❓/形态✅/baseline❌/对比❌ | Li 2022 迁移 |
+| **Q7** | AO 校正后残余 piston 相位在**高阶调制（16-QAM）**下是否需信号域补偿（非载波 PLL）？M=信号域残余补偿，C=16-QAM + AO 校正后，A=Paillier 证 BPSK 下 DPLL 够用，16-QAM 边界待证。**但撞载波边界风险**（残余相位本质是载波域） | 矛盾✅/形态✅/baseline❌/对比❌ + ⚠边界 | Paillier 笔记 |
+
+**Q# 初筛观察（守 D018）**：
+- AO-DSP 3 Q# 共同硬伤：2019+ baseline ❌ + 场景架构不匹配（全多模，单模零适配 Trans）
+- Q7 撞载波边界风险最高（残余相位本质是载波域，Paillier 已证 BPSK 够用）
+
+### 两子地带共同结论（诚实，守 D018 不 Kill）
+
+**两子地带都 baseline 凑不齐 + 场景不匹配**：
+1. **ISI**：Ajam PD/IRS 双重不匹配 + 晴空湍流致 ISI 物理前提存疑
+2. **AO-DSP**：信号域全多模架构（单模零适配）+ Paillier 系载波边界排除
+
+**D004 筛选判据二选一的结果**：
+- 判据 A（baseline 凑池）：**两子地带都 ❌**（D-010 标准 4 篇 Trans 凑不齐）
+- 判据 B（缝潜力）：**两子地带 Q# 共同硬伤 = 2019+ baseline ❌ + 场景不匹配**
+- 判据 C（范围 in）：ISI ⚠（晴空湍流致 ISI 物理前提待证）/ AO-DSP ⚠（多模 vs 单模）
+
+**⚠ 颗粒无收倾向（守"颗粒无收好过凑数"原始目标）**：在已读材料范围内，两子地带都**凑不齐 baseline + 场景不匹配 + Q# baseline 判据普遍 ❌**。但这不是 Go/Kill 结论（守 D018），是**阶段 2 精读的诚实观察**。阶段 3 判读需回答：
+1. ISI：晴空 GG 湍流是否真致时域 ISI？（物理前提判定，补查湍流信道 CIR 文献）
+2. AO-DSP：单模场景有没有信号域残余补偿的真问题？（多模机制不迁移）
+3. 两子地带都不行 → 均衡层换其他子地带（OFDM-FSO? DNN?）还是颗粒无收？
+
+---
+
+> **下一步**：阶段 2.5 方法-改进矩阵（INVARIANT 20，横向汇总）→ 阶段 3 判地三轴
