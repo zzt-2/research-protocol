@@ -451,3 +451,18 @@ topics:
       - slug: framework-evolution
         reason: 继承 framework-evolution 三改造（glossary 问题定义/Q#链/跨 Step 门控）+ thesis-lessons TL-30（框架强制）/TL-27（量级核算）/TL-22/23（物理前提+冷静期）
     conflicts_with: []
+
+  - slug: 2026-07-10-scenario-transfer-pivot
+    title: 场景迁移转向评估（9 次殊途同归后从"找算法增量"转向"场景迁移 + 性能边界刻画"）
+    status: active
+    created: "2026-07-10"
+    last_updated: "2026-07-10（R001 调研落盘 + PROMPT-001 方向评估任务书。2 子 agent 并发调研交叉验证：困境源于一直在'信号处理层纯算法'找增量，窄场景增量在'算法×湍流×工程约束'交叉。FSO 成功套路='迁移成熟DSP+刻画性能边界+给设计准则'非发明算法。待评估：性能边界刻画路线能否凑齐D-010+四判据）"
+    description: "载波同步4候选全Kill + A3/N1/③ Kill + 均衡层两子地带凑不齐baseline（9次殊途同归）后，不再闭门造车。用户'咱们闭门造车太难受了'触发2子agent调研（方法论+FSO领域）。R001交叉验证：场景迁移合法性='B场景下A方法哪个假设不成立了'（只换参数=凑数，必须改算法结构/推导/建模=合法）；FSO成功案例套路='不发明新算法，迁移成熟DSP+刻画性能边界+给设计准则'。9次Kill共同根因可能='找错了贡献类型，找的是算法dB增量但场景给的是边界/准则/包络型贡献'（与TL-05一致）。守9次Kill是物理事实不复活+场景设定不变+颗粒无收好过凑数。PROMPT-001交方向评估新对话。"
+    depends_on:
+      - slug: 2026-07-10-equalization-layer-direction-scouting
+        reason: 均衡层两子地带凑不齐baseline是第8-9次Kill，直接触发本专题
+      - slug: 2026-06-20-problem-driven-redirection
+        reason: 继承9次Kill证据链+D005务实路线+D009 checklist+全方法论产出
+      - slug: 2026-06-10-research-direction-exploration
+        reason: 继承A3/N1/③三条腿Kill+R006大规模补盲180hits坍缩结论"物理可行解空间窄"
+    conflicts_with: []
