@@ -1,7 +1,7 @@
 # Topic Index: 均衡层方向侦察（载波同步 4 候选全 Kill 后换层）
 
 > slug: 2026-07-10-equalization-layer-direction-scouting
-> status: active | created 2026-07-10 | last_updated: 2026-07-10（S005 阶段 1 地勘全部完成 → landscape 完整版 ~46 篇 + 8 子地带 + 4 死地 + 信噪比终判 8 项全过 → 阶段 1 收尾，进 1.5 选地）
+> status: active | created 2026-07-10 | last_updated: 2026-07-10（S006 阶段 1.5 选地完成 → D002 排除 MDCC/偏振 + D003 双偏振伪需求 + D004 选 ISI+AO-DSP 精读。阶段 0-1.5 全部完成，进阶段 2 精读）
 
 ## 专题定位（一句话）
 
@@ -95,7 +95,9 @@
 
 **S005 阶段 1 地勘第 2 批 + 阶段 1 收尾完成**：用户"继续"指示下同对话续接跑组 4-6（ISI 深/AO-DSP/湍流补偿），3 子 agent 并发（564s/500s/531s）。landscape-equalization.md 更新为完整版：**~46 篇主表 + 8 子地带 + 4 🔴死地**。第 1 批 ISI 孤证问题解决（TCOMM 2026 Ajam 成功召回，DOI+seed 三重确认）。§7.2 两批共抽 6 篇全 PASS 无造假。组5 发现 AO-DSP Paillier 系 DSP 残余实质是载波 PLL → 标边界警示。**信噪比合格终判 8 项全过 → 阶段 1 收尾**。子地带活跃度初判：MDCC 最活跃 + Trans 基线池最厚 / 偏振均衡升温 / OAM-MIMO 🔴 死地。H002 交阶段 1.5 选地（主控+用户拍板）。
 
-**当前位置 = 阶段 1.5 选地（等用户拍板选 1-2 个均衡子地带进阶段 2 精读）**。
+**S006（选地讨论 + 场景适配筛查 + 双偏振物理前置验证）**：用户问"前两个（MDCC+偏振）适合我场景吗" → Explore agent 代码核查确认场景 = **单偏振 intradyne 单孔径单链路**（SPEC.md:13/17 + _channel.py + _modulation.py:6 1D 复信号）。**D002 排除 MDCC（多孔径冲突，B3-Q2 前车）+ 偏振均衡（单偏振不匹配）**。用户考虑改双偏振 → D003 物理前置验证：Toyoshima 2009 OICETS 实测 DOP 99.4% / 偏振角 RMS 1.6°（大气几乎不退偏）→ **偏振均衡倾向伪需求（B7 风险）**，不改双偏振。Cvijetic 2010 paywall 未下到 + sat.1553/Nasr 未引（同名作者误认，参考价值打折）。**排除 MDCC/偏振后，适配场景的是 ISI 均衡 + AO-DSP 残余补偿**（标量单偏振单孔径，但 Trans 基线薄）。
+
+**当前位置 = 阶段 1.5 选地完成，进阶段 2 精读（D004 选 ISI+AO-DSP 都精读再筛）**。H003 交阶段 2 精读新对话。
 
 **未决项**：
 - 均衡层有没有真问题（地有没有缝）—— 地勘 + 精读后才判（**阶段 1 不判，守 INVARIANT 6**）
@@ -112,3 +114,4 @@
 - **S003**（2026-07-10，S002 续接）：档 C 实施。`tools/litsearch/search_index.py` 新建（增量索引）+ `tools/litsearch/search_pipeline.py` 改 `_auto_save` + `tools/backfill_index.py` 新建（回填）。回填 19166 篇唯一论文 → `search-archive/_index/all-papers.jsonl`（35MB）。子 agent 从 JSONL 生成 `by-topic/equalization-seed.md`（117 篇 FSO×均衡 / 8 子地带）。AGENTS.md 加 3 行索引。三项验证全过（抽样/计数/增量集成）
 - **S004**（2026-07-10，阶段 1 第 1 批）：3 子 agent 并发跑组 1-3 检索（equalization 总览/偏振/MIMO-combining）。产出 `projects/simulation/landscape-equalization.md` 初版（29 篇主表 + 7 子地带：MDCC/OAM-MIMO/偏振/ISI/OFDM-FSO/DNN/AO-DSP + 3 🔴死地：OAM-MIMO 12年饱和/偏振经典外差奠基/OFDM解析类 + seed 交叉核一致 + 档级标注完整）。信噪比合格 7 项全过。源状况：Exa 耗尽 + IEEE blit 0 命中 → 第 2 批组 4-6 召回受限，ISI 仅孤证待补。H001 交第 2 批
 - **S005**（2026-07-10，阶段 1 第 2 批 + 收尾）：用户"继续"下同对话续接跑组 4-6（ISI 深/AO-DSP/湍流补偿），3 子 agent 并发（564s/500s/531s）。landscape 完整版 ~46 篇 + 8 子地带 + 4 死地。第1批 ISI 孤证解决（TCOMM 2026 Ajam 召回，DOI+seed 三重确认）。§7.2 两批共 6 篇全 PASS。组5 Paillier 系 DSP 残余=载波 PLL 标边界警示。信噪比终判 8 项全过 → **阶段 1 收尾**。活跃度：MDCC 最活跃+Trans 基线最厚 / 偏振升温 / OAM-MIMO 🔴 死地。H002 交阶段 1.5 选地
+- **S006**（2026-07-10，阶段 1.5 选地 + 场景适配筛查 + 双偏振验证）：用户"前两个适合我场景吗" → 代码核查确认**单偏振 intradyne 单孔径**场景。**D002 排除 MDCC（多孔径冲突）+ 偏振均衡（单偏振不匹配）**。**D003 双偏振物理前置验证**：Toyoshima 2009 OICETS 实测 DOP 99.4%/偏振角 1.6°（大气几乎不退偏）→ **偏振均衡倾向伪需求（B7 风险）不改双偏振**。Cvijetic 2010 paywall+同名误认降级。**D004 选 ISI 均衡+AO-DSP 残余补偿都进阶段 2 精读再筛**。H003 交阶段 2 精读。⚠ 本对话严重超载（地勘两批+筛查+验证+选地），阶段 2 严守分对话
