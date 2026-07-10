@@ -5,6 +5,8 @@
 > 纪律：守 FR-22（写作准备不跑实验）+ external-output skill（正文写时再过 C1-C10）+ 数字口径标溯源（D004 教训）。
 >
 > **⚠️ 修订（2026-07-10 续）**：初版只做了外部对标（会议论文体例），**没查已有内部写作规范积累**——被用户纠偏"你有好好看看之前开题报告咋弄的吗？写作规范文档可没少说相关的"。本版补 §0.5「已有写作规范积累引用」，将历史积累的 4 层写作规范接入本流程规划。写正文时**必须先查这些文件**，不能只用本文件的外部对标结论。
+>
+> **⚠️ 二次修订（2026-07-10 续接 S004，Step 1 重做完成）**：初版 Step 1 的会议论文写法提取只到"体例统计"粒度，没到用户要的"句式骨架"粒度——被纠偏"像 writing-patterns-sentence.md 那样从会议论文逐条提取公式引入/参数解释/数值嵌入/方法对比的句式骨架"。本版补 §0.5 第五层（`writing-patterns-conference.md`，8 篇会议论文 ~80 条骨架）+ §2.4 每节句式映射。**写每节时先查 §2.4 映射到具体条目编号套骨架。**
 
 ---
 
@@ -115,6 +117,29 @@
 | §III Proposed Method | Ch4 载波同步（算法推导部分） | section-outline §4.2+§4.3 | paragraph §2.2+§3.3 |
 | §IV Results | Ch4 仿真对比（§4.6）+ Ch3 仿真验证（§3.5） | section-outline §4.6+§3.5 | paragraph §2.5+§3.4.2 |
 | §V Conclusion | Ch 章小结 | section-outline 各章 §X.N | paragraph §0.2 + sentence §12 |
+
+### 第五层：会议论文写法模式库（写英文会议正文时优先查）
+
+**文件**：`毕设/写作材料/writing-patterns-conference.md`（2026-07-10 新建，8 篇 IEEE 会议论文提取，~80 条骨架）
+
+**这是本 CCISP 论文最直接的句式参照**——从 5 篇 FSO 强相关（ICSOS 2025/2019、MWP 2022、OFC 2026、OECC 2025）+ 3 篇检索补充（APCCAS 2022、OECC 2024、ICUMT 2015）会议论文全文逐条提取，格式与第二层句式库完全一致（`> 英文原文 → 骨架 → 用法`）。
+
+**为什么需要单独一份会议版**：第二/三层句式库是从**中文长篇学位论文**（董凡/夏煜等 7 篇范文）提取的，体例跟英文 4-6 页会议论文不同——会议论文贡献是散文不是 bullet list、Conclusion 单段、无"下一节将…"回指、公式少而精、Related work 只 3-5 句。通用句式（公式引入/参数解释/方法对比的骨架）能复用，但**贡献表述、段落过渡、数值嵌入的句式必须从会议论文重新提取**。
+
+**8 大类句式 + 每类写哪节**（详见本文件 §Step2.4 章节写法映射）：
+
+| 会议版大类 | 条数 | 写哪节 |
+|---|---|---|
+| §1 公式引入句式 | 15 | §II System Model（DA-ML/NDA-ML 公式引入） |
+| §2 参数解释句式 | 11 | §II（公式后 where ... denotes/is/represents） |
+| §3 数值嵌入句式 | 12 | §IV Results（增益数字怎么嵌进句子） |
+| §4 方法对比句式 | 11 | §IV（DA vs NDA / 切换 vs 固定对比） |
+| §5 章引言句式 | 10 | §I Introduction（背景→问题→必要性） |
+| §6 章小结句式 | 9 | §V Conclusion |
+| §7 段落过渡模式 | 11 | 各节内部/节间（无回指衔接） |
+| §8 贡献表述模式 | 7 | §I Introduction 末段（散文式带数字） |
+
+**写正文时查文件顺序**：先查第五层（会议版，定体例+句式骨架）→ 通用规则查第一层（写作质量规范，过 R1-R8）→ 段落结构查第三层（段落模式卡，适配到会议短段落）→ 各节大纲查第四层。
 
 ### 文献提取规范
 
@@ -274,6 +299,80 @@ CCISP 是 IEEE 会议（4-6 页），但目标是 EI+Scopus 检索，质量要�
 
 **若需第三条补强**（线宽敏感性）：
 > A linewidth sensitivity analysis confirms the gain is robust to laser phase noise at the 10 kHz operating point.
+
+### 2.4 每节怎么写（基于会议论文写法模式库的句式映射）
+
+> 以下把 R006 骨架的 5 节，逐节映射到「会议论文写法模式库」（`writing-patterns-conference.md`）的具体条目编号 + 该节段落组织要点。
+> 写每节时：① 查映射到的句式条目套骨架 → ② 段落组织按下方要点 → ③ 写完过第一层写作质量规范 R1-R8。
+
+#### §I Introduction（~0.8 页，3 段）
+
+**段落组织**（3 段，对照 paragraph.md §0.1 章引言段 + 会议体例压缩）：
+1. **背景段**：星地 FSO 趋势 → 强湍流挑战（散文，不分小节综述）
+2. **Gap 段**：DA/NDA 两法 + 导频在 deep fade 失效（1-2 句 Related work）
+3. **贡献段**：散文式 3 句带数字（见 §2.3）
+
+**句式映射**：
+- 背景段首句 → `conference.md §5.1`（"The deployment of ... is expanding to support ..., thereby requiring ..."）或 `§5.4`（"FSO has recently emerged as a promising ... However, ... propagation is affected by ..."）或 `§5.5`（"have undergone a revolutionary evolution ... with ... surging from ... to beyond ..."）
+- 问题陈述段 → `§5.2`（"However, the [问题]—caused by [原因]—introduces ... This ... leads to ..., severely degrading ..."）
+- Related work 极简句（1-2 句）→ `§4.11`（"[方法A] is commonly used in [场景]. [方法A] provides poor ... for [场景B] since ..."）或 `§4.7`（"Unlike the [基线], which [局限], [本方法] also use ... thereby"）
+- 贡献段 → `§8.1`（OFC 2026 四步递进 discover→propose→demonstrate→enhances）或 `§8.2`（OECC 2025 "Unlike the prior work, we extend ... Simulations demonstrate ..."）
+
+**禁用**：`§7.5` 结构导航段（"The paper is organized as follows..."）——CCISP 短篇省略。
+
+#### §II System Model（~0.8 页）
+
+**段落组织**（对照 paragraph.md §1.1 系统模型引入段 + §1.2 信号推导段，会议体例压缩到 2-3 段）：
+1. **信道模型段**：GG 湍流（3 档）PDF 引入 + σ²_R 参数声明
+2. **信号模型段**：16APSK 块结构 + DA-ML/NDA-ML 两公式（公式 1/2 from §3.2）
+3. **公平对照坐标段**：γ_tot 定义（公式 3 from §3.2）+ 导频开销 1.25dB 声明
+
+**句式映射**：
+- 信号模型公式引入 → `§1.2`（"In the presence of [损伤], the [信号] is modeled as:"）或 `§1.9`（"can be described as"）或 `§1.7`（"the [物理量] can be estimated using the [手段]:"）
+- DA-ML 估计公式 → `§1.7`（"For each block, the phase offset can be estimated using the pilot symbol:"）
+- NDA-ML 升幂 → `§1.3`（"We can further express the [物理量] in [域] as:"）
+- 参数解释（公式后）→ `§2.1`（"where [变量A] denotes ... while [变量C] represents ... [引用]"）或 `§2.5`（带单位密集列举）或 `§2.9`（6+ 符号密集列举）
+- 近似假设 → `§2.4`（"The approximation is valid considering that ..."）或 `§2.7`（"where we assume unit gain"）
+- 导频开销声明 → `§3.12` 句式变体（"is X dB down ... compared to"）
+
+#### §III Proposed Method（~0.8 页，整节等导师定切换进不进）
+
+**段落组织**（对照 paragraph.md §2.2 算法推导段）：
+1. **判据推导段**：块有效 SNR 定义 + 切换逻辑
+2. **crossover 物理因果段**：低 SNR 区 DA 赢、高 SNR 区 NDA 赢的机制解释
+
+**句式映射**：
+- 判据公式 → `§1.5`（"is obtained by calculating"）或 `§1.1`（"can be approximately derived as"）
+- crossover 机制 → `§4.3`（"This advantage arises from exploiting ..."）—— 把切换优势归因到 crossover 机制
+- 段内过渡 → `§7.1`（"A residual [问题] still remains ... It is then the role of the [本文模块] to ..."）或 `§7.3`（"Thus, considering the tradeoff between [维度A] and [维度B], we set ...")
+- 级联步骤衔接 → `§7.6`（"After [前级处理], we use [算法] to refine ...")
+
+#### §IV Results & Discussion（~1.8 页，最长节）
+
+**段落组织**（对照 paragraph.md §2.5 仿真结果分析段 + §3.4.2 方法对比段 + Complexity 收子节）：
+1. **BER 曲线分析段**：6 场景主图，现象→数字→机理三层（照画 BER 不凑 1e-5，R004 做法 a）
+2. **净增益表分析段**：Tab.1 两口径并列，naive 主报
+3. **切换 vs 固定对比段**：Tab.2 或 Fig.4，诚实标注多数场景不显著
+4. **线宽敏感性段**（可选）：Fig.5，证 10kHz 在最优区间
+5. **Complexity 子段**（期刊体例收子节）：DA/NDA 计算复杂度对比
+
+**句式映射**：
+- BER 曲线引图分析 → `§4.4`（"It can be seen from Fig. X that [方法] performs the best. ... Obviously, [方法] has better [指标A] ..."）—— ⚠️ 注意：本文切换相对 DA 多数场景输/不显著，**不能用 "performs the best / Obviously better"**，改用 `§4.1`（"Compared to the [基线], the [对比方法] exhibits a higher ..."）中性句式或 `§4.8`（"Compared to ... this paper proposed ... more accurately"）
+- 净增益数值嵌入 → `§3.3`（"are about 4 dB, 5 dB and 7.5 dB, respectively" 三场景列举）或 `§3.2`（"enhances receiver sensitivity by X dB and enables ... even under ..."）
+- HD-FEC 达标点 → `§3.4`（"reaches 7% HD-FEC limit at SNR = X dB"）或 `§3.11`（"can be recovered below X% FEC threshold at ..."）
+- 切换 vs 固定对比 → `§4.2`（"... always loses lock during ... while the proposed ... keeps the system locked"）—— ⚠️ 仅限低 SNR 避险场景用此强对比；高 SNR 区用 `§4.9`（"The difference is that ... while ..."）中性差异句
+- 不显著场景诚实表述 → `§4.11` 句式变体（"[方法A] provides [中性指标] for [场景] since [原因]"）+ R006 §2.3 防御性写法
+
+#### §V Conclusion（~0.3 页，单段）
+
+**段落组织**（对照 paragraph.md §0.2 章小结段 + 会议体例单段式）：
+- 单段：贡献重述（1 句）→ 核心数字（1-2 句）→ 切换定位（1 句，若进正文）→ 未来工作（1 句）
+
+**句式映射**：
+- 贡献重述开头 → `§6.2`（"In this paper, we proposed ... The simulation results show that ..."）或 `§6.1`（"We discovered ... and leveraged this correlation to propose ..."）或 `§6.3`（被动语态 "A [方法] was presented ..."）
+- 核心数字嵌入 → `§3.7`（"The results demonstrate the possibility to design [方法] with a [指标] ... thereby offering ..."）
+- 简化假设声明（10⁻⁵ 达不到）→ `§6.6`（"The whole study was conducted here assuming ... However, ... has been investigated in [ref]."）—— 体现学术审慎
+- 未来工作收尾 → `§6.4`（"Future work is underway to ..."）或 `§6.5`（"To the best of our knowledge, no ... has been reported yet."）
 
 ---
 
