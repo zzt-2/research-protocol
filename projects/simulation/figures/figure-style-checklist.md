@@ -74,5 +74,5 @@
 | Fig.1 系统框图 | 手绘 SVG | — | ⏳ 待画 |
 | Fig.2 BER 主图 | `plot_fig2_ber.py` | main30seed + ext5seed×2 | ✅ v1 样图生成 |
 | Fig.3 净增益 | `plot_fig3_gain.py` | `_fair_gain_summary_30seed.json` | ✅ v1 样图生成 |
-| Fig.4 crossover | `plot_fig4_crossover.py` | BER 曲线（strong 场景） | ✅ v1 样图生成 |
+| Fig.4 crossover | `plot_fig4_crossover.py` | BER 曲线（weak/mod/strong 三场景叠加） | ✅ v2 多场景 crossover |
 | Tab.1 净增益表 | R007 §4.2 | 同 Fig.3 | ✅ 结构已定 |

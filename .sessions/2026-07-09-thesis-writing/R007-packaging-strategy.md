@@ -254,14 +254,27 @@ Intro 从背景讲到湍流挑战，再到导频估计在低信噪比区失效�
 
 **vs 固定导频（DA）不进论文**（导师第 3 点 + 不变量 8）。
 
-### 7.5 Fig.4 crossover 数据源澄清
+### 7.5 Fig.4 crossover 数据源与多场景呈现（2026-07-11 更新）
 
 R007 §4.3 原写"crossover ~12-14dB"。D1 图表对话核查发现口径矛盾：
 
 - **BER 曲线数据**：crossover（da/nda BER 比交叉 1.0）在 strong 场景约 11-15dB，与 R007 一致
 - **切换 JSON**：nominal SNR 下 NDA 全程输 DA 直到 strong@24dB（口径不同——切换 JSON 的 SNR 是数据 SNR，crossover 讲的是块有效 SNR）
 
-**决策**：Fig.4 用 BER 曲线数据画 crossover（用户确认），不用切换 JSON。避免两套口径在一张图上打架。crossover 点标 ~11-15dB（数据 SNR），配文讲"块有效 SNR 阈值约 13dB"（meta.gamma_eff_th=13.0）。
+**v1 决策（2026-07-10）**：Fig.4 用 strong 单场景 BER 曲线画 crossover。
+
+**v2 决策（2026-07-11，用户反馈"crossover 位置太靠近低信噪比观感不好"）**：改画**多场景 crossover 对比**（weak/mod/strong 三条 DA/NDA BER 比曲线叠加）。
+
+**v2 的核心反转**：crossover 位置低从「缺点」翻转成「物理发现」——
+- **现象**：weak crossover ~19dB / moderate ~18dB / strong ~11dB
+- **物理因果**：湍流越强→deep fade 越深→导频段越早失效→NDA 反超越早→NDA 优势区越宽
+- **卖点**：crossover 随湍流左移本身是"切换有物理依据"的最强证据
+
+**v2 画法**（`plot_fig4_crossover.py` 已更新）：
+- 横轴=γ_d，纵轴=DA_BER/NDA_BER ratio（>1=NDA 赢）
+- 三条线（weak 浅蓝/moderate 琥珀/strong 朱红），strong 加粗
+- 每条线标 crossover 点（ratio=1.0 处）+ dB 标注
+- 配文框讲物理因果（stronger turb → earlier pilot-segment failure → wider NDA advantage）
 
 ---
 
