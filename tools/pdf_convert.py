@@ -257,6 +257,9 @@ def convert_single(
         print("  [FAIL] 转换结果为空", file=sys.stderr)
         return False
 
+    # 清洗无效的 UTF-16 surrogate（CAJ→PDF 转换可能产生，导致 write_text UnicodeEncodeError）
+    md_text = md_text.encode("utf-8", "surrogatepass").decode("utf-8", "replace")
+
     # 图片提取（仅 fast 模式需要，MinerU 自带图片提取）
     fig_count = 0
     if figures and quality == "fast":

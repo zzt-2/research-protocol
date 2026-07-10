@@ -48,10 +48,10 @@ USER_AGENT = "ResearchProtocol/2.0 (literature-search)"
 REQUEST_TIMEOUT = 30
 
 MODE_SOURCES = {
-    "academic": ["s2", "openalex", "arxiv", "serpapi", "exa"],
+    "academic": ["s2", "openalex", "serpapi", "exa"],  # arXiv: IP限流严重，通过OpenAlex间接覆盖；需要时 --sources arxiv 手动指定
     "chinese":  ["serpapi", "exa", "firecrawl"],
     "standard": ["firecrawl", "exa", "serpapi", "tavily"],
-    "broad":    ["s2", "openalex", "arxiv", "serpapi", "tavily", "firecrawl", "exa"],
+    "broad":    ["s2", "openalex", "serpapi", "tavily", "firecrawl", "exa"],  # arXiv同上
 }
 
 SOURCE_WEIGHTS = {

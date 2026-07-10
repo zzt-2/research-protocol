@@ -452,9 +452,22 @@ topics:
         reason: 继承 framework-evolution 三改造（glossary 问题定义/Q#链/跨 Step 门控）+ thesis-lessons TL-30（框架强制）/TL-27（量级核算）/TL-22/23（物理前提+冷静期）
     conflicts_with: []
 
+  - slug: 2026-07-10-dual-pol-osl-groundwork
+    title: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
+    status: active
+    created: "2026-07-10"
+    last_updated: "2026-07-10"
+    description: "scenario-transfer-pivot D003 解锁双偏振空间后，按 FR-22 从 GW Step 1 重走地勘。搜索空间从单偏振扩到含双偏振 OSL（sat.1553 §6 偏振解复用层主轴 + §3/4/5 次 + 迁移源参照 + 综述锚）。S001 检索策略规划完成，守 D017 穷举门控不直接开搜。继承上游全部不变量 + 方法论产出。"
+    depends_on:
+      - slug: 2026-07-10-scenario-transfer-pivot
+        reason: D001 三维度调整 + D002 角度素材 schema + D003 双偏振空间解锁，方法论准备就绪后 GW 执行转出
+      - slug: 2026-06-20-problem-driven-redirection
+        reason: 继承 D017 穷举门控 + D018 中性提取 + D009 checklist + 全方法论产出 + 9 次 Kill 证据链
+    conflicts_with: []
+
   - slug: 2026-07-10-scenario-transfer-pivot
     title: 场景迁移转向评估（9 次殊途同归后从"找算法增量"转向"场景迁移 + 性能边界刻画"）
-    status: active
+    status: dormant
     created: "2026-07-10"
     last_updated: "2026-07-10（D003 双偏振动Ch3/Ch4许可=维度1空间解锁 + H001交接重进GW Step1。方法论准备全部就绪：D001三维度调整（空间/形态/方法）+D002角度素材精读schema（6类帮想角度来源）+D003空间解锁（sat.1553 §6偏振解复用层回到桌面）。专题使命达成转GW）"
     description: "载波同步4候选全Kill + A3/N1/③ Kill + 均衡层两子地带凑不齐baseline（9次殊途同归）后，不再闭门造车。用户'咱们闭门造车太难受了'触发2子agent调研（方法论+FSO领域）。R001交叉验证+R001框架。S001进一步方法论诊断：standalone边界刻画在单偏振下凑不齐（sat.1553已占地），真正杠杆是找方向方法论三维度调整（D001）——空间解锁（双偏振可放，FR-26核查非硬锁是Ch3/4模型沿袭）+形态锚定（合法迁移适配）+D018强化（不适合也精读保留）。守9次Kill是物理事实不复活+场景设定不变（双偏振放宽待用户拍）+颗粒无收好过凑数。"

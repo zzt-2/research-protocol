@@ -476,3 +476,10 @@ def _auto_save(results: list[dict], query: str, sources: list[str]) -> None:
     )
     rel_path = archive_file.relative_to(Path(__file__).resolve().parent.parent.parent)
     print(f"[存档] {rel_path}")
+
+    # 增量更新全局论文索引（失败不影响检索主流程）
+    try:
+        from .search_index import update_global_index
+        update_global_index(archive_file, output_data)
+    except Exception as e:
+        print(f"[索引] 警告：更新全局索引失败（不影响检索）：{e}", file=sys.stderr)
