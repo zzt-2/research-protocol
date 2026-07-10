@@ -1,7 +1,7 @@
 # Topic Index: 均衡层方向侦察（载波同步 4 候选全 Kill 后换层）
 
 > slug: 2026-07-10-equalization-layer-direction-scouting
-> status: active | created 2026-07-10 | last_updated: 2026-07-10（S006 阶段 1.5 选地完成 → D002 排除 MDCC/偏振 + D003 双偏振伪需求 + D004 选 ISI+AO-DSP 精读。阶段 0-1.5 全部完成，进阶段 2 精读）
+> status: active | created 2026-07-10 | last_updated: 2026-07-10（S007 阶段 2 精读批次 1 ISI 完成 → 产 4 Q# 候选 + 四判据初筛。核心发现：Ajam TCOMM 2026 paywall 仅 abstract + 场景双重不匹配（PD/IM-DD + IRS几何非相干非直射）+ baseline 凑不齐 D-010 标准 + 晴空湍流致 ISI 物理前提存疑。不判 Go/Kill 守 D018。阶段 2 批次 1 完成，进批次 2 AO-DSP）
 
 ## 专题定位（一句话）
 
@@ -97,15 +97,23 @@
 
 **S006（选地讨论 + 场景适配筛查 + 双偏振物理前置验证）**：用户问"前两个（MDCC+偏振）适合我场景吗" → Explore agent 代码核查确认场景 = **单偏振 intradyne 单孔径单链路**（SPEC.md:13/17 + _channel.py + _modulation.py:6 1D 复信号）。**D002 排除 MDCC（多孔径冲突，B3-Q2 前车）+ 偏振均衡（单偏振不匹配）**。用户考虑改双偏振 → D003 物理前置验证：Toyoshima 2009 OICETS 实测 DOP 99.4% / 偏振角 RMS 1.6°（大气几乎不退偏）→ **偏振均衡倾向伪需求（B7 风险）**，不改双偏振。Cvijetic 2010 paywall 未下到 + sat.1553/Nasr 未引（同名作者误认，参考价值打折）。**排除 MDCC/偏振后，适配场景的是 ISI 均衡 + AO-DSP 残余补偿**（标量单偏振单孔径，但 Trans 基线薄）。
 
-**当前位置 = 阶段 1.5 选地完成，进阶段 2 精读（D004 选 ISI+AO-DSP 都精读再筛）**。H003 交阶段 2 精读新对话。
+**当前位置 = 阶段 2 精读批次 1（ISI 均衡）完成，进批次 2（AO-DSP）**。S007 产 4 Q# 候选 + 四判据初筛 + literature_notes ISI 段。核心发现：Ajam TCOMM 2026 paywall 仅 abstract + 场景双重不匹配（PD/IM-DD + IRS 几何）+ baseline 凑不齐 + 晴空湍流致 ISI 物理前提存疑（sat.1553 综述口径：湍流是标量衰落无时域展宽）。守 D018 不 Kill。H004 交批次 2。
+
+**阶段 2 精读批次 1（ISI）核心结论（守 D018，不 Kill）**：
+- **Ajam 场景双重不匹配**：PD/IM-DD（非相干）+ IRS 几何诱导 ISI（非直射星地）。降级参考不当主 baseline
+- **baseline 凑池高风险**：D-010 标准 4 篇 Trans 凑不齐（星地原生仅 Ajam 1 篇 PD+paywall，光纤迁移全 paywall 机制同构性存疑）
+- **晴空 GG 湍流致 ISI 物理前提存疑**：sat.1553 综述（最权威）将湍流建模为乘性标量衰落，不建模时域 CIR 展宽。Ajam ISI 来自 IRS 几何，Lee 来自 cloud 多散射——晴空湍流致 ISI 未被主流文献建立（B7 模式风险，留阶段 3 判读）
+- 4 Q# 候选共同硬伤：2019+ baseline 判据普遍 ❌
 
 **未决项**：
-- 均衡层有没有真问题（地有没有缝）—— 地勘 + 精读后才判（**阶段 1 不判，守 INVARIANT 6**）
-- 均衡层哪个子方向 —— **阶段 1.5 选地，等用户拍板**（不预设，守 INVARIANT 5）
-- ~~阶段 1 地勘实际要几对话~~（**S005 已定：2 批 6 组，1 对话完成**——用户"继续"指令下同对话跑完两批，超 ≤3 步但上下文宽裕）
+- 均衡层有没有真问题（地有没有缝）—— 精读 + 判读后才判（**阶段 2 不判，守 INVARIANT 6 + D018**）
+- ~~均衡层哪个子方向~~（**S006 已定：D004 选 ISI+AO-DSP 都精读再筛**）
+- ~~阶段 1 地勘实际要几对话~~（**S005 已定：2 批 6 组，1 对话完成**）
 - ~~旧检索资产复用机制~~（S003 已定：档 C 已实施）
-- **【S005 待观察】AO-DSP Paillier 系载波边界**：DSP 残余实质是数字 PLL，阶段 2 精读核验是否纯载波域 → 若是则按红线排除
+- **【S005 待观察】AO-DSP Paillier 系载波边界**：DSP 残余实质是数字 PLL，阶段 2 批次 2 精读核验是否纯载波域 → 若是则按红线排除
 - **【S005 待观察】多 DNN 孤证**（ANN/VAE/Kulmer/Qin）：是真孤证还是召回缺口，阶段 2 补证
+- **【S007 待观察·新增】晴空 GG 湍流致时域 ISI 物理前提**：sat.1553 综述口径说湍流是标量衰落无时域展宽，但需查湍流信道 CIR 文献确认。若物理前提不成立 → ISI 子地带整个塌方（B7 模式）。阶段 3 判读前补查
+- **【S007 已知债务】TCOMM 2026 Ajam + 光纤迁移 Trans 全 paywall**：全文下不到，机制/BER 曲线/baseline 详情靠 abstract + 综述二手提取
 
 ## 进展线索
 
@@ -115,3 +123,4 @@
 - **S004**（2026-07-10，阶段 1 第 1 批）：3 子 agent 并发跑组 1-3 检索（equalization 总览/偏振/MIMO-combining）。产出 `projects/simulation/landscape-equalization.md` 初版（29 篇主表 + 7 子地带：MDCC/OAM-MIMO/偏振/ISI/OFDM-FSO/DNN/AO-DSP + 3 🔴死地：OAM-MIMO 12年饱和/偏振经典外差奠基/OFDM解析类 + seed 交叉核一致 + 档级标注完整）。信噪比合格 7 项全过。源状况：Exa 耗尽 + IEEE blit 0 命中 → 第 2 批组 4-6 召回受限，ISI 仅孤证待补。H001 交第 2 批
 - **S005**（2026-07-10，阶段 1 第 2 批 + 收尾）：用户"继续"下同对话续接跑组 4-6（ISI 深/AO-DSP/湍流补偿），3 子 agent 并发（564s/500s/531s）。landscape 完整版 ~46 篇 + 8 子地带 + 4 死地。第1批 ISI 孤证解决（TCOMM 2026 Ajam 召回，DOI+seed 三重确认）。§7.2 两批共 6 篇全 PASS。组5 Paillier 系 DSP 残余=载波 PLL 标边界警示。信噪比终判 8 项全过 → **阶段 1 收尾**。活跃度：MDCC 最活跃+Trans 基线最厚 / 偏振升温 / OAM-MIMO 🔴 死地。H002 交阶段 1.5 选地
 - **S006**（2026-07-10，阶段 1.5 选地 + 场景适配筛查 + 双偏振验证）：用户"前两个适合我场景吗" → 代码核查确认**单偏振 intradyne 单孔径**场景。**D002 排除 MDCC（多孔径冲突）+ 偏振均衡（单偏振不匹配）**。**D003 双偏振物理前置验证**：Toyoshima 2009 OICETS 实测 DOP 99.4%/偏振角 1.6°（大气几乎不退偏）→ **偏振均衡倾向伪需求（B7 风险）不改双偏振**。Cvijetic 2010 paywall+同名误认降级。**D004 选 ISI 均衡+AO-DSP 残余补偿都进阶段 2 精读再筛**。H003 交阶段 2 精读。⚠ 本对话严重超载（地勘两批+筛查+验证+选地），阶段 2 严守分对话
+- **S007**（2026-07-10，阶段 2 精读批次 1 ISI 均衡）：TCOMM 2026 Ajam paywall 仅 abstract（降级链全试失败：无 arXiv 版 + GLOBECOM 2024 arXiv title-mismatch 错绑模板）+ 光纤 DFE/FDE 迁移 Trans 全 paywall（7 篇试下全 FAIL）。靠 Ajam 2022 前置论文（arXiv OA 全文）+ sat.1553 §6（OA 全文）提取。子 agent 精读 Ajam 2022 确认 **PD/IM-DD + 无 ISI 讨论**。§7.2 核查 3 篇全 PASS。产 4 Q# 候选（共同硬伤：2019+ baseline ❌）+ literature_notes ISI 段。核心发现：Ajam 场景双重不匹配 + baseline 凑不齐 D-010 + **晴空 GG 湍流致 ISI 物理前提存疑**（sat.1553 口径：湍流是标量衰落无时域展宽，B7 模式风险）。守 D018 不 Kill 留阶段 3 判读。H004 交批次 2 AO-DSP

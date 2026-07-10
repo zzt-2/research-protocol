@@ -439,7 +439,7 @@ topics:
     title: 均衡层方向侦察（载波同步 4 候选全 Kill 后换层，导师 D-010 允许的均衡/定时/载波同步三层之一）
     status: active
     created: "2026-07-10"
-    last_updated: "2026-07-10（S006 阶段 1.5 选地完成——D002 场景适配筛查排除 MDCC（多孔径冲突）+偏振均衡（单偏振不匹配，代码核查确认单偏振 intradyne 单孔径）；D003 双偏振物理前置验证倾向伪需求（Toyoshima 2009 OICETS 实测 DOP 99.4%/偏振角1.6°大气几乎不退偏，B7风险）；D004 选 ISI 均衡+AO-DSP 残余补偿都进阶段2精读再筛。阶段0-1.5全部完成。H003交阶段2精读。⚠本对话严重超载，阶段2严守分对话）"
+    last_updated: "2026-07-10（S007 阶段2精读批次1 ISI完成——TCOMM 2026 Ajam paywall仅abstract+光纤迁移Trans全paywall。靠Ajam 2022前置论文(arXiv OA)+sat.1553§6(OA)提取。§7.2核查3篇全PASS。产4 Q#候选(共同硬伤:2019+baseline❌)。核心发现3点:Ajam场景双重不匹配(PD/IM-DD+IRS几何非相干非直射)+baseline凑不齐D-010+晴空GG湍流致ISI物理前提存疑(sat.1553口径:湍流是标量衰落无时域展宽,B7模式风险)。守D018不Kill留阶段3判读。H004交批次2 AO-DSP）"
     description: "载波同步 4 候选（B2/B3-Q2/B5/B7）全 Kill + NDA-ML A4 工作区无增益后换层。背景锁死星地激光通信，范围 = FSO 相干均衡全谱（不预设偏振/MIMO/ISI/AO-DSP 子方向，地勘全景后选地）。**不是找均衡方法搬 FSO（凑数），是找均衡层 baseline M 在条件 C 下因 A 失效的真问题（FR-23）**。继承 problem-driven-redirection 全方法论产出（地勘前置/abstract 工具错位/§7.2 核查/D017 v2/D018/D009/adaptation-scan 6 类/profile 升级）直接复用不重发明。守 FR-22 从 GW Step 1 重走，D005 务实路线，FR-25 Go/Kill 分离。**用户 2026-07-10 明确指示**：第一个对话就是分析旧流程+规划新流程，完整规划完毕+利用最新 skill+保证拿到足够多思路前不去开始检索。拆阶段：①阶段 0 流程规划（S001）②阶段 1 地勘前置（1 轮，守 abstract 工具错位）③选地 ④精读批次（§7.2+主线 grep）⑤判读层（D017 v2+D018 中性提取）⑥Go/No-Go（D009 A2 前置+adaptation-scan 6 类+FR-21）⑦MVE 若 Go（sim-preflight v1.3.0+TL-20/22/23/26/27）。A4 相关专题独立本专题不管。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
