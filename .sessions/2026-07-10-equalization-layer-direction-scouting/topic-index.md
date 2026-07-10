@@ -1,7 +1,7 @@
 # Topic Index: 均衡层方向侦察（载波同步 4 候选全 Kill 后换层）
 
 > slug: 2026-07-10-equalization-layer-direction-scouting
-> status: active | created 2026-07-10 | last_updated: 2026-07-10（S004 阶段 1 地勘第 1 批完成 → landscape-equalization.md 初版 29 篇 + 7 子地带 + 3 死地）
+> status: active | created 2026-07-10 | last_updated: 2026-07-10（S005 阶段 1 地勘全部完成 → landscape 完整版 ~46 篇 + 8 子地带 + 4 死地 + 信噪比终判 8 项全过 → 阶段 1 收尾，进 1.5 选地）
 
 ## 专题定位（一句话）
 
@@ -91,14 +91,19 @@
 
 **S001 流程规划完成 + 用户确认（2026-07-10 "写吧"）+ PROMPT-001 地勘任务书落盘**。S002 压缩恢复后盘库了旧检索资产（撤销"价值有限"误判）。S003 实施"档 C 治本改 tools/search"——全局索引机制上线（35MB JSONL / 19166 唯一论文），均衡层 seed.md 已生成（117 篇 FSO×均衡 / 8 子地带）。**S003 后用户拍板：seed.md 重新定位为"地勘参考地图"（不是种子）——56% unknown 质量参差，只 16 篇 Trans/Letters 硬核，新对话开工先读地图然后仍要从零检索（守 INVARIANT 6/17）。PROMPT-001 已加"开工前必读"段。**
 
-**S004 阶段 1 地勘前置第 1 批执行完成**：3 子 agent 并发跑组 1-3（equalization 总览 / 偏振 / MIMO-combining），产出 `projects/simulation/landscape-equalization.md` 初版（29 篇主表 + 7 子地带 + 3 🔴死地 + seed 交叉核 + 档级标注）。信噪比合格判据 7 项全过（子地带≥3 / 候选够 / 档级全 / 死地有理由 / 无载波同步混入 / 覆盖度诚实 / **无判据 A 结论**）。源状况：Exa 信用耗尽 + IEEE blit 3 次 0 命中 + SerpAPI/Tavily 失效 → 第 2 批召回能力下降，ISI 子地带仅孤证需组 4 重点追。**阶段 1 未收尾，组 4-6 待第 2 批**。
+**S004 阶段 1 地勘前置第 1 批执行完成**：3 子 agent 并发跑组 1-3（equalization 总览 / 偏振 / MIMO-combining），产出 `projects/simulation/landscape-equalization.md` 初版（29 篇主表 + 7 子地带 + 3 🔴死地 + seed 交叉核 + 档级标注）。信噪比合格判据 7 项全过（子地带≥3 / 候选够 / 档级全 / 死地有理由 / 无载波同步混入 / 覆盖度诚实 / **无判据 A 结论**）。源状况：Exa 信用耗尽 + IEEE blit 3 次 0 命中 + SerpAPI/Tavily 失效 → 第 2 批召回能力下降，ISI 子地带仅孤证需组 4 重点追。
+
+**S005 阶段 1 地勘第 2 批 + 阶段 1 收尾完成**：用户"继续"指示下同对话续接跑组 4-6（ISI 深/AO-DSP/湍流补偿），3 子 agent 并发（564s/500s/531s）。landscape-equalization.md 更新为完整版：**~46 篇主表 + 8 子地带 + 4 🔴死地**。第 1 批 ISI 孤证问题解决（TCOMM 2026 Ajam 成功召回，DOI+seed 三重确认）。§7.2 两批共抽 6 篇全 PASS 无造假。组5 发现 AO-DSP Paillier 系 DSP 残余实质是载波 PLL → 标边界警示。**信噪比合格终判 8 项全过 → 阶段 1 收尾**。子地带活跃度初判：MDCC 最活跃 + Trans 基线池最厚 / 偏振均衡升温 / OAM-MIMO 🔴 死地。H002 交阶段 1.5 选地（主控+用户拍板）。
+
+**当前位置 = 阶段 1.5 选地（等用户拍板选 1-2 个均衡子地带进阶段 2 精读）**。
 
 **未决项**：
-- 均衡层有没有真问题（地有没有缝）—— 地勘 + 精读后才判
-- 均衡层哪个子方向 —— 地勘全景后选地，不预设
-- 阶段 1 地勘实际要几对话 —— 第 1 批跑完看信噪比再定
-- ~~旧检索资产复用机制~~（S003 已定：档 C 已实施，PROMPT-001 组 1 改为 seed 起步）
-- **【S002 新增】旧检索资产复用机制**：档 A/B/C 选哪个（推荐档 A），影响 PROMPT-001 组 1 是否改为"种子起步 + 补新"
+- 均衡层有没有真问题（地有没有缝）—— 地勘 + 精读后才判（**阶段 1 不判，守 INVARIANT 6**）
+- 均衡层哪个子方向 —— **阶段 1.5 选地，等用户拍板**（不预设，守 INVARIANT 5）
+- ~~阶段 1 地勘实际要几对话~~（**S005 已定：2 批 6 组，1 对话完成**——用户"继续"指令下同对话跑完两批，超 ≤3 步但上下文宽裕）
+- ~~旧检索资产复用机制~~（S003 已定：档 C 已实施）
+- **【S005 待观察】AO-DSP Paillier 系载波边界**：DSP 残余实质是数字 PLL，阶段 2 精读核验是否纯载波域 → 若是则按红线排除
+- **【S005 待观察】多 DNN 孤证**（ANN/VAE/Kulmer/Qin）：是真孤证还是召回缺口，阶段 2 补证
 
 ## 进展线索
 
@@ -106,3 +111,4 @@
 - **S002**（2026-07-10，压缩恢复后续接）：旧检索资产盘库。撤销 S001 含糊的"价值有限"判断——实测 3.6 万条目、142 篇 FSO×均衡唯一论文、81 有 DOI、落盘率仅 3.7%。给出复用方案三档（A 导出索引/B 加 digest/C 框架层治本），待用户拍板
 - **S003**（2026-07-10，S002 续接）：档 C 实施。`tools/litsearch/search_index.py` 新建（增量索引）+ `tools/litsearch/search_pipeline.py` 改 `_auto_save` + `tools/backfill_index.py` 新建（回填）。回填 19166 篇唯一论文 → `search-archive/_index/all-papers.jsonl`（35MB）。子 agent 从 JSONL 生成 `by-topic/equalization-seed.md`（117 篇 FSO×均衡 / 8 子地带）。AGENTS.md 加 3 行索引。三项验证全过（抽样/计数/增量集成）
 - **S004**（2026-07-10，阶段 1 第 1 批）：3 子 agent 并发跑组 1-3 检索（equalization 总览/偏振/MIMO-combining）。产出 `projects/simulation/landscape-equalization.md` 初版（29 篇主表 + 7 子地带：MDCC/OAM-MIMO/偏振/ISI/OFDM-FSO/DNN/AO-DSP + 3 🔴死地：OAM-MIMO 12年饱和/偏振经典外差奠基/OFDM解析类 + seed 交叉核一致 + 档级标注完整）。信噪比合格 7 项全过。源状况：Exa 耗尽 + IEEE blit 0 命中 → 第 2 批组 4-6 召回受限，ISI 仅孤证待补。H001 交第 2 批
+- **S005**（2026-07-10，阶段 1 第 2 批 + 收尾）：用户"继续"下同对话续接跑组 4-6（ISI 深/AO-DSP/湍流补偿），3 子 agent 并发（564s/500s/531s）。landscape 完整版 ~46 篇 + 8 子地带 + 4 死地。第1批 ISI 孤证解决（TCOMM 2026 Ajam 召回，DOI+seed 三重确认）。§7.2 两批共 6 篇全 PASS。组5 Paillier 系 DSP 残余=载波 PLL 标边界警示。信噪比终判 8 项全过 → **阶段 1 收尾**。活跃度：MDCC 最活跃+Trans 基线最厚 / 偏振升温 / OAM-MIMO 🔴 死地。H002 交阶段 1.5 选地
