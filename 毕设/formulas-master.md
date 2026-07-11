@@ -400,6 +400,18 @@ $$d = \sqrt{kD^2/(4d_{link})}$$
 - **适用条件**: 平面波近似；将物理湍流参数映射到统计模型分布参数；d 为孔径平滑参数
 - **章节**: §2.3.3
 
+#### F33b: Greenwood 频率与湍流闪烁相干时间（时间域模型）
+
+$$f_G = 2.31\,\lambda^{-6/5}\left[\int_0^L C_n^2(h)\,V^{5/3}(h)\,dh\right]^{3/5} \quad \text{(平面波)}$$
+
+$$\tau_c = \frac{1}{2\pi\,f_G} \quad \text{(强度闪烁相干时间)}$$
+
+- **来源**: [Greenwood, D.P. (1977) JOSA 67(3):390-393, f_G 定义]; [Conan, Rousset & Madec (1995) JOSA A 12(7):1559-1570, 时间功率谱转折频率→τ_c=1/(2πf_G)]; [Andrews & Phillips (2005) Laser Beam Propagation through Random Media, SPIE, §10-12]
+- **变量**: f_G → Greenwood 频率(Hz); λ → 波长; C_n²(h) → TERMS §10.2 折射率结构常数剖面(F31); V(h) → 横风速度剖面(Bufton 模型); L → 传播路径长度; τ_c → 强度闪烁相干时间(s)
+- **验证**: params.py GGTimeParams; common/_gg_time.py 实现; 验证结果 results/cma-fade-divergence/gg_time_validation.json
+- **适用条件**: 平面波 Kolmogorov 湍流; τ_c 是强度闪烁相干时间(**非** AO 相位校正时间常数 0.314·r₀/V, Roddier 1999); 与 F3.28/F3.29 AR(1) 时变模型配合(T_coh=τ_c); 典型值 f_G=10-1000Hz, τ_c=0.16-16ms(sat.1553:167 τ_c>1ms; s24248036:872 τ_c 1-100ms)
+- **章节**: §2.3.3
+
 #### §2.3.3 Gamma-Gamma 模型参数推导
 
 （参数推导公式见 F33。）

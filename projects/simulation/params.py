@@ -1109,6 +1109,168 @@ class B3Params(BaseModel):
     model_config = ConfigDict(frozen=True)
 
 
+class GGTimeParams(BaseModel):
+    """Gamma-Gamma 时间域衰落模型参数族 (Q-CMA-FADE Step A, FR-20 前置门控)
+
+    现有 ``gg_block`` 块间独立（无时间动力学），本参数族支撑时间相关 GG 包络
+    生成器 ``common/_gg_time.py::gg_time_envelope``——块内恒定物理成立
+    (τ_c ≫ 符号周期)，块间用 AR(1) 相关 (相干时间 τ_c 控制)。
+
+    物理基础（全标来源，FR-20）:
+    - f_G 公式: Greenwood 1977 JOSA 67(3):390-393 + Andrews&Phillips 2005
+    - τ_c = 1/(2π·f_G): Conan 1995 JOSA A 12(7):1559 + Andrews 2005 §12
+      (注: τ_c 是强度闪烁相干时间，非 AO 相位校正时间常数 0.314·r₀/V)
+    - τ_c 典型 1-100 ms: sat.1553:167 (>1ms) + s24248036:872 (1-100ms)
+    - 强度功率谱高频 f⁻¹¹ᐟ³: Tatarskii 1971 / Clifford 1971 / Ishimaru 1972
+      (已由 formulas-master F24/F25 Kolmogorov 谱覆盖，此处不重复)
+
+    所有 literature 字段 source 标精确文献（含行号）。
+    来源: 2026-07-11 Step A 实施（GG 时间域衰落模型 FR-20 前置门控）。
+    """
+
+    # === Greenwood 频率 (湍流时间尺度) ===
+    GREENWOOD_FREQ_DEFAULT: float = Field(
+        100.0,
+        description="Greenwood 频率默认值 100 Hz（中湍流典型，星地 LEO）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "arxiv 2208.00836 content.md L51「60 Hz to 1 kHz depending on environment」+ Greenwood 1977 JOSA 67(3):390 公式推导 + 外部教材交叉验证（Andrews&Phillips 2005 Ch.10-12, Tyson 2011 Ch.8）。典型星地链路 10-1000 Hz",
+            "symbol": "f_G",
+            "unit": "Hz",
+            "audit_flag": AuditFlag.WARNING,
+            "note": "仅 1 篇本地论文(arxiv 2208.00836)给数值范围；f_G 严格公式依赖 Cn²(h)·V(h) 路径积分，本字段取中湍流代表值 100Hz，实际应扫描",
+        },
+    )
+    GREENWOOD_FREQ_SWEEP: tuple = Field(
+        default_factory=lambda: (30.0, 100.0, 300.0, 1000.0),
+        description="f_G 扫描档（守 C1 扫描非单点）。30Hz 弱湍 / 100Hz 中湍 / 300Hz 中强 / 1000Hz 强湍",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "arxiv 2208.00836:51 范围 60-1000Hz + Greenwood 1977 公式量级",
+            "symbol": "f_G(sweep)",
+            "unit": "Hz",
+            "audit_flag": AuditFlag.WARNING,
+        },
+    )
+
+    # === 相干时间 ===
+    TAU_C_COEFF: float = Field(
+        1.0 / (2 * np.pi),
+        description="τ_c = TAU_C_COEFF / f_G 的系数 1/(2π)（强度闪烁相干时间，Conan 1995）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "Conan, Rousset & Madec 1995 JOSA A 12(7):1559 时间功率谱转折频率 ~2π·f_G + Andrews&Phillips 2005 §12。注: AO 相位校正用 0.314·r₀/V（Roddier 1999），本字段是强度闪烁 τ_c 非相位 τ₀",
+            "symbol": "c_τ",
+            "unit": "-",
+            "audit_flag": AuditFlag.OK,
+            "note": "系数 1/(2π) 是强度闪烁谱转折定义，与 AO 的 0.214/f_G 不同（后者是相位校正带宽特定定义）",
+        },
+    )
+
+    # === 横风速度（f_G 公式输入）===
+    WIND_SPEED_GROUND: float = Field(
+        10.0,
+        description="地面横风典型速度 10 m/s（f_G 公式 V(h) 剖面的地面代表值）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "papers/doi/10.3390_photonics10121312/content.md L566（Paillier 全数字 OPLL，地面风 0-43 m/s，强湍场景图用 5/60 m/s 对比）+ Bufton 风模型",
+            "symbol": "V_g",
+            "unit": "m/s",
+            "audit_flag": AuditFlag.WARNING,
+            "note": "仅地面风；LEO 卫星视运动对湍流层横扫的贡献由仰角定，本字段不含（需仰角几何，留作后续精确化）",
+        },
+    )
+
+    # === Cn² 结构常数地面值（f_G/H-V 剖面输入，与 TurbulenceParams 的 α,β 互补）===
+    CN2_GROUND_WEAK: float = Field(
+        1e-15,
+        description="弱湍流地面 Cn²(0) = 1×10⁻¹⁵ m⁻²ᐟ³（Hufnagel-Valley 剖面地面值）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "papers/doi/10.3390_photonics10121312/content.md L560（H-V 剖面 C0 弱 1e-15 / 中 5e-14 / 强 1e-13）",
+            "symbol": "C_n²(0)_weak",
+            "unit": "m^{-2/3}",
+            "audit_flag": AuditFlag.OK,
+        },
+    )
+    CN2_GROUND_MODERATE: float = Field(
+        5e-14,
+        description="中等湍流地面 Cn²(0) = 5×10⁻¹⁴ m⁻²ᐟ³",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "papers/doi/10.3390_photonics10121312/content.md L560",
+            "symbol": "C_n²(0)_mod",
+            "unit": "m^{-2/3}",
+            "audit_flag": AuditFlag.OK,
+        },
+    )
+    CN2_GROUND_STRONG: float = Field(
+        1e-13,
+        description="强湍流地面 Cn²(0) = 1×10⁻¹³ m⁻²ᐟ³",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "papers/doi/10.3390_photonics10121312/content.md L560",
+            "symbol": "C_n²(0)_strong",
+            "unit": "m^{-2/3}",
+            "audit_flag": AuditFlag.OK,
+        },
+    )
+
+    # === AR(1) 生成方法参数 ===
+    AR1_METHOD: str = Field(
+        "gar",
+        description="时间相关 GG 生成方法: 'gar'（默认，精确 Gamma 边缘，分位数匹配畸变 log-ACF 略低<2%）/ 'lognormal'（对数域 AR(1) log-ACF=ρ 精确，但强湍边缘近似偏差大 KS~0.15）",
+        json_schema_extra={
+            "source_type": SourceType.assumption,
+            "source": "MVE 阶段务实选择。gar: 标准正态 AR(1)+分位数映射到精确 Gamma 边缘(KS<0.006 全湍流档)，但非线性映射使 log-ACF 略低于 ρ(高 ρ 区<2%)。lognormal: 对 log(X) 平稳 AR(1)，log-ACF[lag]=ρ 精确(匹配 Conan τ_c 定义)，但边缘矩匹配在强湍(β<1)偏差大(weak KS=0.046/mod 0.074/strong 0.149)",
+            "audit_flag": AuditFlag.WARNING,
+            "note": "默认 gar（边缘精确，跨湍流强度稳健）；lognormal 适弱中湍且需 log-ACF 精确时。验证见 gg_time_validation.json edge_check_independent",
+        },
+    )
+
+    # === τ_c 本地校验锚点（sat.1553/s24248036，供验证脚本对比）===
+    TAU_C_LITERATURE_LOWER_MS: float = Field(
+        1.0,
+        description="文献 τ_c 下限 1 ms（sat.1553 自述 >1ms）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "papers/doi/10.1002_sat.1553/content.md L167「coherence time of more than 1 ms」",
+            "symbol": "τ_c,min",
+            "unit": "ms",
+            "audit_flag": AuditFlag.OK,
+        },
+    )
+    TAU_C_LITERATURE_UPPER_MS: float = Field(
+        100.0,
+        description="文献 τ_c 上限 100 ms（s24248036 综述 1-100ms 范围上端）",
+        json_schema_extra={
+            "source_type": SourceType.literature,
+            "source": "papers/doi/10.3390_s24248036/content.md L872「coherence time ... ranging from 1 to 100 ms」",
+            "symbol": "τ_c,max",
+            "unit": "ms",
+            "audit_flag": AuditFlag.OK,
+        },
+    )
+
+    model_config = ConfigDict(frozen=True)
+
+    def tau_c_from_fg(self, f_g: float) -> float:
+        """τ_c = 1/(2π·f_G)（Conan 1995 强度闪烁相干时间）。
+
+        返回秒。f_G=100Hz → τ_c=1.59ms。
+        """
+        return self.TAU_C_COEFF / f_g
+
+    def rho_block(self, f_g: float, block: int, t_s: float) -> float:
+        """块间 AR(1) 相关系数 ρ = exp(-Δt/τ_c)，Δt = block·T_S（块时长）。
+
+        ρ 越接近 1 块间越相关（τ_c 大 / f_G 小 → 慢变 → 高相关）。
+        """
+        tau_c = self.tau_c_from_fg(f_g)
+        dt = block * t_s
+        return float(np.exp(-dt / tau_c))
+
+
 # ─── 聚合配置 ─────────────────────────────────────────────────
 
 class SimulationConfig(BaseModel):
@@ -1124,6 +1286,7 @@ class SimulationConfig(BaseModel):
     b11: B11Params = Field(default_factory=B11Params)
     b7: B7Params = Field(default_factory=B7Params)
     b3: B3Params = Field(default_factory=B3Params)
+    gg_time: GGTimeParams = Field(default_factory=GGTimeParams)
 
     model_config = ConfigDict(frozen=True)
 

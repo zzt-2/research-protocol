@@ -415,7 +415,7 @@ topics:
     title: 论文写作专题（自适应 CPR 方向）
     status: active
     created: "2026-07-09"
-    last_updated: "2026-07-11（D1图表完成+切换framing新方向：用户看Fig.4提出「切换跨场景自动选优」比当前说法有力，H005交接专门研究。核查发现DA BER双口径(data 768bit/full 1024bit)+切换选对率(strong 7/7✅/awgn 0/8❌)。核心问题=改进判据让切换跨场景选对算调参还是改算法）"
+    last_updated: "2026-07-11（S008 Kill B 回 A：B 路线 goodput 维度数学已证任何 pilot density 都赢不了 NDA（α<1 全点，最大 0.466）+ BER 维度跟 A 卖点重复。用户"Kill B 回 A（推荐）"。D006 新建。回 A 路线用 D005 已有数据写论文，9 天能交）"
     description: "自适应载波相位恢复（A4 per-block 有效 SNR 驱动 DA/NDA 切换）方向的论文写作准备专题。在 GW Step 4a 维度 D（A4 PASS 待 Go）阶段内做：材料盘点/缺口识别/数据稳定性验证/论点合理性审查/简报完善。**是写作准备不是进 Contract/Execute**——守 FR-22。step4a-mve-execution 保持 active（Go 决策+消融回那里），本专题只管写作准备。"
     depends_on:
       - slug: 2026-07-06-step4a-mve-execution
@@ -456,7 +456,7 @@ topics:
     title: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
     status: active
     created: "2026-07-10"
-    last_updated: "2026-07-10（Step 4a 可行性评估完成：Q-DP1 Kill A0§1物理基础不足 / Q-DP2 Conditional Go / Q-DP3 Conditional Go首选。交用户确认）"
+    last_updated: "2026-07-11（PROMPT-003 Step A 完成：GG 时间域衰落模型 PASS，FR-20 缺口补全。新建 common/_gg_time.py + params.py GGTimeParams + 验证脚本。下个对话 Step B CMA 发散扫描）"
     description: "scenario-transfer-pivot D003 解锁双偏振空间后，按 FR-22 从 GW Step 1 重走地勘。搜索空间从单偏振扩到含双偏振 OSL（sat.1553 §6 偏振解复用层主轴 + §3/4/5 次 + 迁移源参照 + 综述锚）。S001 Step1-3完成（15查询43候选8子方向/9篇+sat1553精读/3Q#过四判据）。S002 Step4a完成：Q-DP1(动态SOP跟踪)Kill因A0§1致命（均衡器300krad/s高出湍流致SOP 1-2数量级，A物理基础不足D001）/ Q-DP2(CMA fade发散)Conditional Go（空白真实但需自建GG时间模型D002）/ Q-DP3(跨帧恢复)Conditional Go首选（物理基础最扎实D003）。继承上游全部不变量+方法论产出。"
     depends_on:
       - slug: 2026-07-10-scenario-transfer-pivot

@@ -1,7 +1,7 @@
 # Topic Index: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
 
 > slug: 2026-07-10-dual-pol-osl-groundwork
-> status: active | created 2026-07-10 | last_updated 2026-07-10（Step 4a 可行性评估完成：Q-DP1 Kill / Q-DP2/DP3 Conditional Go，交用户确认）
+> status: active | created 2026-07-10 | last_updated 2026-07-11（PROMPT-003 Step A 完成：GG 时间域衰落模型 PASS，FR-20 缺口补全。下个对话 Step B CMA 发散扫描）
 
 ## 专题定位（一句话）
 
@@ -64,18 +64,26 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 
 ## 当前位置
 
-**GW Step 4a 可行性评估完成（双偏振 OSL 子方向，Q-DP1/2/3）**。交用户确认 Go/No-Go。
+**PROMPT-003 Step A 完成（2026-07-11）**。GG 时间域衰落模型建好并验证 PASS——FR-20 缺口（D002 Conditional 风险 1）补全。Q-CMA-FADE 进 Step 4a 维度 D MVE 的前置门控已过。
 
-- Step 1-3：完成（见 S001）
-- **Step 4a：完成**——对 Q-DP1/2/3 走 gw-feasibility A0/A'/A/B/D，2 子 agent 物理量级核查 + FR-20 参数溯源
-  - **Q-DP1（动态 SOP 跟踪）：No-Go（Kill）**——A0 §1 致命，均衡器 300 krad/s 高出湍流致 SOP 1-2 数量级，A 物理基础不足（D001）
-  - **Q-DP2（CMA fade 发散）：Conditional Go**——空白真实（sat.1553 自认），需自建 GG 时间模型（D002）
-  - **Q-DP3（跨帧恢复）：Conditional Go（首选）**——物理基础最扎实（跨帧+挂起+恢复 open 三点文献支撑），先验覆盖最低（D003）
-- 优先级：Q-DP3（首选）> Q-DP2（备选）> Q-DP1（No-Go）
+- Step 1-3：完成（双偏振 9 篇 + ML 20 篇 = 29 篇精读）
+- **Step 4a：完成**（Q-DP1/2/3 可行性评估）
+- **R001/R002 调研：完成**（调制切换 Kill + ML 全谱）
+- **D004 攒材料：完成**（20 篇精读 + 候选合并 D005）
+- **D005 候选合并：完成**（Q-CMA-FADE 首选）
+- **Step 4a 维度 D MVE（Q-CMA-FADE）**：
+  - ✅ **Step A：完成**（GG 时间域衰落模型，PASS）
+  - ⬜ Step B：CMA 发散概率扫描（下个对话）
+  - ⬜ Step C：ML vs CMA MVE（再下个对话）
 
-下一步：**交用户确认**（Q-DP1 Kill / Q-DP3 首选 / Q-DP2 备选）→ 如认可 Q-DP3，新对话进维度 D MVE（先补 FR-20 大气湍流时间模型参数）。
+下一步：**Step B**——先扩 CMA 均衡器到 `common/_cma.py`，再用 `gg_time_envelope`（≥10⁷ 符号长序列）扫描发散概率 vs {衰落深度, 步长, 阶数}。守 C6-C8（Godard 1980 公式溯源 + 三方对照）。
 
 ## 进展线索
 
 - **S001**（2026-07-10）：双偏振 OSL 检索策略规划 → 执行（用户"一直往下做"授权）→ 15 查询穷举 + 综述补搜 + AI 候选审查 + 覆盖度评估 → Step 2 下载（tools/download + blit IEEE 两轮）→ 9 篇成功+sat.1553 → Step 3 精读（3 批 9 篇 + sat.1553§6补读 + D002 schema 试用）→ 综合分析 + 3 Q#(Q-DP1/2/3)。核心候选 43 篇 8 子方向。守 D017 穷举门控 + D018 中性提取。详见 `S001-search-strategy-dual-pol-osl.md` + `projects/thesis-fso/literature_notes.md` 双偏振 OSL 沉淀节
 - **S002**（2026-07-10）：GW Step 4a 可行性评估。收 H002（Trigger 5 验证全 PASS）→ 读 gw-feasibility/glossary/TL-30/32/27 → 维度 A' 竞争分解 → 2 子 agent 物理量级核查（SOP 速率 + 衰落统计）→ Q-DP1 Kill（A0 §1 致命 D001）/ Q-DP2 Conditional Go（D002）/ Q-DP3 Conditional Go 首选（D003）→ feasibility_report.md 追加双偏振章节。守 D018 全评完才排 + FR-25 Go/Kill 分离 + TL-27 量级核算。详见 `S002-step4a-feasibility-evaluation.md` + `projects/thesis-fso/feasibility_report.md` 双偏振 OSL 节
+- **R001**（2026-07-10）：PROMPT-002 并行开放调研——ML/LSTM 自适应调制切换在光通信现状。两轮检索（英 search 6 查询 + 中 CNKI 7 查询，3 子 agent 消化）。结论：广义"ML for 光通信"成熟大方向（S2 命中 2472），精确"ML 驱动光通信调制切换"小众新兴（2022-2026 引用<40，大半是识别/分配非切换）；LSTM 在切换方向极少（英文 2 篇做检测非切换，中文 0 篇）；用户"见过 LSTM 调制切换学位论文"印象未获标题层佐证（7 中文查询 0 篇，疑印象来自 RF-ACM）；双偏振星地 FSO+ML 调制切换=空白。**不立 Q# 不判 Go/Kill**（守 FR-22）。详见 `R001-ml-modulation-switching-survey.md`
+- **R002**（2026-07-10）：用户追问"ML 在星地激光湍流有啥可行方向"，R001 只查了调制切换一个点，扩到全谱。两轮检索（英 search 11 查询 + 中 CNKI 5 查询，3 子 agent 消化）。结论：ML 有 9 类应用点全不窄（用户直觉正确）；跟物理层 DSP 对口的 3 个点（衰落预测/ML载波恢复/ML均衡）**在湍流场景几乎全空白**（均衡仅 Qin/Nasr 3 篇全 0 引，载波恢复湍流无人，衰落预测喂 DSP 参数无人）→ 有切入空间；中文"星地激光+湍流+ML"学位论文完全空白。**推翻主线对话内口头判断"ML 大概率也窄"**（③ oracle 只封调制切换不封 DSP 模块 ML，外推过度=急于收敛 profile 第 N 次）。修正：ML 做 DSP 模块不受调制切换天花板约束。与 Q-DP3 跨帧恢复有自然结合点（LSTM 衰落预测→fade 前瞻→恢复触发，无人接起来）。不立 Q# 不判 Go/Kill（守 FR-22）。详见 `R002-ml-in-satellite-fso-turbulence.md`
+- **S003**（2026-07-10）：R001+R002 两轮 ML 调研 + 讨论三个调制相关口子（识别/分配/切换均不合适）+ 讨论 Q-DP2/DP3 纯 DSP 不带 ML。**用户确立攒材料策略（D004）**：不急进任何一个，全部推到 MVE 前大量精读攒材料。候选池 5 个（Q-DP2/Q-DP3 + ML 衰落预测/载波恢复/均衡）。守 FR-22 全程不立 Q# 不判 Go/Kill。修正主线口头判断"ML 大概率窄"（急于收敛）。详见 `S003-ml-survey-and-material-accumulation-strategy.md`
+- **续 S003**（2026-07-10~11）：D004 攒材料执行——ML 方向 20 篇精读完成（3 批子 agent，含 Chen2022 标题错配 abort 后补正），全部 gw-read 规范笔记存 papers/_read_notes/ + literature_notes ML 章节（L-ML1~20 + 4 Q-ML# + 综合分析 + 7 可迁移范式 + Freire2022 6 陷阱 checklist）。候选合并（D005）：Q-DP2+Q-ML1 → Q-CMA-FADE（CMA 深衰落发散：分析+ML缓解），四判据全过最强，增量定位补 Qin/Nasr 实验缺口不换皮。候选池收缩为 Q-CMA-FADE（首选）> Q-DP3（备选）> Q-ML4（种子）。用户"和别人接近才好"偏好记 voice.md
+- **S004**（2026-07-11）：PROMPT-003 Step A 执行——GG 时间域衰落模型建好验证 PASS，补 FR-20 缺口（D002 Conditional 风险 1）。2 子 agent 查证物理参数（本地论文全块衰落/准静态，外部教材交叉验证 Greenwood 1977 f_G + Conan 1995 τ_c=1/(2πf_G)）。新建 common/_gg_time.py（gg_time_envelope，块内恒定块间 AR(1)，gar/lognormal 两法）+ params.py GGTimeParams（10 字段全标来源）+ 验证脚本（边缘 PDF GAR KS<0.006 / log-ACF 误差 0% / τ_c 落文献 1-100ms）。formulas-master F33b（Greenwood+τ_c），发现 F3.28/F3.29 AR(1) 已存在同构。物理发现：τ_c≫block·t_s（ρ>0.9999），单帧准静态，Step B 需长序列≥10⁷ 符号。详见 `S004-stepA-gg-time-domain-model.md`
