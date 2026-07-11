@@ -415,7 +415,7 @@ topics:
     title: 论文写作专题（自适应 CPR 方向）
     status: active
     created: "2026-07-09"
-    last_updated: "2026-07-11（S008 Kill B 回 A：B 路线 goodput 维度数学已证任何 pilot density 都赢不了 NDA（α<1 全点，最大 0.466）+ BER 维度跟 A 卖点重复。用户"Kill B 回 A（推荐）"。D006 新建。回 A 路线用 D005 已有数据写论文，9 天能交）"
+    last_updated: "2026-07-11（R011 D-P1 用语符号公式三合一完成：派2子agent查证7篇content.md术语用法，产出术语表34词+符号表22个+公式3个，交叉一致性检查全过。下一步D-P2P3参数数字+叙事结构）"
     description: "自适应载波相位恢复（A4 per-block 有效 SNR 驱动 DA/NDA 切换）方向的论文写作准备专题。在 GW Step 4a 维度 D（A4 PASS 待 Go）阶段内做：材料盘点/缺口识别/数据稳定性验证/论点合理性审查/简报完善。**是写作准备不是进 Contract/Execute**——守 FR-22。step4a-mve-execution 保持 active（Go 决策+消融回那里），本专题只管写作准备。"
     depends_on:
       - slug: 2026-07-06-step4a-mve-execution
