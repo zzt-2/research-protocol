@@ -1,7 +1,7 @@
 # Topic Index: 论文写作专题（自适应 CPR 方向）
 
 > slug: 2026-07-09-thesis-writing
-> status: active | created 2026-07-09 | last_updated 2026-07-10（D1 图表制作 v1 完成：4 张图样图+美化 checklist+R007 §7 数字呈现策略。Fig.2 3×2 纵向美化版/Fig.3 净增益方案B/Fig.4 crossover BER数据源/Fig.1 SVG 框图。D004 口径再验全一致。切换 JSON 只 4 场景无 uplink。下一步 D2 写草稿）
+> status: active | created 2026-07-09 | last_updated 2026-07-11（D1图表完成+切换framing新方向：用户看Fig.4提出「切换跨场景自动选优」比当前说法有力，H005交接专门研究。核查发现DA BER双口径(data 768bit/full 1024bit)+切换选对率(strong 7/7✅/awgn 0/8❌)。核心问题=改进判据让切换跨场景选对算调参还是改算法）
 
 ## 专题定位（一句话）
 
@@ -72,25 +72,22 @@
 
 ## 当前位置
 
-**🟢 D1 图表制作 v1 完成 + R007 §7 数字呈现策略补充（2026-07-10 续，S006）**。
+**🟡 D1 图表制作完成 + 切换 framing 新方向待深挖（2026-07-11，S006 续，H005 交接）**。
 
-**D1 产出**（`projects/simulation/figures/`）：
-- **Fig.2 BER 主图** `plot_fig2_ber.py` → `ccisp_fig2_ber.png`：3×2 纵向布局，按湍流递增排列，线型区分方法（DA实线/NDA虚线/oracle点线），linewidth≤1.2，卖点场景标"NDA +XdB"注释，scipy插值画平滑曲线。解决用户 5 条反馈（横向太扁→纵向布局/差别太小→标注/点太稀疏→插值/标志难看→线型/线太粗→调线宽）
-- **Fig.3 净增益图** `plot_fig3_gain.py` → `ccisp_fig3_gain.png`：方案 B（全 6 场景，弱湍流段视觉弱化浅色，强湍流/上行卖点加粗+数字标注），naive+fair 双线+CI 带
-- **Fig.4 crossover 机制图** `plot_fig4_crossover.py` → `ccisp_fig4_crossover.png`：用 BER 数据画（非切换 JSON），strong 场景 DA vs NDA 曲线+crossover 点（~11dB）+区域标注+切换线
-- **Fig.1 系统框图** `fig1_system_block.svg`：SVG 格式，星地 FSO 链路+DA/NDA 估计器+切换逻辑
-- **图表美化 checklist** `figure-style-checklist.md`：7 类检查项（布局/线型配色/差距可视化/点密度/坐标轴/标注/数据完整性）
-- **R007 §7 数字呈现策略**：工作区测法表述优化 + fair/naive 两口径并列 + Tab.1 列结构升级 + 切换数据源矛盾澄清 + Fig.4 crossover 口径说明
+**D1 产出**（`projects/simulation/figures/`，已完成）：
+- Fig.2 BER 主图（3×2 纵向美化）/ Fig.3 净增益（方案 B）/ Fig.4 crossover（v3：单图 6 条 BER 曲线，3 场景×DA/NDA）/ Fig.1 系统框图 SVG / 美化 checklist
+- R007 §7 数字呈现策略（工作区测法 + 两口径并列 + Tab.1 + 切换数据源澄清）
 
-**关键数据核查**（D1 对话）：
-- D004 口径再验：`fair_comparison.py:109` fair = naive + 1.249dB，6 场景全一致
-- 切换 JSON 只 4 场景（无 uplink），+1.3~2.3dB 范围：strong 最高 ~1.3dB，weak/moderate 更高（weak@10=2.3dB）
-- Fig.4 crossover 用 BER 数据（11-15dB）非切换 JSON（24dB nominal），避免口径打架
+**新方向（用户提出，H005 交接专门对话）**：
+用户看 Fig.4 后提出**「切换跨场景自动选优」framing**——比当前"低 SNR 避险鲁棒性补丁"更有力。数据核查发现：
+- **切换方案在 strong 场景 7/7 选对**（≈理想切换），但弱湍流失效（AWGN 0/8 选对）
+- **DA BER 有两个口径**（data 768bit / full 1024bit），framing 只在 data 口径成立，full 口径下 DA 几乎全场景赢
+- 核心问题：改进判据让切换跨场景选对，算调参（禁止）还是改算法（合法但回 step4a）？
 
 **下一步**：
-1. **进 D2（写中文草稿 Intro + System Model）**——用 R007 定故事 + R006 §2.4 定句式
-2. 图表 v1 样图可带去问老师，根据反馈迭代（Fig.2 可能需要调子图比例/标注位置）
-3. **等导师反馈** v4 数据层 3 问（10⁻⁵/口径/baseline）——不阻塞 D2
+1. **开新对话**接 H005 研究切换 framing（用户明确要求专门研究）
+2. 切换 framing 定论后，回到 D2 写草稿（Intro + System Model）
+3. 等导师反馈 v4 数据层 3 问（10⁻⁵/口径/baseline）
 
 **等导师项（v4 数据层，不阻塞写作）**：
 1. 10⁻⁵ 底线 A/B（D003）→ 决定主图纵轴 + 主卖点成立性（R004 倾向解读 B）
@@ -116,4 +113,5 @@
 - **H004** 包装策略交接（2026-07-10。导师回完简报v5定位困境给4点指令后，用户决定走路1包装层(不改算法)开新对话专门想包装。交接：导师4点反馈+两段式结构指令+切换重新定位(vs固定盲+1.3~2.3dB特定条件优异)+表述策略(强调自己行的)+必读文件+不要做什么(不改算法/不跑实验/不写vs导频输/不再写简报)+关键数据。守路1/D004/FR-22/7-20截稿10天）
 - **R007** CCISP 包装策略（2026-07-10 新建，续 H004。导师4点反馈落地：①两段式(影响分析+方法)落到 Results 内拆 §IV-A/§IV-B，5节骨架保留，叙事重心往"湍流影响→盲估计抗"因果链靠 ②切换收窄只讲 vs 固定盲 +1.3~2.3dB(CI下界全正)，vs导频输不进论文(导师第3点) ③弱湍流选择性呈现(数据真实不报归零数字，领域惯例R002§C) ④图表配合(Fig.2画全6子图影响分析载体/Tab.1只放强湍流3行naive/Fig.4 crossover卖点化) ⑤标题候选A(naive量化归因型)。数字全标溯源，Tab.1 naive CI已核查(`_fair_gain_summary_30seed.json`)。R006 §2.1/2.2/2.3已加引用。守路1/D004/FR-22。下一步进D2写草稿+D1图表并行）
 - **S005** CCISP 包装策略实施（2026-07-10 新建。续 H004 接收方验证3条事实声称全PASS + 用户确认两段式=叙事偏向非砍成2章 + 产出R007包装策略 + R006引用更新。范围在scope内写作准备不跑实验。下一步进D2写草稿+D1图表并行）
-- **S006** D1 图表制作 + 数字呈现策略（2026-07-10 续。续接 R007 包装策略完成后的图表实施。派3子agent提取BER曲线gap数据+切换crossover数据+会议论文图惯例。**产出**：4张图v1样图（Fig.2 BER主图3×2纵向美化/Fig.3净增益方案B/Fig.4 crossover BER数据源/Fig.1系统框图SVG）+ 图表美化checklist 7类检查项 + R007 §7数字呈现策略（工作区测法表述优化+fair/naive两口径并列+Tab.1列升级+切换数据源矛盾澄清）。**关键数据核查**：D004口径再验全一致（fair=naive+1.249）+切换JSON只4场景无uplink+Fig.4 crossover用BER数据(11-15dB)非切换JSON(24dB)。解决用户5条图反馈（横向太扁→纵向/差别太小→标注/点太稀疏→插值/标志难看→线型/线太粗→调线宽）。守路1/D004/FR-22/数据真实。下一步D2写草稿+图表v1带问老师迭代）
+- **S006** D1 图表制作 + 数字呈现策略 + 切换 framing 新方向（2026-07-10/11。续接 R007 包装策略完成后的图表实施。派3子agent提取BER曲线gap数据+切换crossover数据+会议论文图惯例。**产出**：4张图样图（Fig.2 BER主图3×2纵向美化/Fig.3净增益方案B/Fig.4 crossover v3单图6条BER曲线/Fig.1系统框图SVG）+ 图表美化checklist 7类检查项 + R007 §7数字呈现策略。**关键数据核查**：D004口径再验全一致（fair=naive+1.249）+切换JSON只4场景无uplink+DA BER双口径发现（data 768bit/full 1024bit比值=1.333）+切换方案选对率核查（strong 7/7选对/awgn 0/8选对）。**用户提出新方向**：从Fig.4看出「切换跨场景自动选优」framing，比当前说法有力，决定开专门对话深挖（H005）。守路1/D004/FR-22/数据真实。下一步H005专门对话研究切换framing）
+- **H005** 切换「跨场景自动选优」framing 专门研究交接（2026-07-11。用户看Fig.4后提出新framing比当前说法有力。交接现状写全：①DA BER双口径（data 768bit/full 1024bit，比值=1.333=pilot overhead）②切换选对率（strong 7/7✅/awgn 0/8❌/weak-mod 3/7）③framing成立条件（改进判据让弱湍流也选对，需判断算调参禁止还是改算法合法回step4a）。核心问题：改进判据让切换跨场景选对→"跨工况自适应"叙事。交接含完整数据表格+文件位置+验证清单）
