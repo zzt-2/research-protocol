@@ -360,3 +360,69 @@ Step B 用 SOP_RATE=1e-4 rad/sym（250 krad/s），Step C 修正为 4e-7 rad/sym
 ### 来源
 
 S006（Step C 执行）
+
+---
+
+## D008: Step C 补充压力测试 — QPSK 场景弱, 16QAM 场景有真价值, Go 判定修正为 Conditional
+
+> status: active
+> date: 2026-07-11
+> 取代：部分修正 D007（Go 判定从"全场景 Go"改为"16QAM Conditional Go, QPSK 弱"）
+> 被取代：无
+> 依据: 验证: results/cma-fade-divergence/sup_stress_test_results.json (Sup-1 16QAM对比 / Sup-2 小步长CMA / Sup-3 ML SOP漂移)
+
+### 决策
+
+D007 的"全场景 Go"修正为 **Conditional Go**：Q-CMA-FADE 在 **16QAM 场景有真价值**（CMA modulus mismatch 是结构性缺陷），在 **QPSK 场景根基弱**（小步长 CMA 够用，发散是人为构造）。
+
+### 补充测试发现
+
+**Sup-1: 16QAM CMA vs ML vs oracle**
+- 16QAM 安全区 (μ=1e-3): CMA BER=0.05-0.29 (不稳定, modulus mismatch), ML BER=0-0.033 (稳定)
+- 16QAM 危险区 (μ=1e-2): CMA BER=0.20-0.35, ML BER=0.10-0.22 (ML 好但不接近 oracle)
+- 对比 QPSK 安全区: CMA BER≈0.0001 (完美) → **CMA 在 QPSK 没问题, 16QAM 有结构性缺陷**
+
+**Sup-2: CMA μ=1e-3 在危险区信道 (strong, f_G=1000Hz)**
+- QPSK: μ=1e-3 BER≈0.0001 (≈oracle) → **"用小步长就行"在 QPSK 成立 → QPSK 发散问题不构成真问题**
+- 16QAM: μ=1e-3 BER=0.15-0.34, oracle=0.23 → **CMA 在 16QAM 即使安全步长也差 (modulus mismatch, 跟 μ 无关)**
+
+**Sup-3: ML SOP 漂移退化**
+- ML 训练 θ=0, 测试 θ=0~90°: ≤20° 零退化, 45° 崩溃 (BER=0.43)
+- ML SOP 容忍 ≤20° (比 Nasr 2026 报 ±4° 宽, 但 45°+ 需重训练)
+
+### 对 D007 Go 判定的修正
+
+| 场景 | D007 判定 | D008 修正 | 理由 |
+|------|----------|----------|------|
+| QPSK 危险区 | Go (ML P_div=0 vs CMA 0.6) | **弱** — μ=1e-3 的 CMA BER≈oracle, 发散是大 μ 人为构造 | Sup-2 证伪 |
+| QPSK 安全区 | Go (ML≈CMA≈0) | 无争议但无价值 | CMA 够用 |
+| 16QAM 危险区 | 未测 | **Go** — CMA modulus mismatch + 发散, ML 显著优 | Sup-1 |
+| 16QAM 安全区 | 未测 | **Go** — CMA modulus mismatch 即使不发散也 BER 差, ML 优 | Sup-1/Sup-2 |
+
+### 暴露的新风险
+
+1. **pilot 开销不对称**: ML 监督学习需要 pilot, CMA 盲均衡不需要. Qin 的 VAE 也是盲的. 我们用监督学习 vs 盲 CMA, 省了 pilot overhead 但没算代价 → 审稿人会攻击
+2. **增强基线缺失 (FR-03)**: 只跟了裸 CMA, 没跟 CMMA/MMA (CMA 的 16QAM 增强版). 16QAM modulus mismatch 有现成解 (CMMA), ML vs CMMA 才是公平对比
+3. **ML 方法创新性不足**: 网络结构照搬 Qin (L275/283), 损失用更简单的 MSE (非 VAE), 训练方式更弱 (监督 vs 盲). 方法本身每个组件都不新 → 可能撞 TL-12 换皮红线
+4. **在线 vs 离线不对称**: CMA 在线自适应天然跟信道, ML 离线训练需重训练. 真实星地信道连续变化, ML 重训练周期/pilot 开销未量化
+
+### 修正后的方向定位
+
+**聚焦 16QAM**（非 QPSK）：
+- 16QAM CMA modulus mismatch 是结构性缺陷（跟 μ 无关, 调参解决不了）
+- 深衰落加剧 modulus mismatch（BER 从 0.05 恶化到 0.35）
+- ML 不受 modulus mismatch 限制（监督学习直接回归星座点）
+
+**但需解决**：
+- 方法创新性（当前 ML 方法每个组件都不新）
+- pilot 开销量化
+- 增强基线对比（vs CMMA/MMA）
+- 重训练周期设计
+
+### 触发原话
+
+> 触发原话: 用户"补吧"（授权补充压力测试）+ "你觉得能出东西吗"（质疑 Go 判定）
+
+### 来源
+
+S006 续（Step C 补充压力测试）

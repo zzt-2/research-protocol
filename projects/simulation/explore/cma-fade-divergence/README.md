@@ -39,6 +39,7 @@
 | gg_time_fading_model.py | FR-20 GG 时间域衰落模型生成+验证 | **PASS** (2026-07-11) | results/cma-fade-divergence/gg_time_validation.json |
 | cma_divergence_scan.py | CMA 发散概率 vs {湍流,f_G,μ,tap} 扫描 | **PASS** (2026-07-11) | results/cma-fade-divergence/cma_divergence_scan_results.json |
 | mve_cma_vs_ml.py | CMA vs ML 均衡深衰落对比 (三方: CMA/ML/oracle) | **PASS** (2026-07-11) | results/cma-fade-divergence/mve_cma_vs_ml_results.json |
+| sup_stress_test.py | 压力测试 (16QAM/小步长CMA/ML SOP漂移) | **PASS** (2026-07-11) | results/cma-fade-divergence/sup_stress_test_results.json |
 
 ## 参数溯源（FR-20）
 
@@ -177,11 +178,11 @@
 
 ### Go/No-Go 判定
 
-**Go** — Q-CMA-FADE 方向确认:
-- ✅ FR-14: ML P_div (0.0) << CMA P_div (0.6) 在危险区
-- ✅ FR-15: ML BER ≈ oracle BER, 不劣于 CMA 安全区
-- ✅ C8 未触发: 无数学同族性
-- ✅ TL-20 理论预期验证: ML 稳定性符合预测
+**Conditional Go**（D008 修正，原 D007 全场景 Go 被压力测试修正）:
+- ✅ 16QAM 场景: CMA modulus mismatch 是结构性缺陷（μ=1e-3 安全步长也 BER 差），ML 显著优 → **Go**
+- ⚠️ QPSK 场景: μ=1e-3 的小步长 CMA BER≈oracle（"用小步长就行"成立）→ **方向弱**
+- ✅ ML SOP 漂移: ≤20° 容忍（比 Nasr ±4° 宽），45° 需重训练
+- ⚠️ 新风险: pilot 开销不对称 / 增强基线缺失(CMMA) / 方法创新性不足 / 在线vs离线不对称
 
 ### Q-CMA-FADE 两层贡献完整状态
 
@@ -197,6 +198,6 @@
 ## 下一步
 
 1. ~~进 Step 4a 维度 D：先建 GG 时间域衰落模型（FR-20）~~ ✅ **Step A 完成（2026-07-11）**
-2. ~~Step B：CMA 发散概率扫描（分析层）~~ ✅ **Step B 完成（2026-07-11）**——CMA 均衡器 + 发散概率扫描 + 发散条件判据
-3. ~~Step C：ML 均衡器 MVE（方法层）~~ ✅ **Step C 完成（2026-07-11）**——ML vs CMA vs oracle 三方对比 PASS, Go 判定
-4. **进 Contract/Execute**: Q-CMA-FADE 两层贡献 MVE 全 PASS, 方向确认
+2. ~~Step B：CMA 发散概率扫描（分析层）~~ ✅ **Step B 完成（2026-07-11）**
+3. ~~Step C：ML 均衡器 MVE（方法层）~~ ✅ **Step C 完成（2026-07-11）** + 压力测试修正为 **Conditional Go (D008)**
+4. **方向需重新审视**: 16QAM 有价值但方法创新性不足(网络照搬Qin/损失更简单/监督非盲), 需想清楚方法层贡献到底在哪
