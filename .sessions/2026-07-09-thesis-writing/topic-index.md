@@ -1,7 +1,7 @@
 # Topic Index: 论文写作专题（自适应 CPR 方向）
 
 > slug: 2026-07-09-thesis-writing
-> status: active | created 2026-07-09 | last_updated 2026-07-11（R011 D-P1 用语符号公式三合一完成：派2子agent查证A组5篇+C组B11/sat.1553共7篇术语用法，产出三张表锁死全篇英文零件。术语表34词(29标准+5显式定义+5自造词替换)+符号表22个无冲突+公式3个标代码行。交叉一致性检查全过。下一步D-P2P3参数数字+叙事结构）
+> status: active | created 2026-07-09 | last_updated 2026-07-11（R012 D-P2P3 参数+数字呈现+叙事结构完成：口径代码行核验(fair=naive+1.249)+参数表4类标溯源+数字清单10条标进正文/表/图+5节大纲分配R009逻辑链。交叉检查4项全过。下一步D-W1W2 Intro+System Model 正文）
 
 ## 专题定位（一句话）
 
@@ -74,13 +74,13 @@
 
 ## 当前位置
 
-**🟢 D-P1 用语+符号+公式三合一完成，下一步 D-P2P3 参数+数字呈现+叙事结构（2026-07-11，R011 三张表建成）**。
+**🟢 D-P2P3 参数+数字呈现+叙事结构完成，下一步 D-W1W2 Intro+System Model 正文（2026-07-11，R012 参数+大纲建成）**。
 
-R011 三张表（术语表 34 词 + 符号表 22 个 + 公式清单 3 个）锁死全篇英文零件，W1-W5 正文直接照抄。交叉一致性检查全过（符号无冲突 / 术语公式对应 / 无自造词残留）。
+R012 产出参数表（4 类标溯源）+ 数字呈现方案（naive 主报，代码行核验 fair=naive+1.249）+ 5 节大纲（R009 逻辑链分配，两段式落 Results §IV-A/§IV-B）。交叉检查 4 项全过。
 
-**关键锁定**：CPE=估计操作(方法节)/CPR=整体流程(Intro标题)；DA=pilot-aided(统一用DA)；per-block SNR+crossover+block fading+estimator switching+net SNR gain 五词显式定义；相位用 θ/θ̂(从V&V非B11的φ)；公式粒度=直接给结论级标代码行。
+**关键锁定**：口径主报 naive（strong +1.26 / up_str +1.85 dB）；10 条数字清单标进正文/表/图 + 验证状态；切换 framing=自适应选优（26/29 选对率）；crossover 只呈现数据不附归因。
 
-**下一步**：D-P2P3。P2 用 R011 符号表填参数值（M₀/LASER_LW/αβ/SNR 范围/...）；P3 用 R011 术语分配 R009 逻辑链到 5 节大纲。
+**下一步**：D-W1W2。W1 写 Intro（贡献散文式 + 切换 framing R008）；W2 写 System Model（参数表 + GG/pilot overhead 进 §II + θ 符号决定）。规矩见 writing-campaign-plan.md §2 W1+W2。
 
 R010 力度基准表（20 条基准，5 节 × 3-5 技术点）贯穿后续所有写作活（P1/P2/P3/W1-W5/F1-F2 全查它）。核心标尺：公式直接给结论级、贡献散文式、表是增量亮点、算法流程用文字+框图。
 
@@ -147,3 +147,4 @@ R010 力度基准表（20 条基准，5 节 × 3-5 技术点）贯穿后续所�
 - **对标集 + 战役计划**（2026-07-11。benchmark-paper-set.md 12篇对标论文+缺口记录；writing-campaign-plan.md 9类前置+5节正文+收尾，每个活定规矩，~8对话单元，9天时间表。主控对话提示词已给用户去开新对话）
 - **R010** 力度基准表——D-P0 第一轮摸底（2026-07-11。派3子agent并发提取A组5篇content.md力度信息：Johst/Le Bidan各一个重点+Panasiewicz+OECC-PSC+Paillier合并。产出20条基准（5节×3-5技术点），每条标来源论文+我方应到力度+依据。**核心标尺结论**：①公式粒度=直接给结论级（对齐Panasiewicz，不推导，squaring loss引V&V 1983）②贡献声明=散文式2-3句（5/5篇如此，bullet反惯例）③表是增量亮点（4/5篇0表，加1表强化数字）④算法流程=文字+框图（5/5无伪代码）⑤BER主图纵轴不硬凑1e-5（对齐Paillier）+AWGN理论线隐式baseline（对齐Johst）。后续P1/P2/P3/W1-W5/F1全查此表。守质量红线4条+FR-22）
 - **R011** 用语+符号+公式三合一——D-P1 产出（2026-07-11。派2子agent并发查证A组5篇+C组B11/sat.1553共7篇content.md的21+个术语用法，逐词标✅/❌+原句截取+行号。产出三张表锁死全篇英文零件：①术语表34词（29标准词标来源直接用+5显式定义词给定义句[per-block SNR/crossover/block fading/estimator switching/net SNR gain]+5自造词替换映射[fair_gain→net SNR gain/A4→功能名/MSM禁用/伪地板禁用]）②符号表22个无冲突（相位θ/θ̂从V&V非B11的φ，SNR用γ，M₀=8从B11）③公式清单3个（DA θ̂=angle(r_p·p*)/NDA θ̂=(1/M₀)angle(Σr^M₀)/per-block SNR γ_blk=|h_b|²E_s/N₀，全直接给结论级标`_recovery.py:153/213,232-233`代码行）。交叉一致性检查4项全过。守质量红线6条+FR-22。下一步D-P2P3参数数字+叙事结构）
+- **R012** 参数+数字呈现+叙事结构——D-P2P3 产出（2026-07-11。口径代码行核验fair_comparison.py:109确认fair=naive+1.249（strong fair2.509→naive1.260/up_str fair3.101→naive1.852✓）。产出：①参数表4类标溯源[信号调制M₀=8/R_sym=2.5G+信道GG αβ下行3档上行2档+Δν=10kHz/σ²_θ=2.51e-5+帧结构pilot spacing=4 overhead25%=1.25dB+实验矩阵SNR扫描/N_blocks400/30seed]，每个标`_b11_params.py`行号+文献TL-26 ②数字呈现方案10条数字清单标进正文/表/图+口径+来源+验证状态，主报naive（弱湍流归零诚实标注+0.09/0.18/0.19不变量3），口径标注脚注模板，CI策略不报是领域惯例，数字-图表映射Tab.1只强湍流3行naive ③5节大纲分配R009逻辑链[Intro贡献散文式+切换framing自适应选优/SM给GG+块结构+pilot overhead文字+数字/Method DA/NDA/per-block SNR三公式直接给/Results两段式§IV-A影响分析§IV-B方法增益/Conclusion复述+局限+future] ④两段式落Results§IV-A/§IV-B叙事逻辑湍流影响→切换兑现 ⑤切换framing自适应选优全篇统一禁鲁棒性补丁。交叉检查4项全过（数字/公式/篇幅/framing）。守质量红线8条+FR-22。下一步D-W1W2 Intro+SM正文）
