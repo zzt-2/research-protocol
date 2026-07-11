@@ -43,6 +43,9 @@
 | r1_analytical_bound.py | R1: 发散半解析界推导+验证 | **PASS** (2026-07-11) | results/cma-fade-divergence/r1_analytical_bound_results.json |
 | r4_fade_correlation.py | R4: 发散事件 vs AFD/LCR 相关性 | **PASS** (2026-07-11) | results/cma-fade-divergence/r4_fade_correlation_results.json |
 | r5_drift_validation.py | R5: 系数漂移模型验证 (√n律) | **PASS** (2026-07-11) | results/cma-fade-divergence/r5_drift_validation_results.json |
+| r2_cmma_divergence.py | R2: CMMA 多模发散扫描 (16QAM+QPSK) | **PASS** (2026-07-11) | results/cma-fade-divergence/r2_cmma_divergence_results.json |
+| r7_freeze_quantification.py | R7: 被动冻结效果量化 (sat.1553[79]) | **PASS** (2026-07-11) | results/cma-fade-divergence/r7_freeze_results.json |
+| r4_corrected_sop_rate.py | R4修正: 1krad/s SOP+10M符号重跑 | **PASS** (2026-07-11) | results/cma-fade-divergence/r4_corrected_results.json |
 
 ## 参数溯源（FR-20）
 
@@ -258,14 +261,64 @@
 
 **R5 vs R4 的张力**：R5 在深衰落事件内验证了 √n 漂移（r=0.74），但 R4 发现发散本身不靠深衰落触发。两者不矛盾——深衰落期间确实有 √n 漂移，但发散可在无深衰落时由高 μ 持续随机游走达到阈值。深衰落是**加剧因素**非**必要触发条件**。
 
+## R2/R7/R4修正 第二批结果（2026-07-11，完整证据链形成）
+
+### R2: CMMA 发散扫描 — 多模完全不降发散
+
+**实现**：CMMAEqualizer2x2 继承 CMAEqualizer2x2，误差函数从单模 `e=R²-|z|²` 改为多模 `e=nearest_R2-|z|²`（16QAM 三环 [0.2,1.0,1.8]）。QPSK 退化 = 标准 CMA（bit-exact 验证通过）。
+
+**P_div 对比**：32/32 配对组合 CMMA P_div = CMA P_div **完全相同**（0 差异）。发散时序几乎相同（div_idx 比值中位 1.025）。
+
+**结论**：多模修复了星座失配，但**完全修不好高 μ 发散**。证实发散是 μ 驱动的数值不稳定结构性问题，而非单模 R² mismatch 引起。
+
+### R7: 被动冻结 — 完全无效（ΔP_div=0 全 24 组合）
+
+**实现**：CMAEqualizer2x2WithFreeze，h<threshold 时跳过梯度更新（只滤波）。
+
+**实验 A**：24 组合 ΔP_div = 0.00——冻结零效果。即使冻结 59% 的块，P_div 仍不变。
+
+**实验 B（SOP 代价）**：冻结 15.4% 的块，SOP 累计漂移 **1774°/trial**（不跟踪 SOP 导致巨大偏差）。
+
+**实验 C（threshold 敏感性）**：P_div 不随 threshold 单调下降，即使冻结 53% 的块 P_div 仍 0.33。无 threshold 能消除发散。
+
+**结论**：冻结完全无效——发散在 h 高时由随机游走累积突破阈值，冻结只在 h<thr 时停梯度，**打错了靶**。sat.1553 [79] Matsuda 2020"停 CMA 更新"直觉被证伪。
+
+### R4 修正：原结论基本成立，LCR 作用被低估
+
+**修正参数**：SOP_RATE 4e-7（1 krad/s, 真实值）+ N_SYMBOLS 10M（4ms, 原 5M=2ms）
+
+**相关性对比**：
+| 指标 | 修正(1krad/s,10M) | 原始(250krad/s,5M) |
+|---|---|---|
+| P_div vs μ | +0.697 | +0.749 |
+| P_div vs LCR | **+0.420** | +0.173 |
+| P_div vs f_G | +0.441 | +0.267 |
+
+固定 μ=1e-3 时 P_div vs LCR 达 **r=+0.876**——LCR 是真实次级驱动。
+
+**早发散比例（<10%）= 30%** 不变。Mann-Whitney p=0.9998（深衰落触发仍被拒）。AFD 10M 下可计算。
+
+**结论**：μ 主导结论稳健（非 SOP 伪影），深衰落触发仍不成立，但 250 krad/s 掩盖了 LCR 的真实作用（+0.17→+0.42）。
+
+### 完整证据链
+
+| 实验 | 结果 | 裁决 |
+|------|------|------|
+| R2 CMMA | P_div 与 CMA 逐点相同 | 多模不降发散 → 非模失配引起 |
+| R7 冻结 | ΔP_div=0 全 24 组合 | 停深衰落更新不防发散 → 非深衰落触发 |
+| R4 修正 | μ 仍主导(r=0.70)，早发散 30% 不变 | 非 SOP 伪影 → R4 原结论成立 |
+| R4 修正 | LCR +0.42，固定 μ 后 +0.88 | LCR 是真实次级驱动 |
+
+**发散 = 高 μ 数值不稳定（主因，r=0.70）+ 衰落频率 LCR（次因，r=0.42，固定 μ 后 r=0.88）。深衰落是加剧因素非必要触发条件。所有基于"停深衰落更新"的缓解策略（冻结/CMMA）全部失效。**
+
 ## 下一步
 
 1. ~~进 Step 4a 维度 D：先建 GG 时间域衰落模型（FR-20）~~ ✅ **Step A 完成（2026-07-11）**
 2. ~~Step B：CMA 发散概率扫描（分析层）~~ ✅ **Step B 完成（2026-07-11）**
 3. ~~Step C：ML 均衡器 MVE（方法层）~~ ✅ **Step C 完成（2026-07-11）** + 压力测试修正为 **Conditional Go (D008)**
 4. ~~R1/R4/R5 分析层验证~~ ✅ **完成（2026-07-11）** — R4 反证深衰落触发，方向核心叙事受挑战
-5. **第二批 R2/R7 执行**（紧迫性因 R4 发现上升）:
-   - R2: 实现 CMMA + 发散扫描 — 如果 CMMA 也发散 → 支持"CMA 类普遍高 μ 不稳定"
-   - R7: 实现被动冻结 + 量化 — 如果冻结无效（因发散不靠深衰落触发）→ 进一步证伪原叙事
-   - **同步排查 R4 暴露的三个问题**: (a) 5M 符号窗口太短 (b) Step B 用 250 krad/s SOP 可能掩盖深衰落 (c) 发散判据 threshold=10× 可能太松
-6. **方向最终形态待定** — 等 R2/R7 + 参数排查结果再定
+5. ~~第二批 R2/R7 执行~~ ✅ **完成（2026-07-11）** — CMMA 不降发散，冻结完全无效，R4修正确认 μ 主导+LCR 次级
+6. **需用户决策方向最终形态**：
+   - A: 纯分析层（发散机制 + μ 安全界 + CMMA/冻结对比）——安全但不带方法贡献
+   - B: 分析层 + ML 方法层（接受"数值稳定性"叙事，补盲 VAE 做公平对比）——需做 R10
+   - C: Pivot 到 Q-DP3 跨帧恢复（发散→不可恢复因果桥 + 恢复协议）——需做 R8/R9
