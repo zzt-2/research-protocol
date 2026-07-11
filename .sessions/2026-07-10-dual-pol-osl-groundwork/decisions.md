@@ -290,3 +290,73 @@ Q-CMA-FADE Step B（CMA 发散概率扫描，分析层）**PASS**。sat.1553 §6
 ### 来源
 
 S005（Step B 执行）
+
+---
+
+## D007: Step C ML vs CMA MVE 结果 — ML 零发散 vs CMA 高发散, Q-CMA-FADE 方法层 PASS, Go 判定
+
+> status: active
+> date: 2026-07-11
+> 取代：部分更新 D005（Q-CMA-FADE 方法层 MVE PASS, 两层贡献完整）
+> 被取代：无
+> 依据: 验证: results/cma-fade-divergence/mve_cma_vs_ml_results.json (5 场景 × 5 trials = 25 runs, 三方对照 CMA/ML/oracle) + TL-20 理论预期 + C6-C8 自检 + Freire 2022 6 陷阱 checklist
+
+### 决策
+
+Q-CMA-FADE Step C（ML vs CMA MVE, 方法层）**PASS — Go**。ML 均衡器在 CMA 发散条件（危险区 μ≥1e-2, f_G≥100Hz）下零发散（P_div=0.0），而 CMA P_div=0.40-0.60。ML BER 接近 oracle 下界，远好于 CMA。
+
+### 核心发现
+
+1. **ML 零发散 vs CMA 高发散（TL-20 理论预期验证 PASS）**:
+   - 危险区 (μ=1e-2, f_G=1000Hz): CMA P_div=0.40-0.60, **ML P_div=0.00**
+   - 临界区 (μ=5e-3, f_G=300Hz): CMA P_div=0.20, **ML P_div=0.00**
+   - 安全区 (μ=1e-3, f_G=30Hz): CMA P_div=0.00, ML P_div=0.00（简单情况, 非同族性警报）
+
+2. **ML BER 接近 oracle 下界**:
+   - 危险区: ML BER (0.007/0.0006) ≈ oracle BER (0.006/0.0003), CMA BER (0.087/0.039) 差 10×
+   - 临界 300Hz: ML BER (0.001) ≈ oracle (0.0009), CMA BER (0.017) 差 17×
+
+3. **C8 祖师爷警报: 未触发**:
+   - 安全区 ML≈CMA→ 预期（安全区是"简单情况"）
+   - 危险区 ML >> CMA → 差异显著, 无数学同族性
+
+4. **发散机制解释（补 sat.1553 §6.3 L778 空白的方法层）**:
+   - CMA 逐块梯度更新: 深衰落 h→0 时 r≈n, 梯度 ∇w=μ·R²·n* 噪声驱动 → 系数随机游走 → 漂移超阈值 → 不可恢复
+   - ML batch 梯度下降: 梯度对整个 batch 平均 → 单个深衰落样本噪声被 batch 稀释 → 漂移 ∝ μ·σ_n/√B 远小于 CMA
+   - ML 前馈推理（权重固定）不在线更新 → 不会"发散"
+
+### Go 判定依据
+
+- ✅ **FR-14 先验对照**: ML P_div (0.0) << CMA P_div (0.6) 在危险区
+- ✅ **FR-15 贡献目标 baseline 对照**: ML BER ≈ oracle BER, 不劣于 CMA 安全区
+- ✅ **C8 未触发**: 无数学同族性
+- ✅ **TL-20 理论预期验证**: ML 稳定性符合预测（batch 梯度平滑噪声）
+- ✅ **C6 公式溯源**: CNN 蝶形结构标 Qin 2025 L275/283, MSE 损失恋标 Freire 2022
+- ✅ **C7 三方对照**: CMA / ML / oracle MMSE 全含
+- ✅ **Freire 6 陷阱**: MTRS/batch≥1024/MSE/分离/BER/RMpS 全守
+
+### 增量定位（不换皮, 守 D005/D006）
+
+- **Qin 已做**: VAEMR vs CMA 收敛速度 200× + 5dB 功率预算（单一中强湍流 r₀=0.4mm）
+- **我们补**: 发散概率界 + 发散条件判据 + ML 在发散条件下的鲁棒性对比（新测度: P_div + 恢复时间）
+- **不做**: 收敛速度对比（Qin 已做过）
+- **不照搬**: VAE ELBO 损失（用 MSE 监督, 结构标 Qin 来源）
+
+### SOP 速率修正
+
+Step B 用 SOP_RATE=1e-4 rad/sym（250 krad/s），Step C 修正为 4e-7 rad/sym（1 krad/s, sat.1553 §6.3 真实 OSL 速率）。验证：真实 SOP 下 CMA 发散仍由 μ 驱动（与 Step B 结论一致, SOP 速率不改变发散机制）。Step B 的发散条件判据（μ, f_G, tap）仍然有效。
+
+### 对 Q-CMA-FADE 方向的影响
+
+- **方法层 PASS**: ML 在发散条件下保持稳定, 补 Qin/Nasr 实验缺口
+- **两层贡献完整**: 分析层（Step A+B）+ 方法层（Step C）全 PASS
+- **Q-CMA-FADE 方向确认**: Go, 可进 Contract/Execute
+- **D005 更新**: Q-CMA-FADE 从"首选候选"升级为"方向确认"
+
+### 触发原话
+
+> 触发原话: 无（技术推导，PROMPT-005 执行）
+
+### 来源
+
+S006（Step C 执行）

@@ -1,6 +1,6 @@
 # Q-CMA-FADE 探索：CMA 深衰落发散 — 分析 + ML 缓解
 
-> 方向: Q-CMA-FADE | 来源: D005（Q-DP2+Q-ML1 合并） | 状态: WIP-待MVE | 创建: 2026-07-11
+> 方向: Q-CMA-FADE | 来源: D005（Q-DP2+Q-ML1 合并） | 状态: MVE-PASS | 创建: 2026-07-11
 > 组织规范: `../SIM-ORG.md` | 物理真相源: `../SPEC.md`
 
 ## 研究问题
@@ -38,7 +38,7 @@
 |------|------|------|---------|
 | gg_time_fading_model.py | FR-20 GG 时间域衰落模型生成+验证 | **PASS** (2026-07-11) | results/cma-fade-divergence/gg_time_validation.json |
 | cma_divergence_scan.py | CMA 发散概率 vs {湍流,f_G,μ,tap} 扫描 | **PASS** (2026-07-11) | results/cma-fade-divergence/cma_divergence_scan_results.json |
-| (待建) mve_cma_vs_ml.py | CMA vs ML 均衡深衰落对比 | 待建 (Step C) | results/cma-fade-divergence/ |
+| mve_cma_vs_ml.py | CMA vs ML 均衡深衰落对比 (三方: CMA/ML/oracle) | **PASS** (2026-07-11) | results/cma-fade-divergence/mve_cma_vs_ml_results.json |
 
 ## 参数溯源（FR-20）
 
@@ -57,6 +57,13 @@
 | **CMA tap 数** | 11/22 | sat.1553 §6 L572 / Qin 2025 L263 (22 tap) | 信道脉冲响应长度定 |
 | **恒模半径 R²** | 1.0 (QPSK) | Godard 1980: R=E[\|s\|⁴]/E[\|s\|²] | QPSK \|s\|=1 → R²=1 |
 | **CMA 并行化因子** | 64 (block_size) | sat.1553 §6.3 L756 "parallelization factor of 64" | 块级更新模拟 FPGA 实现 |
+| **ML 网络结构** | 8 实值 1D-CNN = 4 复蝴蝶 FIR | Qin 2025 L275/283 | 结构标来源, 不照搬 VAE 损失 |
+| **ML tap 数** | 11 | sat.1553 Fig.13 (跟 CMA 对齐) | Qin 2025 L283 用 29 |
+| **ML 学习率** | 0.005 | Qin 2025 L397 | + ReduceLROnPlateau |
+| **ML batch size** | 1024 | Freire 2022 L349 | ≥1024 防 jail window |
+| **ML 损失** | MSE 监督回归 | Freire 2022 陷阱 4 (MSE > CEL) | 不用 Qin 的 VAE ELBO (增量定位) |
+| **ML SOP 速率** | 1 krad/s (4e-7 rad/sym) | sat.1553 §6.3 L778 "OSL SOP ~krad/s" | 真实 OSL 速率 (Step B 的 250 krad/s 过快) |
+| **ML 复杂度 RMpS** | 88 (8×n_tap) | Freire 2022 L441 | = CMA RMpS (同 tap 数) |
 
 ## Step A 验证结果（2026-07-11，PASS）
 
@@ -83,6 +90,7 @@
 - `common._cma` — **CMA 均衡器（Step B 新建，2×2 蝶形 + 1×1 退化，Godard 1980 公式溯源）**
 - `common._equalizer` — MMSE 均衡（已有，不改）
 - `common._modulation` — QPSK/16QAM + ber_eval
+- `common._ml_equalizer` — **ML 均衡器（Step C 新建，8 实值 1D-CNN 蝶形 + MSE 监督，Qin 2025 L275/283 架构）**
 - `common._experiment` — run_* 编排 + save_results
 
 ## Step B 验证结果（2026-07-11，PASS）
@@ -129,8 +137,66 @@
 **sat.1553 空白补全状态**：sat.1553 自认"probability of the equalizer diverging ... has not been analyzed"——本扫描首次量化了 CMA 在 GG 深衰落下发散的概率，并给出条件判据（μ, f_G, tap 组合）。
 - `common._experiment` — run_* 编排 + save_results
 
+## Step C 验证结果（2026-07-11，PASS — Go）
+
+### MVE 配置
+
+- **序列长度**: 500K 符号 @ 2.5 GBaud
+- **试验数**: 5 seeds/场景（P_div 分辨率 0.2）
+- **场景**: 5 个（危险区×2 / 临界区×2 / 安全区×1），来自 Step B 发散条件判据
+- **三方对照（C7）**: CMA（传统 baseline, FR-14）/ ML（我们的方法）/ oracle MMSE（完美 CSI: h+θ, 下界）
+- **ML 实现**: 8 实值 1D-CNN 蝶形（Qin 2025 L275/283）+ MSE 监督回归（非 VAE, 守增量定位）
+- **SOP 速率**: 1 krad/s（sat.1553 §6.3 真实 OSL 速率, 非 Step B 的 250 krad/s）
+- **公平对照（Freire 6 陷阱）**: MTRS 非 PRBS / batch≥1024 / MSE 非 CEL / 训练测试分离 / BER 非 EVM / RMpS 报告
+
+### 核心发现
+
+**1. ML 在 CMA 发散条件下零发散（TL-20 理论预期验证 PASS）**
+
+| 场景 | CMA P_div | ML P_div | CMA BER | ML BER | Oracle BER |
+|------|-----------|----------|---------|--------|------------|
+| 危险区 μ=1e-2 f_G=1000Hz (strong) | **0.60** | **0.00** | 0.087 | 0.007 | 0.006 |
+| 危险区 μ=1e-2 f_G=1000Hz (uplink) | **0.40** | **0.00** | 0.039 | 0.0006 | 0.0003 |
+| 临界区 μ=5e-3 f_G=100Hz | 0.00 | 0.00 | 0.099 | 0.099 | 0.097 |
+| 临界区 μ=5e-3 f_G=300Hz | **0.20** | **0.00** | 0.017 | 0.001 | 0.0009 |
+| 安全区 μ=1e-3 f_G=30Hz (对照) | 0.00 | 0.00 | 0.0001 | 0.0000 | 0.0000 |
+
+**2. ML BER 接近 oracle 下界**
+- 危险区: ML BER (0.007/0.0006) ≈ oracle BER (0.006/0.0003), 远好于 CMA (0.087/0.039)
+- 临界 300Hz: ML BER (0.001) ≈ oracle (0.0009), 优于 CMA (0.017)
+- 安全区: ML ≈ CMA ≈ oracle ≈ 0（简单情况, 非同族性警报）
+
+**3. C8 祖师爷警报: 未触发**
+- 安全区 ML≈CMA≈oracle→ 预期（安全区是"简单情况"）
+- 危险区 ML >> CMA → 差异显著, 无数学同族性
+
+**4. ML 发散机制解释**
+- CMA 逐块梯度更新: 深衰落 h→0 时 r≈n, 梯度 ∇w=μ·R²·n* 噪声驱动 → 系数随机游走 → 漂移超阈值 → 不可恢复
+- ML batch 梯度下降: 梯度对整个 batch 平均 → 单个深衰落样本噪声被 batch 稀释 → 漂移 ∝ μ·σ_n/√B 远小于 CMA
+- ML 前馈推理（权重固定）不在线更新 → 不会"发散"（训练后权重稳定）
+
+### Go/No-Go 判定
+
+**Go** — Q-CMA-FADE 方向确认:
+- ✅ FR-14: ML P_div (0.0) << CMA P_div (0.6) 在危险区
+- ✅ FR-15: ML BER ≈ oracle BER, 不劣于 CMA 安全区
+- ✅ C8 未触发: 无数学同族性
+- ✅ TL-20 理论预期验证: ML 稳定性符合预测
+
+### Q-CMA-FADE 两层贡献完整状态
+
+1. ✅ **分析层（Step A+B）**: CMA 发散概率 + 条件判据（补 sat.1553 §6.3 L778 空白）
+2. ✅ **方法层（Step C）**: ML 均衡器在发散条件下保持稳定（补 Qin/Nasr 实验缺口）
+
+**增量定位（不换皮）**:
+- Qin 已做: VAEMR vs CMA 收敛速度 200× + 5dB 功率预算（单一中强湍流 r₀=0.4mm）
+- 我们补: 发散概率界 + 发散条件判据 + ML 在发散条件下的鲁棒性对比（新测度: P_div + 恢复时间）
+- 不做: 收敛速度对比（Qin 已做过）
+- 不照搬: VAE ELBO 损失（用 MSE 监督, 结构标 Qin 来源）
+
 ## 下一步
 
 1. ~~进 Step 4a 维度 D：先建 GG 时间域衰落模型（FR-20）~~ ✅ **Step A 完成（2026-07-11）**
 2. ~~Step B：CMA 发散概率扫描（分析层）~~ ✅ **Step B 完成（2026-07-11）**——CMA 均衡器 + 发散概率扫描 + 发散条件判据
-3. **Step C：ML 均衡器 MVE**（方法层，vs CMA）—— 开新对话。用 Step B 确认的发散条件（μ≥5e-3, f_G≥100Hz）作为测试场景，验证 ML 均衡器能否在 CMA 发散的条件下保持稳定
+3. ~~Step C：ML 均衡器 MVE（方法层）~~ ✅ **Step C 完成（2026-07-11）**——ML vs CMA vs oracle 三方对比 PASS, Go 判定
+4. **进 Contract/Execute**: Q-CMA-FADE 两层贡献 MVE 全 PASS, 方向确认

@@ -1,7 +1,7 @@
 # Topic Index: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
 
 > slug: 2026-07-10-dual-pol-osl-groundwork
-> status: active | created 2026-07-10 | last_updated 2026-07-11（PROMPT-004 Step B 完成：CMA 发散概率扫描 PASS，sat.1553§6.3 L778 空白补全。下个对话 Step C ML vs CMA MVE）
+> status: active | created 2026-07-10 | last_updated 2026-07-11（PROMPT-005 Step C 完成：ML vs CMA MVE PASS，Go 判定。Q-CMA-FADE 两层贡献全 PASS，方向确认可进 Contract/Execute）
 
 ## 专题定位（一句话）
 
@@ -64,7 +64,7 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 
 ## 当前位置
 
-**PROMPT-004 Step B 完成（2026-07-11）**。CMA 发散概率扫描 PASS——sat.1553 §6.3 L778 自认的"发散概率未分析"领域级空白已补全。384 trials × 128 组合，给出发散条件判据 (μ, f_G, tap)。
+**PROMPT-005 Step C 完成（2026-07-11）**。ML vs CMA MVE PASS——ML 均衡器在 CMA 发散条件（危险区 μ≥1e-2, f_G≥100Hz）下零发散（P_div=0.0），CMA P_div=0.40-0.60。Go 判定。Q-CMA-FADE 两层贡献（分析层 Step A+B + 方法层 Step C）全 PASS，方向确认。
 
 - Step 1-3：完成（双偏振 9 篇 + ML 20 篇 = 29 篇精读）
 - **Step 4a：完成**（Q-DP1/2/3 可行性评估）
@@ -74,9 +74,9 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 - **Step 4a 维度 D MVE（Q-CMA-FADE）**：
   - ✅ **Step A：完成**（GG 时间域衰落模型，PASS）
   - ✅ **Step B：完成**（CMA 发散概率扫描，PASS——发散由 μ 主导，条件判据已给）
-  - ⬜ Step C：ML vs CMA MVE（下个对话）
+  - ✅ **Step C：完成**（ML vs CMA MVE，PASS——ML 零发散 vs CMA 高发散，Go 判定）
 
-下一步：**Step C**——用 Step B 确认的发散条件（μ≥5e-3, f_G≥100Hz）作为测试场景，实现 ML 均衡器，验证 ML 能否在 CMA 发散的条件下保持稳定。守 C7 三方对照（ML / CMA / oracle MMSE）。
+下一步：**Q-CMA-FADE 方向确认（Go）**，可进 Contract/Execute。两层贡献完整：(1) 分析层——CMA 发散概率+条件判据补 sat.1553 §6.3 L778 空白；(2) 方法层——ML 均衡器在发散条件下保持稳定补 Qin/Nasr 实验缺口。
 
 ## 进展线索
 
@@ -88,3 +88,4 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 - **续 S003**（2026-07-10~11）：D004 攒材料执行——ML 方向 20 篇精读完成（3 批子 agent，含 Chen2022 标题错配 abort 后补正），全部 gw-read 规范笔记存 papers/_read_notes/ + literature_notes ML 章节（L-ML1~20 + 4 Q-ML# + 综合分析 + 7 可迁移范式 + Freire2022 6 陷阱 checklist）。候选合并（D005）：Q-DP2+Q-ML1 → Q-CMA-FADE（CMA 深衰落发散：分析+ML缓解），四判据全过最强，增量定位补 Qin/Nasr 实验缺口不换皮。候选池收缩为 Q-CMA-FADE（首选）> Q-DP3（备选）> Q-ML4（种子）。用户"和别人接近才好"偏好记 voice.md
 - **S004**（2026-07-11）：PROMPT-003 Step A 执行——GG 时间域衰落模型建好验证 PASS，补 FR-20 缺口（D002 Conditional 风险 1）。2 子 agent 查证物理参数（本地论文全块衰落/准静态，外部教材交叉验证 Greenwood 1977 f_G + Conan 1995 τ_c=1/(2πf_G)）。新建 common/_gg_time.py（gg_time_envelope，块内恒定块间 AR(1)，gar/lognormal 两法）+ params.py GGTimeParams（10 字段全标来源）+ 验证脚本（边缘 PDF GAR KS<0.006 / log-ACF 误差 0% / τ_c 落文献 1-100ms）。formulas-master F33b（Greenwood+τ_c），发现 F3.28/F3.29 AR(1) 已存在同构。物理发现：τ_c≫block·t_s（ρ>0.9999），单帧准静态，Step B 需长序列≥10⁷ 符号。详见 `S004-stepA-gg-time-domain-model.md`
 - **S005**（2026-07-11）：PROMPT-004 Step B 执行——CMA 发散概率扫描 PASS，补 sat.1553§6.3 L778 空白。新建 common/_cma.py（2×2 蝶形 + 1×1 退化，Godard 1980 公式溯源 Eq.28/48/50）+ explore/cma-fade-divergence/cma_divergence_scan.py。384 trials (4 湍流×4 f_G×4 μ×2 tap×3 seeds) × 5M 符号。TL-20 理论预期 + TL-22 物理前提检查。核心发现：发散由 μ 主导（μ≤1e-3 安全区/μ≥1e-2 危险区），f_G 第二驱动，湍流深度影响弱（深衰落 h→0 时 r≈n 梯度与 h 无关）。发散条件判据已给出。D006 新建。详见 `S005-stepB-cma-divergence-scan.md`
+- **S006**（2026-07-11）：PROMPT-005 Step C 执行——ML vs CMA MVE PASS，Go 判定。新建 common/_ml_equalizer.py（8 实值 1D-CNN 蝶形, Qin 2025 L275/283 架构 + MSE 监督, 不照搬 VAE 损失）+ explore/cma-fade-divergence/mve_cma_vs_ml.py。5 场景 × 5 trials × 500K 符号, 三方对照（CMA/ML/oracle MMSE）。TL-20 理论预期验证：ML 零发散 vs CMA 危险区 P_div=0.40-0.60。SOP 速率修正（250→1 krad/s, sat.1553 §6.3 真实值）。C6-C8 自检全 PASS（C8 未触发: 安全区 ML≈CMA 是预期非同族性）。D007 新建（Go 判定）。Q-CMA-FADE 两层贡献完整, 方向确认。详见 `S006-stepC-ml-vs-cma-mve.md`
