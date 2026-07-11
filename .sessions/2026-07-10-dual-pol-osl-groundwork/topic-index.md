@@ -64,7 +64,7 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 
 ## 当前位置
 
-**PROMPT-005 Step C 完成（2026-07-11）**。ML vs CMA MVE PASS——ML 均衡器在 CMA 发散条件（危险区 μ≥1e-2, f_G≥100Hz）下零发散（P_div=0.0），CMA P_div=0.40-0.60。Go 判定。Q-CMA-FADE 两层贡献（分析层 Step A+B + 方法层 Step C）全 PASS，方向确认。
+**PROMPT-005 Step C 完成 + 压力测试修正 + R003 子问题穷举完成（2026-07-11）**。Step C MVE 技术上 PASS 但压力测试修正为 Conditional Go（D008）：QPSK 场景弱（小步长够用），16QAM 有真价值（CMA modulus mismatch 结构性缺陷），但方法创新性不足。三个子 agent 调研后发现：(1) CMMA 修不好深衰落梯度发散；(2) 监督 vs 盲对比不公平需改盲 vs 盲；(3) "CMA 发散后不可恢复 = 跨帧恢复"是未被提出的因果桥。R003 穷举 12 个可出结果子问题（高/中/低信心分级）。**当前状态：重新审视方向能出什么，不急着定最终形态。**
 
 - Step 1-3：完成（双偏振 9 篇 + ML 20 篇 = 29 篇精读）
 - **Step 4a：完成**（Q-DP1/2/3 可行性评估）
@@ -74,9 +74,10 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 - **Step 4a 维度 D MVE（Q-CMA-FADE）**：
   - ✅ **Step A：完成**（GG 时间域衰落模型，PASS）
   - ✅ **Step B：完成**（CMA 发散概率扫描，PASS——发散由 μ 主导，条件判据已给）
-  - ✅ **Step C：完成**（ML vs CMA MVE，PASS——ML 零发散 vs CMA 高发散，Go 判定）
+  - ✅ **Step C：完成**（ML vs CMA MVE，PASS）→ 压力测试修正为 **Conditional Go（D008）**
+  - ✅ **R003：完成**（12 个可出结果子问题穷举）
 
-下一步：**Q-CMA-FADE 方向确认（Go）**，可进 Contract/Execute。两层贡献完整：(1) 分析层——CMA 发散概率+条件判据补 sat.1553 §6.3 L778 空白；(2) 方法层——ML 均衡器在发散条件下保持稳定补 Qin/Nasr 实验缺口。
+下一步：**按 H006 执行**。先做 R1/R4/R5（零风险后处理）+ R2/R7（关键前置判断），根据结果再定方向最终形态。
 
 ## 进展线索
 
