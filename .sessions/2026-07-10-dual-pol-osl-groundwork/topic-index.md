@@ -64,7 +64,7 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 
 ## 当前位置
 
-**PROMPT-005 Step C 完成 + 压力测试修正 + R003 子问题穷举完成（2026-07-11）**。Step C MVE 技术上 PASS 但压力测试修正为 Conditional Go（D008）：QPSK 场景弱（小步长够用），16QAM 有真价值（CMA modulus mismatch 结构性缺陷），但方法创新性不足。三个子 agent 调研后发现：(1) CMMA 修不好深衰落梯度发散；(2) 监督 vs 盲对比不公平需改盲 vs 盲；(3) "CMA 发散后不可恢复 = 跨帧恢复"是未被提出的因果桥。R003 穷举 12 个可出结果子问题（高/中/低信心分级）。**当前状态：重新审视方向能出什么，不急着定最终形态。**
+**R1/R4/R5 分析层验证完成（2026-07-11）——⚠️ 发现重大方向风险**。第一批零风险后处理执行完毕，R4 直接反证"CMA 发散由深衰落触发"的核心叙事：57% 发散 trial 前窗口零深衰落事件，发散主要由高 μ 数值不稳定驱动。R1 半解析界趋势对（0.86）但量级差（R² 0.27）。R5 漂移 √n 律部分有效（r=0.74 但系数差 4×）。**方向核心叙事受挑战，第二批 R2/R7 紧迫性上升。**
 
 - Step 1-3：完成（双偏振 9 篇 + ML 20 篇 = 29 篇精读）
 - **Step 4a：完成**（Q-DP1/2/3 可行性评估）
@@ -76,8 +76,9 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
   - ✅ **Step B：完成**（CMA 发散概率扫描，PASS——发散由 μ 主导，条件判据已给）
   - ✅ **Step C：完成**（ML vs CMA MVE，PASS）→ 压力测试修正为 **Conditional Go（D008）**
   - ✅ **R003：完成**（12 个可出结果子问题穷举）
+  - ✅ **R1/R4/R5：完成**（分析层验证）—— R1 趋势对量级差，R4 **反证深衰落触发**，R5 √n 律部分有效
 
-下一步：**按 H006 执行**。先做 R1/R4/R5（零风险后处理）+ R2/R7（关键前置判断），根据结果再定方向最终形态。
+下一步：**第二批 R2/R7 执行**（关键前置判断，紧迫性因 R4 发现而上升）。R4 暴露三个需排查的问题：(1) 5M 符号观测窗口太短（AFD 无法计算）；(2) Step B 用 250 krad/s SOP 可能掩盖深衰落作用；(3) 发散判据 threshold=10× 可能太松。
 
 ## 进展线索
 
@@ -91,3 +92,4 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 - **S005**（2026-07-11）：PROMPT-004 Step B 执行——CMA 发散概率扫描 PASS，补 sat.1553§6.3 L778 空白。新建 common/_cma.py（2×2 蝶形 + 1×1 退化，Godard 1980 公式溯源 Eq.28/48/50）+ explore/cma-fade-divergence/cma_divergence_scan.py。384 trials (4 湍流×4 f_G×4 μ×2 tap×3 seeds) × 5M 符号。TL-20 理论预期 + TL-22 物理前提检查。核心发现：发散由 μ 主导（μ≤1e-3 安全区/μ≥1e-2 危险区），f_G 第二驱动，湍流深度影响弱（深衰落 h→0 时 r≈n 梯度与 h 无关）。发散条件判据已给出。D006 新建。详见 `S005-stepB-cma-divergence-scan.md`
 - **S006**（2026-07-11）：PROMPT-005 Step C 执行——ML vs CMA MVE PASS，Go 判定。新建 common/_ml_equalizer.py（8 实值 1D-CNN 蝶形, Qin 2025 L275/283 架构 + MSE 监督, 不照搬 VAE 损失）+ explore/cma-fade-divergence/mve_cma_vs_ml.py。5 场景 × 5 trials × 500K 符号, 三方对照（CMA/ML/oracle MMSE）。TL-20 理论预期验证：ML 零发散 vs CMA 危险区 P_div=0.40-0.60。SOP 速率修正（250→1 krad/s, sat.1553 §6.3 真实值）。C6-C8 自检全 PASS（C8 未触发: 安全区 ML≈CMA 是预期非同族性）。D007 新建（Go 判定）。Q-CMA-FADE 两层贡献完整, 方向确认。详见 `S006-stepC-ml-vs-cma-mve.md`
 - **S006 续**（2026-07-11）：压力测试修正 Go→Conditional Go（D008）。Sup-1 16QAM CMA modulus mismatch 安全区就 BER 差。Sup-2 QPSK μ=1e-3 够用（方向弱），16QAM 安全步长也差（结构性缺陷）。Sup-3 ML SOP 容忍≤20°。3 子 agent 调研发现：(1) CMMA 修不好深衰落梯度发散（仍是盲 CMA 类），CMMA 在 GG 深衰落下无人测过；(2) 当前"监督 ML vs 盲 CMA"不公平，应改盲 vs 盲，但 Qin 已做 VAE vs CMA，需叠方法增量；(3) "CMA 发散后不可恢复 = Q-DP3 的 hang-up"是未被提出的因果桥，L-DP5/JR-CMA/sat.1553 三种深衰落对策全没在真实动态湍流下测过。用户"扩吧"+"出结果不容易先记下来"→ R003 穷举 12 个可出结果子问题
+- **S007**（2026-07-11）：H006 第一批零风险后处理 R1/R4/R5 执行。3 子 agent 并行。R1 半解析界：drift=μ·R²·σ_n·√(AFD/(block·T_S))，P_div=1-(1-P_single)^{N_events}，趋势一致性 0.86 但 R² 仅 0.27（单 κ 无法吸收自放大动力学）。R4 相关性：μ 主导（r=0.749），LCR 仅高 μ 下弱相关（r=0.46），**⚠️ 深衰落触发模型被直接反证**——57% 发散前零深衰落事件，30% 发散在前 10%，diverged trial min_h 反而更高。R5 漂移模型：√n 律 r=0.74 R²=0.55 但系数差 3.9×（块平均梯度+自平衡负反馈）。综合：发散是高 μ 数值不稳定驱动，深衰落是加剧因素非必要触发。方向核心叙事受挑战，分析层贡献需重新定位。详见 `S007-r1r4r5-analytical-layer-validation.md`

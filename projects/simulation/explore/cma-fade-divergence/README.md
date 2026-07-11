@@ -40,6 +40,9 @@
 | cma_divergence_scan.py | CMA 发散概率 vs {湍流,f_G,μ,tap} 扫描 | **PASS** (2026-07-11) | results/cma-fade-divergence/cma_divergence_scan_results.json |
 | mve_cma_vs_ml.py | CMA vs ML 均衡深衰落对比 (三方: CMA/ML/oracle) | **PASS** (2026-07-11) | results/cma-fade-divergence/mve_cma_vs_ml_results.json |
 | sup_stress_test.py | 压力测试 (16QAM/小步长CMA/ML SOP漂移) | **PASS** (2026-07-11) | results/cma-fade-divergence/sup_stress_test_results.json |
+| r1_analytical_bound.py | R1: 发散半解析界推导+验证 | **PASS** (2026-07-11) | results/cma-fade-divergence/r1_analytical_bound_results.json |
+| r4_fade_correlation.py | R4: 发散事件 vs AFD/LCR 相关性 | **PASS** (2026-07-11) | results/cma-fade-divergence/r4_fade_correlation_results.json |
+| r5_drift_validation.py | R5: 系数漂移模型验证 (√n律) | **PASS** (2026-07-11) | results/cma-fade-divergence/r5_drift_validation_results.json |
 
 ## 参数溯源（FR-20）
 
@@ -195,9 +198,74 @@
 - 不做: 收敛速度对比（Qin 已做过）
 - 不照搬: VAE ELBO 损失（用 MSE 监督, 结构标 Qin 来源）
 
+## R1/R4/R5 分析层验证结果（2026-07-11，⚠️ 发现重大方向风险）
+
+### R1: 发散半解析界 — 趋势对但量级差
+
+**推导**：drift_per_fade = μ·R²·σ_n·√(AFD/(block_size·T_S))，P_single = 2·Q(threshold/σ_drift)，P_div = 1-(1-P_single)^{N_events}，N_events=LCR·T_obs
+
+**验证**：
+- 纯 √N 律（κ=1）极保守（预测 P_div≈0），需放大系数 κ≈2043 标定
+- 标定后 R²=0.27，趋势一致性=0.857（单调方向预测准确）
+- μ 维度 Spearman：model(+0.81) vs data(+0.76) 高度一致
+- **结论**：界适合做 μ 安全选择/趋势门控，不适合精确 P_div 预测。单 κ 无法吸收湍流相关自放大动力学
+
+### R4: 发散 vs AFD/LCR 相关性 — ⚠️ 深衰落触发模型被反证
+
+**相关性（128 组合）**：
+| 关系 | Pearson r | p-value |
+|------|-----------|---------|
+| P_div ~ log₁₀μ | **+0.749** | 2.7e-24 |
+| P_div ~ f_G | +0.267 | 2.3e-3 |
+| P_div ~ LCR | +0.173 | 0.051 |
+| P_div ~ AFD | NaN* | — |
+
+*AFD 在 5M 符号（2ms 观测窗口）下退化为 ≈0/∞，无法有效计算
+
+**固定 μ 后 LCR 仅在高 μ（5e-3/1e-2）弱正相关（r=+0.46~0.49），低/中 μ 无相关**
+
+**⚠️ 深衰落触发模型直接被反证**：
+- 30% 发散在序列前 10% 就发生（51% 在前 25%）——发散极早，不可能是深衰落触发
+- 发散检测点 h 中位 2.52（远高于 1）——CMA 权重已放大到使输出超范围
+- μ=1e-2 固定下：diverged 全序列 min_h 中位 0.070 vs non-diverged 0.035——diverged 反而经历**更浅**衰落
+- 57% 发散 trial 前窗口零深衰落事件（h<0.3）
+
+**R4 结论**：发散是高 μ 下 CMA 数值不稳定（权重随机游走累积）的结果，与触发性的深衰落事件无因果关系。sat.1553 §6.3 L778 "deep fades → local optimum" 直觉在此参数空间不成立。
+
+**方法论注记**：前窗口比较存在不公平（diverged 前窗口短 vs 非发散全序列），但"30% 前 10% 发散"+"pre_div_min_h 中位 2.43"不依赖窗口长度，确实说明发散不需深衰落触发。需排查：5M 符号窗口太短 / Step B 用 250 krad/s SOP 可能掩盖深衰落作用 / 发散判据 threshold=10× 可能太松。
+
+### R5: 漂移模型验证 — √n 律部分有效
+
+**方法**：48 trials 重跑保存完整 w_norm_traj，提取 6736 fade events
+
+**R² 结果**：
+| 阈值 | n 点 | R² | Pearson r | 比例斜率 k |
+|------|------|----|-----------|-----------|
+| h<0.1 | 3206 | 0.552 | 0.743 | 0.246 |
+| h<0.3 | 3530 | 0.505 | 0.711 | 0.267 |
+
+- non-diverged trials R²=0.653（干净轨迹），diverged trials R²=0.240（提前截断失真）
+- **结论**：√n 趋势成立（r=0.74），但模型系统性高估实测漂移 3.9×（k≈0.25）。形式对但系数需校正（块平均梯度 mean() 比逐符号小 √block_size 倍 + w 初始非零自平衡负反馈）
+
+### 三个结果的综合含义
+
+| 声称 | 验证结果 | 对方向的影响 |
+|------|---------|-------------|
+| 发散概率可半解析预测 | R² 0.27，趋势 0.86 | 可做 μ 安全选择，不可精确预测 |
+| 发散由 LCR 驱动非 AFD | **推翻**——μ 主导，LCR 仅高 μ 弱相关 | sat.1553 直觉在此参数空间不成立 |
+| 系数漂移服从 √n 律 | R² 0.55，r=0.74 | 形式对但系数差 4× |
+| **发散由深衰落触发** | **直接反证** | **⚠️ 方向核心叙事受挑战** |
+
+**R5 vs R4 的张力**：R5 在深衰落事件内验证了 √n 漂移（r=0.74），但 R4 发现发散本身不靠深衰落触发。两者不矛盾——深衰落期间确实有 √n 漂移，但发散可在无深衰落时由高 μ 持续随机游走达到阈值。深衰落是**加剧因素**非**必要触发条件**。
+
 ## 下一步
 
 1. ~~进 Step 4a 维度 D：先建 GG 时间域衰落模型（FR-20）~~ ✅ **Step A 完成（2026-07-11）**
 2. ~~Step B：CMA 发散概率扫描（分析层）~~ ✅ **Step B 完成（2026-07-11）**
 3. ~~Step C：ML 均衡器 MVE（方法层）~~ ✅ **Step C 完成（2026-07-11）** + 压力测试修正为 **Conditional Go (D008)**
-4. **方向需重新审视**: 16QAM 有价值但方法创新性不足(网络照搬Qin/损失更简单/监督非盲), 需想清楚方法层贡献到底在哪
+4. ~~R1/R4/R5 分析层验证~~ ✅ **完成（2026-07-11）** — R4 反证深衰落触发，方向核心叙事受挑战
+5. **第二批 R2/R7 执行**（紧迫性因 R4 发现上升）:
+   - R2: 实现 CMMA + 发散扫描 — 如果 CMMA 也发散 → 支持"CMA 类普遍高 μ 不稳定"
+   - R7: 实现被动冻结 + 量化 — 如果冻结无效（因发散不靠深衰落触发）→ 进一步证伪原叙事
+   - **同步排查 R4 暴露的三个问题**: (a) 5M 符号窗口太短 (b) Step B 用 250 krad/s SOP 可能掩盖深衰落 (c) 发散判据 threshold=10× 可能太松
+6. **方向最终形态待定** — 等 R2/R7 + 参数排查结果再定
