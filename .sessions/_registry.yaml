@@ -415,7 +415,7 @@ topics:
     title: 论文写作专题（自适应 CPR 方向）
     status: active
     created: "2026-07-09"
-    last_updated: "2026-07-12（W001 D-W1W2 Intro+System Model 正文起草完成：3段Intro（背景+gap+贡献散文式）+2段SM（GG块衰落+信号/帧/PN）。交叉检查6项全过（术语/符号/数字/力度/framing/句式）。切换framing=自适应选优，θ符号注B11对应，1.85dB naive标脚注。下一步D-W3W4 Method+Results正文）"
+    last_updated: "2026-07-12（W002 D-W3W4 Method+Results 正文起草完成：§III Method（DA/NDA/per-block SNR三公式直接给+切换规则文字+创新点弱声明）+§IV Results两段式（§IV-A影响分析crossover只呈现数据+§IV-B方法增益净增益naive标脚注+弱湍流归零诚实标注）。交叉检查6项+W001衔接全过。Intro承诺26/29+1.85dB naive已兑现。Results风险防范落实（主体对解读不敏感BER曲线+HD-FEC增益硬事实，3个待导师项进标记区TBD）。下一步D-W5F3 Conclusion+Abstract）"
     description: "自适应载波相位恢复（A4 per-block 有效 SNR 驱动 DA/NDA 切换）方向的论文写作准备专题。在 GW Step 4a 维度 D（A4 PASS 待 Go）阶段内做：材料盘点/缺口识别/数据稳定性验证/论点合理性审查/简报完善。**是写作准备不是进 Contract/Execute**——守 FR-22。step4a-mve-execution 保持 active（Go 决策+消融回那里），本专题只管写作准备。"
     depends_on:
       - slug: 2026-07-06-step4a-mve-execution
