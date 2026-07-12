@@ -456,7 +456,7 @@ topics:
     title: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
     status: active
     created: "2026-07-10"
-    last_updated: "2026-07-11（第二批R2/R7/R4修正完成——完整证据链：CMMA不降发散+冻结完全无效+R4修正确认μ主导LCR次级驱动。发散=高μ数值不稳定+LCR，深衰落非必要触发。分析层完整可发表，方法层价值减弱。需用户决策方向最终形态A/B/C）"
+    last_updated: "2026-07-12（用户选B+LCR机制验证+BER影响验证完成——H1/H2都不成立LCR是伪相关代理变量，但BER影响发现方法层真价值：CMA安全μ仍差oracle2.9-2266×跟踪滞后惩罚，ML全f_G优于CMA1.6-160×。方法层从ML不发散重新定位为ML避免CMA跟踪滞后惩罚。D011新建）"
     description: "scenario-transfer-pivot D003 解锁双偏振空间后，按 FR-22 从 GW Step 1 重走地勘。搜索空间从单偏振扩到含双偏振 OSL（sat.1553 §6 偏振解复用层主轴 + §3/4/5 次 + 迁移源参照 + 综述锚）。S001 Step1-3完成（15查询43候选8子方向/9篇+sat1553精读/3Q#过四判据）。S002 Step4a完成：Q-DP1(动态SOP跟踪)Kill因A0§1致命（均衡器300krad/s高出湍流致SOP 1-2数量级，A物理基础不足D001）/ Q-DP2(CMA fade发散)Conditional Go（空白真实但需自建GG时间模型D002）/ Q-DP3(跨帧恢复)Conditional Go首选（物理基础最扎实D003）。S003-S004 D004攒材料+D005候选合并Q-CMA-FADE。S005 Step A+B PASS（GG时间模型+CMA发散扫描补sat.1553§6.3空白）。S006 Step C PASS（ML vs CMA MVE，Go判定）。Q-CMA-FADE两层贡献全PASS方向确认。"
     depends_on:
       - slug: 2026-07-10-scenario-transfer-pivot
