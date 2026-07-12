@@ -415,7 +415,7 @@ topics:
     title: 论文写作专题（自适应 CPR 方向）
     status: active
     created: "2026-07-09"
-    last_updated: "2026-07-12（F001 D-F1F2力度第二轮+图表定稿完成——**写作战役全部完成**。F1：R010 20条基准逐条对照全对齐+8条待查项处理（7项触发正文修正①删APCCAS弱引用②single-estimator→either used alone③§III末26/29精简⑤locally optimal→lower-BER四处hedging⑥Conclusion换角度⑦Abstract加压力⑧enjoys→achieves；④3个TBD不碰）。F2：Fig.1-4+Tab.1五项图表规格定稿。正文5节+Abstract+F1修正全齐。下一步等导师反馈3项+全篇通读+转LaTeX投稿）"
+    last_updated: "2026-07-12（R014 内容映射完成——正文偏短核查。3子agent并发（词数统计+Le Bidan内容地图+4篇内容地图）+主线核验W001-003。**核心结论**：我方1628词比最精简会议对标集(OECC 2247)少28%，'约3500词'目标偏高，合理目标2500-3000。偏短不在Intro/Conclusion/Abstract（在范围内），集中在Method(281)+Results缺实验设置段+SM(268)。三个明确缺口：①§III替代方案对比+弃用理由(4/5有)②§III设计权衡讨论(5/5有)③§IV实验设置段(5/5有)。只给依据不给方案，加不加等用户定。前次F001写作战役全部完成）"
     description: "自适应载波相位恢复（A4 per-block 有效 SNR 驱动 DA/NDA 切换）方向的论文写作准备专题。在 GW Step 4a 维度 D（A4 PASS 待 Go）阶段内做：材料盘点/缺口识别/数据稳定性验证/论点合理性审查/简报完善。**是写作准备不是进 Contract/Execute**——守 FR-22。step4a-mve-execution 保持 active（Go 决策+消融回那里），本专题只管写作准备。"
     depends_on:
       - slug: 2026-07-06-step4a-mve-execution
