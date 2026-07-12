@@ -601,3 +601,91 @@ S008（R2/R7/R4修正 第二批关键前置判断）
 ### 来源
 
 S009（LCR 机制 + BER 影响验证）
+
+---
+
+## D012: 批次 1 数据补完验证 PASS — BER floor 直接验证 D011，seed-bias 债务记录，16QAM 反预期
+
+> status: active
+> date: 2026-07-12
+> 取代：无（进一步用 BER vs SNR 曲线数据验证 D011，不取代 D011）
+> 被取代：无
+> 依据: 验证: results/cma-fade-divergence/{ber_vs_snr_results.json, ber_16qam_vs_fg_results.json, divergence_viz_data.json, pilot_overhead_quantification.json} + 主控独立物理计算（N vs τ_c）+ 20 seeds seed-bias 实测 + 源码确认（ber_vs_snr_scan.py:8,273-276 三方同信道）
+
+### 决策
+
+R004 批次 1 数据补完（PROMPT-007 执行回传）**主控独立验证 PASS**。4 个任务全部完成，数据支撑 D011 + 导师要求。**新发现 seed-bias 债务**（既有盲点，executor 正确识别）——不影响 D011 相对比较，但影响绝对 BER 跨 seed 平均，须写论文 limitations。批次 1 完成，可进批次 2。
+
+### 验证结果（主控独立核对，非信 executor 摘要）
+
+**任务 1 BER vs SNR（F1，导师必须的）—— ✅ 强支撑 D011**：
+- 4 f_G(30/100/300/1000) × 13 SNR(10-40dB) × 5 seeds，QPSK，strong，CMA μ=1e-3 / ML / oracle 三方
+- **高 SNR(35-40dB) CMA 跟踪滞后 floor**：0.03-0.10（全 4 f_G 一致），ML/oracle→0
+- f_G 越大 floor 越高（f_G=1000@40dB CMA=0.046 vs f_G=30@40dB CMA=0.027）
+- 直接验证 D011："即使安全 μ=1e-3，CMA 高 SNR 被跟踪滞后卡在 ~1e-2，ML 能到 ~1e-5"
+- TL-20 预期全部 PASS（低 SNR 三者都高 / 中 SNR ML 接近 oracle / 高 SNR CMA 有 floor）
+
+**任务 2 16QAM BER vs f_G（G1，D008 债务）—— ✅ 确认 + ⚠️ 反预期**：
+- 16QAM，SNR=20dB，strong，6 f_G × 5 seeds，CMA R2=1.32 / ML / oracle
+- ✅ modulus mismatch 结构性缺陷确认：16QAM CMA~0.27 远高于 QPSK~0.10（D008 Sup-1 成立）
+- ⚠️ **反预期（诚实记录，不硬圆）**：16QAM ML/CMA gap（1.1-1.6×）**小于** QPSK（1.6-160×）。原假设"高阶星座双重惩罚放大 ML 相对优势"被数据否证——高阶星座同时伤 ML 和 oracle，ML 相对优势反而不显著
+
+**任务 3 发散概率可视化（F2）—— ✅ 数据自洽**：从 cma_divergence_scan_results.json 提取，μ≤1e-3 安全区 55/128 组合零发散，μ=1e-2 危险区 f_G=1000Hz 15 组合 P_div=1.0，与 README 一致
+
+**任务 4 pilot overhead（G2）—— ✅ 框架修正 + 债务(1) 缓解**：
+- 框架修正：overhead = N_train/(N_train+N_test)，非 train_frac×100%（原 R004 口径错）
+- 连续传输下 N_train=250K 固定、N_test 任意长 → overhead<<1%（0.001dB）
+- **D011 债务(1)（监督 vs 盲不公平）在"连续传输"假设下基本解除**——但仍需审稿人 attack 防御（最坏每帧重训 50%）
+
+### N_SYMBOLS 修正（500K→2M，TL-22 物理前提检查价值体现）
+
+executor 跑前 smoke test 发现 N=500K@2.5GBaud=0.2ms=**仅 0.13τ_c**（f_G=100Hz τ_c=1.59ms），衰落动力学未充分展开，CMA BER 偏低~1000×（0.13τ_c 序列近似准静态，CMA 几乎不跟踪滞后）。改 N=2M（=0.5τ_c）与 r_lcr/README 已发布数据量级一致。**主控独立复算确认物理成立**。这是 TL-22（好结果先查物理前提）的正面案例——executor 主动查物理前提发现参数不足。
+
+### ⚠️ seed-bias 债务（既有盲点，非代码 bug，影响受限）
+
+executor 报 `gg_time_envelope` "seed-dependent bias（h mean 0.43-4.28 波动，理论应稳定）"。**主控实测 20 seeds 确认且更严重**：
+
+```
+N=2M, strong(α1.5β0.8), f_G=100Hz: h_mean mean=1.33 std=1.89 CV=1.42 min=0.060 max=7.196
+N=10M: CV 仅降到 0.90（不随 N 趋零）
+f_G 越大 CV 越低（f_G=3000Hz CV=0.41）
+```
+
+**根因**：AR(1) ρ≈0.97（τ_c≫block·t_s 强相关）→ 块间强相关 → 单序列样本均值收敛慢。非代码 bug（rng 用 default_rng 正确，边缘 PDF GAR KS<0.006 数学正确）。**Step A 验证只查边缘 PDF 从未查跨 seed 样本均值方差** → 既有盲点，executor 正确识别。
+
+**影响判定（决定性）**：
+| 维度 | 是否受影响 | 理由 |
+|---|---|---|
+| D011 相对比较（CMA/ML/oracle 比） | ❌ 不影响 | 同 seed→同 h→三方同向偏置，比率免疫（ber_vs_snr_scan.py:8,273-276 确认三方同信道）|
+| 跟踪滞后 floor 存在性 | ❌ 不影响 | 结构性（CMA 在线更新固有），全 seed 一致 |
+| 绝对 BER 跨 seed 平均精度 | ⚠️ 影响 | CV=1.0 + 仅 5 seeds → 绝对点噪声大。解释 f_G=1000@30dB ML=0.0156 vs @35dB 0.0007 跳变=seed 噪声 |
+
+**处置**：
+- 论文写 limitations（h_mean 跨 seed 方差 + 5 seeds 限制）
+- 关键 BER 点加 seed 到 ≥20，或改报 per-seed 比率分布
+- **非阻断**——核心贡献是比率 + floor 存在性，非绝对 BER 精度
+
+### 对 D011 债务的更新
+
+| D011 债务 | 批次 1 后状态 |
+|---|---|
+| (1) 监督 vs 盲不公平 | 🟡 部分缓解（连续传输 overhead<<1%，但审稿人 attack 防御仍需，批次 3 盲 VQ-VAE 仍推荐）|
+| (2) ML 每 f_G 重训练 | 🟡 同上（连续传输假设缓解，但在线信道变化重训练周期未定）|
+| (3) 方法创新性 | 🔴 未缓解（批次 1 未涉及，仍待批次 3）|
+| (4) 只测了 QPSK | ✅ **解除**（任务 2 补了 16QAM，虽反预期但双调制验证完成）|
+
+### 对方向叙事的影响
+
+**D011 方法层定位进一步加固**：批次 1 BER vs SNR floor 数据是 D011 "ML 避免 CMA 跟踪滞后惩罚"的直接证据（导师"不能只放分析得有方法"+"BER 到 1e-3"约束满足）。
+
+**16QAM 叙事需调整**（基于反预期）：
+- ❌ 不卖"16QAM ML 优势更大"（数据否证）
+- ✅ 改卖"16QAM CMA modulus mismatch 是结构性缺陷（BER 高 2.7×），ML 在两调制都优于 CMA，但高阶星座 ML 也受 oracle 上界限制——ML 的价值在'避免 CMA 的两类独立惩罚（跟踪滞后+modulus mismatch）'而非'高阶星座放大优势'"
+
+### 触发原话
+
+> 触发原话: 无（技术验证，PROMPT-007 批次 1 执行回传后主控集成）
+
+### 来源
+
+S010（批次 1 数据补完验证与集成）

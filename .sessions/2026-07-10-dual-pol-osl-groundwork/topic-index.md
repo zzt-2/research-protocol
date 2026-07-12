@@ -1,7 +1,7 @@
 # Topic Index: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
 
 > slug: 2026-07-10-dual-pol-osl-groundwork
-> status: active | created 2026-07-10 | last_updated 2026-07-11（PROMPT-005 Step C 完成：ML vs CMA MVE PASS，Go 判定。Q-CMA-FADE 两层贡献全 PASS，方向确认可进 Contract/Execute）
+> status: active | created 2026-07-10 | last_updated 2026-07-12（批次 1 数据补完完成并验证 PASS，S010/D012。BER vs SNR 跟踪滞后 floor 直接验证 D011，16QAM modulus mismatch 确认但 ML/CMA gap 反预期小于 QPSK，新发现 seed-bias 债务不影响相对比较但影响绝对 BER 须写 limitations。可进批次 2）
 
 ## 专题定位（一句话）
 
@@ -64,7 +64,7 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 
 ## 当前位置
 
-**第二批 R2/R7/R4修正完成（2026-07-11）——方向核心叙事确认受挑战，完整证据链形成**。R2（CMMA 不降发散）+ R7（冻结完全无效 ΔP_div=0）+ R4修正（1krad/s SOP + 10M 符号，μ 仍主导 r=0.70，LCR 次级驱动 r=0.42 固定μ后 r=0.88，深衰落触发仍被拒）三结果互相印证：发散 = 高 μ 数值不稳定（主因）+ LCR（次因），深衰落是加剧因素非必要触发。分析层故事完整可发表，方法层价值减弱（ML"不发散"从"深衰落鲁棒性"降级为"数值稳定性"）。**需用户决策方向最终形态。**
+**批次 1 数据补完完成并验证 PASS（2026-07-12，S010/D012）——写作数据就绪，可进批次 2**。R004 方向总规划 → PROMPT-007 批次 1 执行（4 任务）→ 主控独立验证全部数据。核心产出：① BER vs SNR 曲线（4 f_G × 13 SNR × 5 seeds，**CMA 高 SNR 跟踪滞后 floor 0.03-0.10 vs ML/oracle→0，直接验证 D011**）；② 16QAM BER vs f_G（确认 modulus mismatch 结构性缺陷 CMA~0.27 vs QPSK~0.10，但 ML/CMA gap **反预期地小于** QPSK）；③ 发散概率可视化数据；④ pilot overhead（连续传输下<<1%，债务(1) 部分缓解）。**新发现 seed-bias 债务**（h_mean 跨 seed CV≈1.0，非代码 bug 是 AR(1) 强相关固有，Step A 只查 PDF 未查样本均值的既有盲点）——不影响 D011 相对比较（同 seed 同 h），影响绝对 BER 跨 seed 平均，须写论文 limitations + 关键点加 seed 数。
 
 - Step 1-3：完成（双偏振 9 篇 + ML 20 篇 = 29 篇精读）
 - **Step 4a：完成**（Q-DP1/2/3 可行性评估）
@@ -78,8 +78,11 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
   - ✅ **R003：完成**（12 个可出结果子问题穷举）
   - ✅ **R1/R4/R5：完成**（分析层验证）—— R1 趋势对量级差，R4 **反证深衰落触发**，R5 √n 律部分有效
   - ✅ **R2/R7/R4修正：完成**（第二批关键前置判断）—— CMMA 不降发散，冻结完全无效，R4修正确认 μ 主导+LCR 次级
+  - ✅ **S009：完成**（用户选 B，LCR 机制 H1/H2 都不成立 + BER 影响验证，方法层重新定位 D011）
+  - ✅ **R004：完成**（方向总规划 13 发散角度 + 3 批次 + 防坑清单）
+  - ✅ **S010 批次 1：完成**（数据补完验证 PASS，D012）—— BER vs SNR / 16QAM / 发散可视化 / pilot overhead
 
-下一步：**用户选 B，方法层重新定位完成（S009）**。LCR 机制验证（H1/H2 都不成立，LCR 是伪相关代理变量）+ BER 影响验证（CMA 安全μ下 BER 仍比 oracle 差 2.9-2266×，ML 全 f_G 优于 CMA 1.8-数百倍）。方法层从"ML 不发散（trivial）"重新定位为"ML 避免 CMA 跟踪滞后惩罚（非 trivial）"。分析层完整可发表。
+下一步：**批次 1 完成，可进批次 2**（CMA 跟踪滞后分解 / CMMA BER / LMMSE，PROMPT-008）。批次 2 完成后进批次 3（可选，盲 VQ-VAE / 自适应步长 / 发散恢复），然后进写作准备。**seed-bias 债务**：批次 2/3 关键 BER 点加 seed 到 ≥20 或报 per-seed 比率，写论文 limitations。
 
 ## 进展线索
 
@@ -96,3 +99,4 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 - **S007**（2026-07-11）：H006 第一批零风险后处理 R1/R4/R5 执行。3 子 agent 并行。R1 半解析界：drift=μ·R²·σ_n·√(AFD/(block·T_S))，P_div=1-(1-P_single)^{N_events}，趋势一致性 0.86 但 R² 仅 0.27（单 κ 无法吸收自放大动力学）。R4 相关性：μ 主导（r=0.749），LCR 仅高 μ 下弱相关（r=0.46），**⚠️ 深衰落触发模型被直接反证**——57% 发散前零深衰落事件，30% 发散在前 10%，diverged trial min_h 反而更高。R5 漂移模型：√n 律 r=0.74 R²=0.55 但系数差 3.9×（块平均梯度+自平衡负反馈）。综合：发散是高 μ 数值不稳定驱动，深衰落是加剧因素非必要触发。方向核心叙事受挑战，分析层贡献需重新定位。详见 `S007-r1r4r5-analytical-layer-validation.md`
 - **S008**（2026-07-11）：第二批关键前置判断 R2/R7/R4修正执行。3 子 agent 并行。R2 CMMA：P_div 与 CMA **逐点相同**（32/32 组合差异=0），多模修星座失配但完全修不好高 μ 发散。R7 冻结：**ΔP_div=0 全 24 组合**（冻结完全无效），即使冻结 53% 的块 P_div 仍 0.33，SOP 累计漂移 1774°/trial，sat.1553 [79] Matsuda 2020"停 CMA 更新"直觉被证伪。R4 修正（1krad/s SOP + 10M 符号）：μ 仍主导 r=0.70，LCR 从 +0.17→+0.42（固定 μ=1e-3 后 r=+0.88），深衰落触发仍被拒（Mann-Whitney p=0.9998），AFD 10M 下可计算。完整证据链：发散 = 高 μ 数值不稳定（主因）+ LCR（次因），深衰落是加剧因素非必要触发。分析层故事完整可发表，方法层价值减弱。详见 `S008-r2r7r4corrected-second-batch.md`
 - **S009**（2026-07-12）：用户选 B，先验证 LCR 机制再定方法层。2 子 agent 并行。LCR 机制：**H1（重收敛累积）和 H2（边沿梯度突变）都不成立**——发散 100% 在正常区，距最近 up-cross 中位 2530 block，<100 block 占 0%。LCR~P_div r=0.96 是伪相关（代理变量：高 f_G → 短 τ_c → 块间 h 波动大 → 梯度方差大 → 数值不稳定）。BER 影响：**方法层真价值出现**——CMA 安全 μ（不发散）下 BER 仍比 oracle 差 2.9-2266×（跟踪滞后惩罚），ML 全 6 f_G 优于 CMA（1.8-数百倍），2 个 f_G 达到 oracle。方法层从"ML 不发散（trivial）"重新定位为"ML 避免 CMA 跟踪滞后惩罚（非 trivial）"。详见 `S009-lcr-mechanism-and-ber-validation.md`
+- **S010**（2026-07-12）：批次 1 数据补完（R004 批次 1）执行回传后主控独立验证集成。4 任务全 PASS：① BER vs SNR（4 f_G×13 SNR×5 seeds）CMA 高 SNR 跟踪滞后 floor 0.03-0.10 vs ML/oracle→0 直接验证 D011；② 16QAM BER 确认 modulus mismatch（CMA~0.27 vs QPSK~0.10）但 ML/CMA gap **反预期小于 QPSK**（高阶星座同时伤 ML/oracle，诚实记录）；③ 发散概率可视化；④ pilot overhead 连续传输下<<1%（债务(1) 缓解）。**新发现 seed-bias 债务**：`gg_time_envelope` h_mean 跨 seed CV≈1.0（20 seeds 实测，N=10M 仅降到 0.90），根因是 AR(1) ρ≈0.97 强相关非代码 bug，Step A 只查 PDF 未查样本均值的既有盲点。影响判定：**不影响 D011 相对比较**（同 seed 同 h，比率免疫）+ 影响**绝对 BER 跨 seed 平均**（须写 limitations + 加 seed 数）。D012 新建。详见 `S010-batch1-data-completion-integration.md`
