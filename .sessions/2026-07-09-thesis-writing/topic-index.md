@@ -1,7 +1,7 @@
 # Topic Index: 论文写作专题（自适应 CPR 方向）
 
 > slug: 2026-07-09-thesis-writing
-> status: active | created 2026-07-09 | last_updated 2026-07-12（W003 D-W5F3 Conclusion+Abstract 正文起草完成——**正文全部定稿**：§V Conclusion 1 段 3 句（复述贡献 26/29+1.85dB naive+弱湍流归零局限+future）+ Abstract 1 段 4 句（问题+方法+结果，Intro 贡献句压缩版）。交叉检查 5 项全过，复述数字五处正文 grep 确认一致（"26 of 29 operating points"+"up to 1.85 dB in strong turbulence (naive, net of pilot overhead)"+同一脚注模板）。下一步 D-F1F2 力度第二轮+图表）
+> status: active | created 2026-07-09 | last_updated 2026-07-12（F001 D-F1F2 力度第二轮+图表定稿完成——**写作战役全部完成**。F1：R010 20 条基准逐条对照全对齐 + 8 条待查项处理（7 项触发正文修正①②③⑤⑥⑦⑧，④3 个 TBD 不碰导师定）。F2：Fig.1-4+Tab.1 五项图表规格定稿（论点+画法+数据+对齐 R010）。正文 5 节+Abstract+F1 修正全齐。下一步等导师反馈 3 项+全篇通读+转 LaTeX 投稿）
 
 ## 专题定位（一句话）
 
@@ -74,21 +74,27 @@
 
 ## 当前位置
 
-**🟢 D-W5F3 Conclusion+Abstract 正文起草完成——正文全部定稿（5 节+Abstract 全齐），下一步 D-F1F2 力度第二轮+图表（2026-07-12，W003 产出）**。
+**🏁 D-F1F2 力度第二轮+图表定稿完成——写作战役全部完成（2026-07-12，F001 产出）**。
 
-W003 完成 §V Conclusion（1 段 3 句：复述贡献 per-block SNR 驱动切换 + 26/29 选对率 + 1.85 dB naive + 弱湍流归零局限 +0.09/0.18/0.19 + future 更强判据/更多湍流/上行验证）+ Abstract（1 段 4 句：DA/NDA trade-off 问题 + per-block SNR-driven switching 方法 + 26/29+1.85 dB naive 结果，Intro 贡献句压缩版）英文正文。交叉检查 5 项全过，复述数字五处正文 grep 确认一致。正文路径：`.sessions/2026-07-09-thesis-writing/W003-conclusion-abstract.md`。
+F001 完成 F1（R010 20 条力度基准逐条对照**全对齐** + 8 条已知待查项处理——7 项触发正文修正①删 Intro [APCCAS 2022] 弱引用 ②"single-estimator baseline"→"either estimator used alone" ③§III 末 26/29 精简（留 §IV-B 数据出处）⑤"locally optimal estimator"→"lower-BER estimator" 四处 hedging ⑥Conclusion 换角度避免逐字重复 Intro ⑦Abstract 开头加问题压力 ⑧"enjoys/known noiselessly"→"achieves/known exactly"；④3 个 TBD 不碰导师反馈后处理）+ F2（Fig.1-4+Tab.1 五项图表规格定稿：论点+画法+数据+对齐 R010，图数 4+表 1 对齐 R010 图表专项）。交叉检查 5 项全过（修正后术语/数字/framing 一致，TBD 不动）。正文路径：`.sessions/2026-07-09-thesis-writing/F001-strength-check-figures.md`。
 
-**正文全部定稿清单**（5 节 + Abstract）：
-- §I Introduction + §II System Model → W001-intro-system-model.md
-- §III Method + §IV Results（§IV-A/§IV-B）→ W002-method-results.md
-- §V Conclusion + Abstract → W003-conclusion-abstract.md
+**正文全部定稿清单**（5 节 + Abstract + F1 修正）：
+- §I Introduction + §II System Model → W001-intro-system-model.md（F1 修正①②⑤a 已落地）
+- §III Method + §IV Results（§IV-A/§IV-B）→ W002-method-results.md（F1 修正②③⑤b⑧ 已落地）
+- §V Conclusion + Abstract → W003-conclusion-abstract.md（F1 修正⑤c⑤d⑥⑦ 已落地）
+- F1 力度对照 + F2 图表规格 → F001-strength-check-figures.md
 
-**关键锁定**：
-- 复述数字五处一致（grep 确认）：Intro/Method/Results/Conclusion/Abstract 全用 "selects the locally optimal estimator in 26 of 29 operating points" + "up to 1.85 dB in strong turbulence (naive, net of pilot overhead)" + 同一脚注模板
-- Conclusion 弱湍流归零诚实标注（不变量 3）；Abstract 不放公式/图表/crossover/弱湍流细节（留 Conclusion）
-- 切换 framing 全篇统一自适应选优（R008 verbatim）；口径脚注逐字照抄 W001/W002 模板
+**关键锁定（F1 修正后）**：
+- 数字仍一致：26 of 29 operating points + 1.85 dB naive 在 Intro/§IV-B/Conclusion/Abstract 四处（③ 删 §III 末一处，剩四处，数字值/口径不动）
+- 切换 framing 仍统一自适应选优（R008）：⑤"locally optimal"→"lower-BER" 是 hedging（3 个点没选对就不能说全点最优）非推翻 R008，语义不变（选 BER 低的 = 选局部更优的）
+- 3 个 TBD 标记区不动（导师反馈后处理）：①§IV-A 纵轴范围 D003 ②§IV-A 1e-5 解读措辞 ③§IV-B 标题数字口径 D004
 
-**下一步**：D-F1F2。F1 力度第二轮（R010 力度基准表 20 条基准逐点对照全篇正文，讲多了还是少了）；F2 图表（S006 四张样图 + R010 图表力度专项 + 每图论点：Fig.1 框图/Fig.2 BER 主图/Fig.3 净增益/Fig.4 crossover + Tab.1）。**已知 F1 待查项**（主控预判）：①Intro [APCCAS 2022] 引用偏弱 ②§IV-B "single-estimator baseline" 不在术语表 ③26/29 在 Method+Results 各一次（考虑精简）④3 个 TBD 标记区（纵轴/1e-5 解读/标题数字，导师反馈后处理）。规矩见 writing-campaign-plan.md §2 F1+F2。
+**下一步（等导师反馈 + 投稿准备，非 writing-campaign 范围）**：
+1. 等导师 3 项反馈（卡 Results §IV TBD）：①10⁻⁵ 底线 A/B（D003）→ 纵轴范围 + 主卖点成立性 ②口径 fair/naive（D004 已倾向 naive）→ 标题数字 ③主对比文献 → 参考文献核心一条
+2. 全篇通读（F1 修正后整体读一遍，检查衔接/读感）
+3. 转 LaTeX 投稿格式（CCISP 双栏，段落调整 + 图表插入 + 参考文献 10-15 篇）
+
+写作战役（writing-campaign-plan §2）全部完成。
 
 **S010 全程结论**：逻辑链逐点核查 + 轻讲定稿 + 主控规划讨论三阶段完成。勘误 S007/D005/R007 三处 crossover 物理因果方向错误。用户拍板轻讲（只放有把握内容，没把握的物理归因不写，受控切片不跑）。
 
@@ -148,3 +154,4 @@ W003 完成 §V Conclusion（1 段 3 句：复述贡献 per-block SNR 驱动切�
 - **W001** Intro（W1）+ System Model（W2）正文起草——D-W1W2 产出（2026-07-12。按R012 §I/§II大纲+R011三表+R010力度+R009逻辑链+writing-patterns-conference.md起草。**Intro 3段**：①背景相干FSO+湍流致相位噪声+CPR必要（引sat.1553/Paillier/Al-Habash/Johst/APCCAS/B11，句式参照§5.4/5.6/5.7）②DA/NDA trade-off gap 2句（DA低SNR准+1.25dB罚引Shieh-Djordjevic / NDA省带宽+squaring loss引V&V1983）③贡献散文式3句不用bullet（propose per-block SNR-driven switching → selects locally optimal in 26/29 → net SNR gain up to 1.85dB naive标脚注，verbatim R008关键短语）。**SM 2段**：①GG块衰落信道（引Al-Habash，块结构N_blk=100，αβ下行3档+上行2档值进正文，不给PDF）+Fig.1占位 ②信号模型r_k=h_b·s_k·e^{jθ}+n_k+帧结构pilot spacing 1/4=25%=1.25dB引Shieh-Djordjevic+Wiener PN σ²_θ=2πΔνT_s注"=σ²_p in [B11]"+N_DFT=256+HD-FEC 3.8e-3。**交叉检查6项全过**：术语跟R011（CPR/DA/NDA/GG/block fading quasi-static/pilot overhead/squaring loss/net SNR gain全标准，fair_gain/A4/MSM/伪地板零残留）/符号跟R011（θ非φ注B11对应，σ²_θ注σ²_p对应，M₀=8/N_blk=100/N_DFT=256全对齐）/数字跟R012（26/29+1.85dB naive标脚注+1.25dB+M₀=8+参数值全对齐，naive口径标脚注模板）/力度跟R010（Intro1-2段~15行在范围/SM给GG+块结构不给PDF/不给独立参数表/估计器公式不进§II）/切换framing统一自适应选优（R008 verbatim关键短语，无鲁棒性补丁残留）/句式参照writing-patterns-conference.md（§5.4/5.6/5.7/8.x/1.2/1.13）。守质量红线9条+FR-22。下一步D-W3W4 Method+Results正文）
 - **W002** Method（W3）+ Results（W4）正文起草——D-W3W4 产出（2026-07-12。按R012 §III/§IV大纲+R011公式清单/符号表+R010 §3/§4力度+R009逻辑链+W001衔接起草。**Method 2段**：①DA估计器公式1 θ̂_DA=angle(r_p·p\*)一句话"removes modulation by dividing"（`_recovery.py:153`）+NDA估计器公式2 θ̂_NDA=(1/M₀)angle(Σr_k^M₀)一句话"raises to M₀-th power"（`_recovery.py:213,232-233`）+引V&V1983 squaring loss文字结论不推导 ②per-block SNR公式3 γ_blk=|h_b|²E_s/N₀（R011术语#30定义句）+切换规则文字"select θ̂_DA when γ_blk<γ_th else θ̂_NDA"不编号（R010 §3.1文字非伪代码5/5篇无伪代码）+创新点弱声明"rather than introducing a new estimator or a new closed-loop component"（R010 §3.2对齐Johst，定位=量化归因型D005务实路线）。**Results两段式**：§IV-A影响分析（Fig.2 BER 6子图占位+AWGN implicit baseline对齐Johst+crossover 17.9/16.8/10.7 dB只呈现数据不附归因R009不变量7）+§IV-B方法增益（切换vs固定NDA低SNR+1.3~2.3 net口径CI下界全正+净增益strong+1.26/up_mod+1.19/up_str+1.85 naive标脚注+弱湍流归零诚实标注+0.09/0.18/0.19 CI重叠不变量3不藏+选对率26/29兑现Intro承诺+切换vs固定DA不写导师第3点）。**交叉检查6项+W001衔接全过**：术语跟R011（DA/NDA/per-block SNR/crossover/estimator switching/net SNR gain全标准+fair_gain/A4/MSM/伪地板/鲁棒性补丁零残留）/符号跟R011（θ̂_DA/θ̂_NDA/γ_blk/γ_th/P_b全对齐）/数字跟R012（crossover=data/切换vs NDA=net/净增益=naive标脚注全对，弱湍流归零诚实）/力度跟R010（Method文字非伪代码+公式直接给+创新点弱声明/Results BER纵轴不硬凑1e-5中性措辞+Tab.1增量亮点+对比融Results不专列）/切换framing自适应选优（R008 verbatim "selecting the locally optimal estimator in 26 of 29"）/crossover只呈现数据不附归因/W001衔接（θ/σ²_θ/net SNR gain脚注逐字照抄+Intro承诺26/29+1.85dB兑现）。**Results风险防范落实**：主体对解读不敏感（BER曲线+HD-FEC(3.8e-3)增益硬事实+crossover+选对率，导师翻解读A也不用重写），3个待导师项进标记区HTML注释TBD（①§IV-A纵轴范围D003 ②§IV-A 1e-5解读措辞 ③§IV-B标题数字口径D004）。守质量红线11条+FR-22。下一步D-W5F3 Conclusion+Abstract）
 - **W003** Conclusion（W5）+ Abstract（F3）正文起草——D-W5F3 产出（2026-07-12，**正文最后一个对话单元，正文全部定稿**）。按R012 §V大纲+R010 §5力度+writing-patterns §6.x/§8.x+W001/W002复述衔接起草。起草前grep W001/W002确认"26 of 29"+"1.85"确切写法口径照抄。**Conclusion 1段3句**（对齐R010 §5 Johst/Le Bidan一段式3-5句）：①复述贡献"In this paper, we proposed a per-block SNR-driven estimator switching scheme ... selects the locally optimal estimator in 26 of 29 operating points, yielding a net SNR gain of up to 1.85 dB in strong turbulence (naive, net of pilot overhead)"（句式§6.2 OECC 2025）+②弱湍流归零诚实标注"the gain narrows toward zero (+0.09/+0.18/+0.19 dB, within the 30-seed confidence interval) in weak turbulence and AWGN"（不变量3）+③future"Future work is underway to strengthen the switching criterion, to extend ... to additional turbulence regimes, and to validate ... on uplink experimental data"（句式§6.4 MWP 2022）。**Abstract 1段4句**（Intro贡献句压缩版）：①问题DA/NDA trade-off（DA低SNR准+1.25dB overhead / NDA省带宽+squaring loss低SNR差）②方法"per-block SNR-driven estimator switching scheme that selects, for each fading block, between a DA and an NDA carrier phase estimator"（句式§8.x）③结果"selects the locally optimal estimator in 26 of 29 operating points, yielding a net SNR gain of up to 1.85 dB in strong turbulence (naive, net of pilot overhead)"。Abstract不放公式/图表/crossover/弱湍流细节（留Conclusion）。**交叉检查5项全过**：复述数字五处一致（Intro/Method/Results/Conclusion/Abstract grep确认同一写法"26 of 29 operating points"+"up to 1.85 dB in strong turbulence (naive, net of pilot overhead)"+同一脚注模板逐字照抄）/术语跟R011+W001/W002（零自造词残留）/口径标注naive+脚注跟W001/W002/力度跟R010（Conclusion 3句在3-5句范围/Abstract 4句Intro压缩版）/切换framing自适应选优R008 verbatim关键短语。守质量红线8条+FR-22。下一步D-F1F2力度第二轮+图表）
+- **F001** 力度第二轮对照（F1）+ 图表定稿（F2）——D-F1F2 产出（2026-07-12，**战役最后一个对话单元，写作战役全部完成**）。按R010力度基准表20条+图表专项+H012已知待查项4条+主控追加4条执行。**F1力度对照**：R010 20条基准（5节×3-5技术点）逐条对照全篇正文（W001+W002+W003）**全部对齐**，无硬性多了/少了偏差（力度在W1-W5起草时已严格对齐R010）。**F1 8条待查项处理**（7项触发正文修正）：①Intro [APCCAS 2022]引用偏弱→删引用保留[B11]（W001§I）②"single-estimator baseline"不在术语表→换"either estimator used alone"描述性（W002§IV-B）③26/29在Method+Results重复→§III末精简改为前瞻引用§IV-B"the fraction of operating points in which this selection recovers the lower-BER estimator is quantified in Section IV-B"（W002§III末，留§IV-B数据出处）④3个TBD标记区不碰（导师反馈后处理）⑤"locally optimal estimator"措辞风险（29点里3个没选对却说全点最优，逻辑瑕疵最易被审稿人挑）→四处hedging为"estimator with the lower bit error rate"/"lower-BER estimator"（Intro/§IV-B/Conclusion/Abstract，语义不变=选BER低的=选局部更优的，是R008措辞精化非推翻framing）⑥Conclusion跟Intro贡献句逐字重复→Conclusion换角度从结果倒推方法（W003§V）⑦Abstract开头句略平→加问题压力"must track a rapidly varying carrier phase ... making CPR a critical receiver function"（W003 Abstract）⑧§III"enjoys high accuracy/known noiselessly in modulation"口语化+绕→"achieves high accuracy/known exactly at the receiver"中性化（W002§III）。**F2图表定稿**：5项规格定稿（Fig.1系统框图含切换判据框/Fig.2 BER主图6子图纵轴TBD+AWGN理论线+HD-FEC线/Fig.3净增益方案双线fair+naive或改切换vs NDA避险待定/Fig.4 crossover data口径叠加只标数值不带归因/Tab.1强湍流3行naive加fair对照列），图数4+表1对齐R010图表专项。F2不实际画图（S006已有样图）只定规格。**修正落地**：7项修正已用Edit改W001/W002/W003对应位置。**交叉检查5项全过**：术语仍跟R011（自造词残留全清②⑤已除）/数字仍跟R012（26/29+1.85dB naive五处→四处③删一处，值/口径不动）/切换framing仍统一自适应选优（⑤hedging非推翻R008）/TBD不动（3个导师反馈后处理）/图表数对齐R010（4图+1表）。守质量红线8条+FR-22。**写作战役全部完成**，下一步等导师反馈3项+全篇通读+转LaTeX投稿）
