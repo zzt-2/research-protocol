@@ -64,7 +64,9 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 
 ## 当前位置
 
-**批次 2 方法层加固完成并验证 PASS（2026-07-12，S011/D013）——方法层机制细化，可选批次3或进写作准备**。R004 方向总规划 → PROMPT-007 批次1（4任务，S010/D012）→ PROMPT-008 批次2（2任务，S011/D013）。核心产出：① 任务1 CMA 瞬态/稳态分解（3 f_G×20 seeds×N=5M）**反预期但经主控4步独立复现验证为真实物理现象**——稳态BER~0.32几乎不依赖f_G，机制=2×2蝶形CMA长序列次优锁定不稳定/相位漂移（|w|稳定1.4142→1.4166未发散，但LS相位0°→-172.6°漂移致BER爬向0.5），**D011机制从"跟踪滞后"细化为"长序列锁定不稳定"**（结论方向不变，ML价值更强）；② 任务2 CMMA BER（6 f_G×20 seeds×双调制，QPSK+16QAM）——QPSK CMMA=CMA精确相同(实现验证PASS，逐seed max diff=0.00)，16QAM CMMA仅优CMA 0.4-0.9%(modulus mismatch非主因，CMMA非强baseline)。**D013机制修正需回传**：r_lcr/批次1的N=2M整段BER掩盖了early/late分化。seed-bias债务仍在。
+**批次 2 深查完成（2026-07-12，D014）——真机制是 SOP 驱动极化串扰，D011 跟踪滞后叙事大部分被推翻，论文主卖点改为 SOP 极化鲁棒性**。批次 2 执行对话自写 S011/D013 报"相位漂移"机制 → 用户质疑 → 主控独立深查（相关性诊断 + SOP=0 vs SOP>0 决定性矩阵）证明 **D013 机制误诊**：late 段 CMA BER→0.5 真因是 **SOP 驱动的极化串扰**（2×2 蝶形 CMA 把 X 偏振锁到 Y 偏振数据，corr(zX,sY)=0.92），不是相位漂移。更彻底的 SOP×f_G 矩阵证明：**SOP=0 时 CMA 在 f_G=30/100 跟 oracle 逐 seed 完全相同（ratio=1.0）**——S009 报"CMA 差 oracle 2.9-2266×"主因是 SOP 极化串扰，纯跟踪滞后只贡献 4.2×（f_G=1000）。**核心结论 ML > CMA 不变且更强**（CMA 极化串扰 BER→0.5 等于断开，ML 固定权重免疫）。论文主卖点从"跟踪滞后"改为"**SOP 极化鲁棒性**"（更硬 + FSO 特色——SOP 光通信独有）。S009/批次1 BER 数据需 SOP 分层重新解读。
+
+**批次 1（S010/D012）+ 批次 2 任务 2 CMMA（S011）均 PASS**：批次 1 BER vs SNR / 16QAM / 发散可视化 / pilot overhead 全完成；CMMA 实现验证 PASS（QPSK CMMA=CMA 逐 seed 相同），16QAM CMMA 仅优 CMA 0.4-0.9%（非强 baseline，modulus mismatch 非主因）。seed-bias 债务（h_mean 跨 seed CV≈1.0）仍在，须写 limitations。
 
 - Step 1-3：完成（双偏振 9 篇 + ML 20 篇 = 29 篇精读）
 - **Step 4a：完成**（Q-DP1/2/3 可行性评估）
@@ -82,6 +84,7 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
   - ✅ **R004：完成**（方向总规划 13 发散角度 + 3 批次 + 防坑清单）
   - ✅ **S010 批次 1：完成**（数据补完验证 PASS，D012）—— BER vs SNR / 16QAM / 发散可视化 / pilot overhead
   - ✅ **S011 批次 2：完成**（方法层加固验证 PASS，D013）—— CMA 瞬态/稳态分解（机制细化）+ CMMA BER（增强 baseline）
+  - ✅ **S011 续 + D014：完成**（D013 机制误诊纠正）—— 主控独立深查证明真因是 SOP 驱动极化串扰（非相位漂移），SOP×f_G 矩阵证明 D011 跟踪滞后叙事大部分被推翻，论文主卖点改为 SOP 极化鲁棒性
 
 下一步：**批次 2 完成，可选批次 3**（盲 VQ-VAE / 自适应步长 / 发散恢复），或**直接进写作准备**。**D013 机制修正需反映在论文叙事**（不卖"跟踪滞后"卖"长序列锁定不稳定"）。**seed-bias 债务**：写论文 limitations。
 

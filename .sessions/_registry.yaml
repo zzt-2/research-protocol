@@ -456,7 +456,7 @@ topics:
     title: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
     status: active
     created: "2026-07-10"
-    last_updated: "2026-07-12（批次2方法层加固完成并验证PASS，S011/D013。R004批次2→PROMPT-008执行→主控独立P6验证：任务1 CMA瞬态/稳态分解反预期但经4步独立复现验证为真实——稳态BER~0.32几乎不依赖f_G，机制=2×2蝶形CMA长序列次优锁定不稳定/相位漂移(|w|稳定但LS相位漂向±π)，D011机制从跟踪滞后细化为长序列锁定不稳定。任务2 CMMA BER：QPSK CMMA=CMA精确相同(实现验证PASS)，16QAM CMMA仅优CMA 0.4-0.9%(modulus mismatch非主因,CMMA非强baseline)。ML方法层价值成立且更强。可选批次3或进写作准备）"
+    last_updated: "2026-07-12（批次2深查完成D014——执行对话自写D013报相位漂移机制被主控独立深查推翻：真因是SOP驱动极化串扰(2×2蝶形CMA把X偏振锁到Y偏振数据corr(zX,sY)=0.92)。SOP×f_G决定性矩阵证明SOP=0时CMA在f_G=30/100跟oracle逐seed完全相同ratio=1.0，S009报CMA差oracle2.9-2266×主因是SOP极化串扰非f_G跟踪滞后，D011跟踪滞后叙事大部分被推翻。核心结论ML>CMA不变且更强(CMA极化串扰BER→0.5等于断开ML固定权重免疫)。论文主卖点改为SOP极化鲁棒性(更硬+FSO特色)。S009/批次1 BER数据需SOP分层重新解读。S011续+D014新建D013改partially superseded）"
     description: "scenario-transfer-pivot D003 解锁双偏振空间后，按 FR-22 从 GW Step 1 重走地勘。搜索空间从单偏振扩到含双偏振 OSL（sat.1553 §6 偏振解复用层主轴 + §3/4/5 次 + 迁移源参照 + 综述锚）。S001 Step1-3完成（15查询43候选8子方向/9篇+sat1553精读/3Q#过四判据）。S002 Step4a完成：Q-DP1(动态SOP跟踪)Kill因A0§1致命（均衡器300krad/s高出湍流致SOP 1-2数量级，A物理基础不足D001）/ Q-DP2(CMA fade发散)Conditional Go（空白真实但需自建GG时间模型D002）/ Q-DP3(跨帧恢复)Conditional Go首选（物理基础最扎实D003）。S003-S004 D004攒材料+D005候选合并Q-CMA-FADE。S005 Step A+B PASS（GG时间模型+CMA发散扫描补sat.1553§6.3空白）。S006 Step C PASS（ML vs CMA MVE，Go判定）。Q-CMA-FADE两层贡献全PASS方向确认。"
     depends_on:
       - slug: 2026-07-10-scenario-transfer-pivot
