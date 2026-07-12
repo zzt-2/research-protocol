@@ -1,7 +1,7 @@
 # Topic Index: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
 
 > slug: 2026-07-10-dual-pol-osl-groundwork
-> status: active | created 2026-07-10 | last_updated 2026-07-12（批次 1 数据补完完成并验证 PASS，S010/D012。BER vs SNR 跟踪滞后 floor 直接验证 D011，16QAM modulus mismatch 确认但 ML/CMA gap 反预期小于 QPSK，新发现 seed-bias 债务不影响相对比较但影响绝对 BER 须写 limitations。可进批次 2）
+> status: active | created 2026-07-10 | last_updated 2026-07-12（批次 2 方法层加固完成并验证 PASS，S011/D013。任务1 CMA 瞬态/稳态分解**反预期但经主控4步独立复现验证为真实**：稳态BER~0.32几乎不依赖f_G，机制=2×2蝶形CMA长序列次优锁定不稳定/相位漂移（权重范数稳定但LS相位漂向±π），D011机制从"跟踪滞后"细化为"长序列锁定不稳定"。任务2 CMMA BER：QPSK CMMA=CMA精确相同(实现验证PASS)，16QAM CMMA仅优CMA 0.4-0.9%(modulus mismatch非主因,CMMA非强baseline)。ML方法层价值成立且更强。可选批次3或进写作准备）
 
 ## 专题定位（一句话）
 
@@ -64,7 +64,26 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 
 ## 当前位置
 
-**批次 1 数据补完完成并验证 PASS（2026-07-12，S010/D012）——写作数据就绪，可进批次 2**。R004 方向总规划 → PROMPT-007 批次 1 执行（4 任务）→ 主控独立验证全部数据。核心产出：① BER vs SNR 曲线（4 f_G × 13 SNR × 5 seeds，**CMA 高 SNR 跟踪滞后 floor 0.03-0.10 vs ML/oracle→0，直接验证 D011**）；② 16QAM BER vs f_G（确认 modulus mismatch 结构性缺陷 CMA~0.27 vs QPSK~0.10，但 ML/CMA gap **反预期地小于** QPSK）；③ 发散概率可视化数据；④ pilot overhead（连续传输下<<1%，债务(1) 部分缓解）。**新发现 seed-bias 债务**（h_mean 跨 seed CV≈1.0，非代码 bug 是 AR(1) 强相关固有，Step A 只查 PDF 未查样本均值的既有盲点）——不影响 D011 相对比较（同 seed 同 h），影响绝对 BER 跨 seed 平均，须写论文 limitations + 关键点加 seed 数。
+**批次 2 方法层加固完成并验证 PASS（2026-07-12，S011/D013）——方法层机制细化，可选批次3或进写作准备**。R004 方向总规划 → PROMPT-007 批次1（4任务，S010/D012）→ PROMPT-008 批次2（2任务，S011/D013）。核心产出：① 任务1 CMA 瞬态/稳态分解（3 f_G×20 seeds×N=5M）**反预期但经主控4步独立复现验证为真实物理现象**——稳态BER~0.32几乎不依赖f_G，机制=2×2蝶形CMA长序列次优锁定不稳定/相位漂移（|w|稳定1.4142→1.4166未发散，但LS相位0°→-172.6°漂移致BER爬向0.5），**D011机制从"跟踪滞后"细化为"长序列锁定不稳定"**（结论方向不变，ML价值更强）；② 任务2 CMMA BER（6 f_G×20 seeds×双调制，QPSK+16QAM）——QPSK CMMA=CMA精确相同(实现验证PASS，逐seed max diff=0.00)，16QAM CMMA仅优CMA 0.4-0.9%(modulus mismatch非主因，CMMA非强baseline)。**D013机制修正需回传**：r_lcr/批次1的N=2M整段BER掩盖了early/late分化。seed-bias债务仍在。
+
+- Step 1-3：完成（双偏振 9 篇 + ML 20 篇 = 29 篇精读）
+- **Step 4a：完成**（Q-DP1/2/3 可行性评估）
+- **R001/R002 调研：完成**（调制切换 Kill + ML 全谱）
+- **D004 攒材料：完成**（20 篇精读 + 候选合并 D005）
+- **D005 候选合并：完成**（Q-CMA-FADE 首选）
+- **Step 4a 维度 D MVE（Q-CMA-FADE）**：
+  - ✅ **Step A：完成**（GG 时间域衰落模型，PASS）
+  - ✅ **Step B：完成**（CMA 发散概率扫描，PASS——发散由 μ 主导，条件判据已给）
+  - ✅ **Step C：完成**（ML vs CMA MVE，PASS）→ 压力测试修正为 **Conditional Go（D008）**
+  - ✅ **R003：完成**（12 个可出结果子问题穷举）
+  - ✅ **R1/R4/R5：完成**（分析层验证）—— R1 趋势对量级差，R4 **反证深衰落触发**，R5 √n 律部分有效
+  - ✅ **R2/R7/R4修正：完成**（第二批关键前置判断）—— CMMA 不降发散，冻结完全无效，R4修正确认 μ 主导+LCR 次级
+  - ✅ **S009：完成**（用户选 B，LCR 机制 H1/H2 都不成立 + BER 影响验证，方法层重新定位 D011）
+  - ✅ **R004：完成**（方向总规划 13 发散角度 + 3 批次 + 防坑清单）
+  - ✅ **S010 批次 1：完成**（数据补完验证 PASS，D012）—— BER vs SNR / 16QAM / 发散可视化 / pilot overhead
+  - ✅ **S011 批次 2：完成**（方法层加固验证 PASS，D013）—— CMA 瞬态/稳态分解（机制细化）+ CMMA BER（增强 baseline）
+
+下一步：**批次 2 完成，可选批次 3**（盲 VQ-VAE / 自适应步长 / 发散恢复），或**直接进写作准备**。**D013 机制修正需反映在论文叙事**（不卖"跟踪滞后"卖"长序列锁定不稳定"）。**seed-bias 债务**：写论文 limitations。
 
 - Step 1-3：完成（双偏振 9 篇 + ML 20 篇 = 29 篇精读）
 - **Step 4a：完成**（Q-DP1/2/3 可行性评估）
@@ -100,3 +119,4 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 - **S008**（2026-07-11）：第二批关键前置判断 R2/R7/R4修正执行。3 子 agent 并行。R2 CMMA：P_div 与 CMA **逐点相同**（32/32 组合差异=0），多模修星座失配但完全修不好高 μ 发散。R7 冻结：**ΔP_div=0 全 24 组合**（冻结完全无效），即使冻结 53% 的块 P_div 仍 0.33，SOP 累计漂移 1774°/trial，sat.1553 [79] Matsuda 2020"停 CMA 更新"直觉被证伪。R4 修正（1krad/s SOP + 10M 符号）：μ 仍主导 r=0.70，LCR 从 +0.17→+0.42（固定 μ=1e-3 后 r=+0.88），深衰落触发仍被拒（Mann-Whitney p=0.9998），AFD 10M 下可计算。完整证据链：发散 = 高 μ 数值不稳定（主因）+ LCR（次因），深衰落是加剧因素非必要触发。分析层故事完整可发表，方法层价值减弱。详见 `S008-r2r7r4corrected-second-batch.md`
 - **S009**（2026-07-12）：用户选 B，先验证 LCR 机制再定方法层。2 子 agent 并行。LCR 机制：**H1（重收敛累积）和 H2（边沿梯度突变）都不成立**——发散 100% 在正常区，距最近 up-cross 中位 2530 block，<100 block 占 0%。LCR~P_div r=0.96 是伪相关（代理变量：高 f_G → 短 τ_c → 块间 h 波动大 → 梯度方差大 → 数值不稳定）。BER 影响：**方法层真价值出现**——CMA 安全 μ（不发散）下 BER 仍比 oracle 差 2.9-2266×（跟踪滞后惩罚），ML 全 6 f_G 优于 CMA（1.8-数百倍），2 个 f_G 达到 oracle。方法层从"ML 不发散（trivial）"重新定位为"ML 避免 CMA 跟踪滞后惩罚（非 trivial）"。详见 `S009-lcr-mechanism-and-ber-validation.md`
 - **S010**（2026-07-12）：批次 1 数据补完（R004 批次 1）执行回传后主控独立验证集成。4 任务全 PASS：① BER vs SNR（4 f_G×13 SNR×5 seeds）CMA 高 SNR 跟踪滞后 floor 0.03-0.10 vs ML/oracle→0 直接验证 D011；② 16QAM BER 确认 modulus mismatch（CMA~0.27 vs QPSK~0.10）但 ML/CMA gap **反预期小于 QPSK**（高阶星座同时伤 ML/oracle，诚实记录）；③ 发散概率可视化；④ pilot overhead 连续传输下<<1%（债务(1) 缓解）。**新发现 seed-bias 债务**：`gg_time_envelope` h_mean 跨 seed CV≈1.0（20 seeds 实测，N=10M 仅降到 0.90），根因是 AR(1) ρ≈0.97 强相关非代码 bug，Step A 只查 PDF 未查样本均值的既有盲点。影响判定：**不影响 D011 相对比较**（同 seed 同 h，比率免疫）+ 影响**绝对 BER 跨 seed 平均**（须写 limitations + 加 seed 数）。D012 新建。详见 `S010-batch1-data-completion-integration.md`
+- **S011**（2026-07-12）：批次 2 方法层加固（R004 批次 2）执行回传后主控独立 P6 验证。2 任务：① 任务1 CMA 瞬态/稳态分解（3 f_G×20 seeds×N=5M）**反预期但经主控4步独立复现验证为真实物理现象**——稳态BER~0.32几乎不依赖f_G（预期f_G=30≈oracle被否证），窗口BER"高→下降→缓慢爬升至0.5"。主控4步验证：排除BER bug(3方法一致)+排除seed scheme偏置(N=2M task1更优)+决定性复现(N=2M late~0.14 vs N=5M late~0.5)+机制定位(|w|稳定1.4142→1.4166未发散但LS相位0°→-172.6°漂移)。机制=2×2蝶形CMA长序列次优锁定不稳定/相位漂移。**D011机制从"跟踪滞后"细化为"长序列锁定不稳定"**（D013新建），结论方向不变ML价值更强。② 任务2 CMMA BER（6 f_G×20 seeds×QPSK+16QAM）——QPSK CMMA=CMA精确相同(逐seed max diff=0.00实现验证PASS)，16QAM CMMA仅优CMA 0.4-0.9%(modulus mismatch非主因，CMMA非强baseline)。**r_lcr/批次1的N=2M整段BER掩盖early/late分化需补说明**。D013新建。详见 `S011-batch2-method-reinforcement.md`
