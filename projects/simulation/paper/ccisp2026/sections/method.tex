@@ -1,0 +1,38 @@
+\section{Method}
+\label{sec:method}
+
+We consider two carrier phase estimators that operate independently on each fading block, differing only in how they remove the modulation from the received samples. The data-aided (DA) estimator removes modulation by dividing each received pilot sample by the known pilot symbol $p$, averages the resulting phases over the $N_p$ pilot symbols within the block, and takes the argument:
+\begin{equation}
+\hat{\theta}_{\mathrm{DA}} = \angle(r_p \cdot p^{*}).
+\label{eq:da-estimator}
+\end{equation}
+The non-data-aided (NDA) estimator instead raises every sample in the block to the $M_0$-th power, averages, and scales the resulting argument by $1/M_0$:
+\begin{equation}
+\hat{\theta}_{\mathrm{NDA}} = \frac{1}{M_0} \angle\Big(\textstyle\sum_k r_k^{M_0}\Big).
+\label{eq:nda-estimator}
+\end{equation}
+where $M_0 = 8$ for $(8,8)$-16APSK (one period per ring). The DA estimator achieves high accuracy at low SNR since the pilot symbol is known exactly at the receiver, but spends $25\%$ of the bandwidth on pilots ($1.25$ dB overhead); the NDA estimator wastes no bandwidth yet suffers from squaring loss that degrades its phase-estimation accuracy at low SNR \cite{viterbi1983}. The two estimators therefore dominate in disjoint SNR regions. A practical difference is that the DA estimate is modulation-format independent, since the pilot symbols are known a priori and carry no payload, whereas the NDA estimate's reliability is governed by the Mth-power squaring loss, whose severity scales with $M_0$: for the $(8,8)$-16APSK constellation with $M_0 = 8$, the noise amplification incurred in raising to the eighth power is considerably larger than for lower-order formats such as QPSK ($M_0 = 4$), which narrows the NDA estimator's usable SNR range and is precisely why a per-block selection between the two is beneficial on this constellation.
+
+\begin{figure}[t]
+  \centering
+  \fbox{%
+    \parbox[c][1.25in][c]{0.92\columnwidth}{%
+      \centering
+      \textit{DRAFT FIGURE PLACEHOLDER}\\
+      Carrier phase recovery and per-block estimator switching mechanism pending
+    }%
+  }
+  \caption{Draft placeholder for the carrier phase recovery and per-block estimator-switching mechanism.}
+  \label{fig:cpr-mechanism-placeholder}
+\end{figure}
+
+To exploit this complementarity, the receiver measures the per-block SNR
+\begin{equation}
+\gamma_{\mathrm{blk}} = |h_b|^{2} \, E_s / N_0,
+\label{eq:block-snr}
+\end{equation}
+i.e., the SNR over a single fading block of $N_{\mathrm{blk}}$ symbols within which the channel coefficient $h_b$ is constant, and selects the estimator with the lower expected bit error rate: select $\hat{\theta}_{\mathrm{DA}}$ when $\gamma_{\mathrm{blk}} < \gamma_{\mathrm{th}}$, and $\hat{\theta}_{\mathrm{NDA}}$ otherwise. Here $h_b$ denotes the per-block channel amplitude, estimated from the received block, and $\gamma_{\mathrm{th}}$ is the fixed effective-SNR switching threshold. The BER curves exhibit an observed, regime-dependent crossover that motivates this choice, but the threshold is not re-estimated from that crossing. The scheme thus performs a per-block, SNR-driven selection between the DA and NDA estimators rather than introducing a new estimator or a new closed-loop component; it adapts an existing DA/NDA choice to the locally prevailing SNR, and the fraction of operating points in which this selection recovers the lower-BER estimator is quantified in Section~\ref{sec:switching-gain}.
+
+Because the two estimators dominate in disjoint SNR regions, committing to either one alone forgoes the advantage the other provides outside its region. An all-DA receiver pays the $1.25$ dB pilot overhead at every SNR, including the high-SNR region where the NDA estimator---unburdened by pilots---already achieves the lower BER; conversely, an all-NDA receiver incurs the squaring-loss penalty at low SNR, where the DA estimator's pilot-based estimate is more accurate \cite{viterbi1983}. The per-block switching rule recovers the lower-BER choice in each region rather than paying either penalty globally. Regarding the switching criterion, the per-block SNR $\gamma_{\mathrm{blk}}$ is a natural statistic for this selection because the DA/NDA trade-off is itself governed by SNR: $\gamma_{\mathrm{blk}}$ is available at the receiver without additional overhead (it is computed from the already-received block), whereas a smoothed or genie-aided SNR estimate would either introduce latency or require side information unavailable in practice. A further distinction is that the DA estimate is independent of the payload constellation, since the pilot symbol is known a priori, whereas the NDA estimator must raise the received samples to the $M_0$-th power matched to the constellation geometry ($M_0 = 8$ for $(8,8)$-16APSK); the switching scheme thus inherits the modulation-format independence of the DA branch in the low-SNR region where the DA estimator is selected.
+
+The threshold $\gamma_{\mathrm{th}}$ is set to a fixed effective-SNR value, chosen to separate the low-SNR region where the DA estimator yields the lower BER from the high-SNR region where the NDA estimator does. This choice involves a trade-off: setting $\gamma_{\mathrm{th}}$ too low leaves a low-SNR region in which the NDA estimator is erroneously selected and suffers from squaring loss, whereas setting it too high retains the DA estimator---and its pilot overhead---in a high-SNR region where the NDA estimator is already superior. Aligning $\gamma_{\mathrm{th}}$ with this region boundary balances these two error regions. In terms of implementation cost, the scheme requires only one per-block SNR estimate ($\gamma_{\mathrm{blk}}$, a ratio of known quantities) and one comparison against $\gamma_{\mathrm{th}}$ per block, on top of the two phase estimates that any single-estimator receiver would compute; this incurs negligible additional complexity relative to a fixed DA or fixed NDA receiver.

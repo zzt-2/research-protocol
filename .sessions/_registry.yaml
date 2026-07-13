@@ -479,3 +479,14 @@ topics:
       - slug: 2026-06-10-research-direction-exploration
         reason: 继承A3/N1/③三条腿Kill+R006大规模补盲180hits坍缩结论"物理可行解空间窄"
     conflicts_with: []
+
+  - slug: 2026-07-13-ccisp-submission-prep
+    title: CCISP 2026 LaTeX 投稿骨架准备
+    status: active
+    created: "2026-07-13"
+    last_updated: "2026-07-13（S001：官方模板硬门通过；4 组引用 unresolved；用户授权后 MiKTeX/Poppler/Perl 构建链已恢复，Gate 0 仍为 PARTIAL）"
+    description: "独立的 CCISP 2026 LaTeX 投稿准备专题：先核验官方模板来源、正文与引用资产、以及本机构建链，再建立首轮可编译双栏骨架。只做组装、编译、渲染、版面诊断和 issues 登记；不跑仿真、不改 W001-W003、不继续 Fig.1/Fig.2。"
+    depends_on:
+      - slug: 2026-07-09-thesis-writing
+        reason: "读取 W001-W003、R011、R016、R018、revision-queue 和 D008/D009/D011/D013/D014，复用已定英文正文、术语、公式和图表规格。"
+    conflicts_with: []

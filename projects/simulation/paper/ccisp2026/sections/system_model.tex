@@ -1,0 +1,29 @@
+\section{System Model}
+
+\begin{figure}[t]
+  \centering
+  \fbox{%
+    \parbox[c][1.15in][c]{0.92\columnwidth}{%
+      \centering
+      \textit{DRAFT PLACEHOLDER}\\
+      System overview figure pending visual acceptance
+    }%
+  }
+  \caption{System overview placeholder for the coherent FSO link and per-block estimator switching.}
+  \label{fig:system-overview-placeholder}
+\end{figure}
+
+As depicted in Fig.~\ref{fig:system-overview-placeholder}, we consider a coherent satellite-to-ground (and uplink) FSO link operating with \((8,8)\)-16APSK modulation, where the constellation comprises \(M_0 = 8\) points per ring \textcolor{red}{[UNRESOLVED CITATION: B11]}. The atmospheric channel is modeled as a Gamma-Gamma block-fading channel \cite{alhabash2001}: the channel undergoes block fading (quasi-static), such that the fading coefficient \(h_b\) remains constant over a block of \(N_{\mathrm{blk}} = 100\) symbols and varies independently between blocks. The Gamma-Gamma shape parameters \((\alpha, \beta)\) are set to \((4.0, 3.0)\), \((2.5, 1.8)\), and \((1.5, 0.8)\) for the weak, moderate, and strong downlink turbulence regimes, respectively, and \((1.2, 0.9)\) and \((1.0, 0.7)\) for the moderate and strong uplink regimes. The pair \((\alpha, \beta)\) determines the Rytov variance \(\sigma_R^2\), a standard measure of turbulence strength \cite{alhabash2001}; smaller values of \(\alpha\) and \(\beta\) correspond to stronger turbulence and, consequently, deeper amplitude fading.
+
+The discrete-time complex baseband received signal at symbol index \(k\) within block \(b\) is modeled as
+\[
+  r_k = h_b\,s_k\,e^{j\theta} + n_k,
+\]
+where \(s_k\) is the transmitted \((8,8)\)-16APSK symbol, \(\theta\) denotes the carrier phase offset (denoted \(\phi\) in \textcolor{red}{[UNRESOLVED CITATION: B11]}; we follow the \(\theta\) notation of \cite{viterbi1983}), and \(n_k\) is complex AWGN with one-sided power spectral density \(N_0\); the signal-to-noise ratio is \(\gamma = E_s/N_0\), where \(E_s\) is the per-symbol energy. The block length \(N_{\mathrm{blk}} = 100\) symbols is chosen well below the coherence time of both the laser phase noise and the atmospheric fading, which justifies the quasi-static (block-fading) assumption \textcolor{red}{[UNRESOLVED CITATION: Johst]}. The frame structure inserts one pilot symbol every four symbols, yielding a pilot spacing of \(1/4\) and a pilot overhead of 25\%, equivalent to a 1.25 dB SNR penalty \(10\log_{10}(4/3)\) \textcolor{red}{[UNRESOLVED CITATION: Shieh-Djordjevic 2010]}. This pilot density follows the frame structure adopted in \textcolor{red}{[UNRESOLVED CITATION: B11]}, in which one pilot symbol is interleaved every three data symbols; the periodic arrangement lets the DA estimator sample the carrier phase at regular intervals across the block, while the three-to-one data-to-pilot ratio keeps the overhead moderate. The residual carrier phase is modeled as a Wiener phase noise process---i.e., a random walk with independent zero-mean Gaussian increments---of per-symbol variance
+\[
+  \sigma_\theta^2 = 2\pi\,\Delta\nu\,T_s
+  \quad
+  \left(= \sigma_p^2\ \text{in B11}\right),
+\]
+\textcolor{red}{[UNRESOLVED CITATION: B11]}
+where \(\Delta\nu = 10\) kHz is the laser linewidth and \(T_s\) is the symbol period. Carrier phase recovery is performed per DSP block of \(N_{\mathrm{DFT}} = 256\) samples, and the HD-FEC threshold is \(3.8 \times 10^{-3}\) (7\% overhead) \textcolor{red}{[UNRESOLVED CITATION: B11]}.
