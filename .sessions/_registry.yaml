@@ -456,8 +456,8 @@ topics:
     title: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
     status: active
     created: "2026-07-10"
-    last_updated: "2026-07-13（PROMPT-011 根因诊断完成：通用 DD/酉约束方案已有成熟先例；旧 _cma.py 非标准复数 CMA 更新，旧 BER 未消除偏振排列。3 seeds 中 current fixed BER 0.474→PI-BER 0.031、swap 3/3。D016 暂停新方法实现，转 10+ seeds 基线合法性重审；未重审前不进 Contract/不写论文结论）"
-    description: "scenario-transfer-pivot D003 解锁双偏振空间后，按 FR-22 从 GW Step 1 重走地勘。搜索空间从单偏振扩到含双偏振 OSL（sat.1553 §6 偏振解复用层主轴 + §3/4/5 次 + 迁移源参照 + 综述锚）。S001 Step1-3完成（15查询43候选8子方向/9篇+sat1553精读/3Q#过四判据）。S002 Step4a完成：Q-DP1(动态SOP跟踪)Kill因A0§1致命（均衡器300krad/s高出湍流致SOP 1-2数量级，A物理基础不足D001）/ Q-DP2(CMA fade发散)Conditional Go（空白真实但需自建GG时间模型D002）/ Q-DP3(跨帧恢复)Conditional Go首选（物理基础最扎实D003）。S003-S004 D004攒材料+D005候选合并Q-CMA-FADE。S005 Step A+B PASS（GG时间模型+CMA发散扫描补sat.1553§6.3空白）。S006 Step C PASS（ML vs CMA MVE，Go判定）。Q-CMA-FADE两层贡献全PASS方向确认。"
+    last_updated: "2026-07-13（PROMPT-012 双口径历史重审完成，D018/V002：S005 μ 主导保留但零风险阈值撤回；N=5M CMA/ML 固定标签约0.5均为交换主导；N=2M 三 f_G 下 ML PI-BER 逐 seed 10/10 优于 CMA。待选择方法层叙事，不自动进 Contract）"
+    description: "scenario-transfer-pivot D003 解锁双偏振空间后，按 FR-22 从 GW Step 1 重走地勘。搜索空间从单偏振扩到含双偏振 OSL（sat.1553 §6 偏振解复用层主轴 + §3/4/5 次 + 迁移源参照 + 综述锚）。S001 Step1-3完成（15查询43候选8子方向/9篇+sat1553精读/3Q#过四判据）。S002 Step4a完成：Q-DP1(动态SOP跟踪)Kill因A0§1致命（均衡器300krad/s高出湍流致SOP 1-2数量级，A物理基础不足D001）/ Q-DP2(CMA fade发散)Conditional Go（空白真实但需自建GG时间模型D002）/ Q-DP3(跨帧恢复)Conditional Go首选（物理基础最扎实D003）。S003-S004 D004攒材料+D005候选合并Q-CMA-FADE。S005-S013 完成 GG 时间模型、发散扫描、ML/CMA MVE、机制复核与双口径历史审计；D018 规定 fixed/PI 必须并报、PI 需流标识开销，并将 N=2M ML 优势限定在已审计参数域。"
     depends_on:
       - slug: 2026-07-10-scenario-transfer-pivot
         reason: D001 三维度调整 + D002 角度素材 schema + D003 双偏振空间解锁，方法论准备就绪后 GW 执行转出
