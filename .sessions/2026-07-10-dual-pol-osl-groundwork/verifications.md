@@ -1,4 +1,4 @@
-# Verifications — 双偏振星地光通信 DSP Groundwork
+﻿﻿# Verifications — 双偏振星地光通信 DSP Groundwork
 
 ## V001: PROMPT-011 CMA 根因诊断与独立复审
 
@@ -97,3 +97,52 @@ git diff --check (task files): exit 0
 ### 结论
 
 PASS
+---
+
+## V004: PROMPT-013 交换质量真实性与机制验证
+
+> date: 2026-07-13
+> 关联：S013 / D020
+
+### 验证项
+
+- [x] Q1 原始 trials：独立重算 seeds 1000–1029、shared seed、finite、PI/excess、胜场与 Wilcoxon → PASS
+- [x] Q1 provenance：记录的 9 项 SHA、P12 结果 SHA、Q1 JSON 被 Q2 引用的 SHA → PASS
+- [x] Q2 固定 trial/窗口：high/low 六 seeds、每方法 13 windows、Q1 gap 与共享 realization → PASS
+- [x] H_a/H_b/H_c：不信任 summary，按预注册阈值独立重算 → H_a FAIL，H_b UNKNOWN，H_c 容量同构 PASS 但初始化混杂存在
+- [x] 目标代码验证：Q1/Q2/P12 long/short 回归与 5 个相关脚本 py_compile → PASS
+- [ ] P12 divergence 回归：范围外脏改删除 `BLOCK/T_S` 导出，collection ImportError → BLOCKED（非 PROMPT-013 路径）
+
+### 证据
+
+```text
+Q1: 30 unique seeds; nonfinite=0
+CMA/ML/oracle PI mean = 0.0213143867 / 0.0077507067 / 0.0065967333
+CMA/ML excess mean = 0.0147176533 / 0.0011539733
+ML/CMA/tie = 30/0/0; exact two-sided Wilcoxon W=0, p=1.862645149230957e-09
+clean<=0.05 CMA=25/5 ML=29/1; clean<0.01 CMA=20/10 ML=25/5
+
+Q2: fixed high=[1006,1017,1011], low=[1024,1028,1029]; 13 windows each; nonfinite=0
+H_a = falsified
+H_b = unknown; oracle rho null 10/12; freeze main threshold current=0/3, standard=0/3
+H_c = 88/88 real DOF; no bias/nonlinearity; ML cross-center actual=1 vs comment/CMA=0
+Q1 9 SHA + Q2 12 SHA all match current disk
+
+python -m pytest [Q1,Q2,P12-longseq,P12-shortseq] -q
+60 passed in 3.27s
+py_compile (5 related scripts): exit 0
+P12 divergence suite: collection exit 2, ImportError BLOCK/T_S from dirty r_lcr_ber_impact.py
+```
+
+正式 JSON：
+
+- `projects/simulation/results/cma-fade-divergence/prompt013_swap_quality.json`
+- `projects/simulation/results/cma-fade-divergence/prompt013_swap_mechanism.json`
+
+### 结论
+
+PARTIAL
+
+### 后续（FAIL/PARTIAL 时）
+
+Q1 统计差异通过；Q2 不得写成机制确认。若继续，先冻结合法 standard CMA 与 ML 初始化合同，再预注册重跑 30-seed 三方比较。P12 divergence collection blocker 属范围外工作树改动，由对应任务处理。

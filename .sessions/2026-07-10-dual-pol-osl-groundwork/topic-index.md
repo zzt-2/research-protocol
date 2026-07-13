@@ -1,7 +1,7 @@
-# Topic Index: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
+﻿﻿# Topic Index: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
 
 > slug: 2026-07-10-dual-pol-osl-groundwork
-> status: active | created 2026-07-10 | last_updated 2026-07-13（PROMPT-012 双口径重审完成并经独立验证：S005 μ 主导保留但零风险阈值撤回；N=5M CMA/ML 固定标签约 0.5 均主要为交换；N=2M 三 f_G 下 ML PI-BER 逐 seed 10/10 优于 CMA。D018/V002）
+> status: active | created 2026-07-10 | last_updated 2026-07-13（PROMPT-013：30-seed 连续指标 Q1 PASS；机制 H_a 证伪、H_b unknown，standard CMA 暴露实现混杂，拒绝泛化为经典 CMA 机制贡献。D020/V004）
 
 ## 专题定位（一句话）
 
@@ -62,10 +62,11 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 - **L-DP5/L-DP6 跨帧结论部分是预期性论述**：L-DP5 湍流未显式仿真，跨帧挂起是预期分析非实测。Q-DP3 进 MVE 前需用真实 GG 时间模型验证。
 - **GG 时间域衰落模型是 Q-DP2/DP3 共享基建**：现有文献只给幅度 PDF，衰落持续时间/频率全篇缺失，需自建。
 - **双口径是后续性能结论的强制口径（D018）**：fixed-label 与 PI-BER 必须并报；PI 需 pilot/帧头消歧。N=5M 的固定标签约 0.5 是交换而非信息丢失；N=2M 的 ML>CMA PI 优势只在已审计参数域内成立。
+- **PROMPT-013 不形成机制贡献（D020）**：30 seeds 只确认 ML 优于 current scalar-error CMA；H_a 证伪，H_b 严格 unknown 且 freeze 主效应 0/3，standard CMA 在 2/3 高差 seed 上近乎消除差距。未统一 standard baseline 与初始化前，不得泛化为 ML 优于经典 CMA。
 
 ## 当前位置
 
-**PROMPT-012 双口径历史重审已完成（2026-07-13，D018/V002）**。S005 40 trials、N=5M 长序列 10 trials、N=2M 三频点 30 trials 均达到每格 10 shared seeds，并由独立 verifier 重算 PASS。当前位置从“基线合法性待审”转为“基于已审计边界选择论文/方法层叙事”：发散 μ 主导保留但 `μ≤1e-3` 只称低风险；D014/D015 的固定标签约 0.5 按交换解释；N=2M 的 ML PI 优势保留但不得跨长度外推。选定后续叙事前不新增方法实验、不进 Contract。
+**PROMPT-013 已完成（2026-07-13，S013 续，D020/V004）**。Q1 连续指标 PASS；Q2 H_a 证伪、H_b 严格 unknown，standard CMA 暴露实现变体混杂。该分支不形成论文机制贡献，也不进入 Contract。
 
 - Step 1-3：完成（双偏振 9 篇 + ML 20 篇 = 29 篇精读）
 - **Step 4a：完成**（Q-DP1/2/3 可行性评估）
@@ -86,8 +87,9 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
   - ✅ **S011 续 + D014：完成**（D013 机制误诊纠正）—— 主控独立深查证明真因是 SOP 驱动极化串扰（非相位漂移），SOP×f_G 矩阵证明 D011 跟踪滞后叙事大部分被推翻，论文主卖点改为 SOP 极化鲁棒性
   - ⚠️ **S012 + D016/V001：PROMPT-011 前提 FAIL**—— fixed-label 0.5 主要是 X/Y swap；旧 CMA 非标准更新。转 10+ seeds 基线合法性重审
   - ✅ **S013 + D018/V002：PROMPT-012 双口径重审 PASS**—— S005 阈值收紧；N=5M CMA/ML 均为交换主导；N=2M 的 ML PI 优势在三 f_G 保留
+  - ⚠️ **S013 续 + D020/V004：PROMPT-013 机制验证 PARTIAL**——30-seed Q1 PASS；H_a 证伪、H_b unknown；standard CMA 混杂使“ML 优于经典 CMA”贡献不可成立
 
-下一步：**只做 D018 后续叙事选择**——重写为“短序列 PI 优势 + 流标识开销/适用边界”，或停止方法层并保留发散分析层。选择前不启动批次 3 或新方法实验。
+下一步：PROMPT-013 不自动续跑。若继续，先冻结 standard CMA 与 ML 初始化合同，再预注册 30-seed 三方比较；不得进入 Contract。
 
 - Step 1-3：完成（双偏振 9 篇 + ML 20 篇 = 29 篇精读）
 - **Step 4a：完成**（Q-DP1/2/3 可行性评估）
@@ -125,4 +127,4 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 - **S010**（2026-07-12）：批次 1 数据补完（R004 批次 1）执行回传后主控独立验证集成。4 任务全 PASS：① BER vs SNR（4 f_G×13 SNR×5 seeds）CMA 高 SNR 跟踪滞后 floor 0.03-0.10 vs ML/oracle→0 直接验证 D011；② 16QAM BER 确认 modulus mismatch（CMA~0.27 vs QPSK~0.10）但 ML/CMA gap **反预期小于 QPSK**（高阶星座同时伤 ML/oracle，诚实记录）；③ 发散概率可视化；④ pilot overhead 连续传输下<<1%（债务(1) 缓解）。**新发现 seed-bias 债务**：`gg_time_envelope` h_mean 跨 seed CV≈1.0（20 seeds 实测，N=10M 仅降到 0.90），根因是 AR(1) ρ≈0.97 强相关非代码 bug，Step A 只查 PDF 未查样本均值的既有盲点。影响判定：**不影响 D011 相对比较**（同 seed 同 h，比率免疫）+ 影响**绝对 BER 跨 seed 平均**（须写 limitations + 加 seed 数）。D012 新建。详见 `S010-batch1-data-completion-integration.md`
 - **S011**（2026-07-12）：批次 2 方法层加固（R004 批次 2）执行回传后主控独立 P6 验证。2 任务：① 任务1 CMA 瞬态/稳态分解（3 f_G×20 seeds×N=5M）**反预期但经主控4步独立复现验证为真实物理现象**——稳态BER~0.32几乎不依赖f_G（预期f_G=30≈oracle被否证），窗口BER"高→下降→缓慢爬升至0.5"。主控4步验证：排除BER bug(3方法一致)+排除seed scheme偏置(N=2M task1更优)+决定性复现(N=2M late~0.14 vs N=5M late~0.5)+机制定位(|w|稳定1.4142→1.4166未发散但LS相位0°→-172.6°漂移)。机制=2×2蝶形CMA长序列次优锁定不稳定/相位漂移。**D011机制从"跟踪滞后"细化为"长序列锁定不稳定"**（D013新建），结论方向不变ML价值更强。② 任务2 CMMA BER（6 f_G×20 seeds×QPSK+16QAM）——QPSK CMMA=CMA精确相同(逐seed max diff=0.00实现验证PASS)，16QAM CMMA仅优CMA 0.4-0.9%(modulus mismatch非主因，CMMA非强baseline)。**r_lcr/批次1的N=2M整段BER掩盖early/late分化需补说明**。D013新建。详见 `S011-batch2-method-reinforcement.md`
 - **S012**（2026-07-13）：PROMPT-011 先调研再最小验证。文献确认 DD/酉约束/两级 CMA 已成熟；机制审计发现连续酉多解表述错误、D014 未区分 swap/同源、旧 `_cma.py` 缺标准 CMA 输出因子。3 shared seeds：current fixed `0.4741±0.0201`→PI `0.0306±0.0253`、swap 3/3；standard PI `0.0349±0.0268`。D016 暂停新方法，转基线重审；V001 PARTIAL（阻断证据充分，正式数字待≥10 seeds）。详见 `S012-prompt011-cma-root-diagnostic.md`
-- **S013**（2026-07-13）：PROMPT-012 双口径历史重审完成。S005 40 trials 证明发散全为范数爆炸、μ 主导保留但 `μ≤1e-3` 为 3/20 发散；N=5M CMA fixed `0.47672`→PI `0.03174`（clean/degraded swap 8/2），ML fixed `0.49741`→PI `0.00523`（clean swap 10/10）；N=2M 三 f_G 下 ML PI-BER 均逐 seed 10/10 优于 CMA。D018 建立后续强制双口径与适用域，V002 PASS。详见 `S013-dual-metric-historical-reaudit.md` 与 `PROMPT_012_REPORT.md`
+- **S013**（2026-07-13）：PROMPT-012 双口径历史重审完成，并续接 PROMPT-013。P012 确立 fixed/PI 强制口径；P013 在 30 seeds 上确认 ML 相对 current CMA 30/30 更优，但 H_a 证伪、H_b unknown，standard CMA 在两个高差 seed 近乎消除差距，故 D020 拒绝机制贡献泛化，V004 PARTIAL。详见 `S013-dual-metric-historical-reaudit.md`、`PROMPT_012_REPORT.md` 与 `PROMPT_013_REPORT.md`

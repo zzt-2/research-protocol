@@ -1,4 +1,4 @@
-# decisions.md — 双偏振 OSL Groundwork 专题
+﻿﻿# decisions.md — 双偏振 OSL Groundwork 专题
 
 > 架构决策、方向选择、路线失败记录。每条有取代/被取代字段形成血缘链。
 
@@ -952,10 +952,10 @@ S012 / V001
 
 ## D017: 主控对 D016 的修正 — 代码 bug 影响被夸大，双口径重审任务定义
 
-> status: active
+> status: partially superseded（D020 仅收窄修正点 1；双口径重审任务定义及其余修正保留）
 > date: 2026-07-13
 > 取代：**D016 第 4 条理由（"代码缺输出因子 z 导致既有结果不能外推"）**——主控独立验证证明该 bug 不影响性能。D016 其余结论（暂停新方法、双口径重审、文献调研扎实）有效保留
-> 被取代：无
+> 被取代：D020（仅取代“缺输出因子 z 不影响性能”的普遍化结论）
 > 依据: 验证: 主控独立核验（CMA 梯度公式对照 Godard 1980 + 独立复现排列不变 BER + 独立复现 X/Y swap 相关性）+ PROMPT_011_REPORT.md 第 28-29 行（执行对话自己的数据）
 
 ### 决策
@@ -1056,3 +1056,50 @@ PROMPT-012 双口径历史重审通过。此后 Q-CMA-FADE 只能使用以下口
 ### 来源
 
 S013 / V002
+---
+
+## D020: PROMPT-013 机制归因失败记录 — ML 相对 current CMA 的优势不可泛化为相对经典 CMA 的机制优势
+
+> status: rejected
+> date: 2026-07-13
+> 取代：D017 修正点 1 中“缺输出因子 z 不影响性能”的普遍化结论
+> 被取代：无
+> 依据: 验证: V004 + `projects/simulation/explore/cma-fade-divergence/PROMPT_013_REPORT.md` + 独立 verifier 对 30/6 trials、21 项 SHA 与阈值判定的重算
+
+### 决策
+
+拒绝把“ML 的监督 MSE 使交换更干净”或“固定权重天然优于在线 CMA”作为当前论文机制贡献；Q1 的 30-seed 结论只适用于项目中的 scalar-error CMA，不得泛化为 ML 优于经典 CMA。
+
+### 核心失败机制
+
+Q1 确认 ML 相对 current CMA 的超额 PI-BER 30/30 更低，但 Q2 的目标函数错位 H_a 被预注册阈值证伪，在线更新推坏 H_b 严格为 unknown 且冻结主效应 current/standard 均 0/3 达标。加入输出因子 `z` 的 standard CMA 在高差 seed 1006/1017 上将 PI-BER 从约 `0.033/0.032` 降至约 `4.4e-5/4.7e-5`，证明实现变体会改变高差样本，推翻 D017 基于 3 seeds 得出的普遍“性能不受影响”。
+
+### 否决了什么
+
+- 否决将 current scalar-error CMA 直接称为经典 CMA 并据此声称 ML 机制优势。
+- 否决“恒模目标已满意于次优交换解”的当前证据链。
+- 否决“继续在线更新把可用映射推坏”的当前证据链。
+- 不否决 Q1 在冻结实现与参数域内的统计事实，也不否决后续做合法三方 baseline 重审。
+
+### 可复用部分
+
+30-seed 连续指标门控、PI-BER/超额 PI-BER 双口径、固定六 seed 机制诊断、current/standard/frozen 对照、完整权重与逐窗诊断均可复用。
+
+### 具体数据
+
+- Q1：CMA/ML 超额 PI-BER 均值 `0.0147177/0.00115397`，ML 30/30，`W=0, p=1.8626e-9`。
+- H_a：current 的高/低 NMSE 比 `1.984`，但 `J_CM`/梯度比 `4.189/1.791`；standard 的 NMSE/泄漏比 `0.874/0.797`，均不支持。
+- H_b：10/12 个 oracle Spearman 因常数窗口不可定义；freeze 主阈值 current/standard 均 0/3。
+- H_c：CMA/ML 均 88 实自由度；ML cross FIR 实际中心 1 与注释 0、CMA 0 不一致。
+
+### 影响范围
+
+D017 修正点 1 被收窄；D018 的 current-CMA 双口径事实保留，但“CMA”后续必须标明实现变体。Q-CMA-FADE 保持 GW Step 4a，不因 PROMPT-013 进入 Contract。若继续，先冻结 standard CMA 与 ML 初始化合同，再重跑预注册 30-seed 三方比较。
+
+### 触发原话
+
+无（技术推导；用户本轮要求按修订口径执行属于操作与实验合同确认，失败结论来自验证数据）
+
+### 来源
+
+S013 续 / V004
