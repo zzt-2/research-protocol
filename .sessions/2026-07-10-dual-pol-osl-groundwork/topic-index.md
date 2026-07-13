@@ -1,7 +1,7 @@
-﻿﻿# Topic Index: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
+# Topic Index: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
 
 > slug: 2026-07-10-dual-pol-osl-groundwork
-> status: active | created 2026-07-10 | last_updated 2026-07-13（PROMPT-013：30-seed 连续指标 Q1 PASS；机制 H_a 证伪、H_b unknown，standard CMA 暴露实现混杂，拒绝泛化为经典 CMA 机制贡献。D020/V004）
+> status: active | created 2026-07-10 | last_updated 2026-07-13（PROMPT-014 盲 VQ-VAE 实现通过代码审查，但正式比较在 11/30 cells 因首末 batch loss sanity 语义失配而截断；当前候选被拒，不判方法 Go/No-Go。D019/V003）
 
 ## 专题定位（一句话）
 
@@ -63,10 +63,11 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 - **GG 时间域衰落模型是 Q-DP2/DP3 共享基建**：现有文献只给幅度 PDF，衰落持续时间/频率全篇缺失，需自建。
 - **双口径是后续性能结论的强制口径（D018）**：fixed-label 与 PI-BER 必须并报；PI 需 pilot/帧头消歧。N=5M 的固定标签约 0.5 是交换而非信息丢失；N=2M 的 ML>CMA PI 优势只在已审计参数域内成立。
 - **PROMPT-013 不形成机制贡献（D020）**：30 seeds 只确认 ML 优于 current scalar-error CMA；H_a 证伪，H_b 严格 unknown 且 freeze 主效应 0/3，standard CMA 在 2/3 高差 seed 上近乎消除差距。未统一 standard baseline 与初始化前，不得泛化为 ML 优于经典 CMA。
+- **PROMPT-014 首轮不形成性能结论（D019）**：盲 VQ-VAE 实现和 11 个诊断 cells 可复用，但顺序不同 batch 的首末 loss 不能作为固定 probe 收敛证据；当前 SHA 的 30-cell 候选被拒，11/11 paired wins 不得外推。
 
 ## 当前位置
 
-**PROMPT-013 已完成（2026-07-13，S013 续，D020/V004）**。Q1 连续指标 PASS；Q2 H_a 证伪、H_b 严格 unknown，standard CMA 暴露实现变体混杂。该分支不形成论文机制贡献，也不进入 Contract。
+**统一合法 baseline 重比立项（2026-07-13，D021）**。主控独立复核 PROMPT-013 Q1/Q2 后确认：(1) Q1 ML 优于 current-CMA 30/30, p=1.86e-9 属实；(2) Q2 standard CMA 在 high-gap seed 1006/1017 把 PI-BER 从 0.033→4.5e-5（752×/688×），seed 1011 无效；(3) H_c 发现 ML 交叉支路初始化混杂（4 FIR 中心全=1 vs CMA 对角 wxy/wyx=0）。两个 baseline 混杂未解除前，"ML 优于 CMA"卖点冻结。用户决策：先统一合法 baseline 再重比（D021），PROMPT-014 盲 VAE 挂起等 baseline 解决。
 
 - Step 1-3：完成（双偏振 9 篇 + ML 20 篇 = 29 篇精读）
 - **Step 4a：完成**（Q-DP1/2/3 可行性评估）
@@ -87,27 +88,11 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
   - ✅ **S011 续 + D014：完成**（D013 机制误诊纠正）—— 主控独立深查证明真因是 SOP 驱动极化串扰（非相位漂移），SOP×f_G 矩阵证明 D011 跟踪滞后叙事大部分被推翻，论文主卖点改为 SOP 极化鲁棒性
   - ⚠️ **S012 + D016/V001：PROMPT-011 前提 FAIL**—— fixed-label 0.5 主要是 X/Y swap；旧 CMA 非标准更新。转 10+ seeds 基线合法性重审
   - ✅ **S013 + D018/V002：PROMPT-012 双口径重审 PASS**—— S005 阈值收紧；N=5M CMA/ML 均为交换主导；N=2M 的 ML PI 优势在三 f_G 保留
-  - ⚠️ **S013 续 + D020/V004：PROMPT-013 机制验证 PARTIAL**——30-seed Q1 PASS；H_a 证伪、H_b unknown；standard CMA 混杂使“ML 优于经典 CMA”贡献不可成立
+  - ⚠️ **S013 续 + D020/V004：PROMPT-013 机制验证 PARTIAL**——30-seed Q1 PASS（ML>CMA 30/30 p=1.86e-9，但 baseline=current scalar-error CMA）；H_a 证伪、H_b unknown；standard CMA 在 2/3 high-gap seed 消除差距 → "ML 优于经典 CMA"不可成立
+  - ⚠️ **S014 + D019/V003：PROMPT-014 首轮 PARTIAL（deferred）**——盲 VQ-VAE 实现 PASS；11/30 cells loss gate 语义不合法被拒；A/B 二选一挂起等 D021
+  - 🔄 **S015 + D021：统一合法 baseline 重比立项**——待封装 PROMPT-015，修正 standard CMA + ML 交叉支路初始化混杂，30-seed 三方对比
 
-下一步：PROMPT-013 不自动续跑。若继续，先冻结 standard CMA 与 ML 初始化合同，再预注册 30-seed 三方比较；不得进入 Contract。
-
-- Step 1-3：完成（双偏振 9 篇 + ML 20 篇 = 29 篇精读）
-- **Step 4a：完成**（Q-DP1/2/3 可行性评估）
-- **R001/R002 调研：完成**（调制切换 Kill + ML 全谱）
-- **D004 攒材料：完成**（20 篇精读 + 候选合并 D005）
-- **D005 候选合并：完成**（Q-CMA-FADE 首选）
-- **Step 4a 维度 D MVE（Q-CMA-FADE）**：
-  - ✅ **Step A：完成**（GG 时间域衰落模型，PASS）
-  - ✅ **Step B：完成**（CMA 发散概率扫描，PASS——发散由 μ 主导，条件判据已给）
-  - ✅ **Step C：完成**（ML vs CMA MVE，PASS）→ 压力测试修正为 **Conditional Go（D008）**
-  - ✅ **R003：完成**（12 个可出结果子问题穷举）
-  - ✅ **R1/R4/R5：完成**（分析层验证）—— R1 趋势对量级差，R4 **反证深衰落触发**，R5 √n 律部分有效
-  - ✅ **R2/R7/R4修正：完成**（第二批关键前置判断）—— CMMA 不降发散，冻结完全无效，R4修正确认 μ 主导+LCR 次级
-  - ✅ **S009：完成**（用户选 B，LCR 机制 H1/H2 都不成立 + BER 影响验证，方法层重新定位 D011）
-  - ✅ **R004：完成**（方向总规划 13 发散角度 + 3 批次 + 防坑清单）
-  - ✅ **S010 批次 1：完成**（数据补完验证 PASS，D012）—— BER vs SNR / 16QAM / 发散可视化 / pilot overhead
-
-下一步（以最新 D018 为准）：**先定方法层叙事，不自动进入批次 3/Contract**。seed-bias、监督公平性与 PI 流标识开销继续作为 limitations。
+下一步：**封装 PROMPT-015（统一合法 baseline 重比）交新对话执行**。预注册判据已写在 D021：三方配对超额 PI-BER + Wilcoxon，Go=standard-CMA vs ML 仍满足主判据，No-Go=卖点塌缩。期间方法层卖点冻结，D019 挂起。不进 Contract。
 
 ## 进展线索
 
@@ -128,3 +113,5 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 - **S011**（2026-07-12）：批次 2 方法层加固（R004 批次 2）执行回传后主控独立 P6 验证。2 任务：① 任务1 CMA 瞬态/稳态分解（3 f_G×20 seeds×N=5M）**反预期但经主控4步独立复现验证为真实物理现象**——稳态BER~0.32几乎不依赖f_G（预期f_G=30≈oracle被否证），窗口BER"高→下降→缓慢爬升至0.5"。主控4步验证：排除BER bug(3方法一致)+排除seed scheme偏置(N=2M task1更优)+决定性复现(N=2M late~0.14 vs N=5M late~0.5)+机制定位(|w|稳定1.4142→1.4166未发散但LS相位0°→-172.6°漂移)。机制=2×2蝶形CMA长序列次优锁定不稳定/相位漂移。**D011机制从"跟踪滞后"细化为"长序列锁定不稳定"**（D013新建），结论方向不变ML价值更强。② 任务2 CMMA BER（6 f_G×20 seeds×QPSK+16QAM）——QPSK CMMA=CMA精确相同(逐seed max diff=0.00实现验证PASS)，16QAM CMMA仅优CMA 0.4-0.9%(modulus mismatch非主因，CMMA非强baseline)。**r_lcr/批次1的N=2M整段BER掩盖early/late分化需补说明**。D013新建。详见 `S011-batch2-method-reinforcement.md`
 - **S012**（2026-07-13）：PROMPT-011 先调研再最小验证。文献确认 DD/酉约束/两级 CMA 已成熟；机制审计发现连续酉多解表述错误、D014 未区分 swap/同源、旧 `_cma.py` 缺标准 CMA 输出因子。3 shared seeds：current fixed `0.4741±0.0201`→PI `0.0306±0.0253`、swap 3/3；standard PI `0.0349±0.0268`。D016 暂停新方法，转基线重审；V001 PARTIAL（阻断证据充分，正式数字待≥10 seeds）。详见 `S012-prompt011-cma-root-diagnostic.md`
 - **S013**（2026-07-13）：PROMPT-012 双口径历史重审完成，并续接 PROMPT-013。P012 确立 fixed/PI 强制口径；P013 在 30 seeds 上确认 ML 相对 current CMA 30/30 更优，但 H_a 证伪、H_b unknown，standard CMA 在两个高差 seed 近乎消除差距，故 D020 拒绝机制贡献泛化，V004 PARTIAL。详见 `S013-dual-metric-historical-reaudit.md`、`PROMPT_012_REPORT.md` 与 `PROMPT_013_REPORT.md`
+- **S014**（2026-07-13）：PROMPT-014 盲 VQ-VAE 公平比较首轮执行。Qin 原文核对修正固定星座码本/Eq.15，完成 1-sps 线性 2×2 complex-FIR VQ-VAE、共享 DP 信道、严格签名/分片/合并与 48 项回归；正式 11/30 cells 时 seed1004 触发 loss sanity，独立复算确认首末来自不同 batch、当前 gate 无固定 probe 语义。D019 拒绝当前结果候选，V003 PARTIAL；不判方法优劣。详见 `S014-prompt014-blind-vqvae-partial.md` 与 `PROMPT_014_REPORT.md`
+- **S015**（2026-07-13）：PROMPT-013 回传后的主控独立核验 + 集成。独立重算 Q1（30/30, p=1.86e-9, CMA超额0.0147 vs ML0.00115, 比率12.75×，stored vs recomputed 三项一致 → 数字真实）；独立重算 Q2 standard CMA 在 high-gap seed 1006/1017 降 752×/688×（与报告一致），seed 1011 无效；H_a 证伪/H_b unknown/H_c 排除但发现 ML 交叉支路初始化混杂（4 FIR 中心全=1 vs CMA 对角 wxy/wyx=0）。确认执行对话已写 D020/V004（结论与主控核验一致）。**关键判断**：Q1 30-seed 优势里至少 high-gap 部分被 current-CMA 实现 bug 贡献，不能声称 ML 优于经典 CMA。用户决策"统一合法 baseline 重比"→ **D021 立项**（修正 standard CMA + ML 初始化，30-seed 三方对比，预注册 Go/No-Go 判据），D019 盲 VAE 挂起。方法层卖点冻结至三方对比出结果。详见 `S015-prompt013-reaudit-and-baseline-decision.md`

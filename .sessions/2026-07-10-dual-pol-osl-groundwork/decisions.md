@@ -1,4 +1,4 @@
-﻿﻿# decisions.md — 双偏振 OSL Groundwork 专题
+# decisions.md — 双偏振 OSL Groundwork 专题
 
 > 架构决策、方向选择、路线失败记录。每条有取代/被取代字段形成血缘链。
 
@@ -1056,6 +1056,54 @@ PROMPT-012 双口径历史重审通过。此后 Q-CMA-FADE 只能使用以下口
 ### 来源
 
 S013 / V002
+
+---
+
+## D019: PROMPT-014 盲 VQ-VAE 首轮结果候选失败记录
+
+> status: rejected (deferred — A/B 二选一挂起，等 D021 baseline 混杂解决后再定；2026-07-13 由 D021 标记)
+> date: 2026-07-13
+> 取代：无
+> 被取代：无
+> 依据: 验证: V003 + 独立 verifier 对 11 trials、loss 分解与训练 cursor 的重算
+
+### 决策
+
+PROMPT-014 当前 SHA 下的 30-cell 结果候选被拒；不得续跑剩余 19 cells 后据此宣称正式 PASS/FAIL，也不得把 11/30 的配对优势写成性能结论。该决策不否决盲 VQ-VAE 方法本身。
+
+### 核心失败机制
+
+冻结 sanity 用 `loss[-1] < loss[0]` 判断训练下降，但 7813 个 update 顺序覆盖不同时间 batch，首末 loss 同时混入模型状态与非平稳数据片段变化，不是固定 probe 上的可比量。f_G=1000、seed=1004 已字面触发 false：total `0.020492→0.199085`，first/last 100 mean `0.049006→0.232686`，commitment 上升 607.95%，而 reconstruction 下降 24.87%。保留该 trial 时，完整 30-cell gate 最终必为 INVALID。
+
+### 否决了什么
+
+- 否决继续用首批与末批 loss 比较作为 VQ-VAE 收敛证据。
+- 否决在当前 SHA/checkpoint 上补齐 30 cells 后形成正式 PASS/FAIL。
+- 否决因当前 11/30 paired wins 为 11/11 就提前解除监督公平性债务。
+
+### 可复用部分
+
+固定 QPSK/STE 的 1-sps 线性双偏振 VQ-VAE 实现、shared-realization 信道入口、双口径评价、严格签名/checkpoint/merge、48 项回归测试，以及 11 个结构有效的诊断 trials 均可复用。若改为固定 probe sanity，必须改变 SHA 并从 0 重跑，旧结果不混入。
+
+### 具体数据
+
+- 正式网格：11/30 unique cells；缺 19 cells。
+- 当前子集 paired wins：f_G=30 为 2/2，100 为 2/2，1000 为 7/7；不得外推。
+- 唯一 sanity false：f_G=1000、seed=1004；VQ PI `0.020713`、CMA PI `0.105624`，但 `loss_decreased=false`。
+- 三路 GPU 并发在不同 CUDA 调用点均 illegal memory access；单路相同 cell 成功，正式运行后续只能串行。
+
+### 影响范围
+
+PROMPT-014 停在 GW Step 4a 补充 MVE 的 PARTIAL；不进入 Contract。下一步若继续，须先由用户确认新的固定-probe gate，并重新生成全套正式结果。
+
+### 触发原话
+
+> 触发原话: 无（用户“做一下这个？”为纯操作指令；失败结论来自验证数据）
+
+### 来源
+
+S014 / V003
+
 ---
 
 ## D020: PROMPT-013 机制归因失败记录 — ML 相对 current CMA 的优势不可泛化为相对经典 CMA 的机制优势
@@ -1103,3 +1151,59 @@ D017 修正点 1 被收窄；D018 的 current-CMA 双口径事实保留，但“
 ### 来源
 
 S013 续 / V004
+
+---
+
+## D021: 统一合法 baseline 后重比 — 修正 standard CMA + ML 交叉支路初始化混杂，30-seed 三方预注册对比
+
+> status: active
+> date: 2026-07-13
+> 取代：无（承接 D020 影响范围的"若继续"分支，正式立项）
+> 被取代：无
+> 依据: 主控对 V004/Q2 raw JSON 的独立复核（30/30, p=1.86e-9 属实；standard 降 752×/688× 属实；H_c 88 DOF 初始化混杂属实）+ 用户决策
+
+### 决策
+
+**先统一合法 baseline，再在预注册 30 seeds 上做 current-CMA / standard-CMA / ML 三方对比，之后才能决定 ML 卖点是否成立。** 同时挂起 D019（PROMPT-014 盲 VAE 的 A/B 二选一），等 baseline 混杂解决后再回头。
+
+### 需要解除的两个混杂（精确代码位置）
+
+1. **CMA 梯度因子 z**（D017/D020 的核心）
+   - current `_cma.py:163-166`：`w += μ·e·conj(r)`，`e = R²−|z|²`，**缺 z**
+   - standard（Q2 `prompt013_swap_mechanism_q2.py:302-305`）：`w += μ·(e·z)·conj(r)`，**有 z**（标准 Godard）
+   - Q2 已证 standard 在 high-gap seed 1006/1017 把 PI-BER 从 0.033→4.4e-5（752×/688×）；seed 1011 无效。D017"性能不受影响"基于 10-seed 均值（被 low-gap 拉平），在高差样本上被推翻。
+
+2. **ML 交叉支路初始化**（H_c 发现）
+   - CMA `_cma.py:81-86`：wxx/wyy 中心=1，**wxy/wyx=0**（对角初始化）
+   - ML `_ml_equalizer.py:88-89`（`ComplexFIRConv1d.__init__`）：**4 个 FIR 中心全=1**，即 wxy/wyx 中心也是 1
+   - 注释 `_ml_equalizer.py:114` 说"wxy/wyx=0"，与实现不符
+   - 后果：ML 从满蝶形起点出发（初始就有 X/Y 串扰），CMA 从对角起点出发——两者不是同一起点，Q1 30-seed 优势可能部分来自初始化而非监督学习
+
+### 三方对比的预注册判据（写死，防事后移动门槛）
+
+- 主判据：standard-CMA vs ML 的**配对超额 PI-BER**（30 seeds），双侧精确 Wilcoxon，p<0.05 且 ML ≥25/30 胜
+- 三组配对比较：current-CMA vs ML、standard-CMA vs ML、current-CMA vs standard-CMA，均报连续指标 + 硬阈值仅描述
+- 次判据：三方法的 clean/degraded-swap 分布（描述用，不参与 Go/Kill）
+- **Go**：standard-CMA vs ML 仍满足主判据 → ML 优势可归因于方法（非实现），卖点立住
+- **No-Go**：standard-CMA vs ML 不满足主判据 → ML 优势被 baseline 混杂吸收，方法层卖点塌缩为"ML 优于一个有 bug 的 CMA"
+
+### 排除的替代方案
+
+- **不重跑，直接写 limitation**：Q1 30-seed 优势里有明确证据（standard 消除 2/3 high-gap 差距）表明混杂实质性影响结论，不重跑等于带水分发表，违反 FR-26 证据链
+- **只修 CMA 不修 ML 初始化**：两个混杂独立，CMA 修了 ML 初始化混杂仍在，三方对比仍不可信
+- **在 Q2 的 6 seeds 上判 Go/No-Go**：6 seeds 只作机制诊断，统计判据必须回到 30 seeds（seed-bias 债务）
+
+### 影响范围
+
+- 承接 D020，是 D020"若继续"分支的正式立项
+- D019（PROMPT-014 盲 VAE）挂起，status 保持 active 但加 deferred 标记，等本决策 Go/No-Go 后再定 A/B
+- master-state.md 不改（仍 GW Step 4a 维度 D MVE 扩展，FR-22）
+- 论文方法层卖点**冻结**，直到三方对比出结果；期间不得写"ML 优于 CMA"
+
+### 触发原话
+
+> 触发原话: 无（用户通过选项选择"统一合法 baseline 后重比"和"等 baseline 混杂解决后再说"，属技术路径决策无自由文本原话，不进 voice.md）
+
+### 来源
+
+S015 / 主控对 V004 的独立复核

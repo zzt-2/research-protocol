@@ -1,4 +1,4 @@
-﻿﻿# Verifications — 双偏振星地光通信 DSP Groundwork
+# Verifications — 双偏振星地光通信 DSP Groundwork
 
 ## V001: PROMPT-011 CMA 根因诊断与独立复审
 
@@ -97,6 +97,67 @@ git diff --check (task files): exit 0
 ### 结论
 
 PASS
+
+---
+
+## V003: PROMPT-014 盲 VQ-VAE 实现与首轮正式比较
+
+> date: 2026-07-13
+> 关联：S014 / D019
+
+### 验证项
+
+- [x] 实现与实验合同：独立审查固定码本/STE/无标签 fit、shared realization、双口径评价、严格签名与分片合并 → PASS
+- [x] 代码验证：VQ 核心、DP shared channel、实验驱动与合同联合回归 → 48 passed
+- [x] 100k 资源门控：默认 391 updates、JSON/save/sanity/CUDA 全路径 → PASS
+- [x] 正式 checkpoint 完整性：3 文件共 11 unique cells、严格 JSON、finite、内部/跨文件签名与当前 7 组件 SHA → PASS
+- [ ] 正式 30-cell gate：只完成 11/30，且 seed1004 `loss_decreased=false` → FAIL/PARTIAL
+- [x] loss 语义审计：首末 update 对应不同连续 batch，不能作为固定 probe 收敛证据 → FAIL（门控设计）
+
+### 证据
+
+```text
+target+core regression: 48 passed in 5.83s
+independent experiment review: Spec PASS; Quality PASS
+
+100k smoke:
+wall=14.61s; updates=391; loss=0.06960639 -> 0.03765663
+usage=1.0; finite=true; sanity.all=true; gate=INCOMPLETE
+
+formal checkpoint composite SHA256:
+1e6ab7719ed9f0d136e358a5ac4a623a91f596586b45fecb3d2b4b4b6c22a807
+11 trials / 11 unique / missing 19 / strict JSON PASS / all numeric values finite
+
+current subset (diagnostic only):
+f_G=30:   n=2, VQ PI mean=0.046426250, CMA=0.122876875, paired wins=2/2
+f_G=100:  n=2, VQ PI mean=0.053955750, CMA=0.154093375, paired wins=2/2
+f_G=1000: n=7, VQ PI mean=0.010625500, CMA=0.111315714, paired wins=7/7
+
+f_G=1000, seed=1004:
+total first/last=0.020491542/0.199085236
+total first100/last100 mean=0.049006393/0.232686317
+reconstruction first100/last100=0.018055079/0.013565502
+commitment first100/last100=0.030951314/0.219120816
+finite=true; usage_gt_half=true; non_collapse=true; loss_decreased=false
+
+fit cursor:
+first center batch=[0,128); last center batch=[999936,1000000)
+```
+
+正式 JSON：
+
+- `projects/simulation/results/cma-fade-divergence/vae_vs_cma_blind_part_a.json`
+- `projects/simulation/results/cma-fade-divergence/vae_vs_cma_blind_part_b.json`
+- `projects/simulation/results/cma-fade-divergence/vae_vs_cma_blind_part_c.json`
+
+### 结论
+
+PARTIAL
+
+### 后续（FAIL/PARTIAL 时）
+
+当前结果候选已知最终不可 PASS，停止剩余 19 cells。若继续，先在查看新结果前冻结同一 probe 的训练前/后 sanity，更新 SHA 后从 0 重跑完整 30 cells；不得混用当前 11 cells。
+
 ---
 
 ## V004: PROMPT-013 交换质量真实性与机制验证
