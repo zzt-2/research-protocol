@@ -1,13 +1,8 @@
 # -*- coding: utf-8 -*-
-"""Fig.2 BER vs SNR main figure (CCISP beautified version).
+"""Fig. 2: BER versus SNR across the six channel scenarios.
 
-3x2 vertical layout (3 rows x 2 cols), scenes ordered by increasing turbulence.
-Addresses user's 5 feedback points:
-  - 横向太扁   -> vertical layout, taller subplots
-  - 差别太小   -> annotate NDA-wins regions in selling-point scenes
-  - 点太稀疏   -> cubic interpolation for visual continuity (no re-simulation)
-  - 标志难看   -> line-style distinction (solid/dashed/dotted), no ugly markers
-  - 线太粗     -> linewidth <= 1.2
+The 3x2 layout uses the existing verified samples. Interpolation is only a
+visual guide between samples; the original sample locations remain marked.
 
 Data sources (read-only, no modification):
   - 30seed main:  results/sc_nda_ml_main_30seed/_main_experiment_30seed.json
@@ -37,12 +32,12 @@ OUT_PDF = os.path.join(_HERE, 'ccisp_fig2_ber.pdf')
 # Scene order: increasing turbulence (top-to-bottom in 3x2 grid)
 SCENES = ['awgn', 'weak', 'moderate', 'strong', 'uplink_moderate', 'uplink_strong']
 TITLES = {
-    'awgn': '(a) No turbulence (AWGN)',
-    'weak': r'(b) Weak turb. ($\alpha$=4.0, $\beta$=3.0)',
-    'moderate': r'(c) Moderate turb. ($\alpha$=2.5, $\beta$=1.8)',
-    'strong': r'(d) Strong turb. ($\alpha$=1.5, $\beta$=0.8)',
-    'uplink_moderate': r'(e) Uplink moderate ($\alpha$=1.2, $\beta$=0.9)',
-    'uplink_strong': r'(f) Uplink strong ($\alpha$=1.0, $\beta$=0.7)',
+    'awgn': '(a) AWGN',
+    'weak': '(b) Weak turbulence',
+    'moderate': '(c) Moderate turbulence',
+    'strong': '(d) Strong turbulence',
+    'uplink_moderate': '(e) Uplink, moderate',
+    'uplink_strong': '(f) Uplink, strong',
 }
 
 # Colorblind-safe palette (Okabe-Ito inspired)
@@ -50,9 +45,6 @@ C_DA = '#0072B2'    # blue
 C_NDA = '#D55E00'   # vermillion (orange-red)
 C_OR = '#009E73'    # green
 C_FEC = '#999999'   # gray for HD-FEC line
-
-# Selling-point scenes (where NDA advantage is the story)
-SELLING_SCENES = {'strong', 'uplink_moderate', 'uplink_strong'}
 
 HD_FEC = 3.8e-3
 
@@ -124,7 +116,7 @@ def smooth_curve(snr, ber, n_dense=200):
     return snr_dense, ber_dense
 
 
-def plot_one(ax, scene):
+def plot_one(ax, scene, row, col):
     """Plot one subplot: DA/NDA/oracle with line-style distinction."""
     for ber_key, label, color, ls in [
         ('da_ml_ber_mean', 'DA-ML (pilot)', C_DA, '-'),
@@ -141,60 +133,25 @@ def plot_one(ax, scene):
         ax.plot(snr_s, ber_s, ls, color=color, linewidth=1.2, zorder=3)
 
         # Original data points (small, same color, no ugly marker shape)
-        ax.plot(snr, ber_plot, 'o', color=color, markersize=2.5,
-                markeredgecolor='none', zorder=4, alpha=0.7)
+        ax.plot(snr, ber_plot, 'o', color=color, markersize=3.2,
+                markeredgecolor='white', markeredgewidth=0.35, zorder=4)
 
     # HD-FEC reference line
     ax.axhline(HD_FEC, color=C_FEC, linestyle='-.', linewidth=0.8, alpha=0.6, zorder=1)
 
     ax.set_yscale('log')
     ax.set_title(TITLES[scene], fontsize=9, pad=4)
-    ax.set_xlabel(r'$\bar{\gamma}_d$ (dB)', fontsize=8)
-    ax.set_ylabel('BER', fontsize=8)
-    ax.grid(True, which='major', alpha=0.2, linewidth=0.5)
-    ax.grid(True, which='minor', alpha=0.08, linewidth=0.3)
-    ax.tick_params(labelsize=7)
-
-    # Annotate NDA-wins region in selling-point scenes
-    if scene in SELLING_SCENES:
-        annotate_nda_wins(ax, scene)
+    if row == 2:
+        ax.set_xlabel(r'Average data-symbol SNR, $\bar{\gamma}_d$ (dB)', fontsize=9)
+    if col == 0:
+        ax.set_ylabel('Bit error rate (BER)', fontsize=9)
+    ax.grid(True, which='major', color='#d0d0d0', alpha=0.55, linewidth=0.45)
+    ax.grid(False, which='minor')
+    ax.tick_params(axis='both', which='major', labelsize=8.5, width=0.6, length=3)
+    ax.tick_params(axis='both', which='minor', width=0.5, length=2)
 
     # Adaptive y-axis range
     set_yrange(ax, scene)
-
-
-def annotate_nda_wins(ax, scene):
-    """Find a high-SNR point where NDA clearly beats DA, annotate it."""
-    snr_da, ber_da = merge_scene(scene, 'da_ml_ber_mean')
-    snr_nda, ber_nda = merge_scene(scene, 'nda_ml_ber_mean')
-
-    # Find matching SNR points (common to both)
-    common = np.intersect1d(snr_da, snr_nda)
-    if len(common) < 2:
-        return
-
-    da_at = np.interp(common, snr_da, np.where(ber_da > 0, ber_da, 1e-7))
-    nda_at = np.interp(common, snr_nda, np.where(ber_nda > 0, ber_nda, 1e-7))
-
-    ratio = da_at / np.maximum(nda_at, 1e-10)
-    # Pick the point with highest ratio (NDA most ahead)
-    best_idx = np.argmax(ratio)
-    best_snr = common[best_idx]
-    best_ratio = ratio[best_idx]
-
-    if best_ratio > 1.15:
-        # Compute equivalent dB gain at this BER level
-        # gain_dB ~ 20*log10(ratio) for approximate (BER slope dependent)
-        gain_db = 10 * np.log10(best_ratio)
-        ax.annotate(
-            f'NDA +{gain_db:.1f} dB\n@{best_snr:.0f} dB',
-            xy=(best_snr, da_at[best_idx]),
-            xytext=(best_snr - 6, da_at[best_idx] * 3),
-            fontsize=6.5, color=C_NDA, fontweight='bold',
-            arrowprops=dict(arrowstyle='->', color=C_NDA, lw=0.8),
-            zorder=5,
-        )
-
 
 def set_yrange(ax, scene):
     """Adaptive y-axis: non-turbulence scenes to 1e-5, strong/uplink narrower."""
@@ -207,16 +164,18 @@ def set_yrange(ax, scene):
 def main():
     plt.rcParams.update({
         'font.family': 'serif',
-        'font.serif': ['Times New Roman', 'DejaVu Serif'],
+        'font.serif': ['Times New Roman', 'Times', 'Nimbus Roman No9 L', 'DejaVu Serif'],
         'mathtext.fontset': 'stix',
+        'pdf.fonttype': 42,
+        'ps.fonttype': 42,
         'axes.linewidth': 0.6,
     })
 
-    fig, axes = plt.subplots(3, 2, figsize=(7.0, 10.0))
+    fig, axes = plt.subplots(3, 2, figsize=(7.16, 8.25), sharex=False, sharey=False)
     axes = axes.flatten()
 
     for idx, scene in enumerate(SCENES):
-        plot_one(axes[idx], scene)
+        plot_one(axes[idx], scene, row=idx // 2, col=idx % 2)
 
     # Shared legend at bottom (line-style based, no markers)
     from matplotlib.lines import Line2D
@@ -224,15 +183,17 @@ def main():
         Line2D([0], [0], color=C_DA, linestyle='-', linewidth=1.2, label='DA-ML (pilot-aided)'),
         Line2D([0], [0], color=C_NDA, linestyle='--', linewidth=1.2, label='NDA-ML (blind)'),
         Line2D([0], [0], color=C_OR, linestyle=':', linewidth=1.2, label='Oracle'),
-        Line2D([0], [0], color=C_FEC, linestyle='-.', linewidth=0.8, label=f'HD-FEC ({HD_FEC:.0e})'),
+        Line2D([0], [0], color=C_FEC, linestyle='-.', linewidth=0.8,
+               label=r'HD-FEC threshold ($3.8\times10^{-3}$)'),
     ]
-    fig.legend(handles=legend_elements, loc='lower center', ncol=4, fontsize=7.5,
-               bbox_to_anchor=(0.5, 0.005), frameon=True, edgecolor='gray',
+    fig.legend(handles=legend_elements, loc='lower center', ncol=4, fontsize=8.5,
+               bbox_to_anchor=(0.5, 0.006), frameon=True, edgecolor='#b0b0b0',
                fancybox=False, borderpad=0.4)
 
-    plt.tight_layout(rect=[0, 0.03, 1, 1])
-    fig.savefig(OUT_PNG, dpi=200, bbox_inches='tight')
-    fig.savefig(OUT_PDF, bbox_inches='tight')
+    fig.subplots_adjust(left=0.105, right=0.985, top=0.965, bottom=0.105,
+                        wspace=0.19, hspace=0.30)
+    fig.savefig(OUT_PNG, dpi=320)
+    fig.savefig(OUT_PDF)
     print(f'[saved] {OUT_PNG}')
     print(f'[saved] {OUT_PDF}')
     plt.close(fig)

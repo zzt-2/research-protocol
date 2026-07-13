@@ -415,7 +415,7 @@ topics:
     title: 论文写作专题（自适应 CPR 方向）
     status: active
     created: "2026-07-09"
-    last_updated: "2026-07-12（W005 D-W-EXPAND正文加厚完成——1628→2651词。补R014五缺口，2子agent提取对标集写法粒度作不拍脑袋前提。逐节都在对标集范围。主动停2651而非硬凑3000：逐节不超标是更高优先级约束。2651=Panasiewicz同级。交叉检查6项全过+自检修正1处R009物理归因。前次R014内容映射完成）"
+    last_updated: "2026-07-13（S011完成Fig.2--4论文级重画与独立验证：Fig.3改为3×7全扫描，Fig.4统一插值口径；Fig.1延期到独立对话）"
     description: "自适应载波相位恢复（A4 per-block 有效 SNR 驱动 DA/NDA 切换）方向的论文写作准备专题。在 GW Step 4a 维度 D（A4 PASS 待 Go）阶段内做：材料盘点/缺口识别/数据稳定性验证/论点合理性审查/简报完善。**是写作准备不是进 Contract/Execute**——守 FR-22。step4a-mve-execution 保持 active（Go 决策+消融回那里），本专题只管写作准备。"
     depends_on:
       - slug: 2026-07-06-step4a-mve-execution
