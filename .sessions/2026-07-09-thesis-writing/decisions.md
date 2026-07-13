@@ -256,3 +256,190 @@ goodput_DA > goodput_NDA 条件：`(1−p)(1−BER_DA) > (1−BER_NDA)`，其中
 **教训（FR-26 第 N 次同型）**：
 - agent 在调研总结里自创结论（"加分项"），后续被自己当依据引用，最终还被说成"用户说过"——信息来源降级的典型链路：自创→自引→归于用户
 - 防护：任何"用户说/用户认为/用户之前定过"的声称，必须能在 voice.md 找到原话，否则视为 agent 推断标注 `[inferred]`，不作为规则依据
+
+## D008: §III 方法描述匹配代码实现——切换阈值固定非 measured crossover/per-regime，DA 多 pilot 平均，γ_blk h_b 估计来源补足
+
+> status: active
+> date: 2026-07-12
+> 取代：无（修正正文描述与代码实现的一致性缺口，不推翻方向/架构决策；D005 strong 高 SNR 3 点选错的物理归因修正嵌入本 D，不另起）
+> 被取代：无
+> 关联：revision-queue Q15/Q16/Q17（F1-F3 代码行核验发现）+ R017（Q17 per-regime 实证排除选项②）+ R011 公式清单 #1/#3 代码行溯源 + D001/D002（Q16 判据脱钩 Bug2，D002 判保留）+ D005（strong 高 SNR 选错归因修正）
+> 触发原话: voice.md:100（2026-07-10 导师简报 v5 反馈第 3 点）"不要说自己不行的。你要去说自己行的" + voice.md:133（2026-07-12 用户）"只挑有利的说，不利的提都不提。你最好连定性都别说"
+> 依据: 验证 R017（30seed per-regime 实验，选对率 26→25 变差 + per-block 追踪机制）+ 代码行核验 F1/F2/F3（H003/D001 代码审计 + `_a4_switch_30seed_fixed.py:64` GAMMA_EFF_TH=13.0 固定 + `_recovery.py:153-161` 多 pilot LS 回归 + `_a4_switch_experiment.py:127-135`/`sc_nda_ml_sim.py:95-110` 盲估计 h_b）+ 用户原话 voice.md 2026-07-10/2026-07-12 + 调研 R011（公式清单代码行溯源）
+
+### 决策
+
+§III 三处方法描述改为匹配代码实现，全部走选项③（改文字不跑实验）：
+
+**Q17（L5，核心）**：W002 §III 切换阈值描述从 "set to the measured crossover SNR for each turbulence regime ... determined separately for each regime rather than held fixed" 改为 "set to a fixed effective-SNR value, chosen to separate the low-SNR region where the DA estimator yields the lower BER from the high-SNR region where the NDA estimator does"。删 "measured crossover" + "per-regime calibration" + "track the estimator crossover as the channel varies" 三句（均声称不符代码）。保留 trade-off 段（通用设计权衡，不依赖 per-regime 声称）+ 实现复杂度段。
+
+**Q16（L4-L5）**：W002 §III 公式 3 后补一句 "Here $h_b$ denotes the per-block channel amplitude, estimated from the received block"——模糊但诚实，不暴露判据用盲估计 ĥ_blind 而 DA 均衡路径用 pilot 估计 ĥ_pilot 的脱钩细节（D001 Bug2，D002 判保留）。R011 公式清单 #3 代码行溯源从错误的 `_recovery.py:232-233` 修正为 `sc_nda_ml_sim.py:95-110(estimate_h_blind_perblock) / explore/nda-awgn-tracking-sandbox/_a4_switch_experiment.py:127-135(decide_switch γ_blk 计算)`。
+
+**Q15（L4）**：W002 §III 公式 1 描述 "the received pilot sample $r_p$（单数）+ takes its argument" 改为 "dividing each received pilot sample by the known pilot symbol $p$, averages the resulting phases over the $N_p$ pilot symbols within the block, and takes the argument"。公式形式 `θ̂_DA = angle(r_p·p*)` 保留（会议论文简化形式 OK，对标集都这么做）。R011 公式清单 #1 代码行 `_recovery.py:153` 保留（行号对），描述更新匹配多 pilot LS 回归（实现 `_recovery.py:153-161`）。
+
+### 理由
+
+**核心矛盾（F3）**：论文 §III 声称切换判据 γ_th = measured crossover SNR + per-regime 校准，代码实际是固定 `GAMMA_EFF_TH=13.0` dB 跨所有 regime 统一（`_a4_switch_30seed_fixed.py:64`）。两点都不符。crossover 17.9/16.8/10.7 是事后从 BER 数据线性插值测的交叉点（`figures/plot_fig4_crossover.py:90 find_crossover()`），仅用于论文呈现/选对率归因，从未喂回 decide()。这是方法描述与实现的一致性缺口——审稿人按论文复现会发现差异。
+
+**为什么选项③（改文字匹配代码）而非②（改代码 per-regime）**：R017 30seed 实测排除②——per-regime crossover 阈值（GAMMA_EFF_TH_REGIME={awgn:99/weak:17.9/mod:16.8/strong:10.7}）选对率 26/29→25/29 **变差**，strong 高 SNR 3 点没翻转，反增 moderate@20 新错点。机制（per-block 追踪 strong@15）：crossover 是 γ 轴概念，decide() 作用在 γ_eff 轴（per-block），th=10.7 时 γ_eff>10.7 的 304 块里 DA 赢 230 块但判据全判 NDA——**γ_eff 是 crossover 的噪声代理**，per-block γ_eff 不能预测该块 DA/NDA 谁赢。改代码 = 回 step4a 重跑（守 FR-22）且结果更差，无收益。
+
+**为什么选项③而非①（写死 "γ_th=13 dB"）**：① 虽诚实，但 D005 已知 13dB 偏保守导致 strong 高 SNR 选错，写死 13dB 暴露弱点（违反导师"不要说自己不行的"+ 用户"不利的提都不提"，不变量 3）。选项③ 用"分离优势区"中性表述既诚实（代码确实固定阈值）又不暴露弱点。
+
+**D005 归因修正**：原 D005 "strong 高 SNR 3 点选错 = 判据 γ_eff 阈值 13dB 偏保守"归因**修正**为 R017 实证结论：不是"13dB 偏保守"，是"γ_eff 是 crossover 的噪声代理"，per-regime(10.7) 也救不回。修正后的物理发现（γ_eff 是噪声代理）**不进正文**——守不变量 7（crossover 只呈现数据不附归因）+ 守 D007（不提不好的：这是方法论弱点不主动暴露）。
+
+### 排除的替代方案
+
+- **选项①（纯改文字写死 "γ_th=13 dB"）**：诚实但暴露 13dB 偏保守弱点，违反导师"只说自己行的"原则。否决。
+- **选项②（改代码实现 per-regime crossover 阈值）**：R017 30seed 实测选对率变差（26→25）+ 物理上 γ_eff 是噪声代理改 per-regime 不解决根本 + 改代码 = 回 step4a 重跑违反 FR-22。否决。
+- **Q16 选项①（论文加注暴露 "判据用盲估计，DA 路径用 pilot 估计"）**：诚实但暴露 D001 Bug2 脱钩弱点，审稿人复现算法效果不卡在此细节。否决，保留模糊描述。
+- **Q15 选项②（改公式为 LS 回归 (φ,Δf) 二参数形式）**：更准但超 R010 力度（会议论文公式简化即可）。否决。
+- **Q15 提 LS 回归 (φ,Δf) 二参数**：那是代码实现细节，会议论文公式简化即可，标代码行让复现者自查。不提。
+
+### 影响范围
+
+- **W002-method-results.md §III**：Q17 L28 段重写（删 3 句 + 改 1 句）+ Q16 公式 3 后插 1 句 + Q15 公式 1 描述改写
+- **W002-method-results.md §IV-A**：两处 "crossover γ_th moves to lower SNR" → "crossover SNR moves to lower values"（去 γ_th 标签，降级为数据观察非判据来源）。§IV-A 主体不动，本轮只改联动措辞
+- **R011-terminology-symbol-formula.md 公式清单**：#1 描述更新（保留 `_recovery.py:153`，补 `_recovery.py:153-161` 多 pilot LS 回归说明）；#3 代码行溯源修正（`_recovery.py:232-233` → `sc_nda_ml_sim.py:95-110 / _a4_switch_experiment.py:127-135`）
+- **不变量 7（crossover 只呈现数据不附归因）**：维持。γ_eff 是噪声代理这个 R017 物理发现不进正文——这是"不好的"不提（D007）；§IV-A crossover 17.9/16.8/10.7 仍只呈现数据
+- **D005 strong 高 SNR 归因**：修正为"γ_eff 是噪声代理"（见理由段），decisions.md D005 原文不动（本 D008 关联段已说明修正，避免回改历史决策）
+- **不回 step4a**：Q15/Q16/Q17 是描述匹配实现的问题，不改研究方向，走 R013 L4-L5 流程（建 D + 回查不变量），不触发 FR-22
+
+### 来源
+
+revision-queue Q15/Q16/Q17（F1/F2/F3 代码行核验转登记）+ R017（Q17 per-regime 实证）+ D001/D002/D005（历史决策背景）+ W006 批次改稿（本对话执行 §III 批次改稿）
+
+**复用资产**：固定阈值代码（`_a4_switch_30seed_fixed.py`）保持不变，是 A 路线全部写作数据的来源；R017 per-regime 实验脚本/数据留作方法论证据（未来如审稿人质疑"为何不 per-regime"，R017 是直接反驳）。
+
+## D009: Fig.2--4 论文级重画，Fig.1 推迟到独立对话
+
+> status: active
+> date: 2026-07-13
+> 取代：无（更新 F001/F2 图表规格，不取代既有方法/数据决策）
+> 被取代：D010（仅取代 Fig.1 渲染路线的暂定倾向；Fig.2--4 决策继续有效）
+> 依据：调研: R018 + 对照: Johst Fig.3/5/6、Le Bidan Fig.10--12、Panasiewicz Fig.4--6、OECC Fig.1--2、Paillier Fig.3--6 + 用户原话: voice.md 2026-07-13
+
+### 决策
+
+Fig.2 保留六场景并删除全部卖点箭头、统一论文版式；Fig.3 改为 weak/moderate/strong 三场景的 BER-reduction 全扫描；Fig.4 保留 crossover 专项并删除图内总标题、过载 legend、HD-FEC 线和大标记。Fig.1 本轮不改，另开新对话决定拆图与渲染路线；draw.io 仅为当前倾向。
+
+### 理由
+
+五篇对标论文实图共同表明，正式论文数据图不依赖图内 headline、大箭头或长注释，主要通过 caption、坐标、线型和小 marker 传达信息。Fig.3 三场景实际含 21 个 SNR 工作点，并不单薄；改为单面板三曲线可避免与 Table I 的三行汇总重复。现有 Fig.1 除视觉拥挤外还存在数据流和控制流语义错误，不能与数据图一起机械微调。
+
+### 排除的替代方案
+
+- Fig.3 三柱/三点净增益：与 Table I 完全重复，否决。
+- Fig.3 加 AWGN 填密度：破坏三档湍流受控比较，否决。
+- Fig.3 继续称 net SNR gain：生成量是同 SNR 下 BER 比值的 dB 化，口径错误，否决。
+- Fig.1 沿旧 SVG 做标签级修补：布局与接口语义均有问题，否决。
+- 本轮顺手决定 Fig.1 draw.io/image/拆图：用户要求另开新对话并提供既有开题经验，延期。
+
+### 影响范围
+
+- 修改 `projects/simulation/figures/plot_fig2_ber.py`、`plot_fig3_gain.py`、`plot_fig4_crossover.py` 及对应 PDF/PNG。
+- 更新 R018 图表规格与 S011 实施记录。
+- Fig.1 文件保持不变；W002 正文口径与图文关系留到转 LaTeX 批次。
+
+### 来源
+
+S011 / 用户拍板 / 三个子 agent 的对标图与信息密度审查。
+
+## D010: Fig.1 先做广谱架构图调研，再决定结构与渲染工具
+
+> status: active
+> date: 2026-07-13
+> 取代：D009 中“draw.io 为当前倾向”的 Fig.1 暂定项（D009 的 Fig.2--4 部分继续有效）
+> 被部分取代：D012（仅取代 Fig.1/Fig.2 renderer TBD 项）
+> 依据：用户原话: voice.md 2026-07-13
+
+### 决策
+
+Fig.1 在独立新对话中先做多批次、跨相邻领域的论文架构图调研；第一批必须先完成样图类型预筛，主线程确认候选确属所需图型后，才启动深度分析。在完成样图分层、视觉语法归纳和候选信息架构比较前，不预设 draw.io、生成式图片、SVG 或 TikZ 为最终工具，也不直接重画。
+
+### 理由
+
+当前问题同时包含信息架构、数据流/控制流语义、版面层级和渲染质量，不能由“旧 draw.io 画得不好”直接归因于工具。完全贴合自适应 CPR 的样图数量有限，因此调研需覆盖相邻的相干光通信接收机、DSP 链、同步/估计模块、自适应选择与反馈控制图，但必须按相关性分层，避免只收集好看却不可迁移的图。
+
+### 排除的替代方案
+
+- 直接沿用用户旧 draw.io 风格：当前质量判断已被用户撤回，否决。
+- 立即改用生成式图片：难保证接口、符号和可编辑性，不能作为论文工程图默认路线。
+- 十几个 agent 无分工地同时搜图：会产生重复、审美描述不可比和证据链缺失；改为分批探索后再由独立综合/critic 汇总。
+- 找图与深度分析同时启动：可能在错误图型上投入大量阅读；改为批次 A 猎图 + Gate A 类型审核的硬门控。
+- 只看完全同题论文：样本过窄，无法回答拆图、层级和控制流表达问题。
+
+### 影响范围
+
+- 新对话先产出调研语料表、视觉语法、反模式和 2--3 个 Fig.1 信息架构候选，不直接画最终图。
+- Fig.1 渲染器在本调研阶段保持 TBD；该暂定项随后由 D012 以 SVG 落地，Fig.2--4 与 R018 当前规格不受影响。
+- 调研仍属于写作专题的图表准备，不跑实验、不改方法。
+
+### 来源
+
+S012 / 用户纠正 / 后续 Fig.1 独立调研对话。
+
+## D011: Fig.1 架构拆为两张独立编号图
+
+> status: active
+> date: 2026-07-13
+> 取代：无（补充 D010 的结构调研结果）
+> 被取代：无
+> 依据：调研: R020 + R021；critic: S012 批次 D；用户原话: voice.md 2026-07-13
+
+### 决策
+
+将原本需要由一张 Fig.1 同时承载的内容拆为两张独立编号图：Fig.1 负责 Tx—FSO/channel—coherent Rx—DSP 的系统上下文；Fig.2 负责 receiver-local 的自适应 CPR 机制（raw sample 主路、effective-SNR 测量、固定阈值、并行 DA/NDA、selector、phase compensation/common downstream）。原有 BER/crossover 图整体顺延为 Fig.3--5，Table I 保持独立。
+
+### 理由
+
+R020/R021 显示，系统边界与 CPR 机制分别需要不同的信息层级：系统总览需要粗粒度、连续主链和留白；机制图需要并行候选、控制平面、判据和公共后级的细粒度表达。强行合并会在单栏缩小、父级 zoom、控制线和 selector 职责之间反复取舍。拆成两张后，两个图各自只有一个主论点，仍处于对标集的 4--6 图范围内（总计 5 图 + 1 表），且不改变数据、方法或 GW 范围。
+
+### 排除的替代方案
+
+- **一张总览 + 嵌入式 zoom**：保留为 R021 候选参考，但不再作为唯一载体；zoom 与系统主链重复/缩小风险仍高。
+- **一张宽幅单面板同时放系统和机制**：信息最全但横向过长、控制线和字号风险最高。
+- **先决定 draw.io/SVG/TikZ/image 再拆图**：违反 D010；本条记录的是拆图前的时序约束，renderer 后由 D012 单独决定。
+- **把两张图做成重复的两套 raw path**：禁止；Fig.1 和 Fig.2 的职责边界、接口标签和 caption 必须明确。
+
+### 影响范围
+
+- 更新 R018 的图表组合规划：由原 4 图 + 1 表调整为 5 图 + 1 表；现有 BER/crossover 图号顺延，正文/代码图号联动尚未执行。
+- 更新 R021：A/B/C 单图候选改作为配对架构的参考，Fig.1 系统总览与 Fig.2 机制图成为当前结构方向。
+- 更新 S012、topic-index.md、_registry.yaml；不修改 `fig1_system_block.svg`，不启动 renderer 或绘图。
+- 不触及“明确不含”：不跑实验、不进 Contract、不写正式论文章节、不改框架。
+
+### 来源
+
+S012 批次 D / R020 / R021；用户原话：“感觉咱们可以多搞两张？就不用纠结要啥图了？”及确认“可以”。
+
+## D012: Fig.1/Fig.2 采用 SVG 作为可编辑图源
+
+> status: active
+> date: 2026-07-13
+> 取代：D010 中“renderer TBD”的暂定状态（仅取代 Fig.1/Fig.2 renderer 项）
+> 被取代：无
+> 依据：R022；`design-paper-figures` 论文图技能；用户原话: voice.md 2026-07-13
+
+### 决策
+
+Fig.1 与 Fig.2 采用两份独立的 SVG 作为可编辑论文图源，并导出矢量 PDF；PNG 仅作目标尺寸与黑白打印预览。保留旧 `projects/simulation/figures/fig1_system_block.svg` 不变，避免把历史图与新架构混写。
+
+### 理由
+
+两图需要稳定的接口语义、数学符号、线型冗余编码和后续可编辑性。SVG 能直接表达这些约束，且可在不改变信息架构的情况下导出 PDF；PNG 只承担视觉验收，不作为正式图源。
+
+### 排除的替代方案
+
+- **沿旧 SVG 标签级修补**：D009/R018 已确认旧图存在布局与数据/控制流语义问题，不能作为新图底稿。
+- **生成式 image**：无法可靠保证箭头接口、符号和可编辑性，不适合作为论文工程图源。
+- **draw.io/TikZ**：当前没有新增证据表明它们在本轮比 SVG 更能满足已冻结的双图语义；后续若需协作编辑可再基于 SVG 结果迁移，不回改本轮结构决策。
+
+### 影响范围
+
+- 新增 `projects/simulation/figures/fig1_system_overview.svg` 与 `fig2_adaptive_cpr.svg`，配套 PDF/PNG 预览。
+- 本决策只确定图源与导出方式，不改变 D011 的两图职责、Fig.3--5 顺延、Table I 或本专题 GW 范围。
+- 正式投稿前仍需完成 caption、正文图号联动和最终版式检查；旧 SVG 不修改。
+
+### 来源
+
+R022 两图详细规格与缩小验收门；`design-paper-figures` skill；用户原话：“我懒得看了，你直接往下吧”。

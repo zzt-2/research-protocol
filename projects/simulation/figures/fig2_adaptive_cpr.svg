@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="7.16in" height="3.64in" viewBox="0 0 1100 560" role="img" aria-labelledby="fig2-title fig2-desc">
+  <title id="fig2-title">Adaptive carrier phase recovery mechanism</title>
+  <desc id="fig2-desc">The received sample follows a continuous raw path to phase compensation while parallel data-aided and non-data-aided estimators, a per-block SNR measurement, and a fixed SNR threshold drive an estimator selector.</desc>
+
+  <defs>
+    <marker id="fig2-arrow-data" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#155a85"/>
+    </marker>
+    <marker id="fig2-arrow-estimate" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2f7d59"/>
+    </marker>
+    <marker id="fig2-arrow-control" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c26b2e"/>
+    </marker>
+    <style>
+      .node { stroke-width: 2; }
+      .node-label { font-family: "STIX Two Text", "Times New Roman", serif; font-size: 22px; font-weight: 600; text-anchor: middle; fill: #18313f; }
+      .node-label-small { font-family: "STIX Two Text", "Times New Roman", serif; font-size: 20px; font-weight: 600; text-anchor: middle; fill: #18313f; }
+      .symbol-data { font-family: "STIX Two Text", "Times New Roman", serif; font-size: 23px; font-style: italic; fill: #155a85; }
+      .symbol-estimate { font-family: "STIX Two Text", "Times New Roman", serif; font-size: 21px; font-style: italic; fill: #2f7d59; }
+      .symbol-control { font-family: "STIX Two Text", "Times New Roman", serif; font-size: 21px; font-style: italic; fill: #c26b2e; }
+      .legend-label { font-family: "STIX Two Text", "Times New Roman", serif; font-size: 19px; fill: #33434c; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1100" height="560" fill="#ffffff"/>
+
+  <!-- Estimator candidates: both receive the same r_k fork. -->
+  <rect class="node" x="300" y="80" width="150" height="60" rx="10" fill="#edf4fb" stroke="#155a85"/>
+  <text class="node-label" x="375" y="117">DA estimator</text>
+
+  <rect class="node" x="300" y="170" width="150" height="60" rx="10" fill="#edf4fb" stroke="#155a85"/>
+  <text class="node-label" x="375" y="207">NDA estimator</text>
+
+  <!-- Selector is a distinct routing primitive. -->
+  <polygon class="node" points="540,110 650,110 675,157 650,205 540,205 515,157" fill="#eaf5ee" stroke="#2f7d59"/>
+  <text class="node-label-small" x="595" y="151">Estimator</text>
+  <text class="node-label-small" x="595" y="178">selector</text>
+
+  <!-- Main raw-data path. -->
+  <text class="symbol-data" x="52" y="292">r</text>
+  <text class="symbol-data" x="67" y="299" font-size="16px">k</text>
+  <line x1="105" y1="285" x2="730" y2="285" stroke="#155a85" stroke-width="4" marker-end="url(#fig2-arrow-data)"/>
+
+  <!-- Shared input fork to both estimators and the measurement block. -->
+  <path d="M 220 110 V 428" fill="none" stroke="#155a85" stroke-width="2"/>
+  <line x1="220" y1="110" x2="300" y2="110" stroke="#155a85" stroke-width="2" marker-end="url(#fig2-arrow-data)"/>
+  <line x1="220" y1="200" x2="300" y2="200" stroke="#155a85" stroke-width="2" marker-end="url(#fig2-arrow-data)"/>
+
+  <!-- Phase compensation and shared downstream. -->
+  <rect class="node" x="730" y="250" width="170" height="70" rx="10" fill="#edf4fb" stroke="#155a85"/>
+  <text class="node-label-small" x="815" y="281">Phase</text>
+  <text class="node-label-small" x="815" y="307">compensation</text>
+
+  <rect class="node" x="950" y="250" width="130" height="70" rx="10" fill="#f2f5f7" stroke="#60727d"/>
+  <text class="node-label-small" x="1015" y="281">Common</text>
+  <text class="node-label-small" x="1015" y="307">downstream DSP</text>
+  <line x1="900" y1="285" x2="950" y2="285" stroke="#155a85" stroke-width="4" marker-end="url(#fig2-arrow-data)"/>
+
+  <!-- Measurement block and fixed threshold diamond. -->
+  <rect class="node" x="300" y="398" width="180" height="60" rx="10" fill="#fff4e6" stroke="#c26b2e"/>
+  <text class="node-label-small" x="390" y="425">Per-block SNR</text>
+  <text class="node-label-small" x="390" y="449">measurement</text>
+  <line x1="220" y1="428" x2="300" y2="428" stroke="#155a85" stroke-width="2" marker-end="url(#fig2-arrow-data)"/>
+
+  <polygon class="node" points="575,365 660,427 575,489 490,427" fill="#fff4e6" stroke="#c26b2e"/>
+  <text class="node-label-small" x="575" y="430">Fixed SNR</text>
+  <text class="node-label-small" x="545" y="461">threshold</text>
+  <text class="node-label-small" x="605" y="461" font-size="18px" font-style="italic">γ</text>
+  <text class="node-label-small" x="619" y="466" font-size="14px" font-style="italic">th</text>
+
+  <!-- Estimate outputs. -->
+  <line x1="450" y1="110" x2="515" y2="137" stroke="#2f7d59" stroke-width="2.5" stroke-dasharray="8 6" marker-end="url(#fig2-arrow-estimate)"/>
+  <text class="symbol-estimate" x="463" y="102">θ</text>
+  <path d="M 458 84 L 463 79 L 468 84" fill="none" stroke="#2f7d59" stroke-width="1.8"/>
+  <text class="symbol-estimate" x="478" y="108" font-size="16px">DA</text>
+  <line x1="450" y1="200" x2="515" y2="177" stroke="#2f7d59" stroke-width="2.5" stroke-dasharray="8 6" marker-end="url(#fig2-arrow-estimate)"/>
+  <text class="symbol-estimate" x="463" y="218">θ</text>
+  <path d="M 458 200 L 463 195 L 468 200" fill="none" stroke="#2f7d59" stroke-width="1.8"/>
+  <text class="symbol-estimate" x="478" y="224" font-size="16px">NDA</text>
+
+  <!-- Measurement/control path to the selector. -->
+  <line x1="480" y1="428" x2="490" y2="428" stroke="#c26b2e" stroke-width="2.5" stroke-dasharray="10 5 2 5" marker-end="url(#fig2-arrow-control)"/>
+  <text class="symbol-control" x="450" y="378">γ</text>
+  <text class="symbol-control" x="465" y="385" font-size="16px">blk</text>
+  <path d="M 660 427 H 690 V 220 H 595 V 205" fill="none" stroke="#c26b2e" stroke-width="2.5" stroke-dasharray="10 5 2 5" marker-end="url(#fig2-arrow-control)"/>
+
+  <!-- Selected estimate is injected from the selector into compensation. -->
+  <path d="M 675 157 H 705 V 235 H 815 V 250" fill="none" stroke="#2f7d59" stroke-width="2.5" stroke-dasharray="8 6" marker-end="url(#fig2-arrow-estimate)"/>
+  <text class="symbol-estimate" x="705" y="227">Selected</text>
+  <text class="symbol-estimate" x="790" y="227">θ</text>
+  <path d="M 785 209 L 790 204 L 795 209" fill="none" stroke="#2f7d59" stroke-width="1.8"/>
+
+  <!-- Compact semantic legend. -->
+  <line x1="80" y1="520" x2="135" y2="520" stroke="#155a85" stroke-width="4"/>
+  <text class="legend-label" x="148" y="527">Data path</text>
+  <line x1="365" y1="520" x2="420" y2="520" stroke="#2f7d59" stroke-width="2.5" stroke-dasharray="8 6"/>
+  <text class="legend-label" x="433" y="527">Phase-estimate path</text>
+  <line x1="775" y1="520" x2="830" y2="520" stroke="#c26b2e" stroke-width="2.5" stroke-dasharray="10 5 2 5"/>
+  <text class="legend-label" x="843" y="527">Control path</text>
+</svg>

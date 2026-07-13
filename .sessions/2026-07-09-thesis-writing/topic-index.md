@@ -1,7 +1,7 @@
 # Topic Index: 论文写作专题（自适应 CPR 方向）
 
 > slug: 2026-07-09-thesis-writing
-> status: active | created 2026-07-09 | last_updated 2026-07-13（S011 完成 Fig.2--4 论文级重画与独立验证；Fig.1 延期到独立对话）
+> status: active | created 2026-07-09 | last_updated 2026-07-13（D011 确认两图；D012 选定 SVG；S013 首版源文件与视觉预览完成，caption/正文联动待后续）
 
 ## 专题定位（一句话）
 
@@ -40,7 +40,10 @@
 - ❌ 不做消融实验（跨块 KF / BPS 迁移等是 step4a 的债务，不在写作专题跑）
 
 ### 范围变更记录
-（暂无）
+- **[2026-07-13]** D011：将原 Fig.1 架构准备拆为两张独立编号图。
+  - 原因：系统上下文与自适应 CPR 机制需要不同信息层级；拆分可降低密度，避免在一张图内反复取舍总览、zoom 和 selector 细节。
+  - 新范围：Fig.1 系统总览（Tx—FSO/channel—coherent Rx—DSP）+ Fig.2 自适应 CPR 机制（measurement—threshold—DA/NDA—selector—compensation）；原 BER/crossover 图顺延为 Fig.3--5，Table I 保持独立。
+  - 影响的未决项：R022 已提出两张图的语义、版式、字号/线型、caption 分工和缩小验收门；图内文字已按用户审阅微调，D012 已选 SVG 并完成首版源文件与预览，最终 caption/正文联动和落版仍待处理。
 
 ## 不变量（动任何一条必须重新讨论）
 
@@ -61,19 +64,37 @@
 ## 其他结论（普通技术决策）
 
 - Fig.2 保留六场景 BER 总览并删除汇报式卖点标注；Fig.3 改为三场景、21 工作点的 BER-reduction 全扫描；Fig.4 只呈现 DA/NDA crossover 数据观察，显示值按统一插值口径为 18.0/16.9/10.7 dB（D009/S011）。
-- Fig.1 不在本轮修补旧图；拆图方式与 draw.io 路线留待独立对话，并先参考用户既有开题报告经验。
+- D011 已确认 Fig.1 系统总览 + Fig.2 自适应 CPR 机制两张独立图；D012 已选 SVG 作为可编辑图源，PNG 仅作预览；旧 SVG 不修补。
 
 ## 已确认决策
 
-（暂无，S001 起步）
+- D011：Fig.1 拆为系统总览，Fig.2 拆为自适应 CPR 机制；原数据图顺延为 Fig.3--5。
+- D012：Fig.1/Fig.2 采用独立 SVG 可编辑图源，导出矢量 PDF，PNG 仅作预览；旧 `fig1_system_block.svg` 保持不变。
 
 ## 悬而未决
 
 1. **主图子图数**：S002 锁定图 2 = 4 子图（下行），H002 补点画了 6 子图（含上行）。待跟老师确认画 4 还是 6 子图。
 2. **strong/uplink 子图纵轴范围**：H002 建议收窄到 1e-4~1e-1（不硬凑 1e-5），待跟老师确认。
 3. **S002 原悬而未决**（图表清单 / fair_gain 呈现 / 主图子图数）：H002 把图 2 数据备齐，等老师反馈后定稿。
+4. **Fig.1/2 最终落版与文字联动**：SVG 首版源文件和预览已完成；caption、正文图号联动、最终单双栏落版及投稿前检查仍未完成。
 
 ## 当前位置
+
+**🔎 S012 / R019 三轮猎图与视觉方向确认完成；R020 批次 C/D 完成；D011 已确认 Fig.1/2 两图拆分；R022 两图详细规格已写；D012 选定 SVG，S013 已完成首版源文件与目标尺寸/黑白预览验收（2026-07-13）**。
+
+前两轮共获得 81 个已核验图位 + 1 个订阅墙备用，主线程分级 A 强匹配 26、B 局部可迁移 46、C 基本不对路 10（含备用）。Gate A 四种图型覆盖通过；R019 前两轮为 82 张纵向卡片，其中 60 张嵌入本地 PNG、22 张明确标注预览暂缺。用户指出多数样本缺乏设计感后，第三轮改以视觉 Gate 定向补样：新增 15 张全部可见候选（顶刊总览 6、自适应控制 5、DSP/芯片管线 4；4 张 6/6、10 张 5/6、1 张 4/6），另有 1 个无法生成可靠预览的强线索被排除。用户已确认第三轮“感觉都不错”。R020 已完成批次 B + C 的 24 图深度分析；批次 D 已提出并批评 3 个候选架构，D011 随后确认采用两张独立编号图：Fig.1 系统总览、Fig.2 自适应 CPR 机制。R022 已将两图职责转成可执行的语义、标签、流向、版式和缩小验收规格；D012 已选定 SVG，S013 已完成首版源文件与颜色/黑白预览，当前位置转为 caption/正文联动与最终落版。
+
+**🏁 S011 Fig.2--4 论文级重画与独立验证完成（2026-07-13）**。
+
+R018 已替代改稿前 F2 规格：Fig.2 删除全部卖点箭头并统一六子图专业格式；Fig.3 采用 weak/moderate/strong 三条 BER-reduction 全扫描曲线（3×7=21 点），避免仅画三个场景柱而显单薄；Fig.4 删除图内 headline、HD-FEC、大叉箭头和过载图例，曲线/交叉点/标记统一使用 log-BER 线性插值，显示 18.0/16.9/10.7 dB。独立 verifier 首轮两项 Important 已修复，V001=PASS。Fig.1 源文件未动，延期到新对话。
+
+**🏁 W007 数据呈现批次改稿完成——Q12/Q14/Q10 三项 L1-L2 改动全部 done（2026-07-12）**。
+
+W007 处理数据呈现层三项改动（按 R013 批次化+三防错纪律）：**Q12（L2，先改）** 删弱湍流归零——W002 §IV-B 删 "In the weak-turbulence and AWGN regimes..." 整段（含 0.09/0.18/0.19 + "reported transparently rather than suppressed" + 弱湍流归零因果解释），重写为只讲强湍流/上行有利结果；W003 Conclusion 删 "while the gain narrows toward zero ... in weak turbulence and AWGN" 整句；弱湍流/AWGN 不再出现在增益讨论段。**Q14（L1，联动）** 删 CI 标注——W002 §IV-B 删 "(CI lower bounds uniformly positive)"，W003 Conclusion CI 表述随 Q12 归零句删除；设置段 "averages over $30$ independent seeds" 保留（MC 次数交代是惯例，CI 不报是惯例）。**Q10（L1，逐处）** 增益精度 2 位→1 位+about——1.85→about 1.9 / 1.26→about 1.3 / 1.19→about 1.2（grep 全清单：W001 Intro L20 + W002 §IV-B 四处 + W003 Conclusion L16 + W003 Abstract L24 共 7 处），脚注 1.25 dB / 768 bits 保留（精确定义值）。交叉检查 4 项 grep 全过（0.09/0.18/0.19 正文 0 处 / confidence interval 正文 0 处 / 1.85-1.26-1.19 正文全 about+1 位 / transparently 正文 0 处）。守 D007/不变量 3 + R016 §4.1/§4.3/红线 6-8 + FR-22（只改文字）。revision-queue Q10/Q12/Q14 状态 → done。
+
+**已知债务（转 LaTeX 前清理）**：W001/W002/W003 的元数据交叉检查表仍含旧表述（弱湍流归零数字行 + "reported transparently rather than suppressed" 引用 + "locally optimal estimator" F1 修正前残留 + 1.85/1.26/1.19 旧精度）。这些是元数据不是正文，不影响投稿，转 LaTeX 前统一清理。
+
+---
 
 **🏁 D-F1F2 力度第二轮+图表定稿完成——写作战役全部完成（2026-07-12，F001 产出）**。
 
@@ -126,6 +147,17 @@ F001 完成 F1（R010 20 条力度基准逐条对照**全对齐** + 8 条已知�
 
 ## 进展线索
 
+- **S012 / H014 / R019** Fig.1 三轮样图猎取与 Gate A/视觉 Gate（2026-07-13）。第一轮 A1/A2/A3 得 41 图位并完成 A/B/C 分级；用户要求 Markdown 可视语料、明确好/不对并再找一轮后，A4/A5/A6 定向补得 40 个已核验图位 + 1 个备用。前两轮合计 A26/B46/C10，四类覆盖 PASS；R019 转为 82 张纵向卡片并嵌入 60 张本地 PNG，余 22 张明确标注暂缺。用户进一步指出多数图缺乏设计感后，B1/B2/B3 以视觉品质硬门补得 15 张全部可见样本（4×6/6、10×5/6、1×4/6），分别覆盖顶刊总览、自适应控制和 DSP/芯片管线；R019 现共 97 张卡片、75 张本地 PNG、22 张明确暂缺。用户已确认第三轮视觉方向；随后 D012 选定 SVG，S013 进入首版实现。
+- **R020** Fig.1 批次 B 深度分析（2026-07-13）。3 个 agent 分析 12 张图；独立 verifier 将初版“5 条高置信”纠正为 2 条跨组高置信、2 条组内重复、1 条待验证版面假设，另有 3 条强特例和 6 类反模式。修正 A2-10 本地预览来源为 UCL thesis Fig.5.1，期刊 Fig.1 仅保留关联来源。批次 C 见下一条；不定 renderer、不画图。
+
+- **R020** Fig.1 批次 C 深度分析（2026-07-13）。3 个 agent 再分析 12 张图：布局组确认 R1（4/4）并提出暂定 R6；流向组将 R3 的直接证据扩为 7 张并确认颜色仅作辅助、early-exit 不可迁移；密度组确认 R5 为条件规则，并提出“>3 面板单一论点+缩小检查”和“跨层线颜色/线型/图例冗余”两道门。批次 D 结果见 R021，不定 renderer、不画图。
+
+- **R021 / D011** Fig.1 批次 D 综合 critic 与两图架构确认（2026-07-13）。D1/D2/D3 先输出 A（receiver-local 单图）、B（端到端总览+嵌入式 zoom）、C（系统主链+receiver-local 两面板）三个候选；用户随后确认采用两张独立编号图：Fig.1 系统总览、Fig.2 自适应 CPR 机制。两图职责已冻结，详细规格见下一条；renderer 选择见 D012。
+
+- **R022 / D012** Fig.1/2 两图详细规格与 renderer 落地（2026-07-13）。R022 将 D011 转成可执行的论点、冻结标签、raw/estimate/control 流向、版式假设、caption 分工和目标尺寸缩小验收门；用户确认 6 处图内文字微调后，D012 选定 SVG。S013 已生成两份 SVG 源文件、矢量 PDF 和 PNG 预览，并完成颜色/黑白目标尺寸检查。
+
+- **S013** Fig.1/Fig.2 SVG 首版实现与视觉验收（2026-07-13）。两图分别落成可编辑 SVG；Fig.1 主链、Fig.2 raw/estimate/control 三类流向与公共后级接口均按 R022 实现。Edge 3×颜色/黑白预览检查通过；独立 verifier 复核与 caption/正文联动仍待完成。
+
 - **S011 / R018 / V001** 图表视觉规范与 Fig.2--4 重画（2026-07-13）。对标论文实图后冻结标题、坐标、字体、图例和最终尺寸规范；三图基于既有 JSON 重画，独立验证 PASS。Fig.1 明确延期，不在本轮修改。
 
 - **S001** 专题开题 + 材料盘点 + 数据稳定性 + 论点审查（2026-07-09 新建）
@@ -168,3 +200,6 @@ F001 完成 F1（R010 20 条力度基准逐条对照**全对齐** + 8 条已知�
 - **R015** 数据使用模式——对标集 A 组 5 篇怎么用数据 + 我方对照（2026-07-12，D-R015 任务产出。正文加厚后审查发现§IV-B 数字密度/口径混乱，先搞清"数据在论文里该怎么用"再决定改不改）。3 子agent并发（A=Paillier 重点有表体例最像标准稿 / B=Panasiewicz 最精简+Johst 含外场数据密集 / C=Le Bidan 0 表全数据进正文+OECC-PSC SNR-penalty 图/BCRLB 处理）按 5 维度提取数据使用模式。**产出**：①5 篇×5 维度数据使用模式总表（每格标依据）②我方 W002 数据用法 vs 对标集差异清单（逐维度标差异）。**10 条跨篇领域惯例**：①表极少且不冗余正文（4/5 篇 0 表，Paillier 唯一有表且表图互证不复述）②正文数字密度中等（主流每百词 1-2），密集靠行内公式/列表非堆砌③逐点证据绝不全列正文（挑代表点 Paillier3/OECC2/Johst AB 标点，或进图正文定性 Le Bidan）④结果/增益精度=1 位小数或整数+about/~ 标记（2 位小数罕见）⑤全不报 CI/误差棒领域惯例（统计性靠 MC 次数/事件数/outage ratio 替代，印证 R002§C）⑥口径标注轻量（多数不标 overhead，标的正文一句或分场景，不两口径同段混）⑦headline 融叙述不单列加粗⑧理论上界 BCRLB/CRB 口头声明+实证替代（OECC abstract 称收敛 BCRLB 正文不画改横向对比）⑨门限/约束两类处理（轻量一句带过配方程/重量专门段+图表交叉引用）⑩数据-文字分工主流"文字引出→方程→图表验证→文字解读"。**我方 5 处差异**（描述性不评判）：§IV-B 四套数字挤一段（naive+net+归零+分母29）高于对标集主流密度/Tab.1 与正文数字冗余（对标集表图互证不复述）/逐点全列正文（对标集挑代表或进图）/增益 2 位小数（对标集 1 位+about/~）/报 30-seed CI 偏离惯例/naive+net 两口径同段混（对标集单一或分场景）。**不替定改方案**——差异清单是事实记录，改不改/怎么改留后续用户+主控决策。R010 力度+R014 内容+R015 数据用法三轮对标互补。守 FR-22（只读已有 content.md+W002）。产出 `R015-data-usage-pattern.md`）
 - **R016** 会议论文写作执行规范（2026-07-12，D-R016 任务产出。把三轮对标调研 R010/R014/R015 + 写作教训 F1/W005/R009/R002§C 总结成可复用执行规范，类似 code-quality.md 之于代码）。主线程完成（规则总结是分析性任务，读 8 个必读文件提取）。**产出** `R016-conference-writing-rules.md`，§0-§7 结构：§0 怎么用（适用范围/何时读/跟 R010-R015 关系/提取原则）§1 立项对标（建 benchmark set/三轮分工/n-5 缺口判定/词数标定）§2 力度规则（公式直接给/贡献散文/文字非伪代码/BER 不硬凑 1e-5/表 0-1 张增量亮点/图 4-6 张/弱声明）§3 内容规则（必有内容项 5 类/方法简洁不硬补/每节词数标定/Conclusion 单段）§4 数据呈现（10 条，最重要）§5 措辞规则（hedging/不用弱引用/黑话禁令/不逐字重复/不口语化/不深挖归因/grep 自检）§6 改稿规则（批次化/L1-L6 六级/三防错纪律）§7 红线速查 15 条。**§4.1「数据诚实 vs 呈现选择」= 本轮最重要新增**（用户战役末期纠正的方法论误判）：数据诚实（底线必须，不伪造不 cherry-pick 不藏 CI 重叠）vs 呈现诚实（有裁量空间，写哪些不写哪些属学术写作惯例）；领域惯例=选择性呈现不主动报不利数字（不是撒谎是不提）；弱湍流归零 0.09/0.18/0.19 不进正文用定性表述"gains concentrate in strong turbulence"；边界=不利数字影响核心声称成立性时必须报（我们弱湍流归零不影响主卖点强湍流净增益所以可选）。每条规则标依据（R010§x/R014§x/R015 惯例 x/F1 修正 x/教训来源），不重复 R010-R015 详细数据只提取规则。守 FR-22 只读已有文件不调研不跑实验）
 - **revision-queue** 待改项集中登记（2026-07-12，D-revision-queue 任务产出。无 R/W 编号，治理文件。把写作战役全过程积累的散落待改项集中登记，为后续按 R013 批次改稿做准备）。**产出** `revision-queue.md`，四源 16 条全覆盖（A=R013 原 Q1-Q6 / B=R015 数据用法 5 处差异 / C=用户纠正 1 条 / D=其他审查 2 条）+ 需核实项 4 条（F1 DA pilot 单/多 / F2 h_b 估计 / F3 γ_th 取法 / F4 voice.md 原话补录）。每条标级别（L1-L6）+ 涉及决策 + 状态。无 L4-L6 项（本轮改动落在 L1-L3 数据呈现层）。**只登记不改正文**。批次触发条件（导师说反馈完了/≥3 条实质 pending→ready/deadline 倒推/用户决定）+ 批次顺序（L6→L5→L4→L2/L3→L1）+ 三防错纪律照搬 R013。**⚠️治理偏离**：来源 C"不报弱湍流归零数字"——建立时 voice.md 未收录原话，按 FR-26 + session-governance Trigger 2 不擅自建 D###；读取中发现 R016（并行产出）已确认此为"用户 2026-07-12 战役末期纠正"且 §4.1 已立规则，故事实成立性已解决，Q12 升级为"pending 补 voice.md 原话→建 D### 细化不变量 3"。请旧对话审查：①四源遗漏 ②级别是否合理（Q7 §IV-B 四套数字挤一段是否够 L5）③F1-F4 外还有无要查代码的 ④F4 voice.md 是否本对话补）
+- **R017** Q17 探索：per-regime crossover 阈值 vs 固定 13.0 实证（2026-07-12，Q17 探索 brief 任务产出。Step 4a 维度 D MVE 判据调整范畴，结果回传本专题不进 Contract/Execute）。**任务**：revision-queue Q17 三选一（①改文字匹配代码 ②改代码 per-regime ③中间方案），brief 要求跑选项②验证选对率/增益变化。**改法（路径 A）**：保留 γ_eff 判据结构，GAMMA_EFF_TH 从单一 13.0 改 per-regime dict {awgn:99/weak:17.9/mod:16.8/strong:10.7}（crossover 换算 γ_eff 轴：median(h_blind)≈1→crossover_γ≈crossover_γ_eff，实测 median(h)∈[0.77,1.15]）。**结果（30seed，TL-23 违例 0）**：选对率 26/29→**25/29 变差**（strong 高 SNR 3 点没翻转，反增 moderate@20 新错点）。vs NDA net gain 中间 SNR 区反增强（weak@15 +0.98→+1.56 / mod@15 +1.08→+1.40 / mod@20 +0.18→+0.47）。**机制（per-block 追踪 strong@15）**：crossover 是 γ 轴概念，decide() 作用 γ_eff 轴（per-block），γ_eff 是噪声代理——th=10.7 时 γ_eff>10.7 的 304 块里 DA 赢 230 块但判据全判 NDA。**可实现性**：per-regime crossover 接收端可实现（regime 从 h 分布/闪烁指数可测；crossover 值需离线校准 LUT=标准自适应实践，非在线 BER 偷看）。**Q17 建议=选项③**（排除②因选对率变差；不取①因暴露 13dB 偏保守弱点）：保留固定代码 + §III 改"a fixed effective-SNR threshold γ_th, chosen to separate the DA- and NDA-favored operating regions"，删 W002 L28 "measured crossover"+"per-regime" 两句。§IV-A crossover 17.9/16.8/10.7 作为数据观察仍呈现。**D005 归因修正**：strong 高 SNR 3 点选错不是"13dB 偏保守"，是"γ_eff 是 crossover 的噪声代理"，per-regime(10.7)也救不回。产出 `R017-q17-per-regime-crossover-experiment.md` + 代码 `_a4_switch_30seed_per_regime.py` + 数据 `_a4_switch_30seed_per_regime.json`。revision-queue Q17 已更新状态）
+- **W006** §III 批次改稿——Q17/Q16/Q15 三项 L4-L5 改动落地（2026-07-12，R013 改稿章程第一次实际改稿）。按"从底层到表层"顺序处理 §III 三项改动（Q17 L5 → Q16 L4-L5 → Q15 L4），全部落在 W002 §III 同一段 + R011 公式清单代码行溯源。**建 D008** 统一记录"§III 方法描述匹配代码实现"（切换阈值固定非 measured crossover/per-regime，DA 多 pilot 平均，γ_blk h_b 估计来源补足）。**Q17（L5）**：W002 §III L28 删三句声称不符代码的描述（"measured crossover SNR for each turbulence regime"+"determined separately for each regime rather than held fixed"+"per-regime calibration lets the switching boundary track"）+ 替换为"a fixed effective-SNR value, chosen to separate the low-SNR region where the DA estimator yields the lower BER from the high-SNR region where the NDA estimator does"；保留 trade-off 段 + 实现复杂度段；§IV-A 两处"crossover γ_th moves to lower SNR"→"crossover SNR moves to lower values"（去 γ_th 标签，数据观察非判据来源）。**Q16（L4-L5）**：W002 §III 公式 3 后加一句"Here h_b denotes the per-block channel amplitude, estimated from the received block"（模糊但诚实，不暴露判据用盲估计而 DA 路径用 pilot 估计的脱钩细节 D001 Bug2/D002，守 D007）；R011 #3 代码行 `_recovery.py:232-233`（指向错误文件）→ `sc_nda_ml_sim.py:95-110 / _a4_switch_experiment.py:127-135`。**Q15（L4）**：W002 §III 公式 1 描述"the received pilot sample r_p"（单数）→"dividing each received pilot sample by ... averages the resulting phases over the N_p pilot symbols within the block, and takes the argument"；公式形式保留（会议简化 OK）；R011 #1 代码行 `_recovery.py:153` 保留，描述更新匹配多 pilot LS 回归（补 `_recovery.py:153-161`）。**守纪律**：FR-22（只改文字不跑实验，选项②改代码已 R017 排除）+ D007/不变量 3（不提不好的——判据脱钩/γ_eff 噪声代理/13dB 偏保守弱点都不进正文）+ 不变量 7（crossover 只呈现数据不附归因）。**交叉检查 4 项全过**（无 measured crossover/per-regime 残留 + §IV-A 不暗示 γ_th 来源 + R011 代码行指向正确文件 + sample 单数→复数）。守 FR-22 + D007 + 不变量 7 + R013 三防错纪律。revision-queue Q15/Q16/Q17 状态 → done）
+- **W007** 数据呈现批次改稿——Q12/Q14/Q10 三项 L1-L2 改动落地（2026-07-12，R013 改稿章程第二次实际改稿）。处理数据呈现层三项改动（跨正文 W001/W002/W003 + 联动），涉及 §I Intro / §IV-B / §V Conclusion / Abstract，不动 §II SM / §III Method / §IV-A / 公式 / 图表规格。**Q12（L2，先改——删弱湍流归零，决定 §IV-B 重写）**：W002 §IV-B 删 "In the weak-turbulence and AWGN regimes the net gain narrows to $+0.09$/$+0.18$/$+0.19$ dB...strong-turbulence and uplink conditions." 整段（含归零数字 + "reported transparently rather than suppressed" + 弱湍流归零因果解释"two estimators' BER curves are close"），§IV-B 重写为只讲强湍流/上行有利结果（Low-SNR avoidance 1.3–2.3 dB + Strong-turbulence net gain 1.2–1.9 dB 三值 + 选对率 26/29）；W003 Conclusion 删 "while the gain narrows toward zero ($+0.09$/$+0.18$/$+0.19$ dB, within the $30$-seed confidence interval) in weak turbulence and AWGN, where the two estimators perform nearly identically" 整句。弱湍流/AWGN 不再出现在增益讨论段（连"gains concentrate in strong turbulence"定性暗示都不写）。Abstract 本就未报归零，不动。**Q14（L1，第二改——CI 收敛，和 Q12 联动）**：W002 §IV-B 删 "(CI lower bounds uniformly positive)"（改为直接陈述"yielding a net SNR gain of $1.3$–$2.3$ dB over a fixed NDA estimator"，不报 CI）；W003 Conclusion "within the $30$-seed confidence interval" 随 Q12 删归零句删除（同一句）；**保留** §IV 开头 L34 "averages over $30$ independent seeds"（设置段交代仿真规模，MC 次数是惯例 CI 不报是惯例，两者不同）。**Q10（L1，第三改——增益精度 2 位→1 位+about）**：1.85→about 1.9（四舍五入，⚠️ 非 1.8，原 queue 笔误已修）/ 1.26→about 1.3 / 1.19→about 1.2 / 1.3–2.3 区间保留（已 1 位）。逐处改（grep 全清单 7 处）：W001 Intro L20 "up to 1.85 dB"→"up to about 1.9 dB"；W002 §IV-B L42 四处（"$+1.26$ dB"→"about $1.3$ dB" / "$+1.19$ dB"→"about $1.2$ dB" / "$+1.85$ dB"→"about $1.9$ dB" / "1.19–1.85 dB"→"about $1.2$–$1.9$ dB"）；W003 Conclusion L16 "up to 1.85 dB"→"up to about 1.9 dB"；W003 Abstract L24 "up to 1.85 dB"→"up to about 1.9 dB"。脚注 1.25 dB ($10\log_{10}(4/3)$) + 768 bits 保留（精确定义值非结果增益）。**守纪律**：FR-22（只改文字不跑实验，Q10 是四舍五入非口径变更不触发 D004 代码行验证，Q12 删呈现非改数据，Q14 删标注非改数字）+ D007/不变量 3（弱湍流归零数字+定性解释+CI 标注全删，弱湍流/AWGN 不出现在增益讨论段）+ R016 §4.1/§7 红线 6（不利数字不进正文连定性都不提）+ R016 §4.3/§7 红线 7（增益 1 位+about）+ R015 惯例 5/§7 红线 8（不报 CI）+ 不变量 8（切换数字用 D002 修复版，本轮不改切换数字只改呈现精度）。**交叉检查 4 项 grep 全过**（grep 0.09/0.18/0.19 正文 0 处残留 + grep confidence interval 正文 0 处残留 + grep 1.85/1.26/1.19 正文增益全 about+1 位 + grep "transparently rather than suppressed" 正文 0 处；剩余命中全在元数据交叉检查表=债务待转 LaTeX 前清理）。revision-queue Q10/Q12/Q14 状态 → done）

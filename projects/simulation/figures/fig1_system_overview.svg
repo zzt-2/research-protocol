@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="3.5in" height="1.4in" viewBox="0 0 900 360" role="img" aria-labelledby="fig1-title fig1-desc">
+  <title id="fig1-title">System overview for adaptive carrier phase recovery</title>
+  <desc id="fig1-desc">A single left-to-right raw data path from transmitter through an FSO channel, coherent receiver, adaptive CPR, and common downstream DSP.</desc>
+
+  <defs>
+    <marker id="fig1-arrow-data" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#155a85"/>
+    </marker>
+    <style>
+      .module { stroke-width: 1.8; }
+      .module-label { font-family: "STIX Two Text", "Times New Roman", serif; font-size: 28px; font-weight: 600; text-anchor: middle; fill: #18313f; }
+      .module-label-small { font-family: "STIX Two Text", "Times New Roman", serif; font-size: 24px; font-weight: 600; text-anchor: middle; fill: #18313f; }
+      .path-label { font-family: "STIX Two Text", "Times New Roman", serif; font-size: 23px; fill: #155a85; }
+      .callout { font-family: "STIX Two Text", "Times New Roman", serif; font-size: 22px; font-style: italic; fill: #5d6870; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="900" height="360" fill="#ffffff"/>
+
+  <!-- Five system-level modules; no internal CPR detail is repeated here. -->
+  <rect class="module" x="30" y="135" width="110" height="80" rx="10" fill="#edf4fb" stroke="#155a85"/>
+  <text class="module-label" x="85" y="181">Tx</text>
+
+  <rect class="module" x="180" y="135" width="135" height="80" rx="10" fill="#fff4e6" stroke="#bd6b1e"/>
+  <text class="module-label-small" x="247.5" y="181">FSO channel</text>
+
+  <rect class="module" x="355" y="135" width="130" height="80" rx="10" fill="#f2f5f7" stroke="#60727d"/>
+  <text class="module-label-small" x="420" y="181">Coherent Rx</text>
+
+  <rect class="module" x="525" y="135" width="145" height="80" rx="10" fill="#eaf5ee" stroke="#2f7d59"/>
+  <text class="module-label-small" x="597.5" y="170">Adaptive</text>
+  <text class="module-label-small" x="597.5" y="198">CPR</text>
+
+  <rect class="module" x="705" y="135" width="165" height="80" rx="10" fill="#f2f5f7" stroke="#60727d"/>
+  <text class="module-label-small" x="787.5" y="170">Common downstream</text>
+  <text class="module-label-small" x="787.5" y="198">DSP</text>
+
+  <!-- One continuous raw-data path. -->
+  <line x1="140" y1="175" x2="180" y2="175" stroke="#155a85" stroke-width="3" marker-end="url(#fig1-arrow-data)"/>
+  <line x1="315" y1="175" x2="355" y2="175" stroke="#155a85" stroke-width="3" marker-end="url(#fig1-arrow-data)"/>
+  <line x1="485" y1="175" x2="525" y2="175" stroke="#155a85" stroke-width="3" marker-end="url(#fig1-arrow-data)"/>
+  <line x1="670" y1="175" x2="705" y2="175" stroke="#155a85" stroke-width="3" marker-end="url(#fig1-arrow-data)"/>
+  <text class="path-label" x="487" y="160" text-anchor="middle" font-style="italic">r</text>
+  <text class="path-label" x="501" y="166" text-anchor="middle" font-size="17px" font-style="italic">k</text>
+
+  <!-- The only cross-figure callout; it is not a second processing path. -->
+  <path d="M 598 215 L 598 264 L 625 264" fill="none" stroke="#7a858c" stroke-width="1.6" stroke-dasharray="6 5"/>
+  <text class="callout" x="635" y="270">Expanded in Fig. 2</text>
+</svg>

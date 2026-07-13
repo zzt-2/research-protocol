@@ -415,7 +415,7 @@ topics:
     title: 论文写作专题（自适应 CPR 方向）
     status: active
     created: "2026-07-09"
-    last_updated: "2026-07-13（S011完成Fig.2--4论文级重画与独立验证：Fig.3改为3×7全扫描，Fig.4统一插值口径；Fig.1延期到独立对话）"
+    last_updated: "2026-07-13（S012/R019三轮猎图、R020批次B+C与批次D完成；D011确认Fig.1系统总览+Fig.2自适应CPR机制两图拆分；D012选定SVG；S013首版源文件与颜色/黑白预览完成，caption/正文联动待后续）"
     description: "自适应载波相位恢复（A4 per-block 有效 SNR 驱动 DA/NDA 切换）方向的论文写作准备专题。在 GW Step 4a 维度 D（A4 PASS 待 Go）阶段内做：材料盘点/缺口识别/数据稳定性验证/论点合理性审查/简报完善。**是写作准备不是进 Contract/Execute**——守 FR-22。step4a-mve-execution 保持 active（Go 决策+消融回那里），本专题只管写作准备。"
     depends_on:
       - slug: 2026-07-06-step4a-mve-execution
@@ -456,7 +456,7 @@ topics:
     title: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
     status: active
     created: "2026-07-10"
-    last_updated: "2026-07-13（PROMPT-012 双口径历史重审完成，D018/V002：S005 μ 主导保留但零风险阈值撤回；N=5M CMA/ML 固定标签约0.5均为交换主导；N=2M 三 f_G 下 ML PI-BER 逐 seed 10/10 优于 CMA。待选择方法层叙事，不自动进 Contract）"
+    last_updated: "2026-07-13（PROMPT-014 首轮 PARTIAL，D019/V003：盲 VQ-VAE 实现与合同审查 PASS；正式 11/30 cells 后发现首末不同 batch 的 loss sanity 不具固定 probe 语义，当前结果候选拒绝。待用户选择重设 gate 后从0重跑或停止方法层，不进 Contract）"
     description: "scenario-transfer-pivot D003 解锁双偏振空间后，按 FR-22 从 GW Step 1 重走地勘。搜索空间从单偏振扩到含双偏振 OSL（sat.1553 §6 偏振解复用层主轴 + §3/4/5 次 + 迁移源参照 + 综述锚）。S001 Step1-3完成（15查询43候选8子方向/9篇+sat1553精读/3Q#过四判据）。S002 Step4a完成：Q-DP1(动态SOP跟踪)Kill因A0§1致命（均衡器300krad/s高出湍流致SOP 1-2数量级，A物理基础不足D001）/ Q-DP2(CMA fade发散)Conditional Go（空白真实但需自建GG时间模型D002）/ Q-DP3(跨帧恢复)Conditional Go首选（物理基础最扎实D003）。S003-S004 D004攒材料+D005候选合并Q-CMA-FADE。S005-S013 完成 GG 时间模型、发散扫描、ML/CMA MVE、机制复核与双口径历史审计；D018 规定 fixed/PI 必须并报、PI 需流标识开销，并将 N=2M ML 优势限定在已审计参数域。"
     depends_on:
       - slug: 2026-07-10-scenario-transfer-pivot
