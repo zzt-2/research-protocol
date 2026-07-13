@@ -1,7 +1,7 @@
 # Topic Index: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
 
 > slug: 2026-07-10-dual-pol-osl-groundwork
-> status: active | created 2026-07-10 | last_updated 2026-07-12（批次 2 方法层加固完成并验证 PASS，S011/D013。任务1 CMA 瞬态/稳态分解**反预期但经主控4步独立复现验证为真实**：稳态BER~0.32几乎不依赖f_G，机制=2×2蝶形CMA长序列次优锁定不稳定/相位漂移（权重范数稳定但LS相位漂向±π），D011机制从"跟踪滞后"细化为"长序列锁定不稳定"。任务2 CMMA BER：QPSK CMMA=CMA精确相同(实现验证PASS)，16QAM CMMA仅优CMA 0.4-0.9%(modulus mismatch非主因,CMMA非强baseline)。ML方法层价值成立且更强。可选批次3或进写作准备）
+> status: active | created 2026-07-10 | last_updated 2026-07-13（PROMPT-011 根因诊断：通用修正方案已成熟；旧 CMA 非标准复数更新，旧 BER 未消除偏振排列。3 seeds 中 fixed BER 0.474→PI-BER 0.031、swap 3/3。D016 暂停新方法，转基线合法性重审）
 
 ## 专题定位（一句话）
 
@@ -64,9 +64,7 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 
 ## 当前位置
 
-**ML 长序列失效确认，方法层转"修正在线跟踪"方向（2026-07-13，D015）**。PROMPT-010 专题研究（交新对话）确认：ML 在长序列/SOP 大漂移下也失效（N=3M/5M 全 10 seeds 崩 BER→0.5），是所有固定权重方法通病（非 ML LS-FIR 同样失效）。**D011/D014 的"ML 优于 CMA"有隐藏前提（短序列/test 段 SOP 漂移<14°）**，方法层核心卖点需根本性重新定位。关键信号：N=8M 时 CMA 在线跟踪反而优于 ML（CMA_late=0.037 vs ML=0.31）——**CMA 在线更新方向对，只是恒模代价让它漂错解**。用户选定新方向 = **"修正在线跟踪"**（让 CMA 不漂到恒模多解的错解），交 PROMPT-011 新对话探索（⚠️ 不撞 D001：SOP=1krad/s << 300krad/s，问题是代价函数非跟踪能力）。分析层贡献不受影响。
-
-**前置进展**：批次 2 深查（D014）—— 真机制是 SOP 驱动极化串扰（D013"相位漂移"误诊已纠正）。批次 1（D012）+ CMMA（S011）PASS。S009/批次1 BER 数据需 SOP 分层重新解读。seed-bias 债务仍在。
+**PROMPT-011 原方向前提被否证，当前位置转为 CMA 基线合法性重审（2026-07-13，D016/V001）**。阶段 0 文献确认 DD/酉约束/两级 CMA 等通用方案已有成熟先例；阶段 1 发现“任意酉旋转保独立 QPSK 恒模”不成立、D014 未区分 swap 与同源奇异点、`_cma.py` 缺标准复数 CMA 输出因子；阶段 2 的 3-seed 根因切片显示 current fixed-label BER `0.474±0.020`，排列消歧后 `0.0306±0.0253`，swap 3/3、same-source 0/3、diverged 0/3。**未完成 10+ seeds 标准基线重审前，不实现新方法、不进 Contract、不引用旧 CMA 数字写论文。**
 
 - Step 1-3：完成（双偏振 9 篇 + ML 20 篇 = 29 篇精读）
 - **Step 4a：完成**（Q-DP1/2/3 可行性评估）
@@ -85,6 +83,7 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
   - ✅ **S010 批次 1：完成**（数据补完验证 PASS，D012）—— BER vs SNR / 16QAM / 发散可视化 / pilot overhead
   - ✅ **S011 批次 2：完成**（方法层加固验证 PASS，D013）—— CMA 瞬态/稳态分解（机制细化）+ CMMA BER（增强 baseline）
   - ✅ **S011 续 + D014：完成**（D013 机制误诊纠正）—— 主控独立深查证明真因是 SOP 驱动极化串扰（非相位漂移），SOP×f_G 矩阵证明 D011 跟踪滞后叙事大部分被推翻，论文主卖点改为 SOP 极化鲁棒性
+  - ⚠️ **S012 + D016/V001：PROMPT-011 前提 FAIL**—— fixed-label 0.5 主要是 X/Y swap；旧 CMA 非标准更新。转 10+ seeds 基线合法性重审
 
 下一步：**批次 2 完成，可选批次 3**（盲 VQ-VAE / 自适应步长 / 发散恢复），或**直接进写作准备**。**D013 机制修正需反映在论文叙事**（不卖"跟踪滞后"卖"长序列锁定不稳定"）。**seed-bias 债务**：写论文 limitations。
 
@@ -123,3 +122,4 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 - **S009**（2026-07-12）：用户选 B，先验证 LCR 机制再定方法层。2 子 agent 并行。LCR 机制：**H1（重收敛累积）和 H2（边沿梯度突变）都不成立**——发散 100% 在正常区，距最近 up-cross 中位 2530 block，<100 block 占 0%。LCR~P_div r=0.96 是伪相关（代理变量：高 f_G → 短 τ_c → 块间 h 波动大 → 梯度方差大 → 数值不稳定）。BER 影响：**方法层真价值出现**——CMA 安全 μ（不发散）下 BER 仍比 oracle 差 2.9-2266×（跟踪滞后惩罚），ML 全 6 f_G 优于 CMA（1.8-数百倍），2 个 f_G 达到 oracle。方法层从"ML 不发散（trivial）"重新定位为"ML 避免 CMA 跟踪滞后惩罚（非 trivial）"。详见 `S009-lcr-mechanism-and-ber-validation.md`
 - **S010**（2026-07-12）：批次 1 数据补完（R004 批次 1）执行回传后主控独立验证集成。4 任务全 PASS：① BER vs SNR（4 f_G×13 SNR×5 seeds）CMA 高 SNR 跟踪滞后 floor 0.03-0.10 vs ML/oracle→0 直接验证 D011；② 16QAM BER 确认 modulus mismatch（CMA~0.27 vs QPSK~0.10）但 ML/CMA gap **反预期小于 QPSK**（高阶星座同时伤 ML/oracle，诚实记录）；③ 发散概率可视化；④ pilot overhead 连续传输下<<1%（债务(1) 缓解）。**新发现 seed-bias 债务**：`gg_time_envelope` h_mean 跨 seed CV≈1.0（20 seeds 实测，N=10M 仅降到 0.90），根因是 AR(1) ρ≈0.97 强相关非代码 bug，Step A 只查 PDF 未查样本均值的既有盲点。影响判定：**不影响 D011 相对比较**（同 seed 同 h，比率免疫）+ 影响**绝对 BER 跨 seed 平均**（须写 limitations + 加 seed 数）。D012 新建。详见 `S010-batch1-data-completion-integration.md`
 - **S011**（2026-07-12）：批次 2 方法层加固（R004 批次 2）执行回传后主控独立 P6 验证。2 任务：① 任务1 CMA 瞬态/稳态分解（3 f_G×20 seeds×N=5M）**反预期但经主控4步独立复现验证为真实物理现象**——稳态BER~0.32几乎不依赖f_G（预期f_G=30≈oracle被否证），窗口BER"高→下降→缓慢爬升至0.5"。主控4步验证：排除BER bug(3方法一致)+排除seed scheme偏置(N=2M task1更优)+决定性复现(N=2M late~0.14 vs N=5M late~0.5)+机制定位(|w|稳定1.4142→1.4166未发散但LS相位0°→-172.6°漂移)。机制=2×2蝶形CMA长序列次优锁定不稳定/相位漂移。**D011机制从"跟踪滞后"细化为"长序列锁定不稳定"**（D013新建），结论方向不变ML价值更强。② 任务2 CMMA BER（6 f_G×20 seeds×QPSK+16QAM）——QPSK CMMA=CMA精确相同(逐seed max diff=0.00实现验证PASS)，16QAM CMMA仅优CMA 0.4-0.9%(modulus mismatch非主因，CMMA非强baseline)。**r_lcr/批次1的N=2M整段BER掩盖early/late分化需补说明**。D013新建。详见 `S011-batch2-method-reinforcement.md`
+- **S012**（2026-07-13）：PROMPT-011 先调研再最小验证。文献确认 DD/酉约束/两级 CMA 已成熟；机制审计发现连续酉多解表述错误、D014 未区分 swap/同源、旧 `_cma.py` 缺标准 CMA 输出因子。3 shared seeds：current fixed `0.4741±0.0201`→PI `0.0306±0.0253`、swap 3/3；standard PI `0.0349±0.0268`。D016 暂停新方法，转基线重审；V001 PARTIAL（阻断证据充分，正式数字待≥10 seeds）。详见 `S012-prompt011-cma-root-diagnostic.md`
