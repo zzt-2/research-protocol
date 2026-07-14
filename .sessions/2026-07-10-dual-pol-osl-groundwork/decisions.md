@@ -1503,3 +1503,169 @@ Q-DP3 压μ MVE **FAIL，Q-DP3 物理 Kill**。压μ（非冻结，μ→μ/k）�
 ### 来源
 
 S019（PROMPT-019 压μ MVE 生死验证执行）
+
+---
+
+## D027: Q-DP4 形态2 预防性约束 Kill — V3 FAIL 触发预注册 Kill；V1 证实问题真实但约束机制错
+
+> status: active
+> date: 2026-07-14
+> 取代：S021 Q-DP4 进维度 D 的门控状态（形态2 方法 Kill，但 Q-DP4 问题陈述 + 形态1/3 未测仍挂起）
+> 被取代：无
+> 依据: 验证: `results/cma-fade-divergence/prompt020_qdp4_mve.json`（V1 5seeds 分解）+ `prompt020_v2_fast.json`（V2 SOP×f_G×μ 矩阵）+ `prompt020_v3_diag.json`（V3 diag 约束 5seeds α 扫描）+ V3a J_XCA 1seed 测试 + TL-20 理论预期 + TL-22 物理前提检查 + D014（SOP 极化串扰真因）+ D018（双口径）+ D022（6× PI-BER 差距源）
+
+### 决策
+
+**Q-DP4 形态2（预防性约束）Kill**。PROMPT-020 维度 D MVE 三验证：V1 PASS（残余 = swap 相关权重漂移，定位 B 成立），V2 PARTIAL（大 μ 部分缓解但不消除 + 发散风险），V3 FAIL（J_XCA 完全无效 + diag 约束最好仅 1.24× 且大 α 反引发更多 swap）。V3 FAIL 触发预注册 Kill 标准"约束伤跟踪/无效"。
+
+**但 V1 证实 Q-DP4 的问题陈述（D3 = 收敛后防 SOP 驱动 swap）真实**：6× PI-BER 差距（CMA 0.03174 vs ML 0.00523）主要来自 swap 相关权重漂移（B0/B2=8.3×），CMA 跟踪能力够（B1/oracle=2.2×）。问题是形态2（预防性约束）不是有效的解。
+
+### 核心失败机制（V3 两种约束实现）
+
+**V3a J_XCA（输出互相关惩罚）完全无效**：clean swap 时 zX=sY, zY=sX 仍是独立 QPSK，输出互相关 ≈0 → J_XCA 梯度 ≈0 → 无约束力。PI-BER 几乎不变（0.0393-0.0395, α 0→1.0）。根因：CA-CMA J_XCA 为静态 same-source singularity（高互相关）设计，不适合 SOP 驱动的 clean swap（低互相关）。这是**机制匹配错误**非噪声问题。
+
+**V3b diag 约束（交叉 FIR 权重惩罚）最好仅 1.24× + 大 α 反引发更多 swap**：
+- α=0.1（最好）：PI 0.0169（vs baseline 0.0210），swap 3/5（vs baseline 2/5）——改善但 swap 反增
+- α=0.5/1.0：swap **5/5**（全 swap），PI 0.0182/0.0185
+- 根因：swap 不是交叉权重过大驱动，是恒模代价多解地形在 SOP 旋转下让权重跳盆地。约束交叉权重不改变地形结构；强约束阻止 CMA 通过增长 wxy/wyx 跟踪 SOP 旋转 → CMA 找不到有效非 swap 解 → 跳 swap 盆地
+
+### V1 核心数据（5 seeds, f_G=30, SOP=4e-7, N=5M, late [4.375M,5M)）
+
+| 分解 | PI-BER mean | 含义 |
+|---|---|---|
+| B0 standard-CMA | 0.0210 | baseline（swap seeds 1000/1002 高）|
+| B1 CMA identity 重初始化 late 跟踪 | 0.0180 | 跟踪能力（2.2× oracle）|
+| B2 per-block LS 最优（完美 CSI 下界）| 0.0025 | 线性接收机理论下界 |
+| B3 CMA early 收敛权重固定 | 0.0240 | 纯固定权重参考 |
+| oracle | 0.0084 | |
+
+- B0/B2 = 8.3× → CMA 远离 per-block LS 最优 = 权重漂移显著（PASS_a）
+- B1/oracle = 2.2× → CMA 从正确盆地跟踪 SOP，BER 接近 oracle = 跟踪能力够（PASS_b）
+- **残余 BER 主要来自 (a) swap 相关权重漂移**，非跟踪滞后、非瞬态
+
+### V2 核心数据（SOP=4e-7 × f_G × μ, swap-prone seeds 1000/1002）
+
+| μ | seed 1000 ratio | seed 1002 ratio（f_G=30）|
+|---|---|---|
+| 1e-4 | 3.83 | 2.11 |
+| 1e-3 | 4.93 | 1.93 |
+| 5e-3 | **1.33** | **1.14** |
+
+大 μ（5e-3）确实降 swap-prone seeds 的 SOP 退化（物理合理：更快跟踪 SOP），但不完全消除（ratio>1.0）+ 发散风险（D006 临界区）。
+
+### 否决了什么
+
+- 否决 Q-DP4 **形态2（预防性约束）** 作为方法——两种约束实现（J_XCA / diag）都 FAIL
+- 否决"约束权重分量可防 swap"假设——swap 是地形结构非权重分量大小
+- 否决 J_XCA 对 clean swap 的适用性——机制匹配错误
+
+### 可复用部分
+
+1. **V1 分解框架（B0/B1/B2/B3 + oracle）**——可复用于任何 CMA 残差 BER 来源诊断
+2. **per-block LS 最优实现**——完美 CSI 线性接收机下界，可复用于其他场景
+3. **V2 SOP×f_G×μ 矩阵数据**——步长对 SOP 退化的量化影响，可写入论文 limitations
+4. **物理洞察"clean swap ≠ same-source singularity"**——对方法设计有决定性影响：任何基于输出互相关的约束对 clean swap 无效
+5. **V1 结论"问题真实"**——Q-DP4 问题陈述（D3 = 收敛后防 swap）有 8.3× 改善空间（CMA 远离 LS 最优），只是形态2 不是解
+
+### 影响范围
+
+- S021 Q-DP4 进维度 D 门控状态 → **形态2 方法 Kill**
+- Q-DP4 问题陈述（D3）**仍成立**（V1 证实），但当前测试的方法形态（形态2）无效
+- 形态1（跳变检测+回滚）/ 形态3（混合 SOP 补偿）**未测**——主控须决定是否继续
+- 路线 A（Q-CMA-FADE D022 + 改动1）不受影响，仍为保底
+- feasibility_report.md Q-DP4 节须更新（形态2 Kill + V1 问题真实 + V3 物理洞察）
+- 分析层贡献不变
+
+### 触发原话
+
+> 触发原话: 无（用户派发 PROMPT-020 为执行指令；Kill 结论来自 V3 数据验证非用户态度）
+
+### 来源
+
+S022（PROMPT-020 Q-DP4 维度 D MVE 执行）
+
+---
+
+## D028: Q-DP4 形态1（检测+回滚）KILL + Q-DP4 整体 Kill — dwell=11 块触发，三类响应式方法全 FAIL
+
+> status: active
+> date: 2026-07-15
+> 取代：S021 Q-DP4 进维度 D 的门控状态（Q-DP4 整体方向 Kill，形态1 是最后一种已测形态）；终结 D027 的"形态1/3 未测"挂起状态
+> 被取代：无
+> 依据: 验证: `results/cma-fade-divergence/prompt021_qdp4_form1_mve.json`（V0 5seeds swap 频率 + V1 3 snapshot windows × 5seeds dwell time + 阈值敏感性 3 档）+ 深度物理诊断（回滚到早期快照的 BER 爬升轨迹）+ TL-20 理论预期 + TL-22 物理前提检查 + D014（SOP 极化串扰真因）+ D010/D026（R7 冻结/压μ响应式失败阴影）+ D027（形态2 Kill）
+
+### 决策
+
+**Q-DP4 形态1（检测+回滚）KILL，Q-DP4 整体方向 Kill**。PROMPT-021 维度 D MVE 第二轮：验证1（Go/Kill hinge）三 snapshot_window（100/500/1000）全部 KILL，回滚后 dwell time 中位 **11 块**（远 < 1000 块 Kill 阈值），CMA 回滚后立即再次跳到 swap 盆地（n_rollbacks=888/late 段）。深度物理诊断进一步证实：即使回滚到早期快照（swap 前 25000+ 块）获得长 dwell（16083 块），BER 从 0.0176 恶性爬升到 0.1226（权重过时）——**不存在"既有长 dwell 又有好 BER"的回滚点**。
+
+**Q-DP4 三种方法形态评估完成**：形态2（预防性约束）Kill（D027）+ 形态1（检测+回滚）Kill（本决策）+ 形态3（混合 SOP 补偿）未测但物理诊断已覆盖（D027 V3 证明约束不改变地形 + 本决策证明响应式无效）。Q-DP4 问题陈述（D3=收敛后防 swap）真实（V1 证实 8.3× 改善空间）但**当前无有效方法形态可解决**。
+
+### 核心失败机制（形态1 两种回滚实现都 FAIL）
+
+**机制1：滑动窗口回滚（snapshot_window=100/500/1000）—— dwell=11 块**：swap 是一次性永久锁定（block 36698+ 持续到序列末尾）。检测到 swap 时（late 段 block 68359+），最近 100-1000 块的快照**都已在 swap 盆地**（swap 已持续 30000+ block）。回滚到 swap 盆地内的快照 = 仍在 swap 盆地 → 立即再检测到 swap → 循环回滚（888 次/late 段）。三 snapshot_window 无差异。
+
+**机制2：回滚到早期快照（swap 前）—— dwell 长但 BER 爬升**：
+| 回滚快照 block | dwell (blocks) | 期间 PI-BER 轨迹 |
+|---|---|---|
+| 5000（swap 前 ~26000 块）| 16083 | 0.0176→0.0321→0.0589→**0.1226**（恶性爬升）|
+| 20000 | 1083 | — |
+| 30000（swap 临近）| 12 | — |
+权重过时（block 5000 SOP 角度 vs 当前 SOP 已差很多），CMA 在线跟踪跟不上 SOP 旋转，BER 越来越差。
+
+**根本死因**：SOP 持续旋转 + 恒模代价多解地形的结构性矛盾。任何历史快照随时间过时（SOP 旋转），CMA 在线更新倾向于跳回 swap 盆地（多解地形）。**物理结构层面的不可行，非参数调优可解**。
+
+### V0 核心数据（5 seeds, f_G=30, SOP=4e-7, N=5M, late [4.375M,5M)）
+
+| seed | n_events_late | swap_frac_late | 含义 |
+|---|---|---|---|
+| 1000 | 1 | 1.000 | 永久锁定覆盖整个 late 段 |
+| 1001 | 0 | 0.000 | clean |
+| 1002 | 0 | 0.000 | clean |
+| 1003 | 1 | 1.000 | 永久锁定覆盖整个 late 段 |
+| 1004 | 0 | 0.000 | clean |
+
+**新发现**：swap 不是间歇性反复跳变，是一次性不可逆锁定。swap 动态分两阶段：①早期间歇期（block 21000-36000，~1300 个单 block 短暂 swap，CMA 能自己跳回）②永久锁定（block 36698+，len=41426 blocks 锁到末尾，CMA 无法自己跳回）。
+
+### V1 核心数据（3 snapshot_windows × 5 seeds）
+
+| snapshot | A(stdCMA) PI | B(form1) PI | dwell 中位 | n_rollbacks(swap seeds) | 判定 |
+|---|---|---|---|---|---|
+| 100 | 0.0210 | 0.0187 | **11 块** | 888 | KILL |
+| 500 | 0.0210 | 0.0187 | **11 块** | 888 | KILL |
+| 1000 | 0.0210 | 0.0187 | **11 块** | 888 | KILL |
+
+swap seeds（1000/1003）form1 PI-BER 略降（0.0393→0.0268 / 0.0001→0.0006）但未达 ≥2× 改善；clean seeds 无变化。阈值敏感性（0.3/0.5/0.7）结论一致。
+
+### 否决了什么
+
+- 否决 Q-DP4 **形态1（检测+回滚）** 作为方法——两种回滚实现（滑动窗口/早期快照）都 FAIL
+- 否决"响应式方法可防 SOP 驱动 swap"假设——R7 冻结（响应 fade）+ 压μ（响应 fade）+ 回滚（响应 swap）三类响应式全 FAIL
+- 否决"回滚到正确盆地能恢复跟踪"假设——SOP 持续旋转让历史快照过时（BER 爬升）
+- **否决 Q-DP4 作为研究方向**——问题真实（8.3× 改善空间）但三种方法形态（约束/检测回滚/混合补偿）都无法有效解决
+
+### 可复用部分
+
+1. **block 级 swap 检测框架**（compute_block_corr_series + detect_swap_events）——可复用于任何 CMA swap 动态分析
+2. **swap 动态两阶段模型**（间歇期→永久锁定）——论文分析层贡献，解释 SOP 驱动 swap 的演化机制
+3. **响应式方法失效的统一证据链**（R7 冻结 + 压μ + 回滚三类）——可写入论文 limitations："SOP 驱动 swap 是 FSO 双偏振 CMA 的结构性瓶颈，响应式方法（冻结/压μ/回滚）均无效"
+4. **形态1 Form1CMA 实现 + dwell time 跟踪**——可复用于其他响应式策略评估
+5. **回滚 BER 爬升诊断方法**——可复用于验证任何"回滚到历史状态"策略的有效性
+
+### 影响范围
+
+- S021 Q-DP4 进维度 D 门控状态 → **Q-DP4 整体 Kill**
+- D027（形态2 Kill）仍有效，本决策补充形态1 Kill 并做整体判定
+- Q-DP4 不进 Contract/Execute，三种方法形态全废
+- **路线 A（Q-CMA-FADE D022 + 改动1）成为 GW Step 4a 双偏振 OSL 唯一存活方向**
+- GW Step 4a 双偏振 OSL 三候选评估完成：Q-DP1 Kill（D001）/ Q-DP3 Kill（D026）/ Q-DP4 Kill（本决策）→ 路线 A 保底
+- feasibility_report.md Q-DP4 节须标注整体 Kill（形态1 dwell=11 + 无可行回滚点）
+- 分析层贡献不变（D006/D010/D014/D024 全部有效）
+- **S021 §3 警告（0 跨域先例=最高风险）部分应验**：0 先例不仅是结构性空白，也指向"问题虽真但当前方法无法解决"。R007/R008 排除的"方法不匹配"风险在 Q-DP4 上部分应验（约束机制错 + 响应式无效）
+
+### 触发原话
+
+> 触发原话: 无（用户派发 PROMPT-021 为执行指令；Kill 结论来自 V1 dwell time 数据验证 + 深度物理诊断非用户态度）
+
+### 来源
+
+S023（PROMPT-021 Q-DP4 形态1 维度 D MVE 执行）
