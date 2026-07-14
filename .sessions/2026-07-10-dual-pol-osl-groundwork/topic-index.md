@@ -1,7 +1,7 @@
 # Topic Index: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
 
 > slug: 2026-07-10-dual-pol-osl-groundwork
-> status: active | created 2026-07-10 | last_updated 2026-07-13（PROMPT-015 统一合法 baseline 重比完成：standard-CMA vs ML-original/aligned 均 29/30 胜，exact p=1.1920928955078125e-6，预注册 gate=GO；结论限于已注册参数域）
+> status: active | created 2026-07-10 | last_updated 2026-07-14（PROMPT-017 B 边完成 R006：Q-DP3 前置厘清——预测性 fade 检测物理可行/对 divergence 前兆存疑；R005 方向2⊂D003 子集；合并定义=预测性 fade 检测驱动跨帧 DSP 恢复；D003 Conditional Go 补第4条。A 边 PROMPT-016 待回传）
 
 ## 专题定位（一句话）
 
@@ -41,6 +41,7 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
   - 原因：D020 发现 PROMPT-013 的 CMA 梯度实现与 ML 交叉支路初始化存在两个独立混杂，D021 要求先解除混杂再判定方法层卖点。
   - 新范围：在不进入 Contract、不中途修改共享 `common/` 实现的前提下，完成 Prompt-015 的隔离脚本、三方/四方法对比、预注册统计判据和结果审计。
   - 影响的未决项：D019 盲 VAE A/B 选择继续挂起，直到本次 baseline Go/No-Go 结论落地。
+- **[2026-07-14]** Inflation scope record（治理 BLOCK 处理）：专题 S### 文件数达 16（S001-S016），触发 session-governance inflation BLOCK（>=15）。确认非范围漂移——16 S 是 GW Step1（检索）→ Step2-3（下载/精读）→ Step4a（可行性评估 Q-DP1/2/3）→ Step4a 维度 D MVE（GG时间模型/发散扫描/ML对比/多轮基线审计 P011-P015）全流程的自然深度，所有 S 均在原始目标「GW Step 1-4a 完整流程」范围内。PROMPT-017 是 S016 已授权派出的 B 边前置厘清任务（Q-DP3 预测性检测物理可行性 + 与 D003 关系厘清），属 GW Step 4a 候选评估范畴，不引入新范围。允许继续执行并记 S017。后续若 S### 继续增长逼近 25，考虑将 MVE 执行段（S005-S015）拆分到独立「cma-fade-mve-execution」子专题。
 
 ## 不变量（动任何一条必须重新讨论）
 
@@ -68,16 +69,17 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 - **PROMPT-013 不形成机制贡献（D020）**：30 seeds 只确认 ML 优于 current scalar-error CMA；H_a 证伪，H_b 严格 unknown 且 freeze 主效应 0/3，standard CMA 在 2/3 高差 seed 上近乎消除差距。未统一 standard baseline 与初始化前，不得泛化为 ML 优于经典 CMA。
 - **PROMPT-014 首轮不形成性能结论（D019）**：盲 VQ-VAE 实现和 11 个诊断 cells 可复用，但顺序不同 batch 的首末 loss 不能作为固定 probe 收敛证据；当前 SHA 的 30-cell 候选被拒，11/11 paired wins 不得外推。
 - **PROMPT-015 统一合法 baseline 重比（D021/V005）**：standard-CMA 对 ML-original 与 ML-aligned 的超额 PI-BER 比较均为 ML 29/30 胜、exact p=1.1920928955078125e-6；预注册 overall gate=GO。初始化敏感性在本实验中近乎不影响均值，但不作因果或跨参数域结论。
+- **feasibility_report Q-DP3 帧时长数据错误（R006 发现的既有债务）**：feasibility_report L593 记 L-DP5 帧时长"~74µs（4160 sym/56GBaud）"，实际 4160/56e9=74**ns**（差 1000 倍）；L-DP6 记"~1µs（32768 sym/32GBd）"，实际 32768/32e9=1.024**ms**（差 1000 倍）。精读笔记（10.1109_ICSOS59710.2023.10490279.md）已确认 L-DP5 仿真帧=4160 sym。影响：feasibility_report"相干时间/帧时长比 13-1000 倍"的论证量级有误（实际 L-DP5: 1ms/74ns≈13500×；L-DP6: 1ms/1.024ms≈1× 即 L-DP6 帧长≈相干时间，跨帧论证可能不成立）。Q-DP3 进维度 A 正式评估前须回原文核实帧时长并修正 feasibility_report。R006 结论不依赖此数值（只用 τ_c≫block·t_s 已验证关系）。
 
 ## 当前位置
 
-**A/B 两边并行推进（2026-07-14，D022 后）**。PROMPT-015 GO 后方法层卖点解冻（ML 优于 standard-CMA 30 seeds 显著），但创新性软（照搬 Qin + 机制说不清）。用户决策"两边同时推"+ "能不能动一点点让它好一点点"。主控诊断方法层 = 别人方法 + 新场景，提出用分析层发散判据驱动 ML 训练调度（改动1）作为可能的创新升级。seed 策略修正：中间验证 5 seeds 够，只有论文最终结论补 30。
+**A/B 两边并行推进（2026-07-14，D022 后；B 边 R006 完成）**。PROMPT-015 GO 后方法层卖点解冻（ML 优于 standard-CMA 30 seeds 显著），但创新性软（照搬 Qin + 机制说不清）。用户决策"两边同时推"+ "能不能动一点点让它好一点点"。主控诊断方法层 = 别人方法 + 新场景，提出用分析层发散判据驱动 ML 训练调度（改动1）作为可能的创新升级。seed 策略修正：中间验证 5 seeds 够，只有论文最终结论补 30。
 
-- **A 边（PROMPT-016，已派出）**：5 seeds 扩参数域（f_G/SNR/16QAM）拿鲁棒性曲线 + 改动1（发散判据驱动 ML 训练调度）新颖性快查。低优先机械活。
-- **B 边（PROMPT-017，已派出）**：Q-DP3 两个前置问题（预测性检测物理可行性 + 与 D003 关系厘清）。高优先思考活，为 step 4a 维度 A 正式竞争分解铺路。
+- **A 边（PROMPT-016，已派出）**：5 seeds 扩参数域（f_G/SNR/16QAM）拿鲁棒性曲线 + 改动1（发散判据驱动 ML 训练调度）新颖性快查。低优先机械活。**待回传**。
+- **B 边（PROMPT-017，R006 已完成）**：Q-DP3 两个前置问题厘清完成。**结论**：预测性 fade 检测物理可行（对 fade 可行，对 divergence 前兆存疑）；R005 方向2 ⊂ D003 Q-DP3（子集）；合并定义=预测性 fade 检测驱动的跨帧 DSP 恢复；D003 Conditional Go 仍有效但补第4条 Conditional（检测对象须 fade 非 divergence + 前兆可辨识性需 MVE 前最小验证）。Q-DP3 可进 step 4a 维度 A 正式竞争分解，致命风险=fade 前兆可辨识性未实证。
 - D019 盲 VAE 仍挂起。R005 方向1（自适应步长）已 Kill（JR-CMA 占点）。
 
-下一步：等 A/B 回传 → A 核验鲁棒性数据 + 改动1 创新判断；B 据前置厘清结果决定 Q-DP3 是否进 step 4a 维度 A。两边汇合后做方法层战略判断（Q-CMA-FADE 加固 vs Q-DP3 转向）。
+下一步：等 A 边回传 → 核验鲁棒性数据 + 改动1 创新判断；B 边据 R006 决定 Q-DP3 是否进 step 4a 维度 A。两边汇合后做方法层战略判断（Q-CMA-FADE 加固 vs Q-DP3 转向）。
 
 - Step 1-3：完成（双偏振 9 篇 + ML 20 篇 = 29 篇精读）
 - **Step 4a：完成**（Q-DP1/2/3 可行性评估）
@@ -126,3 +128,4 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 - **S014**（2026-07-13）：PROMPT-014 盲 VQ-VAE 公平比较首轮执行。Qin 原文核对修正固定星座码本/Eq.15，完成 1-sps 线性 2×2 complex-FIR VQ-VAE、共享 DP 信道、严格签名/分片/合并与 48 项回归；正式 11/30 cells 时 seed1004 触发 loss sanity，独立复算确认首末来自不同 batch、当前 gate 无固定 probe 语义。D019 拒绝当前结果候选，V003 PARTIAL；不判方法优劣。详见 `S014-prompt014-blind-vqvae-partial.md` 与 `PROMPT_014_REPORT.md`
 - **S015**（2026-07-13）：PROMPT-013 回传后的主控独立核验 + 集成，并完成 PROMPT-015 统一合法 baseline 重比。Q1 独立重算（30/30, p=1.86e-9, CMA超额0.0147 vs ML0.00115，数字真实）；Q2 standard CMA 在 high-gap seed 1006/1017 降 752×/688×，seed 1011 无效；H_a 证伪/H_b unknown/H_c 排除但发现 ML 交叉支路初始化混杂。PROMPT-015 30 seeds 上 standard-CMA vs ML-original/aligned 均为 ML 29/30 胜，exact p=1.1920928955078125e-6，两条预注册主判据通过，GO 但仅限注册参数域。D019 继续挂起。详见 `S015-prompt013-reaudit-and-baseline-decision.md` 与 `projects/simulation/explore/cma-fade-divergence/PROMPT_015_REPORT.md`
 - **R005**（2026-07-13）：方法层困境后两个出口方向的文献新颖性调研（用户"要方法层"，S015 诊断方向1 自适应步长 CMA + 方向2 发散检测响应）。4 英文检索（tools/search，Exa credits 耗尽降级 S2+OpenAlex+SerpAPI）+ 3 中文检索（CNKI blit 0 条/cookie 问题，tools/search chinese 命中4条仅1条RF卫星非光通信）+ 2 子 agent 深查（方向1 三篇关键论文摘要交叉验证 + 方向2 三问题 WebSearch 8 查询）。**结论：方向1 不支持继续评估**——JR-CMA (L-DP8, ACP 2025) 已在同场景（FSO+深衰落）占点三机制（AGC+误差阈值重置+自适应步长），是我们精读笔记自评"经典套路新颖性有限"的论文，是 PROMPT-011 教训（DD-CMA 翻车）的精确复现形态；双重否定（文献 JR-CMA 占点 + 自有分析层 R7 冻结无效/R4 深衰落非触发反向证伪自适应 μ 假设）。**方向2 有条件支持**——FSO/卫星光算法层无先例（hang-up recovery 刚被 Le Bidan 2023 列为开放问题），ML 预测衰落→触发 ACM 有邻近范式（Galijasevic 2025），与 Qin 区分清晰；但致命风险是须做出预测性检测（非响应性重置，否则退化成 JR-CMA 阈值重置或被判工程优化），且与 Q-DP3（D003 跨帧恢复）机制相邻须先厘清子集/独立。两个方向都受 D021 冻结约束，评估时序排在统一 baseline 重比之后。**不立 Q# 不判 Go/Kill**（守 FR-22 + 任务书最高纪律）。详见 `R005-method-direction-novelty-survey.md`
+- **R006**（2026-07-14）：PROMPT-017 Q-DP3 两个前置问题厘清（B 边，文献+机制分析，3 子 agent：2 读精读笔记/结果JSON + 1 web 检索）。**前置1 预测性检测物理可行性**：对 **GG fade** 预测性可行（AR(1) ρ≈0.99997，h 下降趋势在 fade 前 0.16-0.5ms 可观测≫响应延迟），对 **CMA divergence** 前兆证据不足（J_CM(t)/h(t) 前兆轨迹从未测过；R4 修正版"前窗口零深衰落"从 57% 降到 32%）。Q-DP3 检测对象须锁定 fade 非 divergence。文献空白确认：光通信 hang-up recovery 全响应性/算法层规避，光 fade 预测全统计级喂链路层，符号级 fade 预测喂物理层 DSP = 空白；RF 有成熟预测范式可借鉴（信道级非环路级）。**前置2 与 D003 关系**：子集关系——R005 方向2 ⊂ D003 Q-DP3（D003 原始定义已含"fade 检测+状态管理+重锁定"完整链，R005 是检测环节具体化+预测性约束；L-DP5=Le Bidan 2023 同源 A 相同）。合并后 Q-DP3 精确定义：M=预测性 fade 检测驱动的跨帧 DSP 恢复（前兆检测→触发→恢复动作→性能指标），检测对象=fade，预测性是硬约束，ML=fade 预测器（可选）非均衡器。D003 Conditional Go 仍有效但补第4条 Conditional（检测对象须 fade 非 divergence + 前兆可辨识性需 MVE 前最小验证）。**不立 Q# 不判 Go/Kill**（守 FR-22）。详见 `R006-qdp3-prerequisite-clarification.md`
