@@ -9,3 +9,8 @@
 - “Received-Power-Aware Carrier Phase Estimator Selection for Turbulent Satellite–Ground FSO Links 改个标题。”
 - “顺便，两个drawio我改好了。还有，一般第一张图不是放在第二页开头吗？”
 - “1、2图放到2、3页，fig3缩小。你怎么这么点工作做了这么久啊？”
+
+## 2026-07-15
+
+- “行，按你来吧，直接往下一直做”
+- “实在不行，可以看看我们的参考文献，搞一搞二次引用”

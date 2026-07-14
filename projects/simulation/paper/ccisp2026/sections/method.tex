@@ -1,9 +1,9 @@
-\section{Method}
+\section{Carrier Phase Recovery and Estimator Selection}
 \label{sec:method}
 
-The receiver uses data-aided (DA) and non-data-aided (NDA) carrier recovery as two complementary processing branches. Both branches operate on a digital-signal-processing window of $N_{\mathrm{DFT}}=256$ received samples, which is distinct from the 100-symbol atmospheric channel block defined in the system model. A branch is selected once per 256-sample window. The selection statistic is formed directly from the raw received samples, before branch-specific channel equalization and carrier recovery, so that the decision follows the same information flow for every turbulence regime. After selection, the DA path uses pilot-derived channel information, whereas the NDA path uses a blind channel estimate. The carrier-frequency and carrier-phase operations within the two paths are described next.
+The receiver uses data-aided (DA) and non-data-aided (NDA) carrier recovery as two complementary processing branches. Both branches operate on a digital-signal-processing window of $N_{\mathrm{DSP}}=256$ received samples, which is distinct from the 100-symbol atmospheric channel block defined in the system model. A branch is selected once per 256-sample window. The selection statistic is formed directly from the raw received samples, before branch-specific channel equalization and carrier recovery, so that the decision follows the same information flow for every turbulence regime. After selection, the DA path uses pilot-derived channel information, whereas the NDA path uses a received-power-based channel estimate. Figure~\ref{fig:adaptive-cpr} summarizes the parallel carrier-recovery branches and the two-stage control path described below.
 
-\subsection{DA and NDA Estimation Stages}
+\subsection{DA and NDA Carrier Estimation}
 
 The DA branch uses one known pilot every four transmitted symbols. Let $n_\ell$ denote the index of the $\ell$th pilot in the current processing window, $p_\ell$ its known complex value, and $t_\ell=n_\ell T_s$ its sampling time. Removing the known pilot modulation and fitting a linear phase model gives
 \begin{equation}
@@ -24,7 +24,7 @@ $\hat\phi_{0,\mathrm{DA}}+2\pi\widehat{\Delta f}_{\mathrm{DA}}kT_s$ from the rec
 
 With a spacing of four, a 256-sample window contains 64 pilot positions at indices $0,4,\ldots,252$. The regression treats their unwrapped phases as one ordered sequence rather than as independent single-pilot estimates. Centering the pilot times in Eq.~\eqref{eq:da-phase-time-ls} gives the frequency slope from their covariance with phase, while the intercept refers the phase estimate to the beginning of the processing window. The receiver then constructs one phase ramp for all 256 samples. This makes the DA output a carrier-corrected complex sequence with the same length and sample timing as the input window, which allows the downstream demodulator to use the same interface for either selected branch.
 
-The NDA branch removes the $(8,8)$-16APSK modulation periodicity through the $M_0$th-power operation, with $M_0=8$. A frequency estimate is first obtained from the spectrum of the raised signal and removed from the received window. Carrier phase is then estimated from the argument of the averaged $M_0$th-power samples. For a sample set $\mathcal I$, the basic estimate is
+The NDA branch removes the $(8,8)$-16APSK modulation periodicity through the $M_0$th-power operation, with $M_0=8$, complementing data-aided and blind phase search approaches that combine pilot symbols with modulation-removal estimators~\cite{martins2021dualstage}. A frequency estimate is first obtained from the spectrum of the raised signal and removed from the received window. Carrier phase is then estimated from the argument of the averaged $M_0$th-power samples. For a sample set $\mathcal I$, the basic estimate is
 \begin{equation}
 \hat\phi_{\mathcal I}
 =\frac{1}{M_0}\angle\!\left(
@@ -36,7 +36,9 @@ Two windowing modes implement this operation. Under Gamma--Gamma turbulence, $\m
 
 The NDA frequency stage precedes these phase modes. Raising the samples to the eighth power removes the ring-wise angular periodicity and produces a spectral component whose frequency is eight times the carrier-frequency offset. After locating that component, the receiver divides the raised-domain estimate by $M_0$, removes the corresponding phase ramp, and applies either the whole-window or segmented phase construction to the frequency-compensated samples. The order is consequently modulation removal, frequency estimation, frequency compensation, and carrier-phase estimation. The resulting derotation preserves the sample order and returns a 256-sample complex window for demodulation.
 
-\subsection{Switching Information Flow and Decision Rule}
+The eighth-power phase statistic is defined modulo $2\pi/8$. For the reported NDA bit-error curves, this eightfold phase ambiguity is resolved separately in each processing window by testing the eight constellation rotations against the transmitted bit labels and retaining the rotation with the lowest error count. This transmitted-bit-assisted step is an ambiguity-resolved evaluation protocol: it is not an online input to the NDA phase statistic or to the selector. The NDA results therefore characterize carrier tracking after phase-ambiguity resolution.
+
+\subsection{Two-Stage Selection Rule}
 
 The switching controller processes the raw received power $q_k=|r_k|^2$ over the current 256-sample window. Its first statistic is the coefficient of variation (CV), which describes the normalized spread of the received power:
 \begin{equation}
@@ -47,14 +49,14 @@ The switching controller processes the raw received power $q_k=|r_k|^2$ over the
 \end{aligned}
 \label{eq:cv-decision-boundary}
 \end{equation}
-Here, $\bar\gamma_{\mathrm{dB}}$ is the nominal data SNR supplied to the receiver, and $\tau_{\mathrm{CV}}$ is a pre-calibrated SNR-dependent boundary. A window with $\mathrm{CV}<\tau_{\mathrm{CV}}$ is directed to the NDA branch. Otherwise, the controller proceeds to the received-power proxy and effective-SNR stage.
+Here, $\bar\gamma_{\mathrm{dB}}$ is the nominal data SNR supplied to the receiver. The reference curve $0.74+0.12e^{-\bar\gamma_{\mathrm{dB}}/5}$ was fitted to an offline AWGN characterization of the received-power statistic, and the factor $1.10$ provides the fixed decision margin. A window with $\mathrm{CV}<\tau_{\mathrm{CV}}$ is directed to the NDA branch. Otherwise, the controller proceeds to the received-power proxy and effective-SNR stage.
 
 For the second stage, let $\bar\gamma=10^{\bar\gamma_{\mathrm{dB}}/10}$ denote the linear nominal data SNR. The controller forms a blind power-based channel proxy, maps it to an effective SNR, and applies the complete branch rule:
 \begin{equation}
 \begin{aligned}
 \hat h_{\mathrm{dsp}}
 &=\max\!\left\{
-\frac{1}{N_{\mathrm{DFT}}}\sum_{k=0}^{N_{\mathrm{DFT}}-1}|r_k|^2
+\frac{1}{N_{\mathrm{DSP}}}\sum_{k=0}^{N_{\mathrm{DSP}}-1}|r_k|^2
 -\frac{1}{2\bar\gamma},\ 10^{-6}
 \right\},\\
 \hat\gamma_{\mathrm{eff,dB}}
@@ -70,12 +72,14 @@ For the second stage, let $\bar\gamma=10^{\bar\gamma_{\mathrm{dB}}/10}$ denote t
 \end{aligned}
 \label{eq:two-stage-switch}
 \end{equation}
-Equation~\eqref{eq:two-stage-switch} makes the execution order explicit. The CV comparison is evaluated first. Only windows that pass this first boundary use $\hat h_{\mathrm{dsp}}$ and $\hat\gamma_{\mathrm{eff,dB}}$ for the 13-dB comparison. This arrangement separates windows whose raw power variation matches the pre-calibrated first-stage condition from those for which the effective-SNR decision distinguishes the DA and NDA operating regions.
+Equation~\eqref{eq:two-stage-switch} makes the execution order explicit. The CV comparison is evaluated first. Only windows that pass this first boundary use $\hat h_{\mathrm{dsp}}$ and $\hat\gamma_{\mathrm{eff,dB}}$ for the 13-dB comparison. This arrangement separates windows whose raw power variation satisfies the offline-characterized first-stage condition from those for which the effective-SNR decision distinguishes the DA and NDA operating regions.
 
 Operationally, the controller first accumulates $q_k$ across the received window and forms its mean and standard deviation. The normalized spread is compared with $\tau_{\mathrm{CV}}$; an NDA decision at this stage completes the route for that window. For the remaining windows, the already accumulated mean power is reused in $\hat h_{\mathrm{dsp}}$, combined with the nominal data SNR, and transformed into $\hat\gamma_{\mathrm{eff,dB}}$. The final comparison sends values below 13 dB to DA and values at or above 13 dB to NDA. This staged data flow implements the piecewise rule directly and keeps the first- and second-stage decision variables distinct.
 
-\subsection{Online Variables and Fixed Decision Parameters}
+\subsection{Online Statistics and Fixed Parameters}
 
 The controller separates quantities evaluated for every received window from quantities fixed before operation. The online sample set consists of the 256 raw complex samples $r_k$. Their squared magnitudes provide the sample mean and standard deviation used by the CV stage, and the same mean power enters $\hat h_{\mathrm{dsp}}$. The nominal data SNR $\bar\gamma_{\mathrm{dB}}$ is an input to the controller: it selects the value of the CV boundary, determines the noise-subtraction term in the blind power proxy, and provides the reference level for $\hat\gamma_{\mathrm{eff,dB}}$. No recovered data symbols or branch-output bit errors enter the selection rule.
 
-The CV coefficients $0.74$, $0.12$, and $5$, the margin factor $1.10$, the proxy floor $10^{-6}$, and the 13-dB decision level are pre-calibrated fixed parameters. They remain unchanged while the sample mean, sample standard deviation, blind power proxy, and effective SNR are recomputed for each processing window. This division gives a reproducible receiver interface: raw received power and nominal data SNR are the decision inputs; the CV boundary and the 13-dB level define the stored decision configuration; and the selected branch supplies the carrier-corrected samples to the subsequent demodulator. The implementation consequently realizes the sequence CV screening, blind-power evaluation, effective-SNR construction, and fixed-level branch selection stated in Eqs.~\eqref{eq:cv-decision-boundary}--\eqref{eq:two-stage-switch}.
+The 13-dB decision level was selected from the 12--14-dB effective-SNR transition region observed in preliminary diagnostic sweeps. After this characterization, the CV coefficients $0.74$, $0.12$, and $5$, the margin factor $1.10$, the proxy floor $10^{-6}$, and the 13-dB level were fixed and applied unchanged across all turbulence regimes and Monte Carlo runs, without per-regime retuning. The sample mean, sample standard deviation, blind power proxy, and effective SNR are nevertheless recomputed for each processing window. This division gives a reproducible receiver interface: raw received power and nominal data SNR are the decision inputs; the CV boundary and the 13-dB level define the stored decision configuration; and the selected branch supplies the carrier-corrected samples to the subsequent demodulator. The implementation consequently realizes the sequence CV screening, blind-power evaluation, effective-SNR construction, and fixed-level branch selection stated in Eqs.~\eqref{eq:cv-decision-boundary}--\eqref{eq:two-stage-switch}.
+
+Neither the turbulence label nor the realized channel gain is supplied to the selector. The stored parameters come only from the offline AWGN characterization and preliminary diagnostics, while online adaptation enters through the current window statistics. Consequently, the weak, moderate, and strong labels organize the evaluation but do not alter the receiver configuration. This separation prevents per-regime parameter choices from embedding knowledge of the evaluated condition and keeps the comparison tied to one receiver configuration across all evaluated conditions.

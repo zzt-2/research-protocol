@@ -1,7 +1,7 @@
 # Topic Index: CCISP 2026 LaTeX 投稿骨架
 
 > slug: 2026-07-13-ccisp-submission-prep
-> status: active | created 2026-07-13 | last_updated 2026-07-14
+> status: active | created 2026-07-13 | last_updated 2026-07-15
 
 ## 专题定位（一句话）
 
@@ -53,6 +53,7 @@
 - D008 要求把固定 effective-SNR 阈值与事后观测 crossover 严格分开；不能在 LaTeX 中让两种含义并存。
 - Table I 口径尚未锁定，首轮使用结构化占位，不填未经确认的 fair/naive 选择。
 - 官方投稿页当前写 5–10 页，而用户任务要求按 4–6 页报告差距；两种页数口径待进一步确认，不能在工程中擅自选定。
+- **2026-07-15 核实**：CCISP 2026 官方（ccisp.org/sub.html）明文页数 = 5–10 页（"no less than 5 pages, no longer than 10 pages"），含参考文献；**篇数上限官方未规定**。当前 7 页 / 12 条均满足硬约束。"4–6 页"非官方要求（旧任务口径），争议已解决。截稿 7/20（WikiCFP + special session 页交叉印证）。待主办方确认项：2026 是否进 IEEE Xplore / 双盲匿名措辞 / 官网首页未更新到 2026——不阻塞参考文献扩展。
 
 ## 进展线索
 
@@ -62,17 +63,18 @@
 - **V002**：独立 delta verifier 复核 D008 语义修正，结论 PASS；`gamma_th` 已只表示固定 effective-SNR switching threshold，最新版 PDF/日志和 Fig.1/Fig.2 占位通过。
 - **S002**：接收当前工作树的 CCE-CC-002 扩展预览并强制重建；最新版式增量 fresh `latexmk` exit 0，PDF 7 页、Letter、字体嵌入；Fig.1 已排第 2 页顶部、Fig.2 已排第 3 页顶部，BER Fig.3 已缩为第 5 页单栏，逐页检查无裁切/重叠。仍有 1 个 `Underfull \\hbox`、1 个 `Underfull \\vbox` 和第 7 页参考文献尾部留白。当前目标已实际嵌入 Fig.1/Fig.2，故与本专题原始占位硬边界存在 B-08；纯 text 3,241、非正文项合计后约 3,505，词数口径列 B-09。
 - **V005**：独立 verifier 复核本轮三项版式改动，结论 PARTIAL；图位、单栏 Fig.3、PDF 属性、字体和错误诊断通过，Underfull 与末页留白保留为债务。
+- **S003**：官方要求核实 + 参考文献从 12 条扩到 20 条。官方页数 5-10（含 ref）、篇数无上限、截稿 7/20（ccisp.org/sub.html）；"4-6 页"旧口径争议解决。补 8 条（IEEE 5/非 IEEE 3），每条 Crossref+S2 逐字段核实，修正 taylor 单作者/2009、liu 标题 2N×2、conroy 末页 5101、martins 页码 3157-3175、guiomar DOI。citekey 20=20 零闲置零缺漏，fresh compile 7 页 0 警告 0 undefined 0 overfull，字体全嵌入，.bbl 逐条格式正确。
 
 ## 未决项
 
-1. CCISP 2026 官方模板的具体投稿细则（纸张、匿名元数据、版权栏、最终源文件/PDF要求）是否还需从会议/IEEE指南补证。
+1. ~~CCISP 2026 官方模板的具体投稿细则~~ → 2026-07-15 核实：页数 5–10（含 ref），篇数无上限，截稿 7/20。待主办方确认：2026 是否进 IEEE Xplore / 双盲匿名措辞（不阻塞参考文献扩展）。
 2. 占位引用到真实 BibTeX/DOI/论文路径的映射完整度。
 3. Table I 的最终口径与 Fig.2 纵轴范围等导师项。
-4. Fig.1/Fig.2 的目标页位已完成；第 7 页参考文献尾部留白及整体 7 页（旧 4--6 页口径超 1 页）是否需要在正式版面优化轮处理。
+4. ~~Fig.1/Fig.2 目标页位~~已完成；~~7 页超旧 4–6 口径~~ → 2026-07-15 解决：官方口径 5–10 页，7 页满足，"4–6"非官方要求。第 7 页参考文献尾部留白是否需版面优化待定。
 5. `naive` 术语以及 external-output C1–C10 的独立复核结论。
 6. 当前 CCE 扩展预览是否允许替代本专题的首轮占位骨架；实际 Fig.1/Fig.2 与 DRAFT 元数据仍未获得本专题范围内的明确确认。
 7. D001 的 3,500 词验收采用纯 text 还是含标题/图注的总口径。
 
 ## 当前位置
 
-当前位置：Gate 0 官方模板硬门 PASS，构建链可用；当前工作树已存在 CCE-CC-002 扩展预览，fresh PDF 为 7 页。S002 已完成用户指定的 Fig.1/Fig.2 第 2/3 页排版和 BER Fig.3 单栏调整；原始 Fig.1/Fig.2 占位边界、末页留白、词数口径、Oracle/术语语义和投稿页数仍未收口，当前交付仍不是最终投稿稿。
+当前位置：Gate 0 官方模板硬门 PASS，构建链可用；当前工作树已存在 CCE-CC-002 扩展预览，fresh PDF 为 7 页。S003 完成官方要求核实（页数 5-10 含 ref、篇数无上限、截稿 7/20）+ 参考文献从 12 条扩到 20 条（IEEE 5/非 IEEE 3，全 Crossref+S2 核实，0 警告 0 undefined 0 overfull）。原始 Fig.1/Fig.2 占位边界、末页留白、词数口径、Oracle/术语语义仍未收口，当前交付仍不是最终投稿稿。
