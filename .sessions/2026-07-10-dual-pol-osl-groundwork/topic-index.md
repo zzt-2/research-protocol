@@ -1,7 +1,7 @@
 # Topic Index: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
 
 > slug: 2026-07-10-dual-pol-osl-groundwork
-> status: active | created 2026-07-10 | last_updated 2026-07-13（PROMPT-014 盲 VQ-VAE 实现通过代码审查，但正式比较在 11/30 cells 因首末 batch loss sanity 语义失配而截断；当前候选被拒，不判方法 Go/No-Go。D019/V003）
+> status: active | created 2026-07-10 | last_updated 2026-07-13（PROMPT-015 统一合法 baseline 重比完成：standard-CMA vs ML-original/aligned 均 29/30 胜，exact p=1.1920928955078125e-6，预注册 gate=GO；结论限于已注册参数域）
 
 ## 专题定位（一句话）
 
@@ -37,7 +37,10 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 - ❌ 不推翻 9 次 Kill 的物理结论（那是事实）
 
 ### 范围变更记录
-- 无（专题刚成立）
+- **[2026-07-13]** [D021]：将 GW Step 4a 维度 D 的当前执行范围明确细化为“统一合法 baseline 后重比”——包含 current-CMA、standard-CMA、ML-original、ML-aligned 的预注册 30-seed 对比。
+  - 原因：D020 发现 PROMPT-013 的 CMA 梯度实现与 ML 交叉支路初始化存在两个独立混杂，D021 要求先解除混杂再判定方法层卖点。
+  - 新范围：在不进入 Contract、不中途修改共享 `common/` 实现的前提下，完成 Prompt-015 的隔离脚本、三方/四方法对比、预注册统计判据和结果审计。
+  - 影响的未决项：D019 盲 VAE A/B 选择继续挂起，直到本次 baseline Go/No-Go 结论落地。
 
 ## 不变量（动任何一条必须重新讨论）
 
@@ -64,10 +67,11 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 - **双口径是后续性能结论的强制口径（D018）**：fixed-label 与 PI-BER 必须并报；PI 需 pilot/帧头消歧。N=5M 的固定标签约 0.5 是交换而非信息丢失；N=2M 的 ML>CMA PI 优势只在已审计参数域内成立。
 - **PROMPT-013 不形成机制贡献（D020）**：30 seeds 只确认 ML 优于 current scalar-error CMA；H_a 证伪，H_b 严格 unknown 且 freeze 主效应 0/3，standard CMA 在 2/3 高差 seed 上近乎消除差距。未统一 standard baseline 与初始化前，不得泛化为 ML 优于经典 CMA。
 - **PROMPT-014 首轮不形成性能结论（D019）**：盲 VQ-VAE 实现和 11 个诊断 cells 可复用，但顺序不同 batch 的首末 loss 不能作为固定 probe 收敛证据；当前 SHA 的 30-cell 候选被拒，11/11 paired wins 不得外推。
+- **PROMPT-015 统一合法 baseline 重比（D021/V005）**：standard-CMA 对 ML-original 与 ML-aligned 的超额 PI-BER 比较均为 ML 29/30 胜、exact p=1.1920928955078125e-6；预注册 overall gate=GO。初始化敏感性在本实验中近乎不影响均值，但不作因果或跨参数域结论。
 
 ## 当前位置
 
-**统一合法 baseline 重比立项（2026-07-13，D021）**。主控独立复核 PROMPT-013 Q1/Q2 后确认：(1) Q1 ML 优于 current-CMA 30/30, p=1.86e-9 属实；(2) Q2 standard CMA 在 high-gap seed 1006/1017 把 PI-BER 从 0.033→4.5e-5（752×/688×），seed 1011 无效；(3) H_c 发现 ML 交叉支路初始化混杂（4 FIR 中心全=1 vs CMA 对角 wxy/wyx=0）。两个 baseline 混杂未解除前，"ML 优于 CMA"卖点冻结。用户决策：先统一合法 baseline 再重比（D021），PROMPT-014 盲 VAE 挂起等 baseline 解决。
+**统一合法 baseline 重比已完成（2026-07-13，D021/V005）**。主控独立复核 PROMPT-013 Q1/Q2 后确认：(1) Q1 ML 优于 current-CMA 30/30, p=1.86e-9 属实；(2) Q2 standard CMA 在 high-gap seed 1006/1017 把 PI-BER 从 0.033→4.5e-5（752×/688×），seed 1011 无效；(3) H_c 发现 ML 交叉支路初始化混杂（4 FIR 中心全=1 vs CMA 对角 wxy/wyx=0）。PROMPT-015 以统一合法 baseline 完成 30-seed 重比：standard-CMA vs ML-original/aligned 均为 ML 29/30 胜，exact p=1.1920928955078125e-6，预注册 gate=GO。结论仅在 N=5M/QPSK/strong/f_G=30/SOP=4e-7 合同内成立；PROMPT-014 盲 VAE 仍挂起。
 
 - Step 1-3：完成（双偏振 9 篇 + ML 20 篇 = 29 篇精读）
 - **Step 4a：完成**（Q-DP1/2/3 可行性评估）
@@ -90,9 +94,9 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
   - ✅ **S013 + D018/V002：PROMPT-012 双口径重审 PASS**—— S005 阈值收紧；N=5M CMA/ML 均为交换主导；N=2M 的 ML PI 优势在三 f_G 保留
   - ⚠️ **S013 续 + D020/V004：PROMPT-013 机制验证 PARTIAL**——30-seed Q1 PASS（ML>CMA 30/30 p=1.86e-9，但 baseline=current scalar-error CMA）；H_a 证伪、H_b unknown；standard CMA 在 2/3 high-gap seed 消除差距 → "ML 优于经典 CMA"不可成立
   - ⚠️ **S014 + D019/V003：PROMPT-014 首轮 PARTIAL（deferred）**——盲 VQ-VAE 实现 PASS；11/30 cells loss gate 语义不合法被拒；A/B 二选一挂起等 D021
-  - 🔄 **S015 + D021：统一合法 baseline 重比立项**——待封装 PROMPT-015，修正 standard CMA + ML 交叉支路初始化混杂，30-seed 三方对比
+  - ✅ **S015 + D021/V005：统一合法 baseline 重比完成**——standard-CMA、ML-original、ML-aligned 的 30-seed 主比较均通过预注册 Go 判据；结果仅作参数域内结论，D019 仍挂起
 
-下一步：**封装 PROMPT-015（统一合法 baseline 重比）交新对话执行**。预注册判据已写在 D021：三方配对超额 PI-BER + Wilcoxon，Go=standard-CMA vs ML 仍满足主判据，No-Go=卖点塌缩。期间方法层卖点冻结，D019 挂起。不进 Contract。
+下一步：**由主控决定是否在 GW Step 4a 维度 D 内扩大参数域或进入下一门控**；PROMPT-015 已完成，结论暂限于注册合同。若进入 Contract，必须按对应阶段框架重新检查门控；D019 盲 VAE 继续挂起。
 
 ## 进展线索
 
@@ -114,4 +118,5 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 - **S012**（2026-07-13）：PROMPT-011 先调研再最小验证。文献确认 DD/酉约束/两级 CMA 已成熟；机制审计发现连续酉多解表述错误、D014 未区分 swap/同源、旧 `_cma.py` 缺标准 CMA 输出因子。3 shared seeds：current fixed `0.4741±0.0201`→PI `0.0306±0.0253`、swap 3/3；standard PI `0.0349±0.0268`。D016 暂停新方法，转基线重审；V001 PARTIAL（阻断证据充分，正式数字待≥10 seeds）。详见 `S012-prompt011-cma-root-diagnostic.md`
 - **S013**（2026-07-13）：PROMPT-012 双口径历史重审完成，并续接 PROMPT-013。P012 确立 fixed/PI 强制口径；P013 在 30 seeds 上确认 ML 相对 current CMA 30/30 更优，但 H_a 证伪、H_b unknown，standard CMA 在两个高差 seed 近乎消除差距，故 D020 拒绝机制贡献泛化，V004 PARTIAL。详见 `S013-dual-metric-historical-reaudit.md`、`PROMPT_012_REPORT.md` 与 `PROMPT_013_REPORT.md`
 - **S014**（2026-07-13）：PROMPT-014 盲 VQ-VAE 公平比较首轮执行。Qin 原文核对修正固定星座码本/Eq.15，完成 1-sps 线性 2×2 complex-FIR VQ-VAE、共享 DP 信道、严格签名/分片/合并与 48 项回归；正式 11/30 cells 时 seed1004 触发 loss sanity，独立复算确认首末来自不同 batch、当前 gate 无固定 probe 语义。D019 拒绝当前结果候选，V003 PARTIAL；不判方法优劣。详见 `S014-prompt014-blind-vqvae-partial.md` 与 `PROMPT_014_REPORT.md`
-- **S015**（2026-07-13）：PROMPT-013 回传后的主控独立核验 + 集成。独立重算 Q1（30/30, p=1.86e-9, CMA超额0.0147 vs ML0.00115, 比率12.75×，stored vs recomputed 三项一致 → 数字真实）；独立重算 Q2 standard CMA 在 high-gap seed 1006/1017 降 752×/688×（与报告一致），seed 1011 无效；H_a 证伪/H_b unknown/H_c 排除但发现 ML 交叉支路初始化混杂（4 FIR 中心全=1 vs CMA 对角 wxy/wyx=0）。确认执行对话已写 D020/V004（结论与主控核验一致）。**关键判断**：Q1 30-seed 优势里至少 high-gap 部分被 current-CMA 实现 bug 贡献，不能声称 ML 优于经典 CMA。用户决策"统一合法 baseline 重比"→ **D021 立项**（修正 standard CMA + ML 初始化，30-seed 三方对比，预注册 Go/No-Go 判据），D019 盲 VAE 挂起。方法层卖点冻结至三方对比出结果。详见 `S015-prompt013-reaudit-and-baseline-decision.md`
+- **S015**（2026-07-13）：PROMPT-013 回传后的主控独立核验 + 集成，并完成 PROMPT-015 统一合法 baseline 重比。Q1 独立重算（30/30, p=1.86e-9, CMA超额0.0147 vs ML0.00115，数字真实）；Q2 standard CMA 在 high-gap seed 1006/1017 降 752×/688×，seed 1011 无效；H_a 证伪/H_b unknown/H_c 排除但发现 ML 交叉支路初始化混杂。PROMPT-015 30 seeds 上 standard-CMA vs ML-original/aligned 均为 ML 29/30 胜，exact p=1.1920928955078125e-6，两条预注册主判据通过，GO 但仅限注册参数域。D019 继续挂起。详见 `S015-prompt013-reaudit-and-baseline-decision.md` 与 `projects/simulation/explore/cma-fade-divergence/PROMPT_015_REPORT.md`
+- **R005**（2026-07-13）：方法层困境后两个出口方向的文献新颖性调研（用户"要方法层"，S015 诊断方向1 自适应步长 CMA + 方向2 发散检测响应）。4 英文检索（tools/search，Exa credits 耗尽降级 S2+OpenAlex+SerpAPI）+ 3 中文检索（CNKI blit 0 条/cookie 问题，tools/search chinese 命中4条仅1条RF卫星非光通信）+ 2 子 agent 深查（方向1 三篇关键论文摘要交叉验证 + 方向2 三问题 WebSearch 8 查询）。**结论：方向1 不支持继续评估**——JR-CMA (L-DP8, ACP 2025) 已在同场景（FSO+深衰落）占点三机制（AGC+误差阈值重置+自适应步长），是我们精读笔记自评"经典套路新颖性有限"的论文，是 PROMPT-011 教训（DD-CMA 翻车）的精确复现形态；双重否定（文献 JR-CMA 占点 + 自有分析层 R7 冻结无效/R4 深衰落非触发反向证伪自适应 μ 假设）。**方向2 有条件支持**——FSO/卫星光算法层无先例（hang-up recovery 刚被 Le Bidan 2023 列为开放问题），ML 预测衰落→触发 ACM 有邻近范式（Galijasevic 2025），与 Qin 区分清晰；但致命风险是须做出预测性检测（非响应性重置，否则退化成 JR-CMA 阈值重置或被判工程优化），且与 Q-DP3（D003 跨帧恢复）机制相邻须先厘清子集/独立。两个方向都受 D021 冻结约束，评估时序排在统一 baseline 重比之后。**不立 Q# 不判 Go/Kill**（守 FR-22 + 任务书最高纪律）。详见 `R005-method-direction-novelty-survey.md`

@@ -1,6 +1,7 @@
 # [S015] PROMPT-013 回传主控核验 + baseline 混杂决策
 
-> 2026-07-13 | GW Step 4a 维度 D MVE 扩展 | 状态：方法论决策已落（D021），PROMPT-015 待封装
+> 2026-07-13 | GW Step 4a 维度 D MVE 扩展 | 状态：D021 已验证；PROMPT-015 GO
+> 2026-07-13 续接 | 统一合法 baseline 重比完成并落盘
 
 ## 目标
 
@@ -79,6 +80,18 @@ ML 交叉支路初始化混杂（wxy/wyx=1 vs CMA=0）是第二个未排除因�
 - **topic-index 更新**：当前位置指向 PROMPT-015；进展线索加 S015
 - **D020/V004**：执行对话已写，结论与主控核验一致，未改动
 
+### PROMPT-015 统一合法 baseline 重比（2026-07-13 续接）
+
+按 D021 预注册合同，在不修改 common/ 与 params.py 的隔离脚本中完成 30 个 seed（1000–1029）的统一比较。每个 seed 使用 N=5,000,000、QPSK、strong turbulence、f_G=30、SOP=4e-7，并共享同一信道 realization；主指标为测试尾段 PI-BER，辅助并报 fixed-label BER。
+
+结果完整性：checkpoint 30/30、无 pending、seed 唯一且范围正确；current-CMA、standard-CMA、ML-original、ML-aligned、oracle 的原始 BER 全部 finite；两个 ML 变体均记录 constructed/trained/inferred=true，实际 device=cuda；结果 summary 可由原始 trials 重算，experiment signature 与当前脚本参数一致，10 个来源文件 SHA 一致。
+
+统计结果：standard-CMA vs ML-original 为 ML 29/30 胜，exact two-sided Wilcoxon W=23.0，p=1.1920928955078125e-6；standard-CMA vs ML-aligned 同为 29/30 胜、W=23.0、p=1.1920928955078125e-6。两条预注册主判据（p<0.05 且 ML 胜场≥25/30）均通过，overall gate=GO。current-CMA vs ML-original 控制比较为 ML 30/30 胜，p=1.862645149230957e-9。
+
+解释边界：本实验支持在已注册参数域内将 standard-CMA 作为合法 baseline 后，ML 仍保留 PI-BER 优势；不支持“所有场景 ML 普遍优于 CMA”。ML-original 与 ML-aligned 均值差为 7.6e-7，仅作初始化敏感性描述，不能作因果归因。fixed-label 接近 0.5 的样本仍需按极化交换解释，不能替代 PI-BER。
+
+产出已落盘：PROMPT_015_REPORT.md、prompt015_unified_baseline.py、test_prompt015_unified_baseline.py，以及 gitignore 下的 30-seed JSON。V005 记录验证证据。本次不进入 Contract，不自动解冻 D019。
+
 ## 决策引用
 
 - D020（执行对话建）：PROMPT-013 机制归因失败，ML 相对 current CMA 优势不可泛化为相对经典 CMA 的机制优势
@@ -91,6 +104,6 @@ ML 交叉支路初始化混杂（wxy/wyx=1 vs CMA=0）是第二个未排除因�
 
 ## 后续
 
-- 封装 PROMPT-015（统一合法 baseline 重比）交新对话执行
-- PROMPT-015 执行回传后：主控独立核验三方对比关键数字 → 据预注册判据判 Go/No-Go → 更新 D021 结论 + 决定方法层卖点命运 → 回头处理 D019 盲 VAE
-- 期间方法层卖点冻结，不得写"ML 优于 CMA"
+- 将 D021 状态更新为“已验证 GO”，后续若推进方法层，沿标准 CMA 合法 baseline 使用本次报告的范围化措辞
+- 保持 D019 盲 VAE 挂起，除非主控另行明确解冻并重新注册验证合同
+- 进入下一阶段前仍需单独读取对应阶段框架文件；本次 PROMPT-015 不进入 Contract

@@ -193,6 +193,55 @@ python -m pytest [Q1,Q2,P12-longseq,P12-shortseq] -q
 60 passed in 3.27s
 py_compile (5 related scripts): exit 0
 P12 divergence suite: collection exit 2, ImportError BLOCK/T_S from dirty r_lcr_ber_impact.py
+
+---
+
+## V005: PROMPT-015 统一合法 baseline 重比
+
+> date: 2026-07-13
+> 关联：S015 / D021
+
+### 验证项
+
+- [x] 30-seed 正式 checkpoint：seeds 1000–1029 唯一、完整、无 pending、范围正确 → PASS
+- [x] 统一 realization 与评价窗口：每 seed 共享同一信道，四方法和 oracle 使用同一 late slice → PASS
+- [x] 原始指标质量：所有方法 fixed-label BER、PI-BER 与超额 PI-BER finite → PASS
+- [x] ML 执行审计：ML-original、ML-aligned 每个 seed 均 constructed/trained/inferred=true，实际 device=cuda → PASS
+- [x] 初始化审计：ML-original 交叉中心为 1，ML-aligned 的 conv_RR/conv_RI 交叉中心均为 0 → PASS
+- [x] provenance：结果 summary 可由 trials 重算，experiment signature 与当前脚本一致，10 项 source SHA 一致 → PASS
+- [x] 预注册主判据：standard-CMA vs ML-original/aligned 均 p<0.05 且 ML 29/30 胜 → PASS，overall GO
+- [x] CLI dry-run：不调用长序列执行，生成 0 trials、pending=[1000] 的临时 checkpoint → PASS
+- [x] 专项与历史回归、编译和差异检查 → PASS
+
+### 证据
+
+~~~text
+prompt015 focused: 12 passed in 4.02s
+Q1/Q2/P12 regression: 60 passed in 4.36s
+py_compile: exit 0
+CLI dry-run: exit 0, trials=0, pending=[1000]
+independent result audit:
+  AUDIT PASS: checkpoint/schema/finite/signature/SHA/summary/init/device
+  formal source SHA count=10
+primary:
+  standard-CMA vs ML-original: 29/30, exact p=1.1920928955078125e-6
+  standard-CMA vs ML-aligned: 29/30, exact p=1.1920928955078125e-6
+  overall gate: GO
+git diff --check: PASS
+~~~
+
+正式 JSON：
+
+- projects/simulation/results/cma-fade-divergence/prompt015_unified_baseline.json
+- projects/simulation/explore/cma-fade-divergence/PROMPT_015_REPORT.md
+
+### 结论
+
+PASS
+
+### 边界
+
+结论限于 D021 注册的 N=5M、QPSK、strong、f_G=30、SOP=4e-7 参数域；不自动推广到 Contract 或其他参数域。seed 1014 的 elapsed_s 受墙钟挂起影响，不作为性能指标。
 ```
 
 正式 JSON：
