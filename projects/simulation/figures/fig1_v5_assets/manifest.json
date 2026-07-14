@@ -1,0 +1,44 @@
+{
+  "assets": {
+    "awgn_iq.svg": {
+      "role": "reconstructed formal complex-AWGN I/Q samples"
+    },
+    "block_fading.svg": {
+      "role": "formal unsmoothed block-fading realization"
+    },
+    "carrier_phase.svg": {
+      "role": "formal total carrier-phase realization"
+    },
+    "constellation.svg": {
+      "role": "formal (8,8)-16APSK constellation"
+    },
+    "decision_regions.png": {
+      "role": "formal m16apsk_demod decision grid and points"
+    },
+    "received_signal.svg": {
+      "realization": "same fixed realization",
+      "role": "impaired received-signal I/Q samples",
+      "source_data": "rx_raw"
+    }
+  },
+  "fixed_inputs": {
+    "N": 256,
+    "f_dot_source": "SimulationConfig().doppler.DOPPLER_HIGH",
+    "scene": "moderate",
+    "seed": 2000,
+    "snr_db": 15.0
+  },
+  "provenance": {
+    "paper_result": false,
+    "purpose": "mechanism-only figure asset"
+  },
+  "resolved_inputs": {
+    "f_dot_hz_per_s": 150000000.0
+  },
+  "source_files": [
+    "common/_modulation.py",
+    "common/_channel.py",
+    "params.py",
+    "figures/fig1_v5_assets/generate_assets.py"
+  ]
+}

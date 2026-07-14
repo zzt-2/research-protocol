@@ -19,7 +19,7 @@
 - `main.log` 未检出 LaTeX error、undefined citation/reference 或 overfull box；有 1 个 `Underfull \\hbox`（log 第 337 行）。`pdffonts` 显示字体均嵌入。
 - `texcount -inc -sum=1 sections/*.tex`：纯 text 3,241 词、headers 42、captions/其他 222、displayed equations 8、floats 5；把 headers 和 captions/其他相加后为 3,505，不能把该总口径写成纯正文词数。
 - 当前正文引用 7 个 BibTeX key，均在 `references.bib` 中存在；这是当前扩展预览的引用解析状态，不代表旧骨架的历史 unresolved 债务已完成治理。
-- 当前工作树实际嵌入 `fig1_system_overview_v3.pdf` 与 `fig2_adaptive_cpr.pdf`，另有三张既有数据图；这与首轮“Fig.1/Fig.2 只放占位框”的原始硬边界不一致，列为当前阻塞项。
+- 当前工作树实际嵌入 `fig1_system_model_v5.pdf` 与 `fig2_adaptive_cpr.pdf`，另有三张既有数据图；这与首轮“Fig.1/Fig.2 只放占位框”的原始硬边界不一致，列为当前阻塞项。
 - 逐页 PNG 检查未见裁切、重叠或公式越界；第 6–7 页有明显 float 留白，暂不通过排版手段回收页数。
 
 ## 本轮新增/更新阻塞项
@@ -104,6 +104,14 @@
 - [ ] D-05：浮动图位与末页留白已在正式版面优化轮处理。
 - [ ] D-06：Fig.3 的 Oracle 曲线含义已写入自包含 caption。
 - [ ] D-07：external-output C1–C10 已完成审查并关闭债务。
+
+## 标题版增量构建（2026-07-14）
+
+- `main.tex:13` 已改为 `Received-Power-Aware Carrier Phase Estimator Selection for Turbulent Satellite--Ground FSO Links`；主线程只改标题，不涉及 W001–W003、实验数字或公式；用户同时更新了 Fig.1/Fig.2 的 draw.io 导出源。
+- 最新 fresh build 命令：`latexmk -g -pdf -interaction=nonstopmode -halt-on-error -file-line-error main.tex`；exit 0，`main.pdf` 为 8 页 Letter 双栏，1,029,955 bytes。
+- 第 1 页标题自然换为两行；日志无 LaTeX error、undefined citation/reference 或 overfull box；有 1 个 `Underfull \\hbox`（`main.log:337`，badness 3158）和 1 个 `Underfull \\vbox`（`main.log:361`，badness 1895）。
+- 逐页渲染观察：Fig.1 当前在第 3 页，Fig.2 在第 4 页，BER 图在第 6 页，结论/参考文献在第 8 页。两张系统图已用 `figure* [t]`，但 Fig.1 的声明位于 `system_model.tex` 的 section 之后；要放到第 2 页顶部，应将该浮动声明移到 `main.tex` 的 introduction 之后、system model 之前。
+- 当前源已引用 `fig1_system_model_v5.pdf` 与 `fig2_adaptive_cpr.pdf`；当前 Fig.3（BER 总览）仍为双栏 `figure*`，此前“缩小到单栏”的版式约束尚未实施。
 
 ## 独立 verifier 快照（V001）
 
