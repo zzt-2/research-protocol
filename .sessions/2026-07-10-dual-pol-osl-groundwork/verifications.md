@@ -242,17 +242,3 @@ PASS
 ### 边界
 
 结论限于 D021 注册的 N=5M、QPSK、strong、f_G=30、SOP=4e-7 参数域；不自动推广到 Contract 或其他参数域。seed 1014 的 elapsed_s 受墙钟挂起影响，不作为性能指标。
-```
-
-正式 JSON：
-
-- `projects/simulation/results/cma-fade-divergence/prompt013_swap_quality.json`
-- `projects/simulation/results/cma-fade-divergence/prompt013_swap_mechanism.json`
-
-### 结论
-
-PARTIAL
-
-### 后续（FAIL/PARTIAL 时）
-
-Q1 统计差异通过；Q2 不得写成机制确认。若继续，先冻结合法 standard CMA 与 ML 初始化合同，再预注册重跑 30-seed 三方比较。P12 divergence collection blocker 属范围外工作树改动，由对应任务处理。

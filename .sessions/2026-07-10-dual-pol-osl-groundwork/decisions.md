@@ -1207,3 +1207,56 @@ S013 续 / V004
 ### 来源
 
 S015 / 主控对 V004 的独立复核
+
+---
+
+## D022: 统一合法 baseline 重比 GO — ML 优于 standard-CMA 在注册参数域经 30 seeds 预注册验证成立，方法层卖点解冻
+
+> status: active
+> date: 2026-07-14
+> 取代：D021 的"方法层卖点冻结"状态（Go 判定解除冻结）
+> 被取代：无
+> 依据: 验证: V005（执行对话）+ 主控独立复核（30 trials 原始重算：ML 29/30 赢 standard-CMA 两变体，W=23.0，exact p=1.19e-6，与报告一致；p 值差异已查清——exact vs asymptotic，报告用 exact 正确）
+
+### 决策
+
+**PROMPT-015 预注册 Go 判据 PASS，方法层卖点解冻。** 解除两个 baseline 混杂（current-CMA 缺 z 因子 + ML 交叉支路初始化）后，在 N=5M/QPSK/strong/f_G=30/SOP=4e-7 参数域，ML 相对 standard-CMA 仍有统计显著的 PI-BER 优势（29/30，exact p=1.19e-6）。"ML 优于 current-CMA"可升级为"ML 在本实验域优于 standard-CMA"。
+
+### 核心数据（主控独立复核，与报告一致）
+
+- ML-original 超额 PI-BER 均值 0.001154 vs standard-CMA 0.010291（ML 低 ~9×）
+- ML-aligned 超额 PI-BER 均值 0.001155 vs standard-CMA 0.010291（与 original 几乎相同，均值差 7.6e-7）
+- standard-CMA vs ML-original：ML 29/30 胜，W=23.0，exact p=1.19e-6 → PASS
+- standard-CMA vs ML-aligned：ML 29/30 胜，W=23.0，exact p=1.19e-6 → PASS
+- 控制比较 current-CMA vs ML-original：ML 30/30 胜，p=1.86e-9（复现 PROMPT-013 Q1）
+- 附带：standard-CMA 比 current-CMA 25/30 更好（补 z 改善基线，但未追上 ML）
+
+### 两个混杂的处理结果
+
+1. **CMA 梯度因子 z**：standard-CMA（有 z）确实比 current-CMA 好（25/30），证明混杂真实存在且影响基线质量。**但** standard-CMA 仍输 ML 29/30——所以 z 因子混杂吸收了部分差距（current→standard 改善），但没吸收全部（standard→ML 还有显著差距）。D020"不能声称 ML 优于经典 CMA"的担忧部分解除。
+2. **ML 交叉支路初始化**：ML-original（4 FIR 中心全=1）与 ML-aligned（wxy/wyx=0）几乎无差（均值差 7.6e-7，逐 seed 仅 1015 不同）。**初始化不是性能来源**，H_c 担忧排除。这是个干净结论。
+
+### 适用边界（不得逾越）
+
+- **只覆盖**：N=5M、QPSK、strong、f_G=30、SOP=4e-7、late slice [4.375M, 5M)
+- **不能外推**：其他序列长度（N=2M 已审计但不同参数点须单独验证）、调制阶数（16QAM 未审）、SNR 扫描、f_G 扫描
+- **剩余债务未解除**：
+  - 监督 vs 盲不公平（D008 债务 1）——PROMPT-014 盲 VAE gate 崩，D019 仍挂起
+  - 方法照搬 Qin CNN（债务 2，无架构创新）
+  - 交换质量机制仍说不清（D020 H_a/H_b 失败）——虽然卖点（PI-BER 优势）立住，但"为什么 ML 更好"没有机制解释
+  - seed-bias（h_mean CV≈1.0）
+
+### 影响范围
+
+- D021"方法层卖点冻结"解除；可写"ML 在本实验域优于 standard-CMA"
+- D020"不能声称 ML 优于经典 CMA"**部分修正**：现在有了 standard-CMA 对照（合法经典 CMA），ML 优于它的证据成立。但 D020 的"机制说不清"仍有效
+- D019（盲 VAE）仍 deferred，A/B 二选一挂起
+- master-state.md 不改（仍 GW Step 4a 维度 D，但 MVE 扩展的主要判据已过；是否进 Contract 待方法层整体判断）
+
+### 触发原话
+
+> 触发原话: 无（PROMPT-015 执行回传，主控独立核验数字后落库；用户未表达态度原话，不进 voice.md）
+
+### 来源
+
+S015 续 / V005 / 主控独立复核

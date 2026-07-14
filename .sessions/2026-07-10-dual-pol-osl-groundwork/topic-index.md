@@ -71,7 +71,7 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 
 ## 当前位置
 
-**统一合法 baseline 重比已完成（2026-07-13，D021/V005）**。主控独立复核 PROMPT-013 Q1/Q2 后确认：(1) Q1 ML 优于 current-CMA 30/30, p=1.86e-9 属实；(2) Q2 standard CMA 在 high-gap seed 1006/1017 把 PI-BER 从 0.033→4.5e-5（752×/688×），seed 1011 无效；(3) H_c 发现 ML 交叉支路初始化混杂（4 FIR 中心全=1 vs CMA 对角 wxy/wyx=0）。PROMPT-015 以统一合法 baseline 完成 30-seed 重比：standard-CMA vs ML-original/aligned 均为 ML 29/30 胜，exact p=1.1920928955078125e-6，预注册 gate=GO。结论仅在 N=5M/QPSK/strong/f_G=30/SOP=4e-7 合同内成立；PROMPT-014 盲 VAE 仍挂起。
+**PROMPT-015 统一合法 baseline 重比 GO（2026-07-14，D022）**。主控独立复核 30 trials 原始数据：ML-original/aligned 相对 standard-CMA 均 29/30 胜，W=23.0，exact p=1.19e-6，与报告一致（p 值差异已查清：exact vs asymptotic，报告用 exact 正确）。两个 baseline 混杂处理结果：(1) z 因子混杂真实存在（standard 比 current 25/30 好）但未吸收全部差距（standard 仍输 ML 29/30）；(2) 初始化不是性能来源（ML-original vs aligned 均值差 7.6e-7）。**方法层卖点解冻**——"ML 优于 standard-CMA"在 N=5M/QPSK/strong/f_G=30/SOP=4e-7 注册域成立。但剩余债务未解除（监督vs盲不公平 D019 挂起 / 方法照搬 Qin 无架构创新 / 交换质量机制 D020 仍说不清 / seed-bias）。R005 方向1（自适应步长）被 JR-CMA 占点 Kill，方向2（发散检测+响应≈Q-DP3）有条件支持。**待决策：方法层整体走向——继续加固 Q-CMA-FADE 方法层（扩参数域/解监督公平性/挖机制），还是回候选池正式评估 Q-DP3。**
 
 - Step 1-3：完成（双偏振 9 篇 + ML 20 篇 = 29 篇精读）
 - **Step 4a：完成**（Q-DP1/2/3 可行性评估）
