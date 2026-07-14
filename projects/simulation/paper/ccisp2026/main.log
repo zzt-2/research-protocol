@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.7.13)  14 JUL 2026 20:19
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.7.13)  14 JUL 2026 21:17
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -323,7 +323,14 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 
 (C:\Users\zzt\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
-)) (sections/abstract.tex) (sections/introduction.tex
+)) (sections/abstract.tex)
+<../../figures/fig1_system_model_v5.pdf, id=1, 1084.05pt x 404.47108pt>
+File: ../../figures/fig1_system_model_v5.pdf Graphic file (type pdf)
+<use ../../figures/fig1_system_model_v5.pdf>
+Package pdftex.def Info: ../../figures/fig1_system_model_v5.pdf  used on input 
+line 25.
+(pdftex.def)             Requested size: 485.04126pt x 180.97345pt.
+ (sections/introduction.tex
 LaTeX Font Info:    Trying to load font information for U+msa on input line 7.
 
 (C:\Users\zzt\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
@@ -338,52 +345,44 @@ Underfull \hbox (badness 3158) in paragraph at lines 7--8
 \OT1/ptm/m/n/10 plies one fixed two-layer de-ci-sion pro-ce-dure to ev-ery
  []
 
-) (sections/system_model.tex [1{C:/Users/zzt/AppData/Local/MiKTeX/fonts/map/pdf
-tex/pdftex.map}{C:/Users/zzt/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base
-/8r.enc}
+) [1{C:/Users/zzt/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/zz
+t/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}
 
 
 ]
-<../../figures/fig1_system_model_v5.pdf, id=12, 1084.05pt x 404.47108pt>
-File: ../../figures/fig1_system_model_v5.pdf Graphic file (type pdf)
-<use ../../figures/fig1_system_model_v5.pdf>
-Package pdftex.def Info: ../../figures/fig1_system_model_v5.pdf  used on input 
-line 5.
-(pdftex.def)             Requested size: 485.04126pt x 180.97345pt.
-) (sections/method.tex [2]
-<../../figures/fig2_adaptive_cpr.pdf, id=20, 1011.78pt x 505.89pt>
+<../../figures/fig2_adaptive_cpr.pdf, id=13, 1011.78pt x 505.89pt>
 File: ../../figures/fig2_adaptive_cpr.pdf Graphic file (type pdf)
 <use ../../figures/fig2_adaptive_cpr.pdf>
 Package pdftex.def Info: ../../figures/fig2_adaptive_cpr.pdf  used on input lin
-e 8.
+e 34.
 (pdftex.def)             Requested size: 485.04126pt x 242.52338pt.
- [3 <../../figures/fig1_system_model_v5.pdf>]
-Underfull \vbox (badness 1895) has occurred while \output is active []
 
- [4 <../../figures/fig2_adaptive_cpr.pdf>]) (sections/results.tex
+(sections/system_model.tex [2 <../../figures/fig1_system_model_v5.pdf>])
+(sections/method.tex
+Underfull \vbox (badness 4634) has occurred while \output is active []
+
+ [3 <../../figures/fig2_adaptive_cpr.pdf>] [4]) (sections/results.tex
 <../../figures/ccisp_fig2_ber.pdf, id=98, 517.45322pt x 596.2275pt>
 File: ../../figures/ccisp_fig2_ber.pdf Graphic file (type pdf)
 <use ../../figures/ccisp_fig2_ber.pdf>
 Package pdftex.def Info: ../../figures/ccisp_fig2_ber.pdf  used on input line 6
 .
-(pdftex.def)             Requested size: 402.47937pt x 463.75461pt.
-<../../figures/ccisp_fig4_crossover.pdf, id=99, 509.67474pt x 278.13098pt>
+(pdftex.def)             Requested size: 252.0pt x 290.37088pt.
+ [5 <../../figures/ccisp_fig2_ber.pdf>]
+<../../figures/ccisp_fig4_crossover.pdf, id=148, 509.67474pt x 278.13098pt>
 File: ../../figures/ccisp_fig4_crossover.pdf Graphic file (type pdf)
 <use ../../figures/ccisp_fig4_crossover.pdf>
 Package pdftex.def Info: ../../figures/ccisp_fig4_crossover.pdf  used on input 
 line 29.
 (pdftex.def)             Requested size: 252.0pt x 137.5161pt.
-<../../figures/ccisp_fig3_gain.pdf, id=100, 257.9004pt x 193.21373pt>
+<../../figures/ccisp_fig3_gain.pdf, id=149, 257.9004pt x 193.21373pt>
 File: ../../figures/ccisp_fig3_gain.pdf Graphic file (type pdf)
 <use ../../figures/ccisp_fig3_gain.pdf>
 Package pdftex.def Info: ../../figures/ccisp_fig3_gain.pdf  used on input line 
 48.
 (pdftex.def)             Requested size: 252.0pt x 188.79977pt.
-) [5] [6 <../../figures/ccisp_fig2_ber.pdf>] [7
-
-
- <../../figures/ccisp_fig4_crossover.pdf> <../../figures/ccisp_fig3_gain.pdf>] 
-(sections/conclusion.tex) (main.bbl)
+) (sections/conclusion.tex) (main.bbl [6 <../../figures/ccisp_fig4_crossover.pd
+f> <../../figures/ccisp_fig3_gain.pdf>])
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -395,8 +394,7 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[8
-
+[7
 
 ] (main.aux)
  ***********
@@ -407,11 +405,11 @@ L3 programming layer <2025-12-24>
 Here is how much of TeX's memory you used:
  4288 strings out of 467871
  70145 string characters out of 5419344
- 493743 words of memory out of 5000000
+ 495793 words of memory out of 5000000
  33109 multiletter control sequences out of 15000+600000
  663023 words of font info for 109 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,15n,65p,1888b,311s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,15n,65p,1888b,313s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/zzt/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cm
 ex10.pfb><C:/Users/zzt/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfont
 s/cm/cmmi10.pfb><C:/Users/zzt/AppData/Local/Programs/MiKTeX/fonts/type1/public/
@@ -434,9 +432,9 @@ onts/symbols/msam10.pfb><C:/Users/zzt/AppData/Local/Programs/MiKTeX/fonts/type1
 rw/times/utmbi8a.pfb><C:/Users/zzt/AppData/Local/Programs/MiKTeX/fonts/type1/ur
 w/times/utmr8a.pfb><C:/Users/zzt/AppData/Local/Programs/MiKTeX/fonts/type1/urw/
 times/utmri8a.pfb>
-Output written on main.pdf (8 pages, 1029955 bytes).
+Output written on main.pdf (7 pages, 1029589 bytes).
 PDF statistics:
- 296 PDF objects out of 1000 (max. 8388607)
+ 293 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  26 words of extra memory for PDF output out of 10000 (max. 10000000)
 

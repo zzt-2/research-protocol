@@ -125,3 +125,24 @@ PARTIAL
 - 若用户确认“图 1 放第 2 页开头”，把 Fig.1 的 `figure*` 声明从 `system_model.tex` 移到 `main.tex` 的 introduction 之后、system model 之前，再 fresh build 验证实际页位。
 - 将 Fig.3 的 BER 总览由双栏改为单栏，重新检查坐标、图例和页数。
 - 继续保留 V003 的总 gate BLOCKED；本次没有关闭 Fig.1/Fig.2 视觉验收、external-output 或词数债务。
+
+## V005: 用户指定图位与单栏 Fig.3 独立复核
+
+> 2026-07-14 | 关联：S002 | 结论：PARTIAL
+
+### 验证范围
+
+独立 verifier 只读检查当前 `projects/simulation/paper/ccisp2026/` 的 `main.tex`、`sections/*.tex`、fresh `main.pdf`/`main.log` 和逐页渲染结果；未修改文件、未提交、未运行仿真或绘图脚本。
+
+### 验证项
+
+- [x] Fig.1 页位：`main.log` 的图形输出记录与 PDF caption/渲染均显示 Fig.1 在第 2 页。
+- [x] Fig.2 页位：`main.log` 的图形输出记录与 PDF caption/渲染均显示 Fig.2 在第 3 页。
+- [x] BER Fig.3 单栏：`sections/results.tex:4--8` 使用 `\\begin{figure}`、`width=\\columnwidth` 和 `fig:ber-overview`；第 5 页右栏图、坐标轴、图例和 caption 完整可读，无裁切或重叠。
+- [x] PDF/build：`main.log:435` 为 7 pages；PDF MediaBox 为 `612 x 792 pt`（Letter）；`IEEEtran` conference 双栏渲染；`pdffonts` 显示全部字体 `emb=yes`、`sub=yes`。
+- [x] 错误诊断：未发现 LaTeX Error、undefined citation/reference 或 overfull box。
+- [ ] Underfull/分页：`main.log:344` 有 Underfull hbox badness 3158，`:362` 有 Underfull vbox badness 4634；第 7 页参考文献尾部大面积留白，第 6 页浮动图与正文分布仍偏松散。
+
+### 结论
+
+PARTIAL：本轮用户指定的三项版式改动均通过独立核验；剩余 underfull 和末页留白属于后续正式版面优化债务，不影响当前 PDF 可编译和可读，但当前版本仍不等于最终投稿稿。

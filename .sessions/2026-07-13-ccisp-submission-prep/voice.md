@@ -8,3 +8,4 @@
 - “图3应该缩小放到单栏。顺便，你用的图1、2好像不对，不过再说吧，我到时候先微调，再让你想想文字咋搞？”
 - “Received-Power-Aware Carrier Phase Estimator Selection for Turbulent Satellite–Ground FSO Links 改个标题。”
 - “顺便，两个drawio我改好了。还有，一般第一张图不是放在第二页开头吗？”
+- “1、2图放到2、3页，fig3缩小。你怎么这么点工作做了这么久啊？”

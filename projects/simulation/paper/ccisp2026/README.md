@@ -24,10 +24,17 @@ latexmk -g -pdf -interaction=nonstopmode -halt-on-error -file-line-error main.te
 
 ## 当前状态
 
-- 首轮目标：测量双栏版式页数、公式/图表溢出和引用债务；上一版扩展预览为 7 页，最新标题与图资产版 fresh build 为 `latexmk` exit 0、`main.pdf` 为 8 页（1,029,955 bytes）。
+- 首轮目标：测量双栏版式页数、公式/图表溢出和引用债务；当前版式调整后的 fresh build 为 `latexmk` exit 0、`main.pdf` 7 页（1,029,589 bytes）。
 - 当前标题为 `Received-Power-Aware Carrier Phase Estimator Selection for Turbulent Satellite--Ground FSO Links`；第 1 页标题自然换为两行。
-- 当前日志无 LaTeX error、未定义引用、overfull box；有 1 个 `Underfull \\hbox`（`main.log:337`）和 1 个 `Underfull \\vbox`（`main.log:361`）。字体检查显示全部嵌入，PDF 为 Letter 纸张。
-- 已使用 MiKTeX 绝对路径渲染并逐页检查最新标题/图资产版 PDF；公式、图表和参考文献未发现裁切或重叠。当前 Fig.1 在第 3 页、Fig.2 在第 4 页、BER 图在第 6 页、结论/参考文献在第 8 页；图浮动造成的留白仍记录在 `issues.md`，暂不把排版回收计入正文增量。
-- 当前 Fig.3 仍为双栏宽图；此前“缩小到单栏”的版式约束尚未实施。
+- 当前日志无 LaTeX error、未定义引用、overfull box；有 1 个 `Underfull \\hbox`（`main.log:344`，badness 3158）和 1 个 `Underfull \\vbox`（`main.log:362`，badness 4634）。字体检查显示全部嵌入，PDF 为 Letter 纸张。
+- 已使用 MiKTeX 绝对路径渲染并逐页检查当前 7 页 PDF；Fig.1 位于第 2 页顶部、Fig.2 位于第 3 页顶部，正文接续在图下；BER Fig.3 位于第 5 页并改为单栏，Fig.4/Fig.5 位于第 6 页，结论与参考文献跨第 6--7 页。未发现裁切、重叠或公式越界；第 7 页仍有参考文献尾部留白，记录在 `issues.md`。
+- 当前 Fig.3 使用 `figure` + `width=\\columnwidth`；Fig.1/Fig.2 使用最新用户导出的 PDF，版位已按本轮要求调整，但其视觉方案仍不视为最终验收。
 - 当前不锁定 CCISP 页数口径：官方投稿页写 5–10 页，既有任务口径写 4–6 页。
 - 当前不运行仿真、不修改绘图脚本、不处理 Fig.1/Fig.2 最终视觉方案。
+
+## 版式调整增量（2026-07-14）
+
+- 将 Fig.1 的 `figure*` 声明放在 Abstract 之后、Introduction 之前；将 Fig.2 的声明放在 Introduction 之后、System Model 之前。这样 IEEEtran 实际排版为 Fig.1 第 2 页顶部、Fig.2 第 3 页顶部，且两页均有正文接续，不使用人为空白页。
+- 将 `sections/results.tex` 的 BER 总览改为单栏 `figure`，图片宽度改为 `\\columnwidth`；没有修改图资产、图内容、正文数字或公式。
+- 重新执行 `latexmk -g -pdf -interaction=nonstopmode -halt-on-error -file-line-error main.tex`：exit 0，生成 7 页、1,029,589 bytes 的 Letter 双栏 PDF。无 LaTeX error、undefined citation/reference 或 overfull box；保留 1 个 Underfull hbox（badness 3158）和 1 个 Underfull vbox（badness 4634）。
+- 已用 MiKTeX `pdftoppm` 逐页渲染 7 页检查；BER Fig.3 单栏图可读且未裁切。4--6 页旧任务口径仍超出 1 页；CCISP 官方页当前的 5--10 页口径则在范围内，二者仍未拍板。

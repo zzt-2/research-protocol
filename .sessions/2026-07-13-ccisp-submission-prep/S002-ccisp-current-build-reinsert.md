@@ -37,6 +37,14 @@
 - 标题在第 1 页自然分为两行；未检出 LaTeX error、undefined citation/reference 或 overfull box；有 1 个 `Underfull \\hbox`（`main.log:337`，badness 3158）和 1 个 `Underfull \\vbox`（`main.log:361`，badness 1895）。
 - 当前 Fig.1 落在第 3 页，Fig.2 落在第 4 页，BER 图落在第 6 页，结论/参考文献落在第 8 页。虽然 Fig.1 已用 `figure*` + `[t]`，但声明位于 `system_model.tex` 的 section 之后；若要真正浮到第 2 页页顶，需要把该浮动声明移到 `main.tex` 的 introduction 之后、system model 之前。
 
+### 版式调整增量（2026-07-14 续接）
+
+- 用户原话：“1、2图放到2、3页，fig3缩小。你怎么这么点工作做了这么久啊？”
+- 仅做三项版式改动：Fig.1 的 `figure*` 声明移到 `main.tex` 的 Abstract 之后；Fig.2 的声明移到 Introduction 之后、System Model 之前；`sections/results.tex` 的 BER 总览改为单栏 `figure` + `width=\\columnwidth`。未修改 W001--W003、正文数字、公式、图资产、仿真或绘图脚本。
+- fresh `latexmk -g -pdf -interaction=nonstopmode -halt-on-error -file-line-error main.tex` exit 0，`main.pdf` 7 页、Letter 双栏、1,029,589 bytes。实际版位为 Fig.1 第 2 页顶部、Fig.2 第 3 页顶部、BER Fig.3 第 5 页单栏、Fig.4/Fig.5 第 6 页；结论与参考文献跨第 6--7 页。
+- MiKTeX `pdftoppm` 已逐页渲染检查；未见裁切、重叠、公式越界或图例缺失。`main.log:344` 有 Underfull hbox badness 3158，`:362` 有 Underfull vbox badness 4634；无 LaTeX error、undefined citation/reference 或 overfull box。
+- 独立 verifier 返回 PARTIAL：Fig.1/Fig.2 页位、单栏 Fig.3、PDF 属性、字体嵌入和无 error/undefined/overfull 均 PASS；Underfull 两条及第 7 页大面积留白保留为后续债务。
+
 ### 结论
 
 本轮已完成“把当前工作树版本重新编译并看页数”的实测，但没有把旧 W 文本覆盖回 CCE 扩展版。标题版结果是一个可读、可编译的 8 页版面探针，不是已解除全部债务的最终投稿稿。

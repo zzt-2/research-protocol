@@ -3,13 +3,6 @@
 
 The receiver uses data-aided (DA) and non-data-aided (NDA) carrier recovery as two complementary processing branches. Both branches operate on a digital-signal-processing window of $N_{\mathrm{DFT}}=256$ received samples, which is distinct from the 100-symbol atmospheric channel block defined in the system model. A branch is selected once per 256-sample window. The selection statistic is formed directly from the raw received samples, before branch-specific channel equalization and carrier recovery, so that the decision follows the same information flow for every turbulence regime. After selection, the DA path uses pilot-derived channel information, whereas the NDA path uses a blind channel estimate. The carrier-frequency and carrier-phase operations within the two paths are described next.
 
-\begin{figure*}[t]
-  \centering
-  \includegraphics[width=0.94\textwidth]{../../figures/fig2_adaptive_cpr.pdf}
-  \caption{Carrier-recovery information flow. The received samples feed the DA and NDA phase-estimation candidates and continue along a common data path. The control path summarizes the window statistics and fixed decision configuration used by the two-layer rule in Eqs.~\eqref{eq:cv-decision-boundary} and~\eqref{eq:two-stage-switch}; the selected phase estimate enters the shared compensation stage.}
-  \label{fig:adaptive-cpr}
-\end{figure*}
-
 \subsection{DA and NDA Estimation Stages}
 
 The DA branch uses one known pilot every four transmitted symbols. Let $n_\ell$ denote the index of the $\ell$th pilot in the current processing window, $p_\ell$ its known complex value, and $t_\ell=n_\ell T_s$ its sampling time. Removing the known pilot modulation and fitting a linear phase model gives

@@ -61,7 +61,7 @@
 | D-02 | OPEN | HTML TBD、导师未定口径、纵轴范围和 Table I 冗余均未收口。 | W002 §IV-A/§IV-B 保留 TBD：纵轴范围、`10^{-5}` 解读、标题/数字口径；Table I 的行列与正文重复程度也未最终确认。 | 收到导师口径后集中处理，删除所有 HTML 注释，锁定纵轴范围、表格内容和数字呈现；首轮不自行扩写或补数字。 |
 | D-03 | OPEN | Fig.1/Fig.2 尚未完成视觉验收。 | H015/R018 规定首轮不继续绘图；LaTeX 只允许放显式尺寸合理的占位框，不得把占位框当作最终图形。 | 完成独立视觉验收并获得明确拆图/合图决定后，再替换占位框；本轮不锁死图形结构。 |
 | D-04 | PARTIAL | 构建链已可用，但 Codex 的 `pdftoppm`/`pdfinfo` wrapper 仍存在路径遮蔽。 | MiKTeX 的 `pdflatex`/`latexmk`/`bibtex`/`biber` 已可用；`pdftoppm`/`pdfinfo` 的默认命令解析到 wrapper。本轮已使用 MiKTeX 绝对路径完成 PDF 检查和渲染。 | 修正 PATH 优先级或为项目固定一套可审计的工具路径配置。 |
-| D-05 | OPEN | 首轮浮动图版面导致末页留白，尚未做压缩或图位优化。 | 实测 6 页：正文/参考文献在第 4 页结束，三张数据图被排到第 5–6 页；逐页渲染未发现裁切，但第 4、6 页下半部留白明显。首轮保留现状以便先看页数，不自行改图或改故事。 | 在正文口径、图形视觉验收和投稿页数口径锁定后，再单独做 float/图尺寸版面优化。 |
+| D-05 | PARTIAL | 首轮浮动图版面仍有末页留白，但本轮已按用户指定把 Fig.1/Fig.2 放到第 2/3 页并将 BER Fig.3 改为单栏。 | 当前 fresh build 7 页：Fig.1 第 2 页顶部、Fig.2 第 3 页顶部、BER Fig.3 第 5 页单栏；第 7 页仍只有参考文献尾部，存在明显留白。逐页渲染未发现裁切或重叠。 | 在正文口径、图形视觉验收和投稿页数口径锁定后，再单独处理末页留白与整体 float/图尺寸优化。 |
 | D-06 | OPEN | Fig.3 图例含 Oracle 曲线，但当前 caption 未解释 Oracle 的含义。 | 独立 verifier 发现 `ccisp_fig2_ber.pdf` 的图例包含 Oracle；目标 `sections/results.tex:9` 的 caption 只写 DA/NDA。 | 在图例语义和 baseline 定义锁定后补充自包含 caption；不在本轮猜测 Oracle 的方法含义。 |
 | D-07 | OPEN | external-output C1–C10 尚未全部通过。 | 独立 verifier 的 V001 结论：C1/C5/C6/C7/C10 为 PARTIAL，C2/C3/C4 为 DEBT，C8/C9 PASS（C9 为 N/A）；主要债务是 `naive`、缩写首次定义、阈值语义、4 组 unresolved 引用及数字口径。 | 完成正式术语/引用/数字/缩写审查后，再将 C1–C10 逐项关闭。 |
 
@@ -112,6 +112,14 @@
 - 第 1 页标题自然换为两行；日志无 LaTeX error、undefined citation/reference 或 overfull box；有 1 个 `Underfull \\hbox`（`main.log:337`，badness 3158）和 1 个 `Underfull \\vbox`（`main.log:361`，badness 1895）。
 - 逐页渲染观察：Fig.1 当前在第 3 页，Fig.2 在第 4 页，BER 图在第 6 页，结论/参考文献在第 8 页。两张系统图已用 `figure* [t]`，但 Fig.1 的声明位于 `system_model.tex` 的 section 之后；要放到第 2 页顶部，应将该浮动声明移到 `main.tex` 的 introduction 之后、system model 之前。
 - 当前源已引用 `fig1_system_model_v5.pdf` 与 `fig2_adaptive_cpr.pdf`；当前 Fig.3（BER 总览）仍为双栏 `figure*`，此前“缩小到单栏”的版式约束尚未实施。
+
+## 版式调整增量（2026-07-14）
+
+- 用户本轮要求 Fig.1 放第 2 页、Fig.2 放第 3 页，并将 Fig.3 缩小为单栏；本轮只实现这三项，不修改正文、数字、公式、图资产、仿真或绘图脚本。
+- `main.tex` 现在按 Fig.1 → Introduction → Fig.2 的浮动声明顺序组织，实际渲染为 Fig.1 第 2 页顶部、Fig.2 第 3 页顶部，且正文接在图下；`system_model.tex` 与 `method.tex` 不再重复声明两张系统图。
+- `sections/results.tex:4--9` 的 BER 总览使用单栏 `figure` 和 `width=\\columnwidth`，实际为第 5 页 Fig.3；Fig.4/Fig.5 在第 6 页。
+- fresh `latexmk` exit 0，`main.pdf` 7 页（1,029,589 bytes），Letter 双栏；无 LaTeX error、undefined citation/reference 或 overfull box；`main.log:344` 有 Underfull hbox badness 3158，`:362` 有 Underfull vbox badness 4634。逐页 PNG 检查未发现裁切、重叠或公式越界。
+- 4--6 页旧任务口径仍超出 1 页；第 7 页参考文献尾部留白和 Fig.1/Fig.2 实际图越过原始占位硬边界仍是债务。
 
 ## 独立 verifier 快照（V001）
 
