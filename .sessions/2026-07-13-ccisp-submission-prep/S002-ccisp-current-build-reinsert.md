@@ -25,12 +25,21 @@
 ### 当前内容量与范围债务
 
 - `texcount` 结果为纯 text 3,241 词、headers 42、captions/其他 222、8 个 displayed equation groups、5 个 floats。把非正文项计入后的总和约 3,505，不能混报为纯正文词数；D001 的 3,500 词验收口径仍需明确。
-- 当前工程实际嵌入 `fig1_system_overview_v3.pdf` 和 `fig2_adaptive_cpr.pdf`。这与原 CCISP 首轮“Fig.1/Fig.2 只放显式占位框”的硬边界不一致；本轮保留已有改动，不把它默认为最终视觉验收通过。
+- 当前工程实际嵌入用户最新导出的 `fig1_system_model_v5.pdf` 和 `fig2_adaptive_cpr.pdf`，两者都使用 `figure* [t]`。这与原 CCISP 首轮“Fig.1/Fig.2 只放显式占位框”的硬边界不一致；本轮不把图形视觉验收默认为完成。
+- 用户给定新标题：`Received-Power-Aware Carrier Phase Estimator Selection for Turbulent Satellite--Ground FSO Links`。本轮只更新 `main.tex` 标题，不改正文论证。
+- 用户已更新 `fig1_system_model_v5.drawio` 与 `fig2_adaptive_cpr.drawio`，并同步产生当前构建实际使用的 PDF 导出。
 - 当前 7 个正文引用 key 均可在 `references.bib` 找到，构建未产生未定义引用；`oracle` 图例语义、`DA-ML/NDA-ML` 术语和图轴/扩展范围说明仍需收口。
+
+### 标题版增量构建（2026-07-14）
+
+- 仅更新 `main.tex:13` 标题为 `Received-Power-Aware Carrier Phase Estimator Selection for Turbulent Satellite--Ground FSO Links`，没有替换图资产或改正文。
+- 最新图资产版 fresh build：`latexmk -g -pdf -interaction=nonstopmode -halt-on-error -file-line-error main.tex`，exit 0；`main.pdf` 8 页、Letter，输出 1029955 bytes。该构建使用了用户随后更新的 Fig.1/Fig.2 PDF 导出。
+- 标题在第 1 页自然分为两行；未检出 LaTeX error、undefined citation/reference 或 overfull box；有 1 个 `Underfull \\hbox`（`main.log:337`，badness 3158）和 1 个 `Underfull \\vbox`（`main.log:361`，badness 1895）。
+- 当前 Fig.1 落在第 3 页，Fig.2 落在第 4 页，BER 图落在第 6 页，结论/参考文献落在第 8 页。虽然 Fig.1 已用 `figure*` + `[t]`，但声明位于 `system_model.tex` 的 section 之后；若要真正浮到第 2 页页顶，需要把该浮动声明移到 `main.tex` 的 introduction 之后、system model 之前。
 
 ### 结论
 
-本轮已完成“把当前工作树版本重新编译并看页数”的实测，但没有把旧 W 文本覆盖回 CCE 扩展版。当前结果是一个可读、可编译的 7 页版面探针，不是已解除全部债务的最终投稿稿。
+本轮已完成“把当前工作树版本重新编译并看页数”的实测，但没有把旧 W 文本覆盖回 CCE 扩展版。标题版结果是一个可读、可编译的 8 页版面探针，不是已解除全部债务的最终投稿稿。
 
 独立 verifier 的 V003 结论为 BLOCKED：构建、字体、引用闭合和基本可读性通过；Fig.1/Fig.2 越过原首轮占位边界，`DA-ML/NDA-ML/oracle` 定义、缩写首次展开、数字逐项溯源和 float 留白仍未收口。
 
@@ -50,3 +59,4 @@
 - 独立 verifier 完成当前 7 页 PDF、数字/公式/引用、逐页版面和 C1–C10 复核。
 - 用户决定是否保留 CCE 扩展预览作为下一版正文；若继续，先锁 D001 词数口径、Fig.1/Fig.2 是否允许实际图、Oracle/DA-ML/NDA-ML 语义和 CCISP 页数口径。
 - 下一轮版式约束：按用户当前编号将图 3 缩小为单栏宽；图 1/图 2 暂缓，待用户先微调后再重新对齐图注、交叉引用和正文文字。
+- 图 1 版式候选：当前已验证 `figure* [t]` 仍落第 3 页；下一步若用户确认，单独移动其浮动声明位置，不改图内容。

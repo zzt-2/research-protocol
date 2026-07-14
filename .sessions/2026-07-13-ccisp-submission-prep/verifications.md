@@ -86,3 +86,42 @@ BLOCKED
 - 用户需明确当前 CCE 扩展预览是否可以替代原始首轮占位骨架；若不能，恢复 Fig.1/Fig.2 占位框和 DRAFT 元数据。
 - 先定义 `DA-ML`、`NDA-ML`、`oracle`，补全缩写首次展开和代表数字的 source/data/code 溯源。
 - 另开版面优化轮处理第 6–7 页 float 留白和 1 个 Underfull；不通过新增图、参考文献或留白补足正文。
+
+## V004: 新标题与用户更新图资产的 fresh build 局部复核
+
+> 2026-07-14 | 关联：S002 | 结论：PARTIAL
+
+### 验证项
+
+- [x] 标题源与渲染：检查 `main.tex:13` 和第 1 页 PNG；标题按用户给定内容渲染为两行，未见溢出。
+- [x] 最新图资产：检查 `system_model.tex`、`method.tex` 和构建日志；当前使用 `fig1_system_model_v5.pdf`、`fig2_adaptive_cpr.pdf`，两张系统图均为 `figure* [t]`。
+- [x] 构建：使用 MiKTeX `latexmk` fresh build；exit 0，PDF 为 8 页 Letter。
+- [x] 逐页局部版面：渲染并检查 8 页；Fig.1 在第 3 页、Fig.2 在第 4 页、BER 图在第 6 页、Fig.4/Fig.5 在第 7 页、结论/参考文献在第 8 页，未见裁切或重叠。
+- [ ] 独立复核：另行派发的只读 verifier 未在等待窗口内返回，随后关闭；本条不把主线程观察升级为独立验证结论。
+
+### 证据
+
+```text
+main.tex:13 = Received-Power-Aware Carrier Phase Estimator Selection for Turbulent Satellite--Ground FSO Links
+latexmk: exit 0
+Output written on main.pdf (8 pages, 1029955 bytes)
+main.log:337 Underfull \\hbox (badness 3158)
+main.log:361 Underfull \\vbox (badness 1895)
+LaTeX error/fatal: none detected
+Undefined citation/reference: none detected
+Overfull box: none detected
+Rendered pages: 8; no clipping/overlap observed
+Fig.1 source: sections/system_model.tex uses figure* [t] and fig1_system_model_v5.pdf
+Fig.3 source: sections/results.tex still uses figure* and ccisp_fig2_ber.pdf
+Independent verifier: no result returned before timeout; not counted as PASS
+```
+
+### 结论
+
+PARTIAL
+
+### 后续（FAIL/PARTIAL 时）
+
+- 若用户确认“图 1 放第 2 页开头”，把 Fig.1 的 `figure*` 声明从 `system_model.tex` 移到 `main.tex` 的 introduction 之后、system model 之前，再 fresh build 验证实际页位。
+- 将 Fig.3 的 BER 总览由双栏改为单栏，重新检查坐标、图例和页数。
+- 继续保留 V003 的总 gate BLOCKED；本次没有关闭 Fig.1/Fig.2 视觉验收、external-output 或词数债务。
