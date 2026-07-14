@@ -28,6 +28,26 @@ EXT2 = os.path.join(_SIM_ROOT, 'results', 'sc_nda_ml_ber_ext_5seed', '_ber_ext2_
 OUT_PNG = os.path.join(_HERE, 'ccisp_fig4_crossover.png')
 OUT_PDF = os.path.join(_HERE, 'ccisp_fig4_crossover.pdf')
 
+FIGSIZE_IN = (3.5, 3.0)
+FONT_SIZES = {
+    'title': 10.0,
+    'label': 10.0,
+    'tick': 9.0,
+    'legend': 9.0,
+    'annotation': 9.0,
+}
+MPL_RCPARAMS = {
+    'font.family': 'serif',
+    'font.serif': ['Times New Roman', 'Times', 'Nimbus Roman No9 L', 'DejaVu Serif'],
+    'mathtext.fontset': 'stix',
+    'text.usetex': False,
+    'font.weight': 'normal',
+    'axes.labelweight': 'normal',
+    'axes.linewidth': 0.6,
+    'pdf.fonttype': 42,
+    'ps.fonttype': 42,
+}
+
 SCENES = ['weak', 'moderate', 'strong']
 LABELS = {
     'weak': 'Weak',
@@ -97,16 +117,9 @@ def find_crossover(snr_da, ber_da, snr_nda, ber_nda):
 
 
 def main():
-    plt.rcParams.update({
-        'font.family': 'serif',
-        'font.serif': ['Times New Roman', 'DejaVu Serif'],
-        'mathtext.fontset': 'stix',
-        'axes.linewidth': 0.6,
-        'pdf.fonttype': 42,
-        'ps.fonttype': 42,
-    })
+    plt.rcParams.update(MPL_RCPARAMS)
 
-    fig, ax = plt.subplots(figsize=(7.16, 4.0))
+    fig, ax = plt.subplots(figsize=FIGSIZE_IN)
 
     crossovers = {}
 
@@ -157,21 +170,25 @@ def main():
                 xo_snr + dx,
                 xo_ber * y_scale,
                 rf'$\approx {xo_snr:.1f}$ dB',
-                fontsize=8.5,
+                fontsize=FONT_SIZES['annotation'],
                 color=color,
                 ha='left',
                 va='center',
+                bbox={'facecolor': 'white', 'edgecolor': 'none', 'alpha': 0.8, 'pad': 0.1},
                 zorder=7,
             )
 
     ax.set_yscale('log')
     ax.set_ylim(1e-4, 0.5)
     ax.set_xlim(4, 30)
-    ax.set_xlabel(r'Average data-symbol SNR, $\bar{\gamma}_d$ (dB)', fontsize=9)
-    ax.set_ylabel('Bit error rate (BER)', fontsize=9)
+    ax.set_xlabel(
+        r'Average data-symbol SNR, $\bar{\gamma}_d$ (dB)',
+        fontsize=FONT_SIZES['label'],
+    )
+    ax.set_ylabel('Bit error rate (BER)', fontsize=FONT_SIZES['label'])
     ax.grid(True, which='major', alpha=0.2, linewidth=0.5)
     ax.grid(False, which='minor')
-    ax.tick_params(labelsize=8.5)
+    ax.tick_params(labelsize=FONT_SIZES['tick'])
 
     # Separate legends prevent a redundant 3 x 2 combination listing.
     from matplotlib.lines import Line2D
@@ -187,7 +204,7 @@ def main():
     ]
     scenario_legend = ax.legend(
         handles=scenario_handles,
-        fontsize=8.5,
+        fontsize=FONT_SIZES['legend'],
         loc='lower left',
         frameon=True,
         edgecolor='0.65',
@@ -199,7 +216,7 @@ def main():
     ax.add_artist(scenario_legend)
     ax.legend(
         handles=method_handles,
-        fontsize=8.5,
+        fontsize=FONT_SIZES['legend'],
         loc='lower left',
         bbox_to_anchor=(0.37, 0.0),
         frameon=True,
@@ -210,9 +227,9 @@ def main():
         borderpad=0.4,
     )
 
-    plt.tight_layout()
-    fig.savefig(OUT_PNG, dpi=300, bbox_inches='tight')
-    fig.savefig(OUT_PDF, bbox_inches='tight')
+    fig.subplots_adjust(left=0.20, right=0.97, top=0.97, bottom=0.19)
+    fig.savefig(OUT_PNG, dpi=300)
+    fig.savefig(OUT_PDF)
     print(f'[saved] {OUT_PNG}')
     print(f'[saved] {OUT_PDF}')
 

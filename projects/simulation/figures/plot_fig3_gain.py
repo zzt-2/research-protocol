@@ -35,6 +35,26 @@ DATA_JSON = os.path.join(
 OUT_PNG = os.path.join(_HERE, "ccisp_fig3_gain.png")
 OUT_PDF = os.path.join(_HERE, "ccisp_fig3_gain.pdf")
 
+FIGSIZE_IN = (3.5, 3.0)
+FONT_SIZES = {
+    "title": 10.0,
+    "label": 10.0,
+    "tick": 9.0,
+    "legend": 9.0,
+    "annotation": 9.0,
+}
+MPL_RCPARAMS = {
+    "font.family": "serif",
+    "font.serif": ["Times New Roman", "Times", "Nimbus Roman No9 L", "DejaVu Serif"],
+    "mathtext.fontset": "stix",
+    "text.usetex": False,
+    "font.weight": "normal",
+    "axes.labelweight": "normal",
+    "axes.linewidth": 0.6,
+    "pdf.fonttype": 42,
+    "ps.fonttype": 42,
+}
+
 METRIC_FORMULA = "10*log10(P_b,NDA/P_b,sw) at the same average data-symbol SNR"
 SCENES = ("weak", "moderate", "strong")
 STYLES = {
@@ -54,18 +74,9 @@ def load_scan(scene):
 
 
 def main():
-    plt.rcParams.update(
-        {
-            "font.family": "serif",
-            "font.serif": ["Times New Roman", "Times", "DejaVu Serif"],
-            "mathtext.fontset": "stix",
-            "axes.linewidth": 0.6,
-            "pdf.fonttype": 42,
-            "ps.fonttype": 42,
-        }
-    )
+    plt.rcParams.update(MPL_RCPARAMS)
 
-    fig, ax = plt.subplots(figsize=(3.5, 2.65))
+    fig, ax = plt.subplots(figsize=FIGSIZE_IN)
 
     for scene in SCENES:
         snr_db, reduction_db = load_scan(scene)
@@ -84,15 +95,23 @@ def main():
         )
 
     ax.axhline(0.0, color="#777777", linewidth=0.8, zorder=1)
-    ax.set_xlabel(r"Average data-symbol SNR, $\bar{\gamma}_d$ (dB)", fontsize=9)
-    ax.set_ylabel("BER reduction relative to fixed NDA (dB)", fontsize=9)
+    ax.set_xlabel(
+        r"Average data-symbol SNR, $\bar{\gamma}_d$ (dB)",
+        fontsize=FONT_SIZES["label"],
+    )
+    ax.set_ylabel(
+        "BER reduction relative\nto fixed NDA (dB)",
+        fontsize=FONT_SIZES["label"],
+    )
     ax.set_xlim(5, 26)
     ax.set_xticks([5, 10, 15, 20, 25])
-    ax.tick_params(axis="both", which="major", labelsize=8.5, width=0.6, length=3)
+    ax.tick_params(
+        axis="both", which="major", labelsize=FONT_SIZES["tick"], width=0.6, length=3
+    )
     ax.minorticks_off()
     ax.grid(True, which="major", color="#d0d0d0", alpha=0.55, linewidth=0.45)
     ax.legend(
-        fontsize=8.5,
+        fontsize=FONT_SIZES["legend"],
         loc="upper right",
         frameon=True,
         edgecolor="#b0b0b0",
@@ -101,9 +120,9 @@ def main():
         handlelength=1.8,
     )
 
-    fig.tight_layout(pad=0.45)
-    fig.savefig(OUT_PDF, bbox_inches="tight")
-    fig.savefig(OUT_PNG, dpi=300, bbox_inches="tight")
+    fig.subplots_adjust(left=0.22, right=0.97, top=0.97, bottom=0.20)
+    fig.savefig(OUT_PDF)
+    fig.savefig(OUT_PNG, dpi=300)
     plt.close(fig)
 
     print(f"[metric] {METRIC_FORMULA}")

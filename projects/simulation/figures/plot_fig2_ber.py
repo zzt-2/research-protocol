@@ -29,6 +29,26 @@ EXT2 = os.path.join(_SIM_ROOT, 'results', 'sc_nda_ml_ber_ext_5seed', '_ber_ext2_
 OUT_PNG = os.path.join(_HERE, 'ccisp_fig2_ber.png')
 OUT_PDF = os.path.join(_HERE, 'ccisp_fig2_ber.pdf')
 
+FIGSIZE_IN = (3.5, 6.8)
+FONT_SIZES = {
+    'title': 10.0,
+    'label': 10.0,
+    'tick': 9.0,
+    'legend': 9.0,
+    'annotation': 9.0,
+}
+MPL_RCPARAMS = {
+    'font.family': 'serif',
+    'font.serif': ['Times New Roman', 'Times', 'Nimbus Roman No9 L', 'DejaVu Serif'],
+    'mathtext.fontset': 'stix',
+    'text.usetex': False,
+    'font.weight': 'normal',
+    'axes.labelweight': 'normal',
+    'pdf.fonttype': 42,
+    'ps.fonttype': 42,
+    'axes.linewidth': 0.6,
+}
+
 # Scene order: increasing turbulence (top-to-bottom in 3x2 grid)
 SCENES = ['awgn', 'weak', 'moderate', 'strong', 'uplink_moderate', 'uplink_strong']
 TITLES = {
@@ -47,6 +67,27 @@ C_OR = '#009E73'    # green
 C_FEC = '#999999'   # gray for HD-FEC line
 
 HD_FEC = 3.8e-3
+CURVE_SPECS = (
+    {
+        'ber_key': 'da_ml_ber_mean',
+        'label': 'DA-ML (pilot-aided)',
+        'color': C_DA,
+        'linestyle': '-',
+    },
+    {
+        'ber_key': 'nda_ml_ber_mean',
+        'label': 'NDA-ML (blind)',
+        'color': C_NDA,
+        'linestyle': '--',
+    },
+    {
+        'ber_key': 'oracle_ber_mean',
+        'label': 'Oracle',
+        'color': C_OR,
+        'linestyle': ':',
+    },
+)
+HD_FEC_LEGEND_LABEL = r'HD-FEC threshold ($3.8\times10^{-3}$)'
 
 
 def load(path):
@@ -118,11 +159,10 @@ def smooth_curve(snr, ber, n_dense=200):
 
 def plot_one(ax, scene, row, col):
     """Plot one subplot: DA/NDA/oracle with line-style distinction."""
-    for ber_key, label, color, ls in [
-        ('da_ml_ber_mean', 'DA-ML (pilot)', C_DA, '-'),
-        ('nda_ml_ber_mean', 'NDA-ML (blind)', C_NDA, '--'),
-        ('oracle_ber_mean', 'Oracle', C_OR, ':'),
-    ]:
+    for spec in CURVE_SPECS:
+        ber_key = spec['ber_key']
+        color = spec['color']
+        ls = spec['linestyle']
         snr, ber = merge_scene(scene, ber_key)
         if len(snr) == 0:
             continue
@@ -140,14 +180,10 @@ def plot_one(ax, scene, row, col):
     ax.axhline(HD_FEC, color=C_FEC, linestyle='-.', linewidth=0.8, alpha=0.6, zorder=1)
 
     ax.set_yscale('log')
-    ax.set_title(TITLES[scene], fontsize=9, pad=4)
-    if row == 2:
-        ax.set_xlabel(r'Average data-symbol SNR, $\bar{\gamma}_d$ (dB)', fontsize=9)
-    if col == 0:
-        ax.set_ylabel('Bit error rate (BER)', fontsize=9)
+    ax.set_title(TITLES[scene], fontsize=FONT_SIZES['title'], pad=4)
     ax.grid(True, which='major', color='#d0d0d0', alpha=0.55, linewidth=0.45)
     ax.grid(False, which='minor')
-    ax.tick_params(axis='both', which='major', labelsize=8.5, width=0.6, length=3)
+    ax.tick_params(axis='both', which='major', labelsize=FONT_SIZES['tick'], width=0.6, length=3)
     ax.tick_params(axis='both', which='minor', width=0.5, length=2)
 
     # Adaptive y-axis range
@@ -162,16 +198,9 @@ def set_yrange(ax, scene):
 
 
 def main():
-    plt.rcParams.update({
-        'font.family': 'serif',
-        'font.serif': ['Times New Roman', 'Times', 'Nimbus Roman No9 L', 'DejaVu Serif'],
-        'mathtext.fontset': 'stix',
-        'pdf.fonttype': 42,
-        'ps.fonttype': 42,
-        'axes.linewidth': 0.6,
-    })
+    plt.rcParams.update(MPL_RCPARAMS)
 
-    fig, axes = plt.subplots(3, 2, figsize=(7.16, 8.25), sharex=False, sharey=False)
+    fig, axes = plt.subplots(3, 2, figsize=FIGSIZE_IN, sharex=False, sharey=False)
     axes = axes.flatten()
 
     for idx, scene in enumerate(SCENES):
@@ -180,19 +209,30 @@ def main():
     # Shared legend at bottom (line-style based, no markers)
     from matplotlib.lines import Line2D
     legend_elements = [
-        Line2D([0], [0], color=C_DA, linestyle='-', linewidth=1.2, label='DA-ML (pilot-aided)'),
-        Line2D([0], [0], color=C_NDA, linestyle='--', linewidth=1.2, label='NDA-ML (blind)'),
-        Line2D([0], [0], color=C_OR, linestyle=':', linewidth=1.2, label='Oracle'),
+        Line2D(
+            [0],
+            [0],
+            color=spec['color'],
+            linestyle=spec['linestyle'],
+            linewidth=1.2,
+            label=spec['label'],
+        )
+        for spec in CURVE_SPECS
+    ] + [
         Line2D([0], [0], color=C_FEC, linestyle='-.', linewidth=0.8,
-               label=r'HD-FEC threshold ($3.8\times10^{-3}$)'),
+               label=HD_FEC_LEGEND_LABEL.replace(' ($', '\n($')),
     ]
-    fig.legend(handles=legend_elements, loc='lower center', ncol=4, fontsize=8.5,
+    fig.legend(handles=legend_elements, loc='lower center', ncol=2,
+               fontsize=FONT_SIZES['legend'],
                bbox_to_anchor=(0.5, 0.006), frameon=True, edgecolor='#b0b0b0',
                fancybox=False, borderpad=0.4)
 
-    fig.subplots_adjust(left=0.105, right=0.985, top=0.965, bottom=0.105,
-                        wspace=0.19, hspace=0.30)
-    fig.savefig(OUT_PNG, dpi=320)
+    fig.supxlabel(r'Average data-symbol SNR, $\bar{\gamma}_d$ (dB)',
+                  fontsize=FONT_SIZES['label'], y=0.115)
+    fig.supylabel('Bit error rate (BER)', fontsize=FONT_SIZES['label'], x=0.015)
+    fig.subplots_adjust(left=0.18, right=0.98, top=0.965, bottom=0.185,
+                        wspace=0.36, hspace=0.32)
+    fig.savefig(OUT_PNG, dpi=300)
     fig.savefig(OUT_PDF)
     print(f'[saved] {OUT_PNG}')
     print(f'[saved] {OUT_PDF}')

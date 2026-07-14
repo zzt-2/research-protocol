@@ -534,3 +534,23 @@ topics:
     produces:
       - .sessions/2026-07-13-ccisp-submission-prep/
       - projects/simulation/paper/ccisp2026/
+
+  - slug: 2026-07-14-ccisp-figure-typography
+    title: CCISP 五张论文图字体与排版统一
+    status: closed
+    created: "2026-07-14"
+    last_updated: "2026-07-14（S001/V001：五图字体排版统一并通过独立验证）"
+    description: "只统一 CCISP Fig.1–Fig.5 在最终 IEEEtran 双栏 PDF 中的字体、数学排版、字号层级与图内留白；不修改数据、曲线、算法语义、节点结构或论文论点。"
+    depends_on:
+      - slug: 2026-07-13-ccisp-submission-prep
+        reason: 以当前 IEEEtran 工程、五图嵌入关系和最终页内尺寸为验收载体
+      - slug: 2026-07-14-ccisp-content-expansion
+        reason: 继承当前正文、图注和数据语义，字体轮不得改写这些内容
+    conflicts_with: []
+    produces:
+      - .sessions/2026-07-14-ccisp-figure-typography/
+      - projects/simulation/figures/fig1_system_model_v5.drawio
+      - projects/simulation/figures/fig2_adaptive_cpr.drawio
+      - projects/simulation/figures/ccisp_fig2_ber.pdf
+      - projects/simulation/figures/ccisp_fig4_crossover.pdf
+      - projects/simulation/figures/ccisp_fig3_gain.pdf

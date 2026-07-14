@@ -120,9 +120,9 @@ def test_two_layer_control_nodes_and_exact_13_db_gate_exist():
     cells = _cells()
     expected_values = {
         "window_stats": "Window power<br>statistics",
-        "cv_gate": "CV &lt; τ<sub>CV</sub>?",
-        "blind_effective_snr": "Blind <i>ĥ</i><sub>dsp</sub><br>Effective SNR <i>γ̂</i><sub>eff</sub>",
-        "snr_gate": "<i>γ̂</i><sub>eff</sub> &lt; 13 dB?",
+        "cv_gate": r"CV &lt; \(\tau_{\mathrm{CV}}\)?",
+        "blind_effective_snr": r"Blind \(\hat{h}_{\mathrm{dsp}}\)<br>Effective SNR \(\hat{\gamma}_{\mathrm{eff}}\)",
+        "snr_gate": r"\(\hat{\gamma}_{\mathrm{eff}}\) &lt; 13 dB?",
         "branch_command": "Branch<br>command",
     }
 
