@@ -12,6 +12,35 @@
 | **DRAFT DEBT** | 首轮骨架可以暂留，但定稿或视觉验收前必须处理。 |
 | **INFO** | 已记录的事实或证据，不表示问题已经解决，也不要求本轮改正文。 |
 
+## 当前工作树快照（2026-07-14，覆盖旧版构建快照）
+
+- 当前 `sections/*.tex` 是 `CCE-CC-002` 扩展预览，不是 W001–W003 的逐字抽取版；W001–W003 本轮保持只读。
+- fresh build：`latexmk -g -pdf -interaction=nonstopmode -halt-on-error -file-line-error main.tex`，exit 0；`main.pdf` 为 7 页、Letter、双栏，构建时间为 2026-07-14 15:34（Asia/Shanghai）。
+- `main.log` 未检出 LaTeX error、undefined citation/reference 或 overfull box；有 1 个 `Underfull \\hbox`（log 第 337 行）。`pdffonts` 显示字体均嵌入。
+- `texcount -inc -sum=1 sections/*.tex`：纯 text 3,241 词、headers 42、captions/其他 222、displayed equations 8、floats 5；把 headers 和 captions/其他相加后为 3,505，不能把该总口径写成纯正文词数。
+- 当前正文引用 7 个 BibTeX key，均在 `references.bib` 中存在；这是当前扩展预览的引用解析状态，不代表旧骨架的历史 unresolved 债务已完成治理。
+- 当前工作树实际嵌入 `fig1_system_overview_v3.pdf` 与 `fig2_adaptive_cpr.pdf`，另有三张既有数据图；这与首轮“Fig.1/Fig.2 只放占位框”的原始硬边界不一致，列为当前阻塞项。
+- 逐页 PNG 检查未见裁切、重叠或公式越界；第 6–7 页有明显 float 留白，暂不通过排版手段回收页数。
+
+## 本轮新增/更新阻塞项
+
+| ID | 状态 | 问题 | 证据与当前处理 | 解除条件 |
+|---|---|---|---|---|
+| B-08 | BLOCKING | 当前工作树是 CCE 扩展预览，实际使用 Fig.1/Fig.2，而不是原 CCISP 首轮要求的显式占位框；标题/作者也已从 DRAFT 占位改成工作标题/匿名提交。 | `sections/system_model.tex:5`、`sections/method.tex:8` 直接 `includegraphics`；`main.tex:13-15` 使用工作标题和 `Anonymous Submission`。本轮不回滚这些已有未提交改动，只把偏离显式暴露。 | 明确选择“保留 CCE 扩展预览并允许实际 Fig.1/Fig.2”，或恢复首轮骨架的占位框/DRAFT 元数据；完成独立视觉验收后才可解除。 |
+| B-09 | PARTIAL | CCE-CC-002 的 3,500 词验收口径尚未闭合。 | fresh `texcount` 纯 text 为 3,241；含 headers 与 captions/其他为 3,505；R002/V001 的计划值约 3,570。当前不能把 3,505 报成纯正文词数，也不能用图注/标题冒充正文增量。 | 明确 D001 采用的词数口径，并按该口径补足或接受当前正文；不得靠浮动图、参考文献或留白补足。 |
+
+## 当前独立验证结论（V003）
+
+| Gate | 结论 | 证据 |
+|---|---|---|
+| 构建/源新鲜度 | PASS | fresh `latexmk` exit 0；`main.pdf` 7 页且 PNG 晚于 PDF。 |
+| PDF/字体/可读性 | PASS | Letter、双栏、字体全部嵌入；7 页逐页未见裁切或重叠。 |
+| LaTeX warnings | PARTIAL | error/undefined/overfull 为 0；`main.log:337` 有 1 个 Underfull，badness 3158。 |
+| 数字/公式/引用 | PARTIAL | D004/V003 关键口径一致，7 个 cite key 闭合；全部代表数字的逐项 source/data/code 溯源仍未写入当前稿。 |
+| Fig.1/Fig.2 首轮边界 | BLOCKED | 当前为实际图，不是原专题要求的显式占位框。 |
+| external-output C1–C10 | PARTIAL | C1/C5/C6/C7/C8/C9 PASS；C2/C3/C4/C10 PARTIAL，涉及 `DA-ML/NDA-ML/oracle`、缩写首次展开和数字溯源。 |
+| 总 gate | BLOCKED | 当前是可编译 7 页扩展预览，不是可称最终投稿稿的版本。 |
+
 ## BLOCKING
 
 | ID | 状态 | 问题 | 证据与当前处理 | 解除条件 |

@@ -1,29 +1,54 @@
 \section{System Model}
 
-\begin{figure}[t]
+\begin{figure*}[t]
   \centering
-  \fbox{%
-    \parbox[c][1.15in][c]{0.92\columnwidth}{%
-      \centering
-      \textit{DRAFT PLACEHOLDER}\\
-      System overview figure pending visual acceptance
-    }%
-  }
-  \caption{System overview placeholder for the coherent FSO link and per-block estimator switching.}
-  \label{fig:system-overview-placeholder}
-\end{figure}
+  \includegraphics[width=0.94\textwidth]{../../figures/fig1_system_overview_v3.pdf}
+  \caption{Coherent satellite--ground FSO link with atmospheric propagation, coherent reception, and the carrier-recovery subsystem expanded in Fig.~\ref{fig:adaptive-cpr}.}
+  \label{fig:system-overview}
+\end{figure*}
 
-As depicted in Fig.~\ref{fig:system-overview-placeholder}, we consider a coherent satellite-to-ground (and uplink) FSO link operating with \((8,8)\)-16APSK modulation, where the constellation comprises \(M_0 = 8\) points per ring \textcolor{red}{[UNRESOLVED CITATION: B11]}. The atmospheric channel is modeled as a Gamma-Gamma block-fading channel \cite{alhabash2001}: the channel undergoes block fading (quasi-static), such that the fading coefficient \(h_b\) remains constant over a block of \(N_{\mathrm{blk}} = 100\) symbols and varies independently between blocks. The Gamma-Gamma shape parameters \((\alpha, \beta)\) are set to \((4.0, 3.0)\), \((2.5, 1.8)\), and \((1.5, 0.8)\) for the weak, moderate, and strong downlink turbulence regimes, respectively, and \((1.2, 0.9)\) and \((1.0, 0.7)\) for the moderate and strong uplink regimes. The pair \((\alpha, \beta)\) determines the Rytov variance \(\sigma_R^2\), a standard measure of turbulence strength \cite{alhabash2001}; smaller values of \(\alpha\) and \(\beta\) correspond to stronger turbulence and, consequently, deeper amplitude fading.
+\subsection{Signal and impairment model}
 
-The discrete-time complex baseband received signal at symbol index \(k\) within block \(b\) is modeled as
-\[
-  r_k = h_b\,s_k\,e^{j\theta} + n_k,
-\]
-where \(s_k\) is the transmitted \((8,8)\)-16APSK symbol, \(\theta\) denotes the carrier phase offset (denoted \(\phi\) in \textcolor{red}{[UNRESOLVED CITATION: B11]}; we follow the \(\theta\) notation of \cite{viterbi1983}), and \(n_k\) is complex AWGN with one-sided power spectral density \(N_0\); the signal-to-noise ratio is \(\gamma = E_s/N_0\), where \(E_s\) is the per-symbol energy. The block length \(N_{\mathrm{blk}} = 100\) symbols is chosen well below the coherence time of both the laser phase noise and the atmospheric fading, which justifies the quasi-static (block-fading) assumption \textcolor{red}{[UNRESOLVED CITATION: Johst]}. The frame structure inserts one pilot symbol every four symbols, yielding a pilot spacing of \(1/4\) and a pilot overhead of 25\%, equivalent to a 1.25 dB SNR penalty \(10\log_{10}(4/3)\) \textcolor{red}{[UNRESOLVED CITATION: Shieh-Djordjevic 2010]}. This pilot density follows the frame structure adopted in \textcolor{red}{[UNRESOLVED CITATION: B11]}, in which one pilot symbol is interleaved every three data symbols; the periodic arrangement lets the DA estimator sample the carrier phase at regular intervals across the block, while the three-to-one data-to-pilot ratio keeps the overhead moderate. The residual carrier phase is modeled as a Wiener phase noise process---i.e., a random walk with independent zero-mean Gaussian increments---of per-symbol variance
-\[
-  \sigma_\theta^2 = 2\pi\,\Delta\nu\,T_s
-  \quad
-  \left(= \sigma_p^2\ \text{in B11}\right),
-\]
-\textcolor{red}{[UNRESOLVED CITATION: B11]}
-where \(\Delta\nu = 10\) kHz is the laser linewidth and \(T_s\) is the symbol period. Carrier phase recovery is performed per DSP block of \(N_{\mathrm{DFT}} = 256\) samples, and the HD-FEC threshold is \(3.8 \times 10^{-3}\) (7\% overhead) \textcolor{red}{[UNRESOLVED CITATION: B11]}.
+As shown in Fig.~\ref{fig:system-overview}, we consider a coherent free-space optical (FSO) link between a satellite and an optical ground station, including both downlink and uplink propagation regimes. The transmitted symbols use \((8,8)\) 16-ary amplitude-phase shift keying (16APSK), with eight equally spaced phase points on each of two amplitude rings, following the modulation definition used by Du \emph{et al.}~\cite{du2025nda}. The constellation is normalized so that its average symbol energy is \(E_s=1\).
+
+Let \(b(k)=\lfloor k/N_{\mathrm{ch}}\rfloor\) identify the atmospheric channel block containing symbol \(k\), where \(N_{\mathrm{ch}}=100\) symbols. The discrete-time complex-baseband observation is
+\begin{equation}
+  r_k = \sqrt{h_{b(k)}}\,s_k\exp\!\left(j\phi_k\right)+n_k,
+  \label{eq:received-signal}
+\end{equation}
+where \(s_k\) is the transmitted symbol, \(h_{b(k)}\) is the normalized irradiance, or intensity gain, and \(n_k\sim\mathcal{CN}(0,N_0)\) is circular complex Gaussian noise. The square root is required because irradiance scales signal power, whereas the complex-baseband coefficient scales amplitude. Consequently, the instantaneous received signal-to-noise ratio (SNR), before receiver estimation error, is \(h_{b(k)}\bar{\gamma}\), where \(\bar{\gamma}=E_s/N_0\) is the average pre-fading SNR.
+
+The irradiance follows a Gamma--Gamma model~\cite{alhabash2001} and is constant only within each 100-symbol channel block. It is generated as the product of two unit-mean Gamma variates. The shape-parameter pairs \((\alpha,\beta)=(4.0,3.0)\), \((2.5,1.8)\), and \((1.5,0.8)\) define the weak, moderate, and strong downlink simulation regimes; \((1.2,0.9)\) and \((1.0,0.7)\) define the moderate and strong uplink regimes. These parameter pairs define the numerical fading regimes evaluated below. Treating the atmospheric gain as constant over a short processing interval is consistent with reported FSO timing analyses that place scintillation dynamics on a substantially slower time scale than a microsecond-scale coherent frame~\cite{johst2024dataaided}.
+
+The carrier phase is continuous across channel-block and DSP-window boundaries. It contains a residual frequency offset \(f_{\mathrm{res}}\), a linear Doppler rate \(\dot f\), and laser phase noise:
+\begin{equation}
+  \begin{aligned}
+  \phi_k
+    &= \phi_{\mathrm{init}}+2\pi f_{\mathrm{res}}kT_s
+       +\pi\dot f\,(kT_s)^2+\sum_{\ell=0}^{k}\epsilon_\ell,\\
+  \epsilon_\ell &\overset{\mathrm{i.i.d.}}{\sim}
+       \mathcal{N}\!\left(0,\,2\pi\Delta\nu T_s\right),
+  \end{aligned}
+  \label{eq:phase-process}
+\end{equation}
+where \(T_s\) is the symbol interval, \(\Delta\nu=10\)~kHz is the combined laser linewidth, and \(\phi_{\mathrm{init}}\) is an arbitrary initial phase. The Wiener-increment variance follows the standard linewidth model used for coherent FSO carrier estimation~\cite{du2025nda}. Unlike the atmospheric coefficient, this phase is not assumed constant within a channel block.
+
+Equations~\eqref{eq:received-signal} and~\eqref{eq:phase-process} keep the impairment roles explicit. The irradiance term controls received signal power, the residual frequency and Doppler-rate terms produce deterministic phase evolution, the Wiener term produces stochastic phase diffusion, and \(n_k\) sets the additive-noise floor. In particular, neither the random irradiance nor the carrier phase is absorbed into \(\bar{\gamma}\). This convention lets all receiver branches process the same channel realization while differing only in the observations and estimators available to them.
+
+\subsection{Block, pilot, and SNR contract}
+
+Two distinct partitions are used. The atmospheric channel block has \(N_{\mathrm{ch}}=100\) symbols and determines where \(h_{b(k)}\) is held constant. Carrier recovery and estimator selection operate on nonoverlapping digital signal processing (DSP) windows of \(N_{\mathrm{DSP}}=256\) samples. Because these lengths differ, a DSP window may contain samples from multiple atmospheric channel blocks; the receiver does not assume a single value of \(h\) over all 256 samples. Channel-gain estimation is therefore performed on the 100-symbol partition, while phase estimation and method selection use the 256-sample partition.
+
+Within each DSP window, the data-aided layout assigns local indices \(0,4,\ldots,252\) to 64 known pilots and the remaining 192 positions to data. Channel-block boundaries are applied independently of this local layout, so pilots contributing to a channel-gain estimate are selected by their global symbol indices rather than by treating the DSP window as one fading interval. The same transmitted symbols, atmospheric gains, phase sequence, and noise realization are supplied to all compared receiver branches.
+
+For the data-aided branch, one known pilot is placed every \(L_p=4\) transmitted symbols. Thus pilots occupy \(\rho_p=1/4\) of transmitted positions, while the expansion relative to the three data symbols is \(1/3\). Comparisons use a total-transmit-energy coordinate: sending three data symbols plus one pilot requires \(4/3\) of the energy used by three data-only symbols at the same per-symbol energy. The coordinate offset is therefore
+\begin{equation}
+  \begin{aligned}
+  \rho_p&=\frac{1}{4},\\
+  \Delta_p&=10\log_{10}\!\left(\frac{4}{3}\right)=1.249~\mathrm{dB},\\
+  \gamma_{\mathrm{tot,DA}}^{\mathrm{dB}}
+    &=\gamma_{\mathrm{data}}^{\mathrm{dB}}+\Delta_p.
+  \end{aligned}
+  \label{eq:pilot-energy-coordinate}
+\end{equation}
+The non-data-aided branch carries data in every symbol and receives no such coordinate offset. For both branches, bit error rate (BER) is evaluated over information-bearing data positions; pilot positions are excluded from the data-aided denominator. Performance is referenced to the pre-decoding BER threshold \(3.8\times10^{-3}\), corresponding to 7\% overhead hard-decision forward error correction (HD-FEC)~\cite{takimoto2024modegroup}.

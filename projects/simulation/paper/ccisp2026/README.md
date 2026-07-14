@@ -1,15 +1,15 @@
-# CCISP 2026 LaTeX 投稿骨架（DRAFT）
+# CCISP 2026 LaTeX 投稿骨架 / CCE-CC-002 版面探针
 
-这是第一轮可编译版面探针，不是最终投稿稿。工程使用 CCISP 官方投稿页提供的 `IEEE-Conference-LaTeX-template_7-9-18.zip` 中的 `IEEEtran.cls`；官方 ZIP SHA256：
+这是第一轮可编译版面探针，不是最终投稿稿。当前工作树中的正文已经是获批 `CCE-CC-002` 的扩展预览，不再是旧的 6 页占位骨架；因此不得把当前文件误读为 W001–W003 的逐字抽取版。工程使用 CCISP 官方投稿页提供的 `IEEE-Conference-LaTeX-template_7-9-18.zip` 中的 `IEEEtran.cls`；官方 ZIP SHA256：
 
 `64CD0E9BD91A909530A9BD65F41622959CCD5D57A6344200FA70F967AF8A7ECD`
 
 ## 内容范围
 
-- `sections/abstract.tex` 与 `sections/introduction.tex`–`sections/conclusion.tex` 只抽取 W001–W003 的 Abstract 与 §§I–V 正文。
-- `Fig.1`/`Fig.2` 只保留显式占位框；三张已有数据图使用 `../../figures/` 下的 PDF。
-- 未核验引用保留为红色显式债务，不生成伪造 BibTeX；详见 `issues.md`。
-- 标题、作者、单位为 DRAFT 占位，不推断个人信息。
+- 当前 `sections/*.tex` 采用 D004/V003 修正后的 `sqrt(h)` 接收模型、100-symbol channel block / 256-sample DSP window、multi-pilot DA-LS、两层选择器、data-BER 和 BER-ratio 口径；旧 W 文件只读，不能直接覆盖回去。
+- 当前工作树暂时引用 `fig1_system_overview_v3.pdf`、`fig2_adaptive_cpr.pdf` 以及三张已有数据图。原 CCISP 首轮合同要求 Fig.1/Fig.2 使用显式占位框，这个偏离仍是阻塞债务，详见 `issues.md`，不表示图形方案已最终验收。
+- 当前 7 个 BibTeX 条目均被正文引用；引用解析与构建已通过，但 `oracle` 图例语义、来源同步和投稿口径仍需独立收口。
+- 当前作者栏为 `Anonymous Submission`，标题为工作标题；这不是最终作者/单位信息，也不等于已完成投稿元数据。
 
 ## 构建
 
@@ -17,15 +17,15 @@
 
 ```powershell
 $env:Path = "C:\\Program Files\\Git\\usr\\bin;C:\\Users\\zzt\\AppData\\Local\\Programs\\MiKTeX\\miktex\\bin\\x64;$env:Path"
-latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
+latexmk -g -pdf -interaction=nonstopmode -halt-on-error -file-line-error main.tex
 ```
 
 如果当前环境优先解析到 Codex 的 `pdftoppm`/`pdfinfo` wrapper，逐页渲染和 PDF 检查使用 MiKTeX 路径中的同名可执行文件。不要把 `毕设/论文/ccisp/` 的示例正文复制进来；它只是同源模板样例。
 
 ## 当前状态
 
-- 首轮目标：测量双栏版式页数、公式/图表溢出和引用债务。
-- 实测结果：`latexmk` exit 0，`main.pdf` 为 6 页；最终日志无 LaTeX error、未定义引用、overfull/underfull box，字体检查显示全部嵌入。
-- 已使用 MiKTeX 绝对路径渲染并逐页检查 PDF；图表、公式和占位框未发现裁切。浮动图位造成第 4 页和第 6 页留白，记录在 `issues.md` 的 D-05，暂不在首轮自行优化。
+- 首轮目标：测量双栏版式页数、公式/图表溢出和引用债务；当前扩展预览的 fresh build 为 `latexmk` exit 0，`main.pdf` 为 7 页。
+- 当前日志无 LaTeX error、未定义引用、overfull box；有 1 个 `Underfull \\hbox`（`main.log` 第 337 行）。字体检查显示全部嵌入，PDF 为 Letter 纸张。
+- 已使用 MiKTeX 绝对路径渲染并逐页检查 PDF；公式、图表和参考文献未发现裁切或重叠。第 6–7 页存在由大图浮动造成的留白，记录在 `issues.md`，暂不把排版回收计入正文增量。
 - 当前不锁定 CCISP 页数口径：官方投稿页写 5–10 页，既有任务口径写 4–6 页。
 - 当前不运行仿真、不修改绘图脚本、不处理 Fig.1/Fig.2 最终视觉方案。

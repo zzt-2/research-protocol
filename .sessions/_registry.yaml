@@ -518,3 +518,19 @@ topics:
     produces:
       - C:\Users\zzt\.agents\skills\design-paper-figures\
       - .sessions/2026-07-14-paper-figure-skill/
+
+  - slug: 2026-07-13-ccisp-submission-prep
+    title: CCISP 2026 LaTeX 投稿骨架与版面探针
+    status: active
+    created: "2026-07-13"
+    last_updated: "2026-07-14（S002：当前扩展预览 fresh build 7 页，范围债务已登记）"
+    description: "独立 CCISP 投稿准备专题：核验官方 IEEEtran 模板、构建链、正文/引用资产和双栏版面。原始首轮边界保留 Fig.1/Fig.2 占位、W001–W003 只读、不跑仿真；当前工作树另有 CCE-CC-002 扩展预览，是否替代首轮骨架仍待确认。"
+    depends_on:
+      - slug: 2026-07-09-thesis-writing
+        reason: 继承 H015、W001–W003、R011/R016/R018 和 D008/D009/D011/D013/D014。
+      - slug: 2026-07-14-ccisp-content-expansion
+        reason: 当前工作树扩展预览采用 CCE-CC-002/D004/V003 的 sqrt(h)、data-BER、BER-ratio、两层 selector 与引用修正；该依赖不改写原始首轮占位不变量。
+    conflicts_with: []
+    produces:
+      - .sessions/2026-07-13-ccisp-submission-prep/
+      - projects/simulation/paper/ccisp2026/

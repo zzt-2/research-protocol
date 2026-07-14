@@ -1,7 +1,7 @@
 # Topic Index: CCISP 2026 LaTeX 投稿骨架
 
 > slug: 2026-07-13-ccisp-submission-prep
-> status: active | created 2026-07-13 | last_updated 2026-07-13
+> status: active | created 2026-07-13 | last_updated 2026-07-14
 
 ## 专题定位（一句话）
 
@@ -60,6 +60,7 @@
 - **T001–T003**：分别派发官方模板、正文/引用资产、构建环境只读预检。
 - **V001**：独立 verifier 完成首轮复核，结论 PARTIAL；正文实质保真、占位图、现有 PDF 图和当前 PDF 可读性通过，数字/公式/引用与 external-output C1–C10 债务已补入目标 `issues.md`。
 - **V002**：独立 delta verifier 复核 D008 语义修正，结论 PASS；`gamma_th` 已只表示固定 effective-SNR switching threshold，最新版 PDF/日志和 Fig.1/Fig.2 占位通过。
+- **S002**：接收当前工作树的 CCE-CC-002 扩展预览并强制重建；fresh `latexmk` exit 0，PDF 7 页、Letter、字体嵌入；逐页检查无裁切/重叠，但有 1 个 `Underfull \\hbox` 和第 6–7 页 float 留白。当前目标已实际嵌入 Fig.1/Fig.2，故与本专题原始占位硬边界存在 B-08；纯 text 3,241、非正文项合计后约 3,505，词数口径列 B-09。
 
 ## 未决项
 
@@ -68,7 +69,9 @@
 3. Table I 的最终口径与 Fig.2 纵轴范围等导师项。
 4. 首轮浮动图位造成的末页留白是否需要在正式版面优化轮处理。
 5. `naive` 术语以及 external-output C1–C10 的独立复核结论。
+6. 当前 CCE 扩展预览是否允许替代本专题的首轮占位骨架；实际 Fig.1/Fig.2 与 DRAFT 元数据仍未获得本专题范围内的明确确认。
+7. D001 的 3,500 词验收采用纯 text 还是含标题/图注的总口径。
 
 ## 当前位置
 
-当前位置：Gate 0 官方模板硬门 PASS，正文/引用资产 PARTIAL，构建链已在目标工程实测通过；首轮骨架和 6 页 PDF 已生成，V001 总体 PARTIAL、V002（D008 delta）PASS。当前交付是“可编译版面探针”，不是最终投稿稿。
+当前位置：Gate 0 官方模板硬门 PASS，构建链可用；当前工作树已存在 CCE-CC-002 扩展预览，fresh PDF 为 7 页。S002/V003 只确认当前版本可编译和可读，原始 Fig.1/Fig.2 占位边界、词数口径、Oracle/术语语义和投稿页数仍未收口；当前交付仍不是最终投稿稿。

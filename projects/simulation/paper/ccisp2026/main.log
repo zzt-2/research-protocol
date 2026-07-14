@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.7.13)  13 JUL 2026 23:17
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.7.13)  14 JUL 2026 15:34
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -274,6 +274,9 @@ Package: array 2025/09/25 v2.6n Tabular extension package (FMi)
 \backup@length=\skip56
 \ar@cellbox=\box58
 )
+(C:\Users\zzt\AppData\Local\Programs\MiKTeX\tex/latex/placeins\placeins.sty
+Package: placeins 2005/04/18  v 2.2
+)
 (C:\Users\zzt\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdfte
 x.def
 File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
@@ -281,20 +284,20 @@ File: l3backend-pdftex.def 2025-10-09 L3 backend support: PDF output (pdfTeX)
 ) (main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 18.
-LaTeX Font Info:    ... okay on input line 18.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 17.
+LaTeX Font Info:    ... okay on input line 17.
 
 -- Lines per column: 56 (exact).
 
@@ -320,43 +323,63 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 
 (C:\Users\zzt\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
-)) (sections/abstract.tex
-LaTeX Font Info:    Trying to load font information for U+msa on input line 2.
+)) (sections/abstract.tex) (sections/introduction.tex
+LaTeX Font Info:    Trying to load font information for U+msa on input line 7.
 
 (C:\Users\zzt\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 2.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 7.
 
 (C:\Users\zzt\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-))
-(sections/introduction.tex) (sections/system_model.tex [1{C:/Users/zzt/AppData/
-Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/zzt/AppData/Local/Programs/M
-iKTeX/fonts/enc/dvips/base/8r.enc}
+)
+Underfull \hbox (badness 3158) in paragraph at lines 7--8
+\OT1/ptm/m/n/10 plies one fixed two-layer de-ci-sion pro-ce-dure to ev-ery
+ []
+
+[1{C:/Users/zzt/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/zzt/
+AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}
 
 
-]) (sections/method.tex [2])
+])
+(sections/system_model.tex
+<../../figures/fig1_system_overview_v3.pdf, id=12, 517.45322pt x 252.2223pt>
+File: ../../figures/fig1_system_overview_v3.pdf Graphic file (type pdf)
+<use ../../figures/fig1_system_overview_v3.pdf>
+Package pdftex.def Info: ../../figures/fig1_system_overview_v3.pdf  used on inp
+ut line 5.
+(pdftex.def)             Requested size: 485.04126pt x 236.42703pt.
+) (sections/method.tex [2]
+<../../figures/fig2_adaptive_cpr.pdf, id=20, 984.5583pt x 463.7325pt>
+File: ../../figures/fig2_adaptive_cpr.pdf Graphic file (type pdf)
+<use ../../figures/fig2_adaptive_cpr.pdf>
+Package pdftex.def Info: ../../figures/fig2_adaptive_cpr.pdf  used on input lin
+e 8.
+(pdftex.def)             Requested size: 485.04126pt x 228.46213pt.
+ [3 <../../figures/fig1_system_overview_v3.pdf>] [4 <../../figures/fig2_adaptiv
+e_cpr.pdf>])
 (sections/results.tex
-<../../figures/ccisp_fig2_ber.pdf, id=26, 517.45322pt x 596.2275pt>
+<../../figures/ccisp_fig2_ber.pdf, id=70, 517.45322pt x 596.2275pt>
 File: ../../figures/ccisp_fig2_ber.pdf Graphic file (type pdf)
 <use ../../figures/ccisp_fig2_ber.pdf>
-Package pdftex.def Info: ../../figures/ccisp_fig2_ber.pdf  used on input line 8
+Package pdftex.def Info: ../../figures/ccisp_fig2_ber.pdf  used on input line 6
 .
-(pdftex.def)             Requested size: 516.0pt x 594.56116pt.
-<../../figures/ccisp_fig3_gain.pdf, id=27, 257.9004pt x 193.21373pt>
-File: ../../figures/ccisp_fig3_gain.pdf Graphic file (type pdf)
-<use ../../figures/ccisp_fig3_gain.pdf>
-Package pdftex.def Info: ../../figures/ccisp_fig3_gain.pdf  used on input line 
-20.
-(pdftex.def)             Requested size: 252.0pt x 188.79977pt.
-<../../figures/ccisp_fig4_crossover.pdf, id=28, 509.67474pt x 278.13098pt>
+(pdftex.def)             Requested size: 402.47937pt x 463.75461pt.
+<../../figures/ccisp_fig4_crossover.pdf, id=71, 509.67474pt x 278.13098pt>
 File: ../../figures/ccisp_fig4_crossover.pdf Graphic file (type pdf)
 <use ../../figures/ccisp_fig4_crossover.pdf>
 Package pdftex.def Info: ../../figures/ccisp_fig4_crossover.pdf  used on input 
-line 27.
+line 29.
 (pdftex.def)             Requested size: 252.0pt x 137.5161pt.
-) (sections/conclusion.tex [3]) (main.bbl)
+<../../figures/ccisp_fig3_gain.pdf, id=72, 257.9004pt x 193.21373pt>
+File: ../../figures/ccisp_fig3_gain.pdf Graphic file (type pdf)
+<use ../../figures/ccisp_fig3_gain.pdf>
+Package pdftex.def Info: ../../figures/ccisp_fig3_gain.pdf  used on input line 
+48.
+(pdftex.def)             Requested size: 252.0pt x 188.79977pt.
+ [5]) [6 <../../figures/ccisp_fig2_ber.pdf>]
+(sections/conclusion.tex) (main.bbl)
 
 ** Conference Paper **
 Before submitting the final camera ready copy, remember to:
@@ -368,50 +391,46 @@ Before submitting the final camera ready copy, remember to:
  uses only Type 1 fonts and that every step in the generation
  process uses the appropriate paper size.
 
-[4
-
-] [5 <../../figures/ccisp_fig2_ber.pdf>] [6
-
-
- <../../figures/ccisp_fig3_gain.pdf> <../../figures/ccisp_fig4_crossover.pdf>] 
-(main.aux)
+[7 <../../figures/ccisp_fig4_crossover.pdf> <../../figures/ccisp_fig3_gain.pdf>
+] (main.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 4255 strings out of 467871
- 68829 string characters out of 5419344
- 492563 words of memory out of 5000000
- 33073 multiletter control sequences out of 15000+600000
- 668955 words of font info for 120 fonts, out of 8000000 for 9000
+ 4288 strings out of 467871
+ 70166 string characters out of 5419344
+ 494616 words of memory out of 5000000
+ 33109 multiletter control sequences out of 15000+600000
+ 663023 words of font info for 109 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 57i,8n,65p,1621b,271s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,15n,65p,1888b,311s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/zzt/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cm
 ex10.pfb><C:/Users/zzt/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfont
 s/cm/cmmi10.pfb><C:/Users/zzt/AppData/Local/Programs/MiKTeX/fonts/type1/public/
-amsfonts/cm/cmmi6.pfb><C:/Users/zzt/AppData/Local/Programs/MiKTeX/fonts/type1/p
-ublic/amsfonts/cm/cmmi7.pfb><C:/Users/zzt/AppData/Local/Programs/MiKTeX/fonts/t
-ype1/public/amsfonts/cm/cmmi8.pfb><C:/Users/zzt/AppData/Local/Programs/MiKTeX/f
-onts/type1/public/amsfonts/cm/cmmi9.pfb><C:/Users/zzt/AppData/Local/Programs/Mi
+amsfonts/cm/cmmi5.pfb><C:/Users/zzt/AppData/Local/Programs/MiKTeX/fonts/type1/p
+ublic/amsfonts/cm/cmmi6.pfb><C:/Users/zzt/AppData/Local/Programs/MiKTeX/fonts/t
+ype1/public/amsfonts/cm/cmmi7.pfb><C:/Users/zzt/AppData/Local/Programs/MiKTeX/f
+onts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Users/zzt/AppData/Local/Programs/Mi
 KTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/zzt/AppData/Local/Progr
 ams/MiKTeX/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Users/zzt/AppData/Local/
 Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Users/zzt/AppData/L
 ocal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Users/zzt/AppD
 ata/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Users/zzt
-/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr9.pfb><C:/User
-s/zzt/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><
-C:/Users/zzt/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy7
-.pfb><C:/Users/zzt/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/sy
-mbols/msam10.pfb><C:/Users/zzt/AppData/Local/Programs/MiKTeX/fonts/type1/urw/ti
-mes/utmb8a.pfb><C:/Users/zzt/AppData/Local/Programs/MiKTeX/fonts/type1/urw/time
-s/utmbi8a.pfb><C:/Users/zzt/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times
-/utmr8a.pfb><C:/Users/zzt/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/u
-tmri8a.pfb>
-Output written on main.pdf (6 pages, 374410 bytes).
+/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Us
+ers/zzt/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy6.pfb>
+<C:/Users/zzt/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy
+7.pfb><C:/Users/zzt/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/c
+m/cmsy8.pfb><C:/Users/zzt/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsf
+onts/symbols/msam10.pfb><C:/Users/zzt/AppData/Local/Programs/MiKTeX/fonts/type1
+/urw/times/utmb8a.pfb><C:/Users/zzt/AppData/Local/Programs/MiKTeX/fonts/type1/u
+rw/times/utmbi8a.pfb><C:/Users/zzt/AppData/Local/Programs/MiKTeX/fonts/type1/ur
+w/times/utmr8a.pfb><C:/Users/zzt/AppData/Local/Programs/MiKTeX/fonts/type1/urw/
+times/utmri8a.pfb>
+Output written on main.pdf (7 pages, 491208 bytes).
 PDF statistics:
- 213 PDF objects out of 1000 (max. 8388607)
+ 265 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 16 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 26 words of extra memory for PDF output out of 10000 (max. 10000000)
 
