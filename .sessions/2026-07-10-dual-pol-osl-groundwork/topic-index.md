@@ -71,7 +71,13 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 
 ## 当前位置
 
-**PROMPT-015 统一合法 baseline 重比 GO（2026-07-14，D022）**。主控独立复核 30 trials 原始数据：ML-original/aligned 相对 standard-CMA 均 29/30 胜，W=23.0，exact p=1.19e-6，与报告一致（p 值差异已查清：exact vs asymptotic，报告用 exact 正确）。两个 baseline 混杂处理结果：(1) z 因子混杂真实存在（standard 比 current 25/30 好）但未吸收全部差距（standard 仍输 ML 29/30）；(2) 初始化不是性能来源（ML-original vs aligned 均值差 7.6e-7）。**方法层卖点解冻**——"ML 优于 standard-CMA"在 N=5M/QPSK/strong/f_G=30/SOP=4e-7 注册域成立。但剩余债务未解除（监督vs盲不公平 D019 挂起 / 方法照搬 Qin 无架构创新 / 交换质量机制 D020 仍说不清 / seed-bias）。R005 方向1（自适应步长）被 JR-CMA 占点 Kill，方向2（发散检测+响应≈Q-DP3）有条件支持。**待决策：方法层整体走向——继续加固 Q-CMA-FADE 方法层（扩参数域/解监督公平性/挖机制），还是回候选池正式评估 Q-DP3。**
+**A/B 两边并行推进（2026-07-14，D022 后）**。PROMPT-015 GO 后方法层卖点解冻（ML 优于 standard-CMA 30 seeds 显著），但创新性软（照搬 Qin + 机制说不清）。用户决策"两边同时推"+ "能不能动一点点让它好一点点"。主控诊断方法层 = 别人方法 + 新场景，提出用分析层发散判据驱动 ML 训练调度（改动1）作为可能的创新升级。seed 策略修正：中间验证 5 seeds 够，只有论文最终结论补 30。
+
+- **A 边（PROMPT-016，已派出）**：5 seeds 扩参数域（f_G/SNR/16QAM）拿鲁棒性曲线 + 改动1（发散判据驱动 ML 训练调度）新颖性快查。低优先机械活。
+- **B 边（PROMPT-017，已派出）**：Q-DP3 两个前置问题（预测性检测物理可行性 + 与 D003 关系厘清）。高优先思考活，为 step 4a 维度 A 正式竞争分解铺路。
+- D019 盲 VAE 仍挂起。R005 方向1（自适应步长）已 Kill（JR-CMA 占点）。
+
+下一步：等 A/B 回传 → A 核验鲁棒性数据 + 改动1 创新判断；B 据前置厘清结果决定 Q-DP3 是否进 step 4a 维度 A。两边汇合后做方法层战略判断（Q-CMA-FADE 加固 vs Q-DP3 转向）。
 
 - Step 1-3：完成（双偏振 9 篇 + ML 20 篇 = 29 篇精读）
 - **Step 4a：完成**（Q-DP1/2/3 可行性评估）

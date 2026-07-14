@@ -415,7 +415,7 @@ topics:
     title: 论文写作专题（自适应 CPR 方向）
     status: active
     created: "2026-07-09"
-    last_updated: "2026-07-13（S012/R019三轮猎图、R020批次B+C与批次D完成；D011确认Fig.1系统总览+Fig.2自适应CPR机制两图拆分；D012选定SVG；S013首版源文件与颜色/黑白预览完成，caption/正文联动待后续）"
+    last_updated: "2026-07-13（S017 语义版 Fig.2 原型已生成，V005 PASS，待用户审阅）"
     description: "自适应载波相位恢复（A4 per-block 有效 SNR 驱动 DA/NDA 切换）方向的论文写作准备专题。在 GW Step 4a 维度 D（A4 PASS 待 Go）阶段内做：材料盘点/缺口识别/数据稳定性验证/论点合理性审查/简报完善。**是写作准备不是进 Contract/Execute**——守 FR-22。step4a-mve-execution 保持 active（Go 决策+消融回那里），本专题只管写作准备。"
     depends_on:
       - slug: 2026-07-06-step4a-mve-execution
@@ -427,7 +427,7 @@ topics:
     status: active
     created: "2026-06-20"
     last_updated: "2026-07-06（S031 Step 4a 排优先级 + 前 5 名 Go/Kill 评估完成交用户拍板。用户选 B11/B3/B7 进 MVE，转新专题 2026-07-06-step4a-mve-execution 执行 Step 4a 维度 D。原 S031 描述保留：S031 迁出为新专题 2026-07-02-carrier-sync-v2-deep-read S001——用户指出精读沉淀是独立多对话工作流应开新专题，原专题 28S+20H=48 编号文件已膨胀。S030 判读层收尾 B 档 12 篇全摸完+总表落盘交用户排优先级。精读沉淀补强转新专题执行）"
-    description: "framework-evolution 三改造落地后的首次实战验证。**根本目的不是'推进论文'，是'验证新方法论能不能产出可行的东西'**。**D005 学位定位翻转=务实路线（INVARIANT 级）**：先能写出东西毕业，接受赢传统 baseline 几 dB 作贡献，FR-21 降级为参考。**S004-S012 地勘五轮**：landscape.md 683 主表落盘，死轴冷区结论加固。**S011-S012 Q#-A 验证 Kill**：批3造假发现。**R001/D003 方法论起点校正**：6次Kill共性=都没走完Step3→4a完整发现链条。**S015 块C综合分析完成**：literature_notes.md 重写（10篇L##+综合分析+**研究问题清单Q1-Q10**，6篇全过4篇部分不过）。**S016 块D检索+召回+Q12 Kill**：🔴纠正H004选样漏召(Pech/Valjus/Paillier召回Q11-Q13旧B1资产)，Paillier2020JLT下载+精读完成，块E Step4a启动+Q12评估=Kill(D006 B1换皮6维度致命)。**S017 Q8切入点2 MVE FAIL Kill**（散布0.1-0.3dB<0.5dB FR-21）。**S018 Q8切入点4B Kill+checklist立轮**：D007重定义4B(湍流×Doppler→σ²慢包络,三查坐实物理gap)，但D008 FR-21数值显示ABR对σ²平缓性能gap趋零(vs中档+0.01dB,A2+A3双重硬门槛失败)；**D009立「靠谱方向checklist」v1**(A1轻化+A2指标敏感4B教训新提炼+A3增量≥同门~2-4dB+B/C类)，回应用户诉求2'先定标准别样样松'。**S019 Q1 checklist首次实战=Kill(D010)**：范围双重出界(不变量6星地+S007 ISL排除+无湍流)+A1方法归属错位(产出形态=论文自己的TS-KF)+C3堵死抢救(搬星地撞Q12/B1换皮D006)。A2在Q1自身ISL场景反而过(Doppler真硬动态)。论文TS-KF降级baseline参考。**🔴系统性发现**：四判据全过6候选里Q1(ISL)/Q3(feeder)/Q7(OISL)都带⚠️链路撞S007，范围硬门一卡候选池收缩明显。**S019续 Q2 Kill(D011)**：死因=Q1复刻(范围双重出界+A1归属+C3撞Q12/B1换皮)。论文降级方法借鉴+同实验室前作，**登记「16-QAM CPR扩展」为待回看种子**(Q2自承仅QPSK未扩展16-QAM，未被D006堵死)。回应用户'没办法挣扎吗'拆三层salvage分析(方向候选/方法借鉴/启发种子)。**S019续2 Q3 Kill(D012)**：范围双重出界(feeder系统级+无湍流建模)+A1归属错位(产出形态=论文adaptive MMSE)。**C3未撞旧Kill**(Q3跟Q1/Q2唯一差别)但不构成salvage(A1+范围已双重硬门槛)。feeder辨析(物理经大气但S007排系统级架构)。论文降级方法借鉴(time-packing+MMSE检测框架+SINR-BER闭式可复用)。**🔴候选池近清零**：四判据全过6候选已Kill 3(Q1/Q2/Q3)，D010预测被Q2/Q3连续验证，实质在范围+未死候选仍然只剩Q10。**暂0Go**：Q12/切入点2/4B/Q1/Q2/Q3全Kill。**🔴S019续3 重心转折(D013)**：用户直觉'方向可能歪了'+'找不出来是不是我菜'+'ISL/LEO/星地难度对比'戳中盲区——9天19session全在逐个Kill候选0Go，但**Kill候选≠判地**，全Kill只证明'这几个不行'证明不了'地没缝'。abstract报不出判据A(S010工具错位,0.6%真信号)。**转块F判地专项**：判星地湍流处理范围内有没有D005够格的缝(三选一:A真没缝/B有缝但选样错过/C窄缝可救)。判据不对称(用户拍板'最怕A,B/C好说'):A需排假阴性(覆盖度核查+死轴必验+综述充分),B/C有信号即成立。三轴判读(物理有缝/范围内/够D005)+~25篇全文精读(综述8-10+湍流子地带10-15)+已有13篇=~38篇底座,4批subagent并行+grep核查(§7.2防造假)。**判地结论前禁立Q#**。详见H011+R002(待写)。**S020 块F判地第1对话完成**：选样36篇判地底座落盘（28已精读+7补精读+1综述，用户拍板"只判已落盘不补检索"）+批1（综述+系统级7篇）+批2（死轴验证8篇）精读+grep核查全PASS无造假。🔴**死轴验证核心结论:载波同步子地带="有缝但人少"非"真死地"**（不对称判据A第2重防漏看已验:范围内4篇全有baseline失效信号0篇饱和,但增量普遍<1dB/靠分集/孤证,够格硬证据集中在ISL出界,精确gap仍空）。载波同步不能判A。覆盖度债务:信道估计偏薄(2.8 paywall)+综述偏薄(landscape 91综述仅1篇落盘)。**下一步:新对话执行H012（批3调制/检测+批4 AO+补充+三轴判读+R002三选一）**。"
+    description: "framework-evolution 三改造落地后的首次实战验证。**根本目的不是'推进论文'，是'验证新方法论能不能产出可行的东西'**。**D005 学位定位翻转=务实路线（INVARIANT 级）**：先能写出东西毕业，接受赢传统 baseline 几 dB 作贡献，FR-21 降级为参考。**S004-S012 地勘五轮**：landscape.md 683 主表落盘，死轴冷区结论加固。**S011-S012 Q#-A 验证 Kill**：批3造假发现。**R001/D003 方法论起点校正**：6次Kill共性=都没走完Step3→4a完整发现链条。**S015 块C综合分析完成**：literature_notes.md 重写（10篇L##+综合分析+**研究问题清单Q1-Q10**，6篇全过4篇部分不过）。**S016 块D检索+召回+Q12 Kill**：🔴纠正H004选样漏召(Pech/Valjus/Paillier召回Q11-Q13旧B1资产)，Paillier2020JLT下载+精读完成，块E Step4a启动+Q12评估=Kill(D006 B1换皮6维度致命)。**S017 Q8切入点2 MVE FAIL Kill**（散布0.1-0.3dB<0.5dB FR-21）。**S018 Q8切入点4B Kill+checklist立轮**：D007重定义4B(湍流×Doppler→σ²慢包络,三查坐实物理gap)，但D008 FR-21数值显示ABR对σ²平缓性能gap趋零(vs中档+0.01dB,A2+A3双重硬门槛失败)；**D009立「靠谱方向checklist」v1**(A1轻化+A2指标敏感4B教训新提炼+A3增量≥同门~2-4dB+B/C类)，回应用户诉求2'先定标准别样样松'。**S019 Q1 checklist首次实战=Kill(D010)**：范围双重出界(不变量6星地+S007 ISL排除+无湍流)+A1方法归属错位(产出形态=论文自己的TS-KF)+C3堵死抢救(搬星地撞Q12/B1换皮D006)。A2在Q1自身ISL场景反而过(Doppler真硬动态)。论文TS-KF降级baseline参考。**🔴系统性发现**：四判据全过6候选里Q1(ISL)/Q3(feeder)/Q7(OISL)都带⚠️链路撞S007，范围硬门一卡候选池收缩明显。**S019续 Q2 Kill(D011)**：死因=Q1复刻(范围双重出界+A1归属+C3撞Q12/B1换皮)。论文降级方法借鉴+同实验室前作，**登记「16-QAM CPR扩展」为待回看种子**(Q2自承仅QPSK未扩展16-QAM，未被D006堵死)。回应用户'没办法挣扎吗'拆三层salvage分析(方向候选/方法借鉴/启发种子)。**S019续2 Q3 Kill(D012)**：范围双重出界(feeder系统级+无湍流建模)+A1归属错位(产出形态=论文adaptive MMSE)。**C3未撞旧Kill**(Q3跟Q1/Q2唯一差别)但不构成salvage(A1+范围已双重硬门槛)。feeder辨析(物理经大气但S007排系统级架构)。论文降级方法借鉴(time-packing+MMSE检测框架+SINR-BER闭式可复用)。**🔴候选池近清零**：四判据全过6候选已Kill 3(Q1/Q2/Q3)，D010预测被Q2/Q3连续验证，实质在范围+未死候选仍然只剩Q10。**暂0Go**：Q12/切入点2/4B/Q1/Q2/Q3全Kill。**🔴S019续3 重心转折(D013)**：用户直觉'方向可能歪了'+'找不出来是不是我菜'+'ISL/LEO/星地难度对比'戳中盲区——9天19session全在逐个Kill候选0Go，但**Kill候选≠判地**，全Kill只证明'这几个不行'证明不了'地没缝'。abstract报不出判据A(S010工具错位,0.6%真信号)。**转块F判地专项**：判星地湍流处理范围内有没有D005够格的缝(三选一:A真没缝/B有缝但选样错过/C窄缝可救)。判据不对称(用户拍板'最怕A,B/C好说'):A需排假阴性(覆盖度核查+死轴必验+综述充分),B/C有信号即成立。三轴判读(物理有缝/范围内/够D005)+~25篇全文精读(综述8-10+湍流子地带10-15)+已有13篇=~38篇底座,4批subagent并行+grep核查(§7.2防造假)。**判地结论前禁立Q#**。详见H011+R002(待写)。**S020 块F判地第1对话完成**：选样36篇判地底座落盘（28已精读+7补精读+1综述，用户拍板\"只判已落盘不补检索\"）+批1（综述+系统级7篇）+批2（死轴验证8篇）精读+grep核查全PASS无造假。🔴**死轴验证核心结论:载波同步子地带=\"有缝但人少\"非\"真死地\"**（不对称判据A第2重防漏看已验:范围内4篇全有baseline失效信号0篇饱和,但增量普遍<1dB/靠分集/孤证,够格硬证据集中在ISL出界,精确gap仍空）。载波同步不能判A。覆盖度债务:信道估计偏薄(2.8 paywall)+综述偏薄(landscape 91综述仅1篇落盘)。**下一步:新对话执行H012（批3调制/检测+批4 AO+补充+三轴判读+R002三选一）**。"
     depends_on:
       - slug: 2026-06-19-4b1-adaptive-interleaving-groundwork
         reason: 继承 H002 路径 A、问题四判据、5 次失败根因（C1+C2+C3 三轴锁死）、导师反馈
@@ -456,7 +456,7 @@ topics:
     title: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
     status: active
     created: "2026-07-10"
-    last_updated: "2026-07-13（PROMPT-015 统一合法 baseline 重比完成：30 seeds、standard-CMA vs ML-original/aligned 均 29/30 胜，exact p=1.1920928955078125e-6，预注册 gate=GO；结论限于 N=5M/QPSK/strong/f_G=30/SOP=4e-7 参数域。D019 盲 VAE 继续挂起，不进入 Contract）"
+    last_updated: "2026-07-14（D022 PROMPT-015 GO 落库：ML 优于 standard-CMA 30seeds exact p=1.19e-6，方法层卖点解冻；A/B 并行——PROMPT-016 扩参数域5seeds+改动1新颖性 / PROMPT-017 Q-DP3前置厘清；seed策略修正中间验证5seeds够；R005方向1自适应步长Kill/JR-CMA占点）"
     description: "scenario-transfer-pivot D003 解锁双偏振空间后，按 FR-22 从 GW Step 1 重走地勘。搜索空间从单偏振扩到含双偏振 OSL（sat.1553 §6 偏振解复用层主轴 + §3/4/5 次 + 迁移源参照 + 综述锚）。S001 Step1-3完成（15查询43候选8子方向/9篇+sat1553精读/3Q#过四判据）。S002 Step4a完成：Q-DP1(动态SOP跟踪)Kill因A0§1致命（均衡器300krad/s高出湍流致SOP 1-2数量级，A物理基础不足D001）/ Q-DP2(CMA fade发散)Conditional Go（空白真实但需自建GG时间模型D002）/ Q-DP3(跨帧恢复)Conditional Go首选（物理基础最扎实D003）。S003-S004 D004攒材料+D005候选合并Q-CMA-FADE。S005-S013 完成 GG 时间模型、发散扫描、ML/CMA MVE、机制复核与双口径历史审计；D018 规定 fixed/PI 必须并报、PI 需流标识开销，并将 N=2M ML 优势限定在已审计参数域。"
     depends_on:
       - slug: 2026-07-10-scenario-transfer-pivot
@@ -480,13 +480,41 @@ topics:
         reason: 继承A3/N1/③三条腿Kill+R006大规模补盲180hits坍缩结论"物理可行解空间窄"
     conflicts_with: []
 
-  - slug: 2026-07-13-ccisp-submission-prep
-    title: CCISP 2026 LaTeX 投稿骨架准备
-    status: active
-    created: "2026-07-13"
-    last_updated: "2026-07-13（S001：官方模板硬门通过；4 组引用 unresolved；用户授权后 MiKTeX/Poppler/Perl 构建链已恢复，Gate 0 仍为 PARTIAL）"
-    description: "独立的 CCISP 2026 LaTeX 投稿准备专题：先核验官方模板来源、正文与引用资产、以及本机构建链，再建立首轮可编译双栏骨架。只做组装、编译、渲染、版面诊断和 issues 登记；不跑仿真、不改 W001-W003、不继续 Fig.1/Fig.2。"
+  - slug: 2026-07-14-paper-writing-skill
+    title: 论文写作全局 Skill
+    status: closed
+    created: "2026-07-14"
+    last_updated: "2026-07-14"
+    description: "已完成并通过 V001：全局 paper-writing skill 已安装；采用六状态门控、根因诊断、选择性呈现边界、批量改稿、真实构建和独立验证。RED 3/3 FAIL→GREEN 3/3 PASS，边界复测 8/8 PASS，独立最终审查 PASS。"
     depends_on:
       - slug: 2026-07-09-thesis-writing
-        reason: "读取 W001-W003、R011、R016、R018、revision-queue 和 D008/D009/D011/D013/D014，复用已定英文正文、术语、公式和图表规格。"
+        reason: 继承 R013 改稿影响传播、R016 会议论文写作规则、D007 数据呈现边界和实际写作踩坑
     conflicts_with: []
+
+  - slug: 2026-07-14-ccisp-content-expansion
+    title: CCISP 2026 论文内容补强
+    status: active
+    created: "2026-07-14"
+    last_updated: "2026-07-14（D004/V003 撤销口径误判，WRITE 恢复）"
+    description: "针对 CCISP 2026 论文内容补强。D001 冻结至少 3500 词，D002 冻结外部只呈现有利且可证实内容。CCE-CC-002 已获批。Batch A 官方约束、引用和公式门 PASS；初次 T009/D003/V002 漏读上游 D005/D006，误将 full/net 口径当最终公平口径。D004/V003 已恢复 data BER（NDA 1024、DA 768）并由既有 A4 JSON 确定性复算 26/29，无需新仿真。1.9 dB 仍归 NDA-vs-DA，Fig.3 不称 equal-BER SNR gain。WRITE 已恢复，论文正文尚未修改。"
+    depends_on:
+      - slug: 2026-07-09-thesis-writing
+        reason: 继承 R010/R013/R014/R015/R016、benchmark-paper-set、D007 数据呈现边界及论文事实材料
+    conflicts_with: []
+    produces:
+      - .sessions/2026-07-14-ccisp-content-expansion/
+      - projects/simulation/paper/ccisp2026/
+
+  - slug: 2026-07-14-paper-figure-skill
+    title: 论文插图全局 Skill
+    status: closed
+    created: "2026-07-14"
+    last_updated: "2026-07-14（V001 PASS：12/12 单测、quick_validate、真实 Fig.2 与独立边界探针通过）"
+    description: "从 Fig.1/Fig.2 调研、视觉纠偏和 draw.io 落地中升级全局 design-paper-figures：补图型覆盖门、语义图元证据、renderer/编辑合同、交叉线审查、失败截断和确定性 draw.io validator。采用 RED→GREEN→REFACTOR，禁止把项目专属三泳道、配色或标签固化为万能模板。"
+    depends_on:
+      - slug: 2026-07-09-thesis-writing
+        reason: 继承 R019/R020/R022、S017、D013/D017 与 V005-V007 的参考调研、失败纠偏和 draw.io 验证证据
+    conflicts_with: []
+    produces:
+      - C:\Users\zzt\.agents\skills\design-paper-figures\
+      - .sessions/2026-07-14-paper-figure-skill/
