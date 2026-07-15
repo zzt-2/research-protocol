@@ -118,7 +118,73 @@ Other sections: 955 / 3,570 = 26.75%
 
 PASS
 
+## V015: T018 三档下行正式全流程终验
+
+> date: 2026-07-16
+> 关联：S001 / D019 / R016 / T018
+
+### 验证项
+
+- [x] Gu/Al-Habash provenance 与六项偏差：PASS；最大 2.775%，冻结参数未改。
+- [x] `params.py` / common 接口：PASS；三档现场哈希与三份正式结果 authority 一致。
+- [x] fixed：870/870 cells PASS；AWGN 8 点、三档各 7 点、30×400 与逐方法分母完整。
+- [x] A/B：990/990 exact PASS；selected complex output、errors、counts、realization、seed/window 边界零差异。
+- [x] route B structural N/A：fixed-NDA/oracle/gain null/absent，零违规。
+- [x] 统计：33 点 paired seed mean 与 df=29 95% t-CI 独立重算误差 ≤1e-12；DA/NDA=144980/251020。
+- [x] 图：三脚本 formal-only、无 fallback；交叉点 14.644/17.334/16.194 dB；typography 19/19 PASS；Fig.2 未覆盖。
+- [x] 论文：uplink/26-of-29/旧数字/内部代号零残留；`texcount=3656`；fresh build 7 页；undefined/overfull=0。
+- [x] 视觉：逐页 7/7 检查，无裁切、重叠、空白页；Fig.2 最终尺寸无压字。
+- [x] 独立 formal verifier：PASS；消歧前 label-free output 990/990 exact。
+- [ ] 独立论文 reviewer：Fig.2 仍表达双路先跑后选，与 route-B 实现冲突，BLOCKED。
+
+### 证据
+
+`projects/simulation/results/ccisp_family1_independent_verification.json`；`ccisp_family1_formal_verification.json`；`ccisp_family1_fixed_verification.json`；`paper/ccisp2026/main.pdf` 与 `main.log`。
+
+### 结论
+
+BLOCKED
+
+### 后续（BLOCKED）
+
+仅需 Fig.2 资产维护方将控制器的 branch command 前置到 DA/NDA 执行之前，并显示单支激活；不得由本轮覆盖用户图资产。修改后重建 7 页 PDF并重复逐页与实现真相终验。
+
+## V014: 参数证据门解除状态核验（D019）
+
+> date: 2026-07-16
+> 关联：S001 / D019 / R017 / V013
+
+### 验证项
+
+- [x] Al-Habash 2001 本地归档：`ls papers/doi/10.1117_1.1386641/` → `source.pdf`(185KB) + `content.md`(42KB) + `metadata.json` 均存在，PASS。
+- [x] 公式可核：读 content.md 确认 Eq.13（GG 分布）、Eq.14（αβ-闪烁关系）、Eq.18-19（plane-wave 方差以 Rytov variance 表示）均存在，PASS。
+- [x] Family-1 引用惯例：子 Agent 全文读 Gu 2022（*Appl. Sci.* 12(7):3331，卫星下行）确认采用三档 (11.6,10.1)/(4.0,1.9)/(4.2,1.4) + σ²_R=0.2/1.6/3.5，著作级引 Ghassemlooy CRC 2019 无表/页，PASS（惯例佐证）。
+- [x] 数学复算一致性：精确映射值相对冻结四舍五入值的六项偏差最大 2.775% < 5%，闪烁指数有序（0.193/0.902/1.144），PASS。
+- [x] D019 冻结值与 R016 复算、Gu 2022 实用值三方一致，PASS。
+
+### 证据
+
+```text
+papers/doi/10.1117_1.1386641/: source.pdf(185KB 2026-07-15) + content.md(42KB) + metadata.json
+Al-Habash Eq.13/14/18-19 confirmed in content.md (GG dist, alpha-beta relation, plane-wave variances)
+Gu 2022 Appl.Sci.12(7):3331 verbatim: "with the parameters given in [19]" + values 11.6/10.1/0.2, 4/1.9/1.6, 4.2/1.4/3.5; [19]=Ghassemlooy CRC 2019 2nd ed., no table/page
+exact-to-frozen relative deviations: 0.438%,0.221%,0.659%,0.551%,0.608%,2.775%; max 2.775% < 5%
+sigma_I^2 = 0.193/0.902/1.144 (weak<mod<strong, each in Andrews regime)
+Gu 2022 archived: papers/doi/10.3390_app12073331/{source.pdf,content.md,metadata.json}
+Gu evidence: PDF p.4 Eq.(9)/content.md:106-112; PDF p.5/content.md:117; PDF p.11/content.md:268
+```
+
+### 结论
+
+PASS（证据门按 D019 修订口径解除：Al-Habash 已闭合 + Family-1 按 Gu 2022 惯例等效闭合）
+
+### 后续
+
+T018 宏阶段一证据门解除。进入宏阶段二（改 params.py + 30-seed formal 重跑）前仍须遵守 D018 的 selector/CV/13 dB/seed/metric 冻结与 A/B exact 990/990 门；本验证只解除参数来源门，不解除运行真实性门。
+
 ## V013: T018 正式闭环参数证据门与 common 接口核验
+
+> 状态说明：本验证的参数来源两项 FAIL（Al-Habash/Family-1 全文未落盘）已由 D019/V014 修订解除——Al-Habash 已归档闭合，Family-1 按领域惯例（Gu 2022 著作级引用 Ghassemlooy 2019）等效闭合。common 接口 97/97 PASS 仍有效。
 
 > date: 2026-07-15
 > 关联：S001 / D018 / R016

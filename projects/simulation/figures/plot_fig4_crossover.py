@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 """Fig.4 observed DA/NDA BER crossovers across turbulence regimes.
 
-The figure retains the six verified BER curves and uses two independent
+The figure retains the six formal downlink BER curves and uses two independent
 visual encodings: scenario color and estimator line style.  Curves and
 crossovers use the same piecewise-linear interpolation in log BER; the
 observed crossovers are not switching thresholds.
 
-Data sources (read-only):
-  30seed main + 5seed ext
+Data source (read-only): formal 30-seed fixed JSON only.
 
 Output: figures/ccisp_fig4_crossover.png + .pdf
 """
@@ -22,9 +21,7 @@ import matplotlib.pyplot as plt
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _SIM_ROOT = os.path.abspath(os.path.join(_HERE, '..'))
 
-MAIN30 = os.path.join(_SIM_ROOT, 'results', 'sc_nda_ml_main_30seed', '_main_experiment_30seed.json')
-EXT1 = os.path.join(_SIM_ROOT, 'results', 'sc_nda_ml_ber_ext_5seed', '_ber_ext_5seed.json')
-EXT2 = os.path.join(_SIM_ROOT, 'results', 'sc_nda_ml_ber_ext_5seed', '_ber_ext2_5seed.json')
+MAIN30 = os.path.join(_SIM_ROOT, 'results', 'ccisp_family1_fixed_30seed.json')
 OUT_PNG = os.path.join(_HERE, 'ccisp_fig4_crossover.png')
 OUT_PDF = os.path.join(_HERE, 'ccisp_fig4_crossover.pdf')
 
@@ -65,27 +62,20 @@ def load(path):
 
 
 def merge_scene(scene, ber_key):
-    snr_list, ber_list = [], []
     m = load(MAIN30)
-    if scene in m['summary']:
-        for p in m['summary'][scene]['points']:
-            snr_list.append(p['snr_db'])
-            ber_list.append(p[ber_key])
-    e1 = load(EXT1)
-    if scene in e1['summary']:
-        for p in e1['summary'][scene]['points']:
-            snr_list.append(p['snr_db'])
-            ber_list.append(p[ber_key])
-    if os.path.exists(EXT2):
-        e2 = load(EXT2)
-        if scene in e2['summary']:
-            for p in e2['summary'][scene]['points']:
-                snr_list.append(p['snr_db'])
-                ber_list.append(p[ber_key])
-    snr = np.array(snr_list)
-    ber = np.array(ber_list)
-    order = np.argsort(snr)
-    return snr[order], ber[order]
+    validate_formal(m); groups = {}
+    method = 'da' if ber_key.startswith('da') else 'nda'
+    for row in m['raw']:
+        if row['scene'] == scene:
+            g = groups.setdefault(float(row['snr_db']), [0, 0]); g[0] += int(row[f'{method}_errors']); g[1] += int(row[f'{method}_bits'])
+    snr = np.array(sorted(groups)); return snr, np.array([groups[x][0] / groups[x][1] for x in snr])
+
+
+def validate_formal(payload):
+    a = payload['authority']; hashes = a.get('imported_file_sha256', {})
+    if a.get('authority_status') != 'formal' or a.get('route') != 'fixed': raise ValueError('fixed formal authority required')
+    if a.get('params_sha256') != hashes.get('params.py'): raise ValueError('params hash mismatch')
+    if a['grid']['scenes'] != ['awgn', 'weak', 'moderate', 'strong'] or a['grid']['n_seeds'] != 30 or a['grid']['windows_per_seed'] != 400: raise ValueError('formal grid mismatch')
 
 
 def log_linear_curve(snr, ber, n_dense=300):
@@ -182,7 +172,7 @@ def main():
     ax.set_ylim(1e-4, 0.5)
     ax.set_xlim(4, 30)
     ax.set_xlabel(
-        r'Average data-symbol SNR, $\bar{\gamma}_d$ (dB)',
+        r'Data-symbol $E_s/N_0$ [dB]',
         fontsize=FONT_SIZES['label'],
     )
     ax.set_ylabel('Bit error rate (BER)', fontsize=FONT_SIZES['label'])

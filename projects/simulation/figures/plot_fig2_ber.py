@@ -1,13 +1,8 @@
 # -*- coding: utf-8 -*-
-"""Fig. 2: BER versus SNR across the six channel scenarios.
+"""BER versus SNR for AWGN and three formal downlink regimes.
 
-The 3x2 layout uses the existing verified samples. Interpolation is only a
-visual guide between samples; the original sample locations remain marked.
-
-Data sources (read-only, no modification):
-  - 30seed main:  results/sc_nda_ml_main_30seed/_main_experiment_30seed.json
-  - 5seed ext1:   results/sc_nda_ml_ber_ext_5seed/_ber_ext_5seed.json
-  - 5seed ext2:   results/sc_nda_ml_ber_ext_5seed/_ber_ext2_5seed.json
+The 2x2 layout consumes only the authority-checked 30-seed fixed result.
+Interpolation is only a visual guide between formal samples.
 
 Output: figures/ccisp_fig2_ber.png + .pdf
 """
@@ -18,18 +13,17 @@ import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from matplotlib.ticker import MultipleLocator
 from scipy.interpolate import interp1d
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _SIM_ROOT = os.path.abspath(os.path.join(_HERE, '..'))
 
-MAIN30 = os.path.join(_SIM_ROOT, 'results', 'sc_nda_ml_main_30seed', '_main_experiment_30seed.json')
-EXT1 = os.path.join(_SIM_ROOT, 'results', 'sc_nda_ml_ber_ext_5seed', '_ber_ext_5seed.json')
-EXT2 = os.path.join(_SIM_ROOT, 'results', 'sc_nda_ml_ber_ext_5seed', '_ber_ext2_5seed.json')
+MAIN30 = os.path.join(_SIM_ROOT, 'results', 'ccisp_family1_fixed_30seed.json')
 OUT_PNG = os.path.join(_HERE, 'ccisp_fig2_ber.png')
 OUT_PDF = os.path.join(_HERE, 'ccisp_fig2_ber.pdf')
 
-FIGSIZE_IN = (3.5, 6.8)
+FIGSIZE_IN = (3.5, 4.7)
 FONT_SIZES = {
     'title': 10.0,
     'label': 10.0,
@@ -49,15 +43,13 @@ MPL_RCPARAMS = {
     'axes.linewidth': 0.6,
 }
 
-# Scene order: increasing turbulence (top-to-bottom in 3x2 grid)
-SCENES = ['awgn', 'weak', 'moderate', 'strong', 'uplink_moderate', 'uplink_strong']
+# Scene order: AWGN followed by increasing downlink turbulence.
+SCENES = ['awgn', 'weak', 'moderate', 'strong']
 TITLES = {
     'awgn': '(a) AWGN',
     'weak': '(b) Weak turbulence',
     'moderate': '(c) Moderate turbulence',
     'strong': '(d) Strong turbulence',
-    'uplink_moderate': '(e) Uplink, moderate',
-    'uplink_strong': '(f) Uplink, strong',
 }
 
 # Colorblind-safe palette (Okabe-Ito inspired)
@@ -69,25 +61,30 @@ C_FEC = '#999999'   # gray for HD-FEC line
 HD_FEC = 3.8e-3
 CURVE_SPECS = (
     {
-        'ber_key': 'da_ml_ber_mean',
-        'label': 'DA-ML (pilot-aided)',
+        'ber_key': 'da',
+        'label': 'DA-ML',
         'color': C_DA,
         'linestyle': '-',
     },
     {
-        'ber_key': 'nda_ml_ber_mean',
-        'label': 'NDA-ML (blind)',
+        'ber_key': 'nda',
+        'label': 'NDA-ML',
         'color': C_NDA,
-        'linestyle': '--',
+        'linestyle': '-',
     },
     {
-        'ber_key': 'oracle_ber_mean',
+        'ber_key': 'oracle',
         'label': 'Oracle',
         'color': C_OR,
-        'linestyle': ':',
+        'linestyle': '-',
     },
 )
-HD_FEC_LEGEND_LABEL = r'HD-FEC threshold ($3.8\times10^{-3}$)'
+X_TICK_INTERVALS = {
+    'awgn': (5.0, 2.5),
+    'weak': (10.0, 5.0),
+    'moderate': (10.0, 5.0),
+    'strong': (10.0, 5.0),
+}
 
 
 def load(path):
@@ -95,51 +92,27 @@ def load(path):
         return json.load(f)
 
 
-def extract_pts(summary_block, ber_key):
-    """Extract (snr[], ber[]) from a summary scene's points, sorted by snr."""
-    pts = summary_block['points']
-    snr = [p['snr_db'] for p in pts]
-    ber = [p[ber_key] for p in pts]
-    order = np.argsort(snr)
-    return np.array(snr)[order], np.array(ber)[order]
-
-
 def merge_scene(scene, ber_key):
-    """Merge 30seed main + 5seed ext1 + 5seed ext2 for one scene.
-
-    Returns (snr_all, ber_all) sorted, with BER>0 filter.
-    """
     m = load(MAIN30)
-    snr_list, ber_list = [], []
-    if scene in m['summary']:
-        s, b = extract_pts(m['summary'][scene], ber_key)
-        snr_list.extend(s)
-        ber_list.extend(b)
+    validate_formal(m); groups = {}
+    for row in m['raw']:
+        if row['scene'] == scene:
+            g = groups.setdefault(float(row['snr_db']), [0, 0])
+            g[0] += int(row[f'{ber_key}_errors']); g[1] += int(row[f'{ber_key}_bits'])
+    snr = np.array(sorted(groups)); return snr, np.array([groups[x][0] / groups[x][1] for x in snr])
 
-    e1 = load(EXT1)
-    if scene in e1['summary']:
-        s, b = extract_pts(e1['summary'][scene], ber_key)
-        snr_list.extend(s)
-        ber_list.extend(b)
 
-    if os.path.exists(EXT2):
-        e2 = load(EXT2)
-        if scene in e2['summary']:
-            s, b = extract_pts(e2['summary'][scene], ber_key)
-            snr_list.extend(s)
-            ber_list.extend(b)
-
-    snr = np.array(snr_list)
-    ber = np.array(ber_list)
-    order = np.argsort(snr)
-    snr, ber = snr[order], ber[order]
-    return snr, ber
+def validate_formal(payload):
+    a = payload['authority']; hashes = a.get('imported_file_sha256', {})
+    if a.get('authority_status') != 'formal' or a.get('route') != 'fixed': raise ValueError('fixed formal authority required')
+    if a.get('params_sha256') != hashes.get('params.py'): raise ValueError('params hash mismatch')
+    if a['grid']['scenes'] != SCENES or a['grid']['n_seeds'] != 30 or a['grid']['windows_per_seed'] != 400: raise ValueError('formal grid mismatch')
 
 
 def smooth_curve(snr, ber, n_dense=200):
     """Interpolate for visual continuity (cubic in log-BER domain).
 
-    Only used for the drawn line; original points still plotted.
+    Only used for the drawn solid curves; sample markers are intentionally omitted.
     """
     ber_plot = np.where(ber > 0, ber, 1e-7)
     log_ber = np.log10(ber_plot)
@@ -158,7 +131,7 @@ def smooth_curve(snr, ber, n_dense=200):
 
 
 def plot_one(ax, scene, row, col):
-    """Plot one subplot: DA/NDA/oracle with line-style distinction."""
+    """Plot one A2 subplot: solid DA/NDA/oracle curves distinguished by color."""
     for spec in CURVE_SPECS:
         ber_key = spec['ber_key']
         color = spec['color']
@@ -166,23 +139,28 @@ def plot_one(ax, scene, row, col):
         snr, ber = merge_scene(scene, ber_key)
         if len(snr) == 0:
             continue
-        ber_plot = np.where(ber > 0, ber, 1e-7)
 
         # Smooth interpolated line
         snr_s, ber_s = smooth_curve(snr, ber)
         ax.plot(snr_s, ber_s, ls, color=color, linewidth=1.2, zorder=3)
 
-        # Original data points (small, same color, no ugly marker shape)
-        ax.plot(snr, ber_plot, 'o', color=color, markersize=3.2,
-                markeredgecolor='white', markeredgewidth=0.35, zorder=4)
-
     # HD-FEC reference line
-    ax.axhline(HD_FEC, color=C_FEC, linestyle='-.', linewidth=0.8, alpha=0.6, zorder=1)
+    ax.axhline(HD_FEC, color=C_FEC, linestyle='-', linewidth=0.7,
+               alpha=0.7, zorder=1)
+    if scene == 'awgn':
+        ax.text(0.97, HD_FEC, 'HD-FEC', transform=ax.get_yaxis_transform(),
+                ha='right', va='bottom', color=C_FEC,
+                fontsize=FONT_SIZES['annotation'])
 
     ax.set_yscale('log')
     ax.set_title(TITLES[scene], fontsize=FONT_SIZES['title'], pad=4)
+    major_interval, minor_interval = X_TICK_INTERVALS[scene]
+    ax.xaxis.set_major_locator(MultipleLocator(major_interval))
+    ax.xaxis.set_minor_locator(MultipleLocator(minor_interval))
     ax.grid(True, which='major', color='#d0d0d0', alpha=0.55, linewidth=0.45)
-    ax.grid(False, which='minor')
+    ax.grid(True, which='minor', axis='x', color='#e5e5e5', alpha=0.45,
+            linewidth=0.3)
+    ax.grid(False, which='minor', axis='y')
     ax.tick_params(axis='both', which='major', labelsize=FONT_SIZES['tick'], width=0.6, length=3)
     ax.tick_params(axis='both', which='minor', width=0.5, length=2)
 
@@ -200,13 +178,13 @@ def set_yrange(ax, scene):
 def main():
     plt.rcParams.update(MPL_RCPARAMS)
 
-    fig, axes = plt.subplots(3, 2, figsize=FIGSIZE_IN, sharex=False, sharey=False)
+    fig, axes = plt.subplots(2, 2, figsize=FIGSIZE_IN, sharex=False, sharey=False)
     axes = axes.flatten()
 
     for idx, scene in enumerate(SCENES):
         plot_one(axes[idx], scene, row=idx // 2, col=idx % 2)
 
-    # Shared legend at bottom (line-style based, no markers)
+    # Shared A2 legend at bottom (color-only solid lines, no markers)
     from matplotlib.lines import Line2D
     legend_elements = [
         Line2D(
@@ -218,19 +196,15 @@ def main():
             label=spec['label'],
         )
         for spec in CURVE_SPECS
-    ] + [
-        Line2D([0], [0], color=C_FEC, linestyle='-.', linewidth=0.8,
-               label=HD_FEC_LEGEND_LABEL.replace(' ($', '\n($')),
     ]
-    fig.legend(handles=legend_elements, loc='lower center', ncol=2,
+    fig.legend(handles=legend_elements, loc='lower center', ncol=3,
                fontsize=FONT_SIZES['legend'],
-               bbox_to_anchor=(0.5, 0.006), frameon=True, edgecolor='#b0b0b0',
-               fancybox=False, borderpad=0.4)
+               bbox_to_anchor=(0.5, 0.006), frameon=False)
 
-    fig.supxlabel(r'Average data-symbol SNR, $\bar{\gamma}_d$ (dB)',
+    fig.supxlabel(r'Data-symbol $E_s/N_0$ [dB]',
                   fontsize=FONT_SIZES['label'], y=0.115)
     fig.supylabel('Bit error rate (BER)', fontsize=FONT_SIZES['label'], x=0.015)
-    fig.subplots_adjust(left=0.18, right=0.98, top=0.965, bottom=0.185,
+    fig.subplots_adjust(left=0.18, right=0.98, top=0.94, bottom=0.185,
                         wspace=0.36, hspace=0.32)
     fig.savefig(OUT_PNG, dpi=300)
     fig.savefig(OUT_PDF)

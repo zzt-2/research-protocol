@@ -95,63 +95,75 @@ class SystemParams(BaseModel):
 
 class TurbulenceParams(BaseModel):
     turb_weak_alpha: float = Field(
-        4.0,
+        11.6,
         description="弱湍流 GG α",
         json_schema_extra={
             "source_type": SourceType.literature,
-            "source": "夜间/高仰角场景典型值",
+            "source": "Gu et al., Applied Sciences 12(7):3331 (2022), doi:10.3390/app12073331, p.5: weak (alpha,beta,sigma_l^2)=(11.6,10.1,0.2); GG plane-wave model: Al-Habash 2001, doi:10.1117/1.1386641",
             "symbol": "α (weak)",
-            "audit_flag": AuditFlag.WARNING,
+            "audit_flag": AuditFlag.OK,
+            "derivation": "Al-Habash plane-wave mapping at sigma_R^2=0.2 gives alpha=11.651045...; frozen literature value 11.6 differs by 0.438% < 5%",
+            "note": "Gu denotes the plane-wave Rytov variance by sigma_l^2; Eq.(9) is 1.23 Cn^2 k^(7/6) L^(11/6)",
         },
     )
     turb_weak_beta: float = Field(
-        3.0,
+        10.1,
         description="弱湍流 GG β",
         json_schema_extra={
             "source_type": SourceType.literature,
-            "source": "同 α(weak)",
+            "source": "Gu et al. 2022, doi:10.3390/app12073331, p.5; Al-Habash 2001, doi:10.1117/1.1386641",
             "symbol": "β (weak)",
-            "audit_flag": AuditFlag.WARNING,
+            "audit_flag": AuditFlag.OK,
+            "derivation": "Exact beta=10.122365... at sigma_R^2=0.2; frozen literature value 10.1 differs by 0.221% < 5%",
+            "note": "Gu sigma_l^2 is the plane-wave Rytov variance by its Eq.(9)",
         },
     )
     turb_moderate_alpha: float = Field(
-        2.5,
+        4.0,
         description="中等湍流 GG α",
         json_schema_extra={
             "source_type": SourceType.literature,
-            "source": "白天/中仰角场景",
+            "source": "Gu et al. 2022, doi:10.3390/app12073331, p.5: moderate (alpha,beta,sigma_l^2)=(4.0,1.9,1.6); Al-Habash 2001, doi:10.1117/1.1386641",
             "symbol": "α (moderate)",
-            "audit_flag": AuditFlag.WARNING,
+            "audit_flag": AuditFlag.OK,
+            "derivation": "Exact alpha=4.026521... at sigma_R^2=1.6; frozen literature value 4.0 differs by 0.659% < 5%",
+            "note": "Gu sigma_l^2 is the plane-wave Rytov variance by its Eq.(9)",
         },
     )
     turb_moderate_beta: float = Field(
-        1.8,
+        1.9,
         description="中等湍流 GG β",
         json_schema_extra={
             "source_type": SourceType.literature,
-            "source": "同 α(moderate)",
+            "source": "Gu et al. 2022, doi:10.3390/app12073331, p.5; Al-Habash 2001, doi:10.1117/1.1386641",
             "symbol": "β (moderate)",
-            "audit_flag": AuditFlag.WARNING,
+            "audit_flag": AuditFlag.OK,
+            "derivation": "Exact beta=1.910522... at sigma_R^2=1.6; frozen literature value 1.9 differs by 0.551% < 5%",
+            "note": "Gu sigma_l^2 is the plane-wave Rytov variance by its Eq.(9)",
         },
     )
     turb_strong_alpha: float = Field(
-        1.5,
+        4.2,
         description="强湍流 GG α",
         json_schema_extra={
             "source_type": SourceType.literature,
-            "source": "低仰角/恶劣天气场景",
+            "source": "Gu et al. 2022, doi:10.3390/app12073331, p.5: strong (alpha,beta,sigma_l^2)=(4.2,1.4,3.5); Al-Habash 2001, doi:10.1117/1.1386641",
             "symbol": "α (strong)",
-            "audit_flag": AuditFlag.WARNING,
+            "audit_flag": AuditFlag.OK,
+            "derivation": "Exact alpha=4.225671... at sigma_R^2=3.5; frozen literature value 4.2 differs by 0.608% < 5%",
+            "note": "Gu sigma_l^2 is the plane-wave Rytov variance by its Eq.(9)",
         },
     )
     turb_strong_beta: float = Field(
-        0.8,
+        1.4,
         description="强湍流 GG β",
         json_schema_extra={
             "source_type": SourceType.literature,
-            "source": "同 α(strong)",
+            "source": "Gu et al. 2022, doi:10.3390/app12073331, p.5; Al-Habash 2001, doi:10.1117/1.1386641",
             "symbol": "β (strong)",
-            "audit_flag": AuditFlag.WARNING,
+            "audit_flag": AuditFlag.OK,
+            "derivation": "Exact beta=1.362195... at sigma_R^2=3.5; frozen literature value 1.4 differs by 2.775% < 5%",
+            "note": "Gu sigma_l^2 is the plane-wave Rytov variance by its Eq.(9)",
         },
     )
     # --- 上行(地面→卫星)湍流场景 (sat.1553 Valjus 2025 综述 Table 1) ---

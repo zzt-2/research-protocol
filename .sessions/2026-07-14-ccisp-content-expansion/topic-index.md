@@ -99,6 +99,7 @@
 - T017/R015：用户授权共享信道最小无副作用 `turb_params` 注入口后完成三档 Family 1 matched diagnostic。接口默认路径对修改前 bit-exact，专项 19/19；probe old/new 各 45 case-seed，独立 verifier 确认 A/B 45/45、六门全 PASS，判 `DOWNLINK_ONLY_PROMISING`。该 3-seed 结果仅为方向诊断，不是投稿数字；正式参数落库、30-seed、删除 uplink 和图文闭环仍待新合同。
 - V012/D018/T018/H001：独立主控复核 R015 并由仿真管线、论文同步面、任务合同三路只读 critic 交叉审查。正式开跑获批；保留 common 无副作用注入口，正式真相源唯一为 `params.py`；旧 26/29/uplink/全部旧数字退出；新对话按三个宏阶段一次性执行。
 - R016/V013：T018 宏阶段一的数学复算与 common 接口 PASS（相关回归 97/97），但 Al-Habash 原文和 Family-1 三个 sigma-R-squared 锚均未形成合法本地全文，按 §7.1 判 BLOCKED；未改 params、未跑 formal、未改图文。
+- R017/D019/V014：参数证据门最终裁决并定死。用户手动取得 Al-Habash 2001 合法 PDF（UCF STARS）并归档 `papers/doi/10.1117_1.1386641/`（source.pdf+content.md），公式可核（Eq.13/14/18-19）；Family-1 三档经子 Agent 全文提取 Gu 2022（*Appl.Sci.* 12(7):3331，卫星下行）证实领域惯例为"著作级引 Ghassemlooy CRC 2019，不标表/页"，无需教材全文。D019 冻结三档 (11.6,10.1)/(4.0,1.9)/(4.2,1.4)（σ²_R=0.2/1.6/3.5）与唯一引用措辞，修订 D018 第3条过严的"式号/页码"硬门为"Al-Habash 已闭合 + Family-1 按惯例等效闭合"。证据门解除，T018 可进宏阶段二；用户要求这块定死不再动，禁止再开"找出处"对话。Al-Habash 原典证实 0.2/1.6/3.5 非经典"标准三档"，故引用只说"as given in [教材]"，禁止声称是文献标准值。
 
 ## 已确认结论
 
@@ -130,15 +131,14 @@
 
 ## 未决项
 
-- Fig.2 权威图把 $\hat\gamma_{\mathrm{eff}}<13\,\mathrm{dB}$ 改为与正文一致的 dB 域量；必须由图资产对话修改 draw.io 并重建交付件，论文主控不直接补 PDF。
-- 第 8 页仅有参考文献 [16]--[20] 且右栏全空；需在不灌水、不用异常留白凑页的前提下处理最终版式。
-- 上述两项闭环后，对整稿再做 fresh build 和独立终验。
+- Fig.2 用户资产已按最终 0.94\textwidth 集成并完成视觉验收；本轮未覆盖其独立设计。
+- 旧第 8 页稀疏问题已通过等比例收窄三张定量图的最终嵌入宽度闭合；当前 fresh PDF 为 7 页，无空白页。
 - 参考文献补充由用户所述其他流程处理，不在本专题当前修复范围。
 - 导师所说“应该是估计算法”具体指哪个技术对象尚未确认；在 L6/G7 定位决策前禁止用改标题或换词代替方法定位。
-- 五组 \((\alpha,\beta)\) 缺直接来源/物理映射：下行 source 仍为 WARNING，上行为 assumption；需用户/导师确认采用直接文献、显式设计场景或先补映射验证。
+- ~~五组 \((\alpha,\beta)\) 缺直接来源/物理映射~~ → **已由 D019/R017 闭环**：下行三档定死为 (11.6,10.1)/(4.0,1.9)/(4.2,1.4)（σ²_R=0.2/1.6/3.5），按 Gu 2022 惯例引 Ghassemlooy CRC 2019；上行两档已删（D018）。用户要求定死不再动。
 - 方法定位已由 D014 拍板：整体称 received-power-aware adaptive CPR scheme/method，selection 作为核心内部控制机制；不得称新的 adaptive phase estimator，`two-stage` 必须限定为 control。
 - 精炼已有保守候选边界：优先处理无职责否定、公式后独立复述和方法流程第三次复述，预计 250--350 词；不得删除真实性、公平性和指标定义。
-- 下行三档正式 WRITE 的唯一前门是 Al-Habash 映射与 Family-1 \(\sigma_R^2=0.2,1.6,3.5\) 本地可审计来源及 5% 复算；Sandalidis/uplink 不再是门。只有 DOI/转述不算闭合。
+- ~~下行三档正式 WRITE 的唯一前门是 Al-Habash 映射与 Family-1 σ²_R 本地可审计来源~~ → **已由 D019/V014 解除**：Al-Habash 已归档 `papers/doi/10.1117_1.1386641/`，Family-1 按 Gu 2022 著作级引用惯例等效闭合。证据门不再是阻塞项；T018 可进宏阶段二（改 params + 30-seed 重跑），仍守运行真实性门。
 - adaptive CPR 定位新增实现真实性门：必须先闭合逻辑 branch routing、双分支评估和 selected metric/output 的关系；不得声称只执行所选分支或已有复数序列 mux。
 - R009 的纯精炼逐句表仍可复用，但组合合同已被 D015 否决；不得借“精炼”顺手改方法身份或 Fig.2 语义。
 - R012/`CCE-CC-005` 不得机械全量执行；删 uplink/26-of-29 后按正文不少于 3500 词的硬门，只做有职责的精炼。
@@ -149,4 +149,4 @@
 
 ## 当前位置
 
-`D018 APPROVED / T018 BLOCKED AT EVIDENCE GATE / V013 FAIL`：数学复算和 common 接口已闭合，但 Al-Habash 公式原文与 Family-1 三锚权威全文未落盘。不得修改 params、运行 formal 或进入论文 WRITE；取得两类合法本地全文后从宏阶段一复核续接。
+`T018 FORMAL/PAPER DATA CLOSED / FIG.2 SEMANTIC BLOCKED`：D019 三档、fixed 870/870、消歧前 receiver-output A/B 990/990、formal-only 三图、正文和 7 页 fresh build 均 PASS。独立终验发现用户维护 Fig.2 仍表达双路先跑后选，与 route-B 先选后跑冲突；本轮按资产边界不覆盖，故总终态 BLOCKED。解除只需资产维护方修正 Fig.2 控制流并重新 build/视觉/真相终验。

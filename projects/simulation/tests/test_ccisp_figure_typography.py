@@ -74,41 +74,88 @@ def test_data_plot_pdf_is_native_single_column_and_uses_allowed_fonts(name: str)
     assert any("STIX" in font for font in fonts)
 
 
-def test_ber_source_preserves_scientific_and_legend_contract():
+def test_ber_source_preserves_scientific_and_a2_curve_contract():
     module = _load_module("ber", PLOT_MODULES["ber"])
 
-    assert module.SCENES == [
-        "awgn",
-        "weak",
-        "moderate",
-        "strong",
-        "uplink_moderate",
-        "uplink_strong",
-    ]
+    assert module.SCENES == ["awgn", "weak", "moderate", "strong"]
     assert module.HD_FEC == pytest.approx(3.8e-3)
     assert module.CURVE_SPECS == (
         {
-            "ber_key": "da_ml_ber_mean",
-            "label": "DA-ML (pilot-aided)",
+            "ber_key": "da",
+            "label": "DA-ML",
             "color": "#0072B2",
             "linestyle": "-",
         },
         {
-            "ber_key": "nda_ml_ber_mean",
-            "label": "NDA-ML (blind)",
+            "ber_key": "nda",
+            "label": "NDA-ML",
             "color": "#D55E00",
-            "linestyle": "--",
+            "linestyle": "-",
         },
         {
-            "ber_key": "oracle_ber_mean",
+            "ber_key": "oracle",
             "label": "Oracle",
             "color": "#009E73",
-            "linestyle": ":",
+            "linestyle": "-",
         },
     )
-    assert module.HD_FEC_LEGEND_LABEL == (
-        r"HD-FEC threshold ($3.8\times10^{-3}$)"
-    )
+    assert module.X_TICK_INTERVALS == {
+        "awgn": (5.0, 2.5),
+        "weak": (10.0, 5.0),
+        "moderate": (10.0, 5.0),
+        "strong": (10.0, 5.0),
+    }
+
+
+def test_ber_a2_rendering_uses_minor_x_grid_direct_fec_label_and_clean_legend(
+    monkeypatch: pytest.MonkeyPatch,
+):
+    module = _load_module("ber", PLOT_MODULES["ber"])
+    saved_figures = []
+
+    def capture_savefig(self, *_args, **_kwargs):
+        saved_figures.append(self)
+
+    monkeypatch.setattr(module.plt.Figure, "savefig", capture_savefig)
+    monkeypatch.setattr(module.plt, "close", lambda _fig: None)
+    module.main()
+
+    figure = saved_figures[0]
+    assert saved_figures == [figure, figure]
+    figure.canvas.draw()
+
+    for scene, axis in zip(module.SCENES, figure.axes):
+        curve_lines = axis.lines[:3]
+        assert len(curve_lines) == 3
+        assert all(line.get_linestyle() == "-" for line in curve_lines)
+        assert all(line.get_marker() in (None, "None", "") for line in curve_lines)
+
+        major, minor = module.X_TICK_INTERVALS[scene]
+        major_ticks = axis.xaxis.get_major_locator().tick_values(0.0, 20.0)
+        minor_ticks = axis.xaxis.get_minor_locator().tick_values(0.0, 20.0)
+        assert major_ticks[1] - major_ticks[0] == pytest.approx(major)
+        assert minor_ticks[1] - minor_ticks[0] == pytest.approx(minor)
+        assert axis.xaxis.get_minor_ticks()
+        assert all(tick.gridline.get_visible() for tick in axis.xaxis.get_minor_ticks())
+
+        fec_lines = [line for line in axis.lines if line.get_ydata()[0] == module.HD_FEC]
+        assert len(fec_lines) == 1
+        assert fec_lines[0].get_color() == module.C_FEC
+        assert fec_lines[0].get_linestyle() == "-"
+        assert fec_lines[0].get_linewidth() <= 0.8
+
+    assert [text.get_text() for text in figure.axes[0].texts] == ["HD-FEC"]
+    assert all(not axis.texts for axis in figure.axes[1:])
+
+    assert len(figure.legends) == 1
+    legend = figure.legends[0]
+    assert [text.get_text() for text in legend.get_texts()] == [
+        "DA-ML",
+        "NDA-ML",
+        "Oracle",
+    ]
+    assert legend._ncols == 3
+    assert legend.get_frame_on() is False
 
 
 def test_ber_export_keeps_top_titles_inside_page_box():
@@ -120,6 +167,95 @@ def test_ber_export_keeps_top_titles_inside_page_box():
     ]
     assert len(title_boxes) == 2
     assert min(box.y0 for box in title_boxes) >= 1.0
+
+
+@pytest.mark.parametrize("name", ["ber", "gain", "crossover"])
+def test_quantitative_snr_axes_use_explicit_data_symbol_esn0_label(
+    name: str,
+    monkeypatch: pytest.MonkeyPatch,
+):
+    module = _load_module(name, PLOT_MODULES[name])
+    saved_figures = []
+
+    def capture_savefig(self, *_args, **_kwargs):
+        saved_figures.append(self)
+
+    monkeypatch.setattr(module.plt.Figure, "savefig", capture_savefig)
+    monkeypatch.setattr(module.plt, "close", lambda _fig: None)
+    module.main()
+
+    figure = saved_figures[0]
+    expected = r"Data-symbol $E_s/N_0$ [dB]"
+    if name == "ber":
+        assert expected in [text.get_text() for text in figure.texts]
+    else:
+        assert figure.axes[0].get_xlabel() == expected
+
+
+def test_gain_source_and_sampling_contract():
+    module = _load_module("gain", PLOT_MODULES["gain"])
+
+    assert Path(module.DATA_JSON).name == "ccisp_family1_formal_verification.json"
+    assert module.EXPECTED_SNR_DB == set(range(5, 26, 2))
+    assert module.X_MAJOR_TICKS == [5, 9, 13, 17, 21, 25]
+
+
+def test_gain_rendering_shows_all_samples_ci_zero_and_negative_ci(
+    monkeypatch: pytest.MonkeyPatch,
+):
+    module = _load_module("gain", PLOT_MODULES["gain"])
+    snr_db = list(range(5, 26, 2))
+    figure_data = {}
+    for scene_index, scene in enumerate(module.SCENES):
+        means = [0.9 - 0.03 * index - 0.35 * scene_index for index in range(11)]
+        lows = [mean - 0.04 for mean in means]
+        highs = [mean + 0.04 for mean in means]
+        figure_data[scene] = {
+            "snr_db": snr_db,
+            "mean_gain_db": means,
+            "ci95_low_db": lows,
+            "ci95_high_db": highs,
+        }
+    figure_data["strong"]["mean_gain_db"][-1] = -0.02
+    figure_data["strong"]["ci95_low_db"][-1] = -0.06
+    figure_data["strong"]["ci95_high_db"][-1] = 0.02
+
+    saved_figures = []
+
+    def capture_savefig(self, *_args, **_kwargs):
+        saved_figures.append(self)
+
+    monkeypatch.setattr(module, "load_figure_data", lambda: figure_data)
+    monkeypatch.setattr(module.plt.Figure, "savefig", capture_savefig)
+    monkeypatch.setattr(module.plt, "close", lambda _fig: None)
+    module.main()
+
+    figure = saved_figures[0]
+    assert saved_figures == [figure, figure]
+    figure.canvas.draw()
+    axis = figure.axes[0]
+    assert axis.get_xlabel() == r"Data-symbol $E_s/N_0$ [dB]"
+    assert axis.get_ylabel() == (
+        "Common-payload BER-ratio\nreduction, $G_{\\mathcal{C}}$ [dB]"
+    )
+    assert list(axis.get_xticks()) == module.X_MAJOR_TICKS
+    assert axis.get_ylim()[0] <= -0.06
+
+    sample_lines = [
+        container.lines[0]
+        for container in axis.containers
+        if container.get_label()
+        in {module.STYLES[scene]["label"] for scene in module.SCENES}
+    ]
+    assert len(sample_lines) == 3
+    assert all(list(line.get_xdata()) == snr_db for line in sample_lines)
+    zero_lines = [
+        line
+        for line in axis.lines
+        if len(line.get_ydata()) == 2 and set(line.get_ydata()) == {0.0}
+    ]
+    assert len(zero_lines) == 1
+    assert zero_lines[0].get_linestyle() == "--"
 
 
 def test_fig1_effective_typography_matches_body_size_in_final_paper():
