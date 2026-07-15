@@ -78,6 +78,11 @@ J.~Panasiewicz, N.~Arab, F.~Destic, G.~M. Pacheco, and A.~Rissons,
   Microwave Photonics (MWP)}.\hskip 1em plus 0.5em minus 0.4em\relax IEEE,
   2022, pp. 1--4.
 
+\bibitem{gavert2022pilot}
+B.~G{\"a}vert and T.~Eriksson, ``Estimation of phase noise based on in-band and
+  out-of-band frequency domain pilots,'' \emph{IEEE Transactions on
+  Communications}, vol.~70, no.~7, pp. 4780--4792, 2022.
+
 \bibitem{viterbi1983}
 A.~J. Viterbi and A.~M. Viterbi, ``Nonlinear estimation of {PSK}-modulated
   carrier phase with application to burst digital transmission,'' \emph{IEEE
@@ -107,6 +112,11 @@ X.~Du, T.~Song, Y.~Li, M.-W. Wu, and P.-Y. Kam, ``An optimum signal detection
   approach to the joint {ML} estimation of timing offset, carrier frequency and
   phase offset for coherent optical {OFDM},'' \emph{Journal of Lightwave
   Technology}, vol.~39, no.~6, pp. 1629--1644, 2021.
+
+\bibitem{liu2025tdml}
+S.~Liu, X.~Du, H.~Ye, and C.~Yu, ``Time-domain maximum likelihood estimation of
+  ultra-fast {RSOP} and phase in coherent optical {PDM} systems,'' \emph{IEEE
+  Transactions on Communications}, vol.~73, no.~7, pp. 5018--5034, 2025.
 
 \bibitem{wang2025pilotmlsd}
 C.~Wang, Z.~Li, Z.~Dong, R.~Gao, J.~Hao, J.~Song, D.~Guo, F.~Wang, T.~Mai,

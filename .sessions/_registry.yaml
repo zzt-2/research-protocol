@@ -495,8 +495,8 @@ topics:
     title: CCISP 2026 论文内容补强
     status: active
     created: "2026-07-14"
-    last_updated: "2026-07-15（D013：Fig.5 扩为 5--25 dB/2 dB 网格并统一定量图 SNR 轴）"
-    description: "针对 CCISP 2026 论文内容补强。D013 继承 common-768 paired-seed 口径，将 Fig.5 扩为 weak/moderate/strong × 5--25 dB（2 dB 间隔），并按同领域论文对照把三张定量图横轴统一为 data-symbol E_s/N_0 [dB]；算法、判据和参数不变。"
+    last_updated: "2026-07-15（R009 v2：精炼 307--338 词 PASS、定位真实性 BLOCKED；R010 Fig.2 合同待批准）"
+    description: "针对 CCISP 2026 论文内容补强。D013 已完成 common-768 paired-seed 33 点权威重建，并统一三张定量图的 data-symbol E_s/N_0 轴；V009 确认量化链 PASS，整稿仍待 Fig.2 dB 域符号和末页稀疏版面闭环。"
     depends_on:
       - slug: 2026-07-09-thesis-writing
         reason: 继承 R010/R013/R014/R015/R016、benchmark-paper-set、D007 数据呈现边界及论文事实材料
@@ -523,7 +523,7 @@ topics:
     title: CCISP 2026 LaTeX 投稿骨架与版面探针
     status: active
     created: "2026-07-13"
-    last_updated: "2026-07-15（S003：官方要求核实 + 参考文献从 12 扩到 20 条，0 警告 0 undefined）"
+    last_updated: "2026-07-15（S003：官方要求核实 + 参考文献从 12 扩到 22 条含 venue 调整补现代 Trans，8 页 0 警告）"
     description: "独立 CCISP 投稿准备专题：核验官方 IEEEtran 模板、构建链、正文/引用资产和双栏版面。原始首轮边界保留 Fig.1/Fig.2 占位、W001–W003 只读、不跑仿真；当前工作树另有 CCE-CC-002 扩展预览，是否替代首轮骨架仍待确认。"
     depends_on:
       - slug: 2026-07-09-thesis-writing

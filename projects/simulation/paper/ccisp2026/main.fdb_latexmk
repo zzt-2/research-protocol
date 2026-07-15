@@ -1,19 +1,19 @@
 # Fdb version 4
-["bibtex main"] 1784049207.18051 "main.aux" "main.bbl" "main" 1784049208.88316 0
-  "./references.bib" 1784048825.13338 8766 826beb9f6db4a3b0dcb7c8226e3a51fa ""
+["bibtex main"] 1784117055.87169 "main.aux" "main.bbl" "main" 1784117057.76486 0
+  "./references.bib" 1784116996.80188 9514 7bb39a87f297d374806396f44ceb71ea ""
   "C:/Users/zzt/AppData/Local/Programs/MiKTeX/bibtex/bst/ieeetran/IEEEtran.bst" 1440622569 57748 7c8250ecf02814ce6ddc0cdbb63df1dd ""
-  "main.aux" 1784049207.99809 5026 25d51fee7cad477101f8bc894625979a "pdflatex"
+  "main.aux" 1784117056.75738 5129 4d5a99138b2dd543a00a0d31caecc9c8 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1784049207.50855 "main.tex" "main.pdf" "main" 1784049208.88437 0
-  "../../figures/ccisp_fig2_ber.pdf" 1784048751.84191 51402 ac8d7ffd1f860d3e0cd1836a0c819bc8 ""
-  "../../figures/ccisp_fig3_gain.pdf" 1784036553.95735 39634 d58e649c3a5b9b9831844a225edd863f ""
-  "../../figures/ccisp_fig4_crossover.pdf" 1784036555.31891 42362 a78f8cc55a492a07b217ac20ffc0eaf4 ""
+["pdflatex"] 1784117056.23305 "main.tex" "main.pdf" "main" 1784117057.76559 0
+  "../../figures/ccisp_fig2_ber.pdf" 1784100130.05888 51302 77f69095220d06028e479943fe20b768 ""
+  "../../figures/ccisp_fig3_gain.pdf" 1784102903.10346 44462 1c2b88963430105335f078707bb17e77 ""
+  "../../figures/ccisp_fig4_crossover.pdf" 1784100131.25202 41940 94bd48d78c71508d693803d4dbcaa3bb ""
   "../../figures/fig1_system_model_v5.pdf" 1784038665.45682 544391 ac9e6faf4b8a663e0f917aac49535172 ""
   "../../figures/fig2_adaptive_cpr.pdf" 1784039450.41279 65016 62b96fdf7a367a79e1c010d6e5b03df4 ""
-  "C:/Users/zzt/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1784001425.30963 82507 a9eef8696c92627b87e9975edea03b2a ""
+  "C:/Users/zzt/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1784093972.20261 82507 a9eef8696c92627b87e9975edea03b2a ""
   "C:/Users/zzt/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1783953793.09712 13332519 a4965d4d1f9ebacc90d5bc7d616b750b ""
   "C:/Users/zzt/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc" 1458473887 4993 1194fb36dfcb11d9ae9802f2b00b60a3 ""
   "C:/Users/zzt/AppData/Local/Programs/MiKTeX/fonts/tfm/adobe/times/ptmb7t.tfm" 1136743454 2172 fd0c924230362ff848a33632ed45dc23 ""
@@ -90,15 +90,15 @@
   "C:/Users/zzt/AppData/Local/Programs/MiKTeX/tex/latex/tools/array.sty" 1761901070 15651 9d7c62df82cb29a555c00550babfe364 ""
   "C:/Users/zzt/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1729265222 55384 b454dec21c2d9f45ec0b793f0995b992 ""
   "IEEEtran.cls" 1440611324 288304 b67b6fc6c2abb39f9b461923f5199343 ""
-  "main.aux" 1784049207.99809 5026 25d51fee7cad477101f8bc894625979a "pdflatex"
-  "main.bbl" 1784049207.43119 7142 d73f89f719d81d35313969f9f83267a0 "bibtex main"
+  "main.aux" 1784117056.75738 5129 4d5a99138b2dd543a00a0d31caecc9c8 "pdflatex"
+  "main.bbl" 1784117056.10751 7638 5a115d9adaaff6ad866e5a33e44e1e90 "bibtex main"
   "main.tex" 1784036652.78038 1156 ba6632367b7bdb0996b78cbd4d5983ac ""
-  "sections/abstract.tex" 1784047384.57849 1417 773be29c74c46b95d45e6a2a489c01fd ""
-  "sections/conclusion.tex" 1784046927.49907 987 d0cae4999b2c4d18ad70fa020f753869 ""
-  "sections/introduction.tex" 1784048862.82468 5254 ec99f1b0dbd1913d97dc0164fd5433b9 ""
-  "sections/method.tex" 1784048892.88422 11186 b5681f95852bf615468cfafc43ad1362 ""
-  "sections/results.tex" 1784046892.35807 6533 c2a0bbd9931779d531ebf4b96f632d7f ""
-  "sections/system_model.tex" 1784048885.52028 6418 549f7aab1ea959852f2031240bf2b198 ""
+  "sections/abstract.tex" 1784094400.57986 1580 2b1437ac20c3854a2d519a2b193c3c79 ""
+  "sections/conclusion.tex" 1784093851.96465 1133 01ca42b8b012f8c838e51ae035c9e539 ""
+  "sections/introduction.tex" 1784117015.93797 5529 914f00c7d1c8e45bf2d9b88cde4e5b46 ""
+  "sections/method.tex" 1784100906.64481 11291 a99177c353db2f710fa4398fb47289a7 ""
+  "sections/results.tex" 1784103704.15335 6949 83634936b2103af1a0844abccf937687 ""
+  "sections/system_model.tex" 1784100906.64386 6523 4a3295bb3a1cb6634686a9e12cd7e046 ""
   (generated)
   "main.aux"
   "main.log"

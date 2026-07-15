@@ -1,6 +1,7 @@
-# [S003] 参考文献从 12 条扩到 20 条 + 官方要求核实
+# [S003] 参考文献从 12 条扩到 22 条 + 官方要求核实 + venue 结构调整
 
-> 2026-07-15 | 阶段：投稿准备（参考文献扩展） | 状态：完成
+> 2026-07-15 | 阶段：投稿准备（参考文献扩展 + venue 调整） | 状态：完成
+> 2026-07-15 续接（venue 结构调整：补现代 IEEE Transactions）
 
 ## 目标
 
@@ -66,6 +67,55 @@ IEEE 5 / 非 IEEE 3。非 IEEE 3 条含金量足：Conroy 是 Applied Optics 经
 - `.log`：0 undefined citation，0 overfull/underfull，0 LaTeX Warning
 - 字体全部嵌入（emb=yes + sub=yes）
 - `.bbl` 逐条抽查 8 条新条目：作者缩写/venue 斜体/页码/year/重音字符全部正确
+
+### Step 4：venue 结构调整（续接，补现代 IEEE Transactions）
+
+**触发**：用户指出 venue 构成问题——"参考论文不能一大片的会议；transactions 目前只有 2 篇，其中 1 篇还是 1983 年的"。
+
+**venue 分类盘点**（22 条最终状态前，20 条时）：
+| 类型 | 篇数 | 备注 |
+|------|------|------|
+| IEEE Transactions | 2 | viterbi1983(TIT,1983) + wang2022jointml(TSP,2022)——**现代仅 1 篇** |
+| JLT | 6 | paillier/smith/taylor/guiomar/du2021/liu2023 |
+| PTL | 1 | du2025nda |
+| 其他期刊 | 6 | valjus/alhabash/wang2025/horst/conroy/martins |
+| 会议 | 5 | johst/lebidan/panasiewicz/ma/pech |
+
+**补强**（用户选"新检索 IEEE Transactions 补强"）：
+- 派子 agent 用 tools/search 检索（7 条查询归档 search-archive/2026-07-15/）。命中 3 篇候选：Liu/Du TCOM 2025（ML 相位估计，最对口）、Zedini TWC 2026（FSO+IRS，偏离核心，不引）、Qin TCOM 2026（VAE 盲均衡，偏离，不引）。
+- 库内 gavert TCOMM 2022（pilot 相位噪声估计，有 content.md）作保底。
+- 最终补 **gavert2022pilot (TCOMM 2022) + liu2025tdml (TCOM 2025)** 两篇，均为 IEEE Transactions on Communications，与论文 pilot/ML 相位估计方法论直接相关，非凑数。
+- liu2025tdml 库内无 content.md，Crossref+S2 双源确认真实存在（IEEE doc 10813584, vol 73 no 7 pp 5018-5034 2025）。
+- IRS 和 VAE 两篇明确**不引**（偏离论文核心 DA/NDA 切换方法，凑数风险高）。
+
+**补引位置**（不硬塞，学术理由明确）：
+- gavert2022pilot → intro 第 2 段 "A DA receiver inserts known pilot symbols... fit the carrier evolution"（pilot 相位噪声估计理论）
+- liu2025tdml → intro "extends to APSK" ML 理论 cite 群（跟 wang2022jointml/du2021jointml 同群，时域 ML 相位估计）
+
+**自检**：citekey 22=22 零闲置零缺漏；fresh compile **8 页**（Conclusion 在第 7 页，参考文献溢出到第 8 页——正文未变多，是 20→22 条 ref 自然溢出），0 overfull/0 underfull，blg clean，0 undefined，字体全嵌入，.bbl 两条新条目格式正确。
+
+**venue 分布改善**（20→22）：
+| 类型 | 调整前 | 调整后 |
+|------|--------|--------|
+| IEEE Transactions | 2（现代 1） | **4（现代 3）** |
+| 会议 | 5 | 5（不动，对标核心） |
+
+## 决策引用
+
+- 无新建 D###（本轮无架构/方向决策，纯执行）
+- topic-index 未决项 1+4 已更新（官方要求核实结果）
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是（参考文献扩展属本专题"引用资产"范围，不动正文数字/口径/方法描述——不变量 7 守住）
+
+## 后续
+
+- 10 条新补文献（Step 3 的 8 条 + Step 4 的 2 条）的引用位置都是单点补引，未改动正文任何句子结构或数字
+- 待主办方确认：2026 是否进 IEEE Xplore / 双盲匿名措辞（不阻塞当前投稿，但正式投稿前需确认）
+- PDF 从 7 页变 8 页（参考文献 20→22 自然溢出，正文仍到第 7 页 Conclusion），8 页在官方 5-10 页范围内，健康
+- venue 结构已改善（现代 IEEE Transactions 1→3），会议 5 篇为 R016 对标核心不宜动
+
 
 ## 决策引用
 
