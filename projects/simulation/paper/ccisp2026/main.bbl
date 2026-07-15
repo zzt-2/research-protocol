@@ -83,6 +83,17 @@ B.~G{\"a}vert and T.~Eriksson, ``Estimation of phase noise based on in-band and
   out-of-band frequency domain pilots,'' \emph{IEEE Transactions on
   Communications}, vol.~70, no.~7, pp. 4780--4792, 2022.
 
+\bibitem{zhang2010decisionaided}
+S.~Zhang, P.-Y. Kam, C.~Yu, and J.~Chen, ``Decision-aided carrier phase
+  estimation for coherent optical communications,'' \emph{Journal of Lightwave
+  Technology}, vol.~28, no.~11, pp. 1597--1607, 2010.
+
+\bibitem{qin2026blindvae}
+G.~Qin, Y.~Wei, Z.~Tang, J.~Zhang, F.~Wei, N.~Chi, and J.~Shi, ``Bootstrapping
+  blind equalizer for dual-polarization coherent {FSO} systems via
+  modulus-rings-based variational autoencoder,'' \emph{IEEE Transactions on
+  Cognitive Communications and Networking}, vol.~12, pp. 3538--3554, 2026.
+
 \bibitem{viterbi1983}
 A.~J. Viterbi and A.~M. Viterbi, ``Nonlinear estimation of {PSK}-modulated
   carrier phase with application to burst digital transmission,'' \emph{IEEE

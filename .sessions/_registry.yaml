@@ -523,7 +523,7 @@ topics:
     title: CCISP 2026 LaTeX 投稿骨架与版面探针
     status: active
     created: "2026-07-13"
-    last_updated: "2026-07-15（S003：官方要求核实 + 参考文献从 12 扩到 22 条含 venue 调整补现代 Trans，8 页 0 警告）"
+    last_updated: "2026-07-15（S003：官方要求核实 + 参考文献从 12 扩到 24 条含三轮 venue 调整现代 Trans 0→4，8 页 0 警告）"
     description: "独立 CCISP 投稿准备专题：核验官方 IEEEtran 模板、构建链、正文/引用资产和双栏版面。原始首轮边界保留 Fig.1/Fig.2 占位、W001–W003 只读、不跑仿真；当前工作树另有 CCE-CC-002 扩展预览，是否替代首轮骨架仍待确认。"
     depends_on:
       - slug: 2026-07-09-thesis-writing

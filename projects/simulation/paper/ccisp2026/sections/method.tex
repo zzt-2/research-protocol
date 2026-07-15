@@ -44,14 +44,14 @@ The switching controller processes the raw received power $q_k=|r_k|^2$ over the
 \begin{equation}
 \begin{aligned}
 \mathrm{CV}&=\frac{\operatorname{std}(q_k)}{\operatorname{mean}(q_k)},\\
-\tau_{\mathrm{CV}}(\bar\gamma_{\mathrm{dB}})
-&=1.10\left(0.74+0.12e^{-\bar\gamma_{\mathrm{dB}}/5}\right).
+\tau_{\mathrm{CV}}(\gamma_{\mathrm{data}}^{\mathrm{dB}})
+&=1.10\left(0.74+0.12e^{-\gamma_{\mathrm{data}}^{\mathrm{dB}}/5}\right).
 \end{aligned}
 \label{eq:cv-decision-boundary}
 \end{equation}
-Here, $\bar\gamma_{\mathrm{dB}}$ is the nominal data SNR supplied to the receiver. The reference curve $0.74+0.12e^{-\bar\gamma_{\mathrm{dB}}/5}$ was fitted to an offline AWGN characterization of the received-power statistic, and the factor $1.10$ provides the fixed decision margin. A window with $\mathrm{CV}<\tau_{\mathrm{CV}}$ is directed to the NDA branch. Otherwise, the controller proceeds to the received-power proxy and effective-SNR stage.
+Here, $\gamma_{\mathrm{data}}^{\mathrm{dB}}$ is the nominal data-symbol SNR supplied to the receiver. The reference curve $0.74+0.12e^{-\gamma_{\mathrm{data}}^{\mathrm{dB}}/5}$ was fitted to an offline AWGN characterization of the received-power statistic, and the factor $1.10$ provides the fixed decision margin. A window with $\mathrm{CV}<\tau_{\mathrm{CV}}$ is directed to the NDA branch. Otherwise, the controller proceeds to the received-power proxy and effective-SNR stage.
 
-For the second stage, let $\bar\gamma=10^{\bar\gamma_{\mathrm{dB}}/10}$ denote the linear nominal data SNR. The controller forms a blind power-based channel proxy, maps it to an effective SNR, and applies the complete branch rule:
+For the second stage, the linear nominal data-symbol SNR is $\bar\gamma=E_s/N_0=10^{\gamma_{\mathrm{data}}^{\mathrm{dB}}/10}$. The controller forms a blind power-based channel proxy, maps it to an effective SNR, and applies the complete branch rule:
 \begin{equation}
 \begin{aligned}
 \hat h_{\mathrm{dsp}}
@@ -60,7 +60,7 @@ For the second stage, let $\bar\gamma=10^{\bar\gamma_{\mathrm{dB}}/10}$ denote t
 -\frac{1}{2\bar\gamma},\ 10^{-6}
 \right\},\\
 \hat\gamma_{\mathrm{eff,dB}}
-&=\bar\gamma_{\mathrm{dB}}+10\log_{10}\hat h_{\mathrm{dsp}},\\
+&=\gamma_{\mathrm{data}}^{\mathrm{dB}}+10\log_{10}\hat h_{\mathrm{dsp}},\\
 \mathcal A(r)
 &=\begin{cases}
 \mathrm{NDA}, & \mathrm{CV}<\tau_{\mathrm{CV}},\\
@@ -78,7 +78,7 @@ Operationally, the controller first accumulates $q_k$ across the received window
 
 \subsection{Online Statistics and Fixed Parameters}
 
-The controller separates quantities evaluated for every received window from quantities fixed before operation. The online sample set consists of the 256 raw complex samples $r_k$. Their squared magnitudes provide the sample mean and standard deviation used by the CV stage, and the same mean power enters $\hat h_{\mathrm{dsp}}$. The nominal data SNR $\bar\gamma_{\mathrm{dB}}$ is an input to the controller: it selects the value of the CV boundary, determines the noise-subtraction term in the blind power proxy, and provides the reference level for $\hat\gamma_{\mathrm{eff,dB}}$. No recovered data symbols or branch-output bit errors enter the selection rule.
+The controller separates quantities evaluated for every received window from quantities fixed before operation. The online sample set consists of the 256 raw complex samples $r_k$. Their squared magnitudes provide the sample mean and standard deviation used by the CV stage, and the same mean power enters $\hat h_{\mathrm{dsp}}$. The nominal data-symbol SNR $\gamma_{\mathrm{data}}^{\mathrm{dB}}$ is an input to the controller: it selects the value of the CV boundary, determines the noise-subtraction term in the blind power proxy, and provides the reference level for $\hat\gamma_{\mathrm{eff,dB}}$. No recovered data symbols or branch-output bit errors enter the selection rule.
 
 The 13-dB decision level was selected from the 12--14-dB effective-SNR transition region observed in preliminary diagnostic sweeps. After this characterization, the CV coefficients $0.74$, $0.12$, and $5$, the margin factor $1.10$, the proxy floor $10^{-6}$, and the 13-dB level were fixed and applied unchanged across all turbulence regimes and Monte Carlo runs, without per-regime retuning. The sample mean, sample standard deviation, blind power proxy, and effective SNR are nevertheless recomputed for each processing window. This division gives a reproducible receiver interface: raw received power and nominal data SNR are the decision inputs; the CV boundary and the 13-dB level define the stored decision configuration; and the selected branch supplies the carrier-corrected samples to the subsequent demodulator. The implementation consequently realizes the sequence CV screening, blind-power evaluation, effective-SNR construction, and fixed-level branch selection stated in Eqs.~\eqref{eq:cv-decision-boundary}--\eqref{eq:two-stage-switch}.
 

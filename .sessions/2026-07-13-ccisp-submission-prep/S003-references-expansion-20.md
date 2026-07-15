@@ -1,7 +1,8 @@
-# [S003] 参考文献从 12 条扩到 22 条 + 官方要求核实 + venue 结构调整
+# [S003] 参考文献从 12 条扩到 24 条 + 官方要求核实 + venue 结构调整
 
 > 2026-07-15 | 阶段：投稿准备（参考文献扩展 + venue 调整） | 状态：完成
-> 2026-07-15 续接（venue 结构调整：补现代 IEEE Transactions）
+> 2026-07-15 续接 1（venue 结构调整：补现代 IEEE Transactions）
+> 2026-07-15 续接 2（再补 Trans：第 2 轮深度检索 + 库内重评）
 
 ## 目标
 
@@ -100,6 +101,24 @@ IEEE 5 / 非 IEEE 3。非 IEEE 3 条含金量足：Conroy 是 Applied Optics 经
 | IEEE Transactions | 2（现代 1） | **4（现代 3）** |
 | 会议 | 5 | 5（不动，对标核心） |
 
+### Step 5：再补 Trans——第 2 轮深度检索 + 库内重评（续接）
+
+**触发**：用户"没办法再多点吗"——希望现代 Trans 更多。
+
+**第 2 轮深度检索**（换 3 角度共 12 条查询：JOCN 专向 / 光纤 CPR 方法论经典 / OJ-COMS+DA-NDA 切换概念）：**0 合格候选**。两轮共 19 条查询挖尽，确认领域现实——相干 FSO + CPR 的 IEEE Transactions 级文献本身稀疏，方法论源头几乎全在 JLT/Optica 系（Kikuchi、Faruk&Savory、Zhang&Kam、Du/Kam 系列）。
+
+**库内重评**（用户选"补 qin TCCN + 放宽引 JLT"）：
+- **qin2026blindvae**（IEEE TCCN 2026）：上轮因"VAE"否决过严。重看 content.md 发现是**双偏振相干 FSO + 湍流 + blind 均衡**（对抗 CMA/CMMA），基金含"星地激光通信"，跟 NDA(blind) 分支有真实交集。补入，现代 Trans 3→4。
+- **zhang2010decisionaided**（JLT 2010）：Decision-Aided Carrier Phase Estimation，"decision-aided"直击 DA 概念源头。放宽 venue 规则引作方法论溯源。Crossref 核实修正：标题是"...for Coherent Optical Communications"（非 QPSK），**4 作者**（Shaoliang Zhang, P.-Y. Kam, C. Yu, Jian Chen），vol 28 no 11 pp 1597-1607。
+
+**补引位置**：qin2026 → intro NDA/blind 描述句（modulus-based equalizer 并行方向）；zhang2010 → intro DA pilot 句（跟 gavert 同群，DA 方法论源头）。
+
+**自检**：citekey 24=24 零闲置零缺漏；fresh compile 8 页，0 overfull/0 underfull，blg clean，0 undefined，字体全嵌入，.bbl 两条新条目格式正确。
+
+**venue 分布最终态**（24 条）：IEEE Transactions **5**（现代 4：wang2022/gavert/liu2025/qin2026）/ JLT 7 / PTL 1 / 其他期刊 6 / 会议 5。现代 IEEE Transactions 从最初 0→4。
+
+**领域现实结论**：19 条查询挖尽后确认，5 篇 IEEE Transactions 已是该细分领域 Trans 资源的合理上限，再补只能凑数（IRS/VAE/水下/中继等偏离核心）。JLT 虽不带 Transactions 名但是该领域顶刊，zhang2010 作 DA 方法论溯源补入合理。
+
 ## 决策引用
 
 - 无新建 D###（本轮无架构/方向决策，纯执行）
@@ -111,10 +130,11 @@ IEEE 5 / 非 IEEE 3。非 IEEE 3 条含金量足：Conroy 是 Applied Optics 经
 
 ## 后续
 
-- 10 条新补文献（Step 3 的 8 条 + Step 4 的 2 条）的引用位置都是单点补引，未改动正文任何句子结构或数字
+- 12 条新补文献（Step 3 的 8 条 + Step 4 的 2 条 + Step 5 的 2 条）的引用位置都是单点补引，未改动正文任何句子结构或数字
 - 待主办方确认：2026 是否进 IEEE Xplore / 双盲匿名措辞（不阻塞当前投稿，但正式投稿前需确认）
-- PDF 从 7 页变 8 页（参考文献 20→22 自然溢出，正文仍到第 7 页 Conclusion），8 页在官方 5-10 页范围内，健康
-- venue 结构已改善（现代 IEEE Transactions 1→3），会议 5 篇为 R016 对标核心不宜动
+- PDF 8 页（参考文献 20→24 自然溢出，正文仍到第 7 页 Conclusion），8 页在官方 5-10 页范围内
+- venue 结构已大幅改善（现代 IEEE Transactions 0→4），19 条查询挖尽确认 5 篇 Trans 是领域上限，会议 5 篇为 R016 对标核心不宜动
+- 领域现实：相干 FSO + CPR 的 IEEE Transactions 级文献本身稀疏，方法论源头在 JLT/Optica 系，不宜为凑 Trans 数而引偏离核心的论文
 
 
 ## 决策引用

@@ -63,7 +63,7 @@
 - **V002**：独立 delta verifier 复核 D008 语义修正，结论 PASS；`gamma_th` 已只表示固定 effective-SNR switching threshold，最新版 PDF/日志和 Fig.1/Fig.2 占位通过。
 - **S002**：接收当前工作树的 CCE-CC-002 扩展预览并强制重建；最新版式增量 fresh `latexmk` exit 0，PDF 7 页、Letter、字体嵌入；Fig.1 已排第 2 页顶部、Fig.2 已排第 3 页顶部，BER Fig.3 已缩为第 5 页单栏，逐页检查无裁切/重叠。仍有 1 个 `Underfull \\hbox`、1 个 `Underfull \\vbox` 和第 7 页参考文献尾部留白。当前目标已实际嵌入 Fig.1/Fig.2，故与本专题原始占位硬边界存在 B-08；纯 text 3,241、非正文项合计后约 3,505，词数口径列 B-09。
 - **V005**：独立 verifier 复核本轮三项版式改动，结论 PARTIAL；图位、单栏 Fig.3、PDF 属性、字体和错误诊断通过，Underfull 与末页留白保留为债务。
-- **S003**：官方要求核实 + 参考文献从 12 条扩到 20 条。官方页数 5-10（含 ref）、篇数无上限、截稿 7/20（ccisp.org/sub.html）；"4-6 页"旧口径争议解决。补 8 条（IEEE 5/非 IEEE 3），每条 Crossref+S2 逐字段核实，修正 taylor 单作者/2009、liu 标题 2N×2、conroy 末页 5101、martins 页码 3157-3175、guiomar DOI。citekey 20=20 零闲置零缺漏，fresh compile 7 页 0 警告 0 undefined 0 overfull，字体全嵌入，.bbl 逐条格式正确。**续接 venue 调整**：用户指出"现代 Transactions 仅 1 篇 + 会议一大片"，检索补 gavert TCOMM 2022 + liu2025 TCOM 2025 两篇现代 IEEE Transactions（ML/pilot 相位估计，非凑数；IRS/VAE 候选因偏离核心不引），现代 Trans 1→3，总计 22 条，fresh compile 8 页（正文到第 7 页 Conclusion，ref 溢出第 8 页），0 警告 0 overfull。
+- **S003**：官方要求核实 + 参考文献从 12 条扩到 24 条（含 venue 三轮调整）。官方页数 5-10（含 ref）、篇数无上限、截稿 7/20（ccisp.org/sub.html）；"4-6 页"旧口径争议解决。三轮扩展：①补 8 条（IEEE 5/非 IEEE 3）基础扩展到 20；②用户指出"现代 Trans 仅 1 篇 + 会议一大片"，检索补 gavert TCOMM 2022 + liu2025 TCOM 2025（现代 Trans 1→3，22 条）；③用户"再多点"，第 2 轮深度检索 19 条查询挖尽确认领域 Trans 资源上限，库内重评补 qin TCCN 2026（blind 均衡，上轮 VAE 否决过严）+ 放宽引 zhang2010 JLT（DA 方法论源头），现代 Trans 3→4，总计 24 条。全程 Crossref+S2 逐字段核实（修正 taylor 单作者/2009、liu 标题 2N×2、conroy 末页 5101、martins 页码、guiomar DOI、qin 末页 3554、zhang 标题+4 作者）。citekey 24=24 零闲置零缺漏，fresh compile 8 页 0 警告 0 undefined 0 overfull 字体全嵌入。venue 最终：IEEE Trans 5（现代 4）/ JLT 7 / PTL 1 / 其他期刊 6 / 会议 5。
 
 ## 未决项
 
@@ -77,4 +77,4 @@
 
 ## 当前位置
 
-当前位置：Gate 0 官方模板硬门 PASS，构建链可用；当前工作树已存在 CCE-CC-002 扩展预览。S003 完成官方要求核实（页数 5-10 含 ref、篇数无上限、截稿 7/20）+ 参考文献从 12 条扩到 22 条（含 venue 结构调整：现代 IEEE Transactions 1→3，补 gavert TCOMM 2022 + liu2025 TCOM 2025），fresh compile 8 页（正文到第 7 页 Conclusion，ref 溢出第 8 页），0 警告 0 undefined 0 overfull 字体全嵌入。原始 Fig.1/Fig.2 占位边界、词数口径、Oracle/术语语义仍未收口，当前交付仍不是最终投稿稿。
+当前位置：Gate 0 官方模板硬门 PASS，构建链可用；当前工作树已存在 CCE-CC-002 扩展预览。S003 完成官方要求核实（页数 5-10 含 ref、篇数无上限、截稿 7/20）+ 参考文献从 12 条扩到 24 条（三轮 venue 调整：现代 IEEE Transactions 0→4，补 gavert/liu2025/qin2026 三篇现代 Trans + zhang2010 JLT DA 源头），fresh compile 8 页（正文到第 7 页 Conclusion，ref 溢出第 8 页），0 警告 0 undefined 0 overfull 字体全嵌入。19 条查询挖尽确认 5 篇 Trans 是领域上限。原始 Fig.1/Fig.2 占位边界、词数口径、Oracle/术语语义仍未收口，当前交付仍不是最终投稿稿。
