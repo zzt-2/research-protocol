@@ -1,8 +1,9 @@
 ---
 created: 2026-07-15
-status: draft
+status: frozen
 version: 1
-stage: Contract S0-S3 draft（S4 端到端推演 + S5 反模式审查 + 冻结 待下轮）
+frozen_date: 2026-07-15
+stage: Contract S0-S5 全过 + 用户确认冻结（FR-17 主指标调整已确认）
 ---
 
 # Research Contract — Q-CMA-FADE
@@ -191,15 +192,26 @@ stage: Contract S0-S3 draft（S4 端到端推演 + S5 反模式审查 + 冻结 �
 
 ---
 
-## Contract S0-S3 完成状态
+## Contract S0-S5 完成状态（冻结 2026-07-15）
 
 - **S0（新颖性检索）**：✅ PASS — 复用 GW 29 篇精读 + R002/R005。reframe 后增量定位冻结：分析层 7 项 Qin/Nasr 全空白 + 方法层窄域 PI 优势 + 架构迁移诚实标注。不换皮。
 - **S1（瓶颈诊断）**：✅ PASS — 引用 D014。瓶颈 = 恒模多解 SOP 跳变（表达力/结构性瓶颈），SOP=0 时 CMA=oracle 证明非架构瓶颈。
 - **S2（指标模型审计）**：✅ PASS — FR-17 PI-BER 首选率 0% → 主指标改 fixed-label BER（75%），PI-BER 降辅指标。FR-19 模型假设记录。D018 双口径强制。
 - **S3（参数溯源审计）**：✅ PASS — 所有 [ASSUMPTION] 消除。SOP_RATE 仿真值债务标注。D014 SOP=0 矩阵债务已补（prompt023 复现 PASS）。
+- **S4（端到端推演）**：✅ PASS — data-flow.md 创建（8 步 DSP 信号流推演 + FR-13 均衡能力表达力审计 + FR-16 架构信息增量审计）。8 步全标真实代码来源。FR-13 门控通过（B1 可比窄域已标注 D023；B3 < oracle 预期 FR-25）。FR-16 门控通过（信息增量真实但来源是监督学习数据非架构创新，F4 诚实标注）。
+- **S5（压力测试 + 反模式 + 实验完备性）**：✅ PASS — experiment_completeness_checklist.md 创建。5 问压力测试无致命风险；反模式 4 项 3 pass + 1 注意（反模式 3 已诚实标注 D023 非致命）；Tier 1 六项全 pass（T1-4 适配 DSP 单组件）。
 
-## 待下轮（S4-S5-冻结）
+## 冻结状态（2026-07-15，用户确认）
 
-- **S4 端到端推演**：data-flow.md（8 步推演 + FR-13 动作空间审计 + FR-16 架构信息增量审计）
-- **S5 压力测试 + 反模式审查 + 实验完备性对标**：5 问压力测试 + 反模式 4 项排查 + experiment_completeness_checklist.md（Tier 1 门控）
-- **Step 6 冻结**：用户确认后 status: frozen
+**Contract 冻结**。不可变字段：hypothesis（H1+H2）/ success_signal / failure_signal / fairness_rules / ablation_plan / experiment_list 结构。
+
+**FR-17 冻结调整（用户确认）**：主指标 fixed-label BER（领域首选 75%），PI-BER 降辅指标（Q-CMA-FADE 特色诊断口径，须标 pilot/帧头开销）。D018 双口径强制保留。
+
+**已知债务（冻结时标注，Execute/论文须处理）**：
+1. 监督 vs 盲不公平（D008 债务 1）— F4 已标，论文 limitations
+2. 方法照搬 Qin CNN（D008 债务 2）— F4 已标，诚实"场景迁移 + 分析增量"
+3. seed-bias（h_mean CV≈1.0）— E8 待 Execute 补 30 seeds，论文 limitations
+4. SOP_RATE 仿真值非实测 — Parameter Provenance 已标，论文 limitations
+5. BER 10⁻⁵ 达不到 — 当前 PI-BER 2e-3~3e-2，S2 指标审计已处理（pre-FEC 口径）
+
+**下一步**：Execute 阶段（H011 handoff 已写）。

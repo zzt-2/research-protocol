@@ -456,7 +456,7 @@ topics:
     title: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
     status: active
     created: "2026-07-10"
-    last_updated: "2026-07-15（S025 Contract S0-S3 完成。contract.md draft 创建。S0 reframe 后增量定位冻结。S1 瓶颈=恒模多解 SOP 跳变。S2 FR-17 审计：PI-BER 首选率 0% → 主指标改 fixed-label BER，PI-BER 降辅指标。S3 参数溯源全消除，D014 SOP=0 矩阵债务已补 prompt023 复现 PASS。下轮 S4+S5+冻结）"
+    last_updated: "2026-07-15（S026 Contract 冻结完成。contract.md status: frozen（用户确认）。S4 data-flow.md 创建（8 步 DSP 信号流 + FR-13/FR-16 审计全过）。S5 experiment_completeness_checklist.md 创建（Tier 1 六项全 pass）。H011 交 Execute。此前 S025 Contract S0-S3 完成）"
     description: "scenario-transfer-pivot D003 解锁双偏振空间后，按 FR-22 从 GW Step 1 重走地勘。搜索空间从单偏振扩到含双偏振 OSL（sat.1553 §6 偏振解复用层主轴 + §3/4/5 次 + 迁移源参照 + 综述锚）。S001 Step1-3完成（15查询43候选8子方向/9篇+sat1553精读/3Q#过四判据）。S002 Step4a完成：Q-DP1(动态SOP跟踪)Kill因A0§1致命（均衡器300krad/s高出湍流致SOP 1-2数量级，A物理基础不足D001）/ Q-DP2(CMA fade发散)Conditional Go（空白真实但需自建GG时间模型D002）/ Q-DP3(跨帧恢复)Conditional Go首选（物理基础最扎实D003）。S003-S004 D004攒材料+D005候选合并Q-CMA-FADE。S005-S013 完成 GG 时间模型、发散扫描、ML/CMA MVE、机制复核与双口径历史审计；D018 规定 fixed/PI 必须并报、PI 需流标识开销，并将 N=2M ML 优势限定在已审计参数域。"
     depends_on:
       - slug: 2026-07-10-scenario-transfer-pivot
@@ -495,7 +495,7 @@ topics:
     title: CCISP 2026 论文内容补强
     status: active
     created: "2026-07-14"
-    last_updated: "2026-07-15（R009 v2：精炼 307--338 词 PASS、定位真实性 BLOCKED；R010 Fig.2 合同待批准）"
+    last_updated: "2026-07-15（创建 T015：真实 selected complex-output mux 路线评估，预留 R013）"
     description: "针对 CCISP 2026 论文内容补强。D013 已完成 common-768 paired-seed 33 点权威重建，并统一三张定量图的 data-symbol E_s/N_0 轴；V009 确认量化链 PASS，整稿仍待 Fig.2 dB 域符号和末页稀疏版面闭环。"
     depends_on:
       - slug: 2026-07-09-thesis-writing
