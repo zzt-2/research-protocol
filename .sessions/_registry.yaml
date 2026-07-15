@@ -456,7 +456,7 @@ topics:
     title: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
     status: active
     created: "2026-07-10"
-    last_updated: "2026-07-15（S023 Q-DP4 形态1 Kill + Q-DP4 整体 Kill — PROMPT-021 维度D MVE第二轮：V0 发现swap是一次性永久锁定非间歇反复跳变，V1 三snapshot_window全KILL dwell=11块+CMA立即再跳，深度诊断证实回滚早期快照BER恶性爬升→无可行回滚点。三类响应式方法全FAIL。D028新建形态1Kill+整体Kill。GW Step4a双偏振OSL三候选Q-DP1/DP3/DP4全Kill完成，路线A唯一存活）"
+    last_updated: "2026-07-15（S025 Contract S0-S3 完成。contract.md draft 创建。S0 reframe 后增量定位冻结。S1 瓶颈=恒模多解 SOP 跳变。S2 FR-17 审计：PI-BER 首选率 0% → 主指标改 fixed-label BER，PI-BER 降辅指标。S3 参数溯源全消除，D014 SOP=0 矩阵债务已补 prompt023 复现 PASS。下轮 S4+S5+冻结）"
     description: "scenario-transfer-pivot D003 解锁双偏振空间后，按 FR-22 从 GW Step 1 重走地勘。搜索空间从单偏振扩到含双偏振 OSL（sat.1553 §6 偏振解复用层主轴 + §3/4/5 次 + 迁移源参照 + 综述锚）。S001 Step1-3完成（15查询43候选8子方向/9篇+sat1553精读/3Q#过四判据）。S002 Step4a完成：Q-DP1(动态SOP跟踪)Kill因A0§1致命（均衡器300krad/s高出湍流致SOP 1-2数量级，A物理基础不足D001）/ Q-DP2(CMA fade发散)Conditional Go（空白真实但需自建GG时间模型D002）/ Q-DP3(跨帧恢复)Conditional Go首选（物理基础最扎实D003）。S003-S004 D004攒材料+D005候选合并Q-CMA-FADE。S005-S013 完成 GG 时间模型、发散扫描、ML/CMA MVE、机制复核与双口径历史审计；D018 规定 fixed/PI 必须并报、PI 需流标识开销，并将 N=2M ML 优势限定在已审计参数域。"
     depends_on:
       - slug: 2026-07-10-scenario-transfer-pivot
@@ -495,8 +495,8 @@ topics:
     title: CCISP 2026 论文内容补强
     status: active
     created: "2026-07-14"
-    last_updated: "2026-07-15（V008：CCE-CC-003A 局部 PASS，整稿 PARTIAL）"
-    description: "针对 CCISP 2026 论文内容补强。D010 授权的 SNR 双坐标、calibration 来源/冻结边界和门面段降噪已由 V008 独立复核 PASS；纯正文 3526 词、7 页。整稿因 R004/Fig.5 与 Results 中 26/29 语义仍为 PARTIAL；参考文献由外部流程处理。"
+    last_updated: "2026-07-15（D013：Fig.5 扩为 5--25 dB/2 dB 网格并统一定量图 SNR 轴）"
+    description: "针对 CCISP 2026 论文内容补强。D013 继承 common-768 paired-seed 口径，将 Fig.5 扩为 weak/moderate/strong × 5--25 dB（2 dB 间隔），并按同领域论文对照把三张定量图横轴统一为 data-symbol E_s/N_0 [dB]；算法、判据和参数不变。"
     depends_on:
       - slug: 2026-07-09-thesis-writing
         reason: 继承 R010/R013/R014/R015/R016、benchmark-paper-set、D007 数据呈现边界及论文事实材料
