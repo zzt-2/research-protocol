@@ -1,14 +1,14 @@
 ---
 created: 2026-07-15
-status: frozen
-version: 1
-frozen_date: 2026-07-15
-stage: Contract S0-S5 全过 + 用户确认冻结（FR-17 主指标调整已确认）
+status: draft (方法层解冻，重新探索；分析层冻结)
+version: 2
+frozen_date: 2026-07-15（S0-S5 全过冻结，同日 D030 方法层解冻）
+stage: Contract S0-S5 全过（S026 冻结）→ D030 方法层解冻重新探索（2026-07-15）
 ---
 
 # Research Contract — Q-CMA-FADE
 
-> 本 Contract 冻结 Q-CMA-FADE 的研究假设和实验方案。
+> **状态说明（D030，2026-07-15）**：Contract S0-S5 全过曾冻结（S026，用户确认）。同日用户决定解冻**方法层**重新打开探索。**分析层 7 项 + Contract S0-S3 字段（假设 H1/baseline/指标 FR-17 调整/参数溯源）保留冻结有效**，待方法层探索收敛后增量更新 H2。
 > GW Step 4a 完成后定型形态：分析层（强，7 项稳结论）+ 方法层（弱，D022 窄域 PI 优势）。
 > **reframe 后叙事**（主控 2026-07-15 定）：旧叙事"ML 缓解发散"已被 D014 证伪。新叙事 = 分析层 D014（SOP 极化串扰是 BER 真因）+ 方法层 D022（ML PI 优势）焊在一起。
 

@@ -1,7 +1,7 @@
 # Topic Index: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
 
 > slug: 2026-07-10-dual-pol-osl-groundwork
-> status: active | created 2026-07-10 | last_updated 2026-07-15（**Contract 冻结完成**。contract.md status: draft → frozen（用户确认）。S4 端到端推演 PASS（data-flow.md 创建：8 步 DSP 信号流 + FR-13 均衡能力审计 + FR-16 信息增量审计全过）。S5 压力测试 + 反模式 + 实验完备性 PASS（experiment_completeness_checklist.md 创建：5 问无致命 + 反模式 3 pass 1 注意 + Tier 1 六项全 pass）。FR-17 主指标调整用户确认（fixed-label BER 主 / PI-BER 辅）。H011 交 Execute。此前：Contract S0-S3 完成，GW Step 4a 完成，改动1 Kill D029）
+> status: active | created 2026-07-10 | last_updated 2026-07-15（**Contract 方法层解冻，重新打开方法层探索**（D030）。用户"我想解冻，重新打开探索"+"只解冻方法层"+"慢慢做"。Contract S0-S5 全过曾冻结（S026），但用户识别方法层探索集中在"响应 SOP swap"一个点 4 路全 Kill，未穷尽"每处都捋一遍"。**分析层 7 项不动**（硬贡献），方法层按 A 改 loss/B 改架构/C 改训练/D 混合/E pilot 前置 5 类归类批量探索，准入放宽（拼也行+试了没用再说），每类 GW Step 1 检索一道防线防撞车。A 类优先（成本最低+SOP 正则攻 D014 真因）。此前：Contract S0-S5 全过冻结，prompt023 补 D014 债务）
 
 ## 专题定位（一句话）
 
@@ -81,20 +81,26 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 
 ## 当前位置
 
-**Contract 冻结完成（2026-07-15，用户确认）**。`projects/thesis-fso/contract.md` status: draft → frozen。本轮按 stages/contract.md S0-S5 完成全部 6 步：
+**Contract 方法层解冻，重新打开方法层探索（2026-07-15，D030）**。Contract S0-S5 全过曾冻结（S026，用户确认），但用户识别方法层探索集中在"怎么响应 SOP swap"一个点（Q-DP3 压μ/Q-DP4 形态2 约束/Q-DP4 形态1 回滚/改动1 重训练 4 路全 Kill），**未穷尽"每处都捋一遍"**。用户"我想解冻，重新打开探索"+"只解冻方法层找增强"+"慢慢做"。
 
-- **S0 新颖性检索** ✅ PASS — 复用 GW 29 篇精读。reframe 后增量定位冻结：分析层 7 项 Qin/Nasr 全空白 + 方法层窄域 PI 优势 + 架构迁移诚实标注。不换皮。
-- **S1 瓶颈诊断** ✅ PASS — 引用 D014。瓶颈 = 恒模多解 SOP 跳变（表达力/结构性），SOP=0 时 CMA=oracle ratio=1.0 证明非架构瓶颈。
-- **S2 指标模型审计** ✅ PASS — FR-17 子 agent 抽查 8 篇：**PI-BER 首选率 0%（67 篇零命中）→ 主指标改 fixed-label BER（75%）**，PI-BER 降辅指标，发散概率 + PI ratio 做分析层指标。FR-19 模型假设记录。D018 双口径强制保留。
-- **S3 参数溯源审计** ✅ PASS — 全 [ASSUMPTION] 消除。SOP_RATE=4e-7 仿真值债务标注。**D014 SOP=0 矩阵债务已补**（prompt023 复现 PASS：SOP=0 ratio=1.00-1.01，SOP=4e-7 ratio=1.12-6.93，方向一致强化复现）。
-- **S4 端到端推演** ✅ PASS — data-flow.md 创建（8 步 DSP 信号流推演 + FR-13 均衡能力表达力审计 + FR-16 架构信息增量审计）。8 步全标真实代码来源（gen_channel / StandardCMA2x2 / ButterflyCNNEqualizer2x2 / evaluate_outputs）。FR-13 门控通过（B1 可比窄域 D023 已标；B3 < oracle 预期 FR-25）。FR-16 门控通过（信息增量真实但来源是监督学习数据非架构创新，F4 标注）。
-- **S5 压力测试 + 反模式 + 实验完备性** ✅ PASS — experiment_completeness_checklist.md 创建。5 问压力测试无致命风险；反模式 4 项 3 pass + 1 注意（反模式 3 已诚实标注 D023 非致命）；Tier 1 六项全 pass（T1-4 适配 DSP 单组件场景）。
+**范围限定**：分析层 7 项稳结论不动（硬贡献：发散 μ 主导/SOP 串扰真因/CMMA 不降发散/冻结无效/LCR 伪相关/GG 时间模型/swap 永久锁定）。Contract S0-S3 字段保留有效（假设 H1 分析层 / H2 方法层 / baseline / 指标 FR-17 调整 / 参数溯源），待方法层探索收敛后增量更新 H2。
 
-**FR-17 处置（用户已确认）**：主指标从 PI-BER 改 fixed-label BER（领域首选 75%），PI-BER 降为 Q-CMA-FADE 特色辅指标（须标 pilot/帧头开销）。D018 双口径强制保留。这不影响假设/信号，是 Contract Metrics 字段调整。
+**方法层增强候选地图（5 类，归类批量处理）**：
+- **A 改 loss**（极低成本）：SOP 不变性正则 / 对比学习(swap 做负对) / VAE 盲损失(D019 deferred)。共享训练脚本，只改 loss 3 行
+- **B 改架构**（低-中）：复值网络 / SOP attention / 双分支偏振分治。共享训练数据+循环，改网络定义
+- **C 改训练**（低）：在线微调 / SOP 数据增强 / 课程学习。架构+loss 不变改训练循环
+- **D CMA+ML 混合**（高）：CMA 跟 SOP+ML 修 swap。要新写均衡器
+- **E pilot 前置**（最高）：插 pilot 估 SOP→补偿→均衡。要新写估计器
 
-**下一步：Execute 阶段**（H011 已写）。E1-E7 实验在 GW Step 4a 维度 D MVE 阶段已基本跑完，Execute 主要是：补 E8（统计严谨性 ≥30 seeds）+ T2-5（复杂度报告）+ 整理论文数据 + 写论文。读 `stages/execute.md` 全文守 FR-22。
+**执行顺序**（成本从低到高）：A → C → B → D → E。**A 类优先**（成本最低 + SOP 正则直接攻 D014 真因）。
 
-此前：GW Step 4a 完成。Q-DP1/DP3/DP4/改动1 全 Kill。唯一存活 = Q-CMA-FADE 分析层（强 7 项）+ 方法层（弱 D022 窄域 29/30）。主控 reframe：D014 SOP 真因 + D022 ML PI 优势焊一起。
+**准入原则（D030 放宽）**：拼也行（A 机制+B 场景=合法迁移）+ 可能存在优化就可试（试了没用再说，不要求机制预判成立）+ 唯一硬防线=每类 GW Step 1 检索一次防撞车 + 消融可验（拿掉加的模块性能得退）。
+
+**软退出判据**：一轮穷举扫描（A-E 全类过 GW Step 1+四判据+能跑的 MVE）做满后看全貌，全 Kill 或只剩窄域增强 → 接受当前形态进 Execute。不设硬时限。
+
+**下一步：A 类 GW Step 1 检索 + 批量 MVE**。主控负责给提示词，执行交新对话。
+
+此前：Contract S0-S5 全过冻结（S026）。Contract S0-S3 + prompt023 补 D014 债务（S025）。GW Step 4a 全候选 Kill（Q-DP1/DP3/DP4/改动1），唯一存活 Q-CMA-FADE 分析层强 7 项 + 方法层弱 D022 窄域 29/30。主控 reframe：D014 SOP 真因 + D022 ML PI 优势焊一起。
 
 不立 Q# 不判 Go/Kill（守 FR-22）——注：D029 是改动1 方法 Kill，Q-CMA-FADE 方向本身不变量仍守。
 
