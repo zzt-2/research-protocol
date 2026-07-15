@@ -1829,3 +1829,81 @@ Contract S0-S3 已填的字段（假设 H1 分析层 / H2 方法层 / baseline /
 ### 来源
 
 S026 续（Contract 冻结后用户决定解冻方法层重新探索）
+
+---
+
+## D031: A 类（改 loss）KILL — L1 SOP 不变性正则 + L2 swap 对比均无增量；A3 VAE 盲损失硬撞车 defer
+
+> status: active
+> date: 2026-07-15
+> 取代：无（D030 A 类候选的执行结论，A 类从"待探索"变"已 Kill"；A3 从 D019 deferred 变"撞车 confirmed defer"）
+> 被取代：无
+> 依据: 验证: `results/cma-fade-divergence/prompt024_a_class_loss.json`（9 config × 5 seeds = 45 runs + 10 消融 = 55 runs, 6388s）+ GW Step 1 检索（search-archive/2026-07-15/a1/a2/a3*.json，子 agent 撞车评估）+ D014（SOP 串扰真因）+ D022（L0 复现锚点）+ D027（clean swap 物理洞察）+ D030（准入原则）
+
+### 决策
+
+**A 类（改 loss）整体 KILL**。D030 方法层解冻后第一类（成本最低 + SOP 正则攻 D014 真因）横向 MVE：L1（SOP 不变性正则）和 L2（swap 对比学习）在 4 档 λ 扫描 [0.001, 0.01, 0.1, 1.0] × 5 seeds（含 D027 swap-prone 1000/1002）中，**甜点 λ 均未显著优于 L0 baseline**（L1 2/5 胜 p=0.75，L2 2/5 胜 p=0.75），消融 PASS（λ=0 退回 L0）。A3（VAE 盲损失）GW Step 1 检索发现**硬撞车**（Qin 组 2026 TCCN 同场景同机制）→ defer 不跑。
+
+### 核心数据（D022 参数域：N=5M/f_G=30/SOP=4e-7/strong/20dB/QPSK/late[4.375M,5M)/seeds 1000-1004）
+
+**L0 baseline 复现性 PASS**：mean PI-BER = 0.01020（per-seed 1000=0.01000 / 1001=0.0 / 1002=0.04098 / 1003=0.00001 / 1004=0.0）。3/5 clean seeds（1001/1003/1004）PI≈0，2/5 swap-prone seeds（1000/1002）PI 高。复现 D022/D029 B(ML 训练一次) PI≈0.01。
+
+**L1 SOP 不变性正则（甜点 λ=0.001）**：mean PI = 0.01019（ΔPI vs L0 = +0.00001，**更差**），2/5 胜 p=0.75 → KILL。
+- λ 扫描趋势：λ=0.001→0.01019 / 0.01→0.01033 / 0.1→0.01065 / 1.0→0.01031。**λ↑ → PI 单调升（正则伤性能）**，仅 λ=1.0 略回。无甜点。
+
+**L2 swap 对比学习（甜点 λ=0.1）**：mean PI = 0.01017（ΔPI vs L0 = +0.00003，**微差**），2/5 胜 p=0.75 → KILL。
+- λ 扫描趋势：λ=0.001→0.01030 / 0.01→0.01064 / 0.1→0.01017 / 1.0→0.01037。λ=0.1 是唯一 mean < L0 的点，但 ΔPI=3e-5 远小于噪声，无统计显著性。
+- L2 λ=0.1 swap-prone seed1000 PI=0.00983（L0 0.01000，唯一实质性改善点）+ seed1002 PI=0.04100（L0 0.04098，持平）。
+
+**消融可验 PASS（守 D030 准入 5）**：L1 λ=0 mean=0.01035（L0 0.01020，差 0.00015<0.01 退回）；L2 λ=0 mean=0.01039（L0 0.01020，差 0.00019<0.01 退回）。正则项拿掉性能退回 L0，证明正则确有贡献（但贡献方向是中性偏负）。
+
+### A3 VAE 盲损失硬撞车（GW Step 1 检索防线触发）
+
+D019 deferred 的盲 VAE 在 D030 重检时子 agent 发现 **Qin 组 2026 IEEE TCCN** "Bootstrapping Blind Equalizer for Dual-Polarization Coherent FSO Systems via Modulus-Rings-Based Variational Autoencoder"（Qin, Wei, Tang, Zhang, Wei, Chi, Shi）= **同作者组 + 同场景（DP 相干 FSO 偏振解复用）+ 同机制（盲 VAE ELBO loss，VAELP/VAEMR）**。次级撞车 L003 "Blind Equalization in Dynamic PMD Channels Using VAE" 2025（光纤 PMD 非 FSO 但同机制）。L6 Song 2023 VQ-VAE 是已知 baseline 非 new collision。
+
+**A3 作为独立变体 defer**（D030 准入 3 唯一硬防线=防撞车触发）。若后续要复活须重构为"A1 SOP 专攻盲 VAE"（非泛化盲 ELBO），另开决策。这进一步证实 D019 当初 defer 的判断正确。
+
+### 核心失败机制（TL-22 物理前提检查）
+
+**根因 = floor 效应 + swap 是 0/1 离散事件非连续可优化目标**：
+1. **3/5 clean seeds（1001/1003/1004）PI≈0 已是 floor**：ML 监督学习在这些 seed 上已完美解偏振，loss 正则无处可改（你不能比 0 更好）。只有 2/5 swap-prone seeds 有改善空间。
+2. **swap 是一次性永久锁定（D028 V0 证实）**：swap 发生在训练后 test 段（block 36698+），是 CMA 在线更新跳盆地（D027/D028），但 **ML 是固定权重前馈，test 段权重不更新**。L1/L2 正则在训练阶段施加，训练段 SOP 漂移远小于 test late 段，正则学到的"SOP 不变性"泛化不到 test late 的极端 SOP 旋转（D015 Q2 周期性失效带 57°+ 正是此机制）。
+3. **L1 增强角度 ≤0.2rad 远小于 test late SOP 累积旋转**（N=5M late 段 SOP≈57°=1.0rad）：训练时见的小角度旋转不变性，无法外推到大角度旋转的不变性。这是 D015 Q3-A（训练覆盖更大 SOP）失败的同构原因。
+4. **L2 swap 对比 margin 机制错配**：swap 不是"输出对 swap 输入敏感"的问题，是"CMA 在线权重跳盆地"（D027 V3b）。ML 固定权重本就不跳，L2 对一个不发生的事件加约束 = 无效。
+
+**与 D027 V3 的同构性**：D027 Q-DP4 形态2（预防性约束）Kill 根因是"约束权重分量不改变恒模代价多解地形"。本轮 A 类 Kill 根因同构——"loss 正则不改变固定权重 test 段行为"。两者都指向同一结论：**SOP 驱动 lock-swap 是训练阶段 loss/约束无法触及的问题**（发生在 test 段 + CMA 在线更新跳盆地，非 ML 训练目标）。
+
+### 否决了什么
+
+- 否决 L1（SOP 不变性正则）作为方法层增强——4 档 λ 全 KILL
+- 否决 L2（swap 对比学习）作为方法层增强——4 档 λ 全 KILL
+- 否决 A3（VAE 盲损失）作为独立变体——硬撞车 Qin 2026 TCCN
+- 否决"改 loss 能攻 D014 SOP 串扰"假设——loss 正则在训练段，swap 发生在 test 段，两者时序正交
+
+### 可复用部分
+
+1. **prompt024_a_class_loss_variants.py 隔离脚本 + 自定义训练循环**——支持任意 loss 变体的横向对比框架，可复用于 C 类（改训练）和 B 类（改架构，加 loss 正则作对照）
+2. **L0 baseline 5-seed 复现数据**——D022 窄域 PI=0.01020 的独立复现，可作后续所有 A-E 类的对照锚点
+3. **λ 扫描 + 甜点选择 + 配对 Wilcoxon Go/Kill 流程**——可复用于其他方法层候选的横向对比
+4. **floor 效应诊断方法**（3/5 clean seeds PI≈0 → 只有 swap-prone seeds 有改善空间）——后续候选评估须先看 clean/swap seed 分布
+5. **"loss 正则触及不到 test 段 swap"物理洞察**——排除整类训练阶段 loss 修改方法（A 类 + 部分 C 类），把火力导向 test 段在线机制（D 类 CMA+ML 混合 / E 类 pilot 前置）或架构（B 类复值/attention）
+6. **GW Step 1 撞车检索方法**（tools/search 多关键词 + 子 agent 消化 + DOI/S2 交叉验证）——D030 准入 3 的可复用执行模板
+7. **A3 撞车信息**——Qin 2026 TCCN 是同作者组最新作，论文写作须引用并区分增量（我们的 SOP 专攻 vs 他们的泛化盲 ELBO）
+
+### 影响范围
+
+- **D030 A 类候选**：从"待探索"变"已 Kill"。方法层增强候选地图 A 类消除，剩余 B/C/D/E 四类
+- **D019 VAE 盲损失**：defer 状态加固（撞车 confirmed），A3 独立变体永久 defer，除非重构
+- **执行顺序更新**：A KILL → **下一类 C（改训练）**。但 C 类（在线微调/SOP 数据增强/课程学习）部分机制与 A 类失败同构（训练阶段改动触及不到 test 段 swap），C 类进 MVE 前须先判"是否触及 test 段"——在线微调触及（test 段持续更新），SOP 数据增强/课程学习不触及（同 A 类失败）。**C 类可能只"在线微调"一个方向值得跑**
+- **方法层火力重定向**：A 类失败 + D027 V3 同构 → 训练阶段 loss/约束无效，火力应转向 test 段在线机制（D 类 CMA+ML 混合 = CMA 跟 SOP + ML 修 swap）或上游估计（E 类 pilot 前置）。但 D/E 成本最高（D030 顺序最后）
+- **topic-index 当前位置**：A 类 KILL → C 类 GW Step 1 检索 + MVE
+- **不变量**：不新增（A 类 KILL 是执行结论非架构约束变更）
+- **contract.md H2**：不动（A 类无增量，H2 方法层仍 D022 窄域形态）
+
+### 触发原话
+
+> 触发原话: 无（用户派发 PROMPT-024 为执行指令；A 类 KILL 来自 55 runs MVE 数据验证 + GW Step 1 撞车检索非用户态度。用户本轮无新态度原话，不进 voice.md）
+
+### 来源
+
+S027（PROMPT-024 A 类 GW Step 1 检索 + 横向 MVE 执行）
