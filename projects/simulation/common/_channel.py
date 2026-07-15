@@ -7,6 +7,23 @@ from ._config import BLOCK, TURB, F_RESIDUAL, DOPPLER_HIGH, LASER_LW, T_S
 from ._modulation import qpsk_mod, apsk8_mod, m16apsk_mod
 
 
+def _resolve_turb_params(turb_name, turb_params=None):
+    """Resolve Gamma-Gamma shape parameters without mutating shared config."""
+    if turb_params is None:
+        return TURB[turb_name]
+    if isinstance(turb_params, (str, bytes)):
+        raise TypeError("turb_params must be a two-item numeric sequence")
+    try:
+        if len(turb_params) != 2:
+            raise ValueError("turb_params must contain exactly two values")
+        a, b = (float(value) for value in turb_params)
+    except TypeError as exc:
+        raise TypeError("turb_params must be a two-item numeric sequence") from exc
+    if not np.isfinite(a) or not np.isfinite(b) or a <= 0.0 or b <= 0.0:
+        raise ValueError("turb_params values must be finite and positive")
+    return a, b
+
+
 def gg_block(N, a, b, bs=BLOCK):
     nb = (N + bs - 1) // bs
     return np.repeat(
@@ -37,7 +54,9 @@ def doppler_phase(N, f_res=None, f_dot=None, lw=None):
     return phi_fo + phi_dot + phi_laser
 
 
-def generate_shared_realization(Ns, gamma_bar, turb_name, f_dot, seed=42, lw=None):
+def generate_shared_realization(
+    Ns, gamma_bar, turb_name, f_dot, seed=42, lw=None, turb_params=None,
+):
     """
     生成单次信道/噪声/相位实现，所有方案共享。
 
@@ -49,7 +68,7 @@ def generate_shared_realization(Ns, gamma_bar, turb_name, f_dot, seed=42, lw=Non
               Ns, gamma_bar, turb_name, f_dot
     """
     np.random.seed(seed)
-    a, b = TURB[turb_name]
+    a, b = _resolve_turb_params(turb_name, turb_params)
 
     bits = np.random.randint(0, 2, Ns * 2)
     tx = qpsk_mod(bits)
@@ -77,6 +96,7 @@ def generate_shared_realization(Ns, gamma_bar, turb_name, f_dot, seed=42, lw=Non
 
 def generate_shared_realization_apsk(
     Ns, gamma_bar, turb_name, f_dot, mod='m16apsk', seed=42, lw=None,
+    turb_params=None,
 ):
     """M-APSK 调制版信道实现（B11 NDA-ML STO+CPE / B7 Gardner TED FOE MVE 共用）。
 
@@ -102,6 +122,9 @@ def generate_shared_realization_apsk(
         随机种子（可复现）。
     lw : float or None
         激光线宽 (Hz)。None 时从 params.py SystemParams.LASER_LW 读 (默认 10kHz, D-007 统一)。
+    turb_params : tuple[float, float] or None
+        可选的 Gamma-Gamma ``(alpha, beta)``。None 时保持从 TURB 按名称读取；
+        显式传入仅作用于本次调用，不修改全局配置。
 
     返回
     ----
@@ -109,7 +132,7 @@ def generate_shared_realization_apsk(
           rx_raw 已含 ``signal = tx * sqrt(h) * carrier`` 相干约定（TL-01）。
     """
     np.random.seed(seed)
-    a, b = TURB[turb_name]
+    a, b = _resolve_turb_params(turb_name, turb_params)
 
     # 调制（守 TL-13：与 generate_shared_realization 共用同一信道实现）
     if mod == 'qpsk':

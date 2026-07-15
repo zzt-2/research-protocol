@@ -495,8 +495,8 @@ topics:
     title: CCISP 2026 论文内容补强
     status: active
     created: "2026-07-14"
-    last_updated: "2026-07-15（创建 T015：真实 selected complex-output mux 路线评估，预留 R013）"
-    description: "针对 CCISP 2026 论文内容补强。D013 已完成 common-768 paired-seed 33 点权威重建，并统一三张定量图的 data-symbol E_s/N_0 轴；V009 确认量化链 PASS，整稿仍待 Fig.2 dB 域符号和末页稀疏版面闭环。"
+    last_updated: "2026-07-15（R016/V013：T018 参数证据门 FAIL；common 97/97 PASS；未进入 formal/WRITE）"
+    description: "针对 CCISP 2026 论文内容补强。D018 已批准 route-B adaptive CPR 三档下行正式闭环；R016/V013 确认数学复算与 common 接口通过，但 Al-Habash 原文和 Family-1 三锚未形成合法本地全文，当前按 T018 §7.1 BLOCKED。"
     depends_on:
       - slug: 2026-07-09-thesis-writing
         reason: 继承 R010/R013/R014/R015/R016、benchmark-paper-set、D007 数据呈现边界及论文事实材料

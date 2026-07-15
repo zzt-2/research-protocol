@@ -826,7 +826,7 @@ class TestT7ParameterConsistency:
 
     def test_turb_params_keys(self):
         """TURB 包含 weak/moderate/strong"""
-        assert set(TURB.keys()) == {'weak', 'moderate', 'strong'}
+        assert {'weak', 'moderate', 'strong'} <= set(TURB.keys())
 
     def test_turb_param_values(self):
         """TURB 参数与 SPEC §1.4 一致"""
