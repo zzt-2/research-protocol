@@ -462,3 +462,184 @@ def psa_foe_recovery(rx, pilot_idx, pilot_sym):
     n_all = np.arange(len(rx))
     rx_comp = rx * np.exp(-1j * 2*np.pi*df_est*T_S * n_all)
     return rx_comp, df_est
+
+
+# ════════════════════════════════════════════════════════════════════════════
+# B5 LEO Doppler 短时谱 FOE (转正自 explore/b5-leo-doppler-spectrum-foe/)
+# 来源: optcom.2024.130981 L71-87 (MVE S004+S005 PASS, consistency bit-exact)
+# ════════════════════════════════════════════════════════════════════════════
+def short_time_spectrum_foe(
+    rx, n_fft=16, n_blocks=1024, alpha=6e8, fs=2.5e9,
+    normalize_mode='ratio', ephemeris_pred=0.0,
+):
+    """B5 短时谱 FOE 单次估计 (前馈开环, 不撞 D006).
+
+    分块 FFT → Hanning → 均值滤波 → 正负功率谱面积比 Rp-n → Δfest=α·Rp-n → +星历.
+    B5 锚 optcom.2024.130981 L71-87. C6 公式重建 (PDF→md 丢失, 从 L77-87 文字):
+      式 1 (L73): R[k] = |FFT(r·win)|²        离散功率谱
+      式 3 (L81): Rp-n = P₊ − P₋              正负功率谱面积比
+      式 2 (L79): Δfest = α · Rp-n            (α=6×10⁸, 暗 ratio 模式)
+      式 4 (L83): Δf_comp = Δfest + ephemeris_pred   星历预测调 LO
+
+    normalize_mode: 'block' 按块归一化(≡ratio 仅 α 尺度) / 'agc' AGC 前置(绝对差) /
+      'ratio' 归一化功率比 (P₊−P₋)/(P₊+P₋) (α=6×10⁸ 暗 B5 锚用此模式).
+    """
+    rx = np.asarray(rx, dtype=complex).ravel()
+    if n_fft <= 0 or (n_fft & (n_fft - 1)) != 0:
+        raise ValueError(f"n_fft 须 2 的幂次, got {n_fft}")
+    if normalize_mode not in ('block', 'agc', 'ratio'):
+        raise ValueError(f"normalize_mode 须 'block'/'agc'/'ratio', got {normalize_mode!r}")
+
+    N = rx.shape[0]
+    n_blocks = min(n_blocks, N // n_fft)
+    if n_blocks < 1:
+        raise ValueError(f"数据 {N} 不足一块 FFT (n_fft={n_fft})")
+    usable = n_blocks * n_fft
+
+    # 星历预测预补偿 (B5 锚 L87 调 LO)
+    if ephemeris_pred != 0.0:
+        k0 = np.arange(N)
+        rx = rx * np.exp(-1j * 2.0 * np.pi * ephemeris_pred * k0 / fs)
+    # AGC 前置 (方案 B)
+    if normalize_mode == 'agc':
+        rms = np.sqrt(np.mean(np.abs(rx) ** 2))
+        if rms > 0:
+            rx = rx / rms
+
+    # 分块 + Hanning + FFT → 功率谱
+    blocks = rx[:usable].reshape(n_blocks, n_fft)
+    blocks_win = blocks * np.hanning(n_fft)[np.newaxis, :]
+    spec = np.fft.fftshift(np.fft.fft(blocks_win, axis=1), axes=1)
+    psd = np.abs(spec) ** 2
+    # block 归一化 (方案 A, ≡ ratio)
+    if normalize_mode == 'block':
+        blk_total = psd.sum(axis=1, keepdims=True)
+        blk_total = np.where(blk_total > 0, blk_total, 1.0)
+        psd = psd / blk_total
+    # 均值滤波 (B5 锚 L87 "1024 sets mean filtering")
+    spectrum_mean = np.mean(psd, axis=0)
+    # 正负功率谱面积比 Rp-n (fftshift 后 half 处是 DC, 归正半轴)
+    half = n_fft // 2
+    p_plus = float(np.sum(spectrum_mean[half:]))
+    p_minus = float(np.sum(spectrum_mean[:half]))
+    if normalize_mode == 'ratio':
+        denom = p_plus + p_minus
+        rp_n = (p_plus - p_minus) / denom if denom > 0 else 0.0
+    else:
+        rp_n = p_plus - p_minus
+    fest_residual_hz = alpha * rp_n
+    fest_hz = fest_residual_hz + ephemeris_pred
+    return {
+        'fest_hz': float(fest_hz),
+        'fest_residual_hz': float(fest_residual_hz),
+        'fest_omega': float(2.0 * np.pi * fest_hz / fs),
+        'rp_n': float(rp_n),
+        'spectrum': spectrum_mean,
+        'p_plus': p_plus,
+        'p_minus': p_minus,
+        'normalize_mode': normalize_mode,
+        'n_blocks_used': n_blocks,
+    }
+
+
+def short_time_spectrum_foe_iterate(
+    rx, n_iter=4, n_fft=16, n_blocks=1024, alpha=6e8, fs=2.5e9,
+    normalize_mode='ratio', ephemeris_pred=0.0, precise_range_hz=None,
+):
+    """B5 短时谱 FOE 迭代收敛 (B5 锚 L141 "converges by 3rd/4th iteration").
+
+    Rp-n-vs-f 非线性, 单次估仅对残频有效; 每轮预补偿 fest→rx, 残频减小再估.
+    大频偏靠星历预测预补偿到残频 (ephemeris_pred), FFT 迭代估残频.
+    precise_range_hz: 早停阈值 |fest_residual| < 此值即停 (B5Params.PRECISE_RANGE_B5).
+    """
+    rx = np.asarray(rx, dtype=complex)
+    if ephemeris_pred != 0.0:
+        k0 = np.arange(rx.shape[0])
+        rx = rx * np.exp(-1j * 2.0 * np.pi * ephemeris_pred * k0 / fs)
+    k = np.arange(rx.shape[0])
+    fest_accum = 0.0
+    history = []
+    converged = False
+    n_iter_used = 0
+    rx_cur = rx.copy()
+    for it in range(n_iter):
+        res = short_time_spectrum_foe(
+            rx_cur, n_fft=n_fft, n_blocks=n_blocks, alpha=alpha, fs=fs,
+            normalize_mode=normalize_mode, ephemeris_pred=0.0)
+        fest_step = res['fest_residual_hz']
+        fest_accum += fest_step
+        rx_cur = rx_cur * np.exp(-1j * 2.0 * np.pi * fest_step * k / fs)
+        history.append({'iter': it, 'fest_step': float(fest_step),
+                        'fest_accum': float(fest_accum),
+                        'residual_hz': float(fest_step), 'rp_n': float(res['rp_n'])})
+        n_iter_used = it + 1
+        if precise_range_hz is not None and abs(fest_step) < precise_range_hz:
+            converged = True
+            break
+    fest_hz = fest_accum + ephemeris_pred
+    return {
+        'fest_hz': float(fest_hz),
+        'fest_residual_hz': float(history[-1]['residual_hz']),
+        'fest_omega': float(2.0 * np.pi * fest_hz / fs),
+        'history': history,
+        'converged': converged,
+        'n_iter_used': n_iter_used,
+        'normalize_mode': normalize_mode,
+    }
+
+
+def leven_mthpower_foe(rx, M=4, N_sum=500, fs=2.5e9, normalize_mode='block'):
+    """[60] Leven Mth-power FOE (祖师爷对照, 前馈开环 feed-forward).
+
+    [60] Leven 2007 IEEE PTL L55-65: 符号差分 → M 次方去调制 → N 求和 → 相位/M → 频偏.
+    捕获范围 ±fs/(2M) (QPSK M=4 @ 2.5GBaud → ±312.5MHz). 时域差分相位增量估计,
+    跟 B5 频域功率谱面积比机制正交 (V3 祖师爷警报: 非同族).
+    normalize_mode: 'block'/'agc'/'ratio' (跟 short_time_spectrum_foe 同方案, 公平对照).
+    """
+    rx = np.asarray(rx, dtype=complex)
+    N = len(rx)
+    if N < 2:
+        raise ValueError(f"len(rx)={N} 太短, 差分至少需 2 个样本")
+    if M < 2:
+        raise ValueError(f"M={M} 必须 >= 2 (PSK 阶数)")
+    Ts = 1.0 / fs
+    # 前馈归一化
+    if normalize_mode == 'block':
+        p = np.sqrt(np.mean(np.abs(rx) ** 2))
+        rx_n = rx / p if p > 1e-12 else rx
+    elif normalize_mode == 'agc':
+        a = np.abs(rx)
+        a[a < 1e-12] = 1e-12
+        rx_n = rx / a
+    elif normalize_mode in ('ratio', 'none'):
+        rx_n = rx
+    else:
+        raise ValueError(f"normalize_mode must be 'block'/'agc'/'ratio'/'none', got {normalize_mode!r}")
+    # 符号差分 z[k] = r[k]·conj(r[k-1])
+    z = rx_n[1:] * np.conj(rx_n[:-1])
+    if normalize_mode == 'ratio':
+        za = np.abs(z)
+        za[za < 1e-12] = 1e-12
+        z = z / za
+    # Mth-power 去调制 + 求和
+    z_M = z ** M
+    n = min(N_sum, len(z_M))
+    s = np.sum(z_M[:n])
+    delta_phi = np.angle(s) / M
+    fest_hz = delta_phi / (2.0 * np.pi * Ts)
+    phi_acc = np.arange(N, dtype=float) * delta_phi
+    return {
+        'fest_hz': fest_hz,
+        'fest_omega': 2.0 * np.pi * fest_hz * Ts,
+        'delta_phi': delta_phi,
+        'phi_acc': phi_acc,
+        'normalize_mode': normalize_mode,
+        'sum_complex': s,
+        'M': M,
+        'N_sum': N_sum,
+    }
+
+
+def leven_capture_range_hz(fs, M=4):
+    """[60] Leven Mth-power 无歧义捕获范围 (±fs/(2M))."""
+    return fs / (2.0 * M)

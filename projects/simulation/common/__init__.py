@@ -20,6 +20,7 @@ from ._channel import (
     gg_block, doppler_phase,
     generate_shared_realization, generate_shared_realization_apsk,
 )
+from ._dual_pol_channel import generate_shared_realization_dp
 
 # Modulation
 from ._modulation import (
