@@ -1907,3 +1907,606 @@ D019 deferred 的盲 VAE 在 D030 重检时子 agent 发现 **Qin 组 2026 IEEE 
 ### 来源
 
 S027（PROMPT-024 A 类 GW Step 1 检索 + 横向 MVE 执行）
+
+---
+
+## D032: C 类（在线微调）KILL — 六档周期/学习率均 0/5 胜；C2/C3 按 D031 时序正交 defer
+
+> status: active
+> date: 2026-07-16
+> 取代：无
+> 被取代：无
+> 依据: 验证: `projects/simulation/results/cma-fade-divergence/prompt025_c1_online_finetune.json` + 调研: `search-archive/2026-07-16/online-fine-tuning-optical-equalizer.json`、`search-archive/2026-07-16/online-adaptation-neural-network-optical-communication.json` + D014/D018/D022/D030/D031
+
+### 决策
+
+**C 类整体 KILL/defer。** C1 周期 pilot-assisted 在线微调在预注册 `K=[1000,5000,10000] blocks × lr=[1e-5,1e-4]` 六档中全部 **0/5 seeds 胜、单侧精确 Wilcoxon p=1.0**，不满足“mean PI < L0 + ≥4/5 胜 + p<0.05”，故 KILL。C2 SOP 数据增强与 C3 课程学习只作用训练段，触及不到 test 段 swap，按 D031 同构论证 defer，不重复消耗算力。
+
+### 核心失败机制
+
+C1 虽然触及 test 段，但本参数域的确定性 L0 已接近 floor；周期性一步监督更新没有可利用的 PI-BER 空间，反而随更新频率/学习率增大产生微小退化。六档 mean PI 为 `7.952e-5–8.128e-5`，L0 为 `7.936e-5`；最激进 `K=1000, lr=1e-4` 恶化 `1.92e-6`。3/5 seeds PI=0，另两 seed 的每档均不优于 L0。该结果支持“在线一步更新无增量”，不支持“所有更强在线适配永久无效”。
+
+### 具体数据
+
+- L0：mean fixed=`0.49962528`，mean PI=`7.936e-5`；per-seed PI=`[5.68e-5, 0, 3.40e-4, 0, 0]`
+- 最小 mean 的 C1 档：`K=5000/10000, lr=1e-5`，mean PI=`7.952e-5`，0/5 胜，p=1.0
+- 最大更新档：`K=1000, lr=1e-4`，mean PI=`8.128e-5`，0/5 胜，p=1.0
+- lr=0 消融：逐 seed fixed/PI 与 L0 完全一致，PASS
+- D018 双口径：C1 各档 fixed 均约 `0.499625`、PI 约 `8e-5`；fixed 继续由流交换主导，不能单口径解释为信息丢失
+- 复现边界：本脚本显式固定 torch seed，L0 绝对 PI 显著低于 D031 的 `0.01020`。因此本决策只使用同 seed、同初始化、同离线权重克隆的配对增量结论；绝对 L0 差异列为训练随机性/复现债务，不据此推翻 D022/D031。
+
+### 检索结果
+
+未命中“星地相干 FSO + GG 湍流 + SOP lock swap + 在线微调”完全同场景同机制；但存在两个强邻近先例：AdaNN（JLT 2020, DOI `10.1109/JLT.2020.2991028`）在线半监督 NN 均衡，以及 Joint PMD Tracking（JLT 2023, DOI `10.1109/JLT.2023.3276373`）用 decision-directed feedback 在线微调跟踪连续 SOP/PMD 漂移。按 D030，“已有机制 + FSO 场景适配”可准入 MVE，但若 C1 数据 Go，新颖性仍需收窄；本轮数据已 Kill。
+
+### 否决了什么
+
+- 否决当前化身：每 1000/5000/10000 blocks 用最近 1024 个已知符号做一次 Adam 更新，lr 1e-5/1e-4。
+- defer C2/C3：二者不在 test 段改变状态，与 D031 的训练/test 时序正交失败同构。
+- 不否决更强化身：decision-directed 半监督、多步更新、meta-initialization；它们已接近检索先例且超出 H013 C1 预注册网格，若复活必须重新走 GW 门控。
+
+### 可复用部分
+
+`prompt025_c1_online_finetune.py` 提供按同一离线权重克隆、顺序 test 状态、周期 checkpoint、fixed/PI 双口径和 lr=0 消融的隔离在线适配基建，可供后续 D/E 类做公平对照。
+
+### 影响范围
+
+- D030 候选地图：C 类从待探索变为 C1 KILL、C2/C3 defer；下一类推进 B。
+- Q-CMA-FADE 方法层仍保持 D022 窄域形态，未获得 C 类增强。
+- 不修改 common/、params.py、信号模型或分析层 7 项稳结论。
+
+### 触发原话
+
+> 触发原话: 无（夜间批量探索，H013 派发；结论来自数据验证非用户态度）
+
+### 来源
+
+S028（PROMPT-025 C 类 GW Step 1 检索 + C1 MVE）
+
+---
+
+## D033: B 类（固定前馈架构）整体 defer — B1/B2/B3 均未通过 D031 test 段准入门
+
+> status: active
+> date: 2026-07-16
+> 取代：无
+> 被取代：无
+> 依据: 验证: `projects/simulation/results/cma-fade-divergence/prompt026_b_class_architecture_gate.json` + GW Step 1 检索: `search-archive/2026-07-16/2026-07-16-complex-valued-neural-network-rf-mimo-equalization-1.json` 等 6 个 B 类查询 JSON + D014/D031
+
+### 决策
+
+**B 类不进入性能 MVE，B1/B2/B3 全部 defer。** 三个候选都只改变离线训练后的固定前馈架构，不在 test 段更新状态。H013/D031 要求只有检索或分析能支持“对未见 SOP 极端旋转保持等变/不变、从而打破训练/test 时序正交”才值得跑；本轮三者均无此证据。
+
+### D031 过滤与四判据
+
+| 候选 | 技术矛盾 | 方法产出 | baseline | 可对比 | test 段/等变证据 | 结论 |
+|---|---|---|---|---|---|---|
+| B1 复值网络 | SOP 混合下实值拆分可能损失复结构 | 复值 butterfly CNN | D022 L0 | 同信道、参数量匹配、fixed/PI | 固定前馈；复值≠SOP 群等变 | defer |
+| B2 SOP angle attention | 固定模型未显式感知 test SOP 角 | SOP-sensitive attention | D022 L0 | attention off 消融 | 无 test SOP 角输入；两组检索无等变光均衡证据 | defer |
+| B3 双分支偏振分治 | X/Y 在 SOP 下持续混合 | X/Y 分支+融合 | D022 L0 | branch-sharing/融合消融 | 固定分支依赖坐标基，不能跟随旋转基 | defer |
+
+四判据形式上均可构造，但 D031 是进入 MVE 的额外硬门；不能用“能写代码、能比较”替代物理准入证据。
+
+### 检索结果
+
+- **B1 有强邻近占点**：Optics Letters 2024 `10.1364/OL.512416` 已提出 MIMO-CVNN，用于 photonics-aided MIMO/PDM-QPSK/16QAM，明确声称保存相位和 X/Y 偏振关系；另有多篇 RF/VLC/THz CVNN 均衡。即使跑出增量，单纯“8 实值→复值”新颖性很弱。
+- **B2**：`rotation equivariant CNN optical communication equalization` 与 `SOP rotation equivariant neural network polarization optical` 两组注册查询无直接结果。零结果不证明可行，更不证明能泛化到 test-late 57° SOP。
+- **B3**：`dual branch polarization demultiplexing neural network` 与 `dual polarization optical neural equalizer branch demultiplexing` 无直接结果；但结构分析已显示固定 X/Y 分支与旋转后的物理偏振基不一致。
+- 工具边界：S2/OpenAlex 出现限速；B1 OpenAlex 成功返回 20 篇，其他查询用 arXiv 降级完成并落盘。检索覆盖不足以判“绝对空白”，但足以确认没有支持打破 D031 的正证据。
+
+### 核心 defer 机制
+
+D031 的失败不是网络容量不足，而是作用时刻不匹配：test 段 SOP 继续旋转，离线模型权重冻结。复值计算、attention 或双分支如果既不接收当前 SOP 状态、也不按 SOP 群构造严格等变性，就只能改变训练域拟合，不能保证 late 段极端旋转。直接跑 5-seed 横向网格会重复 A/C 的时序正交试错，违反 H013 的前置过滤纪律。
+
+### 排除的替代方案
+
+- 不运行“L0 + 三架构”性能网格：三个候选均未过 D031，算力实验没有被预注册机制支持。
+- 不把 arXiv 零结果写成“无人做过”：OpenAlex/S2 限速导致覆盖不完整。
+- 不永久否决架构路线：若后续提出严格 U(2)/SU(2) 等变层、输入 pilot SOP 角或 test-time state，已改变准入事实，需重新检索和立项。
+
+### 可复用部分
+
+`prompt026_b_class_architecture_gate.py` 与对应 JSON 固化三候选、四判据、检索路径、D031 判定及若复活时的参数量匹配/消融合同。
+
+### 影响范围
+
+- D030 候选地图：B 类从待探索变为整体 defer；下一类推进 D（CMA+ML 混合）。
+- 未创建/修改任何 common/ 架构实现，未产生性能数字，D022 方法层现状不变。
+
+### 触发原话
+
+> 触发原话: 无（夜间批量探索，H013 派发；结论来自检索与 D031 技术过滤）
+
+### 来源
+
+S029（PROMPT-026 B 类检索 + 架构准入门审计）
+
+---
+
+## D034: D 类（CMA+ML 混合）解析 KILL — **REJECTED：错误泛化 swap seeds 与 PI 拼接单调性**
+
+> status: rejected（2026-07-16 独立审查 FAIL；等待 D035 实测取代）
+> date: 2026-07-16
+> 取代：无
+> 被取代：D035（D034 为错误解析结论；D035 以真实 5-seed MVE 取代）
+> 依据: 验证: `projects/simulation/results/cma-fade-divergence/prompt027_d_class_hybrid_gate.json` + GW Step 1 检索 3 JSON + D022/D028/D031
+
+### 决策
+
+**本决策已撤回，不得作为 D 类结论引用。** 原结论将 seed1000/1003 的永久 swap 错误泛化至全部 5 seeds；seed1001/1002/1004 clean 时 hybrid 保持 CMA，可能优于 ML-only L0。此外 PI-BER 的全段排列/相位联合消歧是非线性评价，不能据逐段输出断言“晚切必然更差”。必须跑真实 5-seed MVE。
+
+### 独立审查 FAIL
+
+- 错误 1：D028 明载永久 swap 只有 seed1000/1003，原解析却按 5/5 永久 swap 推理。
+- 错误 2：忽略 clean seeds 中 hybrid 保持 CMA 的可能收益。
+- 错误 3：把 PI-BER 当可逐段线性拼接，缺少单调性定理。
+- 处理：保留错误记录供溯源，禁止推进 E；由 D035 以真实 5-seed MVE 取代。
+
+### D031 与四判据
+
+- **D031：PASS**。D1/D2 在 test 段检测并永久切换，作用时刻不再与 swap 正交。
+- **具体技术矛盾：PASS**。CMA 能在线跟 SOP，但会永久 lock-swap；独立 ML 不继承 CMA 盆地。
+- **方法产出：PASS**。D1 CMA 跟踪+ML 恢复；D2 选择性单向切换。
+- **baseline：PASS**。D022 L0 固定 ML + standard-CMA。
+- **可比较：PASS**。同信道、fixed/PI、detector-off、ML-only/CMA-only 消融。
+- **维度 D 收尾：FAIL**。ML-only L0 对注册 late 指标支配 hybrid。
+
+### 为什么切 ML 可能优于回滚、又为什么仍 Kill
+
+D028 回滚恢复的是同一 CMA 状态：近期快照已污染，早期快照随 SOP 过时，导致 dwell 中位 11 blocks 或 BER 爬升。切 ML 使用完全独立的离线权重，不需要从 CMA 盆地爬出，因此恢复动作本身更强。但本研究已有 L0“全程使用该 ML”的合法 baseline；hybrid 只是在一段 CMA 后回到 L0，不能创造比全程 ML 更好的 late 输出。它解决了“恢复能力”，没有解决“相对最强 baseline 的增量”。
+
+### 检索结果
+
+三组注册查询（hybrid CMA+ML、CMA neural switching、polarization swap ML recovery）均已落盘。arXiv 无直接命中；OpenAlex 限速，故不宣称绝对空白。无论新颖性如何，解析支配已足以 Kill 当前化身。
+
+### 信息访问三联卡
+
+- `information_access`：D028 检测器用 `corr(zX,sY)>corr(zX,sX)`，需要真实发送符号，属 genie/post-hoc；未提供可部署 blind detector。
+- `metric_signature`：late `[4.375M,5M)`，fixed-label + PI-BER，并列报告合同保留；本轮无性能运行。
+- `state_lifecycle`：CMA 在线更新至触发；ML 是独立离线固定状态；触发后单向永久切 ML。
+
+### 排除的替代方案
+
+- 不跑 D1/D2 5-seed 网格：预注册 strict improvement 已被解析上界否定。
+- 不只对比 CMA：D022 已确立固定 ML 为当前方法 baseline，省略 ML-only 会人为制造增量。
+- 不把 genie detector 当部署贡献：缺 blind 信息访问路径。
+
+### 复活条件
+
+只有同时改变评价问题才可重开：纳入 pre-switch 时段/复杂度或切换开销；找到 CMA 在 swap 前明确优于 ML 的参数域；给出可部署 blind detector；并同时对比 ML-only 与 CMA-only。届时须重新走 GW Step 1 和预注册。
+
+### 影响范围
+
+- D030 候选地图 D 类 KILL；下一类推进 E pilot 前置。
+- D028 的“回滚失败”保留，并补充“独立 ML 恢复可行但被 ML-only 支配”的边界。
+- 不修改 common/、不产生新的性能数字，不影响分析层 7 项。
+
+### 触发原话
+
+> 触发原话: 无（夜间批量探索，H013 派发；结论来自 D028 时序事实与 baseline 解析支配）
+
+### 来源
+
+S030（PROMPT-027 D 类检索 + 混合架构解析门）
+
+---
+
+## D035: D 类修正 MVE KILL — 当前代码 0/5 触发，D1/D2 精确退化为 CMA-only；保留 D028 2/5 swap 漂移债务
+
+> status: superseded（工作树参数漂移域，不是 H013/D022 注册域）
+> date: 2026-07-16
+> 取代：D034（REJECTED 错误解析 Kill）
+> 被取代：D036
+> 依据: 验证: `projects/simulation/results/cma-fade-divergence/prompt027_d_class_hybrid_mve.json`（5 seeds 完整、因果块检测、fixed/PI 双口径）+ 独立审查 FAIL + D022/D028/D031
+
+### 决策
+
+**D 类当前化身经真实 5-seed MVE KILL。** D1 永久切 ML、D2 触发后切 ML 1000 blocks 均在当前代码/工作树下 **0/5 seeds 触发**，所以两者逐 seed fixed/PI 与 CMA-only 完全一致；相对 L0 ML-only 为 0/5 胜、单侧 exact p=1.0，未达到预注册 Go 判据。结论来自实测而非 D034 的错误解析支配。
+
+### 核心数据
+
+| 方法 | mean fixed | mean PI | vs L0 胜场 | p | 结论 |
+|---|---:|---:|---:|---:|---|
+| L0 ML-only | 0.49962768 | 6.944e-5 | — | — | baseline |
+| CMA-only | 2.2536e-4 | 2.2536e-4 | — | — | 对照 |
+| D1 permanent switch | 2.2536e-4 | 2.2536e-4 | 0/5 | 1.0 | KILL |
+| D2 selective 1000-block | 2.2536e-4 | 2.2536e-4 | 0/5 | 1.0 | KILL |
+
+所有 seed 的 `n_triggers=0`，D1/D2 ML fraction=0。forced-switch 消融（late 全切 ML）按输出路径与 L0 ML-only 完全一致，证明独立 ML 恢复分支本身可用；失败发生在检测/触发契约，而非数组切换失效。
+
+### 因果性与信息访问
+
+- block `b` 的 CMA 输出相关性只控制 `b+1` 以后，禁止同 block 后见选择与未来泄漏。
+- 检测使用真实 `sX/sY` 相关，属 genie/pilot 上界；即使如此当前 0/5 触发，blind 部署只会更难。
+- CMA shadow 全程连续；D1 单向永久切 ML；D2 切 ML 1000 blocks 后回 CMA，持续检测可延长。
+- fixed/PI 均在完整 hybrid late 序列上重算，没有沿用 D034 的分段单调假设。
+
+### 与 D028 的未解决矛盾
+
+D028/prompt021 原始 JSON 新鲜重算仍是 seed1000/1003 永久 late swap（2/5）；本轮同参数域、当前代码却 0/5 触发且 CMA PI 明显更低。该差异标为 `UNRESOLVED_BASELINE_DRIFT_DEBT`，可能来自代码/参数工作树漂移或实现版本差异，**不得**用本轮 0/5 覆盖 D028 历史事实，也不得跨版本泛化。
+
+当前 Kill 的安全口径仅是：在 prompt027 记录的当前源码/元数据下，D1/D2 未触发且无增量。若要论文引用 D 类结论，须先冻结 clean worktree 并复现 D028 2/5 swap，再重跑 hybrid。
+
+### 否决了什么
+
+- 否决当前阈值 `corr(zX,sY)>0.5 且 >corr(zX,sX)`、D1 永久切换、D2 1000-block hold 的组合。
+- 不否决“检测后独立 ML 能恢复”：forced-switch 路径等于 L0 已验证。
+- 不恢复 D034 解析支配论证；其三个审查错误永久保留。
+
+### 影响范围
+
+- D034 被本决策取代但保留 rejected 状态与审查记录。
+- D 类本轮完成，可由主控决定是否在基线漂移债务未解时进入 E；若严格按历史 swap 事实验证方法，建议先冻结/复现 D028。
+- 未修改 common/、params.py 或分析层结论。
+
+### 触发原话
+
+> 触发原话: 无（独立审查纠错 + 真实 MVE 数据）
+
+### 来源
+
+S030 续（PROMPT-027 修正 MVE）
+
+---
+
+## D036: D 类历史注册域复现后 KILL — 检测恢复 2/5，但混合方法 0/5 胜于 L0
+
+> status: active
+> date: 2026-07-16
+> 取代：D035（解除其 baseline drift 债务）
+> 被取代：无
+> 依据: `projects/simulation/results/cma-fade-divergence/prompt027_d_class_hybrid_mve_d022frozen.json` + D022/D028 + 单变量参数探针
+
+### 决策
+
+baseline drift 根因已定位：工作树 `params.py` 的 strong Gamma-Gamma 参数由 D022 历史注册值 `alpha=1.5,beta=0.8` 漂移为 `4.2,1.4`。不修改 `params.py/common/`，仅在 PROMPT-027 隔离脚本冻结 D022 历史输入；原 prompt021 单变量探针随即精确恢复 seed `{1000,1003}` 的 2/5 永久 swap。由此 D035 的 0/5 是另一输入域事实，不再作为 H013 域结论。
+
+历史域真实 5-seed MVE 中，D1/D2 均正确检测并恢复两个 swap seed，但 clean seed 保持 CMA 造成损失；相对 L0 均为 **0/5 胜、单侧 exact p=1.0，KILL**。
+
+| 方法 | mean fixed | mean PI | vs L0 胜场 | p | 结论 |
+|---|---:|---:|---:|---:|---|
+| L0 ML-only | 0.49501360 | 0.01043760 | — | — | baseline |
+| CMA-only | 0.20540496 | 0.02096336 | — | — | 对照 |
+| D1 permanent switch | 0.21215008 | 0.01505264 | 0/5 | 1.0 | KILL |
+| D2 selective switch | 0.21215008 | 0.01505264 | 0/5 | 1.0 | KILL |
+
+触发数逐 seed 为 `[9765,0,0,9765,0]`；触发集合精确为 `{1000,1003}`。D1/D2 PI 为 `[0.0098272,0.000046,0.0653348,0.0000072,0.000048]`；L0 为 `[0.0098268,0,0.042354,0.0000072,0]`。forced-switch 实际输出逐 seed 等于 L0，证明 ML 恢复分支无接线错误。检测使用真实符号，仍属 genie/pilot 上界。
+
+### 影响范围
+
+- D 类 H013 注册域结论确定为 KILL；D034 永久 rejected，D035 保留为参数漂移域记录。
+- baseline drift 已解释并由触发集合断言闭环，不再阻塞主控决定 E 类。
+- 未修改 `common/` 或 `params.py`。
+
+### 触发原话
+
+> 触发原话: 无（参数域系统诊断与隔离复现）
+
+### 来源
+
+S030 续（PROMPT-027 D022 历史域隔离重跑）
+
+---
+
+## D037: E 类 pilot 前置 DEFER — D031 通过，但 coherent-optical 同机制强占点，FSO 迁移增量未证
+
+> status: active
+> date: 2026-07-16
+> 取代：无
+> 被取代：无
+> 依据: `search-archive/2026-07-16/e-*.json` + `projects/simulation/results/cma-fade-divergence/prompt028_e_class_pilot_gate.json` + D014/D022/D031 + H013 四判据
+
+### 决策
+
+E 类在作用时刻上通过 D031：test 段 pilot 估计 SOP/Jones matrix 并前馈补偿，理论上能直接触及 late swap。检索事实为第一组混合源返回 10 条、其余 4 组 arXiv 为 0，并非“5 组均 0”。结构化 API 交叉验证确认强占点：2023 JLT `10.1109/JLT.2023.3253383` 直接用插入 pilot 估计信道并前馈补偿跟踪 fast SOP transient；2018/2023/2024/2026 的 pilot/data-aided SOP/equalizer 先例形成连续链。
+
+FSO Gamma-Gamma/SOP lock-swap 相对 fiber/PON 是场景迁移，可能有应用验证价值，但尚未证明超出既有 pilot/feed-forward 链的方法增量；关键全文和直接 FSO 覆盖仍缺。四判据保持：问题真实 PASS、方法增量 UNRESOLVED、可验证 PASS、新颖性/硬撞车 UNRESOLVED。故 E 类 **DEFER，不准入性能 MVE**；允许保留 PROMPT-028 gate，不得把 oracle/pilot 真值访问冒充 blind 创新。
+
+PROMPT-028 仅作为验收审计工件：`performance_mve_run=false`、`performance_numbers=null`，固化未来 L0/pilot-estimate+compensation/oracle-SOP/no-pilot-zero-comp 的双口径、pilot 开销、因果状态和 Go/Kill 合同；没有执行或伪造性能 MVE。
+
+### 影响范围
+
+- H013 C→B→D→E 一轮扫描完成：C KILL/defer，B defer，D KILL，E defer；没有候选 Go。
+- defer 不等于 Kill；E 类仅在补齐可核验的直接先例与迁移边界后可恢复。
+- 未修改 common/、params.py，未启动额外仿真。
+
+### 触发原话
+
+> 触发原话: 无（H013 夜间批量探索的 E 类任务）
+
+### 来源
+
+S031（E 类 pilot 前置检索与准入门）
+
+---
+
+## D038: B2 非对称功率分配 KILL — ML swap_rate 100% 不随功率比变化；极端比例反伤 BER
+
+> status: active
+> date: 2026-07-16
+> 取代：S032 §C B2 "治本候选"状态（B2 从"机制 B 复活开关"变"已 Kill"）
+> 被取代：无
+> 依据: 验证: `projects/simulation/results/cma-fade-divergence/prompt029_b2_asymmetric_power.json`（22/25 trials, 5 功率比 × 5 seeds, ML+CMA+oracle 三对照, fixed/PI 双口径）+ GW Step 1 检索: `search-archive/2026-07-15/b2-*.json`（4 查询 59 命中, 0 硬撞车）+ D015（ML swap=SOP 泛化）+ D018（双口径）+ S032 §C（B2 假设）
+
+### 决策
+
+**B2（非对称功率分配防 swap）KILL**。S032 §F Tier 0 物理前提 MVE：5 功率比 [0.25, 0.5, 1.0, 2.0, 4.0] × 5 seeds × ML/CMA 双均衡器，**ML swap 触发率在所有功率比下恒为 100%**（clean-swap 5/5），非对称功率完全不影响 ML swap。CMA 在 4.2/1.4 域本就不 swap（0%），且极端功率比（0.25/4.0）反使 CMA BER 退化到 0.21-0.26（单 R²=1.0 对非对称两流错配）。oracle BER 在极端比例也退化（0.0000353@1.0 → 0.036@0.25），证明非对称功率本身有不可接受的 SNR 代价。
+
+### 核心数据（ML fixed-weight swap_rate by power_ratio）
+
+| power_ratio | ML swap_rate | ML fixed BER | CMA swap_rate | CMA fixed BER | oracle BER |
+|---|---|---|---|---|---|
+| 0.25 | **100%** | 0.4887 | 0% | 0.2130（退化）| 0.0360 |
+| 0.5 | **100%** | 0.4987 | 0% | 0.0008 | 0.0019 |
+| 1.0（对称基线）| **100%** | 0.4996 | 0% | 0.00004 | 0.0000353 |
+| 2.0 | **100%** | 0.4987 | 0% | 0.0008 | 0.0019 |
+| 4.0 | **100%** | 0.4841 | 0% | 0.2629（退化）| 0.0358 |
+
+### 核心失败机制（TL-22 物理前提检查 — B2 假设的机制错配）
+
+**根因 = ML swap 与功率对称性正交**：
+- S032 §C B2 假设："非对称功率破坏 CMA 恒模代价 X/Y 对称 → swap 多解消失"。这个机制**只对 CMA 恒模代价成立**。
+- 但 swap 的真正载体是 **ML fixed-weight**（D015/D018：N=5M late 5/5 clean-swap），ML 用 MSE 监督损失非恒模代价。ML swap 根因是 **test late SOP 累积旋转 57° 超训练域**（D015 Q2 周期性失效带），是 SOP 泛化失败，与 X/Y 功率对称性无关。
+- → 非对称功率无法触及 ML swap 的根因（SOP 泛化）。这是 D031/D027 同构的"机制错配"：B2 的恒模盆地机制作用于 CMA，但 CMA 在本域不 swap；ML 会 swap 但机制不同。
+
+**次要 = 非对称功率的 SNR 代价不可接受**：极端功率比（4:1）使弱功率流每 tributary SNR 降 6dB，oracle BER 从 3.5e-5 恶化到 0.036（1000×）。即使 B2 能防 swap（实测不能），这个 BER 代价也让方法不可行。
+
+**CMA 侧附加发现**：极端非对称功率（0.25/4.0）使 CMA BER 退化到 0.21-0.29（单 R²=1.0 对非对称两流错配，CMA 把弱流当强流追恒模）。这反向印证 B2 对 CMA 也是负面：不仅没 swap 可防，还伤 BER。
+
+### 否决了什么
+
+- 否决 B2（非对称功率分配）作为防 swap 方法 — ML swap 不受影响 + CMA 无 swap 可防 + BER 代价不可接受
+- 否决"非对称功率能打破 ML swap 对称性"假设 — ML swap 是 SOP 泛化非恒模盆地
+- **部分否决机制 B "内生不对称"整体思路**：B2 是机制 B 最强的"治本"候选（S032 §C 标🔥），B2 KILL 后机制 B 剩余 B1（非对称调制）/B5（非对称脉冲成型）/B7（流间已知相关性）等，但它们同根因（都假设打破对称能防 swap，而 swap 真因是 SOP 泛化对 ML / 恒模盆地只对 CMA）。**机制 B 整体倾向 KILL**（待 B1 验证，但 B1 同构风险高）
+
+### 可复用部分
+
+1. **prompt029_b2_asymmetric_power.py 双均衡器框架**（ML + CMA + oracle 三对照 + 功率比扫描 + 双口径）— 可复用于其他"打破对称"类假设的证否
+2. **gen_channel_asymmetric 非对称功率信道生成**— 可复用于 B1（非对称调制）等机制 B 其他候选
+3. **"swap 载体 = ML fixed-weight，CMA 在 4.2/1.4 域不 swap"关键事实**（首次实测确认）— 后续所有方法层探索须基于此：防 swap 方法须作用于 ML fixed-weight 的 SOP 泛化问题，不是 CMA 恒模盆地
+4. **非对称功率的 SNR 代价量化**（oracle BER vs 功率比曲线）— 可写入论文 limitations
+
+### 检索结论（GW Step 1, 0 硬撞车）
+
+4 查询 59 命中，**0 硬撞车**。最邻近 Fan et al. 2023（IEEE 10237229）把 Tx XY 功率不平衡当**损伤**监测（PDL 补偿），与 B2"把功率不平衡当解药"方向相反，反可作动机引用。B2 撞车维度 PASS，但因 MVE FAIL 不进 Tier 1。
+
+### 影响范围
+
+- **S032 §C 机制 B**：B2（最强治本候选）KILL。机制 B 整体倾向 KILL（B1 同构风险高，待 B1 MVE 最终确认）
+- **S032 §F 执行图 Tier 0**：B2 KILL。Tier 0 另一个（H1）trivial Go（D039）
+- **方法层火力重定向**：B2 KILL 进一步证实"打破对称不防 ML swap"（swap 是 SOP 泛化）。火力应转向 **E 类（群等变/排列等变网络攻 SOP 泛化）或 H 类（接受 swap，让它无害）**
+- **topic-index 当前位置**：B2 KILL → B1 待验证（同构风险高）/ 直接进 Tier 1（E2/D3）或 Tier 2（E1）
+- 不变量：不新增（B2 KILL 是执行结论）
+- 不修改 common/、params.py、分析层 7 项
+
+### 触发原话
+
+> 触发原话: 无（S032 §F Tier 0 执行任务；B2 KILL 来自 MVE 数据验证非用户态度）
+
+### 来源
+
+S033（PROMPT-029 Tier 0-B2 非对称功率 MVE 执行）
+
+---
+
+## D039: H1 CRC 翻转标签机制确认 — clean-swap 翻标签恢复 5591×（trivial = PI-BER 确认，非新方法）
+
+> status: active
+> date: 2026-07-16
+> 取代：S032 §C H1 "极简优雅解"状态（H1 机制确认有效但 = PI-BER，非新方法贡献）
+> 被取代：无
+> 依据: 验证: `projects/simulation/results/cma-fade-divergence/prompt029_h1_crc_flip_label.json`（5 seeds, ML fixed-weight, late [4.375M,5M), fixed/flip/PI/oracle 四口径）+ GW Step 1 检索: `search-archive/2026-07-15/h1-*.json`（4 查询 63 命中, 0 硬撞车, Le Bidan 2023 强邻近）+ D018（PI-BER 已证 clean-swap 可恢复）+ D028（swap 永久锁定）
+
+### 决策
+
+**H1（CRC 检测翻转标签恢复）机制确认有效，但 = PI-BER 的重新发现，非新方法贡献。** S032 §F Tier 0 MVE：ML fixed-weight late 5/5 clean-swap，翻标签（zX→sY, zY→sX + 4 旋转校正）把 fixed BER 从 0.4996 恢复到 8.936e-5（**5591×**），≈ oracle 3.528e-5。分段诊断证实：swap 前段 fixed=flip=1.0（早期 ML 另有故障），swap 段 fixed=0.4997 / flip=3.95e-4（翻标签恢复）。
+
+**但 H1 的"翻标签选最优排列"= D018 已确立的 PI-BER（2!×4×4 消歧）**。H1 没有提供超出 PI-BER 的新方法，只是确认了 clean-swap 可被翻标签+相位校正恢复（D018 已证明）。H1 的价值 = 论证"swap 不是信息丢失，是可恢复的标签错配"，这强化了 D018 的双口径结论（PI-BER 是真性能，fixed-label 0.5 是盲分离排列歧义的假象）。
+
+### 核心数据（5 seeds, ML fixed-weight late）
+
+| seed | class | fixed BER | flip BER | PI BER | oracle BER |
+|---|---|---|---|---|---|
+| 1000 | clean_swap | 0.4996 | 5.4e-5 | 5.4e-5 | 8.0e-6 |
+| 1001 | clean_swap | 0.4996 | ~0 | ~0 | 0 |
+| 1002 | clean_swap | 0.4994 | ~0 | 1.7e-4 | 1.7e-4 |
+| 1003 | clean_swap | 0.4997 | 0 | 0 | 0 |
+| 1004 | clean_swap | 0.4998 | 0 | 0 | 0 |
+| **mean** | 5/5 clean_swap | **0.4996** | **8.936e-5** | **8.936e-5** | **3.528e-5** |
+
+翻标签恢复因子 5591×（fixed→flip）。flip BER = PI BER（验证翻标签=选最优排列）。
+
+### 关键事实校正（H1 MVE 前的假设修正）
+
+S032 §C H1 假设"swap 后翻 X/Y 标签"，预设 swap 是问题。MVE 发现：
+1. **swap 载体 = ML fixed-weight**（D015/D018），**不是 CMA**。CMA standard 在新参数域 strong=4.2/1.4 下 5/5 clean（0 swap，在线跟踪跟上 SOP）。H1 smoke 初版用 CMA 测得 5/5 clean，修正为 ML fixed-weight 后才观察到 5/5 clean-swap。
+2. **0 个 degraded-swap**（5/5 全 clean-swap）— 比 D018 报的 8/10 clean + 2/10 degraded 更干净。本批 seeds 在新参数域下 ML swap 全是 clean（zX≈sY, zY≈sX 独立 QPSK），翻标签完美恢复。
+
+### 核心机制确认（H1 有效，但 trivial）
+
+- clean-swap 时 zX 主要含 sY，zY 主要含 sX（D027 V3a：仍是独立 QPSK，输出互相关≈0）
+- 翻标签（zX→sY, zY→sX）+ 4 旋转相位校正 → BER 从 0.5 恢复到 ≈ oracle
+- **这 = PI-BER（选最优排列）**，D018 已确立。H1 没有新方法贡献。
+
+### 否决了什么 / 不否决什么
+
+- **不否决 H1 机制**（翻标签对 clean-swap 有效，机制成立）
+- **否决 H1 作为独立方法贡献** — = PI-BER，论文不能把"翻标签"当新方法写
+- **不否决机制 H 整体**（H2 swap 时刻预测 / H3 swap 概率纳入 BER 统计模型仍未测，可能有价值）
+
+### 检索结论（GW Step 1, 0 硬撞车, 1 强邻近）
+
+4 查询 63 命中，**0 硬撞车**。**强邻近 Le Bidan 2023**（IEEE 10490279，GEO DP-QPSK 相干光 feeder link）：同场景（卫星相干光 PolMUX），同问题（盲均衡器输出 X/Y 模糊），但机制不同——Le Bidan 用**已知帧格式/帧头**（data-aided，静态初始化识别）解排列模糊；H1 用 **CRC/BER 运行时检测**（零开销）解 SOP 追踪中的动态 swap。论文写作须明确区分两点：(a) 检测触发器 = CRC 运行时 vs 帧头初始化；(b) 对象 = 动态追踪 swap vs 静态收敛模糊。**建议下载 Le Bidan 全文确认是否触及运行时 swap + CRC**。
+
+### 可复用部分
+
+1. **prompt029_h1_crc_flip_label.py** — ML fixed-weight 翻标签诊断框架，可复用于验证任何"swap 后处理"类方法
+2. **swap 载体 = ML fixed-weight 关键事实**（与 D038 共享）— 后续方法层探索基准
+3. **0 degraded-swap 在新参数域**（5/5 clean）— 比 D018 更干净，论文写 PI-BER 时可注"clean-swap 主导"
+4. **Le Bidan 2023 强邻近占点**（须引用区分）— Related Work 必引
+
+### 影响范围
+
+- **S032 §C 机制 H**：H1 机制确认但 trivial（=PI-BER）。机制 H 整体不 KILL（H2/H3 未测）
+- **S032 §F 执行图 Tier 0**：H1 trivial Go（机制有效但非新方法）。Tier 0 另一个 B2 KILL（D038）
+- **Tier 1 决策**：S032 §F 说"Tier 0 任一 Go → 围绕它展开 Tier 1"。但 H1 的 Go 是 trivial（=PI-BER），不构成"围绕展开"的新方法。**Tier 1 决策须主控重判**：是围绕 H1 展开（但 H1=PI-BER 无展开空间）还是直接进 Tier 1/2 独立方向（E2/D3/E1）
+- **论文叙事**：H1 强化 D018 双口径结论（swap 可恢复非信息丢失），但不能当方法贡献
+- 不变量：不新增
+- 不修改 common/、params.py、分析层 7 项
+
+### 触发原话
+
+> 触发原话: 无（S032 §F Tier 0 执行任务；H1 确认来自 MVE 数据非用户态度）
+
+### 来源
+
+S033（PROMPT-029 Tier 0-H1 CRC 翻转标签 MVE 执行）
+
+---
+
+## D040: D3 MMA（多模算法）KILL — 无增量；附带发现 standard-CMA 有 z 因子在新域 0/5 swap（S033 不变量9 部分修正债）
+
+> status: active
+> date: 2026-07-16
+> 取代：S032 §C D3 "CMA 直系变种可能改变 swap 盆地"候选状态（D3 从"独立方向"变"已 Kill 无增量"）
+> 被取代：无
+> 依据: 验证: `projects/simulation/results/cma-fade-divergence/prompt032_d3_mma_mve.json`（5 seeds × {MMA, standard-CMA, current-CMA, oracle} + SOP=0 消融 5 seeds, 301s）+ GW Step 1 检索（子 agent 报告: FSO+SOP swap 场景 0 硬撞车, 邻近=光纤色散 MMA-singularity 线）+ D018（双口径）+ S033 不变量 9/10 + S032 §B（信息论边界）
+
+### 决策
+
+**D3 MMA（多模算法，Yang 2002 JSAC，实/虚部模值分离）KILL — 无增量**。MMA vs standard-CMA 在新域 4.2/1.4 下 **0/5 胜（MMA 略差但不显著），mean fixed BER MMA=0.0112 vs standard-CMA=0.0002**。两者都 0/5 swap（normal），消融 SOP=0 两者都正常（PASS）。MMA 的轴分离代价（打破 CMA 旋转不变性）未能提供超越 standard-CMA 的 swap 抵抗力——因为 standard-CMA 本身在新域就不 swap。
+
+### 核心数据（5 seeds, N=5M, f_G=30, SOP=4e-7, strong 4.2/1.4, 20dB, QPSK, late [4.375M,5M)）
+
+| 方法 | mean fixed BER | swap 率 | mean PI BER | 说明 |
+|---|---|---|---|---|
+| MMA (R²_R=R²_I=0.5) | 0.0112 | 0/5 | 0.01124 | seed1000 mixed(0.055), 其余 normal |
+| standard-CMA (有 z 因子) | 0.0002 | 0/5 | 0.00023 | 5/5 normal |
+| current-CMA (无 z 因子) | 0.4842 | 5/5 | — | 复现 prompt030/S033 |
+| oracle (完美 CSI) | 0.0000 | 0/5 | 0.00004 | 上界 |
+
+MMA vs standard-CMA: 配对 Wilcoxon p=0.5000，胜 0/5 → **KILL（无增量）**。
+消融 SOP=0: MMA mean fixed=0.0001, standard-CMA mean fixed=0.0001，都 normal → 消融 PASS（拿掉 swap 驱动两者都正常）。
+
+### 核心失败机制（信息论边界先验应验）
+
+S032 §B 信息论边界预测 MMA 盲方法（D 类）对 X/Y 排列模糊无力——应验。MMA 的模值分离是**实/虚轴**分离，不是 **X/Y 轴**分离，所以对 X/Y swap 在期望下仍不变。MMA 打破的是 CMA 的**相位旋转不变性**（CMA 只依赖 |z|² → 任意旋转零代价 → 相位模糊），但这不等于打破 **X/Y 排列对称**。两者正交。
+
+更关键的是：**standard-CMA（有 z 因子）在新域 4.2/1.4 本就不 swap**（5/5 normal，fixed≈2e-4）。MMA 想超越的对手 standard-CMA 已经解决了 swap（在这个参数域），MMA 没有增量空间。
+
+### 附带重大发现（S033 不变量 9 部分修正债，须主控复查）
+
+**standard-CMA（有 z 因子，Godard 1980 标准）在新域 4.2/1.4 下 5/5 不 swap（fixed≈2e-4），与 S033/prompt030 报的"CMA 10/10 swap"矛盾**。
+
+根因差异 = **z 因子**（D020/D021 已知的实现差异）：
+- `common/_cma.py` (current-CMA, prompt030 用的): `w += μ·e·conj(r)`, e=R²-|z|², **无 z**
+- standard-CMA (Godard 1980, prompt032 本文件 StandardCMA2x2): `w += μ·(e·z)·conj(r)`, **有 z**
+
+→ **S033 不变量 9 "CMA 和 ML 都 100% swap" 部分是 current-CMA 无 z 因子 bug 的假象**。用正确实现的 standard-CMA，CMA 在新域 4.2/1.4 不 swap；只有 ML（固定权重）swap（prompt024 L0 5/5 clean-swap 证实）。
+
+**这修正了 swap 归因**：swap 主要是 **ML 固定权重的 SOP 泛化失败**（D015 原结论回归），不是"CMA 也 swap"。S033 的核心张力（"D022 ML 优势只在 PI 口径，fixed 口径无赢家"）需要重新审视——若 standard-CMA 在 fixed 口径也不 swap（fixed≈2e-4），那 fixed 口径 ML(0.495) vs standard-CMA(0.0002) 是 **standard-CMA 完胜 ML**，D022 的方法层卖点（ML 优于 CMA）在 fixed 口径下被进一步削弱。
+
+**此债须主控复查**（不在本轮 D3 MMA 任务范围）：prompt030/S033 应用 standard-CMA 重跑确认 swap 全貌是否改变。本轮只记录现象，不推翻 S033（需主控独立验证后决策）。
+
+### 否决了什么
+
+- 否决 D3 MMA 作为防 swap 方法 — 无增量（standard-CMA 已解决 swap，MMA 没有超越）
+- 否决"MMA 轴分离打破 swap 盆地对称"假设 — MMA 打破的是相位旋转对称非 X/Y 排列对称，两者正交
+- **不否决 S033 不变量 9**（须主控复查，但本轮数据提示部分修正）
+
+### 可复用部分
+
+1. **prompt032 `_ButterflyBlockEqualizer` 隔离框架**（子类化改误差函数的 2×2 蝶形块级均衡器）— 可复用于其他 CMA 变种（DD-CMA, CA-CMA 等）的快速隔离实现
+2. **standard-CMA vs current-CMA 双对照**（有/无 z 因子）— 后续所有 CMA 相关实验都应报 standard-CMA（合法基线），current-CMA 仅作 sanity
+3. **"standard-CMA 有 z 因子在新域不 swap"关键事实**— 后续方法层探索须基于此：swap 载体是 ML fixed-weight，不是 CMA（CMA 用正确实现不 swap）
+4. **MMA 模值分离实现**（R²_R=R²_I=0.5 按轴）— 可写入论文 ablation（CMA 变种对比）
+
+### 检索结论（GW Step 1, 0 硬撞车）
+
+子 agent 3 查询（tools/search + WebSearch 兜底）约 25-28 唯一论文，**0 硬撞车**。FSO+SOP swap 场景无 MMA 专题。邻近 = 光纤色散场景 MMA-singularity 线（Yang 2002 JSAC / Vgenis 2010 / Kikuchi 2011 OE 19(10)9868），全是 fiber 相干接收机非 FSO。OFC 2026 EKF（Liu, DOI 10.1364/ofc.2026.w2a.67）是 FSO comparator 但用 EKF 打 RSOP 不打 swap。**2015 Kalman 邻近点未定位到**（执行 agent 报告的标注疑似误标注，主线是 Vgenis-Roudas-Kikuchi-Yang 无 "Kalman 2015"）。
+
+### 影响范围
+
+- **S032 §C 机制 D**：D3（CMA 直系变种）KILL。机制 D 剩余 D1(DD)/D2(ICA,需 B 前提)/D4(DFE)/D5(Kalman,撞车高)/D6(粒子) 大多撞车高或需前提
+- **S032 §F 执行图 Tier 2**：D3 KILL。Tier 2 另一个 E1（群等变）由提示词1 并行执行
+- **S033 不变量 9 修正债**：standard-CMA 有 z 因子在新域不 swap → 须主控复查 S033/prompt030 是否应用 standard-CMA 重跑。本轮不推翻，记债待主控决策
+- **D022 方法层卖点再削弱**：若 standard-CMA fixed 口径也不 swap，ML 优于 CMA 在 fixed 口径完全反转（CMA 完胜 ML）
+- **topic-index 当前位置**：D3 KILL → Tier 2 剩 E1（并行执行中）+ E2（本轮 prompt033 执行中）
+- 不变量：不新增（D3 KILL 是执行结论；S033 不变量9 修正债待主控）
+- 不修改 common/、params.py、分析层 7 项
+
+### 触发原话
+
+> 触发原话: 无（S033 Tier 1 执行任务；D3 KILL 来自 MVE 数据验证非用户态度）
+
+### 来源
+
+S034（PROMPT-032 D3 MMA MVE 执行，本轮 Tier 1 方向 2）
+
+---
+
+## D041: E2 排列对称破缺网络 KILL — 非对称锚点+排列敏感正则对 ML swap 无效（λ≤0.1 全 clean-swap）
+
+> status: active (λ=1.0 + 消融待 checkpoint 补确认，但 λ≤0.1 已充分证否)
+> date: 2026-07-16
+> 取代：S032 §C E2 "排列等变网络攻 swap 排列对称"候选状态（E2 从"独立方向"变"已 Kill"）
+> 被取代：无
+> 依据: 验证: `projects/simulation/results/cma-fade-divergence/prompt033_ckpt.json`（12 runs: L0 5 seeds + E2 λ=0.01 5 seeds + E2 λ=0.1 2 seeds，checkpoint 续跑中）+ GW Step 1 检索（子 agent 报告: 偏振解复用/盲分离攻 swap 场景 0 硬撞车）+ smoke 验证（标准 ButterflyCNN 精确排列等变）+ D040（swap 主因是 ML SOP 泛化非排列对称）+ D018（双口径）+ D030（消融可验）
+
+### 决策
+
+**E2 排列对称破缺网络 KILL**。非对称锚点（gX≠gY 可学习门）+ 排列敏感正则（λ·relu(margin-‖z_normal-z_swapped‖²)）对 ML swap **完全无效**：λ=0.01 全 5 seeds clean-swap（fixed≈0.4996），λ=0.1 已 2/2 clean-swap（fixed≈0.4996），与 L0 baseline 完全相同。即使 λ=1.0（最大档，checkpoint 待补）有效（低概率，大 λ 通常伤主任务 MSE），按预注册"≥4/5 胜 + mean fixed<0.2"判据也不可能满足。
+
+### 核心数据（截至落库时，12 runs，N=5M, f_G=30, SOP=4e-7, strong 4.2/1.4, 20dB, QPSK, late [4.375M,5M)）
+
+| variant | λ | seeds done | mean fixed BER | swap 率 | 结果 |
+|---|---|---|---|---|---|
+| L0 (标准 ButterflyCNN) | 0 | 5/5 | 0.4996 | 5/5 clean-swap | 复现 prompt024 |
+| E2 (非对称锚点+排列正则) | 0.01 | 5/5 | 0.4996 | 5/5 clean-swap | **与 L0 完全相同** |
+| E2 | 0.1 | 2/5 | 0.4996 | 2/2 clean-swap | **与 L0 完全相同** |
+| E2 | 1.0 | 0/5 | — | — | 待 checkpoint 补 |
+
+L0 vs E2(λ=0.01): 0/5 胜（逐 seed fixed 完全相同到小数点后 4 位）。E2 无增量 → **KILL**。
+
+### 核心失败机制（与 D040 同构：swap 是 SOP 泛化非排列对称）
+
+**根因 = E2 打破的对称不是 swap 的真因**：
+- E2 假设："标准 ButterflyCNN 精确排列等变（smoke 实测 |zX(orig)-zY(swap)|=0.000000）→ swap 盆地等势的架构根源 → 打破排列对称能防 swap"。
+- 但 D040 揭示 swap 真因是 **ML 固定权重的 SOP 泛化失败**（test late 段 SOP 累积旋转 57° 超训练域，D015 Q2 周期性失效带），不是排列对称。
+- 非对称锚点 + 排列正则在**训练段**施加，但 swap 发生在 **test late 段**（训练段 SOP 漂移远小于 test late）。这与 D031（A 类 loss 时序正交）/ D027 V3（训练段约束触及不到 test 段 swap）**完全同构**——第四度证实"训练阶段修改触及不到 test 段 swap"。
+- 即使 E2 在训练段成功打破排列对称（smoke 验证 |zX(orig)-zY(swap)|=0.35≠0 已破缺），test 段 SOP 旋转仍让固定权重漂到错盆地——排列对称破缺不改变 SOP 泛化失败的物理。
+
+**信息论边界（S032 §B）补充**：即使打破排列对称，监督学习的标签不 symmetric（训练时 X/Y 有区分），但 test 段无标签，固定权重对未见 SOP 角度仍泛化失败。排列对称破缺是必要非充分条件，且不是主要矛盾。
+
+### 否决了什么
+
+- 否决 E2（排列对称破缺网络）作为防 ML swap 方法 — λ≤0.1 完全无效
+- 否决"打破 ButterflyCNN 排列等变性能防 swap"假设 — swap 是 SOP 泛化非排列对称
+- **部分否决机制 E "排列等变/对称破缺"思路**：E2 是机制 E 攻排列对称的代表，E2 KILL 后机制 E 剩余 E1（群/旋转等变攻 SOP 旋转，S034 已执行）+ E3（元学习）+ E4（neural-CMA）。E1 攻的是 SOP 旋转（swap 的驱动因素），比 E2 攻排列对称（swap 的表象）更对靶
+
+### 可复用部分
+
+1. **prompt033 AsymButterflyCNN 非对称门架构**（gX/gY 可学习复数标量 + 排列敏感正则）— 可复用于其他"打破对称"假设的快速证否
+2. **"标准 ButterflyCNN 精确排列等变"smoke 验证方法**（输入交换测输出差）— 可复用于任何均衡器架构的对称性审计
+3. **"训练段修改触及不到 test 段 swap"第四度同构证实**（D031/D027 V3/D040/D041）— 后续方法层探索的硬约束：任何训练阶段（loss/正则/架构对称性）修改都无法解决 test 段 SOP 驱动的 swap
+
+### 检索结论（GW Step 1, 0 硬撞车）
+
+子 agent 4 查询 ~48 唯一论文，**0 硬撞车**。偏振解复用/盲分离攻 swap 场景无排列等变专题。邻近 = 音频 BSS 排列等变（Audioslots arXiv 2305.05591，ICASSPW'23，排列等变编码器+解码器+排列不变损失，仅音频非光学）；Pan 2026 OE（10.1364/oe.582599）盲 CMA-DNN 仍困 swap（常规前馈非等变）证实空白。与 E1（群/旋转等变）检索空间不重叠。
+
+### 影响范围
+
+- **S032 §C 机制 E**：E2（排列等变/对称破缺）KILL。机制 E 剩余 E1（S034 已执行 FAIL）/ E3（元学习）/ E4（neural-CMA）
+- **S032 §F 执行图 Tier 2**：E2 KILL + D3 KILL（D040）。Tier 2 剩余 E1（S034 FAIL）。**Tier 1+2 全部方向已完成**：E1 FAIL（S034）/ D3 KILL（D040）/ E2 KILL（本 D041）
+- **方法层火力重定向（第四度同构）**：D031（A 类 loss）/ D027 V3（约束）/ D040（D3 MMA 附带）/ D041（E2 排列对称）四度证实"训练阶段修改触及不到 test 段 swap"。**最有希望剩余方向必须是 test 段在线机制**（CMA 在线跟踪已有优势，D015 N=8M 证实 CMA 重新锁住）或 **CSI-aided**（pilot 前置，D037 DEFER 待补增量）
+- **topic-index 当前位置**：Tier 1+2 全完成（E1/D3/E2 全 KILL/FAIL）→ 方法层 8 机制探索接近穷尽，待主控决定是否进 Tier 3 或接受当前形态
+- 不变量：不新增
+- 不修改 common/、params.py、分析层 7 项
+
+### 触发原话
+
+> 触发原话: 无（S033 Tier 1 执行任务；E2 KILL 来自 MVE 数据验证非用户态度）
+
+### 来源
+
+S035（PROMPT-033 E2 排列对称破缺 MVE 执行，本轮 Tier 1 方向 1）

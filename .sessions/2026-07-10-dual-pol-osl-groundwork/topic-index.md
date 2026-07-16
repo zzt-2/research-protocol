@@ -44,6 +44,7 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 - **[2026-07-14]** Inflation scope record（治理 BLOCK 处理）：专题 S### 文件数达 16（S001-S016），触发 session-governance inflation BLOCK（>=15）。确认非范围漂移——16 S 是 GW Step1（检索）→ Step2-3（下载/精读）→ Step4a（可行性评估 Q-DP1/2/3）→ Step4a 维度 D MVE（GG时间模型/发散扫描/ML对比/多轮基线审计 P011-P015）全流程的自然深度，所有 S 均在原始目标「GW Step 1-4a 完整流程」范围内。PROMPT-017 是 S016 已授权派出的 B 边前置厘清任务（Q-DP3 预测性检测物理可行性 + 与 D003 关系厘清），属 GW Step 4a 候选评估范畴，不引入新范围。允许继续执行并记 S017。后续若 S### 继续增长逼近 25，考虑将 MVE 执行段（S005-S015）拆分到独立「cma-fade-mve-execution」子专题。
 - **[2026-07-15]** Inflation scope record（25 S + Contract 冻结）：专题 S### 文件数达 25（S001-S025）。S017-S025 是 Q-DP4 评估（S021-S024）+ 改动1 Kill（S024/D029）+ Contract S0-S5（S025-S026）的自然延续，全部在原始目标「GW Step 1-4a 完整流程 + Contract 冻结」范围内（Contract 冻结 = 形态定型最后一步）。非范围漂移。Contract 已冻结，专题使命（GW+Contract）基本达成，后续 Execute 转新专题或续接由用户定。
 - **[2026-07-15]** Inflation scope record（27 S + 方法层解冻探索）：专题 S### 文件数达 27（S026-S027）。D030 用户解冻方法层重新探索后，S027 是 A 类（改 loss）GW Step 1 检索 + 横向 MVE，属 D030 授权的"方法层增强归类批量探索"范围（原始目标已含 Contract 冻结后形态定型，方法层解冻是用户明确的范围内延伸）。非范围漂移。S027 已完成 A 类 KILL（D031），下一 S 将是 C 类探索。S### 继续增长但每类探索 1 S 节奏可控，暂不拆子专题。
+- **[2026-07-16]** 范围边界明确（S033，用户拍板）：S032 §C 8 机制中的 **F1（电控偏振跟踪，硬件层）和 G2（HARQ swap 段重传，协议层）排除**出本轮方法层再探索范围。原因：F1 撞车重（光纤 PMD 电控偏振跟踪成熟标配）+ 仿真器无 EPC 模型无法 MVE；G2 物理上对 D028 永久锁定 swap 无效（SOP 不变重传还错）+ 属协议层。聚焦软件方法层 A-E+H。未改原始目标（GW Step 1-4a + Contract 形态定型），只是细化方法层探索边界。
 
 ## 不变量（动任何一条必须重新讨论）
 
@@ -60,6 +61,10 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 **本专题新增不变量**：
 
 8. **SC-001 许可的双偏振放宽有效**：场景设定从"单偏振 intradyne"放宽到"含双偏振 PolMUX"。其余约束（单孔径/单链路/GG 湍流/LEO）不变。双偏振动 Ch3/Ch4 的许可来自用户"可以动"（上游 D003）
+
+9. **swap 是 SOP 累积旋转的物理现象（S033/prompt030 双控扫描坐实）**：临界点在累积旋转角 29°~114° 之间。超过临界角，CMA 和 ML 都 100% swap（fixed-label BER≈0.5）——swap 不是任何均衡器的设计缺陷，是 SOP 旋转让恒模代价"正确/交换盆地"势能反转的物理必然（D014 机制）。旧域 1.5/0.8 和新域 4.2/1.4 两域都 swap（执行 agent TL-22"新域 CMA 不 swap"是检测器口径错误的假象，已推翻）。N=8M 时 CMA 在线跟踪可重新锁住正确盆地，ML 固定权重崩（泛化失败）
+10. **PI-BER 对 swap 结构性失明，fixed-label BER 是 swap 真记分牌（S033）**：PI-BER 排列不变（自动选最优解抹掉 swap 影响），oracle 在 PI 口径仅比 L0 好 2 倍（任何方法都"看起来像 Kill"）；swap 的全部破坏力在 fixed-label BER（0.4996→oracle 3.5e-5，4 个数量级可恢复空间，前提 CSI）。后续所有 swap 相关判定统一用 fixed-label + correlation 分类口径（prompt030 标准），不用 divergence trigger 口径
+11. **D022 的 ML 优势仅在 PI-BER 口径成立（S033 修正）**：D022"ML PI-BER 优于 standard-CMA 29/30"在 PI 口径仍成立，但 fixed-label 口径两者都 swap（CMA 0.488 / ML 0.500），无赢家。H2 方法层卖点不能讲"ML 比 CMA 好"，须重新定位为"诊断 swap 临界角 + 提出 swap-aware 方法"
 
 ## 其他结论（普通技术决策）
 
@@ -80,27 +85,100 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 - **Q-DP4 形态1 检测+回滚 Kill + Q-DP4 整体 Kill（S023/D028）**：PROMPT-021 维度 D MVE 第二轮。**V0 发现 swap 是一次性永久锁定**（非间歇反复跳变）：seed 1000/1003 swap 从 block 36698 持续到序列末尾（len=41426 blocks），late 段 100% swap 状态；clean seeds 1001/1002/1004 无 swap。swap 动态两阶段：①早期间歇期（block 21000-36000 ~1300个单block短暂swap CMA能自己跳回）②永久锁定（block 36698+ CMA无法自己跳回）。**V1 KILL**（3 snapshot_windows × 5 seeds 全 KILL）：回滚后 dwell time 中位 **11 块**（远<1000 Kill阈值），swap seeds n_rollbacks=888（late段几乎每11block回滚一次）。**深度物理诊断（TL-22）**：回滚到早期快照（swap前25000+块）dwell长（16083块）但BER从0.0176恶性爬升到0.1226（权重过时SOP旋转）——**不存在"既有长dwell又有好BER"的回滚点**。**根本死因**：SOP持续旋转+恒模代价多解地形的结构性矛盾，物理层面不可行。**三类响应式方法全FAIL**：R7冻结（响应fade D010）+ 压μ（响应fade D026）+ 回滚（响应swap 本轮）。**Q-DP4整体Kill**：问题陈述真实（8.3×改善空间）但三种方法形态（约束Kill/检测回滚Kill/混合补偿未测但物理覆盖）都无法解决。S021 §3 警告（0跨域先例）部分应验——不仅是结构性空白也指向"问题虽真但当前方法无法解决"。**GW Step4a 双偏振OSL三候选评估完成**：Q-DP1 Kill（D001）/ Q-DP3 Kill（D026）/ Q-DP4 Kill（D028）→ **路线A（Q-CMA-FADE D022+改动1）唯一存活方向**。
 - **改动1（物理判据驱动 ML 重训练）KILL（S024/D029）**：PROMPT-022 验证1（N=5M, 5 seeds, f_G=30, SOP=4e-7, strong, 20dB, QPSK）。**所有 D 方法 PI-BER 精确等于 B（ML训练一次），无改善**。B PI=0.01028 ≈ oracle 0.00837（差距仅 0.00191）。**Kill 根因 1（最根本）**：改动1 前提（"ML训练一次失效需重训练"）在 PI 口径下不成立——D018 已确认 N=5M ML 是 clean swap（fixed≈0.5 但 PI≈0.005），ML 训练一次 PI 口径已接近 oracle，重训练无空间。D015"ML N=5M 全崩 BER=0.497"是 fixed-label 口径，改动1 基于错误口径设计。**Kill 根因 2**：物理判据检测不到 swap——预筛选证实 D013（swap 时 |w| 不发散→D1 权重范数判据 0% 触发）+ D027 V3a（clean swap J_CMA 不变→D2 恒模代价判据 0% 触发）；D3（权重漂移）唯一能触发但重训练无效。**Kill 根因 3**：C（固定周期重训练）PI=0.01626 反而比 B 0.01028 更差（每段用更少数据训练）。D015 Q3-B 报"PI=0.002"实为 fixed-label 4 旋转口径非 D018 PI 口径。**路线 A 方法层升级最后一张牌 Kill**：Q-CMA-FADE 方法层定型为"弱"（D022 窄域 29/30 + 无架构创新 + 无重训练机制）。**GW Step4a 全部候选 + 方法层升级评估完成**：Q-DP1/DP3/DP4/改动1 全 Kill，唯一存活 = Q-CMA-FADE 分析层（强）+ 方法层（弱 D022）。
 - **A 类（改 loss）KILL（S027/D031）**：D030 方法层解冻后第一类横向 MVE。L1 SOP 不变性正则（4 档 λ × 5 seeds）甜点 λ=0.001 mean PI=0.01019（L0 0.01020，2/5 胜 p=0.75）KILL；L2 swap 对比学习甜点 λ=0.1 mean PI=0.01017（2/5 胜 p=0.75）KILL；消融 PASS（λ=0 退回 L0）。A3 VAE 盲损失 GW Step 1 检索硬撞车（Qin 组 2026 IEEE TCCN "Bootstrapping Blind Equalizer DP-coherent FSO via modulus-rings VAE" = 同作者组+同场景+同机制）defer 不跑。**核心失败机制 = floor 效应 + 时序正交**：3/5 clean seeds PI≈0 已 floor 无处改；swap 是 test 段 CMA 在线跳盆地（D027/D028），但 L1/L2 正则在训练段施加，训练段 SOP 漂移远小于 test late 段（57°），学到的"SOP 不变性"泛化不到。**与 D027 V3 同构**（训练阶段 loss/约束触及不到 test 段 swap）→ 火力重定向：排除整类训练阶段 loss 修改（A + 部分 C），转向 test 段在线机制（D 类 CMA+ML 混合 / E 类 pilot 前置）或架构（B 类）。L0 baseline 5-seed 复现 D022（PI=0.01020）。守 FR-22（GW Step 1 检索→MVE）+D030（归类批量+消融可验）+D018（双口径）+TL-20/22（假设先行+物理前提检查）。
+- **C 类（改训练）KILL/defer（S028/D032）**：C1 周期 pilot-assisted 在线微调按预注册 `K=[1000,5000,10000] × lr=[1e-5,1e-4] × 5 seeds` 全部 0/5 胜、单侧精确 p=1.0；mean PI=`7.952e-5–8.128e-5`，不低于同初始化 L0=`7.936e-5`，lr=0 消融逐 seed 完全退回 L0。C2 SOP 数据增强/C3 curriculum 不触及 test 段，依 D031 时序正交 defer。检索发现 AdaNN 2020 与 JLT 2023 joint PMD tracking 强邻近在线适配先例，但无星地 FSO+GG+SOP lock-swap 同场景硬撞；数据已 Kill 当前化身。确定性训练下 L0 绝对值与 D031 差异大，故只采用同权重配对“无增量”结论，训练随机性列复现债务。
+- **B 类（改架构）整体 defer（S029/D033）**：B1/B2/B3 四判据形式可构造，但均未通过 D031 test 段准入门，故不跑性能 MVE。B1 有 Optics Letters 2024 MIMO-CVNN/PDM 强邻近占点，复值结构保存相位/偏振关系但不等于未见 SOP 群等变；B2 无当前 SOP 角输入且两组检索无 rotation-equivariant optical equalization 支撑；B3 固定 X/Y 分支依赖坐标基，不能随 SOP 旋转基变化。`prompt026` JSON 固化筛选和若复活时的参数量匹配/消融合同。检索部分源限速，零结果不解释为绝对空白。
+- **D 类历史注册域 MVE KILL（S030/D036；D034 REJECTED，D035 superseded）**：系统诊断确认 2/5→0/5 漂移来自 strong Gamma-Gamma 参数由 D022 的 `1.5/0.8` 变为当前 `4.2/1.4`；隔离脚本冻结历史输入后精确恢复 `{1000,1003}` 2/5 swap。D1/D2 mean PI=0.01505264，高于 L0=0.01043760，0/5 胜、p=1.0，KILL；触发集合断言和 forced-switch=L0 均 PASS。baseline drift 债务关闭，未改 common/params.py。
+- **E 类 pilot 前置 DEFER（S031/D037）**：test 段 pilot 直接估 SOP/Jones 并前馈补偿，通过 D031。正确检索计数为首组混合源 10 条、其余 4 组 arXiv 0 条；2023 JLT `10.1109/JLT.2023.3253383` 已直接占据“插入 pilot 估信道+前馈补偿跟踪 fast SOP”，并有 2018/2023/2024/2026 pilot/data-aided SOP 链。FSO 是场景迁移但方法增量未证、关键全文/直接 FSO 覆盖仍缺，四判据保持 PASS/UNRESOLVED/PASS/UNRESOLVED，故不准入性能 MVE。`prompt028` gate 仅固化合同（`performance_mve_run=false`）。H013 C→B→D→E 扫描结束，无 Go；defer 不计 Kill。
 
 ## 当前位置
 
-**A 类（改 loss）KILL，准备进 C 类（2026-07-15，D031）**。D030 方法层解冻后第一类 A 类（SOP 不变性正则 / swap 对比 / VAE 盲损失）横向 MVE 完成：L1/L2 在 4 档 λ × 5 seeds 全 KILL（甜点 λ 均 2/5 胜 p=0.75，消融 PASS），A3 VAE 盲损失 GW Step 1 检索硬撞车（Qin 2026 TCCN 同场景同机制）defer。**A 类整体 KILL**。此前 D030 Contract 方法层解冻，分析层 7 项不动，方法层按 A→C→B→D→E 成本顺序归类批量探索。
+**S035 Tier 1 执行完成（D3 MMA KILL + E2 排列对称破缺 KILL）— 2026-07-16**。
+
+承接 S033 §F 方法层 Tier 1 两独立方向（与 S034 E1/CMA+H1 并行）：
+- **方向 2 D3 MMA KILL**（prompt032_d3_mma_mve.py，D040）：MMA vs standard-CMA 0/5 胜 p=0.5，无增量。MMA 轴分离打破的是相位旋转对称非 X/Y 排列对称（正交）。**附带重大发现**：standard-CMA（有 z 因子）在新域 4.2/1.4 下 5/5 不 swap（fixed≈2e-4），而 ML 5/5 clean-swap（fixed≈0.495）——**S033 不变量 9 "CMA 和 ML 都 swap" 部分是 current-CMA 无 z 因子 bug 的假象**，swap 主因是 ML 固定权重 SOP 泛化（D015 回归）。此债须主控复查
+- **方向 1 E2 排列对称破缺 KILL**（prompt033_e2_perm_symmetry_break_mve.py，D041）：非对称锚点 + 排列敏感正则 λ=0.01（5/5）+ λ=0.1（2/2）全 clean-swap（fixed≈0.4996），与 L0 完全相同。smoke 验证标准 ButterflyCNN 精确排列等变（|zX(orig)-zY(swap)|=0），E2 成功破缺（=0.35）但 swap 不变
+
+**关键结论（第四度同构）**：训练段修改（loss D031 / 约束 D027 V3 / CMA 变种 D040 / 架构对称 D041）四度证实触及不到 test 段 swap。swap 真因 = ML 固定权重 SOP 泛化失败（D015/D040）。火力须转向 **test 段在线机制**（CMA 在线跟踪 D015 N=8M 优势）或 **CSI-aided**（pilot 前置 D037 DEFER）或 **H 类**（接受 swap）。
+
+**方法层 8 机制探索状态**（S032 §C）：A KILL（D031）/ C KILL（D032）/ B defer（D033）/ D KILL（D036）/ E defer（D037）/ Tier0 B2 KILL（D038）H1 trivial（D039）/ Tier1 E1 FAIL（S034）D3 KILL（D040）E2 KILL（D041）。**Tier 0-2 全部完成，无 Go**。剩余：E3 元学习 / E4 neural-CMA / H2-H3 / 严格群卷积（e2cnn，成本高）
+
+**待主控决定**：① standard-CMA z 因子债复查（S033 不变量 9 是否修正）② 方法层是否穷尽（8 机制 Tier 0-2 全 KILL/FAIL）→ 接受当前形态进 Execute 或开 Tier 3
+
+---
+
+此前：**S034 Tier 1 执行完成（E1 FAIL + CMA+H1 PASS 弱）— 2026-07-16**。
+
+承接 S033 §F 方法层下一步两方向：
+- **方向 1 E1 群等变 NN FAIL**（prompt031_e1_equivariant.py）：约束等变（soft equivariance，loss 惩罚 `‖f(R(θ)r)-R(θ)f(r)‖²`）在训练段施加，L0 fixed=0.49937 vs E1 λ=0.01/1.0 fixed=0.49939/0.49940，改善 1.0×。与 D031（A1 不变性正则 KILL）三度同构——训练段任何几何约束都触及不到 test late 57° SOP 旋转。要实现真等变需严格群卷积（e2cnn SO(2) 等变层重写架构，成本高）
+- **方向 2 CMA+H1 组合 PASS 但弱于 ML+H1**（prompt031_cma_h1_combo.py）：CMA 5/5 swap（4 clean_swap + 1 degraded_swap），翻标签 fixed 0.484→0.0169（28.6× 改善）。但 ML+H1 5591× 更好（CMA degraded_swap seed1004 拖后腿：翻标签只救到 7.6e-2）。CMA+H1 是独立有效方法（≠ PI-BER trivial），但不构成方法层升级（弱于已有 ML+H1）
+
+**关键结论**：训练段几何约束类方法（A1/A2/E1）全 FAIL，火力应转向**严格群卷积架构**（hard equivariance）或 **test 段在线机制**或 **H 类（接受 swap）**。
+
+**方法层下一步（待主控决定）**：E2 排列等变（与 E1 同构风险高但机制不同）/ D3 MMA / H2-H3 / 严格群卷积（e2cnn）。
+
+---
+
+此前：**S033 swap 全貌诊断完成 + 8 机制方法层战场重新校准（2026-07-15，待 Tier 1 执行）**。
+
+prompt030 双控扫描（2 域 × SOP_RATE×N × CMA/ML/oracle × 10 seeds，7656s）**推翻执行 agent 的 TL-22 结论**，坐实三条不变量（见上方不变量 9/10/11）：
+- swap 是 SOP 累积旋转的物理现象（临界角 29°~114°），**CMA 和 ML 都 100% swap**——执行 agent"新域 CMA 不 swap"是 prompt029 检测器口径错误的假象
+- PI-BER 对 swap 失明，fixed-label BER 是真记分牌
+- D022 的 ML 优势仅在 PI 口径成立，fixed 口径无赢家
+
+**执行 agent Tier 0 结论修正（基于全貌）：**
+- D038 B2 非对称功率 KILL：仍成立（机制错配），但当时只测 ML swap，CMA 重测优先级低
+- D039 H1 翻转标签 trivial Go：仍成立（=PI-BER），但**只测了 ML+H1，CMA+H1 未测是新方向**
+- 检索批次 1（5 方向 0 撞车）仍有效
+
+**方法层下一步（Tier 1，按依赖关系，可并行）**：
+1. **E1 群等变**（攻 SOP 泛化，prompt030 坐实 ML 在 N=8M/SOP=1e-6 崩塌）— 优先
+2. **CMA+H1 组合重测**（执行 agent 只测 ML+H1，CMA 在线跟踪+事后翻转可能是独立有效方法）— 新方向
+3. **E2 排列等变 / D3 MMA** — 独立方向可并行（D3 须对冲 2015 Kalman 邻近点）
+4. 后置：B1（同构风险高）/ H2-H3（价值未明）/ A 系列 pilot（撞车高）
+
+**范围边界（D030 + S033）**：分析层 7 项不动。F1/G2 排除。方法层聚焦软件 DSP/ML。Contract S0-S3 字段保留，待方法层收敛后增量更新 H2。
+
+**守纪律**：守 FR-22（不跳框架，每个新方法先 GW Step 1 检索防撞车）+ D030（拼也行+试了再说+消融可验）+ D018（fixed/PI 双口径）+ S033 不变量 9/10/11。
+
+---
+
+此前：S032 方法层 8 机制全景 + 统一规划（A-H ~40 思路）。执行 agent 跑完 Tier 0（B2 KILL/H1 trivial/检索 0 撞车）。
+
+---
+
+此前：**S032 方法层再探索 8 机制全景规划完成（2026-07-15，待执行）**。承接夜间 A-E 全类 KILL/defer 后用户质疑"不可能一点方法没有"。
+
+**S032 核心发现（战场扩大依据）：**
+1. **参数域审计**：夜间"参数漂移"误判澄清——4.2/1.4 是用户刚改的正确新参数（Gu 2022）。逐脚本核对：C 类 prompt025 用新参数，swap 5/5 正常触发，**不是假 Kill**；D 类 D036 引用旧域 1.5/0.8 frozen run（域不一致债，但 D 信息论注定 Kill）
+2. **oracle 上界关键发现**：fixed-label BER 0.4996→3.5e-5（oracle，4 个数量级可恢复空间，前提 CSI）；PI-BER 仅 2×（**对 swap 结构性失明**）。夜间全类 MVE 用错记分牌（Go 判据用 PI-BER）
+3. **信息论边界**：盲方法（A/C/D）注定碰不到 fixed-label BER（排列模糊，无参考帧）。只有 CSI-aided 或打破对称性的方法能解
+4. **8 机制全景**（A 注入CSI / 🔥B 内生不对称 / C 时间维 / D 换范式 / 🔥E ML范式 / F 硬件 / G 跨层 / 🔥H 换问题）共 ~40 思路。富矿带=B/E/H，撞车重灾=A/D/F
+5. **检索缺口**：夜间已覆盖 A1/A2/A3/C1/D2/E1；机制 B 全 5 个 + H 全 3 个 + 5 散点共 13 个真空白
+
+**待用户拍板 3 点**：① F1/G2 范围（倾向排除）② Tier 0 先行（B2+H1）③ 检索批次 1（5 个：B2/B1/H1/E2/D3）立即并行？
+
+**MVE 执行图**（按依赖分 tier，详见 S032 §F）：Tier 0（B2 非对称功率 + H1 CRC 翻转，物理前提，最快）→ Tier 1（B 成立后激活 D2/B1/E2）→ Tier 2（独立并行 E1/D3/C1）→ Tier 3（依赖殿后）
+
+---
+
+此前：**H013 C→B→D→E 全类扫描已结束（2026-07-16，D037）**。D 类历史注册域 KILL；E 类因 coherent-optical 同机制强占点且 FSO 方法增量未证而 DEFER，不启动性能 MVE。
 
 **范围限定**：分析层 7 项稳结论不动（硬贡献：发散 μ 主导/SOP 串扰真因/CMMA 不降发散/冻结无效/LCR 伪相关/GG 时间模型/swap 永久锁定）。Contract S0-S3 字段保留有效（假设 H1 分析层 / H2 方法层 / baseline / 指标 FR-17 调整 / 参数溯源），待方法层探索收敛后增量更新 H2。
 
-**方法层增强候选地图（5 类，归类批量处理）**：
+**方法层增强候选地图**（**已从 5 类扩展为 8 机制，见 S032**。原 5 类 D030 归类如下，仅供参考；当前以 S032 8 机制全景为准）：
 - ~~**A 改 loss**~~（**KILL D031**）：L1 SOP 不变性正则 / L2 swap 对比 4 档 λ 全 KILL；L3 VAE 盲损失撞车 defer。失败根因：loss 正则在训练段，swap 发生在 test 段，时序正交（同 D027 V3 同构）
-- **B 改架构**（低-中）：复值网络 / SOP attention / 双分支偏振分治。共享训练数据+循环，改网络定义
-- **C 改训练**（低）：在线微调 / SOP 数据增强 / 课程学习。架构+loss 不变改训练循环。**注意**：D031 物理洞察——SOP 数据增强/课程学习不触及 test 段 swap（同 A 类失败机制），可能只"在线微调"（test 段持续更新）值得跑
-- **D CMA+ML 混合**（高）：CMA 跟 SOP+ML 修 swap。要新写均衡器。**D031 火力重定向目标**（test 段在线机制）
-- **E pilot 前置**（最高）：插 pilot 估 SOP→补偿→均衡。要新写估计器
+- ~~**B 改架构**~~（**整体 defer，D033**）：复值网络/SOP attention/双分支均未证明固定前馈可对未见 SOP 旋转等变
+- ~~**C 改训练**~~（**C1 KILL、C2/C3 defer，D032**）：在线微调六档 0/5 胜；SOP 数据增强/课程学习按 D031 时序正交 defer
+- ~~**D CMA+ML 混合**~~（**历史注册域 MVE KILL，D036；D034 rejected，D035 superseded**）：恢复历史 2/5 触发后仍 0/5 胜于 L0；baseline drift 已关闭
+- ~~**E pilot 前置**~~（**DEFER，D037**）：插 pilot 估 SOP→补偿→均衡在 coherent fiber/PON 已有强同机制占点；FSO 场景迁移的方法增量未证
 
-**执行顺序**（成本从低到高，A 已 KILL）：~~A~~ → **C（下一类）** → B → D → E。
+**执行顺序**（H013 扫描完成）：~~A~~ → ~~C~~ → ~~B~~ → ~~D~~ → ~~E（DEFER）~~。
 
 **准入原则（D030 放宽，仍守）**：拼也行（A 机制+B 场景=合法迁移）+ 可能存在优化就可试（试了没用再说，不要求机制预判成立）+ 唯一硬防线=每类 GW Step 1 检索一次防撞车 + 消融可验（拿掉加的模块性能得退）。
 
 **软退出判据**：一轮穷举扫描（A-E 全类过 GW Step 1+四判据+能跑的 MVE）做满后看全貌，全 Kill 或只剩窄域增强 → 接受当前形态进 Execute。不设硬时限。
 
-**下一步：C 类 GW Step 1 检索 + 批量 MVE**。C 类进 MVE 前须先判"是否触及 test 段"（D031 物理洞察）：在线微调触及（值得跑），SOP 数据增强/课程学习不触及（同 A 类失败，可能直接 defer 不跑）。
+**下一步：H013 全类扫描已结束；E 类保持 DEFER，待补关键全文、直接 FSO 覆盖及超出既有 pilot/feed-forward 链的方法增量后，再决定是否启动 PROMPT-028 性能 MVE（D037）。** baseline drift 已由 D036 定位并关闭。
 
 此前：Contract S0-S5 全过冻结（S026）。Contract S0-S3 + prompt023 补 D014 债务（S025）。GW Step 4a 全候选 Kill（Q-DP1/DP3/DP4/改动1），唯一存活 Q-CMA-FADE 分析层强 7 项 + 方法层弱 D022 窄域 29/30。主控 reframe：D014 SOP 真因 + D022 ML PI 优势焊一起。
 
@@ -206,3 +284,11 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 - **S025**（2026-07-15）：Contract 阶段 S0-S3 执行（GW Step 4a → Contract 转阶段）。收 H010 handoff（Trigger 5 验证 3 事实：D022 PASS / D014 SOP=0 FAIL 无独立JSON / D029 PASS）。读 stages/contract.md 全文守 FR-22。**S0 PASS**（复用 GW 29 篇，reframe 后增量定位冻结：分析层 7 项 Qin/Nasr 全空白 + 方法层窄域，不换皮）。**S1 PASS**（瓶颈=恒模多解 SOP 跳变，引用 D014，SOP=0 时 CMA=oracle 证明非架构瓶颈）。**S2 PASS**（FR-17 子 agent 抽查 8 篇 67 去重：PI-BER 首选率 0% → 主指标改 fixed-label BER 75%，PI-BER 降辅指标；FR-19 模型假设记录；D018 双口径强制保留）。**S3 PASS**（全 [ASSUMPTION] 消除，SOP_RATE 仿真值债务标注；**D014 SOP=0 矩阵债务补 PASS**：子 agent 建 prompt023_sop0_matrix.py 隔离脚本，30 runs 428s，复现 SOP=0 ratio=1.00-1.01 / SOP=4e-7 ratio=1.12-6.93，方向一致强化 D014 核心声称）。contract.md draft 创建（`projects/thesis-fso/contract.md`，含 Problem Reference/H1+H2 Hypothesis/Success-Failure Signal/B1-B4 Baselines/M1-M4 Metrics FR-17调整/F1-F5 Fairness/A1-A5 Ablation/E1-E8 Experiments/Simulation Config/数据集设计/Parameter Provenance全标来源/C1-C5声称证据映射）。守 FR-22（转阶段读 contract.md）+FR-17（指标首选率审计）+FR-19（模型假设敏感性）+FR-20（参数溯源）+FR-25（Go/Kill 对手分离）+D018（双口径）+TL-21（文档审计用确定性证据）。详见 `S025-contract-s0-s3.md`
 - **S026**（2026-07-15）：Contract S4-S5 + 冻结执行（Contract 收尾）。续 S025。**S4 PASS** — data-flow.md 创建（`projects/thesis-fso/data-flow.md`）：8 步 DSP 信号流推演适配网络路由模板（信道配置→信号生成→均衡器输入→处理→输出→BER 计算→评估指标→跨参数泛化），每步标真实代码来源（`ml_long_seq_failure.py:154` gen_channel / `_cma.py` CMAEqualizer2x2 / `_ml_equalizer.py` ButterflyCNNEqualizer2x2 / `prompt012_longseq_audit.py:98` evaluate_outputs）。FR-13 均衡能力表达力审计适配 DSP（非 RL 动作空间→均衡能力）：B1 standard-CMA 可比（ML<CMA 跟踪能力但 ML>CMA swap 免疫，窄域 D023 已标）/ B2 CMMA ≥（16QAM）/ B3 oracle <（预期 FR-25 不做判据）。FR-16 架构信息增量审计：训练前后输出不同（信息增量真实），但增量来源是监督学习数据非架构创新（F4 标注）。**S5 PASS** — experiment_completeness_checklist.md 创建：5 问压力测试无致命风险（分析层独立成立 + 方法层窄域量级优势 9×）；反模式 4 项 3 pass + 1 注意（反模式 3 确定性信道+DL 强行优越已诚实标注 D023 非致命）；Tier 1 六项全 pass（T1-4 逐模块消融适配 DSP 单组件场景：D022 ML-original vs ML-aligned 初始化消融是组件级等价性验证）。**Step 6 冻结**：用户确认 FR-17 主指标调整（fixed-label BER 主 / PI-BER 辅）后 contract.md status: draft → frozen。H011 交 Execute。守 FR-22（S4/S5 读 contract.md Step 4/5 段）+FR-13/FR-16（两项审计适配 DSP）+D018（双口径）+FR-25（Go/Kill 分离）。详见 `S026-contract-s4-s5-freeze.md`
 - **S027**（2026-07-15）：D030 方法层解冻后 A 类（改 loss）GW Step 1 检索 + 横向 MVE 执行（主控派出，本轮）。新建 `prompt024_a_class_loss_variants.py`（隔离脚本，复用 ButterflyCNNEqualizer2x2 + gen_channel/oracle_equalize/evaluate_outputs，自定义训练循环支持 L0/L1/L2 三 loss）。**阶段 1 GW Step 1 检索**：3 方向各 2 组关键词（tools/search s2+openalex）+ 子 agent 撞车评估。A1 SOP 不变性正则 = NO（无人在均衡 loss 加 SOP/旋转不变性正则，都跟踪/估计 SOP）；A2 swap 对比 = NO（零对比学习偏振解复用）；**A3 VAE 盲损失 = YES 硬撞车**（Qin 组 2026 IEEE TCCN "Bootstrapping Blind Equalizer DP-coherent FSO via modulus-rings VAE" = 同作者组+同场景+同机制）→ A3 defer 不跑。**阶段 2-3 横向 MVE**（9 config × 5 seeds + 10 消融 = 55 runs, 6388s）：L1（SOP 不变性正则，λ=0.001 甜点）mean PI=0.01019 vs L0=0.01020，2/5 胜 p=0.75 → KILL；L2（swap 对比学习，λ=0.1 甜点）mean PI=0.01017，2/5 胜 p=0.75 → KILL；消融 PASS（λ=0 退回 L0）。L0 baseline 5-seed mean PI=0.01020 复现 D022。**A 类整体 KILL**。核心失败机制 = floor 效应（3/5 clean seeds PI≈0）+ 时序正交（loss 正则在训练段，swap 在 test 段）+ 与 D027 V3 同构（训练阶段修改触及不到 test 段 swap）。**D031 新建**：A 类 KILL + 火力重定向（排除训练阶段 loss 修改类，转向 test 段在线机制 D/E 或架构 B）。守 FR-22（GW Step 1 检索→MVE）+D030（归类批量+消融可验+检索防撞车）+D018（双口径 evaluate_outputs）+TL-20/22（假设先行+物理前提检查）。详见 `S027-prompt024-a-class-loss-mve.md` + `results/cma-fade-divergence/prompt024_a_class_loss.json`
+- **S028**（2026-07-16，夜间 H013 C 类）：C1 周期 pilot-assisted 在线微调 `K=[1000,5000,10000]×lr=[1e-5,1e-4]` 六档全 0/5 胜 p=1.0，mean PI `7.952e-5–8.128e-5` 不低于 L0 `7.936e-5`，lr=0 消融逐 seed 退回 L0。**C 类整体 KILL/defer**（D032）：C1 KILL，C2 SOP 数据增强/C3 课程学习按 D031 时序正交 defer。检索 AdaNN 2020 + JLT 2023 joint PMD tracking 强邻近但无 FSO+GG+SOP lock-swap 硬撞。详见 `S028-*` + `prompt025_c1_online_finetune.json`
+- **S029**（2026-07-16，夜间 H013 B 类）：B1/B2/B3 四判据形式可构造但均未过 D031 test 段准入门，**B 类整体 defer**（D033）不跑性能 MVE。B1 有 Optics Letters 2024 MIMO-CVNN/PDM 强邻近占点。`prompt026` 固化筛选合同。详见 `S029-*`
+- **S030**（2026-07-16，夜间 H013 D 类）：D 类历史注册域 MVE KILL（D036；D034 REJECTED，D035 superseded）。strong GG 参数由 D022 的 1.5/0.8 漂移为 4.2/1.4 致 2/5→0/5；冻结历史输入后精确恢复 {1000,1003} 2/5 swap。D1/D2 mean PI=0.01505264 高于 L0=0.01043760，0/5 胜 p=1.0 KILL。baseline drift 债务关闭，未改 params.py。详见 `S030-*`
+- **S031**（2026-07-16，夜间 H013 E 类）：E 类 pilot 前置 DEFER（D037）。test 段 pilot 估 SOP/Jones 前馈补偿过 D031，但 2023 JLT `10.1109/JLT.2023.3253383` 直接占"插入 pilot 估信道+前馈补偿跟踪 fast SOP"，FSO 迁移增量未证。四判据 PASS/UNRESOLVED/PASS/UNRESOLVED，不准入性能 MVE。`prompt028` 仅固化合同。详见 `S031-*`
+- **S032**（2026-07-15）：方法层再探索 8 机制全景 + 统一规划。承接夜间 A-E 全类 KILL/defer 后用户质疑"不可能一点方法没有"。**参数域审计**澄清 4.2/1.4 是用户刚改的正确新参数（非漂移）。**oracle 上界关键发现**：fixed-label BER 0.4996→3.5e-5（4 数量级），PI-BER 仅 2×（对 swap 失明）。**8 机制全景**（A 注入CSI/B 内生不对称🔥/C 时间维/D 换范式/E ML范式🔥/F 硬件/G 跨层/H 换问题🔥）~40 思路。**MVE 执行图** Tier 0（B2+H1 物理前提）→ Tier 1（B 成立后 D2/B1/E2）→ Tier 2（E1/D3/C1）。待用户拍板 F1/G2 + Tier 0 顺序 + 检索批次。详见 `S032-method-layer-8-mechanism-plan.md`
+- **S033**（2026-07-16）：S032 §F 执行图 Tier 0 物理前提 MVE + 检索批次 1 执行（执行 agent 本轮）。新建 `prompt029_b2_asymmetric_power.py`（5 功率比 × ML/CMA/oracle 三对照，非对称功率信道）+ `prompt029_h1_crc_flip_label.py`（ML fixed-weight 翻标签诊断 + block 级 swap 两阶段检测）。**关键事实校正（TL-22）**：swap 载体=ML fixed-weight（D015/D018），CMA standard 在新参数域 strong=4.2/1.4 下 5/5 clean（0 swap）；D028 的 2/5 swap 是旧域 1.5/0.8。H1/B2 smoke 初版误用 CMA（得 5/5 clean），修正为 ML fixed-weight 后才观察 5/5 clean-swap。**Tier 0-B2 KILL（D038）**：5 功率比 × 5 seeds，ML swap_rate=100% 恒定（SOP 泛化与功率对称正交），CMA 本域不 swap，极端比例伤 BER（oracle 3.5e-5→0.036）。机制 B 整体倾向 KILL。**Tier 0-H1 trivial Go（D039）**：5/5 clean-swap 翻标签恢复 5591×（0.4996→8.9e-5≈oracle），但=PI-BER（D018 已证）非新方法；0 degraded-swap。**检索批次 1（5 方向 B2/B1/H1/E2/D3）0 硬撞车**，注意 Le Bidan 2023（H1 强邻近须区分）+ 2015 Kalman（D3 定性 MMA=CMA singularity 须对冲）。范围拍板：F1/G2 排除（用户）。**火力重定向信号**：A 类（D031）+ D027 V3 + B2（D038）三度同构失败→"swap 是 test 段 ML SOP 泛化，训练段 loss/约束/对称性触及不到"，最有希望剩余=E 类架构（攻 SOP 泛化）+ H 类。守 FR-22+D030+D018+TL-22。详见 `S033-tier0-b2-h1-mve.md` + `results/cma-fade-divergence/prompt029_b2_asymmetric_power.json` + `prompt029_h1_crc_flip_label.json`
+- **S034**（2026-07-16）：S033 §F 方法层 Tier 1 两方向执行（本轮）。**方向 1 E1 群等变 NN FAIL**（`prompt031_e1_equivariant.py`）：约束等变（soft equivariance，训练 loss 加 `‖f(R(θ)r)-R(θ)f(r)‖²`，θ~U[0,2π]）。seed=1000 完整三 λ：L0 fixed=0.49937 / E1 λ=0.01 fixed=0.49939 / E1 λ=1.0 fixed=0.49940，全 clean_swap，改善 1.0×。与 D031（A1 SOP 不变性正则 KILL + A2 swap 对比 KILL）三度同构——**训练段任何几何约束（不变性/对比/等变）都触及不到 test late 57° SOP 旋转**。约束等变（soft）≠ 严格等变（hard，需 e2cnn SO(2) 群卷积重写架构）。**方向 2 CMA+H1 组合 PASS 但弱于 ML+H1**（`prompt031_cma_h1_combo.py`）：5 seeds 完整，CMA 5/5 swap（4 clean_swap + 1 degraded_swap seed1004），翻标签 fixed 0.484→flip 0.0169（28.6× 改善）。ML+H1 对照 flip 8.25e-5（5591×）更好。CMA degraded_swap seed1004 翻标签只救到 7.6e-2（CMA 在线输出质量差）拖后腿。CMA+H1 ≠ PI-BER trivial（CMA 在线输出随 SOP 持续演化，翻标签是 post-hoc 翻"CMA 锁错"），但不构成方法层升级（弱于已有 ML+H1）。GW Step 1 E1 检索复核：夜间 2 组 rotation-equivariant 查询 40 命中全邻近领域（遥感/光纤传感/diffractive NN/PolSK），**0 硬撞车**（最强相关 Nasr 2026 ANN-FSO 已知 baseline + Chen 2023 QNN-PolSK 无线非光）。守 FR-22（E1 GW Step 1 复核）+ D030（消融可验 λ=0 退回 L0）+ D018（fixed/PI 双口径）+ S033 不变量 9/10/11（correlation 口径 classify_swap + fixed-label Go 判据 + cma_equalize 用 prompt030 口径）。详见 `S034-tier1-e1-cma-h1-mve.md` + `results/cma-fade-divergence/prompt031_e1_equivariant.json` + `prompt031_cma_h1_combo.json`
+- **S035**（2026-07-16）：S033 §F 方法层 Tier 1 两独立方向执行（与 S034 并行，本轮）。**方向 2 D3 MMA KILL**（D040，`prompt032_d3_mma_mve.py`）：MMA（Yang 2002 多模，实/虚部模值分离 R²_R=R²_I=0.5）vs standard-CMA 0/5 胜 p=0.5，mean fixed MMA=0.0112 vs standard-CMA=0.0002，无增量。MMA 打破相位旋转对称非 X/Y 排列对称（正交）。消融 SOP=0 两者都正常 PASS。**附带重大发现（S033 不变量 9 部分修正债）**：standard-CMA（有 z 因子 Godard 1980）在新域 4.2/1.4 下 5/5 不 swap（fixed≈2e-4），ML 5/5 clean-swap（fixed≈0.495），current-CMA（无 z 因子 common/_cma.py）5/5 swap——**S033 不变量 9 "CMA 和 ML 都 swap" 部分是 current-CMA 无 z 因子 bug 假象**，swap 主因是 ML 固定权重 SOP 泛化（D015 回归）。GW Step 1 检索 0 硬撞车（邻近=光纤色散 MMA-singularity 线 Yang 2002/Vgenis 2010/Kikuchi 2011；2015 Kalman 邻近点未定位疑似误标注）。**方向 1 E2 排列对称破缺 KILL**（D041，`prompt033_e2_perm_symmetry_break_mve.py`）：非对称锚点（gX≠gY 可学习门）+ 排列敏感正则。smoke 验证标准 ButterflyCNN 精确排列等变（|zX(orig)-zY(swap)|=0），E2 成功破缺（=0.35）。但 λ=0.01（5/5）+ λ=0.1（2/2）全 clean-swap（fixed≈0.4996）与 L0 完全相同，λ=1.0 待 checkpoint 补。第四度同构证实"训练段修改触及不到 test 段 swap"（D031→D027 V3→D040→D041）。GW Step 1 检索 0 硬撞车（邻近=音频 BSS Audioslots arXiv 2305.05591 非光学；Pan 2026 OE 盲 CMA-DNN 仍困 swap 证实空白）。**Tier 1+2 全部完成无 Go**（E1 FAIL/D3 KILL/E2 KILL）。守 FR-22（两方向 GW Step 1 检索）+ D030（消融可验）+ D018（双口径 evaluate_outputs）+ S033 不变量 + 铁律 #2/#3（fixed-label Go + correlation 分类）。详见 `S035-tier1-d3-mma-e2-perm-mve.md` + `results/cma-fade-divergence/prompt032_d3_mma_mve.json` + `prompt033_ckpt.json`（E2 λ=1.0 待补）
