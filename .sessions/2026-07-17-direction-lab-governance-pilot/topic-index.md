@@ -38,6 +38,7 @@
 - **H001**：新对话启动交接，冻结首轮范围为 sandbox 选择、3-5 个最小硬门、RED 压力测试和独立验证。
 - **H002**：第二阶段改为一个主对话连续运行；实现 receipt/evidence gate 后依次完成正常、诱惑、stale/绕过和无历史上下文恢复四轮测试。
 - **H003**：冻结提交 `44adff7` 的 pilot v1，进入 5 个真实 shadow 工作循环或一个完整候选批次的单主对话观察期；观察结束后分析完整对话历史。
+- **H004**：将 pilot v1 接到双偏振星地 OSL Groundwork 真实地基，先导入 anchor/CandidateMap/BatchQueue，再启动第一批小型 paired batch。
 - **S002**：收 H002 核验、receipt/evidence gate 最小设计、TDD 计划与四轮压力测试过程记录。
 - **S003**：完成 5 个真实 shadow 工作循环；核心行为/P0 隔离 PASS，恢复阈值未覆盖，整体 PARTIAL。
 - **D001**：选择审计账本背书的最小 receipt/evidence gate；签名与不可变存储留作债务。
@@ -56,4 +57,4 @@
 
 ## 当前位置
 
-首轮压力测试核心行为经 V004/V005 复核为 PASS；S003/V006 已完成 5 个真实 shadow 循环，核心行为/P0 隔离 PASS，但恢复能力仍未满足 ≥3 次样本门槛，整体保持 PARTIAL。pilot v1 继续冻结，不进入正式 registry/schema 设计。
+首轮压力测试核心行为经 V004/V005 复核为 PASS；S003/V006 已完成 5 个真实 shadow 循环，核心行为/P0 隔离 PASS，但恢复能力仍未满足 ≥3 次样本门槛，整体保持 PARTIAL。H004 已就绪：将冻结的 pilot v1 接入双偏振星地 OSL 真实地基，从候选族批量队列启动，不回到零或旧单点。
