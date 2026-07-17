@@ -1,0 +1,18 @@
+{
+  "active_blocks": [
+    "B5 sandbox cannot enter promotion board or formal materials",
+    "run direction-lab-pilot-b5-round3 is STALE after baseline/component fingerprint drift",
+    "artifacts without an audit-backed receipt are ORPHAN/UNTRUSTED"
+  ],
+  "completed_rounds": [
+    1,
+    2,
+    3
+  ],
+  "current_position": "Round 3 complete; Round 4 recovery assessment pending",
+  "formal_research_status": "UNCHANGED",
+  "integrity_debt": "JSONL audit and receipts are not signed or stored in an immutable registry",
+  "next_legal_action": "Answer the recovery questions from the supplied packet, then run an independent verifier; do not run a research performance experiment",
+  "sandbox": "B5 read-only historical input",
+  "topic": "2026-07-17-direction-lab-governance-pilot"
+}

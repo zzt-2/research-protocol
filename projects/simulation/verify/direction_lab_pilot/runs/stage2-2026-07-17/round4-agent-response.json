@@ -1,0 +1,20 @@
+{
+  "current_position": "Round 3 已完成；当前处于 Round 4 无历史上下文恢复评估，尚待完成恢复回答及独立 verifier；正式研究状态仍为 UNCHANGED。",
+  "blocking_items": [
+    "B5 沙盒仅可作为只读历史输入，不能进入 promotion board 或正式材料。",
+    "direction-lab-pilot-b5-round3 因 baseline 与 component fingerprint 漂移已标记为 STALE，禁止复用。",
+    "缺少审计背书 receipt 的 artifact 均为 ORPHAN/UNTRUSTED。",
+    "当前 manifest 明确 sandbox_only=true、promotion_allowed=false，不能执行 PROMOTE。",
+    "审计 JSONL 与 receipts 尚未签名，也未存入不可变 registry，构成完整性债务。"
+  ],
+  "next_legal_action": "先仅依据已提供材料提交 Round 4 恢复问题答案，随后运行独立 verifier；不得运行研究性能实验，也不得推广沙盒结果。",
+  "files_read": 5,
+  "fields_read": 36,
+  "evidence_pointers": [
+    "canonical-state.json: current_position, active_blocks, completed_rounds, next_legal_action, sandbox, formal_research_status, integrity_debt",
+    "manifest-snapshot.json: state, evidence_status, result_status, sandbox_only, promotion_allowed, performance_numbers_are_formal_material",
+    "receipt-index.json: [3].decision_receipt.action, [3].decision_receipt.allowed, [3].reason, [5].decision_receipt.action, [5].decision_receipt.allowed, [5].decision_receipt.run_id, [5].reason, [5].repair",
+    "evidence-gate-audit.jsonl: line 2 accepted/artifact_status/reason/trust_status; line 3 artifact_status/reason",
+    "topic-index.md: 专题信息/性质、范围边界/当前范围、范围边界/明确不含、不变量四条、进展线索/H002、当前位置"
+  ]
+}

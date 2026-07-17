@@ -1,0 +1,80 @@
+[
+  {
+    "blocked": false,
+    "decision_receipt": {
+      "action": "RUN",
+      "allowed": true,
+      "blocked": false,
+      "decision_id": "decision-083a67e1393c419bb65652f6184743f5",
+      "manifest_hash": "8aceb5a399ea6848a878f0d7bba4e6606a975884c49c0433800b4cc41fe53a53",
+      "run_id": "direction-lab-pilot-b5-001"
+    },
+    "reason": null,
+    "repair": null
+  },
+  {
+    "blocked": true,
+    "decision_receipt": {
+      "action": "GO",
+      "allowed": false,
+      "blocked": true,
+      "decision_id": "decision-2a34940a575c411eb1550805b81fc786",
+      "manifest_hash": "0207283e672c5f8b5fdf3772a5251b452fa2dbbc3f1476f883989ba587ee6a72",
+      "run_id": "direction-lab-pilot-b5-001"
+    },
+    "reason": "GO/KILL requires BOARD_READY",
+    "repair": null
+  },
+  {
+    "blocked": true,
+    "decision_receipt": {
+      "action": "PROMOTE",
+      "allowed": false,
+      "blocked": true,
+      "decision_id": "decision-96e839995dfe4b98b7fcf21560aea50f",
+      "manifest_hash": "007898569b924622d2034533aefa9644d86fe144439e1c85b3f2c9369055a805",
+      "run_id": "direction-lab-pilot-b5-001"
+    },
+    "reason": "evidence cannot be promoted: PARTIAL",
+    "repair": null
+  },
+  {
+    "blocked": true,
+    "decision_receipt": {
+      "action": "PROMOTE",
+      "allowed": false,
+      "blocked": true,
+      "decision_id": "decision-d2298634b11a471ab45b29db6f5e6223",
+      "manifest_hash": "8aceb5a399ea6848a878f0d7bba4e6606a975884c49c0433800b4cc41fe53a53",
+      "run_id": "direction-lab-pilot-b5-001"
+    },
+    "reason": "sandbox manifest does not allow promotion",
+    "repair": null
+  },
+  {
+    "blocked": false,
+    "decision_receipt": {
+      "action": "RUN",
+      "allowed": true,
+      "blocked": false,
+      "decision_id": "decision-2932c464605e4659afbabeca4a72e7b0",
+      "manifest_hash": "5d1df6847caf419c92b1a0214e60a94a4a30216d568ee8c100e21dff69e6553c",
+      "run_id": "direction-lab-pilot-b5-round3"
+    },
+    "reason": null,
+    "repair": null
+  },
+  {
+    "blocked": true,
+    "decision_receipt": {
+      "action": "REUSE_RESULT",
+      "allowed": false,
+      "blocked": true,
+      "decision_id": "decision-a2387c77b04f4191bab080e7e91aa7fe",
+      "manifest_hash": "5d1df6847caf419c92b1a0214e60a94a4a30216d568ee8c100e21dff69e6553c",
+      "run_id": "direction-lab-pilot-b5-round3"
+    },
+    "reason": "component state changed: baseline, component",
+    "repair": "mark_stale"
+  }
+]

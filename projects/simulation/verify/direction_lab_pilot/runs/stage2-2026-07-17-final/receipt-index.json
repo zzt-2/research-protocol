@@ -1,0 +1,108 @@
+[
+  {
+    "blocked": false,
+    "decision_receipt": {
+      "action": "RUN",
+      "allowed": true,
+      "blocked": false,
+      "decision_id": "decision-50be9337bae7400eb611fd3b518972d2",
+      "manifest_hash": "8aceb5a399ea6848a878f0d7bba4e6606a975884c49c0433800b4cc41fe53a53",
+      "run_id": "direction-lab-pilot-b5-001"
+    },
+    "event_type": null,
+    "reason": null,
+    "repair": null,
+    "result_hash": null
+  },
+  {
+    "blocked": false,
+    "decision_receipt": null,
+    "event_type": "EXECUTION",
+    "reason": null,
+    "repair": null,
+    "result_hash": "756bdfd1a19634bf36f7241b86f24827f6d51b42c0191fbec8bd0e6aaebbc84d"
+  },
+  {
+    "blocked": true,
+    "decision_receipt": {
+      "action": "GO",
+      "allowed": false,
+      "blocked": true,
+      "decision_id": "decision-8d1105a8ae344d8da0aaf4d338979684",
+      "manifest_hash": "0207283e672c5f8b5fdf3772a5251b452fa2dbbc3f1476f883989ba587ee6a72",
+      "run_id": "direction-lab-pilot-b5-001"
+    },
+    "event_type": null,
+    "reason": "GO/KILL requires BOARD_READY",
+    "repair": null,
+    "result_hash": null
+  },
+  {
+    "blocked": true,
+    "decision_receipt": {
+      "action": "PROMOTE",
+      "allowed": false,
+      "blocked": true,
+      "decision_id": "decision-545abdfff3814075bafe92686422836a",
+      "manifest_hash": "007898569b924622d2034533aefa9644d86fe144439e1c85b3f2c9369055a805",
+      "run_id": "direction-lab-pilot-b5-001"
+    },
+    "event_type": null,
+    "reason": "evidence cannot be promoted: PARTIAL",
+    "repair": null,
+    "result_hash": null
+  },
+  {
+    "blocked": true,
+    "decision_receipt": {
+      "action": "PROMOTE",
+      "allowed": false,
+      "blocked": true,
+      "decision_id": "decision-7adcdedc63f5470d9e3f5b30d9f1cc28",
+      "manifest_hash": "8aceb5a399ea6848a878f0d7bba4e6606a975884c49c0433800b4cc41fe53a53",
+      "run_id": "direction-lab-pilot-b5-001"
+    },
+    "event_type": null,
+    "reason": "sandbox manifest does not allow promotion",
+    "repair": null,
+    "result_hash": null
+  },
+  {
+    "blocked": false,
+    "decision_receipt": {
+      "action": "RUN",
+      "allowed": true,
+      "blocked": false,
+      "decision_id": "decision-4e5a3b51ad7a4188ae5e86f5fe407b07",
+      "manifest_hash": "5d1df6847caf419c92b1a0214e60a94a4a30216d568ee8c100e21dff69e6553c",
+      "run_id": "direction-lab-pilot-b5-round3"
+    },
+    "event_type": null,
+    "reason": null,
+    "repair": null,
+    "result_hash": null
+  },
+  {
+    "blocked": false,
+    "decision_receipt": null,
+    "event_type": "EXECUTION",
+    "reason": null,
+    "repair": null,
+    "result_hash": "918baa320a9b6e9dd9e8463f5d30663df42e68cea933bbfe5c0bb0fab8964acc"
+  },
+  {
+    "blocked": true,
+    "decision_receipt": {
+      "action": "REUSE_RESULT",
+      "allowed": false,
+      "blocked": true,
+      "decision_id": "decision-cca71ed249604e4caf4d5abec636c1a5",
+      "manifest_hash": "5d1df6847caf419c92b1a0214e60a94a4a30216d568ee8c100e21dff69e6553c",
+      "run_id": "direction-lab-pilot-b5-round3"
+    },
+    "event_type": null,
+    "reason": "component state changed: baseline, component",
+    "repair": "mark_stale",
+    "result_hash": null
+  }
+]

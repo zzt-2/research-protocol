@@ -36,6 +36,11 @@
 
 - **S001**：试运行目标、观察矩阵和退出条件（本专题首 session）。
 - **H001**：新对话启动交接，冻结首轮范围为 sandbox 选择、3-5 个最小硬门、RED 压力测试和独立验证。
+- **H002**：第二阶段改为一个主对话连续运行；实现 receipt/evidence gate 后依次完成正常、诱惑、stale/绕过和无历史上下文恢复四轮测试。
+- **S002**：收 H002 核验、receipt/evidence gate 最小设计、TDD 计划与四轮压力测试过程记录。
+- **D001**：选择审计账本背书的最小 receipt/evidence gate；签名与不可变存储留作债务。
+- **D002**：execute 结果必须有 execution audit/result hash，并防止同一 receipt replay。
+- **V004/V005**：独立 verifier 先发现 result provenance/replay 漏口；修复后 34 tests 与黑盒复核通过，Round 4 hash provenance 仍为 PARTIAL。
 - **V001**：B5 隔离输入的首版控制器 RED/GREEN 与独立 verifier PASS（9 tests）。
 - **V002**：独立黑盒复核发现 PROMOTE 证据缺失、未知动作和 baseline stale 处理等漏口；结论 PARTIAL，暂不扩展 schema。
 - **V003**：修复最小硬门并由独立 verifier 复核，22 tests PASS；manifest 签名/来源绑定列为正式 schema 阶段债务。
@@ -49,4 +54,4 @@
 
 ## 当前位置
 
-首轮最小治理边界经 V003 复核为 PASS：22 tests、真实 B5 smoke test、恢复/重复违规和 stale execute 均通过。下一步是否继续扩大至签名/来源绑定和更长时间的 AI 行为观察，另行决定；不进入正式方向探索。
+首轮最小治理边界经 V003 复核为 PASS。S002 已在一个主对话中按 TDD 实现 receipt/evidence gate 并连续完成四轮行为压力测试；核心 gate 经 V005 黑盒复核 PASS，Round 4 记录因 raw hash 表示未定义而为 PARTIAL，manifest/JSONL 不可变性与 destination path 边界仍为债务。

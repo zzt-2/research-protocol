@@ -1,0 +1,19 @@
+{
+  "current_position": "Round 3 complete; Round 4 recovery assessment pending. B5 is read-only historical input for a governance pilot, and formal research status is unchanged.",
+  "blocking_items": [
+    "B5 sandbox cannot enter the promotion board or formal materials; manifest promotion_allowed=false and sandbox_only=true.",
+    "direction-lab-pilot-b5-round3 is STALE after baseline/component fingerprint drift.",
+    "Artifacts without controller decision receipts are ORPHAN/UNTRUSTED.",
+    "Audit JSONL and receipts are not signed or stored in an immutable registry."
+  ],
+  "next_legal_action": "Answer the recovery questions from the supplied packet, then run an independent verifier; do not run a research performance experiment.",
+  "files_read": 5,
+  "fields_read": 34,
+  "evidence_pointers": [
+    "canonical-state.json: active_blocks, current_position, formal_research_status, integrity_debt, next_legal_action, sandbox",
+    "manifest-snapshot.json: promotion_allowed, sandbox_only, evidence_status, result_status, state, baseline_fingerprint, component_fingerprint",
+    "receipt-index.json: blocked, decision_receipt.action, decision_receipt.allowed, reason, repair, run_id",
+    "evidence-gate-audit.jsonl: accepted, artifact_status, destination, reason, trust_status, decision_id",
+    "topic-index.md: 性质, 当前范围, 明确不含, 不变量, 当前位置"
+  ]
+}

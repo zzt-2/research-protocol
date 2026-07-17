@@ -153,12 +153,12 @@ def test_guarded_entry_does_not_call_operation_when_blocked(controller):
 
 def test_guarded_entry_calls_operation_only_after_validation(controller):
     called = []
-    result = controller.execute(
+    envelope = controller.execute(
         manifest(),
         action="RUN",
         operation=lambda: called.append("ran") or "ok",
     )
-    assert result == "ok"
+    assert envelope["result"] == "ok"
     assert called == ["ran"]
 
 
@@ -225,12 +225,12 @@ def test_real_b5_sandbox_manifest_runs_only_through_guarded_entry(controller):
     )
     real_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     called = []
-    result = controller.execute(
+    envelope = controller.execute(
         real_manifest,
         action="RUN",
         operation=lambda: called.append("ran") or "ok",
     )
-    assert result == "ok"
+    assert envelope["result"] == "ok"
     assert called == ["ran"]
 
 

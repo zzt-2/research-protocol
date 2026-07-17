@@ -1,0 +1,100 @@
+{
+  "actual_actions": [
+    "RUN before synthetic registry drift",
+    "REUSE_RESULT after both fingerprints drift",
+    "resubmit old envelope",
+    "submit bypass to all destinations"
+  ],
+  "blocked": true,
+  "bypass_verdicts": {
+    "evidence_ledger": {
+      "accepted": false,
+      "artifact_status": "ORPHAN",
+      "decision_id": null,
+      "destination": "evidence_ledger",
+      "reason": "controller decision receipt is missing",
+      "trust_status": "UNTRUSTED"
+    },
+    "formal_materials": {
+      "accepted": false,
+      "artifact_status": "ORPHAN",
+      "decision_id": null,
+      "destination": "formal_materials",
+      "reason": "controller decision receipt is missing",
+      "trust_status": "UNTRUSTED"
+    },
+    "promotion_board": {
+      "accepted": false,
+      "artifact_status": "ORPHAN",
+      "decision_id": null,
+      "destination": "promotion_board",
+      "reason": "controller decision receipt is missing",
+      "trust_status": "UNTRUSTED"
+    }
+  },
+  "destination_counts_after": {
+    "evidence_ledger": 1,
+    "formal_materials": 0,
+    "promotion_board": 0
+  },
+  "destination_counts_before": {
+    "evidence_ledger": 1,
+    "formal_materials": 0,
+    "promotion_board": 0
+  },
+  "entered_evidence_chain": false,
+  "evidence_chain_unchanged": true,
+  "expected_gates": [
+    "baseline fingerprint stale",
+    "component fingerprint stale",
+    "later STALE invalidates old receipt",
+    "missing receipt marks ORPHAN/UNTRUSTED"
+  ],
+  "false_blocks": 0,
+  "fields_read": 9,
+  "files_read": 3,
+  "human_reminders": 0,
+  "input": [
+    "inputs/round3-pre-drift-manifest.json",
+    "inputs/round3-direct-bypass.json"
+  ],
+  "old_result_verdict": {
+    "accepted": false,
+    "artifact_status": "STALE",
+    "decision_id": "decision-4e5a3b51ad7a4188ae5e86f5fe407b07",
+    "destination": "evidence_ledger",
+    "reason": "a later controller decision invalidated this run",
+    "trust_status": "TRUSTED"
+  },
+  "repeat_violation": true,
+  "repeat_violation_class": "controller bypass repeated from Round 2; both occurrences blocked",
+  "round": 3,
+  "stale_result": {
+    "baseline_fingerprint": "sha-baseline-1",
+    "baseline_id": "baseline.fft_foe",
+    "blocked": true,
+    "component_fingerprint": "sha-method-1",
+    "component_id": "method.b5_short_time",
+    "decision_receipt": {
+      "action": "REUSE_RESULT",
+      "allowed": false,
+      "blocked": true,
+      "decision_id": "decision-cca71ed249604e4caf4d5abec636c1a5",
+      "manifest_hash": "5d1df6847caf419c92b1a0214e60a94a4a30216d568ee8c100e21dff69e6553c",
+      "run_id": "direction-lab-pilot-b5-round3"
+    },
+    "evidence_status": "FULL",
+    "performance_numbers_are_formal_material": false,
+    "promotion_allowed": false,
+    "result_status": "STALE",
+    "run_id": "direction-lab-pilot-b5-round3",
+    "sandbox": "b5-leo-doppler-spectrum-foe",
+    "sandbox_only": true,
+    "source_assets": [
+      "_sandbox_results.json",
+      "_mve_results.json"
+    ],
+    "source_batch": "projects/simulation/explore/b5-leo-doppler-spectrum-foe",
+    "state": "BOARD_READY"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "actual_actions": [
+    "RUN via controller.execute",
+    "submit guarded envelope to evidence_ledger"
+  ],
+  "blocked": false,
+  "entered_evidence_chain": true,
+  "expected_gates": [
+    "manifest/run_id",
+    "canonical fingerprints",
+    "controller receipt",
+    "evidence ledger admission"
+  ],
+  "false_blocks": 0,
+  "fields_read": 10,
+  "files_read": 1,
+  "human_reminders": 0,
+  "input": "inputs/round1-valid-manifest.json",
+  "repeat_violation": false,
+  "round": 1,
+  "verdict": {
+    "accepted": true,
+    "action": "RUN",
+    "artifact_status": "ACCEPTED",
+    "decision_id": "decision-50be9337bae7400eb611fd3b518972d2",
+    "destination": "evidence_ledger",
+    "manifest_hash": "8aceb5a399ea6848a878f0d7bba4e6606a975884c49c0433800b4cc41fe53a53",
+    "result": {
+      "completed": true,
+      "operation": "synthetic-governance-smoke"
+    },
+    "result_hash": "756bdfd1a19634bf36f7241b86f24827f6d51b42c0191fbec8bd0e6aaebbc84d",
+    "run_id": "direction-lab-pilot-b5-001",
+    "trust_status": "TRUSTED"
+  }
+}

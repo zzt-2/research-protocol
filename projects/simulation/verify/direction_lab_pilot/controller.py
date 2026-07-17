@@ -7,6 +7,8 @@ result in place; every decision is appended to an audit JSONL file.
 from __future__ import annotations
 
 import json
+import hashlib
+import uuid
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Callable, Mapping
@@ -14,6 +16,11 @@ from typing import Any, Callable, Mapping
 
 ALLOWED_ACTIONS = {"RUN", "GO", "KILL", "PROMOTE", "REUSE_RESULT"}
 PROMOTABLE_EVIDENCE = {"FULL", "VERIFIED_RUN", "PAPER_READY"}
+DESTINATION_ACTIONS = {
+    "evidence_ledger": ALLOWED_ACTIONS,
+    "promotion_board": {"GO", "KILL", "PROMOTE"},
+    "formal_materials": {"PROMOTE"},
+}
 
 
 class GovernanceViolation(RuntimeError):
@@ -87,7 +94,14 @@ class GovernanceController:
                     }
                 )
                 result = dict(manifest)
-                result.update({"result_status": "STALE", "blocked": True})
+                receipt = self._attach_receipt(event, manifest, action=action, allowed=False)
+                result.update(
+                    {
+                        "result_status": "STALE",
+                        "blocked": True,
+                        "decision_receipt": receipt,
+                    }
+                )
                 self._record(event)
                 return result
             if "baseline" in fingerprint_drift:
@@ -109,10 +123,17 @@ class GovernanceController:
 
             result = dict(manifest)
             result["blocked"] = False
+            result["decision_receipt"] = self._attach_receipt(
+                event,
+                manifest,
+                action=action,
+                allowed=True,
+            )
             self._record(event)
             return result
         except GovernanceViolation as exc:
             event.update({"blocked": True, "reason": str(exc)})
+            self._attach_receipt(event, manifest, action=action, allowed=False)
             self._record(event)
             raise
 
@@ -128,10 +149,243 @@ class GovernanceController:
         checked = self.check(manifest, action=action)
         if checked.get("blocked") or checked.get("result_status") == "STALE":
             raise GovernanceViolation("action is blocked by STALE governance result")
-        return operation()
+        operation_result = operation()
+        result_hash = _value_hash(operation_result)
+        self._record(
+            {
+                "event_type": "EXECUTION",
+                "blocked": False,
+                "decision_id": checked["decision_receipt"]["decision_id"],
+                "run_id": checked["decision_receipt"]["run_id"],
+                "result_hash": result_hash,
+            }
+        )
+        return {
+            "result": operation_result,
+            "result_hash": result_hash,
+            "manifest": dict(manifest or {}),
+            "decision_receipt": checked["decision_receipt"],
+        }
+
+    def _attach_receipt(
+        self,
+        event: dict[str, Any],
+        manifest: Mapping[str, Any] | None,
+        *,
+        action: str,
+        allowed: bool,
+    ) -> dict[str, Any]:
+        receipt = {
+            "decision_id": f"decision-{uuid.uuid4().hex}",
+            "run_id": manifest.get("run_id") if manifest else None,
+            "action": action,
+            "manifest_hash": _manifest_hash(manifest),
+            "allowed": allowed,
+            "blocked": not allowed,
+        }
+        event["decision_receipt"] = receipt
+        return receipt
 
     def _record(self, event: dict[str, Any]) -> None:
         event = dict(event)
         self.audit_events.append(event)
         with self.audit_path.open("a", encoding="utf-8") as handle:
             handle.write(json.dumps(event, ensure_ascii=False, sort_keys=True) + "\n")
+
+
+def _manifest_hash(manifest: Mapping[str, Any] | None) -> str | None:
+    if manifest is None:
+        return None
+    payload = json.dumps(
+        manifest,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
+
+def _value_hash(value: Any) -> str:
+    payload = json.dumps(
+        value,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
+
+@dataclass
+class EvidenceGate:
+    audit_path: Path
+    destinations: Mapping[str, Path]
+    gate_audit_path: Path | None = None
+
+    def __post_init__(self) -> None:
+        if self.gate_audit_path is None:
+            self.gate_audit_path = self.audit_path.with_name("evidence-gate-audit.jsonl")
+
+    def submit(self, envelope: Mapping[str, Any], *, destination: str) -> dict[str, Any]:
+        if destination not in DESTINATION_ACTIONS or destination not in self.destinations:
+            raise GovernanceViolation(f"unknown evidence destination: {destination}")
+
+        receipt = envelope.get("decision_receipt")
+        if not isinstance(receipt, Mapping):
+            return self._reject(
+                destination,
+                artifact_status="ORPHAN",
+                reason="controller decision receipt is missing",
+            )
+
+        recorded = self._recorded_receipt(receipt.get("decision_id"))
+        manifest = envelope.get("manifest")
+        trusted = (
+            recorded is not None
+            and dict(receipt) == recorded
+            and receipt.get("allowed") is True
+            and receipt.get("blocked") is False
+            and isinstance(manifest, Mapping)
+            and receipt.get("manifest_hash") == _manifest_hash(manifest)
+            and receipt.get("run_id") == manifest.get("run_id")
+            and envelope.get("result_hash") == _value_hash(envelope.get("result"))
+            and self._recorded_execution(
+                receipt.get("decision_id"),
+                envelope.get("result_hash"),
+            )
+        )
+        if not trusted:
+            return self._reject(
+                destination,
+                artifact_status="UNTRUSTED",
+                reason="receipt is absent from audit or does not match the artifact",
+            )
+
+        if self._has_later_stale_invalidation(
+            receipt.get("decision_id"),
+            receipt.get("run_id"),
+        ):
+            return self._reject(
+                destination,
+                artifact_status="STALE",
+                reason="a later controller decision invalidated this run",
+                trust_status="TRUSTED",
+                decision_id=receipt.get("decision_id"),
+            )
+
+        if self._already_admitted(destination, receipt.get("decision_id")):
+            return self._reject(
+                destination,
+                artifact_status="REPLAY",
+                reason="decision receipt has already been admitted to this destination",
+                trust_status="TRUSTED",
+                decision_id=receipt.get("decision_id"),
+            )
+
+        action = receipt.get("action")
+        if action not in DESTINATION_ACTIONS[destination]:
+            return self._reject(
+                destination,
+                artifact_status="BLOCKED",
+                reason=f"action {action} cannot enter {destination}",
+                trust_status="TRUSTED",
+                decision_id=receipt.get("decision_id"),
+            )
+
+        accepted = {
+            "destination": destination,
+            "accepted": True,
+            "artifact_status": "ACCEPTED",
+            "trust_status": "TRUSTED",
+            "decision_id": receipt.get("decision_id"),
+            "run_id": receipt.get("run_id"),
+            "action": action,
+            "manifest_hash": receipt.get("manifest_hash"),
+            "result_hash": envelope.get("result_hash"),
+            "result": envelope.get("result"),
+        }
+        self._append_jsonl(self.destinations[destination], accepted)
+        self._append_jsonl(self.gate_audit_path, accepted)
+        return accepted
+
+    def _recorded_receipt(self, decision_id: Any) -> dict[str, Any] | None:
+        if not decision_id or not self.audit_path.exists():
+            return None
+        for line in self.audit_path.read_text(encoding="utf-8").splitlines():
+            event = json.loads(line)
+            receipt = event.get("decision_receipt")
+            if isinstance(receipt, dict) and receipt.get("decision_id") == decision_id:
+                if event.get("blocked") is False:
+                    return receipt
+                return None
+        return None
+
+    def _has_later_stale_invalidation(self, decision_id: Any, run_id: Any) -> bool:
+        if not decision_id or not run_id or not self.audit_path.exists():
+            return False
+        seen_decision = False
+        for line in self.audit_path.read_text(encoding="utf-8").splitlines():
+            event = json.loads(line)
+            event_receipt = event.get("decision_receipt")
+            if not isinstance(event_receipt, dict):
+                continue
+            if event_receipt.get("decision_id") == decision_id:
+                seen_decision = True
+                continue
+            if (
+                seen_decision
+                and event_receipt.get("run_id") == run_id
+                and event.get("repair") == "mark_stale"
+            ):
+                return True
+        return False
+
+    def _recorded_execution(self, decision_id: Any, result_hash: Any) -> bool:
+        if not decision_id or not result_hash or not self.audit_path.exists():
+            return False
+        for line in self.audit_path.read_text(encoding="utf-8").splitlines():
+            event = json.loads(line)
+            if (
+                event.get("event_type") == "EXECUTION"
+                and event.get("decision_id") == decision_id
+                and event.get("result_hash") == result_hash
+                and event.get("blocked") is False
+            ):
+                return True
+        return False
+
+    def _already_admitted(self, destination: str, decision_id: Any) -> bool:
+        path = self.destinations[destination]
+        if not decision_id or not path.exists():
+            return False
+        for line in path.read_text(encoding="utf-8").splitlines():
+            if json.loads(line).get("decision_id") == decision_id:
+                return True
+        return False
+
+    def _reject(
+        self,
+        destination: str,
+        *,
+        artifact_status: str,
+        reason: str,
+        trust_status: str = "UNTRUSTED",
+        decision_id: Any = None,
+    ) -> dict[str, Any]:
+        verdict = {
+            "destination": destination,
+            "accepted": False,
+            "artifact_status": artifact_status,
+            "trust_status": trust_status,
+            "decision_id": decision_id,
+            "reason": reason,
+        }
+        self._append_jsonl(self.gate_audit_path, verdict)
+        return verdict
+
+    @staticmethod
+    def _append_jsonl(path: Path | None, value: Mapping[str, Any]) -> None:
+        if path is None:
+            return
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with path.open("a", encoding="utf-8") as handle:
+            handle.write(json.dumps(value, ensure_ascii=False, sort_keys=True) + "\n")

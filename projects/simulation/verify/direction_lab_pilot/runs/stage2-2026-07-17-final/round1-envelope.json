@@ -1,0 +1,34 @@
+{
+  "decision_receipt": {
+    "action": "RUN",
+    "allowed": true,
+    "blocked": false,
+    "decision_id": "decision-50be9337bae7400eb611fd3b518972d2",
+    "manifest_hash": "8aceb5a399ea6848a878f0d7bba4e6606a975884c49c0433800b4cc41fe53a53",
+    "run_id": "direction-lab-pilot-b5-001"
+  },
+  "manifest": {
+    "baseline_fingerprint": "sha-baseline-1",
+    "baseline_id": "baseline.fft_foe",
+    "component_fingerprint": "sha-method-1",
+    "component_id": "method.b5_short_time",
+    "evidence_status": "FULL",
+    "performance_numbers_are_formal_material": false,
+    "promotion_allowed": false,
+    "result_status": "VALID",
+    "run_id": "direction-lab-pilot-b5-001",
+    "sandbox": "b5-leo-doppler-spectrum-foe",
+    "sandbox_only": true,
+    "source_assets": [
+      "_sandbox_results.json",
+      "_mve_results.json"
+    ],
+    "source_batch": "projects/simulation/explore/b5-leo-doppler-spectrum-foe",
+    "state": "BOARD_READY"
+  },
+  "result": {
+    "completed": true,
+    "operation": "synthetic-governance-smoke"
+  },
+  "result_hash": "756bdfd1a19634bf36f7241b86f24827f6d51b42c0191fbec8bd0e6aaebbc84d"
+}

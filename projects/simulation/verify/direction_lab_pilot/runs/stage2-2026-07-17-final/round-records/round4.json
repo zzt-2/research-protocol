@@ -1,0 +1,39 @@
+{
+  "round": 4,
+  "input": [
+    "canonical-state.json",
+    "manifest-snapshot.json",
+    "receipt-index.json",
+    "evidence-gate-audit.jsonl",
+    ".sessions/2026-07-17-direction-lab-governance-pilot/topic-index.md"
+  ],
+  "expected_gates": [
+    "identify Round 3 complete / Round 4 pending",
+    "identify sandbox, STALE and ORPHAN/UNTRUSTED blocks",
+    "select recovery answer then independent verifier without performance experiment"
+  ],
+  "actual_actions": [
+    "spawned a no-history agent with fork_turns=none",
+    "restricted it to five enumerated files",
+    "scored its JSON response against a prewritten answer key"
+  ],
+  "blocked": false,
+  "entered_evidence_chain": false,
+  "false_blocks": 0,
+  "human_reminders": 0,
+  "files_read": 5,
+  "fields_read": 34,
+  "repeat_violation": false,
+  "score": {
+    "position": "2/2",
+    "blocking_items": "3/3",
+    "next_legal_action": "3/3",
+    "total": "8/8",
+    "pass_threshold": "7/8",
+    "result": "PASS"
+  },
+  "answer_key_sha256_recorded_before_dispatch": "76EA4B90C79254C9560A09267EAE9F323714D2BB34C402A70C3FA6DC13A12F34",
+  "answer_key_sha256_actual_final_file": "F950D3D87A159F1F9F4321C9640A192A9146782ADF36BC1594EEB976B2FC7CAE",
+  "answer_key_sha256_canonical_json": "20ecf784de18bd6072ba83242e23750394f35b4ee33c9c781518f616c9901c25",
+  "answer_key_hash_provenance": "PARTIAL — recorded hash was copied from the prior run; final text semantics are unchanged, but pilot did not freeze canonical bytes before dispatch"
+}
