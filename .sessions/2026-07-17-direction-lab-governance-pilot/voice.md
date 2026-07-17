@@ -9,3 +9,5 @@
 > “本次只使用一个主对话，连续完成 Direction Lab 第二阶段行为压力测试，不要让我手动再开四个对话。” → D001
 
 > “绕过 controller 的产物即使生成，也必须标记为 `ORPHAN/UNTRUSTED`，不得进入 evidence ledger、promotion board 或正式材料。” → D001
+
+> “你觉得，要不要先固定下来，然后开个对话直接拿去用？跑一段时间，然后你去分析它的对话历史” → H003

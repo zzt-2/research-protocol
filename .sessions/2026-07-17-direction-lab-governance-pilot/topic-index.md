@@ -37,6 +37,7 @@
 - **S001**：试运行目标、观察矩阵和退出条件（本专题首 session）。
 - **H001**：新对话启动交接，冻结首轮范围为 sandbox 选择、3-5 个最小硬门、RED 压力测试和独立验证。
 - **H002**：第二阶段改为一个主对话连续运行；实现 receipt/evidence gate 后依次完成正常、诱惑、stale/绕过和无历史上下文恢复四轮测试。
+- **H003**：冻结提交 `44adff7` 的 pilot v1，进入 5 个真实 shadow 工作循环或一个完整候选批次的单主对话观察期；观察结束后分析完整对话历史。
 - **S002**：收 H002 核验、receipt/evidence gate 最小设计、TDD 计划与四轮压力测试过程记录。
 - **D001**：选择审计账本背书的最小 receipt/evidence gate；签名与不可变存储留作债务。
 - **D002**：execute 结果必须有 execution audit/result hash，并防止同一 receipt replay。
@@ -54,4 +55,4 @@
 
 ## 当前位置
 
-首轮最小治理边界经 V003 复核为 PASS。S002 已在一个主对话中按 TDD 实现 receipt/evidence gate 并连续完成四轮行为压力测试；核心 gate 经 V005 黑盒复核 PASS，Round 4 记录因 raw hash 表示未定义而为 PARTIAL，manifest/JSONL 不可变性与 destination path 边界仍为债务。
+首轮压力测试核心行为经 V004/V005 复核为 PASS，但整体治理仍为 PARTIAL。H003 已就绪：冻结 `44adff7`，进入真实 shadow 观察期；观察结束后分析完整对话历史，不在观察中途改规则。
