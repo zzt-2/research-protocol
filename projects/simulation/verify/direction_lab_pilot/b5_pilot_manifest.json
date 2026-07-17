@@ -1,0 +1,19 @@
+{
+  "run_id": "direction-lab-pilot-b5-001",
+  "sandbox": "b5-leo-doppler-spectrum-foe",
+  "sandbox_only": true,
+  "source_batch": "projects/simulation/explore/b5-leo-doppler-spectrum-foe",
+  "source_assets": [
+    "_sandbox_results.json",
+    "_mve_results.json"
+  ],
+  "baseline_id": "baseline.fft_foe",
+  "component_id": "method.b5_short_time",
+  "baseline_fingerprint": "sha-baseline-1",
+  "component_fingerprint": "sha-method-1",
+  "evidence_status": "FULL",
+  "state": "BOARD_READY",
+  "result_status": "VALID",
+  "promotion_allowed": false,
+  "performance_numbers_are_formal_material": false
+}
