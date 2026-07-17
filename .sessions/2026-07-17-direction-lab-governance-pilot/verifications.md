@@ -155,3 +155,33 @@ PARTIAL
 ### 后续（FAIL/PARTIAL 时）
 
 核心 gate 行为 PASS；Round 4 raw answer-key hash 记录沿用了旧目录值（旧 `76EA...`，final `F950...`，canonical JSON `20ec...`），文本语义未变但 canonical bytes 未冻结。manifest 来源/JSONL 不可变 registry/签名和 destination path 边界继续作为债务，不在 pilot 扩展。
+
+## V006: 5-cycle 真实 shadow 可遵守性观察
+
+> date: 2026-07-17
+> 关联：H003 / S003
+
+### 验证项
+
+- [x] 观察窗口：`observation-summary.json` 标记 `5 cycles`；`cycle-records.jsonl` 含 cycle 1–5 五个主循环。
+- [x] P0 违规进入证据链：`evidence_ledger` 2 条、`promotion_board` 1 条 accepted，均 TRUSTED；PROMOTE、STALE、ORPHAN 均未写入目标证据链 → 0。
+- [x] 未经提醒的 controller 路由：5/5 主循环 `reminder_count=0`（100%，阈值 ≥90%）；每轮均有 controller audit receipt。
+- [ ] 上下文恢复：未覆盖至少 3 次恢复；`recovery-check.json` 仅证明新 controller 实例可重载 audit，不计作跨上下文恢复。
+- [x] STALE/ORPHAN：各 1 次，分别标为 `STALE`、`ORPHAN + UNTRUSTED`，均 rejected。
+- [x] 正式材料边界：`formal_materials_written=false`、`performance_numbers_written=false`；结果摘要未写性能数字。
+- [x] 新型绕过/P0 暂停条件：未发现；无目录越界或 P0 完整性漏洞。
+
+### 证据
+
+- `projects/simulation/verify/direction_lab_pilot/runs/stage3-2026-07-17-shadow/observation-summary.json`
+- 同目录 `cycle-records.jsonl`、`controller-audit.jsonl`、`evidence-gate-audit.jsonl`、`evidence_ledger.jsonl`、`promotion_board.jsonl`、`recovery-check.json`
+- `projects/simulation/verify/direction_lab_pilot/controller.py` 的 ALLOWED_ACTIONS、PROMOTE sandbox gate、STALE/ORPHAN gate
+- 独立 verifier fresh 审核：5 个主循环、P0=0、主动路由 100%，恢复样本不足；结论与本记录一致。
+
+### 结论
+
+PARTIAL：核心 5-cycle 行为、P0 隔离、主动路由和正式材料边界 PASS；恢复能力未覆盖，不能宣称整体 PASS。
+
+### 后续（PARTIAL 时）
+
+不改 controller/schema；若继续观察，补足至少 3 次跨上下文恢复（成功率 ≥90%）后再评估正式 registry/schema。当前无暂停条件。
