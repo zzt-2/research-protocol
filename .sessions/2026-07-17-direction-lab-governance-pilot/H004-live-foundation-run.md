@@ -7,11 +7,12 @@
 
 - H003 真实 shadow 观察完成 5 个主循环：controller 路由率 100%，P0 进入 trusted evidence 为 0；整体仍因恢复样本不足 3 次而为 PARTIAL。
 - 当前 pilot v1 固定在 `44adff7`，不在真实使用期修改 controller、schema 或提示词护栏。
-- 双偏振星地 OSL Groundwork 是真实地基：候选族地图已完成；Batch 0.5=PASS；Batch 1/2 已有低信息、FAIL、DEFER 和 observation-only 结论。
+- 双偏振星地 OSL Groundwork 是真实地基：它冻结场景、baseline、指标、有效域和已知死路，但不封闭 ML 候选空间。既有候选族地图只是种子视图，不是“所有可用 ML 方法”的全集。
 
 ## 不要做什么
 
 - 不把双偏振 OSL 项目当作从零 GW；优先复用已有候选地图、baseline 审计、失败结论和文献证据。
+- 不把既有 CMA-fade/SOP/pilot 候选地图误当成完整研究空间；必须重新做一次全处理链 ML Candidate Universe 盘点。
 - 不把旧的 pilot-Jones 或 Q-DP4 等已 Kill/DEFER 路线当作新贡献重新包装。
 - 不绕过候选族地图直接挑一个方法深挖；不得单点正信号劫持主线。
 - 不把 current-CMA/no-z 当 standard baseline；standard-CMA（含 z）与 ML 的固定标签指标口径必须分开。
@@ -63,11 +64,13 @@
 
 ## 下一轮
 
-一个主对话连续完成：读取地基 → 生成 anchor snapshot → 对现有候选/失败/待测项分类 → 生成 CandidateMap + BatchQueue → 只运行第一批小型 paired batch → 独立 verifier → 分析主对话历史。第一轮不做完整 GW，不做论文输出，不扩展新场景。
+一个主对话连续完成：读取地基 → 生成 anchor snapshot → 枚举全处理链 ML Candidate Universe → 合并既有候选/失败/待测项 → 中性分类和全景排序 → 生成 BatchQueue → 只运行第一批小型 paired batch → 独立 verifier → 分析主对话历史。第一轮不做论文输出，不扩展出双偏振星地 OSL 场景。
 
 ## 可直接粘贴的新对话提示词
 
-你现在把 Direction Lab pilot v1 用到真实研究地基上。主线地基是 `.sessions/2026-07-10-dual-pol-osl-groundwork/` 的双偏振星地 OSL Groundwork；不是从零找方向，也不是继续重复旧 pilot-Jones/Q-DP4 单点路线。
+你现在把 Direction Lab pilot v1 用到真实研究地基上。主线地基是 `.sessions/2026-07-10-dual-pol-osl-groundwork/` 的双偏振星地 OSL Groundwork。
+
+核心研究目标是：系统寻找 **ML 在这个场景下的任何合理应用、方法或改进**。地基只冻结场景、baseline、指标、已有证据和已知死路，不限制候选只能来自 CMA-fade、SOP、pilot-Jones 或已有 CandidateMap。既有候选地图是种子，不是封闭全集。
 
 先读取并核验：
 
@@ -81,14 +84,16 @@
 
 读取后先核验至少 5 条地基事实：候选族地图状态、Batch 0.5/1/2 状态、已 Kill/DEFER 路线、standard-CMA 与 current-CMA 的区别、fixed-label 与 PI-BER 双口径。若地基文件互相冲突，先登记冲突并阻断下游，不自行猜测。
 
-本轮目标是“从地基导入并启动第一批真实候选族探索”，不是从头执行完整 GW。按顺序做：
+本轮目标是“复用地基，建立完整 ML 候选宇宙，并启动第一批真实候选族探索”。按顺序做：
 
 1. 在隔离的 Direction Lab 目录生成 anchor snapshot，引用而不复制地基事实；
-2. 把已有候选、失败路线、observation-only、DEFER 和待测项导入 CandidateMap，保留血缘和有效域；
-3. 生成 BatchQueue，明确第一批并行候选、共享 baseline、seed、主指标、诊断指标、Go/Kill 条件；
-4. 在 CandidateMap 和 BatchQueue 通过门控前，不运行正式批次；
-5. 门控通过后只跑第一批小型 paired batch，所有动作走 controller/receipt/evidence gate，结果留在隔离目录；
-6. 由独立 verifier 审查，不把任何数字直接写入论文材料；
-7. 在同一主对话分析整个过程：AI 是否复用地基、是否跳回旧单点、哪些字段负担过重、是否出现新绕过。
+2. 沿完整处理链枚举 ML 应用点，包括但不限于：信道/状态估计、偏振解复用与均衡、定时/载波恢复、检测与软解调、译码辅助、链路监测、异常/失锁检测、在线自适应、复杂度控制、pilot/数据效率、跨参数泛化、联合模块优化；方法可包括监督/自监督/无监督、physics-informed、deep unfolding、equivariant、meta/online learning、生成式方法、混合 model-based/ML 等；
+3. 对每个应用点继续枚举可改进维度：性能、鲁棒性、泛化、收敛、样本效率、pilot 开销、复杂度、时延、可解释性、校准和失效检测；纯硬件/纯协议旧排除不阻止其中可落到软件侧的 ML-assisted 变体进入地图；
+4. 将新枚举结果与已有候选、失败路线、observation-only、DEFER 和待测项合并。旧 Kill 只否决原来的具体 M-C-A 和有效域，不能自动 Kill 整个 ML 方法族；
+5. 完成中性扫描和全景分类后再统一排序，生成 BatchQueue，明确第一批并行候选、共享 baseline、seed、主指标、诊断指标、Go/Kill 条件；
+6. 在 CandidateMap 和 BatchQueue 通过门控前，不运行正式批次；
+7. 门控通过后只跑第一批小型 paired batch，所有动作走 controller/receipt/evidence gate，结果留在隔离目录；
+8. 由独立 verifier 审查，不把任何数字直接写入论文材料；
+9. 在同一主对话分析整个过程：AI 是否真正展开了 ML 全空间、是否仍被 CMA/pilot 旧路径锚定、哪些字段负担过重、是否出现新绕过。
 
-硬约束：不把 current-CMA/no-z 当 standard；不复活已 Kill/DEFER 路线；不跳 CandidateMap/BatchQueue；不修改 canonical baseline；不把真实性能结果自动晋级论文；不创建 skill；普通失败记录后继续，只有 P0 数据完整性或范围冲突才暂停。
+硬约束：不把 current-CMA/no-z 当 standard；不复活已被否决的具体 M-C-A，但也不把局部 Kill 扩大成整个 ML 方法族禁令；不把已有候选地图当封闭全集；不跳 Candidate Universe/CandidateMap/BatchQueue；不修改 canonical baseline；不把真实性能结果自动晋级论文；不创建 skill；普通失败记录后换同族其他机制或下一候选，只有 P0 数据完整性或范围冲突才暂停。

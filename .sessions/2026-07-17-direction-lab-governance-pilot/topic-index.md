@@ -39,6 +39,7 @@
 - **H002**：第二阶段改为一个主对话连续运行；实现 receipt/evidence gate 后依次完成正常、诱惑、stale/绕过和无历史上下文恢复四轮测试。
 - **H003**：冻结提交 `44adff7` 的 pilot v1，进入 5 个真实 shadow 工作循环或一个完整候选批次的单主对话观察期；观察结束后分析完整对话历史。
 - **H004**：将 pilot v1 接到双偏振星地 OSL Groundwork 真实地基，先导入 anchor/CandidateMap/BatchQueue，再启动第一批小型 paired batch。
+- **D003/H004 修正**：地基是场景、baseline、证据和死路的约束源，不是 ML 候选边界；真实运行先枚举完整处理链的 ML Candidate Universe，再统一排序和批跑。
 - **S002**：收 H002 核验、receipt/evidence gate 最小设计、TDD 计划与四轮压力测试过程记录。
 - **S003**：完成 5 个真实 shadow 工作循环；核心行为/P0 隔离 PASS，恢复阈值未覆盖，整体 PARTIAL。
 - **D001**：选择审计账本背书的最小 receipt/evidence gate；签名与不可变存储留作债务。
@@ -57,4 +58,4 @@
 
 ## 当前位置
 
-首轮压力测试核心行为经 V004/V005 复核为 PASS；S003/V006 已完成 5 个真实 shadow 循环，核心行为/P0 隔离 PASS，但恢复能力仍未满足 ≥3 次样本门槛，整体保持 PARTIAL。H004 已就绪：将冻结的 pilot v1 接入双偏振星地 OSL 真实地基，从候选族批量队列启动，不回到零或旧单点。
+首轮压力测试核心行为经 V004/V005 复核为 PASS；S003/V006 已完成 5 个真实 shadow 循环，整体保持 PARTIAL。H004 已按 D003 修正：复用双偏振星地 OSL 地基，但候选范围开放到完整处理链的所有 ML 应用、方法和改进；先全景 Candidate Universe，后统一排序和批跑。
