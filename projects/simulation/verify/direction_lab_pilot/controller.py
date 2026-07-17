@@ -9,7 +9,11 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any, Callable, Mapping
+
+
+ALLOWED_ACTIONS = {"RUN", "GO", "KILL", "PROMOTE", "REUSE_RESULT"}
+PROMOTABLE_EVIDENCE = {"FULL", "VERIFIED_RUN", "PAPER_READY"}
 
 
 class GovernanceViolation(RuntimeError):
@@ -41,6 +45,8 @@ class GovernanceController:
         }
 
         try:
+            if action not in ALLOWED_ACTIONS:
+                raise GovernanceViolation(f"action is not allowed: {action}")
             if manifest is None:
                 raise GovernanceViolation("manifest is required")
             if not manifest.get("run_id"):
@@ -54,24 +60,52 @@ class GovernanceController:
                 raise GovernanceViolation(f"baseline_id not found: {baseline_id}")
             if component is None:
                 raise GovernanceViolation(f"component_id not found: {component_id}")
+            if action != "REUSE_RESULT" and baseline.get("status") != "canonical":
+                raise GovernanceViolation(f"baseline status is not canonical: {baseline.get('status')}")
+            if action != "REUSE_RESULT" and component.get("status") != "canonical":
+                raise GovernanceViolation(f"component status is not canonical: {component.get('status')}")
 
             baseline_fp = manifest.get("baseline_fingerprint")
             component_fp = manifest.get("component_fingerprint")
+            fingerprint_drift = []
+            status_drift = []
+            if baseline.get("status") != "canonical":
+                status_drift.append("baseline status")
+            if component.get("status") != "canonical":
+                status_drift.append("component status")
             if baseline_fp != baseline.get("fingerprint"):
-                raise GovernanceViolation("baseline fingerprint mismatch")
+                fingerprint_drift.append("baseline")
             if component_fp != component.get("fingerprint"):
-                if action == "REUSE_RESULT":
-                    event.update({"blocked": True, "repair": "mark_stale", "reason": "component fingerprint changed"})
-                    result = dict(manifest)
-                    result.update({"result_status": "STALE", "blocked": True})
-                    self._record(event)
-                    return result
+                fingerprint_drift.append("component")
+            if (fingerprint_drift or status_drift) and action == "REUSE_RESULT":
+                drift = fingerprint_drift + status_drift
+                event.update(
+                    {
+                        "blocked": True,
+                        "repair": "mark_stale",
+                        "reason": f"component state changed: {', '.join(drift)}",
+                    }
+                )
+                result = dict(manifest)
+                result.update({"result_status": "STALE", "blocked": True})
+                self._record(event)
+                return result
+            if "baseline" in fingerprint_drift:
+                raise GovernanceViolation("baseline fingerprint mismatch")
+            if "component" in fingerprint_drift:
                 raise GovernanceViolation("component fingerprint mismatch")
 
             if action in {"GO", "KILL"} and manifest.get("state") != "BOARD_READY":
                 raise GovernanceViolation("GO/KILL requires BOARD_READY")
-            if action == "PROMOTE" and manifest.get("evidence_status") == "PARTIAL":
-                raise GovernanceViolation("PARTIAL evidence cannot be promoted")
+            if action == "PROMOTE" and (
+                manifest.get("sandbox_only") is True
+                or manifest.get("promotion_allowed") is not True
+            ):
+                raise GovernanceViolation("sandbox manifest does not allow promotion")
+            if action == "PROMOTE" and manifest.get("evidence_status") not in PROMOTABLE_EVIDENCE:
+                raise GovernanceViolation(
+                    f"evidence cannot be promoted: {manifest.get('evidence_status')}"
+                )
 
             result = dict(manifest)
             result["blocked"] = False
@@ -81,6 +115,20 @@ class GovernanceController:
             event.update({"blocked": True, "reason": str(exc)})
             self._record(event)
             raise
+
+    def execute(
+        self,
+        manifest: Mapping[str, Any] | None,
+        *,
+        action: str,
+        operation: Callable[[], Any],
+    ) -> Any:
+        """Run an operation only after its proposed action passes governance."""
+
+        checked = self.check(manifest, action=action)
+        if checked.get("blocked") or checked.get("result_status") == "STALE":
+            raise GovernanceViolation("action is blocked by STALE governance result")
+        return operation()
 
     def _record(self, event: dict[str, Any]) -> None:
         event = dict(event)

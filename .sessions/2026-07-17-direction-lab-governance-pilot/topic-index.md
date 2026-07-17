@@ -37,6 +37,8 @@
 - **S001**：试运行目标、观察矩阵和退出条件（本专题首 session）。
 - **H001**：新对话启动交接，冻结首轮范围为 sandbox 选择、3-5 个最小硬门、RED 压力测试和独立验证。
 - **V001**：B5 隔离输入的首版控制器 RED/GREEN 与独立 verifier PASS（9 tests）。
+- **V002**：独立黑盒复核发现 PROMOTE 证据缺失、未知动作和 baseline stale 处理等漏口；结论 PARTIAL，暂不扩展 schema。
+- **V003**：修复最小硬门并由独立 verifier 复核，22 tests PASS；manifest 签名/来源绑定列为正式 schema 阶段债务。
 
 ## 未决项
 
@@ -47,4 +49,4 @@
 
 ## 当前位置
 
-首轮已在 B5 只读输入上完成 RED→GREEN 与独立复核；下一步仅在需要时观察重复轮次/恢复场景，不进入正式方向探索。
+首轮最小治理边界经 V003 复核为 PASS：22 tests、真实 B5 smoke test、恢复/重复违规和 stale execute 均通过。下一步是否继续扩大至签名/来源绑定和更长时间的 AI 行为观察，另行决定；不进入正式方向探索。
