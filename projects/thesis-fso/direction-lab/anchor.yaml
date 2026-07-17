@@ -1,0 +1,52 @@
+schema_version: direction-lab.anchor.v1
+anchor_id: anchor.dual-pol-osl.2026-07-17
+created: 2026-07-17
+scope: dual-polarization-ground-to-satellite-OSL
+import_policy:
+  mode: reference-only
+  rule: 地基事实以 source pointer 为准；本文件不替换、改写或扩大原结论。
+  kill_scope: 历史 Kill/FAIL 仅继承原 M-C-A、实现、参数域与证据等级。
+sources:
+  - id: foundation.topic-index
+    path: .sessions/2026-07-10-dual-pol-osl-groundwork/topic-index.md
+    sha256: 8f8c369fe02784c4fae6bba255372dbed763f8516d589b3d2e93445301478a97
+  - id: foundation.decisions
+    path: .sessions/2026-07-10-dual-pol-osl-groundwork/decisions.md
+    sha256: 90d8da65eb552df473c1efb8e7ae345955406d8877d6860690c2883882dec204
+  - id: foundation.verifications
+    path: .sessions/2026-07-10-dual-pol-osl-groundwork/verifications.md
+    sha256: e0945631690c35b7369c9a1fd97bea7b97bf54f5def6a95b32b9d805aa64d45f
+  - id: project.master-state
+    path: projects/thesis-fso/master-state.md
+    sha256: da2b24b547cc49d4fbf1466ddd009a2d0c46d1287b0b141d454eab790b804776
+  - id: direction-lab.design
+    path: .sessions/framework-evolution/R002-direction-lab-design.md
+    sha256: 4f2e599c586cb3a1139fec218575284e6825a3bed90ef6b215d3c7abfcd57b4c
+fact_contracts:
+  candidate_history:
+    pointers: [foundation.topic-index:S041-S074, foundation.verifications:V010-V029]
+    required_read: 候选族地图、Batch0.5/1/2、DEFER、observation-only 与待测状态逐条沿用原证据等级。
+  baseline_identity:
+    pointers: [foundation.decisions:D040, foundation.decisions:D045]
+    required_read: standard-CMA 与 current-CMA/no-z 身份严格分离；只冻结身份，不跨域宣称 standard-CMA 永不 swap。
+  metric_contract:
+    pointers: [foundation.decisions:D018, foundation.verifications:V006-V010]
+    required_read: fixed-label BER 与 permutation-invariant BER 必须并报；二者语义不得互换。
+  historical_domains:
+    pointers: [foundation.decisions:D040-D056, foundation.verifications:V006-V029]
+    required_read: 每条结论必须携带参数域和 evidence level；无 domain 的摘要不得进入候选裁决。
+conflicts:
+  - id: conflict.scope-governance-vs-live-run
+    status: resolved-by-explicit-scope-change
+    resolution: .sessions/2026-07-17-direction-lab-governance-pilot/decisions.md#D004
+    blocked_downstream: false
+  - id: conflict.master-state-vs-latest-DV
+    status: open
+    details: master-state 的 V015/V017/V025/V030 状态与最新 decisions/verifications 不完全一致。
+    blocked_downstream: [formal-Step3.5-completion, formal-Step4a, paper-promotion]
+    permitted_downstream: [historical-fact-import, sandbox-candidate-scan, sandbox-RUN]
+  - id: conflict.runner-not-in-main-tree
+    status: contained
+    details: unified runner/metrics/events 位于未提交 worktree；只能按逐文件 SHA 作为 sandbox source snapshot 使用。
+    blocked_downstream: [canonical-component-registration, formal-reproduction, paper-promotion]
+    permitted_downstream: [sandbox-RUN-with-source-hashes]

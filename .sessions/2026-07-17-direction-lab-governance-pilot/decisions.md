@@ -84,3 +84,27 @@ S002 / V004 独立 verifier 发现 / V005 修复后复核
 ### 来源
 
 用户原话见 `voice.md` 2026-07-17。
+
+## D004: pilot 扩展为真实地基 sandbox 运行但不等同正式 Groundwork 晋级
+
+> status: active
+> date: 2026-07-17
+> 取代：topic-index 原“只测治理、不寻找新算法”的当前范围与对应不变量
+> 被取代：无
+> 依据：用户显式 scope change + H004 live foundation run
+
+### 决策
+
+本专题从纯治理 shadow pilot 扩展为真实研究地基上的 Direction Lab sandbox：先建立完整 ML Candidate Universe，再形成 CandidateMap、BatchQueue，并在门控通过后运行一个小型 paired batch。运行结果仍只进入隔离的 Direction Lab 证据链，不自动进入正式 Groundwork、论文材料或 canonical baseline。
+
+### 理由
+
+用户已明确要求“把 Direction Lab pilot v1 用到真实研究地基上”并连续跑完第一批；继续把“只测治理”当硬阻断会与本轮授权直接冲突。保留 sandbox、receipt、evidence gate 和论文晋级隔离，可在不篡改原 Groundwork 状态的前提下执行真实候选。
+
+### 影响范围
+
+允许创建 `projects/thesis-fso/direction-lab/` 下的 anchor、候选全景、地图、队列和隔离批次产物；不允许把 current-CMA/no-z 当 baseline，不允许修改 canonical baseline，不允许绕过 thesis-fso 当前 Step 3.5/Step 4a 门控。
+
+### 来源
+
+用户原话见 `voice.md` 2026-07-17。

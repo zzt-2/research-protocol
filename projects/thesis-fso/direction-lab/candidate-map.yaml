@@ -1,0 +1,105 @@
+schema_version: direction-lab.candidate-map.v1
+map_id: map.dual-pol-osl.ml.2026-07-17.v1
+universe_id: universe.dual-pol-osl.ml.2026-07-17
+status: PASS
+score_scale: 1-low-to-5-high
+score_semantics:
+  problem_truth: 5 means direct foundation evidence of a current failure/problem
+  ml_information_increment: 5 means ML consumes useful information unavailable to the traditional rule
+  baseline_legality: 5 means a strong, same-budget canonical comparator exists
+  novelty: 5 means low known collision risk; no novelty claim is made before literature closure
+  improvement_space: 5 means large plausible headroom with a falsifiable mechanism
+  implementation_cost: 5 means low cost
+  evidence_readiness: 5 means small evidence gap
+  history_distance: 5 means far from an exact historical dead end
+  paper_contribution: 5 means plausible method contribution if later gates pass
+weights: {problem_truth: 0.20, ml_information_increment: 0.15, baseline_legality: 0.15, novelty: 0.10, improvement_space: 0.10, implementation_cost: 0.10, evidence_readiness: 0.05, history_distance: 0.05, paper_contribution: 0.10}
+
+families:
+  - {id: F01, name: channel-state-and-world-models, members: [U04, U05, U06, U28]}
+  - {id: F02, name: synchronization-and-lock-safety, members: [U08, U09, U10]}
+  - {id: F03, name: polarization-equalization-and-adaptation, members: [U11, U12, U13, U14, U15, U16, U26, U27]}
+  - {id: F04, name: detection-llr-and-fec, members: [U19, U20, U21, U22]}
+  - {id: F05, name: monitoring-fallback-and-mode-control, members: [U07, U23, U24, U25, U31]}
+  - {id: F06, name: tx-pilot-and-data-efficiency, members: [U01, U02, U03, U29]}
+  - {id: F07, name: joint-dsp-and-deployment, members: [U17, U18, U30]}
+  - {id: F08, name: diversity-and-resource-extension, members: [U32]}
+
+ranked_shortlist:
+  - id: U24
+    score: 4.15
+    factors: {problem_truth: 5, ml_information_increment: 4, baseline_legality: 5, novelty: 3, improvement_space: 4, implementation_cost: 5, evidence_readiness: 2, history_distance: 3, paper_contribution: 4}
+    classification: BATCH_1_FAMILY
+    rationale: foundation has authentic high-SOP non-swap BER failures while the historical single-statistic threshold detector failed; supervised temporal and self-supervised mechanisms change features/training and inherit, but are not identical to, D048-D049.
+  - id: U10
+    score: 3.80
+    factors: {problem_truth: 4, ml_information_increment: 4, baseline_legality: 4, novelty: 3, improvement_space: 4, implementation_cost: 4, evidence_readiness: 2, history_distance: 4, paper_contribution: 4}
+    classification: NEXT_AFTER_EVENT_LIBRARY
+  - id: U05
+    score: 3.55
+    factors: {problem_truth: 4, ml_information_increment: 4, baseline_legality: 5, novelty: 2, improvement_space: 4, implementation_cost: 3, evidence_readiness: 2, history_distance: 2, paper_contribution: 4}
+    classification: HOLD_FOR_COMPETITOR_CLOSURE
+  - id: U20
+    score: 3.55
+    factors: {problem_truth: 3, ml_information_increment: 4, baseline_legality: 4, novelty: 3, improvement_space: 4, implementation_cost: 4, evidence_readiness: 2, history_distance: 5, paper_contribution: 4}
+    classification: PROBLEM_EVIDENCE_NEEDED
+  - id: U19
+    score: 3.50
+    factors: {problem_truth: 3, ml_information_increment: 4, baseline_legality: 4, novelty: 2, improvement_space: 4, implementation_cost: 4, evidence_readiness: 2, history_distance: 5, paper_contribution: 4}
+    classification: PROBLEM_EVIDENCE_NEEDED
+  - id: U23
+    score: 3.45
+    factors: {problem_truth: 4, ml_information_increment: 4, baseline_legality: 4, novelty: 3, improvement_space: 3, implementation_cost: 4, evidence_readiness: 2, history_distance: 3, paper_contribution: 3}
+    classification: MERGE_WITH_U24_DIAGNOSTICS
+  - id: U13
+    score: 3.35
+    factors: {problem_truth: 3, ml_information_increment: 4, baseline_legality: 4, novelty: 3, improvement_space: 4, implementation_cost: 2, evidence_readiness: 2, history_distance: 4, paper_contribution: 4}
+    classification: LATER_HIGH_COST
+  - id: U16
+    score: 3.25
+    factors: {problem_truth: 2, ml_information_increment: 4, baseline_legality: 5, novelty: 3, improvement_space: 3, implementation_cost: 4, evidence_readiness: 1, history_distance: 3, paper_contribution: 4}
+    classification: DEFER_INHERITS_D044
+  - id: U12
+    score: 3.15
+    factors: {problem_truth: 3, ml_information_increment: 3, baseline_legality: 5, novelty: 2, improvement_space: 3, implementation_cost: 3, evidence_readiness: 2, history_distance: 2, paper_contribution: 4}
+    classification: NEED_NEW_FAILURE_DOMAIN
+  - id: U08
+    score: 3.10
+    factors: {problem_truth: 2, ml_information_increment: 4, baseline_legality: 4, novelty: 2, improvement_space: 3, implementation_cost: 3, evidence_readiness: 1, history_distance: 4, paper_contribution: 4}
+    classification: NEED_AUTHENTIC_MCA
+  - id: U18
+    score: 3.00
+    factors: {problem_truth: 2, ml_information_increment: 5, baseline_legality: 4, novelty: 2, improvement_space: 4, implementation_cost: 1, evidence_readiness: 1, history_distance: 5, paper_contribution: 5}
+    classification: LATER_HIGH_COST
+  - id: U03
+    score: 2.95
+    factors: {problem_truth: 3, ml_information_increment: 4, baseline_legality: 4, novelty: 1, improvement_space: 3, implementation_cost: 3, evidence_readiness: 2, history_distance: 2, paper_contribution: 3}
+    classification: HOLD_GENERIC_COLLISION
+
+unranked_but_retained:
+  ids: [U01, U02, U04, U06, U07, U09, U11, U14, U15, U17, U21, U22, U25, U26, U27, U28, U29, U30, U31, U32]
+  rule: 未进入前12名不等于 Kill；缺少问题证据、范围接口、竞品闭合或实现预算时保持 RETAINED_NEUTRAL。
+
+historical_merge:
+  killed_exact_routes:
+    - {pointer: D040, mapping: U14, effect: MMA exact mechanism/domain excluded; blind family retained}
+    - {pointer: D041, mapping: [U11, U14], effect: asymmetric/permutation regularizer at original lambda/domain excluded; other equivariant mechanisms retained}
+    - {pointer: D043, mapping: U11, effect: strict e2cnn blind fixed-label positioning excluded; representation/residual uses retained}
+  deferred:
+    - {pointer: D044, mapping: U16, effect: inherits residual-information UNKNOWN}
+  observation_only:
+    - {pointer: D047-D054, mapping: [U05, U10, U23, U24], effect: imports event and pilot observations without Go}
+  failed_detectors:
+    - {pointer: D048-D051, mapping: [U23, U24], effect: exact basic threshold/Stokes routes remain negative controls; richer ML mechanisms remain candidates}
+  collision_and_competitor_constraints:
+    - {pointer: D055, mapping: [U03, U05, U24], effect: generic pilot-Jones collision and narrow stability route remain boundaries; B001 changes task to receiver-only causal ML detection and does not reuse pilot-Jones as a winner}
+    - {pointer: D056, mapping: [U05, U10, U24], effect: direct-competitor/crossref chain remains unresolved; B001 is observation-only and cannot enter Step4a or paper promotion}
+
+map_gate:
+  universe_coverage_pass: true
+  old_candidate_map_treated_as_seed_only: true
+  local_failures_not_expanded_to_families: true
+  canonical_baseline_unchanged: true
+  formal_promotion_blocked: true
+  independent_review: PASS
+  verdict: PASS

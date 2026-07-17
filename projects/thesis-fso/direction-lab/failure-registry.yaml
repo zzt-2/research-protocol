@@ -1,0 +1,15 @@
+schema_version: direction-lab.failure-registry.v1
+entries:
+  - id: infra.windows-memmap-handle-001
+    kind: infrastructure-bug
+    status: repaired-targeted-verified-pending-independent-review
+    observed: 2026-07-17
+    symptom: test_batch1_low_memory 在 Windows TemporaryDirectory 清理时 WinError32
+    root_cause: shared 中的 numpy memmap 在 context exit 时仍持有文件句柄
+    fix_scope: 显式关闭 shared 内每个 mmap；未改算法、baseline 或参数
+    verification: latest independent run has 37 simulation tests PASS plus 14 Direction Lab tests PASS after minimal mmap close; the earlier pre-fix run was 34 passed/1 failed and is not treated as current evidence
+  - id: hist.basic-blind-threshold-detector
+    kind: inherited-negative-evidence
+    status: FAIL-in-original-domain
+    pointers: [foundation.decisions:D048-D049, foundation.verifications:V016-V017]
+    inheritance_rule: 仅作为传统阈值对照；不得据此 Kill 监督或自监督时序 detector 方法族。

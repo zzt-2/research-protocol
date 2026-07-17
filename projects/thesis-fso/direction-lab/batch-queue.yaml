@@ -1,0 +1,88 @@
+schema_version: direction-lab.batch-queue.v1
+queue_id: queue.dual-pol-osl.2026-07-17.v1
+map_id: map.dual-pol-osl.ml.2026-07-17.v1
+status: PASS
+
+batches:
+  - batch_id: B001
+    family_id: F05
+    archetype_id: U24
+    title: high-SOP causal ML degradation detector family
+    state: QUEUED_NOT_RUN
+    sandbox_only: true
+    promotion_allowed: false
+    problem_mca:
+      M: receiver-only detector layered on unchanged standard-CMA
+      C: dual-pol OSL GG strong turbulence at SOP rates 4e-6 control and 1e-5 event condition
+      A: high-SOP non-swap BER failures exist in foundation observations, while single-statistic threshold detectors missed the observed failures
+    shared_contract:
+      simulator_id: simulator.dual_pol_shared_realization.v1
+      baseline_id: baseline.standard_cma.godard_z
+      metric_contract_id: metric.dual_qpsk.fixed-plus-pi.v1
+      n_symbols: 100000
+      block_size: 64
+      alpha: 4.2
+      beta: 1.4
+      f_g_hz: 30
+      snr_db: 20
+      modulation: QPSK
+      cma_mu: 0.001
+      cma_taps: 11
+      rates: [0.000004, 0.00001]
+      train_seeds: [11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+      test_seeds: [41, 42, 43, 44, 45]
+      pairing: all candidates consume the same saved causal feature rows for each rate-seed cell
+      supervision_boundary: oracle fixed-label BER may create train labels and post-hoc evaluation only; inference features contain receiver/CMA-internal quantities and no transmitted symbols, true Jones, h, or future samples
+      resource_budget: 30 shared standard-CMA cells plus three lightweight CPU models; no 1M/5M expansion
+    comparator:
+      id: comparator.historical-quantile-threshold
+      role: traditional negative-control only, not a revived candidate
+      source: foundation D048-D049
+    candidates:
+      - candidate_id: C24-SL-LINEAR
+        mechanism: supervised class-weighted logistic temporal detector
+        hypothesis: a causal combination of multiple CMA internal traces contains predictive information not captured by any one threshold
+      - candidate_id: C24-SL-MLP
+        mechanism: supervised shallow nonlinear temporal detector
+        hypothesis: nonlinear interactions among causal trace level/delta/history improve event discrimination beyond the linear detector
+      - candidate_id: C24-SSL-AE
+        mechanism: clean-control reconstruction autoencoder with anomaly score
+        hypothesis: event blocks depart from the learned clean causal feature manifold without requiring event labels
+    causal_features:
+      raw: [cm_error, output_power, update_norm]
+      transforms: [log1p, one-step-delta, causal-rolling-mean, causal-rolling-std]
+      forbidden: [future-window-statistics, transmitted-symbol-features, true-channel-h, true-Jones]
+    labels_and_events:
+      block_label: fixed_label_ber greater than 0
+      event: first of 2 persistent positive blocks after warmup
+      pi_ber: required diagnostic, never substituted for fixed-label event semantics
+    metrics:
+      required_signal_metrics: [fixed_label_ber, permutation_invariant_ber]
+      primary: [cell_recall_before_or_at_oracle, control_cell_false_alarm_rate]
+      diagnostics: [block_AUROC, block_AUPRC, lead_blocks, ECE, positive_cells, positive_blocks]
+    preregistered_outcomes:
+      minimum_information: at least 3 event cells and 50 positive train blocks; otherwise INCONCLUSIVE_DEFER
+      advance_specific_mechanism: test recall at least 0.60 AND control false-alarm at most 0.20 AND AUROC at least 0.70
+      retire_specific_mechanism: with minimum information, AUROC at most 0.55 OR recall equals 0
+      otherwise: DEFER
+      no_family_wide_kill: true
+    valid_domain: exact shared contract only; no cross-SNR/fG/modulation/length claim
+    controller:
+      action: RUN
+      state: BATCH_READY
+      evidence_status: EXPLORATORY
+      destination: evidence_ledger
+
+queue_gate:
+  candidate_universe_before_map: true
+  map_before_queue: true
+  multiple_distinct_mechanisms: true
+  shared_baseline_seed_metrics_budget: true
+  hypotheses_and_exit_rules_preregistered: true
+  valid_domain_explicit: true
+  standard_cma_godard_z_only: true
+  current_cma_no_z_forbidden: true
+  source_snapshot_frozen: true
+  detector_tests: PASS
+  independent_review: PASS
+  verdict: PASS

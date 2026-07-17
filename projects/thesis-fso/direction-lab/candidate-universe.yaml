@@ -1,0 +1,186 @@
+schema_version: direction-lab.candidate-universe.v1
+universe_id: universe.dual-pol-osl.ml.2026-07-17
+anchor_id: anchor.dual-pol-osl.2026-07-17
+status: COMPLETE_FOR_V1_SCAN
+closure_rule: 开放全集；新增机制、步骤、输入信息、训练方式或目标维度均可登记新候选。
+neutral_scan_rule: 本文件只做中性枚举，不含 Go/Kill。
+
+method_families:
+  SL: supervised-learning
+  SSL: self-supervised-learning
+  UL: unsupervised-or-blind-learning
+  PI: physics-informed-learning
+  DU: deep-unfolding
+  EQ: equivariant-or-invariant-learning
+  META: meta-learning
+  OCL: online-or-continual-learning
+  GEN: generative-models
+  RL: reinforcement-learning-or-bandit
+  HYB: model-based-plus-ML
+  COMP: teacher-student-distillation-pruning-quantization
+  BAYES: probabilistic-or-uncertainty-aware-learning
+
+improvement_dimensions:
+  P: BER-NMSE-GMI performance
+  R: robustness
+  G: generalization
+  C: convergence-and-stability
+  S: sample-efficiency
+  O: pilot-or-training-overhead
+  X: compute-complexity
+  L: latency
+  I: interpretability
+  U: uncertainty-and-calibration
+  F: failure-detection-and-safe-fallback
+  J: cross-module-coordination
+
+application_points:
+  - id: AP01
+    name: Tx probabilistic/geometric shaping
+    methods: [SL, GEN, PI, RL, HYB]
+    dimensions: [P, R, G, J]
+  - id: AP02
+    name: pulse shaping and front-end predistortion
+    methods: [SL, SSL, PI, DU, HYB, COMP]
+    dimensions: [P, R, X, L]
+  - id: AP03
+    name: pilot/training-sequence placement and waveform design
+    methods: [SL, PI, META, RL, HYB]
+    dimensions: [S, O, P, J]
+  - id: AP04
+    name: GG turbulence/Jones/link-state estimation
+    methods: [SL, SSL, PI, DU, EQ, META, OCL, BAYES, HYB]
+    dimensions: [P, R, G, S, U]
+  - id: AP05
+    name: channel digital twin and rare-event generation
+    methods: [PI, GEN, BAYES, OCL]
+    dimensions: [S, G, U, I]
+  - id: AP06
+    name: AGC/ADC range and quantization control
+    methods: [SL, OCL, RL, HYB, COMP]
+    dimensions: [R, X, L, F]
+  - id: AP07
+    name: timing synchronization
+    methods: [SL, SSL, PI, DU, META, OCL, HYB]
+    dimensions: [P, R, G, C, L]
+  - id: AP08
+    name: frequency-offset estimation
+    methods: [SL, SSL, PI, DU, META, HYB]
+    dimensions: [P, R, G, C, O]
+  - id: AP09
+    name: carrier-phase recovery and cycle-slip handling
+    methods: [SL, SSL, PI, DU, OCL, BAYES, HYB]
+    dimensions: [P, R, C, U, F]
+  - id: AP10
+    name: polarization demultiplexing/equalization
+    methods: [SL, SSL, UL, PI, DU, EQ, META, OCL, GEN, HYB, COMP]
+    dimensions: [P, R, G, C, S, O, X, L, U, F]
+  - id: AP11
+    name: residual impairment compensation after canonical DSP
+    methods: [SL, SSL, PI, DU, BAYES, HYB, COMP]
+    dimensions: [P, R, U, F, X]
+  - id: AP12
+    name: joint timing/FOE/CPR/polarization DSP
+    methods: [SL, SSL, PI, DU, EQ, META, HYB]
+    dimensions: [P, R, G, J, L]
+  - id: AP13
+    name: symbol detection and neural soft demapping
+    methods: [SL, SSL, PI, GEN, BAYES, HYB, COMP]
+    dimensions: [P, G, U, X, L]
+  - id: AP14
+    name: LLR generation and calibration
+    methods: [SL, SSL, BAYES, HYB, COMP]
+    dimensions: [P, U, G, F]
+  - id: AP15
+    name: FEC decoding assistance
+    methods: [SL, SSL, DU, OCL, HYB, COMP]
+    dimensions: [P, C, X, L, I]
+  - id: AP16
+    name: iterative detection-decoding/joint receiver
+    methods: [SL, DU, META, HYB, COMP]
+    dimensions: [P, J, C, X, L]
+  - id: AP17
+    name: link-quality monitoring and BER/GMI prediction
+    methods: [SL, SSL, UL, META, OCL, BAYES, HYB]
+    dimensions: [U, F, G, S]
+  - id: AP18
+    name: anomaly/lock-loss/divergence/degradation detection
+    methods: [SL, SSL, UL, PI, GEN, OCL, BAYES, HYB]
+    dimensions: [F, U, R, I, L]
+  - id: AP19
+    name: safe fallback, reset and algorithm selection
+    methods: [SL, META, OCL, RL, BAYES, HYB]
+    dimensions: [F, R, C, X, L]
+  - id: AP20
+    name: online parameter/step-size/window control
+    methods: [SL, SSL, DU, META, OCL, RL, HYB]
+    dimensions: [C, R, G, X]
+  - id: AP21
+    name: cross-SNR/modulation/SOP/turbulence/length generalization
+    methods: [SL, SSL, EQ, META, OCL, GEN, BAYES, HYB]
+    dimensions: [G, R, S, U]
+  - id: AP22
+    name: sim-to-real/domain adaptation
+    methods: [SL, SSL, EQ, META, OCL, GEN, BAYES]
+    dimensions: [G, S, U, F]
+  - id: AP23
+    name: active learning/data selection/sample efficiency
+    methods: [SSL, META, OCL, GEN, BAYES, RL]
+    dimensions: [S, O, G]
+  - id: AP24
+    name: complexity/latency/hardware compression
+    methods: [SL, COMP, HYB, RL]
+    dimensions: [X, L, P, F]
+  - id: AP25
+    name: multi-module resource coordination
+    methods: [SL, META, OCL, RL, HYB]
+    dimensions: [J, X, L, R]
+  - id: AP26
+    name: diversity/combining and branch selection
+    methods: [SL, SSL, PI, DU, RL, HYB]
+    dimensions: [P, R, X, L]
+
+candidate_archetypes:
+  - {id: U01, ap: AP01, problem: fixed shaping may underperform under GG-tail and domain shift, mechanisms: [GEN, PI, HYB], baseline: equal-net-rate uniform modulation, history_distance: far, evidence_gap: Tx controllability and fair-rate model}
+  - {id: U02, ap: AP02, problem: fixed RRC/predistortion can mismatch bandwidth/quantization/front-end distortion, mechanisms: [PI, DU, COMP], baseline: RRC plus analytic predistortion, history_distance: far, evidence_gap: front-end model absent}
+  - {id: U03, ap: AP03, problem: fixed pilot placement may be information-inefficient for time-varying Jones channels, mechanisms: [PI, META, RL], baseline: equal-overhead periodic pilots, history_distance: near-D055-not-identical, evidence_gap: frame constraints and direct competitors}
+  - {id: U04, ap: AP05, problem: analytic GG plus SOP generator may miss joint rare-tail dynamics, mechanisms: [PI, GEN, BAYES], baseline: canonical generator, history_distance: far, evidence_gap: measured-data anchor}
+  - {id: U05, ap: AP04, problem: LS-KF state estimation may degrade with low pilot density and fast SOP, mechanisms: [DU, BAYES, HYB], baseline: equal-pilot LS-KF-EKF, history_distance: near-pilot-Jones, evidence_gap: direct competitor closure}
+  - {id: U06, ap: AP04, problem: handcrafted channel representation may not transfer across SNR-fG-SOP, mechanisms: [SSL, EQ, META], baseline: handcrafted statistics, history_distance: far-from-D043-fixed-label, evidence_gap: equivariance object definition}
+  - {id: U07, ap: AP06, problem: fixed AGC/ADC range can clip deep dynamic channels or waste resolution, mechanisms: [OCL, RL, HYB], baseline: traditional AGC at same ADC bits, history_distance: far, evidence_gap: ADC and causal-control model}
+  - {id: U08, ap: AP07, problem: classic TED-PLL timing jitter may propagate under dual-pol fades, mechanisms: [DU, META, HYB], baseline: Gardner-MM at same loop bandwidth, history_distance: adjacent-only, evidence_gap: reproduce an authentic failure}
+  - {id: U09, ap: AP08, problem: segmented FOE may couple poorly to polarization and turbulence dynamics, mechanisms: [SL, PI, DU], baseline: FFT-FOE, history_distance: adjacent-carrier-work, evidence_gap: authentic M-C-A}
+  - {id: U10, ap: AP09, problem: CPR cycle slips and lock loss may lack calibrated early warning, mechanisms: [SSL, GEN, BAYES], baseline: VV-BPS-DPLL plus threshold monitor, history_distance: far-from-QDP4-action, evidence_gap: event library}
+  - {id: U11, ap: AP10, problem: fixed-weight supervised equalizer lacks unseen-SOP label stability, mechanisms: [SL, EQ, HYB], baseline: standard-CMA plus equal-pilot classical estimator, history_distance: inherits-fixed-ML-swap, evidence_gap: pilot information increment}
+  - {id: U12, ap: AP10, problem: CMA-RLS may have slow or unstable adaptation in some valid domains, mechanisms: [DU, META, HYB], baseline: optimized standard-CMA-RLS, history_distance: near-D040-D041, evidence_gap: real failure domain}
+  - {id: U13, ap: AP10, problem: offline equalizer may drift under unseen fG-SOP-SNR, mechanisms: [META, OCL, SSL], baseline: frozen-ML plus standard-CMA, history_distance: untested-E3, evidence_gap: forgetting and safe rollback}
+  - {id: U14, ap: AP10, problem: blind equalization may need richer non-label supervision than constant modulus, mechanisms: [SSL, UL, EQ], baseline: standard-CMA-MMA, history_distance: inherits-D048-D049-only-monitor, evidence_gap: degenerate-solution proof}
+  - {id: U15, ap: AP10, problem: explicit blind costs may not represent multimodal posterior ambiguity, mechanisms: [GEN, BAYES], baseline: CMA plus strongest legal blind ML, history_distance: collision-risk, evidence_gap: distinct mechanism boundary}
+  - {id: U16, ap: AP11, problem: canonical DSP may leave context-dependent residual impairment, mechanisms: [SL, BAYES, HYB], baseline: standard-CMA plus simple DSP residual, history_distance: inherits-D044-DEFER, evidence_gap: residual information increment}
+  - {id: U17, ap: AP24, problem: useful ML equalizers may exceed latency and compute budgets, mechanisms: [COMP, HYB], baseline: uncompressed model and equal-compute DSP, history_distance: far, evidence_gap: requires a useful teacher first}
+  - {id: U18, ap: AP12, problem: serial DSP can amplify cross-module errors, mechanisms: [DU, SL, HYB], baseline: canonical serial chain, history_distance: far-from-single-point-kills, evidence_gap: diagnosability and stable training}
+  - {id: U19, ap: AP13, problem: analytic detector may be mismatched to residual Jones/non-Gaussian errors, mechanisms: [SL, BAYES, HYB], baseline: analytic detector with same CSI, history_distance: far, evidence_gap: residual distribution evidence}
+  - {id: U20, ap: AP14, problem: analytic LLR may be miscalibrated under residual channel uncertainty, mechanisms: [SL, BAYES, HYB], baseline: analytic LLR plus temperature scaling, history_distance: far, evidence_gap: coded-chain contract}
+  - {id: U21, ap: AP15, problem: BP-minsum may underuse structured burst errors and mismatched LLR, mechanisms: [DU, SL, COMP], baseline: same-code same-iteration BP-minsum, history_distance: far, evidence_gap: code choice and net gain}
+  - {id: U22, ap: AP16, problem: one-shot demap ignores decoder feedback, mechanisms: [DU, HYB], baseline: BICM plus BP at same iteration budget, history_distance: far, evidence_gap: complexity-benefit ratio}
+  - {id: U23, ap: AP17, problem: online BER-GMI cannot be directly observed and thresholds may shift by domain, mechanisms: [SSL, BAYES, OCL], baseline: power-CMA-error threshold, history_distance: inherits-D048-D051, evidence_gap: reliable labels}
+  - {id: U24, ap: AP18, problem: high-SOP standard-CMA has observed non-swap BER failures that simple blind thresholds missed, mechanisms: [SL, SSL, UL, BAYES], baseline: standard-CMA plus historical threshold detector, history_distance: changed-training-and-feature-mechanism, evidence_gap: event count and cross-domain validation}
+  - {id: U25, ap: AP19, problem: fixed fallback/reset policy may trade recovery against false interventions, mechanisms: [META, RL, BAYES, HYB], baseline: fixed safe policy, history_distance: far-from-killed-QDP4-actions, evidence_gap: causal reward and safety}
+  - {id: U26, ap: AP20, problem: fixed CMA step/window may be suboptimal across regimes, mechanisms: [DU, META, OCL, RL], baseline: optimized fixed grid, history_distance: near-clip-freeze-but-new-policy, evidence_gap: causal state and oracle action labels}
+  - {id: U27, ap: AP21, problem: models may fail across SNR-modulation-SOP-fG-length shifts, mechanisms: [EQ, META, OCL, GEN], baseline: per-domain retrain and frozen model, history_distance: far, evidence_gap: domain matrix}
+  - {id: U28, ap: AP22, problem: simulator-trained models may silently fail on hardware or measured channels, mechanisms: [SSL, META, OCL, GEN, BAYES], baseline: simulator-only training, history_distance: far, evidence_gap: measured dataset}
+  - {id: U29, ap: AP23, problem: labels and pilots may be spent on redundant regions rather than tails, mechanisms: [BAYES, RL, SSL], baseline: uniform sampling, history_distance: far, evidence_gap: acquisition-cost model}
+  - {id: U30, ap: AP24, problem: ML inference may violate OSL receiver latency-power constraints, mechanisms: [COMP, HYB], baseline: teacher and equal-budget DSP, history_distance: far, evidence_gap: target hardware}
+  - {id: U31, ap: AP25, problem: a single receiver configuration may not balance quality-compute-latency across states, mechanisms: [META, RL, OCL, HYB], baseline: best fixed configuration, history_distance: far, evidence_gap: safe contextual state}
+  - {id: U32, ap: AP26, problem: fixed diversity combining may waste branch-specific information under fades and polarization rotation, mechanisms: [SL, DU, RL, HYB], baseline: MRC-selection combining at same resources, history_distance: far, evidence_gap: multi-branch model outside current single-aperture anchor}
+
+coverage_gate:
+  application_points_covered: 26
+  method_families_covered: 13
+  improvement_dimensions_covered: 12
+  archetypes: 32
+  known_out_of_scope:
+    - F1 hardware EPC/optical-domain control
+    - G2 HARQ/coding-system expansion outside current frozen scope
+    - multi-aperture candidate U32 requires explicit future scope change before any run
+  verdict: PASS

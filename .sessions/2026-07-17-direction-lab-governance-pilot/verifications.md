@@ -185,3 +185,43 @@ PARTIAL：核心 5-cycle 行为、P0 隔离、主动路由和正式材料边界 
 ### 后续（PARTIAL 时）
 
 不改 controller/schema；若继续观察，补足至少 3 次跨上下文恢复（成功率 ≥90%）后再评估正式 registry/schema。当前无暂停条件。
+
+## V007: B001 真实地基 paired batch sandbox integrity
+
+> date: 2026-07-17
+> 关联：S004 / D004
+
+### 验证项
+
+- [x] pre-run CandidateMap 与 BatchQueue gate 均为 `PASS`；canonical sandbox 状态为 `BOARD_READY`，formal research state 仍为 `BLOCKED`。
+- [x] 运行经过 controller `RUN` 与 `EXECUTE` receipt；EvidenceGate 为 `accepted=true`、`ACCEPTED/TRUSTED`，无 replay/stale admission。
+- [x] manifest、result、receipt、execution event 的 manifest/result hash 一致；17/17 source closure 文件存在且 SHA 一致；component fingerprint 与 registry 一致。
+- [x] 30 paired cells、30 baseline calls、46,860 行 block 结果；train seeds 11–20 与 test seeds 41–45 不重叠；共享 standard-CMA/Godard-with-z baseline 未被修改。
+- [x] 特征只使用 12 个 causal CMA trace transforms；fixed-label BER 与 permutation-invariant BER 均存在；历史单阈值仅作 `candidate=false` negative control。
+- [x] 阈值只由 control-rate train scores 标定；无 test-row 训练或阈值选择；AE 的 train-label clean-row 过滤被 verifier 明确标为预注册 oracle-label supervision，而非 test leakage。
+- [x] 最小信息满足：4 个 persistent test event cells、6,279 个 positive train blocks。
+- [x] 局部规则结果：`C24-SL-LINEAR=ADVANCE_SPECIFIC`，`C24-SL-MLP=ADVANCE_SPECIFIC`，`C24-SSL-AE=RETIRE_SPECIFIC`。
+- [x] 未发生 family-wide kill、canonical baseline 变更或 paper/material 自动写入。
+
+### 证据
+
+- `projects/thesis-fso/direction-lab/batches/B001-20260717-live/manifest.json`
+- 同目录 `controller-audit.jsonl`、`evidence-gate-audit.jsonl`、`verifier-report.md`、`batch-synthesis.md`
+- 同目录 `result.json` 与 `evidence_ledger.jsonl`（大体量原始证据，保留在隔离目录）
+- `projects/thesis-fso/direction-lab/candidate-map.yaml`、`batch-queue.yaml`、`component-registry.yaml`
+
+### 结论
+
+PASS：B001 作为 sandbox evidence 的完整性、来源、指标边界与独立复核均通过。该 PASS 不等同正式 Go/Kill、Step 4a 结论、方法族结论或论文材料资格。
+
+### 已知债务
+
+| 债务 | 当前状态 | 触发解决条件 |
+|------|----------|-------------|
+| unified runner 仍来自未提交 worktree 快照 | sandbox-only | 新一轮复验前形成可复现、经审查的 canonical runner 变更 |
+| 两个监督式检测器尚未测试 causal safe fallback | 仅有 detector signal | 新 gate 批次完成 fallback/BER/PI-BER 联合评估 |
+| master-state 与最新 D/V 存在 formal Step 3.5/4a 漂移 | formal state BLOCKED | 独立解决状态冲突并补足所需文献/基线证据 |
+
+### 后续
+
+对两个监督式候选做新的独立门控 paired revalidation，或选择不同机制的下一候选；不得直接复用 B001 数字扩大有效域。

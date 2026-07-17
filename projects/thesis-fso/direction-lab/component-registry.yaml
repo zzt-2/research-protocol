@@ -1,0 +1,23 @@
+schema_version: direction-lab.component-registry.v1
+components:
+  - id: baseline.standard_cma.godard_z
+    status: canonical
+    fingerprint: 9282ecb53608a2093a5e69a62ccea9976211ecfda7626d2e65ce2fd912f1ca2f
+  - id: component.ml_degradation_detector.batch-v1
+    status: sandbox-candidate
+    fingerprint: 6869e52461a652f67bd3e5ce6a2e694e0aaff4f2710687a4f2743ffc62ef61e6
+    entrypoint: projects/thesis-fso/direction-lab/tools/run_b001.py:run_dataset
+    tests: [projects/thesis-fso/direction-lab/tests/test_run_b001.py, projects/thesis-fso/direction-lab/tests/test_ml_detector_batch.py]
+    valid_domains: [B001 exact shared contract]
+  - id: runner.unified_batch.worktree-snapshot
+    status: sandbox-candidate
+    fingerprint: 6869e52461a652f67bd3e5ce6a2e694e0aaff4f2710687a4f2743ffc62ef61e6
+    entrypoint: projects/thesis-fso/direction-lab/tools/run_b001.py:run_governed
+  - id: metric.dual_qpsk.fixed-plus-pi.v1
+    status: sandbox-candidate
+    fingerprint: 7ff4c9d6fbcf7eef075fd4f88f2d42097cf75bca8640b150d69faa583d905cd0
+    entrypoint: .worktrees/unified-batch-runner/projects/simulation/common/_batch_metrics.py:evaluate_dual_qpsk
+notes:
+  - pilot controller v1 只接受 status=canonical；运行时会建立本批次专用内存 registry，把已冻结 sandbox component 显式映射为 canonical-for-this-run。该映射不改变本文件或正式 registry。
+  - worktree source snapshot 不等于已提交或正式 canonical。
+  - “sandbox-candidate” 是代码注册状态；controller 运行时的 canonical alias 只用于通过 pilot receipt gate，不代表方向或代码晋级。
