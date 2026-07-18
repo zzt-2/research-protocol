@@ -106,12 +106,12 @@ projects/{name}/paper_materials/
 **输入**：literature_notes, competitor_notes/, baseline_report, novelty_search（如有）
 **Section 骨架**：
 
-1. **核心论文完整条目**：标题/作者/年份/来源/DOI/方法/结论/与本研究关系
+1. **核心论文完整条目**：标题/作者/年份/来源/DOI/**源文件路径**/方法/结论/与本研究关系
 2. **技术路线分类体系**：每条路线含论文列表 + 特征摘要
 3. **竞品精确区分表**：每篇竞争论文的覆盖要素/缺失要素/威胁等级
 4. **理论支撑文献**（如有）
 5. **适配性分析汇总**：从 literature_notes 中提取每篇核心论文的适配点/不适配点/改进方向
-6. **文献索引**：全部提及论文的 DOI/arXiv/URL 汇总
+6. **文献索引**：全部提及论文的 DOI/arXiv/URL/**源文件路径**汇总
 
 **格式要求**：每篇论文结构化条目；索引表按 ID 排序；标注精读/浅读状态。
 
@@ -193,7 +193,7 @@ projects/{name}/paper_materials/
 - [ ] 关键论点均有来源标注（文件名 + 决策编号/行号）
 - [ ] 关键数字均用表格呈现
 - [ ] 公式均用 LaTeX
-- [ ] 文献均含 DOI 或 arXiv ID
+- [ ] 文献均含 DOI 或 arXiv ID，且标注源文件路径（格式 `papers/{type}/{id}/content.md`）
 - [ ] 无未标注的数据矛盾
 - [ ] 04_literature.md 包含适配性分析汇总（适配点/不适配点/改进方向）
 - [ ] 05_limitations.md 包含 Execute 阶段积累的局限性记录

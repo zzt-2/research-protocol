@@ -1,0 +1,23 @@
+[
+  {
+    "id": "blind-genie-information",
+    "claim": "blind estimator",
+    "implementation": "resolve(rx, tx_bits)",
+    "missing_or_conflicting_field": "information_access",
+    "expected": "BLOCKED"
+  },
+  {
+    "id": "metric-signature-mismatch",
+    "claim": "all reported gains use the same data BER",
+    "implementation": "headline A uses 1024/768; headline B uses 1024/1024",
+    "missing_or_conflicting_field": "metric_signature",
+    "expected": "BLOCKED"
+  },
+  {
+    "id": "reset-scope-mismatch",
+    "claim": "phase is continuous across windows",
+    "implementation": "for each window: generate(256, new_seed)",
+    "missing_or_conflicting_field": "state_lifecycle",
+    "expected": "BLOCKED"
+  }
+]

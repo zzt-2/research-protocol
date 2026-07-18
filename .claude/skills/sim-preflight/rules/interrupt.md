@@ -1,8 +1,10 @@
 # 遗漏中断 + 自检机制
 
-## 中断清单（8 条）
+## 中断清单（12 条）
 
 执行任何仿真任务时，发现以下情况**立即中断**。每条配可执行检测命令。
+
+> v1.3.0 新增 10-12 条（算法正确性防线，源自 NDA-ML D-007~D-009 教训：consistency PASS 但算法是错的 / vs 祖师爷持平当合理结果接受 / 参数变更后没重审算法）。
 
 ### 1. 试图从 archive/ 或已删除的子文件取公式
 
@@ -69,6 +71,95 @@ grep -rn "{要加的内容}" 毕设/*.md
 - 操作类型（跑/读/改/写）
 
 无 grep，纯 agent 判断。中断后**显式反问用户**，不允许默认选择。
+
+### 9. 参数真相源分裂（v1.2.0 新增）
+
+发现以下任一 → 中断（详见 `rules/param-source.md`）：
+
+**(a) 函数默认参数固化模块常量**：
+```bash
+grep -rn "def [a-z_]*([^)]*=[A-Z_]" projects/simulation/ --include="*.py"
+# 例如 def doppler_phase(N, f_res=F_RESIDUAL, lw=LASER_LW) —— import 时冻结，patch 模块属性无效
+```
+
+**(b) 同一物理量跨模块多个数值源**：
+```bash
+# 检查线宽/符号率/噪声等高频混淆项是否多处定义
+grep -rn "LASER_LW\|CLW\b\|R_SYM\|BAUD\b" projects/simulation/ --include="*.py" | grep -v "import\|#"
+# 若同一物理量名（如 LASER_LW vs CLW_B11）在不同模块有不同数值 → 中断
+```
+
+**(c) sweep/ablation 脚本用 monkey-patch `__defaults__` 注入参数**：
+```bash
+grep -rn "__defaults__" projects/simulation/ --include="*.py"
+# __defaults__ 是函数默认参数固化的症状——正路是传参或重新初始化 SimulationConfig
+```
+
+匹配 → 中断，向用户澄清"这个物理量的真相源字段是哪个、为何有多个"。修复方向：默认参数留 None + 函数体读 params.py 单一字段（见 `param-source.md` 失败模式 A/B 正确做法）。
+
+### 10. "vs 祖师爷方法持平"警报（v1.3.0 新增）
+
+**触发条件**：实验结果显示"我们的方法"与领域祖师爷经典方法（如 VV 1983 升幂 mean-angle / Gardner TED 1986 / Decision-aided ML 1980s）在 BER/RMSE/gain 上**持平或差异 <5%**。
+
+**立即查数学同族性，不当"合理结果"接受**。两种可能：
+- (a) **数学同族**（如 NDA-ML 升幂 mean-angle vs VV 升幂 mean-angle，只差 ML 加权）→ 持平是必然，**创新性受质疑**，必须找到拉开差距的条件（换参数/换场景）或重新定位贡献
+- (b) **对照不公平**（实现 bug / 参数掩盖差异）→ 修 bug 后重跑
+
+**自检命令**：
+```bash
+# 查最近 results JSON 是否有 vs 经典方法对照
+grep -rln "vv_cpr\|bps_cpr\|gardner\|decision_aided\|da_ml" projects/simulation/results/ projects/simulation/explore/*/  2>/dev/null
+# 如有，grep gain 字段看是否 |gain|<0.05dB 或 BER ratio 在 [0.95,1.05]
+```
+
+**来源**：NDA-ML D-008——vs VV 持平被当合理结果接受长达 2 个 session，实际是漏 ML 加权 bug（两者数学同族都是等权 mean-angle）。用户原话"这和 VV 持平真没问题吗？"戳穿。
+
+**匹配 → 中断**，向用户报告"方法 X 跟祖师爷方法 Y 持平，数学同族性检查结果={a/b}，建议={换条件重跑/修 bug/重新定位贡献}"。**禁当合理结果默默接受**。
+
+### 11. 参数变更后未触发算法重审（v1.3.0 新增）
+
+**触发条件**：CRITICAL 参数值变更后（如线宽 500kHz→10kHz、符号率 25GBaud→2.5GBaud、噪声方差改量级），未重新审视算法实现是否在新区间仍正确 + 是否仍有增量。
+
+**参数选择和算法验证是耦合的**——改参数可能掩盖或暴露算法 bug / 算法创新。
+
+**必做清单**（参数变更后、重跑前）：
+1. 该参数影响哪些算法路径？（如线宽影响 ML 加权收益、segmented 跟踪收益、CRB 下界）
+2. 原参数下的算法增量结论，在新参数下还成立吗？
+3. 是否需要补 sandbox 验证新参数下的算法对错（不只 consistency）？
+
+**自检命令**：
+```bash
+# 查最近 git diff 是否改了 params.py 的 CRITICAL 参数
+git diff HEAD~3 -- projects/simulation/params.py | grep -E "^\-.*[0-9]|^\+.*[0-9]" | grep -iE "lw|linewidth|baud|r_sym|sigma2|kappa"
+# 如有改动，检查同 commit 是否同时改了算法实现或跑了 sandbox 验证
+```
+
+**来源**：NDA-ML D-008 教训 4 + D-009 教训 7——D-007 选 10kHz 低线宽后，ML 加权收益退化（低线宽下样本 SNR 均匀，加权≈等权），掩盖了 D-008 双 bug（漏 ML 加权 + 升幂未归一化）。consistency 0.0000% PASS 是因为 MVE 和 Formal 都漏同一加权，"两者一致"不证明符合原论文。
+
+**匹配 → 中断**，向用户报告"参数 X 从 A 改到 B，影响算法路径 {list}，原增量结论 {成立/待重验}，建议 {补 sandbox / 重跑全量 / 仅记录}"。
+
+### 12. MVE/sandbox 缺三方对照（v1.3.0 新增）
+
+**触发条件**：MVE 或 sandbox 验证只跑了"我们的方法 vs baseline"两方对照，**没含"祖师爷方法/原论文方法"第三方**。
+
+**MVE/sandbox 必须含三方对照**：
+1. 我们的方法（加权版 / segmented 版 / 增强版）
+2. 等权 / naive 版（消融，证明增强有效）
+3. 祖师爷方法（VV / Gardner 1986 / BPS 等领域经典，证明非数学同族）
+
+**缺第 2 方**（消融）→ 增量归因不可信（可能增量来自其他改动非核心算法）。
+**缺第 3 方**（祖师爷）→ 数学同族性不可查（可能跟祖师爷持平被当合理接受，见中断 10）。
+
+**自检命令**：
+```bash
+# 查 MVE/sandbox 脚本是否 import 了至少 3 个对照方法
+grep -rE "from common import|from common._recovery import" projects/simulation/explore/*/  --include="*.py" | grep -oE "(vv_cpr|bps_cpr|nda_ml|da_ml|gardner|dpll|kf_)" | sort -u
+# 如不足 3 个 → 中断
+```
+
+**来源**：NDA-ML D-008 教训 1——之前 sandbox（`explore/nda-awgn-tracking-sandbox`）只验证 segK8 vs none（都是等权 mean-angle 变体），没验证 vs B11 真 ML（加权版）。结果 bug 没被抓，直到 vs VV ablation 才暴露。
+
+**匹配 → 中断**，向用户报告"sandbox/MVE 只含 {N} 方对照，缺 {消融/祖师爷}，建议补 {X} 再下结论"。
 
 ## 中断状态持久化（强制，F1/F2 压缩防护）
 

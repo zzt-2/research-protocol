@@ -83,10 +83,14 @@ bash tools/search "LEO satellite handover attention DQN" \
 
 [MUST] 假设指向一个可量化的预测。不是"改进性能"而是"在 X 场景下 SNR 提升 ≥3dB"。
 
-假设来源应该是 Groundwork 中发现的研究空白或改进空间，而不是凭空提出。具体来说：
-- 从 literature_notes 的"已知局限"中识别研究空白
-- 从 baseline 复现中确认改进空间确实存在
+假设来源是 **Groundwork 产出的研究问题清单**（问题定义见 `stages/glossary.md`——"现有方法 M 在条件 C 下因假设 A 失效"，过问题四判据）。不是凭空提出，也不是从"没人做过 X"的空白反推。具体来说：
+- [MUST] **每个假设必须引用一个已过四判据的 Q#**（来自 `literature_notes.md` 的研究问题清单，见 `templates.md`）。Contract 模板有"Problem Reference"字段填 Q# 编号 + M-C-A 陈述。**无 Q# 引用的 Contract 非法**——这是可检查的硬门控（review 时查 Problem Reference 字段是否非空、指向的 Q# 是否四判据全过）。
+- 从 baseline 复现中确认改进空间确实存在（即问题里 M 的"失效"确实可复现）
 - 从仿真环境验证中确认实验条件能支撑假设
+
+> **禁止**把 `literature_notes` 的"已知局限/研究空白"当假设来源。空白（"没人做过 X"）只是新颖性证据，不是问题；必须先转译成 M-C-A 矛盾、过四判据，才能进问题清单被假设引用。本协议早期版本曾允许"从 literature_notes 的研究空白识别假设"，这恰恰是把空白当问题的制度性入口，现已删除。
+
+> **设计意图**：历史上 Contract 假设来源无锚（可凭空白提），精读产出也无问题清单（只有空白/局限清单）。本 Step + `templates.md` 的问题清单 Q# 表格 + Problem Reference 字段，把"问题→假设"的引用链打通，使每个假设必须可溯源到某个过四判据的 Q#。
 
 ### 瓶颈诊断 [MUST]
 

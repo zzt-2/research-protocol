@@ -7,6 +7,49 @@
 
 ---
 
+## [2026-07-14] v1.4.0
+
+### 新增：论文实现真相三联卡与投稿前阻断门禁
+
+- **改动**：C4 扩展为“场景、信息访问、指标签名、状态生命周期”一致性；场景 C 的数字转移卡增加真实调用链与 `information_access` / `metric_signature` / `state_lifecycle`；技术规则新增 T7 和三个人工投稿前门禁。
+- **回归锚点**：`blind-genie-information`、`metric-signature-mismatch`、`reset-scope-mismatch` 任一命中均为 `BLOCKED`。
+- **触发证据**：`usage-2026-07.md:148` 的场景 C 中断记录——NDA 使用 `tx_bits` 解模糊、26/29 与 Fig.5 指标口径不同、湍流相位每 256 点重启；`:149` 记录按三联卡修复后的对齐结果。
+- **影响的规则编号/文件**：SKILL.md §1.5 C4；`scenarios/write.md`；`rules/tech.md` T7。
+- **验证**：`tests/test_truth_gate_docs.py` 是结构契约测试，确保三联卡、调用链和 3 个固定阻断锚点不会从文档中回退；它不替代行为验证。另以独立上下文进行 RED→GREEN 压力测试：3 个冲突案例均 `BLOCKED`，按真实边界收窄后对应局部门禁均 `PASS`。
+- **结构兼容**：将原有 version/last_updated/changelog 收入合法的 `metadata` frontmatter，供标准 skill validator 读取。
+
+---
+
+## [2026-07-10] v1.3.1
+
+### 小改：均衡层专题适配 + 文档准确性修复（3 点）
+
+**背景**：载波同步 4 候选全 Kill 后换均衡层，开新专题 `.sessions/2026-07-10-equalization-layer-direction-scouting/`。本 skill 在均衡层专题阶段 0-4a 不上场（GW 范围），阶段 5 MVE 才用。本次只做文档准确性修复，不改规则。
+
+### 改动（3 点）
+
+1. **§0 阶段边界声明加均衡层专题**：`不该用本 skill 的阶段`段加 `.sessions/2026-07-10-equalization-layer-direction-scouting/` 引用 + 加"均衡层专题特别提示"段（阶段 0-4a 不用本 skill，阶段 5 MVE 才用）
+2. **adaptation-scan.md 补 SKILL.md §3 索引 + 同步到 .agents**：原 adaptation-scan.md 只在 `.claude/` 那份，`.agents/`（真相源）缺。已同步两份一致 + §3 索引补行（Kill 前必跑 6 类适配，B5 教训）
+3. **§1.5 C3 补"分层精读"**：baseline 必须 Trans 级（D-010 标准 4），但思路来源可含 Letters/会议（做扩写溯源——已扩成 Trans 读 Trans，未扩写读本身）；红线：Letters/会议不能当主 baseline。跟均衡层专题 INVARIANT 19 对齐
+
+### 触发证据
+
+均衡层专题 S001 流程规划（2026-07-10）+ 用户提问"sim-preflight 用不用融进去"+ 发现 `.agents`/`.claude` 两份 skill 不一致（`.agents` 是 v1.3.0 真相源，`.claude` 停 v1.2.1 且缺 adaptation-scan.md 在 .agents）。
+
+### 影响的规则编号
+
+- SKILL.md §0（阶段边界加均衡层引用）
+- SKILL.md §1.5 C3（补分层精读）
+- SKILL.md §3（子文件索引补 adaptation-scan.md 行）
+- rules/adaptation-scan.md（.agents 新增，从 .claude 同步）
+
+### 不改的部分
+
+- 不改任何规则内容（C1-C8 / V1-V6 / interrupt 1-12 / 5 条核心全不动）
+- 不加"均衡层专用"规则（均衡层特有约束属专题 topic-index 不变量，不污染 skill）
+
+---
+
 ## [2026-07-08] v1.3.0
 
 ### 重大改动：算法正确性验证补强（consistency ≠ 算法对错）

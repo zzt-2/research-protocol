@@ -9,10 +9,14 @@
 3. **`毕设/formulas-master.md`** — 公式编号和 LaTeX 从这里取，不从论文草稿或记忆取
 4. **`毕设/symbol-conventions.md`** — 符号用法
 
-**关键**：每个引用的数字/公式，抄到工作笔记（M1 管道断裂防护）。格式：
+**关键**：每个引用的数字/公式，抄到工作笔记（M1 管道断裂防护）。同时沿真实调用链填写实现真相三联卡，不能只抄结论文件或 JSON 元数据。格式：
 
 ```
 {文件名:行号 或 结论编号} | {指标}={值} {单位} | {安全等级} | {限定条件}
+code_path={paper line -> caller -> callee -> metric/state}
+information_access={online known, genie/oracle, post-hoc}
+metric_signature={error population, numerator, denominator, excluded positions, aggregation, dataset/figure}
+state_lifecycle={initialization scope, reset scope, generator-call scope, continuity span}
 ```
 
 举例（**真实格式，数字必须 grep 验证**）：
@@ -22,9 +26,18 @@ CONCLUSIONS.md:128 | VV(Nw=64) 弱湍流 BER=2.33e-4 [1.1e-4, 3.6e-4] | ⚠️ �
 formulas-master.md:F3.5 | VV 相位估计方差 | σ² ≈ 1/(2·Nw·γ)
 ```
 
+三联卡任一字段为空、调用链未追到实际 callee/外层循环，或论文表述强于实现 → `BLOCKED`，不得进入写作。`CONCLUSIONS.md` 与 JSON/meta 只能定位证据，不能单独证明信息流、指标分母或重置范围。
+
+强制回归锚点：
+
+- `blind-genie-information`：论文称 blind，但 `resolve(rx, tx_bits)` 等运行/评估路径读取发送标签或 ground truth → `BLOCKED`，除非明确标为 genie/post-hoc 评估或移除该输入；
+- `metric-signature-mismatch`：不同结果的 error population、分子、分母、排除位置或聚合不同，却共用同一 BER/增益名称 → `BLOCKED`；
+- `reset-scope-mismatch`：外层循环逐窗口 `generate(..., new_seed)`，却声称跨窗口连续 → `BLOCKED`。
+
 ## 守（写作时）
 
 - 每个数字必须能在 CONCLUSIONS.md 找到对应条目，找不到 → 不写入论文
+- 每个算法声称和 headline/figure 必须有完整实现真相三联卡；同名指标逐项比对 `metric_signature`
 - 安全等级 ⚠️ 需限定的结论，引用时必须加边界条件（见下方模板）
 - 公式编号连续，不自创编号
 - **符号一致性检查**（强制）：h 在 Ch3/Ch4 含义不同（信道估计误差 vs 辐照度），引用前 grep TERMS.md 确认

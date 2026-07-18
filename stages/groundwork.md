@@ -51,9 +51,27 @@ Step 3 精读完成后**必须执行**。用精读产生的新认知做一轮定
 
 Agent 进入新方向时，先确认方法类型。遇到不适用的标签规则时跳过，并在 `decision_log.md` 记录跳过原因。当前框架中 DRL 相关规则最多（奖励函数审查 `domain-comms.md` §1.5、MDP 试运行 `groundwork.md` S6、状态/动作/奖励提取 `gw-read.md`），非 DRL 方向不应被迫执行这些步骤。
 
-### 步骤完成标记
+### 步骤完成标记（FR-22 执行载体）
 
-每个步骤完成时，**必须更新 `literature_notes.md` 的步骤进度表**（将 ⬜ 改为 ✅，填写日期和 commit hash）。跨对话恢复时优先读取此表判断已完成步骤，避免重复执行。
+每个步骤完成时，**必须同步更新两处进度表**：
+
+1. `literature_notes.md` 的步骤进度表（⬜→✅ + 日期 + commit hash）
+2. `master-state.md` 的 `## GW Progress` 表（见 `templates/master-state-template.md`，跨阶段权威）
+
+两处必须一致，冲突时以 master-state.md 为准。
+
+### 跨 Step 硬门控（FR-22）
+
+> 设计意图：Groundwork 各 Step 原本只靠 markdown 进度表标记完成，跨 Step 无硬门控——agent 可以在早期 Step 全未完成时，跳过精读和可行性判断直接跑去试方法，结果反复撞物理天花板把方向做死。本节把"进下游前先查进度"做成硬门控。
+
+**[MUST] 进入任何下游步骤前，先查 master-state.md 的 GW Progress 表**：
+
+- 上游任一项 ⬜ = **禁止进入下游**。
+- **Step 3（精读）和 Step 4a（可行性 Go/No-Go）是硬门，不可跳过**。
+- literature_notes 进度表 / master-state GW Progress 任一 Step 2/3/3.5/4a 为 ⬜ 时，**禁止进 MVE / Contract / 任意"试新方法/新方向"动作**。
+- 进 Step 4a 额外要求：literature_notes 研究问题清单至少含 1 条四判据全过的 Q#（gw-feasibility §A0 §0 会再查一次）。
+
+> **跳步识别信号**：候选的论证起点是"标题联想"（如"PCS 能不能提升""交织能不能省东西"）而非 GW Step 4a 维度 A0 的产物（某个过四判据的 Q#）→ 一定跳了 Step 3-4a，**禁止开跑**。判断"现在在 GW 哪一步"时，以 master-state.md GW Progress 表为准，不靠记忆。
 
 ### 环境检查
 

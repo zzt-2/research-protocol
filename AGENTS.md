@@ -61,6 +61,9 @@
 | 产物              | 生成方式                       | 存放路径                                                          |
 | ----------------- | ------------------------------ | ----------------------------------------------------------------- |
 | 检索结果 JSON     | `tools/search` 自动保存        | `search-archive/{YYYY-MM-DD}/{slug}.json`                         |
+| 全局论文索引      | `tools/search` 自动维护（增量）| `search-archive/_index/all-papers.jsonl`（每行一篇，去重合并）    |
+| 索引一次性回填    | `tools/backfill_index.py`      | 重建 `search-archive/_index/all-papers.jsonl`（幂等）             |
+| 专题种子视图      | 手动从索引生成（子 agent 扫） | `search-archive/_index/by-topic/{topic}-seed.md`                  |
 | 论文下载（arXiv） | `tools/download`               | `papers/arxiv/{arxiv_id}/source.{html,tar.gz,pdf}` + `content.md` |
 | 论文下载（DOI）   | `tools/download`               | `papers/doi/{doi_path}/source.pdf` + `content.md`                 |
 | 论文下载（无 ID） | `tools/download`               | `papers/manual/{slug}/source.pdf` + `content.md`                  |

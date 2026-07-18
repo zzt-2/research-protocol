@@ -21,6 +21,7 @@
 │   │   ├── source.pdf
 │   │   └── content.md
 │   ├── manual/{slug}/   # 无 arxiv/DOI 的论文（slug 如 cai-jsac-gdrl）
+│   ├── _read_notes/{paper_id}.md  # 精读笔记（一篇一文件，全局共享，文件名=paper_id）
 │   └── index.json       # 全局论文索引
 ├── search-archive/{date}/  # 检索缓存（date 如 2026-05-12）
 ├── .sessions/              # 会话管理（跨对话状态集中存放）
@@ -42,6 +43,7 @@
     ├── master-state.md  # Master 编排状态（每步后更新，恢复时首选读取）
     ├── decision_log.md
     ├── literature_notes.md
+    ├── read-log.md        # 精读日志（paper_id/源/笔记/首读/重读/方向）
     ├── feasibility_report.md
     ├── competitor_notes/
     ├── baseline_report.md
@@ -72,6 +74,8 @@
 | Master 编排状态   | Master agent 每步后更新        | `projects/{name}/master-state.md`                                 |
 | Worker 执行日志   | Worker 执行结束时写入          | `projects/{name}/worker-logs/step-{N}-{slug}.md`                  |
 | Worker 任务文件   | Master 派遣前写入（ephemeral） | `projects/{name}/worker-tasks/`                                   |
+| 精读笔记（全局） | gw-read 子 agent 精读时写入    | `papers/_read_notes/{paper_id}.md`                                |
+| 精读日志（项目级） | 精读子 agent 追加              | `projects/{name}/read-log.md`                                     |
 
 **禁止事项：**
 
@@ -79,6 +83,7 @@
 - 不在根目录创建 `literature_notes.md`（属于项目目录）
 - 不在 `search-archive/` 根级放文件（必须按日期入子目录）
 - 不手动创建 `papers/` 下的任意命名目录（走 `tools/download` 自动建路径）
+- 不在项目目录创建 `_read_notes`（全局资产，仅 `papers/_read_notes/`）
 
 ## 框架文件是执行规范
 
@@ -146,6 +151,7 @@
 | 反模式审查位置                | `stages/contract.md` S5                                                                                                                    |
 | 预印本验证                    | `gw-read.md`, `paper-materials-workflow.md` S5                                                                                             |
 | 论文引用质量                  | `thesis-materials.md`                                                                                                                      |
+| 论文精读溯源                  | `stages/gw-read.md` + `templates.md` §literature_notes + `stages/paper-materials-workflow.md` S5                                            |
 | 可行性防坑规则 FR-01~08       | `stages/gw-feasibility.md` A0§1/§6, A', A, D; `tools-guide.md` §8; `stages/groundwork.md` 方法类型标注; `code-quality.md` 方法论适配性矩阵 |
 | GNN 信息冗余检查 FR-09        | `code-quality.md` 方法论适配性矩阵                                                                                                         |
 | 空间隔离约束决策模式 FR-10    | `code-quality.md` 方法论适配性矩阵                                                                                                         |

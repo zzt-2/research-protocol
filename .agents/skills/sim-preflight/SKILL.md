@@ -1,9 +1,10 @@
 ---
 name: sim-preflight
 description: 仿真前必看流程。触发场景：跑仿真/实验脚本、改实验参数、加新算法（载波恢复/KF/DPLL/VV/BPS/均衡）、验证 BER 或相位估计结果、为论文引用仿真数字、修改 common/ 或 params.py、新对话恢复仿真工作。强制按文档纪律操作，防止文档体系崩溃。遗漏即中断。
-version: 1.3.0
-last_updated: 2026-07-08
-changelog: ./CHANGELOG.md
+metadata:
+  version: 1.4.0
+  last_updated: 2026-07-14
+  changelog: ./CHANGELOG.md
 ---
 
 # 仿真前必看流程（sim-preflight）
@@ -17,12 +18,14 @@ changelog: ./CHANGELOG.md
 本 skill **只管 Execute 阶段**——方向已选定、Contract 已冻结、进入仿真实现之后。4 个场景（跑实验/加算法/写论文/恢复）全部假设此前提。
 
 **不该用本 skill 的阶段**（用了 = 越界跳步）：
-- 方向探索/评判筛选 → 专题 `.sessions/2026-06-10-research-direction-exploration/`
-- Groundwork 前置（论文精读/综述/baseline合法性/空白零假设）→ `stages/groundwork.md`, `stages/gw-read.md`
+- 方向探索/评判筛选 → 专题 `.sessions/2026-06-10-research-direction-exploration/` 或 `.sessions/2026-07-10-equalization-layer-direction-scouting/`（均衡层方向侦察）
+- Groundwork 前置（论文精读/综述/baseline合法性/空白零假设/方法-改进矩阵）→ `stages/groundwork.md`, `stages/gw-read.md`, 对应专题 `.sessions/*-direction-scouting/`
 - MVE 本身 → `stages/gw-feasibility.md` §D（必含 FR-11~15）
 - Contract（瓶颈诊断/参数溯源/动作空间/信息增量）→ `stages/contract.md`
 
 ⚠️ **常见跳步**：候选筛出后直接想跑 MVE。正确链 = 筛选 → Groundwork 前置 → 合规 MVE → Contract → Execute（本 skill）。
+
+⚠️ **均衡层专题特别提示**（2026-07-10）：`.sessions/2026-07-10-equalization-layer-direction-scouting/` 的阶段 0-4a（流程规划/地勘/精读/判读/Go-NoGo）全在 GW 范围内，**不用本 skill**。阶段 5 MVE（若 Go）才用本 skill。方向侦察阶段守的是 session-governance + D017 v2 + D018 + §7.2 + glossary 四判据，不是本 skill 的 5 条核心。
 
 ## 1. 核心 5 条（任何场景必守）
 
@@ -42,13 +45,15 @@ changelog: ./CHANGELOG.md
 |---|------|---------|---------|
 | **C1** | 关键参数必须扫描，不能单点 | 我的关键参数（SNR/线宽/速率/衰落强度）是只测一个点还是扫了范围？单点结论站得住吗？ | 实验设计时 |
 | **C2** | 评估指标对齐领域标准，区分 pre/post-FEC | 评估阈值是 pre-FEC 还是 post-FEC？HD-FEC 还是 SD-FEC？跟领域惯例一致吗？ | 实验设计时 |
-| **C3** | 对比对象够档级（近年顶刊），不只对老经典 | baseline 有几篇近年(2022+) IEEE Transactions 级？方法来源本身是 Trans 还是 Letters？ | baseline 选定时 + 投稿前 |
-| **C4** | 场景描述与实验设置严格一致 | 我写的损伤（论文/简报）和代码实际建模的损伤逐项对应吗？有没有"写了但没测"或"测了但没写"的参数？ | 写文档时 + 投稿前 |
+| **C3** | 对比对象够档级（近年顶刊），不只对老经典 | baseline 有几篇近年(2022+) IEEE Transactions 级？方法来源本身是 Trans 还是 Letters？**精读分层**（2026-07-10 补）：baseline 必须 Trans 级（D-010 标准 4），但思路来源可含 Letters/会议（做"扩写溯源"——已扩成 Trans 读 Trans，未扩写读本身，常是新想法第一篇如 Du PTL 2025）；红线：Letters/会议不能当主 baseline | baseline 选定时 + 投稿前 |
+| **C4** | 场景与实现真相严格一致 | 我写的损伤、信息访问、指标口径和状态生命周期，是否沿真实调用链逐项对应代码？有没有"写了但没测"、"测了但没写"或论文强于实现？ | 写文档时 + 投稿前 |
 | **C5** | 场景选择要论证，不能照搬文献默认值 | 我选这个场景有具体理由吗？最能体现方法价值，还是最方便？ | 场景设计时 |
 
 **触发时机**：不要求每次主动查，但以下时刻**必须**逐条核对：① 准备投稿前（C1-C5 全过）② 老师/审稿人反馈后（看反馈指向哪条）③ 开新方向跑实验前（C1/C2/C5 先想清楚再跑）。
 
 **C1/C2 是"实验设计扎实性"，C3 是"学术定位扎实性"，C4/C5 是"场景严谨性"。** 本项目 2026-07-07 的线宽根因正是 C1（单点 500kHz 当通用）+ C4（简报写 500kHz 但湍流实为 10kHz）双重违反。
+
+**C4 实现真相三联卡（写论文和投稿前强制）**：逐项填写 `information_access={online known, genie/oracle, post-hoc}`、`metric_signature={error population, numerator, denominator, excluded positions, aggregation, dataset/figure}`、`state_lifecycle={initialization scope, reset scope, generator-call scope, continuity span}`。任一字段为空、未追到 caller/callee，或论文强于实现 → `BLOCKED`。三类回归锚点：`blind-genie-information`、`metric-signature-mismatch`、`reset-scope-mismatch`。
 
 ## 1.6 算法正确性自检（C6-C8，MVE/sandbox/对照实验前必过）
 
@@ -96,6 +101,7 @@ changelog: ./CHANGELOG.md
 | 技术规则 | `rules/tech.md` | 写代码前 |
 | **参数真相源（v1.2.0）** | `rules/param-source.md` | **写信道函数 / 写 sweep 脚本 / 跨场景比较前** |
 | **MVE 算法正确性（v1.3.0）** | `rules/mve-validation.md` | **MVE 设计/sandbox 验证/对照实验/参数变更重跑前** |
+| **增量方向扫描（v1.2.1）** | `rules/adaptation-scan.md` | **MVE/Contract/Execute 前找增量方向时 + Kill 前必跑 6 类适配（B5 教训）** |
 | 文档纪律 | `rules/doc-discipline.md` | 改任何 .md 前 |
 | 中断协议 | `rules/interrupt.md` | 怀疑违规时 |
 | 归档流程 | `rules/archive.md` | formulas-master 接近上限时 |

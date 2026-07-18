@@ -22,6 +22,7 @@ research-protocol/
 │   ├── gw-experiment.md # Step 6-7: 仿真器设计 + Baseline 复现
 │   ├── contract.md      # Contract 执行手册
 │   ├── execute.md       # Execute 执行手册
+│   ├── glossary.md      # 核心术语（问题/空白/研究主题判据）
 │   ├── thesis-materials.md # 学位论文：§0 章节方向决策 + §1-§5 材料准备
 │   └── paper-materials-workflow.md # 论文素材提取工作流（通用版）
 ├── templates.md         # 文档模板集
@@ -35,6 +36,7 @@ research-protocol/
 | `stages/groundwork.md` | Groundwork 7 步执行流程 | Groundwork 阶段 |
 | `stages/contract.md` | Contract 7 步执行流程（Step 0-6） | Contract 阶段 |
 | `stages/execute.md` | Execute 7 步执行流程（Step 0-6） | Execute 阶段 |
+| `stages/glossary.md` | 核心术语定义（问题四判据 + 问题/空白/研究主题对照） | 定义"问题"、判断候选是否是问题时读 |
 | `stages/thesis-materials.md` | 学位论文材料准备：章节方向决策 + 多子问题组织 + 材料包清单 + 记录钩子 | ≥2 方向完成 GW Step 4 时读 §0；准备论文时读 §1-§5 |
 | `stages/paper-materials-workflow.md` | 论文素材提取工作流（通用版） | 提取 paper_materials 时 |
 | `domain-comms.md` | 通信领域定制内容 | 通信领域研究必读 |
@@ -88,6 +90,7 @@ AI 的优势是效率，不是创新。人定义问题，AI 验证问题。[MUST
 | 决策及理由 | decision_log.md |
 | 实验数据 + 结果 | results/*.md |
 | 文献记录 | literature_notes.md |
+| 研究问题定义（问题/空白/研究主题判据） | stages/glossary.md |
 | Baseline 信息 | baseline_report.md |
 | 方向可行性评估 | feasibility_report.md |
 

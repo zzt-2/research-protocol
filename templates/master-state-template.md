@@ -48,6 +48,31 @@ current_stage: { GW|Contract|Execute }
 - Step 2 (acquire): {date}, commit {hash}, {N} 篇论文已获取
 - ...
 
+### GW Progress（跨 Step 硬门控，单一事实源）[MUST]
+
+> 设计意图：跨 Step 原本只靠 `literature_notes` 进度表标记，无独立硬门控——agent 可以在早期 Step 全未完成时，跳过精读和可行性判断直接跑去试方法，反复撞物理天花板把方向做死。本表是跨 Step 唯一可信进度源，进入下游步骤前先查本表。
+
+| Step | 状态 | 完成日期 | commit | 关键产出 | 下游门控 |
+| ---- | ---- | -------- | ------ | -------- | -------- |
+| 1 search | ⬜/✅ | | | search-archive JSON | — |
+| 2 acquire | ⬜/✅ | | | papers/*/content.md | 进 Step 3 前 Step 1 必 ✅ |
+| 3 read | ⬜/✅ | | | literature_notes.md（含**研究问题清单 Q#**） | **进 Step 3.5/4a 前必 ✅，且 Q# 清单非空** |
+| 3.5 supplement | ⬜/✅ | | | 更新 literature_notes.md | 进 Step 4a 前必 ✅ |
+| 4a feasibility | ⬜/✅ | | | feasibility_report.md | **进 Step 5/Contract/MVE 前必 ✅（Go 决策已记录）** |
+| 5 validate | ⬜/✅ | | | Baseline 候选表 | 进 Step 4b 前必 ✅ |
+| 4b sim-feasibility | ⬜/✅ | | | feasibility_report.md (C/E) | 进 Step 6 前必 ✅ |
+| 6 sim-design | ⬜/✅ | | | 仿真器设计规格 | 进 Step 7 前必 ✅ |
+| 7 implement | ⬜/✅ | | | baseline_report.md | — |
+
+**硬门控规则**（FR-22 执行载体）：
+
+1. **进入任何下游步骤前，先查本表**——上游任一项 ⬜ = 禁止进入下游。
+2. **特别硬门控**：Step 3（read）+ Step 4a（feasibility）是 Go/No-Go 硬门，不可跳过。`literature_notes` 进度表或本表任一为 ⬜ 时，**禁止进 MVE / Contract / 任意"试方法"动作**。
+3. **进 Step 4a 额外要求**：literature_notes 研究问题清单至少含 1 条四判据全过的 Q#（gw-feasibility §A0 §0 会再查一次）。
+4. 跨对话恢复时，**优先读本表**判断当前位置，不靠记忆/上下文摘要。
+
+> 本表与 `literature_notes.md` 的步骤进度表是**镜像关系**——两处必须一致。Master 每步完成时同步更新两处。冲突时以本表为准（本表在 master-state，是跨阶段权威）。
+
 ### 关键决策（最近 10 条）
 
 {从 decision_log.md 摘要，每条一行：}

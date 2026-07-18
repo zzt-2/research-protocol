@@ -7,30 +7,118 @@
 
 ---
 
-## [2026-07-08] v1.2.1
+## [2026-07-10] v1.3.1
 
-### 扩展（适配扫描补 A5/A6 + 物理因果强调）
+### 小改：均衡层专题适配 + 文档准确性修复（3 点）
 
-- **A5 评价维度适配**：BER 持平 ≠ 所有维度持平。换评价维度（outage/BER方差/block error rate/工作区范围/收敛速度）可能量出被掩盖的差异。注意"维度选择要有物理意义，不是换指标直到赢"
-- **A6 失效边界**：各方法失效条件不同（deep-fade深度/SNR下限/线宽上限/湍流上限）。失效边界有物理因果时比"谁BER低"更好讲故事
-- **物理因果强制要求**：新增段落"物理因果是适配策略跟查表调参的唯一区别"。没有物理因果的适配=查表调参，有物理因果=自适应策略
-- **触发证据**：subagent 推演现有数据后发现 BER 持平掩盖的失效边界信号（deep-fade阈值分化），确认 A5/A6 能挖出 A1-A4 看不到的差异
+**背景**：载波同步 4 候选全 Kill 后换均衡层，开新专题 `.sessions/2026-07-10-equalization-layer-direction-scouting/`。本 skill 在均衡层专题阶段 0-4a 不上场（GW 范围），阶段 5 MVE 才用。本次只做文档准确性修复，不改规则。
+
+### 改动（3 点）
+
+1. **§0 阶段边界声明加均衡层专题**：`不该用本 skill 的阶段`段加 `.sessions/2026-07-10-equalization-layer-direction-scouting/` 引用 + 加"均衡层专题特别提示"段（阶段 0-4a 不用本 skill，阶段 5 MVE 才用）
+2. **adaptation-scan.md 补 SKILL.md §3 索引 + 同步到 .agents**：原 adaptation-scan.md 只在 `.claude/` 那份，`.agents/`（真相源）缺。已同步两份一致 + §3 索引补行（Kill 前必跑 6 类适配，B5 教训）
+3. **§1.5 C3 补"分层精读"**：baseline 必须 Trans 级（D-010 标准 4），但思路来源可含 Letters/会议（做扩写溯源——已扩成 Trans 读 Trans，未扩写读本身）；红线：Letters/会议不能当主 baseline。跟均衡层专题 INVARIANT 19 对齐
+
+### 触发证据
+
+均衡层专题 S001 流程规划（2026-07-10）+ 用户提问"sim-preflight 用不用融进去"+ 发现 `.agents`/`.claude` 两份 skill 不一致（`.agents` 是 v1.3.0 真相源，`.claude` 停 v1.2.1 且缺 adaptation-scan.md 在 .agents）。
+
+### 影响的规则编号
+
+- SKILL.md §0（阶段边界加均衡层引用）
+- SKILL.md §1.5 C3（补分层精读）
+- SKILL.md §3（子文件索引补 adaptation-scan.md 行）
+- rules/adaptation-scan.md（.agents 新增，从 .claude 同步）
+
+### 不改的部分
+
+- 不改任何规则内容（C1-C8 / V1-V6 / interrupt 1-12 / 5 条核心全不动）
+- 不加"均衡层专用"规则（均衡层特有约束属专题 topic-index 不变量，不污染 skill）
 
 ---
 
-## [2026-07-08] v1.2.0
+## [2026-07-08] v1.3.0
 
-### 新增（增量方向扫描规则）
+### 重大改动：算法正确性验证补强（consistency ≠ 算法对错）
 
-- **新规则文件 `rules/adaptation-scan.md`**：4 种适配扫描（参数适配 A1 / 结构适配 A2 / 组合适配 A3 / 条件适配 A4），防止"锁死单一方法内部找增量"死循环
-- **SKILL.md §3 子文件索引加行**：注册 adaptation-scan.md
-- **触发证据**：thesis-fso NDA-ML 方向 D-009，~9 个对话证算法层无增量（加权/segmented/高线宽/上行全堵死），根因是锁死 NDA-ML 内部找增量。用户提出"把 4 种适配思路固化成 skill，以后仿真都往这上靠"
-- **核心设计**：
-  - 4 个维度全扫一遍，哪个出信号追哪个（不是选一个做）
-  - 每种适配有信号判据 + 失败信号（无信号就跳过）
-  - baseline 结构规则：创新是适配策略时，baseline = "不做适配的版本"，不是"另一个方法"
-  - 满足老师"不找接近方法当 baseline"——比的是策略有无，不是方法强弱
-- **何时用**：跑 MVE / Contract / Execute 实验前找增量方向时。纯复现/纯调优/方向已定时不需用
+**背景**：NDA-ML 单载波候选执行链（S002-S008 + D-007~D-009）暴露 consistency bit-exact 0.0000% PASS 但算法是错的（MVE 和 Formal 都漏同一 ML 加权 bug）。consistency 锚点只查实现同步，查不了算法对错——需要补"算法正确性验证"层。
+
+### 新增规则：MVE 算法正确性验证（区别于 consistency）
+
+- **新增 `rules/mve-validation.md`**：6 条验证清单（V1-V6）
+  - V1 公式来源逐项核对（禁靠文字重建，PDF→md 公式转 picture omitted 时标红不硬磕）
+  - V2 三方对照（消融 + 祖师爷，缺任一方归因不可信）
+  - V3 祖师爷持平警报（vs VV/Gardner 1986/BPS 持平即查数学同族性）
+  - V4 参数变更触发算法重审（参数选择和算法验证耦合）
+  - V5 子 agent 归因独立核查（只信原始数字不信归因）
+  - V6 FR-26 读原文数值（不只引位置）
+- **SKILL.md §1.6 新增 C6-C8 算法正确性自检**：从 D-007~D-009 抽取的通用清单（公式核对/三方对照/祖师爷警报），跟 C1-C5 实验设计扎实性正交
+- **interrupt.md 加第 10-12 条**：
+  - 第 10 条 "vs 祖师爷方法持平"警报（NDA-ML D-008 vs VV 持平被当合理接受）
+  - 第 11 条 参数变更后未触发算法重审（D-008 教训 4 + D-009 教训 7，低线宽掩盖加权 bug）
+  - 第 12 条 MVE/sandbox 缺三方对照（D-008 教训 1，sandbox 只两方没祖师爷）
+- **SKILL.md §3 子文件索引**：新增 `rules/mve-validation.md` 行
+- **SKILL.md §5.1 快速自检命令**：加 C6-C8 算法正确性自检 grep
+
+### 触发证据（来自 NDA-ML D-007~D-009，已 grep + 原 BER 核实）
+
+1. **D-008 双 bug**：`common/_recovery.py:nda_ml_recovery` 漏 ML 加权（B11 Eq.16）+ 升幂未归一化（B11 Eq.5），导致 NDA-ML 数学上跟 VV 同族（都是等权 mean-angle），vs VV 持平是 bug 必然非物理真实
+2. **consistency 假 PASS**：D-007 consistency 0.0000% 是因为 MVE `_time_domain_crlb.py` 和 Formal `sc_nda_ml_sim.py` 都漏同一加权（都等权），"两者一致"只证明实现一致不证明符合 B11
+3. **参数掩盖 bug**：D-007 选 10kHz 低线宽后，ML 加权收益退化（低线宽下样本 SNR 均匀加权≈等权），bug 不易暴露
+4. **sandbox 缺三方**：`explore/nda-awgn-tracking-sandbox` 只验证 segK8 vs none（都是等权变体），没验证 vs B11 真 ML（加权版）
+5. **子 agent 归因错**：D-009 sandbox 子 agent 报"加权拉开 VV"，主线独立重算发现真因是 segmented 跟踪非加权
+6. **FR-26 引位置没读数值**：D-007 引"Valjus sat.1553 §4.2 L438"但没读 L438 原文"0.1-1MHz typical"
+
+### 影响的规则编号
+
+- SKILL.md §1.6（新增 C6-C8）/ §3（新增 mve-validation.md 索引）/ §5.1（新增 C6-C8 自检命令）
+- interrupt.md（新增第 10-12 条中断，总数 9→12）
+- rules/mve-validation.md（新增文件）
+
+---
+
+## [2026-07-07] v1.2.0
+
+### 重大改动：搬家 + 参数真相源统一补强
+
+**位置变更**：skill 从 `.claude/skills/sim-preflight/` 搬到仓库内 `.agents/skills/sim-preflight/`（与 `.claude/skills/` 平级，仍仓库级仅本项目可见）。原 `.claude/skills/sim-preflight/` 保留但不再维护，以新位置为真相源。
+
+### 新增规则：参数真相源统一（T3 精确缺口补强）
+
+- **新增 `rules/param-source.md`**：覆盖 T3 没管住的两个失败模式
+  - **失败模式 A**：函数默认参数固化（`def f(..., lw=LASER_LW)`，import 时冻结，patch 模块属性无效）
+  - **失败模式 B**：跨模块同义常量派生（`_b11_params.CLW_B11` vs `params.LASER_LW`，同物理量两个数值源）
+  - 含自检命令 + 前置门控 checklist + 与 T3/TL-13 关系对照表
+- **SKILL.md §1 核心 5 条第 3 条扩展**：在"参数溯源"后加"同一物理量跨场景必须从 params.py 单一字段读"
+- **SKILL.md §1.5 新增 C1-C5 实验设计扎实性自检**：从 `REVIEW_NOTES.md` §二 抽取的通用清单（参数扫描/指标对齐/baseline档级/文档一致/场景论证），跨方向通用
+- **interrupt.md 加第 9 条**：参数真相源分裂中断（函数默认参数固化 / 跨模块同义常量 / `__defaults__` monkey-patch 三种症状）
+- **SKILL.md §3 子文件索引**：新增 `rules/param-source.md` 行
+- **SKILL.md §5 快速自检命令**：加参数真相源审计 grep
+
+### 触发证据（来自本次根因，已 grep + raw BER 核实）
+
+载波同步 NDA-ML 项目发现：激光线宽（combined linewidth）这一个物理量，AWGN 路径从 `simulator/_b11_params.py:CLW_B11=500kHz` 派生 `SIGMA2_P_B11`，湍流路径从 `common/_config.py:LASER_LW=10kHz` 派生。**两个源差 50 倍**，导致：
+
+1. **C4 违反**（场景描述与参数不一致）：简报写"激光线宽 500kHz"对 AWGN 成立、对湍流错（实为 10kHz）——命中导师 2026-07-07 意见 4
+2. **C1 违反**（单点当通用）：500kHz 单点结论被误当通用，500kHz 湍流下 NDA 崩塌（−0.82dB）被当成方法缺陷
+3. **raw BER 核实**：500kHz 湍流三场景 oracle（genie-aided）都打不到 HD-FEC 3.8e-3 → 是物理不可达 + 参数组合不真实（500kHz@2.5GBaud 的 ΔνTs=2e-4，是 Du 500kHz@25GBaud 的 10 倍 PN），非纯算法问题
+
+**子 agent 文献调查佐证**：Valjus 2025 (sat.1553) §4.2 锁定星地 FSO 线宽典型区间 0.1–1MHz@28GBaud（ΔνTs≈10⁻⁶–10⁻⁵），2.5GBaud 配 ECL（1-100kHz）才是典型，500kHz@2.5GBaud 是极端压力测试非典型。
+
+### 影响的规则编号
+
+- SKILL.md §1（核心 5 条第 3 条扩展）
+- SKILL.md §1.5（新增 C1-C5）
+- SKILL.md §3（子文件索引加 param-source.md）
+- SKILL.md §5（自检命令加参数真相源审计）
+- rules/param-source.md（新增）
+- rules/interrupt.md（第 9 条）
+
+### 不改的部分
+
+- 不改任何仿真代码（`common/`、`simulator/`、`params.py`）——参数修复 + 重跑放下轮
+- 不改 T3 原文（只扩展不替换）
+- 不改其他 rules（archive/audit-skill/doc-discipline/tech/usage-log）
 
 ---
 

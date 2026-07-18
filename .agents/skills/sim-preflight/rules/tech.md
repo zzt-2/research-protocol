@@ -12,6 +12,7 @@
 | T4 | 公式来源 | 必须 `formulas-master.md` | 新推导（须先追加到 master） | 公式版本混乱（VV bug 教训） |
 | T5 | 分层验证 | 新算法跑 6 步相关项 | 算法适配矩阵已替换（见 `scenarios/add.md`） | 错误隐藏到端到端才暴露 |
 | T6 | 红旗检查 | 结果过 `red_flags.py` | 无 | 种子未传播等静默错误 |
+| T7 | 实现真相三联卡 | 写论文/投稿前沿调用链填写 `information_access`、`metric_signature`、`state_lifecycle` | 无 | blind/genie、指标分母、连续性声称失真 |
 
 ## 前置门控 checklist（开始任务前承诺）
 
@@ -22,6 +23,7 @@
 - [ ] 我会从 `params.py` 导入参数，不会硬编码
 - [ ] 我会从 `formulas-master.md` 取公式，不会从论文草稿或记忆取
 - [ ] 我会在 handoff 记录约定变更
+- [ ] 写论文/投稿前，我会记录 `paper line -> caller -> callee -> metric/state`，三联卡任一空缺即 `BLOCKED`
 
 ## sigma2_turb 双推导路径
 
@@ -50,3 +52,14 @@
 - 单位错误（Hz vs rad/s）—— 查 `params.py` 的 `unit` 字段
 - 量纲错误（dB vs 线性）—— 写代码时自查
 - 采样率匹配（不同模块的 fs 假设）—— 检查 import
+- `information_access`：blind/online 路径是否读取 `tx_bits`、真相位、真信道等 genie/post-hoc 信息——追 caller/callee；`blind-genie-information` 冲突即 `BLOCKED`
+- `metric_signature`：各 headline/figure 的 error population、分子、分母、排除位置、聚合是否相同——逐结果建卡；`metric-signature-mismatch` 即 `BLOCKED`
+- `state_lifecycle`：初始化/重置/生成器调用范围是否支撑连续性声称——追外层循环；`reset-scope-mismatch` 即 `BLOCKED`
+
+## 投稿前人工真相门禁（red_flags 不覆盖）
+
+1. **信息访问门**：列出在线输入、genie/oracle 输入和 post-hoc 标签，沿调用链确认论文的 blind/online 限定；
+2. **指标签名门**：逐 headline/figure 比较分子、分母、排除位置、聚合和数据集，签名不同不得共用一个指标名称；
+3. **状态生命周期门**：从外层实验循环追到生成器和有状态算法，确认初始化、reset 和连续跨度。
+
+任一门缺证据或论文强于实现 → `BLOCKED`。结论汇总和结果 JSON/meta 不能替代这三门。
