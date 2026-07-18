@@ -1,0 +1,542 @@
+{
+  "meta": {
+    "task": "B5-Q1 范围优势结实度审计 (D002 修正版)",
+    "purpose": "实测验证 3 致命盲点: BER 根因/公平范围对照/同族 PSA 对照",
+    "bias": "证伪优先 - 找范围优势是假象的证据",
+    "environment": "系统 python 3.11.9, numpy 2.4.3, scipy 1.17.1",
+    "elapsed_s": 0.7910647392272949,
+    "timestamp": "2026-07-08T11:01:38"
+  },
+  "experiment_A_ber_diagnosis": {
+    "awgn_baseline": {
+      "ber_at_6db": 0.022509765625,
+      "ber_at_13db": 0.0,
+      "ber_at_20db": 0.0,
+      "theory_qpsk_awgn_ber": {
+        "6.0dB": 0.002388290780932807,
+        "13.0dB": 1.3329310175300506e-10,
+        "20.0dB": 1.0442437918812723e-45
+      },
+      "verdict": "AWGN BER@13dB=0.00e+00 << 1e-2 → FOE/eval 路径无 bug; BER fail 根因不在评估链路"
+    },
+    "no_foffset_weak": {
+      "ber_perfect_comp_13db": 0.01630859375,
+      "ber_b5_comp_13db": 0.26221923828125,
+      "ber_fft_foe_comp_13db": 0.00828857421875,
+      "b5_fest_sigma_mhz": 6.8365080551501665,
+      "fft_fest_sigma_mhz": 0.05089687211846189,
+      "channel_residual_f_offset_mhz": 1.0,
+      "verdict": "f_true=0 (在 fft_foe 捕获范围内): perfect-comp BER=0.0163, fft_foe BER=0.0083 (估准 1MHz 信道残频→近最优), B5 BER=0.2622 (B5 fest σ=6.8MHz 噪声大→BER 退化). → BER 路径对 MHz 残频极度敏感; B5 估计噪声 (σ=6.8MHz) >> fft_foe (σ=0.1MHz) 致 B5 BER 退化. 非 \"评估 bug\" 但暴露 B5 估计精度弱于 fft_foe."
+    },
+    "ber_path_fs_check": "fest_hz 是频率 (Hz) 跟 fs 无关, 理论上不矛盾. 子块 BER_SUBBLOCK=256 符号相位漂移: 残频 140MHz→90.1 rad (子块解模糊失效), 但 B5 估计后残频 ~几 MHz→3.22 rad (子块解模糊有效). BER 路径 fs 匹配 OK, 残频小时无 fs bug.",
+    "deep_fade_diag": {
+      "frac_symbols_eff_snr_below_3db": 0.009689922480620155,
+      "frac_symbols_eff_snr_below_6db": 0.06298449612403101,
+      "note": "深衰落符号比例与 BER floor 量级一致 (湍流容量限)"
+    },
+    "diagnosis": "BER fail 根因 = (a) BER 路径对 MHz 残频极度敏感 + B5 估计噪声大 (B5 fest σ=6.8MHz vs fft_foe σ=0.1MHz) + (b) 湍流块衰落深衰落容量限; 非评估 bug. 证据: (1) 纯 AWGN BER@13dB=0.0e+00 << 1e-2 → 评估链路无 bug; (2) f_true=0: fft_foe BER=0.0083 (估准1MHz残频→近最优) 但 B5 BER=0.2622 (B5 估噪大→BER退化) → B5 估计精度弱于 fft_foe; (3) perfect-comp BER=0.0163 (湍流容量限 floor). → B5 BER fail 部分真实 (B5 估噪大) + 部分 BER 路径敏感; 但根因不是 \"评估 bug\". 范围优势评估应用 残频σ (非 BER) 作指标, BER 需完整链路 (加 CPE)."
+  },
+  "experiment_B_fair_range": {
+    "fft_foe_with_ephemeris": {
+      "converged_points_19": 19,
+      "capture_range_hz": 4500000000.0,
+      "verdict": "fft_foe 配星历后 19/19 收敛 → B5 范围优势归零 (纯特权功劳) → Kill 级"
+    },
+    "fft_foe_with_2sps": {
+      "converged_points_19": 3,
+      "capture_range": "±fs/8=±625MHz (2-sps fs=5e9, M=4)",
+      "note": "fft_foe 2-sps 适配: 直接 2-sps 输入 fs=5e9, 4 次幂谱峰位置不变 (验证 OK)"
+    },
+    "fft_foe_2sps_with_ephemeris": {
+      "converged_points_19": 19,
+      "verdict": "fft_foe 2-sps+星历 19/19 收敛 → 跟 B5 完全同条件"
+    },
+    "b5_vs_fft_foe_fair": {
+      "b5_converged": 19,
+      "fft_2sps_eph_converged": 19,
+      "fft_eph_converged": 19,
+      "range_advantage_remaining": "1.00×"
+    },
+    "sweep_points": [
+      {
+        "f_true_hz": -4500000000.0,
+        "B5_eph": {
+          "residual_abs_mean_hz": 10265873.048288155,
+          "converged": true
+        },
+        "fft_eph": {
+          "residual_abs_mean_hz": 976239.161728096,
+          "converged": true
+        },
+        "fft_2sps": {
+          "residual_abs_mean_hz": 5000908495.505854,
+          "converged": false
+        },
+        "fft_2sps_eph": {
+          "residual_abs_mean_hz": 908382.5165735245,
+          "converged": true
+        },
+        "fft_blind": {
+          "residual_abs_mean_hz": 4375976308.499708,
+          "converged": false
+        }
+      },
+      {
+        "f_true_hz": -4000000000.0,
+        "B5_eph": {
+          "residual_abs_mean_hz": 10265873.048287963,
+          "converged": true
+        },
+        "fft_eph": {
+          "residual_abs_mean_hz": 976239.1617281914,
+          "converged": true
+        },
+        "fft_2sps": {
+          "residual_abs_mean_hz": 3750908420.3769846,
+          "converged": false
+        },
+        "fft_2sps_eph": {
+          "residual_abs_mean_hz": 908382.5165736198,
+          "converged": true
+        },
+        "fft_blind": {
+          "residual_abs_mean_hz": 3750976284.6545973,
+          "converged": false
+        }
+      },
+      {
+        "f_true_hz": -3500000000.0,
+        "B5_eph": {
+          "residual_abs_mean_hz": 10265873.048288058,
+          "converged": true
+        },
+        "fft_eph": {
+          "residual_abs_mean_hz": 976239.1617281914,
+          "converged": true
+        },
+        "fft_2sps": {
+          "residual_abs_mean_hz": 3750908425.3168173,
+          "converged": false
+        },
+        "fft_2sps_eph": {
+          "residual_abs_mean_hz": 908382.5165735245,
+          "converged": true
+        },
+        "fft_blind": {
+          "residual_abs_mean_hz": 3750976273.0659103,
+          "converged": false
+        }
+      },
+      {
+        "f_true_hz": -3000000000.0,
+        "B5_eph": {
+          "residual_abs_mean_hz": 10265873.048287963,
+          "converged": true
+        },
+        "fft_eph": {
+          "residual_abs_mean_hz": 976239.1617281914,
+          "converged": true
+        },
+        "fft_2sps": {
+          "residual_abs_mean_hz": 2500908341.733345,
+          "converged": false
+        },
+        "fft_2sps_eph": {
+          "residual_abs_mean_hz": 908382.5165735245,
+          "converged": true
+        },
+        "fft_blind": {
+          "residual_abs_mean_hz": 3125976316.014539,
+          "converged": false
+        }
+      },
+      {
+        "f_true_hz": -2500000000.0,
+        "B5_eph": {
+          "residual_abs_mean_hz": 10265873.048287963,
+          "converged": true
+        },
+        "fft_eph": {
+          "residual_abs_mean_hz": 976239.1617281914,
+          "converged": true
+        },
+        "fft_2sps": {
+          "residual_abs_mean_hz": 2500908382.516574,
+          "converged": false
+        },
+        "fft_2sps_eph": {
+          "residual_abs_mean_hz": 908382.5165735245,
+          "converged": true
+        },
+        "fft_blind": {
+          "residual_abs_mean_hz": 2500976239.161729,
+          "converged": false
+        }
+      },
+      {
+        "f_true_hz": -2000000000.0,
+        "B5_eph": {
+          "residual_abs_mean_hz": 10265873.048288107,
+          "converged": true
+        },
+        "fft_eph": {
+          "residual_abs_mean_hz": 976239.1617281914,
+          "converged": true
+        },
+        "fft_2sps": {
+          "residual_abs_mean_hz": 2500908495.505854,
+          "converged": false
+        },
+        "fft_2sps_eph": {
+          "residual_abs_mean_hz": 908382.5165735245,
+          "converged": true
+        },
+        "fft_blind": {
+          "residual_abs_mean_hz": 1875976308.4997087,
+          "converged": false
+        }
+      },
+      {
+        "f_true_hz": -1500000000.0,
+        "B5_eph": {
+          "residual_abs_mean_hz": 10265873.048288155,
+          "converged": true
+        },
+        "fft_eph": {
+          "residual_abs_mean_hz": 976239.1617281914,
+          "converged": true
+        },
+        "fft_2sps": {
+          "residual_abs_mean_hz": 1250908420.376985,
+          "converged": false
+        },
+        "fft_2sps_eph": {
+          "residual_abs_mean_hz": 908382.5165735245,
+          "converged": true
+        },
+        "fft_blind": {
+          "residual_abs_mean_hz": 1250976284.6545978,
+          "converged": false
+        }
+      },
+      {
+        "f_true_hz": -1000000000.0,
+        "B5_eph": {
+          "residual_abs_mean_hz": 10265873.048288155,
+          "converged": true
+        },
+        "fft_eph": {
+          "residual_abs_mean_hz": 976239.1617282152,
+          "converged": true
+        },
+        "fft_2sps": {
+          "residual_abs_mean_hz": 1250908425.316817,
+          "converged": false
+        },
+        "fft_2sps_eph": {
+          "residual_abs_mean_hz": 908382.5165735245,
+          "converged": true
+        },
+        "fft_blind": {
+          "residual_abs_mean_hz": 1250976273.06591,
+          "converged": false
+        }
+      },
+      {
+        "f_true_hz": -500000000.0,
+        "B5_eph": {
+          "residual_abs_mean_hz": 10265873.048288118,
+          "converged": true
+        },
+        "fft_eph": {
+          "residual_abs_mean_hz": 976239.1617282152,
+          "converged": true
+        },
+        "fft_2sps": {
+          "residual_abs_mean_hz": 908341.7333445668,
+          "converged": true
+        },
+        "fft_2sps_eph": {
+          "residual_abs_mean_hz": 908382.5165735245,
+          "converged": true
+        },
+        "fft_blind": {
+          "residual_abs_mean_hz": 625976316.0145385,
+          "converged": false
+        }
+      },
+      {
+        "f_true_hz": 0.0,
+        "B5_eph": {
+          "residual_abs_mean_hz": 10265873.048288116,
+          "converged": true
+        },
+        "fft_eph": {
+          "residual_abs_mean_hz": 976239.161728216,
+          "converged": true
+        },
+        "fft_2sps": {
+          "residual_abs_mean_hz": 908382.5165735263,
+          "converged": true
+        },
+        "fft_2sps_eph": {
+          "residual_abs_mean_hz": 908382.5165735263,
+          "converged": true
+        },
+        "fft_blind": {
+          "residual_abs_mean_hz": 976239.161728216,
+          "converged": true
+        }
+      },
+      {
+        "f_true_hz": 500000000.0,
+        "B5_eph": {
+          "residual_abs_mean_hz": 10265873.048288096,
+          "converged": true
+        },
+        "fft_eph": {
+          "residual_abs_mean_hz": 976239.1617282152,
+          "converged": true
+        },
+        "fft_2sps": {
+          "residual_abs_mean_hz": 908495.5058541417,
+          "converged": true
+        },
+        "fft_2sps_eph": {
+          "residual_abs_mean_hz": 908382.5165735245,
+          "converged": true
+        },
+        "fft_blind": {
+          "residual_abs_mean_hz": 624023691.5002915,
+          "converged": false
+        }
+      },
+      {
+        "f_true_hz": 1000000000.0,
+        "B5_eph": {
+          "residual_abs_mean_hz": 10265873.048288107,
+          "converged": true
+        },
+        "fft_eph": {
+          "residual_abs_mean_hz": 976239.1617282152,
+          "converged": true
+        },
+        "fft_2sps": {
+          "residual_abs_mean_hz": 1249091579.6230152,
+          "converged": false
+        },
+        "fft_2sps_eph": {
+          "residual_abs_mean_hz": 908382.5165735245,
+          "converged": true
+        },
+        "fft_blind": {
+          "residual_abs_mean_hz": 1249023715.3454022,
+          "converged": false
+        }
+      },
+      {
+        "f_true_hz": 1500000000.0,
+        "B5_eph": {
+          "residual_abs_mean_hz": 10265873.048288107,
+          "converged": true
+        },
+        "fft_eph": {
+          "residual_abs_mean_hz": 976239.1617281914,
+          "converged": true
+        },
+        "fft_2sps": {
+          "residual_abs_mean_hz": 1249091574.683183,
+          "converged": false
+        },
+        "fft_2sps_eph": {
+          "residual_abs_mean_hz": 908382.5165735245,
+          "converged": true
+        },
+        "fft_blind": {
+          "residual_abs_mean_hz": 1249023726.9340901,
+          "converged": false
+        }
+      },
+      {
+        "f_true_hz": 2000000000.0,
+        "B5_eph": {
+          "residual_abs_mean_hz": 10265873.048288155,
+          "converged": true
+        },
+        "fft_eph": {
+          "residual_abs_mean_hz": 976239.1617281914,
+          "converged": true
+        },
+        "fft_2sps": {
+          "residual_abs_mean_hz": 2499091658.2666554,
+          "converged": false
+        },
+        "fft_2sps_eph": {
+          "residual_abs_mean_hz": 908382.5165735245,
+          "converged": true
+        },
+        "fft_blind": {
+          "residual_abs_mean_hz": 1874023683.9854615,
+          "converged": false
+        }
+      },
+      {
+        "f_true_hz": 2500000000.0,
+        "B5_eph": {
+          "residual_abs_mean_hz": 10265873.048287963,
+          "converged": true
+        },
+        "fft_eph": {
+          "residual_abs_mean_hz": 976239.1617281914,
+          "converged": true
+        },
+        "fft_2sps": {
+          "residual_abs_mean_hz": 2499091617.4834266,
+          "converged": false
+        },
+        "fft_2sps_eph": {
+          "residual_abs_mean_hz": 908382.5165735245,
+          "converged": true
+        },
+        "fft_blind": {
+          "residual_abs_mean_hz": 2499023760.838272,
+          "converged": false
+        }
+      },
+      {
+        "f_true_hz": 3000000000.0,
+        "B5_eph": {
+          "residual_abs_mean_hz": 10265873.048287963,
+          "converged": true
+        },
+        "fft_eph": {
+          "residual_abs_mean_hz": 976239.1617281914,
+          "converged": true
+        },
+        "fft_2sps": {
+          "residual_abs_mean_hz": 2499091504.494146,
+          "converged": false
+        },
+        "fft_2sps_eph": {
+          "residual_abs_mean_hz": 908382.5165736198,
+          "converged": true
+        },
+        "fft_blind": {
+          "residual_abs_mean_hz": 3124023691.500292,
+          "converged": false
+        }
+      },
+      {
+        "f_true_hz": 3500000000.0,
+        "B5_eph": {
+          "residual_abs_mean_hz": 10265873.048288058,
+          "converged": true
+        },
+        "fft_eph": {
+          "residual_abs_mean_hz": 976239.1617281914,
+          "converged": true
+        },
+        "fft_2sps": {
+          "residual_abs_mean_hz": 3749091579.6230154,
+          "converged": false
+        },
+        "fft_2sps_eph": {
+          "residual_abs_mean_hz": 908382.5165735245,
+          "converged": true
+        },
+        "fft_blind": {
+          "residual_abs_mean_hz": 3749023715.3454027,
+          "converged": false
+        }
+      },
+      {
+        "f_true_hz": 4000000000.0,
+        "B5_eph": {
+          "residual_abs_mean_hz": 10265873.048288058,
+          "converged": true
+        },
+        "fft_eph": {
+          "residual_abs_mean_hz": 976239.1617281914,
+          "converged": true
+        },
+        "fft_2sps": {
+          "residual_abs_mean_hz": 3749091574.6831827,
+          "converged": false
+        },
+        "fft_2sps_eph": {
+          "residual_abs_mean_hz": 908382.5165735245,
+          "converged": true
+        },
+        "fft_blind": {
+          "residual_abs_mean_hz": 3749023726.9340897,
+          "converged": false
+        }
+      },
+      {
+        "f_true_hz": 4500000000.0,
+        "B5_eph": {
+          "residual_abs_mean_hz": 10265873.048288155,
+          "converged": true
+        },
+        "fft_eph": {
+          "residual_abs_mean_hz": 976239.161728096,
+          "converged": true
+        },
+        "fft_2sps": {
+          "residual_abs_mean_hz": 4999091658.266655,
+          "converged": false
+        },
+        "fft_2sps_eph": {
+          "residual_abs_mean_hz": 908382.5165735245,
+          "converged": true
+        },
+        "fft_blind": {
+          "residual_abs_mean_hz": 4374023683.985461,
+          "converged": false
+        }
+      }
+    ],
+    "verdict": "公平条件下 B5 范围优势 = 1.0× (归零). fft_foe 配同样星历预补后 19/19 收敛, 跟 B5 19/19 持平. B5 的 \"14.4× 范围优势\" 本质是星历预补的功劳, 不是 B5 算法独有. Kill 级: 范围优势是特权假象."
+  },
+  "experiment_C_same_family_psa": {
+    "vieira_psa_alpha_calibrated": 612282648.6637083,
+    "vieira_alpha_note": "Vieira α=6.123e+08 Hz ≈ B5 α=6.000e+08 Hz (同量级, 同族确认). Vieira 用 ln(P+/P-) 对数比, B5 用 (P+-P-)/(P++P-) 线性归一化比.",
+    "b5_vs_vieira_sigma": {
+      "0.5GHz": {
+        "b5_sigma_hz": 9679162.535079407,
+        "b5_sigma_mhz": 9.679162535079406,
+        "vieira_sigma_hz": 28708825.98074482,
+        "vieira_sigma_mhz": 28.70882598074482,
+        "rel_diff": 0.6628506320122153
+      },
+      "1.0GHz": {
+        "b5_sigma_hz": 9679162.535079401,
+        "b5_sigma_mhz": 9.679162535079401,
+        "vieira_sigma_hz": 28708825.98074482,
+        "vieira_sigma_mhz": 28.70882598074482,
+        "rel_diff": 0.6628506320122156
+      },
+      "2.0GHz": {
+        "b5_sigma_hz": 9679162.535079392,
+        "b5_sigma_mhz": 9.679162535079392,
+        "vieira_sigma_hz": 28708825.980744842,
+        "vieira_sigma_mhz": 28.70882598074484,
+        "rel_diff": 0.6628506320122162
+      }
+    },
+    "ablation_source_attribution": {
+      "b5_nfft16_sigma_mhz": 9.679162535079401,
+      "b5_nfft1024_sigma_mhz": 14.058361746935788,
+      "vieira_nfft1024_sigma_mhz": 28.70882598074482,
+      "note": "同 FFT 分辨率 (n_fft=1024) 同总样本: B5 σ=14.1MHz vs Vieira σ=28.7MHz → B5 线性归一化比 Rp-n 比 Vieira ln 对数比 在小残频处更鲁棒 (ln(P+/P-) 在 P+≈P- 时数值放大噪声). B5 原配置 n_fft=16 进一步降 σ 到 9.7MHz."
+    },
+    "v3_corrected_alarm": {
+      "triggered": false,
+      "max_rel_diff": 0.6628506320122162,
+      "threshold": 0.05,
+      "verdict": "同族持平未触发 (max rel_diff=66.3% >= 5%): B5 有部分增量 vs Vieira"
+    },
+    "verdict": "B5 vs Vieira PSA: 有真增量 (max σ 差 66.3% >= 5%, B5 σ=9.7MHz vs Vieira σ=28.7MHz). 增量来源 (消融): 同 FFT 分辨率 n_fft=1024 下 B5 σ=14.1MHz < Vieira σ=28.7MHz → B5 线性 Rp-n 比 Vieira ln 对数比在小残频处更鲁棒 (ln 数值放大噪声). B5 原配置 n_fft=16 进一步降噪. V3 同族警报未触发."
+  },
+  "overall_verdict": "范围优势 (B5 主卖点) 崩塌, 但残频精度有部分真贡献. 综合判 \"部分结实 (需重新叙事)\". (1) BER fail 非评估 bug: AWGN BER@13dB=0.0e+00, 根因=BER路径MHz敏感+B5估噪大(σ=6.8MHz)+湍流深衰落; (2) 范围优势归零 (Kill): fft_foe 配同星历 19/19 = B5 19/19 → 14.4× 优势是星历特权假象; (3) V3 同族警报未触发: B5 σ=9.7MHz < Vieira σ=28.7MHz (差66%), 增量来自线性Rp-n 比 ln 对数比在小残频处更鲁棒. B5 不能再卖 \"范围优势\", 可改卖 \"残频精度 (同族更优)\"."
+}

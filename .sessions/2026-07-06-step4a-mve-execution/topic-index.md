@@ -1,7 +1,7 @@
 # Topic Index: Step 4a 维度 D MVE 执行
 
 > slug: 2026-07-06-step4a-mve-execution
-> status: active | created 2026-07-06 | last_updated 2026-07-08（S013 续接 A1 参数适配 FAIL。NDA 块长自适应 K 两阶段验证：标定 35 点 4 判据 ρ 全<0.6（J4 unwrap bug 修正后仍 -0.019），验证 8 点 5 seed adaptive-J4 gain vs K16=+0.000dB 退化 always-K16，0/8 点显著赢。oracle 上界仅 -0.474dB 且 -2.46dB 全来自 1000kHz 非主流极端点。D-011 记录 FAIL。前 S012 A3 组合适配亦 FAIL（混合≈max(NDA,DPLL) 互补证伪）。4 种适配扫描进度：A2 已做/A3 FAIL/A1 FAIL/A4 待返回。详见 S013 + D-011 + _a1_adaptive_k_report.md）
+> status: active | created 2026-07-06 | last_updated 2026-07-09（S013 A4 条件适配 PASS + 30seed 数据 + 简报写完。4 种适配扫描全闭合：A1 参数 FAIL / A2 已做 D002 / A3 组合 FAIL / **A4 条件 PASS**（唯一出信号方向）。A4 = per-block 有效 SNR 驱动 DA/NDA 切换，crossover 区 30 seed 赢 max(DA,NDA) +0.27~+0.48dB CI 下界全正。物理发现：crossover 由 γ_eff 驱动汇聚 12~14dB。文献 16 组检索 ~130 篇确认 per-block pilot/blind 硬切换没人做过。fair_gain 30seed 链 AWGN+1.34→up_str+3.10dB。简报 ADVISOR_BRIEFING_2026-07-09 写完未发。详见 S013 + H008）
 
 ## 专题定位（一句话）
 
@@ -145,7 +145,7 @@ projects/simulation/
 
 ## 当前位置
 
-**🟡 S012 续接：A3 NDA+DPLL 组合适配实验 FAIL（2026-07-08）**：混合（NDA 粗估 + DPLL 连续精跟）全场景 ≈ max(NDA, DPLL)，**A3 信号 FAIL**（无额外增益，组合是冗余非互补）。TL-20 一致性自检 ALL PASS（实现正确）。**互补性假设证伪**：预期 strong/uplink deep fade 混合赢 DPLL（NDA 粗估避免失锁），实测 strong 混合**统计显著输 DPLL 0.046dB**——NDA 在 fade 块估计误差传给 DPLL 反而更差（"避免失锁"变成"引入额外误差"）。AWGN/weak/moderate 持平无显著赢。**物理根因**：σ²_p=2.51e-5（10kHz@2.5GBaud）下，单块 256 符号内 Wiener PN 漂移标准差 ≈ 0.08 rad，NDA 块常数 mean-angle 已接近最优；DPLL 跟的残余漂移跟自身环路噪声同一量级 → 两步串联无信息增量（adaptation-scan.md A3 失败信号"两方法强项重叠冗余"匹配）。**4 种适配扫描 A1-A4 基本闭合**：NDA-ML 算法层无显著增量方向（A1 持平 / A2 仅 AWGN / A3 FAIL / A4 是 pilot overhead 架构红利非算法）。数据 `explore/nda-awgn-tracking-sandbox/_a3_hybrid_results.json`，报告 `_a3_hybrid_report.md`。下一步：A1（参数自适应 K）/ A4（DA/NDA 条件切换）结果待返回；如全 FAIL 排除适配策略这条路。
+**🟢 S013 A4 条件适配 PASS + 简报写完待发（2026-07-09）**：4 种适配扫描全闭合（A1 参数 FAIL / A2 结构已做 D002 / A3 组合 FAIL / **A4 条件 PASS**）。A4 = per-block 有效 SNR 驱动 DA/NDA 切换，crossover 区（γd=15dB）30 seed 赢 max(DA,NDA) +0.27~+0.48dB（CI 下界全正）。物理发现：crossover 由 per-block γ_eff 驱动（非单纯 fade 深度），诊断实证汇聚在 γ_eff 12~14dB。文献两轮独立检索（16 组 ~130 篇）确认单载波 CPR per-block pilot/blind 硬切换没人做过（最接近是静态比较 Song 2020 / 级联组合 Moretti 2013 / 算法内自适应参数，都不是切换）。fair_gain 30 seed 链：AWGN+1.34→weak+1.43→mod+1.44→strong+2.51→up_mod+2.44→up_str+3.10dB（weak/mod CI 重叠，两段趋势非严格单调）。简报 `ADVISOR_BRIEFING_2026-07-09_adaptive_cpr.md` 写完未发。**下一步**：用户去新对话调研"自适应论文怎么组织 baseline/参数/叙述"（H008），回来完善简报后发老师。
 
 **（前 S011 DPLL 异族 baseline 仿真完成 + baseline 池立住 2026-07-08）**：跑 DPLL DD BER 仿真（5 seed × 4 场景，181s），TL-20 四判据全 PASS（DPLL≥oracle / <2×NDA / >0.7×NDA / @18dB AWGN=3.64e-3 在预期 0.003~0.006 内）。关键发现：DPLL 必须连续处理（全数组 VCO 累积），per-block 重置 VCO 丢符号间相位连续性致 BER 暴涨。omega_n=50e6。Fair gain：DPLL vs NDA AWGN +0.103dB（NDA 稍赢 CI 不跨 0），weak/moderate +0.02dB（CI 跨 0 持平），strong 工作区 -0.046dB；DPLL vs DA 全场景稳赢 +1.25~+1.68dB。DPLL 是异族（DD 闭环 vs 升幂前馈），D-010 标准 3 合规。**baseline 池立住**：DA-ML 主 + DPLL 异族 + VV/BPS fellow。
 
@@ -197,7 +197,10 @@ projects/simulation/
 - **S010** D-010 baseline 标准 + blit venue 修复 + baseline 池检索精读（2026-07-08）
 - **S011** DPLL DD 异族 baseline 仿真 + baseline 池立住（2026-07-08）
 - **S012** 方法论转向：4 种适配 skill + 3 并行实验方向（2026-07-08，本对话产出）
-- **S013** 4 种适配扫描各方向实验日志（2026-07-08 新建，A3 NDA+DPLL FAIL 首条；2026-07-08 续接 A1 参数适配 FAIL 第二条；后续 A4 结果追加到此，不另开 S###）
+- **S013** 4 种适配扫描各方向实验日志（2026-07-08 新建，A3 NDA+DPLL FAIL 首条；2026-07-08 续接 A1 参数适配 FAIL 第二条；2026-07-09 续接 A4 条件适配 PASS + 改进版 + 30seed + 文献核查 + 简报；**2026-07-09 续接 A4 切换三 bug 修复重跑（D002/H003）—— 原"切换 PASS +0.27-0.48dB"基于 oracle max(DA,NDA) 假增益，三 bug 修复后切换无全场景增益，真实价值=低 SNR 避 NDA 崩溃 +1.3~+2.3dB + 强湍流高 SNR 微赢 DA +0.02~+0.20dB。切换 A4 信号从"全场景赢"修正为"条件性避险/鲁棒性"。切换叙事定位回 thesis-writing 待讨论**）
 - **D-011** A1 参数适配（NDA 块长自适应 K）FAIL（2026-07-08，S013 新建）
+- **H008** 交接给新对话：自适应论文 baseline 组织/参数处理/叙述展开调研（2026-07-09，用户要去新对话搞清楚别人怎么弄 baseline + 参数照搬还是自调）
+- **H009** 切换三 bug 修复+30seed 重跑结果（2026-07-09，执行 thesis-writing D001 修复任务，实验在本专题 step4a 跑。代码 `_a4_switch_30seed_fixed.py` + 数据 + 报告 `_a4_switch_bugfix_report.md`。Bug2 非假增益源不修（独立核查修正用户诊断）。结论：切换无全场景增益，降级为鲁棒性补丁，net gain+1.2dB 不依赖切换。切换叙事定位回 thesis-writing 待讨论。完整交接见 thesis-writing/H003）
 - **S010** D-010 baseline 标准确立 + baseline 池检索精读（2026-07-08，10 组查询 ~220 篇召回 4 篇精读，认知修正：通信 baseline 自实现）
 - **S011** DPLL DD 异族 baseline 仿真 + baseline 池立住（2026-07-08，TL-20 四判据全 PASS，DPLL 连续处理 omega_n=50e6，vs NDA 持平到稍差，异族合规）
+- **R001** 自适应 CPR 论文 baseline 组织/参数处理/叙述展开调研（2026-07-09，执行 H008，3 篇精读：张思齐 BUPT 同门学位论文 + Wang 2025 OE 全文 + Barbosa 2020 JLT abstract。4 问全答：Q1 切换型 baseline=固定版本+fellow+上界 / Q2 五段式叙述 / Q3 自调+标溯源不照搬 / Q4 领域不做先复现再迁移。结论=简报 §6 符合惯例，验证非推翻。附 MSDM per-symbol vs per-block 有效 SNR 机制不同，可补强 §5 新颖性。**§F 追加**：用户质疑"baseline 太老"触发合法性背书矩阵调研——三轮 59 JSON/~544 篇证实 NDA 载波相位恢复 2020+ 严格 Trans 是空白（物理事实非检索不全），DA/DPLL/VV/BPS 背书已够；补检索 NDA 大类 8 JSON 找到 4 篇严格 Trans 作 NDA 方法论合法性背书（TVT 2023 CRB + TVT 2025/JLT 2025/TWC 2022），缺口转化为"我们填补空白"叙事）

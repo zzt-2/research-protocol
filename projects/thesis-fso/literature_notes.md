@@ -120,6 +120,7 @@
 | Q11 | 固定参数 Z 变换 ODPLL（只建模多普勒相位斜坡 φ_D） | 星地 LEO 下行（419km）+ 高 Doppler rate（85 MHz/s）+ 大气湍流 | PLL 环路闭环传递函数 H(z) 只含多普勒残频激励，**不含湍流相位噪声 φ_T(t)**；用 1kHz-1MHz 正弦近似衰落（非 Gamma-Gamma/Rytov 真实统计），湍流相位扰动未建模 | DSP 联合建模方法（H(z) 扩展为 φ_D(t)+φ_T(t) 双激励输入）+ 稳态相位误差方差/失锁概率分析 | ✅ M/C/A 明确 | ✅ 模型+分析 | ✅ Pech 2025 单激励 ODPLL（自实现同链路）+ Paillier 2019 DPLL 分治架构 | ⚠️ Pech 2025 自身无数值 BER 曲线（仅 XOR 误差清零定性）+ 无 phase error variance 数值 | **部分过**（D⚠️ baseline 自身量化弱）⚠️旧 B1 方向（曾判"勉强>常识重做"，D005 下作 baseline 重评） | Pech2025 §L357 + Paillier2019conf §L55/75 |
 | Q12 | 分治架构（AO 管湍流光域 + DPLL 管多普勒数字域，环路内不含湍流相位） | 星地 LEO 相干下行 + 大气湍流（Gamma-Gamma + 相位畸变）+ Doppler 残频（30-300 MHz） | 分治假设"AO 完全校正湍流振幅+相位、AGC 维持恒幅、DPLL 只管多普勒残频"——湍流相位被推给 AO 不进 PLL 环路传递函数 | DSP 联合建模方法（PLL 环路内联合 φ_D+φ_T）vs 分治架构对比 + AO 残差进环路的扰动建模 | ✅ M/C/A 明确 | ✅ 对比框架 | ✅ Paillier 2019 conf + **Paillier 2020 JLT（companion[9]完整版，端到端数值湍流仿真，证明分治够用）** | ✅ pull-in time、相位误差方差 vs CRB、BER penalty（湍流致 2.3dB）、AO penalty（-4.5dB）全量化 | **全过** ⚠️**JLT 版条件性细化（2026-06-27 块D精读）**：Paillier 证明"湍流相位对载波同步可忽略"但**依赖特定条件**（BPSK+10GBaud+理想timing+AGC恒幅+AO校正后piston相位~1ms慢于符号率）。**gap 修正**：不是"领域没人做联合建模"，是"Paillier 分治够用是条件性的，换条件（高阶调制/低SNR/无理想timing/强湍流快piston/上行链路）可能不成立"→ **潜在务实切入点（D005）：针对 Paillier 假设不适用的条件做改进，赢其分治 baseline 几 dB** | Paillier2019conf §L56-62 + **Paillier2020JLT §L195/205/189（companion完整版）** |
 | Q13 | （综述级证据，非单一方法 Q#）现 OSL DSP 算法地图中"湍流仅作 SNR 分布参数，无湍流相位专用 DSP 模块；多普勒与湍流补偿在流水线中独立不交互" | OSL 全场景（ISL/下行/上行强弱湍流） | 综述假设"信道准静态"，湍流相位扰动未建模（相位噪声专指激光线宽）；前馈载波恢复（VV+CFO）分治处理，无联合算法 | — | ✅ 综述级 gap 证据 | N/A（综述非方法产出） | ✅ Valjus 2025 综述本身 + 4 场景 SNR penalty 全量化 | ✅ 4 场景 SNR penalty(dB) @ BER 1e-3 全表 | **支撑型**（不作独立 Go 候选，作 Q11/Q12 gap 的综述级背景论证 + 算法地图基线）⚠️综述推荐前馈非闭环 PLL，与联合建模切入角度不同 | Valjus2025 §4-5 |
+| Q14 | standard-CMA always-online 后接 additive NN residual：`z_out=z_CMA+gφ(z_CMA,context)` | 当前 GG+SOP/线性双偏振 OSL 接收模型（先固定单一 C，待 4a） | CMA 在多幅度/PCS、SOP 或 fading 条件下的失配是否留下稳定、可辨识且非简单 DSP 可覆盖的残差 | 在线 CMA 前端 + 小型监督 residual head；与 CMA-only、raw-ML、fixed+PI、oracle 及简单 DSP 对照 | ✅ M/C/A 已由 S038 L01/L04/L05 组合具体化 | ⚠️ **UNKNOWN**：有 online CMA 与 `b−a` residual 的邻近证据，但无 additive-cascade 直接证据，且当前 GG+SOP 模型的残差信息增量未验证 | ✅ CMA/RDE/ML/VAE-LE 作为可实现 baseline | ✅ BER/SER/Q²、swap rate、收敛长度、MAC/latency 可统一量化 | **Step 3 暂存**：5/5 全文精读，均为 direct/adjacent 分类；四判据 1/3/4 PASS、2 UNKNOWN，禁止据此进入 Step 4a A0/MVE | S038 L01–L05 |
 
 **Q# 清单判定（块 C + 块 D 召回，块 E 才判 Go/No-Go）**：
 
@@ -1148,3 +1149,78 @@ B 档 12 篇的共同不足：
 3. **"几 dB 量级"需 MVE 验证**——若深衰落下 ML 均衡 vs CMA 增益 <0.5dB 则 Go 不成立（FR-21 但这里测度不止 dB，还有发散概率）
 
 ---
+## GW Step 3 正式精读补充（2026-07-17）
+
+本批5篇均完成标题自检、全文精读和结构化笔记；逐篇笔记见：
+`papers/_read_notes/10.1109_LCOMM.2026.3651445.md`、`10.1109_jphot.2021.3062727.md`、`10.1109_tcomm.2022.3171809.md`、`10.1109_JLT.2025.3533422.md`、`10.1109_jlt.2020.3042546.md`。此前4个失败 DOI 未冒充替代稿件。
+
+### Step 3 进度与 L 条目索引
+
+| L# | 论文 | 关系 | 结构化笔记 |
+|---|---|---|---|
+| L01 | LCOMM 2026 LPT/FPT-Jones-RSOP | 直接方法族竞品 | [read note](../../papers/_read_notes/10.1109_LCOMM.2026.3651445.md) |
+| L02 | JPHOT 2021 M-CMA+NPCA | 盲式RSOP baseline | [read note](../../papers/_read_notes/10.1109_jphot.2021.3062727.md) |
+| L03 | TCOMM 2022 CW pilot phase estimation | pilot功率/相位邻近理论 | [read note](../../papers/_read_notes/10.1109_tcomm.2022.3171809.md) |
+| L04 | JLT 2025 dual-pol Costas PLL | 低复杂度硬件邻近 | [read note](../../papers/_read_notes/10.1109_JLT.2025.3533422.md) |
+| L05 | JLT 2020 OFDM joint ML synchronization | pilot同步邻近 | [read note](../../papers/_read_notes/10.1109_jlt.2020.3042546.md) |
+
+Step 3 本批状态：5/5 已精读；5/5 标题一致；5/5 有 baseline 或明确“无数字偏振 baseline”；5/5 完成七子表和实验完备性记录。Step 4a 入口候选为 Q1/Q2，Q3/Q4 仅作背景/参数依据。
+
+### 方法分类与综合比较
+
+1. **直接 pilot/Jones/RSOP 路线**：LCOMM 2026 的 LPT 在 DSCM 中用四路频域 pilot 功率谱消除偏振衰落，再直接求 Jones 矩阵；这是当前 OSL+6pilot+EMA09 的方法族直接竞品，但没有 GG 大气或稀疏时域 pilot。
+2. **盲式自适应路线**：JPHOT 2021 用 M-CMA FIR+NPCA 盲估计逆混合矩阵，支持 5 Mrad/s 光纤 RSOP，给出 40% 级复杂度锚点；无 pilot，适合作为当前方案的传统强 baseline。
+3. **pilot 相位/同步邻近路线**：TCOMM 2022 分析 CW pilot 的带内/带外功率分配；JLT 2020 用重复 OFDM training symbols 做 TO/CFO/CPO 联合 ML。两者可提供 pilot 功率、同步误差和开销审计先验，但不解决2×2 Jones。
+4. **模拟低复杂度路线**：JLT 2025 集成双偏振 Costas PLL，展示无DSP载波恢复和功耗边界；不处理偏振矩阵与GG衰落。
+
+### 已知局限、趋势与背景
+
+共同局限是：直接 FPT/Jones 方案未评估大气 GG 深衰落；盲 NPCA/CMA 方案无 pilot 可观测性且缺少深衰落统计；pilot 理论多为单通道相位或AWGN/Wiener；硬件PLL受参考载波和cycle slip约束。2020→2022 的趋势是从训练符号同步走向频域 CW pilot 的功率/估计理论，2021→2026 则出现盲RSOP低复杂度和FPT-Jones高速跟踪并行发展，系统目标转向低功耗和高RSOP速率。当前研究定位是把这两类路线放入同一 OSL Gamma-Gamma 深衰落条件，量化传统 CMA/Jones 估计发散概率，并审计6pilot+EMA09的开销-稳定性折中。
+
+### 研究问题清单（M-C-A + 四判据）
+
+| Q# | M-C-A | 四判据 | 产出形态 |
+|---|---|---|---|
+| Q1 | M=传统盲CMA/Jones更新；C=OSL双偏振Gamma-Gamma深衰落与RSOP混合；A=深衰落使输入能量骤降，更新矩阵发散/失锁 | 1具体矛盾✅（JPHOT/Jones与本项目批次实证）；2方法产出✅（发散概率界+稳定跟踪器）；3有baseline✅（CMA、NPCA、LPT）；4可对比✅（发散率、恢复时间、BER/Q） | 分析+pilot辅助稳定均衡 |
+| Q2 | M=传统短帧/块级稀疏pilot LS Jones inversion（不含本研究EMA稳定化）；C=OSL双偏振Gamma-Gamma衰落+高速时变SOP、pilot预算≤10%；A=短pilot在深衰落/快速SOP下矩阵病态或噪声抖动，导致fixed-label恢复不稳 | 1具体矛盾✅（S064 seed47与pilot-count对照）；2方法产出✅（稳定化跟踪器+开销-恢复曲线）；3baseline✅（传统LS/CMA、NPCA、LPT）；4可对比✅（pilot率、BER、Jones误差、发散/恢复） | **待Step4a复核**：问题已按D055改回现有M-C-A；不是“己方6pilot+EMA”的自证问题 |
+| Q3 | M=频域FPT/Jones；C=光纤DSCM RSOP；A=偏振衰落污染CPE | 1✅；2✅；3✅；4✅，但与OSL迁移需验证 | 直接DSP竞品，不直接进MVE |
+| Q4 | M=CW/OFDM pilot相位同步；C=AWGN/Wiener或CO-OFDM；A=pilot功率/带宽影响MSE/SNDR | 1✅；2✅；3✅；4✅，不含Jones/GG | 参数先验，不作为OSL主问题 |
+
+Q1可直接作为Step4a候选；Q2已完成M-C-A纠正，四判据形式通过但需Step4a核查是否与LCOMM/Jones竞品构成同机制撞车；Q3/Q4为背景与参数依据，不单独触发新方向。
+
+### Step 3.5 定向补检：直接竞品浅读（2026-07-17）
+
+关键词矩阵第一轮6/6组合完成，共42条原始、41条canonical去重记录；实际有效来源为OpenAlex与Semantic Scholar两类（满足≥2源，**不含此前误记的Tavily**）。LCOMM 2026的引用链补检得到backward=19、forward=0；两组`FSO + Gamma-Gamma`精确组合检索均为0。第一轮新增必读4篇、建议读1篇，按`gw-supplement.md`“最后一轮新增=0”判据**尚未收敛**，必须用这5篇生成的新关键词执行第二轮定向检索。
+
+5篇先完成题名、摘要和正式发表状态核验，结构化浅读记录见`search-archive/2026-07-16/step35-direct-read5.json`。随后provenance复核发现L08已由Firecrawl成功取得54KB完整HTML正文（metadata=`success/good`，含方法、实验、复杂度、结论与参考文献），现转正式全文精读；其余4篇仍无可读全文，只能作摘要级证据，不得断言其具体LS公式、EMA实现、pilot开销、复杂度或全文实验条件。
+
+| L# | 论文 | 摘要核验的方法 | 对Q2的影响 | 证据级别 |
+|---|---|---|---|---|
+| L06 | TCOMM 2025, DOI `10.1109/TCOMM.2024.3522036` | pilot-symbol ML估计RSOP，EM利用未知数据精化，decision-aided动态跟踪 | 直接覆盖低pilot、高速RSOP估计稳定性；仅光纤PDM场景 | 无源文件（浅读） |
+| L07 | JLT 2026, DOI `10.1109/JLT.2025.3640695` | 共享短preamble联合帧同步、FOE、SOP tracking和均衡预收敛 | 直接覆盖短训练块与SOP稳定估计；未核实GG/Jones-inverse/EMA | 无源文件（浅读） |
+| L08 | Optics Express 2021, DOI `10.1364/OE.419574` | 三个线性无关pilot tones，逐block平均并解析求RSOP矩阵后求逆；扫描PSR与block size | 与“稀疏pilot→块级矩阵→逆补偿”高度同构，是Q2最直接机制基线；明确已有短block增噪/长block失配权衡，但未覆盖OSL GG、LS病态、EMA、fixed-label | **全文精读完成**（`papers/_read_notes/10.1364_oe.419574.md`） |
+| L09 | JLT 2022, DOI `10.1109/JLT.2022.3224805` | FPT提取传输矩阵与载波相位，并用滑动窗口平均跟踪 | 已覆盖pilot矩阵估计+时间平滑的核心链条，EMA本身不能作为贡献 | 无源文件（浅读） |
+| L10 | JLT 2023, DOI `10.1109/JLT.2023.3284489` | FPT联合偏振/载波恢复并处理IQ mixing等硬件失真 | 说明pilot/FPT鲁棒估计已有成熟竞争主线；OSL场景迁移不足以自动构成新问题 | 无源文件（浅读） |
+
+#### Step 3.5 对方法分类和Q2的修正
+
+1. **generic机制已饱和**：pilot/FPT估计Jones或RSOP矩阵、逐block逆补偿、短训练序列预收敛、滑动时间平均均已有直接先例。L08全文还明确写出block内平均的短block增噪/长block失配权衡（content.md第249行附近），并报告PSR、block size、RSOP速率和复杂度。因此当前方案不能声称“首次pilot-assisted Jones tracking”，也不能以EMA替换SWA或block averaging作为新颖性。
+2. **可保留的仅是待证问题，不是完整组合空白**：在dual-pol OSL Gamma-Gamma深衰落且pilot预算不超过10%时，传统短块pilot矩阵估计是否因观测SNR下降、条件数恶化或跨block动态失配而造成fixed-label恢复不稳；其价值必须由相同场景的直接强baseline和可诊断机制共同证明。
+3. **Step 4a碰撞门加严**：L08/L09是首选直接机制baseline，L06是高动态强估计baseline，L01是近期Jones/FPT baseline。若Q2只能靠“换成大气场景”或“EMA参数不同”区分，则Kill；只有证明OSL GG引入竞品未处理、且足以改变最优估计/稳定化结构的失效机制，Q2才可能继续。
+4. **未闭合债务**：其余4篇全文获取失败，尚不能比较其精确pilot overhead、矩阵估计形式和复杂度。此债务必须保留到可获取全文或Step 4a明确采用摘要支持范围内的保守判断；L08的全文证据已足以把“短block噪声/长block失配”列为已知竞争维度，不能再把它当作未被讨论的现象。
+
+R2按5种方法变体×2类场景得到31 raw/25 unique；R3围绕JLT 2023 PDL/FPT及引用链得到50 raw/37 unique。R2/R3最后一轮新增必读/建议读均为0，三轮关键词检索收敛。最高引用直接竞品确定为JLT 2022 FPT（citation_count=36，高于OE 2021的19）：Semantic Scholar前向链25篇；Crossref publisher metadata给出21条backward references，经索引与摘要筛出7篇方法相关，均为已知候选，新增0。检索与引用链归档见`search-archive/2026-07-17/step35-r3-summary.json`及`step35-r3-jlt2022-backward-screened.json`。
+
+当前Step 3.5后的Q2状态：**形式合法但新颖性高风险，禁止直接Go**。L08全文精读确认generic block-pilot稳定性问题已有明确噪声/失配分析；进入Step 4a时先以L08/L09/L06/L01做竞争维度分解，再判断OSL GG导致的病态性是否是结构性新失效条件；“同一篇论文未同时出现全部关键词”不作证据。
+
+### 实验完备性对标汇总
+
+| 论文 | 统计规范 | Baseline | 消融/扫描 | VVUQ(V/V/U) |
+|---|---|---|---|---|
+| LCOMM 2026 | 无多seed/CI | PTJ、MIMO+BPS | LPF、RSOP率、静态θ | 2/2/1 |
+| JPHOT 2021 | 无多seed/CI | CMA+VVPE | LMS/RLS、RSOP、线宽 | 3/2/1 |
+| TCOMM 2022 | 理论/曲线 | BLUE/ML | in/out-band、SPR、噪声 | 2/1/1 |
+| JLT 2025 | BER窗口、无CI | 既有PLL定性 | 带宽、单/双偏振 | 3/2/1 |
+| JLT 2020 | 仿真、无seed/CI | Schmidl/Minn/Park/CRLB | 联合/顺序、SNR/CPN/CD | 3/1/1 |
+
+领域惯例是少量参数扫描和传统 baseline，几乎没有多 seed 统计或显著性检验；本项目 Contract 应补多 seed、固定标签、深衰落扫描和逐组件消融。

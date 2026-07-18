@@ -1,0 +1,163 @@
+{
+  "meta": {
+    "task": "B5-Q1 MVE (阶段 3)",
+    "purpose": "V1-V6 算法正确性 + consistency bit-exact",
+    "source": "S004 sandbox PASS 路径 C → 对话 4 B5-MVE-SPEC.md",
+    "params": {
+      "N_FFT": 16,
+      "N_BLOCKS": 1024,
+      "ALPHA": 600000000.0,
+      "PRECISE_RANGE_Hz": 312500000.0,
+      "RESIDUAL_STD_TARGET_Hz": 140000000.0,
+      "DOPPLER_RANGE_Hz": 4500000000.0,
+      "FS_ADC_B5": 5000000000.0,
+      "FS_SYM": 2500000000.0,
+      "SPS": 2,
+      "BER_TARGET": 0.001,
+      "HD_FEC": 0.0038,
+      "N_SYM": 8256,
+      "SNR_DB_LIST": [
+        6.0,
+        13.0,
+        20.0
+      ],
+      "TURB_LEVELS": [
+        "weak",
+        "moderate",
+        "strong"
+      ],
+      "N_SEEDS_V3": 20,
+      "N_SEEDS_EPH": 20
+    },
+    "sandbox_anchors": {
+      "range_extension": "14.4× (B5 vs fft_foe, sandbox S004)",
+      "turb_max_sigma_mhz": 16.2,
+      "converged_points": "19/19 (B5) vs 1/19 (baselines)",
+      "pathC_verdict": "PASS"
+    },
+    "V1_formula_audit": "C6 标注式 1-4 (PDF→md 重建, content.md L73/79/81/83). sandbox 已 PASS, MVE 公式不变复核",
+    "V2_three_way": "B5/fft_foe/leven 三方 (sandbox 已 PASS C7 完备). MVE 复用 sandbox 估计器封装 (est_b5/est_fft_foe/est_leven)",
+    "V3_grandmaster_alarm": {
+      "fair_condition": {
+        "f_offsets_ghz": [
+          0.5,
+          1.0,
+          2.0
+        ],
+        "snr_db": 13.0,
+        "turb": "weak",
+        "n_seeds": 20,
+        "shared_LO_precomp": "两方都施加同一星历预补偿 LO 把 f_true 平移到 ~0, 都在各自捕获范围内测残频 σ (公平机制对照)"
+      },
+      "results": {
+        "0.5GHz": {
+          "f_true_hz": 500000000.0,
+          "B5_sigma_hz": 12299173.395947939,
+          "B5_sigma_mhz": 12.299173395947939,
+          "Leven_sigma_hz": 1993086.2253728537,
+          "Leven_sigma_mhz": 1.9930862253728536,
+          "relative_diff": 0.8379495791132199,
+          "alarm": false,
+          "n_seeds": 20
+        },
+        "1.0GHz": {
+          "f_true_hz": 1000000000.0,
+          "B5_sigma_hz": 12299173.395947957,
+          "B5_sigma_mhz": 12.299173395947957,
+          "Leven_sigma_hz": 1993086.225372853,
+          "Leven_sigma_mhz": 1.993086225372853,
+          "relative_diff": 0.8379495791132201,
+          "alarm": false,
+          "n_seeds": 20
+        },
+        "2.0GHz": {
+          "f_true_hz": 2000000000.0,
+          "B5_sigma_hz": 12299173.395947918,
+          "B5_sigma_mhz": 12.299173395947918,
+          "Leven_sigma_hz": 1993086.2253728537,
+          "Leven_sigma_mhz": 1.9930862253728536,
+          "relative_diff": 0.8379495791132194,
+          "alarm": false,
+          "n_seeds": 20
+        }
+      },
+      "alarm_triggered": false,
+      "verdict": "B5 vs [60] Leven 非同族 (频域积分 Rp-n vs 时域差分相位增量), 残频 σ 差 >5% → 机制正交, 不触发警报"
+    },
+    "V4_param_change_review": "星历残差扫描 (ephemeris_pred 完美→有残差): CRITICAL 参数变更重审, 见 _ephemeris_residual_sweep.json",
+    "V5_main_thread_audit": "主线独立 grep 核查 (子 agent 跑 MVE + 主线核查). sandbox 已 PASS V5, MVE 复核",
+    "V6_original_values": "B5Params 20 字段全溯源 content.md 行号. sandbox 已 PASS V6, MVE 复核 (params 经 sandbox import)",
+    "timestamp": "2026-07-08T09:54:21",
+    "elapsed_s": 0.43246984481811523
+  },
+  "V3_grandmaster_alarm": {
+    "fair_condition": {
+      "f_offsets_ghz": [
+        0.5,
+        1.0,
+        2.0
+      ],
+      "snr_db": 13.0,
+      "turb": "weak",
+      "n_seeds": 20,
+      "shared_LO_precomp": "两方都施加同一星历预补偿 LO 把 f_true 平移到 ~0, 都在各自捕获范围内测残频 σ (公平机制对照)"
+    },
+    "results": {
+      "0.5GHz": {
+        "f_true_hz": 500000000.0,
+        "B5_sigma_hz": 12299173.395947939,
+        "B5_sigma_mhz": 12.299173395947939,
+        "Leven_sigma_hz": 1993086.2253728537,
+        "Leven_sigma_mhz": 1.9930862253728536,
+        "relative_diff": 0.8379495791132199,
+        "alarm": false,
+        "n_seeds": 20
+      },
+      "1.0GHz": {
+        "f_true_hz": 1000000000.0,
+        "B5_sigma_hz": 12299173.395947957,
+        "B5_sigma_mhz": 12.299173395947957,
+        "Leven_sigma_hz": 1993086.225372853,
+        "Leven_sigma_mhz": 1.993086225372853,
+        "relative_diff": 0.8379495791132201,
+        "alarm": false,
+        "n_seeds": 20
+      },
+      "2.0GHz": {
+        "f_true_hz": 2000000000.0,
+        "B5_sigma_hz": 12299173.395947918,
+        "B5_sigma_mhz": 12.299173395947918,
+        "Leven_sigma_hz": 1993086.2253728537,
+        "Leven_sigma_mhz": 1.9930862253728536,
+        "relative_diff": 0.8379495791132194,
+        "alarm": false,
+        "n_seeds": 20
+      }
+    },
+    "alarm_triggered": false,
+    "verdict": "B5 vs [60] Leven 非同族 (频域积分 Rp-n vs 时域差分相位增量), 残频 σ 差 >5% → 机制正交, 不触发警报"
+  },
+  "consistency_check": {
+    "meta_note": "Formal 版 = MVE 脚本函数直接调用 (同代码路径, 模拟转正后 Formal 脚本). consistency 查实现同步, 非算法正确性 (守 D-008).",
+    "seed": 1000,
+    "f_true_hz": 1000000000.0,
+    "turb": "weak",
+    "snr_db": 13.0,
+    "B5_fest_mve": 1003898399.6601198,
+    "B5_fest_formal": 1003898399.6601198,
+    "B5_relative_error": 0.0,
+    "fft_foe_fest_mve": -249087277.7910037,
+    "fft_foe_fest_formal": -249087277.7910037,
+    "fft_foe_relative_error": 0.0,
+    "leven_fest_mve": -252225558.88847464,
+    "leven_fest_formal": -252225558.88847464,
+    "leven_relative_error": 0.0,
+    "bit_exact_threshold": 1e-15,
+    "bit_exact_per_estimator": {
+      "B5": true,
+      "fft_foe": true,
+      "leven": true
+    },
+    "verdict": "PASS"
+  }
+}

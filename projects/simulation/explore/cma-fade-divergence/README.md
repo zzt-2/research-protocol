@@ -48,6 +48,7 @@
 | r4_corrected_sop_rate.py | R4修正: 1krad/s SOP+10M符号重跑 | **PASS** (2026-07-11) | results/cma-fade-divergence/r4_corrected_results.json |
 | r_lcr_mechanism.py | LCR机制验证: 发散vs衰落事件位置+剂量效应 | **PASS** (2026-07-12) | results/cma-fade-divergence/r_lcr_mechanism_results.json |
 | r_lcr_ber_impact.py | LCR的BER影响: CMA跟踪滞后+ML优势验证 | **PASS** (2026-07-12) | results/cma-fade-divergence/r_lcr_ber_impact_results.json |
+| ml_long_seq_failure.py | PROMPT-010: ML 长序列失效边界诊断 (Q1 N扫描/Q2 SOP扫描/Q3 机制对照) | **PASS** (2026-07-12) | results/cma-fade-divergence/ml_long_seq_failure_results.json |
 
 ## 参数溯源（FR-20）
 

@@ -1,0 +1,161 @@
+{
+  "meta": {
+    "task": "NDA-ML 加权版 (修 D-008 Bug1 漏ML加权 + Bug2 升幂未归一化) vs 等权版 vs VV 三方对照",
+    "weighting_formula": {
+      "yn": "(rx/|rx|)^M0   (归一化升幂, B11 Eq.5, 修 Bug2)",
+      "w": "|rx|^2          (ML 权重, B11 Eq.16, 修 Bug1)",
+      "phi_none": "angle(sum(w*yn)) / M0   (整块加权 mean-angle)",
+      "phi_segmented": "per K=8 段 angle(sum(w*yn))/M0 → unwrap → interp (brief §2)"
+    },
+    "fairness": "三方同 seed / 同 tx_bits / 同 awgn_wiener_channel / 同 generate_shared_realization_apsk / 同 rx_blind",
+    "M0": 8,
+    "LASER_LW_Hz": 10000.0,
+    "SIGMA2_P": 2.5132741228718347e-05,
+    "TURB_strong_alpha_beta": [
+      1.5,
+      0.8
+    ],
+    "N_BLOCKS": 400,
+    "seed_awgn": 20240701,
+    "seed_turb0": 2000,
+    "HDFEC": 0.0038,
+    "n_seeds": 1,
+    "common_or_simulator_modified": false,
+    "python": "C:\\Users\\zzt\\scoop\\apps\\python311\\current\\python.exe",
+    "numpy_version": "2.4.3",
+    "elapsed_sec": 18.248807668685913
+  },
+  "awgn": [
+    {
+      "snr_db": 5.0,
+      "ber_eq_segmented": 0.20075439453125,
+      "ber_weighted_segmented": 0.19497802734375,
+      "ber_weighted_none": 0.18123779296875,
+      "ber_vv": 0.19941162109375,
+      "weighted_seg_vs_vv_rel": -0.022233377000208093
+    },
+    {
+      "snr_db": 8.0,
+      "ber_eq_segmented": 0.12079345703125,
+      "ber_weighted_segmented": 0.1251171875,
+      "ber_weighted_none": 0.106552734375,
+      "ber_vv": 0.11687744140625,
+      "weighted_seg_vs_vv_rel": 0.0704990286800493
+    },
+    {
+      "snr_db": 10.0,
+      "ber_eq_segmented": 0.07036376953125,
+      "ber_weighted_segmented": 0.0786865234375,
+      "ber_weighted_none": 0.06775146484375,
+      "ber_vv": 0.07060546875,
+      "weighted_seg_vs_vv_rel": 0.11445366528354088
+    },
+    {
+      "snr_db": 12.0,
+      "ber_eq_segmented": 0.04022705078125,
+      "ber_weighted_segmented": 0.04687255859375,
+      "ber_weighted_none": 0.040029296875,
+      "ber_vv": 0.04008056640625,
+      "weighted_seg_vs_vv_rel": 0.16945848815252496
+    },
+    {
+      "snr_db": 14.0,
+      "ber_eq_segmented": 0.0221240234375,
+      "ber_weighted_segmented": 0.02730224609375,
+      "ber_weighted_none": 0.02211181640625,
+      "ber_vv": 0.02212890625,
+      "weighted_seg_vs_vv_rel": 0.23378199470432479
+    },
+    {
+      "snr_db": 16.0,
+      "ber_eq_segmented": 0.00982666015625,
+      "ber_weighted_segmented": 0.02244873046875,
+      "ber_weighted_none": 0.0100390625,
+      "ber_vv": 0.00977294921875,
+      "weighted_seg_vs_vv_rel": 1.2970272295778167
+    },
+    {
+      "snr_db": 18.0,
+      "ber_eq_segmented": 0.00341796875,
+      "ber_weighted_segmented": 0.0127978515625,
+      "ber_weighted_none": 0.00363525390625,
+      "ber_vv": 0.00343994140625,
+      "weighted_seg_vs_vv_rel": 2.7203690560681335
+    },
+    {
+      "snr_db": 20.0,
+      "ber_eq_segmented": 0.0007177734375,
+      "ber_weighted_segmented": 0.0061474609375,
+      "ber_weighted_none": 0.000888671875,
+      "ber_vv": 0.000712890625,
+      "weighted_seg_vs_vv_rel": 7.623287671232876
+    }
+  ],
+  "strong_turbulence": [
+    {
+      "snr_db": 5.0,
+      "ber_eq_none": 0.403154296875,
+      "ber_weighted_none": 0.40321044921875,
+      "ber_weighted_segmented": 0.40347412109375,
+      "ber_vv": 0.40349853515625,
+      "weighted_none_vs_vv_rel": -0.0007139702189710743
+    },
+    {
+      "snr_db": 10.0,
+      "ber_eq_none": 0.28130126953125,
+      "ber_weighted_none": 0.28144287109375,
+      "ber_weighted_segmented": 0.28242431640625,
+      "ber_vv": 0.28304443359375,
+      "weighted_none_vs_vv_rel": -0.005658343037046575
+    },
+    {
+      "snr_db": 15.0,
+      "ber_eq_none": 0.1530712890625,
+      "ber_weighted_none": 0.1528759765625,
+      "ber_weighted_segmented": 0.15401611328125,
+      "ber_vv": 0.15529296875,
+      "weighted_none_vs_vv_rel": -0.015564079989938515
+    },
+    {
+      "snr_db": 20.0,
+      "ber_eq_none": 0.06929931640625,
+      "ber_weighted_none": 0.06919677734375,
+      "ber_weighted_segmented": 0.070380859375,
+      "ber_vv": 0.0708056640625,
+      "weighted_none_vs_vv_rel": -0.022722570857182177
+    },
+    {
+      "snr_db": 22.0,
+      "ber_eq_none": 0.04919921875,
+      "ber_weighted_none": 0.04919677734375,
+      "ber_weighted_segmented": 0.04968994140625,
+      "ber_vv": 0.05060302734375,
+      "weighted_none_vs_vv_rel": -0.027789839339991407
+    },
+    {
+      "snr_db": 24.0,
+      "ber_eq_none": 0.034052734375,
+      "ber_weighted_none": 0.03404296875,
+      "ber_weighted_segmented": 0.03446533203125,
+      "ber_vv": 0.0348388671875,
+      "weighted_none_vs_vv_rel": -0.022845129642606807
+    },
+    {
+      "snr_db": 26.0,
+      "ber_eq_none": 0.02426513671875,
+      "ber_weighted_none": 0.024248046875,
+      "ber_weighted_segmented": 0.02453369140625,
+      "ber_vv": 0.0249072265625,
+      "weighted_none_vs_vv_rel": -0.026465398941384072
+    }
+  ],
+  "verdict_strong": {
+    "category": "tie",
+    "weighted_beats_vv_10pct": false,
+    "all_within_5pct_of_vv": true,
+    "weighted_worse_than_equalweight_5pct": false,
+    "max_rel_improvement_vs_vv": -0.027789839339991407,
+    "max_rel_worse_vs_equalweight": 0.0005033804601591092
+  },
+  "ber_curves_png": "D:\\code\\study\\research-protocol\\projects\\simulation\\explore\\nda-awgn-tracking-sandbox\\_ml_weighting_curves.png"
+}

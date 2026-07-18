@@ -1,0 +1,65 @@
+{
+  "meta": {
+    "task": "LMMSE 复现验证 (#15 JPhoto avg-energy 版)",
+    "channel": "AWGN + Wiener PN (D-007 单载波 2.5GBaud/10kHz)",
+    "lmmse_params": {
+      "M0": 8,
+      "L": 5,
+      "version": "avg-energy"
+    },
+    "verdict": "PARTIAL",
+    "paper_reference": "Wang 2024 JPhoto Fig.7 16APSK(8,8) @ 2MHz penalty ≈0.5dB @ BER=1e-2",
+    "our_setup": "10kHz (Δν·T 小 200×), penalty 预期更小或持平"
+  },
+  "per_snr": [
+    {
+      "snr_db": 8.0,
+      "nda_ml_ber": 0.1178955078125,
+      "lmmse_ber": 0.13533935546875,
+      "da_ml_ber": 0.12764973958333334,
+      "oracle_ber": 0.10440673828125
+    },
+    {
+      "snr_db": 10.0,
+      "nda_ml_ber": 0.0711572265625,
+      "lmmse_ber": 0.0968701171875,
+      "da_ml_ber": 0.07984049479166666,
+      "oracle_ber": 0.06713623046875
+    },
+    {
+      "snr_db": 12.0,
+      "nda_ml_ber": 0.04054443359375,
+      "lmmse_ber": 0.06883056640625,
+      "da_ml_ber": 0.0408984375,
+      "oracle_ber": 0.03964111328125
+    },
+    {
+      "snr_db": 14.0,
+      "nda_ml_ber": 0.0217822265625,
+      "lmmse_ber": 0.041083984375,
+      "da_ml_ber": 0.022418619791666667,
+      "oracle_ber": 0.02147705078125
+    },
+    {
+      "snr_db": 16.0,
+      "nda_ml_ber": 0.01033935546875,
+      "lmmse_ber": 0.041474609375,
+      "da_ml_ber": 0.010517578125,
+      "oracle_ber": 0.01017333984375
+    },
+    {
+      "snr_db": 18.0,
+      "nda_ml_ber": 0.0034716796875,
+      "lmmse_ber": 0.0358349609375,
+      "da_ml_ber": 0.0036848958333333334,
+      "oracle_ber": 0.00341064453125
+    },
+    {
+      "snr_db": 20.0,
+      "nda_ml_ber": 0.00074951171875,
+      "lmmse_ber": 0.04415771484375,
+      "da_ml_ber": 0.000791015625,
+      "oracle_ber": 0.0006787109375
+    }
+  ]
+}

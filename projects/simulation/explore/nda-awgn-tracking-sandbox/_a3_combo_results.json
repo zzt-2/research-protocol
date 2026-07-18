@@ -1,0 +1,243 @@
+{
+  "meta": {
+    "task": "A3 组合适配扫描 (combo scan): NDA+DPLL 级联 (cross-check) + NDA+VV 级联 (new)",
+    "purpose": "验证 NDA+DPLL / NDA+VV 组合是否优于单一 (互补性判据: combo < min 单一)",
+    "combos": {
+      "nda_dpll": "级联 NDA(块常数粗估)→DPLL(连续跟踪残余), 思路 (b)",
+      "nda_vv": "级联 NDA(升幂粗估)→VV(M0=8 滑窗精修), D-009 同族冗余测试"
+    },
+    "n_seeds": 2,
+    "scenes": [
+      "awgn",
+      "weak"
+    ],
+    "snr_repr": {
+      "awgn": [
+        16.0,
+        18.0,
+        20.0
+      ],
+      "weak": [
+        18.0,
+        20.0,
+        22.0
+      ]
+    },
+    "dpll_params": {
+      "omega_n": 50000000.0,
+      "zeta": 0.7071067811865476,
+      "source": "S011 选定"
+    },
+    "vv_params": {
+      "Nw": 64,
+      "M0": 8,
+      "source": "run_vv_ablation vv_cpr_m16apsk"
+    },
+    "nda_intra_tracking": {
+      "awgn": "segmented",
+      "turb": "none"
+    },
+    "complementarity_criterion": "combo BER < min(NDA, baseline) 该点互补成立; WIN=全部点赢, PARTIAL=部分点赢, NO_SIGNAL=无点赢",
+    "prior_art": "run_a3_hybrid_ablation.py (5-seed, 6 场景) 结论 NDA+DPLL FAIL (冗余)",
+    "channel_bit_exact": "同 seed 同 generate_shared_realization_apsk 重算 (守 TL-13)",
+    "M0": 8,
+    "hdfec": 0.0038,
+    "partial_run": false,
+    "python": "C:\\Users\\zzt\\scoop\\apps\\python311\\current\\python.exe",
+    "numpy_version": "2.4.3",
+    "elapsed_sec": 12.8544180393219
+  },
+  "results": {
+    "awgn": [
+      {
+        "snr_db": 16.0,
+        "nda_ber_mean": 0.010303955078125,
+        "dpll_ber_mean": 0.010643310546875,
+        "vv_ber_mean": 0.01028076171875,
+        "nda_dpll_ber_mean": 0.010498046875,
+        "nda_vv_ber_mean": 0.010290527343750001,
+        "per_seed": [
+          {
+            "nda": 0.01026611328125,
+            "dpll": 0.01058837890625,
+            "vv": 0.01029052734375,
+            "nda_dpll": 0.0104736328125,
+            "nda_vv": 0.0102685546875
+          },
+          {
+            "nda": 0.010341796875,
+            "dpll": 0.0106982421875,
+            "vv": 0.01027099609375,
+            "nda_dpll": 0.0105224609375,
+            "nda_vv": 0.0103125
+          }
+        ]
+      },
+      {
+        "snr_db": 18.0,
+        "nda_ber_mean": 0.0035717773437499998,
+        "dpll_ber_mean": 0.0036999511718750003,
+        "vv_ber_mean": 0.0035595703125,
+        "nda_dpll_ber_mean": 0.0036633300781249998,
+        "nda_vv_ber_mean": 0.003580322265625,
+        "per_seed": [
+          {
+            "nda": 0.0035888671875,
+            "dpll": 0.0036865234375,
+            "vv": 0.00357177734375,
+            "nda_dpll": 0.0036767578125,
+            "nda_vv": 0.00360595703125
+          },
+          {
+            "nda": 0.0035546875,
+            "dpll": 0.00371337890625,
+            "vv": 0.00354736328125,
+            "nda_dpll": 0.00364990234375,
+            "nda_vv": 0.0035546875
+          }
+        ]
+      },
+      {
+        "snr_db": 20.0,
+        "nda_ber_mean": 0.00073486328125,
+        "dpll_ber_mean": 0.000794677734375,
+        "vv_ber_mean": 0.000732421875,
+        "nda_dpll_ber_mean": 0.0007385253906250001,
+        "nda_vv_ber_mean": 0.000731201171875,
+        "per_seed": [
+          {
+            "nda": 0.0007080078125,
+            "dpll": 0.00077392578125,
+            "vv": 0.00070556640625,
+            "nda_dpll": 0.00072998046875,
+            "nda_vv": 0.0006982421875
+          },
+          {
+            "nda": 0.00076171875,
+            "dpll": 0.0008154296875,
+            "vv": 0.00075927734375,
+            "nda_dpll": 0.0007470703125,
+            "nda_vv": 0.00076416015625
+          }
+        ]
+      }
+    ],
+    "weak": [
+      {
+        "snr_db": 18.0,
+        "nda_ber_mean": 0.00439453125,
+        "dpll_ber_mean": 0.00390625,
+        "vv_ber_mean": 0.00390625,
+        "nda_dpll_ber_mean": 0.00439453125,
+        "nda_vv_ber_mean": 0.00390625,
+        "oracle_ber_mean": 0.00390625,
+        "per_seed": [
+          {
+            "nda": 0.001953125,
+            "dpll": 0.001953125,
+            "vv": 0.0009765625,
+            "nda_dpll": 0.001953125,
+            "nda_vv": 0.0009765625,
+            "oracle": 0.0009765625
+          },
+          {
+            "nda": 0.0068359375,
+            "dpll": 0.005859375,
+            "vv": 0.0068359375,
+            "nda_dpll": 0.0068359375,
+            "nda_vv": 0.0068359375,
+            "oracle": 0.0068359375
+          }
+        ]
+      },
+      {
+        "snr_db": 20.0,
+        "nda_ber_mean": 0.0009765625,
+        "dpll_ber_mean": 0.0009765625,
+        "vv_ber_mean": 0.0009765625,
+        "nda_dpll_ber_mean": 0.0009765625,
+        "nda_vv_ber_mean": 0.0009765625,
+        "oracle_ber_mean": 0.0009765625,
+        "per_seed": [
+          {
+            "nda": 0.0009765625,
+            "dpll": 0.0009765625,
+            "vv": 0.0009765625,
+            "nda_dpll": 0.0009765625,
+            "nda_vv": 0.0009765625,
+            "oracle": 0.0009765625
+          },
+          {
+            "nda": 0.0009765625,
+            "dpll": 0.0009765625,
+            "vv": 0.0009765625,
+            "nda_dpll": 0.0009765625,
+            "nda_vv": 0.0009765625,
+            "oracle": 0.0009765625
+          }
+        ]
+      },
+      {
+        "snr_db": 22.0,
+        "nda_ber_mean": 0.0,
+        "dpll_ber_mean": 0.0,
+        "vv_ber_mean": 0.0,
+        "nda_dpll_ber_mean": 0.0,
+        "nda_vv_ber_mean": 0.0,
+        "oracle_ber_mean": 0.0,
+        "per_seed": [
+          {
+            "nda": 0.0,
+            "dpll": 0.0,
+            "vv": 0.0,
+            "nda_dpll": 0.0,
+            "nda_vv": 0.0,
+            "oracle": 0.0
+          },
+          {
+            "nda": 0.0,
+            "dpll": 0.0,
+            "vv": 0.0,
+            "nda_dpll": 0.0,
+            "nda_vv": 0.0,
+            "oracle": 0.0
+          }
+        ]
+      }
+    ]
+  },
+  "complementarity_judgement": {
+    "nda_dpll": {
+      "awgn": {
+        "n_win_points": 0,
+        "n_total_points": 3,
+        "worst_ratio_combo_over_minbase": 1.0256322624743677,
+        "best_ratio_combo_over_minbase": 1.0049833887043191,
+        "complementarity": "NO_SIGNAL"
+      },
+      "weak": {
+        "n_win_points": 0,
+        "n_total_points": 3,
+        "worst_ratio_combo_over_minbase": Infinity,
+        "best_ratio_combo_over_minbase": 1.0,
+        "complementarity": "NO_SIGNAL"
+      }
+    },
+    "nda_vv": {
+      "awgn": {
+        "n_win_points": 1,
+        "n_total_points": 3,
+        "worst_ratio_combo_over_minbase": 1.005829903978052,
+        "best_ratio_combo_over_minbase": 0.9983333333333334,
+        "complementarity": "PARTIAL"
+      },
+      "weak": {
+        "n_win_points": 0,
+        "n_total_points": 3,
+        "worst_ratio_combo_over_minbase": Infinity,
+        "best_ratio_combo_over_minbase": 1.0,
+        "complementarity": "NO_SIGNAL"
+      }
+    }
+  }
+}

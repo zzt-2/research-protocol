@@ -1,0 +1,1004 @@
+{
+  "meta": {
+    "task": "A4 切换 30 seed [PER-REGIME crossover]",
+    "n_seeds": 2,
+    "gamma_eff_th_regime": {
+      "awgn": 99.0,
+      "weak": 17.9,
+      "moderate": 16.8,
+      "strong": 10.7
+    },
+    "cv_margin": 1.1,
+    "cv_model": "CV_awgn(snr)=0.74+0.12*exp(-snr/5)",
+    "ci_method": "t-dist 95% df=1",
+    "elapsed_sec": 24.508431673049927,
+    "crossover_source": "事后从 BER 数据线性插值 DA_data vs NDA 交叉点 (/tmp/verify_logic_chain.py 断言1)",
+    "path": "A: 保留 γ_eff 判据结构，threshold 改 per-regime crossover",
+    "measurability_note": "crossover 17.9/16.8/10.7 是事后从 BER 数据测的——接收端真实部署时不可直接获得。本结果回答的是\"用了 per-regime crossover 当阈值的选对率/增益上界\"，可实现性单结论。",
+    "ber_convention": "NDA/DA_full/SW all on full-block bits (1024) — same denominator. DA_data = DA errors / data bits (768) = standard info-BER (physically fair, D005). NDA has no pilot so full==data for NDA.",
+    "selfcheck_min_violations": 0
+  },
+  "summary": {
+    "awgn": {
+      "snr_db": [
+        5.0,
+        8.0,
+        10.0,
+        12.0,
+        14.0,
+        16.0,
+        18.0,
+        20.0
+      ],
+      "points": [
+        {
+          "snr_db": 5.0,
+          "nda_ber_mean": 0.200782470703125,
+          "da_ber_mean_full": 0.18935791015625,
+          "da_ber_mean_data": 0.2524772135416667,
+          "switch_ber_mean": 0.196092529296875,
+          "switch_ber_ci95": [
+            0.1704846874762886,
+            0.22170037111746144
+          ],
+          "oracle_ber_mean": 0.15825927734375,
+          "switch_vs_da_net_db_mean": -0.15177596430855472,
+          "switch_vs_da_net_db_ci95": [
+            -0.5856817577578977,
+            0.28256335840636854
+          ],
+          "switch_vs_nda_db_mean": 0.10264745786109279,
+          "switch_vs_nda_db_ci95": [
+            -0.4720073107422237,
+            0.6777609161946244
+          ],
+          "oracle_vs_switch_db_mean": 0.930918700127487,
+          "switch_vs_da_gross_db_mean": 1.0976114017744454,
+          "per_seed_switch_vs_da_db": [
+            -0.185725385967898,
+            -0.11739301338363109
+          ],
+          "per_seed_switch_vs_nda_db": [
+            0.05763244176987775,
+            0.148121163682523
+          ]
+        },
+        {
+          "snr_db": 8.0,
+          "nda_ber_mean": 0.120936279296875,
+          "da_ber_mean_full": 0.097386474609375,
+          "da_ber_mean_data": 0.1298486328125,
+          "switch_ber_mean": 0.11611572265625,
+          "switch_ber_ci95": [
+            0.11596061761796658,
+            0.11627082769453342
+          ],
+          "oracle_ber_mean": 0.08533569335937499,
+          "switch_vs_da_net_db_mean": -0.7639238473318594,
+          "switch_vs_da_net_db_ci95": [
+            -2.0287469937035185,
+            0.49860111339112945
+          ],
+          "switch_vs_nda_db_mean": 0.17665573661954187,
+          "switch_vs_nda_db_ci95": [
+            0.11728515716276658,
+            0.23602030699514318
+          ],
+          "oracle_vs_switch_db_mean": 1.3376030787467128,
+          "switch_vs_da_gross_db_mean": 0.48546351875114013,
+          "per_seed_switch_vs_da_db": [
+            -0.8645262450403532,
+            -0.6656196352720357
+          ],
+          "per_seed_switch_vs_nda_db": [
+            0.17198040260301245,
+            0.1813250615548973
+          ]
+        },
+        {
+          "snr_db": 10.0,
+          "nda_ber_mean": 0.07023315429687499,
+          "da_ber_mean_full": 0.05578857421875,
+          "da_ber_mean_data": 0.07438476562499999,
+          "switch_ber_mean": 0.068604736328125,
+          "switch_ber_ci95": [
+            0.061733583132171144,
+            0.07547588952407885
+          ],
+          "oracle_ber_mean": 0.05243408203125,
+          "switch_vs_da_net_db_mean": -0.8980883718310252,
+          "switch_vs_da_net_db_ci95": [
+            -0.9775461998531013,
+            -0.8187380536857513
+          ],
+          "switch_vs_nda_db_mean": 0.10188074269720403,
+          "switch_vs_nda_db_ci95": [
+            -0.23034659332842247,
+            0.43436290482095796
+          ],
+          "oracle_vs_switch_db_mean": 1.1674043035865314,
+          "switch_vs_da_gross_db_mean": 0.35129899425197375,
+          "per_seed_switch_vs_da_db": [
+            -0.8918928906889143,
+            -0.9043913628499383
+          ],
+          "per_seed_switch_vs_nda_db": [
+            0.07585126972282182,
+            0.12816504176971366
+          ]
+        },
+        {
+          "snr_db": 12.0,
+          "nda_ber_mean": 0.040364990234375,
+          "da_ber_mean_full": 0.030848388671875,
+          "da_ber_mean_data": 0.04113118489583333,
+          "switch_ber_mean": 0.03994140625,
+          "switch_ber_ci95": [
+            0.03441966688711158,
+            0.04546314561288842
+          ],
+          "oracle_ber_mean": 0.030568847656250002,
+          "switch_vs_da_net_db_mean": -1.121908672507578,
+          "switch_vs_da_net_db_ci95": [
+            -1.384365259046549,
+            -0.8599991178183614
+          ],
+          "switch_vs_nda_db_mean": 0.045815003817321856,
+          "switch_vs_nda_db_ci95": [
+            -0.3657960946276647,
+            0.4578895275980468
+          ],
+          "oracle_vs_switch_db_mean": 1.1614428378846533,
+          "switch_vs_da_gross_db_mean": 0.12747869357542124,
+          "per_seed_switch_vs_da_db": [
+            -1.1428164435903039,
+            -1.1015479332746065
+          ],
+          "per_seed_switch_vs_nda_db": [
+            0.07845944866322177,
+            0.013633984307160337
+          ]
+        },
+        {
+          "snr_db": 14.0,
+          "nda_ber_mean": 0.021982421874999998,
+          "da_ber_mean_full": 0.01677734375,
+          "da_ber_mean_data": 0.022369791666666666,
+          "switch_ber_mean": 0.021724853515625,
+          "switch_ber_ci95": [
+            0.019910124567709443,
+            0.023539582463540557
+          ],
+          "oracle_ber_mean": 0.01674072265625,
+          "switch_vs_da_net_db_mean": -1.1223365395365967,
+          "switch_vs_da_net_db_ci95": [
+            -1.1369796326191104,
+            -1.1077088964933706
+          ],
+          "switch_vs_nda_db_mean": 0.051186815516367626,
+          "switch_vs_nda_db_ci95": [
+            0.0438752701599193,
+            0.05850585436277616
+          ],
+          "oracle_vs_switch_db_mean": 1.1318265531147078,
+          "switch_vs_da_gross_db_mean": 0.1270508265464029,
+          "per_seed_switch_vs_da_db": [
+            -1.121192436109686,
+            -1.1234960930027948
+          ],
+          "per_seed_switch_vs_nda_db": [
+            0.05061483628704466,
+            0.0517662882356508
+          ]
+        },
+        {
+          "snr_db": 16.0,
+          "nda_ber_mean": 0.01005615234375,
+          "da_ber_mean_full": 0.0076965332031250005,
+          "da_ber_mean_data": 0.010262044270833333,
+          "switch_ber_mean": 0.009954833984375,
+          "switch_ber_ci95": [
+            0.0073645798450425095,
+            0.01254508812370749
+          ],
+          "oracle_ber_mean": 0.007573242187500001,
+          "switch_vs_da_net_db_mean": -1.1173887446719415,
+          "switch_vs_da_net_db_ci95": [
+            -1.2918101138640585,
+            -0.9435718404186022
+          ],
+          "switch_vs_nda_db_mean": 0.043978222441041506,
+          "switch_vs_nda_db_ci95": [
+            -0.08558619114917958,
+            0.1731018661802206
+          ],
+          "oracle_vs_switch_db_mean": 1.187521762347272,
+          "switch_vs_da_gross_db_mean": 0.13199862141105737,
+          "per_seed_switch_vs_da_db": [
+            -1.1313944503922382,
+            -1.1039875038904226
+          ],
+          "per_seed_switch_vs_nda_db": [
+            0.03357824169203624,
+            0.0539374333390048
+          ]
+        },
+        {
+          "snr_db": 18.0,
+          "nda_ber_mean": 0.0033935546875,
+          "da_ber_mean_full": 0.002694091796875,
+          "da_ber_mean_data": 0.0035921223958333337,
+          "switch_ber_mean": 0.00338134765625,
+          "switch_ber_ci95": [
+            0.0031021585873399118,
+            0.003660536725160088
+          ],
+          "oracle_ber_mean": 0.0024951171874999997,
+          "switch_vs_da_net_db_mean": -0.9867743590279352,
+          "switch_vs_da_net_db_ci95": [
+            -2.2710935935096392,
+            0.296507467941717
+          ],
+          "switch_vs_nda_db_mean": 0.01565026853627744,
+          "switch_vs_nda_db_ci95": [
+            -0.022781882940539316,
+            0.05404102712045386
+          ],
+          "oracle_vs_switch_db_mean": 1.319988776017735,
+          "switch_vs_da_gross_db_mean": 0.26261300705506496,
+          "per_seed_switch_vs_da_db": [
+            -1.088330355774423,
+            -0.8862557697934991
+          ],
+          "per_seed_switch_vs_nda_db": [
+            0.018652619162474432,
+            0.01260652501744011
+          ]
+        },
+        {
+          "snr_db": 20.0,
+          "nda_ber_mean": 0.0007397460937500001,
+          "da_ber_mean_full": 0.000631103515625,
+          "da_ber_mean_data": 0.0008414713541666667,
+          "switch_ber_mean": 0.0007373046875,
+          "switch_ber_ci95": [
+            0.000458115618589912,
+            0.001016493756410088
+          ],
+          "oracle_ber_mean": 0.000496826171875,
+          "switch_vs_da_net_db_mean": -0.6754639552718933,
+          "switch_vs_da_net_db_ci95": [
+            -2.638812421035123,
+            1.2915970402467782
+          ],
+          "switch_vs_nda_db_mean": 0.014356855451544349,
+          "switch_vs_nda_db_ci95": [
+            0.008937350847272645,
+            0.01980179964925772
+          ],
+          "oracle_vs_switch_db_mean": 1.7144252939591174,
+          "switch_vs_da_gross_db_mean": 0.5739234108111065,
+          "per_seed_switch_vs_da_db": [
+            -0.518942723832915,
+            -0.82827265695543
+          ],
+          "per_seed_switch_vs_nda_db": [
+            0.014797100580477635,
+            0.013942049916052728
+          ]
+        }
+      ]
+    },
+    "weak": {
+      "snr_db": [
+        5.0,
+        10.0,
+        15.0,
+        20.0,
+        22.0,
+        24.0,
+        26.0
+      ],
+      "points": [
+        {
+          "snr_db": 5.0,
+          "nda_ber_mean": 0.399351806640625,
+          "da_ber_mean_full": 0.25601806640625,
+          "da_ber_mean_data": 0.341357421875,
+          "switch_ber_mean": 0.270751953125,
+          "switch_ber_ci95": [
+            0.25427979805930495,
+            0.28722410819069505
+          ],
+          "oracle_ber_mean": 0.25138916015625,
+          "switch_vs_da_net_db_mean": -0.24300984964470876,
+          "switch_vs_da_net_db_ci95": [
+            -0.6140120160235345,
+            0.12807560887664166
+          ],
+          "switch_vs_nda_db_mean": 1.6878405531047864,
+          "switch_vs_nda_db_ci95": [
+            1.2500797038879679,
+            2.125658003171891
+          ],
+          "oracle_vs_switch_db_mean": 0.32225051107584396,
+          "switch_vs_da_gross_db_mean": 1.0063775164382902,
+          "per_seed_switch_vs_da_db": [
+            -0.21376642222691086,
+            -0.272169984919982
+          ],
+          "per_seed_switch_vs_nda_db": [
+            1.7223236068360501,
+            1.6534141002238087
+          ]
+        },
+        {
+          "snr_db": 10.0,
+          "nda_ber_mean": 0.233250732421875,
+          "da_ber_mean_full": 0.122012939453125,
+          "da_ber_mean_data": 0.16268391927083334,
+          "switch_ber_mean": 0.13505859375,
+          "switch_ber_ci95": [
+            0.12609352253722036,
+            0.14402366496277966
+          ],
+          "oracle_ber_mean": 0.111451416015625,
+          "switch_vs_da_net_db_mean": -0.4411633349060948,
+          "switch_vs_da_net_db_ci95": [
+            -1.0690050701158111,
+            0.1866325098169087
+          ],
+          "switch_vs_nda_db_mean": 2.37300792662991,
+          "switch_vs_nda_db_ci95": [
+            1.9646872012701213,
+            2.780755687799133
+          ],
+          "oracle_vs_switch_db_mean": 0.834366328078805,
+          "switch_vs_da_gross_db_mean": 0.8082240311769046,
+          "per_seed_switch_vs_da_db": [
+            -0.4905966904963704,
+            -0.391775869802532
+          ],
+          "per_seed_switch_vs_nda_db": [
+            2.4048344359224356,
+            2.340608453146819
+          ]
+        },
+        {
+          "snr_db": 15.0,
+          "nda_ber_mean": 0.04701416015625,
+          "da_ber_mean_full": 0.0361474609375,
+          "da_ber_mean_data": 0.04819661458333333,
+          "switch_ber_mean": 0.037437744140625,
+          "switch_ber_ci95": [
+            0.017754914782463764,
+            0.057120573498786235
+          ],
+          "oracle_ber_mean": 0.031822509765625,
+          "switch_vs_da_net_db_mean": -0.15231874804040293,
+          "switch_vs_da_net_db_ci95": [
+            -0.2960589714188163,
+            -0.009540778720615956
+          ],
+          "switch_vs_nda_db_mean": 0.9891901055371698,
+          "switch_vs_nda_db_ci95": [
+            -2.3873364069119516,
+            4.371449154861263
+          ],
+          "oracle_vs_switch_db_mean": 0.7057524344873366,
+          "switch_vs_da_gross_db_mean": 1.0970686180425964,
+          "per_seed_switch_vs_da_db": [
+            -0.16407461047054278,
+            -0.14152513966888947
+          ],
+          "per_seed_switch_vs_nda_db": [
+            1.2580203538612256,
+            0.7260923940880855
+          ]
+        },
+        {
+          "snr_db": 20.0,
+          "nda_ber_mean": 0.00838623046875,
+          "da_ber_mean_full": 0.00727294921875,
+          "da_ber_mean_data": 0.009697265625,
+          "switch_ber_mean": 0.008140869140625,
+          "switch_ber_ci95": [
+            0.006295119185052751,
+            0.009986619096197248
+          ],
+          "oracle_ber_mean": 0.006405029296875,
+          "switch_vs_da_net_db_mean": -0.48960218539628236,
+          "switch_vs_da_net_db_ci95": [
+            -2.719705638972939,
+            1.7272129709769386
+          ],
+          "switch_vs_nda_db_mean": 0.1289601964089746,
+          "switch_vs_nda_db_ci95": [
+            -0.21278931433054754,
+            0.47150376666249166
+          ],
+          "oracle_vs_switch_db_mean": 1.041496532203141,
+          "switch_vs_da_gross_db_mean": 0.7597851806867169,
+          "per_seed_switch_vs_da_db": [
+            -0.6712363763546079,
+            -0.3212562916413925
+          ],
+          "per_seed_switch_vs_nda_db": [
+            0.1562847428871866,
+            0.1024297094447575
+          ]
+        },
+        {
+          "snr_db": 22.0,
+          "nda_ber_mean": 0.004031982421875,
+          "da_ber_mean_full": 0.003038330078125,
+          "da_ber_mean_data": 0.004051106770833333,
+          "switch_ber_mean": 0.003917236328125,
+          "switch_ber_ci95": [
+            0.003684578770699926,
+            0.004149893885550075
+          ],
+          "oracle_ber_mean": 0.002938232421875,
+          "switch_vs_da_net_db_mean": -1.1034482048691083,
+          "switch_vs_da_net_db_ci95": [
+            -3.5799596762532495,
+            1.3625393558475558
+          ],
+          "switch_vs_nda_db_mean": 0.12538856595910078,
+          "switch_vs_nda_db_ci95": [
+            -0.7705006057504505,
+            1.0194769716261487
+          ],
+          "oracle_vs_switch_db_mean": 1.2489362682047407,
+          "switch_vs_da_gross_db_mean": 0.14593916121389044,
+          "per_seed_switch_vs_da_db": [
+            -1.303201715105526,
+            -0.9142186053001676
+          ],
+          "per_seed_switch_vs_nda_db": [
+            0.0540510376791821,
+            0.19492532819651615
+          ]
+        },
+        {
+          "snr_db": 24.0,
+          "nda_ber_mean": 0.001678466796875,
+          "da_ber_mean_full": 0.001282958984375,
+          "da_ber_mean_data": 0.0017106119791666667,
+          "switch_ber_mean": 0.001661376953125,
+          "switch_ber_ci95": [
+            -0.0001843730024472523,
+            0.003507126908697252
+          ],
+          "oracle_ber_mean": 0.00122802734375,
+          "switch_vs_da_net_db_mean": -1.1225540917509245,
+          "switch_vs_da_net_db_ci95": [
+            -1.714974869901018,
+            -0.538716780876381
+          ],
+          "switch_vs_nda_db_mean": 0.04444572962946792,
+          "switch_vs_nda_db_ci95": [
+            -0.3132048985656761,
+            0.3970305719982302
+          ],
+          "oracle_vs_switch_db_mean": 1.3126014448342607,
+          "switch_vs_da_gross_db_mean": 0.12683327433207528,
+          "per_seed_switch_vs_da_db": [
+            -1.173132585024951,
+            -1.080559065752448
+          ],
+          "per_seed_switch_vs_nda_db": [
+            0.013964464825894309,
+            0.06986120860665983
+          ]
+        },
+        {
+          "snr_db": 26.0,
+          "nda_ber_mean": 0.000672607421875,
+          "da_ber_mean_full": 0.00052001953125,
+          "da_ber_mean_data": 0.000693359375,
+          "switch_ber_mean": 0.000672607421875,
+          "switch_ber_ci95": [
+            -0.0010490585030705451,
+            0.002394273346820545
+          ],
+          "oracle_ber_mean": 0.000496826171875,
+          "switch_vs_da_net_db_mean": -1.1174199974906611,
+          "switch_vs_da_net_db_ci95": [
+            -2.800646184356468,
+            0.5095908320516513
+          ],
+          "switch_vs_nda_db_mean": 0.0,
+          "switch_vs_nda_db_ci95": [
+            0.0,
+            0.0
+          ],
+          "oracle_vs_switch_db_mean": 1.3155718962656495,
+          "switch_vs_da_gross_db_mean": 0.13196736859233843,
+          "per_seed_switch_vs_da_db": [
+            -1.275788327745084,
+            -1.0152670245597324
+          ],
+          "per_seed_switch_vs_nda_db": [
+            0.0,
+            0.0
+          ]
+        }
+      ]
+    },
+    "moderate": {
+      "snr_db": [
+        5.0,
+        10.0,
+        15.0,
+        20.0,
+        22.0,
+        24.0,
+        26.0
+      ],
+      "points": [
+        {
+          "snr_db": 5.0,
+          "nda_ber_mean": 0.399154052734375,
+          "da_ber_mean_full": 0.27070434570312496,
+          "da_ber_mean_data": 0.3609391276041667,
+          "switch_ber_mean": 0.277099609375,
+          "switch_ber_ci95": [
+            0.2721052271422754,
+            0.2820939916077246
+          ],
+          "oracle_ber_mean": 0.26640625,
+          "switch_vs_da_net_db_mean": -0.10140685867187899,
+          "switch_vs_da_net_db_ci95": [
+            -0.19509417710721133,
+            -0.007752968526183346
+          ],
+          "switch_vs_nda_db_mean": 1.5850462959409404,
+          "switch_vs_nda_db_ci95": [
+            1.3130577245696842,
+            1.8568687146393141
+          ],
+          "oracle_vs_switch_db_mean": 0.1709150421673779,
+          "switch_vs_da_gross_db_mean": 1.1479805074111213,
+          "per_seed_switch_vs_da_db": [
+            -0.09405153637974045,
+            -0.10879560925365422
+          ],
+          "per_seed_switch_vs_nda_db": [
+            1.606362646158732,
+            1.5635637930502664
+          ]
+        },
+        {
+          "snr_db": 10.0,
+          "nda_ber_mean": 0.25207763671875,
+          "da_ber_mean_full": 0.153704833984375,
+          "da_ber_mean_data": 0.20493977864583335,
+          "switch_ber_mean": 0.15991943359375,
+          "switch_ber_ci95": [
+            0.12201176223729122,
+            0.19782710495020878
+          ],
+          "oracle_ber_mean": 0.140101318359375,
+          "switch_vs_da_net_db_mean": -0.17213716735091816,
+          "switch_vs_da_net_db_ci95": [
+            -0.5050443472583899,
+            0.15963665000681557
+          ],
+          "switch_vs_nda_db_mean": 1.97633075663439,
+          "switch_vs_nda_db_ci95": [
+            -0.22248273159011456,
+            4.174707089161631
+          ],
+          "oracle_vs_switch_db_mean": 0.5745902088423026,
+          "switch_vs_da_gross_db_mean": 1.077250198732081,
+          "per_seed_switch_vs_da_db": [
+            -0.1988596131151178,
+            -0.14654808413645654
+          ],
+          "per_seed_switch_vs_nda_db": [
+            2.1491453508482588,
+            1.803079006723258
+          ]
+        },
+        {
+          "snr_db": 15.0,
+          "nda_ber_mean": 0.084923095703125,
+          "da_ber_mean_full": 0.062591552734375,
+          "da_ber_mean_data": 0.08345540364583333,
+          "switch_ber_mean": 0.064638671875,
+          "switch_ber_ci95": [
+            0.034858504524590536,
+            0.09441883922540946
+          ],
+          "oracle_ber_mean": 0.051594238281249996,
+          "switch_vs_da_net_db_mean": -0.13976699039743382,
+          "switch_vs_da_net_db_ci95": [
+            -0.7669240192676053,
+            0.48326602826741716
+          ],
+          "switch_vs_nda_db_mean": 1.1853339267863507,
+          "switch_vs_nda_db_ci95": [
+            0.5885167899124819,
+            1.7850556537172766
+          ],
+          "oracle_vs_switch_db_mean": 0.9789121937881156,
+          "switch_vs_da_gross_db_mean": 1.1096203756855658,
+          "per_seed_switch_vs_da_db": [
+            -0.19102504079817267,
+            -0.09263295020201545
+          ],
+          "per_seed_switch_vs_nda_db": [
+            1.2338710472465928,
+            1.1397013963831657
+          ]
+        },
+        {
+          "snr_db": 20.0,
+          "nda_ber_mean": 0.021561279296875,
+          "da_ber_mean_full": 0.017742919921875,
+          "da_ber_mean_data": 0.0236572265625,
+          "switch_ber_mean": 0.0192578125,
+          "switch_ber_ci95": [
+            0.010013552218310413,
+            0.028502072781689584
+          ],
+          "oracle_ber_mean": 0.0151416015625,
+          "switch_vs_da_net_db_mean": -0.35581861490689426,
+          "switch_vs_da_net_db_ci95": [
+            -2.093036157840397,
+            1.387431570943638
+          ],
+          "switch_vs_nda_db_mean": 0.49067571338315397,
+          "switch_vs_nda_db_ci95": [
+            -0.5140713294203303,
+            1.4880434800830569
+          ],
+          "oracle_vs_switch_db_mean": 1.0443514003184715,
+          "switch_vs_da_gross_db_mean": 0.893568751176106,
+          "per_seed_switch_vs_da_db": [
+            -0.48976166885003286,
+            -0.21584291804672587
+          ],
+          "per_seed_switch_vs_nda_db": [
+            0.5657710017147445,
+            0.408201148947982
+          ]
+        },
+        {
+          "snr_db": 22.0,
+          "nda_ber_mean": 0.012188720703125,
+          "da_ber_mean_full": 0.009833984375,
+          "da_ber_mean_data": 0.013111979166666666,
+          "switch_ber_mean": 0.01193603515625,
+          "switch_ber_ci95": [
+            0.008244535245105503,
+            0.015627535067394498
+          ],
+          "oracle_ber_mean": 0.008253173828125,
+          "switch_vs_da_net_db_mean": -0.8413057538225519,
+          "switch_vs_da_net_db_ci95": [
+            -2.4510260965404314,
+            0.7585974745184252
+          ],
+          "switch_vs_nda_db_mean": 0.09098036278904517,
+          "switch_vs_nda_db_ci95": [
+            -0.141566664565761,
+            0.3225615374964954
+          ],
+          "oracle_vs_switch_db_mean": 1.602390969916989,
+          "switch_vs_da_gross_db_mean": 0.4080816122604474,
+          "per_seed_switch_vs_da_db": [
+            -0.9725157376644328,
+            -0.7199128843575735
+          ],
+          "per_seed_switch_vs_nda_db": [
+            0.07223359562149671,
+            0.10876127730923772
+          ]
+        },
+        {
+          "snr_db": 24.0,
+          "nda_ber_mean": 0.0059912109375,
+          "da_ber_mean_full": 0.00479248046875,
+          "da_ber_mean_data": 0.006389973958333333,
+          "switch_ber_mean": 0.005952148437500001,
+          "switch_ber_ci95": [
+            0.002943110694802378,
+            0.008961186180197624
+          ],
+          "oracle_ber_mean": 0.00427978515625,
+          "switch_vs_da_net_db_mean": -0.94113401682357,
+          "switch_vs_da_net_db_ci95": [
+            -3.0781572790326894,
+            1.2027649891651928
+          ],
+          "switch_vs_nda_db_mean": 0.02840857108622224,
+          "switch_vs_nda_db_ci95": [
+            -0.04758885702655509,
+            0.10392339983429187
+          ],
+          "oracle_vs_switch_db_mean": 1.4325178518856818,
+          "switch_vs_da_gross_db_mean": 0.30825334925943004,
+          "per_seed_switch_vs_da_db": [
+            -1.1061540895790936,
+            -0.769238200288403
+          ],
+          "per_seed_switch_vs_nda_db": [
+            0.03412940801376773,
+            0.02220513479396906
+          ]
+        },
+        {
+          "snr_db": 26.0,
+          "nda_ber_mean": 0.002840576171875,
+          "da_ber_mean_full": 0.002752685546875,
+          "da_ber_mean_data": 0.0036702473958333333,
+          "switch_ber_mean": 0.002840576171875,
+          "switch_ber_ci95": [
+            0.0011809522622428068,
+            0.004500200081507193
+          ],
+          "oracle_ber_mean": 0.002225341796875,
+          "switch_vs_da_net_db_mean": -0.1364983707275056,
+          "switch_vs_da_net_db_ci95": [
+            -2.4508782448242754,
+            2.1870045057941563
+          ],
+          "switch_vs_nda_db_mean": 0.0,
+          "switch_vs_nda_db_ci95": [
+            0.0,
+            0.0
+          ],
+          "oracle_vs_switch_db_mean": 1.0600971463175364,
+          "switch_vs_da_gross_db_mean": 1.1128889953554937,
+          "per_seed_switch_vs_da_db": [
+            0.050567774748003946,
+            -0.31444151377812324
+          ],
+          "per_seed_switch_vs_nda_db": [
+            0.0,
+            0.0
+          ]
+        }
+      ]
+    },
+    "strong": {
+      "snr_db": [
+        5.0,
+        10.0,
+        15.0,
+        20.0,
+        22.0,
+        24.0,
+        26.0
+      ],
+      "points": [
+        {
+          "snr_db": 5.0,
+          "nda_ber_mean": 0.39859130859375,
+          "da_ber_mean_full": 0.28806640625,
+          "da_ber_mean_data": 0.38408854166666667,
+          "switch_ber_mean": 0.289962158203125,
+          "switch_ber_ci95": [
+            0.2799268622261901,
+            0.29999745418005985
+          ],
+          "oracle_ber_mean": 0.280301513671875,
+          "switch_vs_da_net_db_mean": -0.028487089216687383,
+          "switch_vs_da_net_db_ci95": [
+            -0.07402393250789874,
+            0.017066322328086077
+          ],
+          "switch_vs_nda_db_mean": 1.3818650097457903,
+          "switch_vs_nda_db_ci95": [
+            0.5995479172804213,
+            2.1636451345654453
+          ],
+          "oracle_vs_switch_db_mean": 0.14715880543664375,
+          "switch_vs_da_gross_db_mean": 1.2209002768663118,
+          "per_seed_switch_vs_da_db": [
+            -0.024894325824565598,
+            -0.032063284355247065
+          ],
+          "per_seed_switch_vs_nda_db": [
+            1.4431450862429172,
+            1.3200479656029496
+          ]
+        },
+        {
+          "snr_db": 10.0,
+          "nda_ber_mean": 0.2840625,
+          "da_ber_mean_full": 0.21055175781250002,
+          "da_ber_mean_data": 0.28073567708333336,
+          "switch_ber_mean": 0.215877685546875,
+          "switch_ber_ci95": [
+            0.2092547004121746,
+            0.22250067068157542
+          ],
+          "oracle_ber_mean": 0.19138671875000002,
+          "switch_vs_da_net_db_mean": -0.10848881767217808,
+          "switch_vs_da_net_db_ci95": [
+            -0.14318430313889768,
+            -0.07378186129718156
+          ],
+          "switch_vs_nda_db_mean": 1.1920615161231767,
+          "switch_vs_nda_db_ci95": [
+            0.7886908593660138,
+            1.595047115485353
+          ],
+          "oracle_vs_switch_db_mean": 0.522959565977013,
+          "switch_vs_da_gross_db_mean": 1.1408985484108214,
+          "per_seed_switch_vs_da_db": [
+            -0.10575203690266993,
+            -0.11121412753340931
+          ],
+          "per_seed_switch_vs_nda_db": [
+            1.1601381805930326,
+            1.2235997942583339
+          ]
+        },
+        {
+          "snr_db": 15.0,
+          "nda_ber_mean": 0.15265747070312502,
+          "da_ber_mean_full": 0.1266455078125,
+          "da_ber_mean_data": 0.16886067708333335,
+          "switch_ber_mean": 0.1298828125,
+          "switch_ber_ci95": [
+            0.11638867416934565,
+            0.14337695083065435
+          ],
+          "oracle_ber_mean": 0.105531005859375,
+          "switch_vs_da_net_db_mean": -0.10961894597413306,
+          "switch_vs_da_net_db_ci95": [
+            -0.48003181616021645,
+            0.2601223124682022
+          ],
+          "switch_vs_nda_db_mean": 0.7016637819376802,
+          "switch_vs_nda_db_ci95": [
+            0.4001606001617251,
+            1.0034254221526198
+          ],
+          "oracle_vs_switch_db_mean": 0.9017160672884399,
+          "switch_vs_da_gross_db_mean": 1.139768420108867,
+          "per_seed_switch_vs_da_db": [
+            -0.0808290552278347,
+            -0.1390804484641795
+          ],
+          "per_seed_switch_vs_nda_db": [
+            0.6780540255782058,
+            0.7255319967361389
+          ]
+        },
+        {
+          "snr_db": 20.0,
+          "nda_ber_mean": 0.068280029296875,
+          "da_ber_mean_full": 0.062923583984375,
+          "da_ber_mean_data": 0.08389811197916666,
+          "switch_ber_mean": 0.0648046875,
+          "switch_ber_ci95": [
+            0.05503307008814697,
+            0.07457630491185302
+          ],
+          "oracle_ber_mean": 0.049512939453125,
+          "switch_vs_da_net_db_mean": -0.12792969629841558,
+          "switch_vs_da_net_db_ci95": [
+            -0.927044487635032,
+            0.6717669570807502
+          ],
+          "switch_vs_nda_db_mean": 0.22687278072721834,
+          "switch_vs_nda_db_ci95": [
+            0.05775363071531833,
+            0.3956356635707581
+          ],
+          "oracle_vs_switch_db_mean": 1.1688771069333956,
+          "switch_vs_da_gross_db_mean": 1.1214576697845835,
+          "per_seed_switch_vs_da_db": [
+            -0.19055336007207407,
+            -0.06472417048220781
+          ],
+          "per_seed_switch_vs_nda_db": [
+            0.23999059348858567,
+            0.21339870079749074
+          ]
+        },
+        {
+          "snr_db": 22.0,
+          "nda_ber_mean": 0.047525634765625005,
+          "da_ber_mean_full": 0.0448974609375,
+          "da_ber_mean_data": 0.05986328125,
+          "switch_ber_mean": 0.046579589843750005,
+          "switch_ber_ci95": [
+            0.030169476793368115,
+            0.06298970289413189
+          ],
+          "oracle_ber_mean": 0.035146484374999995,
+          "switch_vs_da_net_db_mean": -0.15973878768196798,
+          "switch_vs_da_net_db_ci95": [
+            -1.0496117591407896,
+            0.7328915700179813
+          ],
+          "switch_vs_nda_db_mean": 0.08732266095871603,
+          "switch_vs_nda_db_ci95": [
+            -0.3272923429832547,
+            0.4998888927949172
+          ],
+          "oracle_vs_switch_db_mean": 1.2231377002540076,
+          "switch_vs_da_gross_db_mean": 1.0896485784010315,
+          "per_seed_switch_vs_da_db": [
+            -0.22850312177408416,
+            -0.0882170673487241
+          ],
+          "per_seed_switch_vs_nda_db": [
+            0.11884856246035096,
+            0.053747987351311616
+          ]
+        },
+        {
+          "snr_db": 24.0,
+          "nda_ber_mean": 0.033553466796875,
+          "da_ber_mean_full": 0.033222656249999996,
+          "da_ber_mean_data": 0.044296875,
+          "switch_ber_mean": 0.03328125,
+          "switch_ber_ci95": [
+            0.03231959876264302,
+            0.034242901237356974
+          ],
+          "oracle_ber_mean": 0.025673828125,
+          "switch_vs_da_net_db_mean": -0.007652768181123149,
+          "switch_vs_da_net_db_ci95": [
+            -0.579346795651125,
+            0.5637799294383251
+          ],
+          "switch_vs_nda_db_mean": 0.03537769356240216,
+          "switch_vs_nda_db_ci95": [
+            -0.6607644173266435,
+            0.7305805972729323
+          ],
+          "oracle_vs_switch_db_mean": 1.1270899998829977,
+          "switch_vs_da_gross_db_mean": 1.2417345979018766,
+          "per_seed_switch_vs_da_db": [
+            -0.05276644529708809,
+            0.037199579084288094
+          ],
+          "per_seed_switch_vs_nda_db": [
+            0.08965870368859963,
+            -0.019842523742310773
+          ]
+        },
+        {
+          "snr_db": 26.0,
+          "nda_ber_mean": 0.024027099609374998,
+          "da_ber_mean_full": 0.023883056640625,
+          "da_ber_mean_data": 0.031844075520833334,
+          "switch_ber_mean": 0.02401611328125,
+          "switch_ber_ci95": [
+            0.02156545367637256,
+            0.026466772886127442
+          ],
+          "oracle_ber_mean": 0.018350830078124998,
+          "switch_vs_da_net_db_mean": -0.024128148163099432,
+          "switch_vs_da_net_db_ci95": [
+            -3.2077607516248166,
+            3.149118471595935
+          ],
+          "switch_vs_nda_db_mean": 0.0019862542395302422,
+          "switch_vs_nda_db_ci95": [
+            -0.10162403761547438,
+            0.10545037779938761
+          ],
+          "oracle_vs_switch_db_mean": 1.168470095908698,
+          "switch_vs_da_gross_db_mean": 1.2252592179199002,
+          "per_seed_switch_vs_da_db": [
+            -0.2794697624871551,
+            0.22082748245827316
+          ],
+          "per_seed_switch_vs_nda_db": [
+            0.010061725058386487,
+            -0.0062353848744732465
+          ]
+        }
+      ]
+    }
+  }
+}

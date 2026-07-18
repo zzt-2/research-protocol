@@ -1,0 +1,75 @@
+{
+  "meta": {
+    "task": "2×2 消融 {等权,加权}×{none,segmented} AWGN 高 SNR — segmented 根因确认",
+    "cells": {
+      "eq_none": "等权 rx**M0, none (整块 mean-angle)",
+      "eq_seg": "等权 rx**M0, segmented (K=8 段 mean-angle /M0 unwrap interp)",
+      "w_none": "加权 (rx/|rx|)^M0, w=|rx|^2, none (整块 (w*yn).sum())",
+      "w_seg": "加权 (rx/|rx|)^M0, w=|rx|^2, segmented (K=8 段 (w*yn).sum())"
+    },
+    "fairness": "4 格同 seed / 同 tx_bits / 同 awgn_wiener_channel / 同 resolve_m16apsk_blockwise / 同 m16apsk_demod",
+    "ber_shell": "ber_eval: 逐 N_DFT 块 recovery_fn(seg,M0) → resolve → demod (4 格统一)",
+    "M0": 8,
+    "N_DFT": 256,
+    "N_BLOCKS": 400,
+    "K_seg": 8,
+    "seed_awgn": 20240701,
+    "snr_points_db": [
+      16.0,
+      18.0,
+      20.0
+    ],
+    "HDFEC": 0.0038,
+    "LASER_LW_Hz": 10000.0,
+    "common_or_simulator_modified": false,
+    "reuse": "nda_weighted_recovery (加权) from ml_weighting_check.py; awgn_wiener_channel / ber_nda_awgn from sc_nda_ml_sim",
+    "python": "C:\\Users\\zzt\\scoop\\apps\\python311\\current\\python.exe",
+    "numpy_version": "2.4.3",
+    "elapsed_sec": 3.1731185913085938
+  },
+  "results": [
+    {
+      "snr_db": 16.0,
+      "ber_eq_none": 0.0100341796875,
+      "ber_eq_seg": 0.02206298828125,
+      "ber_w_none": 0.0100390625,
+      "ber_w_seg": 0.02244873046875,
+      "ratio_w_seg_over_eq_seg": 1.017483678211796
+    },
+    {
+      "snr_db": 18.0,
+      "ber_eq_none": 0.003642578125,
+      "ber_eq_seg": 0.0125927734375,
+      "ber_w_none": 0.00363525390625,
+      "ber_w_seg": 0.0127978515625,
+      "ratio_w_seg_over_eq_seg": 1.0162853819309812
+    },
+    {
+      "snr_db": 20.0,
+      "ber_eq_none": 0.00088134765625,
+      "ber_eq_seg": 0.00622314453125,
+      "ber_w_none": 0.000888671875,
+      "ber_w_seg": 0.0061474609375,
+      "ratio_w_seg_over_eq_seg": 0.9878383679874461
+    }
+  ],
+  "diagnosis": {
+    "w_seg_gt_2x_eq_seg": [],
+    "w_none_gt_2x_eq_none": [],
+    "eq_seg_gt_2x_eq_none": [
+      [
+        16.0,
+        2.1987834549878347
+      ],
+      [
+        18.0,
+        3.4571045576407506
+      ],
+      [
+        20.0,
+        7.0609418282548475
+      ]
+    ],
+    "category": "segmented_high_snr_hazard"
+  }
+}

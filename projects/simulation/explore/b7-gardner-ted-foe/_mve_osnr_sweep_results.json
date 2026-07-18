@@ -1,0 +1,417 @@
+{
+  "meta": {
+    "mode": "osnr_sweep",
+    "baud_Hz": 25000000000.0,
+    "n_sym": 4096,
+    "n_seed": 2,
+    "f_d_GHz": [
+      5.0,
+      12.0,
+      23.0
+    ],
+    "osnr_grid_dB": [
+      5.0,
+      8.0,
+      11.0,
+      14.0,
+      17.0,
+      20.0,
+      23.0,
+      26.0,
+      29.0,
+      32.0,
+      35.0
+    ],
+    "alpha_psa_GHz": 13.266904455247985,
+    "alpha_psa_method": "sequential-search multi-point fit",
+    "alpha_psa_cal_points_GHz": [
+      0.5,
+      1.0,
+      1.5,
+      2.0,
+      2.5,
+      3.0
+    ],
+    "alpha_psa_rmse_MHz": 49.287233945691014,
+    "psa_method": "Vieira 2023 two-stage (coarse CFE FFT 1024 + fine CFE M=4 FFT 512)",
+    "baselines": [
+      "B7",
+      "Gardner1986",
+      "PSA_two_stage",
+      "4th_power_F4.4",
+      "Kay1989"
+    ],
+    "targets": {
+      "BER_2e2": 0.02,
+      "HD_FEC": 0.0038
+    },
+    "elapsed_s": 180.7
+  },
+  "curves": {
+    "f_D5GHz": [
+      {
+        "OSNR_dB": 5.0,
+        "ber_B7_mean": 0.16433613901710561,
+        "ber_B7_std": 0.002511539505837629,
+        "ber_Gardner1986_mean": 0.49144718979093127,
+        "ber_PSA_mean": 0.4868913348941295,
+        "ber_4thpower_mean": 0.341635888014326,
+        "ber_Kay_mean": 0.20010860711376594
+      },
+      {
+        "OSNR_dB": 8.0,
+        "ber_B7_mean": 0.14435089625203695,
+        "ber_B7_std": 0.022270505160239,
+        "ber_Gardner1986_mean": 0.48927504751561224,
+        "ber_PSA_mean": 0.44454249253326095,
+        "ber_4thpower_mean": 0.17298689694403122,
+        "ber_Kay_mean": 0.17434452273707035
+      },
+      {
+        "OSNR_dB": 11.0,
+        "ber_B7_mean": 0.045275590551181105,
+        "ber_B7_std": 0.010385555253869128,
+        "ber_Gardner1986_mean": 0.49042434856949835,
+        "ber_PSA_mean": 0.26751289709475967,
+        "ber_4thpower_mean": 0.05613630192777627,
+        "ber_Kay_mean": 0.10120825414064621
+      },
+      {
+        "OSNR_dB": 14.0,
+        "ber_B7_mean": 0.03169970133043715,
+        "ber_B7_std": 0.001289709475970676,
+        "ber_Gardner1986_mean": 0.4783464566929134,
+        "ber_PSA_mean": 0.18578604398588108,
+        "ber_4thpower_mean": 0.06306000543035568,
+        "ber_Kay_mean": 0.08647841433613902
+      },
+      {
+        "OSNR_dB": 17.0,
+        "ber_B7_mean": 0.015272875373336953,
+        "ber_B7_std": 0.004004887320119468,
+        "ber_Gardner1986_mean": 0.4711512354059191,
+        "ber_PSA_mean": 0.04106706489275047,
+        "ber_4thpower_mean": 0.03271789302199294,
+        "ber_Kay_mean": 0.0638066793374966
+      },
+      {
+        "OSNR_dB": 20.0,
+        "ber_B7_mean": 0.007602497963616617,
+        "ber_B7_std": 0.0009503122454520771,
+        "ber_Gardner1986_mean": 0.46124083627477597,
+        "ber_PSA_mean": 0.0198886777083899,
+        "ber_4thpower_mean": 0.0133722508824328,
+        "ber_Kay_mean": 0.018870486016834102
+      },
+      {
+        "OSNR_dB": 23.0,
+        "ber_B7_mean": 0.00332609285908227,
+        "ber_B7_std": 0.00020363833831115938,
+        "ber_Gardner1986_mean": 0.4566250339397231,
+        "ber_PSA_mean": 0.07751832745044801,
+        "ber_4thpower_mean": 0.009503122454520771,
+        "ber_Kay_mean": 0.03366820526744502
+      },
+      {
+        "OSNR_dB": 26.0,
+        "ber_B7_mean": 0.0034618517512897094,
+        "ber_B7_std": 0.0007466739071409177,
+        "ber_Gardner1986_mean": 0.45472440944881887,
+        "ber_PSA_mean": 0.012489818083084442,
+        "ber_4thpower_mean": 0.005769752918816182,
+        "ber_Kay_mean": 0.0521314146076568
+      },
+      {
+        "OSNR_dB": 29.0,
+        "ber_B7_mean": 0.0038012489818083084,
+        "ber_B7_std": 0.0009503122454520771,
+        "ber_Gardner1986_mean": 0.4557426011403747,
+        "ber_PSA_mean": 0.06285636709204453,
+        "ber_4thpower_mean": 0.005769752918816182,
+        "ber_Kay_mean": 0.036451262557697525
+      },
+      {
+        "OSNR_dB": 32.0,
+        "ber_B7_mean": 0.0027151778441487917,
+        "ber_B7_std": 0.0009503122454520771,
+        "ber_Gardner1986_mean": 0.4557426011403747,
+        "ber_PSA_mean": 0.005158837903882704,
+        "ber_4thpower_mean": 0.005498235134401303,
+        "ber_Kay_mean": 0.010724952484387727
+      },
+      {
+        "OSNR_dB": 35.0,
+        "ber_B7_mean": 0.00332609285908227,
+        "ber_B7_std": 0.00033939723051859896,
+        "ber_Gardner1986_mean": 0.45255226717349983,
+        "ber_PSA_mean": 0.041745859353787676,
+        "ber_4thpower_mean": 0.004955199565571545,
+        "ber_Kay_mean": 0.005566114580505023
+      }
+    ],
+    "f_D12GHz": [
+      {
+        "OSNR_dB": 5.0,
+        "ber_B7_mean": 0.14702688026065708,
+        "ber_B7_std": 0.005837632364919909,
+        "ber_Gardner1986_mean": 0.4862167300380228,
+        "ber_PSA_mean": 0.4834374151506924,
+        "ber_4thpower_mean": 0.48601683410263374,
+        "ber_Kay_mean": 0.4848628835188705
+      },
+      {
+        "OSNR_dB": 8.0,
+        "ber_B7_mean": 0.12476242193863699,
+        "ber_B7_std": 0.032989410806407826,
+        "ber_Gardner1986_mean": 0.48866413250067875,
+        "ber_PSA_mean": 0.47814281835460226,
+        "ber_4thpower_mean": 0.48893415701102133,
+        "ber_Kay_mean": 0.3399402660874287
+      },
+      {
+        "OSNR_dB": 11.0,
+        "ber_B7_mean": 0.05566114580505023,
+        "ber_B7_std": 0.008281292424653818,
+        "ber_Gardner1986_mean": 0.48913928862340483,
+        "ber_PSA_mean": 0.251696986152593,
+        "ber_4thpower_mean": 0.48689380896749324,
+        "ber_Kay_mean": 0.08865055661145804
+      },
+      {
+        "OSNR_dB": 14.0,
+        "ber_B7_mean": 0.024436600597339125,
+        "ber_B7_std": 0.0014933478142818354,
+        "ber_Gardner1986_mean": 0.4877104834329169,
+        "ber_PSA_mean": 0.09082269888677708,
+        "ber_4thpower_mean": 0.48513440130328533,
+        "ber_Kay_mean": 0.02979907683953299
+      },
+      {
+        "OSNR_dB": 17.0,
+        "ber_B7_mean": 0.0198886777083899,
+        "ber_B7_std": 0.010521314146076568,
+        "ber_Gardner1986_mean": 0.4880499728408474,
+        "ber_PSA_mean": 0.4904968775454792,
+        "ber_4thpower_mean": 0.489342926961716,
+        "ber_Kay_mean": 0.0315639424382297
+      },
+      {
+        "OSNR_dB": 20.0,
+        "ber_B7_mean": 0.006177029595438501,
+        "ber_B7_std": 0.00033939723051859896,
+        "ber_Gardner1986_mean": 0.4911746396195035,
+        "ber_PSA_mean": 0.4900190114068441,
+        "ber_4thpower_mean": 0.489679410594711,
+        "ber_Kay_mean": 0.05905511811023622
+      },
+      {
+        "OSNR_dB": 23.0,
+        "ber_B7_mean": 0.005905511811023622,
+        "ber_B7_std": 0.0014254683681781156,
+        "ber_Gardner1986_mean": 0.49205810480586476,
+        "ber_PSA_mean": 0.49049547644881875,
+        "ber_4thpower_mean": 0.4889322941157943,
+        "ber_Kay_mean": 0.028713005701873472
+      },
+      {
+        "OSNR_dB": 26.0,
+        "ber_B7_mean": 0.00325821341297855,
+        "ber_B7_std": 0.00040727667662231876,
+        "ber_Gardner1986_mean": 0.48893264530146663,
+        "ber_PSA_mean": 0.48981505884397447,
+        "ber_4thpower_mean": 0.4883888528561702,
+        "ber_Kay_mean": 0.015748031496062992
+      },
+      {
+        "OSNR_dB": 29.0,
+        "ber_B7_mean": 0.0030545750746673907,
+        "ber_B7_std": 0.0014254683681781156,
+        "ber_Gardner1986_mean": 0.4887983796833315,
+        "ber_PSA_mean": 0.4902908419433828,
+        "ber_4thpower_mean": 0.4893397183163419,
+        "ber_Kay_mean": 0.03964159652457236
+      },
+      {
+        "OSNR_dB": 32.0,
+        "ber_B7_mean": 0.004140646212326907,
+        "ber_B7_std": 0.00033939723051859896,
+        "ber_Gardner1986_mean": 0.49185341564505825,
+        "ber_PSA_mean": 0.49165082812924243,
+        "ber_4thpower_mean": 0.4901521325726705,
+        "ber_Kay_mean": 0.03923431984795005
+      },
+      {
+        "OSNR_dB": 35.0,
+        "ber_B7_mean": 0.0040727667662231876,
+        "ber_B7_std": 0.00040727667662231876,
+        "ber_Gardner1986_mean": 0.4913090711569799,
+        "ber_PSA_mean": 0.4900217214227532,
+        "ber_4thpower_mean": 0.48906547133931,
+        "ber_Kay_mean": 0.013711648112951398
+      }
+    ],
+    "f_D23GHz": [
+      {
+        "OSNR_dB": 5.0,
+        "ber_B7_mean": 0.14729839804507194,
+        "ber_B7_std": 0.00746673907140917,
+        "ber_Gardner1986_mean": 0.48356944906378735,
+        "ber_PSA_mean": 0.485268298211773,
+        "ber_4thpower_mean": 0.42715832659457675,
+        "ber_Kay_mean": 0.43476549191152136
+      },
+      {
+        "OSNR_dB": 8.0,
+        "ber_B7_mean": 0.10331251696986152,
+        "ber_B7_std": 0.012082541406462123,
+        "ber_Gardner1986_mean": 0.4839125712734184,
+        "ber_PSA_mean": 0.48248212397276324,
+        "ber_4thpower_mean": 0.3145533532446375,
+        "ber_Kay_mean": 0.3209340211783872
+      },
+      {
+        "OSNR_dB": 11.0,
+        "ber_B7_mean": 0.03916644040184632,
+        "ber_B7_std": 6.787944610371979e-05,
+        "ber_Gardner1986_mean": 0.48574177574401295,
+        "ber_PSA_mean": 0.31604670105891935,
+        "ber_4thpower_mean": 0.2927640510453434,
+        "ber_Kay_mean": 0.2732147705674722
+      },
+      {
+        "OSNR_dB": 14.0,
+        "ber_B7_mean": 0.03468639695900082,
+        "ber_B7_std": 0.002918816182459951,
+        "ber_Gardner1986_mean": 0.48920716806950854,
+        "ber_PSA_mean": 0.223594895465653,
+        "ber_4thpower_mean": 0.2215585120825414,
+        "ber_Kay_mean": 0.23832473527016018
+      },
+      {
+        "OSNR_dB": 17.0,
+        "ber_B7_mean": 0.01656258484930763,
+        "ber_B7_std": 0.007874015748031496,
+        "ber_Gardner1986_mean": 0.48750697327154147,
+        "ber_PSA_mean": 0.3093266358946511,
+        "ber_4thpower_mean": 0.21762150420852566,
+        "ber_Kay_mean": 0.2396823241922346
+      },
+      {
+        "OSNR_dB": 20.0,
+        "ber_B7_mean": 0.00658430627206082,
+        "ber_B7_std": 0.00033939723051859896,
+        "ber_Gardner1986_mean": 0.4887289516567083,
+        "ber_PSA_mean": 0.1964431170241651,
+        "ber_4thpower_mean": 0.17058104805864782,
+        "ber_Kay_mean": 0.20696443117024166
+      },
+      {
+        "OSNR_dB": 23.0,
+        "ber_B7_mean": 0.0063806679337496605,
+        "ber_B7_std": 0.00040727667662231876,
+        "ber_Gardner1986_mean": 0.4860847135487374,
+        "ber_PSA_mean": 0.10711376595166984,
+        "ber_4thpower_mean": 0.10786043985881075,
+        "ber_Kay_mean": 0.1278848764594081
+      },
+      {
+        "OSNR_dB": 26.0,
+        "ber_B7_mean": 0.004276405104534347,
+        "ber_B7_std": 0.0010181916915557969,
+        "ber_Gardner1986_mean": 0.48771225323922485,
+        "ber_PSA_mean": 0.1886369807222373,
+        "ber_4thpower_mean": 0.15103176758077655,
+        "ber_Kay_mean": 0.16080640781971217
+      },
+      {
+        "OSNR_dB": 29.0,
+        "ber_B7_mean": 0.005837632364919902,
+        "ber_B7_std": 0.00027151778441487917,
+        "ber_Gardner1986_mean": 0.4852022807493891,
+        "ber_PSA_mean": 0.15965245723594895,
+        "ber_4thpower_mean": 0.10059733912571274,
+        "ber_Kay_mean": 0.1323649199022536
+      },
+      {
+        "OSNR_dB": 32.0,
+        "ber_B7_mean": 0.005905511811023622,
+        "ber_B7_std": 0.0006109150149334781,
+        "ber_Gardner1986_mean": 0.4847230308377375,
+        "ber_PSA_mean": 0.140985609557426,
+        "ber_4thpower_mean": 0.0891935921802878,
+        "ber_Kay_mean": 0.09319847950040727
+      },
+      {
+        "OSNR_dB": 35.0,
+        "ber_B7_mean": 0.0031903339668748303,
+        "ber_B7_std": 6.787944610371979e-05,
+        "ber_Gardner1986_mean": 0.4869671463480858,
+        "ber_PSA_mean": 0.14580505023079013,
+        "ber_4thpower_mean": 0.1104398588107521,
+        "ber_Kay_mean": 0.12985338039641597
+      }
+    ]
+  },
+  "gains": {
+    "f_D5GHz": {
+      "BER_2e2": {
+        "OSNR_B7_dB": 15.89218071328801,
+        "OSNR_PSA_dB": 19.97690524201411,
+        "gain_vs_PSA_dB": 4.084724528726099,
+        "OSNR_4thpower_dB": 18.650277052404956,
+        "gain_vs_4thpower_dB": 2.758096339116946,
+        "OSNR_Kay_dB": 19.85684529359487,
+        "gain_vs_Kay_dB": 3.9646645803068594
+      },
+      "HD_FEC": {
+        "OSNR_B7_dB": 22.516609823242113,
+        "OSNR_PSA_dB": null,
+        "gain_vs_PSA_dB": null,
+        "OSNR_4thpower_dB": null,
+        "gain_vs_4thpower_dB": null,
+        "OSNR_Kay_dB": null,
+        "gain_vs_Kay_dB": null
+      }
+    },
+    "f_D12GHz": {
+      "BER_2e2": {
+        "OSNR_B7_dB": 16.91868657458204,
+        "OSNR_PSA_dB": null,
+        "gain_vs_PSA_dB": null,
+        "OSNR_4thpower_dB": null,
+        "gain_vs_4thpower_dB": null,
+        "OSNR_Kay_dB": 24.80617857539867,
+        "gain_vs_Kay_dB": 7.8874920008166285
+      },
+      "HD_FEC": {
+        "OSNR_B7_dB": 25.224044647843087,
+        "OSNR_PSA_dB": null,
+        "gain_vs_PSA_dB": null,
+        "OSNR_4thpower_dB": null,
+        "gain_vs_4thpower_dB": null,
+        "OSNR_Kay_dB": null,
+        "gain_vs_Kay_dB": null
+      }
+    },
+    "f_D23GHz": {
+      "BER_2e2": {
+        "OSNR_B7_dB": 16.2346359633693,
+        "OSNR_PSA_dB": null,
+        "gain_vs_PSA_dB": null,
+        "OSNR_4thpower_dB": null,
+        "gain_vs_4thpower_dB": null,
+        "OSNR_Kay_dB": null,
+        "gain_vs_Kay_dB": null
+      },
+      "HD_FEC": {
+        "OSNR_B7_dB": 34.14800254907775,
+        "OSNR_PSA_dB": null,
+        "gain_vs_PSA_dB": null,
+        "OSNR_4thpower_dB": null,
+        "gain_vs_4thpower_dB": null,
+        "OSNR_Kay_dB": null,
+        "gain_vs_Kay_dB": null
+      }
+    }
+  }
+}

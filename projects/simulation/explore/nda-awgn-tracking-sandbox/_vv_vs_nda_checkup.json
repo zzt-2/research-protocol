@@ -1,0 +1,245 @@
+{
+  "meta": {
+    "task": "NDA-ML (加权/等权) vs VV 三方参数扫描体检 (brief, 只跑数字+机械分类)",
+    "weighting_formula": {
+      "yn": "(rx/|rx|)^M0   (归一化升幂, brief §3)",
+      "w": "|rx|^2          (ML 权重, brief §3)",
+      "none": "angle(sum(w*yn)) / M0   (整块加权 mean-angle)",
+      "segmented": "seg_phi[k]=angle(sum(w[lo:hi]*yn[lo:hi]))  [不/M0, 升幂域]; unwrap(seg_phi); interp; phi_est=phi_raised/M0  [最后/M0]",
+      "unwrap_order": "unwrap 在升幂域, 最后 /M0 (brief §3)"
+    },
+    "equalweight_formula": "(w*yn).sum() -> (rx**M0)[lo:hi].mean(); unwrap 顺序与加权版一致 (brief §3)",
+    "vv_formula": "复制 VV.vv_cpr_m16apsk, M 可变; unwrap(angle)/M0 (brief §3)",
+    "fairness": "三方同信道同 seed 同 tx_bits (AWGN 同 awgn_wiener_channel; 湍流同 generate_shared_realization_apsk + 同 rx_blind)",
+    "classification": "rel=(ber_weighted-ber_ref)/ber_ref; rel<=-10% weighted_wins / |rel|<10% tie / rel>=+10% weighted_loses",
+    "intra_block_tracking": "AWGN=segmented(K=8); 湍流=none (brief §2)",
+    "mod_match": "apsk8->apsk8_mod/demod/resolve_apsk8_blockwise; m16apsk->m16apsk_mod/demod/resolve_m16apsk_blockwise",
+    "sigma2p_linewidth": "派生 2*pi*lw*T_S (T_S=4e-10, 不读 params SIGMA2_P)",
+    "vv_M_matches_NDA_M0": true,
+    "M0_default": 8,
+    "LASER_LW_Hz": 10000.0,
+    "T_S": 4e-10,
+    "N_BLOCKS": 400,
+    "N_DFT": 256,
+    "BLOCK_SIZE_RESOLVE": 256,
+    "SEED_AWGN": 20240701,
+    "SEED_TURB0": 2000,
+    "HDFEC": 0.0038,
+    "TURB_ALPHA_BETA": {
+      "weak": [
+        4.0,
+        3.0
+      ],
+      "moderate": [
+        2.5,
+        1.8
+      ],
+      "strong": [
+        1.5,
+        0.8
+      ]
+    },
+    "n_seeds": 1,
+    "common_or_simulator_or_params_modified": false,
+    "python": "C:\\Users\\zzt\\scoop\\apps\\python311\\current\\python.exe",
+    "numpy_version": "2.4.3",
+    "elapsed_sec": 8.270004272460938
+  },
+  "sweep1_linewidth": [
+    {
+      "linewidth_hz": 10000.0,
+      "linewidth_khz": 10.0,
+      "sigma2_p": 2.5132741228718347e-05,
+      "snr_db": 18.0,
+      "ber_weighted": 0.00344970703125,
+      "ber_equalweight": 0.00341796875,
+      "ber_vv": 0.00343994140625,
+      "weighted_vs_vv_rel": 0.0028388928317956653,
+      "weighted_vs_vv_cat": "tie",
+      "weighted_vs_equalweight_rel": 0.009285714285714342,
+      "weighted_vs_equalweight_cat": "tie"
+    },
+    {
+      "linewidth_hz": 50000.0,
+      "linewidth_khz": 50.0,
+      "sigma2_p": 0.0001256637061435917,
+      "snr_db": 18.0,
+      "ber_weighted": 0.00362548828125,
+      "ber_equalweight": 0.00360595703125,
+      "ber_vv": 0.003701171875,
+      "weighted_vs_vv_rel": -0.02044854881266494,
+      "weighted_vs_vv_cat": "tie",
+      "weighted_vs_equalweight_rel": 0.005416384563304,
+      "weighted_vs_equalweight_cat": "tie"
+    },
+    {
+      "linewidth_hz": 100000.0,
+      "linewidth_khz": 100.0,
+      "sigma2_p": 0.0002513274122871834,
+      "snr_db": 18.0,
+      "ber_weighted": 0.00384521484375,
+      "ber_equalweight": 0.0038037109375,
+      "ber_vv": 0.00393310546875,
+      "weighted_vs_vv_rel": -0.022346368715083765,
+      "weighted_vs_vv_cat": "tie",
+      "weighted_vs_equalweight_rel": 0.010911424903722718,
+      "weighted_vs_equalweight_cat": "tie"
+    },
+    {
+      "linewidth_hz": 200000.0,
+      "linewidth_khz": 200.0,
+      "sigma2_p": 0.0005026548245743669,
+      "snr_db": 18.0,
+      "ber_weighted": 0.00461181640625,
+      "ber_equalweight": 0.004619140625,
+      "ber_vv": 0.0053564453125,
+      "weighted_vs_vv_rel": -0.13901549680948042,
+      "weighted_vs_vv_cat": "weighted_wins",
+      "weighted_vs_equalweight_rel": -0.0015856236786469945,
+      "weighted_vs_equalweight_cat": "tie"
+    },
+    {
+      "linewidth_hz": 500000.0,
+      "linewidth_khz": 500.0,
+      "sigma2_p": 0.0012566370614359172,
+      "snr_db": 18.0,
+      "ber_weighted": 0.01782958984375,
+      "ber_equalweight": 0.01813232421875,
+      "ber_vv": 0.0221142578125,
+      "weighted_vs_vv_rel": -0.19375137999558398,
+      "weighted_vs_vv_cat": "weighted_wins",
+      "weighted_vs_equalweight_rel": -0.0166958395045105,
+      "weighted_vs_equalweight_cat": "tie"
+    }
+  ],
+  "sweep2_modulation": [
+    {
+      "modulation": "8psk_M4",
+      "M0": 4,
+      "snr_db": 18.0,
+      "linewidth_hz": 10000.0,
+      "sigma2_p": 2.5132741228718347e-05,
+      "ber_weighted": 0.16880533854166666,
+      "ber_equalweight": 0.168623046875,
+      "ber_vv": 0.17988932291666668,
+      "weighted_vs_vv_rel": -0.06161557670732161,
+      "weighted_vs_vv_cat": "tie",
+      "weighted_vs_equalweight_rel": 0.0010810602111928386,
+      "weighted_vs_equalweight_cat": "tie"
+    },
+    {
+      "modulation": "8psk_M8",
+      "M0": 8,
+      "snr_db": 18.0,
+      "linewidth_hz": 10000.0,
+      "sigma2_p": 2.5132741228718347e-05,
+      "ber_weighted": 0.16230794270833335,
+      "ber_equalweight": 0.16023763020833334,
+      "ber_vv": 0.1603515625,
+      "weighted_vs_vv_rel": 0.01220056841250523,
+      "weighted_vs_vv_cat": "tie",
+      "weighted_vs_equalweight_rel": 0.012920264093448477,
+      "weighted_vs_equalweight_cat": "tie"
+    },
+    {
+      "modulation": "m16apsk_M8",
+      "M0": 8,
+      "snr_db": 18.0,
+      "linewidth_hz": 10000.0,
+      "sigma2_p": 2.5132741228718347e-05,
+      "ber_weighted": 0.00344970703125,
+      "ber_equalweight": 0.00341796875,
+      "ber_vv": 0.00343994140625,
+      "weighted_vs_vv_rel": 0.0028388928317956653,
+      "weighted_vs_vv_cat": "tie",
+      "weighted_vs_equalweight_rel": 0.009285714285714342,
+      "weighted_vs_equalweight_cat": "tie"
+    }
+  ],
+  "sweep3_turbulence": [
+    {
+      "turbulence": "weak",
+      "snr_db": 12.0,
+      "alpha_beta": [
+        4.0,
+        3.0
+      ],
+      "linewidth_hz": 10000.0,
+      "ber_weighted": 0.1455908203125,
+      "ber_equalweight": 0.14573486328125,
+      "ber_vv": 0.1466552734375,
+      "weighted_vs_vv_rel": -0.007258198768103901,
+      "weighted_vs_vv_cat": "tie",
+      "weighted_vs_equalweight_rel": -0.0009883905985625086,
+      "weighted_vs_equalweight_cat": "tie"
+    },
+    {
+      "turbulence": "moderate",
+      "snr_db": 16.0,
+      "alpha_beta": [
+        2.5,
+        1.8
+      ],
+      "linewidth_hz": 10000.0,
+      "ber_weighted": 0.06402099609375,
+      "ber_equalweight": 0.06392333984375,
+      "ber_vv": 0.06550537109375,
+      "weighted_vs_vv_rel": -0.022660355558868413,
+      "weighted_vs_vv_cat": "tie",
+      "weighted_vs_equalweight_rel": 0.0015277088186992863,
+      "weighted_vs_equalweight_cat": "tie"
+    },
+    {
+      "turbulence": "strong",
+      "snr_db": 20.0,
+      "alpha_beta": [
+        1.5,
+        0.8
+      ],
+      "linewidth_hz": 10000.0,
+      "ber_weighted": 0.06919677734375,
+      "ber_equalweight": 0.06929931640625,
+      "ber_vv": 0.0708056640625,
+      "weighted_vs_vv_rel": -0.022722570857182177,
+      "weighted_vs_vv_cat": "tie",
+      "weighted_vs_equalweight_rel": -0.0014796547472257034,
+      "weighted_vs_equalweight_cat": "tie"
+    }
+  ],
+  "summary_classification": {
+    "sweep1_weighted_vs_vv_cats": [
+      "tie",
+      "tie",
+      "tie",
+      "weighted_wins",
+      "weighted_wins"
+    ],
+    "sweep2_weighted_vs_vv_cats": [
+      "tie",
+      "tie",
+      "tie"
+    ],
+    "sweep3_weighted_vs_vv_cats": [
+      "tie",
+      "tie",
+      "tie"
+    ],
+    "sweep1_weighted_vs_eq_cats": [
+      "tie",
+      "tie",
+      "tie",
+      "tie",
+      "tie"
+    ],
+    "sweep2_weighted_vs_eq_cats": [
+      "tie",
+      "tie",
+      "tie"
+    ],
+    "sweep3_weighted_vs_eq_cats": [
+      "tie",
+      "tie",
+      "tie"
+    ]
+  }
+}

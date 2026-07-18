@@ -2510,3 +2510,427 @@ L0 vs E2(λ=0.01): 0/5 胜（逐 seed fixed 完全相同到小数点后 4 位）
 ### 来源
 
 S035（PROMPT-033 E2 排列对称破缺 MVE 执行，本轮 Tier 1 方向 1）
+
+---
+
+## D042: 方法层自主推进授权与 FR-22 重开轨
+
+> status: active
+> date: 2026-07-16
+> 取代：2026-07-15 两模型分工下“GPT 只做创新判断、GLM/主控负责提示词与执行”的操作安排
+> 被取代：无
+> 依据: 用户原话: `voice.md` 2026-07-16 + 治理审计: S036
+
+### 决策
+
+用户授权主控在**现有软件 DSP/ML 方法层 A-E+H 范围内**自主完成候选排序、止损和换向，不再逐个候选等待用户拍板；但每个新候选仍必须先形成 Q# 的 M-C-A，并完整走其自己的 GW 证据链，**不得从创意直接跳到 MVE**。
+
+### 理由
+
+Tier 0-2 已无 Go，且 D040 已推翻“standard-CMA 与 ML 都 swap”的旧问题前提。继续沿旧简报逐项试验会重复在错误问题上消耗；用户明确要求主控“按流程不跳步”并允许方向不行时自行切换。自主权改变的是**谁负责排序和何时止损**，不改变 FR-22、D017、D018、FR-20/21/25/26 等门控。
+
+### 排除的替代方案
+
+- 不再维持“GPT 只给创新判断、主控只写提示词”的两段式安排：用户已明确改为本对话直接推进。
+- 不授权无边界自由换向：F1 电控偏振跟踪（硬件层）和 G2 HARQ 重传（协议层）仍按 S033 范围记录排除。
+- 不允许“先做一个最小实验再补文献”：每个候选必须按 Step 1 检索 → Step 2 获取 → Step 3 精读 → 必要时 Step 3.5 → Step 4a A0/A'/A → 维度 D MVE 推进；上游未过即不得开跑。
+
+### 影响范围
+
+- 当前专题进入“状态修复 → 新候选 GW Step 1”的方法层重开轨。
+- 主控可在 A-E+H 内自行 Kill、defer、换候选；若要进入 F1/G2 或其他硬件/协议/系统层，仍须另建 scope change + D###，必要时拆新专题。
+- Contract 分析层与方法层的旧字段须在后续批次按 D040 修正；本决策不直接冻结新 Contract，也不授权 Execute。
+
+### 触发原话
+
+- “你直接自己做吧？按流程不跳步，切实地一直跑，自己想怎么能弄出东西？方向不行可以自己决定怎么换”
+
+### 来源
+
+S036（用户授权 + 状态治理复位）
+
+---
+
+## D043: 严格等变/e2cnn 作为 fixed-label 解法 A0 NO-GO
+
+> status: active
+> date: 2026-07-16
+> 取代：S034/S035/topic-index 中“严格群卷积（e2cnn SO(2)）是 E1 soft 等变失败后的活跃 Tier 3 fixed-label 解法”候选状态
+> 被取代：无
+> 依据: S036 表示审计 + 本地实现: `projects/simulation/explore/cma-fade-divergence/ml_long_seq_failure.py:154-181`、`prompt031_e1_equivariant.py:25-31` + 理论/相邻领域对照 DOI: `10.1073/pnas.97.9.4541`、`10.1016/j.neunet.2023.01.042`、`10.1016/j.optcom.2017.03.006`、`10.1109/JLT.2023.3253383`
+
+### 决策
+
+严格等变/e2cnn 作为“在未知 SOP/Jones 变换下恢复绝对 X/Y fixed label”的候选在 A0 阶段 **NO-GO，不进入 MVE**。这只否决其 fixed-label 解法定位，不否决群等变结构用于 PI-BER、残差建模或其他已定义群作用的任务。
+
+### 理由
+
+1. **表示不匹配**：e2cnn 的 SO(2)/E(2) 等变卷积作用于二维空间特征场；本地 `ButterflyCNNEqualizer2x2` 是双复偏振通道上的一维时序、四支路复 FIR。物理 SOP 混合由 Jones 空间的 U(2)/SU(2) 作用描述，不能把“都有旋转”当成同一表示。
+2. **任务不可辨识**：fixed-label 均衡需要的是规范固定/逆变换 `f(Js)=s`，而等变合同是 `f(Js)=Jf(s)`；后者会保留群作用，并不从盲观测中产生绝对 X/Y 标签锚点。未知 Jones 变换下的排列/相位歧义仍在；fixed-label 恢复需要 pilot、帧头、CSI、历史状态或其他身份信息。Nabavi et al. 2017（`10.1016/j.optcom.2017.03.006`）采用与上一权重最接近的等价类成员维持 alignment，正说明需要状态锚点。
+3. **代码与领域对照一致**：本地模型四支路没有二维空间基或绝对标签侧信息；相邻光通信工作 `10.1109/JLT.2023.3253383` 采用插入 pilot 估计信道并前馈补偿 fast SOP，支持“fixed-label 需锚点/信道信息”的工程路径，而不是单靠 e2cnn canonicalization。
+
+### 排除的替代方案
+
+- 不投入 e2cnn SO(2) 架构重写来解决 fixed-label swap：群作用错误且不能补足标签可辨识性。
+- 不把 E1 soft loss 的 FAIL 直接外推为“所有 hard equivariance 都无用”：本决策的 A0 NO-GO 原因是表示与任务合同不匹配，不是训练样本不足。
+- pilot/CSI 路线不因本决策自动 Go：D037 已有强占点，仍需独立新颖性与场景增量证据。
+
+### 影响范围
+
+- 从 Tier 3 fixed-label 候选中移除“strict equivariance/e2cnn”。
+- 下一候选优先转为 **standard-CMA 前端 + ML residual cascade**，但目前只进入 GW Step 1；尚未形成 Go、尚未设计或运行实验。
+- 后续若研究正确的 Jones/U(2) 等变残差模型，必须重新定义 Q#、输入输出群作用和不变量/等变量，并重走 GW 链。
+
+### 触发原话
+
+> 触发原话: 无（技术推导）
+
+### 来源
+
+S036（strict-equivariance 表示审计与三路线比较）
+
+---
+
+## D044: residual cascade 在 Step 4a §0 暂缓，不进入 MVE
+
+> status: active
+> date: 2026-07-16
+> 取代：无
+> 被取代：无
+> 依据：S037（Step 2 获取）、S038（5/5 全文精读）、S039（Step 4a §0 门控）
+
+### 决策
+
+`standard-CMA always-online + additive NN residual`（Q14）判为 **PIVOT/DEFER**：不进入 Step 4a A0 §1–§6，不运行 MVE。该判定不是方法实验失败，而是合法问题四判据第 2 条仍为 UNKNOWN。
+
+### 理由
+
+1. S038 的 5 篇全文都只是邻近证据：L01 支持 CMA 失效与在线自适应，L04 支持 `b-a` 残差监督形态，L05 支持 CMA/FSO 压力条件，但没有一篇证明 additive cascade 在当前 GG+SOP/线性模型中产生稳定信息增量。
+2. `gw-feasibility.md` Step 4a §0 要求 Q# 四判据全过；任一 UNKNOWN 时不得进入 A0，更不能用 MVE 反向补合法性。
+3. 依据 D042，下一轮可在软件 DSP/ML 范围内自主切换候选；依据 D043，不回退到严格 e2cnn fixed-label 路线。
+
+### 影响范围
+
+- Q14 保留为 DEFER，不删除 S037/S038 证据。
+- 下一候选必须重新走 Step 1→2→3，并先解决“方法产出是否可复用、简单 DSP 是否不足”的四判据缺口。
+- 本决策不授权 Contract、Execute 或任何 MVE。
+
+### 触发原话
+
+- 无（技术门控结论；用户授权自主换向已记录于 D042）
+
+### 来源
+
+S039
+
+---
+
+## D045: 方法层改为“深耕基点—候选族—批量排跑—晋级”工作流
+
+> status: active
+> date: 2026-07-16
+> 取代：D042 中“每个候选均独立完整重走 Q#+GW 链”的过窄执行解释；D044 仅保留为 residual cascade 这一候选的局部结论
+> 被取代：无
+> 依据: 用户历次原话（voice.md 2026-07-15、2026-07-16）+ D030 方法层解冻决策 + S032 批量探索规划 + S039 residual cascade 过度机械执行的反证
+
+### 决策
+
+当前不再把每个微小方法变体当成独立研究方向逐一执行完整 GW。研究推进的基本单位改为：
+
+> **一个已有仿真/代码基础的深耕基点 → 一次性展开候选族 → 按机制/代码接口归类 → 共享轻量撞车与可行性检查 → 分批低成本 MVE/消融 → 只把胜出的少数候选晋级为正式 Q#+Step 3/4a/Contract。**
+
+当前深耕基点仍是已有的 CMA/ML 偏振均衡与 SOP lock-swap 仿真，不因 residual cascade 的 DEFER 而换到陌生问题。
+
+### 为什么这样改
+
+1. 用户已多次要求“很多个尝试方向”“归类批量处理”“先找思路，找完之后统一规划，别一个个试，又乱又慢”。
+2. D030 已明确：允许“方法 A + 场景 B”的组合迁移；保留唯一硬防线是低成本 GW Step 1 防止完全撞车；同类候选共享代码并横向比较。
+3. residual cascade 这轮暴露了反例：它作为一个微小变体被单独拉去完成 5 篇全文和完整 §0，最终只能得到 UNKNOWN，既没有利用既有 CMA-fade 基础，也没有比较同族的在线/结构/监督变体。
+4. “不跳步”应约束阶段转换和证据记录，而不应阻止同一基点下的候选族并行展开。正式论文候选仍必须在晋级时补齐完整 GW 硬门。
+
+### 新工作流门控
+
+- **族前勘察**：从既有代码、结果、D022/D027/D030 资产出发，列出全部可改点和候选组合，不先 Kill。
+- **族级轻门**：确认候选属于软件 DSP/ML 范围、没有明显同场景同机制硬撞车；不要求每个变体先独立凑齐 5 篇全文。
+- **批量实验**：同一接口、同一数据切片、同一 baseline、同一 seed 预算，横向跑一批候选；必须保留消融、失败数据和 clean/swap 分层。
+- **晋级门**：只有表现出稳定增量且可写成独立 M-C-A 的少数候选，才登记新的 Q#，补足 Step 2/3/4a 文献与正式验证。
+- **方向切换**：整族无增量时切换下一族，不在族内无限打补丁；残差 cascade 作为 D044 的 DEFER 变体保留，但不再单独占据主线。
+
+### 触发原话
+
+- “而且，我感觉你这每处，都能有很多个尝试方向？它们是不是都可以单独尝试？”
+- “检索太麻烦了？感觉可以先归类，把接近的都归一起，到时候一起想怎么写代码”
+- “可以往外一层，甚至多层。这可能让我们找到很多思路？我们先找思路。找完之后，统一规划。别一个个试，又乱又慢”
+- “没必要这么严？只要可能存在优化，那都可以尝试，试了没用再说？”
+- “你直接自己做吧？按流程不跳步，切实地一直跑，自己想怎么能弄出东西？方向不行可以自己决定怎么换”
+
+### 影响范围
+
+- 主线回到既有 CMA-fade/SOP lock-swap 基点，先做候选族地图和批量实验规划。
+- residual cascade 不删除，降为候选族中的一个变体，不再作为唯一主线。
+- F1 电控偏振跟踪、G2 HARQ 协议仍排除；Contract/Execute 仍需由晋级候选触发，不提前进入。
+
+---
+
+## D046: 修复 GG 时间生成器长度依赖，freeze 低信息暂缓
+
+> status: active
+> date: 2026-07-16
+> 取代：无
+> 被取代：无
+> 依据: S048 / V009（待登记）
+
+### 决策
+
+`common/_gg_time.py` 的 `gg_time_envelope` 改用 big/small 两条独立 SeedSequence 子流，保证同 seed 的短 realization 等于长 realization 的前缀。此前同一 RNG 先生成完整 big、再生成 small，N 改变会移动 small 流起点，导致长度比较失真。
+
+修复后，5M pilot（seeds 41–43、两种 block 口径）均未出现 `h<0.1`；freeze threshold=0.1 在当前 strong/fG=30 域暂列 **低信息/DEFER**，不是性能 KILL。clip 单轴候选保留，下一步优先做其更大 paired 批或换能产生真实 fade 的条件前置验证。
+
+### 为什么
+
+1. 失败测试先复现了同 seed N=100k 与 N=5M 前缀不一致，最大差约 0.149。
+2. 根因追踪定位到 big/small 共享 RNG 的长度耦合，而非物理 tail 或样本归一化。
+3. 修复后 prefix exact，相关回归 103 PASS；v2 pilot 配置/source SHA 和分位数经独立审计。
+
+### 影响范围
+
+- 旧的未修复 5M tail 数字（低 h 54.14%）作废，不得引用。
+- RNG 修复前生成的 100k pilot 与 S047 small-batch 数值也只保留 schema/管线证据，禁止作物理或性能比较；需用修复后 generator 重跑。
+- `h_tail_length_pilot_5m_seeds41-43_prefix_stable_v2.json` 是当前有效 pilot；结论限于 3 seed/当前参数域。
+- 不改变 Batch1 clip 候选，也不授权正式长跑或性能 Go。
+
+### 触发原话
+
+- 无（技术根因修复；用户“你一直推吧”授权继续推进）
+
+---
+
+## D047: 将 Batch2 下一批转向高速 SOP 失效检测/恢复侦察
+
+> status: active
+> date: 2026-07-16
+> 取代：无
+> 被取代：无
+> 依据: S053/V013、S054/V014（独立 schema/source 审计）+ 用户原话（voice.md 2026-07-16）
+
+### 决策
+
+Batch1 的 fade-freeze 在修复后当前参数域低信息，clip 仅有机制触发而无性能事件；Batch2 的 fG=30/100/1000 lock/swap pilot 也未产生事件。SOP rate 扫描显示 `1e-5` 在 2/3 seed 出现稳定的 BER tracking failure，但仍无 swap/divergence/fade。因此下一批不继续扩大“阻止 lock-swap”的单轴网格，改做**高速 SOP failure 域中的因果失效检测与恢复侦察**：先验证检测信号是否能在 failure 前/发生时触发，再决定是否实现 relock、DD 或状态切换。
+
+### 为什么不直接判 Go
+
+1. `1e-5` 的 fixed=PI，说明当前失败不是 X/Y 标签 swap；把它当 lock-swap 会混淆问题定义。
+2. 事件只有 2/3 seed，仍是 observation-only，尚无恢复增益、检测延迟或开销证据。
+3. detector/relock 必须与 oracle/post-hoc 真值分开；下一批先做事件定位和因果窗口，不能先宣称方法有效。
+
+### 下一批门控
+
+- 条件：优先 `sop_rate=1e-5`，保留 `4e-6` 作为无事件对照。
+- 候选：滑窗 BER/输出能量/assignment 变化的盲检测；若盲信号无增量，立即退回候选地图换 DFE/Kalman 或接受式 H 族。
+- 退出：检测无法早于 failure、只依赖 transmitted-symbol genie、或 2 轮改善 <10%，则停止该支线，不扩成长跑。
+- 任何 relock 性能比较必须同时保留 baseline、oracle detector 和 no-event 对照。
+
+### 触发原话
+
+- “你一直推。别停。一个方向不行，就回来换另一个。都不行就退回去重新想一批，而且，文件组织别搞乱了，一定要整齐。”
+
+### 影响范围
+
+- 仍在 D045 的 CMA-fade/SOP 候选族与软件 DSP 范围内；不改变原始目标，不纳入 F1/G2。
+- 不授权正式 GW/Contract 或长跑；只授权下一批最小事件侦察。
+
+---
+
+## D048: 基础盲统计量不晋级，先补 evaluator provenance 后换族
+
+> status: active
+> date: 2026-07-16
+> 取代：无
+> 被取代：无
+> 依据: S055/V015（独立审计 FAIL；JSON 内部算术一致但源码覆盖不足）+ 用户原话（voice.md 2026-07-16）
+
+### 决策
+
+`cm_error`、`update_norm`、`output_power deviation` 三个基础盲统计量不晋级为 detector/recovery 候选。当前 JSON 显示它们对 2 个 oracle failure 提前召回 0/2，且有控制组误报；更重要的是，生成/阈值校准/oracle 匹配/持久化 evaluator 没有作为可审计源码纳入 source SHA，因此本批证据不能作为可复现 Go。
+
+### 后续路线
+
+先把 evaluator 固化为源码+TDD，加入 warm-up 排除 block0 启动瞬态，再做一次同样最小重跑。若 recall 仍为 0，则立即停止基础统计量支线，不修补阈值，转 H 接受/分段恢复或更强状态跟踪候选。
+
+### 影响范围
+
+- 不进入 recovery 性能跑，不宣称 detector 有效。
+- 不改变 D047 的高速 SOP failure 观察结论；只修正证据可复现性和下一批顺序。
+- 仍在 D045 软件 DSP/ML 候选族范围内。
+
+---
+
+## D049: 基础盲统计量支线关闭，转接收端几何特征侦察
+
+> status: active
+> date: 2026-07-16
+> 取代：D048 中“先重算再决定”这一暂定状态
+> 被取代：无
+> 依据: S057/V017（真实短重算链路 PASS；三特征 recall=0/2）+ 用户原话（voice.md 2026-07-16）
+
+### 决策
+
+在 evaluator provenance 修复并完成真实短重算后，`cm_error`、`update_norm`、`output_power` 三个基础统计量正式关闭，不进入 recovery 性能跑。下一批转向接收端可观测的几何/偏振特征侦察（窗口化 X/Y 交叉相关、协方差特征、Stokes-like 比值），仍以 control-only calibration、warm-up、post-hoc oracle 分离为硬约束。
+
+### 为什么换
+
+1. 真实重算链路独立审计 PASS，排除了 V015 的证据债务。
+2. 三个基础统计量在两个真实 oracle failure 上均无提前召回；继续调阈值属于钻牛角尖，且控制组已有误报。
+3. 几何特征只依赖接收端 `rX/rY`，先做信息增量侦察，不直接承诺 detector 或 recovery。
+
+### 退出条件
+
+- 新特征对 1e-5 failure recall=0/2，或只靠控制组误报 → 立即转 pilot-assisted E 族/接受式 H 族。
+- 使用 transmitted symbols、真实 `h` 或 post-hoc assignment 作为 alarm → 仅作 oracle，不得晋级。
+- 通过后才考虑小 pilot 或因果 recovery，不跑长序列。
+
+---
+
+## D050: Stokes-like 比值进入短 pilot，其他几何特征降级
+
+> status: active
+> date: 2026-07-16
+> 取代：无
+> 被取代：无
+> 依据: S058/V018（独立审计 PASS）
+
+### 决策
+
+Stokes-like ratio 在 `1e-5` 两个 oracle failure 上 recall=2/2，lead 分别 351/604 blocks，control false alarm=0/3；准入下一批短 pilot。covariance eigenvalue ratio 仅 recall=1/2 且 control false alarm=1/3，保留为敏感性对照；cross-correlation recall=0/2，不再晋级。
+
+### 边界
+
+这只是盲信号信息增量，不是 detector 性能 Go，也不是 recovery Go。下一批必须扩大到新 seeds/相邻 SOP rate，保留无事件 control、oracle 仅后验、固定 warm-up/persistence；若 recall 不稳定或出现控制误报，立即退出。
+
+---
+
+## D051: Stokes-like pilot 不晋级，优先转 pilot-assisted E 族
+
+> status: active
+> date: 2026-07-16
+> 取代：D050 的短 pilot 暂定状态
+> 被取代：无
+> 依据: S059/V019（独立审查 PARTIAL）+ 用户原话（voice.md 2026-07-16）
+
+### 决策
+
+Stokes-like 短 pilot 不构成可行 detector：control `4e-6` 的新 seed47/48 已出现 oracle events，control-only 阈值前提失效；跨 rate/seed 的 raw recall 和误报不达门槛。保留数据作 observation，不挑选 event-free seed 重新包装，不进入 recovery。
+
+下一步回到候选地图，优先 E 族稀疏 pilot-assisted SOP/Jones 估计；H 分段接受当前只有依赖 `h`/BER 的 oracle evaluator，暂不作为独立盲方案。
+
+### 最小候选约束
+
+- 每 64-symbol CMA block 前 4 个已知 QPSK pilot，开销 6.25%，上限 10%。
+- 对照：同一 canonical realization、同一 eval mask 的无 pilot standard-CMA。
+- 必须输出 pilot data mask、2×2 assignment/phase/SOP estimate、fixed/PI BER 和恢复延迟。
+- pilot 若不能在 failure 域改善固定标签 BER/恢复，或实现依赖 post-hoc truth，则立即停止。
+
+---
+
+## D052: Pilot-informed Jones derotation 准入扩展验证
+
+> status: active
+> date: 2026-07-16
+> 取代：无
+> 被取代：无
+> 依据: S062/V021（独立公平性/泄漏审查 PASS）
+
+### 决策
+
+稀疏 pilot（4/64，6.25% overhead）得到的逐 block 2×2 Jones estimate 经 pinv 作用于 data 后，在 seeds41/43 将 fixed=PI BER 从 `.003985/.006106` 降为 `0`，clean seed42 无退化；naive pilot 没有收益。准入新 seeds、相邻 SOP rate 和 pilot-count 敏感性的扩展短验证。
+
+### 仍未证明
+
+- 只有3 seeds、N=100k；不是性能 Go。
+- pilot 注入为 simulator 内 noise-preserving 重建，尚未验证更真实 transmitter framing。
+- 尚未比较 2/4/6 pilot 开销、不同 rate 和估计误差鲁棒性。
+
+### 扩展门槛
+
+- 新 failure cells 中 fixed BER 相对 baseline 改善≥50%，clean cells 不退化。
+- pilot overhead≤10%，至少比较2/4/6 pilots或等价开销点。
+- 同 realization fingerprint、shared data mask、baseline/naive/derotation三臂继续保留。
+
+---
+
+## D053: 不修改 D052 门槛，修汇总并攻克 6-pilot seed47
+
+> status: active
+> date: 2026-07-16
+> 取代：无
+> 被取代：无
+> 依据: S064/V022（独立审查 PARTIAL）
+
+### 决策
+
+不把“任意正改善”事后改写为“≥50%改善”。按预注册口径，6-pilot 为14/15，尚未过正式晋级门。先修结果 summary 与2-pilot divergence denominator；然后只针对 pilot Jones estimator 的稳定性做同族单轴候选（Tikhonov/condition-number guard、跨 block 时间平滑），在完整网格复核，不挑 seed、不降低门槛。
+
+### 退出
+
+若稳定化变体仍不能让 failure cells 全部≥50%改善，或造成clean退化，则该形态不晋级；回候选地图换下一方法族。
+
+---
+
+## D054: 6-pilot Jones derotation + EMA09 晋级正式 GW Step 1
+
+> status: active
+> date: 2026-07-16
+> 取代：无
+> 被取代：无
+> 依据: S065/V023（EMA09 full24 原门槛15/15、clean0/9；独立审查）
+
+### 决策
+
+候选形态冻结为：每64 symbols插入6个双偏振已知QPSK pilot（9.375% overhead），逐block LS估计2×2 Jones matrix，对H estimate做EMA α=.9，再对data应用pinv derotation，后接standard-CMA。该形态已通过族级实验晋级门，进入正式GW Step1检索。
+
+### 边界
+
+- 晋级只说明值得投入正式证据链，不等于方向Go、性能定论或Contract授权。
+- Step1必须检查同场景同机制撞车、pilot overhead、时间平滑Jones估计与coherent FSO适配；若硬撞车或问题四判据不成立，按GW流程退出。
+- Step2/3/3.5/4a仍是硬门，不因先有仿真正信号而跳过。
+
+---
+
+## D055: 否决泛称pilot跟踪贡献，收窄为OSL低开销Jones稳定性问题
+
+> status: active
+> date: 2026-07-16
+> 取代：D054 中尚未经过检索的宽泛候选表述
+> 被取代：无
+> 依据: S066 的两组独立tools/search结果 + S064–S065机制数据
+
+### 决策
+
+“pilot-assisted polarization/SOP tracking”与“pilot估计Jones矩阵后前馈逆补偿”的核心链条已有JLT 2023、LCOMM 2026等直接工作覆盖；LS+EMA只是实现细节，不能单独作为贡献。
+
+候选问题暂收窄为：传统block/frame pilot Jones inversion在dual-pol OSL的GG湍流+高速SOP+≤10% pilot预算下，因短pilot估计抖动/病态造成fixed-label恢复不稳定；研究目标是量化并稳定“pilot overhead—Jones estimate stability—fixed-label recovery”权衡。
+
+### 边界
+
+- 这只是Step1问题候选，不是新颖性确认或Go。
+- 若Step2/3发现同场景同问题已解决，立即Kill或再换族。
+- EMA09可以作为当前候选解，不允许把“没搜到同样α=.9”当新颖性。
+
+---
+
+## D056: Step4a前强制精读block-pilot Jones直接竞品
+
+> status: active
+> date: 2026-07-16
+> 取代：无
+> 被取代：无
+> 依据: S072 Step3.5矩阵检索+LCOMM backward引用链
+
+### 决策
+
+OE 2021三pilot tones逐block RSOP矩阵估计、TCOM 2025 pilot-symbol ML/EM RSOP、JLT 2022/2023 FPT传输矩阵/偏振跟踪构成比Step1更直接的竞品。当前不得以“完整 OSL GG+EMA09组合未出现”为新颖性结论；必须获取/精读直接竞品，确认其失效条件与当前Q2的A是否真的不同。
+
+### 边界
+
+- Step3.5尚未闭合；不进入Step4a。
+- 若直接竞品已处理相同低pilot病态/时间平滑问题，Q2 Kill或重写；不靠场景换皮保留。

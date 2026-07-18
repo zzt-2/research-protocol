@@ -45,15 +45,13 @@ SIM_DIR = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(SIM_DIR))
 
 from params import SimulationConfig
-from common._gg_time import gg_time_envelope
+from common import generate_shared_realization_dp
 from common._cma import CMAEqualizer2x2
 from common._ml_equalizer import MLChannelEqualizer
 from common._equalizer import mmse_equalize
-from common._config import BLOCK
 
 cfg = SimulationConfig()
 GAMMA_BAR = cfg.experiment.GAMMA_BAR_DEFAULT  # 100 (20 dB)
-T_S = cfg.system.T_S
 
 # ─── 实验参数 ───────────────────────────────────────────────
 # f_G 扫描: [10, 30, 100, 300, 1000, 3000] Hz
@@ -98,14 +96,6 @@ def _save_ckpt(name, data):
             json.dump(data, f, indent=1, default=str)
     except Exception:
         pass
-
-
-# ─── 调制/解调 (从 sup_stress_test.py 复制) ─────────────────
-
-def gen_qpsk(N, rng):
-    bits = rng.integers(0, 2, N * 2)
-    s = ((1 - 2 * bits[0::2]) + 1j * (1 - 2 * bits[1::2])) / np.sqrt(2)
-    return s, bits
 
 
 def qpsk_demap(z):
@@ -163,25 +153,16 @@ def oracle_equalize(rX, rY, h, theta, gamma_bar):
 # ─── 信道生成 (跟 sup_stress_test.py / r4_corrected 一致) ────
 
 def gen_channel(N, alpha, beta, f_g, sop_rate, seed):
-    """生成双偏振 GG 衰落 + SOP 旋转信道 (QPSK).
-
-    返回 rX, rY, sX, sY, h, theta.
-    """
-    rng = np.random.default_rng(seed)
-    tau_c = cfg.gg_time.tau_c_from_fg(f_g)
-    h = gg_time_envelope(N, alpha, beta, tau_c, block=BLOCK, t_s=T_S,
-                         method='gar', seed=seed)
-    sX, _ = gen_qpsk(N, rng)
-    sY, _ = gen_qpsk(N, rng)
-    theta = sop_rate * np.arange(N)
-    cos_t = np.cos(theta)
-    sin_t = np.sin(theta)
-    nv = 1.0 / (2 * GAMMA_BAR)
-    rX = np.sqrt(h) * (cos_t * sX + sin_t * sY) \
-        + np.sqrt(nv) * (rng.standard_normal(N) + 1j * rng.standard_normal(N))
-    rY = np.sqrt(h) * (-sin_t * sX + cos_t * sY) \
-        + np.sqrt(nv) * (rng.standard_normal(N) + 1j * rng.standard_normal(N))
-    return rX, rY, sX, sY, h, theta
+    """兼容旧接口：返回 rX, rY, sX, sY, h, theta。"""
+    shared = generate_shared_realization_dp(
+        N=N,
+        alpha=alpha,
+        beta=beta,
+        f_g=f_g,
+        sop_rate=sop_rate,
+        seed=seed,
+    )
+    return tuple(shared[key] for key in ("rX", "rY", "sX", "sY", "h", "theta"))
 
 
 # ─── 单次 CMA trial ─────────────────────────────────────────

@@ -430,6 +430,168 @@ def calibrate_psa_alpha(tx_rx, fs_rx):
     return psa.calibrate_alpha(tx_rx, fs_rx)
 
 
+def calibrate_psa_alpha_sequential(tx_rx, fs_rx, cal_grid_GHz=None):
+    """Stronger PSA alpha calibration via multi-point linear regression.
+
+    Vieira 2023 uses sequential search to find alpha minimizing estimation
+    error. Our 1-point fit (calibrate_psa_alpha) is a crude proxy and
+    produces a weak baseline (D006 + S006 finding B: PSA estimation bias
+    keeps BER floor high). This stronger calibration fits alpha over a range
+    of known f_D points in the linear region, giving a more accurate slope
+    df_est / (ln(P+/P-)/2).
+
+    Returns alpha (Hz) that minimizes total |df_est - f_D_true| over cal grid.
+    """
+    if cal_grid_GHz is None:
+        cal_grid_GHz = np.arange(0.5, 3.1, 0.5)
+    t = np.arange(tx_rx.size) / fs_rx
+    half_logs = []
+    f_trues = []
+    for f_g in cal_grid_GHz:
+        f_D = f_g * 1e9
+        rx_shifted = tx_rx * np.exp(1j * 2 * np.pi * f_D * t)
+        hl = psa.log_asymmetry(rx_shifted, fs_rx)
+        if abs(hl) > 1e-9:
+            half_logs.append(hl)
+            f_trues.append(f_D)
+    half_logs = np.array(half_logs)
+    f_trues = np.array(f_trues)
+    alpha = float(np.sum(f_trues * half_logs) / np.sum(half_logs ** 2))
+    f_est = alpha * half_logs
+    rmse_GHz = float(np.sqrt(np.mean((f_est - f_trues) ** 2)) / 1e9)
+    return alpha, rmse_GHz, cal_grid_GHz.tolist()
+
+
+def psa_foe_baseline_strong(rx_rx, fs_rx, alpha):
+    """Stronger PSA FOE with finer CFE stage (coarse + fine two-stage).
+
+    Poster content.md L37 describes a finer CFE stage ("scan range can be
+    narrowed to directly obtain the Doppler-shift estimate") for B7; the
+    same two-stage principle applies to PSA. The coarse stage (alpha*ln-ratio)
+    gives a rough estimate; the fine stage searches a narrow window around it
+    to minimize the residual log-asymmetry, achieving <<100MHz accuracy
+    instead of the coarse stage's ~100MHz floor (which was causing the
+    -0.35rad residual phase that wrecked BER, TL-22 finding).
+
+    Returns (rx_compensated, df_est, df_est_fine).
+    """
+    # Stage 1: coarse CFE (spectral asymmetry, same as psa_foe_baseline)
+    rx_comp, df_coarse = psa.psa_foe_asymmetry(rx_rx, fs_rx, alpha, psa.FFT_N)
+    # Stage 2: finer CFE — search a narrow window around df_coarse to find
+    # the offset that minimizes the residual |log_asymmetry| of the compensated
+    # signal. The compensated signal should have ln(P+/P-)/2 ~ 0 when the
+    # estimate is exact, so we hunt for the residual offset that zeros it.
+    fine_step = 10e6   # 10 MHz finesse (vs coarse ~100MHz floor)
+    fine_window = 0.3e9  # +/- 0.3 GHz around coarse (covers coarse err)
+    cands = np.arange(df_coarse - fine_window, df_coarse + fine_window, fine_step)
+    t = np.arange(rx_rx.size) / fs_rx
+    best_df = df_coarse
+    best_residual = abs(psa.log_asymmetry(rx_comp, fs_rx))
+    for dc in cands:
+        rx_try = rx_rx * np.exp(-1j * 2 * np.pi * dc * t)
+        res = abs(psa.log_asymmetry(rx_try, fs_rx))
+        if res < best_residual:
+            best_residual = res
+            best_df = dc
+    rx_comp_fine = rx_rx * np.exp(-1j * 2 * np.pi * best_df * t)
+    return rx_comp_fine, best_df, df_coarse
+
+
+def psa_foe_two_stage(rx_rx, fs_rx, alpha, coarse_fft=1024, fine_fft=512, M=4):
+    """Vieira 2023 two-stage PSA FOE (content.md L343-387).
+
+    Stage 1 coarse CFE: spectral asymmetry alpha*ln(P+/P-)/2 (FFT 1024 sample).
+    Stage 2 fine CFE: per-block M-th power FFT (512 sample, M=4 for QPSK),
+    each block independently estimates residual FOE and compensates.
+
+    Returns (rx_compensated, df_coarse).
+    """
+    t = np.arange(rx_rx.size) / fs_rx
+    # Stage 1: coarse CFE
+    hl = psa.log_asymmetry(rx_rx, fs_rx, coarse_fft)
+    df_coarse = alpha * hl
+    rx_c = rx_rx * np.exp(-1j * 2 * np.pi * df_coarse * t)
+    # Stage 2: fine CFE 分块 M-th power
+    n = rx_c.size
+    n_blocks = n // fine_fft
+    rx_fine = rx_c.copy()
+    for blk in range(n_blocks):
+        s = slice(blk * fine_fft, (blk + 1) * fine_fft)
+        chunk = rx_c[s]
+        chunk_m = chunk ** M
+        spec = np.abs(np.fft.fft(chunk_m))
+        freqs = np.fft.fftfreq(fine_fft, d=1.0 / fs_rx)
+        peak = int(np.argmax(spec))
+        df_res = freqs[peak] / M
+        t_blk = np.arange(fine_fft) / fs_rx + blk * fine_fft / fs_rx
+        rx_fine[s] = chunk * np.exp(-1j * 2 * np.pi * df_res * t_blk)
+    return rx_fine, df_coarse
+
+
+# =============================================================================
+# Method 4 & 5: classic FOE baselines (4th-power F4.4 + Kay 1989 ML)
+# Added as credible BER-gain references: PSA spectral-asymmetry is intrinsically
+# weak and inflates B7's BER gain. Classic NDA FOEs give a fairer ceiling.
+# =============================================================================
+def fourth_power_foe(rx_rx, fs_rx, N_fft=2048, nfft_zp=8192):
+    """4th-power FOE (formulas-master.md F4.4, QPSK M=4).
+
+    r4[k] = r[k]^4, R4(f) = FFT{r4 * w_Hann}, f_est = (1/4) * argmax|R4|.
+    Range limit: +/- Rs/(2M) = +/- 3.125 GHz at 25GBaud. High precision
+    within range. Classic NDA FOE, well-established (Liu 2023, user's
+    undergrad code sim_direction_a.py L114-142).
+
+    Returns (rx_compensated, f_est_Hz).
+    """
+    seg = rx_rx[:N_fft]
+    r4 = seg ** 4
+    win = np.hanning(N_fft)
+    R4 = np.fft.fftshift(np.fft.fft(r4 * win, n=nfft_zp))
+    freqs = np.fft.fftshift(np.fft.fftfreq(nfft_zp, d=1.0 / fs_rx))
+    idx = int(np.argmax(np.abs(R4)))
+    # parabolic interpolation for sub-bin accuracy
+    if 1 <= idx < len(R4) - 1:
+        av, bv, gv = np.abs(R4[idx-1]), np.abs(R4[idx]), np.abs(R4[idx+1])
+        if bv - av > 0 and bv + av - 2*gv != 0:
+            p = 0.5 * (av - gv) / (av - 2*bv + gv)
+        else:
+            p = 0.0
+    else:
+        p = 0.0
+    f_est = (freqs[idx] + p * (freqs[1] - freqs[0])) / 4.0
+    t = np.arange(rx_rx.size) / fs_rx
+    rx_comp = rx_rx * np.exp(-1j * 2 * np.pi * f_est * t)
+    return rx_comp, f_est
+
+
+def kay_foe(rx_rx, fs_rx):
+    """Kay 1989 ML frequency estimator (weighted phase-diff average).
+
+    f_est = (1/(2*pi*T)) * sum_k w[k] * angle(y[k]*conj(y[k-1]))
+    w[k] = 6*(N-k)*(N-k+1) / (N*(N^2-1))   (ML optimal weights, Kay 1989)
+
+    Theoretically optimal NDA FOE for AWGN. Sensitive to phase wrapping
+    at large offsets (range limit ~ +/- Rs/(2*pi) per sample step).
+    Reference: Kay, "A Fast and Accurate Single Frequency Estimator,"
+    IEEE T-ASSP, 1989.
+
+    Returns (rx_compensated, f_est_Hz).
+    """
+    n = rx_rx.size
+    # phase differences of consecutive samples
+    phases = np.angle(rx_rx[1:] * np.conj(rx_rx[:-1]))
+    # ML weights w[k] for k=1..N-1 (Kay 1989 Eq. 12)
+    k = np.arange(1, n)  # k=1..N-1
+    w = 6.0 * (n - k) * (n - k + 1) / (n * (n**2 - 1))
+    # weighted average phase -> frequency
+    mean_phase = np.sum(w * phases) / np.sum(w)
+    T_s = 1.0 / fs_rx
+    f_est = mean_phase / (2 * np.pi * T_s)
+    t = np.arange(n) / fs_rx
+    rx_comp = rx_rx * np.exp(-1j * 2 * np.pi * f_est * t)
+    return rx_comp, f_est
+
+
 # =============================================================================
 # BER evaluation (QPSK hard decision, MVE simplified)
 # =============================================================================
@@ -548,8 +710,8 @@ def run_three_way(n_sym, n_seed, f_d_grid, osnr_list, out_dir):
                 out_g = gardner_1986_tr(rx, fs_rx)
                 ber_g1986.append(qpsk_hard_decision_ber(out_g, ref_syms))
 
-                # Method 3: PSA FOE baseline
-                rx_comp_psa, f_psa = psa_foe_baseline(rx, fs_rx, alpha_psa)
+                # Method 3: PSA FOE baseline (Vieira 2023 two-stage)
+                rx_comp_psa, f_psa = psa_foe_two_stage(rx, fs_rx, alpha_psa)
                 rx_comp_psa, _ = residual_foe_mth_power(rx_comp_psa, fs_rx, M=4)
                 out_psa, _ = gardner_1986_tr(rx_comp_psa, fs_rx, return_timing_error=True)
                 ber_psa.append(qpsk_hard_decision_ber(out_psa, ref_syms))
@@ -618,31 +780,239 @@ def _plot_results(results, out_dir):
 
 
 # =============================================================================
+# OSNR sweep mode (for BER gain @ BER 2e-2 / HD-FEC quantification)
+# =============================================================================
+def run_osnr_sweep(n_sym, n_seed, f_d_representative_GHz, osnr_grid_dB, out_dir):
+    """Fixed f_D, sweep OSNR -> BER vs OSNR curves -> read off BER gain.
+
+    For each representative f_D, produces BER-vs-OSNR for B7 / Gardner1986 / PSA.
+    BER gain @ target_BER = OSNR_PSA(target_BER) - OSNR_B7(target_BER) in dB.
+    Targets: BER 2e-2 (poster anchor) + HD-FEC 3.8e-3 (cross-candidate main).
+
+    This complements run_three_way (which fixes OSNR and sweeps f_D): the
+    Doppler-sweep MVE proved B7 wins on range + robustness; this OSNR-sweep
+    quantifies the BER gain in dB so we can compare against poster's 0.6dB.
+    """
+    t0 = time.time()
+    rng_master = np.random.default_rng(0)
+    tx_high, ref_syms_master = make_tx(n_sym, SPS_GEN, ROLL_OFF, rng_master)
+    tx_rx_clean, fs_rx = decimate_to_rx(tx_high)
+    # Stronger PSA calibration: multi-point sequential-search fit (D006 + S006
+    # finding B fix — 1-point fit was producing a weak baseline; this multi-
+    # point regression aligns with Vieira 2023's sequential-search procedure).
+    # NOTE: a finer-CEF-stage variant was also tried (psa_foe_baseline_strong)
+    # but made estimation worse (minimizing residual log-asymmetry is not the
+    # same as maximizing accuracy), so the OSNR sweep keeps the multi-point
+    # alpha fit + coarse CFE. PSA's residual-phase problem (~1.3rad at 5GHz)
+    # is deeper than alpha/stage can fix — it's in the spectral-asymmetry
+    # method's FFT-block-averaging phase handling (see S007 finding).
+    alpha_psa, alpha_rmse, alpha_calpts = calibrate_psa_alpha_sequential(tx_rx_clean, fs_rx)
+    scan_grid = np.arange(0, DOPPLER_RANGE + DOPPLER_INTERVAL, DOPPLER_INTERVAL)
+    print(f"[calib] PSA alpha = {alpha_psa/1e9:.3f} GHz "
+          f"(sequential-search multi-point fit, {len(alpha_calpts)} pts, "
+          f"RMSE={alpha_rmse*1e3:.0f} MHz)")
+
+    results = {
+        "meta": {
+            "mode": "osnr_sweep",
+            "baud_Hz": BAUD, "n_sym": n_sym, "n_seed": n_seed,
+            "f_d_GHz": [float(x) for x in f_d_representative_GHz],
+            "osnr_grid_dB": [float(x) for x in osnr_grid_dB],
+            "alpha_psa_GHz": alpha_psa / 1e9,
+            "alpha_psa_method": "sequential-search multi-point fit",
+            "alpha_psa_cal_points_GHz": alpha_calpts,
+            "alpha_psa_rmse_MHz": alpha_rmse * 1e3,
+            "psa_method": "Vieira 2023 two-stage (coarse CFE FFT 1024 + fine CFE M=4 FFT 512)",
+            "baselines": ["B7", "Gardner1986", "PSA_two_stage", "4th_power_F4.4", "Kay1989"],
+            "targets": {"BER_2e2": 2e-2, "HD_FEC": 3.8e-3},
+        },
+        "curves": {},
+    }
+
+    for f_d_g in f_d_representative_GHz:
+        f_d = f_d_g * 1e9
+        cond = f"f_D{f_d_g:.0f}GHz"
+        print(f"\n=== OSNR sweep at {cond} ===")
+        rows = []
+        for osnr_db in osnr_grid_dB:
+            ber_b7, ber_g1986, ber_psa, ber_4p, ber_kay = [], [], [], [], []
+            for seed_i in range(n_seed):
+                rng = np.random.default_rng(20000 + seed_i * 31 + int(round(f_d_g * 7)) + int(round(osnr_db * 13)))
+                tx_high_s, ref_syms = make_tx(n_sym, SPS_GEN, ROLL_OFF,
+                                              np.random.default_rng(20260707))
+                tx_rx, _ = decimate_to_rx(tx_high_s)
+                rx = inject_foe(tx_rx, f_d, fs_rx)
+                rx = add_awgn(rx, osnr_db, BAUD, rng)
+
+                # Method 1: B7 proposed FOE
+                f_b7, _, _ = b7_proposed_foe(rx, fs_rx, scan_grid, lpf2_en=True)
+                t_v = np.arange(rx.size) / fs_rx
+                rx_comp_b7 = rx * np.exp(-1j * 2 * np.pi * f_b7 * t_v)
+                rx_comp_b7 = _lpf2(rx_comp_b7, fs_rx)
+                rx_comp_b7, _ = residual_foe_mth_power(rx_comp_b7, fs_rx, M=4)
+                out_b7, _ = gardner_1986_tr(rx_comp_b7, fs_rx, return_timing_error=True)
+                ber_b7.append(qpsk_hard_decision_ber(out_b7, ref_syms))
+
+                # Method 2: Gardner 1986 TR only
+                out_g = gardner_1986_tr(rx, fs_rx)
+                ber_g1986.append(qpsk_hard_decision_ber(out_g, ref_syms))
+
+                # Method 3: PSA FOE (Vieira 2023 two-stage: coarse CFE + 分块 fine CFE M=4)
+                rx_comp_psa, f_psa = psa_foe_two_stage(rx, fs_rx, alpha_psa)
+                # whole-block residual cleanup: 分块 fine CFE 量化(24.4MHz/bin)残留
+                # ~2MHz 恒定 FOE, 在 4096 sym 块上累积 ~8rad 相位旋转, 必须清掉.
+                # 与 B7 路径对称 (B7 也 = b7_proposed_foe + residual_foe_mth_power).
+                rx_comp_psa, _ = residual_foe_mth_power(rx_comp_psa, fs_rx, M=4)
+                out_psa, _ = gardner_1986_tr(rx_comp_psa, fs_rx, return_timing_error=True)
+                ber_psa.append(qpsk_hard_decision_ber(out_psa, ref_syms))
+
+                # Method 4: 4th-power FOE (F4.4, classic NDA)
+                rx_comp_4p, f_4p = fourth_power_foe(rx, fs_rx)
+                rx_comp_4p, _ = residual_foe_mth_power(rx_comp_4p, fs_rx, M=4)
+                out_4p, _ = gardner_1986_tr(rx_comp_4p, fs_rx, return_timing_error=True)
+                ber_4p.append(qpsk_hard_decision_ber(out_4p, ref_syms))
+
+                # Method 5: Kay 1989 ML FOE
+                rx_comp_kay, f_kay = kay_foe(rx, fs_rx)
+                rx_comp_kay, _ = residual_foe_mth_power(rx_comp_kay, fs_rx, M=4)
+                out_kay, _ = gardner_1986_tr(rx_comp_kay, fs_rx, return_timing_error=True)
+                ber_kay.append(qpsk_hard_decision_ber(out_kay, ref_syms))
+
+            row = {
+                "OSNR_dB": float(osnr_db),
+                "ber_B7_mean": float(np.mean(ber_b7)),
+                "ber_B7_std": float(np.std(ber_b7)),
+                "ber_Gardner1986_mean": float(np.mean(ber_g1986)),
+                "ber_PSA_mean": float(np.mean(ber_psa)),
+                "ber_4thpower_mean": float(np.mean(ber_4p)),
+                "ber_Kay_mean": float(np.mean(ber_kay)),
+            }
+            rows.append(row)
+            print(f"  OSNR={osnr_db:>4.0f}dB | B7={row['ber_B7_mean']:.3e} "
+                  f"1986={row['ber_Gardner1986_mean']:.3e} "
+                  f"PSA={row['ber_PSA_mean']:.3e} "
+                  f"4thP={row['ber_4thpower_mean']:.3e} "
+                  f"Kay={row['ber_Kay_mean']:.3e}")
+        results["curves"][cond] = rows
+
+    # BER gain computation via log-interpolation of BER vs OSNR
+    def osnr_at_ber(osnr_arr, ber_arr, target):
+        """OSNR at which BER crosses target, via linear interp on log(BER)."""
+        lber = np.log10(np.clip(ber_arr, 1e-6, 0.5))
+        # monotonic decreasing expected; find first crossing from high BER
+        if np.all(ber_arr > target) or np.all(ber_arr < target):
+            return None
+        for i in range(len(lber) - 1):
+            if (lber[i] - np.log10(target)) * (lber[i + 1] - np.log10(target)) <= 0:
+                # linear interp on log(BER)
+                frac = (np.log10(target) - lber[i]) / (lber[i + 1] - lber[i] + 1e-30)
+                return float(osnr_arr[i] + frac * (osnr_arr[i + 1] - osnr_arr[i]))
+        return None
+
+    gains = {}
+    for cond, rows in results["curves"].items():
+        osnr = np.array([r["OSNR_dB"] for r in rows])
+        b7 = np.array([r["ber_B7_mean"] for r in rows])
+        curves_to_compare = {
+            "PSA": np.array([r["ber_PSA_mean"] for r in rows]),
+            "4thpower": np.array([r["ber_4thpower_mean"] for r in rows]),
+            "Kay": np.array([r["ber_Kay_mean"] for r in rows]),
+        }
+        cond_gain = {}
+        for tgt_name, tgt in [("BER_2e2", 2e-2), ("HD_FEC", 3.8e-3)]:
+            osnr_b7 = osnr_at_ber(osnr, b7, tgt)
+            tgt_gain = {"OSNR_B7_dB": osnr_b7}
+            for bl_name, bl_curve in curves_to_compare.items():
+                osnr_bl = osnr_at_ber(osnr, bl_curve, tgt)
+                gain_db = (osnr_bl - osnr_b7) if (osnr_b7 is not None and osnr_bl is not None) else None
+                tgt_gain[f"OSNR_{bl_name}_dB"] = osnr_bl
+                tgt_gain[f"gain_vs_{bl_name}_dB"] = gain_db
+            cond_gain[tgt_name] = tgt_gain
+        gains[cond] = cond_gain
+        # 打印三个 gain
+        for tgt_name in ["BER_2e2", "HD_FEC"]:
+            g = cond_gain[tgt_name]
+            print(f"[gain @ {cond} {tgt_name}] B7@{g['OSNR_B7_dB']}dB | "
+                  f"vs PSA={g.get('gain_vs_PSA_dB')} | "
+                  f"vs 4th={g.get('gain_vs_4thpower_dB')} | "
+                  f"vs Kay={g.get('gain_vs_Kay_dB')}")
+    results["gains"] = gains
+
+    results["meta"]["elapsed_s"] = round(time.time() - t0, 1)
+    out_json = os.path.join(out_dir, "_mve_osnr_sweep_results.json")
+    with open(out_json, "w") as f:
+        json.dump(results, f, indent=2)
+    print(f"\n[wrote] {out_json}  (elapsed {results['meta']['elapsed_s']}s)")
+    _plot_osnr_sweep(results, out_dir)
+    return results
+
+
+def _plot_osnr_sweep(results, out_dir):
+    fig, ax = plt.subplots(1, len(results["curves"]), figsize=(5 * len(results["curves"]), 4.5))
+    if len(results["curves"]) == 1:
+        ax = [ax]
+    for a, (cond, rows) in zip(ax, results["curves"].items()):
+        osnr = [r["OSNR_dB"] for r in rows]
+        a.semilogy(osnr, [r["ber_B7_mean"] for r in rows], "o-", ms=4, label="B7 proposed")
+        a.semilogy(osnr, [r["ber_Gardner1986_mean"] for r in rows], "s-", ms=4, label="Gardner 1986 TR")
+        a.semilogy(osnr, [r["ber_PSA_mean"] for r in rows], "^-", ms=4, label="PSA FOE")
+        a.semilogy(osnr, [r["ber_4thpower_mean"] for r in rows], "D-", ms=4, label="4th-power F4.4")
+        a.semilogy(osnr, [r["ber_Kay_mean"] for r in rows], "v-", ms=4, label="Kay 1989")
+        a.axhline(2e-2, color="k", ls=":", alpha=0.5, label="BER 2e-2 (anchor)")
+        a.axhline(3.8e-3, color="r", ls=":", alpha=0.5, label="HD-FEC 3.8e-3")
+        a.set_xlabel("OSNR (dB)")
+        a.set_ylabel("BER")
+        a.set_title(f"{cond}")
+        a.legend(fontsize=7)
+        a.grid(True, which="both", alpha=0.3)
+    fig.suptitle("B7 OSNR sweep — BER gain quantification", fontsize=11)
+    fig.tight_layout()
+    out_png = os.path.join(out_dir, "_mve_osnr_sweep_curves.png")
+    fig.savefig(out_png, dpi=130)
+    print(f"[wrote] {out_png}")
+
+
+# =============================================================================
 # Main
 # =============================================================================
 def main():
     parser = argparse.ArgumentParser(description="B7 Gardner-TED FOE three-way MVE")
     parser.add_argument("--smoke", action="store_true",
                         help="smoke test: small scale, verify pipeline runs")
+    parser.add_argument("--osnr-sweep", action="store_true",
+                        help="OSNR sweep mode: fixed representative f_D, sweep OSNR "
+                             "to quantify BER gain @ BER 2e-2 and HD-FEC")
     parser.add_argument("--n-sym", type=int, default=N_SYM_DEFAULT)
     parser.add_argument("--n-seed", type=int, default=N_SEED_DEFAULT)
     args = parser.parse_args()
+
+    here = os.path.dirname(os.path.abspath(__file__))
+
+    if args.osnr_sweep:
+        print("=" * 70)
+        print("OSNR SWEEP MODE (fixed f_D, sweep OSNR, quantify BER gain)")
+        print("=" * 70)
+        # representative f_D: 5GHz (PSA fair zone) + 12GHz (PSA edge) + 23GHz (B7 edge)
+        f_d_repr = [5.0, 12.0, 23.0]
+        # OSNR sweep covering BER from ~0.3 (low) down past HD-FEC 3.8e-3 (high).
+        # Extended to 35dB because PSA's estimation bias keeps its BER floor high
+        # even at 25dB, so we need the high-OSNR tail to reach BER 2e-2 / HD-FEC.
+        osnr_grid = np.arange(5, 38, 3)   # 5..35 dB step 3dB, ~11 points
+        run_osnr_sweep(args.n_sym, args.n_seed, f_d_repr, osnr_grid, here)
+        return
 
     if args.smoke:
         print("=" * 70)
         print("SMOKE TEST MODE (small scale, verify pipeline)")
         print("=" * 70)
-        # n_sym must give enough samples at sps_rx=2 for PSA FFT_N=4096 averaging
-        # (need >= FFT_N samples = >= 2048 symbols). Use 4096 sym, 1 seed, 5 f_D points.
         n_sym, n_seed = 4096, 1
-        f_d_grid = np.array([0, 5, 12, 15, 23]) * 1e9   # 5 representative points
-        osnr_list = [OSNR_MAIN]                          # only main point
+        f_d_grid = np.array([0, 5, 12, 15, 23]) * 1e9
+        osnr_list = [OSNR_MAIN]
     else:
         n_sym, n_seed = args.n_sym, args.n_seed
         f_d_grid = F_D_GRID_DEFAULT
         osnr_list = [None, OSNR_MAIN, OSNR_LOW]
 
-    here = os.path.dirname(os.path.abspath(__file__))
     run_three_way(n_sym, n_seed, f_d_grid, osnr_list, here)
 
 

@@ -1,0 +1,58 @@
+{
+  "meta": {
+    "task": "B5-Q1 星历残差扫描 (sandbox 遗留债务, MVE 新增)",
+    "purpose": "测星历预测残差对 B5 残频 σ 的影响 (sandbox 完美星历假设债务)",
+    "params": {
+      "fixed": {
+        "snr_db": 13.0,
+        "turb": "weak",
+        "f_true_hz": 1000000000.0,
+        "n_seeds": 20
+      },
+      "sweep": {
+        "ephem_residual_mhz": [
+          0.0,
+          50.0,
+          100.0
+        ]
+      }
+    },
+    "gate": "B5 residual_std < 140MHz per point",
+    "mechanism": "ephem_residual 直接加到估计误差: est_b5(ephem_residual=res) 把 f_true 预补偿到残频 res, B5 FFT 估此残频",
+    "architecture": "前馈开环不撞 D006 (normalize_mode=ratio)",
+    "timestamp": "2026-07-08T09:54:21"
+  },
+  "sweep": {
+    "0MHz": {
+      "ephem_residual_hz": 0.0,
+      "B5_residual_std_hz": 9679162.535079401,
+      "B5_residual_std_mhz": 9.679162535079401,
+      "B5_residual_mean_hz": -1576489.462542951,
+      "B5_residual_abs_mean_hz": 8140204.589390362,
+      "gate": true,
+      "n_seeds": 20
+    },
+    "50MHz": {
+      "ephem_residual_hz": 50000000.0,
+      "B5_residual_std_hz": 9870191.542543253,
+      "B5_residual_std_mhz": 9.870191542543253,
+      "B5_residual_mean_hz": 24323139.231403686,
+      "B5_residual_abs_mean_hz": 24323139.231403686,
+      "gate": true,
+      "n_seeds": 20
+    },
+    "100MHz": {
+      "ephem_residual_hz": 100000000.0,
+      "B5_residual_std_hz": 10030451.825455826,
+      "B5_residual_std_mhz": 10.030451825455826,
+      "B5_residual_mean_hz": 50258790.590887025,
+      "B5_residual_abs_mean_hz": 50258790.590887025,
+      "gate": true,
+      "n_seeds": 20
+    }
+  },
+  "max_sigma_hz": 10030451.825455826,
+  "max_sigma_mhz": 10.030451825455826,
+  "all_pass": true,
+  "verdict": "星历残差扫描 PASS (路径 C 前提在星历残差下仍成立): max σ=10.0MHz < 140MHz"
+}
