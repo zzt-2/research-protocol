@@ -1,0 +1,94 @@
+schema_version: direction-lab.p03-readiness-report.v1
+report_id: P03-U19-interface-closure-20260718
+candidate: U19
+process: DL-Process v0.3
+profile: Communications
+project_adapter: dual-pol OSL
+final_verdict: P03_SCOUT_CONTRACT_READY
+current_contract: scout-contract.v2.yaml
+superseded_contract: scout-contract.v1.yaml
+capability: [estimative, observational]
+input_source: authentic standard-CMA zX/zY through run_b001._default_runner
+causal_boundary: completed z window; available after eval_end plus half the centered equalizer span
+csi_access_class:
+  closed_path: CSI_NONE
+  receiver_estimated_CSI: DECLARED_NOT_BOUND
+output: comparator-relative residual conditional moments and explicit-threshold tail mass
+receiver_state_changed: false
+queue_created: false
+b004_started: false
+performance_cell_created: false
+evidence_ledger_written: false
+work_packages:
+  - package: z-window adapter
+    status: PASS
+    entrypoint: z_window_adapter.py::adapt_standard_cma_output
+    schema: direction-lab.p03-z-window.v1
+    real_input: run_b001._default_runner standard-CMA output
+    tests: python -m pytest projects/thesis-fso/direction-lab/tests/test_p03_z_window_adapter.py -q
+    result: 20 passed
+  - package: same-information analytic comparator
+    status: PASS
+    entrypoint: analytic_comparator.py::compare_qpsk_csi_none
+    schema: direction-lab.p03-analytic-comparator.v1
+    real_input: adapted CSI_NONE z window and explicit QPSK amplitude
+    tests: python -m pytest projects/thesis-fso/direction-lab/tests/test_p03_analytic_comparator.py -q
+    result: 5 passed
+  - package: residual artifact
+    status: PASS
+    entrypoint: residual_artifact.py::build_residual_artifact
+    schema: direction-lab.p03-residual-artifact.v1
+    real_input: aligned z-window and analytic comparator output
+    tests: python -m pytest projects/thesis-fso/direction-lab/tests/test_p03_residual_artifact.py -q
+    result: 6 passed
+  - package: authentic deterministic one-cell interface smoke
+    status: PASS
+    entrypoint: run_interface_smoke.py
+    schema: direction-lab.p03-interface-smoke-report.v1
+    real_input: frozen dual-pol generator and frozen standard-CMA runner
+    tests: python -m pytest projects/thesis-fso/direction-lab/tests/test_p03_interface_smoke.py -q
+    result: 2 passed
+residual_definition: receiver-visible z minus same-information analytic QPSK predicted mean
+residual_artifact:
+  path: artifacts/interface-smoke-v2/residual-artifact.json
+  runtime_artifact_hash: ee1424bbdb158a6ff27f239f358c3101ebcd04554335c8dc94520c1f83a86fcc
+  role: SCOUT_INTERFACE_DIAGNOSTIC_NOT_PERFORMANCE
+  cross_cell_stability: NOT_ESTIMABLE_ONE_CELL
+  evaluation_only:
+    fixed_label_ber: NOT_COMPUTED_INTERFACE_SMOKE
+    pi_ber: NOT_COMPUTED_INTERFACE_SMOKE
+analytic_comparator:
+  component_id: candidate.P03-U19.qpsk-analytic-comparator-csi-none.v1
+  information_parity: PASS
+  deterministic_smoke: PASS
+  oracle_csi_used: false
+component_binding:
+  snapshot: candidate-components.v1.yaml
+  status: scout-candidate
+  canonical: false
+  registry: false
+source_closure:
+  path: artifacts/interface-smoke-v2/source-closure.yaml
+  generated_from_runtime_loaded_project_modules: true
+  sha256: e5bba6ddb874a01be95ae98fa5892a99f077e7152f567521b9c3a3ecced069c7
+history_guards:
+  B002_unchanged: PASS
+  B003_unchanged: PASS
+  canonical_baseline_unchanged: PASS
+  B004_absent: PASS
+remaining_sandbox_prerequisites:
+  - actual U19 ML mechanism implementation and mechanism-level hypothesis
+  - multi-cell stability budget and pre-registered diagnostic threshold
+  - evaluation-only fixed-label and PI-BER binding
+  - mechanism-distinct Sandbox comparison design
+  - new immutable Queue and Registry binding after the preceding items pass
+exact_entry_reason: >-
+  CSI_NONE receiver input, causal timing, deterministic output, same-information comparator, and minimum authentic
+  smoke are all executable and reproducible. This closes the Scout contract interface and permits the next U19
+  contract-implementation round only; it does not permit a Queue, Sandbox batch, B004, or a performance claim.
+reproduction_commands:
+  tests: python -m pytest projects/thesis-fso/direction-lab/tests -q -k p03_
+  smoke: >-
+    python projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/run_interface_smoke.py
+    --contract projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/interface-smoke-contract.v1.yaml
+    --output-dir projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/interface-smoke-v2

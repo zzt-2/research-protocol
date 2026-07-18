@@ -223,6 +223,7 @@ class EvidenceGate:
     audit_path: Path
     destinations: Mapping[str, Path]
     gate_audit_path: Path | None = None
+    require_artifact_pointer: bool = False
 
     def __post_init__(self) -> None:
         if self.gate_audit_path is None:
@@ -262,6 +263,40 @@ class EvidenceGate:
                 artifact_status="UNTRUSTED",
                 reason="receipt is absent from audit or does not match the artifact",
             )
+
+        if self.require_artifact_pointer:
+            pointer = envelope.get("artifact_pointer")
+            pointer_error = None
+            if not isinstance(pointer, Mapping):
+                pointer_error = "lean evidence requires an artifact_pointer; full result cannot enter the ledger"
+            else:
+                relative = Path(str(pointer.get("path", "")))
+                root = self.audit_path.parent.resolve()
+                if relative.is_absolute() or ".." in relative.parts or not relative.parts or relative.parts[0] != "artifacts":
+                    pointer_error = "artifact_pointer path must be relative and contained under artifacts/"
+                else:
+                    artifact = (root / relative).resolve()
+                    try:
+                        artifact.relative_to(root)
+                    except ValueError:
+                        pointer_error = "artifact_pointer escapes the governed output directory"
+                    if pointer_error is None and not artifact.is_file():
+                        pointer_error = "artifact_pointer target does not exist"
+                    if pointer_error is None:
+                        expected_bytes = pointer.get("bytes")
+                        expected_sha = pointer.get("sha256")
+                        if not isinstance(expected_bytes, int) or expected_bytes != artifact.stat().st_size:
+                            pointer_error = "artifact_pointer byte count does not match the artifact"
+                        elif not isinstance(expected_sha, str) or expected_sha != hashlib.sha256(artifact.read_bytes()).hexdigest():
+                            pointer_error = "artifact_pointer sha256 does not match the artifact"
+            if pointer_error is not None:
+                return self._reject(
+                    destination,
+                    artifact_status="ORPHAN",
+                    reason=pointer_error,
+                    trust_status="TRUSTED",
+                    decision_id=receipt.get("decision_id"),
+                )
 
         if self._has_later_stale_invalidation(
             receipt.get("decision_id"),

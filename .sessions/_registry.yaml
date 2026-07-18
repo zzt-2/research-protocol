@@ -8,15 +8,15 @@ topics:
     title: 框架演进与问题追踪
     status: active
     created: "2026-05-15"
-    last_updated: "2026-06-21"
+    last_updated: "2026-07-17"
     description: "跨项目长期专题。**2026-06-20 重新激活**——thesis-fso 5 次殊途同归 + agent 连犯 3 错暴露框架根本缺陷（未定义'问题/方法/空白'概念，contract.md L86-88 把空白当假设来源是制度性缺陷）。LOG-001 新建，三改造方案待执行（glossary.md 定义问题 + GW 问题清单产出 + master-state.md 强制化）。历史：2026-05-15~18 处理 20+ P0/P1/P2 issues。"
 
   - slug: 2026-07-17-direction-lab-governance-pilot
     title: Direction Lab 可遵守性与控制器试运行
-    status: active
+    status: dormant
     created: "2026-07-17"
-    last_updated: "2026-07-17"
-    description: "受控 Direction Lab governance pilot。第一阶段 22 项硬门 PASS；第二阶段在单主对话完成 receipt/evidence gate 与四轮压力测试。独立 verifier 曾发现 result provenance/replay 漏口并已修复；核心 gate 34 项测试与黑盒探针 PASS，Round 4 raw hash provenance 及 manifest/JSONL/path 完整性仍为 PARTIAL 债务，不产出论文结论。"
+    last_updated: "2026-07-18（S010/D013：控制面与重复编号收口；研究状态回归项目目录；恢复阈值覆盖仍 PARTIAL，专题转 dormant）"
+    description: "受控 Direction Lab governance pilot，依 D004 扩展为双偏振星地 OSL 真实地基 sandbox 运行；v2 Candidate Universe→Map→Queue、B002 与独立 synthesis 已闭环，正式 Groundwork 与论文晋级继续阻断。"
     depends_on:
       - slug: framework-evolution
         reason: 使用 R002 的 Direction Lab 设计和五个核心 schema

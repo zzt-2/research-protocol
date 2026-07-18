@@ -1,0 +1,33 @@
+schema_version: direction-lab.project-adapter.v1
+adapter_id: dual-pol-osl
+project_scope: dual-polarization-ground-to-satellite-OSL
+profile: profiles/communications.yaml
+anchor: anchor.yaml
+canonical_baseline:
+  identity: standard-CMA
+  source_pointer: anchor.yaml::fact_contracts.baseline_identity
+  mutable: false
+
+runtime_trace_contract:
+  standard_cma_blind_trace:
+    source_pointer: projects/thesis-fso/direction-lab/tools/run_b001.py::_default_runner
+    fields:
+      output_start: {shape: scalar, dtype: int, unit: symbol_index, time: block_start}
+      output_end: {shape: scalar, dtype: int, unit: symbol_index, time: block_end_exclusive}
+      cm_error: {shape: scalar, dtype: float64, unit: normalized_power_squared, time: block}
+      output_power: {shape: scalar, dtype: float64, unit: normalized_power, time: block}
+      update_norm: {shape: scalar, dtype: float64, unit: equalizer_weight_norm, time: block}
+    forbidden_runtime_inputs: [tx_bits, sX, sY, h, theta, true_jones, fixed_label_ber, pi_ber, future_window]
+
+existing_runner:
+  v3: projects/thesis-fso/direction-lab/tools/run_v3.py
+  limitation: U24 observational detector path only; do not reuse for action/closed_loop candidates
+
+candidate_triage_scope:
+  - P02-U10
+  - P03-U19
+
+reuse_policy:
+  old_results: import only with baseline SHA, valid parameter domain, metric contract and source closure
+  old_kills: inherit only the original mechanism/implementation/domain/evidence scope
+  canonical_baseline: never modified by candidate triage

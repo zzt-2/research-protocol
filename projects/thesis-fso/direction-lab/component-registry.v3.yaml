@@ -1,0 +1,44 @@
+schema_version: direction-lab.component-registry.v3
+registry_id: registry.dual-pol-osl.ml.2026-07-18.v3
+lineage:
+  supersedes_registry_id: registry.dual-pol-osl.ml.2026-07-18.v2
+  v2_file: component-registry.v2.yaml
+  v2_immutable: true
+components:
+  - id: baseline.standard_cma.godard_z
+    status: canonical
+    fingerprint: 9282ecb53608a2093a5e69a62ccea9976211ecfda7626d2e65ce2fd912f1ca2f
+  - id: component.ml_degradation_detector.batch-v3
+    status: sandbox-candidate
+    fingerprint: 527332e9940361013f692349d49dd6b177ab0ef661b192a7118d4b1855d7c14f
+    entrypoint: projects/thesis-fso/direction-lab/tools/run_v3.py:run_dataset
+    tests: [projects/thesis-fso/direction-lab/tests/test_v3_governance.py]
+    valid_domains: [B003 exact shared contract]
+  - id: runner.direction_lab.replacement-v3
+    status: sandbox-candidate
+    fingerprint: 6f21dfe023ccb8e74876730bee8789353ef649ad2b976be63317420f298a9caf
+    entrypoint: projects/thesis-fso/direction-lab/tools/run_v3.py:run_governed
+  - id: runner.direction_lab.replacement-v2-helper
+    status: sandbox-candidate
+    fingerprint: 329ffedd2134c7e2b1123e4ca771cc0d7fd3e67da4893041acf93f15431bff3a
+    entrypoint: projects/thesis-fso/direction-lab/tools/run_v2.py
+  - id: runner.direction_lab.legacy-b001-helper
+    status: sandbox-candidate
+    fingerprint: 26a0e95d79d58088b6a24054d04cb76893a97a952a714e335068ea871edb8c89
+    entrypoint: projects/thesis-fso/direction-lab/tools/run_b001.py
+  - id: controller.direction_lab.pilot-v3
+    status: sandbox-candidate
+    fingerprint: 95a153fe893f5df1c83ab2436de1829c2bd36a1e76e730a2c53d4401a58cf2a8
+    entrypoint: projects/simulation/verify/direction_lab_pilot/controller.py
+  - id: validator.direction_lab.queue-gate-v3
+    status: sandbox-candidate
+    fingerprint: 5a6ac4ee89c05f660e9ab7f5b5ef18e7e2d6ed8b5231c1ddc2125e84578d9002
+    entrypoint: projects/thesis-fso/direction-lab/tools/validate_batch_queue.py:validate_queue
+  - id: metric.dual_qpsk.fixed-plus-pi.v1
+    status: sandbox-candidate
+    fingerprint: 7ff4c9d6fbcf7eef075fd4f88f2d42097cf75bca8640b150d69faa583d905cd0
+    entrypoint: .worktrees/unified-batch-runner/projects/simulation/common/_batch_metrics.py:evaluate_dual_qpsk
+notes:
+  - v3 registry is a new snapshot; v2 and B002 remain immutable historical evidence.
+  - baseline remains canonical; detector, runner and metric retain sandbox-candidate status.
+  - every v3 runtime component must match its static fingerprint before controller RUN.

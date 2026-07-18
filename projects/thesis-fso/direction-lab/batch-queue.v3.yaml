@@ -1,0 +1,124 @@
+schema_version: direction-lab.batch-queue.v3
+queue_id: queue.dual-pol-osl.ml.2026-07-18.v3
+batch_id: B003
+universe_id: universe.dual-pol-osl.ml.2026-07-17.v2
+map_id: map.dual-pol-osl.ml.2026-07-17.v2
+status: PASS
+lineage:
+  supersedes_queue_id: queue.dual-pol-osl.ml.2026-07-18.v2
+  v1_file: batch-queue.v2.yaml
+  v1_file_sha256: 3990e7b9c49c5f88eb7f91e65a50d2faa8a4e937bc34d64c66e070752025bf51
+  v1_immutable: true
+  candidate_universe_v2_file: candidate-universe.v2.yaml
+  candidate_universe_v2_sha256: f38806165b63ba83f474605f3f21812b2015d759f379fc93429a6eec2d41c807
+  candidate_map_v2_file: candidate-map.v2.yaml
+  candidate_map_v2_sha256: e6baa75f2a6f5c691dc3a2c1e5974a61122c03c6ec133954329e81ead67cd883
+  component_registry_v3_file: component-registry.v3.yaml
+  correction_reason: v3 replacement snapshot binds the current runner and makes all physical/channel fields explicit.
+
+batches:
+  - batch_id: B003
+    family_id: F05
+    archetype_id: U24
+    title: v3 explicit-contract causal ML degradation detector family
+    state: QUEUED_NOT_RUN
+    sandbox_only: true
+    promotion_allowed: false
+    problem_mca:
+      M: receiver-only detector layered on unchanged standard-CMA
+      C: dual-pol OSL GG strong turbulence at SOP rates 4e-6 control and 1e-5 event condition
+      A: high-SOP non-swap BER failures exist in foundation observations, while single-statistic threshold detectors missed the observed failures
+    shared_contract:
+      simulator_id: simulator.dual_pol_shared_realization.v1
+      baseline_id: baseline.standard_cma.godard_z
+      metric_contract_id: metric.dual_qpsk.fixed-plus-pi.v1
+      n_symbols: 100000
+      block_size: 64
+      alpha: 4.2
+      beta: 1.4
+      f_g_hz: 30
+      snr_db: 20
+      modulation: QPSK
+      cma_mu: 0.001
+      cma_taps: 11
+      rates: [0.000004, 0.00001]
+      train_seeds: [11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+      test_seeds: [41, 42, 43, 44, 45]
+      channel_block: 100
+      r2: 1.0
+      fade_threshold_h: 0.1
+      clip_norm: 1.0
+      t_s: 0.0000000004
+      method: gar
+      method_scope: channel_gg_time_envelope_method
+      runtime_field_effects:
+        channel_block:
+          effect: operative
+          consumer: channel_generator
+        r2:
+          effect: operative
+          consumer: standard_cma_config
+        fade_threshold_h:
+          effect: audit_only
+          consumer: canonical_standard_cma_not_consumed
+          reason: retained explicitly for audit compatibility; canonical prompt013 does not read it
+        clip_norm:
+          effect: audit_only
+          consumer: canonical_standard_cma_not_consumed
+          reason: retained explicitly for audit compatibility; canonical prompt013 does not read it
+        t_s:
+          effect: operative
+          consumer: channel_generator
+        method:
+          effect: operative
+          consumer: channel_generator
+          scope: channel_gg_time_envelope_method
+      pairing: all candidates consume the same saved causal feature rows for each rate-seed cell
+      supervision_boundary: logistic and MLP may use train block labels; the unlabeled AE uses the complete control-rate train feature domain and never receives event labels; all inference features are causal receiver/CMA traces only
+      resource_budget: 30 shared standard-CMA cells plus three lightweight CPU models; no 1M/5M expansion
+    candidates:
+      - candidate_id: C24-SL-LINEAR
+        mechanism: supervised class-weighted logistic temporal detector
+        hypothesis: a causal combination of multiple CMA internal traces contains predictive information not captured by any one threshold
+      - candidate_id: C24-SL-MLP
+        mechanism: supervised shallow nonlinear temporal detector
+        hypothesis: nonlinear interactions among causal trace level/delta/history improve event discrimination beyond the linear detector
+      - candidate_id: C24-SSL-AE-UNLABELED
+        mechanism: unlabeled control-domain reconstruction with cell-level anomaly threshold
+        hypothesis: event blocks depart from the overall control-rate train feature domain without using event labels for representation fitting or threshold calibration
+    metrics:
+      required_signal_metrics: [fixed_label_ber, permutation_invariant_ber]
+      primary: [cell_recall_before_or_at_oracle, control_cell_false_alarm_rate]
+      diagnostics: [block_AUROC, block_AUPRC, lead_blocks, ECE, positive_cells, positive_blocks]
+    preregistered_outcomes:
+      minimum_information: at least 3 event cells and 50 positive train blocks; otherwise INCONCLUSIVE_DEFER
+      advance_specific_mechanism: test recall at least 0.60 AND control false-alarm at most 0.20 AND AUROC at least 0.70
+      retire_specific_mechanism: with minimum information, AUROC at most 0.55 OR recall equals 0
+      otherwise: DEFER
+      no_family_wide_kill: true
+    valid_domain: exact B003 shared contract only; no cross-SNR/fG/modulation/length claim
+    controller:
+      action: RUN
+      state: BATCH_READY
+      evidence_status: EXPLORATORY
+      destination: evidence_ledger
+
+queue_gate:
+  candidate_universe_v2_bound: true
+  candidate_map_v2_bound: true
+  map_gate_required: true
+  multiple_distinct_mechanisms: true
+  shared_baseline_seed_metrics_budget: true
+  hypotheses_and_exit_rules_preregistered: true
+  valid_domain_explicit: true
+  standard_cma_godard_z_only: true
+  current_cma_no_z_forbidden: true
+  source_snapshot_frozen: true
+  runner: projects/thesis-fso/direction-lab/tools/run_v3.py:run_governed
+  runner_sha256: 6f21dfe023ccb8e74876730bee8789353ef649ad2b976be63317420f298a9caf
+  registry: projects/thesis-fso/direction-lab/component-registry.v3.yaml
+  registry_sha256: 82fdb419de785568a3afe13666200aa17cde0abf56d9ae55848c70508bcddce9
+  independent_review: PASS
+  verifier_scope: v3 Universe/Map/Queue/Registry/Runner binding and lean-ledger governance smoke only
+  verifier_evidence: .sessions/2026-07-17-direction-lab-governance-pilot/verifications.md#V012
+  verdict: PASS

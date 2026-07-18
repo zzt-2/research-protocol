@@ -87,6 +87,8 @@ Scout 必须先完成全景，再排序；不得因一个候选的正/负信号�
 
 状态转换必须由机器可读产物支持，不能只由自然语言日志推动。`state/completion-events.jsonl` 是 append-only 转换事实源，`canonical-state.yaml` 是由 reducer 物化的当前投影视图；`topic-index.md`、session note 和 README 只做摘要。
 
+这里的 `canonical-state.yaml` 只对 Direction Lab Sandbox 投影负责；正式研究状态与授权只看 `projects/thesis-fso/master-state.md`。`sandbox_state: BOARD_READY` 表示全局 board/controller 基础设施能力，不等于当前 Scout 已进入 Sandbox，也不授予候选创建 Queue、Registry 或执行 batch。
+
 ### 3.1 运行前硬门
 
 脚本必须阻断以下情况：
@@ -168,7 +170,7 @@ B001–B003 是 Communications profile 下的双偏振 OSL Project Adapter 实�
 
 B002 与 B003 的 U24 结果属于同一 exact contract；B003 的主要新增价值是治理链复核，而不是新的方法学证据。下一批不得继续重复 U24 微变体，也不得把 Logistic/MLP 的 exact-domain `ADVANCE_SPECIFIC` 扩展成方法族结论。
 
-候选 Universe 仍保持开放。下一轮先完成 canonical state reconciliation 和机制族 BatchPlan，再选择实现就绪且能产生新信息的批次。
+canonical state reconciliation 已完成，当前机器状态指向 B003。当前 Scout 是 P03/U19：CSI_NONE 接口合同已闭合，但尚未形成 residual headroom 研究证据或 Sandbox 资格。下一唯一合法动作是 P03 residual headroom probe；在其退出前暂停新增候选、B004、ML 训练和流程扩展。
 
 ## 9. 未来 skill 化要求
 

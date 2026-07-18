@@ -9,3 +9,35 @@ results*/
 *.pyc
 cnki_cookies.json
 **/worker-tasks/
+.worktrees/
+
+# Local tool state and reproducible render/build noise
+/.superpowers/brainstorm/.last-*
+/tmp/**/*.png
+/tmp/**/*.log
+/tmp_*.png
+**/.$*.drawio.bkp
+**/.$*.drawio.dtmp
+**/~$*
+**/.DS_Store
+/projects/simulation/paper/ccisp2026/$tmp/
+/projects/simulation/paper/ccisp2026/build_*.log
+/projects/simulation/paper/ccisp2026/_qa/
+/projects/simulation/figures/fig1-reference-previews/
+/projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/interface-smoke-v1/*.json
+/projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/interface-smoke-v1/*.yaml
+/~/
+/build_text_final.log
+/gs.html
+
+# Zero-byte shell fragments accidentally created at the repository root
+/nul
+/0$
+/2026-05-31
+/2026-06-01
+/依赖
+/关联仿真
+/关联
+/审查
+/调研
+/状态

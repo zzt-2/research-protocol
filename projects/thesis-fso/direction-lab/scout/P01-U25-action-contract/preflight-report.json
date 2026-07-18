@@ -1,0 +1,74 @@
+{
+  "schema_version": "direction-lab.p01-preflight.v1",
+  "plan_batch_id": "P01-U25-ACTION-CONTRACT-SCOUT",
+  "status": "P01_BLOCKED",
+  "formal_performance_run": false,
+  "b004_started": false,
+  "sandbox_queue_created": false,
+  "causal_event_adapter": {
+    "status": "PASS_RECEIVER_PROXY_ONLY",
+    "contract_fingerprint": "131ccab5d21e5339617a92fdeea16360e6a2d98bd07b51576228a3c3d07297cb",
+    "actual_source": "projects/thesis-fso/direction-lab/batches/B003-20260718-live/artifacts/result.json::cells[0].trace",
+    "producer_chain": "run_b001._default_runner -> prompt013_swap_mechanism_q2.run_cma_diagnostic(mode='standard') -> blind_trace",
+    "runtime_fields": [
+      "output_start",
+      "output_end",
+      "cm_error",
+      "output_power",
+      "update_norm"
+    ],
+    "event_lock_score": "receiver-only proxy 1/(1+cm_error); not a validated physical lock variable",
+    "forbidden_runtime_fields": [
+      "sX",
+      "sY",
+      "h",
+      "theta",
+      "bitsX",
+      "bitsY",
+      "fixed_label_ber",
+      "pi_ber",
+      "future_window",
+      "post_hoc_ber"
+    ]
+  },
+  "fork_replay": {
+    "status": "BLOCKED",
+    "blockers": [
+      "STATE_SNAPSHOT_MISSING",
+      "ACTION_EFFECT_NOT_OBSERVABLE"
+    ],
+    "no_op_bit_exact": "NOT_REACHED",
+    "replay_determinism": "CONTRACT_ONLY_NOT_RECEIVER_STATE_REPLAY",
+    "clean_false_intervention": "NOT_COMPUTABLE",
+    "action_latency": "NOT_COMPUTABLE",
+    "recovery_delay": "NOT_COMPUTABLE",
+    "worst_cell_degradation": "NOT_COMPUTABLE",
+    "reason": "The standard-CMA adapter has no per-decision action hook and does not expose a receiver state snapshot. u25_action_contract.apply_action changes only a Python metadata dictionary, not CMA weights or zX/zY."
+  },
+  "sandbox_preflight": {
+    "status": "NOT_REACHED",
+    "blockers": [
+      "RUNNER_U24_HARDCODED",
+      "NO_U25_COMPONENT_REGISTRY",
+      "NO_U25_SOURCE_CLOSURE"
+    ],
+    "registry_created": false,
+    "queue_created": false,
+    "runner_created": false,
+    "completion_event_written": false,
+    "canonical_state_changed": false
+  },
+  "reusable_assets": [
+    "standard-CMA blind_trace with real receiver-visible fields",
+    "causal event schema and source pointers",
+    "oracle/future/post-hoc rejection tests",
+    "fixed-safe-policy action contract",
+    "prompt013 online/frozen diagnostic branch"
+  ],
+  "next_candidate": "P02/U10 event-library Scout; if its physical carrier-event chain is also absent, proceed to P03/U19 residual-headroom Scout",
+  "reproduce": {
+    "preflight": "python projects/thesis-fso/direction-lab/tools/u25_sandbox_preflight.py",
+    "adapter_tests": "python -m pytest projects/thesis-fso/direction-lab/tests/test_u25_action_contract.py -q",
+    "preflight_tests": "python -m pytest projects/thesis-fso/direction-lab/tests/test_u25_sandbox_preflight.py -q"
+  }
+}

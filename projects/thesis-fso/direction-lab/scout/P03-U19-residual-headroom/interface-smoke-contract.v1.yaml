@@ -1,0 +1,44 @@
+schema_version: direction-lab.p03-interface-smoke.v1
+contract_id: scout.P03-U19.interface-closure-smoke.v1
+mode: interface_smoke_only
+performance_experiment: false
+source_root: .worktrees/unified-batch-runner/projects/simulation
+n_symbols: 512
+alpha: 4.2
+beta: 1.4
+f_g_hz: 30.0
+sop_rate: 0.000004
+gamma_bar: 100.0
+block: 100
+t_s: 0.0000000004
+method: gar
+seed: 11
+mu: 0.001
+cma_mu: 0.001
+cma_taps: 11
+r2: 1.0
+cma_block_size: 64
+eval_start: 133
+eval_end: 389
+fade_threshold_h: 0.1
+clip_norm: 1.0
+csi_access_class: CSI_NONE
+constellation: QPSK
+constellation_amplitude_per_axis: 0.7071067811865475
+tail_energy_threshold: 0.25
+valid_domain:
+  scenario: dual-pol ground-space OSL
+  receiver: standard-CMA Godard-z
+  modulation: QPSK
+  snr_db: 20.0
+  f_g_hz: 30.0
+  turbulence: alpha-4.2-beta-1.4
+  purpose: deterministic interface smoke only
+forbidden_runtime_inputs:
+  - TX truth
+  - true h
+  - true Jones
+  - future window
+  - fixed-label BER
+  - PI-BER
+  - post-hoc labels

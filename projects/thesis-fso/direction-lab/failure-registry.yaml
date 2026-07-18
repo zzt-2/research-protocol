@@ -2,7 +2,7 @@ schema_version: direction-lab.failure-registry.v1
 entries:
   - id: infra.windows-memmap-handle-001
     kind: infrastructure-bug
-    status: repaired-targeted-verified-pending-independent-review
+    status: repaired-targeted-verified
     observed: 2026-07-17
     symptom: test_batch1_low_memory 在 Windows TemporaryDirectory 清理时 WinError32
     root_cause: shared 中的 numpy memmap 在 context exit 时仍持有文件句柄
@@ -13,3 +13,28 @@ entries:
     status: FAIL-in-original-domain
     pointers: [foundation.decisions:D048-D049, foundation.verifications:V016-V017]
     inheritance_rule: 仅作为传统阈值对照；不得据此 Kill 监督或自监督时序 detector 方法族。
+  - id: b001.v1.c24-ssl-ae-protocol-deviation
+    kind: protocol-deviation-plus-specific-failure
+    status: INCONCLUSIVE_AS_SSL_RETIRE_ORACLE_FILTERED_IMPLEMENTATION_ONLY
+    observed: 2026-07-17
+    candidate_claimed: C24-SSL-AE
+    mechanism_actually_run: oracle-supervised clean-row reconstruction AE
+    root_cause: train fixed-label y==0 was used to select clean fitting rows, contradicting the preregistered no-event-label mechanism
+    empirical_failure: control-rate test false-alarm 0.40 and event recall 0 under the B001 exact domain
+    effective_domain: B001 exact shared contract only
+    ruled_out: this oracle-label-filtered clean-reconstruction implementation under B001
+    not_ruled_out: [true self-supervised AE, generative detectors, SSL family]
+    reopen_condition: fit the representation using control-rate receiver features without event labels and pass a new pre-run gate
+    pointers: [direction-lab.verifications:V008, batches/B001-20260717-live/result.json]
+  - id: b002.v2.c24-ssl-ae-unlabeled-exact-retire
+    kind: specific-mechanism-failure
+    status: RETIRE_SPECIFIC_IN_EXACT_DOMAIN
+    observed: 2026-07-18
+    candidate: C24-SSL-AE-UNLABELED
+    mechanism: unlabeled control-domain reconstruction with cell-level threshold; fit and calibration receive no event labels
+    empirical_failure: event-cell recall 0 and control-rate test false-alarm 0.40; event AUROC 0.8213859 does not override the preregistered recall retire rule
+    effective_domain: B002 exact shared contract only
+    ruled_out: this unlabeled reconstruction architecture/training/threshold under B002
+    not_ruled_out: [other self-supervised mechanisms, robust-contamination reconstruction, generative detectors, SSL family]
+    inheritance_rule: future related candidates inherit the recall/false-alarm negative evidence but are independent if mechanism, input, training, threshold, or target dimension changes
+    pointers: [direction-lab.verifications:V011, batches/B002-20260718-live/verifier-report.md]

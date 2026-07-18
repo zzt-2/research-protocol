@@ -1,0 +1,42 @@
+schema_version: direction-lab.communications-profile.v1
+profile_id: communications
+owner: domain-comms.md
+process_owner: projects/thesis-fso/direction-lab/process.md
+
+capability_vocabulary:
+  observational:
+    meaning: receiver-visible monitoring or warning without receiver-state mutation
+  estimative:
+    meaning: infer a state, channel, residual or confidence quantity with an explicit error/comparator contract
+  action:
+    meaning: choose a receiver/pilot/resource action at an online decision time
+  closed_loop:
+    meaning: action changes receiver state and is continued on the same realization/state
+
+information_classes:
+  runtime_receiver_visible: must be available at the decision time from the receiver chain
+  training_or_evaluation_only: labels, BER, PI-BER, TX symbols and true channel/Jones quantities
+  oracle_or_post_hoc: forbidden as runtime inputs; may only be used for separated evaluation
+
+metric_rules:
+  symbol_error_metrics: fixed-label BER and permutation-invariant BER must remain separate
+  estimator_metrics: must declare target, error population, causal inputs and comparator
+  warning_metrics: require event definition, persistence and lead-time contract before performance use
+  llr_metrics: require a legal CSI contract and same-information coded comparator
+
+baseline_rules:
+  canonical_identity_source: projects/thesis-fso/direction-lab/anchor.yaml
+  standard_cma_only: current-CMA/no-z is never a substitute for standard-CMA
+  comparator: same realization, same causal information and same budget unless explicitly documented
+
+runner_rules:
+  observational: requires receiver-visible trace adapter
+  estimative: requires target/error/comparator interface; does not require state mutation
+  action: requires action schema and decision-time input contract
+  closed_loop: requires state snapshot, action hook, fork replay and post-action continuation
+
+anti_patterns:
+  - rename SOP/Jones failure as carrier lock-loss or cycle-slip
+  - use TX truth/true h/true Jones/post-hoc BER as runtime event input
+  - call a hard symbol detector an LLR generator
+  - treat an adjacent single-carrier or 16-APSK implementation as dual-pol OSL evidence

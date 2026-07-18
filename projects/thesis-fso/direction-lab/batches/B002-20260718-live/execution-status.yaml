@@ -1,0 +1,37 @@
+schema_version: direction-lab.execution-status.v1
+batch_id: B002
+queue_snapshot:
+  queue_id: queue.dual-pol-osl.ml.2026-07-18.v2
+  queue_hash: 3990e7b9c49c5f88eb7f91e65a50d2faa8a4e937bc34d64c66e070752025bf51
+  state_semantics: frozen-pre-run-contract
+run:
+  run_id: B002-15309cc700804776a45740786101a6ae
+  controller_decision_id: decision-30e66bbf8b5f4373813d5c7007c5bb19
+  manifest_hash: 3004a354ddaa107e609d0bb736d99c5fc06a03e38487484ffc0311ad00e35c76
+  result_hash: a492e00e986ec352e4b01f10c7b32f3cc43c0a9603bf5bc2f75f27ad6924f019
+  cells: 30
+  train_cells: 20
+  test_cells: 10
+  baseline_calls: 30
+  block_rows: 46860
+  source_closure: 31/31
+  execution_mode: PRODUCTION
+  test_only: false
+evidence_gate:
+  accepted: true
+  artifact_status: ACCEPTED
+  trust_status: TRUSTED
+  destination: evidence_ledger
+  replay_rejections: 0
+  stale_invalidations: 0
+independent_verification:
+  status: PASS
+  report: verifier-report.md
+  verification_pointer: .sessions/2026-07-17-direction-lab-governance-pilot/verifications.md#V011
+synthesis:
+  status: COMPLETE_EXPLORATORY_ONLY
+  report: batch-synthesis.md
+  promotion_allowed: false
+status: COMPLETED_SANDBOX_VERIFIED
+valid_domain: exact B002 shared contract only; no cross-SNR/fG/modulation/length claim
+publication_boundary: no automatic formal-material or paper promotion

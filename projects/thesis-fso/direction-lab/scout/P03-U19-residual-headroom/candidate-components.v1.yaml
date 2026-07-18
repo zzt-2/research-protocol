@@ -1,0 +1,34 @@
+schema_version: direction-lab.candidate-components.v1
+snapshot_id: P03-U19-interface-closure-components.v1
+candidate: U19
+status: scout-candidate
+registry: false
+queue_binding: null
+canonical_baseline_modified: false
+components:
+  - component_id: candidate.P03-U19.z-window-adapter.v1
+    role: causal_receiver_output_adapter
+    path: scout/P03-U19-residual-headroom/z_window_adapter.py
+    sha256: c781b973e532725656ac0e874137dfc1cf3764e3a6229f781e3a4be25e27cd5a
+    canonical: false
+  - component_id: candidate.P03-U19.qpsk-analytic-comparator-csi-none.v1
+    role: same_information_analytic_comparator
+    path: scout/P03-U19-residual-headroom/analytic_comparator.py
+    sha256: 35ce40c6f52ab79002c6cee10296bfa3f916de4b784b6a24f709db8ac23d64ad
+    canonical: false
+  - component_id: candidate.P03-U19.residual-artifact.v1
+    role: scout_residual_diagnostic
+    path: scout/P03-U19-residual-headroom/residual_artifact.py
+    sha256: 2b58f9bef8e7fdecc6351ad7d18574c7da9063619bccd036ecc583faddd1c7ca
+    canonical: false
+  - component_id: candidate.P03-U19.interface-smoke-runner.v1
+    role: isolated_interface_smoke_orchestrator
+    path: scout/P03-U19-residual-headroom/run_interface_smoke.py
+    sha256: 85717c7303a4c7c5eaad0b6ffb232003adf5a40fee6937333e950f266a644e3f
+    canonical: false
+source_closure:
+  path: scout/P03-U19-residual-headroom/artifacts/interface-smoke-v2/source-closure.yaml
+  sha256: e5bba6ddb874a01be95ae98fa5892a99f077e7152f567521b9c3a3ecced069c7
+smoke_report:
+  path: scout/P03-U19-residual-headroom/artifacts/interface-smoke-v2/smoke-report.yaml
+  sha256: 4dede836cc616c5b74ac71f68059811f667b50c7360ce0a454e959fd47c0170a

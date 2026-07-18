@@ -1,0 +1,152 @@
+schema_version: direction-lab.capability-triage.v1
+triage_id: triage.dual-pol-osl.2026-07-18.p02-p03.v1
+process: projects/thesis-fso/direction-lab/process.md
+profile: projects/thesis-fso/direction-lab/profiles/communications.yaml
+project_adapter: projects/thesis-fso/direction-lab/adapters/dual-pol-osl.yaml
+mode: capability_triage_only
+performance_experiment: forbidden
+b004: forbidden
+historical_batches: read_only
+universe_scope: [P02-U10, P03-U19]
+
+common_contract_rules:
+  canonical_baseline: baseline.standard_cma.godard_z
+  baseline_source: projects/thesis-fso/direction-lab/anchor.yaml
+  runtime_forbidden: [tx_bits, sX, sY, h, theta, true_jones, fixed_label_ber, permutation_invariant_ber, pi_ber, future_window, post_hoc_ber]
+  training_or_evaluation_only: [sX, sY, tx_bits, h, theta, true_jones, fixed_label_ber, permutation_invariant_ber, pi_ber]
+  receiver_state_mutation: false
+  queue_registry_fingerprint: not_created_by_policy
+
+candidates:
+  - plan_id: P02-U10-EVENT-LIBRARY-SCOUT
+    candidate_ids: [U10, U37, U38]
+    capability: [observational, estimative]
+    status: NOT_RUNNABLE
+    asset_readiness: NOT_READY
+    lineage:
+      previous_status: NOT_RUNNABLE
+      previous_blocker: current_artifact_drops_zX_zY_and_no_comparator_contract_is_bound
+      current_status: NOT_RUNNABLE
+      superseded_by_evidence: none
+    input_sources:
+      existing_receiver_inputs:
+        - source: projects/thesis-fso/direction-lab/tools/run_b001.py:128-151
+          fields: [zX, zY, valid_mask, output_start, output_end]
+          shape_dtype_unit: zX_zY=1d_complex_receiver_symbols; valid_mask=1d_bool; indices=scalar_int_symbol_index
+          availability: current_or_completed_standard_cma_output_block
+        - source: projects/simulation/common/_recovery.py:37-118
+          fields: [fft_foe, dpll_track_dd, vv_cpr, bps_cpr]
+          availability: adjacent_single_carrier_assets_only
+      required_new_inputs:
+        - dual_pol_carrier_phase_noise_and_cfo_with_parameter_provenance
+        - post_cma_dual_pol_cpr_output_and_receiver_state_trace
+    causal_boundary: decision_at_current_cpr_sample_or_completed_block; only_trace_through_t; no_future_window_or_oracle
+    output_or_action:
+      output: receiver_only_lock_loss_or_cycle_slip_score_type_persistence_and_warning_lead
+      action: none
+    changes_receiver_state: false
+    runner_capability:
+      required: receiver_visible_cpr_trace_adapter_and_event_persistence_validator
+      existing: v3_u24_blind_trace_detector_only
+      status: NOT_RUNNABLE
+    existing_implementation:
+      - standard-CMA_dual_pol_generator_without_carrier_impairment
+      - adjacent_single_carrier_FOE_DPLL_VV_BPS
+      - adjacent_single_carrier_closed_loop_tracker_not_dual_pol_evidence
+    missing_implementation:
+      - dual_pol_carrier_impairment_contract
+      - explicit_CPR_order_and_parameters
+      - phase_innovation_confidence_residual_trace
+      - authentic_event_clean_library_and_persistence_validator
+      - candidate-specific_runner_source-closure
+    runner_reuse: reuse_governance_scaffold_and_standard_cma_seam_only; cannot_reuse_v3_as_U10_runner
+    minimal_smoke_test:
+      status: BLOCKED
+      fixture: 3_clean_plus_3_event_like_dual_pol_realizations_after_same_conventional_CPR
+      checks: [causal_trace_only, event_persistence, warning_lead, clean_false_alarm, deterministic_replay]
+      blocker: no_legal_dual_pol_carrier_cpr_trace
+    evidence_pointers:
+      - projects/thesis-fso/direction-lab/scout/P02-U10-event-library/foundation-audit.yaml
+      - projects/simulation/common/_dual_pol_channel.py:10-81
+      - projects/thesis-fso/direction-lab/tools/run_v3.py:143-185
+
+  - plan_id: P03-U19-RESIDUAL-HEADROOM-SCOUT
+    candidate_ids: [U19, U36]
+    capability: [estimative, observational]
+    status: P03_SCOUT_CONTRACT_READY
+    asset_readiness: INTERFACE_CLOSED_CSI_NONE
+    lineage:
+      previous_status: NOT_RUNNABLE
+      previous_blocker: no_executable_input_causal_boundary_reproducible_output_and_legal_comparator
+      superseded_by_evidence: P03-U19-residual-headroom/artifacts/interface-smoke-v2/smoke-report.yaml
+    input_sources:
+      existing_receiver_inputs:
+        - source: projects/thesis-fso/direction-lab/tools/run_b001.py:128-151
+          fields: [zX, zY, valid_mask, output_start, output_end]
+          shape_dtype_unit: zX_zY=1d_complex_receiver_symbols; valid_mask=1d_bool; indices=scalar_int_symbol_index
+          availability: in_memory_from_real_standard_cma_runner
+        - source: projects/thesis-fso/direction-lab/tools/ml_detector_batch.py:17-54
+          fields: [causal_scalar_trace_features]
+          availability: current_or_past_blind_trace_only; not_complex_residual_artifact
+      legal_csi_options:
+        - id: CSI_NONE
+          status: BOUND_AND_SMOKED
+          source: receiver_output_only
+        - id: CSI_PILOT_OR_INTERNAL_ESTIMATE
+          status: DECLARED_NOT_BOUND
+          source: must_be_explicitly_added_to_project_adapter
+    causal_boundary: block_end_t; zX_zY_and_receiver_trace_through_t_and_prior_window_only
+    output_or_action:
+      output: residual_conditional_moments_tail_mass_and_or_symbol_posterior_hard_or_soft_decision
+      action: none
+    changes_receiver_state: false
+    runner_capability:
+      required: residual_headroom_probe_over_the_closed_CSI_NONE_interface
+      existing: standard_cma_runner_z_window_adapter_residual_artifact_and_same_information_analytic_comparator
+      status: READY_FOR_SCOUT_PROBE_NOT_SANDBOX
+    existing_implementation:
+      - standard-CMA_real_output_zX_zY
+      - causal_zX_zY_adapter_with_source_pointers
+      - explicit_CSI_NONE_contract
+      - residual_distribution_artifact
+      - same-information_nearest-QPSK_comparator
+      - fixed_label_and_PI_evaluators_for_separated_scoring_only
+      - hard_QPSK_decision_primitive_as_possible_negative_control
+    missing_implementation:
+      - preregistered_multi_cell_residual_headroom_probe
+      - stability_and_90_percent_headroom_exit_evaluator
+      - actual_U19_ML_entrypoint_only_if_residual_mismatch_is_stable
+      - receiver_estimated_CSI_path_remains_unbound
+    runner_reuse: reuse_standard_cma_generation_seam_and_closed_CSI_NONE_scout_components; do_not_reuse_v3_as_a_performance_runner
+    minimal_smoke_test:
+      status: PASS
+      fixture: one_deterministic_small_real_standard_cma_z_window
+      checks: [shape_dtype_time_alignment, finite_values, deterministic_rerun, reject_oracle_future_posthoc_fields, same_information_analytic_comparator]
+      evidence: P03-U19-residual-headroom/artifacts/interface-smoke-v2/smoke-report.yaml
+      performance_claim: none
+    evidence_pointers:
+      - projects/thesis-fso/direction-lab/tools/run_b001.py:109-152
+      - projects/thesis-fso/direction-lab/tools/run_v3.py:161-185
+      - projects/simulation/common/_dual_pol_channel.py:10-81
+      - .sessions/2026-07-10-dual-pol-osl-groundwork/decisions.md#D044
+
+decision:
+  verdict: P03_SCOUT_CONTRACT_READY
+  lineage:
+    previous_verdict: B_ALL_CANDIDATES_NOT_RUNNABLE
+    previous_reason: neither_candidate_had_all_of_executable_input_causal_boundary_reproducible_output_legal_comparator_and_minimal_smoke
+    superseded_by: P03_interface_closure_sprint
+  current_scout: P03-U19
+  preferred_shortest_closure: completed_for_P03_CSI_NONE
+  why_not_p02: requires_new_dual_pol_carrier_cpr_event_chain_before_any_ml_event_library
+  p03_current_boundary: interface_ready_only; no_multi_cell_headroom_result_no_ML_training_no_sandbox_queue
+  next_candidate_after_closure_failure: none_selected
+  next_candidate_guard: pause_candidate_expansion_until_P03_residual_headroom_probe_exits
+  allowed_next_actions:
+    - preregister_and_run_P03_residual_headroom_probe_without_ML_training
+  forbidden_next_actions:
+    - create_pass_queue
+    - create_registry_or_fingerprint
+    - start_B004
+    - modify_or_rerun_B001_B002_B003
+    - relabel_CMA_trace_as_CPR_event_or_use_oracle_CSI

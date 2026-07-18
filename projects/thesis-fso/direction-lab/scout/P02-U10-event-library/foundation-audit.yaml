@@ -1,0 +1,44 @@
+schema_version: direction-lab.scout-foundation-audit.v1
+plan_batch_id: P02-U10-EVENT-LIBRARY-SCOUT
+status: P02_SCOUT_CONTRACT_ASSETS_PARTIAL
+formal_performance_run: false
+event_library_ready: false
+
+reusable_implementation:
+  carrier_recovery:
+    - projects/simulation/common/_recovery.py::foe_fourth_power
+    - projects/simulation/common/_recovery.py::dpll_fourth_power
+    - projects/simulation/common/_recovery.py::vv_cpr
+    - projects/simulation/common/_recovery.py::bps_cpr
+  carrier_impairment:
+    - projects/simulation/common/_channel.py::doppler_phase
+    - projects/simulation/common/_channel.py::generate_shared_realization
+  adjacent_stateful_tracker:
+    - projects/simulation/explore/b2-fade-freeze-pilot-fallback/_closed_loop_freeze.py::ClosedLoopPhaseTracker
+  existing_tests:
+    - projects/simulation/tests/test_common.py
+
+current_scene_gap:
+  dual_pol_generator: projects/simulation/common/_dual_pol_channel.py::generate_shared_realization_dp
+  present_impairments: [Gamma-Gamma_amplitude, SOP_Jones_rotation, AWGN]
+  absent_impairments: [carrier_phase_noise, residual_frequency_offset, carrier_phase_state]
+  warning: SOP theta is a Jones/polarization rotation angle and must not be renamed carrier phase or cycle slip
+
+blockers:
+  - DP_CARRIER_IMPAIRMENT_CONTRACT_MISSING
+  - DP_CPR_CHAIN_MISSING
+  - LOCK_LOSS_CYCLE_SLIP_EVENT_SCHEMA_MISSING
+  - AUTHENTIC_EVENT_AND_CLEAN_LIBRARY_MISSING
+  - U10_RUNNER_REGISTRY_SOURCE_CLOSURE_MISSING
+
+required_before_event_library_smoke:
+  - freeze linewidth, phase process, residual CFO, carrier seed, t_s and chain ordering
+  - integrate the same conventional CPR after standard-CMA for every comparator
+  - expose receiver-only phase innovation, estimator state and confidence trace
+  - define event persistence and warning lead without runtime access to TX truth or BER
+  - create same-CPR clean/event fixtures and validator
+
+ordering_conclusion:
+  relative_to_p01: better component reuse, because FOE/VV/BPS/DPLL and phase-noise channel code exist
+  readiness: not event-library-ready
+  next_allowed_action: light-gate carrier-impairment and dual-pol CPR contract; no performance cell

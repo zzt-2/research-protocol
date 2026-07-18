@@ -1,0 +1,21 @@
+schema_version: direction-lab.scout-contract.v1
+contract_id: scout.P02-U10.event-library.v1
+status: NOT_READY
+candidate: U10
+capability: [observational, estimative]
+profile: ../../profiles/communications.yaml
+adapter: ../../adapters/dual-pol-osl.yaml
+baseline: standard-CMA
+runtime_inputs:
+  required: [dual_pol_cpr_output, phase_estimate, innovation, confidence_or_residual, sample_or_block_index]
+  forbidden: [tx_bits, true_h, true_jones, theta, post_hoc_ber, future_window]
+causal_boundary: current_cpr_output_through_t_only
+output: [lock_loss_score, cycle_slip_score, event_type, persistence, warning_lead]
+state_mutation: false
+comparator: conventional_CPR_plus_receiver_only_threshold_monitor_same_trace
+smoke: 3_clean_and_3_event_like_dual_pol_fixtures_after_same_CPR; not_executable_until_carrier_cpr_adapter_exists
+gaps:
+  - dual-pol carrier phase/CFO model
+  - explicit CPR chain and receiver trace fields
+  - event label/persistence/lead validator
+  - source closure and runner seam

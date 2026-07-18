@@ -1,0 +1,78 @@
+schema_version: direction-lab.scout-contract.v2
+contract_id: scout.P03-U19.residual-headroom.v2
+lineage:
+  supersedes: scout.P03-U19.residual-headroom.v1
+  reason: causal z adapter, same-information comparator, residual artifact, and authentic interface smoke closed
+status: SCOUT_CONTRACT_READY
+current: true
+sandbox_status: NOT_ENTERED
+candidate: U19
+capability: [estimative, observational]
+profile: ../../profiles/communications.yaml
+adapter: ../../adapters/dual-pol-osl.yaml
+baseline: standard-CMA
+input_source:
+  entrypoint: projects/thesis-fso/direction-lab/tools/run_b001.py::_default_runner
+  receiver_visible_fields: [zX, zY, valid_mask, blind_trace]
+  source_output: frozen prompt013 run_cma_diagnostic mode standard
+  source_hash: 26a0e95d79d58088b6a24054d04cb76893a97a952a714e335068ea871edb8c89
+causal_boundary:
+  symbol_range: half-open [eval_start, eval_end)
+  decision_available_at_input_index: eval_end + floor(cma_taps / 2)
+  runtime_allowed: [completed zX, completed zY, valid_mask, known QPSK alphabet]
+  evaluation_only: [fixed-label BER, PI-BER]
+  forbidden: [TX truth, true h, true Jones, future window, post-hoc labels]
+  receiver_state_changed: false
+information_access:
+  CSI_NONE:
+    status: BOUND_AND_SMOKED
+    comparator: analytic.qpsk-nearest.csi-none.v1
+  RECEIVER_ESTIMATED_CSI:
+    status: DECLARED_NOT_BOUND
+    schema_boundary: receiver-only estimate with provenance and availability no later than decision time
+    reason: no legal receiver-estimated CSI producer is presently bound
+z_window_adapter:
+  component_id: candidate.P03-U19.z-window-adapter.v1
+  schema: direction-lab.p03-z-window.v1
+  shape: [window_symbols, 2]
+  dtype: complex128 encoded as float64 real-imag pairs
+  unit: normalized complex baseband symbol
+residual_artifact:
+  component_id: candidate.P03-U19.residual-artifact.v1
+  schema: direction-lab.p03-residual-artifact.v1
+  definition: receiver-visible z minus analytic comparator predicted mean
+  fields: [conditional moments, explicit-threshold tail mass, cross-cell stability status]
+  interpretation_limit: nonzero residual does not establish ML headroom
+  evaluation_metrics:
+    fixed_label_ber: separate evaluation-only field
+    pi_ber: separate evaluation-only field
+    interface_smoke_status: NOT_COMPUTED_INTERFACE_SMOKE
+analytic_comparator:
+  component_id: candidate.P03-U19.qpsk-analytic-comparator-csi-none.v1
+  entrypoint: analytic_comparator.py::compare_qpsk_csi_none
+  inputs: [same z-window, explicit QPSK amplitude]
+  outputs: [hard predicted mean, per-stream squared distance, aggregate mean squared distance]
+  complexity: O(N) time and O(1) state
+  deterministic_numerical_smoke: PASS
+implementation_status:
+  causal_adapter: PASS
+  csi_none_path: PASS
+  receiver_estimated_csi_path: DECLARED_NOT_BOUND
+  analytic_comparator: PASS
+  residual_artifact: PASS
+  authentic_one_cell_interface_smoke: PASS
+smoke:
+  contract: interface-smoke-contract.v1.yaml
+  artifact: artifacts/interface-smoke-v2
+  runtime_artifact_hash: ee1424bbdb158a6ff27f239f358c3101ebcd04554335c8dc94520c1f83a86fcc
+  scope: one deterministic cell, interface only, no performance conclusion
+remaining_sandbox_prerequisites:
+  - implement and freeze the actual U19 ML estimative or detection mechanism; this Sprint implements interfaces, not an ML model
+  - pre-register a multi-cell diagnostic budget and stability criterion without treating residual magnitude as ML headroom
+  - bind fixed-label BER and PI-BER evaluators outside the runtime causal path
+  - construct a mechanism-distinct shared Sandbox batch plan with legal no-change and analytic comparators
+  - bind candidate components into a new immutable Registry and Queue snapshot only after those gates pass
+exact_entry_reason: >-
+  CSI_NONE now has executable receiver-visible input, an explicit causal boundary, reproducible residual output,
+  a same-information analytic comparator, and an authentic deterministic one-cell smoke; therefore P03 may enter
+  the next candidate contract-implementation round, but not Sandbox or B004.

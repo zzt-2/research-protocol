@@ -1,0 +1,171 @@
+schema_version: direction-lab.batch-plan.v1
+plan_id: plan.dual-pol-osl.ml.2026-07-18.v1
+status: SCOUT_PLAN_ONLY
+coverage_audit: candidate-coverage-audit.v3.yaml
+ordering_rule: problem evidence, causal information increment, implementation readiness, legal baseline, diagnostic value, cost, historical distance
+global_constraints:
+  scene: dual-pol ground-to-satellite OSL
+  canonical_baseline_unchanged: true
+  fixed_and_pi_metrics_required_where_symbol_errors_are_measured: true
+  no_hidden_defaults: true
+  no_b004_simulation: true
+  no_promotion_or_paper_write: true
+  queue_registry_runner_required_before_any_sandbox: true
+tiers:
+  Scout: light evidence and interface gate; no performance claim and no formal simulation batch
+  Sandbox: automatic manifest, receipt, result hash, source closure, completion event, and reducer
+  Promotion: independent verifier plus formal Groundwork and Contract only after stable sandbox winner
+planned_batches:
+  - plan_batch_id: P01-U25-ACTION-CONTRACT-SCOUT
+    rank: 1
+    tier: Scout
+    candidates: [U25, U42]
+    real_problem_evidence:
+      - B003 U24 provides exploratory causal degradation scores only
+      - intervention benefit, false intervention, and recovery safety are unobserved
+      - D036 exact genie-trigger CMA/ML switching kill must be inherited in its old valid domain
+    existing_implementation:
+      - standard-CMA state and output
+      - 12 causal U24 CMA-trace features and detector scores
+      - an adjacent 16-APSK fallback prototype exists but is outside this exact scene and registry
+    missing_implementation:
+      - causal event generator and shared fork-replay dataset
+      - trigger/action latency, reward, safety cost, censoring, and counterfactual evaluator
+      - U25/U42 runner/registry integration and queue fingerprint
+    implemented_scout_asset: u25-action-contract.v1.yaml + standard-CMA blind_trace adapter
+    shared_baseline: same realization and pre-trigger receiver state; no-intervention plus preregistered fixed safe policy; standard-CMA remains unchanged
+    input_contract:
+      - all v3 explicit physical fields
+      - trigger source and version
+      - action enum and parameters
+      - decision cadence and fork symbol
+      - post-action horizon and state snapshot schema
+      - oracle labels are post-hoc only
+    metrics: [fixed_label_ber, permutation_invariant_ber, paired_post_trigger_excess_ber, recovery_delay, right_censoring, clean_false_intervention, action_count, action_duty, action_latency, divergence, worst_cell_degradation]
+    budget: deterministic replay/no-op smoke first; then at most 18 new cells only after interface gate, with at least 3 event and 3 clean cells
+    kill_or_block:
+      - no-op is not bit-exact
+      - action reads TX truth or future information
+      - no clean safety comparator
+      - after minimum information every action has non-positive paired benefit or violates clean non-inferiority
+    dependencies: [state-event-reducer-PASS, causal-action-contract, fixed-safe-policy, new-component-registry]
+    readiness: DEFERRED_ARCHITECTURE
+    contract_artifact: u25-action-contract.v1.yaml
+    contract_fingerprint: 131ccab5d21e5339617a92fdeea16360e6a2d98bd07b51576228a3c3d07297cb
+    contract_gate: PASS
+    sandbox_gate: DEFERRED_ARCHITECTURE
+    blockers: [STATE_SNAPSHOT_MISSING, ACTION_EFFECT_NOT_OBSERVABLE, RUNNER_U24_HARDCODED]
+  - plan_batch_id: P02-U10-EVENT-LIBRARY-SCOUT
+    rank: 2
+    tier: Scout
+    candidates: [U10, U37, U38]
+    real_problem_evidence:
+      - current Map evidence is SOP/polarization/CMA degradation, not cycle-slip or CPR lock loss
+      - traditional VV, BPS, and DPLL primitives exist but are outside the current Direction Lab chain
+    existing_implementation:
+      - VV, BPS, and DPLL recovery primitives with compensated symbols and phase estimates
+      - standard-CMA dual-pol chain without carrier impairments
+    missing_implementation:
+      - physically sourced phase-noise and frequency-offset model in the dual-pol chain
+      - explicit DSP ordering after standard-CMA
+      - cycle-slip and lock-loss event definitions and persistence
+      - receiver-visible confidence/residual traces and clean/event library
+      - registry entry, input contract, labels, metrics, and fingerprint
+    shared_baseline: unchanged standard-CMA followed by the same conventional CPR for every mechanism; the added CPR is not renamed canonical
+    input_contract: [linewidth, phase_process, frequency_offset, carrier_seed, CPR_method, CPR_window_or_loop_parameters, chain_order, slip_ambiguity, event_persistence, no_hidden_defaults]
+    metrics: [event_count, label_repeatability, receiver_trace_separation, usable_warning_lead, fixed_label_ber, permutation_invariant_ber]
+    budget: at most 12 cells after parameter provenance; require at least 3 event and 3 clean cells before any ML training
+    kill_or_block:
+      - zero authentic events
+      - events require unphysical manual injection
+      - event label depends on future TX truth without a receiver-visible proxy
+    dependencies: [carrier-impairment-contract, conventional-CPR-registry, event-label-validator]
+    readiness: P02_SCOUT_CONTRACT_ASSETS_PARTIAL
+    foundation_audit: scout/P02-U10-event-library/foundation-audit.yaml
+    event_library_gate: BLOCKED_NO_DP_CARRIER_EVENT_CHAIN
+  - plan_batch_id: P03-U19-RESIDUAL-HEADROOM-SCOUT
+    rank: 3
+    tier: Scout
+    candidates: [U19, U36]
+    real_problem_evidence:
+      - D044 records residual information increment as UNKNOWN and DEFER
+      - current standard-CMA outputs exist, but residual Jones or non-Gaussian mismatch is not established
+    existing_implementation:
+      - standard-CMA zX/zY outputs
+      - causal z-window adapter with field-level source pointers
+      - CSI_NONE same-information nearest-QPSK analytic comparator
+      - residual artifact with conditional moments, explicit tail mass, and stability status
+      - deterministic one-cell interface smoke and runtime source closure
+      - fixed-label and PI evaluation with TX truth used only for scoring
+    missing_implementation:
+      - preregistered multi-cell residual headroom probe
+      - stable-mismatch and 90-percent-headroom exit evaluator
+      - receiver-estimated CSI path, if later needed
+      - ML detector entrypoints only after stable residual mismatch is demonstrated
+    shared_baseline: standard-CMA plus analytic detector with exactly the same legal CSI and noise information
+    input_contract: [complex_z_window, CSI_source, CSI_access_class, noise_estimator, pilot_budget, label_budget, train_test_domain_split, causal_inference_boundary]
+    metrics: [fixed_label_ber, permutation_invariant_ber, SER, NLL, calibration_error, residual_conditional_moments, residual_tail_mass, compute, latency]
+    budget: at most 10 new paired cells for headroom; no large model training before mismatch is demonstrated
+    kill_or_block:
+      - matched analytic or affine baseline closes at least 90 percent of visible headroom
+      - gain requires TX truth at inference
+      - residual mismatch is not stable across the preregistered slice
+    dependencies: [P03-CSI_NONE-interface-PASS, residual-headroom-probe-not-yet-run]
+    readiness: P03_SCOUT_CONTRACT_READY
+    sandbox_readiness: NOT_ENTERED
+    current_contract: scout/P03-U19-residual-headroom/scout-contract.v2.yaml
+    readiness_report: scout/P03-U19-residual-headroom/readiness-report.yaml
+    next_action: run_residual_headroom_probe_without_ML_training_or_B004
+  - plan_batch_id: P04-U20-LLR-CODED-CONTRACT-SCOUT
+    rank: 4
+    tier: Scout
+    candidates: [U20, U21, U39]
+    real_problem_evidence:
+      - no current residual-aware LLR evidence in the Direction Lab chain
+      - historical GG-LLR exact route requires same-information comparator and cannot be revived as an ideal-CSI strawman comparison
+    existing_implementation:
+      - hard QPSK decision and fixed/PI evaluation only
+    missing_implementation:
+      - bit mapping and analytic QPSK LLR
+      - temperature-scaling baseline
+      - code, net rate, interleaver, decoder, iterations, quantization, clipping, and latency contract
+      - GMI, NLL, ECE, pre/post-FEC BER, and FER evaluators
+      - SL, uncertainty-marginalized Bayesian, and analytic-plus-residual hybrid components
+    shared_baseline: same-CSI analytic QPSK LLR plus temperature scaling and same-code same-iteration decoder
+    input_contract: [U19_legal_CSI_fields, bit_mapping, code_matrix, rate, block_length, interleaver, decoder, iterations, LLR_quantization, LLR_clipping, net_rate, latency]
+    metrics: [NLL, ECE, GMI, pre_FEC_BER, post_FEC_BER, FER, decoder_iterations, latency]
+    budget: deterministic AWGN symmetry, monotonicity, and decoder-consistency smoke first; then at most 10 paired cells
+    kill_or_block:
+      - analytic plus temperature scaling already covers the mismatch
+      - ML improves only calibration number without GMI or FER benefit
+      - compared methods use unequal CSI or code budgets
+    dependencies: [P03-U19-RESIDUAL-HEADROOM-SCOUT-PASS, coded-chain-contract, LLR-evaluator]
+    readiness: NOT_RUNNABLE
+  - plan_batch_id: P05-U25-SAFE-FALLBACK-SANDBOX
+    rank: 5
+    tier: Sandbox
+    candidates: [fixed-safe-policy, risk-triggered-fixed-action, uncertainty-triggered-fixed-action]
+    real_problem_evidence: must be supplied by P01; B003 detector numbers alone are insufficient
+    existing_implementation: none until P01 closes action and replay contracts
+    missing_implementation: governed runner, action components, shared fork-replay dataset, metric evaluator, component fingerprints, Queue and Registry snapshots
+    shared_baseline: no-intervention standard-CMA and the strongest fixed safe policy on identical forked states
+    input_contract: exactly the P01 frozen contract; no contract override and no oracle runtime fields
+    metrics: [fixed_label_ber, permutation_invariant_ber, paired_post_trigger_excess_ber, recovery_delay, clean_false_intervention, action_latency, worst_cell_degradation]
+    budget: maximum 30 paired cells after governance smoke; no 1M or 5M expansion
+    kill_or_block:
+      - P01 does not establish deterministic fork-replay and minimum event/clean information
+      - any component lacks entrypoint, tests, valid domain, or fingerprint
+      - Queue, Registry, Runner, manifest, source closure, or state head disagree
+    dependencies: [P01-U25-ACTION-CONTRACT-SCOUT-PASS, completion-event-v1, state-reducer-PASS, new-queue-registry-runner-gate]
+    readiness: BLOCKED_PENDING_P01
+next_after_plan:
+  selected_for_implementation: P03-U19-RESIDUAL-HEADROOM-SCOUT
+  reason: the CSI_NONE interface is closed; the unresolved research question is whether stable receiver-visible residual headroom remains beyond the same-information analytic comparator
+  allowed_now: preregister and run only the P03 residual headroom probe; do not train ML during the probe
+  exit_rules:
+    - if_analytic_comparator_covers_at_least_90_percent_visible_headroom_stop_P03_without_ML
+    - if_residual_mismatch_is_stable_only_then_design_a_new_sandbox_batch
+    - if_residual_artifact_is_unstable_return_P03_without_adding_models
+  forbidden_now: [start_B004, create_PASS_Queue, add_new_candidates, expand_framework, train_ML_before_headroom_signal]
+promotion_gate:
+  required_only_at_promotion: [independent_verifier, formal_GW_Step3_and_4a, competitor_closure, Contract, cross-domain_revalidation]

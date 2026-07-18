@@ -1,0 +1,101 @@
+schema_version: direction-lab.u25-action-contract.v1
+candidate_id: U25
+status: SCOUT_CONTRACT_ONLY
+promotion_allowed: false
+implementation_module: projects/thesis-fso/direction-lab/tools/u25_action_contract.py
+contract_fingerprint: 131ccab5d21e5339617a92fdeea16360e6a2d98bd07b51576228a3c3d07297cb
+
+event_input:
+  required_fields:
+    - sequence_id
+    - step
+    - available_at_step
+    - trigger
+    - observables
+    - source_pointers
+  required_observables:
+    - lock_score
+    - cma_error
+  allowed_observables:
+    - lock_score
+    - cma_error
+    - output_power
+    - update_norm
+  standard_cma_trace_fields:
+    output_start: {shape: scalar, dtype: int, unit: symbol_index, time_index: block_start}
+    output_end: {shape: scalar, dtype: int, unit: symbol_index, time_index: block_end}
+    cm_error: {shape: scalar, dtype: float64, unit: power_squared, time_index: block}
+    output_power: {shape: scalar, dtype: float64, unit: normalized_power, time_index: block}
+    update_norm: {shape: scalar, dtype: float64, unit: weight_norm, time_index: block}
+  source_pointer_rule: every runtime event field points to a source_id plus trace field/index, caller argument, or explicit causal transform
+  input_key_policy: strict whitelist; every unregistered trace field is rejected before event emission
+  lock_score_semantics: receiver-only proxy 1/(1+cm_error), not a validated carrier/polarization lock state
+  allowed_triggers:
+    - NONE
+    - LOCK_LOSS
+    - CYCLE_SLIP
+    - DIVERGENCE
+    - PERFORMANCE_DEGRADATION
+  causal_rule: available_at_step <= step
+  forbidden_fields:
+    - oracle
+    - post_hoc
+    - future_label
+    - future_state
+    - tx_bits
+    - sX
+    - sY
+
+action_output:
+  allowed_actions:
+    - NO_OP
+    - SAFE_BASELINE
+    - RESET
+  required_fields:
+    - sequence_id
+    - step
+    - action
+    - reason
+    - policy_id
+
+fixed_safe_policy:
+  policy_id: fixed-safe-policy.v1
+  trigger_action_map:
+    NONE: NO_OP
+    LOCK_LOSS: SAFE_BASELINE
+    CYCLE_SLIP: SAFE_BASELINE
+    DIVERGENCE: SAFE_BASELINE
+    PERFORMANCE_DEGRADATION: SAFE_BASELINE
+
+shared_runtime_contract:
+  required_fields:
+    - channel_block
+    - r2
+    - fade_threshold_h
+    - clip_norm
+    - t_s
+    - method
+  values: null
+  note: Values must be supplied by a future frozen queue; this contract does not provide defaults.
+
+replay:
+  ordering: contiguous step values beginning at zero
+  sequence_scope: one sequence_id per replay
+  future_input: forbidden
+  stochastic_state: forbidden
+
+metrics_reserved_for_sandbox:
+  - false_intervention_rate
+  - recovery_latency
+  - safe_action_rate
+  - post_event_fixed_label_ber
+  - post_event_pi_ber
+  - fallback_count
+
+readiness:
+  scout_contract: PASS
+  causal_event_adapter: PASS_RECEIVER_PROXY_ONLY
+  fork_replay: BLOCKED_ACTION_EFFECT_NOT_OBSERVABLE
+  sandbox_runner: BLOCKED
+  queue_registry_fingerprint: NOT_CREATED
+  reason: standard-CMA exposes causal blind trace but no receiver state snapshot or per-decision action hook; run_v3 remains hard-coded to U24

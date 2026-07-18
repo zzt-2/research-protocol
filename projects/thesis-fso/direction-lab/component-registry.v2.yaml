@@ -1,0 +1,23 @@
+schema_version: direction-lab.component-registry.v2
+components:
+  - id: baseline.standard_cma.godard_z
+    status: canonical
+    fingerprint: 9282ecb53608a2093a5e69a62ccea9976211ecfda7626d2e65ce2fd912f1ca2f
+  - id: component.ml_degradation_detector.batch-v2
+    status: sandbox-candidate
+    fingerprint: 527332e9940361013f692349d49dd6b177ab0ef661b192a7118d4b1855d7c14f
+    entrypoint: projects/thesis-fso/direction-lab/tools/run_v2.py:run_dataset
+    tests: [projects/thesis-fso/direction-lab/tests/test_run_v2.py]
+    valid_domains: [replacement queue exact shared contract]
+  - id: runner.direction_lab.replacement-v2
+    status: sandbox-candidate
+    fingerprint: 1ff6307ad2eea94e6f382cc7a8d8e28677127fc10447def7cedd5c11c9d2e8a5
+    entrypoint: projects/thesis-fso/direction-lab/tools/run_v2.py:run_governed
+  - id: metric.dual_qpsk.fixed-plus-pi.v1
+    status: sandbox-candidate
+    fingerprint: 7ff4c9d6fbcf7eef075fd4f88f2d42097cf75bca8640b150d69faa583d905cd0
+    entrypoint: .worktrees/unified-batch-runner/projects/simulation/common/_batch_metrics.py:evaluate_dual_qpsk
+notes:
+  - v2 registry is separate from the immutable B001 v1 registry.
+  - fingerprints cover the explicit runtime closure; governance files are snapshotted separately.
+  - replacement runner requires static fingerprint equality before controller execution.

@@ -1,0 +1,15 @@
+schema_version: direction-lab.execution-status.v1
+batch_id: B003
+run_id: B003-75778e4b4e4045388b5ee06e9b8e6649
+manifest_hash: 42d8061773f7ecb1d03912bd775dc18424a44a14b1943b97b664818634b6b5e6
+result_hash: c17ab94708307b82c0162b9e5d573971170869ec757dc6bb24ca62a83ac8e3cc
+artifact:
+  path: artifacts\result.json
+  sha256: a395ece10ed9eb084beae8d9bd2f49854d4220ba520f82bcf04d2ae0e43df6e0
+  bytes: 107859566
+evidence_gate:
+  accepted: true
+  artifact_status: ACCEPTED
+  trust_status: TRUSTED
+  decision_id: decision-5653e7f9bd0a4032a63e65d8c0918fa0
+status: COMPLETED_SANDBOX

@@ -1,0 +1,104 @@
+schema_version: direction-lab.candidate-universe.v2
+universe_id: universe.dual-pol-osl.ml.2026-07-17.v2
+anchor_id: anchor.dual-pol-osl.2026-07-17
+status: COMPLETE_FOR_V2_SCAN_MAP_BUILT_GATE_PASS_PENDING_QUEUE
+
+# This is an overlay, not a rewrite.  The v1 file remains an immutable
+# historical scan; the effective v2 universe is its 32 archetypes plus the
+# two additions below and the conditional scope reclassifications.
+lineage:
+  supersedes_universe_id: universe.dual-pol-osl.ml.2026-07-17
+  base_file: candidate-universe.yaml
+  base_file_sha256: af32b7b000551c4542fcbc9a8b4322fa89c34b1ba3e72f6d05c732e92137ae7a
+  v1_immutable: true
+  merge_rule: inherit-v1-then-apply-v2-reclassifications-and-additions
+  reason: 用户明确冻结的是双偏振星地 OSL 场景，不是 ML 应用方向；旧自动排除只保留为历史状态。
+
+scope_principle:
+  scene_boundary: dual-polarization ground-to-satellite optical wireless link
+  candidate_boundary: open to any ML-assisted operation within that scene and its end-to-end communication/DSP chain
+  conditional_rule: 只有仍落在上述星地 OSL 链路、并能给出新增物理/协议参数时，候选才从 RETAINED_NEUTRAL 进入后续门控；本文件不提前 Go/Kill。
+  non_scene_examples: [unrelated terrestrial-RF-only control, unrelated imaging-only task, unconstrained protocol redesign]
+
+scope_reclassification:
+  - legacy_id: F1
+    legacy_label: hardware EPC/optical-domain control
+    old_state: known_out_of_scope_or_future_scope
+    new_state: RETAINED_NEUTRAL
+    scene_gate: 控制对象必须是该双偏振星地 OSL 发射机/接收机链路内的功率、光学或电子前端状态。
+    required_scene_parameters: [actuator_definition, control_rate, power_or_optical_budget, quantization_and_latency_model]
+    evidence_gap: 当前地基没有冻结可执行的 EPC/光学执行器接口、功耗/动态范围预算或闭环时标。
+    go_blocked_until_evidence: true
+    inherited_negative_evidence: 旧 v1 仅记录范围排除，没有针对该 ML 机制的失败实验；不扩张为方法族 Kill。
+  - legacy_id: G2
+    legacy_label: HARQ/coding-system expansion outside current frozen scope
+    old_state: known_out_of_scope_or_future_scope
+    new_state: RETAINED_NEUTRAL
+    scene_gate: HARQ/FEC 只能作为该双偏振星地 OSL 接收链中的译码、重传或联合接收环节，不能偷偷改变信道/链路场景。
+    required_scene_parameters: [code_family, decoder_iterations, harq_or_no_harq_rule, feedback_delay, net_rate_and_budget]
+    evidence_gap: 当前 canonical metric contract 未冻结编码、反馈时延、净速率和重传预算，无法合法比较。
+    go_blocked_until_evidence: true
+    inherited_negative_evidence: 旧 v1 没有 HARQ 失败证据；仅有冻结范围缺口，不能否决 coding-aware ML 家族。
+  - legacy_id: U32
+    legacy_label: multi-aperture candidate
+    old_state: known_out_of_scope_or_future_scope
+    new_state: RETAINED_NEUTRAL
+    scene_gate: 额外孔径必须仍是同一星地双偏振 OSL 链路的分支，不能换成无关多天线或不同业务场景。
+    required_scene_parameters: [aperture_count, branch_geometry, branch_correlation, per_branch_snr_or_fade_model, combining_resource_budget]
+    evidence_gap: 当前 anchor 是 single-aperture；没有孔径几何、分支相关性和等资源 MRC/selection comparator。
+    go_blocked_until_evidence: true
+    inherited_negative_evidence: 旧 v1 只有单孔径锚点约束，没有 U32 机制实验；不把单孔径缺口扩大为 diversity 方法族 Kill。
+
+application_points_added:
+  - id: AP27
+    name: in-link hardware/optical EPC and receiver-front-end control
+    methods: [SL, SSL, PI, OCL, RL, HYB, COMP, BAYES]
+    dimensions: [P, R, G, C, X, L, U, F, J]
+    scope_note: 仅登记为星地 OSL 链路内控制问题；执行前必须冻结执行器和预算接口。
+  - id: AP28
+    name: coding-aware FEC/HARQ assistance and joint receiver control
+    methods: [SL, SSL, DU, META, OCL, RL, HYB, COMP, BAYES]
+    dimensions: [P, R, G, C, S, X, L, U, F, J]
+    scope_note: 仅登记为星地 OSL 接收链中的译码/反馈协同；执行前必须冻结 code、feedback、net-rate 与 delay。
+
+candidate_archetypes_added:
+  - id: U33
+    application_point: AP27
+    problem: fixed front-end power/optical control may waste dynamic range or amplify fade-induced degradation under a valid OSL link state
+    mechanisms: [SL, SSL, PI, OCL, RL, HYB, COMP, BAYES]
+    baseline: fixed front-end/EPC policy at the same actuator, power, latency and quantization budget
+    status: RETAINED_NEUTRAL
+    run_gate: BLOCKED_PENDING_SCENE_PARAMETERS_AND_EVIDENCE
+    scene_gate: in-link dual-pol ground-to-satellite OSL front-end only
+    evidence_gap: actuator model, causal observations, safety constraints and equal-budget comparator are absent
+    historical_boundary: no exact F1 M-C-A was killed; inherit only the old scope omission.
+  - id: U34
+    application_point: AP28
+    problem: fixed coding/feedback policy may underuse structured burst errors and residual polarization/channel uncertainty
+    mechanisms: [SL, SSL, DU, META, OCL, RL, HYB, COMP, BAYES]
+    baseline: same-code same-net-rate decoder/ HARQ policy with matched feedback and latency budget
+    status: RETAINED_NEUTRAL
+    run_gate: BLOCKED_PENDING_SCENE_PARAMETERS_AND_EVIDENCE
+    scene_gate: coding and feedback remain inside the dual-pol ground-to-satellite OSL receiver chain
+    evidence_gap: code, iterations, feedback delay, net rate and legal metric bridge are absent
+    historical_boundary: no exact G2 M-C-A was killed; inherit only the old scope omission.
+
+effective_coverage:
+  inherited_archetypes: 32
+  added_archetypes: [U33, U34]
+  total_archetypes: 34
+  inherited_application_points: 26
+  added_application_points: [AP27, AP28]
+  method_families_inherited: 13
+  neutral_scan_only: true
+  map_rebuild_required: true
+
+historical_exclusions:
+  preserved_in_v1: true
+  interpretation: old v1 known_out_of_scope entries remain auditable history and are not silently edited; v2 changes only their candidate status under an explicit scene gate.
+
+governance:
+  canonical_baseline_unchanged: true
+  standard_cma_not_replaced: true
+  formal_groundwork_or_paper_promotion: blocked
+  candidate_map_v2_must_reference: this-file-and-base-sha

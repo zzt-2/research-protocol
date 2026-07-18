@@ -1,0 +1,29 @@
+schema_version: direction-lab.scout-contract.v1
+contract_id: scout.P03-U19.residual-headroom.v1
+status: SUPERSEDED
+current: false
+current_status: P03_SCOUT_CONTRACT_READY
+lineage:
+  previous_status: NOT_READY
+  previous_smoke_status: BLOCKED_CURRENT_ARTIFACT_DROPS_ZX_ZY
+  previous_blockers:
+    - causal_z_window_adapter_and_source_pointers
+    - explicit_legal_csi_and_noise_contract
+    - residual_artifact_separate_from_runtime_inputs
+    - analytic_comparator_binding
+    - detector_calibration_and_residual_tail_evaluators
+  superseded_by: scout.P03-U19.residual-headroom.v2
+  superseding_contract: scout-contract.v2.yaml
+  superseding_evidence: artifacts/interface-smoke-v2/smoke-report.yaml
+  reason: authentic z-window, CSI_NONE comparator, residual artifact, and deterministic smoke closed the old blockers
+candidate: U19
+capability: [estimative, observational]
+profile: ../../profiles/communications.yaml
+adapter: ../../adapters/dual-pol-osl.yaml
+baseline: standard-CMA
+history_rule: old NOT_READY evidence is retained only through lineage and is not a current blocker
+current_pointer:
+  contract: scout-contract.v2.yaml
+  readiness: readiness-report.yaml
+  status: P03_SCOUT_CONTRACT_READY
+  sandbox_status: NOT_ENTERED

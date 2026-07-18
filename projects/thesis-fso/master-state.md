@@ -4,9 +4,9 @@ direction: 星地激光通信（FSO）——子地带由地勘（S003 方法论 
 method_type: 待定（精读后根据问题方法产出形态确定，见 glossary 判据 2）
 domain: comms
 created: 2026-06-21
-updated: 2026-06-21
-current_step: GW-Step-2
-current_stage: GW
+updated: 2026-07-18
+current_step: Direction-Lab-Scout-P03-residual-headroom-probe
+current_stage: FORMAL_BLOCKED
 ---
 
 # Master Agent: thesis-fso
@@ -20,12 +20,22 @@ current_stage: GW
 
 ## §2 项目状态
 
-### 当前位置
+### 当前控制面桥接（唯一现行入口）
 
-- 阶段：GW
-- 步骤：Step 2（论文获取）—— **下一步实际是地勘（Step 0，S003 方法论迭代后）**：大范围检索产 `landscape.md` 全景表，再选地进批评汇总。见 `.sessions/2026-06-20-problem-driven-redirection/H002`
-- Contract 状态：not started
-- 方法类型：待定
+- formal stage：`BLOCKED`。Direction Lab 的 Scout/Sandbox 结果对正式研究的 promotion effect 为 `none`。
+- formal blockers：P03 尚未完成 residual headroom probe；尚无稳定 residual mismatch、Sandbox winner 或正式 GW/Contract promotion 证据；旧 Pilot-Jones Step 3.5/4a 链也未成为当前授权入口。
+- Direction Lab sandbox history：当前 last completed batch = `B003 / COMPLETED_SANDBOX_VERIFIED`；事实源为 `projects/thesis-fso/direction-lab/state/completion-events.jsonl` 与对应不可变 projection。`canonical-state.yaml` 仅为机器投影，不是正式研究授权源。
+- current scout candidate：`P03/U19 residual-aware detection`。
+- scout status：`P03_SCOUT_CONTRACT_READY`，current contract = `projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/scout-contract.v2.yaml`。
+- formal promotion effect：`none`；B001–B003 数字不得进入论文或正式材料。
+- 下一唯一合法研究动作：P03 residual headroom probe：真实 standard-CMA 输出 → 同信息量 analytic comparator → residual headroom。不得将它替换成 B004、ML 训练、新候选或框架扩展。
+
+### 历史 Groundwork 轨迹（保留审计，不授权当前执行）
+
+- 阶段：**方法层重开轨（GW）**。Q-CMA-FADE Contract 曾于 2026-07-15 完成 S0-S5 并冻结；D030 同日只解冻方法层，分析层/方法层旧状态尚待按 D040 分批修正。
+- 步骤：**Batch 0.5 已闭合；Batch 1 fade/clip 低信息；Batch 2 已确认 fG 轴无事件、SOP rate=1e-5 有 2/3 seed BER tracking failure**。下一步做高速 SOP failure detector/recovery 最小侦察；不把该信号称为 lock-swap Go。D045 执行方式仍有效：正式 GW/Contract 门控留给批量结果中的少数晋级候选。
+- Contract 状态：**曾冻结，方法层已解冻；当前不可授权 Execute**。D040 已推翻旧 Problem/H1 的关键前提——合法 standard-CMA 在注册新域 0/5 swap，fixed≈2e-4；fixed-weight ML 5/5 clean-swap。Contract 的旧 CMA lock-swap 叙事须后续增量修订。
+- 方法类型：待新候选完成 Q# + GW Step 1/2/3/必要 3.5/Step 4a 后确定。
 
 ### 项目级参数（glossary 四判据 3/4 的当前值）
 
@@ -38,6 +48,8 @@ current_stage: GW
 
 ### GW Progress（跨 Step 硬门控，单一事实源）[MUST]
 
+> **当前状态声明**：以下 GW Progress 与方法层重开轨仅保留历史审计和旧门控证据，不授权当前执行；当前正式状态、sandbox 指针、Scout 状态和下一动作只看本节上方“当前控制面桥接”。
+
 | Step | 状态 | 完成日期 | commit | 关键产出 | 下游门控 |
 | ---- | ---- | -------- | ------ | -------- | -------- |
 | 1 search | ✅ | 2026-05-29 | — | search-archive + landscape.md 683 主表（S003-S010 五轮地勘） | — |
@@ -49,6 +61,44 @@ current_stage: GW
 | 4b sim-feasibility | ⬜ | | | feasibility_report.md (C/E) | 进 Step 6 前必 ✅ |
 | 6 sim-design | ⬜ | | | 仿真器设计规格 | 进 Step 7 前必 ✅ |
 | 7 implement | ⬜ | | | baseline_report.md | — |
+
+### 方法层重开轨进度（2026-07-16，D042；优先于上方历史项目表授权新候选）
+
+| Step | 状态 | 证据 | 下游门控 |
+|---|---|---|---|
+| 状态修复 / 候选重置 | ✅ | S036 + D042 + D043 | 只授权进入新候选 Step 1 |
+| residual cascade Step 1 search | ✅ | R009 | 已完成；结论 DEFER，未发现直接 additive-residual 先例 |
+| residual cascade Step 2 acquire | ✅ | S037 | 5 篇可读全文输入达到质量门 |
+| residual cascade Step 3 read | ✅ | S038 | 5/5 精读；四判据 1/3/4 PASS、2 UNKNOWN |
+| 新候选 Step 3.5 supplement | ⬜（按需） | — | 若 Step 3 暴露缺口则必须补齐 |
+| residual cascade Step 4a §0/A0 | **DEFER** | S039 / D044 | Q14 判据 2 UNKNOWN；不作为唯一主线 |
+| 候选族地图（CMA-fade/SOP 基点） | ✅ | S041 / D045 | 6 类方法族、约 30 个变体，已按作用时段/接口/成本分组 |
+| Batch 0 基线审计 | **PARTIAL** | S042 | paired 基线/口径可重算；CRITICAL=4，recovery-delay 缺口 |
+| Batch 0.5 参数/指标闭合 | ✅ | S043–S045 / V006 | 端到端 smoke + 等价性 99 tests PASS；独立逐条审查 PASS |
+| Batch 1 Fade 单轴族 | 🟨 | S041 / S046–S052 / V007–V012 | 5M性能批仍PARTIAL；1M fallback合同 PASS但inconclusive；freeze 当前低信息，clip 仅有机制触发 |
+| Batch 2 fG lock/swap pilot | ✅ observation-only | S053 / V013 | fG=30/100/1000×3 seeds 全无事件，保留为无事件对照 |
+| Batch 2 SOP rate event pilot | ✅ observation-only | S054 / V014 / D047 | 1e-5 在2/3 seed出现 BER failure，无 swap/div/fade；转 detector/recovery 侦察 |
+| Batch 2 basic blind detector | 🔴 FAIL / stopped | S055 / V015 pending | cm_error/update_norm/power deviation 对 2 个 oracle failure 提前召回 0/2，控制组各有误报；不进入 recovery |
+| Batch 2 evaluator provenance | ✅ | S056 / V016 | evaluator 已固化并纳入源码/SHA，2 TDD tests；真实 scout 尚待转换脚本接入后重算 |
+| Batch 2 real blind recompute | 🟨 | S057 / V017 pending | N=100k、warmup=1，三种基础盲信号对2个 oracle failure recall=0/2；待审查后关闭支线 |
+| Batch 2 geometry-feature scout | ✅ observation-only | S058 / V018 / D050 | Stokes-like recall=2/2、control FA=0/3；cov-eigen敏感性；cross降级 |
+| Batch 2 Stokes-like short pilot | 🔴 PARTIAL / stopped | S059 / V019 / D051 | control 新 seed 有 oracle events，阈值前提失效；不晋级，转 E pilot-assisted |
+| Batch 2 pilot-assisted E scout | ⬜ | D051 | dual canonical 稀疏 pilot 注入与 SOP/Jones 估计，先做短 pilot |
+| E pilot seam / naive integration | 🟨 PARTIAL | S061 / V020 | seam角度估计可行且overhead 6.25%；naive injection无BER收益，集成脚本provenance待补 |
+| E pilot Jones derotation | 🟨 feasible short integration | S062 / V021 / D052 | 公平性/泄漏审查PASS；failure seeds BER→0，准入新seed/rate/pilot-count扩展，非性能Go |
+| E pilot Jones 72-cell expansion | 🟨 PARTIAL | S063–S064 / V022 / D053 | 正确≥50%计数：2p9/15、4p13/15、6p14/15；不改门槛，先做inverse稳定化 |
+| E 6-pilot Jones EMA09 gate | ✅ family promotion | S065 / V023 / D054 | full24原门槛15/15、clean0/9；晋级正式GW Step1，非Go |
+| Pilot Jones EMA09 formal GW Step1 | ✅ | S066 / D055 / V025 / V026b | 82候选/3源/正式比例68.3%；必读6；generic机制撞车、窄问题收敛 |
+| Pilot Jones Step2 acquisition | 🟨 | S067 | LCOMM2026全文已有；4篇DOI all_failed并留metadata；Step1分类标注已补 |
+| Pilot Jones Step2 gap follow-up | 🟨 | S070 | 4 DOI补检无可读稿件；转共享papers库邻近全文，失败条目不冒充已读 |
+| Pilot Jones Step3 five-paper read | ✅ | S069 / S071 / V027b | 5篇结构化精读、read-log、Q1合法；Q2已按D055纠正，进入Step3.5 |
+| Pilot Jones Step3.5 supplement | 🔄 待V030 | S072–S074 / D056 / V028–V029 | R1新增4+1；R2/R3最终new=0；OE2021全文精读；最高引用JLT2022前向25+Crossref后向21（筛后7、new0）已补，待V030独立终审，Step4a仍封锁 |
+| Pilot Jones Step1 classification | ✅ | S068 / V026b | candidate_key/top-level stats；必读6、formal56、direct5/adjacent26/none51 |
+| 候选族批量 MVE | ⬜ | — | 统一 baseline/seed/消融后执行 |
+| 晋级候选正式 GW Step 1→4a | ⬜ | — | 仅对批量胜者补齐 |
+| 新候选维度 D MVE | ⛔ 未授权 | — | 仅在以上候选专属门控全过后开放 |
+
+> **FR-22 解释**：上方 2026-06-21 起的全项目历史表证明旧批次曾完成哪些步骤，**不能授权 2026-07-16 后出现的新候选直接进入 MVE**。新候选必须以本重开轨表为单一门控，从 Step 1 重新积累证据。
 
 **硬门控规则（FR-22）**：进入任何下游步骤前先查本表——上游任一项 ⬜ = 禁止进入下游。Step 3 + Step 4a 是 Go/No-Go 硬门不可跳过。本表/literature_notes 进度表任一上游项 ⬜ 时，**禁止进 MVE/Contract/任意"试方法"动作**。跨对话恢复优先读本表。
 

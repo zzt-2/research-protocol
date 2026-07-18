@@ -1,0 +1,500 @@
+{
+  "artifact": {
+    "bytes": 107859566,
+    "path": "artifacts\\result.json",
+    "sha256": "a395ece10ed9eb084beae8d9bd2f49854d4220ba520f82bcf04d2ae0e43df6e0"
+  },
+  "execution": {
+    "decision_receipt": {
+      "action": "RUN",
+      "allowed": true,
+      "blocked": false,
+      "decision_id": "decision-5653e7f9bd0a4032a63e65d8c0918fa0",
+      "manifest_hash": "42d8061773f7ecb1d03912bd775dc18424a44a14b1943b97b664818634b6b5e6",
+      "run_id": "B003-75778e4b4e4045388b5ee06e9b8e6649"
+    },
+    "manifest": {
+      "archetype_id": "U24",
+      "baseline_fingerprint": "9282ecb53608a2093a5e69a62ccea9976211ecfda7626d2e65ce2fd912f1ca2f",
+      "baseline_id": "baseline.standard_cma.godard_z",
+      "batch_id": "B003",
+      "component_fingerprint": "527332e9940361013f692349d49dd6b177ab0ef661b192a7118d4b1855d7c14f",
+      "component_id": "component.ml_degradation_detector.batch-v3",
+      "contract": {
+        "alpha": 4.2,
+        "archetype_id": "U24",
+        "baseline_id": "baseline.standard_cma.godard_z",
+        "batch_id": "B003",
+        "beta": 1.4,
+        "block_size": 64,
+        "candidates": [
+          {
+            "candidate_id": "C24-SL-LINEAR",
+            "hypothesis": "a causal combination of multiple CMA internal traces contains predictive information not captured by any one threshold",
+            "mechanism": "supervised class-weighted logistic temporal detector"
+          },
+          {
+            "candidate_id": "C24-SL-MLP",
+            "hypothesis": "nonlinear interactions among causal trace level/delta/history improve event discrimination beyond the linear detector",
+            "mechanism": "supervised shallow nonlinear temporal detector"
+          },
+          {
+            "candidate_id": "C24-SSL-AE-UNLABELED",
+            "hypothesis": "event blocks depart from the overall control-rate train feature domain without using event labels for representation fitting or threshold calibration",
+            "mechanism": "unlabeled control-domain reconstruction with cell-level anomaly threshold"
+          }
+        ],
+        "channel_block": 100,
+        "clip_norm": 1.0,
+        "cma_mu": 0.001,
+        "cma_taps": 11,
+        "eval_end": 100000,
+        "eval_start": 0,
+        "f_g_hz": 30,
+        "fade_threshold_h": 0.1,
+        "family_id": "F05",
+        "method": "gar",
+        "method_scope": "channel_gg_time_envelope_method",
+        "metric_contract_id": "metric.dual_qpsk.fixed-plus-pi.v1",
+        "metrics": {
+          "diagnostics": [
+            "block_AUROC",
+            "block_AUPRC",
+            "lead_blocks",
+            "ECE",
+            "positive_cells",
+            "positive_blocks"
+          ],
+          "primary": [
+            "cell_recall_before_or_at_oracle",
+            "control_cell_false_alarm_rate"
+          ],
+          "required_signal_metrics": [
+            "fixed_label_ber",
+            "permutation_invariant_ber"
+          ]
+        },
+        "modulation": "QPSK",
+        "n_symbols": 100000,
+        "pairing": "all candidates consume the same saved causal feature rows for each rate-seed cell",
+        "preregistered_outcomes": {
+          "advance_specific_mechanism": "test recall at least 0.60 AND control false-alarm at most 0.20 AND AUROC at least 0.70",
+          "minimum_information": "at least 3 event cells and 50 positive train blocks; otherwise INCONCLUSIVE_DEFER",
+          "no_family_wide_kill": true,
+          "otherwise": "DEFER",
+          "retire_specific_mechanism": "with minimum information, AUROC at most 0.55 OR recall equals 0"
+        },
+        "problem_mca": {
+          "A": "high-SOP non-swap BER failures exist in foundation observations, while single-statistic threshold detectors missed the observed failures",
+          "C": "dual-pol OSL GG strong turbulence at SOP rates 4e-6 control and 1e-5 event condition",
+          "M": "receiver-only detector layered on unchanged standard-CMA"
+        },
+        "queue_id": "queue.dual-pol-osl.ml.2026-07-18.v3",
+        "r2": 1.0,
+        "rates": [
+          4e-06,
+          1e-05
+        ],
+        "resource_budget": "30 shared standard-CMA cells plus three lightweight CPU models; no 1M/5M expansion",
+        "runtime_field_effects": {
+          "channel_block": {
+            "consumer": "channel_generator",
+            "effect": "operative"
+          },
+          "clip_norm": {
+            "consumer": "canonical_standard_cma_not_consumed",
+            "effect": "audit_only",
+            "reason": "retained explicitly for audit compatibility; canonical prompt013 does not read it"
+          },
+          "fade_threshold_h": {
+            "consumer": "canonical_standard_cma_not_consumed",
+            "effect": "audit_only",
+            "reason": "retained explicitly for audit compatibility; canonical prompt013 does not read it"
+          },
+          "method": {
+            "consumer": "channel_generator",
+            "effect": "operative",
+            "scope": "channel_gg_time_envelope_method"
+          },
+          "r2": {
+            "consumer": "standard_cma_config",
+            "effect": "operative"
+          },
+          "t_s": {
+            "consumer": "channel_generator",
+            "effect": "operative"
+          }
+        },
+        "simulator_id": "simulator.dual_pol_shared_realization.v1",
+        "snr_db": 20,
+        "supervision_boundary": "logistic and MLP may use train block labels; the unlabeled AE uses the complete control-rate train feature domain and never receives event labels; all inference features are causal receiver/CMA traces only",
+        "t_s": 4e-10,
+        "test_seeds": [
+          41,
+          42,
+          43,
+          44,
+          45
+        ],
+        "title": "v3 explicit-contract causal ML degradation detector family",
+        "train_seeds": [
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20
+        ],
+        "valid_domain": "exact B003 shared contract only; no cross-SNR/fG/modulation/length claim"
+      },
+      "destination": "evidence_ledger",
+      "evidence_status": "EXPLORATORY",
+      "execution_component_ids": [
+        "baseline.standard_cma.godard_z",
+        "component.ml_degradation_detector.batch-v3",
+        "runner.direction_lab.replacement-v3",
+        "metric.dual_qpsk.fixed-plus-pi.v1",
+        "runner.direction_lab.replacement-v2-helper",
+        "runner.direction_lab.legacy-b001-helper",
+        "controller.direction_lab.pilot-v3",
+        "validator.direction_lab.queue-gate-v3"
+      ],
+      "execution_mode": "PRODUCTION",
+      "family_id": "F05",
+      "promotion_allowed": false,
+      "queue_hash": "62cabb989e269af28697c5e4092cc9d984c92d15d7565d1bf0c461c3f0df5917",
+      "registry_hash": "82fdb419de785568a3afe13666200aa17cde0abf56d9ae55848c70508bcddce9",
+      "registry_path": "projects\\thesis-fso\\direction-lab\\component-registry.v3.yaml",
+      "run_id": "B003-75778e4b4e4045388b5ee06e9b8e6649",
+      "runner_fingerprint": "6f21dfe023ccb8e74876730bee8789353ef649ad2b976be63317420f298a9caf",
+      "sandbox_only": true,
+      "source_hash": "3df3d64c7711d8b62978fe9c839fce2a335faa42bc7a053abe772a5c7c5c1e3e",
+      "source_import_closure": [
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\__init__.py",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_batch_events.py",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_batch_metrics.py",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_channel.py",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_cma.py",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_config.py",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_dual_pol_channel.py",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_equalizer.py",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_experiment.py",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_gg_time.py",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_kf.py",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_ml_equalizer.py",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_modulation.py",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_recovery.py",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_vae_equalizer.py",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\explore\\cma-fade-divergence\\ml_long_seq_failure.py",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\explore\\cma-fade-divergence\\prompt012_longseq_audit.py",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\explore\\cma-fade-divergence\\prompt013_swap_mechanism_q2.py",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\explore\\cma-fade-divergence\\prompt013_swap_quality_q1.py",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\params.py",
+        "D:\\code\\study\\research-protocol\\projects\\simulation\\verify\\direction_lab_pilot\\controller.py",
+        "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\anchor.yaml",
+        "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\batch-queue.v3.yaml",
+        "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\candidate-map.v2.yaml",
+        "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\candidate-universe.v2.yaml",
+        "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\canonical-state.yaml",
+        "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\component-registry.v3.yaml",
+        "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\tools\\ml_detector_batch.py",
+        "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\tools\\run_b001.py",
+        "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\tools\\run_v2.py",
+        "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\tools\\run_v3.py",
+        "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\tools\\unlabeled_control_reconstruction.py",
+        "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\tools\\validate_batch_queue.py"
+      ],
+      "source_snapshot": {
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\__init__.py": "c76781beac0b2a188fc918ecb16b82c801662f0b1ed5bc6a08a918d1a7208c02",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_batch_events.py": "1a2b5a00e5629ba8b0d059086802f2d2e484398d20ee6ecf138b957d98a6e284",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_batch_metrics.py": "7ff4c9d6fbcf7eef075fd4f88f2d42097cf75bca8640b150d69faa583d905cd0",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_channel.py": "800e437510372a53a2e821c7e3ca2a84a5595b3b240cd696cf7998cfbce9f8e3",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_cma.py": "63d4493dfa2ebd8ce04446aab311ad0f93a4abe3d336db3260903c3de6c30c46",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_config.py": "91b8664a3af1684a9be3c43e6aa125a403f6cec98bac7b8048fe3c9fee1a9bd9",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_dual_pol_channel.py": "3d02eaa31e3efa9c343028a81ec6b36c1d1ebf9135e386e974ef581ba11bf7d3",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_equalizer.py": "320115d96a6ed7c3b970371f47fc98fb5054510129f556f66d602ef7d38199b9",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_experiment.py": "e109d56bbec59810717c28eb7630e02da6db562ace36e2c52c11cd5d618887aa",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_gg_time.py": "92eaa6a6c92e72122a1921a0c844160bbf5b4ee7bc2527fc66da468187af9786",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_kf.py": "577f57321fe7fcaf5ab093a8730a2ca9e09bfe42e6452ef0fdb0cf992a807760",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_ml_equalizer.py": "db352990f6ca740955bba3b48136077d8b8147d5d2b6af700350ad9f62d631df",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_modulation.py": "036fb7aa4d0bef153ee53799f20a244492fb6294f93132d1ecc2b0530b5694d5",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_recovery.py": "afb8aed9508cc83ee13d05bfd4346a2e6f0852af0e9d6a182a85a441ff5d60e2",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_vae_equalizer.py": "c808e13cd365c5f4ab4a5c9ba10e5a61205d777db81192ef878f4fe1158f29ad",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\explore\\cma-fade-divergence\\ml_long_seq_failure.py": "5ed5ff9c5145292a59fab9688c1cbf823e7ae2ebea4fb60878ed81f8e10a3e1d",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\explore\\cma-fade-divergence\\prompt012_longseq_audit.py": "b4e55d6971cc370605309472cdb17c19996d41c1c11b0ba5b18bc6dceea837a1",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\explore\\cma-fade-divergence\\prompt013_swap_mechanism_q2.py": "9282ecb53608a2093a5e69a62ccea9976211ecfda7626d2e65ce2fd912f1ca2f",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\explore\\cma-fade-divergence\\prompt013_swap_quality_q1.py": "4c99e50e0de39b41722f22ce3850d0aebb1c58983e8699eff1d0c3c47ba3f3c9",
+        "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\params.py": "8351469458b9cfdc93724d457a287011c65609b64d70bf9fcf798c9ad82a539c",
+        "D:\\code\\study\\research-protocol\\projects\\simulation\\verify\\direction_lab_pilot\\controller.py": "95a153fe893f5df1c83ab2436de1829c2bd36a1e76e730a2c53d4401a58cf2a8",
+        "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\anchor.yaml": "7fc0dfa1ab1c7e448496b27d1cc13c12bce3484a9494f0562ea7e30340c135f2",
+        "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\batch-queue.v3.yaml": "62cabb989e269af28697c5e4092cc9d984c92d15d7565d1bf0c461c3f0df5917",
+        "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\candidate-map.v2.yaml": "e6baa75f2a6f5c691dc3a2c1e5974a61122c03c6ec133954329e81ead67cd883",
+        "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\candidate-universe.v2.yaml": "f38806165b63ba83f474605f3f21812b2015d759f379fc93429a6eec2d41c807",
+        "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\canonical-state.yaml": "821415346437f47de064966fdaa768242c63d2d660ea189e88a4a0dfb51995b0",
+        "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\component-registry.v3.yaml": "82fdb419de785568a3afe13666200aa17cde0abf56d9ae55848c70508bcddce9",
+        "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\tools\\ml_detector_batch.py": "2911f421c9dcd8bbb7d1c389b37548e101335a4654eeaaf8f8fd371aae6e199e",
+        "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\tools\\run_b001.py": "26a0e95d79d58088b6a24054d04cb76893a97a952a714e335068ea871edb8c89",
+        "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\tools\\run_v2.py": "329ffedd2134c7e2b1123e4ca771cc0d7fd3e67da4893041acf93f15431bff3a",
+        "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\tools\\run_v3.py": "6f21dfe023ccb8e74876730bee8789353ef649ad2b976be63317420f298a9caf",
+        "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\tools\\unlabeled_control_reconstruction.py": "4fd319b782d4b9231253879f7fdac08f39edb7376b92bc4fde0eedf55e642c71",
+        "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\tools\\validate_batch_queue.py": "5a6ac4ee89c05f660e9ab7f5b5ef18e7e2d6ed8b5231c1ddc2125e84578d9002"
+      },
+      "state": "BATCH_READY",
+      "test_only": false
+    },
+    "result_hash": "c17ab94708307b82c0162b9e5d573971170869ec757dc6bb24ca62a83ac8e3cc"
+  },
+  "gate": {
+    "accepted": true,
+    "action": "RUN",
+    "artifact_pointer": {
+      "bytes": 107859566,
+      "path": "artifacts\\result.json",
+      "sha256": "a395ece10ed9eb084beae8d9bd2f49854d4220ba520f82bcf04d2ae0e43df6e0"
+    },
+    "artifact_status": "ACCEPTED",
+    "decision_id": "decision-5653e7f9bd0a4032a63e65d8c0918fa0",
+    "destination": "evidence_ledger",
+    "manifest_hash": "42d8061773f7ecb1d03912bd775dc18424a44a14b1943b97b664818634b6b5e6",
+    "result_hash": "c17ab94708307b82c0162b9e5d573971170869ec757dc6bb24ca62a83ac8e3cc",
+    "run_id": "B003-75778e4b4e4045388b5ee06e9b8e6649",
+    "trust_status": "TRUSTED"
+  },
+  "manifest": {
+    "archetype_id": "U24",
+    "baseline_fingerprint": "9282ecb53608a2093a5e69a62ccea9976211ecfda7626d2e65ce2fd912f1ca2f",
+    "baseline_id": "baseline.standard_cma.godard_z",
+    "batch_id": "B003",
+    "component_fingerprint": "527332e9940361013f692349d49dd6b177ab0ef661b192a7118d4b1855d7c14f",
+    "component_id": "component.ml_degradation_detector.batch-v3",
+    "contract": {
+      "alpha": 4.2,
+      "archetype_id": "U24",
+      "baseline_id": "baseline.standard_cma.godard_z",
+      "batch_id": "B003",
+      "beta": 1.4,
+      "block_size": 64,
+      "candidates": [
+        {
+          "candidate_id": "C24-SL-LINEAR",
+          "hypothesis": "a causal combination of multiple CMA internal traces contains predictive information not captured by any one threshold",
+          "mechanism": "supervised class-weighted logistic temporal detector"
+        },
+        {
+          "candidate_id": "C24-SL-MLP",
+          "hypothesis": "nonlinear interactions among causal trace level/delta/history improve event discrimination beyond the linear detector",
+          "mechanism": "supervised shallow nonlinear temporal detector"
+        },
+        {
+          "candidate_id": "C24-SSL-AE-UNLABELED",
+          "hypothesis": "event blocks depart from the overall control-rate train feature domain without using event labels for representation fitting or threshold calibration",
+          "mechanism": "unlabeled control-domain reconstruction with cell-level anomaly threshold"
+        }
+      ],
+      "channel_block": 100,
+      "clip_norm": 1.0,
+      "cma_mu": 0.001,
+      "cma_taps": 11,
+      "eval_end": 100000,
+      "eval_start": 0,
+      "f_g_hz": 30,
+      "fade_threshold_h": 0.1,
+      "family_id": "F05",
+      "method": "gar",
+      "method_scope": "channel_gg_time_envelope_method",
+      "metric_contract_id": "metric.dual_qpsk.fixed-plus-pi.v1",
+      "metrics": {
+        "diagnostics": [
+          "block_AUROC",
+          "block_AUPRC",
+          "lead_blocks",
+          "ECE",
+          "positive_cells",
+          "positive_blocks"
+        ],
+        "primary": [
+          "cell_recall_before_or_at_oracle",
+          "control_cell_false_alarm_rate"
+        ],
+        "required_signal_metrics": [
+          "fixed_label_ber",
+          "permutation_invariant_ber"
+        ]
+      },
+      "modulation": "QPSK",
+      "n_symbols": 100000,
+      "pairing": "all candidates consume the same saved causal feature rows for each rate-seed cell",
+      "preregistered_outcomes": {
+        "advance_specific_mechanism": "test recall at least 0.60 AND control false-alarm at most 0.20 AND AUROC at least 0.70",
+        "minimum_information": "at least 3 event cells and 50 positive train blocks; otherwise INCONCLUSIVE_DEFER",
+        "no_family_wide_kill": true,
+        "otherwise": "DEFER",
+        "retire_specific_mechanism": "with minimum information, AUROC at most 0.55 OR recall equals 0"
+      },
+      "problem_mca": {
+        "A": "high-SOP non-swap BER failures exist in foundation observations, while single-statistic threshold detectors missed the observed failures",
+        "C": "dual-pol OSL GG strong turbulence at SOP rates 4e-6 control and 1e-5 event condition",
+        "M": "receiver-only detector layered on unchanged standard-CMA"
+      },
+      "queue_id": "queue.dual-pol-osl.ml.2026-07-18.v3",
+      "r2": 1.0,
+      "rates": [
+        4e-06,
+        1e-05
+      ],
+      "resource_budget": "30 shared standard-CMA cells plus three lightweight CPU models; no 1M/5M expansion",
+      "runtime_field_effects": {
+        "channel_block": {
+          "consumer": "channel_generator",
+          "effect": "operative"
+        },
+        "clip_norm": {
+          "consumer": "canonical_standard_cma_not_consumed",
+          "effect": "audit_only",
+          "reason": "retained explicitly for audit compatibility; canonical prompt013 does not read it"
+        },
+        "fade_threshold_h": {
+          "consumer": "canonical_standard_cma_not_consumed",
+          "effect": "audit_only",
+          "reason": "retained explicitly for audit compatibility; canonical prompt013 does not read it"
+        },
+        "method": {
+          "consumer": "channel_generator",
+          "effect": "operative",
+          "scope": "channel_gg_time_envelope_method"
+        },
+        "r2": {
+          "consumer": "standard_cma_config",
+          "effect": "operative"
+        },
+        "t_s": {
+          "consumer": "channel_generator",
+          "effect": "operative"
+        }
+      },
+      "simulator_id": "simulator.dual_pol_shared_realization.v1",
+      "snr_db": 20,
+      "supervision_boundary": "logistic and MLP may use train block labels; the unlabeled AE uses the complete control-rate train feature domain and never receives event labels; all inference features are causal receiver/CMA traces only",
+      "t_s": 4e-10,
+      "test_seeds": [
+        41,
+        42,
+        43,
+        44,
+        45
+      ],
+      "title": "v3 explicit-contract causal ML degradation detector family",
+      "train_seeds": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "valid_domain": "exact B003 shared contract only; no cross-SNR/fG/modulation/length claim"
+    },
+    "destination": "evidence_ledger",
+    "evidence_status": "EXPLORATORY",
+    "execution_component_ids": [
+      "baseline.standard_cma.godard_z",
+      "component.ml_degradation_detector.batch-v3",
+      "runner.direction_lab.replacement-v3",
+      "metric.dual_qpsk.fixed-plus-pi.v1",
+      "runner.direction_lab.replacement-v2-helper",
+      "runner.direction_lab.legacy-b001-helper",
+      "controller.direction_lab.pilot-v3",
+      "validator.direction_lab.queue-gate-v3"
+    ],
+    "execution_mode": "PRODUCTION",
+    "family_id": "F05",
+    "promotion_allowed": false,
+    "queue_hash": "62cabb989e269af28697c5e4092cc9d984c92d15d7565d1bf0c461c3f0df5917",
+    "registry_hash": "82fdb419de785568a3afe13666200aa17cde0abf56d9ae55848c70508bcddce9",
+    "registry_path": "projects\\thesis-fso\\direction-lab\\component-registry.v3.yaml",
+    "run_id": "B003-75778e4b4e4045388b5ee06e9b8e6649",
+    "runner_fingerprint": "6f21dfe023ccb8e74876730bee8789353ef649ad2b976be63317420f298a9caf",
+    "sandbox_only": true,
+    "source_hash": "3df3d64c7711d8b62978fe9c839fce2a335faa42bc7a053abe772a5c7c5c1e3e",
+    "source_import_closure": [
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\__init__.py",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_batch_events.py",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_batch_metrics.py",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_channel.py",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_cma.py",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_config.py",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_dual_pol_channel.py",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_equalizer.py",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_experiment.py",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_gg_time.py",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_kf.py",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_ml_equalizer.py",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_modulation.py",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_recovery.py",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_vae_equalizer.py",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\explore\\cma-fade-divergence\\ml_long_seq_failure.py",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\explore\\cma-fade-divergence\\prompt012_longseq_audit.py",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\explore\\cma-fade-divergence\\prompt013_swap_mechanism_q2.py",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\explore\\cma-fade-divergence\\prompt013_swap_quality_q1.py",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\params.py",
+      "D:\\code\\study\\research-protocol\\projects\\simulation\\verify\\direction_lab_pilot\\controller.py",
+      "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\anchor.yaml",
+      "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\batch-queue.v3.yaml",
+      "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\candidate-map.v2.yaml",
+      "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\candidate-universe.v2.yaml",
+      "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\canonical-state.yaml",
+      "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\component-registry.v3.yaml",
+      "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\tools\\ml_detector_batch.py",
+      "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\tools\\run_b001.py",
+      "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\tools\\run_v2.py",
+      "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\tools\\run_v3.py",
+      "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\tools\\unlabeled_control_reconstruction.py",
+      "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\tools\\validate_batch_queue.py"
+    ],
+    "source_snapshot": {
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\__init__.py": "c76781beac0b2a188fc918ecb16b82c801662f0b1ed5bc6a08a918d1a7208c02",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_batch_events.py": "1a2b5a00e5629ba8b0d059086802f2d2e484398d20ee6ecf138b957d98a6e284",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_batch_metrics.py": "7ff4c9d6fbcf7eef075fd4f88f2d42097cf75bca8640b150d69faa583d905cd0",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_channel.py": "800e437510372a53a2e821c7e3ca2a84a5595b3b240cd696cf7998cfbce9f8e3",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_cma.py": "63d4493dfa2ebd8ce04446aab311ad0f93a4abe3d336db3260903c3de6c30c46",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_config.py": "91b8664a3af1684a9be3c43e6aa125a403f6cec98bac7b8048fe3c9fee1a9bd9",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_dual_pol_channel.py": "3d02eaa31e3efa9c343028a81ec6b36c1d1ebf9135e386e974ef581ba11bf7d3",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_equalizer.py": "320115d96a6ed7c3b970371f47fc98fb5054510129f556f66d602ef7d38199b9",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_experiment.py": "e109d56bbec59810717c28eb7630e02da6db562ace36e2c52c11cd5d618887aa",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_gg_time.py": "92eaa6a6c92e72122a1921a0c844160bbf5b4ee7bc2527fc66da468187af9786",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_kf.py": "577f57321fe7fcaf5ab093a8730a2ca9e09bfe42e6452ef0fdb0cf992a807760",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_ml_equalizer.py": "db352990f6ca740955bba3b48136077d8b8147d5d2b6af700350ad9f62d631df",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_modulation.py": "036fb7aa4d0bef153ee53799f20a244492fb6294f93132d1ecc2b0530b5694d5",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_recovery.py": "afb8aed9508cc83ee13d05bfd4346a2e6f0852af0e9d6a182a85a441ff5d60e2",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\common\\_vae_equalizer.py": "c808e13cd365c5f4ab4a5c9ba10e5a61205d777db81192ef878f4fe1158f29ad",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\explore\\cma-fade-divergence\\ml_long_seq_failure.py": "5ed5ff9c5145292a59fab9688c1cbf823e7ae2ebea4fb60878ed81f8e10a3e1d",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\explore\\cma-fade-divergence\\prompt012_longseq_audit.py": "b4e55d6971cc370605309472cdb17c19996d41c1c11b0ba5b18bc6dceea837a1",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\explore\\cma-fade-divergence\\prompt013_swap_mechanism_q2.py": "9282ecb53608a2093a5e69a62ccea9976211ecfda7626d2e65ce2fd912f1ca2f",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\explore\\cma-fade-divergence\\prompt013_swap_quality_q1.py": "4c99e50e0de39b41722f22ce3850d0aebb1c58983e8699eff1d0c3c47ba3f3c9",
+      "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner\\projects\\simulation\\params.py": "8351469458b9cfdc93724d457a287011c65609b64d70bf9fcf798c9ad82a539c",
+      "D:\\code\\study\\research-protocol\\projects\\simulation\\verify\\direction_lab_pilot\\controller.py": "95a153fe893f5df1c83ab2436de1829c2bd36a1e76e730a2c53d4401a58cf2a8",
+      "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\anchor.yaml": "7fc0dfa1ab1c7e448496b27d1cc13c12bce3484a9494f0562ea7e30340c135f2",
+      "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\batch-queue.v3.yaml": "62cabb989e269af28697c5e4092cc9d984c92d15d7565d1bf0c461c3f0df5917",
+      "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\candidate-map.v2.yaml": "e6baa75f2a6f5c691dc3a2c1e5974a61122c03c6ec133954329e81ead67cd883",
+      "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\candidate-universe.v2.yaml": "f38806165b63ba83f474605f3f21812b2015d759f379fc93429a6eec2d41c807",
+      "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\canonical-state.yaml": "821415346437f47de064966fdaa768242c63d2d660ea189e88a4a0dfb51995b0",
+      "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\component-registry.v3.yaml": "82fdb419de785568a3afe13666200aa17cde0abf56d9ae55848c70508bcddce9",
+      "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\tools\\ml_detector_batch.py": "2911f421c9dcd8bbb7d1c389b37548e101335a4654eeaaf8f8fd371aae6e199e",
+      "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\tools\\run_b001.py": "26a0e95d79d58088b6a24054d04cb76893a97a952a714e335068ea871edb8c89",
+      "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\tools\\run_v2.py": "329ffedd2134c7e2b1123e4ca771cc0d7fd3e67da4893041acf93f15431bff3a",
+      "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\tools\\run_v3.py": "6f21dfe023ccb8e74876730bee8789353ef649ad2b976be63317420f298a9caf",
+      "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\tools\\unlabeled_control_reconstruction.py": "4fd319b782d4b9231253879f7fdac08f39edb7376b92bc4fde0eedf55e642c71",
+      "D:\\code\\study\\research-protocol\\projects\\thesis-fso\\direction-lab\\tools\\validate_batch_queue.py": "5a6ac4ee89c05f660e9ab7f5b5ef18e7e2d6ed8b5231c1ddc2125e84578d9002"
+    },
+    "state": "BATCH_READY",
+    "test_only": false
+  }
+}

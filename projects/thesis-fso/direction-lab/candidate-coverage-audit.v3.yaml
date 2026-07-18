@@ -1,0 +1,174 @@
+schema_version: direction-lab.candidate-coverage-audit.v1
+audit_id: coverage.dual-pol-osl.ml.2026-07-18.v3
+status: PARTIAL_MECHANISM_COVERAGE
+lineage:
+  universe_v2: candidate-universe.v2.yaml
+  universe_v2_sha256: f38806165b63ba83f474605f3f21812b2015d759f379fc93429a6eec2d41c807
+  map_v2: candidate-map.v2.yaml
+  map_v2_sha256: e6baa75f2a6f5c691dc3a2c1e5974a61122c03c6ec133954329e81ead67cd883
+  immutable_inputs: true
+coverage_facts:
+  application_points: 28
+  archetypes: 34
+  map_partition: 34-of-34-to-8-families
+  method_tags: 13
+  conclusion: archetype partition and global tag occurrence do not prove mechanism or information-interface completeness
+mechanism_identity:
+  key: [application_point, input_source, causal_time, oracle_boundary, output_action]
+  rule: changing only a method-family tag does not create a distinct candidate
+  axes:
+    supervision: [SL, SSL, UL]
+    structural_prior: [PI, DU, EQ, HYB, BAYES, GEN]
+    adaptation_control: [META, OCL, RL]
+    deployment: [COMP]
+schema_gaps:
+  missing_fields: [input_source, causal_time, label_boundary, oracle_boundary, output_action, runtime_state, io_contract, component_fingerprint]
+  reverse_inconsistencies:
+    - {candidate: U10, application_point: AP09, extra_candidate_tag: GEN, application_methods_missing_tag: true}
+    - {candidate: U15, application_point: AP10, extra_candidate_tag: BAYES, application_methods_missing_tag: true}
+application_method_gaps:
+  AP01: [SL, RL]
+  AP02: [SL, SSL, HYB]
+  AP03: [SL, HYB]
+  AP04: [SL, PI, OCL]
+  AP05: [OCL]
+  AP06: [SL, COMP]
+  AP07: [SL, SSL, PI, OCL]
+  AP08: [SSL, META, HYB]
+  AP09: [SL, PI, DU, OCL, HYB]
+  AP10: [PI, COMP]
+  AP11: [SSL, PI, DU, COMP]
+  AP12: [SSL, PI, EQ, META]
+  AP13: [SSL, PI, GEN, COMP]
+  AP14: [SSL, COMP]
+  AP15: [SSL, OCL, HYB]
+  AP16: [SL, META, COMP]
+  AP17: [SL, UL, META, HYB]
+  AP18: [PI, GEN, OCL, HYB]
+  AP19: [SL, OCL]
+  AP20: [SL, SSL, HYB]
+  AP21: [SL, SSL, BAYES, HYB]
+  AP22: [SL, EQ]
+  AP23: [META, OCL, GEN]
+  AP24: [SL, RL]
+  AP25: [SL]
+  AP26: [SSL, PI]
+  AP27: broad_single_archetype_not_interface_complete
+  AP28: broad_single_archetype_not_interface_complete
+new_retained_neutral_interfaces:
+  - id: U35
+    application_point: AP03
+    mechanism: adaptive uncertainty-triggered pilot scheduling
+    input_source: previous-block state posterior, uncertainty, and remaining pilot budget
+    causal_time: choose pilots for the next block
+    oracle_boundary: simulator h/Jones may be training or post-hoc only
+    output_action: pilot density, placement, or waveform
+    method_axes: [BAYES, RL, OCL, HYB]
+  - id: U36
+    application_point: AP04
+    mechanism: causal GG/Jones/link-state posterior tracker
+    input_source: raw dual-pol RX, known pilots, causal CMA state and history
+    causal_time: block-causal
+    oracle_boundary: simulator h/Jones allowed only as training label or post-hoc metric
+    output_action: calibrated posterior over Jones, fade, SNR, and SOP-rate
+    method_axes: [DU, BAYES, PI, HYB]
+  - id: U37
+    application_point: AP07-AP12
+    mechanism: joint synchronization and polarization tracker
+    input_source: raw samples, pilots, decision-directed observations, previous state
+    causal_time: symbol or block causal
+    oracle_boundary: non-pilot TX truth is evaluation-only
+    output_action: timing, CFO, phase, Jones estimates, and covariance
+    method_axes: [DU, BAYES, HYB, OCL]
+  - id: U38
+    application_point: AP09-AP19
+    mechanism: decoder or CRC-aided cycle-slip and swap repair
+    input_source: phase and assignment hypotheses plus CRC, syndrome, or extrinsic LLR
+    causal_time: decoded feedback affects the next iteration or block
+    oracle_boundary: true assignment and BER are not runtime inputs
+    output_action: relabel, phase-hypothesis switch, rollback, or relock
+    method_axes: [BAYES, HYB, RL]
+  - id: U39
+    application_point: AP16
+    mechanism: turbo decoder-aided equalization and CPR
+    input_source: samples, equalizer and CPR state, decoder extrinsic information
+    causal_time: within-frame iteration
+    oracle_boundary: coded truth is training or evaluation-only
+    output_action: updated equalizer/CPR state and LLR
+    method_axes: [DU, HYB, SL]
+  - id: U40
+    application_point: AP18-AP22
+    mechanism: online OOD/domain-shift monitor with abstention
+    input_source: causal representation and DSP traces
+    causal_time: before adaptation or receiver-control action
+    oracle_boundary: domain labels may be offline labels; runtime BER is unavailable
+    output_action: OOD score, abstention, or fixed safe fallback
+    method_axes: [SSL, BAYES, GEN, OCL]
+  - id: U41
+    application_point: AP21-AP23
+    mechanism: shared causal dual-pol self-supervised pretraining
+    input_source: unlabeled dual-pol RX with multi-view or causal masking
+    causal_time: offline representation training; causal mask at use time
+    oracle_boundary: no runtime TX, h, or Jones truth
+    output_action: representation for state, LQM, alarm, or equalizer heads
+    method_axes: [SSL, EQ, PI, META]
+  - id: U42
+    application_point: AP19-AP20-AP25
+    mechanism: safety-constrained contextual receiver controller
+    input_source: calibrated state, alarm, uncertainty, and resource telemetry
+    causal_time: block-causal
+    oracle_boundary: oracle action is training label or upper bound only
+    output_action: reset, mode, CMA step, window, or compute with fixed fallback
+    method_axes: [RL, BAYES, HYB, OCL]
+  - id: U43
+    application_point: AP24-AP25
+    mechanism: link-state-gated dynamic inference
+    input_source: LQM, uncertainty, and hardware budget
+    causal_time: before each inference block
+    oracle_boundary: future BER is unavailable
+    output_action: early exit, MoE route, or compute allocation
+    method_axes: [COMP, RL, HYB]
+  - id: U44
+    application_point: AP05
+    mechanism: calibrated conditional digital twin and rare-event importance sampler
+    input_source: simulator and measured channel traces plus conditions
+    causal_time: offline generation or differentiable surrogate use
+    oracle_boundary: synthetic truth and measured evidence stay distinct
+    output_action: rare-event samples, surrogate response, and uncertainty
+    method_axes: [PI, GEN, BAYES]
+duplicate_merge_rules:
+  - {candidates: [U05, U11, pilot-Jones], merge_if: pilot-to-Jones-to-inverse, keep_separate_if: U11 outputs direct residual or equalized samples}
+  - {candidates: [U12, U26], merge_if: unfolding only selects CMA step or window, keep_separate_if: U12 outputs a full equalized sequence}
+  - {candidates: [U13, U27], merge_if: adaptation timing is unspecified, split_as: online-TTA-with-rollback versus offline-domain-generalization}
+  - {candidates: [U17, U30], action: merge_as_deployment_family, variants: [teacher-compression, hardware-aware-quantization-or-NAS]}
+  - {candidates: [U19, U20], keep_separate_if: hard-symbol output versus calibrated LLR, merge_if: both output the same soft posterior}
+  - {candidates: [U21, U22, U34], split_by: one-way decoder versus iterative feedback versus HARQ action, merge_note: U34 FEC-only part belongs to U21}
+  - {candidates: [U23, U24], action: shared_causal_backbone_two_heads, heads: [continuous-quality, discrete-event]}
+  - {candidates: [U25, U31], keep_separate_if: safe recovery action versus resource scheduling, merge_if: identical mode-action set}
+  - {candidates: [U03, U29], keep_separate_if: runtime pilot action versus offline data query}
+  - {candidates: [U10, U24], action: shared_temporal_detector_family, distinction: event definition only}
+  - {candidates: [U06, U27, U28], split_by: state representation versus synthetic-domain generalization versus measured-data adaptation}
+historical_lineage_corrections:
+  inherited_missing_from_map_v2:
+    - {decision: D031, candidates: [U11, U14, U15], effect: exact L1/L2 no-increment and blind-VAE collision boundaries}
+    - {decision: D032, candidates: [U13], effect: periodic-pilot online-finetune exact kill; does not kill other online mechanisms}
+    - {decision: D033, candidates: [U11, U13, U27], effect: fixed CVNN/attention/dual-branch defer pending test-state interface}
+    - {decision: D036, candidates: [U25, U31, U42], effect: genie-trigger CMA/ML switch exact kill in old alpha-beta domain only}
+    - {decision: D037, candidates: [U03, U05, U11], effect: generic pilot feed-forward collision/defer}
+    - {decision: D038, candidates: [U01], effect: asymmetric-power submechanism exact kill only}
+    - {decision: D039, candidates: [U25, U34, U38], effect: CRC relabel equals PI-BER and is a baseline, not a new method}
+  corrected_mapping:
+    - {decision: D048-D049, candidate: U14, effect: inherit only if reusing the same detector statistics; primary U14 boundaries are D040 and D043}
+readiness_corrections:
+  U10:
+    current_map_claim: NEXT_AFTER_EVENT_LIBRARY with problem_truth 4
+    audit_finding: existing evidence is SOP/polarization/CMA BER failure, not CPR cycle-slip or lock-loss
+    corrected_gate: SCOUT_EVENT_LIBRARY_ONLY
+  U25: BLOCKED_ACTION_EFFECT_NOT_OBSERVABLE_EXACT_STANDARD_CMA_CHAIN
+  U19: ABSENT_PROBLEM_AND_DETECTOR_CONTRACT
+  U20: ABSENT_LLR_AND_CODED_CHAIN
+governance:
+  neutral_scan_only: true
+  no_go_kill_from_this_audit: true
+  candidate_map_v2_unchanged: true
+  b004_simulation_forbidden: true
