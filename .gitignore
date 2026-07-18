@@ -41,3 +41,14 @@ cnki_cookies.json
 /审查
 /调研
 /状态
+
+# Reproducible local build, extraction, and preview outputs
+/tmp/
+/leo-fig1-samples/
+/毕设/开题PPT/extracted_images/
+/毕设/开题PPT/P*.pptx
+/projects/simulation/tmp/
+/projects/simulation/paper/ccisp2026/qa_check_*.png
+/projects/simulation/paper/ccisp2026/*_extracted.txt
+/pdf_toc.pdf
+*.bak
