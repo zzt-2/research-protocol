@@ -736,3 +736,160 @@ Al-Habash 原典全文已落盘并确认 GG 映射公式（Eq.14/18-19）。子 
 ### 来源
 
 R017 / 用户定死 / Al-Habash 本地归档 / Gu 2022 惯例子 Agent 提取
+
+## D020: 授权主控修正 Fig.2 route-B 控制流并解除资产边界
+
+> status: active
+> date: 2026-07-16
+> 取代：D018 中“Fig.2 只集成验收、不覆盖”的本轮资产边界
+> 被取代：无
+> 依据：验证: V015 + 用户原话: voice.md 2026-07-16
+
+### 决策
+
+用户授权当前主控直接修改 Fig.2 编辑源。修改仅把信息流修正为 `branch command -> branch router -> 单一 DA/NDA 分支 -> selected phase -> common compensation/DSP`，不修改 selector、CV、1.10 margin、13 dB、CPR、参数、seed/window/metric 或正式结果。
+
+### 理由
+
+T018 的唯一终验阻断是旧 Fig.2 仍表达“双路先运行、后选择”，与已经通过 990/990 exact 验证的 route-B 先选后跑实现不一致。用户明确撤销了本轮不得覆盖该资产的限制，因此可以做最小语义修复并重新构建、视觉 QA 和独立终验。
+
+### 排除的替代方案
+
+- 继续保留 BLOCKED 等待外部资产维护方：用户已授权主控修改，排除。
+- 改 route-B 实现或重新跑正式结果来迁就旧图：会破坏已冻结算法与数据，排除。
+- 仅改 caption 而保留错误箭头：不能闭合实现真实性，排除。
+
+### 影响范围
+
+`projects/simulation/figures/fig2_adaptive_cpr.{drawio,pdf,png,svg}`、Fig.2 结构测试、论文嵌入宽度、fresh build，以及 V015/T018 最终状态。
+
+### 来源
+
+S001 / 用户授权 / V015 原 Fig.2 语义阻断
+
+## D021: Fig.3 fixed 横轴统一为 5--35 dB、2 dB 步长
+
+> status: active
+> date: 2026-07-16
+> 取代：D018 中 fixed-estimator 的旧代表点网格（仅网格，不取代 A/B adaptive 网格）
+> 被取代：无
+> 依据：用户原话: voice.md 2026-07-16 + 验证: fixed-grid contract tests
+
+### 决策
+
+Fig.3 所消费的正式 fixed DA/NDA/oracle 数据，AWGN、weak、moderate、strong 四个场景统一使用 5, 7, ..., 35 dB（16 点）；保持 30 seeds、400 windows、既有算法、参数、统计口径不变。A/B adaptive 仍保持冻结的 5--25 dB、2 dB 步长和 990/990 exact 契约。
+
+### 理由
+
+旧 fixed 网格在不同场景分别为 5--20 dB 和不规则的 5--26 dB，导致 Fig.3 横轴范围不一致，也无法比较高 SNR 的低 BER 区域。统一网格是图表可比性修正，不是依据结果调整 selector、参数或指标。
+
+### 排除的替代方案
+
+- 只在绘图层把旧曲线外推到 35 dB：会把未运行点伪装成正式结果，排除。
+- 修改 A/B adaptive 5--25 dB 网格：与已冻结的 selector 990/990 契约冲突，排除。
+- 看到新曲线后调整算法、阈值或删除不利点：违反正式闭环纪律，排除。
+
+### 影响范围
+
+更新 `params.py` 的 fixed 专用网格、fixed runner、fixed verifier/tests、Fig.3/交叉图、Results 中 fixed 网格描述和由新正式曲线计算的 crossover 数字；不改 A/B JSON、selector/CV/1.10 margin/13 dB/CPR/seed/window/metric。
+
+### 来源
+
+用户原话 / fixed-grid contract tests / T018 正式闭环
+
+## D022: CCISP 论文治理收口为一个活动专题
+
+> status: active
+> date: 2026-07-16
+> 取代：独立 `2026-07-16-ccisp-fig1-layout` 专题安排
+> 被取代：无
+> 依据：用户原话: voice.md 2026-07-16 + registry/目录只读审计
+
+### 决策
+
+以 `2026-07-14-ccisp-content-expansion` 为 CCISP 论文唯一 active/canonical 专题，并更名为“CCISP 2026 论文整稿闭环”。`2026-07-13-ccisp-submission-prep` 与 `2026-07-14-ccisp-figure-typography` 只保留为关闭的历史档案；刚创建且尚未执行的 Fig.1 专题撤销，其设计与任务合同迁为本专题 S002/T019。后续同一论文的单图、排版、文字和投稿修订默认追加到本专题，不再拆新专题。
+
+### 理由
+
+同一论文被拆成投稿、内容、字体和单图多个入口，已经增加查找与恢复成本，也让用户难以判断当前主线。历史专题若物理搬迁，会造成 S/D/V 编号冲突和大量引用断裂；因此采用“一个活动入口 + 关闭历史档案”的最小破坏收口。
+
+### 排除的替代方案
+
+- 排除把所有历史文件强行搬进同一目录：会产生编号冲突并破坏既有证据指针。
+- 排除继续保留独立 Fig.1 活动专题：任务尚未执行，迁回总专题成本最低。
+- 排除删除投稿和字体历史：其验证证据仍需可追溯。
+- 排除今后每个单图或局部修改都建专题：粒度过细；只有独立长期生命周期且用户明确批准时才可例外。
+
+### 影响范围
+
+更新 `_registry.yaml`、本专题 topic-index/S002/T019/decisions/voice，以及投稿骨架专题的关闭状态；不修改论文、图片、仿真、数据或历史验证内容。
+
+### 来源
+
+S002 / 用户治理纠正 / 独立只读审计
+
+## D023: 论文引用删减按质量与职责双门执行
+
+> status: active
+> date: 2026-07-16
+> 取代：无
+> 被取代：无
+> 依据：用户原话: voice.md 2026-07-16 + 调研: 当前 aux/HEAD aux 引用集合审计
+
+### 决策
+
+CCISP 论文删除或替换引用时，必须同时检查正文职责与来源质量；在职责可由多篇文献承担时，优先保留 IEEE Transactions、JLT、PTL 等高质量且直接相关来源，优先删除低质量、弱相关或超出当前 downlink scope 的来源。不得仅为压页或减少参考文献数量而移除已经归档并承担论证职责的高质量文献。
+
+### 理由
+
+当前 PDF 的实际引用由 24 条降为 18 条，其中消失集合包含 TSP、JLT、TCCN、TCOM 等高质量来源；多数并非从 `references.bib` 删除，而是在压缩 Introduction 时失去正文挂接。只按文字长度删引用会破坏此前投入建立的证据链，也不符合 comparable-paper 的 related-work 组织要求。
+
+### 排除的替代方案
+
+- 为控制页数按引用数量机械删减：引用质量和论证职责比条目数量更重要，排除。
+- 无差别恢复全部旧引用：Conroy uplink 与当前 downlink scope 不贴合，Martins OSA Continuum 相关性和质量优先级较低，不要求恢复。
+- 保留高质量文献但把多篇堆在无职责句尾：仍属于引用罗列，排除；恢复必须绑定具体论证职责。
+
+### 影响范围
+
+后续修改 `sections/introduction.tex`、`sections/system_model.tex`、`sections/method.tex` 与 `references.bib` 时适用；不改变正式参数、算法、结果或指标。
+
+### 来源
+
+用户纠正 / Introduction 与引用集合独立审计
+
+## D024: 导师批注驱动的 Skill 门禁升级与论文统一修订
+
+> status: active
+> date: 2026-07-17
+> 取代：S003 中“只做提取和规划、暂不修改”的阶段边界
+> 被取代：无
+> 依据：用户原话: voice.md 2026-07-17 + S003 + Skill RED/GREEN 压力测试 + 21 项论文现状审计
+
+### 决策
+
+批准先升级 `paper-writing` 与 `external-output` 的导师/审稿反馈处理门禁，再按一个统一批次修改 CCISP 论文。统一批次采用 `INTAKE -> DIAGNOSE -> PROPOSE -> WRITE -> VERIFY -> DELIVER`，以逐条反馈账本为唯一核销入口；每项局部批注必须同时执行全文同类问题扫描。论文修改顺序固定为论证结构与术语、公式/符号职责、图表、引用、作者元数据、精确五页版式，最后 fresh build、逐页视觉 QA 和独立 reviewer 终验。
+
+### 项目硬门
+
+- 终稿必须恰为 5 页，并占用到第 5 页最后允许行；参考文献末页双栏视觉平衡。
+- 作者为张哲铜、吴浩；吴浩为通信作者，邮箱 `wuhao@bit.edu.cn`；单位只用仓库既有正式证据，不猜测。
+- Fig.3--5 图例位于图面/坐标轴内且统一；Fig.4 不用约等号，标注不遮挡；HD-FEC 若无独立职责即从图中移除。
+- DA/NDA 定义为两类 CPR 算法/方法，不以“互补”定义，不把论文身份退回估计器选择。
+- 会议引用按论证职责与来源质量压缩；不机械删除高质量 Transactions/JLT/PTL。
+- 明确删除线内容不得以同义改写回流；局部删除必须扩展到同类防御性、元话语和内部验证语言扫描。
+
+### 冻结边界
+
+不修改 selector、CV 门限、1.10 margin、13 dB、CPR、三档参数、seed/window/metric、正式数据和结果；不覆盖用户维护的 Fig.1/Fig.2 drawio。禁止用 filler、弱引用、不可读缩图、负间距或删除有效性边界凑到五页。
+
+### 排除的替代方案
+
+- 排除只逐条改批注位置而不扫描全文同类问题：会重复出现同源缺陷。
+- 排除先调字号/间距再改内容：结构变化会推翻排版且掩盖论证问题。
+- 排除把所有导师局部意见机械升级成通用禁令：须区分项目合同与可复用规则。
+- 排除以引用数量或文献类型机械删减：必须保留不可替代的直接证据。
+
+### 来源
+
+S003 / 用户批准 / paper-writing RED-GREEN / 独立 21 项 feedback ledger

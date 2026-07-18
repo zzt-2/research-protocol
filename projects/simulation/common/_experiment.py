@@ -191,6 +191,6 @@ def save_results(data, filepath, script_name):
         warnings.warn("save_results: _meta 缺少 script 字段", stacklevel=3)
 
     os.makedirs(os.path.dirname(filepath) or '.', exist_ok=True)
-    with open(filepath, 'w') as f:
+    with open(filepath, 'w', encoding='utf-8') as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
     print(f"Results saved to {filepath} [common@{chash}, git@{commit}]")

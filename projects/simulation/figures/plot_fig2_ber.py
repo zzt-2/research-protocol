@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-"""BER versus SNR for AWGN and three formal downlink regimes.
+"""Single-axis BER comparison for AWGN and three formal downlink regimes.
 
-The 2x2 layout consumes only the authority-checked 30-seed fixed result.
-Interpolation is only a visual guide between formal samples.
+The plot consumes only the authority-checked 30-seed fixed result. Regimes are
+encoded by color and CPR algorithms by line style; interpolation is only a
+visual guide between formal samples.
 
 Output: figures/ccisp_fig2_ber.png + .pdf
 """
@@ -28,7 +29,7 @@ FONT_SIZES = {
     'title': 10.0,
     'label': 10.0,
     'tick': 9.0,
-    'legend': 9.0,
+    'legend': 6.5,
     'annotation': 9.0,
 }
 MPL_RCPARAMS = {
@@ -56,19 +57,16 @@ TITLES = {
 C_DA = '#0072B2'    # blue
 C_NDA = '#D55E00'   # vermillion (orange-red)
 C_OR = '#009E73'    # green
-C_FEC = '#999999'   # gray for HD-FEC line
-
-HD_FEC = 3.8e-3
 CURVE_SPECS = (
     {
         'ber_key': 'da',
-        'label': 'DA-ML',
+        'label': 'DA',
         'color': C_DA,
         'linestyle': '-',
     },
     {
         'ber_key': 'nda',
-        'label': 'NDA-ML',
+        'label': 'NDA',
         'color': C_NDA,
         'linestyle': '-',
     },
@@ -80,11 +78,16 @@ CURVE_SPECS = (
     },
 )
 X_TICK_INTERVALS = {
-    'awgn': (5.0, 2.5),
-    'weak': (10.0, 5.0),
-    'moderate': (10.0, 5.0),
-    'strong': (10.0, 5.0),
+    'awgn': (5.0, 2.0),
+    'weak': (5.0, 2.0),
+    'moderate': (5.0, 2.0),
+    'strong': (5.0, 2.0),
 }
+SCENE_COLORS = {
+    'awgn': '#000000', 'weak': '#0072B2',
+    'moderate': '#E69F00', 'strong': '#D55E00',
+}
+METHOD_STYLES = {'da': '-', 'nda': '--', 'oracle': ':'}
 
 
 def load(path):
@@ -99,7 +102,11 @@ def merge_scene(scene, ber_key):
         if row['scene'] == scene:
             g = groups.setdefault(float(row['snr_db']), [0, 0])
             g[0] += int(row[f'{ber_key}_errors']); g[1] += int(row[f'{ber_key}_bits'])
-    snr = np.array(sorted(groups)); return snr, np.array([groups[x][0] / groups[x][1] for x in snr])
+    snr = np.array(sorted(groups))
+    # A zero count is not an exact zero BER. Plot a half-count estimate so the
+    # log-scale curve remains finite without inventing an arbitrary floor.
+    ber = np.array([(groups[x][0] if groups[x][0] else 0.5) / groups[x][1] for x in snr])
+    return snr, ber
 
 
 def validate_formal(payload):
@@ -114,8 +121,7 @@ def smooth_curve(snr, ber, n_dense=200):
 
     Only used for the drawn solid curves; sample markers are intentionally omitted.
     """
-    ber_plot = np.where(ber > 0, ber, 1e-7)
-    log_ber = np.log10(ber_plot)
+    log_ber = np.log10(ber)
     # Need unique sorted snr for interpolation
     snr_u, idx = np.unique(snr, return_index=True)
     log_ber_u = log_ber[idx]
@@ -144,17 +150,11 @@ def plot_one(ax, scene, row, col):
         snr_s, ber_s = smooth_curve(snr, ber)
         ax.plot(snr_s, ber_s, ls, color=color, linewidth=1.2, zorder=3)
 
-    # HD-FEC reference line
-    ax.axhline(HD_FEC, color=C_FEC, linestyle='-', linewidth=0.7,
-               alpha=0.7, zorder=1)
-    if scene == 'awgn':
-        ax.text(0.97, HD_FEC, 'HD-FEC', transform=ax.get_yaxis_transform(),
-                ha='right', va='bottom', color=C_FEC,
-                fontsize=FONT_SIZES['annotation'])
-
     ax.set_yscale('log')
     ax.set_title(TITLES[scene], fontsize=FONT_SIZES['title'], pad=4)
     major_interval, minor_interval = X_TICK_INTERVALS[scene]
+    ax.set_xlim(5.0, 35.0)
+    ax.set_xticks(np.arange(5.0, 36.0, 2.0))
     ax.xaxis.set_major_locator(MultipleLocator(major_interval))
     ax.xaxis.set_minor_locator(MultipleLocator(minor_interval))
     ax.grid(True, which='major', color='#d0d0d0', alpha=0.55, linewidth=0.45)
@@ -168,44 +168,52 @@ def plot_one(ax, scene, row, col):
     set_yrange(ax, scene)
 
 def set_yrange(ax, scene):
-    """Adaptive y-axis: non-turbulence scenes to 1e-5, strong/uplink narrower."""
-    if scene in ('awgn', 'weak', 'moderate'):
-        ax.set_ylim(1e-6, 1)
-    else:  # strong / uplink: deep fade, don't force 1e-5
-        ax.set_ylim(1e-4, 0.5)
+    """Use a common log-BER range so all four panels are directly comparable."""
+    ax.set_ylim(1e-6, 1)
 
 
 def main():
     plt.rcParams.update(MPL_RCPARAMS)
-
-    fig, axes = plt.subplots(2, 2, figsize=FIGSIZE_IN, sharex=False, sharey=False)
-    axes = axes.flatten()
-
-    for idx, scene in enumerate(SCENES):
-        plot_one(axes[idx], scene, row=idx // 2, col=idx % 2)
-
-    # Shared A2 legend at bottom (color-only solid lines, no markers)
+    # A single axes keeps the four regimes and three receiver references in
+    # one directly comparable coordinate system.  Regime is encoded by color;
+    # receiver reference by line style (solid/dashed/dotted).
+    fig, ax = plt.subplots(figsize=(3.5, 3.0))
+    for scene in SCENES:
+        for spec in CURVE_SPECS:
+            snr, ber = merge_scene(scene, spec['ber_key'])
+            if len(snr) == 0:
+                continue
+            snr_s, ber_s = smooth_curve(snr, ber)
+            ax.plot(snr_s, ber_s, METHOD_STYLES[spec['ber_key']],
+                    color=SCENE_COLORS[scene], linewidth=1.05,
+                    label=f'{scene}:{spec["label"]}')
+    ax.set_yscale('log')
+    ax.set_xlim(5.0, 35.0)
+    ax.set_xticks(np.arange(5.0, 36.0, 2.0))
+    ax.set_ylim(1e-6, 1)
+    ax.set_xlabel(r'Data-symbol $E_s/N_0$ [dB]', fontsize=FONT_SIZES['label'])
+    ax.set_ylabel('Bit error rate (BER)', fontsize=FONT_SIZES['label'])
+    ax.xaxis.set_minor_locator(MultipleLocator(1.0))
+    ax.grid(True, which='major', color='#d0d0d0', alpha=0.55, linewidth=0.45)
+    ax.grid(False, which='minor', axis='y')
+    ax.tick_params(axis='both', which='major', labelsize=FONT_SIZES['tick'],
+                   width=0.6, length=3)
+    ax.tick_params(axis='both', which='minor', width=0.5, length=2)
     from matplotlib.lines import Line2D
     legend_elements = [
-        Line2D(
-            [0],
-            [0],
-            color=spec['color'],
-            linestyle=spec['linestyle'],
-            linewidth=1.2,
-            label=spec['label'],
-        )
-        for spec in CURVE_SPECS
+        Line2D([0], [0], color=SCENE_COLORS[s], linewidth=1.1,
+               label="AWGN" if s == "awgn" else s.title()) for s in SCENES
+    ] + [
+        Line2D([0], [0], color='black', linestyle=METHOD_STYLES[k],
+               linewidth=1.1, label=k.upper()) for k in ('da', 'nda', 'oracle')
     ]
-    fig.legend(handles=legend_elements, loc='lower center', ncol=3,
-               fontsize=FONT_SIZES['legend'],
-               bbox_to_anchor=(0.5, 0.006), frameon=False)
-
-    fig.supxlabel(r'Data-symbol $E_s/N_0$ [dB]',
-                  fontsize=FONT_SIZES['label'], y=0.115)
-    fig.supylabel('Bit error rate (BER)', fontsize=FONT_SIZES['label'], x=0.015)
-    fig.subplots_adjust(left=0.18, right=0.98, top=0.94, bottom=0.185,
-                        wspace=0.36, hspace=0.32)
+    ax.legend(handles=legend_elements, loc='lower left',
+              bbox_to_anchor=(0.04, 0.03), ncol=2,
+              fontsize=FONT_SIZES['legend'],
+              frameon=True, framealpha=0.78, facecolor='white',
+              edgecolor='#b0b0b0', borderpad=0.3, labelspacing=0.2,
+              columnspacing=0.65, handlelength=1.25)
+    fig.subplots_adjust(left=0.19, right=0.98, top=0.97, bottom=0.20)
     fig.savefig(OUT_PNG, dpi=300)
     fig.savefig(OUT_PDF)
     print(f'[saved] {OUT_PNG}')

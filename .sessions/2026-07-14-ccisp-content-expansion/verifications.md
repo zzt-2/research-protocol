@@ -118,6 +118,34 @@ Other sections: 955 / 3,570 = 26.75%
 
 PASS
 
+## V016: 导师无意义段落、专业术语与符号清理终验
+
+> date: 2026-07-16
+> 关联：S001 / D020 / V015
+
+### 验证项
+
+- [x] 重复职责：独立 reviewer 对 `system_model.tex`、`method.tex` 逐段复核 → 公式逐项复述、CV/13 dB 流程重复和多段 no-retuning 说明已合并；必要的信息访问、状态生命周期和 ambiguity 边界保留，PASS。
+- [x] 专业术语：确定性搜索 `DA-ML|NDA-ML|uplink|26/29` → 当前论文源与 Fig.3 生成脚本零命中；图例统一为 DA/NDA，PASS。
+- [x] 符号：selected output 首次定义为 `SEL`，公式统一为 `x in {NDA,SEL}`；未定义 `SW` 零命中，PASS。
+- [x] 数字与指标：1.50/1.05/0.83 dB、CI、990/990、144980/251020、768-bit common payload 和 df=29 未漂移，PASS。
+- [x] 图与构建：Fig.3 从 formal-only 脚本重建；图例 DA/NDA；typography/Fig.2 tests `24 passed`；`texcount -sum -inc=3511`；fresh `latexmk` 7 页，undefined/overfull=0，PASS。
+- [x] 视觉与外部输出：fresh 渲染 7 页逐页 QA；独立 reviewer 判无裁切、重叠或符号异常，external-output C1--C10 全 PASS。
+
+### 证据
+
+```text
+pytest: 24 passed in 2.00s
+latexmk: exit 0; main.pdf 7 pages
+main.pdf SHA256: 4C1730B10BE71D6993354772D135AE86427ABA36F4748BCCEC5FEC7AD8E9DDBA
+fresh render: tmp/pdfs/ccisp_cleanup_final/page-1.png ... page-7.png
+independent reviewer: PASS; no simulation rerun required
+```
+
+### 结论
+
+PASS
+
 ## V015: T018 三档下行正式全流程终验
 
 > date: 2026-07-16
@@ -135,7 +163,7 @@ PASS
 - [x] 论文：uplink/26-of-29/旧数字/内部代号零残留；`texcount=3656`；fresh build 7 页；undefined/overfull=0。
 - [x] 视觉：逐页 7/7 检查，无裁切、重叠、空白页；Fig.2 最终尺寸无压字。
 - [x] 独立 formal verifier：PASS；消歧前 label-free output 990/990 exact。
-- [ ] 独立论文 reviewer：Fig.2 仍表达双路先跑后选，与 route-B 实现冲突，BLOCKED。
+- [x] 独立论文 reviewer：D020 修正后 Fig.2 明确表达 `Branch command -> Branch router -> DA/NDA 单支 -> Selected theta -> Phase compensation -> Common downstream DSP`；与 route-B `decide()` 后 `if/else` 单支执行一致，PASS。
 
 ### 证据
 
@@ -143,11 +171,11 @@ PASS
 
 ### 结论
 
-BLOCKED
+PASS
 
-### 后续（BLOCKED）
+### D020 解除记录
 
-仅需 Fig.2 资产维护方将控制器的 branch command 前置到 DA/NDA 执行之前，并显示单支激活；不得由本轮覆盖用户图资产。修改后重建 7 页 PDF并重复逐页与实现真相终验。
+用户已授权主控修改 Fig.2。draw.io validator PASS；相关回归 `139 passed`；fresh PDF 7 页、undefined/overfull=0。独立 reviewer 逐页 1--7 检查 PASS；Fig.2 在 `0.88\textwidth` 下无压字、裁切或交叉误导。`main.pdf` SHA256=`9FF69EB079076D90235FE05A5A17E49AAEBC7FA6EFB5EDB4B7AAE50D123CEF0C`。
 
 ## V014: 参数证据门解除状态核验（D019）
 
@@ -600,3 +628,297 @@ independent re-review: prior Important finding RESOLVED / PASS
 ### 结论
 
 PASS
+## V017: Fig.3 fixed 5--35 dB unified-grid重跑与独立验证
+
+> status: PASS
+> date: 2026-07-16
+> 关联：D021 / T018
+
+### 验证范围
+
+- `params.py` 新增 `CCISP_FIXED_SNR_DB=(5,7,...,35)`，fixed runner 从该字段读取；A/B adaptive 仍为 5--25 dB、2 dB、990 cells。
+- 正式 fixed runner 退出码 0，`ccisp_family1_fixed_30seed.json` raw=1920（4 scenes × 16 SNR × 30 seeds），authority 两组网格完全一致，30 seeds × 400 windows 保持不变。
+- 独立 `verify_fixed` 从 raw 记录重算并通过：`fixed_cells=1920`。
+- Fig.3 四面板统一 `xlim=(5,35)`、固定网格采样步长 2 dB，四面板 BER 轴统一到 `10^{-6}`；零误码采用 half-count 可视化值，不写成精确零 BER。
+- Fig.4 crossover 由新 fixed JSON 重算为 weak 14.470 dB、moderate 16.858 dB、strong 16.005 dB；正文更新为 14.5/16.9/16.0 dB。
+- 相关 contract/typography tests：35 passed。
+
+### 结论
+
+PASS。该改动只扩展 fixed formal 网格与图轴统一性，不改变 selector/CV/1.10 margin/13 dB/CPR、A/B adaptive 网格、seed/window/metric 或冻结湍流参数。
+
+### 证据
+
+- `projects/simulation/results/ccisp_family1_fixed_30seed.json`
+- `projects/simulation/results/ccisp_family1_fixed_30seed_verification.json`
+- `projects/simulation/figures/ccisp_fig2_ber.pdf`
+- `projects/simulation/figures/ccisp_fig4_crossover.pdf`
+## V018: 用户微调 Fig.2 drawio 重导出与论文验收
+
+> status: PASS
+> date: 2026-07-16
+> 关联：D020 / T018
+
+### 验证范围
+
+- 以用户当前 `projects/simulation/figures/fig2_adaptive_cpr.drawio` 为唯一编辑源，重新导出 PDF/PNG/SVG；未修改 drawio 内容。
+- `test_fig2_two_layer_drawio.py` 与 `test_ccisp_figure_typography.py` 共 24 项通过。
+- fresh `latexmk` build 输出 7 页；`main.log` undefined=0、overfull=0。
+- PDF 第 3 页视觉检查通过：Fig.2 无裁切、重叠或字体退化，route-B 先选后跑语义保持闭合。
+
+### 结论
+
+PASS。当前用户微调已集成到论文资产和 fresh PDF。
+
+## V019: Eq.(5)、图例与全文结果叙事终验
+
+> status: PASS
+> date: 2026-07-16
+> 关联：用户反馈 / T018
+
+### 验证范围
+
+- Eq.(5) 拆为四行单一等号对齐，PDF 第4页居中、无挤压，公式含义未变。
+- Fig.3--5 统一为 9pt、外置、横排、无边框图例；Fig.4 以颜色/marker 区分场景、实/虚线区分 DA/NDA，语义清晰。
+- Results 重组为“实验角色—固定分支现象—交叉点—自适应指标—综合解释”，并从摘要、引言、结果、结论移除 verifier ledger 的 fingerprint、identity、990/396000、分支计数和 CI 端点罗列。
+- 结论措辞收窄为“residual turbulence-limited BER over the evaluated SNR range”，不再声称渐近 error floor。
+- fresh `latexmk` 输出 7 页；`main.log` undefined=0、overfull=0，仅有 1 处低风险 underfull hbox；独立 reviewer 对公式、图例、结果结构和证据边界逐项复核后确认上述项通过。
+- `texcount -inc -sum main.tex` 当前总量超过 3500 词门槛；此前 40 项图形/契约测试通过，图资产与 Fig.2 用户微调均已在 V017/V018 验收。
+
+### 结论
+
+PASS。
+
+## V028: 摘要/正文缩写首次定义与实际阅读顺序核验
+
+> status: PASS
+> date: 2026-07-17
+> 关联：S003 续修 / V027 / 用户标题豁免
+
+### 验证范围
+
+- 标题中的 FSO 按用户要求不修改。
+- 摘要内部：CPR、DA、NDA 在首次出现处展开；未在摘要使用 CV/SNR/BER/AWGN 缩写，因此不做多余括注。
+- 正文实际阅读顺序：p1 引言首次定义 FSO、CPR、DA、NDA、APSK、DSP、SNR、BER、16APSK、CV、AWGN；这些定义均早于 p2 Fig.1 和 p3 Fig.2 的图内相应缩写。
+- 后续 System Model、Method、Results 只使用已定义缩写，不重复展开。APSK 与 16APSK 分别指调制族和具体 16 阶格式，各自定义一次。
+- fresh build 5 页；Fig.1 p2、Fig.2 p3；无 overfull、undefined citation/reference。测试 35 passed、1 known xfail；独立 acronym reviewer PASS。
+
+### 最终哈希
+
+```text
+06D45979BB2FCED402DBE8CF23DC45052D645AF02A349DD4AE4E6FC63EF81A03  main.pdf
+```
+
+### 结论
+
+PASS。
+
+## V020: 首尾段落 benchmark 对标、压缩与终验
+
+> status: PASS
+> date: 2026-07-16
+> 关联：用户反馈 / T018
+
+### 验证范围
+
+- 委托子 Agent 对 5 篇可比 coherent FSO/CPR 论文做全文结构对标：5/5 采用“场景—具体接收机困难—既有方案/互补性—本文方法与验证”；0/5 使用机械三项贡献清单；5/5 结论为单段并保留约 0--3 个代表数字。
+- Introduction 重写为背景与问题、DA/NDA 互补性、本文 received-window 先选后跑方法、跨三档固定规则与评价安排、路线图；删除过载算法谱系、实现常数和内部验证治理；修正 Le Bidan 引用挂接范围。
+- Conclusion 收束为方法、固定分支互补工作区、9 dB common-payload BER-ratio reduction 0.8--1.5 dB、随湍流增强而收窄及评估范围边界；不再声称 error floor 或宣传 evaluator。
+- Results 删除 crossover 三点逐字转录、重复高 SNR 解释、第二处 paired-comparison；保留 metric 定义、公平性和一次 online/offline 信息访问边界。
+- fresh `latexmk` 输出 6 页，undefined=0、overfull=0；逐页 PNG 检查无裁切、重叠或异常 float 空白。原第7页孤立参考文献通过将 Method 中泛化的 Martins 引用替换为直接支持 M-APSK NDA 构造的 Du 2025 而消除，保持 IEEE 默认参考文献字号，不以灌水填充。
+- 图形/正式契约/Fig.2 测试 40 passed；确定性 stale-term 扫描未检出内部编号、旧 headline、error-floor 声称或重复 crossover 数字。
+
+### 结论
+
+PASS。
+
+## V021: Introduction 引用恢复与 Fig.1/Fig.2 分页验收
+
+> status: PASS
+> date: 2026-07-16
+> 关联：D023 / 用户反馈 / T018
+
+### 验证范围
+
+- Introduction 从约 312 词补至约 365 词，仍保持“场景—接收机困难—DA/NDA 互补性—本文方法—评价”结构；新增内容均绑定具体文献职责，不形成机械贡献清单。
+- 恢复 6 条此前失去正文挂接的高质量/直接相关来源：Panasiewicz MWP、Wang TSP、Du JLT、Liu JLT、Liu TCOM、Qin TCCN；当前实际 bibliography 恢复为 24 条。Conroy uplink 与 Martins OSA Continuum 未作为优先来源恢复。
+- Fig.1 与 Fig.2 通过显式分页分置于 PDF 第 2、3 页；独立 reviewer 确认两图完整、无裁切/重叠，Fig.2 尺寸可读。
+- fresh `latexmk` 输出 7 页；`main.log` undefined=0、overfull=0，仅保留既有 underfull vbox；40 项图形/正式契约测试通过。
+- 结果、参数、selector、指标和正式数据文件未改动；Wang 2025 的引用措辞收窄为 coherent-optical adaptive pilot DSP 先例，不再让非 FSO 文献替本文 FSO 动机背书。
+
+### 结论
+
+PASS。
+
+> 2026-07-16 状态说明：本条关于 Fig.2 位于第 3 页的页码记录仅对应当时构建，已由 V023 的最新 fresh build 取代；Introduction 与引用恢复结论继续有效。
+
+## V022: T019 Fig.1 A 版布局重构与最终独立验收
+
+> status: PARTIAL
+> date: 2026-07-16
+> 关联：S002 / D022 / T019
+> 说明：任务书原定从 V020 开始，但本专题已有 V020，且并行任务已新增 V021；为避免重复编号，本任务顺延为 V022。
+
+### 验证项
+
+- [x] 基线接收：启动时记录 Fig.1 drawio/PDF/PNG SHA-256、git status、XML 结构及 `main.tex:25` 的 `figure*`/`0.94\textwidth` 嵌入宽度。
+- [x] 参考对标：从 `fig1-reference-previews` 选取 A1-03、A1-06、B1-06、A2-08，记录同角色、可迁移和不可迁移布局原则。
+- [x] A/B 门控：balanced lanes 与 main-chain first 均在临时副本中以 IEEEtran `0.94\textwidth` harness 渲染，并由用户明确选择 A。
+- [x] 语义独立审查：64 cells、全部标签、7 个 image assets、8 条 edge 的 ID/source/target/方向与基线一致；A 两轮复核均 PASS。
+- [x] 结构与回归：权威 draw.io validator PASS；`test_ccisp_figure_typography.py` 全部 19 项 PASS。
+- [x] 字体与尺寸：PDF 字体全部嵌入，仅 TimesNewRoman regular/italic/bold；无 Type 3、Helvetica、DejaVu Sans；PDF/PNG 均为 2.307692 比例，PNG 3000×1300。
+- [x] 并发覆盖门：覆盖前三份权威文件的旧哈希与启动哈希逐项一致；未发现并行冲突后才覆盖 A 版。
+- [ ] 严格视觉 PASS：独立视觉 reviewer 仍发现顶部 `amplitude factor`/`phase` 贴近 Composite FSO channel 顶边、`Detected bits` 贴近 demodulation 框，以及浅色缩略图的灰度风险。
+
+### 证据
+
+启动权威哈希：
+
+```text
+FCAE5092746A02E943AD54DF7690E88C535845AB1A211FD3A554246ED530E459  fig1_system_model_v5.drawio
+CA97DEDAC5E59942C33C36B7012791D93EB6B40D8AF8E832467FB9ED62301350  fig1_system_model_v5.pdf
+A0A7D0F464A480053D034024565D66D8114BE4FF308E428451972EBE5E728BC9  fig1_system_model_v5.png
+```
+
+最终权威哈希：
+
+```text
+31A11606418097A0515B50CEA34AE8A3BACC901F48CEFBF3A826D4F38203940B  fig1_system_model_v5.drawio
+F7529B9B80954AFBB22A5E3907B950264B75133D6DA7D3C9A1EC76E66D470F7A  fig1_system_model_v5.pdf
+F68660038F377838C494D6D09586F09D7FF544F07EFF58AA5A8FEB0824C14B16  fig1_system_model_v5.png
+```
+
+```text
+validate_drawio.py: {"ok": true, "counts": {"cells": 64, "edges": 8}, "errors": [], "warnings": []}
+pytest projects/simulation/tests/test_ccisp_figure_typography.py: 19 passed
+pdffonts: TimesNewRomanPSMT / TimesNewRomanPS-ItalicMT / TimesNewRomanPS-BoldMT; emb=yes; no Type 3/Helvetica/DejaVu Sans
+semantic diff: ids_equal=true, labels_equal=true, edges_equal=true, assets_equal=true, cells=64, edges=8, assets=7
+PDF/PNG geometry: pdf_ratio=2.307692, png_px=(3000,1300), png_ratio=2.307692
+```
+
+独立视觉 reviewer 第 2 轮：主链 4.4/5、拥挤度明显改善、底部支持带无重叠；残余为顶部标签贴边、Detected bits 贴角和灰度风险，结论 PARTIAL。
+
+### 结论
+
+PARTIAL。
+
+### 后续（PARTIAL）
+
+本任务已达到两轮精修上限，按任务书停止继续堆补丁。若要达到严格视觉 PASS，应另行明确是否允许改变顶部边标签的语义承载方式或进一步调整灰度对比；本轮不再扩大范围。
+
+## V023: 第一、二节空白修复与图分页终验
+
+> status: PASS
+> date: 2026-07-16
+> 关联：用户排版反馈 / V021
+
+### 验证范围
+
+- 根因定位为 `main.tex` 中为分隔 Fig.1/Fig.2 引入的强制分页：它提前截断正文流，造成 Introduction 与 System Model 之间以及后续页面的非自然空白。
+- 最终版删除强制分页，保持 Fig.2 在 `system_model` 之后自然浮动；未修改正文科学内容、结果、参数或图资产。
+- fresh `latexmk` 输出 7 页；`main.log` undefined=0、overfull=0、underfull=0。
+- 独立视觉 reviewer 对最新 `main.pdf`（982092 bytes）复核：p1 Introduction 后由 Section II 在右栏自然承接；p3 两栏由正文与公式正常填充；Fig.1 位于 p2、Fig.2 位于 p4，二者未同页，均无裁切、重叠或明显版式缺陷。
+- 图形/正式契约/Fig.2 回归测试 40 passed。
+
+### 结论
+
+PASS。
+
+## V024: 用户微调 Fig.1 重导出与全文嵌入验收
+
+> status: PASS
+> date: 2026-07-16
+> 关联：S002 / T019 / 用户重导出指令
+
+### 验证范围
+
+- 以用户最新 `fig1_system_model_v5.drawio` 为权威编辑源；保留其布局调整，只修复手动编辑导致的 `e_bits_mapper` source 脱绑，并将 `Information bits` 文字框左移 15 个 draw.io 单位以满足最终尺寸安全间距。
+- draw.io validator PASS：63 cells、8 edges，所有语义边均具有效 source/target，无悬空端点。
+- 从同一 drawio 导出 1080×468 pt 矢量 PDF，并生成 3000×1300 PNG；PDF 字体仅含嵌入的 Times New Roman regular/italic/bold，无 Type 3、Helvetica 或 DejaVu Sans。
+- fresh `latexmk` 输出 7 页，最新 Fig.1 已嵌入 p2；`main.log` undefined=0、overfull=0、underfull=0。
+- 本地主图 typography 回归 19 passed；独立 reviewer 的图形/资产契约复核 25 passed，并确认 p2 最终尺寸无裁切、重叠、错误接线或严重贴边。
+
+### 最终哈希
+
+```text
+4E9794B5ADA8EDC292C4F1A9AFB618E92A8E971492CEEC5B662AA982D990FC77  fig1_system_model_v5.drawio
+6C95F9585C4A4E0D902EE95D757F80BB60A3D3488FB311F6F71D99C12B1B7CEF  fig1_system_model_v5.pdf
+2F7E0796893ABB1F85E170EC78BDFB0FCB139B4B7F56A03CCC93BB8C23EC2FA5  fig1_system_model_v5.png
+391C261169069F5A348B72FF7652E22B4E8AD70D3FA582E6044E2CD651B5F648  main.pdf
+```
+
+### 结论
+
+PASS。
+
+> 2026-07-16 状态纠正：本条包含主控未经授权加入的两处 drawio 修补，已由 V025 撤销并取代；不得再把 V024 哈希视为当前权威资产。
+
+## V025: 用户指定 Fig.1 drawio 原样恢复与重导
+
+> status: PARTIAL
+> date: 2026-07-16
+> 关联：S002 / 用户路径纠正 / supersedes V024 当前资产状态
+
+### 验证范围
+
+- 权威输入确认是 `D:\code\study\research-protocol\projects\simulation\figures\fig1_system_model_v5.drawio`；用户保存时哈希为 `CBD59FF2509D8168BD81C55B5E15D3CEFC9305952E1AB99284B93CBE7111FCB0`。
+- 主控撤销其后自行加入的 `e_bits_mapper` source 绑定与 `Information bits` 左移，恢复到上述用户哈希；未使用 `.bkp`、旧 PDF 或其他 drawio 作为输入。
+- 从恢复后的用户原文件重导 PDF/PNG，并 fresh build 全文 7 页；LaTeX 构建成功，undefined/overfull/underfull=0。
+- 忠实重导 PASS，但原始 drawio 自身的结构/安全间距门仍为 PARTIAL：validator 报 `e_bits_mapper` 缺 source；typography 回归 18 passed、1 failed（`Information bits` 与 mapper 标题的水平安全间距 0.32 pt，小于 3.0 pt 门）。按用户要求不再擅自修改源图。
+
+### 当前哈希
+
+```text
+CBD59FF2509D8168BD81C55B5E15D3CEFC9305952E1AB99284B93CBE7111FCB0  fig1_system_model_v5.drawio
+14423F4363A0AD13AAA2EF0E261A41DF08D9BF7EB080E75AF38C3092AF32BB9D  fig1_system_model_v5.pdf
+806DD7F7D6FE513E2F8E7A99376665130327BC94E325D63506544640AF32CF09  fig1_system_model_v5.png
+DDAE062F09CC434FC3819620A038FADC71FB7B81628D01DC7F84935D9392E427  main.pdf
+```
+
+### 结论
+
+PARTIAL：用户指定版本已原样恢复并完成重导；结构与安全间距问题如实保留，未再越权修补。
+
+## V026: 导师批注驱动 Skill 升级与 CCISP 五页全文终验
+
+> status: PASS
+> date: 2026-07-17
+> 关联：S003 / D024 / D019 / T018
+
+### 验证范围
+
+- `paper-writing` 与 `external-output` 完成 RED/GREEN 压力测试和导师反馈门禁升级：证据账本、逐条 disposition、全文同类扫描、图文/缩写/作者元数据、精确页面与独立 reviewer 均有可执行门。
+- 论文 21 项反馈账本全部核销：算法中心标题、作者信息、引言合并与 remainder、相关工作分析、DA/NDA 类别定义、随机变量和 CV 解释、划线/灌水句删除、Fig.3 单轴、Fig.3--5 图内图例、HD-FEC/uplink/26-of-29 清除、Fig.4 三交点解释、AWGN 首次展开、会议引用为零、公式(5)与逐页版式均 PASS。
+- 当前 `params.py`、formal A、formal B 和 fixed 结果的权威签名一致：`fac6d229ebfb18a26fc5898579ffd4671e463be524ec73ec06ee02e0d2e8dc3c`。A/B 各 990 cells exact；route B 不存在的 fixed-NDA/oracle/gain 字段均为 null；formal verifier PASS。
+- Fig.3 横轴 5--35 dB，2 dB 间隔的 16 个主刻度均可提取，`AWGN` 专业缩写正确，无标签重叠。
+- fresh build 为 5 页；末页最深文本 y=713.219 pt，距同模板最后正文带 5.63 pt，小于一个正文基线，属于最后允许行带；双栏底线差约一个参考文献基线。无 overfull、undefined citation/reference。
+- 回归：37 passed、1 xfailed；xfail 为用户 Fig.1 原资产已知 0.32 pt 安全间距债务，不影响本轮论文终验。
+
+### 最终哈希
+
+```text
+D5EC13FE9A57510DAB161C744B9F67923383FD0270399F57FF8E0F32E5F86C23  main.pdf
+FAC6D229EBFB18A26FC5898579FFD4671E463BE524EC73EC06EE02E0D2E8DC3C  params.py
+```
+
+### 结论
+
+PASS。科学 authority、导师批注、Skill 门禁、图表、文字、精确五页和独立终验全部闭环。
+
+## V027: Fig.2 第三页页位与 Transactions/专业性回归
+
+> status: PASS
+> date: 2026-07-17
+> 关联：S003 续修 / D024 / V026
+
+### 验证范围
+
+- PDF 实际引用仍为 18 条；IEEE Transactions on Communications、IEEE Transactions on Information Theory、IEEE Transactions on Signal Processing 均保留，conference=0。
+- 对当前 `main.tex` 做 fresh clean build，输出 5 页；Fig.1 caption 在 p2，Fig.2 caption 在 p3 顶部，Fig.3/4 在 p4，Fig.5 与参考文献在 p5。
+- Fig.2 页位修复没有提前浮动块到 p2，也没有扩成 6 页；仅等义压缩 System Model 两处重复性分区描述，并保持图资产、实验参数、结果、方法逻辑不变。
+- `main.log` 无 overfull、undefined citation/reference；测试 35 passed、1 known xfail。专业性确定性扫描中 `HD-FEC`、`26/29`、`uplink`、`estimator selection` 均无正文命中，Transactions 条目可由 `main.bbl` 逐项核对。
+- 独立视觉核验：p3 顶部 Fig.2 无裁切/重叠，p1/p2/p4/p5 无异常空白或公式挤边，5 页与末页约束无回归。
+
+### 结论
+
+PASS。

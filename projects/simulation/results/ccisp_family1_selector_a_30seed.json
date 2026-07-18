@@ -2,17 +2,17 @@
   "authority": {
     "authority_status": "formal",
     "route": "A",
-    "params_sha256": "a1d5f051ba93e20f15f7380a5955c38a7bd4b2e215f7af4ad53fc56507a972e1",
+    "params_sha256": "fac6d229ebfb18a26fc5898579ffd4671e463be524ec73ec06ee02e0d2e8dc3c",
     "script_sha256": "f2b30a14b4e7e73a9393a4d22c2b18569e662ea76da649a239438539e434f497",
     "imported_file_sha256": {
       "explore\\nda-awgn-tracking-sandbox\\_a4_switch_common768_30seed.py": "03c61856a88055bab0e09bc8e9cc8815db3fdd326b06990817435a1bc1e08d03",
       "explore\\nda-awgn-tracking-sandbox\\_a4_branchrouted_30seed.py": "1b1a6cdaafcee0676938abf823b8ff8af22e7c09ce8e59d582df2225a52e0ce5",
       "simulator\\sc_nda_ml_sim.py": "f775d3f79adee33d2104d5908250006565ec7bcbc354d73ceccfe4e3de625e78",
-      "params.py": "a1d5f051ba93e20f15f7380a5955c38a7bd4b2e215f7af4ad53fc56507a972e1",
+      "params.py": "fac6d229ebfb18a26fc5898579ffd4671e463be524ec73ec06ee02e0d2e8dc3c",
       "common\\_channel.py": "8bd8beed61608f1bbaa25715c77be70aedcb895260dad3edde50bd9445735fe8"
     },
-    "command": "simulator/run_ccisp_family1_selector_a_30seed.py",
-    "git_head": "d54bb0c6eaa01ba43faaa65ee84048115bf52a53",
+    "command": "projects/simulation/simulator/run_ccisp_family1_selector_a_30seed.py",
+    "git_head": "0bdf5427912a5729596ff281b79cc2a87fac05fb",
     "git_dirty": true,
     "grid": {
       "scenes": [
@@ -19862,7 +19862,7 @@
   "_meta": {
     "script": "run_ccisp_family1_selector_a_30seed.py",
     "common_md5": "3343f085",
-    "git_commit": "d54bb0c",
-    "timestamp": "2026-07-16T01:33:34"
+    "git_commit": "0bdf542",
+    "timestamp": "2026-07-17T13:18:25"
   }
 }

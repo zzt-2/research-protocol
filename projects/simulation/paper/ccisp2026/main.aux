@@ -1,85 +1,77 @@
 \relax 
-\citation{lebidan2023frame}
+\citation{horst2023tbit}
 \citation{valjus2025dsp,paillier2020spaceground,guiomar2022coherent}
-\citation{alhabash2001,paillier2020spaceground,pech2025odpll}
+\citation{alhabash2001,paillier2020spaceground}
 \citation{taylor2009phase}
-\citation{paillier2020spaceground,johst2024dataaided,panasiewicz2022opl}
 \citation{gavert2022pilot,zhang2010decisionaided}
-\citation{johst2024dataaided}
-\citation{qin2026blindvae}
-\citation{viterbi1983}
-\citation{du2025nda,ma2025mapphase}
+\citation{viterbi1983,du2025nda}
 \citation{wang2022jointml,du2021jointml,liu2025tdml}
 \citation{wang2025pilotmlsd}
+\citation{liu2023multiaperture}
+\citation{qin2026blindvae}
+\citation{du2025nda}
+\citation{alhabash2001}
 \@writefile{toc}{\contentsline {section}{\numberline {I}Introduction}{1}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {II}System Model}{1}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-A}}Signal and Impairment Model}{1}{}\protected@file@percent }
+\newlabel{eq:received-signal}{{1}{1}{}{equation.1}{}}
+\citation{gu2022mfi}
+\citation{ghassemlooy2019owc}
 \citation{du2025nda}
-\citation{alhabash2001,liu2023multiaperture}
-\citation{johst2024dataaided,conroy2018geouplink}
-\citation{du2025nda}
-\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces System model of the coherent satellite--ground FSO link.}}{2}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces System model of the coherent satellite--ground FSO link, including AWGN.}}{2}{}\protected@file@percent }
 \newlabel{fig:system-overview}{{1}{2}{}{figure.1}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {II}System Model}{2}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-A}}Signal and Impairment Model}{2}{}\protected@file@percent }
-\newlabel{eq:received-signal}{{1}{2}{}{equation.1}{}}
-\newlabel{eq:phase-process}{{2}{2}{}{equation.2}{}}
-\citation{smith2012staircase,horst2023tbit}
-\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Received-power-aware DA/NDA carrier phase recovery with two-stage estimator selection.}}{3}{}\protected@file@percent }
+\newlabel{eq:gg-shape-mapping}{{2}{2}{}{equation.2}{}}
+\newlabel{eq:phase-process}{{3}{2}{}{equation.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-B}}Block Structure, Pilot Pattern, and SNR Definition}{2}{}\protected@file@percent }
+\newlabel{eq:pilot-energy-coordinate}{{4}{2}{}{equation.4}{}}
+\citation{du2025nda}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Received-power-aware adaptive carrier phase recovery. The CV and effective-SNR statistic control a single executed DA or NDA branch and produce one carrier-corrected complex output.}}{3}{}\protected@file@percent }
 \newlabel{fig:adaptive-cpr}{{2}{3}{}{figure.2}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {II-B}}Block Structure, Pilot Pattern, and SNR Definition}{3}{}\protected@file@percent }
-\newlabel{eq:pilot-energy-coordinate}{{3}{3}{}{equation.3}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {III}Carrier Phase Recovery and Estimator Selection}{3}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {III}Received-Power-Aware Adaptive Carrier Phase Recovery}{3}{}\protected@file@percent }
 \newlabel{sec:method}{{III}{3}{}{section.3}{}}
-\citation{martins2021dualstage}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-A}}DA and NDA Carrier Estimation}{4}{}\protected@file@percent }
-\newlabel{eq:da-phase-time-ls}{{4}{4}{}{equation.4}{}}
-\newlabel{eq:nda-m0-phase}{{5}{4}{}{equation.5}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-B}}Two-Stage Selection Rule}{4}{}\protected@file@percent }
-\newlabel{eq:cv-decision-boundary}{{6}{4}{}{equation.6}{}}
-\citation{smith2012staircase}
-\newlabel{eq:two-stage-switch}{{7}{5}{}{equation.7}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-C}}Online Statistics and Fixed Parameters}{5}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {IV}Simulation Results}{5}{}\protected@file@percent }
-\newlabel{sec:results}{{IV}{5}{}{section.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-A}}Simulation Setup and Performance Metrics}{5}{}\protected@file@percent }
-\newlabel{sec:simulation-contract}{{\mbox  {IV-A}}{5}{}{subsection.4.1}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Data BER of DA-ML, NDA-ML, and oracle phase recovery under AWGN and Gamma--Gamma turbulence.}}{6}{}\protected@file@percent }
-\newlabel{fig:ber-overview}{{3}{6}{}{figure.3}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-B}}DA/NDA Operating Regions}{6}{}\protected@file@percent }
-\newlabel{sec:da-nda-behavior}{{\mbox  {IV-B}}{6}{}{subsection.4.2}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces DA--NDA data-BER crossovers under downlink turbulence.}}{6}{}\protected@file@percent }
-\newlabel{fig:crossover}{{4}{6}{}{figure.4}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-C}}Selector Performance}{6}{}\protected@file@percent }
-\newlabel{sec:switching-gain}{{\mbox  {IV-C}}{6}{}{subsection.4.3}{}}
-\newlabel{eq:common-payload-ber-reduction}{{8}{6}{}{equation.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-A}}DA and NDA Carrier-Recovery Algorithms}{3}{}\protected@file@percent }
+\newlabel{eq:da-phase-time-ls}{{5}{3}{}{equation.5}{}}
+\newlabel{eq:nda-m0-phase}{{6}{3}{}{equation.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-B}}Two-Stage Branch Control}{3}{}\protected@file@percent }
+\newlabel{eq:cv-decision-boundary}{{7}{3}{}{equation.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Data BER of DA, NDA, and oracle phase recovery under AWGN and Gamma--Gamma turbulence.}}{4}{}\protected@file@percent }
+\newlabel{fig:ber-overview}{{3}{4}{}{figure.3}{}}
+\newlabel{eq:two-stage-switch}{{8}{4}{}{equation.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {III-C}}Online Statistics and Fixed Parameters}{4}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {IV}Simulation Results}{4}{}\protected@file@percent }
+\newlabel{sec:results}{{IV}{4}{}{section.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-A}}Simulation Setup and Performance Metrics}{4}{}\protected@file@percent }
+\newlabel{sec:simulation-contract}{{\mbox  {IV-A}}{4}{}{subsection.4.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces DA--NDA data-BER crossovers under downlink turbulence.}}{4}{}\protected@file@percent }
+\newlabel{fig:crossover}{{4}{4}{}{figure.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-B}}DA/NDA Operating Regions}{4}{}\protected@file@percent }
+\newlabel{sec:da-nda-behavior}{{\mbox  {IV-B}}{4}{}{subsection.4.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {\mbox  {IV-C}}Adaptive CPR Performance}{4}{}\protected@file@percent }
+\newlabel{sec:switching-gain}{{\mbox  {IV-C}}{4}{}{subsection.4.3}{}}
 \bibstyle{IEEEtran}
 \bibdata{references}
-\bibcite{lebidan2023frame}{1}
+\bibcite{horst2023tbit}{1}
 \bibcite{valjus2025dsp}{2}
 \bibcite{paillier2020spaceground}{3}
 \bibcite{guiomar2022coherent}{4}
 \bibcite{alhabash2001}{5}
-\bibcite{pech2025odpll}{6}
-\bibcite{taylor2009phase}{7}
-\bibcite{johst2024dataaided}{8}
-\bibcite{panasiewicz2022opl}{9}
-\bibcite{gavert2022pilot}{10}
-\bibcite{zhang2010decisionaided}{11}
-\bibcite{qin2026blindvae}{12}
-\bibcite{viterbi1983}{13}
-\bibcite{du2025nda}{14}
-\bibcite{ma2025mapphase}{15}
-\bibcite{wang2022jointml}{16}
-\bibcite{du2021jointml}{17}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Common-payload BER-ratio reduction relative to fixed NDA. Error bars show 95\% confidence intervals over 30 paired seeds.}}{7}{}\protected@file@percent }
-\newlabel{fig:ber-reduction}{{5}{7}{}{figure.5}{}}
-\@writefile{toc}{\contentsline {section}{\numberline {V}Conclusion}{7}{}\protected@file@percent }
-\newlabel{sec:conclusion}{{V}{7}{}{section.5}{}}
-\@writefile{toc}{\contentsline {section}{References}{7}{}\protected@file@percent }
-\bibcite{liu2025tdml}{18}
-\bibcite{wang2025pilotmlsd}{19}
-\bibcite{liu2023multiaperture}{20}
-\bibcite{conroy2018geouplink}{21}
-\bibcite{smith2012staircase}{22}
-\bibcite{horst2023tbit}{23}
-\bibcite{martins2021dualstage}{24}
-\gdef \@abspage@last{8}
+\bibcite{taylor2009phase}{6}
+\bibcite{gavert2022pilot}{7}
+\bibcite{zhang2010decisionaided}{8}
+\bibcite{viterbi1983}{9}
+\bibcite{du2025nda}{10}
+\bibcite{wang2022jointml}{11}
+\bibcite{du2021jointml}{12}
+\bibcite{liu2025tdml}{13}
+\bibcite{wang2025pilotmlsd}{14}
+\bibcite{liu2023multiaperture}{15}
+\bibcite{qin2026blindvae}{16}
+\bibcite{gu2022mfi}{17}
+\bibcite{ghassemlooy2019owc}{18}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Common-payload BER-ratio reduction relative to fixed NDA. Error bars show 95\% confidence intervals over 30 paired seeds.}}{5}{}\protected@file@percent }
+\newlabel{fig:ber-reduction}{{5}{5}{}{figure.5}{}}
+\newlabel{eq:common-payload-ber-reduction}{{9}{5}{}{equation.9}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {V}Conclusion}{5}{}\protected@file@percent }
+\newlabel{sec:conclusion}{{V}{5}{}{section.5}{}}
+\@writefile{toc}{\contentsline {section}{References}{5}{}\protected@file@percent }
+\gdef \@abspage@last{5}

@@ -9,10 +9,12 @@
 \usepackage{booktabs}
 \usepackage{array}
 \usepackage{placeins}
+\usepackage{balance}
 
-\title{Received-Power-Aware Carrier Phase Estimator Selection for Turbulent Satellite--Ground FSO Links}
+\title{Adaptive Carrier Phase Recovery for Turbulent Satellite--Ground FSO Links}
 
-\author{\IEEEauthorblockN{Anonymous Submission}}
+\author{\IEEEauthorblockN{Zhetong Zhang and Hao Wu}
+\IEEEauthorblockA{Corresponding author: Hao Wu (wuhao@bit.edu.cn)}}
 
 \begin{document}
 
@@ -20,29 +22,32 @@
 
 \input{sections/abstract}
 
-\begin{figure*}[t]
+\begin{figure*}[!t]
   \centering
   \includegraphics[width=0.94\textwidth]{../../figures/fig1_system_model_v5.pdf}
-  \caption{System model of the coherent satellite--ground FSO link.}
+  \caption{System model of the coherent satellite--ground FSO link, including AWGN.}
   \label{fig:system-overview}
 \end{figure*}
 
 \input{sections/introduction}
 
-\begin{figure*}[t]
+\input{sections/system_model}
+
+\begin{figure*}[!t]
   \centering
-  \includegraphics[width=0.94\textwidth]{../../figures/fig2_adaptive_cpr.pdf}
-  \caption{Received-power-aware DA/NDA carrier phase recovery with two-stage estimator selection.}
+  \includegraphics[width=0.88\textwidth]{../../figures/fig2_adaptive_cpr.pdf}
+  \caption{Received-power-aware adaptive carrier phase recovery. The CV and effective-SNR statistic control a single executed DA or NDA branch and produce one carrier-corrected complex output.}
   \label{fig:adaptive-cpr}
 \end{figure*}
 
-\input{sections/system_model}
 \input{sections/method}
 \input{sections/results}
 \FloatBarrier
 \input{sections/conclusion}
 
+\balance
+{\renewcommand{\baselinestretch}{1.03}\selectfont
 \bibliographystyle{IEEEtran}
-\bibliography{references}
+\bibliography{references}}
 
 \end{document}

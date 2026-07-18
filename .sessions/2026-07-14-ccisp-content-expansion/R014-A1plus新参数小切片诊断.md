@@ -47,10 +47,10 @@
 | 30° plane-wave 锚点 | 相对误差 ≤5% | NOT RUN：缺原文公式、HV 常数和路径边界 |
 | 10° plane-wave 锚点 | 相对误差 ≤5% | NOT RUN：同上 |
 | 积分收敛性 | 网格/容差收敛证据 | NOT RUN：没有合法被积式和边界 |
-| uplink moderate spherical \(\sigma_R^2,(\alpha,\beta)\) | P0 后推导 | PROHIBITED |
-| uplink strong spherical \(\sigma_R^2,(\alpha,\beta)\) | P0 后推导 | PROHIBITED |
+| uplink moderate spherical \(\sigma_R^2,(\alpha,\beta)\) | P0 后推导 | NOT AUTHORIZED FOR SIMULATION：证据输入未归档，尚未执行复算 |
+| uplink strong spherical \(\sigma_R^2,(\alpha,\beta)\) | P0 后推导 | NOT AUTHORIZED FOR SIMULATION：证据输入未归档，尚未执行复算 |
 
-五档候选因此只能给出三档下行确定性复算；两档上行不是“待四舍五入”，而是因 P0 证据门未过而不存在合法候选值。不得回流 A2/A3，也不得用 R008b 的示例 0.2/1.5 代替 spherical-wave 推导。
+五档候选因此只能给出三档下行确定性复算。两档上行的准确状态是：**当前没有通过 T016 证据门、获准进入仿真的候选值**。这不表示数学上算不出 \((\alpha,\beta)\)，也不表示 A1+ 被证伪、上行模型不可行或新参数效果不好；本轮压根没有执行上行参数复算和 BER probe。不得回流 A2/A3，也不得用 R008b 的示例 0.2/1.5 代替 spherical-wave 推导。
 
 ### 4. P1 old-vs-new 诊断矩阵
 
@@ -97,11 +97,11 @@ state_lifecycle:
 
 **PARTIAL**。
 
-P0 未闭合：下行三档完成确定性复算，但四项指定本地全文缺失，Osborn plane-wave 锚点无法合法复现，上行 spherical-wave 两档禁止推导。因“复算通过后才运行”的硬门，P1 未运行。本轮没有证据支持进入正式全量重跑合同；应先补齐原始文献并重新执行 P0。
+P0 未闭合：下行三档完成确定性复算，但四项指定本地全文缺失，Osborn plane-wave 锚点无法复现，上行 spherical-wave 两档尚未执行复算、未获准进入仿真。阻断对象是当前证据链和执行授权，不是 A1+ 参数路线。因“复算通过后才运行”的硬门，P1 未运行；应先补齐原始文献落盘并只重做 P0。
 
 ## 对决策的影响
 
-- D016 的目标方向不被推翻，但正式 A1+ 参数替换与全量重跑继续 BLOCKED。
+- D016 的 A1+ 目标方向不被推翻；当前只因一手证据未归档而暂停 P0，正式参数替换与全量重跑暂未获准。
+- 根因分类为 M1 管道断裂：上游子 Agent 的“已读/VERIFIED”结论没有连同原文、页码、公式号和路径边界落盘，违反 FR-26 的证据指针要求；R014 的停止动作正确。
 - 不新建 D###：本轮是 T016 预注册门禁按预期中断，没有提出替代路线，也没有形成新参数决策。
 - 不修改 `params.py`、论文、图片、Skill、旧权威 JSON、原 A/B runner 或 `common/`。
-

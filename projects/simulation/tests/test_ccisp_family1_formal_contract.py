@@ -70,11 +70,13 @@ def test_verifier_rejects_incomplete_or_non_authoritative_formal_records(mutatio
  else: a.pop("_meta")
  with pytest.raises(AssertionError): v.verify(a,b,sim_root=SIM)
 
-def test_fixed_authority_uses_eight_awgn_points_and_seven_turbulence_points():
+def test_fixed_authority_uses_unified_5_to_35_db_two_db_grid_from_params():
  m=load("simulator/run_ccisp_family1_fixed_30seed.py")
- assert tuple(m.P.SNR_AWGN_DB)==tuple(m.SNR_AWGN_DB)
- assert tuple(m.P.SNR_TURB_DB)==tuple(m.SNR_TURB_DB)
- assert len(m.SNR_AWGN_DB)==8 and len(m.SNR_TURB_DB)==7
+ params=load("params.py")
+ expected=tuple(map(float,range(5,36,2)))
+ assert tuple(params.CCISP_FIXED_SNR_DB)==expected
+ assert tuple(m.SNR_AWGN_DB)==expected
+ assert tuple(m.SNR_TURB_DB)==expected
 
 def test_fixed_metric_signatures_keep_method_specific_denominators():
  m=load("simulator/run_ccisp_family1_fixed_30seed.py")
@@ -100,7 +102,7 @@ def test_nda_receiver_output_digest_is_independent_of_posthoc_labels():
  _,_,out1=a.per_block_nda_receiver_output(x,r["bits"]); _,_,out2=a.per_block_nda_receiver_output(x,1-r["bits"])
  assert np.array_equal(out1,out2)
 
-def test_verifier_recomputes_fixed_870_cell_contract():
+def test_verifier_recomputes_fixed_1920_cell_contract():
  v=load("verify/verify_ccisp_family1_formal.py"); f=load("simulator/run_ccisp_family1_fixed_30seed.py")
  raw=[]
  for scene in f.SCENES:
@@ -115,4 +117,4 @@ def test_verifier_recomputes_fixed_870_cell_contract():
  authority=f.authority(f.SCENES,{"awgn":list(f.SNR_AWGN_DB),"turbulence":list(f.SNR_TURB_DB)},"formal")
  authority["grid"]["snr_db"]={"awgn":list(f.SNR_AWGN_DB),"turbulence":list(f.SNR_TURB_DB)}
  report=v.verify_fixed({"authority":authority,"_meta":{"script":"fixed.py"},"raw":raw},SIM)
- assert report["fixed_cells"]==870
+ assert report["fixed_cells"]==1920

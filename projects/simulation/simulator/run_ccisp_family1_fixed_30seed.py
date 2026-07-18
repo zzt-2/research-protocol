@@ -2,8 +2,9 @@
 import argparse, hashlib, importlib.util, sys
 from pathlib import Path
 import numpy as np
-SIM=Path(__file__).resolve().parents[1]; spec=importlib.util.spec_from_file_location("formal_a",Path(__file__).with_name("run_ccisp_family1_selector_a_30seed.py")); F=importlib.util.module_from_spec(spec); spec.loader.exec_module(F); P=F.P
-N_SEEDS=30; N_WINDOWS=400; SCENES=("awgn","weak","moderate","strong"); SNR_AWGN_DB=tuple(F.P.SNR_AWGN_DB); SNR_TURB_DB=tuple(F.P.SNR_TURB_DB)
+SIM=Path(__file__).resolve().parents[1]; sys.path.insert(0,str(SIM)); from params import CCISP_FIXED_SNR_DB
+spec=importlib.util.spec_from_file_location("formal_a",Path(__file__).with_name("run_ccisp_family1_selector_a_30seed.py")); F=importlib.util.module_from_spec(spec); spec.loader.exec_module(F); P=F.P
+N_SEEDS=30; N_WINDOWS=400; SCENES=("awgn","weak","moderate","strong"); SNR_AWGN_DB=tuple(CCISP_FIXED_SNR_DB); SNR_TURB_DB=tuple(CCISP_FIXED_SNR_DB)
 def authority(scenes,snrs,command,n_seeds=N_SEEDS,n_windows=N_WINDOWS):
  a=F.authority(scenes,(),command,n_seeds,n_windows); a["script_sha256"]=F.sha(__file__); a["route"]="fixed"; a["grid"]["snr_db"]={k:list(v) for k,v in snrs.items()} if isinstance(snrs,dict) else list(snrs); return a
 def run(scenes,n_seeds,n_windows,out,command,smoke=False):

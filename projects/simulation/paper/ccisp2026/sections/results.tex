@@ -3,51 +3,52 @@
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=\columnwidth]{../../figures/ccisp_fig2_ber.pdf}
-  \caption{Data BER of DA-ML, NDA-ML, and oracle phase recovery under AWGN and Gamma--Gamma turbulence.}
+  \includegraphics[width=0.90\columnwidth]{../../figures/ccisp_fig2_ber.pdf}
+  \caption{Data BER of DA, NDA, and oracle phase recovery under AWGN and Gamma--Gamma turbulence.}
   \label{fig:ber-overview}
 \end{figure}
 
 \subsection{Simulation Setup and Performance Metrics}
 \label{sec:simulation-contract}
 
-We evaluate the data-aided (DA) and non-data-aided (NDA) carrier-phase-recovery paths over six channel conditions: an additive white Gaussian noise (AWGN) reference, weak, moderate, and strong downlink Gamma--Gamma turbulence, and moderate and strong uplink turbulence. The benchmark sweep uses 30 independent seeds at every operating point. Each seed contains 400 processing windows of 256 received samples, or 102400 samples per seed and operating point. The sampled average data-symbol signal-to-noise ratios (SNRs) span 5--20~dB for AWGN and 5--26~dB for all turbulent conditions. These common samples provide the basis for the fixed-estimator comparison. The selector-recovery count uses a separate fixed-configuration 30-seed data layer covering 29 prescribed points: eight AWGN SNRs and seven SNRs in each of the three downlink regimes.
+The evaluation contains an AWGN reference and weak, moderate, and strong downlink Gamma--Gamma turbulence. Fixed-branch curves use 30 independent seeds and 400 processing windows per point on a common 5--35~dB grid. The adaptive receiver is evaluated on the three turbulence regimes over 5--25~dB using the same seed and window scales.
 
-Figure~\ref{fig:ber-overview} also displays additional high-SNR samples so that the low-BER portions of the curves remain visible. Those extension samples use five independent seeds and extend the AWGN, weak, moderate, and strong/uplink curves to 30, 40, 46, and 50~dB, respectively. Together, the 30-seed benchmark and five-seed extension provide the complete displayed SNR range. Figure~\ref{fig:crossover} uses the same merged curve set, while the selector count is evaluated on its separate fixed-configuration 30-seed grid.
-
-The primary fixed-estimator metric is the bit error rate (BER), $P_b$. For NDA, all 256 16-APSK symbols carry data, giving 1024 data bits per processing window. With one pilot every four symbols, DA is evaluated over the remaining 192 data symbols, giving 768 data bits per processing window. This data-BER convention evaluates the decoded payload positions of each branch and is used to determine the lower-BER estimator in the 26-of-29 selector-recovery count. The $7\%$ hard-decision forward-error-correction (HD-FEC) reference is $P_b=3.8\times10^{-3}$ \cite{smith2012staircase}; Fig.~\ref{fig:ber-overview} uses it as a visual performance reference.
-
-The oracle curves in Fig.~\ref{fig:ber-overview} are performance references rather than candidate selector branches. The AWGN oracle removes the true carrier phase, while the turbulence oracle uses both the true irradiance and the true carrier phase. Neither oracle quantity enters the DA/NDA selector.
+The wider fixed-algorithm sweep reveals the DA and NDA operating regions; the paired adaptive sweep evaluates window-level control over their transition region. The metric is BER, $P_b$. DA excludes pilot positions, whereas NDA carries data in all 256 symbols, so the adaptive comparison scores fixed NDA and the executed output on the same non-pilot payload. The oracle curves remove the true carrier phase (and, under turbulence, the true irradiance) and serve only as performance references.
 
 \subsection{DA/NDA Operating Regions}
 \label{sec:da-nda-behavior}
 
-Figure~\ref{fig:ber-overview} shows the complementary operating regions of the two estimators. DA uses known pilot symbols to support carrier estimation, whereas NDA preserves all symbol positions for payload. In the predefined work region $\gamma_{\mathrm{tot}}\geq15$~dB, the average NDA-versus-DA gaps on the data-symbol-SNR coordinate are approximately 1.3~dB for strong downlink turbulence, 1.2~dB for moderate uplink turbulence, and 1.9~dB for strong uplink turbulence. Accounting for the DA pilot-energy term $\Delta_p=10\log_{10}(4/3)=1.249$~dB maps these values to total-energy-equivalent advantages of approximately 2.5, 2.4, and 3.1~dB, respectively. These values compare the two fixed estimators and are distinct from the selector-output metric considered below.
+Figure~\ref{fig:ber-overview} shows that the ordering of the fixed DA and NDA algorithms changes in the mid-SNR region. Stronger turbulence also produces a shallower BER waterfall, creating the window-dependent performance variation addressed by adaptive CPR.
 
-The intersections of the DA and NDA data-BER curves provide a second view of this complementarity. Using linear interpolation in log-BER between simulated samples, the observed crossover SNRs are 18.0, 16.9, and 10.7~dB for weak, moderate, and strong downlink turbulence, respectively. Figure~\ref{fig:crossover} marks these post-simulation curve observations directly. The receiver uses one fixed 13~dB effective-SNR decision level shared by all evaluated regimes.
+The three marked points in Fig.~\ref{fig:crossover} are the SNRs at which the fixed DA and NDA BER curves are equal. They lie between 14.5 and 16.9~dB and are diagnostic curve intersections, distinct from the fixed 13~dB control level.
+
+At 35~dB, the AWGN and weak-turbulence runs contain no observed errors within the simulated bit budget, whereas the moderate- and strong-turbulence BERs remain near $3\times10^{-5}$ and $2\times10^{-4}$. The high-SNR floor therefore rises with turbulence severity.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=\columnwidth]{../../figures/ccisp_fig4_crossover.pdf}
+  \includegraphics[width=0.90\columnwidth]{../../figures/ccisp_fig4_crossover.pdf}
   \caption{DA--NDA data-BER crossovers under downlink turbulence.}
   \label{fig:crossover}
 \end{figure}
 
-\subsection{Selector Performance}
+\subsection{Adaptive CPR Performance}
 \label{sec:switching-gain}
 
-We quantify the selector relative to fixed NDA at the same average data-symbol SNR using a full-block-normalized error ratio. For branch $x\in\{\mathrm{NDA},\mathrm{SW}\}$, let $R_{\mathrm{FB},x}=N_{\mathrm{err},x}/(1024N_{\mathrm{win}})$, where $N_{\mathrm{err},x}$ is the recorded bit-error count over $N_{\mathrm{win}}$ processing windows. The logarithmic error-ratio reduction is
+We compare adaptive CPR with fixed NDA at the same data-symbol SNR through a common-payload BER ratio. For non-pilot positions $\mathcal C$, let $N_{\mathrm{err},\mathcal C,x}^{(s)}$ be the error count for paired seed $s$ and output $x\in\{\mathrm{NDA},\mathrm{ADP}\}$. Then
 \begin{equation}
-G_{\mathrm{FB}}=10\log_{10}\!\left(\frac{R_{\mathrm{FB,NDA}}}{R_{\mathrm{FB,SW}}}\right),
-\label{eq:full-block-error-ratio-reduction}
+\begin{aligned}
+P_{b,\mathcal C,x}^{(s)}&=\frac{N_{\mathrm{err},\mathcal C,x}^{(s)}}{768N_{\mathrm{win}}},\\
+G_{\mathcal C}^{(s)}&=10\log_{10}\!\left(\frac{P_{b,\mathcal C,\mathrm{NDA}}^{(s)}}{P_{b,\mathcal C,\mathrm{ADP}}^{(s)}}\right).
+\end{aligned}
+\label{eq:common-payload-ber-reduction}
 \end{equation}
-This normalization is distinct from the branch-specific data-BER denominators used for the selector-recovery count. A positive $G_{\mathrm{FB}}$ gives the logarithmic reduction of the full-block-normalized error ratio at a common data-symbol SNR. Figure~\ref{fig:ber-reduction} reports this metric over the three downlink turbulence regimes. Representative positive values are 2.3~dB at 10~dB in weak turbulence, 2.0~dB at 10~dB in moderate turbulence, and 1.3~dB at 5~dB in strong turbulence. These anchors illustrate the reduction obtained when the selector activates the branch favored by its fixed decision rule.
+Figure~\ref{fig:ber-reduction} reports the mean of this same-SNR logarithmic BER ratio with 95\% confidence intervals. At 9~dB, the reduction is positive in all three regimes and spans approximately 0.8--1.5~dB, with the largest value under weak turbulence.
 
-Across the selector grid, 29 operating points are evaluated: eight AWGN SNRs plus seven SNRs in each of the weak, moderate, and strong downlink regimes, i.e., $29=8+7+7+7$. Using the standard data-BER definition to identify the lower-BER fixed estimator, the selector recovers that estimator at 26 of the 29 points. This count and Fig.~\ref{fig:ber-reduction} describe complementary aspects of operation: the count measures branch recovery using the branch-specific payload denominators, whereas $G_{\mathrm{FB}}$ measures the full-block-normalized error-ratio reduction relative to fixed NDA at each common SNR. Together, they show that a single fixed 13~dB decision level shared across regimes converts the DA--NDA operating-region complementarity into repeatable estimator selection.
+Across the three regimes, the reduction peaks in the low-to-intermediate-SNR region and decreases toward zero as fixed-NDA errors approach those of adaptive CPR. The benefit is therefore concentrated where fixed NDA is most exposed to low-power windows, rather than uniform over the full SNR range. All three curves peak at the same tested average SNR, 9~dB, while their heights follow the separation available between the fixed algorithms. The common peak location is consistent with one frozen control boundary; the regime-dependent heights bound the gain by the available branch contrast.
 
 \begin{figure}[t]
   \centering
-  \includegraphics[width=\columnwidth]{../../figures/ccisp_fig3_gain.pdf}
-  \caption{Same-SNR full-block-normalized error-ratio reduction of received-power-aware switching relative to fixed NDA.}
+  \includegraphics[width=0.90\columnwidth]{../../figures/ccisp_fig3_gain.pdf}
+  \caption{Common-payload BER-ratio reduction relative to fixed NDA. Error bars show 95\% confidence intervals over 30 paired seeds.}
   \label{fig:ber-reduction}
 \end{figure}

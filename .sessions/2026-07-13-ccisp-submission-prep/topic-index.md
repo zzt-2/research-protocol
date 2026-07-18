@@ -1,7 +1,7 @@
 # Topic Index: CCISP 2026 LaTeX 投稿骨架
 
 > slug: 2026-07-13-ccisp-submission-prep
-> status: active | created 2026-07-13 | last_updated 2026-07-15
+> status: closed | created 2026-07-13 | last_updated 2026-07-16
 
 ## 专题定位（一句话）
 
@@ -77,4 +77,4 @@
 
 ## 当前位置
 
-当前位置：Gate 0 官方模板硬门 PASS，构建链可用；当前工作树已存在 CCE-CC-002 扩展预览。S003 完成官方要求核实（页数 5-10 含 ref、篇数无上限、截稿 7/20）+ 参考文献从 12 条扩到 24 条（三轮 venue 调整：现代 IEEE Transactions 0→4，补 gavert/liu2025/qin2026 三篇现代 Trans + zhang2010 JLT DA 源头），fresh compile 8 页（正文到第 7 页 Conclusion，ref 溢出第 8 页），0 警告 0 undefined 0 overfull 字体全嵌入。19 条查询挖尽确认 5 篇 Trans 是领域上限。原始 Fig.1/Fig.2 占位边界、词数口径、Oracle/术语语义仍未收口，当前交付仍不是最终投稿稿。
+当前位置：CLOSED / HISTORICAL。投稿骨架、官方要求、构建链与参考文献扩展事实保留在本目录；2026-07-16 起，所有 CCISP 整稿、图文和投稿收尾统一续接 `.sessions/2026-07-14-ccisp-content-expansion/`，本专题不再接收新任务。

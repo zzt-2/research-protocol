@@ -45,7 +45,7 @@
 - [ ] BER 用 log-y（semilogy / set_yscale('log')）
 - [ ] 纵轴范围按场景自适应（守不变量 5 deep fade 正确表征）：
   - AWGN/weak/moderate：1e-6 到 1（能到 1e-5）
-  - strong/uplink：1e-4 到 0.5（deep fade 不强凑 1e-5，对齐 Paillier JLT 2020 惯例）
+  - CCISP Fig.3 四面板：统一 1e-6 到 1；zero-count 使用 half-count 可视化，不宣称精确零 BER
 - [ ] HD-FEC 参考线（3.8e-3）必画
 - [ ] 横轴标签统一 `$\bar{\gamma}_d$ (dB)`（数据 SNR，非总 SNR）
 - [ ] grid 只画 major（alpha 0.2），minor 几乎不可见（alpha 0.08）

@@ -30,3 +30,35 @@ independent verifier: typography gate PASS; P0/P1/P2 findings 0
 ### 结论
 
 PASS
+
+## V002: Fig.3 A2 视觉返工最终验收
+
+> date: 2026-07-15
+> 关联：S001 / D002
+
+### 验证项
+
+- [x] 权威源：仅修改 `plot_fig2_ber.py` 的视觉编码并覆盖当前 PDF/PNG，无 v2/v3 候选。
+- [x] 语义冻结：数据数组、插值函数、六场景、HD-FEC 数值与 3×2 单栏结构未变。
+- [x] A2 规格：三方法均为无标记实线；横轴主/次刻度加密；HD-FEC 仅在 (a) 直接标注；底部无框三列图例。
+- [x] 字体嵌入：Fig.3 PDF 的 Times New Roman/STIX 全部嵌入，无 Type 3、Helvetica、DejaVu Sans。
+- [x] 最终页面：fresh `latexmk -g` 生成 7 页 PDF；第 5 页 2× 渲染无裁切、遮挡、重叠或不可读文字。
+- [x] 回归测试：`python -m pytest projects/simulation/tests/test_ccisp_figure_typography.py -q` → 14 passed。
+- [x] 独立审查：规格符合性 PASS；代码/视觉质量 PASS；Critical/Important/Minor 均为 0。
+
+### 证据
+
+```text
+14 passed in 1.58s
+main.pdf: 7 pages, 968063 bytes
+mtime: 2026-07-15 01:05:59 +08:00
+SHA-256: FE2FAE71DA52E293DD2994F32851E6A20012CD3810A47CA42F561471FFF15C00
+build: exit 0
+warnings: Underfull vbox badness 10000 on page 2; no Fig.3 layout warning
+fonts: all embedded; no Type 3 / Helvetica / DejaVu Sans
+independent reviewer: spec PASS; quality PASS; findings 0
+```
+
+### 结论
+
+PASS

@@ -92,18 +92,29 @@ def _cells():
     return {cell.attrib["id"]: cell for cell in ElementTree.parse(FIGURE).iter("mxCell")}
 
 
-def test_user_adjusted_non_control_edges_are_byte_semantically_frozen():
+def test_route_b_router_precedes_exactly_one_estimator_branch():
     cells = _cells()
-
-    for edge_id, expected in FROZEN_NON_CONTROL_EDGES.items():
-        edge = cells[edge_id]
-        actual = (
-            edge.attrib["source"],
-            edge.attrib["target"],
-            edge.attrib["style"],
-            _tree_signature(edge.find("mxGeometry")),
-        )
-        assert actual == expected, edge_id
+    assert cells["selector"].attrib["value"] == "Branch<br>router"
+    assert (cells["e_selected"].attrib["source"], cells["e_selected"].attrib["target"]) == (
+        "fork",
+        "selector",
+    )
+    assert (cells["e_fork_da"].attrib["source"], cells["e_fork_da"].attrib["target"]) == (
+        "selector",
+        "da",
+    )
+    assert (cells["e_fork_nda"].attrib["source"], cells["e_fork_nda"].attrib["target"]) == (
+        "selector",
+        "nda",
+    )
+    assert (cells["e_theta_da"].attrib["source"], cells["e_theta_da"].attrib["target"]) == (
+        "da",
+        "phase",
+    )
+    assert (cells["e_theta_nda"].attrib["source"], cells["e_theta_nda"].attrib["target"]) == (
+        "nda",
+        "phase",
+    )
 
 
 def test_old_single_layer_control_labels_are_removed():

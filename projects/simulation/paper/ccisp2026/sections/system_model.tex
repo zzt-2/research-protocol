@@ -2,16 +2,24 @@
 
 \subsection{Signal and Impairment Model}
 
-As shown in Fig.~\ref{fig:system-overview}, we consider a coherent free-space optical (FSO) link between a satellite and an optical ground station, including both downlink and uplink propagation regimes. The transmitted symbols use \((8,8)\) 16-ary amplitude-phase shift keying (16APSK), with eight equally spaced phase points on each of two amplitude rings, following the modulation definition used by Du \emph{et al.}~\cite{du2025nda}. The constellation is normalized so that its average symbol energy is \(E_s=1\).
+As shown in Fig.~\ref{fig:system-overview}, we consider a coherent FSO downlink from a satellite to an optical ground station. The transmitted symbols use \((8,8)\) 16APSK, with eight equally spaced phase points on each of two amplitude rings, following the modulation definition used by Du \emph{et al.}~\cite{du2025nda}. The constellation is normalized so that its average symbol energy is \(E_s=1\).
 
 Let \(b(k)=\lfloor k/N_{\mathrm{ch}}\rfloor\) identify the atmospheric channel block containing symbol \(k\), where \(N_{\mathrm{ch}}=100\) symbols. The discrete-time complex-baseband observation is
 \begin{equation}
   r_k = \sqrt{h_{b(k)}}\,s_k\exp\!\left(j\phi_k\right)+n_k,
   \label{eq:received-signal}
 \end{equation}
-where \(s_k\) is the transmitted symbol, \(h_{b(k)}\) is the normalized irradiance, or intensity gain, and \(n_k\sim\mathcal{CN}(0,N_0)\) is circular complex Gaussian noise. The square root is required because irradiance scales signal power, whereas the complex-baseband coefficient scales amplitude. Consequently, the instantaneous received signal-to-noise ratio (SNR), before receiver estimation error, is \(h_{b(k)}\bar{\gamma}\), where \(\bar{\gamma}=E_s/N_0\) is the average pre-fading SNR.
+where \(s_k\) is the transmitted symbol, \(h_{b(k)}\) is the normalized irradiance, and \(n_k\sim\mathcal{CN}(0,N_0)\) is circular complex Gaussian noise. With \(E_s=1\), the average pre-fading data-symbol SNR is \(\bar{\gamma}=E_s/N_0\), its instantaneous value is \(h_{b(k)}\bar{\gamma}\), and \(\gamma_{\mathrm{data}}^{\mathrm{dB}}=10\log_{10}(E_s/N_0)\).
 
-The irradiance follows a Gamma--Gamma model~\cite{alhabash2001,liu2023multiaperture} and is constant only within each 100-symbol channel block. It is generated as the product of two unit-mean Gamma variates. The shape-parameter pairs \((\alpha,\beta)=(4.0,3.0)\), \((2.5,1.8)\), and \((1.5,0.8)\) define the weak, moderate, and strong downlink simulation regimes; \((1.2,0.9)\) and \((1.0,0.7)\) define the moderate and strong uplink regimes. These parameter pairs define the numerical fading regimes evaluated below. Treating the atmospheric gain as constant over a short processing interval is consistent with reported FSO timing analyses that place scintillation dynamics on a substantially slower time scale than a microsecond-scale coherent frame~\cite{johst2024dataaided,conroy2018geouplink}.
+The irradiance follows the Gamma--Gamma model of Al-Habash \emph{et al.}~\cite{alhabash2001} and is generated as the product of two unit-mean Gamma variates. For a plane wave, the small- and large-scale shape parameters are functions of the Rytov variance \(\sigma_R^2\):
+\begin{equation}
+\begin{aligned}
+\alpha&=\left[\exp\!\left(\frac{0.49\sigma_R^2}{(1+1.11(\sigma_R^2)^{6/5})^{7/6}}\right)-1\right]^{-1},\\
+\beta&=\left[\exp\!\left(\frac{0.51\sigma_R^2}{(1+0.69(\sigma_R^2)^{6/5})^{5/6}}\right)-1\right]^{-1}.
+\end{aligned}
+\label{eq:gg-shape-mapping}
+\end{equation}
+Gu \emph{et al.} use the equivalent plane-wave log-irradiance-variance notation \(\sigma_l^2\) and report weak, moderate, and strong conditions \(\sigma_l^2=0.2,1.6,3.5\) with \((\alpha,\beta)=(11.6,10.1)\), \((4.0,1.9)\), and \((4.2,1.4)\), respectively~\cite{gu2022mfi}. We use those rounded pairs as the three downlink regimes. Substitution into the Al-Habash mapping gives \((11.651,10.122)\), \((4.027,1.911)\), and \((4.226,1.362)\), whose largest componentwise rounding deviation is 2.78\%. The same variance levels trace to the optical-wireless channel-modeling reference cited by Gu \emph{et al.}~\cite{ghassemlooy2019owc}.
 
 Within each evaluated 256-sample processing window, the carrier phase evolves continuously and contains a residual frequency offset \(f_{\mathrm{res}}\), a linear Doppler rate \(\dot f\), and laser phase noise:
 \begin{equation}
@@ -24,15 +32,11 @@ Within each evaluated 256-sample processing window, the carrier phase evolves co
   \end{aligned}
   \label{eq:phase-process}
 \end{equation}
-where \(T_s\) is the symbol interval, \(\Delta\nu=10\)~kHz is the combined laser linewidth, and \(\phi_{\mathrm{init}}\) is an arbitrary initial phase. The Wiener-increment variance follows the standard linewidth model used for coherent FSO carrier estimation~\cite{du2025nda}. Unlike the atmospheric coefficient, this phase is not assumed constant within a channel block.
-
-For the turbulence simulations, each 256-sample processing window uses an independently initialized phase realization. Equation~\eqref{eq:phase-process} therefore specifies continuous phase evolution within a processing window, while successive simulated windows provide independent realizations for Monte Carlo evaluation.
-
-Equations~\eqref{eq:received-signal} and~\eqref{eq:phase-process} keep the impairment roles explicit. The irradiance term controls received signal power, the residual frequency and Doppler-rate terms produce deterministic phase evolution, the Wiener term produces stochastic phase diffusion, and \(n_k\) sets the additive-noise floor. In particular, neither the random irradiance nor the carrier phase is absorbed into \(\bar{\gamma}\). This convention lets all receiver branches process the same channel realization while differing only in the observations and estimators available to them.
+where \(T_s\) is the symbol interval, \(\Delta\nu=10\)~kHz is the combined laser linewidth, and \(\phi_{\mathrm{init}}\) is the initial phase. The increment variance follows the coherent-FSO linewidth model~\cite{du2025nda}. Each 256-sample window uses an independent realization with continuous phase evolution within the window.
 
 \subsection{Block Structure, Pilot Pattern, and SNR Definition}
 
-Two distinct partitions are used. The atmospheric channel block has \(N_{\mathrm{ch}}=100\) symbols and determines where \(h_{b(k)}\) is held constant. Carrier recovery and estimator selection operate on nonoverlapping digital signal processing (DSP) windows of \(N_{\mathrm{DSP}}=256\) samples. Because these lengths differ, a DSP window may contain samples from multiple atmospheric channel blocks; the receiver does not assume a single value of \(h\) over all 256 samples. Channel-gain estimation is therefore performed on the 100-symbol partition, while phase estimation and method selection use the 256-sample partition.
+Two distinct partitions are used. The atmospheric channel block has \(N_{\mathrm{ch}}=100\) symbols, whereas carrier recovery and adaptive control use nonoverlapping DSP windows of \(N_{\mathrm{DSP}}=256\) samples. A DSP window may therefore span multiple channel blocks; gain estimation follows the 100-symbol partition, while recovery and control use the 256-sample partition.
 
 Within each DSP window, the data-aided layout assigns local indices \(0,4,\ldots,252\) to 64 known pilots and the remaining 192 positions to data. Channel-block boundaries are applied independently of this local layout, so pilots contributing to a channel-gain estimate are selected by their global symbol indices rather than by treating the DSP window as one fading interval. The same transmitted symbols, atmospheric gains, phase sequence, and noise realization are supplied to all compared receiver branches.
 
@@ -46,4 +50,4 @@ For the data-aided branch, one known pilot is placed every \(L_p=4\) transmitted
   \end{aligned}
   \label{eq:pilot-energy-coordinate}
 \end{equation}
-The non-data-aided branch carries data in every symbol and receives no such coordinate offset. For both branches, bit error rate (BER) is evaluated over information-bearing data positions; pilot positions are excluded from the data-aided denominator. Performance is referenced to the pre-decoding BER threshold \(3.8\times10^{-3}\), corresponding to 7\% overhead hard-decision forward error correction (HD-FEC)~\cite{smith2012staircase,horst2023tbit}.
+The non-data-aided branch uses every symbol. BER is evaluated over information-bearing positions, with pilot positions excluded from the DA denominator.

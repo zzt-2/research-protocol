@@ -19,6 +19,10 @@ from typing import Optional, Dict, Any, List, Tuple
 import numpy as np
 from pydantic import BaseModel, Field, ConfigDict
 
+# CCISP formal fixed-branch BER sweep. This dedicated grid is separate from
+# the adaptive A/B sweep (5--25 dB) and is the sole truth source for Fig. 3.
+CCISP_FIXED_SNR_DB: Tuple[float, ...] = tuple(map(float, range(5, 36, 2)))
+
 
 # ─── 枚举 ─────────────────────────────────────────────────────
 

@@ -507,11 +507,11 @@ topics:
     conflicts_with: []
 
   - slug: 2026-07-14-ccisp-content-expansion
-    title: CCISP 2026 论文内容补强
+    title: CCISP 2026 论文整稿闭环
     status: active
     created: "2026-07-14"
-    last_updated: "2026-07-16（R016/V015：formal与论文数据PASS；Fig.2先选后跑语义BLOCKED）"
-    description: "针对 CCISP 2026 论文内容补强。D019 三档、fixed 870/870、消歧前A/B 990/990、formal-only三图和7页构建已闭合；用户维护Fig.2仍为双路先跑后选语义，终态BLOCKED待资产方修正。"
+    last_updated: "2026-07-17（S003：导师批注证据归档与 Skill 修改规划前置；待用户复核）"
+    description: "CCISP 2026 唯一 active/canonical 论文专题，统一管理投稿工程、内容与结果闭环、图文返工和最终验证；历史投稿/字体专题只读归档。"
     depends_on:
       - slug: 2026-07-09-thesis-writing
         reason: 继承 R010/R013/R014/R015/R016、benchmark-paper-set、D007 数据呈现边界及论文事实材料
@@ -536,10 +536,10 @@ topics:
 
   - slug: 2026-07-13-ccisp-submission-prep
     title: CCISP 2026 LaTeX 投稿骨架与版面探针
-    status: active
+    status: closed
     created: "2026-07-13"
-    last_updated: "2026-07-15（S003：官方要求核实 + 参考文献从 12 扩到 24 条含三轮 venue 调整现代 Trans 0→4，8 页 0 警告）"
-    description: "独立 CCISP 投稿准备专题：核验官方 IEEEtran 模板、构建链、正文/引用资产和双栏版面。原始首轮边界保留 Fig.1/Fig.2 占位、W001–W003 只读、不跑仿真；当前工作树另有 CCE-CC-002 扩展预览，是否替代首轮骨架仍待确认。"
+    last_updated: "2026-07-16（D022：已由 CCISP 论文整稿闭环专题吸收，保留为投稿骨架历史档案）"
+    description: "CLOSED/HISTORICAL：保留官方 IEEEtran 模板、构建链、投稿要求和参考文献扩展证据；后续工作统一续接 2026-07-14-ccisp-content-expansion。"
     depends_on:
       - slug: 2026-07-09-thesis-writing
         reason: 继承 H015、W001–W003、R011/R016/R018 和 D008/D009/D011/D013/D014。

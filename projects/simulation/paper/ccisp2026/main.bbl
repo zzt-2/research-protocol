@@ -21,12 +21,13 @@
 \providecommand{\BIBdecl}{\relax}
 \BIBdecl
 
-\bibitem{lebidan2023frame}
-R.~{Le Bidan}, H.~M{\'e}ric, and J.~Sommer, ``Frame format and {DSP} receiver
-  design for a 56-{GBaud} {GEO} {DP-QPSK} coherent optical feeder link,'' in
-  \emph{2023 IEEE International Conference on Space Optical Systems and
-  Applications (ICSOS)}.\hskip 1em plus 0.5em minus 0.4em\relax Vancouver, BC,
-  Canada: IEEE, 2023, pp. 77--84.
+\bibitem{horst2023tbit}
+Y.~Horst, B.~I. Bitachon, L.~Kulmer, J.~Brun, T.~Blatter, J.-M. Conan,
+  A.~Montmerle-Bonnefois, J.~Montri, B.~Sorrente, C.~B. Lim, N.~V{\'e}drenne,
+  D.~Matter, L.~Pommarel, B.~Baeuerle, and J.~Leuthold, ``{Tbit/s} line-rate
+  satellite feeder links enabled by coherent modulation and full-adaptive
+  optics,'' \emph{Light: Science \& Applications}, vol.~12, no.~1, p. 153,
+  2023.
 
 \bibitem{valjus2025dsp}
 C.~Valjus, R.~Wolf, and J.~Poliak, ``Review and analysis of digital signal
@@ -52,31 +53,10 @@ M.~A. Al-Habash, L.~C. Andrews, and R.~L. Phillips, ``Mathematical model for
   through turbulent media,'' \emph{Optical Engineering}, vol.~40, no.~8, pp.
   1554--1562, 2001.
 
-\bibitem{pech2025odpll}
-S.~Pech, F.~Destic, A.~Dion, and A.~Rissons, ``{Z}-transform model of a
-  coherent receiver for satellite-to-ground laser links under high doppler
-  rates,'' in \emph{2025 IEEE International Conference on Space Optical Systems
-  and Applications (ICSOS)}.\hskip 1em plus 0.5em minus 0.4em\relax IEEE, 2025,
-  pp. 1--10.
-
 \bibitem{taylor2009phase}
 M.~G. Taylor, ``Phase estimation methods for optical coherent detection using
   digital signal processing,'' \emph{Journal of Lightwave Technology}, vol.~27,
   no.~7, pp. 901--914, 2009.
-
-\bibitem{johst2024dataaided}
-A.~Johst, L.~Molle, N.~Perlot, M.~Rothe, M.~Rohde, and M.~N{\"o}lle,
-  ``Data-aided multi-format {DSP} for robust free-space coherent optical
-  communication,'' in \emph{2024 IEEE International Conference on Wireless for
-  Space and Extreme Environments (WiSEE)}.\hskip 1em plus 0.5em minus
-  0.4em\relax IEEE, 2024, pp. 82--87.
-
-\bibitem{panasiewicz2022opl}
-J.~Panasiewicz, N.~Arab, F.~Destic, G.~M. Pacheco, and A.~Rissons,
-  ``All-digital optical phase-locked loop for satellite communications under
-  turbulence effects,'' in \emph{2022 International Topical Meeting on
-  Microwave Photonics (MWP)}.\hskip 1em plus 0.5em minus 0.4em\relax IEEE,
-  2022, pp. 1--4.
 
 \bibitem{gavert2022pilot}
 B.~G{\"a}vert and T.~Eriksson, ``Estimation of phase noise based on in-band and
@@ -88,12 +68,6 @@ S.~Zhang, P.-Y. Kam, C.~Yu, and J.~Chen, ``Decision-aided carrier phase
   estimation for coherent optical communications,'' \emph{Journal of Lightwave
   Technology}, vol.~28, no.~11, pp. 1597--1607, 2010.
 
-\bibitem{qin2026blindvae}
-G.~Qin, Y.~Wei, Z.~Tang, J.~Zhang, F.~Wei, N.~Chi, and J.~Shi, ``Bootstrapping
-  blind equalizer for dual-polarization coherent {FSO} systems via
-  modulus-rings-based variational autoencoder,'' \emph{IEEE Transactions on
-  Cognitive Communications and Networking}, vol.~12, pp. 3538--3554, 2026.
-
 \bibitem{viterbi1983}
 A.~J. Viterbi and A.~M. Viterbi, ``Nonlinear estimation of {PSK}-modulated
   carrier phase with application to burst digital transmission,'' \emph{IEEE
@@ -104,14 +78,6 @@ X.~Du, K.~Yu, Q.~Wang, and P.-Y. Kam, ``Non-data-aided {ML} estimation of
   timing offset and carrier phase for {M-APSK} modulated {FSO} systems,''
   \emph{IEEE Photonics Technology Letters}, vol.~37, no.~10, pp. 559--562,
   2025.
-
-\bibitem{ma2025mapphase}
-W.~Ma, S.~Liu, X.~Du, Q.~Wang, and P.-Y. Kam, ``Maximum a posteriori
-  probability phase recovery for 256-{QAM} modulated signals in coherent
-  optical communications,'' in \emph{2025 30th OptoElectronics and
-  Communications Conference and 2025 International Conference on Photonics in
-  Switching and Computing (OECC/PSC)}.\hskip 1em plus 0.5em minus 0.4em\relax
-  IEEE, 2025, pp. 1--4.
 
 \bibitem{wang2022jointml}
 Q.~Wang, Z.~Quan, S.~Bi, and P.-Y. Kam, ``Joint {ML}/{MAP} estimation of the
@@ -142,28 +108,21 @@ N.~Liu, C.~Ju, D.~Wang, D.~Wang, and P.~Xie, ``Multi-aperture coherent digital
   for {FSO} communication,'' \emph{Journal of Lightwave Technology}, vol.~41,
   no.~18, pp. 5983--5990, 2023.
 
-\bibitem{conroy2018geouplink}
-P.~Conroy, J.~Surof, J.~Poliak, and R.~Mata~Calvo, ``Demonstration of 40
-  {GBaud} intradyne transmission through worst-case atmospheric turbulence
-  conditions for geostationary satellite uplink,'' \emph{Applied Optics},
-  vol.~57, no.~18, pp. 5095--5101, 2018.
+\bibitem{qin2026blindvae}
+G.~Qin, Y.~Wei, Z.~Tang, J.~Zhang, F.~Wei, N.~Chi, and J.~Shi, ``Bootstrapping
+  blind equalizer for dual-polarization coherent {FSO} systems via
+  modulus-rings-based variational autoencoder,'' \emph{IEEE Transactions on
+  Cognitive Communications and Networking}, vol.~12, pp. 3538--3554, 2026.
 
-\bibitem{smith2012staircase}
-B.~P. Smith, A.~Farhood, A.~Hunt, F.~R. Kschischang, and J.~Lodge, ``Staircase
-  codes: {FEC} for 100 {Gb/s} {OTN},'' \emph{Journal of Lightwave Technology},
-  vol.~30, no.~1, pp. 110--117, 2012.
+\bibitem{gu2022mfi}
+Y.~Gu, Z.~Wu, X.~Li, R.~Tian, S.~Ma, and T.~Jia, ``Modulation format
+  identification in a satellite to ground optical wireless communication
+  systems using a convolution neural network,'' \emph{Applied Sciences},
+  vol.~12, no.~7, p. 3331, 2022.
 
-\bibitem{horst2023tbit}
-Y.~Horst, B.~I. Bitachon, L.~Kulmer, J.~Brun, T.~Blatter, J.-M. Conan,
-  A.~Montmerle-Bonnefois, J.~Montri, B.~Sorrente, C.~B. Lim, N.~V{\'e}drenne,
-  D.~Matter, L.~Pommarel, B.~Baeuerle, and J.~Leuthold, ``{Tbit/s} line-rate
-  satellite feeder links enabled by coherent modulation and full-adaptive
-  optics,'' \emph{Light: Science \& Applications}, vol.~12, no.~1, p. 153,
-  2023.
-
-\bibitem{martins2021dualstage}
-C.~S. Martins, F.~P. Guiomar, and A.~N. Pinto, ``Hardware optimization of
-  dual-stage carrier-phase recovery for coherent optical receivers,'' \emph{OSA
-  Continuum}, vol.~4, no.~12, pp. 3157--3175, 2021.
+\bibitem{ghassemlooy2019owc}
+Z.~Ghassemlooy, W.~Popoola, and S.~Rajbhandari, \emph{Optical Wireless
+  Communications: System and Channel Modelling with MATLAB}, 2nd~ed.\hskip 1em
+  plus 0.5em minus 0.4em\relax Boca Raton, FL, USA: CRC Press, 2019.
 
 \end{thebibliography}

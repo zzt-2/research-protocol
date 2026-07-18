@@ -86,15 +86,19 @@ def verify(a,b,sim_root):
 
 def verify_fixed(d,sim_root):
  sim_root=Path(sim_root); a=d["authority"]
+ sys.path.insert(0,str(sim_root))
+ try: from params import CCISP_FIXED_SNR_DB
+ finally: sys.path.pop(0)
+ fixed_snrs=tuple(map(float,CCISP_FIXED_SNR_DB))
  assert d.get("_meta",{}).get("script") and a["authority_status"]=="formal" and a["route"]=="fixed"
  assert a["params_sha256"]==sha(sim_root/"params.py")
  assert a["script_sha256"]==sha(sim_root/"simulator"/"run_ccisp_family1_fixed_30seed.py")
  for rel,digest in a["imported_file_sha256"].items(): assert sha(sim_root/rel)==digest
  grid=a["grid"]; assert tuple(grid["scenes"])==("awgn",)+SCENES
- assert tuple(grid["snr_db"]["awgn"])==(5.,8.,10.,12.,14.,16.,18.,20.)
- assert tuple(grid["snr_db"]["turbulence"])==(5.,10.,15.,20.,22.,24.,26.)
+ assert tuple(grid["snr_db"]["awgn"])==fixed_snrs
+ assert tuple(grid["snr_db"]["turbulence"])==fixed_snrs
  assert grid["n_seeds"]==30 and grid["windows_per_seed"]==400
- expected={(s,g,i) for s in ("awgn",)+SCENES for g in ((5.,8.,10.,12.,14.,16.,18.,20.) if s=="awgn" else (5.,10.,15.,20.,22.,24.,26.)) for i in range(30)}
+ expected={(s,g,i) for s in ("awgn",)+SCENES for g in fixed_snrs for i in range(30)}
  seen=set()
  for x in d["raw"]:
   key=(x["scene"],float(x["snr_db"]),x["seed_index"]); assert key not in seen; seen.add(key)

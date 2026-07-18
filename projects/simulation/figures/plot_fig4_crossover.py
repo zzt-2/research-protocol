@@ -25,7 +25,8 @@ MAIN30 = os.path.join(_SIM_ROOT, 'results', 'ccisp_family1_fixed_30seed.json')
 OUT_PNG = os.path.join(_HERE, 'ccisp_fig4_crossover.png')
 OUT_PDF = os.path.join(_HERE, 'ccisp_fig4_crossover.pdf')
 
-FIGSIZE_IN = (3.5, 3.0)
+# Compact conference-column footprint; width and typography remain unchanged.
+FIGSIZE_IN = (3.5, 2.85)
 FONT_SIZES = {
     'title': 10.0,
     'label': 10.0,
@@ -56,6 +57,7 @@ COLORS = {
     'moderate': '#E69F00',  # amber
     'strong': '#D55E00',    # vermillion
 }
+MARKERS = {'weak': 'o', 'moderate': 's', 'strong': '^'}
 def load(path):
     with open(path, 'r', encoding='utf-8') as f:
         return json.load(f)
@@ -126,12 +128,12 @@ def main():
 
         # DA: solid line
         ax.plot(sd, bd, '-', color=color, linewidth=1.3)
-        ax.plot(snr_da, ber_da_plot, 'o', color=color, markersize=2.5,
+        ax.plot(snr_da, ber_da_plot, MARKERS[scene], color=color, markersize=2.5,
                 alpha=0.6, markeredgecolor='none', zorder=4)
 
         # NDA: dashed line (same color)
         ax.plot(sn, bn, '--', color=color, linewidth=1.3)
-        ax.plot(snr_nda, ber_nda_plot, 's', color=color, markersize=2.5,
+        ax.plot(snr_nda, ber_nda_plot, MARKERS[scene], color=color, markersize=2.5,
                 alpha=0.6, markeredgecolor='none', zorder=4)
 
         # Compute and mark the crossing from the same log-linear curves.
@@ -156,21 +158,24 @@ def main():
                 'strong': (0.35, 1.18),
             }
             dx, y_scale = label_offsets[scene]
-            ax.text(
-                xo_snr + dx,
-                xo_ber * y_scale,
-                rf'$\approx {xo_snr:.1f}$ dB',
+            ax.annotate(
+                rf'${xo_snr:.1f}$ dB',
+                xy=(xo_snr, xo_ber),
+                xytext=(xo_snr + dx, xo_ber * y_scale),
+                textcoords='data',
                 fontsize=FONT_SIZES['annotation'],
                 color=color,
                 ha='left',
                 va='center',
+                arrowprops={'arrowstyle': '-', 'color': color,
+                            'linewidth': 0.7, 'shrinkA': 2, 'shrinkB': 2},
                 bbox={'facecolor': 'white', 'edgecolor': 'none', 'alpha': 0.8, 'pad': 0.1},
                 zorder=7,
             )
 
     ax.set_yscale('log')
     ax.set_ylim(1e-4, 0.5)
-    ax.set_xlim(4, 30)
+    ax.set_xlim(5, 35)
     ax.set_xlabel(
         r'Data-symbol $E_s/N_0$ [dB]',
         fontsize=FONT_SIZES['label'],
@@ -180,41 +185,35 @@ def main():
     ax.grid(False, which='minor')
     ax.tick_params(labelsize=FONT_SIZES['tick'])
 
-    # Separate legends prevent a redundant 3 x 2 combination listing.
+    # Keep scenario and method encodings separate; place both legend blocks
+    # inside the upper-right data-sparse part of the axes.
     from matplotlib.lines import Line2D
     scenario_handles = [
-        Line2D([0], [0], color=COLORS[scene], linewidth=1.3, label=LABELS[scene])
+        Line2D([0], [0], color=COLORS[scene], linewidth=1.3,
+               marker=MARKERS[scene], markersize=3.0, label=LABELS[scene])
         for scene in SCENES
     ]
     method_handles = [
         Line2D([0], [0], color='black', linestyle='-', linewidth=1.3,
-               marker='o', markersize=3.0, label='DA'),
+               label='DA'),
         Line2D([0], [0], color='black', linestyle='--', linewidth=1.3,
-               marker='s', markersize=3.0, label='NDA'),
+               label='NDA'),
     ]
-    scenario_legend = ax.legend(
-        handles=scenario_handles,
-        fontsize=FONT_SIZES['legend'],
-        loc='lower left',
-        frameon=True,
-        edgecolor='0.65',
-        ncol=1,
-        labelspacing=0.3,
-        handletextpad=0.6,
-        borderpad=0.4,
-    )
-    ax.add_artist(scenario_legend)
     ax.legend(
-        handles=method_handles,
-        fontsize=FONT_SIZES['legend'],
-        loc='lower left',
-        bbox_to_anchor=(0.37, 0.0),
+        handles=scenario_handles + method_handles,
+        fontsize=6.5,
+        loc='upper center',
+        bbox_to_anchor=(0.55, 0.98),
         frameon=True,
-        edgecolor='0.65',
-        ncol=1,
-        labelspacing=0.3,
-        handletextpad=0.6,
-        borderpad=0.4,
+        framealpha=0.78,
+        facecolor='white',
+        edgecolor='#b0b0b0',
+        ncol=5,
+        columnspacing=0.42,
+        labelspacing=0.25,
+        handletextpad=0.25,
+        borderpad=0.3,
+        handlelength=1.0,
     )
 
     fig.subplots_adjust(left=0.20, right=0.97, top=0.97, bottom=0.19)

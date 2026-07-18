@@ -51,7 +51,7 @@
 | B-04 | OPEN | CCISP 页数口径未锁定。 | CCISP 官方投稿页 [`sub.html`](https://www.ccisp.org/sub.html) 当前写 full paper `5--10` pages；既有项目材料仍使用 `4--6` pages（`projects/simulation/ADVISOR_BRIEFING_2026-07-09_v2_ccisp.md:19`）。 | 以会议最新作者指南/投稿系统说明确认最终范围；在确认前，骨架只能报告实测页数，不能把 `4--6` 或 `5--10` 当作已拍板规则。 |
 | B-05 | OPEN | 正文结果数字与源文档交叉检查表存在 `1.9 dB` / `1.85 dB` 精度口径差异。 | W001/W002 正文及当前 LaTeX Abstract/Introduction/Conclusion 使用 `about 1.9 dB`；W001/W003 的交叉检查表和 W002 的数字表写 `1.85 dB`。首轮按正文抽取，未自行改数字。 | 锁定正文与交叉检查表的统一精度和 fair/naive 口径，再同步 Abstract、Conclusion、表格、图注和验证材料。 |
 | B-06 | OPEN | DA 估计器文字声称对块内 `N_p` 个导频求平均，但公式只写单个 `r_p p^*`。 | W002 `:16` 与目标 `sections/method.tex:4-7` 都保留该组合；LaTeX 未新增这一不一致。 | 明确公式是否应展开导频求和/平均，或把文字改为与公式一致；需回到方法定义后再改。 |
-| B-07 | OPEN | 结果文字的 SNR 扫描范围与现有 BER 图横轴范围尚未对齐。 | 目标 `sections/results.tex:4` 写 AWGN `5--20 dB`、湍流 `5--26 dB`；嵌入 `ccisp_fig2_ber.pdf` 的部分横轴延伸到约 `30--50 dB`。本轮不跑仿真、不修改图。 | 确认文字描述的是 benchmark 扫描区间还是图形展示区间，并据此统一正文或图资产说明。 |
+| B-07 | CLOSED | fixed benchmark 与 Fig.3 横轴已统一。 | D021/V017：四场景正式 fixed 均为 5--35 dB、2 dB 步长，图轴显式为 5--35 dB；A/B adaptive 仍为 5--25 dB。 | 已由 1920-cell formal runner、独立 verifier 和 fresh build 闭合。 |
 
 ## DRAFT DEBT
 

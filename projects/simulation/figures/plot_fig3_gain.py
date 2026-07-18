@@ -36,7 +36,8 @@ DATA_JSON = os.path.join(
 OUT_PNG = os.path.join(_HERE, "ccisp_fig3_gain.png")
 OUT_PDF = os.path.join(_HERE, "ccisp_fig3_gain.pdf")
 
-FIGSIZE_IN = (3.5, 3.0)
+# Compact conference-column footprint; width and typography remain unchanged.
+FIGSIZE_IN = (3.5, 2.85)
 FONT_SIZES = {
     "title": 10.0,
     "label": 10.0,
@@ -200,18 +201,18 @@ def main():
     ax.grid(True, which="major", color="#d0d0d0", alpha=0.55, linewidth=0.45)
     ax.legend(
         fontsize=FONT_SIZES["legend"],
-        loc="lower center",
-        bbox_to_anchor=(0.5, 1.02),
-        ncol=3,
+        loc="upper right",
+        ncol=1,
         frameon=True,
+        framealpha=0.78,
+        facecolor="white",
         edgecolor="#b0b0b0",
-        fancybox=False,
-        borderpad=0.35,
+        borderpad=0.3,
         handlelength=1.5,
-        columnspacing=0.8,
+        labelspacing=0.25,
     )
 
-    fig.subplots_adjust(left=0.22, right=0.97, top=0.84, bottom=0.20)
+    fig.subplots_adjust(left=0.22, right=0.97, top=0.97, bottom=0.20)
     fig.savefig(OUT_PDF)
     fig.savefig(OUT_PNG, dpi=300)
     plt.close(fig)
