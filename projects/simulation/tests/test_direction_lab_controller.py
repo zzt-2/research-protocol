@@ -104,6 +104,23 @@ def test_unknown_action_is_blocked(controller):
         controller.check(manifest(), action="DELETE_EVIDENCE")
 
 
+def test_sandbox_candidate_is_allowed_for_run_but_not_board_actions(tmp_path):
+    controller = GovernanceController(
+        registry={
+            "baseline.standard": {"status": "canonical", "fingerprint": "base"},
+            "component.sandbox": {"status": "sandbox-candidate", "fingerprint": "comp"},
+        },
+        audit_path=tmp_path / "audit.jsonl",
+    )
+    candidate = manifest(
+        baseline_id="baseline.standard", component_id="component.sandbox",
+        baseline_fingerprint="base", component_fingerprint="comp",
+    )
+    assert controller.check(candidate, action="RUN")["decision_receipt"]["allowed"] is True
+    with pytest.raises(GovernanceViolation, match="sandbox-candidate"):
+        controller.check(candidate, action="GO")
+
+
 def test_component_change_marks_old_result_stale(controller):
     checked = controller.check(manifest(), action="RUN")
     assert checked["result_status"] == "VALID"

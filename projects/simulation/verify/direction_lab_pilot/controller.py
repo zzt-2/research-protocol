@@ -69,7 +69,10 @@ class GovernanceController:
                 raise GovernanceViolation(f"component_id not found: {component_id}")
             if action != "REUSE_RESULT" and baseline.get("status") != "canonical":
                 raise GovernanceViolation(f"baseline status is not canonical: {baseline.get('status')}")
-            if action != "REUSE_RESULT" and component.get("status") != "canonical":
+            allowed_component_statuses = {"canonical"}
+            if action == "RUN":
+                allowed_component_statuses.add("sandbox-candidate")
+            if action != "REUSE_RESULT" and component.get("status") not in allowed_component_statuses:
                 raise GovernanceViolation(f"component status is not canonical: {component.get('status')}")
 
             baseline_fp = manifest.get("baseline_fingerprint")
@@ -301,8 +304,11 @@ class EvidenceGate:
             "action": action,
             "manifest_hash": receipt.get("manifest_hash"),
             "result_hash": envelope.get("result_hash"),
-            "result": envelope.get("result"),
         }
+        if envelope.get("artifact_pointer") is not None:
+            accepted["artifact_pointer"] = envelope.get("artifact_pointer")
+        else:
+            accepted["result"] = envelope.get("result")
         self._append_jsonl(self.destinations[destination], accepted)
         self._append_jsonl(self.gate_audit_path, accepted)
         return accepted
