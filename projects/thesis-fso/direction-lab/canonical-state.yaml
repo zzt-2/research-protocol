@@ -9,10 +9,15 @@ baseline:
     path: .worktrees/unified-batch-runner/projects/simulation/explore/cma-fade-divergence/prompt013_swap_mechanism_q2.py
     entry: run_cma_diagnostic(mode='standard')
     sha256: 9282ecb53608a2093a5e69a62ccea9976211ecfda7626d2e65ce2fd912f1ca2f
-  forbidden_aliases: [current-CMA, CMA-without-z, common._cma.CMAEqualizer-as-standard]
+  forbidden_aliases:
+  - current-CMA
+  - CMA-without-z
+  - common._cma.CMAEqualizer-as-standard
 metric_contract:
   id: metric.dual_qpsk.fixed-plus-pi.v1
-  required: [fixed_label_ber, permutation_invariant_ber]
+  required:
+  - fixed_label_ber
+  - permutation_invariant_ber
   source: .sessions/2026-07-10-dual-pol-osl-groundwork/decisions.md#D018
 simulator:
   id: simulator.dual_pol_shared_realization.v1
@@ -20,8 +25,56 @@ simulator:
   sha256: 537dce986dba418d594777375856fb97f16af8a4c9a6d8ff1bb670fa18ff1721
 formal_research_state:
   status: BLOCKED
-  reasons: [master-state/latest-DV drift, Step3.5 evidence chain not independently closed, Step4a not released]
+  reasons:
+  - master-state/latest-DV drift
+  - Step3.5 evidence chain not independently closed
+  - Step4a not released
 sandbox_state:
   status: BOARD_READY
-  allowed_actions: [candidate-scan, map, queue, controller-RUN, independent-verification, synthesis]
-  forbidden_actions: [PROMOTE, formal-material-write, baseline-modification]
+  allowed_actions:
+  - candidate-scan
+  - map
+  - queue
+  - controller-RUN
+  - independent-verification
+  - synthesis
+  forbidden_actions:
+  - PROMOTE
+  - formal-material-write
+  - baseline-modification
+last_completed_batch: &id001
+  batch_id: B003
+  status: COMPLETED_SANDBOX_VERIFIED
+  run_id: B003-75778e4b4e4045388b5ee06e9b8e6649
+  status_source: projects/thesis-fso/direction-lab/batches/B003-20260718-live/execution-status.yaml
+  manifest_hash: 42d8061773f7ecb1d03912bd775dc18424a44a14b1943b97b664818634b6b5e6
+  result_hash: c17ab94708307b82c0162b9e5d573971170869ec757dc6bb24ca62a83ac8e3cc
+  promotion_effect: none
+  runtime_rule_observations:
+    advance_specific:
+    - C24-SL-LINEAR
+    - C24-SL-MLP
+    retire_specific:
+    - C24-SSL-AE-UNLABELED
+completion_history:
+- batch_id: B002
+  status: COMPLETED_SANDBOX_VERIFIED
+  run_id: B002-15309cc700804776a45740786101a6ae
+  status_source: batches/B002-20260718-live/execution-status.yaml
+  runtime_rule_observations:
+    advance_specific:
+    - C24-SL-LINEAR
+    - C24-SL-MLP
+    retire_specific:
+    - C24-SSL-AE-UNLABELED
+    protocol_deviation_inconclusive: []
+  promotion_effect: none
+  replacement_required: none-for-this-contract
+- *id001
+state_provenance:
+  base_state_sha256: 821415346437f47de064966fdaa768242c63d2d660ea189e88a4a0dfb51995b0
+  event_count: 1
+  head_sequence: 1
+  head_event_id: completion:B003:B003-75778e4b4e4045388b5ee06e9b8e6649
+  head_event_hash: 39d85d029a90cf6719d4b03cffc4cce811006d8faec4663c3d2ef3889e8de976
+  event_log_sha256: 5cba7da92c9d67a9dfa65f017ff218f6aa7db02a674d661cc22252cf289c590e
