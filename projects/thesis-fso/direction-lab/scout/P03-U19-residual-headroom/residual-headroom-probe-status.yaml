@@ -1,0 +1,63 @@
+schema_version: direction-lab.p03-residual-headroom-status.v1
+candidate: P03/U19
+date: 2026-07-19
+final_status: P03_BLOCKED_NON_SELF_CONTAINED
+probe_executed: false
+reason: >-
+  The frozen interface smoke depended on a linked worktree whose _gg_time.py
+  bytes were not committed. The only committed source snapshot produces a
+  different deterministic standard-CMA z window, so the source-closure
+  equivalence gate fails and the residual headroom probe is forbidden.
+
+canonical_recovery:
+  status: PASS
+  recovery_commit: f14c0da
+  base_projection_sha256: 821415346437f47de064966fdaa768242c63d2d660ea189e88a4a0dfb51995b0
+  output_sha256: 5967ea38e676b46cb092c98060bec5b470b5a03625f21e65218cf3b2ae3a88af
+  last_completed_batch: B003
+  batch_status: COMPLETED_SANDBOX_VERIFIED
+  manifest_hash: 42d8061773f7ecb1d03912bd775dc18424a44a14b1943b97b664818634b6b5e6
+  result_hash: c17ab94708307b82c0162b9e5d573971170869ec757dc6bb24ca62a83ac8e3cc
+  event_count: 1
+  formal_research_state: BLOCKED
+  deterministic_rerun: PASS
+
+source_provenance_audit:
+  historical_closure: artifacts/interface-smoke-v2/source-closure.yaml
+  candidate_origin_snapshot_commit: 65db35bb15dd9b6da0ad05ea5835054ad4277485
+  external_files_checked: 17
+  hashes_reconciled_to_commit_after_crlf_materialization: 16
+  unreconciled_component:
+    origin_repo_relative_path: projects/simulation/common/_gg_time.py
+    only_git_blob_object: 03bdeb82f181189bf89c6c913b220662e615fe32
+    introducing_commit: 59ead25fbdffe1dac18313e076c4e80a8638a485
+    snapshot_commit_blob_sha256_lf: 1ffd6af106181a6e589d674e0508bb8cc0ea3496e2dae1f7364bb47f2a842db5
+    snapshot_commit_sha256_crlf: d8e7929d00d885eccf111eb96d80ecd3822b065cbf3eca09ed31912c3da73113
+    historical_smoke_sha256: 92eaa6a6c92e72122a1921a0c844160bbf5b4ee7bc2527fc66da468187af9786
+    committed_match: false
+  dirty_worktree_bytes_read_or_copied: false
+
+equivalence_gate:
+  deterministic_realization_parameters: interface-smoke-contract.v1.yaml
+  standard_cma_gradient: Godard-with-z
+  fixed_pi_evaluator_semantics_match_frozen_function: PASS
+  candidate_committed_source_z_window_sha256: eb242e5711b92a070898b21af79eb8d986fd08591ebc0a5de59e42e9db341e27
+  historical_frozen_z_window_sha256: 3d99d4fef5f3749d2047816b8bc655affc207f307bafc808b6de887b88ca64f7
+  exact_output_equal: false
+  max_abs_z_difference: 0.21934995093323548
+  mean_abs_z_candidate: 0.836738484299093
+  mean_abs_z_historical: 1.050996998591898
+  verdict: FAIL
+
+guards:
+  B001_B002_B003_modified: false
+  B004_exists: false
+  ML_trained: false
+  queue_or_registry_created: false
+  paper_material_written: false
+  parameter_domain_expanded: false
+
+next_only_legal_action: >-
+  Recover the exact historical _gg_time.py bytes from a clean, immutable,
+  provenance-bearing source (a commit or source snapshot), then rebuild the
+  local closure and rerun the deterministic equivalence gate before any probe.
