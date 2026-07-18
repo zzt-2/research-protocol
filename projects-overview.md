@@ -1,8 +1,17 @@
 # 项目总览
 
-> 最后更新: 2026-05-24 | 活跃: 5 | 已归档: 5 | 总计: 10
+> 最后更新: 2026-07-18 | 活跃: 6 | 已归档: 5 | 总计: 11
 
 ## 活跃项目
+
+### thesis-fso
+
+- **方向**：双偏振星地 OSL 场景中的 ML 应用方向探索；正式研究与 Direction Lab Scout/Sandbox 分层管理。
+- **正式状态**：`BLOCKED`。Direction Lab 的 exploratory evidence 对正式 Groundwork/论文 promotion effect 为 `none`。
+- **Direction Lab canonical**：已完成 B003，状态 `COMPLETED_SANDBOX_VERIFIED`；B001–B003 数字均不可进入论文或正式材料。
+- **当前 Scout**：P03/U19 residual-aware detection，`P03_SCOUT_CONTRACT_READY`、Sandbox `NOT_ENTERED`。
+- **下一唯一合法动作**：运行 P03 residual headroom probe：真实 standard-CMA 输出 → 同信息量 analytic comparator → residual headroom；不是 B004，不训练 ML，不新增候选。
+- **入口**：`projects/thesis-fso/master-state.md` → `projects/thesis-fso/direction-lab/README.md` → `projects/thesis-fso/direction-lab/canonical-state.yaml`。
 
 ### leo-mega-constellation-gnn-routing
 
