@@ -1,0 +1,56 @@
+<mxfile host="Electron" compressed="false">
+  <diagram name="编码辅助迭代载波恢复" id="turbo-sync">
+    <mxGraphModel dx="686" dy="473" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="grp_dpll" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#BBBBBB;strokeWidth=1;fillColor=#F5F5F5;fontColor=#666666;fontSize=9;fontFamily=Microsoft YaHei;verticalAlign=top;" value="DPLL闭环" vertex="1">
+          <mxGeometry height="70" width="320" x="210" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="rx" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#E6E6E6;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" value="&lt;b&gt;接收信号&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="80" x="110" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="pd" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;" value="&lt;b&gt;鉴相器&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="80" x="220" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="lf" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;" value="&lt;b&gt;环路滤波&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="80" x="330" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="nco" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;" value="&lt;b&gt;NCO&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="80" x="440" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="ldpc" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" value="&lt;b&gt;LDPC译码&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="80" x="550" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="rx" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=10;fontFamily=Microsoft YaHei;labelBackgroundColor=none;labelPosition=center;verticalLabelPosition=top;align=center;verticalAlign=bottom;" target="pd" value="r[k]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="pd" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;" target="lf" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="lf" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;" target="nco" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="nco" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;" target="ldpc" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fb_dpll" edge="1" parent="1" source="nco" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#999999;strokeWidth=1.5;dashed=1;dashPattern=8 4;endArrow=blockThin;endFill=1;fontColor=#666666;fontSize=9;fontFamily=Microsoft YaHei;labelBackgroundColor=#FFFFFF;labelPosition=center;verticalLabelPosition=top;align=center;verticalAlign=bottom;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" target="pd" value="相位更新">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="480" y="170" />
+              <mxPoint x="280" y="170" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fb_turbo" edge="1" parent="1" source="ldpc" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#AAAAAA;strokeWidth=1.5;dashed=1;dashPattern=4 4;endArrow=blockThin;endFill=1;fontColor=#666666;fontSize=9;fontFamily=Microsoft YaHei;labelBackgroundColor=#FFFFFF;labelPosition=center;verticalLabelPosition=top;align=center;verticalAlign=bottom;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" target="pd" value="软符号估计">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="590" y="190" />
+              <mxPoint x="240" y="190" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

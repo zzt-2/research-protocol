@@ -1,0 +1,52 @@
+<mxfile host="Electron" compressed="false">
+  <diagram name="FFT频偏估计RTL架构" id="foe-module">
+    <mxGraphModel dx="1188" dy="815" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="inp" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#E6E6E6;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" value="&lt;b&gt;接收信号&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="100" x="200" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="out" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#E6E6E6;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" value="&lt;b&gt;补偿输出&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="100" x="340" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="pow4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;" value="&lt;b&gt;四次方运算&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="100" x="200" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="fft" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" value="&lt;b&gt;FFT&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="100" x="200" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="peak" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;" value="&lt;b&gt;峰值检测&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="100" x="340" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="freq" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;" value="&lt;b&gt;频偏计算&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="100" x="340" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="dds" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" value="&lt;b&gt;DDS补偿&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="100" x="340" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="inp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;" target="pow4" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="pow4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;" target="fft" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="fft" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;" target="peak" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="peak" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;" target="freq" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="freq" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=10;fontFamily=Microsoft YaHei;labelBackgroundColor=#FFFFFF;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;" target="dds" value="Δf">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="inp" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#999999;strokeWidth=1.5;dashed=1;dashPattern=8 4;endArrow=blockThin;endFill=1;fontColor=#666666;fontSize=9;fontFamily=Microsoft YaHei;labelBackgroundColor=#FFFFFF;labelPosition=center;verticalLabelPosition=top;align=center;verticalAlign=bottom;" target="dds" value="r[k]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="dds" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;" target="out" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

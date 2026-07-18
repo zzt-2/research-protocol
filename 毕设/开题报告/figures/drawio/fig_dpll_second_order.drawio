@@ -1,0 +1,99 @@
+<mxfile host="Electron" agent="draw.io">
+  <diagram id="dpll-2nd-order" name="二阶DPLL">
+    <mxGraphModel dx="1201" dy="828" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="input" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#E6E6E6;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" value="接收信号" vertex="1">
+          <mxGeometry height="40" width="100" x="50" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="group" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#BBBBBB;strokeWidth=1;fillColor=#F5F5F5;fontColor=#666666;fontSize=9;fontFamily=Microsoft YaHei;verticalAlign=top;" value="二阶DPLL" vertex="1">
+          <mxGeometry height="170" width="580" x="170" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="pd" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" value="鉴相器" vertex="1">
+          <mxGeometry height="50" width="100" x="190" y="95" as="geometry" />
+        </mxCell>
+        <mxCell id="mult_c1" parent="1" style="shape=mxgraph.flowchart.or;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=12;fontStyle=1;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="370" y="75" as="geometry" />
+        </mxCell>
+        <mxCell id="mult_c2" parent="1" style="shape=mxgraph.flowchart.or;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=12;fontStyle=1;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="370" y="147" as="geometry" />
+        </mxCell>
+        <mxCell id="c2_edge" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontColor=light-dark(#333333,#000000);fontSize=9;fontFamily=Microsoft YaHei;align=left;verticalAlign=middle;labelBackgroundColor=none;labelPosition=right;verticalLabelPosition=middle;" target="mult_c2" value="&#xa;&lt;span style=&quot;font-family: &amp;quot;Microsoft YaHei&amp;quot;; font-size: 9px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;c₂&lt;/span&gt;&#xa;&#xa;">
+          <mxGeometry relative="1" x="-0.5745" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="385" y="210" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="integrator" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;" value="积分器" vertex="1">
+          <mxGeometry height="40" width="80" x="450" y="142" as="geometry" />
+        </mxCell>
+        <mxCell id="sum_pi" parent="1" style="shape=mxgraph.flowchart.summing_function;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=12;fontStyle=1;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="590" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="nco" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" value="NCO" vertex="1">
+          <mxGeometry height="50" width="80" x="660" y="95" as="geometry" />
+        </mxCell>
+        <mxCell id="output" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#E6E6E6;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" value="补偿输出" vertex="1">
+          <mxGeometry height="40" width="100" x="790" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="input" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=9;fontFamily=Microsoft YaHei;labelBackgroundColor=none;fontStyle=0;align=center;verticalAlign=bottom;" target="pd" value="r[k]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="pd" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=9;fontFamily=Microsoft YaHei;labelBackgroundColor=none;fontStyle=0;align=center;verticalAlign=bottom;" target="mult_c1" value="e[k]">
+          <mxGeometry relative="1" x="0.2727" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="330" y="90" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="pd" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=9;fontFamily=Microsoft YaHei;labelBackgroundColor=#FFFFFF;" target="mult_c2" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="330" y="162" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="mult_c1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=9;fontFamily=Microsoft YaHei;labelBackgroundColor=#FFFFFF;" target="sum_pi" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="570" y="90" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="mult_c2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=9;fontFamily=Microsoft YaHei;labelBackgroundColor=#FFFFFF;" target="integrator" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="integrator" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=9;fontFamily=Microsoft YaHei;labelBackgroundColor=#FFFFFF;" target="sum_pi" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="570" y="162" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="sum_pi" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=9;fontFamily=Microsoft YaHei;labelBackgroundColor=none;labelPosition=center;verticalLabelPosition=top;align=center;verticalAlign=bottom;" target="nco" value="ν[k]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" edge="1" parent="1" source="nco" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=9;fontFamily=Microsoft YaHei;labelBackgroundColor=none;fontStyle=0;align=center;verticalAlign=bottom;" target="output" value="ŝ[k]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" edge="1" parent="1" source="nco" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#999999;strokeWidth=1.5;dashed=1;dashPattern=8 4;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=9;fontFamily=Microsoft YaHei;labelBackgroundColor=none;fontStyle=0;align=center;verticalAlign=bottom;" target="pd" value="相位更新">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="700" y="250" />
+              <mxPoint x="240" y="250" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="BARjfg4MHmoCJU3-fkBD-7" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontColor=light-dark(#333333,#000000);fontSize=9;fontFamily=Microsoft YaHei;align=left;verticalAlign=middle;labelBackgroundColor=none;labelPosition=right;verticalLabelPosition=middle;entryX=0.5;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;" target="mult_c1" value="&lt;span style=&quot;text-align: center;&quot;&gt;&lt;font style=&quot;color: light-dark(rgb(51, 51, 51), rgb(0, 0, 0));&quot;&gt;c₁&lt;/font&gt;&lt;/span&gt;">
+          <mxGeometry relative="1" x="-0.5745" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="385" y="140" as="sourcePoint" />
+            <mxPoint x="410" y="110" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

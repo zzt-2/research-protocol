@@ -1,0 +1,226 @@
+<mxfile host="Electron" compressed="false">
+  <diagram name="P10 Ch3 engineering skill v2" id="p10-ch3-engineering-skill-v2">
+    <mxGraphModel dx="1188" dy="815" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="group_methods" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#6C8EBF;strokeWidth=1.5;fillColor=#DAE8FC;fontColor=#333333;fontSize=9;fontFamily=Microsoft YaHei;verticalAlign=top;" value="候选估计方法" vertex="1">
+          <mxGeometry height="239.5" width="268" x="242" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="method_bank" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;labelPosition=center;verticalLabelPosition=top;align=center;verticalAlign=bottom;dashed=1;" value="" vertex="1">
+          <mxGeometry height="90" width="130" x="279.25" y="341.5" as="geometry" />
+        </mxCell>
+        <mxCell id="method_ls" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;" value="L&lt;div&gt;S&lt;/div&gt;&lt;div&gt;估&lt;/div&gt;&lt;div&gt;计&lt;/div&gt;" vertex="1">
+          <mxGeometry height="89" width="27.5" x="371.75" y="341.5" as="geometry" />
+        </mxCell>
+        <mxCell id="method_mmse" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;" value="M&lt;div&gt;M&lt;/div&gt;&lt;div&gt;S&lt;/div&gt;&lt;div&gt;E&lt;/div&gt;&lt;div&gt;估&lt;/div&gt;&lt;div&gt;计&lt;/div&gt;" vertex="1">
+          <mxGeometry height="89" width="30" x="329.25" y="341.5" as="geometry" />
+        </mxCell>
+        <mxCell id="method_kf" parent="1" style="rounded=0;html=1;strokeColor=#333333;strokeWidth=1;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;whiteSpace=wrap;" value="K&lt;div&gt;F&lt;/div&gt;&lt;div&gt;递&lt;/div&gt;&lt;div&gt;推&lt;/div&gt;" vertex="1">
+          <mxGeometry height="89" width="30" x="289.25" y="341.5" as="geometry" />
+        </mxCell>
+        <mxCell id="group_input" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#BBBBBB;strokeWidth=1;fillColor=#F5F5F5;fontColor=#666666;fontSize=9;fontFamily=Microsoft YaHei;verticalAlign=top;" value="输入基准" vertex="1">
+          <mxGeometry height="360.5" width="110" x="132" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="group_impact" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#BBBBBB;strokeWidth=1;fillColor=#F5F5F5;fontColor=#666666;fontSize=9;fontFamily=Microsoft YaHei;verticalAlign=top;" value="接收性能影响分析" vertex="1">
+          <mxGeometry height="240.5" width="270" x="510" y="270" as="geometry" />
+        </mxCell>
+        <mxCell id="group_guideline" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#82B366;strokeWidth=1.5;fillColor=#D5E8D4;fontColor=#333333;fontSize=9;fontFamily=Microsoft YaHei;verticalAlign=top;" value="精度设计准则" vertex="1">
+          <mxGeometry height="121" width="188" x="592" y="509" as="geometry" />
+        </mxCell>
+        <mxCell id="group_verify" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#36393d;strokeWidth=1;dashed=1;dashPattern=5 5;fillColor=#eeeeee;fontSize=9;fontFamily=Microsoft YaHei;verticalAlign=top;" value="仿真验证回路" vertex="1">
+          <mxGeometry height="121" width="350" x="242" y="509" as="geometry" />
+        </mxCell>
+        <mxCell id="input_ch2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#E6E6E6;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" value="&lt;b&gt;GG 信道参数&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="90" x="142" y="366" as="geometry" />
+        </mxCell>
+        <mxCell id="input_pilot" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" value="&lt;b&gt;导频观测&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:8px&quot;&gt;y_p[k]&lt;/font&gt;" vertex="1">
+          <mxGeometry height="40" width="90" x="142" y="296.5" as="geometry" />
+        </mxCell>
+        <mxCell id="input_format" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" value="&lt;b&gt;调制格式&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:8px&quot;&gt;QPSK / QAM&lt;/font&gt;" vertex="1">
+          <mxGeometry height="40" width="90" x="142" y="514.5" as="geometry" />
+        </mxCell>
+        <mxCell id="pilot_seg_1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1;fillColor=#FFFFFF;" value="" vertex="1">
+          <mxGeometry height="20" width="30" x="269.25" y="301.5" as="geometry" />
+        </mxCell>
+        <mxCell id="pilot_seg_2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1;fillColor=#DAE8FC;" value="" vertex="1">
+          <mxGeometry height="20" width="30" x="299.25" y="301.5" as="geometry" />
+        </mxCell>
+        <mxCell id="pilot_seg_3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1;fillColor=#FFFFFF;" value="" vertex="1">
+          <mxGeometry height="20" width="30" x="329.25" y="301.5" as="geometry" />
+        </mxCell>
+        <mxCell id="pilot_seg_4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1;fillColor=#DAE8FC;" value="" vertex="1">
+          <mxGeometry height="20" width="30" x="359.25" y="301.5" as="geometry" />
+        </mxCell>
+        <mxCell id="pilot_seg_5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1;fillColor=#FFFFFF;fontColor=#000000;fontSize=9;fontFamily=Microsoft YaHei;" value="..." vertex="1">
+          <mxGeometry height="20" width="50" x="389.25" y="301.5" as="geometry" />
+        </mxCell>
+        <mxCell id="method_condition" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1;fillColor=#E6E6E6;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;" value="&lt;b&gt;条件记录&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:8px&quot;&gt;先验 /&amp;nbsp;&lt;/font&gt;&lt;span style=&quot;font-size: 8px; background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));&quot;&gt;时序 /&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;font-size: 8px; background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(237, 237, 237));&quot;&gt;复杂度&lt;/span&gt;" vertex="1">
+          <mxGeometry height="50" width="80" x="420" y="380.5" as="geometry" />
+        </mxCell>
+        <mxCell id="error_interface" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#E6E6E6;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" value="&lt;b&gt;误差统计接口&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:8px&quot;&gt;NMSE / 方差 / 动态误差&lt;/font&gt;" vertex="1">
+          <mxGeometry height="31" width="130" x="279.25" y="470.5" as="geometry" />
+        </mxCell>
+        <mxCell id="funnel_in" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;" value="估计误差" vertex="1">
+          <mxGeometry height="30" width="120" x="547" y="471.5" as="geometry" />
+        </mxCell>
+        <mxCell id="funnel_mid" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;" value="均衡偏差 / 判决输入扰动" vertex="1">
+          <mxGeometry height="30" width="120" x="547" y="415.5" as="geometry" />
+        </mxCell>
+        <mxCell id="funnel_out" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" value="接收性能变化" vertex="1">
+          <mxGeometry height="30" width="120" x="547" y="361.5" as="geometry" />
+        </mxCell>
+        <mxCell id="impact_boundary" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;" value="&lt;b&gt;方法可用性边界&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:8px&quot;&gt;E[1/h]发散判据 × 信道条件&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="120" x="547" y="301.5" as="geometry" />
+        </mxCell>
+        <mxCell id="impact_modulation" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;" value="&lt;b&gt;调制格式灵敏度差异&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:8px&quot;&gt;QPSK / QAM 对比&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="95" x="677" y="471.5" as="geometry" />
+        </mxCell>
+        <mxCell id="guideline_table" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#D5E8D4;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" value="&lt;b&gt;面向同步的精度设计准则&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:8px&quot;&gt;条件 × 方法 × 阈值 (IP1)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="36" width="125" x="597" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="ch4_input" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#E6E6E6;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" value="&lt;b&gt;参数输入&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:8px&quot;&gt;同步方法分析与设计&lt;/font&gt;" vertex="1">
+          <mxGeometry height="31" width="90" x="632" y="538" as="geometry" />
+        </mxCell>
+        <mxCell id="verify_metric" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;" value="&lt;b&gt;性能曲线&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:8px&quot;&gt;NMSE / BER&lt;/font&gt;" vertex="1">
+          <mxGeometry height="31" width="120" x="257" y="569" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_input_to_methods" edge="1" parent="1" source="input_ch2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=10;fontFamily=Microsoft YaHei;labelBackgroundColor=none;labelPosition=center;verticalLabelPosition=top;align=center;verticalAlign=bottom;" target="method_bank" value="约束">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_pilot_to_methods" edge="1" parent="1" source="input_pilot" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=10;fontFamily=Microsoft YaHei;labelBackgroundColor=none;entryX=0.001;entryY=0.424;entryDx=0;entryDy=0;fontStyle=0;align=center;verticalAlign=bottom;exitX=1;exitY=0.344;exitDx=0;exitDy=0;exitPerimeter=0;entryPerimeter=0;" target="pilot_seg_1" value="观测">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="269" y="310.5" />
+            </Array>
+            <mxPoint x="242" y="311.5" as="sourcePoint" />
+            <mxPoint x="222" y="271.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_format_to_impact" edge="1" parent="1" source="verify_channel" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=10;fontFamily=Microsoft YaHei;labelBackgroundColor=none;fontStyle=0;align=center;verticalAlign=bottom;" target="impact_modulation" value="判决模型">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_ls_to_interface" edge="1" parent="1" source="method_ls" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;strokeWidth=1.5;endArrow=blockThin;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="error_interface" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_mmse_to_interface" edge="1" parent="1" source="method_mmse" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;strokeWidth=1.5;endArrow=blockThin;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="error_interface" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_kf_to_interface" edge="1" parent="1" source="method_kf" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#666666;strokeWidth=1.5;endArrow=blockThin;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="error_interface" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_condition_to_interface" edge="1" parent="1" source="method_condition" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=10;fontFamily=Microsoft YaHei;labelBackgroundColor=none;labelPosition=left;verticalLabelPosition=top;align=right;verticalAlign=bottom;jumpStyle=arc;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="error_interface" value="条件">
+          <mxGeometry relative="1" x="-0.5237" y="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_interface_to_funnel" edge="1" parent="1" source="error_interface" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=10;fontFamily=Microsoft YaHei;labelBackgroundColor=none;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fontStyle=0;align=center;verticalAlign=bottom;" target="funnel_in" value="误差统计">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_funnel_1" edge="1" parent="1" source="funnel_in" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=blockThin;endFill=1;" target="funnel_mid" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_funnel_2" edge="1" parent="1" source="funnel_mid" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=blockThin;endFill=1;" target="funnel_out" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_out_to_boundary" edge="1" parent="1" source="funnel_out" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=blockThin;endFill=1;" target="impact_boundary" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_out_to_modulation" edge="1" parent="1" source="funnel_out" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=blockThin;endFill=1;" target="impact_modulation" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_to_guideline" edge="1" parent="1" source="impact_boundary" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=10;fontFamily=Microsoft YaHei;labelBackgroundColor=none;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" target="guideline_table" value="准则抽取">
+          <mxGeometry relative="1" x="-0.1346" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="607" y="290" />
+              <mxPoint x="790" y="290" />
+              <mxPoint x="790" y="617" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_mod_to_guideline" edge="1" parent="1" source="impact_modulation" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=blockThin;endFill=1;entryX=1;entryY=0.75;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="guideline_table" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="790" y="487" />
+              <mxPoint x="790" y="617" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_guideline_to_ch4" edge="1" parent="1" source="guideline_table" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=10;fontFamily=Microsoft YaHei;labelBackgroundColor=none;fontStyle=0;align=center;verticalAlign=bottom;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="ch4_input" value="承接">
+          <mxGeometry relative="1" x="0.1465" y="-18" as="geometry">
+            <mxPoint as="offset" />
+            <mxPoint x="700" y="585" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_methods_to_verify" edge="1" parent="1" source="method_bank" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=10;fontFamily=Microsoft YaHei;labelBackgroundColor=none;entryX=0;entryY=0.5;entryDx=0;entryDy=0;align=left;verticalAlign=top;labelPosition=right;verticalLabelPosition=bottom;jumpStyle=arc;exitX=0;exitY=0.75;exitDx=0;exitDy=0;" target="verify_channel" value="对比">
+          <mxGeometry relative="1" x="0.0083" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_verify_1" edge="1" parent="1" source="verify_channel" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=blockThin;endFill=1;" target="verify_metric" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_verify_2" edge="1" parent="1" source="verify_metric" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=blockThin;endFill=1;" target="verify_chart_box" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_verify_to_guideline" edge="1" parent="1" source="verify_chart_box" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#999999;strokeWidth=1.5;dashed=1;dashPattern=8 4;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=10;fontFamily=Microsoft YaHei;labelBackgroundColor=none;fontStyle=0;align=left;verticalAlign=middle;labelPosition=right;verticalLabelPosition=middle;" target="guideline_table" value="校验">
+          <mxGeometry relative="1" x="-0.0047" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pitm8HakrLpiJ55NiH-1-3" edge="1" parent="1" source="pilot_seg_2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.198;entryY=0.006;entryDx=0;entryDy=0;entryPerimeter=0;" target="method_bank">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pitm8HakrLpiJ55NiH-1-5" edge="1" parent="1" source="pilot_seg_4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.661;entryY=0.002;entryDx=0;entryDy=0;entryPerimeter=0;" target="method_bank">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pitm8HakrLpiJ55NiH-1-8" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="56" width="95" x="445" y="556.5" as="geometry" />
+        </mxCell>
+        <mxCell id="verify_chart_box" parent="pitm8HakrLpiJ55NiH-1-8" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1;fillColor=#FFFFFF;" value="" vertex="1">
+          <mxGeometry height="56" width="95" as="geometry" />
+        </mxCell>
+        <mxCell id="axis_x" edge="1" parent="pitm8HakrLpiJ55NiH-1-8" style="endArrow=blockThin;html=1;rounded=0;strokeColor=#333333;strokeWidth=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="8.636363636363637" y="45.502333333333326" as="sourcePoint" />
+            <mxPoint x="86.36363636363636" y="45.502333333333326" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="axis_y" edge="1" parent="pitm8HakrLpiJ55NiH-1-8" style="endArrow=blockThin;html=1;rounded=0;strokeColor=#333333;strokeWidth=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="9" y="45.5" as="sourcePoint" />
+            <mxPoint x="8.636363636363637" y="9.333333333333332" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="curve_1" edge="1" parent="pitm8HakrLpiJ55NiH-1-8" style="endArrow=none;html=1;rounded=0;strokeColor=#6C8EBF;strokeWidth=1.5;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="17.272727272727273" y="28" as="sourcePoint" />
+            <mxPoint x="34.54545454545455" y="18.666666666666664" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="curve_2" edge="1" parent="pitm8HakrLpiJ55NiH-1-8" style="endArrow=none;html=1;rounded=0;strokeColor=#6C8EBF;strokeWidth=1.5;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="34.54545454545455" y="18.666666666666664" as="sourcePoint" />
+            <mxPoint x="60.45454545454545" y="18.666666666666664" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="curve_3" edge="1" parent="pitm8HakrLpiJ55NiH-1-8" style="endArrow=none;html=1;rounded=0;strokeColor=#6C8EBF;strokeWidth=1.5;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="60.45454545454545" y="18.666666666666664" as="sourcePoint" />
+            <mxPoint x="82.04545454545455" y="28" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pitm8HakrLpiJ55NiH-1-9" edge="1" parent="1" source="input_format" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=10;fontFamily=Microsoft YaHei;labelBackgroundColor=none;" target="verify_channel" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="142" y="584" as="sourcePoint" />
+            <mxPoint x="672" y="409" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="verify_channel" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;" value="&lt;b&gt;仿真场景&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:8px&quot;&gt;湍流 × SNR&lt;/font&gt;" vertex="1">
+          <mxGeometry height="31" width="120" x="257" y="519" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

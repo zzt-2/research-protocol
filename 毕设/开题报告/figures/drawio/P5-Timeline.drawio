@@ -1,0 +1,179 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="P3-Timeline" id="p3timeline">
+    <mxGraphModel dx="0" dy="0" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- ==================== Column 1: 奠基期 ==================== -->
+        <mxCell id="c1_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#b0c4de;arcSize=4;" vertex="1" parent="1">
+          <mxGeometry x="10" y="10" width="490" height="540" as="geometry"/>
+        </mxCell>
+        <!-- Title bar -->
+        <mxCell id="c1_hdr" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b0c4de;strokeColor=none;arcSize=6;" vertex="1" parent="1">
+          <mxGeometry x="22" y="18" width="466" height="46" as="geometry"/>
+        </mxCell>
+        <mxCell id="c1_title" value="&lt;b style='font-size:24px;color:#1a3a5c;'&gt;奠基期&lt;/b&gt;&lt;span style='font-size:15px;color:#4a6a8f;margin-left:14px;'&gt;70s — 01&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="22" y="18" width="466" height="46" as="geometry"/>
+        </mxCell>
+        <!-- Summary (below title bar) -->
+        <mxCell id="c1_sum" value="&lt;i style='font-size:14px;color:#3a5a7c;'&gt;分析框架与统计基础建立&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="22" y="68" width="466" height="26" as="geometry"/>
+        </mxCell>
+        <!-- Timeline line -->
+        <mxCell id="c1_tl" style="endArrow=none;html=1;strokeColor=#6c8ebf;strokeWidth=4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="50" y="105" as="sourcePoint"/>
+            <mxPoint x="50" y="535" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Node 1: PLL同步理论 -->
+        <mxCell id="c1_d1" value="" style="ellipse;fillColor=#4a6a8f;strokeColor=#2a4a6f;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="38" y="118" width="24" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="c1_c1" value="" style="rounded=1;fillColor=#ffffff;strokeColor=#9ab0cc;arcSize=5;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="75" y="105" width="410" height="82" as="geometry"/>
+        </mxCell>
+        <mxCell id="c1_t1" value="&lt;b style='font-size:22px;'&gt;PLL同步理论&lt;/b&gt;&lt;span style='color:#666;font-size:14px;margin-left:8px;'&gt;1979&lt;/span&gt;&lt;br&gt;&lt;span style='color:#444;font-size:15px;'&gt;载波同步分析奠基&lt;/span&gt;" style="text;html=1;align=left;verticalAlign=middle;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="75" y="105" width="410" height="82" as="geometry"/>
+        </mxCell>
+
+        <!-- Node 2: VV前馈估计 -->
+        <mxCell id="c1_d2" value="" style="ellipse;fillColor=#4a6a8f;strokeColor=#2a4a6f;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="38" y="275" width="24" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="c1_c2" value="" style="rounded=1;fillColor=#ffffff;strokeColor=#9ab0cc;arcSize=5;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="75" y="262" width="410" height="82" as="geometry"/>
+        </mxCell>
+        <mxCell id="c1_t2" value="&lt;b style='font-size:22px;'&gt;VV前馈估计&lt;/b&gt;&lt;span style='color:#666;font-size:14px;margin-left:8px;'&gt;1983&lt;/span&gt;&lt;br&gt;&lt;span style='color:#444;font-size:15px;'&gt;CPR前馈范式确立&lt;/span&gt;" style="text;html=1;align=left;verticalAlign=middle;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="75" y="262" width="410" height="82" as="geometry"/>
+        </mxCell>
+
+        <!-- Node 3: GG湍流模型 -->
+        <mxCell id="c1_d3" value="" style="ellipse;fillColor=#4a6a8f;strokeColor=#2a4a6f;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="38" y="432" width="24" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="c1_c3" value="" style="rounded=1;fillColor=#ffffff;strokeColor=#9ab0cc;arcSize=5;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="75" y="419" width="410" height="82" as="geometry"/>
+        </mxCell>
+        <mxCell id="c1_t3" value="&lt;b style='font-size:22px;'&gt;GG湍流模型&lt;/b&gt;&lt;span style='color:#666;font-size:14px;margin-left:8px;'&gt;2001&lt;/span&gt;&lt;br&gt;&lt;span style='color:#444;font-size:15px;'&gt;湍流统计建模基础&lt;/span&gt;" style="text;html=1;align=left;verticalAlign=middle;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="75" y="419" width="410" height="82" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== Column 2: 成熟期 ==================== -->
+        <mxCell id="c2_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#b6d7a8;arcSize=4;" vertex="1" parent="1">
+          <mxGeometry x="520" y="10" width="490" height="540" as="geometry"/>
+        </mxCell>
+        <!-- Title bar -->
+        <mxCell id="c2_hdr" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b6d7a8;strokeColor=none;arcSize=6;" vertex="1" parent="1">
+          <mxGeometry x="532" y="18" width="466" height="46" as="geometry"/>
+        </mxCell>
+        <mxCell id="c2_title" value="&lt;b style='font-size:24px;color:#2d5016;'&gt;成熟期&lt;/b&gt;&lt;span style='font-size:15px;color:#3d6a33;margin-left:14px;'&gt;02 — 18&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="532" y="18" width="466" height="46" as="geometry"/>
+        </mxCell>
+        <!-- Summary -->
+        <mxCell id="c2_sum" value="&lt;i style='font-size:14px;color:#2d5016;'&gt;方法体系在传统场景中完善&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="532" y="68" width="466" height="26" as="geometry"/>
+        </mxCell>
+        <!-- Timeline line -->
+        <mxCell id="c2_tl" style="endArrow=none;html=1;strokeColor=#82b366;strokeWidth=4;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="560" y="105" as="sourcePoint"/>
+            <mxPoint x="560" y="535" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Node 1: BPS盲相位搜索 -->
+        <mxCell id="c2_d1" value="" style="ellipse;fillColor=#3d6a33;strokeColor=#2a4a22;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="548" y="118" width="24" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="c2_c1" value="" style="rounded=1;fillColor=#ffffff;strokeColor=#a3c89a;arcSize=5;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="585" y="105" width="410" height="82" as="geometry"/>
+        </mxCell>
+        <mxCell id="c2_t1" value="&lt;b style='font-size:22px;'&gt;BPS盲相位搜索&lt;/b&gt;&lt;span style='color:#666;font-size:14px;margin-left:8px;'&gt;2009&lt;/span&gt;&lt;br&gt;&lt;span style='color:#444;font-size:15px;'&gt;高阶调制载波恢复&lt;/span&gt;" style="text;html=1;align=left;verticalAlign=middle;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="585" y="105" width="410" height="82" as="geometry"/>
+        </mxCell>
+
+        <!-- Node 2: 经典CE·FSO验证 -->
+        <mxCell id="c2_d2" value="" style="ellipse;fillColor=#3d6a33;strokeColor=#2a4a22;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="548" y="275" width="24" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="c2_c2" value="" style="rounded=1;fillColor=#ffffff;strokeColor=#a3c89a;arcSize=5;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="585" y="262" width="410" height="82" as="geometry"/>
+        </mxCell>
+        <mxCell id="c2_t2" value="&lt;b style='font-size:22px;'&gt;经典CE · FSO验证&lt;/b&gt;&lt;span style='color:#666;font-size:14px;margin-left:8px;'&gt;2010s&lt;/span&gt;&lt;br&gt;&lt;span style='color:#444;font-size:15px;'&gt;LS / MMSE 场景验证&lt;/span&gt;" style="text;html=1;align=left;verticalAlign=middle;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="585" y="262" width="410" height="82" as="geometry"/>
+        </mxCell>
+
+        <!-- Node 3: FSO理论综述 -->
+        <mxCell id="c2_d3" value="" style="ellipse;fillColor=#3d6a33;strokeColor=#2a4a22;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="548" y="432" width="24" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="c2_c3" value="" style="rounded=1;fillColor=#ffffff;strokeColor=#a3c89a;arcSize=5;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="585" y="419" width="410" height="82" as="geometry"/>
+        </mxCell>
+        <mxCell id="c2_t3" value="&lt;b style='font-size:22px;'&gt;FSO理论综述&lt;/b&gt;&lt;span style='color:#666;font-size:14px;margin-left:8px;'&gt;2014&lt;/span&gt;&lt;br&gt;&lt;span style='color:#444;font-size:15px;'&gt;领域系统梳理&lt;/span&gt;" style="text;html=1;align=left;verticalAlign=middle;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="585" y="419" width="410" height="82" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== Column 3: 扩展期 ==================== -->
+        <mxCell id="c3_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#e6c95c;arcSize=4;" vertex="1" parent="1">
+          <mxGeometry x="1030" y="10" width="490" height="540" as="geometry"/>
+        </mxCell>
+        <!-- Title bar -->
+        <mxCell id="c3_hdr" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe599;strokeColor=none;arcSize=6;" vertex="1" parent="1">
+          <mxGeometry x="1042" y="18" width="466" height="46" as="geometry"/>
+        </mxCell>
+        <mxCell id="c3_title" value="&lt;b style='font-size:24px;color:#7a5c00;'&gt;扩展期&lt;/b&gt;&lt;span style='font-size:15px;color:#8a6d2b;margin-left:14px;'&gt;19 — 现在&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1042" y="18" width="466" height="46" as="geometry"/>
+        </mxCell>
+        <!-- Summary -->
+        <mxCell id="c3_sum" value="&lt;i style='font-size:14px;color:#7a5c00;'&gt;向新场景和新维度初步扩展&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="1042" y="68" width="466" height="26" as="geometry"/>
+        </mxCell>
+        <!-- Timeline line (dashed) -->
+        <mxCell id="c3_tl" style="endArrow=none;html=1;strokeColor=#d6b656;strokeWidth=4;dashed=1;dashPattern=10 5;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1070" y="105" as="sourcePoint"/>
+            <mxPoint x="1070" y="535" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Node 1: 数据驱动探索 -->
+        <mxCell id="c3_d1" value="" style="ellipse;fillColor=#8a6d2b;strokeColor=#6a4d0b;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1058" y="118" width="24" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="c3_c1" value="" style="rounded=1;fillColor=#ffffff;strokeColor=#d6c87a;arcSize=5;strokeWidth=1;dashed=1;dashPattern=8 4;" vertex="1" parent="1">
+          <mxGeometry x="1095" y="105" width="410" height="82" as="geometry"/>
+        </mxCell>
+        <mxCell id="c3_t1" value="&lt;b style='font-size:22px;'&gt;数据驱动探索&lt;/b&gt;&lt;span style='color:#666;font-size:14px;margin-left:8px;'&gt;2020s&lt;/span&gt;&lt;br&gt;&lt;span style='color:#444;font-size:15px;'&gt;DL入局信道估计&lt;/span&gt;" style="text;html=1;align=left;verticalAlign=middle;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="1095" y="105" width="410" height="82" as="geometry"/>
+        </mxCell>
+
+        <!-- Node 2: 湍流场景迁移 -->
+        <mxCell id="c3_d2" value="" style="ellipse;fillColor=#8a6d2b;strokeColor=#6a4d0b;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1058" y="275" width="24" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="c3_c2" value="" style="rounded=1;fillColor=#ffffff;strokeColor=#d6c87a;arcSize=5;strokeWidth=1;dashed=1;dashPattern=8 4;" vertex="1" parent="1">
+          <mxGeometry x="1095" y="262" width="410" height="82" as="geometry"/>
+        </mxCell>
+        <mxCell id="c3_t2" value="&lt;b style='font-size:22px;'&gt;湍流场景迁移&lt;/b&gt;&lt;span style='color:#666;font-size:14px;margin-left:8px;'&gt;2019—&lt;/span&gt;&lt;br&gt;&lt;span style='color:#444;font-size:15px;'&gt;解析框架初步建立&lt;/span&gt;" style="text;html=1;align=left;verticalAlign=middle;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="1095" y="262" width="410" height="82" as="geometry"/>
+        </mxCell>
+
+        <!-- Node 3: 联合补偿初探 -->
+        <mxCell id="c3_d3" value="" style="ellipse;fillColor=#8a6d2b;strokeColor=#6a4d0b;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="1058" y="432" width="24" height="24" as="geometry"/>
+        </mxCell>
+        <mxCell id="c3_c3" value="" style="rounded=1;fillColor=#ffffff;strokeColor=#d6c87a;arcSize=5;strokeWidth=1;dashed=1;dashPattern=8 4;" vertex="1" parent="1">
+          <mxGeometry x="1095" y="419" width="410" height="82" as="geometry"/>
+        </mxCell>
+        <mxCell id="c3_t3" value="&lt;b style='font-size:22px;'&gt;联合补偿初探&lt;/b&gt;&lt;span style='color:#666;font-size:14px;margin-left:8px;'&gt;2023—&lt;/span&gt;&lt;br&gt;&lt;span style='color:#444;font-size:15px;'&gt;FOE + CPR 联合架构&lt;/span&gt;" style="text;html=1;align=left;verticalAlign=middle;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="1095" y="419" width="410" height="82" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

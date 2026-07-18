@@ -1,0 +1,46 @@
+<mxfile host="Electron" compressed="false">
+  <diagram name="载波恢复链框图" id="carrier-sync-chain">
+    <mxGraphModel dx="1201" dy="828" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="grp_sync" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#BBBBBB;strokeWidth=1;fillColor=#F5F5F5;fontColor=#666666;fontSize=9;fontFamily=Microsoft YaHei;verticalAlign=top;" value="载波同步" vertex="1">
+          <mxGeometry height="70" width="310" x="360" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="rx" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#E6E6E6;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" value="&lt;b&gt;接收信号&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="100" x="50" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="ephem" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#E6E6E6;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" value="&lt;b&gt;星历数据&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="100" x="210" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="dec" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#E6E6E6;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" value="&lt;b&gt;符号判决&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="100" x="710" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="doppler" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;" value="&lt;b&gt;多普勒预补偿&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="120" x="200" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="foe" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" value="&lt;b&gt;FFT频偏估计&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="120" x="370" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="cpr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" value="&lt;b&gt;载波相位恢复&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="120" x="540" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="rx" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=10;fontFamily=Microsoft YaHei;labelBackgroundColor=none;labelPosition=center;verticalLabelPosition=top;align=center;verticalAlign=bottom;" target="doppler" value="r[k]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="doppler" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;" target="foe" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="foe" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;" target="cpr" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="cpr" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=10;fontFamily=Microsoft YaHei;labelBackgroundColor=none;labelPosition=center;verticalLabelPosition=top;align=center;verticalAlign=bottom;" target="dec" value="ŝ[k]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="ephem" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=blockThin;endFill=1;" target="doppler" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

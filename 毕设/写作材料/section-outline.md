@@ -180,9 +180,9 @@
   - 段2: 衰减系数的组成（吸收+散射），Rayleigh/Mie散射
   - 段3: 通信窗口选择（1550nm），典型衰减值
   - 段4(可选): 相函数简介
-- **公式**: F17-F22（6条）— Beer-Lambert、衰减系数、Rayleigh/Mie散射、相函数
-  - (2.17) Beer-Lambert定律 $T = e^{-\sigma L}$
-  - (2.18) 总衰减系数 $\sigma = \sigma_a + \sigma_s$
+- **公式**: F17-F22（6条）— Beer-Lambert、吸收/散射系数分解、Rayleigh/Mie散射、相函数
+  - (2.11) Beer-Lambert定律 $I(H) = I_0 e^{-(\sigma_a+\sigma_s) H \sec\theta}$
+  - (2.12) 吸收/散射系数分解 $\sigma_a = \sigma_{a,\text{mol}} + \sigma_{a,\text{ae}}$；$\sigma_s = \sigma_{s,\text{mol}} + \sigma_{s,\text{ae}}$
   - (2.19) Rayleigh散射系数
   - (2.20) Mie散射系数
   - (2.21) 相函数

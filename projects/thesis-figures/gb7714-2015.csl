@@ -179,6 +179,9 @@
       <if variable="medium">
         <text variable="medium"/>
       </if>
+      <else-if type="article-journal article-magazine article-newspaper periodical book chapter paper-conference thesis" match="any">
+        <!-- 有印刷版对应物的文献类型不加 OL -->
+      </else-if>
       <else-if variable="URL DOI" match="any">
         <text value="OL"/>
       </else-if>
@@ -366,7 +369,7 @@
   <macro name="access">
     <group delimiter=". ">
       <text variable="URL"/>
-      <text variable="DOI" prefix="DOI:"/>
+      <!-- DOI hidden per user request -->
     </group>
   </macro>
   <!-- 参考文献表格式 -->

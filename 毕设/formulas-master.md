@@ -1030,20 +1030,6 @@ $$Q\!\left(\frac{\pi}{4\sigma_\phi}\right) \leq P_{target} \implies \sigma_\phi 
 > 以下公式属于原 Ch3"QPSK相干检测链路性能分析"方向。方向切换后不再作为 Ch3 主体内容。
 > 部分公式可能在 §3.4 级联分析或 Ch4 载波同步分析中作为背景/工具使用。
 
-#### F3.3: 湍流参数
-
-| 湍流 | α | β | 来源 |
-|------|---------|---------|------|
-| 弱 | 4.0 | 3.0 | Trinh 2017 |
-| 中 | 2.5 | 1.8 | Trinh 2017 |
-| 强 | 1.5 | 0.8 | Trinh 2017 |
-
-- **来源**: Trinh 2017; S019 参数统一确认
-- **变量**: α → TERMS §10.2 GG大尺度参数; β → TERMS §10.2 GG小尺度参数
-- **验证**: 与 sim_prototype.py / sim_direction_a.py 一致
-- **适用条件**: Gamma-Gamma 湍流衰落模型
-- **章节**: §3.5.1（仿真参数）
-
 #### F3.4: QPSK 条件 BER（Gray coding）
 
 $$P_b(\gamma, \phi) = \frac{1}{2}\left[Q(\sqrt{2\gamma}\cos(\phi+\pi/4)) + Q(\sqrt{2\gamma}\cos(\phi-\pi/4))\right]$$
@@ -1057,8 +1043,6 @@ $$P_b(\gamma, \phi) = \frac{1}{2}\left[Q(\sqrt{2\gamma}\cos(\phi+\pi/4)) + Q(\sq
 - **验证**: φ=0 退化检验：P_b = Q(√γ) 与标准 QPSK BER 一致
 - **适用条件**: QPSK 调制，Gray coding 映射，AWGN 信道
 - **章节**: 待分配（可能在 §3.4.1 或 Ch4 背景分析）
-
-#### F3.5: AWGN 相位 PDF 的 Fourier 展开
 
 #### F3.5: AWGN 相位 PDF 的 Fourier 展开
 
@@ -1753,15 +1737,44 @@ $$r[k] \xrightarrow{\times 4} r^{(4)}[k] \xrightarrow{\text{FFT}} \hat{\Delta f}
 - **来源**: 综合张思齐 §3.2 + sim_direction_a.py
 
 ---
-
-### §4.4 补充 — Kalman滤波载波同步（F4.K1-F4.K13）
-
-> KF 13条公式（状态空间模型 F4.K1-K3、噪声设计 F4.K4-K7、递推方程 F4.K8-K9、性能分析 F4.K10-K13）完整推导见 `写作材料/archive/formulas-dedup-backup/formulas-ch4-kf.md`
-
+### §4.4 补充 — CCISP DA/NDA 切换公式（F4.47-F4.54）
+#### F4.47: 强度增益接收模型
+$$r_k=\sqrt{h_{b(k)}}s_k e^{j\phi_k}+n_k,\quad b(k)=\lfloor k/N_{\rm ch}\rfloor,\quad N_{\rm ch}=100.$$
+- **来源/适用条件**：`projects/simulation/common/_channel.py:10-15,127-138`；Gamma-Gamma 强度块衰落的相干复基带模型，DSP/切换窗另为 256 点。
+- **变量/验证**：$h$ 为强度增益、$s_k$ 为 APSK 符号、$n_k$ 为复 AWGN；代码信号项逐字为 `tx * np.sqrt(h) * carrier`。
+#### F4.48: 残余频偏、Doppler rate 与 Wiener 相位过程
+$$\phi_k=2\pi f_{\rm res}kT_s+\pi\dot f(kT_s)^2+\sum_{i=0}^{k}\Delta\phi_i,\qquad \Delta\phi_i\sim\mathcal N(0,2\pi\Delta\nu T_s).$$
+- **来源/适用条件**：`projects/simulation/common/_channel.py:18-37`、`simulator/_b11_params.py:46-58`；单载波 2.5-GBaud、10-kHz 线宽配置。
+- **变量/验证**：$f_{\rm res}$ 为残余频偏、$\dot f$ 为频率变化率、$\Delta\nu$ 为线宽；三项分别对应 `phi_fo`、`phi_dot`、`phi_laser`。
+#### F4.49: 多导频 phase-time LS
+$$\vartheta_\ell=\operatorname{unwrap}\angle(r_{n_\ell}/p_\ell),\quad \widehat{\Delta f}=\frac{\sum_\ell(t_\ell-\bar t)(\vartheta_\ell-\bar\vartheta)}{2\pi\sum_\ell(t_\ell-\bar t)^2},\quad \hat\phi_0=\bar\vartheta-2\pi\widehat{\Delta f}\bar t,\quad t_\ell=n_\ell T_s.$$
+- **来源/适用条件**：`projects/simulation/common/_recovery.py:136-168`；已知多导频、窗内相位对时间采用无权线性 LS。
+- **变量/验证**：$n_\ell,p_\ell$ 为导频索引/符号；代码以 covariance/variance 求 slope，并由截距同时给出 CFO 与 CPE。
+#### F4.50: NDA $M_0$ 次幂相位估计
+$$\hat\phi_{\mathcal I}=\frac1{M_0}\angle\!\left(\frac1{|\mathcal I|}\sum_{k\in\mathcal I}r_k^{M_0}\right),\quad M_0=8;\qquad \mathcal I=\{0{:}255\}\ \text{或}\ \mathcal I_q\ (K=8,|\mathcal I_q|=32).$$
+- **来源/适用条件**：`projects/simulation/common/_recovery.py:171-237`；湍流路径用 whole-window，AWGN 路径用 8 段估计、段间 unwrap 与线性插值。
+- **变量/验证**：$\mathcal I$ 为 256 点 DSP 窗或 32 点子段；对应 `raised.mean()` 与 `intra_block_tracking='segmented'` 两个实现分支。
+#### F4.51: blind-$h$ proxy、effective SNR 与两层选择
+$$\hat h_{\rm dsp}=\max\!\left\{\overline{|r|^2}-\frac1{2\bar\gamma},10^{-6}\right\},\quad \hat\gamma_{\rm eff,dB}=\bar\gamma_{\rm dB}+10\log_{10}\hat h_{\rm dsp},\quad \mathcal A(r)=\begin{cases}{\rm NDA},&{\rm CV}<\tau_{\rm CV},\\{\rm DA},&{\rm CV}\ge\tau_{\rm CV},\ \hat\gamma_{\rm eff,dB}<13\ {\rm dB},\\{\rm NDA},&\text{otherwise.}\end{cases}$$
+- **来源/适用条件**：`projects/simulation/explore/nda-awgn-tracking-sandbox/_a4_switch_30seed_fixed.py:64-90,191-206`；raw 256-sample 窗、固定预校准决策参数。
+- **变量/验证**：$\bar\gamma$ 为传入的 nominal/data SNR，$\hat h_{\rm dsp}$ 为功率代理量；与 `decide()` 分支逐项一致，不作无偏或理论最优声称。
+#### F4.52: CV 统计量与 SNR 相关门限
+$$ {\rm CV}=\frac{\operatorname{std}(|r_k|^2)}{\operatorname{mean}(|r_k|^2)},\qquad \tau_{\rm CV}=1.10\left(0.74+0.12e^{-\bar\gamma_{\rm dB}/5}\right). $$
+- **来源/适用条件**：`projects/simulation/explore/nda-awgn-tracking-sandbox/_a4_switch_30seed_fixed.py:64-90`；raw decision window 上的预校准第一层门控。
+- **变量/验证**：统计对象为接收功率 $|r_k|^2$；公式逐字对应 `cv_awgn_theory()`、`CV_MARGIN=1.10` 和 `decide()`。
+#### F4.53: pilot 开销与 total-energy SNR 坐标
+$$\rho_p=1/L_p=1/4,\quad \Delta_p=10\log_{10}\frac{L_p}{L_p-1}=1.249\ {\rm dB},\quad \gamma_{\rm tot,NDA,dB}=\gamma_{d,\rm dB},\quad \gamma_{\rm tot,DA,dB}=\gamma_{d,\rm dB}+\Delta_p.$$
+- **来源/适用条件**：`projects/simulation/simulator/_b11_params.py:64-68`、`simulator/fair_comparison.py:2-44`；相同信息吞吐量下的公平总能量坐标。
+- **变量/验证**：$L_p=4$ 为 pilot spacing、$\rho_p=25\%$ 为密度；`PILOT_OVERHEAD_DB` 与 DA/NDA 映射均由代码直接实现。
+#### F4.54: 同 SNR BER reduction 指标
+$$G_{\rm BER}^{\rm NDA\rightarrow SW}(\gamma)=10\log_{10}\frac{P_{b,{\rm NDA}}(\gamma)}{P_{b,{\rm SW}}(\gamma)}.$$
+- **来源/适用条件**：`projects/simulation/explore/nda-awgn-tracking-sandbox/_a4_switch_30seed_fixed.py:220-270`；相同 nominal SNR、相同 full-block-bit 分母。
+- **变量/验证**：正值表示 switching BER 更低；与 `gain_vs_nda` 精确一致，仅称 BER reduction，不称 SNR gain。
 ---
-
+### §4.4 补充 — Kalman滤波载波同步（F4.K1-F4.K13）
+> KF 13条公式（状态空间模型 F4.K1-K3、噪声设计 F4.K4-K7、递推方程 F4.K8-K9、性能分析 F4.K10-K13）完整推导见 `写作材料/archive/formulas-dedup-backup/formulas-ch4-kf.md`
+---
 ### 跨章依赖图
-
 ```
 Ch2 系统模型
   F1-F36 信号/噪声/信道/链路预算           ← 全文模型基础
@@ -1864,29 +1877,7 @@ $$
 **备注**：每增加 1 bit 小数位宽，量化噪声功率降低 6.02 dB。
 
 ---
-
-### F5.4 信号量化噪声比（SQNR）
-
-$$
-\text{SQNR} = 6.02 \cdot W_F + 1.76 \ \text{dB}
-$$
-
-**定义**：
-- $\text{SQNR}$: 信号量化噪声比（dB）
-- $W_F$: 小数位宽（bit）
-- 6.02 = $20\log_{10}(2)$: 每位宽增益（dB/bit）
-- 1.76: 正弦信号峰值与均方根之比的修正项（dB）
-
-**来源**：通用公式
-
-**适用条件**：均匀量化；输入为满量程正弦波；仅考虑量化噪声
-
-**验证方式**：MATLAB 中生成满量程正弦波，不同 $W_F$ 下量化，计算实际 SQNR 与理论值对比
-
-**备注**：实际系统中信号不总是满量程正弦波，实际 SQNR 会低于理论值。董凡 2024 定点化仿真结论：12 bit 时与浮点性能接近，8 bit 时存在较大量化误差，6 bit 不可用。
-
----
-
+> F5.4 已归档：见 `_archive/formulas-superseded-2026-07-14.md`。
 ### F5.5 溢出保护（饱和截断）
 
 $$
@@ -2022,30 +2013,7 @@ $$
 **备注**：findmax 模块首先通过 get_modulo 子模块进行线性近似求模（F5.9），然后进行三级流水线比较。输出索引为 11 bit。
 
 ---
-
-### F5.11 频率索引到频偏角度转换（ROM 查表）
-
-$$
-\hat{\phi}_{\text{fo}} = \text{ROM}[k_{\max}], \quad \text{ROM}[k] = \text{quantize}_{12\text{bit}, 2\text{Q}9}\left(\frac{2\pi k}{N \cdot T_s}\right)
-$$
-
-**定义**：
-- $\hat{\phi}_{\text{fo}}$: 估计的频偏角度（rad，2Q9 格式 12 bit）
-- $k_{\max}$: 频谱最大值索引（11 bit 无量纲整数）
-- $\text{ROM}[k]$: 预计算的第 $k$ 个索引对应的频偏角度值（rad，12 bit 2Q9）
-- $N$: FFT 点数，取 4096
-- $T_s$: 符号周期（s）
-
-**来源**：董凡 2024 §5.3.6 fmax2phi 模块
-
-**适用条件**：ROM 数据通过 MATLAB 预计算并量化为 12 bit 2Q9 格式；每帧（128 时钟周期）给出一次估计
-
-**验证方式**：将 ROM 地址与 MATLAB 预计算值逐一对比
-
-**备注**：输出为 32 倍频偏值（16 bit，6Q9 格式），供 fo_comp 模块直接使用。
-
----
-
+> F5.11 已归档：见 `_archive/formulas-superseded-2026-07-14.md`。
 ### F5.12 并行频偏补偿（角度域）
 
 $$
@@ -2392,74 +2360,7 @@ $$
 **备注**：32 路 12 bit 数据延迟 1 个周期需 $32 \times 12 = 384$ 个 FF。
 
 ---
-
-### F5.24 ROM 查找表资源估算
-
-$$
-R_{\text{ROM}} = 2^{W_{\text{addr}}} \times W_{\text{out}} \ \text{bits}
-$$
-
-**定义**：
-- $R_{\text{ROM}}$: ROM 存储空间（bits）
-- $W_{\text{addr}}$: 地址位宽（bit）
-- $W_{\text{out}}$: 每个条目的输出数据位宽（bit）
-
-**来源**：通用公式；董凡 2024 §5.3.6 fmax2phi 模块
-
-**适用条件**：预计算且运行时不改变的参数映射
-
-**验证方式**：计算理论存储量，与综合报告中 BRAM 使用量对比
-
-**备注**：fmax2phi 的 ROM 存储量为 $2^{11} \times 16 = 32768$ bits ≈ 2 个 BRAM18K。
-
----
-
-### F5.25 关键路径与时钟约束
-
-$$
-f_{\max} = \frac{1}{T_{\text{cp}}}, \quad T_{\text{cp}} = T_{\text{logic}} + T_{\text{route}} + T_{\text{setup}}
-$$
-
-**定义**：
-- $f_{\max}$: FPGA 最大工作频率（Hz）
-- $T_{\text{cp}}$: 关键路径延迟（s）
-- $T_{\text{logic}}$: 逻辑单元延迟（s）
-- $T_{\text{route}}$: 布线延迟（s）
-- $T_{\text{setup}}$: 触发器建立时间（s）
-
-**来源**：通用公式；董凡 2024 §5.5.3
-
-**适用条件**：同步时序电路分析；时钟约束 $f_{\text{clk}} \leq f_{\max}$
-
-**验证方式**：Vivado 时序报告中查看 Worst Setup Slack 和 Worst Hold Slack
-
-**备注**：董凡 2024 实测：最差建立时间裕量 5.284 ns，最大逻辑与路径延迟 7.401 ns，$f_{\max} \approx 135$ MHz，满足 78.125 MHz 设计要求，裕量充足。
-
----
-
-### F5.26 流水线延迟与吞吐量
-
-$$
-\text{Latency} = N_{\text{stages}} \ \text{时钟周期}, \quad \text{Throughput} = f_{\text{clk}} \times P
-$$
-
-**定义**：
-- $\text{Latency}$: 从输入到第一个有效输出的时钟周期数
-- $N_{\text{stages}}$: 流水线级数
-- $\text{Throughput}$: 系统吞吐量（符号/秒）
-- $f_{\text{clk}}$: 系统时钟频率（Hz）
-- $P$: 并行路数，取 32
-
-**来源**：通用公式；董凡 2024 §5.3.4
-
-**适用条件**：流水线充满后，每个时钟周期产生 $P$ 个输出
-
-**验证方式**：$f_{\text{clk}} = 78.125$ MHz, $P = 32$ → Throughput = 2.5 GBaud = 5 Gbps（QPSK）
-
-**备注**：FFT 模块 128 个时钟周期完成一帧 4096 点 FFT（$128 \times 32 = 4096$）。BCPE 仅 1 个时钟周期延迟。
-
----
-
+> F5.24-F5.26 已归档：见 `_archive/formulas-superseded-2026-07-14.md`。
 ### F5.27 系统资源利用率（参考数据）
 
 载波恢复模块（CR）总资源占用（董凡 2024，Xilinx XC7K325T）：

@@ -1,0 +1,135 @@
+<mxfile host="app.diagrams.net" compressed="false">
+  <diagram name="LEO星地链路预算" id="link-budget">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- 因子块（上方，垂直接入乘法圆） -->
+        <mxCell id="gt" value="&lt;b&gt;天线增益&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;" vertex="1" parent="1">
+          <mxGeometry x="150" y="30" width="80" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="lfs" value="&lt;b&gt;空间损耗&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;" vertex="1" parent="1">
+          <mxGeometry x="250" y="30" width="80" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="latm" value="&lt;b&gt;大气衰减&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;" vertex="1" parent="1">
+          <mxGeometry x="350" y="30" width="80" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="hturb" value="&lt;b&gt;湍流衰落&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=2;fillColor=#FFF2CC;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="450" y="30" width="80" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="gr" value="&lt;b&gt;接收增益&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;" vertex="1" parent="1">
+          <mxGeometry x="550" y="30" width="80" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- 主链：信号块 -->
+        <mxCell id="pt" value="&lt;b&gt;发射功率&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#E6E6E6;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;" vertex="1" parent="1">
+          <mxGeometry x="30" y="100" width="100" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="pr" value="&lt;b&gt;接收功率&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#DAE8FC;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="660" y="100" width="80" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="snr" value="&lt;b&gt;平均SNR&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#D5E8D4;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="870" y="100" width="80" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- 乘法圆（×） -->
+        <mxCell id="m1" value="&lt;b&gt;&amp;times;&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#333333;fontSize=14;fontFamily=Microsoft YaHei;" vertex="1" parent="1">
+          <mxGeometry x="170" y="100" width="40" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="m2" value="&lt;b&gt;&amp;times;&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#333333;fontSize=14;fontFamily=Microsoft YaHei;" vertex="1" parent="1">
+          <mxGeometry x="270" y="100" width="40" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="m3" value="&lt;b&gt;&amp;times;&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#333333;fontSize=14;fontFamily=Microsoft YaHei;" vertex="1" parent="1">
+          <mxGeometry x="370" y="100" width="40" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="m4" value="&lt;b&gt;&amp;times;&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#333333;fontSize=14;fontFamily=Microsoft YaHei;" vertex="1" parent="1">
+          <mxGeometry x="470" y="100" width="40" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="m5" value="&lt;b&gt;&amp;times;&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#333333;fontSize=14;fontFamily=Microsoft YaHei;" vertex="1" parent="1">
+          <mxGeometry x="570" y="100" width="40" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- 除法圆（÷） -->
+        <mxCell id="d1" value="&lt;b&gt;&amp;divide;&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#333333;fontSize=14;fontFamily=Microsoft YaHei;" vertex="1" parent="1">
+          <mxGeometry x="790" y="100" width="40" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- 噪声（下方，垂直接入除法圆） -->
+        <mxCell id="pn" value="&lt;b&gt;噪声功率&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#E6E6E6;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;" vertex="1" parent="1">
+          <mxGeometry x="770" y="200" width="80" height="40" as="geometry"/>
+        </mxCell>
+
+        <!-- 主链水平箭头 -->
+        <mxCell id="e0" value="P_t" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=10;fontFamily=Microsoft YaHei;labelBackgroundColor=#FFFFFF;" edge="1" source="pt" target="m1" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;" edge="1" source="m1" target="m2" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e23" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;" edge="1" source="m2" target="m3" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e34" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;" edge="1" source="m3" target="m4" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e45" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;" edge="1" source="m4" target="m5" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="e5pr" value="P_r" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=10;fontFamily=Microsoft YaHei;labelBackgroundColor=#FFFFFF;" edge="1" source="m5" target="pr" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="eprd" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;" edge="1" source="pr" target="d1" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="edsnr" value="&amp;gamma;&#772;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=10;fontFamily=Microsoft YaHei;labelBackgroundColor=#FFFFFF;" edge="1" source="d1" target="snr" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- 因子→乘法圆（垂直箭头） -->
+        <mxCell id="egtm1" value="G_t" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=9;fontFamily=Microsoft YaHei;labelBackgroundColor=#FFFFFF;" edge="1" source="gt" target="m1" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="elfsm2" value="L_fs" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=9;fontFamily=Microsoft YaHei;labelBackgroundColor=#FFFFFF;" edge="1" source="lfs" target="m2" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="elatmm3" value="L_atm" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=9;fontFamily=Microsoft YaHei;labelBackgroundColor=#FFFFFF;" edge="1" source="latm" target="m3" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="ehturbm4" value="h" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=9;fontFamily=Microsoft YaHei;fontStyle=1;labelBackgroundColor=#FFFFFF;" edge="1" source="hturb" target="m4" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="egrm5" value="G_r" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=9;fontFamily=Microsoft YaHei;labelBackgroundColor=#FFFFFF;" edge="1" source="gr" target="m5" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+        <!-- 噪声→除法圆（垂直箭头） -->
+        <mxCell id="epnd1" value="P_n" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=9;fontFamily=Microsoft YaHei;labelBackgroundColor=#FFFFFF;" edge="1" source="pn" target="d1" parent="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

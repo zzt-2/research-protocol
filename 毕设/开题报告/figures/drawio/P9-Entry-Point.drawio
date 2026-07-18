@@ -1,0 +1,154 @@
+<mxfile host="Electron">
+  <diagram name="P6-EntryPoint" id="p6entry">
+    <mxGraphModel dx="1485" dy="1019" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="h1" parent="1" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fillColor=#4472C4;strokeColor=none;shadow=1;" value="&lt;b style=&#39;font-size:22px;color:#fff;&#39;&gt;应用需求&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="220" x="195" y="5" as="geometry" />
+        </mxCell>
+        <mxCell id="h2" parent="1" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fillColor=#C55A11;strokeColor=none;shadow=1;" value="&lt;b style=&#39;font-size:22px;color:#fff;&#39;&gt;现有不足&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="220" x="615" y="5" as="geometry" />
+        </mxCell>
+        <mxCell id="h3" parent="1" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fillColor=#548235;strokeColor=none;shadow=1;" value="&lt;b style=&#39;font-size:22px;color:#fff;&#39;&gt;切入路线&lt;/b&gt;" vertex="1">
+          <mxGeometry height="40" width="220" x="1035" y="5" as="geometry" />
+        </mxCell>
+        <mxCell id="l1_bg" parent="1" style="rounded=1;arcSize=4;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#e0e0e0;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry height="128" width="1410" x="15" y="52" as="geometry" />
+        </mxCell>
+        <mxCell id="b1" parent="1" style="ellipse;fillColor=#b0e3e6;strokeColor=#0e8088;strokeWidth=2;shadow=1;fontSize=28;fontStyle=1;verticalAlign=middle;" value="1" vertex="1">
+          <mxGeometry height="42" width="42" x="52" y="98" as="geometry" />
+        </mxCell>
+        <mxCell id="c11_bg" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#4472C4;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="88" width="380" x="105" y="72" as="geometry" />
+        </mxCell>
+        <mxCell id="c11" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d0d0d0;strokeWidth=1;shadow=1;" value="" vertex="1">
+          <mxGeometry height="80" width="380" x="105" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c11t" parent="1" style="text;html=1;verticalAlign=middle;align=center;fontFamily=Helvetica;fontSize=12;fontColor=default;fontStyle=0;whiteSpace=wrap;" value="&lt;div style=&quot;color: rgb(51, 51, 51); text-align: center;&quot;&gt;&lt;font style=&quot;font-size: 28px;&quot;&gt;星地FSO链路需要统一的系统与信道参数量化&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="380" x="105" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="a1" edge="1" parent="1" style="html=1;strokeColor=#555;strokeWidth=3;endArrow=block;endFill=1;rounded=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="485" y="116" as="sourcePoint" />
+            <mxPoint x="530" y="116" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c12_bg" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#C55A11;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="88" width="380" x="535" y="72" as="geometry" />
+        </mxCell>
+        <mxCell id="c12" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d0d0d0;strokeWidth=1;shadow=1;" value="" vertex="1">
+          <mxGeometry height="80" width="380" x="535" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c12t" parent="1" style="text;html=1;verticalAlign=middle;align=center;fontFamily=Helvetica;fontSize=12;fontColor=default;fontStyle=0;whiteSpace=wrap;" value="&lt;div style=&quot;color: rgb(51, 51, 51); text-align: center;&quot;&gt;&lt;font style=&quot;font-size: 28px;&quot;&gt;各研究采用不同参数设置，工程化缺乏统一建模&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="380" x="535" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="a2" edge="1" parent="1" style="html=1;strokeColor=#555;strokeWidth=3;endArrow=block;endFill=1;rounded=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="915" y="116" as="sourcePoint" />
+            <mxPoint x="960" y="116" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c13_bg" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#548235;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="88" width="380" x="965" y="72" as="geometry" />
+        </mxCell>
+        <mxCell id="c13" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d0d0d0;strokeWidth=1;shadow=1;" value="" vertex="1">
+          <mxGeometry height="80" width="380" x="965" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="c13t" parent="1" style="text;html=1;verticalAlign=middle;align=center;fontFamily=Helvetica;fontSize=12;fontColor=default;fontStyle=0;whiteSpace=wrap;" value="&lt;div style=&quot;color: rgb(51, 51, 51); text-align: center;&quot;&gt;&lt;font style=&quot;font-size: 28px;&quot;&gt;建立星地 FSO 系统与湍流信道统一模型&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="380" x="965" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="l2_bg" parent="1" style="rounded=1;arcSize=4;whiteSpace=wrap;html=1;fillColor=#f8f8f8;strokeColor=#e0e0e0;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry height="128" width="1410" x="15" y="187" as="geometry" />
+        </mxCell>
+        <mxCell id="b2" parent="1" style="ellipse;fillColor=#b0e3e6;strokeColor=#0e8088;strokeWidth=2;shadow=1;fontSize=28;fontStyle=1;verticalAlign=middle;" value="2" vertex="1">
+          <mxGeometry height="42" width="42" x="52" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="c21_bg" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#4472C4;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="88" width="380" x="105" y="207" as="geometry" />
+        </mxCell>
+        <mxCell id="c21" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d0d0d0;strokeWidth=1;shadow=1;" value="" vertex="1">
+          <mxGeometry height="80" width="380" x="105" y="215" as="geometry" />
+        </mxCell>
+        <mxCell id="c21t" parent="1" style="text;html=1;verticalAlign=middle;align=center;fontFamily=Helvetica;fontSize=12;fontColor=default;fontStyle=0;whiteSpace=wrap;" value="&lt;div style=&quot;color: rgb(51, 51, 51); text-align: center;&quot;&gt;&lt;font style=&quot;font-size: 28px;&quot;&gt;相干接收链路需要可靠信道估计&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="380" x="105" y="215" as="geometry" />
+        </mxCell>
+        <mxCell id="a3" edge="1" parent="1" style="html=1;strokeColor=#555;strokeWidth=3;endArrow=block;endFill=1;rounded=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="485" y="251" as="sourcePoint" />
+            <mxPoint x="530" y="251" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c22_bg" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#C55A11;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="88" width="380" x="535" y="207" as="geometry" />
+        </mxCell>
+        <mxCell id="c22" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d0d0d0;strokeWidth=1;shadow=1;" value="" vertex="1">
+          <mxGeometry height="80" width="380" x="535" y="215" as="geometry" />
+        </mxCell>
+        <mxCell id="c22t" parent="1" style="text;html=1;verticalAlign=middle;align=center;fontFamily=Helvetica;fontSize=12;fontColor=default;fontStyle=0;whiteSpace=wrap;" value="&lt;div style=&quot;color: rgb(51, 51, 51); text-align: center;&quot;&gt;&lt;font style=&quot;font-size: 28px;&quot;&gt;估计误差对同步性能的级联影响缺乏量化分析&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="380" x="535" y="215" as="geometry" />
+        </mxCell>
+        <mxCell id="a4" edge="1" parent="1" style="html=1;strokeColor=#555;strokeWidth=3;endArrow=block;endFill=1;rounded=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="915" y="251" as="sourcePoint" />
+            <mxPoint x="960" y="251" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c23_bg" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#548235;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="88" width="380" x="965" y="207" as="geometry" />
+        </mxCell>
+        <mxCell id="c23" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d0d0d0;strokeWidth=1;shadow=1;" value="" vertex="1">
+          <mxGeometry height="80" width="380" x="965" y="215" as="geometry" />
+        </mxCell>
+        <mxCell id="c23t" parent="1" style="text;html=1;verticalAlign=middle;align=center;fontFamily=Helvetica;fontSize=12;fontColor=default;fontStyle=0;whiteSpace=wrap;" value="&lt;div style=&quot;color: rgb(51, 51, 51); text-align: center;&quot;&gt;&lt;font style=&quot;font-size: 28px;&quot;&gt;建立信道估计误差级联分析模型与面向同步的精度设计方法&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="380" x="965" y="215" as="geometry" />
+        </mxCell>
+        <mxCell id="l3_bg" parent="1" style="rounded=1;arcSize=4;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#e0e0e0;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry height="128" width="1410" x="15" y="322" as="geometry" />
+        </mxCell>
+        <mxCell id="b3" parent="1" style="ellipse;fillColor=#b0e3e6;strokeColor=#0e8088;strokeWidth=2;shadow=1;fontSize=28;fontStyle=1;verticalAlign=middle;" value="3" vertex="1">
+          <mxGeometry height="42" width="42" x="52" y="365" as="geometry" />
+        </mxCell>
+        <mxCell id="c31_bg" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#4472C4;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="88" width="380" x="105" y="342" as="geometry" />
+        </mxCell>
+        <mxCell id="c31" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d0d0d0;strokeWidth=1;shadow=1;" value="" vertex="1">
+          <mxGeometry height="80" width="380" x="105" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="c31t" parent="1" style="text;html=1;verticalAlign=middle;align=center;fontFamily=Helvetica;fontSize=12;fontColor=default;fontStyle=0;whiteSpace=wrap;" value="&lt;div style=&quot;color: rgb(51, 51, 51); text-align: center;&quot;&gt;&lt;font style=&quot;font-size: 28px;&quot;&gt;湍流下需要稳定载波同步&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="380" x="105" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="a5" edge="1" parent="1" style="html=1;strokeColor=#555;strokeWidth=3;endArrow=block;endFill=1;rounded=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="485" y="386" as="sourcePoint" />
+            <mxPoint x="530" y="386" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c32_bg" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#C55A11;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="88" width="380" x="535" y="342" as="geometry" />
+        </mxCell>
+        <mxCell id="c32" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d0d0d0;strokeWidth=1;shadow=1;" value="" vertex="1">
+          <mxGeometry height="80" width="380" x="535" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="c32t" parent="1" style="text;html=1;verticalAlign=middle;align=center;whiteSpace=wrap;" value="&lt;div style=&quot;color: rgb(51, 51, 51); text-align: center;&quot;&gt;&lt;font style=&quot;font-size: 28px;&quot;&gt;经典同步方法在湍流下的性能边界与参数设计不完善&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="380" x="535" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="a6" edge="1" parent="1" style="html=1;strokeColor=#555;strokeWidth=3;endArrow=block;endFill=1;rounded=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="915" y="386" as="sourcePoint" />
+            <mxPoint x="960" y="386" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c33_bg" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#548235;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="88" width="380" x="965" y="342" as="geometry" />
+        </mxCell>
+        <mxCell id="c33" parent="1" style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d0d0d0;strokeWidth=1;shadow=1;" value="" vertex="1">
+          <mxGeometry height="80" width="380" x="965" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="c33t" parent="1" style="text;html=1;verticalAlign=middle;align=center;fontFamily=Helvetica;fontSize=12;fontColor=default;fontStyle=0;whiteSpace=wrap;" value="&lt;div style=&quot;color: rgb(51, 51, 51); text-align: center;&quot;&gt;&lt;font style=&quot;font-size: 28px;&quot;&gt;建立湍流下载波同步性能分析模型与参数设计方法&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="80" width="380" x="965" y="350" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

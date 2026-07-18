@@ -1,0 +1,281 @@
+<mxfile host="Electron" compressed="false">
+  <diagram name="P11 Ch4 engineering skill v3" id="p11-ch4-engineering-skill-v3">
+    <mxGraphModel dx="2567" dy="959" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="group_explore" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#b46504;strokeWidth=1;dashed=1;dashPattern=5 5;fillColor=#fad7ac;fontSize=14;fontFamily=Microsoft YaHei;verticalAlign=top;" value="拟探索范围" vertex="1">
+          <mxGeometry height="250" width="295" x="-195" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="group_methods" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#82B366;strokeWidth=1.5;fillColor=#D5E8D4;fontColor=#333333;fontSize=14;fontFamily=Microsoft YaHei;verticalAlign=top;" value="CPR 方法性能分析" vertex="1">
+          <mxGeometry height="390" width="728" x="102" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="group_outputs" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#BBBBBB;strokeWidth=1;fillColor=#F5F5F5;fontColor=#666666;fontSize=14;fontFamily=Microsoft YaHei;verticalAlign=top;" value="分析输出与设计准则" vertex="1">
+          <mxGeometry height="110" width="730" x="100" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="input_ch3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#E6E6E6;fontColor=#000000;fontSize=15;fontFamily=Microsoft YaHei;fontStyle=1;" value="&lt;b&gt;Ch3准则&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;精度设计准则&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="120" x="-100" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="signal_input" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=15;fontFamily=Microsoft YaHei;fontStyle=1;" value="&lt;b&gt;接收序列&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;统一输入&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="120" x="105" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="seq_segment_1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1;fillColor=#FFFFFF;" value="" vertex="1">
+          <mxGeometry height="30" width="50" x="120" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="seq_segment_2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1;fillColor=#D5E8D4;" value="" vertex="1">
+          <mxGeometry height="30" width="50" x="120" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="seq_segment_4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1;fillColor=#FFFFFF;" value="" vertex="1">
+          <mxGeometry height="30" width="50" x="120" y="353" as="geometry" />
+        </mxCell>
+        <mxCell id="seq_segment_5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1;fillColor=#D5E8D4;" value="" vertex="1">
+          <mxGeometry height="30" width="50" x="120" y="413" as="geometry" />
+        </mxCell>
+        <mxCell id="seq_segment_7" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1;fillColor=#FFFFFF;fontColor=#000000;fontSize=15;fontFamily=Microsoft YaHei;" value="..." vertex="1">
+          <mxGeometry height="30" width="50" x="120" y="500" as="geometry" />
+        </mxCell>
+        <mxCell id="method_vv" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=15;fontFamily=Microsoft YaHei;fontStyle=1;" value="&lt;b&gt;VV前馈&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;平均窗口 M&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="120" x="240" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="vv_window" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=15;fontFamily=Microsoft YaHei;" value="&lt;b&gt;VV平均窗口&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;平均窗口长度 M&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="120" x="400" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="vv_power" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=15;fontFamily=Microsoft YaHei;" value="&lt;b&gt;M次幂&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;消调制&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="120" x="568" y="320" as="geometry" />
+        </mxCell>
+        <mxCell id="method_bps" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=15;fontFamily=Microsoft YaHei;fontStyle=1;" value="&lt;b&gt;BPS搜索&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;步长 / 计算复杂度&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="120" x="240" y="403" as="geometry" />
+        </mxCell>
+        <mxCell id="bps_metric" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=15;fontFamily=Microsoft YaHei;" value="&lt;b&gt;度量矩阵&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;最小距离&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="120" x="568" y="403" as="geometry" />
+        </mxCell>
+        <mxCell id="method_dpll" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=15;fontFamily=Microsoft YaHei;fontStyle=1;" value="&lt;b&gt;DPLL闭环&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;ω_n / 稳定边界&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="120" x="240" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="dpll_filter" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=15;fontFamily=Microsoft YaHei;" value="&lt;b&gt;环路滤波&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;带宽&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="120" x="520" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="dpll_nco" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=15;fontFamily=Microsoft YaHei;" value="&lt;b&gt;NCO&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;相位更新&lt;/font&gt;" vertex="1">
+          <mxGeometry height="40" width="80" x="670" y="495" as="geometry" />
+        </mxCell>
+        <mxCell id="perf_interface" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#E6E6E6;fontColor=#000000;fontSize=15;fontFamily=Microsoft YaHei;fontStyle=1;" value="&lt;b&gt;性能统计&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;统一接口&lt;/font&gt;" vertex="1">
+          <mxGeometry height="75" width="70" x="750" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="result_boundary" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=15;fontFamily=Microsoft YaHei;" value="&lt;b&gt;性能边界&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;阈值区域&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="120" x="300" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="result_failure" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=15;fontFamily=Microsoft YaHei;" value="&lt;b&gt;失效机制&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;深衰落&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="120" x="495" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="result_sensitivity" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=15;fontFamily=Microsoft YaHei;" value="&lt;b&gt;参数敏感性&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;ω_n / M&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="120" x="690" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="explore_integrity" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=15;fontFamily=Microsoft YaHei;" value="&lt;b&gt;完整性扩展&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;分析+准则&lt;/font&gt;" vertex="1">
+          <mxGeometry height="40" width="80" x="-180" y="490" as="geometry" />
+        </mxCell>
+        <mxCell id="explore_param" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=15;fontFamily=Microsoft YaHei;" value="&lt;b&gt;参数解析&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;湍流条件&lt;/font&gt;" vertex="1">
+          <mxGeometry height="40" width="80" x="-180" y="353" as="geometry" />
+        </mxCell>
+        <mxCell id="explore_joint" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=15;fontFamily=Microsoft YaHei;" value="&lt;b&gt;联合处理&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;跨模块&lt;/font&gt;" vertex="1">
+          <mxGeometry height="40" width="80" x="-10" y="353" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_ch3_to_input" edge="1" parent="1" source="input_ch3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=15;fontFamily=Microsoft YaHei;labelBackgroundColor=none;fontStyle=0;align=center;verticalAlign=bottom;labelPosition=center;verticalLabelPosition=top;" target="signal_input" value="约束输入">
+          <mxGeometry relative="1" x="0.0182" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="foe_step" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#E6E6E6;fontColor=#000000;fontSize=15;fontFamily=Microsoft YaHei;fontStyle=1;" value="&lt;b&gt;FOE&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;频偏估计与补偿&lt;/font&gt;" vertex="1">
+          <mxGeometry height="40" width="120" x="240" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_input_to_foe" edge="1" parent="1" source="signal_input" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=15;fontFamily=Microsoft YaHei;labelBackgroundColor=none;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;" target="foe_step" value="r[k]">
+          <mxGeometry relative="1" x="-0.0833" y="15" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_foe_to_seq" edge="1" parent="1" source="foe_step" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=15;fontFamily=Microsoft YaHei;labelBackgroundColor=none;" target="seq_segment_1" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_seq_to_vv" edge="1" parent="1" source="seq_segment_2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#314354;strokeWidth=1;dashed=1;dashPattern=5 5;endArrow=openThin;endFill=0;fontColor=#333333;fontSize=15;fontFamily=Microsoft YaHei;labelBackgroundColor=none;fontStyle=0;align=center;verticalAlign=bottom;fillColor=#647687;" target="method_vv" value="窗口抽取">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_seq_to_bps" edge="1" parent="1" source="seq_segment_5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#314354;strokeWidth=1;dashed=1;dashPattern=5 5;endArrow=openThin;endFill=0;fontColor=#333333;fontSize=15;fontFamily=Microsoft YaHei;labelBackgroundColor=none;fontStyle=0;align=center;verticalAlign=bottom;fillColor=#647687;" target="method_bps" value="候选搜索">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_seq_to_dpll" edge="1" parent="1" source="seq_segment_7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#314354;strokeWidth=1;dashed=1;dashPattern=5 5;endArrow=openThin;endFill=0;fontColor=#333333;fontSize=15;fontFamily=Microsoft YaHei;labelBackgroundColor=none;fontStyle=0;align=center;verticalAlign=bottom;fillColor=#647687;" target="method_dpll" value="闭环输入">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_vv_1" edge="1" parent="1" source="method_vv" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=blockThin;endFill=1;jumpStyle=arc;" target="vv_window" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_vv_2" edge="1" parent="1" source="vv_window" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="vv_power" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="508" y="345" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_bps_1" edge="1" parent="1" source="method_bps" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=blockThin;endFill=1;entryX=0.011;entryY=0.558;entryDx=0;entryDy=0;entryPerimeter=0;jumpStyle=arc;" target="q30prmmfC-753BtMAkEy-8" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="400" y="428" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_bps_2" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=blockThin;endFill=1;" target="bps_metric" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="508" y="428" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_dpll_1" edge="1" parent="1" source="method_dpll" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=blockThin;endFill=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="q30prmmfC-753BtMAkEy-17" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="400" y="515" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_dpll_2" edge="1" parent="1" source="q30prmmfC-753BtMAkEy-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="dpll_filter" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="480" y="515" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_dpll_3" edge="1" parent="1" source="dpll_filter" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=blockThin;endFill=1;" target="dpll_nco" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_dpll_feedback" edge="1" parent="1" source="dpll_nco" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#999999;strokeWidth=1.5;dashed=1;dashPattern=8 4;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=15;fontFamily=Microsoft YaHei;labelBackgroundColor=none;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontStyle=0;align=center;verticalAlign=bottom;" target="q30prmmfC-753BtMAkEy-17" value="反馈">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="440" y="535" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_vv_to_interface" edge="1" parent="1" source="vv_power" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=15;fontFamily=Microsoft YaHei;labelBackgroundColor=none;fontStyle=0;align=center;verticalAlign=bottom;" target="perf_interface" value="估计结果">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_bps_to_interface" edge="1" parent="1" source="bps_metric" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=15;fontFamily=Microsoft YaHei;labelBackgroundColor=none;fontStyle=0;align=center;verticalAlign=bottom;" value="最优相位">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="748" y="427.9999999999998" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_dpll_to_interface" edge="1" parent="1" source="dpll_nco" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=15;fontFamily=Microsoft YaHei;labelBackgroundColor=none;fontStyle=0;align=left;verticalAlign=middle;labelPosition=right;verticalLabelPosition=middle;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="perf_interface" value="闭环结果">
+          <mxGeometry relative="1" x="-0.7895" y="-15" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_interface_to_boundary" edge="1" parent="1" source="perf_interface" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="result_sensitivity" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_boundary_failure" edge="1" parent="1" source="result_sensitivity" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=blockThin;endFill=1;" target="result_failure" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_failure_sensitivity" edge="1" parent="1" source="result_failure" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=blockThin;endFill=1;" target="result_boundary" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_sensitivity_diagnosis" edge="1" parent="1" source="result_boundary" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#999999;strokeWidth=1.5;dashed=1;dashPattern=8 4;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=15;fontFamily=Microsoft YaHei;labelBackgroundColor=none;fontStyle=0;align=center;verticalAlign=bottom;" value="验证">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="240" y="625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_diagnosis_guideline" edge="1" parent="1" source="q30prmmfC-753BtMAkEy-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=blockThin;endFill=1;entryX=0.999;entryY=0.547;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryPerimeter=0;" target="q30prmmfC-753BtMAkEy-19" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="105" y="625" as="sourcePoint" />
+            <mxPoint x="70" y="625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_guideline_explore" edge="1" parent="1" source="output_ch5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#314354;strokeWidth=1;dashed=1;dashPattern=5 5;endArrow=openThin;endFill=0;fontColor=#333333;fontSize=15;fontFamily=Microsoft YaHei;labelBackgroundColor=none;align=center;verticalAlign=bottom;fontStyle=0;fillColor=#647687;labelPosition=center;verticalLabelPosition=top;" target="explore_integrity" value="递进探索">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_explore_2_3" edge="1" parent="1" source="explore_param" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#314354;strokeWidth=1;dashed=1;dashPattern=5 5;endArrow=openThin;endFill=0;align=center;verticalAlign=bottom;fontFamily=Microsoft YaHei;fontSize=15;fontColor=#333333;fontStyle=0;labelBackgroundColor=none;fillColor=#647687;" target="explore_joint" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_guideline_ch5" edge="1" parent="1" source="q30prmmfC-753BtMAkEy-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontColor=#333333;fontSize=15;fontFamily=Microsoft YaHei;labelBackgroundColor=none;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;exitX=0.764;exitY=0.003;exitDx=0;exitDy=0;exitPerimeter=0;" target="output_ch5" value="确定交付">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="10" y="600" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_explore_ch5" edge="1" parent="1" source="explore_joint" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#314354;strokeWidth=1;dashed=1;dashPattern=5 5;endArrow=openThin;endFill=0;fontColor=#333333;fontSize=15;fontFamily=Microsoft YaHei;labelBackgroundColor=none;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;align=right;verticalAlign=middle;fontStyle=0;fillColor=#647687;labelPosition=left;verticalLabelPosition=middle;" target="output_ch5" value="可选验证">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="q30prmmfC-753BtMAkEy-1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1;fillColor=#FFFFFF;" value="" vertex="1">
+          <mxGeometry height="30" width="50" x="120" y="383" as="geometry" />
+        </mxCell>
+        <mxCell id="q30prmmfC-753BtMAkEy-2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1;fillColor=#FFFFFF;" value="" vertex="1">
+          <mxGeometry height="30" width="50" x="120" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="q30prmmfC-753BtMAkEy-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1;fillColor=#FFFFFF;" value="" vertex="1">
+          <mxGeometry height="30" width="50" x="120" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="output_ch5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#E6E6E6;fontColor=#000000;fontSize=15;fontFamily=Microsoft YaHei;fontStyle=1;" value="&lt;b&gt;FPGA&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:12px&quot;&gt;设计分析&lt;/font&gt;" vertex="1">
+          <mxGeometry height="50" width="120" x="-30" y="485" as="geometry" />
+        </mxCell>
+        <mxCell id="q30prmmfC-753BtMAkEy-6" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff9ed;strokeColor=#9a6d20;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry height="44" width="92" x="416" y="386" as="geometry" />
+        </mxCell>
+        <mxCell id="q30prmmfC-753BtMAkEy-7" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff9ed;strokeColor=#9a6d20;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry height="44" width="92" x="408" y="411" as="geometry" />
+        </mxCell>
+        <mxCell id="q30prmmfC-753BtMAkEy-8" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#111111;strokeWidth=1.1;fontFamily=Microsoft YaHei;fontSize=18;" value="候选相位集" vertex="1">
+          <mxGeometry height="44" width="92" x="400" y="403" as="geometry" />
+        </mxCell>
+        <mxCell id="q30prmmfC-753BtMAkEy-17" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#111111;strokeWidth=1.1;fontFamily=Microsoft YaHei;fontSize=18;" value="鉴相" vertex="1">
+          <mxGeometry height="58" width="58" x="410" y="486" as="geometry" />
+        </mxCell>
+        <mxCell id="q30prmmfC-753BtMAkEy-19" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f7fbf8;strokeColor=#111111;strokeWidth=1.2;" value="" vertex="1">
+          <mxGeometry height="110" width="295" x="-195" y="570" as="geometry" />
+        </mxCell>
+        <mxCell id="q30prmmfC-753BtMAkEy-20" parent="1" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontFamily=Microsoft YaHei;fontSize=18;fontStyle=1;fontColor=#111111;" value="方法选择与参数设计准则" vertex="1">
+          <mxGeometry height="32" width="160" x="-127.5" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="q30prmmfC-753BtMAkEy-21" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#777777;strokeWidth=1;fontFamily=Microsoft YaHei;fontSize=16;fontColor=#111111;align=center;verticalAlign=middle;" value="湍流条件 | 方法 | 参数&#xa;弱 / 中 / 强" vertex="1">
+          <mxGeometry height="40" width="280" x="-187.5" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="q30prmmfC-753BtMAkEy-30" connectable="0" parent="1" style="group" value="" vertex="1">
+          <mxGeometry height="90" width="110" x="130" y="585" as="geometry" />
+        </mxCell>
+        <mxCell id="q30prmmfC-753BtMAkEy-23" parent="q30prmmfC-753BtMAkEy-30" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#496caa;strokeWidth=1.1;dashed=1;" value="" vertex="1">
+          <mxGeometry height="90" width="110" as="geometry" />
+        </mxCell>
+        <mxCell id="q30prmmfC-753BtMAkEy-24" parent="q30prmmfC-753BtMAkEy-30" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Microsoft YaHei;fontSize=18;fontStyle=1;fontColor=#111111;" value="诊断面板" vertex="1">
+          <mxGeometry height="13.846153846153847" width="58.23529411764705" x="6.470588235294117" y="13.846153846153847" as="geometry" />
+        </mxCell>
+        <mxCell id="q30prmmfC-753BtMAkEy-25" edge="1" parent="q30prmmfC-753BtMAkEy-30" style="endArrow=block;html=1;rounded=0;strokeColor=#111111;strokeWidth=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="12.941176470588234" y="74.76923076923077" as="sourcePoint" />
+            <mxPoint x="100.29411764705881" y="74.76923076923077" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="q30prmmfC-753BtMAkEy-26" edge="1" parent="q30prmmfC-753BtMAkEy-30" style="endArrow=block;html=1;rounded=0;strokeColor=#111111;strokeWidth=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="12.941176470588234" y="74.76923076923077" as="sourcePoint" />
+            <mxPoint x="12.941176470588234" y="34.61538461538462" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="q30prmmfC-753BtMAkEy-27" edge="1" parent="q30prmmfC-753BtMAkEy-30" style="endArrow=none;html=1;rounded=0;strokeColor=#496caa;strokeWidth=1.5;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="19.41176470588235" y="67.15384615384615" as="sourcePoint" />
+            <mxPoint x="40.11764705882353" y="55.38461538461539" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="q30prmmfC-753BtMAkEy-28" edge="1" parent="q30prmmfC-753BtMAkEy-30" style="endArrow=none;html=1;rounded=0;strokeColor=#496caa;strokeWidth=1.5;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="40.11764705882353" y="55.38461538461539" as="sourcePoint" />
+            <mxPoint x="64.70588235294117" y="47.07692307692309" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="q30prmmfC-753BtMAkEy-29" edge="1" parent="q30prmmfC-753BtMAkEy-30" style="endArrow=none;html=1;rounded=0;strokeColor=#496caa;strokeWidth=1.5;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="64.70588235294117" y="47.07692307692309" as="sourcePoint" />
+            <mxPoint x="90.58823529411764" y="42.92307692307693" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_foe_to_phasedet" edge="1" parent="1" source="foe_step" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#999999;strokeWidth=1;dashed=1;dashPattern=5 5;endArrow=openThin;endFill=0;fontColor=#333333;fontSize=15;fontFamily=Microsoft YaHei;labelBackgroundColor=none;fontStyle=0;align=center;verticalAlign=bottom;entryX=0.5;entryY=0;entryDx=0;entryDy=0;jumpStyle=arc;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="q30prmmfC-753BtMAkEy-17" value="信号入口">
+          <mxGeometry relative="1" x="-0.6612" y="30" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="380" y="270" />
+              <mxPoint x="380" y="470" />
+              <mxPoint x="439" y="470" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Aog6RuICGsUT1ppsMch7-1" edge="1" parent="1" source="explore_param" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#314354;strokeWidth=1;dashed=1;dashPattern=5 5;endArrow=openThin;endFill=0;align=center;verticalAlign=bottom;fontFamily=Microsoft YaHei;fontSize=15;fontColor=#333333;fontStyle=0;labelBackgroundColor=none;fillColor=#647687;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" target="explore_integrity" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="-140" y="495" as="sourcePoint" />
+            <mxPoint x="-140" y="434" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

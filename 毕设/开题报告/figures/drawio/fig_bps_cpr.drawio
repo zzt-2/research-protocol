@@ -1,0 +1,64 @@
+<mxfile host="Electron" agent="Claude">
+  <diagram name="BPS盲相位搜索算法原理" id="bps-cpr">
+    <mxGraphModel dx="1001" dy="690" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="input_signal" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#E6E6E6;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" value="接收信号" vertex="1">
+          <mxGeometry height="40" width="80" x="55" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="group_parallel" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#BBBBBB;strokeWidth=1;fillColor=#F5F5F5;fontColor=#666666;fontSize=9;fontFamily=Microsoft YaHei;verticalAlign=top;" value="B路并行测试" vertex="1">
+          <mxGeometry height="120" width="400" x="170" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="mult_test" parent="1" style="shape=mxgraph.flowchart.or;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=12;fontStyle=1;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="200" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="hard_decision" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;" value="硬判决" vertex="1">
+          <mxGeometry height="40" width="80" x="330" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="sq_dist" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;" value="|·|²" vertex="1">
+          <mxGeometry height="40" width="80" x="480" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="ellipsis_b" parent="1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=14;fontColor=#666666;" value="⋮" vertex="1">
+          <mxGeometry height="30" width="40" x="350" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="sliding_sum" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" value="滑动窗累加" vertex="1">
+          <mxGeometry height="40" width="80" x="480" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="phase_select" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" value="最优相位选择" vertex="1">
+          <mxGeometry height="40" width="80" x="330" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="mult_corr" parent="1" style="shape=mxgraph.flowchart.or;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=12;fontStyle=1;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="80" y="235" as="geometry" />
+        </mxCell>
+        <mxCell id="output_signal" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#E6E6E6;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" value="补偿输出" vertex="1">
+          <mxGeometry height="40" width="80" x="55" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_input_mult" edge="1" parent="1" source="input_signal" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;labelPosition=center;verticalLabelPosition=top;align=center;verticalAlign=bottom;" target="mult_test" value="r[k]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_mult_hd" edge="1" parent="1" source="mult_test" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;labelPosition=center;verticalLabelPosition=top;align=center;verticalAlign=bottom;" target="hard_decision" value="e^{jφ_b}·r[k]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_hd_sq" edge="1" parent="1" source="hard_decision" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;" target="sq_dist" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_sq_sum" edge="1" parent="1" source="sq_dist" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;" target="sliding_sum" value="d²">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_sum_sel" edge="1" parent="1" source="sliding_sum" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;" target="phase_select" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_sel_corr" edge="1" parent="1" source="phase_select" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=1.5;endArrow=blockThin;endFill=1;labelPosition=center;verticalLabelPosition=top;align=center;verticalAlign=bottom;" target="mult_corr" value="φ̂[k]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_input_bypass" edge="1" parent="1" source="input_signal" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#999999;strokeWidth=1.5;dashed=1;dashPattern=8 4;endArrow=blockThin;endFill=1;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;" target="mult_corr" value="r[k]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_corr_out" edge="1" parent="1" source="mult_corr" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;" target="output_signal" value="ŝ[k]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,169 @@
+<mxfile host="Electron" compressed="false">
+  <diagram name="P7-method-scenario-matrix" id="p7">
+    <mxGraphModel dx="679" dy="466" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="440" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="hdr1" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#2E75B6;fontColor=#FFFFFF;fontSize=18;align=center;verticalAlign=middle;strokeColor=#1F4E79;" value="&lt;b&gt;传统场景&lt;/b&gt; (AWGN / 光纤)" vertex="1">
+          <mxGeometry height="34" width="300" x="125" y="5" as="geometry" />
+        </mxCell>
+        <mxCell id="hdr2" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#C55A11;fontColor=#FFFFFF;fontSize=18;align=center;verticalAlign=middle;strokeColor=#843C0B;" value="&lt;b&gt;FSO 湍流&lt;/b&gt;" vertex="1">
+          <mxGeometry height="34" width="300" x="435" y="5" as="geometry" />
+        </mxCell>
+        <mxCell id="t_ce" parent="1" style="rounded=0;fillColor=#DEEBF7;strokeColor=#9DC3E6;" value="" vertex="1">
+          <mxGeometry height="64" width="300" x="125" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="t_ce_bar" parent="1" style="rounded=0;fillColor=#5B9BD5;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="18" width="260" x="135" y="68" as="geometry" />
+        </mxCell>
+        <mxCell id="t_ce_num" parent="1" style="text;html=1;fontSize=18;fontColor=#2E75B6;align=left;" value="~10K" vertex="1">
+          <mxGeometry height="26" width="60" x="138" y="42" as="geometry" />
+        </mxCell>
+        <mxCell id="f_ce" parent="1" style="rounded=0;fillColor=#FFF8E1;strokeColor=#FBE5D6;" value="" vertex="1">
+          <mxGeometry height="64" width="300" x="435" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="f_ce_bar" parent="1" style="rounded=0;fillColor=#ED7D31;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="18" width="55" x="445" y="68" as="geometry" />
+        </mxCell>
+        <mxCell id="f_ce_num" parent="1" style="text;html=1;fontSize=18;fontColor=#C55A11;align=left;" value="~400" vertex="1">
+          <mxGeometry height="26" width="60" x="448" y="42" as="geometry" />
+        </mxCell>
+        <mxCell id="f_ce_ann" parent="1" style="text;html=1;fontSize=18;fontColor=#843C0B;align=left;verticalAlign=middle;" value="&lt;b&gt;限于子场景&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="130" x="508" y="62" as="geometry" />
+        </mxCell>
+        <mxCell id="t_cpr" parent="1" style="rounded=0;fillColor=#DEEBF7;strokeColor=#9DC3E6;" value="" vertex="1">
+          <mxGeometry height="64" width="300" x="125" y="113" as="geometry" />
+        </mxCell>
+        <mxCell id="t_cpr_bar" parent="1" style="rounded=0;fillColor=#5B9BD5;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="18" width="260" x="135" y="136" as="geometry" />
+        </mxCell>
+        <mxCell id="t_cpr_num" parent="1" style="text;html=1;fontSize=18;fontColor=#2E75B6;align=left;" value="~10K" vertex="1">
+          <mxGeometry height="26" width="60" x="138" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="f_cpr" parent="1" style="rounded=0;fillColor=#FFF8E1;strokeColor=#FBE5D6;" value="" vertex="1">
+          <mxGeometry height="64" width="300" x="435" y="113" as="geometry" />
+        </mxCell>
+        <mxCell id="f_cpr_bar" parent="1" style="rounded=0;fillColor=#ED7D31;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="18" width="45" x="445" y="136" as="geometry" />
+        </mxCell>
+        <mxCell id="f_cpr_num" parent="1" style="text;html=1;fontSize=18;fontColor=#C55A11;align=left;" value="~375" vertex="1">
+          <mxGeometry height="26" width="60" x="448" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="f_cpr_ann" parent="1" style="text;html=1;fontSize=18;fontColor=#843C0B;align=left;verticalAlign=middle;" value="&lt;b&gt;初步分析，准则缺乏&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="200" x="498" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="t_tim" parent="1" style="rounded=0;fillColor=#DEEBF7;strokeColor=#9DC3E6;" value="" vertex="1">
+          <mxGeometry height="64" width="300" x="125" y="181" as="geometry" />
+        </mxCell>
+        <mxCell id="t_tim_bar" parent="1" style="rounded=0;fillColor=#5B9BD5;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="18" width="240" x="135" y="204" as="geometry" />
+        </mxCell>
+        <mxCell id="t_tim_num" parent="1" style="text;html=1;fontSize=18;fontColor=#2E75B6;align=left;" value="~2.7K/5yr" vertex="1">
+          <mxGeometry height="26" width="90" x="138" y="178" as="geometry" />
+        </mxCell>
+        <mxCell id="f_tim" parent="1" style="rounded=0;fillColor=#FFF8E1;strokeColor=#FBE5D6;" value="" vertex="1">
+          <mxGeometry height="64" width="300" x="435" y="181" as="geometry" />
+        </mxCell>
+        <mxCell id="f_tim_bar" parent="1" style="rounded=0;fillColor=#ED7D31;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="18" width="12" x="445" y="204" as="geometry" />
+        </mxCell>
+        <mxCell id="f_tim_num" parent="1" style="text;html=1;fontSize=18;fontColor=#C55A11;align=left;" value="~3" vertex="1">
+          <mxGeometry height="26" width="30" x="448" y="178" as="geometry" />
+        </mxCell>
+        <mxCell id="f_tim_ann" parent="1" style="text;html=1;fontSize=18;fontColor=#843C0B;align=left;verticalAlign=middle;" value="性能影响有限" vertex="1">
+          <mxGeometry height="30" width="180" x="464" y="198" as="geometry" />
+        </mxCell>
+        <mxCell id="t_eq" parent="1" style="rounded=0;fillColor=#DEEBF7;strokeColor=#9DC3E6;" value="" vertex="1">
+          <mxGeometry height="64" width="300" x="125" y="249" as="geometry" />
+        </mxCell>
+        <mxCell id="t_eq_bar" parent="1" style="rounded=0;fillColor=#5B9BD5;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="18" width="260" x="135" y="272" as="geometry" />
+        </mxCell>
+        <mxCell id="t_eq_num" parent="1" style="text;html=1;fontSize=18;fontColor=#2E75B6;align=left;" value="研究充分" vertex="1">
+          <mxGeometry height="26" width="75" x="138" y="246" as="geometry" />
+        </mxCell>
+        <mxCell id="f_eq" parent="1" style="rounded=0;fillColor=#FFF8E1;strokeColor=#FBE5D6;" value="" vertex="1">
+          <mxGeometry height="64" width="300" x="435" y="249" as="geometry" />
+        </mxCell>
+        <mxCell id="f_eq_bar" parent="1" style="rounded=0;fillColor=#ED7D31;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="18" width="50" x="445" y="272" as="geometry" />
+        </mxCell>
+        <mxCell id="f_eq_num" parent="1" style="text;html=1;fontSize=18;fontColor=#C55A11;align=left;" value="~400" vertex="1">
+          <mxGeometry height="26" width="60" x="448" y="246" as="geometry" />
+        </mxCell>
+        <mxCell id="f_eq_ann" parent="1" style="text;html=1;fontSize=18;fontColor=#843C0B;align=left;verticalAlign=middle;" value="非 FSO 核心瓶颈，需求有限" vertex="1">
+          <mxGeometry height="30" width="190" x="503" y="266" as="geometry" />
+        </mxCell>
+        <mxCell id="t_ca" parent="1" style="rounded=0;fillColor=#DEEBF7;strokeColor=#9DC3E6;" value="" vertex="1">
+          <mxGeometry height="64" width="300" x="125" y="317" as="geometry" />
+        </mxCell>
+        <mxCell id="t_ca_bar" parent="1" style="rounded=0;fillColor=#5B9BD5;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="18" width="240" x="135" y="340" as="geometry" />
+        </mxCell>
+        <mxCell id="t_ca_num" parent="1" style="text;html=1;fontSize=18;fontColor=#2E75B6;align=left;" value="~2.7K/5yr" vertex="1">
+          <mxGeometry height="26" width="90" x="138" y="314" as="geometry" />
+        </mxCell>
+        <mxCell id="f_ca" parent="1" style="rounded=0;fillColor=#FFF8E1;strokeColor=#FBE5D6;" value="" vertex="1">
+          <mxGeometry height="64" width="300" x="435" y="317" as="geometry" />
+        </mxCell>
+        <mxCell id="f_ca_num" parent="1" style="text;html=1;fontSize=18;fontColor=#C55A11;fontStyle=1;align=left;" value="0" vertex="1">
+          <mxGeometry height="26" width="20" x="448" y="314" as="geometry" />
+        </mxCell>
+        <mxCell id="f_ca_ann" parent="1" style="text;html=1;fontSize=18;fontColor=#843C0B;align=left;verticalAlign=middle;" value="空白" vertex="1">
+          <mxGeometry height="30" width="90" x="445" y="334" as="geometry" />
+        </mxCell>
+        <mxCell id="flow_ce" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#4472C4;fontColor=#FFFFFF;fontSize=18;align=center;verticalAlign=middle;strokeColor=#2F5496;spacingTop=-2;" value="&lt;b&gt;CE&lt;/b&gt;&lt;br&gt;信道估计" vertex="1">
+          <mxGeometry height="44" width="105" x="8" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="flow_cpr" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#4472C4;fontColor=#FFFFFF;fontSize=18;align=center;verticalAlign=middle;strokeColor=#2F5496;spacingTop=-2;" value="&lt;b&gt;CPR&lt;/b&gt;&lt;br&gt;载波同步" vertex="1">
+          <mxGeometry height="44" width="105" x="8" y="123" as="geometry" />
+        </mxCell>
+        <mxCell id="flow_tim" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#4472C4;fontColor=#FFFFFF;fontSize=18;align=center;verticalAlign=middle;strokeColor=#2F5496;" value="定时同步" vertex="1">
+          <mxGeometry height="44" width="105" x="8" y="191" as="geometry" />
+        </mxCell>
+        <mxCell id="flow_eq" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#4472C4;fontColor=#FFFFFF;fontSize=18;align=center;verticalAlign=middle;strokeColor=#2F5496;" value="均衡" vertex="1">
+          <mxGeometry height="44" width="105" x="8" y="259" as="geometry" />
+        </mxCell>
+        <mxCell id="flow_ca" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#4472C4;fontColor=#FFFFFF;fontSize=18;align=center;verticalAlign=middle;strokeColor=#2F5496;" value="编码辅助" vertex="1">
+          <mxGeometry height="44" width="105" x="8" y="327" as="geometry" />
+        </mxCell>
+        <mxCell id="arr1" edge="1" parent="1" source="flow_ce" style="edgeStyle=none;strokeColor=#4472C4;strokeWidth=2;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="flow_cpr">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arr2" edge="1" parent="1" source="flow_cpr" style="edgeStyle=none;strokeColor=#4472C4;strokeWidth=2;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="flow_tim">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arr3" edge="1" parent="1" source="flow_tim" style="edgeStyle=none;strokeColor=#4472C4;strokeWidth=2;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="flow_eq">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arr4" edge="1" parent="1" source="flow_eq" style="edgeStyle=none;strokeColor=#4472C4;strokeWidth=2;endArrow=block;endFill=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" target="flow_ca">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="callout_a" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F2F2F2;strokeColor=#888888;fontSize=18;verticalAlign=middle;align=center;" value="&lt;b&gt;CE→CPR 级联分析空白&lt;/b&gt;" vertex="1">
+          <mxGeometry height="50" width="180" x="760" y="18" as="geometry" />
+        </mxCell>
+        <mxCell id="callout_a_line" edge="1" parent="1" style="endArrow=none;strokeColor=#888888;strokeWidth=1;dashed=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="callout_a">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="735" y="77" as="sourcePoint" />
+            <mxPoint x="760" y="75" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="callout_b" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F2F2F2;strokeColor=#888888;fontSize=18;verticalAlign=middle;align=center;" value="&lt;b&gt;湍流适配设计准则缺失&lt;/b&gt;" vertex="1">
+          <mxGeometry height="50" width="180" x="760" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="callout_b_line" edge="1" parent="1" style="endArrow=none;strokeColor=#888888;strokeWidth=1;dashed=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="callout_b">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="735" y="145" as="sourcePoint" />
+            <mxPoint x="760" y="145" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="vAVu4581eFaxmR_Lm3HT-1" parent="1" style="text;whiteSpace=wrap;fontSize=18;" value="精度需求是同步设计的前提" vertex="1">
+          <mxGeometry height="40" width="130" x="700" y="83" as="geometry" />
+        </mxCell>
+        <mxCell id="vAVu4581eFaxmR_Lm3HT-2" parent="1" style="shape=singleArrow;direction=south;whiteSpace=wrap;html=1;fillColor=#F4B183;strokeColor=#C55A11;strokeWidth=1.5;arrowWidth=0.6355555555555535;arrowSize=0.23976665296052152;" value="" vertex="1">
+          <mxGeometry height="82" width="48" x="826" y="68" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

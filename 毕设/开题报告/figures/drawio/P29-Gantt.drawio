@@ -1,0 +1,130 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="P13-Gantt" id="p13gantt">
+    <mxGraphModel dx="0" dy="0" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="1600" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <!-- ==================== Frame ==================== -->
+        <mxCell id="frame" value="" style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#fafafa;strokeColor=#d0d0d0;strokeWidth=1.5;" vertex="1" parent="1">
+          <mxGeometry x="5" y="5" width="1430" height="290" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== Year Headers ==================== -->
+        <mxCell id="y2026" value="&lt;b style='font-size:18px;color:#4472C4;'&gt;2026&lt;/b&gt;" style="text;html=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+          <mxGeometry x="210" y="8" width="660" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="y2027" value="&lt;b style='font-size:18px;color:#548235;'&gt;2027&lt;/b&gt;" style="text;html=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+          <mxGeometry x="870" y="8" width="550" height="28" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== Month Headers ==================== -->
+        <mxCell id="m7" value="&lt;span style='font-size:14px;color:#888;'&gt;7月&lt;/span&gt;" style="text;html=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+          <mxGeometry x="210" y="36" width="110" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="m8" value="&lt;span style='font-size:14px;color:#888;'&gt;8月&lt;/span&gt;" style="text;html=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+          <mxGeometry x="320" y="36" width="110" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="m9" value="&lt;span style='font-size:14px;color:#888;'&gt;9月&lt;/span&gt;" style="text;html=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+          <mxGeometry x="430" y="36" width="110" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="m10" value="&lt;span style='font-size:14px;color:#888;'&gt;10月&lt;/span&gt;" style="text;html=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+          <mxGeometry x="540" y="36" width="110" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="m11" value="&lt;span style='font-size:14px;color:#888;'&gt;11月&lt;/span&gt;" style="text;html=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+          <mxGeometry x="650" y="36" width="110" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="m12" value="&lt;span style='font-size:14px;color:#888;'&gt;12月&lt;/span&gt;" style="text;html=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+          <mxGeometry x="760" y="36" width="110" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="m1" value="&lt;span style='font-size:14px;color:#888;'&gt;1月&lt;/span&gt;" style="text;html=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+          <mxGeometry x="870" y="36" width="110" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="m2" value="&lt;span style='font-size:14px;color:#888;'&gt;2月&lt;/span&gt;" style="text;html=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+          <mxGeometry x="980" y="36" width="110" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="m3" value="&lt;span style='font-size:14px;color:#888;'&gt;3月&lt;/span&gt;" style="text;html=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="36" width="110" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="m4" value="&lt;span style='font-size:14px;color:#888;'&gt;4月&lt;/span&gt;" style="text;html=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1200" y="36" width="110" height="28" as="geometry"/>
+        </mxCell>
+        <mxCell id="m5" value="&lt;span style='font-size:14px;color:#888;'&gt;5月&lt;/span&gt;" style="text;html=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1310" y="36" width="110" height="28" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== Separators ==================== -->
+        <!-- Header/Content separator -->
+        <mxCell id="hsep" style="endArrow=none;html=1;strokeColor=#d0d0d0;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="15" y="68" as="sourcePoint"/>
+            <mxPoint x="1420" y="68" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <!-- Left separator (label | timeline) -->
+        <mxCell id="lsep" style="endArrow=none;html=1;strokeColor=#e0e0e0;strokeWidth=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="210" y="10" as="sourcePoint"/>
+            <mxPoint x="210" y="290" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+        <!-- Year boundary -->
+        <mxCell id="yb" style="endArrow=none;html=1;strokeColor=#bbb;strokeWidth=1.5;dashed=1;dashPattern=6 3;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="870" y="10" as="sourcePoint"/>
+            <mxPoint x="870" y="290" as="targetPoint"/>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- ==================== Row 1: 文献调研与理论分析 ==================== -->
+        <mxCell id="r1_bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="10" y="68" width="1420" height="55" as="geometry"/>
+        </mxCell>
+        <mxCell id="r1_label" value="&lt;span style='font-size:16px;color:#333;'&gt;文献调研与理论分析&lt;/span&gt;" style="text;html=1;verticalAlign=middle;align=left;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="10" y="68" width="200" height="55" as="geometry"/>
+        </mxCell>
+        <!-- Bar: 7月-11月 (5 months) -->
+        <mxCell id="r1_bar" value="&lt;span style='font-size:13px;color:#fff;'&gt;7 — 11月&lt;/span&gt;" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;fillColor=#4472C4;strokeColor=none;shadow=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+          <mxGeometry x="210" y="79" width="550" height="33" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== Row 2: 算法设计与仿真实现 ==================== -->
+        <mxCell id="r2_bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8f8f8;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="10" y="123" width="1420" height="55" as="geometry"/>
+        </mxCell>
+        <mxCell id="r2_label" value="&lt;span style='font-size:16px;color:#333;'&gt;算法设计与仿真实现&lt;/span&gt;" style="text;html=1;verticalAlign=middle;align=left;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="10" y="123" width="200" height="55" as="geometry"/>
+        </mxCell>
+        <!-- Bar: 9月-2月 (6 months) -->
+        <mxCell id="r2_bar" value="&lt;span style='font-size:13px;color:#fff;'&gt;9月 — 2月&lt;/span&gt;" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;fillColor=#548235;strokeColor=none;shadow=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+          <mxGeometry x="430" y="134" width="660" height="33" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== Row 3: FPGA 设计与验证 ==================== -->
+        <mxCell id="r3_bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="10" y="178" width="1420" height="55" as="geometry"/>
+        </mxCell>
+        <mxCell id="r3_label" value="&lt;span style='font-size:16px;color:#333;'&gt;FPGA 设计与验证&lt;/span&gt;" style="text;html=1;verticalAlign=middle;align=left;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="10" y="178" width="200" height="55" as="geometry"/>
+        </mxCell>
+        <!-- Bar: 1月-4月 (4 months) -->
+        <mxCell id="r3_bar" value="&lt;span style='font-size:13px;color:#fff;'&gt;1 — 4月&lt;/span&gt;" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;fillColor=#C55A11;strokeColor=none;shadow=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+          <mxGeometry x="870" y="189" width="440" height="33" as="geometry"/>
+        </mxCell>
+
+        <!-- ==================== Row 4: 论文撰写与修改 ==================== -->
+        <mxCell id="r4_bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8f8f8;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="10" y="233" width="1420" height="55" as="geometry"/>
+        </mxCell>
+        <mxCell id="r4_label" value="&lt;span style='font-size:16px;color:#333;'&gt;论文撰写与修改&lt;/span&gt;" style="text;html=1;verticalAlign=middle;align=left;spacingLeft=15;" vertex="1" parent="1">
+          <mxGeometry x="10" y="233" width="200" height="55" as="geometry"/>
+        </mxCell>
+        <!-- Bar: 3月-5月 (3 months) -->
+        <mxCell id="r4_bar" value="&lt;span style='font-size:13px;color:#fff;'&gt;3 — 5月&lt;/span&gt;" style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;fillColor=#7B2D8E;strokeColor=none;shadow=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="244" width="330" height="33" as="geometry"/>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

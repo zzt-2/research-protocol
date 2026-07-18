@@ -113,9 +113,9 @@
 
 | # | 公式 | 物理含义 | 来源（代码行 / 文献）| 呈现粒度 |
 |---|---|---|---|---|
-| 1 | **θ̂_DA = angle(r_p · p\*)** | DA 估计器：用已知 pilot 符号 p 去除调制，取接收 pilot 样值 r_p 的相位。r_p = pilot 位置的接收样值，p* = conj(p)。| 代码 `_recovery.py:153`：`theta = np.angle(rx[pilot_idx] / pilot_sym)`（/pilot_sym = ·conj(pilot_sym) 当 |p|=1）| 直接给结论级。1 行 + 1 句话："removes modulation by dividing the received pilot sample by the known pilot symbol" |
+| 1 | **θ̂_DA = angle(r_p · p\*)** | DA 估计器：用已知 pilot 符号 p 去除每个 pilot 样值的调制，对块内 $N_p$ 个 pilot 样值取平均相位。r_p = pilot 位置的接收样值，p* = conj(p)。| 代码 `_recovery.py:153`：`theta = np.angle(rx[pilot_idx] / pilot_sym)`（/pilot_sym = ·conj(pilot_sym) 当 |p|=1；实现为多 pilot `N_p=64` LS 相位回归 `_recovery.py:153-161`，公式保留单 pilot 简化形式）| 直接给结论级。1 行 + 1 句话："removes modulation by dividing each received pilot sample by the known pilot symbol, averages the resulting phases over the N_p pilot symbols" |
 | 2 | **θ̂_NDA = (1/M₀) angle(Σ_k r_k^{M₀})** | NDA 估计器：将块内所有接收样值升 M₀=8 次幂去除调制（M₀=8 对 (8,8)-16APSK 每环 8 点），取均值相位后除以 M₀ 恢复载波相位。| 代码 `_recovery.py:213,232-233`：`raised = rx ** M0` → `phi_raised = np.angle(raised.mean())` → `phi_est = phi_raised / M0`。M₀=8 = `_b11_params.py:36`（B11 L75-77）| 直接给结论级。1 行 + 1 句话："raises the received samples to the M₀-th power to remove modulation" |
-| 3 | **γ_blk = |h_b|² · E_s / N₀** | 每块 SNR：信道块 b 内衰落系数 h_b 恒定，γ_blk 是该块的瞬时 SNR。接收端据此感知信道条件选择估计器。切换规则（文字，不编号）：select θ̂_DA when γ_blk < γ_th, else θ̂_NDA。| 定义依据：块衰落模型（术语 #32）+ `_b11_params.py:39 N_blk=100`（h 块内恒定）| 直接给结论级。1 行 + 1 句话定义 + 切换规则用文字（不用编号公式） |
+| 3 | **γ_blk = |h_b|² · E_s / N₀** | 每块 SNR：信道块 b 内衰落系数 h_b 恒定，γ_blk 是该块的瞬时 SNR。接收端据此感知信道条件选择估计器。切换规则（文字，不编号）：select θ̂_DA when γ_blk < γ_th, else θ̂_NDA。| 定义依据：块衰落模型（术语 #32）+ `_b11_params.py:39 N_blk=100`（h 块内恒定）。代码实现：`sc_nda_ml_sim.py:95-110`（estimate_h_blind_perblock 估计 h_b）/ `explore/nda-awgn-tracking-sandbox/_a4_switch_experiment.py:127-135`（decide_switch γ_blk 计算）| 直接给结论级。1 行 + 1 句话定义 + 切换规则用文字（不用编号公式） |
 
 **不进正文的公式**（系统模型参数，进 P2 参数表）：
 - Gamma-Gamma PDF：参数 α/β 值进参数表，不给 PDF 公式（R010 §2.1 决定给模型名 + 块结构，不给完整 PDF）
@@ -176,7 +176,7 @@ D-P1 用语+符号+公式三合一完成。三张表定死全篇英文零件：
    - DA = pilot-aided（统一用 DA，首次出现注明）
    - per-block SNR + crossover + block fading + estimator switching + net SNR gain 五个词需显式定义（A/C 组无先例），均已给定义句
 2. **符号表**：22 个符号，全篇统一无冲突。关键选择：相位用 θ/θ̂（从 V&V 1983/sat.1553，非 B11 的 φ，首次出现注明对应）；SNR 用 γ（文本写 "SNR"）；M₀=8（B11 惯例）
-3. **公式清单**：3 个核心公式（DA/NDA/per-block SNR），全直接给结论级，标代码行溯源（`_recovery.py:153/213,232-233`）。系统模型参数不进正文公式（进 P2 参数表）
+3. **公式清单**：3 个核心公式（DA/NDA/per-block SNR），全直接给结论级，标代码行溯源（公式 1/2 = `_recovery.py:153/153-161`（DA 多 pilot LS 回归）/`_recovery.py:213,232-233`（NDA mean-angle CPE）；公式 3 = `sc_nda_ml_sim.py:95-110`/`_a4_switch_experiment.py:127-135`（γ_blk 盲估计 h_b + decide_switch），**W006 修正**：公式 3 原 `_recovery.py:232-233` 指向错误文件已改）。系统模型参数不进正文公式（进 P2 参数表）
 
 ## 对决策的影响
 

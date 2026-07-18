@@ -1,0 +1,64 @@
+<mxfile host="Electron" compressed="false">
+  <diagram name="VV载波相位恢复原理" id="vv-cpr">
+    <mxGraphModel dx="828" dy="571" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="input_signal" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#E6E6E6;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" value="接收信号" vertex="1">
+          <mxGeometry height="30" width="60" x="70" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="fourth_power" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;" value="(·)⁴" vertex="1">
+          <mxGeometry height="30" width="60" x="190" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="sliding_avg" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;" value="1/M Σ" vertex="1">
+          <mxGeometry height="30" width="60" x="310" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="arg_phase" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;" value="arg(·)" vertex="1">
+          <mxGeometry height="30" width="60" x="430" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="divide4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;" value="÷4" vertex="1">
+          <mxGeometry height="30" width="60" x="430" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="phase_unwrap" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#FFFFFF;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;" value="解卷绕" vertex="1">
+          <mxGeometry height="30" width="60" x="310" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="output_signal" parent="1" style="rounded=0;whiteSpace=wrap;html=1;strokeColor=#333333;strokeWidth=1.5;fillColor=#E6E6E6;fontColor=#000000;fontSize=10;fontFamily=Microsoft YaHei;fontStyle=1;" value="补偿输出" vertex="1">
+          <mxGeometry height="30" width="60" x="70" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_input_pow" edge="1" parent="1" source="input_signal" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontSize=9;fontFamily=Microsoft YaHei;labelPosition=center;verticalLabelPosition=top;align=center;verticalAlign=bottom;" target="fourth_power" value="r[k]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_pow_avg" edge="1" parent="1" source="fourth_power" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontSize=9;fontFamily=Microsoft YaHei;labelPosition=center;verticalLabelPosition=top;align=center;verticalAlign=bottom;" target="sliding_avg" value="r⁴[k]">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_avg_arg" edge="1" parent="1" source="sliding_avg" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;" target="arg_phase" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_arg_div" edge="1" parent="1" source="arg_phase" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontSize=9;fontFamily=Microsoft YaHei;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;" target="divide4" value="arg">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_div_unwrap" edge="1" parent="1" source="divide4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;" target="phase_unwrap" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge_unwrap_mult" edge="1" parent="1" source="phase_unwrap" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontSize=9;fontFamily=Microsoft YaHei;labelPosition=center;verticalLabelPosition=top;align=center;verticalAlign=bottom;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" target="Wfgv75rKZCgK84sQ3LSR-3" value="φ̂[k]">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="185" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_input_mult" edge="1" parent="1" source="input_signal" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#999999;strokeWidth=1.5;dashed=1;dashPattern=8 4;endArrow=blockThin;endFill=1;fontSize=9;fontFamily=Microsoft YaHei;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="Wfgv75rKZCgK84sQ3LSR-3" value="r[k]">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="170" y="245" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="edge_mult_output" edge="1" parent="1" source="Wfgv75rKZCgK84sQ3LSR-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeColor=#333333;strokeWidth=2;endArrow=blockThin;endFill=1;fontSize=9;fontFamily=Microsoft YaHei;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;" target="output_signal" value="ŝ[k]">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="200" y="245" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Wfgv75rKZCgK84sQ3LSR-3" parent="1" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.flowchart.or;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="85" y="170" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

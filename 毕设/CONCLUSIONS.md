@@ -36,6 +36,56 @@
 
 ---
 
+## CCISP/A4 结论（DA/NDA 估计器切换，独立边界）
+
+> 本节使用 16-APSK CCISP 仿真资产，独立于文件顶部的 QPSK/10-seed 通用边界；论文引用时以本节条件为准。
+
+### C-A4-01: 数据集、扫描与 BER 口径合同
+
+**结论**: 30-seed 主实验、30-seed A4 fixed 切换实验和 5-seed BER 扩展实验是三个不同数据层，不得混称为同一 30-seed sweep。
+**安全等级**: ✅ 可写（实验元数据事实）
+**数据集边界**:
+- 主实验：6 场景（AWGN、下行 weak/moderate/strong、上行 moderate/strong），30 seeds；每 seed 每点 400 blocks、102400 symbols；AWGN SNR = [5,8,10,12,14,16,18,20] dB，湍流 SNR = [5,10,15,20,22,24,26] dB。
+- A4 fixed：4 场景（AWGN、下行 weak/moderate/strong），30 seeds、400 blocks/seed；同一 8+7+7+7 = 29 个 operating points，不含 uplink。
+- Fig.2/Fig.4 扩展点：另用 5 seeds；AWGN 扩至 30 dB、weak 至 40 dB、moderate 至 46 dB、strong/uplink 至 50 dB，不计入 29 点。
+**标准 data BER 口径**: NDA = `ne_n/1024`（256 symbols × 4 bits）；DA = `ne_d/768`（192 data symbols × 4 bits）。`ne_d/1024` 仅是 full/net 归一化口径，不能替代 DA 标准信息 BER 判断估计器胜负。
+**来源**: [common.py] `results/sc_nda_ml_main_30seed/_main_experiment_30seed.json:meta`；`explore/nda-awgn-tracking-sandbox/_a4_switch_30seed_fixed.json:meta`；`simulator/run_main_experiment_30seed.py:302-335`；`_a4_switch_30seed_fixed.py:63-68,129-215`。
+
+### C-A4-02: 29 点中 26 点恢复 lower-BER 估计器
+
+**结论**: 按标准 data BER 判定 DA/NDA 赢家，A4 fixed 在 29 个 operating points 中有 26 点恢复 lower-BER 估计器（90%）。
+**安全等级**: ⚠️ 需限定（仅当前 4 场景、固定 13dB 判据与 29 点网格）
+**场景分解**: AWGN 8/8，weak 7/7，moderate 7/7，strong 4/7。
+**不一致点**: strong@15dB、strong@20dB、strong@22dB。
+**确定性重算**: 逐点以 `argmin(nda_ber_mean, da_ber_mean_data)` 定义真实赢家，并由 `switch_ber_mean` 更接近 `nda_ber_mean` 还是 `da_ber_mean_full` 判定 switch 分支；持久 JSON 可直接复算，无需旧临时脚本或新仿真。
+**来源**: [common.py] `_a4_switch_30seed_fixed.json:summary.*.points`；`_a4_switch_30seed_fixed.py:220-277`；历史裁定 D005/D006、S007、R008。
+
+### C-A4-03: Fig.3 是同 SNR BER-ratio dB，不是 SNR gain
+
+**结论**: Fig.3 指标为同一平均 data-symbol SNR 下 `10log10(P_b,NDA/P_b,switch)`；正值表示相对固定 NDA 的 BER reduction，不能称为 equal-BER SNR gain。
+**安全等级**: ⚠️ 需限定（必须连同指标定义、场景和 SNR 引用）
+**正向代表点**: weak@10dB = 2.295dB；moderate@10dB = 1.985dB；strong@5dB = 1.298dB。
+**允许写法**: “在相同平均 data-symbol SNR 下，切换方案相对固定 NDA 的 BER-ratio reduction 为 X dB。”
+**来源**: [common.py] `_a4_switch_30seed_fixed.json:summary.{weak,moderate,strong}.points[].switch_vs_nda_db_mean`；`_a4_switch_30seed_fixed.py:237-263`；`figures/plot_fig3_gain.py:2-13,47-53`。
+
+### C-A4-04: 观测 crossover 与固定选择阈值必须分离
+
+**结论**: DA/NDA data-BER 曲线的观测 crossover 为 weak 18.0dB、moderate 16.9dB、strong 10.7dB（log-BER 线性插值，分别为 18.0129/16.8661/10.7026dB）。
+**安全等级**: ⚠️ 需限定（数据插值结果，仅作观测事实）
+**选择阈值**: A4 fixed 对全部 4 场景统一使用固定 effective-SNR threshold = 13.0dB；它不是上述 crossover，也不是 per-regime 在线测量值。
+**边界**: crossover 只描述 DA/NDA 曲线交点；不得把 18.0/16.9/10.7dB 写成 switching 阈值，也不得为左移趋势添加未验证物理归因。
+**来源**: [common.py] 主实验/5-seed 扩展 JSON 的 `da_ml_ber_mean`、`nda_ml_ber_mean`；`figures/plot_fig4_crossover.py:47-96,113-160`；A4 JSON `meta.gamma_eff_th=13.0`；`_a4_switch_30seed_fixed.py:64,75-90`。
+
+### C-A4-05: NDA-vs-DA 工作区等效 SNR 优势
+
+**结论**: 在预定义 `gamma_tot >= 15dB` 工作区，NDA 相对 DA 的 naive 等效 SNR 优势约为 downlink strong 1.3dB、uplink moderate 1.2dB、uplink strong 1.9dB。
+**安全等级**: ⚠️ 需限定（NDA-vs-DA、工作区平均；不是 switching 增益，也不是 HD-FEC 交点数字）
+**精确换算**: 2.508910−1.249387 = 1.259523dB；2.442983−1.249387 = 1.193596dB；3.101257−1.249387 = 1.851870dB。
+**能量口径**: pilot spacing=4 的 total-energy offset 为 `10log10(4/3)=1.249387dB`；`fair = naive + 1.249387dB`。
+**来源**: [common.py] `_main_experiment_30seed.json:fair_gain_per_seed.{strong,uplink_moderate,uplink_strong}.workregion_grand_mean_db` 与 `meta.pilot_overhead_db`；`simulator/fair_comparison.py:84-156`；`run_main_experiment_30seed.py:154-199`。
+
+---
+
 ## Ch3 结论（信道估计与灵敏度分析）
 
 ### C3-01: GG 衰落 QPSK BER 闭合解
@@ -432,3 +482,4 @@
 | 2026-06-02 | 创建。整合 SPEC §6 + verification-report + supplementary-experiments + investigation 文件 + S004 审查结论。 |
 | 2026-06-02 | 6-agent 完整性验证 + 来源追溯：修正 C3-03 湍流等级（中→弱）、澄清 C3-02 噪声模型等价性、所有结论添加代码来源标签（TL-24）、C4-08/C4-09 降级为待重验、新增待重验结论表（P-01~P-10）。 |
 | 2026-06-02 | common.py 重验完成: C4-08/R/Q/P ✅升级可写、C4-09 导频设计 ✅升级可写、P-05(+7.6dB)❌拒绝(非共享信道假象)、P-07(BS=20优)❌拒绝(方向反)、P-06 corr 更新为 0.18~0.27、P-01/02/03/08 标记为纯理论无需重验。 |
+| 2026-07-14 | 新增 CCISP/A4 可写结论 C-A4-01~05：冻结数据层、data BER、26/29、Fig.3 指标、crossover/13dB 分离及 NDA-vs-DA 工作区数字。 |
