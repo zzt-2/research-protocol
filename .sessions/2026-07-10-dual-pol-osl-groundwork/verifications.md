@@ -900,3 +900,26 @@ B004 count: 0
 ### 结论
 
 PASS。Headroom Atlas 强门入口、Stage A 可运行代表域诊断、append-only 审计、claim-scope gate 绑定、历史保护均可验收。Stage A 在 runnable 子域给出 LOCAL_NEGATIVE，但 DOMAIN/CANDIDATE/FAMILY 因 3 轴 INFRASTRUCTURE_BLOCKED + 历史反例落在被阻轴上仍 UNRESOLVED/OPEN；ML 仍禁止，B004/Queue/Registry 仍禁止。
+
+## V034: Portfolio Autopilot 目标设计独立审查
+
+> date: 2026-07-19
+> 关联：S078 / D060
+
+### 验证项
+
+- [x] owner 边界：campaign 只管组合预算、轮换和全局停机；不接管 runner、EvidenceGate、claim-scope、Sandbox canonical 或 formal master-state。
+- [x] 首轮 P0 修复：新增 portfolio-scope receipt，防止冻结偏窄 CandidateMap 后稳定跑偏；preflight 必须证明预算足够完成 6 个科学批次和 3 族。
+- [x] 首轮 P0 修复：6批/3族前的穷尽、预算或扩域早停必须绑定 frozen map hash，由独立 science critic PASS，并逐候选校验 blocker/替代路线/shared capability。
+- [x] 防刷批次：`scientific_question_id + artifact hash + assessment hash` 去重；capability-only 工作不计 6 批或 3 族。
+- [x] critic 分离：PRE/POST 两份 receipt，运行时注入 implementer/reviewer context ID，审 comparator information contract、deployability、统计单位、scope 和历史反例。
+- [x] 停机语义：6批/3族只可作为首轮 shadow 验收终点；生产 campaign 中只是 checkpoint，不能单独 CLOSE。
+- [x] 抗膨胀与复杂度：只新增 campaign 三文件、批次薄摘要和单一 `campaignctl`；无 DAG、插件、签名 registry、逐 cell 日志或 raw result 复制。
+
+### 证据
+
+第一轮独立审查：PARTIAL，2 个 P0、4 个 P1、1 个 P2。修订后第二轮：PASS，无残余 P0/P1；3 个实现接口 P2（event reducer closure、PRE/POST receipt、runtime context ID）已补入设计稿。
+
+### 结论
+
+PASS。目标设计可进入 implementation planning；这不是控制器实现、shadow campaign PASS 或新实验授权。

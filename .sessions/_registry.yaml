@@ -471,7 +471,7 @@ topics:
     title: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
     status: active
     created: "2026-07-10"
-    last_updated: "2026-07-19（S077/D059/V033：建立唯一 Headroom Atlas 强门入口 atlas_gate.py（TDD 19 tests + 独立对抗审查）；跑 baseline-only Stage A 11 cells × 10 paired seeds，runnable 代表子域 LOCAL_NEGATIVE（0/11 cells 达 MDE 0.005，max vh=0.00039），但 16QAM/receiver-CSI/coded-output 三轴 INFRASTRUCTURE_BLOCKED + 历史反例落在被阻轴上 → DOMAIN/CANDIDATE/FAMILY 仍 UNRESOLVED/OPEN；Stage B 不触发；ML/B004/Queue/Registry 仍禁止。）"
+    last_updated: "2026-07-19（S078/D060/V034：Portfolio Autopilot 目标设计经两轮独立审查由 PARTIAL 修至 PASS；首轮 shadow 至少 6 个有效批次、至少 3 个机制族。当前可进入实现计划，不授权 B004、ML 或新性能实验。）"
     description: "scenario-transfer-pivot D003 解锁双偏振空间后，按 FR-22 从 GW Step 1 重走地勘。搜索空间从单偏振扩到含双偏振 OSL（sat.1553 §6 偏振解复用层主轴 + §3/4/5 次 + 迁移源参照 + 综述锚）。S001 Step1-3完成（15查询43候选8子方向/9篇+sat1553精读/3Q#过四判据）。S002 Step4a完成：Q-DP1(动态SOP跟踪)Kill因A0§1致命（均衡器300krad/s高出湍流致SOP 1-2数量级，A物理基础不足D001）/ Q-DP2(CMA fade发散)Conditional Go（空白真实但需自建GG时间模型D002）/ Q-DP3(跨帧恢复)Conditional Go首选（物理基础最扎实D003）。S003-S004 D004攒材料+D005候选合并Q-CMA-FADE。S005-S013 完成 GG 时间模型、发散扫描、ML/CMA MVE、机制复核与双口径历史审计；D018 规定 fixed/PI 必须并报、PI 需流标识开销，并将 N=2M ML 优势限定在已审计参数域。"
     depends_on:
       - slug: 2026-07-10-scenario-transfer-pivot

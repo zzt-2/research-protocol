@@ -1,7 +1,7 @@
 # Topic Index: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
 
 > slug: 2026-07-10-dual-pol-osl-groundwork
-> status: active | created 2026-07-10 | last_updated 2026-07-19（S077/D059：建立唯一 Headroom Atlas 强门入口（TDD 19 tests + 独立对抗审查），跑 Stage A 11 cells × 10 paired seeds，runnable 代表子域 LOCAL_NEGATIVE（0/11 cells 达 MDE 0.005，max vh=0.00039），但 16QAM/receiver-CSI/coded-output 三轴 INFRASTRUCTURE_BLOCKED + 历史反例落在被阻轴上 → DOMAIN/CANDIDATE/FAMILY 仍 UNRESOLVED/OPEN；Stage B 不触发；ML/B004/Queue/Registry 仍禁止。）
+> status: active | created 2026-07-10 | last_updated 2026-07-19（S078/D060/V034：Portfolio Autopilot 目标设计经两轮独立审查由 PARTIAL 修至 PASS；首轮 shadow 至少 6 个有效批次、至少 3 个机制族，达到下限前局部事件不得请求用户方向拍板。当前可进入实现计划，不授权 B004、ML 或新性能实验。）
 
 ## 专题定位（一句话）
 
@@ -53,6 +53,7 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 - **[2026-07-19]** [D057] Inflation scope record（75 S 文件 + Direction Lab P03 closure）：S075 是 D045“深耕基点—候选族—批量排跑—晋级”工作流内的 residual-headroom Scout terminal closure，不是新研究方向，也未扩大 formal GW/Contract/Execute 范围。之所以新开 S075 而不追加 S074，是因为 S074 属 pilot-Jones Step3.5 文献门控，P03 属独立 Scout diagnostic，混写会破坏两条状态线。F1/G2 排除、formal FR-22 门和 S074 未决项均不变；本轮只记录 P03 A 出口及停止，不选择下一候选。
 - **[2026-07-19]** [D058] Inflation scope record（76 S 文件 + claim-scope P0纠错）：S076 从 P03 科学 closure 转为推理范围与流程规范纠错，性质不同于 S075，故新开编号。它仍服务 D045 的候选族批量探索，不扩大 formal GW/Contract/Execute；只纠正局部证据越级，并为后续 Headroom Atlas 增加通用机器门。
 - **[2026-07-19]** [D059] Inflation scope record（77 S 文件 + Headroom Atlas Stage A）：S077 是 D058 列为下一对话硬前置的 Atlas 阶段（唯一强门入口 + Stage A runnable 子域诊断），承接 S076 但性质不同（流程纠错 vs 实验+门实现），故新开编号而非追加 S076。仍服务 D045 候选族批量探索，不扩大 formal GW/Contract/Execute；runnable 子域 LOCAL_NEGATIVE 但不退候选/族。
+- **[2026-07-19]** [D060] Inflation scope record（79 个 S 文件、78 个唯一 S 编号 + Portfolio Autopilot 目标设计）：S078 从 P03 单候选科学诊断转为 D045 批量探索的组合级长跑控制设计，性质不同于 S077，故新开编号。额外 1 个文件来自既有 S033 重号债务，本轮不重命名历史。它只定义未来 6批/3族 shadow 的调度、双审查和全局停机边界，不实现控制器、不运行实验、不扩大 formal GW/Contract/Execute。
 
 ## 不变量（动任何一条必须重新讨论）
 
@@ -372,3 +373,4 @@ prompt030 双控扫描（2 域 × SOP_RATE×N × CMA/ML/oracle × 10 seeds，765
 - **S075/D057/V030**（2026-07-19）：一轮有限 archaeology 找回 `_gg_time.py` 精确 SHA `92eaa6…` 并固化为 raw Git blob；historical z-window `3d99d4…` exact equal。10-cell P03 probe 的 fixed/PI BER、SER 全0、visible headroom=0，按预注册 zero-headroom rule 触发 A；P03停止且不训练ML。独立终验43/43定向测试、7/7 runtime blobs、三次probe 6/6 SHA exact PASS。
 - **S076/D058/V031–V032**（2026-07-19）：保留S075运行事实并纠正其候选级停止解释；首轮绕过审查FAIL后，补齐结构化decision class、DOMAIN以上scope certificate、真实证据/hash、独立复核、统计灵敏度与内容寻址receipt。第二轮独立终验PASS；Atlas receipt consumer仍是运行前硬前置。
 - **S077/D059/V033**（2026-07-19）：建立唯一 Headroom Atlas 强门入口 `headroom-atlas/atlas_gate.py`（TDD 11 functional + 8 独立对抗测试 = 19 passed；不信任 PASS receipt 本身，对实时 assessment 字节重跑 validator；append-only 审计；token 类型分离 CELL_RUN/CLOSEOUT）。跑 baseline-only Stage A 11 cells × 10 paired seeds，覆盖 QPSK × SNR 5/10/15/20/25 dB × f_G 30/100/1000 Hz × SOP 4e-6/4e-5 × N 512/8192 × CSI_NONE × uncoded hard decision。0/11 cells 达 MDE 0.005（max visible headroom 0.00039，比 MDE 低 ~13×）；6/11 灵敏度受限（零错误但 rule-of-three UB > MDE），4/11 测得 negative（oracle affine 不胜 nearest on PI-SER）。exit=`NO_HEADROOM_IN_REPRESENTATIVE_DOMAIN_WITH_CERTIFICATE`；Stage B 不触发。3 轴 INFRASTRUCTURE_BLOCKED（16QAM/receiver-CSI/coded-output），历史反例（D008–D015/D023、U20 coded）恰好落在被阻轴上 → DOMAIN/CANDIDATE/FAMILY 仍 UNRESOLVED/OPEN。独立 verifier 子 agent 5 区全 PASS（B001–B003/canonical 未触、B004 不存在、gate SHA binding 一致、3 cells 重算逐位一致含 P03 v1 anchor 零错误精确复现、aggregation 自洽）。P03 当前 status 不变=`P03_DOMAIN_ADEQUACY_UNRESOLVED`；ML/B004/Queue/Registry 仍禁止。下一步用户决策：① P03 暂停回候选池；② 建一条干净 closure（最有杠杆 16QAM）扩域重跑 Stage A；③ 换候选族（U36 等）。
+- **S078/D060/V034**（2026-07-19）：完成 Direction Lab Portfolio Autopilot 目标设计。根因定位为单候选状态机和组合级停机权缺失；采用最小 `campaign.yaml + events.jsonl + reducer-built state.yaml + batch thin summary + campaignctl`，复用现有 CandidateMap/BatchPlan/EvidenceGate/claim-scope/canonical owners。首轮 shadow 要求至少 6 个有效批次、至少 3 个证据型机制族，每 2 批重排；达到下限前局部失败、阻断、critic FAIL 和正信号不触发用户方向拍板。独立审查首轮 PARTIAL，修复 scope/预算早停、刷批次、critic 独立性和生产停机漏洞后第二轮 PASS；当前可进入实现计划，尚未实现或运行。

@@ -3045,3 +3045,42 @@ Stage A 把 P03 v1 的 exact-slice LOCAL_NEGATIVE 扩展到一个更宽的可运
 ### 来源
 
 S077；触发原话见 voice.md 2026-07-19。
+
+---
+
+## D060: 采用最小 Portfolio Autopilot 作为 Direction Lab 长跑控制面
+
+> status: active
+> date: 2026-07-19
+> 取代：无（扩展 D045 的候选族批量探索；不改变 D058/D059 科学结论）
+> 被取代：无
+> 依据: S078 + 设计稿 `docs/superpowers/specs/2026-07-19-direction-lab-portfolio-autopilot-design.md` + 用户原话 voice.md 2026-07-19
+
+### 决策
+
+Direction Lab 下一阶段不再以单候选闭环作为长跑单位，而增加独立的组合级 Portfolio Autopilot。首轮 shadow campaign 必须至少完成 6 个有效批次、覆盖至少 3 个机制族；达到这个下限前，单批 `LOCAL_NEGATIVE`、`BLOCKED`、critic FAIL 或局部正信号均不得触发用户方向拍板，存在合法 runnable 候选时必须自动轮换。
+
+第一版只增加 `campaign.yaml + events.jsonl + reducer-built state.yaml + batch thin summaries` 和一个 `campaignctl`。它复用 CandidateMap、BatchPlan、现有 runner/EvidenceGate、claim-scope validator 与 Sandbox reducer；不接管具体算法运行，不保存 raw result，不写 `canonical-state.yaml` 或 `master-state.md`。启动前必须有 portfolio-scope receipt，证明冻结 Universe/Map 的覆盖、机制族分类、已知反例和被阻轴没有被选择性遗漏，并证明预算足以支持 6 个科学批次和 3 个机制族。
+
+晋级或 terminal claim 必须经过相互独立的 evidence verifier 与 science critic。前者审 provenance/hash/replay/history protection，后者审 estimand/单位/分母、统计灵敏度、comparator/oracle 合法性、scope 外推和历史反例。critic FAIL 保留 raw evidence 并阻止错误解释，但除 P0 外不停止组合调度。
+
+### 全局停止边界
+
+首轮 shadow 可在完成 6批/3族并做治理综合后结束；生产 campaign 达到 6批/3族只形成 checkpoint，仍须同时满足组合饱和、候选穷尽或预算终点。若在 6批/3族前声称组合穷尽、预算耗尽或必须扩域，必须由独立 science critic 对绑定 frozen map hash 的穷尽证书给出 PASS；脚本逐候选核对 blocker receipt、替代路线和共享 capability 判定。无法安全绕开的历史保护/P0 失败仍可直接进入全局停止审查。
+
+### 排除的替代方案
+
+- 不只靠更长提示词：上下文恢复后仍会退化，且同一 AI 容易自审通过。
+- 不继续堆 receipt、schema 和逐接口门：现有失败的核心是组合调度与停机权缺失，不是 provenance 门数量不足。
+- 不建设通用 DAG、插件系统、签名 registry 或统一 runner 基类：首轮明显过度设计。
+- 不把 campaign state 合并进 Sandbox canonical：两者分别拥有“组合进行态”和“verified Sandbox 完成态”。
+
+### 边界
+
+- 本决策只批准目标设计与后续实现规划，不授权 B004、ML 训练、新性能实验或正式研究晋级。
+- AI 保留候选生成/归并、代表点设计、排序、诊断和换族判断；脚本只强制预算、状态迁移、全局停机、类型化证据、双审查分离和历史保护。
+- 先完成一次 6批/3族 shadow 并复盘，才决定是否抽成 skill。
+
+### 来源
+
+S078；触发原话见 voice.md 2026-07-19。
