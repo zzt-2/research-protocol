@@ -27,6 +27,31 @@ candidate_triage_scope:
   - P02-U10
   - P03-U19
 
+claim_scope_axes:
+  semantics_owner: domain-comms.md
+  project_declaration_owner: projects/thesis-fso/direction-lab/adapters/dual-pol-osl.yaml
+  project_values:
+    modulation_order: [QPSK, 16QAM, other_if_mechanism_relevant]
+    SNR_or_operating_region: [low, waterfall_or_transition, high]
+    channel_or_state_dynamics: [turbulence_timescale, SOP_rate, carrier_dynamics_when_applicable]
+    observation_length: [short_interface_window, long_tracking_window]
+    CSI_or_pilot_access: [CSI_NONE, receiver_estimated_CSI, explicit_pilot_budget]
+    task_output: [hard_decision, soft_information_or_coded_metric, receiver_action]
+  selection_rule: choose only mechanism-relevant axes, but justify every fixed or omitted axis before a DOMAIN-or-higher claim
+
+historical_counterexamples:
+  - id: P03_QPSK_SHORT_ZERO_HEADROOM
+    evidence: scout/P03-U19-residual-headroom/residual-headroom-probe-status.yaml
+    scope: QPSK, CSI_NONE, uncoded hard-decision, frozen short slice
+    implication: local zero headroom; no inference about higher-order modulation, longer tracking, receiver-estimated CSI, or coded metrics
+  - id: MODULATION_DYNAMICS_LENGTH_ORDERING_SIGNAL
+    evidence: .sessions/2026-07-10-dual-pol-osl-groundwork/topic-index.md
+    status: HISTORICAL_SIGNAL_REQUIRES_REVALIDATION
+    implication: prior results report ordering changes across modulation, SNR, dynamics, and sequence length; future DOMAIN-or-higher exits must address them
+  - id: HARD_DECISION_DOES_NOT_CLOSE_CODED_PATH
+    evidence: scout/P03-U19-residual-headroom/residual-headroom-probe-status.yaml::implications_for_candidate_map.U20
+    implication: zero hard-decision errors do not resolve LLR, GMI, FER, or decoder behavior
+
 reuse_policy:
   old_results: import only with baseline SHA, valid parameter domain, metric contract and source closure
   old_kills: inherit only the original mechanism/implementation/domain/evidence scope

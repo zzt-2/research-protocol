@@ -73,8 +73,8 @@ candidates:
   - plan_id: P03-U19-RESIDUAL-HEADROOM-SCOUT
     candidate_ids: [U19, U36]
     capability: [estimative, observational]
-    status: P03_ANALYTIC_COVERAGE_GE_90
-    asset_readiness: SCOUT_DIAGNOSTIC_CLOSED
+    status: P03_DOMAIN_ADEQUACY_UNRESOLVED
+    asset_readiness: EXACT_SLICE_CLOSED_DOMAIN_OPEN
     lineage:
       previous_status: NOT_RUNNABLE
       previous_blocker: no_executable_input_causal_boundary_reproducible_output_and_legal_comparator
@@ -103,7 +103,7 @@ candidates:
     runner_capability:
       required: residual_headroom_probe_over_the_closed_CSI_NONE_interface
       existing: standard_cma_runner_z_window_adapter_residual_artifact_same_information_comparators_and_10_cell_probe
-      status: COMPLETED_SCOUT_PROBE_NOT_SANDBOX
+      status: COMPLETED_EXACT_SLICE_PROBE_DOMAIN_ATLAS_PENDING
     existing_implementation:
       - standard-CMA_real_output_zX_zY
       - causal_zX_zY_adapter_with_source_pointers
@@ -133,20 +133,22 @@ candidates:
       - projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/residual-headroom-probe-v1/probe-result.json
 
 decision:
-  verdict: P03_ANALYTIC_COVERAGE_GE_90
+  verdict: P03_DOMAIN_ADEQUACY_UNRESOLVED
   lineage:
-    previous_verdict: B_ALL_CANDIDATES_NOT_RUNNABLE
-    previous_reason: neither_candidate_had_all_of_executable_input_causal_boundary_reproducible_output_legal_comparator_and_minimal_smoke
-    superseded_by: P03_interface_closure_sprint
-  current_scout: none_selected
-  preferred_shortest_closure: completed_for_P03_CSI_NONE
+    previous_verdict: P03_ANALYTIC_COVERAGE_GE_90
+    previous_reason: historical_v1_zero_headroom_rule_closed_the_exact_slice
+    superseded_by: P03-U19-residual-headroom/claim-scope-assessment.v1.yaml
+  current_scout: P03-U19-BASELINE-HEADROOM-ATLAS
+  preferred_shortest_closure: representative_domain_headroom_atlas_before_any_ML
   why_not_p02: requires_new_dual_pol_carrier_cpr_event_chain_before_any_ml_event_library
-  p03_current_boundary: terminal_Scout_A; zero_visible_headroom_in_frozen_slice_no_ML_no_sandbox_queue
+  p03_current_boundary: exact_slice_local_negative; domain_candidate_family_unresolved_or_open; no_ML_no_sandbox_queue
   next_candidate_after_closure_failure: none_selected
-  next_candidate_guard: P03_exited; candidate_pool_and_next_selection_unchanged_in_this_milestone
+  next_candidate_guard: do_not_retire_P03_or_select_ML_until_representative_domain_and_sensitivity_gate
   allowed_next_actions:
-    - return_to_BatchPlan_candidate_family_selection_in_a_later_round
+    - run_baseline_only_multi_domain_Headroom_Atlas_under_batch_plan_v2
   forbidden_next_actions:
+    - train_P03_ML
+    - retire_P03_candidate_or_family_without_claim_scope_certificate
     - create_pass_queue
     - create_registry_or_fingerprint
     - start_B004

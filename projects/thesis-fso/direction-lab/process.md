@@ -1,6 +1,6 @@
 # Direction Lab 运行流程
 
-> 版本：DL-Process v0.3（2026-07-18）
+> 版本：DL-Process v0.4（2026-07-19）
 > 适用范围：通用研究探索内核；当前提供 Communications profile，并由 OSL project adapter 实例化
 > 状态：项目级执行规范；尚未打包为 Codex skill
 
@@ -109,6 +109,20 @@ Scout 必须先完成全景，再排序；不得因一个候选的正/负信号�
 
 因此，完成运行后更新状态不会反过来污染历史运行的 provenance。历史 batch 不得通过事后修改源快照来“修正”；B003 的旧 canonical bytes 已保存在 `state/projections/821415...yaml`，当前视图由 reducer 产生。
 
+### 3.3 证据范围与结论层级
+
+结论必须显式分为五级：`CELL → SLICE → DOMAIN → CANDIDATE → FAMILY`。`CELL` 是一个具体条件组合，`SLICE` 是预注册的局部条件集，`DOMAIN` 是有物理或任务含义的有效域，`CANDIDATE` 是一个具体机制与合同，`FAMILY` 是共享因果机制的候选族。
+
+- 结果只能直接更新其实测层级；从低层级向高层级推进必须附覆盖依据，不得默认外推。
+- `CELL/SLICE` 局部负结果最多记为 `LOCAL_NEGATIVE`；未覆盖的更高层级保持 `UNRESOLVED/OPEN`。
+- 每级 verdict 必须把自由文本 `status` 与机器枚举 `decision_class` 分开；`decision_class` 只能是 `NON_DECISIVE / LOCAL_NEGATIVE / ADVANCE / RETIRE`，不得靠状态名猜测是否为终局动作。
+- `DOMAIN`、`CANDIDATE` 或 `FAMILY` 的 `ADVANCE/RETIRE` 必须提供与最高决策层匹配的 scope certificate。代表域覆盖或 strong-baseline dominance 最高只支持 `CANDIDATE`；`FAMILY` 退出必须有跨候选的 `MECHANISM_PROOF`。
+- scope certificate 必须绑定真实 artifact/hash、独立验证 PASS、已执行的代表轴、统计灵敏度和历史反例处置；只填写计划轴或不存在的证据路径无效。
+- 每个 assessment 须列出已测试范围、五级 verdict、统计可见性和已知反例。已知反例未处理时，不得做 `DOMAIN/CANDIDATE/FAMILY` 退出。
+- 独立 verifier 除了核验数字与 provenance，还必须检查“证据允许推出的层级”是否与声称一致。
+
+具体领域如何解释 zero-headroom、统计灵敏度和代表性轴，由 Domain Profile 拥有；Project Adapter 只声明本项目的相关轴与历史反例。任何 readiness/triage/canonical 状态转换入口必须先调用 claim-scope validator，并保存验证 receipt；单独手工运行 CLI 不构成状态转换授权。
+
 ## 5. 代码与文件对齐
 
 项目目录是运行态唯一拥有者：
@@ -148,6 +162,7 @@ Evidence ledger 只保存 receipt、manifest/result hash 和 artifact pointer；
 - 连续两轮改善小于 10%，或机制诊断不朝假设方向变化，停止同一微变体扩展。
 - 同一机制族连续两批没有新增信息，返回 Scout，换到另一应用点或方法族。
 - 结果只在单 seed/单参数域有效时，只能 `RETAINED_SPECIFIC`，不得升为家族结论。
+- 一个 `CELL/SLICE` 没有观测到 headroom 时，只停止该局部条件下的训练；不自动停止 `DOMAIN/CANDIDATE/FAMILY`。
 - baseline 接近 oracle 时，转为边界/分析问题，不继续堆模型。
 - provenance 返工超过一次，暂停算力，先修 ledger/状态模型。
 - 正信号若可能修的是代码 bug，先做 baseline/实现对照，不得直接写成研究发现。
@@ -170,7 +185,7 @@ B001–B003 是 Communications profile 下的双偏振 OSL Project Adapter 实�
 
 B002 与 B003 的 U24 结果属于同一 exact contract；B003 的主要新增价值是治理链复核，而不是新的方法学证据。下一批不得继续重复 U24 微变体，也不得把 Logistic/MLP 的 exact-domain `ADVANCE_SPECIFIC` 扩展成方法族结论。
 
-canonical state reconciliation 已完成，当前机器状态指向 B003。当前 Scout 是 P03/U19：CSI_NONE 接口合同已闭合，但尚未形成 residual headroom 研究证据或 Sandbox 资格。下一唯一合法动作是 P03 residual headroom probe；在其退出前暂停新增候选、B004、ML 训练和流程扩展。
+canonical state reconciliation 已完成，当前机器状态指向 B003。P03/U19 的 CSI_NONE 接口与 exact-slice residual probe 已完成；QPSK/20 dB/短序列 slice 中没有可见判决 headroom，只支持局部负面，不能关闭 domain/candidate/family。当前状态为 `P03_DOMAIN_ADEQUACY_UNRESOLVED`。下一科学动作是 baseline-only multi-domain Headroom Atlas；在代表域、统计灵敏度与 claim-scope transition gate 闭合前，暂停 B004、P03 ML、Queue/Registry 和正式晋级。
 
 ## 9. 未来 skill 化要求
 

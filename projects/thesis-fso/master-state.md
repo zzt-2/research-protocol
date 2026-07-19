@@ -23,12 +23,12 @@ current_stage: FORMAL_BLOCKED
 ### 当前控制面桥接（唯一现行入口）
 
 - formal stage：`BLOCKED`。Direction Lab 的 Scout/Sandbox 结果对正式研究的 promotion effect 为 `none`。
-- formal blockers：P03 已以 `P03_ANALYTIC_COVERAGE_GE_90` 停止，未产生稳定 residual mismatch、Sandbox winner 或正式 GW/Contract promotion 证据；旧 Pilot-Jones Step 3.5/4a 链也未成为当前授权入口。
+- formal blockers：P03 的 QPSK/20 dB/CSI_NONE/短序列 slice 没有可见 headroom，但代表域覆盖不足，当前为 `P03_DOMAIN_ADEQUACY_UNRESOLVED`；尚无 Sandbox winner 或正式 GW/Contract promotion 证据。旧 Pilot-Jones Step 3.5/4a 链也未成为当前授权入口。
 - Direction Lab sandbox history：当前 last completed batch = `B003 / COMPLETED_SANDBOX_VERIFIED`；事实源为 `projects/thesis-fso/direction-lab/state/completion-events.jsonl` 与对应不可变 projection。`canonical-state.yaml` 仅为机器投影，不是正式研究授权源。
-- current scout candidate：无；`P03/U19 residual-aware detection` 已完成并停止。
-- scout status：`P03_ANALYTIC_COVERAGE_GE_90`；10-cell 冻结 slice 的 visible headroom=0、coverage=1.0（zero-headroom rule），terminal contract snapshot = `projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/scout-contract.v2.yaml`。
+- current scout candidate：`P03/U19 residual-aware detection`，仅 exact slice 局部负面，domain/candidate/family 未决或开放。
+- scout status：`P03_DOMAIN_ADEQUACY_UNRESOLVED`；历史 `P03_ANALYTIC_COVERAGE_GE_90` 保留为 exact-slice machine verdict，zero-headroom 的 adjudicated coverage 为不可适用而非实测100%覆盖。权威纠正投影见 `claim-scope-assessment.v1.yaml`。
 - formal promotion effect：`none`；B001–B003 数字不得进入论文或正式材料。
-- 下一合法边界：后续另轮回到 BatchPlan 做候选族选择；本轮不选择下一候选。不得启动 B004、P03 ML 训练、Queue/Registry 或框架扩展。
+- 下一合法边界：先为 `direction-lab/batch-plan.v2.yaml` 建立并测试唯一的 Headroom Atlas preflight/assessment receipt consumer；通过后再做 baseline-only multi-domain Headroom Atlas，覆盖代表性的调制、SNR、动态性、序列长度、CSI与输出任务。不得启动 B004、P03 ML 训练或 Queue/Registry。
 
 ### 历史 Groundwork 轨迹（保留审计，不授权当前执行）
 

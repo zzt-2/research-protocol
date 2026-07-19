@@ -777,7 +777,7 @@ PARTIAL：三轮检索已经在数量与新增候选维度收敛，最高引用�
 
 ### 后续（PARTIAL 时）
 
-优先在限速恢复后用 Semantic Scholar/OpenAlex DOI 端点重取 JLT 2022 backward references；若API持续不可用，获取JLT 2022全文/正式参考文献表或使用可审计的Crossref/OpenAlex works引用关系完成后向链。取得真实 backward 列表、筛查并确认无新增直接竞品后，再做 V031（V030 后用于 P03 终验）；不需要第四轮关键词泛搜。
+优先在限速恢复后用 Semantic Scholar/OpenAlex DOI 端点重取 JLT 2022 backward references；若API持续不可用，获取JLT 2022全文/正式参考文献表或使用可审计的Crossref/OpenAlex works引用关系完成后向链。取得真实 backward 列表、筛查并确认无新增直接竞品后，再使用下一可用 V### 记录终验；不需要第四轮关键词泛搜。
 
 ## V030: P03 residual-headroom Scout 最终独立终验
 
@@ -828,3 +828,41 @@ projects/simulation/common + params.py + canonical-state.yaml diff: empty
 ### 结论
 
 PASS
+
+## V031: P03 claim-scope gate 首轮绕过审查
+
+> date: 2026-07-19
+> 关联：S076 / D058
+
+### 验证项
+
+- [x] 当前 P03 overlay 与 raw artifact、V030 数字一致；B001–B003、raw P03 artifact、canonical/state 未修改，B004 不存在。
+- [x] 初版 CLI 对当前 overlay 返回 PASS；定向 suite 为 `68 passed`。
+- [ ] `FAMILY=ADVANCE` 且无证书时被阻断：实际返回 `errors=[]`。
+- [ ] 复合状态 `P03_STOPPED_WITHOUT_ML` 且无证书时被阻断：实际返回 `errors=[]`。
+- [ ] 伪 evidence pointer、未达标 sensitivity 和 coverage `pass=false` 的 retirement certificate 被阻断：实际返回 `errors=[]`。
+- [ ] claim-scope gate 已绑定唯一状态转换入口：初版只有可跳过的独立 CLI。
+
+### 结论
+
+FAIL。五级 lattice 和 P03 纠错投影方向正确，但首版脚本仍依赖自由文本状态名，并且只检查证书字段形状，不能作为强门。不得据此进入 Headroom Atlas。必须改为机器枚举 `decision_class`、DOMAIN 以上双向证书、真实证据/独立复核/统计灵敏度校验，并让合法入口产生和消费 PASS receipt 后再做下一次独立复核。
+
+## V032: P03 claim-scope gate 修复后独立终验
+
+> date: 2026-07-19
+> 关联：S076 / D058 / V031
+
+### 验证项
+
+- [x] 上轮三项 P0 绕过（无证书 FAMILY ADVANCE、复合 STOP 状态、伪证据与不达标 sensitivity）均被实际阻断。
+- [x] 五级 verdict 使用结构化 `decision_class`；DOMAIN 以上 ADVANCE/RETIRE 强制 scope certificate，FAMILY 退出强制 mechanism proof。
+- [x] evidence pointer/hash、独立 verifier PASS、`achieved_upper_bound <= target_effect`、coverage/certificate 一致性均有反例测试。
+- [x] zero-headroom canonical token 在 owner/profile/validator/overlay 中统一为 `NOT_APPLICABLE_ZERO_HEADROOM`。
+- [x] P03 overlay CLI PASS，validation receipt 的 assessment SHA、validator SHA 与 receipt ID 一致。
+- [x] Project Adapter 与 BatchPlan 使用相同六个 canonical axis key。
+- [x] 定向回归 `88 passed, 137 deselected`；最终 quick smoke `42 passed`；9 个相关 YAML 解析 PASS。
+- [x] B001–B003、raw P03 artifacts、canonical/state 无改动；B004 不存在。
+
+### 结论
+
+PASS。本轮流程纠错与强门可验收。Headroom Atlas 的 receipt consumer 尚未实现，已作为下一对话运行前硬前置：consumer 建成并测试前，不得执行 Atlas cell 或更新 readiness/triage/canonical 状态。

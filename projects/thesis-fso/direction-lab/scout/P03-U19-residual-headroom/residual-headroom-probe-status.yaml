@@ -3,6 +3,15 @@ candidate: P03/U19
 date: 2026-07-19
 final_status: P03_ANALYTIC_COVERAGE_GE_90
 primary_verdict: P03_ANALYTIC_COVERAGE_GE_90
+status_semantics: HISTORICAL_EXACT_SLICE_MACHINE_VERDICT
+claim_scope_assessment: claim-scope-assessment.v1.yaml
+adjudicated_candidate_status: P03_DOMAIN_ADEQUACY_UNRESOLVED
+adjudicated_verdicts:
+  cell: NO_VISIBLE_HEADROOM
+  slice: LOCAL_NEGATIVE
+  domain: UNRESOLVED
+  candidate: OPEN
+  family: OPEN
 probe_executed: true
 scientific_finding: >-
   在冻结的 10 个 CSI_NONE paired cells 中，standard-CMA 后的 nearest-QPSK、blind affine 和
@@ -135,4 +144,4 @@ guards:
   parameter_domain_expanded: false
   sandbox_status: NOT_ENTERED
 
-next_only_legal_action: return to BatchPlan candidate-family selection in a later round; this milestone selects or starts no next candidate
+next_only_legal_action: run a baseline-only multi-domain Headroom Atlas under batch-plan.v2.yaml; do not train P03 ML or retire the candidate/family before claim-scope certification

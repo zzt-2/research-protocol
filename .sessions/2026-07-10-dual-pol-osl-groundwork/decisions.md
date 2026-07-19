@@ -2939,10 +2939,10 @@ OE 2021三pilot tones逐block RSOP矩阵估计、TCOM 2025 pilot-symbol ML/EM RS
 
 ## D057: P03 residual-headroom Scout 触发 A 出口并停止
 
-> status: active
+> status: superseded
 > date: 2026-07-19
 > 取代：无（D044 是 formal Q14 门控，继续保留）
-> 被取代：无
+> 被取代：D058（仅取代候选级停止解释；10-cell 运行事实与当前 slice 不训练 ML 继续有效）
 > 依据: 验证数据 `projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/residual-headroom-probe-v1/probe-result.json` + deterministic rerun report + 用户原话 voice.md 2026-07-19
 
 ### 决策
@@ -2969,3 +2969,39 @@ P03/U19 在冻结的 CSI_NONE、uncoded hard-decision Scout slice 中以 `P03_AN
 ### 来源
 
 S075；触发原话见 voice.md 2026-07-19。
+
+---
+
+## D058: 局部 P03 负面结论降级并建立五级结论范围门
+
+> status: active
+> date: 2026-07-19
+> 取代：D057 的候选级停止解释
+> 被取代：无
+> 依据: 验证: V030 的 10-cell 数据 + D008–D014/D023 中 QPSK/16QAM、SNR、动态性和序列长度反例 + 用户原话: voice.md 2026-07-19
+
+### 决策
+
+P03 v1 只关闭已测试的 QPSK/20 dB/CSI_NONE/短序列 cell/slice；domain、P03/U19 candidate 与 residual/analytic-hybrid family 保持未决或开放。Direction Lab 新增 `CELL → SLICE → DOMAIN → CANDIDATE → FAMILY` 五级结论门，低级证据不得无证书更新高级状态。
+
+### 理由
+
+P03 的运行和算术正确，但 zero visible headroom 被合同记为 coverage=1.0，并进一步投影为 P03 terminal stop。该切片只有单一调制、SNR、动态条件和短评价窗口；历史证据已经显示 baseline 排名会随 16QAM、SNR、SOP/fG 和序列长度改变。因此问题属于推理范围越级，而不是运行真实性失败。
+
+### 排除的替代方案
+
+- 不删除或重算 P03 v1 raw artifact：它们仍是真实历史证据。
+- 不继续靠提示词提醒“不要外推”：同类错误反复出现，必须有机器门。
+- 不把所有维度做成固定全因子硬编码：具体代表轴由 Domain Profile/Project Adapter 声明，Universal Core 只检查覆盖、排除理由和证书。
+- 不修改 legacy v3 controller/Queue validator：其 SHA 已被 B003 历史绑定；新门独立实现，未来 v4 再集成。
+
+### 影响范围
+
+- P03 当前状态改为 `P03_DOMAIN_ADEQUACY_UNRESOLVED`；当前 slice 仍不训练 ML。
+- zero-headroom 在 adjudication 层必须为 `NOT_APPLICABLE_ZERO_HEADROOM`、numeric coverage=`null`、pass=`false`；历史机器值1.0只作 lineage。
+- domain/candidate/family 的 ADVANCE 或 RETIRE 都必须有与决策层级匹配的 scope certificate，并处理统计灵敏度、真实证据与历史反例；代表域覆盖证书最高只支持 candidate，family 退出必须使用 mechanism proof。
+- 下一科学动作是 baseline-only multi-domain Headroom Atlas；B004、P03 ML、Queue/Registry 和论文晋级继续禁止。
+
+### 来源
+
+S076；用户纠正，见 voice.md 2026-07-19。

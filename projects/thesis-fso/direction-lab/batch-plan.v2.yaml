@@ -1,0 +1,53 @@
+schema_version: direction-lab.batch-plan-overlay.v1
+plan_id: plan.dual-pol-osl.ml.2026-07-19.v2
+status: SCOUT_PLAN_ONLY
+lineage:
+  base_file: batch-plan.v1.yaml
+  base_plan_id: plan.dual-pol-osl.ml.2026-07-18.v1
+  preserve_base: true
+  correction_reason: P03 v1 closed only one QPSK/20dB/CSI_NONE/short-sequence slice; it did not support candidate-level retirement
+claim_scope_gate:
+  validator: tools/validate_claim_scope.py
+  p03_assessment: scout/P03-U19-residual-headroom/claim-scope-assessment.v1.yaml
+  validation_receipt: scout/P03-U19-residual-headroom/claim-scope-validation-receipt.v1.yaml
+  transition_rule: every readiness/triage/canonical update must consume a fresh PASS receipt bound to the exact assessment and validator hashes
+  required_levels: [CELL, SLICE, DOMAIN, CANDIDATE, FAMILY]
+  zero_headroom_semantics: NOT_APPLICABLE_ZERO_HEADROOM
+current_candidate:
+  id: P03/U19
+  status: P03_DOMAIN_ADEQUACY_UNRESOLVED
+  exact_slice_status: LOCAL_NEGATIVE_NO_VISIBLE_HEADROOM
+  family_status: OPEN
+next_batch:
+  id: P03-BASELINE-HEADROOM-ATLAS-SCOUT
+  tier: Scout
+  objective: map where the strongest legal non-ML receiver retains measurable decision or soft-information headroom before training ML
+  ml_training: forbidden
+  required_axes_source: adapters/dual-pol-osl.yaml
+  required_axes:
+    - modulation_order
+    - SNR_or_operating_region
+    - channel_or_state_dynamics
+    - observation_length
+    - CSI_or_pilot_access
+    - task_output
+  minimum_modulations: [QPSK, 16QAM]
+  design_rule: use staged representative coverage rather than an exhaustive full-factorial grid
+  prerequisites:
+    - clean QPSK and 16QAM dual-pol runner paths with modulation-appropriate strong baselines
+    - preregistered minimum detectable effect or confidence bound
+    - historical counterexamples disposition
+    - same-information comparator per output task
+    - a single Headroom Atlas preflight and assessment entrypoint that invokes the claim-scope gate and refuses state updates without a fresh PASS receipt
+  exits:
+    - HEADROOM_DOMAIN_FOUND
+    - NO_HEADROOM_IN_REPRESENTATIVE_DOMAIN_WITH_CERTIFICATE
+    - INSUFFICIENT_SENSITIVITY
+    - INFRASTRUCTURE_BLOCKED
+guards:
+  B001_B002_B003_read_only: true
+  B004_forbidden: true
+  P03_ML_training_forbidden: true
+  Queue_Registry_forbidden: true
+  formal_promotion_forbidden: true
+  no_candidate_or_family_exit_without_certificate: true

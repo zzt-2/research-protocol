@@ -9,8 +9,8 @@
 - **方向**：双偏振星地 OSL 场景中的 ML 应用方向探索；正式研究与 Direction Lab Scout/Sandbox 分层管理。
 - **正式状态**：`BLOCKED`。Direction Lab 的 exploratory evidence 对正式 Groundwork/论文 promotion effect 为 `none`。
 - **Direction Lab Sandbox 历史**：B003 已完成，状态 `COMPLETED_SANDBOX_VERIFIED`；批次事实以 completion events 和不可变 projection 为证据，B001–B003 数字均不可进入论文或正式材料。
-- **当前 Scout**：P03/U19 residual-aware detection 已以 `P03_ANALYTIC_COVERAGE_GE_90` 完成并停止；10-cell 冻结 slice 的 visible headroom=0，Sandbox `NOT_ENTERED`。
-- **下一合法边界**：后续另轮回到 BatchPlan 做候选族选择；本里程碑不选择下一候选，不启动 B004，不训练 P03 ML，不创建 Queue/Registry。
+- **当前 Scout**：P03/U19 的 QPSK/20 dB/CSI_NONE/短序列 slice 为局部负面；candidate 当前 `P03_DOMAIN_ADEQUACY_UNRESOLVED`，domain/family 未关闭，Sandbox `NOT_ENTERED`。
+- **下一合法边界**：先为 Direction Lab BatchPlan v2 建立并测试唯一的 Headroom Atlas preflight/assessment receipt consumer；通过后再做 baseline-only multi-domain Headroom Atlas。不启动 B004，不训练 P03 ML，不创建 Queue/Registry。
 - **入口**：`projects/thesis-fso/master-state.md` → `projects/thesis-fso/direction-lab/README.md`；机器状态溯源见 `projects/thesis-fso/direction-lab/state/completion-events.jsonl` 与 `state/projections/`，`canonical-state.yaml` 不是正式研究授权源。
 
 ### leo-mega-constellation-gnn-routing

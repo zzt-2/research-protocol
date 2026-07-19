@@ -1,7 +1,7 @@
 # Topic Index: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
 
 > slug: 2026-07-10-dual-pol-osl-groundwork
-> status: active | created 2026-07-10 | last_updated 2026-07-19（S075/D057：P03/U19 exact source closure 恢复，10-cell residual-headroom Scout 触发 `P03_ANALYTIC_COVERAGE_GE_90`；冻结 slice visible headroom=0，停止 P03、不训练 ML。formal research 仍 BLOCKED，S074 pilot-Jones Step3.5 门控不变。）
+> status: active | created 2026-07-10 | last_updated 2026-07-19（S076/D058：P03 v1 的10-cell事实保留，但候选级停止被纠正为 exact-slice 局部负面；新增五级 claim-scope 门，当前 `P03_DOMAIN_ADEQUACY_UNRESOLVED`，下一步为 baseline-only multi-domain Headroom Atlas。）
 
 ## 专题定位（一句话）
 
@@ -51,6 +51,7 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
   - 新范围：软件 DSP/ML A-E+H 内可自主排序、止损和换候选；每个候选必须 Q#+GW 全链。F1 硬件和 G2 协议仍明确排除，不能借“自主换向”静默解禁。
   - 影响的未决项：strict equivariance/e2cnn 由 D043 A0 NO-GO；下一候选 residual cascade 从 GW Step 1 开始；Contract/feasibility/literature/briefing 的旧状态留下一批同步，当前不进 MVE/Execute。
 - **[2026-07-19]** [D057] Inflation scope record（75 S 文件 + Direction Lab P03 closure）：S075 是 D045“深耕基点—候选族—批量排跑—晋级”工作流内的 residual-headroom Scout terminal closure，不是新研究方向，也未扩大 formal GW/Contract/Execute 范围。之所以新开 S075 而不追加 S074，是因为 S074 属 pilot-Jones Step3.5 文献门控，P03 属独立 Scout diagnostic，混写会破坏两条状态线。F1/G2 排除、formal FR-22 门和 S074 未决项均不变；本轮只记录 P03 A 出口及停止，不选择下一候选。
+- **[2026-07-19]** [D058] Inflation scope record（76 S 文件 + claim-scope P0纠错）：S076 从 P03 科学 closure 转为推理范围与流程规范纠错，性质不同于 S075，故新开编号。它仍服务 D045 的候选族批量探索，不扩大 formal GW/Contract/Execute；只纠正局部证据越级，并为后续 Headroom Atlas 增加通用机器门。
 
 ## 不变量（动任何一条必须重新讨论）
 
@@ -100,13 +101,14 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 - **D 类历史注册域 MVE KILL（S030/D036；D034 REJECTED，D035 superseded）**：系统诊断确认 2/5→0/5 漂移来自 strong Gamma-Gamma 参数由 D022 的 `1.5/0.8` 变为当前 `4.2/1.4`；隔离脚本冻结历史输入后精确恢复 `{1000,1003}` 2/5 swap。D1/D2 mean PI=0.01505264，高于 L0=0.01043760，0/5 胜、p=1.0，KILL；触发集合断言和 forced-switch=L0 均 PASS。baseline drift 债务关闭，未改 common/params.py。
 - **E 类 pilot 前置 DEFER（S031/D037）**：test 段 pilot 直接估 SOP/Jones 并前馈补偿，通过 D031。正确检索计数为首组混合源 10 条、其余 4 组 arXiv 0 条；2023 JLT `10.1109/JLT.2023.3253383` 已直接占据“插入 pilot 估信道+前馈补偿跟踪 fast SOP”，并有 2018/2023/2024/2026 pilot/data-aided SOP 链。FSO 是场景迁移但方法增量未证、关键全文/直接 FSO 覆盖仍缺，四判据保持 PASS/UNRESOLVED/PASS/UNRESOLVED，故不准入性能 MVE。`prompt028` gate 仅固化合同（`performance_mve_run=false`）。H013 C→B→D→E 扫描结束，无 Go；defer 不计 Kill。
 - **strict equivariance/e2cnn fixed-label 路线 A0 NO-GO（S036/D043）**：e2cnn SO(2)/E(2) 的二维空间特征表示与 Jones U(2)/SU(2) 双复偏振作用不匹配；即使实现正确 Jones 等变，等变性也不提供绝对 X/Y 标签锚点，不能从盲观测消除排列/相位歧义。该结论只否决其 fixed-label 解法定位，不否决等变结构用于 PI-BER/残差任务。
-- **P03 residual-headroom Scout A 出口（S075/D057）**：精确历史 source closure 与 z-window 已确定性恢复；10/10 冻结 CSI_NONE cells 的 nearest/blind/oracle fixed/PI BER、SER 均为0，visible headroom=0，coverage按zero-headroom rule=1.0。停止P03、不训练ML；非零模拟 residual 不得冒充 decision headroom。只约束当前 slice，不外推整个 U19/U36 或 U20 coded-LLR。
+- **P03 exact-slice 局部负面与范围纠错（S075–S076/D057–D058）**：精确 source closure 与10-cell零错误事实有效；历史coverage=1.0仅是v1零分母约定。claim-scope adjudication为cell无headroom、slice局部负面、domain未决、candidate/family开放。当前slice不训练ML，但P03需先做代表域Headroom Atlas才可候选级退出。
 
 ## 当前位置
 
-**S075 P03 residual-headroom Scout 已完成 A 出口，V030 独立终验 PASS — 2026-07-19**。
+**S076 P03 claim-scope 纠错已完成，Headroom Atlas 待启动 — 2026-07-19**。
 
-- P03 status=`P03_ANALYTIC_COVERAGE_GE_90`；10-cell visible headroom=0；停止 P03，不训练 ML，不创建 B004/Queue/Registry。
+- P03 exact-slice历史status=`P03_ANALYTIC_COVERAGE_GE_90`，当前candidate status=`P03_DOMAIN_ADEQUACY_UNRESOLVED`；10-cell visible headroom=0只关闭该slice。
+- 下一步为baseline-only multi-domain Headroom Atlas；在代表域与统计灵敏度闭合前，不训练P03 ML，不创建B004/Queue/Registry，也不退休candidate/family。
 - formal research 仍 BLOCKED；S074 pilot-Jones Step3.5 与 V029 backward-chain 债务不因 P03 改变。
 - 本里程碑不选择下一候选；若后续继续，另轮回 BatchPlan 选择既有候选族。
 
@@ -358,3 +360,4 @@ prompt030 双控扫描（2 域 × SOP_RATE×N × CMA/ML/oracle × 10 seeds，765
 - **S073**（2026-07-17）：Step3.5 41篇canonical结果与5篇direct浅读已集成；主控provenance复核纠正“5篇均无全文”的错误回报——OE2021已有完整HTML全文并转正式精读，其余4篇维持摘要级债务。V028待精读集成后执行，未提前进入4a。
 - **S074/V028**（2026-07-17）：独立门控发现R1新增4必读+1建议未收敛、R2存在JLT2023 PDL/FPT直接竞品去重口径争议，且LCOMM(0 citations)不满足最高引用双向链要求；V028=PARTIAL，R3与JLT2022/OE2021引用链补检执行中，Step4a继续封锁。
 - **S075/D057/V030**（2026-07-19）：一轮有限 archaeology 找回 `_gg_time.py` 精确 SHA `92eaa6…` 并固化为 raw Git blob；historical z-window `3d99d4…` exact equal。10-cell P03 probe 的 fixed/PI BER、SER 全0、visible headroom=0，按预注册 zero-headroom rule 触发 A；P03停止且不训练ML。独立终验43/43定向测试、7/7 runtime blobs、三次probe 6/6 SHA exact PASS。
+- **S076/D058/V031–V032**（2026-07-19）：保留S075运行事实并纠正其候选级停止解释；首轮绕过审查FAIL后，补齐结构化decision class、DOMAIN以上scope certificate、真实证据/hash、独立复核、统计灵敏度与内容寻址receipt。第二轮独立终验PASS；Atlas receipt consumer仍是运行前硬前置。

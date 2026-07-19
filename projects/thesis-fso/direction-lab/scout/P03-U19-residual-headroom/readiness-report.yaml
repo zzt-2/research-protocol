@@ -1,10 +1,14 @@
 schema_version: direction-lab.p03-readiness-report.v1
 report_id: P03-U19-interface-closure-20260718
 candidate: U19
-process: DL-Process v0.3
+historical_process: DL-Process v0.3
+adjudication_process: DL-Process v0.4
 profile: Communications
 project_adapter: dual-pol OSL
 final_verdict: P03_ANALYTIC_COVERAGE_GE_90
+final_verdict_scope: HISTORICAL_EXACT_SLICE_ONLY
+claim_scope_assessment: claim-scope-assessment.v1.yaml
+adjudicated_candidate_status: P03_DOMAIN_ADEQUACY_UNRESOLVED
 interface_readiness_verdict: P03_SCOUT_CONTRACT_READY
 probe_executed: true
 terminal_contract_snapshot: scout-contract.v2.yaml
@@ -101,12 +105,13 @@ probe_result:
   pi_ser_max: 0.0
   residual_energy_cv: 0.7039620405059673
   scope: frozen CSI_NONE uncoded hard-decision Scout slice only
-sandbox_prerequisites: NOT_APPLICABLE_P03_STOPPED_WITHOUT_ML
+sandbox_prerequisites: NOT_APPLICABLE_PENDING_MULTI_DOMAIN_HEADROOM_ATLAS
 post_probe_closure_reason: >-
   Exact source recovery makes the historical interface smoke self-contained and byte-reproducible. Across the
   preregistered 10 cells, nearest-QPSK and the scoring-only oracle affine both have zero fixed-label/PI BER and SER,
-  leaving zero visible headroom. The zero-headroom analytic-coverage exit therefore stops P03 without ML; it does
-  not permit a Queue, Registry, Sandbox batch, B004, formal promotion, or a paper claim.
+  leaving zero visible headroom in that exact slice. The historical v1 zero-headroom rule closed the slice without ML,
+  but claim-scope adjudication does not retire the domain, candidate, or family. A baseline-only multi-domain Headroom
+  Atlas is required before any higher-level exit; Queue, Registry, B004, formal promotion and paper claims remain blocked.
 reproduction_commands:
   tests: python -m pytest projects/thesis-fso/direction-lab/tests -q -k p03_
   smoke: >-

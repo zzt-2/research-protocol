@@ -23,6 +23,16 @@ metric_rules:
   estimator_metrics: must declare target, error population, causal inputs and comparator
   warning_metrics: require event definition, persistence and lead-time contract before performance use
   llr_metrics: require a legal CSI contract and same-information coded comparator
+  zero_headroom: machine status is NOT_APPLICABLE_ZERO_HEADROOM (mathematically undefined/not applicable); a historical zero-denominator sentinel must remain labeled as a sentinel
+  statistical_sensitivity: declare minimum detectable effect, sample or error-event count, confidence bound, and INSUFFICIENT_SENSITIVITY fallback
+
+claim_scope_rules:
+  lattice_owner: projects/thesis-fso/direction-lab/process.md
+  metric_semantics_owner: domain-comms.md
+  levels: [CELL, SLICE, DOMAIN, CANDIDATE, FAMILY]
+  representative_axes_are_mechanism_specific: true
+  communications_axes_to_review: [modulation_order, SNR_or_operating_region, channel_or_state_dynamics, observation_length, CSI_or_pilot_access, task_output]
+  known_counterexample_required_before_domain_exit: true
 
 baseline_rules:
   canonical_identity_source: projects/thesis-fso/direction-lab/anchor.yaml

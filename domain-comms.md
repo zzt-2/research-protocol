@@ -160,6 +160,15 @@
 | 只看均值不看分布 | 忽略显著性 | leo-channel-pred 初始结果 | 配对 t 检验 / Wilcoxon 检验，报告 p 值 |
 | 只看中间指标不看应用指标 | SNR MAE 达标但 MCS 不达标 | isl-acm-pred E006 | 应用指标（MCS 一致率、BER）优先于中间指标（SNR MAE） |
 
+### Zero-headroom 与统计灵敏度
+
+> 结论层级由 `projects/thesis-fso/direction-lab/process.md` 唯一定义；本节只定义通信指标的解释语义。
+
+- 可见 headroom 为 0 时，coverage 的机器状态统一记为 `NOT_APPLICABLE_ZERO_HEADROOM`（数学含义是零分母下未定义/不适用），不得写成实测 100% 改善。历史合同若用 `coverage=1.0` 处理零分母，必须保留原值并另写该解释。
+- BER/SER/FER 的零错误只能报告在当前样本量下未观测到错误；必须同时给出预注册的最小可检测差异、样本/错误事件数和置信上界。未达灵敏度时状态为 `INSUFFICIENT_SENSITIVITY`，不得声称 baseline 在更高层级“已完美”。
+- 代表域须按机制选择轴，而非强制全因子。至少审查调制阶数、SNR/工作区、信道或状态动态性、观测时长、CSI/导频信息等级，以及 hard decision 与 LLR/GMI/FER 等任务输出。不相关的轴可固定，但必须写明理由。
+- 已有历史结果表明排序会随调制、SNR、动态性或序列长度变化时，新 probe 必须引用这些反例或说明为何不影响当前声称；否则只能得到 `CELL/SLICE` 结论。
+
 ---
 
 ## 4. 结果可视化

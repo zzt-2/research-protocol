@@ -1,0 +1,6 @@
+assessment_sha256: 7a6880ab0dd91953f0263d85bb8653c69237401da97cf0ce4effadba43310c30
+receipt_id: c088057fbc46d3598d13e320fde7549da84609a1a177ccdb2695a53bebbdf449
+schema_version: direction-lab.claim-scope-validation-receipt.v1
+status: PASS
+validator_sha256: ccdbd47c46ce078d8dd27b97e9c99dd8066a7aa8015cc11956931be649123066
+validator_version: direction-lab.claim-scope.v1

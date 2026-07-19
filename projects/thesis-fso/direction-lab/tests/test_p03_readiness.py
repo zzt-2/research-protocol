@@ -42,5 +42,31 @@ def test_scout_contract_and_readiness_report_close_only_csi_none_scout_gate() ->
     assert report["b004_started"] is False
     assert report["receiver_state_changed"] is False
     assert all(package["status"] == "PASS" for package in report["work_packages"])
-    assert report["sandbox_prerequisites"] == "NOT_APPLICABLE_P03_STOPPED_WITHOUT_ML"
+    assert report["sandbox_prerequisites"] == "NOT_APPLICABLE_PENDING_MULTI_DOMAIN_HEADROOM_ATLAS"
+    assert report["final_verdict_scope"] == "HISTORICAL_EXACT_SLICE_ONLY"
+    assert report["adjudicated_candidate_status"] == "P03_DOMAIN_ADEQUACY_UNRESOLVED"
+    assert report["claim_scope_assessment"] == "claim-scope-assessment.v1.yaml"
+    assert report["historical_process"] == "DL-Process v0.3"
+    assert report["adjudication_process"] == "DL-Process v0.4"
     assert report["post_probe_closure_reason"].startswith("Exact source recovery")
+
+
+def test_headroom_atlas_plan_uses_adapter_canonical_axis_keys() -> None:
+    adapter = yaml.safe_load((LAB_ROOT / "adapters" / "dual-pol-osl.yaml").read_text(encoding="utf-8"))
+    plan = yaml.safe_load((LAB_ROOT / "batch-plan.v2.yaml").read_text(encoding="utf-8"))
+
+    assert plan["next_batch"]["required_axes_source"] == "adapters/dual-pol-osl.yaml"
+    assert set(plan["next_batch"]["required_axes"]) == set(
+        adapter["claim_scope_axes"]["project_values"]
+    )
+
+
+def test_p03_claim_scope_receipt_binds_exact_assessment_and_validator() -> None:
+    receipt = yaml.safe_load((ROOT / "claim-scope-validation-receipt.v1.yaml").read_text(encoding="utf-8"))
+    assert receipt["status"] == "PASS"
+    assert receipt["assessment_sha256"] == hashlib.sha256(
+        (ROOT / "claim-scope-assessment.v1.yaml").read_bytes()
+    ).hexdigest()
+    assert receipt["validator_sha256"] == hashlib.sha256(
+        (LAB_ROOT / "tools" / "validate_claim_scope.py").read_bytes()
+    ).hexdigest()
