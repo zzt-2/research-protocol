@@ -1,0 +1,86 @@
+schema_version: direction-lab.p03-residual-headroom-probe.v1
+contract_id: scout.P03-U19.residual-headroom-probe.v1
+mode: SCOUT_DIAGNOSTIC_ONLY
+performance_experiment: false
+b004: false
+ml_training: false
+queue_registry: false
+paper_material: false
+source_snapshot:
+  manifest: source-snapshots/interface-smoke-v2/source-snapshot.v1.yaml
+  simulation_source_commit: 65db35bb15dd9b6da0ad05ea5835054ad4277485
+  scout_orchestration_commit: c38ff0d6648d5320d49ea199acbed68e14e40065
+  target_sha256: 92eaa6a6c92e72122a1921a0c844160bbf5b4ee7bc2527fc66da468187af9786
+source_equivalence_contract: source-equivalence-contract.v1.yaml
+runtime_source_snapshot: source-snapshots/residual-headroom-probe-v1/runtime-source-snapshot.v1.yaml
+seeds: [11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+n_symbols: 512
+alpha: 4.2
+beta: 1.4
+f_g_hz: 30.0
+sop_rate: 0.000004
+gamma_bar: 100.0
+snr_db: 20.0
+block: 100
+t_s: 0.0000000004
+method: gar
+cma_mu: 0.001
+cma_taps: 11
+r2: 1.0
+cma_block_size: 64
+eval_start: 133
+calibration_end: 261
+eval_end: 389
+fade_threshold_h: 0.1
+clip_norm: 1.0
+csi_access_class: CSI_NONE
+constellation: QPSK
+constellation_amplitude_per_axis: 0.7071067811865475
+affine_ridge: 0.000001
+tail_energy_threshold: 0.25
+shared_realization_rule: one standard-CMA call per seed; nearest, blind-affine, and scoring-only oracle-affine share that output
+runtime_allowed: [completed z calibration window, completed z evaluation window, known QPSK alphabet]
+evaluation_only: [sX, sY, fixed-label BER, PI-BER, fixed-label SER, PI-SER, oracle-affine bound]
+runtime_forbidden: [TX truth, true h, true Jones, future window, post-hoc labels, oracle affine coefficients]
+comparators:
+  nearest_qpsk:
+    information: CSI_NONE z only
+    role: no-fit analytic control
+  blind_affine:
+    information: CSI_NONE z plus pseudo-labels derived from the same calibration z
+    form: one-step complex 2x2 affine least squares with explicit ridge
+    role: strongest preregistered same-information simple comparator
+  oracle_affine:
+    information: calibration TX truth
+    role: post-hoc scoring upper bound only; never a runtime comparator
+definitions:
+  visible_headroom:
+    formula: max(PI-SER_nearest - PI-SER_oracle_affine, 0)
+    primary_metric: PI-SER
+  analytic_coverage:
+    formula: sum(max(PI-SER_nearest - min(PI-SER_nearest, PI-SER_blind_affine), 0)) / sum(visible_headroom)
+    zero_headroom_rule: 1.0
+    threshold: 0.90
+  stable_residual_mismatch:
+    minimum_cells_with_headroom: 7
+    per_cell_headroom_floor: one dual-pol evaluation-symbol error unit
+    median_visible_headroom_min: 0.01
+    residual_energy_cv_max: 0.50
+    tail_mass_iqr_max: 0.10
+    conditional_second_moment_max_cv: 0.75
+    conditional_symbol_min_cell_support: 8
+exit_states:
+  - P03_ANALYTIC_COVERAGE_GE_90
+  - P03_RESIDUAL_MISMATCH_STABLE
+  - P03_RESIDUAL_UNSTABLE
+valid_domain:
+  scenario: dual-pol ground-space OSL
+  receiver: standard-CMA Godard-with-z
+  modulation: QPSK
+  csi_access_class: CSI_NONE
+  snr_db: 20.0
+  f_g_hz: 30.0
+  turbulence: alpha-4.2-beta-1.4
+  sequence_symbols: 512
+  seeds: 11-20
+  interpretation: Scout diagnostic only; not MVE, Sandbox, Contract, Execute, or paper evidence

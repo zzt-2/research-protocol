@@ -4,8 +4,10 @@ candidate: U19
 process: DL-Process v0.3
 profile: Communications
 project_adapter: dual-pol OSL
-final_verdict: P03_SCOUT_CONTRACT_READY
-current_contract: scout-contract.v2.yaml
+final_verdict: P03_ANALYTIC_COVERAGE_GE_90
+interface_readiness_verdict: P03_SCOUT_CONTRACT_READY
+probe_executed: true
+terminal_contract_snapshot: scout-contract.v2.yaml
 superseded_contract: scout-contract.v1.yaml
 capability: [estimative, observational]
 input_source: authentic standard-CMA zX/zY through run_b001._default_runner
@@ -48,6 +50,19 @@ work_packages:
     real_input: frozen dual-pol generator and frozen standard-CMA runner
     tests: python -m pytest projects/thesis-fso/direction-lab/tests/test_p03_interface_smoke.py -q
     result: 2 passed
+  - package: exact historical source recovery and equivalence
+    status: PASS
+    entrypoint: run_source_equivalence.py
+    contract: source-equivalence-contract.v1.yaml
+    evidence: artifacts/residual-headroom-probe-v1/source-equivalence/report.yaml
+    exact_historical_z_window_sha256: 3d99d4fef5f3749d2047816b8bc655affc207f307bafc808b6de887b88ca64f7
+  - package: preregistered residual-headroom probe
+    status: PASS
+    entrypoint: run_residual_headroom_probe.py
+    contract: residual-headroom-probe-contract.v1.yaml
+    evidence: artifacts/residual-headroom-probe-v1/probe-result.json
+    cells: 10
+    primary_verdict: P03_ANALYTIC_COVERAGE_GE_90
 residual_definition: receiver-visible z minus same-information analytic QPSK predicted mean
 residual_artifact:
   path: artifacts/interface-smoke-v2/residual-artifact.json
@@ -68,27 +83,36 @@ component_binding:
   canonical: false
   registry: false
 source_closure:
-  path: artifacts/interface-smoke-v2/source-closure.yaml
+  path: artifacts/residual-headroom-probe-v1/source-closure.yaml
   generated_from_runtime_loaded_project_modules: true
-  sha256: e5bba6ddb874a01be95ae98fa5892a99f077e7152f567521b9c3a3ecced069c7
+  sha256: 4584371503e0f19e2cb519c612c550917020e8212a2a0252f24d0f636b4bb5d2
+  immutable_probe_runtime_snapshot: source-snapshots/residual-headroom-probe-v1/runtime-source-snapshot.v1.yaml
 history_guards:
   B002_unchanged: PASS
   B003_unchanged: PASS
   canonical_baseline_unchanged: PASS
   B004_absent: PASS
-remaining_sandbox_prerequisites:
-  - actual U19 ML mechanism implementation and mechanism-level hypothesis
-  - multi-cell stability budget and pre-registered diagnostic threshold
-  - evaluation-only fixed-label and PI-BER binding
-  - mechanism-distinct Sandbox comparison design
-  - new immutable Queue and Registry binding after the preceding items pass
-exact_entry_reason: >-
-  CSI_NONE receiver input, causal timing, deterministic output, same-information comparator, and minimum authentic
-  smoke are all executable and reproducible. This closes the Scout contract interface and permits the next U19
-  contract-implementation round only; it does not permit a Queue, Sandbox batch, B004, or a performance claim.
+probe_result:
+  aggregate_visible_headroom: 0.0
+  aggregate_analytic_coverage: 1.0
+  fixed_label_ber_max: 0.0
+  pi_ber_max: 0.0
+  fixed_label_ser_max: 0.0
+  pi_ser_max: 0.0
+  residual_energy_cv: 0.7039620405059673
+  scope: frozen CSI_NONE uncoded hard-decision Scout slice only
+sandbox_prerequisites: NOT_APPLICABLE_P03_STOPPED_WITHOUT_ML
+post_probe_closure_reason: >-
+  Exact source recovery makes the historical interface smoke self-contained and byte-reproducible. Across the
+  preregistered 10 cells, nearest-QPSK and the scoring-only oracle affine both have zero fixed-label/PI BER and SER,
+  leaving zero visible headroom. The zero-headroom analytic-coverage exit therefore stops P03 without ML; it does
+  not permit a Queue, Registry, Sandbox batch, B004, formal promotion, or a paper claim.
 reproduction_commands:
   tests: python -m pytest projects/thesis-fso/direction-lab/tests -q -k p03_
   smoke: >-
     python projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/run_interface_smoke.py
     --contract projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/interface-smoke-contract.v1.yaml
     --output-dir projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/interface-smoke-v2
+  probe: >-
+    python projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/run_residual_headroom_probe.py
+    --output-dir projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/residual-headroom-probe-v1

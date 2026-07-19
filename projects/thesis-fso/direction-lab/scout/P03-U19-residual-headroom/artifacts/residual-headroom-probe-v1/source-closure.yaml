@@ -1,0 +1,68 @@
+schema_version: direction-lab.p03-source-closure.v2
+simulation_source_commit: 65db35bb15dd9b6da0ad05ea5835054ad4277485
+scout_orchestration_commit: c38ff0d6648d5320d49ea199acbed68e14e40065
+materialized_override:
+  path: projects/simulation/common/_gg_time.py
+  sha256: 92eaa6a6c92e72122a1921a0c844160bbf5b4ee7bc2527fc66da468187af9786
+  git_blob_oid: 9155de058912593f487d95fb4e3aecf25ae1617c
+  patch_sha256: 4cd7007bc2dc9776c0973468d196ceb811eb391c2c8548559f77160f6e52520d
+loaded_project_files:
+- path: projects/simulation/common/__init__.py
+  sha256: c76781beac0b2a188fc918ecb16b82c801662f0b1ed5bc6a08a918d1a7208c02
+- path: projects/simulation/common/_channel.py
+  sha256: 800e437510372a53a2e821c7e3ca2a84a5595b3b240cd696cf7998cfbce9f8e3
+- path: projects/simulation/common/_config.py
+  sha256: 91b8664a3af1684a9be3c43e6aa125a403f6cec98bac7b8048fe3c9fee1a9bd9
+- path: projects/simulation/common/_dual_pol_channel.py
+  sha256: 3d02eaa31e3efa9c343028a81ec6b36c1d1ebf9135e386e974ef581ba11bf7d3
+- path: projects/simulation/common/_equalizer.py
+  sha256: 320115d96a6ed7c3b970371f47fc98fb5054510129f556f66d602ef7d38199b9
+- path: projects/simulation/common/_experiment.py
+  sha256: e109d56bbec59810717c28eb7630e02da6db562ace36e2c52c11cd5d618887aa
+- path: projects/simulation/common/_gg_time.py
+  sha256: 92eaa6a6c92e72122a1921a0c844160bbf5b4ee7bc2527fc66da468187af9786
+- path: projects/simulation/common/_kf.py
+  sha256: 577f57321fe7fcaf5ab093a8730a2ca9e09bfe42e6452ef0fdb0cf992a807760
+- path: projects/simulation/common/_ml_equalizer.py
+  sha256: db352990f6ca740955bba3b48136077d8b8147d5d2b6af700350ad9f62d631df
+- path: projects/simulation/common/_modulation.py
+  sha256: 036fb7aa4d0bef153ee53799f20a244492fb6294f93132d1ecc2b0530b5694d5
+- path: projects/simulation/common/_recovery.py
+  sha256: afb8aed9508cc83ee13d05bfd4346a2e6f0852af0e9d6a182a85a441ff5d60e2
+- path: projects/simulation/explore/cma-fade-divergence/prompt013_swap_mechanism_q2.py
+  sha256: 9282ecb53608a2093a5e69a62ccea9976211ecfda7626d2e65ce2fd912f1ca2f
+- path: projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/z_window_adapter.py
+  sha256: c781b973e532725656ac0e874137dfc1cf3764e3a6229f781e3a4be25e27cd5a
+- path: projects/thesis-fso/direction-lab/tools/run_b001.py
+  sha256: 26a0e95d79d58088b6a24054d04cb76893a97a952a714e335068ea871edb8c89
+immutable_probe_runtime_snapshot:
+  manifest_path: source-snapshots/residual-headroom-probe-v1/runtime-source-snapshot.v1.yaml
+  manifest_sha256: 3ecaa092e0c3a16301364aec74836678af81ac4e9ba6abe141503f30d31fc99f
+  manifest_git_blob_oid: d9151ff68094fba7924c28b19ed270769da63e26
+  files:
+  - path: run_residual_headroom_probe.py
+    sha256: 25146295f0d6ac05f1a1cc52f50e56db4a90ac3b548eee1cafb661be110d087e
+    git_blob_oid: a140d02c7349091add9ea398d29443a7d097a9a0
+  - path: probe_evaluator.py
+    sha256: e73ea290958d6e96d5ad2281eb0508ef1d4e11e6263d91ffb0a140749b28ea32
+    git_blob_oid: 979fbec07dc3d47f71da77df83af74d559ac1e97
+  - path: run_source_equivalence.py
+    sha256: 9383c384290b0f2d2b7277b79797b84ad7dda31dd2025d038f769421b807ea75
+    git_blob_oid: 1b9e615d1f15a1fb137b8af6affc36dc73ef3783
+  - path: residual-headroom-probe-contract.v1.yaml
+    sha256: 1c8f72c43f7b7032a766f35b2d9a11f878cc6701d4e284ac909307860312b090
+    git_blob_oid: 451a66be8a4794b77f028f1a202be7b811be5135
+  - path: source-equivalence-contract.v1.yaml
+    sha256: dba8f9df350ecb0b306b2b29dfdb2e27c5395bf27a5139f1cf1341399f7a9766
+    git_blob_oid: 31aa71b27f90ddb7c527d711bae799522df5f512
+  - path: source-snapshots/interface-smoke-v2/source-snapshot.v1.yaml
+    sha256: d29a92a9823e09adc51c4a79a52f1435e6303636930e34fbe06ca8f98c5c16a6
+    git_blob_oid: 270b9e495c6fbf65a8d19df7ee6683ede9e6dd7c
+  - path: source-snapshots/interface-smoke-v2/gg-time-prefix-stability.patch
+    sha256: 4cd7007bc2dc9776c0973468d196ceb811eb391c2c8548559f77160f6e52520d
+    git_blob_oid: 1c6be185d83fbb5af18c9723895599f562308b98
+probe_runtime_sources:
+  run_residual_headroom_probe.py: 25146295f0d6ac05f1a1cc52f50e56db4a90ac3b548eee1cafb661be110d087e
+  probe_evaluator.py: e73ea290958d6e96d5ad2281eb0508ef1d4e11e6263d91ffb0a140749b28ea32
+  probe_contract: 1c8f72c43f7b7032a766f35b2d9a11f878cc6701d4e284ac909307860312b090
+  source_equivalence_contract: dba8f9df350ecb0b306b2b29dfdb2e27c5395bf27a5139f1cf1341399f7a9766

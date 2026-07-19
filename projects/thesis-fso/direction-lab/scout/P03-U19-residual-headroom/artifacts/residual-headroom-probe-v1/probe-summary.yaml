@@ -1,0 +1,29 @@
+cell_count: 10
+aggregate_visible_headroom: 0.0
+aggregate_simple_analytic_gain: 0.0
+aggregate_analytic_coverage: 1.0
+cells_with_minimum_headroom: 0
+median_visible_headroom: 0.0
+residual_energy_cv: 0.7039620405059673
+tail_mass_iqr: 0.0
+conditional_second_moment_cv:
+  -0.707106781187-0.707106781187j: 0.6911864033189422
+  -0.707106781187+0.707106781187j: 0.7412350754957225
+  +0.707106781187-0.707106781187j: 0.7422010018145011
+  +0.707106781187+0.707106781187j: 0.6841067384951949
+conditional_second_moment_max_cv: 0.7422010018145011
+conditional_symbol_cell_support:
+  -0.707106781187-0.707106781187j: 10
+  -0.707106781187+0.707106781187j: 10
+  +0.707106781187-0.707106781187j: 10
+  +0.707106781187+0.707106781187j: 10
+conditional_symbol_min_cell_support: 10
+primary_verdict: P03_ANALYTIC_COVERAGE_GE_90
+analytic_coverage_gate: true
+stable_mismatch_checks:
+  minimum_cells_with_headroom: false
+  median_visible_headroom: false
+  residual_energy_cv: false
+  tail_mass_iqr: true
+  conditional_second_moment_max_cv: true
+  conditional_symbol_min_cell_support: true

@@ -1,0 +1,13 @@
+schema_version: direction-lab.p03-deterministic-rerun-report.v1
+status: PASS
+run_count: 2
+contract: ../../residual-headroom-probe-contract.v1.yaml
+comparison: exact_file_sha256_equality
+files:
+  probe-result.json: 1232d1a47431f14729045c04beafe0836e531ad238f9bcb8e15462c2f7901cdd
+  probe-summary.yaml: 39f72da078a6bc4a0182f2397a82e80556049acc058d59bf72131a5fd9dfab87
+  source-closure.yaml: 4584371503e0f19e2cb519c612c550917020e8212a2a0252f24d0f636b4bb5d2
+  source-equivalence/report.yaml: f49c91bdaa86c6a67c86749ae9a23eff4cad4b2f5513def3a47d2b21d3305415
+  source-equivalence/source-closure.yaml: bb97261bc9fd3e264e8ec3ba9470afd0f04e13d7f6e778f388cde59315f49368
+  source-equivalence/z-window.json: 3d99d4fef5f3749d2047816b8bc655affc207f307bafc808b6de887b88ca64f7
+scope: deterministic Scout reconstruction only; no paper or formal-performance claim

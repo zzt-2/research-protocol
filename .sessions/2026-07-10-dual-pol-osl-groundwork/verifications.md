@@ -777,4 +777,54 @@ PARTIAL：三轮检索已经在数量与新增候选维度收敛，最高引用�
 
 ### 后续（PARTIAL 时）
 
-优先在限速恢复后用 Semantic Scholar/OpenAlex DOI 端点重取 JLT 2022 backward references；若API持续不可用，获取JLT 2022全文/正式参考文献表或使用可审计的Crossref/OpenAlex works引用关系完成后向链。取得真实 backward 列表、筛查并确认无新增直接竞品后，再做 V030；不需要第四轮关键词泛搜。
+优先在限速恢复后用 Semantic Scholar/OpenAlex DOI 端点重取 JLT 2022 backward references；若API持续不可用，获取JLT 2022全文/正式参考文献表或使用可审计的Crossref/OpenAlex works引用关系完成后向链。取得真实 backward 列表、筛查并确认无新增直接竞品后，再做 V031（V030 后用于 P03 终验）；不需要第四轮关键词泛搜。
+
+## V030: P03 residual-headroom Scout 最终独立终验
+
+> date: 2026-07-19
+> 关联：S075 / D057
+
+### 验证项
+
+- [x] source recovery：独立 verifier 检查 exact `_gg_time.py` SHA、raw Git blob、snapshot 重建与 historical z-window → `92eaa6…` / blob `9155de…` / z-window `3d99d4…` exact PASS
+- [x] standard-CMA：静态检查公式并运行 numeric identity gate → `(R2-|z|²)·z·conj(r)`，`godard_with_z_formula_numeric: PASS`
+- [x] runtime closure：逐文件核对 runtime manifest SHA、Git blob OID 和 blob bytes → 7/7 PASS
+- [x] P03 tests：独立运行定向 suite → 43/43 PASS
+- [x] deterministic probe：正式 artifact、第二次 rerun、第三次 fresh temp probe逐文件比较 → 6/6 SHA exact equal
+- [x] science recompute：独立重算 10 cells 的 fixed/PI BER、SER、headroom、coverage 和 residual statistics → verdict 与 `P03_ANALYTIC_COVERAGE_GE_90` 一致
+- [x] history/scope guards：比较 HEAD、路径和新文件 → B001–B003 无差异，B004=0，无 ML/Queue/Registry/paper/common/params/canonical-state 修改
+- [x] governance：status/readiness/triage/BatchPlan/README/master-state/projects-overview/S075/D057 交叉检查 → formal BLOCKED、P03停止、未选择下一候选一致
+
+### 证据
+
+~~~text
+python -m pytest projects/thesis-fso/direction-lab/tests -q -k p03_
+43 passed, 142 deselected
+
+runtime manifest: 7/7 SHA + Git blob OID + blob bytes match
+manifest SHA: 3ecaa092e0c3a16301364aec74836678af81ac4e9ba6abe141503f30d31fc99f
+manifest blob: d9151ff68094fba7924c28b19ed270769da63e26
+
+probe-result.json: 1232d1a47431f14729045c04beafe0836e531ad238f9bcb8e15462c2f7901cdd
+probe-summary.yaml: 39f72da078a6bc4a0182f2397a82e80556049acc058d59bf72131a5fd9dfab87
+source-closure.yaml: 4584371503e0f19e2cb519c612c550917020e8212a2a0252f24d0f636b4bb5d2
+source-equivalence/report.yaml: f49c91bdaa86c6a67c86749ae9a23eff4cad4b2f5513def3a47d2b21d3305415
+source-equivalence/source-closure.yaml: bb97261bc9fd3e264e8ec3ba9470afd0f04e13d7f6e778f388cde59315f49368
+source-equivalence/z-window.json: 3d99d4fef5f3749d2047816b8bc655affc207f307bafc808b6de887b88ca64f7
+three runs: all six hashes exact equal
+
+10/10 cells: nearest/blind/oracle fixed BER=PI-BER=fixed SER=PI-SER=0
+visible_headroom=0.0; simple_gain=0.0; zero-headroom coverage=1.0
+nearest residual mean=0.2855824473; blind affine=0.0466822478
+selected residual CV=0.703962; 2/10 nonzero tail cells
+
+git diff HEAD -- B001 B002 B003: empty
+B004 count=0
+projects/simulation/common + params.py + canonical-state.yaml diff: empty
+~~~
+
+新增 canonical-LF line-ending test 前，完整 Direction Lab suite 的旁证结果为 `147 passed, 37 failed`；37 个失败均在非 P03、当前 diff 未修改文件，集中于 Windows CRLF 旧指纹与既有 `DEFAULT_SOURCE_ROOT` linked-worktree 路径假设。该环境/治理债务不构成 P03 回归，不把本轮表述成“全 Direction Lab suite 全绿”。
+
+### 结论
+
+PASS

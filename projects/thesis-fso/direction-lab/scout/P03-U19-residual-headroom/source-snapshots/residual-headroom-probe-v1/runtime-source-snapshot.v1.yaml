@@ -1,0 +1,28 @@
+schema_version: direction-lab.p03-runtime-source-snapshot.v1
+snapshot_id: P03-U19-residual-headroom-probe-v1
+created: 2026-07-19
+provenance: current P03 Scout worktree source, frozen before scientific execution
+immutability: each file is stored as an exact raw Git blob before scientific execution
+scope: runtime code and contracts only; simulation and historical interface source are closed separately
+files:
+  - path: run_residual_headroom_probe.py
+    sha256: 25146295f0d6ac05f1a1cc52f50e56db4a90ac3b548eee1cafb661be110d087e
+    git_blob_oid: a140d02c7349091add9ea398d29443a7d097a9a0
+  - path: probe_evaluator.py
+    sha256: e73ea290958d6e96d5ad2281eb0508ef1d4e11e6263d91ffb0a140749b28ea32
+    git_blob_oid: 979fbec07dc3d47f71da77df83af74d559ac1e97
+  - path: run_source_equivalence.py
+    sha256: 9383c384290b0f2d2b7277b79797b84ad7dda31dd2025d038f769421b807ea75
+    git_blob_oid: 1b9e615d1f15a1fb137b8af6affc36dc73ef3783
+  - path: residual-headroom-probe-contract.v1.yaml
+    sha256: 1c8f72c43f7b7032a766f35b2d9a11f878cc6701d4e284ac909307860312b090
+    git_blob_oid: 451a66be8a4794b77f028f1a202be7b811be5135
+  - path: source-equivalence-contract.v1.yaml
+    sha256: dba8f9df350ecb0b306b2b29dfdb2e27c5395bf27a5139f1cf1341399f7a9766
+    git_blob_oid: 31aa71b27f90ddb7c527d711bae799522df5f512
+  - path: source-snapshots/interface-smoke-v2/source-snapshot.v1.yaml
+    sha256: d29a92a9823e09adc51c4a79a52f1435e6303636930e34fbe06ca8f98c5c16a6
+    git_blob_oid: 270b9e495c6fbf65a8d19df7ee6683ede9e6dd7c
+  - path: source-snapshots/interface-smoke-v2/gg-time-prefix-stability.patch
+    sha256: 4cd7007bc2dc9776c0973468d196ceb811eb391c2c8548559f77160f6e52520d
+    git_blob_oid: 1c6be185d83fbb5af18c9723895599f562308b98

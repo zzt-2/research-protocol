@@ -1,0 +1,35 @@
+schema_version: direction-lab.p03-source-equivalence.v1
+contract_id: scout.P03-U19.interface-smoke-v2-source-recovery.v1
+mode: SOURCE_EQUIVALENCE_GATE_ONLY
+performance_experiment: false
+simulation_source_commit: 65db35bb15dd9b6da0ad05ea5835054ad4277485
+scout_orchestration_commit: c38ff0d6648d5320d49ea199acbed68e14e40065
+base_source_root: projects/simulation
+snapshot_manifest: source-snapshots/interface-smoke-v2/source-snapshot.v1.yaml
+snapshot_patch: source-snapshots/interface-smoke-v2/gg-time-prefix-stability.patch
+materialized_override:
+  path: projects/simulation/common/_gg_time.py
+  sha256: 92eaa6a6c92e72122a1921a0c844160bbf5b4ee7bc2527fc66da468187af9786
+  git_blob_oid: 9155de058912593f487d95fb4e3aecf25ae1617c
+historical_z_window:
+  path: artifacts/interface-smoke-v2/z-window.json
+  sha256: 3d99d4fef5f3749d2047816b8bc655affc207f307bafc808b6de887b88ca64f7
+n_symbols: 512
+alpha: 4.2
+beta: 1.4
+f_g_hz: 30.0
+sop_rate: 0.000004
+gamma_bar: 100.0
+block: 100
+t_s: 0.0000000004
+method: gar
+seed: 11
+cma_mu: 0.001
+cma_taps: 11
+r2: 1.0
+cma_block_size: 64
+eval_start: 133
+eval_end: 389
+fade_threshold_h: 0.1
+clip_norm: 1.0
+csi_access_class: CSI_NONE

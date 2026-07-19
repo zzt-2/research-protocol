@@ -1,0 +1,25 @@
+schema_version: direction-lab.p03-source-equivalence-report.v1
+status: PASS
+source_materialization:
+  simulation_source_commit: 65db35bb15dd9b6da0ad05ea5835054ad4277485
+  scout_orchestration_commit: c38ff0d6648d5320d49ea199acbed68e14e40065
+  base_git_blob_sha256: 1ffd6af106181a6e589d674e0508bb8cc0ea3496e2dae1f7364bb47f2a842db5
+  base_materialized_sha256: d8e7929d00d885eccf111eb96d80ecd3822b065cbf3eca09ed31912c3da73113
+  patch_sha256: 4cd7007bc2dc9776c0973468d196ceb811eb391c2c8548559f77160f6e52520d
+  snapshot_manifest_sha256: d29a92a9823e09adc51c4a79a52f1435e6303636930e34fbe06ca8f98c5c16a6
+  materialized_sha256: 92eaa6a6c92e72122a1921a0c844160bbf5b4ee7bc2527fc66da468187af9786
+  materialized_git_blob_oid: 9155de058912593f487d95fb4e3aecf25ae1617c
+equivalence:
+  historical_z_window_sha256: 3d99d4fef5f3749d2047816b8bc655affc207f307bafc808b6de887b88ca64f7
+  z_window_sha256: 3d99d4fef5f3749d2047816b8bc655affc207f307bafc808b6de887b88ca64f7
+  exact_output_equal: true
+checks:
+  source_snapshot_sha256: PASS
+  materialized_git_blob_identity: PASS
+  godard_with_z_identity: PASS
+  godard_with_z_formula_numeric: PASS
+  shape_dtype_finiteness_time_boundary: PASS
+  csi_none: PASS
+  oracle_future_posthoc_rejection: PASS
+  deterministic_rerun: PASS
+scope: source equivalence only; no performance or scientific conclusion

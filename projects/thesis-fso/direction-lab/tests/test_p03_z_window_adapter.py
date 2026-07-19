@@ -6,6 +6,7 @@ from pathlib import Path
 
 import numpy as np
 import pytest
+import yaml
 
 
 LAB_ROOT = Path(__file__).parents[1]
@@ -145,34 +146,11 @@ def test_receiver_estimated_csi_requires_receiver_only_source_and_causal_time() 
 
 
 def test_adapter_consumes_authentic_deterministic_standard_cma_output() -> None:
-    run_b001 = _load(RUN_B001_PATH, "direction_lab_p03_run_b001_adapter_test")
-    source_root = run_b001.DEFAULT_SOURCE_ROOT
-    generator = run_b001._default_generator(source_root)
-    runner, config_factory = run_b001._default_runner(source_root)
-    realization = generator(
-        512, 4.2, 1.4, 30.0,
-        sop_rate=0.000004, seed=11, gamma_bar=100.0,
-        block=100, t_s=0.0000000004, method="gar",
-    )
-    cfg = config_factory(
-        mu=0.001, taps=11, r2=1.0, block_size=64,
-        eval_start=133, eval_end=389, fade_threshold_h=0.1, clip_norm=1.0,
-    )
-    output = runner(
-        {"rX": realization["rX"], "rY": realization["rY"]},
-        cfg, variant="baseline", return_blind_trace=True,
-    )
-    window = _adapter().adapt_standard_cma_output(
-        output,
-        sequence_id="p03-authentic-one-cell",
-        symbol_start=133,
-        symbol_end=389,
-        equalizer_taps=11,
-        csi_access_class="CSI_NONE",
-        source_id="projects/thesis-fso/direction-lab/tools/run_b001.py::_default_runner",
-        source_hash=_sha(RUN_B001_PATH),
-        receiver_estimated_csi=None,
-    )
+    root = LAB_ROOT / "scout" / "P03-U19-residual-headroom"
+    recovery = _load(root / "run_source_equivalence.py", "direction_lab_p03_recovery_adapter_test")
+    contract = yaml.safe_load((root / "source-equivalence-contract.v1.yaml").read_text(encoding="utf-8"))
+    with recovery.materialized_source(contract) as (source_tree, _):
+        window, _ = recovery._generate_window(source_tree, contract, "adapter_test")
     assert window["shape"] == [256, 2]
     assert all(window["valid_mask"])
     assert np.isfinite(_adapter().decode_stream(window, "zX")).all()

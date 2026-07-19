@@ -1,0 +1,38 @@
+schema_version: direction-lab.p03-source-archaeology.v1
+date: 2026-07-19
+scope: one bounded pass over Git objects/history/reflogs, known linked worktrees, registered snapshots, P03/B001-B003 closures, and repository caches/backups
+target:
+  path: projects/simulation/common/_gg_time.py
+  sha256: 92eaa6a6c92e72122a1921a0c844160bbf5b4ee7bc2527fc66da468187af9786
+result: FOUND_EXACT_PROVENANCE_BEARING_MUTABLE_BYTES
+found_at:
+  path: D:/code/study/research-protocol/.worktrees/unified-batch-runner/projects/simulation/common/_gg_time.py
+  sha256: 92eaa6a6c92e72122a1921a0c844160bbf5b4ee7bc2527fc66da468187af9786
+  bytes: 8722
+  state: dirty mutable linked-worktree file
+provenance:
+  immutable_attestations: 4
+  pointers:
+    - artifacts/interface-smoke-v2/source-closure.yaml
+    - batches/B001-20260717-live/manifest.json
+    - batches/B002-20260718-live/manifest.json
+    - batches/B003-20260718-live/manifest.json
+  interpretation: the committed records immutably attest path plus SHA; the dirty carrier itself is not immutable
+git_object_audit:
+  blobs_scanned: 6604
+  bytes_scanned: 1352018212
+  unreachable_blobs_included: 1445
+  exact_sha256_hits_before_snapshot: 0
+  historical_committed_blob: 03bdeb82f181189bf89c6c913b220662e615fe32
+  historical_committed_sha256_lf: 1ffd6af106181a6e589d674e0508bb8cc0ea3496e2dae1f7364bb47f2a842db5
+other_sources:
+  second_byte_bearing_backup_found: false
+  unprovenanced_copy_used: false
+  dirty_worktree_modified: false
+recovery_action:
+  snapshot: source-snapshots/interface-smoke-v2/source-snapshot.v1.yaml
+  exact_raw_git_blob_oid: 9155de058912593f487d95fb4e3aecf25ae1617c
+  git_blob_stored_before_equivalence_run: true
+  immutable_reconstruction_inputs: [simulation commit, Scout orchestration commit, patch Git blob, line-ending recipe]
+  runtime_reads_dirty_origin: false
+  deterministic_historical_z_window_equivalence: PASS

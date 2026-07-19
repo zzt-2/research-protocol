@@ -2934,3 +2934,38 @@ OE 2021三pilot tones逐block RSOP矩阵估计、TCOM 2025 pilot-symbol ML/EM RS
 
 - Step3.5尚未闭合；不进入Step4a。
 - 若直接竞品已处理相同低pilot病态/时间平滑问题，Q2 Kill或重写；不靠场景换皮保留。
+
+---
+
+## D057: P03 residual-headroom Scout 触发 A 出口并停止
+
+> status: active
+> date: 2026-07-19
+> 取代：无（D044 是 formal Q14 门控，继续保留）
+> 被取代：无
+> 依据: 验证数据 `projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/residual-headroom-probe-v1/probe-result.json` + deterministic rerun report + 用户原话 voice.md 2026-07-19
+
+### 决策
+
+P03/U19 在冻结的 CSI_NONE、uncoded hard-decision Scout slice 中以 `P03_ANALYTIC_COVERAGE_GE_90` 结束：停止 P03，不训练 ML，不创建 B004/Queue/Registry；本轮不选择下一候选。
+
+### 理由
+
+10/10 paired cells 中 nearest-QPSK、blind affine 与 scoring-only oracle affine 的 fixed-label BER、PI-BER、fixed-label SER、PI-SER 均为 0，visible headroom=0。按预注册 zero-headroom rule，analytic coverage=1.0，A 出口优先于 residual stability 判据。虽然模拟 residual 非零，blind affine 也降低了 residual energy，但它没有产生判决收益，不能作为 ML headroom 的替代证据。
+
+### 排除的替代方案
+
+- 不因非零 residual magnitude 启动 ML：residual 不是 decision headroom。
+- 不为制造 headroom 调参或扩大参数域：违反冻结 contract。
+- 不把 A 外推成 U19/U36 整族失败或 U20 coded-LLR 结论：当前只覆盖固定 slice。
+- 不自动转 P04 或其他候选：用户要求本里程碑不扩候选池、不启动下一方向。
+
+### 影响范围
+
+- P03 terminal status、Scout contract/readiness、capability triage、BatchPlan、Direction Lab README、master-state 与 projects-overview 更新为 A/STOP_NO_ML。
+- U36 的同类 residual/analytic-hybrid 假设仅降权；U20 仍 NOT_RUNNABLE，未获得 P04 启动许可。
+- formal research 仍 BLOCKED，S074 pilot-Jones Step3.5 门控不变，B001–B003 历史不变。
+
+### 来源
+
+S075；触发原话见 voice.md 2026-07-19。

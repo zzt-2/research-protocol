@@ -1,6 +1,6 @@
 # [S074] Pilot Jones Step3.5 R2/R3 收敛纠偏
 
-> 2026-07-17 | GW Step3.5 | 状态：待V030最终审查
+> 2026-07-17 | GW Step3.5 | 状态：待V031最终审查（原预留V030未落盘，V030后用于P03终验）
 
 ## 目标
 
@@ -12,7 +12,7 @@ R1满足6/6矩阵、42 raw→41 unique、OpenAlex+Semantic Scholar两源，但�
 
 R2严格按5种方法变体×2类场景检索，31 raw→25 unique；汇总相对全归档判new=0，但独立V028指出JLT 2023 PDL/FPT仍应视为R2新增直接竞品，存在去重全集口径差异，故不采信“已收敛”作为门控结论。V028结论PARTIAL，禁止进入Step4a。
 
-R3仅围绕JLT 2023 PDL/FPT同族补检，50 raw→37 unique，新增必读/建议读=0。最高引用直接竞品为JLT 2022（citation_count=36，高于OE 2021的19）：Semantic Scholar前向链25篇；原backward wrapper因空query/HTTP429失败，不能当真实0。随后通过Crossref publisher metadata补得21条references，并在子agent中批量筛出7篇方法相关，全部为已知候选、新增0。双向链已按“前向citing papers + 后向references metadata”语义透明闭合，待V030独立复核。
+R3仅围绕JLT 2023 PDL/FPT同族补检，50 raw→37 unique，新增必读/建议读=0。最高引用直接竞品为JLT 2022（citation_count=36，高于OE 2021的19）：Semantic Scholar前向链25篇；原backward wrapper因空query/HTTP429失败，不能当真实0。随后通过Crossref publisher metadata补得21条references，并在子agent中批量筛出7篇方法相关，全部为已知候选、新增0。双向链已按“前向citing papers + 后向references metadata”语义透明闭合，待V031独立复核。
 
 ## 决策引用
 
@@ -25,4 +25,4 @@ R3仅围绕JLT 2023 PDL/FPT同族补检，50 raw→37 unique，新增必读/建�
 
 ## 后续
 
-V029在Crossref补链前判PARTIAL；现由独立agent执行V030。只有V030 PASS才进入Step4a。
+V029在Crossref补链前判PARTIAL；后续独立复核编号改为V031。只有V031 PASS才进入Step4a。

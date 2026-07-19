@@ -1,0 +1,50 @@
+schema_version: direction-lab.p03-source-snapshot.v1
+snapshot_id: P03-interface-smoke-v2-gg-time-recovery
+status: IMMUTABLE_SOURCE_SNAPSHOT
+created: 2026-07-19
+base:
+  simulation_commit: 65db35bb15dd9b6da0ad05ea5835054ad4277485
+  scout_orchestration_commit: c38ff0d6648d5320d49ea199acbed68e14e40065
+  path: projects/simulation/common/_gg_time.py
+  git_blob_oid: 03bdeb82f181189bf89c6c913b220662e615fe32
+  sha256: 1ffd6af106181a6e589d674e0508bb8cc0ea3496e2dae1f7364bb47f2a842db5
+  windows_materialized_sha256: d8e7929d00d885eccf111eb96d80ecd3822b065cbf3eca09ed31912c3da73113
+  line_endings: immutable blob is LF; Windows git-archive materialization is CRLF
+patch:
+  path: gg-time-prefix-stability.patch
+  sha256: 4cd7007bc2dc9776c0973468d196ceb811eb391c2c8548559f77160f6e52520d
+  semantic_change: independent SeedSequence child streams for big and small Gamma factors
+materialized:
+  path: projects/simulation/common/_gg_time.py
+  sha256: 92eaa6a6c92e72122a1921a0c844160bbf5b4ee7bc2527fc66da468187af9786
+  git_blob_oid: 9155de058912593f487d95fb4e3aecf25ae1617c
+  byte_length: 8722
+  line_endings: mixed historical Windows materialization
+  lf_only_lines: [142, 143, 144, 145, 146, 147, 152, 153, 155, 156]
+  reconstruction: apply patch to LF base, then encode all lines CRLF except lf_only_lines
+immutability:
+  content_addressed_by: [sha256, git_blob_oid]
+  dirty_origin_is_not_claimed_immutable: true
+  runtime_rule: reconstruct from this manifest, base commit, and patch; never read linked worktree bytes
+provenance_attestations:
+  - artifact: projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/interface-smoke-v2/source-closure.yaml
+    git_blob_oid: 0b0d7694ee8f0af79945b870a527ed087916a2de
+    introducing_commit: 1cd4e30ed5333cedb206c1334d03a249297dcfcc
+    recorded_path_and_sha: true
+  - artifact: projects/thesis-fso/direction-lab/batches/B001-20260717-live/manifest.json
+    git_blob_oid: d6516ad2d0c2ff6aed718f168c0d5dc222b49cf2
+    introducing_commit: e30524af8824df10458a6e992da9ed0d18d4820f
+    verifier_closure: 17/17
+  - artifact: projects/thesis-fso/direction-lab/batches/B002-20260718-live/manifest.json
+    git_blob_oid: 65f519ff6ef6965c844aa7aa2cb8c317846b3905
+    introducing_commit: 1cd4e30ed5333cedb206c1334d03a249297dcfcc
+    verifier_closure: 31/31
+  - artifact: projects/thesis-fso/direction-lab/batches/B003-20260718-live/manifest.json
+    git_blob_oid: 5a30d78c548d6ed10f633b33c200c6fe990ef1d4
+    introducing_commit: 1cd4e30ed5333cedb206c1334d03a249297dcfcc
+    verifier_closure: 33/33
+origin_observation:
+  allowed_linked_worktree_path: D:/code/study/research-protocol/.worktrees/unified-batch-runner/projects/simulation/common/_gg_time.py
+  observed_sha256: 92eaa6a6c92e72122a1921a0c844160bbf5b4ee7bc2527fc66da468187af9786
+  observed_size: 8722
+  observed_state: dirty mutable source; read-only archaeology only

@@ -1,0 +1,2319 @@
+{
+  "cells": [
+    {
+      "analytic_coverage": 1.0,
+      "evaluation_only_truth_fields": [
+        "sX",
+        "sY"
+      ],
+      "headroom_error_unit": 0.00390625,
+      "metrics": {
+        "blind_affine": {
+          "fixed_label_ber": 0.0,
+          "fixed_label_ser": 0.0,
+          "fixed_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_assignment": [
+            "sX",
+            "sY"
+          ],
+          "pi_ber": 0.0,
+          "pi_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_ser": 0.0
+        },
+        "nearest_qpsk": {
+          "fixed_label_ber": 0.0,
+          "fixed_label_ser": 0.0,
+          "fixed_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_assignment": [
+            "sX",
+            "sY"
+          ],
+          "pi_ber": 0.0,
+          "pi_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_ser": 0.0
+        },
+        "oracle_affine_scoring_only": {
+          "fixed_label_ber": 0.0,
+          "fixed_label_ser": 0.0,
+          "fixed_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_assignment": [
+            "sX",
+            "sY"
+          ],
+          "pi_ber": 0.0,
+          "pi_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_ser": 0.0
+        }
+      },
+      "residual": {
+        "conditional_moments": {
+          "+0.707106781187+0.707106781187j": {
+            "count": 67,
+            "fourth_abs_moment": 0.00021592427349892326,
+            "mean_imag": 0.005457799361735897,
+            "mean_real": -0.01713239772524381,
+            "second_abs_moment": 0.01026185739733856
+          },
+          "+0.707106781187-0.707106781187j": {
+            "count": 55,
+            "fourth_abs_moment": 0.0002480726908172693,
+            "mean_imag": -0.004423571686833987,
+            "mean_real": -0.013477896506115469,
+            "second_abs_moment": 0.011056185017307502
+          },
+          "-0.707106781187+0.707106781187j": {
+            "count": 71,
+            "fourth_abs_moment": 0.00013536712529773617,
+            "mean_imag": -0.012388182847941945,
+            "mean_real": -0.0015403731529934092,
+            "second_abs_moment": 0.008472715795619942
+          },
+          "-0.707106781187-0.707106781187j": {
+            "count": 63,
+            "fourth_abs_moment": 0.0001744432016912399,
+            "mean_imag": 0.004651357639432259,
+            "mean_real": 0.001237826125729389,
+            "second_abs_moment": 0.010311080126691097
+          }
+        },
+        "mean_joint_residual_energy": 0.01989683977378243,
+        "tail_energy_threshold": 0.25,
+        "tail_mass": 0.0
+      },
+      "residual_selection_for_scoring": "blind_affine",
+      "runtime_record": {
+        "blind_affine_residual": {
+          "conditional_moments": {
+            "+0.707106781187+0.707106781187j": {
+              "count": 67,
+              "fourth_abs_moment": 0.00021592427349892326,
+              "mean_imag": 0.005457799361735897,
+              "mean_real": -0.01713239772524381,
+              "second_abs_moment": 0.01026185739733856
+            },
+            "+0.707106781187-0.707106781187j": {
+              "count": 55,
+              "fourth_abs_moment": 0.0002480726908172693,
+              "mean_imag": -0.004423571686833987,
+              "mean_real": -0.013477896506115469,
+              "second_abs_moment": 0.011056185017307502
+            },
+            "-0.707106781187+0.707106781187j": {
+              "count": 71,
+              "fourth_abs_moment": 0.00013536712529773617,
+              "mean_imag": -0.012388182847941945,
+              "mean_real": -0.0015403731529934092,
+              "second_abs_moment": 0.008472715795619942
+            },
+            "-0.707106781187-0.707106781187j": {
+              "count": 63,
+              "fourth_abs_moment": 0.0001744432016912399,
+              "mean_imag": 0.004651357639432259,
+              "mean_real": 0.001237826125729389,
+              "second_abs_moment": 0.010311080126691097
+            }
+          },
+          "mean_joint_residual_energy": 0.01989683977378243,
+          "tail_energy_threshold": 0.25,
+          "tail_mass": 0.0
+        },
+        "calibration_range": {
+          "end_exclusive": 261,
+          "start": 133
+        },
+        "csi_access_class": "CSI_NONE",
+        "evaluation_range": {
+          "end_exclusive": 389,
+          "start": 261
+        },
+        "nearest_residual": {
+          "conditional_moments": {
+            "+0.707106781187+0.707106781187j": {
+              "count": 67,
+              "fourth_abs_moment": 0.0003987108452489957,
+              "mean_imag": 0.05103362986485117,
+              "mean_real": 0.024779445980527275,
+              "second_abs_moment": 0.014603823831259972
+            },
+            "+0.707106781187-0.707106781187j": {
+              "count": 55,
+              "fourth_abs_moment": 0.00041735395655038396,
+              "mean_imag": -0.0411118052857482,
+              "mean_real": 0.030671337704313982,
+              "second_abs_moment": 0.014113626171400323
+            },
+            "-0.707106781187+0.707106781187j": {
+              "count": 71,
+              "fourth_abs_moment": 0.0002214666634839706,
+              "mean_imag": 0.028599063399988026,
+              "mean_real": -0.0394870094659946,
+              "second_abs_moment": 0.011523703459231545
+            },
+            "-0.707106781187-0.707106781187j": {
+              "count": 63,
+              "fourth_abs_moment": 0.00031564706358436863,
+              "mean_imag": -0.030764940222826446,
+              "mean_real": -0.03329980612623448,
+              "second_abs_moment": 0.013039087571522218
+            }
+          },
+          "mean_joint_residual_energy": 0.02651836795884981,
+          "tail_energy_threshold": 0.25,
+          "tail_mass": 0.0
+        },
+        "seed": 11,
+        "sequence_id": "p03-residual-headroom-seed-11"
+      },
+      "seed": 11,
+      "shared_realization": true,
+      "simple_analytic_gain": 0.0,
+      "standard_cma_calls": 1,
+      "visible_headroom": 0.0
+    },
+    {
+      "analytic_coverage": 1.0,
+      "evaluation_only_truth_fields": [
+        "sX",
+        "sY"
+      ],
+      "headroom_error_unit": 0.00390625,
+      "metrics": {
+        "blind_affine": {
+          "fixed_label_ber": 0.0,
+          "fixed_label_ser": 0.0,
+          "fixed_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_assignment": [
+            "sX",
+            "sY"
+          ],
+          "pi_ber": 0.0,
+          "pi_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_ser": 0.0
+        },
+        "nearest_qpsk": {
+          "fixed_label_ber": 0.0,
+          "fixed_label_ser": 0.0,
+          "fixed_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_assignment": [
+            "sX",
+            "sY"
+          ],
+          "pi_ber": 0.0,
+          "pi_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_ser": 0.0
+        },
+        "oracle_affine_scoring_only": {
+          "fixed_label_ber": 0.0,
+          "fixed_label_ser": 0.0,
+          "fixed_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_assignment": [
+            "sX",
+            "sY"
+          ],
+          "pi_ber": 0.0,
+          "pi_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_ser": 0.0
+        }
+      },
+      "residual": {
+        "conditional_moments": {
+          "+0.707106781187+0.707106781187j": {
+            "count": 71,
+            "fourth_abs_moment": 0.0015687575753218057,
+            "mean_imag": -0.0303847746411608,
+            "mean_real": -0.04965302193330832,
+            "second_abs_moment": 0.02821999653287847
+          },
+          "+0.707106781187-0.707106781187j": {
+            "count": 54,
+            "fourth_abs_moment": 0.0009161199048122198,
+            "mean_imag": 0.035301885560015435,
+            "mean_real": -0.0038529309458826357,
+            "second_abs_moment": 0.023383393115571114
+          },
+          "-0.707106781187+0.707106781187j": {
+            "count": 54,
+            "fourth_abs_moment": 0.0011944198643897045,
+            "mean_imag": -0.014854989039260172,
+            "mean_real": 0.008212882629682772,
+            "second_abs_moment": 0.026390197009991172
+          },
+          "-0.707106781187-0.707106781187j": {
+            "count": 77,
+            "fourth_abs_moment": 0.0008134924467079797,
+            "mean_imag": 0.0005647933177622775,
+            "mean_real": 0.030928475569585768,
+            "second_abs_moment": 0.021383611394734794
+          }
+        },
+        "mean_joint_residual_energy": 0.04951509139069776,
+        "tail_energy_threshold": 0.25,
+        "tail_mass": 0.0
+      },
+      "residual_selection_for_scoring": "blind_affine",
+      "runtime_record": {
+        "blind_affine_residual": {
+          "conditional_moments": {
+            "+0.707106781187+0.707106781187j": {
+              "count": 71,
+              "fourth_abs_moment": 0.0015687575753218057,
+              "mean_imag": -0.0303847746411608,
+              "mean_real": -0.04965302193330832,
+              "second_abs_moment": 0.02821999653287847
+            },
+            "+0.707106781187-0.707106781187j": {
+              "count": 54,
+              "fourth_abs_moment": 0.0009161199048122198,
+              "mean_imag": 0.035301885560015435,
+              "mean_real": -0.0038529309458826357,
+              "second_abs_moment": 0.023383393115571114
+            },
+            "-0.707106781187+0.707106781187j": {
+              "count": 54,
+              "fourth_abs_moment": 0.0011944198643897045,
+              "mean_imag": -0.014854989039260172,
+              "mean_real": 0.008212882629682772,
+              "second_abs_moment": 0.026390197009991172
+            },
+            "-0.707106781187-0.707106781187j": {
+              "count": 77,
+              "fourth_abs_moment": 0.0008134924467079797,
+              "mean_imag": 0.0005647933177622775,
+              "mean_real": 0.030928475569585768,
+              "second_abs_moment": 0.021383611394734794
+            }
+          },
+          "mean_joint_residual_energy": 0.04951509139069776,
+          "tail_energy_threshold": 0.25,
+          "tail_mass": 0.0
+        },
+        "calibration_range": {
+          "end_exclusive": 261,
+          "start": 133
+        },
+        "csi_access_class": "CSI_NONE",
+        "evaluation_range": {
+          "end_exclusive": 389,
+          "start": 261
+        },
+        "nearest_residual": {
+          "conditional_moments": {
+            "+0.707106781187+0.707106781187j": {
+              "count": 71,
+              "fourth_abs_moment": 0.025370013462873476,
+              "mean_imag": -0.2617459115744203,
+              "mean_real": -0.26163727765638223,
+              "second_abs_moment": 0.14804283281032615
+            },
+            "+0.707106781187-0.707106781187j": {
+              "count": 54,
+              "fourth_abs_moment": 0.020292118858285628,
+              "mean_imag": 0.25540580786778766,
+              "mean_real": -0.23752702760507063,
+              "second_abs_moment": 0.1313667469840458
+            },
+            "-0.707106781187+0.707106781187j": {
+              "count": 54,
+              "fourth_abs_moment": 0.02105154460326715,
+              "mean_imag": -0.2440996480710498,
+              "mean_real": 0.25111833445621423,
+              "second_abs_moment": 0.1340412298130764
+            },
+            "-0.707106781187-0.707106781187j": {
+              "count": 77,
+              "fourth_abs_moment": 0.01944119095021931,
+              "mean_imag": 0.23864090548308745,
+              "mean_real": 0.2574306413465577,
+              "second_abs_moment": 0.13204860407574204
+            }
+          },
+          "mean_joint_residual_energy": 0.2735219874250773,
+          "tail_energy_threshold": 0.25,
+          "tail_mass": 0.5625
+        },
+        "seed": 12,
+        "sequence_id": "p03-residual-headroom-seed-12"
+      },
+      "seed": 12,
+      "shared_realization": true,
+      "simple_analytic_gain": 0.0,
+      "standard_cma_calls": 1,
+      "visible_headroom": 0.0
+    },
+    {
+      "analytic_coverage": 1.0,
+      "evaluation_only_truth_fields": [
+        "sX",
+        "sY"
+      ],
+      "headroom_error_unit": 0.00390625,
+      "metrics": {
+        "blind_affine": {
+          "fixed_label_ber": 0.0,
+          "fixed_label_ser": 0.0,
+          "fixed_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_assignment": [
+            "sX",
+            "sY"
+          ],
+          "pi_ber": 0.0,
+          "pi_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_ser": 0.0
+        },
+        "nearest_qpsk": {
+          "fixed_label_ber": 0.0,
+          "fixed_label_ser": 0.0,
+          "fixed_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_assignment": [
+            "sX",
+            "sY"
+          ],
+          "pi_ber": 0.0,
+          "pi_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_ser": 0.0
+        },
+        "oracle_affine_scoring_only": {
+          "fixed_label_ber": 0.0,
+          "fixed_label_ser": 0.0,
+          "fixed_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_assignment": [
+            "sX",
+            "sY"
+          ],
+          "pi_ber": 0.0,
+          "pi_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_ser": 0.0
+        }
+      },
+      "residual": {
+        "conditional_moments": {
+          "+0.707106781187+0.707106781187j": {
+            "count": 75,
+            "fourth_abs_moment": 0.0005310027275135056,
+            "mean_imag": 0.011303101663209535,
+            "mean_real": 0.0031998672176279364,
+            "second_abs_moment": 0.01564439550342704
+          },
+          "+0.707106781187-0.707106781187j": {
+            "count": 59,
+            "fourth_abs_moment": 0.000294715859935953,
+            "mean_imag": 0.019788739349056932,
+            "mean_real": -0.003410486485063969,
+            "second_abs_moment": 0.010997438130327325
+          },
+          "-0.707106781187+0.707106781187j": {
+            "count": 64,
+            "fourth_abs_moment": 0.0004468425168005261,
+            "mean_imag": 0.0030059010429860557,
+            "mean_real": 0.01740383329822808,
+            "second_abs_moment": 0.014425326672914098
+          },
+          "-0.707106781187-0.707106781187j": {
+            "count": 58,
+            "fourth_abs_moment": 0.00035381837407917903,
+            "mean_imag": 0.00813502578895836,
+            "mean_real": 0.015106890950916042,
+            "second_abs_moment": 0.013411157135222949
+          }
+        },
+        "mean_joint_residual_energy": 0.027525363541841978,
+        "tail_energy_threshold": 0.25,
+        "tail_mass": 0.0
+      },
+      "residual_selection_for_scoring": "blind_affine",
+      "runtime_record": {
+        "blind_affine_residual": {
+          "conditional_moments": {
+            "+0.707106781187+0.707106781187j": {
+              "count": 75,
+              "fourth_abs_moment": 0.0005310027275135056,
+              "mean_imag": 0.011303101663209535,
+              "mean_real": 0.0031998672176279364,
+              "second_abs_moment": 0.01564439550342704
+            },
+            "+0.707106781187-0.707106781187j": {
+              "count": 59,
+              "fourth_abs_moment": 0.000294715859935953,
+              "mean_imag": 0.019788739349056932,
+              "mean_real": -0.003410486485063969,
+              "second_abs_moment": 0.010997438130327325
+            },
+            "-0.707106781187+0.707106781187j": {
+              "count": 64,
+              "fourth_abs_moment": 0.0004468425168005261,
+              "mean_imag": 0.0030059010429860557,
+              "mean_real": 0.01740383329822808,
+              "second_abs_moment": 0.014425326672914098
+            },
+            "-0.707106781187-0.707106781187j": {
+              "count": 58,
+              "fourth_abs_moment": 0.00035381837407917903,
+              "mean_imag": 0.00813502578895836,
+              "mean_real": 0.015106890950916042,
+              "second_abs_moment": 0.013411157135222949
+            }
+          },
+          "mean_joint_residual_energy": 0.027525363541841978,
+          "tail_energy_threshold": 0.25,
+          "tail_mass": 0.0
+        },
+        "calibration_range": {
+          "end_exclusive": 261,
+          "start": 133
+        },
+        "csi_access_class": "CSI_NONE",
+        "evaluation_range": {
+          "end_exclusive": 389,
+          "start": 261
+        },
+        "nearest_residual": {
+          "conditional_moments": {
+            "+0.707106781187+0.707106781187j": {
+              "count": 75,
+              "fourth_abs_moment": 0.001512072936286233,
+              "mean_imag": -0.09334069826074787,
+              "mean_real": -0.10471801494235145,
+              "second_abs_moment": 0.030714967073229495
+            },
+            "+0.707106781187-0.707106781187j": {
+              "count": 59,
+              "fourth_abs_moment": 0.0013135257777339639,
+              "mean_imag": 0.11510651639234552,
+              "mean_real": -0.10776002773993561,
+              "second_abs_moment": 0.03223806327796916
+            },
+            "-0.707106781187+0.707106781187j": {
+              "count": 64,
+              "fourth_abs_moment": 0.001608529447824105,
+              "mean_imag": -0.09966843186970331,
+              "mean_real": 0.11526169622453403,
+              "second_abs_moment": 0.03311721692327996
+            },
+            "-0.707106781187-0.707106781187j": {
+              "count": 58,
+              "fourth_abs_moment": 0.0017398995460061071,
+              "mean_imag": 0.10261028498472685,
+              "mean_real": 0.11537828460151259,
+              "second_abs_moment": 0.03358295962313388
+            }
+          },
+          "mean_joint_residual_energy": 0.06463267035253184,
+          "tail_energy_threshold": 0.25,
+          "tail_mass": 0.0
+        },
+        "seed": 13,
+        "sequence_id": "p03-residual-headroom-seed-13"
+      },
+      "seed": 13,
+      "shared_realization": true,
+      "simple_analytic_gain": 0.0,
+      "standard_cma_calls": 1,
+      "visible_headroom": 0.0
+    },
+    {
+      "analytic_coverage": 1.0,
+      "evaluation_only_truth_fields": [
+        "sX",
+        "sY"
+      ],
+      "headroom_error_unit": 0.00390625,
+      "metrics": {
+        "blind_affine": {
+          "fixed_label_ber": 0.0,
+          "fixed_label_ser": 0.0,
+          "fixed_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_assignment": [
+            "sX",
+            "sY"
+          ],
+          "pi_ber": 0.0,
+          "pi_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_ser": 0.0
+        },
+        "nearest_qpsk": {
+          "fixed_label_ber": 0.0,
+          "fixed_label_ser": 0.0,
+          "fixed_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_assignment": [
+            "sX",
+            "sY"
+          ],
+          "pi_ber": 0.0,
+          "pi_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_ser": 0.0
+        },
+        "oracle_affine_scoring_only": {
+          "fixed_label_ber": 0.0,
+          "fixed_label_ser": 0.0,
+          "fixed_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_assignment": [
+            "sX",
+            "sY"
+          ],
+          "pi_ber": 0.0,
+          "pi_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_ser": 0.0
+        }
+      },
+      "residual": {
+        "conditional_moments": {
+          "+0.707106781187+0.707106781187j": {
+            "count": 68,
+            "fourth_abs_moment": 0.0009316530582987131,
+            "mean_imag": -0.03582825965007708,
+            "mean_real": 0.022043096138545062,
+            "second_abs_moment": 0.0220033636226801
+          },
+          "+0.707106781187-0.707106781187j": {
+            "count": 57,
+            "fourth_abs_moment": 0.00095902640744451,
+            "mean_imag": -0.002380312484406567,
+            "mean_real": -0.017227660007852755,
+            "second_abs_moment": 0.023645538437401123
+          },
+          "-0.707106781187+0.707106781187j": {
+            "count": 61,
+            "fourth_abs_moment": 0.0008380691469233035,
+            "mean_imag": -0.013399520939606481,
+            "mean_real": 0.0006798693163415674,
+            "second_abs_moment": 0.021959598132952996
+          },
+          "-0.707106781187-0.707106781187j": {
+            "count": 70,
+            "fourth_abs_moment": 0.0007638289475822027,
+            "mean_imag": -0.014658120243060856,
+            "mean_real": 0.034990807530746716,
+            "second_abs_moment": 0.02084898623260482
+          }
+        },
+        "mean_joint_residual_energy": 0.04408585109114516,
+        "tail_energy_threshold": 0.25,
+        "tail_mass": 0.0
+      },
+      "residual_selection_for_scoring": "blind_affine",
+      "runtime_record": {
+        "blind_affine_residual": {
+          "conditional_moments": {
+            "+0.707106781187+0.707106781187j": {
+              "count": 68,
+              "fourth_abs_moment": 0.0009316530582987131,
+              "mean_imag": -0.03582825965007708,
+              "mean_real": 0.022043096138545062,
+              "second_abs_moment": 0.0220033636226801
+            },
+            "+0.707106781187-0.707106781187j": {
+              "count": 57,
+              "fourth_abs_moment": 0.00095902640744451,
+              "mean_imag": -0.002380312484406567,
+              "mean_real": -0.017227660007852755,
+              "second_abs_moment": 0.023645538437401123
+            },
+            "-0.707106781187+0.707106781187j": {
+              "count": 61,
+              "fourth_abs_moment": 0.0008380691469233035,
+              "mean_imag": -0.013399520939606481,
+              "mean_real": 0.0006798693163415674,
+              "second_abs_moment": 0.021959598132952996
+            },
+            "-0.707106781187-0.707106781187j": {
+              "count": 70,
+              "fourth_abs_moment": 0.0007638289475822027,
+              "mean_imag": -0.014658120243060856,
+              "mean_real": 0.034990807530746716,
+              "second_abs_moment": 0.02084898623260482
+            }
+          },
+          "mean_joint_residual_energy": 0.04408585109114516,
+          "tail_energy_threshold": 0.25,
+          "tail_mass": 0.0
+        },
+        "calibration_range": {
+          "end_exclusive": 261,
+          "start": 133
+        },
+        "csi_access_class": "CSI_NONE",
+        "evaluation_range": {
+          "end_exclusive": 389,
+          "start": 261
+        },
+        "nearest_residual": {
+          "conditional_moments": {
+            "+0.707106781187+0.707106781187j": {
+              "count": 68,
+              "fourth_abs_moment": 0.010462094500760674,
+              "mean_imag": -0.2110622896136065,
+              "mean_real": -0.18661355459793508,
+              "second_abs_moment": 0.0898790745637307
+            },
+            "+0.707106781187-0.707106781187j": {
+              "count": 57,
+              "fourth_abs_moment": 0.012267302413906247,
+              "mean_imag": 0.20566695788246805,
+              "mean_real": -0.21292405344794701,
+              "second_abs_moment": 0.09967322053573208
+            },
+            "-0.707106781187+0.707106781187j": {
+              "count": 61,
+              "fourth_abs_moment": 0.009443845611143309,
+              "mean_imag": -0.19733509224423976,
+              "mean_real": 0.19025781802140437,
+              "second_abs_moment": 0.08644226930347763
+            },
+            "-0.707106781187-0.707106781187j": {
+              "count": 70,
+              "fourth_abs_moment": 0.011066967372249022,
+              "mean_imag": 0.1954257786653885,
+              "mean_real": 0.21767406119320334,
+              "second_abs_moment": 0.0952059577195622
+            }
+          },
+          "mean_joint_residual_energy": 0.18539489147462426,
+          "tail_energy_threshold": 0.25,
+          "tail_mass": 0.171875
+        },
+        "seed": 14,
+        "sequence_id": "p03-residual-headroom-seed-14"
+      },
+      "seed": 14,
+      "shared_realization": true,
+      "simple_analytic_gain": 0.0,
+      "standard_cma_calls": 1,
+      "visible_headroom": 0.0
+    },
+    {
+      "analytic_coverage": 1.0,
+      "evaluation_only_truth_fields": [
+        "sX",
+        "sY"
+      ],
+      "headroom_error_unit": 0.00390625,
+      "metrics": {
+        "blind_affine": {
+          "fixed_label_ber": 0.0,
+          "fixed_label_ser": 0.0,
+          "fixed_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_assignment": [
+            "sX",
+            "sY"
+          ],
+          "pi_ber": 0.0,
+          "pi_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_ser": 0.0
+        },
+        "nearest_qpsk": {
+          "fixed_label_ber": 0.0,
+          "fixed_label_ser": 0.0,
+          "fixed_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_assignment": [
+            "sX",
+            "sY"
+          ],
+          "pi_ber": 0.0,
+          "pi_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_ser": 0.0
+        },
+        "oracle_affine_scoring_only": {
+          "fixed_label_ber": 0.0,
+          "fixed_label_ser": 0.0,
+          "fixed_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_assignment": [
+            "sX",
+            "sY"
+          ],
+          "pi_ber": 0.0,
+          "pi_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_ser": 0.0
+        }
+      },
+      "residual": {
+        "conditional_moments": {
+          "+0.707106781187+0.707106781187j": {
+            "count": 64,
+            "fourth_abs_moment": 0.0008364771618743835,
+            "mean_imag": -0.0007665730744239813,
+            "mean_real": -0.014535056086282158,
+            "second_abs_moment": 0.020002750342427298
+          },
+          "+0.707106781187-0.707106781187j": {
+            "count": 59,
+            "fourth_abs_moment": 0.000644922284328383,
+            "mean_imag": 0.009369073513330415,
+            "mean_real": 0.011758826462257467,
+            "second_abs_moment": 0.01745305620219585
+          },
+          "-0.707106781187+0.707106781187j": {
+            "count": 61,
+            "fourth_abs_moment": 0.0007746812378689945,
+            "mean_imag": 0.005410462418447488,
+            "mean_real": 0.016161855097620005,
+            "second_abs_moment": 0.018430646385293653
+          },
+          "-0.707106781187-0.707106781187j": {
+            "count": 72,
+            "fourth_abs_moment": 0.000990206753953756,
+            "mean_imag": 0.03887533484306233,
+            "mean_real": 0.02088165245764033,
+            "second_abs_moment": 0.021694291848039053
+          }
+        },
+        "mean_joint_residual_energy": 0.03903253734692678,
+        "tail_energy_threshold": 0.25,
+        "tail_mass": 0.0
+      },
+      "residual_selection_for_scoring": "blind_affine",
+      "runtime_record": {
+        "blind_affine_residual": {
+          "conditional_moments": {
+            "+0.707106781187+0.707106781187j": {
+              "count": 64,
+              "fourth_abs_moment": 0.0008364771618743835,
+              "mean_imag": -0.0007665730744239813,
+              "mean_real": -0.014535056086282158,
+              "second_abs_moment": 0.020002750342427298
+            },
+            "+0.707106781187-0.707106781187j": {
+              "count": 59,
+              "fourth_abs_moment": 0.000644922284328383,
+              "mean_imag": 0.009369073513330415,
+              "mean_real": 0.011758826462257467,
+              "second_abs_moment": 0.01745305620219585
+            },
+            "-0.707106781187+0.707106781187j": {
+              "count": 61,
+              "fourth_abs_moment": 0.0007746812378689945,
+              "mean_imag": 0.005410462418447488,
+              "mean_real": 0.016161855097620005,
+              "second_abs_moment": 0.018430646385293653
+            },
+            "-0.707106781187-0.707106781187j": {
+              "count": 72,
+              "fourth_abs_moment": 0.000990206753953756,
+              "mean_imag": 0.03887533484306233,
+              "mean_real": 0.02088165245764033,
+              "second_abs_moment": 0.021694291848039053
+            }
+          },
+          "mean_joint_residual_energy": 0.03903253734692678,
+          "tail_energy_threshold": 0.25,
+          "tail_mass": 0.0
+        },
+        "calibration_range": {
+          "end_exclusive": 261,
+          "start": 133
+        },
+        "csi_access_class": "CSI_NONE",
+        "evaluation_range": {
+          "end_exclusive": 389,
+          "start": 261
+        },
+        "nearest_residual": {
+          "conditional_moments": {
+            "+0.707106781187+0.707106781187j": {
+              "count": 64,
+              "fourth_abs_moment": 0.010729485726996023,
+              "mean_imag": -0.19555379352638141,
+              "mean_real": -0.20724118227382476,
+              "second_abs_moment": 0.09169462370491178
+            },
+            "+0.707106781187-0.707106781187j": {
+              "count": 59,
+              "fourth_abs_moment": 0.008427021197126556,
+              "mean_imag": 0.19278324355841078,
+              "mean_real": -0.18588917117266554,
+              "second_abs_moment": 0.08128396458929088
+            },
+            "-0.707106781187+0.707106781187j": {
+              "count": 61,
+              "fourth_abs_moment": 0.008258682158173053,
+              "mean_imag": -0.19154987005314308,
+              "mean_real": 0.19242371862340948,
+              "second_abs_moment": 0.08333065271493546
+            },
+            "-0.707106781187-0.707106781187j": {
+              "count": 72,
+              "fourth_abs_moment": 0.010252768764706184,
+              "mean_imag": 0.2068196143974349,
+              "mean_real": 0.19911851503288422,
+              "second_abs_moment": 0.09313403806146092
+            }
+          },
+          "mean_joint_residual_energy": 0.17541429987436535,
+          "tail_energy_threshold": 0.25,
+          "tail_mass": 0.1015625
+        },
+        "seed": 15,
+        "sequence_id": "p03-residual-headroom-seed-15"
+      },
+      "seed": 15,
+      "shared_realization": true,
+      "simple_analytic_gain": 0.0,
+      "standard_cma_calls": 1,
+      "visible_headroom": 0.0
+    },
+    {
+      "analytic_coverage": 1.0,
+      "evaluation_only_truth_fields": [
+        "sX",
+        "sY"
+      ],
+      "headroom_error_unit": 0.00390625,
+      "metrics": {
+        "blind_affine": {
+          "fixed_label_ber": 0.0,
+          "fixed_label_ser": 0.0,
+          "fixed_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_assignment": [
+            "sX",
+            "sY"
+          ],
+          "pi_ber": 0.0,
+          "pi_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_ser": 0.0
+        },
+        "nearest_qpsk": {
+          "fixed_label_ber": 0.0,
+          "fixed_label_ser": 0.0,
+          "fixed_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_assignment": [
+            "sX",
+            "sY"
+          ],
+          "pi_ber": 0.0,
+          "pi_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_ser": 0.0
+        },
+        "oracle_affine_scoring_only": {
+          "fixed_label_ber": 0.0,
+          "fixed_label_ser": 0.0,
+          "fixed_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_assignment": [
+            "sX",
+            "sY"
+          ],
+          "pi_ber": 0.0,
+          "pi_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_ser": 0.0
+        }
+      },
+      "residual": {
+        "conditional_moments": {
+          "+0.707106781187+0.707106781187j": {
+            "count": 54,
+            "fourth_abs_moment": 0.007090291733106874,
+            "mean_imag": -0.02693394259573832,
+            "mean_real": -0.024149752011121912,
+            "second_abs_moment": 0.059502478213508576
+          },
+          "+0.707106781187-0.707106781187j": {
+            "count": 72,
+            "fourth_abs_moment": 0.005740471825529224,
+            "mean_imag": 0.049492806347607415,
+            "mean_real": -0.04530430397592667,
+            "second_abs_moment": 0.05480455145715277
+          },
+          "-0.707106781187+0.707106781187j": {
+            "count": 60,
+            "fourth_abs_moment": 0.007662333376872693,
+            "mean_imag": -0.03955903993111838,
+            "mean_real": 0.047395577077063274,
+            "second_abs_moment": 0.05942920688378947
+          },
+          "-0.707106781187-0.707106781187j": {
+            "count": 70,
+            "fourth_abs_moment": 0.0053428169181988965,
+            "mean_imag": 0.029972880514671157,
+            "mean_real": 0.032605306045618135,
+            "second_abs_moment": 0.050371887468910685
+          }
+        },
+        "mean_joint_residual_energy": 0.1113347348773092,
+        "tail_energy_threshold": 0.25,
+        "tail_mass": 0.0625
+      },
+      "residual_selection_for_scoring": "blind_affine",
+      "runtime_record": {
+        "blind_affine_residual": {
+          "conditional_moments": {
+            "+0.707106781187+0.707106781187j": {
+              "count": 54,
+              "fourth_abs_moment": 0.007090291733106874,
+              "mean_imag": -0.02693394259573832,
+              "mean_real": -0.024149752011121912,
+              "second_abs_moment": 0.059502478213508576
+            },
+            "+0.707106781187-0.707106781187j": {
+              "count": 72,
+              "fourth_abs_moment": 0.005740471825529224,
+              "mean_imag": 0.049492806347607415,
+              "mean_real": -0.04530430397592667,
+              "second_abs_moment": 0.05480455145715277
+            },
+            "-0.707106781187+0.707106781187j": {
+              "count": 60,
+              "fourth_abs_moment": 0.007662333376872693,
+              "mean_imag": -0.03955903993111838,
+              "mean_real": 0.047395577077063274,
+              "second_abs_moment": 0.05942920688378947
+            },
+            "-0.707106781187-0.707106781187j": {
+              "count": 70,
+              "fourth_abs_moment": 0.0053428169181988965,
+              "mean_imag": 0.029972880514671157,
+              "mean_real": 0.032605306045618135,
+              "second_abs_moment": 0.050371887468910685
+            }
+          },
+          "mean_joint_residual_energy": 0.1113347348773092,
+          "tail_energy_threshold": 0.25,
+          "tail_mass": 0.0625
+        },
+        "calibration_range": {
+          "end_exclusive": 261,
+          "start": 133
+        },
+        "csi_access_class": "CSI_NONE",
+        "evaluation_range": {
+          "end_exclusive": 389,
+          "start": 261
+        },
+        "nearest_residual": {
+          "conditional_moments": {
+            "+0.707106781187+0.707106781187j": {
+              "count": 54,
+              "fourth_abs_moment": 0.1184742966235035,
+              "mean_imag": -0.402952054553647,
+              "mean_real": -0.39652533574860943,
+              "second_abs_moment": 0.3307718910890651
+            },
+            "+0.707106781187-0.707106781187j": {
+              "count": 72,
+              "fourth_abs_moment": 0.12148352948850258,
+              "mean_imag": 0.4103642271552524,
+              "mean_real": -0.40287326945686697,
+              "second_abs_moment": 0.3399729404930338
+            },
+            "-0.707106781187+0.707106781187j": {
+              "count": 60,
+              "fourth_abs_moment": 0.1259616810675031,
+              "mean_imag": -0.4059810988798694,
+              "mean_real": 0.4127148474067844,
+              "second_abs_moment": 0.34608654505432895
+            },
+            "-0.707106781187-0.707106781187j": {
+              "count": 70,
+              "fourth_abs_moment": 0.1177739763112808,
+              "mean_imag": 0.4007324174750008,
+              "mean_real": 0.4049531185661036,
+              "second_abs_moment": 0.3341319569783624
+            }
+          },
+          "mean_joint_residual_energy": 0.6757356525472895,
+          "tail_energy_threshold": 0.25,
+          "tail_mass": 1.0
+        },
+        "seed": 16,
+        "sequence_id": "p03-residual-headroom-seed-16"
+      },
+      "seed": 16,
+      "shared_realization": true,
+      "simple_analytic_gain": 0.0,
+      "standard_cma_calls": 1,
+      "visible_headroom": 0.0
+    },
+    {
+      "analytic_coverage": 1.0,
+      "evaluation_only_truth_fields": [
+        "sX",
+        "sY"
+      ],
+      "headroom_error_unit": 0.00390625,
+      "metrics": {
+        "blind_affine": {
+          "fixed_label_ber": 0.0,
+          "fixed_label_ser": 0.0,
+          "fixed_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_assignment": [
+            "sX",
+            "sY"
+          ],
+          "pi_ber": 0.0,
+          "pi_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_ser": 0.0
+        },
+        "nearest_qpsk": {
+          "fixed_label_ber": 0.0,
+          "fixed_label_ser": 0.0,
+          "fixed_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_assignment": [
+            "sX",
+            "sY"
+          ],
+          "pi_ber": 0.0,
+          "pi_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_ser": 0.0
+        },
+        "oracle_affine_scoring_only": {
+          "fixed_label_ber": 0.0,
+          "fixed_label_ser": 0.0,
+          "fixed_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_assignment": [
+            "sX",
+            "sY"
+          ],
+          "pi_ber": 0.0,
+          "pi_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_ser": 0.0
+        }
+      },
+      "residual": {
+        "conditional_moments": {
+          "+0.707106781187+0.707106781187j": {
+            "count": 64,
+            "fourth_abs_moment": 0.0002829719827813827,
+            "mean_imag": 0.008554447219974554,
+            "mean_real": -0.020325127562935058,
+            "second_abs_moment": 0.011597566902482946
+          },
+          "+0.707106781187-0.707106781187j": {
+            "count": 61,
+            "fourth_abs_moment": 0.00010901953383788374,
+            "mean_imag": 0.02380868186047603,
+            "mean_real": -0.007494704160793741,
+            "second_abs_moment": 0.007715054614803796
+          },
+          "-0.707106781187+0.707106781187j": {
+            "count": 68,
+            "fourth_abs_moment": 0.0001412292901263622,
+            "mean_imag": -0.011416053495905224,
+            "mean_real": 0.010483725550991297,
+            "second_abs_moment": 0.00807487050741977
+          },
+          "-0.707106781187-0.707106781187j": {
+            "count": 63,
+            "fourth_abs_moment": 0.00023999436370807502,
+            "mean_imag": 0.01253739319105928,
+            "mean_real": 0.015277763113040651,
+            "second_abs_moment": 0.01006615972262855
+          }
+        },
+        "mean_joint_residual_energy": 0.0187197021116569,
+        "tail_energy_threshold": 0.25,
+        "tail_mass": 0.0
+      },
+      "residual_selection_for_scoring": "blind_affine",
+      "runtime_record": {
+        "blind_affine_residual": {
+          "conditional_moments": {
+            "+0.707106781187+0.707106781187j": {
+              "count": 64,
+              "fourth_abs_moment": 0.0002829719827813827,
+              "mean_imag": 0.008554447219974554,
+              "mean_real": -0.020325127562935058,
+              "second_abs_moment": 0.011597566902482946
+            },
+            "+0.707106781187-0.707106781187j": {
+              "count": 61,
+              "fourth_abs_moment": 0.00010901953383788374,
+              "mean_imag": 0.02380868186047603,
+              "mean_real": -0.007494704160793741,
+              "second_abs_moment": 0.007715054614803796
+            },
+            "-0.707106781187+0.707106781187j": {
+              "count": 68,
+              "fourth_abs_moment": 0.0001412292901263622,
+              "mean_imag": -0.011416053495905224,
+              "mean_real": 0.010483725550991297,
+              "second_abs_moment": 0.00807487050741977
+            },
+            "-0.707106781187-0.707106781187j": {
+              "count": 63,
+              "fourth_abs_moment": 0.00023999436370807502,
+              "mean_imag": 0.01253739319105928,
+              "mean_real": 0.015277763113040651,
+              "second_abs_moment": 0.01006615972262855
+            }
+          },
+          "mean_joint_residual_energy": 0.0187197021116569,
+          "tail_energy_threshold": 0.25,
+          "tail_mass": 0.0
+        },
+        "calibration_range": {
+          "end_exclusive": 261,
+          "start": 133
+        },
+        "csi_access_class": "CSI_NONE",
+        "evaluation_range": {
+          "end_exclusive": 389,
+          "start": 261
+        },
+        "nearest_residual": {
+          "conditional_moments": {
+            "+0.707106781187+0.707106781187j": {
+              "count": 64,
+              "fourth_abs_moment": 0.0004997614639720622,
+              "mean_imag": 0.0461997797829995,
+              "mean_real": 0.030459604345728232,
+              "second_abs_moment": 0.015988180704147398
+            },
+            "+0.707106781187-0.707106781187j": {
+              "count": 61,
+              "fourth_abs_moment": 0.00020979720088595778,
+              "mean_imag": -0.03092854790032411,
+              "mean_real": 0.03693709216836821,
+              "second_abs_moment": 0.01029475188448695
+            },
+            "-0.707106781187+0.707106781187j": {
+              "count": 68,
+              "fourth_abs_moment": 0.00019517150400068673,
+              "mean_imag": 0.03102273946809925,
+              "mean_real": -0.03107096211494961,
+              "second_abs_moment": 0.010936003453093498
+            },
+            "-0.707106781187-0.707106781187j": {
+              "count": 63,
+              "fourth_abs_moment": 0.0003151006896296115,
+              "mean_imag": -0.03593530244284527,
+              "mean_real": -0.03288197698030749,
+              "second_abs_moment": 0.013214861174053944
+            }
+          },
+          "mean_joint_residual_energy": 0.025214124365585105,
+          "tail_energy_threshold": 0.25,
+          "tail_mass": 0.0
+        },
+        "seed": 17,
+        "sequence_id": "p03-residual-headroom-seed-17"
+      },
+      "seed": 17,
+      "shared_realization": true,
+      "simple_analytic_gain": 0.0,
+      "standard_cma_calls": 1,
+      "visible_headroom": 0.0
+    },
+    {
+      "analytic_coverage": 1.0,
+      "evaluation_only_truth_fields": [
+        "sX",
+        "sY"
+      ],
+      "headroom_error_unit": 0.00390625,
+      "metrics": {
+        "blind_affine": {
+          "fixed_label_ber": 0.0,
+          "fixed_label_ser": 0.0,
+          "fixed_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_assignment": [
+            "sX",
+            "sY"
+          ],
+          "pi_ber": 0.0,
+          "pi_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_ser": 0.0
+        },
+        "nearest_qpsk": {
+          "fixed_label_ber": 0.0,
+          "fixed_label_ser": 0.0,
+          "fixed_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_assignment": [
+            "sX",
+            "sY"
+          ],
+          "pi_ber": 0.0,
+          "pi_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_ser": 0.0
+        },
+        "oracle_affine_scoring_only": {
+          "fixed_label_ber": 0.0,
+          "fixed_label_ser": 0.0,
+          "fixed_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_assignment": [
+            "sX",
+            "sY"
+          ],
+          "pi_ber": 0.0,
+          "pi_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_ser": 0.0
+        }
+      },
+      "residual": {
+        "conditional_moments": {
+          "+0.707106781187+0.707106781187j": {
+            "count": 65,
+            "fourth_abs_moment": 0.0010042603229980913,
+            "mean_imag": 0.003837882720054564,
+            "mean_real": -0.013036604192872333,
+            "second_abs_moment": 0.024914229128684892
+          },
+          "+0.707106781187-0.707106781187j": {
+            "count": 58,
+            "fourth_abs_moment": 0.0006330294924148762,
+            "mean_imag": -0.014238028449737029,
+            "mean_real": -0.0021156578448536913,
+            "second_abs_moment": 0.01635284596902057
+          },
+          "-0.707106781187+0.707106781187j": {
+            "count": 74,
+            "fourth_abs_moment": 0.0008631787776595547,
+            "mean_imag": -0.027283017767673758,
+            "mean_real": 0.040676349828099076,
+            "second_abs_moment": 0.020613803284289915
+          },
+          "-0.707106781187-0.707106781187j": {
+            "count": 59,
+            "fourth_abs_moment": 0.0015075269081063587,
+            "mean_imag": 0.023193609552796268,
+            "mean_real": 0.006876119806045458,
+            "second_abs_moment": 0.029071722280242726
+          }
+        },
+        "mean_joint_residual_energy": 0.04537924232140223,
+        "tail_energy_threshold": 0.25,
+        "tail_mass": 0.0
+      },
+      "residual_selection_for_scoring": "blind_affine",
+      "runtime_record": {
+        "blind_affine_residual": {
+          "conditional_moments": {
+            "+0.707106781187+0.707106781187j": {
+              "count": 65,
+              "fourth_abs_moment": 0.0010042603229980913,
+              "mean_imag": 0.003837882720054564,
+              "mean_real": -0.013036604192872333,
+              "second_abs_moment": 0.024914229128684892
+            },
+            "+0.707106781187-0.707106781187j": {
+              "count": 58,
+              "fourth_abs_moment": 0.0006330294924148762,
+              "mean_imag": -0.014238028449737029,
+              "mean_real": -0.0021156578448536913,
+              "second_abs_moment": 0.01635284596902057
+            },
+            "-0.707106781187+0.707106781187j": {
+              "count": 74,
+              "fourth_abs_moment": 0.0008631787776595547,
+              "mean_imag": -0.027283017767673758,
+              "mean_real": 0.040676349828099076,
+              "second_abs_moment": 0.020613803284289915
+            },
+            "-0.707106781187-0.707106781187j": {
+              "count": 59,
+              "fourth_abs_moment": 0.0015075269081063587,
+              "mean_imag": 0.023193609552796268,
+              "mean_real": 0.006876119806045458,
+              "second_abs_moment": 0.029071722280242726
+            }
+          },
+          "mean_joint_residual_energy": 0.04537924232140223,
+          "tail_energy_threshold": 0.25,
+          "tail_mass": 0.0
+        },
+        "calibration_range": {
+          "end_exclusive": 261,
+          "start": 133
+        },
+        "csi_access_class": "CSI_NONE",
+        "evaluation_range": {
+          "end_exclusive": 389,
+          "start": 261
+        },
+        "nearest_residual": {
+          "conditional_moments": {
+            "+0.707106781187+0.707106781187j": {
+              "count": 65,
+              "fourth_abs_moment": 0.017905377343267404,
+              "mean_imag": -0.22381414416569823,
+              "mean_real": -0.24886180228866256,
+              "second_abs_moment": 0.12296958266438332
+            },
+            "+0.707106781187-0.707106781187j": {
+              "count": 58,
+              "fourth_abs_moment": 0.014340352211086245,
+              "mean_imag": 0.2239889689916086,
+              "mean_real": -0.2352145368004799,
+              "second_abs_moment": 0.11297151914845902
+            },
+            "-0.707106781187+0.707106781187j": {
+              "count": 74,
+              "fourth_abs_moment": 0.01974487963426667,
+              "mean_imag": -0.25191002638650395,
+              "mean_real": 0.24652211976815147,
+              "second_abs_moment": 0.13258468113124744
+            },
+            "-0.707106781187-0.707106781187j": {
+              "count": 59,
+              "fourth_abs_moment": 0.018759099911714518,
+              "mean_imag": 0.24287318548421943,
+              "mean_real": 0.23188685106441612,
+              "second_abs_moment": 0.12538696693501522
+            }
+          },
+          "mean_joint_residual_energy": 0.24808178466151365,
+          "tail_energy_threshold": 0.25,
+          "tail_mass": 0.5078125
+        },
+        "seed": 18,
+        "sequence_id": "p03-residual-headroom-seed-18"
+      },
+      "seed": 18,
+      "shared_realization": true,
+      "simple_analytic_gain": 0.0,
+      "standard_cma_calls": 1,
+      "visible_headroom": 0.0
+    },
+    {
+      "analytic_coverage": 1.0,
+      "evaluation_only_truth_fields": [
+        "sX",
+        "sY"
+      ],
+      "headroom_error_unit": 0.00390625,
+      "metrics": {
+        "blind_affine": {
+          "fixed_label_ber": 0.0,
+          "fixed_label_ser": 0.0,
+          "fixed_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_assignment": [
+            "sX",
+            "sY"
+          ],
+          "pi_ber": 0.0,
+          "pi_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_ser": 0.0
+        },
+        "nearest_qpsk": {
+          "fixed_label_ber": 0.0,
+          "fixed_label_ser": 0.0,
+          "fixed_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_assignment": [
+            "sX",
+            "sY"
+          ],
+          "pi_ber": 0.0,
+          "pi_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_ser": 0.0
+        },
+        "oracle_affine_scoring_only": {
+          "fixed_label_ber": 0.0,
+          "fixed_label_ser": 0.0,
+          "fixed_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_assignment": [
+            "sX",
+            "sY"
+          ],
+          "pi_ber": 0.0,
+          "pi_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_ser": 0.0
+        }
+      },
+      "residual": {
+        "conditional_moments": {
+          "+0.707106781187+0.707106781187j": {
+            "count": 55,
+            "fourth_abs_moment": 3.501321005332793e-05,
+            "mean_imag": -0.01489298704529873,
+            "mean_real": -0.004367144189945091,
+            "second_abs_moment": 0.004197845857620349
+          },
+          "+0.707106781187-0.707106781187j": {
+            "count": 66,
+            "fourth_abs_moment": 3.33715577981818e-05,
+            "mean_imag": -0.005071314509088041,
+            "mean_real": -0.016902185083483453,
+            "second_abs_moment": 0.0038564076470758452
+          },
+          "-0.707106781187+0.707106781187j": {
+            "count": 66,
+            "fourth_abs_moment": 2.470713797906448e-05,
+            "mean_imag": -0.0012276981251893783,
+            "mean_real": 0.011559110203798535,
+            "second_abs_moment": 0.003899433207326984
+          },
+          "-0.707106781187-0.707106781187j": {
+            "count": 69,
+            "fourth_abs_moment": 4.04329426336979e-05,
+            "mean_imag": 0.0050851173711354645,
+            "mean_real": 0.0008351164603354168,
+            "second_abs_moment": 0.004343342581854916
+          }
+        },
+        "mean_joint_residual_energy": 0.00814420044302887,
+        "tail_energy_threshold": 0.25,
+        "tail_mass": 0.0
+      },
+      "residual_selection_for_scoring": "blind_affine",
+      "runtime_record": {
+        "blind_affine_residual": {
+          "conditional_moments": {
+            "+0.707106781187+0.707106781187j": {
+              "count": 55,
+              "fourth_abs_moment": 3.501321005332793e-05,
+              "mean_imag": -0.01489298704529873,
+              "mean_real": -0.004367144189945091,
+              "second_abs_moment": 0.004197845857620349
+            },
+            "+0.707106781187-0.707106781187j": {
+              "count": 66,
+              "fourth_abs_moment": 3.33715577981818e-05,
+              "mean_imag": -0.005071314509088041,
+              "mean_real": -0.016902185083483453,
+              "second_abs_moment": 0.0038564076470758452
+            },
+            "-0.707106781187+0.707106781187j": {
+              "count": 66,
+              "fourth_abs_moment": 2.470713797906448e-05,
+              "mean_imag": -0.0012276981251893783,
+              "mean_real": 0.011559110203798535,
+              "second_abs_moment": 0.003899433207326984
+            },
+            "-0.707106781187-0.707106781187j": {
+              "count": 69,
+              "fourth_abs_moment": 4.04329426336979e-05,
+              "mean_imag": 0.0050851173711354645,
+              "mean_real": 0.0008351164603354168,
+              "second_abs_moment": 0.004343342581854916
+            }
+          },
+          "mean_joint_residual_energy": 0.00814420044302887,
+          "tail_energy_threshold": 0.25,
+          "tail_mass": 0.0
+        },
+        "calibration_range": {
+          "end_exclusive": 261,
+          "start": 133
+        },
+        "csi_access_class": "CSI_NONE",
+        "evaluation_range": {
+          "end_exclusive": 389,
+          "start": 261
+        },
+        "nearest_residual": {
+          "conditional_moments": {
+            "+0.707106781187+0.707106781187j": {
+              "count": 55,
+              "fourth_abs_moment": 0.07545910429862432,
+              "mean_imag": 0.3539622920499164,
+              "mean_real": 0.36185921117956865,
+              "second_abs_moment": 0.2650936828853806
+            },
+            "+0.707106781187-0.707106781187j": {
+              "count": 66,
+              "fourth_abs_moment": 0.0763197987110868,
+              "mean_imag": -0.36745160510416575,
+              "mean_real": 0.35466687971628436,
+              "second_abs_moment": 0.2689619786894033
+            },
+            "-0.707106781187+0.707106781187j": {
+              "count": 66,
+              "fourth_abs_moment": 0.07245188201620853,
+              "mean_imag": 0.361710638702258,
+              "mean_real": -0.35001303398316974,
+              "second_abs_moment": 0.2618842539751236
+            },
+            "-0.707106781187-0.707106781187j": {
+              "count": 69,
+              "fourth_abs_moment": 0.0782189618894055,
+              "mean_imag": -0.36345344791763534,
+              "mean_real": -0.35423567575178516,
+              "second_abs_moment": 0.2673649558094629
+            }
+          },
+          "mean_joint_residual_energy": 0.5317514520734974,
+          "tail_energy_threshold": 0.25,
+          "tail_mass": 1.0
+        },
+        "seed": 19,
+        "sequence_id": "p03-residual-headroom-seed-19"
+      },
+      "seed": 19,
+      "shared_realization": true,
+      "simple_analytic_gain": 0.0,
+      "standard_cma_calls": 1,
+      "visible_headroom": 0.0
+    },
+    {
+      "analytic_coverage": 1.0,
+      "evaluation_only_truth_fields": [
+        "sX",
+        "sY"
+      ],
+      "headroom_error_unit": 0.00390625,
+      "metrics": {
+        "blind_affine": {
+          "fixed_label_ber": 0.0,
+          "fixed_label_ser": 0.0,
+          "fixed_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_assignment": [
+            "sX",
+            "sY"
+          ],
+          "pi_ber": 0.0,
+          "pi_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_ser": 0.0
+        },
+        "nearest_qpsk": {
+          "fixed_label_ber": 0.0,
+          "fixed_label_ser": 0.0,
+          "fixed_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_assignment": [
+            "sX",
+            "sY"
+          ],
+          "pi_ber": 0.0,
+          "pi_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_ser": 0.0
+        },
+        "oracle_affine_scoring_only": {
+          "fixed_label_ber": 0.0,
+          "fixed_label_ser": 0.0,
+          "fixed_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_assignment": [
+            "sX",
+            "sY"
+          ],
+          "pi_ber": 0.0,
+          "pi_rotations": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "pi_ser": 0.0
+        }
+      },
+      "residual": {
+        "conditional_moments": {
+          "+0.707106781187+0.707106781187j": {
+            "count": 76,
+            "fourth_abs_moment": 0.00646321206326862,
+            "mean_imag": -0.02422887887777384,
+            "mean_real": -0.059024691645338315,
+            "second_abs_moment": 0.05218664267109207
+          },
+          "+0.707106781187-0.707106781187j": {
+            "count": 62,
+            "fourth_abs_moment": 0.005260695652175614,
+            "mean_imag": 0.012721484485057824,
+            "mean_real": 0.0034787137241545085,
+            "second_abs_moment": 0.04860546134870335
+          },
+          "-0.707106781187+0.707106781187j": {
+            "count": 66,
+            "fourth_abs_moment": 0.005779318756832601,
+            "mean_imag": -0.027091403258289057,
+            "mean_real": 0.02023961753785852,
+            "second_abs_moment": 0.049363493486162355
+          },
+          "-0.707106781187-0.707106781187j": {
+            "count": 52,
+            "fourth_abs_moment": 0.005441406209321699,
+            "mean_imag": 0.020034878931100727,
+            "mean_real": 0.04448179074211588,
+            "second_abs_moment": 0.05712436739952725
+          }
+        },
+        "mean_joint_residual_energy": 0.10318891501159952,
+        "tail_energy_threshold": 0.25,
+        "tail_mass": 0.046875
+      },
+      "residual_selection_for_scoring": "blind_affine",
+      "runtime_record": {
+        "blind_affine_residual": {
+          "conditional_moments": {
+            "+0.707106781187+0.707106781187j": {
+              "count": 76,
+              "fourth_abs_moment": 0.00646321206326862,
+              "mean_imag": -0.02422887887777384,
+              "mean_real": -0.059024691645338315,
+              "second_abs_moment": 0.05218664267109207
+            },
+            "+0.707106781187-0.707106781187j": {
+              "count": 62,
+              "fourth_abs_moment": 0.005260695652175614,
+              "mean_imag": 0.012721484485057824,
+              "mean_real": 0.0034787137241545085,
+              "second_abs_moment": 0.04860546134870335
+            },
+            "-0.707106781187+0.707106781187j": {
+              "count": 66,
+              "fourth_abs_moment": 0.005779318756832601,
+              "mean_imag": -0.027091403258289057,
+              "mean_real": 0.02023961753785852,
+              "second_abs_moment": 0.049363493486162355
+            },
+            "-0.707106781187-0.707106781187j": {
+              "count": 52,
+              "fourth_abs_moment": 0.005441406209321699,
+              "mean_imag": 0.020034878931100727,
+              "mean_real": 0.04448179074211588,
+              "second_abs_moment": 0.05712436739952725
+            }
+          },
+          "mean_joint_residual_energy": 0.10318891501159952,
+          "tail_energy_threshold": 0.25,
+          "tail_mass": 0.046875
+        },
+        "calibration_range": {
+          "end_exclusive": 261,
+          "start": 133
+        },
+        "csi_access_class": "CSI_NONE",
+        "evaluation_range": {
+          "end_exclusive": 389,
+          "start": 261
+        },
+        "nearest_residual": {
+          "conditional_moments": {
+            "+0.707106781187+0.707106781187j": {
+              "count": 76,
+              "fourth_abs_moment": 0.12285376906833234,
+              "mean_imag": -0.39832976284510807,
+              "mean_real": -0.4146227485674488,
+              "second_abs_moment": 0.34028379494910105
+            },
+            "+0.707106781187-0.707106781187j": {
+              "count": 62,
+              "fourth_abs_moment": 0.10204300866965388,
+              "mean_imag": 0.38845089821789114,
+              "mean_real": -0.3867826624923575,
+              "second_abs_moment": 0.3100168769570886
+            },
+            "-0.707106781187+0.707106781187j": {
+              "count": 66,
+              "fourth_abs_moment": 0.11140645026849315,
+              "mean_imag": -0.39928789296355716,
+              "mean_real": 0.39079753772074527,
+              "second_abs_moment": 0.322064692464483
+            },
+            "-0.707106781187-0.707106781187j": {
+              "count": 52,
+              "fourth_abs_moment": 0.11163431154516047,
+              "mean_imag": 0.38888914787879525,
+              "mean_real": 0.4009255381673577,
+              "second_abs_moment": 0.32316728006441153
+            }
+          },
+          "mean_joint_residual_energy": 0.6495592426052847,
+          "tail_energy_threshold": 0.25,
+          "tail_mass": 1.0
+        },
+        "seed": 20,
+        "sequence_id": "p03-residual-headroom-seed-20"
+      },
+      "seed": 20,
+      "shared_realization": true,
+      "simple_analytic_gain": 0.0,
+      "standard_cma_calls": 1,
+      "visible_headroom": 0.0
+    }
+  ],
+  "contract_id": "scout.P03-U19.residual-headroom-probe.v1",
+  "guards": {
+    "B001_B002_B003_modified": false,
+    "B004_exists": false,
+    "ML_trained": false,
+    "paper_material_written": false,
+    "parameter_domain_expanded": false,
+    "queue_or_registry_created": false
+  },
+  "interpretation_limit": "Scout diagnostic only; not MVE, Sandbox, Contract, Execute, or paper evidence",
+  "schema_version": "direction-lab.p03-residual-headroom-result.v1",
+  "source_equivalence": {
+    "checks": {
+      "csi_none": "PASS",
+      "deterministic_rerun": "PASS",
+      "godard_with_z_formula_numeric": "PASS",
+      "godard_with_z_identity": "PASS",
+      "materialized_git_blob_identity": "PASS",
+      "oracle_future_posthoc_rejection": "PASS",
+      "shape_dtype_finiteness_time_boundary": "PASS",
+      "source_snapshot_sha256": "PASS"
+    },
+    "equivalence": {
+      "exact_output_equal": true,
+      "historical_z_window_sha256": "3d99d4fef5f3749d2047816b8bc655affc207f307bafc808b6de887b88ca64f7",
+      "z_window_sha256": "3d99d4fef5f3749d2047816b8bc655affc207f307bafc808b6de887b88ca64f7"
+    },
+    "schema_version": "direction-lab.p03-source-equivalence-report.v1",
+    "scope": "source equivalence only; no performance or scientific conclusion",
+    "source_materialization": {
+      "base_git_blob_sha256": "1ffd6af106181a6e589d674e0508bb8cc0ea3496e2dae1f7364bb47f2a842db5",
+      "base_materialized_sha256": "d8e7929d00d885eccf111eb96d80ecd3822b065cbf3eca09ed31912c3da73113",
+      "materialized_git_blob_oid": "9155de058912593f487d95fb4e3aecf25ae1617c",
+      "materialized_sha256": "92eaa6a6c92e72122a1921a0c844160bbf5b4ee7bc2527fc66da468187af9786",
+      "patch_sha256": "4cd7007bc2dc9776c0973468d196ceb811eb391c2c8548559f77160f6e52520d",
+      "scout_orchestration_commit": "c38ff0d6648d5320d49ea199acbed68e14e40065",
+      "simulation_source_commit": "65db35bb15dd9b6da0ad05ea5835054ad4277485",
+      "snapshot_manifest_sha256": "d29a92a9823e09adc51c4a79a52f1435e6303636930e34fbe06ca8f98c5c16a6"
+    },
+    "status": "PASS"
+  },
+  "summary": {
+    "aggregate_analytic_coverage": 1.0,
+    "aggregate_simple_analytic_gain": 0.0,
+    "aggregate_visible_headroom": 0.0,
+    "analytic_coverage_gate": true,
+    "cell_count": 10,
+    "cells_with_minimum_headroom": 0,
+    "conditional_second_moment_cv": {
+      "+0.707106781187+0.707106781187j": 0.6841067384951949,
+      "+0.707106781187-0.707106781187j": 0.7422010018145011,
+      "-0.707106781187+0.707106781187j": 0.7412350754957225,
+      "-0.707106781187-0.707106781187j": 0.6911864033189422
+    },
+    "conditional_second_moment_max_cv": 0.7422010018145011,
+    "conditional_symbol_cell_support": {
+      "+0.707106781187+0.707106781187j": 10,
+      "+0.707106781187-0.707106781187j": 10,
+      "-0.707106781187+0.707106781187j": 10,
+      "-0.707106781187-0.707106781187j": 10
+    },
+    "conditional_symbol_min_cell_support": 10,
+    "median_visible_headroom": 0.0,
+    "primary_verdict": "P03_ANALYTIC_COVERAGE_GE_90",
+    "residual_energy_cv": 0.7039620405059673,
+    "stable_mismatch_checks": {
+      "conditional_second_moment_max_cv": true,
+      "conditional_symbol_min_cell_support": true,
+      "median_visible_headroom": false,
+      "minimum_cells_with_headroom": false,
+      "residual_energy_cv": false,
+      "tail_mass_iqr": true
+    },
+    "tail_mass_iqr": 0.0
+  }
+}

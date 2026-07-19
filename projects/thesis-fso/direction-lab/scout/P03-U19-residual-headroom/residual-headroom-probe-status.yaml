@@ -1,63 +1,138 @@
-schema_version: direction-lab.p03-residual-headroom-status.v1
+schema_version: direction-lab.p03-residual-headroom-status.v2
 candidate: P03/U19
 date: 2026-07-19
-final_status: P03_BLOCKED_NON_SELF_CONTAINED
-probe_executed: false
-reason: >-
-  The frozen interface smoke depended on a linked worktree whose _gg_time.py
-  bytes were not committed. The only committed source snapshot produces a
-  different deterministic standard-CMA z window, so the source-closure
-  equivalence gate fails and the residual headroom probe is forbidden.
+final_status: P03_ANALYTIC_COVERAGE_GE_90
+primary_verdict: P03_ANALYTIC_COVERAGE_GE_90
+probe_executed: true
+scientific_finding: >-
+  在冻结的 10 个 CSI_NONE paired cells 中，standard-CMA 后的 nearest-QPSK、blind affine 和
+  post-hoc oracle affine 的 fixed-label BER、PI-BER、fixed-label SER、PI-SER 均为 0。
+  因而可见 decision headroom 为 0；按预注册 zero-headroom rule，analytic coverage 记为 1.0，
+  P03 在当前 slice 停止且不训练 ML。非零模拟残差不能单独证明仍有可利用的判决增益。
 
-canonical_recovery:
+source_recovery:
   status: PASS
-  recovery_commit: f14c0da
-  base_projection_sha256: 821415346437f47de064966fdaa768242c63d2d660ea189e88a4a0dfb51995b0
-  output_sha256: 5967ea38e676b46cb092c98060bec5b470b5a03625f21e65218cf3b2ae3a88af
-  last_completed_batch: B003
-  batch_status: COMPLETED_SANDBOX_VERIFIED
-  manifest_hash: 42d8061773f7ecb1d03912bd775dc18424a44a14b1943b97b664818634b6b5e6
-  result_hash: c17ab94708307b82c0162b9e5d573971170869ec757dc6bb24ca62a83ac8e3cc
-  event_count: 1
-  formal_research_state: BLOCKED
-  deterministic_rerun: PASS
+  archaeology_scope: one bounded pass over Git objects, reachable history and reflog, linked worktrees, registered snapshots, P03/B001-B003 closures, and repository-local caches
+  recovered_origin_path: D:/code/study/research-protocol/.worktrees/unified-batch-runner/projects/simulation/common/_gg_time.py
+  recovered_origin_state: dirty_mutable_linked_worktree
+  recovered_sha256: 92eaa6a6c92e72122a1921a0c844160bbf5b4ee7bc2527fc66da468187af9786
+  immutable_raw_git_blob_oid: 9155de058912593f487d95fb4e3aecf25ae1617c
+  provenance_report: source-archaeology-report.yaml
+  immutable_reconstruction:
+    simulation_commit: 65db35bb15dd9b6da0ad05ea5835054ad4277485
+    scout_orchestration_commit: c38ff0d6648d5320d49ea199acbed68e14e40065
+    source_snapshot: source-snapshots/interface-smoke-v2/source-snapshot.v1.yaml
+    patch_sha256: 4cd7007bc2dc9776c0973468d196ceb811eb391c2c8548559f77160f6e52520d
+  dirty_worktree_used_as_probe_runtime_dependency: false
 
-source_provenance_audit:
-  historical_closure: artifacts/interface-smoke-v2/source-closure.yaml
-  candidate_origin_snapshot_commit: 65db35bb15dd9b6da0ad05ea5835054ad4277485
-  external_files_checked: 17
-  hashes_reconciled_to_commit_after_crlf_materialization: 16
-  unreconciled_component:
-    origin_repo_relative_path: projects/simulation/common/_gg_time.py
-    only_git_blob_object: 03bdeb82f181189bf89c6c913b220662e615fe32
-    introducing_commit: 59ead25fbdffe1dac18313e076c4e80a8638a485
-    snapshot_commit_blob_sha256_lf: 1ffd6af106181a6e589d674e0508bb8cc0ea3496e2dae1f7364bb47f2a842db5
-    snapshot_commit_sha256_crlf: d8e7929d00d885eccf111eb96d80ecd3822b065cbf3eca09ed31912c3da73113
-    historical_smoke_sha256: 92eaa6a6c92e72122a1921a0c844160bbf5b4ee7bc2527fc66da468187af9786
-    committed_match: false
-  dirty_worktree_bytes_read_or_copied: false
-
-equivalence_gate:
-  deterministic_realization_parameters: interface-smoke-contract.v1.yaml
-  standard_cma_gradient: Godard-with-z
-  fixed_pi_evaluator_semantics_match_frozen_function: PASS
-  candidate_committed_source_z_window_sha256: eb242e5711b92a070898b21af79eb8d986fd08591ebc0a5de59e42e9db341e27
+historical_blocker_preserved:
+  previous_status: P03_BLOCKED_NON_SELF_CONTAINED
+  status_now: RESOLVED_BY_EXACT_SOURCE_RECOVERY
+  previous_candidate_committed_source_z_window_sha256: eb242e5711b92a070898b21af79eb8d986fd08591ebc0a5de59e42e9db341e27
   historical_frozen_z_window_sha256: 3d99d4fef5f3749d2047816b8bc655affc207f307bafc808b6de887b88ca64f7
-  exact_output_equal: false
-  max_abs_z_difference: 0.21934995093323548
-  mean_abs_z_candidate: 0.836738484299093
-  mean_abs_z_historical: 1.050996998591898
-  verdict: FAIL
+  previous_exact_output_equal: false
+  previous_max_abs_z_difference: 0.21934995093323548
+  previous_mean_abs_z_candidate: 0.836738484299093
+  previous_mean_abs_z_historical: 1.050996998591898
+  interpretation: the failure applied to the incomplete committed-source candidate, not to the now-recovered exact source closure
+
+source_equivalence_gate:
+  status: PASS
+  contract: source-equivalence-contract.v1.yaml
+  artifact: artifacts/residual-headroom-probe-v1/source-equivalence/report.yaml
+  materialized_source_sha256: 92eaa6a6c92e72122a1921a0c844160bbf5b4ee7bc2527fc66da468187af9786
+  historical_z_window_sha256: 3d99d4fef5f3749d2047816b8bc655affc207f307bafc808b6de887b88ca64f7
+  exact_output_equal: true
+  standard_cma_gradient: Godard-with-z
+  checks: [shape_dtype_finiteness_time_boundary, CSI_NONE, oracle_future_posthoc_rejection, deterministic_rerun]
+
+probe:
+  contract: residual-headroom-probe-contract.v1.yaml
+  artifact: artifacts/residual-headroom-probe-v1/probe-result.json
+  artifact_sha256: 1232d1a47431f14729045c04beafe0836e531ad238f9bcb8e15462c2f7901cdd
+  deterministic_rerun_report: artifacts/residual-headroom-probe-v1/deterministic-rerun-report.yaml
+  cells: 10
+  paired_seeds: [11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+  csi_access_class: CSI_NONE
+  shared_standard_cma_realization: true
+  standard_cma_calls_per_seed: 1
+  tx_truth_role: post-hoc scoring only
+  visible_headroom_definition: max(PI-SER_nearest - PI-SER_oracle_affine, 0)
+  analytic_coverage_definition: sum(max(PI-SER_nearest - min(PI-SER_nearest, PI-SER_blind_affine), 0)) / sum(visible_headroom)
+  zero_headroom_rule: coverage=1.0
+  aggregate_visible_headroom: 0.0
+  aggregate_simple_analytic_gain: 0.0
+  aggregate_analytic_coverage: 1.0
+  cells_with_minimum_headroom: 0
+  median_visible_headroom: 0.0
+  fixed_label_ber_max: 0.0
+  pi_ber_max: 0.0
+  fixed_label_ser_max: 0.0
+  pi_ser_max: 0.0
+  residual_energy:
+    min: 0.00814420044302887
+    median: 0.041559194219036
+    max: 0.111334734877309
+    coefficient_of_variation: 0.7039620405059673
+  residual_tail:
+    threshold: 0.25
+    nonzero_cells: 2
+    max_mass: 0.0625
+    across_cell_iqr: 0.0
+  conditional_second_moment_max_cv: 0.7422010018145011
+  conditional_symbol_min_cell_support: 10
+
+secondary_findings:
+  - nearest-QPSK alone made zero fixed-label and PI decision errors in every preregistered evaluation slice
+  - blind one-step complex 2x2 affine did not improve an already error-free nearest-QPSK decision result
+  - oracle affine also had zero errors, so this slice contains no visible decision headroom to allocate among simple or learned comparators
+  - analog residual energy was nonzero and variable across cells; two cells had nonzero tail mass, but this did not translate into BER or SER headroom
+  - blind affine reduced mean analog residual energy from 0.285582447333862 to 0.0466822477909391 without changing any decision metric
+  - fixed-label and permutation-invariant metrics remained separate and happened to agree at zero in this slice
+  - the exact historical source difference was prefix-stable independent RNG streams in _gg_time.py plus mixed line endings; public simulator code and parameter truth sources were not modified
+
+negative_results:
+  - mechanism: nonzero nearest-QPSK residual magnitude as sufficient evidence for ML headroom
+    result: REJECTED_IN_PREREGISTERED_SLICE
+  - mechanism: one-step blind affine correction after standard-CMA
+    result: NO_MEASURABLE_DECISION_GAIN_IN_PREREGISTERED_SLICE
+  - mechanism: tune parameters to recover or create headroom
+    result: NOT_ATTEMPTED_BY_CONTRACT
+  - scope_limit: these results do not reject residual-aware detection across other parameter domains, receivers, CSI classes, coding metrics, or candidate families
+
+reusable_assets:
+  - source-archaeology-report.yaml
+  - source-snapshots/interface-smoke-v2/source-snapshot.v1.yaml
+  - source-snapshots/interface-smoke-v2/gg-time-prefix-stability.patch
+  - source-snapshots/residual-headroom-probe-v1/runtime-source-snapshot.v1.yaml
+  - run_source_equivalence.py
+  - source-equivalence-contract.v1.yaml
+  - probe_evaluator.py
+  - run_residual_headroom_probe.py
+  - residual-headroom-probe-contract.v1.yaml
+  - projects/thesis-fso/direction-lab/tests/test_p03_source_recovery.py
+  - projects/thesis-fso/direction-lab/tests/test_p03_residual_headroom_probe.py
+
+invalid_or_unresolved_claims:
+  - the earlier claim that the historical v2 source could not be self-contained is superseded by exact source recovery; its old failure evidence remains preserved above
+  - analytic coverage=1.0 follows the preregistered zero-headroom rule; it must not be paraphrased as a measured 100 percent error reduction by blind affine
+  - no claim is supported about ML utility outside the frozen slice, receiver-estimated CSI, coded LLR/GMI/FER, formal Groundwork, Contract, Execute, or paper performance
+  - receiver-estimated CSI remains DECLARED_NOT_BOUND
+
+implications_for_candidate_map:
+  U19: stop P03 in the frozen CSI_NONE uncoded hard-decision slice; do not train ML
+  U36: residual-aware evidence shared with this P03 slice is weakened, but U36 is not globally rejected
+  U20: no direct coded-LLR conclusion; P03 supplies a negative hard-decision prior only, not permission to start P04
+  candidate_pool: unchanged; no candidate was added, selected, or launched in this milestone
 
 guards:
+  formal_research_state: BLOCKED
   B001_B002_B003_modified: false
   B004_exists: false
   ML_trained: false
   queue_or_registry_created: false
   paper_material_written: false
   parameter_domain_expanded: false
+  sandbox_status: NOT_ENTERED
 
-next_only_legal_action: >-
-  Recover the exact historical _gg_time.py bytes from a clean, immutable,
-  provenance-bearing source (a commit or source snapshot), then rebuild the
-  local closure and rerun the deterministic equivalence gate before any probe.
+next_only_legal_action: return to BatchPlan candidate-family selection in a later round; this milestone selects or starts no next candidate

@@ -89,7 +89,7 @@ planned_batches:
     candidates: [U19, U36]
     real_problem_evidence:
       - D044 records residual information increment as UNKNOWN and DEFER
-      - current standard-CMA outputs exist, but residual Jones or non-Gaussian mismatch is not established
+      - the preregistered CSI_NONE hard-decision slice has zero visible headroom and exits P03 through analytic coverage
     existing_implementation:
       - standard-CMA zX/zY outputs
       - causal z-window adapter with field-level source pointers
@@ -98,10 +98,7 @@ planned_batches:
       - deterministic one-cell interface smoke and runtime source closure
       - fixed-label and PI evaluation with TX truth used only for scoring
     missing_implementation:
-      - preregistered multi-cell residual headroom probe
-      - stable-mismatch and 90-percent-headroom exit evaluator
       - receiver-estimated CSI path, if later needed
-      - ML detector entrypoints only after stable residual mismatch is demonstrated
     shared_baseline: standard-CMA plus analytic detector with exactly the same legal CSI and noise information
     input_contract: [complex_z_window, CSI_source, CSI_access_class, noise_estimator, pilot_budget, label_budget, train_test_domain_split, causal_inference_boundary]
     metrics: [fixed_label_ber, permutation_invariant_ber, SER, NLL, calibration_error, residual_conditional_moments, residual_tail_mass, compute, latency]
@@ -110,12 +107,13 @@ planned_batches:
       - matched analytic or affine baseline closes at least 90 percent of visible headroom
       - gain requires TX truth at inference
       - residual mismatch is not stable across the preregistered slice
-    dependencies: [P03-CSI_NONE-interface-PASS, residual-headroom-probe-not-yet-run]
-    readiness: P03_SCOUT_CONTRACT_READY
-    sandbox_readiness: NOT_ENTERED
-    current_contract: scout/P03-U19-residual-headroom/scout-contract.v2.yaml
+    dependencies: [P03-CSI_NONE-interface-PASS, residual-headroom-probe-PASS]
+    readiness: P03_ANALYTIC_COVERAGE_GE_90
+    sandbox_readiness: STOPPED_NOT_ENTERED
+    terminal_contract_snapshot: scout/P03-U19-residual-headroom/scout-contract.v2.yaml
     readiness_report: scout/P03-U19-residual-headroom/readiness-report.yaml
-    next_action: run_residual_headroom_probe_without_ML_training_or_B004
+    probe_result: scout/P03-U19-residual-headroom/residual-headroom-probe-status.yaml
+    next_action: stop_P03_without_ML; do_not_create_B004_Queue_or_Registry
   - plan_batch_id: P04-U20-LLR-CODED-CONTRACT-SCOUT
     rank: 4
     tier: Scout
@@ -139,7 +137,7 @@ planned_batches:
       - analytic plus temperature scaling already covers the mismatch
       - ML improves only calibration number without GMI or FER benefit
       - compared methods use unequal CSI or code budgets
-    dependencies: [P03-U19-RESIDUAL-HEADROOM-SCOUT-PASS, coded-chain-contract, LLR-evaluator]
+    dependencies: [P03-RESIDUAL-MISMATCH-STABLE-or-independent-coded-headroom-evidence, coded-chain-contract, LLR-evaluator]
     readiness: NOT_RUNNABLE
   - plan_batch_id: P05-U25-SAFE-FALLBACK-SANDBOX
     rank: 5
@@ -159,13 +157,13 @@ planned_batches:
     dependencies: [P01-U25-ACTION-CONTRACT-SCOUT-PASS, completion-event-v1, state-reducer-PASS, new-queue-registry-runner-gate]
     readiness: BLOCKED_PENDING_P01
 next_after_plan:
-  selected_for_implementation: P03-U19-RESIDUAL-HEADROOM-SCOUT
-  reason: the CSI_NONE interface is closed; the unresolved research question is whether stable receiver-visible residual headroom remains beyond the same-information analytic comparator
-  allowed_now: preregister and run only the P03 residual headroom probe; do not train ML during the probe
+  selected_for_implementation: none
+  reason: P03 exited A with zero visible hard-decision headroom in the frozen CSI_NONE slice; this milestone does not select or launch the next family
+  allowed_now: later return to BatchPlan candidate-family selection without expanding the candidate pool in this milestone
   exit_rules:
     - if_analytic_comparator_covers_at_least_90_percent_visible_headroom_stop_P03_without_ML
     - if_residual_mismatch_is_stable_only_then_design_a_new_sandbox_batch
     - if_residual_artifact_is_unstable_return_P03_without_adding_models
-  forbidden_now: [start_B004, create_PASS_Queue, add_new_candidates, expand_framework, train_ML_before_headroom_signal]
+  forbidden_now: [start_B004, create_PASS_Queue, create_Registry, add_new_candidates, expand_framework, train_ML_for_P03]
 promotion_gate:
   required_only_at_promotion: [independent_verifier, formal_GW_Step3_and_4a, competitor_closure, Contract, cross-domain_revalidation]

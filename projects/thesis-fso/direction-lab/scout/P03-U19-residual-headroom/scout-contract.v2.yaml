@@ -3,8 +3,8 @@ contract_id: scout.P03-U19.residual-headroom.v2
 lineage:
   supersedes: scout.P03-U19.residual-headroom.v1
   reason: causal z adapter, same-information comparator, residual artifact, and authentic interface smoke closed
-status: SCOUT_CONTRACT_READY
-current: true
+status: CLOSED
+current: false
 sandbox_status: NOT_ENTERED
 candidate: U19
 capability: [estimative, observational]
@@ -66,13 +66,20 @@ smoke:
   artifact: artifacts/interface-smoke-v2
   runtime_artifact_hash: ee1424bbdb158a6ff27f239f358c3101ebcd04554335c8dc94520c1f83a86fcc
   scope: one deterministic cell, interface only, no performance conclusion
-remaining_sandbox_prerequisites:
+historical_untriggered_sandbox_prerequisites:
   - implement and freeze the actual U19 ML estimative or detection mechanism; this Sprint implements interfaces, not an ML model
   - pre-register a multi-cell diagnostic budget and stability criterion without treating residual magnitude as ML headroom
   - bind fixed-label BER and PI-BER evaluators outside the runtime causal path
   - construct a mechanism-distinct shared Sandbox batch plan with legal no-change and analytic comparators
   - bind candidate components into a new immutable Registry and Queue snapshot only after those gates pass
-exact_entry_reason: >-
+outcome:
+  primary_verdict: P03_ANALYTIC_COVERAGE_GE_90
+  evidence: artifacts/residual-headroom-probe-v1/probe-summary.yaml
+  action: STOP_P03_WITHOUT_ML
+  aggregate_visible_headroom: 0.0
+  aggregate_analytic_coverage: 1.0
+  interpretation_limit: coverage=1.0 is assigned by the preregistered zero-headroom rule, not by a measured positive error reduction
+historical_interface_entry_reason: >-
   CSI_NONE now has executable receiver-visible input, an explicit causal boundary, reproducible residual output,
   a same-information analytic comparator, and an authentic deterministic one-cell smoke; therefore P03 may enter
   the next candidate contract-implementation round, but not Sandbox or B004.

@@ -4,8 +4,8 @@ direction: 星地激光通信（FSO）——子地带由地勘（S003 方法论 
 method_type: 待定（精读后根据问题方法产出形态确定，见 glossary 判据 2）
 domain: comms
 created: 2026-06-21
-updated: 2026-07-18
-current_step: Direction-Lab-Scout-P03-residual-headroom-probe
+updated: 2026-07-19
+current_step: Direction-Lab-BatchPlan-selection-pending
 current_stage: FORMAL_BLOCKED
 ---
 
@@ -23,12 +23,12 @@ current_stage: FORMAL_BLOCKED
 ### 当前控制面桥接（唯一现行入口）
 
 - formal stage：`BLOCKED`。Direction Lab 的 Scout/Sandbox 结果对正式研究的 promotion effect 为 `none`。
-- formal blockers：P03 尚未完成 residual headroom probe；尚无稳定 residual mismatch、Sandbox winner 或正式 GW/Contract promotion 证据；旧 Pilot-Jones Step 3.5/4a 链也未成为当前授权入口。
+- formal blockers：P03 已以 `P03_ANALYTIC_COVERAGE_GE_90` 停止，未产生稳定 residual mismatch、Sandbox winner 或正式 GW/Contract promotion 证据；旧 Pilot-Jones Step 3.5/4a 链也未成为当前授权入口。
 - Direction Lab sandbox history：当前 last completed batch = `B003 / COMPLETED_SANDBOX_VERIFIED`；事实源为 `projects/thesis-fso/direction-lab/state/completion-events.jsonl` 与对应不可变 projection。`canonical-state.yaml` 仅为机器投影，不是正式研究授权源。
-- current scout candidate：`P03/U19 residual-aware detection`。
-- scout status：`P03_SCOUT_CONTRACT_READY`，current contract = `projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/scout-contract.v2.yaml`。
+- current scout candidate：无；`P03/U19 residual-aware detection` 已完成并停止。
+- scout status：`P03_ANALYTIC_COVERAGE_GE_90`；10-cell 冻结 slice 的 visible headroom=0、coverage=1.0（zero-headroom rule），terminal contract snapshot = `projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/scout-contract.v2.yaml`。
 - formal promotion effect：`none`；B001–B003 数字不得进入论文或正式材料。
-- 下一唯一合法研究动作：P03 residual headroom probe：真实 standard-CMA 输出 → 同信息量 analytic comparator → residual headroom。不得将它替换成 B004、ML 训练、新候选或框架扩展。
+- 下一合法边界：后续另轮回到 BatchPlan 做候选族选择；本轮不选择下一候选。不得启动 B004、P03 ML 训练、Queue/Registry 或框架扩展。
 
 ### 历史 Groundwork 轨迹（保留审计，不授权当前执行）
 

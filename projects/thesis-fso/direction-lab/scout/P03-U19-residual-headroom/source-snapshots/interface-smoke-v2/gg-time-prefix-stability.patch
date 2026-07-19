@@ -1,0 +1,31 @@
+diff --git a/projects/simulation/common/_gg_time.py b/projects/simulation/common/_gg_time.py
+index 03bdeb8..48c6beb 100644
+--- a/projects/simulation/common/_gg_time.py
++++ b/projects/simulation/common/_gg_time.py
+@@ -139,16 +139,21 @@ def gg_time_envelope(N, alpha, beta, tau_c, block=BLOCK, t_s=1.0 / 2.5e9,
+     - τ_c ≫ 符号周期 → 单帧(≪τ_c)内序列近似常数; 需序列长 ≫ τ_c/t_s
+       才能看到完整衰落动力学。
+     """
+-    rng = np.random.default_rng(seed)
++    # Use independent child streams so a same-seed shorter realization is a
++    # prefix of a longer one.  Sharing one stream and drawing all ``big``
++    # samples before ``small`` makes the small-scale sequence depend on N.
++    streams = np.random.SeedSequence(seed).spawn(2)
++    rng_big = np.random.default_rng(streams[0])
++    rng_small = np.random.default_rng(streams[1])
+     n_blocks = (N + block - 1) // block
+     rho = rho_from_tau_c(tau_c, block, t_s)
+ 
+     if method == 'lognormal':
+-        big = _ar1_lognormal(n_blocks, alpha, rho, rng)
+-        small = _ar1_lognormal(n_blocks, beta, rho, rng)
++        big = _ar1_lognormal(n_blocks, alpha, rho, rng_big)
++        small = _ar1_lognormal(n_blocks, beta, rho, rng_small)
+     elif method == 'gar':
+-        big = _gamma_ar1_exact(n_blocks, alpha, rho, rng)
+-        small = _gamma_ar1_exact(n_blocks, beta, rho, rng)
++        big = _gamma_ar1_exact(n_blocks, alpha, rho, rng_big)
++        small = _gamma_ar1_exact(n_blocks, beta, rho, rng_small)
+     else:
+         raise ValueError(f"method must be 'lognormal' or 'gar', got {method!r}")
+ 
