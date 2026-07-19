@@ -866,3 +866,37 @@ FAIL。五级 lattice 和 P03 纠错投影方向正确，但首版脚本仍依�
 ### 结论
 
 PASS。本轮流程纠错与强门可验收。Headroom Atlas 的 receipt consumer 尚未实现，已作为下一对话运行前硬前置：consumer 建成并测试前，不得执行 Atlas cell 或更新 readiness/triage/canonical 状态。
+
+## V033: Headroom Atlas 强门入口 + Stage A 独立终验
+
+> date: 2026-07-19
+> 关联：S077 / D059
+
+### 验证项
+
+- [x] 强门入口存在并唯一：`headroom-atlas/atlas_gate.py` 是唯一 authorize/authorize_closeout 入口；`AtlasRunner.run_cell/write_summary/write_closeout` 都要求 token 并校验 `audit_identity`。
+- [x] TDD 反例覆盖：`tests/test_headroom_atlas_gate.py` 11 个原始测试 + 8 个独立 code-review 子 agent 加的对抗测试 = 19 passed。覆盖 10 类绕过 + 跨类型 token 误用 + `audit_path=None` 静默跳过 + schema 篡改 + 手算 `receipt_id` 漂白 FAIL 评估 + 跨 workspace token + append-only 跨多次 authorize 保持。
+- [x] Gate 不信任 PASS receipt 本身：对实时 assessment 字节重新运行 `validate_claim_scope`，FAIL 评估即使有匹配 SHA 的手写 PASS receipt 也被阻断。
+- [x] 审计 append-only：JSONL，`"a"` 模式，从不 truncate；2 次单元 run + 1 次 closeout 共 3 AUTHORIZED + 22 SUMMARY_WRITTEN + 1 CLOSEOUT_WRITTEN = 26 行，时间戳单调非降，2 个 distinct nonce。
+- [x] Stage A 11 cells × 10 paired seeds 确定性可复现：独立 verifier 子 agent 重算 `qpsk-snr05-nominal-short`（LOCAL_NEGATIVE, n_err=18）、`qpsk-snr20-nominal-short`（P03 v1 anchor, 全零）、`qpsk-snr15-fg1000-long`（SUB_MDE_HEADROOM, vh=0.0003906250）三 cell 逐位一致。
+- [x] P03 v1 anchor 精确复现：seeds 11–20 上 nearest/blind/oracle PI-SER 全 0，eval window {133, 261, 389} 与 source-equivalence contract 一致。
+- [x] aggregation 自洽：`n_advance_cells=0` 与 0 cell `vh>=0.005` 一致；`max_visible_headroom=0.00039` 等于 cell max；exit `NO_HEADROOM_IN_REPRESENTATIVE_DOMAIN_WITH_CERTIFICATE` 由"0 cell above MDE 且非全部 cell 灵敏度受限"导出。
+- [x] 历史 guards：`git diff HEAD -- B001 B002 B003`、`canonical-state.yaml`、`common/_dual_pol_channel.py`、`common/_gg_time.py` 全 empty；B004 不存在；无 ML/Queue/Registry 新增。
+- [x] claim-scope gate 仍对 P03 overlay、atlas pre-run assessment、atlas closeout assessment 全 PASS；三份 receipt 内容寻址正确。
+
+### 证据
+
+~~~text
+gate tests: 19 passed
+validate_claim_scope.py on atlas-pre-run-assessment.v1.yaml: PASS
+validate_claim_scope.py on atlas-closeout-assessment.v1.yaml: PASS
+audit: 26 lines (3 AUTHORIZED + 22 SUMMARY_WRITTEN + 1 CLOSEOUT_WRITTEN)
+independent verifier recompute: 3/3 cells bit-identical to stage-a-atlas.json
+P03 v1 anchor (qpsk-snr20-nominal-short): per-seed PI-SER=0 for nearest/blind/oracle, seeds 11-20
+git diff HEAD -- B001 B002 B003 canonical-state.yaml common/_dual_pol_channel.py common/_gg_time.py: empty
+B004 count: 0
+~~~
+
+### 结论
+
+PASS。Headroom Atlas 强门入口、Stage A 可运行代表域诊断、append-only 审计、claim-scope gate 绑定、历史保护均可验收。Stage A 在 runnable 子域给出 LOCAL_NEGATIVE，但 DOMAIN/CANDIDATE/FAMILY 因 3 轴 INFRASTRUCTURE_BLOCKED + 历史反例落在被阻轴上仍 UNRESOLVED/OPEN；ML 仍禁止，B004/Queue/Registry 仍禁止。

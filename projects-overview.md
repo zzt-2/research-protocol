@@ -9,8 +9,9 @@
 - **方向**：双偏振星地 OSL 场景中的 ML 应用方向探索；正式研究与 Direction Lab Scout/Sandbox 分层管理。
 - **正式状态**：`BLOCKED`。Direction Lab 的 exploratory evidence 对正式 Groundwork/论文 promotion effect 为 `none`。
 - **Direction Lab Sandbox 历史**：B003 已完成，状态 `COMPLETED_SANDBOX_VERIFIED`；批次事实以 completion events 和不可变 projection 为证据，B001–B003 数字均不可进入论文或正式材料。
-- **当前 Scout**：P03/U19 的 QPSK/20 dB/CSI_NONE/短序列 slice 为局部负面；candidate 当前 `P03_DOMAIN_ADEQUACY_UNRESOLVED`，domain/family 未关闭，Sandbox `NOT_ENTERED`。
-- **下一合法边界**：先为 Direction Lab BatchPlan v2 建立并测试唯一的 Headroom Atlas preflight/assessment receipt consumer；通过后再做 baseline-only multi-domain Headroom Atlas。不启动 B004，不训练 P03 ML，不创建 Queue/Registry。
+- **当前 Scout**：P03/U19 Headroom Atlas Stage A 已完成（2026-07-19，S077/D059/V033）。runnable 代表子域（QPSK × SNR 5–25 dB × f_G 30/100/1000 Hz × SOP 4e-6/4e-5 × N 512/8192 × CSI_NONE × uncoded hard decision，11 cells × 10 paired seeds）`LOCAL_NEGATIVE`：0/11 cells 达 MDE 0.005，max visible headroom 0.00039。candidate 当前仍 `P03_DOMAIN_ADEQUACY_UNRESOLVED`（16QAM/receiver-CSI/coded-output 三轴 INFRASTRUCTURE_BLOCKED，历史反例落在被阻轴上），domain/family 未关闭，Sandbox `NOT_ENTERED`，Stage B 不触发。
+- **下一合法边界**：用户决策点（未选定）：① P03 暂停回候选池；② 建一条干净 source closure（最有杠杆是 16QAM）扩域重跑 Stage A；③ 换候选族（U36 等）。要关 DOMAIN/CANDIDATE 必须先扩 closure 并带 scope certificate。不启动 B004，不训练 P03 ML，不创建 Queue/Registry。
+- **Atlas 强门入口**：`projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/atlas_gate.py`（唯一 receipt-bound 入口，19 tests 含独立对抗审查）。
 - **入口**：`projects/thesis-fso/master-state.md` → `projects/thesis-fso/direction-lab/README.md`；机器状态溯源见 `projects/thesis-fso/direction-lab/state/completion-events.jsonl` 与 `state/projections/`，`canonical-state.yaml` 不是正式研究授权源。
 
 ### leo-mega-constellation-gnn-routing

@@ -1,7 +1,7 @@
 # Topic Index: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
 
 > slug: 2026-07-10-dual-pol-osl-groundwork
-> status: active | created 2026-07-10 | last_updated 2026-07-19（S076/D058：P03 v1 的10-cell事实保留，但候选级停止被纠正为 exact-slice 局部负面；新增五级 claim-scope 门，当前 `P03_DOMAIN_ADEQUACY_UNRESOLVED`，下一步为 baseline-only multi-domain Headroom Atlas。）
+> status: active | created 2026-07-10 | last_updated 2026-07-19（S077/D059：建立唯一 Headroom Atlas 强门入口（TDD 19 tests + 独立对抗审查），跑 Stage A 11 cells × 10 paired seeds，runnable 代表子域 LOCAL_NEGATIVE（0/11 cells 达 MDE 0.005，max vh=0.00039），但 16QAM/receiver-CSI/coded-output 三轴 INFRASTRUCTURE_BLOCKED + 历史反例落在被阻轴上 → DOMAIN/CANDIDATE/FAMILY 仍 UNRESOLVED/OPEN；Stage B 不触发；ML/B004/Queue/Registry 仍禁止。）
 
 ## 专题定位（一句话）
 
@@ -52,6 +52,7 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
   - 影响的未决项：strict equivariance/e2cnn 由 D043 A0 NO-GO；下一候选 residual cascade 从 GW Step 1 开始；Contract/feasibility/literature/briefing 的旧状态留下一批同步，当前不进 MVE/Execute。
 - **[2026-07-19]** [D057] Inflation scope record（75 S 文件 + Direction Lab P03 closure）：S075 是 D045“深耕基点—候选族—批量排跑—晋级”工作流内的 residual-headroom Scout terminal closure，不是新研究方向，也未扩大 formal GW/Contract/Execute 范围。之所以新开 S075 而不追加 S074，是因为 S074 属 pilot-Jones Step3.5 文献门控，P03 属独立 Scout diagnostic，混写会破坏两条状态线。F1/G2 排除、formal FR-22 门和 S074 未决项均不变；本轮只记录 P03 A 出口及停止，不选择下一候选。
 - **[2026-07-19]** [D058] Inflation scope record（76 S 文件 + claim-scope P0纠错）：S076 从 P03 科学 closure 转为推理范围与流程规范纠错，性质不同于 S075，故新开编号。它仍服务 D045 的候选族批量探索，不扩大 formal GW/Contract/Execute；只纠正局部证据越级，并为后续 Headroom Atlas 增加通用机器门。
+- **[2026-07-19]** [D059] Inflation scope record（77 S 文件 + Headroom Atlas Stage A）：S077 是 D058 列为下一对话硬前置的 Atlas 阶段（唯一强门入口 + Stage A runnable 子域诊断），承接 S076 但性质不同（流程纠错 vs 实验+门实现），故新开编号而非追加 S076。仍服务 D045 候选族批量探索，不扩大 formal GW/Contract/Execute；runnable 子域 LOCAL_NEGATIVE 但不退候选/族。
 
 ## 不变量（动任何一条必须重新讨论）
 
@@ -102,10 +103,19 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 - **E 类 pilot 前置 DEFER（S031/D037）**：test 段 pilot 直接估 SOP/Jones 并前馈补偿，通过 D031。正确检索计数为首组混合源 10 条、其余 4 组 arXiv 0 条；2023 JLT `10.1109/JLT.2023.3253383` 已直接占据“插入 pilot 估信道+前馈补偿跟踪 fast SOP”，并有 2018/2023/2024/2026 pilot/data-aided SOP 链。FSO 是场景迁移但方法增量未证、关键全文/直接 FSO 覆盖仍缺，四判据保持 PASS/UNRESOLVED/PASS/UNRESOLVED，故不准入性能 MVE。`prompt028` gate 仅固化合同（`performance_mve_run=false`）。H013 C→B→D→E 扫描结束，无 Go；defer 不计 Kill。
 - **strict equivariance/e2cnn fixed-label 路线 A0 NO-GO（S036/D043）**：e2cnn SO(2)/E(2) 的二维空间特征表示与 Jones U(2)/SU(2) 双复偏振作用不匹配；即使实现正确 Jones 等变，等变性也不提供绝对 X/Y 标签锚点，不能从盲观测消除排列/相位歧义。该结论只否决其 fixed-label 解法定位，不否决等变结构用于 PI-BER/残差任务。
 - **P03 exact-slice 局部负面与范围纠错（S075–S076/D057–D058）**：精确 source closure 与10-cell零错误事实有效；历史coverage=1.0仅是v1零分母约定。claim-scope adjudication为cell无headroom、slice局部负面、domain未决、candidate/family开放。当前slice不训练ML，但P03需先做代表域Headroom Atlas才可候选级退出。
+- **P03 Headroom Atlas Stage A（S077/D059/V033）**：建立唯一强门入口（TDD 19 tests + 独立对抗审查），跑 baseline-only Stage A 11 cells × 10 paired seeds（QPSK × SNR 5–25 dB × f_G 30/100/1000 Hz × SOP 4e-6/4e-5 × N 512/8192 × CSI_NONE × uncoded hard decision）。0/11 cells 达 MDE 0.005（max visible headroom 0.00039，比 MDE 低 ~13×），exit=`NO_HEADROOM_IN_REPRESENTATIVE_DOMAIN_WITH_CERTIFICATE`，Stage B 不触发。但 16QAM/receiver-CSI/coded-output 三轴在 frozen closure 上 INFRASTRUCTURE_BLOCKED，历史反例（D008–D015/D023、U20 coded）恰好落在被阻轴上 → DOMAIN/CANDIDATE/FAMILY 仍 UNRESOLVED/OPEN。P03 当前 status 不变=`P03_DOMAIN_ADEQUACY_UNRESOLVED`；ML/B004/Queue/Registry 仍禁止。
 
 ## 当前位置
 
-**S076 P03 claim-scope 纠错已完成，Headroom Atlas 待启动 — 2026-07-19**。
+**S077 Headroom Atlas Stage A 完成，P03 在 runnable 子域 LOCAL_NEGATIVE 但 DOMAIN/CANDIDATE/FAMILY 仍开放 — 2026-07-19**。
+
+- 唯一强门入口 `headroom-atlas/atlas_gate.py` 已建立并通过 19 tests + 独立对抗审查（V033）；Stage A artifact 在 `scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/`。
+- runnable 代表子域（QPSK × SNR × dynamics × length × CSI_NONE × hard-decision）0/11 cells 达 MDE；max visible headroom 0.00039；6/11 cells 灵敏度受限（零错误但 UB > MDE），4/11 cells 测得 negative。
+- DOMAIN/CANDIDATE/FAMILY 仍 UNRESOLVED/OPEN：3 轴 INFRASTRUCTURE_BLOCKED + 历史反例落在被阻轴上，无 scope certificate。
+- 用户决策点（未选定）：① P03 暂停回候选池；② 建一条干净 closure（最有杠杆是 16QAM）扩域重跑 Stage A；③ 换候选族（U36 等）。
+- formal research 仍 BLOCKED；S074 pilot-Jones Step3.5 与 V029 backward-chain 债务不因 P03 改变；ML/B004/Queue/Registry 仍禁止。
+
+此前：**S076 P03 claim-scope 纠错已完成，Headroom Atlas 待启动 — 2026-07-19**。
 
 - P03 exact-slice历史status=`P03_ANALYTIC_COVERAGE_GE_90`，当前candidate status=`P03_DOMAIN_ADEQUACY_UNRESOLVED`；10-cell visible headroom=0只关闭该slice。
 - 下一步为baseline-only multi-domain Headroom Atlas；在代表域与统计灵敏度闭合前，不训练P03 ML，不创建B004/Queue/Registry，也不退休candidate/family。
@@ -361,3 +371,4 @@ prompt030 双控扫描（2 域 × SOP_RATE×N × CMA/ML/oracle × 10 seeds，765
 - **S074/V028**（2026-07-17）：独立门控发现R1新增4必读+1建议未收敛、R2存在JLT2023 PDL/FPT直接竞品去重口径争议，且LCOMM(0 citations)不满足最高引用双向链要求；V028=PARTIAL，R3与JLT2022/OE2021引用链补检执行中，Step4a继续封锁。
 - **S075/D057/V030**（2026-07-19）：一轮有限 archaeology 找回 `_gg_time.py` 精确 SHA `92eaa6…` 并固化为 raw Git blob；historical z-window `3d99d4…` exact equal。10-cell P03 probe 的 fixed/PI BER、SER 全0、visible headroom=0，按预注册 zero-headroom rule 触发 A；P03停止且不训练ML。独立终验43/43定向测试、7/7 runtime blobs、三次probe 6/6 SHA exact PASS。
 - **S076/D058/V031–V032**（2026-07-19）：保留S075运行事实并纠正其候选级停止解释；首轮绕过审查FAIL后，补齐结构化decision class、DOMAIN以上scope certificate、真实证据/hash、独立复核、统计灵敏度与内容寻址receipt。第二轮独立终验PASS；Atlas receipt consumer仍是运行前硬前置。
+- **S077/D059/V033**（2026-07-19）：建立唯一 Headroom Atlas 强门入口 `headroom-atlas/atlas_gate.py`（TDD 11 functional + 8 独立对抗测试 = 19 passed；不信任 PASS receipt 本身，对实时 assessment 字节重跑 validator；append-only 审计；token 类型分离 CELL_RUN/CLOSEOUT）。跑 baseline-only Stage A 11 cells × 10 paired seeds，覆盖 QPSK × SNR 5/10/15/20/25 dB × f_G 30/100/1000 Hz × SOP 4e-6/4e-5 × N 512/8192 × CSI_NONE × uncoded hard decision。0/11 cells 达 MDE 0.005（max visible headroom 0.00039，比 MDE 低 ~13×）；6/11 灵敏度受限（零错误但 rule-of-three UB > MDE），4/11 测得 negative（oracle affine 不胜 nearest on PI-SER）。exit=`NO_HEADROOM_IN_REPRESENTATIVE_DOMAIN_WITH_CERTIFICATE`；Stage B 不触发。3 轴 INFRASTRUCTURE_BLOCKED（16QAM/receiver-CSI/coded-output），历史反例（D008–D015/D023、U20 coded）恰好落在被阻轴上 → DOMAIN/CANDIDATE/FAMILY 仍 UNRESOLVED/OPEN。独立 verifier 子 agent 5 区全 PASS（B001–B003/canonical 未触、B004 不存在、gate SHA binding 一致、3 cells 重算逐位一致含 P03 v1 anchor 零错误精确复现、aggregation 自洽）。P03 当前 status 不变=`P03_DOMAIN_ADEQUACY_UNRESOLVED`；ML/B004/Queue/Registry 仍禁止。下一步用户决策：① P03 暂停回候选池；② 建一条干净 closure（最有杠杆 16QAM）扩域重跑 Stage A；③ 换候选族（U36 等）。

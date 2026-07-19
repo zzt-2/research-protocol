@@ -1,0 +1,62 @@
+schema_version: direction-lab.claim-scope.v1
+assessment_id: P03-U19.headroom-atlas.stage-a.pre-run.2026-07-19.v1
+candidate: P03/U19
+atlas_stage: A
+atlas_mode: SCOUT_BASELINE_DIAGNOSTIC_ONLY
+raw_evidence:
+  contract: stage-a-contract.v1.yaml
+  baseline_identity: standard-CMA Godard-with-z followed by nearest-QPSK hard decision
+  comparators: [nearest_qpsk, blind_affine, oracle_affine_scoring_only]
+  historical_machine_verdict: P03_ANALYTIC_COVERAGE_GE_90
+  historical_p03_overlay: claim-scope-assessment.v1.yaml
+  aggregate_visible_headroom: 0.0
+  historical_numeric_coverage: null
+  interpretation: >-
+    the historical coverage=1.0 is a zero-headroom sentinel, not a measured
+    100 percent error reduction. The Stage A Atlas re-asks whether the
+    strongest legal non-ML baseline retains measurable headroom across the
+    runnable representative domain, using the same source closure and the
+    same strongest-legal comparators as P03 v1.
+evidence_scope:
+  max_supported_level: SLICE
+  tested_axes:
+    modulation: [QPSK]
+    snr_db: [5.0, 10.0, 15.0, 20.0, 25.0]
+    channel_or_state_dynamics: [f_g_hz=30, f_g_hz=100, f_g_hz=1000, sop_rate=4e-6, sop_rate=4e-5]
+    observation_length: [short_interface_window_512, long_tracking_window_8192]
+    csi_access_class: [CSI_NONE]
+    task_output: [uncoded_hard_decision]
+  coverage:
+    denominator: 0.0
+    value: null
+    status: NOT_APPLICABLE_ZERO_HEADROOM
+    pass: false
+    decision_class: LOCAL_NEGATIVE
+  statistical_sensitivity:
+    status: INSUFFICIENT_FOR_DOMAIN_DECISION
+    reason: >-
+      zero errors in the historical P03 v1 short slice do not establish
+      cross-domain absence of headroom; the Stage A Atlas probes a wider
+      representative domain with a preregistered minimum detectable effect
+  historical_counterexamples:
+    status: OPEN
+    items:
+      - reference: .sessions/2026-07-10-dual-pol-osl-groundwork/decisions.md#D008-D014
+        axes: [modulation, snr_db, sequence_symbols]
+      - reference: .sessions/2026-07-10-dual-pol-osl-groundwork/decisions.md#D023
+        axes: [f_g_hz, snr_db, modulation]
+      - reference: .sessions/2026-07-10-dual-pol-osl-groundwork/decisions.md#D015
+        axes: [sequence_symbols, sop_rate, fixed_label_ber]
+verdicts:
+  CELL: {status: ATLAS_STAGE_A_RUNNING, decision_class: NON_DECISIVE}
+  SLICE: {status: LOCAL_NEGATIVE_PRIOR_FROM_P03_V1, decision_class: LOCAL_NEGATIVE}
+  DOMAIN: {status: UNRESOLVED, decision_class: NON_DECISIVE}
+  CANDIDATE: {status: OPEN, decision_class: NON_DECISIVE}
+  FAMILY: {status: OPEN, decision_class: NON_DECISIVE}
+scope_certificate: null
+adjudicated_candidate_status: P03_DOMAIN_ADEQUACY_UNRESOLVED
+allowed_next_action: >-
+  run the baseline-only Stage A Headroom Atlas; an ADVANCE cell may trigger a
+  Stage B confirmation; no CANDIDATE or FAMILY exit is permitted without a
+  scope certificate that dispositions the INFRASTRUCTURE_BLOCKED axes
+forbidden: [P03_ML_training, candidate_retirement, family_retirement, B004, PASS_Queue, Registry, paper_claim, extrapolation_to_16QAM, extrapolation_to_coded_metric]

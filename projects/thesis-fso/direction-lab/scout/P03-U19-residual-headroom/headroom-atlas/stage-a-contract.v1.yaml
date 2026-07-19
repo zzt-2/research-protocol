@@ -1,0 +1,191 @@
+schema_version: direction-lab.headroom-atlas.stage-a.v1
+contract_id: atlas.P03-U19.baseline-headroom.stage-a.2026-07-19.v1
+mode: SCOUT_BASELINE_DIAGNOSTIC_ONLY
+tier: Scout
+ml_training: false
+b004: false
+queue_registry: false
+paper_material: false
+performance_experiment: false
+
+gate:
+  module: headroom-atlas/atlas_gate.py
+  validator: tools/validate_claim_scope.py
+  required_receipt: a fresh PASS receipt bound to the exact assessment and validator SHA at authorize-time
+  audit: append-only JSONL; one record per authorize/run/summary/closeout
+  token_separation: CELL_RUN token cannot authorize CLOSEOUT
+
+objective: >-
+  Answer where the strongest legal non-ML receiver retains measurable decision
+  headroom on the dual-pol OSL Scout, using only the frozen P03 source closure.
+  ML is never trained. The Atlas may exit a representative-domain CANDIDATE
+  claim only with a scope certificate; FAMILY exit needs a mechanism proof.
+
+strongest_legal_non_ml_baseline:
+  identity: standard-CMA (Godard-with-z) followed by nearest-QPSK hard decision
+  comparator_set:
+    nearest_qpsk:
+      information: CSI_NONE z only
+      role: no-fit analytic control; same information as the strongest legal baseline
+    blind_affine:
+      information: CSI_NONE z plus pseudo-labels derived from the same calibration z
+      form: one-step complex 2x2 affine least squares with explicit ridge
+      role: strongest preregistered same-information simple comparator
+    oracle_affine:
+      information: calibration TX truth
+      role: post-hoc SCORING UPPER BOUND ONLY; never a runtime comparator; defines visible headroom
+  forbidden_runtime_inputs: [tx_bits, sX, sY, h, theta, true_jones, fixed_label_ber, pi_ber, future_window]
+
+statistical_sensitivity:
+  primary_metric: PI-SER (permutation-invariant symbol error rate; swap-aware complement is fixed-label SER, both reported)
+  minimum_detectable_effect:
+    value: 0.005
+    unit: per-symbol
+    rationale: >-
+      A 0.5 percentage-point SER difference is the smallest effect that would
+      make a learned residual-aware detector worth training; below this the
+      training/evaluation budget on the dual-pol OSL Scout cannot distinguish a
+      real mechanism from implementation noise.
+  confidence_method: rule-of-three upper bound on zero-error cells (1 - 0.05^(1/n_paired_cells))
+  sequential_sampling:
+    initial: 10 paired seeds
+    on_insufficient_sensitivity: double paired seeds up to a preregistered budget of 40
+    fallback_verdict: INSUFFICIENT_SENSITIVITY
+
+representative_axes:
+  # axes with clean frozen source closure are RUN; axes without one are
+  # INFRASTRUCTURE_BLOCKED (an axis-level block, not a candidate failure)
+  modulation_order:
+    in_closure: [QPSK]
+    blocked:
+      - value: 16QAM
+        reason: >-
+          the frozen P03 source closure's channel generator
+          (common/_dual_pol_channel.py, SHA-pinned by source-equivalence
+          contract) hard-codes QPSK symbol generation. 16QAM gen/eval assets
+          exist in separate unfrozen historical explore scripts
+          (ber_16qam_vs_fg.py, sup_stress_test.py) but are not hash-bound into
+          the P03 source closure and cannot be imported without either
+          modifying the canonical baseline source (forbidden by anchor.yaml
+          canonical_baseline.mutable=false) or building a new source closure
+          (large rebuild of the common simulator). Per the task brief this
+          blocks the 16QAM axis, not the candidate.
+  SNR_or_operating_region:
+    in_closure: [5.0_dB, 10.0_dB, 15.0_dB, 20.0_dB, 25.0_dB]
+    mapping: gamma_bar = 10^(snr_db/10)
+    rationale: spans low / waterfall-transition / high operating regions; 20 dB is the P03 v1 cell
+  channel_or_state_dynamics:
+    in_closure:
+      - {f_g_hz: 30.0, sop_rate: 0.000004, label: nominal_P03_baseline}
+      - {f_g_hz: 100.0, sop_rate: 0.000004, label: faster_turbulence}
+      - {f_g_hz: 1000.0, sop_rate: 0.000004, label: fast_turbulence}
+      - {f_g_hz: 30.0, sop_rate: 0.000040, label: faster_SOP}
+    rationale: spans slow / nominal / fast turbulence timescales and a 10x faster SOP point; nominal is the P03 v1 cell
+  observation_length:
+    in_closure:
+      - {n_symbols: 512, label: short_interface_window_P03_v1}
+      - {n_symbols: 8192, label: long_tracking_window}
+    rationale: P03 v1 was N=512; a long window exposes late-slice SOP accumulation that historical results (D015/D022) show re-order baseline ranking
+  CSI_or_pilot_access:
+    in_closure: [CSI_NONE]
+    blocked:
+      - {value: receiver_estimated_CSI, reason: clean frozen source closure exposes only the CSI_NONE z-window adapter; receiver-estimated CSI needs a new estimator seam}
+      - {value: explicit_pilot_budget, reason: pilot injection seam is partial (E pilot family S061); not hash-bound into the P03 source closure}
+    rationale: the residual-aware detection candidate (U19) is mechanism-relevant to CSI_NONE; CSI-aided variants are a separate candidate family and are deferred here
+  task_output:
+    in_closure: [uncoded_hard_decision]
+    blocked:
+      - value: soft_information_or_coded_metric
+        reason: >-
+          the frozen evaluator is hard-decision QPSK only; LLR/GMI/FER need a
+          legal CSI contract and same-information coded comparator that the
+          closure does not expose. Adapter's
+          HARD_DECISION_DOES_NOT_CLOSE_CODED_PATH counterexample remains open.
+    rationale: hard decision is the mechanism-relevant output for residual-aware detection; coded metrics are a separate U20 candidate and remain NOT_RUNNABLE
+
+design_rule: staged representative coverage, NOT exhaustive full-factorial
+covering_design:
+  # Stage A uses a pairwise-style covering design over the runnable axes.
+  # Every level of every runnable axis appears in at least one cell, and every
+  # pair of adjacent-axis levels co-occurs at least once, while staying inside
+  # the 15-minute subagent budget per batch.
+  strategy: covering_array_with_anchors
+  anchors:
+    - P03_v1_frozen_cell: {modulation: QPSK, snr_db: 20.0, dynamics: nominal_P03_baseline, length: short_interface_window_P03_v1}
+  paired_seeds: [11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+  cells:
+    # format: cell_id, modulation, snr_db, f_g_hz, sop_rate, n_symbols
+    - {id: qpsk-snr05-nominal-short,  modulation: QPSK, snr_db: 5.0,  f_g_hz: 30.0,  sop_rate: 0.000004, n_symbols: 512}
+    - {id: qpsk-snr10-nominal-short,  modulation: QPSK, snr_db: 10.0, f_g_hz: 30.0,  sop_rate: 0.000004, n_symbols: 512}
+    - {id: qpsk-snr15-nominal-short,  modulation: QPSK, snr_db: 15.0, f_g_hz: 30.0,  sop_rate: 0.000004, n_symbols: 512}
+    - {id: qpsk-snr20-nominal-short,  modulation: QPSK, snr_db: 20.0, f_g_hz: 30.0,  sop_rate: 0.000004, n_symbols: 512}
+    - {id: qpsk-snr25-nominal-short,  modulation: QPSK, snr_db: 25.0, f_g_hz: 30.0,  sop_rate: 0.000004, n_symbols: 512}
+    - {id: qpsk-snr20-fg100-short,    modulation: QPSK, snr_db: 20.0, f_g_hz: 100.0, sop_rate: 0.000004, n_symbols: 512}
+    - {id: qpsk-snr20-fg1000-short,   modulation: QPSK, snr_db: 20.0, f_g_hz: 1000.0,sop_rate: 0.000004, n_symbols: 512}
+    - {id: qpsk-snr20-sop40e-short,   modulation: QPSK, snr_db: 20.0, f_g_hz: 30.0,  sop_rate: 0.000040, n_symbols: 512}
+    - {id: qpsk-snr10-fg100-long,     modulation: QPSK, snr_db: 10.0, f_g_hz: 100.0, sop_rate: 0.000004, n_symbols: 8192}
+    - {id: qpsk-snr15-fg1000-long,    modulation: QPSK, snr_db: 15.0, f_g_hz: 1000.0,sop_rate: 0.000004, n_symbols: 8192}
+    - {id: qpsk-snr20-nominal-long,   modulation: QPSK, snr_db: 20.0, f_g_hz: 30.0,  sop_rate: 0.000004, n_symbols: 8192}
+
+frozen_common_axes:
+  alpha: 4.2
+  beta: 1.4
+  block: 100
+  t_s: 0.0000000004
+  method: gar
+  cma_mu: 0.001
+  cma_taps: 11
+  r2: 1.0
+  cma_block_size: 64
+  fade_threshold_h: 0.1
+  clip_norm: 1.0
+  csi_access_class: CSI_NONE
+  constellation_amplitude_per_axis: 0.7071067811865475
+  affine_ridge: 0.000001
+  tail_energy_threshold: 0.25
+  calibration_fraction: 0.25   # first quarter of eval window is calibration, rest is evaluation
+  source_equivalence_contract: source-equivalence-contract.v1.yaml
+  runtime_source_snapshot: source-snapshots/residual-headroom-probe-v1/runtime-source-snapshot.v1.yaml
+
+verdict_levels: [CELL, SLICE, DOMAIN, CANDIDATE, FAMILY]
+per_cell_verdict_schema:
+  # one verdict per cell, machine-enum decision_class
+  status: free-text status token (e.g. NO_VISIBLE_HEADROOM, LOCAL_HEADROOM, INSUFFICIENT_SENSITIVITY)
+  decision_class: [NON_DECISIVE, LOCAL_NEGATIVE, ADVANCE, RETIRE]
+  visible_headroom: float
+  simple_analytic_gain: float
+  nearest_pi_ser: float
+  blind_pi_ser: float
+  oracle_pi_ser: float
+  n_paired_seeds: int
+  n_error_events: int
+  zero_error_upper_bound: float   # rule-of-three when n_error_events==0
+  meets_minimum_detectable_effect: bool
+
+slice_verdict_schema:
+  # grouped by (modulation, snr_bin, dynamics_bin, length_bin)
+  status: free-text
+  decision_class: [NON_DECISIVE, LOCAL_NEGATIVE, ADVANCE, RETIRE]
+
+stage_a_exits:
+  - HEADROOM_REGION_FOUND        # at least one SLICE has measurable headroom >= MDE with sensitivity PASS -> Stage B
+  - NO_HEADROOM_IN_REPRESENTATIVE_DOMAIN_WITH_CERTIFICATE  # all runnable SLICEs zero-headroom with sensitivity PASS, all blocked axes INFRASTRUCTURE_BLOCKED, historical counterexamples dispositioned
+  - INSUFFICIENT_SENSITIVITY     # sensitivity upper bound > MDE on every runnable cell and sequential budget exhausted
+  - INFRASTRUCTURE_BLOCKED       # all runnable axes blocked AND at least one runnable axis exists but cannot be exercised
+
+forbidden_exits:
+  - CANDIDATE_RETIRE_without_scope_certificate
+  - FAMILY_RETIRE_without_mechanism_proof
+  - paper_claim
+  - B004_or_ML_training
+  - extrapolation_to_16QAM_or_coded_metric
+
+guards:
+  B001_B002_B003_read_only: true
+  B004_forbidden: true
+  P03_ML_training_forbidden: true
+  Queue_Registry_forbidden: true
+  formal_promotion_forbidden: true
+  no_candidate_or_family_exit_without_certificate: true
+  canonical_baseline_unchanged: true
+  source_closure_unchanged: true

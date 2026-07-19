@@ -5,7 +5,7 @@ method_type: 待定（精读后根据问题方法产出形态确定，见 glossa
 domain: comms
 created: 2026-06-21
 updated: 2026-07-19
-current_step: Direction-Lab-BatchPlan-selection-pending
+current_step: Direction-Lab-Headroom-Atlas-Stage-A-completed-P03-still-UNRESOLVED
 current_stage: FORMAL_BLOCKED
 ---
 
@@ -23,12 +23,13 @@ current_stage: FORMAL_BLOCKED
 ### 当前控制面桥接（唯一现行入口）
 
 - formal stage：`BLOCKED`。Direction Lab 的 Scout/Sandbox 结果对正式研究的 promotion effect 为 `none`。
-- formal blockers：P03 的 QPSK/20 dB/CSI_NONE/短序列 slice 没有可见 headroom，但代表域覆盖不足，当前为 `P03_DOMAIN_ADEQUACY_UNRESOLVED`；尚无 Sandbox winner 或正式 GW/Contract promotion 证据。旧 Pilot-Jones Step 3.5/4a 链也未成为当前授权入口。
+- formal blockers：P03 的 Headroom Atlas Stage A（2026-07-19，S077/D059/V033）已在 runnable 代表子域（QPSK × SNR 5–25 dB × f_G 30/100/1000 Hz × SOP 4e-6/4e-5 × N 512/8192 × CSI_NONE × uncoded hard decision，11 cells × 10 paired seeds）给出 LOCAL_NEGATIVE：0/11 cells 达到预注册 MDE 0.005，max visible headroom 0.00039（比 MDE 低 ~13×）。但 16QAM / receiver-estimated CSI / coded-output 三轴在 P03 frozen source closure 上 INFRASTRUCTURE_BLOCKED，历史反例（D008–D015/D023、U20 coded）恰好落在被阻轴上 → DOMAIN/CANDIDATE/FAMILY 仍 UNRESOLVED/OPEN。尚无 Sandbox winner 或正式 GW/Contract promotion 证据。旧 Pilot-Jones Step 3.5/4a 链也未成为当前授权入口。
 - Direction Lab sandbox history：当前 last completed batch = `B003 / COMPLETED_SANDBOX_VERIFIED`；事实源为 `projects/thesis-fso/direction-lab/state/completion-events.jsonl` 与对应不可变 projection。`canonical-state.yaml` 仅为机器投影，不是正式研究授权源。
-- current scout candidate：`P03/U19 residual-aware detection`，仅 exact slice 局部负面，domain/candidate/family 未决或开放。
-- scout status：`P03_DOMAIN_ADEQUACY_UNRESOLVED`；历史 `P03_ANALYTIC_COVERAGE_GE_90` 保留为 exact-slice machine verdict，zero-headroom 的 adjudicated coverage 为不可适用而非实测100%覆盖。权威纠正投影见 `claim-scope-assessment.v1.yaml`。
+- current scout candidate：`P03/U19 residual-aware detection`，Stage A runnable 子域 LOCAL_NEGATIVE，但 domain/candidate/family 未决或开放。
+- scout status：`P03_DOMAIN_ADEQUACY_UNRESOLVED`；Stage A exit = `NO_HEADROOM_IN_REPRESENTATIVE_DOMAIN_WITH_CERTIFICATE`。历史 `P03_ANALYTIC_COVERAGE_GE_90` 保留为 exact-slice machine verdict；Stage A artifact 在 `projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/`。
 - formal promotion effect：`none`；B001–B003 数字不得进入论文或正式材料。
-- 下一合法边界：先为 `direction-lab/batch-plan.v2.yaml` 建立并测试唯一的 Headroom Atlas preflight/assessment receipt consumer；通过后再做 baseline-only multi-domain Headroom Atlas，覆盖代表性的调制、SNR、动态性、序列长度、CSI与输出任务。不得启动 B004、P03 ML 训练或 Queue/Registry。
+- Atlas 强门入口：`projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/atlas_gate.py`（唯一 receipt-bound 入口；19 tests 含 8 个独立对抗反例；append-only 审计；token 类型分离）。
+- 下一合法边界：用户决策点（未选定）：① P03 暂停回候选池；② 建一条干净 source closure（最有杠杆是 16QAM）扩域重跑 Stage A；③ 换候选族（U36 等）。要关闭 DOMAIN/CANDIDATE 必须先建 {16QAM, receiver-CSI, coded-output} 中至少一条干净 closure 并带 scope certificate 处置历史反例。Stage B 不触发（无 headroom 区域）。不得启动 B004、P03 ML 训练或 Queue/Registry。
 
 ### 历史 Groundwork 轨迹（保留审计，不授权当前执行）
 

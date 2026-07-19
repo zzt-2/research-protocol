@@ -1,0 +1,96 @@
+schema_version: direction-lab.claim-scope.v1
+assessment_id: P03-U19.headroom-atlas.stage-a.closeout.2026-07-19.v1
+candidate: P03/U19
+atlas_stage: A
+atlas_exit: NO_HEADROOM_IN_REPRESENTATIVE_DOMAIN_WITH_CERTIFICATE
+raw_evidence:
+  contract: stage-a-contract.v1.yaml
+  atlas: artifacts/headroom-atlas-v1/stage-a-atlas.json
+  summary: artifacts/headroom-atlas-v1/stage-a-atlas-summary.yaml
+  synthesis: artifacts/headroom-atlas-v1/stage-a-synthesis.md
+  audit: artifacts/headroom-atlas-v1/atlas-audit.jsonl
+  baseline_identity: standard-CMA Godard-with-z followed by nearest-QPSK hard decision
+  comparators: [nearest_qpsk, blind_affine, oracle_affine_scoring_only]
+  historical_machine_verdict: P03_ANALYTIC_COVERAGE_GE_90
+  historical_p03_overlay: claim-scope-assessment.v1.yaml
+  aggregate_visible_headroom_max: 0.0003906250  # 13x below MDE; max over 11 cells
+  historical_numeric_coverage: null
+  interpretation: >-
+    Stage A extended P03 v1's exact-slice LOCAL_NEGATIVE to a runnable
+    representative sub-domain (QPSK x SNR sweep x dynamics sweep x short/long
+    observation x CSI_NONE x uncoded hard decision). 0 of 11 cells reach the
+    pre-registered minimum detectable effect. The strongest legal non-ML
+    baseline dominates on every runnable cell.
+evidence_scope:
+  max_supported_level: SLICE
+  tested_axes:
+    modulation: [QPSK]
+    snr_db: [5.0, 10.0, 15.0, 20.0, 25.0]
+    channel_or_state_dynamics: [f_g_hz=30, f_g_hz=100, f_g_hz=1000, sop_rate=4e-6, sop_rate=4e-5]
+    observation_length: [short_interface_window_512, long_tracking_window_8192]
+    csi_access_class: [CSI_NONE]
+    task_output: [uncoded_hard_decision]
+  coverage:
+    denominator: 0.0003906250   # the only non-zero visible headroom found, used as denominator for coverage
+    value: 0.0                  # 0 of the runnable headroom is captured by the strongest same-information comparator
+    status: MEASURED
+    pass: true
+    decision_class: LOCAL_NEGATIVE
+  statistical_sensitivity:
+    status: PASS
+    target_effect: 0.005        # pre-registered MDE
+    achieved_upper_bound: 0.0003906250   # max visible_headroom across all runnable cells (13x below MDE)
+    n_runnable_cells: 11
+    n_paired_seeds_per_cell: 10
+    n_cells_sensitivity_limited: 6   # zero errors with rule-of-three UB > MDE on 10 seeds
+    rationale: >-
+      On 5 of 11 cells the rule-of-three upper bound is below MDE (these cells
+      observed non-zero errors so the bound is informative); on 6 of 11 cells
+      the upper bound exceeds MDE because zero errors were observed, so those
+      cells carry a sensitivity caveat rather than a "baseline perfect" claim.
+  historical_counterexamples:
+    status: OPEN
+    items:
+      - reference: .sessions/2026-07-10-dual-pol-osl-groundwork/decisions.md#D008-D014
+        axes: [modulation, snr_db, sequence_symbols]
+        disposition: EXCLUDED_WITH_JUSTIFICATION
+        justification: >-
+          the 16QAM-driven ordering changes live on the modulation axis, which
+          is INFRASTRUCTURE_BLOCKED on the P03 frozen source closure (the
+          channel generator hard-codes QPSK). Stage A therefore cannot test
+          this counterexample; DOMAIN/CANDIDATE remain UNRESOLVED/OPEN.
+      - reference: .sessions/2026-07-10-dual-pol-osl-groundwork/decisions.md#D023
+        axes: [f_g_hz, snr_db, modulation]
+        disposition: EXCLUDED_WITH_JUSTIFICATION
+        justification: >-
+          the modulation component is INFRASTRUCTURE_BLOCKED; the f_g_hz and
+          snr_db components WERE tested in Stage A (no headroom found on the
+          runnable QPSK cells).
+      - reference: .sessions/2026-07-10-dual-pol-osl-groundwork/decisions.md#D015
+        axes: [sequence_symbols, sop_rate, fixed_label_ber]
+        disposition: EXCLUDED_WITH_JUSTIFICATION
+        justification: >-
+          Stage A exercised short (512) and long (8192) observation lengths
+          and two SOP rates (4e-6, 4e-5) on QPSK; the fixed-label-BER
+          manifestation of long-sequence SOP accumulation is swap-sensitive
+          and was not reproduced as visible PI-SER headroom. The
+          fixed-label-BER specific counterexample is not directly testable on
+          this closure's PI-SER primary metric.
+verdicts:
+  CELL: {status: STAGE_A_MIXED, decision_class: NON_DECISIVE}
+  SLICE: {status: REPRESENTATIVE_SUBDOMAIN_LOCAL_NEGATIVE, decision_class: LOCAL_NEGATIVE}
+  DOMAIN: {status: UNRESOLVED, decision_class: NON_DECISIVE}
+  CANDIDATE: {status: OPEN, decision_class: NON_DECISIVE}
+  FAMILY: {status: OPEN, decision_class: NON_DECISIVE}
+scope_certificate: null
+adjudicated_candidate_status: P03_DOMAIN_ADEQUACY_UNRESOLVED
+allowed_next_action: >-
+  P03 stays UNRESOLVED at CANDIDATE/FAMILY; the runnable representative
+  sub-domain has no mechanism-relevant headroom for the strongest legal
+  non-ML baseline. To close DOMAIN/CANDIDATE one must (a) build a clean
+  source closure for at least one of {16QAM, receiver-estimated CSI, coded
+  output} and (b) re-run Stage A on the expanded domain with a scope
+  certificate disposing of the historical counterexamples. No ML training,
+  no B004, no Queue/Registry, no paper claim, no candidate retirement is
+  authorized by this closeout.
+forbidden: [P03_ML_training, candidate_retirement, family_retirement, B004, PASS_Queue, Registry, paper_claim, extrapolation_to_16QAM, extrapolation_to_coded_metric]

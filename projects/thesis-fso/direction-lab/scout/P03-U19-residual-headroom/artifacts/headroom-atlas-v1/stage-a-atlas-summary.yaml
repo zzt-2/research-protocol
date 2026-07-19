@@ -1,0 +1,28 @@
+stage: A
+exit_state: NO_HEADROOM_IN_REPRESENTATIVE_DOMAIN_WITH_CERTIFICATE
+n_runnable_cells: 11
+n_advance_cells: 0
+n_local_negative_cells: 10
+n_insufficient_sensitivity_cells: 0
+n_headroom_cells: 1
+n_cells_above_mde: 0
+n_sensitivity_limited_cells: 6
+max_visible_headroom: 0.00039062500000000035
+blocked_axes:
+- axis: modulation_order
+  blocked_values:
+  - 16QAM
+- axis: CSI_or_pilot_access
+  blocked_values:
+  - receiver_estimated_CSI
+  - explicit_pilot_budget
+- axis: task_output
+  blocked_values:
+  - soft_information_or_coded_metric
+minimum_detectable_effect: 0.005
+summary_note: Stage A is baseline-only; cells with visible_headroom >= MDE flag a
+  measurable same-information headroom that justifies a Stage B confirmation (still
+  no ML training). When no runnable cell reaches MDE, the runnable representative
+  domain has no mechanism-relevant headroom for the strongest legal non-ML baseline;
+  CANDIDATE-level retirement still requires a scope certificate that dispositions
+  the INFRASTRUCTURE_BLOCKED axes (16QAM, receiver-estimated CSI, coded metrics).

@@ -3005,3 +3005,43 @@ P03 的运行和算术正确，但 zero visible headroom 被合同记为 coverag
 ### 来源
 
 S076；用户纠正，见 voice.md 2026-07-19。
+
+---
+
+## D059: 建立唯一 Headroom Atlas 强门入口；Stage A runnable 子域 LOCAL_NEGATIVE，DOMAIN/CANDIDATE/FAMILY 仍开放
+
+> status: active
+> date: 2026-07-19
+> 取代：无（沿用 D058 五级结论门；不推翻 D057 的 10-cell 事实）
+> 被取代：无
+> 依据: 验证 V033（独立 verifier 5 区全 PASS）+ Stage A artifact `stage-a-atlas.json` + gate 测试 19 passed（11 functional + 8 adversarial）+ 用户原话 voice.md 2026-07-19
+
+### 决策
+
+1. **唯一强门入口**：Direction Lab 的 Headroom Atlas preflight/assessment 入口收敛到 `headroom-atlas/atlas_gate.py`。该入口必须（i）绑定 batch-plan.v2.yaml 的 6 个 guard 全开，（ii）消费与实时 assessment/validator SHA 一致的 PASS receipt，（iii）对实时 assessment 字节重新运行 `validate_claim_scope.py`（不信任 receipt 本身），（iv）append-only 审计，token 类型分离（CELL_RUN 不能授权 CLOSEOUT）。任何 readiness/triage/canonical 状态更新必须先过该门并保存 PASS receipt。
+2. **Stage A runnable 子域 LOCAL_NEGATIVE**：在 QPSK × SNR 5–25 dB × f_G 30/100/1000 Hz × SOP 4e-6/4e-5 × N 512/8192 × CSI_NONE × uncoded hard decision 的 11 cells × 10 paired seeds 上，strongest legal non-ML baseline（standard-CMA + nearest-QPSK + 同信息 blind affine + scoring-only oracle affine）在所有 cell 上 visible headroom < MDE（0.005）。exit = `NO_HEADROOM_IN_REPRESENTATIVE_DOMAIN_WITH_CERTIFICATE`；Stage B 不触发。
+3. **DOMAIN/CANDIDATE/FAMILY 仍开放**：3 轴（16QAM / receiver-estimated CSI / coded output）在 P03 frozen source closure 上 INFRASTRUCTURE_BLOCKED；历史反例 `MODULATION_DYNAMICS_LENGTH_ORDERING_SIGNAL`（D008–D014/D023）、`HARD_DECISION_DOES_NOT_CLOSE_CODED_PATH`（U20）恰好落在被阻轴上 → DOMAIN 仍 UNRESOLVED，CANDIDATE/FAMILY 仍 OPEN。
+4. **P03 当前 status 不变**：仍 `P03_DOMAIN_ADEQUACY_UNRESOLVED`；ML 仍禁止训练；B004/Queue/Registry 仍禁止；论文晋级仍禁止。
+
+### 理由
+
+Stage A 把 P03 v1 的 exact-slice LOCAL_NEGATIVE 扩展到一个更宽的可运行代表子域，用的是同一 source closure 和同一组 strongest-legal non-ML comparators，预注册了 MDE 和 rule-of-three 灵敏度。结果：0/11 cells 达到 MDE，6/11 cells 灵敏度受限（零错误但 UB > MDE），4/11 cells 测得 negative（非零错误但 oracle affine 不胜 nearest on PI-SER）。被阻轴上的历史反例未被处置，所以不能升级到 DOMAIN/CANDIDATE/FAMILY 退出。
+
+### 排除的替代方案
+
+- 不把 runnable 子域 LOCAL_NEGATIVE 外推成 candidate/family 退出：3 轴 INFRASTRUCTURE_BLOCKED + 历史反例落在被阻轴上，没 scope certificate。
+- 不为制造 headroom 调参或扩参：违反冻结 contract。
+- 不为 16QAM 借用未 hash-bound 的历史 explore 脚本：会污染 canonical baseline 或需要大重建，超出 Scout 边界。
+- 不在 6 个灵敏度受限 cell 上宣称"baseline 完美"：诚实标 INSUFFICIENT_SENSITIVITY 上界。
+- 不重启 Stage A′ 把 seeds 翻到 40：当前 0 cell 接近 MDE，扩 seeds 不会改变结论，且不解决被阻轴。
+
+### 影响范围
+
+- 新增唯一强门入口 `atlas_gate.py`（19 tests，含 8 个对抗反例）；`stage_a_cell_runner.py`、`run_stage_a.py`、`stage-a-contract.v1.yaml`、`atlas-pre-run-assessment.v1.yaml` + receipt、`atlas-closeout-assessment.v1.yaml` + receipt、`artifacts/headroom-atlas-v1/`（atlas JSON + summary + synthesis + verifier report + append-only audit）。
+- P03/U19 candidate 状态不变；U20 coded-LLR 仍 NOT_RUNNABLE（hard-decision LOCAL_NEGATIVE 先验 only）；U36 residual-aware 证据在 runnable 子域被削弱但未全局退。
+- formal research 仍 BLOCKED；S074 pilot-Jones Step3.5 不变；B001–B003 历史/canonical/state 不变。
+- 治理债：Direction Lab 仍有 37 个 pre-existing test 失败（V030 已记录的 Windows CRLF + linked-worktree 路径假设），不在本轮回归范围。
+
+### 来源
+
+S077；触发原话见 voice.md 2026-07-19。
