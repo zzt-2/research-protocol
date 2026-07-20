@@ -588,3 +588,21 @@ topics:
       - projects/simulation/figures/ccisp_fig2_ber.pdf
       - projects/simulation/figures/ccisp_fig4_crossover.pdf
       - projects/simulation/figures/ccisp_fig3_gain.pdf
+
+  - slug: 2026-07-20-direction-lab-science-scout
+    title: Direction Lab 首轮 SCIENCE_SCOUT 正式科学探索
+    status: active
+    created: "2026-07-20"
+    last_updated: "2026-07-20（S001：campaign 启动；授权迁移 READ_ONLY_MIGRATION_PREVIEW → SCIENCE_SCOUT；隔离 worktree direction-lab-capability-atlas 建立）"
+    description: "用户明确授权的首轮正式 SCIENCE_SCOUT campaign。在双偏振星地 OSL 接收机中的合法 ML 信息增量目标范围内，连续推进 Portfolio Refresh → Capability Leverage Atlas → 共享能力建设 → baseline/headroom 探针 → 多候选批量 Scout → synthesis → harvest → 自动轮换。隔离 worktree：.worktrees/direction-lab-capability-atlas（分支 codex/direction-lab-capability-atlas，从 65db4ef）。不授权：修改/重跑 B001-B003 与 P03 Atlas 原始历史、创建 legacy B004、把 Scout/Sandbox 数字自动写入论文、自动宣称 candidate/family/domain 结论、绕过 GW/Contract/Execute 正式晋级、push/merge、为让 ML 获胜而修改物理参数/baseline/指标/比较口径。"
+    depends_on:
+      - slug: 2026-07-20-research-direction-lab-system
+        reason: 继承 V007 PASS 的消费者部署（全局 Skill + STATUS + Project Adapter + protected history）作为科学探索起点
+      - slug: 2026-07-17-direction-lab-governance-pilot
+        reason: 继承 anchor/canonical-state/portfolio/harvest/B001-B003 protected history、receipt-bound Atlas gate 和 P03 SLICE local negative
+      - slug: 2026-07-10-dual-pol-osl-groundwork
+        reason: 继承 D040-D056 baseline identity、D018 metric contract、D008-D015/D023 historical counterexamples（modulation/dynamics/length ordering signals）
+    conflicts_with: []
+    produces:
+      - .sessions/2026-07-20-direction-lab-science-scout/
+      - projects/thesis-fso/direction-lab/campaigns/science-scout-2026-07-20/

@@ -1,0 +1,176 @@
+schema_version: direction-lab.campaign-contract.v1
+campaign_id: science-scout-2026-07-20.dual-pol-osl
+created: 2026-07-20
+authorization_source: user-prompt-2026-07-20-1944
+authorization_voice_log: .sessions/2026-07-20-direction-lab-science-scout/voice.md
+
+# === Authorization migration (additive, not history-rewriting) ===
+mode_migration:
+  from: READ_ONLY_MIGRATION_PREVIEW
+  to: SCIENCE_SCOUT
+  scope: this-campaign-only
+  formal_status_unchanged: BLOCKED
+  formal_reasons_unchanged:
+    - master-state/latest-DV drift
+    - Step3.5 evidence chain not independently closed
+    - Step4a not released
+  sandbox_status_unchanged: BOARD_READY
+  protected_history_unchanged: true
+  note: >-
+    This campaign authorizes new Scout/Sandbox science work on top of the
+    V007-DEPLOYED consumer state. It does NOT unblock formal Groundwork /
+    Contract / Execute / paper promotion. It does NOT rewrite canonical-state,
+    portfolio/current.v1, STATUS.v1, B001-B003 batches, P03 Atlas artifacts,
+    completion events, or receipts. All new artifacts live under
+    campaigns/science-scout-2026-07-20/ and new scout subdirectories.
+
+# === Inherited foundation (reference only, do not modify) ===
+inherits:
+  anchor: anchor.yaml
+  anchor_id: anchor.dual-pol-osl.2026-07-17
+  canonical_baseline:
+    id: baseline.standard_cma.godard_z
+    identity_source: .sessions/2026-07-10-dual-pol-osl-groundwork/decisions.md#D040
+    mutable: false
+  metric_contract:
+    id: metric.dual_qpsk.fixed-plus-pi.v1
+    required: [fixed_label_ber, permutation_invariant_ber]
+    source: .sessions/2026-07-10-dual-pol-osl-groundwork/decisions.md#D018
+  protected_history:
+    - canonical-state.yaml
+    - portfolio/current.v1.yaml
+    - STATUS.v1.md
+    - state/completion-events.jsonl
+    - state/projections/
+    - batches/B001-20260717-live/
+    - batches/B002-20260718-live/
+    - batches/B003-20260718-live/
+    - scout/P03-U19-residual-headroom/headroom-atlas/
+    - scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/
+    - harvest/ledger.v1.yaml
+    - harvest/thesis-spines.v1.md
+
+# === Scientific goal (scoped, not formal promotion) ===
+scientific_goal: >-
+  Within the dual-pol ground-to-satellite OSL receiver chain, identify whether
+  any legal ML information increment has a measurable, mechanism-relevant
+  headroom region against the strongest legal same-information non-ML baseline,
+  on an expanded runnable domain that closes at least one of the three
+  INFRASTRUCTURE_BLOCKED axes (16QAM modulation, receiver-estimated CSI, or
+  soft/coded output). Produce scoped scientific harvest (positive mechanism
+  signals, scoped negatives, baseline failure boundaries, metric/evaluator
+  insights, formula/parameter provenance, reusable runners, infrastructure
+  gaps, figure seeds, writable methods/limitations paragraphs, future
+  experiment designs) without auto-promoting to formal Groundwork / Contract /
+  Execute or paper claims.
+
+# === Allowed actions within this campaign ===
+allowed_actions:
+  - portfolio_refresh
+  - capability_leverage_atlas
+  - build_shared_capability
+  - baseline_only_atlas_with_preregistered_MDE
+  - batch_ML_scout_conditional_on_headroom
+  - synthesis
+  - harvest
+  - automatic_rotation_on_local_blocker
+  - literature_audit_via_subagent
+  - formula_symbol_parameter_provenance
+  - independent_verification
+
+# === Forbidden actions (even within campaign) ===
+forbidden_actions:
+  - modify_or_rerun_B001_B002_B003_original_bytes
+  - modify_or_rerun_P03_Atlas_original_bytes
+  - create_legacy_B004
+  - auto_write_scout_or_sandbox_numbers_into_paper
+  - auto_claim_candidate_family_or_domain_conclusion
+  - bypass_Groundwork_Contract_Execute_for_formal_promotion
+  - push_or_merge
+  - modify_dirty_normal_root_worktree
+  - modify_physical_params_baseline_metric_or_comparison_to_make_ML_win
+  - use_oracle_scoring_only_upper_bound_as_Go_baseline
+  - rewrite_canonical_state_or_portfolio_or_STATUS
+  - delete_old_state
+  - pretend_history_self_contained_when_raw_artifacts_absent
+  - main_thread_WebSearch_or_webReader
+  - copy_protected_numbers_to_new_ledger_without_rehashing
+
+# === Claim ceilings (per-level, pre-registered) ===
+claim_ceilings:
+  CELL: LOCAL_RESULT
+  SLICE: LOCAL_RESULT
+  DOMAIN: UNRESOLVED_unless_blocked_axes_closed_and_scope_certificate_issued
+  CANDIDATE: OPEN_until_mechanism_proof_and_legal_comparator
+  FAMILY: OPEN_until_mechanism_proof
+  FORMAL_PROMOTION: BLOCKED_requires_user_strategy_decision
+
+# === Statistical pre-registration (hard gate before any Atlas run) ===
+statistical_preregistration_template:
+  primary_metric: PI-SER (permutation-invariant symbol error rate)
+  secondary_metric: fixed-label SER (swap-aware complement)
+  MDE: 0.005_per_symbol
+  MDE_rationale: >-
+    Below this, a learned detector's training/evaluation budget cannot
+    distinguish a real mechanism from implementation noise. Inherited from
+    P03 Stage A contract; may be revisited ONLY if a new mechanism family
+    plausibly produces smaller per-symbol effects AND a paired-seed power
+    analysis supports a smaller MDE.
+  zero_error_confidence: rule_of_three_one_sided_95pc_upper_bound
+  sequential_sampling_budget: 10_to_40_paired_seeds
+  insufficient_sensitivity_fallback: >-
+    If every cell stays zero-error with rule-of-three UB > MDE at max budget,
+    mark INSUFFICIENT_SENSITIVITY, do not claim LOCAL_NEGATIVE-as-baseline-perfect.
+  oracle_role: Kill_tool_only_at_Step4a_dimension_D_per_FR21; never a Go baseline per FR25
+
+# === Rotation policy (continuous progress) ===
+rotation_policy:
+  auto_rotate_without_asking_user_on:
+    - single_candidate_failure
+    - single_cell_no_headroom
+    - local_interface_missing
+    - single_model_does_not_beat_baseline
+    - reviewer_rejects_local_synthesis
+    - bounded_shared_repair_needed
+    - single_capability_bundle_judged_low_leverage
+  escalate_to_user_only_on:
+    - change_dual_pol_ground_to_satellite_OSL_core_scenario
+    - choose_formal_paper_main_line
+    - large_scale_infrastructure_or_compute_investment
+    - all_legal_shared_capabilities_and_candidates_evidence_backed_exhausted
+    - provenance_problem_with_no_safe_handling
+    - prepare_to_promote_from_Scout_or_Sandbox_to_formal_GW_Contract_Execute
+
+# === Stale debts to resolve in new projection (not by rewriting history) ===
+known_debts:
+  - id: stale_dual_pol_channel_checksum
+    symptom: canonical-state.yaml declares simulator sha256=537dce98 but worktree actual=3d02eaa3
+    root_cause: line-ending difference (main worktree CRLF vs worktree LF); content identical
+    resolution: >-
+      New authorization-projection binds the actual source closure (commit
+      65db35bb + _gg_time.py git_blob_oid 9155de05 + per-file worktree SHA at
+      campaign start), not the canonical-state CRLF SHA. canonical-state is
+      not rewritten.
+    does_not_block: this_campaign_science_work
+  - id: stale_last_completed_batch_pointer
+    symptom: canonical-state.last_completed_batch = B003 (correct as of V007 deploy)
+    resolution: new projection carries forward B003 as last protected completed batch; new campaign batches (if any) get new IDs B005+ (B004 intentionally never created)
+    does_not_block: this_campaign_science_work
+  - id: raw_artifacts_absent_in_checkout
+    symptom: B001/B002/B003 raw batch data not present in this worktree (only manifests/status/synthesis/verifier)
+    resolution: continue to mark history_self_contained=false; do not pretend reproducibility from raw; rely on hash-bound manifests and receipts
+    does_not_block: this_campaign_science_work (new campaign artifacts are self-contained)
+
+# === Exit conditions for this campaign ===
+exit_conditions:
+  - positive_headroom_region_found_and_ML_scout_batch_completed_with_synthesis_and_harvest
+  - all_legal_shared_capabilities_and_candidates_evidence_backed_exhausted
+  - user_strategy_decision_to_change_scenario_or_choose_paper_main_line
+  - provenance_hard_gate_unresolvable_for_all_remaining_candidates
+  - context_budget_reached_with_handoff_written
+
+# === Worktree and branch ===
+worktree: .worktrees/direction-lab-capability-atlas
+branch: codex/direction-lab-capability-atlas
+base_commit: 65db4ef84fcba20103f6f0e97961fef3373100fc
+commit_policy: single_consolidated_commit_at_session_end_no_push

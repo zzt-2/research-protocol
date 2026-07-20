@@ -1,0 +1,302 @@
+schema_version: direction-lab.capability-leverage-atlas.v1
+atlas_id: atlas.science-scout-2026-07-20.v1
+campaign_id: science-scout-2026-07-20.dual-pol-osl
+created: 2026-07-20
+ranking_method: scientific_judgment_no_fixed_scorer  # per user §六
+evidence_sources:
+  - subagent-B-capability-asset-inventory (2026-07-20)
+  - subagent-A-literature-audit (2026-07-20)
+  - subagent-C-candidate-universe-v3-seed (2026-07-20)
+  - P03 Stage A synthesis (0/11 cells at MDE; 3 axes INFRASTRUCTURE_BLOCKED)
+
+# === Per-bundle evaluation ===
+bundles:
+
+  - id: CB1_modulation_generic_closure
+    name: modulation-generic source closure (QPSK + 16QAM hash-bound)
+    unlocks_candidates: [U19_expanded_16QAM, U20_partial, U34_partial, RC1_modulation_generic_coded_closure, U05_U36_test_domain]
+    unlocks_mechanism_families: [F03 partial, F04 partial, RC1]
+    supports_multiple_scouts: true  # any modulation-aware candidate benefits
+    current_code_assets:
+      - _modulation.py:24 qam16_mod (Gray map, /sqrt(10) normalization)
+      - _modulation.py:39 qam16_demod
+      - _modulation.py:84 hard_decision(mod='qpsk'/'qam16') modulation-aware
+      - _cma.py:43 cma_radius(symbols) computes R² from any constellation
+      - _cma.py:74 CMAEqualizer2x2(R2=...) already parameterized
+      - _gg_time.py modulation-agnostic
+      - P03 source-equivalence-contract pins commit 65db35bb + _gg_time.py blob
+    missing_interfaces:
+      - _dual_pol_channel.py:48-55 hardcodes QPSK symbol gen; needs modulation='qpsk'/'qam16' kwarg
+      - stage_a_cell_runner.py:228 hardcodes hard_qpsk + amplitude 0.7071; needs modulation dispatch
+      - probe_evaluator.py:15 hardcodes QPSK; needs modulation-aware variant
+      - source-equivalence-contract.v1.yaml is QPSK-only; needs v2 or parallel closure
+      - stage-a-contract.v1.yaml lists 16QAM as blocked; needs axis reclassification
+    implementation_cost: MEDIUM_half_day
+    implementation_risk: LOW  # all primitives exist; only wiring + re-hashing
+    historical_positive_signal: >-
+      ber_16qam_vs_fg.py (explore script, not closure-bound) showed CMA BER
+      higher for 16QAM than QPSK (modulus mismatch structural, D008 Sup-1),
+      suggesting 16QAM domain may have MORE headroom than QPSK where P03
+      found zero. This is the strongest mechanistic prior that bundle-1 may
+      unlock measurable headroom invisible on QPSK.
+    historical_negative_signal: >-
+      P03 v1 exact-slice LOCAL_NEGATIVE was QPSK-only; no 16QAM negative
+      exists yet (axis was blocked, not measured-negative).
+    can_test_specific_baseline_failure: >-
+      YES — D008-D014/D023 historical counterexamples explicitly show
+      modulation-driven ordering changes. Bundle-1 directly unblocks the
+      modulation axis these counterexamples live on. This is the single
+      bundle that disposes of the most historical UNRESOLVED counterexamples.
+    strongest_legal_comparator: >-
+      standard-CMA Godard-with-z (R²_16QAM=1.32) + nearest-16QAM hard decision
+      via _modulation.py:84. Same-information blind affine as upper-bound
+      Kill tool (FR-21/FR-25), not Go baseline.
+    primary_metric_observable: [PI-SER_16QAM, fixed_label_SER_16QAM]
+    diagnostic_observable: [CMA convergence trace, residual energy, swap events if any]
+    paper_main_line_value: 4  # unblocks 16QAM chapter; extends boundary or finds headroom
+    if_fails_leaves_secondary_result: >-
+      LOCAL_NEGATIVE on 16QAM runnable domain — extends P03 boundary to a
+      second modulation, still a defensible thesis result (boundary mapping).
+    minimal_buildable_slice: >-
+      Parameterize _dual_pol_channel.py + stage_a_cell_runner.py for
+      modulation='qam16'; re-pin source closure; deterministic smoke on one
+      16QAM cell; QPSK regression (P03 v1 anchor cell must reproduce exactly);
+      special-case regression (R²_16QAM=1.32 must match analytical); run
+      baseline-only Atlas on ~10 representative 16QAM cells.
+    exit_condition: >-
+      Either (a) find a 16QAM cell with visible headroom > MDE 0.005 for the
+      strongest legal non-ML baseline → triggers ML Scout batch; or (b) all
+      16QAM cells at-or-below MDE → LOCAL_NEGATIVE extension, rotate to
+      next-priority candidate (U24 or RC2 cluster).
+
+  - id: CB2_soft_coded_evaluator
+    name: soft/coded evaluator (LLR / GMI / FER / coded comparator contract)
+    unlocks_candidates: [U20, U34, U47, U39]
+    unlocks_mechanism_families: [F04 coded, RC1 coded closure]
+    supports_multiple_scouts: true
+    current_code_assets:
+      - ber_eval(_mode='direct'/'oracle') only (hard decision)
+      - communications.yaml:25 declares llr_metrics rule (no implementation)
+    missing_interfaces:
+      - LLR computer for QPSK and 16QAM
+      - GMI integrator
+      - FEC codec (HD-FEC or SD-FEC)
+      - FER counter
+      - coded comparator contract
+      - legal CSI contract first (per profile rule)
+    implementation_cost: HIGH_multi_day
+    implementation_risk: MEDIUM  # needs CSI contract first (dependency on CB3)
+    historical_positive_signal: none directly
+    historical_negative_signal: HARD_DECISION_DOES_NOT_CLOSE_CODED_PATH counterexample open
+    can_test_specific_baseline_failure: PARTIAL — only after CB1 + CB3
+    strongest_legal_comparator: same-code same-net-rate decoder with matched feedback and latency budget
+    primary_metric_observable: [GMI, LLR_calibration_error, FER]
+    diagnostic_observable: [decoder iteration trace, BER evolution]
+    paper_main_line_value: 5  # end-to-end coded BER/GMI is the strongest paper route
+    if_fails_leaves_secondary_result: >-
+      Coded metric evaluation infrastructure reusable by later candidates;
+      documents the legal CSI contract requirement as a thesis limitation.
+    minimal_buildable_slice: >-
+      Not minimal — requires CB3 (CSI contract) and CB1 (modulation) first.
+      Build order: CB1 → CB3 → CB2.
+    exit_condition: >-
+      Cannot exit independently; gated on CB1 and CB3. Defer until both built.
+
+  - id: CB3_receiver_csi_pilot_seam
+    name: receiver CSI / pilot seam (receiver-estimated CSI or explicit pilot budget)
+    unlocks_candidates: [U05, U36, U37, U52, RC3]
+    unlocks_mechanism_families: [F01 channel-state, F06 pilot, RC3]
+    supports_multiple_scouts: true
+    current_code_assets:
+      - _kf.py:68 get_pilots (single-pol only)
+      - _kf.py:134 kf_pilot_recovery (single-pol)
+      - _experiment.py:18 insert_pilots (single-pol)
+      - z_window_adapter.py:215 accepts receiver_estimated_csi=None placeholder
+    missing_interfaces:
+      - dual-pol CSI estimator (existing all single-pol — silent degradation risk)
+      - pilot budget contract (overhead, placement, spacing)
+      - receiver-estimated CSI quality metric
+    implementation_cost: HIGH_multi_day
+    implementation_risk: HIGH  # single-pol reuse silently drops Y polarization
+    historical_positive_signal: D052 three-arm baseline/naive/derotation proven
+    historical_negative_signal: D055 narrowed pilot-Jones scope
+    can_test_specific_baseline_failure: YES for U05/U36/U52
+    strongest_legal_comparator: same-overhead pilot budget + same-information non-ML estimator
+    primary_metric_observable: [Jones estimation MSE, normalized overhead, residual h error]
+    diagnostic_observable: [pilot SNR, condition number, estimation trace]
+    paper_main_line_value: 4
+    if_fails_leaves_secondary_result: >-
+      Dual-pol pilot estimator seam reusable for any future CSI candidate;
+      documents the single-pol-reuse trap.
+    minimal_buildable_slice: >-
+      Dual-pol pilot insertion + dual-pol Jones estimator + overhead contract.
+      Larger than CB1 because existing single-pol code cannot be safely reused.
+    exit_condition: >-
+      Either a dual-pol estimator seam passing deterministic smoke, or defer
+      and rotate. Higher cost than CB1; build second if CB1 succeeds.
+
+  - id: CB4_carrier_impairment_dual_pol_cpr
+    name: carrier impairment + dual-pol CPR event chain
+    unlocks_candidates: [U10, U38]
+    unlocks_mechanism_families: [F02 sync, RC2 cycle-slip repair]
+    supports_multiple_scouts: true
+    current_code_assets:
+      - _recovery.py:78 vv_cpr (single-pol)
+      - _recovery.py:91 bps_cpr(mod=) (single-pol)
+      - _recovery.py:8 dpll_track_dd (single-pol)
+      - _channel.py:35 doppler_phase (single-pol)
+      - P02 foundation-audit.yaml enumerates FOE/VV/BPS/DPLL
+    missing_interfaces:
+      - DP_CARRIER_IMPAIRMENT_CONTRACT
+      - DP_CPR_CHAIN (current all single-pol)
+      - lock_loss / cycle_slip event schema
+      - authentic event library fixtures
+      - U10 closure
+    implementation_cost: HIGH_multi_day
+    implementation_risk: HIGH  # SOP theta != carrier phase (foundation-audit:25 warning)
+    historical_positive_signal: D047 observed 1e-5 tracking fail (but fixed=PI not swap)
+    historical_negative_signal: P02 NOT_RUNNABLE
+    can_test_specific_baseline_failure: YES for U10/U38
+    strongest_legal_comparator: same-information VV/BPS/DPLL with matched decision-directed feedback
+    primary_metric_observable: [cycle-slip rate, lock-loss rate, post-CPR SER]
+    diagnostic_observable: [CFO trace, phase unwrap events]
+    paper_main_line_value: 4
+    if_fails_leaves_secondary_result: >-
+      Event library schema reusable; documents carrier-vs-SOP distinction.
+    minimal_buildable_slice: >-
+      Not minimal — requires carrier impairment contract + dual-pol CPR
+      derivation. Build third if CB1 and CB3 succeed.
+    exit_condition: >-
+      Cannot exit independently; gated on contract derivation. Defer.
+
+  - id: CB5_receiver_snapshot_action_replay
+    name: receiver snapshot + action replay
+    unlocks_candidates: [U25, U42_full]
+    unlocks_mechanism_families: [F05 mode control, RC2 safe controller]
+    supports_multiple_scouts: false  # single-chain action replay
+    current_code_assets:
+      - tools/u25_action_contract.py:122 fixed_safe_policy
+      - tools/u25_action_contract.py:232 apply_action (mutates Python dict, not CMA weights)
+      - tools/u25_action_contract.py:250 replay_events (metadata only)
+    missing_interfaces:
+      - receiver state snapshot (CMA weights, zX, zY, not just dict)
+      - observable action hook (action must change CMA state observably)
+      - deterministic fork replay (no-op bit-exact test)
+    implementation_cost: HIGH_multi_day
+    implementation_risk: HIGH  # apply_action does not actually mutate receiver state
+    historical_positive_signal: none (P01 BLOCKED)
+    historical_negative_signal: P01 BLOCKED STATE_SNAPSHOT_MISSING, ACTION_EFFECT_NOT_OBSERVABLE
+    can_test_specific_baseline_failure: YES for U25/U42 if unblocked
+    strongest_legal_comparator: same-action-budget non-ML controller with same fallback
+    primary_metric_observable: [recovery rate, action effect magnitude]
+    diagnostic_observable: [state delta, action trace]
+    paper_main_line_value: 5  # if unblocked, closed-loop receiver controller is strong
+    if_fails_leaves_secondary_result: >-
+      State snapshot architecture documents the receiver-interface gap.
+    minimal_buildable_slice: >-
+      Requires receiver state-snapshot architecture. Largest single bundle.
+    exit_condition: >-
+      Cannot exit independently; gated on architecture. Defer to last.
+
+# === Leverage ranking (scientific judgment, not fixed scorer) ===
+leverage_ranking:
+  - rank: 1
+    bundle: CB1_modulation_generic_closure
+    rationale: >-
+      Highest leverage, lowest cost (MEDIUM_half_day vs HIGH_multi_day for
+      all others). All primitives exist; only wiring + re-hashing. Unlocks
+      the single axis (modulation) that disposes of the most historical
+      UNRESOLVED counterexamples (D008-D014/D023 modulation-driven ordering
+      signals). Directly enables U19_expanded_16QAM re-test (P03 v1 was
+      QPSK-only LOCAL_NEGATIVE). Mechanistic prior (16QAM CMA modulus
+      mismatch) suggests 16QAM domain may have MORE headroom than QPSK where
+      P03 found zero. Even a LOCAL_NEGATIVE on 16QAM extends the boundary
+      (defensible thesis result). User profile "务实可毕业" + "多挑候选保留
+      余地" strongly favor this build-first-then-test approach.
+    build_first: true
+  - rank: 2
+    bundle: CB3_receiver_csi_pilot_seam
+    rationale: >-
+      Second-highest leverage; unblocks U05/U36/U52 (RC3 cluster). HIGH cost
+      (dual-pol derivation required). Build after CB1 succeeds.
+    build_first: false
+  - rank: 3
+    bundle: CB2_soft_coded_evaluator
+    rationale: >-
+      Highest paper-main-line value (5) but blocked on CB1 and CB3.
+      Build third.
+    build_first: false
+  - rank: 4
+    bundle: CB4_carrier_impairment_dual_pol_cpr
+    rationale: >-
+      Unlocks U10/U38 but HIGH cost + HIGH risk (SOP vs carrier phase
+      distinction). Build fourth.
+    build_first: false
+  - rank: 5
+    bundle: CB5_receiver_snapshot_action_replay
+    rationale: >-
+      Highest paper value (5) if unblocked but P01 BLOCKED. Largest cost.
+      Defer to last; may require user strategy decision on receiver
+      architecture.
+    build_first: false
+
+# === Decision ===
+selected_bundle: CB1_modulation_generic_closure
+selection_rationale: >-
+  Per user §六 "排序使用科学判断，不使用固定打分器". CB1 wins on three
+  independent criteria: (1) lowest implementation cost with all primitives
+  already existing; (2) disposes of the most historical UNRESOLVED
+  counterexamples by unblocking the modulation axis; (3) strongest
+  mechanistic prior for finding NEW headroom (16QAM modulus mismatch).
+  User profile "务实可毕业" and "多挑候选保留余地" both favor building a
+  reusable shared capability that multiplies candidate testability rather
+  than investing in a single high-cost path. CB1 also leaves a defensible
+  thesis result even on failure (16QAM boundary mapping).
+selection_not_authoritative_for_paper: >-
+  This selection authorizes building CB1 and running baseline-only Atlas +
+  conditional ML Scout within SCIENCE_SCOUT scope. It does NOT authorize
+  formal paper main-line commitment. Paper main-line decision requires user
+  strategy (per campaign-contract.v1.yaml escalate_to_user_only_on).
+
+# === Build plan for CB1 (detailed in implementation) ===
+cb1_build_plan_summary:
+  step_1_source_provenance: >-
+    Close 16QAM Gray map + R²=1.32 provenance via targeted sub-search
+    (Proakis/Sklar textbook or Mammasis 2012 / Yang 2002 CMMA). Mark
+    PI-SER as DEFINED_HERE (lab-coined) or find BSS permutation-invariance
+    precedent. Record in formula-symbol-parameter-provenance.yaml.
+  step_2_parameterize_generator: >-
+    Add modulation='qpsk'/'qam16' kwarg to generate_shared_realization_dp;
+    branch symbol-gen block (lines 48-55) to call qam16_mod for 16QAM.
+    QPSK path must produce byte-identical output to current (regression).
+  step_3_parameterize_runner: >-
+    Replace hardcoded hard_qpsk + amplitude 0.7071 in stage_a_cell_runner
+    with modulation dispatch via hard_decision(z, mod). Same for
+    probe_evaluator.
+  step_4_repin_closure: >-
+    Create source-equivalence-contract.v2.yaml (or parallel 16QAM closure)
+    that pins the parameterized generator at a new commit. P03 v1 closure
+    remains immutable (historical).
+  step_5_deterministic_smoke: >-
+    One 16QAM cell with fixed seed → verify CMA converges, demapper produces
+    finite BER, oracle affine bound is computed.
+  step_6_special_case_regression: >-
+    R²_16QAM=1.32 must match analytical E[|s|⁴]/E[|s|²] for the Gray map.
+    QPSK anchor cell (P03 v1) must reproduce exactly (PI-SER=0, etc.).
+  step_7_baseline_atlas: >-
+    Run baseline-only Atlas on ~10 representative 16QAM cells (SNR sweep ×
+    dynamics sweep × short/long). Pre-registered MDE 0.005. Check headroom.
+  step_8_conditional_ml_scout: >-
+    If any cell shows visible headroom > MDE for strongest legal non-ML
+    baseline, authorize one ML Scout batch (mechanism-different candidates,
+    shared input/output contract, includes no-change baseline + strongest
+    comparator + ablation). If no cell shows headroom, record scoped
+    LOCAL_NEGATIVE extension and rotate to next-priority (U24 or RC2).
+
+# === Governance ===
+governance:
+  protected_history_unchanged: true
+  formal_promotion_blocked: true
+  no_oracle_as_go_baseline: true  # FR-21/FR-25
+  no_param_tuning_to_make_ml_win: true
+  provenance_hard_gate_before_implementation: true  # §七 of user prompt

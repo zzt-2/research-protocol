@@ -1,0 +1,305 @@
+schema_version: direction-lab.portfolio-refresh.v1
+refresh_id: portfolio.science-scout-2026-07-20.v1
+campaign_id: science-scout-2026-07-20.dual-pol-osl
+created: 2026-07-20
+mode: SCIENCE_SCOUT
+evidence_sources:
+  - subagent-A-literature-audit (baseline-source-matrix preliminary, 2026-07-20)
+  - subagent-B-capability-asset-inventory (2026-07-20)
+  - subagent-C-candidate-universe-v3-seed (2026-07-20)
+inherits_from:
+  universe_v2: candidate-universe.v2.yaml
+  universe_base: candidate-universe.yaml
+  map_v2: candidate-map.v2.yaml
+  coverage_audit_v3: candidate-coverage-audit.v3.yaml
+  failure_registry: failure-registry.yaml
+refresh_policy: >-
+  Additive expansion along 12 dimensions. Does not re-Kill historically
+  ruled-out mechanisms (D040-D056 + failure-registry); inherits their negative
+  scope only. Does not auto-promote any candidate to DOMAIN/FAMILY. No fixed
+  scorer (per user instruction §六); ranking uses scientific judgment.
+
+# === 12-dimensional expansion summary ===
+dimensional_expansion:
+  d1_receiver_processing_position:
+    existing: [RX-DSP_AP10-AP14_dense, RX-controller_AP19-AP20_thin, RX-decoder_AP15-AP16_deferred]
+    under_represented_or_absent: [TX-side_AP01-AP03_no_invivo, channel-side_AP04_offline_only, RX-front-end_AP27_blocked]
+    new_seeds: [U45_TX_probabilistic_shaping_under_GG_tail, U46_channel_reciprocity_estimator]
+  d2_runtime_available_information:
+    existing: [raw_samples, pilots, CMA_state]
+    under_represented_or_absent: [decoder_extrinsic, CRC_syndrome, hardware telemetry]
+    new_seeds: [U47_CRC_syndrome_early_warning_head_promote_from_U38]
+  d3_causal_time:
+    existing: [block_causal, offline]
+    under_represented_or_absent: [symbol_causal_at_scale, within_frame_iterative]
+    new_seeds: []  # U39 declares within-frame; promote rather than seed
+  d4_oracle_label_boundary:
+    existing: [well_articulated_for_U10_U23_U24]
+    under_represented_or_absent: [coded_truth_boundary_for_U20_U34]
+    new_seeds: []
+  d5_output_action_estimate:
+    existing: [hard_decision_dense, estimate_dense]
+    under_represented_or_absent: [continuous_control_action_U33_blocked, HARQ_retransmit_action_U34_blocked]
+    new_seeds: [U48_adaptive_quantization_AGC_action]
+  d6_mechanism_family:
+    existing: [SL_SSL_UL_DU_HYB_dense]
+    under_represented_or_absent: [META_RL_GEN_COMP_EQ_at_RX-DSP]
+    new_seeds: [U49_RL_bandit_per_block_CMA_step_window, U50_generative_swap_posterior]
+  d7_operating_condition:
+    existing: [QPSK_short_slice_local_negative_P03]
+    under_represented_or_absent: [16QAM, long_tracking, low_SNR_waterfall]
+    new_seeds: []  # axis closure work, not new candidates; reuse U19/U20/U27/U44
+  d8_baseline_failure_mechanism:
+    existing: [SOP_driven_fixed_weight_swap_D015_D040]
+    under_replored: [clip_events, lock_loss_non_swap_BER_D047, turbulence_tail_events]
+    new_seeds: [U51_clip_AGC_saturation_failure_detector]
+  d9_required_shared_capability:
+    existing: [none_no_shared_backbone]
+    under_represented_or_absent: [shared_causal_state_abstention_closure]
+    new_seeds: []  # cluster concept, see cross_cutting_reclusterings
+  d10_claim_ceiling:
+    existing: [hard_decision_frozen]
+    under_represented_or_absent: [GMI_LLR_FER_ceilings_U20_U34_blocked]
+    new_seeds: []
+  d11_paper_main_line_value:
+    existing: [detection_only_main_line]
+    under_represented_or_absent: [end_to_end_coded_BER_GMI_paper_route]
+    new_seeds: []
+  d12_information_increment_type:
+    existing: [label_availability_increment_dominant]
+    under_represented_or_absent: [bandwidth_overhead_increment_U03_U29_U35_thin, action_delay_increment_U42_U43_blocked]
+    new_seeds: []
+
+# === New candidate seeds (U45-U52; U01-U44 taken) ===
+new_candidate_seeds:
+  - id: U45
+    application_point: AP01-AP03
+    mechanism: TX-side probabilistic shaping under Gamma-Gamma tail
+    method_axes: [GEN, RL]
+    required_shared_capability: TX_actuator_and_power_model
+    why_absent_before: front-end/actuator model missing; TX-side not exercised in-vivo
+    runnable_in_campaign: N  # blocked on AP27 actuator closure
+    claim_ceiling_seed: CONTRACT
+    historical_boundary: no TX-side M-C-A was killed; inherits only scope omission
+  - id: U46
+    application_point: AP04
+    mechanism: channel-side dual-pol OSL beacon/uplink atmospheric reciprocity estimator
+    method_axes: [PI, DU]
+    required_shared_capability: reciprocity_contract
+    why_absent_before: reciprocity contract absent
+    runnable_in_campaign: N  # needs new reciprocity scene params
+    claim_ceiling_seed: CONTRACT
+    historical_boundary: none
+  - id: U47
+    application_point: AP09-AP19
+    mechanism: decoder-CRC-aided early-warning head consuming syndrome bits
+    method_axes: [BAYES, HYB, RL]
+    required_shared_capability: soft_coded_evaluator_bundle_2
+    why_absent_before: U38 declared neutral; promote requires coded-truth contract
+    runnable_in_campaign: N  # blocked on bundle 2 (coded evaluator)
+    claim_ceiling_seed: CONTRACT
+    historical_boundary: D039 CRC relabel = PI-BER baseline; this is a different mechanism (early warning, not relabel)
+  - id: U48
+    application_point: AP27
+    mechanism: adaptive quantization / AGC step action
+    method_axes: [RL, COMP]
+    required_shared_capability: ADC_causal_control_model
+    why_absent_before: ADC causal-control model absent
+    runnable_in_campaign: N  # blocked on AP27 actuator closure
+    claim_ceiling_seed: CONTRACT
+    historical_boundary: none
+  - id: U49
+    application_point: AP24-AP26
+    mechanism: RL bandit for per-block CMA step/window selection
+    method_axes: [RL, META]
+    required_shared_capability: causal_state_backbone_U42
+    why_absent_before: U26 only selects step/window offline; RL bandit not declared
+    runnable_in_campaign: Y_conditional  # Y if U42 state backbone provides context
+    claim_ceiling_seed: SLICE
+    historical_boundary: D032 periodic-pilot online-finetune killed, but this is step-size RL not pilot finetune
+  - id: U50
+    application_point: AP10-AP14
+    mechanism: model-free generative density estimator for swap/posterior ambiguity
+    method_axes: [GEN, BAYES]
+    required_shared_capability: causal_dual_pol_representation
+    why_absent_before: D031 A3-VAE killed (reconstruction AE oracle-filtered); generative density != reconstruction
+    runnable_in_campaign: Y  # if representation fit avoids oracle-filtered rows (failure-registry reopen condition)
+    claim_ceiling_seed: SLICE
+    historical_boundary: D031 A3-VAE reconstruction killed; generative density estimator is a different mechanism family
+  - id: U51
+    application_point: AP19-AP22
+    mechanism: clip / AGC-saturation failure detector
+    method_axes: [SSL, BAYES]
+    required_shared_capability: causal_amplitude_trace
+    why_absent_before: D050-052 cover Stokes statistics only; clip/saturation events unexplored
+    runnable_in_campaign: Y
+    claim_ceiling_seed: SLICE
+    historical_boundary: D048-049 basic statistics failed; clip-event detector uses different features
+  - id: U52
+    application_point: AP04-AP07
+    mechanism: Tikhonov / condition-number-guarded + cross-block time-smoothed Jones estimator
+    method_axes: [PI, BAYES]
+    required_shared_capability: pilot_jones_stabilization_closure
+    why_absent_before: D053 stabilization route narrowed; not promoted to runnable
+    runnable_in_campaign: Y
+    claim_ceiling_seed: SLICE
+    historical_boundary: D053 narrowed but did not kill; D055 narrowed pilot-Jones scope
+
+# === Cross-cutting re-clusterings ===
+cross_cutting_reclusterings:
+  - id: RC1_modulation_generic_coded_closure
+    members: [U19, U20, U34, U39, U47]
+    shared_capability: coded-truth-strict input contract + decoder-extrinsic feedback interface
+    why_more_informative: >-
+      Spans families F03/F04/F05 and exposes the same legal-label boundary;
+      unlocks coded claim ceiling (currently blocked). Depends on bundle-1
+      (modulation-generic) and bundle-2 (coded evaluator).
+  - id: RC2_causal_state_abstention_controller
+    members: [U23, U24, U40, U41, U42, U43]
+    shared_capability: causal representation + calibrated uncertainty + fixed safe fallback
+    why_more_informative: >-
+      Unifies monitoring/control across detector, fallback, and resource
+      scheduling. U23/U24 already proposed two-head; extends to U42/U43.
+      Requires no new actuator, only state/uncertainty contract.
+  - id: RC3_pilot_aware_jones_inversion_stabilization
+    members: [U03, U05, U35, U36, U37, U50, U52]
+    shared_capability: block-pilot Jones estimator + overhead-stability contract
+    why_more_informative: >-
+      Consolidates pilot-Jones lineage into one testable closure rather than
+      scattered archetypes. Inherits D055 narrowed scope.
+  - id: RC4_test_time_adaptation_with_rollback
+    members: [U13, U27, U28, U40, U42]
+    shared_capability: online TTA with safe rollback
+    why_more_informative: >-
+      Cuts across F03/F05/F06; addresses D032's deferred online mechanisms
+      with a safe-rollback constraint.
+
+# === Priority candidates for this campaign (ranked by scientific judgment) ===
+priority_candidates:
+  - rank: 1
+    id: U24
+    mechanism: supervised temporal + SSL non-swap BER detector on authentic high-SOP failure
+    required_shared_capability: causal_representation + abstention_head (subset of bundle-1 + RC2)
+    claim_ceiling: SLICE  # detector performance on B001/B002 failure cells, no DOMAIN
+    paper_main_line_value: 4
+    runnable_in_campaign: Y  # v3 runner has U24 observational path
+    note: highest-scored existing candidate (4.20); benefits from causal backbone reuse
+  - rank: 2
+    id: U10
+    mechanism: CPR cycle-slip / lock-loss early warning
+    required_shared_capability: event_library (bundle-4)
+    claim_ceiling: SLICE
+    paper_main_line_value: 4
+    runnable_in_campaign: Y_for_scout  # N for full MVE until event library frozen
+    note: D047 observed 1e-5 tracking fail (fixed=PI not swap) — corrected_gate SCOUT_EVENT_LIBRARY
+  - rank: 3
+    id: RC2_cluster  # U40+U41+U42
+    mechanism: online OOD monitor + shared causal SSL backbone + safety-constrained controller
+    required_shared_capability: causal mask + uncertainty calibration + fixed fallback policy
+    claim_ceiling: SLICE  # abstention/recall on cross-SOP/modulation/length
+    paper_main_line_value: 4
+    runnable_in_campaign: Y  # if representation fit avoids oracle-filtered rows (B001 reopen condition)
+    note: most leveraged new-runnable unit; bundle-1 modulation-generic closure expands its test domain
+  - rank: 4
+    id: U05_U36
+    mechanism: causal GG/Jones posterior tracker with pilot-aware closure
+    required_shared_capability: pilot-Jones inversion + overhead-stability contract
+    claim_ceiling: SLICE  # OSL Jones stability under <=10% overhead
+    paper_main_line_value: 4
+    runnable_in_campaign: Y  # simulator-internal pilot injection, D052 three-arm proven
+    note: D052-055 narrowed scope; U36 retained-neutral, U05 score 3.65
+  - rank: 5
+    id: U50  # new seed
+    mechanism: model-free generative density estimator for swap/posterior ambiguity
+    required_shared_capability: causal_dual_pol_representation (subset of RC2)
+    claim_ceiling: SLICE
+    paper_main_line_value: 3
+    runnable_in_campaign: Y
+    note: distinct from D031 A3-VAE (generative not reconstruction); high info increment
+  - rank: 6
+    id: U19_expanded  # P03 re-test on expanded modulation domain
+    mechanism: residual-aware hard-symbol detector on 16QAM domain (P03 v1 was QPSK-only LOCAL_NEGATIVE)
+    required_shared_capability: modulation_generic_closure_bundle_1
+    claim_ceiling: SLICE  # must not auto-promote to DOMAIN even if 16QAM shows headroom
+    paper_main_line_value: 4
+    runnable_in_campaign: Y_after_bundle_1
+    note: >-
+      P03 v1 LOCAL_NEGATIVE was QPSK-only; 16QAM axis was INFRASTRUCTURE_BLOCKED.
+      Building bundle-1 lets us re-test U19/P03 mechanism on 16QAM. Even a
+      LOCAL_NEGATIVE on 16QAM is a defensible thesis result (extends the
+      boundary). Positive headroom on 16QAM would trigger ML Scout.
+  - rank: 7
+    id: U51  # new seed
+    mechanism: clip / AGC-saturation failure detector
+    required_shared_capability: causal_amplitude_trace
+    claim_ceiling: SLICE
+    paper_main_line_value: 3
+    runnable_in_campaign: Y
+    note: unexplored failure mechanism (clip events); independent of U24/SOP-swap
+  - rank: 8
+    id: U20
+    mechanism: LLR calibration under residual channel uncertainty
+    required_shared_capability: coded-chain metric contract (bundle-2)
+    claim_ceiling: DOMAIN_BLOCKED  # GMI/LLR requires bundle-2 + bundle-3
+    paper_main_line_value: 4
+    runnable_in_campaign: N  # blocker: code/iteration/net-rate/feedback contract unfrozen
+    note: deferred until bundle-2 coded evaluator built
+
+# === Historical ruled-out mechanisms (inherited negative scope, families survive) ===
+inherited_negative_scope:
+  - decision: D031
+    ruled_out_exact: [L1 SOP-invariant reg, L2 swap contrast, A3 VAE blind cost collision]
+    surviving_family: blind family (F03)
+  - decision: D032
+    ruled_out_exact: [periodic-pilot online finetune]
+    surviving_family: online mechanisms (F03/F06)
+  - decision: D033
+    ruled_out_exact: [fixed-feedforward architecture B-class]
+    surviving_family: test-state-interface mechanisms
+  - decision: D034_D035_D036
+    ruled_out_exact: [CMA+ML hybrid in old alpha-beta domain D-class]
+    surviving_family: hybrid family outside old domain
+  - decision: D037
+    ruled_out_exact: [generic pilot feedforward E-class]
+    surviving_family: narrowed OSL-specific pilot mechanisms
+  - decision: D038
+    ruled_out_exact: [asymmetric power allocation B2]
+    surviving_family: U01 non-asymmetric submechanisms
+  - decision: D039
+    ruled_out_exact: [CRC relabel = PI-BER baseline]
+    surviving_family: U25/U34/U38 non-relabel mechanisms
+  - decision: D040
+    ruled_out_exact: [MMA D3]
+    surviving_family: blind family; standard-CMA Godard-with-z canonical
+  - decision: D041
+    ruled_out_exact: [permutation-symmetry-breaking net E2]
+    surviving_family: equivariance for residual/PI-BER
+  - decision: D043
+    ruled_out_exact: [strict e2cnn for fixed-label]
+    surviving_family: group-equivariance for residual/Jones-U(2)
+  - decision: D048_D049
+    ruled_out_exact: [basic blind statistics cm_error/update_norm/output_power, Stokes threshold]
+    surviving_family: richer ML mechanisms on U23/U24
+  - decision: D055
+    ruled_out_exact: [generic pilot-Jones tracking]
+    surviving_family: narrowed OSL Jones-stability
+  - failure_registry: B001_B002
+    ruled_out_exact: [oracle-supervised + unlabeled reconstruction AE in exact B001/B002 contracts]
+    surviving_family: SSL/generative families
+
+# === Rotation readiness (auto-rotate targets) ===
+rotation_readiness:
+  ready_now: [U24, U50, U51, RC2_cluster]
+  ready_after_bundle_1: [U19_expanded_16QAM, U05_U36, U10]
+  ready_after_bundle_2: [U20, U47, U34]
+  ready_after_bundle_4: [U10_full, U38]
+  ready_after_bundle_5: [U25, U42_full]
+  blocked_indefinitely_without_user_strategy: [U45, U46, U48]
+
+# === Governance ===
+governance:
+  no_fixed_scorer: true  # per user §六
+  no_auto_kill: true  # inherits negative scope only
+  no_auto_promote: true  # all candidates stay sandbox/SLICE unless user strategy
+  protected_history_unchanged: true
+  formal_promotion_blocked: true

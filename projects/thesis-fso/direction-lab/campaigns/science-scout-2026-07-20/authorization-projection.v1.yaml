@@ -1,0 +1,130 @@
+schema_version: direction-lab.authorization-projection.v1
+projection_id: auth.science-scout-2026-07-20.v1
+campaign_id: science-scout-2026-07-20.dual-pol-osl
+created: 2026-07-20
+projection_type: additive_overlay_on_protected_history
+does_not_rewrite: [canonical-state.yaml, portfolio/current.v1.yaml, STATUS.v1.md, state/projections/, batches/, scout/P03-U19-residual-headroom/, harvest/ledger.v1.yaml]
+
+# === Foundation snapshot (reference only) ===
+foundation:
+  anchor_id: anchor.dual-pol-osl.2026-07-17
+  canonical_baseline:
+    id: baseline.standard_cma.godard_z
+    identity_source: .sessions/2026-07-10-dual-pol-osl-groundwork/decisions.md#D040
+    forbidden_aliases: [current-CMA, CMA-without-z, common._cma.CMAEqualizer-as-standard]
+    implementation_sha256: 9282ecb53608a2093a5e69a62ccea9976211ecfda7626d2e65ce2fd912f1ca2f
+    implementation_path_in_unified_worktree: .worktrees/unified-batch-runner/projects/simulation/explore/cma-fade-divergence/prompt013_swap_mechanism_q2.py
+    verified_at: 2026-07-20
+  metric_contract: [fixed_label_ber, permutation_invariant_ber]
+  protected_history_status:
+    B001: HISTORICAL_SANDBOX_TRACKED
+    B002: COMPLETED_SANDBOX_VERIFIED
+    B003: COMPLETED_SANDBOX_VERIFIED
+    P03_Atlas_Stage_A: NO_HEADROOM_IN_REPRESENTATIVE_DOMAIN_WITH_CERTIFICATE
+    last_completed_protected_batch: B003
+  protected_harvest: [H001, H002, H003, H004, H005, H006, H007, H008, H009]
+
+# === Authorization state (this campaign) ===
+authorization:
+  formal_status: BLOCKED  # unchanged
+  sandbox_status: BOARD_READY  # unchanged
+  campaign_mode: SCIENCE_SCOUT  # new, this campaign only
+  science_authorized: true  # within campaign scope
+  promotion_effect: none  # still requires user strategy decision
+  allowed_actions: see campaign-contract.v1.yaml
+  forbidden_actions: see campaign-contract.v1.yaml
+  claim_ceilings: see campaign-contract.v1.yaml
+
+# === Source closure binding (campaign-start snapshot, worktree SHAs) ===
+source_closure:
+  binding_policy: per-file_worktree_sha_at_campaign_start_plus_git_commit
+  base_commit: 65db4ef84fcba20103f6f0e97961fef3373100fc
+  source_equivalence_reference: scout/P03-U19-residual-headroom/source-equivalence-contract.v1.yaml
+  p03_source_closure_commit: 65db35bb15dd9b6da0ad05ea5835054ad4277485
+  files:
+    dual_pol_channel:
+      path: projects/simulation/common/_dual_pol_channel.py
+      worktree_sha256: 3d02eaa31e3efa9c343028a81ec6b36c1d1ebf9135e386e974ef581ba11bf7d3
+      canonical_state_sha256: 537dce986dba418d594777375856fb97f16af8a4c9a6d8ff1bb670fa18ff1721
+      sha_mismatch_explanation: >-
+        Line-ending difference only (main worktree CRLF vs linked worktree LF);
+        content identical. canonical-state.yaml records the main-worktree CRLF
+        SHA; this projection records the actual linked-worktree LF SHA used by
+        this campaign. Neither file is rewritten.
+    gg_time:
+      path: projects/simulation/common/_gg_time.py
+      worktree_sha256: d8e7929d00d885eccf111eb96d80ecd3822b065cbf3eca09ed31912c3da73113
+      materialized_override_blob_oid_in_p03_closure: 9155de058912593f487d95fb4e3aecf25ae1617c
+    cma_equalizer:
+      path: projects/simulation/common/_cma.py
+      worktree_sha256: 63d4493dfa2ebd8ce04446aab311ad0f93a4abe3d336db3260903c3de6c30c46
+    modulation:
+      path: projects/simulation/common/_modulation.py
+      worktree_sha256: 036fb7aa4d0bef153ee53799f20a244492fb6294f93132d1ecc2b0530b5694d5
+      reusable_for_16qam: true
+      qam16_mod_present: true
+      qam16_demod_present: true
+      note: >-
+        qam16_mod and qam16_demod already exist in _modulation.py (Gray mapping,
+        avg power normalized to 1). Reusable for modulation-generic closure
+        but must be re-hash-bound into a new 16QAM source closure (cannot
+        borrow the unfrozen historical explore scripts as canonical).
+
+# === Stale-debt resolution ledger ===
+stale_debts_resolved_here:
+  - id: stale_dual_pol_channel_checksum
+    resolution: >-
+      Bound to worktree_sha256=3d02eaa3 in this projection;
+      canonical-state's 537dce98 retained as main-worktree reference;
+      neither rewritten; sha_mismatch_explanation above is the audit trail.
+    status: RESOLVED_IN_PROJECTION
+  - id: raw_artifacts_absent
+    resolution: >-
+      B001-B003 raw artifacts remain absent in this checkout (matches
+      governance-pilot portfolio entry). This campaign produces its own
+      self-contained artifacts; it does not claim raw-level reproducibility
+      of protected history.
+    status: ACKNOWLEDGED_NOT_BLOCKING
+
+# === Current portfolio snapshot (campaign view, supersedes nothing) ===
+campaign_portfolio_snapshot:
+  as_of: 2026-07-20
+  protected_candidates:
+    - id: P03/U19
+      status: P03_DOMAIN_ADEQUACY_UNRESOLVED  # unchanged
+      claim_ceiling: SLICE
+      blocked_axes_in_this_campaign: [16QAM, receiver_estimated_CSI, soft_or_coded_output]
+      note: >-
+        P03 SLICE local negative inherited; this campaign may build a clean
+        16QAM source closure to expand the runnable domain and re-test, but
+        does not auto-retire P03 or auto-promote any 16QAM result to DOMAIN.
+    - id: P01/U25
+      status: DEFERRED_ARCHITECTURE  # unchanged
+    - id: P02/U10
+      status: NOT_RUNNABLE  # unchanged
+    - id: U24/B003-exact-contract
+      status: HISTORICAL_SANDBOX_COMPLETE_NO_PROMOTION  # unchanged
+  new_campaign_candidates: []  # to be filled by Portfolio Refresh (S001续 / S002)
+  blocked_axes:
+    - p03.modulation.16qam  # TARGET: build clean closure this campaign
+    - p03.csi.receiver-estimated-or-pilot
+    - p03.output.soft-or-coded
+    - p01.u25.action-and-fork-replay
+    - p02.u10.carrier-cpr-event-chain
+    - formal.promotion  # unchanged, requires user strategy
+
+# === What this campaign will produce ===
+expected_outputs:
+  - campaigns/science-scout-2026-07-20/portfolio-refresh.v1.yaml
+  - campaigns/science-scout-2026-07-20/capability-leverage-atlas.v1.yaml
+  - campaigns/science-scout-2026-07-20/formula-symbol-parameter-provenance.yaml
+  - campaigns/science-scout-2026-07-20/baseline-source-matrix.yaml
+  - campaigns/science-scout-2026-07-20/unresolved-source-gaps.yaml
+  - scout/<new-closure>/  # new source closure for chosen capability
+  - scout/<new-closure>/baseline-atlas/  # baseline-only Atlas with preregistered MDE
+  - scout/<new-closure>/ml-scout-batch/  # conditional on headroom
+  - campaigns/science-scout-2026-07-20/harvest-addendum.v1.yaml  # new harvest entries, hash-bound
+
+# === Handoff pointer ===
+session_governance_topic: .sessions/2026-07-20-direction-lab-science-scout/
+latest_session_note: .sessions/2026-07-20-direction-lab-science-scout/S001-campaign-launch.md

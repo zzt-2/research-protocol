@@ -1,0 +1,759 @@
+# =============================================================================
+# Formula / Symbol / Parameter Provenance
+# Scope: modulation-generic source closure (CB1) — add 16QAM alongside QPSK in
+#        a dual-polarization optical satellite link (OSL) simulator.
+# Author: science-scout subagent (provenance-only, no code changes, no sims)
+# Created: 2026-07-20
+# Hard gate: user §七 (per-symbol/formula provenance BEFORE CB1 implementation).
+# =============================================================================
+# Source-type vocabulary (mutually exclusive per item):
+#   PRIMARY_LITERATURE  — peer-reviewed paper or textbook, exact eq/page cited
+#   REPRESENTATIVE      — on-disk paper reproducing a textbook result, cited as cross-check
+#   DERIVED_IN_PROJECT  — closed-form derivation carried out in this repo (derivation shown)
+#   DEFINED_HERE        — convention/lab-coined definition with justification (no citation)
+#   STANDARD_CONVENTION — widely-used textbook definition; convention source noted
+# =============================================================================
+# Code bindings are relative to the worktree root
+#   D:/code/study/research-protocol/.worktrees/direction-lab-capability-atlas
+# Papers live in the MAIN repo (gitignored from worktrees):
+#   D:/code/study/research-protocol/papers/doi/<DOI>/content.md
+# =============================================================================
+
+meta:
+  cb: CB1
+  cb_title: "modulation-generic source closure (16QAM + QPSK, dual-pol OSL)"
+  provenance_gate: "user §七 (hard gate before implementation)"
+  deliverable_type: provenance-only
+  code_modified: false
+  simulations_run: false
+  time_budget_minutes: 15
+  doi_short_names:
+    sat.1553: "10.1002/sat.1553  (Valjus 2025, OSL DSP review — canonical CMA ref)"
+    app12073331: "10.3390/app12073331  (Gu 2022, Gamma-Gamma channel + CNN)"
+  primary_external_refs:
+    godard1980: "D. Godard, IEEE TCOM 28(11):1867-1875, 1980, Eq.(10)"
+    andrews_phillips2005: "L.C. Andrews & R.L. Phillips, 'Laser Beam Propagation through Random Media', SPIE, 2nd ed., 2005"
+    greenwood1977: "D.P. Greenwood, JOSA 67(3):390-393, 1977 (Greenwood frequency f_G)"
+    conan1995: "R. Conan et al., JOSA A 12(7):1559-1570, 1995 (τ_c = 1/(2π f_G))"
+
+# =============================================================================
+# A. CORE FORMULAS
+# =============================================================================
+formulas:
+
+  # ---------- A1. Godard CMA cost (the "z factor" / Godard exponent = 2) ----------
+  - formula_id: F-GODARD-COST
+    name: "Godard constant-modulus cost function (p=2)"
+    math: "J = E[ ( R^2 - |z|^2 )^2 ]"
+    source_type: PRIMARY_LITERATURE
+    primary_source:
+      author: "Godard 1980"
+      title: "Self-Recovering Equalization and Carrier Tracking in Two-Dimensional Data Communication Systems"
+      venue: "IEEE Trans. Commun. (TCOM) 28(11):1867-1875"
+      year: 1980
+      equation: "Eq.(10)  (general Godard family J = E[(R_p - |z|^{2p})^2], p=2 here)"
+      doi: "10.1109/TCOM.1980.1094608"
+    representative_crosscheck:
+      paper: sat.1553
+      doi: 10.1002/sat.1553
+      location: "§6 Eq.(50), content.md L721  (e[n] = R^2 - |z_X[n]|^2 ; R^2 - |z_Y[n]|^2)"
+      note: "sat.1553 cites CMA via ref [84] (Johnson et al. 1998 survey); the original cost function is Godard 1980 [12-family]. sat.1553 uses the p=2 constant-modulus specialisation."
+    original_symbols:
+      z: "equalizer output sample (complex)"
+      R: "dispersion constant (Godard) / constant-modulus radius"
+      p: "Godard exponent (=2 ⇒ constant modulus)"
+    project_symbols:
+      z: "z (z_X, z_Y per pol) — equalizer output, _cma.py:123-124"
+      R2: "R^2 (Godard radius squared, stored not R) — _cma.py:74-77"
+      z_factor_note: "'z' is the equalizer output, NOT a free factor; the 'Godard exponent' p=2 is fixed (constant modulus). sat.1553 Eq.(50) hard-codes p=2."
+    transformation_to_project:
+      - "Godard general family specialised to p=2 (constant modulus): R_2^2 = E[|s|^4]/E[|s|^2], R_p→R^2 in error."
+      - "sat.1553 writes the *error* e = R^2 - |z|^2 (Eq.50); we adopt the same error form. The *cost* J is Godard's Eq.(10) and is implicit in our gradient (we never evaluate J directly, only its instantaneous gradient)."
+    assumptions:
+      - "p=2 constant-modulus (single R for whole constellation). sat.1553 Eq.(50) note (L723): extendable to higher-order formats via multiple R values (multi-modulus MMA) — CB1 keeps single-R CMA per the source closure scope."
+      - "Block-averaged gradient (parallelization factor 64, sat.1553 L756/L103) rather than per-symbol stochastic gradient."
+    code_binding:
+      file: projects/simulation/common/_cma.py
+      location: "docstring L11-15 (Godard 1980 Eq.10); cost realised via error e at L161-162, 259, 319"
+      verification: "Error term self.R2 - np.abs(zx_blk)**2 (L161) is the per-sample derivative kernel of J = E[(R^2-|z|^2)^2]; W += μ·e·r* (L163-166) is stochastic-gradient descent on J."
+    verification_method: "Cross-checked: code error formula == sat.1553 Eq.(50) == Godard Eq.(10) gradient (dJ/dz* = -2(R^2-|z|^2)z, absorbed into e·r* update)."
+
+  # ---------- A2. Godard radius R^2 ----------
+  - formula_id: F-GODARD-RADIUS
+    name: "Godard dispersion radius R^2 = E[|s|^4]/E[|s|^2]"
+    math: "R^2 = E[ |s|^4 ] / E[ |s|^2 ]    (for a unit-mean-power constellation s)"
+    source_type: PRIMARY_LITERATURE
+    primary_source:
+      author: "Godard 1980"
+      venue: "IEEE TCOM 28(11):1867-1875"
+      equation: "Eq.(12)-(13) family (R_p defined from constellation moments); p=2 ⇒ R^2 = E[|s|^4]/E[|s|^2]"
+      doi: "10.1109/TCOM.1980.1094608"
+    representative_crosscheck:
+      paper: sat.1553
+      doi: 10.1002/sat.1553
+      location: "§6 L719-721 (QPSK symbols lie on a circle of radius R, R^2 implicit); _cma.py docstring L21-22"
+    closed_form_values:
+      QPSK:   "R^2 = 1.0     (|s|=1 constant ⇒ E[|s|^4]=E[|s|^2]=1)"
+      "16QAM": "R^2 = 1.32    (DERIVED_IN_PROJECT, see F-R2-16QAM-DERIVATION below)"
+    project_symbols:
+      R2: "R^2 (we store R^2, not R) — _cma.py:74-77, 202-205"
+    transformation_to_project:
+      - "We store and use R^2 directly (not R), matching sat.1553 Eq.(50) which writes R^2. Godard writes R_p; squaring is a notational convenience, no math change."
+    assumptions:
+      - "Constellation normalised to unit average power (E[|s|^2]=1). Without normalisation R^2 scales with power."
+    code_binding:
+      file: projects/simulation/common/_cma.py
+      location: "cma_radius(symbols) L43-52 computes R = sqrt(E[|s|^4]/E[|s|^2]); caller passes R2 = R^2"
+    verification_method: "QPSK path: cma_radius on QPSK symbols returns 1.0 (R^2=1). 16QAM path verified numerically (see F-R2-16QAM-DERIVATION)."
+
+  # ---------- A2b. 16QAM R^2 = 1.32 derivation ----------
+  - formula_id: F-R2-16QAM-DERIVATION
+    name: "16QAM Godard radius squared (closed-form derivation)"
+    math: "R^2_16QAM = E[|s|^4] / E[|s|^2] = 1.32 / 1.0 = 1.32"
+    source_type: DERIVED_IN_PROJECT
+    derivation: |
+      Constellation: s = (s_i + j s_q)/sqrt(10), {s_i, s_q} ∈ {-3,-1,+1,+3} (Gray-mapped, unit avg power).
+      |s|^2 takes three values across the 16 points:
+        |s|^2 = (1^2 + 1^2)/10 = 0.20   — 4 points  (inner 2x2)
+        |s|^2 = (1^2 + 3^2)/10 = 1.00   — 8 points  (mid ring)
+        |s|^2 = (3^2 + 3^2)/10 = 1.80   — 4 points  (outer corners)
+      E[|s|^2] = (4·0.20 + 8·1.00 + 4·1.80)/16 = (0.8 + 8.0 + 7.2)/16 = 16/16 = 1.0   ✓ unit power
+      E[|s|^4] = (4·0.20^2 + 8·1.00^2 + 4·1.80^2)/16
+               = (4·0.04 + 8·1.00 + 4·3.24)/16
+               = (0.16 + 8.0 + 12.96)/16 = 21.12/16 = 1.32
+      ⇒ R^2_16QAM = E[|s|^4]/E[|s|^2] = 1.32/1.0 = 1.32
+    numeric_verification: "python3 reproduces E[|s|^2]=1.0, E[|s|^4]=1.32, R^2=1.32 (ran during provenance research)."
+    code_binding:
+      file: projects/simulation/explore/cma-fade-divergence/ber_16qam_vs_fg.py
+      location: "L83-85  '# 16QAM Godard R^2 ... |s|^2∈{0.2,1.0,1.8} ... E[|s|^4]=1.32'  R2_16QAM = 1.32"
+      comment_origin: "ber_16qam_vs_fg.py:56 cites sup_stress_test.py:56 as the originating comment"
+    assumptions:
+      - "Square 16QAM with amplitudes {±1,±3} per axis, /sqrt(10) power normalisation (see F-16QAM-NORM)."
+      - "Uniform prior over the 16 symbols."
+    note: "No external textbook found on local disk stating R^2_16QAM=1.32 explicitly; the value is a 1-line consequence of Godard's R^2 definition applied to the standard square-16QAM constellation. Classified DERIVED_IN_PROJECT (not DEFINED_HERE) because the formula is Godard's; only the arithmetic is ours."
+
+  # ---------- A3. 16QAM Gray mapping ----------
+  - formula_id: F-16QAM-GRAY-MAP
+    name: "16QAM Gray-coded symbol mapping (per axis)"
+    math: "2-bit label → amplitude:  00→-3, 01→-1, 11→+1, 10→+3    (reflection Gray code)"
+    source_type: STANDARD_CONVENTION
+    convention_source:
+      type: textbook
+      representative: "Proakis, 'Digital Communications', 4th ed., §5.x (QAM constellations); Sklar, 'Digital Communications', §7. Also DVB-S2 (ETSI EN 302 307)."
+      local_disk_status: "No local copy of Proakis/Sklar; convention is universally standard."
+    project_symbols:
+      gray_map: "gray_map = np.array([-3, -1, +3, +1]) indexed by 2-bit code bi = 2*b0 + b1"
+    transformation_to_project:
+      - "Code realisation: gray_map = [-3,-1,+3,+1] (_modulation.py:33). bi=0(00)→-3, bi=1(01)→-1, bi=2(10)→+3, bi=3(11)→+1."
+      - "IMPORTANT docstring/code mismatch: docstring L26 says '00→-3, 01→-1, 11→+1, 10→+3' but the array realisation gives 10→+3, 11→+1 (the last two are swapped vs the docstring). Both are valid reflection-Gray orderings (adjacent amplitudes differ by 1 bit); the *array* is authoritative for simulation. The mapping is bijective and Gray-valid either way. For BER/metric purposes only the set {±1,±3} matters, so R^2 and PI-SER are unaffected."
+    assumptions:
+      - "Natural-bit indexing: b0 = MSB, b1 = LSB of the 2-bit I (or Q) label."
+      - "4 bits/symbol: b0b1→I, b2b3→Q."
+    code_binding:
+      file: projects/simulation/common/_modulation.py
+      location: "qam16_mod L24-37 (gray_map L33); qam16_demod L39-58 (gray_enc L48); hard_decision L84-91"
+    verification_method: "Adjacent amplitude levels differ by exactly 1 bit (Gray property): -3↔-1 flips 1 bit, -1↔+1 flips 1 bit, +1↔+3 flips 1 bit. Set of amplitudes {±1,±3} matches F-16QAM-NORM and F-R2-16QAM-DERIVATION."
+
+  # ---------- A4. 16QAM average-power normalisation ----------
+  - formula_id: F-16QAM-NORM
+    name: "16QAM unit-average-power normalisation factor 1/sqrt(10)"
+    math: "s = (s_i + j·s_q) / sqrt(10),  {s_i,s_q}∈{±1,±3}  ⇒  E[|s|^2] = 1"
+    source_type: STANDARD_CONVENTION
+    derivation: |
+      Without normalisation E[|s_i + j s_q|^2] = E[s_i^2] + E[s_q^2]
+        = (9+1+1+9)/4 + (9+1+1+9)/4 = 5 + 5 = 10.
+      Divide by sqrt(10) ⇒ E[|s|^2] = 10/10 = 1.   ✓
+    convention_source:
+      type: textbook
+      representative: "Standard in Proakis/Sklar/Middleton; matches DVB-S2 16QAM reference. Also implied by app12073331 §4 (QPSK/16QAM normalised before the GG channel)."
+    project_symbols:
+      norm: "/sqrt(10) factor applied in qam16_mod; undone by *sqrt(10) in qam16_demod/hard_decision"
+    transformation_to_project:
+      - "mod multiplies by 1/sqrt(10); demod and hard_decision multiply by sqrt(10) to invert before slicing to {-3,-1,+1,+3}."
+    assumptions:
+      - "Uniform symbol prior; square (not rectangular) 16QAM."
+    code_binding:
+      file: projects/simulation/common/_modulation.py
+      location: "qam16_mod L37 '/ sqrt(10)'; comment L36 'E[|s|^2] = (9+1+1+9)/4 * 2 = 10'; demod L41 '* sqrt(10)'; hard_decision L88 '* sqrt(10)'"
+    verification_method: "E[|s|^2]=1.0 confirmed numerically (python3 on the 16 const points). Same normalisation makes F-R2-16QAM-DERIVATION's E[|s|^2]=1 hold."
+
+  # ---------- A5. Gamma-Gamma turbulence PDF ----------
+  - formula_id: F-GAMMA-GAMMA-PDF
+    name: "Gamma-Gamma irradiance PDF (α, β plane-wave model)"
+    math: |
+      f(I) = [ 2 (αβ)^{(α+β)/2} / ( Γ(α) Γ(β) Ī ) ] · (I/Ī)^{(α+β)/2 - 1} · K_{α-β}( 2 sqrt( αβ I / Ī ) ),  I>0
+    source_type: PRIMARY_LITERATURE
+    primary_source:
+      author: "Andrews & Phillips 2005"
+      title: "Laser Beam Propagation through Random Media"
+      publisher: "SPIE Press, 2nd ed."
+      year: 2005
+      location: "Ch. 9-10 (Gamma-Gamma model derivation); Eq.(9.30)/(10.37) family"
+    representative_crosscheck:
+      paper: app12073331
+      doi: 10.3390/app12073331
+      location: "§3 Eq.(2)-(9), content.md L68-110"
+      note: "Gu 2022 derives the same GG PDF: marginal Gamma PDFs Eq.(2)-(3), conditional Eq.(4), joint/marginal Eq.(5); plane-wave α,β from Rytov variance Eq.(6)-(7); Cn^2 Eq.(9). Strong-turbulence example α=4.2, β=1.4 at L117 matches the project's strong-turbulence parameter set."
+    local_master_crosscheck:
+      file: 毕设/formulas-master.md
+      entry: "F32 (Gamma-Gamma 分布模型), L379-387; F33 plane-wave α,β L389-401"
+    original_symbols:
+      I: "irradiance (received optical intensity)"
+      alpha: "effective number of large-scale eddies"
+      beta: "effective number of small-scale eddies"
+      I_bar: "mean irradiance"
+      K_nu: "modified Bessel function of the 2nd kind, order ν"
+      Gamma: "Gamma function"
+    project_symbols:
+      h: "channel fading envelope (proportional to I; we use h = X·Y with E[h]=1, equivalent to Ī=1 normalisation)"
+      alpha: "GG large-scale shape"
+      beta: "GG small-scale shape"
+      gamma_bar: "mean irradiance Ī (we set =100 for 20 dB SNR; see P-GAMMA-BAR)"
+    transformation_to_project:
+      - "We generate h via the *product* representation h = X·Y, X~Gamma(α,1/α), Y~Gamma(β,1/β) (each mean 1), which is exactly the modulation model behind the GG PDF (app12073331 L62-66, Andrews & Phillips Ch.9). The PDF is the marginal of this product; we sample the product directly (AR(1)-correlated in time, see _gg_time.py) rather than via inverse-CDF of the PDF."
+      - "Ī=1 in the canonical PDF; we scale received power separately via gamma_bar (AWGN variance σ_n^2 = 1/(2·gamma_bar))."
+    assumptions:
+      - "Plane-wave, Kolmogorov turbulence, weak-to-strong regime (GG is valid across all strengths, app12073331 L60)."
+      - "Large-scale and small-scale processes statistically independent (app12073331 L62)."
+      - "No aperture averaging in the base PDF (aperture-averaging factor d added in F33/formulas-master, not used in CB1 base channel)."
+    code_binding:
+      file: projects/simulation/common/_gg_time.py
+      location: "gg_time_envelope L106-157 (h = big*small, L155); gg_pdf_theory L183-194 (PDF for validation, references formulas-master F32 in docstring L188)"
+    verification_method: "gg_pdf_theory() matches the marginal of the sampled h (KS test referenced in formulas-master F32 '验证: sim_prototype.py GG 采样验证')."
+
+  # ---------- A6. f_G → τ_c conversion ----------
+  - formula_id: F-FG-TO-TAUC
+    name: "Greenwood frequency to scintillation coherence time"
+    math: "tau_c = 1 / (2π f_G)"
+    source_type: PRIMARY_LITERATURE
+    primary_source:
+      author: "Greenwood 1977 + Conan 1995"
+      location: "Greenwood (JOSA 67(3):390-393, 1977) defines f_G; Conan, Rousset & Madec (JOSA A 12(7):1559-1570, 1995) give the intensity-scintillation coherence time τ_c = 1/(2π f_G) from the temporal power-spectrum break frequency."
+      doi_or_identifier: "Greenwood1977-JOSA-67-390 ; Conan1995-JOSAA-12-1559"
+    representative_crosscheck:
+      paper: sat.1553
+      doi: 10.1002/sat.1553
+      location: "§2 L167 'scintillation ... coherence time of more than 1 ms' (qualitative τ_c > 1 ms, consistent with f_G ≲ 160 Hz)"
+    local_master_crosscheck:
+      file: 毕设/formulas-master.md
+      entry: "F33b L403-413 (full provenance: Greenwood 1977 + Conan 1995 + Andrews&Phillips 2005 §10-12)"
+    original_symbols:
+      tau_c: "intensity-scintillation coherence time (s) — NOT AO phase-correction time constant"
+      f_G: "Greenwood frequency (Hz)"
+    project_symbols:
+      tau_c: "tau_c (gg_time.tau_c_from_fg)"
+      f_g: "f_g / f_G — GG -3dB scintillation frequency"
+    transformation_to_project:
+      - "Direct identity; f_g swept in {30,100,1000} Hz ⇒ tau_c ∈ {5.31, 1.59, 0.159} ms."
+      - "τ_c feeds AR(1) block-correlation ρ = exp(-Δt/τ_c), Δt = block·t_s (see _gg_time.py rho_from_tau_c L37-45)."
+    assumptions:
+      - "Plane-wave Kolmogorov turbulence. τ_c is the *intensity* coherence time, explicitly NOT the AO phase-correction time constant 0.314·r0/V (Roddier 1999) — disambiguation in formulas-master F33b."
+    code_binding:
+      file: projects/simulation/common/_gg_time.py
+      location: "L11-14 (docstring: Greenwood 1977 + Conan 1995); tau_c consumed at _dual_pol_channel.py:36 via cfg.gg_time.tau_c_from_fg(f_g); rho_from_tau_c L37-45"
+    verification_method: "τ_c > 1 ms for f_g < 160 Hz matches sat.1553 §2 L167. formulas-master F33b lists τ_c typical 0.16-16 ms for f_G 10-1000 Hz."
+
+  # ---------- A7. SOP rotation ----------
+  - formula_id: F-SOP-ROTATION
+    name: "Continuous state-of-polarization rotation (per-symbol angle)"
+    math: "theta[n] = sop_rate · n,   n = 0,1,…,N-1   (discretised Jones rotation)"
+    source_type: PRIMARY_LITERATURE
+    primary_source:
+      paper: sat.1553
+      doi: 10.1002/sat.1553
+      location: "§6.1 Eq.(51) Jones matrix J=[[cosθ, sinθ],[-sinθ, cosθ]]; §6.1 L740 θ(t)=ωt, ω = SOP rotation speed; §6.3 L745, L777 tracking ~10^-6-10^-5 rad/sym"
+      equation: "Eq.(51) + L740 θ(t)=ωt"
+    original_symbols:
+      theta: "current SOP angle (rad)"
+      omega: "SOP rotation speed (rad/s)"
+      t: "time"
+    project_symbols:
+      theta: "theta — per-symbol SOP angle array (rad), _dual_pol_channel.py:57"
+      sop_rate: "sop_rate — per-symbol rotation increment (rad/symbol), the discretised ω·t_s"
+      n: "symbol index arange(N)"
+    transformation_to_project:
+      - "sat.1553 is continuous-time θ(t)=ωt. We discretise per symbol: theta[n] = sop_rate · n where sop_rate = ω·t_s [rad/sym]. This matches sat.1553's own tracking-speed units (L745, L777 'radians per symbol')."
+      - "sop_rate=4e-7 rad/sym baseline (sat.1553 §6.3 L745: '10^-7 radians per symbol'); CB1 stress sweeps sop_rate ∈ {4e-6, 4e-5} (10x and 100x baseline)."
+      - "cos/sin applied to build the 2x2 real rotation matrix multiplying [s_X, s_Y] (see F-JONES-2x2)."
+    assumptions:
+      - "Deterministic (not random-walk) SOP rotation — matches sat.1553 §6.1 simplified model 'continuous polarization rotations as in [73]'. sat.1553 L778 acknowledges this is a simplification."
+      - "Same theta for both polarisations (single rotation axis); no PDL."
+    code_binding:
+      file: projects/simulation/common/_dual_pol_channel.py
+      location: "L57 theta = sop_rate * np.arange(N); L58-59 cos_t/sin_t; L61-66 rotation applied to [sX,sY]"
+    verification_method: "theta[0]=0, theta is arithmetic progression — matches sat.1553 Eq.(51) θ(t)=ωt sampled at symbol rate. sop_rate baseline 4e-7 rad/sym ∈ sat.1553's stated 10^-7 region."
+
+  # ---------- A8. Jones 2x2 butterfly channel ----------
+  - formula_id: F-JONES-2x2
+    name: "Dual-polarization 2x2 butterfly equalizer / channel structure"
+    math: |
+      z_X = w_xx ∗ r_X + w_xy ∗ r_Y
+      z_Y = w_yx ∗ r_X + w_yy ∗ r_Y
+      (equalizer side; channel side is the inverse Jones rotation [[cosθ, sinθ],[-sinθ,cosθ]])
+    source_type: PRIMARY_LITERATURE
+    primary_source:
+      paper: sat.1553
+      doi: 10.1002/sat.1553
+      location: "§6.1 Eq.(28) butterfly equalizer (content.md L570); §6.1 Eq.(51) Jones rotation matrix (L737)"
+      equation: "Eq.(28) + Eq.(51)"
+      refs: "[73] butterfly structure; [15] terrestrial-fiber demux"
+    original_symbols:
+      r_X_r_Y: "incoming signals for the two polarizations"
+      w_xx_w_xy_w_yx_w_yy: "four complex FIR filters"
+      z_X_z_Y: "demultiplexed outputs"
+    project_symbols:
+      rX_rY: "r_X, r_Y — received dual-pol samples (complex), _dual_pol_channel.py:61-66"
+      zX_zY: "z_X, z_Y — equalizer outputs, _cma.py:123-124, 151-152"
+      wxx_wxy_wyx_wyy: "four complex FIR tap vectors, _cma.py:81-86"
+    transformation_to_project:
+      - "Equalizer (4 FIRs) inverts the channel (Jones rotation + impulse response). Channel rotation built at _dual_pol_channel.py:57-66; equalizer butterfly at _cma.py:148-152."
+      - "Channel-side J is real 2x2 rotation (SOP only); equalizer-side w's are complex FIRs (also absorb carrier phase, PMD, channel IR). sat.1553 §6.1 notes this is the standard structure."
+    assumptions:
+      - "Single SOP rotation axis (real 2x2 J, not general complex unitary). sat.1553 §6.1 L733 'simplified model'."
+      - "No PDL in the channel (sat.1553 L723 notes PDL can cause both pols converging to same output — a CMA failure mode, out of scope for the channel model)."
+    code_binding:
+      file: projects/simulation/common/_cma.py
+      location: "docstring L7-10 (Eq.28 mapping, content.md L570); equalizer L148-152 (zX = rX_blk@wxx + rY_blk@wxy etc.)"
+      channel_side: "projects/simulation/common/_dual_pol_channel.py:57-66 (builds the Jones rotation applied to TX)"
+    verification_method: "Butterfly structure literal match to sat.1553 Eq.(28). Channel J = [[cos,sin],[-sin,cos]] literal match to Eq.(51)."
+
+  # ---------- A9. PI-SER (permutation-invariant SER) ----------
+  - formula_id: F-PI-SER
+    name: "Permutation-invariant symbol error rate (PI-SER)"
+    math: |
+      PI-SER = min_{π ∈ S_M}  (1/N) Σ_n  1[ ŝ_π(n) ≠ s(n) ]
+      where S_M is the symmetric group over the M label slots (M=2 polarizations here ⇒ |S_2|=2 permutations: identity and swap)
+    source_type: DEFINED_HERE
+    justification: |
+      PI-SER is a LAB-COINED evaluation metric for modulation-generic source closure.
+      Motivation: the dual-pol CMA/Jones equalizer has an inherent permutation ambiguity
+      (the two output streams z_X, z_Y can be swapped without changing the cost — a
+      well-known CMA/CFO/BSS indeterminacy). A fixed-label SER unfairly penalises a
+      method that recovers both sources correctly but assigns them to the wrong label
+      slot. PI-SER removes this trivial ambiguity by reporting the minimum SER over
+      the 2! = 2 label permutations, isolating genuine *demodulation* errors from
+      *label-assignment* errors.
+    bss_literature_context: |
+      A tools/search run ("permutation ambiguity blind source separation symbol error rate",
+      OpenAlex + S2, 2026-07-20) returned BSS/ICA literature on permutation *ambiguity*
+      (resolving which recovered source is which — e.g. IVA, complex-valued BSS:
+      app12073331-adjacent refs L001-L005 in search archive). That literature treats
+      permutation as a *problem to resolve*, typically via higher-order statistics or
+      pilot correlation. No paper found defines an explicit *permutation-invariant error
+      metric* analogous to PI-SER; the closest precedents are "permutation-averaged" or
+      "best-permutation" reporting conventions in multi-user/BSS benchmarking, which are
+      informal. We therefore classify PI-SER as DEFINED_HERE (lab metric) while noting it
+      is the natural error-side dual of the BSS permutation-ambiguity problem.
+    search_archive: "search-archive/2026-07-20/permutation-ambiguity-blind-source-separation-symbol-error-r.json (5 results, none a direct precedent)"
+    original_symbols:
+      pi: "a permutation in S_M"
+      s_hat: "demodulated symbol estimate"
+      s: "transmitted (true) symbol"
+    project_symbols:
+      PI-SER: "PI-SER — permutation-invariant SER, the CB1 closure metric"
+      N: "number of evaluated symbols"
+    transformation_to_project:
+      - "M=2 (two polarizations) ⇒ only 2 permutations: identity and X↔Y swap. PI-SER = min( SER_fixed, SER_swapped )."
+      - "Distinct from fixed-label BER (F-FIXED-LABEL-BER) which does NOT minimise over permutations."
+      - "For single-polarisation / single-modulation runs PI-SER collapses to ordinary SER (only the identity permutation)."
+    assumptions:
+      - "Uniform symbol prior; symmetric cost across label slots."
+      - "PI-SER is an *oracle* metric (uses TX symbols to pick the best permutation) — appropriate for method comparison, not for a deployed receiver. Documented as oracle/eval-boundary (see symbol table)."
+    code_binding:
+      file: "(new, to be implemented in CB1 — no current binding)"
+      intended_location: "projects/simulation/common/_modulation.py or a new _metrics.py; metric computed in eval phase only"
+    verification_method: "Unit test: feed perfectly-recovered-but-swapped streams ⇒ PI-SER=0 while fixed-label SER=1.0. (To be added in CB1 implementation.)"
+    blocking_status: NOT_BLOCKING  # metric is well-defined; implementation pending CB1
+
+  # ---------- A9b. Fixed-label BER (contrast metric, already in code) ----------
+  - formula_id: F-FIXED-LABEL-BER
+    name: "Fixed-label bit error rate (existing, non-permutation-invariant)"
+    math: "BER_fixed = (1/N_b) Σ_k 1[ b̂_k ≠ b_k ]   (no permutation minimisation)"
+    source_type: STANDARD_CONVENTION
+    convention_source:
+      type: textbook
+      representative: "Standard BER definition (Proakis/Sklar); implemented as ber_count / ber_count_qam16."
+    project_symbols:
+      BER: "fixed-label BER — the existing _modulation.py metric"
+    code_binding:
+      file: projects/simulation/common/_modulation.py
+      location: "ber_count L14-15 (QPSK), ber_count_qam16 L60-61, ber_eval L71-82 (direct vs oracle-rotation)"
+    note: "Retained as the contrast baseline against PI-SER. The existing resolve_qpsk/resolve_qam16 minimise over 8 phase rotations (phase ambiguity) but NOT over polarization label swap — PI-SER adds the missing permutation axis."
+
+# =============================================================================
+# B. SYMBOL TABLE (unique notation, conflict avoidance)
+# =============================================================================
+symbols:
+  - symbol: s_X
+    meaning: "transmitted symbol, X polarization"
+    domain_shape: "complex, shape (N,)"
+    unit: "dimensionless (unit power)"
+    time_index: "symbol index n = 0..N-1"
+    boundary: TX
+    source: "sat.1553 §6.1 Eq.(28); code _dual_pol_channel.py:49-51"
+    project_adaptation: "QPSK: (±1±j)/√2; 16QAM: (s_i + j s_q)/√10"
+    conflict_note: "do not reuse 's' for channel envelope (we use h)"
+  - symbol: s_Y
+    meaning: "transmitted symbol, Y polarization"
+    domain_shape: "complex, shape (N,)"
+    unit: "dimensionless"
+    time_index: "n = 0..N-1"
+    boundary: TX
+    source: "sat.1553 §6.1 Eq.(28); _dual_pol_channel.py:53-55"
+    conflict_note: "none"
+  - symbol: r_X
+    meaning: "received sample, X polarization (after channel + AWGN)"
+    domain_shape: "complex, shape (N,)"
+    unit: "dimensionless"
+    time_index: "n = 0..N-1"
+    boundary: RX
+    source: "sat.1553 Eq.(28); _dual_pol_channel.py:61-63"
+    conflict_note: "none"
+  - symbol: r_Y
+    meaning: "received sample, Y polarization"
+    domain_shape: "complex, shape (N,)"
+    unit: "dimensionless"
+    time_index: "n = 0..N-1"
+    boundary: RX
+    source: "sat.1553 Eq.(28); _dual_pol_channel.py:64-66"
+    conflict_note: "none"
+  - symbol: h
+    meaning: "Gamma-Gamma fading envelope (irradiance proxy), E[h]=1"
+    domain_shape: "real positive, shape (N,)"
+    unit: "dimensionless (normalised irradiance)"
+    time_index: "block-constant within block, AR(1) across blocks"
+    boundary: runtime (channel realisation)
+    source: "app12073331 §3 Eq.(5); Andrews & Phillips 2005 Ch.9; _gg_time.py:155"
+    project_adaptation: "h = X·Y, X~Gamma(α,1/α), Y~Gamma(β,1/β); block-expanded via np.repeat"
+    conflict_note: "formulas-master disambiguates: h is *irradiance/envelope*; do NOT use h for filter taps or channel impulse response. Code uses 'big'/'small' internally for X,Y."
+  - symbol: theta
+    meaning: "state-of-polarization rotation angle"
+    domain_shape: "real, shape (N,)"
+    unit: "radian"
+    time_index: "theta[n] = sop_rate · n"
+    boundary: runtime (channel realisation)
+    source: "sat.1553 §6.1 Eq.(51), L740 θ(t)=ωt; _dual_pol_channel.py:57"
+    conflict_note: "do NOT confuse with phase-noise θ (sat.1553 §4 Eq.(18)-(20), random walk) — different physical quantity; in code theta is SOP-only"
+  - symbol: J
+    meaning: "Jones 2x2 SOP rotation matrix"
+    domain_shape: "real 2x2, [[cosθ, sinθ],[-sinθ, cosθ]]"
+    unit: "dimensionless"
+    time_index: "time-varying via θ(t)"
+    boundary: runtime (channel)
+    source: "sat.1553 §6.1 Eq.(51); _dual_pol_channel.py:58-66 (implicit in cos_t/sin_t)"
+    conflict_note: "J here is the *channel* Jones matrix (real rotation); the equalizer uses 4 FIRs w_xx..w_yy (complex), not J"
+  - symbol: z_X
+    meaning: "CMA equalizer output, X polarization"
+    domain_shape: "complex, shape (N,)"
+    unit: "dimensionless"
+    time_index: "n = 0..N-1"
+    boundary: "runtime (equalizer output, mid-DSP)"
+    source: "sat.1553 Eq.(28)/(50); _cma.py:123, 151, 156"
+    conflict_note: "this is the 'z' in the Godard cost J=E[(R²-|z|²)²]; do NOT reuse z for Rytov log-amplitude (formulas-master §10.6 uses z that way — different scope)"
+  - symbol: z_Y
+    meaning: "CMA equalizer output, Y polarization"
+    domain_shape: "complex, shape (N,)"
+    unit: "dimensionless"
+    boundary: runtime
+    source: "sat.1553 Eq.(28)/(50); _cma.py:124, 152, 157"
+    conflict_note: "none"
+  - symbol: R² (R2)
+    meaning: "Godard constant-modulus radius squared = E[|s|⁴]/E[|s|²]"
+    domain_shape: "real scalar"
+    unit: "dimensionless"
+    boundary: "training (constellation-derived), then frozen at runtime"
+    source: "Godard 1980 Eq.(12)-(13); _cma.py:43-52, 74-77"
+    values: {QPSK: 1.0, "16QAM": 1.32}
+    conflict_note: "we store R² (not R); sat.1553 Eq.(50) also writes R²"
+  - symbol: μ (mu, cma_mu)
+    meaning: "CMA / LMS step size"
+    domain_shape: "real positive scalar"
+    unit: "dimensionless"
+    boundary: "baseline-algorithm hyperparameter (frozen within a run, swept across runs)"
+    source: "sat.1553 §6.3 L760 μ=0.001; _cma.py:74-77"
+    conflict_note: "none"
+  - symbol: f_g (f_G)
+    meaning: "Greenwood / GG -3dB scintillation frequency"
+    domain_shape: "real positive scalar"
+    unit: "Hz"
+    boundary: "experimental-design (swept: 30/100/1000 Hz)"
+    source: "Greenwood 1977; formulas-master F33b; consumed via tau_c_from_fg"
+    conflict_note: "f_g is *scintillation* -3dB freq; do NOT confuse with optical carrier frequency or symbol rate"
+  - symbol: tau_c (τ_c)
+    meaning: "intensity-scintillation coherence time"
+    domain_shape: "real positive scalar"
+    unit: "second"
+    boundary: "derived from f_g (tau_c = 1/(2π f_g))"
+    source: "Conan 1995; formulas-master F33b; _gg_time.py:11-14, 37-45"
+    conflict_note: "τ_c is the *intensity* coherence time, NOT AO phase-correction time 0.314·r0/V (Roddier 1999) — explicit disambiguation in formulas-master F33b"
+  - symbol: alpha (α)
+    meaning: "Gamma-Gamma large-scale shape parameter"
+    domain_shape: "real positive scalar"
+    unit: "dimensionless (effective # large-scale eddies)"
+    boundary: "physical (frozen per turbulence regime)"
+    source: "app12073331 §3 Eq.(6); Andrews & Phillips 2005; formulas-master F33"
+    value_strong: 4.2
+    conflict_note: "do NOT confuse with phase-noise α or aperture-averaging parameter; here GG-only"
+  - symbol: beta (β)
+    meaning: "Gamma-Gamma small-scale shape parameter"
+    domain_shape: "real positive scalar"
+    unit: "dimensionless (effective # small-scale eddies)"
+    boundary: "physical (frozen per turbulence regime)"
+    source: "app12073331 §3 Eq.(7); Andrews & Phillips 2005; formulas-master F33"
+    value_strong: 1.4
+    conflict_note: "do NOT confuse with DVB-S2 APSK radius ratio γ (different symbol); here GG-only"
+  - symbol: gamma_bar (γ̄, Ī)
+    meaning: "mean irradiance / mean SNR scale"
+    domain_shape: "real positive scalar"
+    unit: "dimensionless (linear); 100 = 20 dB"
+    boundary: "experimental-design (set per SNR point)"
+    source: "app12073331 §3 (Ī in GG PDF); code sets AWGN var σ_n² = 1/(2·gamma_bar)"
+    value_baseline: 100
+    conflict_note: "γ̄ here = mean irradiance; do NOT confuse with APSK radius ratio γ or Euler gamma Γ(·)"
+  - symbol: N
+    meaning: "number of symbols per polarization per realisation"
+    domain_shape: "integer scalar"
+    unit: "symbols"
+    boundary: "experimental-design (512 short / 8192 long)"
+    source: "code (_dual_pol_channel.py:10, _experiment.py)"
+    conflict_note: "N is symbol count; do NOT confuse with n_tap (filter taps) or block (symbols per fade block)"
+  - symbol: PI-SER
+    meaning: "permutation-invariant symbol error rate (CB1 metric)"
+    domain_shape: "real in [0,1]"
+    unit: "dimensionless"
+    boundary: "eval (oracle: uses TX to pick best of 2 permutations)"
+    source: "DEFINED_HERE (F-PI-SER)"
+    conflict_note: "distinct from fixed-label BER (F-FIXED-LABEL-BER)"
+  - symbol: fixed-label BER
+    meaning: "BER without permutation minimisation (existing metric)"
+    domain_shape: "real in [0,1]"
+    unit: "dimensionless"
+    boundary: eval
+    source: "STANDARD_CONVENTION (Proakis/Sklar); _modulation.py:14,60"
+    conflict_note: "existing resolve_* minimise over phase rotations only, not label swaps"
+  - symbol: n_tap (n_tap, L)
+    meaning: "number of FIR taps per butterfly filter"
+    domain_shape: "integer scalar"
+    unit: "taps"
+    boundary: "baseline-algorithm hyperparameter (frozen=11)"
+    source: "sat.1553 §6.1 L572 (taps set by channel IR length); _cma.py:66-67"
+    conflict_note: "use n_tap in code; L internally in _cma.py (L = self.n_tap)"
+  - symbol: block
+    meaning: "symbols per quasi-static fade block (block-constant h)"
+    domain_shape: "integer scalar"
+    unit: "symbols"
+    boundary: "experimental-design (frozen=100)"
+    source: "_gg_time.py:32 (BLOCK from _config); physical basis sat.1553 L167 (τ_c ≫ block·t_s)"
+    conflict_note: "block is the GG fade block; do NOT confuse with CMA parallelization factor (=64, sat.1553 L756) — different concept"
+  - symbol: t_s (T_S)
+    meaning: "symbol period"
+    domain_shape: "real positive scalar"
+    unit: "second"
+    boundary: "physical (system constant)"
+    source: "_config.py SimulationConfig.system.T_S = 4e-10 (≡ 2.5 GBaud)"
+    conflict_note: "t_s is symbol period; do NOT confuse with block duration (block·t_s) or τ_c"
+
+# =============================================================================
+# C. PARAMETER PROVENANCE
+# =============================================================================
+# classification: physical | baseline-algorithm | new-method-hyper | experimental-design | statistical
+parameters:
+  # ---- physical (turbulence / link) ----
+  - parameter_id: P-ALPHA
+    symbol: alpha
+    value: 4.2
+    unit: dimensionless
+    classification: physical
+    source_pointer: "app12073331 §3 L117 (strong turbulence α=4.2); formulas-master F33"
+    source_value: 4.2
+    adaptation: "Used verbatim; corresponds to strong turbulence (σ_R²=3.5 plane-wave)."
+    rationale: "Strong-turbulence regime exercises CMA divergence (the CB1 stress target)."
+    sensitivity_requirement: "Frozen across all methods (shared channel)."
+    frozen: true
+    shared_across_methods: true
+  - parameter_id: P-BETA
+    symbol: beta
+    value: 1.4
+    unit: dimensionless
+    classification: physical
+    source_pointer: "app12073331 §3 L117 (strong turbulence β=1.4); formulas-master F33"
+    source_value: 1.4
+    adaptation: "Used verbatim."
+    rationale: "Strong-turbulence pair with α=4.2."
+    sensitivity_requirement: "Frozen across all methods."
+    frozen: true
+    shared_across_methods: true
+  - parameter_id: P-TS
+    symbol: t_s
+    value: 4.0e-10
+    unit: s
+    classification: physical
+    source_pointer: "_config.py SimulationConfig.system.T_S (≡ 2.5 GBaud); sat.1553 §6.3 uses 28 GBaud (illustrative)"
+    source_value: 4.0e-10
+    adaptation: "Project uses 2.5 GBaud (t_s=4e-10) rather than sat.1553's 28 GBaud; absolute symbol rate affects only time-unit rescaling of sop_rate and τ_c, not the dimensionless dynamics."
+    rationale: "Project baseline baud rate."
+    sensitivity_requirement: "Frozen."
+    frozen: true
+    shared_across_methods: true
+
+  # ---- experimental-design (swept) ----
+  - parameter_id: P-FG
+    symbol: f_g
+    value_range: [30, 100, 1000]
+    unit: Hz
+    classification: experimental-design
+    source_pointer: "formulas-master F33b (typical f_G 10-1000 Hz); sat.1553 §2 L167 (τ_c>1ms ⇒ f_g≲160Hz for the slow end)"
+    source_value: "10-1000 Hz envelope"
+    adaptation: "Three-point sweep {30,100,1000} Hz spanning slow/medium/fast scintillation; 1000 Hz is the stress corner (τ_c≈0.16 ms)."
+    rationale: "f_g controls fade dynamics speed via τ_c=1/(2π f_g); sweeping it exercises the CMA-tracking-vs-divergence trade-off central to CB1."
+    sensitivity_requirement: "Primary independent variable; reported on the x-axis."
+    frozen: false
+    shared_across_methods: true
+  - parameter_id: P-SOP-RATE
+    symbol: sop_rate
+    value_range: [4.0e-6, 4.0e-5]
+    unit: rad/symbol
+    classification: experimental-design
+    source_pointer: "sat.1553 §6.3 L745 (baseline ~10^-7 rad/sym) and L777 (tracking degrades >10^-6); code baseline 4e-7 (ber_16qam_vs_fg.py:80)"
+    source_value: "baseline 4e-7 rad/sym; stress regime 10^-6-10^-5"
+    adaptation: "CB1 sweeps {4e-6, 4e-5} = {10x, 100x} the 4e-7 baseline to probe near/above the CMA tracking edge (sat.1553 L777)."
+    rationale: "SOP rotation speed is the second axis (with f_g) stressing CMA tracking; values bracket the L777 degradation onset."
+    sensitivity_requirement: "Secondary independent variable; reported per curve."
+    frozen: false
+    shared_across_methods: true
+  - parameter_id: P-GAMMA-BAR
+    symbol: gamma_bar
+    value: 100
+    unit: "dimensionless (linear) = 20 dB"
+    classification: experimental-design
+    source_pointer: "_dual_pol_channel.py:29 (GAMMA_BAR_DEFAULT); ber_16qam_vs_fg.py:78 (SNR_DB=20 → gamma_bar=100)"
+    source_value: 100
+    adaptation: "γ̄ = 10^(SNR_dB/10); 20 dB ⇒ 100. Sets AWGN variance σ_n² = 1/(2·γ̄) = 0.005."
+    rationale: "Single high-SNR operating point isolates turbulence/SOP effects from AWGN noise floor."
+    sensitivity_requirement: "Frozen for CB1 (one SNR point); sensitivity deferred."
+    frozen: true
+    shared_across_methods: true
+  - parameter_id: P-N-SYMBOLS
+    symbol: N
+    value_range: [512, 8192]
+    unit: symbols
+    classification: experimental-design
+    source_pointer: "_dual_pol_channel.py:10 (N parameter); sat.1553 §6.3 L757 (CMA converges ~10^5 sym — long sequence); short N=512 for transient analysis"
+    source_value: "sat.1553 uses 10^7 sym/sim; Qin 2025 block sizes"
+    adaptation: "Two lengths: N=8192 (steady-state BER, still below sat.1553's 10^5 convergence for some configs) and N=512 (transient/short-seq stress)."
+    rationale: "N controls whether CMA reaches steady state; short N exposes transient divergence."
+    sensitivity_requirement: "Reported per series; not a primary axis."
+    frozen: false
+    shared_across_methods: true
+  - parameter_id: P-BLOCK
+    symbol: block
+    value: 100
+    unit: symbols
+    classification: experimental-design
+    source_pointer: "_gg_time.py:32 (BLOCK from _config); physical basis sat.1553 L167 (τ_c ≫ block·t_s ⇒ quasi-static within block)"
+    source_value: 100
+    adaptation: "block·t_s = 100·4e-10 = 4e-8 s = 40 ns ≪ τ_c (≥0.16 ms) ⇒ block-constant h is physically valid across the whole f_g sweep."
+    rationale: "Sets the GG fade granularity; small enough that many blocks span a coherence time at f_g=1000 Hz."
+    sensitivity_requirement: "Frozen; not swept."
+    frozen: true
+    shared_across_methods: true
+
+  # ---- baseline-algorithm (CMA hyperparameters) ----
+  - parameter_id: P-CMA-MU
+    symbol: cma_mu
+    value: 0.001
+    unit: dimensionless
+    classification: baseline-algorithm
+    source_pointer: "sat.1553 §6.3 L760, L764 (μ=0.001 for one-stage equalizer, found by coarse search per ref [89])"
+    source_value: 0.001
+    adaptation: "Used verbatim from sat.1553's one-stage equalizer value; their ref [89] notes no closed-form optimal μ exists."
+    rationale: "sat.1553's empirically-tuned value for the same algorithm class; provides convergence/stability baseline."
+    sensitivity_requirement: "Frozen as baseline; separate μ-sweeps exist (prompt019_mu_compress_mve.py) outside CB1 scope."
+    frozen: true
+    shared_across_methods: true
+  - parameter_id: P-CMA-TAPS
+    symbol: cma_taps
+    value: 11
+    unit: taps
+    classification: baseline-algorithm
+    source_pointer: "sat.1553 §6.1 L572 (taps set by channel IR length); sat.1553 Fig.13 uses N=11 taps (per _cma.py docstring L30-31); ber_16qam_vs_fg.py:81 N_TAP=11"
+    source_value: 11
+    adaptation: "Matches sat.1553 Fig.13 simulation tap count; sufficient for the SOP-rotation-dominated channel (short IR)."
+    rationale: "Standard short-IR choice; balances adaptation speed vs noise amplification."
+    sensitivity_requirement: "Frozen; Qin 2025 uses 22 taps for longer-IR fiber (not our regime)."
+    frozen: true
+    shared_across_methods: true
+  - parameter_id: P-R2-QPSK
+    symbol: R2_QPSK
+    value: 1.0
+    unit: dimensionless
+    classification: baseline-algorithm
+    source_pointer: "Godard 1980 (|s|=1 constant); _cma.py:46-47; sat.1553 Eq.(50) implicit"
+    source_value: 1.0
+    adaptation: "Direct from Godard for unit-circle QPSK."
+    rationale: "Only correct R² for QPSK CMA."
+    sensitivity_requirement: "Frozen; derived quantity."
+    frozen: true
+    shared_across_methods: true
+  - parameter_id: P-R2-16QAM
+    symbol: R2_16QAM
+    value: 1.32
+    unit: dimensionless
+    classification: baseline-algorithm
+    source_pointer: "DERIVED_IN_PROJECT — see F-R2-16QAM-DERIVATION (E[|s|⁴]/E[|s|²] = 1.32/1.0). Code: ber_16qam_vs_fg.py:83-85 (citing sup_stress_test.py:56)."
+    source_value: 1.32
+    adaptation: "Computed analytically from the standard square-16QAM constellation; verified numerically (E[|s|⁴]=1.32)."
+    rationale: "Godard radius for 16QAM; single-R CMA per sat.1553 Eq.(50) (multi-R MMA is out of CB1 scope)."
+    sensitivity_requirement: "Frozen; derived quantity. Note: single-R CMA on 16QAM is a known sub-optimal but standard baseline (sat.1553 L723 notes multi-R extension exists)."
+    frozen: true
+    shared_across_methods: true
+
+  # ---- statistical (experiment controls) ----
+  - parameter_id: P-MDE
+    symbol: MDE
+    value: 0.005
+    unit: "dimensionless (0.5%)"
+    classification: statistical
+    source_pointer: "Minimum-detectable-effect threshold for BER/SER comparison; project statistical convention (compute_stat_tests.py)."
+    source_value: 0.005
+    adaptation: "Used as the practical-equivalence (TOST) and superiority test margin."
+    rationale: "0.5% SER/BER MDE sets the seed count and sequence length needed for adequate power."
+    sensitivity_requirement: "Frozen; defines the stopping rule for paired_seeds."
+    frozen: true
+    shared_across_methods: true
+  - parameter_id: P-PAIRED-SEEDS
+    symbol: paired_seeds
+    value_range: [10, 40]
+    unit: "seeds (paired realisations)"
+    classification: statistical
+    source_pointer: "Project paired-seed protocol (compute_stat_tests.py); ber_16qam_vs_fg.py:87 N_SEEDS=5 (historical, lower)."
+    source_value: "10-40 adaptive"
+    adaptation: "Adaptive seed budget: start at 10 paired seeds, extend to 40 until MDE=0.005 is resolved at target power. Each seed pair shares the channel realisation across both modulation formats for paired comparison."
+    rationale: "Paired seeds reduce variance for modulation A/B comparison; adaptive bound controls compute cost."
+    sensitivity_requirement: "Stopping rule depends on observed variance and MDE."
+    frozen: false
+    shared_across_methods: true
+
+# =============================================================================
+# SUMMARY OF SOURCE COVERAGE
+# =============================================================================
+source_coverage:
+  strong_primary_source:
+    - "F-GODARD-COST, F-GODARD-RADIUS ← Godard 1980 TCOM Eq.(10)/(12)-(13), cross-checked sat.1553 §6 Eq.(50)"
+    - "F-JONES-2x2, F-SOP-ROTATION ← sat.1553 §6.1 Eq.(28) & Eq.(51)"
+    - "F-GAMMA-GAMMA-PDF ← Andrews & Phillips 2005 Ch.9-10, representative app12073331 §3 Eq.(2)-(9)"
+    - "F-FG-TO-TAUC ← Greenwood 1977 + Conan 1995 (formulas-master F33b)"
+    - "F-16QAM-NORM ← STANDARD_CONVENTION (Proakis/Sklar), numerically verified"
+  derived_in_project:
+    - "F-R2-16QAM-DERIVATION: E[|s|⁴]/E[|s|²] = 1.32/1.0 = 1.32 (closed-form + numeric check)"
+  standard_convention:
+    - "F-16QAM-GRAY-MAP: reflection Gray code on {±1,±3} (Proakis/Sklar; code array authoritative, docstring has a harmless 11/10 swap)"
+    - "F-16QAM-NORM: /√10 unit-power (verified)"
+    - "F-FIXED-LABEL-BER: textbook BER"
+  defined_here:
+    - "F-PI-SER: permutation-invariant SER; tools/search found BSS permutation-ambiguity literature but no direct metric precedent — classified lab-coined (oracle eval metric)"
+  unresolved_source_gaps_blocking_CB1:
+    - "NONE. Every formula/parameter has a source_type assignment (PRIMARY / REPRESENTATIVE / DERIVED / STANDARD / DEFINED). PI-SER is DEFINED_HERE by design (a metric, not a physical law) and is well-specified for implementation."
+  notes:
+    - "Docstring/code mismatch in F-16QAM-GRAY-MAP (gray_map array vs docstring) is cosmetic — both are valid reflection-Gray orderings, the set of amplitudes is unchanged, and R²/PI-SER are unaffected. Flagged for awareness, not blocking."
+    - "sat.1553 paper content.md lives in the MAIN repo (D:/code/study/research-protocol/papers/doi/10.1002_sat.1553/), not the worktree (papers gitignored). Line numbers cited are from that main-repo file."

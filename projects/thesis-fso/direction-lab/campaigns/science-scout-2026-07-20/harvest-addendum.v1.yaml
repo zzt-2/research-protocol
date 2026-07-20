@@ -1,0 +1,207 @@
+schema_version: direction-lab.harvest-addendum.v1
+addendum_id: harvest.science-scout-2026-07-20.v1
+campaign_id: science-scout-2026-07-20.dual-pol-osl
+created: 2026-07-20
+mode: SCIENCE_SCOUT
+supersedes: none  # additive to harvest/ledger.v1.yaml (H001-H009 protected)
+promotion_policy: >-
+  New harvest entries H010+ are SCIENCE_SCOUT-scoped. They do NOT auto-promote
+  to formal Groundwork/Contract/Execute/thesis main ledger. Promotion requires
+  user strategy decision per campaign-contract.v1.yaml. Hashes re-bind to
+  campaign artifacts, not to protected history.
+
+# === Independent verification status ===
+independent_verification:
+  verifier: separate subagent (clean-room, used canonical prompt013 only)
+  verification_date: 2026-07-20
+  verdict: CONFIRM
+  verified_claims:
+    - QPSK anchor PI-SER=0.0 reproduces P03 v1 exactly (PASS)
+    - 16QAM headroom ≥ MDE on tested cells (snr=20: 0.3117, snr=25: 0.3328, snr=5: 0.0)
+    - standard-CMA inner-ring collapse is real (~50% seeds at snr=20/25)
+    - headroom definition correct (oracle = Kill tool per FR-21, nearest = Go baseline per FR-25)
+    - CMA identity finding (_cma.py scalar-error vs prompt013 Godard-with-z) confirmed by direct code inspection
+
+# === New harvest entries ===
+entries:
+
+  - id: H010
+    category: POSITIVE_MECHANISM_SIGNAL
+    finding: >-
+      On the CB1 modulation-generic closure (QPSK+16QAM, hash-bound), the
+      strongest legal non-ML baseline (standard-CMA Godard-with-z +
+      nearest-16QAM hard decision) leaves large measurable PI-SER headroom
+      on 10/11 representative 16QAM cells (max 0.333 at snr=25, 66x the
+      pre-registered MDE 0.005). The same baseline had 0/11 headroom on QPSK
+      (P03 Stage A). The 16QAM headroom is mechanistically driven by
+      standard-CMA collapsing to the inner 16QAM ring on ~50% of seeds at
+      SNR >= 15 dB; the oracle affine (scoring-only Kill tool) recovers
+      collapsed seeds to PI-SER=0.0, confirming the gap is closable in
+      principle.
+    evidence_scope: >-
+      CB1 closure, 16QAM, SNR sweep 5-25 dB, f_g 30-1000 Hz, sop 4e-6/4e-5,
+      short (512) and long (8192) observation, CSI_NONE, uncoded hard
+      decision, 10 paired seeds per cell. QPSK anchor reproduces P03 v1.
+    claim_ceiling: SLICE  # runnable 16QAM representative subdomain; DOMAIN needs other axes closed
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/baseline-atlas/artifacts/cb1-baseline-atlas-v1.json
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/baseline-atlas/artifacts/cb1-baseline-atlas-v1-synthesis.md
+      - projects/thesis-fso/direction-lab/campaigns/science-scout-2026-07-20/capability-leverage-atlas.v1.yaml
+    source_hashes:
+      cb1_baseline_atlas_v1_json: TO_BE_BOUND_AT_COMMIT
+      cb1_baseline_atlas_v1_synthesis_md: TO_BE_BOUND_AT_COMMIT
+    related: [CB1, U19_expanded_16QAM, P03, standard-CMA, inner-ring-collapse]
+    thesis_destination: >-
+      Results section (16QAM baseline boundary); Methods section (modulation-
+      generic closure). Candidate thesis main-line seed for a "learned
+      collapse detector" contribution.
+    confidence: HIGH  # independently verified
+    follow_up: >-
+      ML Scout batch authorized but not yet run. Design candidate mechanisms
+      targeted at inner-ring-collapse detection (causal CMA-state features,
+      calibrated abstention, learned re-initialization). Legal Go baseline =
+      nearest-16QAM; oracle affine = Kill tool only.
+    status: HARVESTED_SCOPE_LIMITED
+
+  - id: H011
+    category: FAILURE_MECHANISM
+    finding: >-
+      standard-CMA Godard-with-z on 16QAM (R^2=1.32) exhibits a bimodal
+      convergence failure: on ~50% of seeds at SNR >= 15 dB the equalizer
+      collapses to the inner 16QAM ring (|z|^2 -> 0.2), producing per-seed
+      PI-SER ~0.67-0.78, while the other ~50% converge normally (PI-SER=0).
+      The collapse is NOT caught by the existing divergence criteria in
+      _cma.py (weight-norm and amplitude thresholds) because the weights
+      stay near init norm; it requires an E[|z|^2] << R^2 signal to detect.
+      This is the U19 residual-aware detection signal — CMA trace features
+      carry clear collapse signatures.
+    evidence_scope: >-
+      16QAM, SNR 15-25 dB, 10 paired seeds per cell. Per-seed collapse
+      pattern independently verified at snr=25 (seeds 12,16,17,19,20 collapse;
+      11,13,14,15,18 do not).
+    claim_ceiling: SLICE
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/baseline-atlas/artifacts/cb1-baseline-atlas-v1.json
+    related: [standard-CMA, 16QAM, U19, U24, inner-ring-collapse, divergence-detection]
+    thesis_destination: >-
+      Results section (baseline failure boundary); Discussion (why modulus
+      mismatch causes collapse); Limitations (current divergence criteria
+      miss this mode).
+    confidence: HIGH
+    follow_up: >-
+      Design ML Scout candidates that detect inner-ring collapse from CMA
+      trace features (output power, weight-norm derivative, |z|^2 vs R^2
+      ratio). Existing _cma.py divergence thresholds need an E[|z|^2] criterion
+      to catch this mode (infrastructure improvement, not a result).
+    status: HARVESTED
+
+  - id: H012
+    category: REUSABLE_ASSET
+    finding: >-
+      CB1 modulation-generic source closure: generate_shared_realization_dp
+      now accepts modulation='qpsk'|'qam16'. QPSK path byte-identical to
+      pre-CB1 (regression PASS, P03 v1 source-equivalence preserved).
+      16QAM path emits Gray-mapped /sqrt(10) normalized symbols, R^2=1.32
+      Godard radius verified analytically (1.32 to 1e-12 on the exact
+      16-point constellation). 11 closure tests + 6 existing dual-pol
+      regression tests PASS. Unlocks 16QAM for all modulation-aware
+      candidates (U19_expanded, U20, U34, RC1 cluster).
+    evidence_scope: CB1 closure infrastructure only; no performance claim
+    claim_ceiling: CONTRACT
+    artifact_pointers:
+      - projects/simulation/common/_dual_pol_channel.py
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/tests/test_cb1_closure.py
+      - projects/thesis-fso/direction-lab/campaigns/science-scout-2026-07-20/formula-symbol-parameter-provenance.yaml
+    related: [CB1, modulation-generic, QPSK, 16QAM, U19_expanded, RC1]
+    thesis_destination: Methods and reproducibility appendix
+    confidence: HIGH
+    follow_up: >-
+      Reusable for any modulation-aware Scout/Sandbox. Extend to 64QAM/8PSK
+      via the same modulation kwarg pattern when needed. Closure must be
+      re-pinned (new commit hash) when _dual_pol_channel.py changes.
+    status: HARVESTED
+
+  - id: H013
+    category: INFRASTRUCTURE_GAP
+    finding: >-
+      The canonical-state simulator declaration
+      (canonical-state.yaml::simulator.sha256=537dce98) does not match the
+      linked-worktree _dual_pol_channel.py (3d02eaa3). Root cause is line-
+      ending difference (main worktree CRLF vs linked worktree LF); content
+      identical. Independently, _cma.py:CMAEqualizer2x2 implements scalar-
+      error CMA (gradient with no z factor) while its docstring and the
+      canonical baseline identity say "Godard-with-z". The true Godard-with-z
+      lives only in prompt013.run_cma_diagnostic(mode='standard'). These are
+      documented state drifts that do not invalidate any protected result
+      (P03 used prompt013 via run_b001) but must be resolved before any
+      DOMAIN-level claim or formal promotion.
+    evidence_scope: >-
+      canonical-state, _dual_pol_channel.py (3 worktrees), _cma.py,
+      prompt013_swap_mechanism_q2.py. Independently verified by code
+      inspection.
+    claim_ceiling: DOMAIN_GAP_ONLY
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/canonical-state.yaml
+      - projects/simulation/common/_cma.py
+      - projects/simulation/explore/cma-fade-divergence/prompt013_swap_mechanism_q2.py
+      - projects/thesis-fso/direction-lab/campaigns/science-scout-2026-07-20/authorization-projection.v1.yaml
+    related: [canonical-state, _cma.py, prompt013, standard-CMA-identity, stale-debt]
+    thesis_destination: Limitations and infrastructure discussion
+    confidence: HIGH
+    follow_up: >-
+      Resolve in a future dedicated task: (1) canonicalize _dual_pol_channel.py
+      line endings and re-bind canonical-state SHA, or move to git-attributes
+      enforced LF; (2) either rename _cma.py:CMAEqualizer2x2 to
+      ScalarErrorCMAEqualizer2x2 OR add a GodardWithZ variant, and update the
+      docstring. Does not block Scout/Sandbox work.
+    status: OPEN_ACKNOWLEDGED
+
+  - id: H014
+    category: EVALUATION_INSIGHT
+    finding: >-
+      The PI-SER evaluator for 16QAM must consider 4 quadrant rotations
+      ({+1,+j,-1,-j} — the 16QAM 90-degree rotational symmetry), NOT the 8
+      rotations used for 8PSK. Combined with the 2! stream permutation this
+      gives 8 candidate assignments (not 16). Using 8 rotations would
+      over-count and underestimate PI-SER. The fixed-label SER (no rotation
+      search, identity assignment) should be reported alongside PI-SER per
+      the metric contract.
+    evidence_scope: 16QAM evaluator design (CB1)
+    claim_ceiling: CONTRACT
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/baseline-atlas/cb1_evaluator.py
+    related: [PI-SER, 16QAM, metric-contract, evaluator-design]
+    thesis_destination: Evaluation design section
+    confidence: HIGH
+    follow_up: >-
+      Carry this convention forward to any 16QAM Scout/Sandbox. Document in
+      formula-symbol-parameter-provenance.yaml (PI-SER entry).
+    status: HARVESTED
+
+  - id: H015
+    category: LOCAL_NEGATIVE
+    finding: >-
+      On the CB1 16QAM closure, the snr=5 dB cell is LOCAL_NEGATIVE: even
+      the oracle affine (scoring-only Kill tool) cannot improve on nearest-
+      16QAM (oracle PI-SER = 0.69, worse than nearest 0.66). AWGN dominates
+      at this SNR and no same-information method (ML or non-ML) can close
+      the gap. This bounds the low-SNR frontier of any 16QAM ML claim.
+    evidence_scope: 16QAM, snr=5 dB, f_g=30, sop=4e-6, N=512, 10 seeds
+    claim_ceiling: SLICE
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/baseline-atlas/artifacts/cb1-baseline-atlas-v1.json
+    related: [16QAM, low-SNR, LOCAL_NEGATIVE, U19_expanded]
+    thesis_destination: Results negative boundary
+    confidence: HIGH
+    follow_up: >-
+      Any future 16QAM ML claim must report the snr=5 boundary or justify its
+      SNR operating region. Extends P03's LOCAL_NEGATIVE-prior concept to 16QAM.
+    status: VERIFIED
+
+# === Governance ===
+governance:
+  protected_history_unchanged: true
+  no_auto_promotion: true
+  claim_ceiling_max_this_campaign: SLICE
+  formal_promotion_blocked: true
+  hash_binding: to_be_finalized_at_consolidated_commit
