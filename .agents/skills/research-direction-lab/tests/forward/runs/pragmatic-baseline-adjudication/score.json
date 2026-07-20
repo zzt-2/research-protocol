@@ -1,0 +1,28 @@
+[
+  {
+    "case_id": "pragmatic-baseline-adjudication",
+    "response": "round-red.md",
+    "checks": {
+      "bounded_claim": false,
+      "ml_gate": false,
+      "oracle_not_go": true,
+      "pragmatic_stop": false,
+      "fair_conventional_baseline": true,
+      "portfolio_continues": false
+    },
+    "verdict": "FAIL"
+  },
+  {
+    "case_id": "pragmatic-baseline-adjudication",
+    "response": "round-green.md",
+    "checks": {
+      "bounded_claim": true,
+      "ml_gate": true,
+      "oracle_not_go": true,
+      "pragmatic_stop": true,
+      "fair_conventional_baseline": true,
+      "portfolio_continues": true
+    },
+    "verdict": "PASS"
+  }
+]

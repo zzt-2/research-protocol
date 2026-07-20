@@ -1,6 +1,7 @@
 # [S002] CB1 baseline Atlas 发现 16QAM headroom；记录 scoped positive + harvest + handoff
 
 > 2026-07-20 | SCIENCE_SCOUT — CB1 实施 + baseline Atlas + 独立验证 | 状态: 完成（本轮收尾）
+> 2026-07-20 续接 | baseline 充分性复核 | 状态: 原 headroom 保留为 DIAGNOSTIC；旧 ML handoff 被取代
 
 ## 目标
 
@@ -93,3 +94,26 @@ verifier caveat：R²=1.32 for 16QAM 只在 CB1 closure 中定义，不在 canon
 - `canonical-state.yaml::simulator.sha256=537dce98` 与 worktree 实际 `3d02eaa3`（行尾差异）（已在 authorization-projection.v1.yaml 登记）。
 - 16QAM 的 R²=1.32 canonical 化（目前只在 CB1 closure 中定义，不在 canonical-state 中）。
 - P03 `test_p03_claim_scope_receipt_binds_exact_assessment_and_validator` 在 base commit `65db4ef` 上就 FAIL（pre-existing，与本轮无关）—— `claim-scope-validation-receipt.v1.yaml` 的 SHA 与 `claim-scope-assessment.v1.yaml` 不匹配；须在专门治理任务中修复。
+
+## 2026-07-20 续接：baseline 充分性复核
+
+### 记录
+
+独立方法审计确认代码/复现资产可信，但科学 comparator 不足：单模 CMA 对 16QAM 可能任务失配；`N=512/8192` 相对材料中的约 `1e5` 收敛尺度不足；最大 0.333 是 scoring-only oracle gap，不是 deployable 或 ML gain；blind affine 只改善约 0–0.032 且部分长窗变差。
+
+原 D004/H001 将“下一对话直接 ML Scout”列为合法动作，现由 D005/H002 取代。历史数字和 H010-H015 不删除，但证据级别明确收回到 `DIAGNOSTIC/SLICE`。下一批只需一个广泛采用、任务适配且来源闭环的主要传统 comparator，加一个直接对应失效的低成本扩展（如确有必要），并核验公平收敛；不要求当前 SOTA。
+
+裁决达到 `PROBLEM_SURVIVES_CONVENTIONAL_BASELINE` 后才允许 bounded ML Scout。裁决期间同时从完整 Portfolio 准备其他机制不同、可共享地基的候选，避免继续钻单点。
+
+### 决策引用
+
+- D005：新建并取代 D004 的直接 ML 授权部分。
+
+### 范围确认
+
+- 本轮是否在 scope boundary 内：是。只重新解释现有证据并更新流程入口，未重跑实验、未训练 ML、未修改 protected history。
+
+### 后续
+
+- 按 H002 在新对话完成 baseline adjudication shared batch 的来源、实现、收敛和公平合同；证据支持后自动运行。
+- 同步准备 2–4 个机制不同、共享基座的候选卡，不因 CB1 单点阻断停止 Portfolio。

@@ -29,7 +29,7 @@ Run one continuous loop:
 
 1. **Recover** — refresh the anchor, authorization, current work, history boundaries, and next action.
 2. **Map** — expand and organize an open candidate portfolio around the anchor; do not claim mathematical completeness.
-3. **Plan a batch portfolio** — group questions that share a baseline, evidence slice, interface, or causal comparison.
+3. **Plan a batch portfolio** — group questions that share a baseline, evidence slice, interface, or causal comparison; adjudicate whether the baseline is adequate for the intended claim before treating a gap as method-worthy.
 4. **Prepare and run** — freeze the batch contract, protect integrity boundaries, and use project-declared runners.
 5. **Synthesize** — interpret mechanisms and metrics, test alternative explanations, and set the smallest defensible claim scope.
 6. **Harvest** — record at least one evidence-backed scientific, methodological, writing, asset, or infrastructure item.
@@ -43,7 +43,7 @@ Continue without asking the user when a local event leaves a legal alternative: 
 
 Use judgment to choose among another ready candidate, another family, a bounded repair, a shared capability, a scope-expansion probe, portfolio remapping, or deeper evidence. Record the next action and why it is more informative than the alternatives. Do not require a controller to prove work conservation.
 
-Keep local results local. A blocked axis is not a scientific failure. A positive result against an invalid comparator is diagnostic until a legal comparator confirms it.
+Keep local results local. A blocked axis is not a scientific failure. A positive result against an invalid, task-mismatched, or materially under-converged comparator is diagnostic until a defensible conventional comparator confirms that the problem survives.
 
 ## User escalation
 
@@ -66,6 +66,7 @@ Load only the reference needed for the current decision:
 - `references/candidate-portfolio.md` — open candidate mapping, lineage, and ranking principles.
 - `references/batch-and-atlas.md` — batch cards, shared sprints, representative scope coverage, and targeted expansion.
 - `references/evidence-and-claims.md` — integrity boundaries, comparator legality, evidence validity, and claim ceilings.
+- `references/baseline-adjudication.md` — pragmatic comparator adequacy, the minimal baseline ladder, and the pre-method gate.
 - `references/thesis-harvest.md` — harvest categories, ledger fields, and thesis-spine promotion.
 - `references/recovery-and-rotation.md` — startup modes, state recovery, blocker handling, rotation, and handoff.
 - `references/project-layout.md` — canonical artifact ownership, compact status, and anti-duplication layout.

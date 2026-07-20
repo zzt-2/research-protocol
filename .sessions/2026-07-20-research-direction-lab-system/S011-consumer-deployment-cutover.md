@@ -2,6 +2,7 @@
 
 > 2026-07-20 | 部署收口 | 状态: PASS (pending independent verifier 终验)
 > 来源: 用户 2026-07-20 执行提示词（"shadow 分支已 PASS，但普通项目入口还没有真正接通"——消费者部署断链修复）
+> 2026-07-20 续接 | baseline 充分性 Skill 修订 | 状态: V008/V009 PASS，全局同步完成
 
 ## 目标
 
@@ -136,3 +137,29 @@ git worktree add .worktrees/research-direction-lab-integration -b codex/research
   - Windows symlink / POSIX flock 动态测试覆盖。
   - forward-test scorer B6/B1 fallback 词表外局限（V004 已知债务）。
   - dirty 普通根目录 `_registry.yaml` 仍停在 `S001/D001` 旧描述、canonical-state.yaml dirty 与 shadow 已对齐——这些是用户工作目录改动，本轮不动。
+
+## 2026-07-20 续接：务实 baseline 充分性裁决
+
+### 目标
+
+修复正式 SCIENCE_SCOUT 暴露的 Skill 判断缺口：正确但任务不适配或欠收敛的 baseline 不能制造 ML Go 信号；同时 baseline 仲裁不能默认膨胀为 SOTA 或传统方法穷举。
+
+### 记录
+
+- RED fresh-agent 正确阻断了 ML，却要求多个传统方法、多长度和后续全 Atlas，缺少“足以支撑有限主张即停止”的明确原则。
+- 新增按需参考 `baseline-adjudication.md`，定义务实充分性、最小 baseline 梯子、`PROBLEM_SURVIVES_CONVENTIONAL_BASELINE` 和 Portfolio 继续条件。
+- GREEN fresh-agent 正确保持 `DIAGNOSTIC/SLICE`，明确不追默认 SOTA，并把下一批限制为一个主要传统 comparator、一个直接相关廉价扩展和公平收敛核验。
+- 通用核心未写入通信项目术语；通信解释仅更新 Communications Profile。
+
+### 决策引用
+
+- D010：新建——Direction Lab 采用务实的 baseline 充分性裁决。
+
+### 范围确认
+
+- 本轮是否在 scope boundary 内：是。属于已部署 Skill 的真实使用反馈修订；不运行科学实验、不修改 protected history、不创建 B004、不训练 ML。
+
+### 后续
+
+- V008/V009 已 PASS；42 个非缓存文件全局同步且 hash mismatch=0。
+- 从科学专题 H002 继续正式推进。

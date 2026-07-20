@@ -3,6 +3,14 @@
 > Aggregate log for the blind forward tests defined in session R001.
 > Each round records prompts, raw responses, scorer output, and reviewer notes.
 
+## Pragmatic baseline adjudication revision (2026-07-20)
+
+- RED: the pre-revision Skill correctly blocked premature ML but expanded the remedy to three conventional methods, multiple long convergence points, postprocessing variants, and eventual full-atlas execution. It lacked both a pragmatic adequacy stop and a portfolio-continuation rule.
+- GREEN: the revised Skill kept the evidence `DIAGNOSTIC`/`SLICE`, required `PROBLEM_SURVIVES_CONVENTIONAL_BASELINE`, selected one defensible conventional comparator plus one directly relevant cheap extension, explicitly rejected default SOTA chasing, and continued candidate/interface preparation in parallel.
+- Raw runs: `tests/forward/runs/pragmatic-baseline-adjudication/round-red.md` and `round-green.md`.
+- Scorer output: `tests/forward/runs/pragmatic-baseline-adjudication/score.json` (`FAIL` → `PASS`).
+- Fixture: `tests/forward/pragmatic-baseline-adjudication.yaml`.
+
 ## Round 1 (2026-07-20)
 
 _status: PASS (after scorer bug fixes; no Skill revision; no rerun needed)_

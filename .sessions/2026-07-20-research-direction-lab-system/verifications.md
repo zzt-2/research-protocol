@@ -387,3 +387,50 @@ PASS（11/11）。消费者部署断链已修复，integration worktree + 全局
 - dirty 普通根目录 `_registry.yaml` 仍停在 `S001/D001` 旧描述：用户工作目录改动，本轮按授权不动；用户若把普通根并入 integration 分支时需要手动 reconcile（建议直接以 integration 分支为准）。
 - dirty 普通根目录 `canonical-state.yaml` 已与 shadow 版本对齐（之前已被同步过）：用户工作目录改动，本轮按授权不动。
 - 全局 Skill 安装无 git 跟踪：安装元数据记录在 S011/D009/V007；新机器/克隆需重新安装。
+
+## V008: 务实 baseline 充分性 Skill 修订独立终验
+
+> date: 2026-07-20
+> 关联：S011 续接 / D010 / 科学专题 D005-H002
+> verifier 上下文：独立 subagent，与实现和 RED/GREEN agents 分离
+> FINAL VERDICT: PASS
+
+### 验证项
+
+- [x] RED/ GREEN 文件包含相同 blind prompt、fresh-agent 标识和完整逐字回答。
+- [x] 独立 scorer 只解析封闭的 `## Raw response` 区段；RED=`FAIL`，GREEN=`PASS`（6/6）。
+- [x] Skill 全套测试：`67 passed, 1 skipped`；skip 为 Windows symlink 环境限制。
+- [x] UTF-8 `quick_validate.py`：`Skill is valid!`。
+- [x] `git diff --check`：exit 0，仅 Windows LF→CRLF 提示。
+- [x] 通用 core 无具体通信项目术语；领域解释仍位于 Communications Profile。
+- [x] baseline 原则满足：不默认要求 SOTA；必须正确、任务适配、广泛采用、公平且足以支撑有限主张；有明确停止条件。
+- [x] `PROBLEM_SURVIVES_CONVENTIONAL_BASELINE` 前不授权 ML/new-method Scout；baseline 裁决期间 Portfolio 可继续。
+- [x] 治理血缘一致：D010 → 科学 D005 → D004 superseded → H001 superseded → H002 唯一续接入口。
+- [x] `_registry.yaml` 两个专题已同步更新并通过 YAML 解析。
+
+### 结论
+
+PASS。此前首轮 verifier 的 P1（无逐字行为证据/可执行 scorer）和 P2（注册表落后）均已关闭；未发现残留 P0/P1/P2。允许同步全局消费者 Skill，并从 H002 开启下一正式研究对话。
+
+## V009: baseline 修订全局消费者同步复核
+
+> date: 2026-07-20
+> 关联：V008 / D010
+> verifier 上下文：独立 subagent
+> FINAL VERDICT: PASS（部署通过）
+
+### 证据
+
+- repo source 与 `C:/Users/zzt/.agents/skills/research-direction-lab/`：42 个非缓存文件路径集合一致，SHA256 mismatch=0。
+- 全局 `quick_validate.py`：PASS。
+- 全局可移植结构/forward/domain 测试：`17 passed`。
+- repo worktree Skill 全套：`67 passed, 1 skipped`。
+- 全局路径直接跑全套：`64 passed, 3 failed, 1 skipped`；3 项均为 `EXPECTED_REPO_CONTEXT_FAILURE`，同三项在 repo worktree 为 `3 passed`。
+
+### 失败边界
+
+全局 3 项失败来自测试按 Skill 文件位置反推 research-protocol 仓库根：历史 replay artifact 和 `control-migration-audit.md` 在 canonical repo 中存在，但全局安装位置不包含项目 artifacts。它们不涉及 Skill 内容、hash、forward gate、行为规则或领域隔离，因此不阻断部署；不得把全局全套宣称为全绿。
+
+### 结论
+
+PASS。全局消费者 Skill 已与 repo 验证版本字节一致且可发现。非阻断 P2：未来可给 3 项 source-integration tests 增加 `repo_context` marker 或显式 repo-root 参数。

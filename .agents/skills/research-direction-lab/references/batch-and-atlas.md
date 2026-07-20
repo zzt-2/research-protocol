@@ -8,7 +8,9 @@ Define:
 
 `question | candidates | shared baseline | domain slice | legal comparator | diagnostics | cost | dependencies | preregistered exit | claim ceiling`
 
-Include a no-change baseline, the strongest legal simple comparator, a small set of mechanisms sharing the contract, and only the ablations needed to distinguish the stated hypotheses. Choose size from information value and cost; do not enforce a global count.
+Include a no-change baseline, one defensible widely used task-appropriate conventional comparator, one obvious low-cost extension when it directly addresses the diagnosed failure, a small set of mechanism-distinct candidates sharing the contract, and only the ablations needed to distinguish the stated hypotheses. Current SOTA is not a default prerequisite. Choose size from information value and cost; do not enforce a global count.
+
+Before a gap becomes method-worthy, apply `baseline-adjudication.md`. Keep the result diagnostic until `PROBLEM_SURVIVES_CONVENTIONAL_BASELINE` is supported. Baseline checks and preparation of other reusable candidates may proceed in the same portfolio cycle.
 
 ## Shared preparation sprint
 

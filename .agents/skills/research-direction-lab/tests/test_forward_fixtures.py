@@ -15,11 +15,22 @@ import yaml
 ROOT = Path(__file__).parents[1]
 FORWARD = ROOT / "tests" / "forward"
 FORWARD_CASE = FORWARD / "non-comms-baseline-extension.yaml"
+PRAGMATIC_CASE = FORWARD / "pragmatic-baseline-adjudication.yaml"
 SCORER = ROOT / "tests" / "score_forward_tests.py"
+BASELINE_SCORER = ROOT / "tests" / "score_baseline_adjudication.py"
 
 
 def _load_scorer():
     spec = importlib.util.spec_from_file_location("score_forward_tests", SCORER)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def _load_baseline_scorer():
+    spec = importlib.util.spec_from_file_location(
+        "score_baseline_adjudication", BASELINE_SCORER
+    )
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
@@ -60,6 +71,48 @@ def test_non_comms_fixture_carries_no_project_pointers():
     )
     for token in forbidden:
         assert token not in text, token
+
+
+def test_pragmatic_baseline_fixture_has_closed_contract():
+    case = yaml.safe_load(PRAGMATIC_CASE.read_text(encoding="utf-8"))
+    assert set(case) == {
+        "schema_version",
+        "case_id",
+        "decision_point",
+        "domain_note",
+        "facts",
+        "allowed_actions",
+        "forbidden_actions",
+        "claim_ceiling",
+    }
+    assert case["case_id"] == "pragmatic-baseline-adjudication"
+    assert case["claim_ceiling"]["level"] == "DIAGNOSTIC"
+    assert any("current SOTA" in item for item in case["forbidden_actions"])
+
+
+def test_skill_routes_pragmatic_baseline_adjudication_reference():
+    skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
+    reference = ROOT / "references" / "baseline-adjudication.md"
+    assert reference.exists()
+    policy = reference.read_text(encoding="utf-8")
+    assert "PROBLEM_SURVIVES_CONVENTIONAL_BASELINE" in policy
+    assert "need not be current SOTA" in policy
+    assert "widely used" in policy
+    assert "baseline-adjudication.md" in skill
+
+
+def test_pragmatic_baseline_scorer_distinguishes_red_and_green():
+    scorer = _load_baseline_scorer()
+    run_root = FORWARD / "runs" / "pragmatic-baseline-adjudication"
+    red = scorer.score_response(run_root / "round-red.md")
+    green = scorer.score_response(run_root / "round-green.md")
+    assert red["verdict"] == "FAIL"
+    assert green["verdict"] == "PASS"
+    assert not red["checks"]["ml_gate"]
+    assert not red["checks"]["portfolio_continues"]
+    assert not red["checks"]["pragmatic_stop"]
+    assert green["checks"]["pragmatic_stop"]
+    assert green["checks"]["portfolio_continues"]
 
 
 def test_scorer_marks_a_clear_pass_response(tmp_path):

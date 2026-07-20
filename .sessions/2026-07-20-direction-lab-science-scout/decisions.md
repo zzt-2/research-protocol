@@ -112,10 +112,10 @@ S001 + 子 agent A + 用户 §七/§八
 
 ## D004: 本轮不触发 ML Scout；记录 scoped positive + harvest + handoff
 
-> status: active
+> status: superseded
 > date: 2026-07-20
 > 取代：无
-> 被取代：无
+> 被取代：D005
 > 依据: 验证: 独立 verifier CONFIRM (clean-room, canonical prompt013 only) + 调研: CB1 baseline Atlas artifacts + 用户原话: `voice.md` 2026-07-20 "如果首选共享能力不成立，自动回到 Portfolio 选择下一项；不要在每个小步骤等待用户确认" + profile.md "警惕主线急于给方向性结论"
 
 ### 决策
@@ -146,3 +146,34 @@ S001 + 子 agent A + 用户 §七/§八
 ### 来源
 
 S002 + 独立 verifier CONFIRM + profile.md
+
+## D005: CB1 降为诊断信号，先做轻量传统 baseline 裁决
+
+> status: active
+> date: 2026-07-20
+> 取代：D004 中“headroom 已授权下一对话直接进入 ML Scout”的部分
+> 被取代：无
+> 依据：用户原话: 本专题 `voice.md` 2026-07-20 + critic: S002 续接 baseline 审计 + 验证: `.agents/skills/research-direction-lab/tests/forward/runs/pragmatic-baseline-adjudication/round-red.md` 与 `round-green.md`
+
+### 决策
+
+CB1 的 16QAM 结果只保留为 `DIAGNOSTIC/SLICE`：在验证公平收敛并用一个来源闭环、广泛采用、任务适配的传统 comparator 重新裁决前，不授权 ML 训练。裁决与其他机制候选准备并行推进，不把当前单点变成新的完整流程瓶颈。
+
+### 理由
+
+原结果证明的是单模 Godard-with-z 在当前长度下存在 inner-ring collapse 和 scoring-only oracle gap，但未排除约 `1e5` symbols 收敛尺度、MMA/RDE 这类 16QAM 任务适配方法。实现正确不等于 baseline 足以支撑“需要 ML”。同时，用户明确要求 baseline 说得过去即可，不追当前最好，因此下一批只选一个主传统 comparator，并最多补一个直接处理当前失效的廉价扩展；不做论文级 SOTA 堆叠。
+
+### 排除的替代方案
+
+- **直接执行 H001 的 ML Scout**：否决；会把任务失配或欠收敛制造的 gap 当研究问题。
+- **一次实现并穷举所有 MMA/RDE/DD/SOTA 变体**：否决；超出有限主张所需证据，违背务实停止条件。
+- **抹去 CB1 正结果和 harvest**：否决；closure、R²、PI-SER evaluator、inner-ring collapse 和 baseline 选择教训仍是有效次级材料。
+- **裁决期间暂停整个 Portfolio**：否决；其他共享契约候选可继续准备和排序。
+
+### 影响范围
+
+H001 标记为被取代；新增 H002 作为续接入口。CB1 raw artifacts、历史 harvest 和 protected history 不修改。下一对话先做 baseline 来源/实现/收敛合同与共享批次，再由 `PROBLEM_SURVIVES_CONVENTIONAL_BASELINE` 决定是否运行 ML。
+
+### 来源
+
+S002 续接 / 用户纠正 / Skill D010。

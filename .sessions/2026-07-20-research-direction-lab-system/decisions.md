@@ -290,3 +290,34 @@ V005/V006 已在 shadow worktree 验证 Task 9/10 PASS，但 shadow 是 isolated
 ### 来源
 
 S011 / 用户 2026-07-20 执行提示词 §一~§八。触发原话：见 voice.md 2026-07-20 段。
+
+## D010: Direction Lab 采用务实的 baseline 充分性裁决
+
+> status: active
+> date: 2026-07-20
+> 取代：无
+> 被取代：无
+> 依据：用户原话: 本专题 `voice.md` 2026-07-20 + 验证: `.agents/skills/research-direction-lab/tests/forward/runs/pragmatic-baseline-adjudication/round-red.md` 与 `round-green.md` + 科学事件: `2026-07-20-direction-lab-science-scout/S002-cb1-baseline-atlas-headroom.md`
+
+### 决策
+
+候选进入 ML 或新方法 Scout 前，必须证明问题经过一个实现正确、任务适配、相关领域广泛采用且对当前有限主张公平的传统 baseline 后仍然存在；baseline 默认不要求当前 SOTA，也不要求穷举全部传统变体。
+
+### 理由
+
+旧 Skill 能识别 buggy comparator，却没有覆盖“实现正确但任务不适配或明显欠收敛”的弱 baseline，也没有 baseline 搜索的务实停止条件。RED fresh-agent 因而把补证扩张为多传统方法、多长度和全 Atlas 扫描；GREEN fresh-agent 在新增充分性规则后，收敛为一个主传统 comparator、一个直接相关的低成本扩展和共享收敛核验，同时保留 Portfolio 继续准备其他机制候选。
+
+### 排除的替代方案
+
+- **默认追逐当前 SOTA**：拒绝；除非论文主张、领域惯例、导师或审稿要求明确依赖 SOTA，否则会把 Scout 变成无止境竞品工程。
+- **只要实现正确就接受 baseline**：拒绝；任务失配、欠收敛和信息不公平仍会制造假研究问题。
+- **穷举所有广泛使用 baseline**：拒绝；当前有限主张有一个充分 comparator 且显而易见的廉价替代解释已处置后即停止。
+- **把通信例子写进通用核心**：拒绝；具体算法和调制仍属于 Communications Profile 与 Project Adapter。
+
+### 影响范围
+
+新增 `references/baseline-adjudication.md`，轻量更新主 Skill 的路由与 Portfolio/Batch/Evidence/Harvest contracts；Communications Profile 只保存领域稳定解释。`AGENTS.md` 不复制规则。当前科学事件须重新裁决，但不改写历史实验字节。
+
+### 来源
+
+S011 续接 / 用户纠正 / RED-GREEN forward test。

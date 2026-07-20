@@ -1,5 +1,7 @@
 # Handoff: CB1 16QAM headroom found — design and run ML Scout batch
 
+> **SUPERSEDED by D005 / H002. Do not execute this handoff.** The headroom is diagnostic until a defensible task-appropriate conventional baseline and convergence check show that the problem survives.
+
 > 来源: S001 + S002 | 交接目标: 在新对话设计并运行针对 inner-ring-collapse 的 ML Scout batch
 > 文件名: H001-ml-scout-batch.md
 > 日期: 2026-07-20

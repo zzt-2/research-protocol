@@ -10,6 +10,7 @@ REFERENCE_NAMES = (
     "candidate-portfolio.md",
     "batch-and-atlas.md",
     "evidence-and-claims.md",
+    "baseline-adjudication.md",
     "thesis-harvest.md",
     "recovery-and-rotation.md",
     "project-layout.md",
@@ -26,7 +27,7 @@ ALLOWED_MARKDOWN = {
 }
 
 
-def test_exactly_seven_top_level_references_exist():
+def test_only_routed_top_level_references_exist():
     reference_root = ROOT / "references"
     actual_files = set(reference_root.glob("*.md"))
     nested_files = {
@@ -45,7 +46,7 @@ def test_exactly_seven_top_level_references_exist():
         raise AssertionError(
             f"unexpected top-level references: {sorted(path.name for path in extra)}"
         )
-    assert len(actual_files) == 7
+    assert len(actual_files) == len(REFERENCE_NAMES)
     assert nested_files == ALLOWED_NESTED_FILES, (
         "unexpected nested references: "
         f"missing={sorted(str(path.relative_to(ROOT)) for path in ALLOWED_NESTED_FILES - nested_files)}, "

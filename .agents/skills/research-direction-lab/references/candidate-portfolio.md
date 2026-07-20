@@ -12,13 +12,20 @@ Expand around the anchor along independent lenses appropriate to the domain:
 - mechanism family;
 - operating-condition and evaluation axes.
 
-Also inspect existing assets, known failures, literature anchors, historical counterexamples, missing comparators, and shared capabilities. Record uncovered angles without claiming the map is complete.
+Populate the map from four complementary sources:
+
+- reviews, strong papers, open problems, and citation neighborhoods;
+- verified failures or boundary behavior of existing baselines, after bug and comparator checks;
+- intervention points across the full system or processing chain; and
+- transferable mechanisms from adjacent mature systems.
+
+Normalize a problem candidate as `method M is inadequate under condition C because mechanism A`, then state the legal information, output or action, metric, and conventional comparator. Also inspect existing assets, historical counterexamples, missing comparators, and shared capabilities. Record uncovered angles without claiming the map is complete.
 
 ## Candidate card
 
 Record only decision-useful fields:
 
-`id | question | lineage | mechanism | information access | output | supported scope | blocked scope | baseline | comparator | diagnostics | dependencies | cost | evidence pointers | claim ceiling | status`
+`id | M-C-A problem | question | source | lineage | mechanism | information access | output | supported scope | blocked scope | baseline | comparator | diagnostics | dependencies | cost | thesis form | evidence pointers | claim ceiling | status`
 
 Keep scientific vocabulary in domain profiles or project adapter values. Keep the generic card structure domain-neutral.
 

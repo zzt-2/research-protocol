@@ -1,0 +1,32 @@
+schema_version: 1
+case_id: pragmatic-baseline-adjudication
+decision_point: A correct but task-mismatched conventional baseline shows a large oracle gap before ML training
+domain_note: >-
+  Self-contained communications example used to test judgment about baseline
+  adequacy, evidence scope, and stopping cost. It does not authorize a real run.
+facts:
+  - A correct single-modulus Godard-with-z equalizer is being applied to dual-polarization 16QAM.
+  - In 11 cells with 10 paired seeds, 10 cells show scoring-only oracle affine headroom above the preregistered MDE; the largest gap is 0.333.
+  - The oracle uses transmitted symbols and is evaluation-only.
+  - A receiver-visible blind affine postprocessor gives little benefit and becomes worse in some long-window cells.
+  - The executed lengths are 512 and 8192 symbols; literature material indicates that convergence can require about 100000 symbols.
+  - MMA and RDE are recognized task-appropriate conventional methods for multilevel QAM, but neither was compared.
+  - The user wants a defensible graduation contribution and explicitly does not require a current-SOTA comparison by default.
+allowed_actions:
+  - keep the current result diagnostic and at SLICE ceiling
+  - select a correct task-appropriate conventional baseline supported by canonical literature and multiple independent uses
+  - add one obvious low-cost conventional extension when it directly addresses the observed failure
+  - verify convergence and information parity under one shared batch contract
+  - stop baseline expansion once the exact limited claim has a defensible widely used comparator
+  - prepare multiple mechanism-distinct candidates in parallel while adjudication runs
+forbidden_actions:
+  - authorize ML because the scoring-only oracle gap is large
+  - use the task-mismatched single-modulus baseline as the sole Go comparator
+  - require an exhaustive sweep of MMA RDE decision-directed variants and current SOTA before any bounded claim
+  - treat oracle performance as deployable improvement
+claim_ceiling:
+  level: DIAGNOSTIC
+  statement: >-
+    The executed slice exposes a real diagnostic gap, but whether a research
+    problem survives a defensible task-appropriate conventional baseline is unresolved.
+

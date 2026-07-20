@@ -11,6 +11,7 @@ Before execution, bind the formal goal and batch question to:
 - information available during training, operation, evaluation, and oracle analysis;
 - metric definition, units, aggregation, and uncertainty method;
 - comparator legality and configuration parity;
+- comparator adequacy for the exact contribution claim, including task fit and convergence;
 - protected history and preregistered exits.
 
 Treat deterministic integrity failures as binding. Repair them within the scientific contract or mark evidence untrusted, stale, unknown, or invalid.
@@ -25,7 +26,7 @@ Record execution facts and verifier findings before scientific synthesis. Then t
 - sampling variation, selection, or metric aggregation explains the signal;
 - the result applies only to the executed cell or slice.
 
-A result against a buggy or invalid baseline is diagnostic. Revalidate against the legal baseline before promotion.
+A result against a buggy, invalid, task-mismatched, or materially under-converged baseline is diagnostic. Revalidate using `baseline-adjudication.md`; only `PROBLEM_SURVIVES_CONVENTIONAL_BASELINE` permits a method Scout, and it remains scoped evidence rather than a method win.
 
 ## Set the claim ceiling
 

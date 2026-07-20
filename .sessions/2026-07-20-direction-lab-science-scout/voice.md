@@ -18,3 +18,5 @@
 > "不要把 CMA、P03、residual、pilot 或旧 CandidateMap 当成科学边界。"
 
 > "现在开始：先恢复 STATUS 和授权边界，创建隔离 worktree，然后完成 Portfolio Refresh 与 Capability Leverage Atlas。证据支持后继续建设首个共享能力并运行 baseline Atlas，不要在规划完成后提前停止。"
+
+- "是。你这套我很同意。你快想想怎么改skill，怎么更新日志。当然，baseline说得过去就行，不必追目前最好，只要比大量人都在用的baseline好，那就行。" → D005

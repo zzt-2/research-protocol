@@ -1,6 +1,6 @@
 # Topic Index: Research Direction Lab 完整体系设计
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-07-20（消费者部署收口：integration worktree 建立 + 全局 Skill 安装 + fresh-agent discovery PASS；V007 pending 独立 verifier；未 push）
+> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-07-20（baseline 充分性修订 V008 PASS；全局同步 V009 PASS；未运行科学实验）
 
 ## 专题信息
 
@@ -22,6 +22,7 @@
 - Task 6 的只读项目投影、Task 7 的旧 scheduler 迁移审计和不计为行为 PASS 的桌面使用推演已由 V003 验证；
 - Task 8 round 1 fresh-agent 盲测（5 类案例）已由 V004 独立终验 PASS；首轮 scorer 实现缺陷已一次性批量修复，无 Skill 修订、无重跑；
 - 本阶段不修改现有 controller、campaign core、仿真器、baseline 或科学证据。
+- 基于首轮正式 SCIENCE_SCOUT 的真实失效，允许以 RED→GREEN 修订主 Skill 的 baseline 充分性判断；不借此运行新实验或改写历史证据。
 
 ### 明确不含
 
@@ -57,6 +58,10 @@
   - 新范围：建立 integration worktree（`.worktrees/research-direction-lab-integration`，分支 `codex/research-direction-lab-integration`，从 `6ca142e` fast-forward）+ 全局 Skill 安装到 `C:\Users\zzt\.agents\skills\research-direction-lab\`（36 文件 hash 全等）+ fresh-agent discovery smoke + 独立 verifier 终验（V007）。
   - 明确排除：dirty 普通根目录合并/cherry-pick/rebase；删除旧 method-family Skill；SHADOW-H010..H017 晋升；运行新科学或创建 B004；修改 protected history/canonical baseline/B001-B003/P03 Atlas；复制 Skill 内容到 AGENTS.md；push/merge；开 Goal。
   - 影响的未决项：消费者部署断链从未授权改为已完成（V007 pending → 待 verifier PASS）；用户正式使用开放式研究方向探索应从 `codex/research-direction-lab-integration` 分支开始；dirty 普通根目录保持不动。
+- **[2026-07-20] baseline 充分性修订（D010）**：用户明确要求 baseline 以“说得过去、广泛采用”为准，不默认追当前最好；允许更新主 Skill、测试和两层治理记录。
+  - 原因：正式 SCIENCE_SCOUT 把实现正确但 16QAM 任务不适配/可能欠收敛的单模 baseline 当成 ML headroom 起点。
+  - 新范围：务实 baseline ladder、`PROBLEM_SURVIVES_CONVENTIONAL_BASELINE` 门、四类候选来源和 forward test。
+  - 明确排除：SOTA 穷举、运行新科学实验、训练 ML、改写 protected history、复制规则到 AGENTS.md。
 
 ## 已确认结论
 
@@ -69,6 +74,7 @@
 - **通用与领域解耦**：通用代码和核心 Skill 不包含具体通信项目语义；领域规则进入 Profile，项目事实进入 Adapter。
 - **原话可追溯**：目标体系的长期约束必须能指回用户原话；执行提示词和用户自然原话分开标注。
 - **唯一拥有者**：执行流程最终由一个主 Skill 拥有；项目文档只保存事实和状态，不复制流程全文。
+- **baseline 充分而非最强**：Go comparator 必须正确、任务适配、广泛采用且公平；当前 SOTA 仅在主张或外部要求依赖时才成为义务。
 
 ### 其他结论
 
@@ -99,6 +105,9 @@
 - **S009 / D008 / V005**：Task 9 live shadow 在隔离 worktree `research-direction-lab-shadow`（分支 `codex/research-direction-lab-shadow`，从 `f79cb1b` 创建）执行；Foundation Certificate PASS（18/18 protected history hash 一致，standard-CMA 含 Godard z）；驱动 Skill 7-phase loop 在既有 READ_ONLY_MIGRATION_PREVIEW 地基上 replay + 派生 8 个 SHADOW-H010..H017 harvest entries（全部 CONTRACT/SLICE 级，DOMAIN/FAMILY 0 越界）；五类行为证据齐全（OBS-BLOCK 6 真实 blockers / OBS-ROTATE R1-R5 100% 续跑率 / OBS-SCOPE 最小 ceiling / OBS-HARVEST 每批 ≥1 / OBS-RECOVER session 启动恢复）；独立 verifier 11/11 PASS。
 - **S010 / V006**：Task 10 cutover 完成；AGENTS.md 加 FR-27 路由索引（单行）；process.md / README.md 加 Skill 指针段；method-family-batch-exploration SKILL.md 加 superseded frontmatter（保留原文）；docs/architecture/research-direction-lab.md doc-steward mode 架构文档（锚定 13 个真实路径）；FR-22 vs Direction Lab 表面冲突解决（Direction Lab = 晋级前候选发现层，晋级仍必须走 GW/Contract/Execute）；独立 verifier 11/11 PASS，**live-activation authorized**。
 - **S011 / D009 / V007 (pending)**：消费者部署收口。根因诊断 = shadow V005/V006 PASS 后从未回流消费者路径，导致普通根目录无 Skill/STATUS/Adapter/cutover 改动、全局 Skill 不存在、旧 Skill superseded 指针悬空。集成策略 = fast-forward（`merge-base(97473a2, 6ca142e) = 97473a2`，shadow 多 114 文件少 0 文件），从 `6ca142e` 创建 integration worktree 无冲突包含 Task 1-10 全部资产。全局 Skill 安装 36 文件字节级 hash 全等；fresh-agent discovery smoke（agent_a702565b）仅凭 AGENTS.md FR-27 自行发现 Skill 并正确回答 5 问。
+- **S011 续接 / D010**：真实 SCIENCE_SCOUT 暴露“弱但正确 baseline 制造假问题”和“补证过重”双风险；完成新 pressure fixture、RED/ GREEN fresh-agent 测试和最小 Skill 修订。GREEN 行为已满足：不默认追 SOTA、一个主传统 comparator + 一个直接相关廉价扩展、ML 前必须达到 `PROBLEM_SURVIVES_CONVENTIONAL_BASELINE`、Portfolio 不因仲裁单点停滞。
+- **V008**：首次独立终验 PARTIAL 暴露逐字行为证据/scorer 与注册表缺口；修复后复验 PASS。Skill 测试 `67 passed, 1 skipped`，RED FAIL/GREEN 6/6 PASS，无残留 P0/P1/P2。
+- **V009**：repo 与全局消费者 Skill 42 文件 SHA256 全等；全局 quick validation 与可移植测试 17/17 PASS。全局全套另有 3 项预期 repo-context failure，同项在 canonical repo 3/3 PASS，不阻断部署。
 
 ## 未决项
 
@@ -111,4 +120,4 @@
 
 ## 当前位置
 
-Task 1–10 已全部由 V001–V006 分阶段独立终验 PASS；消费者部署收口（S011/D009）已执行，V007 由独立 verifier 终验。**Live-activation authorized 且消费者入口已接通**：开放式研究方向探索的唯一流程拥有者是 `research-direction-lab` Skill（同时存在 integration worktree `.agents/skills/research-direction-lab/` 和全局消费者路径 `C:\Users\zzt\.agents\skills\research-direction-lab\`，两者字节级一致）；日常人类入口是 `projects/thesis-fso/direction-lab/STATUS.v1.md`；AGENTS.md FR-27 提供路由索引；旧 method-family-batch-exploration Skill 已 superseded（指针不再悬空）但保留历史。**用户正式使用开放式研究方向探索应从 `codex/research-direction-lab-integration` 分支开始**（普通根 `feat/title-consistency-check` 仍 dirty，不动）。本对话收尾做单次 consolidated commit（不 push）。下一阶段：用户可在新对话中从 integration worktree 正式用 Skill 进行开放式研究方向探索，或授权 SHADOW-H010..H017 晋升到 main ledger 进入正式论文材料流程。
+Task 1–10 和消费者部署历史继续有效；主 Skill 的 baseline 充分性修订已由 V008/V009 完成 repo 与全局消费者终验。下一阶段不是直接训练 ML，而是由科学专题 H002 先完成轻量传统 baseline 裁决，同时并行准备其他机制候选。

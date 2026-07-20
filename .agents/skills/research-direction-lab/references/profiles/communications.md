@@ -61,11 +61,14 @@ A legal scientific comparison aligns:
 - metric definition, aggregation, and uncertainty treatment; and
 - material compute or latency constraints when efficiency is claimed.
 
-Use a recognized conventional baseline and the strongest relevant reusable
-baseline available for the claimed contribution. Label ablations as mechanism
-tests rather than competitors. Keep oracle results visibly separate from
-deployable results. A method that relies on evaluation-only truth cannot
-support a deployed-receiver superiority claim.
+Use a recognized, task-appropriate conventional baseline that is widely used
+and defensible for the exact contribution claim. It need not be current SOTA
+unless the claim or venue convention requires that comparison. Add an obvious
+low-cost conventional extension when it directly addresses the diagnosed
+failure, then stop baseline expansion once the bounded claim is fairly tested.
+Label ablations as mechanism tests rather than competitors. Keep oracle results
+visibly separate from deployable results. A method that relies on
+evaluation-only truth cannot support a deployed-receiver superiority claim.
 
 ## Claim boundaries
 
