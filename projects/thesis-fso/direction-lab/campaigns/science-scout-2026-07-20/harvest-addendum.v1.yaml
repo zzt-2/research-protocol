@@ -198,6 +198,221 @@ entries:
       SNR operating region. Extends P03's LOCAL_NEGATIVE-prior concept to 16QAM.
     status: VERIFIED
 
+  # === Baseline Adjudication Batch (2026-07-20) — H016-H022 ===
+  # Source: baseline-adjudication-batch (H002 / D005). Adjudicates whether the
+  # CB1 16QAM Atlas v1 inner-ring collapse headroom survives a task-correct
+  # conventional comparator (MMA) and a longer convergence length (N=32768).
+
+  - id: H016
+    category: BASELINE_ADJUDICATION
+    finding: >-
+      The Multi-Modulus Algorithm (MMA, Yang-Werner-Dumont JSAC 2002) is the
+      task-correct conventional comparator for 16QAM blind equalization. It
+      was designed precisely as the counter-measure to CMA's inner-ring
+      collapse on square M-QAM (Johnson PIEEE 1998 §III-IV; Mendes-Filho SSP
+      2009; Liu TSP 2021) and is the fiber-coherent standard for DP-16QAM
+      blind demultiplexing (Kikuchi JLT 2016; Fludger OFC 2014). Provenance
+      closed: cost formula Eq.(12)-(13), dual-pol extension §IV.B, R_R^2 =
+      R_I^2 = 0.82 derived and literature-cross-checked. Implementation
+      sanity-gated (5/5 tests PASS) and independently verified bit-identical
+      by a clean-room re-implementation.
+    evidence_scope: >-
+      Provenance audit, implementation, sanity tests, independent verifier.
+      No simulation results in this entry (those are H017/H018).
+    claim_ceiling: SLICE
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/baseline-adjudication-batch/batch-contract.v1.yaml
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/baseline-adjudication-batch/mma_comparator.py
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/baseline-adjudication-batch/tests/test_mma_identity.py
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/baseline-adjudication-batch/verifier_mma.py
+      - projects/thesis-fso/direction-lab/campaigns/science-scout-2026-07-20/formula-symbol-parameter-provenance.yaml
+    related: [MMA, baseline_adjudication, Yang-Werner-Dumont, conventional_comparator]
+    thesis_destination: Methods (baseline choice justification)
+    confidence: HIGH
+    follow_up: >-
+      MMA is now the default task-correct comparator for any 16QAM blind
+      equalization work in this project. Earlier attribution to Oh-Un 1982
+      or Wesemann 1998 should be corrected to Yang-Werner-Dumont 2002 +
+      Kikuchi 2016.
+    status: VERIFIED
+
+  - id: H017
+    category: FAILURE_MECHANISM
+    finding: >-
+      CMA/MMA block-end gradient descent on dual-pol OSL with SOP rotation +
+      Gamma-Gamma fading exhibits a stable ~40-60% per-seed inner-ring
+      collapse rate on 16QAM, INVARIANT to sequence length N (tested N=512,
+      8192, 32768). The collapse is seed-and-trajectory dependent, NOT
+      length-dependent: longer N swaps WHICH seeds collapse, not WHETHER
+      they collapse. Per-seed diagnosis on snr=25, 5 seeds: at N=512 seed
+      12 collapses (|z|^2=0.16) while seeds 11/13/14/15 converge; at N=32768
+      seed 12 recovers (|z|^2=1.23) BUT seeds 13 and 15 which converged at
+      N=512 now collapse (|z|^2=0.06, 0.27). The collapse rate stays
+      roughly 40-50% across all three lengths.
+    evidence_scope: >-
+      4 convergence-probe cells × {N=512, N=32768} × 5 seeds; 3 long cells
+      (N=8192) × 10 seeds; per-seed |z|^2 and n_unique diagnostics on
+      snr=25 cell.
+    claim_ceiling: SLICE
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/baseline-adjudication-batch/artifacts/baseline-adjudication-v1.json
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/baseline-adjudication-batch/artifacts/baseline-adjudication-v1-synthesis.md
+    related: [inner_ring_collapse, seed_trajectory, length_invariance, block_end_update]
+    thesis_destination: Results / Discussion (mechanism analysis)
+    confidence: HIGH
+    follow_up: >-
+      This is a publishable methodological observation: convergence-length
+      sufficiency for CMA/MMA cannot be assessed by checking one long N.
+      The block-end update structure (inherited from prompt013 / sat.1553)
+      is the suspected bottleneck; per-symbol stochastic-gradient variants
+      might change this but are out of scope (would break CMA anchor parity).
+    status: VERIFIED
+
+  - id: H018
+    category: LOCAL_NEGATIVE
+    finding: >-
+      MMA does NOT outperform CMA on the CB1 dual-pol OSL channel at any
+      length tested. At short N (512) MMA and CMA are statistically
+      indistinguishable (max |Δ PI-SER| = 0.0039, well below MDE). At long
+      N (8192 and 32768) MMA is WORSE than CMA by 0.04-0.06 PI-SER and
+      diverges on 10-60% of seeds. The textbook result "MMA beats CMA on
+      16QAM" does NOT transfer to this SOP-rotation + GG-fading dual-pol
+      OSL setting with block-end updates. MMA's cubic-modulus error
+      (y·y^2 vs CMA's |y|·y) amplifies over long block-end update sequences
+      into thermal divergence; stability boundary at μ∈(5e-4, 1e-3) for
+      this channel (verified by independent μ-sweep on the worst cell).
+    evidence_scope: >-
+      11 atlas-v1 cells × 10 seeds + 4 convergence-probe cells × {N=512,
+      N=32768} × 5 seeds. Independent verifier confirmed via clean-room MMA
+      bit-identical reproduction + μ-sweep diagnostic.
+    claim_ceiling: SLICE
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/baseline-adjudication-batch/artifacts/baseline-adjudication-v1.json
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/baseline-adjudication-batch/verifier_mma.py
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/baseline-adjudication-batch/verifier_diag.py
+    related: [MMA_worse_than_CMA, thermal_divergence, cubic_modulus_error]
+    thesis_destination: Results (negative result on textbook MMA superiority)
+    confidence: HIGH
+    follow_up: >-
+      This negative result is itself a contribution: it shows the
+      fiber-coherent textbook MMA superiority does not transfer naively to
+      OSL with SOP + GG. Any future 16QAM blind equalization work in this
+      project should report both CMA and MMA; MMA is NOT a "free win".
+    status: VERIFIED
+
+  - id: H019
+    category: EVALUATION_INSIGHT
+    finding: >-
+      Headroom is NON-MONOTONIC in N for this algorithm class. Increasing
+      N from 512 to 32768 INCREASES headroom on 3/4 convergence-probe cells
+      (snr=25: 0.15→0.30; snr=20 fg=1000: 0.14→0.22; snr=20 sop=40e:
+      0.14→0.43). Only snr=15 nominal holds steady at 0.12. This is
+      counter-intuitive (the usual expectation is "longer N = more
+      convergence = less headroom") and is itself a publishable
+      methodological observation: a single long-N data point cannot
+      adjudicate convergence sufficiency; per-seed trajectory analysis is
+      required.
+    evidence_scope: 4 convergence-probe cells × {N=512, N=32768} × 5 seeds, paired.
+    claim_ceiling: SLICE
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/baseline-adjudication-batch/artifacts/baseline-adjudication-v1.json
+    related: [non_monotonic_convergence, evaluation_methodology, per_seed_analysis]
+    thesis_destination: Methods / Discussion (evaluation insight)
+    confidence: HIGH
+    follow_up: >-
+      This insight should inform how convergence sufficiency is argued in
+      any future paper from this project. Reviewers may expect "we tested
+      at N=1e5 and headroom vanished" — we now have evidence that this
+      argument does not work for CMA/MMA on this channel.
+    status: VERIFIED
+
+  - id: H020
+    category: REUSABLE_ASSET
+    finding: >-
+      The MMA comparator module (mma_comparator.py + batch-contract.v1.yaml
+      + 5-test sanity suite) is a reusable, provenance-bound, identity-gated
+      conventional baseline for any future 16QAM blind equalization work in
+      this project. It shares the same channel generator, eval window, and
+      divergence criteria as the CMA anchor, ensuring information and
+      budget parity for any head-to-head comparison.
+    evidence_scope: Code asset (not a scientific finding per se).
+    claim_ceiling: SLICE
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/baseline-adjudication-batch/mma_comparator.py
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/baseline-adjudication-batch/run_baseline_adjudication.py
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/baseline-adjudication-batch/batch-contract.v1.yaml
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/baseline-adjudication-batch/tests/test_mma_identity.py
+    related: [reusable_code, baseline_infra]
+    thesis_destination: N/A (infrastructure)
+    confidence: HIGH
+    follow_up: >-
+      Any future 16QAM ML Scout should reuse this comparator module rather
+      than re-implementing; provenance and identity gate are already closed.
+    status: VERIFIED
+
+  - id: H021
+    category: INFRASTRUCTURE_GAP
+    finding: >-
+      The block_size=64 + block-end update protocol (inherited from
+      prompt013 / sat.1553) is the CMA anchor's frozen identity AND the
+      suspected bottleneck for the inner-ring collapse. Adjudicating
+      per-symbol (block_size=1) or smaller-block variants would require
+      breaking the CMA anchor's identity parity, which is out of scope for
+      the baseline adjudication batch. This is a known infrastructure debt:
+      the anchor's frozen identity prevents fully testing whether the
+      collapse is fundamental to CMA/MMA or specific to the block-end
+      protocol.
+    evidence_scope: >-
+      Diagnostic reasoning from H017 (length invariance) + H018 (MMA
+      divergence). No per-symbol variant implemented.
+    claim_ceiling: SLICE
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/baseline-adjudication-batch/artifacts/baseline-adjudication-v1-synthesis.md
+    related: [block_end_protocol, anchor_identity, infrastructure_debt]
+    thesis_destination: Limitations / Future work
+    confidence: MEDIUM
+    follow_up: >-
+      Future infrastructure task: implement per-symbol CMA/MMA variant
+      with a separate (non-protected) identity, and re-run the adjudication.
+      This is OUT OF SCOPE for the baseline adjudication batch but should
+      be tracked.
+    status: OPEN
+
+  - id: H022
+    category: METHOD_SIGNAL  # scoped, conditional
+    finding: >-
+      The inner-ring collapse is INFORMATION-RECOVERABLE: the oracle affine,
+      fit on TX truth on a 50% calibration slice, recovers collapsed seeds
+      to PI-SER ≈ 0 on most long-N cells (oracle PI-SER ≤ 0.03 on 3/4 long
+      cells). This means a learned detector with access to causal CMA-trace
+      features (output_power, weight_norm, |z|^2/R^2 ratio, update_norm per
+      block) should in principle be able to detect collapse trajectories
+      early and trigger corrective action. PROBLEM_SURVIVES_CONVENTIONAL_BASELINE
+      authorizes a bounded ML Scout targeting this mechanism. CRITICAL:
+      the Scout's Go comparator MUST be nearest-16QAM (and ideally MMA),
+      NOT the oracle affine — the oracle remains a Kill tool only (FR-25).
+      The Scout's claim ceiling is SLICE; it cannot be promoted to DOMAIN
+      without closing other blocked axes.
+    evidence_scope: >-
+      Oracle PI-SER from axis 1 (10 seeds × 11 cells) + axis 2 (5 seeds ×
+      4 cells × 2 lengths). Mechanism reasoning: information is in z-stream
+      (oracle recovers it), failure is in algorithm trajectory (CMA/MMA
+      cannot).
+    claim_ceiling: SLICE
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/baseline-adjudication-batch/artifacts/baseline-adjudication-v1.json
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/baseline-adjudication-batch/artifacts/baseline-adjudication-v1-synthesis.md
+    related: [ML_scout_authorized, collapse_detection, causal_trace_features, FR25_comparator]
+    thesis_destination: Future work (ML Scout design); NOT auto-promoted to Results.
+    confidence: HIGH  # that the problem survives; ML winning is NOT implied
+    follow_up: >-
+      Next batch (clean-context conversation): design bounded ML Scout
+      targeting collapse detection with shared CMA-trace input contract,
+      dual Go comparators (nearest-16QAM + MMA), oracle affine as Kill
+      only. Mechanism-different candidates: collapse classifier, anomaly
+      detector, learned re-init trigger. NOT model-name permutations.
+    status: CONDITIONAL  # authorizes but does not require ML Scout
+
 # === Governance ===
 governance:
   protected_history_unchanged: true

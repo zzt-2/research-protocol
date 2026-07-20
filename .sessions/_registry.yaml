@@ -593,8 +593,8 @@ topics:
     title: Direction Lab 首轮 SCIENCE_SCOUT 正式科学探索
     status: active
     created: "2026-07-20"
-    last_updated: "2026-07-20（S002/D005/H002：CB1 收回 DIAGNOSTIC/SLICE；先做轻量传统 baseline 裁决，同时继续 Portfolio）"
-    description: "首轮正式 SCIENCE_SCOUT campaign。CB1 modulation closure 与 16QAM Atlas 已完成，但单模 CMA 可能任务失配或欠收敛，原直接 ML handoff 已被取代；下一步从 H002 完成一个广泛采用、任务适配的传统 baseline 裁决并并行准备机制不同候选。继续保护 B001-B003、P03 Atlas、CB1 raw artifacts 与 formal GW/Contract/Execute 边界。"
+    last_updated: "2026-07-20（S003/D006/H003：baseline adjudication shared batch 完成，裁决 = PROBLEM_SURVIVES_CONVENTIONAL_BASELINE；条件授权 ML Scout；Portfolio 新增 C01-C04）"
+    description: "首轮正式 SCIENCE_SCOUT campaign。CB1 modulation closure 与 16QAM Atlas 已完成；baseline adjudication 裁决 = PROBLEM_SURVIVES_CONVENTIONAL_BASELINE（MMA + N=32768 联合裁决后 gap 稳定存在）；D006 条件授权下一对话做 bounded ML Scout（首选 C01 causal collapse detector），Go 对手必须 nearest-16QAM + MMA。继续保护 B001-B003、P03 Atlas、CB1 raw artifacts 与 formal GW/Contract/Execute 边界。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 V007 PASS 的消费者部署（全局 Skill + STATUS + Project Adapter + protected history）作为科学探索起点

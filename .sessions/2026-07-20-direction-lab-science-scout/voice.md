@@ -20,3 +20,13 @@
 > "现在开始：先恢复 STATUS 和授权边界，创建隔离 worktree，然后完成 Portfolio Refresh 与 Capability Leverage Atlas。证据支持后继续建设首个共享能力并运行 baseline Atlas，不要在规划完成后提前停止。"
 
 - "是。你这套我很同意。你快想想怎么改skill，怎么更新日志。当然，baseline说得过去就行，不必追目前最好，只要比大量人都在用的baseline好，那就行。" → D005
+
+## 2026-07-20（续 — SCIENCE_SCOUT 第二对话，baseline 裁决）
+
+> "不要停在规划或接口层；在边界内尽可能连续推进到一次真正的 baseline 科学裁决、明确的基础设施阻断，或合法路径自动轮转。"
+
+> "baseline 不必是当前 SOTA。不得为了'严谨'无限追逐最新方法。"
+
+> "只有正式目标/场景改变、重大资源投入、多个成熟论文路线必须二选一，或所有合法 Portfolio 路径都耗尽时，才询问我。"
+
+> "当有限主张已经有合理 comparator，且显而易见的廉价替代解释已经处置，立即停止扩展 baseline，不做传统算法穷举。"

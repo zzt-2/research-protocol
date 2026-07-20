@@ -1,0 +1,265 @@
+# Portfolio Refresh v2 Addendum — post-baseline-adjudication candidates
+# Campaign: science-scout-2026-07-20.dual-pol-osl
+# Trigger: H022 (PROBLEM_SURVIVES_CONVENTIONAL_BASELINE) + H017 (collapse mechanism)
+# Date: 2026-07-20
+#
+# Adds 4 mechanism-distinct candidates seeded by the baseline-adjudication
+# findings. All reuse the CB1 modulation-generic closure + shared channel
+# contract (generate_shared_realization_dp with modulation='qam16') and the
+# MMA/CMA comparator lattice. None blocks on the others; each can be scouted
+# independently in a clean-context conversation.
+#
+# Candidate expression form (per user prompt §五):
+#   Method M in condition C, because mechanism A, has deficiency;
+#   legal input = ...;
+#   output / action = ...;
+#   metric improved = ...;
+#   main conventional comparator = ...;
+#   likely paper content = ...
+#
+# These candidates are PROBLEM_SURVIVES_CONVENTIONAL_BASELINE-authorized
+# Scout targets ONLY if the ML Scout beats nearest-16QAM AND MMA on the
+# same channel (FR-25). Oracle affine remains Kill tool only (FR-21).
+
+schema_version: direction-lab.portfolio-refresh.v2-addendum
+campaign_id: science-scout-2026-07-20.dual-pol-osl
+supersedes: none  # additive to portfolio-refresh.v1.yaml
+inherits_priority_candidates_from: portfolio-refresh.v1.yaml
+
+# === New candidates from baseline adjudication (H016-H022) ===
+new_candidates:
+
+  # ─── C01: Causal collapse-early-warning detector ───────────────────────────
+  # Strongest direct mechanism match to H017 (length-invariant collapse).
+  - id: C01
+    rank: 1  # post-adjudication top priority (direct mechanism match)
+    name: causal_collapse_early_warning_detector
+    mechanism_family: supervised_temporal_detector
+
+    # M-C-A expression (per user §五 form)
+    method_M: >-
+      Causal (online, no future-peek) binary classifier on CMA-trace features
+      (output_power, weight_norm, |z|^2/R^2 ratio, update_norm per block)
+      predicting "will this seed collapse to inner ring in the next K blocks".
+    condition_C: >-
+      Dual-pol OSL with strong Gamma-Gamma turbulence (α=4.2, β=1.4),
+      SOP rotation 4e-6 to 4e-5 rad/sym, SNR 10-25 dB, square 16QAM,
+      block-end CMA updates with μ=0.001, block_size=64, N=512 or 32768.
+    mechanism_A_deficiency: >-
+      Standard-CMA (and MMA) exhibit a stable ~40-60% per-seed inner-ring
+      collapse rate that is INVARIANT to sequence length (H017). The collapse
+      is seed-and-trajectory dependent; the algorithm cannot detect it is
+      collapsing until too late. There is no receiver-side early warning.
+    legal_input: >-
+      CSI_NONE: causal CMA-trace features only (no TX, no future symbols).
+      Same information class as nearest-16QAM and MMA.
+    output_or_action: >-
+      Per-block binary alert {collapse_imminent, healthy} + confidence.
+      Optional: abstain (output "uncertain" if confidence < τ).
+    metric_improved: >-
+      PI-SER on seeds that would otherwise collapse, IF the alert triggers
+      a corrective action (re-init, fallback to pilot-aided, or learned
+      affine correction). Direct metric = detection AUC + downstream
+      PI-SER impact.
+    main_conventional_comparator: >-
+      nearest-16QAM (strongest legal non-ML on collapsed seeds = terrible
+      PI-SER ≈ 0.7) AND MMA (also collapses; PI-SER ≈ 0.3-0.8). ML wins
+      only if it beats BOTH.
+    likely_paper_content: >-
+      (a) Mechanism characterization: length-invariant seed-trajectory-
+      dependent collapse (H017, novel observation).
+      (b) Method: causal collapse detector + corrective action trigger.
+      (c) Baseline: CMA + MMA + blind affine + oracle affine (Kill only).
+      (d) Result: ML beats both CMA and MMA on collapse-prone seeds,
+          scoped to SLICE.
+    reuses: [cb1_closure, generate_shared_realization_dp, mma_comparator,
+             cb1_cell_runner.standard_cma_godard_with_z]
+    claim_ceiling: SLICE
+    paper_main_line_value: 5  # direct mechanism + method + boundary mapping
+    runnable_in_campaign: Y
+    risks: >-
+      Labels for supervised training come from oracle affine disagreement
+      (PI-SER > τ ⇒ collapsed) — this is FR-14 prior knowledge, allowed for
+      labels but not as runtime input. Must verify no oracle leakage at
+      inference time.
+    next_action: design_ML_scout_batch_C01
+
+  # ─── C02: Self-supervised anomaly detector on CMA trace ────────────────────
+  # Mechanism different from C01: SSL reconstruction instead of supervised.
+  - id: C02
+    rank: 2
+    name: ssl_cma_trace_anomaly_detector
+    mechanism_family: self_supervised_anomaly
+
+    method_M: >-
+      Self-supervised reconstruction model (causal mask + lightweight
+      transformer/GRU) trained on CMA-trace features from HEALTHY seeds
+      only; at inference, flag seeds whose reconstruction error exceeds
+      threshold as anomalous (collapse-prone).
+    condition_C: same as C01 (dual-pol OSL 16QAM, same channel class).
+    mechanism_A_deficiency: >-
+      Same as C01 (H017 length-invariant collapse) but the failure-detection
+      mechanism is different: instead of supervised classification with
+      oracle-derived labels, use SSL anomaly detection that needs no labels.
+      This avoids FR-14 label-derivation concerns entirely.
+    legal_input: same as C01 (CSI_NONE causal CMA-trace features).
+    output_or_action: per-block anomaly score + threshold-based alert.
+    metric_improved: >-
+      Same as C01 (detection AUC + downstream PI-SER) but reported as
+      "label-free" version. Useful if C01's label-derivation raises
+      reviewer concerns.
+    main_conventional_comparator: nearest-16QAM + MMA + blind affine.
+    likely_paper_content: >-
+      (a) SSL alternative to supervised collapse detection.
+      (b) Comparison: supervised (C01) vs SSL (C02) vs conventional (CMA/MMA).
+      (c) Result: trade-off between label-derivation cleanliness and
+          detection power, scoped to SLICE.
+    reuses: [cb1_closure, generate_shared_realization_dp, mma_comparator]
+    claim_ceiling: SLICE
+    paper_main_line_value: 3  # supporting method (C01 is primary)
+    runnable_in_campaign: Y
+    risks: >-
+      SSL on time series is fiddly; reconstruction may simply learn the
+      "constant-modulus" prior without capturing collapse dynamics. Need
+      ablation against a constant-output baseline.
+    next_action: design_ML_scout_batch_C02
+
+  # ─── C03: Learned re-initialization policy ─────────────────────────────────
+  # Mechanism different from C01/C02: control action, not detection.
+  - id: C03
+    rank: 3
+    name: learned_reinit_policy
+    mechanism_family: reinforcement_learning_control
+
+    method_M: >-
+      RL policy (lightweight, e.g., contextual bandit or DQN) that observes
+      CMA-trace features and chooses among {continue, reinit center-tap,
+      reinit random-orthogonal, switch to MMA} per block. Reward = -PI-SER
+      on the eval window (or +1 per correctly-demodulated symbol).
+    condition_C: same as C01.
+    mechanism_A_deficiency: >-
+      CMA/MMA's center-tap initialization is fixed; once the trajectory
+      enters the inner-ring basin, no escape mechanism exists. An RL policy
+      can learn WHEN to re-init or switch algorithm to escape collapse.
+    legal_input: same as C01 (CSI_NONE CMA-trace features).
+    output_or_action: discrete action per block (4 actions listed above).
+    metric_improved: >-
+      PI-SER averaged over all seeds. Policy should recover most collapsed
+      seeds by triggering re-init at the right moment.
+    main_conventional_comparator: >-
+      nearest-16QAM + MMA + random-reinit baseline (reinit every K blocks
+      regardless of state). RL wins only if it beats all three.
+    likely_paper_content: >-
+      (a) RL-based adaptive equalizer control (novel for OSL).
+      (b) Action-space design: continue/reinit/switch.
+      (c) Result: RL beats fixed-algorithm baselines on collapse-prone
+          seeds, scoped to SLICE.
+    reuses: [cb1_closure, generate_shared_realization_dp, mma_comparator,
+             standard_cma_godard_with_z]
+    claim_ceiling: SLICE
+    paper_main_line_value: 4
+    runnable_in_campaign: Y_with_compute  # RL training takes longer than supervised
+    risks: >-
+      RL sample efficiency; reward sparsity (PI-SER only computed at eval
+      window). May need dense proxy reward (e.g., -|output_power - R^2|).
+      Risk of "RL beats random but loses to MMA at long N" (must report
+      both).
+    next_action: design_ML_scout_batch_C03
+
+  # ─── C04: Learned affine correction (bounded) ──────────────────────────────
+  # Mechanism different: post-hoc correction rather than detection/control.
+  - id: C04
+    rank: 4
+    name: learned_affine_correction
+    mechanism_family: supervised_post_hoc_correction
+
+    method_M: >-
+      Lightweight learned affine map (2x2 complex + bias, same shape as
+      blind_affine_compare_16qam) but with coefficients predicted from
+      CMA-trace features (not from TX truth, not from z-only pseudo-labels).
+      At inference: features → predicted coefficients → apply to z →
+      hard-decision.
+    condition_C: same as C01.
+    mechanism_A_deficiency: >-
+      Blind affine (the existing comparator) uses z-derived 16QAM pseudo-
+      labels; on collapsed z, pseudo-labels are wrong (all inner ring) so
+      the fit is useless. A learned map conditions on trace features (which
+      DO carry collapse signature) instead of pseudo-labels, recovering
+      collapse-correcting power WITHOUT TX truth.
+    legal_input: same as C01 (CSI_NONE CMA-trace features + z).
+    output_or_action: corrected z-stream (same shape as input).
+    metric_improved: PI-SER after correction.
+    main_conventional_comparator: >-
+      nearest-16QAM + MMA + blind affine (the natural same-class baseline).
+      ML wins only if it beats blind affine (which is the strongest same-
+      information non-ML affine).
+    likely_paper_content: >-
+      (a) Trace-conditioned affine correction (mechanism different from
+          detection/control).
+      (b) Comparison vs blind affine isolates the value of trace features
+          over pseudo-labels.
+      (c) Result: scoped SLICE; cheap to deploy (inference is one 2x2
+          matrix multiply).
+    reuses: [cb1_closure, generate_shared_realization_dp, mma_comparator,
+             cb1_evaluator.blind_affine_compare_16qam]
+    claim_ceiling: SLICE
+    paper_main_line_value: 3
+    runnable_in_campaign: Y
+    risks: >-
+      May simply reduce to blind affine if trace features are uninformative
+      beyond pseudo-labels. Architectural ablation required (features-only
+      vs pseudo-labels-only vs both).
+    next_action: design_ML_scout_batch_C04
+
+# === Candidate family relationships ===
+family_structure:
+  collapse_detection_family:
+    members: [C01, C02]
+    shared_mechanism: detect collapse trajectory from CMA-trace features
+    differentiation: supervised (C01) vs SSL (C02); C01 is primary, C02 ablation
+  collapse_control_family:
+    members: [C03]
+    shared_mechanism: take corrective ACTION on collapse (vs just detect)
+    differentiation: RL policy with discrete action space
+  collapse_correction_family:
+    members: [C04]
+    shared_mechanism: post-hoc correction of collapsed z
+    differentiation: learned affine conditioned on trace features
+
+# === Recommended next-batch sequencing ===
+sequencing:
+  next_batch_priority: C01  # direct mechanism match, lowest risk
+  next_batch_alternatives: [C04, C02, C03]  # in order of paper value / risk
+  shared_contract_for_all_C_candidates: >-
+    All 4 candidates share the same input contract (CSI_NONE causal CMA-
+    trace features), the same channel generator, the same eval window, and
+    the same Go comparator lattice (nearest-16QAM + MMA + blind affine;
+    oracle affine = Kill only). A single ML Scout batch can evaluate
+    multiple candidates under this shared contract.
+  rotation_policy: >-
+    If C01 fails (ML does not beat nearest-16QAM AND MMA on collapse-prone
+    seeds), rotate to C04 (cheaper, different mechanism). If C04 also
+    fails, rotate to C02 (SSL, no label-derivation concerns). If all C
+    candidates fail, the inner-ring collapse is NOT closable by ML on
+    CSI_NONE features — record LOCAL_NEGATIVE and rotate to U24 / RC2
+    cluster from portfolio-refresh.v1.
+
+# === Candidates NOT pursued (and why) ===
+not_pursued:
+  - id: per_symbol_cma_variant
+    reason: >-
+      Would test whether the block-end protocol (block_size=64) is the
+      collapse bottleneck (H021 infrastructure gap). OUT OF SCOPE for ML
+      Scout batch — it is a CONVENTIONAL algorithm variant, not an ML
+      candidate. Tracked as H021 follow-up infrastructure task.
+  - id: pilot_aided_cma
+    reason: >-
+      Would change information class from CSI_NONE to CSI_PILOT. Out of
+      scope for this campaign (claim ceiling = CSI_NONE SLICE). May be
+      pursued in a future campaign that closes the receiver-CSI axis.
+  - id: frequency_domain_equalizer
+    reason: >-
+      Mechanism different but requires significant new infrastructure
+      (FFT-based processing, different eval window geometry). Not runnable
+      on current CB1 closure without major changes. Defer to future
+      capability bundle.

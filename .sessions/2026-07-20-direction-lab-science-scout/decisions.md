@@ -177,3 +177,63 @@ H001 标记为被取代；新增 H002 作为续接入口。CB1 raw artifacts、�
 ### 来源
 
 S002 续接 / 用户纠正 / Skill D010。
+
+---
+
+## D006: CB1 16QAM inner-ring collapse 裁决为 PROBLEM_SURVIVES_CONVENTIONAL_BASELINE；条件授权 ML Scout
+
+> status: active
+> date: 2026-07-20
+> 取代：D005 中"裁决达到 PROBLEM_SURVIVES_CONVENTIONAL_BASELINE 后才允许 bounded ML Scout"的条件触发部分（现在已满足，授权生效）
+> 被取代：无
+> 依据: 验证: `baseline-adjudication-batch/artifacts/baseline-adjudication-v1.json` + `baseline-adjudication-v1-synthesis.md` + 子 agent clean-room verifier（`verifier_mma.py`，bit-identical 复现）+ 用户原话: `voice.md` 2026-07-20 "在边界内尽可能连续推进到一次真正的 baseline 科学裁决"
+
+### 决策
+
+CB1 16QAM inner-ring collapse headroom 经一个广泛采用、任务适配、来源闭环的传统主 comparator（MMA, Yang-Werner-Dumont JSAC 2002）和一个 ~1e5 收敛长度（N=32768）联合裁决后，**仍然稳定存在**。裁决结论 = `PROBLEM_SURVIVES_CONVENTIONAL_BASELINE`。
+
+具体：
+1. MMA 在 8/11 short cells (N=512) 上跟 CMA 统计无差异（|Δ PI-SER| < MDE）；在 3/11 long cells (N=8192) 上反而**比 CMA 更差**且 1/10 seeds diverge。
+2. N=32768 不仅未消除 CMA headroom，反而 3/4 cells **headroom 增大**（length-invariant collapse rate ≈ 40-60%）。
+3. 因此**条件 (a) task-mismatch** 和**条件 (b) under-convergence** 都被排除；headroom 是稳定的、机制相关的残余。
+
+依 H002 / baseline-adjudication 参考，这**条件性授权**（不强制）一个 bounded ML Scout batch 针对 collapse 机制，但：
+- ML 的 Go 对手必须是 nearest-16QAM **和** MMA（FR-25）；oracle affine 仍仅 Kill（FR-21）。
+- claim ceiling 仍为 SLICE；DOMAIN 仍需关闭其他 blocked axes。
+- Portfolio 同时准备 4 个机制不同候选 C01-C04（portfolio-refresh.v2-addendum.yaml）。
+
+### 理由
+
+裁决严格遵守 batch-contract.v1.yaml 的预注册决策规则：
+- 条件 (1) MMA headroom ≥ MDE on ≥ 2 atlas-v1 cells → 10/11 PASS
+- 条件 (2) N=32768 CMA headroom ≥ MDE on ≥ 1 cell → 4/4 PASS
+- 合取 → PROBLEM_SURVIVES_CONVENTIONAL_BASELINE
+
+来源核验：
+- MMA 公式（Eq.12-13）+ dual-pol 扩展（Kikuchi JLT 2016 §IV.B）+ R_R²=R_I²=0.82 推导：3 篇独立复现 + 数值验证。
+- 5/5 sanity tests PASS（identity gate / R_R² / clean QPSK / clean 16QAM / CMA anchor byte regression）。
+- 独立 verifier 子 agent clean-room MMA 实现与主线 bit-identical；w_norm 飙升是合法 thermal divergence（μ∈(5e-4, 1e-3) 稳定性边界）非 bug。
+
+机制判读（重要 nuance）：
+- headroom 不能简单归因 task-mismatch（MMA 没更好甚至更差）。
+- 不能简单归因 under-convergence（N=32768 反而更糟）。
+- 真因：block-end gradient descent (block_size=64) 在 SOP-rotation + GG-fading 下存在稳定的 seed-and-trajectory-dependent 收敛失败，~40-60% seeds 坍缩到内环，与 N 无关。
+- 信息可恢复性：oracle affine 能恢复坍缩 seeds 到 PI-SER≈0，说明恢复信息在 z-stream 中，只是 CMA/MMA trajectory 拿不到。这给 ML collapse detector 留下机制合理性。
+
+### 排除的替代方案
+
+- **不直接进 ML training**：D005 要求先裁决，本轮裁决 = PROBLEM_SURVIVES；授权生效但不在本对话训练 ML（上下文预算 + 需 clean-context 设计）。
+- **不追 RLS / FD-MMA / DD-LMS cascade / neural equalizer 等 SOTA**：用户 §三 "baseline 不必是当前 SOTA"；MMA 已是任务适配广泛采用主 comparator，headroom 在其下仍存活就足够。
+- **不抹除 H010-H015 正面 harvest**：CB1 closure / R²=1.32 / PI-SER evaluator / inner-ring collapse 诊断 / baseline 选择教训仍是有效次级材料。
+- **不外推整个 16QAM 或通信领域**：claim ceiling 严格限 SLICE；DOMAIN 仍 UNRESOLVED。
+
+### 影响范围
+
+- 下一对话（clean context）：设计 bounded ML Scout batch（候选 C01-C04 任选，C01 为首选直接机制匹配）；shared input contract = causal CMA-trace features；dual Go comparator = nearest-16QAM + MMA。
+- 本轮 harvest H016-H022 追加到 harvest-addendum.v1.yaml；provenance 追加 F-MMA-COST / F-MMA-R2-16QAM + 符号 + 参数。
+- topic-index 不变量段无变更；H021 新增基础设施债务（block-end protocol 是 collapse 瓶颈但不能动 CMA anchor identity）。
+- protected history（B001-B003 / P03 / CB1 raw）字节未改。
+
+### 来源
+
+S003（本轮 baseline adjudication shared batch）+ 子 agent verifier + 用户 §三/§五/§六/§七
