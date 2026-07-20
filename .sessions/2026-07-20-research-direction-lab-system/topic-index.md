@@ -6,7 +6,7 @@
 
 - **slug**: `2026-07-20-research-direction-lab-system`
 - **title**: Research Direction Lab 完整体系设计
-- **性质**: 目标体系蓝图与分阶段实施；Task 4–5 已终验 PASS，不运行科学实验
+- **性质**: 目标体系蓝图与分阶段实施；Task 1–7 已验证，当前等待提交与 Task 8 授权决定，不运行科学实验
 
 ## 范围边界
 
@@ -19,6 +19,7 @@
 - 审计既有 `method-family-batch-exploration`、Direction Lab v0.3、governance pilot、Portfolio Autopilot 和用户原话；
 - 冻结目标体系蓝图、资产迁移表、实施顺序和验收场景；
 - Task 1–3 已完成；Task 4–5 的确定性安全小工具与只读历史 replay 已实现并由 V002 独立终验 PASS；
+- Task 6 的只读项目投影、Task 7 的旧 scheduler 迁移审计和不计为行为 PASS 的桌面使用推演已由 V003 验证；
 - 本阶段不修改现有 controller、campaign core、仿真器、baseline 或科学证据。
 
 ### 明确不含
@@ -36,6 +37,10 @@
   - 原因：V001 已验证 Phase 1；用户按 H001 指示继续。
   - 新范围：五个确定性安全小工具及测试、只读历史 replay cases/tests。
   - 影响的未决项：Task 4–5 从未开始改为进行中；Task 6–10 继续未授权。
+- **[2026-07-20] D005**：从 Phase 2 扩展到实施 Task 6–7，并加入只读桌面使用推演。
+  - 原因：V002 已 PASS；用户按 H002 继续并要求推演实际使用。
+  - 新范围：只读 Adapter/portfolio/harvest/status、旧 scheduler 逐函数审计与 no-scheduler 测试、非评分桌面演练。
+  - 影响的未决项：Task 6–7 从未授权改为进行中；Task 8–10、shadow 和科学运行继续未授权。
 
 ## 已确认结论
 
@@ -69,12 +74,16 @@
 - **S004（续）**：Task 4–5 已实现；分任务审查与整阶段终验发现的并发断链、失败原子性、Atlas claim ceiling 和 report-source 合同问题均已修复，随后整阶段复审 PASS。
 - **S005 / V002**：Phase 2 修复后独立终验 PASS；48 项 Skill 测试通过、1 项环境型 skip，旧 baseline 62/62 通过。
 - **H002**：冻结 Task 6–7 的只读项目投影与 scheduler 审计入口，未授权 forward test 或科学运行。
+- **S006 / D005**：H002 接收核验通过，Task 6–7 与只读桌面推演获授权。
+- **D006**：Task 6 增补最小 `thesis-spines.v1.md`，补齐闭合 Adapter 的唯一拥有者，不虚构论文路线。
+- **S007 / D007**：完成真实只读使用推演；STATUS 从 512 行全量 dump 收敛为 58 行有界八问入口，并明确分层授权与六个 blocked axes。
+- **V003**：Task 6–7 与只读推演修复后独立终验 PASS；完整 Skill `60 passed, 1 skipped`，旧 baseline `62 passed`。
+- **H003**：冻结下一轮 Task 8 fresh-agent blind forward tests 的入口与纪律。
 
 ## 未决项
 
-- 是否授权 Task 6–7 的只读项目投影与旧 scheduler 迁移审计。
-- 现有 `campaign_core.py/campaignctl.py` 中哪些小函数值得提取，留到 Task 7 逐函数审计。
+- Task 8 forward tests 是否能在盲测中维持续跑、claim scope、harvest 和领域隔离。
 
 ## 当前位置
 
-Task 1–3 已由 V001 验证并提交；Task 4–5 已由 V002 独立终验 PASS，等待一次性提交。Task 6–10、project adapter 实例、forward behavior、shadow 和科学实验均未开始；下一入口为 H002。
+Task 1–7 已由 V001–V003 分阶段验证；Task 6–7 与只读使用推演等待本轮一次性提交。Task 8–10、forward behavior、shadow 和科学实验均未开始；下一入口为 H003。

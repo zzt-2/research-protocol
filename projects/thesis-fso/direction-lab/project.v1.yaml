@@ -1,0 +1,290 @@
+project_id: thesis-fso.dual-pol-osl.direction-lab.read-only-preview.v1
+formal_goal:
+  statement: >-
+    Systematically identify whether machine learning provides a real, legally
+    comparable information increment anywhere in the complete dual-polarization
+    ground-to-satellite OSL receiver chain.
+  contribution_scope:
+    - receiver algorithm or bounded mechanism under a legal standard-CMA baseline
+    - adaptive or robust method tied to an explicit operating axis
+    - performance boundary or scoped negative-result study
+    - reusable benchmark, evaluator, runner, or evidence protocol that unlocks a scientific comparison
+  thesis_constraints:
+    - sandbox or Scout governance success is not formal scientific progress
+    - B001-B003 numbers are exploratory-only and cannot enter thesis or paper materials automatically
+    - fixed-label BER and permutation-invariant BER remain separate
+    - blocked axes are not negative evidence
+    - claim ceiling is the smallest evidence-backed level
+  authorized_actions:
+    - READ_ONLY_MIGRATION_PREVIEW
+  prohibited_actions:
+    - start B004 or any new Sandbox batch
+    - run any new scientific experiment or train P03 ML
+    - modify or rerun protected history, baseline, runner, canonical state, completion events, or receipts
+    - create a Queue, Registry, promotion, formal Groundwork, Contract, thesis, or paper claim
+    - select a new scientific direction in this migration task
+anchor:
+  scenario: dual-polarization ground-to-satellite OSL under Gamma-Gamma turbulence and SOP dynamics
+  baseline_component: baseline.standard_cma.godard_z
+  metrics:
+    - fixed_label_ber
+    - permutation_invariant_ber
+  parameter_sources:
+    - name: baseline_identity_and_forbidden_aliases
+      pointer: projects/thesis-fso/direction-lab/anchor.yaml
+    - name: standard_cma_frozen_implementation
+      pointer: projects/simulation/explore/cma-fade-divergence/prompt013_swap_mechanism_q2.py
+    - name: shared_dual_pol_channel
+      pointer: projects/simulation/common/_dual_pol_channel.py
+    - name: metric_contract
+      pointer: .sessions/2026-07-10-dual-pol-osl-groundwork/decisions.md
+  known_limitations:
+    - current-CMA/no-z and common._cma.CMAEqualizer-as-standard are forbidden aliases
+    - fixed-label and permutation-invariant metrics are not interchangeable
+    - current frozen P03 closure supports QPSK, CSI_NONE, and uncoded hard decision only
+    - B001-B003 and Atlas are sandbox/scout evidence with no formal promotion effect
+    - tracked receipts and projections exist, but B001-B003 raw artifacts are absent from this checkout
+    - anchor.yaml embedded source hashes are historical rather than fresh migration hashes
+  evidence_status: VALID
+components:
+  - component_id: baseline.standard_cma.godard_z
+    role: canonical baseline implementation
+    source_pointer: projects/simulation/explore/cma-fade-divergence/prompt013_swap_mechanism_q2.py
+    identity_digest: 9282ecb53608a2093a5e69a62ccea9976211ecfda7626d2e65ce2fd912f1ca2f
+    availability: AVAILABLE
+  - component_id: simulator.dual_pol_shared_realization.v1
+    role: shared dual-pol channel
+    source_pointer: projects/simulation/common/_dual_pol_channel.py
+    identity_digest: 3d02eaa31e3efa9c343028a81ec6b36c1d1ebf9135e386e974ef581ba11bf7d3
+    availability: AVAILABLE
+  - component_id: runner.direction_lab.b003.snapshot
+    role: exact historical B003 runner identity from manifest; not a current-run alias
+    source_pointer: projects/thesis-fso/direction-lab/batches/B003-20260718-live/manifest.json
+    identity_digest: 6f21dfe0f883779bd3cf4edc731a179b95a9a8db0780670a2ba9ae330d9a9caf
+    availability: RETIRED
+  - component_id: candidate.P01-U25.action-contract.v1
+    role: receiver-proxy event and action contract; architecture blocked
+    source_pointer: projects/thesis-fso/direction-lab/u25-action-contract.v1.yaml
+    identity_digest: f0fe39a55a80b6280e64c4d822dce09c8d5125ac3a2ed583933164a5f8371f67
+    availability: BLOCKED
+  - component_id: candidate.P03-U19.atlas-gate.v1
+    role: receipt-bound Atlas gate; asset available but no run authorization
+    source_pointer: projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/atlas_gate.py
+    identity_digest: f25531f58613ee2f4788f09cb151116e28fb3d5ecff8756a42e423762052f4f5
+    availability: AVAILABLE
+  - component_id: candidate.P03-U19.stage-a-cell-runner.v1
+    role: frozen-closure cell runner; asset available but no run authorization
+    source_pointer: projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/stage_a_cell_runner.py
+    identity_digest: 47574961af6ba4c65492b905b98def714e330dfb90ba5449483f5a498cc69e1c
+    availability: AVAILABLE
+  - component_id: candidate.P03-U19.stage-a-driver.v1
+    role: gated Stage A driver; asset available but no run authorization
+    source_pointer: projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/run_stage_a.py
+    identity_digest: a25481096eeb5ad8acc10149f3d14654ecb883be2a1c6090c403c69c27963078
+    availability: AVAILABLE
+  - component_id: protected.canonical-state
+    role: protected historical file; disk-byte SHA guard for READ_ONLY_MIGRATION_PREVIEW
+    source_pointer: projects/thesis-fso/direction-lab/canonical-state.yaml
+    identity_digest: 56abf96caf24d2404d0e37d31d58904bef3163ef1f73de69cf8c8a29971c087f
+    availability: AVAILABLE
+  - component_id: protected.completion-events
+    role: protected historical file; disk-byte SHA guard for READ_ONLY_MIGRATION_PREVIEW
+    source_pointer: projects/thesis-fso/direction-lab/state/completion-events.jsonl
+    identity_digest: 5565e78ac1b5f1a9e5bba5f53096f2cb4001f2264451239a34a0ce6cb8c6c5fe
+    availability: AVAILABLE
+  - component_id: protected.immutable-current-projection
+    role: protected historical file; disk-byte SHA guard for READ_ONLY_MIGRATION_PREVIEW
+    source_pointer: projects/thesis-fso/direction-lab/state/projections/5967ea38e676b46cb092c98060bec5b470b5a03625f21e65218cf3b2ae3a88af.yaml
+    identity_digest: 56abf96caf24d2404d0e37d31d58904bef3163ef1f73de69cf8c8a29971c087f
+    availability: AVAILABLE
+  - component_id: protected.b001-manifest
+    role: protected historical file; disk-byte SHA guard for READ_ONLY_MIGRATION_PREVIEW
+    source_pointer: projects/thesis-fso/direction-lab/batches/B001-20260717-live/manifest.json
+    identity_digest: 7e84cfe59b3cefcb013eb5013b36cc42c5d813655097b5ef6fe90e37a7f6d90b
+    availability: AVAILABLE
+  - component_id: protected.b001-verifier
+    role: protected historical file; disk-byte SHA guard for READ_ONLY_MIGRATION_PREVIEW
+    source_pointer: projects/thesis-fso/direction-lab/batches/B001-20260717-live/verifier-report.md
+    identity_digest: 61c5f0d24b5febafe58ecc4f09b6bab70cad3ce09c44bceed5e2518f935a1751
+    availability: AVAILABLE
+  - component_id: protected.b001-synthesis
+    role: protected historical file; disk-byte SHA guard for READ_ONLY_MIGRATION_PREVIEW
+    source_pointer: projects/thesis-fso/direction-lab/batches/B001-20260717-live/batch-synthesis.md
+    identity_digest: 4bd1783a163314dccbd2f0e600a0993f0d8100f6c28a2f3823ca957bdba4a0be
+    availability: AVAILABLE
+  - component_id: protected.b002-manifest
+    role: protected historical file; disk-byte SHA guard for READ_ONLY_MIGRATION_PREVIEW
+    source_pointer: projects/thesis-fso/direction-lab/batches/B002-20260718-live/manifest.json
+    identity_digest: f1b4f205bdb3a40b518a36bdca5e8c02760a9613313d4d10b2b4fead22db4f98
+    availability: AVAILABLE
+  - component_id: protected.b002-status
+    role: protected historical file; disk-byte SHA guard for READ_ONLY_MIGRATION_PREVIEW
+    source_pointer: projects/thesis-fso/direction-lab/batches/B002-20260718-live/execution-status.yaml
+    identity_digest: 5dcf6a9a60bf84625042e87013c83ad631815db0664b828f8a303655f38e43bc
+    availability: AVAILABLE
+  - component_id: protected.b002-verifier
+    role: protected historical file; disk-byte SHA guard for READ_ONLY_MIGRATION_PREVIEW
+    source_pointer: projects/thesis-fso/direction-lab/batches/B002-20260718-live/verifier-report.md
+    identity_digest: 22fa5e6741dbae8c77669f01b79291dd679abb195e02bfb35cb37cedac9e937d
+    availability: AVAILABLE
+  - component_id: protected.b002-synthesis
+    role: protected historical file; disk-byte SHA guard for READ_ONLY_MIGRATION_PREVIEW
+    source_pointer: projects/thesis-fso/direction-lab/batches/B002-20260718-live/batch-synthesis.md
+    identity_digest: 3ecc182b6b7e48dbaa0d0154365729769ddbdfdfb53b2ff1f9750a759f64f587
+    availability: AVAILABLE
+  - component_id: protected.b003-manifest
+    role: protected historical file; disk-byte SHA guard for READ_ONLY_MIGRATION_PREVIEW
+    source_pointer: projects/thesis-fso/direction-lab/batches/B003-20260718-live/manifest.json
+    identity_digest: 5d4471fde14880f25c5674068059ce0b3b58cb750f8b0e0693100eaa74d1db13
+    availability: AVAILABLE
+  - component_id: protected.b003-status
+    role: protected historical file; disk-byte SHA guard for READ_ONLY_MIGRATION_PREVIEW
+    source_pointer: projects/thesis-fso/direction-lab/batches/B003-20260718-live/execution-status.yaml
+    identity_digest: 5612a8187c5aa616528249eee3d30e3cf72b48f0afddd29a18e09b4fa011ba8d
+    availability: AVAILABLE
+  - component_id: protected.b003-verifier
+    role: protected historical file; disk-byte SHA guard for READ_ONLY_MIGRATION_PREVIEW
+    source_pointer: projects/thesis-fso/direction-lab/batches/B003-20260718-live/verifier-report.md
+    identity_digest: 091d37af56b44ef78d97e6493fa68e683234cfe5423d4b50614acdd396302cbc
+    availability: AVAILABLE
+  - component_id: protected.b003-synthesis
+    role: protected historical file; disk-byte SHA guard for READ_ONLY_MIGRATION_PREVIEW
+    source_pointer: projects/thesis-fso/direction-lab/batches/B003-20260718-live/batch-synthesis.md
+    identity_digest: b207e08f17dbad7d995c568e1dcde2b5bc46fbe9ca1eb2c6c7b9f4c390bfdda7
+    availability: AVAILABLE
+  - component_id: protected.p01-preflight
+    role: protected historical file; disk-byte SHA guard for READ_ONLY_MIGRATION_PREVIEW
+    source_pointer: projects/thesis-fso/direction-lab/scout/P01-U25-action-contract/preflight-report.json
+    identity_digest: 3d08568e949408dcfad34a8bc64497627ce4fd2a78b30693d31a4889f17ad8b9
+    availability: AVAILABLE
+  - component_id: protected.p03-atlas-closeout
+    role: protected historical file; disk-byte SHA guard for READ_ONLY_MIGRATION_PREVIEW
+    source_pointer: projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/atlas-closeout-assessment.v1.yaml
+    identity_digest: df97d9ea847a21177026c008bc5f268d3582be4c8d8e6e8fa11193c3d049f981
+    availability: AVAILABLE
+  - component_id: protected.p03-atlas-synthesis
+    role: protected historical file; disk-byte SHA guard for READ_ONLY_MIGRATION_PREVIEW
+    source_pointer: projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/stage-a-synthesis.md
+    identity_digest: cb683444e04cb591ff4adf4cdb4da305f2f0d420d3b680b28aaa06c2b54acd31
+    availability: AVAILABLE
+  - component_id: protected.p03-atlas-verifier
+    role: protected historical file; disk-byte SHA guard for READ_ONLY_MIGRATION_PREVIEW
+    source_pointer: projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/stage-a-verifier-report.md
+    identity_digest: d221053bd8bc0ec0d4bc9447629f0728d41fd99b4c8b01a9941bfdbc52d5b75e
+    availability: AVAILABLE
+paths:
+  status: projects/thesis-fso/direction-lab/STATUS.v1.md
+  state_events: projects/thesis-fso/direction-lab/state/completion-events.jsonl
+  current_state: projects/thesis-fso/direction-lab/state/projections/5967ea38e676b46cb092c98060bec5b470b5a03625f21e65218cf3b2ae3a88af.yaml
+  candidates: projects/thesis-fso/direction-lab/portfolio/current.v1.yaml
+  batches: projects/thesis-fso/direction-lab/batch-plan.v2.yaml
+  harvest_ledger: projects/thesis-fso/direction-lab/harvest/ledger.v1.yaml
+  thesis_spines: projects/thesis-fso/direction-lab/harvest/thesis-spines.v1.md
+  component_registry: projects/thesis-fso/direction-lab/component-registry.v3.yaml
+  failure_registry: projects/thesis-fso/direction-lab/failure-registry.yaml
+  archive_roots:
+    - projects/thesis-fso/direction-lab/batches/B001-20260717-live
+    - projects/thesis-fso/direction-lab/batches/B002-20260718-live
+    - projects/thesis-fso/direction-lab/batches/B003-20260718-live
+    - projects/thesis-fso/direction-lab/state/projections
+    - projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1
+runnable_axes:
+  - axis_id: p03.qpsk-csi-none-uncoded-hard-decision.representative-subdomain
+    description: >-
+      Frozen closure supports QPSK across declared SNR, turbulence, SOP and
+      observation-length cells with CSI_NONE and uncoded hard decisions. Stage A
+      is complete; capability existence is not current execution authorization.
+    evidence_pointer: projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/atlas-closeout-assessment.v1.yaml
+blocked_axes:
+  - axis_id: p03.modulation.16qam
+    reason: frozen channel and evaluator closure hard-code QPSK
+    evidence_pointer: projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/stage-a-synthesis.md
+    repair_condition: clean hash-bound 16QAM source closure with a scope certificate
+  - axis_id: p03.csi.receiver-estimated-or-pilot
+    reason: receiver estimator and pilot seam are not bound
+    evidence_pointer: projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/stage-a-synthesis.md
+    repair_condition: legal receiver estimator or explicit pilot budget with same-information comparator
+  - axis_id: p03.output.soft-or-coded
+    reason: no LLR, GMI, FER evaluator or coded comparator exists
+    evidence_pointer: projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/stage-a-synthesis.md
+    repair_condition: legal CSI contract and same-information coded comparator
+  - axis_id: p01.u25.action-and-fork-replay
+    reason: no receiver-state snapshot or observable action hook exists
+    evidence_pointer: projects/thesis-fso/direction-lab/scout/P01-U25-action-contract/preflight-report.json
+    repair_condition: real state snapshot, per-decision action effect, and deterministic fork replay
+  - axis_id: p02.u10.carrier-cpr-event-chain
+    reason: no dual-pol carrier impairment, CPR trace, or authentic event library exists
+    evidence_pointer: projects/thesis-fso/direction-lab/scout/capability-triage.v1.yaml
+    repair_condition: frozen carrier impairment, CPR ordering trace, and authentic event library
+  - axis_id: formal.promotion
+    reason: formal research remains blocked and has no winner evidence chain
+    evidence_pointer: projects/thesis-fso/master-state.md
+    repair_condition: explicit authorization after route selection and framework gates
+historical_counterexamples:
+  - record_id: CURRENT_CMA_NO_Z_IS_NOT_STANDARD_CMA
+    proposition: current-CMA without the Godard z factor cannot stand in for standard-CMA
+    scope: D040 exact registered domain; current-CMA 5/5 swap and standard-CMA 0/5 swap
+    evidence_pointer: .sessions/2026-07-10-dual-pol-osl-groundwork/decisions.md
+    validity: VALID
+  - record_id: B001_AE_ORACLE_FILTER_PROTOCOL_DEVIATION
+    proposition: fixed-label clean-row filtering cannot support a label-free SSL claim
+    scope: B001 exact contract only
+    evidence_pointer: projects/thesis-fso/direction-lab/failure-registry.yaml
+    validity: VALID
+  - record_id: B002_B003_UNLABELED_AE_EXACT_RETIRE
+    proposition: the concrete unlabeled reconstruction mechanism retires only in its exact contract
+    scope: B002 and B003 exact shared contract; not the SSL family
+    evidence_pointer: projects/thesis-fso/direction-lab/batches/B003-20260718-live/verifier-report.md
+    validity: VALID
+  - record_id: P03_RUNNABLE_SUBDOMAIN_LOCAL_NEGATIVE
+    proposition: zero of eleven representative cells reached MDE 0.005
+    scope: QPSK, CSI_NONE, uncoded hard-decision representative subdomain; ceiling SLICE
+    evidence_pointer: projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/atlas-closeout-assessment.v1.yaml
+    validity: VALID
+  - record_id: MODULATION_DYNAMICS_LENGTH_ORDERING_SIGNAL
+    proposition: historical ordering changes remain unresolved outside the frozen closure
+    scope: blocked axes need fresh scoped evidence
+    evidence_pointer: projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/stage-a-synthesis.md
+    validity: UNKNOWN
+  - record_id: HARD_DECISION_DOES_NOT_CLOSE_CODED_PATH
+    proposition: a hard-decision local negative does not close LLR, GMI, FER, or coded paths
+    scope: U20 and coded axis contract boundary
+    evidence_pointer: projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/residual-headroom-probe-status.yaml
+    validity: VALID
+  - record_id: REPEATED_EXACT_DOMAIN_GOVERNANCE_ADDS_LITTLE_SCIENCE
+    proposition: B003 provenance passed but added little research information beyond B002 exact contract
+    scope: governance-pilot process lesson; not a scientific performance claim
+    evidence_pointer: .sessions/2026-07-17-direction-lab-governance-pilot/decisions.md
+    validity: VALID
+commands:
+  - command_id: validate-task6-projection
+    purpose: validate the read-only projection and protected disk-byte hashes; no science run
+    argv:
+      - python
+      - -m
+      - pytest
+      - projects/thesis-fso/direction-lab/tests/test_skill_adapter_v1.py
+      - -q
+    working_directory: .
+    timeout_seconds: 120
+  - command_id: render-read-only-status
+    purpose: render STATUS.v1.md from existing read-only inputs; no science run
+    argv:
+      - python
+      - .agents/skills/research-direction-lab/scripts/render_status.py
+      - --adapter
+      - projects/thesis-fso/direction-lab/project.v1.yaml
+      - --state
+      - projects/thesis-fso/direction-lab/portfolio/current.v1.yaml#status_input
+      - --portfolio
+      - projects/thesis-fso/direction-lab/portfolio/current.v1.yaml
+      - --harvest
+      - projects/thesis-fso/direction-lab/harvest/ledger.v1.yaml
+    working_directory: .
+    timeout_seconds: 30
+budgets:
+  - resource: projection_artifact_count
+    limit: 5
+    unit: files
+    scope: Task 6 READ_ONLY_MIGRATION_PREVIEW only, including D006 thesis-spines owner
+    evidence_pointer: docs/superpowers/plans/2026-07-20-research-direction-lab-system-implementation.md

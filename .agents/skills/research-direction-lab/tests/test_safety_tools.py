@@ -2,6 +2,7 @@ from hashlib import sha256
 import json
 import multiprocessing
 from pathlib import Path
+import subprocess
 import sys
 
 import pytest
@@ -352,6 +353,186 @@ def test_render_status_is_deterministic_and_reports_only_recorded_facts():
         "promote C",
     )
     assert not [phrase for phrase in forbidden_decisions if phrase in first.lower()]
+
+
+def test_render_status_is_a_compact_eight_question_view_not_a_projection_dump():
+    adapter = {
+        "formal_goal": {
+            "statement": "Find a bounded contribution",
+            "authorized_actions": ["READ_ONLY"],
+            "prohibited_actions": ["run science"],
+        },
+        "anchor": {
+            "scenario": "generic scenario",
+            "baseline_component": "baseline.v1",
+            "metrics": ["metric-a"],
+        },
+        "components": [{"component_id": f"component-{index}"} for index in range(100)],
+        "paths": {
+            "current_state": "state/current.yaml",
+            "candidates": "portfolio/current.yaml",
+            "batches": "portfolio/batches.yaml",
+            "harvest_ledger": "harvest/ledger.yaml",
+            "thesis_spines": "harvest/thesis-spines.md",
+        },
+        "blocked_axes": [{"axis_id": "axis.blocked"}],
+    }
+    state = {
+        "formal_authorization": "BLOCKED",
+        "portfolio_and_blocked_axes": "C1 is open; axis.blocked is unmeasured",
+        "latest_completed_batch": {"batch_id": "B1", "established": "bounded result"},
+        "current_mode": {"science": "AWAITING_STRATEGY", "migration": "READ_ONLY"},
+        "harvested_material": ["H1"],
+        "recorded_next_action": "Validate the projection",
+        "strategy_required_when": "Authorization or route changes",
+        "no_new_experiment_running": True,
+    }
+    portfolio = {
+        "current_focus": {"candidate_id": "C1", "status": "OPEN"},
+        "candidates": [{"candidate_id": f"C{index}", "status": "OPEN"} for index in range(100)],
+        "batch_history": [{"batch_id": f"B{index}"} for index in range(100)],
+    }
+    harvest = {
+        "entries": [
+            {"id": "H1", "category": "BOUNDARY_RESULT", "finding": "A bounded finding", "source_hashes": {"x": "f" * 64}}
+        ]
+    }
+
+    output = render_status(adapter, state, portfolio, harvest)
+
+    assert len(output.splitlines()) <= 120
+    for heading in (
+        "1. Formal Goal and Authorization",
+        "2. Anchor or Baseline",
+        "3. Portfolio and Blocked Axes",
+        "4. Latest Completed Scientific Result",
+        "5. Current Mode",
+        "6. Thesis Harvest",
+        "7. Next Automatic Action",
+        "8. Strategy Escalation Condition",
+    ):
+        assert heading in output
+    assert "H1 — BOUNDARY_RESULT: A bounded finding" in output
+    assert "Formal status: BLOCKED" in output
+    assert "Currently allowed: READ_ONLY" in output
+    assert "Prohibited actions:" in output
+    assert "state/current.yaml" in output
+    for forbidden_dump_key in ("source_hashes", "components", "batch_history", "component-99", "C99"):
+        assert forbidden_dump_key not in output
+
+
+def test_render_status_always_lists_bounded_blocked_axis_ids_even_with_state_summary():
+    adapter = {
+        "formal_goal": {},
+        "anchor": {},
+        "blocked_axes": [
+            {"axis_id": f"axis-{index}", "reason": "not displayed"}
+            for index in range(20)
+        ],
+    }
+    state = {
+        "portfolio_and_blocked_axes": "A compact portfolio summary already exists",
+        "recorded_next_action": "Inspect",
+    }
+
+    output = render_status(adapter, state, {}, {})
+
+    for axis_id in ("axis-0", "axis-1", "axis-2"):
+        assert axis_id in output
+    assert "axis-19" not in output
+    assert "..." in output
+
+
+def test_render_status_bounds_adversarial_display_fields_and_marks_truncation():
+    huge = "x" * 100_000
+    adapter = {
+        "formal_goal": {
+            "statement": huge,
+            "authorized_actions": [huge] * 20,
+            "prohibited_actions": [huge] * 20,
+        },
+        "anchor": {
+            "scenario": huge,
+            "baseline_component": huge,
+            "metrics": [huge] * 20,
+        },
+        "blocked_axes": [{"axis_id": huge} for _ in range(20)],
+        "paths": {"current_state": huge, "candidates": huge, "batches": huge, "harvest_ledger": huge, "thesis_spines": huge},
+    }
+    state = {
+        "formal_goal": huge,
+        "formal_authorization": huge,
+        "anchor_baseline": huge,
+        "metric_contract": [huge] * 20,
+        "portfolio_and_blocked_axes": huge,
+        "latest_completed_batch": {"batch_id": huge, "established": huge},
+        "latest_scout_result": huge,
+        "current_mode": {"science": huge, "migration": huge},
+        "recorded_next_action": huge,
+        "strategy_required_when": huge,
+        "no_new_experiment_running": huge,
+    }
+    portfolio = {
+        "current_focus": {"candidate_id": huge, "status": huge, "claim_ceiling": huge},
+    }
+    harvest = {
+        "entries": [
+            {"id": huge, "category": huge, "finding": huge}
+            for _ in range(20)
+        ]
+    }
+
+    output = render_status(adapter, state, portfolio, harvest)
+
+    assert len(output.encode("utf-8")) <= 12_000
+    assert output.count("...") >= 8
+    assert huge not in output
+
+
+def test_render_status_cli_reads_four_mappings_writes_stdout_only_and_fails_nonzero(tmp_path):
+    adapter = {"formal_goal": {"statement": "Goal", "authorized_actions": ["READ"]}, "anchor": {"scenario": "S"}}
+    state = {"formal_authorization": "BLOCKED", "recorded_next_action": "Inspect"}
+    portfolio = {"candidates": [{"candidate_id": "C1", "status": "OPEN"}]}
+    harvest = {"items": [{"item_id": "H1", "kind": "lesson"}]}
+    inputs = {
+        "adapter": adapter,
+        "state": state,
+        "portfolio": portfolio,
+        "harvest": harvest,
+    }
+    paths = {}
+    for name, value in inputs.items():
+        path = tmp_path / f"{name}.json"
+        path.write_text(json.dumps(value), encoding="utf-8")
+        paths[name] = path
+    before_names = sorted(path.name for path in tmp_path.iterdir())
+    before_bytes = {path.name: path.read_bytes() for path in paths.values()}
+
+    command = [
+        sys.executable,
+        str(SCRIPTS / "render_status.py"),
+        "--adapter",
+        str(paths["adapter"]),
+        "--state",
+        str(paths["state"]),
+        "--portfolio",
+        str(paths["portfolio"]),
+        "--harvest",
+        str(paths["harvest"]),
+    ]
+    completed = subprocess.run(command, check=False, capture_output=True)
+
+    assert completed.returncode == 0, completed.stderr.decode("utf-8", errors="replace")
+    assert completed.stdout == render_status(adapter, state, portfolio, harvest).encode("utf-8")
+    assert sorted(path.name for path in tmp_path.iterdir()) == before_names
+    assert {path.name: path.read_bytes() for path in paths.values()} == before_bytes
+
+    failed = subprocess.run(
+        command[:-1] + [str(tmp_path / "missing.json")],
+        check=False,
+        capture_output=True,
+    )
+    assert failed.returncode != 0
 
 
 def test_render_status_does_not_invent_a_next_action():

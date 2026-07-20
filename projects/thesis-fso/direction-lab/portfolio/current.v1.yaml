@@ -1,0 +1,144 @@
+schema_version: research-direction-lab.portfolio.v1
+mode: READ_ONLY_MIGRATION_PREVIEW
+project_id: thesis-fso.dual-pol-osl.direction-lab.read-only-preview.v1
+completeness_claim: OPEN_PORTFOLIO_NO_COMPLETENESS_CLAIM
+formal_authorization:
+  status: BLOCKED
+  science_authorized: false
+  promotion_effect: none
+source_map:
+  candidate_map: projects/thesis-fso/direction-lab/candidate-map.v2.yaml
+  current_plan: projects/thesis-fso/direction-lab/batch-plan.v2.yaml
+  completion_event: projects/thesis-fso/direction-lab/state/completion-events.jsonl
+  current_scout: projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/atlas-closeout-assessment.v1.yaml
+current_focus:
+  candidate_id: P03/U19
+  status: P03_DOMAIN_ADEQUACY_UNRESOLVED
+  claim_ceiling: SLICE
+candidates:
+  - candidate_id: P03/U19
+    status: P03_DOMAIN_ADEQUACY_UNRESOLVED
+    candidate_state: OPEN
+    supported_scope: QPSK, CSI_NONE, uncoded hard-decision runnable representative subdomain
+    claim_ceiling: SLICE
+    negative_scope:
+      - runnable_representative_subdomain
+    blocked_scope:
+      - 16QAM
+      - receiver_estimated_CSI_or_explicit_pilot
+      - soft_or_coded_output
+    evidence_pointer: projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/atlas-closeout-assessment.v1.yaml
+  - candidate_id: P01/U25
+    status: DEFERRED_ARCHITECTURE
+    preflight: P01_BLOCKED
+    supported_scope: causal receiver-proxy event schema and fixed safe action contract only
+    claim_ceiling: CONTRACT
+    blocked_scope:
+      - receiver_state_snapshot
+      - observable_action_hook
+      - deterministic_fork_replay
+      - runner_registry_source_closure
+    evidence_pointer: projects/thesis-fso/direction-lab/scout/P01-U25-action-contract/preflight-report.json
+  - candidate_id: P02/U10
+    status: NOT_RUNNABLE
+    supported_scope: adjacent single-carrier recovery assets only; no dual-pol scientific evidence
+    claim_ceiling: CONTRACT
+    blocked_scope:
+      - carrier_impairment
+      - CPR_ordering_and_state_trace
+      - authentic_event_library
+    evidence_pointer: projects/thesis-fso/direction-lab/scout/capability-triage.v1.yaml
+  - candidate_id: U24/B003-exact-contract
+    status: HISTORICAL_SANDBOX_COMPLETE_NO_PROMOTION
+    supported_scope: linear and MLP ADVANCE_SPECIFIC; unlabeled AE RETIRE_SPECIFIC
+    claim_ceiling: CONTRACT
+    blocked_scope:
+      - recovery_or_BER_benefit
+      - cross_domain_generalization
+      - formal_or_paper_claim
+    evidence_pointer: projects/thesis-fso/direction-lab/state/completion-events.jsonl
+  - candidate_id: U36
+    status: RETAINED_NOT_SELECTED
+    supported_scope: adjacent alternative mechanism remains open
+    claim_ceiling: CONTRACT
+    blocked_scope:
+      - no_new_mechanism_contract
+      - no_execution_authorization
+    evidence_pointer: projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/stage-a-synthesis.md
+batch_history:
+  - batch_id: B001
+    status: HISTORICAL_SANDBOX_TRACKED
+    raw_artifact_available_in_checkout: false
+    history_self_contained: false
+    artifact_availability_note: tracked manifest, verifier, and synthesis are available; raw artifact is absent from this checkout
+  - batch_id: B002
+    status: COMPLETED_SANDBOX_VERIFIED
+    raw_artifact_available_in_checkout: false
+    history_self_contained: false
+    artifact_availability_note: tracked manifest, status, verifier, and synthesis are available; raw artifact is absent from this checkout
+  - batch_id: B003
+    status: COMPLETED_SANDBOX_VERIFIED
+    status_source: projects/thesis-fso/direction-lab/state/completion-events.jsonl
+    promotion_effect: none
+    scientific_scope: exact U24 contract; linear and MLP ADVANCE_SPECIFIC, unlabeled AE RETIRE_SPECIFIC
+    excluded_claims:
+      - recovery_or_BER_benefit
+      - cross_domain_generalization
+      - formal_or_paper_claim
+    raw_artifact_available_in_checkout: false
+    history_self_contained: false
+    artifact_availability_note: tracked completion event, manifest, status, verifier, synthesis, and result envelope are available; raw artifact is absent from this checkout
+blocked_axes:
+  - p03.modulation.16qam
+  - p03.csi.receiver-estimated-or-pilot
+  - p03.output.soft-or-coded
+  - p01.u25.action-and-fork-replay
+  - p02.u10.carrier-cpr-event-chain
+  - formal.promotion
+recorded_next_action: >-
+  No automatic scientific runner is authorized. Preserve P03 as unresolved and
+  visible in the portfolio while awaiting strategy among returning it to the pool,
+  funding one clean hash-bound blocked-axis closure, or choosing another existing
+  candidate family.
+strategy_required_when: >-
+  Choosing among pausing P03 back into the pool, investing in one clean blocked-axis
+  closure such as 16QAM, or moving to another existing candidate family; also when
+  changing formal authorization, contribution line, or material resource investment.
+no_new_experiment_running: true
+status_input:
+  formal_goal: identify legal ML information increment in the complete dual-pol ground-to-satellite OSL receiver chain
+  formal_authorization: BLOCKED
+  anchor_baseline: baseline.standard_cma.godard_z
+  metric_contract:
+    - fixed_label_ber
+    - permutation_invariant_ber
+  portfolio_and_blocked_axes: P03/U19 remains open with a SLICE local negative; P01 is architecture-blocked, P02 is not runnable, and blocked axes remain unmeasured
+  latest_completed_batch:
+    batch_id: B003
+    status: COMPLETED_SANDBOX_VERIFIED
+    established: linear and MLP ADVANCE_SPECIFIC and unlabeled AE RETIRE_SPECIFIC in the exact U24 contract only
+    excluded_claims: no recovery or BER benefit, cross-domain generalization, formal promotion, or paper claim
+    status_source: projects/thesis-fso/direction-lab/state/completion-events.jsonl
+  latest_scout_result: P03 Atlas Stage A found 0/11 cells at MDE in the runnable representative subdomain; claim ceiling is SLICE and blocked axes are not negative
+  current_mode:
+    science: AWAITING_STRATEGY
+    migration: READ_ONLY_MIGRATION_PREVIEW
+  harvested_material:
+    - H001
+    - H002
+    - H003
+    - H004
+    - H005
+    - H006
+    - H007
+    - H008
+    - H009
+  recorded_next_action: >-
+    Within current authorization, validate this read-only projection and render status;
+    no automatic scientific runner is authorized.
+  strategy_required_when: >-
+    Choose among pausing P03 back into the pool, one clean hash-bound blocked-axis
+    closure such as 16QAM, or another existing candidate family; or change formal
+    authorization, contribution line, or material resource investment.
+  no_new_experiment_running: true
+  no_new_experiment_statement: no new experiment is running

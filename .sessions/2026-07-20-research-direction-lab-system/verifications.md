@@ -85,3 +85,58 @@ PASS
 
 - Windows symlink 动态测试因当前主机权限 skip；实现与测试保留，需在可创建 symlink 的 Windows/POSIX 环境补跑。
 - POSIX `flock` 分支在当前 Windows 主机仅完成静态临界区复核；需在 POSIX CI 首次启用前动态验证。
+
+## V003: Phase 3 Task 6–7 与只读使用推演独立终验
+
+> date: 2026-07-20
+> 关联：S006 / S007 / D005–D007
+
+### 验证项
+
+- [x] ProjectAdapterV1：递归闭合 schema 子集、缺失/额外/类型负例 → 通过；十个顶层字段齐全。
+- [x] 指针与历史保护：repo-relative/contained/exists、disk-byte guards、completion-vs-queue、raw-envelope 分层 → 通过；protected diff 为 0。
+- [x] STATUS：真实 CLI、exact render、八问、六轴、三层授权、UTF-8 超长边界 → 通过；58 行 / 4,790 bytes。
+- [x] 旧 scheduler 迁移审计：23 functions + 1 property + 4 CLI → 全部覆盖；科研调度均未 KEEP。
+- [x] no-scheduler 语义门：候选选择、资源匹配、完整性证明、停止合法性 AST 变异 → 全部拒绝；被动事实展示未误伤。
+- [x] 使用推演边界：S007 → 未执行 Task 8、未给行为 PASS、未运行科学实验。
+
+### 证据
+
+```text
+python -m pytest .agents/skills/research-direction-lab/tests -q
+60 passed, 1 skipped
+
+python -m pytest projects/thesis-fso/direction-lab/tests/test_skill_adapter_v1.py -q
+13 passed
+
+Task 6 + Task 7 focused
+58 passed, 1 skipped
+
+original Direction Lab baseline
+62 passed
+
+render command probe
+returncode=0; stdout=4790 bytes; stderr=0
+stdout == STATUS.v1.md bytes
+LAB file size/mtime map unchanged
+
+portable pointer probes
+D:/private/x.py -> REJECT
+projects/ok/../escape.py -> REJECT
+
+quick_validate: PASS
+compileall: exit 0
+YAML parse: 62 files
+git diff --check: PASS
+domain/scheduler/protected scans: PASS
+independent review: P0=0, P1=0, P2=0
+```
+
+### 结论
+
+PASS
+
+### 已知证据债
+
+- 沿用 V002：Windows symlink 动态测试因当前权限 skip；POSIX `flock` 分支尚无本机动态覆盖。Phase 3 未改相关路径/锁逻辑，债务未恶化。
+- S007 是可理解性/组织推演，不是 Skill 长期行为证据；Task 8 forward tests 与 shadow 尚未执行。

@@ -1,0 +1,146 @@
+schema_version: research-direction-lab.harvest-ledger.v1
+mode: READ_ONLY_MIGRATION_PREVIEW
+raw_results_copied: false
+entries:
+  - id: H001
+    category: FAILURE_MECHANISM
+    finding: current-CMA lacks the Godard z factor and swapped in 5/5 registered D040 cases while standard-CMA swapped in 0/5; historical CMA-swap claims must preserve implementation identity.
+    evidence_scope: D040 exact registered domain
+    claim_ceiling: SLICE
+    artifact_pointers:
+      - .sessions/2026-07-10-dual-pol-osl-groundwork/decisions.md
+    source_hashes:
+      .sessions/2026-07-10-dual-pol-osl-groundwork/decisions.md: f1042203100275ba7e63031715b162054468b4645641ea0dc7e6f0a544fcf70e
+    related: [D040, standard-CMA, current-CMA]
+    thesis_destination: Methods and baseline validity
+    confidence: HIGH
+    follow_up: preserve baseline identity in every comparison
+    status: HARVESTED
+  - id: H002
+    category: INFRASTRUCTURE_GAP
+    finding: P01/U25 has a causal receiver-proxy event/action schema, but standard-CMA lacks receiver-state snapshots and an observable action hook, so authentic fork replay is blocked.
+    evidence_scope: P01 architecture preflight
+    claim_ceiling: CONTRACT
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/scout/P01-U25-action-contract/preflight-report.json
+    source_hashes:
+      projects/thesis-fso/direction-lab/scout/P01-U25-action-contract/preflight-report.json: 3d08568e949408dcfad34a8bc64497627ce4fd2a78b30693d31a4889f17ad8b9
+    related: [P01/U25]
+    thesis_destination: Limitations and future receiver interface
+    confidence: HIGH
+    follow_up: require state snapshot, action effect, and deterministic fork replay before reconsideration
+    status: BLOCKED_REUSABLE_PARTS
+  - id: H003
+    category: LOCAL_NEGATIVE
+    finding: P03 Stage A reached MDE 0.005 in 0/11 runnable representative cells; maximum visible headroom was 0.000390625, supporting only a runnable-subdomain local negative.
+    evidence_scope: QPSK, declared dynamics and lengths, CSI_NONE, uncoded hard decision
+    claim_ceiling: SLICE
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/atlas-closeout-assessment.v1.yaml
+      - projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/stage-a-synthesis.md
+      - projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/stage-a-verifier-report.md
+    source_hashes:
+      projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/atlas-closeout-assessment.v1.yaml: df97d9ea847a21177026c008bc5f268d3582be4c8d8e6e8fa11193c3d049f981
+      projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/stage-a-synthesis.md: cb683444e04cb591ff4adf4cdb4da305f2f0d420d3b680b28aaa06c2b54acd31
+      projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/stage-a-verifier-report.md: d221053bd8bc0ec0d4bc9447629f0728d41fd99b4c8b01a9941bfdbc52d5b75e
+    related: [P03/U19, Atlas-Stage-A]
+    thesis_destination: Results negative boundary
+    confidence: HIGH
+    follow_up: keep domain, candidate, and family unresolved outside measured scope
+    status: VERIFIED
+  - id: H004
+    category: EVALUATION_INSIGHT
+    finding: nonzero cross-cell-variable analog residual energy with CV 0.703962 did not imply decision headroom; fixed, PI BER, and SER were all zero in the frozen ten-cell slice.
+    evidence_scope: frozen ten-cell CSI_NONE exact slice
+    claim_ceiling: SLICE
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/residual-headroom-probe-status.yaml
+    source_hashes:
+      projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/residual-headroom-probe-status.yaml: 47ebed04416e66651ccf9312d9098f864133f85b1b270e3a6c9e2e2e6b548992
+    related: [P03/U19]
+    thesis_destination: Evaluation and metric interpretation
+    confidence: HIGH
+    follow_up: keep analog residual and decision metrics separate
+    status: VERIFIED
+  - id: H005
+    category: INFRASTRUCTURE_GAP
+    finding: 16QAM, receiver-estimated CSI or explicit pilots, and soft or coded outputs are blocked axes; they are coverage gaps and must not be rewritten as negative results.
+    evidence_scope: Atlas domain coverage gap
+    claim_ceiling: DOMAIN_GAP_ONLY
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/atlas-closeout-assessment.v1.yaml
+      - projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/stage-a-synthesis.md
+    source_hashes:
+      projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/atlas-closeout-assessment.v1.yaml: df97d9ea847a21177026c008bc5f268d3582be4c8d8e6e8fa11193c3d049f981
+      projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/stage-a-synthesis.md: cb683444e04cb591ff4adf4cdb4da305f2f0d420d3b680b28aaa06c2b54acd31
+    related: [P03/U19, 16QAM, receiver-CSI, coded-output]
+    thesis_destination: Limitations and future work
+    confidence: HIGH
+    follow_up: strategy must authorize one clean hash-bound closure before measurement
+    status: OPEN
+  - id: H006
+    category: REUSABLE_ASSET
+    finding: the receipt-bound Atlas gate, parameterized cell runner, gated Stage A driver, and preregistered contract can support representative-domain mapping with a scope certificate.
+    evidence_scope: reusable infrastructure only; no performance claim
+    claim_ceiling: CONTRACT
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/atlas_gate.py
+      - projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/stage_a_cell_runner.py
+      - projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/run_stage_a.py
+      - projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/stage-a-contract.v1.yaml
+    source_hashes:
+      projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/atlas_gate.py: f25531f58613ee2f4788f09cb151116e28fb3d5ecff8756a42e423762052f4f5
+      projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/stage_a_cell_runner.py: 47574961af6ba4c65492b905b98def714e330dfb90ba5449483f5a498cc69e1c
+      projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/run_stage_a.py: a25481096eeb5ad8acc10149f3d14654ecb883be2a1c6090c403c69c27963078
+      projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/stage-a-contract.v1.yaml: 0809dc2a2d80aa73263aca58a8ce77e44475348340ed33fb2598e55b3109e8f9
+    related: [P03/U19, Atlas]
+    thesis_destination: Methods and reproducibility appendix
+    confidence: HIGH
+    follow_up: no execution without separate authorization
+    status: AVAILABLE_NOT_AUTHORIZED_TO_RUN
+  - id: H007
+    category: EVALUATION_INSIGHT
+    finding: a hard-decision zero or local negative cannot close LLR, GMI, FER, or coded paths; coded claims require legal CSI and a same-information coded comparator.
+    evidence_scope: U20 and coded-axis contract boundary
+    claim_ceiling: CONTRACT
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/residual-headroom-probe-status.yaml
+      - projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/stage-a-synthesis.md
+    source_hashes:
+      projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/residual-headroom-probe-status.yaml: 47ebed04416e66651ccf9312d9098f864133f85b1b270e3a6c9e2e2e6b548992
+      projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/stage-a-synthesis.md: cb683444e04cb591ff4adf4cdb4da305f2f0d420d3b680b28aaa06c2b54acd31
+    related: [U20, coded-axis]
+    thesis_destination: Evaluation design and future work
+    confidence: HIGH
+    follow_up: preserve coded path as open until its comparator contract exists
+    status: OPEN
+  - id: H008
+    category: FAILURE_MECHANISM
+    finding: B001 used fixed labels to filter clean reconstruction rows, while B002/B003 unlabeled reconstruction had recall zero and false-alarm rate 0.40; this retires only the concrete exact-contract mechanism, not the SSL family.
+    evidence_scope: B001 protocol deviation and B002/B003 exact domain
+    claim_ceiling: CONTRACT
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/failure-registry.yaml
+      - projects/thesis-fso/direction-lab/batches/B003-20260718-live/verifier-report.md
+    source_hashes:
+      projects/thesis-fso/direction-lab/failure-registry.yaml: 1d86297593d56554f401044c5b41e74a250551575ff3c313549d15875796616d
+      projects/thesis-fso/direction-lab/batches/B003-20260718-live/verifier-report.md: 091d37af56b44ef78d97e6493fa68e683234cfe5423d4b50614acdd396302cbc
+    related: [B001, B002, B003, U24]
+    thesis_destination: Ablation and negative implementation lesson
+    confidence: HIGH
+    follow_up: preserve exact mechanism and scope lineage
+    status: VERIFIED_SCOPED
+  - id: H009
+    category: REUSABLE_ASSET
+    finding: B003 verified receipt, hash, event, and lean-ledger provenance, but its U24 numbers duplicated the B002 exact contract; repeating full governance per micro-variant can cost more than the added research information.
+    evidence_scope: governance-pilot process lesson; not a scientific performance claim
+    claim_ceiling: CONTRACT
+    artifact_pointers:
+      - .sessions/2026-07-17-direction-lab-governance-pilot/decisions.md
+    source_hashes:
+      .sessions/2026-07-17-direction-lab-governance-pilot/decisions.md: 60281c9cd8cbddace83eda2a2ece5ed4433baae9fb9c41473f8cc1c46afc15d9
+    related: [B002, B003, U24]
+    thesis_destination: Research methodology and infrastructure discussion
+    confidence: HIGH
+    follow_up: batch related variants and reserve full governance for information-bearing comparisons
+    status: HARVESTED
