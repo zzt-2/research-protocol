@@ -30,8 +30,8 @@ topics:
     title: Research Direction Lab 完整体系设计
     status: active
     created: "2026-07-20"
-    last_updated: "2026-07-20（V003/H003：Task 6–7 终验 PASS，下一入口为 Task 8 fresh-agent forward tests）"
-    description: "一次性规划从零/从地基的长期自动研究探索体系；冻结 Skill、通用代码、领域 Profile、项目 Adapter、状态/文件和论文收获的职责边界。Task 1–7 已验证；尚未执行 forward tests、shadow 或科学实验。"
+    last_updated: "2026-07-20（V004/S008：Task 8 round 1 fresh-agent 盲测 5 类案例 PASS；无 Skill 修订；下一入口为 Task 9 shadow 授权决定）"
+    description: "一次性规划从零/从地基的长期自动研究探索体系；冻结 Skill、通用代码、领域 Profile、项目 Adapter、状态/文件和论文收获的职责边界。Task 1–8 已验证；Task 9 shadow、Task 10、live activation 和科学实验仍未授权。"
     depends_on:
       - slug: framework-evolution
         reason: 继承 R002 Direction Lab 设计和唯一拥有者原则

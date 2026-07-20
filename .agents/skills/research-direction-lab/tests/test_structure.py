@@ -22,6 +22,7 @@ ALLOWED_MARKDOWN = {
     ROOT / "SKILL.md",
     *EXPECTED_REFERENCE_FILES,
     *ALLOWED_NESTED_FILES,
+    ROOT / "tests" / "forward-test-log.md",
 }
 
 
@@ -80,7 +81,13 @@ def test_skill_does_not_claim_project_state():
 
 
 def test_skill_tree_has_no_extra_documentation():
-    markdown_files = set(ROOT.rglob("*.md"))
+    # Forward-test run recordings under tests/forward/runs/ are test data
+    # (blind prompts + raw responses), not Skill documentation; they are
+    # excluded from the documentation-set check.
+    RUNS_DIR = ROOT / "tests" / "forward" / "runs"
+    markdown_files = {
+        path for path in ROOT.rglob("*.md") if RUNS_DIR not in path.parents
+    }
     missing = ALLOWED_MARKDOWN - markdown_files
     extra = markdown_files - ALLOWED_MARKDOWN
     if missing or extra:

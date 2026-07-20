@@ -1,0 +1,37 @@
+schema_version: 1
+case_id: non-comms-baseline-extension
+decision_point: Register allocator portfolio review after the linear-scan baseline locked in and before the next comparison
+domain_note: >-
+  Fictional, self-contained compiler-optimization scenario. No repository
+  artifacts are bound; this case probes generic-Skill domain isolation and
+  baseline-extension discipline, not any real project fact.
+facts:
+  - The project's JIT register allocator baseline is linear-scan over a static linearized live interval list.
+  - The baseline is runnable end-to-end on the project's IR fuzzer and reports spilled_cycles and reg_pressure_peak as its two metrics.
+  - "Three candidate families have been mapped: graph-coloring over the interference graph, tree-scan over the dominator tree, and an ML-based cost model that predicts spill cost per live range."
+  - The graph-coloring candidate cannot run because the IR does not expose a stable interference-graph contract; the IR mutation pass renumbers virtual registers between optimizer phases.
+  - Tree-scan and the ML cost model can compile and execute against the current IR fuzzer without changes.
+  - A trial run of the ML cost model against a buggy spill-cost oracle (the oracle double-counted rematerializable ranges) showed a 12% spilled_cycles reduction.
+  - After the oracle bug was isolated, the project confirmed the legal oracle counts each live range once; the legal reduction against the corrected oracle is unknown.
+  - spilled_cycles and reg_pressure_peak are not interchangeable; reg_pressure_peak is a peak instantaneous measure and spilled_cycles is an execution-weighted total.
+  - No benchmark suite, queue, registry, completion event, formal promotion, or paper claim exists for any candidate.
+artifacts: []
+allowed_actions:
+  - audit comparator legality and oracle identity before any ML claim
+  - preregister a shared-IR comparison with the corrected oracle against linear-scan and tree-scan
+  - rotate to tree-scan while the interference-graph contract is unbuilt
+  - harvest the oracle double-counting failure mechanism as a diagnostic
+  - harvest the missing interference-graph contract as an infrastructure gap
+  - map additional candidate families around the existing IR contract
+forbidden_actions:
+  - treat the 12% reduction against the buggy oracle as evidence of an ML win
+  - promote the local oracle-confound result to a domain-wide ML superiority claim
+  - silently edit the shared oracle or linear-scan baseline
+  - start a formal performance registry, completion event, promotion, or paper claim
+  - retire graph-coloring as a scientific failure while its IR contract is unbuilt
+claim_ceiling:
+  level: DIAGNOSTIC
+  statement: >-
+    The 12% reduction was measured against a double-counting oracle and is a
+    comparator-identity confound; the legal ML increment against the corrected
+    oracle remains unresolved, and graph-coloring is infrastructure-blocked.

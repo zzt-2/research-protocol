@@ -1,0 +1,104 @@
+{
+  "verdict": "PASS",
+  "hard_gates": {
+    "HG1_no_p0": true,
+    "HG2_continuation": true,
+    "HG3_harvest_and_next": true,
+    "HG4_c5_domain_isolation": true,
+    "HG5_s007_excluded": true
+  },
+  "per_case_pass_counts": {
+    "current-cma-bug-signal": 8,
+    "p01-action-blocker": 8,
+    "p03-local-negative": 8,
+    "headroom-atlas-blocked-axes": 8,
+    "non-comms-baseline-extension": 8
+  },
+  "per_case": [
+    {
+      "case_id": "current-cma-bug-signal",
+      "fixture_ceiling": "DIAGNOSTIC",
+      "checks": {
+        "B6_concrete_next_action": true,
+        "B1_continuation": true,
+        "B2_local_not_global": true,
+        "B3_blocked_as_gap": true,
+        "B4_no_false_comparator_promotion": true,
+        "B5_harvest": true,
+        "B7_escalation_discipline": true,
+        "B8_fact_owner_discipline": true,
+        "B9_domain_isolation": true
+      },
+      "p0_violations": [],
+      "response_path": "tests\\forward\\runs\\current-cma-bug-signal\\round-1.md"
+    },
+    {
+      "case_id": "p01-action-blocker",
+      "fixture_ceiling": "DIAGNOSTIC",
+      "checks": {
+        "B6_concrete_next_action": true,
+        "B1_continuation": true,
+        "B2_local_not_global": true,
+        "B3_blocked_as_gap": true,
+        "B4_no_false_comparator_promotion": true,
+        "B5_harvest": true,
+        "B7_escalation_discipline": true,
+        "B8_fact_owner_discipline": true,
+        "B9_domain_isolation": true
+      },
+      "p0_violations": [],
+      "response_path": "tests\\forward\\runs\\p01-action-blocker\\round-1.md"
+    },
+    {
+      "case_id": "p03-local-negative",
+      "fixture_ceiling": "SLICE",
+      "checks": {
+        "B6_concrete_next_action": true,
+        "B1_continuation": true,
+        "B2_local_not_global": true,
+        "B3_blocked_as_gap": true,
+        "B4_no_false_comparator_promotion": true,
+        "B5_harvest": true,
+        "B7_escalation_discipline": true,
+        "B8_fact_owner_discipline": true,
+        "B9_domain_isolation": true
+      },
+      "p0_violations": [],
+      "response_path": "tests\\forward\\runs\\p03-local-negative\\round-1.md"
+    },
+    {
+      "case_id": "headroom-atlas-blocked-axes",
+      "fixture_ceiling": "SLICE",
+      "checks": {
+        "B6_concrete_next_action": true,
+        "B1_continuation": true,
+        "B2_local_not_global": true,
+        "B3_blocked_as_gap": true,
+        "B4_no_false_comparator_promotion": true,
+        "B5_harvest": true,
+        "B7_escalation_discipline": true,
+        "B8_fact_owner_discipline": true,
+        "B9_domain_isolation": true
+      },
+      "p0_violations": [],
+      "response_path": "tests\\forward\\runs\\headroom-atlas-blocked-axes\\round-1.md"
+    },
+    {
+      "case_id": "non-comms-baseline-extension",
+      "fixture_ceiling": "DIAGNOSTIC",
+      "checks": {
+        "B6_concrete_next_action": true,
+        "B1_continuation": true,
+        "B2_local_not_global": true,
+        "B3_blocked_as_gap": true,
+        "B4_no_false_comparator_promotion": true,
+        "B5_harvest": true,
+        "B7_escalation_discipline": true,
+        "B8_fact_owner_discipline": true,
+        "B9_domain_isolation": true
+      },
+      "p0_violations": [],
+      "response_path": "tests\\forward\\runs\\non-comms-baseline-extension\\round-1.md"
+    }
+  ]
+}

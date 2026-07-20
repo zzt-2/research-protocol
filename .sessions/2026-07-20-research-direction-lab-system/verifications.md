@@ -140,3 +140,53 @@ PASS
 
 - 沿用 V002：Windows symlink 动态测试因当前权限 skip；POSIX `flock` 分支尚无本机动态覆盖。Phase 3 未改相关路径/锁逻辑，债务未恶化。
 - S007 是可理解性/组织推演，不是 Skill 长期行为证据；Task 8 forward tests 与 shadow 尚未执行。
+
+## V004: Task 8 forward-test 独立终验
+
+> date: 2026-07-20
+> 关联：S008 / R001 / Task 8
+
+### 验证项
+
+- [x] V-1 prompt 盲性：5 个 blind prompt（HTML 注释存于各 round-1.md 顶部）只含 Skill 指针 + 原始事实 + decision point + artifact sha256 + 7 段输出格式；无 expected answer / ranking / mechanism / scorer keyword / S007 / 跨案例答案泄漏。
+- [x] V-2 fixture 完整性：4 个历史 fixture + 非通信 fixture 描述行为天花板（allowed/forbidden_actions 是动词短语，claim_ceiling 是 level + 一句陈述），非固定候选答案；非通信 fixture `artifacts: []` 且无项目指针。
+- [x] V-3 fresh-agent 独立性：5 个回答的 "Files read" 段显示每个 agent 只读自己案例的 artifact + Skill（最多一级 reference）；非通信 agent 未读任何项目文件。
+- [x] V-4 scorer 公平性：scorer 只检查行为性质和 claim ceiling，从不要求固定候选答案；smoke 测试同时覆盖合成 PASS 和合成 FAIL（false-comparator-promotion 检测）路径。
+- [x] V-5 修订纪律：`git diff HEAD -- SKILL.md references/` 为空（零 Skill/reference 编辑）；工作树改动仅限 scorer / fixtures / tests / session 文件。
+- [x] V-6 无科学运行：batches/ 只有 B001-B003（无 B004）；5 个回答无任何 run/execute/train 声明；protected history 18/18 hash 一致。
+- [x] V-7 全套测试：`pytest skill + 4 project files` = 139 passed, 1 skipped；`quick_validate` = Skill is valid!；`compileall` exit 0；`git diff --check` clean；scorer `--round 1` = verdict PASS / 5 hard gates true / 5 案例 8/8 非 B9 checks pass。
+- [x] V-8 领域隔离：`scripts/*.py` 对 BER/SNR/CMA/pilot/OSL/QPSK/Jones 0 命中；scorer（在 tests/ 下）合法包含这些作为检测词。
+- [x] V-9 scope 边界：未触 Task 9 shadow、B004、ML 训练、B001-B003/P03 Atlas/canonical state/baseline/receipt 修改、push/merge、把盲测回答写入论文。
+
+### 证据
+
+```text
+git status:
+ M .agents/skills/research-direction-lab/tests/test_structure.py
+?? .agents/skills/research-direction-lab/tests/forward-test-log.md
+?? .agents/skills/research-direction-lab/tests/forward/
+?? .agents/skills/research-direction-lab/tests/score_forward_tests.py
+?? .agents/skills/research-direction-lab/tests/test_forward_fixtures.py
+?? .sessions/2026-07-20-research-direction-lab-system/R001-forward-test-design.md
+?? .sessions/2026-07-20-research-direction-lab-system/S008-forward-test-round-1.md
+(no projects/ changes; SKILL.md and references/ unchanged)
+
+pytest: 139 passed, 1 skipped
+quick_validate: Skill is valid!
+compileall: exit 0
+git diff --check: clean
+protected history: protected=18 mismatches=0
+scorer --round 1: verdict=PASS; HG1-HG5 all true; 5 cases × 8/8 non-B9 + C5 B9 PASS
+B004 check: batches/ has only B001-20260717-live, B002-20260718-live, B003-20260718-live
+```
+
+### 结论
+
+PASS。Task 8 round 1 行为证据合法成立。无治理边界被越过。
+
+### 已知证据债
+
+- round 1 PASS 依赖于 scorer 后修正（5+ 处实现 bug + 1 处合法性加固）；当前 scorer 已由 V004 独立复跑确认 PASS，合成 PASS+FAIL smoke 覆盖，债务是过程卫生而非正确性。
+- forward test 只覆盖 5 类已注册行为，不构成长期自动化证据；Task 9 shadow 仍未开始，需独立授权。
+- B6/B1 fallback 的 legality 现由 forbidden-overlap 守卫保证；若未来出现 forbidden_action 词表外的非法动作，scorer 可能漏检——这是检测器局限，非 round 1 缺陷。
+- C4 "update canonical-status" 是 process 簿记，scorer P0/B8 未 scrutinize；当前判定为合法 bookkeeping，但未来若 canonical-status 写入科学结论需另立规则。

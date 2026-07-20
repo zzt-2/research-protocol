@@ -1,6 +1,6 @@
 # Topic Index: Research Direction Lab 完整体系设计
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-07-20
+> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-07-20（Task 8 round 1 PASS）
 
 ## 专题信息
 
@@ -20,6 +20,7 @@
 - 冻结目标体系蓝图、资产迁移表、实施顺序和验收场景；
 - Task 1–3 已完成；Task 4–5 的确定性安全小工具与只读历史 replay 已实现并由 V002 独立终验 PASS；
 - Task 6 的只读项目投影、Task 7 的旧 scheduler 迁移审计和不计为行为 PASS 的桌面使用推演已由 V003 验证；
+- Task 8 round 1 fresh-agent 盲测（5 类案例）已由 V004 独立终验 PASS；首轮 scorer 实现缺陷已一次性批量修复，无 Skill 修订、无重跑；
 - 本阶段不修改现有 controller、campaign core、仿真器、baseline 或科学证据。
 
 ### 明确不含
@@ -41,6 +42,11 @@
   - 原因：V002 已 PASS；用户按 H002 继续并要求推演实际使用。
   - 新范围：只读 Adapter/portfolio/harvest/status、旧 scheduler 逐函数审计与 no-scheduler 测试、非评分桌面演练。
   - 影响的未决项：Task 6–7 从未授权改为进行中；Task 8–10、shadow 和科学运行继续未授权。
+- **[2026-07-20] Task 8 授权（本轮执行提示词）**：用户明确授权 Task 8 fresh-agent forward tests。
+  - 原因：V003 已 PASS；H003 冻结了入口；用户在本轮提示词中明确授权。
+  - 新范围：5 类案例的 fresh-agent 盲测、预注册 scorer、独立 reviewer + verifier 复核、最多一次批量 Skill 修订（实际未触发）、一次性提交。
+  - 明确排除：Task 9 shadow、B004、ML 训练、科学实验、修改 B001–B003/P03 Atlas/canonical state/baseline/receipt、把盲测回答写入论文、push/merge。
+  - 影响的未决项：Task 8 从未授权改为已完成（V004 PASS）；Task 9–10、shadow、live activation 继续未授权。
 
 ## 已确认结论
 
@@ -79,11 +85,13 @@
 - **S007 / D007**：完成真实只读使用推演；STATUS 从 512 行全量 dump 收敛为 58 行有界八问入口，并明确分层授权与六个 blocked axes。
 - **V003**：Task 6–7 与只读推演修复后独立终验 PASS；完整 Skill `60 passed, 1 skipped`，旧 baseline `62 passed`。
 - **H003**：冻结下一轮 Task 8 fresh-agent blind forward tests 的入口与纪律。
+- **R001 / S008 / V004**：Task 8 round 1 fresh-agent 盲测 5 类案例全 PASS；首轮 scorer 实现缺陷一次性批量修复（含 B6/B1 合法性加固），无 Skill 修订、无需重跑；独立 reviewer 与独立 verifier 复核均确认 prompt 盲、fixture 无泄漏、零 Skill 编辑、未跑科学实验、protected 18/18 hash 一致、全套测试 139 passed + 1 skipped。
 
 ## 未决项
 
-- Task 8 forward tests 是否能在盲测中维持续跑、claim scope、harvest 和领域隔离。
+- Task 9 shadow 是否授权（Task 8 round 1 PASS 仅授权"考虑"Task 9，不等于长期自动化可靠）。
+- forward test scorer 的 B6/B1 fallback legality 当前由 forbidden-overlap 守卫保证，覆盖已有 forbidden_action 词表；未来出现词表外的非法动作需扩守卫。
 
 ## 当前位置
 
-Task 1–7 已由 V001–V003 分阶段验证；Task 6–7 与只读使用推演等待本轮一次性提交。Task 8–10、forward behavior、shadow 和科学实验均未开始；下一入口为 H003。
+Task 1–7 已由 V001–V003 分阶段验证 PASS。Task 8 round 1 fresh-agent 盲测（5 类案例）已由 V004 独立终验 PASS：5 个独立 fresh agent 在只给 Skill + 原始案例事实的盲条件下，全部维持续跑、claim ceiling、harvest、组织、领域隔离不变量；scorer 实现缺陷已一次性批量修复，零 Skill 修订、零科学运行、protected history 18/18 hash 一致。Task 9 shadow、Task 10、live activation 和科学实验仍未授权；下一入口为用户决定是否授权 Task 9。
