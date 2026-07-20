@@ -1,0 +1,77 @@
+schema_version: 1
+requirements:
+  - requirement_id: U01
+    source_pointer: .sessions/2026-07-10-dual-pol-osl-groundwork/voice.md:65-66; .sessions/2026-07-17-direction-lab-governance-pilot/voice.md:15
+    scenario: an existing project has a runnable baseline, prior results, known bugs, and blocked axes
+    must_do: audit the anchor and classify inherited evidence before rebuilding the candidate portfolio
+    must_not_do: discard the foundation or inherit old conclusions without validation
+  - requirement_id: U02
+    source_pointer: .sessions/2026-07-10-dual-pol-osl-groundwork/voice.md:33,42,66
+    scenario: a stable anchor exists but the surrounding candidate space has not been mapped
+    must_do: expand and organize an open candidate portfolio before committing to one candidate
+    must_not_do: fixate on the first plausible method or claim the map is mathematically complete
+  - requirement_id: U03
+    source_pointer: .sessions/2026-07-10-dual-pol-osl-groundwork/voice.md:13,66; AGENTS.md:104-105
+    scenario: a lightweight batch produces a stable signal that may support a formal contribution claim
+    must_do: invoke incremental Deep Evidence and obey the project's formal evidence gates before promotion
+    must_not_do: charge every micro-variant the full evidence cost or bypass mandatory project gates
+  - requirement_id: U04
+    source_pointer: .sessions/2026-07-10-dual-pol-osl-groundwork/voice.md:62,65
+    scenario: one candidate is blocked while two legal candidates remain
+    must_do: select another legal candidate without asking for direction
+    must_not_do: stop the campaign or patch the blocked runner indefinitely
+  - requirement_id: U05
+    source_pointer: .sessions/2026-07-10-dual-pol-osl-groundwork/voice.md:29,41-42,62
+    scenario: several related ideas can share one baseline and evaluation interface
+    must_do: group them into candidate families and compare them as a portfolio
+    must_not_do: treat every micro-variant as an isolated project
+  - requirement_id: U06
+    source_pointer: .sessions/2026-07-17-direction-lab-governance-pilot/voice.md:7; .sessions/2026-07-10-dual-pol-osl-groundwork/voice.md:65
+    scenario: a routine sprint finishes while other legal work remains
+    must_do: record a readable checkpoint and continue automatically to the next legal action
+    must_not_do: request user approval merely because a sprint or context window ended
+  - requirement_id: U07
+    source_pointer: .sessions/2026-07-10-dual-pol-osl-groundwork/voice.md:42,80; .sessions/2026-07-17-direction-lab-governance-pilot/voice.md:53 [transcribed execution prompt]
+    scenario: multiple questions share baseline realizations, diagnostics, or setup work
+    must_do: plan an informative batch and consolidate shared preparation into a sprint
+    must_not_do: impose a fixed global batch count or stop after each small interface task
+  - requirement_id: U08
+    source_pointer: .sessions/2026-07-10-dual-pol-osl-groundwork/voice.md:74-76
+    scenario: a narrow negative result leaves runnable and infrastructure-blocked axes untested
+    must_do: state the tested scope, blocked axes, claim ceiling, and most informative next axis
+    must_not_do: promote the local negative to candidate-family or domain closure
+  - requirement_id: U09
+    source_pointer: .sessions/2026-07-10-dual-pol-osl-groundwork/voice.md:13; .sessions/2026-07-20-research-direction-lab-system/topic-index.md:15,41
+    scenario: a batch has no winner but reveals a boundary, failure mechanism, or reusable asset
+    must_do: harvest at least one evidence-backed thesis or infrastructure item
+    must_not_do: equate the absence of a winner with the absence of useful progress
+  - requirement_id: U10
+    source_pointer: .sessions/2026-07-10-dual-pol-osl-groundwork/voice.md:48,54,62; .sessions/2026-07-17-direction-lab-governance-pilot/voice.md:55-57
+    scenario: a long campaign has accumulated events, batches, artifacts, and historical versions
+    must_do: place each fact in its canonical artifact and expose a compact recovery entry point
+    must_not_do: scatter live state across session notes, controller logs, or multiple active versions
+  - requirement_id: U11
+    source_pointer: .sessions/2026-07-20-research-direction-lab-system/voice.md:7
+    scenario: the system needs both scientific judgment and deterministic integrity checks
+    must_do: keep scientific interpretation in the Skill and deterministic safeguards in code
+    must_not_do: encode domain semantics or research direction selection in generic utilities
+  - requirement_id: U12
+    source_pointer: .sessions/2026-07-20-research-direction-lab-system/voice.md:7; .sessions/2026-07-17-direction-lab-governance-pilot/voice.md:5
+    scenario: the project has accumulated several overlapping process documents and controllers
+    must_do: use one triggerable Skill as the active process owner and route details to focused references
+    must_not_do: create another scheduler brain or duplicate the workflow in project state files
+  - requirement_id: U13
+    source_pointer: .sessions/2026-07-10-dual-pol-osl-groundwork/voice.md:13,21,65; .sessions/2026-07-20-research-direction-lab-system/topic-index.md:15,41
+    scenario: repeated batches produce positive, negative, methodological, and infrastructure findings
+    must_do: maintain a queryable thesis harvest that preserves scope and evidence pointers
+    must_not_do: count governance activity as scientific progress or leave findings only in transient logs
+  - requirement_id: U14
+    source_pointer: .sessions/2026-07-17-direction-lab-governance-pilot/voice.md:55-57
+    scenario: the user needs to understand whether work is running, planned, or blocked
+    must_do: maintain a one-page status with anchor, portfolio, latest science, harvest, next action, and escalation conditions
+    must_not_do: require the user to infer state from batch names, session history, or controller output
+  - requirement_id: U15
+    source_pointer: .sessions/2026-07-20-research-direction-lab-system/voice.md:8-9; AGENTS.md voice.md governance rule
+    scenario: long-term requirements are derived from user statements and historical execution prompts
+    must_do: preserve source pointers and distinguish natural user voice from transcribed execution prompts
+    must_not_do: duplicate the full quote archive or treat an execution prompt as independent user intent

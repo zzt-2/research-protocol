@@ -26,6 +26,25 @@ topics:
     produces:
       - .sessions/2026-07-17-direction-lab-governance-pilot/
 
+  - slug: 2026-07-20-research-direction-lab-system
+    title: Research Direction Lab 完整体系设计
+    status: active
+    created: "2026-07-20"
+    last_updated: "2026-07-20（V001/H001：Phase 1 终验 PASS，下一阶段边界冻结）"
+    description: "一次性规划从零/从地基的长期自动研究探索体系；冻结 Skill、通用代码、领域 Profile、项目 Adapter、状态/文件和论文收获的职责边界。当前进入 Skill 实施第一阶段，不运行科学实验。"
+    depends_on:
+      - slug: framework-evolution
+        reason: 继承 R002 Direction Lab 设计和唯一拥有者原则
+      - slug: 2026-07-17-direction-lab-governance-pilot
+        reason: 继承 controller/EvidenceGate/state reducer 压测结果与复杂度教训
+      - slug: 2026-06-12-simulation-foundation-rebuild
+        reason: 复用代码/仿真基础设施的职责分层和历史保护要求
+    conflicts_with: []
+    produces:
+      - .sessions/2026-07-20-research-direction-lab-system/
+      - docs/superpowers/specs/2026-07-20-research-direction-lab-system-blueprint.md
+      - docs/superpowers/plans/2026-07-20-research-direction-lab-system-implementation.md
+
   - slug: direction-scouting
     title: 方向侦察与项目盘点
     status: closed

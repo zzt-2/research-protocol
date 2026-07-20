@@ -1,0 +1,4 @@
+interface:
+  display_name: "Research Direction Lab"
+  short_description: "Batch and sustain research direction exploration"
+  default_prompt: "Use $research-direction-lab to recover this research foundation, map candidate families, run informative batches, harvest thesis material, and continue until a strategic decision is required."

@@ -1,0 +1,309 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+title: ProjectAdapterV1
+description: Closed contract for current project facts consumed by the research-direction Skill.
+type: object
+additionalProperties: false
+required:
+  - project_id
+  - formal_goal
+  - anchor
+  - components
+  - paths
+  - runnable_axes
+  - blocked_axes
+  - historical_counterexamples
+  - commands
+  - budgets
+properties:
+  project_id:
+    type: string
+    minLength: 1
+  formal_goal:
+    type: object
+    additionalProperties: false
+    required:
+      - statement
+      - contribution_scope
+      - thesis_constraints
+      - authorized_actions
+      - prohibited_actions
+    properties:
+      statement:
+        type: string
+        minLength: 1
+      contribution_scope:
+        type: array
+        items:
+          type: string
+          minLength: 1
+      thesis_constraints:
+        type: array
+        items:
+          type: string
+          minLength: 1
+      authorized_actions:
+        type: array
+        items:
+          type: string
+          minLength: 1
+      prohibited_actions:
+        type: array
+        items:
+          type: string
+          minLength: 1
+  anchor:
+    type: object
+    additionalProperties: false
+    required:
+      - scenario
+      - baseline_component
+      - metrics
+      - parameter_sources
+      - known_limitations
+      - evidence_status
+    properties:
+      scenario:
+        type: string
+        minLength: 1
+      baseline_component:
+        type: string
+        minLength: 1
+      metrics:
+        type: array
+        minItems: 1
+        items:
+          type: string
+          minLength: 1
+      parameter_sources:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          required:
+            - name
+            - pointer
+          properties:
+            name:
+              type: string
+              minLength: 1
+            pointer:
+              type: string
+              minLength: 1
+      known_limitations:
+        type: array
+        items:
+          type: string
+          minLength: 1
+      evidence_status:
+        type: string
+        enum:
+          - VALID
+          - STALE
+          - UNKNOWN
+          - INVALID
+  components:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+        - component_id
+        - role
+        - source_pointer
+        - identity_digest
+        - availability
+      properties:
+        component_id:
+          type: string
+          minLength: 1
+        role:
+          type: string
+          minLength: 1
+        source_pointer:
+          type: string
+          minLength: 1
+        identity_digest:
+          type: string
+          minLength: 1
+        availability:
+          type: string
+          enum:
+            - AVAILABLE
+            - BLOCKED
+            - RETIRED
+  paths:
+    type: object
+    additionalProperties: false
+    required:
+      - status
+      - state_events
+      - current_state
+      - candidates
+      - batches
+      - harvest_ledger
+      - thesis_spines
+      - component_registry
+      - failure_registry
+      - archive_roots
+    properties:
+      status:
+        type: string
+        minLength: 1
+      state_events:
+        type: string
+        minLength: 1
+      current_state:
+        type: string
+        minLength: 1
+      candidates:
+        type: string
+        minLength: 1
+      batches:
+        type: string
+        minLength: 1
+      harvest_ledger:
+        type: string
+        minLength: 1
+      thesis_spines:
+        type: string
+        minLength: 1
+      component_registry:
+        type: string
+        minLength: 1
+      failure_registry:
+        type: string
+        minLength: 1
+      archive_roots:
+        type: array
+        items:
+          type: string
+          minLength: 1
+  runnable_axes:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+        - axis_id
+        - description
+        - evidence_pointer
+      properties:
+        axis_id:
+          type: string
+          minLength: 1
+        description:
+          type: string
+          minLength: 1
+        evidence_pointer:
+          type: string
+          minLength: 1
+  blocked_axes:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+        - axis_id
+        - reason
+        - evidence_pointer
+        - repair_condition
+      properties:
+        axis_id:
+          type: string
+          minLength: 1
+        reason:
+          type: string
+          minLength: 1
+        evidence_pointer:
+          type: string
+          minLength: 1
+        repair_condition:
+          type: string
+          minLength: 1
+  historical_counterexamples:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+        - record_id
+        - proposition
+        - scope
+        - evidence_pointer
+        - validity
+      properties:
+        record_id:
+          type: string
+          minLength: 1
+        proposition:
+          type: string
+          minLength: 1
+        scope:
+          type: string
+          minLength: 1
+        evidence_pointer:
+          type: string
+          minLength: 1
+        validity:
+          type: string
+          enum:
+            - VALID
+            - STALE
+            - UNKNOWN
+            - INVALID
+  commands:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+        - command_id
+        - purpose
+        - argv
+        - working_directory
+        - timeout_seconds
+      properties:
+        command_id:
+          type: string
+          minLength: 1
+        purpose:
+          type: string
+          minLength: 1
+        argv:
+          type: array
+          minItems: 1
+          items:
+            type: string
+        working_directory:
+          type: string
+          minLength: 1
+        timeout_seconds:
+          type: integer
+          minimum: 1
+  budgets:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+        - resource
+        - limit
+        - unit
+        - scope
+        - evidence_pointer
+      properties:
+        resource:
+          type: string
+          minLength: 1
+        limit:
+          type: number
+          exclusiveMinimum: 0
+        unit:
+          type: string
+          minLength: 1
+        scope:
+          type: string
+          minLength: 1
+        evidence_pointer:
+          type: string
+          minLength: 1
