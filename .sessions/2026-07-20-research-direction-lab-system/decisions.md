@@ -251,3 +251,42 @@ V001-V004 已分阶段验证 Task 1-8（Skill 结构 + 通用工具 + 历史 rep
 ### 来源
 
 S009 / 用户 2026-07-20 执行提示词 §一~§九。触发原话：见 voice.md 2026-07-20 段。
+
+## D009: 消费者部署收口——integration worktree + 全局 Skill 安装 + 悬空 superseded 指针消除
+
+> status: active
+> date: 2026-07-20
+> 取代：无
+> 被取代：无
+> 依据：用户授权: 2026-07-20 执行提示词 §一~§八（明确授权消费者部署收口） + 验证: V005/V006 + Skill: using-git-worktrees + Skill: writing-skills（字节一致审计）
+
+### 决策
+
+1. 诊断"消费者部署断链"：shadow 分支 V005/V006 PASS 的工作从未进入消费者可达路径，全局 `research-direction-lab` Skill 不存在，旧 `method-family-batch-exploration` 的 `superseded_by` 指针悬空。
+2. 集成策略：因 `merge-base(97473a2, 6ca142e) = 97473a2`（fast-forward），从 `6ca142e` 创建新 worktree `.worktrees/research-direction-lab-integration`（分支 `codex/research-direction-lab-integration`）即可获得 Task 1-10 完整历史链和全部资产，无需 merge/rebase/cherry-pick，无冲突。
+3. 全局 Skill 安装：从 integration worktree 的 `.agents/skills/research-direction-lab/` 复制 36 文件到 `C:\Users\zzt\.agents\skills\research-direction-lab\`，字节级 hash 全等，`quick_validate` PASS。
+4. 旧 Skill superseded 指针消除：全局 `research-direction-lab` Skill 已存在且验证通过，旧 `method-family-batch-exploration` 的 `superseded_by: research-direction-lab` 不再悬空；保留旧 Skill 历史不删（沿用 D008 §5）。
+5. 普通用户 dirty 根目录完全不动；用户正式使用开放式研究方向探索应从 integration worktree（分支 `codex/research-direction-lab-integration`）开始。
+6. 整个对话只在收尾时一次 consolidated commit，不 push。
+
+### 理由
+
+V005/V006 已在 shadow worktree 验证 Task 9/10 PASS，但 shadow 是 isolated 分支从未回流——消费者（普通新对话）打开普通项目根时既看不到 Skill（不在 `.agents/skills/`），也读不到 FR-27（普通根 AGENTS.md 仍是 `97473a2` 旧版无 FR-27），即使读到了旧 `method-family-batch-exploration` Skill 也会被指向不存在的 `research-direction-lab`。本决策用最小、无冲突的 worktree 隔离 + 文件复制完成部署，不动用户 dirty 工作目录、不重做 Task 9/10 科学内容、不触发 push/merge。
+
+### 排除的替代方案
+
+- **直接在 dirty 普通根目录 merge `codex/research-direction-lab-shadow`**：拒绝；用户提示词 §二明确禁止，且 dirty 改动会被卷入合并。
+- **cherry-pick 单个 `6ca142e` 到 `feat/title-consistency-check`**：拒绝；会丢失 Task 1-8 的中间历史（cfb29f0/61b623d/e2f42e8/f79cb1b），且 dirty 根目录不允许。
+- **rebase shadow 到普通根**：拒绝；同上 dirty 问题，且 fast-forward 关系下与新建 integration 分支等价但更脏。
+- **只安装全局 Skill，不建立 integration worktree**：拒绝；只解决 Skill 发现，但普通根仍无 Skill 本体、STATUS、Project Adapter、shadow artifacts、Task 8 forward tests、Task 9/10 cutover 改动——消费者从普通根启动时仍读不到完整资产。
+- **删除旧 `method-family-batch-exploration` Skill**：拒绝；用户要求保留历史（D008 §5），且旧内容是 candidate-family batch 部分的可复用原型。
+- **把 shadow 派生的 SHADOW-H010..H017 晋升到 main ledger**：拒绝；超出本轮范围，需单独授权。
+- **运行新科学实验或创建 B004**：拒绝；用户提示词 §一/§二/§八明确禁止。
+
+### 影响范围
+
+允许新增 `.worktrees/research-direction-lab-integration/`（已 gitignore）；允许在 integration worktree 内重渲染 STATUS（renderer 输出 LF，符合 V006 anchor 4790 bytes）；允许新增 S011 + D009 + V007 + voice 条目到 `.sessions/2026-07-20-research-direction-lab-system/`；允许在 integration worktree 单次 consolidated commit（不 push）；允许在 `C:/Users/zzt/.agents/skills/research-direction-lab/` 安装 36 文件（git 不跟踪，记录在 S011/D009/V007）。继续保护 dirty 普通根目录、18 个 protected history 文件字节、B001-B003 raw artifacts、canonical baseline、historical receipts、B004 absence。
+
+### 来源
+
+S011 / 用户 2026-07-20 执行提示词 §一~§八。触发原话：见 voice.md 2026-07-20 段。

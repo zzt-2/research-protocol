@@ -27,3 +27,22 @@
 [转述:执行提示词] "Task 9 和 Task 10 分别独立复核。实现 agent 不得自审自验。" → D008
 [转述:执行提示词] "必须解决 AGENTS.md 当前'stages/groundwork 是唯一合法研究路径'与 Direction Lab 的表面冲突。" → D008
 [转述:执行提示词] "整个对话只在收尾时提交一次；不要 push。" → D008
+
+## 2026-07-20（消费者部署收口授权提示词）
+
+> 来源：执行提示词（粘贴文本，非对话原话，按 voice-quote.md §"执行提示词"规则标 [转述:执行提示词]）
+> 注：本段是用户授权消费者部署收口的执行提示词关键约束，非自然对话原话；不冒充用户自然原话。
+
+[转述:执行提示词] "本轮只解决'shadow 分支已经 PASS，但普通项目入口还没有真正接通'的问题。不得运行新科学实验，不得创建 B004，不得训练 ML，不得修改 B001–B003、P03 Atlas、canonical baseline 或历史科学证据。不要开 Goal。不要 push。" → D009
+[转述:执行提示词] "禁止直接在 dirty 普通根目录合并。" → D009
+[转述:执行提示词] "集成目标必须包含完整历史链，而不只是单独 cherry-pick 6ca142e。" → D009
+[转述:执行提示词] "不丢 Task 1–10 的历史；不吸收普通根目录的未提交改动；不覆盖其他研究专题；发生冲突时逐文件判断，不执行 reset --hard、restore、checkout --；只解决 Research Direction Lab 所需冲突。" → D009
+[转述:执行提示词] "如果无法安全集成，停止在干净 integration branch 并报告，不碰 dirty 根目录。" → D009
+[转述:执行提示词] "安装内容必须与 integration worktree 中的 Skill 字节一致或有明确生成清单；记录 source commit、文件 hash、安装时间和回滚方式。" → D009
+[转述:执行提示词] "不把 Project Adapter、双偏振 OSL 参数或通信术语复制进通用 Skill/core；项目专属事实仍留在项目 Adapter；Communications Profile 仍与通用 Skill 解耦。" → D009
+[转述:执行提示词] "只有新全局 Skill 已存在且验证通过后，才允许保留旧 method-family Skill 的 superseded 状态。" → D009
+[转述:执行提示词] "如果新 Skill 安装失败：恢复旧 Skill 的可用状态或明确消除悬空 superseded 指针；不允许留下'旧 Skill 已退休、新 Skill 又不可发现'的状态。" → D009
+[转述:执行提示词] "必须使用 fresh agent 做一次真正的 discovery smoke：只给它普通项目路径和'请使用 Research Direction Lab 恢复当前状态'，不在 prompt 中直接提供 SKILL.md 路径。" → D009
+[转述:执行提示词] "必须由独立 verifier agent 做消费者环境终验。" → D009
+[转述:执行提示词] "任何一项失败，最终结论不得写 DEPLOYED。" → D009
+[转述:执行提示词] "现在开始。不要运行科学实验，不要在每个小步骤停下来问我。" → D009

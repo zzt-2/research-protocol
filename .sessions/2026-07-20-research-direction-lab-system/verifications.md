@@ -305,3 +305,85 @@ PASS。Task 10 cutover 全部 deliverable 合规，FR-22 vs Direction Lab 冲突
 - forward-test scorer B6/B1 词表外局限（V004 debt）：检测器局限。
 - STATUS.v1.md / _registry.yaml Windows autocrlf 行尾脆弱性：pre-existing，STATUS 在本 worktree 已确认 LF-clean（0 CRLF）。
 - runner.direction_lab.b003.snapshot RETIRED snapshot digest stale：有意 out-of-guard（V005 已记录"18/18 + baseline + channel all match"）。
+
+## V007: 消费者部署收口独立终验
+
+> date: 2026-07-20
+> 关联：S011 / D009 / 用户 2026-07-20 执行提示词 §七
+> verifier 上下文: 独立 subagent（与实现分离）
+> FINAL VERDICT: PASS（11/11）
+> Deployment status authorized label: **DEPLOYED**
+
+### 验证项（11 项，全部独立复核）
+
+- [x] V-1 普通消费者能发现新 Skill：`C:\Users\zzt\.agents\skills\` 下 `research-direction-lab/` 与其他 skills 并列；integration worktree `.agents/skills/research-direction-lab/` 存在。
+- [x] V-2 新 Skill 不再只存在于 shadow worktree：`git worktree list` 含 integration worktree HEAD `6ca142e` + shadow worktree HEAD `6ca142e`；Skill dir 在 integration worktree 内可达。
+- [x] V-3 旧 Skill 没有悬空 superseded 指针：`method-family-batch-exploration/SKILL.md` frontmatter 含 `superseded_by: research-direction-lab`，目标 `C:\Users\zzt\.agents\skills\research-direction-lab\SKILL.md` 存在。
+- [x] V-4 integration branch 包含 Task 1–10 完整资产：`git log cfb29f0..HEAD` 链 cfb29f0 → 61b623d → e2f42e8 → f79cb1b → 6ca142e 完整；`.agents/skills/research-direction-lab/` 下 36 文件。
+- [x] V-5 dirty 普通根目录没有被修改：普通根 HEAD 仍 `97473a2184c72e3246db2a4053b962c0b36ed1dd`；dirty 文件 52 个保持不动。
+- [x] V-6 B004 不存在：batches/ 只含 B001-20260717-live / B002-20260718-live / B003-20260718-live。
+- [x] V-7 没有科学实验：integration worktree git status 只含 S011/D009/voice/topic-index 新增 + STATUS.v1.md renderer 重渲染；无 batch artifacts、无 completion-events、无 canonical-state 科学字段改动。
+- [x] V-8 protected history 未变：18 文件 SHA-256 全部独立重算并匹配 foundation-certificate.v1.yaml（0 mismatch）。
+- [x] V-9 通信和非通信 smoke 均通过：通用 Skill/code（SKILL.md + 8 references 除 profiles/communications.md + scripts/*.py + agents/openai.yaml）扫描 `CMA|BER|SNR|QPSK|OSL|Jones|pilot` = 0 命中；非通信 fixture `non-comms-baseline-extension.yaml` 存在且 `artifacts: []`。
+- [x] V-10 FR-22/FR-27 没有冲突：AGENTS.md FR-27（line 190）明确写"Direction Lab 是正式晋级前的候选发现/批量筛选层，不等于 GW 完成"+"正式候选晋级后仍必须走 Groundwork → Contract → Execute（继续遵守 FR-22）"；AGENTS.md 只保留 FR-27 单行路由索引，无 Skill 内容复制。
+- [x] V-11 所有定向测试和 quick_validate 通过：
+  - `pytest skill tests + 4 project files` = **139 passed, 1 skipped**
+  - `compileall` exit 0
+  - `quick_validate`（integration worktree）= Skill is valid!
+  - `quick_validate`（global install）= Skill is valid!
+  - 36 文件 sha256 hash 全等（integration vs global install，0 mismatch）
+  - STATUS.v1.md = 4790 bytes / LF-only（与 V006 anchor 一致）
+
+### 证据
+
+```text
+git worktree list:
+  D:/code/study/research-protocol                                               97473a2 [feat/title-consistency-check]
+  D:/code/study/research-protocol/.worktrees/p03-residual-headroom              29b330c [codex/p03-residual-headroom]
+  D:/code/study/research-protocol/.worktrees/research-direction-lab-integration 6ca142e [codex/research-direction-lab-integration]
+  D:/code/study/research-protocol/.worktrees/research-direction-lab-shadow      6ca142e [codex/research-direction-lab-shadow]
+  D:/code/study/research-protocol/.worktrees/research-direction-lab-system      f79cb1b [codex/research-direction-lab-system]
+  D:/code/study/research-protocol/.worktrees/unified-batch-runner              65db35b [codex/unified-batch-runner]
+
+git -C D:/code/study/research-protocol rev-parse HEAD: 97473a2184c72e3246db2a4053b962c0b36ed1dd
+git -C D:/code/study/research-protocol status --short | wc -l: 52
+
+git -C .../research-direction-lab-integration log --oneline cfb29f0..HEAD:
+  6ca142e feat(research-direction-lab): Task 9 shadow + Task 10 cutover (V005/V006 PASS)
+  f79cb1b feat(research-direction-lab): Task 8 forward-test round 1 PASS
+  e2f42e8 Add read-only Direction Lab project projection
+  61b623d Add Direction Lab safety tools and replay fixtures
+
+git -C .../research-direction-lab-integration status --short:
+ M .sessions/2026-07-20-research-direction-lab-system/decisions.md
+ M .sessions/2026-07-20-research-direction-lab-system/topic-index.md
+ M .sessions/2026-07-20-research-direction-lab-system/voice.md
+ M projects/thesis-fso/direction-lab/STATUS.v1.md
+?? .sessions/2026-07-20-research-direction-lab-system/S011-consumer-deployment-cutover.md
+
+pytest: 139 passed, 1 skipped
+compileall: exit 0
+quick_validate (integration): Skill is valid!
+quick_validate (global install): Skill is valid!
+hash compare 36 Skill files: checked=36 mismatches=0
+STATUS.v1.md: 4790 bytes LF-only
+
+protected history SHA-256 independent recompute: 18/18 match (0 mismatch)
+communications scan in generic Skill/code: 0 hits
+non-comms fixture present, artifacts: []
+```
+
+### 结论
+
+PASS（11/11）。消费者部署断链已修复，integration worktree + 全局 Skill 安装 + 悬空 superseded 指针消除 + dirty 普通根目录保护 + protected history 未变 + B004 absence + FR-22/FR-27 边界 + 通用/领域隔离全部验证通过。**Deployment status authorized label: DEPLOYED**。
+
+### 已知证据债（沿用 V005/V006 + 本轮新增）
+
+- canonical-state 内部 stale self-checksums（event_log_sha256 / simulator.sha256）：pre-existing，FC caveat 1-2；正式激活前清理。
+- canonical-state.last_completed_batch pointer 仍指 B002：pre-existing process debt，B003 verifier-report 已自文档化。
+- Windows symlink / POSIX flock 动态测试覆盖（V002/V003 debt）：跨平台 CI 前补跑。
+- forward-test scorer B6/B1 词表外局限（V004 debt）：检测器局限。
+- STATUS.v1.md Windows autocrlf 行尾脆弱性：pre-existing；本轮 renderer 重渲染保持当前 copy LF-clean，但跨 worktree checkout 时仍可能被 autocrlf 转 CRLF——长期修复需要在 .gitattributes 显式声明 `text=auto eol=lf` 或类似策略（非阻塞，不属本轮范围）。
+- dirty 普通根目录 `_registry.yaml` 仍停在 `S001/D001` 旧描述：用户工作目录改动，本轮按授权不动；用户若把普通根并入 integration 分支时需要手动 reconcile（建议直接以 integration 分支为准）。
+- dirty 普通根目录 `canonical-state.yaml` 已与 shadow 版本对齐（之前已被同步过）：用户工作目录改动，本轮按授权不动。
+- 全局 Skill 安装无 git 跟踪：安装元数据记录在 S011/D009/V007；新机器/克隆需重新安装。
