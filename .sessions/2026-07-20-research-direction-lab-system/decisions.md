@@ -210,3 +210,44 @@ S006 / 技术合同审计。触发原话：无（技术推导）。
 ### 来源
 
 S007 / task-6-review。触发原话已记录于 `voice.md` D005/D007。
+
+## D008: 授权 Task 9 live shadow 并条件性扩展到 Task 10 cutover（含 AGENTS.md 最小路由）
+
+> status: active
+> date: 2026-07-20
+> 取代：无
+> 被取代：无
+> 依据：用户授权: 2026-07-20 执行提示词 §一~§九（明确授权 Task 9 shadow + Task 9 PASS 后条件性执行 Task 10 cutover） + 计划边界: Task 9 Step 4 PASS 标准 + Skill: recovery-and-rotation.md + thesis-lessons TL-30 (不跳框架)
+
+### 决策
+
+1. 在隔离 worktree `research-direction-lab-shadow`（分支 `codex/research-direction-lab-shadow`，从 `f79cb1b` 创建）执行 Task 9 live shadow，时间预算为本对话内连续推进最长 ~2h。
+2. shadow 工作严格在 dual-pol OSL 现有地基 + 合法 Project Adapter 范围内；不运行新科学实验，不创建 B004，不修改 protected history；性能数字只能留在 `shadow/` 下的 sandbox artifact。
+3. 先冻结 Shadow Contract + Foundation Certificate，再驱动 Skill 7-phase loop 收集 5 类行为证据（OBS-BLOCK / OBS-ROTATE / OBS-SCOPE / OBS-HARVEST / OBS-RECOVER）。
+4. 自然科学工作未覆盖 5 类时可 replay 已冻结历史，不能伪造新科学 batch。
+5. **范围扩展**：plan Task 9 Step 5 + Task 10 cutover 在本轮授权下扩展为包含 AGENTS.md 最小路由——AGENTS.md 只增加指向 research-direction-lab Skill 的路由和边界索引行（"开放式找方向用 research-direction-lab Skill；Groundwork/Contract/Execute 是正式证据形成层；Direction Lab 的 Scout/Sandbox 不等于 GW 完成"），不复制 Skill 内容；旧 method-family-batch-exploration Skill 标 superseded 但保留历史不删；process.md 成为短入口，STATUS 成为日常唯一人类入口。
+6. AGENTS.md 路由必须解决"stages/groundwork 是唯一合法研究路径"（FR-22）与 Direction Lab 的表面冲突：正确解释是 Direction Lab 是正式晋级前的候选发现/批量筛选层，晋级候选仍必须走 GW/Contract/Execute。
+7. 实现上下文与独立 verifier 上下文分离；Task 9 和 Task 10 分别独立终验。
+8. 整个对话只在收尾时一次 consolidated commit，不 push。
+
+### 理由
+
+V001-V004 已分阶段验证 Task 1-8（Skill 结构 + 通用工具 + 历史 replay + 只读项目投影 + scheduler 审计 + 5 类案例 fresh-agent 盲测）；用户本轮明确授权进入 Task 9 live shadow 以获取长期自动化行为的真实观察证据。条件性扩展到 Task 10 + AGENTS.md 最小路由是因为旧路由仍指向 method-family-batch-exploration Skill，正式激活前必须收敛到唯一 owner；用户原话："只有独立 verifier 明确判定 Task 9 PASS，才继续 Task 10 cutover"，所以 Task 10 是严格条件性的。
+
+### 排除的替代方案
+
+- **跳过 Task 9 直接 Task 10 cutover**：拒绝；forward test 只验证 5 类已覆盖行为，shadow 才提供长期证据（S008 后续）。
+- **借 shadow 跑新科学实验或创建 B004**：拒绝；违反用户提示词 §一/§二/§八；新科学仍需 sim-preflight 合同和独立授权。
+- **把 shadow 派生的 SHADOW-H010..H017 自动晋升到 main ledger**：拒绝；main ledger V003-anchored 到 H001-H009，强制晋升破坏 V003 测试；晋升需单独授权 + 重新 hash 绑定 + thesis-spines 更新。
+- **AGENTS.md 复制 Skill 全文**：拒绝；违反"唯一拥有者"不变量；AGENTS.md 只加路由行。
+- **删除 method-family-batch-exploration Skill**：拒绝；用户要求"标记 superseded 但保留历史"。
+- **把 shadow/sandbox 数字写入正式论文材料**：拒绝；用户提示词 §二明确禁止。
+- **scheduler 或复杂状态机补丁**：拒绝；D001 不变量。
+
+### 影响范围
+
+允许在 shadow worktree 内新增 `projects/thesis-fso/direction-lab/shadow/` 下 contract / observation / harvest-derived / foundation-certificate；允许更新 STATUS（通过 renderer 保持 LF bytes）；允许新增 S009 + D008 + voice 条目；允许更新 `_registry.yaml`。Task 9 PASS + 独立 verifier 终验后，Task 10 cutover 修改 process.md / projects/thesis-fso/direction-lab/README.md / `C:/Users/zzt/.agents/skills/method-family-batch-exploration/SKILL.md`（标 superseded） / 新增 docs/architecture/research-direction-lab.md（doc-steward mode）/ AGENTS.md 加最小路由索引行（不复制 Skill 内容）。继续保护 18 个 protected history 文件的字节、B001-B003 raw artifacts、canonical baseline、historical receipts。
+
+### 来源
+
+S009 / 用户 2026-07-20 执行提示词 §一~§九。触发原话：见 voice.md 2026-07-20 段。

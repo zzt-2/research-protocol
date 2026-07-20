@@ -2,7 +2,24 @@
 
 > 版本：DL-Process v0.4（2026-07-19）
 > 适用范围：通用研究探索内核；当前提供 Communications profile，并由 OSL project adapter 实例化
-> 状态：项目级执行规范；尚未打包为 Codex skill
+> 状态：**SUPERSEDED 2026-07-20（D008/V005）**——开放式研究方向探索的流程拥有者已迁移到 `.agents/skills/research-direction-lab/SKILL.md`。本文件保留作为历史与项目实例的事实记录，不再作为执行流程拥有者；新工作请先加载 research-direction-lab Skill。本文件下方的 Scout/Sandbox/Promotion 三层描述与"未来 skill 化要求"（§9）已被 V001-V005 验证的 Skill + 通用工具 + Profile + Adapter + 项目状态分层实现，不再作为待办。
+
+---
+
+## 进入入口（推荐路径）
+
+1. 日常恢复与人类决策：`projects/thesis-fso/direction-lab/STATUS.v1.md`（renderer 输出的八问一页）
+2. 开放式研究方向探索流程：`.agents/skills/research-direction-lab/SKILL.md`（唯一拥有者，含 7-phase loop、candidate portfolio、batch/atlas、evidence/claims、harvest、recovery/rotation、project-layout 七份 reference）
+3. 通信领域稳定规则：`.agents/skills/research-direction-lab/references/profiles/communications.md`
+4. 当前项目事实：`projects/thesis-fso/direction-lab/project.v1.yaml`（READ_ONLY_MIGRATION_PREVIEW；adapter 唯一拥有者）
+5. 通用代码模板：`.agents/skills/research-direction-lab/scripts/`（hash/receipt/event/reducer/status 五个确定性工具）
+6. 历史批次证据：`projects/thesis-fso/direction-lab/batches/`（B001-B003，protected，不可改字节）
+
+**职责边界**：Direction Lab 是正式晋级前的候选发现与批量筛选层；Scout/Sandbox 数字不等于 GW 完成；正式候选晋级后仍必须走 Groundwork → Contract → Execute（继续遵守 FR-22）。
+
+---
+
+## 历史内容（DL-Process v0.4，仅供参考，不再拥有流程）
 
 ## 1. 目的与边界
 

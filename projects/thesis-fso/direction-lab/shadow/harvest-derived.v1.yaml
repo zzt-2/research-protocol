@@ -1,0 +1,164 @@
+schema_version: research-direction-lab.shadow-harvest-ledger.v1
+mode: SHADOW_REPLAY_DERIVATION
+shadow_id: SHADOW-S001
+created: 2026-07-20
+parent_ledger: projects/thesis-fso/direction-lab/harvest/ledger.v1.yaml
+parent_ledger_digest_at_shadow_start: <computed below>
+scope_rule: >-
+  Entries here are derived from the frozen historical artifacts (B001-B003
+  manifest/verifier/synthesis, Atlas closeout + stage-a, P01 preflight, P02
+  triage, failure-registry, canonical-state) by replay under SHADOW-S001.
+  They are NOT promoted into the main harvest ledger (ledger.v1.yaml) and
+  MUST NOT be referenced from formal thesis materials unless a later,
+  separately authorized promotion decision copies them in with fresh hash
+  re-binding and a thesis-spines update.
+inheritance: >-
+  Every entry's source_hashes are identical to the corresponding frozen
+  artifact's identity_digest in project.v1.yaml, because replay did not
+  modify any protected file. Foundation Certificate B (18/18 hash match)
+  is the binding evidence.
+
+# H010-H017: see shadow/S001-observation.md §Harvest derivation for narrative
+entries:
+  - id: SHADOW-H010
+    parent_category: BOUNDARY_RESULT
+    finding: >-
+      C24-SL-LINEAR (recall 1.00, control FA 0.20, AUROC 0.9622865) and
+      C24-SL-MLP (recall 1.00, control FA 0.00, AUROC 0.9577760) both
+      satisfied ADVANCE_SPECIFIC in the exact U24 contract.
+    evidence_scope: U24 exact shared contract
+    claim_ceiling: CONTRACT
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/batches/B001-20260717-live/verifier-report.md
+      - projects/thesis-fso/direction-lab/batches/B001-20260717-live/batch-synthesis.md
+      - projects/thesis-fso/direction-lab/batches/B002-20260718-live/verifier-report.md
+      - projects/thesis-fso/direction-lab/batches/B003-20260718-live/verifier-report.md
+    quote: "C24-SL-LINEAR | At event rate 1e-5: recall 1.00, control-rate (4e-6) false alarm 0.20, AUROC 0.9622865429. | ADVANCE_SPECIFIC"
+    promotion_block: not yet promoted; shadow-only until authorized
+
+  - id: SHADOW-H011
+    parent_category: EVALUATION_INSIGHT
+    finding: >-
+      High block AUROC did not translate to persistent event recall at the
+      preregistered control budget. Historical threshold comparator AUROC
+      0.9412255 but recall 0.00 / FA 1.00. SSL-AE AUROC 0.8213859 retired by
+      recall=0 rule. AUROC alone cannot advance a candidate.
+    evidence_scope: U24 exact shared contract (B001/B002/B003)
+    claim_ceiling: CONTRACT
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/batches/B001-20260717-live/batch-synthesis.md
+      - projects/thesis-fso/direction-lab/batches/B001-20260717-live/verifier-report.md
+      - projects/thesis-fso/direction-lab/batches/B002-20260718-live/verifier-report.md
+      - projects/thesis-fso/direction-lab/failure-registry.yaml
+    quote: "High block AUROC did not translate to persistent event recall at the preregistered control budget."
+    promotion_block: not yet promoted; shadow-only until authorized
+
+  - id: SHADOW-H012
+    parent_category: EVALUATION_INSIGHT
+    finding: >-
+      6 of 11 Stage A cells are sensitivity-limited (zero errors, rule-of-three
+      upper bound > MDE on 10 seeds); LOCAL_NEGATIVE is "no observed headroom"
+      not "baseline perfect". Only 5/11 cells carry an informative bound below MDE.
+    evidence_scope: P03 Stage A runnable representative sub-domain
+    claim_ceiling: SLICE
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/atlas-closeout-assessment.v1.yaml
+      - projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/stage-a-synthesis.md
+    quote: "on 6 of 11 cells the upper bound exceeds MDE because zero errors were observed, so those cells carry a sensitivity caveat rather than a 'baseline perfect' claim."
+    promotion_block: not yet promoted; shadow-only until authorized
+    deduplication_note: refines H003 by distinguishing measured-negative (5) from sensitivity-limited (6)
+
+  - id: SHADOW-H013
+    parent_category: BOUNDARY_RESULT
+    finding: >-
+      Same-information blind affine comparator dominated by nearest-QPSK on
+      all 11 Stage A cells; slightly worse in low-SNR cells due to
+      calibration-z pseudo-label noise.
+    evidence_scope: P03 Stage A runnable representative sub-domain
+    claim_ceiling: SLICE
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/stage-a-synthesis.md
+    quote: "The same-information blind affine comparator did not beat it on any cell (in several low-SNR cells the affine was slightly worse, because the calibration-z pseudo-labels are themselves noisy at low SNR)."
+    promotion_block: not yet promoted; shadow-only until authorized
+
+  - id: SHADOW-H014
+    parent_category: BOUNDARY_RESULT
+    finding: >-
+      B001 tested detection only, not recovery. No candidate changed
+      standard-CMA, labels, pilots, or BER denominators. Control rate 4e-6
+      produced no persistent test event cells. Batch licenses local
+      discrimination at event rate 1e-5 only — no BER/cross-rate/recovery claim.
+    evidence_scope: B001 exact shared contract
+    claim_ceiling: CONTRACT
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/batches/B001-20260717-live/batch-synthesis.md
+      - projects/thesis-fso/direction-lab/batches/B001-20260717-live/verifier-report.md
+    quote: "The batch tested detection, not recovery. No candidate changed standard-CMA, labels, pilots, or BER denominators; no BER-improvement claim is licensed."
+    promotion_block: not yet promoted; shadow-only until authorized
+
+  - id: SHADOW-H015
+    parent_category: WRITING_MATERIAL
+    finding: >-
+      Stage A "Reading the result honestly" + "Verdict ladder" sections are
+      ready-to-cite negative-boundary discussion prose; extends exact-slice
+      LOCAL_NEGATIVE to wider runnable sub-domain; enumerates why
+      DOMAIN/CANDIDATE/FAMILY remain open (16QAM/CSI/coded axes blocked).
+    evidence_scope: P03 Stage A closeout narrative
+    claim_ceiling: SLICE
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/stage-a-synthesis.md
+    quote: "This Stage A finding extends P03 v1's exact-slice LOCAL_NEGATIVE to a wider runnable sub-domain... It does not close DOMAIN/CANDIDATE/FAMILY: the historical counterexamples that force DOMAIN-level UNRESOLVED live on exactly the axes the frozen closure cannot exercise."
+    promotion_block: not yet promoted; shadow-only until authorized
+    usage_note: when promoted to thesis, quote verbatim — the DOMAIN-remains-open enumeration lists exact blocked axes
+
+  - id: SHADOW-H016
+    parent_category: WRITING_MATERIAL
+    finding: >-
+      B001 Mechanism-level synthesis section provides ready methods-narrative
+      prose: positive detector signal in supervised multi-trace temporal
+      features, not a single threshold; historical single-statistic threshold
+      is an executable negative control, not a candidate revival.
+    evidence_scope: U24 exact shared contract methods narrative
+    claim_ceiling: CONTRACT
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/batches/B001-20260717-live/batch-synthesis.md
+    quote: "The positive signal is in supervised multi-trace temporal features, not a single threshold. This changes the historical detector mechanism."
+    promotion_block: not yet promoted; shadow-only until authorized
+
+  - id: SHADOW-H017
+    parent_category: LOCAL_NEGATIVE
+    finding: >-
+      Inherited historical single-statistic blind threshold detector, run as
+      negative control in B001, scored AUROC 0.9412255 but event recall 0.00
+      with control FA 1.00 at event rate 1e-5 in the exact B001 contract.
+      Re-observed under preregistered control budget, consistent with
+      foundation-decisions negative lineage.
+    evidence_scope: B001 exact shared contract, historical-threshold-comparator mechanism only
+    claim_ceiling: CONTRACT
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/batches/B001-20260717-live/batch-synthesis.md
+      - projects/thesis-fso/direction-lab/batches/B001-20260717-live/verifier-report.md
+      - projects/thesis-fso/direction-lab/failure-registry.yaml
+    quote: "historical threshold comparator | AUROC 0.9412255; AUPRC 0.6238694; recall 0.00; control FA 1.00 | negative control only"
+    inheritance_rule_note: >-
+      failure-registry inheritance_rule forbids using this to Kill supervised
+      or SSL temporal detector families. Mechanism-scoped only.
+    promotion_block: not yet promoted; shadow-only until authorized
+
+# Self-check
+self_check:
+  count: 8
+  parent_categories_used:
+    - BOUNDARY_RESULT
+    - EVALUATION_INSIGHT
+    - WRITING_MATERIAL
+    - LOCAL_NEGATIVE
+  claim_ceilings_used:
+    - CONTRACT
+    - SLICE
+  forbidden_ceilings_absent:
+    - DOMAIN
+    - FAMILY
+  every_entry_points_to_protected_artifact: true
+  source_hashes_match_foundation_certificate_B: true
+  forward_looking_proposals: 0

@@ -1,0 +1,138 @@
+schema_version: research-direction-lab.shadow-contract.v1
+contract_id: SHADOW-S001
+created: 2026-07-20
+worktree: D:/code/study/research-protocol/.worktrees/research-direction-lab-shadow
+branch: codex/research-direction-lab-shadow
+parent_commit: f79cb1bc77ad1a20fb0b8334be6dac19124f214c
+authorization_source: >-
+  2026-07-20 用户执行提示词：明确授权 Task 9 live shadow；Task 9 PASS 后条件性授权 Task 10 cutover。
+  本对话内连续推进，不规定固定批次数或机制族数量。
+
+# 边界 — 在 dual-pol OSL 现有地基及其合法 Project Adapter 范围内
+scope:
+  domain: dual-polarization ground-to-satellite OSL under Gamma-Gamma turbulence and SOP dynamics
+  project_adapter: projects/thesis-fso/direction-lab/project.v1.yaml
+  legal_portfolio: portfolio/current.v1.yaml 中 P01/P02/P03/U24/U36 + 历史 B001-B003/Atlas
+  legal_replay_sources:
+    - projects/thesis-fso/direction-lab/batches/B001-20260717-live/
+    - projects/thesis-fso/direction-lab/batches/B002-20260718-live/
+    - projects/thesis-fso/direction-lab/batches/B003-20260718-live/
+    - projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/
+    - projects/thesis-fso/direction-lab/scout/P01-U25-action-contract/
+    - projects/thesis-fso/direction-lab/scout/capability-triage.v1.yaml
+    - projects/thesis-fso/direction-lab/failure-registry.yaml
+
+# 时间预算 — 本对话内连续推进，最长约 2 小时 wall-clock
+time_budget:
+  mode: continuous_within_conversation
+  max_wall_clock: 2h
+  fixed_batch_count: NONE  # 不规定固定批次数或机制族数量
+  stop_conditions:
+    - 五类行为都收集到充分证据
+    - 所有合法替代路径耗尽
+    - 涉及战略性范围扩张或不可逆改动需要用户决策
+    - 2h wall-clock 上限
+
+# 严禁事项
+prohibitions:
+  - 不进入正式论文晋级
+  - 不创建 B004
+  - 不修改 B001-B003 / P03 Atlas / canonical baseline / 历史 receipt
+  - 不修改 protected history 18 个文件的字节
+  - 不运行任何新科学仿真或训练（P03 ML、新 sandbox batch 均禁止）
+  - 不把 shadow/sandbox 性能数字写入正式论文材料
+  - 不 push、不 merge
+  - 不修改主 worktree 或旧 p03/unified-batch-runner dirty worktree
+  - 不让通用 Skill/代码吸收通信或双偏振 OSL 项目语义
+
+# 允许的 Shadow 工作
+allowed_actions:
+  - 驱动 Skill 7-phase loop（Recover/Map/Plan/Prepare/Synthesize/Harvest/Rotate）在既有 portfolio 上
+  - replay 模式读 B001-B003/Atlas 的 manifest/verifier/synthesis（不重跑）
+  - 派生新 harvest entries（WRITING_MATERIAL / FAILURE_MECHANISM / SCOPE_CLARIFICATION）
+  - candidate rotation（U24 → P03 → P01 → P02，触发并记录）
+  - claim-scope assessment（在既有 SLICE/CONTRACT ceiling 基础上做细化）
+  - 上下文恢复演练（kill/recover 子 agent 测试）
+  - STATUS 更新（保持一页可读）
+  - Foundation Certificate 审计（read-only hash + 内容审）
+
+# 必须观察的 5 类行为（Plan Task 9 Step 3）
+required_observations:
+  - id: OBS-BLOCK
+    name: real_blocker
+    description: 至少一次真实 blocker 被识别并按 Skill 纪律处理（不是伪造的）
+    evidence_source: 自然科学工作遇到的真实阻塞，或 replay 中明确标记的历史 blocker
+  - id: OBS-ROTATE
+    name: automatic_candidate_rotation
+    description: 至少一次单候选阻断后自动轮换到另一个合法候选
+    evidence_source: P03 SLICE local negative → 自动换到 U24 历史闭包 or P01/P02 status check
+  - id: OBS-SCOPE
+    name: claim_scope_assessment
+    description: 至少一次 claim ceiling 被显式声明且不超过证据支持的最小级别
+    evidence_source: SLICE local negative 不能升为 DOMAIN；blocked axis 不能当 negative evidence
+  - id: OBS-HARVEST
+    name: harvest_update
+    description: 至少一个完成的科学 batch 产生新的 harvest entry
+    evidence_source: replay B001-B003/Atlas 后派生新的 ledger 条目
+  - id: OBS-RECOVER
+    name: context_recovery_or_state_rebuild
+    description: 至少一次上下文恢复或状态重建演示
+    evidence_source: fresh subagent 启动恢复、或本对话从 H003 续接的恢复过程
+
+# 补测规则（Plan Task 9 Step 3）
+replay_policy: >-
+  自然科学工作没有覆盖某一项时，可使用已冻结历史 replay 补测该行为，
+  但必须标明 replay，不能伪造新的科学 batch。
+  本 shadow 自然工作覆盖：OBS-ROTATE（P03 SLICE local negative 已记录）、
+  OBS-SCOPE（claim ceiling ladder 已在 evidence-and-claims.md 落地）、
+  OBS-HARVEST（B001-B003/Atlas replay 派生新条目）、OBS-RECOVER（本对话恢复）。
+  OBS-BLOCK 由 P01 architecture-blocked + P02 not-runnable + P03 三个 blocked axes 提供。
+
+# PASS 条件（Plan Task 9 Step 4，verbatim）
+pass_criteria:
+  - id: PASS-P0
+    rule: zero history/provenance P0
+    measurement: protected 18 files hash 100% 一致（Foundation Certificate 已 PASS）
+  - id: PASS-OVERCLAIM
+    rule: zero local-to-domain overclaim
+    measurement: 所有 claim ceiling ≤ 证据支持的最小级别（SLICE/CONTRACT，不越 DOMAIN）
+  - id: PASS-CONTINUE
+    rule: 100% automatic continuation when legal alternatives existed
+    measurement: 存在合法替代项时不停止、不向用户请示非战略性决策
+  - id: PASS-STATUS
+    rule: readable one-page STATUS
+    measurement: STATUS.v1.md 保持 ≤120 行、八问完整、blocked axes 直接列出
+  - id: PASS-HARVEST
+    rule: at least one harvest per completed scientific batch
+    measurement: 每个完成的 replay batch 至少一个新 harvest entry
+  - id: PASS-FIVE-BEHAVIORS
+    rule: 5 类行为都有证据
+    measurement: OBS-BLOCK / OBS-ROTATE / OBS-SCOPE / OBS-HARVEST / OBS-RECOVER 全部有证据指针
+  - id: PASS-DOMAIN-NEUTRAL
+    rule: 通用 Skill/代码没有吸收通信或双偏振 OSL 项目语义
+    measurement: Skill/scripts 对 BER/SNR/CMA/pilot/OSL/QPSK/Jones 0 命中
+  - id: PASS-NO-SCHEDULER
+    rule: 没有 scheduler / science_slots / 固定最小批次数 / completeness solver 回潮
+    measurement: 通用代码无候选选择/资源匹配/完整性证明逻辑
+
+# 治理成本
+governance_cost:
+  rule: 只记录实际比例，不预设通过阈值
+  escalate_if: 流程明显过重时优先删重复文档/门控/不产生决策价值的步骤，不新增控制器补丁
+
+# 升级条件（必须请求用户）
+escalation_conditions:
+  - 涉及战略性范围扩张
+  - 不可逆改动
+  - 所有合法路径耗尽
+  - Foundation Certificate FAIL（地基不可靠）
+
+# 失败处理（Plan Task 9 Step 5）
+failure_handling:
+  - 不修改 AGENTS.md 为正式激活
+  - 不宣布新体系可长期可靠
+  - 不添加 scheduler 或复杂状态机
+  - 定位失败属于：Skill 判断 / Project Adapter / 领域 Profile / 确定性工具 / 项目地基
+  - 只修改正确拥有者
+  - 记录失败机制和可复用资产
+  - 独立复核后停止并汇报

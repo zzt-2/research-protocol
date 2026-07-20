@@ -1,0 +1,164 @@
+schema_version: research-direction-lab.foundation-certificate.v1
+certificate_id: FC-S001
+created: 2026-07-20
+verifier_context: independent subagent (separate from shadow implementation)
+mode: READ_ONLY_MIGRATION_PREVIEW
+verdict: PASS
+
+# 在任何新科学计算前生成；shadow 阶段不运行新计算，本证书作为地基可靠性证据
+
+# A. Baseline 身份
+baseline_identity:
+  component_id: baseline.standard_cma.godard_z
+  source_pointer: projects/simulation/explore/cma-fade-divergence/prompt013_swap_mechanism_q2.py
+  expected_digest: 9282ecb53608a2093a5e69a62ccea9976211ecfda7626d2e65ce2fd912f1ca2f
+  disk_digest: 9282ecb53608a2093a5e69a62ccea9976211ecfda7626d2e65ce2fd912f1ca2f
+  hash_match: PASS
+  godard_z_present: YES
+  godard_z_evidence: >-
+    _cma_deltas 函数 standard 分支（line 300-306）：
+    delta w ∝ (R-|z|²) z r*，error e_x=R2-|z_x|² 乘以 z_x 再与 r* 相关。
+    canonical-state 绑定 run_cma_diagnostic(mode='standard')，line 382 选 standard_delta 分支。
+  forbidden_alias_current_cma_no_z: NOT_USED
+  forbidden_alias_common_cma_equalizer_as_standard: NOT_USED
+  common_cma_note: >-
+    prompt013_swap_mechanism_q2.py 只 import ButterflyCNNEqualizer2x2，
+    不 import CMAEqualizer；common/_cma.py 仅作为 tracked 依赖 hash，不作为 standard-CMA 实现。
+
+shared_channel_identity:
+  component_id: simulator.dual_pol_shared_realization.v1
+  source_pointer: projects/simulation/common/_dual_pol_channel.py
+  expected_digest: 3d02eaa31e3efa9c343028a81ec6b36c1d1ebf9135e386e974ef581ba11bf7d3
+  disk_digest: 3d02eaa31e3efa9c343028a81ec6b36c1d1ebf9135e386e974ef581ba11bf7d3
+  hash_match: PASS
+  shared_realization_present: YES
+  shared_realization_evidence: >-
+    函数 generate_shared_realization_dp(...) 产生一份共享 realization (rX, rY, sX, sY, h, theta)
+    跨方法复用；别名 generate_shared_dual_pol_realization 被 prompt013_swap_mechanism_q2.py import。
+
+# B. Protected history (18 files)
+protected_history:
+  total_files: 18
+  matched: 18
+  mismatched: 0
+  verdict: PASS
+  files:
+    - file: projects/thesis-fso/direction-lab/canonical-state.yaml
+      digest: 56abf96caf24d2404d0e37d31d58904bef3163ef1f73de69cf8c8a29971c087f
+    - file: projects/thesis-fso/direction-lab/state/completion-events.jsonl
+      digest: 5565e78ac1b5f1a9e5bba5f53096f2cb4001f2264451239a34a0ce6cb8c6c5fe
+    - file: projects/thesis-fso/direction-lab/state/projections/5967ea38e676b46cb092c98060bec5b470b5a03625f21e65218cf3b2ae3a88af.yaml
+      digest: 56abf96caf24d2404d0e37d31d58904bef3163ef1f73de69cf8c8a29971c087f
+    - file: projects/thesis-fso/direction-lab/batches/B001-20260717-live/manifest.json
+      digest: 7e84cfe59b3cefcb013eb5013b36cc42c5d813655097b5ef6fe90e37a7f6d90b
+    - file: projects/thesis-fso/direction-lab/batches/B001-20260717-live/verifier-report.md
+      digest: 61c5f0d24b5febafe58ecc4f09b6bab70cad3ce09c44bceed5e2518f935a1751
+    - file: projects/thesis-fso/direction-lab/batches/B001-20260717-live/batch-synthesis.md
+      digest: 4bd1783a163314dccbd2f0e600a0993f0d8100f6c28a2f3823ca957bdba4a0be
+    - file: projects/thesis-fso/direction-lab/batches/B002-20260718-live/manifest.json
+      digest: f1b4f205bdb3a40b518a36bdca5e8c02760a9613313d4d10b2b4fead22db4f98
+    - file: projects/thesis-fso/direction-lab/batches/B002-20260718-live/execution-status.yaml
+      digest: 5dcf6a9a60bf84625042e87013c83ad631815db0664b828f8a303655f38e43bc
+    - file: projects/thesis-fso/direction-lab/batches/B002-20260718-live/verifier-report.md
+      digest: 22fa5e6741dbae8c77669f01b79291dd679abb195e02bfb35cb37cedac9e937d
+    - file: projects/thesis-fso/direction-lab/batches/B002-20260718-live/batch-synthesis.md
+      digest: 3ecc182b6b7e48dbaa0d0154365729769ddbdfdfb53b2ff1f9750a759f64f587
+    - file: projects/thesis-fso/direction-lab/batches/B003-20260718-live/manifest.json
+      digest: 5d4471fde14880f25c5674068059ce0b3b58cb750f8b0e0693100eaa74d1db13
+    - file: projects/thesis-fso/direction-lab/batches/B003-20260718-live/execution-status.yaml
+      digest: 5612a8187c5aa616528249eee3d30e3cf72b48f0afddd29a18e09b4fa011ba8d
+    - file: projects/thesis-fso/direction-lab/batches/B003-20260718-live/verifier-report.md
+      digest: 091d37af56b44ef78d97e6493fa68e683234cfe5423d4b50614acdd396302cbc
+    - file: projects/thesis-fso/direction-lab/batches/B003-20260718-live/batch-synthesis.md
+      digest: b207e08f17dbad7d995c568e1dcde2b5bc46fbe9ca1eb2c6c7b9f4c390bfdda7
+    - file: projects/thesis-fso/direction-lab/scout/P01-U25-action-contract/preflight-report.json
+      digest: 3d08568e949408dcfad34a8bc64497627ce4fd2a78b30693d31a4889f17ad8b9
+    - file: projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/atlas-closeout-assessment.v1.yaml
+      digest: df97d9ea847a21177026c008bc5f268d3582be4c8d8e6e8fa11193c3d049f981
+    - file: projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/stage-a-synthesis.md
+      digest: cb683444e04cb591ff4adf4cdb4da305f2f0d420d3b680b28aaa06c2b54acd31
+    - file: projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/stage-a-verifier-report.md
+      digest: d221053bd8bc0ec0d4bc9447629f0728d41fd99b4c8b01a9941bfdbc52d5b75e
+
+# C. B004 absence
+b004_absence:
+  verdict: PASS
+  evidence: >-
+    projects/thesis-fso/direction-lab/batches/ 只含 B001-20260717-live / B002-20260718-live / B003-20260718-live。
+
+# D. Standard-CMA semantic correctness
+standard_cma_semantics:
+  verdict: PASS
+  evidence: >-
+    _cma_deltas 函数含 standard 分支（带 z 因子），与 canonical "delta w ∝ (R-|z|²) z r*" 一致；
+    canonical-state 绑定 baseline.standard_cma.godard_z，run_cma_diagnostic(mode='standard')。
+
+# E. Comparator legality per batch
+comparator_legality:
+  B001:
+    verdict: LEGAL
+    comparator: 30 paired cells × standard-CMA/Godard-z，fixed-label + PI BER 双报
+    caveat: 域限于 B001 exact contract（GG strong turb, QPSK, 20dB, N=100000, etc.）
+  B002:
+    verdict: LEGAL
+    comparator: 同 B001 的 30 cells、同 seeds、同 causal 12-feature rows、同 metric contract
+    caveat: 源自 uncommitted unified-runner snapshot（sandbox）
+  B003:
+    verdict: LEGAL
+    comparator: 三 mechanism-distinct detectors on 同 30 cells、standard-CMA Godard-z baseline
+    caveat: exact shared contract only；stale canonical-state.last_completed_batch pointer 是已知 debt
+  P03_atlas_stage_a:
+    verdict: LEGAL
+    comparator: strongest legal non-ML: nearest-QPSK + same-information blind one-step complex 2×2 affine + scoring-only oracle affine upper bound
+    caveat: Stage A is baseline-only（no ML trained）；0/11 cells reached MDE；3 axes INFRASTRUCTURE_BLOCKED
+
+# F. Runnable vs blocked axes consistency
+axes_consistency:
+  verdict: PASS
+  runnable_axes_count: 1
+  blocked_axes_count: 6
+  evidence: >-
+    runnable_axes: p03.qpsk-csi-none-uncoded-hard-decision.representative-subdomain（与 atlas-closeout tested_axes 一致）；
+    blocked_axes: p03.modulation.16qam / p03.csi.receiver-estimated-or-pilot / p03.output.soft-or-coded /
+    p01.u25.action-and-fork-replay / p02.u10.carrier-cpr-event-chain / formal.promotion；
+    每个 blocked axis 在对应 synthesis/preflight 中有 INFRASTRUCTURE_BLOCKED rationale。
+
+# G. Receipt ledger consistency
+receipt_ledger:
+  verdict: PASS_WITH_CAVEAT
+  append_only: PASS
+  b004_absence: PASS
+  design_caveat: >-
+    completion-events.jsonl 只含 B003 一个 event（sequence=1, bootstrap）；
+    B001/B002 provenance 在 canonical-state.completion_history 和 per-batch artifacts。
+    这是项目设计（head_sequence=1, single-event bootstrap at B003），不是 corruption。
+
+# 非 blocking caveats
+non_blocking_caveats:
+  - id: CAVEAT-STALE-HASH-1
+    severity: cosmetic
+    description: >-
+      canonical-state.yaml line 80 event_log_sha256=5cba7da9... 与 completion-events.jsonl
+      disk hash 5565e78a... 不一致。这是 canonical-state 内部 stale self-checksum，
+      不是 protected file corruption（两文件的 protected digest 都和 disk 一致）。
+    impact: 不影响 Foundation Certificate（A/B 都 PASS）
+    follow_up: 正式激活前可清理 canonical-state 内部 stale hash
+  - id: CAVEAT-STALE-HASH-2
+    severity: cosmetic
+    description: >-
+      canonical-state.simulator.sha256=537dce98... 与 _dual_pol_channel.py adapter-protected
+      digest 3d02eaa3... 不一致。同 CAVEAT-STALE-HASH-1，是内部 stale hash。
+    impact: 不影响 Foundation Certificate
+    follow_up: 同上
+  - id: CAVEAT-LAST-BATCH-POINTER
+    severity: process_debt
+    description: canonical-state.last_completed_batch pointer 在 B003 verification 时仍指 B002
+    impact: 不影响 B003 artifact chain（已在 verifier-report 中自文档化）
+    follow_up: 正式激活时可一并清理
+
+# 总判定
+overall_verdict: PASS
+science_may_proceed_on_protected_foundation: true
+note: >-
+  shadow 阶段不运行新科学计算；本证书作为地基可靠性证据，证明若未来运行新计算，
+  地基（baseline identity + protected history + comparator legality）可靠。

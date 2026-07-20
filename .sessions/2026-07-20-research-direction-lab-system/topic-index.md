@@ -1,6 +1,6 @@
 # Topic Index: Research Direction Lab 完整体系设计
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-07-20（Task 8 round 1 PASS）
+> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-07-20（Task 9 shadow + Task 10 cutover PASS；live-activation authorized；未 push）
 
 ## 专题信息
 
@@ -47,6 +47,11 @@
   - 新范围：5 类案例的 fresh-agent 盲测、预注册 scorer、独立 reviewer + verifier 复核、最多一次批量 Skill 修订（实际未触发）、一次性提交。
   - 明确排除：Task 9 shadow、B004、ML 训练、科学实验、修改 B001–B003/P03 Atlas/canonical state/baseline/receipt、把盲测回答写入论文、push/merge。
   - 影响的未决项：Task 8 从未授权改为已完成（V004 PASS）；Task 9–10、shadow、live activation 继续未授权。
+- **[2026-07-20] Task 9 shadow + Task 10 cutover 授权（D008）**：用户明确授权 Task 9 live shadow + Task 9 PASS 后条件性 Task 10 cutover（含 AGENTS.md 最小路由）。
+  - 原因：V004 已 PASS；用户 2026-07-20 执行提示词 §一~§九 明确授权；Task 9 提供 shadow 长期自动化行为证据，Task 10 收敛流程拥有者到唯一 owner。
+  - 新范围：隔离 worktree `research-direction-lab-shadow` 内运行 shadow（不跑新科学，只 replay + 派生 harvest + rotation 演示）；cutover 修改 AGENTS.md（加 FR-27 路由索引）/ process.md（加 SUPERSEDED 头）/ README.md（加流程入口）/ method-family-batch-exploration SKILL.md（加 superseded frontmatter）/ docs/architecture/research-direction-lab.md（doc-steward mode 架构文档）。
+  - 明确排除：跳过 Task 9 直接 Task 10；借 shadow 跑新科学或创建 B004；shadow 派生物自动晋升到 main ledger；AGENTS.md 复制 Skill 全文；删除 method-family-batch-exploration Skill；shadow/sandbox 数字写入论文材料；scheduler 或复杂状态机补丁；push/merge。
+  - 影响的未决项：Task 9 从未授权改为已完成（V005 PASS, 11/11）；Task 10 从未授权改为已完成（V006 PASS, 11/11, live-activation authorized）；本对话收尾做单次 consolidated commit。
 
 ## 已确认结论
 
@@ -86,12 +91,18 @@
 - **V003**：Task 6–7 与只读推演修复后独立终验 PASS；完整 Skill `60 passed, 1 skipped`，旧 baseline `62 passed`。
 - **H003**：冻结下一轮 Task 8 fresh-agent blind forward tests 的入口与纪律。
 - **R001 / S008 / V004**：Task 8 round 1 fresh-agent 盲测 5 类案例全 PASS；首轮 scorer 实现缺陷一次性批量修复（含 B6/B1 合法性加固），无 Skill 修订、无需重跑；独立 reviewer 与独立 verifier 复核均确认 prompt 盲、fixture 无泄漏、零 Skill 编辑、未跑科学实验、protected 18/18 hash 一致、全套测试 139 passed + 1 skipped。
+- **S009 / D008 / V005**：Task 9 live shadow 在隔离 worktree `research-direction-lab-shadow`（分支 `codex/research-direction-lab-shadow`，从 `f79cb1b` 创建）执行；Foundation Certificate PASS（18/18 protected history hash 一致，standard-CMA 含 Godard z）；驱动 Skill 7-phase loop 在既有 READ_ONLY_MIGRATION_PREVIEW 地基上 replay + 派生 8 个 SHADOW-H010..H017 harvest entries（全部 CONTRACT/SLICE 级，DOMAIN/FAMILY 0 越界）；五类行为证据齐全（OBS-BLOCK 6 真实 blockers / OBS-ROTATE R1-R5 100% 续跑率 / OBS-SCOPE 最小 ceiling / OBS-HARVEST 每批 ≥1 / OBS-RECOVER session 启动恢复）；独立 verifier 11/11 PASS。
+- **S010 / V006**：Task 10 cutover 完成；AGENTS.md 加 FR-27 路由索引（单行）；process.md / README.md 加 Skill 指针段；method-family-batch-exploration SKILL.md 加 superseded frontmatter（保留原文）；docs/architecture/research-direction-lab.md doc-steward mode 架构文档（锚定 13 个真实路径）；FR-22 vs Direction Lab 表面冲突解决（Direction Lab = 晋级前候选发现层，晋级仍必须走 GW/Contract/Execute）；独立 verifier 11/11 PASS，**live-activation authorized**。
 
 ## 未决项
 
-- Task 9 shadow 是否授权（Task 8 round 1 PASS 仅授权"考虑"Task 9，不等于长期自动化可靠）。
+- ~~Task 9 shadow 是否授权~~（已授权并完成，V005 PASS）。
+- ~~Task 10 cutover 是否授权~~（已授权并完成，V006 PASS）。
 - forward test scorer 的 B6/B1 fallback legality 当前由 forbidden-overlap 守卫保证，覆盖已有 forbidden_action 词表；未来出现词表外的非法动作需扩守卫。
+- shadow 派生的 SHADOW-H010..H017 是否晋升到 main ledger：**未授权**；晋升需单独授权 + 重新 hash 绑定 + thesis-spines 更新。
+- canonical-state 内部 stale self-checksums（event_log_sha256 / simulator.sha256）：正式激活前清理。
+- Windows symlink / POSIX flock 动态测试覆盖：跨平台 CI 前补跑。
 
 ## 当前位置
 
-Task 1–7 已由 V001–V003 分阶段验证 PASS。Task 8 round 1 fresh-agent 盲测（5 类案例）已由 V004 独立终验 PASS：5 个独立 fresh agent 在只给 Skill + 原始案例事实的盲条件下，全部维持续跑、claim ceiling、harvest、组织、领域隔离不变量；scorer 实现缺陷已一次性批量修复，零 Skill 修订、零科学运行、protected history 18/18 hash 一致。Task 9 shadow、Task 10、live activation 和科学实验仍未授权；下一入口为用户决定是否授权 Task 9。
+Task 1–10 已全部由 V001–V006 分阶段独立终验 PASS。**Live-activation authorized**：开放式研究方向探索的唯一流程拥有者是 `.agents/skills/research-direction-lab/SKILL.md`；日常人类入口是 `projects/thesis-fso/direction-lab/STATUS.v1.md`；AGENTS.md FR-27 提供路由索引；旧 method-family-batch-exploration Skill 已 superseded 但保留历史。本对话收尾做单次 consolidated commit（不 push）。下一阶段：用户可在新对话中正式用 Skill 进行开放式研究方向探索，或授权 SHADOW-H010..H017 晋升到 main ledger 进入正式论文材料流程。

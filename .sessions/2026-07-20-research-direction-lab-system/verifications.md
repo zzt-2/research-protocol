@@ -190,3 +190,118 @@ PASS。Task 8 round 1 行为证据合法成立。无治理边界被越过。
 - forward test 只覆盖 5 类已注册行为，不构成长期自动化证据；Task 9 shadow 仍未开始，需独立授权。
 - B6/B1 fallback 的 legality 现由 forbidden-overlap 守卫保证；若未来出现 forbidden_action 词表外的非法动作，scorer 可能漏检——这是检测器局限，非 round 1 缺陷。
 - C4 "update canonical-status" 是 process 簿记，scorer P0/B8 未 scrutinize；当前判定为合法 bookkeeping，但未来若 canonical-status 写入科学结论需另立规则。
+
+## V005: Task 9 live shadow 独立终验
+
+> date: 2026-07-20
+> 关联：S009 / D008 / Plan Task 9 Step 4
+
+### 验证项（11 项，全部独立复核）
+
+- [x] V-1 worktree 隔离 + 父 worktree 保护：shadow 分支从 f79cb1b 派生；research-direction-lab-system 父 worktree clean，HEAD 不变；main + p03 + unified-batch-runner 均未触动。
+- [x] V-2 protected history 18/18 hash 匹配：独立重算 SHA-256 全部与 adapter identity_digest 一致（含 baseline + shared channel）。
+- [x] V-3 B004 不存在：batches/ 只含 B001/B002/B003。
+- [x] V-4 无新科学计算：git diff 只在 .sessions/、shadow/、STATUS.v1.md、_registry.yaml；无 B004、无 completion-events.jsonl 改动、无 raw artifact 改动。
+- [x] V-5 全套测试：pytest 77 passed + 1 skipped；quick_validate PASS；compileall exit 0；STATUS.v1.md 确认 LF（CRLF=0），renderer 测试 PASS。
+- [x] V-6 通用 Skill/code 领域中立：SKILL.md / scripts/ / references/（除 profiles/communications.md）对 BER/SNR/CMA/pilot/OSL/QPSK/Jones 0 命中。
+- [x] V-7 无 scheduler 回潮：test_no_scheduler_contract.py 8 passed；science_slots/completeness_solver/resource_match/fixed_min_batch grep 0 命中。
+- [x] V-8 五类行为证据：OBS-BLOCK（6 真实 blockers 含 repair_condition）；OBS-ROTATE（R1-R5 完整 trace，100% 续跑率）；OBS-SCOPE（所有 SHADOW-H010..H017 ceiling ∈ {CONTRACT, SLICE}，0 DOMAIN/FAMILY）；OBS-HARVEST（8 entries 抽 3 条 verbatim quote 核对 PASS）；OBS-RECOVER（session 启动恢复文档化 + 3 handoff 事实 PASS）。
+- [x] V-9 PASS 标准（Plan Task 9 Step 4，verbatim 8 条）：全部 PASS（详见 verifier 报告 V-9 表）。
+- [x] V-10 scope 边界：未触 AGENTS.md/process.md/README/method-family-batch-exploration SKILL.md/B001-B003/canonical-state/completion-events/baseline/receipts；shadow/harvest-derived.v1.yaml 全部 promotion_block=not yet promoted；main ledger 仍只含 H001-H009。
+- [x] V-11 反模式审计：未加 scheduler patch；未宣称长期可靠；未把 shadow 数字写入论文；未 push/merge（git rev-list f79cb1b..HEAD = 0，未提交）。
+
+### 证据
+
+```text
+git rev-parse HEAD: f79cb1bc77ad1a20fb0b8334be6dac19124f214c
+git rev-parse --abbrev-ref HEAD: codex/research-direction-lab-shadow
+parent worktree (research-direction-lab-system) git status: clean, HEAD f79cb1b
+worktree list: 4 worktrees, shadow 是新增的，其他 3 个未受影响
+
+pytest: 77 passed, 1 skipped
+quick_validate: Skill is valid!
+compileall: exit 0
+STATUS.v1.md: 58 lines, CRLF=0, LF=58, bytes=4790 (renderer output, matches HEAD blob)
+
+protected history hashes: 18/18 + baseline + channel all match adapter
+domain grep outside profile/tests: 0 hits
+scheduler grep: 0 hits; test_no_scheduler_contract: 8 passed
+
+shadow/harvest-derived.v1.yaml: 8 entries, all promotion_block=not yet promoted
+main ledger.v1.yaml: H001-H009 only (no leak)
+
+git diff --stat: only .sessions/ + STATUS.v1.md
+git rev-list f79cb1b..HEAD: 0 (uncommitted, single consolidated commit pending)
+```
+
+### 结论
+
+PASS。Task 9 live shadow 行为证据合法成立，无治理边界被越过。Task 10 cutover 获授权推进。
+
+### 已知证据债
+
+- _registry.yaml 行尾正常化（Windows autocrlf 环境产物，与 STATUS CRLF debt 同类）：pre-existing，非阻塞，Task 10 cutover 时可一并清理。
+- canonical-state 内部 stale self-checksums（event_log_sha256 / simulator.sha256）：pre-existing，FC caveat 1-2 已记录。
+- canonical-state.last_completed_batch pointer 仍指 B002：pre-existing process debt，B003 verifier-report 已自文档化。
+- B6/B1 fallback 词表外局限：V004 已知债务，shadow 范围外。
+
+## V006: Task 10 cutover 独立终验
+
+> date: 2026-07-20
+> 关联：S010 / D008 / Plan Task 10 Step 1-5
+> Live-activation decision: authorized
+
+### 验证项（11 项，全部独立复核）
+
+- [x] T-1 V005 前置：verifications.md V005 verdict=PASS，Task 10 推进合法。
+- [x] T-2 cutover deliverables：AGENTS.md FR-27 单行路由（指向 Skill 唯一拥有者）；process.md 加 SUPERSEDED 头 + 进入入口段（DL-Process v0.4 历史内容保留）；README.md 加流程入口段；method-family-batch-exploration SKILL.md 加 superseded frontmatter（保留原文）；docs/architecture/research-direction-lab.md doc-steward 锚定 13 个真实路径。
+- [x] T-3 未复制 Skill 内容：FR-27 单行；process.md/README 仅 pointer list；architecture doc 无 phase contract 复制。
+- [x] T-4 FR-22 vs Direction Lab 冲突解决：AGENTS.md / process.md / README.md / architecture doc 四处一致声明 Direction Lab 是晋级前候选发现层 + 晋级仍必须走 GW/Contract/Execute。
+- [x] T-5 全套测试：pytest 77 passed + 1 skipped；quick_validate PASS；compileall exit 0。
+- [x] T-6 owner/terminology scans：通用 Skill/scripts/references（除 profiles/communications.md）对领域词 0 命中；test_no_scheduler_contract 8 passed；test_domain_separation 5 passed；唯一 process owner（method-family-batch-exploration 已 SUPERSEDED）。
+- [x] T-7 protected history + scope：18 protected + baseline + channel 全部 hash 匹配；git diff 只在授权路径（AGENTS.md/process.md/README.md/STATUS.v1.md/.sessions/docs/architecture/shadow）；无 B004、无 canonical-state/completion-events/baseline 改动；main ledger 仍只 H001-H009；STATUS.v1.md LF 4790 bytes。
+- [x] T-8 architecture doc 真实：13 个 owner path 全部存在；V001-V005 表与 verifications.md 一致；superseded artifacts 关系表与实际文件一致。
+- [x] T-9 V006 recordable：本条目满足 PASS/PARTIAL/FAIL + 命令 + 输出 + 已知债务 + live-activation 决策字段。
+- [x] T-10 无 push/merge：git rev-list f79cb1b..HEAD = 0（未提交）；git branch -r 只 origin/main。
+- [x] T-11 反模式审计：未加 scheduler；未复制 Skill；未改 protected history；旧 Skill 保留历史（未删）；shadow 数字未进论文材料。
+
+### 证据
+
+```text
+verifications.md V005 verdict: PASS（precondition）
+
+AGENTS.md FR-27 row: line 190，单行，指向 .agents/skills/research-direction-lab/SKILL.md
+process.md: line 5 SUPERSEDED 头 + line 9-18 进入入口段；DL-Process v0.4 §1-9 历史内容保留
+README.md: line 5-15 流程入口段；旧"当前状态"段保留
+method-family-batch-exploration SKILL.md: frontmatter superseded_by/superseded_date/superseded_evidence；SUPERSEDED 头注；原文保留
+docs/architecture/research-direction-lab.md: 81 行，13 个 owner path 全部存在，V001-V005 表一致
+
+pytest: 77 passed, 1 skipped
+quick_validate: Skill is valid!
+compileall: exit 0
+domain grep outside profile/tests: 0 hits
+test_no_scheduler_contract: 8 passed
+test_domain_separation: 5 passed
+
+protected history: 18 protected + baseline + channel = 20/20 match
+git status: AGENTS.md / process.md / README.md / STATUS.v1.md / .sessions/ / docs/architecture/ / shadow/ only
+batches/: B001/B002/B003 only (no B004)
+ledger.v1.yaml: H001-H009 only
+STATUS.v1.md: 4790 bytes / 58 LF / 0 CRLF
+
+git rev-list f79cb1b..HEAD: 0 (uncommitted)
+git branch -r: origin/main only (no shadow on remote)
+```
+
+### 结论
+
+PASS。Task 10 cutover 全部 deliverable 合规，FR-22 vs Direction Lab 冲突已解决，Skill 内容未被复制，旧 Skill 已标 superseded 但保留历史，protected history 完整，scope 边界守住。**Live-activation authorized**。
+
+### 已知证据债
+
+- canonical-state 内部 stale self-checksums（event_log_sha256 / simulator.sha256）：pre-existing，FC caveat 1-2；正式激活前清理。
+- canonical-state.last_completed_batch pointer 仍指 B002：pre-existing process debt，B003 verifier-report 已自文档化。
+- Windows symlink / POSIX flock 动态测试覆盖（V002/V003 debt）：跨平台 CI 前补跑。
+- forward-test scorer B6/B1 词表外局限（V004 debt）：检测器局限。
+- STATUS.v1.md / _registry.yaml Windows autocrlf 行尾脆弱性：pre-existing，STATUS 在本 worktree 已确认 LF-clean（0 CRLF）。
+- runner.direction_lab.b003.snapshot RETIRED snapshot digest stale：有意 out-of-guard（V005 已记录"18/18 + baseline + channel all match"）。

@@ -1,6 +1,20 @@
 # Direction Lab：双偏振星地 OSL 研究探索入口
 
-Direction Lab 用共享地基批量筛查“ML 在双偏振星地 OSL 接收链上是否有真实信息增量”。它分为 Scout、Sandbox 和 Promotion 三层；这里的结果不会自动修改 canonical baseline、正式 Groundwork 或论文材料。
+Direction Lab 用共享地基批量筛查"ML 在双偏振星地 OSL 接收链上是否有真实信息增量"。它分为 Scout、Sandbox 和 Promotion 三层；这里的结果不会自动修改 canonical baseline、正式 Groundwork 或论文材料。
+
+## 流程入口（2026-07-20 cutover 后）
+
+开放式研究方向探索的**流程拥有者**已迁移到 `.agents/skills/research-direction-lab/SKILL.md`（D008/V005）。本目录的角色：
+
+- **日常恢复与人类决策**：[`STATUS.v1.md`](STATUS.v1.md)（renderer 输出的八问一页）
+- **流程拥有者**：`../../.agents/skills/research-direction-lab/SKILL.md`（7-phase loop、candidate portfolio、batch/atlas、evidence/claims、harvest、recovery/rotation、project-layout）
+- **当前项目事实（adapter 唯一拥有者）**：[`project.v1.yaml`](project.v1.yaml)（mode: READ_ONLY_MIGRATION_PREVIEW）
+- **历史批次证据（protected，不可改字节）**：[`batches/`](batches/)（B001-B003）
+- **本目录的旧 `process.md`**：已标 SUPERSEDED；保留为项目实例历史记录，不再拥有流程
+
+Direction Lab 是正式晋级前的候选发现/批量筛选层；Scout/Sandbox 数字不等于 GW 完成；正式候选晋级后仍必须走 Groundwork → Contract → Execute（FR-22）。
+
+## 当前状态
 
 ## 当前状态
 
