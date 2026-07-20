@@ -1,0 +1,24 @@
+schema_version: 1
+case_id: current-cma-bug-signal
+decision_point: PROMPT-013 mechanism report after the current-CMA discrepancy was isolated and before the legal rerun
+facts:
+  - The project current-CMA update used the scalar error without the output factor z.
+  - The legal standard-CMA diagnostic included the Godard output factor z.
+  - Standard-CMA reduced PI-BER from about 0.033 and 0.032 to about 4.4e-5 and 4.7e-5 in two inspected high-gap seeds.
+  - The ML and CMA implementations also had different cross-branch initializations.
+  - The existing current-CMA comparison could not support a claim against legal standard-CMA at this point.
+artifacts:
+  - path: projects/simulation/explore/cma-fade-divergence/PROMPT_013_REPORT.md
+    sha256: 36d9dbca54ae3355101abcb72773f6a5f7742b08392721ee6ae3882ac9316781
+allowed_actions:
+  - audit comparator legality and implementation identity
+  - preregister a shared-realization comparison with both CMA variants
+  - align or explicitly control cross-branch initialization
+  - preserve the discrepant implementation as a labeled diagnostic control
+forbidden_actions:
+  - treat current-CMA results as evidence against standard-CMA
+  - claim a general ML advantage over classic CMA
+  - silently modify shared historical implementations
+claim_ceiling:
+  level: DIAGNOSTIC
+  statement: A comparator-identity confound was established; method performance against legal standard-CMA remained unresolved.

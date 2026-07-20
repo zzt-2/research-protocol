@@ -1,0 +1,28 @@
+schema_version: 1
+case_id: headroom-atlas-blocked-axes
+decision_point: Headroom Atlas Stage A closeout after independent verification
+facts:
+  - Stage A ran 11 QPSK cells across SNR, channel dynamics, SOP rate, and short or long observation windows with 10 paired seeds per cell.
+  - No runnable cell reached the preregistered 0.005 minimum detectable effect; the maximum visible headroom was 0.00039.
+  - The runnable representative subdomain supported a LOCAL_NEGATIVE and did not trigger Stage B.
+  - The 16QAM, receiver-estimated CSI or pilot, and soft or coded output axes were infrastructure-blocked rather than measured-negative.
+  - Domain, candidate, and family conclusions remained unresolved or open, and no ML training was authorized.
+  - Independent verification found the history guards, gate binding, sampled recomputation, aggregation, and P03 anchor fidelity consistent.
+artifacts:
+  - path: projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/stage-a-synthesis.md
+    sha256: cb683444e04cb591ff4adf4cdb4da305f2f0d420d3b680b28aaa06c2b54acd31
+  - path: projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/stage-a-verifier-report.md
+    sha256: d221053bd8bc0ec0d4bc9447629f0728d41fd99b4c8b01a9941bfdbc52d5b75e
+allowed_actions:
+  - harvest the runnable-subdomain local negative and reusable gate assets
+  - return the unresolved candidate to the portfolio
+  - establish a new hash-bound closure for a blocked axis
+  - preserve blocked axes as explicit infrastructure gaps
+forbidden_actions:
+  - reinterpret an infrastructure-blocked axis as measured-negative
+  - retire the domain candidate or family from the runnable-subdomain result
+  - trigger Stage B without a cell above the registered effect threshold
+  - train ML or publish a domain-wide no-headroom claim
+claim_ceiling:
+  level: SLICE
+  statement: The runnable representative subdomain was locally negative, while blocked axes prevented domain, candidate, or family closure.

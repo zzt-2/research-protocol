@@ -6,7 +6,7 @@
 
 - **slug**: `2026-07-20-research-direction-lab-system`
 - **title**: Research Direction Lab 完整体系设计
-- **性质**: 目标体系蓝图与分阶段实施；当前实施 Task 1–3，不运行科学实验
+- **性质**: 目标体系蓝图与分阶段实施；Task 4–5 已终验 PASS，不运行科学实验
 
 ## 范围边界
 
@@ -18,7 +18,7 @@
 
 - 审计既有 `method-family-batch-exploration`、Direction Lab v0.3、governance pilot、Portfolio Autopilot 和用户原话；
 - 冻结目标体系蓝图、资产迁移表、实施顺序和验收场景；
-- 在隔离 worktree 中实施 Task 1–3：需求溯源、精简 `research-direction-lab` Skill、Communications Profile 与 Project Adapter schema；
+- Task 1–3 已完成；Task 4–5 的确定性安全小工具与只读历史 replay 已实现并由 V002 独立终验 PASS；
 - 本阶段不修改现有 controller、campaign core、仿真器、baseline 或科学证据。
 
 ### 明确不含
@@ -32,6 +32,10 @@
 ### 范围变更记录
 
 - 2026-07-20，D003：用户认可蓝图后，从“只设计”扩展为隔离实施 Task 1–3；仍明确排除科学实验、shadow 和旧控制器迁移。
+- **[2026-07-20] D004**：从 Phase 1 扩展到实施 Task 4–5。
+  - 原因：V001 已验证 Phase 1；用户按 H001 指示继续。
+  - 新范围：五个确定性安全小工具及测试、只读历史 replay cases/tests。
+  - 影响的未决项：Task 4–5 从未开始改为进行中；Task 6–10 继续未授权。
 
 ## 已确认结论
 
@@ -61,12 +65,16 @@
 - **S003**：Task 1–3 已实现并分别通过独立复核；等待全阶段验证与统一提交。
 - **V001**：全阶段独立终验 PASS；10 项新体系测试与 62 项原 baseline 测试全绿，范围审计无科学/历史污染。
 - **H001**：冻结下一轮只读恢复入口与 Task 4–5 边界。
+- **S004 / D004**：H001 接收核验通过，授权只实施 Task 4–5。
+- **S004（续）**：Task 4–5 已实现；分任务审查与整阶段终验发现的并发断链、失败原子性、Atlas claim ceiling 和 report-source 合同问题均已修复，随后整阶段复审 PASS。
+- **S005 / V002**：Phase 2 修复后独立终验 PASS；48 项 Skill 测试通过、1 项环境型 skip，旧 baseline 62/62 通过。
+- **H002**：冻结 Task 6–7 的只读项目投影与 scheduler 审计入口，未授权 forward test 或科学运行。
 
 ## 未决项
 
-- Task 1–3 独立复核后，是否继续确定性工具与历史 replay（Task 4–5）。
+- 是否授权 Task 6–7 的只读项目投影与旧 scheduler 迁移审计。
 - 现有 `campaign_core.py/campaignctl.py` 中哪些小函数值得提取，留到 Task 7 逐函数审计。
 
 ## 当前位置
 
-Task 1–3 已实现并经 V001 独立终验 PASS；正在形成本对话唯一一次统一提交。Task 4–10、project adapter 实例、shadow 和科学实验均未开始。
+Task 1–3 已由 V001 验证并提交；Task 4–5 已由 V002 独立终验 PASS，等待一次性提交。Task 6–10、project adapter 实例、forward behavior、shadow 和科学实验均未开始；下一入口为 H002。

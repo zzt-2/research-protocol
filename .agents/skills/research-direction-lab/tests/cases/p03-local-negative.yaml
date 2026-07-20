@@ -1,0 +1,25 @@
+schema_version: 1
+case_id: p03-local-negative
+decision_point: P03 claim-scope correction after the exact frozen slice probe
+facts:
+  - The tested evidence covered QPSK at 20 dB with CSI_NONE, f_G 30 Hz, SOP rate 4e-6, 512 symbols, and uncoded hard decisions.
+  - Aggregate visible headroom was zero under the frozen probe convention.
+  - Zero errors in the short fixed slice were statistically insufficient for a domain decision.
+  - The cell and slice were LOCAL_NEGATIVE while domain, candidate, and family remained unresolved or open.
+  - Historical counterexamples on modulation, SNR, sequence length, and dynamics remained open.
+artifacts:
+  - path: projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/claim-scope-assessment.v1.yaml
+    sha256: 2ffed2d1e000ad57fa3494a9a8e045e3a13ba209fec01acdbd52b19e3d80c2f8
+allowed_actions:
+  - preserve the exact-slice local negative
+  - expand baseline-only coverage across untested domain axes
+  - improve statistical sensitivity without changing the claim level
+  - retain the candidate and family as open
+forbidden_actions:
+  - train P03 ML on the closed exact slice
+  - retire the P03 candidate or family
+  - promote the slice result to a domain closure
+  - start B004 queue registry or a paper claim
+claim_ceiling:
+  level: SLICE
+  statement: No visible headroom was observed in the exact frozen QPSK CSI_NONE hard-decision slice; broader levels remained unresolved.

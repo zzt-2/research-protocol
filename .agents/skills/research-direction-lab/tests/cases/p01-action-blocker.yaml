@@ -1,0 +1,25 @@
+schema_version: 1
+case_id: p01-action-blocker
+decision_point: P01 action-contract preflight before any sandbox performance run
+facts:
+  - The receiver trace exposed causal receiver-visible proxy fields but no validated physical lock variable.
+  - The standard-CMA adapter exposed neither a per-decision action hook nor a receiver-state snapshot.
+  - The available action changed only Python metadata and did not change CMA weights or receiver outputs.
+  - Fork replay, intervention effects, recovery delay, and degradation were not computable.
+  - No formal performance run, B004 batch, sandbox queue, registry, completion event, or canonical-state change occurred.
+artifacts:
+  - path: projects/thesis-fso/direction-lab/scout/P01-U25-action-contract/preflight-report.json
+    sha256: 3d08568e949408dcfad34a8bc64497627ce4fd2a78b30693d31a4889f17ad8b9
+allowed_actions:
+  - harvest the causal trace schema and rejection checks
+  - close a receiver-state snapshot interface
+  - add an observable per-decision action-effect seam
+  - rotate to other legal work while this action contract is blocked
+forbidden_actions:
+  - start a formal performance run through the blocked adapter
+  - report metadata mutation as a receiver intervention
+  - infer action latency recovery delay or degradation from unavailable replay
+  - create queue registry or completion state for an unexecutable action
+claim_ceiling:
+  level: DIAGNOSTIC
+  statement: P01 was blocked by missing state replay and observable action effects; no intervention performance was measured.

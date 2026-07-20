@@ -89,3 +89,33 @@ S001 / 用户原话来源审计。
 ### 来源
 
 S002 / 用户批准。
+
+## D004: Phase 2 仅实施确定性工具与历史 replay
+
+> status: active
+> date: 2026-07-20
+> 取代：无
+> 被取代：无
+> 依据：用户授权: 当前对话“继续吧” + 计划边界: H001 + 验证: V001
+
+### 决策
+
+在同一干净隔离 worktree 中继续实施 Task 4–5：Task 4 只提供确定性 hash/receipt/event/reducer/status 小工具，Task 5 只建立指向不可变历史证据的 replay fixtures；不进入项目实例、forward test、shadow 或科学运行。
+
+### 理由
+
+Phase 1 已由 V001 证明结构与职责边界成立；H001 已把 Task 4–5 固定为下一阶段。先验证安全内核和历史回放，可以在不污染项目状态的前提下判断目标体系是否真正可用。
+
+### 排除的替代方案
+
+- **直接建立双偏振 OSL project adapter 实例**：暂不采用；属于 Task 6，必须等安全工具和 replay 先通过。
+- **同时修旧 campaign scheduler**：拒绝；违反 D001 与 H001，不属于确定性安全内核。
+- **开始 live shadow 或科学实验**：拒绝；Task 8–9 和 `sim-preflight` 前置尚未满足。
+
+### 影响范围
+
+允许新增 `.agents/skills/research-direction-lab/scripts/` 下五个通用小工具、对应测试和 Task 5 replay case/test；仍保护 controller、campaign core、项目实例、canonical state 与历史科学 evidence。
+
+### 来源
+
+S004 / H001 / 用户继续指令。触发原话不入 `voice.md`：按 voice 规范，“继续吧”属于零信息推进语。
