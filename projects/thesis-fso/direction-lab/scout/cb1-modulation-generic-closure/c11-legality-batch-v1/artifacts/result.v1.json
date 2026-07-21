@@ -1,0 +1,2598 @@
+{
+  "cells": [
+    {
+      "cell_id": "16qam-snr05-nominal-short",
+      "is_validation_cell": false,
+      "is_held_out_cell": true,
+      "axes": {
+        "snr_db": 5.0,
+        "f_g_hz": 30.0,
+        "sop_rate": 4e-06,
+        "n_symbols": 512
+      },
+      "plateau_block": 3,
+      "switch_point_block": 5,
+      "per_seed": [
+        {
+          "seed": 41,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.859375,
+              "oracle_pi_ser": 0.8984375,
+              "nearest_fixed_ser": 0.859375
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.859375,
+              "oracle_pi_ser": 0.8984375,
+              "nearest_fixed_ser": 0.859375
+            }
+          }
+        },
+        {
+          "seed": 42,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.609375,
+              "oracle_pi_ser": 0.63671875,
+              "nearest_fixed_ser": 0.609375
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.609375,
+              "oracle_pi_ser": 0.63671875,
+              "nearest_fixed_ser": 0.609375
+            }
+          }
+        },
+        {
+          "seed": 43,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.51953125,
+              "oracle_pi_ser": 0.55078125,
+              "nearest_fixed_ser": 0.51953125
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.51953125,
+              "oracle_pi_ser": 0.55078125,
+              "nearest_fixed_ser": 0.51953125
+            }
+          }
+        },
+        {
+          "seed": 44,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.69140625,
+              "oracle_pi_ser": 0.74609375,
+              "nearest_fixed_ser": 0.69140625
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.69140625,
+              "oracle_pi_ser": 0.74609375,
+              "nearest_fixed_ser": 0.69140625
+            }
+          }
+        },
+        {
+          "seed": 45,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.58203125,
+              "oracle_pi_ser": 0.6171875,
+              "nearest_fixed_ser": 0.58203125
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.58203125,
+              "oracle_pi_ser": 0.62109375,
+              "nearest_fixed_ser": 0.58203125
+            }
+          }
+        },
+        {
+          "seed": 46,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.71484375,
+              "oracle_pi_ser": 0.7734375,
+              "nearest_fixed_ser": 0.71484375
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.7109375,
+              "oracle_pi_ser": 0.7734375,
+              "nearest_fixed_ser": 0.7109375
+            }
+          }
+        },
+        {
+          "seed": 47,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.765625,
+              "oracle_pi_ser": 0.7890625,
+              "nearest_fixed_ser": 0.765625
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.765625,
+              "oracle_pi_ser": 0.7890625,
+              "nearest_fixed_ser": 0.765625
+            }
+          }
+        },
+        {
+          "seed": 48,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.77734375,
+              "oracle_pi_ser": 0.80859375,
+              "nearest_fixed_ser": 0.77734375
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.77734375,
+              "oracle_pi_ser": 0.80859375,
+              "nearest_fixed_ser": 0.77734375
+            }
+          }
+        },
+        {
+          "seed": 49,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.8828125,
+              "oracle_pi_ser": 0.8828125,
+              "nearest_fixed_ser": 0.8828125
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.8828125,
+              "oracle_pi_ser": 0.8828125,
+              "nearest_fixed_ser": 0.8828125
+            }
+          }
+        },
+        {
+          "seed": 50,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.40234375,
+              "oracle_pi_ser": 0.4296875,
+              "nearest_fixed_ser": 0.40234375
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.40625,
+              "oracle_pi_ser": 0.4296875,
+              "nearest_fixed_ser": 0.40625
+            }
+          }
+        }
+      ],
+      "eval_window": {
+        "eval_start": 133,
+        "calibration_end": 261,
+        "eval_end": 389
+      },
+      "aggregate": {
+        "fixed_mu_cma": {
+          "nearest_pi_ser_mean": 0.68046875,
+          "oracle_pi_ser_mean": 0.71328125,
+          "nearest_fixed_ser_mean": 0.68046875,
+          "headroom_mean": 0.0,
+          "n_non_diverged_seeds": 10,
+          "n_diverged_seeds": 0,
+          "stage2_max_visits_per_sample_max_over_seeds": 0
+        },
+        "C11_legal": {
+          "nearest_pi_ser_mean": 0.68046875,
+          "oracle_pi_ser_mean": 0.713671875,
+          "nearest_fixed_ser_mean": 0.68046875,
+          "headroom_mean": 0.0,
+          "n_non_diverged_seeds": 10,
+          "n_diverged_seeds": 0,
+          "stage2_max_visits_per_sample_max_over_seeds": 1
+        }
+      }
+    },
+    {
+      "cell_id": "16qam-snr10-nominal-short",
+      "is_validation_cell": false,
+      "is_held_out_cell": true,
+      "axes": {
+        "snr_db": 10.0,
+        "f_g_hz": 30.0,
+        "sop_rate": 4e-06,
+        "n_symbols": 512
+      },
+      "plateau_block": 3,
+      "switch_point_block": 5,
+      "per_seed": [
+        {
+          "seed": 41,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.87890625,
+              "oracle_pi_ser": 0.79296875,
+              "nearest_fixed_ser": 0.87890625
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.87890625,
+              "oracle_pi_ser": 0.79296875,
+              "nearest_fixed_ser": 0.87890625
+            }
+          }
+        },
+        {
+          "seed": 42,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.3828125,
+              "oracle_pi_ser": 0.375,
+              "nearest_fixed_ser": 0.3828125
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.3828125,
+              "oracle_pi_ser": 0.375,
+              "nearest_fixed_ser": 0.3828125
+            }
+          }
+        },
+        {
+          "seed": 43,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.19140625,
+              "oracle_pi_ser": 0.20703125,
+              "nearest_fixed_ser": 0.19140625
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.19140625,
+              "oracle_pi_ser": 0.20703125,
+              "nearest_fixed_ser": 0.19140625
+            }
+          }
+        },
+        {
+          "seed": 44,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.5390625,
+              "oracle_pi_ser": 0.48046875,
+              "nearest_fixed_ser": 0.5390625
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.5390625,
+              "oracle_pi_ser": 0.48046875,
+              "nearest_fixed_ser": 0.5390625
+            }
+          }
+        },
+        {
+          "seed": 45,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.234375,
+              "oracle_pi_ser": 0.234375,
+              "nearest_fixed_ser": 0.234375
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.234375,
+              "oracle_pi_ser": 0.234375,
+              "nearest_fixed_ser": 0.234375
+            }
+          }
+        },
+        {
+          "seed": 46,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.625,
+              "oracle_pi_ser": 0.5390625,
+              "nearest_fixed_ser": 0.625
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.625,
+              "oracle_pi_ser": 0.5390625,
+              "nearest_fixed_ser": 0.625
+            }
+          }
+        },
+        {
+          "seed": 47,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.6796875,
+              "oracle_pi_ser": 0.6015625,
+              "nearest_fixed_ser": 0.6796875
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.6796875,
+              "oracle_pi_ser": 0.6015625,
+              "nearest_fixed_ser": 0.6796875
+            }
+          }
+        },
+        {
+          "seed": 48,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.69921875,
+              "oracle_pi_ser": 0.61328125,
+              "nearest_fixed_ser": 0.69921875
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.703125,
+              "oracle_pi_ser": 0.61328125,
+              "nearest_fixed_ser": 0.703125
+            }
+          }
+        },
+        {
+          "seed": 49,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.8828125,
+              "oracle_pi_ser": 0.7890625,
+              "nearest_fixed_ser": 0.8828125
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.8828125,
+              "oracle_pi_ser": 0.7890625,
+              "nearest_fixed_ser": 0.8828125
+            }
+          }
+        },
+        {
+          "seed": 50,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.1015625,
+              "oracle_pi_ser": 0.1328125,
+              "nearest_fixed_ser": 0.1015625
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.1015625,
+              "oracle_pi_ser": 0.13671875,
+              "nearest_fixed_ser": 0.1015625
+            }
+          }
+        }
+      ],
+      "eval_window": {
+        "eval_start": 133,
+        "calibration_end": 261,
+        "eval_end": 389
+      },
+      "aggregate": {
+        "fixed_mu_cma": {
+          "nearest_pi_ser_mean": 0.521484375,
+          "oracle_pi_ser_mean": 0.4765625,
+          "nearest_fixed_ser_mean": 0.521484375,
+          "headroom_mean": 0.049609375,
+          "n_non_diverged_seeds": 10,
+          "n_diverged_seeds": 0,
+          "stage2_max_visits_per_sample_max_over_seeds": 0
+        },
+        "C11_legal": {
+          "nearest_pi_ser_mean": 0.521875,
+          "oracle_pi_ser_mean": 0.476953125,
+          "nearest_fixed_ser_mean": 0.521875,
+          "headroom_mean": 0.05,
+          "n_non_diverged_seeds": 10,
+          "n_diverged_seeds": 0,
+          "stage2_max_visits_per_sample_max_over_seeds": 1
+        }
+      }
+    },
+    {
+      "cell_id": "16qam-snr15-nominal-short",
+      "is_validation_cell": false,
+      "is_held_out_cell": true,
+      "axes": {
+        "snr_db": 15.0,
+        "f_g_hz": 30.0,
+        "sop_rate": 4e-06,
+        "n_symbols": 512
+      },
+      "plateau_block": 3,
+      "switch_point_block": 5,
+      "per_seed": [
+        {
+          "seed": 41,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.81640625,
+              "oracle_pi_ser": 0.6015625,
+              "nearest_fixed_ser": 0.81640625
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.81640625,
+              "oracle_pi_ser": 0.6015625,
+              "nearest_fixed_ser": 0.81640625
+            }
+          }
+        },
+        {
+          "seed": 42,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.16015625,
+              "oracle_pi_ser": 0.0859375,
+              "nearest_fixed_ser": 0.16015625
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.16015625,
+              "oracle_pi_ser": 0.0859375,
+              "nearest_fixed_ser": 0.16015625
+            }
+          }
+        },
+        {
+          "seed": 43,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.01171875,
+              "oracle_pi_ser": 0.01953125,
+              "nearest_fixed_ser": 0.01171875
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.01171875,
+              "oracle_pi_ser": 0.01953125,
+              "nearest_fixed_ser": 0.01171875
+            }
+          }
+        },
+        {
+          "seed": 44,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.39453125,
+              "oracle_pi_ser": 0.12109375,
+              "nearest_fixed_ser": 0.39453125
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.39453125,
+              "oracle_pi_ser": 0.12109375,
+              "nearest_fixed_ser": 0.39453125
+            }
+          }
+        },
+        {
+          "seed": 45,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.0078125,
+              "oracle_pi_ser": 0.0078125,
+              "nearest_fixed_ser": 0.0078125
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.0078125,
+              "oracle_pi_ser": 0.0078125,
+              "nearest_fixed_ser": 0.0078125
+            }
+          }
+        },
+        {
+          "seed": 46,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.58984375,
+              "oracle_pi_ser": 0.22265625,
+              "nearest_fixed_ser": 0.58984375
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.5859375,
+              "oracle_pi_ser": 0.22265625,
+              "nearest_fixed_ser": 0.5859375
+            }
+          }
+        },
+        {
+          "seed": 47,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.63671875,
+              "oracle_pi_ser": 0.23828125,
+              "nearest_fixed_ser": 0.63671875
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.63671875,
+              "oracle_pi_ser": 0.23828125,
+              "nearest_fixed_ser": 0.63671875
+            }
+          }
+        },
+        {
+          "seed": 48,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.6640625,
+              "oracle_pi_ser": 0.25,
+              "nearest_fixed_ser": 0.6640625
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.6640625,
+              "oracle_pi_ser": 0.25,
+              "nearest_fixed_ser": 0.6640625
+            }
+          }
+        },
+        {
+          "seed": 49,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.86328125,
+              "oracle_pi_ser": 0.52734375,
+              "nearest_fixed_ser": 0.86328125
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.86328125,
+              "oracle_pi_ser": 0.52734375,
+              "nearest_fixed_ser": 0.86328125
+            }
+          }
+        },
+        {
+          "seed": 50,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            }
+          }
+        }
+      ],
+      "eval_window": {
+        "eval_start": 133,
+        "calibration_end": 261,
+        "eval_end": 389
+      },
+      "aggregate": {
+        "fixed_mu_cma": {
+          "nearest_pi_ser_mean": 0.414453125,
+          "oracle_pi_ser_mean": 0.207421875,
+          "nearest_fixed_ser_mean": 0.414453125,
+          "headroom_mean": 0.2078125,
+          "n_non_diverged_seeds": 10,
+          "n_diverged_seeds": 0,
+          "stage2_max_visits_per_sample_max_over_seeds": 0
+        },
+        "C11_legal": {
+          "nearest_pi_ser_mean": 0.4140625,
+          "oracle_pi_ser_mean": 0.207421875,
+          "nearest_fixed_ser_mean": 0.4140625,
+          "headroom_mean": 0.207421875,
+          "n_non_diverged_seeds": 10,
+          "n_diverged_seeds": 0,
+          "stage2_max_visits_per_sample_max_over_seeds": 1
+        }
+      }
+    },
+    {
+      "cell_id": "16qam-snr20-nominal-short",
+      "is_validation_cell": true,
+      "is_held_out_cell": false,
+      "axes": {
+        "snr_db": 20.0,
+        "f_g_hz": 30.0,
+        "sop_rate": 4e-06,
+        "n_symbols": 512
+      },
+      "plateau_block": 3,
+      "switch_point_block": 5,
+      "per_seed": [
+        {
+          "seed": 41,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.76953125,
+              "oracle_pi_ser": 0.23828125,
+              "nearest_fixed_ser": 0.76953125
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.76953125,
+              "oracle_pi_ser": 0.23828125,
+              "nearest_fixed_ser": 0.76953125
+            }
+          }
+        },
+        {
+          "seed": 42,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.03125,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.03125
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.03125,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.03125
+            }
+          }
+        },
+        {
+          "seed": 43,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            }
+          }
+        },
+        {
+          "seed": 44,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.30859375,
+              "oracle_pi_ser": 0.00390625,
+              "nearest_fixed_ser": 0.30859375
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.3046875,
+              "oracle_pi_ser": 0.00390625,
+              "nearest_fixed_ser": 0.3046875
+            }
+          }
+        },
+        {
+          "seed": 45,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            }
+          }
+        },
+        {
+          "seed": 46,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.5625,
+              "oracle_pi_ser": 0.01171875,
+              "nearest_fixed_ser": 0.5625
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.5625,
+              "oracle_pi_ser": 0.01171875,
+              "nearest_fixed_ser": 0.5625
+            }
+          }
+        },
+        {
+          "seed": 47,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.68359375,
+              "oracle_pi_ser": 0.01953125,
+              "nearest_fixed_ser": 0.68359375
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.68359375,
+              "oracle_pi_ser": 0.01953125,
+              "nearest_fixed_ser": 0.68359375
+            }
+          }
+        },
+        {
+          "seed": 48,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.6796875,
+              "oracle_pi_ser": 0.0078125,
+              "nearest_fixed_ser": 0.6796875
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.6796875,
+              "oracle_pi_ser": 0.0078125,
+              "nearest_fixed_ser": 0.6796875
+            }
+          }
+        },
+        {
+          "seed": 49,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.83984375,
+              "oracle_pi_ser": 0.1484375,
+              "nearest_fixed_ser": 0.83984375
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.83984375,
+              "oracle_pi_ser": 0.1484375,
+              "nearest_fixed_ser": 0.83984375
+            }
+          }
+        },
+        {
+          "seed": 50,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            }
+          }
+        }
+      ],
+      "eval_window": {
+        "eval_start": 133,
+        "calibration_end": 261,
+        "eval_end": 389
+      },
+      "aggregate": {
+        "fixed_mu_cma": {
+          "nearest_pi_ser_mean": 0.3875,
+          "oracle_pi_ser_mean": 0.04296875,
+          "nearest_fixed_ser_mean": 0.3875,
+          "headroom_mean": 0.34453125,
+          "n_non_diverged_seeds": 10,
+          "n_diverged_seeds": 0,
+          "stage2_max_visits_per_sample_max_over_seeds": 0
+        },
+        "C11_legal": {
+          "nearest_pi_ser_mean": 0.387109375,
+          "oracle_pi_ser_mean": 0.04296875,
+          "nearest_fixed_ser_mean": 0.387109375,
+          "headroom_mean": 0.344140625,
+          "n_non_diverged_seeds": 10,
+          "n_diverged_seeds": 0,
+          "stage2_max_visits_per_sample_max_over_seeds": 1
+        }
+      }
+    },
+    {
+      "cell_id": "16qam-snr25-nominal-short",
+      "is_validation_cell": false,
+      "is_held_out_cell": true,
+      "axes": {
+        "snr_db": 25.0,
+        "f_g_hz": 30.0,
+        "sop_rate": 4e-06,
+        "n_symbols": 512
+      },
+      "plateau_block": 3,
+      "switch_point_block": 5,
+      "per_seed": [
+        {
+          "seed": 41,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.7265625,
+              "oracle_pi_ser": 0.0078125,
+              "nearest_fixed_ser": 0.7265625
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.7265625,
+              "oracle_pi_ser": 0.0078125,
+              "nearest_fixed_ser": 0.7265625
+            }
+          }
+        },
+        {
+          "seed": 42,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            }
+          }
+        },
+        {
+          "seed": 43,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            }
+          }
+        },
+        {
+          "seed": 44,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.1953125,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.1953125
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.19140625,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.19140625
+            }
+          }
+        },
+        {
+          "seed": 45,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            }
+          }
+        },
+        {
+          "seed": 46,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.6328125,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.6328125
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.6328125,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.6328125
+            }
+          }
+        },
+        {
+          "seed": 47,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.73828125,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.73828125
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.73828125,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.73828125
+            }
+          }
+        },
+        {
+          "seed": 48,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.73828125,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.73828125
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.73828125,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.73828125
+            }
+          }
+        },
+        {
+          "seed": 49,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.80859375,
+              "oracle_pi_ser": 0.01171875,
+              "nearest_fixed_ser": 0.80859375
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.80859375,
+              "oracle_pi_ser": 0.01171875,
+              "nearest_fixed_ser": 0.80859375
+            }
+          }
+        },
+        {
+          "seed": 50,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            }
+          }
+        }
+      ],
+      "eval_window": {
+        "eval_start": 133,
+        "calibration_end": 261,
+        "eval_end": 389
+      },
+      "aggregate": {
+        "fixed_mu_cma": {
+          "nearest_pi_ser_mean": 0.383984375,
+          "oracle_pi_ser_mean": 0.001953125,
+          "nearest_fixed_ser_mean": 0.383984375,
+          "headroom_mean": 0.38203125,
+          "n_non_diverged_seeds": 10,
+          "n_diverged_seeds": 0,
+          "stage2_max_visits_per_sample_max_over_seeds": 0
+        },
+        "C11_legal": {
+          "nearest_pi_ser_mean": 0.38359375,
+          "oracle_pi_ser_mean": 0.001953125,
+          "nearest_fixed_ser_mean": 0.38359375,
+          "headroom_mean": 0.381640625,
+          "n_non_diverged_seeds": 10,
+          "n_diverged_seeds": 0,
+          "stage2_max_visits_per_sample_max_over_seeds": 1
+        }
+      }
+    },
+    {
+      "cell_id": "16qam-snr20-fg100-short",
+      "is_validation_cell": false,
+      "is_held_out_cell": true,
+      "axes": {
+        "snr_db": 20.0,
+        "f_g_hz": 100.0,
+        "sop_rate": 4e-06,
+        "n_symbols": 512
+      },
+      "plateau_block": 3,
+      "switch_point_block": 5,
+      "per_seed": [
+        {
+          "seed": 41,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.76953125,
+              "oracle_pi_ser": 0.2421875,
+              "nearest_fixed_ser": 0.76953125
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.76953125,
+              "oracle_pi_ser": 0.2421875,
+              "nearest_fixed_ser": 0.76953125
+            }
+          }
+        },
+        {
+          "seed": 42,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.03125,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.03125
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.03125,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.03125
+            }
+          }
+        },
+        {
+          "seed": 43,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            }
+          }
+        },
+        {
+          "seed": 44,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.2890625,
+              "oracle_pi_ser": 0.00390625,
+              "nearest_fixed_ser": 0.2890625
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.2890625,
+              "oracle_pi_ser": 0.00390625,
+              "nearest_fixed_ser": 0.2890625
+            }
+          }
+        },
+        {
+          "seed": 45,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            }
+          }
+        },
+        {
+          "seed": 46,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.55859375,
+              "oracle_pi_ser": 0.01171875,
+              "nearest_fixed_ser": 0.55859375
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.55859375,
+              "oracle_pi_ser": 0.01171875,
+              "nearest_fixed_ser": 0.55859375
+            }
+          }
+        },
+        {
+          "seed": 47,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.6875,
+              "oracle_pi_ser": 0.01953125,
+              "nearest_fixed_ser": 0.6875
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.6875,
+              "oracle_pi_ser": 0.01953125,
+              "nearest_fixed_ser": 0.6875
+            }
+          }
+        },
+        {
+          "seed": 48,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.671875,
+              "oracle_pi_ser": 0.0078125,
+              "nearest_fixed_ser": 0.671875
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.671875,
+              "oracle_pi_ser": 0.0078125,
+              "nearest_fixed_ser": 0.671875
+            }
+          }
+        },
+        {
+          "seed": 49,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.83984375,
+              "oracle_pi_ser": 0.1484375,
+              "nearest_fixed_ser": 0.83984375
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.83984375,
+              "oracle_pi_ser": 0.1484375,
+              "nearest_fixed_ser": 0.83984375
+            }
+          }
+        },
+        {
+          "seed": 50,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            }
+          }
+        }
+      ],
+      "eval_window": {
+        "eval_start": 133,
+        "calibration_end": 261,
+        "eval_end": 389
+      },
+      "aggregate": {
+        "fixed_mu_cma": {
+          "nearest_pi_ser_mean": 0.384765625,
+          "oracle_pi_ser_mean": 0.043359375,
+          "nearest_fixed_ser_mean": 0.384765625,
+          "headroom_mean": 0.34140625,
+          "n_non_diverged_seeds": 10,
+          "n_diverged_seeds": 0,
+          "stage2_max_visits_per_sample_max_over_seeds": 0
+        },
+        "C11_legal": {
+          "nearest_pi_ser_mean": 0.384765625,
+          "oracle_pi_ser_mean": 0.043359375,
+          "nearest_fixed_ser_mean": 0.384765625,
+          "headroom_mean": 0.34140625,
+          "n_non_diverged_seeds": 10,
+          "n_diverged_seeds": 0,
+          "stage2_max_visits_per_sample_max_over_seeds": 1
+        }
+      }
+    },
+    {
+      "cell_id": "16qam-snr20-fg1000-short",
+      "is_validation_cell": true,
+      "is_held_out_cell": false,
+      "axes": {
+        "snr_db": 20.0,
+        "f_g_hz": 1000.0,
+        "sop_rate": 4e-06,
+        "n_symbols": 512
+      },
+      "plateau_block": 3,
+      "switch_point_block": 5,
+      "per_seed": [
+        {
+          "seed": 41,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.7734375,
+              "oracle_pi_ser": 0.25,
+              "nearest_fixed_ser": 0.7734375
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.7734375,
+              "oracle_pi_ser": 0.25,
+              "nearest_fixed_ser": 0.7734375
+            }
+          }
+        },
+        {
+          "seed": 42,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.03125,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.03125
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.03125,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.03125
+            }
+          }
+        },
+        {
+          "seed": 43,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            }
+          }
+        },
+        {
+          "seed": 44,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.2421875,
+              "oracle_pi_ser": 0.00390625,
+              "nearest_fixed_ser": 0.2421875
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.2421875,
+              "oracle_pi_ser": 0.00390625,
+              "nearest_fixed_ser": 0.2421875
+            }
+          }
+        },
+        {
+          "seed": 45,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            }
+          }
+        },
+        {
+          "seed": 46,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.5546875,
+              "oracle_pi_ser": 0.01171875,
+              "nearest_fixed_ser": 0.5546875
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.55859375,
+              "oracle_pi_ser": 0.01171875,
+              "nearest_fixed_ser": 0.55859375
+            }
+          }
+        },
+        {
+          "seed": 47,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.7109375,
+              "oracle_pi_ser": 0.0234375,
+              "nearest_fixed_ser": 0.7109375
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.7109375,
+              "oracle_pi_ser": 0.0234375,
+              "nearest_fixed_ser": 0.7109375
+            }
+          }
+        },
+        {
+          "seed": 48,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.6328125,
+              "oracle_pi_ser": 0.0078125,
+              "nearest_fixed_ser": 0.6328125
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.6328125,
+              "oracle_pi_ser": 0.0078125,
+              "nearest_fixed_ser": 0.6328125
+            }
+          }
+        },
+        {
+          "seed": 49,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.83984375,
+              "oracle_pi_ser": 0.17578125,
+              "nearest_fixed_ser": 0.83984375
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.83984375,
+              "oracle_pi_ser": 0.17578125,
+              "nearest_fixed_ser": 0.83984375
+            }
+          }
+        },
+        {
+          "seed": 50,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            }
+          }
+        }
+      ],
+      "eval_window": {
+        "eval_start": 133,
+        "calibration_end": 261,
+        "eval_end": 389
+      },
+      "aggregate": {
+        "fixed_mu_cma": {
+          "nearest_pi_ser_mean": 0.378515625,
+          "oracle_pi_ser_mean": 0.047265625,
+          "nearest_fixed_ser_mean": 0.378515625,
+          "headroom_mean": 0.33125,
+          "n_non_diverged_seeds": 10,
+          "n_diverged_seeds": 0,
+          "stage2_max_visits_per_sample_max_over_seeds": 0
+        },
+        "C11_legal": {
+          "nearest_pi_ser_mean": 0.37890625,
+          "oracle_pi_ser_mean": 0.047265625,
+          "nearest_fixed_ser_mean": 0.37890625,
+          "headroom_mean": 0.331640625,
+          "n_non_diverged_seeds": 10,
+          "n_diverged_seeds": 0,
+          "stage2_max_visits_per_sample_max_over_seeds": 1
+        }
+      }
+    },
+    {
+      "cell_id": "16qam-snr20-sop40e-short",
+      "is_validation_cell": true,
+      "is_held_out_cell": false,
+      "axes": {
+        "snr_db": 20.0,
+        "f_g_hz": 30.0,
+        "sop_rate": 4e-05,
+        "n_symbols": 512
+      },
+      "plateau_block": 3,
+      "switch_point_block": 5,
+      "per_seed": [
+        {
+          "seed": 41,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.7734375,
+              "oracle_pi_ser": 0.23828125,
+              "nearest_fixed_ser": 0.7734375
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.7734375,
+              "oracle_pi_ser": 0.23828125,
+              "nearest_fixed_ser": 0.7734375
+            }
+          }
+        },
+        {
+          "seed": 42,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.03125,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.03125
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.02734375,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.02734375
+            }
+          }
+        },
+        {
+          "seed": 43,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            }
+          }
+        },
+        {
+          "seed": 44,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.3203125,
+              "oracle_pi_ser": 0.00390625,
+              "nearest_fixed_ser": 0.3203125
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.3203125,
+              "oracle_pi_ser": 0.00390625,
+              "nearest_fixed_ser": 0.3203125
+            }
+          }
+        },
+        {
+          "seed": 45,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            }
+          }
+        },
+        {
+          "seed": 46,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.5625,
+              "oracle_pi_ser": 0.01171875,
+              "nearest_fixed_ser": 0.5625
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.5625,
+              "oracle_pi_ser": 0.01171875,
+              "nearest_fixed_ser": 0.5625
+            }
+          }
+        },
+        {
+          "seed": 47,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.68359375,
+              "oracle_pi_ser": 0.01953125,
+              "nearest_fixed_ser": 0.68359375
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.68359375,
+              "oracle_pi_ser": 0.01953125,
+              "nearest_fixed_ser": 0.68359375
+            }
+          }
+        },
+        {
+          "seed": 48,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.6796875,
+              "oracle_pi_ser": 0.0078125,
+              "nearest_fixed_ser": 0.6796875
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.6796875,
+              "oracle_pi_ser": 0.0078125,
+              "nearest_fixed_ser": 0.6796875
+            }
+          }
+        },
+        {
+          "seed": 49,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.83984375,
+              "oracle_pi_ser": 0.15234375,
+              "nearest_fixed_ser": 0.83984375
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.83984375,
+              "oracle_pi_ser": 0.15234375,
+              "nearest_fixed_ser": 0.83984375
+            }
+          }
+        },
+        {
+          "seed": 50,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            }
+          }
+        }
+      ],
+      "eval_window": {
+        "eval_start": 133,
+        "calibration_end": 261,
+        "eval_end": 389
+      },
+      "aggregate": {
+        "fixed_mu_cma": {
+          "nearest_pi_ser_mean": 0.3890625,
+          "oracle_pi_ser_mean": 0.043359375,
+          "nearest_fixed_ser_mean": 0.3890625,
+          "headroom_mean": 0.345703125,
+          "n_non_diverged_seeds": 10,
+          "n_diverged_seeds": 0,
+          "stage2_max_visits_per_sample_max_over_seeds": 0
+        },
+        "C11_legal": {
+          "nearest_pi_ser_mean": 0.388671875,
+          "oracle_pi_ser_mean": 0.043359375,
+          "nearest_fixed_ser_mean": 0.388671875,
+          "headroom_mean": 0.3453125,
+          "n_non_diverged_seeds": 10,
+          "n_diverged_seeds": 0,
+          "stage2_max_visits_per_sample_max_over_seeds": 1
+        }
+      }
+    },
+    {
+      "cell_id": "16qam-snr10-fg100-long",
+      "is_validation_cell": false,
+      "is_held_out_cell": true,
+      "axes": {
+        "snr_db": 10.0,
+        "f_g_hz": 100.0,
+        "sop_rate": 4e-06,
+        "n_symbols": 8192
+      },
+      "plateau_block": 8,
+      "switch_point_block": 10,
+      "per_seed": [
+        {
+          "seed": 41,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.78515625,
+              "oracle_pi_ser": 0.7578125,
+              "nearest_fixed_ser": 0.78515625
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.8046875,
+              "oracle_pi_ser": 0.7578125,
+              "nearest_fixed_ser": 0.8046875
+            }
+          }
+        },
+        {
+          "seed": 42,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.43359375,
+              "oracle_pi_ser": 0.42578125,
+              "nearest_fixed_ser": 0.43359375
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.4921875,
+              "oracle_pi_ser": 0.421875,
+              "nearest_fixed_ser": 0.4921875
+            }
+          }
+        },
+        {
+          "seed": 43,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.60546875,
+              "oracle_pi_ser": 0.58203125,
+              "nearest_fixed_ser": 0.60546875
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.7109375,
+              "oracle_pi_ser": 0.57421875,
+              "nearest_fixed_ser": 0.7109375
+            }
+          }
+        },
+        {
+          "seed": 44,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.51953125,
+              "oracle_pi_ser": 0.50390625,
+              "nearest_fixed_ser": 0.51953125
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.58203125,
+              "oracle_pi_ser": 0.5234375,
+              "nearest_fixed_ser": 0.58203125
+            }
+          }
+        },
+        {
+          "seed": 45,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.54296875,
+              "oracle_pi_ser": 0.5390625,
+              "nearest_fixed_ser": 0.54296875
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.6015625,
+              "oracle_pi_ser": 0.5390625,
+              "nearest_fixed_ser": 0.6015625
+            }
+          }
+        },
+        {
+          "seed": 46,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.109375,
+              "oracle_pi_ser": 0.12109375,
+              "nearest_fixed_ser": 0.109375
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.09765625,
+              "oracle_pi_ser": 0.09375,
+              "nearest_fixed_ser": 0.09765625
+            }
+          }
+        },
+        {
+          "seed": 47,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.046875,
+              "oracle_pi_ser": 0.05078125,
+              "nearest_fixed_ser": 0.046875
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.0390625,
+              "oracle_pi_ser": 0.05078125,
+              "nearest_fixed_ser": 0.0390625
+            }
+          }
+        },
+        {
+          "seed": 48,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.18359375,
+              "oracle_pi_ser": 0.1796875,
+              "nearest_fixed_ser": 0.18359375
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.16796875,
+              "oracle_pi_ser": 0.18359375,
+              "nearest_fixed_ser": 0.16796875
+            }
+          }
+        },
+        {
+          "seed": 49,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.28515625,
+              "oracle_pi_ser": 0.296875,
+              "nearest_fixed_ser": 0.28515625
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.28515625,
+              "oracle_pi_ser": 0.296875,
+              "nearest_fixed_ser": 0.28515625
+            }
+          }
+        },
+        {
+          "seed": 50,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.10546875,
+              "oracle_pi_ser": 0.09765625,
+              "nearest_fixed_ser": 0.10546875
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.0859375,
+              "oracle_pi_ser": 0.08984375,
+              "nearest_fixed_ser": 0.0859375
+            }
+          }
+        }
+      ],
+      "eval_window": {
+        "eval_start": 2181,
+        "calibration_end": 2309,
+        "eval_end": 2437
+      },
+      "aggregate": {
+        "fixed_mu_cma": {
+          "nearest_pi_ser_mean": 0.36171875,
+          "oracle_pi_ser_mean": 0.35546875,
+          "nearest_fixed_ser_mean": 0.36171875,
+          "headroom_mean": 0.008984375,
+          "n_non_diverged_seeds": 10,
+          "n_diverged_seeds": 0,
+          "stage2_max_visits_per_sample_max_over_seeds": 0
+        },
+        "C11_legal": {
+          "nearest_pi_ser_mean": 0.38671875,
+          "oracle_pi_ser_mean": 0.353125,
+          "nearest_fixed_ser_mean": 0.38671875,
+          "headroom_mean": 0.037890625,
+          "n_non_diverged_seeds": 10,
+          "n_diverged_seeds": 0,
+          "stage2_max_visits_per_sample_max_over_seeds": 1
+        }
+      }
+    },
+    {
+      "cell_id": "16qam-snr15-fg1000-long",
+      "is_validation_cell": false,
+      "is_held_out_cell": true,
+      "axes": {
+        "snr_db": 15.0,
+        "f_g_hz": 1000.0,
+        "sop_rate": 4e-06,
+        "n_symbols": 8192
+      },
+      "plateau_block": 3,
+      "switch_point_block": 5,
+      "per_seed": [
+        {
+          "seed": 41,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.78515625,
+              "oracle_pi_ser": 0.5234375,
+              "nearest_fixed_ser": 0.78515625
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.80078125,
+              "oracle_pi_ser": 0.53515625,
+              "nearest_fixed_ser": 0.80078125
+            }
+          }
+        },
+        {
+          "seed": 42,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.203125,
+              "oracle_pi_ser": 0.13671875,
+              "nearest_fixed_ser": 0.203125
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.35546875,
+              "oracle_pi_ser": 0.140625,
+              "nearest_fixed_ser": 0.35546875
+            }
+          }
+        },
+        {
+          "seed": 43,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.5859375,
+              "oracle_pi_ser": 0.3125,
+              "nearest_fixed_ser": 0.5859375
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.75390625,
+              "oracle_pi_ser": 0.31640625,
+              "nearest_fixed_ser": 0.75390625
+            }
+          }
+        },
+        {
+          "seed": 44,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.2578125,
+              "oracle_pi_ser": 0.19140625,
+              "nearest_fixed_ser": 0.2578125
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.43359375,
+              "oracle_pi_ser": 0.1875,
+              "nearest_fixed_ser": 0.43359375
+            }
+          }
+        },
+        {
+          "seed": 45,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.3203125,
+              "oracle_pi_ser": 0.25,
+              "nearest_fixed_ser": 0.3203125
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.59375,
+              "oracle_pi_ser": 0.2421875,
+              "nearest_fixed_ser": 0.59375
+            }
+          }
+        },
+        {
+          "seed": 46,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.0078125,
+              "oracle_pi_ser": 0.0078125,
+              "nearest_fixed_ser": 0.0078125
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.00390625,
+              "nearest_fixed_ser": 0.0
+            }
+          }
+        },
+        {
+          "seed": 47,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            }
+          }
+        },
+        {
+          "seed": 48,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.015625,
+              "oracle_pi_ser": 0.01953125,
+              "nearest_fixed_ser": 0.015625
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.0078125,
+              "oracle_pi_ser": 0.0078125,
+              "nearest_fixed_ser": 0.0078125
+            }
+          }
+        },
+        {
+          "seed": 49,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.0390625,
+              "oracle_pi_ser": 0.0390625,
+              "nearest_fixed_ser": 0.0390625
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.03515625,
+              "oracle_pi_ser": 0.02734375,
+              "nearest_fixed_ser": 0.03515625
+            }
+          }
+        },
+        {
+          "seed": 50,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            }
+          }
+        }
+      ],
+      "eval_window": {
+        "eval_start": 2181,
+        "calibration_end": 2309,
+        "eval_end": 2437
+      },
+      "aggregate": {
+        "fixed_mu_cma": {
+          "nearest_pi_ser_mean": 0.221484375,
+          "oracle_pi_ser_mean": 0.148046875,
+          "nearest_fixed_ser_mean": 0.221484375,
+          "headroom_mean": 0.073828125,
+          "n_non_diverged_seeds": 10,
+          "n_diverged_seeds": 0,
+          "stage2_max_visits_per_sample_max_over_seeds": 0
+        },
+        "C11_legal": {
+          "nearest_pi_ser_mean": 0.298046875,
+          "oracle_pi_ser_mean": 0.14609375,
+          "nearest_fixed_ser_mean": 0.298046875,
+          "headroom_mean": 0.15234375,
+          "n_non_diverged_seeds": 10,
+          "n_diverged_seeds": 0,
+          "stage2_max_visits_per_sample_max_over_seeds": 1
+        }
+      }
+    },
+    {
+      "cell_id": "16qam-snr20-nominal-long",
+      "is_validation_cell": true,
+      "is_held_out_cell": false,
+      "axes": {
+        "snr_db": 20.0,
+        "f_g_hz": 30.0,
+        "sop_rate": 4e-06,
+        "n_symbols": 8192
+      },
+      "plateau_block": 3,
+      "switch_point_block": 5,
+      "per_seed": [
+        {
+          "seed": 41,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.7421875,
+              "oracle_pi_ser": 0.15625,
+              "nearest_fixed_ser": 0.7421875
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.7578125,
+              "oracle_pi_ser": 0.15234375,
+              "nearest_fixed_ser": 0.7578125
+            }
+          }
+        },
+        {
+          "seed": 42,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.0078125,
+              "oracle_pi_ser": 0.00390625,
+              "nearest_fixed_ser": 0.0078125
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.03515625,
+              "oracle_pi_ser": 0.00390625,
+              "nearest_fixed_ser": 0.03515625
+            }
+          }
+        },
+        {
+          "seed": 43,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.39453125,
+              "oracle_pi_ser": 0.0390625,
+              "nearest_fixed_ser": 0.39453125
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.73828125,
+              "oracle_pi_ser": 0.04296875,
+              "nearest_fixed_ser": 0.73828125
+            }
+          }
+        },
+        {
+          "seed": 44,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.03515625,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.03515625
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.26171875,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.26171875
+            }
+          }
+        },
+        {
+          "seed": 45,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.11328125,
+              "oracle_pi_ser": 0.01171875,
+              "nearest_fixed_ser": 0.11328125
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.57421875,
+              "oracle_pi_ser": 0.01171875,
+              "nearest_fixed_ser": 0.57421875
+            }
+          }
+        },
+        {
+          "seed": 46,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            }
+          }
+        },
+        {
+          "seed": 47,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            }
+          }
+        },
+        {
+          "seed": 48,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            }
+          }
+        },
+        {
+          "seed": 49,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            }
+          }
+        },
+        {
+          "seed": 50,
+          "methods": {
+            "fixed_mu_cma": {
+              "diverged": false,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            },
+            "C11_legal": {
+              "diverged": false,
+              "stage2_max_visits_per_sample": 1,
+              "nearest_pi_ser": 0.0,
+              "oracle_pi_ser": 0.0,
+              "nearest_fixed_ser": 0.0
+            }
+          }
+        }
+      ],
+      "eval_window": {
+        "eval_start": 2181,
+        "calibration_end": 2309,
+        "eval_end": 2437
+      },
+      "aggregate": {
+        "fixed_mu_cma": {
+          "nearest_pi_ser_mean": 0.129296875,
+          "oracle_pi_ser_mean": 0.02109375,
+          "nearest_fixed_ser_mean": 0.129296875,
+          "headroom_mean": 0.108203125,
+          "n_non_diverged_seeds": 10,
+          "n_diverged_seeds": 0,
+          "stage2_max_visits_per_sample_max_over_seeds": 0
+        },
+        "C11_legal": {
+          "nearest_pi_ser_mean": 0.23671875,
+          "oracle_pi_ser_mean": 0.02109375,
+          "nearest_fixed_ser_mean": 0.23671875,
+          "headroom_mean": 0.215625,
+          "n_non_diverged_seeds": 10,
+          "n_diverged_seeds": 0,
+          "stage2_max_visits_per_sample_max_over_seeds": 1
+        }
+      }
+    }
+  ],
+  "hierarchical_paired_ci": {
+    "macro_mean": 0.014453125,
+    "lower": -0.00022321428571428573,
+    "upper": 0.041128627232142834,
+    "n_cells": 7,
+    "per_cell_means": [
+      0.0,
+      0.000390625,
+      -0.000390625,
+      -0.000390625,
+      0.0,
+      0.025,
+      0.0765625
+    ],
+    "n_boot": 10000
+  },
+  "adjudication": {
+    "verdict": "B_C11_SIGNAL_DISAPPEARS_AFTER_LEGALIZATION",
+    "macro_paired_delta_mean": 0.014453125,
+    "macro_paired_delta_ci_upper_95": 0.041128627232142834,
+    "macro_paired_delta_ci_lower_95": -0.00022321428571428573,
+    "practical_significance_threshold": -0.005,
+    "best_dd_step_size": 0.0003,
+    "best_switch_offset": 2,
+    "per_cell_paired_delta_means": [
+      0.0,
+      0.000390625,
+      -0.000390625,
+      -0.000390625,
+      0.0,
+      0.025,
+      0.0765625
+    ],
+    "per_cell_paired_ci_95": {
+      "16qam-snr05-nominal-short": {
+        "mean": 0.0,
+        "lower": -0.001171875,
+        "upper": 0.001171875,
+        "n": 10
+      },
+      "16qam-snr10-nominal-short": {
+        "mean": 0.000390625,
+        "lower": 0.0,
+        "upper": 0.001171875,
+        "n": 10
+      },
+      "16qam-snr15-nominal-short": {
+        "mean": -0.000390625,
+        "lower": -0.001171875,
+        "upper": 0.0,
+        "n": 10
+      },
+      "16qam-snr25-nominal-short": {
+        "mean": -0.000390625,
+        "lower": -0.001171875,
+        "upper": 0.0,
+        "n": 10
+      },
+      "16qam-snr20-fg100-short": {
+        "mean": 0.0,
+        "lower": 0.0,
+        "upper": 0.0,
+        "n": 10
+      },
+      "16qam-snr10-fg100-long": {
+        "mean": 0.025,
+        "lower": 0.00078125,
+        "upper": 0.051171875,
+        "n": 10
+      },
+      "16qam-snr15-fg1000-long": {
+        "mean": 0.0765625,
+        "lower": 0.016796875,
+        "upper": 0.1390625,
+        "n": 10
+      }
+    },
+    "worst_cell_paired_delta": 0.0765625,
+    "divergence_rate_C11_legal": 0.0,
+    "divergence_rate_fixed_mu_cma": 0.0,
+    "stage2_max_visits_per_sample_global": 1,
+    "n_held_out_cells": 7
+  },
+  "frozen_params": {
+    "fixed_mu_cma_mu": 0.03,
+    "c11_legal_stage1_mu": 0.03,
+    "c11_legal_best_dd_step_size": 0.0003,
+    "c11_legal_best_switch_offset": 2,
+    "plateau_block_per_cell": {
+      "16qam-snr20-nominal-short": 3,
+      "16qam-snr20-fg1000-short": 3,
+      "16qam-snr20-sop40e-short": 3,
+      "16qam-snr20-nominal-long": 3
+    },
+    "dd_step_grid": [
+      0.0,
+      1e-06,
+      3e-06,
+      1e-05,
+      3e-05,
+      0.0001,
+      0.0003
+    ],
+    "switch_offsets": [
+      0,
+      1,
+      2
+    ],
+    "validation_seeds": [
+      31,
+      32,
+      33,
+      34,
+      35
+    ],
+    "test_seeds": [
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50
+    ],
+    "mde": 0.005
+  },
+  "metadata": {
+    "schema": "direction-lab.cb1.c11-legality-batch.v1",
+    "campaign_id": "science-scout-2026-07-20.dual-pol-osl",
+    "source_research_note": "c11-legality-batch-v1/R001-c11-legality-root-cause.md",
+    "amends_subclaim_of": "D010",
+    "MDE": 0.005,
+    "validation_seeds": [
+      31,
+      32,
+      33,
+      34,
+      35
+    ],
+    "test_seeds": [
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50
+    ],
+    "leakage_check": "set(val) \u2229 set(test) = \u2205; set(val,test) \u2229 set(B01-R 11-15,21-30) = \u2205 (both asserted in code)",
+    "R2_qam16": 1.32,
+    "elapsed_seconds": 85.68528056144714,
+    "timestamp": "2026-07-21T17:14:46",
+    "dd_step_grid": [
+      0.0,
+      1e-06,
+      3e-06,
+      1e-05,
+      3e-05,
+      0.0001,
+      0.0003
+    ],
+    "switch_offsets": [
+      0,
+      1,
+      2
+    ],
+    "fixed_mu_cma_mu_inherited_from": "B01-R HF6 interior optimum (NOT re-tuned)"
+  }
+}

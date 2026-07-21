@@ -1,0 +1,39 @@
+fixed_mu_cma_mu: 0.03
+c11_legal_stage1_mu: 0.03
+c11_legal_best_dd_step_size: 0.0003
+c11_legal_best_switch_offset: 2
+plateau_block_per_cell:
+  16qam-snr20-nominal-short: 3
+  16qam-snr20-fg1000-short: 3
+  16qam-snr20-sop40e-short: 3
+  16qam-snr20-nominal-long: 3
+dd_step_grid:
+- 0.0
+- 1.0e-06
+- 3.0e-06
+- 1.0e-05
+- 3.0e-05
+- 0.0001
+- 0.0003
+switch_offsets:
+- 0
+- 1
+- 2
+validation_seeds:
+- 31
+- 32
+- 33
+- 34
+- 35
+test_seeds:
+- 41
+- 42
+- 43
+- 44
+- 45
+- 46
+- 47
+- 48
+- 49
+- 50
+mde: 0.005

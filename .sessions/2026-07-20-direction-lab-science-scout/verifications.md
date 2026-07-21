@@ -83,3 +83,44 @@ HF1-HF8（每条 flaw 一项）+ protected history 回归 + v1 git history 可�
 ### 对决策的影响
 
 支撑 D010（修正 D009）：VERDICT 从 B 改为 A；fixed_μ CMA μ=0.03（非 0.01）；C11_fixed_mu 是真阳性 method signal（4/7 cells 显著）；detector target ready 但 thin（min_z2 已 AUROC=1.000 ceiling，ML 必须在 lead time 或 calibration 上赢，不能在 AUROC 上）；forward rule 要求未来 corrector batch 用 fixed_μ + blind-affine 双 comparator。
+
+## V003: C11 legality batch 独立 verifier 复核 — CONFIRM (10/10)
+
+> 关联：D011 / H008 / R001 | 日期: 2026-07-21
+> verifier: 独立 subagent context（与实现代码分离，P6 separation）
+
+### 验证范围
+
+10 项独立复核（V1-V10），每项重新执行命令、读原始数据、重算数字，不信任实现方摘要。
+
+### 结果
+
+| # | 项 | 结果 | 关键证据 |
+|---|---|---|---|
+| V1 | 测试套件 fresh 重跑 | PASS | 13 tests passed, 0 failed（8 gates + 4 OLD-impl bug 确认 + 1 contract-path） |
+| V2 | 手算复数约定 | PASS | r@w = (-6.27+4.33j)，vdot(w,r) = (-9.43-0.71j)，**不等** |
+| V3 | dd_step=0 位等价手测 | PASS | max\|ΔzX\| = 0.0；np.array_equal = True |
+| V4 | 因果前缀不变动独立重实现 | PASS | safe_prefix=1494 处 zX[:safe_prefix] bit-identical |
+| V5 | 3 cells 配对 Δ 独立重算 | PASS | 与 runner 数字 bit-identical（CIs 在 Monte-Carlo 噪声内一致）；macro +0.014453125 完全相同 |
+| V6 | OLD 实现三 pass 结构定位 | PASS | b01_candidates.py L220 / L254 / L287 / L290 四个 marker 全在 |
+| V7 | v1 路径未覆盖 | PASS | git diff --name-only HEAD 空；B01-R mtime 在本 session 之前 |
+| V8 | contract/runner 一致性 | PASS | DD_STEP_GRID 与 contract 完全一致；所有 outputs 在 c11-legality-batch-v1/ 下 |
+| V9 | verdict 逻辑应用 | PASS | macro_mean=+0.014 不满足 <0；CI 上限 +0.041 不满足 <0；worst-cell +0.077 不满足 ≤0 → Verdict B 唯一可能 |
+| V10 | 无禁止动作 | PASS | 无 fairness-batch-b01* 改动；无 ML/torch/sklearn import |
+
+### 独立重算的数字（核心）
+
+- macro paired Δ = **+0.014453125**（runner 报告值完全相同）
+- macro CI 下限 = **−0.000223**（runner 报告值完全相同）；上限 +0.040851（runner +0.041129，Monte-Carlo 噪声 3e-4 内）
+- snr10-fg100-long Δ mean = **+0.025000**（完全相同），CI = [+0.000781, +0.051562]（runner 上限 +0.051172，差 4e-4）
+- snr15-fg1000-long Δ mean = **+0.076563**（完全相同），CI = [+0.016406, +0.140234]（runner 上限 +0.139063，差 1e-3）
+- 所有显著性结论（2 cells CI 下限 > 0；0 cells CI 上限 < 0）与 runner 一致
+
+### 次级观察（非阻塞）
+
+1. 实现方摘要写 "8 gate tests"，实际测试套件是 **13 tests**（8 gates + 4 negative-control + 1 contract-path）。所有 PASS，不影响结论。
+2. Contract `outputs.synthesis` 声明的路径 `c11-legality-batch-v1/artifacts/synthesis.v1.md` 在 verifier 运行时尚未存在；contract-path 测试只校验声明的字符串不校验文件存在，所以测试 PASS。（注：synthesis.v1.md 在 verifier 报告后已补写。）
+
+### 结论
+
+**CONFIRM** 实现方 "Verdict B、所有门 PASS、无禁止动作" 的结论。所有数字独立重算一致；OLD 实现的 3 个合法性缺陷（D1/D2/D3）在 b01_candidates.py L220/254/287/290 独立确认。

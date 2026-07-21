@@ -593,8 +593,8 @@ topics:
     title: Direction Lab 首轮 SCIENCE_SCOUT 正式科学探索
     status: active
     created: "2026-07-20"
-    last_updated: "2026-07-21 hotfix（S007/D010/H007/V002：B01-R hotfix v2 完成，VERDICT B→A = fairness survives + detector target READY (thin)；fixed_μ 最优 μ=0.03；C11_fixed_mu 4/7 cells 显著改善；等用户决策下一批方向）"
-    description: "首轮正式 SCIENCE_SCOUT campaign。CB1 closure、16QAM Atlas、CMA/MMA raw evidence、B01 fairness batch、B01-R 纠偏批（v1 + hotfix v2）均完成。外部评审抓出 B01-R v1 的 7 个实现 flaw（min_z2 NaN、warmup 错位、伪 5% FPR、机械触发 verdict B、ambiguous 计数冲突、μ 网格边界、C11 vs anchor 而非 vs fixed_μ），hotfix v2 全修复后 verdict 从 B 改为 A：fairness 存活（fixed_μ 最优 μ=0.03 interior optimum；C11_fixed_mu 4/7 cells 显著优于 fixed_μ CMA |Δ|≈0.01，是整个 campaign 第一个真阳性 method signal），detector target READY 但 thin（min_z2 已 AUROC=1.000 ceiling；lead time 全 ≤ 0）。VERDICT A 不自动授权 B02；HF8 forward rule 要求未来 corrector batch 用 fixed_μ + blind-affine 双 comparator。等用户决策下一批方向（路径 1：C04/C09 learned corrector；路径 2：C01/C02/C06 lead-time detector）。"
+    last_updated: "2026-07-21 c11-legality（S008/D011/H008/V003：C11 合法性裁决 Verdict B = signal disappears after legalization；撤回 D010 第 4 点 C11_fixed_mu 4/7 阳性 method signal，reclassified as implementation/confound diagnostic；C11 原 3 个合法性缺陷独立定位 + 修复；forward rule 第 2 comparator 修正 oracle_affine → blind_affine_compare；fixed_μ μ=0.03 / fairness-survives / min_z2 ceiling 不变；等用户决策下一批方向）"
+    description: "首轮正式 SCIENCE_SCOUT campaign。CB1 closure、16QAM Atlas、CMA/MMA raw evidence、B01 fairness batch、B01-R 纠偏批（v1 + hotfix v2）+ C11 legality batch 均完成。B01-R hotfix v2 给出 VERDICT A = fairness survives + detector target READY (thin)，fixed_μ 最优 μ=0.03。C11 legality batch 进一步在合法化（统一 bilinear r@w / 因果 one-pass / 同 pass 预算 / dd_step=0 身份门）下重测 C11，Verdict B：C11 原 4/7 阳性信号消失甚至反向（macro +0.01445 更差；2/7 long cells 显著更差），reclassified as implementation/confound diagnostic 由 3 个合法性缺陷（复数约定突变 / 非因果未来信息 / 多 pass）造成。C11_fixed_mu 不再算方法信号；C04/C09 learned corrector 仍不授权，且须超越 blind_affine_compare_16qam（receiver-visible），不是超越 C11。等用户决策下一批方向。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 V007 PASS 的消费者部署（全局 Skill + STATUS + Project Adapter + protected history）作为科学探索起点

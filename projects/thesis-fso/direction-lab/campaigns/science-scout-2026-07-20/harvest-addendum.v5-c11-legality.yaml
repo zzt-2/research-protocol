@@ -1,0 +1,105 @@
+# Harvest Addendum v5 — C11 Legality Batch (2026-07-21)
+# Adds H039-H043: C11 legalization negative result + methodology lessons.
+# v4 (H029-H038) preserved; H029/H035 content on "C11_fixed_mu 4/7 positive"
+# is qualified by H039 below (reclassified as implementation/confound diagnostic).
+
+schema_version: direction-lab.harvest.v5-c11-legality
+campaign_id: science-scout-2026-07-20.dual-pol-osl
+batch: c11-legality-batch-v1
+batch_version: legality_v1_2026-07-21
+date: 2026-07-21
+verdict: B_C11_SIGNAL_DISAPPEARS_AFTER_LEGALIZATION
+
+amends_in_v4:
+  - H029_H035_c11_fixed_mu_positive_reclassified_as_diagnostic  # see H039
+
+harvest:
+
+  - id: H039
+    category: LOCAL_NEGATIVE
+    content: >-
+      The C11_fixed_mu "4/7 held-out cells positive vs fixed_μ CMA" signal
+      reported in v4 (H029, H035) does NOT survive legalization. Under a
+      UNIFIED complex filter convention (z = r @ w bilinear everywhere),
+      NO future information (causal one-pass CMA→DD switch at a frozen
+      block), EQUAL single-pass access budget, and a dd_step=0 identity
+      gate, the legal C11 cascade macro paired Δ (C11_legal − fixed_μ) is
+      +0.01445 (C11 WORSE), 95% CI = [−0.00022, +0.04113]. 2/7 long
+      held-out cells are significantly worse (snr10-fg100-long Δ=+0.025
+      CI[+0.00078,+0.05117]; snr15-fg1000-long Δ=+0.077 CI[+0.017,
+      +0.139]). 0/7 are significantly better. The original 4/7 positive
+      was an implementation/confound diagnostic, not a method signal.
+    evidence_pointer: c11-legality-batch-v1/artifacts/result.v1.json#adjudication
+    claim_ceiling: LOCAL_RESULT_SLICE
+
+  - id: H040
+    category: FAILURE_MECHANISM
+    content: >-
+      Causal per-symbol DD-LMS applied to ALREADY-CONVERGED fixed-μ CMA
+      weights destabilises them on long cells (N=8192). The per-symbol
+      update with hard-decision reference introduces feedback noise that
+      accumulates over the long post-switch tail. The original C11's
+      apparent long-cell benefit was an offline multi-pass smoothing
+      artifact: stage-2's full-stream re-traversal from i=0 using the
+      final stage-1 weights effectively filtered the whole stream with
+      a single set of converged weights, which is NOT what a causal
+      online DD-LMS does. Short cells (N=512) show essentially zero
+      effect either way (Δ ≈ ±0.0004) because few post-switch symbols
+      exist for DD to act on.
+    evidence_pointer: c11-legality-batch-v1/artifacts/result.v1.json#cells[?is_held_out_cell].aggregate
+    claim_ceiling: LOCAL_RESULT_SLICE
+
+  - id: H041
+    category: METHODOLOGY
+    content: >-
+      Complex filter convention must be UNIFIED across a cascade. The
+      OLD C11 stage-1 used z = r @ w (bilinear, no conjugation, matches
+      the CMA anchor) while stage-2 used z = np.vdot(w, r) = w^H r
+      (Hermitian). For post-convergence complex weights these differ
+      strictly; quantified at dd_step=0 the max|ΔzX| ≈ 1.97, on the
+      order of the inter-constellation distance (≈2 for normalised
+      16QAM). The "no-op" was not a no-op. Always assert the identity
+      gate (dd_step=0 ⇒ bit-identical to the stage-1-alone comparator)
+      before any cascade result is trusted. Mathematically, the correct
+      DD-LMS update for bilinear z = r @ w is w += mu*(d-z)*conj(r)
+      (numerically verified against 4 candidate update rules; only this
+      form minimises |d-z|^2).
+    evidence_pointer: c11-legality-batch-v1/R001-c11-legality-root-cause.md + tests/test_c11_legality.py::TestComplexConventionUnified
+    claim_ceiling: DOMAIN  # methodology lesson; applies to any complex-LMS implementation
+
+  - id: H042
+    category: METHODOLOGY
+    content: >-
+      Causality / future-information audit must be a mandatory gate for
+      any cascade or multi-stage method. The OLD C11 stage-2 started
+      processing sample i=0 using weights obtained by processing the
+      ENTIRE future stream in stage-1 — a strict non-causal leak that
+      inflated long-cell performance. The fix is a strict causal
+      one-pass architecture with a frozen block-index switch point.
+      Always run a causal-prefix invariance test: perturb future samples
+      beyond a prefix and assert prefix outputs are bit-identical.
+      Combined with the one-pass access-budget test (each sample is the
+      centre of a stage-2 update at most once), this catches both the
+      future-information leak and the unequal-pass-budget artifact.
+    evidence_pointer: c11-legality-batch-v1/tests/test_c11_legality.py::TestCausalPrefixInvariance + TestOnePassAccessBudget
+    claim_ceiling: DOMAIN
+
+  - id: H043
+    category: EVALUATION_INSIGHT
+    content: >-
+      Forward-rule comparator labels must distinguish receiver-visible
+      same-task comparators from oracle/scoring-only bounds. The B01-R
+      contract (line 352) mislabeled oracle_affine_16qam as "blind" in
+      the forward rule for a future corrector batch. The repository
+      (cb1_evaluator.py:106/132) contains TWO distinct functions:
+      blind_affine_compare_16qam (z-derived pseudo-labels only; NO TX
+      truth; legitimate Go baseline / receiver-visible same-task
+      comparator) vs oracle_affine_bound_16qam (consumes TX truth in
+      calibration; scoring-only Kill bound per FR-21; NEVER a Go
+      baseline per FR-25). Any future learned-corrector batch must use
+      blind_affine_compare_16qam as the task-specific comparator and
+      may use oracle_affine_bound_16qam only as a Kill bound. The
+      corrector's contribution is established only by beating
+      blind_affine_compare_16qam, NOT by beating fixed_μ CMA or C11.
+    evidence_pointer: baseline-atlas/cb1_evaluator.py:106,132 + c11-legality-batch-v1/batch-contract.v1.yaml#forward_rules_for_corrector_batch
+    claim_ceiling: DOMAIN

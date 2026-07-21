@@ -1,0 +1,241 @@
+# =============================================================================
+# C11 Legality Batch v1 — FROZEN BEFORE RUNNING
+# Campaign: science-scout-2026-07-20.dual-pol-osl
+# Trigger: 2026-07-21 external review (R001 root-cause investigation)
+# Scope: adjudicate whether C11 (CMA→DD-LMS) signal survives legalization.
+# =============================================================================
+# Scientific question:
+#   Under a UNIFIED complex filter convention (z = r @ w bilinear, matching the
+#   anchor), NO future information (causal one-pass CMA→DD switch), SAME
+#   pass/access budget as the fixed-μ CMA comparator, and a `dd_step=0`
+#   identity gate, does CMA→DD-LMS still significantly beat a fairly-tuned
+#   fixed-μ CMA on held-out cells × independent test seeds?
+#
+# H1 (R001):
+#   Original C11's 4/7 positive signal is an artifact of (a) a complex
+#   convention flip r@w → vdot(w,r) between stage-1 and stage-2, and (b) an
+#   offline full-stream second/third pass that uses future information.
+#   Rejection condition: legal implementation still yields paired CI upper
+#   bound < 0 and |mean Δ| ≥ practical-significance threshold (0.005 PI-SER)
+#   on ≥ 4/7 held-out cells. If rejected → Verdict A. If confirmed → Verdict B.
+# =============================================================================
+# All B01-R v1 artifacts preserved as diagnostic history (NOT modified).
+# D010 / H007 / V002 kept; their "C11_fixed_mu 4/7" sub-claim is AMENDED by
+# the present batch's verdict (D011).
+# =============================================================================
+
+schema_version: direction-lab.cb1.c11-legality-batch.v1
+campaign_id: science-scout-2026-07-20.dual-pol-osl
+source_research_note: c11-legality-batch-v1/R001-c11-legality-root-cause.md
+inherits_from_contract: fairness-batch-b01r/batch-contract.v1.yaml  # contract structure reused
+amends_subclaim_of: D010  # the "C11_fixed_mu 4/7 positive" sub-claim only
+
+scientific_question: >-
+  Under a unified complex filter convention (z = r @ w bilinear), no future
+  information (causal one-pass CMA→DD switch at a frozen switch point), same
+  pass/access budget as the fixed-μ CMA comparator, and a `dd_step=0`
+  identity gate, does the legal CMA→DD-LMS cascade significantly beat the
+  fairly-tuned fixed-μ CMA (μ=0.03) on held-out cells × fresh test seeds?
+
+claim_ceiling: LOCAL_RESULT_SLICE
+
+# === Roles ===
+roles:
+
+  system_anchor_and_go_comparator:
+    id: fixed_mu_cma_mu_0_03
+    implementation: cb1_cell_runner.standard_cma_godard_with_z
+    mu: 0.03  # inherited from B01-R hotfix v2 interior optimum (HF6)
+    block_size: 64
+    note: >-
+      Go comparator. μ frozen from B01-R hotfix v2 (validation-optimal under
+      HF6 extended grid [1e-4..1e-1]). ONE causal pass.
+
+  candidate_legal_c11:
+    id: C11_legal_causal_one_pass
+    implementation: c11-legality-batch-v1.c11_causal.c11_cma_dd_lms_causal
+    stage1_mu: 0.03  # SAME μ as fixed_mu_cma — fair stage-1
+    complex_convention: bilinear_r_at_w  # UNIFIED with anchor and stage-1
+    stage2_switch_policy: frozen_block_index  # NO future information
+    dd_step_size_grid: [0.0, 1e-6, 3e-6, 1e-5, 3e-5, 1e-4, 3e-4]  # includes 0 (identity gate)
+    dd_iterations: 1  # ONE causal pass per sample
+    access_budget_per_sample: 1  # each sample processed exactly once
+    note: >-
+      Causal one-pass: CMA update for sample k uses only weights from samples
+      < switch_point; DD update for sample k >= switch_point uses weights
+      causal up to k. NO replay. NO second full-stream pass.
+
+  identity_gate_reference:
+    id: fixed_mu_cma_mu_0_03_clone
+    implementation: cb1_cell_runner.standard_cma_godard_with_z
+    mu: 0.03
+    note: >-
+      Used by the no-op identity test: C11_legal with dd_step=0 MUST be
+      bit-identical to this reference on the same input/seed (stage-2 no-op
+      leaves stage-1 output unchanged, including the switch).
+
+# === Sweep axes (frozen) ===
+sweep_axes:
+
+  - id: atlas_v1_16qam_cells
+    cells: atlas_v1_full_16qam_set  # SAME 11 cells as B01 / B01-R; raw preserved
+    validation_cells: [16qam-snr20-nominal-short, 16qam-snr20-fg1000-short, 16qam-snr20-sop40e-short, 16qam-snr20-nominal-long]
+    held_out_cells: [16qam-snr05-nominal-short, 16qam-snr10-nominal-short, 16qam-snr15-nominal-short, 16qam-snr25-nominal-short, 16qam-snr20-fg100-short, 16qam-snr10-fg100-long, 16qam-snr15-fg1000-long]
+
+  - id: no_leakage_seed_split_NEW_disjoint_from_b01r
+    # FRESH seeds, disjoint from B01-R tuning [11-15] / test [21-30].
+    # Prevents any reuse of B01-R selected hyperparameters on their own seeds.
+    validation_seeds: [31, 32, 33, 34, 35]  # for switch-point + dd grid selection
+    test_seeds: [41, 42, 43, 44, 45, 46, 47, 48, 49, 50]  # 10 fresh test seeds
+    leakage_check: >-
+      set(validation_seeds) ∩ set(test_seeds) = ∅ (asserted in code);
+      AND set({validation,test} seeds) ∩ set(B01-R seeds {11-15,21-30}) = ∅
+      (asserted in code).
+
+# === Switch-point selection (frozen BEFORE test) ===
+switch_point_policy:
+  principle: physical_or_algorithmic_reason_then_validation_confirm
+  candidate_rationale: >-
+    Switch CMA→DD when CMA has entered steady-state (post-convergence) so DD
+    hard decisions are reliable. Block-wise: after the CMA convergence
+    plateau on validation cells (defined as: cumulative |Δw_norm| over the
+    last 4 validation blocks < 1% of init norm). Probe a small validation
+    grid of switch points {convergence_plateau_block, +1 block, +2 blocks}
+    and pick the one that minimizes validation mean PI-SER at dd_step=1e-4.
+  freeze_rule: >-
+    Switch point frozen BEFORE any test seed is run. Each cell uses its OWN
+    frozen switch point (cells differ in convergence speed). Frozen values
+    recorded in frozen-params.v1.yaml.
+  forbidden: selecting_switch_point_on_test_seeds
+
+# === Tuning protocol (frozen) ===
+tuning_protocol:
+  principle: equal_tuning_opportunity_for_C11_and_fixed_mu
+  fixed_mu_cma_mu: 0.03  # frozen from B01-R (NOT re-tuned; no double-dip)
+  c11_stage1_mu: 0.03  # INHERITS from fixed_mu_cma (fair stage-1)
+  c11_tuned_hyperparams: [dd_step_size, switch_point_block]
+  tuning_universe: validation_cells × validation_seeds
+  freeze_rule: >-
+    dd_step_size and switch_point_block frozen on validation before any test
+    seed is run. dd_step=0 is the identity gate; if validation picks 0 as
+    best dd_step, that itself is a (null) result for C11.
+  divergence_penalty: 0.1_times_divergence_rate
+
+# === Statistical preregistration ===
+statistical_preregistration:
+
+  # PRIMARY statistic: hierarchical paired delta over held-out cells × test seeds
+  primary_statistic:
+    name: paired_delta_pi_ser_C11_legal_minus_fixed_mu_cma
+    aggregation: >-
+      Per-cell paired delta = mean over test seeds of
+      (PI-SER(C11_legal) - PI-SER(fixed_mu_cma)) on the SAME seed.
+      Then hierarchical: report per-cell paired delta + macro mean over
+      7 held-out cells + paired bootstrap 95% CI on the macro mean
+      (10k resamples, cells+seeds paired).
+    practical_significance_threshold: 0.005_PI_SER_absolute  # same as B01-R MDE
+    primary_effect_direction: negative (C11_legal < fixed_mu_cma → C11 better)
+    go_threshold: >-
+      Verdict A requires macro paired delta CI upper bound < 0
+      AND macro mean ≤ -0.005 AND worst-cell delta ≤ 0 (no unacceptable
+      degradation) AND divergence rate of C11_legal ≤ fixed_mu_cma + 0.05.
+
+  secondary_statistics:
+    - per_cell_paired_bootstrap_ci  # exploratory; Holm-corrected if used for formal claim
+    - pass_count_per_sample  # MUST equal 1 for both methods
+    - access_count_per_sample  # MUST equal 1 for C11_legal stage-2 after switch
+    - divergence_rate_per_method
+    - headroom_over_oracle_affine  # oracle = Kill bound only, FR-21
+
+  identity_gate_tests_REQUIRED_PASS_before_any_evaluation:
+    - complex_convention_unified_with_anchor
+    - no_op_dd_step_0_bit_identity_with_stage1_comparator
+    - stage_1_state_identity_with_fixed_mu_cma
+    - causal_prefix_invariance_under_future_perturbation
+    - one_pass_access_budget_count
+    - stage_switch_at_frozen_block_only
+    - source_contract_runner_consistency
+
+# === Decision rule (A/B/C, frozen BEFORE running) ===
+decision_rule:
+
+  A_C11_CAUSAL_SIGNAL_SURVIVES:
+    all_of:
+      - "All identity/causality/budget tests PASS (RED→GREEN verified)."
+      - "Contract / runner / artifact consistency test PASS."
+      - "Macro paired delta CI upper bound < 0 (C11_legal significantly better)."
+      - "Macro mean paired delta ≤ -0.005 (practical significance)."
+      - "Worst-cell paired delta ≤ 0 (no unacceptable degradation)."
+      - "Divergence rate C11_legal ≤ fixed_mu_cma + 0.05."
+    consequence: >-
+      C11 becomes a LEGAL conventional comparator. 57384ed "4/7 positive"
+      sub-claim is CONFIRMED under legalization. Next batch may consider
+      equalizer corrector (C04/C09) with C11_legal as conventional target.
+      BUT this batch does NOT train C04/C09 or any ML.
+
+  B_C11_SIGNAL_DISAPPEARS_AFTER_LEGALIZATION:
+    any_of:
+      - "Macro paired delta CI upper bound ≥ 0 (no significant improvement)."
+      - "|Macro mean paired delta| < 0.005 (below practical significance)."
+      - "Validation picks dd_step=0 as best (DD stage adds nothing)."
+    consequence: >-
+      57384ed "4/7 positive" is reclassified as implementation/confound
+      DIAGNOSTIC, not method signal. C11 NOT promoted. Failure-mechanism
+      material kept. Next step re-ranks by residual headroom, blind affine,
+      or C12/C13 candidates. C04/C09 NOT authorized.
+
+  C_C11_ARCHITECTURE_BLOCKED:
+    description: >-
+      Only if identity/causality/budget tests cannot be made to PASS within
+      batch budget (genuine capability gap). MUST name the specific missing
+      capability. CANNOT be used to mask a test failure.
+
+# === Forbidden within this batch ===
+forbidden:
+  - modify_B001_B002_B003_or_P03_Atlas_bytes
+  - modify_B01_or_B01r_raw_artifacts  # fairness-batch-b01* artifacts preserved
+  - modify_D010_H007_V002  # superseded/amended, never overwritten
+  - modify_canonical_state_yaml
+  - modify_global_skills
+  - train_ML_detector_or_corrector  # no C01/C02/C04/C06/C09/B002/B003/B004
+  - expand_candidate_pool
+  - tune_on_test_seeds
+  - use_future_information_in_stage_2  # causality
+  - use_two_conventions_in_one_cascade  # unified bilinear r@w
+  - multi_pass_offline_without_equal_comparator_budget  # one-pass default
+  - write_results_into_paper_text
+  - push_or_merge
+  - overwrite_v1_paths  # fairness-batch-b01r-v1.* and frozen-params-b01r-v1.yaml frozen
+  - reuse_B01R_seeds_11_to_15_or_21_to_30
+  - treat_oracle_affine_as_Go_baseline  # FR-21, FR-25
+  - call_blind_affine_an_oracle  # forward-rule label fix (H2)
+
+# === Forward rule for any future corrector batch (CORRECTED, supersedes B01-R HF8) ===
+forward_rules_for_corrector_batch:
+  required_task_comparators:
+    - fixed_mu_cma_validation_optimal_mu_0_03  # system anchor / Go baseline
+    - blind_affine_compare_16qam  # CORRECTED: receiver-visible same-task comparator (z-derived pseudo-labels only)
+    - C11_legal_causal_one_pass  # NEW: if Verdict A, the legal conventional cascade target
+  kill_bound_only:
+    - oracle_affine_bound_16qam  # TX-truth calibration; Kill bound ONLY (FR-21), never Go
+  note: >-
+    B01-R batch-contract line 352 mislabeled oracle_affine_16qam as "blind".
+    This contract corrects: blind_affine_compare_16qam (z-only) ≠
+    oracle_affine_bound_16qam (TX-truth). If the repo's blind_affine
+    implementation is illegitimate or absent, record as readiness blocker;
+    do NOT fake READY.
+
+# === Outputs ===
+outputs:
+  research_note: c11-legality-batch-v1/R001-c11-legality-root-cause.md
+  implementation: c11-legality-batch-v1/c11_causal.py
+  runner: c11-legality-batch-v1/run_c11_legality_batch.py
+  tests: c11-legality-batch-v1/tests/test_c11_legality.py
+  raw_artifact: c11-legality-batch-v1/artifacts/result.v1.json
+  synthesis: c11-legality-batch-v1/artifacts/synthesis.v1.md
+  frozen_params: c11-legality-batch-v1/artifacts/frozen-params.v1.yaml
+  harvest_update: campaigns/science-scout-2026-07-20/harvest-addendum.v5-c11-legality.yaml
+
+# === Time budget ===
+time_budget_minutes: 90
+commit_policy: single_consolidated_commit_at_session_end_no_push

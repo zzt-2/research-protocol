@@ -420,3 +420,56 @@ VERDICT A **不自动授权 B02**：detector target ready 是 "by contract lette
 ### 来源
 
 S007 / B01-R hotfix v2 科学运行 / 独立 verifier V002 CONFIRM 13/14+1P1修复 / 外部评审 2026-07-21（7 个 flaw）。
+
+## D011: C11 legality batch — VERDICT B (signal disappears after legalization); 撤回 D010 的 C11_fixed_mu 4/7 阳性子结论
+
+> status: active
+> date: 2026-07-21
+> 取代：D010 第 4 点（"C11_fixed_mu 是真阳性 method signal"）和 H007 第 2、3 关键发现（fixed_μ μ=0.03 不变；C11_fixed_mu 4/7 显著改善**撤回**）；forward rule 第 2 comparator 修正（oracle_affine_16qam → blind_affine_compare_16qam）。D010 fairness-survives 部分、fixed_μ μ=0.03 部分、min_z2 detector ceiling 部分不变。
+> 被取代：无
+> 依据: 调研: `c11-legality-batch-v1/R001-c11-legality-root-cause.md`（Phase 1-3 根因调查，含 b01_candidates.py 行号 220/254/287/290 + 数值复现 max|ΔzX|≈1.97 + 数值 SGD 4 个 update rule 比较）+ 验证: `c11-legality-batch-v1/artifacts/result.v1.json`（schema direction-lab.cb1.c11-legality-batch.v1）+ `c11-legality-batch-v1/artifacts/synthesis.v1.md` + 独立 verifier V003（10 项检查全 PASS，每数字独立重算）+ `c11-legality-batch-v1/tests/test_c11_legality.py`（13 tests 全 PASS：8 gates + 4 OLD-impl bug 确认 + 1 contract-path）+ 触发原话: 用户 2026-07-21 任务附件 "在统一复数滤波约定、无未来信息、同 pass/同预算、dd_step=0 身份门成立的前提下，合法的 CMA→DD-LMS 是否仍显著优于公平 fixed-μ CMA？"
+
+### 决策
+
+合法化后（统一 bilinear r@w 约定 / 因果 one-pass CMA→DD switch / 同 pass 预算 / dd_step=0 身份门）重测 C11，verdict = **`B_C11_SIGNAL_DISAPPEARS_AFTER_LEGALIZATION`**。
+
+1. **C11 原实现的 3 个合法性缺陷全部独立确认并定位**：
+   - D1 复数约定突变：stage-1 用 `r @ w`（bilinear，anchor 约定），stage-2 用 `np.vdot(wxx, rx)`（= `w^H r` Hermitian）。复数权重下二者严格不等；dd_step=0 时 max|ΔzX| ≈ 1.97（≈ 星座点间距）。`b01_candidates.py:290-291`。
+   - D2 非因果未来信息：stage-2 从 i=0 开始用 stage-1 final 权重（看完整个 stream 才得到）。`b01_candidates.py:287`。
+   - D3 多 pass / 预算不等：每个样本被访问 3 次（stage-1 + replay + stage-2）vs comparator 1 次。`b01_candidates.py:220/254/287`。
+2. **合法化后的 C11_legal 在 7 个 held-out cells × 10 个 fresh test seeds 上显著**不**优于 fixed-μ CMA**：macro paired Δ (C11_legal − fixed_μ) = **+0.01445**（C11 更差），95% CI = [−0.00022, +0.04113]。2/7 long cells 显著更差（snr10-fg100-long Δ=+0.025 CI [+0.00078, +0.05117]；snr15-fg1000-long Δ=+0.077 CI [+0.017, +0.139]）；0/7 显著更好；5/7 short cells 实质 tie（|Δ| < 0.001）。
+3. **D010 第 4 点 C11_fixed_mu 4/7 阳性 method signal 撤回**：reclassified as implementation/confound diagnostic，由 D1+D2+D3 三缺陷造成。C11_legal 不被 promote 为合法 conventional comparator。
+4. **forward rule（HF8）的 task-specific comparator 修正**：D010 写 "blind_affine_16qam (task-specific Kill, FR-21)" 是标签错误（line 352 把 oracle_affine_16qam 标为 blind）。仓库实际有两个独立函数（cb1_evaluator.py:106/132）：
+   - `blind_affine_compare_16qam(z_calib, z_eval, ridge)` — z 派生伪标签，无 TX truth，**receiver-visible 同任务 comparator**（合法 Go baseline）
+   - `oracle_affine_bound_16qam(z_calib, z_eval, truth_calib, ridge)` — 用 TX truth 做 calibration，**scoring-only Kill bound (FR-21)，禁止当 Go baseline (FR-25)**
+5. **C04/C09 learned corrector 仍不授权**：D010 forward rule 的 "超越 C11_fixed_mu 0.01 margin" 失去依据；corrector 必须超越 `blind_affine_compare_16qam`（receiver-visible），不是超越 C11。
+
+### 理由
+
+1. **H1 根因假设（R001）被证据支持而非否决**：合法化后原 4/7 信号消失甚至反向（long cells 显著变差），符合 "C11 信号来自约定突变 + 未来信息 + 多 pass 的 artifact" 假设。否决条件（合法实现下信号仍存活）未达到。
+2. **合法实现的所有身份/因果/预算测试 PASS**（8 gates + 4 negative-control 全绿，独立 verifier 10 项复核 CONFIRM），裁决 B 不是测试失败或架构阻塞，是真正的科学结果。
+3. **long cells C11_legal 反而显著更差**揭示：因果 DD-LMS 对已收敛的 fixed-μ 权重做 per-symbol update 反而**扰动**它们；原 "4/7 改善" 完全靠非因果 full-stream second/third pass 的离线平滑效应。
+4. **数据切分严格无泄漏**：validation [31-35] / test [41-50] 全新 seeds，与 B01-R 的 [11-15]/[21-30] 完全不相交（代码 assert）。fixed_μ μ=0.03 从 B01-R HF6 继承（不再 re-tune，无 double-dip）。
+5. **switch_point 冻结后才进 test**：plateau block 估算 + offset grid {0,+1,+2} 在 validation 上选，frozen 后才进 test（contract 明禁 "selecting_switch_point_on_test_seeds"）。
+
+### 排除的替代方案
+
+- **维持 D010 第 4 点（C11_fixed_mu 是真阳性 method signal）**：拒绝；4/7 阳性是 D1+D2+D3 缺陷的 artifact，合法化后消失甚至反向。继续维持等于把 implementation confound 当成科学结论。
+- **用合法 C11 的 long cells 显著更差反推 "DD-LMS 有害"**：拒绝；这是 LOCAL_RESULT_SLICE（7 cells × 10 seeds × 1 switch policy × 1 μ），不能外推到 "DD-LMS 在该信道下总是有害"。legal C11 在 short cells 与 fixed_μ 实质 tie，DD 没用而非有害。
+- **裁决 C（ARCHITECTURE_BLOCKED）**：拒绝；所有身份/因果/预算门 PASS，没有架构阻塞。Verdict C 只能用于真正的能力缺失，不能掩盖测试失败（合同明示）。
+- **删 D010**：拒绝；D010 fairness-survives 部分、μ=0.03 部分、min_z2 detector ceiling 部分仍有效，只 amend 第 4 点和 forward rule 第 2 comparator。D010 标 amended 不 superseded。
+- **修改 B01-R raw artifacts**：拒绝；contract 明禁。57384ed 的产物保留为历史，新结果走新路径 `c11-legality-batch-v1/artifacts/`。
+- **直接开 C04/C09**：拒绝（D010 forward rule 仍有效）；corrector 必须先超越 `blind_affine_compare_16qam` 才算贡献。
+
+### 影响范围
+
+- 仅在本 campaign worktree（`.worktrees/direction-lab-capability-atlas`）内新增 `c11-legality-batch-v1/` 目录（research note + contract + c11_causal.py + run_c11_legality_batch.py + tests + artifacts）。
+- D010 标 amended（不 superseded）；H007 标 amended by H008；V002 保留。topic-index 的 "已确认结论 / 其他结论" 段更新。
+- harvest-addendum.v5-c11-legality.yaml 追加：复杂约定突变教训 / 非因果未来信息教训 / no-op identity 门教训 / C11 negative result。
+- protected history（B001-B003 / P03 / CB1 raw / canonical-state / B01 raw / B01-R raw）字节未改；无 B004；无 ML 训练；无 detector/B02 启动；无 push。
+- **detector / B02 仍暂停**（任务 brief 明示）。
+- 下一动作见 H008：re-rank equalizer 方向 by residual headroom over `oracle_affine_bound_16qam`（Kill bound）；或 rotate 到 path 2（detector lead-time）；或 rotate 到 C12/C13。**等用户战略决策**。
+
+### 来源
+
+S008 / c11-legality-batch-v1 科学运行 / 独立 verifier V003 CONFIRM V1-V10 全 PASS / R001 根因调查 / 用户任务附件 2026-07-21（强制 systematic-debugging Phase 1-3 + TDD + 独立验证；"局部实现失败、参数不工作或旧信号消失时不要停下来问我；继续完成 A/B/C 裁决"）。

@@ -97,3 +97,35 @@
 [来源:外部评审] "若评估 DD-LMS，必须运行 fixed-μ=0.01 CMA + DD-LMS，并直接与 fixed-μ CMA 比。"
 
 [来源:外部评审] "C04/C09 若以后运行，除了 system anchor，还必须保留同任务的 blind-affine comparator。" → HF8 forward rule
+
+## 2026-07-21（C11 legality batch / S008 / D011 / H008）
+
+[来源:外部评审] "在统一复数滤波约定、无未来信息、同 pass/同预算、dd_step=0 身份门成立的前提下，合法的 CMA→DD-LMS 是否仍显著优于公平 fixed-μ CMA？" → D011
+
+[来源:外部评审] "先做根因调查，禁止立即修代码。逐调用链核验 standard_cma_godard_with_z 和 c11_cma_dd_lms_cascade 的实际复数滤波约定。"
+
+[来源:外部评审] "公式必须附来源、公式号或页码；若项目已有来源优先复用，不得凭文字重建。"
+
+[来源:外部评审] "新建专门的可执行测试文件，必须亲眼看到每个测试因现有实现问题而失败，再改生产代码。"
+
+[来源:外部评审] "complex convention test: 用手算可验证的复数输入和权重，保证 CMA stage 与 DD stage 使用完全相同的滤波定义。测试必须能抓出 r @ w 与 np.vdot(w,r) 的差异。"
+
+[来源:外部评审] "no-op identity test: dd_step_size = 0 必须满足 C11 stage-2 输出与其 stage-1 comparator 逐位一致；PI-SER、fixed-SER、headroom、divergence、eval window 完全一致；不允许只比较均值。"
+
+[来源:外部评审] "causal-prefix invariance test: 改变未来样本，不得改变更早时刻的输出、动作或权重。"
+
+[来源:外部评审] "默认选择'因果 one-pass CMA→DD 切换'。只有在权威文献明确要求离线 multi-pass 且本项目愿意把 claim 限定为离线接收机时，才允许 two-pass。"
+
+[来源:外部评审] "不要再修改 fairness-batch-b01r-v1.json / fairness-batch-b01r-v1-synthesis.md / 旧 batch-contract.v1.yaml / 0404f47/57384ed 对应的历史产物。"
+
+[来源:外部评审] "数据切分使用全新 seeds，不复用 11–30：validation/tuning seeds：31–35；test seeds：41–50。"
+
+[来源:外部评审] "不要再把 28 个未校正的 per-cell CI 全称为'显著'。"
+
+[来源:外部评审] "裁决只能三选一：A_C11_CAUSAL_SIGNAL_SURVIVES / B_C11_SIGNAL_DISAPPEARS_AFTER_LEGALIZATION / C_C11_ARCHITECTURE_BLOCKED。"
+
+[来源:外部评审] "局部实现失败、参数不工作或旧信号消失时不要停下来问我；继续完成 A/B/C 裁决。" → D011 verdict B
+
+[来源:外部评审] "实现和独立验证必须使用不同 subagent/context。主线程负责范围、证据综合和最终裁决。"
+
+[来源:外部评审] "不得继续把 oracle_affine_bound_16qam 写成 blind affine。" → H043
