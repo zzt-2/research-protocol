@@ -1,0 +1,56 @@
+schema_version: direction-lab.harvest.v7-s010-scientific-amendment
+campaign_id: science-scout-2026-07-20.dual-pol-osl
+date: 2026-07-21
+amends: harvest-addendum.v6-s009-corrector-adjudication.yaml
+
+status_amendments:
+  H044:
+    status: amended
+    current_claim: >-
+      A TX-truth-assisted affine bound exists on the measured local slice.
+      The signed macro fixed-minus-oracle gap is about 0.05575 with 95% CI
+      [0.00240, 0.12098]. This is a privileged diagnostic bound, not an ML target.
+  H045:
+    status: amended
+    current_claim: >-
+      The specific blind-affine comparator is locally harmful: macro gain
+      -0.00837 with 95% CI [-0.01529, -0.00251]. The prior causal explanation
+      about noisy pseudo-labels or exhausted affine information is withdrawn.
+  H046:
+    status: superseded
+    superseded_by: H051
+    current_claim: >-
+      C04/C09 raw bad results remain reproducible, but the exact-mechanism
+      negative is invalid because the implemented training objective admits
+      an input-independent constant optimum.
+  H047:
+    status: retracted
+    current_claim: >-
+      The thesis-grade exists-versus-learnable interpretation is not supported.
+  H048:
+    status: amended
+    current_claim: >-
+      Headroom decomposition and source-closure utilities remain reusable.
+      The learned-corrector adapter is experimental and not scientifically validated.
+  H049:
+    status: amended
+    current_claim: >-
+      C12 remains infrastructure-blocked. S009 does not prove hard labels are
+      intrinsically too noisy or that coded output is the required remedy.
+  H050:
+    status: active
+    current_claim: Source-closure hashing remains a useful reproducibility practice.
+
+harvest:
+  - id: H051
+    category: FAILURE_MECHANISM
+    status: active
+    content: >-
+      The C04/C09 soft expected-distance objective admits an input-independent
+      constant solution: A=0 and each real output coordinate near +/-0.6075.
+      Its one-dimensional minimum loss is about 0.32710044, or 1.30840175
+      across four real coordinates, matching the observed 1.3084 plateau.
+      Therefore the batch diagnoses objective-induced constant collapse;
+      candidate and method-family science remain unresolved.
+    evidence_pointer: .sessions/2026-07-20-direction-lab-science-scout/S010-s009-scientific-semantic-audit.md
+    claim_ceiling: IMPLEMENTATION_DIAGNOSTIC

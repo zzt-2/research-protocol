@@ -172,3 +172,36 @@ S009 三批（c11-legality-batch-v1 amendment / corrector-residual-headroom-v1 /
 ### 对决策的影响
 
 支撑 D012（C11 scope-narrow amended）、D013（adjudication VERDICT A）、D014（C04/C09 CANDIDATE_BLOWS_UP）三决策。所有数字独立重算一致；三批的 source closure hash 全 match；protected history 全未改；无 P0；2 P1 已修复。
+
+> **Amendment（V005）**：V004 只保留 artifact fidelity、数值重算、seed/hash 和历史保护层面的 PASS。目标函数语义与机制推断由 V005 判定 FAIL。
+
+## V005: S009 外部科学语义复核——FAIL
+
+> 日期：2026-07-21
+> 关联：S010 / D013 / D014 / D015 / D016 / V004
+
+### 验证范围
+
+复核 C04/C09 训练目标是否与合同语义一致、坏结果是否能排除更简单的实现解释、D013 的 headroom 分解是否足以授权 learned corrector，以及 V004 是否覆盖科学机制解释。
+
+### 证据
+
+- 目标函数存在输入无关常数解：`A=0`、每个实坐标约 `±0.6075`；一维 loss 约 `0.32710044`，四维约 `1.30840175`，与 artifact `1.3084` plateau 一致。
+- runner 实际每个函数类只训练一个硬编码配置；合同/synthesis 所称 8-combo sweep 没有 raw artifact。
+- C04/C09 raw PI-SER 约 `0.928`、相对 blind 约 `+0.624`、worst degradation 约 `+0.78` 可复现，但只能支持实现/目标常数塌缩。
+- D013 中 signed `fixed-oracle` macro 约 `0.05575`，而 clipped `H_total=0.06172` 是不同聚合；`H_residual=blind-oracle` 包含 blind 自身负贡献。
+- V004 的重算、hash、seed、source closure 与 protected-history 检查没有覆盖“训练目标是否代表声称任务”的最小反例。
+
+### 结论
+
+**FAIL**。
+
+- artifact fidelity：PASS（沿用 V004）。
+- scientific semantic validity：FAIL。
+- D014 exact-mechanism negative：撤回。
+- D013 learned-corrector target ready：撤回，降为 truth-assisted local diagnostic。
+- C04/C09 candidate science：`UNRESOLVED`。
+
+### 后续验证门
+
+未来 corrector 在进入全量 cells × seeds 前，至少通过：恒等/no-harm、常数输出、输出方差/星座占用、单样本过拟合、简单 comparator 复现、目标函数手算最小反例。实现与科学语义审查继续分离。

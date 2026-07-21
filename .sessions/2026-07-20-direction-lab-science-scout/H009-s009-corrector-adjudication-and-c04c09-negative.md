@@ -1,5 +1,7 @@
 # Handoff: S009 完成 — corrector residual-headroom VERDICT A → C04/C09 EXACT MECHANISM NEGATIVE
 
+> **CURRENT-STATE WARNING（2026-07-21）**：本 handoff 已由 H010 / D016 / V005 修订。C04/C09 的机制级负面和“thesis-grade exists-vs-learnable”解释已撤回；不得用本文件恢复当前科学状态。
+
 > 来源: S009 / D012 / D013 / D014 / D015 / V004 | 交接目标: 用户审 S009 全链条结果；通过后开新对话决定下一轮 rotation
 > 日期: 2026-07-21
 > 文件名: H009-s009-corrector-adjudication-and-c04c09-negative.md

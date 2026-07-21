@@ -30,8 +30,8 @@ topics:
     title: Research Direction Lab 完整体系设计
     status: active
     created: "2026-07-20"
-    last_updated: "2026-07-21（S011/D011/V010：两层 baseline 公平性与有界机制级候选扩图修订 PASS，全局同步完成）"
-    description: "从零/从地基的长期自动研究探索体系，唯一流程拥有者为 research-direction-lab Skill。Task 1–10 与消费者部署已验证；baseline 采用充分而非最强原则，并区分共同系统锚点与任务专属 comparator；候选过窄时先短时机制级扩图和 readiness 审计，再立即批跑 READY 候选。"
+    last_updated: "2026-07-21"
+    description: "从零/从地基的长期自动研究探索体系，唯一流程拥有者为 research-direction-lab Skill。Task 1–10 与消费者部署已验证；当前因真实科学审计暂停大规模运行，先设计并推演 Probe→Scout→Deep Evidence 成本分层、单一恢复投影、current-view/lineage 与抗膨胀目录，固定后再改 Skill。"
     depends_on:
       - slug: framework-evolution
         reason: 继承 R002 Direction Lab 设计和唯一拥有者原则
@@ -593,8 +593,8 @@ topics:
     title: Direction Lab 首轮 SCIENCE_SCOUT 正式科学探索
     status: active
     created: "2026-07-20"
-    last_updated: "2026-07-21 S009 收尾（D012/D013/D014/D015/H009/V004：C11 状态 scope-narrow 到 LOCAL_SLICE/DIAGNOSTIC + UTF-8/source-hash fix；corrector residual-headroom adjudication = VERDICT A_LEARNED_CORRECTOR_TARGET_READY（H_residual +0.066, 6/7 cells, CI [+0.015,+0.127]；blind affine 净负面 G_blind=-0.008）；C04/C09 shared corrector batch = 两个 candidate 均 CANDIDATE_BLOWS_UP（EXACT MECHANISM NEGATIVE：z_calib 无法识别 corrective affine，residual 非-affine）；独立 verifier V004 8/8 CONFIRM；本轮 SCIENCE_SCOUT 链条完成，等用户决策下一轮 rotation 方向 C12/C13）"
-    description: "首轮正式 SCIENCE_SCOUT campaign。CB1 closure、16QAM Atlas、CMA/MMA raw evidence、B01 fairness batch、B01-R 纠偏批（v1 + hotfix v2）+ C11 legality batch + S009 corrector adjudication + C04/C09 全部完成。S009 收尾：C11 verdict scope-narrow 到 C11_EXACT_CAUSAL_RAW_DECISION_POLICY_NO_BENEFIT / LOCAL_SLICE/DIAGNOSTIC（数值不变；UTF-8 + source closure hash FIXED）。Corrector residual-headroom adjudication = VERDICT A：macro H_total +0.0617 / G_blind 净负面 -0.0084 / H_residual +0.0664 CI [+0.015,+0.127] / 6/7 cells；blind affine 在 fixed-μ CMA 收敛后无法识别有用 affine 映射。C04/C09 shared corrector batch（shared adapter + MLP/GRU 两函数类，train [81-90]/val [91-95]/test [71-80] disjoint）= 两 candidate 均 CANDIDATE_BLOWS_UP（PI-SER 0.928 ≈ random ceiling 0.9375）；EXACT MECHANISM NEGATIVE：fixed-μ CMA 已抽 channel affine 结构，residual 非-affine，z_calib 不含识别 corrective affine 的信息。exists vs learnable gap = thesis-grade 发现。独立 verifier V004 8/8 CONFIRM。等用户决策下一轮 rotation 方向。"
+    last_updated: "2026-07-21"
+    description: "首轮正式 SCIENCE_SCOUT campaign。C11 D012 局部结论保持有效。S009 corrector raw 数字与来源闭合保留，但外部语义审计发现 soft-distance 目标存在输入无关常数最优解；撤回 C04/C09 exact-mechanism negative 和 thesis-grade exists-vs-learnable 解释。D013 仅保留 TX-truth-assisted local diagnostic；C04/C09 为 IMPLEMENTATION_CONFOUND_CONSTANT_COLLAPSE / UNRESOLVED。当前唯一恢复入口 H010，下一阶段先重设计 Probe/恢复/文件体系。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 V007 PASS 的消费者部署（全局 Skill + STATUS + Project Adapter + protected history）作为科学探索起点

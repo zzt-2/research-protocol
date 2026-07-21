@@ -540,10 +540,10 @@ S009 §Phase 1 / 用户任务附件 2026-07-21（8 条 C11 已知问题清单 + 
 
 ## D013: Corrector residual-headroom adjudication — VERDICT A (learned-corrector target ready); blind affine is NET NEGATIVE
 
-> status: active
+> status: amended by D016
 > date: 2026-07-21
 > 取代：无（新批次，独立产物）
-> 被取代：无
+> 被取代：D016（保留 truth-assisted bound 与 blind comparator 数字，撤回 learned-corrector target-ready 解释）
 > 依据: 调研: `corrector-residual-headroom-v1/batch-contract.v1.yaml`（冻结 A/B/C 判据 + 信息边界测试）+ 验证: `corrector-residual-headroom-v1/artifacts/result.v1.json`（schema direction-lab.cb1.corrector-residual-headroom.v1）+ `corrector-residual-headroom-v1/artifacts/synthesis.v1.md` + 独立 verifier V004（8/8 任务 PASS，重算 3 cells bit-identical，blind/oracle 信息边界对抗测试 PASS）+ `corrector-residual-headroom-v1/tests/test_information_boundary.py`（12/12 PASS）+ 触发原话: 用户 2026-07-21 任务附件 "在公平调优的 fixed-μ CMA（当前 μ=0.03）之后，最强 receiver-visible blind affine 能关闭多少可恢复 PI-SER 余量？相对于 TX-truth oracle affine，是否仍存在足够支撑 C04/C09 learned corrector 的合法 residual target？"
 
 ### 决策
@@ -589,10 +589,10 @@ S009 §Phase 2 / 用户任务附件 2026-07-21（强制 A/B/C 冻结 + fresh see
 
 ## D014: C04/C09 shared corrector batch — VERDICT CANDIDATE_BLOWS_UP for both (EXACT MECHANISM NEGATIVE for context-dependent affine hypothesis)
 
-> status: active
+> status: superseded by D016
 > date: 2026-07-21
 > 取代：D011 的 "C04/C09 learned corrector 不授权" 推论（D013 授权后本批执行，结果为 negative）
-> 被取代：无
+> 被取代：D016（raw 坏结果保留；机制负面由 objective-induced constant collapse 取代）
 > 依据: 调研: `c04-c09-shared-corrector-v1/batch-contract.v1.yaml`（冻结 train/val/test seeds + cell split + HP 公平性）+ 验证: `c04-c09-shared-corrector-v1/artifacts/result.v1.json` + `c04-c09-shared-corrector-v1/artifacts/synthesis.v1.md` + 独立 verifier V004（8/8 PASS，重算 candidate macro PI-SER ≈ 0.928，near random-decision ceiling 0.9375）+ `c04-c09-shared-corrector-v1/tests/test_corrector_identity.py`（12/12 PASS）+ 触发原话: 用户 2026-07-21 任务附件 "如果是 A：在同一对话建立 C04/C09 shared adapter；将它们作为同一个 corrector batch 一起运行，不按 MLP/GRU/Transformer 名称拆成多个假方向；conventional task comparator 必须是 receiver-visible blind affine；若两者均失败，记录 exact mechanism negative，并轮转，不继续做网络微调"
 
 ### 决策
@@ -645,14 +645,69 @@ S009 §Phase 3 / 用户任务附件 2026-07-21（强制 shared adapter + 公平 
 
 ## D015: S009 收尾 — 轮转到下一机制 family（C12/C13），本轮 SCIENCE_SCOUT 链条完成
 
-> status: active
+> status: amended by D016
 > date: 2026-07-21
 > 取代：无
-> 被取代：无
+> 被取代：D016（因 exact mechanism negative 而强制轮转的推理撤回；轮转仅可作为资源选择）
 > 依据: 验证: D012 + D013 + D014 三批 verdict 全独立 verifier V004 CONFIRM + 触发原话: 用户 2026-07-21 任务附件 "本对话至少完成一个科学 adjudication，并对一个后续机制形成 RUN / LOCAL_NEGATIVE / INFRASTRUCTURE_BLOCKED 之一；普通文档债务不构成提前停止理由"
 
 ### 决策
 
-S009 完成用户 brief 要求的链条：
-1. ✅ C11 状态收口（D012）：scope-narrow 到 `C11_EXACT_CAUSAL_RAW_DECISION_POLICY_NO_BENEFIT` / LOCAL_SLICE / DIAGNOSTIC；修 UTF-8 + source closure hash；不重跑（8 audit issues 无一改变 verdict 方向）。
-2. ✅ Corrector residual-headroom adjudication（D013）：VERDICT A，授权 learned corrector 
+S009 当时按用户 brief 完成了 C11 状态收口、corrector headroom adjudication、C04/C09 shared batch 和 V004 artifact 复核，并据此决定下一轮可轮转到 C12/C13/detector 等其他机制族。
+
+**D016 修订**：上述“完成了运行链条”的历史事实保留；D013 learned-target-ready、D014 exact-mechanism negative 以及由此强制轮转的科学推理撤回。当前是否轮转只能是资源选择，不能写成本批科学结论。
+
+### 理由
+
+旧决策依据 D013/D014/V004；D016/V005 后确认 V004 没有覆盖目标函数语义，C04/C09 失败首先来自常数塌缩。
+
+### 排除的替代方案
+
+- **删除 D015**：拒绝；保留决策血缘。
+- **继续把轮转写成科学必然**：拒绝；其前提已失效。
+
+### 影响范围
+
+下一科学方向未由 D015 锁定；先执行体系专题 D012 的方法与恢复结构重设计。
+
+### 来源
+
+S009 / V004；由 S010 / D016 / V005 修订。
+
+---
+
+## D016: S009 外部科学审计——C04/C09 为目标函数常数塌缩，撤回机制级负面
+
+> status: active
+> date: 2026-07-21
+> 取代：D014
+> 修订：D013、D015
+> 被取代：无
+> 依据：S010 的目标函数解析、artifact plateau 对照与 runner/contract 审计；V005 科学语义复核 FAIL
+
+### 决策
+
+1. D013 只保留 `TX_TRUTH_ASSISTED_AFFINE_GAP_PRESENT / LOCAL_SLICE / DIAGNOSTIC`。truth-assisted affine bound 与 blind-affine 净负面数字有效，但 `H_residual=blind-oracle` 包含 blind comparator 自身损害，不能据此自动授权 learned corrector。
+2. D014 的 C04/C09 raw 运行结果保留，科学裁决改为 `IMPLEMENTATION_CONFOUND_CONSTANT_COLLAPSE`。训练目标存在输入无关常数最优解，候选状态恢复为 `UNRESOLVED`；不得声称 `z_calib` 无信息、residual 非 affine、receiver-visible affine 不可学习或方法路线已关闭。
+3. D015 中由“exact mechanism negative”强制轮转的因果链撤回。轮转仍可作为资源分配选择，但不是本批证据强制的科学结论。
+4. V004 保留 artifact fidelity、hash、seed split、protected-history 等验证价值；其科学语义确认由 V005 修订为 FAIL。
+5. 旧 artifact 不覆盖、不删除。本次用 S010、H010 和 harvest v7 构成 append-only 修订链。
+
+### 理由
+
+soft expected-distance 目标在 `A=0` 且输出常数约 `±0.6075` 时达到四维 loss 约 `1.30840175`，精确解释所有配置的 `1.3084` plateau。该最小反例比网络结构、超参数或全量统计更接近根因。旧证据链证明了错误目标的可复现性，却没有证明候选机制失败。
+
+### 排除的替代方案
+
+- **补更多超参数或 seeds**：拒绝；不能消除目标函数的输入无关最优解。
+- **删除或重写旧 artifact**：拒绝；保留历史，靠显式 amendment 修正当前态。
+- **把 D013 全部判无效**：拒绝；truth-assisted bound 与 blind comparator 的 raw 数字仍有效，只需收窄语义。
+- **立即重跑 corrected v2**：拒绝；先完成 Probe/恢复/文件体系重设计，避免再次把“小修”扩成完整重链。
+
+### 影响范围
+
+仅修订 S009 的科学解释、当前恢复入口与 harvest 状态；C11 D012 不变；不修改代码、旧 artifact、baseline、protected history 或 Skill。
+
+### 来源
+
+S010 / V005。触发原话为流程与记录体系要求，见本专题及体系专题 `voice.md` 2026-07-21。

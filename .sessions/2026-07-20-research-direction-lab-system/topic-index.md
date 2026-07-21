@@ -1,12 +1,12 @@
 # Topic Index: Research Direction Lab 完整体系设计
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-07-21（D011/V010 PASS；全局同步完成；未运行科学实验）
+> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-07-21（S012/D012：大规模运行前先设计、推演并固定 Probe/恢复/文件组织体系；尚未改 Skill、未运行科学实验）
 
 ## 专题信息
 
 - **slug**: `2026-07-20-research-direction-lab-system`
 - **title**: Research Direction Lab 完整体系设计
-- **性质**: 目标体系蓝图与分阶段实施；Task 1–7 已验证，当前等待提交与 Task 8 授权决定，不运行科学实验
+- **性质**: 目标体系蓝图与分阶段实施；Task 1–10、消费者部署、D010/D011 已验证，当前进入 S012/D012 的 Probe/恢复/文件组织重设计，不运行科学实验
 
 ## 范围边界
 
@@ -24,6 +24,7 @@
 - 本阶段不修改现有 controller、campaign core、仿真器、baseline 或科学证据。
 - 基于首轮正式 SCIENCE_SCOUT 的真实失效，允许以 RED→GREEN 修订主 Skill 的 baseline 充分性判断；不借此运行新实验或改写历史证据。
 - 基于 C01–C04 的 comparator/readiness 失配，允许最小修订两层 baseline 公平性与重实施前的有界机制级候选扩图；不借此扩展通用 scheduler 或运行科学实验。
+- 基于 S009 的科学语义审计，当前范围扩展为 Probe/Scout/Deep Evidence 分层、单一恢复投影、current-view/lineage、harvest 状态索引和抗膨胀目录的设计与推演；设计固定前不改 Skill、不运行科学实验。
 
 ### 明确不含
 
@@ -63,6 +64,10 @@
   - 原因：正式 SCIENCE_SCOUT 把实现正确但 16QAM 任务不适配/可能欠收敛的单模 baseline 当成 ML headroom 起点。
   - 新范围：务实 baseline ladder、`PROBLEM_SURVIVES_CONVENTIONAL_BASELINE` 门、四类候选来源和 forward test。
   - 明确排除：SOTA 穷举、运行新科学实验、训练 ML、改写 protected history、复制规则到 AGENTS.md。
+- **[2026-07-21] Probe 与恢复体系重设计（D012）**：用户要求先记清当前状态，再优化记录/恢复/文件组织，推演固定后才改 Skill 并大规模运行。
+  - 原因：S009 出现完整可复现链未发现目标函数常数塌缩，且“极小”工作反复扩成重流程。
+  - 新范围：体系蓝图、目录与 current projection、成本分层、历史反例与 fresh-agent 恢复推演、后续 Skill 修订验证。
+  - 明确排除：本轮直接改 Skill、运行科学实验、重跑 C04/C09、构建复杂 scheduler、删除历史。
 
 ## 已确认结论
 
@@ -112,6 +117,7 @@
 - **V008**：首次独立终验 PARTIAL 暴露逐字行为证据/scorer 与注册表缺口；修复后复验 PASS。Skill 测试 `67 passed, 1 skipped`，RED FAIL/GREEN 6/6 PASS，无残留 P0/P1/P2。
 - **V009**：repo 与全局消费者 Skill 42 文件 SHA256 全等；全局 quick validation 与可移植测试 17/17 PASS。全局全套另有 3 项预期 repo-context failure，同项在 canonical repo 3/3 PASS，不阻断部署。
 - **S011 续接 / D011 / V010**：真实 C01–C04 计划暴露“共同 system anchor 冒充任务专属 baseline”“共享输入冒充 runnable”及候选过窄问题；RED→GREEN、自动 scorer、独立复验和全局同步均 PASS。
+- **S012 / D012**：S009 外部语义审计暴露“极小探针扩成重证据链”和“artifact fidelity 掩盖目标函数常数塌缩”。冻结新顺序：先设计 Probe/Scout/Deep Evidence 分层、单一恢复投影、current-view/lineage、harvest 状态索引与抗膨胀目录；推演固定后再改 Skill 和大规模运行。本轮仅立项。
 
 ## 未决项
 
@@ -121,7 +127,8 @@
 - shadow 派生的 SHADOW-H010..H017 是否晋升到 main ledger：**未授权**；晋升需单独授权 + 重新 hash 绑定 + thesis-spines 更新。
 - canonical-state 内部 stale self-checksums（event_log_sha256 / simulator.sha256）：正式激活前清理。
 - Windows symlink / POSIX flock 动态测试覆盖：跨平台 CI 前补跑。
+- D012 体系设计尚未完成：需要目录候选、恢复投影 schema、语义门最小集合、成本预算、至少四类历史失败推演和 fresh-agent 恢复演练。
 
 ## 当前位置
 
-Task 1–10、消费者部署、D010 与 D011 均已验证；全局消费者同步完成。下一科学阶段从 H004 续接：不直接只训 C01，先短时扩展机制级候选、纠正 readiness 与任务专属 comparator，再立即运行首批 `READY` 候选。
+Task 1–10、消费者部署、D010 与 D011 均已验证。当前转入 S012/D012 设计阶段：暂停科学批次，先把轻量 Probe、快速恢复和文件组织方案设计、反例推演并固定；之后才修改 Skill、独立验证并启动大规模 campaign。
