@@ -1,0 +1,133 @@
+# Harvest Addendum v6 — S009 Corrector Adjudication (VERDICT A) + C04/C09 (EXACT MECHANISM NEGATIVE)
+# Adds H044-H050: corrector residual-headroom finding + learned-corrector negative + methodology lessons.
+# v5 (H039-H043) preserved; D012 further scope-narrows the C11 verdict label to
+# C11_EXACT_CAUSAL_RAW_DECISION_POLICY_NO_BENEFIT (LOCAL_SLICE/DIAGNOSTIC), numerical unchanged.
+
+schema_version: direction-lab.harvest.v6-s009-corrector-adjudication
+campaign_id: science-scout-2026-07-20.dual-pol-osl
+batches:
+  - corrector-residual-headroom-v1
+  - c04-c09-shared-corrector-v1
+date: 2026-07-21
+verdicts:
+  corrector-residual-headroom-v1: A_LEARNED_CORRECTOR_TARGET_READY
+  c04-c09-shared-corrector-v1:
+    C04_mlp: CANDIDATE_BLOWS_UP
+    C09_gru: CANDIDATE_BLOWS_UP
+
+harvest:
+
+  - id: H044
+    category: POSITIVE_MECHANISM_SIGNAL
+    content: >-
+      After a fairly-tuned fixed-μ CMA (μ=0.03), there EXISTS a significant
+      recoverable PI-SER headroom on 16QAM: macro H_total = +0.0617, 95% CI
+      [+0.0024, +0.1210] (7 held-out cells × 10 test seeds [71-80], fresh
+      disjoint from all prior batches). Oracle affine proves this residual IS
+      recoverable by SOME affine map (calibrated to TX truth). This is the
+      first quantitative bound on "what an ideal affine corrector could close"
+      in this anchor + channel setting.
+    evidence_pointer: corrector-residual-headroom-v1/artifacts/result.v1.json#adjudication.macro_h_total
+    claim_ceiling: LOCAL_RESULT_SLICE
+
+  - id: H045
+    category: LOCAL_NEGATIVE
+    content: >-
+      The strongest receiver-visible blind affine corrector
+      (blind_affine_compare_16qam, ridge-tuned on validation) is NET NEGATIVE
+      on this anchor + channel: macro G_blind = -0.0084, CI [-0.0153,
+      -0.0025]; coverage_blind = -0.19 (negative — blind affine widens the
+      headroom, doesn't close it). z-derived pseudo-labels are too noisy to
+      identify a useful affine map after fixed-μ CMA has already extracted
+      the channel's affine structure. This is a receiver-visible negative
+      that is independent of (and corroborates) H046.
+    evidence_pointer: corrector-residual-headroom-v1/artifacts/result.v1.json#adjudication.macro_g_blind
+    claim_ceiling: LOCAL_RESULT_SLICE
+
+  - id: H046
+    category: FAILURE_MECHANISM
+    content: >-
+      Context-dependent learned affine correctors (MLP / GRU function classes,
+      SHARED adapter, trained on MSE(z_corrected_calib, hard_16qam pseudo-
+      labels), receiver-visible only) CANNOT beat the blind affine baseline
+      on this anchor + channel. Both candidates catastrophically fail
+      (CANDIDATE_BLOWS_UP): macro PI-SER_candidate ≈ 0.928 vs random-decision
+      ceiling 0.9375 — the learned (A, b) scrambles z_eval. Training loss
+      plateaus at 1.3084 regardless of HP combo or function class — the model
+      has no useful target to fit because z_calib does not contain the
+      information needed to identify a corrective affine. The residual error
+      after fixed-μ CMA is NON-AFFINE (residual ISI + AWGN + SOP drift); no
+      2x2 complex affine map can recover it.
+    evidence_pointer: c04-c09-shared-corrector-v1/artifacts/result.v1.json#adjudications
+    claim_ceiling: LOCAL_RESULT_SLICE
+
+  - id: H047
+    category: EVALUATION_INSIGHT
+    content: >-
+      The "exists vs learnable" gap is a thesis-grade finding pattern.
+      Adjudication (H044) proved the residual EXISTS (oracle closes H_total ≈
+      6% PI-SER). The C04/C09 batch (H046) proved the residual is NOT LEARNABLE
+      from receiver-visible signals. Oracle affine achieves recoverability via
+      TX truth; the receiver-visible proxy (z-derived pseudo-labels, whether
+      closed-form blind affine or learned MLP/GRU) cannot identify the same
+      map. This gap is the central negative result of the corrector route and
+      a candidate thesis-chapter anchor: "What the receiver fundamentally
+      cannot infer about its own residual distortion after CMA equalization."
+    evidence_pointer: corrector-residual-headroom-v1/artifacts/synthesis.v1.md + c04-c09-shared-corrector-v1/artifacts/synthesis.v1.md
+    claim_ceiling: LOCAL_RESULT_SLICE
+
+  - id: H048
+    category: REUSABLE_ASSET
+    content: >-
+      Two new reusable source closures (SHA-256-hashed, 14 files total):
+      (a) corrector-residual-headroom-v1/run_corrector_adjudication.py — a
+      headroom-decomposition primitive (H_total / G_blind / H_residual /
+      coverage_blind) with frozen A/B/C verdict rule, reusable for any
+      future "is there a learnable residual target?" question.
+      (b) c04-c09-shared-corrector-v1/src/corrector_adapter.py — a shared
+      learned-affine adapter (MLPCorrector + GRUCorrector, both with
+      calibrate(z_calib) / get_correction() / apply_correction(z_eval, A, b)),
+      reusable for any future learned-corrector experiment with a different
+      information access (e.g. soft-output, coded).
+    evidence_pointer: corrector-residual-headroom-v1/run_corrector_adjudication.py + c04-c09-shared-corrector-v1/src/corrector_adapter.py
+    claim_ceiling: LOCAL_RESULT_SLICE
+
+  - id: H049
+    category: INFRASTRUCTURE_GAP
+    content: >-
+      The C12 soft-output/coded direction remains INFRASTRUCTURE_BLOCKED: the
+      corrector adjudication shows that hard-decision pseudo-labels (the only
+      receiver-visible training signal in this setting) are too noisy to
+      identify corrective structure. A soft-decision FEC-aware evaluator
+      would give the corrector a richer training signal (LLR-based), but
+      building it is bounded infrastructure work (one sprint). Per user brief:
+      if infrastructure cost exceeds estimate, register
+      INFRASTRUCTURE_BLOCKED and rotate; do NOT keep building infrastructure.
+    evidence_pointer: portfolio-refresh.v3-fairness.yaml (C12 entry) + D015 rotation note
+    claim_ceiling: DIAGNOSTIC
+
+  - id: H050
+    category: EVALUATION_INSIGHT
+    content: >-
+      Per-batch source-closure SHA-256 hashing is a cheap, high-value
+      reproducibility practice. The c11-legality amendment (D012) added
+      _source_closure_hashes() recording SHA-256 of 9 source files, locked
+      by a unit test. The corrector-residual-headroom and C04/C09 batches
+      inherit this pattern (7-8 files each). Independent verifier V004
+      recomputed all 14 hashes bit-identical. Cost: ~10 lines of code per
+      batch. Benefit: any future reader can verify an artifact was produced
+      by exactly this source set. Recommended as default for all future
+      SCIENCE_SCOUT batches.
+    evidence_pointer: c11-legality-batch-v1/run_c11_legality_batch.py (D012) + corrector-residual-headroom-v1/run_corrector_adjudication.py + c04-c09-shared-corrector-v1/src/run_corrector_batch.py
+    claim_ceiling: METHOD_LESSON
+
+# Summary of S009 harvest:
+#   POSITIVE: H044 (residual headroom exists), H048 (reusable assets)
+#   NEGATIVE: H045 (blind affine net negative), H046 (learned corrector blows up)
+#   EVALUATION: H047 (exists vs learnable gap = thesis-grade), H050 (source-hash reproducibility)
+#   INFRASTRUCTURE: H049 (C12 soft-output still blocked)
+#
+# Thesis-spine promotion candidates (next conversation, user decision):
+#   - H047 "exists vs learnable gap" as a chapter anchor for the negative result
+#   - H044 + H045 + H046 together as the "receiver-visible affine corrector
+#     cannot recover post-CMA residual" story

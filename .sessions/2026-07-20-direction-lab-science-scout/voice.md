@@ -129,3 +129,21 @@
 [来源:外部评审] "实现和独立验证必须使用不同 subagent/context。主线程负责范围、证据综合和最终裁决。"
 
 [来源:外部评审] "不得继续把 oracle_affine_bound_16qam 写成 blind affine。" → H043
+
+## 2026-07-21（S009 C11 状态收口 + corrector residual adjudication 启动）
+
+- "C11 状态应收窄为 `C11_EXACT_CAUSAL_RAW_DECISION_POLICY_NO_BENEFIT`，claim ceiling = LOCAL_SLICE / DIAGNOSTIC" → D012
+- "允许保留：旧 4/7 阳性由实现混淆造成；当前具体因果 raw-decision 策略没有发现收益；两个 long slices 上明显更差"
+- "禁止声称：整个 DD-LMS 家族失败；C11 已被全域关闭；7 个 cells 都充分测试了 DD 阶段"
+- "修复 UTF-8 可移植性测试和最小 provenance 记录；按 session-governance 将原正式 Verdict B 标为 amended/PARTIAL，不删除历史"
+- "不要重跑完整 C11 科学批，除非独立审查证明某项最小修复会改变已有数值方向"
+- "本对话至少完成一个科学 adjudication，并对一个后续机制形成 RUN / LOCAL_NEGATIVE / INFRASTRUCTURE_BLOCKED 之一；普通文档债务不构成提前停止理由"
+- "在公平调优的 fixed-μ CMA（当前 μ=0.03）之后，最强 receiver-visible blind affine 能关闭多少可恢复 PI-SER 余量？相对于 TX-truth oracle affine，是否仍存在足够支撑 C04/C09 learned corrector 的合法 residual target？"
+- "新建版本化、隔离的 adjudication 目录，不覆盖 B01、B01-R、C11 或旧 Headroom Atlas"
+- "oracle affine 只能 Kill，不能 Go"
+- "在读取 test 结果前冻结 A/B/C 判据"
+- "只允许一次有针对性的 atlas 扩展，禁止无限加 seeds 或调阈值"
+- "同一方向连续两轮没有新机制、改善不足 10%，立即轮转"
+- "不允许把多个模型名冒充多个机制方向"
+- "harvest 必须记录正结果、负结果、baseline 边界、失败机制、评估教训和可复用资产，但不得把数量当作独立贡献数量"
+- "禁止只回复'下一步建议'。在合法边界内连续完成上述链条"

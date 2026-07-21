@@ -473,3 +473,186 @@ S007 / B01-R hotfix v2 科学运行 / 独立 verifier V002 CONFIRM 13/14+1P1修�
 ### 来源
 
 S008 / c11-legality-batch-v1 科学运行 / 独立 verifier V003 CONFIRM V1-V10 全 PASS / R001 根因调查 / 用户任务附件 2026-07-21（强制 systematic-debugging Phase 1-3 + TDD + 独立验证；"局部实现失败、参数不工作或旧信号消失时不要停下来问我；继续完成 A/B/C 裁决"）。
+
+---
+
+## D012: C11 状态收口 — verdict 标签 scope-narrow（amended D011）+ 8 审计问题处理 + 不重跑
+
+> status: active
+> date: 2026-07-21
+> 取代：D011 的 verdict 标签范围（`B_C11_SIGNAL_DISAPPEARS_AFTER_LEGALIZATION` → scope-narrowed `C11_EXACT_CAUSAL_RAW_DECISION_POLICY_NO_BENEFIT`，ceiling = `LOCAL_SLICE / DIAGNOSTIC`）。**D011 的数值结论（macro +0.01445、2/7 long cells 显著更差、4/7 阳性撤回）不变**；D011 标 amended 不 superseded。
+> 被取代：无
+> 依据: 调研: 用户 2026-07-21 任务附件列出的 8 条 C11 已知问题 + 独立核验（见 S009 §Phase 1 表 + synthesis.v1.md §10 表）+ 验证: `c11-legality-batch-v1/tests/test_c11_legality.py` 19/19 PASS（新增 6 个 portability/provenance/scope gate tests）+ 手算 short-cell eval window DD 覆盖（64/128 at offset=+2）+ 触发原话: 用户 2026-07-21 任务附件 "C11 状态应收窄为 `C11_EXACT_CAUSAL_RAW_DECISION_POLICY_NO_BENEFIT`，claim ceiling = LOCAL_SLICE / DIAGNOSTIC" + "修复 UTF-8 可移植性测试和最小 provenance 记录；按 session-governance 将原正式 Verdict B 标为 amended/PARTIAL，不删除历史"
+
+### 决策
+
+**1. Verdict 标签 scope-narrow**：
+- 保留原标签 `B_C11_SIGNAL_DISAPPEARS_AFTER_LEGALIZATION`（traceability）
+- 新增 scope-narrowed 标签 **`C11_EXACT_CAUSAL_RAW_DECISION_POLICY_NO_BENEFIT`**
+- claim ceiling 收窄为 **`LOCAL_SLICE / DIAGNOSTIC`**
+- 允许声称：（a）旧 4/7 阳性是 implementation confound；（b）当前具体 raw-decision 策略（causal one-pass + nearest-16QAM DD + switch_point=plateau+{0,1,2} + dd_step grid [0..3e-4]）无收益；（c）2 个 long cells 显著更差
+- 禁止声称：（a）整个 DD-LMS 家族失败；（b）C11 已被全域关闭；（c）7 个 cells 都充分测试了 DD 阶段（short cells 只 ~一半符号进 DD）
+
+**2. 8 条审计问题的独立核验 + 处理**（全部独立核验，全部为真，但都不改变 verdict 方向）：
+- #1（no-op test switch=10**9）：DOCUMENTED + 锁定 finite-switch 变体共存
+- #2（finite-switch 证的是冻结权重不等于持续 fixed-μ）：DOCUMENTED 两 test 答不同问题
+- #3（held-out switch/plateau 未完整预冻结）：DOCUMENTED P1 debt，偏置朝 C11
+- #4（Windows UTF-8）：**FIXED** 4 处 open() 加 encoding="utf-8"
+- #5（artifact 缺 source closure hash）：**FIXED** 新增 `_source_closure_hashes()` 记录 9 源文件 SHA-256
+- #6（dd_step + offset 在网格边界）：DOCUMENTED scope limit，两方向都不会翻 verdict
+- #7（short-cell eval window ~一半符号在 DD）：DOCUMENTED 手算验证 64/128，只影响 tie 的 short cells
+- #8（DD raw-decision 无 phase/permutation resolution）：DOCUMENTED scope limit，让 C11 更差而非更好
+
+**3. 不重跑 C11 科学批**：用户 brief 明示 "不要重跑完整 C11 科学批，除非独立审查证明某项最小修复会改变已有数值方向"。本轮独立审查结论：8 条问题无一改变数值方向（macro +0.01445 不变；2/7 long cells 显著更差不变）。因此不重跑。
+
+### 理由
+
+1. **数值方向稳健性**：每个审计问题要么不影响 verdict 方向（#1/#2/#3/#6/#7/#8 是 scope 限制或文档清晰度），要么偏置朝 C11（#3 让 held-out 用自己 plateau、#8 让 DD 更差）——没有任何一条会让 "C11 no benefit" 变成 "C11 benefit"。
+2. **P1 修复的成本/收益**：#4（UTF-8）和 #5（source hash）是 reproducibility 关键，修复成本低（几行 + 几个 test 锁定），收益高（fresh Windows 可复现 + artifact 可溯源）。
+3. **scope-narrow 而非 supersede**：原 verdict B 的数值结论正确，只是 claim 范围过宽。amended 保留历史血缘，superseded 会丢数值结论。
+4. **不重跑的工作守恒**：用户 brief 明示 "同一方向连续两轮没有新机制、改善不足 10%，立即轮转"；重跑 C11 无新机制，应轮转到 corrector residual adjudication。
+
+### 排除的替代方案
+
+- **维持 D011 原 verdict 标签不做 scope-narrow**：拒绝；claim 范围过宽会让 "C11 已被关闭" 的误读合法，违反 LOCAL_SLICE 原则。
+- **supersede D011（删旧 verdict 标签）**：拒绝；数值结论未变，supersede 会丢血缘。amended 保留旧标签 + 新增 scope-narrowed 标签。
+- **重跑 C11 科学批**：拒绝；用户 brief 明示不要，且 8 条问题无一改变数值方向。
+- **修复 #6（扩 dd_step/offset 网格）**：拒绝；偏置方向不支持翻 verdict，且会触发重跑。只在 synthesis 标 scope limit。
+- **修复 #7（改 short-cell eval window 让全部符号进 DD）**：拒绝；short cells 是 tie，与 DD 覆盖无关；改了反而引入新变量。只在 synthesis 标 scope limit。
+- **修复 #8（加 phase/permutation resolution 的 DD policy）**：拒绝；这是新机制，超出 "C11 状态收口" 范围，应走下一个独立 batch（如果 corrector adjudication 转 A 的话）。
+
+### 影响范围
+
+- 仅在本 campaign worktree（`.worktrees/direction-lab-capability-atlas`）内：
+  - `c11-legality-batch-v1/run_c11_legality_batch.py`：加 `hashlib` import + `_source_closure_hashes()` + `_sha256_of_file()` + 4 处 open() encoding
+  - `c11-legality-batch-v1/tests/test_c11_legality.py`：2 处 open() encoding + 新增 `TestPortabilityAndProvenance` 类（6 tests）
+  - `c11-legality-batch-v1/artifacts/synthesis.v1.md`：加 §10（audit issues 表 + verdict scope）
+- D011 标 amended（不 superseded）；H008 标 amended by H009（待写）；V003 保留。
+- topic-index 的 "已确认结论 / 其他结论" 段更新（D011 增加 scope-narrowed 标签）。
+- protected history（B001-B003 / P03 / CB1 raw / canonical-state / B01 raw / B01-R raw / `result.v1.json`）字节未改；原 artifact 不改（新 source-closure hash 只在未来 run 的 metadata 出现）。
+- 无 ML 训练；无 B004；无 detector/B02 启动；无 push。
+
+### 来源
+
+S009 §Phase 1 / 用户任务附件 2026-07-21（8 条 C11 已知问题清单 + scope-narrow 指令 + 不重跑指令）/ 19/19 tests PASS / 手算 short-cell eval window DD 覆盖 64/128。
+
+---
+
+## D013: Corrector residual-headroom adjudication — VERDICT A (learned-corrector target ready); blind affine is NET NEGATIVE
+
+> status: active
+> date: 2026-07-21
+> 取代：无（新批次，独立产物）
+> 被取代：无
+> 依据: 调研: `corrector-residual-headroom-v1/batch-contract.v1.yaml`（冻结 A/B/C 判据 + 信息边界测试）+ 验证: `corrector-residual-headroom-v1/artifacts/result.v1.json`（schema direction-lab.cb1.corrector-residual-headroom.v1）+ `corrector-residual-headroom-v1/artifacts/synthesis.v1.md` + 独立 verifier V004（8/8 任务 PASS，重算 3 cells bit-identical，blind/oracle 信息边界对抗测试 PASS）+ `corrector-residual-headroom-v1/tests/test_information_boundary.py`（12/12 PASS）+ 触发原话: 用户 2026-07-21 任务附件 "在公平调优的 fixed-μ CMA（当前 μ=0.03）之后，最强 receiver-visible blind affine 能关闭多少可恢复 PI-SER 余量？相对于 TX-truth oracle affine，是否仍存在足够支撑 C04/C09 learned corrector 的合法 residual target？"
+
+### 决策
+
+新建隔离版本化目录 `corrector-residual-headroom-v1/`（不覆盖 B01/B01-R/c11-legality）。在 fresh paired seeds（val [61-65] / test [71-80]，与所有先前批次不相交）+ 同 z-stream / 同 eval window / 同 paired realization 下比较：
+
+1. `fixed-μ CMA μ=0.03 + nearest 16QAM`（baseline low bound）
+2. `blind_affine_compare_16qam`（receiver-visible，tune ridge → frozen 1e-8）
+3. `oracle_affine_bound_16qam`（Kill bound only，FR-21/FR-25）
+
+**裁决 = `A_LEARNED_CORRECTOR_TARGET_READY`**。关键数字（7 held-out cells × 10 test seeds = 70 paired）：
+- macro H_total = +0.0617 PI-SER（recoverable headroom 存在；CI [+0.0024, +0.1210]）
+- macro G_blind = **-0.0084**（blind affine **净负面**；CI [-0.0153, -0.0025]）
+- macro H_residual = +0.0664（blind 后仍存在 residual；CI [+0.0147, +0.1270]）
+- macro coverage_blind = -0.19（blind 不关闭 headroom，反而扩大）
+- H_residual ≥ MDE 在 **6/7** cells（仅 snr05-short 不达 MDE；oracle 在该 cell 也无力）
+
+### 理由
+
+1. **信息边界测试 12/12 PASS**（blind 不读 TX truth；oracle 显式读 TX truth；perturbing TX truth leaves blind bit-identical AND changes oracle；三者同 z-stream / 同 window / 同 paired realization；fixed-label 与 PI-SER 分开报告；source closure hash 记录）。独立 verifier V004 adversarial 复核 8/8 PASS。
+2. **blind affine 是净负面**揭示：z-derived pseudo-labels 在 fixed-μ CMA 收敛后无法识别有用 affine 映射。fixed-μ CMA 已抽出 channel 的 affine 结构；residual 是非-affine（residual ISI + AWGN + SOP drift）。
+3. **oracle affine 证明 residual IS recoverable by SOME affine**（H_total 显著），但 receiver-visible proxy（z-derived）too noisy to identify the same map。这正是 "exists vs learnable" 的关键 gap。
+4. **数据切分严格无泄漏**：val [61-65] / test [71-80] 与所有先前批次 [11-50] 完全不相交；ridge 在 val 上选后冻结才进 test。
+
+### 排除的替代方案
+
+- **裁决 B（blind 已关闭）**：拒绝；blind coverage 为负，未关闭任何 headroom。
+- **裁决 C（UNRESOLVED）**：拒绝；H_residual 远超 MDE，CI 下限 +0.015 > 0，灵敏度足够。
+- **treat blind affine degradation 为 A 的 blocker**：拒绝；用户 brief 的 A 定义是 "blind 后仍存在稳定 residual"，blind 退化只让 residual 更大、learned target 更容易。
+
+### 影响范围
+
+- 仅在本 campaign worktree 内新增 `corrector-residual-headroom-v1/`（contract + runner + tests + 3 artifacts）。
+- protected history 全未改（独立 verifier V004 确认）。
+- 授权 C04/C09 shared corrector batch（D014）在同一对话运行。
+- 无 ML 训练（本批）；无 push。
+
+### 来源
+
+S009 §Phase 2 / 用户任务附件 2026-07-21（强制 A/B/C 冻结 + fresh seeds + 信息边界测试 + source closure hash）/ 独立 verifier V004 CONFIRM。
+
+---
+
+## D014: C04/C09 shared corrector batch — VERDICT CANDIDATE_BLOWS_UP for both (EXACT MECHANISM NEGATIVE for context-dependent affine hypothesis)
+
+> status: active
+> date: 2026-07-21
+> 取代：D011 的 "C04/C09 learned corrector 不授权" 推论（D013 授权后本批执行，结果为 negative）
+> 被取代：无
+> 依据: 调研: `c04-c09-shared-corrector-v1/batch-contract.v1.yaml`（冻结 train/val/test seeds + cell split + HP 公平性）+ 验证: `c04-c09-shared-corrector-v1/artifacts/result.v1.json` + `c04-c09-shared-corrector-v1/artifacts/synthesis.v1.md` + 独立 verifier V004（8/8 PASS，重算 candidate macro PI-SER ≈ 0.928，near random-decision ceiling 0.9375）+ `c04-c09-shared-corrector-v1/tests/test_corrector_identity.py`（12/12 PASS）+ 触发原话: 用户 2026-07-21 任务附件 "如果是 A：在同一对话建立 C04/C09 shared adapter；将它们作为同一个 corrector batch 一起运行，不按 MLP/GRU/Transformer 名称拆成多个假方向；conventional task comparator 必须是 receiver-visible blind affine；若两者均失败，记录 exact mechanism negative，并轮转，不继续做网络微调"
+
+### 决策
+
+D013 裁决 A 后，在本对话建立 shared adapter（`apply_correction(z_eval, A, b) = z_eval @ A.T + b`），训练两个函数类：
+- C04_mlp：MLP 映射 z_calib SUMMARY STATISTICS → context-specific (A, b)
+- C09_gru：GRU encoder over z_calib TIME SERIES → context-specific (A, b)
+
+训练用 MSE(z_corrected_calib, hard_16qam(z_corrected_calib))（receiver-visible only，NO TX truth）。train [81-90] / val [91-95] / test [71-80]（test slice = D013 adjudication 的 blind_affine test slice，paired comparison）；training cells (4 val cells) disjoint from held-out test cells (7)。HP 公平（smoke 显示所有 8 HP 组合 val_loss plateau 在 1.3084，non-discriminating；train ONE representative HP per class）。
+
+**两个 candidate 均裁决 `CANDIDATE_BLOWS_UP`**：
+- C04_mlp：macro PI-SER_candidate = **0.928**（near 16QAM random-decision ceiling 0.9375），macro Δ(cand−blind) = **+0.624** CI [+0.483, +0.753]，0/7 cells beat blind by ≥ MDE，worst degradation vs fixed_cma = +0.783。
+- C09_gru：macro PI-SER_candidate = **0.928**，macro Δ(cand−blind) = +0.624 CI [+0.483, +0.753]，0/7 cells beat blind，worst degradation = +0.782。
+
+### Exact mechanism negative（核心科学发现）
+
+**Context-dependent affine hypothesis 被 REJECTED for this anchor + channel**：
+1. fixed-μ CMA 已抽出 channel 的 affine 结构；residual 是非-affine（residual ISI + AWGN + SOP drift）。
+2. z_calib（receiver-visible calibration）**不含足够信息识别 corrective affine**——因为本来就没有有用的 corrective affine 可识别。blind affine 从另一角度确认（net negative）。
+3. learned corrector 没有 useful target 可拟合：要么学 identity（匹配 fixed-μ CMA，无改善），要么学 overfit-to-noise 的 non-identity map（scrambles z_eval，本批 outcome）。
+4. oracle affine 证明 recoverability 存在但仅通过 TX truth；receiver-visible proxy 太 noisy 无法识别同一 map。
+
+**"exists vs learnable" gap 是 thesis-grade 发现**：adjudication（D013）证明 residual EXISTS（oracle closes it）；C04/C09 证明 residual NOT LEARNABLE from receiver-visible signals。
+
+### 理由
+
+1. **identity 测试 12/12 PASS**（candidate forward 不含 truth 参数；training loss body 不含 truth；affine application 形式正确；shared adapter 两类统一 contract；train/val/test seeds pairwise disjoint + 与 prior [11-65] disjoint；training cells disjoint from held-out；source closure hash）。
+2. **训练损失 plateau 在 ~1.31 不论 HP 或函数类**——模型学不到 useful mapping。1.31 ≈ 每个实坐标距任何 16QAM grid level 平均 ~1.1；模型可达下界。
+3. **independent verifier V004 adversarial 复核 8/8 PASS**：重算 candidate macro PI-SER = 0.928 ≈ random ceiling；fresh Windows pytest 12/12 PASS；protected history 全未改；source closure SHA-256 全 match。
+
+### 排除的替代方案
+
+- **继续网络微调**：拒绝；用户 brief 明示 "若两者均失败，记录 exact mechanism negative，并轮转，不继续做网络微调"。HP grid 已显示 non-discriminating。
+- **加 Transformer 或其他函数类**：拒绝；用户 brief 明示 "不允许把多个模型名冒充多个机制方向"。MLP+GRU 已是两个代表性函数类。
+- **改训练 loss（用 Godard-cost unsupervised）**：超出本批 scope；应走下一个独立 batch（如果未来要重新评估 corrector 路线）。
+- **改 anchor 或 channel**：超出本批 scope；本批的 negative 是 "在 fixed-μ CMA μ=0.03 + 16QAM atlas 下" 的 LOCAL_NEGATIVE。
+
+### 影响范围
+
+- 仅在本 campaign worktree 内新增 `c04-c09-shared-corrector-v1/`（contract + adapter + runner + tests + 3 artifacts）。
+- protected history 全未改。
+- **C04/C09 当前 corrector 路线在 this budget + information access 下 CLOSED**。按用户 brief 自动轮转：下一对话检查 C13（去重 pilot→Jones→inverse 微变体）或转 C12 soft-output/coded。
+- 无 push。
+
+### 来源
+
+S009 §Phase 3 / 用户任务附件 2026-07-21（强制 shared adapter + 公平 tuning + blind affine 作 task comparator + 失败即轮转）/ 独立 verifier V004 CONFIRM。
+
+---
+
+## D015: S009 收尾 — 轮转到下一机制 family（C12/C13），本轮 SCIENCE_SCOUT 链条完成
+
+> status: active
+> date: 2026-07-21
+> 取代：无
+> 被取代：无
+> 依据: 验证: D012 + D013 + D014 三批 verdict 全独立 verifier V004 CONFIRM + 触发原话: 用户 2026-07-21 任务附件 "本对话至少完成一个科学 adjudication，并对一个后续机制形成 RUN / LOCAL_NEGATIVE / INFRASTRUCTURE_BLOCKED 之一；普通文档债务不构成提前停止理由"
+
+### 决策
+
+S009 完成用户 brief 要求的链条：
+1. ✅ C11 状态收口（D012）：scope-narrow 到 `C11_EXACT_CAUSAL_RAW_DECISION_POLICY_NO_BENEFIT` / LOCAL_SLICE / DIAGNOSTIC；修 UTF-8 + source closure hash；不重跑（8 audit issues 无一改变 verdict 方向）。
+2. ✅ Corrector residual-headroom adjudication（D013）：VERDICT A，授权 learned corrector 

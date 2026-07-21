@@ -1,0 +1,26 @@
+fixed_mu_cma_mu: 0.03
+blind_affine_best_ridge: 1.0e-08
+ridge_grid:
+- 1.0e-08
+- 1.0e-06
+- 0.0001
+- 0.01
+- 1.0
+validation_seeds:
+- 61
+- 62
+- 63
+- 64
+- 65
+test_seeds:
+- 71
+- 72
+- 73
+- 74
+- 75
+- 76
+- 77
+- 78
+- 79
+- 80
+mde: 0.005

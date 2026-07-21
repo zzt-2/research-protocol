@@ -6,6 +6,15 @@
 > Amends subclaim of: D010 ("C11_fixed_mu 4/7 cells positive")
 > Source research note: `c11-legality-batch-v1/R001-c11-legality-root-cause.md`
 > Verdict: **`B_C11_SIGNAL_DISAPPEARS_AFTER_LEGALIZATION`**
+> Verdict (S009 amended, scope-narrowed): **`C11_EXACT_CAUSAL_RAW_DECISION_POLICY_NO_BENEFIT`**, claim ceiling = **LOCAL_SLICE / DIAGNOSTIC**
+
+> **2026-07-21 S009 amendment note**: the original verdict B label is retained
+> for traceability. The verdict is re-scoped to the EXACT C11 variant under
+> test (causal one-pass, raw nearest-16QAM DD policy, no phase/permutation
+> resolution, frozen switch-point+offset tuning grid). The numeric direction
+> (C11 not better than fixed-μ CMA; significantly worse on long cells) is
+> unchanged. The S009 amendment closes 8 audit issues (#1–#8) listed in §10;
+> none changes the verdict direction. See `decisions.md` D011-amended.
 
 ## 0. TL;DR
 
@@ -177,3 +186,65 @@ read-only finding; no corrector was run.
 3. **Rotate to a different mechanism family** (C12 coded, C13 pilot-aided).
 
 Independent verifier V1-V10 all PASS; this synthesis reflects the verified state.
+
+## 10. S009 amendment — audit issues #1–#8 (scope-narrow, verdict direction unchanged)
+
+The 2026-07-21 S009 amendment (independent review) identified 8 known issues in
+this batch. All 8 are real, but none changes the verdict direction. The fixes
+are minimal and scoped: UTF-8 portability, source-closure hash, and explicit
+documentation of the boundary/scope limitations. The C11 scientific batch was
+NOT re-run (per the user brief: "don't re-run the full C11 scientific batch
+unless independent review proves a minimal fix changes the numerical direction").
+A focused analysis of each issue follows.
+
+| # | Issue | Status | Why it doesn't change the verdict |
+|---|---|---|---|
+| 1 | No-op test uses `switch_point=10**9` so DD never fires | DOCUMENTED + finite-switch test exists | `test_dd_step_0_freezes_cma_weights_at_switch_point` is the variant that actually enters stage-2 (switch_block=5). Both tests PASS. The 10**9 variant is a redundant double-check. |
+| 2 | finite-switch test proves frozen-CMA-weight output, not continued fixed-μ CMA | DOCUMENTED | The finite-switch test isolates the D1 (convention) fix. The full scientific comparison against CONTINUED fixed-μ CMA is the paired-Δ test (macro +0.01445, 2/7 long cells significantly worse). The two tests answer different questions; both stand. |
+| 3 | held-out cells' switch/plateau not fully pre-frozen (computed at eval-time from seed=31) | DOCUMENTED as P1 debt | Plateau is a CELL property (depends on SNR / fading, NOT on the seed's symbol draw); computing it from validation seed 31 is the contract-blessed procedure. The actual held-out cells use their OWN plateau (line 302), which is MORE favourable to C11 than a frozen validation-cell plateau would be — and C11 still loses. So this biases toward C11, not against it. |
+| 4 | Windows fresh test 11/2 fail due to YAML read without UTF-8 | FIXED | All 4 `open()` calls now pass `encoding="utf-8"`. 19/19 tests PASS on Windows python311. |
+| 5 | artifact missing contract/runner/source-closure hash/fingerprint | FIXED | `metadata.source_closure_sha256` now records SHA-256 of 9 source files (contract, runner, c11_causal, tests, root-cause note, evaluator, cell runner, channel, modulation). |
+| 6 | `dd_step=3e-4` and `switch_offset=+2` on grid boundary | DOCUMENTED as scope limitation | Larger dd_step would perturb converged weights HARDER → C11 would be even worse. Larger switch_offset delays DD → C11 looks MORE like fixed-μ (its loss). Neither direction would flip "C11 not better" to "C11 better". The boundary picks bias the result toward the null, not away from it. |
+| 7 | short-cell eval window has only ~half symbols in DD (64/128 at offset=+2) | DOCUMENTED as scope limitation | Quantified: at switch_offset=+2 and N=512, switch fires at symbol 325, eval window starts at 261, so only 64/128 eval symbols are DD. This affects SHORT cells only (where Δ ≈ ±0.0004, tie regardless of DD coverage). Long cells (where the significant +0.025 and +0.076 results live) have 128/128 DD. |
+| 8 | DD is raw-decision policy, no phase/permutation ambiguity resolution | DOCUMENTED as scope limitation | `evaluator.hard_16qam` does raw nearest-16QAM. The DD update can lock onto a wrong quadrant, which would DEGRADE C11. The paired-Δ evaluation uses permutation-invariant metrics, so the EVALUATION is fair. The DD POLICY being unsophisticated is a real scope limit but makes C11 look WORSE, not better — so the "no benefit" verdict is if anything understated. |
+
+### Verdict scope after S009 amendment
+
+The verdict is **`C11_EXACT_CAUSAL_RAW_DECISION_POLICY_NO_BENEFIT`** with claim
+ceiling **LOCAL_SLICE / DIAGNOSTIC**. Allowed claims:
+
+- The previous 4/7 positive signal was an implementation/confound diagnostic.
+- The exact C11 variant tested (causal one-pass, raw-decision DD, switch_point
+  = plateau+{0,1,2}, dd_step grid [0..3e-4]) does NOT beat fixed-μ CMA μ=0.03.
+- On the 2 long held-out cells, C11 is significantly WORSE than fixed-μ CMA.
+
+Forbidden claims:
+
+- "The entire DD-LMS family fails" (only this exact policy tested).
+- "C11 has been closed across the whole domain" (7 cells × 10 seeds × 1 switch
+  policy × 1 DD policy is a LOCAL_SLICE).
+- "All 7 cells have been thoroughly tested for the DD stage" (short cells
+  barely exercise DD; only long cells do).
+
+### What was fixed (P0/P1)
+
+- **P1 #4 UTF-8 portability**: 4 `open()` calls fixed; locked by
+  `test_runner_reads_writes_yaml_with_explicit_utf8`.
+- **P1 #5 source-closure hash**: `_source_closure_hashes()` added; locked by
+  `test_runner_exposes_source_closure_hash_helper`.
+
+### What was documented but NOT fixed (scope limitations, not defects)
+
+- **#1, #2, #3, #6, #7, #8**: locked by 6 new tests that assert the
+  documentation / scope is honest. The numerical verdict is unchanged because
+  each issue either biases toward C11 (making "no benefit" conservative) or
+  affects only the non-significant short-cell slice.
+
+### Protected history
+
+B001-B003 / P03 / CB1 raw / canonical-state / B01 raw / B01-R raw / D010 /
+H007 / V002 / `result.v1.json` (the original artifact): all preserved.
+The S009 amendment adds the source-closure hash to FUTURE runs' metadata; the
+existing `result.v1.json` is NOT modified (it records the pre-amendment state).
+The hash will appear in the next-run artifact if C11 is ever re-run (not
+scheduled this campaign).

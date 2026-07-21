@@ -124,3 +124,51 @@ HF1-HF8（每条 flaw 一项）+ protected history 回归 + v1 git history 可�
 ### 结论
 
 **CONFIRM** 实现方 "Verdict B、所有门 PASS、无禁止动作" 的结论。所有数字独立重算一致；OLD 实现的 3 个合法性缺陷（D1/D2/D3）在 b01_candidates.py L220/254/287/290 独立确认。
+
+## V004: S009 三批独立 verifier 复核 — CONFIRM (8/8 PASS, 0 P0, 2 P1 fixed)
+
+> 关联：D012 / D013 / D014 / H009 | 日期: 2026-07-21
+> verifier: 独立 subagent context（P6 separation，与三批实现代码不同上下文）
+
+### 验证问题
+
+S009 三批（c11-legality-batch-v1 amendment / corrector-residual-headroom-v1 / c04-c09-shared-corrector-v1）的 verdict 和数字是否忠实于 raw artifact + source？是否有 leakage / protected-history 损伤 / overreach / synthesis 不忠实？
+
+### 验证范围（8 项 adversarial checks）
+
+1. Batch 1 重算 3 个代表性 cells (16qam-snr20-fg100-short / snr10-fg100-long / snr15-fg1000-long, seed 71) PI-SER
+2. Batch 1 blind/oracle 信息边界对抗测试（perturbing TX truth）
+3. Batch 1 + Batch 2 no-leakage seed check
+4. Batch 1 + Batch 2 source-closure SHA-256 比对
+5. Batch 2 ceiling check (candidate macro PI-SER ≈ random 0.9375)
+6. protected history check (git diff 不触及 B001-B003 / P03 / canonical-state / B01/B01-R raw / c11 result.v1.json)
+7. Batch 3 fresh Windows pytest (c11-legality-batch-v1 tests/)
+8. Batch 1 + Batch 2 synthesis faithfulness (3 numeric claims each)
+
+### 结果
+
+| # | 项 | 结果 | 关键证据 |
+|---|---|---|---|
+| 1 | 3 cells PI-SER 重算 | PASS | 与 result.v1.json per_seed[seed=71] bit-identical (Δ ≤ 5e-7) |
+| 2 | blind/oracle 边界对抗 | PASS | perturbing TX truth × (0.7+0.7j): blind max\|Δ\|=0.000e+00 (bit-identical); oracle max\|Δ\|=1.279 (changed) |
+| 3 | no-leakage seed check | PASS | Batch 1 val[61-65] ∩ test[71-80] = ∅; ∩ prior[11-50] = ∅. Batch 2 train[81-90] ∩ val[91-95] ∩ test[71-80] = ∅ pairwise; train/val ∩ prior[11-65] = ∅ |
+| 4 | source-closure SHA-256 | PASS | 14 files (7 per batch), zero mismatches |
+| 5 | Batch 2 ceiling check | PASS | C04_mlp macro PI-SER_candidate = 0.927846; C09_gru = 0.927958; both ~0.01 below 16QAM random ceiling 0.9375 |
+| 6 | protected history check | PASS | 19 changed/new paths, NONE in protected set (B001-B003 / P03 / canonical-state / B01 raw / B01-R raw / c11 result.v1.json 全未改) |
+| 7 | Batch 3 fresh Windows pytest | PASS | 19/19 PASS in 0.58s (Python 3.11.9, pytest 9.1.1, win32) — 13 原 + 6 新 portability/provenance |
+| 8 | synthesis faithfulness | PASS | Batch 1: H_total +0.0617, G_blind -0.0084, H_residual +0.0664 全 match raw. Batch 2: C04/C09 macro Δ(cand-blind) +0.624 / worst +0.783 / +0.782 全 match raw |
+
+### 发现
+
+- **P0 issues: 无**。无 leakage / hash mismatch / protected-path violation / synthesis 不忠实。
+- **P1 issues (2)**:
+  1. Batch 1 synthesis §3 与 §0 用了两种 macro 聚合约定（hierarchical paired bootstrap macro_mean vs 简单 aggregate mean with max-floor），数字差 ~0.006（H_total: +0.0557 vs +0.0617）。**已修复**（§3 加 footnote 说明两种约定 + verdict 对选择稳健）。
+  2. Batch 2 test 名拼写错误：`test_apply_affile_is_A_times_z_plus_b` → `test_apply_affine_is_A_times_z_plus_b`。**已修复**（cosmetic only；测试逻辑不变，12/12 仍 PASS）。
+
+### 结论
+
+**CONFIRM / HIGH confidence**。三批 verdict 和数字全部忠实于 raw artifact + source；无 leakage / overreach / protected-history 损伤；contract↔runner↔artifact 三一致；所有信息边界测试 PASS。
+
+### 对决策的影响
+
+支撑 D012（C11 scope-narrow amended）、D013（adjudication VERDICT A）、D014（C04/C09 CANDIDATE_BLOWS_UP）三决策。所有数字独立重算一致；三批的 source closure hash 全 match；protected history 全未改；无 P0；2 P1 已修复。

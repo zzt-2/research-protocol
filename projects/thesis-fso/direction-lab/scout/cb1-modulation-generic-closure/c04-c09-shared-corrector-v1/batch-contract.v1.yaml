@@ -1,0 +1,292 @@
+# =============================================================================
+# C04/C09 Shared Corrector Batch v1 — FROZEN BEFORE RUNNING
+# Campaign: science-scout-2026-07-20.dual-pol-osl
+# Trigger: 2026-07-21 S009 / corrector-residual-headroom-v1 VERDICT A
+# Scope: a SHARED corrector batch testing whether context-dependent learned
+#        affine correctors (MLP / GRU function classes) can STABLY beat the
+#        receiver-visible blind_affine_compare_16qam baseline on the residual
+#        target that adjudication proved exists.
+# =============================================================================
+# Scientific question:
+#   Verdict A (corrector-residual-headroom-v1) proved that after the fairly-
+#   tuned fixed-μ CMA, the receiver-visible blind affine corrector leaves a
+#   significant residual target (H_residual = +0.066 PI-SER macro, CI
+#   [+0.015, +0.127], 6/7 held-out cells). The blind affine is in fact NET
+#   NEGATIVE (G_blind = -0.008, coverage_blind = -0.19) — it cannot identify
+#   the affine map from z-derived pseudo-labels.
+#
+#   Can a CONTEXT-DEPENDENT learned corrector (taking calibration context as
+#   input, outputting a context-specific 2x2 affine correction) STABLY beat
+#   the blind affine baseline on the SAME test slice (7 held-out cells × 10
+#   test seeds [71-80])?
+#
+# H1 (working hypothesis):
+#   Yes — because the residual error after fixed-μ CMA is NOT a single global
+#   affine (the blind affine would have closed it if it were). It is a context-
+#   dependent distortion (SOP drift, fade-dependent ISI). A learned corrector
+#   that conditions its output on the calibration context can capture this.
+#
+# Rejection condition (→ LOCAL_NEGATIVE): no learned corrector beats blind
+# affine by ≥ MDE (0.005 PI-SER) on ≥ 5/7 held-out cells with paired CI
+# excluding 0. In that case record the exact mechanism negative and rotate.
+#
+# Per user brief: C04 and C09 are NOT separate mechanism directions — they
+# are function-class variants of the SAME corrector task. Run as ONE batch
+# with a SHARED adapter. Conventional task comparator = blind affine.
+# System anchor = fixed-μ CMA. Oracle = Kill only. Train/val/test isolated.
+# =============================================================================
+
+schema_version: direction-lab.cb1.c04-c09-shared-corrector.v1
+campaign_id: science-scout-2026-07-20.dual-pol-osl
+inherits_from_contract: corrector-residual-headroom-v1/batch-contract.v1.yaml
+triggered_by: corrector-residual-headroom-v1_VERDICT_A_2026-07-21
+related_decisions: [D010, D011-amended, D012, D013-corrector-adjudication-A]
+
+scientific_question: >-
+  Can a context-dependent learned affine corrector (MLP / GRU function
+  classes, SHARED adapter) STABLY beat the receiver-visible blind_affine
+  baseline by ≥ MDE on ≥ 5/7 held-out cells?
+
+claim_ceiling: LOCAL_RESULT_SLICE
+
+# === Roles ===
+
+roles:
+
+  system_anchor:
+    id: fixed_mu_cma_mu_0_03
+    implementation: cb1_cell_runner.standard_cma_godard_with_z
+    mu: 0.03
+    block_size: 64
+    note: >-
+      System anchor (inherited). Produces zX/zY consumed by ALL comparators.
+
+  conventional_task_comparator:
+    id: blind_affine_compare_16qam
+    implementation: cb1_evaluator.blind_affine_compare_16qam
+    ridge: 1.0e-08  # FROZEN from corrector-residual-headroom-v1 tuning
+    information_access: receiver_visible_online
+    note: >-
+      THE BAR TO BEAT. Receiver-visible, z-derived pseudo-labels, no TX truth.
+      Frozen ridge from the adjudication batch's validation tuning. This is
+      the conventional task comparator per user brief (NOT oracle, NOT
+      fixed-μ alone). On the test slice it is NET NEGATIVE (G_blind < 0).
+
+  candidate_function_classes:
+    - id: C04_mlp_corrector
+      implementation: c04-c09-shared-corrector-v1.src.corrector_adapter.MLPCorrector
+      inputs: [calibration_summary_statistics]
+      outputs: [affine_2x2_complex_A, offset_complex_b]
+      hyperparameters:
+        hidden_dim: [32, 64]
+        learning_rate: [1e-3, 3e-3]
+        n_epochs: 30
+        weight_decay: [0.0, 1e-4]
+      note: >-
+        Function class A: MLP that maps calibration SUMMARY STATISTICS
+        (per-pol mean / variance / lag-1 autocorrelation of z_calib) to a
+        context-specific 2x2 complex affine + offset. Receiver-visible only.
+
+    - id: C09_gru_corrector
+      implementation: c04-c09-shared-corrector-v1.src.corrector_adapter.GRUCorrector
+      inputs: [calibration_time_series]
+      outputs: [affine_2x2_complex_A, offset_complex_b]
+      hyperparameters:
+        hidden_dim: [32, 64]
+        learning_rate: [1e-3, 3e-3]
+        n_epochs: 30
+        weight_decay: [0.0, 1e-4]
+        gru_layers: 1
+      note: >-
+        Function class B: GRU encoder over the calibration TIME SERIES
+        (dual-pol), producing a context-specific 2x2 complex affine + offset.
+        Receiver-visible only. Conditioned on the full calibration sequence.
+
+  kill_bound_only:
+    id: oracle_affine_bound_16qam
+    note: >-
+      Reported for context (H_total ceiling). NOT a Go baseline (FR-21/FR-25).
+
+# === Sweep axes (frozen) ===
+
+sweep_axes:
+
+  - id: cell_split
+    # Cells are split, NOT seeds — model never sees held-out-cell channel
+    # realizations during training.
+    training_cells: [16qam-snr20-nominal-short, 16qam-snr20-fg1000-short, 16qam-snr20-sop40e-short, 16qam-snr20-nominal-long]  # = validation cells from prior batches
+    validation_cells_for_early_stopping: [16qam-snr20-nominal-short, 16qam-snr20-fg1000-short, 16qam-snr20-sop40e-short, 16qam-snr20-nominal-long]
+    held_out_test_cells: [16qam-snr05-nominal-short, 16qam-snr10-nominal-short, 16qam-snr15-nominal-short, 16qam-snr25-nominal-short, 16qam-snr20-fg100-short, 16qam-snr10-fg100-long, 16qam-snr15-fg1000-long]
+    rationale: >-
+      The 4 "training/validation cells" are the SAME cells used to tune
+      blind_affine ridge in the adjudication batch — they are NOT in the
+      held-out test slice. The model trains/validates on these 4 cells with
+      FRESH seeds; tests on the 7 held-out cells with the SAME seeds used
+      for blind_affine test eval (perfect paired comparison).
+
+  - id: no_leakage_seed_split_NEW_disjoint_from_all_prior
+    # Training/validation seeds NEW (disjoint from all prior batches AND from
+    # the adjudication test slice). Test seeds = adjudication test slice
+    # (the blind_affine test set) for paired comparison.
+    training_seeds: [81, 82, 83, 84, 85, 86, 87, 88, 89, 90]
+    validation_seeds_for_early_stopping: [91, 92, 93, 94, 95]
+    test_seeds: [71, 72, 73, 74, 75, 76, 77, 78, 79, 80]  # = adjudication test slice
+    leakage_check: >-
+      set(train) ∩ set(val) ∩ set(test) = ∅ (pairwise disjoint, asserted);
+      AND set(train, val) ∩ set(all prior batches {11-80}) = ∅ (asserted);
+      AND test_seeds = adjudication test slice (intentional reuse for paired
+      comparison; blind_affine ridge frozen on [61-65], C04/C09 never trained
+      on [71-80]).
+
+# === Training protocol (frozen) ===
+
+training_protocol:
+  principle: receiver_visible_supervised_on_pseudo_labels
+  loss: >-
+    MSE between z_corrected and its hard_16qam pseudo-label on the
+    calibration slice. Receiver-visible only (no TX truth). The pseudo-label
+    is the nearest-16QAM grid point; the model learns a context-specific
+    affine that pulls z_calib closer to its pseudo-labels. The same affine is
+    then applied to z_eval (generalization across the slice).
+  note: >-
+    This is NOT the same as blind_affine. Blind affine fits ONE closed-form
+    ridge regression of pseudo-label ~ z_calib. The learned corrector
+    conditions its affine on a CONTEXT summary (MLP: statistics; GRU: time
+    series), allowing it to model context-dependent distortions that a single
+    global affine cannot.
+  optimizer: adam
+  early_stopping: validation_loss_plateau (patience=5 epochs on validation seeds [91-95])
+  per_class_tuning_budget: 12 hyperparameter combinations (3 seeds each for tuning reliability)
+  fairness_note: >-
+    blind_affine has ONE tuned hyperparameter (ridge, picked from 5 grid
+    values on validation). C04/C09 each have a small hyperparameter grid
+    (hidden_dim × lr × wd = 2×2×2 = 8 combos) picked on the SAME validation
+    set. The tuning budget is COMPARABLE (blind: 5 combos; learned: 8 combos
+    each) and both use the same validation cells × validation seeds.
+
+# === Statistical preregistration ===
+
+statistical_preregistration:
+
+  primary_statistic:
+    name: paired_delta_pi_ser_vs_blind
+    definition: >-
+      Per (cell, seed) paired delta = PI-SER(candidate) - PI-SER(blind) on
+      the SAME z-stream, SAME eval window, SAME paired realization. Negative
+      = candidate better than blind.
+    aggregation: >-
+      Per-cell mean over test seeds (paired), then macro mean over 7
+      held-out cells. Hierarchical paired bootstrap 95% CI (10k resamples).
+    practical_significance_threshold: 0.005_PI_SER_absolute  # MDE
+
+  secondary_statistics:
+    - per_cell_paired_bootstrap_ci  # on (candidate - blind)
+    - n_cells_candidate_beats_blind_by_mde  # need ≥ 5/7
+    - worst_cell_degradation_vs_fixed_cma  # candidate must not blow up
+    - divergence_rate_per_candidate
+    - oracle_kill_bound_reference  # H_total from adjudication (context only)
+
+  identity_tests_REQUIRED_PASS_before_any_evaluation:
+    - candidate_does_not_read_tx_truth
+    - candidate_application_is_affine_form_on_eval_slice
+    - shared_adapter_produces_same_input_output_contract_for_both_function_classes
+    - train_val_test_seeds_pairwise_disjoint_asserted
+    - training_cells_disjoint_from_held_out_test_cells_asserted
+    - source_closure_hash_recorded
+
+# === Decision rule (frozen BEFORE running) ===
+
+decision_rule:
+
+  CANDIDATE_BEATS_BLIND_STABLY:
+    all_of:
+      - "All identity tests PASS."
+      - "Macro paired Δ (candidate − blind) ≤ -MDE (candidate better by ≥ 0.005)."
+      - "Macro CI upper bound < 0 (statistically significant improvement)."
+      - "Candidate beats blind by ≥ MDE on ≥ 5/7 held-out cells."
+      - "Worst-cell (candidate − fixed_cma) ≤ MDE (no unacceptable degradation vs anchor)."
+    consequence: >-
+      The learned corrector stably beats the receiver-visible blind affine
+      baseline. POSITIVE_MECHANISM_SIGNAL recorded. The corrector direction
+      is promoted to deeper evidence work (not to formal Groundwork/Contract
+      — that requires user strategic decision).
+
+  CANDIDATE_DOES_NOT_BEAT_BLIND:
+    any_of:
+      - "Macro paired Δ (candidate − blind) > -MDE (not practically significant)."
+      - "Macro CI upper bound ≥ 0 (not statistically significant)."
+      - "Candidate beats blind by ≥ MDE on < 5/7 held-out cells (not stable)."
+    consequence: >-
+      LOCAL_NEGATIVE for this function class. The context-dependent affine
+      hypothesis is not supported by this function class at this budget. If
+      BOTH C04 and C09 fail, record the EXACT MECHANISM NEGATIVE and rotate
+      (per user brief: do not continue tuning, do not add more model names).
+
+  CANDIDATE_BLOWS_UP:
+    description: >-
+      Worst-cell degradation vs fixed_cma > MDE on ≥ 2 cells (the candidate
+      actively harms the anchor). Recorded as INSTABILITY_NEGATIVE; the
+      function class is not viable at this budget.
+
+# === Forbidden within this batch ===
+
+forbidden:
+  - modify_any_prior_batch_artifacts  # B01/B01-R/c11-legality/corrector-residual-headroom
+  - modify_D010_D011_D012_D013_H007_H008_H009_V002_V003_V004
+  - modify_canonical_state_yaml
+  - modify_global_skills
+  - use_TX_truth_in_training_or_inference  # receiver-visible only
+  - use_test_seeds_in_training  # [71-80] are test ONLY
+  - use_held_out_cells_in_training  # 7 held-out cells are test ONLY
+  - treat_C04_and_C09_as_separate_mechanism_directions  # same task, function-class variants
+  - tune_on_test_seeds
+  - use_oracle_affine_as_Go_baseline  # FR-21, FR-25
+  - write_results_into_paper_text
+  - push_or_merge
+  - overwrite_v1_paths
+  - add_transformer_or_other_function_classes_without_new_mechanism_argument  # user brief: no fake directions
+
+# === Outputs ===
+
+outputs:
+  adapter_implementation: c04-c09-shared-corrector-v1/src/corrector_adapter.py
+  training_runner: c04-c09-shared-corrector-v1/src/run_corrector_batch.py
+  tests: c04-c09-shared-corrector-v1/tests/test_corrector_identity.py
+  raw_artifact: c04-c09-shared-corrector-v1/artifacts/result.v1.json
+  synthesis: c04-c09-shared-corrector-v1/artifacts/synthesis.v1.md
+  frozen_params: c04-c09-shared-corrector-v1/artifacts/frozen-params.v1.yaml
+
+# === Time budget ===
+
+time_budget_minutes: 180  # training + eval
+commit_policy: single_consolidated_commit_at_session_end_no_push
+
+# === Provenance ===
+
+provenance:
+  R2_qam16:
+    value: 1.32
+    source: inherited_from_B01-R_HF6
+  fixed_mu_cma_mu:
+    value: 0.03
+    source: B01-R_HF6_interior_optimum
+  blind_affine_ridge:
+    value: 1.0e-08
+    source: corrector-residual-headroom-v1_validation_tuning
+    note: frozen from adjudication batch; NOT re-tuned here
+  MDE:
+    value: 0.005
+    source: inherited_from_all_prior_batches
+  training_loss:
+    source: DEFINED_HERE
+    note: >-
+      MSE(z_corrected, hard_16qam(z_corrected)) on the calibration slice.
+      Receiver-visible only (hard_16qam uses the public 16QAM alphabet, no
+      TX truth). Same information access as blind_affine.
+  affine_application:
+    source: DEFINED_HERE
+    note: >-
+      z_corrected_eval = A @ z_eval + b, where A (2x2 complex) and b (2
+      complex) are the candidate's output for the calibration context. Same
+      functional form as blind_affine's closed-form fit, but context-
+      dependent.

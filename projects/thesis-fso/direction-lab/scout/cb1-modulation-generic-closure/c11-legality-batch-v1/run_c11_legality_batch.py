@@ -21,6 +21,7 @@ Discipline:
 from __future__ import annotations
 
 import argparse
+import hashlib
 import importlib.util
 import json
 import sys
@@ -526,6 +527,52 @@ def adjudicate(results, hier_ci, tune_result):
 
 
 # =============================================================================
+# Source-closure provenance (audit issue #5 fix)
+# =============================================================================
+
+def _sha256_of_file(path: Path) -> str:
+    """SHA-256 of a file's bytes (read in binary so encoding is irrelevant)."""
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        for chunk in iter(lambda: f.read(8192), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+# Frozen at import time: the set of source files whose bytes produced this
+# artifact. The closure spans: contract, runner, new C11 module, tests,
+# evaluator, cell runner, CMA anchor dependency, channel generator. Adding a
+# path here is fine; modifying the set after a run invalidates the hash.
+_SOURCE_CLOSURE_PATHS = [
+    BATCH_DIR / "batch-contract.v1.yaml",
+    BATCH_DIR / "run_c11_legality_batch.py",
+    BATCH_DIR / "c11_causal.py",
+    BATCH_DIR / "tests" / "test_c11_legality.py",
+    BATCH_DIR / "R001-c11-legality-root-cause.md",
+    ATLAS_DIR / "cb1_evaluator.py",
+    ATLAS_DIR / "cb1_cell_runner.py",
+    REPO_ROOT / "projects" / "simulation" / "common" / "_dual_pol_channel.py",
+    REPO_ROOT / "projects" / "simulation" / "common" / "_modulation.py",
+]
+
+
+def _source_closure_hashes() -> dict[str, str]:
+    """Return {relative_path: sha256} for every file in the source closure."""
+    out: dict[str, str] = {}
+    base = REPO_ROOT
+    for p in _SOURCE_CLOSURE_PATHS:
+        if not p.exists():
+            out[str(p.relative_to(base))] = "MISSING"
+            continue
+        try:
+            rel = str(p.relative_to(base))
+        except ValueError:
+            rel = str(p)
+        out[rel] = _sha256_of_file(p)
+    return out
+
+
+# =============================================================================
 # Main
 # =============================================================================
 
@@ -583,8 +630,8 @@ def main():
         "mde": MDE,
     }
     params_path = BATCH_DIR / "artifacts" / "frozen-params.v1.yaml"
-    with open(params_path, "w") as f:
-        yaml.safe_dump(frozen_out, f, sort_keys=False)
+    with open(params_path, "w", encoding="utf-8") as f:
+        yaml.safe_dump(frozen_out, f, sort_keys=False, allow_unicode=True)
     log(f"[C11-LEGAL] frozen params: {params_path}")
 
     log("[C11-LEGAL] Phase 2: held-out evaluation on 11 cells × 10 fresh test seeds")
@@ -628,8 +675,14 @@ def main():
         "dd_step_grid": DD_STEP_GRID,
         "switch_offsets": SWITCH_OFFSETS,
         "fixed_mu_cma_mu_inherited_from": "B01-R HF6 interior optimum (NOT re-tuned)",
+        # Minimal provenance: SHA-256 of the source closure (contract + runner +
+        # new module + evaluator + cell runner + channel + cma anchor) so a future
+        # reader can verify the artifact was produced by THIS source set.
+        # Fix for audit issue #5 (artifact missing source closure hash). Read-only
+        # wrt protected history (B01/B01-R raw untouched).
+        "source_closure_sha256": _source_closure_hashes(),
     }
-    with open(out_path, "w") as f:
+    with open(out_path, "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2, default=str)
     log(f"[C11-LEGAL] DONE in {time.time() - t0:.1f}s — {out_path}")
 

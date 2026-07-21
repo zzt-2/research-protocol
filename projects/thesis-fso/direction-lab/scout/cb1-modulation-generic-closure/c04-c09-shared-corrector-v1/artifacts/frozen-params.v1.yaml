@@ -1,0 +1,60 @@
+fixed_mu_cma_mu: 0.03
+blind_affine_ridge_frozen: 1.0e-08
+training_seeds:
+- 81
+- 82
+- 83
+- 84
+- 85
+- 86
+- 87
+- 88
+- 89
+- 90
+validation_seeds:
+- 91
+- 92
+- 93
+- 94
+- 95
+test_seeds:
+- 71
+- 72
+- 73
+- 74
+- 75
+- 76
+- 77
+- 78
+- 79
+- 80
+hp_tuning_seeds:
+- 81
+- 82
+- 83
+n_epochs: 30
+early_stop_patience: 5
+hp_grid:
+  hidden_dim:
+  - 32
+  - 64
+  learning_rate:
+  - 0.001
+  - 0.003
+  weight_decay:
+  - 0.0
+  - 0.0001
+mde: 0.005
+candidates:
+  C04_mlp:
+    best_hp:
+      hidden_dim: 64
+      learning_rate: 0.003
+      weight_decay: 0.0001
+    best_val_loss: 1.3084300994873046
+  C09_gru:
+    best_hp:
+      hidden_dim: 64
+      learning_rate: 0.003
+      weight_decay: 0.0001
+    best_val_loss: 1.3084765195846557

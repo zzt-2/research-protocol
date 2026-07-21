@@ -1,0 +1,296 @@
+# =============================================================================
+# Corrector Residual-Headroom Adjudication v1 — FROZEN BEFORE RUNNING
+# Campaign: science-scout-2026-07-20.dual-pol-osl
+# Trigger: 2026-07-21 S009 user brief (after D012 C11 scope-narrow)
+# Scope: adjudicate whether a receiver-visible blind affine corrector leaves
+#        a LEGAL residual target that a learned corrector (C04/C09) could
+#        legitimately beat, relative to the TX-truth oracle affine Kill bound.
+# =============================================================================
+# Scientific question:
+#   After a fairly-tuned fixed-μ CMA (μ=0.03, inherited from B01-R HF6), how
+#   much RECOVERABLE PI-SER headroom does the strongest receiver-visible blind
+#   affine corrector close, and how much remains relative to the TX-truth
+#   oracle affine upper bound? Does the residual support a learned-corrector
+#   batch (C04/C09), or does the blind affine already close most of it?
+#
+# H1 (working hypothesis):
+#   The blind affine (z-derived pseudo-labels only) closes some but not all of
+#   the recoverable headroom over the fixed-μ CMA baseline, leaving a residual
+#   target ≥ MDE on enough cells to authorize a learned-corrector batch.
+#
+# Rejection conditions (→ Verdict B): blind affine closes ≥ (1 - MDE/H_total)
+# of the recoverable headroom on ≥ 5/7 held-out cells. OR H_total < MDE on a
+# majority of cells (no recoverable headroom to target).
+#
+# All B01 / B01-R / c11-legality-batch-v1 artifacts preserved (NOT modified).
+# D010 / D011 / D012 / H007 / H008 / V002 / V003 kept; not overwritten.
+# =============================================================================
+
+schema_version: direction-lab.cb1.corrector-residual-headroom.v1
+campaign_id: science-scout-2026-07-20.dual-pol-osl
+inherits_from_contract: c11-legality-batch-v1/batch-contract.v1.yaml  # structure reused
+triggered_by: S009_user_brief_2026-07-21
+related_decisions: [D010, D011-amended, D012]
+
+scientific_question: >-
+  After a fairly-tuned fixed-μ CMA (μ=0.03), how much recoverable PI-SER
+  headroom does the strongest receiver-visible blind affine corrector close,
+  and how much residual remains relative to the TX-truth oracle affine upper
+  bound (Kill bound only, FR-21)? Does the residual authorize a learned-
+  corrector batch (C04/C09)?
+
+claim_ceiling: LOCAL_RESULT_SLICE
+
+# === Roles (information boundary is the only difference) ===
+
+roles:
+
+  system_anchor:
+    id: fixed_mu_cma_mu_0_03
+    implementation: cb1_cell_runner.standard_cma_godard_with_z
+    mu: 0.03  # inherited from B01-R HF6 interior optimum (NOT re-tuned; no double-dip)
+    block_size: 64
+    note: >-
+      System anchor. Produces zX/zY which ALL three comparators consume.
+      μ frozen from B01-R hotfix v2. ONE causal pass.
+
+  baseline_comparator_low_bound:
+    id: fixed_mu_nearest_16qam
+    implementation: cb1_evaluator.hard_16qam
+    inputs: [zX, zY, known_16QAM_alphabet]
+    information_access: receiver_visible_online
+    note: >-
+      Lower-bound baseline: nearest-16QAM hard decision on the fixed-μ z-stream.
+      Same information as z (public alphabet). Defines PI-SER_fixed_CMA.
+
+  receiver_visible_comparator:
+    id: blind_affine_compare_16qam
+    implementation: cb1_evaluator.blind_affine_compare_16qam
+    inputs: [z_calibration, z_evaluation, known_16QAM_alphabet]
+    information_access: receiver_visible_online
+    tuned_hyperparameter: ridge
+    ridge_grid: [1e-8, 1e-6, 1e-4, 1e-2, 1.0]
+    tuning_universe: validation_cells × validation_seeds
+    freeze_rule: >-
+      ridge picked on validation (minimize mean PI-SER over validation cells
+      × validation seeds), frozen BEFORE any test seed is run.
+    note: >-
+      The strongest LEGAL preregistered receiver-visible affine corrector.
+      Pseudo-labels = hard_16qam(z_calibration). No TX truth consumed.
+      Defines PI-SER_blind. This is the conventional comparator a learned
+      corrector must BEAT to count as a contribution.
+
+  kill_bound_only:
+    id: oracle_affine_bound_16qam
+    implementation: cb1_evaluator.oracle_affine_bound_16qam
+    inputs: [z_calibration, z_evaluation, truth_calibration]
+    information_access: genie_oracle
+    note: >-
+      TX-truth-calibrated affine. SCORING-ONLY Kill bound (FR-21); NEVER a Go
+      baseline (FR-25). Defines PI-SER_oracle, the absolute affine-recoverable
+      lower bound. Used to compute H_total = max(PI-SER_fixed_CMA - PI-SER_oracle, 0).
+
+# === Sweep axes (frozen) ===
+
+sweep_axes:
+
+  - id: atlas_v1_16qam_cells_full_11
+    cells: atlas_v1_full_16qam_set  # SAME 11 cells as B01 / B01-R / c11-legality
+    validation_cells: [16qam-snr20-nominal-short, 16qam-snr20-fg1000-short, 16qam-snr20-sop40e-short, 16qam-snr20-nominal-long]
+    held_out_cells: [16qam-snr05-nominal-short, 16qam-snr10-nominal-short, 16qam-snr15-nominal-short, 16qam-snr25-nominal-short, 16qam-snr20-fg100-short, 16qam-snr10-fg100-long, 16qam-snr15-fg1000-long]
+
+  - id: no_leakage_seed_split_NEW_disjoint_from_all_prior
+    # FRESH seeds, disjoint from B01 [11-20], B01-R [11-15, 21-30], c11-legality [31-35, 41-50].
+    validation_seeds: [61, 62, 63, 64, 65]  # for ridge selection
+    test_seeds: [71, 72, 73, 74, 75, 76, 77, 78, 79, 80]  # 10 fresh test seeds
+    leakage_check: >-
+      set(validation_seeds) ∩ set(test_seeds) = ∅ (asserted in code);
+      AND set({validation,test} seeds) ∩ set(B01 ∪ B01-R ∪ c11-legality seeds
+      {11-50}) = ∅ (asserted in code).
+
+# === Tuning protocol (frozen) ===
+
+tuning_protocol:
+  principle: ridge_selected_on_validation_then_frozen
+  fixed_mu_cma_mu: 0.03  # frozen from B01-R (NOT re-tuned; no double-dip)
+  blind_affine_tuned_hyperparams: [ridge]
+  tuning_universe: validation_cells × validation_seeds
+  freeze_rule: >-
+    ridge frozen on validation before any test seed is run.
+  divergence_penalty: 0.1_times_divergence_rate
+
+# === Statistical preregistration ===
+
+statistical_preregistration:
+
+  # HEADROOM DECOMPOSITION (the primary scientific output)
+  primary_statistic:
+    name: headroom_decomposition
+    definitions: |
+      Let PI-SER_X be the permutation-invariant SER of comparator X on the
+      same z-stream, same eval window, same paired realization. Then:
+        H_total   = max(PI-SER_fixed_CMA - PI-SER_oracle, 0)   # recoverable
+        G_blind   = PI-SER_fixed_CMA - PI-SER_blind            # blind gain (can be < 0)
+        H_residual= max(PI-SER_blind   - PI-SER_oracle, 0)     # residual after blind
+        coverage_blind = G_blind / H_total  (only when H_total > 0)
+    aggregation: >-
+      Per-cell mean over test seeds (paired), then macro mean over 7 held-out
+      cells. Paired bootstrap 95% CI (10k resamples, cells + seeds paired) on
+      every primary quantity.
+    practical_significance_threshold: 0.005_PI_SER_absolute  # MDE
+
+  secondary_statistics:
+    - per_cell_paired_bootstrap_ci  # on H_total, G_blind, H_residual
+    - worst_cell_degradation_blind  # max over cells of (PI-SER_blind - PI-SER_fixed_CMA); blind must not degrade
+    - fixed_label_ser_reported_separately_from_pi_ser
+    - divergence_rate_per_comparator  # all use same z-stream → same divergence
+    - hierarchical_paired_ci_on_macro_residual
+
+  information_boundary_tests_REQUIRED_PASS_before_any_evaluation:
+    - blind_affine_does_not_read_tx_truth_or_oracle_label
+    - tx_truth_perturbation_leaves_blind_affine_bit_identical
+    - oracle_affine_explicitly_reads_tx_truth
+    - all_three_comparators_share_same_z_stream_window_paired_realization
+    - fixed_label_ser_and_pi_ser_reported_separately_not_interchanged
+    - source_closure_hash_recorded
+
+# === Decision rule (A/B/C, frozen BEFORE running) ===
+
+decision_rule:
+
+  A_LEARNED_CORRECTOR_TARGET_READY:
+    all_of:
+      - "All information-boundary tests PASS (RED→GREEN verified)."
+      - "Macro H_total ≥ MDE (0.005) — there IS recoverable headroom."
+      - "Macro H_residual ≥ MDE (0.005) — blind affine leaves residual."
+      - "H_residual ≥ MDE on ≥ 5/7 held-out cells (stable, not driven by 1 cell)."
+      - "CI on H_residual macro: lower bound > 0 (statistically significant residual)."
+    note: >-
+      Per user brief: A = "receiver-visible blind affine 后仍存在稳定、达到 MDE、
+      且 oracle 明确证明可恢复的 residual". The "blind does not degrade"
+      condition is NOT part of A — if blind affine degrades (G_blind < 0), that
+      only makes the residual LARGER and the learned-corrector target EASIER.
+      Blind degradation is reported as a secondary diagnostic, not a gate.
+    consequence: >-
+      Residual target is real, stable, and receiver-visible-blind affine does
+      not already close it. Authorizes a SHARED C04/C09 learned-corrector
+      batch in the SAME conversation, with blind_affine_compare_16qam as the
+      conventional task comparator (NOT oracle, NOT fixed-μ alone). Per user
+      brief: conventional task comparator = blind affine; system anchor =
+      fixed-μ CMA; oracle = Kill only; fair tuning budget; train/val/test
+      isolated. If C04/C09 both fail to beat blind affine, record exact
+      mechanism negative and rotate.
+
+  B_LEGAL_BLIND_BASELINE_CLOSES_TARGET:
+    any_of:
+      - "Macro H_total < MDE — no recoverable headroom to target."
+      - "Macro H_residual < MDE AND macro coverage_blind ≥ 0.5 — blind affine closes a meaningful share."
+      - "Macro coverage_blind ≥ 0.95 — blind affine closes ≥95% of recoverable."
+      - "H_residual ≥ MDE on < 5/7 held-out cells AND coverage_blind ≥ 0.5 on the rest."
+    note: >-
+      Per user brief: B = "blind affine 已关闭绝大多数 recoverable headroom".
+      Coverage must be POSITIVE and meaningful (≥ 0.5) for B to fire — a
+      negative coverage (blind affine degrades) is NOT B, it is A with a
+      stronger residual.
+    consequence: >-
+      The blind affine baseline already closes the recoverable headroom (or
+      there isn't enough to begin with). C04/C09 current corrector route
+      stops (local negative). AUTO-ROTATE per user brief: check C13 for
+      genuinely different mechanism (deduplicate against rejected
+      pilot→Jones→inverse micro-variant); if C13 is just a micro-variant,
+      skip; else run C13's different mechanism OR rotate to C12 soft-output/
+      coded. Only ONE bounded adapter sprint allowed.
+
+  C_UNRESOLVED:
+    description: >-
+      Only if (a) H_total or H_residual is borderline (within 0.5×MDE of MDE)
+      AND (b) statistical sensitivity (paired CI width) is the blocker. MUST
+      name the specific sensitivity gap. ALLOWS ONE targeted atlas expansion
+      (e.g., add 3 cells × 5 seeds), then MUST resolve to A or B or stay
+      UNRESOLVED and rotate. Forbidden: unlimited seed/cell/threshold tuning.
+
+# === Forbidden within this batch ===
+
+forbidden:
+  - modify_B001_B002_B003_or_P03_Atlas_bytes
+  - modify_B01_or_B01r_raw_artifacts
+  - modify_c11_legality_batch_v1_raw_artifacts  # result.v1.json / synthesis.v1.md / frozen-params.v1.yaml
+  - modify_D010_D011_D012_H007_H008_V002_V003
+  - modify_canonical_state_yaml
+  - modify_global_skills
+  - train_ML_corrector_in_THIS_batch  # C04/C09 (if A) go in a SEPARATE follow-on batch
+  - expand_candidate_pool
+  - tune_ridge_on_test_seeds
+  - use_oracle_affine_as_Go_baseline  # FR-21, FR-25
+  - mix_fixed_label_ser_with_pi_ser  # metric contract invariant
+  - reuse_prior_seeds_11_to_50
+  - write_results_into_paper_text
+  - push_or_merge
+  - overwrite_v1_paths
+  - treat_blind_affine_as_oracle  # information boundary
+  - treat_oracle_affine_as_blind
+
+# === Forward rules (for the C04/C09 batch, IF Verdict A) ===
+
+forward_rules_for_corrector_batch_if_A:
+  required_task_comparators:
+    - fixed_mu_cma_validation_optimal_mu_0_03  # system anchor
+    - blind_affine_compare_16qam  # receiver-visible same-task comparator (THE bar to beat)
+  kill_bound_only:
+    - oracle_affine_bound_16qam  # Kill only (FR-21)
+  candidate_models:
+    - C04_learned_corrector_mlp
+    - C09_learned_corrector_gru_or_transformer
+  note: >-
+    C04 and C09 share ONE adapter (same input/output contract, same z-stream,
+    same eval window). They are NOT separate mechanism directions — they are
+    two function classes for the SAME corrector task. Run as ONE batch with
+    shared adapter. Conventional task comparator = blind affine (not oracle,
+    not fixed-μ alone). Train/val/test seeds and channel realizations strictly
+    isolated. Fair, task-adapted tuning budget for C04, C09, AND blind affine.
+    Primary judgment: does the learned corrector STABLY beat blind affine?
+    If both fail → exact mechanism negative, rotate (do not continue tuning).
+
+# === Outputs ===
+
+outputs:
+  implementation: corrector-residual-headroom-v1/run_corrector_adjudication.py
+  tests: corrector-residual-headroom-v1/tests/test_information_boundary.py
+  raw_artifact: corrector-residual-headroom-v1/artifacts/result.v1.json
+  synthesis: corrector-residual-headroom-v1/artifacts/synthesis.v1.md
+  frozen_params: corrector-residual-headroom-v1/artifacts/frozen-params.v1.yaml
+
+# === Time budget ===
+
+time_budget_minutes: 120
+commit_policy: single_consolidated_commit_at_session_end_no_push
+
+# === Provenance (formulas / symbols / parameters) ===
+
+provenance:
+  R2_qam16:
+    value: 1.32
+    source: inherited_from_B01-R_HF6  # cross-validated against Mammasis 2012 / Yang 2002 CMMA
+    note: not re-derived; reused from B01-R provenance chain
+  affine_ridge_default:
+    value: 1e-6
+    source: inherited_from_P03_probe_evaluator
+    note: default; the ridge_grid above tunes it on validation
+  fixed_mu_cma_mu:
+    value: 0.03
+    source: B01-R_HF6_interior_optimum
+    note: validation-optimal under HF6 extended grid [1e-4..1e-1]; μ=0.1 diverged
+  MDE:
+    value: 0.005
+    source: inherited_from_B01_B01-R_c11-legality  # practical significance threshold
+    note: same as all prior batches for comparability
+  H_total_G_blind_H_residual_coverage:
+    source: DEFINED_HERE
+    note: >-
+      Lab-coined headroom decomposition for this adjudication. Definitions are
+      self-contained (see statistical_preregistration.primary_statistic).
+      Cross-checked: H_total = G_blind + H_residual when all are non-negative
+      and PI-SER_fixed ≥ PI-SER_blind ≥ PI-SER_oracle (verified per-cell).
+  blind_affine_pseudo_labels:
+    source: hard_16qam  # cb1_evaluator.hard_16qam (nearest 16QAM)
+    note: receiver-visible; same information as z-stream + public alphabet
