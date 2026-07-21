@@ -53,3 +53,27 @@
 > "如果公平修复后问题被传统方法关闭，保留负面结果并自动轮换其他候选族，不为保住 ML 方向修改条件。" → D008
 
 > "整个对话只做一次 consolidated commit，不 push。"
+
+## 2026-07-21（续 2 — SCIENCE_SCOUT 第四对话，B01-R 科学纠偏批）
+
+> "继续当前 worktree 和分支，不要另开 worktree，不要 push。"
+
+> "本轮不是继续 B02，也不是扩展候选池，而是完成一次有界的 B01-R 科学纠偏批。请连续推进到能够重新裁决"B02 是否 READY"为止，不要只写计划或做表面文档修补。"
+
+> "明确承认并独立复现以下审计发现，不得直接沿用 D008 的裁决。"
+
+> "若任一事实不能复现，记录具体证据，不要猜测。"
+
+> "C10 只能否决本次确切 `block_size/μ/N` 配置，除非有额外证据，不得关闭整个 block-end causality。"
+
+> "single-class cell 的 AUROC 写 `NA/UNDEFINED`，禁止写 0.5。"
+
+> "如无法建立可信 collapse 标签，诚实结论应是 DETECTOR_TARGET_NOT_READY，不要强行授权 B02。"
+
+> "不得用跨异质 cell 的单一 pooled AUROC 掩盖 cell composition，也不得把"两个可分 cell AUROC=1"解释成"所有长窗都可靠"。"
+
+> "最终 claim ceiling 最高仍为 SLICE。禁止写"Godard-cost 深层属性""所有传统处理均失败"等超出证据的话。"
+
+> "如果 verifier 发现 P0/P1，修复后重新独立复核；不得靠改报告措辞掩盖执行问题。"
+
+> "请连续执行到重新裁决完成；普通的局部失败、参数不工作或单候选阻断不要停下来问我，按上述 A/B/C 自动收口。" → D009, H006

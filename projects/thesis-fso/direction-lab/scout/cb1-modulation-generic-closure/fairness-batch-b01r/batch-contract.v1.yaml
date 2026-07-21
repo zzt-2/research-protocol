@@ -1,0 +1,324 @@
+# =============================================================================
+# Fairness Batch B01-R — Correction Contract v1 (FROZEN BEFORE RUNNING)
+# Campaign: science-scout-2026-07-20.dual-pol-osl
+# Trigger: 2026-07-21 user audit (10 findings) + H005 superseded by H006
+# Source audit findings: pasted task 2026-07-21 (10 explicit items)
+# Date: 2026-07-21
+# =============================================================================
+# Scientific question:
+#   Reproduce-independently the 10 audit findings on B01 (Phase 1, DONE — all
+#   10 confirmed against source code + raw JSON), then re-adjudicate with:
+#     (1) a no-leakage seed split (tuning seeds disjoint from test seeds);
+#     (2) a validation-optimal fixed-μ CMA as a genuine Go comparator (not
+#         just a bandit);
+#     (3) achievable exit criteria (denominator = actual held-out cells = 7);
+#     (4) detector rebuilt with 4-category labels and real metrics
+#         (per-cell AUROC, PR-AUC, recall@5%FPR, false-alarm, degradation
+#         onset, warning lead time, Brier/ECE).
+#
+# Relationship to B01:
+#   - B01 raw artifacts (JSON, frozen params, synthesis) are preserved as
+#     DIAGNOSTIC history; this batch does NOT modify them.
+#   - D008 / H005 are marked superseded by D009 / H006 but NOT deleted.
+#   - The B01-R correction supersedes the B01 verdict only when B01-R
+#     produces a higher-fidelity verdict with no audit-finding left open.
+# =============================================================================
+
+schema_version: direction-lab.cb1.fairness-batch-b01r.v1
+campaign_id: science-scout-2026-07-20.dual-pol-osl
+source_handoff: .sessions/2026-07-20-direction-lab-science-scout/H005-fairness-batch-b01-complete.md  # superseded by H006
+supersedes_contract: fairness-batch-b01/batch-contract.v1.yaml  # for traceability only; B01 raw untouched
+source_portfolio: campaigns/science-scout-2026-07-20/portfolio-refresh.v3-fairness.yaml
+inherits_from_contract: campaigns/science-scout-2026-07-20/campaign-contract.v1.yaml
+
+# === Scientific question (frozen) ===
+scientific_question: >-
+  Under a strict no-leakage split (tuning seeds disjoint from test seeds)
+  with a validation-optimal fixed-μ CMA as a genuine Go comparator, does
+  the CB1 16QAM inner-ring collapse headroom:
+    (a) survive a fairly-tuned fixed-μ CMA (NEW: standalone tuning of μ,
+        not only bandit-driven);
+    (b) survive a fairly-tuned C08 adaptive-μ bandit;
+    (c) survive a fairly-tuned C10 per-symbol CMA (this finding only
+        closes the specific block_size=1/μ/N combo, NOT the whole
+        block-end-causality thesis);
+    (d) survive a fairly-tuned C11 CMA+DD-LMS cascade?
+  In parallel: under a 4-category collapse label audit (inner-ring/
+  recoverable, AWGN-dominated, healthy, ambiguous), what are the real
+  detector metrics (per-cell AUROC, PR-AUC, recall@5%FPR, false-alarm,
+  degradation onset, warning lead time, Brier/ECE) for the min-z2-ratio
+  baseline and the CUSUM/threshold detector?
+
+claim_ceiling: LOCAL_RESULT_SLICE
+
+# === Roles (six, explicitly separated) ===
+# Addresses audit finding #2 (fixed-μ CMA not actually run as comparator)
+# and #5 (C05 score detached from tuned params).
+roles:
+
+  diagnostic_anchor:
+    id: standard_cma_godard_z
+    implementation: cb1_cell_runner.standard_cma_godard_with_z
+    block_size: 64
+    mu: 0.001  # Atlas v1 identity; byte-identical regression required
+    note: >-
+      Diagnostic only. NOT a Go comparator (same-μ across methods is not
+      fairness per baseline-adjudication.md).
+
+  validation_optimal_fixed_mu_cma:  # NEW comparator, genuinely tuned
+    id: fixed_mu_cma_validation_optimal
+    implementation: cb1_cell_runner.standard_cma_godard_with_z
+    block_size: 64  # same structure as anchor; ONLY μ changes
+    mu_grid: [1e-4, 3e-4, 1e-3, 3e-3, 1e-2]  # covers C08's arm set
+    tuning_metric: validation_negative_mean_pi_ser_with_divergence_penalty
+    note: >-
+      The genuine Go comparator. Tuned on validation cells only, then frozen
+      BEFORE any test seed is run. Provides the fair fixed-μ reference.
+
+  c08_adaptive_mu:
+    id: C08
+    implementation: b01_candidates.c08_adaptive_mu_bandit
+    alpha_grid: [0.1, 1.0, 10.0]
+    mu_candidates_fixed: [1e-4, 3e-4, 1e-3, 3e-3, 1e-2]  # same arms
+    task_specific_comparator: fixed_mu_cma_validation_optimal
+    note: >-
+      Tests whether adaptive-μ bandit beats a fairly-tuned fixed-μ CMA.
+
+  c10_per_symbol_cma:
+    id: C10
+    implementation: b01_candidates.c10_per_symbol_cma
+    mu_grid: [1e-5, 1e-4, 3e-4, 1e-3, 3e-3]
+    block_size: 1
+    task_specific_comparator: standard_cma_godard_z
+    note: >-
+      Finding is restricted to the specific block_size=1 / μ / N combo.
+      Does NOT close the block-end causality thesis without additional
+      evidence.
+
+  c11_cma_dd_lms_cascade:
+    id: C11
+    implementation: b01_candidates.c11_cma_dd_lms_cascade
+    dd_step_size_grid: [1e-4, 3e-4, 1e-3, 3e-3, 1e-2]
+    dd_iterations: 1
+    warm_start: from anchor final weights
+    task_specific_comparator: standard_cma_godard_z  # stage-1 alone
+    note: >-
+      Local signal must be reported PER CELL, not "long cells" as a class.
+
+  detector_scoring_baselines:
+    - id: min_z2_ratio_scoring_baseline  # bare heuristic, no tuned params
+      implementation: b01r_detector.min_z2_ratio_score
+      score: -min(z2_ratio over trace after warmup)
+      tuning: none  # zero-parameter baseline for honest lower bound
+    - id: c05_cusum_threshold_detector  # parameterised, tuned
+      implementation: b01_candidates.c05_threshold_detector
+      z2_ratio_threshold_grid: [0.2, 0.3, 0.4, 0.5, 0.6]
+      cusum_drift_grid: [0.01, 0.05, 0.1]
+      tuning_metric: validation_macro_auroc_on_two_class_cells_only
+      note: >-
+        Tuning metric ONLY uses cells with both classes; single-class cells
+        are excluded from tuning (their AUROC is UNDEFINED, not 0.5).
+
+# === Sweep axes (frozen) ===
+sweep_axes:
+
+  - id: atlas_v1_16qam_cells  # the SAME 11 cells as B01
+    cells: atlas_v1_full_16qam_set
+    paired_test_seeds: [21, 22, 23, 24, 25, 26, 27, 28, 29, 30]  # NEW, disjoint
+    candidates_per_cell:
+      - fixed_mu_cma_validation_optimal
+      - C08
+      - C10
+      - C11
+    anchor_per_cell: [standard_cma_godard_z]  # paired delta reference
+    detector_baselines_per_cell:
+      - min_z2_ratio_scoring_baseline
+      - c05_cusum_threshold_detector
+
+  - id: tuning_validation_split
+    # NEW: no-leakage at SEED level.
+    # Cells can repeat across validation/test (for composition coverage),
+    # but seeds NEVER overlap.
+    validation_cells: [16qam-snr20-nominal-short, 16qam-snr20-fg1000-short, 16qam-snr20-sop40e-short, 16qam-snr20-nominal-long]
+    tuning_seeds: [11, 12, 13, 14, 15]  # disjoint from test
+    held_out_cells: [16qam-snr05-nominal-short, 16qam-snr10-nominal-short, 16qam-snr15-nominal-short, 16qam-snr25-nominal-short, 16qam-snr20-fg100-short, 16qam-snr10-fg100-long, 16qam-snr15-fg1000-long]
+    test_seeds: [21, 22, 23, 24, 25, 26, 27, 28, 29, 30]  # disjoint from tuning
+    leakage_check: >-
+      set(tuning_seeds) ∩ set(test_seeds) = ∅  (asserted in code)
+      Aggregate Go/Kill uses ONLY held_out_cells × test_seeds.
+
+# === Tuning protocol (frozen) ===
+tuning_protocol:
+  principle: equal_tuning_opportunity_not_identical_hyperparameters
+  validation_cells: 4
+  tuning_seeds: [11, 12, 13, 14, 15]
+  seeds_per_validation_cell: 5
+  hyperparameter_candidates_per_method: 5
+  convergence_check: per_method_behavior_appropriate
+  freeze_rule: >-
+    Each method selects its hyperparameters by minimising held-out
+    PI-SER (for fixed-μ/C08/C10/C11) or maximising macro-AUROC over
+    two-class cells only (for C05) on validation, then freezes BEFORE
+    any test seed is run.
+  divergence_penalty: 0.1_times_divergence_rate  # applied to PI-SER tuning score
+  detector_two_class_only_rule: >-
+    C05 tuning metric EXCLUDES single-class validation cells
+    (AUROC is UNDEFINED there). If fewer than 2 two-class cells exist
+    in validation, C05 is tuned on whatever two-class cells are
+    available and the limitation is reported honestly.
+
+# === Statistical preregistration ===
+statistical_preregistration:
+  primary_metric: PI-SER (permutation-invariant symbol error rate)
+  secondary_metric: fixed-label SER
+  MDE: 0.005_per_symbol
+  paired_test_seeds: 10  # disjoint from tuning
+  paired_ci_method: bootstrap_paired_delta_over_seeds  # 10k resamples, 95% CI
+  detector_metrics_required:
+    - per_cell_auroc_with_two_class_check  # NA/UNDEFINED for single-class
+    - macro_or_stratified_auroc_over_two_class_cells  # NOT pooled across heterogeneous cells
+    - pr_auc_per_cell
+    - recall_at_5pct_fpr_per_cell
+    - false_alarm_rate_per_cell
+    - degradation_onset_block_per_seed  # block index where collapse signature first appears
+    - warning_lead_time_blocks_per_seed  # detector_alert_block - degradation_onset_block
+    - brier_score_per_seed  # only if calibration claim is made
+    - ece_per_seed  # only if calibration claim is made
+  oracle_role: Kill_tool_only_FR21_never_Go_baseline_FR25
+
+# === Decision rule (ACHIEVABLE, frozen BEFORE running) ===
+# Fixes audit findings #6 (denominator mismatch) and #8 (exit criteria
+# unreachable).
+decision_rule:
+
+  # Held-out cell count = 7. "Closes a cell" = headroom < MDE for that
+  # method on that cell (averaged over 10 test seeds).
+  # CLOSE_THRESHOLD = 5/7: if a method closes ≥ 5/7 held-out cells, the
+  # collapse is considered CLOSED BY FAIR CONVENTIONAL TREATMENT.
+  # SURVIVE_THRESHOLD = ≤ 4/7 closed: problem survives.
+  CLOSE_THRESHOLD_Held_OUT_CELLS: 5_of_7  # was 9/11 (unreachable); 5/7 is achievable
+  SURVIVE_THRESHOLD_Held_OUT_CELLS: at_most_4_of_7_closed
+
+  A_B01R_FAIRNESS_SURVIVES_AND_DETECTOR_TARGET_READY:
+    all_of:
+      - "None of {fixed-μ, C08, C10, C11} closes ≥ 5/7 held-out cells."
+      - "C05 detector has ≥2 two-class test cells with per-cell AUROC strictly defined."
+      - "Warning lead time actually computed on long cells."
+      - "No calibration claim without Brier/ECE."
+
+  B_B01R_FAIRNESS_SURVIVES_BUT_DETECTOR_TARGET_NOT_READY:
+    all_of:
+      - "None of {fixed-μ, C08, C10, C11} closes ≥ 5/7 held-out cells."
+      - "OR: detector label audit cannot establish a credible inner-ring collapse label distinct from AWGN-dominated."
+      - "OR: <2 two-class test cells, so AUROC is not informative."
+    consequence: >-
+      Equalizer headroom still exists; detector target not ready. B02
+      detector batch is NOT authorized. Rotate to other mechanism families
+      or build minimal label infrastructure first.
+
+  C_B01R_PROBLEM_CLOSED_BY_FAIR_CONVENTIONAL_BASELINE:
+    any_of:
+      - "fixed-μ CMA closes ≥ 5/7 held-out cells."
+      - "C08/C10/C11 closes ≥ 5/7 held-out cells."
+    consequence: >-
+      Stop pursuing collapse as ML contribution entry. Record LOCAL_NEGATIVE
+      and rotate to other candidate families.
+
+  INFRASTRUCTURE_BLOCKED:
+    description: >-
+      Implementation fails identity gate, sanity, or smoke test in a way
+      that cannot be repaired within batch budget. Records as infrastructure
+      debt; rotates to next candidate.
+
+# === 4-category detector label audit (NEW, fixes findings #9 and #2) ===
+detector_label_audit:
+  categories:
+    inner_ring_recoverable_collapse:
+      definition: >-
+        Trajectory shows z2_ratio < 0.3 sustained AND oracle_affine PI-SER
+        recovers the seed to < 0.1 (i.e. the collapse is mechanically
+        recoverable by an affine map on z).
+      oracle_use: LABEL ONLY (not online input).
+    awgn_dominated_error:
+      definition: >-
+        AWGN dominates error budget. Criterion: nearest_pi_ser -
+        oracle_pi_ser < MDE (oracle does NOT help) AND nearest_pi_ser is
+        high. Typical for snr=5 dB.
+      oracle_use: LABEL ONLY (different label from inner-ring).
+    healthy:
+      definition: nearest_pi_ser < 0.1 (no meaningful error).
+    ambiguous:
+      definition: >-
+        None of the above cleanly applies (e.g. nearest_pi_ser high,
+        oracle_pi_ser high but z2_ratio not low, or mixed signatures).
+      reporting: >-
+        Counted and reported but EXCLUDED from per-cell AUROC denominator
+        if it would distort the metric.
+  single_class_rule: >-
+    For any test cell with only ONE category present, per-cell AUROC is
+    reported as "NA/UNDEFINED" (NEVER 0.5). Pooled AUROC is computed ONLY
+    over two-class cells, with the count and composition reported.
+  pooled_auroc_rule: >-
+    A single pooled AUROC across heterogeneous cells is NOT the headline
+    metric. The headline is per-cell AUROC + macro-AUROC over two-class
+    cells + stratified breakdown by category.
+
+# === Provenance gate (frozen) ===
+provenance_gate:
+  formula_source_required_for:
+    - cma_godard_z_cost  # Godard 1980 (inherited)
+    - dd_lms_cost  # Sato 1975 TCOM
+    - cusum_statistic  # Page 1954 Biometrika
+    - linucb_algorithm  # Li et al. WWW 2010
+  derivations_in_project:
+    - collapse_label_4_category  # DERIVED_HERE: supersedes 2-category oracle>0.3
+    - degradation_onset_definition  # DERIVED_HERE: first block where z2_ratio < 0.5 sustained for ≥2 blocks
+    - warning_lead_time_definition  # DERIVED_HERE: alert_block - degradation_onset_block (negative = too late)
+
+# === Sanity checks (frozen) ===
+sanity_checks:
+  - id: anchor_byte_regression
+    description: standard_cma_godard_with_z on QPSK anchor cell reproduces P03 PI-SER=0 byte-identical.
+  - id: fixed_mu_cma_tuning_smoke
+    description: fixed-μ CMA tuning completes on 1 validation cell; best μ ∈ grid.
+  - id: c10_smoke_clean_16qam
+    description: C10 per-symbol converges on clean 16QAM to PI-SER ~ 0.
+  - id: c11_smoke_no_improvement_on_clean
+    description: C11 does not degrade on clean 16QAM.
+  - id: c05_two_class_smoke
+    description: On a synthetic two-class trace, C05 detector returns a defined AUROC.
+  - id: leakage_check
+    description: assert set(tuning_seeds) ∩ set(test_seeds) = ∅ in code.
+  - id: single_class_auroc_reporting
+    description: Synthetic single-class cell returns AUROC="NA/UNDEFINED", not 0.5.
+
+# === Forbidden within this batch ===
+forbidden:
+  - modify_B001_B002_B003_or_P03_Atlas_bytes
+  - create_legacy_B004
+  - modify_B01_raw_JSON_or_frozen_params_or_synthesis  # B01 preserved as DIAGNOSTIC history
+  - delete_D008_or_H005  # superseded, not deleted
+  - modify_canonical_state_yaml
+  - train_ML_detector_classifier_anomaly_or_RL  # B02 only, not authorised by B01-R
+  - treat_oracle_affine_as_Go_baseline  # FR-21, FR-25
+  - tune_on_test_seeds  # no-leakage rule
+  - aggregate_validation_into_go_kill  # Go/Kill uses only held_out × test_seeds
+  - report_single_class_auroc_as_0_5  # report NA/UNDEFINED
+  - write_Godard_cost_deep_property_claim  # overreach per audit finding #5 spirit
+  - write_all_long_cells_reliable_claim  # overreach per audit finding #10
+  - main_thread_WebSearch_or_webReader
+  - push_or_merge
+
+# === Outputs ===
+outputs:
+  raw: artifacts/fairness-batch-b01r-v1.json
+  synthesis: artifacts/fairness-batch-b01r-v1-synthesis.md
+  frozen_params: artifacts/frozen-params-b01r-v1.yaml
+  detector_code: b01r_detector.py  # NEW: min-z2-ratio baseline + onset/lead-time
+  runner: run_fairness_batch_b01r.py
+  audit_reproduction: artifacts/b01-audit-reproduction.md  # the 10 findings, confirmed
+  harvest_update: campaigns/science-scout-2026-07-20/harvest-addendum.v3-b01r.yaml
+
+# === Time budget ===
+time_budget_minutes: 120  # slightly more than B01 due to fresh seed realisations + paired CI
+commit_policy: single_consolidated_commit_at_session_end_no_push

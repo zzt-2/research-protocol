@@ -593,8 +593,8 @@ topics:
     title: Direction Lab 首轮 SCIENCE_SCOUT 正式科学探索
     status: active
     created: "2026-07-20"
-    last_updated: "2026-07-21（S005/D008/H005：B01 fairness batch 完成，PROBLEM_SURVIVES_FAIR_CONVENTIONAL_TREATMENT，条件授权 B02 ML detector）"
-    description: "首轮正式 SCIENCE_SCOUT campaign。CB1 closure、16QAM Atlas、CMA/MMA raw evidence 和 B01 fairness batch（C05/C08/C10/C11）均完成。B01 证明坍塌在公平调参、per-symbol 结构和 CMA+DD-LMS 级联下存活（held-out 6/7 cells headroom ≥ MDE）；C10 per-symbol 否定 H021；C05 detector pooled AUROC=0.6546（long cells=1.000）。D008 条件授权 B02 ML detector batch（narrowed claim）。下一入口 H005：B02 = {C01, C02, C06} + causal feature stacker adapter sprint。"
+    last_updated: "2026-07-21（S006/D009/H006/V001：B01-R 科学纠偏批完成，VERDICT B = fairness survives + detector target NOT ready；撤回 B02 授权；rotation 入口 H006）"
+    description: "首轮正式 SCIENCE_SCOUT campaign。CB1 closure、16QAM Atlas、CMA/MMA raw evidence、B01 fairness batch 均完成。B01-R 科学纠偏批独立复现 B01 的 10 条审计发现（全部 CONFIRM），用无泄漏 seed 切分（tuning=[11-15], test=[21-30]）+ 真实 validation-optimal fixed-μ CMA（μ=0.01）+ 4-cat 标签审计重审，VERDICT B：fairness 存活（更强证据：fixed_μ CMA 在 7/7 held-out cells 显著优于 frozen-μ anchor；C11 4/7 cells 显著小改善；C10 无显著差异；C08 混合），但 detector target 不 READY（4-cat 标签揭示 B01 把 AWGN 错误误当 collapse；held-out 长窗 cells inner-ring=0；只有 2 个 held-out cells two-class）。D009 撤回 D008 的 B02 ML detector 授权。下一入口 H006：rotation 到非 detector 机制族（路径 1：equalizer 学习型校正器 C04/C09，task comparator = fixed_μ CMA μ=0.01；路径 2：不同信息类 C13/C12）。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 V007 PASS 的消费者部署（全局 Skill + STATUS + Project Adapter + protected history）作为科学探索起点

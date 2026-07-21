@@ -280,10 +280,10 @@ S004 / 用户纠正 / system D011 / 独立方法论与候选血缘审计。
 
 ## D008: B01 完成 PROBLEM_SURVIVES_FAIR_CONVENTIONAL_TREATMENT；条件授权 B02 ML detector batch
 
-> status: active
+> status: superseded
 > date: 2026-07-21
 > 取代：D007 中"先做有界公平修复后立即批跑 READY 子集"的执行部分（现已完成；下一动作变为 B02）
-> 被取代：无
+> 被取代：D009
 > 依据: 用户原话: `voice.md` 2026-07-21 "整个对话最多做一次 consolidated commit" + "只要存在合法可运行路径，就继续推进" + 验证: `fairness-batch-b01/artifacts/fairness-batch-b01-v1.json` + `fairness-batch-b01-v1-synthesis.md` + 独立 verifier subagent (CONFIRM, HIGH confidence, 20/20 PASS) + Skill: `baseline-adjudication.md` + `batch-and-atlas.md`
 
 ### 决策
@@ -323,3 +323,50 @@ D007 公平性债务 #1/#3/#5/#6 已 CLOSED，#2/#4 PARTIALLY CLOSED。
 ### 来源
 
 S005 / 公平 batch 科学运行 / 独立 verifier CONFIRM / baseline-adjudication + batch-and-atlas 参考。
+
+---
+
+## D009: B01-R 纠偏 — VERDICT B（fairness survives, detector target NOT ready）；撤回 B02 ML detector 授权
+
+> status: active
+> date: 2026-07-21
+> 取代：D008 的 `PROBLEM_SURVIVES_FAIR_CONVENTIONAL_TREATMENT → AUTHORIZE_B02_ML_DETECTOR_BATCH_CONDITIONAL` 推论链（verdict 的 fairness-survival 部分被更高保真路径 CONFIRM；B02 detector 授权被 WITHDRAW；C11 "long cells" claim 收紧到 4/7 held-out；C05 pooled AUROC=0.6546 被每 cell AUROC + 严格 4-cat 标签审计取代）
+> 被取代：无
+> 依据: 用户原话: `voice.md` 2026-07-21 "本轮不是继续 B02，也不是扩展候选池，而是完成一次有界的 B01-R 科学纠偏批" + "请连续推进到能够重新裁决"B02 是否 READY"为止" + "按上述 A/B/C 自动收口" + 验证: `fairness-batch-b01r/artifacts/fairness-batch-b01r-v1.json` + `fairness-batch-b01r-v1-synthesis.md` + `b01-audit-reproduction.md`（10/10 audit findings 复现）+ 独立 verifier subagent (CONFIRM, 11/11 checks PASS) + Skill: `baseline-adjudication.md` + `evidence-and-claims.md`
+
+### 决策
+
+B01-R 科学纠偏批（在隔离 worktree 中，不修改 B01 原始 raw / D008 / H005，新增独立合同 + runner + detector + 4 类标签审计）证实：
+
+1. **B01 的 10 条审计发现全部独立复现**（见 `b01-audit-reproduction.md`）。
+2. **公平性存活（强证据）**：在无泄漏 seed 切分（tuning=[11-15], test=[21-30]）+ 真实 validation-optimal fixed-μ CMA（μ=0.01，B01 从未运行的 comparator）下，CB1 16QAM inner-ring collapse headroom 仍在 6/7 held-out cells 上 ≥ MDE。最佳方法 fixed_μ CMA 只关闭 1/7（snr05-short，AWGN floor）。Paired bootstrap CI 显示 fixed_μ CMA 在 7/7 held-out cells 显著优于 frozen-μ anchor；C11 在 4/7 cells 显著改善（|Δ|≤0.026，headroom 仍 ≥6×MDE）；C10 与 anchor 无显著差异（confirm B01 H021 否定）；C08 混合（2 长 cell 微改善 + 1 短 cell 微退化）。
+3. **detector target NOT READY**：4 类标签审计（inner_ring_recoverable / awgn_dominated / healthy / ambiguous）显示 B01 的 `oracle_pi_ser > 0.3` binary label 把 AWGN-dominated 错误（oracle 不能恢复）误当 collapse。严格 inner-ring 标签后只有 14/110 seeds（12.7%）是 true positive；**held-out 长窗 cells 的 inner-ring 数 = 0**。Only 2 held-out cells two-class（snr25-short / snr20-fg100-short）；C05 default-grid AUROC=0.875 / 0.75，lead_time=2 blocks，但样本太少不能支撑 B02 ML detector target。
+4. **VERDICT B**（`B_B01R_FAIRNESS_SURVIVES_BUT_DETECTOR_TARGET_NOT_READY`）：fairness 存活；detector target 不 ready；**B02 ML detector batch NOT authorized**。
+
+### 理由
+
+1. 严格公平性 + 真实 comparator + 无泄漏切分 + paired CI 是 B01 缺失的科学保真度；补齐后 fairness-survival 部分被 CONFIRM（更可信）。
+2. 4-cat 标签审计是核心纠偏：把"看起来像 collapse 的 AWGN 错误"分开后，B02 监督 detector 的合法目标群体太小且不在 held-out 长窗。强行授权 B02 会重蹈 B01 的 label-conflation 覆辙。
+3. C11 的长窗改善是真实的（paired CI 显著），但**不是** inner-ring collapse 上的改善（held-out 长窗无 inner-ring seeds）。B01 把它写成"3 个长窗都改善 0.01-0.03"是把 validation cell（snr20-nominal-long）混进 held-out 的 overreach。
+4. VERDICT B 自动 rotation（用户 §九"按上述 A/B/C 自动收口"）：候选族转向不依赖 collapse detector 的机制（equalizer 侧学习型校正器 C04/C09，task comparator=fixed_μ CMA；或 C13 pilot-aided / C12 coded 不同信息类）。
+
+### 排除的替代方案
+
+- **维持 D008 并启动 B02**：拒绝；会跳过 B01-R 的科学保真修复，把 AWGN/ambiguous 误当 collapse 监督信号。
+- **删除 D008 / B01 raw / H005**：拒绝；B01 的 raw 数值、closure 资产、PI-SER evaluator 仍是有效诊断与次级论文材料（H029-H034）；D008/H005 标 superseded 保留可审计血缘。
+- **强行建更大 test seed budget 重试 detector**：拒绝出本轮范围；记录为 §9 open question；下一对话决定。
+- **穷举更多均衡器（RLS/FD/neural）**：拒绝；用户 §三"baseline 不必是当前 SOTA"；fixed_μ CMA 已是公平 comparator。
+- **把 B01-R 数字写入论文正文**：拒绝；Scout/Sandbox；晋级需用户 strategy 决策。
+
+### 影响范围
+
+- H005 被 H006 取代为续接入口（H005 不删除）。
+- B01 raw artifacts（`fairness-batch-b01/artifacts/*`）字节未改；保留为 DIAGNOSTIC history。
+- B01-R raw artifacts（`fairness-batch-b01r/artifacts/*`）是新的高保真证据源。
+- topic-index 不变量段无变更；harvest-addendum.v3-b01r.yaml 追加 H029-H034；provenance 沿用 v1 + 新增 4-cat label / degradation onset / warning lead time 三个 DERIVED_HERE 推导。
+- protected history（B001-B003 / P03 / CB1 raw / canonical-state）字节未改；无 B004；无 ML 训练；无 push。
+- B02 detector 路线暂停；下一动作见 H006（rotation 到 C04/C09 学习型校正器或 C13 pilot-aided）。
+
+### 来源
+
+S006 / B01-R 纠偏科学运行 / 独立 verifier CONFIRM 11/11 / baseline-adjudication + evidence-and-claims 参考 / 用户 2026-07-21 10 条审计 + 自动收口授权。
