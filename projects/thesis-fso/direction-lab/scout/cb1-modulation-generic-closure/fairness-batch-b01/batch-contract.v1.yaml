@@ -1,0 +1,252 @@
+# =============================================================================
+# Fairness Batch B01 — Contract v1 (FROZEN BEFORE RUNNING)
+# Campaign: science-scout-2026-07-20.dual-pol-osl
+# Trigger: H004 / D007 (fairness debt + candidate over-narrowing)
+# Date: 2026-07-21
+# =============================================================================
+# Scientific question:
+#   Does the CB1 16QAM inner-ring collapse headroom (Atlas v1 max 0.333,
+#   PROBLEM_SURVIVES per H022) survive (a) a fairly-tuned CMA, (b) a per-
+#   symbol update structure, and (c) a standard CMA+DD-LMS cascade? In
+#   parallel, can a conventional threshold detector predict collapse from
+#   causal CMA-trace features with useful lead time?
+#
+# Candidates: C05 (conventional threshold detector), C08 (adaptive-mu bandit),
+#             C10 (per-symbol CMA variant), C11 (CMA+DD-LMS cascade).
+# =============================================================================
+
+schema_version: direction-lab.cb1.fairness-batch-b01.v1
+campaign_id: science-scout-2026-07-20.dual-pol-osl
+source_handoff: .sessions/2026-07-20-direction-lab-science-scout/H004-fair-portfolio-first-batch.md
+source_portfolio: campaigns/science-scout-2026-07-20/portfolio-refresh.v3-fairness.yaml
+inherits_from_contract: campaigns/science-scout-2026-07-20/campaign-contract.v1.yaml
+
+# === Scientific question (frozen) ===
+scientific_question: >-
+  In the CB1 dual-pol OSL source closure with square 16QAM, does the
+  standard-CMA inner-ring collapse headroom (Atlas v1: 10/11 cells >= MDE,
+  max 0.333; H022 PROBLEM_SURVIVES_CONVENTIONAL_BASELINE) close under any
+  of:
+    (a) FAIR TUNING — give CMA a validation-cell-selected mu (C08 bandit
+        and/or grid) instead of the frozen mu=0.001;
+    (b) STRUCTURAL CHANGE — per-symbol stochastic-gradient CMA (block_size=1,
+        C10) instead of block-end (block_size=64);
+    (c) CONVENTIONAL CASCADE — CMA followed by decision-directed LMS using
+        nearest-16QAM hard decisions (C11)?
+  In parallel: can a conventional change-point / threshold detector (C05)
+  on causal CMA-trace features predict per-seed collapse before PI-SER
+  degrades, with AUROC, recall, false alarm, and lead time reported?
+
+claim_ceiling: LOCAL_RESULT_SLICE
+
+# === Candidate lattice (frozen) ===
+# Per baseline-adjudication.md: shared system anchor for end-to-end, task-
+# specific comparator per output type. C05 is a DETECTOR; C08/C10/C11 are
+# EQUALIZER/CORRECTOR variants. They share the end-to-end PI-SER anchor but
+# C05 also has its own detector metric set.
+
+candidates:
+
+  # ─── C05: conventional change-point / threshold detector ─────────────────
+  - id: C05
+    role: conventional_detector_baseline
+    output_type: per_block_binary_alert
+    implementation: b01_candidates.c05_threshold_detector
+    legal_input: causal CMA-trace features (output_power, weight_norm, |z|^2/R^2 ratio, update_norm)
+    tuning: {threshold_grid: [0.2, 0.3, 0.4, 0.5, 0.6], cusum_drift_grid: [0.01, 0.05, 0.1]}
+    task_specific_comparator: none  # C05 IS the conventional comparator
+    metric_set: [auroc, pr_auc, recall_at_5pct_fpr, false_alarm_rate, warning_lead_time_blocks]
+
+  # ─── C08: adaptive-mu contextual bandit ──────────────────────────────────
+  - id: C08
+    role: adaptive_step_method
+    output_type: z_stream
+    implementation: b01_candidates.c08_adaptive_mu_bandit
+    legal_input: causal CMA-trace features at batch start + raw dual-pol samples
+    tuning:
+      mu_candidates: [1e-4, 3e-4, 1e-3, 3e-3, 1e-2]
+      bandit: linucb_alpha_grid [0.1, 1.0, 10.0]
+      reward: negative_mean_|z|^2 - R^2_deviation_per_batch
+    task_specific_comparator: fixed_mu_cma_validation_optimal  # the fairly-tuned anchor
+    metric_set: [pi_ser_global, pi_ser_per_cell, collapse_rate, divergence_rate]
+
+  # ─── C10: per-symbol CMA variant (block_size=1) ──────────────────────────
+  - id: C10
+    role: structural_equalizer_variant
+    output_type: z_stream
+    implementation: b01_candidates.c10_per_symbol_cma
+    legal_input: raw dual-pol samples (same channel realisations)
+    tuning:
+      mu_grid: [1e-5, 1e-4, 3e-4, 1e-3]  # per-symbol needs smaller mu; grid-search
+      block_size: 1  # per-symbol SGD; everything else identical to anchor
+    task_specific_comparator: standard_cma_godard_with_z  # the block_size=64 anchor
+    metric_set: [pi_ser_global, pi_ser_per_cell, collapse_rate, divergence_rate]
+
+  # ─── C11: CMA + DD-LMS cascade ───────────────────────────────────────────
+  - id: C11
+    role: conventional_cascade_equalizer
+    output_type: z_stream
+    implementation: b01_candidates.c11_cma_dd_lms_cascade
+    legal_input: raw dual-pol samples (CSI_NONE, public 16QAM alphabet)
+    tuning:
+      dd_step_size_grid: [1e-4, 3e-4, 1e-3]
+      dd_iterations: 1  # single refinement pass (per batch-contract.v1.yaml)
+      warm_start: from CMA anchor final weights
+    task_specific_comparator: standard_cma_godard_with_z  # stage 1 alone
+    metric_set: [pi_ser_global, pi_ser_per_cell, collapse_rate, divergence_rate]
+
+  # ─── Comparators (re-used from baseline-adjudication, unchanged) ─────────
+  - id: standard_cma_godold_z
+    role: diagnostic_anchor  # block_size=64, mu=0.001, the Atlas v1 identity
+    implementation: cb1_cell_runner.standard_cma_godard_with_z
+    note: re-used from baseline-adjudication-batch; identity-gated.
+
+  - id: nearest_16qam
+    role: end_to_end_go_floor  # the no-ML floor on any z-stream
+    implementation: cb1_evaluator.hard_16qam
+
+  - id: oracle_affine_16qam
+    role: kill_tool_only  # FR-21, scoring-only, never Go (FR-25)
+    implementation: cb1_evaluator.oracle_affine_bound_16qam
+
+# === Sweep axes (frozen) ===
+sweep_axes:
+
+  # Axis 1: Full Atlas v1 16QAM cells × {C05, C08, C10, C11} × 10 paired seeds.
+  #         C05 detector labels derived from oracle-affine PI-SER > 0.3 per seed.
+  - id: atlas_v1_fairness_probe
+    cells: atlas_v1_full_16qam_set  # 11 cells (inherit from baseline-adjudication)
+    paired_seeds: [11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+    candidates_per_cell: [C05, C08, C10, C11]
+    anchor_per_cell: [standard_cma_godard_with_z]  # for paired delta
+    purpose: >-
+      Test whether fairly-tuned CMA / per-symbol / DD-LMS cascade closes the
+      collapse on the same cells where Atlas v1 found headroom.
+
+  # Axis 2: Tuning-validation split (per D007 fairness contract).
+  #         Tune on 4 validation cells (3 short + 1 long, so tuning sees
+  #         convergence-length stability), freeze, evaluate on 7 held-out cells.
+  - id: tuning_validation_split
+    validation_cells: [16qam-snr20-nominal-short, 16qam-snr20-fg1000-short, 16qam-snr20-sop40e-short, 16qam-snr20-nominal-long]
+    held_out_cells: >-
+      [16qam-snr05-nominal-short, 16qam-snr10-nominal-short, 16qam-snr15-nominal-short,
+       16qam-snr25-nominal-short, 16qam-snr20-fg100-short,
+       16qam-snr10-fg100-long, 16qam-snr15-fg1000-long]
+    purpose: >-
+      Per-method hyperparameter selection on validation (including a long cell
+      so hyperparameters that diverge at long N are penalised), freeze, then
+      paired held-out evaluation with shared seeds and channel realisations.
+
+# === Tuning protocol (frozen, per baseline-adjudication.md) ===
+tuning_protocol:
+  principle: equal_tuning_opportunity_not_identical_hyperparameters
+  validation_cells: 3  # representative subset for tuning
+  seeds_per_validation_cell: 5  # subset of 10 for tuning speed
+  hyperparameter_candidates_per_method: 5  # from each method's grid above
+  convergence_check: per_method_behavior_appropriate
+  freeze_rule: >-
+    Each method selects its hyperparameters on validation cells by minimizing
+    held-out PI-SER (for C08/C10/C11) or maximizing AUROC (for C05), then
+    freezes them BEFORE held-out evaluation.
+
+# === Statistical preregistration (inherited from baseline-adjudication) ===
+statistical_preregistration:
+  primary_metric: PI-SER (permutation-invariant symbol error rate)
+  secondary_metric: fixed-label SER
+  MDE: 0.005_per_symbol
+  detector_metrics: [auroc, pr_auc, recall_at_5pct_fpr, false_alarm_rate, warning_lead_time_blocks]
+  zero_error_confidence: rule_of_three_one_sided_95pc_upper_bound
+  sequential_sampling_budget: 10_paired_seeds_per_cell
+  oracle_role: Kill_tool_only_FR21_never_Go_baseline_FR25
+
+# === Decision rule (frozen BEFORE running) ===
+decision_rule:
+
+  CLOSED_BY_FAIR_CONVENTIONAL_TREATMENT: >-
+    At least one of {C08 fairly-tuned, C10 per-symbol, C11 cascade} achieves
+    nearest-PI-SER - oracle-PI-SER < MDE on >= 9/11 atlas-v1 held-out cells.
+    Records LOCAL_NEGATIVE_on_ML_CSI_NONE; the collapse was infrastructure /
+    tuning, not method-worthy.
+
+  PROBLEM_SURVIVES_FAIR_CONVENTIONAL_TREATMENT: >-
+    None of {C08, C10, C11} achieves nearest-PI-SER - oracle-PI-SER < MDE on
+    >= 9/11 atlas-v1 held-out cells. The collapse survives fair conventional
+    treatment with per-method tuning, structural variation, and cascade.
+
+  AUTHORIZE_B02_ML_DETECTOR_BATCH_CONDITIONAL: >-
+    PROBLEM_SURVIVES_FAIR_CONVENTIONAL_TREATMENT AND C05 detector AUROC on
+    held-out seeds:
+      - AUROC >= 0.85 AND warning_lead_time >= 1 block: B02 must beat C05 AUROC.
+      - AUROC < 0.65: B02 authorized unconditionally (conventional thresholds
+        cannot capture the signal; ML needed).
+      - 0.65 <= AUROC < 0.85: B02 authorized; claim narrows to "ML improves
+        lead time / calibration over conventional threshold".
+
+  INFRASTRUCTURE_BLOCKED: >-
+    Implementation fails identity gate, sanity, or smoke test in a way that
+    cannot be repaired within batch budget. Records as infrastructure debt;
+    rotates to next candidate.
+
+# === Provenance gate (frozen BEFORE running) ===
+provenance_gate:
+  formula_source_required_for:
+    - cma_godard_z_cost  # inherited (Godard 1980)
+    - dd_lms_cost        # Sato 1975 / Proakis §10.4-10.5
+    - cusum_statistic    # Page 1954 / Basseville-Nikiforov 1993
+    - linucb_algorithm   # Li et al. WWW 2010
+  source_classification:
+    cma_godard_z_cost: PRIMARY_LITERATURE  # inherited
+    dd_lms_cost: PRIMARY_LITERATURE  # Sato 1975 TCOM
+    cusum_statistic: PRIMARY_LITERATURE  # Page 1954 Biometrika
+    linucb: PRIMARY_LITERATURE  # Li, Chu, Langford, Schapire WWW 2010
+  derivations_in_project:
+    - collapse_label_from_oracle  # DERIVED_HERE: per-seed oracle PI-SER > 0.3 => collapsed
+
+# === Sanity checks (frozen BEFORE running) ===
+sanity_checks:
+  - id: cma_anchor_byte_regression
+    description: >-
+      standard_cma_godard_with_z on QPSK anchor cell reproduces P03 v1
+      PI-SER=0.0 (byte-identical to Atlas v1). Wiring unchanged.
+  - id: c10_smoke_clean_16qam
+    description: >-
+      On a clean (no fading, no SOP, no AWGN) 16QAM input, C10 per-symbol CMA
+      converges to PI-SER ~ 0 within N=512. Sanity that per-symbol gradient
+      sign is correct.
+  - id: c11_smoke_no_improvement_on_clean
+    description: >-
+      On a clean 16QAM input where CMA already converges, DD-LMS cascade
+      does not degrade (PI-SER stays ~ 0). Sanity that warm-start is correct.
+  - id: c05_detector_constant_input
+    description: >-
+      On a synthetic constant-|z|^2 input (no collapse), C05 detector emits
+      no alert. Sanity that the threshold is not degenerate.
+  - id: c08_bandit_smoke
+    description: >-
+      On 1 validation cell, C08 bandit selects a mu and completes without
+      divergence. Sanity that LinUCB update is finite.
+
+# === Forbidden within this batch (inherited from campaign + H004) ===
+forbidden:
+  - modify_B001_B002_B003_or_P03_Atlas_bytes
+  - create_legacy_B004
+  - train_ML_detector_classifier_anomaly_or_RL  # B02 only, conditional on B01 outcome
+  - modify_physical_params_or_metric_to_make_CMA_or_MMA_win
+  - treat_oracle_affine_as_Go_baseline
+  - tune_on_held_out_cells  # validation/held-out split is frozen
+  - main_thread_WebSearch_or_webReader
+  - push_or_merge
+  - modify_protected_history
+
+# === Outputs ===
+outputs:
+  raw: artifacts/fairness-batch-b01-v1.json
+  synthesis: artifacts/fairness-batch-b01-v1-synthesis.md
+  candidate_code: b01_candidates.py
+  runner: run_fairness_batch_b01.py
+  provenance_update: campaigns/science-scout-2026-07-20/formula-symbol-parameter-provenance.yaml
+  harvest: campaigns/science-scout-2026-07-20/harvest-addendum.v2-b01.yaml
+
+# === Time budget ===
+time_budget_minutes: 90
+commit_policy: single_consolidated_commit_at_session_end_no_push

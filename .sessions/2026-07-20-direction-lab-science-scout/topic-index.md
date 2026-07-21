@@ -1,6 +1,6 @@
 # Topic Index: Direction Lab 首轮 SCIENCE_SCOUT 正式科学探索
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-07-21（S004/D007/H004：baseline 公平性与候选过窄纠正；当前 DIAGNOSTIC/SLICE）
+> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-07-21（S005/D008/H005：B01 公平 batch 完成，PROBLEM_SURVIVES_FAIR_CONVENTIONAL_TREATMENT，条件授权 B02 ML detector）
 
 ## 专题信息
 
@@ -61,6 +61,7 @@
 - **2026-07-21 D007 纠正**：S003 的 raw CMA/MMA 数值与局部失败观察有效，但同 `mu` 不等于公平调参，`N=32768` 不等于约 `1e5` 收敛闭合；当前科学状态退回 `DIAGNOSTIC/SLICE`，不得把 task-mismatch、under-convergence 或 block-end 真因写成已排除/已证明。
 - **oracle 边界**：oracle affine 只能证明特权映射存在；receiver-visible trace 是否足以识别该映射仍未验证。C01 可先验证 observability，但检测本身不代表 PI-SER 改善。
 - **教科书结果不外推**：MMA > CMA on 16QAM 在 fiber-coherent 成立但在 OSL+GG+SOP+block-end 下不成立（H018）。这是可毕业的负面论文材料。
+- **2026-07-21 D008 公平闭合**：CB1 16QAM inner-ring collapse 在 per-method tuning（C08 bandit）、per-symbol 结构变化（C10 block_size=1）、CMA+DD-LMS 级联（C11）下**均存活**（held-out 6/7 cells headroom ≥ MDE）。**坍塌是 Godard cost 在该信道下的深层属性**，不是 block-end 协议 artifact（H021 被 C10 直接否定，H024）。C05 传统阈值 detector 在 long cells AUROC=1.000，pooled 0.6546 → 条件授权 B02 ML detector（narrowed claim）。
 
 ## 进展线索
 
@@ -69,17 +70,19 @@
 - **S002 续接 / D005 / H002**：独立审计指出 comparator 任务适配和收敛不足；历史 Atlas 数字不删除，但证据级别收回 `DIAGNOSTIC/SLICE`。D005 取代 D004 的直接 ML 授权；H002 要求先做一个主传统 comparator + 必要廉价扩展的共享裁决，并行准备其他机制候选。
 - **S003 / D006 / H003**：baseline adjudication shared batch 完成。实现 MMA（Yang-Werner-Dumont JSAC 2002）作主 Go comparator，5/5 sanity tests PASS，独立 verifier clean-room bit-identical 复现。axis 1（11 cells × 10 seeds）+ axis 2（4 cells × {N=512, N=32768} × 5 seeds）联合裁决 = `PROBLEM_SURVIVES_CONVENTIONAL_BASELINE`。机制：MMA 不优于 CMA（H018），N=32768 headroom 不降反升（H019），block-end protocol 是瓶颈但动 CMA anchor 会破 parity（H021）。harvest H016-H022。Portfolio 新增 4 个机制不同候选 C01-C04。D006 条件授权下一对话做 bounded ML Scout（首选 C01 causal collapse detector）。
 - **S004 / D007 / H004**：独立复审确认 D006 对公平性、收敛、因果和 recoverability 解释过强；撤回其 ML 直接晋级，保留 raw evidence/资产/harvest。下一入口改为短时机制级扩图、任务专属 comparator/readiness 纠正和有界公平修复，随后立即批跑 `READY` 子集。
+- **S005 / D008 / H005**：B01 fairness batch 完成。Portfolio v3 扩图到 13 候选 9 簇（C01-C13），纠正 readiness/comparator；B01 合同冻结 + 实现 4 候选（C05/C08/C10/C11）+ 7/7 sanity PASS + 11×10 全量运行（43-59s）。结论 `PROBLEM_SURVIVES_FAIR_CONVENTIONAL_TREATMENT`：held-out 7 cells 上 anchor/C08/C10/C11 各只关闭 1/7；C11 是最佳变体（long cells 改善 0.01-0.03，headroom 仍 ≥6×MDE）；C10 per-symbol 否定 H021；C05 detector pooled AUROC=0.6546（long cells=1.000，short cells=0.5）。harvest H023-H028；独立 verifier CONFIRM HIGH confidence 20/20 PASS。D007 公平性债务 #1/#3/#5/#6 CLOSED，#2/#4 PARTIALLY_CLOSED。**条件授权 B02 ML detector batch**（narrowed claim "ML improves lead time / calibration"）。
 
 ## 未决项
 
-- ML Scout batch 仍未运行；D006 已由 D007 取代，当前须先闭合有限公平性并扩展机制级候选全貌。
-- Portfolio 候选 C01-C04 已写卡但 readiness 需纠正：C01/C02/C04 至少需 adapter/合同；C03 为 `INFRASTRUCTURE_BLOCKED`。
+- ML Scout batch 仍未运行；D008 已条件授权 B02 ML detector batch（narrowed claim），但尚未执行。
+- Portfolio 候选 C01-C13 已写卡：C05/C08/C11 已运行（B01）；C01/C02/C04/C06/C09/C10/C13 = NEEDS_SMALL_ADAPTER；C03/C07/C12 = INFRASTRUCTURE_BLOCKED。
 - `_cma.py:CMAEqualizer2x2` scalar-error 与 docstring/canonical "Godard-with-z" 不一致（H013 OPEN_ACKNOWLEDGED，pre-existing）。
 - 16QAM R²=1.32 未 canonical 化（仅 CB1 closure 中定义）。
-- **新债务 H021**：block_size=64 + block-end protocol 是 collapse 瓶颈但动 CMA anchor identity 会破 parity；per-symbol 变体是 future infrastructure task。
+- **H021 债务 DOWN-GRADED**：C10 per-symbol 直接测试（H024）表明 block-end 协议不是 collapse 瓶颈；per-symbol 不帮助。H021 不再是 primary suspect。
 - P03 `claim-scope-validation-receipt.v1.yaml` SHA 与 `claim-scope-assessment.v1.yaml` 不匹配（pre-existing at base commit，与本轮无关）。
 - stale `_dual_pol_channel.py` checksum（行尾差异）已在 authorization-projection.v1.yaml 登记。
+- **D007 #2/#4 部分闭合**：convergence N 和 oracle recoverability 仍需 B02/B03 在 long cells 上进一步验证。
 
 ## 当前位置
 
-S003 raw baseline adjudication 已完成；D007 将结论收回 `DIAGNOSTIC/SLICE` 并取代 D006 的直接 ML 授权。下一步先做约 12–18 个机制级候选的有界扩图、两层 comparator 与 readiness 审计，再立即运行 3–5 个 `READY` 候选。H004 是唯一续接入口。
+S005 / D008 / H005：B01 fairness batch 完成，PROBLEM_SURVIVES_FAIR_CONVENTIONAL_TREATMENT + 独立 verifier CONFIRM。下一入口 H005：B02 ML detector batch（C01/C02/C06 + causal feature stacker adapter sprint，task comparator = C05 AUROC=0.6546，narrowed claim "ML improves lead time / calibration in short-cell ambiguous regime"）。

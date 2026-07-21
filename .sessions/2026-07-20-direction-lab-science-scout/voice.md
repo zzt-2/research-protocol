@@ -35,3 +35,21 @@
 
 - "只是一定要保证公平性？我很担心随着推进会出现和baseline标准不一致的问题。以及，这一批没找多少啊？你觉得是多找十几个方向还是直接现在就开始？" → D007
 - "是。你稍微改一下skill，然后给我新对话提示词吧" → D007, H004
+
+## 2026-07-21（续 — SCIENCE_SCOUT 第三对话，B01 fairness batch）
+
+> "你现在接续 Research Direction Lab 的正式 SCIENCE_SCOUT。"
+
+> "不要开 Goal。不要 push。整个对话最多做一次 consolidated commit。"
+
+> "本轮目标：在一个连续对话内完成三个宏阶段：A. 恢复与机制级 Portfolio 扩图；B. baseline/readiness 收口并运行首批；C. synthesis、harvest、独立复核和交接。"
+
+> "不要停在规划、接口 smoke 或候选列表。只要存在合法可运行路径，就继续推进。"
+
+> "局部失败、单候选阻断或模型不工作时自动换候选；不要停下来问我。"
+
+> "检测 AUC 再高也不能写成 PI-SER 改善。"
+
+> "如果公平修复后问题被传统方法关闭，保留负面结果并自动轮换其他候选族，不为保住 ML 方向修改条件。" → D008
+
+> "整个对话只做一次 consolidated commit，不 push。"

@@ -1,0 +1,795 @@
+# Portfolio Refresh v3 — Fairness + Mechanism-Level Bounded Expansion
+# Campaign: science-scout-2026-07-20.dual-pol-osl
+# Trigger: H004 / D007 (fairness debt + candidate over-narrowing on collapse/trace)
+# Date: 2026-07-21
+#
+# Purpose (per H004 / user §五):
+#   - Expand the portfolio from 4 same-cluster candidates (C01-C04) to a bounded
+#     mechanism-level map covering 9 functional clusters (12-18 candidates).
+#   - Correct C01-C04 readiness and task-specific comparators (per D007).
+#   - Assign a shared system anchor + task-specific comparator per candidate.
+#   - 12-18 is a HEURISTIC target, NOT a completeness proof. The map stays
+#     open; deferred candidates are recorded with lineage.
+#
+# Source material (NOT cherry-picked):
+#   - H017 / H018 / H022 (adjudicated survival + MMA failure + recoverability)
+#   - failure-registry.yaml (inherit negative scope only, families survive)
+#   - candidate-universe.yaml U01-U32 + candidate-universe.v2.yaml U33-U34
+#   - portfolio-refresh.v1.yaml U45-U52 + priority candidates
+#   - portfolio-refresh.v2-addendum.yaml C01-C04
+#
+# Comparator model (per baseline-adjudication.md + user §六):
+#   - SHARED SYSTEM ANCHOR: standard_cma_godard_with_z + nearest_16qam
+#     (end-to-end PI-SER comparison across all candidates that emit a z-stream)
+#   - TASK-SPECIFIC COMPARATOR: per candidate (detector vs controller vs
+#     corrector each needs its own conventional peer)
+#   - ORACLE: scoring-only Kill tool (FR-21), never Go (FR-25)
+
+schema_version: direction-lab.portfolio-refresh.v3-fairness
+campaign_id: science-scout-2026-07-20.dual-pol-osl
+supersedes: none  # additive; corrects readiness in v2-addendum, expands map
+inherits_priority_candidates_from:
+  - portfolio-refresh.v1.yaml
+  - portfolio-refresh.v2-addendum.yaml
+
+# =============================================================================
+# §1 Shared anchors (frozen for this campaign)
+# =============================================================================
+
+shared_anchors:
+  system_anchor:
+    id: cb1_dual_pol_osl_16qam
+    description: >-
+      CB1 modulation-generic closure (QPSK+16QAM hash-bound) on dual-pol OSL
+      with Gamma-Gamma strong turbulence, SOP rotation, block-end CMA updates.
+    channel: {alpha: 4.2, beta: 1.4, f_g_hz_range: [30, 1000], sop_rate_range: [4e-6, 4e-5]}
+    modulation: qam16
+    algorithm_class: {mu: 0.001, n_tap: 11, block_size: 64, init: center-tap}
+    end_to_end_metric: pi_ser  # permutation-invariant SER (primary), fixed-label SER (secondary)
+    end_to_end_go_comparator: nearest_16qam  # the no-ML floor on any z-stream
+    end_to_end_kill_tool: oracle_affine_16qam  # scoring-only, FR-21
+
+  fairness_contract:
+    principle: equal_tuning_opportunity_not_identical_hyperparameters
+    per_method_budget:
+      validation_cells: 3  # representative subset for tuning
+      seeds_per_cell: 5
+      hyperparameter_candidates: 5  # grid or random search
+      convergence_check: per_method_behavior_appropriate
+    freeze_rule: >-
+      Each compared method selects its hyperparameters on validation cells,
+      freezes them, then is evaluated on paired held-out cells with shared
+      seeds and shared channel realisations.
+    oracle_role: Kill_tool_only_FR21_never_Go_baseline_FR25
+
+  reusable_assets:
+    cb1_closure: projects/simulation/common/_dual_pol_channel.py::generate_shared_realization_dp
+    cma_anchor: cb1_cell_runner.standard_cma_godard_with_z
+    mma_comparator: mma_comparator.mma_yang_werner_dumont
+    evaluator: cb1_evaluator.evaluate_dual_16qam
+    blind_affine: cb1_evaluator.blind_affine_compare_16qam
+    oracle_affine: cb1_evaluator.oracle_affine_bound_16qam
+    trace_features: >-
+      {output_power, weight_norm, |z|^2/R^2 ratio, update_norm, mma_cost}
+      per block-end snapshot; same features emitted by CMA anchor trace and
+      MMA trace (information-parity proven).
+
+# =============================================================================
+# §2 Readiness corrections to C01-C04 (per D007 §5)
+# =============================================================================
+# v2-addendum had: C01=Y, C02=Y, C03=Y_with_compute, C04=Y
+# D007 correction: shared input does NOT prove runnable; C03 lacks action hook.
+
+readiness_corrections:
+  C01_causal_collapse_early_warning_detector:
+    corrected_readiness: NEEDS_SMALL_ADAPTER
+    reason: >-
+      Mechanism + comparator exist, but the labels for supervised training come
+      from oracle-derived PI-SER (allowed for labels per FR-14 prior knowledge)
+      AND a small adapter is needed: a per-block label-extraction hook that
+      consumes the oracle's pre-computed per-seed collapse flag, NOT a fresh
+      oracle call at training time. Also needs a causal feature stacker that
+      aligns CMA-trace blocks to label timestamps. ~half-day adapter.
+    corrected_task_comparator: >-
+      Conventional change-point / threshold detector on the same CMA-trace
+      features (CUSUM on output_power, threshold on |z|^2/R^2 ratio). NOT
+      nearest-16QAM (which is a corrector comparator, not a detector one).
+    blocked_scope: none_after_adapter
+
+  C02_ssl_cma_trace_anomaly_detector:
+    corrected_readiness: NEEDS_SMALL_ADAPTER
+    reason: >-
+      Same causal feature stacker adapter as C01. SSL training loop itself is
+      off-the-shelf (GRU + masked reconstruction). ~half-day adapter shared
+      with C01.
+    corrected_task_comparator: >-
+      Same conventional threshold detector as C01 (statistical anomaly baseline).
+      PLUS an ablation against a constant-output null hypothesis (per v2 risk
+      note: SSL may simply learn the constant-modulus prior).
+    blocked_scope: none_after_adapter
+
+  C03_learned_reinit_policy:
+    corrected_readiness: INFRASTRUCTURE_BLOCKED
+    reason: >-
+      RL policy requires a state snapshot hook (capture CMA weights mid-run)
+      AND an action effect hook (re-inject modified weights into the running
+      CMA). The current CMA runner is a pure forward trace emitter; it has
+      neither. Y_with_compute in v2-addendum was wrong — compute budget is
+      not the blocker, the action interface is.
+    corrected_task_comparator: >-
+      Fixed-period re-init baseline (reinit every K blocks regardless of
+      state) AND threshold-triggered re-init baseline (reinit when
+      output_power < tau). Both need the same action hook, so they are
+      co-blocked.
+    blocked_scope: state_snapshot_action_effect_hook_missing
+    unblock_path: implement non-protected runner variant with reinit hook
+
+  C04_learned_affine_correction:
+    corrected_readiness: NEEDS_SMALL_ADAPTER
+    reason: >-
+      Mechanism + comparator (blind_affine_compare_16qam) exist. Needs a
+      feature-conditioned coefficient predictor (a tiny MLP from trace
+      features to 6 affine params). Adapter is the feature-conditioned head
+      on top of the existing blind affine. ~half-day adapter.
+    corrected_task_comparator: blind_affine_compare_16qam (same-class, same-information)
+    blocked_scope: none_after_adapter
+
+# =============================================================================
+# §3 Mechanism-level expansion: 9 functional clusters
+# =============================================================================
+# Each cluster has 1-3 candidates. Total map = 4 corrected (C01-C04) + 9 new
+# (C05-C13) = 13 candidates, inside the 12-18 heuristic.
+#
+# Per user §五: organize by MECHANISM, not by model name. Logistic/MLP/GRU/
+# Transformer of the same task = ONE candidate family, not four.
+
+mechanism_clusters:
+
+  # ─── Cluster 1: Failure observability (can we see collapse forming?) ───────
+  cluster_1_failure_observability:
+    question: >-
+      From receiver-visible causal signals, can we predict per-seed collapse
+      BEFORE PI-SER degrades, with calibrated confidence?
+    shared_input: causal_cma_trace_features
+    members:
+      - C01_causal_collapse_early_warning_detector  # supervised, corrected to NEEDS_SMALL_ADAPTER
+      - C02_ssl_cma_trace_anomaly_detector          # SSL, corrected to NEEDS_SMALL_ADAPTER
+      - C05_conventional_changepoint_baseline       # NEW: non-ML CUSUM/threshold
+    task_specific_comparator: >-
+      C05 (the conventional change-point / threshold detector) is the task
+      comparator for C01/C02. nearest-16QAM is NOT a detector comparator.
+    metric_set: [auroc, pr_auc, recall_at_fixed_fpr, false_alarm_rate, warning_lead_time_blocks, calibration_ece]
+
+  # ─── Cluster 2: Anomaly / OOD / confidence (is this seed off-distribution?) ─
+  cluster_2_anomaly_ood_confidence:
+    question: >-
+      Can an OOD detector flag collapse-prone seeds as off-manifold relative
+      to healthy convergence, without explicit collapse labels?
+    shared_input: causal_cma_trace_features (same as cluster 1)
+    members:
+      - C06_trace_density_ood_detector  # NEW: density-based OOD on trace embeddings
+    task_specific_comparator: >-
+      C05 (same conventional threshold detector) + a "constant-modulus prior"
+      null (detect anomaly purely from |z|^2 deviation from R^2).
+    metric_set: [auroc, pr_auc, recall_at_fixed_fpr, false_alarm_rate]
+
+  # ─── Cluster 3: Re-initialization / algorithm switch (control action) ──────
+  cluster_3_reinit_switch_control:
+    question: >-
+      Given an early-warning signal, WHEN and WHAT corrective action (re-init
+      vs switch to MMA vs switch to DD-LMS) recovers the most collapsed seeds?
+    shared_input: causal_cma_trace_features + action_effect_hook
+    members:
+      - C03_learned_reinit_policy  # RL, INFRASTRUCTURE_BLOCKED
+      - C07_threshold_reinit_controller  # NEW: non-ML fixed/threshold policy (control baseline)
+    task_specific_comparator: >-
+      C07 is the task comparator for C03 (both emit discrete re-init actions).
+      Co-blocked on the same action hook as C03.
+    metric_set: [pi_ser_recovered_fraction, pi_ser_global, false_intervention_rate]
+    blocked_scope: state_snapshot_action_effect_hook_missing
+
+  # ─── Cluster 4: Adaptive step / window / block (CMA tuning control) ────────
+  cluster_4_adaptive_step_window_block:
+    question: >-
+      Does per-block adaptation of CMA step size mu, window length, or block
+      size reduce the collapse rate without breaking the CMA anchor identity?
+    shared_input: causal_cma_trace_features
+    members:
+      - C08_adaptive_mu_bandit  # NEW: contextual bandit selecting mu per block
+    task_specific_comparator: >-
+      Fixed-mu CMA at the validation-optimal mu (the conventional "best fixed
+      step" baseline). This is the CMA anchor with mu tuned per-cell instead
+      of frozen at 0.001.
+    metric_set: [pi_ser_global, collapse_rate, divergence_rate]
+    readiness_note: >-
+      READY if the CMA runner accepts mu as a per-call argument (it does —
+      standard_cma_godard_with_z(mu=...)). Bandit does NOT need intra-run mu
+      changes; it selects mu before each block-end batch using prior trace.
+      May be implemented as outer-loop selection without action hook.
+
+  # ─── Cluster 5: Output correction (post-hoc fix on z) ──────────────────────
+  cluster_5_output_correction:
+    question: >-
+      Can a learned map conditioned on trace features correct the collapsed
+      z-stream better than blind affine (which fails on collapsed z)?
+    shared_input: causal_cma_trace_features + z_stream
+    members:
+      - C04_learned_affine_correction  # NEEDS_SMALL_ADAPTER
+      - C09_per_seed_mixture_correction  # NEW: trace-conditioned mixture of affine experts
+    task_specific_comparator: blind_affine_compare_16qam (same-class, same-information)
+    metric_set: [pi_ser_corrected, pi_ser_gain_over_blind_affine]
+
+  # ─── Cluster 6: Equalizer structure / update mechanism ─────────────────────
+  cluster_6_equalizer_structure_update:
+    question: >-
+      Does a different equalizer structure (per-symbol update, smaller block,
+      or a hybrid CMA+DD-LMS cascade) reduce the collapse rate?
+    shared_input: raw dual-pol samples (same channel realisations)
+    members:
+      - C10_per_symbol_cma_variant  # NEW: block_size=1 stochastic gradient (tests H021)
+      - C11_cma_dd_lms_cascade      # NEW: standard fiber-coherent cascade
+    task_specific_comparator: >-
+      The CMA anchor (standard_cma_godard_with_z at block_size=64) is the
+      task comparator. This cluster is CONVENTIONAL variants — they serve as
+      additional Go comparators for the ML candidates AND test the
+      infrastructure-gap hypothesis H021 (block-end bottleneck).
+    metric_set: [pi_ser_global, collapse_rate, divergence_rate]
+    readiness_note: >-
+      C10 tests H021 directly. It requires a non-protected runner variant
+      (per-symbol CMA is a different identity than the block-end anchor), so
+      it does NOT modify the anchor — it is a NEW runner. C11 is READY
+      (DD-LMS warm-starts from CMA final weights; no action hook needed).
+
+  # ─── Cluster 7: Soft-output / LLR / coded path (paper-main-line but blocked)
+  cluster_7_soft_output_llr_coded:
+    question: >-
+      Does the collapse-induced BER degrade coded BER / GMI, and can a soft-
+      output aware method recover coded performance?
+    shared_input: z_stream + decoder_feedback (BLOCKED)
+    members:
+      - C12_soft_output_collapse_aware  # NEW: collapse-aware LLR remapping
+    task_specific_comparator: >-
+      Standard soft demapper on the collapsed z-stream. Both need the
+      coded-chain evaluator (bundle 2).
+    metric_set: [gmi, coded_ber, fer]
+    readiness: INFRASTRUCTURE_BLOCKED  # coded evaluator (bundle 2) not built
+    paper_main_line_value: 5  # highest paper value, blocked
+
+  # ─── Cluster 8: CSI / pilot / closed-loop (information-class change) ───────
+  cluster_8_csi_pilot_closed_loop:
+    question: >-
+      Does adding receiver-estimated CSI (pilot-aided Jones estimation)
+      close the collapse, and does it change the ML claim ceiling?
+    shared_input: pilot_aided_jones_estimate (different information class)
+    members:
+      - C13_pilot_aided_jones_stabilization  # NEW: from U05/U36/U52 lineage
+    task_specific_comparator: >-
+      CSI_NONE CMA anchor (the cluster-1 system anchor). The comparator here
+      tests whether the information-class change (CSI_NONE -> CSI_PILOT) is
+      itself the mechanism that closes collapse.
+    metric_set: [pi_ser_global, collapse_rate]
+    readiness: NEEDS_SMALL_ADAPTER  # pilot injection is simulator-internal, D052 proven
+    note: >-
+      This candidate is in a DIFFERENT information class. It does NOT compete
+      with CSI_NONE candidates on the same claim; it tests whether the CSI_NONE
+      ceiling itself is fundamental or an artifact.
+
+  # ─── Cluster 9: High paper value but infrastructure-blocked ────────────────
+  cluster_9_infra_blocked_high_value:
+    question: >-
+      What high-paper-value directions are blocked by current infrastructure,
+      and what is the minimum unblock?
+    members:
+      - C03  # state/action hook missing (cluster 3)
+      - C12  # coded evaluator missing (cluster 7)
+    note: >-
+      Recorded as harvestable thesis material (boundary mapping). Not in the
+      READY batch.
+
+# =============================================================================
+# §4 Candidate cards (C05-C13 new, full form per candidate-portfolio.md)
+# =============================================================================
+
+new_candidates:
+
+  # ─── C05: Conventional change-point / threshold detector (NON-ML) ──────────
+  - id: C05
+    name: conventional_changepoint_threshold_detector
+    mechanism_family: conventional_statistical_detector  # NON-ML
+    cluster: cluster_1_failure_observability
+    method_M: >-
+      CUSUM on output_power trajectory + hard threshold on |z|^2/R^2 ratio,
+      emitting a binary "collapse imminent" alert when either crosses a
+      validation-tuned threshold. No learning.
+    condition_C: same as C01 (dual-pol OSL 16QAM, same channel).
+    mechanism_A_deficiency: >-
+      Same collapse mechanism as C01, but addressed with the conventional
+      change-point detection toolkit (Page 1954 CUSUM; Basseville-Nikiforov
+      1993). This is the NON-ML task comparator that any ML detector (C01,
+      C02, C06) must beat.
+    legal_input: same as C01 (CSI_NONE causal CMA-trace features).
+    output_or_action: per-block binary alert + threshold-crossing time.
+    metric_improved: >-
+      AUROC / PR-AUC / recall at fixed FPR / false alarm rate / warning lead
+      time. NOT PI-SER directly (this is a detector, not a corrector).
+    main_conventional_comparator: >-
+      None — C05 IS the conventional comparator. It is also the task-specific
+      comparator for C01, C02, C06.
+    likely_paper_content: >-
+      (a) Conventional detector baseline for collapse early warning.
+      (b) Reveals whether the collapse signature is simple enough to be
+          caught by a threshold, or requires learned temporal structure.
+    reuses: [cb1_closure, cma_anchor, trace_features]
+    claim_ceiling: SLICE
+    paper_main_line_value: 3  # supporting comparator; main value is enabling ML comparison
+    readiness: READY  # no ML, no adapter; uses existing trace output
+    risks: >-
+      May trivially achieve high AUROC if the collapse signature (|z|^2 -> 0.2)
+      is stark; must report lead time and false alarm, not just AUC.
+    next_action: include_in_first_batch
+
+  # ─── C06: Trace-density OOD detector ────────────────────────────────────────
+  - id: C06
+    name: trace_density_ood_detector
+    mechanism_family: density_based_ood
+    cluster: cluster_2_anomaly_ood_confidence
+    method_M: >-
+      Fit a lightweight density estimator (GMM or normalizing flow on trace
+      embeddings) on HEALTHY seed traces only; flag seeds with log-likelihood
+      below threshold as OOD (collapse-prone). No collapse labels.
+    condition_C: same as C01.
+    mechanism_A_deficiency: >-
+      Same collapse mechanism as C01, addressed via OOD detection rather than
+      supervised classification or SSL reconstruction. Mechanism difference
+      vs C02: density estimation vs reconstruction error.
+    legal_input: same as C01.
+    output_or_action: per-block OOD score + threshold-based alert.
+    metric_improved: same as C05 (detector metrics).
+    main_conventional_comparator: C05 (the conventional threshold detector).
+    likely_paper_content: >-
+      (a) Density-based OOD alternative to supervised (C01) and SSL (C02)
+          collapse detection.
+      (b) Comparison isolates whether collapse is better framed as
+          classification, reconstruction anomaly, or density tail.
+    reuses: [cb1_closure, cma_anchor, trace_features]
+    claim_ceiling: SLICE
+    paper_main_line_value: 3
+    readiness: NEEDS_SMALL_ADAPTER  # needs the same causal feature stacker as C01/C02
+    risks: >-
+      Density estimation on short traces (N=512 / ~7 blocks) is statistically
+      fragile. May need longer-block aggregation or a per-cell density.
+    next_action: deferred_after_C01_C02
+
+  # ─── C07: Threshold / fixed-period re-init controller (NON-ML) ─────────────
+  - id: C07
+    name: threshold_periodic_reinit_controller
+    mechanism_family: conventional_rule_based_controller  # NON-ML
+    cluster: cluster_3_reinit_switch_control
+    method_M: >-
+      Two rule-based controllers: (a) fixed-period re-init every K blocks
+      (grid search K on validation); (b) threshold-triggered re-init when
+      output_power < tau (grid search tau on validation).
+    condition_C: same as C01.
+    mechanism_A_deficiency: >-
+      Same as C03 but conventional. This is the NON-ML task comparator that
+      C03 (RL policy) must beat.
+    legal_input: same as C03 (trace features + action hook).
+    output_or_action: discrete re-init action per block.
+    metric_improved: >-
+      PI-SER global, fraction of collapsed seeds recovered, false
+      intervention rate.
+    main_conventional_comparator: >-
+      None — C07 IS the conventional comparator. Co-blocked with C03 on the
+      action hook.
+    likely_paper_content: >-
+      (a) Conventional re-init baseline for adaptive equalizer control.
+      (b) Reveals whether a simple threshold rule captures most of the
+          recovery, or whether learned policy is needed.
+    reuses: [cb1_closure, cma_anchor, trace_features, action_hook_BLOCKED]
+    claim_ceiling: SLICE
+    paper_main_line_value: 3
+    readiness: INFRASTRUCTURE_BLOCKED  # same action hook as C03
+    risks: >-
+      Fixed-period re-init may destroy healthy convergence; threshold-triggered
+      needs careful tau tuning to avoid false interventions.
+    next_action: deferred_until_action_hook
+
+  # ─── C08: Adaptive-mu contextual bandit ────────────────────────────────────
+  - id: C08
+    name: adaptive_mu_contextual_bandit
+    mechanism_family: bandit_control
+    cluster: cluster_4_adaptive_step_window_block
+    method_M: >-
+      Contextual bandit (LinUCB or Thompson sampling) that observes trace
+      features at the start of each block-batch and selects mu from a discrete
+      candidate set {1e-4, 3e-4, 1e-3, 3e-3, 1e-2}. Reward = -mean(|z|^2 - R^2)
+      on the batch (dense proxy for PI-SER).
+    condition_C: same as C01.
+    mechanism_A_deficiency: >-
+      The CMA anchor uses a fixed mu=0.001 inherited from sat.1553 for ALL
+      cells and seeds. H017 shows the collapse is seed-trajectory dependent;
+      a fixed mu cannot adapt. A bandit can select a smaller mu on
+      collapse-prone trajectories and a larger mu on healthy ones.
+    legal_input: causal CMA-trace features at batch start.
+    output_or_action: discrete mu selection per batch.
+    metric_improved: PI-SER global, collapse rate, divergence rate.
+    main_conventional_comparator: >-
+      Fixed-mu CMA at the validation-optimal mu (the strongest conventional
+      "best fixed step" baseline — addresses D007 debt #1 directly).
+    likely_paper_content: >-
+      (a) Bandit-based adaptive step size for CMA on time-varying OSL.
+      (b) Comparison vs fixed-mu isolates the value of adaptation.
+      (c) Addresses D007 fairness debt #1 (same mu != fair tuning).
+    reuses: [cb1_closure, cma_anchor(mu_parameterized), trace_features]
+    claim_ceiling: SLICE
+    paper_main_line_value: 4  # directly addresses D007 debt; novel mechanism
+    readiness: READY  # mu is a per-call kwarg on standard_cma_godard_with_z
+    risks: >-
+      Bandit needs many episodes to converge; may need dense proxy reward
+      (|z|^2 - R^2 deviation) rather than sparse PI-SER. Risk of "bandit
+      beats fixed-mu=0.001 but loses to fixed-mu=validation-optimal".
+    next_action: include_in_first_batch
+
+  # ─── C09: Per-seed mixture-of-affine-experts correction ───────────────────
+  - id: C09
+    name: trace_conditioned_mixture_affine_correction
+    mechanism_family: mixture_of_experts_correction
+    cluster: cluster_5_output_correction
+    method_M: >-
+      Mixture of K affine experts (K small, e.g. 4); a tiny gate network
+      predicts softmax weights over experts from trace features. Final
+      correction = weighted sum of expert outputs. Conditions on trace
+      (carrying collapse signature) instead of pseudo-labels (wrong on
+      collapsed z).
+    condition_C: same as C01.
+    mechanism_A_deficiency: >-
+      Same as C04 (blind affine fails on collapsed z because pseudo-labels
+      are wrong). C09 adds mixture capacity: different experts can specialize
+      for healthy vs collapsed regimes.
+    legal_input: same as C04 (trace features + z).
+    output_or_action: corrected z-stream.
+    metric_improved: PI-SER after correction, gain over blind affine.
+    main_conventional_comparator: blind_affine_compare_16qam (same-class).
+    likely_paper_content: >-
+      (a) Mixture-of-experts extension of C04.
+      (b) Ablation: single-expert (C04) vs mixture (C09) isolates the value
+          of regime specialization.
+    reuses: [cb1_closure, cma_anchor, blind_affine, trace_features]
+    claim_ceiling: SLICE
+    paper_main_line_value: 3
+    readiness: NEEDS_SMALL_ADAPTER  # same adapter as C04 + mixture head
+    risks: >-
+      Mixture may overfit; needs careful regularization and held-out eval.
+      May not beat C04 if the single-expert already captures the structure.
+    next_action: deferred_after_C04
+
+  # ─── C10: Per-symbol CMA variant (tests H021 infrastructure gap) ───────────
+  - id: C10
+    name: per_symbol_cma_variant
+    mechanism_family: conventional_sgd_equalizer  # NON-ML, structural variant
+    cluster: cluster_6_equalizer_structure_update
+    method_M: >-
+      Standard-CMA (Godard-with-z) with block_size=1 (per-symbol stochastic
+      gradient) instead of block_size=64. Everything else identical (mu,
+      n_tap, init, R^2, eval window). Implemented as a NEW runner — does NOT
+      modify the CMA anchor identity.
+    condition_C: same as C01.
+    mechanism_A_deficiency: >-
+      H021 (infrastructure gap): the block-end update protocol (block_size=64)
+      is the suspected bottleneck for the length-invariant collapse. Per-symbol
+      SGD makes ~500x more updates per N symbols, potentially escaping the
+      spurious local minima.
+    legal_input: raw dual-pol samples (same channel).
+    output_or_action: z-stream (same as CMA anchor).
+    metric_improved: PI-SER global, collapse rate.
+    main_conventional_comparator: >-
+      The CMA anchor (block_size=64). This is a CONVENTIONAL variant that
+      tests whether the collapse is fundamental to CMA or specific to the
+      block-end protocol.
+    likely_paper_content: >-
+      (a) Tests H021 directly: is block-end the bottleneck?
+      (b) If per-symbol CMA eliminates collapse, the ML claim weakens (the
+          problem was infrastructure, not method).
+      (c) If per-symbol CMA also collapses, the ML claim strengthens (the
+          collapse is fundamental to Godard cost on this channel).
+      (d) Either outcome is publishable as mechanism characterization.
+    reuses: [cb1_closure, cma_anchor_logic_new_runner]
+    claim_ceiling: SLICE
+    paper_main_line_value: 5  # tests the central H021 hypothesis; high information value
+    readiness: NEEDS_SMALL_ADAPTER  # new runner variant; ~half-day
+    risks: >-
+      Per-symbol CMA with mu=0.001 may diverge (per-symbol updates are higher
+      variance); may need smaller mu. Tuning budget must match the anchor's
+      (D007 fairness debt #1).
+    next_action: include_in_first_batch_as_conventional_probe
+
+  # ─── C11: CMA + DD-LMS cascade (fiber-coherent standard) ───────────────────
+  - id: C11
+    name: cma_then_dd_lms_cascade
+    mechanism_family: conventional_cascade_equalizer  # NON-ML
+    cluster: cluster_6_equalizer_structure_update
+    method_M: >-
+      Standard two-stage fiber-coherent receiver: stage 1 = CMA anchor
+      (block_size=64, converges or collapses); stage 2 = decision-directed
+      LMS using nearest-16QAM hard decisions on the stage-1 output, warm-
+      started from stage-1 final weights. Per Sato 1975 / Kikuchi 2016 §IV.B.
+    condition_C: same as C01.
+    mechanism_A_deficiency: >-
+      DD-LMS is the standard post-CMA refinement in fiber-coherent DP-16QAM
+      receivers. It can correct residual modulus error that CMA leaves. On
+      collapsed seeds (inner-ring), DD-LMS sees wrong hard decisions and
+      cannot recover — but on near-converged seeds it may help.
+    legal_input: raw dual-pol samples (CSI_NONE, public 16QAM alphabet).
+    output_or_action: z-stream after two stages.
+    metric_improved: PI-SER global, per-seed recovery rate.
+    main_conventional_comparator: >-
+      The CMA anchor (stage 1 alone). This is the cheap conventional
+      extension pre-specified in batch-contract.v1.yaml as
+      `mma_then_dd_lms_cascade` (though here we cascade from CMA, not MMA).
+    likely_paper_content: >-
+      (a) Standard CMA+DD-LMS cascade baseline.
+      (b) Reveals whether the collapse is recoverable by decision-directed
+          refinement (it should not be, since hard decisions on collapsed z
+          are inner-ring and wrong).
+      (c) Negative result (DD-LMS does not help collapsed seeds) is itself
+          publishable as confirmation that the collapse is in the trajectory,
+          not the residual.
+    reuses: [cb1_closure, cma_anchor, hard_16qam]
+    claim_ceiling: SLICE
+    paper_main_line_value: 4
+    readiness: READY  # warm-start from CMA final weights; no action hook
+    risks: >-
+      DD-LMS is widely implemented; the risk is mostly in tuning the DD step
+      size. Use the same mu=0.001 for parity, then tune on validation if needed.
+    next_action: include_in_first_batch_as_conventional_extension
+
+  # ─── C12: Soft-output / LLR collapse-aware remapping (BLOCKED) ─────────────
+  - id: C12
+    name: soft_output_collapse_aware_llr
+    mechanism_family: soft_output_correction
+    cluster: cluster_7_soft_output_llr_coded
+    method_M: >-
+      Replace the standard soft demapper with a collapse-aware one that
+      remaps LLRs based on the detector's confidence (clusters 1/2 output).
+      Down-stream FEC decoder consumes remapped LLRs.
+    condition_C: same as C01 + coded chain.
+    mechanism_A_deficiency: >-
+      Standard soft demapper assumes the z-stream is approximately Gaussian-
+      per-symbol; on collapsed seeds this assumption breaks and LLRs are
+      overconfident in wrong symbols. A collapse-aware remap should improve
+      coded BER / GMI.
+    legal_input: z-stream + decoder feedback (different information class —
+      needs coded-chain evaluator).
+    output_or_action: remapped LLRs.
+    metric_improved: GMI, coded BER, FER.
+    main_conventional_comparator: standard soft demapper on the same z.
+    likely_paper_content: >-
+      (a) Collapse-aware soft demapper for coded OSL.
+      (b) Coded performance impact of the collapse mechanism.
+    reuses: [cb1_closure, cma_anchor, soft_demap_BLOCKED]
+    claim_ceiling: DOMAIN_BLOCKED  # coded evaluator (bundle 2) not built
+    paper_main_line_value: 5  # highest paper value, but blocked
+    readiness: INFRASTRUCTURE_BLOCKED
+    risks: >-
+      Bundle 2 (coded evaluator) is a multi-day infrastructure task. Out of
+      scope for this campaign.
+    next_action: deferred_indefinitely_until_bundle_2
+
+  # ─── C13: Pilot-aided Jones stabilization (different info class) ───────────
+  - id: C13
+    name: pilot_aided_jones_stabilization
+    mechanism_family: pilot_aided_channel_estimation
+    cluster: cluster_8_csi_pilot_closed_loop
+    method_M: >-
+      Inject known pilots periodically; estimate the Jones matrix via
+      Tikhonov-regularized LS with cross-block time smoothing; apply the
+      estimated inverse to equalize before CMA. Per U05/U36/U52 lineage
+      (D052-D055 narrowed but did not kill).
+    condition_C: same as C01 but with <=10% pilot overhead.
+    mechanism_A_deficiency: >-
+      CMA is blind (CSI_NONE). Pilot-aided estimation gives an explicit
+      Jones inverse that may short-circuit the collapse entirely. This tests
+      whether the collapse is a blind-estimation pathology or a fundamental
+      channel property.
+    legal_input: CSI_PILOT (different information class than CSI_NONE).
+    output_or_action: equalized z-stream (pre-CMA or replacing CMA).
+    metric_improved: PI-SER global, collapse rate.
+    main_conventional_comparator: >-
+      The CSI_NONE CMA anchor. The comparison tests the information-class
+      boundary itself.
+    likely_paper_content: >-
+      (a) Pilot-aided vs blind equalization on dual-pol OSL with SOP + GG.
+      (b) Information-class boundary: how much does pilot-aided estimation
+          buy on this channel?
+    reuses: [cb1_closure, pilot_injection_simulator_internal]
+    claim_ceiling: SLICE  # different info class; cannot claim DOMAIN over CSI_NONE
+    paper_main_line_value: 4
+    readiness: NEEDS_SMALL_ADAPTER  # pilot injection simulator-internal, D052 proven
+    risks: >-
+      Different information class — results do NOT directly compete with
+      CSI_NONE candidates. Must be reported as a separate claim ("with pilot
+      overhead, collapse closes") not as a CSI_NONE improvement.
+    next_action: deferred_to_second_batch
+
+# =============================================================================
+# §5 Family structure (consolidated)
+# =============================================================================
+
+family_structure:
+  collapse_detection_family:        # clusters 1, 2
+    members: [C01, C02, C05, C06]
+    shared_mechanism: predict collapse from causal CMA-trace features
+    differentiation: >-
+      supervised (C01) vs SSL (C02) vs density-OOD (C06) vs conventional
+      threshold (C05). C05 is the non-ML comparator for the others.
+  collapse_control_family:          # cluster 3
+    members: [C03, C07]
+    shared_mechanism: take corrective action on collapse
+    differentiation: learned RL policy (C03) vs conventional rules (C07).
+  adaptive_step_family:             # cluster 4
+    members: [C08]
+    shared_mechanism: adapt CMA hyperparameters online
+    differentiation: bandit selecting mu per batch (single member; can extend to window/block).
+  output_correction_family:         # cluster 5
+    members: [C04, C09]
+    shared_mechanism: post-hoc correction of collapsed z
+    differentiation: single affine (C04) vs mixture of affine experts (C09).
+  equalizer_structure_family:       # cluster 6 — CONVENTIONAL, NOT ML
+    members: [C10, C11]
+    shared_mechanism: change the equalizer structure (per-symbol / DD-LMS cascade)
+    differentiation: >-
+      per-symbol SGD (C10) vs CMA+DD-LMS cascade (C11). These are baseline
+      variants that ALSO test H021 (block-end bottleneck) and serve as
+      additional Go comparators for the ML candidates.
+  soft_output_family:               # cluster 7
+    members: [C12]
+    shared_mechanism: collapse-aware soft demapping
+    differentiation: single member (blocked).
+  pilot_aided_family:               # cluster 8
+    members: [C13]
+    shared_mechanism: change information class to CSI_PILOT
+    differentiation: single member (different info class).
+
+# =============================================================================
+# §6 Readiness summary
+# =============================================================================
+
+readiness_summary:
+  READY:
+    - C05  # conventional threshold detector, no ML no adapter
+    - C08  # adaptive-mu bandit; mu is already kwarg
+    - C11  # CMA+DD-LMS cascade; warm-start, no hook
+  NEEDS_SMALL_ADAPTER:  # half-day shared adapters
+    - C01  # causal feature stacker + label extraction hook
+    - C02  # shared feature stacker + SSL head
+    - C04  # feature-conditioned affine head
+    - C06  # shared feature stacker + density head
+    - C09  # shared affine head + mixture
+    - C10  # new per-symbol CMA runner variant
+    - C13  # pilot injection adapter
+  INFRASTRUCTURE_BLOCKED:
+    - C03  # state snapshot + action effect hook
+    - C07  # same action hook (co-blocked with C03)
+    - C12  # coded-chain evaluator (bundle 2)
+  HYPOTHESIS_ONLY: []  # none in this expansion; all have a mechanism + source
+
+# =============================================================================
+# §7 Recommended first batch (per user §七 + readiness above)
+# =============================================================================
+# Strategy: run ONE batch with READY candidates that share a common scientific
+# question and can share infrastructure. The fairness-debt cluster (D007 §1)
+# naturally aligns with cluster 4 (adaptive step) + cluster 6 (equalizer
+# structure): both address "does the collapse survive giving CMA a fair,
+# adaptive, structurally-varied chance?"
+#
+# Batch B01 = {C05, C08, C10, C11}:
+#   - C05 (READY): conventional collapse detector → gives AUROC floor that
+#     any future ML detector (C01/C02/C06) must beat. ALSO emits collapse
+#     labels usable by C01/C02 adapter sprint.
+#   - C08 (READY): adaptive-mu bandit → addresses D007 debt #1 (same mu !=
+#     fair tuning) directly.
+#   - C10 (NEEDS_SMALL_ADAPTER but shared-sprint): per-symbol CMA → addresses
+#     H021 infrastructure gap AND D007 debt #3 (block-end causality).
+#   - C11 (READY): CMA+DD-LMS cascade → the cheap conventional extension
+#     pre-specified in batch-contract.v1.yaml; tests if DD refinement recovers
+#     collapsed seeds.
+#
+# Shared scientific question (batch B01):
+#   "Does the CB1 16QAM inner-ring collapse survive (a) a fairly-tuned CMA,
+#    (b) a per-symbol update structure, and (c) a standard CMA+DD-LMS cascade?
+#    In parallel, can a conventional threshold detector predict collapse from
+#    causal CMA-trace features with useful lead time?"
+#
+# Pre-registered exit:
+#   - If C08/C10/C11 close the collapse (PI-SER < MDE on >= 9/11 atlas cells),
+#     the ML claim weakens: the problem was infrastructure/tuning, not method.
+#     Record LOCAL_NEGATIVE on ML and rotate to the next family.
+#   - If C08/C10/C11 do NOT close the collapse, the PROBLEM_SURVIVES verdict
+#     strengthens with fairness-closed evidence. C05's detector AUROC sets
+#     the floor that C01/C02/C06 must beat in batch B02.
+#   - If C05's detector achieves AUROC >= 0.85 with lead time >= 1 block,
+#     batch B02 (ML detectors C01/C02/C06) is authorized; the adapter sprint
+#     (shared feature stacker) is the bounded preparation.
+#   - If C05's detector AUROC < 0.65, the collapse signature is not captured
+#     by conventional thresholds; ML detectors are MORE valuable (the signal
+#     needs learned structure). Authorize B02 unconditionally.
+
+first_batch:
+  id: B01_fairness_and_conventional_probe
+  members: [C05, C08, C10, C11]
+  shared_system_anchor: cb1_dual_pol_osl_16qam
+  shared_channel_contract: cb1_closure
+  shared_seeds: [11, 12, 13, 14, 15, 16, 17, 18, 19, 20]  # paired, 10 seeds
+  cells: atlas_v1_full_16qam_set  # 11 cells, inherit from baseline-adjudication
+  tuning_protocol:
+    validation_cells: [snr20-nominal-short, snr20-fg1000-short, snr20-sop40e-short]
+    held_out_cells: [snr05-nominal-short, snr10-nominal-short, snr15-nominal-short,
+                     snr25-nominal-short, snr20-fg100-short,
+                     snr10-fg100-long, snr15-fg1000-long, snr20-nominal-long]
+    per_method_tuning_budget: 5_hyperparameter_candidates
+    freeze_before_held_out: true
+  shared_sprint_needed:
+    - per_symbol_cma_runner  # for C10; new non-protected runner variant
+    - dd_lms_warm_start      # for C11; thin wrapper over CMA final weights
+    - threshold_detector     # for C05; CUSUM + threshold on trace features
+    - bandit_mu_selector     # for C08; LinUCB over discrete mu set
+  preregistered_exit: see above
+  claim_ceiling: SLICE
+  time_budget_minutes: 90  # 4 candidates x ~15-20 min each + analysis
+
+# =============================================================================
+# §8 Rotation policy
+# =============================================================================
+
+rotation_policy:
+  after_B01:
+    if_fairness_closes_collapse:
+      action: record LOCAL_NEGATIVE_on_ML; rotate to cluster 7 or 8 (C12 or C13)
+      reason: >-
+        If fairly-tuned CMA + per-symbol structure + DD-LMS cascade close the
+        collapse, the problem is not method-worthy for ML on CSI_NONE.
+        Boundary mapping (the collapse closes under fairer conventional
+        treatment) is itself a defensible thesis result.
+    if_fairness_does_not_close_collapse_AND_C05_auroc_ge_0p85:
+      action: authorize B02 = {C01, C02, C06} after shared adapter sprint
+      reason: >-
+        Collapse survives fair conventional treatment AND is detectable by
+        conventional threshold. ML detectors must beat C05's AUROC.
+    if_fairness_does_not_close_collapse_AND_C05_auroc_lt_0p65:
+      action: authorize B02 = {C01, C02, C06} unconditionally
+      reason: >-
+        Collapse survives fair conventional treatment AND conventional
+        thresholds cannot detect it. ML detectors are more valuable (the
+        signal needs learned structure).
+    if_C08_or_C10_partial_recovery:
+      action: scoped positive; run B02 with narrower claim
+      reason: >-
+        Partial recovery means the collapse has a tunable / structural
+        component AND a residual ML-addressable component. B02 claim
+        narrows to "ML detects the residual collapse after fair conventional
+        treatment".
+
+  exhausted portfolio:
+    fallback: >-
+      If B01 and B02 both fail to produce a defensible claim, harvest the
+      boundary mapping (collapse is fundamental to Godard-cost CMA on this
+      channel, invariant to length / tuning / structure within budget) as
+      the thesis result. Rotate to U24 / RC2 cluster from v1.
+
+# =============================================================================
+# §9 Governance
+# =============================================================================
+
+governance:
+  no_fixed_scorer: true
+  no_auto_kill: true
+  no_auto_promote: true
+  protected_history_unchanged: true  # B001-B003, P03, CB1 raw, canonical-state
+  formal_promotion_blocked: true
+  fairness_debt_addressed_this_refresh:
+    - D007_debt_1_same_mu: addressed by C08 (adaptive mu) + per-method tuning budget
+    - D007_debt_2_convergence_N: addressed by held-out long cells + per-symbol variant (C10)
+    - D007_debt_3_block_end_causality: addressed by C10 (per-symbol variant tests H021)
+    - D007_debt_4_oracle_receiver_visibility: addressed by C05/C08 metrics (no oracle at runtime)
+    - D007_debt_5_task_specific_comparators: addressed by cluster-level comparators (C05, C07, C11)
+    - D007_debt_6_candidate_narrowness: addressed by expansion from 4 to 13 mechanism-distinct candidates

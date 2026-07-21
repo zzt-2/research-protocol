@@ -1,0 +1,18 @@
+frozen_params:
+  C05:
+    best_combo:
+      z2_ratio_threshold: 0.2
+      cusum_drift: 0.01
+    best_score: 1.0
+  C08:
+    best_combo:
+      alpha: 10.0
+    best_score: -0.20546875
+  C10:
+    best_combo:
+      mu: 1.0e-05
+    best_score: -0.2060546875
+  C11:
+    best_combo:
+      dd_step_size: 0.0001
+    best_score: -0.2048828125

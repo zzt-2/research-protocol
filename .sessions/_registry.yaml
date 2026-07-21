@@ -593,8 +593,8 @@ topics:
     title: Direction Lab 首轮 SCIENCE_SCOUT 正式科学探索
     status: active
     created: "2026-07-20"
-    last_updated: "2026-07-21（S004/D007/H004：baseline 公平性与候选过窄纠正；当前 DIAGNOSTIC/SLICE）"
-    description: "首轮正式 SCIENCE_SCOUT campaign。CB1 closure、16QAM Atlas 和 CMA/MMA raw evidence 已完成；D007 撤回 D006 的直接 ML 晋级，因为同参数不等于公平调参、N=32768 未闭合约 1e5 收敛且候选 readiness 有误标。下一入口 H004：先短时机制级扩图和任务专属 comparator/readiness 审计，再立即批跑 READY 子集。"
+    last_updated: "2026-07-21（S005/D008/H005：B01 fairness batch 完成，PROBLEM_SURVIVES_FAIR_CONVENTIONAL_TREATMENT，条件授权 B02 ML detector）"
+    description: "首轮正式 SCIENCE_SCOUT campaign。CB1 closure、16QAM Atlas、CMA/MMA raw evidence 和 B01 fairness batch（C05/C08/C10/C11）均完成。B01 证明坍塌在公平调参、per-symbol 结构和 CMA+DD-LMS 级联下存活（held-out 6/7 cells headroom ≥ MDE）；C10 per-symbol 否定 H021；C05 detector pooled AUROC=0.6546（long cells=1.000）。D008 条件授权 B02 ML detector batch（narrowed claim）。下一入口 H005：B02 = {C01, C02, C06} + causal feature stacker adapter sprint。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 V007 PASS 的消费者部署（全局 Skill + STATUS + Project Adapter + protected history）作为科学探索起点

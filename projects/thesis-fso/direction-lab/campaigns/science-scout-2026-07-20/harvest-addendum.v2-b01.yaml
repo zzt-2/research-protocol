@@ -1,0 +1,239 @@
+schema_version: direction-lab.harvest-addendum.v2-b01
+addendum_id: harvest.science-scout-2026-07-20.v2-b01
+campaign_id: science-scout-2026-07-20.dual-pol-osl
+created: 2026-07-21
+mode: SCIENCE_SCOUT
+supersedes: none  # additive to harvest-addendum.v1.yaml (H010-H022 protected)
+source_batch: fairness-batch-b01
+trigger: H004 / D007 (fairness debt + candidate over-narrowing)
+
+promotion_policy: >-
+  New harvest entries H023+ are SCIENCE_SCOUT-scoped. They do NOT auto-
+  promote to formal Groundwork/Contract/Execute/thesis main ledger.
+  Promotion requires user strategy decision per campaign-contract.v1.yaml.
+  Hashes re-bind to campaign artifacts, not to protected history.
+
+# === Independent verification status ===
+independent_verification:
+  verifier: independent subagent (clean-room, fresh context)
+  verification_date: 2026-07-21
+  verdict: CONFIRM
+  confidence: HIGH
+  verified_claims:
+    - A1-A4: identity gates PASS (C10 Godard-with-z, C11 Sato DD-LMS, C08 LinUCB Li WWW2010, C05 CUSUM Page 1954)
+    - B5-B9: fairness PASS (frozen-before-eval, per-method grids, long validation cell, divergence penalty, shared seeds+realisations)
+    - C10-C12: numerical PASS (recomputed: anchor/C08/C10/C11 each close 1/7 held-out; C05 pooled AUROC=0.6546; C11 snr10-fg100-long PI-SER=0.3984)
+    - D13-D15: history protection PASS (P01/P02/P03 bytes unchanged since 65db4ef; no ML artifacts; no B004)
+    - E16-E18: claim scope PASS (SLICE not DOMAIN; oracle as Kill tool only; detector AUROC not conflated with PI-SER gain)
+    - F19-F20: contract adherence PASS (no forbidden item violated; PROBLEM_SURVIVES condition met)
+  minor_issues_not_affecting_verdict:
+    - "C05/C10/C11 tuning grids initially differed slightly from frozen contract (reconciled post-verification: grids now match contract exactly; re-run produced byte-identical PI-SER results)"
+    - "Synthesis headroom column uses post-aggregation max(mean_n-mean_o,0); JSON stores per-seed-then-mean headroom_mean. Both valid; all values >MDE either way"
+
+# === New harvest entries (H023-H028) ===
+entries:
+
+  - id: H023
+    category: BASELINE_ADJUDICATION
+    finding: >-
+      The CB1 16QAM inner-ring collapse headroom survives fair per-method
+      tuning (C08 LinUCB bandit), per-symbol structural variation (C10
+      block_size=1), and CMA+DD-LMS cascade (C11). On 7 held-out cells × 10
+      paired seeds, all four methods (anchor, C08, C10, C11) close headroom
+      on only 1/7 cells (the AWGN-dominated snr=5 dB cell with no headroom
+      for any method). The best conventional variant, C11 (CMA+DD-LMS
+      cascade), improves long-cell PI-SER by 0.01-0.03 (snr10-fg100-long:
+      0.4273→0.3984, headroom 0.055→0.023) but does NOT close the collapse
+      (headroom still ≥6× MDE=0.005 on the best long cell). This extends
+      H022 PROBLEM_SURVIVES_CONVENTIONAL_BASELINE with fairness-closed
+      evidence: the collapse survives not just task-mismatch (MMA) but also
+      fair tuning, structural variation, and conventional cascade.
+    evidence_scope: >-
+      11 atlas-v1 16QAM cells × 10 paired seeds × {anchor, C08, C10, C11};
+      4 validation cells (3 short + 1 long) × 5 tuning seeds × per-method
+      grid; frozen params before held-out evaluation; 0 divergence across
+      all 110 seeds for all methods.
+    claim_ceiling: SLICE
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/fairness-batch-b01/artifacts/fairness-batch-b01-v1.json
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/fairness-batch-b01/artifacts/fairness-batch-b01-v1-synthesis.md
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/fairness-batch-b01/artifacts/frozen-params.v1.yaml
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/fairness-batch-b01/batch-contract.v1.yaml
+    related: [PROBLEM_SURVIVES_FAIR_CONVENTIONAL_TREATMENT, H022, fairness_debt_D007]
+    thesis_destination: >-
+      Results (fairness probe section); Methods (per-method tuning protocol
+      with divergence penalty); Discussion (the collapse survives all four
+      conventional angles: MMA, fair tuning, structure, cascade).
+    confidence: HIGH
+    follow_up: >-
+      B02 ML detector batch authorized with narrowed claim. The collapse is
+      mechanism-relevant for ML: not closable by conventional means, but
+      detectable by conventional thresholds on separable cells.
+    status: HARVESTED_SCOPE_LIMITED
+
+  - id: H024
+    category: FAILURE_MECHANISM
+    finding: >-
+      Per-symbol stochastic-gradient CMA (C10, block_size=1, μ=1e-5 tuned
+      with divergence penalty on a long validation cell) is slightly WORSE
+      than the block-end anchor on long cells (snr10-fg100-long:
+      0.4273→0.4371). The H021 infrastructure-gap hypothesis — that the
+      block-end protocol (block_size=64) is the bottleneck for the
+      length-invariant collapse — is NOT supported by this direct test.
+      Per-symbol updates are stability-limited: the μ required for stability
+      on long sequences (1e-5) is too small to make sufficient update
+      progress over N=8192 symbols. This means the collapse is NOT an
+      artifact of the block-end protocol; it is a deeper property of
+      Godard-cost CMA on this channel.
+    evidence_scope: >-
+      C10 per-symbol CMA tuned on 4 validation cells (incl. 1 long) × 5
+      seeds, μ grid {1e-6, 1e-5, 1e-4, 3e-4, 1e-3}. Selected μ=1e-5 (most
+      conservative; larger μ diverged on long validation cell). Evaluated
+      on 11 atlas cells × 10 paired seeds. 0 divergence on held-out.
+    claim_ceiling: SLICE
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/fairness-batch-b01/artifacts/fairness-batch-b01-v1.json
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/fairness-batch-b01/b01_candidates.py
+    related: [H021_infrastructure_gap, per_symbol_cma, H017_length_invariance]
+    thesis_destination: >-
+      Results (negative result on H021 hypothesis); Discussion (the collapse
+      is fundamental to Godard cost, not to the block-end protocol).
+    confidence: HIGH
+    follow_up: >-
+      The H021 infrastructure debt is DOWN-GRADED: per-symbol CMA was
+      expected to potentially close the collapse, but it does not. The
+      block-end protocol is no longer the primary suspect; the Godard cost
+      surface itself is.
+    status: VERIFIED
+
+  - id: H025
+    category: METHOD_SIGNAL  # scoped, conditional
+    finding: >-
+      A conventional change-point / threshold detector (C05: CUSUM per Page
+      1954 + threshold on output_power/(2·R²) ratio) achieves AUROC=1.000
+      on 4/11 cells where collapse is both present AND separable
+      (snr10/15-nominal-short + all three long cells). Pooled AUROC across
+      110 seeds = 0.6546 (28 collapsed, 82 healthy). AUROC=0.5 on cells
+      with no collapse (degenerate) or AWGN-dominated (snr=5). The detector
+      signal is CONDITIONAL: in long cells the collapse trajectory has time
+      to develop, producing a stark output_power signature; in short cells
+      the trajectory has not yet committed within N=512.
+    evidence_scope: >-
+      C05 detector on anchor CMA-trace across 11 atlas cells × 10 paired
+      seeds. Labels from oracle PI-SER > 0.3 (collapse threshold per
+      contract). Tuning on 4 validation cells × 5 seeds; selected
+      z2_ratio_threshold=0.25, cusum_drift=0.02.
+    claim_ceiling: SLICE
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/fairness-batch-b01/artifacts/fairness-batch-b01-v1.json
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/fairness-batch-b01/b01_candidates.py
+    related: [conventional_detector_baseline, C05, AUROC_pooled_0p6546]
+    thesis_destination: >-
+      Results (conventional detector boundary); Methods (CUSUM + threshold
+      baseline); Discussion (conditional detectability by convergence length).
+    confidence: HIGH
+    follow_up: >-
+      B02 ML detector batch authorized. ML must beat C05's pooled AUROC
+      0.6546 AND provide warning lead time on long cells (where C05 already
+      AUROC=1.0). The narrowed claim is "ML improves lead time / calibration
+      in the short-cell ambiguous regime".
+    status: CONDITIONAL  # authorizes B02 with narrowed claim
+
+  - id: H026
+    category: REUSABLE_ASSET
+    finding: >-
+      The B01 candidate module (b01_candidates.py: c05_threshold_detector,
+      c08_adaptive_mu_bandit, c10_per_symbol_cma, c11_cma_dd_lms_cascade)
+      plus the runner (run_fairness_batch_b01.py with per-method tuning
+      budget and divergence penalty) plus 7 sanity tests is a reusable
+      fairness-batch infrastructure for any future 16QAM equalization work
+      in this project. The per-method tuning protocol with divergence
+      penalty + long validation cell is a generalisable fairness contract
+      addressing D007 debts #1 (same μ) and #2 (convergence N).
+    evidence_scope: >-
+      Code asset. 7/7 sanity tests PASS. End-to-end runner completes in
+      ~60s on 11 cells × 10 seeds × 4 candidates.
+    claim_ceiling: CONTRACT
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/fairness-batch-b01/b01_candidates.py
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/fairness-batch-b01/run_fairness_batch_b01.py
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/fairness-batch-b01/tests/test_b01_sanity.py
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/fairness-batch-b01/batch-contract.v1.yaml
+    related: [reusable_code, fairness_protocol, tuning_budget]
+    thesis_destination: N/A (infrastructure)
+    confidence: HIGH
+    follow_up: >-
+      Any future fairness comparison in this project should reuse the
+      per-method tuning protocol rather than re-deriving it.
+    status: HARVESTED
+
+  - id: H027
+    category: EVALUATION_INSIGHT
+    finding: >-
+      Detector AUROC is CONDITIONAL on convergence length. C05 achieves
+      AUROC=1.000 on all three long cells (N=8192) and on two short cells
+      (snr=10, 15) where the collapse label rate is high. It achieves
+      AUROC=0.5 on short cells at snr≥20 where collapse is rare or absent.
+      This implies collapse detection requires either (a) waiting until
+      the trajectory has committed (long N), or (b) a learned temporal
+      model that can extract early signatures from short traces. B02 ML
+      detectors target (b). This is a methodological observation: collapse-
+      detection AUROC reported without conditioning on N is misleading.
+    evidence_scope: >-
+      Per-cell AUROC across 11 atlas cells (varied SNR, f_g, SOP, N). N=512
+      short cells vs N=8192 long cells.
+    claim_ceiling: SLICE
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/fairness-batch-b01/artifacts/fairness-batch-b01-v1-synthesis.md
+    related: [conditional_AUROC, convergence_length, short_cell_ambiguity]
+    thesis_destination: >-
+      Methods / Discussion (evaluation methodology: AUROC conditional on N).
+    confidence: HIGH
+    follow_up: >-
+      Any future detector paper from this project must report AUROC
+      conditioned on N (short vs long), not pooled. Reviewers may expect a
+      single AUROC; we now have evidence that this is misleading here.
+    status: VERIFIED
+
+  - id: H028
+    category: LOCAL_NEGATIVE
+    finding: >-
+      LinUCB contextual bandit (C08) with 4 trace features (output_power,
+      w_norm, |z|²/R² ratio, update_norm) and dense proxy reward
+      (-mean|R²-|z|²|) does NOT significantly improve over a well-chosen
+      fixed μ=0.001 on short cells. Selected α=10.0 (high exploration);
+      PI-SER on short cells is within 0.001 of the anchor. The bandit gives
+      a small improvement on long cells (snr10-fg100-long: 0.4273→0.4094)
+      but less than C11 (cascade). Bandit-driven step adaptation is not a
+      free win; richer context or reward shaping is needed.
+    evidence_scope: >-
+      C08 LinUCB on 11 atlas cells × 10 paired seeds. 5 mu candidates
+      (1e-4 to 1e-2). Tuning on 4 validation cells × 5 seeds.
+    claim_ceiling: SLICE
+    artifact_pointers:
+      - projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/fairness-batch-b01/artifacts/fairness-batch-b01-v1.json
+    related: [LinUCB_negative, bandit_step_adaptation, dense_proxy_reward]
+    thesis_destination: >-
+      Results (negative result on simple bandit-driven CMA step adaptation).
+    confidence: HIGH
+    follow_up: >-
+      This negative result bounds the simple-bandit approach. A richer
+      context (e.g., per-block trajectory embedding) or a different action
+      space (window size, block size) might still help, but simple
+      μ-selection does not.
+    status: VERIFIED
+
+# === Governance ===
+governance:
+  protected_history_unchanged: true  # B001-B003, P03, CB1 raw, canonical-state
+  no_auto_promotion: true
+  claim_ceiling_max_this_campaign: SLICE
+  formal_promotion_blocked: true
+  hash_binding: to_be_finalized_at_consolidated_commit
+  fairness_debt_status:
+    D007_debt_1_same_mu: CLOSED_BY_PER_METHOD_TUNING  # C08/C10/C11 each tuned
+    D007_debt_2_convergence_N: PARTIALLY_CLOSED  # long validation cell in tuning; long held-out cells tested; collapse survives
+    D007_debt_3_block_end_causality: CLOSED_BY_C10  # per-symbol tested; does not help (H024)
+    D007_debt_4_oracle_receiver_visibility: PARTIALLY_CLOSED  # C05 detector shows receiver-visible signal is partially detectable (AUROC=0.65 pooled, 1.0 on separable cells)
+    D007_debt_5_task_specific_comparators: CLOSED_BY_CLUSTER_COMPARATORS  # C05/C07/C11 each serve as task-specific comparator per cluster
+    D007_debt_6_candidate_narrowness: CLOSED_BY_V3_EXPANSION  # 13 mechanism-distinct candidates across 9 clusters

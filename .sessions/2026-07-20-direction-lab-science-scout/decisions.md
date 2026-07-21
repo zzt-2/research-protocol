@@ -275,3 +275,51 @@ H003 被 H004 取代为续接入口。下一轮允许更新 Portfolio、candidat
 ### 来源
 
 S004 / 用户纠正 / system D011 / 独立方法论与候选血缘审计。
+
+---
+
+## D008: B01 完成 PROBLEM_SURVIVES_FAIR_CONVENTIONAL_TREATMENT；条件授权 B02 ML detector batch
+
+> status: active
+> date: 2026-07-21
+> 取代：D007 中"先做有界公平修复后立即批跑 READY 子集"的执行部分（现已完成；下一动作变为 B02）
+> 被取代：无
+> 依据: 用户原话: `voice.md` 2026-07-21 "整个对话最多做一次 consolidated commit" + "只要存在合法可运行路径，就继续推进" + 验证: `fairness-batch-b01/artifacts/fairness-batch-b01-v1.json` + `fairness-batch-b01-v1-synthesis.md` + 独立 verifier subagent (CONFIRM, HIGH confidence, 20/20 PASS) + Skill: `baseline-adjudication.md` + `batch-and-atlas.md`
+
+### 决策
+
+Fairness Batch B01（{C05, C08, C10, C11}，11 cells × 10 paired seeds，per-method tuning budget with divergence penalty）证实 CB1 16QAM 内环坍塌 headroom 在公平调参、per-symbol 结构变化和 CMA+DD-LMS 级联下**仍然存活**：
+
+1. held-out 7 cells 上 anchor/C08/C10/C11 各只关闭 1/7（snr=5 AWGN floor）
+2. C11（最佳变体）在 long cells 改善 0.01-0.03 PI-SER（snr10-fg100-long headroom 0.055→0.023）但远未关闭（≥6×MDE）
+3. C10 per-symbol 略差于 anchor → **H021 基础设施缺口假设不被支持**
+4. C05 detector pooled AUROC=0.6546 ∈ [0.65, 0.85) → **条件授权 B02 ML detector batch，narrowed claim "ML improves lead time / calibration over conventional threshold"**
+
+D007 公平性债务 #1/#3/#5/#6 已 CLOSED，#2/#4 PARTIALLY CLOSED。
+
+### 理由
+
+1. 公平性已用 per-method tuning budget（4 validation cells × 5 seeds × 5 hyperparameter candidates + divergence penalty）严格保证；independent verifier 确认 tuning 在 held-out evaluation 前冻结。
+2. 所有 4 个候选（含结构变体 C10 和级联 C11）都未能关闭坍塌，且 C10 直接否定了 H021 的 block-end 瓶颈假设——坍塌是 Godard cost 在该信道下的深层属性，不是协议 artifact。
+3. C05 detector 的条件依赖性（long cells AUROC=1.000，short cells AUROC=0.5）说明：信号在长序列上可被传统阈值完美检测，但在短序列上需要 learned temporal model。这正是 ML 的合法贡献区域。
+4. claim ceiling 严格限 SLICE；oracle 仍仅 Kill tool（FR-21）；detection AUROC 不等同于 PI-SER 改善（C05 不与 C08/C10/C11 混淆）。
+
+### 排除的替代方案
+
+- **直接训练 ML 检测器跳过 B01**：拒绝；会跳过 D007 要求的公平性收口。
+- **关闭 B01 后宣布 ML 无价值**：拒绝；C05 detector AUROC=1.000 在可分 cells 说明信号存在，pooled 0.6546 在 [0.65, 0.85) 授权 narrowed-claim B02。
+- **穷举所有传统均衡器（RLS/FD/neural）**：拒绝；用户 §三"baseline 不必是当前 SOTA"；当前有限主张的公平 comparator 已充分。
+- **把 C11 的 long-cell 小改善写成 PI-SER 胜利**：拒绝；改善 0.01-0.03 远未关闭 headroom，且只在 3/11 cells 上。
+- **把 B01 数字写入论文正文**：拒绝；Scout/Sandbox，晋级需用户 strategy 决策。
+
+### 影响范围
+
+- H004 的 A/B/C 三宏阶段全部完成；H005 成为下一轮续接入口。
+- D007 公平性债务闭合；下一动作 = B02 ML detector batch（C01/C02/C06 + causal feature stacker adapter sprint）。
+- harvest-addendum.v2-b01.yaml 追加 H023-H028；provenance 沿用 v1。
+- topic-index 不变量段无变更；C10/C11/C05 进入 Portfolio READY/baseline 库。
+- protected history（B001-B003 / P03 / CB1 raw / canonical-state）字节未改；无 B004；无 ML 训练。
+
+### 来源
+
+S005 / 公平 batch 科学运行 / 独立 verifier CONFIRM / baseline-adjudication + batch-and-atlas 参考。
