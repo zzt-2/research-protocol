@@ -1,0 +1,33 @@
+schema_version: 1
+case_id: cross-output-portfolio-fairness
+decision_point: >-
+  Four candidates share one receiver anchor but produce detection, control,
+  and correction outputs; decide whether to run immediately or first widen
+  the portfolio and assign fair comparators.
+domain_note: >-
+  Self-contained communications example used only to test portfolio breadth,
+  readiness honesty, and claim-specific comparator selection.
+facts:
+  - A verified receiver failure appears in 40 to 60 percent of paired seeds.
+  - Four proposed candidates are a supervised warning detector, a self-supervised anomaly detector, a learned reset controller, and a learned output corrector.
+  - All four currently name the same equalizer and hard-decision chain as Go comparators.
+  - The detector emits alerts, the controller emits actions, and the corrector emits corrected samples.
+  - The controller lacks a state snapshot and an observable action hook.
+  - The user prefers seeing the candidate landscape before heavy implementation, but does not want an exhaustive survey to delay useful experiments.
+allowed_actions:
+  - retain one shared receiver anchor while assigning task-specific comparators by output and claim
+  - give each method comparable tuning opportunity rather than forcing identical hyperparameters
+  - keep the four candidates while briefly expanding to mechanism-level alternatives from literature failures intervention points and adjacent systems
+  - classify candidates as READY NEEDS_SMALL_ADAPTER or INFRASTRUCTURE_BLOCKED from evidence
+  - select a small mechanism-distinct READY batch immediately after the bounded map refresh
+  - treat detection quality separately from downstream receiver improvement
+forbidden_actions:
+  - use one identical comparator list for detection control and correction claims
+  - call all four candidates runnable because they share input data
+  - implement every mapped candidate before running any batch
+  - run only the first detector without checking nearby mechanism-distinct alternatives
+claim_ceiling:
+  level: PORTFOLIO_PLANNING
+  statement: >-
+    The failure authorizes a bounded portfolio refresh and comparable Scout
+    batches, not a claim that any proposed method is already effective.

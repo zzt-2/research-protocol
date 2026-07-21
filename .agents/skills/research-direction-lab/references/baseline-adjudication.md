@@ -23,6 +23,14 @@ Do not chase every recent method. Require current SOTA only when the proposed cl
 
 Stop expanding the ladder when the exact claim has a fair conventional comparator and the obvious cheap alternative explanation has been tested. More baselines may improve a later paper, but they are not a prerequisite for every Scout.
 
+## Shared anchor and claim-specific fairness
+
+Keep a **shared system anchor** for end-to-end comparison, but do not force candidates with different outputs to use one identical comparator list. Each detection, estimation, correction, or control claim also needs a **task-specific comparator** that performs the same job with the same legal information. The shared system anchor does not replace a detector baseline, a fixed control policy, or a conventional correction method.
+
+Fairness means **equal tuning opportunity**, not identical hyperparameters. Give compared methods comparable search budget and validation evidence, freeze their selected settings before held-out evaluation, and check convergence using behavior appropriate to each method. Use paired data, seeds, metrics, and evaluation windows where the claim permits them to be shared.
+
+Reuse a baseline record while task, information, output, condition, and claim remain unchanged. Re-adjudicate the affected layer when any of those change. If task fit, tuning, convergence, or information parity remains materially unresolved, keep the result diagnostic and state the limit.
+
 ## Adjudication state
 
 An anomaly remains `DIAGNOSTIC` until identity, task fit, convergence, information parity, and the obvious conventional fix have been checked. If the problem remains materially visible, record:
@@ -37,5 +45,4 @@ Baseline adjudication is one shared batch, not a new single-candidate full proce
 
 Record a baseline choice as:
 
-`claim | chosen comparator | canonical source | representative uses | task fit | fairness checks | obvious extension considered | stop reason | unresolved limits`
-
+`claim | shared system anchor | task-specific comparator | canonical source | representative uses | task fit | information parity | tuning opportunity | convergence | obvious extension considered | stop reason | unresolved limits`

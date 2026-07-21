@@ -29,7 +29,7 @@ Run one continuous loop:
 
 1. **Recover** — refresh the anchor, authorization, current work, history boundaries, and next action.
 2. **Map** — expand and organize an open candidate portfolio around the anchor; do not claim mathematical completeness.
-3. **Plan a batch portfolio** — group questions that share a baseline, evidence slice, interface, or causal comparison; adjudicate whether the baseline is adequate for the intended claim before treating a gap as method-worthy.
+3. **Plan a batch portfolio** — group questions that share a system anchor, evidence slice, interface, or causal comparison; use task-specific comparators when outputs or claims differ, and adjudicate baseline adequacy before treating a gap as method-worthy.
 4. **Prepare and run** — freeze the batch contract, protect integrity boundaries, and use project-declared runners.
 5. **Synthesize** — interpret mechanisms and metrics, test alternative explanations, and set the smallest defensible claim scope.
 6. **Harvest** — record at least one evidence-backed scientific, methodological, writing, asset, or infrastructure item.

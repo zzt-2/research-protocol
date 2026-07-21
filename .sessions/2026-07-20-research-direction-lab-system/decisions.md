@@ -321,3 +321,35 @@ S011 / 用户 2026-07-20 执行提示词 §一~§八。触发原话：见 voice.
 ### 来源
 
 S011 续接 / 用户纠正 / RED-GREEN forward test。
+
+## D011: 采用两层 baseline 公平性与有界机制级候选扩图
+
+> status: active
+> date: 2026-07-21
+> 取代：无
+> 被取代：无
+> 依据：用户原话: `voice.md` 2026-07-21 + 验证: `.agents/skills/research-direction-lab/tests/forward/cross-output-portfolio-fairness.yaml` + 真实失效: `2026-07-20-direction-lab-science-scout/portfolio-refresh.v2-addendum.yaml`
+
+### 决策
+
+Direction Lab 将共同系统锚点与任务专属 comparator 分开：不同输出或主张必须使用同任务、同合法信息的 comparator；公平调参采用相当机会而非强制相同超参数。候选池过窄、集中于单一机制或 readiness 仅由共享数据推断时，重实施前先做一次有界的机制级扩图，随后立即选择小型 `READY` 批次运行。
+
+### 理由
+
+本轮真实 SCIENCE_SCOUT 把检测、控制和修正候选统一绑定到 nearest-16QAM + MMA，且把缺少动作接口的 C03 标为 `Y_with_compute`。共同 receiver anchor 能比较端到端结果，却不能替代检测器、控制策略或修正器各自的传统 comparator；共享输入也不能证明候选 runnable。另一方面，只有 C01–C04 四个同源候选会再次形成单机制隧道，但穷举或实现整个开放候选空间又会拖慢科学运行。
+
+### 排除的替代方案
+
+- **所有候选共用完全相同 baseline 列表**：拒绝；输出和主张不同会造成任务失配。
+- **所有算法强制相同超参数**：拒绝；表面一致不等于公平，应给予相当调参预算并在 held-out 评估前冻结。
+- **只运行当前排名第一候选**：拒绝；当前候选池过窄且 readiness 有误标，容易重新单点深挖。
+- **先实现十几个候选再运行**：拒绝；扩图只建立机制全貌和 readiness，执行仍限于小型可比较 `READY` 批次。
+- **用固定全局候选数量证明完整**：拒绝；候选地图保持开放，局部数量由信息价值和成本决定。
+
+### 影响范围
+
+最小更新 `references/baseline-adjudication.md`、`candidate-portfolio.md`、`batch-and-atlas.md` 及主 Skill 路由；新增一个 forward fixture 和结构测试。下一科学对话先短时扩图、纠正 readiness 与 comparator，再运行首批；不修改 protected history、baseline 数字或既有科学 artifacts。
+
+### 来源
+
+S011 续接 / 用户纠正 / RED-GREEN forward test。

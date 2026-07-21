@@ -1,6 +1,6 @@
 # Topic Index: Research Direction Lab 完整体系设计
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-07-20（baseline 充分性修订 V008 PASS；全局同步 V009 PASS；未运行科学实验）
+> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-07-21（D011/V010 PASS；全局同步完成；未运行科学实验）
 
 ## 专题信息
 
@@ -23,6 +23,7 @@
 - Task 8 round 1 fresh-agent 盲测（5 类案例）已由 V004 独立终验 PASS；首轮 scorer 实现缺陷已一次性批量修复，无 Skill 修订、无重跑；
 - 本阶段不修改现有 controller、campaign core、仿真器、baseline 或科学证据。
 - 基于首轮正式 SCIENCE_SCOUT 的真实失效，允许以 RED→GREEN 修订主 Skill 的 baseline 充分性判断；不借此运行新实验或改写历史证据。
+- 基于 C01–C04 的 comparator/readiness 失配，允许最小修订两层 baseline 公平性与重实施前的有界机制级候选扩图；不借此扩展通用 scheduler 或运行科学实验。
 
 ### 明确不含
 
@@ -75,6 +76,8 @@
 - **原话可追溯**：目标体系的长期约束必须能指回用户原话；执行提示词和用户自然原话分开标注。
 - **唯一拥有者**：执行流程最终由一个主 Skill 拥有；项目文档只保存事实和状态，不复制流程全文。
 - **baseline 充分而非最强**：Go comparator 必须正确、任务适配、广泛采用且公平；当前 SOTA 仅在主张或外部要求依赖时才成为义务。
+- **公平按主张分层**：共同系统锚点用于端到端比较，不替代不同输出的任务专属 comparator；公平是相当调参与验证机会，不是机械使用相同超参数。
+- **有界扩图后立即批跑**：候选过窄或集中于单一机制时先做短时机制级扩图和 readiness 事实审计；不证明完整、不实现全池，随后立即运行小型 `READY` 批次。
 
 ### 其他结论
 
@@ -108,6 +111,7 @@
 - **S011 续接 / D010**：真实 SCIENCE_SCOUT 暴露“弱但正确 baseline 制造假问题”和“补证过重”双风险；完成新 pressure fixture、RED/ GREEN fresh-agent 测试和最小 Skill 修订。GREEN 行为已满足：不默认追 SOTA、一个主传统 comparator + 一个直接相关廉价扩展、ML 前必须达到 `PROBLEM_SURVIVES_CONVENTIONAL_BASELINE`、Portfolio 不因仲裁单点停滞。
 - **V008**：首次独立终验 PARTIAL 暴露逐字行为证据/scorer 与注册表缺口；修复后复验 PASS。Skill 测试 `67 passed, 1 skipped`，RED FAIL/GREEN 6/6 PASS，无残留 P0/P1/P2。
 - **V009**：repo 与全局消费者 Skill 42 文件 SHA256 全等；全局 quick validation 与可移植测试 17/17 PASS。全局全套另有 3 项预期 repo-context failure，同项在 canonical repo 3/3 PASS，不阻断部署。
+- **S011 续接 / D011 / V010**：真实 C01–C04 计划暴露“共同 system anchor 冒充任务专属 baseline”“共享输入冒充 runnable”及候选过窄问题；RED→GREEN、自动 scorer、独立复验和全局同步均 PASS。
 
 ## 未决项
 
@@ -120,4 +124,4 @@
 
 ## 当前位置
 
-Task 1–10 和消费者部署历史继续有效；主 Skill 的 baseline 充分性修订已由 V008/V009 完成 repo 与全局消费者终验。下一阶段不是直接训练 ML，而是由科学专题 H002 先完成轻量传统 baseline 裁决，同时并行准备其他机制候选。
+Task 1–10、消费者部署、D010 与 D011 均已验证；全局消费者同步完成。下一科学阶段从 H004 续接：不直接只训 C01，先短时扩展机制级候选、纠正 readiness 与任务专属 comparator，再立即运行首批 `READY` 候选。

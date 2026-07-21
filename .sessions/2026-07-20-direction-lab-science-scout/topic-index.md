@@ -1,6 +1,6 @@
 # Topic Index: Direction Lab 首轮 SCIENCE_SCOUT 正式科学探索
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-07-20（S003/D006/H003：baseline adjudication shared batch 完成，裁决 = PROBLEM_SURVIVES_CONVENTIONAL_BASELINE；条件授权 ML Scout；Portfolio 新增 C01-C04）
+> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-07-21（S004/D007/H004：baseline 公平性与候选过窄纠正；当前 DIAGNOSTIC/SLICE）
 
 ## 专题信息
 
@@ -58,8 +58,8 @@
 
 - CB1 证明当前单模 CMA/长度合同下存在 inner-ring collapse 与 scoring-only oracle gap，但尚未证明问题经过任务适配的传统 baseline 后仍存在。
 - baseline 不必是当前 SOTA；一个来源闭环、广泛采用、任务适配且公平的 comparator 足以支撑有限主张。
-- **2026-07-20 S003 裁决**：CB1 16QAM inner-ring collapse headroom 经 MMA + N=32768 联合裁决后仍稳定存在 = `PROBLEM_SURVIVES_CONVENTIONAL_BASELINE`。task-mismatch（MMA 没更好甚至更差）和 under-convergence（N=32768 headroom 不降反升）都被排除。真因 = block-end gradient descent (block_size=64) 在 SOP+GG 下的 seed-trajectory-dependent 收敛失败，length-invariant。
-- **信息可恢复性**：oracle affine 能恢复坍缩 seeds 到 PI-SER≈0 ⇒ ML collapse detector 有机制合理性（H022）。条件授权 bounded ML Scout，Go 对手必须 nearest-16QAM + MMA。
+- **2026-07-21 D007 纠正**：S003 的 raw CMA/MMA 数值与局部失败观察有效，但同 `mu` 不等于公平调参，`N=32768` 不等于约 `1e5` 收敛闭合；当前科学状态退回 `DIAGNOSTIC/SLICE`，不得把 task-mismatch、under-convergence 或 block-end 真因写成已排除/已证明。
+- **oracle 边界**：oracle affine 只能证明特权映射存在；receiver-visible trace 是否足以识别该映射仍未验证。C01 可先验证 observability，但检测本身不代表 PI-SER 改善。
 - **教科书结果不外推**：MMA > CMA on 16QAM 在 fiber-coherent 成立但在 OSL+GG+SOP+block-end 下不成立（H018）。这是可毕业的负面论文材料。
 
 ## 进展线索
@@ -68,11 +68,12 @@
 - **S002**：CB1 closure 实施（`_dual_pol_channel.py` 参数化 modulation，11/11 closure + 6/6 regression PASS）；baseline Atlas 运行（11 16QAM cells × 10 seeds）；**发现 10/11 cells headroom ≥ MDE，max 0.333**；独立验证 CONFIRM（clean-room verifier）；harvest H010-H015（POSITIVE_MECHANISM_SIGNAL / FAILURE_MECHANISM inner-ring-collapse / REUSABLE_ASSET closure / INFRASTRUCTURE_GAP _cma identity / EVALUATION_INSIGHT 16QAM PI-SER rotations / LOCAL_NEGATIVE snr=5）；D004 本轮不触发 ML Scout，记录 scoped positive + handoff H001。
 - **S002 续接 / D005 / H002**：独立审计指出 comparator 任务适配和收敛不足；历史 Atlas 数字不删除，但证据级别收回 `DIAGNOSTIC/SLICE`。D005 取代 D004 的直接 ML 授权；H002 要求先做一个主传统 comparator + 必要廉价扩展的共享裁决，并行准备其他机制候选。
 - **S003 / D006 / H003**：baseline adjudication shared batch 完成。实现 MMA（Yang-Werner-Dumont JSAC 2002）作主 Go comparator，5/5 sanity tests PASS，独立 verifier clean-room bit-identical 复现。axis 1（11 cells × 10 seeds）+ axis 2（4 cells × {N=512, N=32768} × 5 seeds）联合裁决 = `PROBLEM_SURVIVES_CONVENTIONAL_BASELINE`。机制：MMA 不优于 CMA（H018），N=32768 headroom 不降反升（H019），block-end protocol 是瓶颈但动 CMA anchor 会破 parity（H021）。harvest H016-H022。Portfolio 新增 4 个机制不同候选 C01-C04。D006 条件授权下一对话做 bounded ML Scout（首选 C01 causal collapse detector）。
+- **S004 / D007 / H004**：独立复审确认 D006 对公平性、收敛、因果和 recoverability 解释过强；撤回其 ML 直接晋级，保留 raw evidence/资产/harvest。下一入口改为短时机制级扩图、任务专属 comparator/readiness 纠正和有界公平修复，随后立即批跑 `READY` 子集。
 
 ## 未决项
 
-- ML Scout batch 仍未运行；D006 已条件授权（PROBLEM_SURVIVES_CONVENTIONAL_BASELINE 达成），下一对话（clean context）设计 bounded ML Scout（首选 C01）。
-- Portfolio 候选 C01-C04 已写卡（portfolio-refresh.v2-addendum.yaml），未实现。
+- ML Scout batch 仍未运行；D006 已由 D007 取代，当前须先闭合有限公平性并扩展机制级候选全貌。
+- Portfolio 候选 C01-C04 已写卡但 readiness 需纠正：C01/C02/C04 至少需 adapter/合同；C03 为 `INFRASTRUCTURE_BLOCKED`。
 - `_cma.py:CMAEqualizer2x2` scalar-error 与 docstring/canonical "Godard-with-z" 不一致（H013 OPEN_ACKNOWLEDGED，pre-existing）。
 - 16QAM R²=1.32 未 canonical 化（仅 CB1 closure 中定义）。
 - **新债务 H021**：block_size=64 + block-end protocol 是 collapse 瓶颈但动 CMA anchor identity 会破 parity；per-symbol 变体是 future infrastructure task。
@@ -81,4 +82,4 @@
 
 ## 当前位置
 
-S003 baseline adjudication shared batch 已完成，裁决 = `PROBLEM_SURVIVES_CONVENTIONAL_BASELINE`。D006 条件授权下一对话做 bounded ML Scout（首选 C01 causal collapse detector）。Portfolio 已扩到 C01-C04。H003 是唯一续接入口。本对话末尾做单次 consolidated commit，不 push。
+S003 raw baseline adjudication 已完成；D007 将结论收回 `DIAGNOSTIC/SLICE` 并取代 D006 的直接 ML 授权。下一步先做约 12–18 个机制级候选的有界扩图、两层 comparator 与 readiness 审计，再立即运行 3–5 个 `READY` 候选。H004 是唯一续接入口。

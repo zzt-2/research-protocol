@@ -8,8 +8,26 @@ ROOT = Path(__file__).parents[1]
 PROFILE = ROOT / "references" / "profiles" / "communications.md"
 SCHEMA = ROOT / "references" / "project-adapter-schema.yaml"
 PROJECT_LAYOUT = ROOT / "references" / "project-layout.md"
-GENERIC = [ROOT / "SKILL.md", *sorted((ROOT / "scripts").glob("*.py"))]
-FORBIDDEN_DOMAIN_TOKENS = {"ber", "snr", "cma", "pilot", "osl", "qpsk", "jones"}
+GENERIC_REFERENCES = [
+    path
+    for path in sorted((ROOT / "references").glob("*.md"))
+    if "profiles" not in path.parts
+]
+GENERIC = [
+    ROOT / "SKILL.md",
+    *GENERIC_REFERENCES,
+    *sorted((ROOT / "scripts").glob("*.py")),
+]
+FORBIDDEN_DOMAIN_TOKENS = {
+    "ber",
+    "snr",
+    "cma",
+    "pilot",
+    "osl",
+    "qpsk",
+    "jones",
+    "receiver",
+}
 PROJECT_ADAPTER_FIELDS = {
     "project_id",
     "formal_goal",

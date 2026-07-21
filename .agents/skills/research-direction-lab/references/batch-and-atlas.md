@@ -6,9 +6,11 @@ Use this reference to plan comparable work and decide whether local evidence war
 
 Define:
 
-`question | candidates | shared baseline | domain slice | legal comparator | diagnostics | cost | dependencies | preregistered exit | claim ceiling`
+`question | candidates | shared system anchor | task-specific comparator per claim/output | domain slice | legal information | tuning budget | diagnostics | cost | dependencies | preregistered exit | claim ceiling`
 
-Include a no-change baseline, one defensible widely used task-appropriate conventional comparator, one obvious low-cost extension when it directly addresses the diagnosed failure, a small set of mechanism-distinct candidates sharing the contract, and only the ablations needed to distinguish the stated hypotheses. Current SOTA is not a default prerequisite. Choose size from information value and cost; do not enforce a global count.
+Include a no-change baseline, one defensible widely used task-appropriate conventional comparator, one obvious low-cost extension when it directly addresses the diagnosed failure, a small set of mechanism-distinct candidates sharing the contract, and only the ablations needed to distinguish the stated hypotheses. Keep a **shared system anchor** for end-to-end effects, and assign a **task-specific comparator** when candidates produce different kinds of outputs or support different claims. Current SOTA is not a default prerequisite. Choose size from information value and cost; do not enforce a global count.
+
+When a batch contains an observational stage and an intervention stage, evaluate them separately: prediction quality establishes observability; only an executable action or correction can establish downstream system improvement. Do not promote a detector-only result as performance gain.
 
 Before a gap becomes method-worthy, apply `baseline-adjudication.md`. Keep the result diagnostic until `PROBLEM_SURVIVES_CONVENTIONAL_BASELINE` is supported. Baseline checks and preparation of other reusable candidates may proceed in the same portfolio cycle.
 

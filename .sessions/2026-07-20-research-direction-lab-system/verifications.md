@@ -434,3 +434,30 @@ PASS。此前首轮 verifier 的 P1（无逐字行为证据/可执行 scorer）�
 ### 结论
 
 PASS。全局消费者 Skill 已与 repo 验证版本字节一致且可发现。非阻断 P2：未来可给 3 项 source-integration tests 增加 `repo_context` marker 或显式 repo-root 参数。
+
+## V010: 两层 baseline 公平性与有界候选扩图独立终验
+
+> date: 2026-07-21
+> 关联：S011 续接 / D011 / science-scout D007-H004
+> verifier 上下文：独立 subagent，与实现和 GREEN agent 分离
+> FINAL VERDICT: PASS
+
+### 验证项
+
+- [x] 共同系统锚点与任务专属 comparator 已分离；不同 detection/control/correction 主张不再机械共用同一列表。
+- [x] 公平性明确为 `equal tuning opportunity`，不是强制 identical hyperparameters；信息、验证、收敛和 held-out 冻结边界均保留。
+- [x] 候选过窄时触发 bounded mechanism-level refresh；明确不设固定全局数量、不要求实现全池，随后立即进入小型 `READY` 批次。
+- [x] readiness 使用 `READY / NEEDS_SMALL_ADAPTER / INFRASTRUCTURE_BLOCKED / HYPOTHESIS_ONLY`，共享输入或代码复用不能冒充 runnable。
+- [x] detector observability 与 downstream system gain 明确分开。
+- [x] 真实 RED artifact 被 scorer 判 `FAIL`，fresh-agent GREEN 判 `PASS`；P1 行为回归缺口关闭。
+- [x] 通用 Skill、全部通用 references 与 scripts 的 domain-neutral test 通过；`receiver` 已移入领域 Profile 语义，P2 关闭。
+- [x] Skill 全套：`71 passed, 1 skipped`；UTF-8 quick_validate PASS；compileall PASS；git diff-check exit 0。
+- [x] 全局消费者同步：46 个非缓存文件，missing=0、extra=0、SHA256 mismatch=0；全局定向 tests `16 passed`，quick_validate PASS。
+
+### 已知非本轮失败
+
+Skill + 4 个项目文件组合回归为 `145 passed, 1 failed, 1 skipped`。唯一失败是未修改 `STATUS.v1.md` 的 Windows checkout CRLF 与 renderer LF 不一致；该文件不在本轮 diff，属于既有行尾债务。因此本轮 Skill 修订 PASS，但不得宣称组合套件全绿。
+
+### 结论
+
+PASS。两项真实失效已由最小 Skill/reference 修订、fresh-agent 行为证据、自动 scorer 和独立复验闭合；未引入 scheduler、固定候选数量、全池实现义务或通信项目语义。

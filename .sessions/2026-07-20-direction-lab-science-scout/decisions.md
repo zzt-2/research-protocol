@@ -182,10 +182,10 @@ S002 续接 / 用户纠正 / Skill D010。
 
 ## D006: CB1 16QAM inner-ring collapse 裁决为 PROBLEM_SURVIVES_CONVENTIONAL_BASELINE；条件授权 ML Scout
 
-> status: active
+> status: superseded
 > date: 2026-07-20
 > 取代：D005 中"裁决达到 PROBLEM_SURVIVES_CONVENTIONAL_BASELINE 后才允许 bounded ML Scout"的条件触发部分（现在已满足，授权生效）
-> 被取代：无
+> 被取代：D007
 > 依据: 验证: `baseline-adjudication-batch/artifacts/baseline-adjudication-v1.json` + `baseline-adjudication-v1-synthesis.md` + 子 agent clean-room verifier（`verifier_mma.py`，bit-identical 复现）+ 用户原话: `voice.md` 2026-07-20 "在边界内尽可能连续推进到一次真正的 baseline 科学裁决"
 
 ### 决策
@@ -237,3 +237,41 @@ CB1 16QAM inner-ring collapse headroom 经一个广泛采用、任务适配、�
 ### 来源
 
 S003（本轮 baseline adjudication shared batch）+ 子 agent verifier + 用户 §三/§五/§六/§七
+
+---
+
+## D007: baseline 公平性未闭合；先扩机制全貌并做有界公平修复
+
+> status: active
+> date: 2026-07-21
+> 取代：D006 的 `PROBLEM_SURVIVES_CONVENTIONAL_BASELINE` 晋级、统一 Go comparator 与“首选 C01 直接训练”下一动作
+> 被取代：无
+> 依据: 用户原话: `voice.md` 2026-07-21 + critic: D006/S003 独立复审 + Skill: `2026-07-20-research-direction-lab-system/D011`
+
+### 决策
+
+D006 的原始 CMA/MMA 数值、实现资产和局部失败观察继续有效，但 baseline 公平性与机制因果尚未闭合，科学状态退回 `DIAGNOSTIC/SLICE`。下一对话先做短时机制级 Portfolio 扩图、readiness 纠正和有界公平修复；随后立即运行共享合同下的首个 `READY` 批次，不直接只训 C01。
+
+### 理由
+
+1. CMA/MMA 强制同一 `mu=0.001` 不等于算法各自获得公平调参机会；`mu=1e-4` 仅在一个 cell × 5 seeds 探测，不能代表候选专属 tuning closure。
+2. `N=32768` 是预算内最大长度，不等于文献提到的约 `1e5` 收敛尺度，不能宣称欠收敛已经排除。
+3. 未运行 smaller-block 或 per-symbol 更新，不能把 block-end protocol 写成已证明真因。
+4. oracle affine 使用 TX truth，只证明特权映射存在，不证明 receiver-visible trace 足够识别该映射。
+5. C01–C04 分属检测、控制、修正，不能用完全相同的 comparator 列表；C03 又缺 state/action hook，`Y_with_compute` readiness 不成立。
+6. 四个候选仍集中在同一 collapse/trace 簇，直接只跑 C01 会重新单点收窄；但穷举或实现十几个候选同样过重。
+
+### 排除的替代方案
+
+- **维持 D006 并直接训练 C01**：拒绝；会在 baseline 公平性和候选全貌未闭合时过早推进。
+- **删除 D006 数值或 harvest**：拒绝；原始数据、MMA 实现和局部失败仍是有效诊断与次级论文材料。
+- **追逐所有 SOTA 或穷举传统均衡器**：拒绝；只做能改变有限主张的公平调参、收敛和直接机制核验。
+- **先实现整个扩展 Portfolio**：拒绝；扩图只做候选全貌、证据和 readiness，随后立即批跑 `READY` 子集。
+
+### 影响范围
+
+H003 被 H004 取代为续接入口。下一轮允许更新 Portfolio、candidate-specific comparator/readiness、共享公平性合同并运行 Scout；继续禁止修改 B001–B003/P03/CB1 历史字节、创建 legacy B004、自动写论文或绕过 GW/Contract/Execute 晋级。
+
+### 来源
+
+S004 / 用户纠正 / system D011 / 独立方法论与候选血缘审计。

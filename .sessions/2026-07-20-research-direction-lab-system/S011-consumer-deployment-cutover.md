@@ -3,6 +3,7 @@
 > 2026-07-20 | 部署收口 | 状态: PASS (pending independent verifier 终验)
 > 来源: 用户 2026-07-20 执行提示词（"shadow 分支已 PASS，但普通项目入口还没有真正接通"——消费者部署断链修复）
 > 2026-07-20 续接 | baseline 充分性 Skill 修订 | 状态: V008/V009 PASS，全局同步完成
+> 2026-07-21 续接 | baseline 公平性与候选扩图小修 | 状态: V010 PASS，全局同步完成
 
 ## 目标
 
@@ -163,3 +164,29 @@ git worktree add .worktrees/research-direction-lab-integration -b codex/research
 
 - V008/V009 已 PASS；42 个非缓存文件全局同步且 hash mismatch=0。
 - 从科学专题 H002 继续正式推进。
+
+## 2026-07-21 续接：两层 baseline 与有界候选扩图
+
+### 目标
+
+修复真实使用中的两个缺口：不同输出候选错误共用同一 comparator 列表；四个同源候选直接进入单点执行，缺少重实施前的短时机制级全貌检查。
+
+### 记录
+
+- RED 证据来自 science-scout 的 C01–C04 卡片：检测、控制、修正共用 nearest-16QAM + MMA；C03 缺 action/state hook 却标 `Y_with_compute`。
+- 新增 `cross-output-portfolio-fairness.yaml`；修订前定向测试 `8 passed, 2 failed`，失败点正是 shared anchor/task comparator 未分和 bounded mechanism-level refresh 缺失。
+- Skill 最小修订：baseline 公平性改为共同系统锚点 + 任务专属 comparator；公平调参改为相当机会而非相同超参数；候选扩图新增 `READY / NEEDS_SMALL_ADAPTER / INFRASTRUCTURE_BLOCKED / HYPOTHESIS_ONLY` 事实分层。
+- 扩图不设全局固定数量，不要求先实现全池；完成短时全貌检查后立即选择小型 `READY` 批次。
+
+### 决策引用
+
+- D011：新建——采用两层 baseline 公平性与有界机制级候选扩图。
+
+### 范围确认
+
+- 本轮是否在 scope boundary 内：是。属于主 Skill 真实使用反馈的最小修订；不运行新科学实验、不修改 protected history、不创建 B004。
+
+### 后续
+
+- fresh-agent GREEN、自动 scorer、全套回归和独立 verifier 均已完成；见 V010。
+- 全局消费者 Skill 46 个非缓存文件与 repo source SHA256 全等；下一科学入口为 science-scout H004。

@@ -90,3 +90,8 @@ covered categories; this does not constitute long-term automation evidence
 
 Not run. Per the revision discipline, a rerun is required only after a Skill
 revision; round 1 needed no Skill revision.
+# Cross-output portfolio fairness — 2026-07-21
+
+- RED: real C01–C04 portfolio used one Go comparator lattice across detection/control/correction, marked a controller runnable despite missing action/state interfaces, and prioritized C01 before a bounded mechanism-level refresh.
+- GREEN: fresh agent separated shared system anchor from task-specific comparators, used equal tuning opportunity, corrected readiness, required a bounded refresh, and selected a small comparable batch without demanding exhaustive mapping.
+- Skill change: minimal edits to baseline adjudication, candidate portfolio, batch planning, and one routing sentence in SKILL.md.

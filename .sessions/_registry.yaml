@@ -30,8 +30,8 @@ topics:
     title: Research Direction Lab 完整体系设计
     status: active
     created: "2026-07-20"
-    last_updated: "2026-07-20（S011/D010/V008/V009：baseline 充分性修订与全局消费者同步双 PASS）"
-    description: "从零/从地基的长期自动研究探索体系，唯一流程拥有者为 research-direction-lab Skill。Task 1–10 与消费者部署已验证；本轮以真实科学事件补入务实 baseline 充分性：正确、任务适配、广泛采用且公平即可支撑有限主张，不默认追 SOTA；问题未经过充分传统 baseline 前不授权方法 Scout。"
+    last_updated: "2026-07-21（S011/D011/V010：两层 baseline 公平性与有界机制级候选扩图修订 PASS，全局同步完成）"
+    description: "从零/从地基的长期自动研究探索体系，唯一流程拥有者为 research-direction-lab Skill。Task 1–10 与消费者部署已验证；baseline 采用充分而非最强原则，并区分共同系统锚点与任务专属 comparator；候选过窄时先短时机制级扩图和 readiness 审计，再立即批跑 READY 候选。"
     depends_on:
       - slug: framework-evolution
         reason: 继承 R002 Direction Lab 设计和唯一拥有者原则
@@ -593,8 +593,8 @@ topics:
     title: Direction Lab 首轮 SCIENCE_SCOUT 正式科学探索
     status: active
     created: "2026-07-20"
-    last_updated: "2026-07-20（S003/D006/H003：baseline adjudication shared batch 完成，裁决 = PROBLEM_SURVIVES_CONVENTIONAL_BASELINE；条件授权 ML Scout；Portfolio 新增 C01-C04）"
-    description: "首轮正式 SCIENCE_SCOUT campaign。CB1 modulation closure 与 16QAM Atlas 已完成；baseline adjudication 裁决 = PROBLEM_SURVIVES_CONVENTIONAL_BASELINE（MMA + N=32768 联合裁决后 gap 稳定存在）；D006 条件授权下一对话做 bounded ML Scout（首选 C01 causal collapse detector），Go 对手必须 nearest-16QAM + MMA。继续保护 B001-B003、P03 Atlas、CB1 raw artifacts 与 formal GW/Contract/Execute 边界。"
+    last_updated: "2026-07-21（S004/D007/H004：baseline 公平性与候选过窄纠正；当前 DIAGNOSTIC/SLICE）"
+    description: "首轮正式 SCIENCE_SCOUT campaign。CB1 closure、16QAM Atlas 和 CMA/MMA raw evidence 已完成；D007 撤回 D006 的直接 ML 晋级，因为同参数不等于公平调参、N=32768 未闭合约 1e5 收敛且候选 readiness 有误标。下一入口 H004：先短时机制级扩图和任务专属 comparator/readiness 审计，再立即批跑 READY 子集。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 V007 PASS 的消费者部署（全局 Skill + STATUS + Project Adapter + protected history）作为科学探索起点

@@ -16,8 +16,10 @@ ROOT = Path(__file__).parents[1]
 FORWARD = ROOT / "tests" / "forward"
 FORWARD_CASE = FORWARD / "non-comms-baseline-extension.yaml"
 PRAGMATIC_CASE = FORWARD / "pragmatic-baseline-adjudication.yaml"
+CROSS_OUTPUT_CASE = FORWARD / "cross-output-portfolio-fairness.yaml"
 SCORER = ROOT / "tests" / "score_forward_tests.py"
 BASELINE_SCORER = ROOT / "tests" / "score_baseline_adjudication.py"
+CROSS_OUTPUT_SCORER = ROOT / "tests" / "score_cross_output_portfolio.py"
 
 
 def _load_scorer():
@@ -30,6 +32,15 @@ def _load_scorer():
 def _load_baseline_scorer():
     spec = importlib.util.spec_from_file_location(
         "score_baseline_adjudication", BASELINE_SCORER
+    )
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def _load_cross_output_scorer():
+    spec = importlib.util.spec_from_file_location(
+        "score_cross_output_portfolio", CROSS_OUTPUT_SCORER
     )
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
@@ -99,6 +110,60 @@ def test_skill_routes_pragmatic_baseline_adjudication_reference():
     assert "need not be current SOTA" in policy
     assert "widely used" in policy
     assert "baseline-adjudication.md" in skill
+
+
+def test_cross_output_portfolio_fixture_has_closed_contract():
+    case = yaml.safe_load(CROSS_OUTPUT_CASE.read_text(encoding="utf-8"))
+    assert set(case) == {
+        "schema_version",
+        "case_id",
+        "decision_point",
+        "domain_note",
+        "facts",
+        "allowed_actions",
+        "forbidden_actions",
+        "claim_ceiling",
+    }
+    assert case["case_id"] == "cross-output-portfolio-fairness"
+    assert case["claim_ceiling"]["level"] == "PORTFOLIO_PLANNING"
+    assert any("task-specific comparators" in item for item in case["allowed_actions"])
+
+
+def test_skill_distinguishes_shared_anchor_from_task_specific_comparators():
+    baseline = (ROOT / "references" / "baseline-adjudication.md").read_text(
+        encoding="utf-8"
+    )
+    batch = (ROOT / "references" / "batch-and-atlas.md").read_text(
+        encoding="utf-8"
+    )
+    assert "shared system anchor" in baseline
+    assert "task-specific comparator" in baseline
+    assert "equal tuning opportunity" in baseline
+    assert "shared system anchor" in batch
+    assert "task-specific comparator" in batch
+
+
+def test_skill_requires_bounded_mechanism_level_portfolio_refresh():
+    portfolio = (ROOT / "references" / "candidate-portfolio.md").read_text(
+        encoding="utf-8"
+    )
+    assert "Bounded portfolio refresh" in portfolio
+    assert "mechanism-level" in portfolio
+    assert "NEEDS_SMALL_ADAPTER" in portfolio
+    assert "INFRASTRUCTURE_BLOCKED" in portfolio
+
+
+def test_cross_output_scorer_distinguishes_real_red_and_fresh_green():
+    scorer = _load_cross_output_scorer()
+    run_root = FORWARD / "runs" / "cross-output-portfolio-fairness"
+    red = scorer.score_response(run_root / "round-red.md")
+    green = scorer.score_response(run_root / "round-green.md")
+    assert red["verdict"] == "FAIL"
+    assert green["verdict"] == "PASS"
+    assert not red["checks"]["task_specific_comparators"]
+    assert not red["checks"]["readiness_honesty"]
+    assert green["checks"]["equal_tuning_opportunity"]
+    assert green["checks"]["observability_not_gain"]
 
 
 def test_pragmatic_baseline_scorer_distinguishes_red_and_green():
