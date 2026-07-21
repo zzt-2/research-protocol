@@ -88,19 +88,32 @@ def collapse_label_for_auroc(label_4cat: str) -> int | None:
 # min-z2-ratio scoring baseline (zero-parameter, honest lower bound)
 # =============================================================================
 
-def min_z2_ratio_score(trace: list[dict[str, Any]], *, warmup: int = 2) -> float:
+def min_z2_ratio_score(trace: list[dict[str, Any]], *, R2: float = 1.32, warmup: int = 2) -> float:
     """Zero-parameter scoring baseline: -min(z2_ratio) after warmup.
 
     Higher score = more collapse-like. This is the BARE heuristic; the
     parameterised C05 detector should beat this if its parameters matter.
+
+    Accepts traces that carry EITHER `z2_over_R2_ratio` directly OR only
+    `output_power` (from which ratio is derived as output_power/(2*R2)).
+    This matches the C05 detector and degradation_onset_block behavior;
+    the previous version silently returned NaN for anchor traces (which
+    only carry output_power), which mechanically broke the adjudicator.
     """
     ratios = []
     for i, t in enumerate(trace):
         if i < warmup:
             continue
-        r = t.get("z2_over_R2_ratio", float("nan"))
-        if not np.isnan(r):
-            ratios.append(float(r))
+        r = t.get("z2_over_R2_ratio")
+        if r is None or (isinstance(r, float) and np.isnan(r)):
+            op = t.get("output_power")
+            if op is None or (isinstance(op, float) and np.isnan(op)):
+                continue  # skip missing
+            else:
+                r = float(op) / (2.0 * R2) if R2 > 0 else float("nan")
+                if np.isnan(r):
+                    continue
+        ratios.append(float(r))
     if not ratios:
         return float("nan")
     return -float(np.min(ratios))
@@ -156,6 +169,17 @@ def c05_alert_score(
         if np.isnan(ratio):
             alerts.append({"block": i, "alert": 0, "threshold_alert": 0, "cusum_alert": 0,
                            "z2_ratio": float("nan"), "cusum_stat": float(cusum_stat)})
+            continue
+        # WARMUP GUARD: blocks before `warmup` are used only to estimate the
+        # baseline; they MUST NOT emit alerts. Previously the detector could
+        # fire at block 0 or 1 (during warmup), which made lead_time =
+        # onset(2) - alert(0) look like "+2 blocks lead" when it was just a
+        # warmup口径 misalignment.
+        if i < warmup:
+            cusum_stat = max(0.0, cusum_stat + (baseline - ratio) - cusum_drift)
+            alerts.append({"block": i, "alert": 0, "threshold_alert": 0, "cusum_alert": 0,
+                           "z2_ratio": float(ratio), "cusum_stat": float(cusum_stat),
+                           "in_warmup": True})
             continue
         threshold_alert = 1 if ratio < z2_ratio_threshold else 0
         cusum_stat = max(0.0, cusum_stat + (baseline - ratio) - cusum_drift)
@@ -295,28 +319,53 @@ def pr_auc_or_none(scores: list[float], labels: list[int]) -> float | None:
     return float(area)
 
 
-def recall_at_fpr(scores: list[float], labels: list[int], *, fpr: float = 0.05) -> float | None:
-    """Recall at a fixed false-positive rate. None if single-class."""
+def recall_at_fpr(scores: list[float], labels: list[int], *, fpr: float = 0.05) -> tuple[float | None, float | None, int | None]:
+    """Recall at a target FPR. Returns (recall, actual_fpr_achieved, fp_budget).
+
+    HONESTY FIX (BUG 3): with small n_neg, a target 5% FPR cannot actually
+    be achieved. The smallest nonzero FPR is 1/n_neg. Previously this fn
+    silently used floor(0.05*n_neg)=0 for n_neg<20 and returned recall at
+    0 FPR (or with the off-by-one in `>` returned at ~1/n_neg).
+
+    Now it returns a tuple: (recall_at_smallest_achievable_nonzero_fpr,
+    actual_fpr = fp_budget/n_neg, fp_budget). Caller must report the
+    ACTUAL fpr, not the nominal target. If fp_budget=0 (target FPR would
+    require 0 false positives but we want nonzero), we report recall at 0
+    FPR and actual_fpr=0.0, and the caller must note "0% FPR achieved;
+    5% not resolvable with n_neg={}".
+
+    None for all if single-class.
+    """
     s = np.asarray(scores, dtype=float)
     l = np.asarray(labels, dtype=int)
     n_pos = int(np.sum(l == 1))
     n_neg = int(np.sum(l == 0))
     if n_pos == 0 or n_neg == 0:
-        return None
+        return None, None, None
     finite = np.isfinite(s)
     s_filled = np.where(finite, s, -1e18)
     order = np.argsort(-s_filled)
+    # Budget: largest integer k such that k/n_neg <= target fpr.
+    # If target fpr * n_neg < 1 (i.e. n_neg < 1/fpr), the smallest nonzero
+    # achievable FPR is 1/n_neg; we use k=1 and flag it.
+    k_target = int(np.floor(fpr * n_neg))
+    if k_target < 1:
+        # Cannot honor target fpr; use smallest nonzero (k=1).
+        fp_budget = 1
+        actual_fpr = 1.0 / n_neg
+    else:
+        fp_budget = k_target
+        actual_fpr = fp_budget / n_neg
     fp_count = 0
     tp_count = 0
-    fpr_budget = max(1, int(np.floor(fpr * n_neg)))
     for idx in order:
         if l[idx] == 1:
             tp_count += 1
         else:
             fp_count += 1
-            if fp_count > fpr_budget:
+            if fp_count > fp_budget:
                 break
-    return float(tp_count / n_pos)
+    return float(tp_count / n_pos), float(actual_fpr), int(fp_budget)
 
 
 def false_alarm_rate(scores: list[float], labels: list[int], *, threshold_rank: int = 1) -> float | None:

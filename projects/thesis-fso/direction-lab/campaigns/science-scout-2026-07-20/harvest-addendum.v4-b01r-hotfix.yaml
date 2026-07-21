@@ -1,0 +1,159 @@
+# Harvest Addendum v4 — B01-R Hotfix v2 (2026-07-21)
+# Supersedes v3 content for H029-H034 (corrected counts and verdicts);
+# adds H035-H038 (new evaluation insights from hotfix).
+# v3 file preserved for traceability.
+
+schema_version: direction-lab.harvest.v4-b01r-hotfix
+campaign_id: science-scout-2026-07-20.dual-pol-osl
+batch: fairness-batch-b01r
+batch_version: hotfix_v2_hf2_2026-07-21
+date: 2026-07-21
+verdict: A_B01R_FAIRNESS_SURVIVES_AND_DETECTOR_TARGET_READY  # was B in v3; v1 verdict B was mechanically forced by min_z2 NaN bug
+
+supersedes_in_v3:
+  - H029_H034_content_corrected_below
+  - verdict_B_was_mechanically_forced  # min_z2_ratio_score had no output_power fallback; all 110 scores were NaN; adjudicator's "both detector scores need ≥2 two-class cells" gate could not pass for min_z2
+
+harvest:
+
+  - id: H029
+    category: BASELINE_ADJUDICATION
+    content: >-
+      Under a no-leakage seed split (tuning [11-15], test [21-30]) with a
+      validation-optimal fixed-μ CMA at μ=0.03 (interior optimum after
+      HF6 grid extension from [1e-4..1e-2] to [1e-4..1e-1]; μ=0.01 was a
+      boundary artifact), the CB1 16QAM inner-ring collapse headroom
+      remains on 4/7 held-out cells. C11_fixed_μ (μ=0.03 CMA + DD-LMS)
+      closes 3/7 and significantly beats fixed_μ CMA on 4/7 (paired CI
+      excludes 0, |Δ|≈0.01). fixed_μ CMA alone closes only 1/7.
+    evidence_pointer: fairness-batch-b01r/artifacts/fairness-batch-b01r-v1.json#paired_cis_held_out.*.C11_fixed_mu_vs_fixed_mu_cma
+    claim_ceiling: LOCAL_RESULT_SLICE
+
+  - id: H030
+    category: FAILURE_MECHANISM
+    content: >-
+      The binary oracle_pi_ser > 0.3 collapse label conflates inner-ring
+      recoverable collapse with AWGN-dominated error. 4-category audit
+      on 110 test seeds: inner_ring=14 (12.7%), awgn=18 (16.4%),
+      healthy=27 (24.5%), ambiguous=51 (46.4%). Held-out long cells have
+      ZERO inner-ring seeds. (v1 had conflicting ambiguous counts 43/54;
+      actual is 51; v1 also misreported awgn=20, actual is 18.)
+    evidence_pointer: fairness-batch-b01r/artifacts/fairness-batch-b01r-v1.json#cells[*].aggregate.label_4cat_counts
+    claim_ceiling: EVALUATION_INSIGHT
+
+  - id: H031
+    category: METHOD_SIGNAL
+    content: >-
+      C11_fixed_μ (stage-1 = TUNED μ=0.03 CMA + DD-LMS dd_step_size=1e-4)
+      significantly beats fixed_μ CMA on 4/7 held-out cells (paired
+      bootstrap CI excludes 0): snr15-short, snr25-short, snr20-fg100-short,
+      snr10-fg100-long. |Δ| ≈ 0.01 PI-SER. This is the FIRST method in
+      the entire campaign that significantly beats a fairly-tuned
+      conventional comparator. v1's "C11 improves 4/7" was an artifact
+      of comparing to the under-tuned μ=0.001 anchor; C11 (stage-1=anchor)
+      is actually WORSE than fixed_μ on 7/7 cells.
+    evidence_pointer: fairness-batch-b01r/artifacts/fairness-batch-b01r-v1.json#paired_cis_held_out
+    claim_ceiling: LOCAL_RESULT_SLICE
+    thesis_spine_candidate: secondary_c11_fixed_mu_modest_improvement
+
+  - id: H032
+    category: EVALUATION_INSIGHT
+    content: >-
+      Single-class cells must report AUROC = NA/UNDEFINED, not 0.5. In
+      this batch, 5 of 7 held-out cells are single-class under the strict
+      binary projection (collapse vs healthy). v1 also had min_z2_ratio
+      silently returning NaN for all 110 seeds due to a missing
+      output_power→ratio fallback (the anchor trace carries output_power,
+      not z2_over_R2_ratio); this mechanically forced VERDICT B.
+    evidence_pointer: fairness-batch-b01r/b01r_detector.py:min_z2_ratio_score
+    claim_ceiling: EVALUATION_INSIGHT
+
+  - id: H033
+    category: EVALUATION_INSIGHT
+    content: >-
+      Tuning [11-15] ∩ test [21-30] = ∅ is the minimum honesty bar.
+      Paired bootstrap CIs over test seeds are required to distinguish
+      small Δ (e.g. 0.01) from noise.
+    evidence_pointer: fairness-batch-b01r/run_fairness_batch_b01r.py:paired_bootstrap_ci
+    claim_ceiling: EVALUATION_INSIGHT
+
+  - id: H034
+    category: REUSABLE_ASSET
+    content: >-
+      B01-R runner + detector module (4-cat label audit, paired bootstrap
+      CI, real detector metrics with honest FPR reporting, warmup-guarded
+      lead time, μ-grid boundary check, apples-to-apples cascade
+      comparison) is reusable fairness-batch infrastructure.
+    evidence_pointer: fairness-batch-b01r/run_fairness_batch_b01r.py + b01r_detector.py
+    claim_ceiling: REUSABLE_ASSET
+
+  - id: H035
+    category: EVALUATION_INSIGHT
+    content: >-
+      μ grid boundary check: if the best μ is at the grid max, the grid
+      must be extended until an interior optimum, plateau, or divergence
+      boundary is found. v1 falsely concluded "μ=0.01 optimal" when the
+      grid ended at 0.01; v2 extended to 0.1 and found μ=0.03 (μ=0.1
+      diverged). Without this check, "fairly tuned" claims are not
+      defensible.
+    evidence_pointer: fairness-batch-b01r/run_fairness_batch_b01r.py:TUNE_GRID.fixed_mu_cma.mu
+    claim_ceiling: EVALUATION_INSIGHT
+    thesis_spine_candidate: writing_evaluation_methodology
+
+  - id: H036
+    category: EVALUATION_INSIGHT
+    content: >-
+      Warmup must precede BOTH detector alert AND degradation onset.
+      v1 let detector alert fire during warmup (block 0/1), producing
+      fake "+2 lead time" (it was just onset(2) - alert(0) = 2 = the
+      warmup window). Hotfix guards both: warmup is for baseline
+      estimation only; alerts and onset-detection start at block `warmup`.
+      After the fix, actual lead time is ≤ 0 on every seed (mean -5.95
+      blocks) — the detector does NOT provide early warning. This is a
+      significant honest correction.
+    evidence_pointer: fairness-batch-b01r/b01r_detector.py:c05_alert_score warmup guard
+    claim_ceiling: EVALUATION_INSIGHT
+
+  - id: H037
+    category: EVALUATION_INSIGHT
+    content: >-
+      Apples-to-apples cascade comparison: a cascade method (C11) must
+      be compared against its OWN stage-1 (fixed_μ CMA), not against an
+      unrelated anchor (frozen μ=0.001). v1's "C11 improves 4/7" was
+      entirely an artifact of comparing to the under-tuned anchor; v2's
+      C11_fixed_μ comparison shows the real effect: still positive
+      (4/7 sig) but smaller, and only manifests when stage-1 is itself
+      well-tuned. DD-LMS on top of an under-tuned CMA is not a valid
+      method signal.
+    evidence_pointer: fairness-batch-b01r/run_fairness_batch_b01r.py:run_c11_fixed_mu
+    claim_ceiling: EVALUATION_INSIGHT
+    thesis_spine_candidate: writing_evaluation_methodology
+
+  - id: H038
+    category: REUSABLE_ASSET
+    subcategory: conventional_baseline_ceiling_guard
+    content: >-
+      Conventional baseline may already be perfect: min_z2_ratio
+      achieves AUROC=1.000 on both two-class held-out cells, beating
+      the "tuned" C05 (default-grid, AUROC=0.875 and 0.5). Before
+      claiming ML beats conventional, check whether conventional is
+      already at ceiling. The ML contribution axis must then be
+      different (lead time, calibration, generalization to single-class
+      cells) — NOT raw AUROC.
+    evidence_pointer: fairness-batch-b01r/artifacts/fairness-batch-b01r-v1.json#cells[*].aggregate.detector_min_z2_ratio.auroc
+    claim_ceiling: EVALUATION_INSIGHT
+    thesis_spine_candidate: writing_evaluation_methodology
+
+rotation:
+  verdict: A_B01R_FAIRNESS_SURVIVES_AND_DETECTOR_TARGET_READY
+  next_action_requires_user_decision: true  # per external reviewer: "通过后再开新对话进入下一批"
+  legal_paths:
+    path_1_equalizer_corrector:
+      candidates: [C04, C09]
+      task_comparators: [fixed_mu_cma_mu_0_03, oracle_affine_16qam_blind]  # HF8 forward rule
+      go_metric: paired_CI_significant_beat_C11_fixed_mu_on_at_least_4_of_7_held_out
+    path_2_detector_lead_time:
+      candidates: [C01, C02, C06]
+      task_comparator: min_z2_ratio  # AUROC=1.000 ceiling
+      go_metric: positive_mean_lead_time_on_at_least_2_two_class_cells_without_AUROC_regression
+  b02_status: not_automatically_authorized_detector_target_is_thin

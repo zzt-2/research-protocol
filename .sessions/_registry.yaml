@@ -593,8 +593,8 @@ topics:
     title: Direction Lab 首轮 SCIENCE_SCOUT 正式科学探索
     status: active
     created: "2026-07-20"
-    last_updated: "2026-07-21（S006/D009/H006/V001：B01-R 科学纠偏批完成，VERDICT B = fairness survives + detector target NOT ready；撤回 B02 授权；rotation 入口 H006）"
-    description: "首轮正式 SCIENCE_SCOUT campaign。CB1 closure、16QAM Atlas、CMA/MMA raw evidence、B01 fairness batch 均完成。B01-R 科学纠偏批独立复现 B01 的 10 条审计发现（全部 CONFIRM），用无泄漏 seed 切分（tuning=[11-15], test=[21-30]）+ 真实 validation-optimal fixed-μ CMA（μ=0.01）+ 4-cat 标签审计重审，VERDICT B：fairness 存活（更强证据：fixed_μ CMA 在 7/7 held-out cells 显著优于 frozen-μ anchor；C11 4/7 cells 显著小改善；C10 无显著差异；C08 混合），但 detector target 不 READY（4-cat 标签揭示 B01 把 AWGN 错误误当 collapse；held-out 长窗 cells inner-ring=0；只有 2 个 held-out cells two-class）。D009 撤回 D008 的 B02 ML detector 授权。下一入口 H006：rotation 到非 detector 机制族（路径 1：equalizer 学习型校正器 C04/C09，task comparator = fixed_μ CMA μ=0.01；路径 2：不同信息类 C13/C12）。"
+    last_updated: "2026-07-21 hotfix（S007/D010/H007/V002：B01-R hotfix v2 完成，VERDICT B→A = fairness survives + detector target READY (thin)；fixed_μ 最优 μ=0.03；C11_fixed_mu 4/7 cells 显著改善；等用户决策下一批方向）"
+    description: "首轮正式 SCIENCE_SCOUT campaign。CB1 closure、16QAM Atlas、CMA/MMA raw evidence、B01 fairness batch、B01-R 纠偏批（v1 + hotfix v2）均完成。外部评审抓出 B01-R v1 的 7 个实现 flaw（min_z2 NaN、warmup 错位、伪 5% FPR、机械触发 verdict B、ambiguous 计数冲突、μ 网格边界、C11 vs anchor 而非 vs fixed_μ），hotfix v2 全修复后 verdict 从 B 改为 A：fairness 存活（fixed_μ 最优 μ=0.03 interior optimum；C11_fixed_mu 4/7 cells 显著优于 fixed_μ CMA |Δ|≈0.01，是整个 campaign 第一个真阳性 method signal），detector target READY 但 thin（min_z2 已 AUROC=1.000 ceiling；lead time 全 ≤ 0）。VERDICT A 不自动授权 B02；HF8 forward rule 要求未来 corrector batch 用 fixed_μ + blind-affine 双 comparator。等用户决策下一批方向（路径 1：C04/C09 learned corrector；路径 2：C01/C02/C06 lead-time detector）。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 V007 PASS 的消费者部署（全局 Skill + STATUS + Project Adapter + protected history）作为科学探索起点

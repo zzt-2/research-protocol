@@ -77,3 +77,23 @@
 > "如果 verifier 发现 P0/P1，修复后重新独立复核；不得靠改报告措辞掩盖执行问题。"
 
 > "请连续执行到重新裁决完成；普通的局部失败、参数不工作或单候选阻断不要停下来问我，按上述 A/B/C 自动收口。" → D009, H006
+
+## 2026-07-21（续 3 — 外部评审 intervention on B01-R v1）
+
+[来源:外部评审] "结论：B01-R 比上一轮好很多，真正修复了切分和 fixed-μ baseline；但仍不能按"最终闭环 PASS"接收。当前应标为：PARTIAL / B-like" → D010
+
+[来源:外部评审] "Verdict B 被 min-z2 bug 强制产生。[min_z2_ratio_score] 只读取 `z2_over_R2_ratio`，但实际 anchor trace 只有 `output_power`。其他代码知道需要从 `output_power` 换算，唯独这个 baseline 没做。因此：所有 min-z2 score 都是 NaN；所有 cell 的 n_scores=0；裁决器又要求两个 detector baseline 都至少有两个 two-class cells；所以 Verdict B 被机械触发。"
+
+[来源:外部评审] "2-block lead time 是 warmup 错位。onset 从 warmup 后开始计算，但 detector 从 block 0 就允许报警。"
+
+[来源:外部评审] "recall@5%FPR 实际不是 5%。每个 cell 只有 2–4 个 negative，不可能可靠估计 5% FPR。"
+
+[来源:外部评审] "C11 的"4/7 显著改善"只成立于相对旧 μ=0.001 anchor。相对新的公平 baseline fixed-μ=0.01，C11 在 7/7 held-out cells 的平均 PI-SER 都更差。因此：C11 不能继续算成正面方法信号。"
+
+[来源:外部评审] "μ=0.01 是 μ 搜索网格的最大值。最优点落在边界，一般意味着搜索范围可能还没覆盖真正最优值。"
+
+[来源:外部评审] "整体评价：这轮有真实科学进展，尤其是发现旧 CMA 严重欠调、建立独立 test seeds、拆开 AWGN 与 recoverable collapse；但 verifier 又漏掉了"全 NaN baseline、warmup 错位、伪 5% FPR"。因此现在不要开 B02，也不要直接开 C04/C09。先在原对话完成这个小修复，交给我再审；通过后再开新对话进入下一批。" → D010, H007
+
+[来源:外部评审] "若评估 DD-LMS，必须运行 fixed-μ=0.01 CMA + DD-LMS，并直接与 fixed-μ CMA 比。"
+
+[来源:外部评审] "C04/C09 若以后运行，除了 system anchor，还必须保留同任务的 blind-affine comparator。" → HF8 forward rule

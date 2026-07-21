@@ -328,7 +328,7 @@ S005 / 公平 batch 科学运行 / 独立 verifier CONFIRM / baseline-adjudicati
 
 ## D009: B01-R 纠偏 — VERDICT B（fairness survives, detector target NOT ready）；撤回 B02 ML detector 授权
 
-> status: active
+> status: amended
 > date: 2026-07-21
 > 取代：D008 的 `PROBLEM_SURVIVES_FAIR_CONVENTIONAL_TREATMENT → AUTHORIZE_B02_ML_DETECTOR_BATCH_CONDITIONAL` 推论链（verdict 的 fairness-survival 部分被更高保真路径 CONFIRM；B02 detector 授权被 WITHDRAW；C11 "long cells" claim 收紧到 4/7 held-out；C05 pooled AUROC=0.6546 被每 cell AUROC + 严格 4-cat 标签审计取代）
 > 被取代：无
@@ -370,3 +370,53 @@ B01-R 科学纠偏批（在隔离 worktree 中，不修改 B01 原始 raw / D008
 ### 来源
 
 S006 / B01-R 纠偏科学运行 / 独立 verifier CONFIRM 11/11 / baseline-adjudication + evidence-and-claims 参考 / 用户 2026-07-21 10 条审计 + 自动收口授权。
+
+---
+
+## D010: B01-R hotfix v2 — VERDICT B → A（修正 D009）；C11_fixed_mu 是真阳性 signal；forward rule 加 blind-affine 双 comparator
+
+> status: active
+> date: 2026-07-21（hotfix）
+> 取代：D009 中 VERDICT B 推论链的具体技术内容（fairness-survives 部分不变；detector target 从 "NOT READY" 改 "READY (thin)"；C11/C11_fixed_mu 信号重评；fixed_μ 最优 μ 从 0.01 改 0.03；下一动作加 forward rule 双 comparator 约束）
+> 被取代：无
+> 依据: 用户原话（外部评审）: "结论：B01-R 比上一轮好很多，真正修复了切分和 fixed-μ baseline；但仍不能按"最终闭环 PASS"接收。当前应标为：PARTIAL / B-like" + "verifier 又漏掉了"全 NaN baseline、warmup 错位、伪 5% FPR"。因此现在不要开 B02，也不要直接开 C04/C09。先在原对话完成这个小修复，交给我再审；通过后再开新对话进入下一批" + 验证: `fairness-batch-b01r/artifacts/fairness-batch-b01r-v1.json`（metadata.hotfix_version=hf2_2026-07-21）+ `fairness-batch-b01r-v1-synthesis.md` v2 + V002 独立 verifier CONFIRM 13/14 + 1 P1 修复
+
+### 决策
+
+外部评审识别的 7 个 B01-R v1 实现 flaw 全部独立确认。hotfix v2 修复全部 7 个，重新运行后 verdict 从 B 改为 **A**：
+
+1. **公平性存活（不变）**：best 方法 C11_fixed_mu 关闭 3/7 < 5/7 threshold。
+2. **detector target 从 NOT READY 改 READY (thin)**：min_z2 修复后（output_power fallback）有 2 个 two-class held-out cells；c05_alert_earliness 也有 2 个。但 detector target 是 "thin"：min_z2 在这 2 个 cells AUROC=1.000（ML 不能在 AUROC 上赢 ceiling）；lead time 实际全 ≤ 0（detector 在 onset 之后才 fire，没有真正提前预警）。
+3. **fixed_μ 最优 μ 从 0.01 改 0.03**：grid 扩展到 1e-1，μ=0.03 是真正内部最优（μ=0.1 diverged）。
+4. **C11_fixed_mu 是真阳性 method signal**：stage-1 继承 tuned μ=0.03 + DD-LMS，在 4/7 held-out cells 显著优于 fixed_μ CMA（paired CI 排除 0），|Δ| ≈ 0.01 PI-SER。v1 的 C11（stage-1=anchor μ=0.001）vs fixed_μ 时 7/7 更差，不是阳性 signal。
+5. **forward rule（HF8）**：任何未来 learned-corrector batch 必须用双 task comparator：fixed_μ CMA μ=0.03（system anchor）+ blind_affine_16qam（task-specific Kill, FR-21）。
+
+VERDICT A **不自动授权 B02**：detector target ready 是 "by contract letter" 但 thin；B02 若跑需换目标（lead-time maximization 而非 AUROC；或 generalization 到 single-class cells）。
+
+### 理由
+
+1. v1 的 VERDICT B 是 min_z2 NaN bug 机械触发的，不是科学得出的；修复后真实状态是 A。
+2. C11_fixed_mu 的 4/7 显著改善（vs fair fixed_μ baseline，不是 vs 旧 anchor）是 B01-R 的真正科学产出——是整个 campaign 中第一个显著超越"公平调参传统 baseline"的方法。
+3. min_z2 AUROC=1.000 揭示：conventional baseline 已在某些 cells 达 ceiling；ML 必须在非 AUROC 维度（lead time / calibration / generalization）赢，否则没贡献。
+4. forward rule（HF8）防止未来 corrector batch 重蹈 C11 v1 覆辙（vs 错误 comparator 假装赢）。
+5. μ=0.03 是 interior optimum，fixed_μ CMA 现在是真正"充分公平调参"的 baseline（v1 的 μ=0.01 是 grid 边界，不够）。
+
+### 排除的替代方案
+
+- **维持 D009 VERDICT B 并暂停 detector 路线**：拒绝；VERDICT B 是 bug 触发，不是科学结论；修复后必须诚实改 A。
+- **直接推导启动 C04/C09 learned corrector**：拒绝（按评审明确要求）；C11_fixed_mu 的 0.01 margin 是 learned corrector 必须超越的 gap，但需用户战略决策 + forward rule 双 comparator 约束。
+- **把 C11_fixed_mu 写成"DD-LMS 解决了 collapse"**：拒绝；4/7 cells 改善 0.01 PI-SER，headroom 仍 ≥ 6×MDE；只是"小但显著的渐进改善"，不是问题闭合。
+- **删除 D009**：拒绝；D009 标 amended（不 superseded，因为 fairness-survives 部分仍有效），保留可审计血缘。
+- **修改 B01 raw / protected history**：拒绝；本轮 hotfix 仅改 B01-R 自身的 artifacts（raw JSON、synthesis、frozen params）和治理文件。
+
+### 影响范围
+
+- H006（v1 handoff）被 H007 取代（不删除，标 amended）。
+- B01-R raw artifacts 被 hf2 版本覆盖（v1 在 git commit 0404f47 可恢复）。
+- topic-index 不变量段无变更；harvest-addendum.v4-b01r-hotfix.yaml 追加 H035-H038（v1 H029-H034 内容修正）。
+- protected history（B001-B003 / P03 / CB1 raw / canonical-state / B01 raw）字节未改；无 B004；无 ML 训练；无 push。
+- 下一动作见 H007：VERDICT A + forward rule；**等用户战略决策**（评审明确"通过后再开新对话进入下一批"）。
+
+### 来源
+
+S007 / B01-R hotfix v2 科学运行 / 独立 verifier V002 CONFIRM 13/14+1P1修复 / 外部评审 2026-07-21（7 个 flaw）。

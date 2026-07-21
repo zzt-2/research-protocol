@@ -99,10 +99,15 @@ TUNING_SEEDS = [11, 12, 13, 14, 15]  # disjoint from test
 TEST_SEEDS = [21, 22, 23, 24, 25, 26, 27, 28, 29, 30]  # FRESH, disjoint
 assert set(TUNING_SEEDS).isdisjoint(set(TEST_SEEDS)), "LEAKAGE: tuning/test seeds overlap"
 
-# Tuning grids per method (B01-R; mirror batch-contract.v1.yaml B01-R).
+# Tuning grids per method (B01-R hotfix v2; mirror batch-contract.v1.yaml).
+# HF6 (BUG 6): fixed_mu_cma grid EXTENDED upward from [1e-4..1e-2] to
+# [1e-4..1e-1] to test whether μ=0.01 (the previous boundary pick) is a
+# true interior optimum or just a grid edge. If best μ is still 1e-2 we
+# report "0.01 is the largest STABLE value; larger values diverge"; if
+# best μ moves into the interior (e.g. 3e-2) we report the new optimum.
 TUNE_GRID = {
-    "fixed_mu_cma": {  # NEW genuine comparator
-        "mu": [1e-4, 3e-4, 1e-3, 3e-3, 1e-2],
+    "fixed_mu_cma": {  # genuine comparator
+        "mu": [1e-4, 3e-4, 1e-3, 3e-3, 1e-2, 3e-2, 1e-1],
     },
     "C08": {
         "alpha": [0.1, 1.0, 10.0],
@@ -110,8 +115,13 @@ TUNE_GRID = {
     "C10": {
         "mu": [1e-5, 1e-4, 3e-4, 1e-3, 3e-3],
     },
-    "C11": {
+    "C11": {  # stage-1 = ANCHOR μ=0.001 (B01 design); retained for traceability
         "dd_step_size": [1e-4, 3e-4, 1e-3, 3e-3, 1e-2],
+    },
+    "C11_fixed_mu": {  # HF7 (BUG 7): stage-1 = TUNED fixed_μ (not anchor μ=0.001)
+        "dd_step_size": [1e-4, 3e-4, 1e-3, 3e-3, 1e-2],
+        # stage-1 μ is set from fixed_mu_cma's tuned value at eval time,
+        # not re-tuned here (it inherits fixed_mu_cma's optimum).
     },
     "C05": {  # tuned by macro-AUROC over two-class validation cells ONLY
         "z2_ratio_threshold": [0.2, 0.3, 0.4, 0.5, 0.6],
@@ -216,9 +226,28 @@ def run_c10(cell, realization, *, mu):
 
 
 def run_c11(cell, realization, *, dd_step_size):
+    """C11 from B01 design: stage-1 = ANCHOR μ=0.001 (frozen). Kept for
+    traceability with B01 / B01-R v1."""
     return cand.c11_cma_dd_lms_cascade(
         realization["rX"], realization["rY"],
         n_tap=int(FROZEN["cma_taps"]), cma_mu=float(FROZEN["cma_mu_anchor"]),
+        cma_R2=R2_16QAM, cma_block_size=int(FROZEN["cma_block_size"]),
+        dd_step_size=float(dd_step_size), dd_iterations=1,
+        hard_decision_fn=evaluator.hard_16qam,
+    )
+
+
+def run_c11_fixed_mu(cell, realization, *, cma_mu, dd_step_size):
+    """HF7 (BUG 7): C11 with stage-1 = TUNED fixed_μ CMA (not anchor μ=0.001).
+
+    This is the apples-to-apples comparison the reviewer asked for: does
+    DD-LMS cascade improve over a fairly-tuned fixed-μ CMA (μ=0.01)?
+    The original C11 (run_c11) only beats the under-tuned μ=0.001 anchor,
+    which the reviewer correctly noted is not a positive method signal.
+    """
+    return cand.c11_cma_dd_lms_cascade(
+        realization["rX"], realization["rY"],
+        n_tap=int(FROZEN["cma_taps"]), cma_mu=float(cma_mu),
         cma_R2=R2_16QAM, cma_block_size=int(FROZEN["cma_block_size"]),
         dd_step_size=float(dd_step_size), dd_iterations=1,
         hard_decision_fn=evaluator.hard_16qam,
@@ -229,8 +258,13 @@ def run_c11(cell, realization, *, dd_step_size):
 # Tuning (validation cells × tuning seeds ONLY)
 # =============================================================================
 
-def _eval_combo_piser(method, combo, cells, seeds):
-    """Negative mean PI-SER + divergence penalty (higher = better)."""
+def _eval_combo_piser(method, combo, cells, seeds, *, stage1_mu_for_c11fm=None):
+    """Negative mean PI-SER + divergence penalty (higher = better).
+
+    HF7: C11_fixed_mu requires a stage-1 μ; it inherits fixed_mu_cma's
+    tuned value (passed in via stage1_mu_for_c11fm). dd_step_size is the
+    only grid-tuned hyperparameter for C11_fixed_mu.
+    """
     pis: list[float] = []
     n_div = 0
     n_total = 0
@@ -246,6 +280,12 @@ def _eval_combo_piser(method, combo, cells, seeds):
                 out = run_c10(cell, realization, mu=combo["mu"])
             elif method == "C11":
                 out = run_c11(cell, realization, dd_step_size=combo["dd_step_size"])
+            elif method == "C11_fixed_mu":
+                if stage1_mu_for_c11fm is None:
+                    raise ValueError("C11_fixed_mu requires stage1_mu_for_c11fm")
+                out = run_c11_fixed_mu(cell, realization,
+                                       cma_mu=stage1_mu_for_c11fm,
+                                       dd_step_size=combo["dd_step_size"])
             else:
                 raise ValueError(method)
             if out.get("diverged", False):
@@ -318,7 +358,7 @@ def _eval_combo_c05(combo, cells, seeds):
     return float(np.mean(per_cell_aurocs))
 
 
-def tune_method(method, cells, seeds, log=print):
+def tune_method(method, cells, seeds, log=print, *, stage1_mu_for_c11fm=None):
     log(f"  [tune] {method}: scanning grid...")
     grid_keys = list(TUNE_GRID[method].keys())
     grid_values = [TUNE_GRID[method][k] for k in grid_keys]
@@ -336,7 +376,8 @@ def tune_method(method, cells, seeds, log=print):
             if method == "C05":
                 score = _eval_combo_c05(combo, cells, seeds)
             else:
-                score = _eval_combo_piser(method, combo, cells, seeds)
+                score = _eval_combo_piser(method, combo, cells, seeds,
+                                          stage1_mu_for_c11fm=stage1_mu_for_c11fm)
         except Exception as exc:
             log(f"    combo {combo}: FAILED ({exc})")
             continue
@@ -475,7 +516,7 @@ def evaluate_held_out(frozen_params, log=print):
                                   eval_start=es, calibration_end=ce, eval_end=ee)
                 seed_record["methods"]["C10"] = {"diverged": False, "mu": c10p["mu"], **m}
 
-            # C11
+            # C11 (stage-1 = anchor μ=0.001; B01 design, kept for traceability)
             c11p = frozen_params["C11"]["best_combo"]
             c11_out = run_c11(cell, realization, dd_step_size=c11p["dd_step_size"])
             if c11_out["diverged"]:
@@ -483,18 +524,48 @@ def evaluate_held_out(frozen_params, log=print):
             else:
                 m = pi_ser_from_z(c11_out["zX"], c11_out["zY"], realization,
                                   eval_start=es, calibration_end=ce, eval_end=ee)
-                seed_record["methods"]["C11"] = {"diverged": False, "dd_step_size": c11p["dd_step_size"], **m}
+                seed_record["methods"]["C11"] = {"diverged": False, "dd_step_size": c11p["dd_step_size"],
+                                                 "stage1_mu": float(FROZEN["cma_mu_anchor"]), **m}
+
+            # HF7 (BUG 7): C11_fixed_mu — stage-1 = TUNED fixed_μ CMA.
+            # Uses fixed_mu_cma's tuned μ and re-tunes dd_step_size on
+            # validation. This is the apples-to-apples C11 vs fixed_μ
+            # comparison the reviewer asked for.
+            c11fm_seed_record = None
+            if "C11_fixed_mu" in frozen_params:
+                c11fm_p = frozen_params["C11_fixed_mu"]["best_combo"]
+                fmu_for_c11 = frozen_params["fixed_mu_cma"]["best_combo"]["mu"]
+                c11fm_out = run_c11_fixed_mu(
+                    cell, realization,
+                    cma_mu=fmu_for_c11,
+                    dd_step_size=c11fm_p["dd_step_size"],
+                )
+                if c11fm_out["diverged"]:
+                    seed_record["methods"]["C11_fixed_mu"] = {
+                        "diverged": True, "stage1_mu": float(fmu_for_c11),
+                        "dd_step_size": c11fm_p["dd_step_size"],
+                    }
+                else:
+                    m = pi_ser_from_z(c11fm_out["zX"], c11fm_out["zY"], realization,
+                                      eval_start=es, calibration_end=ce, eval_end=ee)
+                    seed_record["methods"]["C11_fixed_mu"] = {
+                        "diverged": False, "stage1_mu": float(fmu_for_c11),
+                        "dd_step_size": c11fm_p["dd_step_size"], **m,
+                    }
 
             cell_record["per_seed"].append(seed_record)
 
         cell_record["aggregate"] = _aggregate_cell(cell_record["per_seed"])
         elapsed = time.time() - t_start
+        agg = cell_record["aggregate"]
+        c11fm_mean = agg.get("C11_fixed_mu", {}).get("nearest_pi_ser_mean", float("nan"))
         log(f"  cell {cell['id']}: {elapsed:.1f}s — "
-            f"anchor={cell_record['aggregate']['anchor']['nearest_pi_ser_mean']:.4f}, "
-            f"fixed_mu={cell_record['aggregate']['fixed_mu_cma']['nearest_pi_ser_mean']:.4f}, "
-            f"C08={cell_record['aggregate']['C08']['nearest_pi_ser_mean']:.4f}, "
-            f"C10={cell_record['aggregate']['C10']['nearest_pi_ser_mean']:.4f}, "
-            f"C11={cell_record['aggregate']['C11']['nearest_pi_ser_mean']:.4f}")
+            f"anchor={agg['anchor']['nearest_pi_ser_mean']:.4f}, "
+            f"fixed_mu={agg['fixed_mu_cma']['nearest_pi_ser_mean']:.4f}, "
+            f"C08={agg['C08']['nearest_pi_ser_mean']:.4f}, "
+            f"C10={agg['C10']['nearest_pi_ser_mean']:.4f}, "
+            f"C11={agg['C11']['nearest_pi_ser_mean']:.4f}, "
+            f"C11_fixed_mu={c11fm_mean:.4f}")
         results["cells"].append(cell_record)
     return results
 
@@ -523,7 +594,9 @@ def _aggregate_cell(per_seed):
     agg["label_4cat_counts"] = label_counts
 
     # PI-SER aggregates per method
-    for method in ("anchor", "fixed_mu_cma", "C08", "C10", "C11"):
+    # HF7: include C11_fixed_mu in the per-method aggregates.
+    methods_for_agg = ("anchor", "fixed_mu_cma", "C08", "C10", "C11", "C11_fixed_mu")
+    for method in methods_for_agg:
         vals_near = []
         vals_orac = []
         n_div = 0
@@ -538,6 +611,8 @@ def _aggregate_cell(per_seed):
                 vals_near.append(m["nearest_pi_ser"])
             if not np.isnan(m.get("oracle_pi_ser", float("nan"))):
                 vals_orac.append(m["oracle_pi_ser"])
+        if not vals_near and not vals_orac and n_div == 0:
+            continue  # method not run (e.g. C11_fixed_mu not in frozen_params)
         agg[method] = {
             "nearest_pi_ser_mean": float(np.mean(vals_near)) if vals_near else float("nan"),
             "oracle_pi_ser_mean": float(np.mean(vals_orac)) if vals_orac else float("nan"),
@@ -546,9 +621,12 @@ def _aggregate_cell(per_seed):
             "n_diverged_seeds": int(n_div),
         }
 
-    # C05 detector metrics (REAL — fixes findings #2, #7, #8)
-    # Use min_z2_score as the ranking score (zero-param baseline) AND
-    # c05_alert_earliness as the tuned-detector ranking score.
+    # C05 detector metrics (REAL — fixes audit findings #2, #7, #8)
+    # HF1 (BUG 1): min_z2_score now reads output_power fallback so it is
+    # no longer all-NaN. Both detector baselines now actually produce
+    # scores for every seed.
+    # HF3 (BUG 3): recall_at_fpr returns (recall, actual_fpr, fp_budget);
+    # the caller must report the ACTUAL fpr, not the nominal target.
     for score_key, score_field in [
         ("min_z2_ratio", "score_min_z2_ratio"),
         ("c05_alert_earliness", "score_c05_alert_earliness"),
@@ -573,7 +651,7 @@ def _aggregate_cell(per_seed):
                 lead_times.append(int(lt))
         auroc = det.auroc_or_none(scores, labels)
         pr = det.pr_auc_or_none(scores, labels)
-        rec5 = det.recall_at_fpr(scores, labels, fpr=0.05)
+        rec5, rec5_actual_fpr, rec5_fp_budget = det.recall_at_fpr(scores, labels, fpr=0.05)
         # False-alarm rate when declaring top-1 seed positive (per cell, n=10 seeds)
         far = det.false_alarm_rate(scores, labels, threshold_rank=1)
         # Brier/ECE: convert scores to pseudo-probabilities (note limitation)
@@ -590,6 +668,13 @@ def _aggregate_cell(per_seed):
             "auroc": auroc,  # may be None (single-class)
             "pr_auc": pr,
             "recall_at_5pct_fpr": rec5,
+            "recall_at_5pct_fpr_ACTUAL_FPR": rec5_actual_fpr,  # HF3: actual FPR achieved (may be > 0.05 if n_neg too small)
+            "recall_at_5pct_fpr_fp_budget": rec5_fp_budget,
+            "recall_at_5pct_fpr_note": (  # explicit honesty field
+                "5% FPR not resolvable with n_neg={}; reported at smallest nonzero FPR={:.1%}".format(
+                    len(labels) - sum(labels), rec5_actual_fpr,
+                ) if rec5_actual_fpr is not None and rec5_actual_fpr > 0.05 else None
+            ),
             "false_alarm_rate_top1": far,
             "brier_score": brier,
             "ece": ece,
@@ -650,16 +735,25 @@ def paired_delta_per_seed(cell_record, method_a, method_b):
 # =============================================================================
 
 def adjudicate(results):
-    """Apply B01-R decision rule (achievable denominator = 7 held-out cells)."""
+    """Apply B01-R decision rule (achievable denominator = 7 held-out cells).
+
+    HF7: include C11_fixed_mu (stage-1 = tuned fixed_μ) in close-count.
+    HF1: min_z2 detector now has real scores (output_power fallback fixed),
+         so the detector_target_ready gate is no longer mechanically forced.
+    """
     held_cells = [c for c in results["cells"] if c["is_held_out_cell"]]
 
-    method_closes = {m: 0 for m in ("fixed_mu_cma", "C08", "C10", "C11")}
-    method_per_cell = {m: {} for m in ("fixed_mu_cma", "C08", "C10", "C11")}
+    methods_for_close = ("fixed_mu_cma", "C08", "C10", "C11", "C11_fixed_mu")
+    method_closes = {m: 0 for m in methods_for_close}
+    method_per_cell = {m: {} for m in methods_for_close}
 
     for c in held_cells:
         agg = c["aggregate"]
         # "Closes a cell" = headroom < MDE
-        for m in ("fixed_mu_cma", "C08", "C10", "C11"):
+        for m in methods_for_close:
+            if m not in agg:
+                method_per_cell[m][c["cell_id"]] = None
+                continue
             headroom = agg[m]["headroom_mean"]
             method_per_cell[m][c["cell_id"]] = float(headroom)
             if not np.isnan(headroom) and headroom < MDE:
@@ -669,14 +763,18 @@ def adjudicate(results):
     # CLOSE_THRESHOLD = 5 of 7 (achievable). Any method that closes ≥ 5/7 → CLOSED.
     any_close = any(cnt >= CLOSE_THRESHOLD for cnt in method_closes.values())
 
-    # Detector readiness: ≥2 two-class test cells (held-out) for either detector score.
-    # Two-class = both n_pos > 0 and n_neg > 0.
+    # Detector readiness: ≥2 two-class test cells (held-out) for EITHER detector score.
+    # Two-class = both n_pos > 0 and n_neg > 0. Note: a stricter rule would
+    # require BOTH scores to have ≥2 two-class cells; the previous run used
+    # `all(v >= 2)` which mechanically forced B when min_z2 was all-NaN.
+    # HF4: do NOT preset verdict B. Report counts and let the rule fire.
     det_two_class_counts = {"min_z2_ratio": 0, "c05_alert_earliness": 0}
     for c in held_cells:
         for k in det_two_class_counts:
             d = c["aggregate"].get(f"detector_{k}", {})
             if d.get("n_pos", 0) > 0 and d.get("n_neg", 0) > 0:
                 det_two_class_counts[k] += 1
+    # Rule: detector target ready iff BOTH detector scores have ≥2 two-class cells.
     detector_target_ready = all(v >= 2 for v in det_two_class_counts.values())
 
     if any_close:
@@ -694,6 +792,7 @@ def adjudicate(results):
         "close_threshold": CLOSE_THRESHOLD,
         "detector_two_class_held_out_counts": det_two_class_counts,
         "detector_target_ready": detector_target_ready,
+        "note": "HF1 fix: min_z2_ratio_score now reads output_power fallback; detector_target_ready gate no longer mechanically forced by all-NaN baseline.",
     }
 
 
@@ -727,11 +826,25 @@ def main():
     log(f"  tuning_seeds={TUNING_SEEDS}  test_seeds={TEST_SEEDS}  (disjoint asserted)")
 
     frozen_params = {}
+    # Tune fixed_mu_cma FIRST so C11_fixed_mu can inherit its stage-1 μ.
     for method in ("fixed_mu_cma", "C08", "C10", "C11", "C05"):
         t_tune = time.time()
         res = tune_method(method, validation_cells, TUNING_SEEDS, log=log)
         frozen_params[method] = {"best_combo": res["best_combo"], "best_score": res["best_score"]}
         log(f"  [tune] {method} took {time.time() - t_tune:.1f}s")
+
+    # HF7 (BUG 7): C11_fixed_mu inherits stage-1 μ from fixed_mu_cma; only
+    # dd_step_size is grid-tuned.
+    fixed_mu_best = frozen_params["fixed_mu_cma"]["best_combo"]["mu"]
+    log(f"  [tune] C11_fixed_mu: inheriting stage-1 μ={fixed_mu_best} from fixed_mu_cma")
+    t_tune = time.time()
+    res = tune_method("C11_fixed_mu", validation_cells, TUNING_SEEDS, log=log,
+                      stage1_mu_for_c11fm=fixed_mu_best)
+    frozen_params["C11_fixed_mu"] = {
+        "best_combo": {**res["best_combo"], "stage1_mu": float(fixed_mu_best)},
+        "best_score": res["best_score"],
+    }
+    log(f"  [tune] C11_fixed_mu took {time.time() - t_tune:.1f}s")
 
     params_out = BATCH_DIR / "artifacts" / "frozen-params-b01r-v1.yaml"
     with open(params_out, "w") as f:
@@ -747,9 +860,11 @@ def main():
         if not c["is_held_out_cell"]:
             continue
         cell_ci = {}
-        for m in ("fixed_mu_cma", "C08", "C10", "C11"):
-            deltas = paired_delta_per_seed(c, m, "anchor")
-            cell_ci[m] = paired_bootstrap_ci(deltas)
+        # Each method vs anchor (legacy comparator) AND vs fixed_mu_cma
+        # (the genuine Go comparator per HF7 / BUG 7).
+        for m in ("fixed_mu_cma", "C08", "C10", "C11", "C11_fixed_mu"):
+            cell_ci[f"{m}_vs_anchor"] = paired_bootstrap_ci(paired_delta_per_seed(c, m, "anchor"))
+            cell_ci[f"{m}_vs_fixed_mu_cma"] = paired_bootstrap_ci(paired_delta_per_seed(c, m, "fixed_mu_cma"))
         paired_cis[c["cell_id"]] = cell_ci
     results["paired_cis_held_out"] = paired_cis
 
@@ -763,6 +878,7 @@ def main():
     results["frozen_params"] = frozen_params
     results["metadata"] = {
         "schema": "direction-lab.cb1.fairness-batch-b01r.v1",
+        "hotfix_version": "hf2_2026-07-21",  # HF1+HF2+HF3+HF6+HF7: min_z2 output_power fallback, warmup guard, honest recall FPR, μ grid extended, C11_fixed_mu added
         "campaign_id": "science-scout-2026-07-20.dual-pol-osl",
         "MDE": MDE,
         "tuning_seeds": TUNING_SEEDS,
@@ -774,6 +890,8 @@ def main():
         "elapsed_seconds": time.time() - t0,
         "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S"),
         "close_threshold": CLOSE_THRESHOLD,
+        "fixed_mu_cma_grid": TUNE_GRID["fixed_mu_cma"]["mu"],
+        "fixed_mu_cma_grid_extension_note": "HF6: grid extended from [1e-4..1e-2] to [1e-4..1e-1] to test boundary.",
     }
 
     with open(out_path, "w") as f:

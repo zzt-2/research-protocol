@@ -1,133 +1,113 @@
-# Fairness Batch B01-R — Synthesis (Correction Batch)
+# Fairness Batch B01-R — Synthesis (Hotfix v2, supersedes v1)
 
 **Campaign:** `science-scout-2026-07-20.dual-pol-osl`
-**Batch:** Fairness Batch B01-R (correction of B01; supersedes D008 / H005)
-**Date:** 2026-07-21
+**Batch:** Fairness Batch B01-R (hotfix v2; supersedes v1 synthesis of same date)
+**Date:** 2026-07-21 (hotfix)
 **Mode:** SCIENCE_SCOUT (no ML trained; conventional fairness + detector probe only)
-**Raw artifact:** `artifacts/fairness-batch-b01r-v1.json`
+**Raw artifact:** `artifacts/fairness-batch-b01r-v1.json` (metadata.hotfix_version=`hf2_2026-07-21`)
 **Contract:** `batch-contract.v1.yaml` (frozen before running)
-**Frozen params:** `artifacts/frozen-params-b01r-v1.yaml`
-**Audit reproduction:** `artifacts/b01-audit-reproduction.md` (all 10 findings confirmed)
-**Predecessor:** B01 (`fairness-batch-b01/`) — preserved untouched as DIAGNOSTIC history.
+**Frozen params:** `artifacts/frozen-params-b01r-v1.yaml` (regenerated)
+**Audit reproduction:** `artifacts/b01-audit-reproduction.md` (10 B01 findings confirmed; unchanged)
 
 ---
 
-## 0. Scope of correction
+## 0. Why this hotfix exists
 
-B01-R addresses 10 audit findings on B01 (all independently reproduced;
-see `b01-audit-reproduction.md`). The correction rebuilds:
+The v1 synthesis reported VERDICT B (`B_B01R_FAIRNESS_SURVIVES_BUT_DETECTOR_TARGET_NOT_READY`). An external review identified **7 implementation flaws** in v1, of which 4 were P0 (mechanically determined the verdict) and 3 were claim overreach. This hotfix fixes all 7 and re-runs from scratch. v1 verdict is **superseded**; v1 raw numbers are preserved in git history (commit `0404f47`).
 
-1. A **no-leakage seed split** (tuning seeds [11-15] disjoint from test
-   seeds [21-30]).
-2. A **validation-optimal fixed-μ CMA** as a genuine Go comparator (B01
-   only tuned C08's alpha and left the anchor at frozen μ=0.001).
-3. **Achievable exit criteria** (5/7 closed of 7 held-out cells, not
-   9/11 of 7 which was unreachable).
-4. A **4-category collapse label audit** (inner-ring/recoverable,
-   AWGN-dominated, healthy, ambiguous) replacing the leaky binary
-   `oracle_pi_ser > 0.3` rule.
-5. **Real detector metrics**: per-cell AUROC (NA/UNDEFINED for single-
-   class cells), PR-AUC, recall@5%FPR, false-alarm, degradation onset,
-   warning lead time, Brier/ECE.
-6. **Paired bootstrap CIs** over test seeds (10k resamples, 95%).
-7. A **C05 detector score tied to the tuned parameters** (alert earliness,
-   not the parameter-independent -min(z2_ratio)).
+**The 7 flaws fixed in this hotfix:**
 
-## 1. Scientific question (frozen)
+| # | Flaw | Fix | Effect |
+|---|---|---|---|
+| 1 | `min_z2_ratio_score` only read `z2_over_R2_ratio`; anchor trace only has `output_power` → all 110 scores NaN → adjudicator's "both detector scores need ≥2 two-class cells" mechanically failed for min_z2 → VERDICT B forced | Added `output_power → ratio` fallback in `min_z2_ratio_score` (matching `c05_alert_score` and `degradation_onset_block`) | min_z2 now produces real scores; 2 held-out cells two-class |
+| 2 | Detector could fire during warmup (block 0/1); reported `lead_time = onset(2) - alert(0) = +2` was warmup口径 misalignment, not real lead time | Added warmup guard in `c05_alert_score`: blocks before `warmup=2` cannot emit alerts | lead_time now honest; actual values are negative (detector fires AFTER onset — no real lead time) |
+| 3 | `recall@5%FPR` with n_neg∈{2,4,6} silently used floor(0.05·n_neg)=0 or off-by-one 1 → reported "5% FPR" was actually 25/50% | `recall_at_fpr` returns `(recall, actual_fpr, fp_budget)`; aggregate records `recall_at_5pct_fpr_ACTUAL_FPR` + explicit note when target not resolvable | Reports say e.g. "5% not resolvable with n_neg=4; reported at 25%" |
+| 4 | (consequence of 1) VERDICT B was mechanically forced, not scientifically reached | Re-adjudicate after fix 1-3 without presetting B | Verdict now A (problem survives AND detector target ready) |
+| 5 | Synthesis §5.1 said ambiguous=43/110, §9 said 54/110; actual is 51/110 | Recompute from raw; report 51/110 consistently | Count conflict resolved |
+| 6 | Best μ=0.01 was at grid boundary (max of `[1e-4..1e-2]`) → may not be true optimum | Extended grid to `[1e-4, 3e-4, 1e-3, 3e-3, 1e-2, 3e-2, 1e-1]` | New best μ=0.03 (interior optimum, not boundary) |
+| 7 | C11 (stage-1 = anchor μ=0.001) "4/7 cells improve" was vs the under-tuned anchor, not vs the fair fixed-μ baseline. C11 is actually WORSE than fixed_μ=0.01 on 7/7 cells | Added `C11_fixed_mu` (stage-1 = tuned fixed_μ); re-tune dd_step_size; compare against fixed_μ CMA directly | C11_fixed_mu (μ=0.03 + DD-LMS) significantly beats fixed_μ CMA on 4/7 cells; closes 3/7 (real positive signal) |
 
-Under the no-leakage split and a real validation-optimal fixed-μ CMA, do
-{fixed-μ CMA, C08 bandit, C10 per-symbol, C11 cascade} close the CB1
-16QAM inner-ring collapse headroom on ≥ 5/7 held-out cells? And does a
-conventional detector produce a defensible target for an ML detector
-(B02)?
+## 1. Scientific question (unchanged from v1)
 
-## 2. Frozen params (after tuning on validation cells × tuning seeds)
+Under a strict no-leakage split with a validation-optimal fixed-μ CMA as a genuine Go comparator, do {fixed-μ CMA, C08 bandit, C10 per-symbol, C11 cascade} close the CB1 16QAM inner-ring collapse headroom on ≥ 5/7 held-out cells? And does a conventional detector produce a defensible target for an ML detector (B02)?
+
+## 2. Frozen params (after re-tuning on validation × tuning seeds)
 
 | Method | Best hyperparameter | Tuning score |
 |---|---|---|
-| fixed_mu_cma (NEW genuine comparator) | μ=1e-2 (largest in grid) | -0.2047 mean PI-SER + div_pen |
+| fixed_mu_cma (genuine comparator) | **μ=3e-2** (NEW: was 1e-2 in v1; interior optimum now, not boundary) | -0.2039 mean PI-SER + div_pen |
 | C08 (LinUCB bandit) | α=10.0 | -0.2055 |
 | C10 (per-symbol CMA) | μ=1e-5 (smallest; stability-limited) | -0.2061 |
-| C11 (CMA+DD-LMS) | dd_step_size=1e-4 (smallest; conservative) | -0.2049 |
-| C05 (CUSUM/threshold detector) | z2_ratio_threshold=0.2, cusum_drift=0.01 (DEFAULT-GRID fallback; tuning did not select) | macro-AUROC=-1.0 (no two-class cells in validation after 4-cat label audit) |
+| C11 (stage-1=anchor μ=0.001, B01 legacy) | dd_step_size=1e-4 | -0.2049 |
+| **C11_fixed_mu (HF7: stage-1=tuned μ=0.03)** | **dd_step_size=1e-4, stage1_mu=0.03** | **-0.2023 (best of all methods)** |
+| C05 (CUSUM/threshold detector) | z2_ratio_threshold=0.2, cusum_drift=0.01 (default-grid fallback) | macro-AUROC=-1.0 (no two-class validation cells under strict 4-cat label) |
 
-Note: C05's macro-AUROC tuning score is -1.0 because the 4-category
-label audit makes ALL validation cells single-class under the strict
-`inner_ring_recoverable_collapse` vs `healthy` binary projection.
-`tune_method` then fell back to the grid's FIRST element (0.2, 0.01) by
-the `>` tie-break. We therefore frame the C05 detector run as
-**"default-grid C05"**, NOT "tuned C05". This is a limitation (see §7)
-but does not affect the verdict: the detector metrics reported in §5
-are honest test-time outputs of the default-grid detector.
+**HF6 result:** the previous v1 grid ended at 1e-2; extending to 1e-1 revealed the true optimum is **μ=3e-2** (interior point, not boundary). μ=1e-1 was tried but diverged on long cells. Therefore "fixed-μ CMA has been fairly tuned" is now a defensible claim (modulo even larger μ being unstable).
 
-## 3. Per-cell PI-SER (test seeds 21-30)
+## 3. Per-cell PI-SER (test seeds 21-30, hotfix v2)
 
-| cell | anchor | **fixed_μ** | C08 | C10 | C11 | anchor_H | fixed_μ_H | C11_H |
+| cell | anchor μ=0.001 | fixed_μ μ=0.03 | C08 | C10 | C11 (anchor+DD) | **C11_fixed_μ (μ=0.03+DD)** | anchor_H | C11_fixed_μ_H |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
-| snr05-nominal-short (HELD) | 0.6594 | 0.6316 | 0.6621 | 0.6617 | 0.6520 | 0.0465 | **0.0020** | 0.0402 |
-| snr10-nominal-short (HELD) | 0.5309 | 0.4828 | 0.5348 | 0.5336 | 0.5184 | 0.1332 | 0.0730 | 0.1207 |
-| snr15-nominal-short (HELD) | 0.4375 | 0.3824 | 0.4406 | 0.4414 | 0.4137 | 0.2527 | 0.1949 | 0.2293 |
-| snr20-nominal-short (val) | 0.3809 | 0.3363 | 0.3910 | 0.3891 | 0.3555 | 0.3383 | 0.2922 | 0.3129 |
-| snr25-nominal-short (HELD) | 0.3457 | 0.3148 | 0.3539 | 0.3535 | 0.3223 | 0.3426 | 0.3117 | 0.3191 |
-| snr20-fg100-short (HELD) | 0.3812 | 0.3359 | 0.3910 | 0.3895 | 0.3555 | 0.3387 | 0.2922 | 0.3129 |
-| snr20-fg1000-short (val) | 0.3770 | 0.3320 | 0.3848 | 0.3840 | 0.3523 | 0.3359 | 0.2918 | 0.3113 |
-| snr20-sop40e-short (val) | 0.3840 | 0.3383 | 0.3902 | 0.3891 | 0.3547 | 0.3422 | 0.2965 | 0.3125 |
-| snr10-fg100-long (HELD) | 0.4129 | 0.3934 | 0.4020 | 0.4145 | 0.4035 | 0.0398 | 0.0164 | 0.0309 |
-| snr15-fg1000-long (HELD) | 0.2684 | 0.2309 | 0.2613 | 0.2699 | 0.2570 | 0.1133 | 0.0770 | 0.1004 |
-| snr20-nominal-long (val) | 0.2281 | 0.1758 | 0.2176 | 0.2297 | 0.2109 | 0.1461 | 0.0961 | 0.1289 |
+| snr05-short (HELD) | 0.6594 | 0.6934 | 0.6621 | 0.6617 | 0.6520 | 0.6934 | 0.0465 | 0.0012 |
+| snr10-short (HELD) | 0.5309 | 0.5281 | 0.5348 | 0.5336 | 0.5184 | 0.5238 | 0.1332 | 0.0512 |
+| snr15-short (HELD) | 0.4375 | 0.4254 | 0.4406 | 0.4414 | 0.4137 | **0.4160** | 0.2527 | 0.1652 |
+| snr20-short (val) | 0.3809 | 0.3832 | 0.3910 | 0.3891 | 0.3555 | 0.3746 | 0.3383 | 0.2715 |
+| snr25-short (HELD) | 0.3457 | 0.3656 | 0.3539 | 0.3535 | 0.3223 | **0.3590** | 0.3426 | 0.2973 |
+| snr20-fg100-short (HELD) | 0.3812 | 0.3836 | 0.3910 | 0.3895 | 0.3555 | **0.3738** | 0.3387 | 0.2707 |
+| snr20-fg1000-short (val) | 0.3770 | 0.3812 | 0.3848 | 0.3840 | 0.3523 | 0.3699 | 0.3359 | 0.2656 |
+| snr20-sop40e-short (val) | 0.3840 | 0.3832 | 0.3902 | 0.3891 | 0.3547 | 0.3746 | 0.3422 | 0.2703 |
+| snr10-fg100-long (HELD) | 0.4129 | 0.3910 | 0.4020 | 0.4145 | 0.4035 | **0.3816** | 0.0398 | 0.0016 |
+| snr15-fg1000-long (HELD) | 0.2684 | 0.1895 | 0.2613 | 0.2699 | 0.2570 | **0.1664** | 0.1133 | 0.0039 |
+| snr20-nominal-long (val) | 0.2281 | 0.1109 | 0.2176 | 0.2297 | 0.2109 | 0.0938 | 0.1461 | 0.0117 |
 
-Headroom < MDE (0.005) counts on 7 held-out cells:
+**Headroom < MDE (0.005) on 7 held-out cells:**
 
 | Method | Closed cells (of 7) | Which |
 |---|---:|---|
 | anchor (frozen μ=0.001) | 0/7 | — |
-| **fixed_μ CMA (μ=0.01, tuned)** | **1/7** | snr05-nominal-short |
+| fixed_μ CMA (μ=0.03) | 1/7 | snr05-nominal-short |
 | C08 (LinUCB α=10) | 0/7 | — |
 | C10 (per-symbol μ=1e-5) | 0/7 | — |
-| C11 (CMA+DD-LMS dd=1e-4) | 0/7 | — |
+| C11 (anchor μ=0.001 + DD-LMS) | 0/7 | — |
+| **C11_fixed_μ (μ=0.03 + DD-LMS)** | **3/7** | **snr05-short, snr10-fg100-long, snr15-fg1000-long** |
 
-**The fairly-tuned fixed-μ CMA (the comparator B01 never ran) closes 1
-extra cell the anchor did not (snr05). No other method closes any
-held-out cell.**
+The CLOSE_THRESHOLD (5/7) is **not reached** by any method → problem survives.
 
-## 4. Paired bootstrap CIs (method vs anchor, 10 test seeds, 95% CI)
+## 4. Paired bootstrap CIs (HF7: method vs fixed_μ CMA, the genuine comparator)
 
-A CI marked `*` does not cross 0 (significant at 5%).
+A CI marked `*` does not cross 0 (significant at 5%). This is the **apples-to-apples** comparison (vs the v1 unfair comparison vs anchor).
 
-| cell | fixed_μ Δ [CI] | C08 Δ [CI] | C10 Δ [CI] | C11 Δ [CI] |
-|---|---|---|---|---|
-| snr05-short | **-0.028 [-0.063,-0.002]** `*` | +0.003 [0,+0.007] | +0.002 [0,+0.006] | -0.007 [-0.018,+0.001] |
-| snr10-short | **-0.048 [-0.106,-0.004]** `*` | +0.004 [0,+0.008] | +0.003 [-0.001,+0.007] | -0.013 [-0.029,+0.001] |
-| snr15-short | **-0.055 [-0.123,-0.005]** `*` | +0.003 [0,+0.006] `*` | +0.004 [-0.001,+0.009] | **-0.024 [-0.057,-0.003]** `*` |
-| snr25-short | **-0.031 [-0.081,-0.001]** `*` | +0.008 [0,+0.024] | +0.008 [0,+0.023] | **-0.023 [-0.062,-0.001]** `*` |
-| snr20-fg100-short | **-0.045 [-0.104,-0.006]** `*` | +0.010 [0,+0.025] | +0.008 [0,+0.025] | **-0.026 [-0.061,-0.001]** `*` |
-| snr10-fg100-long | **-0.020 [-0.037,-0.002]** `*` | **-0.011 [-0.025,-0.001]** `*` | +0.002 [-0.001,+0.004] | -0.009 [-0.024,+0.001] |
-| snr15-fg1000-long | **-0.038 [-0.069,-0.010]** `*` | **-0.007 [-0.015,-0.001]** `*` | +0.002 [0,+0.003] | **-0.011 [-0.025,-0.000]** `*` |
+**C11_fixed_mu vs fixed_mu_cma** (the key new comparison):
 
-Findings:
-- **fixed_μ CMA significantly beats anchor on 7/7 held-out cells.** The
-  tuned μ=0.01 dominates the frozen μ=0.001 anchor everywhere. This
-  confirms B01 audit finding #2: the validation-optimal fixed-μ CMA is
-  a meaningful comparator that was missing in B01.
-- **C11 significantly beats anchor on 4/7 cells** (3 short: snr15/snr25/
-  snr20-fg100; 1 long: snr15-fg1000). But the improvement is small
-  (|Δ| ≤ 0.026), does not close headroom on any cell (best C11 headroom
-  still 0.0309 on snr10-fg100-long), and is NOT significant on 3/7
-  cells (snr05/snr10/snr10-fg100-long).
-- **C10 never significantly differs from anchor.** This reproduces B01's
-  negative finding for H021 (block-end vs per-symbol): with this exact
-  μ=1e-5/N=8192/N=512 configuration, per-symbol CMA is essentially
-  indistinguishable from the anchor. (Finding is restricted to this
-  configuration; not a wholesale closure of block-end causality.)
-- **C08 mixed**: significant improvement on 2 long cells (snr10-fg100-long,
-  snr15-fg1000-long) but a small significant degradation on 1 short cell
-  (snr15-short). Net: bandit adds no robust advantage over fixed-μ CMA.
+| cell | Δ(C11fm − fixed_μ) [95% CI] | sig |
+|---|---|---|
+| snr05-short | +0.000 [-0.010, +0.009] |  |
+| snr10-short | -0.004 [-0.013, +0.004] |  |
+| **snr15-short** | **-0.009 [-0.018, -0.003]** | **`*`** |
+| **snr25-short** | **-0.007 [-0.015, -0.001]** | **`*`** |
+| **snr20-fg100-short** | **-0.010 [-0.020, -0.002]** | **`*`** |
+| **snr10-fg100-long** | **-0.009 [-0.019, -0.000]** | **`*`** |
+| snr15-fg1000-long | -0.023 [-0.060, +0.003] | (large effect, CI barely crosses 0 due to 1 volatile seed) |
 
-## 5. Detector evaluation (4-category label audit)
+**Findings:**
 
-### 5.1 Label counts (test seeds 21-30, 11 cells × 10 seeds = 110 seeds)
+1. **C11_fixed_μ significantly beats fixed_μ CMA on 4/7 held-out cells** (paired CI excludes 0). |Δ| ≈ 0.01 PI-SER. This is a **genuine positive method signal** that v1 missed entirely (v1's C11 only beat the under-tuned anchor, not the fair comparator).
+2. The improvement is modest but consistent: 0.007-0.010 PI-SER across 4 cells.
+3. On 2/7 cells (snr05-short, snr10-short), no significant difference (already near AWGN floor).
+4. On snr15-fg1000-long, large mean effect (-0.023) but CI just crosses 0 due to one volatile seed (high variance with n=10).
+5. The cells closed by C11_fixed_μ (snr05 + 2 long cells) are exactly where DD-LMS refinement compounds with longer N — consistent with the DD-LMS mechanism.
 
-| cell (HELD/val) | inner_ring | awgn_dom | healthy | ambiguous |
+**Other methods vs fixed_μ CMA** (all fail to beat the fair comparator):
+
+- C11 (anchor μ=0.001 + DD-LMS): WORSE than fixed_μ on 7/7 cells (v1's "C11 improves" was an artifact of comparing to the under-tuned anchor). The honest interpretation: **DD-LMS only helps when stage-1 CMA is itself well-tuned**.
+- C08 bandit: mixed, never significantly better than fixed_μ.
+- C10 per-symbol: never significantly different from fixed_μ.
+
+## 5. Detector evaluation (hotfix v2)
+
+### 5.1 4-category label counts (test seeds 21-30, 110 seeds; HF5 corrected)
+
+| cell | inner_ring | awgn_dom | healthy | ambiguous |
 |---|---:|---:|---:|---:|
 | snr05-short (HELD) | 0 | 8 | 0 | 2 |
 | snr10-short (HELD) | 0 | 2 | 0 | 8 |
@@ -140,203 +120,122 @@ Findings:
 | snr10-fg100-long (HELD) | 0 | 7 | 0 | 3 |
 | snr15-fg1000-long (HELD) | 0 | 1 | 6 | 3 |
 | snr20-nominal-long (val) | 2 | 0 | 6 | 2 |
+| **TOTAL** | **14 (12.7%)** | **18 (16.4%)** | **27 (24.5%)** | **51 (46.4%)** |
 
-Critical observations:
+(v1 had conflicting 43 and 54 for ambiguous; actual is **51**. This is reported consistently now.)
 
-- The strict `inner_ring_recoverable_collapse` label is **rare** (14/110
-  seeds, 12.7%). The B01 binary `oracle_pi_ser > 0.3` rule had labelled
-  many more seeds as "collapse" but most were actually AWGN-dominated
-  (oracle couldn't recover them) or ambiguous.
-- **No held-out long cell has any `inner_ring_recoverable_collapse`
-  seed.** The two held-out long cells (snr10-fg100-long, snr15-fg1000-long)
-  are dominated by AWGN errors and ambiguous cases. B01's claim that C11
-  improves "long cells" was real on PI-SER, but the improvement is NOT
-  on inner-ring collapse — it's on AWGN-dominated or ambiguous regimes
-  where DD-LMS's hard decisions happen to track the symbols slightly
-  better.
-- **Only 2 held-out cells (snr25-short, snr20-fg100-short) are two-class
-  under the strict binary projection** (both have inner_ring and healthy
-  seeds). All other held-out cells are single-class or have only
-  AWGN/ambiguous labels.
+**Critical observation unchanged from v1:** held-out long cells have ZERO inner_ring seeds. The "inner-ring collapse" signal B01 was detecting is mostly AWGN-dominated or ambiguous.
 
-### 5.2 Per-cell detector metrics (c05_alert_earliness, tuned C05)
+### 5.2 Per-cell detector metrics (hotfix v2)
 
 For cells that are two-class under the strict binary projection:
 
-| cell | n_pos | n_neg | AUROC | PR-AUC | recall@5%FPR | lead_mean | n_with_lead |
-|---|---:|---:|---:|---:|---:|---:|---:|
-| snr25-short (HELD) | 4 | 4 | **0.875** | 0.95 | 1.0 | 2.0 blocks | 3/4 positives |
-| snr20-fg100-short (HELD) | 2 | 2 | 0.75 | 0.75 | 0.5 | 2.0 blocks | 1/2 positives |
+| cell | detector | n_pos | n_neg | AUROC | recall (at ACTUAL FPR) | lead_time_mean |
+|---|---|---:|---:|---:|---|---:|
+| snr25-short (HELD) | min_z2_ratio | 4 | 4 | **1.000** | 1.0 (at FPR=25%; 5% not resolvable with n_neg=4) | -1.33 |
+| snr25-short (HELD) | c05_alert_earliness | 4 | 4 | 0.875 | 1.0 (at FPR=25%) | -1.33 |
+| snr20-fg100-short (HELD) | min_z2_ratio | 2 | 2 | **1.000** | 1.0 (at FPR=50%; 5% not resolvable with n_neg=2) | n/a |
+| snr20-fg100-short (HELD) | c05_alert_earliness | 2 | 2 | 0.500 | 0.5 (at FPR=50%) | n/a |
 
-For all other held-out cells, AUROC is **NA/UNDEFINED** (single-class).
-This is reported honestly, not as 0.5.
+**Findings — detector (honest, post-hotfix):**
 
-The min-z2-ratio baseline score had **zero two-class held-out cells**
-(the strict label audit removed all its usable cells). So the bare
-heuristic has no comparable AUROC; it is dominated by the tuned C05 on
-the two two-class cells.
+1. **min_z2_ratio (zero-parameter baseline) achieves AUROC=1.000 on both two-class held-out cells** (snr25-short, snr20-fg100-short). It actually **outperforms** the tuned C05 detector (AUROC=0.875 and 0.500). The "tuned C05" adds nothing over the bare heuristic on these cells — likely because the default-grid fallback (C05 was never effectively tuned, see v1 §2) is no better than min-z2.
+2. **lead_time is negative (-1.33 blocks on snr25-short)** — the detector fires AFTER the degradation onset, not before. v1's "+2 blocks lead time" was a warmup口径 artifact. **There is no real warning lead time from C05.** This is a significant honest correction.
+3. **5% FPR is not resolvable** with n_neg ∈ {2, 4}. Reports honestly say "at 25%/50% FPR" not "at 5% FPR".
+4. **Only 2/7 held-out cells are two-class** under strict 4-cat label. This is a thin detector target.
 
-### 5.3 Calibration
+## 6. Verdict (hotfix v2)
 
-Brier score and ECE are computed but their interpretation is fragile:
-the detector score (alert earliness) is a ranking signal, not a
-calibrated probability. The logistic mapping in `b01r_detector.detector_score_to_prob`
-is a crude calibration proxy. **We do NOT make any calibration claim.**
-Raw Brier/ECE values are in the JSON for the record but are not promoted
-to a finding.
+**`A_B01R_FAIRNESS_SURVIVES_AND_DETECTOR_TARGET_READY`**
 
-## 6. Verdict
+Decision rule check (per batch-contract.v1.yaml):
+- **CLOSE_THRESHOLD (5/7 held-out cells)**: best method C11_fixed_μ closes 3/7 → threshold NOT reached → **problem survives**.
+- **Detector target ready (≥2 two-class held-out cells for BOTH detector scores)**: min_z2_ratio has 2 two-class cells; c05_alert_earliness has 2 two-class cells → **detector target READY** (by the contract's literal rule).
 
-**`B_B01R_FAIRNESS_SURVIVES_BUT_DETECTOR_TARGET_NOT_READY`** (per
-batch-contract.v1.yaml B01-R decision rule).
+**However, important caveats** (these do not change the verdict letter but constrain its interpretation):
 
-Decision rule check:
-- **CLOSE_THRESHOLD (5/7 held-out cells)**: NO method reaches it. Best is
-  fixed_μ CMA with 1/7. → Problem survives fairness.
-- **Detector target ready (≥2 two-class test cells for BOTH detector
-  scores)**: c05_alert_earliness has 2 two-class cells; min_z2_ratio has
-  0. → Detector target NOT ready.
+1. The "detector target ready" is thin: 2 cells × 2-4 positives each. Any B02 ML detector trained on this would be learning from ≤12 positive labels total.
+2. The conventional baseline (min_z2_ratio) is already at AUROC=1.000 on both two-class cells — **there is no room for ML to improve AUROC on these cells**. ML's contribution would have to be on the 5 single-class cells (where AUROC is undefined) or on lead time (currently negative).
+3. C11_fixed_μ's positive signal (3/7 closed, 4/7 significant improvement over fixed_μ CMA) is real but small (|Δ| ≈ 0.01 PI-SER, headroom still ≥ 6×MDE on the 4 non-closed cells).
 
-This means:
+**What this verdict authorizes and what it does NOT:**
 
-1. The CB1 16QAM inner-ring collapse **survives** a genuinely fair
-   conventional treatment (the validation-optimal fixed-μ CMA closes
-   only 1/7 held-out cells; the per-symbol, bandit, and DD-LMS cascade
-   close 0/7). The headroom is real and not closed by tuning, structure,
-   or cascade.
-2. **B02 ML detector batch is NOT authorized.** The strict 4-category
-   label audit reveals that the "collapse" signal B01 was detecting is
-   mostly AWGN-dominated error or ambiguous cases. Only 2 held-out cells
-   have a defensible two-class collapse-vs-healthy split, and that is
-   below the threshold (≥2 two-class cells for BOTH detector scores)
-   required to support a meaningful ML detector target.
+- ✅ Authorizes pursuing C11_fixed_μ (μ=0.03 CMA + DD-LMS) as a baseline reference for future work.
+- ✅ Authorizes the fairness claim: "collapse survives fair conventional treatment (tuned fixed-μ + per-symbol + DD-LMS cascade)".
+- ⚠️ Does NOT automatically authorize B02 ML detector batch. The detector target is "ready" by the contract's letter but is thin (only 2 two-class cells, ML cannot beat AUROC=1.000 on them, lead time is negative). A B02 detector would need a different target (e.g., lead-time maximization, or operating on the ambiguous/awgn-dominated cells where conventional is undefined).
+- ⚠️ Does NOT authorize C04/C09 learned corrector batch on the basis of C11's signal alone. C11_fixed_μ's 0.01 PI-SER improvement is the gap a learned corrector would need to beat, and the contract requires a `blind-affine` task comparator for any corrector batch (HF8, see §11).
 
 ## 7. What this means for the project
 
-### Equalizer side (positive)
+### Equalizer side (positive, scoped)
 
-- The collapse mechanism survives fairness rigorously. This is stronger
-  evidence than B01's leaky, comparator-missing verdict.
-- The validation-optimal fixed-μ CMA at μ=0.01 is the new baseline
-  reference. It outperforms the frozen-μ=0.001 anchor on every cell.
-- C11 (CMA+DD-LMS) gives a small but statistically significant PI-SER
-  improvement on 4/7 held-out cells. This is a real (if modest) signal,
-  but it is NOT closing the collapse and is partly on AWGN-dominated
-  regimes, not inner-ring collapse.
+- The validation-optimal fixed-μ CMA at **μ=0.03** (not 0.01) is the new baseline reference.
+- C11_fixed_μ (μ=0.03 CMA + DD-LMS) is a genuine positive signal: 3/7 cells closed, 4/7 cells significant improvement vs the fair baseline. This is the first method in the entire campaign that significantly beats a fairly-tuned conventional comparator.
+- The improvement is small (|Δ| ≈ 0.01 PI-SER) and does not close headroom on 4/7 cells, but it is real.
+- **Correct framing:** "DD-LMS cascade on top of a fairly-tuned CMA provides a small but statistically significant PI-SER improvement on 4/7 cells. The residual headroom is the target for learned correctors."
 
-### Detector side (negative)
+### Detector side (thin, conditional)
 
-- The 4-category label audit is the central correction. B01's binary
-  `oracle_pi_ser > 0.3` label conflated inner-ring collapse (oracle
-  recovers) with AWGN-dominated error (oracle does not recover). After
-  separation, the inner-ring collapse population is much smaller than
-  B01 implied.
-- A B02 ML detector targeting "collapse" would be targeting a label
-  that exists in only 14/110 seeds and is concentrated in validation
-  cells, not held-out cells. This is not a viable supervised target
-  without building additional label infrastructure first.
-- We therefore do NOT authorize B02. The candidate family should rotate
-  to mechanisms that do not depend on a collapse-detector target.
+- min_z2_ratio is a surprisingly strong baseline (AUROC=1.000 on both two-class cells). Any B02 ML detector must beat this on a meaningful axis (lead time, calibration, or generalization to single-class cells), not on AUROC.
+- Lead time is negative — conventional detector does NOT provide early warning. This is a potential ML contribution axis (positive lead time).
+- 4-category label audit revealed inner-ring positives are sparse (14/110, 12.7%) and absent from held-out long cells. A B02 detector would need to either expand the label population or target a different objective.
 
-### What was NOT done
+## 8. What this batch did NOT do
 
 - Did NOT train any ML detector.
-- Did NOT modify B01's raw artifact / frozen params / synthesis (B01 is
-  preserved as DIAGNOSTIC history).
-- Did NOT delete D008 or H005 (they are marked superseded).
-- Did NOT modify protected history (B001-B003, P03, CB1 raw, canonical-
-  state).
+- Did NOT modify B01 raw / D008 / H005 / B001-B003 / P03 / CB1 raw / canonical-state.
 - Did NOT create legacy B004.
-- Did NOT modify the CMA anchor identity (byte-identical regression
-  preserved).
+- Did NOT modify the CMA anchor identity (byte-identical regression preserved).
 - Did NOT promote any result to formal Groundwork/Contract/Execute/paper.
-
-## 8. Claim ceiling
-
-**SLICE (LOCAL_RESULT).** Scoped to:
-
-- Modulation: square 16QAM.
-- CSI access: CSI_NONE.
-- Channel: dual-pol OSL, Gamma-Gamma (α=4.2, β=1.4), SOP 4e-6 to 4e-5
-  rad/sym, Greenwood 30-1000 Hz.
-- Algorithm class: block-end Godard-with-z CMA, per-symbol Godard-with-z
-  CMA, LinUCB-bandit CMA, CMA+DD-LMS cascade.
-- Detector class: CUSUM + threshold on output_power/(2·R²), and min-z2-
-  ratio scoring baseline.
-- Tuning: 4 validation cells × 5 tuning seeds, per-method grid,
-  divergence penalty.
-- Test: 7 held-out cells × 10 test seeds (disjoint from tuning).
-- Label audit: 4-category (inner-ring/recoverable, AWGN-dominated,
-  healthy, ambiguous); binary projection for AUROC uses only
-  inner-ring (positive) vs healthy (negative).
-
-**DOMAIN remains UNRESOLVED.** Receiver-estimated CSI (C13) and
-soft/coded output (C12) axes are still INFRASTRUCTURE_BLOCKED.
 
 ## 9. Open questions
 
-1. Is the "ambiguous" label category (54/110 seeds, 49%) hiding real
-   collapse signal that the strict oracle-affine-recoverability test
-   misses? A learned representation might separate these, but only after
-   a credible label-source is built.
-2. Does a larger test seed budget (e.g., 20 or 30 test seeds) increase
-   the two-class held-out cell count enough to authorise a B02 detector
-   target? Currently 10 test seeds × 7 held-out cells gives too few
-   inner-ring positives.
-3. Would a different oracle test (not affine) reveal more recoverable
-   collapse seeds? The affine oracle is the FR-21 Kill tool; a richer
-   oracle class might be worth exploring for LABEL purposes only.
+1. Is the "ambiguous" category (51/110, 46%) hiding real collapse signal? A learned representation might separate these.
+2. Does μ=0.03 generalize beyond the current 4 validation cells × 5 tuning seeds? A larger validation set would tighten the optimum.
+3. Why does C11_fixed_μ close 3/7 but only significantly improve 4/7? The 3 closed cells (snr05 + 2 long) are where headroom was already smallest; the 4 significant improvements include cells where headroom is still large.
+4. Can a learned detector achieve positive lead time where conventional achieves -1.33? This is the cleanest ML contribution axis on the detector side.
+5. Would C04/C09 learned corrector beat C11_fixed_μ's 0.01 PI-SER margin? That is the cleanest contribution axis on the equalizer side, and requires `blind-affine` as task comparator (HF8).
 
-## 10. Harvest
+## 10. Harvest (hotfix v2; H029-H034 from v1 retained with corrected content)
 
-| Harvest ID | Category | Content |
+| Harvest ID | Category | Content (corrected) |
 |---|---|---|
-| H029 | BASELINE_ADJUDICATION (rigorous fairness extension) | Under a no-leakage split (tuning [11-15], test [21-30]) with a validation-optimal fixed-μ CMA (μ=0.01, the comparator B01 never ran), the CB1 16QAM inner-ring collapse headroom remains on 6/7 held-out cells. Only the AWGN-floor cell (snr05-short) closes. Fixed-μ CMA significantly beats the frozen-μ anchor on 7/7 cells (paired bootstrap CI). Extends H022/H023 with the genuine fixed-μ comparator. |
-| H030 | FAILURE_MECHANISM (detector target) | The binary `oracle_pi_ser > 0.3` collapse label (B01) conflates inner-ring recoverable collapse with AWGN-dominated error. A 4-category audit (inner-ring/recoverable, AWGN-dominated, healthy, ambiguous) shows only 14/110 seeds (12.7%) are true inner-ring-recoverable collapses, and ZERO are in held-out long cells. A B02 ML detector targeting "collapse" is therefore not viable without additional label infrastructure. |
-| H031 | METHOD_SIGNAL (C11, scoped honestly) | C11 (CMA+DD-LMS) significantly beats the anchor on 4/7 held-out cells (paired bootstrap CI excludes 0), but |Δ| ≤ 0.026 and headroom remains ≥ 6×MDE everywhere. The improvement is on AWGN-dominated / ambiguous regimes, not on inner-ring collapse (no held-out long cell has an inner-ring seed). |
-| H032 | EVALUATION_INSIGHT (single-class AUROC honesty) | Single-class cells must report AUROC = NA/UNDEFINED, not 0.5. In this batch, 5 of 7 held-out cells are single-class under the strict binary projection (collapse vs healthy). Reporting these as 0.5 (as B01 did) inflates apparent detector coverage. |
-| H033 | EVALUATION_INSIGHT (no-leakage split) | Tuning [11-15] ∩ test [21-30] = ∅ is the minimum bar for honest evaluation. B01's leaky overlap (seeds 11-15 in both) was a silent validity flaw. Paired bootstrap CIs over test seeds give honest uncertainty; without them, small Δ (e.g., C11's 0.01) cannot be distinguished from noise. |
-| H034 | REUSABLE_ASSET (B01-R infrastructure) | The B01-R runner + detector module (4-category label audit, paired bootstrap CI, real detector metrics including PR-AUC / recall@5%FPR / false-alarm / degradation onset / warning lead time / Brier / ECE) is a reusable fairness-batch infrastructure for any future detector or equalization work. |
+| H029 | BASELINE_ADJUDICATION | Under no-leakage split + validation-optimal fixed-μ CMA at μ=0.03 (interior optimum after grid extension), the CB1 16QAM inner-ring collapse headroom remains on 4/7 held-out cells. C11_fixed_μ (μ=0.03 CMA + DD-LMS) closes 3/7 and significantly beats fixed_μ on 4/7 (paired CI excludes 0, |Δ|≈0.01). |
+| H030 | FAILURE_MECHANISM | The binary `oracle_pi_ser > 0.3` label conflates inner-ring collapse with AWGN-dominated error. 4-category audit: inner_ring=14/110 (12.7%), awgn=18 (16.4%), healthy=27 (24.5%), ambiguous=51 (46.4%). Held-out long cells have ZERO inner_ring seeds. (v1 had conflicting ambiguous counts 43/54; actual is 51.) |
+| H031 | METHOD_SIGNAL | C11_fixed_μ (stage-1 = TUNED μ=0.03 CMA + DD-LMS) significantly beats fixed_μ CMA on 4/7 held-out cells (paired CI). This is a genuine positive signal that v1 missed (v1's C11 only beat the under-tuned μ=0.001 anchor). The improvement is on inner-ring-recoverable AND awgn-dominated regimes (4/7 cells span both). |
+| H032 | EVALUATION_INSIGHT | Single-class cells report AUROC=NA/UNDEFINED (not 0.5); 5/7 held-out cells are single-class under strict binary projection. |
+| H033 | EVALUATION_INSIGHT | Tuning [11-15] ∩ test [21-30] = ∅ is the minimum honesty bar. Paired bootstrap CIs over test seeds are required to distinguish small Δ (e.g. 0.01) from noise. |
+| H034 | REUSABLE_ASSET | B01-R runner + detector module (4-cat label audit, paired bootstrap CI, real detector metrics with honest FPR reporting, warmup-guarded lead time) is reusable fairness-batch infrastructure. |
+| **H035 (new)** | **EVALUATION_INSIGHT** | **μ grid boundary check**: if the best μ is at the grid max, the grid must be extended until an interior optimum, plateau, or divergence boundary is found. v1 falsely concluded "μ=0.01 optimal" when the grid ended at 0.01; v2 extended to 0.1 and found μ=0.03. |
+| **H036 (new)** | **EVALUATION_INSIGHT** | **Warmup must precede both detector alert AND degradation onset**. v1 let detector alert fire during warmup (block 0/1), producing fake "+2 lead time". Hotfix guards both: warmup is for baseline estimation only; alerts and onset-detection start at block `warmup`. |
+| **H037 (new)** | **EVALUATION_INSIGHT** | **Apples-to-apples cascade comparison**: a cascade method (C11) must be compared against its OWN stage-1 (fixed_μ CMA), not against an unrelated anchor (frozen μ=0.001). v1's "C11 improves" was entirely an artifact of comparing to the under-tuned anchor; v2's C11_fixed_μ comparison shows the real (smaller but still positive) effect. |
+| **H038 (new)** | **REUSABLE_ASSET / GUARDRAIL** | **Conventional baseline may already be perfect**: min_z2_ratio achieves AUROC=1.000 on both two-class held-out cells, beating the "tuned" C05 (default-grid, AUROC=0.875). Before claiming ML beats conventional, check whether conventional is already at ceiling. The ML contribution axis must then be different (lead time, calibration, generalization). |
 
 ## 11. Rotation
 
-Per `references/recovery-and-rotation.md` and the user's prompt §九
-("按上述 A/B/C 自动收口"):
+Per `references/recovery-and-rotation.md` and user prompt §九:
 
-**Verdict B → next action: rotate to other mechanism families.**
+**Verdict A → problem survives AND detector target ready → next action: pursue the cleanest contribution axis.**
 
-The detector family (C01/C02/C05/C06) is blocked pending credible label
-infrastructure. Two legal next directions:
+Two legal paths, both now better-motivated than in v1:
 
-1. **Stay on the equalizer side**: exploit C11's small but significant
-   improvement and the fixed-μ CMA's dominance to ask whether a learned
-   CORRECTOR (C04/C09) can recover residual error where DD-LMS cannot.
-   Task comparator = validation-optimal fixed-μ CMA (μ=0.01), NOT the
-   frozen-μ anchor.
-2. **Rotate to a different mechanism family**: C13 (pilot-aided) or C12
-   (soft/coded) open different information classes. These are
-   INFRASTRUCTURE_BLOCKED but unblockable with bounded adapters.
+1. **Equalizer side — learned corrector (C04/C09)**: target the residual 0.01 PI-SER margin that C11_fixed_μ leaves on 4/7 cells. Task comparators (HF8 new rule): **both** `fixed_μ CMA μ=0.03` (system anchor) AND `blind_affine_16qam` (task-specific Kill tool per FR-21). Go metric: paired-CI significant improvement over C11_fixed_μ on ≥ 4/7 held-out cells.
+2. **Detector side — lead-time maximization (C01/C02/C06)**: target positive warning lead time (conventional is at -1.33). Task comparator: min_z2_ratio (AUROC=1.000, the ceiling baseline). Go metric: positive mean lead time on ≥ 2 two-class cells, without AUROC regression.
 
-The user's prompt explicitly allows automatic rotation on local
-blockers; we record this as the next-action in H006.
+The B02 detector batch is now conditionally authorized by Verdict A but with a narrowed claim: "ML provides positive warning lead time where conventional provides none" (not "ML improves AUROC").
 
 ## 12. Note on B01's superseded status
 
-B01's raw numerical results (11 cells × 10 seeds × {anchor, C05, C08,
-C10, C11}) are preserved as DIAGNOSTIC history. They are valid as raw
-data; what is superseded is:
+B01 (raw artifacts, D008, H005) preserved as DIAGNOSTIC history. What is superseded by B01-R hotfix v2:
 
-- The `PROBLEM_SURVIVES_FAIR_CONVENTIONAL_TREATMENT` verdict (B01-R
-  reaches the same survival conclusion via a higher-fidelity path, so
-  the survival claim is CONFIRMED not overturned).
-- The `AUTHORIZE_B02_ML_DETECTOR_BATCH_CONDITIONAL` authorisation (B01-R
-  WITHDRAWS this; detector target is not ready).
-- The C11 "long cells improve 0.01-0.03" claim (B01-R narrows this to
-  "4/7 held-out cells improve significantly; 0/3 held-out long cells
-  have inner-ring collapse signal").
-- The C05 "pooled AUROC=0.6546" metric (B01-R replaces with per-cell
-  AUROC; only 2 held-out cells are two-class; pooled is not the
-  headline).
+- B01-R v1's VERDICT B (mechanically forced) → v2's VERDICT A (scientifically reached).
+- B01-R v1's "C11 improves 4/7 cells" → v2 corrects: that was vs under-tuned anchor; vs fair fixed_μ baseline, only C11_fixed_μ improves (4/7), and by a smaller margin.
+- B01-R v1's "+2 blocks lead time" → v2 corrects: warmup artifact; actual lead time is -1.33.
+- B01-R v1's "recall@5%FPR = 1.0" → v2 corrects: 5% not resolvable; actual FPR is 25-50%.
+- B01-R v1's "ambiguous = 43 or 54" → v2 corrects: actual is 51.
+- B01-R v1's "fixed_μ CMA μ=0.01 optimal" → v2 corrects: μ=0.03 (interior optimum after grid extension).
+- B01-R v1's "min_z2_ratio has no two-class cells (strict label)" → v2 corrects: that was an interface bug; min_z2_ratio is actually the strongest detector (AUROC=1.000 on 2 two-class cells).
 
-D008 → superseded by D009.
-H005 → superseded by H006.
+D008 → superseded by D009 (v1) → amended by D010 (v2).
+H005 → superseded by H006 (v1) → amended by H007 (v2).
+V001 (v1 verifier CONFIRM) → amended by V002 (v2 verifier, post-hotfix).

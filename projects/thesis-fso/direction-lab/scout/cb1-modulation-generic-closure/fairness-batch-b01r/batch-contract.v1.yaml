@@ -4,17 +4,26 @@
 # Trigger: 2026-07-21 user audit (10 findings) + H005 superseded by H006
 # Source audit findings: pasted task 2026-07-21 (10 explicit items)
 # Date: 2026-07-21
+# Hotfix v2 (2026-07-21): external review identified 7 implementation flaws
+#   in v1 (min_z2 NaN, warmup misalignment, fake 5% FPR, mechanically forced
+#   verdict B, ambiguous count conflict, μ grid boundary, C11 vs anchor
+#   instead of vs fixed_μ). Hotfix fixes all 7; v1 synthesis superseded by
+#   v2. See artifacts/fairness-batch-b01r-v1-synthesis.md §0 for details.
 # =============================================================================
 # Scientific question:
 #   Reproduce-independently the 10 audit findings on B01 (Phase 1, DONE — all
 #   10 confirmed against source code + raw JSON), then re-adjudicate with:
 #     (1) a no-leakage seed split (tuning seeds disjoint from test seeds);
 #     (2) a validation-optimal fixed-μ CMA as a genuine Go comparator (not
-#         just a bandit);
+#         just a bandit);  [HOTFIX v2: μ grid extended to 1e-1 so optimum
+#         is interior, not boundary]
 #     (3) achievable exit criteria (denominator = actual held-out cells = 7);
 #     (4) detector rebuilt with 4-category labels and real metrics
-#         (per-cell AUROC, PR-AUC, recall@5%FPR, false-alarm, degradation
-#         onset, warning lead time, Brier/ECE).
+#         (per-cell AUROC, PR-AUC, recall@ ACTUAL FPR reported honestly,
+#         false-alarm, degradation onset, warning LEAD TIME GUARDED BY
+#         WARMUP on both detector AND onset);
+#     (5) [HOTFIX v2 HF7] C11_fixed_mu: cascade with stage-1 = TUNED
+#         fixed_μ, compared against fixed_μ CMA (not the frozen-μ anchor).
 #
 # Relationship to B01:
 #   - B01 raw artifacts (JSON, frozen params, synthesis) are preserved as
@@ -104,6 +113,21 @@ roles:
     task_specific_comparator: standard_cma_godard_z  # stage-1 alone
     note: >-
       Local signal must be reported PER CELL, not "long cells" as a class.
+      v1 used stage-1=anchor μ=0.001 (under-tuned); this C11 role is kept
+      for traceability with B01 but is NOT the fair cascade comparator.
+
+  c11_fixed_mu_cascade:  # HOTFIX v2 HF7 (BUG 7): genuine cascade comparator
+    id: C11_fixed_mu
+    implementation: b01_candidates.c11_cma_dd_lms_cascade  # same code; stage-1 μ changes
+    stage1_mu: inherited_from_fixed_mu_cma_tuned  # = 0.03 after HF6 grid extension
+    dd_step_size_grid: [1e-4, 3e-4, 1e-3, 3e-3, 1e-2]
+    dd_iterations: 1
+    warm_start: from fixed_μ CMA final weights
+    task_specific_comparator: fixed_mu_cma_validation_optimal  # OWN stage-1, not anchor
+    note: >-
+      Apples-to-apples cascade test: does DD-LMS improve over the fairly-
+      tuned fixed_μ CMA (μ=0.03)? v1's C11 only beat the under-tuned
+      anchor μ=0.001, which was not a positive method signal.
 
   detector_scoring_baselines:
     - id: min_z2_ratio_scoring_baseline  # bare heuristic, no tuned params
@@ -299,15 +323,35 @@ forbidden:
   - modify_B01_raw_JSON_or_frozen_params_or_synthesis  # B01 preserved as DIAGNOSTIC history
   - delete_D008_or_H005  # superseded, not deleted
   - modify_canonical_state_yaml
-  - train_ML_detector_classifier_anomaly_or_RL  # B02 only, not authorised by B01-R
+  - train_ML_detector_classifier_anomaly_or_RL  # B02 only, conditional on B01-R outcome
   - treat_oracle_affine_as_Go_baseline  # FR-21, FR-25
   - tune_on_test_seeds  # no-leakage rule
   - aggregate_validation_into_go_kill  # Go/Kill uses only held_out × test_seeds
-  - report_single_class_auroc_as_0_5  # report NA/UNDEFINED
+  - report_single_class_auroc_as_0_5  # report NA/UNDEFINED (HF1 ensures min_z2 not silently NaN)
+  - report_5pct_FPR_when_not_resolvable  # HF3: must report ACTUAL FPR given n_neg
+  - report_lead_time_without_warmup_guard  # HF2: detector alerts must skip warmup
+  - cascade_compared_against_other_than_own_stage1  # HF7: C11 must be compared against its OWN stage-1 fixed_μ, not the anchor
+  - best_hyperparameter_at_grid_boundary_without_extension  # HF6: extend grid until interior optimum
   - write_Godard_cost_deep_property_claim  # overreach per audit finding #5 spirit
   - write_all_long_cells_reliable_claim  # overreach per audit finding #10
   - main_thread_WebSearch_or_webReader
   - push_or_merge
+
+# === Forward contract rule for any FUTURE learned-corrector batch (HF8) ===
+# A future learned-corrector batch (C04/C09 or similar) MUST preserve BOTH
+# task comparators, not just the system anchor:
+#   1. fixed_mu_cma_validation_optimal (μ=0.03 after HF6) — the system anchor / Go baseline
+#   2. oracle_affine_16qam (blind-affine) — the task-specific Kill tool (FR-21)
+# A learned corrector that does not beat blind-affine has no demonstrated
+# contribution over the simplest recoverability baseline, regardless of
+# whether it beats fixed_μ CMA. This rule is forward-looking; this batch
+# does not run C04/C09.
+forward_rules_for_corrector_batch:
+  required_task_comparators:
+    - fixed_mu_cma_validation_optimal_mu_0_03  # system anchor
+    - oracle_affine_16qam_blind  # task-specific Kill (FR-21)
+  go_metric: paired_CI_significant_beat_C11_fixed_mu_on_at_least_4_of_7_held_out
+  kill_metric: cannot_beat_blind_affine_on_any_cell
 
 # === Outputs ===
 outputs:
