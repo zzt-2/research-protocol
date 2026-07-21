@@ -386,3 +386,37 @@ S011 续接 / 用户纠正 / RED-GREEN forward test。
 ### 来源
 
 S012 / 用户 2026-07-21 原话（见 `voice.md`）。
+
+## D013: 正式采用三层工作强度、语义先行与单一当前投影
+
+> status: active
+> date: 2026-07-21
+> 取代：无
+> 扩展：D001、D011、D012
+> 被取代：无
+> 依据：S012 + 设计文档 + 三类 RED/GREEN forward fixtures + Skill TDD
+
+### 决策
+
+Research Direction Lab 正式采用 `Probe → Scout → Deep Evidence` 三层成本模型。任何扩算力前先验证科学语义，再验证证据完整性；跨对话恢复以一组有界 current projections 为热路径，显式 amendment/disposition 血缘优先于 mtime 和旧叙述。harvest 必须评估但不强制产生条目，普通 Probe 不默认进入 session 治理链。
+
+### 理由
+
+旧流程把秒级问题自动放大为完整批次证据链，并能在 hash、receipt、独立复核全部通过时遗漏常数最优解或目标错位。恢复又依赖旧 handoff、synthesis 和大量日志，当前有效结论不够醒目。三层模型把成本与声明强度绑定；current view 把“现在相信什么”从“历史发生过什么”中解耦，同时保留 lineage 可审计性。
+
+### 排除的替代方案
+
+- **每个试验都走完整 batch/receipt/verifier**：拒绝；低风险前置问题只需 Probe compact record。
+- **只靠完整 provenance 证明科学有效**：拒绝；integrity PASS 与 semantic validity 必须分开。
+- **按最新修改时间决定当前结论**：拒绝；只有显式 `amends/supersedes/invalidates/restores` 关系能改变有效状态。
+- **每个工作单元强制造 harvest**：拒绝；会制造低价值文档，改为强制 assessment、按耐久价值落条目。
+- **把开放判断写入 scheduler**：拒绝；通用脚本只投影项目已记录事实，不替 AI 做科学选择。
+- **为新体系另建平行流程**：拒绝；继续由 `research-direction-lab` Skill 单一拥有。
+
+### 影响范围
+
+更新主 Skill、现有 references、Project Adapter schema、state reducer、STATUS renderer、forward fixtures 与测试；不复制流程到 AGENTS.md，不引入领域项目术语，不运行科学实验，不改写历史 artifacts。
+
+### 来源
+
+S012 / 用户原话（见 `voice.md`）/ RED→GREEN 行为证据。

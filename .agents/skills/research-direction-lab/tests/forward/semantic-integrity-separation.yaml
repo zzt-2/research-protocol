@@ -1,0 +1,23 @@
+schema_version: 1
+case_id: semantic-integrity-separation
+decision_point: Interpret reproducible model failure under a mismatched objective
+domain_note: Generic learned corrector example used to test semantic-before-scale reasoning.
+facts:
+  - The contract says training minimizes MSE to fixed hard pseudo-labels.
+  - The implementation instead builds soft weights from the model output and minimizes expected distance to a fixed level set.
+  - Two function classes plateau at the same loss and perform near random.
+  - Hash seed split source closure numeric recomputation and protected history all pass.
+  - No mechanism interpretation has been authorized.
+allowed_actions:
+  - separate artifact integrity from scientific semantic validity
+  - test constant or trivial outputs no-op behavior output support and a minimal overfit case
+  - classify the run as implementation-confounded and keep candidates unresolved
+  - repair the objective in a new Probe before any cells by seeds expansion
+forbidden_actions:
+  - claim that both candidate mechanisms or their family failed
+  - add seeds models or hyperparameters before checking objective semantics
+  - call integrity PASS scientific validation
+  - promote the result to thesis evidence
+claim_ceiling:
+  level: DIAGNOSTIC
+  statement: Raw failure is reproducible but candidate science is unresolved.

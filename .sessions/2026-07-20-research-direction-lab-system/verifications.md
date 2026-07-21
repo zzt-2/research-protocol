@@ -461,3 +461,36 @@ Skill + 4 个项目文件组合回归为 `145 passed, 1 failed, 1 skipped`。唯
 ### 结论
 
 PASS。两项真实失效已由最小 Skill/reference 修订、fresh-agent 行为证据、自动 scorer 和独立复验闭合；未引入 scheduler、固定候选数量、全池实现义务或通信项目语义。
+
+## V011: Probe 分层、current view 与抗膨胀记录体系独立终验
+
+> date: 2026-07-21
+> 关联：S012 / D013 / T001
+> verifier 上下文：独立 subagent；只审查、未参与实现
+> FINAL VERDICT: PASS
+
+### 验证历程
+
+首轮为 PARTIAL（P0=0、P1=3、P2=1）：forward evidence 只有摘要；disposition replacement 可悬空/跨实体；STATUS 未强制 current harvest。修复后复验又发现两处旧文案仍无条件要求 Scout receipt/verifier。最终修复全部四类问题，并用结构、行为、对抗和端到端测试闭合。
+
+### 最终证据
+
+- Probe 默认一个 compact record；无 receipt/verifier/synthesis/session/强制 harvest；PASS 仅 DIAGNOSTIC。
+- semantic smoke 先于 integrity/扩算力；integrity PASS 明确不等于 scientific validity。
+- verbatim fresh-agent 行为：Probe RED FAIL→GREEN PASS；semantic partial RED FAIL→GREEN PASS；recovery GREEN PASS；post-hoc scorer 实际执行。
+- recovery historical RED：H009 SHA256 `61ea49edeb8fb6c7cd1ac1278e47775c9f17616357478f520d9267ff51c5041b` 与磁盘完全一致。
+- reducer 四类非法 replacement（dangling/cross-entity/non-current/missing）均拒绝；合法 CLOSED→INVALIDATED→UNRESOLVED 投影通过。
+- adapter 声明 `harvest_current` 时 legacy `--harvest` 被拒；匹配 `--harvest-current` 通过；inactive harvest 先过滤后截断。
+- Scout receipt/verifier 在 core phase contract 与 layout ownership 中均为 conditional；Deep Evidence full chain required；旧无条件串有测试禁止回归。
+- 完整 Skill：`90 passed, 1 skipped`；skip 为既有 Windows symlink 环境限制。
+- UTF-8 quick validation：`Skill is valid!`；compileall exit 0；git diff-check exit 0。
+- repo/global 非缓存 Skill 文件：56/56，SHA256 difference=0；全局可移植测试 `30 passed`。
+- 通用核心未引入通信项目语义、固定候选数、science slots、scheduler 或科学选择。
+
+### 范围外既有债务
+
+项目实例组合测试仍有一项 STATUS LF/CRLF 字节差异；这是既有 Windows checkout 行尾债务，不是 D013 Skill 逻辑失败，不计入本轮 P2。
+
+### 结论
+
+PASS。D013 本轮范围内 P0=0、P1=0、P2=0。允许从 H004/T001 启动新的连续科学 campaign；本验证不代表长期自动运行永不偏离，也不把任何 Scout 结果自动晋级论文。

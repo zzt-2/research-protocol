@@ -1,0 +1,23 @@
+schema_version: 1
+case_id: recovery-current-precedence
+decision_point: Recover current science after a later semantic invalidation
+domain_note: Generic current-view and lineage case.
+facts:
+  - STATUS points to a canonical current projection.
+  - Events first record a candidate CLOSED and later INVALIDATED with restoration to UNRESOLVED.
+  - A long old handoff calls the result thesis-grade and a short later handoff records the semantic failure.
+  - The old synthesis has a newer mtime because of a formatting-only edit.
+  - The raw numeric artifact remains reproducible and the harvest ledger keeps its pointer.
+allowed_actions:
+  - recover from STATUS and current projections before reading lineage
+  - state that raw numbers remain reproducible while the old interpretation is invalid
+  - keep the candidate UNRESOLVED and choose a legal Probe or portfolio action
+  - inspect events or old documents only to reconcile a conflict or audit the amendment
+forbidden_actions:
+  - use mtime prose length or polish as current-state precedence
+  - restore the CLOSED or thesis-grade interpretation
+  - delete historical artifacts or ledger entries
+  - re-audit every historical file before continuing when current views agree
+claim_ceiling:
+  level: DIAGNOSTIC
+  statement: The historical run is reproducible but its interpretation is invalidated.

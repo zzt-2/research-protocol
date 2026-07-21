@@ -23,9 +23,11 @@ Normalize a problem candidate as `method M is inadequate under condition C becau
 
 ## Candidate card
 
-Record only decision-useful fields:
+At Map time record only:
 
-`id | M-C-A problem | question | source | lineage | mechanism | information access | output | supported scope | blocked scope | baseline | comparator | diagnostics | dependencies | cost | thesis form | evidence pointers | claim ceiling | status`
+`id | M-C-A problem | source/lineage | mechanism | legal information | output | readiness | cost/unknowns`
+
+Add comparator, evaluator, diagnostics, dependencies, tuning, evidence pointers, thesis form, and claim ceiling only when a candidate enters a Probe or Scout. Do not pre-fill a heavy card for every mapped idea.
 
 Keep scientific vocabulary in domain profiles or project adapter values. Keep the generic card structure domain-neutral.
 

@@ -95,3 +95,13 @@ revision; round 1 needed no Skill revision.
 - RED: real C01–C04 portfolio used one Go comparator lattice across detection/control/correction, marked a controller runnable despite missing action/state interfaces, and prioritized C01 before a bounded mechanism-level refresh.
 - GREEN: fresh agent separated shared system anchor from task-specific comparators, used equal tuning opportunity, corrected readiness, required a bounded refresh, and selected a small comparable batch without demanding exhaustive mapping.
 - Skill change: minimal edits to baseline adjudication, candidate portfolio, batch planning, and one routing sentence in SKILL.md.
+
+## Probe and current-view redesign — 2026-07-21
+
+- **Probe cost RED**: without revised guidance, a two-minute paired-input check produced five default artifacts (contract, result, receipt, source closure, verifier). **GREEN**: one compact Probe record, optional artifact pointer, no full batch governance, no forced harvest, and immediate stop after the pair.
+- **Semantic RED/control**: general reasoning caught the contract/objective mismatch but did not establish the full reusable smoke set. **GREEN**: integrity and semantic validity separated; objective alignment, constant/trivial output, no-op/identity, output support, and minimal overfit precede scale; candidates remain `UNRESOLVED`.
+- **Recovery GREEN**: routine hot path used current projections; explicit INVALIDATED/restore disposition overrode old handoff, synthesis mtime, and ledger prose without deleting lineage.
+- Raw fixtures and responses: `tests/forward/{probe-cost-boundary,semantic-integrity-separation,recovery-current-precedence}.yaml` and corresponding `tests/forward/runs/*/round-{red,green}.md` files. Each new agent run now stores the blind prompt, agent identity/access condition, and verbatim final response; recovery uses `historical-red.yaml`, whose H009 pointer SHA256 is `61ea49ed...c5041b`, as the real RED artifact.
+- Post-hoc behavior scorer: `tests/score_probe_recovery.py`. It records RED→GREEN for Probe cost and semantic completeness, and PASS for bounded current-view recovery. It is explicitly post-hoc, not mislabelled as preregistered.
+- Independent terminal review first returned PARTIAL and found three P1 gaps: summary-only forward evidence, dangling/cross-entity disposition replacement, and raw-ledger STATUS consumption. Repairs added verbatim runs + scorer, strict current-disposition replacement, adapter-bound `--harvest-current`, and inactive-harvest filtering.
+- Fresh full Skill gate after repairs: 90 passed, 1 environment skip.

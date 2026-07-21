@@ -60,6 +60,51 @@ def test_skill_has_single_level_references():
         assert f"references/{name}" in text
 
 
+def test_skill_routes_three_work_intensities_without_a_new_reference_layer():
+    skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
+    core = (ROOT / "references/core-loop.md").read_text(encoding="utf-8")
+    assert "Probe → Scout → Deep Evidence" in skill
+    assert "Probe record" in core
+    assert "Probe PASS is not a method signal" in core
+
+
+def test_probe_semantics_precede_evidence_scaling_and_default_artifacts_stay_small():
+    evidence = (ROOT / "references/evidence-and-claims.md").read_text(encoding="utf-8")
+    layout = (ROOT / "references/project-layout.md").read_text(encoding="utf-8")
+    core = (ROOT / "references/core-loop.md").read_text(encoding="utf-8")
+    assert evidence.index("Semantic smoke before scale") < evidence.index("Protect evidence integrity")
+    for phrase in ("constant or trivial solution", "no-op or identity", "output support"):
+        assert phrase in evidence
+    assert "probes/<probe-id>/record.yaml" in layout
+    assert "does not require a receipt, verifier, synthesis, or harvest item by default" in layout
+    assert "Scout receipt and verifier are conditional" in layout
+    assert "Deep Evidence requires the full chain" in layout
+    assert "receipt/verifier according to work intensity and risk" in core
+    assert "conditional Scout or required Deep-Evidence integrity files" in layout
+    assert "manifest, artifacts, receipt, execution facts" not in core
+
+
+def test_recovery_uses_current_projection_not_mtime_or_old_handoffs():
+    recovery = (ROOT / "references/recovery-and-rotation.md").read_text(encoding="utf-8")
+    layout = (ROOT / "references/project-layout.md").read_text(encoding="utf-8")
+    assert "mtime" in recovery
+    assert "amends" in recovery and "invalidates" in recovery
+    assert "harvest/current.yaml" in layout
+    assert "current view" in layout
+
+
+def test_adapter_schema_exposes_optional_current_view_paths_without_breaking_legacy_adapters():
+    schema = yaml.safe_load(
+        (ROOT / "references/project-adapter-schema.yaml").read_text(encoding="utf-8")
+    )
+    paths_schema = schema["properties"]["paths"]
+    path_properties = paths_schema["properties"]
+    new_optional_paths = {"probes", "portfolio_history", "harvest_current"}
+
+    assert new_optional_paths <= set(path_properties)
+    assert new_optional_paths.isdisjoint(paths_schema["required"])
+
+
 def test_skill_does_not_claim_project_state():
     core_files = [
         ROOT / "SKILL.md",

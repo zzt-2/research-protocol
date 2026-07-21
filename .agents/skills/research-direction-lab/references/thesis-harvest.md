@@ -1,6 +1,6 @@
 # Thesis harvest
 
-Use this reference after every scientific batch, including batches with no winning candidate.
+Use this reference to assess durable value after a Probe or scientific batch. Assessment is mandatory; creating an item is not.
 
 ## Harvest categories
 
@@ -20,7 +20,9 @@ Record:
 
 `id | category | concise finding | evidence scope | claim ceiling | artifact pointers | source hashes | related candidates/batches | thesis destination | confidence | follow-up | status`
 
-Keep raw data in artifacts and store pointers, hashes, and bounded summaries in the ledger. Preserve negative and invalidated items with their reasons; do not erase lineage.
+Keep raw data in artifacts and store pointers, hashes, and bounded summaries in the append-only ledger. Preserve negative and invalidated items with their reasons; do not erase lineage. Project `harvest/current.yaml` from explicit statuses such as `active`, `diagnostic`, `amended`, `superseded`, `retracted`, and `invalidated`; only the current view feeds thesis writing.
+
+If no durable value exists, record `no_durable_harvest_reason` in the Probe or batch record instead of manufacturing a ledger item. A scientific interpretation, its raw numeric fact, and its reusable asset may receive different dispositions after review. Do not count an old claim and its corrective amendment as two independent contributions.
 
 ## Promote thesis spines
 

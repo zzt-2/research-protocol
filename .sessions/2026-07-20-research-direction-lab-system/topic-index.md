@@ -1,12 +1,12 @@
 # Topic Index: Research Direction Lab 完整体系设计
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-07-21（S012/D012：大规模运行前先设计、推演并固定 Probe/恢复/文件组织体系；尚未改 Skill、未运行科学实验）
+> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-07-21（S012/D013/V011：Probe/恢复/文件组织体系已实施、全局同步并独立终验 PASS；未运行科学实验）
 
 ## 专题信息
 
 - **slug**: `2026-07-20-research-direction-lab-system`
 - **title**: Research Direction Lab 完整体系设计
-- **性质**: 目标体系蓝图与分阶段实施；Task 1–10、消费者部署、D010/D011 已验证，当前进入 S012/D012 的 Probe/恢复/文件组织重设计，不运行科学实验
+- **性质**: 目标体系蓝图与分阶段实施；Task 1–10、消费者部署、D010/D011 已验证，S012/D013 已完成 Probe/恢复/文件组织重设计与实现，等待终验后转入大规模科学使用
 
 ## 范围边界
 
@@ -24,7 +24,7 @@
 - 本阶段不修改现有 controller、campaign core、仿真器、baseline 或科学证据。
 - 基于首轮正式 SCIENCE_SCOUT 的真实失效，允许以 RED→GREEN 修订主 Skill 的 baseline 充分性判断；不借此运行新实验或改写历史证据。
 - 基于 C01–C04 的 comparator/readiness 失配，允许最小修订两层 baseline 公平性与重实施前的有界机制级候选扩图；不借此扩展通用 scheduler 或运行科学实验。
-- 基于 S009 的科学语义审计，当前范围扩展为 Probe/Scout/Deep Evidence 分层、单一恢复投影、current-view/lineage、harvest 状态索引和抗膨胀目录的设计与推演；设计固定前不改 Skill、不运行科学实验。
+- 基于 S009 的科学语义审计，当前范围扩展为 Probe/Scout/Deep Evidence 分层、单一恢复投影、current-view/lineage、harvest 状态索引和抗膨胀目录的设计、推演、Skill 实施与独立验证；不借此运行科学实验。
 
 ### 明确不含
 
@@ -32,7 +32,7 @@
 - 不启动 B004、ML 训练、P03 后续实验或新科学批次；
 - 不改写 B001–B003、P03 Atlas、canonical state 或历史 receipt；
 - 不把目标态蓝图写成当前架构现状；
-- 不在蓝图审定前迁移目录或删除旧流程文件。
+- 不批量迁移或删除旧科学目录；新布局渐进采用，旧历史继续 append-only 保留。
 
 ### 范围变更记录
 
@@ -68,6 +68,9 @@
   - 原因：S009 出现完整可复现链未发现目标函数常数塌缩，且“极小”工作反复扩成重流程。
   - 新范围：体系蓝图、目录与 current projection、成本分层、历史反例与 fresh-agent 恢复推演、后续 Skill 修订验证。
   - 明确排除：本轮直接改 Skill、运行科学实验、重跑 C04/C09、构建复杂 scheduler、删除历史。
+- **[2026-07-21] Probe 与恢复体系实施（D013）**：D012 的设计和 RED 推演完成后，用户明确要求当前对话继续完成 Skill 并交付下一工作提示词。
+  - 新范围：主 Skill/references、可选 current-view adapter 路径、显式 disposition reducer、STATUS current-harvest 指针、forward fixtures、测试、全局消费者同步和下一 campaign 交接。
+  - 明确排除：运行新科学实验、改写旧 artifacts、复杂 scheduler、固定候选数、把领域科学判断写入通用代码。
 
 ## 已确认结论
 
@@ -83,12 +86,16 @@
 - **baseline 充分而非最强**：Go comparator 必须正确、任务适配、广泛采用且公平；当前 SOTA 仅在主张或外部要求依赖时才成为义务。
 - **公平按主张分层**：共同系统锚点用于端到端比较，不替代不同输出的任务专属 comparator；公平是相当调参与验证机会，不是机械使用相同超参数。
 - **有界扩图后立即批跑**：候选过窄或集中于单一机制时先做短时机制级扩图和 readiness 事实审计；不证明完整、不实现全池，随后立即运行小型 `READY` 批次。
+- **成本随声明升级**：前置不确定性默认用单问题 Probe；多候选公平比较才进入 Scout；只有稳定且论文重要的信号进入 Deep Evidence。
+- **语义先于完整性**：objective/label/output/metric、平凡解、identity、output support、最小过拟合和信息边界未通过时，不得用 provenance PASS 升级科学结论。
+- **当前视图优先恢复**：current projection 是恢复入口，append-only lineage 是审计与复现入口；显式 disposition 优先于 mtime 和旧 prose。
 
 ### 其他结论
 
 - 现有 `method-family-batch-exploration` 是候选族批量部分的可复用原型。
 - Direction Lab 的 receipt/hash/stale/history protection 等确定性资产可保留。
 - `science_slots`、固定最小批次数求解和通用资源匹配不进入目标体系。
+- harvest 逐单元评估但不逐单元强制造条目；普通 Probe 不默认生成完整治理文档链。
 
 ## 进展线索
 
@@ -118,6 +125,7 @@
 - **V009**：repo 与全局消费者 Skill 42 文件 SHA256 全等；全局 quick validation 与可移植测试 17/17 PASS。全局全套另有 3 项预期 repo-context failure，同项在 canonical repo 3/3 PASS，不阻断部署。
 - **S011 续接 / D011 / V010**：真实 C01–C04 计划暴露“共同 system anchor 冒充任务专属 baseline”“共享输入冒充 runnable”及候选过窄问题；RED→GREEN、自动 scorer、独立复验和全局同步均 PASS。
 - **S012 / D012**：S009 外部语义审计暴露“极小探针扩成重证据链”和“artifact fidelity 掩盖目标函数常数塌缩”。冻结新顺序：先设计 Probe/Scout/Deep Evidence 分层、单一恢复投影、current-view/lineage、harvest 状态索引与抗膨胀目录；推演固定后再改 Skill 和大规模运行。本轮仅立项。
+- **S012 续接 / D013 / V011**：完成三层成本、语义先行、current projection、轻量 harvest 与抗膨胀目录的设计和实施；首轮/二轮独立审查发现的行为证据、lineage、current harvest 与 Scout conditional 冲突全部修复；Skill `90 passed, 1 skipped`，repo/global 56/56 hash 全等，V011 PASS。
 
 ## 未决项
 
@@ -127,8 +135,9 @@
 - shadow 派生的 SHADOW-H010..H017 是否晋升到 main ledger：**未授权**；晋升需单独授权 + 重新 hash 绑定 + thesis-spines 更新。
 - canonical-state 内部 stale self-checksums（event_log_sha256 / simulator.sha256）：正式激活前清理。
 - Windows symlink / POSIX flock 动态测试覆盖：跨平台 CI 前补跑。
-- D012 体系设计尚未完成：需要目录候选、恢复投影 schema、语义门最小集合、成本预算、至少四类历史失败推演和 fresh-agent 恢复演练。
+- H004/T001 已冻结下一科学 campaign 的恢复入口；真实长期效率与稳定性仍需在后续连续科学使用中观察，不由 V011 一次性外推。
+- 新科学项目首次采用 current layout 时，需要渐进生成 `state/current.yaml`、`portfolio/current.yaml`、`harvest/current.yaml`；禁止为了迁移整洁批量改写旧 artifacts。
 
 ## 当前位置
 
-Task 1–10、消费者部署、D010 与 D011 均已验证。当前转入 S012/D012 设计阶段：暂停科学批次，先把轻量 Probe、快速恢复和文件组织方案设计、反例推演并固定；之后才修改 Skill、独立验证并启动大规模 campaign。
+Task 1–10、消费者部署、D010、D011 与 D013 均已验证。H004/T001 是唯一下一入口：从科学专题 H010 的现行结论建立 current view，然后同时推进多个机制分支；Probe 通过才升级 Scout，稳定论文信号才进入 Deep Evidence。

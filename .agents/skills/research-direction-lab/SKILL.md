@@ -23,6 +23,16 @@ Treat deterministic tools as integrity guards only. Respect their path, history,
 
 Read `references/recovery-and-rotation.md` for recovery depth, evidence classification, rotation, and context handoff.
 
+## Work intensity
+
+Route work through **Probe → Scout → Deep Evidence**. Use the lightest level that can answer the current uncertainty:
+
+- **Probe** answers one prerequisite semantic or headroom question under a project-declared budget. It produces one compact record and at most a small artifact; it does not inherit full batch governance.
+- **Scout** compares a small mechanism-distinct batch under legal baselines and bounded scope.
+- **Deep Evidence** is reserved for stable signals or thesis-important boundary/negative results that justify full provenance, statistics, independent criticism, and promotion work.
+
+Run semantic smoke before scaling evidence. Probe PASS only authorizes considering Scout; it is not a method signal. Load `references/core-loop.md` and `references/evidence-and-claims.md` when choosing or promoting intensity.
+
 ## Seven-phase loop
 
 Run one continuous loop:
@@ -32,7 +42,7 @@ Run one continuous loop:
 3. **Plan a batch portfolio** — group questions that share a system anchor, evidence slice, interface, or causal comparison; use task-specific comparators when outputs or claims differ, and adjudicate baseline adequacy before treating a gap as method-worthy.
 4. **Prepare and run** — freeze the batch contract, protect integrity boundaries, and use project-declared runners.
 5. **Synthesize** — interpret mechanisms and metrics, test alternative explanations, and set the smallest defensible claim scope.
-6. **Harvest** — record at least one evidence-backed scientific, methodological, writing, asset, or infrastructure item.
+6. **Harvest** — assess durable thesis value; record an item only when one exists, otherwise record why there is no durable harvest.
 7. **Rotate or deepen** — select the next informative legal action, or promote a stable signal to deeper evidence work.
 
 Read `references/core-loop.md` for phase inputs, outputs, and closure checks.

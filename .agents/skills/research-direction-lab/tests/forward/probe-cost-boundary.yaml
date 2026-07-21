@@ -1,0 +1,23 @@
+schema_version: 1
+case_id: probe-cost-boundary
+decision_point: Decide how far to take a two-minute input-dependence check
+domain_note: Generic function-level probe with no domain-specific semantics.
+facts:
+  - A candidate function and a small legal input pair are available.
+  - The only question is whether output depends on input rather than collapsing to a constant.
+  - Full batch runner receipt source closure and verifier templates are available.
+  - Budget is two minutes and at most one paired input check.
+  - No paper-level claim or Scout batch is authorized.
+allowed_actions:
+  - classify the work as a Probe answering one semantic question
+  - run one paired input comparison and record PASS FAIL or UNRESOLVED
+  - create one compact Probe record with an optional artifact pointer
+  - state whether Scout is justified without treating Probe PASS as a method signal
+forbidden_actions:
+  - create a full batch manifest receipt source closure verifier and synthesis chain
+  - run the cells by seeds batch
+  - create a harvest item when no durable lesson exists
+  - widen the claim above DIAGNOSTIC
+claim_ceiling:
+  level: DIAGNOSTIC
+  statement: The Probe can only establish behavior on the paired input.

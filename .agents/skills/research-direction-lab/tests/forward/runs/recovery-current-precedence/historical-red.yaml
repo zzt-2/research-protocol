@@ -1,0 +1,8 @@
+schema_version: 1
+case_id: recovery-current-precedence
+evidence_type: historical_real_failure
+source_pointer: .sessions/2026-07-20-direction-lab-science-scout/H009-s009-corrector-adjudication-and-c04c09-negative.md
+source_sha256: 61ea49edeb8fb6c7cd1ac1278e47775c9f17616357478f520d9267ff51c5041b
+amended_by: .sessions/2026-07-20-direction-lab-science-scout/H010-s009-semantic-audit-recovery.md
+failure_observed: Old thesis-grade and candidate-negative interpretation remained the recovery handoff until an explicit semantic amendment replaced it.
+red_role: Demonstrates why raw history or handoff prominence cannot define the current view.

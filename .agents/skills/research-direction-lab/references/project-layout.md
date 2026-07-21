@@ -10,17 +10,22 @@ direction-lab/
 │   ├── events.jsonl
 │   └── current.yaml
 ├── portfolio/
-│   ├── candidates.yaml
-│   └── batches.yaml
+│   ├── current.yaml
+│   └── history/
+├── probes/
+│   └── <probe-id>/
+│       ├── record.yaml
+│       └── artifacts/          # optional
 ├── batches/
 │   └── <batch-id>/
 │       ├── manifest.yaml
 │       ├── artifacts/
-│       ├── receipt.json
-│       ├── verifier.md
+│       ├── receipt.json          # conditional for Scout; required for Deep Evidence
+│       ├── verifier.md           # conditional for Scout; required for Deep Evidence
 │       └── synthesis.md
 ├── harvest/
-│   ├── ledger.yaml
+│   ├── ledger.jsonl
+│   ├── current.yaml
 │   └── thesis-spines.md
 ├── registries/
 │   ├── components.yaml
@@ -33,14 +38,20 @@ direction-lab/
 ## Ownership
 
 - `project.yaml`: current project facts, anchor, paths, commands, axes, budgets, and protected history.
-- `events.jsonl`: append-only execution and disposition facts.
-- `current.yaml`: deterministic projection rebuilt from events.
-- `candidates.yaml` and `batches.yaml`: active scientific portfolio and planned comparisons.
-- batch directory: immutable contract, raw artifacts, receipt, verification, and bounded synthesis.
-- `ledger.yaml`: harvest pointers, hashes, scope, and status; never raw result duplication.
+- `events.jsonl`: append-only execution and explicit disposition facts.
+- `current.yaml`: sole machine current view, deterministically rebuilt from events.
+- `portfolio/current.yaml`: active scientific portfolio; superseded versions move to `history/`.
+- `probes/<probe-id>/record.yaml`: one compact Probe record. A Probe does not require a receipt, verifier, synthesis, or harvest item by default.
+- batch directory: immutable contract, raw artifacts, bounded synthesis, plus conditional Scout or required Deep-Evidence integrity files.
+- `ledger.jsonl`: append-only harvest lineage; never raw result duplication.
+- `harvest/current.yaml`: current thesis-consumption view after explicit amendment, supersession, retraction, invalidation, or restoration.
 - `thesis-spines.md`: a small set of evidence-backed writing routes.
 - registries: component identities and known failures.
-- `STATUS.md`: the only routine human entry point.
+- `STATUS.md`: the only routine human entry point; it reads current projections, never raw history as current fact.
+
+Scout receipt and verifier are conditional on actual provenance, execution, history, or claim risk; they are not folder-completeness requirements. Deep Evidence requires the full chain. A missing optional Scout file is not a governance failure when the batch record states why it was unnecessary.
+
+When an adapter declares `paths.harvest_current`, the status CLI must be called with that exact `--harvest-current` path; a raw ledger is rejected as display input. Inactive `superseded`, `retracted`, and `invalidated` entries stay in lineage but are filtered from the current status view. Legacy adapters may keep the old input until their bounded current-view migration.
 
 ## Profile and adapter routing
 
@@ -62,4 +73,4 @@ Answer:
 7. What is the next automatic action?
 8. What condition would require user strategy?
 
-Keep routine recovery compact. Load detailed batch history only when a current decision needs it. Archive superseded portfolio versions, avoid per-cell prose files, keep raw data in artifacts, and keep process instructions in the Skill rather than project state.
+Keep routine recovery compact. The hot path is `STATUS.md`, `project.yaml`, `state/current.yaml`, `portfolio/current.yaml`, and `harvest/current.yaml`. Load detailed history only when a current decision or conflict needs it. Archive superseded portfolio versions, avoid per-cell prose files, keep raw data in artifacts, and keep process instructions in the Skill rather than project state. Session notes hold user voice, strategic decisions, major failures, and handoffs—not every Probe run.

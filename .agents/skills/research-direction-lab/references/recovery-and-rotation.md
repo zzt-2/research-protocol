@@ -4,11 +4,14 @@ Use this reference at startup, after context loss, after a blocker, or when choo
 
 ## Recover from an existing foundation
 
-1. Read the compact status, adapter, current state, active portfolio/batches, latest synthesis, and harvest summary.
+1. Read `STATUS.md`, the adapter, `state/current.yaml`, `portfolio/current.yaml`, and `harvest/current.yaml` in that order. This is the routine hot path.
 2. Recover the formal goal, current authorization, protected paths, baseline identity, metric contract, supported and blocked axes, available commands, and budgets.
-3. Classify inherited evidence as `VALID`, `STALE`, `UNKNOWN`, or `INVALID`; retain pointers and reasons.
-4. Reconcile unfinished manifests, receipts, events, and artifacts without mutating protected history.
-5. State current mode as planning, preparing, running, synthesizing, blocked, or awaiting strategy.
+3. Apply explicit `amends`, `supersedes`, `invalidates`, and `restores` dispositions. A file's mtime, length, polished prose, or later formatting edit never determines current truth.
+4. Classify inherited evidence as `VALID`, `STALE`, `UNKNOWN`, or `INVALID`; retain pointers and reasons. Read raw events, ledgers, old syntheses, handoffs, and artifacts only for a current decision, conflict, or audit.
+5. Reconcile unfinished manifests, receipts, events, and artifacts without mutating protected history.
+6. State current mode as probing, planning, preparing, running, synthesizing, blocked, or awaiting strategy.
+
+If current projections disagree, stop scientific action and perform a bounded reconciliation. If they agree, do not re-audit the whole history before continuing.
 
 ## Start from zero
 
@@ -32,4 +35,4 @@ Avoid indefinite micro-tuning, repeated repairs of the same local blocker, and i
 
 ## Close a context safely
 
-Update canonical state, latest synthesis, harvest, and one-page status. Leave an explicit next action, required inputs, integrity warnings, and strategic escalation condition. Do not move live project state into the Skill or transient conversation notes.
+Update canonical current state, current portfolio/harvest views, and one-page status. Leave an explicit next action, required inputs, integrity warnings, and strategic escalation condition. Detailed lineage stays append-only. Do not move live project state into the Skill or transient conversation notes.

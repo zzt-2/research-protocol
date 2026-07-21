@@ -2,6 +2,20 @@
 
 Use this reference before running a batch, interpreting results, or changing a claim scope.
 
+## Semantic smoke before scale
+
+Before cells × seeds, tuning, or a full evidence chain, try to falsify the task itself. Select applicable checks and record `PASS`, `FAIL`, or justified `N/A`:
+
+- objective, label, output, and final metric describe the same task;
+- a constant or trivial solution cannot satisfy the objective while ignoring input;
+- a no-op or identity configuration reproduces the unchanged system;
+- output variance, output support, occupancy, or action diversity is non-degenerate;
+- a tiny sample can be overfit when the mechanism is learnable;
+- the simplest legal comparator can be reproduced;
+- causal prefix and legal-information boundaries hold.
+
+Project code owns formulas, thresholds, and domain-specific variants. If a cheaper implementation or task-semantic explanation survives, mark the run implementation-confounded and the candidate unresolved. More seeds, models, hyperparameters, hashes, or independent reruns do not repair semantic failure.
+
 ## Protect evidence integrity
 
 Before execution, bind the formal goal and batch question to:
@@ -14,7 +28,7 @@ Before execution, bind the formal goal and batch question to:
 - comparator adequacy for the exact contribution claim, including task fit and convergence;
 - protected history and preregistered exits.
 
-Treat deterministic integrity failures as binding. Repair them within the scientific contract or mark evidence untrusted, stale, unknown, or invalid.
+Treat deterministic integrity failures as binding. Repair them within the scientific contract or mark evidence untrusted, stale, unknown, or invalid. Integrity PASS proves artifact fidelity, not scientific-semantic validity.
 
 ## Separate facts from interpretation
 

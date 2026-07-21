@@ -13,6 +13,7 @@ MAX_FINDING_BYTES = 180
 MAX_POINTER_BYTES = 220
 MAX_AXIS_ITEMS = 12
 MAX_HARVEST_ITEMS = 9
+INACTIVE_HARVEST_STATUSES = {"invalidated", "retracted", "superseded"}
 
 
 def _bounded_text(value: object, max_bytes: int = MAX_INLINE_BYTES) -> str:
@@ -107,10 +108,17 @@ def _harvest_summary(harvest: Mapping) -> list[str]:
     entries = harvest.get("entries", harvest.get("items", []))
     if not isinstance(entries, list):
         return []
+    current_entries = [
+        entry
+        for entry in entries
+        if isinstance(entry, Mapping)
+        and not (
+            isinstance(entry.get("status"), str)
+            and entry["status"].strip().lower() in INACTIVE_HARVEST_STATUSES
+        )
+    ]
     summaries = []
-    for entry in entries[:MAX_HARVEST_ITEMS]:
-        if not isinstance(entry, Mapping):
-            continue
+    for entry in current_entries[:MAX_HARVEST_ITEMS]:
         item_id = _bounded_text(
             entry.get("id", entry.get("item_id", "unknown")), MAX_IDENTIFIER_BYTES
         )
@@ -122,9 +130,9 @@ def _harvest_summary(harvest: Mapping) -> list[str]:
             entry.get("finding", "No summary recorded."), MAX_FINDING_BYTES
         )
         summaries.append(f"- {item_id} — {category}: {finding}")
-    if len(entries) > MAX_HARVEST_ITEMS:
+    if len(current_entries) > MAX_HARVEST_ITEMS:
         summaries.append(
-            f"- ... {len(entries) - MAX_HARVEST_ITEMS} more harvest entries; see ledger pointer."
+            f"- ... {len(current_entries) - MAX_HARVEST_ITEMS} more current harvest entries; see current-view pointer."
         )
     return summaries
 
@@ -137,6 +145,7 @@ def _detail_pointers(adapter: Mapping) -> list[str]:
         ("Current state", "current_state"),
         ("Portfolio", "candidates"),
         ("Batch plan", "batches"),
+        ("Current harvest", "harvest_current"),
         ("Harvest ledger", "harvest_ledger"),
         ("Thesis spines", "thesis_spines"),
     )
@@ -273,19 +282,49 @@ def _load_mapping(spec: str) -> Mapping:
     return value
 
 
+def _resolved_spec_path(spec: str) -> Path:
+    path_text, _, _ = spec.partition("#")
+    return Path(path_text).resolve()
+
+
 def _main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Render a bounded read-only project status to stdout.")
     parser.add_argument("--adapter", required=True)
     parser.add_argument("--state", required=True)
     parser.add_argument("--portfolio", required=True)
-    parser.add_argument("--harvest", required=True)
+    harvest_group = parser.add_mutually_exclusive_group(required=True)
+    harvest_group.add_argument(
+        "--harvest-current",
+        help="Current harvest projection declared by the project adapter.",
+    )
+    harvest_group.add_argument(
+        "--harvest",
+        help="Legacy harvest input for adapters that do not yet declare harvest_current.",
+    )
     args = parser.parse_args(argv)
     try:
+        adapter = _load_mapping(args.adapter)
+        adapter_paths = adapter.get("paths", {})
+        if not isinstance(adapter_paths, Mapping):
+            adapter_paths = {}
+        declared_current = adapter_paths.get("harvest_current")
+        if declared_current:
+            if not args.harvest_current:
+                raise ValueError(
+                    "adapter declares harvest_current; use --harvest-current"
+                )
+            if _resolved_spec_path(args.harvest_current) != Path(
+                str(declared_current)
+            ).resolve():
+                raise ValueError(
+                    "--harvest-current does not match adapter paths.harvest_current"
+                )
+        harvest_spec = args.harvest_current or args.harvest
         output = render_status(
-            _load_mapping(args.adapter),
+            adapter,
             _load_mapping(args.state),
             _load_mapping(args.portfolio),
-            _load_mapping(args.harvest),
+            _load_mapping(harvest_spec),
         )
     except (OSError, ValueError, yaml.YAMLError) as exc:
         print(f"render_status: {exc}", file=sys.stderr)

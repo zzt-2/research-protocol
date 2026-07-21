@@ -6,6 +6,7 @@ import subprocess
 import sys
 
 import pytest
+import yaml
 
 
 SCRIPTS = Path(__file__).parents[1] / "scripts"
@@ -279,6 +280,7 @@ def test_rebuild_state_derives_only_deterministic_recorded_facts():
     expected = {
         "completed_ids": ["alpha", "zeta"],
         "stale_ids": ["old"],
+        "entity_dispositions": {},
         "last_event_head": "h4",
         "recorded_next_action": "recorded action",
     }
@@ -287,9 +289,155 @@ def test_rebuild_state_derives_only_deterministic_recorded_facts():
     assert rebuild_state([]) == {
         "completed_ids": [],
         "stale_ids": [],
+        "entity_dispositions": {},
         "last_event_head": None,
         "recorded_next_action": None,
     }
+
+
+def test_rebuild_state_stale_removes_subject_from_current_completed_set():
+    state = rebuild_state(
+        [
+            {"event_id": "E1", "event_type": "COMPLETED", "subject_id": "work-1"},
+            {"event_id": "E2", "event_type": "STALE", "subject_id": "work-1"},
+        ]
+    )
+    assert state["completed_ids"] == []
+    assert state["stale_ids"] == ["work-1"]
+
+
+def test_rebuild_state_projects_latest_explicit_entity_disposition_only():
+    state = rebuild_state(
+        [
+            {
+                "event_id": "E1",
+                "event_type": "DISPOSITION",
+                "entity_kind": "claim",
+                "entity_id": "claim-1",
+                "status": "CLOSED",
+                "reason": "initial synthesis",
+            },
+            {
+                "event_id": "E2",
+                "event_type": "DISPOSITION",
+                "entity_kind": "claim",
+                "entity_id": "claim-1",
+                "status": "UNRESOLVED",
+                "reason": "semantic review invalidated the interpretation",
+                "replaces_event_id": "E1",
+            },
+        ]
+    )
+    assert state["entity_dispositions"] == {
+        "claim": {
+            "claim-1": {
+                "status": "UNRESOLVED",
+                "reason": "semantic review invalidated the interpretation",
+                "event_id": "E2",
+                "replaces_event_id": "E1",
+            }
+        }
+    }
+
+
+def test_rebuild_state_rejects_dangling_disposition_replacement():
+    with pytest.raises(ValueError, match="does not have a current disposition"):
+        rebuild_state(
+            [
+                {
+                    "event_id": "E1",
+                    "event_type": "DISPOSITION",
+                    "entity_kind": "claim",
+                    "entity_id": "claim-1",
+                    "status": "UNRESOLVED",
+                    "reason": "review",
+                    "replaces_event_id": "MISSING",
+                }
+            ]
+        )
+
+
+def test_rebuild_state_rejects_cross_entity_disposition_replacement():
+    with pytest.raises(ValueError, match="does not have a current disposition"):
+        rebuild_state(
+            [
+                {
+                    "event_id": "E1",
+                    "event_type": "DISPOSITION",
+                    "entity_kind": "claim",
+                    "entity_id": "claim-1",
+                    "status": "CLOSED",
+                    "reason": "initial",
+                },
+                {
+                    "event_id": "E2",
+                    "event_type": "DISPOSITION",
+                    "entity_kind": "claim",
+                    "entity_id": "claim-2",
+                    "status": "UNRESOLVED",
+                    "reason": "review",
+                    "replaces_event_id": "E1",
+                },
+            ]
+        )
+
+
+def test_rebuild_state_requires_replacement_of_the_current_disposition():
+    with pytest.raises(ValueError, match="must replace current disposition E2"):
+        rebuild_state(
+            [
+                {
+                    "event_id": "E1",
+                    "event_type": "DISPOSITION",
+                    "entity_kind": "claim",
+                    "entity_id": "claim-1",
+                    "status": "CLOSED",
+                    "reason": "initial",
+                },
+                {
+                    "event_id": "E2",
+                    "event_type": "DISPOSITION",
+                    "entity_kind": "claim",
+                    "entity_id": "claim-1",
+                    "status": "INVALIDATED",
+                    "reason": "review",
+                    "replaces_event_id": "E1",
+                },
+                {
+                    "event_id": "E3",
+                    "event_type": "DISPOSITION",
+                    "entity_kind": "claim",
+                    "entity_id": "claim-1",
+                    "status": "UNRESOLVED",
+                    "reason": "repair",
+                    "replaces_event_id": "E1",
+                },
+            ]
+        )
+
+
+def test_rebuild_state_requires_explicit_lineage_after_first_disposition():
+    with pytest.raises(ValueError, match="must declare replaces_event_id=E1"):
+        rebuild_state(
+            [
+                {
+                    "event_id": "E1",
+                    "event_type": "DISPOSITION",
+                    "entity_kind": "claim",
+                    "entity_id": "claim-1",
+                    "status": "CLOSED",
+                    "reason": "initial",
+                },
+                {
+                    "event_id": "E2",
+                    "event_type": "DISPOSITION",
+                    "entity_kind": "claim",
+                    "entity_id": "claim-1",
+                    "status": "UNRESOLVED",
+                    "reason": "review",
+                },
+            ]
+        )
 
 
 def test_rebuild_state_rejects_replayed_event_ids():
@@ -421,6 +569,83 @@ def test_render_status_is_a_compact_eight_question_view_not_a_projection_dump():
         assert forbidden_dump_key not in output
 
 
+def test_render_status_points_to_current_harvest_before_append_only_lineage():
+    adapter = {
+        "formal_goal": {},
+        "anchor": {},
+        "paths": {
+            "harvest_current": "harvest/current.yaml",
+            "harvest_ledger": "harvest/ledger.jsonl",
+        },
+    }
+    state = {"recorded_next_action": "Inspect the current projection"}
+
+    output = render_status(adapter, state, {}, {})
+
+    assert "Current harvest: `harvest/current.yaml`" in output
+    assert "Harvest ledger: `harvest/ledger.jsonl`" in output
+    assert output.index("Current harvest") < output.index("Harvest ledger")
+
+
+def test_render_status_excludes_inactive_harvest_from_current_view():
+    output = render_status(
+        {"formal_goal": {}, "anchor": {}},
+        {"recorded_next_action": "Continue"},
+        {},
+        {
+            "entries": [
+                {
+                    "id": "H-old",
+                    "category": "METHOD_SIGNAL",
+                    "finding": "withdrawn interpretation",
+                    "status": "invalidated",
+                },
+                {
+                    "id": "H-current",
+                    "category": "DIAGNOSTIC",
+                    "finding": "current bounded finding",
+                    "status": "diagnostic",
+                },
+            ]
+        },
+    )
+
+    assert "H-current" in output
+    assert "H-old" not in output
+    assert "withdrawn interpretation" not in output
+
+
+def test_render_status_filters_inactive_harvest_before_display_limit():
+    inactive = [
+        {
+            "id": f"H-old-{index}",
+            "category": "METHOD_SIGNAL",
+            "finding": "withdrawn",
+            "status": "superseded",
+        }
+        for index in range(12)
+    ]
+    output = render_status(
+        {"formal_goal": {}, "anchor": {}},
+        {"recorded_next_action": "Continue"},
+        {},
+        {
+            "entries": inactive
+            + [
+                {
+                    "id": "H-current",
+                    "category": "DIAGNOSTIC",
+                    "finding": "current",
+                    "status": "active",
+                }
+            ]
+        },
+    )
+
+    assert "H-current" in output
+    assert "H-old" not in output
+
+
 def test_render_status_always_lists_bounded_blocked_axis_ids_even_with_state_summary():
     adapter = {
         "formal_goal": {},
@@ -533,6 +758,49 @@ def test_render_status_cli_reads_four_mappings_writes_stdout_only_and_fails_nonz
         capture_output=True,
     )
     assert failed.returncode != 0
+
+
+def test_render_status_cli_enforces_adapter_declared_current_harvest(tmp_path):
+    current = tmp_path / "harvest-current.yaml"
+    ledger = tmp_path / "harvest-ledger.yaml"
+    adapter_path = tmp_path / "adapter.yaml"
+    state_path = tmp_path / "state.yaml"
+    portfolio_path = tmp_path / "portfolio.yaml"
+    current.write_text("entries: []\n", encoding="utf-8")
+    ledger.write_text("entries: []\n", encoding="utf-8")
+    adapter_path.write_text(
+        yaml.safe_dump(
+            {
+                "formal_goal": {},
+                "anchor": {},
+                "paths": {"harvest_current": str(current)},
+            }
+        ),
+        encoding="utf-8",
+    )
+    state_path.write_text("recorded_next_action: Continue\n", encoding="utf-8")
+    portfolio_path.write_text("candidates: []\n", encoding="utf-8")
+    base = [
+        sys.executable,
+        str(SCRIPTS / "render_status.py"),
+        "--adapter",
+        str(adapter_path),
+        "--state",
+        str(state_path),
+        "--portfolio",
+        str(portfolio_path),
+    ]
+
+    rejected_legacy = subprocess.run(
+        base + ["--harvest", str(ledger)], check=False, capture_output=True
+    )
+    accepted_current = subprocess.run(
+        base + ["--harvest-current", str(current)], check=False, capture_output=True
+    )
+
+    assert rejected_legacy.returncode == 2
+    assert b"harvest_current" in rejected_legacy.stderr
+    assert accepted_current.returncode == 0
 
 
 def test_render_status_does_not_invent_a_next_action():

@@ -161,6 +161,15 @@ properties:
       batches:
         type: string
         minLength: 1
+      probes:
+        type: string
+        minLength: 1
+      portfolio_history:
+        type: string
+        minLength: 1
+      harvest_current:
+        type: string
+        minLength: 1
       harvest_ledger:
         type: string
         minLength: 1

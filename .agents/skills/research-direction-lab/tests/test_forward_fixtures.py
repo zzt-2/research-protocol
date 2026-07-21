@@ -10,6 +10,7 @@ from __future__ import annotations
 import importlib.util
 from pathlib import Path
 
+import pytest
 import yaml
 
 ROOT = Path(__file__).parents[1]
@@ -17,9 +18,13 @@ FORWARD = ROOT / "tests" / "forward"
 FORWARD_CASE = FORWARD / "non-comms-baseline-extension.yaml"
 PRAGMATIC_CASE = FORWARD / "pragmatic-baseline-adjudication.yaml"
 CROSS_OUTPUT_CASE = FORWARD / "cross-output-portfolio-fairness.yaml"
+PROBE_COST_CASE = FORWARD / "probe-cost-boundary.yaml"
+SEMANTIC_CASE = FORWARD / "semantic-integrity-separation.yaml"
+RECOVERY_CASE = FORWARD / "recovery-current-precedence.yaml"
 SCORER = ROOT / "tests" / "score_forward_tests.py"
 BASELINE_SCORER = ROOT / "tests" / "score_baseline_adjudication.py"
 CROSS_OUTPUT_SCORER = ROOT / "tests" / "score_cross_output_portfolio.py"
+PROBE_RECOVERY_SCORER = ROOT / "tests" / "score_probe_recovery.py"
 
 
 def _load_scorer():
@@ -41,6 +46,15 @@ def _load_baseline_scorer():
 def _load_cross_output_scorer():
     spec = importlib.util.spec_from_file_location(
         "score_cross_output_portfolio", CROSS_OUTPUT_SCORER
+    )
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def _load_probe_recovery_scorer():
+    spec = importlib.util.spec_from_file_location(
+        "score_probe_recovery", PROBE_RECOVERY_SCORER
     )
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
@@ -153,6 +167,35 @@ def test_skill_requires_bounded_mechanism_level_portfolio_refresh():
     assert "INFRASTRUCTURE_BLOCKED" in portfolio
 
 
+@pytest.mark.parametrize(
+    ("path", "case_id"),
+    [
+        (PROBE_COST_CASE, "probe-cost-boundary"),
+        (SEMANTIC_CASE, "semantic-integrity-separation"),
+        (RECOVERY_CASE, "recovery-current-precedence"),
+    ],
+)
+def test_probe_redesign_fixtures_have_closed_generic_contract(path, case_id):
+    case = yaml.safe_load(path.read_text(encoding="utf-8"))
+    assert set(case) == {
+        "schema_version",
+        "case_id",
+        "decision_point",
+        "domain_note",
+        "facts",
+        "allowed_actions",
+        "forbidden_actions",
+        "claim_ceiling",
+    }
+    assert case["schema_version"] == 1
+    assert case["case_id"] == case_id
+    assert case["claim_ceiling"]["level"] == "DIAGNOSTIC"
+    assert set(case["allowed_actions"]).isdisjoint(case["forbidden_actions"])
+    text = path.read_text(encoding="utf-8").lower()
+    for forbidden in ("dual-pol", "osl", "cma", "16qam", "projects/", ".sessions/"):
+        assert forbidden not in text
+
+
 def test_cross_output_scorer_distinguishes_real_red_and_fresh_green():
     scorer = _load_cross_output_scorer()
     run_root = FORWARD / "runs" / "cross-output-portfolio-fairness"
@@ -178,6 +221,46 @@ def test_pragmatic_baseline_scorer_distinguishes_red_and_green():
     assert not red["checks"]["pragmatic_stop"]
     assert green["checks"]["pragmatic_stop"]
     assert green["checks"]["portfolio_continues"]
+
+
+def test_probe_recovery_runs_store_blind_prompt_and_verbatim_response():
+    run_names = (
+        ("probe-cost-boundary", "round-red.md"),
+        ("probe-cost-boundary", "round-green.md"),
+        ("semantic-integrity-separation", "round-red.md"),
+        ("semantic-integrity-separation", "round-green.md"),
+        ("recovery-current-precedence", "round-green.md"),
+    )
+    for case_id, filename in run_names:
+        text = (FORWARD / "runs" / case_id / filename).read_text(encoding="utf-8")
+        assert "## Blind prompt" in text
+        assert "## Raw response" in text
+        raw = text.split("## Raw response", 1)[1].split("## Behavior scorer output", 1)[0]
+        assert len(raw.encode("utf-8")) >= 900
+        assert "Verdict: PASS" not in raw
+
+
+def test_probe_recovery_behavior_scorer_distinguishes_red_and_green():
+    scorer = _load_probe_recovery_scorer()
+    probe_root = FORWARD / "runs" / "probe-cost-boundary"
+    semantic_root = FORWARD / "runs" / "semantic-integrity-separation"
+    recovery_root = FORWARD / "runs" / "recovery-current-precedence"
+
+    assert scorer.score_response("probe-cost-boundary", probe_root / "round-red.md")[
+        "verdict"
+    ] == "FAIL"
+    assert scorer.score_response("probe-cost-boundary", probe_root / "round-green.md")[
+        "verdict"
+    ] == "PASS"
+    assert scorer.score_response(
+        "semantic-integrity-separation", semantic_root / "round-red.md"
+    )["verdict"] == "FAIL"
+    assert scorer.score_response(
+        "semantic-integrity-separation", semantic_root / "round-green.md"
+    )["verdict"] == "PASS"
+    assert scorer.score_response(
+        "recovery-current-precedence", recovery_root / "round-green.md"
+    )["verdict"] == "PASS"
 
 
 def test_scorer_marks_a_clear_pass_response(tmp_path):
