@@ -523,3 +523,69 @@ SOP 旋转在 256-symbol eval window 上仅 **0.06°**（`theta = sop_rate·aran
 ridge probe 拟合权重 + prefix-feature 向量未存 artifact（只有 cma_diverged/pi_ser/fixed_label_ser/pred_rot 标量），故 g1 无法对真 persistence/AR(1) baseline 独立核验；per-sample h/theta 未存，0.06° 从信道模型+sop_rate 推导非数据直接验证。**这两项债务建议加入下一 Probe 的 raw-rows 字段。**
 
 
+---
+
+## V012: SCIENCE_FREEZE 收口 stale current views + protected byte-identity 独立终验
+
+> date: 2026-07-22
+> 关联：S014 / D022 / H015
+> verifier: 独立 general-purpose 子 agent（P6 separation，与本轮实施不同上下文；对抗性复核非确认）
+
+### 验证问题
+
+D022 SCIENCE_FREEZE 收口是否真正落地：(1) 所有 stale current views 不再把 D020 F1/F3 写成当前 PASS；(2) H013 不再是 latest recovery；(3) F1-B 不再是 active thesis spine；(4) F2 未被创建为新平行 Scout；(5) Pilot-Jones 状态来自真实 S/D/V 文件而非 master-state 摘要联想；(6) protected 文件 byte-identical；(7) 无科学实验或代码变更。
+
+### 验证项
+
+- [x] 项1：F1/F3 不再 PASS → 读 `state/current.yaml` effective_conclusions
+- [x] 项2：H013 不再是 latest recovery → 读 state/portfolio/harvest recovery_entry
+- [x] 项3：F1-B 不再是 active spine → 读 `harvest/current.yaml` current_valid_spines + current_active
+- [x] 项4：无新 F2 Scout → find scout/ 新目录 + portfolio SPARSE_PILOT_SEMIBLIND status
+- [x] 项5：Pilot-Jones 状态来自真实 S/D/V → 读 dual-pol-osl-groundwork verifications.md V030/V028/V029
+- [x] 项6：protected byte-identical → git status + md5sum STATUS.v1.md / project.v1.yaml / canonical-state.yaml
+- [x] 项7：无科学实验/代码变更 → git diff --stat HEAD
+
+### 证据
+
+**项1（F1/F3 不再 PASS）— PASS**
+- `state/current.yaml:146` `validity: INVALIDATED_AS_PROBE_CONCLUSION  # was VALID; D021/D022 retraction governs`（F1A）
+- `state/current.yaml:159` `validity: INVALIDATED_AS_CONDITIONAL_MI  # was VALID; D021/D022 retraction governs`（F3A）
+- `state/current.yaml:221` `mode: SCIENCE_FREEZE`（非 await_user_investment_decision；不描述 F1-A PASS / F1-B 正面候选）
+
+**项2（H013 非 latest recovery）— PASS**
+- `state/current.yaml:16` `last_recovery_entry: H015-pilot-jones-step35-4a-verdict.md`
+- `portfolio/current.yaml:12` `recovery_entry: H015-pilot-jones-step35-4a-verdict.md`
+- `harvest/current.yaml:214` `recovery_entry: H015-pilot-jones-step35-4a-verdict.md`
+
+**项3（F1-B 非 active spine）— PASS**
+- `harvest/current.yaml:365-366` PRIMARY F1-B `status: withdrawn (was probe-passed-pending-infra)`，paper_value `NONE as main method`
+- `harvest/current.yaml:375` F3-B `status: withdrawn (was probe-passed-secondary)`
+- current_active（270-310）无 F1A_..._POSITIVE_SIGNAL / F3A_..._INCREMENT 且 status:active
+
+**项4（无新 F2 Scout）— PASS**
+- `find scout/ -iname '*F2*'` 空；`git diff --stat HEAD` 无 scout/ 路径改动
+- `portfolio/current.yaml:119` `status: MERGED_INTO_PILOT_JONES_NO_PARALLEL_SCOUT`
+
+**项5（Pilot-Jones 状态来自真实 S/D/V）— PASS**
+- V030（dual-pol-osl-groundwork `verifications.md:782`）= "P03 residual-headroom Scout 最终独立终验"，关联 S075/D057（P03 artifacts）→ V030 属 P03 非 Pilot-Jones
+- V028（`:690-691`）`PARTIAL … 不能把 Step3.5 标为完成，也不能直接进入 Step4a`
+- V029（`:794-795`）`PARTIAL … Step3.5 目前不能按正常 PASS 门控进入 Step4a` → 均封锁 Step 4a
+
+**项6（protected byte-identical）— PASS**
+- `git status --short` on STATUS.v1.md / project.v1.yaml / canonical-state.yaml → 空（未改）
+- MD5：`STATUS.v1.md 3964df216c9f886ac77446a5779e5790`（= 实施前基准）/ `project.v1.yaml 287ebe83690ffbe1c894a789ee3e0c2f`（= 基准）/ `canonical-state.yaml 66ded2964bcf5ceb1a2abe24065c4476`
+- `git diff --stat HEAD` 改动文件 = decisions.md / topic-index.md / voice.md / _registry.yaml / harvest/current.yaml / portfolio/current.yaml / state/current.yaml（7 tracked）+ H015 / S014（2 untracked）+ 本 V012（verifications.md）。无代码/sim/testbed 文件。
+
+**项7（无科学实验/代码变更）— PASS**
+- `git diff --stat HEAD` 无 scout/ 源码、无 .py/sim/tracker/pilot/ML/testbed/test 文件；全部为 YAML state + session docs。
+
+### 结论
+
+**PASS**（7/7 项全 PASS，0 缺陷）。
+
+### 后续（FAIL/PARTIAL 时）
+
+无 FAIL/PARTIAL。本 V012 是本轮（S014/D022）的独立终验记录，存档于 science-scout 专题 verifications.md（与本专题 V001-V011 编号连续）。
+
+> 注：dual-pol-osl-groundwork 专题另有一个同名 V012（"Clip stress 1M fallback"，行 368），属不同专题的独立编号体系，不冲突。
+

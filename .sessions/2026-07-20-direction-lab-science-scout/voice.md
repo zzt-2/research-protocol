@@ -192,3 +192,8 @@
 > "验证必须分两种角色：1. integrity verifier；2. scientific critic。两者都要形成独立、可定位的报告文件，不能只在 verifications.md 中写一句 agent 已检查。" → V010, V011
 > "不再修改 campaign contract 中声明 protected 的 STATUS.v1.md；不静默修改 project.v1.yaml/STATUS 的 controller ownership 冲突，只记录并报告。" → D021 (gap #10/#11)
 > "做一次确定性数字 grep，保证 artifact、synthesis、D、V、Handoff、current projection 数字一致；全轮一次 commit，不 push；最终返回 changed files、测试命令与结果、独立审查结论、commit SHA。" → S013 §收尾
+
+## 2026-07-22（S014 / SCIENCE_FREEZE）
+
+- "经过了这么多轮，咱们是不是该整体想想？" → D022
+

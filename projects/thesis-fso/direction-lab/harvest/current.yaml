@@ -211,8 +211,8 @@ historical_thesis_spines_e15ae60:
 # H060_PRIMARY spine above, until a legal-expert retest (Macro A) resolves it.
 # ─────────────────────────────────────────────────────────────────────────────
 current_view:
-  recovery_entry: H013-info-source-probe-complete-f1b-decision.md
-  source: S012-info-source-portfolio-probe.md / D020 / V009 / D017 / D018 / V006 / V007 / D019 / H012
+  recovery_entry: H015-pilot-jones-step35-4a-verdict.md
+  source: S013 / D021 / V010 / V011 / H014 -> FROZEN S014 / D022 / V012 / H015 (SCIENCE_FREEZE). Prior S012/D020/V009 superseded.
 
   dispositions:
     - id: H060_DOWNGRADED
@@ -319,28 +319,33 @@ current_view:
       evidence: C12/C16 source trees / D017
       status: active_with_caveats
 
-    - id: F1A_MODEL_PRIOR_HEADROOM_POSITIVE_SIGNAL
+    - id: F1A_MODEL_PRIOR_HEADROOM_RETRACTED
       category: EVALUATION_INSIGHT
       finding: >-
-        FIRST positive-method signal of the campaign: scoring-only model-prior oracle (true per-block
-        Jones from h/theta -> per-block MMSE) closes macro PI-SER headroom = 0.1329 (CI [+0.078,+0.196])
-        over fixed-mu CMA, 36x the D018 blind-router bound. Receiver-visible observability strong
-        (max |r|=0.651). Model priors are a DIFFERENT information source than swapped blind costs.
-      ceiling: HEADROOM_BOUND_LOCAL_SLICE
-      evidence: S012 / D020 / V009 / info-source-portfolio-probe F1-A-result.v1.json
-      thesis_destination: primary method candidate (F1-B model-based tracker Scout, pending user infra decision)
-      status: active
+        RETRACTED as a positive-method signal (D021/D022). The S012/D020 "first positive-method signal:
+        model-prior oracle headroom 0.1329 + observability |r|=0.651" is INVALIDATED as a Probe
+        conclusion: the oracle used privileged CSI (true h/theta) + TX-truth LS calibration
+        (PRIVILEGED_CSI_PLUS_TX_CALIBRATION_GENIE_GAP); observability features read the full trace
+        (future blocks); the task comparator blind_affine_compare_16qam was never invoked; F1-A0
+        strict-causal repair Probe FAILED (g0 binomial p~0.38). NOT a primary method candidate.
+        F1 = TESTBED_BLOCKED (rotation 0.06 deg makes the testbed near-vacuous for the F1 family).
+      ceiling: HEADROOM_BOUND_LOCAL_SLICE (but scientifically INVALID as a tracker headroom)
+      evidence: S012 / D020 / V009 (history) -> AMENDED by S013 / D021 / V010 / V011 / D022
+      thesis_destination: NOT a primary method candidate. Retained as methodology lesson (genie-gap
+        attribution) for thesis evaluation / threats-to-validity section.
+      status: retracted_not_active
 
-    - id: F3A_HISTORY_INFORMATION_INCREMENT
+    - id: F3A_HISTORY_INFORMATION_INCREMENT_RETRACTED
       category: EVALUATION_INSIGHT
       finding: >-
-        Past-block CMA trace statistics add conditional information (MI increment +0.060 bits over
-        block-0-only; R^2 increment +0.036, best=cm_error_trend). History genuinely adds information;
-        secondary signal suitable as F1-B sub-component.
-      ceiling: OBSERVABILITY_LOCAL_SLICE
-      evidence: S012 / D020 / V009 / F3-A-result.v1.json
-      thesis_destination: secondary method material
-      status: active
+        RETRACTED as conditional-MI (D021/D022). The S012/D020 "history adds conditional information
+        (MI +0.060 bits)" was a marginal-MI max-difference (run_f3a_history.py:195-196), NOT a
+        conditional MI. F3-B is NOT a justified secondary component. F3 = UNRESOLVED (open, no valid
+        Probe conclusion). NOT a secondary-method signal.
+      ceiling: OBSERVABILITY_LOCAL_SLICE (but scientifically INVALID as conditional-MI)
+      evidence: S012 / D020 / V009 (history) -> AMENDED by S013 / D021 / D022
+      thesis_destination: NOT secondary method material. Retained as history only.
+      status: retracted_not_active
 
     - id: F4A_SOFT_GMI_SCALE_ARTIFACT_AND_BOUNDARY
       category: FAILURE_MECHANISM
@@ -356,36 +361,45 @@ current_view:
 
   current_valid_spines:
     - spine: >-
-        PRIMARY (positive-method candidate, pending Scout): F1-B dual-pol GG/SOP model-based
-        tracker -> MMSE. F1-A Probe confirmed headroom 0.133 + observability 0.65. This is the
-        first candidate in the campaign with legal headroom AND receiver-visible observability.
-        Needs ~1 day infrastructure (user decision); Go must beat fixed-mu CMA + blind_affine_compare.
-      status: probe-passed; bounded Scout authorized to consider; awaiting user infra decision
-      ceiling: LOCAL_SLICE (Scout) -> potential DOMAIN if F1-B beats fair comparators
-      paper_value: PRIMARY (if F1-B Scout passes)
+        WITHDRAWN (was PRIMARY): F1-B dual-pol GG/SOP model-based tracker -> MMSE. The F1-A Probe
+        "headroom 0.133 + observability 0.65" is INVALIDATED (D021/D022: privileged CSI + TX-truth
+        genie gap; F1-A0 strict-causal repair FAILED). F1 = TESTBED_BLOCKED. NOT a primary method
+        candidate; no main-method spine.
+      status: withdrawn (was probe-passed-pending-infra)
+      ceiling: LOCAL_SLICE (but INVALID as a tracker headroom)
+      paper_value: NONE as main method; methodology lesson (genie attribution) only
 
     - spine: >-
-        SECONDARY (history-augmented tracker): F3-B multi-block KF using GG AR(1) continuity as a
-        sub-component of F1-B. F3-A confirmed +0.060 bits MI increment from history.
-      status: probe-passed secondary; HALF_DAY sub-component
+        WITHDRAWN (was SECONDARY): F3-B multi-block KF using GG AR(1) continuity as a sub-component
+        of F1-B. The F3-A "conditional-MI +0.060 bits" is INVALIDATED (marginal-MI max-difference,
+        not conditional MI). F3 = UNRESOLVED. NOT a secondary method spine.
+      status: withdrawn (was probe-passed-secondary)
+      ceiling: LOCAL_SLICE (but INVALID as conditional-MI)
+      paper_value: NONE
+
+    - spine: >-
+        LOCAL-NEGATIVE / limitations material (ONLY currently-valid harvest contribution): several
+        exact blind-receiver modifications fail locally (C11 no benefit +0.01445; blind_affine
+        harmful; D018 hybrid-routing oracle headroom 0.0037), with D017/D018 documenting task
+        mismatch, correlated failure, and the C12 scale-artifact. This is LOCAL_SLICE negative
+        material ONLY — NOT a full negative boundary paper (H060 global 5-axis claim INVALIDATED
+        by D017). Destination = thesis limitations / boundary-analysis / methodology chapter.
+      status: evidence-backed local-negative + methodology lesson; insufficient as a main contribution
       ceiling: LOCAL_SLICE
-      paper_value: SECONDARY
+      paper_value: SECONDARY (limitations / threats-to-validity / evaluation methodology)
 
     - spine: >-
-        Boundary/diagnostic chapter: several exact blind-receiver modifications
-        fail locally, with D017/D018 documenting task mismatch and correlated failure.
-      status: evidence-backed but insufficient as a main method contribution
-      ceiling: LOCAL_SLICE
-      paper_value: SECONDARY
-
-    - spine: >-
-        METHODOLOGY (negative material): F4-A decoder/soft family — scale-invariant histogram-MI
-        cannot be an upper bound (C12 artifact reproduced); per-symbol correction is smoothing-fragile.
-        D017/D018 task-mismatch + correlated-failure diagnostics.
+        METHODOLOGY / threats-to-validity material (ONLY currently-valid harvest contribution):
+        F4-A decoder/soft family — scale-invariant histogram-MI cannot be an upper bound (C12 artifact
+        reproduced); per-symbol correction is smoothing-fragile. D017/D018 task-mismatch +
+        correlated-failure + D021 genie-attribution diagnostics. F4 = INFRASTRUCTURE_BLOCKED (coded chain).
       status: boundary material; F4-B blocked on coded chain
       ceiling: LOCAL_SLICE
       paper_value: SECONDARY (limitations / threats-to-validity)
 
   next_action: >-
-    D020: present F1-B investment decision to user (recommended A). Info-source Probes complete.
-    Do NOT auto-build tracker / coded chain / pilot infrastructure this round.
+    D022 (SCIENCE_FREEZE): SCIENCE_SCOUT candidate rotation PAUSED (topic dormant). NO legal
+    main-method signal; NO active thesis spine. Local-negative + methodology-lesson material ->
+    harvest/limitations ONLY; NOT a full negative paper. F1/F3 spines WITHDRAWN. F4 BOUNDARY kept as
+    limitations material. Next authoritative work = Pilot-Jones Step 3.5 terminal review + Step 4a
+    prerequisites (see H015). Do NOT resume Scout or build tracker/coded-chain/pilot/testbed.

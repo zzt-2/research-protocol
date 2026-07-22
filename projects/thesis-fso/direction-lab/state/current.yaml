@@ -1,16 +1,27 @@
 # state/current.yaml — sole machine current view
-# Rebuilt 2026-07-22 from S012 / D020 / V009; AMENDED 2026-07-22 S013 / D021 / V010 / V011
-# (F1-A0 strict-causal repair Probe FAILED; F1-B tracker NOT authorized. Next: F2 collision check.)
+# Rebuilt 2026-07-22 from S012 / D020 / V009; AMENDED 2026-07-22 S013 / D021 / V010 / V011;
+# FROZEN 2026-07-22 S014 / D022 / V012 / H015 (SCIENCE_FREEZE + campaign-level reconciliation).
+# Campaign-level verdict (D022): SCIENCE_SCOUT candidate rotation PAUSED (topic dormant).
+# NO legal main-method signal. F1=TESTBED_BLOCKED / F3=UNRESOLVED / F4=INFRASTRUCTURE_BLOCKED.
+# F2 pilot lineage merges into existing Pilot-Jones formal Groundwork (no parallel Scout).
+# Negative material -> harvest/limitations only; NOT a full negative paper.
+# Next authoritative work = Pilot-Jones Step 3.5 terminal review + Step 4a (see H015).
 # Explicit disposition lineage governs; protected history untouched.
+# Role of protected files (recorded here, NOT edited): STATUS.v1.md = STALE_PROTECTED
+# (not the current scientific-fact source); project.v1.yaml = historical read-only-preview
+# adapter (not the current authorized owner). Current trusted fact source = this file + D022/H015.
 
 schema_version: research-direction-lab.state.current.v1
 project_id: thesis-fso.dual-pol-osl.direction-lab
-last_recovery_entry: H014-f1a0-repair-fail-f2-next.md
+last_recovery_entry: H015-pilot-jones-step35-4a-verdict.md
 
 formal_goal: >-
   Systematically identify whether machine learning provides a real, legally
   comparable information increment anywhere in the complete dual-polarization
   ground-to-satellite OSL receiver chain.
+  NOTE (D022): this goal is RETAINED as an upper-layer screening target only; it is
+  NO LONGER a directly-executable research question. Executable research questions must
+  emerge from formal Groundwork Step 3 close-read + Step 4a dimension A0 only.
 
 authorization:
   current_mode: SCIENCE_SCOUT
@@ -121,24 +132,28 @@ effective_conclusions:  # reflect S011/D017/V006 reconciliation (e15ae60 invalid
 
   - id: F1A_MODEL_PRIOR_ORACLE_HEADROOM
     statement: >-
-      On 11 cells x 10 fresh disjoint test seeds [141-150], a scoring-only model-prior oracle
-      (true per-block Jones from h/theta -> per-block MMSE with TX-truth calibration) closes
-      macro PI-SER headroom = 0.1329 (CI [+0.078,+0.196]) over fixed-mu CMA mu=0.03. This is
-      36x the D018 blind-router bound (0.0037) because model priors are a DIFFERENT information
-      source, not a swapped blind cost. Receiver-visible observability is strong: max |r|=0.651
-      between CMA trace features (z_amp_mean, cm_error_final) and per-realization headroom.
-    ceiling: HEADROOM_BOUND_LOCAL_SLICE
-    source: S012 / D020 / V009 / info-source-portfolio-probe F1-A-result.v1.json
-    validity: VALID
+      INVALIDATED_AS_VALID-PROBE-CONCLUSION (D021/D022). Original S012/D020 reading "scoring-only
+      model-prior oracle closes macro PI-SER headroom = 0.1329 (CI [+0.078,+0.196]) over fixed-mu
+      CMA mu=0.03" is RETRACTED as a valid Probe conclusion: the oracle simultaneously used true h/theta
+      CSI AND TX-truth LS calibration (PRIVILEGED_CSI_PLUS_TX_CALIBRATION_GENIE_GAP); observability
+      features read the full trace (future blocks); target was the post-hoc headroom residual; the
+      task comparator blind_affine_compare_16qam was never invoked; no fixed-label/raw rows saved.
+      F1-A0 strict-causal repair Probe FAILED (g0: 8 help/13 hurt, binomial p~0.38). The 0.133 number
+      is retained as history but is NOT a main-method Go signal or a deployable-tracker headroom bound.
+    ceiling: HEADROOM_BOUND_LOCAL_SLICE  # but scientifically INVALID as a tracker headroom
+    source: S012 / D020 / V009 (history) -> AMENDED by S013 / D021 / V010 / V011
+    validity: INVALIDATED_AS_PROBE_CONCLUSION  # was VALID; D021/D022 retraction governs
 
   - id: F3A_HISTORY_INFORMATION_INCREMENT
     statement: >-
-      Past-block CMA trace statistics add CONDITIONAL information about collapse (MI increment
-      +0.060 bits over block-0-only) and pi_ser (R^2 increment +0.036, best feature cm_error_trend).
-      History genuinely adds information (not an RNN assumption); but the increment is small (secondary).
-    ceiling: OBSERVABILITY_LOCAL_SLICE
-    source: S012 / D020 / V009 / info-source-portfolio-probe F3-A-result.v1.json
-    validity: VALID
+      INVALIDATED_AS_CONDITIONAL-MI (D021/D022). Original S012/D020 reading "history adds CONDITIONAL
+      information (MI increment +0.060 bits)" is RETRACTED: run_f3a_history.py:195-196 computed a
+      marginal-MI max-difference (max_mi_history - max_mi_block0), NOT a conditional MI (no conditioning
+      on block-0 features). "History adds conditional information" does not hold. F3-B is NOT a justified
+      secondary component. Numbers retained as history only.
+    ceiling: OBSERVABILITY_LOCAL_SLICE  # but scientifically INVALID as conditional-MI
+    source: S012 / D020 / V009 (history) -> AMENDED by S013 / D021
+    validity: INVALIDATED_AS_CONDITIONAL_MI  # was VALID; D021/D022 retraction governs
 
   - id: F4A_SOFT_GMI_BOUNDARY_SCALE_ARTIFACT_CONFIRMED
     statement: >-
@@ -203,12 +218,16 @@ dispositions:
     reason: reused across >=6 batches (c04/c09/c14/c15/c16/corrector + c12 subset)
 
 next_action:
-  mode: await_user_investment_decision
+  mode: SCIENCE_FREEZE
   description: >-
-    D020 info-source Probe complete. F1-A model-prior PASS (headroom 0.133 + observability 0.65)
-    makes F1-B (dual-pol GG/SOP model-based tracker -> MMSE) the first positive-method candidate
-    with legal headroom + observability. But F1-B needs ~1 day infrastructure (existing _kf.py is
-    single-pol pilot-based, not reusable; CB3 warns of silent Y-drop). Per prompt section 6, the
-    strongest candidate needing ~1 day infrastructure is NOT auto-built; present the A/B/C/D
-    investment choice to the user. Recommended: A = F1-B bounded Scout. Do NOT auto-build tracker /
-    coded chain / pilot infrastructure this round.
+    D022 campaign-level verdict: SCIENCE_SCOUT candidate rotation PAUSED (topic dormant).
+    NO legal main-method signal. F1=TESTBED_BLOCKED, F3=UNRESOLVED, F4=INFRASTRUCTURE_BLOCKED.
+    F2 pilot lineage merges into existing Pilot-Jones formal Groundwork (no parallel Scout; F2
+    collision check NOT run this round). Negative material -> harvest/limitations only, NOT a full
+    negative paper. F1 testbed rebuild NOT authorized. No new F2 Scout. No new tracker/pilot/ML/testbed.
+    Next authoritative work = Pilot-Jones Step 3.5 terminal review + Step 4a prerequisites (see H015):
+    the master-state.md:96 "待V030" pointer is STALE (V030 = P03, not Pilot-Jones); Pilot-Jones
+    Step 3.5 has V028/V029 both PARTIAL explicitly blocking Step 4a, and is missing an independent
+    terminal verification of the backward citation chain + 4 direct-competitor full reads (OE2021
+    done; JLT2022-23/TCOMM2025/LCOMM2026 abstract-only). Do NOT resume Scout until a formal
+    candidate explicitly needs a new Scout.

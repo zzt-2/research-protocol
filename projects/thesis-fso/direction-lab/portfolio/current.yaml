@@ -1,12 +1,15 @@
-# portfolio/current.yaml — reconciled 2026-07-22 after S012/D020/V009; AMENDED 2026-07-22 S013/D021/V010/V011
-# Info-source Probe: F1-A/F3-A "PASS" AMENDED -> F1-A0 strict-causal repair Probe FAILED (D021/V010/V011).
-# F1-B model-based tracker is NOT authorized; insufficient evidence. Next: F2 collision check or harvest.
+# portfolio/current.yaml — reconciled 2026-07-22 after S012/D020/V009; AMENDED 2026-07-22 S013/D021/V010/V011;
+# FROZEN 2026-07-22 S014/D022/V012/H015 (SCIENCE_FREEZE + campaign-level reconciliation).
+# Campaign-level verdict (D022): SCIENCE_SCOUT candidate rotation PAUSED (topic dormant).
+# NO legal main-method signal. F1=TESTBED_BLOCKED / F3=UNRESOLVED / F4=INFRASTRUCTURE_BLOCKED.
+# F2 pilot lineage merges into existing Pilot-Jones formal Groundwork (no parallel Scout; F2 NOT run).
+# Duplicate contradictory F2/F3 entries (stale S012/D020 copies) removed; each entity now has ONE status.
 # (Original S012/D020 reading preserved inline as historical notes; current authoritative status below.)
 
 schema_version: research-direction-lab.portfolio.current.v1
 project_id: thesis-fso.dual-pol-osl.direction-lab
 completeness_claim: OPEN_PORTFOLIO_NO_COMPLETENESS_CLAIM
-recovery_entry: H014-f1a0-repair-fail-f2-next.md
+recovery_entry: H015-pilot-jones-step35-4a-verdict.md
 
 candidates:
   # ── Cluster 1-2: Failure observability (CEILINGED) ──
@@ -113,58 +116,44 @@ remaining_open:
   - id: SPARSE_PILOT_SEMIBLIND
     label: sparse-pilot or adaptive-pilot state information
     dimension: explicit_reference_information
-    status: NEXT_CANDIDATE_NEEDS_COLLISION_CHECK   # S013/D021: F1-A0 FAIL -> next recommendation = F2 collision check
+    status: MERGED_INTO_PILOT_JONES_NO_PARALLEL_SCOUT   # D022: F2 lineage merges into existing Pilot-Jones formal GW; F2 collision check NOT run
     note: >-
-      AMENDED 2026-07-22 (S013). Promoted to the next candidate after F1-A0 FAIL. Distinct from
-      reviving the old fixed pilot-to-Jones-to-inverse mechanism only if it changes overhead,
-      scheduling, causal state estimation, or recovery. MUST run literature collision check
-      (JLT2023/OE2021/LCOMM2026/TCOMM2025/JLT2022-23) before any F2-A Probe (D006/p03 COLLISION).
+      FROZEN 2026-07-22 (D022). F2 pilot lineage is the SAME family as the already-collided generic
+      pilot->Jones (D055/S066). D022 merges it into the existing Pilot-Jones formal Groundwork chain
+      (dual-pol-osl-groundwork topic). NO new parallel F2 Scout or collision-check chain is created.
+      Any pilot/Jones-state-estimation direction is pursued via Pilot-Jones Step 3.5 terminal + Step 4a,
+      NOT via a new Scout. F2 collision check was NOT run this round (SCIENCE_FREEZE).
   - id: TEMPORAL_MODEL_HISTORY
     label: multi-block causal state continuity / prediction
     dimension: temporal_information
-    status: PROBE_RETRACTED_NOT_CONDITIONAL_MI   # S013/D021: F3-A was marginal-MI max-difference, not conditional MI
+    status: UNRESOLVED   # D022: F3 family open but no valid Probe conclusion; F3-A was marginal-MI not conditional-MI
     note: >-
-      AMENDED 2026-07-22 (S013/D021 gap #4). The S012/D020 "F3-A PASS, +0.060 bits conditional MI"
-      is RETRACTED: run_f3a_history.py:195-196 computed mi_increment = max_mi_history -
-      max_mi_block0, which is a marginal-MI max-difference, NOT a conditional MI (no
-      conditioning on block-0 features). "History adds conditional information" does not hold.
-      F3-B is NOT a justified secondary component. (Historical numbers retained.)
-  - id: SPARSE_PILOT_SEMIBLIND
-    label: sparse-pilot or adaptive-pilot state information
-    dimension: explicit_reference_information
-    status: IDENTIFIED_NEEDS_DEDUP_AND_HEADROOM_PROBE
-    note: >-
-      Distinct from reviving the old fixed pilot-to-Jones-to-inverse mechanism only
-      if it changes overhead, scheduling, causal state estimation, or recovery.
-  - id: TEMPORAL_MODEL_HISTORY
-    label: multi-block causal state continuity / prediction
-    dimension: temporal_information
-    status: PROBE_PASS_SECONDARY_SIGNAL   # S012/D020: F3-A MI increment +0.060 bits, R^2 increment +0.036
-    note: >-
-      F3-A Probe PASS (secondary): past-block CMA trace statistics add conditional information
-      (MI increment +0.060 bits over block-0-only; R^2 increment +0.036, best=cm_error_trend).
-      History genuinely adds information (not an RNN assumption); increment small. F3-B multi-block
-      KF (using GG AR(1) rho~0.99997) is a HALF_DAY secondary component for F1-B; not standalone main.
+      FROZEN 2026-07-22 (D022). F3-A "conditional-MI PASS" RETRACTED (D021): run_f3a_history.py:195-196
+      was a marginal-MI max-difference, not conditional MI. F3-B is NOT a justified secondary component.
+      Family UNRESOLVED (open) but no valid Probe conclusion; not a main-method signal. Historical
+      numbers (+0.060 bits, +0.036 R^2) retained as history only.
   - id: DECODER_FEEDBACK_SOFT
     label: decoder/CRC/soft-output feedback to the front end
     dimension: cross_layer_information
-    status: PROBE_BOUNDARY_DO_NOT_BUILD   # S012/D020 + S013/D021 confirmed: F4-A analytic GMI +0.0089 smoothing-fragile; F4-B coded-chain BLOCKED
+    status: INFRASTRUCTURE_BLOCKED   # D022: F4 family open but F4-B coded-chain BLOCKED
     note: >-
       F4-A Probe BOUNDARY: corrected per-symbol sigma^2 oracle shows only +0.0089 bits/sym analytic
       GMI headroom (smoothing-fragile, verifier P1; sm=2/8/32 = +0.033/+0.009/+0.002). Histogram-MI
       fully reproduces C12 scale-artifact (-0.021, scale-invariant). F4-B coded-receiver loop needs
-      coded chain (INFRASTRUCTURE_BLOCKED, no FEC chain exists). Do NOT build F4-B without coded chain
-      + smoothing-window fix. Valid as boundary/negative material + methodology lesson.
-      (S013/D021 status unchanged; F4 was not the target of the F1-A0 repair.)
+      coded chain (INFRASTRUCTURE_BLOCKED, no FEC chain exists). Valid as boundary/negative material +
+      methodology lesson only. Family open but blocked on coded chain.
   - id: C03_C07_REINIT
     label: learned/threshold reinit controller
     status: INFRASTRUCTURE_BLOCKED
     note: needs action hook; co-blocked
 
 next_action: >-
-  D021/S013: F1-A0 strict-causal repair Probe FAILED; F1-B tracker NOT authorized (insufficient
-  evidence). Present the F2 collision-check decision to the user: (a) F2 pilot collision check
-  (JLT2023/OE2021/LCOMM2026/TCOMM2025/JLT2022-23) before any F2-A Probe; or (b) pivot to
-  harvest/negative-boundary paper; or (c) if F1 family is ever retested, first rebuild the test
-  bed (high-SOP-rate atlas + mu-tuned CMA + raw-stream blind_affine + persistence/AR(1) baseline).
-  Do NOT auto-build tracker / coded chain / pilot infrastructure.
+  D022 (SCIENCE_FREEZE): SCIENCE_SCOUT candidate rotation PAUSED (topic dormant). NO legal
+  main-method signal. F1=TESTBED_BLOCKED, F3=UNRESOLVED, F4=INFRASTRUCTURE_BLOCKED. F2 pilot lineage
+  merged into existing Pilot-Jones formal Groundwork (no parallel Scout; F2 collision check NOT run).
+  Negative material -> harvest/limitations only; NOT a full negative paper. F1 testbed rebuild NOT
+  authorized. Next authoritative work = Pilot-Jones Step 3.5 terminal review + Step 4a prerequisites
+  (see H015): master-state.md:96 "待V030" is STALE (V030=P03, not Pilot-Jones); Pilot-Jones Step 3.5
+  V028/V029 both PARTIAL blocking Step 4a; missing independent terminal verification of backward
+  citation chain + 4 direct-competitor full reads (OE2021 done; JLT2022-23/TCOMM2025/LCOMM2026
+  abstract-only). Do NOT resume Scout until a formal candidate explicitly needs a new Scout.

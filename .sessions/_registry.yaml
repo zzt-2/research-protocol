@@ -591,10 +591,10 @@ topics:
 
   - slug: 2026-07-20-direction-lab-science-scout
     title: Direction Lab 首轮 SCIENCE_SCOUT 正式科学探索
-    status: active
+    status: dormant
     created: "2026-07-20"
     last_updated: "2026-07-22"
-    description: "首轮正式 SCIENCE_SCOUT campaign。S012/D020 信息来源组合级 Probe 完成：F1-A model-prior PASS（headroom 0.133 + observability 0.65，D018 blind-router 的 36×）、F3-A history PASS（+0.060 MI 次级）、F4-A decoder-soft BOUNDARY（analytic GMI +0.0089 smoothing-fragile + histogram 复现 C12 scale-artifact + coded-chain BLOCKED）。F1-B（dual-pol GG/SOP model-based tracker）为首选 Scout，需用户授权约一天基建。F2 pilot 待撞车核查。独立 verifier V009 CONFIRM。"
+    description: "首轮正式 SCIENCE_SCOUT campaign，已 SCIENCE_FREEZE 收口置 dormant（S014/D022/V012/H015）。candidate rotation 暂停；当前无合法 main-method signal。F1-A0 严格因果修复 Probe FAILED（D021），S012/D020 的 F1-A/F3-A 'PASS' 解读撤回（F1 genie=CSI+TX-truth，observability 含未来 block，F3 非 conditional MI）。F1=TESTBED_BLOCKED（rotation 0.06° 使 testbed 对 F1 家族近空）/ F3=UNRESOLVED / F4=INFRASTRUCTURE_BLOCKED（coded chain）。F2 pilot lineage 合并入已有 Pilot-Jones 正式 Groundwork（dual-pol-osl-groundwork 专题），不建平行 Scout；F2 collision check 未执行。负面材料只进 harvest/limitations，不 pivot 完整负面论文（H060 全域 5 宣称已被 D017 invalidated）。下一权威工作 = Pilot-Jones Step 3.5 终审 + Step 4a（H015）。恢复条件：formal candidate 明确需要新 Scout 时。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 V007 PASS 的消费者部署（全局 Skill + STATUS + Project Adapter + protected history）作为科学探索起点

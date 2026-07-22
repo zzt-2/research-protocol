@@ -1000,3 +1000,60 @@ F1-A0 修复 Probe 执行完成（D021 授权）。**verdict = FAIL**（详见 `
 
 **债务（V011 标记，下一 Probe 须修）**：artifact 未存 ridge probe 拟合权重 + prefix-feature 向量 + per-sample h/theta，故 g1 无法对真 persistence/AR(1) 独立核验，0.06° 从模型推导非数据验证。
 
+## D022: SCIENCE_FREEZE — campaign-level 裁决：暂停 candidate rotation；回正式窄问题链（Pilot-Jones Step 3.5 终审 + 4a）
+
+> status: active
+> date: 2026-07-22
+> 取代：无（不 supersede D021；本 D022 是 D021 之后的 campaign-level 收口裁决，与 D017/D018/D019/D020/D021 并列）
+> 被取代：无
+> 依据: 用户原话: voice.md 2026-07-22（"经过了这么多轮，咱们是不是该整体想想？"）+ 对照: `projects/thesis-fso/master-state.md:66-102`（方法层重开轨表：Pilot-Jones Step 3.5 🔄 / Step 4a ⛔）+ 对照: `.sessions/2026-07-10-dual-pol-osl-groundwork/verifications.md:782`（V030 = P03 终验，非 Pilot-Jones）+ 对照: `.sessions/2026-07-10-dual-pol-osl-groundwork/verifications.md:639,743`（V028/V029 = Pilot-Jones Step 3.5 门控，均 PARTIAL，显式封锁 Step 4a）+ 验证: V012（本轮独立 verifier 复核所有 stale current views + protected byte-identity）
+
+### 决策
+
+**SCIENCE_SCOUT candidate rotation 暂停（campaign 收口，置 dormant）。** 逐条裁决如下（均来自用户执行提示词 §二）：
+
+1. **candidate rotation 暂停** — 不再按"候选 FAIL 后自动轮转到下一个 F 族"推进。该轮转机制在 D015 已被部分撤回，本 D022 正式冻结。
+2. **formal goal 降级为上层筛选目标** — "寻找合法 ML 信息增量"保留为 campaign 的上层筛选目标，但**不再充当可直接执行的研究问题**。可执行研究问题只能从正式 Groundwork 的 Step 3 精读 + Step 4a 维度 A0（"现有 M 在 C 下因 A 失效"）产出。
+3. **当前没有合法 main-method signal** — F1/F3/F4 均未产生可授权主方法的正面信号。这是本轮的**权威当前事实**，覆盖所有仍写 F1/F3 PASS 的 stale 字段。
+4. **F1/F3/F4 不关闭 family，分别标状态**：
+   - **F1（model-based tracker）= TESTBED_BLOCKED** — F1-A0 FAIL 的主导 confound 是 testbed 局限（SOP rotation 0.06° 使预测任务近空 + CMA μ 调债），非"model-prior 无价值"普适结论。family 开放但需 high-SOP-rate atlas 重建才能重测（本裁决不授权重建）。
+   - **F3（history information）= UNRESOLVED** — F3-A 是 marginal-MI max-difference 非 conditional MI（D021 gap #4）；"历史增加条件信息"不成立。family 开放但无有效 Probe 结论。
+   - **F4（decoder/soft feedback）= INFRASTRUCTURE_BLOCKED** — F4-B 需 coded chain，无 FEC chain 存在。
+5. **不授权 F1 testbed 重建** — 本裁决不投入 high-SOP-rate atlas / μ-tuned CMA / raw-stream blind_affine / persistence-AR(1) 重建。
+6. **不启动新 F2 Scout** — F2 pilot collision check **本轮不执行**（提示词明禁）。F2 不建立为新的平行 Scout 链。
+7. **F2 lineage 合并回 Pilot-Jones 正式 Groundwork** — F2 的"pilot-assisted Jones / state estimation"与已撞车的 generic pilot→Jones 是同一窄问题族。**不建立平行 collision-check 链**；任何 pilot/Jones 方向的推进归入已有 Pilot-Jones 正式 Groundwork 链（dual-pol-osl-groundwork 专题），不另起。
+8. **当前负面材料只进 harvest/limitations** — D017/D018/D021 的局部负面、评估洞察、可复用资产**不 pivot 为完整负面论文**。当前证据仅 LOCAL_SLICE，不足支撑完整负面 boundary characterization（H060 全域 5 宣称已被 D017 invalidated）。
+9. **Direction Lab campaign 收口设为 dormant** — 本专题（science-scout）置 `dormant`。等待"formal candidate 明确需要新的 Scout"时再恢复（即 Pilot-Jones Step 3.5/4a 闭合后，若其结论需要新的 Scout 支撑，才恢复）。
+
+### 理由
+
+- **campaign-level 反思触发**：用户原话"经过了这么多轮，咱们是不是该整体想想？"——science-scout campaign 自 2026-07-20 启动已跨 13 个 session（S001-S013），从 baseline adjudication → fairness batch → C11 legality → corrector → 混合路由 → 信息源 Probe → F1-A0 修复，每一步都在"找下一个候选"，但**没有产生任何一个合法 main-method Go signal**。这是结构性的，不是单点失败。
+- **底层问题**：campaign 的 anchor（11-cell 16QAM dual-pol OSL atlas × SOP rate 4e-6）在 F1 家族上是**弱测试 by construction**（SOP rotation 0.06° 使 state prediction 近空）。在 testbed 未重建前继续轮转候选，本质是在一个对多数信息源族都近空的 atlas 上反复确认"测不出"，产出的是 LOCAL_SLICE 局部负面而非方法贡献。
+- **Pilot-Jones 链的真实门控位置**：经 Explore agent 只读审计（S014 §四）确认，已有 Pilot-Jones 正式 Groundwork 链停在 **Step 3.5（🔄 in progress），V028/V029 均 PARTIAL 显式封锁 Step 4a**。master-state.md:96 的"待V030"是 **STALE 指针**——V030 实际是 P03 residual-headroom 终验（verifications.md:782），不是 Pilot-Jones 的。Pilot-Jones Step 3.5 缺一个真正独立的终审 V### + 4 个直接竞品（OE2021 已读，JLT2022-23/TCOMM2025/LCOMM2026 仅 abstract）的全文精读。
+- **回到正式窄问题**：generic pilot→Jones 已撞车（D055/S066）；剩余窄问题（M-C-A）= 传统 block/frame pilot Jones inversion（M）在 dual-pol OSL GG 湍流+高速 SOP+≤10% pilot budget（C）下 fixed-label 恢复不稳定（A）。这是唯一有正式 GW 证据链积累的方向，应优先把它的 Step 3.5/4a 门补齐，而非在 Scout campaign 里另起 F2 平行链。
+
+### 排除的替代方案
+
+- **不 pivot 为完整负面论文** — 当前负面仅 LOCAL_SLICE；H060 全域 5 宣称已被 D017 invalidated。把局部负面包装成完整负面论文违反"不把当前局部负面包装成完整负面论文"禁令，且证据不足。
+- **不继续自动轮转候选** — D015 已部分撤回轮转；本 D022 正式冻结。轮转机制在近空 atlas 上无产出。
+- **不建平行 F2 collision-check 链** — F2 pilot/Jones 与 generic pilot→Jones 同族；平行链违反"不建立平行 collision-check 链"。归入已有 Pilot-Jones 正式链。
+- **不授权 F1 testbed 重建** — 高成本（high-SOP-rate atlas + μ-tuned CMA + raw-stream blind_affine + persistence-AR(1)），且当前无明确方法贡献目标支撑该投资。
+- **不新开专题** — 收口在当前 science-scout 专题内完成（S014/D022/H015/V012），不另起。
+- **不新建 controller / registry schema / 平行状态系统** — 仅修正已有 current views，不增加新状态系统。
+
+### 可复用部分
+
+- **局部负面**（进 harvest/limitations）：C11 无收益（macro +0.01445）、blind_affine 局部有害、D018 hybrid-routing 局部负面（oracle headroom 0.0037）。
+- **评估洞察**（进 thesis 方法论/threats-to-validity）：D017 task-mismatch 伪互补、C12 scale-artifact 非 bound、F1 genie 归因纠偏方法论。
+- **可复用资产**（带 caveat）：GMI evaluator（c12）、HOS equalizer（c16，task-mismatched caveat）、Atlas gate、probe-contract.v1.yaml 框架（需补 blind_affine 调用 + raw rows + fixed-label）。
+
+### 影响范围
+
+- **修正非 protected current views**：state/current.yaml（invalidate F1/F3 VALID 解读 + next_action → SCIENCE_FREEZE）、portfolio/current.yaml（消解 F2/F3 同实体矛盾状态）、harvest/current.yaml（撤回 F1-B PRIMARY + F3 secondary spine）、topic-index.md（当前位置 → S014/D022/H015）、_registry.yaml（description 反映 D021/D022 + status dormant）。
+- **新增**：S014（campaign-level retrospective）、H015（交接 Pilot-Jones Step 3.5/4a 裁决材料）、V012（独立 verifier）。
+- **不修改 protected**：STATUS.v1.md、project.v1.yaml、canonical-state、历史 artifacts 字节不变（V012 复核 byte-identity）。在 D022/H015 中明确标记其角色：STATUS.v1.md = STALE_PROTECTED（不是当前科学事实源）；project.v1.yaml = historical read-only-preview adapter（不是当前授权 owner）。当前可信事实源 = 修正后的 state/current.yaml + D022/H015。
+- **不 push；不跑仿真/Probe/collision check；不实现 tracker/pilot/ML/testbed。**
+
+### 来源
+
+用户 2026-07-22 执行提示词（SCIENCE_FREEZE + campaign-level reconciliation）；V012 独立 verifier；S014 只读审计（含 Explore agent 对 Pilot-Jones 链的 file:line 审计）。
