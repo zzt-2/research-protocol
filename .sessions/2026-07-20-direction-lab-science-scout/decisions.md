@@ -915,3 +915,88 @@ S011 / D017 / D018 / V007 / 用户 2026-07-22 交接请求。
 ### 来源
 
 S012 / V009 / 独立 verifier CONFIRM / 用户 2026-07-22 执行提示词 §二-§六。
+
+---
+
+## D021: F1-A 科学语义纠偏 — 重分类 PRIVILEGED_CSI_PLUS_TX_CALIBRATION_GENIE_GAP；撤回 D020 的 PASS/正面候选/授权结论（保留原始数字）；授权 F1-A0 严格因果修复 Probe
+
+> status: active
+> date: 2026-07-22
+> 取代：无（amends D020 的科学解读；D020 的原始数值、D018 blind-router Kill、D017 e15ae60 纠正继续有效，不删不改）
+> 被取代：无
+> 依据: 验证: V010（integrity 独立核验 hashes/seeds/paired/raw-to-aggregate/tests）+ critic: 科学语义纠偏（攻击信息来源归因/因果性/comparator 公平性/统计独立性）+ 对照: `info-source-portfolio-probe/src/{run_f1a_model_prior.py,probe_shared.py,run_f3a_history.py}`（行级 grep + 源码审计）+ 对照: `info-source-portfolio-probe/artifacts/{F1-A,F3-A,F4-A}-result.v1.json`（字段级核验）+ 对照: `git diff bf620b3~1 bf620b3 -- STATUS.v1.md`（protected-diff 矛盾核验）+ 用户原话: voice.md 2026-07-22 执行提示词 §一-§九（本轮纠偏+修复 Probe 指令）
+
+### 决策
+
+**F1-A 正确分类为 `PRIVILEGED_CSI_PLUS_TX_CALIBRATION_GENIE_GAP`**，不是 D020 所称的"per-block MMSE headroom"或"纯 model-prior headroom"。该 0.133 macro PI-SER paired gap 同时由两路 privileged 信息支撑（精确 CSI `h/θ` → Jones inverse + TX-truth LS calibration symbols），属 genie gap，不可作为"model-based tracker headroom"或"Go 判据"。
+
+**撤回/降级 D020 的下列科学宣称**（原始数字保留，仅降级语义）：
+
+1. **"per-block MMSE"** → 降级为"oracle affine scoring-only bound（含 TX-truth calibration）"，不是任何可部署 model-based tracker 的上界。
+2. **F1 observability PASS / 双门 PASS** → 降级为 INVALIDATED：`receiver_visible_features` 读全流 CMA trace（含 t 及之后的样本，含 eval 窗），target 是事后 `headroom`（残差）而非信道状态本身，不是因果可观测性（causal observability），不能作为"deployable tracker 可恢复状态"的依据。
+3. **F3 conditional-MI PASS** → 降级为 INVALIDATED：`run_f3a_history.py:196` `mi_increment = max_mi_history - max_mi_block0` 是两个**边际 MI 之差**（max-difference），不是 conditional MI（未对 block0 做条件化）。"历史增加条件信息"的宣称不成立。
+4. **F4 true upper bound / family boundary** → 降级为 PARTIAL（smoothing-fragile，sm=32 CI 跨 0），不能当稳定 soft-info bound；该条 V009 已部分记录。
+5. **"ML 存在真实信息增量"** → 撤回：F1-A genie gap 不能证明 ML 信息增量，需严格因果修复 Probe（F1-A0）才有结论。
+6. **"第一个合法 headroom+observability 正面候选"** → 撤回：双门 PASS 因上述 2、3 失效而不成立。
+7. **"当前证据已授权一天 F1-B 基建"** → 撤回：在 F1-A0 修复 Probe 通过门槛前不授权 tracker 基建。
+
+**授权 F1-A0 严格因果可观测性修复 Probe**（不超过半天，不实现 EKF/PF/GRU/NN），按提示词 §二-§六设计：严格因果、仅接收机可见 prefix 特征预测下一 block 的 `h/θ/Jones`，构造简单 plug-in estimator，在同一 paired realization 上同时优于 fixed-μ CMA μ=0.03 和**实际运行的** `blind_affine_compare_16qam`，双 metric（PI + fixed-label）报告。是否值得投资一天 tracker 由 F1-A0 结果决定（门槛见提示词 §七）。
+
+### 理由（11 项审计缺口，逐条源码定位）
+
+1. **F1 genie 同时用 true h/θ 与 TX-truth calibration** — `probe_shared.py:136-175 mmse_equalize_oracle`：L148 `reconstruct_jones(h, theta)`（精确 CSI）+ L168 `_ls_unmix(..., sX_calib, sY_calib)`（TX-truth LS）。docstring L139 自述 "uses TX-truth calibration symbols AND true h/theta"。两路 privileged 信息叠加，归因不能给 model prior 独享。
+2. **F1 observability 特征包含未来 block** — `run_f1a_model_prior.py:77-99 run_one` 将**全流** `rX, rY`（非 prefix）传给 `run_cma_anchor`；`receiver_visible_features`（L35-57）读全 `cma["trace"]`，trace 覆盖 eval 窗及之后样本。不满足 future-perturbation invariant。
+3. **target 是 headroom 而非信道状态** — observability check（L155-166）相关的是 per-realization `headroom`（事后残差 `cma_pi_ser - oracle_pi_ser`），不是 `h/θ/Jones` 本身。预测一个用 truth 定义的残差不等于因果恢复状态。
+4. **F3 是 marginal-MI max-difference，不是 conditional MI** — `run_f3a_history.py:195-196` 注释 "MI(block0 features, collapse) vs MI(history features, collapse)"，`mi_increment = max_mi_history - max_mi_block0`。两个独立边际 MI 的差，未做 `I(history; y | block0)` 条件化。
+5. **contract 要求 blind_affine comparator，但 Probe 未实际调用** — `probe-contract.v1.yaml:54` fairness.task_comparator = `blind_affine_compare_16qam`，但 grep `src/{run_f1a_model_prior,probe_shared}.py` 无任何调用；F1-A comparator 实际只有 fixed-μ CMA。任务匹配比较器缺失。
+6. **F1 未保存 fixed-label metric** — artifact `F1-A-result.v1.json` 仅存 `pi_ser`；`probe_shared.metrics()` 虽返回 `fixed_label_ser`，F1-A payload 未写入（diverge 路径 L90 是占位 RANDOM_CEILING）。双 metric 不成立。
+7. **缺少 raw per-seed/per-cell rows** — `F1-A-result.v1.json` keys 仅含 macro/cell_means/observability aggregates，无 `rows/per_realization/raw` 字段；aggregate 无法被独立逐项重算（只能重算到 macro）。
+8. **F1/F3 artifact 的 F4 source hash 与当前源码不一致** — `F1-A-result.v1.json` 与 `F3-A-result.v1.json` 存 `run_f4a_soft_gmi.py` = `adf8559556cf`，但当前文件 = `b91731e9c26f`（F4-A artifact 自身 hash 自洽）。F1/F3 artifact 录入时 F4 源码后改过，未重录。source-closure 闭包已破。
+9. **V009 未发现这些科学问题，不能作为独立科学背书** — V009（9 项）核验的是 artifact fidelity/hash/seed/scale-artifact，未审计"oracle 用了 TX-truth calibration""observability 含未来 block""F3 非 conditional MI""blind_affine 未调用"。V009 的 CONFIRM 是 integrity CONFIRM，非科学语义 CONFIRM。V009 不动（不删不补改），由 V010 + 本 D021 补科学层。
+10. **"protected STATUS unchanged"与 bf620b3 实际 diff 冲突** — `git diff bf620b3~1 bf620b3 -- STATUS.v1.md` 显示 +9/-4 行（加入 D020 "F1-B 第一个正面候选"叙述）。S012/H013/D020 均称 "protected STATUS unchanged"，与实际 diff 矛盾。本轮不修改 STATUS.v1.md（提示词明禁），仅记录此矛盾待主控裁决。
+11. **canonical project.v1 与 SCIENCE_SCOUT projection ownership 冲突仍未解决** — `canonical-state.yaml`（`formal_research_state.status: BLOCKED`，reasons 含 master-state/latest-DV drift + Step3.5 未独立闭合）与 `state/current.yaml`（last_recovery_entry=H013，SCIENCE_SCOUT 投影）并存，controller ownership 未解决。本轮不静默修改，仅记录报告。
+
+### 排除的替代方案
+
+- **不删除/覆盖 D020、V009、S012、H013** — 提示词明禁；旧记录保留，用 amended/corrected/partial 状态形成血缘（本 D021 amends D020；V010 amends V009 的科学层）。
+- **不直接实现 EKF/PF/GRU/NN/完整 model-based tracker** — 提示词 §禁止事项；F1-A0 只允许 persistence / 简单 AR / frozen ridge-linear probe（§四）。
+- **不把 0.133 gap 称作 per-block MMSE / 纯 model-prior headroom / 通信可用阈值 / channel-state observability** — 提示词 §禁止事项。
+- **不进入正式 Scout（F1-B）** — F1-A0 未过门槛前不建 tracker 基建。
+- **不静默修改 canonical/project.v1 的 controller ownership 冲突** — 只记录并报告（提示词 §禁止事项）。
+
+### 可复用部分
+
+- `probe_shared.py` 的 `make_realization / eval_window / bootstrap_ci / macro_aggregate / reconstruct_jones` 可复用（但 `mmse_equalize_oracle` 的 TX-truth calibration 部分在 F1-A0 的 E1 路径必须移除/隔离）。
+- `probe-contract.v1.yaml` 的 anchor/slice/eval-window/fairness 框架可复用（但需补 blind_affine 实际调用 + fixed-label 双 metric + raw rows + 因果 prefix invariant）。
+- `test_probe_identity.py` 的 seed 纪律 / paired realization / constant-output gate 可复用；F1-A0 需扩 future-leakage invariant / target-alignment / comparator-invoked / raw-to-aggregate gates。
+
+### 影响范围
+
+- **仅追加** 本 D021（decisions.md）+ V010（verifications.md）+ 新建 F1-A0 Probe（`info-source-portfolio-probe/repair-f1a0/` 子目录：contract + src + tests + artifacts）+ H014 + synthesis/portfolio/current 更新。
+- 不修改 protected history（B001-B003/P03/canonical-state 字节/receipts）；不修改 STATUS.v1.md（提示词明禁，矛盾仅记录）。
+- D020 status 保留 active（不标 superseded，因为 amends 非 replaces——原始数值+授权结构仍有部分价值，只是科学语义降级）；本 D021 的"撤回"清单是权威当前解读。
+
+### 来源
+
+用户 2026-07-22 执行提示词 §一（确定性纠偏）+ §二-§六（F1-A0 修复 Probe 设计）+ §九（收尾）；V010 integrity 独立核验 + 科学语义纠偏 critic 审查。
+
+### F1-A0 执行结果与 D021 措辞精化（V011 后修正）
+
+F1-A0 修复 Probe 执行完成（D021 授权）。**verdict = FAIL**（详见 `repair-f1a0/artifacts/F1-A0-result.v1.json` + `repair-f1a0/scientific-critic-report.md` + V010 + V011）。**不建一天 tracker；F1-B 标 insufficient evidence；转 F2 collision check**（提示词 §七 on_fail）。
+
+**关键数字（主线 + critic 独立复核 bit-identical / 一致）**：
+- CMA μ=0.03 macro PI-SER = 0.3613；blind_affine(CMA-fed) = 0.3556；E1 CSI-only = 0.1681；E2 budgeted pilot = 0.7629；E3 privileged(CSI+TX-truth) = 0.1787；causal_plugin = 0.1685；causal_plugin_nopred control = 0.1683。
+- g0（prediction 增量）FAIL：plugin vs nopred diff +0.00025，8 help / 13 hurt / 89 tie，binomial p≈0.38（不可区分于 coin flip）。
+- E1≈E3≈causal_plugin≈nopred（全 ~0.168，差 <0.011）。
+
+**D021 措辞精化（V011 要求）**：F1-A0 FAIL 正确，但本 D021 原始"0.133 是 CMA-anchor-bad 归因（CMA 发散）"措辞需精化。经 V011 critic + 主线独立复核：
+1. **"CMA 发散"不准确** — 0/110 rows diverged（max cma_pi_ser=0.930 < RANDOM_CEILING）；真实机制是 **μ=0.03 调参不当**（μ-sweep：μ=0.01→0.083 vs μ=0.03→0.369，blind CMA 仅靠 retune μ 关闭 ~60% gap-to-E1）。这是 **D005/D007 已 flag 的 comparator 收敛债**，非新发现。
+2. **主导 confound 是物理非归因** — SOP rotation 在 256-symbol eval window 仅 **0.06°**（sop_rate=4e-6 → 1.02e-3 rad），de-rotation 近 identity，使"预测下一 block SOP"成近空任务；任何 tracker 在当前 cell atlas 上都长一样。F1-A0 是 F1 家族核心问题的**弱测试 by construction**。
+3. **"TX-truth 无贡献"是 near-zero-rotation 的 artifact** — rotation≈0 时 LS calibration 无 residual 可消，只能加过拟合噪声（E3=0.179 实际比 E1=0.168 **更差** +0.011）。非普适结论。
+4. **F1-A0 自身 2 子结论 OVERTURNED（critic）**：(a) g1/g2 comparator 失效——`blind_affine` 跑在 CMA 损坏的 z-stream 上（raw-stream blind_affine ≈ 0.0000 vs CMA-fed ≈ 0.83）；(b) "budgeted pilot 有害"无效——E2 实现破损（pilot 在接收端合成、信道从未发送，E2=0.76 是噪声放大非 pilot 性能）。
+5. **g6（PI vs fixed-label）空洞** — 两 metric 110 rows × 7 methods bit-identical（de-rotation 无 axis swap），g6 检查 `x==x`。
+
+**最终诚实裁决（D021 权威当前解读，精化后）**：F1-A0 **FAIL 存活**，不建 tracker，转 F2。但原因是 **(rotation 近零使当前 atlas 无法测 F1 家族) + (CMA μ 调参不当的已知债)**，**非**"model-prior/CSI/TX-truth 无价值"的普适结论。若未来重测 F1 家族，必须先换 high-SOP-rate cell atlas（rotation ≥ 几度）+ μ-tuned CMA anchor + raw-stream blind_affine + 真 persistence/AR(1) baseline。
+
+**债务（V011 标记，下一 Probe 须修）**：artifact 未存 ridge probe 拟合权重 + prefix-feature 向量 + per-sample h/theta，故 g1 无法对真 persistence/AR(1) 独立核验，0.06° 从模型推导非数据验证。
+

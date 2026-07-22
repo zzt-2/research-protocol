@@ -1,11 +1,12 @@
-# portfolio/current.yaml — reconciled 2026-07-22 after S012/D020/V009
-# Info-source Probe complete: F1-A/F3-A PASS, F4-A BOUNDARY, F2 pilot pending collision check.
-# F1-B model-based tracker is the first positive-method candidate; needs user infrastructure authorization.
+# portfolio/current.yaml — reconciled 2026-07-22 after S012/D020/V009; AMENDED 2026-07-22 S013/D021/V010/V011
+# Info-source Probe: F1-A/F3-A "PASS" AMENDED -> F1-A0 strict-causal repair Probe FAILED (D021/V010/V011).
+# F1-B model-based tracker is NOT authorized; insufficient evidence. Next: F2 collision check or harvest.
+# (Original S012/D020 reading preserved inline as historical notes; current authoritative status below.)
 
 schema_version: research-direction-lab.portfolio.current.v1
 project_id: thesis-fso.dual-pol-osl.direction-lab
 completeness_claim: OPEN_PORTFOLIO_NO_COMPLETENESS_CLAIM
-recovery_entry: H013-info-source-probe-complete-f1b-decision.md
+recovery_entry: H014-f1a0-repair-fail-f2-next.md
 
 candidates:
   # ── Cluster 1-2: Failure observability (CEILINGED) ──
@@ -94,15 +95,40 @@ remaining_open:
   - id: MODEL_BASED_TRACKER
     label: receiver-only model-based GG+SOP tracker → MMSE
     dimension: different_subproblem
-    status: PROBE_PASS_AWAITING_USER_INFRA_DECISION   # S012/D020: F1-A headroom 0.133 + observability 0.65 PASS
+    status: PROBE_FAIL_INSUFFICIENT_EVIDENCE   # S013/D021/V011: F1-A0 strict-causal repair FAILED; NOT a tracker candidate here
     note: >-
-      F1-A Probe PASS: scoring-only oracle (true per-block Jones from h/theta -> per-block MMSE)
-      closes macro PI-SER headroom = 0.1329 (CI [+0.078,+0.196]), 36x D018's blind-router bound.
-      Receiver-visible observability strong (max |r|=0.651, features z_amp_mean/cm_error_final).
-      F1-B deployable tracker (dual-pol GG/SOP EKF/KF on Jones -> MMSE) needs ~1 day infrastructure
-      (existing _kf.py is single-pol pilot-based, CB3 warns silent Y-drop). Awaiting user
-      investment decision (recommended A). Go comparator = fixed-mu CMA + blind_affine_compare_16qam;
-      oracle only as Kill bound (FR-21/FR-25).
+      AMENDED 2026-07-22 (S013/D021/V010/V011). The S012/D020 "F1-A PASS, headroom 0.133 +
+      observability 0.65" reading is RETRACTED: F1-A's oracle used PRIVILEGED CSI (true h/theta)
+      + TX-truth LS calibration (PRIVILEGED_CSI_PLUS_TX_CALIBRATION_GENIE_GAP), its observability
+      features read the full trace (future blocks), its target was the post-hoc headroom residual,
+      blind_affine was never invoked, fixed-label/raw-rows were not saved (D021 §理由, 11 gaps).
+      F1-A0 strict-causal repair Probe FAILED (g0: ridge rotation prediction adds nothing,
+      8 help/13 hurt, binomial p~0.38). Dominant confound: SOP rotation over the 256-symbol eval
+      window is only ~0.06 deg, so "predict next-block SOP" is near-vacuous by atlas construction;
+      plus the "headroom" is largely CMA mu=0.03 mistuning (mu=0.01 -> 0.083 vs mu=0.03 -> 0.369),
+      a D005/D007-flagged comparator debt. Do NOT build a one-day tracker. If this family is ever
+      retested it needs: high-SOP-rate atlas (rotation >= a few deg) + mu-tuned CMA anchor +
+      raw-stream blind_affine + a real persistence/AR(1) baseline (V011 "what would change").
+      Historical S012/D020 numbers retained for traceability, not as a Go criterion.
+  - id: SPARSE_PILOT_SEMIBLIND
+    label: sparse-pilot or adaptive-pilot state information
+    dimension: explicit_reference_information
+    status: NEXT_CANDIDATE_NEEDS_COLLISION_CHECK   # S013/D021: F1-A0 FAIL -> next recommendation = F2 collision check
+    note: >-
+      AMENDED 2026-07-22 (S013). Promoted to the next candidate after F1-A0 FAIL. Distinct from
+      reviving the old fixed pilot-to-Jones-to-inverse mechanism only if it changes overhead,
+      scheduling, causal state estimation, or recovery. MUST run literature collision check
+      (JLT2023/OE2021/LCOMM2026/TCOMM2025/JLT2022-23) before any F2-A Probe (D006/p03 COLLISION).
+  - id: TEMPORAL_MODEL_HISTORY
+    label: multi-block causal state continuity / prediction
+    dimension: temporal_information
+    status: PROBE_RETRACTED_NOT_CONDITIONAL_MI   # S013/D021: F3-A was marginal-MI max-difference, not conditional MI
+    note: >-
+      AMENDED 2026-07-22 (S013/D021 gap #4). The S012/D020 "F3-A PASS, +0.060 bits conditional MI"
+      is RETRACTED: run_f3a_history.py:195-196 computed mi_increment = max_mi_history -
+      max_mi_block0, which is a marginal-MI max-difference, NOT a conditional MI (no
+      conditioning on block-0 features). "History adds conditional information" does not hold.
+      F3-B is NOT a justified secondary component. (Historical numbers retained.)
   - id: SPARSE_PILOT_SEMIBLIND
     label: sparse-pilot or adaptive-pilot state information
     dimension: explicit_reference_information
@@ -122,21 +148,23 @@ remaining_open:
   - id: DECODER_FEEDBACK_SOFT
     label: decoder/CRC/soft-output feedback to the front end
     dimension: cross_layer_information
-    status: PROBE_BOUNDARY_DO_NOT_BUILD   # S012/D020: F4-A analytic GMI +0.0089 smoothing-fragile; F4-B coded-chain BLOCKED
+    status: PROBE_BOUNDARY_DO_NOT_BUILD   # S012/D020 + S013/D021 confirmed: F4-A analytic GMI +0.0089 smoothing-fragile; F4-B coded-chain BLOCKED
     note: >-
       F4-A Probe BOUNDARY: corrected per-symbol sigma^2 oracle shows only +0.0089 bits/sym analytic
       GMI headroom (smoothing-fragile, verifier P1; sm=2/8/32 = +0.033/+0.009/+0.002). Histogram-MI
       fully reproduces C12 scale-artifact (-0.021, scale-invariant). F4-B coded-receiver loop needs
       coded chain (INFRASTRUCTURE_BLOCKED, no FEC chain exists). Do NOT build F4-B without coded chain
       + smoothing-window fix. Valid as boundary/negative material + methodology lesson.
+      (S013/D021 status unchanged; F4 was not the target of the F1-A0 repair.)
   - id: C03_C07_REINIT
     label: learned/threshold reinit controller
     status: INFRASTRUCTURE_BLOCKED
     note: needs action hook; co-blocked
 
 next_action: >-
-  D020: present the F1-B investment decision to the user. Probe results: F1-A model-prior PASS
-  (headroom 0.133, observability 0.65), F3-A history PASS (secondary, +0.060 MI), F4-A BOUNDARY
-  (do-not-build). Recommended A = ~1 day dual-pol GG/SOP model-based tracker infrastructure +
-  bounded Scout; comparator = fixed-mu CMA + blind_affine_compare_16qam. Do NOT auto-build
-  tracker / coded chain / pilot infrastructure this round (prompt section 6).
+  D021/S013: F1-A0 strict-causal repair Probe FAILED; F1-B tracker NOT authorized (insufficient
+  evidence). Present the F2 collision-check decision to the user: (a) F2 pilot collision check
+  (JLT2023/OE2021/LCOMM2026/TCOMM2025/JLT2022-23) before any F2-A Probe; or (b) pivot to
+  harvest/negative-boundary paper; or (c) if F1 family is ever retested, first rebuild the test
+  bed (high-SOP-rate atlas + mu-tuned CMA + raw-stream blind_affine + persistence/AR(1) baseline).
+  Do NOT auto-build tracker / coded chain / pilot infrastructure.

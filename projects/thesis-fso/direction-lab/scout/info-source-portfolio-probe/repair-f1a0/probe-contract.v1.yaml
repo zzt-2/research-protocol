@@ -1,0 +1,152 @@
+# F1-A0: Strict-Causal Observability Repair Probe — Shared Contract v1
+# Frozen 2026-07-22 (D021 / V010 / S013)
+# Repair of D020 F1-A's scientific gaps: F1-A's 0.133 gap was PRIVILEGED_CSI_PLUS_TX_CALIBRATION_GENIE_GAP
+# (true h/theta + TX-truth LS calibration), its observability features read the full trace (future blocks),
+# its target was the post-hoc headroom residual (not channel state), blind_affine_compare_16qam was never
+# actually invoked, fixed-label metric was never saved, no raw rows were stored, and F1/F3 artifact source
+# hashes drifted from the F4 source. This Probe rebuilds the F1 family test cleanly under strict causality.
+#
+# This is a CAUSAL OBSERVABILITY + PLUG-IN ESTIMATOR Probe. No EKF/PF/GRU/NN. Only persistence / simple AR /
+# frozen ridge-linear probe (D021 + prompt §四).
+
+schema: direction-lab.repair-f1a0.v1
+batch_id: repair-f1a0
+source_session: S013
+governing_decisions: [D020, D021]   # D021 amends D020's scientific reading; D020 raw numbers still cited
+recovery_entry_after: H014 (TBD)
+
+hypothesis: >-
+  Strictly-causal, receiver-VISIBLE-ONLY prefix features (blocks <= t-1) can predict the next block's
+  channel state (h/theta/Jones) on held-out cells/seeds beyond a persistence/AR/no-information baseline;
+  AND a simple plug-in estimator built from that prediction beats BOTH fixed-mu CMA mu=0.03 AND an
+  actually-invoked blind_affine_compare_16qam on the SAME paired realization under BOTH PI and fixed-label
+  metrics, with grouped (cell) bootstrap CI supporting the direction across cells (not a single outlier).
+
+falsifiers:   # ANY one -> FAIL; FORBIDDEN to build a one-day tracker
+  - held-out next-block state prediction does NOT beat persistence/AR/no-information baseline
+  - plug-in PI-SER fails to beat BOTH fixed-mu CMA AND actually-run blind_affine_compare_16qam
+  - future leakage OR TX-truth inference leakage OR test-set feature selection is found
+  - improvement exists only in a single cell; grouped/cell CI does NOT support cross-cell direction
+  - results cannot be recomputed from stored raw per-seed/per-cell rows
+
+info_source_split:   # prompt §三 — sources MUST NOT be conflated
+  E0:
+    name: fixed_mu_cma
+    desc: "fixed-mu CMA mu=0.03 (the fair conventional comparator). NO TX truth, NO CSI."
+    role: comparator_1
+  E1:
+    name: exact_jones_inverse_only
+    desc: >-
+      exact h/theta/Jones inverse per-block MMSE WITHOUT TX-truth calibration. Pure CSI genie. Forbids
+      TX-truth symbols entirely (D021 gap #1). Establishes the CSI-only ceiling distinct from F1-A's
+      CSI+TX-truth genie.
+    role: csi_only_genie_bound
+  E2:
+    name: exact_jones_plus_budgeted_pilot
+    desc: >-
+      exact Jones + explicitly-budgeted FIXED pilot/calibration (known pilot symbols, not TX truth of the
+      data). F1+F2 hybrid. MUST report pilot count and overhead. This is the realistic "what a model-based
+      tracker with a known pilot could reach" bound.
+    role: hybrid_bound
+  E3:
+    name: privileged_csi_plus_tx_truth_calibration
+    desc: >-
+      the OLD F1-A scheme: true h/theta + TX-truth LS calibration. Reproduced ONLY as a privileged genie.
+      The 0.133 gap MUST NOT be wholly attributed to model prior (it is CSI+TX-truth, D021 gap #1).
+    role: legacy_privileged_genie_for_attribution_only
+
+prediction_targets:   # prompt §四 — truth is OFFLINE LABEL / scoring ONLY, never inference input
+  - next_block_h          # per-sample channel gain h over the next block
+  - next_block_theta      # per-sample SOP angle theta over the next block
+  - next_block_jones      # reconstructed 2x2 Jones (a,b,c,d) over the next block
+prediction_truth_role: OFFLINE_LABEL_AND_SCORING_ONLY   # never enters inference input
+
+causal_input:   # prompt §四 — receiver-visible ONLY
+  allowed: "receiver-visible blocks with index <= t-1 (CMA weight trace stats, z-stream stats over past blocks)"
+  forbidden: [full_trace, current_block, future_block, tx_symbols, truth_residual, eval_truth]
+  future_perturbation_invariant: >-
+    arbitrarily perturbing samples at index >= t MUST leave prefix features (index < t) and the t-time
+    action BIT-IDENTICAL. Enforced by test.
+
+allowed_models:   # prompt §四 — simple diagnostics ONLY
+  - persistence_baseline        # predict next-block state == last observed prefix state
+  - simple_ar_baseline          # AR(1) on prefix state
+  - frozen_ridge_linear_probe   # ridge regression; frozen on VALIDATION ONLY, never re-fit on test
+forbidden_models: [EKF, PF, GRU, Transformer, NN]
+
+data_split:   # prompt §五 — 141-150 already observed, CANNOT be the new final test
+  seed_provenance_check: "grep all prior batches for seed reuse before adopting new split"
+  validation: [151, 152, 153, 154, 155]   # NEW; used ONLY to freeze features and hyperparameters
+  test: [161, 162, 163, 164, 165, 166, 167, 168, 169, 170]   # NEW; run ONCE; no feature selection on test
+  forbidden_as_final_test: [141, 142, 143, 144, 145, 146, 147, 148, 149, 150]   # already observed (D020)
+  grouping: by_cell_and_seed
+  validation_role: freeze_features_and_hyperparameters_only
+  test_role: run_once_no_feature_selection
+  statistics: grouped_bootstrap_ci_by_cell   # or equivalent cell/seed-grouped; NOT pooled-only
+  null_check: permutation_or_null_check_on_state_prediction
+  raw_rows: save_per_block_and_per_realization   # NOT aggregate-only
+
+fair_comparison:   # prompt §六 — SAME realization / eval window; actually invoke the comparator
+  shared_realization: true
+  shared_eval_window: true
+  methods_on_same_realization:
+    - fixed_mu_cma_mu_0.03              # E0
+    - blind_affine_compare_16qam        # MUST be actually invoked (D021 gap #5), not just declared
+    - E1_exact_jones_inverse_only
+    - E2_exact_jones_plus_budgeted_pilot
+    - E3_privileged_csi_plus_tx_truth   # legacy genie, attribution only
+    - causal_plug_in_estimator          # the candidate
+  dual_metric: [pi_ser, fixed_label_ser]   # BOTH written to artifact (D021 gap #6)
+  reporting:
+    - clean_cells
+    - worst_cells
+    - cross_cell_degradation
+    - E2_pilot_count_and_overhead
+  resource_threshold_note: "resource decision thresholds MUST NOT be called 'communication-usable thresholds'"
+
+pass_gate:   # prompt §七 — ALL must hold to even CONSIDER a one-day tracker
+  conditions:
+    - g1: held-out next-block state prediction significantly beats persistence, grouped CI supports
+    - g2: causal plug-in estimator beats BOTH fixed CMA AND blind_affine on paired held-out test
+    - g3: no future/truth leakage (test-enforced)
+    - g4: direction consistent across multiple cells, not a single outlier
+    - g5: raw rows recompute every aggregate
+    - g6: PI and fixed-label metrics do NOT reverse conclusion (or reversal has explicit explanation)
+  on_fail:
+    - do_not_implement_tracker
+    - mark_F1B_as_insufficient_evidence
+    - next_recommendation_F2_collision_check
+  on_pass:
+    - STILL_do_not_implement_tracker
+    - report_investment_basis_estimated_infra_and_risk_await_controller_authorization
+
+integrity:   # prompt §八 — fix hashes, raw rows, dual metric, source closure
+  source_closure_hash: required_for_all_src_files   # SHA-256; every artifact records CURRENT hashes of ALL src
+  raw_rows_in_artifact: required
+  fixed_label_metric_in_artifact: required
+  blind_affine_actually_invoked: required
+  independent_verifier: required   # P6 separation
+
+verifier_roles:   # prompt §八 — TWO independent roles, both file-located reports
+  integrity_verifier:
+    checks: [hashes, seeds, paired_realization, raw_to_aggregate, tests]
+  scientific_critic:
+    attacks: [info_source_attribution, causality, comparator_fairness, statistical_independence, conclusion_strength]
+
+prohibitions:
+  - no_ekf_pf_gru_transformer_nn
+  - no_revival_of_D018_blind_expert_router
+  - no_revival_of_p03_pilot_jones_inverse_microvariant
+  - no_global_sigma2_oracle_as_bound
+  - no_mde_or_0.03_as_communication_usable_threshold
+  - no_seeds_71_80
+  - no_seeds_141_150_as_final_test   # already observed (D020)
+  - no_test_set_feature_selection
+  - no_auto_promotion_to_GW_Contract_Execute_or_paper
+  - no_push_no_merge
+  - no_modify_STATUS_v1_md   # prompt §禁止; the STATUS diff contradiction is recorded in D021, not silently fixed
+  - no_silent_change_to_canonical_project_v1_ownership   # record & report only (D021 gap #11)
+
+budget:
+  total_wall_minutes: 30   # half-day ceiling; simple diagnostics only
+  per_cell_seed_max_minutes: 1

@@ -136,3 +136,55 @@ overhead/scheduling/causal state estimation/recovery 机制时才 distinct。
 **推荐 A**：F1-A 的 0.133 headroom 是 campaign 中最强的正面信号，且 observability 强。F1-B 是唯一有
 "合法 headroom + observability + 主结果潜力"的候选。但需用户授权约一天的 model-based tracker 基建投资
 （现有 `_kf.py` 是 single-pol pilot-based，不可直接复用，CB3 警告 silent Y-drop）。
+
+---
+
+# AMENDMENT 2026-07-22 (S013 / D021 / V010 / V011) — 上文 TL;DR/排序/投资选择 RETRACTED
+
+> 本文件 v1 正文（TL;DR、Probe 结果表、排序、可写论文材料、投资选择 A/B/C/D）建立于 D020 的 F1-A/F3-A
+> PASS 解读。该解读已被 D021/V010/V011 撤回。正文保留为历史记录，**不作为当前结论**。
+
+## 当前权威结论（取代上文 TL;DR）
+
+**F1-A0 严格因果可观测性修复 Probe FAILED**（`repair-f1a0/`）。F1-B model-based tracker **不授权**（证据不足）。
+**不建一天 tracker**。下一建议：**F2 collision check** 或转 harvest/负面边界论文。
+
+## 上文被撤回的关键宣称（D021 §决策 1-7）
+
+1. "per-block MMSE" → 降级为 oracle affine scoring-only bound（含 TX-truth calibration）。
+2. F1 observability PASS → INVALIDATED（特征含未来 block，target 是事后 headroom 残差非信道状态）。
+3. F3 conditional-MI PASS → INVALIDATED（marginal-MI max-difference，非 conditional MI）。
+4. "ML 存在真实信息增量" / "第一个合法正面候选" / "授权一天基建" → 全撤回。
+
+## F1-A0 修复 Probe 结果（详见 `repair-f1a0/artifacts/F1-A0-result.v1.json` + `scientific-critic-report.md`）
+
+11 cells × 10 test seeds [161-170] = 110 raw rows（141-150 已被 D020 观察，禁作 final test）。宏观 PI-SER：
+
+| 方法 | macro PI-SER | CI[lo,hi] | 备注 |
+|---|---|---|---|
+| CMA μ=0.03 (E0) | 0.3613 | [0.297,0.445] | 公平传统 comparator |
+| blind_affine (CMA-fed) | 0.3556 | [0.284,0.449] | **critic L1：被 CMA 输出污染，raw-stream≈0.0000** |
+| E1 CSI-only (no TX-truth) | 0.1681 | [0.072,0.278] | 纯 CSI genie |
+| E2 budgeted pilot (32 pilots) | 0.7629 | [0.755,0.772] | **critic L2：实现破损（pilot 从未发送）** |
+| E3 privileged (CSI+TX-truth) | 0.1787 | [0.076,0.297] | 旧 F1-A genie，仅归因 |
+| causal_plugin (候选) | 0.1685 | [0.073,0.278] | ≈ E1 ≈ nopred |
+| causal_plugin_nopred (control) | 0.1683 | [0.073,0.278] | g0 证明 prediction 无增量 |
+
+**g0（prediction 增量）FAIL**：plugin vs nopred diff +0.00025，8 help/13 hurt/89 tie，binomial p≈0.38（不可区分于 coin flip）。
+fixed_label_ser 与 pi_ser 110×7 bit-identical（g6 空洞，de-rotation 无 axis swap）。
+
+## FAIL 的真实原因（V011 critic + 主线独立复核）
+
+- **主导 confound 是物理非归因**：SOP rotation 在 256-symbol eval window 仅 **0.06°**（sop_rate=4e-6 → 1.02e-3 rad），
+  de-rotation 近 identity，E1(真θ)≈causal_plugin(预测θ)≈nopred(θ≡0) 全塌缩 ~0.168。任何 tracker 在当前 atlas 都长一样。
+- **"headroom"是 CMA μ 调参债**：μ=0.01→0.083 vs μ=0.03→0.369，blind CMA 仅靠 retune μ 关闭 ~60% gap-to-E1。
+  0/110 rows diverged。是 D005/D007 已 flag 的 comparator 收敛债，非"CSI/TX-truth/model-prior 无价值"普适结论。
+- **"TX-truth 无贡献"是 near-zero-rotation artifact**：E3=0.179 实际比 E1=0.168 更差 +0.011。
+
+## 若未来重测 F1 家族须先做（V011）
+
+1. high-SOP-rate cell atlas（rotation ≥ 几度，sop_rate ≫ 4e-6）；
+2. μ-tuned CMA anchor（μ 在 validation 上 sweep 后冻结）；
+3. raw-stream blind_affine（非 CMA-fed）；
+4. 真 persistence/AR(1) baseline（g1 非代理）；
+5. artifact 存 ridge 权重 + prefix-feature 向量 + per-sample h/theta（当前债务）。

@@ -175,3 +175,20 @@
 > "不能继续把 MDE=0.005 或 0.03 自动称为'通信可用'。"
 > "若最强候选需要约一天或更大的新基础设施：不要直接开建；完成所有轻量 Probe 后统一向用户报告投资选择。" → D020
 > "不要以代码量、测试数或文档数作为主要进展。先回答科学余量、物理价值和毕业价值。"
+
+## 2026-07-22（S013 F1-A0 严格因果修复 Probe — 科学语义纠偏+修复）
+
+> "你继续充当执行者。当前 HEAD=bf620b3，分支 codex/direction-lab-capability-atlas，未 push。本轮不是实现 F1-B tracker，也不是进入正式 Scout。本轮只做：1. 修正 S012/D020/V009/H013 中的科学语义；2. 执行一个不超过半天的 F1-A0 causal observability repair Probe；3. 给出是否值得再投资一天 tracker 的新证据。" → D021
+> "不把现有 0.133 gap 继续称为 per-block MMSE 或纯 model-prior headroom；不把 |r|=0.65 称为 channel-state observability。" → D021
+> "旧记录必须保留；用 superseded/corrected/partial 等状态形成血缘，不重写历史为'从未发生'。" → D021
+> "不得使用 TX truth calibration。它是纯 CSI genie。"（对 E1）→ D021
+> "141-150 已经被观察，禁止作为新的最终测试集。" → D021
+> "truth 只允许作为离线 label 和评分依据，不得进入 inference input。"（对预测目标）→ D021
+> "不得使用 EKF/PF/GRU/Transformer/NN。" → D021
+> "资源决策阈值不能称为'通信可用阈值'。" → D021
+> "如果 FAIL：不实现 tracker；将 F1-B 标为当前证据不足；下一建议改为 F2 collision check。" → D021
+> "如果 PASS：仍然不要实现 tracker；只报告投资依据、预计基建和风险，等待主控授权。" → D021
+> "先补会失败的测试，再修实现。" → D021
+> "验证必须分两种角色：1. integrity verifier；2. scientific critic。两者都要形成独立、可定位的报告文件，不能只在 verifications.md 中写一句 agent 已检查。" → V010, V011
+> "不再修改 campaign contract 中声明 protected 的 STATUS.v1.md；不静默修改 project.v1.yaml/STATUS 的 controller ownership 冲突，只记录并报告。" → D021 (gap #10/#11)
+> "做一次确定性数字 grep，保证 artifact、synthesis、D、V、Handoff、current projection 数字一致；全轮一次 commit，不 push；最终返回 changed files、测试命令与结果、独立审查结论、commit SHA。" → S013 §收尾

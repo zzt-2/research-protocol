@@ -403,3 +403,123 @@ F1-A/F3-A/F4-A 三个 headroom/observability Probe 的 verdict 和数字是否�
 ### 对决策的影响
 
 支撑 D020：F1-A/F3-A PASS 授权考虑 F1-B Scout；F4-A BOUNDARY 不建 F4-B；统一报告投资选择交用户。
+
+---
+
+## V010: F1-A/F3-A/F4-A integrity 独立核验（D021 科学纠偏） — PARTIAL（数值可复现，科学归因/因果性/hash 闭包有缺口）
+
+> date: 2026-07-22
+> 关联：S012 / D020 / D021
+> verifier: 独立 integrity 子 agent（P6 separation，与 D021 的科学 critic 分工：本 V010 只审 integrity 层——hash/seed/paired/raw-to-aggregate/tests；科学语义归因见 D021 + critic 报告）
+
+### 验证问题
+
+F1-A/F3-A/F4-A artifact 的数值是否可独立重算？source-closure hash 是否与当前源码一致？seed 纪律是否成立？paired realization 是否真共享？raw rows 是否可重算 aggregate？现有 identity test 是否覆盖 D021 列出的缺口？
+
+### 验证项（integrity 层）
+
+- [x] 项1：headline 数字独立重算 → **PASS**。F1-A macro headroom `0.1328835227272727`（stored bit-identical）；fixed-CMA PI-SER `0.331640625`；genie PI-SER `0.19875710227272725`；paired gap `0.1328835227272727`；bootstrap CI `[0.08455255681818183, 0.18269264914772712]`；diagnostic max |r| `0.6510455630919102`。逐项与 `F1-A-result.v1.json` 比对一致（命令：重算 cell_means → macro_aggregate → bootstrap_ci）。
+- [x] 项2：seed 纪律 → **PASS**。`probe_shared.assert_seed_discipline()` 校验 validation[131-135] ∩ test[141-150] = ∅；test ∩ prior batches[11-20/21-30/31-35/41-50/61-65/71-80/81-95/101-105/121-130] = ∅。
+- [x] 项3：paired realization → **PASS**。`make_realization` 每 (cell,seed) 调用一次，CMA anchor 与 oracle 共用同一 `rX,rY,h,theta`。
+- [ ] 项4：source-closure hash 闭包 → **FAIL**。`F1-A-result.v1.json` 与 `F3-A-result.v1.json` 存 `src/run_f4a_soft_gmi.py` = `adf8559556cf...`，当前文件 = `b91731e9c26f...`（D021 缺口 #8）。F1/F3 artifact 录入后 F4 源码被改，闭包已破。F4-A artifact 自身 4 个 hash 全 MATCH（自洽）。
+- [ ] 项5：raw rows 可重算 aggregate → **FAIL**。`F1-A-result.v1.json` 无 `rows/per_realization/raw` 字段；仅存 cell_means（已是聚合后）。无法从 artifact 逐 per-seed 重算 macro（只能重算到 cell_means 层）。D021 缺口 #7。
+- [ ] 项6：fixed-label metric 双报 → **FAIL**。F1-A artifact 仅存 `pi_ser`，无 `fixed_label_ser`（`probe_shared.metrics()` 返回但 payload 未写入）。D021 缺口 #6。
+- [ ] 项7：blind_affine_compare_16qam 实际调用 → **FAIL**。grep `src/{run_f1a_model_prior,probe_shared,run_f3a_history,run_f4a_soft_gmi}.py` 无 `blind_affine` 调用；contract fairness.task_comparator 声明但 Probe 未运行。D021 缺口 #5。
+- [ ] 项8：identity test 覆盖度 → **PARTIAL**。现有 `test_probe_identity.py` 10 项覆盖 seed/constant-output/no-eval-truth-leak-into-visible-path/paired/causal-prefix（F3）/scale-invariance（F4）。**未覆盖**：future-leakage invariant（F1 trace 含未来 block）、target-alignment（observability target=headroom 非 state）、comparator-invoked、dual-metric-written、raw-to-aggregate、source-hash-闭包。D021 缺口 #9（V009 漏审科学层）。
+- [x] 项9：protected STATUS diff 矛盾 → **CONFIRMED 矛盾**。`git diff bf620b3~1 bf620b3 -- STATUS.v1.md` = +9/-4 行（含 "F1-B 第一个正面候选" 叙述），与 S012/D020/H013 "protected STATUS unchanged" 宣称冲突。D021 缺口 #10。本轮不改 STATUS（提示词禁），仅记录。
+- [x] 项10：canonical/project.v1 ownership 冲突 → **CONFIRMED 未解**。`canonical-state.yaml` status=BLOCKED（reasons: master-state/latest-DV drift + Step3.5 未独立闭合）vs `state/current.yaml` SCIENCE_SCOUT 投影（last_recovery_entry=H013）并存。D021 缺口 #11。本轮不静默修改，仅报告。
+
+### 证据
+
+```
+项1 重算（F1-A, 3 cells 抽查 snr20-nominal-short/snr05-nominal-short/snr20-nominal-long）：
+  cma_pi_ser  cell_means = {0.306640625, 0.651953125, 0.13046875}  == stored
+  oracle_pi_ser cell_means = {0.098046875, 0.640625, 0.03984375}  == stored
+  headroom cell_means    = {0.20859375, 0.011328125, 0.090625}     == stored
+  macro(headroom) = 0.1328835227272727  == stored 0.1328835227272727
+  max |r|(z_amp_mean) = 0.6510455630919102  == stored
+
+项4 hash 比对（python3 hashlib.sha256）：
+  F1-A artifact:
+    src/probe_shared.py         MATCH  7d9d87445650 == cur 7d9d87445650
+    src/run_f1a_model_prior.py  MATCH  bf0c65b7feff == cur bf0c65b7feff
+    src/run_f3a_history.py      MATCH  7198aac001f6 == cur 7198aac001f6
+    src/run_f4a_soft_gmi.py     DIFFER stored adf8559556cf != cur b91731e9c26f
+  F4-A artifact: 4/4 MATCH（自洽）
+```
+
+### 结论
+
+**PARTIAL**。数值层（项1/2/3）PASS——headline 数字 bit-identical 可复现，seed 纪律与 paired realization 成立。但 integrity 闭包有 4 项 FAIL（项4 hash 闭包破、项5 无 raw rows、项6 无 fixed-label、项7 comparator 未调用）+ 1 项 PARTIAL（项8 identity test 覆盖不足）+ 2 项矛盾确认（项9 STATUS diff、项10 ownership）。
+
+V009 的 CONFIRM 仅覆盖 artifact fidelity，未覆盖科学归因/因果性/comparator 公平性——这些由 D021 科学 critic 报告承担。V009 不删不改，本 V010 补 integrity 层缺口。
+
+### 后续（PARTIAL）
+
+1. F1-A0 修复 Probe 必须修齐项4-8：重录所有 artifact 的 4 个 source hash（含 F4 当前 hash）、保存 per-seed/per-cell raw rows、写 fixed-label metric、实际运行 blind_affine_compare_16qam、扩 identity test 至 future-leakage/target-alignment/comparator-invoked/dual-metric/raw-to-aggregate/source-hash-闭包。
+2. STATUS.v1.md 的 "protected unchanged vs actual diff" 矛盾与 canonical/project.v1 ownership 冲突交主控裁决（本轮不改）。
+
+---
+
+## V011: F1-A0 修复 Probe 科学 critic 独立复核 — FAIL 结论 HOLDS（但证据基础被重写；2 子结论 OVERTURNED）
+
+> date: 2026-07-22
+> 关联：S013 / D021 / V010（与 V010 分工：V010 审 integrity 层，本 V011 审科学语义层）
+> verifier: 独立 scientific-critic 子 agent（P6 separation，主动攻击非确认）+ 主线独立复核 critic 的 2 个最强攻击
+
+### 验证问题
+
+F1-A0 修复 Probe 的结论（"F1-A0 FAIL；0.133 headroom 是 CMA-anchor-bad 归因；不建 tracker；转 F2"）是否在信息来源归因、因果性、comparator 公平性、统计独立性和结论强度上站得住？
+
+### 验证范围（6 攻击轴）
+
+1. 信息来源归因（E1 真无 TX-truth 泄漏？E1≈E3 是否真实？TX-truth "无贡献" 是否普适？）
+2. 因果性（prefix_features 真只读 <cut？ridge probe 只用 validation？）
+3. comparator 公平性（blind_affine 是否被 CMA 输出污染？）
+4. 统计独立性/强度（n=11 cells grouped CI 是否够？g0 的 8/13 是否显著？）
+5. 结论强度/overclaim（"转 F2"是否真由 FAIL 推出？"CMA 发散"措辞是否准确？）
+6. 隐含泄漏/confound（E2 pilot 反而更差是否实现 bug？）
+
+### 结果（5 个 attack landed，3 个 survived；主线复核 critic 2 最强攻击全 CONFIRM）
+
+| # | 攻击 | 落地? | 主线复核 |
+|---|------|------|---------|
+| L1 | **blind_affine 被 CMA 输出污染 → g1/g2 comparator 失效（最强）** | LANDED | 主线独立复核 CONFIRM：raw-stream blind_affine pi_ser ≈ 0.0000 vs CMA-fed ≈ 0.83（snr15/20-nominal-short seed 161）。causal_plugin "赢" 11/11 cells 是因为对手被废 |
+| L2 | **E2 budgeted pilot 实现破损：pilot 在接收端合成、信道从未发送** | LANDED | causal_plugin 读 raw rX/rY，blind_affine 读 CMA z-stream，信息路径不对等；E2=0.76 是噪声放大非 pilot 性能 |
+| L3 | **g6（PI vs fixed-label 不反转）空洞：两 metric bit-identical** | LANDED | 主线复核 CONFIRM：110 rows × 7 methods，`pi_ser == fixed_label_ser` 至 1e-12。g6 检查 `x==x` |
+| L4 | **"CMA 发散"措辞错误；实际是 μ 调参不当** | LANDED | 主线独立复核 CONFIRM：μ-sweep snr15-short seeds161-163，μ=0.01→0.083 vs μ=0.03→0.369；0/110 rows diverged。blind CMA 仅靠 retune μ 关闭 ~60% gap-to-E1 |
+| L5 | **g1 非真 persistence baseline，是 blind_affine 代理（且被 L1 双重污染）** | LANDED | `_persistence_baseline_theta_error` 返回 None |
+| N1 | 因果性/未来泄漏 | SURVIVED | 主线复核：future-perturbation invariant 重跑 bit-identical；prefix_features 只读 rX[:cut]/rY[:cut] |
+| N2 | E1 TX-truth 泄漏 | SURVIVED | e1_jones_inverse grep 无 sX_calib/sY_calib（仅用 R2_16QAM=1.32 公共星座功率=modulation-format knowledge 非 TX truth） |
+| N3 | g0（prediction 无增量）FAIL 真实 | SURVIVED | 主线复核 CONFIRM：8 help/13 hurt/89 tie；binomial p≈0.38（n=21）= 不可区分于 coin flip，比 Probe 声称的还 null |
+
+### 主导 confound（C1，物理非归因）
+
+SOP 旋转在 256-symbol eval window 上仅 **0.06°**（`theta = sop_rate·arange(N)`，sop_rate=4e-6 → 1.02e-3 rad）。de-rotation 近 identity → E1(真θ) ≈ causal_plugin(预测θ) ≈ nopred(θ≡0) 全塌缩到 0.168（差 <0.0005）。**任何 tracker 在此 cell atlas 上都长一样**——F1-A0 是 F1 家族核心问题的弱测试，by cell-atlas construction，非 estimator 选择。
+
+### 独立重算数字（主线 + critic）
+
+- 主线复核 raw_rows 重算：cma_pi_ser_macro = 0.3612571023（diff 0.00e-00 vs stored）；7 method macros 全 match
+- 主线复核 L1：raw blind_affine ≈ 0.0000 vs CMA-fed ≈ 0.83（3 cells × seed 161）
+- 主线复核 L4：μ=0.01 macro(snr15-short, 3 seeds) = 0.0833 vs μ=0.03 = 0.3685
+- critic 复算 g0：8/13/89 split，binomial p≈0.38
+- critic 复算 E1 vs E3：E1=0.168, E3=0.179（TX-truth 实际更差 +0.011 macro）；E1<E3 in 38 rows vs E1>E3 in 19
+- critic 复算 0/110 CMA diverged（max cma_pi_ser=0.930 < RANDOM_CEILING 0.9375）
+
+### 结论
+
+**HOLDS — FAIL 正确，但证据基础被重写**。headline "0.133 是 fake headroom / 不建 tracker" 存活，但**主导原因是物理（rotation ~0.06° 使预测任务近空）+ CMA μ 调参不当（D005/D007 已 flag 的债）**，**非** Probe 声称的 "CSI/TX-truth/model-prior 无贡献"。两个 Probe 子结论 **OVERTURNED**：(a) "TX-truth 无贡献" 是 near-zero-rotation 的 artifact（LS 无 residual 可消，只能加过拟合噪声）；(b) "budgeted pilot 有害" 是 E2 实现破损（pilot 从未发送）。g1/g2 comparator 因 blind_affine 被 CMA 污染而失效；g6 空洞。
+
+**最终诚实裁决**：
+- F1-A0 **FAIL 存活** → 不建一天 tracker；F1-B 标 insufficient evidence（**但**比 D021 原因更精准：rotation 近零使当前 atlas 无法测 F1 家族 + CMA anchor 是已知 μ 债，双重 confound，**非** "model-prior 无价值"的普适结论）。
+- 下一建议：转 F2 collision check **不变**；但若未来重测 F1 家族，必须先换 high-SOP-rate cell atlas（rotation ≥ 几度）+ μ-tuned CMA anchor + raw-stream blind_affine + 真 persistence/AR(1) baseline。
+
+### 对决策的影响
+
+支撑 D021 的核心（撤回 D020 的 PASS/正面候选/授权），但要求 D021 §决策精化 "CMA-anchor-bad" 措辞为 "CMA μ 调参不当（D005/D007 已 flag 债）+ rotation 近零使 atlas 无法测 F1 家族"。不建 tracker 不变。F2 转向不变。
+
+### 未独立重算的声称
+
+ridge probe 拟合权重 + prefix-feature 向量未存 artifact（只有 cma_diverged/pi_ser/fixed_label_ser/pred_rot 标量），故 g1 无法对真 persistence/AR(1) baseline 独立核验；per-sample h/theta 未存，0.06° 从信道模型+sop_rate 推导非数据直接验证。**这两项债务建议加入下一 Probe 的 raw-rows 字段。**
+
+

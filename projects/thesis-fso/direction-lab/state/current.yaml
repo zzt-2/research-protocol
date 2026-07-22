@@ -1,10 +1,11 @@
 # state/current.yaml — sole machine current view
-# Rebuilt 2026-07-22 from S012 / D020 / V009 (adds info-source Probe results to the S011/D017/D018/D019 base).
+# Rebuilt 2026-07-22 from S012 / D020 / V009; AMENDED 2026-07-22 S013 / D021 / V010 / V011
+# (F1-A0 strict-causal repair Probe FAILED; F1-B tracker NOT authorized. Next: F2 collision check.)
 # Explicit disposition lineage governs; protected history untouched.
 
 schema_version: research-direction-lab.state.current.v1
 project_id: thesis-fso.dual-pol-osl.direction-lab
-last_recovery_entry: H013-info-source-probe-complete-f1b-decision.md
+last_recovery_entry: H014-f1a0-repair-fail-f2-next.md
 
 formal_goal: >-
   Systematically identify whether machine learning provides a real, legally
