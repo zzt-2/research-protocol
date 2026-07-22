@@ -1,0 +1,157 @@
+# Information-Source Portfolio Probe — Shared Contract v1
+# Frozen 2026-07-22 (S012 / D020)
+# Governed by D019/H012. Shared anchor/slice/eval-window/paired-realization/seed discipline across
+# F1-A (model-prior oracle), F3-A (history MI), F4-A (corrected soft/GMI oracle) headroom Probes.
+# These are HEADROOM/OBSERVABILITY Probes (semantic + scoring-only), NOT method Scouts.
+# No training, no router, no EKF/PF implementation in this batch.
+
+schema: direction-lab.info-source-portfolio-probe.v1
+batch_id: info-source-portfolio-probe
+source_session: S012
+governing_decisions: [D019, D020]
+recovery_entry_after: H013 (TBD)
+
+hypothesis: >-
+  Among the four legal information-source families (channel-model prior, sparse/adaptive pilot,
+  causal temporal history, decoder/CRC/soft feedback), at least one shows BOTH (a) scoring-only
+  oracle headroom >= 0.03 macro PI-SER over the fair conventional comparator (fixed-mu CMA
+  mu=0.03 + blind_affine_compare_16qam) on fresh disjoint test seeds, AND (b) receiver-visible
+  observability (the information is recoverable at inference without evaluation truth). If none
+  passes, the thesis positive-method line pivots to harvest / formal-goal review.
+
+anchor:
+  baseline: baseline.standard_cma.godard_z   # with Godard z factor; identity separated from current-CMA/no-z
+  metric_contract: [pi_ser, fixed_label_ser]  # pi_ser primary (permutation-invariant), fixed_label secondary
+  channel: dual-pol OSL, Gamma-Gamma (alpha=4.2, beta=1.4) + SOP rotation, 16QAM
+  channel_state_source: projects/simulation/common/_dual_pol_channel.py:134-149  # exposes h, theta, sX, sY
+  jones_reconstruction: "sqrt(h) * [[cos(theta), sin(theta)],[-sin(theta), cos(theta)]] (real 2x2 SOP)"
+
+shared_slice:   # ONE shared atlas slice; all Probes use the same cells/realizations
+  cells:   # the canonical 11 cells (identical to hybrid-routing-scout-v1/src/run_macro_a_oracle.py:53-65)
+    - {id: 16qam-snr05-nominal-short, snr_db: 5.0,  f_g_hz: 30.0,  sop_rate: 4.0e-6, n_symbols: 512,  kind: short}
+    - {id: 16qam-snr10-nominal-short, snr_db: 10.0, f_g_hz: 30.0,  sop_rate: 4.0e-6, n_symbols: 512,  kind: short}
+    - {id: 16qam-snr15-nominal-short, snr_db: 15.0, f_g_hz: 30.0,  sop_rate: 4.0e-6, n_symbols: 512,  kind: short}
+    - {id: 16qam-snr20-nominal-short, snr_db: 20.0, f_g_hz: 30.0,  sop_rate: 4.0e-6, n_symbols: 512,  kind: short}
+    - {id: 16qam-snr25-nominal-short, snr_db: 25.0, f_g_hz: 30.0,  sop_rate: 4.0e-6, n_symbols: 512,  kind: short}
+    - {id: 16qam-snr20-fg100-short,   snr_db: 20.0, f_g_hz: 100.0, sop_rate: 4.0e-6, n_symbols: 512,  kind: short}
+    - {id: 16qam-snr20-fg1000-short,  snr_db: 20.0, f_g_hz: 1000.0,sop_rate: 4.0e-6, n_symbols: 512,  kind: short}
+    - {id: 16qam-snr20-sop40e-short,  snr_db: 20.0, f_g_hz: 30.0,  sop_rate: 4.0e-5, n_symbols: 512,  kind: short}
+    - {id: 16qam-snr10-fg100-long,    snr_db: 10.0, f_g_hz: 100.0, sop_rate: 4.0e-6, n_symbols: 8192, kind: long}
+    - {id: 16qam-snr15-fg1000-long,   snr_db: 15.0, f_g_hz: 1000.0,sop_rate: 4.0e-6, n_symbols: 8192, kind: long}
+    - {id: 16qam-snr20-nominal-long,  snr_db: 20.0, f_g_hz: 30.0,  sop_rate: 4.0e-6, n_symbols: 8192, kind: long}
+  block: 100           # GG block
+  cma_block_size: 64   # equalizer parallelization
+  eval_window: 256     # symbols (cb1_cell_runner eval_window_for)
+
+seeds:   # DISCIPLINE: fresh disjoint seeds only; 71-80 permanently lost held-out (D017)
+  validation: [131, 132, 133, 134, 135]   # NEW; disjoint from 11-20/21-30/31-35/41-50/61-65/71-80/81-95/101-105/121-130
+  test: [141, 142, 143, 144, 145, 146, 147, 148, 149, 150]   # NEW; disjoint from ALL prior
+  prior_used_do_not_reuse: ["11-20","21-30","31-35","41-50","61-65","71-80","81-95","101-105","121-130"]
+  leakage_check: "validation ∩ test = empty; both ∩ all prior batches = empty (asserted in runner)"
+
+fairness:   # FR-25: Go must beat a fair, widely-used, task-matched conventional comparator
+  fixed_mu_cma_mu: 0.03          # B01-R validation-optimal interior optimum (inherited, NOT re-tuned)
+  task_comparator: blind_affine_compare_16qam   # receiver-visible, z-derived pseudo-labels, NO TX truth
+  kill_bound: oracle_affine_bound_16qam         # scoring-only Kill bound (FR-21); NEVER a Go baseline
+  oracle_only_as: ["Kill", "headroom_bound"]    # FR-25: oracle is NOT a Go criterion
+  paired_realization: true       # same shared realization (make_realization) across all methods per (cell,seed)
+
+probes:   # the THREE headroom/observability Probes run in this batch (F2-A needs collision check first)
+  - id: F1-A
+    name: model_prior_oracle_state_headroom
+    family: channel_model_prior
+    question: >-
+      Under scoring-only conditions (per-block true Jones from h/theta), what macro PI-SER headroom
+      does a model-based MMSE equalizer close over fixed-mu CMA mu=0.03? Is receiver-visible state
+      observability plausible (i.e. is the gap due to information that a causal tracker COULD recover)?
+    hypothesis: "true-state MMSE closes >= 0.03 headroom on the collapse subset; the gap is not just noise."
+    falsifier: "oracle headroom < 0.03 macro PI-SER (8x below like D018) -> model-prior family Kill."
+    legal_information: "per-block true Jones matrix (eval-truth h, theta) -> per-block MMSE"
+    comparator: fixed_mu_cma_mu=0.03
+    semantic_smoke: [constant_output, identity_no_harm, no_eval_truth_leak_into_visible_path, paired_realization]
+    observability_check: >-
+      Correlate per-realization oracle headroom with receiver-visible features (w_norm trajectory,
+      z_amp trajectory, block-0 collapse flag). If headroom is uncorrelated with ALL receiver-visible
+      features (point-biserial |r| < 0.1), flag OBSERVABILITY_UNCONFIRMED even if headroom passes.
+    budget_minutes: 15
+    claim_ceiling: HEADROOM_BOUND_LOCAL_SLICE
+
+  - id: F3-A
+    name: causal_history_information_increment
+    family: causal_temporal_history
+    question: >-
+      Do past K blocks (z-stream, CMA weight trajectory) provide CONDITIONAL information about the
+      current block's optimal action / state beyond block-0-only features? Quantify via conditional
+      mutual information and predictive R^2.
+    hypothesis: "past-block features add > 0 conditional MI about optimal MMSE Jones / collapse flag."
+    falsifier: "conditional MI ~ 0 (|MI| < 0.01 bits) OR predictive R^2 with history <= R^2 block-0-only -> history family Kill."
+    legal_information: "causal past-block z-stream + weight trajectory (receiver-visible)"
+    comparator: "block-0-only feature baseline (H066: collapse determined at block 0)"
+    semantic_smoke: [causal_prefix_invariance, no_future_samples, constant_output, paired_realization]
+    budget_minutes: 15
+    claim_ceiling: OBSERVABILITY_LOCAL_SLICE
+
+  - id: F4-A
+    name: corrected_soft_gmi_oracle_headroom
+    family: decoder_soft_feedback
+    question: >-
+      After correcting the C12 scale-artifact (per-symbol/per-block sigma^2 instead of global sigma^2,
+      plus analytic-GMI cross-check), does a proper soft/GMI oracle show end-to-end headroom over
+      max-log soft demap? Is the corrected oracle a TRUE upper bound (sensitive to common positive LLR scaling)?
+    hypothesis: "corrected per-symbol sigma^2 oracle closes > 0 GMI headroom that global-sigma oracle missed."
+    falsifier: "corrected oracle GMI headroom ~ 0 (within noise) -> decoder/soft family Kill."
+    legal_information: "per-symbol soft LLR (scoring-only, TX-truth-conditioned posterior)"
+    comparator: maxlog_soft_demap_16qam with global sigma^2 (the C12 baseline)
+    semantic_smoke: >-
+      [oracle_sensitive_to_positive_scaling, constant_output, no_eval_truth_leak_into_visible_path,
+      gmi_histogram_vs_analytic_cross_check]
+    budget_minutes: 15
+    claim_ceiling: HEADROOM_BOUND_LOCAL_SLICE
+
+semantic_smoke_definitions:   # every Probe must pass these BEFORE trusting its headline
+  constant_output: "feed constant/zero input -> output is constant/identity (no spurious signal)"
+  identity_no_harm: "the Probe's no-op variant (e.g. oracle = identity) does not improve over comparator"
+  no_eval_truth_leak_into_visible_path: "receiver-visible path source-grep does NOT reference sX/sY/h/theta/fixed_label/pi_ser"
+  paired_realization: "same shared realization across comparator and candidate per (cell,seed)"
+  causal_prefix_invariance: "perturbing samples beyond a prefix leaves prefix outputs bit-identical"
+  no_future_samples: "candidate does not read samples with index > current (source grep)"
+  oracle_sensitive_to_positive_scaling: "scaling TX-truth-derived sigma^2 changes oracle output (rejects scale-invariant artifact)"
+  gmi_histogram_vs_analytic_cross_check: "histogram GMI and analytic GMI agree within tolerance"
+
+practical_effect_threshold:   # same as hybrid-routing-scout-v1 (continuity)
+  oracle_headroom_min: 0.03   # ~6x MDE=0.005 to leave room for deployable-method loss
+  source: "MDE=0.005 (campaign statistical) scaled to practical; oracle below this = no deployable headroom"
+
+verdict_criteria:
+  FAMILY_HAS_HEADROOM_AND_OBSERVABILITY: >-
+    scoring-only oracle headroom >= 0.03 macro PI-SER (or corrected-GMI equivalent) AND receiver-visible
+    observability confirmed (headroom correlates |r| >= 0.1 with at least one receiver-visible feature
+    OR conditional MI > 0.01 bits). Authorizes considering a bounded SMALL_ADAPTER Scout of that family.
+  FAMILY_HEADROOM_BUT_NOT_OBSERVABLE: >-
+    headroom >= 0.03 but no receiver-visible feature predicts it. Record as BOUNDARY result; do NOT build
+    a full model. The information exists but is not extractable from receiver-visible signals.
+  FAMILY_BLOCKED: >-
+    headroom Probe cannot run (missing infrastructure, e.g. F4-B coded chain). Record as BLOCKED, NOT
+    scientific failure. Do not write a Kill verdict for a blocked axis.
+  FAMILY_NO_HEADROOM: >-
+    oracle headroom < 0.03 on fresh test seeds. Record as LOCAL_NEGATIVE for that family. Rotate to next.
+
+prohibitions:   # hard guardrails
+  - no_full_tracker_implementation   # no EKF/PF in this batch (F1-B is post-Probe decision)
+  - no_revival_of_blind_expert_router   # D018 closed
+  - no_revival_of_pilot_jones_inverse_microvariant   # p03 COLLISION; F2 must diff-check first
+  - no_global_sigma2_oracle_as_bound   # C12 scale-artifact (soft_demap.py:344 + V006:220)
+  - no_c16_spatial_2x2_as_expert   # task-mismatched non-FIR (D017)
+  - no_mde_as_communication_usable_threshold   # domain-comms.md:164-171; MDE=0.005 is statistical only
+  - no_seeds_71_80   # permanently lost held-out (D017)
+  - no_auto_promotion_to_GW_Contract_Execute_or_paper
+  - no_push_no_merge
+
+budget:
+  total_wall_minutes: 90   # three SMALL_ADAPTER Probes + collision check, parallelizable
+  per_probe_max_minutes: 15
+
+integrity:
+  protected_history: [B001, B002, B003, P03_atlas, canonical_state, completion_events, receipts]
+  source_closure_hash: required   # SHA-256 of all src files recorded in each Probe's result.json
+  independent_verifier: required   # P6 separation; attacks the 9 items in probe-verifier-checklist.md

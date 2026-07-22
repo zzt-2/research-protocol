@@ -1,8 +1,12 @@
 # Research Direction Lab Status
-# Updated 2026-07-22 S011/D017/D018/D019 — hybrid verdict and next portfolio pivot.
+# Updated 2026-07-22 S012/D020/V009 — info-source portfolio Probe complete; F1-B Scout pending user authorization.
 # IMPORTANT (D017): the prior "5 axes exhausted / collapse is a channel property" global
 # narrative from commit e15ae60 is INVALIDATED. Numbers reproducible; scientific semantics
 # failed on C12/C14/C15/C16 + seeds 71-80 lost held-out status. See harvest amendments.
+# IMPORTANT (D020): info-source Probes ran on FRESH seeds [141-150]. F1-A model-prior oracle
+# closes 0.133 macro PI-SER headroom (36x D018's blind-router 0.0037) with receiver-visible
+# observability |r|=0.65. F1-B model-based tracker is the first PASSING positive-method candidate;
+# needs ~1 day infrastructure investment (user decision). F4-A confirmed C12 scale-artifact.
 
 ## 1. Formal Goal and Authorization
 
@@ -31,12 +35,13 @@
 
 ## 4. Latest Completed Scientific Result
 
+- **S012/D020/V009 (2026-07-22)**: information-source portfolio Probe (3 headroom Probes on fresh seeds [141-150]). F1-A model-prior oracle → PASS: macro PI-SER headroom = 0.1329 (CI [+0.078,+0.196]), 36× D018's blind-router bound; receiver-visible observability |r|=0.651 (z_amp_mean/cm_error_final correlate with headroom). F3-A causal history → PASS: MI increment +0.060 bits, R² increment +0.036. F4-A decoder-soft → BOUNDARY: analytic GMI headroom +0.0089 (smoothing-fragile, verifier P1) + histogram-MI reproduces C12 scale-artifact (−0.021, scale-invariant) + F4-B coded-chain INFRASTRUCTURE_BLOCKED. Independent verifier 9/9 checks (8 PASS + 1 PARTIAL), 0 P0, headline numbers bit-identical. F1-B model-based tracker is the first candidate with legal headroom + observability; needs ~1 day infrastructure (user decision).
 - **S011/D018/V007 (2026-07-22)**: hybrid-routing Macro A → VERDICT C (COMPLEMENTARITY_INVALID). Legal FIR experts (MMA fair-μ + cold-start DD-LMS) vs CMA on fresh disjoint test seeds [121-130]: oracle headroom = 0.003693 macro PI-SER, 8× below the 0.03 practical threshold. MMA/DD-LMS fail in the SAME collapse realizations as CMA (correlated failure modes). Independent verifier 8/8 PASS. Macro B (router) NOT run (no headroom). The prior C16 "26/37 complementarity" confirmed as an artifact of illegal expert + contaminated seeds.
 - **S011/D017/V006 (2026-07-22)**: bounded reconciliation of commit e15ae60. 7 audit items all CONFIRMED. H060 downgraded from PRIMARY to LOCAL_SLICE weak claim.
 
 ## 5. Current Mode
 
-- Mode: SCIENCE_SCOUT portfolio remap. D018 closed the exact blind-expert routing contract; no method contribution yet. D019 authorizes a bounded information-source headroom map before any one-day infrastructure investment.
+- Mode: SCIENCE_SCOUT info-source Probe complete. D020 found the first PASSING positive-method candidate (F1-B model-based tracker, headroom 0.133 + observability 0.65) but it needs ~1 day infrastructure; awaiting user investment decision (A/B/C/D). F4-A is a BOUNDARY result (do-not-build).
 
 ## 6. Thesis Harvest (current view)
 
@@ -52,7 +57,7 @@
 
 ## 7. Next Automatic Action
 
-D019 — map and batch lightweight prerequisite/headroom Probes for four distinct legal information sources: channel-model prior, sparse/adaptive pilot, causal multi-block history, and decoder/CRC/soft feedback. Do not implement a full tracker until its observability and usable headroom survive.
+D020 — present the F1-B investment decision to the user (recommended: A = ~1 day dual-pol GG/SOP model-based tracker infrastructure + bounded Scout; comparator = fixed-μ CMA + blind_affine_compare_16qam). Do NOT auto-build the tracker without user authorization (material infrastructure investment).
 
 ## 8. Strategy Escalation Condition
 
@@ -60,7 +65,7 @@ Escalate only after the information-source map shows either (a) at least one evi
 
 ## Detail Pointers
 
-- Recovery handoff: .sessions/2026-07-20-direction-lab-science-scout/H012-information-source-portfolio-pivot.md
+- Recovery handoff: .sessions/2026-07-20-direction-lab-science-scout/H013-info-source-probe-complete-f1b-decision.md
 - Current state: projects/thesis-fso/direction-lab/state/current.yaml
 - Portfolio: projects/thesis-fso/direction-lab/portfolio/current.yaml
 - Harvest: projects/thesis-fso/direction-lab/harvest/current.yaml

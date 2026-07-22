@@ -211,8 +211,8 @@ historical_thesis_spines_e15ae60:
 # H060_PRIMARY spine above, until a legal-expert retest (Macro A) resolves it.
 # ─────────────────────────────────────────────────────────────────────────────
 current_view:
-  recovery_entry: H012-information-source-portfolio-pivot.md
-  source: S011-hybrid-routing-reconciliation-and-study.md / D017 / D018 / V006 / V007 / D019 / H012
+  recovery_entry: H013-info-source-probe-complete-f1b-decision.md
+  source: S012-info-source-portfolio-probe.md / D020 / V009 / D017 / D018 / V006 / V007 / D019 / H012
 
   dispositions:
     - id: H060_DOWNGRADED
@@ -319,7 +319,58 @@ current_view:
       evidence: C12/C16 source trees / D017
       status: active_with_caveats
 
+    - id: F1A_MODEL_PRIOR_HEADROOM_POSITIVE_SIGNAL
+      category: EVALUATION_INSIGHT
+      finding: >-
+        FIRST positive-method signal of the campaign: scoring-only model-prior oracle (true per-block
+        Jones from h/theta -> per-block MMSE) closes macro PI-SER headroom = 0.1329 (CI [+0.078,+0.196])
+        over fixed-mu CMA, 36x the D018 blind-router bound. Receiver-visible observability strong
+        (max |r|=0.651). Model priors are a DIFFERENT information source than swapped blind costs.
+      ceiling: HEADROOM_BOUND_LOCAL_SLICE
+      evidence: S012 / D020 / V009 / info-source-portfolio-probe F1-A-result.v1.json
+      thesis_destination: primary method candidate (F1-B model-based tracker Scout, pending user infra decision)
+      status: active
+
+    - id: F3A_HISTORY_INFORMATION_INCREMENT
+      category: EVALUATION_INSIGHT
+      finding: >-
+        Past-block CMA trace statistics add conditional information (MI increment +0.060 bits over
+        block-0-only; R^2 increment +0.036, best=cm_error_trend). History genuinely adds information;
+        secondary signal suitable as F1-B sub-component.
+      ceiling: OBSERVABILITY_LOCAL_SLICE
+      evidence: S012 / D020 / V009 / F3-A-result.v1.json
+      thesis_destination: secondary method material
+      status: active
+
+    - id: F4A_SOFT_GMI_SCALE_ARTIFACT_AND_BOUNDARY
+      category: FAILURE_MECHANISM
+      finding: >-
+        Corrected per-symbol sigma^2 soft/GMI oracle shows only +0.0089 bits/sym analytic GMI headroom
+        (smoothing-fragile: sm=2/8/32 = +0.033/+0.009/+0.002, CI crosses 0 at sm=32). Histogram-MI GMI
+        (-0.021) fully reproduces the C12 scale-artifact (scale-invariant). Methodology lesson:
+        scale-invariant estimators cannot serve as upper bounds. F4-B coded loop INFRASTRUCTURE_BLOCKED.
+      ceiling: BOUNDARY_LOCAL_SLICE
+      evidence: S012 / D020 / V009 / F4-A-result.v1.json
+      thesis_destination: limitations / methodology / threats-to-validity section
+      status: active
+
   current_valid_spines:
+    - spine: >-
+        PRIMARY (positive-method candidate, pending Scout): F1-B dual-pol GG/SOP model-based
+        tracker -> MMSE. F1-A Probe confirmed headroom 0.133 + observability 0.65. This is the
+        first candidate in the campaign with legal headroom AND receiver-visible observability.
+        Needs ~1 day infrastructure (user decision); Go must beat fixed-mu CMA + blind_affine_compare.
+      status: probe-passed; bounded Scout authorized to consider; awaiting user infra decision
+      ceiling: LOCAL_SLICE (Scout) -> potential DOMAIN if F1-B beats fair comparators
+      paper_value: PRIMARY (if F1-B Scout passes)
+
+    - spine: >-
+        SECONDARY (history-augmented tracker): F3-B multi-block KF using GG AR(1) continuity as a
+        sub-component of F1-B. F3-A confirmed +0.060 bits MI increment from history.
+      status: probe-passed secondary; HALF_DAY sub-component
+      ceiling: LOCAL_SLICE
+      paper_value: SECONDARY
+
     - spine: >-
         Boundary/diagnostic chapter: several exact blind-receiver modifications
         fail locally, with D017/D018 documenting task mismatch and correlated failure.
@@ -328,13 +379,13 @@ current_view:
       paper_value: SECONDARY
 
     - spine: >-
-        Positive-method search: identify which additional legal information source
-        can break the correlated blind failure before selecting an algorithm.
-      status: portfolio mapping and prerequisite Probes next
-      ceiling: HYPOTHESIS
-      candidate_sources: [channel_model_prior, sparse_or_adaptive_pilot, causal_history, decoder_crc_soft_feedback]
+        METHODOLOGY (negative material): F4-A decoder/soft family — scale-invariant histogram-MI
+        cannot be an upper bound (C12 artifact reproduced); per-symbol correction is smoothing-fragile.
+        D017/D018 task-mismatch + correlated-failure diagnostics.
+      status: boundary material; F4-B blocked on coded chain
+      ceiling: LOCAL_SLICE
+      paper_value: SECONDARY (limitations / threats-to-validity)
 
   next_action: >-
-    D019 information-source headroom map first; do not commit to a full tracker,
-    negative-boundary paper, or formal-goal change until the source-family Probes
-    establish usable headroom and observability or jointly fail.
+    D020: present F1-B investment decision to user (recommended A). Info-source Probes complete.
+    Do NOT auto-build tracker / coded chain / pilot infrastructure this round.

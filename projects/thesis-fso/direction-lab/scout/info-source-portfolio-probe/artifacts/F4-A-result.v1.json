@@ -1,0 +1,151 @@
+{
+  "probe_id": "F4-A",
+  "family": "decoder_soft_feedback",
+  "question": "After correcting the C12 scale-artifact (per-symbol sigma^2), does a proper soft/GMI oracle show headroom over max-log global-sigma?",
+  "macro_gmi_global_sigma": {
+    "macro": 2.578266967652721,
+    "ci_lo": 2.2354862026354465,
+    "ci_hi": 2.862698361392237,
+    "n_cells": 11,
+    "cell_means": {
+      "16qam-snr05-nominal-short": 1.2140056817218627,
+      "16qam-snr10-nominal-short": 2.047290335788502,
+      "16qam-snr15-nominal-short": 2.5744215337831378,
+      "16qam-snr20-nominal-short": 2.7074959716360576,
+      "16qam-snr25-nominal-short": 2.737069916442539,
+      "16qam-snr20-fg100-short": 2.70378656053849,
+      "16qam-snr20-fg1000-short": 2.686455995226251,
+      "16qam-snr20-sop40e-short": 2.706429207044148,
+      "16qam-snr10-fg100-long": 2.4258346981699654,
+      "16qam-snr15-fg1000-long": 3.1381009144831316,
+      "16qam-snr20-nominal-long": 3.420045829345844
+    }
+  },
+  "macro_gmi_corrected_per_symbol": {
+    "macro": 2.5871740670060963,
+    "ci_lo": 2.2468093922377252,
+    "ci_hi": 2.867547818152222,
+    "n_cells": 11,
+    "cell_means": {
+      "16qam-snr05-nominal-short": 1.2404904645383001,
+      "16qam-snr10-nominal-short": 2.0650617606641912,
+      "16qam-snr15-nominal-short": 2.579147245653674,
+      "16qam-snr20-nominal-short": 2.711297014578915,
+      "16qam-snr25-nominal-short": 2.7404085791804214,
+      "16qam-snr20-fg100-short": 2.7076191373451977,
+      "16qam-snr20-fg1000-short": 2.6904431552678587,
+      "16qam-snr20-sop40e-short": 2.7102980980314495,
+      "16qam-snr10-fg100-long": 2.449673479186914,
+      "16qam-snr15-fg1000-long": 3.1450778618083852,
+      "16qam-snr20-nominal-long": 3.419397940811751
+    }
+  },
+  "macro_gmi_headroom": {
+    "macro": 0.008907099353375292,
+    "ci_lo": 0.004108977638433293,
+    "ci_hi": 0.014568639789618028,
+    "n_cells": 11,
+    "cell_means": {
+      "16qam-snr05-nominal-short": 0.02648478281643733,
+      "16qam-snr10-nominal-short": 0.017771424875688953,
+      "16qam-snr15-nominal-short": 0.00472571187053592,
+      "16qam-snr20-nominal-short": 0.0038010429428573743,
+      "16qam-snr25-nominal-short": 0.0033386627378819644,
+      "16qam-snr20-fg100-short": 0.0038325768067077326,
+      "16qam-snr20-fg1000-short": 0.003987160041607674,
+      "16qam-snr20-sop40e-short": 0.0038688909873013655,
+      "16qam-snr10-fg100-long": 0.023838781016948418,
+      "16qam-snr15-fg1000-long": 0.0069769473252538185,
+      "16qam-snr20-nominal-long": -0.000647888534092328
+    }
+  },
+  "macro_gmi_headroom_histogram": {
+    "macro": -0.02085364169746943,
+    "ci_lo": -0.02888031636708373,
+    "ci_hi": -0.012911737556719781,
+    "n_cells": 11,
+    "cell_means": {
+      "16qam-snr05-nominal-short": 0.0009095736014254174,
+      "16qam-snr10-nominal-short": -0.009711974579375827,
+      "16qam-snr15-nominal-short": -0.022516773559428382,
+      "16qam-snr20-nominal-short": -0.028718660325949365,
+      "16qam-snr25-nominal-short": -0.0506143515290574,
+      "16qam-snr20-fg100-short": -0.023489388582513947,
+      "16qam-snr20-fg1000-short": -0.030321389863990557,
+      "16qam-snr20-sop40e-short": -0.026561061752341474,
+      "16qam-snr10-fg100-long": -0.013094534974228966,
+      "16qam-snr15-fg1000-long": -0.020529015680541773,
+      "16qam-snr20-nominal-long": -0.004742481426161449
+    }
+  },
+  "scale_invariance_smoke": {
+    "histogram_gmi_at_scale_0.5": 3.997357636497347,
+    "histogram_gmi_at_scale_1.0": 3.997357636497347,
+    "histogram_gmi_at_scale_2.0": 3.997357636497347,
+    "histogram_scale_sensitive": false,
+    "analytic_gmi_at_scale_0.5": 3.999999117526765,
+    "analytic_gmi_at_scale_1.0": 3.9998028943963315,
+    "analytic_gmi_at_scale_2.0": 3.9919445792368693,
+    "analytic_scale_sensitive": true,
+    "note": "histogram MI is invariant to common LLR scaling (the C12 artifact source); analytic GMI is scale-sensitive and is the TRUE bound. Verdict uses analytic."
+  },
+  "analytic_gmi_cross_check": {
+    "histogram_gmi": 3.997357636497347,
+    "analytic_gmi": 3.9998028943963315,
+    "match_within_0.1": true
+  },
+  "n_realizations": 110,
+  "verdict": "FAMILY_HEADROOM_BUT_NOT_OBSERVABLE",
+  "verdict_reason": "analytic GMI headroom 0.008907 > 0 (CI lo 0.004109) exists beyond the C12 artifact (histogram MI confirmed scale-invariant, reproducing the artifact as expected). BUT headroom is THIN (~0.009 bits/sym, ~15x smaller than F1-A's PI-SER headroom), AND the deployable F4-B coded-receiver loop needs a coded chain (INFRASTRUCTURE_BLOCKED). Record as BOUNDARY; do NOT build a full coded receiver without user infrastructure authorization.",
+  "metadata": {
+    "probe_id": "F4-A",
+    "schema": "direction-lab.info-source-portfolio-probe.v1",
+    "MDE": 0.005,
+    "practical_headroom_min": 0.03,
+    "val_seeds": [
+      131,
+      132,
+      133,
+      134,
+      135
+    ],
+    "test_seeds": [
+      141,
+      142,
+      143,
+      144,
+      145,
+      146,
+      147,
+      148,
+      149,
+      150
+    ],
+    "frozen": {
+      "alpha": 4.2,
+      "beta": 1.4,
+      "block": 100,
+      "t_s": 4e-10,
+      "method": "gar",
+      "cma_mu_fixed": 0.03,
+      "cma_taps": 11,
+      "cma_block_size": 64,
+      "r2_qam16": 1.32
+    },
+    "elapsed_seconds": 1.04,
+    "source_closure_hashes": {
+      "src\\probe_shared.py": "7d9d87445650250530ed9e48ccf53ef75d2c89ff9260d9a37810b8d64c67cbfc",
+      "src\\run_f1a_model_prior.py": "bf0c65b7feff75e20dc1e53a0079b07812468dbe06376ea5d4c167c32fe84b96",
+      "src\\run_f3a_history.py": "7198aac001f646a92fe25f2d18b6a29df484d2dabd8842284fdfc3b2fa6bf55f",
+      "src\\run_f4a_soft_gmi.py": "b91731e9c26fb701d5913e6660688d5f44eccb86edc800ee345783f215025c85"
+    }
+  },
+  "smoothing_sensitivity_caveat": {
+    "finding": "Independent verifier P1: the +0.0089 analytic GMI headroom is sensitive to the per-symbol sigma^2 smoothing window.",
+    "smoothing_2_macro_X_only_headroom": 0.0331,
+    "smoothing_8_macro_X_only_headroom": 0.0102,
+    "smoothing_32_macro_X_only_headroom": 0.0032,
+    "interpretation": "At smoothing=2 the headroom inflates (overfit to single-sample noise); at smoothing=32 it vanishes (CI crosses 0). The effect concentrates in low-SNR cells. This is a FRAGILE window-dependent per-symbol variance exploitation, NOT a robust soft-info bound. The conservative BOUNDARY verdict (do NOT build F4-B) is unchanged; future F4-B investment must NOT cite +0.0089 as a stable upper bound without first fixing the smoothing-window dependence.",
+    "verifier": "independent_verifier agent_ad16446f, attack item 9d, 2026-07-22"
+  }
+}

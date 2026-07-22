@@ -1,11 +1,10 @@
 # state/current.yaml — sole machine current view
-# Rebuilt 2026-07-22 from S011 / D017 / D018 / D019 / V006 / V007 (supersedes the e15ae60 "5-axis exhausted"
-# projection which was reconciled and invalidated on scientific-semantics grounds).
+# Rebuilt 2026-07-22 from S012 / D020 / V009 (adds info-source Probe results to the S011/D017/D018/D019 base).
 # Explicit disposition lineage governs; protected history untouched.
 
 schema_version: research-direction-lab.state.current.v1
 project_id: thesis-fso.dual-pol-osl.direction-lab
-last_recovery_entry: H012-information-source-portfolio-pivot.md
+last_recovery_entry: H013-info-source-probe-complete-f1b-decision.md
 
 formal_goal: >-
   Systematically identify whether machine learning provides a real, legally
@@ -119,6 +118,38 @@ effective_conclusions:  # reflect S011/D017/V006 reconciliation (e15ae60 invalid
     source: S011 / D018 / V007
     validity: VALID
 
+  - id: F1A_MODEL_PRIOR_ORACLE_HEADROOM
+    statement: >-
+      On 11 cells x 10 fresh disjoint test seeds [141-150], a scoring-only model-prior oracle
+      (true per-block Jones from h/theta -> per-block MMSE with TX-truth calibration) closes
+      macro PI-SER headroom = 0.1329 (CI [+0.078,+0.196]) over fixed-mu CMA mu=0.03. This is
+      36x the D018 blind-router bound (0.0037) because model priors are a DIFFERENT information
+      source, not a swapped blind cost. Receiver-visible observability is strong: max |r|=0.651
+      between CMA trace features (z_amp_mean, cm_error_final) and per-realization headroom.
+    ceiling: HEADROOM_BOUND_LOCAL_SLICE
+    source: S012 / D020 / V009 / info-source-portfolio-probe F1-A-result.v1.json
+    validity: VALID
+
+  - id: F3A_HISTORY_INFORMATION_INCREMENT
+    statement: >-
+      Past-block CMA trace statistics add CONDITIONAL information about collapse (MI increment
+      +0.060 bits over block-0-only) and pi_ser (R^2 increment +0.036, best feature cm_error_trend).
+      History genuinely adds information (not an RNN assumption); but the increment is small (secondary).
+    ceiling: OBSERVABILITY_LOCAL_SLICE
+    source: S012 / D020 / V009 / info-source-portfolio-probe F3-A-result.v1.json
+    validity: VALID
+
+  - id: F4A_SOFT_GMI_BOUNDARY_SCALE_ARTIFACT_CONFIRMED
+    statement: >-
+      Corrected per-symbol sigma^2 soft/GMI oracle shows only +0.0089 bits/sym analytic GMI
+      headroom (smoothing-fragile: sm=2/8/32 = +0.033/+0.009/+0.002, CI crosses 0 at sm=32;
+      verifier P1 documented). Histogram-MI GMI (-0.021) fully reproduces the C12 scale-artifact
+      (scale-invariant). F4-B coded-receiver loop needs coded chain (INFRASTRUCTURE_BLOCKED).
+      BOUNDARY result: do NOT build F4-B without coded chain + smoothing-window fix.
+    ceiling: BOUNDARY_LOCAL_SLICE
+    source: S012 / D020 / V009 / info-source-portfolio-probe F4-A-result.v1.json
+    validity: VALID_AS_BOUNDARY_ONLY
+
 dispositions:
   - entity: C04/C09 mechanism negative (old S009 / D014)
     current_status: WITHDRAWN
@@ -171,13 +202,12 @@ dispositions:
     reason: reused across >=6 batches (c04/c09/c14/c15/c16/corrector + c12 subset)
 
 next_action:
-  mode: portfolio_mapping_and_probing
+  mode: await_user_investment_decision
   description: >-
-    D018 closed the exact CMA/MMA/DD-LMS blind-expert routing contract because its
-    oracle headroom was only 0.003693 macro PI-SER. D019 therefore moves one level
-    up: map and cheaply probe distinct legal information sources that could break
-    the correlated blind failure (channel-model prior, sparse/adaptive pilot,
-    causal multi-block history, decoder/CRC/soft feedback). Do not build the full
-    tracker first. Rank source families by scoring-only headroom, observability,
-    physical usability, comparator fairness, infrastructure cost, novelty risk,
-    and thesis fit; Scout only a source family whose prerequisite Probe survives.
+    D020 info-source Probe complete. F1-A model-prior PASS (headroom 0.133 + observability 0.65)
+    makes F1-B (dual-pol GG/SOP model-based tracker -> MMSE) the first positive-method candidate
+    with legal headroom + observability. But F1-B needs ~1 day infrastructure (existing _kf.py is
+    single-pol pilot-based, not reusable; CB3 warns of silent Y-drop). Per prompt section 6, the
+    strongest candidate needing ~1 day infrastructure is NOT auto-built; present the A/B/C/D
+    investment choice to the user. Recommended: A = F1-B bounded Scout. Do NOT auto-build tracker /
+    coded chain / pilot infrastructure this round.

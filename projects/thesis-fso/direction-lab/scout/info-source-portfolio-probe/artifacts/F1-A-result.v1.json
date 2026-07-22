@@ -1,0 +1,130 @@
+{
+  "probe_id": "F1-A",
+  "family": "channel_model_prior",
+  "question": "Under scoring-only conditions, what macro PI-SER headroom does a model-based MMSE equalizer close over fixed-mu CMA? Is receiver-visible observability plausible?",
+  "macro_cma_pi_ser": {
+    "macro": 0.33164062499999997,
+    "ci_lo": 0.2651234019886364,
+    "ci_hi": 0.41421697443181804,
+    "n_cells": 11,
+    "cell_means": {
+      "16qam-snr05-nominal-short": 0.651953125,
+      "16qam-snr10-nominal-short": 0.446484375,
+      "16qam-snr15-nominal-short": 0.332421875,
+      "16qam-snr20-nominal-short": 0.306640625,
+      "16qam-snr25-nominal-short": 0.304296875,
+      "16qam-snr20-fg100-short": 0.30703125,
+      "16qam-snr20-fg1000-short": 0.310546875,
+      "16qam-snr20-sop40e-short": 0.30546875,
+      "16qam-snr10-fg100-long": 0.357421875,
+      "16qam-snr15-fg1000-long": 0.1953125,
+      "16qam-snr20-nominal-long": 0.13046875
+    }
+  },
+  "macro_oracle_pi_ser": {
+    "macro": 0.19875710227272725,
+    "ci_lo": 0.10777521306818184,
+    "ci_hi": 0.31347833806818165,
+    "n_cells": 11,
+    "cell_means": {
+      "16qam-snr05-nominal-short": 0.640625,
+      "16qam-snr10-nominal-short": 0.389453125,
+      "16qam-snr15-nominal-short": 0.2015625,
+      "16qam-snr20-nominal-short": 0.098046875,
+      "16qam-snr25-nominal-short": 0.051953125,
+      "16qam-snr20-fg100-short": 0.09921875,
+      "16qam-snr20-fg1000-short": 0.10078125,
+      "16qam-snr20-sop40e-short": 0.0984375,
+      "16qam-snr10-fg100-long": 0.33046875,
+      "16qam-snr15-fg1000-long": 0.1359375,
+      "16qam-snr20-nominal-long": 0.03984375
+    }
+  },
+  "macro_headroom_over_cma": {
+    "macro": 0.1328835227272727,
+    "ci_lo": 0.08455255681818183,
+    "ci_hi": 0.18269264914772712,
+    "n_cells": 11,
+    "cell_means": {
+      "16qam-snr05-nominal-short": 0.011328125,
+      "16qam-snr10-nominal-short": 0.05703125,
+      "16qam-snr15-nominal-short": 0.130859375,
+      "16qam-snr20-nominal-short": 0.20859375,
+      "16qam-snr25-nominal-short": 0.25234375,
+      "16qam-snr20-fg100-short": 0.2078125,
+      "16qam-snr20-fg1000-short": 0.209765625,
+      "16qam-snr20-sop40e-short": 0.20703125,
+      "16qam-snr10-fg100-long": 0.026953125,
+      "16qam-snr15-fg1000-long": 0.059375,
+      "16qam-snr20-nominal-long": 0.090625
+    }
+  },
+  "macro_headroom_collapse_subset_only": {
+    "macro": 0.3388908617424242,
+    "n_cells": 11,
+    "n_realizations": 49
+  },
+  "practical_threshold_headroom_min": 0.03,
+  "headroom_meets_threshold": true,
+  "observability": {
+    "feature_correlations_with_headroom": {
+      "w_norm_final": 0.23233734168727235,
+      "w_norm_mean": 0.21791912619854859,
+      "w_norm_std": -0.0302724238393565,
+      "z_amp_final": -0.6138318058748358,
+      "z_amp_mean": -0.6510455630919102,
+      "z_amp_std": -0.2816216471595301,
+      "cm_error_mean": 0.45400537370887334,
+      "cm_error_final": 0.6015275653796294
+    },
+    "max_abs_correlation": 0.6510455630919102,
+    "observability_confirmed": true,
+    "threshold": 0.1
+  },
+  "n_realizations": 110,
+  "verdict": "FAMILY_HAS_HEADROOM_AND_OBSERVABILITY",
+  "verdict_reason": "headroom 0.132884 >= threshold AND receiver-visible correlation |r|=0.6510 >= 0.1 -> authorize considering SMALL_ADAPTER Scout (F1-B/C).",
+  "metadata": {
+    "probe_id": "F1-A",
+    "schema": "direction-lab.info-source-portfolio-probe.v1",
+    "MDE": 0.005,
+    "practical_headroom_min": 0.03,
+    "val_seeds": [
+      131,
+      132,
+      133,
+      134,
+      135
+    ],
+    "test_seeds": [
+      141,
+      142,
+      143,
+      144,
+      145,
+      146,
+      147,
+      148,
+      149,
+      150
+    ],
+    "frozen": {
+      "alpha": 4.2,
+      "beta": 1.4,
+      "block": 100,
+      "t_s": 4e-10,
+      "method": "gar",
+      "cma_mu_fixed": 0.03,
+      "cma_taps": 11,
+      "cma_block_size": 64,
+      "r2_qam16": 1.32
+    },
+    "elapsed_seconds": 1.24,
+    "source_closure_hashes": {
+      "src\\probe_shared.py": "7d9d87445650250530ed9e48ccf53ef75d2c89ff9260d9a37810b8d64c67cbfc",
+      "src\\run_f1a_model_prior.py": "bf0c65b7feff75e20dc1e53a0079b07812468dbe06376ea5d4c167c32fe84b96",
+      "src\\run_f3a_history.py": "7198aac001f646a92fe25f2d18b6a29df484d2dabd8842284fdfc3b2fa6bf55f",
+      "src\\run_f4a_soft_gmi.py": "adf8559556cf88a1201180c8f8fc6a43b23aa20576001465e418a006d9ff8d03"
+    }
+  }
+}

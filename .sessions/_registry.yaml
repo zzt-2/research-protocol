@@ -594,7 +594,7 @@ topics:
     status: active
     created: "2026-07-20"
     last_updated: "2026-07-22"
-    description: "首轮正式 SCIENCE_SCOUT campaign。S011/D018 已关闭 CMA/MMA/DD-LMS 盲专家路由具体合同（oracle headroom 0.003693），不关闭新增信息路线。D019/H012 将下一步改为模型先验、pilot、因果历史、decoder/soft feedback 的组合级 headroom/observability Probe；current views 已收口。"
+    description: "首轮正式 SCIENCE_SCOUT campaign。S012/D020 信息来源组合级 Probe 完成：F1-A model-prior PASS（headroom 0.133 + observability 0.65，D018 blind-router 的 36×）、F3-A history PASS（+0.060 MI 次级）、F4-A decoder-soft BOUNDARY（analytic GMI +0.0089 smoothing-fragile + histogram 复现 C12 scale-artifact + coded-chain BLOCKED）。F1-B（dual-pol GG/SOP model-based tracker）为首选 Scout，需用户授权约一天基建。F2 pilot 待撞车核查。独立 verifier V009 CONFIRM。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 V007 PASS 的消费者部署（全局 Skill + STATUS + Project Adapter + protected history）作为科学探索起点

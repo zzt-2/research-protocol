@@ -1,6 +1,6 @@
 # Topic Index: Direction Lab 首轮 SCIENCE_SCOUT 正式科学探索
 
-> 状态: active（信息来源组合级 Probe 待续接） | 创建: 2026-07-20 | 最后更新: 2026-07-22 S011/D017/D018/D019/V006/V007/V008/H012：盲专家路由裁决 C；恢复链终验 PASS；下一步先比较新增信息来源，不直接押注 tracker
+> 状态: active（信息来源组合级 Probe 完成；F1-B 投资选择待用户决策） | 创建: 2026-07-20 | 最后更新: 2026-07-22 S012/D020/V009/H013：信息来源组合级 Probe 完成；F1-A/F3-A PASS（headroom+observability），F4-A BOUNDARY；F1-B model-based tracker 为首选 Scout 候选，需用户授权约一天基建
 
 ## 专题信息
 
@@ -71,6 +71,7 @@
 - **2026-07-21 D015（amended by D016）**：由机制负面强制轮转的推理撤回；轮转仅可作为后续资源选择。
 - **2026-07-21 D016 科学语义修订**：artifact fidelity 与科学语义分离；V004 保留前者，V005 对后者判 FAIL。旧 H009 失效，H010 成为恢复入口。
 - **2026-07-22 D018/D019**：合法 CMA/MMA/DD-LMS 专家间 oracle headroom 仅 0.003693，关闭本具体 blind-expert routing contract；这不等于全局无解。下一步从“换算法”退到“新增什么合法信息”，批量 Probe 模型先验、pilot、时间历史和 decoder/soft feedback，再决定投资哪条方法线。
+- **2026-07-22 D020/V009**：信息来源组合级 Probe 完成（F1-A model prior / F3-A history / F4-A decoder-soft）。F1-A PASS — model-based MMSE oracle 关闭 0.133 macro PI-SER headroom（D018 blind-router 的 36×），receiver-visible observability |r|=0.65 强相关；F3-A PASS — 历史 block 增 +0.060 bits MI、+0.036 R² 条件信息；F4-A BOUNDARY — corrected analytic GMI headroom +0.0089 但 smoothing-fragile（verifier P1）+ histogram-MI 复现 C12 scale-artifact + F4-B 需 coded chain（BLOCKED）。F1-B（dual-pol GG/SOP model-based tracker）为首选 Scout，需用户授权约一天基建。F2 pilot 待撞车核查。本轮不直接建 tracker/coded chain/pilot 基建。
 - **2026-07-22 D017 e15ae60 继承纠正（混合路由研究前置）**：commit e15ae60（C12/C14/C15/C16 + 重写 current views 为"5 轴穷尽"叙述）的数值**可复现**但 7 审计项（V006）全部 CONFIRM 科学语义失效/不足——C04/C09 O1 目标仍是 self-referential moving target（常数塌缩零损失）→ UNRESOLVED；C12 oracle 仅全局 σ² + histogram-MI scale-invariant → 非真上界（H062 撤回）；C14 0.9995 cosine + far-orthogonal probe 仅 narrative 未在 src → 仅证"最强单 init 塌缩"（H063 scope-narrow）；C15 共 μ=0.03 跨 19× 梯度差 → unequal-step 混淆（H064 撤回机制断言）；**C16 是空间 2×2 + real Givens 非 JADE 无 FIR → 非合法 capability-aligned 专家**（H065 重定性）；**seeds 71-80 在 ≥6 批重复使用 → 失去 held-out 资格**；H060 全域"信道属性/5 轴穷尽/不可提取求逆/可写完整负面边界论文/model-based tracker 唯一剩余"5 宣称 **invalidated**，降级为 LOCAL_SLICE 弱断言。混合路由诊断互补（CMA 0.2507 / HOS 0.4664 / 37 塌缩中 26 个 HOS 更好 / oracle selector 0.1928）**数值真实但建立在非法 C16 专家 + 污染 seeds + 事后 oracle 上，仅 DIAGNOSTIC**。合法 FIR 对齐 fallback = MMA（公平 μ 重测）+ standalone DD-LMS（新建）。未重跑科学实验，未建 controller，未改 protected history。
 
 ## 进展线索
@@ -88,6 +89,7 @@
 - **S011 / D017 / V006**：混合路由研究前置 reconciliation。发现 e15ae60 在 H010 之后提交却未登记 S/D/V/H（注册表 last_updated 仍 2026-07-21），其"5 轴穷尽"叙述未经治理。独立子 agent + 主线复算 7 审计项全部 CONFIRM：数值可复现但 C12/C15/C16 科学语义失效、C14 scope 不足、C04/C09 UNRESOLVED、seeds 71-80 失去 held-out。H060 降级 + 拆分。以 D017 为干净起点进入混合路由 Macro A/B/C。本轮最多新建 1 个 S###（即本 S011），D/V 继续追加。
 - **S011 / D018 / V007 / H011**：合法 FIR 专家 Macro A 完成；oracle headroom 0.003693 < 0.03，裁决 C，未训练 router。旧 task-mismatched HOS 互补信号失效。本轮只形成 LOCAL_SLICE 负面与方法论教训。
 - **D019 / H012 / V008**：修复 current views 的残留矛盾与无效 harvest YAML；独立终验 PASS。下一轮不把 model-based tracker 当唯一方向，先做信息来源候选族的组合级 headroom/observability Probe。
+- **S012 / D020 / V009 / H013**：信息来源组合级 Probe 批次完成。冻结共享 contract（probe-contract.v1.yaml：同 anchor/slice/eval-window/paired-realization/fresh seeds [141-150]）；候选 Map（candidate-map.v1.md：四族 F1-F4 × 作用点 × 动作）；3 个 headroom Probe + 10/10 identity/smoke gate PASS + 独立 verifier CONFIRM（0 P0，1 P1 documented）。F1-A model-prior oracle 0.133 headroom + |r|=0.65 observability = campaign 首个正面信号；F4-A 确认 C12 scale-artifact（histogram invariant）。下一步交用户决策 F1-B 投资选择（推荐 A：~1 天 tracker 基建 + Scout）。
 
 ## 未决项
 
@@ -106,4 +108,4 @@
 
 ## 当前位置
 
-S011 / D017 / D018 / D019 / V006 / V007 / V008 / H012：e15ae60 继承状态已纠正；混合路由 Macro A 裁决 **C = COMPLEMENTARITY_INVALID**（合法 FIR 专家 oracle headroom 0.003693 << 0.03）；恢复链独立终验 PASS。本具体 blind-expert contract 关闭，但不能推出所有新增信息路线失败。下一轮先完成模型先验、稀疏/自适应 pilot、因果历史、decoder/CRC/soft feedback 的组合级 Probe 排序；只有胜出信息族才进入方法 Scout。唯一恢复入口 H012。
+S012 / D020 / V009 / H013：信息来源组合级 Probe 完成。**F1-A channel-model prior PASS**（oracle headroom 0.133 >> 0.03，receiver-visible observability |r|=0.65）；**F3-A causal history PASS**（+0.060 bits MI，+0.036 R²）；**F4-A decoder-soft BOUNDARY**（analytic GMI +0.0089 但 smoothing-fragile + histogram-MI 复现 C12 artifact + F4-B coded-chain BLOCKED）；F2 pilot 待撞车核查。**F1-B（dual-pol GG/SOP model-based tracker → MMSE）为首选 Scout 候选**，需用户授权约一天基建投资。本轮完成所有轻量 Probe，不直接建 tracker/coded chain/pilot。独立 verifier V009 CONFIRM（0 P0，1 P1 documented）。唯一恢复入口 H013。

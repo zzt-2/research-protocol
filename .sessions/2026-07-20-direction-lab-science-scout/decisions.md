@@ -853,3 +853,65 @@ S011 + V007 + 用户原话 `voice.md` 2026-07-22。
 ### 来源
 
 S011 / D017 / D018 / V007 / 用户 2026-07-22 交接请求。
+
+---
+
+## D020: 信息来源组合级 Probe — F1-A/F3-A PASS（headroom+observability），F4-A BOUNDARY；授权考虑 F1-B model-based tracker Scout
+
+> status: active
+> date: 2026-07-22
+> 取代：无（D019 的 next_action 执行结果；D018 的 blind-router Kill 继续有效）
+> 被取代：无
+> 依据: 验证: V009（独立 verifier 9 项攻击全 PASS/PARTIAL，0 P0，1 P1 documented；headline 数字独立重算 bit-identical）+ 验证: `info-source-portfolio-probe/artifacts/{F1-A,F3-A,F4-A}-result.v1.json` + `info-source-portfolio-probe/tests/test_probe_identity.py`（10/10 PASS）+ 调研: `info-source-portfolio-probe/candidate-map.v1.md` + `info-source-portfolio-probe/synthesis.v1.md` + 用户原话: voice.md 2026-07-22 "本轮要回答：哪一种新增、合法、运行时可获得的信息，最可能打破当前盲均衡器的相关失败"
+
+### 决策
+
+在 11-cell 16QAM dual-pol OSL atlas × fresh disjoint test seeds [141-150] 上，用冻结的共享 contract（probe-contract.v1.yaml）对四类信息来源中的三类执行最轻量 headroom/observability Probe（F2 pilot 因撞车核查未做，本轮不进）：
+
+1. **F1-A channel-model prior oracle headroom → FAMILY_HAS_HEADROOM_AND_OBSERVABILITY（PASS）**：
+   - 用真信道状态（per-block h, θ → 精确 Jones → per-block MMSE，TX-truth calibration）的 scoring-only oracle 相对 fixed-μ CMA μ=0.03 关闭 **macro PI-SER headroom = 0.1329**（CI [+0.078, +0.196]），远超 0.03 阈值（是 D018 blind-router 0.0037 的 **36×**）。
+   - receiver-visible observability 强相关：max |r|=0.651（z_amp_mean / cm_error_final 与 headroom 相关），远超 0.1 阈值。
+   - 信息来源是**信道模型先验**（不同信息源），不是换盲 cost——根本不同于 D018 的同类盲 FIR 专家。
+
+2. **F3-A causal temporal history information increment → FAMILY_HAS_HEADROOM_AND_OBSERVABILITY（PASS）**：
+   - 历史 block 的 CMA trace 统计量对 collapse 提供 **MI increment = +0.060 bits**（> 0.01 阈值），对 pi_ser 提供 **R² increment = +0.036**（best feature = cm_error_trend）。
+   - 历史**确实增加条件信息**（不是 RNN 假设）；但增量较小（次级信号）。
+
+3. **F4-A corrected soft/GMI oracle headroom → FAMILY_HEADROOM_BUT_NOT_OBSERVABLE（BOUNDARY）**：
+   - 修正 C12 scale-artifact 后，analytic GMI（scale-sensitive 真上界）显示 **+0.0089 bits/sym** headroom（CI lo +0.0041）；histogram-MI（scale-invariant）完全复现 C12 artifact（−0.021）。
+   - verifier P1：headroom **smoothing-fragile**（sm=2:+0.033, sm=8:+0.009, sm=32:+0.002，CI 跨 0）；集中在低 SNR cells。
+   - deployable F4-B 需 coded chain（INFRASTRUCTURE_BLOCKED）。**不建 F4-B**。
+
+**排序结论**：F1-B（可部署 dual-pol GG/SOP model-based tracker → MMSE）是首选 Scout 候选（headroom 上界 0.133 + observability 0.65 + 主结果潜力）。但 F1-B 需约一天新基建（现有 `_kf.py` 是 single-pol pilot-based，CB3 警告 silent Y-drop，不可直接复用），**本轮不直接建**——完成所有轻量 Probe 后统一向用户报告投资选择（提示词 §六）。
+
+### 理由
+
+1. **F1-A 的 0.133 headroom 是 campaign 中第一个有合法 headroom + observability 双通过的正面信号**。之前所有候选（C01-C16 + hybrid-routing）要么 STRUCTURALLY_CEILINGED、要么 UNRESOLVED、要么 VERDICT_C_CLOSED。model-based tracker 用的是不同信息源，未被 D018 关闭。
+2. **observability |r|=0.65 排除了"headroom 存在但 receiver 不可观测"的 BOUNDARY 情况**——deployable tracker 有合理机会从 CMA trace 恢复部分状态。这是 Go 的必要条件（FR-25：必须赢公平传统 comparator；oracle 只作 Kill）。
+3. **F4-A 的方法论价值**：独立确认了 C12 scale-artifact（histogram-MI scale-invariant），并发现 corrected oracle 的 headroom smoothing-fragile。这是负面/边界材料 + 方法论教训（scale-invariant 估计器不能当上界）。
+4. **不直接建 F1-B**：提示词明禁"直接实现完整 EKF/particle filter"和"一次性建设全部基础设施"。F1-B 是 ~1 天基建，属"最强候选需约一天新基建"→ 统一报告投资选择。
+5. **四族未全部无 headroom** → 不进入"全部无解"战略裁决；不收束为负面论文。
+
+### 否决了什么 / 未堵死什么
+
+- **未否决任何族**：F1/F3 通过，F4 是 BOUNDARY（不是 Kill），F2 待撞车核查。
+- **不复活 D018 blind-expert router**（contract 明禁）。
+- **不复活 p03 pilot→Jones→inverse 微变体**（COLLISION；F2 需先撞车核查）。
+- **不把 F4-A 的 fragile +0.009 当稳定 soft-info bound**（verifier P1 caveat 已写入 result.json）。
+
+### 可复用部分
+
+- `info-source-portfolio-probe/src/probe_shared.py`：共享 anchor/slice/eval-window/paired-realization/seed-discipline/source-closure 基础设施，可复用于 F1-B Scout。
+- `probe-contract.v1.yaml`：冻结的 verdict_criteria + semantic_smoke_definitions + fairness，可复用于后续 Scout。
+- `test_probe_identity.py`：10 个 identity/no-op/leakage/scale-invariance gate，可复用于 F1-B。
+- F1-A/F3-A/F4-A result.json：headroom/observability 上界数据，可复用于 Scout 设计。
+
+### 影响范围
+
+- 仅在本 campaign worktree 新增 `info-source-portfolio-probe/`（contract + map + synthesis + 4 src + tests + 3 artifacts）。
+- 不修改 protected history（B001-B003/P03/canonical-state/receipts）；无 ML 训练；无 EKF/PF 实现；无 push。
+- 下一动作：**交用户决策 F1-B 投资选择**（A/B/C/D 四选项，推荐 A）。本轮不自动进 Scout。
+
+### 来源
+
+S012 / V009 / 独立 verifier CONFIRM / 用户 2026-07-22 执行提示词 §二-§六。

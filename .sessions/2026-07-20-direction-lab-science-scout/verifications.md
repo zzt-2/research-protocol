@@ -344,3 +344,62 @@ PASS。三项修复均已复核通过，YAML 解析正常，未修改文件。
 ### 结论
 
 PASS
+
+---
+
+## V009: 信息来源组合级 Probe 独立 verifier adversarial 复核 — CONFIRM
+
+> date: 2026-07-22
+> 关联：S012 / D020
+> verifier: 独立 general-purpose 子 agent（P6 separation，与实现代码不同上下文，主动攻击非确认）
+
+### 验证问题
+
+F1-A/F3-A/F4-A 三个 headroom/observability Probe 的 verdict 和数字是否忠实于 raw artifact + source？是否有信息泄漏 / oracle 偷用 eval truth / comparator 不公平 / scale-artifact 未修正 / overreach / blocked 误写成 negative？
+
+### 验证范围（9 项 adversarial checks）
+
+1. 信息源真实存在（channel 暴露 h/θ，Jones 可解析重建）
+2. receiver-visible 路径不偷用 eval truth（receiver_visible_features 只读 cma trace）
+3. comparator 任务匹配且公平（μ=0.03 是 B01-R interior optimum；paired realization）
+4. 物理门限有 provenance（0.03 = MDE scaled，非 comms 阈值）
+5. 无退化解/常数解膨胀 headroom（独立重算 3 cells bit-identical）
+6. scope/overreach（claim_ceiling 全 LOCAL_SLICE；"authorize considering"非"run"）
+7. blocked vs negative 分离（F4-A BOUNDARY 非 Kill；F4-B INFRASTRUCTURE_BLOCKED）
+8. 公平性/oracle 不膨胀（oracle scoring-only Kill bound，非 Go criterion）
+9. scale-artifact 正确处理（histogram invariant / analytic sensitive / verdict 用 analytic / +0.0089 重算）
+
+### 结果
+
+| # | 项 | 结果 | 关键证据 |
+|---|---|---|---|
+| 1 | 信息源存在 | PASS | `_dual_pol_channel.py:123-132` SOP = sqrt(h)·[[cos,sin],[-sin,cos]]；reconstruct_jones 匹配 |
+| 2 | 无 eval-truth 泄漏 | PASS | receiver_visible_features 代码（去 docstring/comment）无 sX/sY/h/theta；unit test 强制 |
+| 3 | 公平 comparator | PASS | μ=0.03 是 decisions.md:390 interior optimum；每 (cell,seed) 一次 make_realization |
+| 4 | 门限 provenance | PASS | contract:122-123 "MDE=0.005 scaled"；prohibition no_mde_as_communication_usable |
+| 5 | 无退化解膨胀 | PASS | 3 cells (snr20-short/snr05-short/snr20-long) 独立重算 cma/oracle/headroom Δ<1e-9；macro 0.132884 复现 |
+| 6 | scope/overreach | PASS | 全 claim_ceiling=*_LOCAL_SLICE；"authorize considering"=Probe-PASS 语义 |
+| 7 | blocked vs Kill | PASS | F4-A=BOUNDARY 非 Kill；F4-B=INFRASTRUCTURE_BLOCKED；contract:133-135 禁止 blocked 写 Kill |
+| 8 | 公平性 | PASS | probe_shared.py:17-18,127 oracle=scoring-only Kill bound；oracle_only_as:[Kill,headroom_bound] |
+| 9 | scale-artifact | PARTIAL | (a)(b)(c) PASS；(d) **PARTIAL**：+0.0089 smoothing-fragile（sm=2:+0.033/sm=8:+0.009/sm=32:+0.002，CI 跨0）；非 verdict-changing（F4-A 已是保守 BOUNDARY） |
+
+### 独立重算数字（核心）
+
+- F1-A macro headroom = **0.132884**（stored bit-identical）；3 cells Δ<1e-9
+- F1-A max receiver-visible |r| = **0.651**
+- F3-A MI increment = **+0.060 bits**；R² increment = **+0.036**
+- F4-A analytic GMI headroom = **+0.008907**（stored bit-identical）；histogram = −0.021（scale-invariant 复现）
+- F4-A smoothing 敏感性：sm=2/8/32 macro_X_only = +0.0331/+0.0102/+0.0032（独立复现）
+
+### 发现的瑕疵（非 verdict-changing）
+
+1. **P1（methodological caveat）**：F4-A +0.0089 GMI headroom 对 smoothing 窗口超参数敏感；sm=32 时 CI 跨 0。集中在低 SNR cells。**已写入 F4-A-result.v1.json 的 smoothing_sensitivity_caveat 字段**。不影响 verdict（F4-A 已是保守 BOUNDARY/do-not-build）。
+2. **P1（cosmetic）**：contract 引用 `domain-comms.md:164-171` 但该文件行内容与引用字面不完全匹配（实质内容在别处）。不影响。
+
+### 结论
+
+**PASS / HIGH confidence — CONFIRM**。所有 headline 数字独立重算 bit-identical；无 truth 泄漏 / 退化解 / overreach / blocked-as-Kill / oracle-as-Go；scale-artifact 正确诊断（histogram invariant / analytic sensitive / verdict 用 analytic）。1 个 P1（F4-A smoothing 敏感性）已文档化，非 verdict-changing。
+
+### 对决策的影响
+
+支撑 D020：F1-A/F3-A PASS 授权考虑 F1-B Scout；F4-A BOUNDARY 不建 F4-B；统一报告投资选择交用户。

@@ -1,10 +1,11 @@
-# portfolio/current.yaml — reconciled 2026-07-22 after S011/D017/D018/D019
-# Open portfolio: exact blind-expert routing contract closed; information-source families remain open.
+# portfolio/current.yaml — reconciled 2026-07-22 after S012/D020/V009
+# Info-source Probe complete: F1-A/F3-A PASS, F4-A BOUNDARY, F2 pilot pending collision check.
+# F1-B model-based tracker is the first positive-method candidate; needs user infrastructure authorization.
 
 schema_version: research-direction-lab.portfolio.current.v1
 project_id: thesis-fso.dual-pol-osl.direction-lab
 completeness_claim: OPEN_PORTFOLIO_NO_COMPLETENESS_CLAIM
-recovery_entry: H012-information-source-portfolio-pivot.md
+recovery_entry: H013-info-source-probe-complete-f1b-decision.md
 
 candidates:
   # ── Cluster 1-2: Failure observability (CEILINGED) ──
@@ -93,11 +94,15 @@ remaining_open:
   - id: MODEL_BASED_TRACKER
     label: receiver-only model-based GG+SOP tracker → MMSE
     dimension: different_subproblem
-    status: IDENTIFIED_NOT_EXECUTED
+    status: PROBE_PASS_AWAITING_USER_INFRA_DECISION   # S012/D020: F1-A headroom 0.133 + observability 0.65 PASS
     note: >-
-      One information-source candidate: channel MODEL priors rather than another
-      blind cost. Must first pass an observability/headroom Probe; do not commit to
-      a one-day EKF/PF implementation from title plausibility alone.
+      F1-A Probe PASS: scoring-only oracle (true per-block Jones from h/theta -> per-block MMSE)
+      closes macro PI-SER headroom = 0.1329 (CI [+0.078,+0.196]), 36x D018's blind-router bound.
+      Receiver-visible observability strong (max |r|=0.651, features z_amp_mean/cm_error_final).
+      F1-B deployable tracker (dual-pol GG/SOP EKF/KF on Jones -> MMSE) needs ~1 day infrastructure
+      (existing _kf.py is single-pol pilot-based, CB3 warns silent Y-drop). Awaiting user
+      investment decision (recommended A). Go comparator = fixed-mu CMA + blind_affine_compare_16qam;
+      oracle only as Kill bound (FR-21/FR-25).
   - id: SPARSE_PILOT_SEMIBLIND
     label: sparse-pilot or adaptive-pilot state information
     dimension: explicit_reference_information
@@ -108,25 +113,30 @@ remaining_open:
   - id: TEMPORAL_MODEL_HISTORY
     label: multi-block causal state continuity / prediction
     dimension: temporal_information
-    status: IDENTIFIED_NEEDS_OBSERVABILITY_PROBE
+    status: PROBE_PASS_SECONDARY_SIGNAL   # S012/D020: F3-A MI increment +0.060 bits, R^2 increment +0.036
     note: >-
-      Test whether legal history adds state information beyond the block-0 detector;
-      do not assume a recurrent model creates information.
+      F3-A Probe PASS (secondary): past-block CMA trace statistics add conditional information
+      (MI increment +0.060 bits over block-0-only; R^2 increment +0.036, best=cm_error_trend).
+      History genuinely adds information (not an RNN assumption); increment small. F3-B multi-block
+      KF (using GG AR(1) rho~0.99997) is a HALF_DAY secondary component for F1-B; not standalone main.
   - id: DECODER_FEEDBACK_SOFT
     label: decoder/CRC/soft-output feedback to the front end
     dimension: cross_layer_information
-    status: IDENTIFIED_INFRASTRUCTURE_BLOCKED
+    status: PROBE_BOUNDARY_DO_NOT_BUILD   # S012/D020: F4-A analytic GMI +0.0089 smoothing-fragile; F4-B coded-chain BLOCKED
     note: >-
-      Potentially breaks the blind ambiguity, but requires a valid coded/soft chain
-      and a corrected GMI/LLR contract before any method Scout.
+      F4-A Probe BOUNDARY: corrected per-symbol sigma^2 oracle shows only +0.0089 bits/sym analytic
+      GMI headroom (smoothing-fragile, verifier P1; sm=2/8/32 = +0.033/+0.009/+0.002). Histogram-MI
+      fully reproduces C12 scale-artifact (-0.021, scale-invariant). F4-B coded-receiver loop needs
+      coded chain (INFRASTRUCTURE_BLOCKED, no FEC chain exists). Do NOT build F4-B without coded chain
+      + smoothing-window fix. Valid as boundary/negative material + methodology lesson.
   - id: C03_C07_REINIT
     label: learned/threshold reinit controller
     status: INFRASTRUCTURE_BLOCKED
     note: needs action hook; co-blocked
 
 next_action: >-
-  D019: before investing in a full tracker or changing the formal goal, build a
-  bounded information-source headroom atlas across model prior, sparse pilot,
-  temporal history, and decoder/soft feedback. Use analytic or scoring-only bounds
-  and semantic Probes first, rank by usable headroom, legality, infrastructure cost,
-  novelty risk, and thesis fit, then Scout only the strongest runnable family.
+  D020: present the F1-B investment decision to the user. Probe results: F1-A model-prior PASS
+  (headroom 0.133, observability 0.65), F3-A history PASS (secondary, +0.060 MI), F4-A BOUNDARY
+  (do-not-build). Recommended A = ~1 day dual-pol GG/SOP model-based tracker infrastructure +
+  bounded Scout; comparator = fixed-mu CMA + blind_affine_compare_16qam. Do NOT auto-build
+  tracker / coded chain / pilot infrastructure this round (prompt section 6).

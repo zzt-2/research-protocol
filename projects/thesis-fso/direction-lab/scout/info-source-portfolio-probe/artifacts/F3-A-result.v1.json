@@ -1,0 +1,80 @@
+{
+  "probe_id": "F3-A",
+  "family": "causal_temporal_history",
+  "question": "Do past K blocks provide CONDITIONAL information about current block state beyond block-0-only features? (MI + predictive R^2)",
+  "mutual_information": {
+    "block0_feature_mi": {
+      "w_norm": 0.36453922795777033,
+      "cm_error": 0.36781576769086693,
+      "update_norm": 0.3835900623666494,
+      "z_amp_max": 0.44150132135392234
+    },
+    "history_feature_mi": {
+      "cm_error_trend": 0.2537541834104044,
+      "z_amp_mean": 0.43591443615896897,
+      "w_norm_std": 0.31392289618985775,
+      "w_norm_mean": 0.29250993599236713,
+      "z_amp_std": 0.03642092885330178,
+      "cm_error_mean": 0.5011375507328937,
+      "cm_error_std": 0.3433616228191141
+    },
+    "max_mi_block0": 0.44150132135392234,
+    "max_mi_history": 0.5011375507328937,
+    "mi_increment_history_minus_block0": 0.05963622937897134,
+    "threshold_bits": 0.01
+  },
+  "predictive_r2": {
+    "best_r2_block0": 0.3719749664496639,
+    "best_r2_block0_feature": "z_amp_max",
+    "best_r2_history": 0.4079395086622768,
+    "best_r2_history_feature": "z_amp_mean",
+    "r2_increment_history_minus_block0": 0.035964542212612916
+  },
+  "n_realizations": 110,
+  "n_collapse": 49,
+  "verdict": "FAMILY_HAS_HEADROOM_AND_OBSERVABILITY",
+  "verdict_reason": "history adds conditional information: MI increment=0.0596 bits (>0.01) OR R^2 increment=+0.0360. Best history MI=0.5011 (feat=z_amp_mean). Authorize considering SMALL_ADAPTER Scout.",
+  "metadata": {
+    "probe_id": "F3-A",
+    "schema": "direction-lab.info-source-portfolio-probe.v1",
+    "MDE": 0.005,
+    "practical_headroom_min": 0.03,
+    "val_seeds": [
+      131,
+      132,
+      133,
+      134,
+      135
+    ],
+    "test_seeds": [
+      141,
+      142,
+      143,
+      144,
+      145,
+      146,
+      147,
+      148,
+      149,
+      150
+    ],
+    "frozen": {
+      "alpha": 4.2,
+      "beta": 1.4,
+      "block": 100,
+      "t_s": 4e-10,
+      "method": "gar",
+      "cma_mu_fixed": 0.03,
+      "cma_taps": 11,
+      "cma_block_size": 64,
+      "r2_qam16": 1.32
+    },
+    "elapsed_seconds": 1.14,
+    "source_closure_hashes": {
+      "src\\probe_shared.py": "7d9d87445650250530ed9e48ccf53ef75d2c89ff9260d9a37810b8d64c67cbfc",
+      "src\\run_f1a_model_prior.py": "bf0c65b7feff75e20dc1e53a0079b07812468dbe06376ea5d4c167c32fe84b96",
+      "src\\run_f3a_history.py": "7198aac001f646a92fe25f2d18b6a29df484d2dabd8842284fdfc3b2fa6bf55f",
+      "src\\run_f4a_soft_gmi.py": "adf8559556cf88a1201180c8f8fc6a43b23aa20576001465e418a006d9ff8d03"
+    }
+  }
+}
