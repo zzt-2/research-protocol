@@ -4,9 +4,9 @@ direction: 星地激光通信（FSO）——子地带由地勘（S003 方法论 
 method_type: 待定（精读后根据问题方法产出形态确定，见 glossary 判据 2）
 domain: comms
 created: 2026-06-21
-updated: 2026-07-19
-current_step: Direction-Lab-Headroom-Atlas-Stage-A-completed-P03-still-UNRESOLVED
-current_stage: FORMAL_BLOCKED
+updated: 2026-07-22
+current_step: Pilot-Jones-GW-Step3.5-IN_PROGRESS-P03-PAUSED-option1
+current_stage: FORMAL_GROUNDWORK_PILOT_JONES
 ---
 
 # Master Agent: thesis-fso
@@ -22,14 +22,15 @@ current_stage: FORMAL_BLOCKED
 
 ### 当前控制面桥接（唯一现行入口）
 
-- formal stage：`BLOCKED`。Direction Lab 的 Scout/Sandbox 结果对正式研究的 promotion effect 为 `none`。
-- formal blockers：P03 的 Headroom Atlas Stage A（2026-07-19，S077/D059/V033）已在 runnable 代表子域（QPSK × SNR 5–25 dB × f_G 30/100/1000 Hz × SOP 4e-6/4e-5 × N 512/8192 × CSI_NONE × uncoded hard decision，11 cells × 10 paired seeds）给出 LOCAL_NEGATIVE：0/11 cells 达到预注册 MDE 0.005，max visible headroom 0.00039（比 MDE 低 ~13×）。但 16QAM / receiver-estimated CSI / coded-output 三轴在 P03 frozen source closure 上 INFRASTRUCTURE_BLOCKED，历史反例（D008–D015/D023、U20 coded）恰好落在被阻轴上 → DOMAIN/CANDIDATE/FAMILY 仍 UNRESOLVED/OPEN。尚无 Sandbox winner 或正式 GW/Contract promotion 证据。旧 Pilot-Jones Step 3.5/4a 链也未成为当前授权入口。
-- Direction Lab sandbox history：当前 last completed batch = `B003 / COMPLETED_SANDBOX_VERIFIED`；事实源为 `projects/thesis-fso/direction-lab/state/completion-events.jsonl` 与对应不可变 projection。`canonical-state.yaml` 仅为机器投影，不是正式研究授权源。
-- current scout candidate：`P03/U19 residual-aware detection`，Stage A runnable 子域 LOCAL_NEGATIVE，但 domain/candidate/family 未决或开放。
-- scout status：`P03_DOMAIN_ADEQUACY_UNRESOLVED`；Stage A exit = `NO_HEADROOM_IN_REPRESENTATIVE_DOMAIN_WITH_CERTIFICATE`。历史 `P03_ANALYTIC_COVERAGE_GE_90` 保留为 exact-slice machine verdict；Stage A artifact 在 `projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/`。
+> **2026-07-22 战略切换（D061）**：用户选择 P03 routing 选项①——P03 暂停回候选池（不 Kill，family 不关闭，沿用 D057/D058 `P03_DOMAIN_ADEQUACY_UNRESOLVED`）；**激活 Pilot-Jones 为 thesis-fso 当前 formal Groundwork 工作线**。current formal GW step = **Pilot-Jones GW Step 3.5 IN_PROGRESS**（backward-chain 终验 V035 PASS，但 4 篇直接竞品全文获取 BLOCKED → Step 3.5 维持 PARTIAL，不进 Step 4a）。
+
+- formal stage：`GROUNDWORK`（Pilot-Jones formal GW 链激活）。Direction Lab 的 Scout/Sandbox 结果对正式研究的 promotion effect 仍为 `none`；Direction Lab campaign 已 dormant（D022 SCIENCE_FREEZE），无当前科学执行授权。
+- **Pilot-Jones formal GW（当前工作线）**：Step 1 ✅（S066/D055 generic 撞车收窄）/ Step 2 ✅ / Step 3 ✅（S069/S071 五篇精读，含 LCOMM 2026 + OE 2021 全文）/ **Step 3.5 🔄 PARTIAL**（V028/V029 PARTIAL + V035 backward-chain PASS；D056 要求的 4 篇直接竞品全文 BLOCKED）/ Step 4a ⛔（未授权，Step 3.5 未闭合）。详见方法层重开轨表。
+- formal blockers：Step 3.5 的 D056 全文门——4 篇直接竞品（TCOMM `10.1109/TCOMM.2024.3522036` / JLT2025 `10.1109/JLT.2025.3640695` / JLT2022 `10.1109/JLT.2022.3224805` / JLT2023 `10.1109/JLT.2023.3284489`）non-OA IEEE paywalled，`tools/download` all_failed，OA scout 4 源均 closed。只有 OE 2021 + LCOMM 2026 两篇全文精读。
+- P03（暂停，回候选池）：Headroom Atlas Stage A（2026-07-19，S077/D059/V033）runnable 子域 LOCAL_NEGATIVE；16QAM/receiver-CSI/coded-output 三轴 INFRASTRUCTURE_BLOCKED，历史反例落在被阻轴上 → DOMAIN/CANDIDATE/FAMILY 仍 UNRESOLVED/OPEN。**用户选项①已选定：暂停回候选池，不关闭 family**。
+- Direction Lab sandbox history：last completed batch = `B003 / COMPLETED_SANDBOX_VERIFIED`；事实源为 `projects/thesis-fso/direction-lab/state/completion-events.jsonl`。`canonical-state.yaml` 仅为机器投影，不是正式研究授权源。
 - formal promotion effect：`none`；B001–B003 数字不得进入论文或正式材料。
-- Atlas 强门入口：`projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/atlas_gate.py`（唯一 receipt-bound 入口；19 tests 含 8 个独立对抗反例；append-only 审计；token 类型分离）。
-- 下一合法边界：用户决策点（未选定）：① P03 暂停回候选池；② 建一条干净 source closure（最有杠杆是 16QAM）扩域重跑 Stage A；③ 换候选族（U36 等）。要关闭 DOMAIN/CANDIDATE 必须先建 {16QAM, receiver-CSI, coded-output} 中至少一条干净 closure 并带 scope certificate 处置历史反例。Stage B 不触发（无 headroom 区域）。不得启动 B004、P03 ML 训练或 Queue/Registry。
+- 下一合法边界：用户裁决 4 篇全文获取路径（机构 VPN / 作者邮件 / 带债豁免 / 等 OA）；**本轮不豁免、不进 Step 4a**。不得启动 B004、P03 ML 训练或 Queue/Registry。
 
 ### 历史 Groundwork 轨迹（保留审计，不授权当前执行）
 
@@ -93,7 +94,7 @@ current_stage: FORMAL_BLOCKED
 | Pilot Jones Step2 acquisition | 🟨 | S067 | LCOMM2026全文已有；4篇DOI all_failed并留metadata；Step1分类标注已补 |
 | Pilot Jones Step2 gap follow-up | 🟨 | S070 | 4 DOI补检无可读稿件；转共享papers库邻近全文，失败条目不冒充已读 |
 | Pilot Jones Step3 five-paper read | ✅ | S069 / S071 / V027b | 5篇结构化精读、read-log、Q1合法；Q2已按D055纠正，进入Step3.5 |
-| Pilot Jones Step3.5 supplement | 🔄 待V030 | S072–S074 / D056 / V028–V029 | R1新增4+1；R2/R3最终new=0；OE2021全文精读；最高引用JLT2022前向25+Crossref后向21（筛后7、new0）已补，待V030独立终审，Step4a仍封锁 |
+| Pilot Jones Step3.5 supplement | 🔄 PARTIAL（V035 backward PASS；4 篇全文 BLOCKED）| S072–S074 / D056 / D061 / V028–V029 / V035 | R1新增4+1；R2/R3最终new=0；OE2021+LCOMM2026全文精读；JLT2022前向25+Crossref后向21（筛后7、new0）**V035 独立终验 PASS**（gw-supplement 判据#3 闭合）。**但 D056 全文门 BLOCKED**：TCOMM2024.3522036/JLT2025.3640695/JLT2022.3224805/JLT2023.3284489 四篇 non-OA IEEE paywalled，tools/download all_failed，OA scout 4源均closed。Step4a仍封锁。注：V030属P03非Pilot-Jones（原"待V030"指针stale，已纠正）|
 | Pilot Jones Step1 classification | ✅ | S068 / V026b | candidate_key/top-level stats；必读6、formal56、direct5/adjacent26/none51 |
 | 候选族批量 MVE | ⬜ | — | 统一 baseline/seed/消融后执行 |
 | 晋级候选正式 GW Step 1→4a | ⬜ | — | 仅对批量胜者补齐 |

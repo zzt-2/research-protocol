@@ -24,15 +24,18 @@ formal_goal: >-
   emerge from formal Groundwork Step 3 close-read + Step 4a dimension A0 only.
 
 authorization:
-  current_mode: SCIENCE_SCOUT
-  science_authorized: true
-  scope: continuous multi-mechanism campaign in isolated worktree
+  current_mode: DORMANT  # was SCIENCE_SCOUT; D022 SCIENCE_FREEZE paused the campaign (topic dormant). D061 confirms: no current science-execution authorization in the Scout campaign.
+  science_authorized: false  # the Scout campaign is dormant; formal science now advances ONLY via the Pilot-Jones formal GW line (master-state.md §2), NOT via this campaign
+  scope: dormant campaign — no active multi-mechanism Scout rotation (D022). P03 paused back to portfolio (D061 option 1, family not closed). Pilot-Jones is the current formal GW line.
+  formal_gw_line: Pilot-Jones GW Step 3.5 IN_PROGRESS (see projects/thesis-fso/master-state.md §2 + method-layer reopen table)
   prohibits:
     - modify or rerun B001-B003 / P03 Atlas / canonical-state / completion-events
     - create legacy B004
     - auto-write Scout numbers into thesis or paper body
     - bypass Groundwork/Contract/Execute formal promotion
     - push or merge
+    - resume Scout candidate rotation (D022 freeze)
+    - run any new simulation/Probe/MVE/collision-check in the dormant campaign
 
 anchor:
   scenario: dual-polarization ground-to-satellite OSL under Gamma-Gamma turbulence and SOP dynamics

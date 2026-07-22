@@ -3084,3 +3084,61 @@ Direction Lab 下一阶段不再以单候选闭环作为长跑单位，而增加
 ### 来源
 
 S078；触发原话见 voice.md 2026-07-19。
+
+---
+
+## D061: 战略切换控制面 — P03 暂停回候选池（选项①）；激活 Pilot-Jones 为 thesis-fso 当前 formal GW 工作线；Step 3.5 backward-chain 终验 PASS 但 4 篇直接竞品全文获取 BLOCKED → Step 3.5 维持 PARTIAL/BLOCKED
+
+> status: active
+> date: 2026-07-22
+> 取代：无（不取代 D057/D058/D059/D060；P03 状态沿用 D057/D058 的 `P03_DOMAIN_ADEQUACY_UNRESOLVED`，family 不关闭；本 D061 只切换"当前 formal GW 工作线"从 P03 路由决策点切到 Pilot-Jones，并记录 Step 3.5 终验结果）
+> 被取代：无
+> 依据: 用户原话: voice.md 2026-07-22（"选择 master-state.md §2 的 P03 routing 选项①：暂停 P03，返回候选池；不关闭 P03 family。激活 Pilot-Jones 为 thesis-fso 当前 formal Groundwork 工作线。"）+ 验证: V035（backward-chain 独立终验 PASS）+ 对照: `tools/download --doi` 对 4 篇直接竞品 all_failed + OA scout 子 agent（Semantic Scholar/Unpaywall/OpenAlex/arXiv 四源均 closed）+ 对照: S069/S071 证明 LCOMM 2026 与 OE 2021 已全文精读（纠正 170c00c 审计错误）+ 对照: `search-archive/2026-07-17/step35-r3-jlt2022-{crossref,backward,backward-screened}.json`（Crossref refs=21 / screened=7 / new=0）
+
+### 决策
+
+**正式控制面切换**（用户战略裁决）：
+1. **P03 = PAUSED_RETURNED_TO_PORTFOLIO**（master-state §2 P03 routing 选项①）。**不是 Kill**——P03 family 不关闭，沿用 D057/D058 的 `P03_DOMAIN_ADEQUACY_UNRESOLVED`（slice LOCAL_NEGATIVE，DOMAIN/CANDIDATE/FAMILY 仍 OPEN）。P03 暂停，回候选池待未来 16QAM/receiver-CSI/coded-output 干净 closure 后可重评。
+2. **Pilot-Jones = thesis-fso 当前 formal Groundwork 工作线**。current formal GW step = **Pilot-Jones GW Step 3.5 IN_PROGRESS**（非 Step 4a）。
+3. **修正 master-state.md:96 的 stale "待V030" 指针**：V030 属 P03（`verifications.md:782` "P03 residual-headroom Scout 终验"，关联 S075/D057），不是 Pilot-Jones。Pilot-Jones Step 3.5 的门控是 V028（PARTIAL）/ V029（PARTIAL）+ 本轮新增 V035（backward-chain PASS）。
+4. **Direction Lab state/current.yaml authorization 纠正**：campaign 已 dormant（D022 SCIENCE_FREEZE），**无当前科学执行授权**。`current_mode` 不得继续写 `SCIENCE_SCOUT` / `science_authorized: true` / "continuous multi-mechanism campaign"；正式科学推进只在 Pilot-Jones formal GW 链内进行。
+
+**Step 3.5 终验结果（本轮）**：
+- **backward-chain 独立终验 = PASS**（V035）：JLT 2022 `10.1109/JLT.2022.3224805` Crossref references=21、screened_relevant=7、new=0，7 篇全部已在候选池/语料（grep all-papers.jsonl + papers/doi 确认），forward/backward 语义正确（forward 25 citers ∩ backward 21 refs = ∅），provenance 真实（Crossref REST + timestamp）。**gw-supplement 判据 #3（双向引用链已分析）现满足**。这是 V029 标 UNAVAILABLE 后的缺失终审，现已闭合。
+- **4 篇直接竞品全文获取 = BLOCKED**（D056: TCOMM `10.1109/TCOMM.2024.3522036` / JLT2025 `10.1109/JLT.2025.3640695` / JLT2022 `10.1109/JLT.2022.3224805` / JLT2023 `10.1109/JLT.2023.3284489`）：`tools/download --doi` 四篇均 `all_failed`（non-OA IEEE paywalled）；OA scout 子 agent 验证 Semantic Scholar `openAccessPdf=""` + Unpaywall `is_oa:false` + OpenAlex `closed` + arXiv 标题/作者检索 0 命中——**四篇均无合法可获取全文**（无 arXiv 预印本、无 green-OA）。
+- **Step 3.5 最终裁决 = PARTIAL/BLOCKED**：backward-chain 门已闭合（V035 PASS），但 D056 要求的 4 篇直接竞品全文精读无法完成（只有 OE 2021 + LCOMM 2026 两篇已全文精读）。**不进入 Step 4a**（FR-22 硬门；gw-supplement 收敛判据 + D056 全文门未满足）。
+
+### 理由
+
+- **控制面切换的合法性**：用户明确选择 master-state §2 的 P03 routing 选项①。D057/D058 已确立 P03 是 slice-level LOCAL_NEGATIVE、family 不关闭；选项①与之完全一致，无冲突。
+- **Pilot-Jones 是唯一有 formal GW 证据链积累的方向**：generic pilot→Jones 已撞车（D055），但收窄后的窄问题（M-C-A，见下）有 Step 1→2→3→3.5 的完整积累；其他候选（residual cascade 等）仍 ⬜。激活 Pilot-Jones 不违反 FR-22（它在 GW 内推进，不跳步）。
+- **Step 3.5 维持 PARTIAL 的诚实性**：4 篇直接竞品是 D056 明确指定的 Step 4a 前置门（"必须获取/精读直接竞品，确认其失效条件与当前 Q2 的 A 是否真的不同"）。全文获取 BLOCKED 时，不得用 abstract 冒充全文（gw-read.md 浅读不计入精读门槛；用户提示 §五 明禁），也不得强行通过 Step 3.5（FR-22 + TL-33 "自欺式核查"防护）。**BLOCKED 必须显式记录，交主控/用户裁决获取路径**（机构 VPN / 作者邮件 / 等待 OA）。
+
+### 排除的替代方案
+
+- **不用 abstract 冒充全文过 Step 3.5** —— 违反 gw-read.md（浅读不计入精读门槛）+ 用户提示 §五 + TL-33。4 篇只有 metadata.json + 摘要，不是全文。
+- **不强行进入 Step 4a** —— D056 全文门 + backward-chain 之外仍有 4 篇全文未读；FR-22 硬门。
+- **不关闭 P03 family** —— 用户选项①明示"不关闭"；D057/D058 也保持 OPEN。
+- **不复活 science-scout campaign** —— D022 SCIENCE_FREEZE 已收口 dormant；本轮工作在 formal GW 链内，不在 dormant 专题写新 S/D/V/H。
+- **不重做第四轮关键词泛搜** —— V029:778-780 明示"不需要第四轮关键词泛搜"，只缺 backward 终验（现已 PASS）。
+- **不修改 protected STATUS.v1.md / project.v1.yaml / canonical-state** —— 用户提示 + D022 明禁。
+
+### 可复用部分
+
+- **V035 backward-chain PASS**：JLT 2022 双向引用链已分析，gw-supplement 判据 #3 闭合。7 篇方法相关 backward refs 全部已知（含 OE 2021 = 直接前作）。
+- **OA scout 结论**：4 篇 IEEE 论文 closed 状态已由 3 独立聚合器（S2/Unpaywall/OpenAlex）+ arXiv 交叉确认，避免后续重复尝试 `tools/download`。
+- **审计错误纠正**（见 S074 追加段）：LCOMM 2026 + OE 2021 已全文精读（非 abstract-only）；真正缺全文的是 TCOMM2024/JLT2025/JLT2022/JLT2023 四篇。
+
+### 影响范围
+
+- **master-state.md**：§2 当前控制面桥接从 P03 routing 决策点切到 Pilot-Jones formal GW；方法层重开轨表:96 "待V030" 修正为 "V028/V029 PARTIAL + V035 backward PASS；4 篇全文 BLOCKED；Step 3.5 PARTIAL，不进 4a"。
+- **projects/thesis-fso/direction-lab/state/current.yaml**：authorization 块纠正（campaign dormant，无科学执行授权；formal GW 推进走 Pilot-Jones 链）。
+- **verifications.md**：新增 V035（backward-chain PASS）。
+- **literature_notes.md**：Q2 的 M-C-A 根据已读全文（OE 2021 + LCOMM 2026）+ V035 backward 证据重写；4 篇 BLOCKED 竞品标 `BLOCKED_NO_FULLTEXT`。
+- **S074**：追加本轮（审计纠正 + V035 + acquisition BLOCK）。
+- **H017**：交接 Step 3.5 PARTIAL/BLOCKED 状态 + 4 篇获取阻塞决策。
+- 不修改 protected 文件；不跑仿真/MVE；不进 Step 4a；不创建 F2 Scout；不 push。
+
+### 来源
+
+用户 2026-07-22 执行提示词（战略裁决选项① + 激活 Pilot-Jones）；V035 独立 verifier；OA scout 子 agent；S069/S071/S074 复核。触发原话见 voice.md 2026-07-22。

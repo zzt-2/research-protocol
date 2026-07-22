@@ -1192,15 +1192,17 @@ Q1可直接作为Step4a候选；Q2已完成M-C-A纠正，四判据形式通过�
 
 关键词矩阵第一轮6/6组合完成，共42条原始、41条canonical去重记录；实际有效来源为OpenAlex与Semantic Scholar两类（满足≥2源，**不含此前误记的Tavily**）。LCOMM 2026的引用链补检得到backward=19、forward=0；两组`FSO + Gamma-Gamma`精确组合检索均为0。第一轮新增必读4篇、建议读1篇，按`gw-supplement.md`“最后一轮新增=0”判据**尚未收敛**，必须用这5篇生成的新关键词执行第二轮定向检索。
 
-5篇先完成题名、摘要和正式发表状态核验，结构化浅读记录见`search-archive/2026-07-16/step35-direct-read5.json`。随后provenance复核发现L08已由Firecrawl成功取得54KB完整HTML正文（metadata=`success/good`，含方法、实验、复杂度、结论与参考文献），现转正式全文精读；其余4篇仍无可读全文，只能作摘要级证据，不得断言其具体LS公式、EMA实现、pilot开销、复杂度或全文实验条件。
+5篇先完成题名、摘要和正式发表状态核验，结构化浅读记录见`search-archive/2026-07-16/step35-direct-read5.json`。随后provenance复核发现L08已由Firecrawl成功取得54KB完整HTML正文（metadata=`success/good`，含方法、实验、复杂度、结论与参考文献），现转正式全文精读；**LCOMM 2026（S069专篇精读）也已全文精读**（`papers/doi/10.1109_LCOMM.2026.3651445/content.md`，FPT→4路→Jones直接补偿，光纤场景无时域LS+EMA）。其余4篇仍无可读全文，只能作摘要级证据，不得断言其具体LS公式、EMA实现、pilot开销、复杂度或全文实验条件。
+
+> **2026-07-22 更新（S074续接/D061/V035）**：Step 3.5 backward-chain 终验 **V035 PASS**（JLT2022 Crossref refs=21/screened=7/new=0，gw-supplement 判据#3 闭合）。但 4 篇直接竞品全文获取仍 **BLOCKED**：本轮 `tools/download --doi` 对 TCOMM2024.3522036 / JLT2025.3640695 / JLT2022.3224805 / JLT2023.3284489 四篇均 `all_failed`（non-OA IEEE paywalled）；OA scout 子 agent 验证 Semantic Scholar/Unpaywall/OpenAlex/arXiv 四源均 closed（无 arXiv 预印本、无 green-OA）。**4 篇全文无法合法获取**，标 `BLOCKED_NO_FULLTEXT`。Step 3.5 维持 PARTIAL（backward PASS + 收敛 PASS，但 D056 全文门 BLOCKED），不进 Step 4a。下一轮由用户裁决获取路径（机构 VPN / 作者邮件 / 带债豁免 / 等 OA）。**纠正 170c00c 审计错误**：LCOMM 2026 与 OE 2021 均已全文精读（非 abstract-only）。
 
 | L# | 论文 | 摘要核验的方法 | 对Q2的影响 | 证据级别 |
 |---|---|---|---|---|
-| L06 | TCOMM 2025, DOI `10.1109/TCOMM.2024.3522036` | pilot-symbol ML估计RSOP，EM利用未知数据精化，decision-aided动态跟踪 | 直接覆盖低pilot、高速RSOP估计稳定性；仅光纤PDM场景 | 无源文件（浅读） |
-| L07 | JLT 2026, DOI `10.1109/JLT.2025.3640695` | 共享短preamble联合帧同步、FOE、SOP tracking和均衡预收敛 | 直接覆盖短训练块与SOP稳定估计；未核实GG/Jones-inverse/EMA | 无源文件（浅读） |
+| L06 | TCOMM 2025, DOI `10.1109/TCOMM.2024.3522036` | pilot-symbol ML估计RSOP，EM利用未知数据精化，decision-aided动态跟踪 | 直接覆盖低pilot、高速RSOP估计稳定性；仅光纤PDM场景 | **BLOCKED_NO_FULLTEXT**（浅读；2026-07-22 tools/download all_failed + OA scout 4源 closed） |
+| L07 | JLT 2026, DOI `10.1109/JLT.2025.3640695` | 共享短preamble联合帧同步、FOE、SOP tracking和均衡预收敛 | 直接覆盖短训练块与SOP稳定估计；未核实GG/Jones-inverse/EMA | **BLOCKED_NO_FULLTEXT**（浅读；2026-07-22 tools/download all_failed + OA scout 4源 closed） |
 | L08 | Optics Express 2021, DOI `10.1364/OE.419574` | 三个线性无关pilot tones，逐block平均并解析求RSOP矩阵后求逆；扫描PSR与block size | 与“稀疏pilot→块级矩阵→逆补偿”高度同构，是Q2最直接机制基线；明确已有短block增噪/长block失配权衡，但未覆盖OSL GG、LS病态、EMA、fixed-label | **全文精读完成**（`papers/_read_notes/10.1364_oe.419574.md`） |
-| L09 | JLT 2022, DOI `10.1109/JLT.2022.3224805` | FPT提取传输矩阵与载波相位，并用滑动窗口平均跟踪 | 已覆盖pilot矩阵估计+时间平滑的核心链条，EMA本身不能作为贡献 | 无源文件（浅读） |
-| L10 | JLT 2023, DOI `10.1109/JLT.2023.3284489` | FPT联合偏振/载波恢复并处理IQ mixing等硬件失真 | 说明pilot/FPT鲁棒估计已有成熟竞争主线；OSL场景迁移不足以自动构成新问题 | 无源文件（浅读） |
+| L09 | JLT 2022, DOI `10.1109/JLT.2022.3224805` | FPT提取传输矩阵与载波相位，并用滑动窗口平均跟踪 | 已覆盖pilot矩阵估计+时间平滑的核心链条，EMA本身不能作为贡献 | **BLOCKED_NO_FULLTEXT**（浅读；2026-07-22 tools/download all_failed + OA scout 4源 closed；V035 backward-chain refs 含此论文自身） |
+| L10 | JLT 2023, DOI `10.1109/JLT.2023.3284489` | FPT联合偏振/载波恢复并处理IQ mixing等硬件失真 | 说明pilot/FPT鲁棒估计已有成熟竞争主线；OSL场景迁移不足以自动构成新问题 | **BLOCKED_NO_FULLTEXT**（浅读；2026-07-22 tools/download all_failed + OA scout 4源 closed） |
 
 #### Step 3.5 对方法分类和Q2的修正
 
@@ -1211,7 +1213,7 @@ Q1可直接作为Step4a候选；Q2已完成M-C-A纠正，四判据形式通过�
 
 R2按5种方法变体×2类场景得到31 raw/25 unique；R3围绕JLT 2023 PDL/FPT及引用链得到50 raw/37 unique。R2/R3最后一轮新增必读/建议读均为0，三轮关键词检索收敛。最高引用直接竞品确定为JLT 2022 FPT（citation_count=36，高于OE 2021的19）：Semantic Scholar前向链25篇；Crossref publisher metadata给出21条backward references，经索引与摘要筛出7篇方法相关，均为已知候选，新增0。检索与引用链归档见`search-archive/2026-07-17/step35-r3-summary.json`及`step35-r3-jlt2022-backward-screened.json`。
 
-当前Step 3.5后的Q2状态：**形式合法但新颖性高风险，禁止直接Go**。L08全文精读确认generic block-pilot稳定性问题已有明确噪声/失配分析；进入Step 4a时先以L08/L09/L06/L01做竞争维度分解，再判断OSL GG导致的病态性是否是结构性新失效条件；“同一篇论文未同时出现全部关键词”不作证据。
+当前Step 3.5后的Q2状态（2026-07-22 D061/V035 更新）：**形式合法但新颖性高风险，禁止直接Go；Step 3.5 维持 PARTIAL 不进 Step 4a**。L08（OE 2021）+ LCOMM 2026（S069）全文精读确认 generic block-pilot 稳定性问题已有明确噪声/失配分析；backward-chain V035 PASS（JLT2022 双向链已分析，7 篇 backward refs 全已知）。**但 D056 要求的 4 篇直接竞品（L06/L07/L09/L10）全文获取 BLOCKED**——无法比较其精确 pilot overhead、矩阵估计形式、EMA/时间平滑实现与复杂度，无法判定 OSL GG 是否引入它们未处理的结构性新失效。Q2 的 M-C-A（M=传统短帧/块级稀疏pilot LS Jones inversion；C=OSL双偏振GG衰落+高速SOP+≤10%pilot预算；A=短pilot矩阵病态/噪声抖动致fixed-label恢复不稳）形式仍成立，但"是否只是场景替换/EMA参数差异（→Kill）vs 结构性新失效（→允许Step4a）"**待 4 篇全文精读后才能裁决**。下一轮用户裁决获取路径（机构 VPN / 作者邮件 / 带债豁免 / 等 OA）；本轮不豁免、不进 Step 4a。"同一篇论文未同时出现全部关键词"不作证据。
 
 ### 实验完备性对标汇总
 

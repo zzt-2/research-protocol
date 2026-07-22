@@ -923,3 +923,42 @@ PASS。Headroom Atlas 强门入口、Stage A 可运行代表域诊断、append-o
 ### 结论
 
 PASS。目标设计可进入 implementation planning；这不是控制器实现、shadow campaign PASS 或新实验授权。
+
+---
+
+## V035: Pilot-Jones Step3.5 JLT 2022 backward-chain 独立终验（V029 UNAVAILABLE 后的缺失终审）
+
+> date: 2026-07-22
+> 关联：S074 / D056 / D061 / V028 / V029
+> verifier: 独立 general-purpose 子 agent（P6 separation，与本轮实施不同上下文；对抗性复核非确认）
+
+### 验证问题
+
+V029（2026-07-17）判 Pilot-Jones Step 3.5 PARTIAL，其中 backward-chain 标 UNAVAILABLE（Semantic Scholar HTTP 429 / 空 query 返回 0）。S074 line 15 称随后用 Crossref publisher metadata 补得 21 条 references、筛出 7 篇方法相关、new=0。本 V035 是对该现成 Crossref 补链的**独立终验**（不重新抓取，只核验已有 provenance），回答 gw-supplement 判据 #3（双向引用链已分析）是否现满足。
+
+### 验证项（6 项，读真实文件 `search-archive/2026-07-17/step35-r3-jlt2022-*.json`）
+
+- [x] 项1：Crossref refs=21 → `step35-r3-jlt2022-crossref.json` `reference_count=21`、`has_references=true`、`len(references)=21`、`doi=10.1109/jlt.2022.3224805` match
+- [x] 项2：screened_relevant=7 → `step35-r3-jlt2022-backward-screened.json` `screened_relevant` len=7（ref2 OFC2012 CMA / ref3 JLT2009 盲均衡 / ref8 OE.419574 直接前作 / ref9 OE.19.024331 feedforward / ref12 OE.26.021170 Stokes / ref13 OE.26.007211 KF / ref17 JPHOT.2016.2647221）
+- [x] 项3：new=0 → `new_must_read=[]`、`new_suggested=[]`、`unresolved_reference_metadata=11`
+- [x] 项4：7 篇全已知 → grep `search-archive/_index/all-papers.jsonl` 7 DOI 均 count≥1；部分在 `papers/doi/`（如 `papers/doi/10.1364_oe.419574/`）；无新增
+- [x] 项5：backward 语义正确 → `chain_type="backward references metadata"`、`source="Crossref REST works/DOI"`；forward 25 citers ∩ backward 21 refs = ∅（distinct-set sanity）
+- [x] 项6：provenance 真实 → 4 文件非空 valid JSON；crossref.json publisher=IEEE + Crossref 结构；两个 failed backward 尝试（backward.json total=0 timestamp 00:44:01 / backward-s2.json total=0 timestamp 00:46:33）保留为失败证据；screened.json source=Crossref REST
+
+### 证据
+
+~~~text
+crossref.json: reference_count=21, has_references=true, len(references)=21, doi=10.1109/jlt.2022.3224805
+screened.json: screened_relevant len=7, new_must_read=[], new_suggested=[], unresolved=11
+all-papers.jsonl: 7 screened DOIs each count>=1 (OE.419574 in 13 archive files)
+chain_type="backward references metadata"; forward(25) ∩ backward(21) = ∅
+provenance: crossref publisher=IEEE; 2 failed S2 attempts total=0 retained; screened source=Crossref REST
+~~~
+
+### 结论
+
+**PASS**（6/6 项全 PASS，0 缺陷）。JLT 2022 `10.1109/JLT.2022.3224805` 双向引用链已分析：forward=25 citing papers（Semantic Scholar，V029 已确认）+ backward=21 references（Crossref REST，7 screened method-relevant，全已知 new=0）。**gw-supplement.md 判据 #3（"至少 1 篇核心竞品的双向引用链已分析"）现满足**。V029 的 UNAVAILABLE 状态由 Crossref 补链闭合。
+
+### 后续（本 V035 只闭合 backward-chain 门，不闭合 Step 3.5 整体）
+
+Step 3.5 整体仍 **PARTIAL/BLOCKED**：backward-chain 门 PASS（本 V035）+ 收敛门 R3 new=0 PASS（V029），但 **D056 全文门 FAIL/BLOCKED**——4 篇直接竞品（TCOMM 2024.3522036 / JLT 2025.3640695 / JLT 2022.3224805 / JLT 2023.3284489）全文无法获取（non-OA IEEE，tools/download all_failed，OA scout 4 源均 closed）。只有 OE 2021 + LCOMM 2026 两篇全文精读。**不进入 Step 4a**（FR-22 + D056）。详见 D061。

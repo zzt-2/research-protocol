@@ -1,7 +1,7 @@
 # Topic Index: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
 
 > slug: 2026-07-10-dual-pol-osl-groundwork
-> status: active | created 2026-07-10 | last_updated 2026-07-19（S078/D060/V034：Portfolio Autopilot 目标设计经两轮独立审查由 PARTIAL 修至 PASS；首轮 shadow 至少 6 个有效批次、至少 3 个机制族，达到下限前局部事件不得请求用户方向拍板。当前可进入实现计划，不授权 B004、ML 或新性能实验。）
+> status: active | created 2026-07-10 | last_updated 2026-07-22（S074 续接/D061/V035/H017：战略切换——用户选 P03 routing 选项①【暂停回候选池，不关闭 family】，激活 Pilot-Jones 为 thesis-fso 当前 formal GW 工作线。Pilot-Jones Step 3.5 backward-chain 终验 V035 PASS（gw-supplement 判据#3 闭合），但 D056 要求的 4 篇直接竞品全文获取 BLOCKED（non-OA IEEE paywalled）→ Step 3.5 维持 PARTIAL，不进 Step 4a。同时纠正 170c00c science-scout 轮的审计错误：LCOMM 2026 与 OE 2021 均已全文精读非 abstract-only；真正缺全文的是 TCOMM2024/JLT2025/JLT2022/JLT2023。）
 
 ## 专题定位（一句话）
 
@@ -108,15 +108,16 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 
 ## 当前位置
 
-**S077 Headroom Atlas Stage A 完成，P03 在 runnable 子域 LOCAL_NEGATIVE 但 DOMAIN/CANDIDATE/FAMILY 仍开放 — 2026-07-19**。
+**S074 续接/D061/V035：战略切换 — Pilot-Jones 激活为 formal GW 线，Step 3.5 PARTIAL（backward PASS 但 4 篇全文 BLOCKED）— 2026-07-22**。
 
-- 唯一强门入口 `headroom-atlas/atlas_gate.py` 已建立并通过 19 tests + 独立对抗审查（V033）；Stage A artifact 在 `scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/`。
-- runnable 代表子域（QPSK × SNR × dynamics × length × CSI_NONE × hard-decision）0/11 cells 达 MDE；max visible headroom 0.00039；6/11 cells 灵敏度受限（零错误但 UB > MDE），4/11 cells 测得 negative。
-- DOMAIN/CANDIDATE/FAMILY 仍 UNRESOLVED/OPEN：3 轴 INFRASTRUCTURE_BLOCKED + 历史反例落在被阻轴上，无 scope certificate。
-- 用户决策点（未选定）：① P03 暂停回候选池；② 建一条干净 closure（最有杠杆是 16QAM）扩域重跑 Stage A；③ 换候选族（U36 等）。
-- formal research 仍 BLOCKED；S074 pilot-Jones Step3.5 与 V029 backward-chain 债务不因 P03 改变；ML/B004/Queue/Registry 仍禁止。
+- 用户战略裁决（D061）：P03 routing **选项①已选定**——P03 暂停回候选池（**不 Kill**，family 不关闭，沿用 D057/D058 `P03_DOMAIN_ADEQUACY_UNRESOLVED`）；**Pilot-Jones = thesis-fso 当前 formal Groundwork 工作线**。
+- **Pilot-Jones Step 3.5 = PARTIAL/BLOCKED**：backward-chain 终验 **V035 PASS**（JLT 2022 Crossref refs=21 / screened=7 / new=0，gw-supplement 判据#3 闭合）；收敛门 R3 new=0 PASS（V029）。**但 D056 全文门 BLOCKED**：4 篇直接竞品（TCOMM `10.1109/TCOMM.2024.3522036` / JLT2025 `10.1109/JLT.2025.3640695` / JLT2022 `10.1109/JLT.2022.3224805` / JLT2023 `10.1109/JLT.2023.3284489`）non-OA IEEE paywalled，`tools/download` all_failed，OA scout 4 源（S2/Unpaywall/OpenAlex/arXiv）均 closed。只有 OE 2021 + LCOMM 2026 两篇全文精读。
+- **Step 4a ⛔ 未授权**（Step 3.5 未闭合；FR-22 硬门 + D056）。Q2 当前 M-C-A：M=传统 block/frame pilot Jones inversion（短 pilot LS）；C=dual-pol OSL GG 湍流+高速 SOP+≤10% pilot 预算；A=fixed-label 恢复不稳定。**关键不确定性**：是否 OSL GG 引入既有方法（OE 2021/LCOMM 2026 均非 OSL）未处理的结构性新失效，还是仅场景替换/EMA 参数差异（→ Kill）。4 篇全文未读无法判定。
+- **审计错误已纠正**（S074 续接段）：170c00c science-scout 轮的 H015/S014/D022 误写"LCOMM 2026/JLT2022-23 仅 abstract"——实际 LCOMM 2026（S069）+ OE 2021 均已全文精读；master-state:96 "待V030" stale（V030 属 P03 非 Pilot-Jones）已纠正。
+- 下一合法边界：用户裁决 4 篇全文获取路径（机构 VPN / 作者邮件 / 带债豁免 D056 / 等 OA）。**本轮不豁免、不进 Step 4a、不跑仿真/MVE。**
+- Direction Lab Scout campaign dormant（D022）；ML/B004/Queue/Registry 仍禁止。
 
-此前：**S076 P03 claim-scope 纠错已完成，Headroom Atlas 待启动 — 2026-07-19**。
+此前：**S077 Headroom Atlas Stage A 完成，P03 LOCAL_NEGATIVE 但 DOMAIN/CANDIDATE/FAMILY 开放 — 2026-07-19**（P03 routing 决策点，现已被 D061 选项①裁决）。
 
 - P03 exact-slice历史status=`P03_ANALYTIC_COVERAGE_GE_90`，当前candidate status=`P03_DOMAIN_ADEQUACY_UNRESOLVED`；10-cell visible headroom=0只关闭该slice。
 - 下一步为baseline-only multi-domain Headroom Atlas；在代表域与统计灵敏度闭合前，不训练P03 ML，不创建B004/Queue/Registry，也不退休candidate/family。
