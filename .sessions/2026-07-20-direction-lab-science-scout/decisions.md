@@ -711,3 +711,105 @@ soft expected-distance 目标在 `A=0` 且输出常数约 `±0.6075` 时达到�
 ### 来源
 
 S010 / V005。触发原话为流程与记录体系要求，见本专题及体系专题 `voice.md` 2026-07-21。
+
+---
+
+## D017: e15ae60 继承结论纠正 + 7 审计项 reconciliation + H060 拆分降级（混合路由研究前置）
+
+> status: active
+> date: 2026-07-22
+> 取代：无（不删 e15ae60 的 artifacts；旧结论用 amended/superseded/invalidated 保留血缘）
+> 被取代：无
+> 依据: 用户原话: `voice.md` 2026-07-22 "不得直接继承 e15ae60 的以下结论：'五个机制轴已经穷尽'；'16QAM 内环坍塌是 OSL 信道本质属性'；'仅从接收统计量中不可能提取求逆信息'；'可直接写成完整负面边界论文'；'model-based tracker 是唯一剩余方向'" + "不得为了'整理状态'重跑科学实验" + 验证: V006（7 审计项独立子 agent 核验全部 CONFIRM + 主线复算 C16 result.v1.json 110 realizations）+ 调研: `S011-hybrid-routing-reconciliation-and-study.md` §1-§3
+
+### 决策
+
+e15ae60 提交的 C12/C14/C15/C16 四 scout 数值**可复现**，但其科学结论因实现身份/公平性/语义问题**不得直接继承**。7 审计项全部 CONFIRM，处置如下（详见 S011 §1 表）：
+
+1. **C04/C09** → 恢复 `IMPLEMENTATION_CONFOUND / UNRESOLVED`（O1-corrected 目标仍是 self-referential moving target，全局最优 = 常数塌缩 loss=0；constant-smoke 测的不是实际训练目标）。撤回"context-dependence 无价值"机制断言。
+2. **C12** → "零 GMI headroom"**不是真上界**（oracle 仅换全局 σ²；histogram-MI scale-invariant）。H062 撤回。GMI evaluator 资产保留（H067 不变）。
+3. **C14** → 仅证明"最强单 init 塌缩"；"init-invariant across direction space"**未由 shipped code 证明**（0.9995 cosine + far-orthogonal probe 仅在 synthesis narrative）。H063 scope-narrow。
+4. **C15** → "ring-aware 自洽塌缩"**被 unequal-step(19×) 混淆**。H064 撤回机制断言，保留 cold-start freeze 文档化行为。
+5. **C16** → **不是合法 capability-aligned fallback expert**（空间 2×2 + real Givens，无 FIR，非 JADE；vs CMA 11-tap butterfly）。H065 保留为"paradigm-distinct 但 task-mismatched"诊断。
+6. **seeds 71–80** → **失去 held-out 资格**（≥6 批重复使用，contract 自承认 intentional reuse）。confirmatory test 必须用全新 disjoint seeds。
+7. **H060** → **降级 + 拆分**：全域"坍塌是信道属性 / 5 轴穷尽 / 不可提取求逆 / 可写完整负面边界论文"四宣称 **invalidated**（evidence 链含 C12 scale-artifact + C16 task-mismatch，且 5 轴中 4 轴受混淆）；保留为 LOCAL_SLICE 弱断言"Godard-cost 在本 11-cell slice × seeds 71-80 上塌缩"。
+
+e15ae60 的"5 条结论"全部按上述处置；旧 artifacts 字节不动，旧错误结论只追加 amendment/supersede/invalidate。
+
+### 理由
+
+1. 提示词第一节**显式列出**不得直接继承的 5 条结论，并要求"先独立复现并处置 7 个审计问题"。这是强制前置，不是可选。
+2. 7 审计项经独立 explore 子 agent 核验 + 主线直接读 result.v1.json 复算，全部 CONFIRM（V006）。证据含 file:line 指针。
+3. 混合路由假设的"26/37 互补"诊断线索**数值可复现**（CMA 0.2507 / HOS 0.4664 / 37 塌缩中 26 个 HOS 更好 / oracle selector 0.1928），但建立在此 HOS = C16 = 非法 task-mismatched 专家上（审计 5），且 seeds 71-80 失去 held-out（审计 6），oracle 用事后 PI-SER。故仅 DIAGNOSTIC，不能授权 Go。这正是提示词研究问题 #1 要重测的：**合法、能力对齐专家间是否真有稳定互补**。
+4. "5 轴穷尽"叙述的 evidence 链有 3 轴（C12/C15/C16）科学语义失效，1 轴（C14）scope 不足，1 轴（C04/C09）UNRESOLVED。故"穷尽"不成立。
+
+### 排除的替代方案
+
+- **直接继承 e15ae60 全部结论并据此裁决 C**：拒绝（用户明令禁止 + 审计 5/6 证明 C16 非法专家、seeds 污染，"穷尽"前提不成立）。
+- **重跑 C12/C14/C15/C16 修正后版本**：拒绝（用户明令"不得为了整理状态重跑科学实验"；且混合路由研究的 fallback 是合法 FIR 专家，不是修复这些非对齐实现）。
+- **删除 e15ae60 artifacts**：拒绝（protected history；旧结论用 amendment 保留血缘）。
+- **建新通用 controller / scheduler**：拒绝（用户明令"不要建立新的通用控制器"）。
+
+### 影响范围
+
+- 仅修订当前视图的科学解释与 claim ceiling；C11 D012 / D013-amended / D016 不变；不修改代码、旧 artifact 字节、baseline、protected history 或 Skill。
+- H060 从 PRIMARY THESIS SPINE 降级为 LOCAL_SLICE 弱断言；harvest/current.yaml 须加 amendment 段（H062/H064 撤回、H063 scope-narrow、H065 重定性）。
+- 混合路由研究（Macro A/B/C）以 D017 为干净起点：合法 fallback = MMA（公平 μ 重测）+ standalone DD-LMS（新建）；fresh disjoint test seeds。
+- seeds 71-80 永久失去 held-out 资格。
+
+### 来源
+
+S011 + V006 + 用户原话 `voice.md` 2026-07-22。触发原话：见依据字段。
+
+---
+
+## D018: 混合盲均衡专家路由 — VERDICT C (COMPLEMENTARITY_INVALID)
+
+> status: active
+> date: 2026-07-22
+> 取代：无（关闭本具体 hybrid contract；不关闭整个算法选择家族）
+> 被取代：无
+> 依据: 验证: V007（独立 verifier 8/8 adversarial check PASS + headline 独立重算 bit-identical）+ 验证: `hybrid-routing-scout-v1/artifacts/result.v1.json`（oracle headroom all3=0.003693，阈值 0.03）+ 验证: `hybrid-routing-scout-v1/src/test_hybrid_identity.py`（DD-LMS 5/5 身份门 PASS）+ 用户原话: `voice.md` 2026-07-22 "若修正后的合法专家间没有达到预注册实用阈值的 oracle headroom，直接裁决 C" + 调研: 文献新颖性 bounded check（correlated-failure-mode 原理已知 Johnson 1998 / Qian 2002 / Kuncheva）
+
+### 决策
+
+混合盲均衡/专家路由 contract 经 Macro A 测试（合法 FIR 对齐专家 MMA + standalone DD-LMS，fresh disjoint test seeds [121-130]）裁决为 **C = COMPLEMENTARITY_INVALID**：
+
+- 合法专家间 oracle headroom = **0.0037 macro PI-SER**（all3 selector），远低于预注册实用阈值 0.03（8× 以下）。
+- 机制：MMA / DD-LMS / CMA 是近共模目标上的梯度下降，**失效模式相关**——它们在 CMA 塌缩的同一 61/110 realizations 上也塌缩（collapse 子集中 MMA 仅 5/61 更好、DD-LMS 仅 5/61 更好）。无可路由的互补结构。
+- 原 C16 "26/37 互补"是非法专家（空间 2×2 非 FIR）+ 污染 seeds 71-80 + 事后 PI-SER oracle 的伪象（D017 审计 5/6 已证）。
+
+按 frozen contract（headroom < 阈值 → verdict C，停止训练 router），**Macro B（router 比较）不运行**——oracle 上界本身已低于阈值，任何 router（阈值/低复杂度/ML）都无 headroom 可转化；训练 router 即"为 ML 而 ML"。Macro C 独立 verifier（C3）8/8 adversarial check PASS，结论稳健（CMA 给了最强 μ=0.03，测试偏向 C 但 headroom 仍 8× 低于阈值）。
+
+关闭**本具体** hybrid contract（坍塌感知的合法 FIR 盲均衡专家路由）。**不关闭**算法选择家族：在机械更多样的专家池（如 model-based tracker + blind，或 pilot-aided + blind）间路由未测，仍 open。
+
+### 理由
+
+1. 实验诚实：诊断线索（26/37）在合法专家 + fresh seeds 下消失，这是 COMPLEMENTARITY_INVALID 的定义（D017 审计预言的"原互补性是无效实现造成的诊断假象"）。
+2. 物理一致：合法 FIR 盲均衡器都是模/判决目标上的梯度法，共享塌缩盆地——这与 CMA 文献（Johnson 1998）、并行盲均衡多样性（Qian 2002）、集成理论（无多样性⟹无 oracle 增益，Kuncheva）一致。定性机制已知，不是新发现。
+3. 预算纪律：headroom < 阈值时停止 router 训练是 frozen contract 的硬规则；ML 贡献标准是 end-to-end PI-SER 改善，无 headroom 则无改善空间。
+4. 独立 verifier 确认无信息泄漏、专家身份合法（MMA 真实 YWD per-axis modulus + DD-LMS 真 cold-start，5/5 身份门）、comparator 公平（CMA 给了最强 μ）、headline 独立重算 bit-identical。
+
+### 否决了什么（Dead Ends）
+
+- **坍塌感知的合法 FIR 盲均衡专家路由（CMA↔MMA/DD-LMS）**：否决。机制=失效相关，headroom≈0.004。不得以"换个 router"或"加更多 seeds"复活——oracle 上界本身已证无 headroom。
+- **基于 C16 HOS 的路由假设**：否决（D017 审计 5：C16 非法非 FIR 专家，task-mismatch）。
+- **把 correlated-failure-mode 写成新机制贡献**：否决（定性已知 Johnson 1998/Qian 2002/Kuncheva）。
+
+### 可复用部分
+
+- `hybrid-routing-scout-v1/`：frozen batch-contract（A/B/C/D 判据 + 实用阈值 + 失败分类法）可复用于任何"专家路由"contract。
+- `dd_lms_equalizer.py`：legal cold-start DD-LMS 专家（已修 weight-norm bug），可复用于未来专家池。
+- oracle 互补性测试范式（paired realizations + per-realization selector + complementarity fractions）可复用。
+- **负面材料**：D017 + 本 D018 = "task-mismatched 专家 + 污染 seeds 制造假互补"的方法论教训；correlated-failure-mode 的 channel-specific 量化（headroom≈0.004 on OSL GG+SOP）。
+
+### 影响范围
+
+- 关闭本 hybrid contract；portfolio HYBRID_ROUTING 标 `VERDICT_C_CLOSED`。
+- harvest 新增：本 negative 作为 LOCAL_SLICE 负面材料（非 primary spine）；方法论教训进 harvest。
+- 不晋级 formal Groundwork/Contract/Execute；不写论文正文。
+- 算法选择家族仍 open（model-based tracker 维度仍 IDENTIFIED_NOT_EXECUTED）。
+
+### 来源
+
+S011 + V007 + 用户原话 `voice.md` 2026-07-22。

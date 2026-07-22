@@ -1,0 +1,154 @@
+# Batch Contract: hybrid-routing-scout-v1
+# Collapse-aware hybrid blind-equalizer expert routing — Macro A (oracle complementarity)
+# Frozen BEFORE reading any test results (per prompt: freeze A/B/C/D criteria before reading).
+# Schema: direction-lab.cb1.hybrid-routing.v1
+# Campaign: science-scout-2026-07-20.dual-pol-osl
+# Owner: S011 / D017
+
+schema: direction-lab.cb1.hybrid-routing.v1
+date: 2026-07-22
+intensity: SCOUT
+authorization: SCIENCE_SCOUT (no formal Groundwork/Contract/Execute promotion; no paper-body numbers)
+
+# ── Research hypothesis (from prompt §二) ──
+hypothesis: >-
+  Different blind equalizers have complementary failure modes. A receiver can use
+  causal, receiver-visible early statistics to judge the current state and switch
+  between CMA and one or more LEGAL fallback experts, reducing final PI-SER while
+  controlling clean-sample degradation, latency and compute.
+
+# ── A1. Expert identity (legal, capability-aligned, mechanism-distinct) ──
+experts:
+  anchor:
+    id: CMA_godard_z
+    formula: "Godard CMA with z-factor: J = E[(R^2 - |z|^2)^2], R^2=1.32 (16QAM)"
+    structure: "11-tap 2x2 butterfly FIR (wxx,wxy,wyx,wyy), center-tap init, block_size=64, single causal pass"
+    source: "cb1_cell_runner.standard_cma_godard_with_z (B01-R fair fixed-mu anchor, mu=0.03)"
+    identity_tests: [no_op, complex_convention, causal_prefix, source_closure]
+
+  fallback_1:
+    id: MMA_ywd
+    formula: "Yang-Werner-Dumont MMA JSAC 2002: J = E[(y_R^2 - R_R^2)^2 + (y_I^2 - R_I^2)^2], R_R^2=R_I^2=0.82 (sq-16QAM)"
+    structure: "SAME 11-tap 2x2 butterfly FIR, center-tap init, block_size=64, single causal pass (capability-aligned)"
+    source: "baseline-adjudication-batch/mma_comparator.py:mma_yang_werner_dumont"
+    provenance: "Yang/Werner/Dumont JSAC 2002 §III-A; Kikuchi JLT 2016 §IV.B (dual-pol); R_R^2 verified numerically + matches Mendes-Filho SSP2009, Akande-Joya EURASIP 2016"
+    identity_tests: [no_op, complex_convention, causal_prefix, source_closure]
+    mechanism_distinct_from_anchor: "per-axis modulus (splits real/imag, breaks rotational invariance) vs scalar modulus"
+    fairness_note: "per-cost mu tuned on VALIDATION seeds (NOT shared mu); gradient-magnitude-normalized option if magnitudes differ >3x"
+
+  fallback_2:
+    id: DD_LMS_cold_start
+    formula: "Decision-Directed LMS (Sato 1975): J = E[|s_hat - z|^2], s_hat = hard_16qam(z); w += mu*(s_hat - z)*conj(x)"
+    structure: "SAME 11-tap 2x2 butterfly FIR, center-tap init, block_size=64, single causal pass (capability-aligned)"
+    source: "NEW implementation in src/dd_lms_equalizer.py (standalone cold-start, NOT the C11 cascade stage-2)"
+    provenance: "Sato 1975; standard DD-LMS textbook (Haykin Adaptive Filter Theory)"
+    identity_tests: [no_op, complex_convention, causal_prefix, source_closure, decision_feedback_causal]
+    mechanism_distinct_from_anchor: "uses hard-decision feedback (discrete constellation attraction) vs continuous modulus"
+    expected_behavior: "cold-start DD-LMS typically DIVERGES on blind channels (no CMA warm-up); if so, it is a DIAGNOSTIC-only expert (documented), not a legal fallback — then rotate to a 3rd candidate"
+    fairness_note: "per-cost mu tuned on VALIDATION seeds; if diverges >50% on validation, mark DIVERGENT and exclude from Go comparison (honest)"
+
+# ── A2. Real failure taxonomy (NOT single PI-SER>0.3) ──
+failure_taxonomy:
+  receiver_visible_diagnostics:   # used for routing labels (B1), NOT for scoring
+    - inner_ring_occupancy_collapse: "fraction of |z| samples in inner ring > 0.6 AND PI-SER > 0.3"
+    - source_separation_failure: "output power balanced but constellation points unresolvable (high CM error, low collapse)"
+    - divergence: "blockwise weight norm exceeds 1e3 OR output power > 10x nominal"
+    - awgn_unrecoverable: "SNR too low (snr<=5): high error regardless of method (not a method failure)"
+    - permutation_phase_ambiguity: "PI-SER low but fixed_label_SER high (resolved by permutation, not a real failure)"
+    - under_convergence: "CM error still decreasing at end of block (N too short)"
+  scoring_only:   # the single ground-truth metric for oracle/scoring (uses TX truth)
+    pi_ser: "permutation-invariant symbol error rate (the canonical metric contract)"
+    fixed_label_ser: "reported alongside (for permutation/phase ambiguity detection)"
+
+# ── A3. Oracle complementarity (Kill/headroom bound ONLY, not Go comparator) ──
+oracle_test:
+  paired_realizations: true
+  quantities:
+    - always_CMA_macro_pi_ser
+    - always_each_fallback_macro_pi_ser
+    - per_realization_oracle_selector: "min(CMA, fallback) per realization, then macro over cells"
+    - per_cell_oracle_selector: "min-mean per cell"
+    - oracle_improvement: "frac of realizations where fallback < CMA (by >MDE)"
+    - oracle_worsening: "frac where fallback > CMA (by >MDE)"
+    - tie: "frac within +/-MDE"
+    - worst_case: "max degradation from choosing fallback when it's worse"
+    - collapse_subset_complementarity: "among CMA>0.3 realizations, frac where fallback better"
+  oracle_role: KILL_BOUND_HEADROOM_ONLY   # FR-21/FR-25: never a Go comparator
+  oracle_uses: post_hoc_PI_SER_and_TX_truth   # acknowledged: cannot be a runtime router
+
+# ── Seeds (FRESH DISJOINT — NOT 71-80, which lost held-out status) ──
+seeds:
+  validation: [101, 102, 103, 104, 105]      # per-expert mu tuning ONLY; never used for Go/Kill
+  test: [121, 122, 123, 124, 125, 126, 127, 128, 129, 130]   # confirmatory; never seen by any prior batch
+  prior_used_do_not_reuse: [11-20, 21-30, 31-35, 41-50, 61-65, 71-80, 81-95]
+  leakage_check: "validation ∩ test = empty; both ∩ all prior batches = empty"
+
+# ── Cells (representative atlas, not infinite expansion) ──
+cells:   # same 11-cell representative atlas as prior batches (for comparability of the diagnostic)
+  - {id: 16qam-snr05-nominal-short, snr_db: 5.0,  f_g_hz: 30.0,  sop_rate: 4e-6, n_symbols: 512}
+  - {id: 16qam-snr10-nominal-short, snr_db: 10.0, f_g_hz: 30.0,  sop_rate: 4e-6, n_symbols: 512}
+  - {id: 16qam-snr15-nominal-short, snr_db: 15.0, f_g_hz: 30.0,  sop_rate: 4e-6, n_symbols: 512}
+  - {id: 16qam-snr20-nominal-short, snr_db: 20.0, f_g_hz: 30.0,  sop_rate: 4e-6, n_symbols: 512}
+  - {id: 16qam-snr25-nominal-short, snr_db: 25.0, f_g_hz: 30.0,  sop_rate: 4e-6, n_symbols: 512}
+  - {id: 16qam-snr20-fg100-short,   snr_db: 20.0, f_g_hz: 100.0, sop_rate: 4e-6, n_symbols: 512}
+  - {id: 16qam-snr20-fg1000-short,  snr_db: 20.0, f_g_hz: 1000.0,sop_rate: 4e-6, n_symbols: 512}
+  - {id: 16qam-snr20-sop40e-short,  snr_db: 20.0, f_g_hz: 30.0,  sop_rate: 4e-5, n_symbols: 512}
+  - {id: 16qam-snr10-fg100-long,    snr_db: 10.0, f_g_hz: 100.0, sop_rate: 4e-6, n_symbols: 8192}
+  - {id: 16qam-snr15-fg1000-long,   snr_db: 15.0, f_g_hz: 1000.0,sop_rate: 4e-6, n_symbols: 8192}
+  - {id: 16qam-snr20-nominal-long,  snr_db: 20.0, f_g_hz: 30.0,  sop_rate: 4e-6, n_symbols: 8192}
+
+# ── Fairness (B3) ──
+fairness:
+  per_expert_mu_tuning: "grid {1e-4,3e-4,1e-3,3e-3,1e-2,3e-2,1e-1} on VALIDATION seeds [101-105]; freeze best per expert; never touch test"
+  convergence_check: "record CM error trajectory; flag under-convergence"
+  paired_channel_realizations: "same shared realization across experts (generate_shared_realization_dp)"
+  budget_parity: "same n_tap=11, block_size=64, single pass, same eval window"
+
+# ── Preregistered A/B/C/D verdict criteria (frozen before reading test results) ──
+# Per prompt §四. Practical-effect threshold preregistered.
+practical_effect_threshold:
+  oracle_headroom_min: 0.03   # |CMA_macro - oracle_selector_macro| >= 0.03 to justify a router existing
+  router_gain_min: 0.01       # end-to-end PI-SER improvement over always-CMA, >= MDE(0.005)*2
+  source: "MDE=0.005 (campaign) scaled to practical; 0.03 headroom = ~6x MDE to leave room for router loss"
+
+verdict_criteria:
+  HYBRID_METHOD_SIGNAL: >-
+    (a) legal experts have stable oracle headroom >= 0.03 on fresh test seeds AND
+    (b) receiver-visible router (threshold then ML) significantly + practically beats
+    always-CMA/always-fallback/threshold by >= 0.01 end-to-end PI-SER AND
+    (c) clean-case degradation < 0.01 AND false-switch/latency acceptable.
+  OBSERVABLE_BUT_ML_UNNECESSARY: >-
+    simple traditional threshold router captures most of the oracle headroom; ML adds
+    no significant end-to-end gain. Keep non-ML hybrid + ML local-negative.
+  COMPLEMENTARITY_INVALID: >-
+    after legal experts + fair mu-tuning + real failure definitions, oracle headroom
+    < 0.03 (i.e. the original diagnostic complementarity was an implementation artifact
+    of the illegal C16 expert + contaminated seeds). Close this specific hybrid contract;
+    do NOT close the whole algorithm-selection family.
+  ORACLE_HEADROOM_NOT_OBSERVABLE: >-
+    legal experts have complementarity (headroom >= 0.03) but receiver-visible info
+    cannot stably predict the selection; boundary result — needs pilot/model-prior/
+    different state estimate; do NOT fabricate a runnable method.
+
+# ── Automatic rotation (prompt §四) ──
+rotation:
+  - "single candidate fails -> rotate to next legal fallback automatically"
+  - "traditional threshold fails -> test one mechanism-distinct low-complexity router"
+  - "only train ML if traditional router leaves clear headroom"
+  - "same mechanism, 2 consecutive rounds <10% improvement or no new info -> stop that mechanism"
+
+# ── Prohibitions (prompt + invariants) ──
+prohibitions:
+  - "no TX symbols / final PI-SER / future outputs / post-hoc oracle state in INFERENCE"
+  - "validation/test seeds CANNOT use truth to select action or threshold"
+  - "oracle is Kill bound ONLY, never a Go comparator (FR-21/FR-25)"
+  - "no claim of novelty from 'did not find it in search' (C1)"
+  - "single PI-SER>0.3 does NOT stand for all failure mechanisms (A2)"
+  - "blocked axis = INFRASTRUCTURE_BLOCKED, never written as negative"
+  - "statistically significant but below practical threshold -> NOT method success"
+  - "no fabrication of runnable method if headroom not observable (D)"
+
+# ── Budget ──
+budget:
+  max_subagent_minutes: 15
+  total_run_target_seconds: 120   # 11 cells x 10 seeds x 3 methods, similar to C16's 3.7s

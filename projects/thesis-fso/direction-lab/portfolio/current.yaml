@@ -55,41 +55,58 @@ candidates:
   - id: C16
     name: nonmodulus_hos_paradigm
     family: equalizer_paradigm
-    status: MECHANISM_NEGATIVE
-    last_result: {verdict: HOS_WORSE_THAN_CMA, macro_pi_ser_hos: 0.466, collapse_rate_hos: 0.791}
+    status: AMENDED_TASK_MISMATCHED   # was MECHANISM_NEGATIVE; D017/V006
+    last_result: {verdict: HOS_WORSE_THAN_CMA_BUT_TASK_MISMATCHED, macro_pi_ser_hos: 0.466, collapse_rate_hos: 0.791}
     note: >-
-      Non-modulus HOS source separation is worse than CMA on all cells. The
-      collapse is not a modulus-cost local minimum — it's a channel property.
-      Closes the paradigm axis.
+      D017 AMENDMENT: numbers reproducible but C16 is a spatial 2x2 whitening +
+      real-Givens heuristic with NO FIR structure — NOT a legal capability-aligned
+      expert vs the 11-tap 2x2 butterfly CMA anchor. Cannot close an axis. The
+      diagnostic complementarity (26/37 HOS-better-in-collapse) is real in the
+      data but rests on this task-mismatched expert + contaminated seeds 71-80 +
+      post-hoc PI-SER oracle, so it is DIAGNOSTIC ONLY and seeds the hybrid-routing
+      study (S011), not a Go signal.
 
-closed_axes_summary:
-  post_equalizer_correction: CLOSED (C04/C09 affine, C12 GMI)
-  within_cma_adaptation: CLOSED (C08 mu, C10 per-symbol, C11 cascade)
-  cost_function_modulus_family: CLOSED (Godard, MMA, ring-aware, reduced-const)
-  initialization: CLOSED (center-tap, whitening, multistart, oracle Wiener)
-  equalizer_paradigm: CLOSED (modulus CMA, non-modulus HOS)
-  collapse_detection: STRUCTURALLY_CEILINGED (block-0 determined)
-  pilot_aided: COLLISION (old lineage + literature)
+closed_axes_summary:   # D017: "exhausted" claims invalidated; per-axis validity noted
+  post_equalizer_correction: REOPENED (C04/C09 UNRESOLVED — O1 target self-referential; C12 scale-artifact not a bound)
+  within_cma_adaptation: CLOSED-valid (C08 mu, C10 per-symbol, C11 cascade — these were fair)
+  cost_function_modulus_family: REOPENED (C15 unequal-step confound; ring-aware/MMA mechanism claims withdrawn)
+  initialization: PARTIAL (C14 proves strongest-single-init collapses only; not init-invariant across direction space)
+  equalizer_paradigm: REOPENED (C16 task-mismatched, cannot close paradigm axis)
+  collapse_detection: STRUCTURALLY_CEILINGED (block-0 determined — valid)
+  pilot_aided: COLLISION (old lineage + literature — valid)
 
 remaining_open:
+  - id: HYBRID_ROUTING   # NEW family (S011)
+    label: collapse-aware hybrid blind-equalizer expert routing
+    dimension: receiver_expert_selection
+    status: VERDICT_C_CLOSED   # D018/S011/V007 — COMPLEMENTARITY_INVALID
+    note: >-
+      Macro A tested legal FIR experts (MMA fair-mu + cold-start DD-LMS) vs CMA on
+      fresh disjoint test seeds [121-130]. Oracle headroom = 0.0037 macro PI-SER
+      (8x BELOW the 0.03 practical threshold). MMA/DD-LMS fail in the SAME collapse
+      realizations as CMA (correlated failure modes) — no complementary structure to
+      route. Verdict C per frozen contract; Macro B (router) NOT run (no headroom).
+      The prior "26/37 complementarity" was an artifact of the illegal C16 spatial-
+      2x2 expert + contaminated seeds 71-80. THIS specific contract closed; the
+      algorithm-selection family stays open (model-based tracker dimension untested).
   - id: MODEL_BASED_TRACKER
     label: receiver-only model-based GG+SOP tracker → MMSE
     dimension: different_subproblem
     status: IDENTIFIED_NOT_EXECUTED
     note: >-
-      The ONLY untested axis. Uses channel MODEL priors (known GG alpha/beta, SOP
-      rate) not pilots or modulus. Could open a positive contribution line.
-      Requires ~1 day infrastructure (dual-pol EKF/particle filter). Needs user
-      strategy decision (material compute investment).
+      D017: "ONLY remaining axis" claim no longer asserts (paradigm axis reopened).
+      Still a candidate (channel MODEL priors, not pilots/modulus). Requires ~1 day
+      infra; needs user strategy decision.
   - id: C03_C07_REINIT
     label: learned/threshold reinit controller
     status: INFRASTRUCTURE_BLOCKED
     note: needs action hook; co-blocked
 
 next_action: >-
-  The blind-equalization solution space is exhausted across 5 mechanism axes.
-  Escalation required: either (a) invest ~1 day in the model-based tracker
-  (rank-4, the only remaining positive-potential axis), or (b) accept the
-  negative-boundary thesis as the primary contribution and move to formal
-  Groundwork/Contract/Execute promotion. The negative boundary is already
-  evidence-backed and publishable.
+  D018 VERDICT C (hybrid-routing contract closed). Algorithm-selection family
+  remains open: the only untested positive-potential axis is the model-based
+  receiver-only GG+SOP tracker (channel MODEL priors, not pilots/modulus) feeding
+  a model-based MMSE equalizer — requires ~1 day infra + user strategy decision.
+  Alternatively, harvest the negative material (D017 task-mismatch lesson +
+  D018 correlated-failure bound) and the LOCAL_SLICE Godard-collapse, then decide
+  thesis spine direction with the user.

@@ -593,8 +593,8 @@ topics:
     title: Direction Lab 首轮 SCIENCE_SCOUT 正式科学探索
     status: active
     created: "2026-07-20"
-    last_updated: "2026-07-21"
-    description: "首轮正式 SCIENCE_SCOUT campaign。C11 D012 局部结论保持有效。S009 corrector raw 数字与来源闭合保留，但外部语义审计发现 soft-distance 目标存在输入无关常数最优解；撤回 C04/C09 exact-mechanism negative 和 thesis-grade exists-vs-learnable 解释。D013 仅保留 TX-truth-assisted local diagnostic；C04/C09 为 IMPLEMENTATION_CONFOUND_CONSTANT_COLLAPSE / UNRESOLVED。当前唯一恢复入口 H010，下一阶段先重设计 Probe/恢复/文件体系。"
+    last_updated: "2026-07-22"
+    description: "首轮正式 SCIENCE_SCOUT campaign + 混合盲均衡/专家路由系统研究。C11 D012 局部结论保持有效。S011/D017/V006 对 commit e15ae60（C12/C14/C15/C16 + '5 轴穷尽' 叙述）做有界 reconciliation：数值可复现但 7 审计项全部 CONFIRM 科学语义失效（C12 scale-artifact / C15 unequal-step confound / C16 task-mismatched 非 FIR 专家 / C14 scope-narrow / C04-C09 UNRESOLVED / seeds 71-80 失去 held-out）。H060 全域宣称 invalidated 降级为 LOCAL_SLICE 弱断言。混合路由诊断互补（CMA 0.2507 / HOS 0.4664 / 26-of-37 / oracle selector 0.1928）数值真实但仅 DIAGNOSTIC。以 D017 为干净起点重测合法 FIR 专家（MMA 公平 μ + standalone DD-LMS）oracle 互补性。当前恢复入口 S011/D017（H011 待写）。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 V007 PASS 的消费者部署（全局 Skill + STATUS + Project Adapter + protected history）作为科学探索起点

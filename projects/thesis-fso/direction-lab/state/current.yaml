@@ -1,10 +1,11 @@
 # state/current.yaml — sole machine current view
-# Rebuilt 2026-07-22 from H010 / D016 / V005 (NOT from mtime of old v1 files).
+# Rebuilt 2026-07-22 from S011 / D017 / V006 (supersedes the e15ae60 "5-axis exhausted"
+# projection which was reconciled and invalidated on scientific-semantics grounds).
 # Explicit disposition lineage governs; protected history untouched.
 
 schema_version: research-direction-lab.state.current.v1
 project_id: thesis-fso.dual-pol-osl.direction-lab
-last_recovery_entry: H010-s009-semantic-audit-recovery.md
+last_recovery_entry: H011-hybrid-routing-verdict.md
 
 formal_goal: >-
   Systematically identify whether machine learning provides a real, legally
@@ -27,18 +28,21 @@ anchor:
   baseline: baseline.standard_cma.godard_z
   metric_contract: [fixed_label_ber, permutation_invariant_ber]
 
-effective_conclusions:  # reflect D016/V005 + 2026-07-22 campaign round
-  - id: H060_COLLAPSE_CHANNEL_PROPERTY
+effective_conclusions:  # reflect S011/D017/V006 reconciliation (e15ae60 invalidated on semantics)
+  - id: H060_COLLAPSE_LOCAL_SLICE_WEAK
     statement: >-
-      The 16QAM inner-ring collapse is a FUNDAMENTAL PROPERTY OF THE BLIND
-      EQUALIZATION PROBLEM, surviving all 5 mechanism axes: post-equalizer
-      correction (C04/C09 affine, C12 GMI), within-CMA adaptation (C08/C10/C11),
-      cost variants (Godard/MMA/ring-aware), initialization (C14), and equalizer
-      paradigm (C16 non-modulus HOS). Oracle shows channel is invertible but
-      inversion info not extractable from received statistics alone.
+      WEAK claim only: Godard-cost CMA collapses (inner-ring) on the 11-cell
+      atlas slice × seeds 71-80. The PRIOR global claim ("fundamental channel
+      property / 5 mechanism axes exhausted / inversion info unextractable /
+      publishable negative boundary") is INVALIDATED by D017/V006 because the
+      evidence chain relied on C12 (scale-artifact, not a bound), C15 (unequal-
+      step confound, shared μ=0.03 across 19× gradient scales), C16 (task-
+      mismatched spatial 2×2 expert, NOT a legal capability-aligned FIR equalizer),
+      C14 (scope-narrow, strongest-single-init only), and contaminated held-out
+      seeds 71-80 (reused across ≥6 batches).
     ceiling: LOCAL_SLICE
-    source: 2026-07-22 campaign round (5 scout syntheses)
-    validity: VALID
+    source: S011/D017/V006 (e15ae60 reconciliation)
+    validity: VALID_AS_WEAK_LOCAL_ONLY
 
   - id: C11_LEGAL_VERDICT
     statement: >-
@@ -74,9 +78,14 @@ effective_conclusions:  # reflect D016/V005 + 2026-07-22 campaign round
       input-independent constant optimum (A=0, each real coord ~ +/-0.6075; 1D
       loss ~0.32710044, 4D ~1.30840175, matching the observed 1.3084 plateau).
       Candidate and method-family science remain UNRESOLVED, not a mechanism
-      negative.
+      negative. D017 ADDS: the O1-corrected target is ALSO confounded — it is a
+      self-referential moving target MSE(A·z+b, hard(A·z+b)) whose global optimum
+      is the constant collapse (loss=0 at A=0, b=any constellation point); the
+      constant-smoke certified the blind-affine fixed-target, NOT the trained
+      objective. So C04/C09 remain UNRESOLVED; the "context-dependence has no
+      value over ridge-LS" route-CLOSED claim is WITHDRAWN.
     ceiling: IMPLEMENTATION_DIAGNOSTIC
-    source: D016 / V005 / S010
+    source: D016 / V005 / S010 + D017 / V006 (O1 target audit)
     validity: VALID
 
   - id: DETECTOR_CONVENTIONAL_CEILING
@@ -120,9 +129,44 @@ dispositions:
     replaced_by: V005
     reason: V004 retains artifact fidelity value only; science semantics FAIL
 
+  - entity: e15ae60 "5 mechanism axes exhausted / collapse is channel property" global narrative
+    current_status: INVALIDATED
+    replaced_by: H060_COLLAPSE_LOCAL_SLICE_WEAK
+    reason: >-
+      D017/V006 reconciliation: numbers reproducible but scientific semantics
+      failed on C12 (scale-artifact), C15 (unequal-step confound), C16 (task-
+      mismatched non-FIR expert), C14 (scope-narrow); C04/C09 still UNRESOLVED;
+      seeds 71-80 lost held-out status. The 5 prohibited conclusions from the
+      user prompt are NOT inheritable.
+
+  - entity: e15ae60 H062 (zero GMI headroom as a bound)
+    current_status: WITHDRAWN
+    replaced_by: (none — scale-artifact, not a bound)
+    reason: C12 oracle only swaps global sigma^2; histogram-MI is scale-invariant
+
+  - entity: e15ae60 H064 (ring-aware cost self-consistent collapse mechanism)
+    current_status: WITHDRAWN
+    replaced_by: (none — confounded)
+    reason: shared mu=0.03 across 19x gradient scales; cold-start freeze documented only
+
+  - entity: e15ae60 H065 (non-modulus HOS = mechanism negative for paradigm axis)
+    current_status: AMENDED
+    replaced_by: H065_reclassified (paradigm-distinct but task-mismatched, NOT a legal FIR expert)
+    reason: C16 is spatial 2x2 + real Givens, no FIR structure; cannot close an axis vs 11-tap CMA
+
+  - entity: seeds 71-80 as held-out confirmatory test split
+    current_status: INVALIDATED
+    replaced_by: fresh disjoint seeds (TBD per Macro A contract)
+    reason: reused across >=6 batches (c04/c09/c14/c15/c16/corrector + c12 subset)
+
 next_action:
-  mode: probing
+  mode: scouting
   description: >-
-    Run bounded semantic Probes on multiple mechanism branches (C04/C09
-    corrected-target, detector family C01/C02/C06, C13 pilot-Jones dedup, C12
-    coded readiness) before any Scout.
+    Macro A of the collapse-aware hybrid equalizer routing study (S011/D017):
+    retest oracle complementarity among LEGAL capability-aligned FIR fallback
+    experts (MMA with per-cost fair mu tuning; standalone DD-LMS from cold start)
+    on FRESH disjoint test seeds. Distinguish real failure mechanisms (inner-ring
+    collapse / source-separation failure / divergence / AWGN-unrecoverable /
+    permutation-phase ambiguity / under-convergence) instead of a single PI-SER>0.3.
+    Oracle = Kill/headroom bound only (FR-21/FR-25). If no practical oracle headroom
+    among legal experts at the preregistered threshold -> verdict C.

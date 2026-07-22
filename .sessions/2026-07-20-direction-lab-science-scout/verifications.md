@@ -205,3 +205,105 @@ S009 三批（c11-legality-batch-v1 amendment / corrector-residual-headroom-v1 /
 ### 后续验证门
 
 未来 corrector 在进入全量 cells × seeds 前，至少通过：恒等/no-harm、常数输出、输出方差/星座占用、单样本过拟合、简单 comparator 复现、目标函数手算最小反例。实现与科学语义审查继续分离。
+
+---
+
+## V006: e15ae60 七审计项独立核验 + C16 原始数据主线复算
+
+> date: 2026-07-22
+> 关联：S011 / D017
+> verifier: 独立 explore 子 agent（P6 separation）× 3 + 主线直接读 result.v1.json 复算
+
+### 验证项
+
+- [x] 审计1（C04 O1 目标退化解）：子 agent 读 `c04-c09-o1-corrected-scout/src/run_o1_corrected_scout.py:275-290` + `baseline-atlas/cb1_evaluator.py:106-129` + `:666-688` → O1 训练 loss = `MSE(A·z+b, hard(A·z+b))` self-referential moving target，A=0/b=星座点 = 零损失全局最优；constant-smoke 测的是 fixed-target blind-affine。**CONFIRM**。
+- [x] 审计2（C12 oracle）：子 agent 读 `c12.../src/soft_demap.py:315-346`（oracle 仅估全局 σ² line 344 再跑相同 maxlog line 346）+ `gmi.py:50-67`（histogram-MI equi-width bins，公共 LLR 缩放不改变 bin 分配）+ synthesis `:49-51` 自 concession → **CONFIRM**，"零 GMI headroom"非真上界。
+- [x] 审计3（C14 cosine）：子 agent 读 `c14.../src/cma_custom_init.py:254-296`（oracle Wiener truth-conditioned，需 sX_calib/sY_calib）+ `test_init_identity.py:168-173`（唯一 truth-using）+ grep "cosine" in src = 0 hit（0.9995 仅 synthesis narrative `:34,151,238`）+ far-orthogonal probe 仅 narrative `:41-44,190,246` 未在 src → **CONFIRM**。
+- [x] 审计4（C15 μ 共享）：子 agent 读 `c15.../src/run_cost_scout.py:119-132`（godard/ring_aware/rccma 共 μ=0.03 from FROZEN_AXES line 62）+ `cma_cost_variants.py:201-204`（raw LMS `w+=mu*grad`，无归一化）+ synthesis `:98-114` 自报 19× 梯度比 → **CONFIRM**。
+- [x] 审计5（C16 非法专家）：子 agent 读 `c16.../src/hos_equalizer.py:24-37`（2×2 whitening）+ `:66-68`（"real Givens for simplicity"）+ `:96-130`（real θ grid + 单标量 phase）+ `:138`（cost_contains_modulus_term=False）→ 无 n_tap/FIR/sliding-window；vs `_cma.py:57-190`（11-tap 4-filter butterfly block-64）→ **CONFIRM**，task-mismatched 非对齐专家。
+- [x] 审计6（seeds 71-80）：子 agent grep 全 campaign → 71-80 在 c04/c09/c14/c15/c16/corrector 6 批 full + c12 子集 71-76 + probes 71-73 重复使用；contract 自承认 "intentional reuse"（c04-c09-shared `batch-contract.v1.yaml:137`、c14 `:141`、c15 `:172`）；仅 c11(41-50)/b01r(21-30)/atlas(11-20) disjoint → **CONFIRM**，失去 held-out 资格。
+- [x] 审计7（H060 ceiling）：主线核对 H060 evidence 链 = C04/C09(confounded) + C12(scale-artifact) + C14(scope-narrow) + C15(confounded) + C16(task-mismatch) → 5 轴中 3 轴科学语义失效 → **CONFIRM**，H060 须排除 C12/C16 后降级。
+
+- [x] 主线复算 C16 result.v1.json：直接读 `c16-nonmodulus-jade-scout/artifacts/result.v1.json`（110 realizations = 11 cells × 10 seeds，metadata.test_seeds=[71..80]）。复算：CMA macro=0.2507、HOS macro=0.4664（与 synthesis/线索一致）；CMA>0.3 子集=37、HOS 更好=26/37（与线索一致）；per-realization oracle selector min(CMA,HOS) macro=0.1928、绝对余量 0.0579（线索 ~0.2073/0.0434，同量级）。**数值可复现**。
+
+### 证据
+
+- 子 agent 3 份报告（seeds 重用 / C14+C16 身份 / C04+C12+C15+inventory），含 file:line 指针，见 S011 §1。
+- 主线复算脚本输出（PY=~/.venvs/torch/Scripts/python.exe，11 cells flatten 110 rows）：见 S011 §2。
+
+### 结论
+
+**PASS（审计项全部 CONFIRM）+ PARTIAL（数值可复现但科学语义失效）**。
+
+- reproduce-vs-validity 拆分成立：e15ae60 数值可复现，但 C12(scale)/C15(step)/C16(task)/seeds(71-80)/C04(target)/C14(scope) 科学语义均失效或不足。
+- 混合路由诊断互补"数值真实但建立于非法专家 + 污染 seeds + 事后 oracle"，仅 DIAGNOSTIC。
+
+### 后续（FAIL/PARTIAL 时）
+
+- H060 降级为 LOCAL_SLICE 弱断言（D017）。
+- 混合路由研究必须用合法 FIR 对齐 fallback（MMA 公平 μ 重测 + standalone DD-LMS 新建）+ fresh disjoint test seeds 重测 oracle 互补性。
+
+---
+
+## V007: Macro A 混合路由独立 verifier adversarial 复核 — VERDICT C HOLDS
+
+> date: 2026-07-22
+> 关联：S011 / D018
+> verifier: 独立 general-purpose 子 agent（P6 separation，与实现 runner 不同上下文，主动攻击非确认）
+
+### 验证问题
+
+Macro A "合法 FIR 专家 oracle 互补性"测试裁决 VERDICT C（headroom 0.0037 << 阈值 0.03）是否在 adversarial 攻击下成立？测试是否被操纵以产出低 headroom（因 verdict C 恰好符合"不继承 5 轴叙述"的意图）？
+
+### 验证范围（8 项 adversarial checks）
+
+1. seed 新鲜度（121-130 / 101-105 与所有 prior 批次 disjoint）
+2. 无信息泄漏（MMA/DD-LMS 只收 rX/rY；oracle 才用 TX truth）
+3. 专家身份（MMA 真实 YWD per-axis modulus + DD-LMS 真 cold-start；5/5 身份门）
+4a. CMA anchor 公平（μ=0.03 是 B01-R validation-optimal interior optimum）
+4b. fallback μ-tuning 公平（grid search on validation seeds）
+4c. paired comparison（同 shared realization）
+5. headline 独立重算
+6. 统计稳健性（headroom 是否在 0 的噪声内）
+7. 退化解/collapse 检查（CMA 是否被人为做强）
+8. scope/overreach（verdict C 是否只关本 contract）
+
+### 证据
+
+独立 verifier 从零读 result.v1.json 重算：
+- macro PI-SER: cma=0.39719 / mma=0.50305 / ddlms=0.43189 / oracle=0.21964（与 stored bit-identical）
+- selector all3 = 0.39350；**headroom all3 = 0.003693**（与 stored bit-identical）
+- complementarity: mma better 6/110 worse 64, ddlms better 23 worse 39（match）
+- per-realization headroom: mean 0.00369, SE 0.00067, median 0.00000（76/110 exact tie），仅 34/110 有任何正 headroom
+- headroom 是阈值的 12%（~22 SE 低于阈值）
+
+### 结果
+
+| # | 项 | 结果 | 关键证据 |
+|---|---|---|---|
+| 1 | seed 新鲜度 | PASS | grep 121-130/101-105 在 scout/+probes/ 无命中；与 11-20/21-30/41-50/71-80 全 disjoint |
+| 2 | 无信息泄漏 | PASS | run_macro_a_oracle.py:107-135 MMA/DD-LMS 只收 rX/rY；oracle_unmix:88-92 才用 sX/sY（allowed Kill bound） |
+| 3 | 专家身份 | PASS | MMA per-axis modulus R_R²=R_I²=0.82 验证（mma_comparator.py:84-181）；DD-LMS 真 cold-start（dd_lms_equalizer.py:37-122）；5/5 身份门 PASS |
+| 4a | CMA μ 公平 | PASS | μ=0.03 是 B01-R validation-optimal interior optimum；比 atlas default 0.001 更强（macro 0.397 vs 0.442）—— 偏向 C（低 headroom），不偏向反方向 |
+| 4b | fallback μ 公平 | PARTIAL | DD-LMS μ=0.1 是 grid 边界但 5-seed 验证为真 interior min（0.181→0.168→0.178）；MMA 单 seed 选 0.003，真 5-seed 最优 0.001，headroom 差 0.00003 |
+| 4c | paired | PASS | make_realization 每 (cell,seed) 调一次，跨专家共享 |
+| 5 | headline 重算 | PASS | 全部 bit-identical |
+| 6 | 统计稳健 | PASS | median 0, 76/110 exact tie, 22 SE 低于阈值；complementarity fractions 不接近 frequent wins |
+| 7 | collapse/degenerate | PASS | 61/110 CMA>0.3，CMA 非均匀好；fallback 在同 61 个 collapse realizations 也失败（correlated failure），非 CMA-looks-good 伪象 |
+| 8 | scope | PASS | contract:124-127 显式"close THIS specific hybrid contract, NOT the whole family" |
+
+### 结论
+
+**PASS / HIGH confidence — VERDICT C HOLDS under adversarial attack**。
+
+headline 数字独立重算 bit-identical。verifier 专门测了"convenient conclusion"怀疑论：CMA 给了最强 μ（测试偏向 verdict C），但 headroom 仍 8× 低于阈值——结论稳健。机制真实：MMA/DD-LMS/CMA 共享 correlated failure modes（同 61/110 collapse realizations）。scope 正确限定本 contract。
+
+### 发现的瑕疵（非 verdict-changing）
+
+1. **DD-LMS weight-norm bug**（dd_lms_equalizer.py:105-107 旧版）：算 `sqrt(sum|w|)²`（L1-of-magnitudes）非 `sqrt(sum|w|²)`（L2）。**已在主线修复**（改 L2）。impact nil（test 数据 0 divergence）。
+2. **tune_mu 只用 seed 101** 非 5 个 validation seeds：contract 承诺 [101-105]（复数），实现欠交付。impact nil（proper 5-seed 改 headroom 0.00003）。已记录为方法论 caveat。
+
+### 后续
+
+- D018 verdict C 登记。Macro B 不运行（无 headroom 可转化）。
+- 未来若重启专家路由，必须用机械更多样专家池（model-based + blind 或 pilot-aided + blind），非近共模 FIR 盲均衡。

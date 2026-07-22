@@ -1,6 +1,13 @@
 # harvest/current.yaml — current thesis-consumption view after 2026-07-22 campaign round
-# Updated 2026-07-22. This round added C14/C15/C16 mechanism negatives + 3 reusable assets.
+# Updated 2026-07-22 S011/D017/V006. This round added C14/C15/C16 mechanism negatives + 3 reusable assets.
 # Lineage: campaigns/science-scout-2026-07-20/harvest-addendum.v7 + this round's scout syntheses.
+# !!! D017 AMENDMENT (2026-07-22): the e15ae60 "PRIMARY THESIS SPINE — collapse is a channel
+# !!! property / 5-axis exhausted" global narrative is INVALIDATED on scientific-semantics
+# !!! grounds (V006: C12 scale-artifact, C15 unequal-step confound, C16 task-mismatched non-FIR
+# !!! expert, C14 scope-narrow, C04/C09 UNRESOLVED, seeds 71-80 lost held-out). The entries
+# !!! below are RETAINED as history (protected, not deleted); current ceiling = the
+# !!! "amended_2026_07_22" block at the end of this file. Do not cite H060/H062/H064/H065
+# !!! as currently-valid without reading the amendment block.
 
 schema_version: research-direction-lab.harvest.current.v1
 
@@ -190,3 +197,94 @@ thesis_spines:
       could open a positive contribution line. Requires ~1 day infrastructure.
     status: identified but not executed
     escalation: requires user strategy decision (material compute investment)
+
+# ─────────────────────────────────────────────────────────────────────────────
+# amended_2026_07_22 (S011/D017/V006) — CURRENT VALID CEILINGS
+# The e15ae60 harvest entries above are retained as protected history.
+# The block below is the sole current-valid view. Cite this block, not the
+# H060_PRIMARY spine above, until a legal-expert retest (Macro A) resolves it.
+# ─────────────────────────────────────────────────────────────────────────────
+amended_2026_07_22:
+  source: S011-hybrid-routing-reconciliation-and-study.md / D017 / V006
+
+  - id: H060_DOWNGRADED
+    supersedes: H060_COLLAPSE_CHANNEL_PROPERTY
+    current_claim: >-
+      WEAK LOCAL_SLICE claim only: Godard-cost CMA collapses (inner-ring) on the
+      11-cell atlas slice × seeds 71-80. The global "fundamental channel property /
+      5-axis exhausted / inversion-info-unextractable / publishable negative
+      boundary / model-based tracker is the only remaining axis" claims are
+      INVALIDATED (5/7 axes had semantic failures or scope limits; seeds 71-80
+      lost held-out status).
+    ceiling: LOCAL_SLICE_WEAK
+    validity: VALID_AS_WEAK_LOCAL_ONLY
+
+  - id: H062_WITHDRAWN
+    supersedes: H062_GMI_DEMAPPER_BOUND_NOT_EQUALIZER_BOUND
+    current_claim: >-
+      WITHDRAWN as a bound. C12 "zero GMI headroom" is a scale-artifact: the oracle
+      only swaps a global sigma^2 estimate (TX-truth-conditioned) then runs the
+      identical max-log, and the histogram-MI estimator is invariant to a common
+      LLR scale. It is NOT evidence that soft-output correction cannot recover GMI.
+      The GMI evaluator (H067) remains a valid reusable asset.
+
+  - id: H063_SCOPE_NARROWED
+    supersedes: H063_INIT_INVARIANT_COLLAPSE
+    current_claim: >-
+      SCOPE-NARROWED: C14 proves the strongest single init (oracle Wiener, TX-truth
+      MMSE) collapses. It does NOT prove collapse is invariant across a genuinely
+      diverse init family: the cosine~0.9995 with center-tap and the far-orthogonal
+      (cosine 0.03-0.35) probes appear only in the synthesis narrative, not in the
+      shipped src. Oracle Wiener is correctly a Kill-only bound (truth-conditioned).
+
+  - id: H064_WITHDRAWN
+    supersedes: H064_RING_AWARE_COST_SELF_CONSISTENT
+    current_claim: >-
+      WITHDRAWN mechanism claim. C15 used a shared mu=0.03 across costs whose
+      gradient scales differ ~19x (Godard block-0 error +1.181 vs ring-aware +0.061),
+      so the ring-aware update norm is 19x smaller — an unequal effective step size,
+      not a clean test of the cost optimum. RCCMA cold-start freeze (n_active=0) is
+      a documented behavior, not a mechanism finding.
+
+  - id: H065_RECLASSIFIED
+    supersedes: H065_NONMODULUS_HOS_WORSE
+    current_claim: >-
+      RECLASSIFIED (not a mechanism negative for closing an axis). C16 is a spatial
+      2x2 whitening + real-Givens heuristic with NO FIR structure — NOT a legal
+      capability-aligned expert vs the 11-tap 2x2 butterfly CMA anchor. The
+      diagnostic complementarity (CMA macro 0.2507 vs HOS 0.4664; 26/37 HOS-better-
+      in-collapse; oracle selector 0.1928) is reproducible in the data but rests on
+      this task-mismatched expert + contaminated seeds 71-80 + post-hoc PI-SER
+      oracle, so it is DIAGNOSTIC ONLY. It seeds the hybrid-routing study (S011),
+      not a Go signal. The HOS equalizer (H068) remains a valid reusable asset.
+
+  - id: SEEDS_71_80_INVALIDATED
+    current_claim: >-
+      seeds [71-80] lost held-out confirmatory status: reused as the test split in
+      >=6 independent batches (c04/c09/c14/c15/c16/corrector) + c12 subset (71-76)
+      + probes (71-73). Any confirmatory test must use fresh disjoint seeds.
+
+  current_valid_spines:
+    - spine: >-
+        LOCAL_SLICE weak negative: Godard-cost CMA inner-ring collapse on the
+        11-cell slice (seeds 71-80), survives fair tuning / per-symbol / DD-LMS
+        cascade (C08/C10/C11 — these batches were fair and valid). NOT a global
+        channel-property claim.
+      status: evidence-backed (LOCAL_SLICE)
+      ceiling: LOCAL_SLICE
+      paper_value: LOW-MEDIUM (slice-level only)
+    - spine: >-
+        DIAGNOSTIC (not a method): C16 HOS shows task-mismatched complementarity
+        with CMA on the collapse subset — motivates a legal-expert retest for
+        collapse-aware hybrid routing.
+      status: diagnostic only
+      ceiling: DIAGNOSTIC
+    - spine: >-
+        ASSET: GMI evaluator (H067) + HOS equalizer (H068) + Atlas gate (H006)
+        enable future soft-output and paradigm-distinct comparisons.
+      status: evidence-backed (reusable)
+    - spine: >-
+        OPEN (hybrid routing): legal FIR-aligned fallback experts (MMA fair-mu,
+        standalone DD-LMS) to be retested for oracle complementarity (Macro A).
+      status: scout in progress
+
