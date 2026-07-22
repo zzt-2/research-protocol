@@ -1,0 +1,366 @@
+# =============================================================================
+# C15 Reduced-Constellation / Ring-Aware Cost Scout v1 — FROZEN BEFORE RUNNING
+# Campaign: science-scout-2026-07-20.dual-pol-osl
+# Trigger: 2026-07-22 portfolio remapping. NEW mechanism direction (C15).
+#   Recurring conclusion across C04/C09/C11/C12 (and the baseline Atlas / B01-R)
+#   is that the 16QAM inner-ring collapse is a DEEP PROPERTY OF THE GODARD COST
+#   on this channel. This Scout asks whether that thesis survives when the COST
+#   FUNCTION ITSELF is changed to match 16QAM's actual ring geometry.
+# =============================================================================
+# Mechanism / metric: COST-FUNCTION (equalizer) / PI-SER (hard-decision).
+#   This is MECHANISM-DISTINCT from every prior candidate:
+#     - MMA (tested, failed — D006/D040) rotates the constellation into
+#       quadrants; it does NOT do modulus/ring matching. MMA = quadrant-aware.
+#       C15 = RING/modulus-aware. Different decomposition of 16QAM geometry.
+#     - C08 (adaptive mu) changes the STEP SIZE, same Godard cost.
+#     - C04/C09/C11/C12 all operate POST-equalizer on the SAME Godard z-stream.
+#   C15 changes the EQUALIZER COST FUNCTION itself. Nothing prior has touched it.
+#
+# Scientific question:
+#   16QAM has THREE modulus rings (squared radii inner=0.2, middle=1.0,
+#   outer=1.8). The Godard cost e = R2 - |z|^2 with a SINGLE global R2 pulls
+#   EVERY symbol toward one circle, mismatching the multi-ring structure. The
+#   mechanistic hypothesis for inner-ring collapse is exactly this mismatch.
+#   Does a RING-AWARE cost that assigns each symbol z to its NEAREST ring
+#   (R2(z) = nearest-ring squared radius, from |z| alone — receiver-visible)
+#   ELIMINATE OR REDUCE the inner-ring collapse vs the Godard anchor?
+#
+# H1 (working hypothesis):
+#   The collapse is a Godard-cost-mismatch artifact: the single-R2 cost has
+#   spurious local minima at the inner ring for certain channel realizations
+#   (seeds 71, 73 collapse at E|z|^2 ~ 0.3 vs healthy ~2.0). A ring-aware cost
+#   removes the mismatch: every symbol is pulled toward ITS ring, so there is
+#   no pressure for outer/middle symbols to collapse onto the inner ring.
+#   Ring-aware should (a) converge (the cost is well-defined), (b) achieve PI-SER
+#   comparable to Godard on healthy cells, and (c) REDUCE the collapse rate.
+#
+# Rejection condition (-> LOCAL_NEGATIVE):
+#   Ring-aware cost does NOT reduce the collapse rate by >= MDE (0.005) on the
+#   paired bootstrap, OR it diverges / fails to converge. In that case the
+#   "deep Godard-cost property" thesis is STRENGTHENED (the collapse survives
+#   even a ring-matched cost) and we record the mechanism-distinct negative.
+#
+# POSITIVE condition (-> opens a contribution line, Scout-level):
+#   Ring-aware cost REDUCES the collapse rate by >= MDE with paired-bootstrap CI
+#   excluding 0, AND achieves PI-SER no worse than Godard + MDE on healthy cells.
+#   This would REFUTE "deep Godard-cost property" and open a positive route.
+#
+# Claim ceiling: LOCAL_SLICE / DIAGNOSTIC
+#   (11 cells, 10 seeds; Scout — no promotion without a deeper-evidence decision.)
+# =============================================================================
+# WHY THIS IS NOT A RE-RUN OF MMA / D006 / D040:
+#   - MMA (Yang-Werner-Dumont) decomposes 16QAM by QUADRANT and applies a
+#     per-quadrant cost that REMOVES the quadrant-dependent phase. Its cost is
+#     e = z^4 - R4 (a 4th-power, quadrant-aware) — it rotates the constellation.
+#   - C15 ring-aware cost is e = R2(z) - |z|^2 where R2(z) is chosen from the
+#     THREE squared ring radii by NEAREST |z|. It does NOT rotate anything; it
+#     does modulus matching to the ring structure. The decomposition is by
+#     RADIUS, not by ANGLE. This is the standard "multi-modulus / Sato-style"
+#     distinction. (MMA failed; this tests a structurally different variant.)
+# =============================================================================
+
+schema_version: direction-lab.cb1.c15-reduced-const-cost-scout.v1
+campaign_id: science-scout-2026-07-20.dual-pol-osl
+candidate_id: C15  # reduced_constellation_ring_aware_cost
+claim_ceiling: LOCAL_SLICE_DIAGNOSTIC
+related_decisions: [D006-MMA-failed, D040-MMA-failed-confirm, D016, V005, C08-adaptive-mu, C04-C09-C11-C12-post-eq-negatives]
+
+scientific_question: >-
+  The 16QAM inner-ring collapse is attributed to a deep property of the GODARD
+  cost (single global R2 mismatched to 16QAM's three rings). Does a RING-AWARE
+  cost, R2(z) = nearest-16QAM-ring squared radius (receiver-visible from |z|),
+  ELIMINATE OR REDUCE the collapse vs the Godard anchor? Secondary: does a
+  reduced-constellation CMA (RCCMA, outer-ring-only, Sato-style) do the same?
+
+# === Roles ===
+
+roles:
+
+  system_anchor_and_go_comparator:
+    id: godard_cost_anchor
+    implementation: cb1_cell_runner.standard_cma_godard_with_z  # READ-ONLY import
+    cost: godard  # e = R2 - |z|^2, single global R2
+    R2: 1.32
+    mu: 0.03
+    cma_taps: 11
+    block_size: 64
+    init: center_tap
+    note: >-
+      THE ANCHOR. Standard-CMA (Godard-with-z), 11 taps, block=64, mu=0.03,
+      center-tap init, R2=1.32 — IDENTICAL to the C12/C04 anchor. We isolate
+      the COST EFFECT: every candidate shares this exact structure and ONLY the
+      cost function differs. The Godard anchor reproduces the known collapse
+      pattern (seeds 71, 73 collapse at E|z|^2 ~ 0.3 on snr20-nominal-short).
+
+  candidate_function_classes:
+
+    - id: C15_ring_aware
+      implementation: src.cma_cost_variants.cma_ring_aware
+      cost: ring_aware  # e = R2(z) - |z|^2, R2(z) = nearest ring squared radius
+      ring_squared_radii: [0.2, 1.0, 1.8]      # inner/middle/outer of avg-power-1 16QAM
+      ring_boundaries_squared: [0.6, 1.4]       # midpoints in |z|^2 between adjacent rings
+      information_access: receiver_visible_online  # ring assignment from |z| only
+      note: >-
+        For each symbol z, R2(z) is set to the squared radius of the NEAREST
+        16QAM ring (|z|^2 < 0.6 -> 0.2; 0.6 <= |z|^2 < 1.4 -> 1.0; else 1.8).
+        The update is the SAME Godard-with-z blockwise form, only R2 becomes
+        per-symbol. No TX truth is read: the ring assignment uses only |z|.
+
+    - id: C15_rccma
+      implementation: src.cma_cost_variants.cma_rccma
+      cost: reduced_constellation  # Sato/RCCMA: only outer-ring symbols drive the update
+      outer_ring_squared_radius: 1.8
+      outer_ring_threshold_squared: 1.4   # |z|^2 >= 1.4 -> outer-ring symbol
+      R2_outer: 1.8
+      information_access: receiver_visible_online
+      note: >-
+        Reduced-Constellation CMA (Sato 1975 style; standard for square QAM).
+        Only symbols with |z|^2 >= 1.4 (the outer ring) contribute to the
+        block-end gradient; inner/middle symbols contribute ZERO update. The
+        outer ring is constant-modulus (|s|^2 = 1.8 for all 4 outer symbols),
+        so the Godard cost on it is well-defined with a single R2_outer=1.8.
+
+# === Frozen common axes (SAME as anchor — isolate the cost effect) ===
+
+frozen_common_axes:
+  alpha: 4.2
+  beta: 1.4
+  block: 100
+  t_s: 0.0000000004
+  method: gar
+  cma_mu: 0.03           # INHERITED from C12/C04 anchor (NOT the Atlas v1 mu=0.001)
+  cma_taps: 11
+  cma_block_size: 64
+  r2_qam16_godard: 1.32  # single-global R2 for the Godard anchor
+  constellation: 16QAM_avg_power_1
+  ring_squared_radii: [0.2, 1.0, 1.8]
+  ring_boundaries_squared: [0.6, 1.4]
+  rccma_outer_R2: 1.8
+  rccma_outer_threshold_squared: 1.4
+  affine_ridge: 0.000001
+  init: center_tap
+  note: >-
+    All four costs (Godard anchor, ring-aware, RCCMA) share IDENTICAL structure:
+    11 taps, block_size=64, mu=0.03, center-tap init, SAME butterfly 2x2 form,
+    SAME divergence criteria, SAME eval-window geometry. ONLY the cost function
+    differs. This is the cost-isolation discipline.
+
+# === Sweep axes ===
+
+sweep_axes:
+
+  - id: cell_atlas
+    cells:  # full 11-cell atlas (same as baseline Atlas v1, modulation=qam16)
+      - 16qam-snr05-nominal-short
+      - 16qam-snr10-nominal-short
+      - 16qam-snr15-nominal-short
+      - 16qam-snr20-nominal-short
+      - 16qam-snr25-nominal-short
+      - 16qam-snr20-fg100-short
+      - 16qam-snr20-fg1000-short
+      - 16qam-snr20-sop40e-short
+      - 16qam-snr10-fg100-long
+      - 16qam-snr15-fg1000-long
+      - 16qam-snr20-nominal-long
+    rationale: >-
+      Full 11-cell atlas = SAME cell set as baseline Atlas v1 and the C04/C09
+      held-out test slice. Covers SNR {5,10,15,20,25}, f_g {30,100,1000},
+      sop {4e-6, 4e-5}, N {512, 8192}. This is the representative coverage for
+      the CB1 16QAM closure question.
+
+  - id: test_seeds
+    seeds: [71, 72, 73, 74, 75, 76, 77, 78, 79, 80]
+    rationale: >-
+      Test seeds [71-80] = the C04/C09 held-out adjudication slice, disjoint
+      from all prior train/val seeds {11-65, 81-95}. PAIRED comparison: each
+      cost runs on the SAME (cell, seed) realization, so the collapse-rate
+      delta is attributable to the cost function alone.
+
+# === Semantic smoke BEFORE eval (MANDATORY; FAIL -> DIAGNOSTIC, STOP) ===
+
+semantic_smoke_before_eval:
+  godard_reproduces_collapse: >-
+    The Godard anchor reproduces the known collapse: on snr20-nominal-short
+    seed 71 (or 73) E|z|^2 ~ 0.3 (collapse) while a healthy seed is ~2.0.
+    Sanity that the anchor is wired correctly.
+  ring_aware_converges: >-
+    The ring-aware cost does NOT diverge on a clean cell (snr25-nominal-short):
+    finite output, weight norm within 10x init. It should converge (the cost is
+    well-defined: R2(z) is bounded in [0.2, 1.8]).
+  ring_aware_low_pi_ser_on_clean: >-
+    On a clean cell (snr25-nominal-short, seed 71) the ring-aware cost achieves
+    a PI-SER at least comparable to Godard (not at the 16QAM random ceiling
+    0.9375 — that would be a blow-up signature).
+  on_failure: >-
+    STOP and report DIAGNOSTIC. If ring-aware DIVERGES on all cells, the cost
+    may be numerically unstable (report as DIAGNOSTIC, not a method signal).
+
+# === Statistical preregistration ===
+
+statistical_preregistration:
+
+  primary_metric: PI_SER  # permutation-invariant symbol error rate
+  secondary_metrics:
+    - collapse_rate          # fraction of seeds with E|z|^2 < 0.6 (collapsed to inner ring)
+    - divergence_rate        # fraction of seeds that hit the divergence criteria
+    - fixed_label_ser
+
+  collapse_definition: >-
+    A (cell, seed) realization is COLLAPSED if the mean output power on the eval
+    window E[|zX|^2 + |zY|^2] < 0.6 (i.e. the output has fallen onto the inner
+    ring; healthy Godard output is ~2.0-2.6, R2=1.32 per-pol target). The
+    collapse_rate is the fraction of seeds collapsed per cell.
+
+  primary_statistic:
+    name: paired_collapse_rate_delta_vs_godard
+    definition: >-
+      Per (cell, seed) binary collapse indicator (0/1). Per-cell collapse_rate
+      = mean over seeds. Paired delta = collapse_rate(cost) - collapse_rate
+      (godard) on the SAME cell. Negative = candidate collapses LESS.
+    aggregation: >-
+      Macro mean of per-cell paired deltas over the 11 cells. Hierarchical
+      paired bootstrap 95% CI (10k resamples) on the per-(cell,seed) collapse
+      indicators.
+    practical_significance_threshold: 0.005  # MDE on collapse_rate (fraction)
+
+  secondary_statistic:
+    name: paired_pi_ser_delta_vs_godard
+    definition: >-
+      Per (cell, seed) delta = PI-SER(cost) - PI-SER(godard) on the SAME eval
+      window. Negative = candidate better. Macro mean + paired bootstrap CI.
+    practical_significance_threshold: 0.005  # MDE on PI-SER
+
+  identity_tests_REQUIRED_PASS_before_any_evaluation:
+    - candidate_does_not_read_tx_truth   # ring assignment from |z| only
+    - ring_aware_uses_same_butterfly_structure_as_godard
+    - ring_aware_uses_same_init_mu_block_as_godard
+    - ring_boundaries_match_16qam_geometry
+    - rccma_uses_only_outer_ring_symbols_for_update
+    - rccma_threshold_matches_outer_ring_boundary
+    - godard_anchor_identity_gate_gradard_with_z
+
+# === Decision rule (frozen BEFORE running) ===
+
+decision_rule:
+
+  C15_RING_AWARE_REDUCES_COLLAPSE:
+    all_of:
+      - "All identity + semantic smoke tests PASS."
+      - "Macro paired collapse-rate delta (ring_aware - godard) <= -MDE (ring_aware collapses less by >= 0.005)."
+      - "Macro collapse-rate CI upper bound < 0 (statistically significant reduction)."
+      - "Macro paired PI-SER delta (ring_aware - godard) <= +MDE (ring_aware is no worse than Godard on PI-SER)."
+    consequence: >-
+      POSITIVE (Scout-level): the ring-aware cost REDUCES the collapse rate.
+      This REFUTES "deep Godard-cost property" and opens a contribution line
+      (the collapse is a cost-mismatch artifact, fixable by ring matching).
+      Promotion to deeper evidence would require a user strategic decision.
+
+  C15_RING_AWARE_DOES_NOT_REDUCE_COLLAPSE:
+    any_of:
+      - "Macro paired collapse-rate delta (ring_aware - godard) > -MDE (not practically significant)."
+      - "Macro collapse-rate CI upper bound >= 0 (not statistically significant)."
+      - "Macro paired PI-SER delta (ring_aware - godard) > +MDE (ring_aware is worse on PI-SER)."
+    consequence: >-
+      LOCAL_NEGATIVE: the ring-aware cost does NOT reduce the collapse. The
+      collapse SURVIVES a ring-matched cost — this STRENGTHENS the "deep Godard-
+      cost property" thesis (it is not merely a modulus-mismatch artifact; it
+      is a deeper property of modulus-based costs on this channel). Record the
+      mechanism-distinct negative (distinct from MMA's quadrant failure).
+
+  C15_RING_AWARE_BLOWS_UP:
+    description: >-
+      Ring-aware diverges on >= 2 cells (numerically unstable). Recorded as
+      INSTABILITY_NEGATIVE / DIAGNOSTIC.
+
+  C15_RCCMA: >-
+    RCCMA is a SECONDARY comparator (the standard Sato-style reduced-
+    constellation variant). Its collapse-rate and PI-SER are reported alongside
+    ring-aware for mechanism triangulation but it is not the primary decision
+    axis. (RCCMA uses only outer-ring symbols, so it updates less frequently —
+    it may converge slower or be more variance-prone.)
+
+# === Forbidden within this batch ===
+
+forbidden:
+  - modify_any_prior_batch_artifacts  # baseline-atlas / c04-c09 / c11 / c12 / fairness-b01 / B01-R
+  - modify_D006_D040_D016_V005_C08_C04_C09_C11_C12_results
+  - modify_canonical_state_yaml
+  - modify_global_skills
+  - modify_frozen_cb1_cell_runner_or_evaluator  # READ-ONLY imports only
+  - use_TX_truth_in_candidate_cost_at_runtime  # ring assignment from |z|, NOT from sX/sY
+  - change_mu_or_taps_or_block_or_init  # cost-isolation: ONLY the cost changes
+  - use_oracle_affine_as_Go_baseline  # FR-21, FR-25
+  - write_results_into_paper_text
+  - push_or_merge
+  - overwrite_v1_paths
+
+# === Outputs ===
+
+outputs:
+  cost_variants: c15-reduced-const-cost-scout/src/cma_cost_variants.py
+  training_runner: c15-reduced-const-cost-scout/src/run_cost_scout.py
+  tests: c15-reduced-const-cost-scout/src/test_cost_identity.py
+  raw_artifact: c15-reduced-const-cost-scout/artifacts/result.v1.json
+  synthesis: c15-reduced-const-cost-scout/synthesis.v1.md
+
+# === Time budget ===
+
+time_budget_minutes: 6  # 11 cells x 10 seeds x 4 costs; CMA is ~0.1s/seed -> ~50s budget
+commit_policy: single_consolidated_commit_at_session_end_no_push
+
+# === Provenance ===
+
+provenance:
+
+  concept_source_reduced_constellation:
+    primary: >-
+      Sato, Y. (1975), "A method of self-recovering equalization for
+      multilevel amplitude-modulation," IEEE Trans. Communications, 23(6),
+      pp. 679-682. — the classical reduced-constellation cost: a coarser
+      decision-directed / modulus cost that reduces the multilevel alphabet to
+      a simpler one for the cost computation. RCCMA (outer-ring-only) is the
+      direct Sato-style descendant for square QAM.
+    multi_modulus_mma:
+      note: >-
+        Yang, J., Werner, J.-J., & Dumont, G. A. (2002), "The multimodulus
+        blind equalization and its generalized algorithms," IEEE JSAC, 20(5),
+        pp. 997-1015. — MMA decomposes 16QAM by QUADRANT (a 4th-power /
+        quadrant-aware cost) and was tested here as D006/D040 (FAILED). C15's
+        ring-aware cost is DISTINCT: it decomposes by RADIUS (three rings), not
+        by angle. This Scout tests the radius-decomposed variant MMA is NOT.
+    godard:
+      note: >-
+        Godard, D. N. (1980), "Self-recovering equalization and carrier
+        tracking in two-dimensional data communication systems," IEEE Trans.
+        Communications, 28(11), pp. 1867-1875, Eq.(10). — the single-global-R2
+        modulus cost that is the ANCHOR here (and the hypothesized cause of
+        collapse via ring mismatch).
+    ring_radii:
+      note: >-
+        For avg-power-normalized 16QAM (E[|s|^2]=1), the three rings have
+        squared radii inner=2/10=0.2 (4 symbols), middle=10/10=1.0 (8 symbols),
+        outer=18/10=1.8 (4 symbols). Ring boundaries (midpoints in |z|^2):
+        0.6 and 1.4. Verified against projects/simulation/common/_modulation.py
+        qam16_mod (Gray {-3,-1,+1,+3}/sqrt(10) per axis).
+
+  godard_anchor_R2:
+    value: 1.32
+    source: inherited_from_B01-R_HF6 (and C12/C04 anchor)
+  fixed_mu_cma_mu:
+    value: 0.03
+    source: B01-R_HF6_interior_optimum (C12/C04 anchor)
+  MDE:
+    value: 0.005
+    source: inherited_from_all_prior_batches
+  reused_unchanged:
+    - generate_shared_realization_dp (projects/simulation/common/_dual_pol_channel)
+    - standard_cma_godard_with_z (baseline-atlas/cb1_cell_runner) [READ-ONLY anchor]
+    - eval_window_for (baseline-atlas/cb1_cell_runner)
+    - hard_16qam / evaluate_dual_16qam (baseline-atlas/cb1_evaluator) [PI-SER]
+    - 11-cell atlas + test seeds [71-80] (paired with C04/C09 held-out slice)
+  channel:
+    config: CB1 dual-pol OSL 16QAM
+    alpha: 4.2
+    beta: 1.4
+    turbulence: gamma-gamma
+    impairments: [sop_drift, isi, awgn]

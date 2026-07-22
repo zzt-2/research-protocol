@@ -1,0 +1,594 @@
+schema_version: direction-lab.probe-record.v1
+probe_id: p05-rotation-remap
+type: read_only_portfolio_remap
+date: 2026-07-22
+campaign_id: science-scout-2026-07-20.dual-pol-osl
+mode: SCIENCE_SCOUT
+
+# =============================================================================
+# §0 Question and budget
+# =============================================================================
+question: >-
+  Given the recurring scientific conclusion that ALL post-equalizer corrections
+  fail (C04/C09 affine, C12 soft-demapper/GMI) because the 16QAM inner-ring
+  collapse is an EQUALIZER-LEVEL deep Godard-cost property, which untested
+  candidate mechanisms operate DURING or BEFORE CMA convergence (cost / init /
+  paradigm / different sub-problem) and could actually work rather than yield
+  another negative?
+budget: read-only (no compute)
+exit_condition: >-
+  Produce a ranked list of 3-5 next mechanism directions, each classified by
+  MECHANISM, DISTINCTNESS from the closed set, LEGAL INPUT, INFRASTRUCTURE,
+  PAPER VALUE, and THESIS FIT. Directions must change the cost function, the
+  initialization, the equalizer paradigm, or the sub-problem — NOT the
+  post-equalizer output.
+
+# =============================================================================
+# §1 Inputs read (read-only remap)
+# =============================================================================
+inputs:
+  - candidate-universe.yaml          (U01-U32 archetypes, 26 APs, 13 method families)
+  - candidate-universe.v2.yaml       (U33-U34 overlay; F1/G2/U32 RETAINED_NEUTRAL)
+  - portfolio-refresh.v1.yaml        (U45-U52 seeds + priority candidates U24/U10/RC2/U05)
+  - candidate-coverage-audit.v3.yaml (U35-U44 interfaces; mechanism-identity axes)
+  - candidate-map.v2.yaml            (ranked shortlist; F01-F08 families; D040-D056 lineage)
+  # supporting state:
+  - portfolio/current.yaml           (C01-C13 cluster map + dispositions)
+  - portfolio-refresh.v3-fairness.yaml (C01-C13 full cards + readiness)
+  - harvest/current.yaml             (effective harvest after D016/V005)
+  - adapters/dual-pol-osl.yaml       (runtime trace contract; forbidden inputs)
+  - canonical-state.yaml             (baseline.standard_cma.godard_z identity)
+  - failure-registry.yaml            (B001/B002 SSL-AE specific failures)
+  - probes/p01..p04 records          (C04/C09 corrected-target, detector lead-time,
+                                      C13 dedup, C12 coded readiness)
+  - scout/cb1.../c12-gmi-soft-output-scout/synthesis.v1.md  (C12 MECHANISM_NEGATIVE)
+  - campaigns/.../capability-leverage-atlas.v1.yaml (CB1-CB5 bundles)
+  - projects/simulation/common/_cma.py                (CMAEqualizer2x2 cost+init)
+  - scout/cb1.../baseline-atlas/cb1_cell_runner.py    (anchor runner; center-tap hardcoded)
+
+# =============================================================================
+# §2 Closed-set reference (the mechanism space already exhausted)
+# =============================================================================
+closed_set:
+  summary: >-
+    Every mechanism tested to date on the 16QAM inner-ring collapse shares the
+    same three fixed properties: (1) center-tap initialization (wxx/wyy center
+    =1, rest 0; cb1_cell_runner.py:73-78), (2) Godard constant-modulus cost
+    e = R2 - |z|^2 (R2=1.32 for 16QAM; _cma.py:161), (3) CMA butterfly
+    structure. The tested variants only change what is DOWNSTREAM of these
+    three or how the SAME cost is applied.
+  entries:
+    - id: C04_C09
+      what_changed: post-hoc learned affine on hard z-stream (output correction)
+      relation_to_trajectory: AFTER equalizer; does not touch cost/init/paradigm
+      status: CLOSED (p01 PASS showed input-dependent optimum exists; Scout
+              showed learned corrector matches blind ridge-LS or overfits/blows up)
+    - id: C08
+      what_changed: adaptive step size mu via contextual bandit (cluster 4)
+      relation_to_trajectory: same Godord cost, same center-tap init; changes
+                              only the step magnitude per block-batch
+      status: RUN_DONE — collapse survives (CB1_COLLAPSE_DEEP_PROPERTY)
+    - id: C10
+      what_changed: per-symbol stochastic update (block_size=1 vs 64)
+      relation_to_trajectory: same Godard cost, same center-tap init; changes
+                              update granularity (~500x more updates)
+      status: RUN_DONE — collapse survives; H021 (block-end bottleneck) rejected
+    - id: C11
+      what_changed: CMA then decision-directed LMS cascade (cluster 6)
+      relation_to_trajectory: post-CMA refinement with hard 16QAM decisions
+      status: RUN_DONE_LEGAL — no benefit (macro Delta +0.01445 worse)
+    - id: C12
+      what_changed: collapse-aware mixture soft demapper on GMI (cluster 7)
+      relation_to_trajectory: AFTER equalizer; soft-output information metric
+      status: MECHANISM_NEGATIVE — zero TX-truth oracle GMI headroom; loss is
+              equalizer-bound, not demapper-bound. Reusable GMI evaluator asset.
+    - id: MMA_D006_D040
+      what_changed: Yang-Werner-Dumont multi-modulus cost (different cost, tested)
+      relation_to_trajectory: different cost but SAME center-tap init, CMA structure
+      status: not better than CMA on OSL+GG+SOP (H018); D040 killed MMA D3 exact
+              domain, blind family survives
+    - id: C13_pilot_jones
+      what_changed: pilot -> Jones LS -> EMA -> pinv inverse -> CMA (cluster 8)
+      relation_to_trajectory: BEFORE equalizer; different information class (CSI_PILOT)
+      status: COLLISION with old U05/U36/U52 lineage (p03); no ML component; EXIT
+    - id: C01_C02_C06_detection
+      what_changed: collapse detection (supervised/SSL/density)
+      relation_to_trajectory: orthogonal (observability, not correction)
+      status: STRUCTURALLY_CEILINGED — AUROC=1.000 at block 0, lead time non-positive
+    - id: C03_C07_control
+      what_changed: learned/threshold reinit policy
+      relation_to_trajectory: would change init mid-run (the one untouched lever)
+      status: INFRASTRUCTURE_BLOCKED (state-snapshot + action-effect hook absent)
+
+recurring_conclusion:
+  statement: >-
+    All post-equalizer corrections (affine on hard decisions; soft demapping on
+    GMI) fail to recover the collapse because the collapse is an equalizer-level
+    deep property. The problem is IN the CMA equalizer trajectory, not AFTER it.
+  implication_for_remap: >-
+    The closed set exhausts the AFTER-equalizer space and the ADAPT-WITHIN-CMA
+    space (mu, granularity, cascade). Three mechanism dimensions of the
+    trajectory itself remain UNTESTED: the cost function, the initialization,
+    and the equalizer paradigm. A fourth opens a different sub-problem
+    (channel model).
+
+# =============================================================================
+# §3 Analysis framework: the four untested mechanism dimensions
+# =============================================================================
+framework:
+  d1_cost_function:
+    lever: change e = R2 - |z|^2 to a different dispersion/cost
+    tested: MMA (multi-modulus) — FAILED on OSL (D006/D040)
+    untested_subspace: >-
+      Reduced-constellation CMA (outer-ring-only); kurtosis/dispersion
+      minimization with a non-modulus measure; switched-cost schedules;
+      self-supervised learned cost that is NOT constant modulus. These are
+      distinct from MMA's quadrant-modulus approach.
+  d2_initialization:
+    lever: change center-tap init to a data-driven / multi-start strategy
+    tested: NOTHING. All variants (C08/C10/C11/MMA) use center-tap.
+    untested_subspace: >-
+      Statistics-informed init (from block-0 received covariance/eigenstructure);
+      multi-start with selection; eigenvalue/JONES-principal init. The evidence
+      that collapse is DETERMINED AT BLOCK 0 (detection AUROC=1.000, lead time
+      non-positive) is directly consistent with the outcome being init-dependent
+      — making this the single most evidence-aligned untested lever.
+  d3_equalizer_paradigm:
+    lever: replace CMA entirely with a non-modulus blind method
+    tested: NOTHING non-modulus (MMA is still modulus-based)
+    untested_subspace: >-
+      Higher-order-statistics source separation (JADE/Cardoso, FastICA) on the
+      2x2 dual-pol mix; self-supervised learned equalizer with an
+      invariance/reconstruction objective that contains no |z|^2 term. If the
+      collapse is specifically a Godard-cost local minimum, a paradigm with no
+      modulus cost has no such minimum by construction.
+  d4_different_subproblem:
+    lever: solve channel estimation / SOP tracking instead of symbol equalization
+    tested: pilot->Jones->inverse (C13) COLLISION; CB3 receiver-CSI seam blocked
+    untested_subspace: >-
+      Receiver-only (CSI_NONE) model-based tracker exploiting the KNOWN GG+SOP
+      statistical structure as a prior (Kalman/particle filter on Stokes
+      parameters), feeding a model-based equalizer. Distinct from the
+      pilot->Jones->inverse chain because it uses the channel MODEL not pilots.
+
+# =============================================================================
+# §4 Ranked directions (top 5)
+# =============================================================================
+ranked_directions:
+
+  # ──────────────────────────────────────────────────────────────────────────
+  - rank: 1
+    id: INIT-STRATEGY
+    label: data-driven / multi-start CMA initialization
+    universe_mapping: >-
+      NEW direction. Not explicitly present as a distinct candidate in U01-U52.
+      Nearest neighbours: U11 (fixed-weight supervised equalizer — but that is
+      about supervised WEIGHTS, not init strategy); C03/C07 (reinit mid-run —
+      blocked on action hook). This direction sets init ONCE at construction,
+      so it needs NO action hook and is NOT co-blocked with C03/C07.
+    mechanism:
+      dimension: d2_initialization
+      what_it_changes: >-
+        Replace the hardcoded center-tap init (wxx/wyy[center]=1, rest 0) with a
+        receiver-visible-data-driven initialization of the 4 complex FIR filters.
+        Concretely: (a) eigenstructure/whitening init from the block-0 received
+        covariance (principal-eigenvector tap spread instead of a delta), or
+        (b) multi-start: run K inits (center-tap + K perturbed/principal
+        variants), keep the one with the best dense proxy (|z|^2-R^2 deviation
+        or kurtosis) after a short warm-up, then commit. NO mid-run action; the
+        selection is a construction-time/short-warm-up decision.
+      why_it_could_work: >-
+        The collapse is DETERMINED AT BLOCK 0 (C05 detector AUROC=1.000, lead
+        time non-positive by construction). This means the block-0 state
+        (init weights + first channel realization) already encodes the outcome.
+        All tested variants share the SAME center-tap init, so they all enter
+        the same basin-family. A data-driven init that accounts for block-0
+        statistics could systematically target the healthy basin. This is the
+        single untested lever most consistent with the "determined at block 0"
+        evidence. Some seeds do NOT collapse from center-tap, proving the
+        healthy basin is reachable — the question is whether a smarter init
+        reaches it reliably.
+    distinctness:
+      vs_C04_C09: DISTINCT (operates on equalizer init, not post-hoc output)
+      vs_C08: DISTINCT (C08 changes step size mu; this changes the starting point)
+      vs_C10: DISTINCT (C10 changes update granularity; this changes the start)
+      vs_C11: DISTINCT (C11 is post-CMA refinement; this is pre-CMA start)
+      vs_C12: DISTINCT (C12 is post-equalizer soft output; this is init)
+      vs_MMA: DISTINCT (MMA changes cost; this keeps Godard cost, changes init)
+      vs_C03_C07: DISTINCT in mechanism AND infrastructure (C03/C07 reinit
+                  MID-RUN and need the action-effect hook; this sets init at
+                  construction and needs NO hook)
+      verdict: GENUINELY_DISTINCT — no tested variant touches initialization
+    legal_input:
+      class: CSI_NONE
+      justification: >-
+        Init derived from receiver-visible received-signal statistics
+        (covariance, eigenstructure of rX/rY). No TX bits, no h, no theta, no
+        Jones, no pilots. The forbidden_runtime_inputs list in
+        adapters/dual-pol-osl.yaml (tx_bits, sX, sY, h, theta, true_jones,
+        fixed_label_ber, pi_ber, future_window) is not violated. The dense
+        proxy reward (|z|^2-R^2) is the same receiver-visible quantity C08 used.
+    infrastructure:
+      adapter: new_equalizer_runner_variant
+      scope: IN_SCOPE_HALF_DAY
+      rationale: >-
+        Exact precedent: C10 (per-symbol) was implemented as a NEW runner file
+        without modifying the anchor, per the P4 extend-only rule
+        (new algorithm = 1 new file + 0 changes to existing). Init is set at
+        construction in CMAEqualizer2x2.__init__ (_cma.py:74-86) and in the
+        anchor runner (cb1_cell_runner.py:73-78). A new runner that computes a
+        data-driven wxx/wxy/wyx/wyy before the equalize loop, OR runs K
+        short warm-ups and picks the best, is a new file of comparable size to
+        the C10 per-symbol runner. mu/n_tap/R2 are already kwargs. NO
+        state-snapshot hook and NO action-effect hook are required because the
+        selection happens before/at the start of the main equalize loop.
+      blocked_axis_touched: none (does not need p01 action hook, p02 CPR, p03
+                            soft/coded, or p03 CSI-pilot seam)
+    paper_value:
+      level: HIGH
+      rationale: >-
+        Tests a genuinely new mechanism (initialization) that the entire closed
+        set left untouched. Either outcome is publishable: (a) if a data-driven
+        init closes the collapse on cells where center-tap collapses, this is a
+        POSITIVE method contribution (rare in this campaign); (b) if collapse
+        is init-invariant (survives multi-start), it converts "collapse is a
+        deep Godard-cost property" into the stronger "collapse is an
+        init-and-cost property, basin-independent" — a tighter boundary result.
+    thesis_fit:
+      level: STRONG
+      rationale: >-
+        Directly serves the central thesis spine ("collapse is a deep Godard-cost
+        property") by testing the last untested lever WITHIN the CMA trajectory.
+        If it succeeds, it opens a genuine new contribution line (smart init for
+        blind equalizers on turbulent OSL). If it fails, it completes the
+        within-CMA negative triad (cost-adapted C08, granularity C10,
+        init-variant all fail) and forces rotation to d3/d4 (paradigm/subproblem).
+
+  # ──────────────────────────────────────────────────────────────────────────
+  - rank: 2
+    id: REDUCED-CONST-CMA
+    label: reduced-constellation / outer-ring-only CMA cost
+    universe_mapping: >-
+      Maps to U14 ("blind equalization may need richer non-label supervision
+      than constant modulus", candidate-universe.yaml:157) surviving family
+      after D040 (MMA D3 exact domain killed; blind family retained) and
+      D048-D049 (basic blind statistics). U14's evidence_gap is
+      "degenerate-solution proof". NOT identical to MMA: MMA assigns multiple
+      moduli to ALL symbols by quadrant; reduced-constellation CMA uses only
+      the UNAMBIGUOUS outer-ring symbols for the constant-modulus term.
+    mechanism:
+      dimension: d1_cost_function
+      what_it_changes: >-
+        Replace the Godard cost e = R2 - |z|^2 (applied to ALL symbols) with a
+        cost that uses only the outer-ring 16QAM symbols (the 4 corner points,
+        |s|^2 = 1.8*dB-norm) where the modulus is unambiguous, during a
+        convergence phase; then transition to full-constellation or DD-LMS.
+        Equivalently: a confidence-weighted CMA where the modulus error is
+        weighted by a decreasing function of how close |z|^2 is to the
+        inner-ring radius (down-weighting the ambiguous inner region). This is
+        a COST change, not an output correction.
+      why_it_could_work: >-
+        The inner-ring collapse is, by definition, a multi-modulus pathology:
+        CMA's single R2=1.32 sits BETWEEN the inner (|s|^2=0.2) and outer
+        (|s|^2=1.8) rings, so on a deep fade the trajectory minimizes |R2-|z|^2|
+        by collapsing to the inner ring where the cost is locally small. MMA
+        attacked this with multiple moduli but FAILED on OSL (D006), likely
+        because SOP rotation confuses the quadrant-to-modulus assignment needed
+        by YWD-MMA. Reduced-constellation CMA sidesteps the quadrant-assignment
+        problem: it does not need to know WHICH symbol, only WHETHER |z|^2 is
+        in the unambiguous outer band. This is a mechanistically distinct
+        hypothesis for why MMA failed but a cost change could still work.
+    distinctness:
+      vs_MMA: DISTINCT (MMA needs per-quadrant modulus assignment, rotation-
+              sensitive; RCCMA needs only an outer-ring membership test on |z|^2,
+              rotation-insensitive). D040 killed MMA D3 exact, not this.
+      vs_C08_C10_C11: DISTINCT (those keep Godard cost; this changes the cost)
+      vs_C04_C09_C12: DISTINCT (those are post-equalizer; this is the cost)
+      verdict: GENUINELY_DISTINCT from the closed set; distinct from killed MMA
+    legal_input:
+      class: CSI_NONE
+      justification: >-
+        Outer-ring membership is decided from |z|^2 vs the known public 16QAM
+        ring radii (no TX truth needed — the ring geometry is public alphabet
+        knowledge, same as R2 itself). Weighting uses receiver-visible |z|^2.
+    infrastructure:
+      adapter: new_equalizer_runner_variant
+      scope: IN_SCOPE_HALF_DAY
+      rationale: >-
+        Same C10 precedent: a new runner file. The cost e appears in two places
+        (_cma.py:161 eX=R2-|zx_blk|^2; cb1_cell_runner.py:~115-129 update). A
+        new runner with a masked/weighted cost is a localized change to the
+        error computation, comparable in size to the C10 per-symbol variant.
+        No new hook. The DD-LMS transition phase reuses the C11 warm-start
+        pattern (already proven READY).
+      blocked_axis_touched: none
+    paper_value:
+      level: HIGH
+      rationale: >-
+        Directly tests the multi-modulus hypothesis with a mechanism distinct
+        from the failed MMA. If RCCMA closes collapse where MMA did not, the
+        paper contribution is "rotation-insensitive cost design for blind
+        equalization on SOP-dynamic OSL" — a positive result with a clean
+        mechanistic explanation (MMA's quadrant assignment vs RCCMA's
+        ring-membership test).
+    thesis_fit:
+      level: STRONG
+      rationale: >-
+        Sharpens the "deep Godard-cost property" finding: distinguishes
+        "Godard-cost (single modulus) property" from "any-modulus-cost
+        property". If RCCMA works, the collapse is NOT a deep property of
+        modulus costs in general — only of the single-R2 Godard cost — opening
+        a method line. If it fails, the negative broadens to "all modulus costs
+        fail", strengthening the case for d3 (non-modulus paradigm).
+
+  # ──────────────────────────────────────────────────────────────────────────
+  - rank: 3
+    id: NONMODULUS_BLIND_EQ
+    label: non-modulus blind equalization (source separation / learned cost)
+    universe_mapping: >-
+      Maps to U14 (richer non-label supervision) and U15 (multimodal posterior,
+      candidate-universe.yaml:158, collision-risk but evidence_gap
+      "distinct mechanism boundary"). Surviving family after D031 (A3-VAE
+      reconstruction oracle-filtered — killed) and D040 (MMA D3). The
+      failure-registry reopen condition is "fit the representation without
+      event labels / oracle-filtered rows". A source-separation or
+      non-modulus-learned equalizer is a different mechanism family from both
+      the killed reconstruction-AE and MMA.
+    mechanism:
+      dimension: d3_equalizer_paradigm
+      what_it_changes: >-
+        Replace the CMA butterfly with a blind method that has NO constant-
+        modulus term at all. Two concrete instantiations:
+        (a) HOS source separation: block-wise JADE/Cardoso or FastICA on the
+            2x2 dual-pol mixture (rX,rY) -> (zX,zY), which separates sources by
+            fourth-order statistical independence, not by modulus.
+        (b) Self-supervised learned equalizer: a small complex-valued net
+            trained on an invariance/prediction objective (e.g., predict one
+            receive polarization from a time-shifted view of the other, or a
+            contrastive objective) whose loss contains no |z|^2 term. This is
+            the "learned cost" the recurring conclusion points at.
+      why_it_could_work: >-
+        If the collapse is specifically a Godard-cost local minimum (inner ring
+        is a stationary point of E[(R2-|z|^2)^2]), then ANY paradigm without a
+        modulus cost has no such minimum by construction. This is the strongest
+        theoretical escape: it does not fight the bad basin, it removes the
+        landscape feature that creates it. The dual-pol 2x2 mixing is literally
+        an ICA problem, so source separation is a natural fit.
+    distinctness:
+      vs_all_closed: GENUINELY_DISTINCT — no member of the closed set removes
+                     the modulus cost. MMA is still modulus-based. C04/C09/C12
+                     are post-equalizer. This is the only direction that changes
+                     the equalizer PARADIGM.
+      vs_D031_A3_VAE: DISTINCT (D031 killed an oracle-filtered reconstruction AE;
+                      HOS source separation and non-modulus contrastive learning
+                      are different mechanism families, no reconstruction target)
+      verdict: MAXIMALLY_DISTINCT
+    legal_input:
+      class: CSI_NONE
+      justification: >-
+        JADE/FastICA consume only the received samples (rX,rY) and the
+        assumption of statistical independence — no TX truth, no pilots, no
+        channel. A self-supervised learned equalizer uses only receiver-visible
+        multi-view/causal-masking objectives (the U41 SSL representation
+        contract). Both satisfy the forbidden_runtime_inputs list.
+    infrastructure:
+      adapter: new_equalizer_runner_variant (HOS) OR new_trained_model (learned)
+      scope: IN_SCOPE_HALF_DAY_for_HOS ; MEDIUM_for_learned
+      rationale: >-
+        HOS path (a): JADE/Cardoso joint diagonalization of a 4th-order
+        cumulant tensor is ~100-150 lines of numpy on the 2x2 block, no new
+        dependency (numpy/scipy suffice; torch optional). New runner file, same
+        P4 precedent as C10. Block-wise application matches the existing
+        block_size=64 granularity. HALF_DAY.
+        Learned path (b): needs a self-supervised training loop and the
+        B001/B002 reopen-condition discipline (no oracle-filtered rows). Larger;
+        defer unless HOS shows signal. torch is present.
+      blocked_axis_touched: none for HOS path
+    paper_value:
+      level: VERY_HIGH
+      rationale: >-
+        The highest-novelty direction. A non-modulus blind equalizer that avoids
+        the collapse where all CMA variants fail would be a clean positive
+        method contribution: "the inner-ring collapse is a Godard-cost
+        pathology, avoidable by source-separation equalization." Even a
+        negative (HOS also fails on the time-varying channel) is a strong
+        boundary result completing the paradigm axis.
+    thesis_fit:
+      level: OPENS_NEW_LINE_if_positive
+      rationale: >-
+        This is the direction most likely to open a genuinely new contribution
+        line (a working equalizer) rather than extend the negative spine. It is
+        ranked below 1 and 2 only because it is higher-cost/uncertain on a
+        time-varying channel (ICA assumes quasi-static mixing within a block).
+        If the block-wise quasi-static assumption holds at block_size=64, this
+        is the strongest candidate.
+
+  # ──────────────────────────────────────────────────────────────────────────
+  - rank: 4
+    id: MODEL_BASED_TRACKER
+    label: receiver-only model-based GG+SOP tracker feeding a model-based equalizer
+    universe_mapping: >-
+      Maps to U36 (causal GG/Jones/link-state posterior tracker,
+      candidate-coverage-audit.v3.yaml:67-74, method_axes [DU,BAYES,PI,HYB]) and
+      U37 (joint sync+pol tracker). U36 is in priority-candidate rank 4
+      (portfolio-refresh.v1.yaml) under RC3, runnable Y after bundle-1. NOT the
+      C13 pilot->Jones->inverse chain (that collided, p03).
+    mechanism:
+      dimension: d4_different_subproblem
+      what_it_changes: >-
+        Solve a DIFFERENT sub-problem: instead of blind symbol equalization,
+        estimate and track the channel state (GG envelope h, SOP rotation
+        theta) using a model-based recursive estimator (Kalman / particle
+        filter / EKF) that uses the KNOWN Gamma-Gamma + SOP statistical model
+        as a prior, then apply a model-based equalizer (Wiener/MMSE on the
+        tracked channel). The information source is the channel MODEL (known GG
+        alpha/beta, known SOP rate range), not symbol modulus and not pilots.
+      why_it_could_work: >-
+        The recurring conclusion says the problem is IN the (blind) trajectory.
+        A model-based tracker does not rely on blind modulus properties at all;
+        it uses the physics of the channel. If the GG+SOP structure is
+        informative enough, a model-based MMSE equalizer can sidestep the blind
+        collapse entirely. This is the physics-informed angle.
+    distinctness:
+      vs_C13_pilot_jones: DISTINCT_in_information_source — C13 uses PILOTS
+                          (CSI_PILOT, collided); this uses the channel MODEL
+                          (statistical priors on h and theta), CSI_NONE at
+                          runtime. The mechanism (Bayesian tracking with a
+                          physics prior) is different from LS+EMA+pinv.
+      vs_all_CMA_variants: DISTINCT (not CMA; not modulus-based)
+      vs_D055: D055 narrowed the pilot->Jones->inverse chain as
+               literature-collided; a RECEIVER-ONLY model-based tracker using
+               GG statistics (not pilot symbols) is outside that collision.
+      verdict: DISTINCT_subproblem (channel estimation, not symbol equalization)
+    legal_input:
+      class: CSI_NONE_at_runtime (uses channel MODEL priors, not pilots)
+      caveat: >-
+        Borderline. The GG alpha/beta and SOP rate are SCENARIO parameters
+        (declared in the anchor: alpha=4.2, beta=1.4, sop_rate [4e-6,4e-5]),
+        not runtime CSI. Using them as estimator priors is analogous to using
+        the known 16QAM alphabet — public/declared knowledge, not TX truth.
+        Must be reported as "model-aided" and compared against the CSI_NONE
+        blind CMA anchor with that caveat explicit (mirrors C13's separate-claim
+        discipline).
+    infrastructure:
+      adapter: model_based_tracker_runner
+      scope: MEDIUM (between half-day and multi-day)
+      rationale: >-
+        Does NOT require the CB3 pilot seam (that is for PILOT-aided CSI). A
+        receiver-only Stokes/covariance tracker with a GG+EKF is a new file;
+        the EKF/particle-filter math is standard. Existing single-pol _kf.py
+        (get_pilots, kf_pilot_recovery) is single-pol and pilot-based — NOT
+        reusable directly (capability-leverage-atlas CB3 warns of silent
+        Y-polarization drop), so the dual-pol model-based tracker must be
+        written fresh. Estimate ~1 day. The model-based MMSE equalizer on the
+        tracked channel reuses the existing FIR convolution scaffolding.
+      blocked_axis_touched: partially p03.csi.receiver-estimated-or-pilot
+                            (but resolves it for the model-based path, not pilot)
+    paper_value:
+      level: HIGH
+      rationale: >-
+        Tests whether the KNOWN channel structure is exploitable to avoid blind
+        collapse. A positive ("model-based MMSE tracking recovers where blind
+        CMA collapses") is a clean information-increment result: the ML/model
+        value is in the tracker, not the equalizer cost. A negative documents
+        that even model-aided tracking cannot recover on this channel.
+    thesis_fit:
+      level: MODERATE_to_STRONG
+      rationale: >-
+        Opens the channel-estimation contribution line (U36/U37, family F01)
+        which is largely untested in this campaign (C13 was the only CSI
+        candidate and it collided on the pilot mechanism). If positive, it is a
+        genuinely new thesis chapter (model-aided vs blind). Ranked below 1-3
+        because it is higher-cost and the information-class caveat complicates
+        the claim ceiling.
+
+  # ──────────────────────────────────────────────────────────────────────────
+  - rank: 5
+    id: SWITCHED_COST_SCHEDULE
+    label: switched/scheduled cost equalization (Godard -> reduced-const -> DD)
+    universe_mapping: >-
+      Maps to U26 (online step/window control, AP20) and the adaptive-step
+      family extended to the COST dimension. Distinct from C08 (which adapts
+      the STEP of a fixed cost). This adapts WHICH cost is active over time.
+      Also adjacent to U12 (CMA-RLS adaptation) surviving family.
+    mechanism:
+      dimension: d1_cost_function (time-varying)
+      what_it_changes: >-
+        A scheduled or state-gated SWITCH between cost functions across the
+        convergence trajectory: e.g., outer-ring-only CMA (rank-2 cost) during
+        acquisition, transition to full Godard, then DD-LMS (C11) for
+        refinement. The switch points are gated on receiver-visible state
+        (kurtosis / |z|^2-R^2 deviation crossing a threshold), not on TX truth.
+        Combines the rank-2 cost idea with a temporal schedule.
+      why_it_could_work: >-
+        Even if no single cost is globally best (Godard collapses; MMA fails on
+        OSL; DD-LMS needs good hard decisions), a SCHEDULE that uses the right
+        cost in the right phase (acquire on unambiguous outer ring, then refine)
+        may avoid the basin that a fixed cost falls into. This is the
+        cost-space analogue of C08's step-space adaptation.
+    distinctness:
+      vs_C08: DISTINCT (C08 adapts mu of a FIXED Godard cost; this adapts the
+              COST itself over time)
+      vs_C11: PARTIAL_OVERLAP (C11 is a fixed two-stage CMA->DD-LMS; this is a
+              multi-phase cost schedule including the reduced-constellation
+              acquisition phase C11 lacks)
+      vs_rank2: COMPOSES rank-2 (reduced-const) as one phase; ranks above it
+                only if a single-phase RCCMA proves insufficient
+      verdict: DISTINCT_from_C08; composes rank-2 — recommend AFTER rank-2 result
+    legal_input:
+      class: CSI_NONE
+      justification: switch gates use receiver-visible kurtosis / modulus error
+    infrastructure:
+      adapter: new_equalizer_runner_variant
+      scope: IN_SCOPE_HALF_DAY (after rank-2 RCCMA runner exists, this is a
+             scheduler wrapper around it + C11 DD-LMS)
+      rationale: reuses the rank-2 cost runner and C11 warm-start; adds a gate.
+      blocked_axis_touched: none
+    paper_value:
+      level: MODERATE
+      rationale: >-
+        Most valuable as a follow-on to rank-2: if single-phase RCCMA partially
+        works, a schedule may complete the recovery. As a standalone it is less
+        novel than ranks 1-3. Recommend only if rank-2 shows partial signal.
+    thesis_fit:
+      level: MODERATE
+      rationale: extends the cost dimension; best as a refinement of rank-2.
+
+# =============================================================================
+# §5 Summary ranking table
+# =============================================================================
+summary_table:
+  - {rank: 1, id: INIT-STRATEGY,         dim: d2_init,        distinct: GENUINELY, legal: CSI_NONE,         infra: HALF_DAY,          paper: HIGH,      could_work: "HIGH (evidence-aligned)"}
+  - {rank: 2, id: REDUCED-CONST-CMA,     dim: d1_cost,        distinct: GENUINELY, legal: CSI_NONE,         infra: HALF_DAY,          paper: HIGH,      could_work: MODERATE-HIGH}
+  - {rank: 3, id: NONMODULUS_BLIND_EQ,   dim: d3_paradigm,    distinct: MAXIMAL,   legal: CSI_NONE,         infra: "HALF_DAY(HOS)/MED", paper: VERY_HIGH, could_work: "HIGH if quasi-static"}
+  - {rank: 4, id: MODEL_BASED_TRACKER,   dim: d4_subproblem,  distinct: DISTINCT,  legal: "CSI_NONE*(model)", infra: "MEDIUM(~1d)",   paper: HIGH,      could_work: MODERATE}
+  - {rank: 5, id: SWITCHED_COST_SCHEDULE, dim: "d1_cost(time)", distinct: from_C08, legal: CSI_NONE,        infra: "HALF_DAY(after #2)", paper: MODERATE, could_work: "as refinement"}
+
+# =============================================================================
+# §6 Recommendation
+# =============================================================================
+recommendation:
+  primary: INIT-STRATEGY (rank 1)
+  reason: >-
+    It is (a) the ONLY untested lever within the CMA trajectory, (b) the most
+    consistent with the strongest single piece of evidence in the campaign —
+    collapse is DETERMINED AT BLOCK 0 (C05 AUROC=1.000, lead time non-positive),
+    which directly implicates the initial conditions, (c) CSI_NONE with no
+    legal-input caveat, (d) HALF_DAY with a clean C10 precedent (new runner
+    file, no action hook, no blocked axis), and (e) yields a publishable result
+    in either direction (positive method, or init-invariant boundary).
+  parallel_secondary: REDUCED-CONST-CMA (rank 2)
+  reason: >-
+    The second cost-function direction distinct from the failed MMA, also
+    HALF_DAY and CSI_NONE. Runnable in parallel with rank 1 (independent
+    runners, shared anchor/cells/seeds). If rank-1 (init) fails AND rank-2
+    (cost) fails, the within-CMA space is exhausted across all three levers
+    (cost/init/granularity) and the campaign must escalate to rank-3 (paradigm)
+    or rank-4 (sub-problem) as a genuine new contribution line.
+  escalation_trigger: >-
+    If ranks 1 AND 2 both yield LOCAL_NEGATIVE (collapse init-invariant and
+    cost-invariant within the modulus family), the "deep Godard-cost property"
+    thesis spine is maximally strengthened and the next investment should be
+    rank-3 NONMODULUS_BLIND_EQ — the only direction that can, by construction,
+    refute "the collapse is fundamental to modulus-based equalization" by
+    removing the modulus cost entirely. That is the single experiment that can
+    convert the campaign from a negative-boundary thesis into a positive-method
+    thesis.
+  what_NOT_to_revive: >-
+    Do NOT revive C04/C09 (post-hoc affine — CLOSED), C12 (soft-demapper —
+    MECHANISM_NEGATIVE with zero oracle headroom), C13 (pilot-Jones — COLLISION),
+    or further C08/C10/C11-style within-CMA tuning variants. The post-equalizer
+    and adapt-within-CMA spaces are exhausted by the recurring conclusion.
+
+# =============================================================================
+# §7 Governance
+# =============================================================================
+governance:
+  read_only: true
+  protected_history_unchanged: true
+  no_auto_kill: true
+  no_auto_promote: true
+  claim_ceiling_for_any_future_run: SLICE  # all directions stay sandbox until evidence
+  formal_promotion_blocked: true
+  baseline_unchanged: baseline.standard_cma.godard_z is the comparator, never modified
+  new_runners_must_not_modify_anchor: per P4 extend-only rule; new algorithm = new file

@@ -1,0 +1,275 @@
+# =============================================================================
+# C14 Init-Strategy Scout v1 — FROZEN BEFORE RUNNING
+# Campaign: science-scout-2026-07-20.dual-pol-osl
+# Scope: is the 16QAM inner-ring collapse INIT-DEPENDENT? If a data-driven
+#        initialization (informed by calibration-region statistics) escapes the
+#        collapse trajectory that center-tap falls into, the collapse is NOT a
+#        deep property of the Godard cost — it is a property of the
+#        (center-tap + Godard cost) combination. This would OPEN a positive
+#        contribution line (data-driven CMA initialization).
+# Mechanism: INITIAL-CONDITION (changes the CMA STARTING POINT, not its cost,
+#            structure, or post-hoc output). Mechanism-distinct from C04/C09
+#            (output correction), C08 (adaptive step), C10 (per-symbol update),
+#            C11 (DD-LLS cascade), C12 (soft output), C01/C02/C06 (detection).
+# =============================================================================
+# Trigger / lineage:
+#   - The recurring conclusion across C04/C09/C08/C10/C11/C12 is that the
+#     16QAM inner-ring collapse is a deep Godard-cost property.
+#   - Probe p02 (STRUCTURALLY_CEILINGED) showed collapse is FULLY DETERMINED AT
+#     BLOCK 0 (AUROC=1.0 for the conventional detector from the first observable
+#     block). Block-0 output z = r_win @ w_init is dominated by the
+#     initialization. Yet ALL tested variants use the same center-tap init.
+#   - This is mechanism-distinct from everything tested: it changes the CMA's
+#     STARTING POINT. New direction C14 discovered by portfolio remapping.
+# Scientific question:
+#   Is the inner-ring collapse init-dependent? Does an oracle (TX-truth Wiener)
+#   init escape the collapse trajectory? If yes, the collapse is a property of
+#     (center-tap + Godard) not of the Godard cost alone, and data-driven init
+#     (whitening / multi-start) is a viable positive direction.
+# Claim ceiling: LOCAL_SLICE / DIAGNOSTIC
+#   (11 cells, 10 seeds; 4 inits; Scout cannot promote; it only informs whether
+#    C14 init-dependence is a stable LOCAL_SLICE signal worth Deep Evidence.)
+# =============================================================================
+
+schema_version: direction-lab.cb1.c14-init-strategy-scout.v1
+campaign_id: science-scout-2026-07-20.dual-pol-osl
+candidate_id: C14  # init_strategy_data_driven_cma
+unblocks_blocked_axis: none  # C14 changes the STARTING POINT, not an infra axis
+probe_lineage: probes/p02-detector-leadtime-readiness/record.yaml (collapse at block 0)
+
+# === System anchor (frozen; identical to C12/C08/C10 anchor EXCEPT mu) ========
+system_anchor:
+  implementation: standard_cma_godard_with_z  # Godard-with-z gradient
+  mu: 0.03                     # fixed-μ (NOT the 1e-3 atlas default); matches C08/C10/C12
+  block_size: 64
+  n_tap: 11
+  R2: 1.32                      # 16QAM Godard radius
+  gradient: Godard-with-z      # Δw ∝ (R²-|z|²)·z·r*  (prompt013:301-306)
+  note: >-
+    The ONLY thing varied across comparators in this Scout is the weight
+    initialization vector w_init. Cost (Godard-with-z), μ, taps, block_size,
+    R² are IDENTICAL for every comparator. This isolates the init-dependence
+    question.
+
+# === Comparators (differ ONLY in w_init) ======================================
+comparators:
+
+  center_tap_init:
+    id: center_tap
+    implementation: src.cma_custom_init.standard_cma_godard_with_z_custom_init  # w_init=center-tap
+    w_init: "w[center]=1, rest=0"  # the current atlas anchor
+    runtime_inputs: [none]  # init is data-independent
+    role: Go baseline  # the anchor that exhibits the collapse
+    note: >-
+      Reproduces baseline-atlas standard_cma_godard_with_z BYTE-FOR-BYTE when
+      given the center-tap init (identity gate). This is the comparator whose
+      collapse rate we seek to reduce.
+
+  whitening_init:
+    id: whitening
+    implementation: src.cma_custom_init.standard_cma_godard_with_z_custom_init
+    w_init: dominant_eigenvector_of_R_calib
+    runtime_inputs: [r_calibration_window, known_16QAM_alphabet (alphabet NOT used by init)]
+    role: CANDIDATE  # data-driven, receiver-visible (NO TX truth)
+    note: >-
+      THE C14 DATA-DRIVEN CANDIDATE (a). From the received-signal calibration
+      region r_calib (the first ~N_calib received symbols of the dual-pol
+      stream, BEFORE the CMA runs), form the (L+L)×(L+L) dual-pol covariance
+      C = E[r_win r_win^H] and take its principal (largest-eigenvalue)
+      eigenvector. This "points" the filter at the strongest signal direction
+      rather than the trivial center tap. Receiver-visible: only r is used, no
+      TX truth, no decision feedback. Interpretation note: "z_calib" in the
+      brief is the RECEIVER-VISIBLE calibration region = r_calib, because the
+      CMA output z cannot exist before the CMA runs; using z to init the CMA
+      that produces z would be circular.
+
+  random_multistart_init:
+    id: multistart
+    implementation: src.cma_custom_init.standard_cma_godard_with_z_custom_init
+    w_init: best_of_K_unit_norm_after_warmup
+    runtime_inputs: [r_calibration_window]
+    role: CANDIDATE  # data-driven, receiver-visible (NO TX truth); tests init-specificity
+    K: 5
+    warmup_blocks: 1  # short warmup (1 block) to score each start by Godard cost
+    selection: lowest_mean_Godard_cost_after_warmup
+    note: >-
+      THE C14 DATA-DRIVEN CANDIDATE (b). Generates K=5 random unit-norm complex
+      weight vectors, runs each for a SHORT warmup (1 block) on the received
+      stream, scores each by the mean Godard cost (R²-|z|²)² over the warmup,
+      and picks the lowest-cost start. This tests whether collapse is
+      init-SPECIFIC (some random starts escape the center-tap basin) vs
+      cost-fundamental (all starts collapse). Receiver-visible: only r is used.
+
+  oracle_wiener_init:
+    id: oracle_wiener
+    implementation: src.cma_custom_init.standard_cma_godard_with_z_custom_init
+    w_init: principal_direction_of_TX_truth_Wiener_filter
+    runtime_inputs: [r_calibration_window, TX_truth_symbols_calibration]
+    role: SCORING-ONLY Kill bound (FR-21)  # uses TX truth; never a runtime comparator (FR-25)
+    note: >-
+      Kill bound ONLY. Computes the dual-pol Wiener (MMSE) filter from
+      r_calib and truth_calib (the principal direction of W = R_rr^{-1} R_rs),
+      normalizes, and uses it as w_init. Because it uses TX truth it is a
+      diagnostic bound on how good init can possibly be. KEY DIAGNOSTIC:
+      if oracle_wiener init ALSO collapses, the collapse is NOT init-dependent
+      (it is a cost-fundamental property), and C14 is closed as a negative.
+      This is the single most important test in this Scout.
+
+# === Sweep axes (frozen) ===
+sweep_axes:
+
+  - id: full_11_cell_atlas
+    rationale: >-
+      The full 11-cell 16QAM atlas (identical to baseline-atlas QAM16_CELLS) so
+      collapse-rate comparisons are on the exact same cells where the collapse
+      was characterized. Spans SNR 5→25 dB (full waterfall→high), dynamics
+      f_g=30/100/1000, sop=4e-6/4e-5, and short (N=512) + long (N=8192) cells.
+    cells:
+      - {id: 16qam-snr05-nominal-short, modulation: qam16, snr_db: 5.0,  f_g_hz: 30.0,  sop_rate: 0.000004, n_symbols: 512}
+      - {id: 16qam-snr10-nominal-short, modulation: qam16, snr_db: 10.0, f_g_hz: 30.0,  sop_rate: 0.000004, n_symbols: 512}
+      - {id: 16qam-snr15-nominal-short, modulation: qam16, snr_db: 15.0, f_g_hz: 30.0,  sop_rate: 0.000004, n_symbols: 512}
+      - {id: 16qam-snr20-nominal-short, modulation: qam16, snr_db: 20.0, f_g_hz: 30.0,  sop_rate: 0.000004, n_symbols: 512}
+      - {id: 16qam-snr25-nominal-short, modulation: qam16, snr_db: 25.0, f_g_hz: 30.0,  sop_rate: 0.000004, n_symbols: 512}
+      - {id: 16qam-snr20-fg100-short,   modulation: qam16, snr_db: 20.0, f_g_hz: 100.0, sop_rate: 0.000004, n_symbols: 512}
+      - {id: 16qam-snr20-fg1000-short,  modulation: qam16, snr_db: 20.0, f_g_hz: 1000.0,sop_rate: 0.000004, n_symbols: 512}
+      - {id: 16qam-snr20-sop40e-short,  modulation: qam16, snr_db: 20.0, f_g_hz: 30.0,  sop_rate: 0.000040, n_symbols: 512}
+      - {id: 16qam-snr10-fg100-long,    modulation: qam16, snr_db: 10.0, f_g_hz: 100.0, sop_rate: 0.000004, n_symbols: 8192}
+      - {id: 16qam-snr15-fg1000-long,   modulation: qam16, snr_db: 15.0, f_g_hz: 1000.0,sop_rate: 0.000004, n_symbols: 8192}
+      - {id: 16qam-snr20-nominal-long,  modulation: qam16, snr_db: 20.0, f_g_hz: 30.0,  sop_rate: 0.000004, n_symbols: 8192}
+
+  - id: paired_seeds
+    seeds: [71, 72, 73, 74, 75, 76, 77, 78, 79, 80]
+    leakage_check: >-
+      set(seeds) ∩ {B01/B01-R seeds 11-30} = ∅; ∩ {C11 seeds 31-50} = ∅;
+      ∩ {atlas seeds 11-20} = ∅. Reuses only C12 seeds 71-76 + extends to 80,
+      disjoint from every prior scout batch's hard-decision PI-SER cells.
+
+# === Frozen common axes (mirrors baseline-atlas CONTRACT) =====================
+frozen_common_axes:
+  alpha: 4.2
+  beta: 1.4
+  block: 100
+  t_s: 0.0000000004
+  method: gar
+  cma_mu: 0.03              # fixed-μ (NOT the 1e-3 atlas default); matches C08/C10/C12
+  cma_taps: 11
+  r2_qam16: 1.32
+  cma_block_size: 64
+  csi_access_class: CSI_NONE  # for center/whitening/multistart; oracle_wiener is CSI_NONE+truth(Kill)
+  affine_ridge: 0.000001
+  task_output: uncoded_hard_decision  # PI-SER (same as baseline atlas)
+
+# === Init-region geometry (frozen) ============================================
+init_region:
+  source: received_signal_r  # rX, rY; NOT z (z cannot pre-exist the CMA)
+  location: >-
+    The calibration region for init-estimation is the received-signal window
+    immediately preceding the PI-SER eval window, aligned to the SAME
+    eval_window_for() geometry the baseline atlas uses. Specifically the init
+    estimators consume rX_win/rY_win over the blocks before eval_start so the
+    init statistics are computed on the same realization region whose later
+    blocks are scored — this matches how a real receiver would estimate init
+    from a received preamble/observation before equalization.
+  calibration_length_symbols: "first ~100 observable received symbols after the
+    L-tap warmup prefix (≥ block_size); capped at eval_start."
+
+# === Metric (frozen) ==========================================================
+metric:
+  primary: PI-SER
+  definition: >-
+    Permutation- and quadrant-invariant dual-pol 16QAM SER
+    (cb1_evaluator.evaluate_dual_16qam), identical to the baseline atlas. The
+    PI-SER eval window is the SAME frozen window the baseline atlas uses
+    (eval_window_for, window_symbols=256, block_size=64), computed on the CMA
+    z-stream produced FROM each init.
+  collapse_rate:
+    definition: fraction of seeds with PI-SER > collapse_pi_ser_threshold
+    collapse_pi_ser_threshold: 0.3  # matches B01 collapse label (oracle_pi_ser>0.3)
+  divergence_rate:
+    definition: fraction of seeds hitting the CMA divergence criteria
+    (w_norm > 10*init_norm, OR |z|>1e3, OR non-finite)
+
+# === Statistical preregistration ===
+statistical_sensitivity:
+  minimum_detectable_effect: {value: 0.005, unit: per-symbol}
+
+statistical_preregistration:
+  primary_statistic:
+    name: macro_collapse_rate_reduction
+    aggregation: >-
+      Per-cell collapse_rate per init = (# seeds with PI-SER > 0.3) / n_seeds.
+      Macro collapse_rate per init = mean over 11 cells. Primary comparison =
+      collapse_rate(center) vs collapse_rate(candidate) per cell, paired by
+      cell×seed.
+  secondary_statistics:
+    - per_cell_pi_ser_mean_center_whitening_multistart_oracle
+    - macro_delta_pi_ser_candidate_minus_center
+    - divergence_rate_per_init
+  go_threshold: >-
+    (1) oracle_wiener init REDUCES collapse_rate vs center (oracle escapes the
+    collapse) — the necessary condition for init-dependence; AND
+    (2) at least one receiver-visible candidate (whitening OR multistart)
+    reduces collapse_rate vs center by a non-trivial margin on ≥ 2 cells.
+    Scout cannot promote; it only informs whether C14 has a stable
+    LOCAL_SLICE signal worth Deep Evidence.
+
+# === Semantic smoke (MANDATORY before reporting; frozen) =====================
+semantic_smoke:
+  mandatory_checks:
+    - smoke_center_tap_reproduces_collapse: >-
+        Center-tap init exhibits the known bimodal collapse: on a collapsed cell
+        (e.g. snr25-nominal-short) some seeds collapse (PI-SER≈0.7) and some
+        converge (PI-SER≈0). Collapse_rate(center) > 0 on that cell.
+    - smoke_center_tap_identity: >-
+        Center-tap init via the custom-init runner reproduces baseline-atlas
+        standard_cma_godard_with_z BYTE-FOR-BYTE (max |Δz| = 0.0) on at least
+        one collapsed and one converged seed. This is the identity gate.
+    - smoke_oracle_init_is_sensible: >-
+        Oracle Wiener init produces a finite, non-degenerate w_init (norm≈1,
+        not all-zero, not NaN). If the oracle init collapses on EVERY collapsed
+        seed where center-tap collapsed (oracle does NOT escape), report
+        DIAGNOSTIC immediately: collapse is cost-fundamental, not init-dependent.
+  on_failure: >-
+      Report DIAGNOSTIC and STOP. A failed smoke means the custom-init runner
+      is degenerate/confounded (e.g. not byte-identical to the anchor) and no
+      Scout inference about init-dependence is valid.
+
+# === Adjudication ===
+adjudication:
+  primary_question: is_collapse_init_dependent
+  oracle_escape_test: >-
+    The single most important result. For each seed where center-tap collapsed
+    (PI-SER > 0.3), does oracle_wiener init achieve low PI-SER (≤ 0.1)?
+    If YES on the majority of collapsed seeds → init-dependence CONFIRMED →
+    data-driven init is a viable positive direction.
+    If NO (oracle ALSO collapses) → collapse is cost-fundamental → C14 closed.
+  candidate_recovery_test: >-
+    Conditional on oracle escape, do whitening / multistart recover a fraction
+    of the oracle headroom? Compare collapse_rate(center) vs
+    collapse_rate(whitening) and vs collapse_rate(multistart) per cell.
+  bootstrap: paired_bootstrap_on_pi_ser_and_collapse  # per cell, candidate vs center
+
+# === Identity / legality gates (REQUIRED PASS before any cell evaluation) =====
+identity_gates:
+  - center_tap_custom_init_equals_baseline_byte_for_byte  # max |Δz|=0 vs cb1_cell_runner
+  - all_init_weights_unit_norm_or_center  # no trivial-norm (0 or ∞) inits
+  - no_tx_truth_in_whitening_or_multistart  # only oracle_wiener consumes truth
+  - godard_gradient_unchanged  # all inits use the SAME Godard-with-z update
+
+# === Constraints / forbidden ===
+constraints:
+  - runtime_under_6_minutes  # 11×10×(1+5+1+1)≈880 CMA runs, each ~50-200ms
+  - new_files_only  # do NOT modify any existing file
+  - reuse_generate_shared_realization_dp_via_import
+  - reuse_standard_cma_godard_with_z_logic_via_copy  # copied into cma_custom_init.py
+  - reuse_eval_window_for_via_import  # baseline-atlas geometry
+  - reuse_cb1_evaluator_via_import  # PI-SER scoring
+  - no_external_dependency  # numpy/scipy only
+forbidden:
+  - modify_B001_B002_B003_or_P03_bytes
+  - modify_baseline_atlas_or_any_prior_scout_batch
+  - modify_canonical_state_or_protected_history
+  - use_TX_truth_in_whitening_or_multistart_inits
+  - use_CMA_output_z_to_initialize_CMA  # circular; init must come from r only
+  - auto_write_scout_numbers_into_paper
+  - push_or_merge

@@ -1,0 +1,134 @@
+probe_id: p02-detector-leadtime-readiness
+question: >-
+  Is the detector lead-time target structurally ceilinged by the conventional
+  detector, or is there a plausible ML information advantage (temporal
+  structure) that C05's single-block threshold cannot capture?
+type: read_only_capability
+exit_condition: >-
+  READY = plausible ML information advantage identified; STRUCTURALLY_CEILINGED
+  = C05 fires at earliest information point; INCONCLUSIVE = need temporal run.
+result: >-
+  STRUCTURALLY_CEILINGED. The collapse is fully determined at block 0 (the
+  first observable CMA-trace block): 0/37 inner-ring-collapsed seeds show any
+  gradual descent from healthy to collapsed, and block-0 |z|^2/R^2 ratio alone
+  achieves perfect separation (AUROC=1.0) on all 6 two-class cells. The
+  negative mean lead time (-5.95 blocks) is NOT a tuning artifact — it is
+  structural: the `degradation_onset_block` reference is pinned at block 2 (the
+  warmup boundary) for essentially every collapsed seed, because those seeds
+  are ALREADY below the collapse threshold from block 0. Any detector (C05 or
+  ML) operating on the SAME causal CMA-trace features at the SAME timestamps
+  sees the collapse signature at the same earliest moment. There is no
+  temporal trajectory from healthy->collapsed to exploit, so a GRU/SSL temporal
+  aggregator over the same features cannot fire earlier than block 0. The only
+  way ML could win on lead time is by using features C05 does NOT have (none
+  exist in the CSI_NONE causal trace) or by changing the information class
+  (e.g. C13 pilot-aided, which is a different claim, not a detector improvement).
+verdict: STRUCTURALLY_CEILINGED
+findings:
+  lead_time_measurability:
+    answer_1a_vs_1b: "(a) structural, not (b) tuning."
+    explanation: >-
+      The negative lead time is NOT because the C05 threshold was poorly
+      tuned. It is because the collapse label / degradation onset is defined at
+      a point where the trajectory is ALREADY collapsed. The
+      `degradation_onset_block` (b01r_detector.py:213-251) returns the first
+      block where z2_ratio drops below `collapse_z2_ratio_threshold=0.5` for
+      `sustained_blocks=2` consecutive blocks AFTER warmup=2. Because collapsed
+      seeds are already below 0.5 from block 0, onset is pinned at block 2 (the
+      warmup boundary) for nearly every collapsed seed. The C05 alert
+      (c05_alert_score, b01r_detector.py:126-206) can fire at earliest block 2
+      (same warmup guard). So onset == alert_block == 2 for the best case,
+      giving lead_time <= 0 by construction. The mean -5.95 is dominated by an
+      n=21 aggregate including a -113 outlier long-cell seed
+      (snr15-fg1000-long seed 24, onset=2, alert=115, an "ambiguous"-labeled
+      seed whose z2_ratio drifts from ~0.36 to ~0.27 over 127 blocks).
+    structural_ceiling_proof: >-
+      The comparator (C05) and the candidate (C01/C02/C06) consume the SAME
+      causal CMA-trace features at the SAME block timestamps
+      (portfolio-refresh.v3-fairness.yaml:153,168 — shared_input:
+      causal_cma_trace_features for clusters 1 and 2). Since the collapse is
+      fully visible in those features at block 0, BOTH fire at block 0 (the
+      earliest information point). ML cannot inherently fire earlier unless it
+      uses features C05 does not — and none exist in the CSI_NONE causal trace.
+  collapse_label_definition:
+    graded_or_binary: >-
+      BINARY per-seed. `c05_label_from_oracle` (b01_candidates.py:629-636)
+      returns 1 if oracle_pi_ser > 0.3; the B01-R 4-category refinement
+      (assign_label_4cat, b01r_detector.py:31-69) splits into
+      inner_ring_recoverable_collapse / awgn_dominated / healthy / ambiguous,
+      then `collapse_label_for_auroc` (b01r_detector.py:72-84) projects to
+      binary (1=inner_ring, 0=healthy, None=exclude awgn/ambiguous).
+    label_available_early_enough: "NO — this is the core ceiling."
+    no_causal_predictor_at_lead_gt_0: >-
+      There is NO causal feature at block k that predicts collapse at block
+      k+lead for lead > 0, because the collapse is present from block 0. Direct
+      measurement on the B01-R artifact
+      (fairness-batch-b01r-v1.json, test seeds 21-30, 110 seeds):
+      - 0 of 37 collapsed seeds (min z2_ratio < 0.3) show a gradual descent
+        (first-5-blocks mean > 0.5 and last-5-blocks mean < 0.4). Every
+        collapsed seed starts low and stays low; the trajectory is flat.
+      - Block-0 z2_ratio PERFECTLY separates collapse from healthy on all 6
+        two-class cells (max collapsed block0 = 0.303 < min healthy block0 =
+        0.394..2.159). A single block-0 threshold is already AUROC=1.0.
+      - The min_z2_ratio zero-parameter baseline therefore reaches AUROC=1.000
+        on both two-class held-out cells (snr25-short, snr20-fg100-short),
+        beating the tuned C05 (AUROC 0.875 / 0.500).
+    sample_trajectories_collapsed: >-
+      snr25-short seed 21 (collapsed): z2_ratio blocks =
+      [0.184, 0.202, 0.201, 0.201, 0.201, 0.200, 0.193] — flat from block 0.
+      Contrast healthy seed 23: [1.233, 1.173, 1.050, 1.259, ...] — also flat
+      but high. The two classes are static-level-separated, not
+      trajectory-shaped.
+  information_boundary:
+    same_features: "YES."
+    evidence: >-
+      portfolio-refresh.v3-fairness.yaml:153-161 (cluster_1) and :164-174
+      (cluster_2) both declare shared_input: causal_cma_trace_features. C05's
+      legal_input is "same as C01 (CSI_NONE causal CMA-trace features)"
+      (yaml:310). The shared anchor reusable asset list (yaml:72-75) fixes the
+      trace feature set as {output_power, weight_norm, |z|^2/R^2 ratio,
+      update_norm, mma_cost} per block-end snapshot, with "information-parity
+      proven".
+    temporal_aggregation_possible_but_futile: >-
+      C02's adapter is explicitly "GRU + masked reconstruction" (yaml:102-103)
+      and C06 is "density-based OOD on trace embeddings" (yaml:332-340), so
+      these COULD aggregate temporal structure that C05's single-block threshold
+      cannot. BUT temporal aggregation only helps if the collapse signature
+      unfolds over time. Here it does not: the signature is fully present at
+      block 0 and is static thereafter. A GRU over a flat-from-block-0 sequence
+      adds no information beyond the block-0 value; the only theoretical ML
+      advantage (temporal structure) has no signal to exploit on this channel.
+    residual_ml_axes: >-
+      The only non-AUROC axes where ML could still differ from C05 are (i)
+      calibration of collapse probability (ECE/Brier) and (ii) generalization
+      to the 5/7 single-class held-out cells where AUROC is undefined. But (i)
+      is a calibration claim not a detection claim, and (ii) is blocked by the
+      4-category audit finding that held-out long cells have ZERO inner-ring
+      positives (H030: inner_ring=14/110, 12.7%, absent from held-out long
+      cells), so there is no positive signal there to detect.
+  probe_verdict_rationale: >-
+    STRUCTURALLY_CEILINGED, not INCONCLUSIVE. We do not need to run a temporal
+    detector to know the outcome, because the ceiling is provable from the
+    existing data: the collapse is static-level-determined at block 0. Running
+    a GRU/SSL detector (C01/C02/C06) on the same causal features would
+    reproduce AUROC=1.0 at best and a lead time <= 0 at worst — identical to
+    min_z2_ratio. A temporal run would only confirm this, not overturn it. The
+    one genuine escape hatch is a different INFORMATION CLASS (C13 pilot-aided
+    Jones estimation, yaml:578-612), but that is a separate claim about closing
+    collapse, not an ML detector advantage over C05.
+  evidence_pointers:
+    cb1_cell_runner_trace_features: "cb1_cell_runner.py:133-147 (output_power, cm_error, update_norm, w_norm, z_amp_max per block-end snapshot; trace emitted per block)"
+    c05_threshold_detector: "fairness-batch-b01/b01_candidates.py:543-626 (CUSUM on z2_ratio + threshold on output_power; baseline from warmup median)"
+    c05_label_from_oracle: "fairness-batch-b01/b01_candidates.py:629-636 (binary label = oracle_pi_ser > 0.3)"
+    label_4cat_audit: "fairness-batch-b01r/b01r_detector.py:31-84 (inner_ring/awgn/healthy/ambiguous; binary projection excludes awgn+ambiguous)"
+    degradation_onset_block: "fairness-batch-b01r/b01r_detector.py:213-251 (onset = first block z2_ratio < 0.5 sustained 2 blocks after warmup=2)"
+    c05_alert_score_warmup_guard: "fairness-batch-b01r/b01r_detector.py:126-206 (alert cannot fire before warmup=2; score=-first_alert_block)"
+    lead_time_computation: "fairness-batch-b01r/run_fairness_batch_b01r.py:469-475 (lead_time = onset - alert_block; >0 = detector precedes onset)"
+    lead_time_aggregate_minus_5p95: "state/current.yaml:70-78 (DETECTOR_CONVENTIONAL_CEILING; mean -5.95 blocks); reproduced: aggregate over n=21 seeds = mean -5.9524 incl one -113 outlier"
+    auroc_ceiling_1p0: "fairness-batch-b01r-v1-synthesis.md:135,142 (min_z2 AUROC=1.000 on snr25-short & snr20-fg100-short); harvest/current.yaml:46-51 (DETECTOR_CONVENTIONAL_CEILING_HARVEST)"
+    block0_perfect_separation: "computed from fairness-batch-b01r-v1.json: block-0 z2_ratio perfectly separates collapse on all 6 two-class cells (max_pos 0.303 < min_neg 0.394)"
+    zero_gradual_descents: "computed from fairness-batch-b01r-v1.json: 0/37 collapsed seeds transition from healthy(>0.5) to collapsed(<0.4)"
+    shared_input_cluster1_2: "portfolio-refresh.v3-fairness.yaml:153,168 (shared_input: causal_cma_trace_features)"
+    c02_gru_adapter: "portfolio-refresh.v3-fairness.yaml:102-103 (SSL training loop = GRU + masked reconstruction)"
+    eval_window_geometry: "cb1_cell_runner.py:177-197 (eval window starts at ~26% of stream; trace covers blocks 0..n-1 so block-0 features precede the PI-SER eval window)"
+    held_out_zero_inner_ring: "fairness-batch-b01r-v1-synthesis.md:127,204 (H030: inner_ring=14/110, absent from held-out long cells)"

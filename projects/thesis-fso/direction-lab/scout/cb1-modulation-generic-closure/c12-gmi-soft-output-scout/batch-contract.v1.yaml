@@ -1,0 +1,229 @@
+# =============================================================================
+# C12 GMI Soft-Output Scout v1 — FROZEN BEFORE RUNNING
+# Campaign: science-scout-2026-07-20.dual-pol-osl
+# Scope: does a collapse-aware soft demapper recover GMI lost to the 16QAM
+#        inner-ring residual collapse, vs a standard max-log soft demapper?
+# Mechanism/metric: SOFT-OUTPUT / GMI (information-theoretic mutual info).
+#   This is a DIFFERENT mechanism and metric from the C04/C09 affine
+#   correction (hard-decision / PI-SER) and from C11 (hard / DD-LMS).
+# =============================================================================
+# Trigger / lineage:
+#   - p04 (read-only capability probe) concluded the coded evaluator unblocks
+#     at HALF_DAY via a pure-numpy/scipy GMI soft demapper (no FEC codec, no
+#     external dependency: sklearn/sionna/commpy/galois all absent).
+#   - This Scout is the scoped C12 comparison under that GMI unblock.
+# Scientific question:
+#   On the SAME fixed-μ CMA z-stream (Godard-with-z, μ=0.03, 11 taps, block=64,
+#   R²=1.32), does a collapse-aware soft demapper that models the residual as a
+#   healthy/collapsed Gaussian MIXTURE recover GMI on collapsed cells relative
+#   to a standard max-log soft demapper that assumes a single per-symbol
+#   Gaussian residual — and does the TX-truth oracle soft demapper show
+#   headroom above both?
+# Claim ceiling: LOCAL_SLICE / DIAGNOSTIC
+#   (6 cells, 6 seeds; information-theoretic metric; no promotion from Scout.)
+# =============================================================================
+
+schema_version: direction-lab.cb1.c12-gmi-soft-output-scout.v1
+campaign_id: science-scout-2026-07-20.dual-pol-osl
+candidate_id: C12  # soft_output_collapse_aware_llr
+unblocks_blocked_axis: p03.output.soft-or-coded  # LLR/GMI evaluator (GMI subset)
+probe_lineage: probes/p04-c12-coded-readiness/record.yaml (verdict: HALF_DAY)
+
+# === Roles ===
+roles:
+
+  system_anchor_and_go_comparator:
+    id: fixed_mu_cma_mu_0_03
+    implementation: cb1_cell_runner.standard_cma_godard_with_z  # READ-ONLY import
+    mu: 0.03
+    block_size: 64
+    n_tap: 11
+    R2: 1.32
+    note: >-
+      Shared z-source for all three demappers. Go comparator = the z-stream
+      itself (CMA). C12 operates POST-equalizer on soft outputs, not on the
+      equalizer, so the CMA z is the frozen shared substrate.
+
+  # --- task-specific soft-output comparators (different output type from
+  #     PI-SER; per evidence-and-claims.md a task-specific comparator is used) ---
+
+  standard_soft_demap:
+    id: maxlog_soft_demap_16qam
+    implementation: src.soft_demap.maxlog_soft_demap_16qam
+    model: single_Gaussian_residual_per_symbol
+    runtime_inputs: [z_calibration, z_evaluation, known_16QAM_alphabet]
+    note: >-
+      Same-information conventional soft demapper. Max-log LLR per bit from the
+      16QAM Gray constellation; noise variance σ² estimated BLIND from the
+      z_calib residuals (z_calib - hard_16qam(z_calib)). NO TX truth.
+
+  candidate_soft_demap:
+    id: mixture_soft_demap_16qam
+    implementation: src.soft_demap.mixture_soft_demap_16qam
+    model: 2-component_Gaussian_mixture_residual (healthy + collapsed/inner-ring)
+    runtime_inputs: [z_calibration, z_evaluation, known_16QAM_alphabet]
+    note: >-
+      THE C12 CANDIDATE. Models per-real-axis residual as a 2-component Gaussian
+      mixture; fits mixture params (collapse fraction, component variances) BLIND
+      from z_calib; computes max-log LLRs from the mixture likelihood. Same
+      information contract as the standard demapper (z_calib + alphabet only).
+
+  oracle_soft_demap:
+    id: oracle_soft_demap_16qam
+    implementation: src.soft_demap.oracle_soft_demap_16qam
+    model: TX-truth_conditioned_noise_variance
+    runtime_inputs: [z_evaluation, TX_truth_symbols]
+    note: >-
+      SCORING-ONLY Kill bound (FR-21). Uses TX truth to condition the per-symbol
+      noise variance. Never a runtime/Go comparator. Defines the headroom ceiling.
+
+# === Shared carrier alignment (frozen, identical for all 3 demappers) ===
+carrier_alignment:
+  implementation: cb1_evaluator.oracle_affine_bound_16qam  # READ-ONLY import
+  ridge: 1.0e-6
+  fitted_on: z_calibration (dual-pol)
+  applied_to: z_evaluation
+  note: >-
+    A single shared complex 2x2 affine is fit on the calibration slice and
+    applied IDENTICALLY to all three demappers. This is the carrier/phase
+    recovery step that all three demappers would consume in practice; applying
+    it uniformly isolates the noise-MODEL comparison (the scientific question).
+    The collapse residual is NON-AFFINE, so it survives this alignment (verified:
+    snr05 oracle_affine SER=0.875 >> 0). The standard/mixture demappers use BLIND
+    hard-decision pseudo-labels for σ² only; the affine fit itself is also
+    blind-friendly, but here we use the oracle-affine as the canonical alignment
+    for all three so the comparison is purely over the soft-demapper noise model.
+
+# === Sweep axes (frozen) ===
+sweep_axes:
+
+  - id: representative_6_cell_subset
+    rationale: >-
+      Representative covering subset spanning the collapse axis: 4 short nominal
+      cells (snr 05→25, monotone SNR sweep capturing full collapse→clean range),
+      1 strong-fade short cell (fg100), 1 strong-fade long cell (fg1000, 16x
+      symbols). Reuses the atlas_v1 cell parameterization verbatim.
+    cells:
+      - {id: snr05-nominal-short,  modulation: qam16, snr_db: 5.0,  f_g_hz: 30.0,  sop_rate: 0.000004, n_symbols: 512}
+      - {id: snr15-nominal-short,  modulation: qam16, snr_db: 15.0, f_g_hz: 30.0,  sop_rate: 0.000004, n_symbols: 512}
+      - {id: snr20-nominal-short,  modulation: qam16, snr_db: 20.0, f_g_hz: 30.0,  sop_rate: 0.000004, n_symbols: 512}
+      - {id: snr25-nominal-short,  modulation: qam16, snr_db: 25.0, f_g_hz: 30.0,  sop_rate: 0.000004, n_symbols: 512}
+      - {id: snr20-fg100-short,    modulation: qam16, snr_db: 20.0, f_g_hz: 100.0, sop_rate: 0.000004, n_symbols: 512}
+      - {id: snr15-fg1000-long,    modulation: qam16, snr_db: 15.0, f_g_hz: 1000.0,sop_rate: 0.000004, n_symbols: 8192}
+
+  - id: paired_seeds
+    seeds: [71, 72, 73, 74, 75, 76]
+    leakage_check: >-
+      set(seeds) ∩ {B01-R seeds 11-15,21-30} = ∅; ∩ {C11 seeds 31-50} = ∅.
+      All seeds fresh and disjoint from every prior scout batch.
+
+# === Frozen common axes (mirrors baseline-atlas CONTRACT) ===
+frozen_common_axes:
+  alpha: 4.2
+  beta: 1.4
+  block: 100
+  t_s: 0.0000000004
+  method: gar
+  cma_mu: 0.03              # fixed-μ (NOT the 1e-3 default); per task contract
+  cma_taps: 11
+  r2_qam16: 1.32
+  cma_block_size: 64
+  csi_access_class: CSI_NONE
+  affine_ridge: 0.000001
+  task_output: uncoded_soft_output  # LLR / GMI (NOT hard PI-SER)
+
+# === Soft-demapper hyperparameters (frozen BEFORE running) ===
+soft_demap_hyperparameters:
+  constellation: gray_16QAM_avg_power_1  # {±1,±3}/sqrt(10) per axis, matches _modulation.qam16_mod
+  bits_per_symbol: 4
+  noise_variance_estimator: blind_calib_residual    # standard & mixture
+  mixture_components: 2                              # healthy + collapsed
+  mixture_fit_axis: per_real_axis                    # fit Re, Im independently
+  mixture_init: kmeans_2_clusters_on_residual_envelope
+  mixture_em_max_iter: 100
+  mixture_em_tol: 1.0e-6
+  mixture_min_weight: 0.05                           # guard against degenerate collapse
+  llr_clip: 30.0                                     # numerical stability
+
+# === Metric (frozen) ===
+metric:
+  name: GMI  # generalized mutual information
+  definition: >-
+    GMI = (1/4) * Σ_k I(b_k; LLR_k), k=0..3, in bits/symbol/4, aggregated to
+    bits/symbol (×4). I(b_k; LLR_k) estimated by HISTOGRAM mutual information
+    (16 equi-width bins on the LLR magnitude/sign) averaged across the 6 paired
+    seeds per cell. Per-bit-position GMI also reported.
+  gmi_ceiling: 4.0  # perfect 16QAM = 4 bits/symbol
+  crosscheck: >-
+    An analytic soft-GMI (numerically-stable mean log2(1+exp(-b*LLR))) is
+    computed in parallel as a SECONDARY cross-check of the histogram estimator.
+    Primary = histogram (non-parametric, no assumed LLR distribution).
+
+# === Statistical preregistration ===
+statistical_preregistration:
+  primary_statistic:
+    name: macro_delta_gmi_mixture_minus_standard
+    aggregation: >-
+      Per-cell: GMI per demapper = mean over 6 paired seeds of
+      histogram-GMI(bits/symbol). Macro Δ = mean over 6 cells of
+      (GMI_mixture - GMI_standard). Paired by cell×seed.
+  secondary_statistics:
+    - per_cell_gmi_standard_mixture_oracle
+    - per_bit_position_gmi
+    - analytic_soft_gmi_crosscheck
+    - oracle_headroom_over_standard
+  practical_significance_threshold: 0.05_bits_per_symbol  # Scout indicative
+  go_threshold: >-
+    Macro Δ(GMI_mixture - GMI_standard) > 0 with recovery concentrated on
+    collapsed cells (snr05/snr15-nominal, fg1000-long), AND oracle GMI shows
+    headroom (oracle > standard on collapsed cells). Scout cannot promote; it
+    only informs whether C12 has a stable LOCAL_SLICE signal worth Deep Evidence.
+
+# === Semantic smoke (MANDATORY before reporting; frozen) ===
+semantic_smoke:
+  mandatory_checks:
+    - smoke_clean_standard_gmi_gt_3p0: >-
+        On a clean cell (snr25-nominal-short), standard demapper GMI > 3.0
+        (not degenerate).
+    - smoke_collapsed_standard_gmi_lower: >-
+        On a collapsed cell (snr05-nominal-short), standard demapper GMI is
+        notably lower than the clean cell (GMI_snr05 < GMI_snr25 - 0.5).
+    - smoke_oracle_ge_standard_all_cells: >-
+        Oracle demapper GMI ≥ standard demapper GMI on ALL cells (sanity:
+        truth-conditioned variance cannot be worse than blind variance).
+  on_failure: >-
+      Report DIAGNOSTIC and STOP. A failed smoke means the soft-output evaluator
+      is degenerate/confounded and no Scout inference is valid.
+
+# === Adjudication ===
+adjudication:
+  primary_macro_delta: macro_delta_gmi_mixture_minus_standard
+  secondary_recovery_check: >-
+    On collapsed cells (standard GMI low), is mixture GMI closer to oracle
+    GMI than standard GMI is? I.e., does the mixture recover a fraction of the
+    oracle headroom? Report per-cell (mixture - standard) and
+    (oracle - standard) so recovery fraction = (mix-std)/(orac-std).
+
+# === Identity / legality gates (REQUIRED PASS before any cell evaluation) ===
+identity_gates:
+  - constellation_table_matches_qam16_mod  # hard demap of clean symbols == TX bits
+  - maxlog_llr_sign_correct               # positive LLR => bit=1 more likely (and vice versa)
+  - gmi_zero_when_llr_uninformative       # constant LLR => GMI=0
+  - gmi_4_when_perfect_soft               # infinite-magnitude LLR => GMI=4
+  - no_tx_truth_in_standard_or_mixture    # only oracle demapper consumes truth
+
+# === Constraints / forbidden ===
+constraints:
+  - runtime_under_5_minutes  # 6 cells × 6 seeds × fixed-μ CMA ~ 0.1s; GMI dominant cost
+  - new_files_only  # do NOT modify any existing file
+  - reuse_generate_shared_realization_dp_via_import
+  - reuse_standard_cma_godard_with_z_via_import
+  - reuse_hard_16qam_via_import
+  - no_external_dependency  # numpy/scipy only (sklearn/sionna/commpy/galois absent)
+forbidden:
+  - modify_B001_B002_B003_or_P03_bytes
+  - modify_baseline_atlas_or_any_prior_scout_batch
+  - modify_canonical_state_or_protected_history
+  - use_TX_truth_in_standard_or_mixture_demapper
+  - auto_write_scout_numbers_into_paper
+  - push_or_merge

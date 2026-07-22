@@ -1,0 +1,1098 @@
+{
+  "candidates": {
+    "C04_mlp": {
+      "candidate_class": "C04_mlp",
+      "cells": [
+        {
+          "cell_id": "16qam-snr05-nominal-short",
+          "per_seed": [
+            {
+              "pi_ser_fixed_cma": 0.859375,
+              "pi_ser_blind": 0.8515625,
+              "pi_ser_candidate": 0.9375,
+              "pi_ser_oracle": 0.875,
+              "fixed_label_ser_fixed_cma": 0.859375,
+              "fixed_label_ser_blind": 0.8515625,
+              "fixed_label_ser_candidate": 0.9375,
+              "fixed_label_ser_oracle": 0.875,
+              "seed": 71
+            },
+            {
+              "pi_ser_fixed_cma": 0.5703125,
+              "pi_ser_blind": 0.59375,
+              "pi_ser_candidate": 0.9609375,
+              "pi_ser_oracle": 0.609375,
+              "fixed_label_ser_fixed_cma": 0.5703125,
+              "fixed_label_ser_blind": 0.59375,
+              "fixed_label_ser_candidate": 0.9609375,
+              "fixed_label_ser_oracle": 0.609375,
+              "seed": 72
+            },
+            {
+              "pi_ser_fixed_cma": 0.859375,
+              "pi_ser_blind": 0.859375,
+              "pi_ser_candidate": 0.93359375,
+              "pi_ser_oracle": 0.875,
+              "fixed_label_ser_fixed_cma": 0.859375,
+              "fixed_label_ser_blind": 0.859375,
+              "fixed_label_ser_candidate": 0.93359375,
+              "fixed_label_ser_oracle": 0.875,
+              "seed": 73
+            },
+            {
+              "pi_ser_fixed_cma": 0.58203125,
+              "pi_ser_blind": 0.5625,
+              "pi_ser_candidate": 0.9375,
+              "pi_ser_oracle": 0.60546875,
+              "fixed_label_ser_fixed_cma": 0.58203125,
+              "fixed_label_ser_blind": 0.5625,
+              "fixed_label_ser_candidate": 0.9375,
+              "fixed_label_ser_oracle": 0.60546875,
+              "seed": 74
+            },
+            {
+              "pi_ser_fixed_cma": 0.5625,
+              "pi_ser_blind": 0.578125,
+              "pi_ser_candidate": 0.9296875,
+              "pi_ser_oracle": 0.60546875,
+              "fixed_label_ser_fixed_cma": 0.5625,
+              "fixed_label_ser_blind": 0.578125,
+              "fixed_label_ser_candidate": 0.9296875,
+              "fixed_label_ser_oracle": 0.60546875,
+              "seed": 75
+            },
+            {
+              "pi_ser_fixed_cma": 0.46875,
+              "pi_ser_blind": 0.4921875,
+              "pi_ser_candidate": 0.90625,
+              "pi_ser_oracle": 0.50390625,
+              "fixed_label_ser_fixed_cma": 0.46875,
+              "fixed_label_ser_blind": 0.4921875,
+              "fixed_label_ser_candidate": 0.90625,
+              "fixed_label_ser_oracle": 0.50390625,
+              "seed": 76
+            },
+            {
+              "pi_ser_fixed_cma": 0.390625,
+              "pi_ser_blind": 0.46875,
+              "pi_ser_candidate": 0.93359375,
+              "pi_ser_oracle": 0.46484375,
+              "fixed_label_ser_fixed_cma": 0.390625,
+              "fixed_label_ser_blind": 0.46875,
+              "fixed_label_ser_candidate": 0.93359375,
+              "fixed_label_ser_oracle": 0.46484375,
+              "seed": 77
+            },
+            {
+              "pi_ser_fixed_cma": 0.58984375,
+              "pi_ser_blind": 0.61328125,
+              "pi_ser_candidate": 0.921875,
+              "pi_ser_oracle": 0.625,
+              "fixed_label_ser_fixed_cma": 0.58984375,
+              "fixed_label_ser_blind": 0.61328125,
+              "fixed_label_ser_candidate": 0.921875,
+              "fixed_label_ser_oracle": 0.625,
+              "seed": 78
+            },
+            {
+              "pi_ser_fixed_cma": 0.4609375,
+              "pi_ser_blind": 0.4609375,
+              "pi_ser_candidate": 0.9296875,
+              "pi_ser_oracle": 0.45703125,
+              "fixed_label_ser_fixed_cma": 0.4609375,
+              "fixed_label_ser_blind": 0.4609375,
+              "fixed_label_ser_candidate": 0.9296875,
+              "fixed_label_ser_oracle": 0.45703125,
+              "seed": 79
+            },
+            {
+              "pi_ser_fixed_cma": 0.515625,
+              "pi_ser_blind": 0.546875,
+              "pi_ser_candidate": 0.91796875,
+              "pi_ser_oracle": 0.5625,
+              "fixed_label_ser_fixed_cma": 0.515625,
+              "fixed_label_ser_blind": 0.546875,
+              "fixed_label_ser_candidate": 0.91796875,
+              "fixed_label_ser_oracle": 0.5625,
+              "seed": 80
+            }
+          ],
+          "aggregate": {
+            "pi_ser_fixed_cma_mean": 0.5859375,
+            "fixed_label_ser_fixed_cma_mean": 0.5859375,
+            "pi_ser_blind_mean": 0.602734375,
+            "fixed_label_ser_blind_mean": 0.602734375,
+            "pi_ser_candidate_mean": 0.930859375,
+            "fixed_label_ser_candidate_mean": 0.930859375,
+            "pi_ser_oracle_mean": 0.618359375,
+            "fixed_label_ser_oracle_mean": 0.618359375
+          }
+        },
+        {
+          "cell_id": "16qam-snr10-nominal-short",
+          "per_seed": [
+            {
+              "pi_ser_fixed_cma": 0.8203125,
+              "pi_ser_blind": 0.85546875,
+              "pi_ser_candidate": 0.9375,
+              "pi_ser_oracle": 0.7734375,
+              "fixed_label_ser_fixed_cma": 0.8203125,
+              "fixed_label_ser_blind": 0.85546875,
+              "fixed_label_ser_candidate": 0.9375,
+              "fixed_label_ser_oracle": 0.7734375,
+              "seed": 71
+            },
+            {
+              "pi_ser_fixed_cma": 0.234375,
+              "pi_ser_blind": 0.25390625,
+              "pi_ser_candidate": 0.9609375,
+              "pi_ser_oracle": 0.234375,
+              "fixed_label_ser_fixed_cma": 0.234375,
+              "fixed_label_ser_blind": 0.25390625,
+              "fixed_label_ser_candidate": 0.9609375,
+              "fixed_label_ser_oracle": 0.234375,
+              "seed": 72
+            },
+            {
+              "pi_ser_fixed_cma": 0.83203125,
+              "pi_ser_blind": 0.80859375,
+              "pi_ser_candidate": 0.93359375,
+              "pi_ser_oracle": 0.74609375,
+              "fixed_label_ser_fixed_cma": 0.83203125,
+              "fixed_label_ser_blind": 0.80859375,
+              "fixed_label_ser_candidate": 0.93359375,
+              "fixed_label_ser_oracle": 0.74609375,
+              "seed": 73
+            },
+            {
+              "pi_ser_fixed_cma": 0.23828125,
+              "pi_ser_blind": 0.24609375,
+              "pi_ser_candidate": 0.9375,
+              "pi_ser_oracle": 0.25390625,
+              "fixed_label_ser_fixed_cma": 0.23828125,
+              "fixed_label_ser_blind": 0.24609375,
+              "fixed_label_ser_candidate": 0.9375,
+              "fixed_label_ser_oracle": 0.25390625,
+              "seed": 74
+            },
+            {
+              "pi_ser_fixed_cma": 0.25,
+              "pi_ser_blind": 0.26171875,
+              "pi_ser_candidate": 0.9296875,
+              "pi_ser_oracle": 0.27734375,
+              "fixed_label_ser_fixed_cma": 0.25,
+              "fixed_label_ser_blind": 0.26171875,
+              "fixed_label_ser_candidate": 0.9296875,
+              "fixed_label_ser_oracle": 0.27734375,
+              "seed": 75
+            },
+            {
+              "pi_ser_fixed_cma": 0.171875,
+              "pi_ser_blind": 0.16015625,
+              "pi_ser_candidate": 0.90625,
+              "pi_ser_oracle": 0.15625,
+              "fixed_label_ser_fixed_cma": 0.171875,
+              "fixed_label_ser_blind": 0.16015625,
+              "fixed_label_ser_candidate": 0.90625,
+              "fixed_label_ser_oracle": 0.15625,
+              "seed": 76
+            },
+            {
+              "pi_ser_fixed_cma": 0.08984375,
+              "pi_ser_blind": 0.12890625,
+              "pi_ser_candidate": 0.93359375,
+              "pi_ser_oracle": 0.15234375,
+              "fixed_label_ser_fixed_cma": 0.08984375,
+              "fixed_label_ser_blind": 0.12890625,
+              "fixed_label_ser_candidate": 0.93359375,
+              "fixed_label_ser_oracle": 0.15234375,
+              "seed": 77
+            },
+            {
+              "pi_ser_fixed_cma": 0.22265625,
+              "pi_ser_blind": 0.28515625,
+              "pi_ser_candidate": 0.921875,
+              "pi_ser_oracle": 0.2734375,
+              "fixed_label_ser_fixed_cma": 0.22265625,
+              "fixed_label_ser_blind": 0.28515625,
+              "fixed_label_ser_candidate": 0.921875,
+              "fixed_label_ser_oracle": 0.2734375,
+              "seed": 78
+            },
+            {
+              "pi_ser_fixed_cma": 0.09765625,
+              "pi_ser_blind": 0.13671875,
+              "pi_ser_candidate": 0.9296875,
+              "pi_ser_oracle": 0.171875,
+              "fixed_label_ser_fixed_cma": 0.09765625,
+              "fixed_label_ser_blind": 0.13671875,
+              "fixed_label_ser_candidate": 0.9296875,
+              "fixed_label_ser_oracle": 0.171875,
+              "seed": 79
+            },
+            {
+              "pi_ser_fixed_cma": 0.19921875,
+              "pi_ser_blind": 0.21484375,
+              "pi_ser_candidate": 0.91796875,
+              "pi_ser_oracle": 0.2109375,
+              "fixed_label_ser_fixed_cma": 0.19921875,
+              "fixed_label_ser_blind": 0.21484375,
+              "fixed_label_ser_candidate": 0.91796875,
+              "fixed_label_ser_oracle": 0.2109375,
+              "seed": 80
+            }
+          ],
+          "aggregate": {
+            "pi_ser_fixed_cma_mean": 0.315625,
+            "fixed_label_ser_fixed_cma_mean": 0.315625,
+            "pi_ser_blind_mean": 0.33515625,
+            "fixed_label_ser_blind_mean": 0.33515625,
+            "pi_ser_candidate_mean": 0.930859375,
+            "fixed_label_ser_candidate_mean": 0.930859375,
+            "pi_ser_oracle_mean": 0.325,
+            "fixed_label_ser_oracle_mean": 0.325
+          }
+        },
+        {
+          "cell_id": "16qam-snr15-nominal-short",
+          "per_seed": [
+            {
+              "pi_ser_fixed_cma": 0.8203125,
+              "pi_ser_blind": 0.8125,
+              "pi_ser_candidate": 0.9375,
+              "pi_ser_oracle": 0.53125,
+              "fixed_label_ser_fixed_cma": 0.8203125,
+              "fixed_label_ser_blind": 0.8125,
+              "fixed_label_ser_candidate": 0.9375,
+              "fixed_label_ser_oracle": 0.53125,
+              "seed": 71
+            },
+            {
+              "pi_ser_fixed_cma": 0.015625,
+              "pi_ser_blind": 0.015625,
+              "pi_ser_candidate": 0.9609375,
+              "pi_ser_oracle": 0.015625,
+              "fixed_label_ser_fixed_cma": 0.015625,
+              "fixed_label_ser_blind": 0.015625,
+              "fixed_label_ser_candidate": 0.9609375,
+              "fixed_label_ser_oracle": 0.015625,
+              "seed": 72
+            },
+            {
+              "pi_ser_fixed_cma": 0.8125,
+              "pi_ser_blind": 0.82421875,
+              "pi_ser_candidate": 0.93359375,
+              "pi_ser_oracle": 0.5,
+              "fixed_label_ser_fixed_cma": 0.8125,
+              "fixed_label_ser_blind": 0.82421875,
+              "fixed_label_ser_candidate": 0.93359375,
+              "fixed_label_ser_oracle": 0.5,
+              "seed": 73
+            },
+            {
+              "pi_ser_fixed_cma": 0.015625,
+              "pi_ser_blind": 0.0234375,
+              "pi_ser_candidate": 0.9375,
+              "pi_ser_oracle": 0.015625,
+              "fixed_label_ser_fixed_cma": 0.015625,
+              "fixed_label_ser_blind": 0.0234375,
+              "fixed_label_ser_candidate": 0.9375,
+              "fixed_label_ser_oracle": 0.015625,
+              "seed": 74
+            },
+            {
+              "pi_ser_fixed_cma": 0.0234375,
+              "pi_ser_blind": 0.02734375,
+              "pi_ser_candidate": 0.9296875,
+              "pi_ser_oracle": 0.03125,
+              "fixed_label_ser_fixed_cma": 0.0234375,
+              "fixed_label_ser_blind": 0.02734375,
+              "fixed_label_ser_candidate": 0.9296875,
+              "fixed_label_ser_oracle": 0.03125,
+              "seed": 75
+            },
+            {
+              "pi_ser_fixed_cma": 0.01171875,
+              "pi_ser_blind": 0.0078125,
+              "pi_ser_candidate": 0.90625,
+              "pi_ser_oracle": 0.01171875,
+              "fixed_label_ser_fixed_cma": 0.01171875,
+              "fixed_label_ser_blind": 0.0078125,
+              "fixed_label_ser_candidate": 0.90625,
+              "fixed_label_ser_oracle": 0.01171875,
+              "seed": 76
+            },
+            {
+              "pi_ser_fixed_cma": 0.01171875,
+              "pi_ser_blind": 0.01171875,
+              "pi_ser_candidate": 0.93359375,
+              "pi_ser_oracle": 0.015625,
+              "fixed_label_ser_fixed_cma": 0.01171875,
+              "fixed_label_ser_blind": 0.01171875,
+              "fixed_label_ser_candidate": 0.93359375,
+              "fixed_label_ser_oracle": 0.015625,
+              "seed": 77
+            },
+            {
+              "pi_ser_fixed_cma": 0.0234375,
+              "pi_ser_blind": 0.0234375,
+              "pi_ser_candidate": 0.921875,
+              "pi_ser_oracle": 0.0234375,
+              "fixed_label_ser_fixed_cma": 0.0234375,
+              "fixed_label_ser_blind": 0.0234375,
+              "fixed_label_ser_candidate": 0.921875,
+              "fixed_label_ser_oracle": 0.0234375,
+              "seed": 78
+            },
+            {
+              "pi_ser_fixed_cma": 0.015625,
+              "pi_ser_blind": 0.0078125,
+              "pi_ser_candidate": 0.9296875,
+              "pi_ser_oracle": 0.0078125,
+              "fixed_label_ser_fixed_cma": 0.015625,
+              "fixed_label_ser_blind": 0.0078125,
+              "fixed_label_ser_candidate": 0.9296875,
+              "fixed_label_ser_oracle": 0.0078125,
+              "seed": 79
+            },
+            {
+              "pi_ser_fixed_cma": 0.01171875,
+              "pi_ser_blind": 0.02734375,
+              "pi_ser_candidate": 0.91796875,
+              "pi_ser_oracle": 0.01953125,
+              "fixed_label_ser_fixed_cma": 0.01171875,
+              "fixed_label_ser_blind": 0.02734375,
+              "fixed_label_ser_candidate": 0.91796875,
+              "fixed_label_ser_oracle": 0.01953125,
+              "seed": 80
+            }
+          ],
+          "aggregate": {
+            "pi_ser_fixed_cma_mean": 0.176171875,
+            "fixed_label_ser_fixed_cma_mean": 0.176171875,
+            "pi_ser_blind_mean": 0.178125,
+            "fixed_label_ser_blind_mean": 0.178125,
+            "pi_ser_candidate_mean": 0.930859375,
+            "fixed_label_ser_candidate_mean": 0.930859375,
+            "pi_ser_oracle_mean": 0.1171875,
+            "fixed_label_ser_oracle_mean": 0.1171875
+          }
+        },
+        {
+          "cell_id": "16qam-snr25-nominal-short",
+          "per_seed": [
+            {
+              "pi_ser_fixed_cma": 0.73046875,
+              "pi_ser_blind": 0.734375,
+              "pi_ser_candidate": 0.9375,
+              "pi_ser_oracle": 0.0,
+              "fixed_label_ser_fixed_cma": 0.73046875,
+              "fixed_label_ser_blind": 0.734375,
+              "fixed_label_ser_candidate": 0.9375,
+              "fixed_label_ser_oracle": 0.0,
+              "seed": 71
+            },
+            {
+              "pi_ser_fixed_cma": 0.0,
+              "pi_ser_blind": 0.0,
+              "pi_ser_candidate": 0.9609375,
+              "pi_ser_oracle": 0.0,
+              "fixed_label_ser_fixed_cma": 0.0,
+              "fixed_label_ser_blind": 0.0,
+              "fixed_label_ser_candidate": 0.9609375,
+              "fixed_label_ser_oracle": 0.0,
+              "seed": 72
+            },
+            {
+              "pi_ser_fixed_cma": 0.75,
+              "pi_ser_blind": 0.75,
+              "pi_ser_candidate": 0.93359375,
+              "pi_ser_oracle": 0.0,
+              "fixed_label_ser_fixed_cma": 0.75,
+              "fixed_label_ser_blind": 0.75,
+              "fixed_label_ser_candidate": 0.93359375,
+              "fixed_label_ser_oracle": 0.0,
+              "seed": 73
+            },
+            {
+              "pi_ser_fixed_cma": 0.0,
+              "pi_ser_blind": 0.0,
+              "pi_ser_candidate": 0.9375,
+              "pi_ser_oracle": 0.0,
+              "fixed_label_ser_fixed_cma": 0.0,
+              "fixed_label_ser_blind": 0.0,
+              "fixed_label_ser_candidate": 0.9375,
+              "fixed_label_ser_oracle": 0.0,
+              "seed": 74
+            },
+            {
+              "pi_ser_fixed_cma": 0.0,
+              "pi_ser_blind": 0.0,
+              "pi_ser_candidate": 0.9296875,
+              "pi_ser_oracle": 0.0,
+              "fixed_label_ser_fixed_cma": 0.0,
+              "fixed_label_ser_blind": 0.0,
+              "fixed_label_ser_candidate": 0.9296875,
+              "fixed_label_ser_oracle": 0.0,
+              "seed": 75
+            },
+            {
+              "pi_ser_fixed_cma": 0.0,
+              "pi_ser_blind": 0.0,
+              "pi_ser_candidate": 0.90625,
+              "pi_ser_oracle": 0.0,
+              "fixed_label_ser_fixed_cma": 0.0,
+              "fixed_label_ser_blind": 0.0,
+              "fixed_label_ser_candidate": 0.90625,
+              "fixed_label_ser_oracle": 0.0,
+              "seed": 76
+            },
+            {
+              "pi_ser_fixed_cma": 0.0,
+              "pi_ser_blind": 0.0,
+              "pi_ser_candidate": 0.93359375,
+              "pi_ser_oracle": 0.0,
+              "fixed_label_ser_fixed_cma": 0.0,
+              "fixed_label_ser_blind": 0.0,
+              "fixed_label_ser_candidate": 0.93359375,
+              "fixed_label_ser_oracle": 0.0,
+              "seed": 77
+            },
+            {
+              "pi_ser_fixed_cma": 0.0,
+              "pi_ser_blind": 0.0,
+              "pi_ser_candidate": 0.921875,
+              "pi_ser_oracle": 0.0,
+              "fixed_label_ser_fixed_cma": 0.0,
+              "fixed_label_ser_blind": 0.0,
+              "fixed_label_ser_candidate": 0.921875,
+              "fixed_label_ser_oracle": 0.0,
+              "seed": 78
+            },
+            {
+              "pi_ser_fixed_cma": 0.0,
+              "pi_ser_blind": 0.0,
+              "pi_ser_candidate": 0.9296875,
+              "pi_ser_oracle": 0.0,
+              "fixed_label_ser_fixed_cma": 0.0,
+              "fixed_label_ser_blind": 0.0,
+              "fixed_label_ser_candidate": 0.9296875,
+              "fixed_label_ser_oracle": 0.0,
+              "seed": 79
+            },
+            {
+              "pi_ser_fixed_cma": 0.0,
+              "pi_ser_blind": 0.0,
+              "pi_ser_candidate": 0.91796875,
+              "pi_ser_oracle": 0.0,
+              "fixed_label_ser_fixed_cma": 0.0,
+              "fixed_label_ser_blind": 0.0,
+              "fixed_label_ser_candidate": 0.91796875,
+              "fixed_label_ser_oracle": 0.0,
+              "seed": 80
+            }
+          ],
+          "aggregate": {
+            "pi_ser_fixed_cma_mean": 0.148046875,
+            "fixed_label_ser_fixed_cma_mean": 0.148046875,
+            "pi_ser_blind_mean": 0.1484375,
+            "fixed_label_ser_blind_mean": 0.1484375,
+            "pi_ser_candidate_mean": 0.930859375,
+            "fixed_label_ser_candidate_mean": 0.930859375,
+            "pi_ser_oracle_mean": 0.0,
+            "fixed_label_ser_oracle_mean": 0.0
+          }
+        },
+        {
+          "cell_id": "16qam-snr20-fg100-short",
+          "per_seed": [
+            {
+              "pi_ser_fixed_cma": 0.76171875,
+              "pi_ser_blind": 0.765625,
+              "pi_ser_candidate": 0.9375,
+              "pi_ser_oracle": 0.1328125,
+              "fixed_label_ser_fixed_cma": 0.76171875,
+              "fixed_label_ser_blind": 0.765625,
+              "fixed_label_ser_candidate": 0.9375,
+              "fixed_label_ser_oracle": 0.1328125,
+              "seed": 71
+            },
+            {
+              "pi_ser_fixed_cma": 0.0,
+              "pi_ser_blind": 0.0,
+              "pi_ser_candidate": 0.9609375,
+              "pi_ser_oracle": 0.0,
+              "fixed_label_ser_fixed_cma": 0.0,
+              "fixed_label_ser_blind": 0.0,
+              "fixed_label_ser_candidate": 0.9609375,
+              "fixed_label_ser_oracle": 0.0,
+              "seed": 72
+            },
+            {
+              "pi_ser_fixed_cma": 0.76953125,
+              "pi_ser_blind": 0.76953125,
+              "pi_ser_candidate": 0.93359375,
+              "pi_ser_oracle": 0.171875,
+              "fixed_label_ser_fixed_cma": 0.76953125,
+              "fixed_label_ser_blind": 0.76953125,
+              "fixed_label_ser_candidate": 0.93359375,
+              "fixed_label_ser_oracle": 0.171875,
+              "seed": 73
+            },
+            {
+              "pi_ser_fixed_cma": 0.0,
+              "pi_ser_blind": 0.0,
+              "pi_ser_candidate": 0.9375,
+              "pi_ser_oracle": 0.0,
+              "fixed_label_ser_fixed_cma": 0.0,
+              "fixed_label_ser_blind": 0.0,
+              "fixed_label_ser_candidate": 0.9375,
+              "fixed_label_ser_oracle": 0.0,
+              "seed": 74
+            },
+            {
+              "pi_ser_fixed_cma": 0.0,
+              "pi_ser_blind": 0.0,
+              "pi_ser_candidate": 0.9296875,
+              "pi_ser_oracle": 0.0,
+              "fixed_label_ser_fixed_cma": 0.0,
+              "fixed_label_ser_blind": 0.0,
+              "fixed_label_ser_candidate": 0.9296875,
+              "fixed_label_ser_oracle": 0.0,
+              "seed": 75
+            },
+            {
+              "pi_ser_fixed_cma": 0.0,
+              "pi_ser_blind": 0.0,
+              "pi_ser_candidate": 0.90625,
+              "pi_ser_oracle": 0.0,
+              "fixed_label_ser_fixed_cma": 0.0,
+              "fixed_label_ser_blind": 0.0,
+              "fixed_label_ser_candidate": 0.90625,
+              "fixed_label_ser_oracle": 0.0,
+              "seed": 76
+            },
+            {
+              "pi_ser_fixed_cma": 0.0,
+              "pi_ser_blind": 0.0,
+              "pi_ser_candidate": 0.93359375,
+              "pi_ser_oracle": 0.0,
+              "fixed_label_ser_fixed_cma": 0.0,
+              "fixed_label_ser_blind": 0.0,
+              "fixed_label_ser_candidate": 0.93359375,
+              "fixed_label_ser_oracle": 0.0,
+              "seed": 77
+            },
+            {
+              "pi_ser_fixed_cma": 0.0,
+              "pi_ser_blind": 0.0,
+              "pi_ser_candidate": 0.921875,
+              "pi_ser_oracle": 0.0,
+              "fixed_label_ser_fixed_cma": 0.0,
+              "fixed_label_ser_blind": 0.0,
+              "fixed_label_ser_candidate": 0.921875,
+              "fixed_label_ser_oracle": 0.0,
+              "seed": 78
+            },
+            {
+              "pi_ser_fixed_cma": 0.0,
+              "pi_ser_blind": 0.0,
+              "pi_ser_candidate": 0.9296875,
+              "pi_ser_oracle": 0.0,
+              "fixed_label_ser_fixed_cma": 0.0,
+              "fixed_label_ser_blind": 0.0,
+              "fixed_label_ser_candidate": 0.9296875,
+              "fixed_label_ser_oracle": 0.0,
+              "seed": 79
+            },
+            {
+              "pi_ser_fixed_cma": 0.0,
+              "pi_ser_blind": 0.0,
+              "pi_ser_candidate": 0.91796875,
+              "pi_ser_oracle": 0.0,
+              "fixed_label_ser_fixed_cma": 0.0,
+              "fixed_label_ser_blind": 0.0,
+              "fixed_label_ser_candidate": 0.91796875,
+              "fixed_label_ser_oracle": 0.0,
+              "seed": 80
+            }
+          ],
+          "aggregate": {
+            "pi_ser_fixed_cma_mean": 0.153125,
+            "fixed_label_ser_fixed_cma_mean": 0.153125,
+            "pi_ser_blind_mean": 0.153515625,
+            "fixed_label_ser_blind_mean": 0.153515625,
+            "pi_ser_candidate_mean": 0.930859375,
+            "fixed_label_ser_candidate_mean": 0.930859375,
+            "pi_ser_oracle_mean": 0.03046875,
+            "fixed_label_ser_oracle_mean": 0.03046875
+          }
+        },
+        {
+          "cell_id": "16qam-snr10-fg100-long",
+          "per_seed": [
+            {
+              "pi_ser_fixed_cma": 0.2734375,
+              "pi_ser_blind": 0.2890625,
+              "pi_ser_candidate": 0.9140625,
+              "pi_ser_oracle": 0.27734375,
+              "fixed_label_ser_fixed_cma": 0.2734375,
+              "fixed_label_ser_blind": 0.2890625,
+              "fixed_label_ser_candidate": 0.9140625,
+              "fixed_label_ser_oracle": 0.27734375,
+              "seed": 71
+            },
+            {
+              "pi_ser_fixed_cma": 0.78515625,
+              "pi_ser_blind": 0.7890625,
+              "pi_ser_candidate": 0.91796875,
+              "pi_ser_oracle": 0.7578125,
+              "fixed_label_ser_fixed_cma": 0.78515625,
+              "fixed_label_ser_blind": 0.7890625,
+              "fixed_label_ser_candidate": 0.91796875,
+              "fixed_label_ser_oracle": 0.7578125,
+              "seed": 72
+            },
+            {
+              "pi_ser_fixed_cma": 0.3515625,
+              "pi_ser_blind": 0.375,
+              "pi_ser_candidate": 0.9375,
+              "pi_ser_oracle": 0.37890625,
+              "fixed_label_ser_fixed_cma": 0.3515625,
+              "fixed_label_ser_blind": 0.375,
+              "fixed_label_ser_candidate": 0.9375,
+              "fixed_label_ser_oracle": 0.37890625,
+              "seed": 73
+            },
+            {
+              "pi_ser_fixed_cma": 0.75,
+              "pi_ser_blind": 0.7578125,
+              "pi_ser_candidate": 0.90234375,
+              "pi_ser_oracle": 0.69140625,
+              "fixed_label_ser_fixed_cma": 0.75,
+              "fixed_label_ser_blind": 0.7578125,
+              "fixed_label_ser_candidate": 0.90234375,
+              "fixed_label_ser_oracle": 0.69140625,
+              "seed": 74
+            },
+            {
+              "pi_ser_fixed_cma": 0.7578125,
+              "pi_ser_blind": 0.7578125,
+              "pi_ser_candidate": 0.92578125,
+              "pi_ser_oracle": 0.734375,
+              "fixed_label_ser_fixed_cma": 0.7578125,
+              "fixed_label_ser_blind": 0.7578125,
+              "fixed_label_ser_candidate": 0.92578125,
+              "fixed_label_ser_oracle": 0.734375,
+              "seed": 75
+            },
+            {
+              "pi_ser_fixed_cma": 0.4296875,
+              "pi_ser_blind": 0.43359375,
+              "pi_ser_candidate": 0.9296875,
+              "pi_ser_oracle": 0.41796875,
+              "fixed_label_ser_fixed_cma": 0.4296875,
+              "fixed_label_ser_blind": 0.43359375,
+              "fixed_label_ser_candidate": 0.9296875,
+              "fixed_label_ser_oracle": 0.41796875,
+              "seed": 76
+            },
+            {
+              "pi_ser_fixed_cma": 0.390625,
+              "pi_ser_blind": 0.4140625,
+              "pi_ser_candidate": 0.921875,
+              "pi_ser_oracle": 0.38671875,
+              "fixed_label_ser_fixed_cma": 0.390625,
+              "fixed_label_ser_blind": 0.4140625,
+              "fixed_label_ser_candidate": 0.921875,
+              "fixed_label_ser_oracle": 0.38671875,
+              "seed": 77
+            },
+            {
+              "pi_ser_fixed_cma": 0.48046875,
+              "pi_ser_blind": 0.5,
+              "pi_ser_candidate": 0.92578125,
+              "pi_ser_oracle": 0.46875,
+              "fixed_label_ser_fixed_cma": 0.48046875,
+              "fixed_label_ser_blind": 0.5,
+              "fixed_label_ser_candidate": 0.92578125,
+              "fixed_label_ser_oracle": 0.46875,
+              "seed": 78
+            },
+            {
+              "pi_ser_fixed_cma": 0.015625,
+              "pi_ser_blind": 0.015625,
+              "pi_ser_candidate": 0.9140625,
+              "pi_ser_oracle": 0.01171875,
+              "fixed_label_ser_fixed_cma": 0.015625,
+              "fixed_label_ser_blind": 0.015625,
+              "fixed_label_ser_candidate": 0.9140625,
+              "fixed_label_ser_oracle": 0.01171875,
+              "seed": 79
+            },
+            {
+              "pi_ser_fixed_cma": 0.05078125,
+              "pi_ser_blind": 0.05078125,
+              "pi_ser_candidate": 0.9140625,
+              "pi_ser_oracle": 0.0390625,
+              "fixed_label_ser_fixed_cma": 0.05078125,
+              "fixed_label_ser_blind": 0.05078125,
+              "fixed_label_ser_candidate": 0.9140625,
+              "fixed_label_ser_oracle": 0.0390625,
+              "seed": 80
+            }
+          ],
+          "aggregate": {
+            "pi_ser_fixed_cma_mean": 0.428515625,
+            "fixed_label_ser_fixed_cma_mean": 0.428515625,
+            "pi_ser_blind_mean": 0.43828125,
+            "fixed_label_ser_blind_mean": 0.43828125,
+            "pi_ser_candidate_mean": 0.9203125,
+            "fixed_label_ser_candidate_mean": 0.9203125,
+            "pi_ser_oracle_mean": 0.41640625,
+            "fixed_label_ser_oracle_mean": 0.41640625
+          }
+        },
+        {
+          "cell_id": "16qam-snr15-fg1000-long",
+          "per_seed": [
+            {
+              "pi_ser_fixed_cma": 0.03125,
+              "pi_ser_blind": 0.03125,
+              "pi_ser_candidate": 0.9140625,
+              "pi_ser_oracle": 0.03125,
+              "fixed_label_ser_fixed_cma": 0.03125,
+              "fixed_label_ser_blind": 0.03125,
+              "fixed_label_ser_candidate": 0.9140625,
+              "fixed_label_ser_oracle": 0.03125,
+              "seed": 71
+            },
+            {
+              "pi_ser_fixed_cma": 0.8203125,
+              "pi_ser_blind": 0.8359375,
+              "pi_ser_candidate": 0.91796875,
+              "pi_ser_oracle": 0.5625,
+              "fixed_label_ser_fixed_cma": 0.8203125,
+              "fixed_label_ser_blind": 0.8359375,
+              "fixed_label_ser_candidate": 0.91796875,
+              "fixed_label_ser_oracle": 0.5625,
+              "seed": 72
+            },
+            {
+              "pi_ser_fixed_cma": 0.0625,
+              "pi_ser_blind": 0.06640625,
+              "pi_ser_candidate": 0.9375,
+              "pi_ser_oracle": 0.0625,
+              "fixed_label_ser_fixed_cma": 0.0625,
+              "fixed_label_ser_blind": 0.06640625,
+              "fixed_label_ser_candidate": 0.9375,
+              "fixed_label_ser_oracle": 0.0625,
+              "seed": 73
+            },
+            {
+              "pi_ser_fixed_cma": 0.69140625,
+              "pi_ser_blind": 0.734375,
+              "pi_ser_candidate": 0.90234375,
+              "pi_ser_oracle": 0.35546875,
+              "fixed_label_ser_fixed_cma": 0.69140625,
+              "fixed_label_ser_blind": 0.734375,
+              "fixed_label_ser_candidate": 0.90234375,
+              "fixed_label_ser_oracle": 0.35546875,
+              "seed": 74
+            },
+            {
+              "pi_ser_fixed_cma": 0.7265625,
+              "pi_ser_blind": 0.76171875,
+              "pi_ser_candidate": 0.92578125,
+              "pi_ser_oracle": 0.4296875,
+              "fixed_label_ser_fixed_cma": 0.7265625,
+              "fixed_label_ser_blind": 0.76171875,
+              "fixed_label_ser_candidate": 0.92578125,
+              "fixed_label_ser_oracle": 0.4296875,
+              "seed": 75
+            },
+            {
+              "pi_ser_fixed_cma": 0.06640625,
+              "pi_ser_blind": 0.06640625,
+              "pi_ser_candidate": 0.9296875,
+              "pi_ser_oracle": 0.06640625,
+              "fixed_label_ser_fixed_cma": 0.06640625,
+              "fixed_label_ser_blind": 0.06640625,
+              "fixed_label_ser_candidate": 0.9296875,
+              "fixed_label_ser_oracle": 0.06640625,
+              "seed": 76
+            },
+            {
+              "pi_ser_fixed_cma": 0.12890625,
+              "pi_ser_blind": 0.12109375,
+              "pi_ser_candidate": 0.921875,
+              "pi_ser_oracle": 0.109375,
+              "fixed_label_ser_fixed_cma": 0.12890625,
+              "fixed_label_ser_blind": 0.12109375,
+              "fixed_label_ser_candidate": 0.921875,
+              "fixed_label_ser_oracle": 0.109375,
+              "seed": 77
+            },
+            {
+              "pi_ser_fixed_cma": 0.078125,
+              "pi_ser_blind": 0.08984375,
+              "pi_ser_candidate": 0.92578125,
+              "pi_ser_oracle": 0.0859375,
+              "fixed_label_ser_fixed_cma": 0.078125,
+              "fixed_label_ser_blind": 0.08984375,
+              "fixed_label_ser_candidate": 0.92578125,
+              "fixed_label_ser_oracle": 0.0859375,
+              "seed": 78
+            },
+            {
+              "pi_ser_fixed_cma": 0.0,
+              "pi_ser_blind": 0.0,
+              "pi_ser_candidate": 0.9140625,
+              "pi_ser_oracle": 0.0,
+              "fixed_label_ser_fixed_cma": 0.0,
+              "fixed_label_ser_blind": 0.0,
+              "fixed_label_ser_candidate": 0.9140625,
+              "fixed_label_ser_oracle": 0.0,
+              "seed": 79
+            },
+            {
+              "pi_ser_fixed_cma": 0.0078125,
+              "pi_ser_blind": 0.00390625,
+              "pi_ser_candidate": 0.9140625,
+              "pi_ser_oracle": 0.0078125,
+              "fixed_label_ser_fixed_cma": 0.0078125,
+              "fixed_label_ser_blind": 0.00390625,
+              "fixed_label_ser_candidate": 0.9140625,
+              "fixed_label_ser_oracle": 0.0078125,
+              "seed": 80
+            }
+          ],
+          "aggregate": {
+            "pi_ser_fixed_cma_mean": 0.261328125,
+            "fixed_label_ser_fixed_cma_mean": 0.261328125,
+            "pi_ser_blind_mean": 0.27109375,
+            "fixed_label_ser_blind_mean": 0.27109375,
+            "pi_ser_candidate_mean": 0.9203125,
+            "fixed_label_ser_candidate_mean": 0.9203125,
+            "pi_ser_oracle_mean": 0.17109375,
+            "fixed_label_ser_oracle_mean": 0.17109375
+          }
+        }
+      ]
+    }
+  },
+  "adjudications": {
+    "C04_mlp": {
+      "verdict": "CANDIDATE_BLOWS_UP",
+      "macro_delta_candidate_minus_blind": 0.6239397321428571,
+      "macro_ci_upper_candidate_minus_blind": 0.7526297433035714,
+      "ci_candidate_minus_blind": {
+        "macro_mean": 0.6239397321428571,
+        "lower": 0.48330775669642856,
+        "upper": 0.7526297433035714,
+        "n_cells": 7,
+        "per_cell_means": [
+          0.328125,
+          0.595703125,
+          0.752734375,
+          0.782421875,
+          0.77734375,
+          0.48203125,
+          0.64921875
+        ]
+      },
+      "ci_candidate_minus_fixed": {
+        "macro_mean": 0.6323102678571428,
+        "lower": 0.4950823102678571,
+        "upper": 0.7568638392857142,
+        "n_cells": 7,
+        "per_cell_means": [
+          0.344921875,
+          0.615234375,
+          0.7546875,
+          0.7828125,
+          0.777734375,
+          0.491796875,
+          0.658984375
+        ]
+      },
+      "n_cells_beats_blind_by_mde": 0,
+      "n_held_out_cells": 7,
+      "worst_candidate_degradation_vs_fixed_cma": 0.7828125,
+      "n_cells_worst_degradation_gt_mde": 7,
+      "a_conditions": {
+        "macro_delta_cand_minus_blind_le_neg_mde": false,
+        "macro_ci_upper_lt_0": false,
+        "beats_blind_by_mde_in_at_least_5_of_7_cells": false,
+        "worst_degradation_vs_fixed_cma_le_mde": false
+      },
+      "mde": 0.005
+    }
+  },
+  "frozen_params": {
+    "fixed_mu_cma_mu": 0.03,
+    "blind_affine_ridge_frozen": 1e-08,
+    "training_seeds": [
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90
+    ],
+    "validation_seeds": [
+      91,
+      92,
+      93,
+      94,
+      95
+    ],
+    "test_seeds": [
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80
+    ],
+    "hp_tuning_seeds": [
+      81,
+      82,
+      83
+    ],
+    "n_epochs": 30,
+    "early_stop_patience": 5,
+    "hp_grid": {
+      "hidden_dim": [
+        32,
+        64
+      ],
+      "learning_rate": [
+        0.001,
+        0.003
+      ],
+      "weight_decay": [
+        0.0,
+        0.0001
+      ]
+    },
+    "representative_hp": {
+      "hidden_dim": 64,
+      "learning_rate": 0.003,
+      "weight_decay": 0.0001
+    },
+    "mde": 0.005,
+    "objective": "O1_hard_pseudo_label_MSE_detached_target",
+    "candidates": {
+      "C04_mlp": {
+        "best_hp": {
+          "hidden_dim": 64,
+          "learning_rate": 0.003,
+          "weight_decay": 0.0001
+        },
+        "best_val_loss": 9.635115816308826e-06
+      }
+    }
+  },
+  "smoke": {
+    "passed": true,
+    "identity_test": {
+      "loss": 0.06568129360675812,
+      "passed": true
+    },
+    "constant_test": {
+      "const_loss": 0.9312255859374999,
+      "full_loss": 0.03570424396942859,
+      "delta_const_minus_full": 0.8955213419680713,
+      "passed": true
+    },
+    "no_harm_test": {
+      "pi_ser": 0.8828125,
+      "fixed_label_ser": 0.90234375,
+      "random_ceiling": 0.9375,
+      "passed": true
+    }
+  },
+  "metadata": {
+    "schema": "direction-lab.cb1.c04-c09-o1-corrected-scout.v1",
+    "campaign_id": "science-scout-2026-07-20.dual-pol-osl",
+    "triggered_by": "probe_p01_O1_input_dependent_optimum_2026-07-21",
+    "related_decisions": [
+      "D016-constant-collapse",
+      "V005",
+      "V017",
+      "D010",
+      "D011-amended",
+      "D012",
+      "D013-corrector-adjudication-A"
+    ],
+    "MDE": 0.005,
+    "training_seeds": [
+      81,
+      82,
+      83,
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90
+    ],
+    "validation_seeds": [
+      91,
+      92,
+      93,
+      94,
+      95
+    ],
+    "test_seeds": [
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80
+    ],
+    "leakage_check": "set(train) \u2229 set(val) \u2229 set(test) = \u2205 pairwise; set(train,val) \u2229 set(prior batches {11-65}) = \u2205; training_cells \u2229 held_out_cells = \u2205 (all asserted). SAME seed/cell split as c04-c09-shared-corrector-v1 for paired comparison.",
+    "R2_qam16": 1.32,
+    "device": "cuda",
+    "elapsed_seconds": 7.887853145599365,
+    "timestamp": "2026-07-22T09:36:15",
+    "objective": "O1_hard_pseudo_label_MSE_detached_target",
+    "objective_note": "The ONLY change from c04-c09-shared-corrector-v1. O1 = MSE(z_corrected, hard_16qam(z_corrected).detach()). Probe p01 confirmed input-dependent optimum (full=0.039 < const=0.452). This is the objective blind_affine solves in CLOSED FORM; the candidate learns it per-realization conditioned on trace features.",
+    "blind_affine_ridge_frozen_from": "corrector-residual-headroom-v1_validation_tuning",
+    "fixed_mu_cma_mu_inherited_from": "B01-R HF6 interior optimum",
+    "reused_unchanged_from_old_batch": [
+      "corrector_adapter.py (MLPCorrector, _summary_statistics, apply_correction)",
+      "dataset building",
+      "cell/seed splits",
+      "evaluation",
+      "adjudication",
+      "source-closure hashing"
+    ],
+    "source_closure_sha256": {
+      "projects\\thesis-fso\\direction-lab\\scout\\cb1-modulation-generic-closure\\c04-c09-o1-corrected-scout\\batch-contract.v1.yaml": "ec275cd082e3ccf73dc0f0dd12de5c63a8a3e17ecaef780a61ea593319572615",
+      "projects\\thesis-fso\\direction-lab\\scout\\cb1-modulation-generic-closure\\c04-c09-o1-corrected-scout\\src\\run_o1_corrected_scout.py": "1fdf26af18cc40f50a0c12cdb5c6ccebf45ed4a5e604aa4768699c2bca24e1b5",
+      "projects\\thesis-fso\\direction-lab\\scout\\cb1-modulation-generic-closure\\c04-c09-o1-corrected-scout\\src\\test_o1_identity.py": "f7037386483a8a2af0ea1f89372fa3cafadcf81b14691ac805afd601db5fd2a7",
+      "projects\\thesis-fso\\direction-lab\\scout\\cb1-modulation-generic-closure\\c04-c09-shared-corrector-v1\\src\\corrector_adapter.py": "b688a319ba3a2bafd7e3951e548b259811a499278e0b48cf7766cb015b98f5e8",
+      "projects\\thesis-fso\\direction-lab\\scout\\cb1-modulation-generic-closure\\baseline-atlas\\cb1_evaluator.py": "1d3d21ac77ae82e5766d065591ec6b3c382bdae18c914b1f39ccb084e92fb00d",
+      "projects\\thesis-fso\\direction-lab\\scout\\cb1-modulation-generic-closure\\baseline-atlas\\cb1_cell_runner.py": "4a2b8df13ed787221a4f83fed27daf8f0ca8e458e43a63a82bf509d29117396d",
+      "projects\\simulation\\common\\_dual_pol_channel.py": "5cefac97d120e5590905ae36ab20cabc8832a6c556368b1d9f154a2a8091818c",
+      "projects\\simulation\\common\\_modulation.py": "036fb7aa4d0bef153ee53799f20a244492fb6294f93132d1ecc2b0530b5694d5"
+    },
+    "information_boundary_note": "Candidates train on MSE(z_corrected, hard_16qam(z_corrected).detach()) \u2014 receiver-visible pseudo-labels only. No TX truth in training or inference. blind_affine ridge frozen (not re-tuned). oracle_affine reported for context only (Kill bound)."
+  }
+}

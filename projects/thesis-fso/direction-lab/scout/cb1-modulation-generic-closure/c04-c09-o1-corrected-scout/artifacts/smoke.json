@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "identity_test": {
+    "loss": 0.06568129360675812,
+    "passed": true
+  },
+  "constant_test": {
+    "const_loss": 0.9312255859374999,
+    "full_loss": 0.03570424396942859,
+    "delta_const_minus_full": 0.8955213419680713,
+    "passed": true
+  },
+  "no_harm_test": {
+    "pi_ser": 0.8828125,
+    "fixed_label_ser": 0.90234375,
+    "random_ceiling": 0.9375,
+    "passed": true
+  }
+}

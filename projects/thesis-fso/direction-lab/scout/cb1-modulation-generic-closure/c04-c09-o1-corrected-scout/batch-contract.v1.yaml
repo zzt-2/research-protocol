@@ -1,0 +1,314 @@
+# =============================================================================
+# C04/C09 O1-Corrected Corrector Scout v1 — FROZEN BEFORE RUNNING
+# Campaign: science-scout-2026-07-20.dual-pol-osl
+# Trigger: 2026-07-21/22 Probe p01 confirmed O1 (hard pseudo-label MSE) has an
+#          INPUT-DEPENDENT optimum (full=0.039 vs const=0.452, A varies).
+# Scope:   Scout (small-batch mechanism-distinct comparison). The previous
+#          c04-c09-shared-corrector-v1 batch used a SOFT expected-distance
+#          loss with an input-INDEPENDENT constant optimum -> constant collapse
+#          (D016/V005, both candidates CANDIDATE_BLOWS_UP). This Scout corrects
+#          ONLY the training objective to O1 and asks the SAME mechanism-
+#          distinct question on the SAME cell/seed split for paired comparison.
+# =============================================================================
+# Scientific question:
+#   Probe p01 proved the O1 objective (hard-decision pseudo-label MSE) has an
+#   input-dependent optimum — this is exactly the objective blind_affine_compare
+#   _16qam solves in CLOSED FORM (ridge LS). The mechanism-distinct question:
+#   can a LEARNED CONTEXT-DEPENDENT corrector (MLP, conditioned on z_calib
+#   summary statistics, outputting a per-realization affine A,b) BEAT the
+#   closed-form blind affine when BOTH optimize the SAME O1 objective?
+#   I.e. does CONTEXT-DEPENDENCE (varying A,b per realization) add value over a
+#   single closed-form fit?
+#
+# H1 (working hypothesis):
+#   Context-dependence adds value: the residual distortion after fixed-mu CMA
+#   is not a single global affine (a single ridge LS leaves H_residual).
+#   Conditioning (A,b) on trace features lets the corrector specialize to the
+#   current SOP / fade state, recovering part of the residual the blind affine
+#   cannot. The OLD negative was a loss artifact (constant collapse), not a
+#   true mechanism limit; with the corrected O1 objective the candidate may
+#   beat blind.
+#
+# Rejection condition (-> LOCAL_NEGATIVE / DOES_NOT_BEAT): no learned corrector
+# beats blind affine by >= MDE (0.005 PI-SER) on >= 5/7 held-out cells with
+# paired CI excluding 0. In that case record the corrected-objective mechanism
+# negative (distinct from the old loss-artifact blow-up) and rotate.
+#
+# WHY THIS IS NOT A RE-RUN OF THE OLD BATCH:
+#   - The ONLY change is the training loss: OLD = soft expected-distance
+#     (input-independent constant optimum ~1.31 -> collapse); NEW = O1 hard
+#     pseudo-label MSE (input-dependent optimum, probe-confirmed).
+#   - The scientific question is mechanism-distinct: OLD tried to beat blind
+#     but the loss could not even fit a useful map; NEW asks whether context-
+#     dependence beats the closed-form fit of the SAME O1 objective.
+#   - Cell/seed splits, dataset building, evaluation, adjudication, source-
+#     closure hashing are ALL IDENTICAL to the old batch for paired comparison.
+# =============================================================================
+
+schema_version: direction-lab.cb1.c04-c09-o1-corrected-scout.v1
+campaign_id: science-scout-2026-07-20.dual-pol-osl
+inherits_from_contract: c04-c09-shared-corrector-v1/batch-contract.v1.yaml
+triggered_by: probe_p01_O1_input_dependent_optimum_2026-07-21
+related_decisions: [D010, D011-amended, D012, D013-corrector-adjudication-A, D016-constant-collapse, V005, V017]
+claim_ceiling: LOCAL_SLICE_DIAGNOSTIC
+
+scientific_question: >-
+  Can a LEARNED context-dependent affine corrector (MLP on z_calib summary
+  statistics), trained with the O1 hard-decision pseudo-label MSE objective,
+  STABLY beat the closed-form blind_affine_compare_16qam baseline by >= MDE on
+  >= 5/7 held-out cells? I.e. does context-dependence add value over a single
+  ridge-LS fit when BOTH optimize the same O1 objective?
+
+# === Roles ===
+
+roles:
+
+  system_anchor:
+    id: fixed_mu_cma_mu_0_03
+    implementation: cb1_cell_runner.standard_cma_godard_with_z
+    mu: 0.03
+    cma_taps: 11
+    block_size: 64
+    R2_qam16: 1.32
+    note: >-
+      System anchor (inherited from B01-R HF6, NOT re-tuned). Produces the
+      zX/zY consumed by ALL comparators.
+
+  conventional_task_comparator:
+    id: blind_affine_compare_16qam
+    implementation: cb1_evaluator.blind_affine_compare_16qam
+    ridge: 1.0e-08  # FROZEN from corrector-residual-headroom-v1 tuning
+    information_access: receiver_visible_online
+    note: >-
+      THE BAR TO BEAT. A single closed-form ridge LS of
+      hard_16qam(z_calib) ~ z_calib (the SAME O1 objective), applied to z_eval.
+      This is the CLOSED-FORM solution of the O1 objective; the candidate must
+      beat it by doing BETTER via context-dependence. Receiver-visible only.
+
+  candidate_function_classes:
+    - id: C04_mlp_corrector
+      implementation: c04-c09-shared-corrector-v1.src.corrector_adapter.MLPCorrector
+      inputs: [calibration_summary_statistics]
+      outputs: [affine_2x2_complex_A, offset_complex_b]
+      hyperparameters:
+        hidden_dim: 64            # representative HP (grid declared but non-discriminating per old smoke)
+        learning_rate: 3.0e-03
+        n_epochs: 30
+        weight_decay: 1.0e-04
+      note: >-
+        MLP mapping z_calib SUMMARY STATISTICS (10 reals) to a context-specific
+        2x2 complex affine + offset. Receiver-visible only. Reused UNCHANGED
+        from c04-c09-shared-corrector-v1/src/corrector_adapter.py.
+
+  comparators_for_context:
+    - id: fixed_cma
+      implementation: evaluator.hard_16qam on raw z_eval
+      note: >-
+        The system anchor's direct hard decision (no correction). Candidate
+        must not degrade vs this by more than MDE.
+    - id: oracle_affine_bound_16qam
+      note: >-
+        Kill bound only (H_total ceiling via TX truth). Reported for context;
+        NEVER a Go baseline (FR-21/FR-25).
+
+# === Sweep axes (frozen — SAME as old batch for paired comparison) ===
+
+sweep_axes:
+
+  - id: cell_split
+    training_cells: [16qam-snr20-nominal-short, 16qam-snr20-fg1000-short, 16qam-snr20-sop40e-short, 16qam-snr20-nominal-long]
+    validation_cells_for_early_stopping: [16qam-snr20-nominal-short, 16qam-snr20-fg1000-short, 16qam-snr20-sop40e-short, 16qam-snr20-nominal-long]
+    held_out_test_cells: [16qam-snr05-nominal-short, 16qam-snr10-nominal-short, 16qam-snr15-nominal-short, 16qam-snr25-nominal-short, 16qam-snr20-fg100-short, 16qam-snr10-fg100-long, 16qam-snr15-fg1000-long]
+    rationale: >-
+      SAME 11-cell atlas and SAME 4 training / 7 held-out split as the old
+      c04-c09 batch. Training cells are the validation cells used to tune
+      blind_affine ridge; they are NOT in the held-out test slice. The model
+      trains on these 4 cells with FRESH seeds; tests on the 7 held-out cells.
+
+  - id: seed_split_paired_with_old_batch
+    training_seeds: [81, 82, 83, 84, 85, 86, 87, 88, 89, 90]
+    validation_seeds_for_early_stopping: [91, 92, 93, 94, 95]
+    test_seeds: [71, 72, 73, 74, 75, 76, 77, 78, 79, 80]  # = adjudication test slice
+    leakage_check: >-
+      set(train) ∩ set(val) ∩ set(test) = empty pairwise (asserted);
+      set(train,val) ∩ set(prior batches {11-65}) = empty (asserted);
+      SAME seed split as the old c04-c09 batch for PAIRED comparison.
+      test_seeds = adjudication test slice (blind_affine ridge frozen on
+      [61-65]; C04/C09 never trained on [71-80]).
+
+# === Training protocol (frozen) — THE ONLY CHANGE from the old batch ===
+
+training_protocol:
+  principle: receiver_visible_supervised_on_O1_hard_pseudo_label_MSE
+  loss: >-
+    CORRECTED OBJECTIVE O1 (NOT the old soft expected-distance loss):
+    For a training realization with calibration slice z_calib:
+      z_corrected_calib = z_calib @ A.T + b            (candidate output)
+      pseudo_label = hard_16qam(z_corrected_calib)     (DETACHED target)
+      loss = MSE(z_corrected_calib, pseudo_label)
+    The pseudo-label is detached: it is a fixed target per step, not
+    differentiable through the hard decision. Each SGD step is one Lloyd-like
+    iteration (assign labels from current map, then the gradient pulls the
+    affine toward fitting those labels); over epochs this alternates label
+    assignment and affine fitting (k-means-like, converges). This is exactly
+    the objective blind_affine_compare_16qam solves in CLOSED FORM (ridge LS of
+    hard_16qam(z) ~ z); the candidate learns to do the SAME per-realization,
+    but conditioned on trace features.
+  information_access: receiver_visible_only_no_TX_truth
+  optimizer: adam
+  early_stopping: validation_loss_plateau (patience=5 epochs on validation seeds [91-95])
+  representative_hp_note: >-
+    One representative HP per class (hidden_dim=64, lr=3e-3, wd=1e-4). The old
+    smoke showed the HP grid is non-discriminating; the change here is the
+    LOSS, so a representative HP is sufficient for the Scout comparison.
+
+# === Semantic smoke BEFORE held-out eval (mandatory) ===
+
+semantic_smoke_before_eval:
+  identity_test: >-
+    A=I, b=0 gives a finite, non-degenerate O1 loss on z_calib (no inf/nan,
+    not the input-independent constant ~1.31 of the OLD loss).
+  constant_test: >-
+    A=0 constant-b optimum is WORSE than the full (A,b) optimum (probe p01
+    confirmed: const=0.452 > full=0.039). If the corrected loss collapses to a
+    constant-b optimum it would FAIL here (this is the gate that the OLD loss
+    failed and is the whole point of the correction).
+  no_harm_test: >-
+    A trained model on a single realization does not scramble: applied to z_eval
+    the candidate PI-SER is NOT at the 16QAM random ceiling 0.9375 (which is
+    the blow-up signature of the old batch).
+  on_failure: >-
+    STOP and report DIAGNOSTIC. Do NOT proceed to held-out evaluation.
+
+# === Statistical preregistration ===
+
+statistical_preregistration:
+
+  primary_statistic:
+    name: paired_delta_pi_ser_vs_blind
+    definition: >-
+      Per (cell, seed) paired delta = PI-SER(candidate) - PI-SER(blind) on the
+      SAME z-stream, SAME eval window, SAME paired realization. Negative =
+      candidate better than blind.
+    aggregation: >-
+      Per-cell mean over test seeds (paired), then macro mean over 7 held-out
+      cells. Hierarchical paired bootstrap 95% CI (10k resamples).
+    practical_significance_threshold: 0.005_PI_SER_absolute  # MDE
+
+  secondary_statistics:
+    - fixed_label_ser  # secondary metric, reported alongside PI-SER
+    - n_cells_candidate_beats_blind_by_mde  # need >= 5/7
+    - worst_cell_degradation_vs_fixed_cma  # candidate must not blow up
+    - oracle_kill_bound_reference  # H_total context only
+
+  identity_tests_REQUIRED_PASS_before_any_evaluation:
+    - candidate_does_not_read_tx_truth
+    - candidate_application_is_affine_form_on_eval_slice
+    - shared_adapter_produces_uniform_input_output_contract
+    - train_val_test_seeds_pairwise_disjoint_asserted
+    - training_cells_disjoint_from_held_out_test_cells_asserted
+    - source_closure_hash_recorded
+
+# === Decision rule (frozen BEFORE running) ===
+
+decision_rule:
+
+  CANDIDATE_BEATS_BLIND_STABLY:
+    all_of:
+      - "All identity + semantic smoke tests PASS."
+      - "Macro paired delta (candidate - blind) <= -MDE (candidate better by >= 0.005)."
+      - "Macro CI upper bound < 0 (statistically significant improvement)."
+      - "Candidate beats blind by >= MDE on >= 5/7 held-out cells."
+      - "Worst-cell (candidate - fixed_cma) <= MDE (no unacceptable degradation vs anchor)."
+    consequence: >-
+      The context-dependent corrector stably beats the closed-form blind affine
+      on the SAME O1 objective. Context-dependence adds value. POSITIVE
+      mechanism signal recorded (Scout-level; deeper evidence would require
+      user strategic decision).
+
+  CANDIDATE_DOES_NOT_BEAT_BLIND:
+    any_of:
+      - "Macro paired delta (candidate - blind) > -MDE (not practically significant)."
+      - "Macro CI upper bound >= 0 (not statistically significant)."
+      - "Candidate beats blind by >= MDE on < 5/7 held-out cells (not stable)."
+    consequence: >-
+      LOCAL_NEGATIVE for the corrected-objective route. Context-dependence does
+      NOT add value over the closed-form blind affine fit of the SAME O1
+      objective. This is a MECHANISM-DISTINCT negative from the old loss-
+      artifact blow-up: here the loss is correct (probe-confirmed input-
+      dependent optimum), yet a learned context-dependent corrector still
+      cannot beat the single closed-form fit. Record the exact mechanism
+      negative and rotate.
+
+  CANDIDATE_BLOWS_UP:
+    description: >-
+      Worst-cell degradation vs fixed_cma > MDE on >= 2 cells (candidate
+      actively harms the anchor). Recorded as INSTABILITY_NEGATIVE.
+
+# === Forbidden within this batch ===
+
+forbidden:
+  - modify_any_prior_batch_artifacts  # B01/B01-R/c11-legality/corrector-residual-headroom/c04-c09-shared-corrector-v1
+  - modify_D010_D011_D012_D013_H007_H008_H009_V002_V003_V004_D016_V005
+  - modify_canonical_state_yaml
+  - modify_global_skills
+  - use_TX_truth_in_training_or_inference  # receiver-visible only
+  - use_test_seeds_in_training  # [71-80] are test ONLY
+  - use_held_out_cells_in_training  # 7 held-out cells are test ONLY
+  - use_OLD_soft_expected_distance_loss  # the whole point of this Scout is the O1 correction
+  - use_oracle_affine_as_Go_baseline  # FR-21, FR-25
+  - write_results_into_paper_text
+  - push_or_merge
+  - overwrite_v1_paths
+  - add_more_function_classes_without_new_mechanism_argument  # Scout is one representative class
+
+# === Outputs ===
+
+outputs:
+  training_runner: c04-c09-o1-corrected-scout/src/run_o1_corrected_scout.py
+  tests: c04-c09-o1-corrected-scout/src/test_o1_identity.py
+  raw_artifact: c04-c09-o1-corrected-scout/artifacts/result.v1.json
+  synthesis: c04-c09-o1-corrected-scout/synthesis.v1.md
+  frozen_params: c04-c09-o1-corrected-scout/artifacts/frozen-params.v1.yaml
+
+# === Time budget ===
+
+time_budget_minutes: 8  # dataset ~1-2 min (11 cells x 25 seeds); training ~15s; eval ~10s
+commit_policy: single_consolidated_commit_at_session_end_no_push
+
+# === Provenance ===
+
+provenance:
+  R2_qam16:
+    value: 1.32
+    source: inherited_from_B01-R_HF6
+  fixed_mu_cma_mu:
+    value: 0.03
+    source: B01-R_HF6_interior_optimum
+  blind_affine_ridge:
+    value: 1.0e-08
+    source: corrector-residual-headroom-v1_validation_tuning
+    note: frozen from adjudication batch; NOT re-tuned here
+  MDE:
+    value: 0.005
+    source: inherited_from_all_prior_batches
+  corrected_training_loss:
+    source: probe_p01_O1_input_dependent_optimum
+    note: >-
+      O1 = MSE(z_corrected, hard_16qam(z_corrected).detach()). The probe p01
+      confirmed this has an input-dependent optimum (full=0.039 < const=0.452
+      on every realization, A varies). This REPLACES the old soft expected-
+      distance loss (input-independent constant optimum ~1.31 -> collapse).
+  reused_unchanged_from_old_batch:
+    - corrector_adapter.py (MLPCorrector, _summary_statistics, apply_correction)
+    - dataset building (fixed-mu CMA once per cell x seed)
+    - cell/seed splits (paired comparison)
+    - evaluation (PI-SER, fixed_label_ser, blind_affine, oracle_kill)
+    - adjudication (hierarchical paired bootstrap CI)
+    - source-closure hashing
+  channel:
+    config: CB1 dual-pol OSL 16QAM
+    alpha: 4.2
+    beta: 1.4
+    turbulence: gamma-gamma
+    impairments: [sop_drift, isi, awgn]

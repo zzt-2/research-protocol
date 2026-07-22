@@ -1,0 +1,885 @@
+{
+  "cells": [
+    {
+      "cell_id": "16qam-snr05-nominal-short",
+      "per_seed": [
+        {
+          "pi_ser_cma": 0.859375,
+          "pi_ser_hos": 0.85546875,
+          "pi_ser_oracle": 0.875,
+          "hos_objective": 0.33994437717952564,
+          "seed": 71
+        },
+        {
+          "pi_ser_cma": 0.5703125,
+          "pi_ser_hos": 0.75390625,
+          "pi_ser_oracle": 0.61328125,
+          "hos_objective": 0.7584938541381452,
+          "seed": 72
+        },
+        {
+          "pi_ser_cma": 0.859375,
+          "pi_ser_hos": 0.859375,
+          "pi_ser_oracle": 0.87109375,
+          "hos_objective": 0.17240237501901579,
+          "seed": 73
+        },
+        {
+          "pi_ser_cma": 0.58203125,
+          "pi_ser_hos": 0.703125,
+          "pi_ser_oracle": 0.61328125,
+          "hos_objective": 0.8340273713951365,
+          "seed": 74
+        },
+        {
+          "pi_ser_cma": 0.5625,
+          "pi_ser_hos": 0.63671875,
+          "pi_ser_oracle": 0.56640625,
+          "hos_objective": 0.8965173626959742,
+          "seed": 75
+        },
+        {
+          "pi_ser_cma": 0.46875,
+          "pi_ser_hos": 0.64453125,
+          "pi_ser_oracle": 0.46484375,
+          "hos_objective": 0.9798124129893524,
+          "seed": 76
+        },
+        {
+          "pi_ser_cma": 0.390625,
+          "pi_ser_hos": 0.59765625,
+          "pi_ser_oracle": 0.375,
+          "hos_objective": 1.0741559298587002,
+          "seed": 77
+        },
+        {
+          "pi_ser_cma": 0.58984375,
+          "pi_ser_hos": 0.5859375,
+          "pi_ser_oracle": 0.61328125,
+          "hos_objective": 0.8104092601039576,
+          "seed": 78
+        },
+        {
+          "pi_ser_cma": 0.4609375,
+          "pi_ser_hos": 0.4609375,
+          "pi_ser_oracle": 0.453125,
+          "hos_objective": 1.0104365094550884,
+          "seed": 79
+        },
+        {
+          "pi_ser_cma": 0.515625,
+          "pi_ser_hos": 0.7265625,
+          "pi_ser_oracle": 0.546875,
+          "hos_objective": 0.9033846962466232,
+          "seed": 80
+        }
+      ],
+      "cma_pi_ser_mean": 0.5859375,
+      "hos_pi_ser_mean": 0.682421875,
+      "oracle_pi_ser_mean": 0.59921875
+    },
+    {
+      "cell_id": "16qam-snr10-nominal-short",
+      "per_seed": [
+        {
+          "pi_ser_cma": 0.8203125,
+          "pi_ser_hos": 0.77734375,
+          "pi_ser_oracle": 0.7578125,
+          "hos_objective": 0.5945085383457913,
+          "seed": 71
+        },
+        {
+          "pi_ser_cma": 0.234375,
+          "pi_ser_hos": 0.55859375,
+          "pi_ser_oracle": 0.21484375,
+          "hos_objective": 1.096983510590707,
+          "seed": 72
+        },
+        {
+          "pi_ser_cma": 0.83203125,
+          "pi_ser_hos": 0.7578125,
+          "pi_ser_oracle": 0.7578125,
+          "hos_objective": 0.48258655552510965,
+          "seed": 73
+        },
+        {
+          "pi_ser_cma": 0.23828125,
+          "pi_ser_hos": 0.71875,
+          "pi_ser_oracle": 0.234375,
+          "hos_objective": 1.0964834931512506,
+          "seed": 74
+        },
+        {
+          "pi_ser_cma": 0.25,
+          "pi_ser_hos": 0.7421875,
+          "pi_ser_oracle": 0.2578125,
+          "hos_objective": 1.1692160756464247,
+          "seed": 75
+        },
+        {
+          "pi_ser_cma": 0.171875,
+          "pi_ser_hos": 0.5703125,
+          "pi_ser_oracle": 0.12109375,
+          "hos_objective": 1.230489909121053,
+          "seed": 76
+        },
+        {
+          "pi_ser_cma": 0.08984375,
+          "pi_ser_hos": 0.23828125,
+          "pi_ser_oracle": 0.05859375,
+          "hos_objective": 1.306492753130138,
+          "seed": 77
+        },
+        {
+          "pi_ser_cma": 0.22265625,
+          "pi_ser_hos": 0.39453125,
+          "pi_ser_oracle": 0.2421875,
+          "hos_objective": 1.095338393838292,
+          "seed": 78
+        },
+        {
+          "pi_ser_cma": 0.09765625,
+          "pi_ser_hos": 0.48828125,
+          "pi_ser_oracle": 0.125,
+          "hos_objective": 1.2259053195879994,
+          "seed": 79
+        },
+        {
+          "pi_ser_cma": 0.19921875,
+          "pi_ser_hos": 0.79296875,
+          "pi_ser_oracle": 0.2109375,
+          "hos_objective": 1.1736179848784043,
+          "seed": 80
+        }
+      ],
+      "cma_pi_ser_mean": 0.315625,
+      "hos_pi_ser_mean": 0.60390625,
+      "oracle_pi_ser_mean": 0.298046875
+    },
+    {
+      "cell_id": "16qam-snr15-nominal-short",
+      "per_seed": [
+        {
+          "pi_ser_cma": 0.8203125,
+          "pi_ser_hos": 0.5078125,
+          "pi_ser_oracle": 0.5078125,
+          "hos_objective": 0.9641648124283184,
+          "seed": 71
+        },
+        {
+          "pi_ser_cma": 0.015625,
+          "pi_ser_hos": 0.18359375,
+          "pi_ser_oracle": 0.015625,
+          "hos_objective": 1.2472478096072614,
+          "seed": 72
+        },
+        {
+          "pi_ser_cma": 0.8125,
+          "pi_ser_hos": 0.5859375,
+          "pi_ser_oracle": 0.50390625,
+          "hos_objective": 0.9310730877465083,
+          "seed": 73
+        },
+        {
+          "pi_ser_cma": 0.015625,
+          "pi_ser_hos": 0.76953125,
+          "pi_ser_oracle": 0.0078125,
+          "hos_objective": 1.2155071565383502,
+          "seed": 74
+        },
+        {
+          "pi_ser_cma": 0.0234375,
+          "pi_ser_hos": 0.35546875,
+          "pi_ser_oracle": 0.0234375,
+          "hos_objective": 1.2920583371372032,
+          "seed": 75
+        },
+        {
+          "pi_ser_cma": 0.01171875,
+          "pi_ser_hos": 0.59765625,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.3244542763632656,
+          "seed": 76
+        },
+        {
+          "pi_ser_cma": 0.01171875,
+          "pi_ser_hos": 0.0625,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.3959638825568619,
+          "seed": 77
+        },
+        {
+          "pi_ser_cma": 0.0234375,
+          "pi_ser_hos": 0.04296875,
+          "pi_ser_oracle": 0.01953125,
+          "hos_objective": 1.2382350953501509,
+          "seed": 78
+        },
+        {
+          "pi_ser_cma": 0.015625,
+          "pi_ser_hos": 0.390625,
+          "pi_ser_oracle": 0.0078125,
+          "hos_objective": 1.306957297599238,
+          "seed": 79
+        },
+        {
+          "pi_ser_cma": 0.01171875,
+          "pi_ser_hos": 0.65625,
+          "pi_ser_oracle": 0.0078125,
+          "hos_objective": 1.28449064562879,
+          "seed": 80
+        }
+      ],
+      "cma_pi_ser_mean": 0.176171875,
+      "hos_pi_ser_mean": 0.415234375,
+      "oracle_pi_ser_mean": 0.109375
+    },
+    {
+      "cell_id": "16qam-snr20-nominal-short",
+      "per_seed": [
+        {
+          "pi_ser_cma": 0.76171875,
+          "pi_ser_hos": 0.50390625,
+          "pi_ser_oracle": 0.1328125,
+          "hos_objective": 1.195103304287484,
+          "seed": 71
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.19140625,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.3055817972137937,
+          "seed": 72
+        },
+        {
+          "pi_ser_cma": 0.76953125,
+          "pi_ser_hos": 0.25,
+          "pi_ser_oracle": 0.1640625,
+          "hos_objective": 1.2114648296893074,
+          "seed": 73
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.37109375,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.2561125581122716,
+          "seed": 74
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.734375,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.3343881361910337,
+          "seed": 75
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.60546875,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.3529618812423903,
+          "seed": 76
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.39453125,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.425518461364173,
+          "seed": 77
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.359375,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.2944766995561479,
+          "seed": 78
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.37109375,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.3296027812779658,
+          "seed": 79
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.37109375,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.3194446616922937,
+          "seed": 80
+        }
+      ],
+      "cma_pi_ser_mean": 0.153125,
+      "hos_pi_ser_mean": 0.415234375,
+      "oracle_pi_ser_mean": 0.0296875
+    },
+    {
+      "cell_id": "16qam-snr25-nominal-short",
+      "per_seed": [
+        {
+          "pi_ser_cma": 0.73046875,
+          "pi_ser_hos": 0.00390625,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.2889571846165693,
+          "seed": 71
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.0,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.325560978307751,
+          "seed": 72
+        },
+        {
+          "pi_ser_cma": 0.75,
+          "pi_ser_hos": 0.37109375,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.3256158885637457,
+          "seed": 73
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.3515625,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.2679316825211737,
+          "seed": 74
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.35546875,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.3467522158621716,
+          "seed": 75
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.76171875,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.3601453645592794,
+          "seed": 76
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.3984375,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.4346226371454152,
+          "seed": 77
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.0,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.3150088036808727,
+          "seed": 78
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.38671875,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.3337382156253483,
+          "seed": 79
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.3828125,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.3285619309467236,
+          "seed": 80
+        }
+      ],
+      "cma_pi_ser_mean": 0.148046875,
+      "hos_pi_ser_mean": 0.301171875,
+      "oracle_pi_ser_mean": 0.0
+    },
+    {
+      "cell_id": "16qam-snr20-fg100-short",
+      "per_seed": [
+        {
+          "pi_ser_cma": 0.76171875,
+          "pi_ser_hos": 0.546875,
+          "pi_ser_oracle": 0.1328125,
+          "hos_objective": 1.1952860251756605,
+          "seed": 71
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.015625,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.3057093635958463,
+          "seed": 72
+        },
+        {
+          "pi_ser_cma": 0.76953125,
+          "pi_ser_hos": 0.23046875,
+          "pi_ser_oracle": 0.1640625,
+          "hos_objective": 1.210707460305765,
+          "seed": 73
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.37109375,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.2565115889971121,
+          "seed": 74
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.72265625,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.3344339305036415,
+          "seed": 75
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.73828125,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.3529052697822221,
+          "seed": 76
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.0,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.425561540537327,
+          "seed": 77
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.00390625,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.2945381814777173,
+          "seed": 78
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.22265625,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.3295629112822194,
+          "seed": 79
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.75390625,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.3190149792225814,
+          "seed": 80
+        }
+      ],
+      "cma_pi_ser_mean": 0.153125,
+      "hos_pi_ser_mean": 0.360546875,
+      "oracle_pi_ser_mean": 0.0296875
+    },
+    {
+      "cell_id": "16qam-snr20-fg1000-short",
+      "per_seed": [
+        {
+          "pi_ser_cma": 0.76171875,
+          "pi_ser_hos": 0.4609375,
+          "pi_ser_oracle": 0.140625,
+          "hos_objective": 1.1960835522727729,
+          "seed": 71
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.4296875,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.3053144514202004,
+          "seed": 72
+        },
+        {
+          "pi_ser_cma": 0.76953125,
+          "pi_ser_hos": 0.328125,
+          "pi_ser_oracle": 0.16796875,
+          "hos_objective": 1.2058368865171902,
+          "seed": 73
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.75390625,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.258045263685548,
+          "seed": 74
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.359375,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.334531974073385,
+          "seed": 75
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.66015625,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.3525186099516664,
+          "seed": 76
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.0,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.4256004722010578,
+          "seed": 77
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.375,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.2946629841091224,
+          "seed": 78
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.0,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.3293541318115687,
+          "seed": 79
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.37890625,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.316074806371097,
+          "seed": 80
+        }
+      ],
+      "cma_pi_ser_mean": 0.153125,
+      "hos_pi_ser_mean": 0.374609375,
+      "oracle_pi_ser_mean": 0.030859375
+    },
+    {
+      "cell_id": "16qam-snr20-sop40e-short",
+      "per_seed": [
+        {
+          "pi_ser_cma": 0.7578125,
+          "pi_ser_hos": 0.50390625,
+          "pi_ser_oracle": 0.13671875,
+          "hos_objective": 1.1955100056765662,
+          "seed": 71
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.16796875,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.3058175454123198,
+          "seed": 72
+        },
+        {
+          "pi_ser_cma": 0.76953125,
+          "pi_ser_hos": 0.45703125,
+          "pi_ser_oracle": 0.1640625,
+          "hos_objective": 1.2117417032836448,
+          "seed": 73
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.74609375,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.2560590814528005,
+          "seed": 74
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.359375,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.3341287020423247,
+          "seed": 75
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.78515625,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.3519591142963994,
+          "seed": 76
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.0,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.4243971221845741,
+          "seed": 77
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.4453125,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.293245531974385,
+          "seed": 78
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.1171875,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.3295696315148071,
+          "seed": 79
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.80078125,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.3198955075368222,
+          "seed": 80
+        }
+      ],
+      "cma_pi_ser_mean": 0.152734375,
+      "hos_pi_ser_mean": 0.43828125,
+      "oracle_pi_ser_mean": 0.030078125
+    },
+    {
+      "cell_id": "16qam-snr10-fg100-long",
+      "per_seed": [
+        {
+          "pi_ser_cma": 0.2734375,
+          "pi_ser_hos": 0.265625,
+          "pi_ser_oracle": 0.26171875,
+          "hos_objective": 1.115482527426063,
+          "seed": 71
+        },
+        {
+          "pi_ser_cma": 0.78515625,
+          "pi_ser_hos": 0.77734375,
+          "pi_ser_oracle": 0.76171875,
+          "hos_objective": 0.2804219707918634,
+          "seed": 72
+        },
+        {
+          "pi_ser_cma": 0.3515625,
+          "pi_ser_hos": 0.5234375,
+          "pi_ser_oracle": 0.359375,
+          "hos_objective": 0.9775961751094795,
+          "seed": 73
+        },
+        {
+          "pi_ser_cma": 0.75,
+          "pi_ser_hos": 0.61328125,
+          "pi_ser_oracle": 0.6875,
+          "hos_objective": 0.6512193277734952,
+          "seed": 74
+        },
+        {
+          "pi_ser_cma": 0.7578125,
+          "pi_ser_hos": 0.7109375,
+          "pi_ser_oracle": 0.7421875,
+          "hos_objective": 0.2937116043881025,
+          "seed": 75
+        },
+        {
+          "pi_ser_cma": 0.4296875,
+          "pi_ser_hos": 0.578125,
+          "pi_ser_oracle": 0.41796875,
+          "hos_objective": 0.9525166233558242,
+          "seed": 76
+        },
+        {
+          "pi_ser_cma": 0.390625,
+          "pi_ser_hos": 0.35546875,
+          "pi_ser_oracle": 0.375,
+          "hos_objective": 1.0859013326274176,
+          "seed": 77
+        },
+        {
+          "pi_ser_cma": 0.48046875,
+          "pi_ser_hos": 0.76953125,
+          "pi_ser_oracle": 0.4765625,
+          "hos_objective": 1.0466330616991042,
+          "seed": 78
+        },
+        {
+          "pi_ser_cma": 0.015625,
+          "pi_ser_hos": 0.01171875,
+          "pi_ser_oracle": 0.00390625,
+          "hos_objective": 1.3418141157732917,
+          "seed": 79
+        },
+        {
+          "pi_ser_cma": 0.05078125,
+          "pi_ser_hos": 0.66796875,
+          "pi_ser_oracle": 0.00390625,
+          "hos_objective": 1.2901608824963595,
+          "seed": 80
+        }
+      ],
+      "cma_pi_ser_mean": 0.428515625,
+      "hos_pi_ser_mean": 0.52734375,
+      "oracle_pi_ser_mean": 0.408984375
+    },
+    {
+      "cell_id": "16qam-snr15-fg1000-long",
+      "per_seed": [
+        {
+          "pi_ser_cma": 0.03125,
+          "pi_ser_hos": 0.48046875,
+          "pi_ser_oracle": 0.02734375,
+          "hos_objective": 1.2691092341530754,
+          "seed": 71
+        },
+        {
+          "pi_ser_cma": 0.8203125,
+          "pi_ser_hos": 0.6875,
+          "pi_ser_oracle": 0.5625,
+          "hos_objective": 0.771227116997504,
+          "seed": 72
+        },
+        {
+          "pi_ser_cma": 0.0625,
+          "pi_ser_hos": 0.41796875,
+          "pi_ser_oracle": 0.046875,
+          "hos_objective": 1.1883116520229517,
+          "seed": 73
+        },
+        {
+          "pi_ser_cma": 0.69140625,
+          "pi_ser_hos": 0.5859375,
+          "pi_ser_oracle": 0.36328125,
+          "hos_objective": 1.0283740550122928,
+          "seed": 74
+        },
+        {
+          "pi_ser_cma": 0.7265625,
+          "pi_ser_hos": 0.56640625,
+          "pi_ser_oracle": 0.4140625,
+          "hos_objective": 0.8342320882155021,
+          "seed": 75
+        },
+        {
+          "pi_ser_cma": 0.06640625,
+          "pi_ser_hos": 0.83203125,
+          "pi_ser_oracle": 0.05859375,
+          "hos_objective": 1.2366384374114985,
+          "seed": 76
+        },
+        {
+          "pi_ser_cma": 0.12890625,
+          "pi_ser_hos": 0.5,
+          "pi_ser_oracle": 0.0859375,
+          "hos_objective": 1.2880707328140344,
+          "seed": 77
+        },
+        {
+          "pi_ser_cma": 0.078125,
+          "pi_ser_hos": 0.703125,
+          "pi_ser_oracle": 0.0703125,
+          "hos_objective": 1.2742493906222025,
+          "seed": 78
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.37890625,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.382720514935012,
+          "seed": 79
+        },
+        {
+          "pi_ser_cma": 0.0078125,
+          "pi_ser_hos": 0.77734375,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.311687908325994,
+          "seed": 80
+        }
+      ],
+      "cma_pi_ser_mean": 0.261328125,
+      "hos_pi_ser_mean": 0.59296875,
+      "oracle_pi_ser_mean": 0.162890625
+    },
+    {
+      "cell_id": "16qam-snr20-nominal-long",
+      "per_seed": [
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.00390625,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.3258409603545203,
+          "seed": 71
+        },
+        {
+          "pi_ser_cma": 0.79296875,
+          "pi_ser_hos": 0.4765625,
+          "pi_ser_oracle": 0.1953125,
+          "hos_objective": 1.122856994737332,
+          "seed": 72
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.3828125,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.2787705980200037,
+          "seed": 73
+        },
+        {
+          "pi_ser_cma": 0.71875,
+          "pi_ser_hos": 0.43359375,
+          "pi_ser_oracle": 0.1015625,
+          "hos_objective": 1.2251072623773356,
+          "seed": 74
+        },
+        {
+          "pi_ser_cma": 0.765625,
+          "pi_ser_hos": 0.24609375,
+          "pi_ser_oracle": 0.14453125,
+          "hos_objective": 1.090896645364196,
+          "seed": 75
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.41796875,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.3057361988713518,
+          "seed": 76
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.4296875,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.3826641008054665,
+          "seed": 77
+        },
+        {
+          "pi_ser_cma": 0.01953125,
+          "pi_ser_hos": 0.67578125,
+          "pi_ser_oracle": 0.00390625,
+          "hos_objective": 1.3348439046872416,
+          "seed": 78
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.328125,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.3989996465994565,
+          "seed": 79
+        },
+        {
+          "pi_ser_cma": 0.0,
+          "pi_ser_hos": 0.7890625,
+          "pi_ser_oracle": 0.0,
+          "hos_objective": 1.314829686218181,
+          "seed": 80
+        }
+      ],
+      "cma_pi_ser_mean": 0.2296875,
+      "hos_pi_ser_mean": 0.418359375,
+      "oracle_pi_ser_mean": 0.04453125
+    }
+  ],
+  "aggregate": {
+    "macro_pi_ser_cma": 0.2506747159090909,
+    "macro_pi_ser_hos": 0.46637073863636364,
+    "collapse_rate_cma": 0.33636363636363636,
+    "collapse_rate_hos": 0.7909090909090909
+  },
+  "metadata": {
+    "schema": "direction-lab.cb1.c16-nonmodulus-jade.v1",
+    "MDE": 0.005,
+    "test_seeds": [
+      71,
+      72,
+      73,
+      74,
+      75,
+      76,
+      77,
+      78,
+      79,
+      80
+    ],
+    "elapsed_seconds": 3.7486379146575928
+  }
+}

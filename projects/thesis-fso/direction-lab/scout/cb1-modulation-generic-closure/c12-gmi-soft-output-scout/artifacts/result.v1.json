@@ -1,0 +1,332 @@
+{
+  "batch": {
+    "cell_results": [
+      {
+        "axes": {
+          "f_g_hz": 30.0,
+          "n_symbols": 512,
+          "snr_db": 5.0,
+          "sop_rate": 4e-06
+        },
+        "cell_id": "snr05-nominal-short",
+        "delta_mixture_minus_standard": 0.00782968055126454,
+        "delta_oracle_minus_standard": 0.0,
+        "diagnostics_mean": {
+          "blind_sigma2_mean": 0.09438460656951625,
+          "mix_im_w": [
+            0.6867174549063155,
+            0.3132825450936845
+          ],
+          "mix_re_var": [
+            0.023026984718671612,
+            0.04207308384838072
+          ],
+          "mix_re_w": [
+            0.41234603558482075,
+            0.5876539644151791
+          ]
+        },
+        "gmi": {
+          "mixture": {
+            "gmi_ana_mean": 0.8694804142496086,
+            "gmi_hist_mean": 1.5364397129353469
+          },
+          "oracle": {
+            "gmi_ana_mean": 1.1157813393892424,
+            "gmi_hist_mean": 1.5286100323840823
+          },
+          "standard": {
+            "gmi_ana_mean": 1.204792821289656,
+            "gmi_hist_mean": 1.5286100323840823
+          }
+        },
+        "n_seeds_diverged": 0,
+        "n_seeds_valid": 6,
+        "recovery_fraction_of_oracle_headroom": null,
+        "wall_time_seconds": 0.25866270065307617
+      },
+      {
+        "axes": {
+          "f_g_hz": 30.0,
+          "n_symbols": 512,
+          "snr_db": 15.0,
+          "sop_rate": 4e-06
+        },
+        "cell_id": "snr15-nominal-short",
+        "delta_mixture_minus_standard": 0.04172904440462011,
+        "delta_oracle_minus_standard": -0.0013692657745849601,
+        "diagnostics_mean": {
+          "blind_sigma2_mean": 0.04196602493627771,
+          "mix_im_w": [
+            0.3645252821118208,
+            0.6354747178881792
+          ],
+          "mix_re_var": [
+            0.014290597148406836,
+            0.017364993359590235
+          ],
+          "mix_re_w": [
+            0.3524064363429488,
+            0.6475935636570512
+          ]
+        },
+        "gmi": {
+          "mixture": {
+            "gmi_ana_mean": 2.8855960729280365,
+            "gmi_hist_mean": 3.414431629553425
+          },
+          "oracle": {
+            "gmi_ana_mean": 3.207631986602458,
+            "gmi_hist_mean": 3.37133331937422
+          },
+          "standard": {
+            "gmi_ana_mean": 3.1609667701231903,
+            "gmi_hist_mean": 3.372702585148805
+          }
+        },
+        "n_seeds_diverged": 0,
+        "n_seeds_valid": 6,
+        "recovery_fraction_of_oracle_headroom": -30.475489257933617,
+        "wall_time_seconds": 0.22978830337524414
+      },
+      {
+        "axes": {
+          "f_g_hz": 30.0,
+          "n_symbols": 512,
+          "snr_db": 20.0,
+          "sop_rate": 4e-06
+        },
+        "cell_id": "snr20-nominal-short",
+        "delta_mixture_minus_standard": 0.019123669845674485,
+        "delta_oracle_minus_standard": 0.0,
+        "diagnostics_mean": {
+          "blind_sigma2_mean": 0.02674425320793596,
+          "mix_im_w": [
+            0.27584982391039675,
+            0.7241501760896032
+          ],
+          "mix_re_var": [
+            0.009701617031074453,
+            0.011822396704046148
+          ],
+          "mix_re_w": [
+            0.5288169700296691,
+            0.47118302997033096
+          ]
+        },
+        "gmi": {
+          "mixture": {
+            "gmi_ana_mean": 3.7860890506419547,
+            "gmi_hist_mean": 3.834434485043623
+          },
+          "oracle": {
+            "gmi_ana_mean": 3.755903884152859,
+            "gmi_hist_mean": 3.8153108151979485
+          },
+          "standard": {
+            "gmi_ana_mean": 3.8003766637374627,
+            "gmi_hist_mean": 3.8153108151979485
+          }
+        },
+        "n_seeds_diverged": 0,
+        "n_seeds_valid": 6,
+        "recovery_fraction_of_oracle_headroom": null,
+        "wall_time_seconds": 0.24629974365234375
+      },
+      {
+        "axes": {
+          "f_g_hz": 30.0,
+          "n_symbols": 512,
+          "snr_db": 25.0,
+          "sop_rate": 4e-06
+        },
+        "cell_id": "snr25-nominal-short",
+        "delta_mixture_minus_standard": 0.0026041666666665186,
+        "delta_oracle_minus_standard": 0.0026041666666665186,
+        "diagnostics_mean": {
+          "blind_sigma2_mean": 0.020881936645952417,
+          "mix_im_w": [
+            0.3137591713727301,
+            0.68624082862727
+          ],
+          "mix_re_var": [
+            0.0033868598554535555,
+            0.010850458458093676
+          ],
+          "mix_re_w": [
+            0.3739189680703537,
+            0.6260810319296463
+          ]
+        },
+        "gmi": {
+          "mixture": {
+            "gmi_ana_mean": 3.991424793488971,
+            "gmi_hist_mean": 3.9876380040931996
+          },
+          "oracle": {
+            "gmi_ana_mean": 3.9913423745493737,
+            "gmi_hist_mean": 3.9876380040931996
+          },
+          "standard": {
+            "gmi_ana_mean": 3.957497375705804,
+            "gmi_hist_mean": 3.985033837426533
+          }
+        },
+        "n_seeds_diverged": 0,
+        "n_seeds_valid": 6,
+        "recovery_fraction_of_oracle_headroom": 1.0,
+        "wall_time_seconds": 0.23678994178771973
+      },
+      {
+        "axes": {
+          "f_g_hz": 100.0,
+          "n_symbols": 512,
+          "snr_db": 20.0,
+          "sop_rate": 4e-06
+        },
+        "cell_id": "snr20-fg100-short",
+        "delta_mixture_minus_standard": 0.02243483392422796,
+        "delta_oracle_minus_standard": 0.0,
+        "diagnostics_mean": {
+          "blind_sigma2_mean": 0.026755793949728435,
+          "mix_im_w": [
+            0.2727869148691931,
+            0.7272130851308071
+          ],
+          "mix_re_var": [
+            0.009712676175329714,
+            0.01186317678449493
+          ],
+          "mix_re_w": [
+            0.5276104685108232,
+            0.47238953148917684
+          ]
+        },
+        "gmi": {
+          "mixture": {
+            "gmi_ana_mean": 3.7833141159758554,
+            "gmi_hist_mean": 3.834738070126296
+          },
+          "oracle": {
+            "gmi_ana_mean": 3.754466243857429,
+            "gmi_hist_mean": 3.812303236202068
+          },
+          "standard": {
+            "gmi_ana_mean": 3.7990318469951188,
+            "gmi_hist_mean": 3.812303236202068
+          }
+        },
+        "n_seeds_diverged": 0,
+        "n_seeds_valid": 6,
+        "recovery_fraction_of_oracle_headroom": null,
+        "wall_time_seconds": 0.23752379417419434
+      },
+      {
+        "axes": {
+          "f_g_hz": 1000.0,
+          "n_symbols": 8192,
+          "snr_db": 15.0,
+          "sop_rate": 4e-06
+        },
+        "cell_id": "snr15-fg1000-long",
+        "delta_mixture_minus_standard": 0.021653968704221427,
+        "delta_oracle_minus_standard": -0.0019193883493815456,
+        "diagnostics_mean": {
+          "blind_sigma2_mean": 0.051655556905396534,
+          "mix_im_w": [
+            0.33880944073824376,
+            0.6611905592617564
+          ],
+          "mix_re_var": [
+            0.019482319393149462,
+            0.024554697094280986
+          ],
+          "mix_re_w": [
+            0.33636235816614063,
+            0.6636376418338593
+          ]
+        },
+        "gmi": {
+          "mixture": {
+            "gmi_ana_mean": 2.6117245617451275,
+            "gmi_hist_mean": 3.1581276712604716
+          },
+          "oracle": {
+            "gmi_ana_mean": 2.8836743192278633,
+            "gmi_hist_mean": 3.1345543142068686
+          },
+          "standard": {
+            "gmi_ana_mean": 2.9612691104539617,
+            "gmi_hist_mean": 3.13647370255625
+          }
+        },
+        "n_seeds_diverged": 0,
+        "n_seeds_valid": 6,
+        "recovery_fraction_of_oracle_headroom": -11.281702689921321,
+        "wall_time_seconds": 0.3561587333679199
+      }
+    ],
+    "macro": {
+      "delta_mixture_minus_standard": 0.01922922734944584,
+      "delta_mixture_minus_standard_ci95": [
+        0.00843442200888128,
+        0.030815083012551564
+      ],
+      "delta_mixture_minus_standard_frac_positive": 0.5277777777777778,
+      "delta_oracle_minus_standard": -0.00011408124288333117,
+      "delta_oracle_minus_standard_ci95": [
+        -0.00241325157750277,
+        0.0019106890322794518
+      ],
+      "delta_oracle_minus_standard_frac_positive": 0.08333333333333333,
+      "macro_recovery_fraction_of_oracle_headroom": 1.0,
+      "n_cells_with_oracle_headroom": 1,
+      "n_paired_cell_seed_points": 36
+    },
+    "wall_time_seconds": 1.565223217010498
+  },
+  "campaign_id": "science-scout-2026-07-20.dual-pol-osl",
+  "candidate_id": "C12",
+  "claim_ceiling": "LOCAL_SLICE",
+  "frozen_axes": {
+    "alpha": 4.2,
+    "beta": 1.4,
+    "block": 100,
+    "cma_block_size": 64,
+    "cma_mu": 0.03,
+    "cma_taps": 11,
+    "method": "gar",
+    "r2_qam16": 1.32,
+    "t_s": 4e-10
+  },
+  "identity": {
+    "n_failed": 0,
+    "n_passed": 10,
+    "passed": true,
+    "wall_time_seconds": 1.9727356433868408
+  },
+  "metric_ceiling": 4.0,
+  "metric_primary": "histogram_GMI_bits_per_symbol",
+  "n_bins_histogram": 16,
+  "schema_version": "direction-lab.cb1.c12-gmi-soft-output-scout.v1",
+  "seeds": [
+    71,
+    72,
+    73,
+    74,
+    75,
+    76
+  ],
+  "smoke": {
+    "checks": {
+      "smoke_clean_standard_gmi_gt_3p0": true,
+      "smoke_collapsed_standard_gmi_lower": true,
+      "smoke_oracle_ge_standard_all_cells": true
+    },
+    "clean_standard_gmi": 3.987031253829501,
+    "collapsed_standard_gmi": 0.47070485590769123,
+    "passed": true
+  },
+  "status": "EXECUTED",
+  "wall_time_seconds": 3.767796754837036
+}

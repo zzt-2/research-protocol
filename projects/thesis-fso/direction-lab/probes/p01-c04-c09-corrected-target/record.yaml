@@ -1,0 +1,98 @@
+probe_id: p01-c04-c09-corrected-target
+question: >-
+  Which receiver-visible corrected objective for the affine corrector has an
+  input-dependent optimum (survives constant-collapse) vs an input-independent
+  constant optimum?
+budget: ~5 min compute
+exit_condition: >-
+  PASS = at least one objective has input-dependent optimum (full < constant-b,
+  and optimal A varies across realizations). FAIL = all objectives collapse to
+  constant b.
+result: >-
+  PASS — all THREE candidate corrected objectives have an input-dependent
+  optimum and survive the constant-collapse test, on every one of 6 realizations
+  (2 held-out cells x seeds 71-73). The reference OLD soft-expected-distance
+  loss correctly FAILS (constant-b-only optimum 1.308402 reproduces the
+  documented S010/V005/D016 collapse value ~1.30840175), validating the test.
+
+  Per objective (mean const-b-only loss -> mean full (A,b) loss; full strictly
+  lower on ALL 6 realizations):
+    O1_hard_pseudo_mse   : 0.4515 -> 0.0393   (delta +0.4122; A varies,
+                            max-pairwise |dA|=0.121, ||A||=1.40; torch ==
+                            closed-form ridge-LS to 6 dp). PASS.
+    O2_negentropy_kurtosis: 0.0000 -> -3.9842  (delta +3.9842; A varies,
+                            max-pairwise |dA|=5.05, ||A||=3.42). The const-b
+                            optimum collapses to b~0 (zero dispersion, loss 0);
+                            full achieves strong dispersion minimization. PASS.
+                            NOTE: the brief's literal formula E[|z|^2]^2 -
+                            E[|z|^4] is UNBOUNDED below under output scaling
+                            (loss -> -inf as |A|->inf), so the probe uses the
+                            well-posed scale-invariant Godard measure
+                            -E[|z|^4]/E[|z|^2]^2 instead (documented in probe.py).
+    O3_blind_residual    : 0.4122 -> 0.0000   (delta +0.4122; full recovers the
+                            blind-affine closed-form (A,b) EXACTLY, loss->0;
+                            A varies, ||A||=1.40 == blind ridge-LS). PASS.
+
+  Identity test (A=I, b=0): finite, non-degenerate for all three objectives
+  (O1 ~0.04-0.06, O2 ~-1.4 to -1.5, O3 ~0.0005-0.0025).
+
+  Why the OLD soft loss FAILS: its GLOBAL optimum is the constant A=0,
+  b=(+-0.6075 per real coord) at 1.30840175 regardless of input — the const-b
+  run reproduces this (1.308402) on all 6 realizations, while a full (A,b) Adam
+  run from A=I init stays HIGHER (1.344), i.e. the input-dependent optimum is
+  NOT strictly better (it is strictly worse locally), confirming constant
+  collapse. The three corrected objectives have NO such constant optimum.
+
+verdict: PASS
+key_numbers:
+  n_realizations: 6
+  cells: ["16qam-snr15-nominal-short", "16qam-snr20-fg100-short"]
+  seeds: [71, 72, 73]
+  n_objectives_passed: 3
+  n_objectives_total: 3
+  objectives:
+    OLD_soft_loss_reference:
+      verdict: FAIL
+      mean_const_loss: 1.308402          # == documented collapse value
+      mean_full_loss: 1.344396
+      mean_delta_const_minus_full: -0.035994   # full NOT better -> constant collapse
+      identity_loss_mean: ~1.38
+    O1_hard_pseudo_mse:
+      verdict: PASS
+      constant_test: PASS
+      identity_test: PASS
+      mean_const_loss: 0.451548
+      mean_full_loss: 0.039309
+      mean_delta_const_minus_full: +0.412239   # full strictly better all 6 runs
+      min_delta_const_minus_full: +0.150486
+      A_variation_max_pairwise_dist: 0.1207    # A varies across realizations
+      A_norm_mean: 1.3957
+      closed_form_crosscheck: matches_torch_to_6dp
+    O2_negentropy_kurtosis:
+      verdict: PASS
+      constant_test: PASS
+      identity_test: PASS
+      mean_const_loss: 0.0                     # const-b collapses to b~0
+      mean_full_loss: -3.984235
+      mean_delta_const_minus_full: +3.984235
+      min_delta_const_minus_full: +3.665118
+      A_variation_max_pairwise_dist: 5.0456
+      A_norm_mean: 3.4245
+      note: uses_well-posed_normalized_kurtosis_minus_E|z|^4/E|z|^2^2
+    O3_blind_residual:
+      verdict: PASS
+      constant_test: PASS
+      identity_test: PASS
+      mean_const_loss: 0.412239
+      mean_full_loss: 0.0                      # recovers blind-affine closed form exactly
+      mean_delta_const_minus_full: +0.412239
+      min_delta_const_minus_full: +0.150486
+      A_variation_max_pairwise_dist: 0.1207
+      A_norm_mean: 1.3957
+      closed_form_crosscheck: matches_torch_to_6dp
+  elapsed_seconds: 14.1
+  cma: {mu: 0.03, taps: 11, R2_qam16: 1.32, block_size: 64}
+  blind_affine_ridge: 1.0e-8
+artifacts:
+  - artifacts/probe_result.json
+  - probe.py

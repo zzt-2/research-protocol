@@ -1,0 +1,128 @@
+# state/current.yaml — sole machine current view
+# Rebuilt 2026-07-22 from H010 / D016 / V005 (NOT from mtime of old v1 files).
+# Explicit disposition lineage governs; protected history untouched.
+
+schema_version: research-direction-lab.state.current.v1
+project_id: thesis-fso.dual-pol-osl.direction-lab
+last_recovery_entry: H010-s009-semantic-audit-recovery.md
+
+formal_goal: >-
+  Systematically identify whether machine learning provides a real, legally
+  comparable information increment anywhere in the complete dual-polarization
+  ground-to-satellite OSL receiver chain.
+
+authorization:
+  current_mode: SCIENCE_SCOUT
+  science_authorized: true
+  scope: continuous multi-mechanism campaign in isolated worktree
+  prohibits:
+    - modify or rerun B001-B003 / P03 Atlas / canonical-state / completion-events
+    - create legacy B004
+    - auto-write Scout numbers into thesis or paper body
+    - bypass Groundwork/Contract/Execute formal promotion
+    - push or merge
+
+anchor:
+  scenario: dual-polarization ground-to-satellite OSL under Gamma-Gamma turbulence and SOP dynamics
+  baseline: baseline.standard_cma.godard_z
+  metric_contract: [fixed_label_ber, permutation_invariant_ber]
+
+effective_conclusions:  # reflect D016/V005 + 2026-07-22 campaign round
+  - id: H060_COLLAPSE_CHANNEL_PROPERTY
+    statement: >-
+      The 16QAM inner-ring collapse is a FUNDAMENTAL PROPERTY OF THE BLIND
+      EQUALIZATION PROBLEM, surviving all 5 mechanism axes: post-equalizer
+      correction (C04/C09 affine, C12 GMI), within-CMA adaptation (C08/C10/C11),
+      cost variants (Godard/MMA/ring-aware), initialization (C14), and equalizer
+      paradigm (C16 non-modulus HOS). Oracle shows channel is invertible but
+      inversion info not extractable from received statistics alone.
+    ceiling: LOCAL_SLICE
+    source: 2026-07-22 campaign round (5 scout syntheses)
+    validity: VALID
+
+  - id: C11_LEGAL_VERDICT
+    statement: >-
+      C11 causal raw-decision policy (per-symbol DD-LMS on fixed-mu CMA) has no
+      benefit on the local held-out slice; macro paired Delta = +0.01445 (C11
+      worse), 95% CI [-0.00022, +0.04113], 2/7 long cells significantly worse,
+      0/7 better.
+    ceiling: LOCAL_SLICE / DIAGNOSTIC
+    source: D012 / c11-legality-batch-v1 result.v1.json
+    validity: VALID
+
+  - id: TRUTH_ASSISTED_AFFINE_LOCAL_BOUND
+    statement: >-
+      TX-truth-assisted affine gap exists on the measured local slice (signed
+      macro fixed-minus-oracle about 0.05575, CI [0.00240, 0.12098]); this is a
+      privileged diagnostic bound, NOT a learnable-corrector authorization.
+    ceiling: LOCAL_SLICE / DIAGNOSTIC
+    source: D013-amended / D016
+    validity: VALID
+
+  - id: BLIND_AFFINE_LOCALLY_HARMFUL
+    statement: >-
+      blind-affine_compare_16qam is locally net harmful (macro gain -0.00837,
+      CI [-0.01529, -0.00251]). The withdrawn causal explanation about noisy
+      pseudo-labels must NOT be restated.
+    ceiling: LOCAL_SLICE / DIAGNOSTIC
+    source: D013-amended / D016
+    validity: VALID
+
+  - id: C04_C09_OBJECTIVE_CONSTANT_COLLAPSE
+    statement: >-
+      C04/C09 soft expected-distance training objective admits an
+      input-independent constant optimum (A=0, each real coord ~ +/-0.6075; 1D
+      loss ~0.32710044, 4D ~1.30840175, matching the observed 1.3084 plateau).
+      Candidate and method-family science remain UNRESOLVED, not a mechanism
+      negative.
+    ceiling: IMPLEMENTATION_DIAGNOSTIC
+    source: D016 / V005 / S010
+    validity: VALID
+
+  - id: DETECTOR_CONVENTIONAL_CEILING
+    statement: >-
+      Conventional min_z2 detector reaches AUROC=1.000 on the 2 two-class long
+      cells; lead time is non-positive (mean -5.95 blocks). Detector ML must
+      target lead time / calibration / cross-condition generalization, NOT
+      AUROC.
+    ceiling: LOCAL_SLICE
+    source: D010 hotfix / D012
+    validity: VALID
+
+  - id: CB1_INNER_RING_COLLAPSE_SURVIVES_FAIR_TREATMENT
+    statement: >-
+      16QAM inner-ring collapse survives per-method tuning (C08 bandit),
+      per-symbol structure (C10 block_size=1), and CMA+DD-LMS cascade (C11) on
+      held-out 6/7 cells with headroom >= MDE. Collapse is a deep property of
+      Godard cost on this channel, not a block-end protocol artifact.
+    ceiling: LOCAL_SLICE
+    source: D008 / D011 / D012
+    validity: VALID
+
+dispositions:
+  - entity: C04/C09 mechanism negative (old S009 / D014)
+    current_status: WITHDRAWN
+    replaced_by: C04_C09_OBJECTIVE_CONSTANT_COLLAPSE
+    reason: V005 scientific-semantic FAIL; objective has input-independent optimum
+
+  - entity: learned-corrector-target-ready (D013 original)
+    current_status: WITHDRAWN
+    replaced_by: TRUTH_ASSISTED_AFFINE_LOCAL_BOUND (diagnostic only)
+    reason: D016 retraction; truth-assisted bound is privileged, not learnable
+
+  - entity: H009 as recovery entry
+    current_status: SUPERSEDED
+    replaced_by: H010
+    reason: H009 restated withdrawn conclusions
+
+  - entity: V004 scientific semantic confirmation
+    current_status: AMENDED
+    replaced_by: V005
+    reason: V004 retains artifact fidelity value only; science semantics FAIL
+
+next_action:
+  mode: probing
+  description: >-
+    Run bounded semantic Probes on multiple mechanism branches (C04/C09
+    corrected-target, detector family C01/C02/C06, C13 pilot-Jones dedup, C12
+    coded readiness) before any Scout.

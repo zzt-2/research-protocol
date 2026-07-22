@@ -1,0 +1,95 @@
+# portfolio/current.yaml — updated 2026-07-22 after C14/C15/C16 Scouts
+# 16 candidates now; C14-C16 are new mechanism axes from the rotation remap.
+
+schema_version: research-direction-lab.portfolio.current.v1
+project_id: thesis-fso.dual-pol-osl.direction-lab
+completeness_claim: OPEN_PORTFOLIO_NO_COMPLETENESS_CLAIM
+
+candidates:
+  # ── Cluster 1-2: Failure observability (CEILINGED) ──
+  - {id: C01, status: STRUCTURALLY_CEILINGED, note: "block-0 determined; AUROC ceiling; lead-time non-positive"}
+  - {id: C02, status: STRUCTURALLY_CEILINGED, note: "same features as C05; SSL temporal aggregation adds nothing (flat from block 0)"}
+  - {id: C05, status: RUN_DONE, note: "conventional AUROC=1.000 ceiling; lead-time -5.95"}
+  - {id: C06, status: STRUCTURALLY_CEILINGED, note: "same information boundary as C01/C02"}
+
+  # ── Cluster 3: Reinit control (BLOCKED) ──
+  - {id: C03, status: INFRASTRUCTURE_BLOCKED, note: "action hook missing"}
+  - {id: C07, status: INFRASTRUCTURE_BLOCKED, note: "co-blocked with C03"}
+
+  # ── Cluster 4-6: Conventional variants (DONE) ──
+  - {id: C08, status: RUN_DONE, note: "adaptive mu; collapse survives"}
+  - {id: C10, status: RUN_DONE, note: "per-symbol; H021 rejected; collapse survives"}
+  - {id: C11, status: RUN_DONE_LEGAL, note: "D012 LOCAL_SLICE; no benefit (macro +0.01445 worse)"}
+
+  # ── Cluster 5: Output correction (CLOSED) ──
+  - {id: C04, status: CLOSED, note: "O1-corrected objective works but context-dependence has no value over ridge-LS; overfits/blows up"}
+  - {id: C09, status: CLOSED, note: "same route as C04; shared objective fix confirmed, same outcome"}
+
+  # ── Cluster 7: Soft-output (NEGATIVE + ASSET) ──
+  - {id: C12, status: MECHANISM_NEGATIVE_PLUS_ASSET, note: "zero oracle GMI headroom; GMI loss is equalizer-bound; reusable GMI evaluator produced"}
+
+  # ── Cluster 8: Pilot/CSI (COLLISION) ──
+  - {id: C13, status: COLLISION_EXIT, note: "mechanism-identical to old U05/U36/U52; D053/D054 tested; literature collision"}
+
+  # ── NEW from rotation remap (2026-07-22) ──
+  - id: C14
+    name: init_strategy
+    family: equalizer_initialization
+    status: MECHANISM_NEGATIVE
+    last_result: {verdict: COST_FUNDAMENTAL, collapse_rate_data_driven: 1.000, oracle_init_escape: 0/37}
+    note: >-
+      Collapse is init-independent. Oracle Wiener init collapses on all collapsed
+      seeds. Data-driven init (whitening/multistart) strictly worse. Closes the
+      initialization axis.
+
+  - id: C15
+    name: reduced_constellation_cost
+    family: equalizer_cost_function
+    status: MECHANISM_NEGATIVE
+    last_result: {verdict: RING_AWARE_INCREASES_COLLAPSE, delta_collapse: +0.036, delta_pi_ser: +0.033}
+    note: >-
+      Ring-aware cost is self-consistent with collapsed state (error drops 19×).
+      Combined with MMA angle failure, rules out both geometric decompositions.
+      Closes the cost-function axis (within modulus family).
+
+  - id: C16
+    name: nonmodulus_hos_paradigm
+    family: equalizer_paradigm
+    status: MECHANISM_NEGATIVE
+    last_result: {verdict: HOS_WORSE_THAN_CMA, macro_pi_ser_hos: 0.466, collapse_rate_hos: 0.791}
+    note: >-
+      Non-modulus HOS source separation is worse than CMA on all cells. The
+      collapse is not a modulus-cost local minimum — it's a channel property.
+      Closes the paradigm axis.
+
+closed_axes_summary:
+  post_equalizer_correction: CLOSED (C04/C09 affine, C12 GMI)
+  within_cma_adaptation: CLOSED (C08 mu, C10 per-symbol, C11 cascade)
+  cost_function_modulus_family: CLOSED (Godard, MMA, ring-aware, reduced-const)
+  initialization: CLOSED (center-tap, whitening, multistart, oracle Wiener)
+  equalizer_paradigm: CLOSED (modulus CMA, non-modulus HOS)
+  collapse_detection: STRUCTURALLY_CEILINGED (block-0 determined)
+  pilot_aided: COLLISION (old lineage + literature)
+
+remaining_open:
+  - id: MODEL_BASED_TRACKER
+    label: receiver-only model-based GG+SOP tracker → MMSE
+    dimension: different_subproblem
+    status: IDENTIFIED_NOT_EXECUTED
+    note: >-
+      The ONLY untested axis. Uses channel MODEL priors (known GG alpha/beta, SOP
+      rate) not pilots or modulus. Could open a positive contribution line.
+      Requires ~1 day infrastructure (dual-pol EKF/particle filter). Needs user
+      strategy decision (material compute investment).
+  - id: C03_C07_REINIT
+    label: learned/threshold reinit controller
+    status: INFRASTRUCTURE_BLOCKED
+    note: needs action hook; co-blocked
+
+next_action: >-
+  The blind-equalization solution space is exhausted across 5 mechanism axes.
+  Escalation required: either (a) invest ~1 day in the model-based tracker
+  (rank-4, the only remaining positive-potential axis), or (b) accept the
+  negative-boundary thesis as the primary contribution and move to formal
+  Groundwork/Contract/Execute promotion. The negative boundary is already
+  evidence-backed and publishable.

@@ -1,0 +1,182 @@
+probe_id: p03-c13-pilot-jones-dedup
+question: >-
+  Is C13 (pilot-aided Jones stabilization) mechanism-distinct from the old
+  U05/U36/U52 pilot-Jones lineage, and does it have a legal non-trivial
+  information contract?
+type: read_only_mechanism_dedup
+exit_condition: >-
+  DISTINCT = C13 adds a mechanism the old lineage didn't test, with a
+  non-trivial information contract. COLLISION = C13 is the same pilot→Jones→
+  inverse micro-variant the old lineage already covered. NO_ADVANTAGE = the
+  pilot benefit is trivially expected and not ML-specific.
+result: >-
+  COLLISION. C13's declared mechanism (pilot injection → Tikhonov-regularized
+  LS Jones estimate → cross-block time-smoothed → pinv inverse → equalize
+  before CMA) is mechanism-identical to the old pilot-Jones lineage that was
+  already implemented, frozen as a candidate form (D054), and run through a
+  24-cell gate (D052/D053/D054/S065). Every stabilizer variant C13 names —
+  Tikhonov/condition-number guard and cross-block EMA time smoothing — was
+  explicitly tested in S065 and is U52's verbatim mechanism card. The project's
+  own pre-declared dedup rule already flags "pilot-to-Jones-to-inverse" as a
+  merge for U05/U11/pilot-Jones. The information contract (CSI_PILOT vs
+  CSI_NONE, claim = "pilot closes the blind failure") is additionally
+  trivially expected and not ML-specific: it was information-theoretically
+  established in the old lineage and empirically demonstrated (D052 cleared
+  BER to 0), and D055/LCOMM-2026 already ruled the pilot→Jones→inverse core
+  chain as literature-collided implementation detail. C13 should exit.
+verdict: COLLISION
+findings: >-
+  Mechanism identity (primary). C13 method_M = "Inject known pilots
+  periodically; estimate the Jones matrix via Tikhonov-regularized LS with
+  cross-block time smoothing; apply the estimated inverse to equalize before
+  CMA" (portfolio-refresh.v3-fairness.yaml:583-587). The D054 frozen candidate
+  form = "每64 symbols插入6个双偏振已知QPSK pilot (9.375% overhead), 逐block
+  LS估计2×2 Jones matrix, 对H estimate做EMA α=.9, 再对data应用pinv derotation,
+  后接standard-CMA" (decisions.md:2889). These are the same pilot→Jones LS→
+  smoothing→pinv→CMA chain. C13's two named stabilizers are NOT new: S065:11
+  reports "Tikhonov/condition guard 仅改善6–20%; EMA α=.5/.9/.99 分别
+  57.29%/72.92%/74.63%" — i.e. BOTH Tikhonov/condition-number guard AND
+  cross-block EMA time smoothing were already evaluated; EMA won and was frozen
+  at α=.9 (D054). D053 (decisions.md:2871) explicitly authorized "只针对 pilot
+  Jones estimator 的稳定性做同族单轴候选 (Tikhonov/condition-number guard、
+  跨 block 时间平滑)" — C13's exact scope was already authorized and executed.
+
+  U52 is C13 word-for-word. U52 mechanism = "Tikhonov / condition-number-
+  guarded + cross-block time-smoothed Jones estimator", method_axes [PI,BAYES],
+  historical_boundary "D053 narrowed but did not kill; D055 narrowed
+  pilot-Jones scope" (portfolio-refresh.v1.yaml:138-146). C13's method_M
+  restates U52 with no added mechanism element. C13's own card self-attributes
+  to "Per U05/U36/U52 lineage (D052-D055 narrowed but did not kill)"
+  (portfolio-refresh.v3-fairness.yaml:586-587) and cluster_8 lists its member
+  as "C13_pilot_aided_jones_stabilization # NEW: from U05/U36/U52 lineage"
+  (portfolio-refresh.v3-fairness.yaml:265).
+
+  Project's own dedup rule already flags this. candidate-coverage-audit.v3.yaml
+  :140 = "{candidates: [U05, U11, pilot-Jones], merge_if: pilot-to-Jones-to-
+  inverse, keep_separate_if: U11 outputs direct residual or equalized
+  samples}". C13 IS pilot-to-Jones-to-inverse (outputs equalized z-stream,
+  portfolio-refresh.v3-fairness.yaml:595), so under the keep_separate_if test
+  it merges with pilot-Jones, not stays distinct.
+
+  Simulator-internal pilot injection confirmed (read-only check). _dual_pol_
+  channel.py:generate_shared_realization_dp (projects/simulation/common/
+  _dual_pol_channel.py:56-149) exposes TX symbols sX/sY, SOP theta, and GG
+  envelope h in its return dict (lines 134-149) but has NO pilot-injection
+  parameter and does NOT expose a Jones matrix. Pilot injection is therefore
+  "simulator-internal" in the literal sense the portfolio card claims
+  (reuses pilot_injection_simulator_internal, portfolio-refresh.v3-fairness
+  .yaml:604; readiness NEEDS_SMALL_ADAPTER, "pilot injection simulator-
+  internal, D052 proven", line 607): pilots are consumed post-hoc from the
+  already-known TX symbols without changing the physical channel model. This
+  matches D052's "pilot 注入为 simulator 内 noise-preserving 重建"
+  (decisions.md:2850). So the readiness claim is accurate but does not create
+  mechanism distinctness — the old lineage used the same simulator-internal
+  injection.
+
+  Information contract is trivially expected and not ML-specific (secondary,
+  NO_ADVANTAGE). The claim "with pilot overhead, collapse closes" is an
+  information-class assertion (CSI_PILOT strictly contains CSI_NONE) that is
+  guaranteed by construction: D052's three-arm test already drove fixed-label
+  BER from .003985/.006106 → 0 on failure seeds with zero clean-cell
+  degradation (decisions.md:2845; S062:16-21). The information-theoretic
+  boundary was stated in the old lineage: "盲方法注定碰不到 fixed-label BER
+  (排列模糊); 只有 CSI-aided 或打破对称性的方法能解" (topic-index:192). D055
+  (decisions.md:2909) ruled the pilot→Jones→inverse core chain is literature-
+  collided (JLT 2023 10.1109/JLT.2023.3253383, LCOMM 2026, OE 2021 three-pilot
+  RSOP, TCOM 2025 pilot-symbol ML/EM RSOP) and that "LS+EMA只是实现细节, 不能
+  单独作为贡献" (decisions.md:2909-2917). C13 also carries NO learned component
+  in its declared method_M (Tikhonov LS + EMA + pinv are all classical DSP),
+  so it is not an ML candidate despite being filed under method_axes [PI,BAYES].
+
+  Single (weak) distinctness angle, insufficient. The old pilot-Jones lineage
+  was scored on QPSK fixed-label BER / swap recovery (D051 "fixed BER",
+  D054 "已知QPSK pilot", seeds41-48 N=100k). C13 is filed against the 16QAM
+  inner-ring collapse domain (cluster_8 task_specific_comparator "CSI_NONE CMA
+  anchor", metric_set [pi_ser_global, collapse_rate], portfolio-refresh.v3-
+  fairness.yaml:267-270). A pilot→Jones→inverse run on the collapse domain
+  would be a NEW test point, not a mechanism. But (a) the comparator framing
+  in cluster_8 itself reduces the question to "is the CSI_NONE ceiling
+  fundamental or an artifact?" — already answered trivially by the
+  information boundary; and (b) a different operating point does not rescue a
+  mechanism collision per the exit_condition (COLLISION = "same pilot→Jones→
+  inverse micro-variant the old lineage already covered"). A domain re-run is
+  a measurement, not a distinct mechanism.
+old_lineage_summary: >-
+  U05 (candidate-universe.yaml:148): AP04 channel-state estimation, "LS-KF
+  state estimation may degrade with low pilot density and fast SOP",
+  mechanisms [DU,BAYES,HYB], baseline equal-pilot LS-KF-EKF, history_distance
+  "near-pilot-Jones", classification HOLD_FOR_COMPETITOR_CLOSURE, score 3.65
+  (candidate-map.v2.yaml:50-53).
+
+  U52 (portfolio-refresh.v1.yaml:138-146, new seed from science-scout): AP04-
+  AP07, mechanism "Tikhonov / condition-number-guarded + cross-block time-
+  smoothed Jones estimator", method_axes [PI,BAYES], runnable Y, historical_
+  boundary "D053 narrowed but did not kill; D055 narrowed pilot-Jones scope".
+  This is C13's verbatim mechanism.
+
+  RC3 cluster (portfolio-refresh.v1.yaml:164-169): members [U03,U05,U35,U36,
+  U37,U50,U52], shared_capability "block-pilot Jones estimator + overhead-
+  stability contract", consolidates pilot-Jones lineage; inherits D055
+  narrowed scope.
+
+  D051 (decisions.md:2812-2832): Stokes-like pilot detector not viable; pivot
+  to E-family sparse pilot-assisted SOP/Jones; minimal-candidate constraint =
+  4 pilots / 64-block (6.25%, ≤10% cap), same-realization three-arm (baseline
+  / naive-pilot / pilot-derotation), fixed-label BER metric, stop rule if no
+  failure-domain improvement or post-hoc-truth dependence.
+
+  D052 (decisions.md:2835-2857, S062/V021 PASS): sparse 4-pilot per-block 2×2
+  Jones LS estimate, pinv applied to data, drove fixed BER .003985/.006106 →
+  0 on seeds41/43, zero clean-seed42 degradation; naive pilot gave no gain;
+  admitted to extension. "Narrowed but did not kill" finding: gain comes from
+  consuming the Jones estimate, not from pilot insertion per se.
+
+  D053 (decisions.md:2861-2876, S064/V022 PARTIAL): held the D052 gate
+  (≥50% improvement, not "any positive"); 6-pilot was 14/15, not yet promoted;
+  authorized same-family single-axis stabilization candidates = Tikhonov/
+  condition-number guard + cross-block time smoothing, full-grid re-check, no
+  seed cherry-picking, no gate lowering. Exit if stabilization variants still
+  cannot reach ≥50% on all failure cells or cause clean degradation.
+
+  D054 (decisions.md:2879-2896, S065/V023): candidate form FROZEN as 6 dual-pol
+  known QPSK pilots per 64 symbols (9.375% overhead), per-block LS 2×2 Jones,
+  EMA α=.9 on H estimate, pinv derotation on data, then standard-CMA. Passed
+  family-level promotion gate (full24: 15/15 failure ≥50%, 0/9 clean
+  degradation, 0 divergence) → entered formal GW Step1 literature search. EMA
+  α=.9 chosen over α=.99 to avoid lag; Tikhonov/condition-guard scored only
+  6–20% (S065:11). Boundary: promotion ≠ Go/performance/Contract; Step1–4a
+  remain hard gates.
+
+  D055 (decisions.md:2899-2918, S066): REJECTED the generic "pilot-assisted
+  polarization/SOP tracking" and "pilot estimates Jones → feed-forward inverse
+  compensation" contribution as literature-collided (JLT 2023, LCOMM 2026);
+  LS+EMA is an implementation detail, not a standalone contribution. Narrowed
+  the research question to: under dual-pol OSL GG turbulence + high-speed SOP
+  + ≤10% pilot budget, quantify/stabilize the "pilot overhead — Jones estimate
+  stability — fixed-label recovery" tradeoff. EMA09 allowed as current
+  candidate solution; "did not find the same α=.9" is NOT novelty.
+
+  D056 (decisions.md:2921-2936): before Step4a, must acquire/read the more-
+  direct competitors (OE 2021 three-pilot-tone per-block RSOP, TCOM 2025
+  pilot-symbol ML/EM RSOP, JLT 2022/2023 FPT transfer-matrix/polarization
+  tracking); "complete OSL-GG+EMA09 combination not found" is NOT a novelty
+  conclusion; Step3.5 not closed; no Step4a.
+information_contract: >-
+  CSI_PILOT vs CSI_NONE. C13's comparator is the CSI_NONE CMA anchor
+  (portfolio-refresh.v3-fairness.yaml:267-269, 597-599). The would-be claim is
+  "with pilot overhead (≤10%), the inner-ring collapse closes" (risks note,
+  lines 608-611: report as a separate claim, NOT a CSI_NONE improvement).
+  This contract is legal (the information class change is explicit and the
+  comparator is honest), but it is NON-TRIVIAL only if the question "is the
+  CSI_NONE ceiling fundamental or an artifact of blind estimation?" is open.
+  It is NOT open: (1) the old lineage already demonstrated empirically that
+  pilot→Jones→inverse drives the blind failure (fixed-label BER) to 0
+  (D052, S062:16-21), so "collapse closes with CSI" is already answered; (2)
+  the information-theoretic boundary was already stated (topic-index:192 —
+  blind methods provably cannot reach fixed-label BER; only CSI-aided or
+  symmetry-breaking methods can); (3) D055 ruled the core chain is literature-
+  collided and implementation-detail-only. The contract therefore supports no
+  non-trivial, non-redundant claim that the old lineage has not already
+  established, and C13's mechanism carries no learned component so it is not
+  an ML contribution. Combined with the mechanism identity, the correct
+  disposition is exit.

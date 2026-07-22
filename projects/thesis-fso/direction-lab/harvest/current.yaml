@@ -1,0 +1,192 @@
+# harvest/current.yaml — current thesis-consumption view after 2026-07-22 campaign round
+# Updated 2026-07-22. This round added C14/C15/C16 mechanism negatives + 3 reusable assets.
+# Lineage: campaigns/science-scout-2026-07-20/harvest-addendum.v7 + this round's scout syntheses.
+
+schema_version: research-direction-lab.harvest.current.v1
+
+active:
+  # ── PRIMARY THESIS SPINE: the collapse is a channel property ──
+  - id: H060_COLLAPSE_CHANNEL_PROPERTY
+    category: FAILURE_MECHANISM
+    claim: >-
+      The 16QAM inner-ring collapse on dual-pol OSL (GG turbulence + SOP dynamics)
+      is a FUNDAMENTAL PROPERTY OF THE BLIND EQUALIZATION PROBLEM, surviving all
+      five tested mechanism axes: post-equalizer correction (C04/C09 affine,
+      C12 GMI soft-demap), within-CMA adaptation (C08 mu, C10 per-symbol, C11
+      DD-LMS cascade), cost variants (Godard, MMA, ring-aware/reduced-const C15),
+      initialization (C14 center-tap, whitening, multistart, oracle Wiener), and
+      equalizer paradigm (C16 non-modulus HOS source separation). TX-truth oracle
+      shows the channel IS invertible, but the inversion information is not
+      extractable from received statistics alone.
+    ceiling: LOCAL_SLICE (11-cell atlas × 10 seeds each)
+    evidence: C04/C09 O1-scout, C12 GMI-scout, C14 init-scout, C15 cost-scout, C16 HOS-scout
+
+  # ── Per-axis mechanism negatives ──
+  - id: H061_AFFINE_CORRECTION_NO_CONTEXT_VALUE
+    category: FAILURE_MECHANISM
+    claim: >-
+      A learned context-dependent affine corrector optimizing the hard pseudo-label
+      MSE (input-dependent optimum confirmed by Probe p01) can only match the
+      closed-form blind ridge-LS or overfit and blow up. Context-dependence adds
+      no value over a single closed-form fit. C04/C09 route CLOSED on sound objective.
+    ceiling: LOCAL_SLICE
+    evidence: c04-c09-o1-corrected-scout
+
+  - id: H062_GMI_DEMAPPER_BOUND_NOT_EQUALIZER_BOUND
+    category: FAILURE_MECHANISM
+    claim: >-
+      TX-truth oracle shows statistically ZERO GMI headroom over standard max-log
+      demapper (Δ=−0.0001, CI [−0.0024,+0.0019]). The collapse's GMI loss is
+      equalizer-bound, not demapper-bound. Soft-output correction cannot recover.
+    ceiling: LOCAL_SLICE
+    evidence: c12-gmi-soft-output-scout
+
+  - id: H063_INIT_INVARIANT_COLLAPSE
+    category: FAILURE_MECHANISM
+    claim: >-
+      Collapse is init-independent: TX-truth Wiener init (cosine 0.9995 with
+      center-tap) collapses on every collapsed seed. Data-driven init (whitening,
+      multistart) is strictly WORSE (100% collapse rate). Block-0 determination
+      reflects the cost surface, not init dependence.
+    ceiling: LOCAL_SLICE
+    evidence: c14-init-strategy-scout
+
+  - id: H064_RING_AWARE_COST_SELF_CONSISTENT
+    category: FAILURE_MECHANISM
+    claim: >-
+      Ring-aware/reduced-constellation cost INCREASES collapse (Δcollapse +0.036,
+      frac<0=0.00). Once symbols land on inner ring, ring-matching cost sees
+      almost nothing wrong (error drops 19× from 1.18 to 0.06). Ring-mismatch
+      hypothesis REFUTED as collapse cause. Combined with MMA angle-decomposition
+      failure, rules out both geometric decompositions for blind modulus cost.
+    ceiling: LOCAL_SLICE
+    evidence: c15-reduced-const-cost-scout
+
+  - id: H065_NONMODULUS_HOS_WORSE
+    category: FAILURE_MECHANISM
+    claim: >-
+      Non-modulus HOS source separation (kurtosis maximization, no |z|² term) is
+      WORSE than Godard CMA on all cells (macro PI-SER 0.466 vs 0.251; collapse
+      rate 0.791 vs 0.336). The 16QAM kurtosis signal is too weak for 2-source
+      separation on short, time-varying blocks. The collapse is not a modulus-cost
+      local minimum — it is a channel property.
+    ceiling: LOCAL_SLICE
+    evidence: c16-nonmodulus-jade-scout
+
+  - id: H066_DETECTOR_STRUCTURAL_CEILING
+    category: EVALUATION_INSIGHT
+    claim: >-
+      Collapse is fully determined at block 0 (conventional min_z2 AUROC=1.000).
+      Lead time is non-positive by construction (mean −5.95 blocks). ML detectors
+      using same CSI_NONE features cannot fire earlier. Detector family structurally
+      ceilinged.
+    ceiling: LOCAL_SLICE
+    evidence: probe p02
+
+  # ── PRIOR conclusions still valid ──
+  - id: C11_NO_BENEFIT_HARVEST
+    category: FAILURE_MECHANISM
+    claim: C11 causal per-symbol DD-LMS no benefit (macro Δ +0.01445 worse). LOCAL_SLICE/DIAGNOSTIC.
+    evidence: D012 / c11-legality-batch-v1
+
+  - id: TRUTH_ASSISTED_BOUND_HARVEST
+    category: EVALUATION_INSIGHT
+    claim: TX-truth affine gap ~0.05575 is privileged diagnostic bound, not learnable target.
+    evidence: D013-amended / D016
+
+  - id: BLIND_AFFINE_HARMFUL_HARVEST
+    category: FAILURE_MECHANISM
+    claim: blind_affine_compare_16qam locally net harmful (gain −0.00837).
+    evidence: D013-amended / D016
+
+  - id: MMA_NOT_BETTER_THAN_CMA_HARVEST
+    category: FAILURE_MECHANISM
+    claim: MMA not better than CMA on OSL (textbook MMA>CMA on fiber does NOT extrapolate).
+    evidence: D006 / H018
+
+  - id: CB1_COLLAPSE_DEEP_PROPERTY_HARVEST
+    category: FAILURE_MECHANISM
+    claim: Collapse survives fair tuning + per-symbol + DD-LMS cascade. (Now extended to init/cost/paradigm by H060.)
+    evidence: D008 / D011 / D012
+
+  # ── REUSABLE ASSETS ──
+  - id: H067_GMI_EVALUATOR_ASSET
+    category: REUSABLE_ASSET
+    claim: >-
+      GMI soft-output evaluator (~250 lines, max-log + Gaussian mixture demapper +
+      histogram GMI) unblocks the p03.output.soft-or-coded axis at GMI level for
+      any future soft/coded claim. No external FEC dependency needed.
+    ceiling: ASSET
+    evidence: c12-gmi-soft-output-scout/src/soft_demap.py + gmi.py
+
+  - id: H068_HOS_EQUALIZER_ASSET
+    category: REUSABLE_ASSET
+    claim: >-
+      Non-modulus HOS kurtosis-maximization equalizer (~100 lines) provides a
+      paradigm-distinct baseline for any future equalizer comparison.
+    ceiling: ASSET
+    evidence: c16-nonmodulus-jade-scout/src/hos_equalizer.py
+
+  - id: H006_ATLAS_ASSET_HARVEST
+    category: REUSABLE_ASSET
+    claim: Receipt-bound Atlas gate + parameterized cell runner + preregistered contract.
+    evidence: P03 Atlas closeout
+
+amended:
+  - id: H044
+    original: TX-truth-assisted learned-corrector target ready
+    current: diagnostic only (privileged bound, not learnable)
+  - id: H045
+    original: blind-affine with causal explanation
+    current: locally harmful (causal explanation withdrawn)
+  - id: H048
+    original: headroom decomposition + learned adapter reusable
+    current: headroom utilities reusable; adapter not validated
+
+superseded:
+  - id: H046
+    note: superseded by H051 (constant collapse) → now by H061 (O1-corrected route closed)
+  - id: CB1_COLLAPSE_DEEP_PROPERTY_HARVEST
+    note: extended/superseded by H060 (now spans 5 mechanism axes, not just tuning/structure/cascade)
+
+retracted:
+  - id: H047
+    note: exists-vs-learnable thesis-grade interpretation NOT supported
+  - id: H049
+    note: C12 does NOT prove hard labels too noisy; GMI loss is equalizer-bound
+
+no_durable_harvest:
+  - item: C13 pilot-Jones dedup probe
+    reason: COLLISION with old U05/U36/U52 lineage; no new science produced
+  - item: C14/C15/C16 each individually
+    reason: each is a mechanism negative, durable only as part of the aggregate H060 spine; not individually harvestable as standalone thesis material
+
+thesis_spines:
+  - spine: >-
+      PRIMARY (negative boundary): The 16QAM inner-ring collapse on dual-pol OSL
+      is a fundamental property of the blind equalization problem, surviving all
+      five mechanism axes (correction, adaptation, cost, init, paradigm). Oracle
+      shows the channel is invertible but the inversion info is not extractable
+      from received statistics alone. This maps the entire blind-eq solution space.
+    status: evidence-backed (5 axes, 11 cells × 10 seeds each)
+    ceiling: LOCAL_SLICE
+    paper_value: HIGH — complete boundary characterization
+
+  - spine: >-
+      SECONDARY (diagnostic boundary): TX-truth affine recoverable but receiver-
+      visible target unconfirmed learnable; blind affine locally harmful; GMI loss
+      is equalizer-bound not demapper-bound.
+    status: evidence-backed (diagnostic)
+
+  - spine: >-
+      ASSET: GMI evaluator + HOS equalizer + Atlas gate enable future soft-output
+      and paradigm-distinct comparisons.
+    status: evidence-backed (reusable)
+
+  - spine: >-
+      POTENTIAL ESCAPE (untested): receiver-only model-based GG+SOP tracker
+      (rank-4 from remap) using channel MODEL priors (not pilots) feeding a
+      model-based MMSE equalizer. This is the only untested sub-problem axis that
+      could open a positive contribution line. Requires ~1 day infrastructure.
+    status: identified but not executed
+    escalation: requires user strategy decision (material compute investment)

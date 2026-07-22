@@ -1,0 +1,130 @@
+probe_id: p04-c12-coded-readiness
+question: >-
+  What is the minimum effort to unblock C12's coded evaluator, and is it
+  in-scope for this campaign?
+type: read_only_capability
+exit_condition: >-
+  HALF_DAY = soft demap + GMI computable from existing infra. MULTI_DAY =
+  needs FEC codec or substantial new code. EXTERNAL = requires external library
+  not present.
+result: >-
+  HALF_DAY for the scientifically-strong unblock path; EXTERNAL for the literal
+  FEC-coded BER/FER subset. C12's coded evaluator is unblocked at the minimum
+  level (soft demapper + GMI, pure numpy/scipy) with a half-day adapter — NO
+  new dependency required — because a max-log soft demapper and the GMI formula
+  are standard, closed-form, ~80 lines of numpy on top of the existing
+  qam16 constellation. The EXTERNAL blocker applies ONLY to actual coded
+  BER/FER (needs an FEC codec library: commpy/sionna/galois, none installed,
+  none imported anywhere in the 509-file tree, and no requirements/pyproject
+  manifest exists to add one).
+
+  Decomposition of C12's claim ("collapse-aware demapper improves coded
+  BER/GMI/FER"):
+    - Soft demapper (symbol z + sigma^2 -> per-bit LLR): NOT present, must be
+      written. Max-log for 16QAM Gray is well-understood (~50-80 lines numpy,
+      uses the qam16 constellation table already in _modulation.py). HALF_DAY.
+    - GMI (generalized mutual information from LLRs): NOT present, must be
+      written. GMI = 1 - mean[log2(1+exp(-x*LLR))] is a one-liner over LLRs,
+      pure numpy (~10-20 lines incl. numerically-stable log2sumexp). HALF_DAY.
+      GMI is the PREFERRED paper metric for soft-demapper comparison — it is
+      FEC-agnostic and directly bounds achievable coded rate, so it is
+      scientifically stronger than committing to a single FEC.
+    - Collapse-aware LLR remap (C12's actual novelty): the candidate itself,
+      not infrastructure. Pure numpy/torch on top of the soft demapper. In-
+      scope as the C12 method, not a blocker.
+    - Coded BER/FER (literal FEC decode): REQUIRES commpy/sionna/galois.
+      None present (import probe: sionna/commpy/galois all False; scipy/numpy
+      True). No dependency manifest exists anywhere in the tree to add one.
+      This subset is EXTERNAL; a build would be a dependency + LDPC/Turbo
+      codec integration (multi-day), AND would require a FEC choice that is
+      itself a research decision (which code/rate?). NOT the minimum unblock.
+
+  Conclusion: the minimum-effort unblock of C12's coded evaluator is the
+  GMI-based soft-output comparator (HALF_DAY, pure numpy, no external lib,
+  reuses _modulation.py's qam16 constellation). This is both the cheapest AND
+  the most rigorous path for a soft-demapper paper. The full FEC-coded BER/FER
+  is an EXTERNAL dependency build that is optional enrichment, not the minimum
+  to make a publishable C12 claim. Recommend: proceed with HALF_DAY GMI path
+  in-scope; defer EXTERNAL FEC-coded BER/FER out of this campaign (record as
+  a future extension, do not block C12 on it).
+verdict: HALF_DAY
+components_needed:
+  - soft_demapper_qam16_maxlog: >-
+      Per-bit LLR from equalized symbol z + noise-variance estimate. NOT present.
+      ~50-80 lines numpy; reuses _modulation.py qam16 constellation (gray_map
+      line 33, _APSK8-style table lookups). Standard max-log over the 16
+      symbols per bit position.
+  - gmi_from_llr: >-
+      Generalized mutual information from per-bit LLRs. NOT present. ~10-20
+      lines numpy with numerically-stable log2(1+exp(-x*LLR)). Pure formula,
+      no codec.
+  - collapse_aware_llr_remap: >-
+      C12's actual contribution (LLR remap conditioned on detector collapse
+      confidence). The candidate method itself, not infra. Pure numpy/torch.
+  - soft_output_comparator: >-
+      Standard (non-collapse-aware) soft demapper applied to the SAME z, to
+      serve as the same-information comparator. Trivially the soft_demapper
+      above with remap disabled. Reuses cb1_evaluator.py's same-z comparator
+      discipline (lines 78-87, 106-129).
+existing_infra: >-
+  HARD-DECISION ONLY. No soft-output / LLR / GMI / FEC code exists anywhere.
+  Hard-decision demapping present and reusable:
+    - common/_modulation.py:24-37  qam16_mod (Gray 16QAM, avg-power norm, the
+      constellation table a soft demapper needs).
+    - common/_modulation.py:39-58  qam16_demod (HARD nearest-grid slice, NOT
+      soft — the thing a soft demapper would replace).
+    - common/_modulation.py:84-91  hard_decision(z, mod='qam16') (HARD).
+    - common/_modulation.py:60-61  ber_count_qam16 (hard-decision BER).
+    - cb1_evaluator.py:78-87  hard_16qam (hard nearest-symbol).
+    - cb1_evaluator.py:90-97  _bits_from_16qam (hard demap -> per-bit BER).
+    - cb1_evaluator.py:106-129  blind_affine_compare_16qam (same-z comparator
+      pattern a soft comparator would mirror, but on hard pseudo-labels).
+  Environment: numpy + scipy + torch only (import probe). NO commpy/sionna/
+  galois. No requirements.txt/pyproject.toml anywhere in the tree to declare
+  or add an FEC codec dependency.
+  Search coverage: 0 hits for llr|soft_demod|gmi|fec|ldpc|coded_ber|mutual_
+  inform|capacity|entropy across all 509 .py files and all yaml/md.
+effort_estimate: >-
+  HALF_DAY (~4-6 hrs) for the in-scope GMI unblock:
+    1. Write soft_demapper_qam16_maxlog (symbol+sigma^2 -> LLR), ~2-3 hrs.
+       Reuses _modulation.py qam16 constellation; no new dep.
+    2. Write gmi_from_llr (LLR,x -> GMI) + coded-comparator wrapper, ~1-2 hrs.
+       Mirror cb1_evaluator.py's same-z comparator discipline.
+    3. Wire a soft-output cell variant into cb1_cell_runner (output LLR+GMI
+       alongside existing BER/SER), ~1 hr.
+    4. Sanity: GMI on a clean AWGN-only cell should approach the 16QAM AWGN
+       MI curve; coded-GMI gain of collapse-aware vs standard demapper should
+       be positive on collapsed cells, ~0.5 hr.
+  NOT included (EXTERNAL, out of this campaign): FEC-coded BER/FER via
+  commpy/sionna/galois — requires adding an absent dependency + a codec
+  integration + a FEC-choice research decision. Multi-day. Defer.
+notes:
+  scientific_framing: >-
+    GMI is the standard, FEC-agnostic figure for soft-demapper comparison and
+    is arguably STRONGER evidence than a single-FEC coded-BER curve (it avoids
+    confounding the demapper gain with a particular code's waterfall). C12 can
+    therefore make a complete, publishable soft-demapper claim via GMI alone;
+    coded BER/FER with a real codec is a corroborating extension, not a
+    prerequisite. This re-frames C12 from "INFRASTRUCTURE_BLOCKED" to
+    "HALF_DAY-unblockable for the primary (GMI) claim; FEC-coded BER/FER is an
+    optional EXTERNAL extension."
+  recommendation: >-
+    Rotate forward: do NOT keep the campaign stopped on C12 for the EXTERNAL
+    FEC subset. Either (a) spend the half-day GMI adapter now to land the
+    primary C12 evidence in-scope, or (b) if even the half-day is off-budget
+    this rotation, record C12 as HALF_DAY-ready-for-adapter (not
+    infrastructure-blocked) and pick it up next rotation. Either way the
+    blocker is downgraded: the infrastructure gap is small and dep-free for
+    the publishable metric.
+evidence_pointers:
+  hard_only_demod: "projects/simulation/common/_modulation.py:39-58 (qam16_demod = nearest-grid hard slice)"
+  hard_only_hard_decision: "projects/simulation/common/_modulation.py:84-91 (hard_decision mod='qam16')"
+  hard_only_evaluator: "projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/baseline-atlas/cb1_evaluator.py:78-97 (hard_16qam, _bits_from_16qam; no soft path)"
+  same_z_comparator_pattern: "projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/baseline-atlas/cb1_evaluator.py:106-129 (blind_affine_compare_16qam — the comparator discipline a soft comparator mirrors)"
+  qam16_constellation_reuse: "projects/simulation/common/_modulation.py:24-37 (qam16_mod Gray table — the constellation a soft demapper consumes)"
+  c12_blocked_state: "projects/thesis-fso/direction-lab/portfolio/current.yaml:112-116 (C12 status INFRASTRUCTURE_BLOCKED; note 'coded evaluator bundle 2 not built')"
+  blocked_axis_soft_coded: "projects/thesis-fso/direction-lab/portfolio/current.yaml:130 (p03.output.soft-or-coded = LLR/GMI/FER evaluator listed as blocked axis)"
+  zero_soft_infra_search: "grep -rliE 'llr|soft_demod|gmi|fec|ldpc|coded_ber|mutual_inform|capacity' projects/ --include=*.py -> 0 hits across 509 files"
+  zero_fec_imports: "grep -rn 'import commpy|from commpy|import sionna|from sionna|channelcode|ldpc_decode' projects/ -> 0 hits"
+  no_dependency_manifest: "no requirements.txt/pyproject.toml/setup.py/Pipfile anywhere in tree"
+  env_probe: "python importlib.find_spec: numpy=True scipy=True torch=True sionna=False commpy=False galois=False"
