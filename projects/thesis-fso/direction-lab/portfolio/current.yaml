@@ -1,9 +1,10 @@
-# portfolio/current.yaml — updated 2026-07-22 after C14/C15/C16 Scouts
-# 16 candidates now; C14-C16 are new mechanism axes from the rotation remap.
+# portfolio/current.yaml — reconciled 2026-07-22 after S011/D017/D018/D019
+# Open portfolio: exact blind-expert routing contract closed; information-source families remain open.
 
 schema_version: research-direction-lab.portfolio.current.v1
 project_id: thesis-fso.dual-pol-osl.direction-lab
 completeness_claim: OPEN_PORTFOLIO_NO_COMPLETENESS_CLAIM
+recovery_entry: H012-information-source-portfolio-pivot.md
 
 candidates:
   # ── Cluster 1-2: Failure observability (CEILINGED) ──
@@ -21,12 +22,12 @@ candidates:
   - {id: C10, status: RUN_DONE, note: "per-symbol; H021 rejected; collapse survives"}
   - {id: C11, status: RUN_DONE_LEGAL, note: "D012 LOCAL_SLICE; no benefit (macro +0.01445 worse)"}
 
-  # ── Cluster 5: Output correction (CLOSED) ──
-  - {id: C04, status: CLOSED, note: "O1-corrected objective works but context-dependence has no value over ridge-LS; overfits/blows up"}
-  - {id: C09, status: CLOSED, note: "same route as C04; shared objective fix confirmed, same outcome"}
+  # ── Cluster 5: Output correction (implementation-confounded) ──
+  - {id: C04, status: UNRESOLVED_IMPLEMENTATION_CONFOUND, note: "O1 target is self-referential and admits an input-independent zero-loss solution; exact mechanism not adjudicated"}
+  - {id: C09, status: UNRESOLVED_NOT_RUN_ON_CORRECTED_TARGET, note: "GRU was not run under a scientifically valid corrected target; family remains open"}
 
-  # ── Cluster 7: Soft-output (NEGATIVE + ASSET) ──
-  - {id: C12, status: MECHANISM_NEGATIVE_PLUS_ASSET, note: "zero oracle GMI headroom; GMI loss is equalizer-bound; reusable GMI evaluator produced"}
+  # ── Cluster 7: Soft-output (metric-confounded + asset) ──
+  - {id: C12, status: UNRESOLVED_METRIC_CONFOUND_PLUS_ASSET, note: "global-sigma oracle plus histogram MI is not a valid soft-output headroom bound; code remains exploratory"}
 
   # ── Cluster 8: Pilot/CSI (COLLISION) ──
   - {id: C13, status: COLLISION_EXIT, note: "mechanism-identical to old U05/U36/U52; D053/D054 tested; literature collision"}
@@ -35,22 +36,22 @@ candidates:
   - id: C14
     name: init_strategy
     family: equalizer_initialization
-    status: MECHANISM_NEGATIVE
-    last_result: {verdict: COST_FUNDAMENTAL, collapse_rate_data_driven: 1.000, oracle_init_escape: 0/37}
+    status: PARTIAL_DIAGNOSTIC
+    last_result: {verdict: EXACT_INIT_SET_NO_ESCAPE, collapse_rate_data_driven: 1.000, oracle_init_escape: 0/37}
     note: >-
-      Collapse is init-independent. Oracle Wiener init collapses on all collapsed
-      seeds. Data-driven init (whitening/multistart) strictly worse. Closes the
-      initialization axis.
+      Exact normalized-Wiener-direction and limited multistart variants did not
+      escape the measured failures. This does not establish initialization
+      independence or close the family.
 
   - id: C15
     name: reduced_constellation_cost
     family: equalizer_cost_function
-    status: MECHANISM_NEGATIVE
-    last_result: {verdict: RING_AWARE_INCREASES_COLLAPSE, delta_collapse: +0.036, delta_pi_ser: +0.033}
+    status: UNRESOLVED_UNEQUAL_STEP_CONFOUND
+    last_result: {verdict: EXACT_SHARED_MU_VARIANTS_WORSE, delta_collapse: +0.036, delta_pi_ser: +0.033}
     note: >-
-      Ring-aware cost is self-consistent with collapsed state (error drops 19×).
-      Combined with MMA angle failure, rules out both geometric decompositions.
-      Closes the cost-function axis (within modulus family).
+      Exact shared-mu variants were worse, but gradient scales differed by about
+      19x. Without equal tuning opportunity or gradient normalization this does
+      not establish a family-level mechanism negative.
 
   - id: C16
     name: nonmodulus_hos_paradigm
@@ -82,7 +83,7 @@ remaining_open:
     status: VERDICT_C_CLOSED   # D018/S011/V007 — COMPLEMENTARITY_INVALID
     note: >-
       Macro A tested legal FIR experts (MMA fair-mu + cold-start DD-LMS) vs CMA on
-      fresh disjoint test seeds [121-130]. Oracle headroom = 0.0037 macro PI-SER
+      fresh disjoint test seeds [121-130]. Oracle headroom = 0.003693 macro PI-SER
       (8x BELOW the 0.03 practical threshold). MMA/DD-LMS fail in the SAME collapse
       realizations as CMA (correlated failure modes) — no complementary structure to
       route. Verdict C per frozen contract; Macro B (router) NOT run (no headroom).
@@ -94,19 +95,38 @@ remaining_open:
     dimension: different_subproblem
     status: IDENTIFIED_NOT_EXECUTED
     note: >-
-      D017: "ONLY remaining axis" claim no longer asserts (paradigm axis reopened).
-      Still a candidate (channel MODEL priors, not pilots/modulus). Requires ~1 day
-      infra; needs user strategy decision.
+      One information-source candidate: channel MODEL priors rather than another
+      blind cost. Must first pass an observability/headroom Probe; do not commit to
+      a one-day EKF/PF implementation from title plausibility alone.
+  - id: SPARSE_PILOT_SEMIBLIND
+    label: sparse-pilot or adaptive-pilot state information
+    dimension: explicit_reference_information
+    status: IDENTIFIED_NEEDS_DEDUP_AND_HEADROOM_PROBE
+    note: >-
+      Distinct from reviving the old fixed pilot-to-Jones-to-inverse mechanism only
+      if it changes overhead, scheduling, causal state estimation, or recovery.
+  - id: TEMPORAL_MODEL_HISTORY
+    label: multi-block causal state continuity / prediction
+    dimension: temporal_information
+    status: IDENTIFIED_NEEDS_OBSERVABILITY_PROBE
+    note: >-
+      Test whether legal history adds state information beyond the block-0 detector;
+      do not assume a recurrent model creates information.
+  - id: DECODER_FEEDBACK_SOFT
+    label: decoder/CRC/soft-output feedback to the front end
+    dimension: cross_layer_information
+    status: IDENTIFIED_INFRASTRUCTURE_BLOCKED
+    note: >-
+      Potentially breaks the blind ambiguity, but requires a valid coded/soft chain
+      and a corrected GMI/LLR contract before any method Scout.
   - id: C03_C07_REINIT
     label: learned/threshold reinit controller
     status: INFRASTRUCTURE_BLOCKED
     note: needs action hook; co-blocked
 
 next_action: >-
-  D018 VERDICT C (hybrid-routing contract closed). Algorithm-selection family
-  remains open: the only untested positive-potential axis is the model-based
-  receiver-only GG+SOP tracker (channel MODEL priors, not pilots/modulus) feeding
-  a model-based MMSE equalizer — requires ~1 day infra + user strategy decision.
-  Alternatively, harvest the negative material (D017 task-mismatch lesson +
-  D018 correlated-failure bound) and the LOCAL_SLICE Godard-collapse, then decide
-  thesis spine direction with the user.
+  D019: before investing in a full tracker or changing the formal goal, build a
+  bounded information-source headroom atlas across model prior, sparse pilot,
+  temporal history, and decoder/soft feedback. Use analytic or scoring-only bounds
+  and semantic Probes first, rank by usable headroom, legality, infrastructure cost,
+  novelty risk, and thesis fit, then Scout only the strongest runnable family.

@@ -307,3 +307,40 @@ headline 数字独立重算 bit-identical。verifier 专门测了"convenient con
 
 - D018 verdict C 登记。Macro B 不运行（无 headroom 可转化）。
 - 未来若重启专家路由，必须用机械更多样专家池（model-based + blind 或 pilot-aided + blind），非近共模 FIR 盲均衡。
+
+---
+
+## V008: H012 恢复链与 current views 独立终验
+
+> date: 2026-07-22
+> 关联：D019 / H012
+
+### 验证项
+
+- [x] YAML 合法性：独立 verifier 对 `state/current.yaml`、`portfolio/current.yaml`、`harvest/current.yaml` 执行 safe_load → 三者均为 dict，PASS。
+- [x] 数字与切分：从 hybrid result/contract 核验 headroom `0.003693`、阈值 `0.03`、test seeds `121–130` → 与 H012/current views 一致，PASS。
+- [x] 候选状态：核验 C04/C09/C12/C14/C15 不再作为 family closure → current portfolio 分别为 implementation/metric/step confound 或 partial diagnostic，PASS。
+- [x] 恢复入口：核验 STATUS、state、portfolio、harvest、topic-index 均直接指向 D019/H012 → PASS。
+- [x] 历史与当前分离：独立 verifier 首轮发现 harvest 旧 closure 叙述虽在 historical 区但未显式失效，结论 PARTIAL；修复后旧条目均标 `invalidated_by_D017` / `amended_scope_narrowed_by_D017`，`current_view` 成为唯一有效投影 → 复核 PASS。
+
+### 证据
+
+```text
+current.yaml PASS
+current.yaml PASS
+current.yaml PASS
+_registry.yaml PASS
+consistency PASS
+independent verifier round 1: PARTIAL
+independent verifier round 2: PASS
+```
+
+独立 verifier 最终摘要：
+
+```text
+PASS。三项修复均已复核通过，YAML 解析正常，未修改文件。
+```
+
+### 结论
+
+PASS

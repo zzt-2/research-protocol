@@ -1,6 +1,6 @@
 # Topic Index: Direction Lab 首轮 SCIENCE_SCOUT 正式科学探索
 
-> 状态: active（科学运行暂停，verdict 已交付） | 创建: 2026-07-20 | 最后更新: 2026-07-22 S011/D017/D018/V006/V007/H011：e15ae60（C12/C14/C15/C16）数值可复现但 7 审计项全部 CONFIRM 科学语义失效；H060 全域"信道属性/5 轴穷尽"宣称 invalidated 降级为 LOCAL_SLICE 弱断言；混合路由 Macro A 裁决 **C = COMPLEMENTARITY_INVALID**（合法 FIR 专家 MMA+DD-LMS oracle headroom 0.0037 << 阈值 0.03；失效相关；独立 verifier 8/8 PASS）；本具体 hybrid contract 关闭，算法选择家族仍 open；本轮不产出毕业方法，产出负面 bound + 方法论教训
+> 状态: active（信息来源组合级 Probe 待续接） | 创建: 2026-07-20 | 最后更新: 2026-07-22 S011/D017/D018/D019/V006/V007/V008/H012：盲专家路由裁决 C；恢复链终验 PASS；下一步先比较新增信息来源，不直接押注 tracker
 
 ## 专题信息
 
@@ -70,6 +70,7 @@
 - **2026-07-21 D014（superseded by D016）**：C04/C09 raw 坏结果可复现，但 soft-distance 目标存在输入无关常数最优解；当前结论是 `IMPLEMENTATION_CONFOUND_CONSTANT_COLLAPSE`，候选为 `UNRESOLVED`，不是 exact mechanism negative。
 - **2026-07-21 D015（amended by D016）**：由机制负面强制轮转的推理撤回；轮转仅可作为后续资源选择。
 - **2026-07-21 D016 科学语义修订**：artifact fidelity 与科学语义分离；V004 保留前者，V005 对后者判 FAIL。旧 H009 失效，H010 成为恢复入口。
+- **2026-07-22 D018/D019**：合法 CMA/MMA/DD-LMS 专家间 oracle headroom 仅 0.003693，关闭本具体 blind-expert routing contract；这不等于全局无解。下一步从“换算法”退到“新增什么合法信息”，批量 Probe 模型先验、pilot、时间历史和 decoder/soft feedback，再决定投资哪条方法线。
 - **2026-07-22 D017 e15ae60 继承纠正（混合路由研究前置）**：commit e15ae60（C12/C14/C15/C16 + 重写 current views 为"5 轴穷尽"叙述）的数值**可复现**但 7 审计项（V006）全部 CONFIRM 科学语义失效/不足——C04/C09 O1 目标仍是 self-referential moving target（常数塌缩零损失）→ UNRESOLVED；C12 oracle 仅全局 σ² + histogram-MI scale-invariant → 非真上界（H062 撤回）；C14 0.9995 cosine + far-orthogonal probe 仅 narrative 未在 src → 仅证"最强单 init 塌缩"（H063 scope-narrow）；C15 共 μ=0.03 跨 19× 梯度差 → unequal-step 混淆（H064 撤回机制断言）；**C16 是空间 2×2 + real Givens 非 JADE 无 FIR → 非合法 capability-aligned 专家**（H065 重定性）；**seeds 71-80 在 ≥6 批重复使用 → 失去 held-out 资格**；H060 全域"信道属性/5 轴穷尽/不可提取求逆/可写完整负面边界论文/model-based tracker 唯一剩余"5 宣称 **invalidated**，降级为 LOCAL_SLICE 弱断言。混合路由诊断互补（CMA 0.2507 / HOS 0.4664 / 37 塌缩中 26 个 HOS 更好 / oracle selector 0.1928）**数值真实但建立在非法 C16 专家 + 污染 seeds + 事后 oracle 上，仅 DIAGNOSTIC**。合法 FIR 对齐 fallback = MMA（公平 μ 重测）+ standalone DD-LMS（新建）。未重跑科学实验，未建 controller，未改 protected history。
 
 ## 进展线索
@@ -85,6 +86,8 @@
 - **S009 / D012 / D013 / D014 / D015 / H009 / V004（历史运行记录，科学解释已由 S010/D016/V005 修订）**：当时连续完成 C11 收口、corrector adjudication、C04/C09 运行和 artifact verifier。raw 数字、seed/hash 与历史保护保留；其中 `A_LEARNED_CORRECTOR_TARGET_READY`、`EXACT MECHANISM NEGATIVE` 和强制轮转均不得作为当前结论。
 - **S010 / D016 / V005 / H010**：外部科学语义审计定位 soft-distance 常数塌缩（四维最小 loss 约 1.30840175，与 plateau 一致）；撤回 D014 机制负面与 D013 learned-target-ready 解释，C04/C09 恢复 `UNRESOLVED`。建立 harvest v7 修订和唯一恢复入口 H010；科学运行暂停，转体系专题设计轻量 Probe 与恢复结构。
 - **S011 / D017 / V006**：混合路由研究前置 reconciliation。发现 e15ae60 在 H010 之后提交却未登记 S/D/V/H（注册表 last_updated 仍 2026-07-21），其"5 轴穷尽"叙述未经治理。独立子 agent + 主线复算 7 审计项全部 CONFIRM：数值可复现但 C12/C15/C16 科学语义失效、C14 scope 不足、C04/C09 UNRESOLVED、seeds 71-80 失去 held-out。H060 降级 + 拆分。以 D017 为干净起点进入混合路由 Macro A/B/C。本轮最多新建 1 个 S###（即本 S011），D/V 继续追加。
+- **S011 / D018 / V007 / H011**：合法 FIR 专家 Macro A 完成；oracle headroom 0.003693 < 0.03，裁决 C，未训练 router。旧 task-mismatched HOS 互补信号失效。本轮只形成 LOCAL_SLICE 负面与方法论教训。
+- **D019 / H012 / V008**：修复 current views 的残留矛盾与无效 harvest YAML；独立终验 PASS。下一轮不把 model-based tracker 当唯一方向，先做信息来源候选族的组合级 headroom/observability Probe。
 
 ## 未决项
 
@@ -103,4 +106,4 @@
 
 ## 当前位置
 
-S011 / D017 / D018 / V006 / V007 / H011：e15ae60 继承状态已纠正（7 审计项全 CONFIRM，H060 降级 LOCAL_SLICE）；混合路由 Macro A 裁决 **C = COMPLEMENTARITY_INVALID**（合法 FIR 专家 oracle headroom 0.0037 << 阈值 0.03；失效相关；独立 verifier 8/8 PASS）。本具体 hybrid contract 关闭，算法选择家族仍 open。本轮不产出毕业论文级方法，产出 slice-level 负面 bound + 方法论教训。下一步需用户战略决策（model-based tracker / harvest 收尾 / 改 goal）。唯一恢复入口 H011。
+S011 / D017 / D018 / D019 / V006 / V007 / V008 / H012：e15ae60 继承状态已纠正；混合路由 Macro A 裁决 **C = COMPLEMENTARITY_INVALID**（合法 FIR 专家 oracle headroom 0.003693 << 0.03）；恢复链独立终验 PASS。本具体 blind-expert contract 关闭，但不能推出所有新增信息路线失败。下一轮先完成模型先验、稀疏/自适应 pilot、因果历史、decoder/CRC/soft feedback 的组合级 Probe 排序；只有胜出信息族才进入方法 Scout。唯一恢复入口 H012。

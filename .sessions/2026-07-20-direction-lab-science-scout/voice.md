@@ -164,3 +164,4 @@
 - "oracle 只作 Kill/headroom bound，不能作 Go comparator。"
 - "如果简单阈值已经达到 ceiling，记录'ML 无必要'，不要为了 ML 而 ML。"
 - "不要因为'没搜到'就声称新颖。"
+- "寄了？咋办呢？你这边交接一下新对话。但之后呢？" → D019, H012

@@ -1,5 +1,5 @@
 # Research Direction Lab Status
-# Updated 2026-07-22 S011/D017/V006 — e15ae60 reconciliation + hybrid-routing study entry.
+# Updated 2026-07-22 S011/D017/D018/D019 — hybrid verdict and next portfolio pivot.
 # IMPORTANT (D017): the prior "5 axes exhausted / collapse is a channel property" global
 # narrative from commit e15ae60 is INVALIDATED. Numbers reproducible; scientific semantics
 # failed on C12/C14/C15/C16 + seeds 71-80 lost held-out status. See harvest amendments.
@@ -26,22 +26,22 @@
   - C15 cost → unequal-step-confounded (19× gradient, shared μ=0.03); H064 WITHDRAWN
   - C16 non-modulus HOS → NOT a legal capability-aligned expert (spatial 2×2, no FIR); H065 reclassified
   - seeds 71-80 → LOST held-out status (reused in ≥6 batches)
-- **New open family**: collapse-aware hybrid equalizer routing (legal FIR-aligned experts)
+- Exact collapse-aware routing among CMA/MMA/DD-LMS is CLOSED by D018; broader information-source families remain open.
 - Full map: portfolio/current.yaml
 
 ## 4. Latest Completed Scientific Result
 
-- **S011/D018/V007 (2026-07-22)**: hybrid-routing Macro A → VERDICT C (COMPLEMENTARITY_INVALID). Legal FIR experts (MMA fair-μ + cold-start DD-LMS) vs CMA on fresh disjoint test seeds [121-130]: oracle headroom = 0.0037 macro PI-SER, 8× below the 0.03 practical threshold. MMA/DD-LMS fail in the SAME collapse realizations as CMA (correlated failure modes). Independent verifier 8/8 PASS. Macro B (router) NOT run (no headroom). The prior C16 "26/37 complementarity" confirmed as an artifact of illegal expert + contaminated seeds.
+- **S011/D018/V007 (2026-07-22)**: hybrid-routing Macro A → VERDICT C (COMPLEMENTARITY_INVALID). Legal FIR experts (MMA fair-μ + cold-start DD-LMS) vs CMA on fresh disjoint test seeds [121-130]: oracle headroom = 0.003693 macro PI-SER, 8× below the 0.03 practical threshold. MMA/DD-LMS fail in the SAME collapse realizations as CMA (correlated failure modes). Independent verifier 8/8 PASS. Macro B (router) NOT run (no headroom). The prior C16 "26/37 complementarity" confirmed as an artifact of illegal expert + contaminated seeds.
 - **S011/D017/V006 (2026-07-22)**: bounded reconciliation of commit e15ae60. 7 audit items all CONFIRMED. H060 downgraded from PRIMARY to LOCAL_SLICE weak claim.
 
 ## 5. Current Mode
 
-- Mode: SCIENCE_SCOUT verdict delivered (D018 = C). Hybrid-routing contract closed. No method contribution; a slice-level negative bound + methodology lesson harvested. Algorithm-selection family stays open; only the model-based GG+SOP tracker axis remains as a positive-potential candidate (needs user strategy decision).
+- Mode: SCIENCE_SCOUT portfolio remap. D018 closed the exact blind-expert routing contract; no method contribution yet. D019 authorizes a bounded information-source headroom map before any one-day infrastructure investment.
 
 ## 6. Thesis Harvest (current view)
 
 - **H060 (DOWNGRADED to LOCAL_SLICE)**: "Godard-cost collapses on the 11-cell slice × seeds 71-80" weak claim ONLY. The global "channel property / 5-axis exhausted / inversion-info-unextractable / publishable negative-boundary" claims are INVALIDATED (D017).
-- H061 (affine): route CLOSED on sound objective (valid)
+- C04/C09 affine correction: UNRESOLVED because the corrected objective remains self-referential; C09 was not validly rerun.
 - H062 (GMI): WITHDRAWN — not a true bound (scale-artifact)
 - H063 (init): scope-narrowed — strongest-single-init only
 - H064 (ring-aware cost): mechanism claim WITHDRAWN (unequal-step confound)
@@ -52,14 +52,15 @@
 
 ## 7. Next Automatic Action
 
-D018 VERDICT C — hybrid-routing contract closed (headroom 0.0037 << 0.03 threshold; correlated failure modes among legal FIR experts). No automatic scientific runner remains in the blind-equalizer expert-routing sub-family. Algorithm-selection family stays open; the only untested positive-potential axis is the receiver-only model-based GG+SOP tracker (needs ~1 day infra + user strategy decision).
+D019 — map and batch lightweight prerequisite/headroom Probes for four distinct legal information sources: channel-model prior, sparse/adaptive pilot, causal multi-block history, and decoder/CRC/soft feedback. Do not implement a full tracker until its observability and usable headroom survive.
 
 ## 8. Strategy Escalation Condition
 
-Choose: (a) invest ~1 day in the receiver-only model-based GG+SOP tracker (the last identified positive-potential axis, channel MODEL priors not pilots/modulus); or (b) harvest the accumulated negative material (D017 task-mismatch lesson + D018 correlated-failure bound + LOCAL_SLICE Godard-collapse + C11/MMA/blind-affine negatives) and decide thesis spine direction; or (c) change formal goal/contribution line.
+Escalate only after the information-source map shows either (a) at least one evidence-backed family worth a larger Scout, (b) no source family has usable legal headroom and the thesis should pivot to harvest/formal-goal review, or (c) the best family needs a material infrastructure choice only the user can authorize.
 
 ## Detail Pointers
 
+- Recovery handoff: .sessions/2026-07-20-direction-lab-science-scout/H012-information-source-portfolio-pivot.md
 - Current state: projects/thesis-fso/direction-lab/state/current.yaml
 - Portfolio: projects/thesis-fso/direction-lab/portfolio/current.yaml
 - Harvest: projects/thesis-fso/direction-lab/harvest/current.yaml

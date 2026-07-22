@@ -594,7 +594,7 @@ topics:
     status: active
     created: "2026-07-20"
     last_updated: "2026-07-22"
-    description: "首轮正式 SCIENCE_SCOUT campaign + 混合盲均衡/专家路由系统研究。C11 D012 局部结论保持有效。S011/D017/V006 对 commit e15ae60（C12/C14/C15/C16 + '5 轴穷尽' 叙述）做有界 reconciliation：数值可复现但 7 审计项全部 CONFIRM 科学语义失效（C12 scale-artifact / C15 unequal-step confound / C16 task-mismatched 非 FIR 专家 / C14 scope-narrow / C04-C09 UNRESOLVED / seeds 71-80 失去 held-out）。H060 全域宣称 invalidated 降级为 LOCAL_SLICE 弱断言。混合路由诊断互补（CMA 0.2507 / HOS 0.4664 / 26-of-37 / oracle selector 0.1928）数值真实但仅 DIAGNOSTIC。以 D017 为干净起点重测合法 FIR 专家（MMA 公平 μ + standalone DD-LMS）oracle 互补性。当前恢复入口 S011/D017（H011 待写）。"
+    description: "首轮正式 SCIENCE_SCOUT campaign。S011/D018 已关闭 CMA/MMA/DD-LMS 盲专家路由具体合同（oracle headroom 0.003693），不关闭新增信息路线。D019/H012 将下一步改为模型先验、pilot、因果历史、decoder/soft feedback 的组合级 headroom/observability Probe；current views 已收口。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 V007 PASS 的消费者部署（全局 Skill + STATUS + Project Adapter + protected history）作为科学探索起点

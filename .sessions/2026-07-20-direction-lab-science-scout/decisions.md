@@ -813,3 +813,43 @@ S011 + V006 + 用户原话 `voice.md` 2026-07-22。触发原话：见依据字�
 ### 来源
 
 S011 + V007 + 用户原话 `voice.md` 2026-07-22。
+
+---
+
+## D019: 先做信息来源组合级 headroom map，再投资具体 tracker 或改论文主线
+
+> status: active
+> date: 2026-07-22
+> 取代：无（D018 的具体盲专家路由否决继续有效）
+> 被取代：无
+> 依据: 验证: V007（合法盲专家 oracle headroom 仅 0.003693）+ critic: H012 前 current-view reconciliation（portfolio 内部矛盾、harvest YAML 无法解析）+ 用户原话: voice.md 2026-07-22 “寄了？咋办呢？你这边交接一下新对话。但之后呢？”
+
+### 决策
+
+下一科学动作不直接投资约一天实现 GG+SOP tracker，也不立即收束为负面论文。先围绕“什么新增合法信息能打破相关盲失效”建立开放候选组，并用最轻量的语义/可观测性/headroom Probe 批量比较：信道物理模型先验、稀疏或自适应 pilot、多 block 因果历史、decoder/CRC/soft-output 反馈。
+
+只有某一信息族同时表现出可用 headroom、运行时可观测性、物理合理性和可接受基础设施成本，才晋级方法 Scout。模型名不得代替信息增量；oracle 仍仅作 Kill/headroom bound。
+
+### 理由
+
+1. D018 证明的是同类盲 FIR 专家的失败相关，不是“所有接收方法无解”。继续更换 blind router 或增加 router 模型没有余量。
+2. H011 将 model-based tracker 写成“唯一剩余 positive-potential”，与 D017 已 invalidated 的“唯一轴”叙述冲突；pilot、history、decoder 等信息来源没有被同一证据关闭。
+3. 直接建 tracker 会把“状态是否可观测、oracle headroom 是否实用”推迟到高成本实现之后。先 Probe 可以批量比较多个族并避免再次单点深钻。
+4. 当前负面材料可作次级章节，但尚不足以满足主方法贡献；暂不提前锁定负面论文主线。
+
+### 排除的替代方案
+
+- **直接建完整 EKF/particle tracker**：暂不选；先验证可观测性和 headroom。
+- **继续 CMA/MMA/DD-LMS 路由或训练 ML router**：D018 已否决；oracle headroom 本身不足。
+- **立即把局部负面整理成主论文**：暂不选；保留为 fallback 与次级材料。
+- **一次性建设全部基础设施**：拒绝；先 Probe 排序，只建设能解锁最高信息价值候选的共享能力。
+
+### 影响范围
+
+- 更新 STATUS/state/portfolio/harvest 当前投影和恢复入口；不修改旧科学 artifacts 或 protected history。
+- 下一对话保持 SCIENCE_SCOUT，不自动进入 formal Groundwork/Contract/Execute。
+- D018 与本具体 blind-expert routing contract 的关闭状态不变。
+
+### 来源
+
+S011 / D017 / D018 / V007 / 用户 2026-07-22 交接请求。

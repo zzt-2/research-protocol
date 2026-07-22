@@ -1,11 +1,11 @@
 # state/current.yaml — sole machine current view
-# Rebuilt 2026-07-22 from S011 / D017 / V006 (supersedes the e15ae60 "5-axis exhausted"
+# Rebuilt 2026-07-22 from S011 / D017 / D018 / D019 / V006 / V007 (supersedes the e15ae60 "5-axis exhausted"
 # projection which was reconciled and invalidated on scientific-semantics grounds).
 # Explicit disposition lineage governs; protected history untouched.
 
 schema_version: research-direction-lab.state.current.v1
 project_id: thesis-fso.dual-pol-osl.direction-lab
-last_recovery_entry: H011-hybrid-routing-verdict.md
+last_recovery_entry: H012-information-source-portfolio-pivot.md
 
 formal_goal: >-
   Systematically identify whether machine learning provides a real, legally
@@ -102,10 +102,21 @@ effective_conclusions:  # reflect S011/D017/V006 reconciliation (e15ae60 invalid
     statement: >-
       16QAM inner-ring collapse survives per-method tuning (C08 bandit),
       per-symbol structure (C10 block_size=1), and CMA+DD-LMS cascade (C11) on
-      held-out 6/7 cells with headroom >= MDE. Collapse is a deep property of
-      Godard cost on this channel, not a block-end protocol artifact.
+      held-out 6/7 cells with headroom >= MDE. Within this measured slice these
+      exact results make a block-end-only explanation unlikely; they do not prove
+      a domain-wide Godard or channel property.
     ceiling: LOCAL_SLICE
     source: D008 / D011 / D012
+    validity: VALID
+
+  - id: HYBRID_BLIND_EXPERT_ROUTING_LOCAL_NEGATIVE
+    statement: >-
+      On 11 cells x 10 fresh seeds, the per-realization oracle selector among
+      legal CMA, MMA, and cold-start DD-LMS experts improved macro PI-SER by only
+      0.003693, below the preregistered 0.03 practical threshold. The exact
+      blind-expert routing contract is closed; added-information families remain open.
+    ceiling: LOCAL_SLICE
+    source: S011 / D018 / V007
     validity: VALID
 
 dispositions:
@@ -160,13 +171,13 @@ dispositions:
     reason: reused across >=6 batches (c04/c09/c14/c15/c16/corrector + c12 subset)
 
 next_action:
-  mode: scouting
+  mode: portfolio_mapping_and_probing
   description: >-
-    Macro A of the collapse-aware hybrid equalizer routing study (S011/D017):
-    retest oracle complementarity among LEGAL capability-aligned FIR fallback
-    experts (MMA with per-cost fair mu tuning; standalone DD-LMS from cold start)
-    on FRESH disjoint test seeds. Distinguish real failure mechanisms (inner-ring
-    collapse / source-separation failure / divergence / AWGN-unrecoverable /
-    permutation-phase ambiguity / under-convergence) instead of a single PI-SER>0.3.
-    Oracle = Kill/headroom bound only (FR-21/FR-25). If no practical oracle headroom
-    among legal experts at the preregistered threshold -> verdict C.
+    D018 closed the exact CMA/MMA/DD-LMS blind-expert routing contract because its
+    oracle headroom was only 0.003693 macro PI-SER. D019 therefore moves one level
+    up: map and cheaply probe distinct legal information sources that could break
+    the correlated blind failure (channel-model prior, sparse/adaptive pilot,
+    causal multi-block history, decoder/CRC/soft feedback). Do not build the full
+    tracker first. Rank source families by scoring-only headroom, observability,
+    physical usability, comparator fairness, infrastructure cost, novelty risk,
+    and thesis fit; Scout only a source family whose prerequisite Probe survives.

@@ -1,5 +1,5 @@
-# harvest/current.yaml — current thesis-consumption view after 2026-07-22 campaign round
-# Updated 2026-07-22 S011/D017/V006. This round added C14/C15/C16 mechanism negatives + 3 reusable assets.
+# harvest/current.yaml — current thesis-consumption view after S011/D017/D018/D019
+# Historical e15ae60 claims are retained below but are not current-active evidence.
 # Lineage: campaigns/science-scout-2026-07-20/harvest-addendum.v7 + this round's scout syntheses.
 # !!! D017 AMENDMENT (2026-07-22): the e15ae60 "PRIMARY THESIS SPINE — collapse is a channel
 # !!! property / 5-axis exhausted" global narrative is INVALIDATED on scientific-semantics
@@ -11,9 +11,10 @@
 
 schema_version: research-direction-lab.harvest.current.v1
 
-active:
+historical_e15ae60_snapshot:
   # ── PRIMARY THESIS SPINE: the collapse is a channel property ──
   - id: H060_COLLAPSE_CHANNEL_PROPERTY
+    status: invalidated_by_D017
     category: FAILURE_MECHANISM
     claim: >-
       The 16QAM inner-ring collapse on dual-pol OSL (GG turbulence + SOP dynamics)
@@ -30,6 +31,7 @@ active:
 
   # ── Per-axis mechanism negatives ──
   - id: H061_AFFINE_CORRECTION_NO_CONTEXT_VALUE
+    status: invalidated_by_D017
     category: FAILURE_MECHANISM
     claim: >-
       A learned context-dependent affine corrector optimizing the hard pseudo-label
@@ -40,6 +42,7 @@ active:
     evidence: c04-c09-o1-corrected-scout
 
   - id: H062_GMI_DEMAPPER_BOUND_NOT_EQUALIZER_BOUND
+    status: invalidated_by_D017
     category: FAILURE_MECHANISM
     claim: >-
       TX-truth oracle shows statistically ZERO GMI headroom over standard max-log
@@ -49,6 +52,7 @@ active:
     evidence: c12-gmi-soft-output-scout
 
   - id: H063_INIT_INVARIANT_COLLAPSE
+    status: amended_scope_narrowed_by_D017
     category: FAILURE_MECHANISM
     claim: >-
       Collapse is init-independent: TX-truth Wiener init (cosine 0.9995 with
@@ -59,6 +63,7 @@ active:
     evidence: c14-init-strategy-scout
 
   - id: H064_RING_AWARE_COST_SELF_CONSISTENT
+    status: invalidated_by_D017
     category: FAILURE_MECHANISM
     claim: >-
       Ring-aware/reduced-constellation cost INCREASES collapse (Δcollapse +0.036,
@@ -70,6 +75,7 @@ active:
     evidence: c15-reduced-const-cost-scout
 
   - id: H065_NONMODULUS_HOS_WORSE
+    status: invalidated_by_D017
     category: FAILURE_MECHANISM
     claim: >-
       Non-modulus HOS source separation (kurtosis maximization, no |z|² term) is
@@ -168,14 +174,14 @@ no_durable_harvest:
   - item: C14/C15/C16 each individually
     reason: each is a mechanism negative, durable only as part of the aggregate H060 spine; not individually harvestable as standalone thesis material
 
-thesis_spines:
+historical_thesis_spines_e15ae60:
   - spine: >-
       PRIMARY (negative boundary): The 16QAM inner-ring collapse on dual-pol OSL
       is a fundamental property of the blind equalization problem, surviving all
       five mechanism axes (correction, adaptation, cost, init, paradigm). Oracle
       shows the channel is invertible but the inversion info is not extractable
       from received statistics alone. This maps the entire blind-eq solution space.
-    status: evidence-backed (5 axes, 11 cells × 10 seeds each)
+    status: invalidated_by_D017
     ceiling: LOCAL_SLICE
     paper_value: HIGH — complete boundary characterization
 
@@ -183,108 +189,152 @@ thesis_spines:
       SECONDARY (diagnostic boundary): TX-truth affine recoverable but receiver-
       visible target unconfirmed learnable; blind affine locally harmful; GMI loss
       is equalizer-bound not demapper-bound.
-    status: evidence-backed (diagnostic)
+    status: historical_amended
 
   - spine: >-
       ASSET: GMI evaluator + HOS equalizer + Atlas gate enable future soft-output
       and paradigm-distinct comparisons.
-    status: evidence-backed (reusable)
+    status: historical_assets_require_current_view_caveats
 
   - spine: >-
       POTENTIAL ESCAPE (untested): receiver-only model-based GG+SOP tracker
       (rank-4 from remap) using channel MODEL priors (not pilots) feeding a
       model-based MMSE equalizer. This is the only untested sub-problem axis that
       could open a positive contribution line. Requires ~1 day infrastructure.
-    status: identified but not executed
+    status: historical_candidate_not_unique
     escalation: requires user strategy decision (material compute investment)
 
 # ─────────────────────────────────────────────────────────────────────────────
-# amended_2026_07_22 (S011/D017/V006) — CURRENT VALID CEILINGS
+# current_view (S011/D017/D018/D019) — SOLE CURRENT VALID PROJECTION
 # The e15ae60 harvest entries above are retained as protected history.
 # The block below is the sole current-valid view. Cite this block, not the
 # H060_PRIMARY spine above, until a legal-expert retest (Macro A) resolves it.
 # ─────────────────────────────────────────────────────────────────────────────
-amended_2026_07_22:
-  source: S011-hybrid-routing-reconciliation-and-study.md / D017 / V006
+current_view:
+  recovery_entry: H012-information-source-portfolio-pivot.md
+  source: S011-hybrid-routing-reconciliation-and-study.md / D017 / D018 / V006 / V007 / D019 / H012
 
-  - id: H060_DOWNGRADED
-    supersedes: H060_COLLAPSE_CHANNEL_PROPERTY
-    current_claim: >-
-      WEAK LOCAL_SLICE claim only: Godard-cost CMA collapses (inner-ring) on the
-      11-cell atlas slice × seeds 71-80. The global "fundamental channel property /
-      5-axis exhausted / inversion-info-unextractable / publishable negative
-      boundary / model-based tracker is the only remaining axis" claims are
-      INVALIDATED (5/7 axes had semantic failures or scope limits; seeds 71-80
-      lost held-out status).
-    ceiling: LOCAL_SLICE_WEAK
-    validity: VALID_AS_WEAK_LOCAL_ONLY
+  dispositions:
+    - id: H060_DOWNGRADED
+      supersedes: H060_COLLAPSE_CHANNEL_PROPERTY
+      current_claim: >-
+        WEAK LOCAL_SLICE claim only: Godard-cost CMA collapses on the 11-cell
+        atlas slice. The global channel-property, five-axis-exhaustion,
+        inversion-information, and publishable-negative-boundary claims are
+        INVALIDATED. Seeds 71-80 also lost confirmatory held-out status.
+      ceiling: LOCAL_SLICE_WEAK
+      validity: VALID_AS_WEAK_LOCAL_ONLY
 
-  - id: H062_WITHDRAWN
-    supersedes: H062_GMI_DEMAPPER_BOUND_NOT_EQUALIZER_BOUND
-    current_claim: >-
-      WITHDRAWN as a bound. C12 "zero GMI headroom" is a scale-artifact: the oracle
-      only swaps a global sigma^2 estimate (TX-truth-conditioned) then runs the
-      identical max-log, and the histogram-MI estimator is invariant to a common
-      LLR scale. It is NOT evidence that soft-output correction cannot recover GMI.
-      The GMI evaluator (H067) remains a valid reusable asset.
+    - id: C04_C09_UNRESOLVED
+      supersedes: H061_AFFINE_CORRECTION_NO_CONTEXT_VALUE
+      current_claim: >-
+        C04 remains implementation-confounded because its self-referential target
+        admits an input-independent zero-loss solution; C09 was not validly rerun
+        under a corrected target. No corrector-family negative is established.
+      validity: UNRESOLVED
 
-  - id: H063_SCOPE_NARROWED
-    supersedes: H063_INIT_INVARIANT_COLLAPSE
-    current_claim: >-
-      SCOPE-NARROWED: C14 proves the strongest single init (oracle Wiener, TX-truth
-      MMSE) collapses. It does NOT prove collapse is invariant across a genuinely
-      diverse init family: the cosine~0.9995 with center-tap and the far-orthogonal
-      (cosine 0.03-0.35) probes appear only in the synthesis narrative, not in the
-      shipped src. Oracle Wiener is correctly a Kill-only bound (truth-conditioned).
+    - id: H062_WITHDRAWN
+      supersedes: H062_GMI_DEMAPPER_BOUND_NOT_EQUALIZER_BOUND
+      current_claim: >-
+        WITHDRAWN as a bound. The C12 oracle only changes global sigma^2 while the
+        histogram-MI estimator is insensitive to common positive LLR scaling.
+      validity: INVALID_AS_BOUND
 
-  - id: H064_WITHDRAWN
-    supersedes: H064_RING_AWARE_COST_SELF_CONSISTENT
-    current_claim: >-
-      WITHDRAWN mechanism claim. C15 used a shared mu=0.03 across costs whose
-      gradient scales differ ~19x (Godard block-0 error +1.181 vs ring-aware +0.061),
-      so the ring-aware update norm is 19x smaller — an unequal effective step size,
-      not a clean test of the cost optimum. RCCMA cold-start freeze (n_active=0) is
-      a documented behavior, not a mechanism finding.
+    - id: H063_SCOPE_NARROWED
+      supersedes: H063_INIT_INVARIANT_COLLAPSE
+      current_claim: >-
+        Exact normalized-Wiener-direction and limited multistart variants did not
+        escape the measured failures. Initialization-family closure is unsupported.
+      validity: LOCAL_DIAGNOSTIC
 
-  - id: H065_RECLASSIFIED
-    supersedes: H065_NONMODULUS_HOS_WORSE
-    current_claim: >-
-      RECLASSIFIED (not a mechanism negative for closing an axis). C16 is a spatial
-      2x2 whitening + real-Givens heuristic with NO FIR structure — NOT a legal
-      capability-aligned expert vs the 11-tap 2x2 butterfly CMA anchor. The
-      diagnostic complementarity (CMA macro 0.2507 vs HOS 0.4664; 26/37 HOS-better-
-      in-collapse; oracle selector 0.1928) is reproducible in the data but rests on
-      this task-mismatched expert + contaminated seeds 71-80 + post-hoc PI-SER
-      oracle, so it is DIAGNOSTIC ONLY. It seeds the hybrid-routing study (S011),
-      not a Go signal. The HOS equalizer (H068) remains a valid reusable asset.
+    - id: H064_WITHDRAWN
+      supersedes: H064_RING_AWARE_COST_SELF_CONSISTENT
+      current_claim: >-
+        WITHDRAWN mechanism claim because C15 shared mu=0.03 across costs with
+        roughly 19x different gradient scales. Exact shared-mu outcomes remain raw facts.
+      validity: IMPLEMENTATION_CONFOUNDED
 
-  - id: SEEDS_71_80_INVALIDATED
-    current_claim: >-
-      seeds [71-80] lost held-out confirmatory status: reused as the test split in
-      >=6 independent batches (c04/c09/c14/c15/c16/corrector) + c12 subset (71-76)
-      + probes (71-73). Any confirmatory test must use fresh disjoint seeds.
+    - id: H065_RECLASSIFIED
+      supersedes: H065_NONMODULUS_HOS_WORSE
+      current_claim: >-
+        C16 is a task-mismatched spatial 2x2 heuristic, not a legal FIR-aligned
+        JADE/HOS baseline. Its old complementarity is diagnostic only.
+      validity: DIAGNOSTIC_ONLY
+
+    - id: SEEDS_71_80_INVALIDATED
+      current_claim: >-
+        Seeds 71-80 were reused across at least six batches and cannot support
+        future confirmatory claims.
+      validity: INVALID_AS_HELD_OUT
+
+  current_active:
+    - id: D018_HYBRID_ROUTING_LOCAL_NEGATIVE
+      category: LOCAL_NEGATIVE
+      finding: >-
+        On 11 cells x 10 fresh seeds, legal CMA/MMA/DD-LMS experts had only
+        0.003693 macro PI-SER oracle-selection headroom, below the preregistered
+        0.03 practical threshold. The exact blind-expert routing contract is closed.
+      ceiling: LOCAL_SLICE
+      evidence: S011 / D018 / V007 / hybrid-routing-scout-v1
+      thesis_destination: limitations or boundary-analysis chapter
+      status: active
+
+    - id: D017_TASK_MISMATCH_FALSE_COMPLEMENTARITY
+      category: EVALUATION_INSIGHT
+      finding: >-
+        A task-mismatched expert, reused test seeds, and post-hoc selection can
+        manufacture apparent complementarity that disappears under legal experts.
+      ceiling: METHODOLOGY_DIAGNOSTIC
+      evidence: D017 / V006
+      thesis_destination: evaluation methodology or threats-to-validity section
+      status: active
+
+    - id: C11_NO_BENEFIT_LOCAL
+      category: LOCAL_NEGATIVE
+      finding: Legal causal raw-decision CMA-to-DD-LMS policy showed no benefit on its frozen slice.
+      ceiling: LOCAL_SLICE
+      evidence: D012 / c11-legality-batch-v1
+      status: active
+
+    - id: BLIND_AFFINE_HARMFUL_LOCAL
+      category: LOCAL_NEGATIVE
+      finding: Receiver-visible blind affine was locally net harmful; causal explanation remains withdrawn.
+      ceiling: LOCAL_SLICE
+      evidence: D013-amended / D016
+      status: active
+
+    - id: H066_DETECTOR_CEILING
+      category: EVALUATION_INSIGHT
+      finding: Conventional receiver-visible detection reached the measured ceiling but had non-positive lead time.
+      ceiling: LOCAL_SLICE
+      evidence: probe p02 / D010
+      status: active
+
+    - id: H067_H068_EXPLORATORY_ASSETS
+      category: REUSABLE_ASSET
+      finding: >-
+        GMI and HOS code remain exploratory assets only; they require corrected
+        metric and algorithm-identity validation before scientific reuse.
+      ceiling: ASSET
+      evidence: C12/C16 source trees / D017
+      status: active_with_caveats
 
   current_valid_spines:
     - spine: >-
-        LOCAL_SLICE weak negative: Godard-cost CMA inner-ring collapse on the
-        11-cell slice (seeds 71-80), survives fair tuning / per-symbol / DD-LMS
-        cascade (C08/C10/C11 — these batches were fair and valid). NOT a global
-        channel-property claim.
-      status: evidence-backed (LOCAL_SLICE)
+        Boundary/diagnostic chapter: several exact blind-receiver modifications
+        fail locally, with D017/D018 documenting task mismatch and correlated failure.
+      status: evidence-backed but insufficient as a main method contribution
       ceiling: LOCAL_SLICE
-      paper_value: LOW-MEDIUM (slice-level only)
-    - spine: >-
-        DIAGNOSTIC (not a method): C16 HOS shows task-mismatched complementarity
-        with CMA on the collapse subset — motivates a legal-expert retest for
-        collapse-aware hybrid routing.
-      status: diagnostic only
-      ceiling: DIAGNOSTIC
-    - spine: >-
-        ASSET: GMI evaluator (H067) + HOS equalizer (H068) + Atlas gate (H006)
-        enable future soft-output and paradigm-distinct comparisons.
-      status: evidence-backed (reusable)
-    - spine: >-
-        OPEN (hybrid routing): legal FIR-aligned fallback experts (MMA fair-mu,
-        standalone DD-LMS) to be retested for oracle complementarity (Macro A).
-      status: scout in progress
+      paper_value: SECONDARY
 
+    - spine: >-
+        Positive-method search: identify which additional legal information source
+        can break the correlated blind failure before selecting an algorithm.
+      status: portfolio mapping and prerequisite Probes next
+      ceiling: HYPOTHESIS
+      candidate_sources: [channel_model_prior, sparse_or_adaptive_pilot, causal_history, decoder_crc_soft_feedback]
+
+  next_action: >-
+    D019 information-source headroom map first; do not commit to a full tracker,
+    negative-boundary paper, or formal-goal change until the source-family Probes
+    establish usable headroom and observability or jointly fail.
