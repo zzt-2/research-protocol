@@ -952,5 +952,97 @@ Q-DP4 的方法形态（A0 §2 诚实标注非必须 ML）与领域 top-3 成功
 2. Q-DP3 作为首选 Conditional Go，进维度 D MVE 验证恢复机制有效性（需先补衰落时域参数 FR-20）
 3. Q-DP2 作为备选，与 Q-DP3 共享 GG 时间模型基建（Q-DP3 做完时间模型后 Q-DP2 可复用）
 
+---
+
+## Q2 评估（Pilot-Jones）：传统短帧/块级稀疏 pilot LS Jones inversion → 稳定化方法
+
+> 来源：D055/D056/D061/D062（Pilot-Jones formal GW 线，Step 3.5 WAIVED_WITH_BLOCKING_DEBT，带债进 Step 4a 大包）。
+> 评估日期：2026-07-23 | 大包：T002 / S079 | 证据：`projects/simulation/explore/pilot-jones-step4a/`（source-closure.yaml, mve-contract.yaml, synthesis.md）+ `results/pilot-jones-step4a/result.json`。
+> M = 传统 block/frame pilot Jones inversion（短 pilot LS 估计 2×2 Jones + inverse derotation）
+> C = dual-pol OSL 的 GG 湍流 + 高速 SOP + ≤10% pilot 预算
+> A = 短 pilot 下 Jones 估计受噪声、病态和动态失配影响，fixed-label recovery 不稳定
+> **关键裁决（D055/D062）**：若只是场景迁移或 EMA 参数差异 → Kill；只有 GG/低 pilot 引入需要改变估计或稳定化结构的失效，才允许形成方法。
+
+### §0 四判据（A0 前置）
+
+| # | 判据 | 结论 | 备注 |
+|---|---|---|---|
+| 1 | 具体 M-C-A | PASS（形式） | M/C/A 句子级完整；但 **A 子句在本信道下经验上不成立**（见 §1 致命项） |
+| 2 | 方法产出形态 | PASS（形式） | 可产出稳定化设计准则/曲线族 |
+| 3 | 近期顶刊 baseline | PASS | OE 2021（L08 全文）、LCOMM 2026（L01 全文）+ JLT2022/2023/TCOMM2024（4 篇 BLOCKED_NO_FULLTEXT） |
+| 4 | 可量化对标 | PASS | fixed/PI BER、condition、overhead、tracking lag |
+
+形式合法，进 A0 §1-6。判据 2/3 不靠"OSL 没人做过"成立（OE 2021/LCOMM 2026 是直接机制 baseline）。
+
+### A0 §1 六项致命检查 — 两项致命成立
+
+| # | 检查 | 发现 | 致命？ |
+|---|---|---|---|
+| 1 | 性能差距是否真实 | **B0(block-LS pinv)→oracle 的差距被单一固定 EMA 参数完全吸收**（B1 EMA09≈oracle）。strong/historical rate: B0≈1.8e-5, B1≈6e-7, oracle≈6e-7（B1 多 seed 与 oracle bit-equal）。对抗性 hard deep-turb(α=2.0,β=1.0,17dB): B1 均值 5.3e-3 vs oracle 4.5e-3（相对 headroom ~0.19，亚一个数量级，多 seed B1==oracle）| **致命**（无结构差距可缩小） |
+| 2 | 是否需要新结构 | **固定 EMA09 已覆盖全部有用差距**。B2a tikhonov 比 B0 更差（给本就良态的矩阵加偏置）；B2b condition_guard 与 B0 逐位相同（guard 从不触发）。无正则化维度可竞争 | **致命** |
+| 3 | receiver-visible 信息是否够驱动自适应 | 够（cond、innovation 可算），但**无信号可作用**：cond ~ O(1)（strong p50=1.10/p95=1.26/max=1.68；hard probe p95=1.38），自适应触发器是平的 | 信息性 |
+| 4 | 负面证据是否解释沉默 | OE 2021 自述短 block 增噪/长 block 失配 + 仅在"特定退化态"附近矩阵退化；本 real-rotation 信道达不到这些态。直接竞品对"OSL GG 稳定化"的沉默与"无 OSL 专属结构失效可修"一致 | 支持 Kill |
+| 5 | 为什么直接竞品没做 | 场景假设差异（光纤 DSCM/SCM 非 OSL GG）+ **结构原因**：良态 pilot-LS 问题里固定平滑器已达天花板，无可发表的方法增量 | 支持 Kill |
+| 6 | 最强简单方法是否覆盖主指标 | **是——B1 固定 EMA09 把主指标覆盖到 oracle** | **致命（FR-01 先验覆盖）** |
+
+### A′ 竞争维度分解
+
+| 维度 | 本信道先验覆盖度 | 方法可竞争？ |
+|---|---|---|
+| pilot overhead | 单值 9.375%（6/64），≤10% 满足 | 否 |
+| per-block 估计方差 | **被 B1 固定 EMA09 完全覆盖→oracle** | **否** |
+| matrix conditioning / deep-fade 稳定性 | **结构缺席（cond~1）** | **否** |
+| temporal tracking lag | EMA09 覆盖；theta 慢（1 rad/100k sym） | 否 |
+| fixed-label assignment 稳定性 | assignment_xy 主导，非 P-vs-B2 轴 | 否 |
+| compute/state complexity | 各臂 O(1)/block | 否 |
+
+每个维度要么被简单 baseline 饱和，要么结构缺席。能区分 P 的剩余维度（conditioning、dynamic mismatch）正是本信道不演练的维度。
+
+### 方法候选比较（A/B，3 个机制不同）
+
+| 候选 | 机制声称 | 只是 EMA 换参？ | 需 truth？ | 解释 deep-fade vs mismatch？ | 最强 reviewer 反对 |
+|---|---|---|---|---|---|
+| B1 固定 EMA09（参考） | 方差缩减 | n/a（即参考） | 否 | 是（覆盖整段差距） | "trivial 固定参数" |
+| B2a tikhonov / B2b cond_guard（最强廉价替代） | 通过正则化/跳过做 bias-variance | 否 | 否 | 否——给良态 H 加偏置 | "正则化伤害良态问题" |
+| P uncertainty-aware temporal tracker（提出） | 按 cond/innov 调 α 的 trust/memory 调度 | **α 在本信道退化为 ≈0.9 固定（cond/innov 平）** | 否 | 部分意图但无信号可作用 | "α 在本信道是常数伪装" |
+| O true-theta oracle（tagged 上界） | 精确逆 | n/a | **是（tagged）** | 是 | "用了 truth，不可部署" |
+
+选定最强提出方法 = **P（uncertainty-aware temporal tracker）**。结果：P **不赢 B1**（hard 条件 0/10 paired win，6/10 tie，4/10 B1<P）。无一候选结构上胜过 fixed EMA / regularized LS → 按 T002 §5.2 必须 Kill，不跑性能 MVE。
+
+### Oracle / headroom 门控（FR-21）
+
+- B1（最强简单替代）→ true-theta oracle headroom：**可忽略**。strong 条件 B1 多 seed 与 oracle bit-equal；hard 对抗条件 B1 均值 5.3e-3 vs oracle 4.5e-3（相对 ~0.19，亚一个数量级）。
+- scoring oracle 仅用 **true theta**（无 TX data、无 future symbol）。
+- fixed-label 与 PI 口径 headroom 一致（assignment_xy 主导，PI==fixed，无 permutation-calibration gap 可挖）。
+- 预注册 kill（FR-21）：B1 在 oracle 2× 内 → Kill。**触发**。
+- 按 T002 rule 6 + FR-25：oracle 仅作上界/Kill 工具，**不作 Go 对手**；Go 对手是 B2，而 P 连 B1 都赢不了。
+
+### 维度 D（MVE）—— 未运行（门控 Kill）
+
+正式 90-cell 性能 MVE **未运行**，这是门控 Kill 的设计结果而非缺件（T002 rule 4）。两条独立 Kill 门在 semantic-smoke + bounded headroom 阶段同时触发：
+1. **A0 §1 致命 + FR-01 先验覆盖致命**：无结构性能差距；假设失效 A（病态）在 real-rotation 信道缺席；固定 EMA09 把主指标覆盖到 oracle。
+2. **FR-21 headroom Kill**：B1→oracle headroom 可忽略（<0.5dB 等效，亚一个数量级，多 seed bit-equal）。
+
+失效是**结构性的**（cond~1 信道 + B1==oracle），非统计性的——full MVE 不会改变裁决。bounded 10-seed 对抗条件 probe 已给出足够精度的 headroom 数字。
+
+### 4a 决策
+
+**KILL**（provisional，待主控验收 + 用户确认，D062 rule 6；不进 Step 5/Contract/Execute）。
+
+**根因（结构级）**：本信道的 2×2 极化混合是**实旋转**（theta = sop_rate·arange(N)，矩阵 [[c,s],[-s,c]]），条件数恒为 1。pilot-LS Gram 矩阵良态（实测 cond p50≈1.1，max≈1.7 即使深湍流）。pilot-LS 估计**有噪声（SNR 受限）但从不病态**。唯一失效模式是每块估计的*方差*，被单一固定时间平滑器（EMA09）完全消除——直达 oracle。无 conditioning 轴、无 deep-fade 奇异、无 EMA09 不处理的动态失配轴。
+
+### 范围边界与 claim ceiling
+
+- 本 Kill 限于 **real-rotation 信道**。若信道升级为带 PMD/PDL 的复 Jones（如 OE 2021 频率相关 RSOP，OE 显式限一阶 PMD），可能引入真实 conditioning 变化——但那是**不同信道模型**，且 4 篇直接竞品 BLOCKED_NO_FULLTEXT 使该潜在 conditioning 失效无法对照文献确认。
+- 即使信道升级，claim ceiling 最高 **CONDITIONAL_GO_WITH_BLOCKING_LITERATURE_DEBT**（4 篇债）。
+- 历史 EMA09 15/15（pilot_6p_ema09_full24）是 pilot-assisted-vs-blind(CMA) 比较，非 pilot-inversion 方法间比较；其 provenance 断裂（batch1_fade_methods.py SHA mismatch）已记录，不可 exact replay，仅作 diagnostic prior。
+
+### 可复用沉淀（Kill 路径）
+
+- **可复用负面/边界材料**：real-rotation OSL Jones 估计的结构性良态论证——固定 EMA 达 oracle，故无稳定化方法可发表（除非信道有真实频变 PMD/PDL）。排除整个"pilot-LS 稳定化"子族于 unitary real-rotation 信道。
+- **可复用 baseline ladder + runner/metrics**：B0/B1/B2/P/O ladder、paired-realization runner、fixed/PI metrics、10 directed tests——可复用于下一个 pilot-Jones 式问题（如复 Jones 信道或不同 M-C-A）。
+- **可复用机制诊断**：cond-distribution + B1-vs-oracle headroom probe 是任何"稳定化矩阵估计"候选的 5 分钟 pre-MVE 滤波器（泛化 FR-21）。
+- **排除的方法族**：generic pilot→Jones→inverse + EMA/Tikhonov/condition-guard 稳定化于 unitary real-rotation 信道。无信道模型改变（引入真实 conditioning 变化）不得复提。
+
 **MVE 基建共享**：Q-DP2 和 Q-DP3 都需要 GG 时间域衰落模型——建议先建这个共享基建，一次投入两个方向受益。
 

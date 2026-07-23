@@ -1,0 +1,174 @@
+# Source closure — Pilot-Jones GW Step 4a big package
+#
+# Frozen provenance for the minimal reproducible closure used by the
+# Pilot-Jones Step 4a big package.  The closure is self-contained in this
+# worktree (D053-era explore/cma-fade-divergence was never commited to this
+# branch and is only available read-only in the source worktree); we re-trace
+# the canonical channel and reimplement the pilot-LS / inverse / EMA /
+# regularized-LS / oracle algorithms against the canonical generator that IS
+# tracked on the current branch.
+#
+# Owner of this file: T002 (PILOT_JONES_STEP4A_PACKAGE), epoch 4.
+
+closure_id: pilot-jones-step4a-big-package-v1
+created: 2026-07-23
+worktree: "D:\\code\\study\\research-protocol\\.worktrees\\research-direction-lab-longitudinal-test"
+branch: codex/research-direction-lab-longitudinal-test
+basis: D053 6-pilot EMA09 full24 + canonical dual-pol GG channel on current branch
+
+# ---------------------------------------------------------------------------
+# 1. Canonical generator (tracked on current branch, the channel truth source)
+# ---------------------------------------------------------------------------
+canonical_generator:
+  primary:
+    file: projects/simulation/common/_dual_pol_channel.py
+    function: generate_shared_realization_dp
+    sha256: 5cefac97d120e5590905ae36ab20cabc8832a6c556368b1d9f154a2a8091818c
+    role: >-
+      shared dual-pol QPSK realization (rX/rY/sX/sY/h/theta/bits). h = GG time
+      envelope (gar AR1); theta = sop_rate*arange(N) real rotation;
+      rX = sqrt(h)*(cos*sX + sin*sY) + sqrt(nv)*noise; rY = sqrt(h)*(-sin*sX +
+      cos*sY) + sqrt(nv)*noise; nv = 1/(2*gamma_bar). Same realization consumed
+      by every arm of a cell -> paired fairness.
+  gg_time:
+    file: projects/simulation/common/_gg_time.py
+    function: gg_time_envelope
+    sha256: d8e7929d00d885eccf111eb96d80ecd3822b065cbf3eca09ed31912c3da73113
+    role: >-
+      Gamma-Gamma time-domain envelope (gar AR1 method; edge KS<0.006).
+  params:
+    file: projects/simulation/params.py
+    class: SimulationConfig
+    sha256: 0e87c53364461478eddcd81426d8e04646270c3ea7aa717e3c3b28c5dd2a99e9
+    role: >-
+      single truth source for T_S (4e-10s, R_SYM=2.5e9), GAMMA_BAR_DEFAULT
+      (100 -> 20 dB SNR), BLOCK (100), strong turbulence (alpha=4.2, beta=1.4),
+      AR1_METHOD=gar, tau_c_from_fg (tau_c=1/(2*pi*f_g)).
+  common_init:
+    file: projects/simulation/common/__init__.py
+    sha256: c76781beac0b2a188fc918ecb16b82c801662f0b1ed5bc6a08a918d1a7208c02
+
+# ---------------------------------------------------------------------------
+# 2. Read-only historical assets (source worktree, never modified)
+# ---------------------------------------------------------------------------
+# Read-only source worktree (do NOT modify, commit, clean or move):
+source_worktree: "D:\\code\\study\\research-protocol\\.worktrees\\unified-batch-runner"
+read_only_historical:
+  pilot_assisted:
+    file: projects/simulation/explore/cma-fade-divergence/pilot_assisted.py
+    expected_sha256: f9293b72df0b84b434ced0a75913b09eb0a48ef87c7878485449e97168c24464
+    verified: "MATCH (sha256sum 2026-07-23)"
+    role: >-
+      reference for pilot injection + block LS Jones estimate seam. We
+      REIMPLEMENT (not copy) because this file lives outside the current branch.
+      Key facts re-traced: pilots replace only pilot positions; noise is
+      reconstructed from the canonical realization (no new random draw); pilot
+      overhead = n_pilots/block_size; theta uses the channel real SOP rotation
+      (Jones matrix here is a real 2x2 rotation, NOT a full complex Jones
+      matrix -- see known_simplification).
+  pilot_integration_runner:
+    file: projects/simulation/explore/cma-fade-divergence/pilot_integration_runner.py
+    expected_sha256: b147bbd57bd362158656469e75119323256ee8d057fbd55ca8c3da37eb3ea2ef
+    verified: "MATCH (sha256sum 2026-07-23)"
+    role: >-
+      reference for derotate_data_with_estimates (pinv / tikhonov /
+      condition_guard / ema_alpha). Reimplemented in pilot_jones_methods.py.
+  batch1_fade_methods:
+    file: projects/simulation/explore/cma-fade-divergence/batch1_fade_methods.py
+    # KNOWN PROVENANCE BREAK:
+    historical_claimed_sha256: 09b1fe2de6c5363c4a213147a35cbe403017dabb19747730ddad55ed61ef3d91
+    actual_sha256_on_disk: d8e280b480bbf67938d4bd3160ac298af3e2c1f10080ef3ff12b997a6bf8a97a
+    expected_sha256: d8e280b480bbf67938d4bd3160ac298af3e2c1f10080ef3ff12b997a6bf8a97a
+    verified: >-
+      MATCH (actual disk file) -- but MISMATCHES the sha the historical JSON
+      claims for this file.
+    role: >-
+      reference for standard complex Godard-z 2x2 CMA core
+      (w += mu*(e*z)*conj(r) with e = R2-|z|^2). Verified the gradient includes
+      the z factor (godard_with_z). We reimplement the standard CMA core in
+      pilot_jones_methods.py.
+  batch_metrics:
+    file: projects/simulation/common/_batch_metrics.py
+    expected_sha256: 7ff4c9d6fbcf7eef075fd4f88f2d42097cf75bca8640b150d69faa583d905cd0
+    verified: "MATCH (sha256sum in source worktree 2026-07-23)"
+    role: >-
+      reference for fixed-label BER (4-rotation phase-corrected) and PI-BER
+      (2! x 4 x 4 permutation+quadrant search). NOT tracked on current branch
+      -> reimplemented in metrics.py.
+
+# ---------------------------------------------------------------------------
+# 3. Historical result used only as diagnostic prior (NOT exact replay)
+# ---------------------------------------------------------------------------
+historical_result_prior:
+  file: projects/simulation/results/cma-fade-divergence/pilot_6p_ema09_full24_N100k.json
+  expected_sha256: aef153e7fe1d082a108c1730e904e71d18a630cf1d83035bb0f73dedf5b8c1a7
+  verified: "MATCH (sha256sum 2026-07-23)"
+  config:
+    N: 100000
+    rates: [4.0e-6, 8.0e-6, 1.0e-5]
+    seeds: [41, 42, 43, 44, 45, 46, 47, 48]
+    n_pilots: 6
+    ema_alpha: 0.9
+  experiment: D053 6-pilot EMA stabilization full grid
+  claimed_summary:
+    cells: 24
+    failure_denominator: 15
+    failure_ge_50pct: 15
+    failure_improved: 15
+    clean_denominator: 9
+    clean_degraded: 0
+    diverged: 0
+    equal_denominators: true
+  provenance_status: NOT_EXACT_REPLAY
+  reason: >-
+    The historical JSON source_sha256 claims batch1_fade_methods.py =
+    09b1fe2d..., but the only file present on disk has sha d8e280.... The
+    claimed source therefore cannot be bit-exact replayed from the current
+    source worktree. The 15/15 (failure_improved>=50% in 15/15 failure cells,
+    0/9 clean degradation) is treated ONLY as a diagnostic prior, NOT as a
+    fresh MVE result and NOT as Go evidence (per T002 rule 5 + FR-26). The
+    15/15 compares pilot_derotation (pilot-LS Jones inverse with EMA09) vs
+    baseline (standard blind CMA, no pilot treatment) -- i.e. it is a
+    pilot-assisted-vs-blind comparison, NOT a comparison between pilot-inversion
+    methods. It therefore only clears B0-style (no temporal smoothing) at best;
+    it does not establish any proposed method beats B2 (strongest simple
+    regularized alternative).
+
+# ---------------------------------------------------------------------------
+# 4. New closure files (this worktree, fresh seeds, fresh evaluation)
+# ---------------------------------------------------------------------------
+new_closure:
+  metrics: {file: projects/simulation/explore/pilot-jones-step4a/metrics.py}
+  methods: {file: projects/simulation/explore/pilot-jones-step4a/pilot_jones_methods.py}
+  runner: {file: projects/simulation/explore/pilot-jones-step4a/run_pilot_jones_mve.py}
+  contract: {file: projects/simulation/explore/pilot-jones-step4a/mve-contract.yaml}
+  tests: {file: projects/simulation/tests/test_pilot_jones_step4a.py}
+  result: {file: projects/simulation/results/pilot-jones-step4a/result.json}
+
+# ---------------------------------------------------------------------------
+# 5. Known simplifications + provenance debt
+# ---------------------------------------------------------------------------
+known_simplification:
+  real_rotation_jones: >-
+    The canonical generator models the 2x2 polarization mixing as a REAL
+    rotation (theta = sop_rate*arange(N); matrix [[c,s],[-s,c]]), not a full
+    complex Jones matrix with independent PMD/PDL. The historical pilot-assisted
+    seam estimates a 2x2 COMPLEX matrix via LS but the ground-truth channel is a
+    real rotation, so the "Jones estimate" effectively recovers a near-real
+    rotation. Consequence: the pilot-LS estimate is well-conditioned except
+    where h is deep (few pilots * noise) and where theta is near the
+    assignment-flip axis. This is the SAME simplification as the source
+    closure; it does not bias P vs B0/B1/B2 because all arms share it, but it
+    bounds claim ceiling (see synthesis.md).
+  no_frequency_dependent_pmd: >-
+    OE 2021 explicitly limits to first-order PMD; the canonical generator has
+    no frequency-dependent PMD at all. A real complex Jones with PMD would
+    introduce frequency-dependent conditioning that could change the
+    regularization-optimal point. Recorded as known divergence from OE 2021
+    conditions; does not block the P-vs-B2 structural question.
+
+provenance_debt:
+  - >-
+    The 4 D056 direct-competitor full texts remain BLOCKED_NO_FULLTEXT
+    (TCOMM 2024 / JLT 2025 / JLT 2022 / JLT 2023). Claim ceiling capped at
+    CONDITIONAL_GO_WITH_BLOCKING_LITERATURE_DEBT per D062.

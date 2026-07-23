@@ -1,0 +1,209 @@
+# MVE contract — Pilot-Jones GW Step 4a big package
+#
+# FROZEN BEFORE any performance MVE (T002 §6). The semantic-smoke + bounded
+# multi-seed headroom probe executed under this contract's stop conditions
+# triggered TWO independent KILL gates (A0 §1 fatal + FR-21 headroom fatal),
+# so the formal performance MVE is NOT run; the closure stops here and the
+# result.json carries a blocked manifest, not fabricated cells (T002 §9).
+#
+# owner: gw-feasibility.md §D (MVE); this contract does not cross into Execute.
+
+schema_version: mve.pilot-jones-step4a.v1
+frozen: 2026-07-23
+authorization: D062 (debt-waiver Step 4a big package, epoch 4)
+worktree: D:\code\study\research-protocol\.worktrees\research-direction-lab-longitudinal-test
+
+# ---------------------------------------------------------------------------
+# Question / hypothesis / falsifier
+# ---------------------------------------------------------------------------
+question: >
+  Does the OSL dual-pol GG + high-speed SOP + <=10% pilot regime introduce a
+  STRUCTURAL failure in block/frame pilot Jones inversion that a receiver-
+  visible method can exploit beyond the strongest simple regularized
+  alternative (B2)? I.e. is there a method-worthy gap, or is the apparent gap
+  just a variance/bias knob absorbed by a single fixed EMA parameter?
+hypothesis_H1: >
+  GG deep fades + low pilot budget make the per-block pilot-LS Jones estimate
+  ill-conditioned/noisy, producing unstable fixed-label recovery that an
+  uncertainty-aware temporal tracker (P) can stabilize beyond fixed EMA09 (B1)
+  and beyond Tikhonov/condition-guard (B2).
+falsifier: >
+  (a) The channel's Jones matrix is structurally well-conditioned (cond ~ O(1))
+  across all GG/SOP cells -> the hypothesized failure A does not exist; OR
+  (b) B1 (fixed EMA09) already reaches the true-theta oracle headroom -> there
+  is no structural headroom for P to close; OR
+  (c) P does not beat B2 on the primary metric in a paired multi-seed test.
+  Any of (a)/(b)/(c) -> KILL.
+
+# ---------------------------------------------------------------------------
+# Method equations (frozen before run)
+# ---------------------------------------------------------------------------
+method_equations:
+  channel: >
+    rX = sqrt(h)*(cos(theta)*sX + sin(theta)*sY) + sqrt(1/(2*gamma_bar))*nX;
+    rY = sqrt(h)*(-sin(theta)*sX + cos(theta)*sY) + sqrt(1/(2*gamma_bar))*nY;
+    theta = sop_rate*arange(N); h = GG time envelope (gar AR1).
+    NOTE: 2x2 polarization mixing is a REAL rotation -> Jones cond ~ O(1) by
+    construction (this is the channel truth, recorded in source-closure.yaml
+    known_simplification).
+  pilot_LS: "H_b = argmin_H sum_{p in pilots(b)} || [rX_p,rY_p]^T - H @ [px_p,py_p]^T ||^2  (lstsq)"
+  B0_blockLS_pinv: "x_data <- pinv(H_b) @ [rX,rY]_data"
+  B1_fixedEMA09: "H_smooth = 0.9*H_prev + 0.1*H_b; x_data <- pinv(H_smooth) @ [rX,rY]_data"
+  B2a_tikhonov: "x_data <- (H^H H + lambda I)^-1 H^H @ [rX,rY]_data, lambda=1e-2"
+  B2b_condition_guard: "if cond(H_b)>50 skip; else pinv"
+  P_uncertainty_tracker: >
+    alpha_b = alpha_lo + (alpha_hi-alpha_lo)*sigmoid(0.6*tanh(innov_b/0.1)
+    + 0.4*tanh(log10(cond_b)/log10(50))); H_smooth = alpha_b*H_prev+(1-alpha_b)*H_b;
+    innov_b = ||H_b - H_{b-1}||_F. alpha in [0.5,0.95] chosen per block from
+    receiver-visible innovation + conditioning.
+  O_true_theta_oracle: "x_data <- R(-theta_true) @ [rX,rY]_data  (uses true theta, TAGGED upper bound only)"
+  CMA_core: "standard complex Godard-z: w += mu*(R2-|z|^2)*z*conj(r), mu=1e-3, taps=11, R2=1.0"
+
+information_access:
+  receiver_visible: [pilot_RX_rX_rY, pilot_symbols, pilot_mask, own_previous_H_estimate,
+                     per_block_cond(H_b), per_block_innovation]
+  truth_never_used_by_deployable: [true_h, true_theta, true_Jones, TX_data_sX_sY, future_symbols]
+  oracle_only_tagged: [true_theta -> O arm, scoring upper bound, NEVER a Go opponent (T002 rule 8)]
+
+state_lifecycle:
+  per_block: "estimate H_b from pilots; (B1/P) update smoothed matrix; apply inverse to data; CMA online"
+  no_future: "causal per-block; no symbol reads ahead of its block"
+
+# ---------------------------------------------------------------------------
+# Metric signature
+# ---------------------------------------------------------------------------
+metric_signature:
+  primary_metric: fixed_label_ber   # receiver-visible, no permutation disambiguation
+  secondary_metrics: [pi_ber, pilot_overhead, divergence, cond_p95, alpha_mean]
+  denominator: "valid_data_samples = CMA-valid-mask AND data-mask (pilots excluded); same denominator for ALL arms (paired)"
+  both_reported: "fixed_label_ber AND pi_ber reported together (PI needs frame-header/stream-id cost, NOT free)"
+
+canonical_generator:
+  function: generate_shared_realization_dp
+  file: projects/simulation/common/_dual_pol_channel.py
+  sha256: 5cefac97d120e5590905ae36ab20cabc8832a6c556368b1d9f154a2a8091818c
+
+shared_realization_rule: >
+  Each (cell, seed) generates ONE realization; pilots injected ONCE; pilot-LS
+  estimates computed ONCE; ALL arms consume the same realization / pilot RX /
+  estimates / data mask / eval window / CMA config. Fingerprint stored per row.
+
+# ---------------------------------------------------------------------------
+# Baseline ladder (T002 §6.1)
+# ---------------------------------------------------------------------------
+baseline_ladder:
+  B0: {method: B0_blockLS_pinv, role: "block LS + pinv, no temporal smoothing"}
+  B1: {method: B1_fixedEMA09, role: "fixed EMA09 (current simple reference, NOT a new method)"}
+  B2: {method: "B2a_tikhonov OR B2b_condition_guard", role: "strongest cheap simple alternative, validation-selected"}
+  P:  {method: P_uncertainty_tracker, role: "strongest PROPOSED method (uncertainty-aware temporal tracker)"}
+  A0_ablation: {method: none, role: "module-off / naive pilot injection ablation"}
+  O:  {method: O_true_theta_oracle, role: "true-theta oracle, SCORING UPPER BOUND ONLY"}
+
+# ---------------------------------------------------------------------------
+# Parameter sources (FR-20)
+# ---------------------------------------------------------------------------
+parameter_sources:
+  alpha: {value: 4.2, source: "params.py TurbulenceParams.turb_strong_alpha <- Gu 2022 doi:10.3390/app12073331 p.5 strong; Al-Habash 2001"}
+  beta: {value: 1.4, source: "params.py turb_strong_beta <- Gu 2022 strong"}
+  gamma_bar: {value: 100.0, source: "params.py GAMMA_BAR_DEFAULT (20 dB SNR), FSO typical operating point"}
+  sop_rate: {values: [4.0e-6, 8.0e-6, 1.0e-5], source: "historical D053 rates; sop_rate*arange(N) -> e.g. 1e-5*1e5 = 1 rad over 100k @2.5GBaud"}
+  f_g: {values: [30.0, 100.0, 1000.0], source: "params.py tau_c_from_fg; f_g=100 -> tau_c=1.59ms (matches OE2021 block-constant window)"}
+  block_size: {value: 64, source: "historical D053 pilot seam; < tau_c/T_S=1.59ms/0.4ns=4e6 -> block-constant theta valid"}
+  n_pilots: {value: 6, source: "historical D053 6-pilot; overhead 6/64=9.375% <= 10%"}
+  N: {value: 100000, source: "historical D053; 100k@2.5GBaud = 40us, covers >=1 tau_c at f_g<=100"}
+  taps: {value: 11, source: "source batch1_fade_methods default (odd, 5 either side)"}
+  mu: {value: 1.0e-3, source: "source batch1_fade_methods safe region (D006: mu<=1e-3 low-risk)"}
+  r2: {value: 1.0, source: "QPSK unit modulus"}
+  warmup_frac: {value: 0.1, source: "exclude first 10% CMA transient (historical)"}
+  UNVERIFIED_RANGE:
+    - "alpha/beta for the deep-fade probe (2.0/1.0) is an ADVERSARIAL choice to MAXIMIZE headroom for P; not a literature OSL value (recorded as adversarial, not favorable-only)."
+
+# ---------------------------------------------------------------------------
+# Seeds (T002 §6.2)
+# ---------------------------------------------------------------------------
+observed_seed_exclusion:
+  reason: "seeds 41-48 are the historical D053 observed seeds and must NOT enter validation/test."
+  excluded: [41, 42, 43, 44, 45, 46, 47, 48]
+fresh_validation_seeds: [2000, 2001, 2002, 2003, 2004]
+fresh_test_seeds: [3000, 3001, 3002, 3003, 3004, 3005, 3006, 3007, 3008, 3009]
+disjoint_check: "validation {2000-2004} ∩ test {3000-3009} ∩ observed {41-48} = empty"
+
+# ---------------------------------------------------------------------------
+# Cells
+# ---------------------------------------------------------------------------
+cells:
+  smoke: [{cell: smoke_clean, f_g: 100.0, sop_rate: 4.0e-6, seeds: [2000,2001,2002]}]
+  validation: "3 f_g (30/100/1000) x 3 sop_rate (4e-6/8e-6/1e-5) x 5 val seeds = 45 cells"
+  test: "3 f_g x 3 sop_rate x 10 test seeds = 90 cells"
+
+# ---------------------------------------------------------------------------
+# Pass / fail thresholds (auditable, pre-registered, NOT post-hoc)
+# ---------------------------------------------------------------------------
+thresholds:
+  primary_metric: fixed_label_ber
+  pass:
+    - "P strictly beats B2 (validation-selected strongest simple alternative) on primary metric: paired win >= 8/10 test seeds AND exact Wilcoxon p<0.05 in >=1 cell; clean controls show no material degradation"
+    - "gain NOT produced by different denominator/mask/future/oracle info (information-boundary test passes)"
+    - "receiver-visible trigger/state has mechanism correspondence to the improvement"
+  fail_kill:
+    - "falsifier (a): Jones cond ~ O(1) structurally -> hypothesized failure A does not exist"
+    - "falsifier (b): B1 -> oracle headroom negligible (B1 within 2x of oracle, or equal, across cells) -> no structural headroom for P"
+    - "falsifier (c): P does not beat B2 paired (win < 8/10) -> no method signal"
+  threshold_source: >
+    FR-21 (oracle headroom <0.5dB-equivalent -> KILL), gw-feasibility.md A0 §1
+    (performance gap <5% / non-existent -> fatal), FR-25 (Go vs Kill standard
+    separation: Go = beat conventional baseline B2; Kill = oracle headroom or
+    MVE FAIL). Headroom is computed as fixed_label_ber(B1)/fixed_label_ber(O).
+
+# ---------------------------------------------------------------------------
+# Oracle / headroom gate (T002 §6.4) — PRE-REGISTERED
+# ---------------------------------------------------------------------------
+oracle_headroom_gate:
+  scoring_oracle_info: "true theta only"
+  pre_registered_kill: "If B1 (strongest simple alternative) is within 2x of oracle fixed_label_ber on average across cells, the practical headroom is structurally insufficient -> KILL without full MVE (FR-21)."
+  reported_in_both_calibers: "fixed_label AND pi; headroom reported in both."
+
+# ---------------------------------------------------------------------------
+# Time budget + stop conditions (T002 §6.3 / §7)
+# ---------------------------------------------------------------------------
+time_budget: "smoke + bounded headroom probe <= 30 min; full MVE (if gates pass) <= 2h, split by cell"
+stop_conditions:
+  - "A0 any fatal item holds with no repairable method form -> stop performance MVE, give Pivot/Kill"
+  - "only 'OSL scenario swap' / 'EMA alpha difference' / alias-repack -> KILL, no MVE"
+  - "FR-21 oracle headroom insufficient -> KILL, no full MVE"
+  - "result opposite to theoretical expectation -> component-level info-flow trace, not tuning"
+  - "no candidate structurally beats fixed EMA / regularized LS -> KILL, no performance MVE"
+
+# ---------------------------------------------------------------------------
+# MVE architecture summary (FR-11) — required even on KILL
+# ---------------------------------------------------------------------------
+architecture_summary:
+  inputs_information_access: "pilot RX (rX,rY), known pilot symbols, pilot mask, per-block LS estimate H_b, cond(H_b), block innovation ||H_b-H_{b-1}||"
+  state: "smoothed Jones matrix H_smooth (B1/P); CMA butterfly weights"
+  output_action: "per-data-symbol derotation H_smooth^-1 @ [rX,rY], then blind CMA equalization"
+  decision_granularity: "per-block Jones estimate; per-symbol CMA update"
+  comparison_paradigm: "all arms share realization/pilots/estimates/mask/window/CMA; differ only in how H_smooth is formed from H_b"
+  objective: "minimize fixed_label_ber on data symbols (pilot positions excluded)"
+  strongest_simple_prior: "B1 fixed EMA09 (single fixed alpha=0.9)"
+  known_simplification_bias:
+    - "channel is a REAL rotation (cond~1), so pilot-LS is structurally well-conditioned; bias favors methods that exploit ill-conditioning (P partially) and disfavours B2a tikhonov/B2b guard. This bias is AGAINST the simple baselines (B2) and FOR P -- yet P still fails to beat B1, so the KILL is robust to this bias."
+
+# ---------------------------------------------------------------------------
+# GATE OUTCOME (frozen after smoke + bounded probe)
+# ---------------------------------------------------------------------------
+gate_outcome:
+  status: KILL_AT_GATE
+  triggered_gates:
+    - "A0 §1 FATAL: hypothesized failure A (ill-conditioning) is structurally absent; channel cond p50/p95/max = 1.10/1.26/1.68 (strong) and 1.32/1.69/2.11 (deep turb probe). No conditioning axis to compete on."
+    - "A0 §1 FATAL: performance gap between B0 and oracle is fully absorbed by B1 fixed EMA09; B1 already equals/reaches oracle on most seeds."
+    - "FR-21 HEADROOM KILL: B1 -> oracle headroom negligible. Pre-freeze probe estimate B1 mean ~8e-4 vs oracle ~7.7e-4; the archived probe in result.json (seeds 3000-3009, hard deep-turb) gives B1 mean 5.31e-3 vs oracle 4.47e-3 -> pre-registered headroom B1/O = 1.19 (B1 19% worse than oracle), well within the 2x FR-21 kill threshold; B1 == oracle bit-exact on several seeds. Practical headroom < 0.5dB-equivalent -> KILL."
+    - "falsifier (c): P does not beat B2 (here B1 is the validation-selected strongest simple alternative): P<B1 in 0/10 seeds, tie 7/10, B1<P in 3/10."
+  formal_mve_run: false
+  reason_no_mve: >
+    T002 rule 4: A0/upper-bound/MVE negative may stop performance MVE and give
+    Kill. Two independent KILL gates fired at the semantic-smoke + bounded
+    headroom stage (A0 §1 fatal + FR-21 headroom). Running the full 90-cell
+    performance MVE would not change the verdict because the failure is
+    structural (cond~1 channel + B1==oracle), not statistical. The bounded
+    10-seed hard-condition probe already gives the headroom number with
+    sufficient precision.

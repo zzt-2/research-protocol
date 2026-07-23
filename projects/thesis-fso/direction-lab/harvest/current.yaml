@@ -402,6 +402,38 @@ current_view:
     main-method signal; NO active thesis spine. Local-negative + methodology-lesson material ->
     harvest/limitations ONLY; NOT a full negative paper. F1/F3 spines WITHDRAWN. F4 BOUNDARY kept as
     limitations material. D061 routing remains: P03 = PAUSED_RETURNED_TO_PORTFOLIO; Pilot-Jones is the
-    formal line. D062 selects a debt-bearing waiver: Step 3.5 is WAIVED_TO_STEP4A_WITH_BLOCKING_DEBT,
-    not PASS; 4 direct-competitor full reads remain BLOCKED. Step 4a is AUTHORIZED_IN_PROGRESS; next =
-    execute live-test T002 and stop at a provisional verdict before Step 5. Do NOT resume Scout/P03.
+    formal line. D062 Step 4a big package EXECUTED (T002/S079/V036): provisional GATE_KILL — A0 §1
+    fatal + FR-21 headroom Kill (fixed EMA09 reaches oracle on the unitary real-rotation channel).
+    KILL scoped to the unitary-rotation instantiation; direction itself NOT killed (only rescue in
+    scope = upgrade canonical channel to complex Jones/PMD/PDL, out of T002 scope). Pending
+    master-control + user confirmation (D062 rule 6). Do NOT resume Scout/P03; do NOT enter
+    Step 5/Contract/Execute; do NOT push.
+
+  pilot_jones_step4a_gate_kill_2026_07_23:
+    # NEW durable harvest (negative/boundary + reusable infra), from T002/S079/V036.
+    - id: H079_PILOT_JONES_UNITARY_ROTATION_NO_HEADROOM
+      status: current_active
+      category: FAILURE_MECHANISM  # structural negative for the unitary-rotation channel class
+      claim: >-
+        On a unitary real-rotation dual-pol OSL channel (theta=sop_rate*arange(N),
+        Jones=[[c,s],[-s,c]], cond==1), block-pilot LS Jones inversion is structurally
+        well-conditioned (measured cond p50~1.1, max~1.7 even in deep turbulence). The only
+        failure mode is per-block estimate variance, which a SINGLE fixed EMA parameter
+        (alpha=0.9) removes entirely, reaching the true-theta oracle (B1==oracle bit-exact on
+        many seeds; B1/O headroom 1.19 < 2x -> FR-21 Kill). No stabilization method
+        (Tikhonov B2a / condition-guard B2b / uncertainty-aware tracker P) can beat the
+        fixed-EMA ceiling; the proposed P loses 0/10 paired vs B1 on adversarial deep-turb.
+      ceiling: LOCAL (unitary real-rotation channel instantiation; complex-Jones/PMD/PDL out of scope)
+      evidence: projects/simulation/explore/pilot-jones-step4a/{source-closure,mve-contract,synthesis}.md + results/pilot-jones-step4a/result.json + V036
+      paper_value: SECONDARY (boundary/negative material; excludes "pilot-LS stabilization" sub-family on unitary-rotation channels)
+    - id: H079_REUSABLE_PILOT_JONES_RUNNER_METRICS
+      status: current_active
+      category: REUSABLE_INFRA
+      claim: >-
+        Reusable B0/B1/B2/P/O baseline ladder, paired-realization runner, fixed-label/PI-BER
+        metrics, 10 directed tests, and a 5-minute pre-MVE filter (cond-distribution +
+        B1-vs-oracle headroom probe) for any "stabilize a matrix estimate" candidate
+        (generalizes FR-21). Lives in projects/simulation/explore/pilot-jones-step4a/.
+      ceiling: REUSABLE
+      evidence: projects/simulation/explore/pilot-jones-step4a/{metrics,pilot_jones_methods,run_pilot_jones_mve}.py + tests/test_pilot_jones_step4a.py
+      paper_value: SUPPORTING (reusable infra for the next pilot-Jones-style question, e.g. complex-Jones channel)

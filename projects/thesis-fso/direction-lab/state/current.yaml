@@ -31,7 +31,7 @@ authorization:
   current_mode: DORMANT  # was SCIENCE_SCOUT; D022 SCIENCE_FREEZE paused the campaign (topic dormant). D061 confirms: no current science-execution authorization in the Scout campaign.
   science_authorized: false  # the Scout campaign is dormant; formal science now advances ONLY via the Pilot-Jones formal GW line (master-state.md §2), NOT via this campaign
   scope: dormant campaign — no active multi-mechanism Scout rotation (D022). P03 paused back to portfolio (D061 option 1, family not closed). Pilot-Jones is the current formal GW line.
-  formal_gw_line: Pilot-Jones GW Step 4a AUTHORIZED_IN_PROGRESS under D062 debt waiver
+  formal_gw_line: Pilot-Jones GW Step 4a GATE_KILL (provisional) — D062 big package executed (T002/S079/V036); A0/A'/A/B done, D MVE NOT run (A0 §1 fatal + FR-21 headroom Kill). KILL scoped to unitary real-rotation channel instantiation only, not the direction itself; pending master-control acceptance + user confirmation (D062 rule 6).
   prohibits:
     - modify or rerun B001-B003 / P03 Atlas / canonical-state / completion-events
     - create legacy B004

@@ -962,3 +962,53 @@ provenance: crossref publisher=IEEE; 2 failed S2 attempts total=0 retained; scre
 ### 后续（本 V035 只闭合 backward-chain 门，不闭合 Step 3.5 整体）
 
 Step 3.5 整体仍 **PARTIAL/BLOCKED**：backward-chain 门 PASS（本 V035）+ 收敛门 R3 new=0 PASS（V029），但 **D056 全文门 FAIL/BLOCKED**——4 篇直接竞品（TCOMM 2024.3522036 / JLT 2025.3640695 / JLT 2022.3224805 / JLT 2023.3284489）全文无法获取（non-OA IEEE，tools/download all_failed，OA scout 4 源均 closed）。只有 OE 2021 + LCOMM 2026 两篇全文精读。**不进入 Step 4a**（FR-22 + D056）。详见 D061。
+
+---
+
+## V036: Pilot-Jones Step 4a big-package 独立 integrity 终验 + science critic
+
+> date: 2026-07-23
+> 关联：S079 / T002 / D062
+> verifier: 独立 general-purpose 子 agent（P6 separation，对抗性复核非确认）
+> scope: 对 `projects/simulation/explore/pilot-jones-step4a/` + `results/pilot-jones-step4a/result.json` + `tests/test_pilot_jones_step4a.py` + `feasibility_report.md` Q2 节做独立 integrity 终验，并对 provisional KILL verdict 做对抗性 science critic。
+
+### 验证项（integrity，11 项）
+
+- [x] task control: `validate_task_control.py T002…md` → PASS
+- [x] YAML/JSON parse: source-closure.yaml / mve-contract.yaml / result.json 均可解析
+- [x] tests: `pytest test_pilot_jones_step4a.py -q` → 10 passed
+- [x] source SHA 一致: 6 个文件（generator/gg_time/params/metrics/methods/runner）重算全 MATCH result.json
+- [x] contract SHA: mve-contract.yaml 重算 == result.json contract_sha256（contract L199 stale-number 文档修正后 SHA 已刷新，result.json 同步）
+- [x] raw→aggregate 重算: P_beats_B1=0、B1_mean=5.31e-3、oracle_mean=4.47e-3 与 result.json 一致；headroom 公式分歧已修复（新增 contract 预注册公式 B1/O=1.19 与 (B1-O)/O=0.19 并报）
+- [x] seeds disjoint: val{2000-2004} ∩ test{3000-3009} ∩ observed{41-48} = ∅
+- [x] information boundary: 静态 + 运行测试确认 deployable 估计器（derotate / uncertainty_tracker / estimate_jones_blocks）不读 sX/sY/h/theta；仅 inject_dual_pilots（噪声重建，已论证）+ oracle arm 读 truth
+- [x] protected paths: 4 个 protected SHA 未变且不在 git status 脏文件中
+- [x] no fabrication: result.json 无 cells 数组（仅 smoke_rows 3 + bounded_headroom_probe_rows 10 + blocked_manifest）；formal_mve_run=false
+- [x] git diff --check: PASS
+
+### 结论（integrity）
+
+**PASS**。结构性 integrity（SHA/tests/no-fabrication/info-boundary/protected/seeds）全 PASS。唯一记录的分歧（headroom 公式 + contract stale 引用数字）均为文档一致性而非伪造，已修复：result.json 增 contract 预注册公式 B1/O=1.19，contract L199 stale-number 已澄清并刷新 SHA。两个 headroom 口径（1.19 与 0.19）均 <2x → FR-21 KILL 任一口径都触发。
+
+### Science critic（对抗性攻击 provisional KILL）
+
+8 项攻击，结论 **KILL_WITH_CAVEAT**：
+
+1. 场景换皮？— **KILL survives**。OSL-specific：GG 深衰落被主动 probe（α=2.0/β=1.0/17dB，seed 3005 h<0.1 frac=1.0），B1 仍追上 oracle（4.10e-2 vs 3.91e-2）。GG 幅度衰落 ≠ Jones 病态（混合保 unitary）是真实结构结论非光纤换皮。
+2. EMA/α 调参？— **KILL survives with caveat**。P 的 α-map（cond/innov）在 cond~1 信道退化为 α≈0.86（近 B1 的 0.9），非稻草人但信号选择弱（cond 平、innov 噪声驱动）。一个基于 per-pilot 接收能量的 principled α-map 未测——但 B1 在 5/10 seed 上与 oracle bit-equal，无 α-map 能超天花板。完整性 caveat 而非可救。
+3. 最强简单对照公平？— **KILL survives**。missing weighted-LS/Kalman/block-averaged baseline，但 B1 已达 oracle → 任何 baseline 都不能超已闭合的天花板。此路 moot。
+4. oracle 偷做 Go？— **KILL survives**。oracle 仅用 true θ，tagged 上界，从非 Go 对手（synthesis §7）。Go 对手是 B1，P 输（0/10）。
+5. 信道模型逃生？— **唯一 rescue avenue**。KILL 完全 hinge 于信道是 real rotation（cond≡1）。真实 OSL 下行有 complex Jones / 频率相关 RSOP / PDL（OE 2021 一阶 PMD；PDL→非酉→cond≠1）。implementer 自认 known_simplification。complex-Jones/PDL 信道会重新引入真实 conditioning 变化——P 的机制轴。**implementer 不应把此 KILL 重构为杀"方向"；它只杀 unitary-rotation 实例化**。此 rescue 出本大包范围。
+6. headroom 公平？— **KILL survives 且加强**。probe（α=2.0,β=1.0,17dB）显式 adversarial-to-B1/pro-P；headroom 0.19 在最 P-favorable 条件下测得，非阿谀 B1。
+7. P 测公平？— partial。P 跑 α≈0.86 近 B1，"退化为固定"准确但退化到近优点故 P≈B1。未测的 pilot-power 信号是 gap，但 FR-21（B1 在 oracle 2x 内）吸收残余（max 19%，sub-0.5dB）。
+8. claim ceiling 诚实？— 诚实但略 dismissive。CONDITIONAL_GO_WITH_DEBT 正确未在当前信道声称；信道升级 ceiling（Q5）moot 得太快——真实 OSL complex-Jones 是合理扩展非假设。
+
+### 总结论
+
+- **Integrity**: PASS（结构性全 PASS，文档分歧已修复）。
+- **Science**: KILL_WITH_CAVEAT。在 real-rotation 信道内 KILL 稳健（两条独立门、B1 闭合 oracle 天花板、oracle 用对、probe pro-P）；唯一 rescue 是出包范围的 complex-Jones/PMD/PDL 信道升级——admitted as known_simplification。
+- **Provisional verdict 维持 KILL**，但 scope 明确：**KILL 限于 unitary real-rotation 信道实例化；不重构为杀 Pilot-Jones 方向本身**。信道升级（complex Jones / PMD / PDL）+ 4 篇全文解除 BLOCKED 后可重评。不进 Step 5/Contract/Execute。
+
+### 后续
+
+KILL 为 provisional，待主控验收 + 用户确认（D062 rule 6）。若用户接受 KILL：Pilot-Jones 方向回候选池（family 不关闭，同 P03 处置），等待 complex-Jones 信道或 4 篇全文解除 BLOCKED 后重评；thesis-fso formal GW 工作线需另选方向。若用户要求 salvage：唯一在范围内的 rescue = 升级 canonical 信道为带 PMD/PDL 的 complex Jones（出 T002 范围，需新 authorization）。
