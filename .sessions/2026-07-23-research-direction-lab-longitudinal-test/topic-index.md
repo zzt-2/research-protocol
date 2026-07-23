@@ -4,14 +4,14 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v1
-  control_epoch: 5
+  control_epoch: 6
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: PILOT_JONES_COMPLEX_MODEL_SALVAGE
-  authority_pointer: .sessions/2026-07-10-dual-pol-osl-groundwork/decisions.md#D063
-  decision_gate: 判断物理充分的 complex Jones/PMD/PDL 模型是否重新产生最强传统基线无法关闭的方法空间
+  active_lane: PILOT_JONES_SEMANTIC_REPAIR_RETEST
+  authority_pointer: .sessions/2026-07-10-dual-pol-osl-groundwork/decisions.md#D064
+  decision_gate: 在修复信道噪声位置、pre-channel pilot、tapped baseline 和 PMD oracle 后，重新判断 complex Jones/PMD/PDL 是否产生合法传统基线无法关闭的方法空间
   allowed_actions:
-    - PILOT_JONES_COMPLEX_MODEL_SALVAGE_PACKAGE
+    - PILOT_JONES_SEMANTIC_REPAIR_RETEST_PACKAGE
     - TASK_BRIEF_PREPARATION
   forbidden_actions:
     - PRIVATE_FULLTEXT_ACQUISITION
@@ -21,11 +21,11 @@ rdl_control:
     - PROTECTED_HISTORY_EDIT
     - SKILL_EDIT
     - GENERAL_INFRASTRUCTURE_BUILD
-  next_legal_action: 执行 T003，在一个 GLM 对话内完成物理模型充分性、complex-Jones 最小闭包、task-matched baseline、oracle/headroom 和条件式方法 MVE
+  next_legal_action: 执行 T004，在一个 GLM 对话内先闭合语义测试，再重跑 M0-M4、baseline/headroom，并在问题存活时同包运行多机制方法 MVE
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（T003_READY；D063 已授权）
+> 状态: active（T004_READY；D064 已授权）
 > 创建: 2026-07-23 | 最后更新: 2026-07-23
 
 ## 专题信息
@@ -47,7 +47,7 @@ rdl_control:
 - 使用顶部控制块、受 guard 约束的 T、worker-log、raw artifacts 和 commit；
 - 在 control block 允许范围内串行推进，遇到 gate 更新控制块或交用户战略裁决；
 - 记录真实恢复、失败/阻断、轮换、晋级/不晋级和工作包重量。
-- 当前仅授权 complex-Jones/PMD/PDL 模型充分性救活包：隔离模型、物理参数溯源、task-matched conventional baseline、正确 Q²/headroom 口径、方法形成、条件式 MVE 与 provisional verdict。
+- 当前仅授权 T004 语义修复重测包：修正 T003 的 post-noise channel、PMD pilot、tapped baseline、PMD oracle 与混合 gate；语义门通过后重跑 M0–M4、最强传统 baseline、headroom 与条件式方法 MVE。
 
 ### 明确不含
 
@@ -66,6 +66,10 @@ rdl_control:
   - 原因：V036 critic 指出 canonical generator 未包含可能产生真实 conditioning/memory 的 PMD/PDL；V037 又发现原 FR-21 阈值映射无依据。
   - 新范围：物理模型充分性、隔离模型、传统任务适配 baseline、oracle/headroom 和条件式方法比较；不改 shared generator、不进 Step 5。
   - 影响的未决项：decision gate 从“当前 unitary 实例化是否有方法”转为“物理充分模型是否救活 family”。
+- **[2026-07-23] [D064]**：T003 provisional verdict 被主控 V038 否决；授权同一 Step 4a 内的 semantic repair + retest。
+  - 原因：PDL/PMD 作用于含噪 RX 导致可逆恒等、PMD pilot 未经过 FIR、B3 tapped 为 RX→RX 自预测、PMD oracle 被 B1 反超、problem gate 与 P1 success 混合。
+  - 新范围：保留 T003 为失败证据，新建隔离 T004 修复闭包；只有可失败语义测试全过才运行 headroom/MVE。
+  - 影响的未决项：complex-Jones/PMD/PDL 不再是 provisional Pivot，而是 `UNRESOLVED / SEMANTIC_REPAIR_AUTHORIZED`。
 
 ## 已确认结论
 
@@ -92,13 +96,14 @@ rdl_control:
 - **S001 续接 / T001 验收**：提交 `4a0d4a4` 的路径边界、protected diff、YAML 和字段级语义均 PASS；current owner 已收敛。下一门是需要用户权限/豁免的 4 篇全文获取战略 gate，当前不存在非重复且合法的 T002。
 - **S001 续接 / D062/T002**：用户纠正 T001 只做状态协调、科学吞吐过低；T001 降为 bootstrap overhead。用户授权带债进入 Step 4a，下一包必须一次关闭科学决策，前置门通过时同包直接做 MVE。
 - **S001 续接 / T002验收/D063/T003**：T002 工程与 raw 可信，但 V037 修正 contract stale count 和无依据的 BER-ratio→dB 门；只 Kill unitary-real-rotation M-C-A。用户要求“多做点”，授权同包检验 complex-Jones/PMD/PDL rescue。
+- **S001 续接 / T003验收/D064/T004**：fresh 13 tests 通过但 V038 找到 5 项科学语义缺陷；T003 negative verdict 不接收。真实暴露“consistency/provenance PASS 被误作物理正确”的长程事件，epoch 6 授权语义修复重测大包。
 
 ## 未决项
 
-- T003 对 complex-Jones/PMD/PDL 模型充分性与方法空间的 provisional verdict；
+- T004 修复后 complex-Jones/PMD/PDL 的 problem-survival 与 method-success 分离裁决；
 - live run 自然覆盖哪些恢复/轮换/晋级事件；
 - 何时由原 design 对话进行阶段性审计。
 
 ## 当前位置
 
-T003_READY。D063 已把 T002 收窄为 `UNITARY_REAL_ROTATION_MCA_KILLED / FAMILY_UNRESOLVED`，并授权一个 `PILOT_JONES_COMPLEX_MODEL_SALVAGE_PACKAGE`；control guard 已 PASS。不得拆回纯综述/设计小包，也不得越过 Step 4a。
+T004_READY。D064/V038 已否决 T003 provisional Pivot，complex/PMD/PDL 继续 UNRESOLVED。下一包必须先让 signal/noise/pilot/baseline/oracle semantic tests 能失败并通过，再重跑数据；不得拆成单 bug 小包，也不得越过 Step 4a。

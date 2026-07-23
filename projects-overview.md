@@ -7,12 +7,12 @@
 ### thesis-fso
 
 - **方向**：双偏振星地 OSL 场景中的 ML 应用方向探索；正式研究与 Direction Lab Scout/Sandbox 分层管理。
-- **正式状态**：`Pilot-Jones formal GW Step 4a MODEL_ADEQUACY_SALVAGE_DONE`（D063/T003/S080；Step 3.5 非 PASS）。Direction Lab campaign 仍 dormant（D022 SCIENCE_FREEZE）。
+- **正式状态**：`Pilot-Jones formal GW Step 4a COMPLEX_MODEL_SEMANTIC_REPAIR_T004_READY`（D064/V038；Step 3.5 非 PASS）。Direction Lab campaign 仍 dormant（D022 SCIENCE_FREEZE）。
 - **Direction Lab Sandbox 历史**：B003 已完成，状态 `COMPLETED_SANDBOX_VERIFIED`；批次事实以 completion events 和不可变 projection 为证据，B001–B003 数字均不可进入论文或正式材料。
-- **Pilot-Jones formal GW（当前工作线，D061–D063/S079–S080）**：Step 1/2/3 ✅；Step 3.5=`WAIVED_TO_STEP4A_WITH_BLOCKING_DEBT`。T002/V037 确认 `UNITARY_REAL_ROTATION_MCA_KILLED`（不外推 family Kill）。**T003/S080 已完成，provisional verdict = `PIVOT_MODEL_NOT_JUSTIFIED`**：complex-Jones/PMD/PDL 模型梯（8/8 limiting-case tests PASS）+ task-matched B3（whitening/tapped）+ 正确 BER→Q² 口径；决定性结构发现是 B3-vs-oracle headroom 不随损伤强度增长（PDL 0→9.5dB/cond 1→3.6 与 M0 deep-fade-only control 完全相同；PMD 40→160ps 不单调增长）→ 残余 headroom 来自深衰落+噪声非 PDL/PMD 结构；P1（energy-weighted LS）全 cell 不胜 B3。complex 升级不重新产生方法级 gap；T002 unitary 负面扩展为即便 richer Jones B3 仍关闭 headroom。family 仍 `UNRESOLVED`，不在本轴关闭。provisional 待主控验收。
+- **Pilot-Jones formal GW（当前工作线，D061–D064/S079–S080）**：Step 1/2/3 ✅；Step 3.5=`WAIVED_TO_STEP4A_WITH_BLOCKING_DEBT`。T002/V037 的 `UNITARY_REAL_ROTATION_MCA_KILLED` 继续有效。**T003/S080 provisional Pivot 已被 V038/D064 否决**：13 tests/raw consistency 虽通过，但 post-noise PDL/PMD、PMD pilot、RX→RX tapped B3、非 ceiling PMD oracle 与混合 gate 使 M2/M3 结论无效。complex-Jones/PMD/PDL 与 family 均继续 `UNRESOLVED`；T004 semantic repair + retest 已授权。
 - **当前 Scout（dormant）**：Direction Lab Scout campaign 已 dormant（D022 SCIENCE_FREEZE；D061 确认无当前科学执行授权）。P03/U19 Headroom Atlas Stage A 历史（2026-07-19，S077/D059/V033）保留：runnable 代表子域 `LOCAL_NEGATIVE`，candidate `P03_DOMAIN_ADEQUACY_UNRESOLVED`（16QAM/receiver-CSI/coded-output 三轴 INFRASTRUCTURE_BLOCKED），domain/family 未关闭。
 - **P03 状态（D061 选项①，已选定）**：`PAUSED_RETURNED_TO_PORTFOLIO`——P03 暂停回候选池（**不是 Kill**，family 不关闭，沿用 D057/D058）。Sandbox `NOT_ENTERED`，Stage B 不触发。
-- **下一合法边界**：T003 provisional verdict 待主控验收。**不进入 Step 5/Contract/Execute；不新建 D064；不启动 B004/P03 ML/Queue/Registry；不改 shared generator；不复活 Scout/P03；不 push。** 若主控验收 PIVOT，Pilot-Jones family 回候选池等待真正新轴（verified DGD≫T_S 频选信道或 sub-symbol 块变 Jones）。
+- **下一合法边界**：执行 T004，在隔离目录先通过 signal/noise/pilot/B3/oracle semantic tests，再重跑 M0–M4；problem 存活才进入方法 MVE。**不进入 Step 5/Contract/Execute；不启动 B004/P03 ML/Queue/Registry；不改 shared generator；不复活 Scout/P03；不 push。**
 - **Atlas 强门入口**：`projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/atlas_gate.py`（唯一 receipt-bound 入口，19 tests 含独立对抗审查）。
 - **入口**：`projects/thesis-fso/master-state.md` → `projects/thesis-fso/direction-lab/README.md`；机器状态溯源见 `projects/thesis-fso/direction-lab/state/completion-events.jsonl` 与 `state/projections/`，`canonical-state.yaml` 不是正式研究授权源。
 

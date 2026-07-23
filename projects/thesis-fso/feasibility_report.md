@@ -1045,6 +1045,14 @@ D063 授权的 complex-Jones/PMD/PDL 模型充分性救活已完成，**provisio
 
 **含义**：complex-Jones/PMD/PDL 升级在 2.5GBaud / 64–100 sym block 下**不重新产生方法级 Pilot-Jones gap**；T002 的 unitary-real-rotation 负面结论扩展为：即便 richer（非酉/memory）Jones，task-matched B3 仍关闭 headroom。Pilot-Jones family 仍 `UNRESOLVED`，不在本轴关闭，等待真正新轴（verified DGD≫T_S 频选信道或 sub-symbol 块变 Jones）。不进 Step 5/Contract/Execute。详见 `projects/simulation/explore/pilot-jones-complex-salvage/synthesis.md`。
 
+> **主控失效 amendment（V038/D064，2026-07-23）**：本小节 T003 的 provisional
+> verdict、M2/M3 headroom 归因和“richer Jones B3 仍关闭”结论全部
+> `INVALIDATED_AS_SCIENTIFIC_EVIDENCE`。T003 把 component channel 施加于含噪 RX，
+> PMD pilot 未过 FIR，B3 tapped 为 RX→RX 自预测，PMD oracle 被 B1 反超，且
+> decision 将 problem survival 与 P1 success 混合。旧数字仅保留作失败复盘，不得
+> 引用为论文负面结果。complex-Jones/PMD/PDL 继续 UNRESOLVED；D064/T004 先通过
+> semantic repair tests 再重评。
+
 ### 可复用沉淀（Kill 路径）
 
 - **可复用负面/边界材料**：real-rotation OSL Jones 估计的结构性良态论证——固定 EMA 达 oracle，故无稳定化方法可发表（除非信道有真实频变 PMD/PDL）。排除整个"pilot-LS 稳定化"子族于 unitary real-rotation 信道。

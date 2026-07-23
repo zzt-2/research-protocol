@@ -78,3 +78,12 @@ component-level trace 定位、修复（derotate_oracle 现同时逆 J_b 和 R(-
 - 待主控验收 provisional verdict；4 篇 D056 全文继续 BLOCKED；OE2021 一阶 PMD
   provenance 标 unverified 债务。
 - 不复活 Scout/P03，不改 protected history。
+
+> 2026-07-23 主控接收追加 | V038/D064 | 状态：科学结论未接收
+
+主控 fresh 验收确认 13 项 directed tests 通过，但发现 post-noise component
+injection、PMD pilot 未经过 FIR、B3 tapped RX→RX 自预测、PMD oracle 被 B1
+反超及 problem/P gate 混合五项语义缺陷。故本 S080 的
+`PIVOT_MODEL_NOT_JUSTIFIED`、M2/M3 headroom 归因和 negative harvest 全部标
+`INVALIDATED_AS_SCIENTIFIC_EVIDENCE`；源码/raw/result 保留为失败复盘证据。
+complex-Jones/PMD/PDL 继续 UNRESOLVED，下一步为 D064/T004 隔离语义修复重测。

@@ -49,8 +49,8 @@ topics:
     title: Research Direction Lab 长程真实运行测试
     status: active
     created: "2026-07-23"
-    last_updated: "2026-07-23（V037/D063；epoch 5 Pilot-Jones complex-model salvage T003_READY）"
-    description: "D017 轻量前台控制协议的真实纵向运行 mission。T002 找到 unitary-real-rotation 模型—问题错配；V037 修正 stale count 和无依据的 BER-ratio→dB 门。control epoch 5 允许 T003 一包完成 complex Jones/PMD/PDL 模型充分性、task-matched baseline、正确 headroom 与条件式方法 MVE，止于 Step 4a。"
+    last_updated: "2026-07-23（V038/D064；epoch 6 Pilot-Jones semantic repair + retest T004_READY）"
+    description: "D017 轻量前台控制协议的真实纵向运行 mission。T002 找到 unitary-real-rotation 模型—问题错配；T003 虽 tests/raw PASS，但 V038 发现 post-noise channel、PMD pilot、tapped B3、PMD oracle 与 gate 分层五项语义失败。control epoch 6 允许 T004 先修语义再重跑 M0–M4，止于 Step 4a。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 S014 现场故障、R003 场景演练、D017 控制接口和 guard
@@ -503,8 +503,8 @@ topics:
     title: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
     status: active
     created: "2026-07-10"
-    last_updated: "2026-07-23（S080/T003 完成：complex-Jones/PMD/PDL 模型充分性救活 → provisional verdict PIVOT_MODEL_NOT_JUSTIFIED，headroom 不随损伤强度增长，P1 不胜 task-matched B3；family 仍 UNRESOLVED，待主控验收，不进 Step 5。）"
-    description: "formal 双偏振 OSL Groundwork owner。D061 已暂停 P03 并激活 Pilot-Jones；D056 的 4 篇全文保持 BLOCKED_NO_FULLTEXT。T002/V037 只 Kill unitary-real-rotation 实例化，family unresolved。T003/S080 已完成 complex-Jones/PMD/PDL 模型充分性救活，provisional verdict=PIVOT_MODEL_NOT_JUSTIFIED（B3 关闭 headroom，残余来自深衰落+噪声非 PDL/PMD 结构；P1 不胜 B3），family 仍 UNRESOLVED 不在本轴关闭；待主控验收，不进 Step 5。"
+    last_updated: "2026-07-23（V038/D064：T003 科学语义失效；T004 semantic repair + retest READY，complex axis/family 继续 UNRESOLVED，不进 Step 5。）"
+    description: "formal 双偏振 OSL Groundwork owner。D061 已暂停 P03 并激活 Pilot-Jones；D056 的 4 篇全文保持 BLOCKED_NO_FULLTEXT。T002/V037 只 Kill unitary-real-rotation 实例化。T003/S080 的 complex-model provisional Pivot 因 post-noise channel、PMD pilot、tapped B3、PMD oracle 与混合 gate 失效；V038/D064 不接收该结论并授权 T004 隔离语义修复重测。family/complex axis 均 UNRESOLVED，不进 Step 5。"
     depends_on:
       - slug: 2026-07-10-scenario-transfer-pivot
         reason: D001 三维度调整 + D002 角度素材 schema + D003 双偏振空间解锁，方法论准备就绪后 GW 执行转出

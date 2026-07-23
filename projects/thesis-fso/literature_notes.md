@@ -23,7 +23,7 @@
 | 2 获取        | ✅   | 2026-06-26 + **2026-07-10 双偏振 9篇+sat.1553** | H004 块 A 7 篇 + H005 块 B 6 篇 + 双偏振 9 篇成功(download+blit 两轮) |
 | 3 精读        | ✅   | 2026-06-26 + **2026-07-10 双偏振 9篇+sat.1553§6补读** | 块 C 10 篇 + 载波同步 v2 35 Q# + **双偏振 9 篇+角度素材 schema 试用+3 Q#(Q-DP1/2/3)** |
 | 3.5 补充      | ⚠带债豁免 | 2026-06-27 起；2026-07-23 D062 更新 | 历史补充检索、Q11-Q13 召回与载波同步 v2 精读沉淀均保留；Pilot-Jones backward/收敛门已闭合，4 篇直接竞品保持 `BLOCKED_NO_FULLTEXT`。D062 只豁免进入 Step 4a，不记 PASS。|
-| 4a 可行性     | 🔄complex-model salvage | 2026-06-28 起；2026-07-23 D063 更新 | 历史 Kill 保留；T002 只 Kill unitary-real-rotation Q2 实例化。当前 T003 检验 complex Jones/PMD/PDL、task-matched baseline 与条件式方法空间，正面最高 Conditional Go，不进 Step 5。|
+| 4a 可行性     | 🔄semantic repair + retest | 2026-06-28 起；2026-07-23 D064 更新 | 历史 Kill 保留；T002 只 Kill unitary-real-rotation Q2 实例化。T003 complex-model verdict 因 V038 科学语义缺陷失效；当前 T004 修复后重评，正面最高 Conditional Go，不进 Step 5。|
 | 5 Baseline    | ⬜   |          | 块 F：Go 的 Q# 进 baseline 复现 |
 | 4b 仿真可行性 | ⬜   |          | |
 | 6 仿真器      | ⬜   |          | |
@@ -1218,6 +1218,8 @@ R2按5种方法变体×2类场景得到31 raw/25 unique；R3围绕JLT 2023 PDL/F
 > **2026-07-23 主控 amendment（V037/D063）**：T002 raw 的 P/B1 win-tie-loss 为 `0/6/4`，contract gate-outcome 残留 `0/7/3`；`B1/O=1.19` 是 BER ratio，未证明等价 `<0.5dB`，故第二条 FR-21 门降为 diagnostic。正式接收结论仅为 `UNITARY_REAL_ROTATION_MCA_KILLED`，Pilot-Jones family 仍 `UNRESOLVED`。D063 已授权 T003 用有来源的 complex Jones/PMD/PDL 模型、task-matched 2×2 tapped/FDE conventional baseline 和正确 Q²/headroom 口径重评；正面最高 Conditional Go，止于 Step 4a。
 
 > **2026-07-23 T003 救活结果（S080）**：complex-Jones/PMD/PDL 模型充分性救活完成，**provisional verdict = `PIVOT_MODEL_NOT_JUSTIFIED`**。M0–M4 模型梯（8/8 limiting-case tests PASS）+ task-matched B3（whitening/tapped）+ 正确 BER→Q² 口径。**决定性结构发现**：在最 P-favorable 深衰落（α=2.0/β=1.0/17dB）下，B3-vs-oracle headroom 不随损伤强度增长（PDL 0→9.5dB/cond 1→3.6 与 M0 control 完全相同；PMD 40→160ps 不单调增长）→ 残余 headroom 来自深衰落+噪声非 PDL/PMD 结构。P1（energy-weighted LS）全 cell 不胜 B3。complex-Jones/PMD/PDL 升级在 2.5GBaud/64–100sym block 下不重新产生方法级 gap；T002 unitary-real-rotation 负面结论扩展为即便 richer Jones B3 仍关闭 headroom。Pilot-Jones family 仍 `UNRESOLVED`，不在本轴关闭。4 篇 D056 全文继续 BLOCKED；"OE2021 一阶 PMD" provenance 标 unverified 债务（sub-agent 未能确认 Optics-Express 2021 DOI）。详见 `projects/simulation/explore/pilot-jones-complex-salvage/synthesis.md`。不进 Step 5/Contract/Execute。
+
+> **2026-07-23 主控失效 amendment（V038/D064）**：上一段仅保留为 T003 历史执行记录，科学结论全部 INVALIDATED。原因：PDL/PMD 施加于含噪 RX 导致可逆恒等；PMD pilot 未经过 FIR；B3 tapped 是 RX→RX 自预测；PMD oracle 被 B1 反超；decision 将 problem survival 与 P1 success 混合。不得引用 T003 的 M2/M3 数值、headroom 归因或 negative harvest。complex-Jones/PMD/PDL 继续 `UNRESOLVED`；D064/T004 在同一 Step 4a 内先闭合 semantic tests 再重评。
 
 ### 实验完备性对标汇总
 

@@ -1,7 +1,7 @@
 # Topic Index: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
 
 > slug: 2026-07-10-dual-pol-osl-groundwork
-> status: active | created 2026-07-10 | last_updated 2026-07-23（S080/T003 完成：complex-Jones/PMD/PDL 模型充分性救活 → provisional verdict `PIVOT_MODEL_NOT_JUSTIFIED`，headroom 不随损伤强度增长，P1 不胜 task-matched B3。family 仍 UNRESOLVED，待主控验收，不进 Step 5。）
+> status: active | created 2026-07-10 | last_updated 2026-07-23（V038/D064：T003 provisional verdict 因 5 项 scientific-semantic 缺陷失效；complex-Jones/PMD/PDL 继续 UNRESOLVED，T004 semantic repair + retest 已授权，不进 Step 5。）
 
 ## 专题定位（一句话）
 
@@ -29,7 +29,7 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 - **GW Step 3**：正式晋级候选的精读 + 结构化提取；候选族探索阶段先共享轻量证据，不为每个微变体机械重复全文门
 - **GW Step 3.5**：定向补充检索
 - **GW Step 4a**：可行性 Go/No-Go
-- **D063 complex-model salvage（当前）**：T002 只 Kill unitary-real-rotation M-C-A；当前一次完成物理充分性、complex Jones/PMD/PDL 隔离模型、task-matched baseline、正确 headroom 和条件式 MVE，止于 provisional verdict。
+- **D064 semantic repair + retest（当前）**：T002 只 Kill unitary-real-rotation M-C-A；T003 的 complex Jones/PMD/PDL verdict 被 V038 否决。当前先修 signal/noise/pilot/baseline/oracle 语义，再统一重跑 M0–M4；问题存活后同包进入多机制方法 MVE，止于 provisional verdict。
 
 ### 明确不含
 - ❌ 不跳框架（地勘阶段不判方向 Go/Kill，穷举完 + 用户确认全景才推进——D017 红线 6）
@@ -60,6 +60,7 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 - **[2026-07-19]** [D060] Inflation scope record（79 个 S 文件、78 个唯一 S 编号 + Portfolio Autopilot 目标设计）：S078 从 P03 单候选科学诊断转为 D045 批量探索的组合级长跑控制设计，性质不同于 S077，故新开编号。额外 1 个文件来自既有 S033 重号债务，本轮不重命名历史。它只定义未来 6批/3族 shadow 的调度、双审查和全局停机边界，不实现控制器、不运行实验、不扩大 formal GW/Contract/Execute。
 - **[2026-07-23]** [D062] Inflation/scope record（用户显式授权 Pilot-Jones Step 4a 大包）：专题已远超 15 个 S 文件，但本次不是新方向或 topic 膨胀；它回到原始目标“GW Step 1–4a 完整流程”，只对 D056 的不可获取全文门作一次性带债豁免。允许新增 S079、Step 4a 专属 MVE 闭包与 worker-log；明确止于 provisional verdict，不进入 Step 5/Contract/Execute。
 - **[2026-07-23]** [D063] Inflation/scope record：允许新增 S080 和 complex-model salvage 隔离闭包。原因是 T002 暴露 canonical model 不含所假设的物理结构；这是原 Pilot-Jones Step 4a 的模型充分性修复，不是新方向或新 topic。仍止于 provisional verdict。
+- **[2026-07-23]** [D064] Inflation/scope record：允许新增 S081 和 T004 semantic-repair 隔离闭包。原因是 V038 证明 T003 的 tests/SHA/raw PASS 没覆盖信道注入、pre-channel pilot、RX→TX tapped baseline、PMD oracle 和 gate 分层语义；这是 Step 4a 证据修复，不是新方向。T003 artifacts 保留且不得覆盖，仍止于 provisional verdict。
 
 ## 不变量（动任何一条必须重新讨论）
 
@@ -114,21 +115,21 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 
 ## 当前位置
 
-**S080/T003：complex-Jones/PMD/PDL 模型充分性救活完成，provisional verdict = `PIVOT_MODEL_NOT_JUSTIFIED` — 2026-07-23**。
+**V038/D064：T003 provisional verdict 失效，T004 semantic repair + retest 已授权 — 2026-07-23**。
 
-- D063/T003 已完成：物理证据 → M0–M4 模型梯（8/8 limiting-case tests PASS）→ task-matched B3（whitening/tapped）→ 正确 BER→Q² 口径 → headroom 门 → 双审查。
-- **决定性结构发现**：在最 P-favorable 深衰落条件（α=2.0/β=1.0/17dB）下，B3-vs-oracle headroom **不随损伤强度增长**——PDL 0→9.5dB（cond 1→3.6）headroom 与 M0 deep-fade-only control 完全相同（delta=0.0）；PMD 40→160ps 不单调增长。残余 headroom 来自深衰落+噪声，非 PDL/PMD 结构。verified range（PDL 1dB/DGD 6ps）信道近酉/memoryless。
-- P1（energy-weighted LS）全 cell 不胜 task-matched B3。formal MVE 未运行（gate 在 probe 阶段失败，结构性结论非统计性）。
-- Integrity 独立重算 PASS（SHA 链/raw→aggregate bit-exact/seeds disjoint/13 tests PASS）；science critic 8 项攻击 survive。执行中发现并修复 oracle 只逆 J_b 不逆 SOP 旋转的 anomaly（TL-22），M4 联合模型 FDE oracle 因需联合求解器排除出 headroom 表（scope 限制非 confound）。
-- T002 的 `UNITARY_REAL_ROTATION_MCA_KILLED` 扩展为：即便 richer（非酉/memory）Jones，B3 仍关闭 headroom。**Pilot-Jones family 仍 `UNRESOLVED`，不在本轴关闭**，等待真正新轴（verified DGD≫T_S 频选信道或 sub-symbol 块变 Jones）。provisional verdict 待主控验收；不进 Step 5/Contract/Execute，不新建 D064，不复活 Scout/P03，不改 protected/Skill/controller，未 push。
-- 4 篇 D056 全文继续 BLOCKED；OE2021 一阶 PMD provenance 标 unverified 债务。
+- T003 的 13 directed tests 与 raw 可重算成立，但只证明 implementation consistency；不证明物理/算法语义。
+- V038 发现：post-noise PDL/PMD 形成可逆恒等、PMD pilot 未过 FIR、B3 tapped 为 RX→RX 自预测、PMD oracle 被 B1 反超、problem/P gate 混合。
+- T003 `PIVOT_MODEL_NOT_JUSTIFIED`、M2/M3 headroom 归因和 negative harvest 全部 INVALIDATED；T002 的 unitary-real-rotation 局部 Kill 不受影响。
+- D064/T004 将在隔离目录先建立可失败 semantic tests，再重跑 M0–M4；不得继承 T003 数字。
+- T003 曾报告的 PDL flat、PMD 非单调、P1 不胜 B3、critic survive 和“richer Jones 仍关闭”仅保留在 S080/旧 artifact 作为失败历史；当前位置不得把它们列为有效结论。
+- 当前仍有效的 formal 科学结论只有 T002 的 unitary-real-rotation 局部 Kill；4 篇 D056 全文债与 OE2021 provenance 债继续存在。
 
 此前：**S079/T002/V036/V037/D063：unitary slice 局部 Kill 接收，complex-model salvage 已授权 — 2026-07-23**。
 
 - D062/T002 已完成 A0/A′/A/B；formal D 未运行。V037 接收 real-rotation `cond≡1` 这一局部致命门，状态为 `UNITARY_REAL_ROTATION_MCA_KILLED`。
 - 原第二条 FR-21 门不按正式证据采信：`B1/O=1.19` 是 BER ratio，未证明等价 `<0.5dB`；contract 仍有 0/7/3 stale count，真实 raw 为 0/6/4。
 - V036 numeric/code integrity 由 V037 保留为 PASS，但 V036 的全量 integrity/claim-scope 修正为 PARTIAL；science critic 的 complex-Jones caveat 成为下一授权轴。
-- Pilot-Jones family=`UNRESOLVED`；D063/T003 已授权模型充分性、task-matched baseline 和条件式方法 MVE，仍不进 Step 5/Contract/Execute。
+- Pilot-Jones family=`UNRESOLVED`；D064/T004 已授权 semantic repair、合法 baseline/oracle 和条件式方法 MVE，仍不进 Step 5/Contract/Execute。
 - 历史 EMA09 15/15 provenance 断裂已记录（batch1_fade_methods.py SHA mismatch），仅作 diagnostic prior；它是 pilot-vs-blind 比较非 pilot-inversion 方法间比较，从不支持 B2-beating。
 - 可复用沉淀：real-rotation OSL Jones 结构性良态负面材料；B0/B1/B2/P/O ladder + paired runner + fixed/PI metrics + 10 directed tests；5-min pre-MVE 滤波器（cond-distribution + B1-vs-oracle headroom probe，泛化 FR-21）。
 - V037 发现 contract stale count（真实 0/6/4）和无依据 BER-ratio→dB 门；只接收 `UNITARY_REAL_ROTATION_MCA_KILLED`，不接收 family Kill。D063 已授权 T003 检验 complex Jones/PMD/PDL rescue，不改 shared canonical generator。
@@ -393,4 +394,4 @@ prompt030 双控扫描（2 域 × SOP_RATE×N × CMA/ML/oracle × 10 seeds，765
 - **S078/D060/V034**（2026-07-19）：完成 Direction Lab Portfolio Autopilot 目标设计。根因定位为单候选状态机和组合级停机权缺失；采用最小 `campaign.yaml + events.jsonl + reducer-built state.yaml + batch thin summary + campaignctl`，复用现有 CandidateMap/BatchPlan/EvidenceGate/claim-scope/canonical owners。首轮 shadow 要求至少 6 个有效批次、至少 3 个证据型机制族，每 2 批重排；达到下限前局部失败、阻断、critic FAIL 和正信号不触发用户方向拍板。独立审查首轮 PARTIAL，修复 scope/预算早停、刷批次、critic 独立性和生产停机漏洞后第二轮 PASS；当前可进入实现计划，尚未实现或运行。
 - **S079/T002/V036**（2026-07-23）：执行 D062 带债豁免的 Pilot-Jones Step 4a 大包（A0→A′→A/B→D）。新建当前 worktree 自包含最小闭包（source-closure.yaml/metrics.py/pilot_jones_methods.py/run_pilot_jones_mve.py/mve-contract.yaml/test_pilot_jones_step4a.py 10 directed tests/result.json）。A0/A′/A/B 完成；D 性能 MVE **未运行**——两条独立 Kill 门在 semantic-smoke + bounded headroom 阶段触发：(1) A0 §1 致命 + FR-01 先验覆盖致命——real-rotation 信道 cond≡1 使假设失效 A（病态）结构缺席，固定 EMA09 把主指标覆盖到 oracle；(2) FR-21 headroom Kill——B1→oracle headroom 可忽略（预注册 B1/O=1.19，亚一个数量级，多 seed bit-equal）。历史 15/15 provenance 断裂已记录（batch1_fade_methods.py SHA mismatch），仅作 diagnostic prior，且为 pilot-vs-blind 比较非方法间比较。独立 integrity verifier V036=PASS（11 项结构性全 PASS；headroom 公式+contract stale 数字分歧已修复）；独立 science critic=KILL_WITH_CAVEAT（唯一 rescue 出包范围：升级 canonical 信道为 complex Jones/PMD/PDL）。**Provisional verdict=KILL，scope 限于 unitary real-rotation 实例化，不重构为杀方向本身**；待主控+用户确认，不进 Step 5/Contract/Execute。
 - **S079 主控接收/V037/D063/T003**（2026-07-23）：fresh pytest 10/10；raw 重算 0/6/4。V037 修正 V036 漏审：contract 仍残留 0/7/3，且 2×BER 未证明等价 0.5dB。正式结论收窄为 unitary-real-rotation M-C-A Kill，family unresolved；T003 已授权物理模型充分性 + complex-Jones/PMD/PDL + task-matched baseline + 条件式 MVE。
-- **S080/T003**（2026-07-23）：执行 D063 complex-Jones/PMD/PDL 模型充分性救活大包。物理证据（DGD≤6ps=1.5%T_S memoryless；component PDL<1dB cond<1.12；RSOP≤600krad/s 块内恒定；PMD/PDL 是 component/fiber 非大气）→ M0–M4 模型梯（`complex_jones_channel.py` 块常数叠加在 canonical generator 上，保留 shared-noise 契约）8/8 limiting-case tests PASS → task-matched B3（whitening/tapped）+ 正确 BER→Q² 口径（修复 T002 的 BER ratio≠dB 缺陷）→ headroom 门。**决定性结构发现：在最 P-favorable 深衰落（α=2.0/β=1.0/17dB）下，B3-vs-oracle headroom 不随损伤强度增长**——PDL 0→9.5dB（cond 1→3.6）headroom 与 M0 deep-fade-only control 完全相同（delta=0.0），PMD 40→160ps 不单调增长 → 残余 headroom 来自深衰落+噪声非 PDL/PMD 结构。P1（energy-weighted LS）全 cell 不胜 B3。formal MVE 未运行（gate 在 probe 阶段失败，结构性结论）。Integrity 独立重算 PASS（SHA 链/raw→aggregate bit-exact/seeds disjoint/13 directed tests PASS/protected byte-unchanged）；science critic 8 项攻击 survive。执行中修 TL-22 anomaly：oracle 只逆 J_b 不逆 SOP 旋转 R(theta) 致反常差于 B3，component-level trace 定位+修复+回归测试；M4 联合模型 FDE oracle 因需联合求解器排除出 headroom 表（scope 限制非 confound）。**Provisional verdict=`PIVOT_MODEL_NOT_JUSTIFIED`**（允许枚举）：complex-Jones/PMD/PDL 升级不在 2.5GBaud/64–100sym block 下重新产生方法级 Pilot-Jones gap，B3 关闭 headroom。T002 `UNITARY_REAL_ROTATION_MCA_KILLED` 扩展为即便 richer Jones B3 仍关闭。Pilot-Jones family 仍 `UNRESOLVED` 不在本轴关闭，待真正新轴（verified DGD≫T_S 频选或 sub-symbol 块变 Jones）。待主控验收；不进 Step 5/Contract/Execute，不新建 D064，不复活 Scout/P03，不改 protected/Skill/controller，未 push。详见 `projects/simulation/explore/pilot-jones-complex-salvage/synthesis.md`。
+- **S080/T003 → V038/D064 amendment**（2026-07-23）：T003 工程资产完成且 13 tests PASS，但主控接收发现五项科学语义缺陷：component impairment 施加在已含 AWGN 的 RX 上导致 PDL flat 恒等；PDL 奇异值 `[cond,1]` 是增益非差分损耗；PMD pilot 用 memoryless J 重合成；B3 tapped 以 RX 预测 RX；PMD FDE oracle 不逆 canonical SOP，raw 中 B1 在 6/40ps 分别比 oracle 好 35.7%/33.4%，160ps 比 B3 好 43.0%。decision 又把 problem survival 与 P1 success 混合。故 provisional Pivot、headroom 归因与 negative harvest 全失效；T003 文件保留为失败证据。D064 授权 T004 隔离语义修复重测，complex/PMD/PDL 继续 UNRESOLVED。

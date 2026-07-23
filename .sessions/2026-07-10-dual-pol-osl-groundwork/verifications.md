@@ -1043,3 +1043,69 @@ KILL 为 provisional，待主控验收 + 用户确认（D062 rule 6）。若用�
 - scientific claim：`UNITARY_REAL_ROTATION_MCA_KILLED` PASS；
 - `PILOT_JONES_FAMILY_KILLED` FAIL/未获支持；
 - 下一合法动作：D063 授权的 complex-Jones/PMD/PDL 模型充分性救活包，不进 Step 5。
+
+---
+
+## V038: T003 主控接收验收与科学语义否决
+
+> date: 2026-07-23
+> 关联：T003 / S080 / D063 / D064
+> verifier: fork 主控；未复用执行者 verdict，使用源码审计、fresh pytest、raw 数字重算和 git 边界检查
+
+### 验证事实
+
+- commit/边界：HEAD=`5445a2e8899928b8f69d9df811212e913155f8f9`，相对
+  `68c1fd8` 新增/修改 22 个文件；指定 protected paths 无 diff，worktree clean。
+- fresh tests：
+  `python -m pytest projects/simulation/tests/test_pilot_jones_complex_salvage.py -q`
+  → `13 passed in 1.22s`。
+- T003 raw/result 可解析；重列 headroom summary 后确认：
+  - M3 6 ps：B1=`0.0123057`，oracle=`0.0191347`，B1 比 oracle 低 35.69%；
+  - M3 40 ps：B1=`0.0128513`，oracle=`0.0193039`，B1 比 oracle 低 33.43%；
+  - M3 160 ps：B1=`0.0254475`，B3=`0.0446570`，B1 比 B3 低 43.02%；
+  - M3 Q² headroom（6/40/160 ps）约 `0.372/0.437/1.500 dB`。
+- `git diff --check 68c1fd8..5445a2e` FAIL：`_registry.yaml` 多处 trailing
+  whitespace；不影响 raw 数值，但与 worker-log 的 “git diff --check PASS” 不一致。
+
+### 科学语义缺陷
+
+1. **噪声位置错误、PDL flat 结论为实现恒等**：
+   `complex_jones_channel.py:99-108` 明示 canonical RX 已含 noise，随后执行
+   `r_out = J_b @ r_canonical`。oracle/B3 再逆 J 时连噪声一起还原；PDL 0→9.5 dB
+   headroom bit-identical 不能证明 PDL 无影响。`g=[cond,1]` 还把 PDL 实现为增益而非
+   最大透射率不超过 1 的差分损耗。
+2. **PMD pilot 没经过 PMD channel**：
+   `conventional_baselines.py:78-94` 用 memoryless `J @ atm` 重构 residual，再用
+   `J @ patm + residual` 放入 pilot；residual 含旧数据的 PMD/ISI，pilot 自身却未
+   经过 PMD FIR。pilot/data “同一信道”契约失败。
+3. **B3 tapped 是 RX 自预测**：
+   `conventional_baselines.py:137-139` 以接收窗口作输入、接收中心作 target；
+   正确训练 target 应是已知 TX pilot。当前 B3 学近恒等映射，不能作为 task-matched
+   conventional。
+4. **PMD oracle 非 ceiling**：
+   `salvage_methods.py:138-187` 的 FDE 只逆 component PMD，不逆 canonical
+   per-symbol SOP rotation；raw 中 receiver-visible B1 两个 cell 显著优于 oracle，
+   已直接证伪 ceiling。现有 oracle regression test 只覆盖 noiseless memoryless M2，
+   没覆盖 PMD。
+5. **decision gate 混淆问题存在与方法成功**：
+   `run_all.py:224-290` 将 impairment trend 与 `P1 beats B3` 取 AND 后才算 problem
+   survives；P1 失败最多否决 P1，不能推出模型不产生可研究问题。trend 函数也把
+   “相对 M0 每点都 >0.05”混入“随 DGD 单调增长”的定义。
+
+### 测试覆盖判断
+
+13 项测试对 M0 byte compatibility、矩阵 cond、无噪 M2 recovery、SHA/raw 和
+memoryless oracle 有价值，但没有以下关键测试：pre-channel pilot、post-component
+noise、tapped RX→TX target、PMD oracle dominance、B3 对 no-op 的任务改善、problem
+gate 与 P gate 分离。因此 `13 passed` 是 implementation consistency，不是算法/
+物理正确性（TL-02/TL-20/TL-22/TL-29）。
+
+### 结论
+
+**FAIL（科学结论） / PARTIAL（工程资产）**：
+
+- `PIVOT_MODEL_NOT_JUSTIFIED`：FAIL，不接收；
+- T003 M2/M3 headroom、B3/P1 排名和 negative harvest：INVALIDATED；
+- M0–M3 隔离骨架、BER→Q² 实现和部分 limiting tests：可作为修复输入，不作为科学证据；
+- Pilot-Jones complex/PMD/PDL：`UNRESOLVED`；
+- 下一合法动作：D064/T004 的 semantic repair + paired retest，不进 Step 5。

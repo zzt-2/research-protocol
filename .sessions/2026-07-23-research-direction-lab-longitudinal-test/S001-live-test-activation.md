@@ -129,3 +129,51 @@ T002 自包含任务书、control guard 和范围验证已完成；下一步交�
 ## 后续
 
 T003 自包含任务书、epoch 5 control guard 和 current-owner 同步已完成；交用户转发 GLM。
+
+> 2026-07-23 续接 | T003 主控验收与 T004 授权 | 状态：T004_READY
+
+### T003 主控接收验收
+
+- 执行提交 `5445a2e8899928b8f69d9df811212e913155f8f9`；fresh directed tests
+  `13 passed`，protected diff 为空，raw/result 可解析。
+- V038 没有继承执行者的 PASS：新增 PDL/PMD 作用在已经含 AWGN 的 canonical RX，
+  使 inverse 同时还原 signal/noise；PDL flat headroom 是代码恒等而非物理发现。
+- PMD pilot 用 memoryless `J @ pilot` 重合成，未经过 PMD FIR；B3 tapped 以 RX
+  window 预测 RX center，不是 RX→known-TX equalizer。
+- PMD oracle 被部署型 B1 反超：6 ps/40 ps 两格 B1 BER 分别比 oracle 低
+  35.7%/33.4%；160 ps 中 B1 比 B3 低 43.0%。因此 oracle ceiling 与 strongest B3
+  两个基础前提均失败。
+- decision code 又把 `problem_survives` 与 `P1 beats B3` 取 AND。当前 P1 失败不能
+  推出物理模型没有问题。T003 的 `PIVOT_MODEL_NOT_JUSTIFIED` 被 D064 正式否决，
+  complex/PMD/PDL 继续 `UNRESOLVED`。
+- `git diff --check` 仍报 `_registry.yaml` trailing whitespace，与 worker-log PASS
+  不一致；作为执行验收缺陷记录，不把它夸大成科学根因。
+
+### T004 包选择
+
+1. **选择**：一个 semantic repair + paired retest 大包。先用可失败的行为测试锁定
+   signal/noise 顺序、pre-channel pilot、RX→TX tapped baseline 和真正 PMD/M4
+   oracle；全过后统一重跑 M0–M4。
+2. 若合法传统 baseline 到 oracle 的问题 gap 在 verified range 存活，同包扫描
+   A1–A6 并比较 2–3 个机制候选；若问题不存活，才形成 scoped negative。
+3. 排除只补 oracle 或立即换方向：前者留下另外三项结构缺陷，后者会把 T003
+   invalid verdict 留成压缩后可继承的假状态。
+
+本事件是 live test 的真实价值点：worker 一次完成 19k 行资产、tests/SHA/provenance
+均绿，仍因 semantic smoke 设计不充分产生错误科学结论；foreground master 成功在
+接收门阻断，没有把“包很大/流程很全”误当可晋级证据。
+
+## 决策引用
+
+- formal D064：T003 科学结论不接收，授权 T004 semantic repair + retest（新建）。
+- V038：T003 主控科学语义验收 FAIL / 工程 PARTIAL（新建）。
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是；仍在 Pilot-Jones formal GW Step 4a 内修复
+  证据语义，不进 Step 5，不修改 protected history/Skill/controller，不恢复 Scout。
+
+## 后续
+
+T004 自包含任务书与 epoch 6 control guard 完成后交用户转发 GLM。用户把当前阶段
+明确视为真实运行测试，运行一段后回原 system design 对话做磁盘证据审计。

@@ -3233,3 +3233,77 @@ S074（2026-07-23 续接）；触发原话见 voice.md 2026-07-23。
 ### 来源
 
 S079 主控验收追加；V037。触发原话见 voice.md 2026-07-23。
+
+---
+
+## D064: T003 科学结论不予接收，授权语义修复后重测 complex-Jones/PMD/PDL
+
+> status: active
+> date: 2026-07-23
+> 取代：无（D063 对 T003 的历史授权继续有效；本决策否决 T003 的 provisional verdict，并授权修复包）
+> 被取代：无
+> 依据: 验证 V038 + T003 源码与 raw artifact `projects/simulation/results/pilot-jones-complex-salvage/result.json` + fresh pytest/diff-check + 用户原话 voice.md 2026-07-23
+
+### 决策
+
+1. **不接收 T003/S080 的 `PIVOT_MODEL_NOT_JUSTIFIED`**。T003 工程执行记为
+   `PARTIAL_IMPLEMENTATION_WITH_INVALID_SCIENTIFIC_EVIDENCE`；complex-Jones/PMD/PDL
+   轴继续 `UNRESOLVED`，不得把其数值或“headroom 不随损伤增长”写入论文结论。
+2. T003 的 13/13 directed tests、SHA/raw 可重算和 M0–M3 limiting checks 只证明
+   代码按其自身契约运行，不证明信道注入、导频语义、tapped baseline 或 PMD oracle
+   正确。旧源码、raw、result 和 synthesis 保留为失败证据，不覆盖、不改写历史。
+3. 授权 T004 在同一 Pilot-Jones formal GW Step 4a 内完成一次**语义修复—重测大包**：
+   先建立可失败的 channel/pilot/baseline/oracle semantic tests，再重建物理信道链和
+   任务适配 baseline；只有全部语义门通过才可重跑 headroom，问题存活后同包继续
+   多机制方法比较与有界 MVE。
+4. T004 必须分离两个判定：
+   - `problem_survives` 只由合法传统 baseline 到有效 oracle 的增量 headroom 决定，
+     不依赖任何提出方法是否成功；
+   - `method_succeeds` 只在 problem 已存活后判断 P 是否超过 validation 冻结的最强
+     传统 baseline。
+5. T004 仍止于 Step 4a provisional verdict；不得进入 Step 5/Contract/Execute，
+   不复活 dormant Scout/P03，不修改 shared canonical generator、protected history
+   或 Skill/controller。
+
+### 理由
+
+- T003 把 PDL/PMD 直接施加到已经含 AWGN 的 canonical RX，`J^{-1}` 因而同时消去
+  信号和噪声变换；PDL headroom 与 M0 完全相同是实现恒等关系，不能当物理发现。
+- T003 的 PMD pilot 用 memoryless `J @ pilot` 重合成，没有经过 PMD FIR；残差中
+  混入旧数据的 ISI。`B3_tapped` 又以 RX window 预测 RX center，而非已知 TX pilot，
+  形成近恒等自预测，不是合法 tapped equalizer 训练。
+- T003 PMD oracle 不是 ceiling：raw 中 M3 6 ps/40 ps 的 B1 BER 分别比 oracle 低
+  约 35.7%/33.4%；M3 160 ps 的 B1 又比 B3 低约 43.0%。oracle 与“最强 B3”两项
+  基础前提同时失败。
+- raw 的 Q² headroom 随 DGD 6→40→160 ps 为约 0.372→0.437→1.500 dB，实际递增；
+  决策函数却要求所有 impairment delta 均先高于 M0 0.05，且把 P1 胜 B3并入
+  problem-survival gate，导致“当前方法失败”被误写成“模型不产生问题”。
+- `git diff --check 68c1fd8..5445a2e` 仍报告 `_registry.yaml` trailing whitespace，
+  与 worker-log 的 PASS 声称不一致。该项不决定科学结论，但证明验收不能继承执行者
+  自报 PASS。
+
+### 排除的替代方案
+
+- 不接受 T003 后直接轮换方向：会把已定位的模型/导频/oracle 基础错误留作持久假结论。
+- 不只修 PMD oracle：信道噪声位置、pilot 注入和 tapped baseline 是相互独立的三项
+  结构缺陷，单点补丁仍无法解释 headroom。
+- 不立即建设通用 M4/FDE 基础设施：先在 T004 隔离目录闭合 M0–M4 的最小语义；
+  只有正确的 M2/M3 显示问题存活，才允许同包投入 joint solver。
+- 不把 T003 的失败写成 Pilot-Jones family Kill；当前只有 T002 的
+  `UNITARY_REAL_ROTATION_MCA_KILLED` 仍有效。
+
+### 影响范围
+
+- Pilot-Jones Step 4a complex-model 状态从
+  `PIVOT_MODEL_NOT_JUSTIFIED (provisional)` 改为
+  `INVALIDATED_SEMANTIC_REPAIR_AUTHORIZED`。
+- live-test foreground control 递增到 epoch 6，允许
+  `PILOT_JONES_SEMANTIC_REPAIR_RETEST_PACKAGE`。
+- 允许新增 T004 隔离模型、semantic tests、raw results、S081、worker-log 和
+  provisional synthesis；T003 文件保持 immutable evidence。
+- D056 的 4 篇全文债、P03 paused、science-scout dormant、protected history 均不变。
+
+### 来源
+
+V038 主控验收；用户允许继续把本阶段作为长程协议真实测试，触发原话见
+live-test `voice.md` 2026-07-23。
