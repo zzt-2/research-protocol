@@ -133,6 +133,7 @@
 - **S012 / D012**：S009 外部语义审计暴露“极小探针扩成重证据链”和“artifact fidelity 掩盖目标函数常数塌缩”。冻结新顺序：先设计 Probe/Scout/Deep Evidence 分层、单一恢复投影、current-view/lineage、harvest 状态索引与抗膨胀目录；推演固定后再改 Skill 和大规模运行。本轮仅立项。
 - **S012 续接 / D013 / V011**：完成三层成本、语义先行、current projection、轻量 harvest 与抗膨胀目录的设计和实施；首轮/二轮独立审查发现的行为证据、lineage、current harvest 与 Scout conditional 冲突全部修复；Skill `90 passed, 1 skipped`，repo/global 56/56 hash 全等，V011 PASS。
 - **S013 / D014-D015**：在最新谱系冻结四层记忆、双日志和主控—GLM 极短中转；H004/T001 不再是本专题当前入口，下一步先以控制链全读、关键转折深读和原始证据抽查形成 R002 历史复盘。
+- **H005**：为新主控对话冻结 R002 只读复盘入口；要求先核验最新 worktree/HEAD/编号谱系，不修改 Skill、不运行实验。
 
 ## 未决项
 
@@ -148,4 +149,4 @@
 
 ## 当前位置
 
-Task 1–10、消费者部署、D010–D013 均已完成局部验证，但真实 science-scout campaign 后续在 S014/D022/V012 进入 SCIENCE_FREEZE，证明 V011 不能替代长程真实运行检验。D014 已冻结四层记忆与极短中转；D015 将本专题下一入口从 H004/T001 改为只读完成 R002。该顺序不改变 Pilot-Jones 在 `master-state.md` 中的正式 Groundwork 状态。
+Task 1–10、消费者部署、D010–D013 均已完成局部验证，但真实 science-scout campaign 后续在 S014/D022/V012 进入 SCIENCE_FREEZE，证明 V011 不能替代长程真实运行检验。D014 已冻结四层记忆与极短中转；D015 将本专题下一入口从 H004/T001 改为只读完成 R002。新主控对话从 H005 恢复；该顺序不改变 Pilot-Jones 在 `master-state.md` 中的正式 Groundwork 状态。

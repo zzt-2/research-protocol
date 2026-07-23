@@ -30,7 +30,7 @@ topics:
     title: Research Direction Lab 完整体系设计
     status: active
     created: "2026-07-20"
-    last_updated: "2026-07-23（S013/D014-D015：冻结四层记忆与双日志；真实 campaign 复盘先于继续改造）"
+    last_updated: "2026-07-23（H005：新主控对话从只读 R002 长程运行复盘恢复）"
     description: "从零/从地基的长期自动研究探索体系。Task 1–10、消费者部署与 D013 均已验证，但真实 science-scout 已 SCIENCE_FREEZE；当前冻结主控—GLM 极短中转和长程/单项双日志，先完成只读 R002 历史复盘，再决定最小修补，不改变 Pilot-Jones 正式 Groundwork。"
     depends_on:
       - slug: framework-evolution
