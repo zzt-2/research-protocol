@@ -30,8 +30,8 @@ topics:
     title: Research Direction Lab 完整体系设计
     status: active
     created: "2026-07-20"
-    last_updated: "2026-07-23（R002：长程运行复盘完成，待拍板最小修补与纵向真实测试）"
-    description: "从零/从地基的长期自动研究探索体系。Task 1–10、消费者部署与 D013 均完成窄合同验证，但真实 science-scout 已 SCIENCE_FREEZE。R002 已确认主要差距是验收对象错位、semantic smoke 晚门、工作强度/科学信息错配及 current/release/formal owner 未原子收敛；下一步先拍板是否做 P0 owner 收敛，再按 D013/D014 实测纵向真实运行，不改变 Pilot-Jones 正式 Groundwork。"
+    last_updated: "2026-07-23（R003/D017：轻量协议、消费者同步和 live-test 入口终验完成）"
+    description: "从零/从地基的长期自动研究探索体系。R002 确认验收对象错位、semantic smoke 晚门、工作强度/科学信息错配及 current/release/formal owner 未原子收敛；S014 现场复现压缩后把正式候选误推成下一动作。R003/D017 已用小前台控制块、T guard、既有分层日志和独立 live-test mission 完成最小修补；system topic 现为 DESIGN_COMPLETE 审查基线，不授权具体科学方向。"
     depends_on:
       - slug: framework-evolution
         reason: 继承 R002 Direction Lab 设计和唯一拥有者原则
@@ -44,6 +44,19 @@ topics:
       - .sessions/2026-07-20-research-direction-lab-system/
       - docs/superpowers/specs/2026-07-20-research-direction-lab-system-blueprint.md
       - docs/superpowers/plans/2026-07-20-research-direction-lab-system-implementation.md
+
+  - slug: 2026-07-23-research-direction-lab-longitudinal-test
+    title: Research Direction Lab 长程真实运行测试
+    status: active
+    created: "2026-07-23"
+    last_updated: "2026-07-23（S001/H001：READY_FOR_FORK；仅授权 Recover/Map/T 准备）"
+    description: "D017 轻量前台控制协议的真实纵向运行 mission。初始 control epoch 1 只允许 Recover/Map/Reconcile/T 准备，未选择 scientific carrier，不授权实验、formal 变化、Skill 修改或基础设施建设。fork 主控与 executor 将在单一隔离 live-test worktree 中串行运行，用户只中转 T 路径和四项完成索引。"
+    depends_on:
+      - slug: 2026-07-20-research-direction-lab-system
+        reason: 继承 S014 现场故障、R003 场景演练、D017 控制接口和 guard
+    conflicts_with: []
+    produces:
+      - .sessions/2026-07-23-research-direction-lab-longitudinal-test/
 
   - slug: direction-scouting
     title: 方向侦察与项目盘点

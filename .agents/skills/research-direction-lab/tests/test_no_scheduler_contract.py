@@ -74,6 +74,7 @@ APPROVED_SCRIPT_APIS = {
     "rebuild_state",
     "render_status",
     "validate_receipt",
+    "validate_task_control",
 }
 
 FORBIDDEN_SCHEDULER_NAMES = {

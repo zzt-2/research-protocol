@@ -1,6 +1,27 @@
 # Topic Index: Research Direction Lab 完整体系设计
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-07-23（R002：长程运行复盘完成，待拍板最小修补与纵向真实测试）
+<!-- RDL-CONTROL:START -->
+```yaml
+rdl_control:
+  schema_version: rdl.foreground-control.v1
+  control_epoch: 3
+  role: SYSTEM_DESIGN
+  mission: 设计并验证轻量长程研究运行协议
+  active_lane: DESIGN_COMPLETE
+  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D017
+  decision_gate: 协议、消费者同步和 live-test 入口已终验；等待独立 worktree 中的 fork 真实运行
+  allowed_actions:
+    - PROTOCOL_AUDIT
+    - LIVE_TEST_PREPARATION
+  forbidden_actions:
+    - SCIENTIFIC_DISPATCH
+    - SKILL_SCIENCE_CAMPAIGN
+    - FORMAL_STAGE_CHANGE
+  next_legal_action: 在独立 live-test worktree 中 fork 当前对话并按 H001 完成 Recover/Map
+```
+<!-- RDL-CONTROL:END -->
+
+> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-07-23（R003/D017：轻量协议实现、消费者同步与 live-test 入口终验完成）
 
 ## 专题信息
 
@@ -26,6 +47,7 @@
 - 基于 C01–C04 的 comparator/readiness 失配，允许最小修订两层 baseline 公平性与重实施前的有界机制级候选扩图；不借此扩展通用 scheduler 或运行科学实验。
 - 基于 S009 的科学语义审计，当前范围扩展为 Probe/Scout/Deep Evidence 分层、单一恢复投影、current-view/lineage、harvest 状态索引和抗膨胀目录的设计、推演、Skill 实施与独立验证；不借此运行科学实验。
 - 基于真实 science-scout campaign 的 SCIENCE_FREEZE，当前先冻结四层记忆与双日志，复盘 system 设计在真实长跑中的兑现差距；不改变 Pilot-Jones 正式 Groundwork。
+- R002 完成后，先记录并分析一次真实压缩恢复跑偏，设计、演练和审查轻量长程运行协议；用户认可后以 fork 做真实纵向运行，设计完成前不修改 Skill/controller、不派具体科学方向。
 
 ### 明确不含
 
@@ -75,6 +97,9 @@
 - **[2026-07-23] 长程运行复盘（D015）**：用户要求先整理此前整个过程，避免在未理解真实失效前继续派工或补规则。
   - 新范围：只读审计旧方法论、governance pilot、system 落地、science-scout、项目控制面和 Git 轨迹，形成 R002。
   - 明确排除：继续修改 Skill/controller、恢复 Direction Lab 科学 campaign、改动 Pilot-Jones 正式状态或运行新实验。
+- **[2026-07-23] 运行协议设计与 fork 纵向测试（D016）**：R002 后的首次压缩恢复现场复现主线偏离，用户要求先落日志、仔细设计，不根据单次事故急改规则。
+  - 新范围：分析 S014 现场故障及历史同类，比较并演练少量轻量运行协议候选；设计获认可后再一次性落到唯一 owner，并 fork 当前对话真实运行。
+  - 明确排除：当前直接修改 Skill/controller、派 Pilot-Jones 或其他科学方向、把单次事故直接固化成全局规则。
 
 ## 已确认结论
 
@@ -135,6 +160,9 @@
 - **S013 / D014-D015**：在最新谱系冻结四层记忆、双日志和主控—GLM 极短中转；H004/T001 不再是本专题当前入口，下一步先以控制链全读、关键转折深读和原始证据抽查形成 R002 历史复盘。
 - **H005**：为新主控对话冻结 R002 只读复盘入口；要求先核验最新 worktree/HEAD/编号谱系，不修改 Skill、不运行实验。
 - **R002**：完成旧方法论、governance pilot、system、science-scout、项目 current views 与 Git 轨迹的证据化复盘。主因不是规则缺失，而是单轮合规/replay/provenance 验收替代了多轮科学优先级，semantic smoke 晚于完整证据链，且 current/release/formal owner 未原子收敛；建议先拍板 owner/current release 是否已满足纵向测试前置，再按 D013/D014 实测，仅按观察到的具体失败修唯一 owner。
+- **S014 / D016**：R002 后首次真实压缩恢复中，主控把“Pilot-Jones 是正式候选”误推成“下一步推进 Pilot-Jones”，越过 system-design gate；用户纠正后撤回。该现场故障成为 R003/D017 的 RED 样本。实现后本对话再次自动压缩，主控按 epoch 2 控制块恢复并仅继续终验，形成首个真实正向恢复样本（1/1，不足以宣称长程 PASS）。
+- **R003**：承接 S014 的详细设计分析，完成必要能力/非目标/owner 边界、四种架构比较和两轮历史组合场景演练；提出轻量协议 v0.1 与纵向事件验收。详细设计从长程 S 下沉到 R，避免 S014 膨胀。
+- **D017 / implementation**：采用 R003 的轻量前台控制接口；guard 与 Skill 路由完成 TDD/回归（repo 97 passed, 1 skipped），59 个非缓存 Skill 文件已与个人消费者镜像逐字节一致，消费者 guard 6/6 PASS。longitudinal live-test mission 仅以 Recover/Map 权限准备，不携带科学授权。
 
 ## 未决项
 
@@ -146,8 +174,9 @@
 - Windows symlink / POSIX flock 动态测试覆盖：跨平台 CI 前补跑。
 - ~~H004/T001 已冻结下一科学 campaign 的恢复入口~~（D015 暂停执行；仅保留为历史入口，不再作为当前 next action）。
 - 新科学项目首次采用 current layout 时，需要渐进生成 `state/current.yaml`、`portfolio/current.yaml`、`harvest/current.yaml`；禁止为了迁移整洁批量改写旧 artifacts。
-- ~~R002 历史复盘尚未执行~~（已完成）：见 `R002-long-horizon-runtime-retrospective.md`。下一步只在“先收敛 owner/current release”与“现有前置核验通过后直接做纵向真实测试”之间拍板；不先重写 Skill/controller。
+- ~~R002 历史复盘尚未执行~~（已完成）：见 `R002-long-horizon-runtime-retrospective.md`。
+- 长程运行协议尚未设计完成：主控选题、方向 disposition/轮换、专题生命周期、压缩恢复强约束、单 GLM 工作包边界、Skill/治理/current owner 分工和纵向验收仍待分析与演练；不得把 D013/D014 当作已经自动解决这些问题。
 
 ## 当前位置
 
-R002 已完成，证据表明 V004/V005/V011 的窄合同均成立，但不能替代长程真实科学检验。当前建议不继续堆规则：先拍板是否需要 P0 owner/current release 收敛，然后按 D013 三层强度与 D014 四层记忆运行一次纵向真实测试。本专题不恢复 frozen science-scout；Pilot-Jones 仍按 `master-state.md` 独立保持 formal GW Step 3.5 PARTIAL，Step 4a 未授权。
+R003/D017 的轻量协议、个人 Skill 消费端和 live-test 入口已完成终验。system design topic 进入 `DESIGN_COMPLETE`，保留为后续只读审查基线。当前唯一入口是在独立 live-test worktree 中 fork 当前对话并按 H001 做 Recover/Map；仍未授权任何具体科学方向或实验。运行一段时间后回到本专题，按真实事件审计恢复、轮换、晋级和治理重量。

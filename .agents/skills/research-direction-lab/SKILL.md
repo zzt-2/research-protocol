@@ -15,6 +15,12 @@ Treat deterministic tools as integrity guards only. Respect their path, history,
 
 ## Startup recovery
 
+When a long-running RDL topic provides a **foreground control block**, read it
+before choosing which project or formal state owns the next action. After
+**context loss or fork**, re-read that block and its `authority_pointer`; treat
+conversation summaries as locators, not authorization to change the active
+lane. Read `references/long-horizon-control.md` for the bounded interface.
+
 1. Locate the canonical status, project adapter, current state, active portfolio/batches, latest synthesis, and harvest summary.
 2. Recover the formal goal, authorization, anchor, evidence validity, unfinished work, blocked axes, next recorded action, and protected history.
 3. Check recent user voice or collaboration-profile corrections when the project provides them.
@@ -22,6 +28,11 @@ Treat deterministic tools as integrity guards only. Respect their path, history,
 5. State the recovered facts, uncertainties, current mode, and first legal action before continuing.
 
 Read `references/recovery-and-rotation.md` for recovery depth, evidence classification, rotation, and context handoff.
+
+Before dispatching a T from a foreground-controlled mission, bind its control
+reference, epoch, and action class, then run
+`scripts/validate_task_control.py`. A PASS proves authorization consistency
+only; it does not validate scientific quality.
 
 ## Work intensity
 
@@ -80,3 +91,4 @@ Load only the reference needed for the current decision:
 - `references/thesis-harvest.md` — harvest categories, ledger fields, and thesis-spine promotion.
 - `references/recovery-and-rotation.md` — startup modes, state recovery, blocker handling, rotation, and handoff.
 - `references/project-layout.md` — canonical artifact ownership, compact status, and anti-duplication layout.
+- `references/long-horizon-control.md` — foreground lane binding, task authorization, topic lifecycle, and longitudinal recovery.

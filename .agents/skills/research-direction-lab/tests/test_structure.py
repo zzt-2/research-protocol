@@ -14,6 +14,7 @@ REFERENCE_NAMES = (
     "thesis-harvest.md",
     "recovery-and-rotation.md",
     "project-layout.md",
+    "long-horizon-control.md",
 )
 EXPECTED_REFERENCE_FILES = {ROOT / "references" / name for name in REFERENCE_NAMES}
 ALLOWED_NESTED_FILES = {
@@ -66,6 +67,52 @@ def test_skill_routes_three_work_intensities_without_a_new_reference_layer():
     assert "Probe → Scout → Deep Evidence" in skill
     assert "Probe record" in core
     assert "Probe PASS is not a method signal" in core
+
+
+def test_skill_routes_long_horizon_foreground_control_without_owning_science_state():
+    skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
+    control = (ROOT / "references/long-horizon-control.md").read_text(
+        encoding="utf-8"
+    )
+    normalized_control = " ".join(control.split())
+
+    assert "foreground control block" in skill
+    assert "context loss or fork" in skill
+    assert "validate_task_control.py" in skill
+    for field in (
+        "control_epoch",
+        "role",
+        "mission",
+        "active_lane",
+        "authority_pointer",
+        "decision_gate",
+        "allowed_actions",
+        "forbidden_actions",
+        "next_legal_action",
+        "control_ref",
+        "action_class",
+    ):
+        assert f"`{field}`" in control
+    assert (
+        "does not own candidate evidence or formal stage state"
+        in normalized_control
+    )
+    assert (
+        "Candidate rotation stays inside the exploration topic"
+        in normalized_control
+    )
+    assert (
+        "Formal promotion creates or restores a formal topic"
+        in normalized_control
+    )
+    assert (
+        "Formal failure returns to the existing exploration topic"
+        in normalized_control
+    )
+    assert (
+        "Do not implement a scheduler or automatic candidate selector"
+        in normalized_control
+    )
 
 
 def test_probe_semantics_precede_evidence_scaling_and_default_artifacts_stay_small():

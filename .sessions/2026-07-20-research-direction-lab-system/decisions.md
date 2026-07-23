@@ -484,3 +484,80 @@ Research Direction Lab 专题暂不继续修改 Skill、恢复其科学 campaign
 ### 来源
 
 S013 / 用户明确要求先整理此前整个过程。
+
+## D016: 先完成运行协议设计，再以 fork 做真实纵向运行
+
+> status: active
+> date: 2026-07-23
+> 取代：无
+> 扩展：D014、D015
+> 被取代：无
+> 依据：调研: R002 + 用户原话: voice.md 2026-07-23 + 现场故障: S014
+
+### 决策
+
+R002 后不立即修改 Skill、建立 controller 或派具体科学方向；先在当前主控对话基于现场故障和历史失效仔细设计、演练并审查一套轻量长程运行协议，用户认可后 fork 当前对话做真实运行，运行一段时间后再由设计/审查对话根据磁盘证据复盘。
+
+### 理由
+
+本次压缩恢复已经现场证明：即使持久日志存在，主控仍可能把“当前正式候选”误推为“当前下一动作”，越过尚未完成的 system-design gate。若立即把单次事故写成规则，容易继续复制“发现问题—补流程—流程变重”的旧模式；若立即开科学方向，又会让未定的轮换、专题生命周期、恢复约束和 owner 问题带入真实运行。先完成有证据的设计，再用 fork 分离设计上下文与运行反馈，可以直接检验方案而不把设计阶段无限延长。
+
+### 排除的替代方案
+
+- **立即推进 Pilot-Jones 或其他具体方向**：拒绝；长期运行协议和状态门尚未设计完成。
+- **根据本次事故立刻追加大量 Skill 规则**：拒绝；单个样本不足以决定正确 owner 和最小约束。
+- **先实现强 controller 再测试**：拒绝；R002 已表明规则数量不是主要瓶颈，且强控制器可能固化错误判断。
+- **只做口头讨论、不落持久日志**：拒绝；上下文可能再次压缩，必须让当前主线可从磁盘恢复。
+- **设计完成后仍在同一上下文直接长期运行**：不采用；用 fork 分离设计基线和真实运行，便于后续对照审计。
+
+### 影响范围
+
+更新本专题 S014、topic-index、voice 和 registry。后续设计仍在本专题内进行；在设计获用户认可前，不修改 `research-direction-lab` Skill、`session-governance`、controller、项目 scientific current 或 Pilot-Jones 正式状态，也不生成科学执行任务。
+
+### 来源
+
+S014 / R002 / 用户 2026-07-23 连续纠正与拍板。
+
+## D017: 采用轻量前台控制块与 T 授权 guard
+
+> status: active
+> date: 2026-07-23
+> 取代：无
+> 扩展：D013、D014、D016
+> 被取代：无
+> 依据：调研: R003 + 验证: RDL Skill 97 passed, 1 skipped + 用户原话: voice.md 2026-07-23
+
+### 决策
+
+长期 Research Direction Lab mission 采用 topic-index 顶部前台控制块、T 的 control ref/epoch/action class 绑定和极小确定性 guard；设计完成后建立一个独立 longitudinal live-test mission/worktree，由 fork 主控和执行 GLM 串行使用。
+
+### 理由
+
+S014 已证明“日志存在”不足以阻止压缩后跨 lane：system design、dormant science-scout 和 formal candidate 可以同时为真，但摘要推断可能让错误 owner 接管下一动作。R003 两轮历史场景演练表明，一个只保存 role/lane/gate/allowed/forbidden/next legal action 的小控制块足以绑定前台；guard 只校验已记录授权一致性，不替代科学判断。独立 live-test mission/worktree 又能保持设计基线与运行反馈分离。
+
+### 排除的替代方案
+
+- **只补 Skill/checklist**：拒绝；S014 已复现规则存在但未形成约束。
+- **每个 fork 建 run manifest**：v1 拒绝；当前只有一个串行 live fork，会增加平行状态源。
+- **强 controller 或自动候选状态机**：拒绝；会固化开放科学判断并重复 R002 的治理膨胀。
+- **控制块复制 candidate/formal 科学状态**：拒绝；只保留 authority pointer，科学事实仍由原 owner 拥有。
+- **设计完成即授权某个科学方向**：拒绝；live fork 必须先 Recover/Map，并从现有 owner 获得合法 authorization。
+
+### 影响范围
+
+- `research-direction-lab` Skill 新增长程控制 reference 和 `validate_task_control.py`；
+- RDL mission 的 topic-index 可选用前台控制块；不修改所有普通专题模板；
+- 新建一个 longitudinal live-test topic，初始只允许 Recover/Map/Reconcile/T 准备；
+- system design topic 和 live-test topic 分离；一个 live-test worktree 串行承载 fork master 与 executor；
+- 不改变 science-scout dormant 状态、Pilot-Jones formal 状态或任何科学结论。
+
+### 来源
+
+S014 / R003 / 用户认可后要求继续实施。
+
+### 实施验证
+
+- 仓库 Skill：`97 passed, 1 skipped`；`quick_validate.py` PASS；脚本 compileall PASS。
+- 消费者同步：repo/global 共 59 个非缓存文件，相对路径与 SHA256 全部一致。
+- 消费者 smoke：`test_long_horizon_control.py` 6/6 PASS，个人 Skill 解析真实 live control PASS。
+- 自动压缩后的真实恢复：1/1 按 control epoch/lane 继续终验；样本不足，不宣称 longitudinal PASS。
