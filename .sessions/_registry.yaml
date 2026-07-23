@@ -30,8 +30,8 @@ topics:
     title: Research Direction Lab 完整体系设计
     status: active
     created: "2026-07-20"
-    last_updated: "2026-07-21"
-    description: "从零/从地基的长期自动研究探索体系，唯一流程拥有者为 research-direction-lab Skill。Task 1–10、消费者部署与 D013 均已验证；Probe→Scout→Deep Evidence、语义先行、单一 current projection、轻量 harvest 与抗膨胀目录已全局部署，下一入口 H004/T001。"
+    last_updated: "2026-07-23（S013/D014-D015：冻结四层记忆与双日志；真实 campaign 复盘先于继续改造）"
+    description: "从零/从地基的长期自动研究探索体系。Task 1–10、消费者部署与 D013 均已验证，但真实 science-scout 已 SCIENCE_FREEZE；当前冻结主控—GLM 极短中转和长程/单项双日志，先完成只读 R002 历史复盘，再决定最小修补，不改变 Pilot-Jones 正式 Groundwork。"
     depends_on:
       - slug: framework-evolution
         reason: 继承 R002 Direction Lab 设计和唯一拥有者原则

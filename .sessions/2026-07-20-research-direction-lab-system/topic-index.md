@@ -1,12 +1,12 @@
 # Topic Index: Research Direction Lab 完整体系设计
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-07-21（S012/D013/V011：Probe/恢复/文件组织体系已实施、全局同步并独立终验 PASS；未运行科学实验）
+> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-07-23（S013/D014-D015：四层记忆、双日志与真实运行复盘入口）
 
 ## 专题信息
 
 - **slug**: `2026-07-20-research-direction-lab-system`
 - **title**: Research Direction Lab 完整体系设计
-- **性质**: 目标体系蓝图与分阶段实施；Task 1–10、消费者部署、D010/D011 已验证，S012/D013 已完成 Probe/恢复/文件组织重设计与实现，等待终验后转入大规模科学使用
+- **性质**: 目标体系蓝图、分阶段实施与真实运行复盘；Task 1–10、消费者部署和 D010–D013 已验证，真实 campaign 已 SCIENCE_FREEZE，当前先审计设计承诺与实际运行差距
 
 ## 范围边界
 
@@ -25,6 +25,7 @@
 - 基于首轮正式 SCIENCE_SCOUT 的真实失效，允许以 RED→GREEN 修订主 Skill 的 baseline 充分性判断；不借此运行新实验或改写历史证据。
 - 基于 C01–C04 的 comparator/readiness 失配，允许最小修订两层 baseline 公平性与重实施前的有界机制级候选扩图；不借此扩展通用 scheduler 或运行科学实验。
 - 基于 S009 的科学语义审计，当前范围扩展为 Probe/Scout/Deep Evidence 分层、单一恢复投影、current-view/lineage、harvest 状态索引和抗膨胀目录的设计、推演、Skill 实施与独立验证；不借此运行科学实验。
+- 基于真实 science-scout campaign 的 SCIENCE_FREEZE，当前先冻结四层记忆与双日志，复盘 system 设计在真实长跑中的兑现差距；不改变 Pilot-Jones 正式 Groundwork。
 
 ### 明确不含
 
@@ -71,6 +72,9 @@
 - **[2026-07-21] Probe 与恢复体系实施（D013）**：D012 的设计和 RED 推演完成后，用户明确要求当前对话继续完成 Skill 并交付下一工作提示词。
   - 新范围：主 Skill/references、可选 current-view adapter 路径、显式 disposition reducer、STATUS current-harvest 指针、forward fixtures、测试、全局消费者同步和下一 campaign 交接。
   - 明确排除：运行新科学实验、改写旧 artifacts、复杂 scheduler、固定候选数、把领域科学判断写入通用代码。
+- **[2026-07-23] 长程运行复盘（D015）**：用户要求先整理此前整个过程，避免在未理解真实失效前继续派工或补规则。
+  - 新范围：只读审计旧方法论、governance pilot、system 落地、science-scout、项目控制面和 Git 轨迹，形成 R002。
+  - 明确排除：继续修改 Skill/controller、恢复 Direction Lab 科学 campaign、改动 Pilot-Jones 正式状态或运行新实验。
 
 ## 已确认结论
 
@@ -89,6 +93,7 @@
 - **成本随声明升级**：前置不确定性默认用单问题 Probe；多候选公平比较才进入 Scout；只有稳定且论文重要的信号进入 Deep Evidence。
 - **语义先于完整性**：objective/label/output/metric、平凡解、identity、output support、最小过拟合和信息边界未通过时，不得用 provenance PASS 升级科学结论。
 - **当前视图优先恢复**：current projection 是恢复入口，append-only lineage 是审计与复现入口；显式 disposition 优先于 mtime 和旧 prose。
+- **双日志不丢细节**：长程 S 只记裁决和轨迹，worker-log 记完整单项过程，raw artifacts 保存原始证据；聊天只传索引。
 
 ### 其他结论
 
@@ -96,6 +101,7 @@
 - Direction Lab 的 receipt/hash/stale/history protection 等确定性资产可保留。
 - `science_slots`、固定最小批次数求解和通用资源匹配不进入目标体系。
 - harvest 逐单元评估但不逐单元强制造条目；普通 Probe 不默认生成完整治理文档链。
+- `T###` 是不可变任务书，H 只用于主控续接；不得为每个轻量工作包机械生成 S/D/V/H 全套。
 
 ## 进展线索
 
@@ -126,6 +132,7 @@
 - **S011 续接 / D011 / V010**：真实 C01–C04 计划暴露“共同 system anchor 冒充任务专属 baseline”“共享输入冒充 runnable”及候选过窄问题；RED→GREEN、自动 scorer、独立复验和全局同步均 PASS。
 - **S012 / D012**：S009 外部语义审计暴露“极小探针扩成重证据链”和“artifact fidelity 掩盖目标函数常数塌缩”。冻结新顺序：先设计 Probe/Scout/Deep Evidence 分层、单一恢复投影、current-view/lineage、harvest 状态索引与抗膨胀目录；推演固定后再改 Skill 和大规模运行。本轮仅立项。
 - **S012 续接 / D013 / V011**：完成三层成本、语义先行、current projection、轻量 harvest 与抗膨胀目录的设计和实施；首轮/二轮独立审查发现的行为证据、lineage、current harvest 与 Scout conditional 冲突全部修复；Skill `90 passed, 1 skipped`，repo/global 56/56 hash 全等，V011 PASS。
+- **S013 / D014-D015**：在最新谱系冻结四层记忆、双日志和主控—GLM 极短中转；H004/T001 不再是本专题当前入口，下一步先以控制链全读、关键转折深读和原始证据抽查形成 R002 历史复盘。
 
 ## 未决项
 
@@ -135,9 +142,10 @@
 - shadow 派生的 SHADOW-H010..H017 是否晋升到 main ledger：**未授权**；晋升需单独授权 + 重新 hash 绑定 + thesis-spines 更新。
 - canonical-state 内部 stale self-checksums（event_log_sha256 / simulator.sha256）：正式激活前清理。
 - Windows symlink / POSIX flock 动态测试覆盖：跨平台 CI 前补跑。
-- H004/T001 已冻结下一科学 campaign 的恢复入口；真实长期效率与稳定性仍需在后续连续科学使用中观察，不由 V011 一次性外推。
+- ~~H004/T001 已冻结下一科学 campaign 的恢复入口~~（D015 暂停执行；仅保留为历史入口，不再作为当前 next action）。
 - 新科学项目首次采用 current layout 时，需要渐进生成 `state/current.yaml`、`portfolio/current.yaml`、`harvest/current.yaml`；禁止为了迁移整洁批量改写旧 artifacts。
+- R002 历史复盘尚未执行：需要证据化解释 system 设计承诺与真实 science-scout campaign 运行之间的差距。
 
 ## 当前位置
 
-Task 1–10、消费者部署、D010、D011 与 D013 均已验证。H004/T001 是唯一下一入口：从科学专题 H010 的现行结论建立 current view，然后同时推进多个机制分支；Probe 通过才升级 Scout，稳定论文信号才进入 Deep Evidence。
+Task 1–10、消费者部署、D010–D013 均已完成局部验证，但真实 science-scout campaign 后续在 S014/D022/V012 进入 SCIENCE_FREEZE，证明 V011 不能替代长程真实运行检验。D014 已冻结四层记忆与极短中转；D015 将本专题下一入口从 H004/T001 改为只读完成 R002。该顺序不改变 Pilot-Jones 在 `master-state.md` 中的正式 Groundwork 状态。
