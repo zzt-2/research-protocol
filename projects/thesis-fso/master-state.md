@@ -5,7 +5,7 @@ method_type: 待定（精读后根据问题方法产出形态确定，见 glossa
 domain: comms
 created: 2026-06-21
 updated: 2026-07-23
-current_step: Pilot-Jones-GW-Step4a-AUTHORIZED-IN-PROGRESS-D056-DEBT-WAIVER
+current_step: Pilot-Jones-GW-Step4a-COMPLEX-MODEL-SALVAGE-AUTHORIZED-D063
 current_stage: FORMAL_GROUNDWORK_PILOT_JONES
 ---
 
@@ -22,15 +22,15 @@ current_stage: FORMAL_GROUNDWORK_PILOT_JONES
 
 ### 当前控制面桥接（唯一现行入口）
 
-> **2026-07-23 D062 带债豁免**：D061 routing 不变；用户选择 H017 选项 (c)，4 篇直接竞品继续 `BLOCKED_NO_FULLTEXT`，Step 3.5 记 `WAIVED_TO_STEP4A_WITH_BLOCKING_DEBT`（非 PASS），授权 Pilot-Jones 单对话进入 Step 4a A0/A′/A/B/D。正面最高 Conditional Go 且须用户确认；不进 Step 5。
+> **2026-07-23 D063 T002 接收修正 + 模型救活授权**：D061 routing 与 D056/D062 带债边界不变。V037 接收 `UNITARY_REAL_ROTATION_MCA_KILLED`，但因 T002 contract stale count、BER-ratio→dB 门无依据及 V036 complex-Jones caveat，不接收 family Kill；授权 T003 在 Step 4a 内检验 complex Jones/PMD/PDL 的模型充分性、task-matched baseline 和条件式方法 MVE。正面最高 Conditional Go，不进 Step 5。
 
 - formal stage：`GROUNDWORK`（Pilot-Jones formal GW 链激活）。Direction Lab 的 Scout/Sandbox 结果对正式研究的 promotion effect 仍为 `none`；Direction Lab campaign 已 dormant（D022 SCIENCE_FREEZE），无当前科学执行授权。
-- **Pilot-Jones formal GW（当前工作线）**：Step 1 ✅ / Step 2 ✅ / Step 3 ✅ / **Step 3.5 ⚠ WAIVED_WITH_BLOCKING_DEBT**（V035 backward PASS、R3 new=0；D056 的 4 篇全文仍 BLOCKED）/ **Step 4a 🔴 GATE_KILL (provisional)**（S079/T002/V036：A0/A′/A/B 完成，D 未运行因 A0 §1 致命 + FR-21 headroom Kill 双门触发；KILL 限于 unitary real-rotation 信道实例化）。详见方法层重开轨表。
+- **Pilot-Jones formal GW（当前工作线）**：Step 1 ✅ / Step 2 ✅ / Step 3 ✅ / **Step 3.5 ⚠ WAIVED_WITH_BLOCKING_DEBT** / **Step 4a 🔄 MODEL_ADEQUACY_SALVAGE_AUTHORIZED（D063/T003）**。T002 已局部 Kill unitary-real-rotation M-C-A；family 未关闭，正在检验 complex Jones/PMD/PDL 是否产生 task-matched baseline 无法关闭的方法空间。
 - formal blockers：Step 3.5 的 D056 全文门——4 篇直接竞品（TCOMM `10.1109/TCOMM.2024.3522036` / JLT2025 `10.1109/JLT.2025.3640695` / JLT2022 `10.1109/JLT.2022.3224805` / JLT2023 `10.1109/JLT.2023.3284489`）non-OA IEEE paywalled，`tools/download` all_failed，OA scout 4 源均 closed。只有 OE 2021 + LCOMM 2026 两篇全文精读。
 - P03（暂停，回候选池）：Headroom Atlas Stage A（2026-07-19，S077/D059/V033）runnable 子域 LOCAL_NEGATIVE；16QAM/receiver-CSI/coded-output 三轴 INFRASTRUCTURE_BLOCKED，历史反例落在被阻轴上 → DOMAIN/CANDIDATE/FAMILY 仍 UNRESOLVED/OPEN。**用户选项①已选定：暂停回候选池，不关闭 family**。
 - Direction Lab sandbox history：last completed batch = `B003 / COMPLETED_SANDBOX_VERIFIED`；事实源为 `projects/thesis-fso/direction-lab/state/completion-events.jsonl`。`canonical-state.yaml` 仅为机器投影，不是正式研究授权源。
 - formal promotion effect：`none`；B001–B003 数字不得进入论文或正式材料。
-- 下一合法边界：Pilot-Jones Step 4a 大包（T002/S079/V036）已执行完毕——**provisional verdict = GATE_KILL**（A0 §1 致命 + FR-21 headroom Kill 双门触发；D 性能 MVE 未运行 by design）。KILL 限于 unitary real-rotation 信道实例化，不重构为杀方向本身（待主控验收+用户确认 D062 rule 6）。**不得进入 Step 5、Contract、Execute；不得复活 Scout/P03；不得启动 B004/Queue/Registry；不得 push。** 用户确认后：接受 KILL → Pilot-Jones 回候选池（family 不关闭，同 P03 处置），formal GW 工作线另选方向；或要求 salvage → 唯一在范围 rescue = 升级 canonical 信道为带 PMD/PDL 的 complex Jones（出 T002 范围，需新 authorization）。
+- 下一合法边界：执行 live-test T003，在一个大包内完成物理模型充分性、M0–M3 complex-Jones 模型梯、task-matched conventional baseline、正确 Q²/headroom 门和条件式方法 MVE。**不得进入 Step 5/Contract/Execute；不得复活 Scout/P03；不得改 shared canonical generator 或启动通用基础设施。**
 
 ### 历史 Groundwork 轨迹（保留审计，不授权当前执行）
 
@@ -98,7 +98,8 @@ current_stage: FORMAL_GROUNDWORK_PILOT_JONES
 | Pilot Jones Step1 classification | ✅ | S068 / V026b | candidate_key/top-level stats；必读6、formal56、direct5/adjacent26/none51 |
 | 候选族批量 MVE | ⬜ | — | 统一 baseline/seed/消融后执行 |
 | 晋级候选正式 GW Step 1→4a | ⬜ | — | 仅对批量胜者补齐 |
-| Pilot Jones Step4a A0/A′/A/B/D | 🔴 GATE_KILL (provisional) | D062 / live-test T002 / S079 / V036 | A0/A′/A/B 完成；D 性能 MVE 未运行（A0 §1 致命 + FR-21 headroom Kill 双门触发）。KILL 限于 unitary real-rotation 信道实例化，不杀方向本身。provisional verdict 待主控+用户确认。 |
+| Pilot Jones Step4a unitary slice | 🔴 UNITARY_REAL_ROTATION_MCA_KILLED | D062 / T002 / S079 / V036 / V037 / D063 | 结构性 cond=1 结论成立；V037 修正 contract stale count 与无依据的 BER-ratio→dB 门。只 Kill 当前实例化，不 Kill family。 |
+| Pilot Jones Step4a complex-model salvage | 🔄 AUTHORIZED | D063 / live-test T003 | 物理充分性→隔离模型→task-matched baseline→正确 headroom→条件式 MVE；止于 provisional verdict。 |
 
 > **FR-22 解释**：上方 2026-06-21 起的全项目历史表证明旧批次曾完成哪些步骤，**不能授权 2026-07-16 后出现的新候选直接进入 MVE**。新候选必须以本重开轨表为单一门控，从 Step 1 重新积累证据。
 

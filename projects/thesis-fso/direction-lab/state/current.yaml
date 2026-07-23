@@ -5,11 +5,13 @@
 # NO legal main-method signal. F1=TESTBED_BLOCKED / F3=UNRESOLVED / F4=INFRASTRUCTURE_BLOCKED.
 # F2 pilot lineage merges into existing Pilot-Jones formal Groundwork (no parallel Scout).
 # Negative material -> harvest/limitations only; NOT a full negative paper.
-# Next authoritative work = execute D062-authorized Pilot-Jones Step 4a big package.
+# Next authoritative work = execute D063-authorized Pilot-Jones complex-model salvage package.
 # Updated 2026-07-23 (T001 current-owner reconciliation): D061 strategic switch reflected — P03 = PAUSED_RETURNED_TO_PORTFOLIO
 # (option 1, family not closed); Pilot-Jones = current formal GW line; Step 3.5 PARTIAL/BLOCKED
 # (V035 backward PASS, 4 direct-competitor full-text BLOCKED).
 # Updated 2026-07-23 (D062): explicit debt waiver; Step 4a AUTHORIZED_IN_PROGRESS, no Step 5.
+# Updated 2026-07-23 (V037/D063): T002 only kills unitary-real-rotation M-C-A; family unresolved;
+# T003 complex Jones/PMD/PDL model-adequacy salvage authorized, no Step 5.
 # Explicit disposition lineage governs; protected history untouched.
 # Role of protected files (recorded here, NOT edited): STATUS.v1.md = STALE_PROTECTED
 # (not the current scientific-fact source); project.v1.yaml = historical read-only-preview
@@ -31,7 +33,7 @@ authorization:
   current_mode: DORMANT  # was SCIENCE_SCOUT; D022 SCIENCE_FREEZE paused the campaign (topic dormant). D061 confirms: no current science-execution authorization in the Scout campaign.
   science_authorized: false  # the Scout campaign is dormant; formal science now advances ONLY via the Pilot-Jones formal GW line (master-state.md §2), NOT via this campaign
   scope: dormant campaign — no active multi-mechanism Scout rotation (D022). P03 paused back to portfolio (D061 option 1, family not closed). Pilot-Jones is the current formal GW line.
-  formal_gw_line: Pilot-Jones GW Step 4a GATE_KILL (provisional) — D062 big package executed (T002/S079/V036); A0/A'/A/B done, D MVE NOT run (A0 §1 fatal + FR-21 headroom Kill). KILL scoped to unitary real-rotation channel instantiation only, not the direction itself; pending master-control acceptance + user confirmation (D062 rule 6).
+  formal_gw_line: Pilot-Jones GW Step 4a MODEL_ADEQUACY_SALVAGE_AUTHORIZED (D063/T003). V037 accepts UNITARY_REAL_ROTATION_MCA_KILLED but rejects family Kill; complex Jones/PMD/PDL + task-matched baseline is the current formal gate.
   prohibits:
     - modify or rerun B001-B003 / P03 Atlas / canonical-state / completion-events
     - create legacy B004
@@ -232,9 +234,9 @@ next_action:
     F2 pilot lineage merges into existing Pilot-Jones formal Groundwork (no parallel Scout; F2
     collision check NOT run this round). Negative material -> harvest/limitations only, NOT a full
     negative paper. F1 testbed rebuild NOT authorized. No new F2 Scout. No new tracker/pilot/ML/testbed.
-    D061 routing remains: P03 PAUSED_RETURNED_TO_PORTFOLIO; Pilot-Jones is the formal line. D062 (2026-07-23)
-    explicitly selects the debt-bearing waiver: Step 3.5 = WAIVED_TO_STEP4A_WITH_BLOCKING_DEBT, NOT PASS;
-    the 4 direct-competitor full texts remain BLOCKED_NO_FULLTEXT. Step 4a is AUTHORIZED_IN_PROGRESS as one
-    big package A0/A-prime/A/B/D with bounded source recovery and conditional MVE. Positive ceiling =
-    CONDITIONAL_GO_WITH_BLOCKING_LITERATURE_DEBT; stop before Step 5. Next authoritative work = execute
-    live-test T002. Do NOT resume Scout or P03.
+    D061 routing remains: P03 PAUSED_RETURNED_TO_PORTFOLIO; Pilot-Jones is the formal line. D056's 4
+    direct-competitor full texts remain BLOCKED_NO_FULLTEXT. V037/D063 accept only the unitary-real-rotation
+    local Kill; family remains UNRESOLVED because complex Jones/PMD/PDL was not tested and T002's BER-ratio
+    headroom gate was not a justified dB threshold. Step 4a model-adequacy salvage is AUTHORIZED as T003:
+    physical evidence, isolated model ladder, task-matched baseline, correct Q²/headroom, conditional MVE.
+    Positive ceiling = CONDITIONAL_GO_WITH_BLOCKING_LITERATURE_DEBT; stop before Step 5. Do NOT resume Scout/P03.

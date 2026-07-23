@@ -7,12 +7,12 @@
 ### thesis-fso
 
 - **方向**：双偏振星地 OSL 场景中的 ML 应用方向探索；正式研究与 Direction Lab Scout/Sandbox 分层管理。
-- **正式状态**：`Pilot-Jones formal GW Step 4a GATE_KILL (provisional)`（D062 带债豁免大包已执行 T002/S079/V036；Step 3.5 非 PASS）。Direction Lab campaign 仍 dormant（D022 SCIENCE_FREEZE）。
+- **正式状态**：`Pilot-Jones formal GW Step 4a MODEL_ADEQUACY_SALVAGE_AUTHORIZED`（D063/T003；Step 3.5 非 PASS）。Direction Lab campaign 仍 dormant（D022 SCIENCE_FREEZE）。
 - **Direction Lab Sandbox 历史**：B003 已完成，状态 `COMPLETED_SANDBOX_VERIFIED`；批次事实以 completion events 和不可变 projection 为证据，B001–B003 数字均不可进入论文或正式材料。
-- **Pilot-Jones formal GW（当前工作线，D061/D062/S079）**：Step 1/2/3 ✅；Step 3.5=`WAIVED_TO_STEP4A_WITH_BLOCKING_DEBT`——V035 backward PASS，但 D056 的 4 篇全文继续 `BLOCKED_NO_FULLTEXT`。**Step 4a 大包已完成 → provisional GATE_KILL**：A0/A′/A/B 完成；D 性能 MVE 未运行（A0 §1 致命 + FR-21 headroom Kill 双门触发）。**KILL 限于 unitary real-rotation 信道实例化，不杀方向本身**（待主控+用户确认 D062 rule 6）。
+- **Pilot-Jones formal GW（当前工作线，D061–D063/S079）**：Step 1/2/3 ✅；Step 3.5=`WAIVED_TO_STEP4A_WITH_BLOCKING_DEBT`。T002/V037 已确认 `UNITARY_REAL_ROTATION_MCA_KILLED`，但原 contract 有 stale count 且 BER ratio→dB 门无依据，不能外推 family Kill。T003 已授权检验 complex Jones/PMD/PDL + task-matched baseline。
 - **当前 Scout（dormant）**：Direction Lab Scout campaign 已 dormant（D022 SCIENCE_FREEZE；D061 确认无当前科学执行授权）。P03/U19 Headroom Atlas Stage A 历史（2026-07-19，S077/D059/V033）保留：runnable 代表子域 `LOCAL_NEGATIVE`，candidate `P03_DOMAIN_ADEQUACY_UNRESOLVED`（16QAM/receiver-CSI/coded-output 三轴 INFRASTRUCTURE_BLOCKED），domain/family 未关闭。
 - **P03 状态（D061 选项①，已选定）**：`PAUSED_RETURNED_TO_PORTFOLIO`——P03 暂停回候选池（**不是 Kill**，family 不关闭，沿用 D057/D058）。Sandbox `NOT_ENTERED`，Stage B 不触发。
-- **下一合法边界**：Pilot-Jones Step 4a 大包 provisional GATE_KILL 待主控验收+用户确认。接受 KILL → Pilot-Jones 回候选池（family 不关闭，同 P03 处置），formal GW 工作线另选方向；salvage → 唯一在范围 rescue = 升级 canonical 信道为带 PMD/PDL 的 complex Jones（出 T002 范围，需新 authorization）。**不进入 Step 5/Contract/Execute；不启动 B004/P03 ML/Queue/Registry；不 push。**
+- **下一合法边界**：执行 live-test T003，一个大包完成物理模型充分性、complex-Jones 最小闭包、task-matched traditional baseline、正确 Q²/headroom 和条件式方法 MVE。**不进入 Step 5/Contract/Execute；不启动 B004/P03 ML/Queue/Registry；不改 shared generator；不 push。**
 - **Atlas 强门入口**：`projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/atlas_gate.py`（唯一 receipt-bound 入口，19 tests 含独立对抗审查）。
 - **入口**：`projects/thesis-fso/master-state.md` → `projects/thesis-fso/direction-lab/README.md`；机器状态溯源见 `projects/thesis-fso/direction-lab/state/completion-events.jsonl` 与 `state/projections/`，`canonical-state.yaml` 不是正式研究授权源。
 

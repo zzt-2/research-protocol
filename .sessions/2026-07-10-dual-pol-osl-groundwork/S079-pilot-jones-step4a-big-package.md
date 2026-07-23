@@ -72,3 +72,12 @@
 - 若用户接受 KILL：Pilot-Jones 方向回候选池（family 不关闭，同 P03 处置）；thesis-fso formal GW 工作线需另选方向。
 - 若用户要求 salvage：唯一在范围内的 rescue = 升级 canonical 信道为带 PMD/PDL 的 complex Jones（出 T002 范围，需新 authorization）。
 - 可复用沉淀（Kill 路径）：real-rotation OSL Jones 结构性良态论证（负面/边界材料）；B0/B1/B2/P/O ladder + paired runner + fixed/PI metrics + 10 directed tests；5-min pre-MVE 滤波器（cond-distribution + B1-vs-oracle headroom probe，泛化 FR-21）；排除"generic pilot→Jones→inverse + EMA/Tikhonov/cond-guard 稳定化"于 unitary real-rotation 信道。
+
+> 2026-07-23 主控接收验收 | V037/D063 | 状态：局部 Kill 接收，family Kill 不接收；T003 salvage 已授权
+
+### 主控接收修正
+
+- fresh pytest 10/10 PASS，raw 重算、source/contract SHA、保护边界和 unitary real-rotation 结构事实均确认。
+- V036 漏掉两项：contract 仍残留 7 tie/3 loss（真实 6/4）；BER 2× 未证明等价 0.5 dB。因此 V036 全量 integrity 由 V037 修正为 PARTIAL，第二条 FR-21 Kill 门降为 diagnostic。
+- 保留的最小结论是 `UNITARY_REAL_ROTATION_MCA_KILLED`；不外推为 Pilot-Jones family Kill。
+- D063 已授权 T003：用有来源的 complex Jones/PMD/PDL 最小模型和 task-matched conventional baseline，决定该 family 能否救活；仍止于 Step 4a。

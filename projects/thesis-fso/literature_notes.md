@@ -23,7 +23,7 @@
 | 2 获取        | ✅   | 2026-06-26 + **2026-07-10 双偏振 9篇+sat.1553** | H004 块 A 7 篇 + H005 块 B 6 篇 + 双偏振 9 篇成功(download+blit 两轮) |
 | 3 精读        | ✅   | 2026-06-26 + **2026-07-10 双偏振 9篇+sat.1553§6补读** | 块 C 10 篇 + 载波同步 v2 35 Q# + **双偏振 9 篇+角度素材 schema 试用+3 Q#(Q-DP1/2/3)** |
 | 3.5 补充      | ⚠带债豁免 | 2026-06-27 起；2026-07-23 D062 更新 | 历史补充检索、Q11-Q13 召回与载波同步 v2 精读沉淀均保留；Pilot-Jones backward/收敛门已闭合，4 篇直接竞品保持 `BLOCKED_NO_FULLTEXT`。D062 只豁免进入 Step 4a，不记 PASS。|
-| 4a 可行性     | 🔄Pilot-Jones 大包已授权 | 2026-06-28 起；2026-07-23 D062 更新 | 历史已有 Q12/Q8切入点2/Q8切入点4B/Q1 Kill、暂 0 Go；当前只评 Pilot-Jones Q2：A0→A′→A/B→D，正面最高 Conditional Go，止于 provisional verdict，不进 Step 5。|
+| 4a 可行性     | 🔄complex-model salvage | 2026-06-28 起；2026-07-23 D063 更新 | 历史 Kill 保留；T002 只 Kill unitary-real-rotation Q2 实例化。当前 T003 检验 complex Jones/PMD/PDL、task-matched baseline 与条件式方法空间，正面最高 Conditional Go，不进 Step 5。|
 | 5 Baseline    | ⬜   |          | 块 F：Go 的 Q# 进 baseline 复现 |
 | 4b 仿真可行性 | ⬜   |          | |
 | 6 仿真器      | ⬜   |          | |
@@ -1214,6 +1214,8 @@ Q1可直接作为Step4a候选；Q2已完成M-C-A纠正，四判据形式通过�
 R2按5种方法变体×2类场景得到31 raw/25 unique；R3围绕JLT 2023 PDL/FPT及引用链得到50 raw/37 unique。R2/R3最后一轮新增必读/建议读均为0，三轮关键词检索收敛。最高引用直接竞品确定为JLT 2022 FPT（citation_count=36，高于OE 2021的19）：Semantic Scholar前向链25篇；Crossref publisher metadata给出21条backward references，经索引与摘要筛出7篇方法相关，均为已知候选，新增0。检索与引用链归档见`search-archive/2026-07-17/step35-r3-summary.json`及`step35-r3-jlt2022-backward-screened.json`。
 
 当前Step 4a 后的Q2状态（2026-07-23 S079/T002/V036 更新）：**Provisional verdict = GATE_KILL（待主控+用户确认）**。D062 带债豁免大包已执行 A0/A′/A/B；D 性能 MVE 未运行——两条独立 Kill 门在 semantic-smoke + bounded headroom 阶段触发：(1) A0 §1 致命 + FR-01 先验覆盖致命——real-rotation 信道（theta=sop_rate·arange(N)，矩阵 [[c,s],[-s,c]]，cond≡1）使 Q2 假设失效 A（短pilot矩阵病态）**结构缺席**，固定 EMA09 已把主指标覆盖到 oracle；(2) FR-21 headroom Kill——B1→oracle headroom 可忽略（预注册 B1/O=1.19，亚一个数量级，多 seed bit-equal）。P（uncertainty-aware temporal tracker）不赢 B1（0/10 paired）。**KILL scope 限于 unitary real-rotation 信道实例化，不重构为杀 Pilot-Jones 方向本身**（science critic V036 KILL_WITH_CAVEAT：唯一 rescue 出包范围 = 升级 canonical 信道为带 PMD/PDL 的 complex Jones）。历史 EMA09 15/15 provenance 断裂已记录（batch1_fade_methods.py SHA mismatch），仅作 diagnostic prior 且为 pilot-vs-blind 比较非方法间比较。详见 feasibility_report.md Q2 节 + projects/simulation/explore/pilot-jones-step4a/synthesis.md。不进 Step 5/Contract/Execute。
+
+> **2026-07-23 主控 amendment（V037/D063）**：T002 raw 的 P/B1 win-tie-loss 为 `0/6/4`，contract gate-outcome 残留 `0/7/3`；`B1/O=1.19` 是 BER ratio，未证明等价 `<0.5dB`，故第二条 FR-21 门降为 diagnostic。正式接收结论仅为 `UNITARY_REAL_ROTATION_MCA_KILLED`，Pilot-Jones family 仍 `UNRESOLVED`。D063 已授权 T003 用有来源的 complex Jones/PMD/PDL 模型、task-matched 2×2 tapped/FDE conventional baseline 和正确 Q²/headroom 口径重评；正面最高 Conditional Go，止于 Step 4a。
 
 ### 实验完备性对标汇总
 

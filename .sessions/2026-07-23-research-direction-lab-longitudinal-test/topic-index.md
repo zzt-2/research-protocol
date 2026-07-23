@@ -4,14 +4,14 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v1
-  control_epoch: 4
+  control_epoch: 5
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: PILOT_JONES_STEP4A_BIG_PACKAGE
-  authority_pointer: .sessions/2026-07-10-dual-pol-osl-groundwork/decisions.md#D062
-  decision_gate: 关闭 Pilot-Jones 是否存在结构性方法增量并值得继续这一科学不确定性
+  active_lane: PILOT_JONES_COMPLEX_MODEL_SALVAGE
+  authority_pointer: .sessions/2026-07-10-dual-pol-osl-groundwork/decisions.md#D063
+  decision_gate: 判断物理充分的 complex Jones/PMD/PDL 模型是否重新产生最强传统基线无法关闭的方法空间
   allowed_actions:
-    - PILOT_JONES_STEP4A_PACKAGE
+    - PILOT_JONES_COMPLEX_MODEL_SALVAGE_PACKAGE
     - TASK_BRIEF_PREPARATION
   forbidden_actions:
     - PRIVATE_FULLTEXT_ACQUISITION
@@ -21,11 +21,11 @@ rdl_control:
     - PROTECTED_HISTORY_EDIT
     - SKILL_EDIT
     - GENERAL_INFRASTRUCTURE_BUILD
-  next_legal_action: 执行 T002，在一个 GLM 对话内完成 Pilot-Jones Step 4a A0/A-prime/A/B/D、bounded source recovery、条件式 MVE 和 provisional verdict
+  next_legal_action: 执行 T003，在一个 GLM 对话内完成物理模型充分性、complex-Jones 最小闭包、task-matched baseline、oracle/headroom 和条件式方法 MVE
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（T002_READY；D062 已授权）
+> 状态: active（T003_READY；D063 已授权）
 > 创建: 2026-07-23 | 最后更新: 2026-07-23
 
 ## 专题信息
@@ -47,7 +47,7 @@ rdl_control:
 - 使用顶部控制块、受 guard 约束的 T、worker-log、raw artifacts 和 commit；
 - 在 control block 允许范围内串行推进，遇到 gate 更新控制块或交用户战略裁决；
 - 记录真实恢复、失败/阻断、轮换、晋级/不晋级和工作包重量。
-- 当前仅授权 Pilot-Jones Step 4a 单对话大包：A0/A′/A/B/D、方法形成、bounded source recovery、前置上界、条件式 MVE、双审查和 provisional verdict。
+- 当前仅授权 complex-Jones/PMD/PDL 模型充分性救活包：隔离模型、物理参数溯源、task-matched conventional baseline、正确 Q²/headroom 口径、方法形成、条件式 MVE 与 provisional verdict。
 
 ### 明确不含
 
@@ -62,6 +62,10 @@ rdl_control:
 
 - 2026-07-23，system D017：建立 live-test mission，初始只授权 Recover/Map/Reconcile/T 准备。任何科学 action class 必须由后续 control epoch 明确授权，并引用原 scientific/formal owner。
 - 2026-07-23，formal D062：用户选择 D056 带债豁免，允许 Pilot-Jones Step 4a 大包；4 篇全文债务不消失，正面最高 Conditional Go，止于 provisional verdict。
+- **[2026-07-23] [D063]**：T002 只支持 unitary-real-rotation 局部 Kill；允许在 Step 4a 内检验 complex Jones/PMD/PDL 的唯一物理救活轴。
+  - 原因：V036 critic 指出 canonical generator 未包含可能产生真实 conditioning/memory 的 PMD/PDL；V037 又发现原 FR-21 阈值映射无依据。
+  - 新范围：物理模型充分性、隔离模型、传统任务适配 baseline、oracle/headroom 和条件式方法比较；不改 shared generator、不进 Step 5。
+  - 影响的未决项：decision gate 从“当前 unitary 实例化是否有方法”转为“物理充分模型是否救活 family”。
 
 ## 已确认结论
 
@@ -87,13 +91,14 @@ rdl_control:
 - **S001 续接 / T001**：H001 接收 3/3 PASS；确认 formal owner=D061、Scout dormant，并发现 5 个可变 current views 残留 D061 前 routing。首包选择状态协调，不授权科学工作。
 - **S001 续接 / T001 验收**：提交 `4a0d4a4` 的路径边界、protected diff、YAML 和字段级语义均 PASS；current owner 已收敛。下一门是需要用户权限/豁免的 4 篇全文获取战略 gate，当前不存在非重复且合法的 T002。
 - **S001 续接 / D062/T002**：用户纠正 T001 只做状态协调、科学吞吐过低；T001 降为 bootstrap overhead。用户授权带债进入 Step 4a，下一包必须一次关闭科学决策，前置门通过时同包直接做 MVE。
+- **S001 续接 / T002验收/D063/T003**：T002 工程与 raw 可信，但 V037 修正 contract stale count 和无依据的 BER-ratio→dB 门；只 Kill unitary-real-rotation M-C-A。用户要求“多做点”，授权同包检验 complex-Jones/PMD/PDL rescue。
 
 ## 未决项
 
-- T002 对 Pilot-Jones 给出的 provisional verdict 及其完整证据；
+- T003 对 complex-Jones/PMD/PDL 模型充分性与方法空间的 provisional verdict；
 - live run 自然覆盖哪些恢复/轮换/晋级事件；
 - 何时由原 design 对话进行阶段性审计。
 
 ## 当前位置
 
-T002_READY。D062 已记录带债豁免，formal/current owners 已更新为 Step 4a AUTHORIZED_IN_PROGRESS；T002 control guard 已 PASS。下一合法动作是执行一个 `PILOT_JONES_STEP4A_PACKAGE`；不得拆回纯文档小包，也不得越过 Step 4a。
+T003_READY。D063 已把 T002 收窄为 `UNITARY_REAL_ROTATION_MCA_KILLED / FAMILY_UNRESOLVED`，并授权一个 `PILOT_JONES_COMPLEX_MODEL_SALVAGE_PACKAGE`；control guard 已 PASS。不得拆回纯综述/设计小包，也不得越过 Step 4a。

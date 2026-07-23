@@ -3188,3 +3188,48 @@ S078；触发原话见 voice.md 2026-07-19。
 ### 来源
 
 S074（2026-07-23 续接）；触发原话见 voice.md 2026-07-23。
+
+---
+
+## D063: 接收 T002 的局部结构性否决并授权 complex-Jones 模型充分性救活门
+
+> status: active
+> date: 2026-07-23
+> 取代：无（修正 D062 执行结果的解释，不推翻 D062 的带债边界）
+> 被取代：无
+> 依据: 验证 V037 + critic V036 + T002 raw artifact `projects/simulation/results/pilot-jones-step4a/result.json` + 用户原话 voice.md 2026-07-23（“随便，多做点”）
+
+### 决策
+
+1. 接收 T002 的可复现资产和最小局部结论：当前 canonical generator 的偏振混合为 `sqrt(h) × real unitary rotation`，真实信道矩阵条件数恒为 1；因此以“Jones 矩阵病态”为机制的当前 Q2 实例化不成立。状态记为 `UNITARY_REAL_ROTATION_MCA_KILLED`。
+2. **不接收整个 Pilot-Jones family 的 KILL**。V036 已指出 complex Jones / PMD / PDL 是合理且未执行的物理救活轴；当前裁决只能到 `PILOT_JONES_FAMILY_UNRESOLVED`。
+3. V036 的 integrity PASS 由 V037 修正为 `PARTIAL_WITH_NUMERIC_INTEGRITY_PASS`：代码、raw、SHA、测试、保护边界可信，但 frozen contract 仍残留 `7 tie / 3 loss`，与 raw 的 `6 tie / 4 loss` 不一致；且“BER 在 oracle 的 2× 内”不能无推导地等同“<0.5 dB”，第二条 FR-21 门不按正式 Kill 证据采信。
+4. 授权 T003 在同一 formal GW Step 4a 内完成一个**模型充分性 + 方法救活大包**：物理证据审计 → complex-Jones/PMD/PDL 最小隔离模型 → task-matched conventional baseline → oracle/headroom → 若门通过则同包运行机制不同的方法比较和有界 MVE。
+5. T003 必须把“当前模型不含问题”与“真实物理模型仍无问题”分开。只有在有来源的复数 Jones/PMD/PDL 参数范围内，最强任务适配传统 baseline 仍关闭 headroom，才可扩大负面结论；若出现正信号，最高仍为 `CONDITIONAL_GO_WITH_BLOCKING_LITERATURE_DEBT`。
+6. T003 仍止于 Step 4a provisional verdict；不得进入 Step 5/Contract/Execute。4 篇 D056 全文继续 `BLOCKED_NO_FULLTEXT`，不得冒充已读。
+
+### 理由
+
+- T002 比纯状态包有真实信息价值：它发现先前方法问题依赖于 canonical generator 未包含的物理结构，避免在错误模型上继续跑 90-cell。
+- 直接接受 family KILL 会违反 evidence-and-claims 的 claim ceiling：执行证据只覆盖 unitary real-rotation slice。
+- 直接重跑当前模型没有信息增量；直接建设完整新仿真器又过重。最有信息价值的是一个有界模型充分性救活门，先验证物理结构和 conventional baseline，再决定是否值得形成方法。
+- 用户明确要求“多做点”；本授权把模型、基线、方法和条件式 MVE 放在一个决策包内，而不是拆成数个行政小包。
+
+### 排除的替代方案
+
+- 不把 V036 原 PASS 原样升级为正式 family KILL：有未修正文档数字和无依据的 BER-ratio→dB 映射。
+- 不在 unitary real-rotation 模型补跑正式 MVE：结构轴已缺失，额外 cells 只增加统计体积。
+- 不只写 complex-Jones 设计或文献综述后停下：若物理门和 baseline 门通过，本包必须直接跑有界比较。
+- 不把 single-tap block inverse 当作 PMD/频率选择信道的唯一 Go comparator；必须加入 task-matched 2×2 tapped/FDE conventional baseline。
+- 不建设通用 channel framework，不改 shared canonical generator；新模型先隔离在 T003 专属目录。
+
+### 影响范围
+
+- Pilot-Jones formal Step 4a 从 `provisional GATE_KILL` 转为 `MODEL_ADEQUACY_SALVAGE_AUTHORIZED`。
+- live-test foreground control 递增到 epoch 5，允许 `PILOT_JONES_COMPLEX_MODEL_SALVAGE_PACKAGE`。
+- 允许新增 T003 专属模型、runner、测试、raw result、S080、worker-log 及 provisional synthesis。
+- current Scout/P03 disposition、D056 全文债务、protected history 和 source worktree 均不变。
+
+### 来源
+
+S079 主控验收追加；V037。触发原话见 voice.md 2026-07-23。

@@ -49,8 +49,8 @@ topics:
     title: Research Direction Lab 长程真实运行测试
     status: active
     created: "2026-07-23"
-    last_updated: "2026-07-23（D062 带债豁免；epoch 4 Pilot-Jones Step 4a 大包 T002_READY）"
-    description: "D017 轻量前台控制协议的真实纵向运行 mission。用户纠正 T001 科学吞吐过低并授权 D062 带债推进；control epoch 4 允许一个 Pilot-Jones Step 4a 大包完成 A0/A′/A/B/D、source recovery、条件式 MVE 和 provisional verdict，止于 Step 4a。"
+    last_updated: "2026-07-23（V037/D063；epoch 5 Pilot-Jones complex-model salvage T003_READY）"
+    description: "D017 轻量前台控制协议的真实纵向运行 mission。T002 找到 unitary-real-rotation 模型—问题错配；V037 修正 stale count 和无依据的 BER-ratio→dB 门。control epoch 5 允许 T003 一包完成 complex Jones/PMD/PDL 模型充分性、task-matched baseline、正确 headroom 与条件式方法 MVE，止于 Step 4a。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 S014 现场故障、R003 场景演练、D017 控制接口和 guard
@@ -503,8 +503,8 @@ topics:
     title: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
     status: active
     created: "2026-07-10"
-    last_updated: "2026-07-23（S074续接/D062：4 篇直接竞品全文仍 BLOCKED_NO_FULLTEXT；一次性带债豁免 Step 3.5，授权 Pilot-Jones Step 4a 单对话大包，止于 provisional verdict。）"
-    description: "formal 双偏振 OSL Groundwork owner。历史 Q-DP/CMA-fade 路线与负面审计均保留；D061 已暂停 P03 并激活 Pilot-Jones。D062 不把缺失全文写成 PASS，只允许带阻断债务完成 Pilot-Jones A0/A′/A/B/D、必要的 bounded source recovery 与条件式 MVE；正面最高 CONDITIONAL_GO_WITH_BLOCKING_LITERATURE_DEBT，用户确认前不进 Step 5。"
+    last_updated: "2026-07-23（S079主控续接/V037/D063：unitary-real-rotation M-C-A 局部 Kill；complex-Jones/PMD/PDL salvage T003 已授权。）"
+    description: "formal 双偏振 OSL Groundwork owner。D061 已暂停 P03 并激活 Pilot-Jones；D056 的 4 篇全文保持 BLOCKED_NO_FULLTEXT。T002/V037 只 Kill unitary-real-rotation 实例化，family unresolved。D063 授权 Step 4a 内检验 complex Jones/PMD/PDL、task-matched conventional baseline、正确 Q²/headroom 和条件式方法 MVE；正面最高 CONDITIONAL_GO_WITH_BLOCKING_LITERATURE_DEBT，不进 Step 5。"
     depends_on:
       - slug: 2026-07-10-scenario-transfer-pivot
         reason: D001 三维度调整 + D002 角度素材 schema + D003 双偏振空间解锁，方法论准备就绪后 GW 执行转出

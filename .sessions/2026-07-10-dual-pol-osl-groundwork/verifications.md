@@ -1012,3 +1012,34 @@ Step 3.5 整体仍 **PARTIAL/BLOCKED**：backward-chain 门 PASS（本 V035）+ 
 ### 后续
 
 KILL 为 provisional，待主控验收 + 用户确认（D062 rule 6）。若用户接受 KILL：Pilot-Jones 方向回候选池（family 不关闭，同 P03 处置），等待 complex-Jones 信道或 4 篇全文解除 BLOCKED 后重评；thesis-fso formal GW 工作线需另选方向。若用户要求 salvage：唯一在范围内的 rescue = 升级 canonical 信道为带 PMD/PDL 的 complex Jones（出 T002 范围，需新 authorization）。
+
+---
+
+## V037: T002 主控接收验收与 claim-scope 修正
+
+> date: 2026-07-23
+> 关联：T002 / S079 / D062 / D063 / V036
+> verifier: fork 主控；使用提交 diff、fresh pytest、raw 重算和公式审查，不复用执行者结论
+
+### 验证事实
+
+- commit/边界：HEAD=`0b642e9317d4494c481ecf4f1e8ceb07c866c04c`；相对 T002 基线新增/修改 18 个授权文件；4 个 protected paths 无 diff；worktree clean。
+- fresh tests：`python -m pytest projects/simulation/tests/test_pilot_jones_step4a.py -q` → `10 passed in 1.39s`。
+- raw 重算：10 个 bounded rows 得到 B1 mean=`0.005308261178836862`、P mean=`0.005335549069145674`、oracle mean=`0.0044654026343545344`；P 胜 B1=`0/10`、tie=`6/10`、B1 胜 P=`4/10`；与 `result.json.headroom_stats` 一致。
+- 结构事实：`_dual_pol_channel.py` 明确生成 `sqrt(h) * [[cosθ,sinθ],[-sinθ,cosθ]]`；除标量衰落外信道矩阵为实酉旋转，真实矩阵条件数恒为 1。
+- contract SHA 与 result 匹配，raw/aggregate 可重算，部署臂与 oracle 信息分级保持。
+
+### 发现的两项验收缺陷
+
+1. `mve-contract.yaml.gate_outcome` 仍写 `tie 7/10, B1<P 3/10`，与 raw/result 的 `6/10, 4/10` 不一致；V036 声称 stale-number 已修复不成立。
+2. contract 把“B1 BER ≤ 2× oracle”写成 FR-21 `<0.5dB-equivalent`，但未给 BER→Q²/SNR 映射；2× BER 不能直接等同 0.5 dB。该 headroom 门只作 diagnostic，不能作为正式 FR-21 Kill。
+
+### 结论
+
+**PARTIAL**：
+
+- numeric/code integrity：PASS；
+- V036 的全量 integrity 声称：PARTIAL（存在上述文档与阈值缺陷）；
+- scientific claim：`UNITARY_REAL_ROTATION_MCA_KILLED` PASS；
+- `PILOT_JONES_FAMILY_KILLED` FAIL/未获支持；
+- 下一合法动作：D063 授权的 complex-Jones/PMD/PDL 模型充分性救活包，不进 Step 5。
