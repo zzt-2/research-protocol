@@ -1,6 +1,6 @@
 # Topic Index: Research Direction Lab 完整体系设计
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-07-23（S013/D014-D015：四层记忆、双日志与真实运行复盘入口）
+> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-07-23（R002：长程运行复盘完成，待拍板最小修补与纵向真实测试）
 
 ## 专题信息
 
@@ -134,6 +134,7 @@
 - **S012 续接 / D013 / V011**：完成三层成本、语义先行、current projection、轻量 harvest 与抗膨胀目录的设计和实施；首轮/二轮独立审查发现的行为证据、lineage、current harvest 与 Scout conditional 冲突全部修复；Skill `90 passed, 1 skipped`，repo/global 56/56 hash 全等，V011 PASS。
 - **S013 / D014-D015**：在最新谱系冻结四层记忆、双日志和主控—GLM 极短中转；H004/T001 不再是本专题当前入口，下一步先以控制链全读、关键转折深读和原始证据抽查形成 R002 历史复盘。
 - **H005**：为新主控对话冻结 R002 只读复盘入口；要求先核验最新 worktree/HEAD/编号谱系，不修改 Skill、不运行实验。
+- **R002**：完成旧方法论、governance pilot、system、science-scout、项目 current views 与 Git 轨迹的证据化复盘。主因不是规则缺失，而是单轮合规/replay/provenance 验收替代了多轮科学优先级，semantic smoke 晚于完整证据链，且 current/release/formal owner 未原子收敛；建议先拍板 owner/current release 是否已满足纵向测试前置，再按 D013/D014 实测，仅按观察到的具体失败修唯一 owner。
 
 ## 未决项
 
@@ -145,8 +146,8 @@
 - Windows symlink / POSIX flock 动态测试覆盖：跨平台 CI 前补跑。
 - ~~H004/T001 已冻结下一科学 campaign 的恢复入口~~（D015 暂停执行；仅保留为历史入口，不再作为当前 next action）。
 - 新科学项目首次采用 current layout 时，需要渐进生成 `state/current.yaml`、`portfolio/current.yaml`、`harvest/current.yaml`；禁止为了迁移整洁批量改写旧 artifacts。
-- R002 历史复盘尚未执行：需要证据化解释 system 设计承诺与真实 science-scout campaign 运行之间的差距。
+- ~~R002 历史复盘尚未执行~~（已完成）：见 `R002-long-horizon-runtime-retrospective.md`。下一步只在“先收敛 owner/current release”与“现有前置核验通过后直接做纵向真实测试”之间拍板；不先重写 Skill/controller。
 
 ## 当前位置
 
-Task 1–10、消费者部署、D010–D013 均已完成局部验证，但真实 science-scout campaign 后续在 S014/D022/V012 进入 SCIENCE_FREEZE，证明 V011 不能替代长程真实运行检验。D014 已冻结四层记忆与极短中转；D015 将本专题下一入口从 H004/T001 改为只读完成 R002。新主控对话从 H005 恢复；该顺序不改变 Pilot-Jones 在 `master-state.md` 中的正式 Groundwork 状态。
+R002 已完成，证据表明 V004/V005/V011 的窄合同均成立，但不能替代长程真实科学检验。当前建议不继续堆规则：先拍板是否需要 P0 owner/current release 收敛，然后按 D013 三层强度与 D014 四层记忆运行一次纵向真实测试。本专题不恢复 frozen science-scout；Pilot-Jones 仍按 `master-state.md` 独立保持 formal GW Step 3.5 PARTIAL，Step 4a 未授权。

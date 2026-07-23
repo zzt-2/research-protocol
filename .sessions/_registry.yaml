@@ -30,8 +30,8 @@ topics:
     title: Research Direction Lab 完整体系设计
     status: active
     created: "2026-07-20"
-    last_updated: "2026-07-23（H005：新主控对话从只读 R002 长程运行复盘恢复）"
-    description: "从零/从地基的长期自动研究探索体系。Task 1–10、消费者部署与 D013 均已验证，但真实 science-scout 已 SCIENCE_FREEZE；当前冻结主控—GLM 极短中转和长程/单项双日志，先完成只读 R002 历史复盘，再决定最小修补，不改变 Pilot-Jones 正式 Groundwork。"
+    last_updated: "2026-07-23（R002：长程运行复盘完成，待拍板最小修补与纵向真实测试）"
+    description: "从零/从地基的长期自动研究探索体系。Task 1–10、消费者部署与 D013 均完成窄合同验证，但真实 science-scout 已 SCIENCE_FREEZE。R002 已确认主要差距是验收对象错位、semantic smoke 晚门、工作强度/科学信息错配及 current/release/formal owner 未原子收敛；下一步先拍板是否做 P0 owner 收敛，再按 D013/D014 实测纵向真实运行，不改变 Pilot-Jones 正式 Groundwork。"
     depends_on:
       - slug: framework-evolution
         reason: 继承 R002 Direction Lab 设计和唯一拥有者原则
