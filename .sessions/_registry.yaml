@@ -49,8 +49,8 @@ topics:
     title: Research Direction Lab 长程真实运行测试
     status: active
     created: "2026-07-23"
-    last_updated: "2026-07-23（S001/T001 验收 PASS；epoch 3 等待全文获取战略授权）"
-    description: "D017 轻量前台控制协议的真实纵向运行 mission。T001 已将可变 current views 收敛到 D061/H017；当前唯一 formal blocker 是 D056 的 4 篇直接竞品全文，公开获取已耗尽。control epoch 3 等待用户选择机构访问、作者邮件、带债豁免或等待/替换；授权前不创建科学 T、不进 Step 4a。"
+    last_updated: "2026-07-23（D062 带债豁免；epoch 4 Pilot-Jones Step 4a 大包 T002_READY）"
+    description: "D017 轻量前台控制协议的真实纵向运行 mission。用户纠正 T001 科学吞吐过低并授权 D062 带债推进；control epoch 4 允许一个 Pilot-Jones Step 4a 大包完成 A0/A′/A/B/D、source recovery、条件式 MVE 和 provisional verdict，止于 Step 4a。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 S014 现场故障、R003 场景演练、D017 控制接口和 guard
@@ -503,8 +503,8 @@ topics:
     title: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
     status: active
     created: "2026-07-10"
-    last_updated: "2026-07-19（S078/D060/V034：Portfolio Autopilot 目标设计经两轮独立审查由 PARTIAL 修至 PASS；首轮 shadow 至少 6 个有效批次、至少 3 个机制族。当前可进入实现计划，不授权 B004、ML 或新性能实验。）"
-    description: "scenario-transfer-pivot D003 解锁双偏振空间后，按 FR-22 从 GW Step 1 重走地勘。搜索空间从单偏振扩到含双偏振 OSL（sat.1553 §6 偏振解复用层主轴 + §3/4/5 次 + 迁移源参照 + 综述锚）。S001 Step1-3完成（15查询43候选8子方向/9篇+sat1553精读/3Q#过四判据）。S002 Step4a完成：Q-DP1(动态SOP跟踪)Kill因A0§1致命（均衡器300krad/s高出湍流致SOP 1-2数量级，A物理基础不足D001）/ Q-DP2(CMA fade发散)Conditional Go（空白真实但需自建GG时间模型D002）/ Q-DP3(跨帧恢复)Conditional Go首选（物理基础最扎实D003）。S003-S004 D004攒材料+D005候选合并Q-CMA-FADE。S005-S013 完成 GG 时间模型、发散扫描、ML/CMA MVE、机制复核与双口径历史审计；D018 规定 fixed/PI 必须并报、PI 需流标识开销，并将 N=2M ML 优势限定在已审计参数域。"
+    last_updated: "2026-07-23（S074续接/D062：4 篇直接竞品全文仍 BLOCKED_NO_FULLTEXT；一次性带债豁免 Step 3.5，授权 Pilot-Jones Step 4a 单对话大包，止于 provisional verdict。）"
+    description: "formal 双偏振 OSL Groundwork owner。历史 Q-DP/CMA-fade 路线与负面审计均保留；D061 已暂停 P03 并激活 Pilot-Jones。D062 不把缺失全文写成 PASS，只允许带阻断债务完成 Pilot-Jones A0/A′/A/B/D、必要的 bounded source recovery 与条件式 MVE；正面最高 CONDITIONAL_GO_WITH_BLOCKING_LITERATURE_DEBT，用户确认前不进 Step 5。"
     depends_on:
       - slug: 2026-07-10-scenario-transfer-pivot
         reason: D001 三维度调整 + D002 角度素材 schema + D003 双偏振空间解锁，方法论准备就绪后 GW 执行转出

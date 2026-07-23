@@ -2,6 +2,7 @@
 
 > 2026-07-17 | GW Step3.5 | 状态：待V031最终审查（原预留V030未落盘，V030后用于P03终验）
 > 2026-07-22 续接 | D061/V035：战略切换激活 Pilot-Jones 为 formal GW 线；backward-chain 终验 PASS（V035）；4 篇直接竞品全文获取 BLOCKED；Step 3.5 维持 PARTIAL 不进 4a；纠正 170c00c 审计错误
+> 2026-07-23 续接 | D062：用户选择带债豁免；Step 3.5 不改写为 PASS，但授权进入 Step 4a 单对话大包
 
 ## 目标
 
@@ -94,4 +95,32 @@ Step 3.5 维持 PARTIAL/BLOCKED。下一轮由用户裁决 4 篇全文获取路�
 - (b) 邮件联系通讯作者（Shuai Liu / Yiyang Feng / Linsheng Fan×2）求全文；
 - (c) 以 2 篇全文（OE 2021 + LCOMM 2026）+ V035 backward 证据（7 篇已知 backward refs）+ 4 篇摘要级证据"带债推进"Step 4a（需用户显式豁免 D056 全文门，并把 backward 未独立精读列为阻断性债务）；
 - (d) 等 OA / 换近似竞品。
+
+---
+
+## 2026-07-23 续接记录（D062 带债豁免 + Step 4a 大包授权）
+
+用户在 live-test 主控明确指出 T001 “干得太少”，并同意“按大包带债推进”。据此建立 D062：
+
+- 选择 H017 选项 (c)，4 篇直接竞品继续 `BLOCKED_NO_FULLTEXT`，不把摘要当全文；
+- Step 3.5 记 `WAIVED_TO_STEP4A_WITH_BLOCKING_DEBT`，不是 PASS；
+- 授权一次性完成 Step 4a A0/A′/A/B/D；前置门通过时同包直接跑有界 MVE；
+- 正面结论最高为 `CONDITIONAL_GO_WITH_BLOCKING_LITERATURE_DEBT`，且须用户在主控验收后确认；
+- 执行方不得进入 Step 5/Contract/Execute，不复活 Scout/P03，不扩建通用基础设施。
+
+### 当前 provenance 风险
+
+S062–S065 所述 `pilot_assisted.py`、`pilot_integration_runner.py`、相关测试及 EMA09 结果仍存在于只读来源 worktree `D:/code/study/research-protocol/.worktrees/unified-batch-runner`，但其中相关文件未提交。Step 4a 大包必须先做 bounded source recovery：记录原文件哈希、建立当前 worktree 内独立可复现闭包、跑定向测试，并把历史 JSON 只当待重放证据；不得直接把历史 15/15 当新 MVE 结果。
+
+## 决策引用（2026-07-23）
+
+- D062：**新建**——D056 一次性带债豁免，授权 Step 4a 大包。
+
+## 范围确认（2026-07-23）
+
+- 本轮是否在 scope boundary 内：是（用户显式授权原目标“GW Step 1–4a 完整流程”进入 Step 4a；不进入 Step 5/Contract/Execute）。
+
+## 后续（2026-07-23）
+
+执行 live-test T002；主控从磁盘验收 worker-log、artifacts、测试和 provisional verdict，再决定是否交用户确认 Go/Pivot/Kill。
 **本轮不豁免、不进 Step 4a。**

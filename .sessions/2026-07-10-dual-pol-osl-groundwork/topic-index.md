@@ -1,7 +1,7 @@
 # Topic Index: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
 
 > slug: 2026-07-10-dual-pol-osl-groundwork
-> status: active | created 2026-07-10 | last_updated 2026-07-22（S074 续接/D061/V035/H017：战略切换——用户选 P03 routing 选项①【暂停回候选池，不关闭 family】，激活 Pilot-Jones 为 thesis-fso 当前 formal GW 工作线。Pilot-Jones Step 3.5 backward-chain 终验 V035 PASS（gw-supplement 判据#3 闭合），但 D056 要求的 4 篇直接竞品全文获取 BLOCKED（non-OA IEEE paywalled）→ Step 3.5 维持 PARTIAL，不进 Step 4a。同时纠正 170c00c science-scout 轮的审计错误：LCOMM 2026 与 OE 2021 均已全文精读非 abstract-only；真正缺全文的是 TCOMM2024/JLT2025/JLT2022/JLT2023。）
+> status: active | created 2026-07-10 | last_updated 2026-07-23（S074 续接/D062：用户选择 D056 带债豁免；4 篇直接竞品继续 BLOCKED_NO_FULLTEXT，Step 3.5 记 WAIVED_TO_STEP4A_WITH_BLOCKING_DEBT，授权单对话完成 Pilot-Jones Step 4a A0/A′/A/B/D。正面最高 Conditional Go 且须用户确认，不进 Step 5。）
 
 ## 专题定位（一句话）
 
@@ -29,6 +29,7 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 - **GW Step 3**：正式晋级候选的精读 + 结构化提取；候选族探索阶段先共享轻量证据，不为每个微变体机械重复全文门
 - **GW Step 3.5**：定向补充检索
 - **GW Step 4a**：可行性 Go/No-Go
+- **D062 Pilot-Jones 大包（当前）**：在 4 篇全文继续记阻断性债务的条件下，一次完成 Step 4a A0/A′/A/B/D；允许有界 source recovery、前置上界和 MVE，止于 provisional verdict。
 
 ### 明确不含
 - ❌ 不跳框架（地勘阶段不判方向 Go/Kill，穷举完 + 用户确认全景才推进——D017 红线 6）
@@ -36,6 +37,9 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 - ❌ 不预设方向（§6 偏振解复用只是"回到桌面"的最大层，不是已选定方向）
 - ❌ 不复活 9 次 Kill 当贡献（作思路素材重新进精读池，不变量1 仍守）
 - ❌ 不推翻 9 次 Kill 的物理结论（那是事实）
+- ❌ 不把 D056 豁免改写成 4 篇已全文精读；不用摘要冒充全文
+- ❌ 不在 T002 后直接进入 Step 5/Contract/Execute；Step 4a verdict 必须由用户确认
+- ❌ 不复活 dormant science-scout/P03，不建设通用基础设施或调度器
 
 ### 范围变更记录
 - **[2026-07-13]** [D021]：将 GW Step 4a 维度 D 的当前执行范围明确细化为“统一合法 baseline 后重比”——包含 current-CMA、standard-CMA、ML-original、ML-aligned 的预注册 30-seed 对比。
@@ -54,6 +58,7 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 - **[2026-07-19]** [D058] Inflation scope record（76 S 文件 + claim-scope P0纠错）：S076 从 P03 科学 closure 转为推理范围与流程规范纠错，性质不同于 S075，故新开编号。它仍服务 D045 的候选族批量探索，不扩大 formal GW/Contract/Execute；只纠正局部证据越级，并为后续 Headroom Atlas 增加通用机器门。
 - **[2026-07-19]** [D059] Inflation scope record（77 S 文件 + Headroom Atlas Stage A）：S077 是 D058 列为下一对话硬前置的 Atlas 阶段（唯一强门入口 + Stage A runnable 子域诊断），承接 S076 但性质不同（流程纠错 vs 实验+门实现），故新开编号而非追加 S076。仍服务 D045 候选族批量探索，不扩大 formal GW/Contract/Execute；runnable 子域 LOCAL_NEGATIVE 但不退候选/族。
 - **[2026-07-19]** [D060] Inflation scope record（79 个 S 文件、78 个唯一 S 编号 + Portfolio Autopilot 目标设计）：S078 从 P03 单候选科学诊断转为 D045 批量探索的组合级长跑控制设计，性质不同于 S077，故新开编号。额外 1 个文件来自既有 S033 重号债务，本轮不重命名历史。它只定义未来 6批/3族 shadow 的调度、双审查和全局停机边界，不实现控制器、不运行实验、不扩大 formal GW/Contract/Execute。
+- **[2026-07-23]** [D062] Inflation/scope record（用户显式授权 Pilot-Jones Step 4a 大包）：专题已远超 15 个 S 文件，但本次不是新方向或 topic 膨胀；它回到原始目标“GW Step 1–4a 完整流程”，只对 D056 的不可获取全文门作一次性带债豁免。允许新增 S079、Step 4a 专属 MVE 闭包与 worker-log；明确止于 provisional verdict，不进入 Step 5/Contract/Execute。
 
 ## 不变量（动任何一条必须重新讨论）
 
@@ -108,14 +113,13 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 
 ## 当前位置
 
-**S074 续接/D061/V035：战略切换 — Pilot-Jones 激活为 formal GW 线，Step 3.5 PARTIAL（backward PASS 但 4 篇全文 BLOCKED）— 2026-07-22**。
+**S074 续接/D062：Pilot-Jones Step 3.5 带债豁免，Step 4a 大包已授权 — 2026-07-23**。
 
-- 用户战略裁决（D061）：P03 routing **选项①已选定**——P03 暂停回候选池（**不 Kill**，family 不关闭，沿用 D057/D058 `P03_DOMAIN_ADEQUACY_UNRESOLVED`）；**Pilot-Jones = thesis-fso 当前 formal Groundwork 工作线**。
-- **Pilot-Jones Step 3.5 = PARTIAL/BLOCKED**：backward-chain 终验 **V035 PASS**（JLT 2022 Crossref refs=21 / screened=7 / new=0，gw-supplement 判据#3 闭合）；收敛门 R3 new=0 PASS（V029）。**但 D056 全文门 BLOCKED**：4 篇直接竞品（TCOMM `10.1109/TCOMM.2024.3522036` / JLT2025 `10.1109/JLT.2025.3640695` / JLT2022 `10.1109/JLT.2022.3224805` / JLT2023 `10.1109/JLT.2023.3284489`）non-OA IEEE paywalled，`tools/download` all_failed，OA scout 4 源（S2/Unpaywall/OpenAlex/arXiv）均 closed。只有 OE 2021 + LCOMM 2026 两篇全文精读。
-- **Step 4a ⛔ 未授权**（Step 3.5 未闭合；FR-22 硬门 + D056）。Q2 当前 M-C-A：M=传统 block/frame pilot Jones inversion（短 pilot LS）；C=dual-pol OSL GG 湍流+高速 SOP+≤10% pilot 预算；A=fixed-label 恢复不稳定。**关键不确定性**：是否 OSL GG 引入既有方法（OE 2021/LCOMM 2026 均非 OSL）未处理的结构性新失效，还是仅场景替换/EMA 参数差异（→ Kill）。4 篇全文未读无法判定。
-- **审计错误已纠正**（S074 续接段）：170c00c science-scout 轮的 H015/S014/D022 误写"LCOMM 2026/JLT2022-23 仅 abstract"——实际 LCOMM 2026（S069）+ OE 2021 均已全文精读；master-state:96 "待V030" stale（V030 属 P03 非 Pilot-Jones）已纠正。
-- 下一合法边界：用户裁决 4 篇全文获取路径（机构 VPN / 作者邮件 / 带债豁免 D056 / 等 OA）。**本轮不豁免、不进 Step 4a、不跑仿真/MVE。**
-- Direction Lab Scout campaign dormant（D022）；ML/B004/Queue/Registry 仍禁止。
+- D061 routing 继续有效：P03 暂停回候选池且 family 不关闭；Pilot-Jones 是当前 formal GW 线；Direction Lab Scout dormant。
+- D062 选择 H017 选项 (c)：4 篇直接竞品仍 `BLOCKED_NO_FULLTEXT`，Step 3.5 状态为 `WAIVED_TO_STEP4A_WITH_BLOCKING_DEBT`，不是 PASS。
+- **Step 4a AUTHORIZED_IN_PROGRESS**：一次完成 A0/A′/A/B/D；若前置门通过，同包直接做有界 MVE。当前 Q2 M-C-A 不变。
+- 正面结果最高 `CONDITIONAL_GO_WITH_BLOCKING_LITERATURE_DEBT`；执行方只给 provisional verdict，不进入 Step 5。
+- 历史 EMA09 runner/结果位于 dirty `unified-batch-runner` worktree，T002 先做只读 source recovery + 当前 worktree 可复现闭包，不直接复用 15/15 作为新证据。
 
 此前：**S077 Headroom Atlas Stage A 完成，P03 LOCAL_NEGATIVE 但 DOMAIN/CANDIDATE/FAMILY 开放 — 2026-07-19**（P03 routing 决策点，现已被 D061 选项①裁决）。
 

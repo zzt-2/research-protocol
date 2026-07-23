@@ -5,10 +5,11 @@
 # NO legal main-method signal. F1=TESTBED_BLOCKED / F3=UNRESOLVED / F4=INFRASTRUCTURE_BLOCKED.
 # F2 pilot lineage merges into existing Pilot-Jones formal Groundwork (no parallel Scout).
 # Negative material -> harvest/limitations only; NOT a full negative paper.
-# Next authoritative work = Pilot-Jones Step 3.5 terminal review + Step 4a (see H017; D061 strategic switch).
+# Next authoritative work = execute D062-authorized Pilot-Jones Step 4a big package.
 # Updated 2026-07-23 (T001 current-owner reconciliation): D061 strategic switch reflected — P03 = PAUSED_RETURNED_TO_PORTFOLIO
 # (option 1, family not closed); Pilot-Jones = current formal GW line; Step 3.5 PARTIAL/BLOCKED
-# (V035 backward PASS, 4 direct-competitor full-text BLOCKED); Step 4a not authorized.
+# (V035 backward PASS, 4 direct-competitor full-text BLOCKED).
+# Updated 2026-07-23 (D062): explicit debt waiver; Step 4a AUTHORIZED_IN_PROGRESS, no Step 5.
 # Explicit disposition lineage governs; protected history untouched.
 # Role of protected files (recorded here, NOT edited): STATUS.v1.md = STALE_PROTECTED
 # (not the current scientific-fact source); project.v1.yaml = historical read-only-preview
@@ -30,7 +31,7 @@ authorization:
   current_mode: DORMANT  # was SCIENCE_SCOUT; D022 SCIENCE_FREEZE paused the campaign (topic dormant). D061 confirms: no current science-execution authorization in the Scout campaign.
   science_authorized: false  # the Scout campaign is dormant; formal science now advances ONLY via the Pilot-Jones formal GW line (master-state.md §2), NOT via this campaign
   scope: dormant campaign — no active multi-mechanism Scout rotation (D022). P03 paused back to portfolio (D061 option 1, family not closed). Pilot-Jones is the current formal GW line.
-  formal_gw_line: Pilot-Jones GW Step 3.5 IN_PROGRESS (see projects/thesis-fso/master-state.md §2 + method-layer reopen table)
+  formal_gw_line: Pilot-Jones GW Step 4a AUTHORIZED_IN_PROGRESS under D062 debt waiver
   prohibits:
     - modify or rerun B001-B003 / P03 Atlas / canonical-state / completion-events
     - create legacy B004
@@ -231,13 +232,9 @@ next_action:
     F2 pilot lineage merges into existing Pilot-Jones formal Groundwork (no parallel Scout; F2
     collision check NOT run this round). Negative material -> harvest/limitations only, NOT a full
     negative paper. F1 testbed rebuild NOT authorized. No new F2 Scout. No new tracker/pilot/ML/testbed.
-    D061 strategic switch (2026-07-22): P03 = PAUSED_RETURNED_TO_PORTFOLIO (option 1, family not closed);
-    Pilot-Jones = current formal GW line. Step 3.5 = PARTIAL/BLOCKED: V035 backward-chain independent
-    terminal verification PASS (JLT 2022 Crossref refs=21 / screened=7 / new=0; gw-supplement criterion
-    #3 closed); 4 direct-competitor full reads BLOCKED (TCOMM 2024.3522036 / JLT 2025.3640695 / JLT
-    2022.3224805 / JLT 2023.3284489, non-OA IEEE paywalled, tools/download all_failed, OA scout 4 sources
-    closed). Full-text ALREADY read = OE 2021 + LCOMM 2026 (both full-text, NOT abstract-only). Step 4a
-    NOT authorized (FR-22 + D056 full-text gate). Next authoritative work = user decision on the 4
-    direct-competitor full-text acquisition path (institutional VPN / author email / debt-bearing waiver /
-    wait for OA); this round does NOT waive, does NOT enter Step 4a (see H017). Do NOT resume Scout until
-    a formal candidate explicitly needs a new Scout.
+    D061 routing remains: P03 PAUSED_RETURNED_TO_PORTFOLIO; Pilot-Jones is the formal line. D062 (2026-07-23)
+    explicitly selects the debt-bearing waiver: Step 3.5 = WAIVED_TO_STEP4A_WITH_BLOCKING_DEBT, NOT PASS;
+    the 4 direct-competitor full texts remain BLOCKED_NO_FULLTEXT. Step 4a is AUTHORIZED_IN_PROGRESS as one
+    big package A0/A-prime/A/B/D with bounded source recovery and conditional MVE. Positive ceiling =
+    CONDITIONAL_GO_WITH_BLOCKING_LITERATURE_DEBT; stop before Step 5. Next authoritative work = execute
+    live-test T002. Do NOT resume Scout or P03.

@@ -152,13 +152,9 @@ next_action: >-
   main-method signal. F1=TESTBED_BLOCKED, F3=UNRESOLVED, F4=INFRASTRUCTURE_BLOCKED. F2 pilot lineage
   merged into existing Pilot-Jones formal Groundwork (no parallel Scout; F2 collision check NOT run).
   Negative material -> harvest/limitations only; NOT a full negative paper. F1 testbed rebuild NOT
-  authorized. D061 strategic switch (2026-07-22): P03 = PAUSED_RETURNED_TO_PORTFOLIO (option 1, family
-  not closed); Pilot-Jones = current formal GW line. Step 3.5 = PARTIAL/BLOCKED: V035 backward-chain
-  independent terminal verification PASS (JLT 2022 Crossref refs=21 / screened=7 / new=0; gw-supplement
-  criterion #3 closed); 4 direct-competitor full reads BLOCKED (TCOMM 2024.3522036 / JLT 2025.3640695 /
-  JLT 2022.3224805 / JLT 2023.3284489, non-OA IEEE paywalled, tools/download all_failed, OA scout 4
-  sources closed). Full-text ALREADY read = OE 2021 + LCOMM 2026 (both full-text, NOT abstract-only).
-  Step 4a NOT authorized (FR-22 + D056 full-text gate). Next authoritative work = user decision on the
-  4 direct-competitor full-text acquisition path (institutional VPN / author email / debt-bearing waiver /
-  wait for OA); this round does NOT waive, does NOT enter Step 4a (see H017). Do NOT resume Scout until
-  a formal candidate explicitly needs a new Scout.
+  authorized. D061 routing remains: P03 PAUSED_RETURNED_TO_PORTFOLIO; Pilot-Jones is the formal line.
+  D062 selects a debt-bearing waiver: Step 3.5 = WAIVED_TO_STEP4A_WITH_BLOCKING_DEBT, NOT PASS; the 4
+  direct-competitor full texts remain BLOCKED_NO_FULLTEXT. Step 4a is AUTHORIZED_IN_PROGRESS as one big
+  A0/A-prime/A/B/D package with bounded source recovery and conditional MVE. Positive ceiling =
+  CONDITIONAL_GO_WITH_BLOCKING_LITERATURE_DEBT; stop before Step 5. Next = execute live-test T002.
+  Do NOT resume Scout or P03.

@@ -3142,3 +3142,49 @@ S078；触发原话见 voice.md 2026-07-19。
 ### 来源
 
 用户 2026-07-22 执行提示词（战略裁决选项① + 激活 Pilot-Jones）；V035 独立 verifier；OA scout 子 agent；S069/S071/S074 复核。触发原话见 voice.md 2026-07-22。
+
+---
+
+## D062: 对 D056 采用一次性带债豁免，授权 Pilot-Jones 进入 Step 4a 大包
+
+> status: active
+> date: 2026-07-23
+> 取代：无（D056 的全文缺口事实与 D061 的 routing 继续有效；本决策只对“是否允许带债进入 Step 4a”作一次性例外）
+> 被取代：无
+> 依据: 用户 2026-07-23 显式同意“按大包带债推进”（voice.md 2026-07-23）+ D061/H017 已证明公开全文获取路径耗尽 + live-test T001 验收确认 current owners 已收敛
+
+### 决策
+
+1. 用户选择 H017 选项 (c)：**带债豁免 D056 的 4 篇直接竞品全文门**。4 篇仍保持 `BLOCKED_NO_FULLTEXT`，不得改写为已读、不得用摘要冒充全文。
+2. Pilot-Jones Step 3.5 的诚实状态记为 `WAIVED_TO_STEP4A_WITH_BLOCKING_DEBT`，**不是无条件 PASS**；V035 backward-chain PASS 与 R3 `new=0` 继续有效。
+3. 授权一个单对话大包进入 **GW Step 4a A0 → A′ → A/B → D**。包内可完成：问题合法性审查、方法族形成、简单替代解释处置、可复现 runner 闭包、前置 oracle/headroom、条件式 MVE、独立 integrity/science critic 与 provisional verdict。
+4. 大包必须关闭“Pilot-Jones 是否值得继续”这一科学不确定性，而不是再拆成状态整理、方法列表、MVE 计划等行政小包。
+5. 缺 4 篇全文使新颖性闭环存在阻断债务：正面结果最高只能形成 `CONDITIONAL_GO_WITH_BLOCKING_LITERATURE_DEBT`；A0/上界/MVE 的负面结果仍可支持 Pivot/Kill 建议。
+6. Step 4a 的 Go/Conditional Go/Pivot/Kill 只形成**待用户确认的 provisional verdict**。执行方不得进入 Step 5、Contract 或 Execute；主控验收后再交用户确认。
+
+### 大包停止条件
+
+- A0 任一致命项成立且无可修复方法形态：停止 MVE，给 Pivot/Kill 建议。
+- 仅剩“OSL 场景替换”“EMA α 参数差异”或别名重包装：Kill，不运行性能 MVE。
+- 现有 runner/参数/metric 无法形成可复现闭包：允许在同包做一次有界 source recovery；仍无法闭合则 `PARTIAL/INFRASTRUCTURE_BLOCKED`，列出精确缺件，不扩建通用基础设施。
+- 有合法结构性方法且前置上界/可观测 headroom 足够：同包直接运行有界 MVE，不再返回用户请求第二次许可。
+- 不论结果正负，都必须沉淀可复用方法材料、边界/负面材料或明确 `NO_DURABLE_HARVEST` 理由。
+
+### 排除的替代方案
+
+- 不把豁免写成 4 篇全文已完成，也不删除 D056 债务。
+- 不只写 Step 4a 分析后停在“建议以后跑 MVE”；若 D 维度前置条件满足，本包必须直接跑。
+- 不把历史 EMA09 15/15 当 Go；它只是 Step 1 晋级证据，且源码闭包需重新核验。
+- 不复活 dormant science-scout，不恢复 P03，不创建 B004/Portfolio Autopilot，不建设通用 scheduler。
+- 不触碰 protected history；不 push。
+
+### 影响范围
+
+- formal owner 从 `Step 3.5 PARTIAL/BLOCKED` 转为 `Step 3.5 WAIVED_WITH_DEBT / Step 4a AUTHORIZED_IN_PROGRESS`。
+- live-test foreground control 递增 epoch，允许一个 `PILOT_JONES_STEP4A_PACKAGE`。
+- 允许新增 Step 4a 专属 MVE 闭包、结果、测试、formal session note、worker-log，并按 provisional verdict 更新可变 current views。
+- D056、4 篇 `BLOCKED_NO_FULLTEXT`、P03 paused 和 science-scout dormant 均继续有效。
+
+### 来源
+
+S074（2026-07-23 续接）；触发原话见 voice.md 2026-07-23。

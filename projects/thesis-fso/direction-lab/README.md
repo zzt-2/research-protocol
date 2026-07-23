@@ -16,9 +16,9 @@ Direction Lab 是正式晋级前的候选发现/批量筛选层；Scout/Sandbox 
 
 ## 当前状态
 
-- 正式研究：当前 formal Groundwork 工作线 = **Pilot-Jones**，`Step 3.5 PARTIAL/BLOCKED`（D061）。唯一正式入口为 [`../master-state.md`](../master-state.md)。Direction Lab Scout campaign 已 dormant（D022 SCIENCE_FREEZE），无当前科学执行授权。
+- 正式研究：当前 formal Groundwork 工作线 = **Pilot-Jones**，`Step 4a AUTHORIZED_IN_PROGRESS`（D062 带债豁免；Step 3.5 非 PASS）。唯一正式入口为 [`../master-state.md`](../master-state.md)。Direction Lab Scout campaign 仍 dormant。
 - Sandbox 历史：B003 已完成并独立验证；批次事实见 [`state/completion-events.jsonl`](state/completion-events.jsonl) 与 [`state/projections/`](state/projections/)。
-- Pilot-Jones formal GW（D061）：Step 1/2/3 ✅；**Step 3.5 PARTIAL/BLOCKED**——backward-chain 独立终验 V035 PASS（JLT 2022 Crossref refs=21 / screened=7 / new=0，gw-supplement 判据 #3 闭合），但 D056 要求的 4 篇直接竞品全文获取 BLOCKED（TCOMM `10.1109/TCOMM.2024.3522036` / JLT2025 `10.1109/JLT.2025.3640695` / JLT2022 `10.1109/JLT.2022.3224805` / JLT2023 `10.1109/JLT.2023.3284489`，non-OA IEEE paywalled，`tools/download` all_failed，OA scout 4 源均 closed）。已全文精读 OE 2021 + LCOMM 2026 两篇。**Step 4a 未授权**（FR-22 + D056 全文门）。
+- Pilot-Jones formal GW（D061/D062）：Step 1/2/3 ✅；Step 3.5=`WAIVED_TO_STEP4A_WITH_BLOCKING_DEBT`——V035 backward PASS，但 4 篇直接竞品继续 `BLOCKED_NO_FULLTEXT`。**Step 4a 已授权**；一次完成 A0/A′/A/B/D，正面最高 Conditional Go，止于 provisional verdict。
 - P03 状态（D061 选项①，已选定）：`PAUSED_RETURNED_TO_PORTFOLIO`——P03 暂停回候选池，**不是 Kill**（family 不关闭，沿用 D057/D058 `P03_DOMAIN_ADEQUACY_UNRESOLVED`）。Sandbox `NOT_ENTERED`，ML 仍禁止训练，Stage B 不触发。
 - 历史 P03 Stage A 证据（2026-07-19，S077/D059/V033）保留：runnable 代表子域（11 cells × 10 paired seeds）`LOCAL_NEGATIVE`，exit=`NO_HEADROOM_IN_REPRESENTATIVE_DOMAIN_WITH_CERTIFICATE`；16QAM/receiver-CSI/coded-output 三轴 INFRASTRUCTURE_BLOCKED → DOMAIN/CANDIDATE/FAMILY 仍 UNRESOLVED/OPEN。
 - B004：不存在，也不允许启动。
@@ -35,13 +35,13 @@ B001–B003 的任何数字都不能进入论文、正式 Groundwork 或 canonic
 
 ## 当前阻断
 
-当前 formal blocker = Pilot-Jones Step 3.5 的 D056 全文门：4 篇直接竞品（TCOMM `10.1109/TCOMM.2024.3522036` / JLT2025 `10.1109/JLT.2025.3640695` / JLT2022 `10.1109/JLT.2022.3224805` / JLT2023 `10.1109/JLT.2023.3284489`）non-OA IEEE paywalled，`tools/download` all_failed，OA scout 4 源均 closed。只有 OE 2021 + LCOMM 2026 两篇全文精读。backward-chain 门已闭合（V035 PASS），但全文门 BLOCKED → Step 3.5 维持 PARTIAL，**不进 Step 4a**（FR-22 + D056）。
+当前 formal debt = D056 的 4 篇直接竞品全文继续 `BLOCKED_NO_FULLTEXT`。D062 只豁免进入 Step 4a，不把摘要当全文、不关闭新颖性债务。若 Step 4a 出现正面信号，最高只能 Conditional Go。
 
 历史 P03 阻断保留：Stage A 在 runnable 代表子域 LOCAL_NEGATIVE，但 3 轴 INFRASTRUCTURE_BLOCKED（16QAM / receiver-estimated CSI / coded output）+ 历史反例落在被阻轴上，不能形成 domain/candidate/family 退出。没有 ML 训练许可、PASS Queue、新 Registry 或 Sandbox 批次许可。
 
 ## 下一合法边界
 
-用户裁决 Pilot-Jones 4 篇直接竞品全文获取路径（D061 / H017）：(a) 机构 VPN/proxy 获取 IEEE 全文；(b) 邮件联系通讯作者；(c) 带债豁免（显式豁免 D056 全文门）；(d) 等 OA / 换近似竞品。**本轮不豁免、不进 Step 4a**。不启动 B004，不训练 P03 ML，不创建 Queue/Registry，不复活 dormant science-scout。
+执行 live-test `T002-pilot-jones-step4a-big-package.md`：在当前 formal 链内完成 A0/A′/A/B/D、bounded source recovery、前置上界与条件式 MVE。止于 provisional verdict；不进入 Step 5，不启动 B004/P03 ML/Queue/Registry，不复活 dormant science-scout。
 
 历史 P03 Headroom Atlas 入口保留（P03 PAUSED，artifact 不删）：唯一 receipt-bound 入口 [`scout/P03-U19-residual-headroom/headroom-atlas/atlas_gate.py`](scout/P03-U19-residual-headroom/headroom-atlas/atlas_gate.py) 已建立并通过 19 tests（含独立对抗审查）；Stage A artifact 在 [`scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/`](scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/)。不得把 LOCAL_NEGATIVE 改写成候选退出，也不得启动 B004、ML 训练或正式性能结论。
 

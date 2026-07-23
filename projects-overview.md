@@ -7,12 +7,12 @@
 ### thesis-fso
 
 - **方向**：双偏振星地 OSL 场景中的 ML 应用方向探索；正式研究与 Direction Lab Scout/Sandbox 分层管理。
-- **正式状态**：`Pilot-Jones formal GW Step 3.5 PARTIAL/BLOCKED`（当前 formal Groundwork 工作线，D061）。Direction Lab campaign 已 dormant（D022 SCIENCE_FREEZE），exploratory evidence 对正式 Groundwork/论文 promotion effect 为 `none`。
+- **正式状态**：`Pilot-Jones formal GW Step 4a AUTHORIZED_IN_PROGRESS`（D062 带债豁免；Step 3.5 非 PASS）。Direction Lab campaign 仍 dormant（D022 SCIENCE_FREEZE）。
 - **Direction Lab Sandbox 历史**：B003 已完成，状态 `COMPLETED_SANDBOX_VERIFIED`；批次事实以 completion events 和不可变 projection 为证据，B001–B003 数字均不可进入论文或正式材料。
-- **Pilot-Jones formal GW（当前工作线，D061）**：Step 1/2/3 ✅；**Step 3.5 PARTIAL/BLOCKED**——backward-chain 独立终验 V035 PASS（JLT 2022 refs=21/screened=7/new=0），但 D056 要求的 4 篇直接竞品全文获取 BLOCKED（TCOMM `10.1109/TCOMM.2024.3522036` / JLT2025 `10.1109/JLT.2025.3640695` / JLT2022 `10.1109/JLT.2022.3224805` / JLT2023 `10.1109/JLT.2023.3284489`，non-OA IEEE paywalled）。已全文精读 OE 2021 + LCOMM 2026 两篇。**Step 4a 未授权**（FR-22 + D056 全文门）。
+- **Pilot-Jones formal GW（当前工作线，D061/D062）**：Step 1/2/3 ✅；Step 3.5=`WAIVED_TO_STEP4A_WITH_BLOCKING_DEBT`——V035 backward PASS，但 D056 的 4 篇全文继续 `BLOCKED_NO_FULLTEXT`。**Step 4a 大包已授权**；正面最高 Conditional Go，止于待用户确认的 provisional verdict。
 - **当前 Scout（dormant）**：Direction Lab Scout campaign 已 dormant（D022 SCIENCE_FREEZE；D061 确认无当前科学执行授权）。P03/U19 Headroom Atlas Stage A 历史（2026-07-19，S077/D059/V033）保留：runnable 代表子域 `LOCAL_NEGATIVE`，candidate `P03_DOMAIN_ADEQUACY_UNRESOLVED`（16QAM/receiver-CSI/coded-output 三轴 INFRASTRUCTURE_BLOCKED），domain/family 未关闭。
 - **P03 状态（D061 选项①，已选定）**：`PAUSED_RETURNED_TO_PORTFOLIO`——P03 暂停回候选池（**不是 Kill**，family 不关闭，沿用 D057/D058）。Sandbox `NOT_ENTERED`，Stage B 不触发。
-- **下一合法边界**：用户裁决 Pilot-Jones 4 篇直接竞品全文获取路径（机构 VPN / 作者邮件 / 带债豁免 / 等 OA）；**本轮不豁免、不进 Step 4a**。不启动 B004，不训练 P03 ML，不创建 Queue/Registry，不复活 dormant science-scout。
+- **下一合法边界**：执行 live-test `T002-pilot-jones-step4a-big-package.md`，一次完成 A0/A′/A/B/D、可复现闭包和条件式 MVE；不进入 Step 5，不启动 B004/P03 ML/Queue/Registry。
 - **Atlas 强门入口**：`projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/atlas_gate.py`（唯一 receipt-bound 入口，19 tests 含独立对抗审查）。
 - **入口**：`projects/thesis-fso/master-state.md` → `projects/thesis-fso/direction-lab/README.md`；机器状态溯源见 `projects/thesis-fso/direction-lab/state/completion-events.jsonl` 与 `state/projections/`，`canonical-state.yaml` 不是正式研究授权源。
 

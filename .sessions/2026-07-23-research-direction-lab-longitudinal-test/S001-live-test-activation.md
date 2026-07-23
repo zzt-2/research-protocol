@@ -3,6 +3,7 @@
 > 2026-07-23 | mission activation | 状态：READY_FOR_FORK，科学载体未选择
 > 2026-07-23 续接 | H001 接收与 owner reconciliation | 状态：T001_READY
 > 2026-07-23 续接 | T001 接收验收与下一门控判断 | 状态：AWAITING_USER_STRATEGY
+> 2026-07-23 续接 | D062 带债豁免与大包粒度纠偏 | 状态：T002_READY
 
 ## 目标
 
@@ -68,15 +69,29 @@ current owner 收敛后，唯一未闭合门是 D056 的 4 篇直接竞品全文
 
 因此没有合法且非重复的 T002。live test 进入真实的 `AWAITING_USER_STRATEGY`，不以文书型假任务维持表面连续派工。主控建议选择“带债豁免”：以现有 2 篇全文、V035 backward 证据和 4 篇摘要级证据进入 Step 4a，同时将 4 篇未精读保留为阻断性债务；该选择仍须用户显式授权。
 
+### 用户授权与包粒度纠偏
+
+用户指出 T001 “干得太少”。事实核对：T001 只协调 5 个 current views，没有关闭科学问题、形成方法或运行验证，因此只计一次性 bootstrap overhead，不计普通研究包。
+
+用户随后同意“按大包带债推进”。主控据此：
+
+- 在 formal owner 建立 D062，选择 H017 选项 (c)；
+- 4 篇全文仍为 `BLOCKED_NO_FULLTEXT`，Step 3.5 不改写为 PASS；
+- 授权 T002 单对话关闭“Pilot-Jones 是否值得继续”这一科学不确定性；
+- T002 可包含 A0/A′/A/B、方法族比较、bounded source recovery、前置上界、条件式 MVE、双审查和 provisional verdict；
+- 只有真实致命门、无法闭合的基础资产或预算终点才能提前停止，不得停在纯方法列表或 MVE 计划；
+- 正面最高 Conditional Go，主控验收后仍须用户确认，不进入 Step 5。
+
 ## 决策引用
 
 - system D017：采用轻量前台控制块与 T 授权 guard。
+- formal D062：D056 一次性带债豁免，授权 Pilot-Jones Step 4a 大包。
 
 ## 范围确认
 
 - 本轮是否在 scope boundary 内：是。
-- 本轮没有运行科学工作、改变 formal 状态或修改 protected history。
+- 本轮没有运行科学实验或修改 protected history；根据用户授权在 formal owner 新建 D062，将 formal stage 内的合法步骤从 Step 3.5 带债阻断更新为 Step 4a 已授权进行中。该变化是显式 gate 决策，不是执行方自行推进。
 
 ## 后续
 
-等待用户选择 D061/H017 的全文获取路径。用户授权后，主控先递增 control epoch、绑定对应 action class，再生成下一份 T；授权前不运行全文工作、Step 4a、实验或 formal routing 变化。
+T002 自包含任务书、control guard 和范围验证已完成；下一步交给用户转发 GLM 执行。
