@@ -4,25 +4,27 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v1
-  control_epoch: 2
+  control_epoch: 3
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: STATE_RECONCILIATION
+  active_lane: AWAITING_STRATEGIC_AUTHORIZATION
   authority_pointer: .sessions/2026-07-10-dual-pol-osl-groundwork/decisions.md#D061
-  decision_gate: mutable current views 仍混有 D061 前 routing 与已纠正的 Step 3.5 事实，科学派工前必须先收敛
+  decision_gate: D056 的 4 篇直接竞品全文公开获取路径已耗尽；机构访问、作者邮件、带债豁免或等待/替换均需用户裁决
   allowed_actions:
-    - STATE_RECONCILIATION
+    - USER_STRATEGY_DECISION
+    - STRATEGY_DECISION_RECORDING
     - TASK_BRIEF_PREPARATION
   forbidden_actions:
     - SCIENTIFIC_EXPERIMENT
     - FORMAL_STAGE_CHANGE
+    - FULLTEXT_WORK
     - SKILL_EDIT
     - INFRASTRUCTURE_BUILD
-  next_legal_action: 执行 T001，只对齐 D061/H017 到可变 current views 并返回 worker-log，不运行科学工作
+  next_legal_action: 用户显式选择 D061/H017 的 4 篇全文获取路径；推荐带债豁免，授权后再递增 epoch 并准备下一份 T
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（T001_READY；仅授权 current-view reconciliation）
+> 状态: active（AWAITING_USER_STRATEGY；T001 已验收）
 > 创建: 2026-07-23 | 最后更新: 2026-07-23
 
 ## 专题信息
@@ -80,14 +82,14 @@ rdl_control:
 - **S001**：live-test mission 激活边界、运行角色和初始 gate。
 - **H001**：fork 主控启动入口；先恢复和比较 carrier，不运行科学工作。
 - **S001 续接 / T001**：H001 接收 3/3 PASS；确认 formal owner=D061、Scout dormant，并发现 5 个可变 current views 残留 D061 前 routing。首包选择状态协调，不授权科学工作。
+- **S001 续接 / T001 验收**：提交 `4a0d4a4` 的路径边界、protected diff、YAML 和字段级语义均 PASS；current owner 已收敛。下一门是需要用户权限/豁免的 4 篇全文获取战略 gate，当前不存在非重复且合法的 T002。
 
 ## 未决项
 
-- T001 能否把可变 current views 收敛到 D061/H017，且不改科学结论与 protected history；
-- current owner 收敛后，第二包应处理全文获取战略 gate，还是存在无需用户私有访问的更高信息量合法工作；
+- 用户选择 D061/H017 的全文获取路径：机构 VPN/proxy、联系作者、带债豁免或等待 OA/替换近似竞品；
 - live run 自然覆盖哪些恢复/轮换/晋级事件；
 - 何时由原 design 对话进行阶段性审计。
 
 ## 当前位置
 
-T001_READY。唯一合法下一步是执行 `T001-current-owner-reconciliation.md`，将 D061/H017 已确认事实同步到可变 current views。T001 完成并由主控验收前，不得运行科学实验、全文工作或改变 formal 状态。
+AWAITING_USER_STRATEGY。T001 已由主控独立验收，mutable current owners 已收敛。D056 的 4 篇直接竞品全文是唯一 formal blocker；公开获取已穷尽，下一步涉及私有访问、外部联络或显式豁免。用户授权前不创建 T002，不运行全文工作、Step 4a、实验或 formal routing 变化。

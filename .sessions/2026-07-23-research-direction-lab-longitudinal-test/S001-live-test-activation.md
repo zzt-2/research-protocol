@@ -2,6 +2,7 @@
 
 > 2026-07-23 | mission activation | 状态：READY_FOR_FORK，科学载体未选择
 > 2026-07-23 续接 | H001 接收与 owner reconciliation | 状态：T001_READY
+> 2026-07-23 续接 | T001 接收验收与下一门控判断 | 状态：AWAITING_USER_STRATEGY
 
 ## 目标
 
@@ -46,6 +47,27 @@
 
 T001 只修可变 current views 和写 worker-log，不修改 protected history、formal state、科学结论或 Skill；完成后主控再判断第二包。
 
+### T001 接收验收
+
+- 执行提交：`4a0d4a48ad3a817a2a1dc92ad4641b0fb9d47727`；worker-log：`projects/thesis-fso/worker-logs/step-001-current-owner-reconciliation.md`。
+- 路径边界 PASS：相对 T001 基线只修改 5 个指定 current views，并新增 1 个指定 worker-log；protected/formal/Skill/live-control 文件均无差异。
+- 语法与语义 PASS：3 个 YAML 可解析；5 个 current views 均指向 D061/H017，写明 P03 `PAUSED_RETURNED_TO_PORTFOLIO`、Pilot-Jones Step 3.5 `PARTIAL/BLOCKED`、V035 PASS、OE 2021 + LCOMM 2026 已全文精读、4 篇真实缺失全文及 Step 4a 未授权。
+- stale 检查 PASS：不再残留“P03 用户决策未选”“missing independent terminal verification”或“LCOMM 2026 abstract-only”。
+- 执行方未能使用独立 verifier，已在 worker-log 如实标记 `INDEPENDENT_VERIFIER_UNAVAILABLE`；主控用提交 diff、受保护路径 diff、YAML 解析和字段断言完成独立接收验收。
+
+### 第二包判断
+
+current owner 收敛后，唯一未闭合门是 D056 的 4 篇直接竞品全文。D061/H017 已证明公开获取路径耗尽，并明确把以下动作交给用户裁决：机构访问、联系作者、带债豁免或等待/替换。
+
+在当前 epoch 内：
+
+- 重做 OA 搜索或再整理同一决策表不会增加科学信息；
+- 用摘要代替全文或直接进入 Step 4a 违反 D056/FR-22；
+- 恢复 P03/Scout 会改变 D061 的 formal routing；
+- 发邮件、使用私有机构权限或豁免门控都需要新授权。
+
+因此没有合法且非重复的 T002。live test 进入真实的 `AWAITING_USER_STRATEGY`，不以文书型假任务维持表面连续派工。主控建议选择“带债豁免”：以现有 2 篇全文、V035 backward 证据和 4 篇摘要级证据进入 Step 4a，同时将 4 篇未精读保留为阻断性债务；该选择仍须用户显式授权。
+
 ## 决策引用
 
 - system D017：采用轻量前台控制块与 T 授权 guard。
@@ -57,4 +79,4 @@ T001 只修可变 current views 和写 worker-log，不修改 protected history�
 
 ## 后续
 
-用户将 T001 路径交给执行 GLM。执行方只返回 status、commit、worker-log path、one-line anomaly；主控从磁盘验收后再更新 scientific owner/control，不提前准备第二个科学包。
+等待用户选择 D061/H017 的全文获取路径。用户授权后，主控先递增 control epoch、绑定对应 action class，再生成下一份 T；授权前不运行全文工作、Step 4a、实验或 formal routing 变化。
