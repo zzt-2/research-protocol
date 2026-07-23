@@ -5,15 +5,18 @@
 # NO legal main-method signal. F1=TESTBED_BLOCKED / F3=UNRESOLVED / F4=INFRASTRUCTURE_BLOCKED.
 # F2 pilot lineage merges into existing Pilot-Jones formal Groundwork (no parallel Scout).
 # Negative material -> harvest/limitations only; NOT a full negative paper.
-# Next authoritative work = Pilot-Jones Step 3.5 terminal review + Step 4a (see H015).
+# Next authoritative work = Pilot-Jones Step 3.5 terminal review + Step 4a (see H017; D061 strategic switch).
+# Updated 2026-07-23 (T001 current-owner reconciliation): D061 strategic switch reflected — P03 = PAUSED_RETURNED_TO_PORTFOLIO
+# (option 1, family not closed); Pilot-Jones = current formal GW line; Step 3.5 PARTIAL/BLOCKED
+# (V035 backward PASS, 4 direct-competitor full-text BLOCKED); Step 4a not authorized.
 # Explicit disposition lineage governs; protected history untouched.
 # Role of protected files (recorded here, NOT edited): STATUS.v1.md = STALE_PROTECTED
 # (not the current scientific-fact source); project.v1.yaml = historical read-only-preview
-# adapter (not the current authorized owner). Current trusted fact source = this file + D022/H015.
+# adapter (not the current authorized owner). Current trusted fact source = this file + D022/H017 + D061.
 
 schema_version: research-direction-lab.state.current.v1
 project_id: thesis-fso.dual-pol-osl.direction-lab
-last_recovery_entry: H015-pilot-jones-step35-4a-verdict.md
+last_recovery_entry: H017-pilot-jones-step35-partial-4paper-blocked.md
 
 formal_goal: >-
   Systematically identify whether machine learning provides a real, legally
@@ -228,9 +231,13 @@ next_action:
     F2 pilot lineage merges into existing Pilot-Jones formal Groundwork (no parallel Scout; F2
     collision check NOT run this round). Negative material -> harvest/limitations only, NOT a full
     negative paper. F1 testbed rebuild NOT authorized. No new F2 Scout. No new tracker/pilot/ML/testbed.
-    Next authoritative work = Pilot-Jones Step 3.5 terminal review + Step 4a prerequisites (see H015):
-    the master-state.md:96 "待V030" pointer is STALE (V030 = P03, not Pilot-Jones); Pilot-Jones
-    Step 3.5 has V028/V029 both PARTIAL explicitly blocking Step 4a, and is missing an independent
-    terminal verification of the backward citation chain + 4 direct-competitor full reads (OE2021
-    done; JLT2022-23/TCOMM2025/LCOMM2026 abstract-only). Do NOT resume Scout until a formal
-    candidate explicitly needs a new Scout.
+    D061 strategic switch (2026-07-22): P03 = PAUSED_RETURNED_TO_PORTFOLIO (option 1, family not closed);
+    Pilot-Jones = current formal GW line. Step 3.5 = PARTIAL/BLOCKED: V035 backward-chain independent
+    terminal verification PASS (JLT 2022 Crossref refs=21 / screened=7 / new=0; gw-supplement criterion
+    #3 closed); 4 direct-competitor full reads BLOCKED (TCOMM 2024.3522036 / JLT 2025.3640695 / JLT
+    2022.3224805 / JLT 2023.3284489, non-OA IEEE paywalled, tools/download all_failed, OA scout 4 sources
+    closed). Full-text ALREADY read = OE 2021 + LCOMM 2026 (both full-text, NOT abstract-only). Step 4a
+    NOT authorized (FR-22 + D056 full-text gate). Next authoritative work = user decision on the 4
+    direct-competitor full-text acquisition path (institutional VPN / author email / debt-bearing waiver /
+    wait for OA); this round does NOT waive, does NOT enter Step 4a (see H017). Do NOT resume Scout until
+    a formal candidate explicitly needs a new Scout.

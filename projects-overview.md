@@ -7,10 +7,12 @@
 ### thesis-fso
 
 - **方向**：双偏振星地 OSL 场景中的 ML 应用方向探索；正式研究与 Direction Lab Scout/Sandbox 分层管理。
-- **正式状态**：`BLOCKED`。Direction Lab 的 exploratory evidence 对正式 Groundwork/论文 promotion effect 为 `none`。
+- **正式状态**：`Pilot-Jones formal GW Step 3.5 PARTIAL/BLOCKED`（当前 formal Groundwork 工作线，D061）。Direction Lab campaign 已 dormant（D022 SCIENCE_FREEZE），exploratory evidence 对正式 Groundwork/论文 promotion effect 为 `none`。
 - **Direction Lab Sandbox 历史**：B003 已完成，状态 `COMPLETED_SANDBOX_VERIFIED`；批次事实以 completion events 和不可变 projection 为证据，B001–B003 数字均不可进入论文或正式材料。
-- **当前 Scout**：P03/U19 Headroom Atlas Stage A 已完成（2026-07-19，S077/D059/V033）。runnable 代表子域（QPSK × SNR 5–25 dB × f_G 30/100/1000 Hz × SOP 4e-6/4e-5 × N 512/8192 × CSI_NONE × uncoded hard decision，11 cells × 10 paired seeds）`LOCAL_NEGATIVE`：0/11 cells 达 MDE 0.005，max visible headroom 0.00039。candidate 当前仍 `P03_DOMAIN_ADEQUACY_UNRESOLVED`（16QAM/receiver-CSI/coded-output 三轴 INFRASTRUCTURE_BLOCKED，历史反例落在被阻轴上），domain/family 未关闭，Sandbox `NOT_ENTERED`，Stage B 不触发。
-- **下一合法边界**：用户决策点（未选定）：① P03 暂停回候选池；② 建一条干净 source closure（最有杠杆是 16QAM）扩域重跑 Stage A；③ 换候选族（U36 等）。要关 DOMAIN/CANDIDATE 必须先扩 closure 并带 scope certificate。不启动 B004，不训练 P03 ML，不创建 Queue/Registry。
+- **Pilot-Jones formal GW（当前工作线，D061）**：Step 1/2/3 ✅；**Step 3.5 PARTIAL/BLOCKED**——backward-chain 独立终验 V035 PASS（JLT 2022 refs=21/screened=7/new=0），但 D056 要求的 4 篇直接竞品全文获取 BLOCKED（TCOMM `10.1109/TCOMM.2024.3522036` / JLT2025 `10.1109/JLT.2025.3640695` / JLT2022 `10.1109/JLT.2022.3224805` / JLT2023 `10.1109/JLT.2023.3284489`，non-OA IEEE paywalled）。已全文精读 OE 2021 + LCOMM 2026 两篇。**Step 4a 未授权**（FR-22 + D056 全文门）。
+- **当前 Scout（dormant）**：Direction Lab Scout campaign 已 dormant（D022 SCIENCE_FREEZE；D061 确认无当前科学执行授权）。P03/U19 Headroom Atlas Stage A 历史（2026-07-19，S077/D059/V033）保留：runnable 代表子域 `LOCAL_NEGATIVE`，candidate `P03_DOMAIN_ADEQUACY_UNRESOLVED`（16QAM/receiver-CSI/coded-output 三轴 INFRASTRUCTURE_BLOCKED），domain/family 未关闭。
+- **P03 状态（D061 选项①，已选定）**：`PAUSED_RETURNED_TO_PORTFOLIO`——P03 暂停回候选池（**不是 Kill**，family 不关闭，沿用 D057/D058）。Sandbox `NOT_ENTERED`，Stage B 不触发。
+- **下一合法边界**：用户裁决 Pilot-Jones 4 篇直接竞品全文获取路径（机构 VPN / 作者邮件 / 带债豁免 / 等 OA）；**本轮不豁免、不进 Step 4a**。不启动 B004，不训练 P03 ML，不创建 Queue/Registry，不复活 dormant science-scout。
 - **Atlas 强门入口**：`projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/atlas_gate.py`（唯一 receipt-bound 入口，19 tests 含独立对抗审查）。
 - **入口**：`projects/thesis-fso/master-state.md` → `projects/thesis-fso/direction-lab/README.md`；机器状态溯源见 `projects/thesis-fso/direction-lab/state/completion-events.jsonl` 与 `state/projections/`，`canonical-state.yaml` 不是正式研究授权源。
 
