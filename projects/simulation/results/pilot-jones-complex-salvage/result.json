@@ -1,0 +1,314 @@
+{
+ "label": "T003 complex-model salvage consolidated",
+ "experiment": "PILOT_JONES_COMPLEX_MODEL_SALVAGE_PACKAGE",
+ "contract_sha256": "dfc7f19e0a31033b0c761cf1bcaaabc3d9bf087f34143103c82e5177dab2bafa",
+ "source_sha256": {
+  "generator": "5cefac97d120e5590905ae36ab20cabc8832a6c556368b1d9f154a2a8091818c",
+  "gg_time": "d8e7929d00d885eccf111eb96d80ecd3822b065cbf3eca09ed31912c3da73113",
+  "params": "0e87c53364461478eddcd81426d8e04646270c3ea7aa717e3c3b28c5dd2a99e9",
+  "channel": "18b69fe21811f82ee1f216a7bb981e92fc2faeae8a65b275b1663f863a693f03",
+  "baselines": "e76a7adc5cf67144e15a0031759bec8516ac4afabdbc5356ed30d1a18887c7b5",
+  "methods": "b99c1ecce4d2c4ed21776c7bd31ae557e5851f99383be68d6b754da301c0839c",
+  "runner": "8b10a7fda312f8b511cf073d86ad797128691872bbfdbab2c4da58a258fd14b8"
+ },
+ "theory_results": {
+  "T1_M0_control_compat": {
+   "max_abs_diff_rX": 0.0,
+   "max_abs_diff_rY": 0.0,
+   "pass": true
+  },
+  "T2_M1_complex_unitary": {
+   "max_unitary_error": 7.579375031157046e-16,
+   "cond_max": 1.0000000000000007,
+   "pass": true
+  },
+  "T3_M2_cond_vs_pdl_3.5dB": {
+   "pdl_db": 3.5,
+   "cond_mean": 1.4962356560944334,
+   "expected_cond": 1.4962356560944334,
+   "pass": true
+  },
+  "T3_M2_cond_vs_pdl_6.0dB": {
+   "pdl_db": 6.0,
+   "cond_mean": 1.9952623149688795,
+   "expected_cond": 1.9952623149688795,
+   "pass": true
+  },
+  "T3_M2_cond_vs_pdl_9.5dB": {
+   "pdl_db": 9.5,
+   "cond_mean": 2.9853826189179595,
+   "expected_cond": 2.9853826189179595,
+   "pass": true
+  },
+  "T4a_M3_dgd0_memoryless": {
+   "max_abs_diff_rX": 0.0,
+   "pass": true
+  },
+  "T4b_M3_dgd80ps_has_memory": {
+   "max_abs_diff_rX": 0.408859252844299,
+   "pass": true
+  },
+  "T5_M2_noiseless_recovery": {
+   "max_abs_recovery_error": 1.244682418347407e-15,
+   "pass": true
+  }
+ },
+ "theory_all_pass": true,
+ "smoke_rows": 8,
+ "headroom_summary": {
+  "verified": {
+   "M0_control": {
+    "model_id": "M0",
+    "task_matched_b3": "B3_whitening",
+    "oracle_ceiling": "O_jones_oracle",
+    "n_seeds": 3,
+    "B3_mean_nocma": 0.02881786082095042,
+    "oracle_mean_nocma": 0.01524978340117372,
+    "B1_mean_nocma": 0.016018096218920114,
+    "P1_mean_nocma": 0.029253101858663134,
+    "n_eval_per_seed": 40782,
+    "Q2_B3_dB": 5.5680217422847,
+    "Q2_oracle_dB": 6.703304006082716,
+    "Q2_headroom_dB": 1.1352822637980156,
+    "B3_over_oracle_ber_ratio": 1.8897226316494706,
+    "oracle_anomaly": false,
+    "P1_vs_B3_win_tie_loss_nocma": [
+     0,
+     2,
+     1
+    ]
+   },
+   "M1_cunitary": {
+    "model_id": "M1",
+    "task_matched_b3": "B3_whitening",
+    "oracle_ceiling": "O_jones_oracle",
+    "n_seeds": 3,
+    "B3_mean_nocma": 0.02881786082095042,
+    "oracle_mean_nocma": 0.01524978340117372,
+    "B1_mean_nocma": 0.3789069524136466,
+    "P1_mean_nocma": 0.029253101858663134,
+    "n_eval_per_seed": 40782,
+    "Q2_B3_dB": 5.5680217422847,
+    "Q2_oracle_dB": 6.703304006082716,
+    "Q2_headroom_dB": 1.1352822637980156,
+    "B3_over_oracle_ber_ratio": 1.8897226316494706,
+    "oracle_anomaly": false,
+    "P1_vs_B3_win_tie_loss_nocma": [
+     0,
+     2,
+     1
+    ],
+    "impairment_added_ber_ratio_over_M0": 0.0
+   },
+   "M2_pdl1dB_verified": {
+    "model_id": "M2",
+    "task_matched_b3": "B3_whitening",
+    "oracle_ceiling": "O_jones_oracle",
+    "n_seeds": 5,
+    "B3_mean_nocma": 0.023596194399489973,
+    "oracle_mean_nocma": 0.011633809033397087,
+    "B1_mean_nocma": 0.37533348045706444,
+    "P1_mean_nocma": 0.02419204551027414,
+    "n_eval_per_seed": 40782,
+    "Q2_B3_dB": 5.953326240616017,
+    "Q2_oracle_dB": 7.116734473963408,
+    "Q2_headroom_dB": 1.1634082333473916,
+    "B3_over_oracle_ber_ratio": 2.0282432290020025,
+    "oracle_anomaly": false,
+    "P1_vs_B3_win_tie_loss_nocma": [
+     0,
+     3,
+     2
+    ],
+    "impairment_added_ber_ratio_over_M0": 0.13852059735253186
+   },
+   "M3_dgd6ps_verified": {
+    "model_id": "M3",
+    "task_matched_b3": "B3_tapped",
+    "oracle_ceiling": "O_fde_oracle",
+    "n_seeds": 5,
+    "B3_mean_nocma": 0.02356431759109411,
+    "oracle_mean_nocma": 0.019134667255161587,
+    "B1_mean_nocma": 0.012305674071894463,
+    "P1_mean_nocma": 0.024230052474130744,
+    "n_eval_per_seed": 40782,
+    "Q2_B3_dB": 5.955833128210903,
+    "Q2_oracle_dB": 6.327620019595059,
+    "Q2_headroom_dB": 0.371786891384156,
+    "B3_over_oracle_ber_ratio": 1.231498686486833,
+    "oracle_anomaly": false,
+    "P1_vs_B3_win_tie_loss_nocma": [
+     0,
+     3,
+     2
+    ],
+    "impairment_added_ber_ratio_over_M0": -0.6582239451626377
+   }
+  },
+  "stress": {
+   "M0_control_stress": {
+    "model_id": "M0",
+    "task_matched_b3": "B3_whitening",
+    "oracle_ceiling": "O_jones_oracle",
+    "n_seeds": 5,
+    "B3_mean_nocma": 0.023596194399489973,
+    "oracle_mean_nocma": 0.011633809033397087,
+    "B1_mean_nocma": 0.012282379481143644,
+    "P1_mean_nocma": 0.02417855916826051,
+    "n_eval_per_seed": 40782,
+    "Q2_B3_dB": 5.953326240616017,
+    "Q2_oracle_dB": 7.116734473963408,
+    "Q2_headroom_dB": 1.1634082333473916,
+    "B3_over_oracle_ber_ratio": 2.0282432290020025,
+    "oracle_anomaly": false,
+    "P1_vs_B3_win_tie_loss_nocma": [
+     1,
+     2,
+     2
+    ]
+   },
+   "M2_pdl3p5dB_stress": {
+    "model_id": "M2",
+    "task_matched_b3": "B3_whitening",
+    "oracle_ceiling": "O_jones_oracle",
+    "n_seeds": 5,
+    "B3_mean_nocma": 0.023596194399489973,
+    "oracle_mean_nocma": 0.011633809033397087,
+    "B1_mean_nocma": 0.376461429061841,
+    "P1_mean_nocma": 0.02461747829924967,
+    "n_eval_per_seed": 40782,
+    "Q2_B3_dB": 5.953326240616017,
+    "Q2_oracle_dB": 7.116734473963408,
+    "Q2_headroom_dB": 1.1634082333473916,
+    "B3_over_oracle_ber_ratio": 2.0282432290020025,
+    "oracle_anomaly": false,
+    "P1_vs_B3_win_tie_loss_nocma": [
+     0,
+     2,
+     3
+    ]
+   },
+   "M2_pdl6dB_stress": {
+    "model_id": "M2",
+    "task_matched_b3": "B3_whitening",
+    "oracle_ceiling": "O_jones_oracle",
+    "n_seeds": 5,
+    "B3_mean_nocma": 0.023596194399489973,
+    "oracle_mean_nocma": 0.011633809033397087,
+    "B1_mean_nocma": 0.3822151929772939,
+    "P1_mean_nocma": 0.025217007503310285,
+    "n_eval_per_seed": 40782,
+    "Q2_B3_dB": 5.953326240616017,
+    "Q2_oracle_dB": 7.116734473963408,
+    "Q2_headroom_dB": 1.1634082333473916,
+    "B3_over_oracle_ber_ratio": 2.0282432290020025,
+    "oracle_anomaly": false,
+    "P1_vs_B3_win_tie_loss_nocma": [
+     0,
+     2,
+     3
+    ]
+   },
+   "M2_pdl9p5dB_stress": {
+    "model_id": "M2",
+    "task_matched_b3": "B3_whitening",
+    "oracle_ceiling": "O_jones_oracle",
+    "n_seeds": 5,
+    "B3_mean_nocma": 0.023596194399489973,
+    "oracle_mean_nocma": 0.011633809033397087,
+    "B1_mean_nocma": 0.38765386690206466,
+    "P1_mean_nocma": 0.02612672257368447,
+    "n_eval_per_seed": 40782,
+    "Q2_B3_dB": 5.953326240616017,
+    "Q2_oracle_dB": 7.116734473963408,
+    "Q2_headroom_dB": 1.1634082333473916,
+    "B3_over_oracle_ber_ratio": 2.0282432290020025,
+    "oracle_anomaly": false,
+    "P1_vs_B3_win_tie_loss_nocma": [
+     0,
+     2,
+     3
+    ]
+   },
+   "M3_dgd160ps_stress": {
+    "model_id": "M3",
+    "task_matched_b3": "B3_tapped",
+    "oracle_ceiling": "O_fde_oracle",
+    "n_seeds": 5,
+    "B3_mean_nocma": 0.04465695650041685,
+    "oracle_mean_nocma": 0.02173140110833211,
+    "B1_mean_nocma": 0.0254475013486342,
+    "P1_mean_nocma": 0.045841302535432296,
+    "n_eval_per_seed": 40782,
+    "Q2_B3_dB": 4.604010587326085,
+    "Q2_oracle_dB": 6.103737221796143,
+    "Q2_headroom_dB": 1.4997266344700577,
+    "B3_over_oracle_ber_ratio": 2.0549506346967554,
+    "oracle_anomaly": false,
+    "P1_vs_B3_win_tie_loss_nocma": [
+     0,
+     0,
+     5
+    ]
+   },
+   "M3_dgd40ps_stress": {
+    "model_id": "M3",
+    "task_matched_b3": "B3_tapped",
+    "oracle_ceiling": "O_fde_oracle",
+    "n_seeds": 5,
+    "B3_mean_nocma": 0.02459908783286744,
+    "oracle_mean_nocma": 0.019303859545878082,
+    "B1_mean_nocma": 0.012851257907900546,
+    "P1_mean_nocma": 0.025281987151194157,
+    "n_eval_per_seed": 40782,
+    "Q2_B3_dB": 5.875514053684,
+    "Q2_oracle_dB": 6.312453984535913,
+    "Q2_headroom_dB": 0.43693993085191263,
+    "B3_over_oracle_ber_ratio": 1.2743093045411242,
+    "oracle_anomaly": false,
+    "P1_vs_B3_win_tie_loss_nocma": [
+     1,
+     2,
+     2
+    ]
+   }
+  },
+  "metric_used": "fixed_label_ber_nocma"
+ },
+ "decision": {
+  "M0_control_deep_fade_only_headroom_dB": 1.135,
+  "pdl_headroom_grows_with_pdl": false,
+  "pdl_deltas_over_M0": [
+   [
+    "M2_pdl3p5dB_stress",
+    0.0
+   ],
+   [
+    "M2_pdl6dB_stress",
+    0.0
+   ],
+   [
+    "M2_pdl9p5dB_stress",
+    0.0
+   ]
+  ],
+  "pmd_headroom_grows_with_dgd": false,
+  "pmd_deltas_over_M0": [
+   [
+    "M3_dgd40ps_stress",
+    -0.7539
+   ],
+   [
+    "M3_dgd160ps_stress",
+    0.0267
+   ]
+  ],
+  "P1_beats_B3_cell": null,
+  "gate": "GATE_FAILS_NO_IMPUREMENT_ADDED_HEADROOM_OR_NO_P1_WIN",
+  "provisional_verdict": "PIVOT_MODEL_NOT_JUSTIFIED",
+  "verdict_reason": "The PDL/PMD impairment does NOT reintroduce a method-worthy Pilot-Jones gap. Evidence: (i) the B3-vs-oracle BER-ratio headroom is FLAT across PDL 0->9.5 dB (cond 1->3.6) and across DGD 40->160 ps in the UNVERIFIED_STRESS_ONLY band, i.e. identical to the M0 deep-fade-only control -> the headroom comes from deep fade + noise, not from the PDL/PMD structure; (ii) the proposed P1 (energy-weighted LS) does not beat the task-matched B3 (whitening/tapped) in any cell; (iii) in the VERIFIED physical range (PDL<1dB, DGD<=6ps) the channel is near-unitary/memoryless so there is no axis to compete on. The complex-Jones/PMD/PDL model upgrade does not produce a problem that B3 cannot close at this symbol rate / block size."
+ },
+ "formal_mve_run": false,
+ "reason_no_formal_mve": "The gate fails in the verified physical range (B3 closes oracle headroom). Per salvage-contract stop-conditions, a formal performance MVE is not run because there is no verified-range method-worthy gap.",
+ "ber_to_q2_formula": "Q=sqrt(2)*erfcinv(2*BER); Q^2_dB=20*log10(Q); BER=0 -> 0.5/N_eval upper bound; BER>=0.5 -> None (QPSK only)"
+}

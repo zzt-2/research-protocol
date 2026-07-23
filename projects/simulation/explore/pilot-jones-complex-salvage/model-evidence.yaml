@@ -1,0 +1,259 @@
+# Model evidence — Pilot-Jones complex-Jones / PMD / PDL model-sufficiency salvage
+#
+# Owner: T003 (PILOT_JONES_COMPLEX_MODEL_SALVAGE_PACKAGE), epoch 5.
+# Answers T003 Phase 1 questions 1-7 with precise file:line / DOI / section sources.
+# Each parameter tagged VERIFIED (saw the number in the source) / APPROXIMATE
+# (typical value, no FSO-specific source) / UNVERIFIED_STRESS_ONLY (invented range
+# to stress the model, cannot support a positive conclusion).
+
+schema_version: model-evidence.pilot-jones-complex-salvage.v1
+created: 2026-07-23
+authorization: D063 (epoch 5)
+worktree: "D:\\code\\study\\research-protocol\\.worktrees\\research-direction-lab-longitudinal-test"
+
+target_scenario:
+  link: "coherent OSL downlink, LEO, single aperture, single link, 1550 nm"
+  modulation: "dual-polarization (PolMUX) QPSK"
+  symbol_rate: "R_SYM = 2.5e9 sym/s (T_S = 0.4 ns = 400 ps)  [params.py:49 SystemParams.R_SYM]"
+  block_size: "100 symbols (40 ns)  [params.py:493 ExperimentParams.BLOCK]; pilot seam uses 64-symbol blocks historically"
+  working_snr: "gamma_bar = 100 (20 dB)  [params.py:502 GAMMA_BAR_DEFAULT]"
+  current_channel_model:
+    file: "projects/simulation/common/_dual_pol_channel.py:127-132"
+    equation: >
+      rX = sqrt(h)*(cos(theta)*sX + sin(theta)*sY) + sqrt(nv)*nX;
+      rY = sqrt(h)*(-sin(theta)*sX + cos(theta)*sY) + sqrt(nv)*nY;
+      theta = sop_rate*arange(N); h = GG time envelope (gar AR1).
+    structural_note: >
+      The 2x2 polarization mixing is a REAL rotation [[cos,-sin],[sin,cos]] (unitary,
+      cond==1) scaled by sqrt(h). NO complex phase, NO PDL, NO frequency-dependent
+      PMD, NO X/Y skew. This is T002's known_simplification (source-closure.yaml
+      L151-162).
+
+# ---------------------------------------------------------------------------
+# Question 1: does the target star-ground coherent OSL need PDL, PMD/DGD, X/Y
+# skew, frequency-dependent Jones or complex phase?
+# ---------------------------------------------------------------------------
+Q1_need_each_impairment:
+  complex_phase: >
+    A real rotation only mixes X/Y with +/-sin; a COMPLEX Jones element
+    e^{j*phi}*rotation is needed if the two polarizations acquire a relative
+    phase (e.g. from a birefringent element). In a free-space downlink the
+    atmospheric path is isotropic on average, but receiver optics (modulator IQ
+    imbalance, 90 deg hybrid, fiber pigtails) do introduce phase. The canonical
+    generator omits it. NEED: weak / optional (SOP already dominates).
+  pdl: >
+    PDL (polarization-dependent loss) makes the Jones matrix NON-unitary
+    (singular-value ratio cond>1). Origin is almost entirely COMPONENT/OPTICS
+    (dichroic coatings, fiber couplers, WDM, telescope coatings), NOT free-space
+    atmospheric propagation. The atmospheric path is polarization-independent in
+    the geometric-optics / weak-scintillation regime modeled here.
+  pmd_dgd: >
+    PMD / DGD is a differential delay between the two principal states; it is
+    overwhelmingly a FIBER-OPTIC / COMPONENT impairment (modulator, LO, 90 deg
+    hybrid, balanced receiver, fiber patch cables). Free-space vacuum/atmosphere
+    does not generate first-order PMD at these aperture/symbol-rate scales.
+    Vannucci et al. 2022 (Asilomar, 2022asil.conf..170V) explicitly warns against
+    blindly reusing fiber PMD/CD models in FSO. APPROXIMATE source (abstract only).
+  xy_skew: >
+    X/Y timing skew is a DSP-sampling / component artifact (unequal electrical
+    path lengths in the dual-polarization receiver), not an atmospheric effect.
+  frequency_dependent_jones: >
+    Frequency-dependent Jones (= genuine PMD) matters only when DGD is a non-
+    negligible fraction of the symbol period. See Q3.
+  conclusion: >
+    Of the four, only PDL (component) and PMD/DGD (fiber/component) can make the
+    Jones matrix genuinely NON-unitary or frequency-selective; complex phase keeps
+    the matrix unitary (cond==1). Free-space propagation contributes neither. So
+    a faithful upgrade is dominated by COMPONENT impairment, and the question
+    becomes whether verified component magnitudes are large enough to matter at
+    T_S=400 ps / block=100 sym. See Q3.
+
+# ---------------------------------------------------------------------------
+# Question 2: which impairments are fiber transceiver, which free-space, which DSP?
+# ---------------------------------------------------------------------------
+Q2_origin_categorization:
+  free_space_propagation:
+    - "Gamma-Gamma amplitude fade h(t)  [already modeled]"
+    - "SOP rotation theta(t) (RSOP, mechanical/thermal)  [already modeled]"
+    - "(atmospheric PMD/DGD: negligible at these scales per Q3)"
+  fiber_transceiver_or_component:
+    - "PMD/DGD (modulator, 90 deg hybrid, balanced detector, fiber pigtails)"
+    - "PDL (coatings, couplers, WDM)"
+    - "complex Jones phase (IQ imbalance, birefringent elements)"
+  receiver_dsp:
+    - "X/Y timing skew (unequal electrical paths, sampling offset)"
+  implication: >
+    The impairments that could resurrect a method-worthy gap (PMD, PDL) are
+    COMPONENT impairment, NOT atmospheric. A salvage that ONLY adds them without
+    a verified magnitude risks swapping to a "fiber transceiver" problem rather
+    than an OSL atmospheric problem. Q3 + the physics gate decide if verified
+    magnitudes are large enough at 2.5 GBaud / 100-symbol blocks.
+
+# ---------------------------------------------------------------------------
+# Question 3: at current symbol rate / bandwidth / frame / pilot budget, are
+# DGD/PDL large enough to affect single-tap Jones?
+# ---------------------------------------------------------------------------
+Q3_magnitude_at_current_rate:
+  # T_S = 400 ps at 2.5 GBaud; ISI/memory rule of thumb DGD >= ~10% T_S = 40 ps.
+  dgd:
+    verified_value: "6 ps -> 1 dB penalty at 32 GBaud DP-QPSK; DGD<1 ps minimizes penalty"
+    source: "Valjus 2025, 'Review and Analysis of DSP Algorithms for Coherent Optical Satellite Links', doi:10.1002/sat.1553, ref [76] (quoted in text). VERIFIED (number read in source via sub-agent)."
+    fraction_of_Ts: "6 ps / 400 ps = 1.5%; 1 ps / 400 ps = 0.25%"
+    memory_effect: "Both far below the ~40 ps (~10% T_S) threshold for non-negligible ISI/memory. First-order PMD is effectively FLAT (memoryless) at 2.5 GBaud."
+    conclusion: "VERIFIED physical DGD cannot produce frequency-selective memory at this symbol rate."
+  pdl:
+    verified_typical: "<0.5-1 dB for coherent receiver front-end / fiber components (cond<1.12)"
+    source: "Typical coherent component spec; APPROXIMATE (no single FSO source with an exact dB value). ICSOS 2023 (doi:10.1109/ICSOS59710.2023.10490279) lists PDL among 6 impairments but full-text BLOCKED."
+    pdl_to_cond: "PDL(dB) = 20*log10(cond)  [VERIFIED, multiple sources]. cond=1.12 -> 1 dB; cond=1.5 -> 3.5 dB; cond=2 -> 6 dB."
+    conclusion: "Verified component PDL (<1 dB -> cond<1.12) barely perturbs a near-unitary Jones. cond>=1.5 requires 3.5 dB PDL which is large for a single receiver/telescope."
+  rsop_rate:
+    verified_value: "LEO satellite RSOP up to 600 krad/s; terrestrial up to 50 krad/s"
+    source: "Valjus 2025 sat.1553. VERIFIED (read in source)."
+    timescale: "SOP rotates on microsecond timescales >> symbol (0.4 ns) and block (40 ns) timescales -> Jones matrix is effectively constant within a 100-symbol block. Already modeled as theta=sop_rate*arange(N)."
+  conclusion: >
+    At 2.5 GBaud / 100-symbol blocks, VERIFIED magnitudes of DGD (<6 ps vs 400 ps)
+    and component PDL (<1 dB -> cond<1.12) are too small to introduce frequency-
+    selective memory or meaningful non-unitary conditioning that a single-tap
+    block-LS Jones baseline cannot absorb. To probe whether ANY conditioning/
+    memory axis exists at all we must additionally test STRESS ranges (tagged
+    UNVERIFIED_STRESS_ONLY) that exceed verified OSL magnitudes; a positive signal
+    there cannot support a positive verdict (only confirms the mechanism).
+
+# ---------------------------------------------------------------------------
+# Question 4: what do OE2021 / LCOMM2026 / sat.1553 each include / exclude?
+# ---------------------------------------------------------------------------
+Q4_read_papers_content:
+  sat1553:
+    ref: "Valjus 2025 sat.1553 (doi:10.1002/sat.1553)"
+    includes: "DSP algorithm survey for coherent OSL; first-order PMD penalty (6 ps -> 1 dB at 32 GBaud); RSOP rates (LEO 600 krad/s); 2x2 butterfly equalizer architectures."
+    excludes: "No time-domain GG deep-fade + sparse-pilot Jones stabilization analysis; no PDL magnitude for satellite; PMD limited to first-order."
+  lcomm2026:
+    ref: "LCOMM 2026 (doi:10.1109/LCOMM.2026.3651445) [L01, full-text read]"
+    includes: "FPT/LPT frequency-domain pilot power in DSCM to depolarize-fade then solve Jones directly. Fiber DSCM scenario, NO atmospheric GG, NO sparse time-domain pilot."
+    excludes: "No GG atmospheric deep fade; no time-domain LS+EMA seam; method-family direct competitor but different scenario."
+  oe2021:
+    ref: >
+      Literature notes (lit notes line: 'OE 2021 explicitly limits to first-order
+      PMD'). Sub-agent could NOT confirm an Optics-Express (10.1364/OE) 2021 DOI
+      explicitly 'limiting to first-order PMD'; the cited paper may be
+      mis-catalogued (a SPIE 10.1117/12.2582415 'Recent Trends in Coherent FSO'
+      was found instead). TREAT the 'OE2021 first-order PMD' claim as UNVERIFIED
+      provenance debt, not a confirmed full-text source.
+  note: "The 4 D056 direct competitors remain BLOCKED_NO_FULLTEXT (D056 debt); no claim may rest on their full text."
+
+# ---------------------------------------------------------------------------
+# Question 5: what do the 4 BLOCKED abstracts support / not support?
+# ---------------------------------------------------------------------------
+Q5_blocked_competitors:
+  status: "BLOCKED_NO_FULLTEXT (D056 debt; tools/download all_failed + OA scout closed 2026-07-22)"
+  at_most_support: "Existence of pilot/Jones/RSOP methods in nearby fiber/OFDM scenarios (novelty evidence only)."
+  cannot_support: "Their exact LS formula, EMA implementation, pilot overhead, complexity, or their behavior under OSL GG deep fade. Cannot be used as a direct mechanism baseline."
+  ceiling_impact: "Positive verdict capped at CONDITIONAL_GO_WITH_BLOCKING_LITERATURE_DEBT at best."
+
+# ---------------------------------------------------------------------------
+# Question 6: what should the strongest conventional baseline be?
+# ---------------------------------------------------------------------------
+Q6_strongest_conventional_baseline:
+  for_pmd_memory:
+    candidate: "2x2 tapped LS / CMA / LMS or frequency-domain (FDE) pilot Jones"
+    reason: "PMD/frequency-selective channel cannot be inverted by a single-tap per-block LS; a tapped or FDE estimator matches the task."
+  for_pdl_flat:
+    candidate: "regularized / polar-decomposition / whitening single-tap baseline (correctly handles non-unitary cond>1)"
+    reason: "Flat non-unitary PDL is still memoryless but ill-conditioned; the task-matched conventional baseline is a well-tuned regularized LS / whitening inverse, not a naive pinv."
+  rule: "Go opponent MUST include a task-matched conventional 2x2 tapped/FDE/whitening baseline (B3). Beating only single-tap B0/B1 is NOT a method signal (T003 rule 4)."
+
+# ---------------------------------------------------------------------------
+# Question 7: does the model upgrade stay inside the dual-pol OSL scenario or
+# switch to a pure fiber problem?
+# ---------------------------------------------------------------------------
+Q7_scenario_fidelity:
+  assessment: >
+    PMD/PDL are COMPONENT/fiber impairment, NOT atmospheric. Adding them is a
+    legitimate part of a faithful satellite downlink receiver model (the receiver
+    IS fiber+components after the telescope), but the dominant mechanism source
+    shifts from atmosphere to transceiver. This does NOT make it a "pure fiber
+    problem" as long as the GG atmospheric fade h(t) and RSOP are retained and
+    the impairment magnitudes are bounded by VERIFIED satellite-component values
+    (not fiber-long-haul values like 10s of ps DGD). The risk of scope-swap is
+    HIGH if UNVERIFIED_STRESS_ONLY ranges are used to manufacture headroom.
+
+# ---------------------------------------------------------------------------
+# Parameter table (T003 Phase 1 deliverable)
+# ---------------------------------------------------------------------------
+parameter_table:
+  - parameter: "DGD (verified OSL/component)"
+    value: "<6 ps (penalty threshold); <1 ps typical"
+    unit: "ps"
+    source: "Valjus 2025 sat.1553 ref[76]"
+    source_scope: "32 GBaud satellite coherent; APPROXIMATE for 2.5 GBaud component"
+    verified: "VERIFIED"
+    expected_effect: "DGD/400ps < 2% -> negligible memory at 2.5 GBaud; flat (memoryless) model adequate"
+  - parameter: "DGD (stress probe)"
+    value: "40-160 ps"
+    unit: "ps"
+    source: "invented to cross ~10%-40% T_S memory threshold"
+    source_scope: "NOT a satellite value"
+    verified: "UNVERIFIED_STRESS_ONLY"
+    expected_effect: "would produce genuine frequency-selective memory; positive signal here CANNOT support a positive verdict"
+  - parameter: "PDL (verified component)"
+    value: "<1 dB (cond<1.12)"
+    unit: "dB"
+    source: "typical coherent front-end/component spec"
+    source_scope: "receiver/telescope components; APPROXIMATE"
+    verified: "APPROXIMATE"
+    expected_effect: "barely perturbs near-unitary Jones; cond~1.1 no ill-conditioning axis"
+  - parameter: "PDL (stress probe)"
+    value: "3.5-9.5 dB (cond 1.5-3)"
+    unit: "dB"
+    source: "invented to cross cond thresholds 1.5/2/3"
+    source_scope: "large for a single receiver/telescope"
+    verified: "UNVERIFIED_STRESS_ONLY"
+    expected_effect: "genuine non-unitary conditioning; positive signal here CANNOT support a positive verdict"
+  - parameter: "RSOP rate"
+    value: "up to 600 krad/s (LEO)"
+    unit: "rad/s"
+    source: "Valjus 2025 sat.1553"
+    source_scope: "LEO satellite"
+    verified: "VERIFIED"
+    expected_effect: "already modeled as theta; slow vs block (40 ns), block-constant Jones valid"
+  - parameter: "symbol rate"
+    value: "2.5e9"
+    unit: "sym/s"
+    source: "params.py:49 R_SYM"
+    source_scope: "project truth source"
+    verified: "VERIFIED"
+    expected_effect: "T_S=400ps; sets the DGD-memory threshold"
+  - parameter: "block size"
+    value: "100"
+    unit: "symbols"
+    source: "params.py:493 BLOCK"
+    source_scope: "assumption (WARNING flag in params)"
+    verified: "VERIFIED"
+    expected_effect: "block-constant Jones valid (block 40 ns << tau_c)"
+
+# ---------------------------------------------------------------------------
+# Physics gate (T003 Phase 1.4)
+# ---------------------------------------------------------------------------
+physics_gate:
+  # Stop the performance MVE and give PIVOT_MODEL_NOT_JUSTIFIED if ANY of these holds.
+  gate_conditions:
+    - "PMD/PDL only from fiber segment outside the target link AND receiver already has legal compensation"
+    - "sourced magnitude below estimated resolution by >=3 orders of magnitude in current time/bandwidth window"
+    - "conditioning/memory can only be manufactured by source-less extreme parameters"
+    - "task-matched conventional baseline fully covered by direct literature with no separable failure"
+  assessment:
+    g1_fiber_segment_compensated: "PARTIALLY HOLDS — PMD/PDL are component/fiber; but no source confirms a legal pre-compensation that fully removes them. Not a clean stop."
+    g2_below_resolution: "HOLDS for VERIFIED range: DGD(<6ps)/T_S(400ps)=1.5% is 1.7 orders below the 10% (~40ps) memory threshold; PDL(<1dB) is cond<1.12 vs ~1.5 needed for an ill-conditioning axis. Verified magnitudes do NOT cross into memory/ill-conditioning."
+    g3_sourceless_extreme: "HOLDS for any positive signal — to get cond>=1.5 or DGD>=40ps we MUST use UNVERIFIED_STRESS_ONLY ranges. A headroom that only appears under stress cannot support a positive verdict."
+    g4_baseline_covered: "Does NOT hold — the 4 direct competitors are BLOCKED_NO_FULLTEXT, so no source confirms the task-matched conventional baseline fully covers the failure with no separable gap."
+  gate_decision: >
+    The physics gate does NOT cleanly fire PIVOT_MODEL_NOT_JUSTIFIED: the verified
+    range is below the memory/conditioning thresholds (g2 holds for the verified
+    range), BUT a positive signal could in principle appear under stress, and g4
+    (baseline fully covered) does not hold. Therefore the honest path is to BUILD
+    the model ladder, RUN the limiting-case tests and the verified-range probe,
+    and let the empirical B3-vs-oracle headroom decide. The pre-registered rule is:
+    if verified physical range shows NO headroom for P beyond task-matched B3, the
+    verdict is PIVOT_MODEL_NOT_JUSTIFIED; if headroom ONLY appears under
+    UNVERIFIED_STRESS_ONLY ranges, the verdict is PIVOT_UNVERIFIED_PHYSICAL_RANGE.
+    A positive verdict requires headroom in the VERIFIED range AND P beating B3.

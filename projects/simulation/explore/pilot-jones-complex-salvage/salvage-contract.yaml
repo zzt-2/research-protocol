@@ -1,0 +1,199 @@
+# Salvage contract — Pilot-Jones complex-Jones / PMD / PDL model-sufficiency
+#
+# FROZEN BEFORE any performance MVE (T003 Phase 4). The theory limiting-case
+# tests + semantic smoke + bounded headroom probe execute under this contract's
+# stop conditions. The contract is owned by gw-feasibility.md §D (Step 4a
+# dimension D), scoped to a model-sufficiency salvage; it does NOT cross into
+# Step 5/Contract/Execute.
+#
+# owner: T003 (PILOT_JONES_COMPLEX_MODEL_SALVAGE_PACKAGE), epoch 5.
+
+schema_version: salvage.pilot-jones-complex.v1
+frozen: 2026-07-23
+authorization: D063 (complex-model salvage, epoch 5)
+worktree: "D:\\code\\study\\research-protocol\\.worktrees\\research-direction-lab-longitudinal-test"
+
+# ---------------------------------------------------------------------------
+# Question / hypothesis / falsifier
+# ---------------------------------------------------------------------------
+question: >
+  Does a physically more sufficient complex Jones / PMD / PDL channel
+  reintroduce a Pilot-Jones problem where the strongest task-matched
+  conventional baseline (B3) cannot close the oracle headroom, such that a
+  receiver-visible method (P) can beat B3 — i.e. is there a method-worthy gap,
+  or is the gap still absorbed by a task-matched conventional baseline?
+hypothesis_H1: >
+  A non-unitary (PDL) or frequency-selective (PMD) Jones makes the per-block
+  pilot-LS estimate genuinely ill-conditioned / biased, producing a headroom
+  that a task-matched whitening/tapped baseline (B3) only partly closes, and
+  that a reliability-aware (energy-weighted) estimate (P1) closes further.
+falsifier: >
+  (a) In the VERIFIED physical range the channel stays near-unitary /
+      memoryless (cond<1.12, DGD<6ps) -> B3 closes oracle headroom -> no
+      method-worthy gap -> PIVOT_MODEL_NOT_JUSTIFIED.
+  (b) Headroom appears ONLY under UNVERIFIED_STRESS_ONLY ranges -> positive
+      signal cannot support a positive verdict -> PIVOT_UNVERIFIED_PHYSICAL_RANGE.
+  (c) B3 already closes the oracle headroom even under stress -> no method
+      signal -> KILL_PILOT_JONES_AFTER_PHYSICAL_MODEL_AND_TASK_MATCHED_BASELINE.
+  (d) P1 does not beat B3 paired on the primary metric -> no method signal.
+
+# ---------------------------------------------------------------------------
+# Metric signature (T003 Phase 3.2 — corrected from T002)
+# ---------------------------------------------------------------------------
+metric_signature:
+  primary_metric: fixed_label_ber
+  secondary_metrics: [pi_ber, pilot_overhead, divergence, cond_p95, q2_db_fixed]
+  denominator: "valid_data_samples = CMA-valid-mask AND data-mask (pilots excluded); SAME denominator for ALL arms (paired)"
+  both_reported: "fixed_label_ber AND pi_ber reported together"
+ber_to_q2_formula: >
+  Q = sqrt(2)*erfcinv(2*BER); Q^2_dB = 20*log10(Q).
+  QPSK only. BER=0 -> one-sided upper bound BER_ub = 0.5/N_eval (do NOT record
+  infinite Q). BER>=0.5 -> Q invalid (return None). fixed and PI converted
+  separately. BER ratio is NOT a dB and is NOT interchangeable with 0.5 dB.
+
+# ---------------------------------------------------------------------------
+# Baseline ladder (T003 Phase 3.1)
+# ---------------------------------------------------------------------------
+baseline_ladder:
+  B0: {method: B0_pinv, role: "single-tap block LS + pinv, no smoothing"}
+  B1: {method: B1_ema09, role: "single-tap fixed EMA09 (T002 reference)"}
+  B2: {method: B2_tikhonov, role: "validation-tuned regularized LS (tikhonov)"}
+  B3_pdl: {method: B3_whitening, role: "TASK-MATCHED conventional for non-unitary PDL: polar-decomposition / whitening regularized inverse (Go opponent for M2)"}
+  B3_pmd: {method: B3_tapped, role: "TASK-MATCHED conventional for frequency-selective PMD: 2x2 tapped LS (n_taps=3) (Go opponent for M3)"}
+  P1: {method: P1_energy_weighted, role: "PROPOSED: reliability (energy) weighted pilot-LS Jones estimate"}
+  P1_variants: ["P1_energy_whiten (P1 + whitening)", "P1_energy_ema (P1 + EMA09)"]
+  O: {method: O_jones_oracle, role: "true-Jones memoryless oracle (tagged upper bound / Kill only)"}
+  O_fde: {method: O_fde_oracle, role: "true-Jones+PMD FDE MMSE oracle (headroom ceiling for M3, tagged, Kill only)"}
+go_opponent_rule: >
+  Go opponent = task-matched B3 (B3_whitening for M2 PDL, B3_tapped for M3 PMD).
+  Beating only B0/B1/B2 is NOT a method signal (T003 rule 4). Oracle is ONLY an
+  upper-bound/Kill tool, NEVER a Go opponent (T003 rule 8 / FR-25).
+
+information_access:
+  receiver_visible: [pilot_RX_rX_rY, pilot_symbols, pilot_mask, own_previous_H_estimate,
+                     per_block_cond, per_block_RX_energy, per_block_innovation]
+  truth_never_used_by_deployable: [true_h, true_theta, true_Jones, TX_data_sX_sY, future_symbols, true_PSP_delays]
+  oracle_only_tagged: [true_Jones -> O arm; true_Jones+true_PSP_delays -> O_fde arm; scoring/kill only]
+
+state_lifecycle:
+  per_block: "estimate H_b from pilots (shared for B0/B1/B2/B3; P1 uses energy-weighted LS); form inverse; apply to data; CMA online"
+  no_future: "causal per-block; no symbol reads ahead of its block"
+
+# ---------------------------------------------------------------------------
+# Parameter sources (FR-20)
+# ---------------------------------------------------------------------------
+parameter_sources:
+  alpha: {value: 4.2, source: "params.py turb_strong_alpha <- Gu 2022 doi:10.3390/app12073331 strong; Al-Habash 2001", verified: true}
+  beta: {value: 1.4, source: "params.py turb_strong_beta <- Gu 2022 strong", verified: true}
+  gamma_bar: {value: 100.0, source: "params.py GAMMA_BAR_DEFAULT (20 dB)", verified: true}
+  sop_rate: {value: 8.0e-6, source: "historical D053 rate; sop_rate*arange(N); within sat.1553 LEO RSOP <=600krad/s envelope", verified: true}
+  f_g: {value: 100.0, source: "params.py tau_c_from_fg; f_g=100 -> tau_c=1.59ms", verified: true}
+  block_size: {value: 64, source: "historical D053 pilot seam; block 64 << tau_c/T_S", verified: true}
+  n_pilots: {value: 6, source: "historical D053; overhead 6/64=9.375% <= 10%", verified: true}
+  N: {value: 50000, source: "bounded probe size; 50k@2.5GBaud=20us, << tau_c at f_g=100", verified: true}
+  taps: {value: 11, source: "batch1_fade_methods default", verified: true}
+  mu: {value: 1.0e-3, source: "D006 safe region", verified: true}
+  r2: {value: 1.0, source: "QPSK unit modulus", verified: true}
+  warmup_frac: {value: 0.1, source: "exclude first 10% CMA transient", verified: true}
+  t_s: {value: 4.0e-10, source: "params.py T_S = 1/R_SYM, R_SYM=2.5e9", verified: true}
+
+# ---------------------------------------------------------------------------
+# VERIFIED vs UNVERIFIED_STRESS_ONLY ranges (FR-20 / T003 rule 5)
+# ---------------------------------------------------------------------------
+impairment_ranges:
+  verified_range:
+    pdl_db: {value: 1.0, note: "<1 dB component PDL -> cond<1.12 (APPROXIMATE typical coherent front-end)", verified: APPROXIMATE}
+    dgd_ps: {value: 6.0, note: "<=6 ps DGD, 1.5% of T_S=400ps (Valjus 2025 sat.1553 ref[76])", verified: VERIFIED}
+  stress_only_range:
+    pdl_db_stress: {values: [3.5, 6.0, 9.5], note: "cond 1.5/2/3; large for a single receiver/telescope; UNVERIFIED_STRESS_ONLY", verified: UNVERIFIED_STRESS_ONLY}
+    dgd_ps_stress: {values: [40.0, 80.0, 160.0], note: "10/20/40 % of T_S; crosses the ~10% ISI threshold; UNVERIFIED_STRESS_ONLY", verified: UNVERIFIED_STRESS_ONLY}
+
+# ---------------------------------------------------------------------------
+# Seeds (T003 — disjoint from T002 observed/val/test)
+# ---------------------------------------------------------------------------
+observed_seed_exclusion:
+  excluded: [41, 42, 43, 44, 45, 46, 47, 48, 2000, 2001, 2002, 2003, 2004, 3000, 3001, 3002, 3003, 3004, 3005, 3006, 3007, 3008, 3009]
+  reason: "T002 observed (41-48), validation (2000-2004) and test (3000-3009) seeds excluded."
+fresh_validation_seeds: [5000, 5001, 5002, 5003, 5004]
+fresh_test_seeds: [6000, 6001, 6002, 6003, 6004, 6005, 6006, 6007, 6008, 6009]
+disjoint_check: "validation {5000-5004} ∩ test {6000-6009} ∩ T002 excluded = empty"
+
+# ---------------------------------------------------------------------------
+# Pass / fail thresholds (pre-registered, NOT post-hoc)
+# ---------------------------------------------------------------------------
+thresholds:
+  primary_metric: fixed_label_ber
+  pass_logic_gate: >
+    PASSES (problem survives, proceed to MVE) require ALL of:
+      1. in the VERIFIED range, B3 -> oracle headroom is non-negligible
+         (Q^2_dB headroom > 0.5 dB on average), OR the verified range is at the
+         boundary and stress clearly separates the axis; AND
+      2. headroom appears across multiple seeds (not a single-seed artifact).
+    If 1 fails -> PIVOT_MODEL_NOT_JUSTIFIED.
+  pass_mve: >
+    P (strongest proposed) beats task-matched B3: paired win >= 8/10 test seeds
+    on primary metric AND exact sign-test p<0.05 in >=1 cell; clean controls
+    show no material degradation; receiver-visible state has mechanism
+    correspondence; gain not from different denominator/mask/future/oracle.
+  fail_kill:
+    - "falsifier (a): verified range near-unitary/memoryless, B3 closes oracle -> PIVOT_MODEL_NOT_JUSTIFIED"
+    - "falsifier (b): headroom only under stress -> PIVOT_UNVERIFIED_PHYSICAL_RANGE"
+    - "falsifier (c): B3 closes oracle even under stress -> KILL_PILOT_JONES_AFTER_PHYSICAL_MODEL_AND_TASK_MATCHED_BASELINE"
+    - "falsifier (d): P does not beat B3 paired -> no method signal"
+  threshold_source: >
+    FR-21 (oracle headroom <0.5 dB-equivalent Q^2 -> KILL, with the corrected
+    BER->Q^2 conversion above), gw-feasibility A0 §1 (gap <5% / non-existent ->
+    fatal), FR-25 (Go = beat conventional B3; Kill = oracle headroom or MVE
+    FAIL). Headroom reported as fixed_label_ber ratio AND Q^2_dB.
+
+oracle_headroom_gate:
+  scoring_oracle_info: "true Jones (memoryless O) + true Jones+PSP delays (FDE O_fde ceiling for M3)"
+  pre_registered_kill: >
+    If B3 (task-matched conventional) is within the FR-21 headroom of the oracle
+    (Q^2_dB headroom < 0.5 dB, equivalently B3 BER ratio over oracle below the
+    0.5 dB Q^2 line) on average in a given range, the practical headroom is
+    structurally insufficient in that range -> KILL/Pivot for that range.
+
+# ---------------------------------------------------------------------------
+# Cells
+# ---------------------------------------------------------------------------
+cells:
+  theory: "limiting-case tests (run_theory)"
+  smoke: "tiny deterministic per-model smoke"
+  probe_verified:
+    - {cell: M0_control, model_id: M0, verified_range: true, seeds: [5000,5001,5002]}
+    - {cell: M1_cunitary, model_id: M1, verified_range: true, seeds: [5000,5001,5002]}
+    - {cell: M2_pdl1dB_verified, model_id: M2, pdl_db: 1.0, verified_range: true, seeds: [5000,5001,5002,5003,5004]}
+    - {cell: M3_dgd6ps_verified, model_id: M3, dgd_ps: 6.0, verified_range: true, seeds: [5000,5001,5002,5003,5004]}
+  probe_stress:
+    - {cell: M2_pdl3p5dB_stress, model_id: M2, pdl_db: 3.5, verified_range: false, seeds: [5000,5001,5002,5003,5004]}
+    - {cell: M2_pdl6dB_stress, model_id: M2, pdl_db: 6.0, verified_range: false, seeds: [5000,5001,5002,5003,5004]}
+    - {cell: M3_dgd40ps_stress, model_id: M3, dgd_ps: 40.0, verified_range: false, seeds: [5000,5001,5002,5003,5004]}
+    - {cell: M4_pdl3p5_dgd40_stress, model_id: M4, pdl_db: 3.5, dgd_ps: 40.0, verified_range: false, seeds: [5000,5001,5002,5003,5004]}
+
+# ---------------------------------------------------------------------------
+# Architecture summary (FR-11)
+# ---------------------------------------------------------------------------
+architecture_summary:
+  inputs_information_access: "pilot RX (rX,rY), known pilot symbols, pilot mask, per-block LS estimate H_b, cond(H_b), per-pilot RX energy, block innovation"
+  state: "smoothed Jones matrix H_smooth (B1/P1_ema); per-block energy-weighted LS estimate (P1); CMA butterfly weights"
+  output_action: "per-data-symbol derotation H^-1 @ [rX,rY], then blind CMA equalization"
+  decision_granularity: "per-block Jones estimate; per-symbol CMA update"
+  comparison_paradigm: "all arms share impaired realization/pilots/estimates/mask/window/CMA; differ only in how H^-1 is formed"
+  objective: "minimize fixed_label_ber on data symbols (pilot positions excluded)"
+  strongest_simple_prior: "B1 fixed EMA09"
+  task_matched_conventional: "B3_whitening (M2) / B3_tapped (M3)"
+  mechanism_distinct_method: "P1 energy-weighted LS (reliability-aware estimation, distinct from fixed EMA and post-hoc regularization)"
+  known_simplification_bias:
+    - "PMD modeled as a short 2x2 FIR (sinc fractional delay); a real fiber PMD has a longer statistical impulse response. Bias AGAINST memory (under-states ISI), so a positive PMD signal here is conservative."
+    - "impairments are block-constant (consistent with GG block-constant); real component PMD may drift faster. Does not bias B3-vs-P."
+
+# ---------------------------------------------------------------------------
+# Stop conditions (T003 Phase 3.3)
+# ---------------------------------------------------------------------------
+stop_conditions:
+  - "theory limiting-case test fails -> stop, fix model before any MVE"
+  - "verified range shows B3 closes oracle (headroom <0.5 dB Q^2) -> PIVOT_MODEL_NOT_JUSTIFIED, no stress MVE needed for positive claim"
+  - "headroom ONLY under stress -> PIVOT_UNVERIFIED_PHYSICAL_RANGE"
+  - "B3 closes oracle even under stress -> KILL_PILOT_JONES_AFTER_PHYSICAL_MODEL_AND_TASK_MATCHED_BASELINE"
+  - "result opposite to theoretical expectation -> component-level info-flow trace, not tuning (TL-22)"

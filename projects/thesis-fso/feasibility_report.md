@@ -1037,6 +1037,14 @@ Q-DP4 的方法形态（A0 §2 诚实标注非必须 ML）与领域 top-3 成功
 - 即使信道升级，claim ceiling 最高 **CONDITIONAL_GO_WITH_BLOCKING_LITERATURE_DEBT**（4 篇债）。
 - 历史 EMA09 15/15（pilot_6p_ema09_full24）是 pilot-assisted-vs-blind(CMA) 比较，非 pilot-inversion 方法间比较；其 provenance 断裂（batch1_fade_methods.py SHA mismatch）已记录，不可 exact replay，仅作 diagnostic prior。
 
+#### Q2 complex-Jones/PMD/PDL 模型充分性救活结果（T003/S080，2026-07-23）
+
+D063 授权的 complex-Jones/PMD/PDL 模型充分性救活已完成，**provisional verdict = `PIVOT_MODEL_NOT_JUSTIFIED`**。物理证据（DGD≤6ps = 1.5% T_S，2.5GBaud 下 memoryless；component PDL<1dB → cond<1.12；PMD/PDL 是 component/fiber 损伤非大气）+ M0–M4 模型梯（8/8 limiting-case tests PASS）+ task-matched B3（whitening/tapped）+ 正确 BER→Q² 口径（`Q=sqrt(2)·erfcinv(2·BER)`，BER=0→0.5/N 上界；修复 T002 的 BER ratio≠dB 缺陷）。
+
+**决定性结构发现**：在最 P-favorable 深衰落（α=2.0/β=1.0/17dB）下，B3-vs-oracle headroom **不随损伤强度增长**——PDL 0→9.5dB（cond 1→3.6）headroom 与 M0 deep-fade-only control 完全相同（delta=0.0），PMD 40→160ps 不单调增长。残余 headroom 来自深衰落+噪声，非 PDL/PMD 结构。P1（energy-weighted LS）全 cell 不胜 task-matched B3。
+
+**含义**：complex-Jones/PMD/PDL 升级在 2.5GBaud / 64–100 sym block 下**不重新产生方法级 Pilot-Jones gap**；T002 的 unitary-real-rotation 负面结论扩展为：即便 richer（非酉/memory）Jones，task-matched B3 仍关闭 headroom。Pilot-Jones family 仍 `UNRESOLVED`，不在本轴关闭，等待真正新轴（verified DGD≫T_S 频选信道或 sub-symbol 块变 Jones）。不进 Step 5/Contract/Execute。详见 `projects/simulation/explore/pilot-jones-complex-salvage/synthesis.md`。
+
 ### 可复用沉淀（Kill 路径）
 
 - **可复用负面/边界材料**：real-rotation OSL Jones 估计的结构性良态论证——固定 EMA 达 oracle，故无稳定化方法可发表（除非信道有真实频变 PMD/PDL）。排除整个"pilot-LS 稳定化"子族于 unitary real-rotation 信道。

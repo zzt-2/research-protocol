@@ -1217,6 +1217,8 @@ R2按5种方法变体×2类场景得到31 raw/25 unique；R3围绕JLT 2023 PDL/F
 
 > **2026-07-23 主控 amendment（V037/D063）**：T002 raw 的 P/B1 win-tie-loss 为 `0/6/4`，contract gate-outcome 残留 `0/7/3`；`B1/O=1.19` 是 BER ratio，未证明等价 `<0.5dB`，故第二条 FR-21 门降为 diagnostic。正式接收结论仅为 `UNITARY_REAL_ROTATION_MCA_KILLED`，Pilot-Jones family 仍 `UNRESOLVED`。D063 已授权 T003 用有来源的 complex Jones/PMD/PDL 模型、task-matched 2×2 tapped/FDE conventional baseline 和正确 Q²/headroom 口径重评；正面最高 Conditional Go，止于 Step 4a。
 
+> **2026-07-23 T003 救活结果（S080）**：complex-Jones/PMD/PDL 模型充分性救活完成，**provisional verdict = `PIVOT_MODEL_NOT_JUSTIFIED`**。M0–M4 模型梯（8/8 limiting-case tests PASS）+ task-matched B3（whitening/tapped）+ 正确 BER→Q² 口径。**决定性结构发现**：在最 P-favorable 深衰落（α=2.0/β=1.0/17dB）下，B3-vs-oracle headroom 不随损伤强度增长（PDL 0→9.5dB/cond 1→3.6 与 M0 control 完全相同；PMD 40→160ps 不单调增长）→ 残余 headroom 来自深衰落+噪声非 PDL/PMD 结构。P1（energy-weighted LS）全 cell 不胜 B3。complex-Jones/PMD/PDL 升级在 2.5GBaud/64–100sym block 下不重新产生方法级 gap；T002 unitary-real-rotation 负面结论扩展为即便 richer Jones B3 仍关闭 headroom。Pilot-Jones family 仍 `UNRESOLVED`，不在本轴关闭。4 篇 D056 全文继续 BLOCKED；"OE2021 一阶 PMD" provenance 标 unverified 债务（sub-agent 未能确认 Optics-Express 2021 DOI）。详见 `projects/simulation/explore/pilot-jones-complex-salvage/synthesis.md`。不进 Step 5/Contract/Execute。
+
 ### 实验完备性对标汇总
 
 | 论文 | 统计规范 | Baseline | 消融/扫描 | VVUQ(V/V/U) |

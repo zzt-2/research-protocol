@@ -1,0 +1,56 @@
+{
+ "label": "theory",
+ "experiment": "T003 model-ladder limiting-case tests",
+ "contract_sha256": "dfc7f19e0a31033b0c761cf1bcaaabc3d9bf087f34143103c82e5177dab2bafa",
+ "source_sha256": {
+  "generator": "5cefac97d120e5590905ae36ab20cabc8832a6c556368b1d9f154a2a8091818c",
+  "gg_time": "d8e7929d00d885eccf111eb96d80ecd3822b065cbf3eca09ed31912c3da73113",
+  "params": "0e87c53364461478eddcd81426d8e04646270c3ea7aa717e3c3b28c5dd2a99e9",
+  "channel": "18b69fe21811f82ee1f216a7bb981e92fc2faeae8a65b275b1663f863a693f03",
+  "baselines": "e76a7adc5cf67144e15a0031759bec8516ac4afabdbc5356ed30d1a18887c7b5",
+  "methods": "b99c1ecce4d2c4ed21776c7bd31ae557e5851f99383be68d6b754da301c0839c",
+  "runner": "8b10a7fda312f8b511cf073d86ad797128691872bbfdbab2c4da58a258fd14b8"
+ },
+ "results": {
+  "T1_M0_control_compat": {
+   "max_abs_diff_rX": 0.0,
+   "max_abs_diff_rY": 0.0,
+   "pass": true
+  },
+  "T2_M1_complex_unitary": {
+   "max_unitary_error": 7.579375031157046e-16,
+   "cond_max": 1.0000000000000007,
+   "pass": true
+  },
+  "T3_M2_cond_vs_pdl_3.5dB": {
+   "pdl_db": 3.5,
+   "cond_mean": 1.4962356560944334,
+   "expected_cond": 1.4962356560944334,
+   "pass": true
+  },
+  "T3_M2_cond_vs_pdl_6.0dB": {
+   "pdl_db": 6.0,
+   "cond_mean": 1.9952623149688795,
+   "expected_cond": 1.9952623149688795,
+   "pass": true
+  },
+  "T3_M2_cond_vs_pdl_9.5dB": {
+   "pdl_db": 9.5,
+   "cond_mean": 2.9853826189179595,
+   "expected_cond": 2.9853826189179595,
+   "pass": true
+  },
+  "T4a_M3_dgd0_memoryless": {
+   "max_abs_diff_rX": 0.0,
+   "pass": true
+  },
+  "T4b_M3_dgd80ps_has_memory": {
+   "max_abs_diff_rX": 0.408859252844299,
+   "pass": true
+  },
+  "T5_M2_noiseless_recovery": {
+   "max_abs_recovery_error": 1.244682418347407e-15,
+   "pass": true
+  }
+ }
+}

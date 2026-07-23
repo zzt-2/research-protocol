@@ -503,8 +503,8 @@ topics:
     title: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
     status: active
     created: "2026-07-10"
-    last_updated: "2026-07-23（S079主控续接/V037/D063：unitary-real-rotation M-C-A 局部 Kill；complex-Jones/PMD/PDL salvage T003 已授权。）"
-    description: "formal 双偏振 OSL Groundwork owner。D061 已暂停 P03 并激活 Pilot-Jones；D056 的 4 篇全文保持 BLOCKED_NO_FULLTEXT。T002/V037 只 Kill unitary-real-rotation 实例化，family unresolved。D063 授权 Step 4a 内检验 complex Jones/PMD/PDL、task-matched conventional baseline、正确 Q²/headroom 和条件式方法 MVE；正面最高 CONDITIONAL_GO_WITH_BLOCKING_LITERATURE_DEBT，不进 Step 5。"
+    last_updated: "2026-07-23（S080/T003 完成：complex-Jones/PMD/PDL 模型充分性救活 → provisional verdict PIVOT_MODEL_NOT_JUSTIFIED，headroom 不随损伤强度增长，P1 不胜 task-matched B3；family 仍 UNRESOLVED，待主控验收，不进 Step 5。）"
+    description: "formal 双偏振 OSL Groundwork owner。D061 已暂停 P03 并激活 Pilot-Jones；D056 的 4 篇全文保持 BLOCKED_NO_FULLTEXT。T002/V037 只 Kill unitary-real-rotation 实例化，family unresolved。T003/S080 已完成 complex-Jones/PMD/PDL 模型充分性救活，provisional verdict=PIVOT_MODEL_NOT_JUSTIFIED（B3 关闭 headroom，残余来自深衰落+噪声非 PDL/PMD 结构；P1 不胜 B3），family 仍 UNRESOLVED 不在本轴关闭；待主控验收，不进 Step 5。"
     depends_on:
       - slug: 2026-07-10-scenario-transfer-pivot
         reason: D001 三维度调整 + D002 角度素材 schema + D003 双偏振空间解锁，方法论准备就绪后 GW 执行转出

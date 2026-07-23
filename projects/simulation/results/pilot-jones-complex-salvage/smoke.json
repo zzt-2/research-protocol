@@ -1,0 +1,2443 @@
+{
+ "label": "smoke",
+ "experiment": "T003 complex-model salvage",
+ "contract_sha256": "dfc7f19e0a31033b0c761cf1bcaaabc3d9bf087f34143103c82e5177dab2bafa",
+ "source_sha256": {
+  "generator": "5cefac97d120e5590905ae36ab20cabc8832a6c556368b1d9f154a2a8091818c",
+  "gg_time": "d8e7929d00d885eccf111eb96d80ecd3822b065cbf3eca09ed31912c3da73113",
+  "params": "0e87c53364461478eddcd81426d8e04646270c3ea7aa717e3c3b28c5dd2a99e9",
+  "channel": "18b69fe21811f82ee1f216a7bb981e92fc2faeae8a65b275b1663f863a693f03",
+  "baselines": "e76a7adc5cf67144e15a0031759bec8516ac4afabdbc5356ed30d1a18887c7b5",
+  "methods": "b99c1ecce4d2c4ed21776c7bd31ae557e5851f99383be68d6b754da301c0839c",
+  "runner": "8b10a7fda312f8b511cf073d86ad797128691872bbfdbab2c4da58a258fd14b8"
+ },
+ "params": {
+  "alpha": 2.0,
+  "beta": 1.0,
+  "gamma_bar": 50.0,
+  "n_pilots": 6,
+  "block_size": 64,
+  "N": 50000,
+  "taps": 11,
+  "mu": 0.001,
+  "r2": 1.0,
+  "warmup_frac": 0.1,
+  "n_taps_b3": 1
+ },
+ "cells": [
+  {
+   "cell": "smoke_M0",
+   "model_id": "M0",
+   "f_g": 100.0,
+   "sop_rate": 8e-06,
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "verified_range": true,
+   "seeds": [
+    6001,
+    6002
+   ]
+  },
+  {
+   "cell": "smoke_M1",
+   "model_id": "M1",
+   "f_g": 100.0,
+   "sop_rate": 8e-06,
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "verified_range": true,
+   "seeds": [
+    6001,
+    6002
+   ]
+  },
+  {
+   "cell": "smoke_M2_6dB",
+   "model_id": "M2",
+   "f_g": 100.0,
+   "sop_rate": 8e-06,
+   "pdl_db": 6.0,
+   "dgd_ps": 0.0,
+   "verified_range": false,
+   "seeds": [
+    6001,
+    6002
+   ]
+  },
+  {
+   "cell": "smoke_M3_80ps",
+   "model_id": "M3",
+   "f_g": 100.0,
+   "sop_rate": 8e-06,
+   "pdl_db": 0.0,
+   "dgd_ps": 80.0,
+   "verified_range": false,
+   "seeds": [
+    6001,
+    6002
+   ]
+  }
+ ],
+ "raw_rows": [
+  {
+   "pilot_overhead": 0.09384,
+   "shared_realization_fingerprint": "cb04a9b7289366dcd8f0d85ef6c3dc92f039248a77e61cd6b4b92771e9857f81",
+   "estimate_diagnostics": {
+    "n_blocks": 782,
+    "cond_mean": 1.1747085838667854,
+    "cond_p95": 1.3146675371727163,
+    "cond_max": 1.5434715687732738
+   },
+   "arms": {
+    "B0_pinv": {
+     "metrics": {
+      "fixed_label_ber": 1.839497694496223e-05,
+      "pi_ber": 1.839497694496223e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 1.8390466382227453e-05,
+      "pi_ber": 1.8390466382227453e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "B1_ema09": {
+     "metrics": {
+      "fixed_label_ber": 0.0,
+      "pi_ber": 0.0,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.0,
+      "pi_ber": 0.0,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "B2_tikhonov": {
+     "metrics": {
+      "fixed_label_ber": 1.839497694496223e-05,
+      "pi_ber": 1.839497694496223e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 1.8390466382227453e-05,
+      "pi_ber": 1.8390466382227453e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "B3_whitening": {
+     "metrics": {
+      "fixed_label_ber": 1.839497694496223e-05,
+      "pi_ber": 1.839497694496223e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 1.8390466382227453e-05,
+      "pi_ber": 1.8390466382227453e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "B3_tapped": {
+     "metrics": {
+      "fixed_label_ber": 1.839497694496223e-05,
+      "pi_ber": 1.839497694496223e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 1.8390466382227453e-05,
+      "pi_ber": 1.8390466382227453e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "P1_energy_weighted": {
+     "metrics": {
+      "fixed_label_ber": 2.4526635926616306e-05,
+      "pi_ber": 2.4526635926616306e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 1.2260310921484969e-05,
+      "pi_ber": 1.2260310921484969e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "P1_energy_whiten": {
+     "metrics": {
+      "fixed_label_ber": 2.4526635926616306e-05,
+      "pi_ber": 2.4526635926616306e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 1.2260310921484969e-05,
+      "pi_ber": 1.2260310921484969e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "P1_energy_ema": {
+     "metrics": {
+      "fixed_label_ber": 0.0,
+      "pi_ber": 0.0,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.0,
+      "pi_ber": 0.0,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "O_jones_oracle": {
+     "metrics": {
+      "fixed_label_ber": 0.0,
+      "pi_ber": 0.0,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.0,
+      "pi_ber": 0.0,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "oracle_true_jones"
+    },
+    "O_fde_oracle": {
+     "metrics": {
+      "fixed_label_ber": 0.0001778181104679682,
+      "pi_ber": 0.0001778181104679682,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.00031263792849786675,
+      "pi_ber": 0.00031263792849786675,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "oracle_fde_true_jones_pmd"
+    }
+   },
+   "cell": "smoke_M0",
+   "seed": 6001,
+   "model_id": "M0",
+   "alpha": 2.0,
+   "beta": 1.0,
+   "f_g": 100.0,
+   "sop_rate": 8e-06,
+   "gamma_bar": 50.0,
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "verified_range": true,
+   "n_pilots": 6,
+   "block_size": 64,
+   "N": 50000,
+   "taps": 11,
+   "mu": 0.001
+  },
+  {
+   "pilot_overhead": 0.09384,
+   "shared_realization_fingerprint": "1734082a45d163f79ff253d4808fd52d83789cafd455b042146b3f7faa57586b",
+   "estimate_diagnostics": {
+    "n_blocks": 782,
+    "cond_mean": 1.280034718305023,
+    "cond_p95": 1.5291868762472103,
+    "cond_max": 1.8259861046879577
+   },
+   "arms": {
+    "B0_pinv": {
+     "metrics": {
+      "fixed_label_ber": 0.003697390365937408,
+      "pi_ber": 0.003697390365937408,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.0036780932764454905,
+      "pi_ber": 0.0036780932764454905,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "B1_ema09": {
+     "metrics": {
+      "fixed_label_ber": 0.000717404100853527,
+      "pi_ber": 0.000717404100853527,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.0007294884998283557,
+      "pi_ber": 0.0007294884998283557,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "B2_tikhonov": {
+     "metrics": {
+      "fixed_label_ber": 0.0033601491219464336,
+      "pi_ber": 0.0033601491219464336,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.0033593251924868813,
+      "pi_ber": 0.0033593251924868813,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "B3_whitening": {
+     "metrics": {
+      "fixed_label_ber": 0.003697390365937408,
+      "pi_ber": 0.003697390365937408,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.0036780932764454905,
+      "pi_ber": 0.0036780932764454905,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "B3_tapped": {
+     "metrics": {
+      "fixed_label_ber": 0.003697390365937408,
+      "pi_ber": 0.003697390365937408,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.0036780932764454905,
+      "pi_ber": 0.0036780932764454905,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "P1_energy_weighted": {
+     "metrics": {
+      "fixed_label_ber": 0.0038874717943686845,
+      "pi_ber": 0.0038874717943686845,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.00382521700750331,
+      "pi_ber": 0.00382521700750331,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "P1_energy_whiten": {
+     "metrics": {
+      "fixed_label_ber": 0.0038874717943686845,
+      "pi_ber": 0.0038874717943686845,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.00382521700750331,
+      "pi_ber": 0.00382521700750331,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "P1_energy_ema": {
+     "metrics": {
+      "fixed_label_ber": 0.0007357990777984891,
+      "pi_ber": 0.0007357990777984891,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.0007356186552890981,
+      "pi_ber": 0.0007356186552890981,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "O_jones_oracle": {
+     "metrics": {
+      "fixed_label_ber": 0.0006560875110369861,
+      "pi_ber": 0.0006560875110369861,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.0006252758569957335,
+      "pi_ber": 0.0006252758569957335,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "oracle_true_jones"
+    },
+    "O_fde_oracle": {
+     "metrics": {
+      "fixed_label_ber": 0.006444373589718434,
+      "pi_ber": 0.006444373589718434,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.006743171006816733,
+      "pi_ber": 0.006743171006816733,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "oracle_fde_true_jones_pmd"
+    }
+   },
+   "cell": "smoke_M0",
+   "seed": 6002,
+   "model_id": "M0",
+   "alpha": 2.0,
+   "beta": 1.0,
+   "f_g": 100.0,
+   "sop_rate": 8e-06,
+   "gamma_bar": 50.0,
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "verified_range": true,
+   "n_pilots": 6,
+   "block_size": 64,
+   "N": 50000,
+   "taps": 11,
+   "mu": 0.001
+  },
+  {
+   "pilot_overhead": 0.09384,
+   "shared_realization_fingerprint": "5110188a7e6ad8ec676d2c86e6ebf42148775b1826ae5b3d040b6608adbbed20",
+   "estimate_diagnostics": {
+    "n_blocks": 782,
+    "cond_mean": 1.1747085838667854,
+    "cond_p95": 1.314667537172716,
+    "cond_max": 1.5434715687732743
+   },
+   "arms": {
+    "B0_pinv": {
+     "metrics": {
+      "fixed_label_ber": 1.839497694496223e-05,
+      "pi_ber": 1.839497694496223e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 1.8390466382227453e-05,
+      "pi_ber": 1.8390466382227453e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "B1_ema09": {
+     "metrics": {
+      "fixed_label_ber": null,
+      "pi_ber": null,
+      "assignment": null,
+      "phase_x": null,
+      "phase_y": null
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.36600706193909077,
+      "pi_ber": 0.36600706193909077,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 0,
+     "valid_data_samples_nocma": 40782,
+     "diverged": true,
+     "divergence_symbol": 1413,
+     "info_class": "receiver_visible"
+    },
+    "B2_tikhonov": {
+     "metrics": {
+      "fixed_label_ber": 1.839497694496223e-05,
+      "pi_ber": 1.839497694496223e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 1.8390466382227453e-05,
+      "pi_ber": 1.8390466382227453e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "B3_whitening": {
+     "metrics": {
+      "fixed_label_ber": 1.839497694496223e-05,
+      "pi_ber": 1.839497694496223e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 1.8390466382227453e-05,
+      "pi_ber": 1.8390466382227453e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "B3_tapped": {
+     "metrics": {
+      "fixed_label_ber": 1.839497694496223e-05,
+      "pi_ber": 1.839497694496223e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 1.8390466382227453e-05,
+      "pi_ber": 1.8390466382227453e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "P1_energy_weighted": {
+     "metrics": {
+      "fixed_label_ber": 1.839497694496223e-05,
+      "pi_ber": 1.839497694496223e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 1.2260310921484969e-05,
+      "pi_ber": 1.2260310921484969e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "P1_energy_whiten": {
+     "metrics": {
+      "fixed_label_ber": 1.839497694496223e-05,
+      "pi_ber": 1.839497694496223e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 1.2260310921484969e-05,
+      "pi_ber": 1.2260310921484969e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "P1_energy_ema": {
+     "metrics": {
+      "fixed_label_ber": null,
+      "pi_ber": null,
+      "assignment": null,
+      "phase_x": null,
+      "phase_y": null
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.3666997695061547,
+      "pi_ber": 0.3666997695061547,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 0,
+     "valid_data_samples_nocma": 40782,
+     "diverged": true,
+     "divergence_symbol": 1413,
+     "info_class": "receiver_visible"
+    },
+    "O_jones_oracle": {
+     "metrics": {
+      "fixed_label_ber": 0.0,
+      "pi_ber": 0.0,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.0,
+      "pi_ber": 0.0,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "oracle_true_jones"
+    },
+    "O_fde_oracle": {
+     "metrics": {
+      "fixed_label_ber": 0.00019008142843127636,
+      "pi_ber": 0.00019008142843127636,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.00031263792849786675,
+      "pi_ber": 0.00031263792849786675,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "oracle_fde_true_jones_pmd"
+    }
+   },
+   "cell": "smoke_M1",
+   "seed": 6001,
+   "model_id": "M1",
+   "alpha": 2.0,
+   "beta": 1.0,
+   "f_g": 100.0,
+   "sop_rate": 8e-06,
+   "gamma_bar": 50.0,
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "verified_range": true,
+   "n_pilots": 6,
+   "block_size": 64,
+   "N": 50000,
+   "taps": 11,
+   "mu": 0.001
+  },
+  {
+   "pilot_overhead": 0.09384,
+   "shared_realization_fingerprint": "921728b56a1040c0f6115088895a21f3b61a152ead00681d0f058bcc5e6637f4",
+   "estimate_diagnostics": {
+    "n_blocks": 782,
+    "cond_mean": 1.280034718305023,
+    "cond_p95": 1.529186876247211,
+    "cond_max": 1.8259861046879566
+   },
+   "arms": {
+    "B0_pinv": {
+     "metrics": {
+      "fixed_label_ber": 0.003691258706955754,
+      "pi_ber": 0.003691258706955754,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.0036780932764454905,
+      "pi_ber": 0.0036780932764454905,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "B1_ema09": {
+     "metrics": {
+      "fixed_label_ber": null,
+      "pi_ber": null,
+      "assignment": null,
+      "phase_x": null,
+      "phase_y": null
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.37663062135255754,
+      "pi_ber": 0.37663062135255754,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 0,
+     "valid_data_samples_nocma": 40782,
+     "diverged": true,
+     "divergence_symbol": 1285,
+     "info_class": "receiver_visible"
+    },
+    "B2_tikhonov": {
+     "metrics": {
+      "fixed_label_ber": 0.0033601491219464336,
+      "pi_ber": 0.0033601491219464336,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.0033593251924868813,
+      "pi_ber": 0.0033593251924868813,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "B3_whitening": {
+     "metrics": {
+      "fixed_label_ber": 0.003691258706955754,
+      "pi_ber": 0.003691258706955754,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.0036780932764454905,
+      "pi_ber": 0.0036780932764454905,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "B3_tapped": {
+     "metrics": {
+      "fixed_label_ber": 0.003691258706955754,
+      "pi_ber": 0.003691258706955754,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.0036780932764454905,
+      "pi_ber": 0.0036780932764454905,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "P1_energy_weighted": {
+     "metrics": {
+      "fixed_label_ber": 0.003887471794368684,
+      "pi_ber": 0.003887471794368684,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.00382521700750331,
+      "pi_ber": 0.00382521700750331,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "P1_energy_whiten": {
+     "metrics": {
+      "fixed_label_ber": 0.003887471794368684,
+      "pi_ber": 0.003887471794368684,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.00382521700750331,
+      "pi_ber": 0.00382521700750331,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "P1_energy_ema": {
+     "metrics": {
+      "fixed_label_ber": null,
+      "pi_ber": null,
+      "assignment": null,
+      "phase_x": null,
+      "phase_y": null
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.3761156882938551,
+      "pi_ber": 0.3761156882938551,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 0,
+     "valid_data_samples_nocma": 40782,
+     "diverged": true,
+     "divergence_symbol": 1285,
+     "info_class": "receiver_visible"
+    },
+    "O_jones_oracle": {
+     "metrics": {
+      "fixed_label_ber": 0.0006315608751103699,
+      "pi_ber": 0.0006315608751103699,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.0006252758569957335,
+      "pi_ber": 0.0006252758569957335,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "oracle_true_jones"
+    },
+    "O_fde_oracle": {
+     "metrics": {
+      "fixed_label_ber": 0.006505690179534975,
+      "pi_ber": 0.006505690179534975,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.006743171006816733,
+      "pi_ber": 0.006743171006816733,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "oracle_fde_true_jones_pmd"
+    }
+   },
+   "cell": "smoke_M1",
+   "seed": 6002,
+   "model_id": "M1",
+   "alpha": 2.0,
+   "beta": 1.0,
+   "f_g": 100.0,
+   "sop_rate": 8e-06,
+   "gamma_bar": 50.0,
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "verified_range": true,
+   "n_pilots": 6,
+   "block_size": 64,
+   "N": 50000,
+   "taps": 11,
+   "mu": 0.001
+  },
+  {
+   "pilot_overhead": 0.09384,
+   "shared_realization_fingerprint": "5655ee81123afd6f7a900c77e3483562b9978568a99b61fb730a3c0075e744a8",
+   "estimate_diagnostics": {
+    "n_blocks": 782,
+    "cond_mean": 2.027808879675707,
+    "cond_p95": 2.3787532326490757,
+    "cond_max": 2.8983970700850756
+   },
+   "arms": {
+    "B0_pinv": {
+     "metrics": {
+      "fixed_label_ber": 1.839497694496223e-05,
+      "pi_ber": 1.839497694496223e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 1.8390466382227453e-05,
+      "pi_ber": 1.8390466382227453e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "B1_ema09": {
+     "metrics": {
+      "fixed_label_ber": null,
+      "pi_ber": null,
+      "assignment": null,
+      "phase_x": null,
+      "phase_y": null
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.3743931146093865,
+      "pi_ber": 0.3743931146093865,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 0,
+     "valid_data_samples_nocma": 40782,
+     "diverged": true,
+     "divergence_symbol": 1093,
+     "info_class": "receiver_visible"
+    },
+    "B2_tikhonov": {
+     "metrics": {
+      "fixed_label_ber": 1.839497694496223e-05,
+      "pi_ber": 1.839497694496223e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 1.2260310921484969e-05,
+      "pi_ber": 1.2260310921484969e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "B3_whitening": {
+     "metrics": {
+      "fixed_label_ber": 1.839497694496223e-05,
+      "pi_ber": 1.839497694496223e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 1.8390466382227453e-05,
+      "pi_ber": 1.8390466382227453e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "B3_tapped": {
+     "metrics": {
+      "fixed_label_ber": 1.839497694496223e-05,
+      "pi_ber": 1.839497694496223e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 1.8390466382227453e-05,
+      "pi_ber": 1.8390466382227453e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "P1_energy_weighted": {
+     "metrics": {
+      "fixed_label_ber": 1.2263317963308153e-05,
+      "pi_ber": 1.2263317963308153e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 1.2260310921484969e-05,
+      "pi_ber": 1.2260310921484969e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "P1_energy_whiten": {
+     "metrics": {
+      "fixed_label_ber": 1.2263317963308153e-05,
+      "pi_ber": 1.2263317963308153e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 1.2260310921484969e-05,
+      "pi_ber": 1.2260310921484969e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "P1_energy_ema": {
+     "metrics": {
+      "fixed_label_ber": null,
+      "pi_ber": null,
+      "assignment": null,
+      "phase_x": null,
+      "phase_y": null
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.37422760041194647,
+      "pi_ber": 0.37422760041194647,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 0,
+     "valid_data_samples_nocma": 40782,
+     "diverged": true,
+     "divergence_symbol": 1093,
+     "info_class": "receiver_visible"
+    },
+    "O_jones_oracle": {
+     "metrics": {
+      "fixed_label_ber": 0.0,
+      "pi_ber": 0.0,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.0,
+      "pi_ber": 0.0,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "oracle_true_jones"
+    },
+    "O_fde_oracle": {
+     "metrics": {
+      "fixed_label_ber": 0.0002084764053762386,
+      "pi_ber": 0.0002084764053762386,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.00031263792849786675,
+      "pi_ber": 0.00031263792849786675,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "oracle_fde_true_jones_pmd"
+    }
+   },
+   "cell": "smoke_M2_6dB",
+   "seed": 6001,
+   "model_id": "M2",
+   "alpha": 2.0,
+   "beta": 1.0,
+   "f_g": 100.0,
+   "sop_rate": 8e-06,
+   "gamma_bar": 50.0,
+   "pdl_db": 6.0,
+   "dgd_ps": 0.0,
+   "verified_range": false,
+   "n_pilots": 6,
+   "block_size": 64,
+   "N": 50000,
+   "taps": 11,
+   "mu": 0.001
+  },
+  {
+   "pilot_overhead": 0.09384,
+   "shared_realization_fingerprint": "a38b3c05cac3f2b7b9479be4b2bf45c588401e4f59cbd01bda5e3c53c9fb9e2d",
+   "estimate_diagnostics": {
+    "n_blocks": 782,
+    "cond_mean": 2.115479777198849,
+    "cond_p95": 2.7374975025201755,
+    "cond_max": 3.419311389576237
+   },
+   "arms": {
+    "B0_pinv": {
+     "metrics": {
+      "fixed_label_ber": 0.0037341803198273327,
+      "pi_ber": 0.0037341803198273327,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.0036780932764454905,
+      "pi_ber": 0.0036780932764454905,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "B1_ema09": {
+     "metrics": {
+      "fixed_label_ber": null,
+      "pi_ber": null,
+      "assignment": null,
+      "phase_x": null,
+      "phase_y": null
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.38008802903241623,
+      "pi_ber": 0.38008802903241623,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 0,
+     "valid_data_samples_nocma": 40782,
+     "diverged": true,
+     "divergence_symbol": 901,
+     "info_class": "receiver_visible"
+    },
+    "B2_tikhonov": {
+     "metrics": {
+      "fixed_label_ber": 0.0035563622093593645,
+      "pi_ber": 0.0035563622093593645,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.0035248393899269285,
+      "pi_ber": 0.0035248393899269285,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "B3_whitening": {
+     "metrics": {
+      "fixed_label_ber": 0.0037341803198273327,
+      "pi_ber": 0.0037341803198273327,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.0036780932764454905,
+      "pi_ber": 0.0036780932764454905,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "B3_tapped": {
+     "metrics": {
+      "fixed_label_ber": 0.0037341803198273327,
+      "pi_ber": 0.0037341803198273327,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.0036780932764454905,
+      "pi_ber": 0.0036780932764454905,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "P1_energy_weighted": {
+     "metrics": {
+      "fixed_label_ber": 0.004469979397625822,
+      "pi_ber": 0.004469979397625822,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.004303369133441225,
+      "pi_ber": 0.004303369133441225,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "P1_energy_whiten": {
+     "metrics": {
+      "fixed_label_ber": 0.004469979397625822,
+      "pi_ber": 0.004469979397625822,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.004303369133441225,
+      "pi_ber": 0.004303369133441225,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "P1_energy_ema": {
+     "metrics": {
+      "fixed_label_ber": null,
+      "pi_ber": null,
+      "assignment": null,
+      "phase_x": null,
+      "phase_y": null
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.38109337452797803,
+      "pi_ber": 0.38109337452797803,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 0,
+     "valid_data_samples_nocma": 40782,
+     "diverged": true,
+     "divergence_symbol": 901,
+     "info_class": "receiver_visible"
+    },
+    "O_jones_oracle": {
+     "metrics": {
+      "fixed_label_ber": 0.0006315608751103698,
+      "pi_ber": 0.0006315608751103698,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.0006252758569957335,
+      "pi_ber": 0.0006252758569957335,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "oracle_true_jones"
+    },
+    "O_fde_oracle": {
+     "metrics": {
+      "fixed_label_ber": 0.006530216815461591,
+      "pi_ber": 0.006530216815461591,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.006779951939581188,
+      "pi_ber": 0.006779951939581188,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "oracle_fde_true_jones_pmd"
+    }
+   },
+   "cell": "smoke_M2_6dB",
+   "seed": 6002,
+   "model_id": "M2",
+   "alpha": 2.0,
+   "beta": 1.0,
+   "f_g": 100.0,
+   "sop_rate": 8e-06,
+   "gamma_bar": 50.0,
+   "pdl_db": 6.0,
+   "dgd_ps": 0.0,
+   "verified_range": false,
+   "n_pilots": 6,
+   "block_size": 64,
+   "N": 50000,
+   "taps": 11,
+   "mu": 0.001
+  },
+  {
+   "pilot_overhead": 0.09384,
+   "shared_realization_fingerprint": "4d80761518c6e66d3f9c92ce39bdaa080d25336c76826bb02c3201b2148be583",
+   "estimate_diagnostics": {
+    "n_blocks": 782,
+    "cond_mean": 1.223970659571983,
+    "cond_p95": 1.421022064776844,
+    "cond_max": 1.867652719947013
+   },
+   "arms": {
+    "B0_pinv": {
+     "metrics": {
+      "fixed_label_ber": 0.0002575296772294712,
+      "pi_ber": 0.0002575296772294712,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.0004904124368593988,
+      "pi_ber": 0.0004904124368593988,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "B1_ema09": {
+     "metrics": {
+      "fixed_label_ber": 1.2263317963308153e-05,
+      "pi_ber": 1.2263317963308153e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 5.5171399146682365e-05,
+      "pi_ber": 5.5171399146682365e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "B2_tikhonov": {
+     "metrics": {
+      "fixed_label_ber": 0.0002575296772294712,
+      "pi_ber": 0.0002575296772294712,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.00047202197047717127,
+      "pi_ber": 0.00047202197047717127,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "B3_whitening": {
+     "metrics": {
+      "fixed_label_ber": 0.0002575296772294712,
+      "pi_ber": 0.0002575296772294712,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.0004904124368593988,
+      "pi_ber": 0.0004904124368593988,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "B3_tapped": {
+     "metrics": {
+      "fixed_label_ber": 0.0002575296772294712,
+      "pi_ber": 0.0002575296772294712,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.0004904124368593988,
+      "pi_ber": 0.0004904124368593988,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "P1_energy_weighted": {
+     "metrics": {
+      "fixed_label_ber": 0.0003004512901010497,
+      "pi_ber": 0.0003004512901010497,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.0005149330587023687,
+      "pi_ber": 0.0005149330587023687,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "P1_energy_whiten": {
+     "metrics": {
+      "fixed_label_ber": 0.0003004512901010497,
+      "pi_ber": 0.0003004512901010497,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.0005149330587023687,
+      "pi_ber": 0.0005149330587023687,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "P1_energy_ema": {
+     "metrics": {
+      "fixed_label_ber": 1.2263317963308153e-05,
+      "pi_ber": 1.2263317963308153e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 5.5171399146682365e-05,
+      "pi_ber": 5.5171399146682365e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "O_jones_oracle": {
+     "metrics": {
+      "fixed_label_ber": 3.065829490827038e-05,
+      "pi_ber": 3.065829490827038e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 3.6780932764454905e-05,
+      "pi_ber": 3.6780932764454905e-05,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "oracle_true_jones"
+    },
+    "O_fde_oracle": {
+     "metrics": {
+      "fixed_label_ber": 0.00037403119788089866,
+      "pi_ber": 0.00037403119788089866,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.0005271933696238537,
+      "pi_ber": 0.0005271933696238537,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "oracle_fde_true_jones_pmd"
+    }
+   },
+   "cell": "smoke_M3_80ps",
+   "seed": 6001,
+   "model_id": "M3",
+   "alpha": 2.0,
+   "beta": 1.0,
+   "f_g": 100.0,
+   "sop_rate": 8e-06,
+   "gamma_bar": 50.0,
+   "pdl_db": 0.0,
+   "dgd_ps": 80.0,
+   "verified_range": false,
+   "n_pilots": 6,
+   "block_size": 64,
+   "N": 50000,
+   "taps": 11,
+   "mu": 0.001
+  },
+  {
+   "pilot_overhead": 0.09384,
+   "shared_realization_fingerprint": "05bbdd920a9fbcd9db81bb760a2458fa056067338cfcbea8322f903095ea99dc",
+   "estimate_diagnostics": {
+    "n_blocks": 782,
+    "cond_mean": 1.3194116301500947,
+    "cond_p95": 1.6451349969584506,
+    "cond_max": 2.0162494542017706
+   },
+   "arms": {
+    "B0_pinv": {
+     "metrics": {
+      "fixed_label_ber": 0.007278279211223388,
+      "pi_ber": 0.007278279211223388,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.008766122308861753,
+      "pi_ber": 0.008766122308861753,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "B1_ema09": {
+     "metrics": {
+      "fixed_label_ber": 0.0015942313352300598,
+      "pi_ber": 0.0015942313352300598,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.002292678142317689,
+      "pi_ber": 0.002292678142317689,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "B2_tikhonov": {
+     "metrics": {
+      "fixed_label_ber": 0.006891984695379182,
+      "pi_ber": 0.006891984695379182,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.00821440831739493,
+      "pi_ber": 0.00821440831739493,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "B3_whitening": {
+     "metrics": {
+      "fixed_label_ber": 0.007278279211223388,
+      "pi_ber": 0.007278279211223388,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.008766122308861753,
+      "pi_ber": 0.008766122308861753,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "B3_tapped": {
+     "metrics": {
+      "fixed_label_ber": 0.007278279211223388,
+      "pi_ber": 0.007278279211223388,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.008766122308861753,
+      "pi_ber": 0.008766122308861753,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "P1_energy_weighted": {
+     "metrics": {
+      "fixed_label_ber": 0.007603257137251055,
+      "pi_ber": 0.007603257137251055,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.009035849149134422,
+      "pi_ber": 0.009035849149134422,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "P1_energy_whiten": {
+     "metrics": {
+      "fixed_label_ber": 0.007603257137251055,
+      "pi_ber": 0.007603257137251055,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.009035849149134422,
+      "pi_ber": 0.009035849149134422,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "P1_energy_ema": {
+     "metrics": {
+      "fixed_label_ber": 0.0016248896301383304,
+      "pi_ber": 0.0016248896301383304,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.002317198764160659,
+      "pi_ber": 0.002317198764160659,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "receiver_visible"
+    },
+    "O_jones_oracle": {
+     "metrics": {
+      "fixed_label_ber": 0.0020173158049641912,
+      "pi_ber": 0.0020173158049641912,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.0020413417684272475,
+      "pi_ber": 0.0020413417684272475,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "oracle_true_jones"
+    },
+    "O_fde_oracle": {
+     "metrics": {
+      "fixed_label_ber": 0.007560335524379476,
+      "pi_ber": 0.007560335524379476,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "metrics_nocma": {
+      "fixed_label_ber": 0.007791427590603698,
+      "pi_ber": 0.007791427590603698,
+      "assignment": [
+       "x",
+       "y"
+      ],
+      "phase_x": 0,
+      "phase_y": 0
+     },
+     "valid_data_samples": 40772,
+     "valid_data_samples_nocma": 40782,
+     "diverged": false,
+     "divergence_symbol": null,
+     "info_class": "oracle_fde_true_jones_pmd"
+    }
+   },
+   "cell": "smoke_M3_80ps",
+   "seed": 6002,
+   "model_id": "M3",
+   "alpha": 2.0,
+   "beta": 1.0,
+   "f_g": 100.0,
+   "sop_rate": 8e-06,
+   "gamma_bar": 50.0,
+   "pdl_db": 0.0,
+   "dgd_ps": 80.0,
+   "verified_range": false,
+   "n_pilots": 6,
+   "block_size": 64,
+   "N": 50000,
+   "taps": 11,
+   "mu": 0.001
+  }
+ ]
+}
