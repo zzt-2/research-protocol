@@ -4,15 +4,13 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v1
-  control_epoch: 1
+  control_epoch: 2
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: RECOVER_MAP
-  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D017
-  decision_gate: 尚未从当前权威状态选择合法 scientific carrier 和第一个 decision package
+  active_lane: STATE_RECONCILIATION
+  authority_pointer: .sessions/2026-07-10-dual-pol-osl-groundwork/decisions.md#D061
+  decision_gate: mutable current views 仍混有 D061 前 routing 与已纠正的 Step 3.5 事实，科学派工前必须先收敛
   allowed_actions:
-    - RECOVER
-    - PORTFOLIO_MAP
     - STATE_RECONCILIATION
     - TASK_BRIEF_PREPARATION
   forbidden_actions:
@@ -20,11 +18,11 @@ rdl_control:
     - FORMAL_STAGE_CHANGE
     - SKILL_EDIT
     - INFRASTRUCTURE_BUILD
-  next_legal_action: fork 主控按 H001 恢复 current/formal owner，形成合法载体比较并准备第一个受 guard 约束的 T
+  next_legal_action: 执行 T001，只对齐 D061/H017 到可变 current views 并返回 worker-log，不运行科学工作
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（READY_FOR_FORK；尚无 scientific carrier/experiment authorization）
+> 状态: active（T001_READY；仅授权 current-view reconciliation）
 > 创建: 2026-07-23 | 最后更新: 2026-07-23
 
 ## 专题信息
@@ -81,14 +79,15 @@ rdl_control:
 
 - **S001**：live-test mission 激活边界、运行角色和初始 gate。
 - **H001**：fork 主控启动入口；先恢复和比较 carrier，不运行科学工作。
+- **S001 续接 / T001**：H001 接收 3/3 PASS；确认 formal owner=D061、Scout dormant，并发现 5 个可变 current views 残留 D061 前 routing。首包选择状态协调，不授权科学工作。
 
 ## 未决项
 
-- 哪个现有 scientific/formal owner 能合法提供第一个 carrier；
-- 第一个 decision package 的 question、decision delta、comparator、stop 和 action class；
+- T001 能否把可变 current views 收敛到 D061/H017，且不改科学结论与 protected history；
+- current owner 收敛后，第二包应处理全文获取战略 gate，还是存在无需用户私有访问的更高信息量合法工作；
 - live run 自然覆盖哪些恢复/轮换/晋级事件；
 - 何时由原 design 对话进行阶段性审计。
 
 ## 当前位置
 
-READY_FOR_FORK。唯一合法下一步是按 H001 做 Recover/Map 和状态一致性检查，生成载体比较；在 control epoch 更新并通过 T guard 前，不得运行任何科学实验或改变 formal 状态。
+T001_READY。唯一合法下一步是执行 `T001-current-owner-reconciliation.md`，将 D061/H017 已确认事实同步到可变 current views。T001 完成并由主控验收前，不得运行科学实验、全文工作或改变 formal 状态。

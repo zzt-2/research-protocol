@@ -49,8 +49,8 @@ topics:
     title: Research Direction Lab 长程真实运行测试
     status: active
     created: "2026-07-23"
-    last_updated: "2026-07-23（S001/H001：READY_FOR_FORK；仅授权 Recover/Map/T 准备）"
-    description: "D017 轻量前台控制协议的真实纵向运行 mission。初始 control epoch 1 只允许 Recover/Map/Reconcile/T 准备，未选择 scientific carrier，不授权实验、formal 变化、Skill 修改或基础设施建设。fork 主控与 executor 将在单一隔离 live-test worktree 中串行运行，用户只中转 T 路径和四项完成索引。"
+    last_updated: "2026-07-23（S001/T001：H001 接收 PASS；epoch 2 仅授权 D061 current-view reconciliation）"
+    description: "D017 轻量前台控制协议的真实纵向运行 mission。H001 接收确认 formal owner=D061、Scout dormant，并发现可变 current views 混有 D061 前 routing；control epoch 2 只授权 T001 状态协调，不授权实验、全文工作、formal 变化、Skill 修改或基础设施建设。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 S014 现场故障、R003 场景演练、D017 控制接口和 guard
