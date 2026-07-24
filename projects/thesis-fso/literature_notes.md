@@ -1221,6 +1221,14 @@ R2按5种方法变体×2类场景得到31 raw/25 unique；R3围绕JLT 2023 PDL/F
 
 > **2026-07-23 主控失效 amendment（V038/D064）**：上一段仅保留为 T003 历史执行记录，科学结论全部 INVALIDATED。原因：PDL/PMD 施加于含噪 RX 导致可逆恒等；PMD pilot 未经过 FIR；B3 tapped 是 RX→RX 自预测；PMD oracle 被 B1 反超；decision 将 problem survival 与 P1 success 混合。不得引用 T003 的 M2/M3 数值、headroom 归因或 negative harvest。complex-Jones/PMD/PDL 继续 `UNRESOLVED`；D064/T004 在同一 Step 4a 内先闭合 semantic tests 再重评。
 
+> **2026-07-24 T004 主控失效 amendment（V039/D065）**：T004 的工程语义修复
+> 可复用，但正面 PDL problem gate 仍 INVALIDATED。原因不是 B3 方法弱，而是
+> component Jones 每 64 symbols iid redraw 无物理时间尺度来源；固定器件反事实使
+> PDL impairment-added headroom 降至 0.0146/0.00445 dB。B3 过拟合仅证明
+> 6-pilot 下 arbitrary per-block 3-tap LS 零残差自由度，不得外推为真实系统普遍
+> pilot-budget limit。另有 Python hash 与 contract/SHA 闭包债。complex axis 继续
+> `UNRESOLVED / T005_TEMPORAL_ADJUDICATION_READY`，T005 不运行新方法。
+
 ### 实验完备性对标汇总
 
 | 论文 | 统计规范 | Baseline | 消融/扫描 | VVUQ(V/V/U) |

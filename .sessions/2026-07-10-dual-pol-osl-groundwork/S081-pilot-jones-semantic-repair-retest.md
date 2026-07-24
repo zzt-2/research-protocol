@@ -40,3 +40,17 @@
 - 待主控验收 provisional verdict；4 篇 D056 全文债继续 BLOCKED；OE2021 一阶 PMD provenance 标 unverified 债务。
 - 主控可能授权下一轮更强方法候选（pilot-covariance-aware / cross-block / 条件切换），或接受 negative。
 - 不复活 Scout/P03，不改 protected history。
+
+> 2026-07-24 主控接收 amendment（V039/D065）
+
+T004 的工程语义修复部分可复用，但 provisional
+`PROBLEM_SURVIVES_METHOD_CANDIDATES_FAIL` **不予接收**。M2/M4 的 PDL
+component Jones 每 64 symbols 独立重抽 U/V，相当于每 25.6 ns 无来源跳变；固定
+同一 1 dB component Jones 后，impairment-added headroom 在 validation/test 仅
+0.0146/0.00445 dB，原正面 signal 消失。另有 Python `hash(model_id)` 跨进程
+不确定、contract N=50000/runner N=20000、10-seed contract/8-seed run 和伪
+`contract_sha256` 闭包缺陷。B3 过拟合只适用于 6 equations/6 coefficients 的
+arbitrary per-block tapped LS，不得外推为真实系统普遍 pilot-budget limit。
+
+当前状态改为 `T004_POSITIVE_GATE_INVALIDATED / T005_TEMPORAL_ADJUDICATION_READY`；
+complex component rescue axis 仍 UNRESOLVED，不进 Step 5。

@@ -4,14 +4,14 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v1
-  control_epoch: 6
+  control_epoch: 7
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: PILOT_JONES_SEMANTIC_REPAIR_RETEST
-  authority_pointer: .sessions/2026-07-10-dual-pol-osl-groundwork/decisions.md#D064
-  decision_gate: 在修复信道噪声位置、pre-channel pilot、tapped baseline 和 PMD oracle 后，重新判断 complex Jones/PMD/PDL 是否产生合法传统基线无法关闭的方法空间
+  active_lane: PILOT_JONES_TEMPORAL_SEMANTICS_ADJUDICATION
+  authority_pointer: .sessions/2026-07-10-dual-pol-osl-groundwork/decisions.md#D065
+  decision_gate: 在固定或有来源慢变的 component Jones/PSP 时间模型与可复现闭包下，判断 verified PDL/PMD 是否仍产生相对 M0 超过 0.5 dB 的合法余量
   allowed_actions:
-    - PILOT_JONES_SEMANTIC_REPAIR_RETEST_PACKAGE
+    - PILOT_JONES_TEMPORAL_SEMANTICS_ADJUDICATION_PACKAGE
     - TASK_BRIEF_PREPARATION
   forbidden_actions:
     - PRIVATE_FULLTEXT_ACQUISITION
@@ -21,12 +21,12 @@ rdl_control:
     - PROTECTED_HISTORY_EDIT
     - SKILL_EDIT
     - GENERAL_INFRASTRUCTURE_BUILD
-  next_legal_action: 执行 T004，在一个 GLM 对话内先闭合语义测试，再重跑 M0-M4、baseline/headroom，并在问题存活时同包运行多机制方法 MVE
+  next_legal_action: 执行 T005，在一个 GLM 对话内闭合 component temporal semantics、deterministic seed/SHA 和 fixed/slow primary headroom；不运行新方法候选
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（T004_READY；D064 已授权）
-> 创建: 2026-07-23 | 最后更新: 2026-07-23
+> 状态: active（T005_READY；D065 已授权）
+> 创建: 2026-07-23 | 最后更新: 2026-07-24
 
 ## 专题信息
 
@@ -47,7 +47,9 @@ rdl_control:
 - 使用顶部控制块、受 guard 约束的 T、worker-log、raw artifacts 和 commit；
 - 在 control block 允许范围内串行推进，遇到 gate 更新控制块或交用户战略裁决；
 - 记录真实恢复、失败/阻断、轮换、晋级/不晋级和工作包重量。
-- 当前仅授权 T004 语义修复重测包：修正 T003 的 post-noise channel、PMD pilot、tapped baseline、PMD oracle 与混合 gate；语义门通过后重跑 M0–M4、最强传统 baseline、headroom 与条件式方法 MVE。
+- 当前仅授权 T005 temporal-semantics 终审包：固定或有来源慢变 component
+  Jones/PSP，修复 deterministic seed 与 SHA/contract 闭包，在 operational/adversarial
+  两条件和 4/6 pilots 下重算 M0/M2/M3；不运行新方法候选。
 
 ### 明确不含
 
@@ -70,6 +72,15 @@ rdl_control:
   - 原因：PDL/PMD 作用于含噪 RX 导致可逆恒等、PMD pilot 未经过 FIR、B3 tapped 为 RX→RX 自预测、PMD oracle 被 B1 反超、problem gate 与 P1 success 混合。
   - 新范围：保留 T003 为失败证据，新建隔离 T004 修复闭包；只有可失败语义测试全过才运行 headroom/MVE。
   - 影响的未决项：complex-Jones/PMD/PDL 不再是 provisional Pivot，而是 `UNRESOLVED / SEMANTIC_REPAIR_AUTHORIZED`。
+- **[2026-07-24] [D065]**：T004 正面 problem gate 被 V039 否决；授权同一
+  Step 4a 内的 temporal-semantics + reproducibility 终审。
+  - 原因：T004 每 64 symbols iid 重抽器件 PDL/PMD basis；固定器件反事实使
+    impairment-added headroom 降至 0.0146/0.00445 dB。另有 Python hash、
+    contract N/seed 数和假 SHA 闭包缺陷。
+  - 新范围：只闭合 fixed/有来源慢变 component、deterministic closure 和正式
+    headroom；不再搜索方法。
+  - 影响的未决项：从“哪种方法关闭 0.77 dB”改为“该 0.77 dB 是否由错误时间模型
+    制造”；若 fixed primary <0.5 dB，则关闭 complex component rescue axis。
 
 ## 已确认结论
 
@@ -97,13 +108,20 @@ rdl_control:
 - **S001 续接 / D062/T002**：用户纠正 T001 只做状态协调、科学吞吐过低；T001 降为 bootstrap overhead。用户授权带债进入 Step 4a，下一包必须一次关闭科学决策，前置门通过时同包直接做 MVE。
 - **S001 续接 / T002验收/D063/T003**：T002 工程与 raw 可信，但 V037 修正 contract stale count 和无依据的 BER-ratio→dB 门；只 Kill unitary-real-rotation M-C-A。用户要求“多做点”，授权同包检验 complex-Jones/PMD/PDL rescue。
 - **S001 续接 / T003验收/D064/T004**：fresh 13 tests 通过但 V038 找到 5 项科学语义缺陷；T003 negative verdict 不接收。真实暴露“consistency/provenance PASS 被误作物理正确”的长程事件，epoch 6 授权语义修复重测大包。
+- **S001 续接 / T004验收/D065/T005**：fresh 25 tests 通过，但 V039 发现
+  component 每 25.6 ns iid redraw 的无来源时间语义；固定器件反事实把正面
+  headroom 降到近零，同时暴露跨进程 hash 与契约闭包缺陷。T004 工程 PARTIAL
+  可复用、科学 verdict FAIL；epoch 7 授权终局 temporal adjudication，不再堆方法。
 
 ## 未决项
 
-- T004 修复后 complex-Jones/PMD/PDL 的 problem-survival 与 method-success 分离裁决；
+- T005 在 fixed/有来源慢变 component 下对 complex-Jones/PMD/PDL rescue axis 的终局裁决；
 - live run 自然覆盖哪些恢复/轮换/晋级事件；
 - 何时由原 design 对话进行阶段性审计。
 
 ## 当前位置
 
-T004_READY。D064/V038 已否决 T003 provisional Pivot，complex/PMD/PDL 继续 UNRESOLVED。下一包必须先让 signal/noise/pilot/baseline/oracle semantic tests 能失败并通过，再重跑数据；不得拆成单 bug 小包，也不得越过 Step 4a。
+T005_READY。D065/V039 已否决 T004 的正面 problem gate；T004 工程修复可复用，
+但 blockwise iid component 与跨进程不确定性使其科学 verdict 无效。下一包只做
+temporal semantics + deterministic closure + fixed/slow primary headroom；不得继续
+增加方法候选，也不得越过 Step 4a。

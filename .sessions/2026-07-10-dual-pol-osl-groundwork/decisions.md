@@ -3307,3 +3307,71 @@ S079 主控验收追加；V037。触发原话见 voice.md 2026-07-23。
 
 V038 主控验收；用户允许继续把本阶段作为长程协议真实测试，触发原话见
 live-test `voice.md` 2026-07-23。
+
+---
+
+## D065: T004 正面 problem gate 不予接收，授权器件时间语义与复现闭包终审
+
+> status: active
+> date: 2026-07-24
+> 取代：无（D064 的语义修复授权与 T003 失效结论继续有效；本决策裁决 T004 provisional verdict）
+> 被取代：无
+> 依据: 验证 V039 + T004 source/raw/result + 主控固定器件 Jones 反事实重算
+
+### 决策
+
+1. 接收 T004 的局部工程资产：post-component noise、passive PDL、pre-channel pilot、
+   RX→known-TX tapped target、problem/method gate 分离和 M0–M4 noiseless inverse
+   tests 均比 T003 正确。T004 工程状态记为 `PARTIAL_REUSABLE_SEMANTIC_REPAIR`。
+2. **不接收** `PROBLEM_SURVIVES_METHOD_CANDIDATES_FAIL`。T004 的唯一正面门来自
+   M2 PDL 1 dB，但 `build_jones_truth()` 每 64 symbols 独立重抽 PDL 左右奇异向量；
+   对其自己认定的 component/fiber impairment，这相当于每 25.6 ns 无来源跳变。
+   canonical `R(theta)` 已建模 SOP 动态，不能再用随机器件基底制造额外失效。
+3. 主控保持 h/theta/TX/noise/PDL 强度不变，只把 1 dB PDL 器件 Jones 固定跨
+   frame：validation 的 B1→O headroom 为 0.091 dB，扣除 M0 后仅 0.015 dB；
+   fresh 10-seed test 为 0.079 dB，扣除 M0 后仅 0.004 dB。均远低于 0.5 dB。
+   因而原 0.77–0.99 dB signal 主要由无来源的 blockwise component redraw 产生。
+4. B3-PMD 的 6-pilot/64 异常只证明“每 block 任意 3-tap 2×2 LS”恰有 6 个
+   equations 对 6 个 complex coefficients、会插值噪声。cross-block pooled filter
+   又在 blockwise 随机 Jones 下任务错配。不得把两者外推为真实 Pilot-Jones
+   普遍 pilot-budget limit，更不得据此继续堆方法。
+5. 授权 T005 在同一 GW Step 4a 内做一次**终局 temporal-semantics adjudication**：
+   primary component Jones/PSP 跨 frame 固定；只有有来源的慢变模型才可作额外
+   sensitivity；修复 deterministic seed 与 SHA/contract 闭包；用 operational 和
+   adversarial 两个已注册条件、4/6 pilots、合法 B* 与 truth-assisted reference
+   重算 M0/M2/M3。T005 不运行新方法候选。
+6. 若 fixed/有来源慢变 primary 在 verified PDL/DGD 范围的
+   impairment-added headroom 均 <0.5 dB，则关闭
+   `COMPLEX_COMPONENT_PDL_PMD_RESCUE_AXIS`，但不把 4 篇全文债或整个
+   Pilot-Jones family 伪写为已闭合；仍不进入 Step 5/Contract/Execute。
+
+### 理由
+
+- T004 修掉了 T003 的算子顺序，却没有给新增 component truth 的时间演化做
+  semantic smoke；“随机矩阵生成正确”被误当成“随机速度物理正确”。
+- 一个方向连续出现 T003 噪声语义、T004 时间语义两次致命模型错误。继续在当前
+  正面门上搜索 P4/P5 会把模型伪影包装成方法，不符合 FR-20/TL-20/TL-22。
+- 固定器件反事实已经能改变 verdict，下一包应闭合这一决定性不确定性和可复现性，
+  而不是重做整个 T004 或再加方法数量。
+
+### 排除的替代方案
+
+- 不接受 `PROBLEM_SURVIVES...` 后直接找更强 P：其问题门依赖无来源快变器件。
+- 不把 T004 全部作废：正确 signal/noise/pilot/operator tests 与 raw 框架可复用。
+- 不把 fixed-PDL 反事实直接写成最终 formal Kill：T004 还存在 Python hash、
+  contract N、seed 数和 SHA 闭包缺陷，需 T005 用冻结契约正式重算。
+- 不再使用 per-block iid component Jones 作为 primary；若无物理来源，只能保留
+  为明确的 `UNVERIFIED_STRESS_ONLY`，不得支持正面结论。
+
+### 影响范围
+
+- Pilot-Jones Step 4a complex-model 状态更新为
+  `T004_POSITIVE_GATE_INVALIDATED / T005_TEMPORAL_ADJUDICATION_READY`。
+- live-test foreground control 递增到 epoch 7，只允许
+  `PILOT_JONES_TEMPORAL_SEMANTICS_ADJUDICATION_PACKAGE`。
+- T004 文件与提交保持 immutable failure/reusable evidence；T005 新建隔离闭包。
+- D056 全文债、P03 paused、science-scout dormant、protected history 均不变。
+
+### 来源
+
+V039 主控接收验收；live-test S001 续接。

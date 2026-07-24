@@ -4,8 +4,8 @@ direction: 星地激光通信（FSO）——子地带由地勘（S003 方法论 
 method_type: 待定（精读后根据问题方法产出形态确定，见 glossary 判据 2）
 domain: comms
 created: 2026-06-21
-updated: 2026-07-23
-current_step: Pilot-Jones-GW-Step4a-COMPLEX-MODEL-SEMANTIC-REPAIR-T004-READY
+updated: 2026-07-24
+current_step: Pilot-Jones-GW-Step4a-COMPONENT-TEMPORAL-ADJUDICATION-T005-READY
 current_stage: FORMAL_GROUNDWORK_PILOT_JONES
 ---
 
@@ -22,15 +22,32 @@ current_stage: FORMAL_GROUNDWORK_PILOT_JONES
 
 ### 当前控制面桥接（唯一现行入口）
 
-> **2026-07-23 D064/V038 T003 主控失效验收 → T004 准备**：D061 routing 与 D056/D062 带债边界不变；T002 的 `UNITARY_REAL_ROTATION_MCA_KILLED` 继续有效。T003/S080 虽有 13 tests PASS 和可重算 raw，但主控发现 post-noise PDL/PMD 恒等、PMD pilot 未过 FIR、B3 tapped RX→RX 自预测、PMD oracle 被 B1 反超、problem/P gate 混合五项语义缺陷。故 `PIVOT_MODEL_NOT_JUSTIFIED`、M2/M3 headroom 归因及 negative harvest 全部 INVALIDATED；complex-Jones/PMD/PDL 继续 `UNRESOLVED`。D064 授权 T004 在隔离目录先建可失败 semantic tests，再重跑 M0–M4、最强传统 baseline/oracle，problem 存活后同包运行多机制方法 MVE。不进 Step 5/Contract/Execute。
+> **2026-07-24 D065/V039 T004 主控失效验收 → T005 准备**：D061 routing 与
+> D056/D062 带债边界不变；T002 的 `UNITARY_REAL_ROTATION_MCA_KILLED` 和
+> T004 对 T003 的 signal/noise/pilot/target/gate 工程修复继续有效。T004 唯一
+> 正面 PDL gate 依赖每 64 symbols iid 重抽 component Jones；固定器件反事实使
+> impairment-added headroom 在 validation/test 仅 0.0146/0.00445 dB。另有
+> Python hash 跨进程不确定、contract N/seed 数与实际不符、伪 contract SHA。
+> 故 `PROBLEM_SURVIVES_METHOD_CANDIDATES_FAIL` INVALIDATED；complex component
+> rescue axis 继续 `UNRESOLVED`。D065 授权 T005 只做 temporal semantics、
+> deterministic closure 与正式 M0/M2/M3 headroom，不再运行方法候选。不进
+> Step 5/Contract/Execute。
 
 - formal stage：`GROUNDWORK`（Pilot-Jones formal GW 链激活）。Direction Lab 的 Scout/Sandbox 结果对正式研究的 promotion effect 仍为 `none`；Direction Lab campaign 已 dormant（D022 SCIENCE_FREEZE），无当前科学执行授权。
-- **Pilot-Jones formal GW（当前工作线）**：Step 1 ✅ / Step 2 ✅ / Step 3 ✅ / **Step 3.5 ⚠ WAIVED_WITH_BLOCKING_DEBT** / **Step 4a 🔄 COMPLEX_MODEL_SEMANTIC_REPAIR（D064/V038/T004）**。T002 局部 Kill unitary-real-rotation M-C-A；T003 complex-model provisional Pivot 因科学语义失败失效，family/complex axis 均继续 UNRESOLVED。
+- **Pilot-Jones formal GW（当前工作线）**：Step 1 ✅ / Step 2 ✅ / Step 3 ✅ /
+  **Step 3.5 ⚠ WAIVED_WITH_BLOCKING_DEBT** / **Step 4a 🔄
+  COMPONENT_TEMPORAL_ADJUDICATION（D065/V039/T005）**。T002 局部 Kill
+  unitary-real-rotation M-C-A；T003/T004 两轮 complex-model provisional verdict
+  分别因算子语义和时间语义失效，family/complex axis 均继续 UNRESOLVED。
 - formal blockers：Step 3.5 的 D056 全文门——4 篇直接竞品（TCOMM `10.1109/TCOMM.2024.3522036` / JLT2025 `10.1109/JLT.2025.3640695` / JLT2022 `10.1109/JLT.2022.3224805` / JLT2023 `10.1109/JLT.2023.3284489`）non-OA IEEE paywalled，`tools/download` all_failed，OA scout 4 源均 closed。只有 OE 2021 + LCOMM 2026 两篇全文精读。
 - P03（暂停，回候选池）：Headroom Atlas Stage A（2026-07-19，S077/D059/V033）runnable 子域 LOCAL_NEGATIVE；16QAM/receiver-CSI/coded-output 三轴 INFRASTRUCTURE_BLOCKED，历史反例落在被阻轴上 → DOMAIN/CANDIDATE/FAMILY 仍 UNRESOLVED/OPEN。**用户选项①已选定：暂停回候选池，不关闭 family**。
 - Direction Lab sandbox history：last completed batch = `B003 / COMPLETED_SANDBOX_VERIFIED`；事实源为 `projects/thesis-fso/direction-lab/state/completion-events.jsonl`。`canonical-state.yaml` 仅为机器投影，不是正式研究授权源。
 - formal promotion effect：`none`；B001–B003 数字不得进入论文或正式材料。
-- 下一合法边界：执行 live-test T004，在一个大包内先闭合 signal/noise/pilot/baseline/oracle semantic tests，再重跑 M0–M4、problem-survival headroom；仅在问题存活后同包运行多机制方法 MVE。**不得进入 Step 5/Contract/Execute；不得复活 Scout/P03；不得改 shared canonical generator 或启动通用基础设施。**
+- 下一合法边界：执行 live-test T005，在一个包内闭合 fixed/有来源慢变
+  component temporal semantics、deterministic seed/SHA 和 operational/adversarial
+  两条件下的 M0/M2/M3 headroom。**不得运行新方法候选；不得进入 Step 5/
+  Contract/Execute；不得复活 Scout/P03；不得改 shared canonical generator 或
+  启动通用基础设施。**
 
 ### 历史 Groundwork 轨迹（保留审计，不授权当前执行）
 
@@ -99,7 +116,7 @@ current_stage: FORMAL_GROUNDWORK_PILOT_JONES
 | 候选族批量 MVE | ⬜ | — | 统一 baseline/seed/消融后执行 |
 | 晋级候选正式 GW Step 1→4a | ⬜ | — | 仅对批量胜者补齐 |
 | Pilot Jones Step4a unitary slice | 🔴 UNITARY_REAL_ROTATION_MCA_KILLED | D062 / T002 / S079 / V036 / V037 / D063 | 结构性 cond=1 结论成立；V037 修正 contract stale count 与无依据的 BER-ratio→dB 门。只 Kill 当前实例化，不 Kill family。 |
-| Pilot Jones Step4a complex-model salvage | 🔴 INVALIDATED_SCIENTIFIC_EVIDENCE → T004_READY | D063 / T003 / S080 / V038 / D064 | T003 consistency tests/raw 可复用，但信道噪声位置、PMD pilot、B3 tapped、PMD oracle 和 gate 分层均失败；provisional Pivot 不接收。complex axis/family UNRESOLVED，T004 semantic repair + retest 已授权。 |
+| Pilot Jones Step4a complex-model salvage | 🔴 T004_POSITIVE_GATE_INVALIDATED → T005_READY | D063–D065 / T003–T004 / S080–S081 / V038–V039 | T004 修复 T003 的算子语义，但 blockwise iid component 制造正面 PDL gap，且复现闭包失败；provisional verdict 不接收。complex axis/family UNRESOLVED，T005 temporal adjudication 已授权且禁止继续找方法。 |
 
 > **FR-22 解释**：上方 2026-06-21 起的全项目历史表证明旧批次曾完成哪些步骤，**不能授权 2026-07-16 后出现的新候选直接进入 MVE**。新候选必须以本重开轨表为单一门控，从 Step 1 重新积累证据。
 

@@ -1109,3 +1109,83 @@ gate 与 P gate 分离。因此 `13 passed` 是 implementation consistency，不
 - M0–M3 隔离骨架、BER→Q² 实现和部分 limiting tests：可作为修复输入，不作为科学证据；
 - Pilot-Jones complex/PMD/PDL：`UNRESOLVED`；
 - 下一合法动作：D064/T004 的 semantic repair + paired retest，不进 Step 5。
+
+---
+
+## V039: T004 主控接收验收、时间语义反事实与复现闭包审计
+
+> date: 2026-07-24
+> 关联：T004 / S081 / D064 / D065
+> verifier: fork 主控；与 GLM 执行上下文分离，使用 fresh tests、源码审计、跨进程复现和固定器件反事实
+
+### 验证项
+
+- [x] fresh tests：`python -m pytest projects/simulation/tests/test_pilot_jones_complex_repair.py -q`
+  → `25 passed in 2.25s`。
+- [x] T004 工程修复：源码确认 component 只作用 clean、passive PDL
+  `[1,10^(-PDL/20)]`、pilot 在 channel 前注入、tapped target 为 known TX、
+  problem/method gate 已分离。
+- [x] 时间语义：`semantic_channel.py:106-133` 对 M2/M4 每 block 独立调用随机
+  unitary U/V；block=64、T_S=0.4 ns，即 component basis 每 25.6 ns iid 跳变。
+  contract 无该动态的来源，且文档把 PDL/PMD 定位为 component/fiber impairment。
+- [x] 固定器件反事实：保持每 seed 的 canonical realization、post-noise、PDL=1 dB
+  和全部 receiver 配置不变，只将确定性生成的一个 PDL Jones 复制到全 frame。
+  validation(7100–7104)：M0 headroom=0.0761 dB，M2=0.0907 dB，
+  impairment-added=0.0146 dB；fresh test(7200–7209)：M0=0.0743 dB，
+  M2=0.0788 dB，impairment-added=0.00445 dB。
+- [x] B3 identifiability：3 taps × 2 RX inputs = 每 output 6 个 complex coefficients；
+  每 block 恰有 6 pilots，LS residual degrees of freedom=0。过拟合是预期数学结果，
+  但 pooled filter 在 iid blockwise Jones 下又不满足同一 filter 的任务假设。
+- [x] 跨进程复现：同 seed=7100/model=M2 连续两个 Python process 得到不同
+  `hash("M2")`、realization fingerprint 和 `jones_truth[0,0,0]`；根因是
+  `run_repair.py:163` 使用进程随机化的内建 `hash(model_id)` 构造 RNG seed。
+- [x] 契约闭包：`repair-contract.yaml` 冻结 `N=50000`，runner 实际
+  `N=20000`；contract 预注册 test=10 seeds、MVE=10 个独立 73xx seeds，runner
+  只用 8 个 72xx seeds且同时评价 problem/method；raw 的
+  `contract_sha256` 值为字面字符串 `repair-contract.yaml`，不是 SHA256。
+- [x] T004 §6.1 完备性：未完成 clean+至少两个 SNR/湍流条件、4/6 pilot
+  sensitivity、interval/uncertainty 和独立 MVE seed pool；因此 worker 自报
+  `PARTIAL` 正确，但 synthesis 的 positive problem verdict 不能晋升。
+- [x] 边界：commit `9a250e1589bdd583ad2df2ca788eaa43c71aadfd`；
+  worktree clean；`git diff --check HEAD~1 HEAD` PASS；T003/protected files 未在
+  T004 commit 变更列表中。
+
+### 证据
+
+~~~text
+fresh pytest: 25 passed in 2.25s
+
+cross-process seed=7100:
+hash=-95434992963573330
+fingerprint=b21b6854ada1...
+J00=-0.1014625+0.4647710j
+
+hash=-4476152998764700992
+fingerprint=76d73841dc18...
+J00=0.4393482-0.3058258j
+
+fixed-component counterfactual:
+validation M0=0.076145 dB, M2=0.090730 dB, added=0.014585 dB
+test(10 seeds) M0=0.074346 dB, M2=0.078798 dB, added=0.004452 dB
+
+contract N=50000; runner N=20000
+contract test seeds=7200..7209; runner=7200..7207
+raw contract_sha256="repair-contract.yaml"
+~~~
+
+### 结论
+
+**FAIL（T004 科学 provisional verdict） / PARTIAL（工程资产）**。
+
+- `PROBLEM_SURVIVES_METHOD_CANDIDATES_FAIL`：FAIL，不接收；
+- T004 post-noise/passivity/pre-channel-pilot/tapped-target/gate-separation 工程修复：
+  PARTIAL 可复用；
+- 0.77–0.99 dB PDL headroom 与“真实 6-pilot budget limit”解释：
+  `INVALIDATED_BY_UNSOURCED_TEMPORAL_MODEL`；
+- complex-Jones/PMD/PDL axis：仍 UNRESOLVED，下一合法动作是 D065/T005。
+
+### 后续
+
+T005 只闭合 component temporal semantics、deterministic provenance 和正式
+fixed/slow primary headroom；不得继续增加 P 候选。若 verified primary 的
+impairment-added headroom <0.5 dB，关闭该 rescue axis 并回到候选轮换。

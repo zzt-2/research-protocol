@@ -49,8 +49,8 @@ topics:
     title: Research Direction Lab 长程真实运行测试
     status: active
     created: "2026-07-23"
-    last_updated: "2026-07-23（V038/D064；epoch 6 Pilot-Jones semantic repair + retest T004_READY）"
-    description: "D017 轻量前台控制协议的真实纵向运行 mission。T002 找到 unitary-real-rotation 模型—问题错配；T003 虽 tests/raw PASS，但 V038 发现 post-noise channel、PMD pilot、tapped B3、PMD oracle 与 gate 分层五项语义失败。control epoch 6 允许 T004 先修语义再重跑 M0–M4，止于 Step 4a。"
+    last_updated: "2026-07-24（V039/D065；epoch 7 Pilot-Jones temporal-semantics adjudication T005_READY）"
+    description: "D017 轻量前台控制协议的真实纵向运行 mission。T004 修复 T003 的算子语义且 25 tests PASS，但 V039 发现 component Jones 每 64 symbols iid redraw 的无来源时间语义、Python hash 跨进程不确定和 contract/SHA 闭包缺陷；固定器件反事实使 PDL 正面 headroom 近零。control epoch 7 只允许 T005 闭合 temporal semantics 与正式 headroom，不再堆方法，仍止于 Step 4a。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 S014 现场故障、R003 场景演练、D017 控制接口和 guard
@@ -503,7 +503,7 @@ topics:
     title: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
     status: active
     created: "2026-07-10"
-    last_updated: "2026-07-23（V038/D064：T003 科学语义失效；T004 semantic repair + retest READY，complex axis/family 继续 UNRESOLVED，不进 Step 5。）"
+    last_updated: "2026-07-24（V039/D065：T004 正面 problem gate 因无来源 blockwise component redraw 失效；T005 temporal adjudication READY，complex axis 继续 UNRESOLVED，不进 Step 5。）"
     description: "formal 双偏振 OSL Groundwork owner。D061 已暂停 P03 并激活 Pilot-Jones；D056 的 4 篇全文保持 BLOCKED_NO_FULLTEXT。T002/V037 只 Kill unitary-real-rotation 实例化。T003/S080 的 complex-model provisional Pivot 因 post-noise channel、PMD pilot、tapped B3、PMD oracle 与混合 gate 失效；V038/D064 不接收该结论并授权 T004 隔离语义修复重测。family/complex axis 均 UNRESOLVED，不进 Step 5。"
     depends_on:
       - slug: 2026-07-10-scenario-transfer-pivot

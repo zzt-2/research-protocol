@@ -1,7 +1,7 @@
 # Topic Index: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
 
 > slug: 2026-07-10-dual-pol-osl-groundwork
-> status: active | created 2026-07-10 | last_updated 2026-07-23（V038/D064：T003 provisional verdict 因 5 项 scientific-semantic 缺陷失效；complex-Jones/PMD/PDL 继续 UNRESOLVED，T004 semantic repair + retest 已授权，不进 Step 5。）
+> status: active | created 2026-07-10 | last_updated 2026-07-24（V039/D065：T004 工程修复可复用，但正面 PDL gate 因无来源 blockwise component redraw 失效；T005 temporal adjudication 已授权，不进 Step 5。）
 
 ## 专题定位（一句话）
 
@@ -29,7 +29,10 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 - **GW Step 3**：正式晋级候选的精读 + 结构化提取；候选族探索阶段先共享轻量证据，不为每个微变体机械重复全文门
 - **GW Step 3.5**：定向补充检索
 - **GW Step 4a**：可行性 Go/No-Go
-- **D064 semantic repair + retest（当前）**：T002 只 Kill unitary-real-rotation M-C-A；T003 的 complex Jones/PMD/PDL verdict 被 V038 否决。当前先修 signal/noise/pilot/baseline/oracle 语义，再统一重跑 M0–M4；问题存活后同包进入多机制方法 MVE，止于 provisional verdict。
+- **D065 temporal-semantics adjudication（当前）**：T004 已修 signal/noise/pilot/
+  target/gate 语义，但每 64 symbols iid 重抽 component Jones 制造了 PDL 正面 gap。
+  当前只在 fixed/有来源慢变器件和 deterministic closure 下重算 M0/M2/M3；不再
+  运行方法候选，止于 provisional verdict。
 
 ### 明确不含
 - ❌ 不跳框架（地勘阶段不判方向 Go/Kill，穷举完 + 用户确认全景才推进——D017 红线 6）
@@ -61,6 +64,10 @@ scenario-transfer-pivot 方法论准备就绪后（D001 三维度调整 + D002 �
 - **[2026-07-23]** [D062] Inflation/scope record（用户显式授权 Pilot-Jones Step 4a 大包）：专题已远超 15 个 S 文件，但本次不是新方向或 topic 膨胀；它回到原始目标“GW Step 1–4a 完整流程”，只对 D056 的不可获取全文门作一次性带债豁免。允许新增 S079、Step 4a 专属 MVE 闭包与 worker-log；明确止于 provisional verdict，不进入 Step 5/Contract/Execute。
 - **[2026-07-23]** [D063] Inflation/scope record：允许新增 S080 和 complex-model salvage 隔离闭包。原因是 T002 暴露 canonical model 不含所假设的物理结构；这是原 Pilot-Jones Step 4a 的模型充分性修复，不是新方向或新 topic。仍止于 provisional verdict。
 - **[2026-07-23]** [D064] Inflation/scope record：允许新增 S081 和 T004 semantic-repair 隔离闭包。原因是 V038 证明 T003 的 tests/SHA/raw PASS 没覆盖信道注入、pre-channel pilot、RX→TX tapped baseline、PMD oracle 和 gate 分层语义；这是 Step 4a 证据修复，不是新方向。T003 artifacts 保留且不得覆盖，仍止于 provisional verdict。
+- **[2026-07-24]** [D065] Inflation/scope record：允许新增 T005 temporal-adjudication
+  隔离闭包，不新建 S082。原因是 V039 证明 T004 的 25 tests 未覆盖 component
+  时间尺度与跨进程 determinism；这是同一 Step 4a 模型充分性终审，不是新方向。
+  T003/T004 artifacts 均保留，T005 不搜索新方法，仍止于 provisional verdict。
 
 ## 不变量（动任何一条必须重新讨论）
 

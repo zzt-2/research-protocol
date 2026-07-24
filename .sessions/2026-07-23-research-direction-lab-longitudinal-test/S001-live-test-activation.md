@@ -177,3 +177,46 @@ T003 自包含任务书、epoch 5 control guard 和 current-owner 同步已完�
 
 T004 自包含任务书与 epoch 6 control guard 完成后交用户转发 GLM。用户把当前阶段
 明确视为真实运行测试，运行一段后回原 system design 对话做磁盘证据审计。
+
+> 2026-07-24 续接 | T004 主控验收与 T005 授权 | 状态：T005_READY
+
+### T004 主控接收验收
+
+- 执行提交 `9a250e1589bdd583ad2df2ca788eaa43c71aadfd`，fresh tests
+  `25 passed`；T003 五项中 signal/noise、passive PDL、pre-channel pilot、
+  RX→TX target、gate separation 的工程修复成立。
+- V039 发现第六项上游语义：M2/M4 每 64 symbols iid 重抽 component Jones
+  U/V，而 T003/T004 自己把 PDL/PMD 定位为器件/光纤损伤；canonical R(theta)
+  已负责 SOP 动态。该 25.6 ns 跳变无物理来源。
+- 固定器件反事实使 1 dB PDL 的 impairment-added headroom 从原报告
+  0.69–0.91 dB 降到 validation/test 的 0.0146/0.00445 dB，正面 problem gate
+  被推翻。
+- 另发现 same-seed 跨 Python process 不同（内建 hash seed）、contract
+  N=50000/runner 20000、10-seed/8-seed 和假 contract SHA。故 T004 只按
+  `PARTIAL_REUSABLE_SEMANTIC_REPAIR` 接收，科学 provisional verdict FAIL。
+- 这是 live test 的第二次真实接收阻断：大包和 25 tests 没能替代“新增随机过程
+  的时间尺度是否物理正确”检查；前台 master 没把 PARTIAL 当作继续找方法的理由。
+
+### T005 包选择
+
+1. 只做 fixed/有来源慢变 component 的 temporal-semantics 终审、deterministic
+   seed/SHA 闭包与正式 paired headroom；不再增加方法候选。
+2. 同包覆盖 operational 与 adversarial 两个已注册条件、4/6 pilots、M0/M2/M3
+   和 10+10 fresh seeds。primary fixed component 若关闭 <0.5 dB 余量，就关闭
+   complex component rescue axis。
+3. 排除修补 T004 原目录和继续试 P4/P5：旧 T004 必须保留为失败证据；其正面门
+   已被时间模型伪影解释。
+
+## 决策引用
+
+- formal D065：T004 正面门失效，授权 T005 temporal adjudication（新建）。
+- V039：T004 主控接收 FAIL scientific / PARTIAL engineering（新建）。
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是；仍为 Pilot-Jones formal GW Step 4a 的模型
+  充分性终审，不进 Step 5，不修改 protected history/Skill/controller，不恢复 Scout。
+
+## 后续
+
+T005 自包含任务书与 epoch 7 control guard完成后交用户转发 GLM。

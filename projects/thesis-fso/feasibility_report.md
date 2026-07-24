@@ -1053,6 +1053,15 @@ D063 授权的 complex-Jones/PMD/PDL 模型充分性救活已完成，**provisio
 > 引用为论文负面结果。complex-Jones/PMD/PDL 继续 UNRESOLVED；D064/T004 先通过
 > semantic repair tests 再重评。
 
+> **第二次主控失效 amendment（V039/D065，2026-07-24）**：T004 修复的
+> post-component noise、passive PDL、pre-channel pilot、RX→TX target 与 gate
+> separation 可复用，但其 `PROBLEM_SURVIVES_METHOD_CANDIDATES_FAIL` 不得引用。
+> M2/M4 每 64 symbols iid 重抽 component Jones U/V，相当于无来源的 25.6 ns
+> 器件跳变；固定 1 dB component 后，impairment-added Q² headroom 在
+> validation/test 仅 0.0146/0.00445 dB。T004 还存在 Python hash 跨进程不确定、
+> contract N/seed 数与 runner 不符及伪 contract SHA。D065/T005 只做 fixed/有来源
+> 慢变 component 的 temporal adjudication 和复现闭包；不再增加方法候选。
+
 ### 可复用沉淀（Kill 路径）
 
 - **可复用负面/边界材料**：real-rotation OSL Jones 估计的结构性良态论证——固定 EMA 达 oracle，故无稳定化方法可发表（除非信道有真实频变 PMD/PDL）。排除整个"pilot-LS 稳定化"子族于 unitary real-rotation 信道。
