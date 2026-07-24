@@ -1,0 +1,3091 @@
+{
+ "label": "T005_validation",
+ "experiment": "PILOT_JONES_TEMPORAL_SEMANTICS_ADJUDICATION_PACKAGE",
+ "contract_sha256": "9ad9b552bd5d25eeef3e0097b1a8782a58032df4b4dcce600ca23c72ac44e60c",
+ "source_sha256": {
+  "generator": "5cefac97d120e5590905ae36ab20cabc8832a6c556368b1d9f154a2a8091818c",
+  "gg_time": "d8e7929d00d885eccf111eb96d80ecd3822b065cbf3eca09ed31912c3da73113",
+  "params": "0e87c53364461478eddcd81426d8e04646270c3ea7aa717e3c3b28c5dd2a99e9",
+  "contract": "9ad9b552bd5d25eeef3e0097b1a8782a58032df4b4dcce600ca23c72ac44e60c",
+  "temporal_channel": "933e4268a2190a63251a118023f208ddedc69a43a589b6d25141446fd8a2271d",
+  "baselines_and_oracle": "e2ab5f17d221263934ed7de4a35d75961ef5577fb51f22760308a2c7298b9512",
+  "run_probe": "f26ab2807f0db706cfb57f30e7c5d6c1aae4eb502441ffdbffda7383315bf933",
+  "runner": "6066eeb8485d153979644cb6b5002503965424d595a44719f8e33953e7c59fe7"
+ },
+ "params": {
+  "block_size": 64,
+  "t_s": 4e-10,
+  "f_g": 100.0,
+  "sop_rate": 8e-06,
+  "N": 20000,
+  "warmup_frac": 0.1,
+  "taps": 7,
+  "mu": 0.001,
+  "r2": 1.0,
+  "n_taps_b3": 3,
+  "pilots": [
+   4,
+   6
+  ],
+  "conditions": {
+   "operational": {
+    "alpha": 4.2,
+    "beta": 1.4,
+    "gamma_bar": 100.0
+   },
+   "adversarial": {
+    "alpha": 2.0,
+    "beta": 1.0,
+    "gamma_bar": 50.0
+   }
+  },
+  "ema_alpha": 0.9,
+  "b2_lambda_frozen": 0.1,
+  "cells": [
+   {
+    "model_id": "M0",
+    "pdl_db": 0.0,
+    "dgd_ps": 0.0,
+    "tag": "M0_control"
+   },
+   {
+    "model_id": "M2",
+    "pdl_db": 1.0,
+    "dgd_ps": 0.0,
+    "tag": "M2_pdl1dB"
+   },
+   {
+    "model_id": "M3",
+    "pdl_db": 0.0,
+    "dgd_ps": 6.0,
+    "tag": "M3_dgd6ps"
+   }
+  ],
+  "val_seeds": [
+   7400,
+   7401,
+   7402,
+   7403,
+   7404,
+   7405,
+   7406,
+   7407,
+   7408,
+   7409
+  ],
+  "test_seeds": [
+   7500,
+   7501,
+   7502,
+   7503,
+   7504,
+   7505,
+   7506,
+   7507,
+   7508,
+   7509
+  ]
+ },
+ "raw_rows": [
+  {
+   "condition": "operational",
+   "pilot_count": 4,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7400,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 4,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7401,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 4,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7402,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.00014819205690574984
+    },
+    "B2": {
+     "ber": 0.0005186721991701245
+    },
+    "O": {
+     "ber": 0.00012966804979253112,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 4,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7403,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.00025933609958506224
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 4,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7404,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 4,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7405,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 4,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7406,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 4,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7407,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 4,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7408,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 4,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7409,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.00014819205690574984
+    },
+    "B2": {
+     "ber": 0.0007409602845287492
+    },
+    "O": {
+     "ber": 0.00012966804979253112,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 4,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7400,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 4,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7401,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 4,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7402,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.00025933609958506224
+    },
+    "B2": {
+     "ber": 0.0014078245406046236
+    },
+    "O": {
+     "ber": 0.00020376407824540603,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 4,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7403,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 3.704801422643746e-05
+    },
+    "B2": {
+     "ber": 0.00044457617071724955
+    },
+    "O": {
+     "ber": 3.704801422643746e-05,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 4,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7404,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 4,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7405,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 4,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7406,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 4,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7407,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 4,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7408,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 4,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7409,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0004445761707172496
+    },
+    "B2": {
+     "ber": 0.0015930646117368109
+    },
+    "O": {
+     "ber": 0.00027786010669828096,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 4,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7400,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 4,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7401,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 4,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7402,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.00011114404267931239
+    },
+    "B2": {
+     "ber": 0.0007409602845287492
+    },
+    "O": {
+     "ber": 9.262003556609365e-05,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 4,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7403,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 3.704801422643746e-05
+    },
+    "B2": {
+     "ber": 0.00014819205690574984
+    },
+    "O": {
+     "ber": 1.852400711321873e-05,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 4,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7404,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 4,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7405,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 4,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7406,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 4,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7407,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 4,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7408,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 4,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7409,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.00012966804979253112
+    },
+    "B2": {
+     "ber": 0.0009076763485477179
+    },
+    "O": {
+     "ber": 9.262003556609365e-05,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 6,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7400,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 6,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7401,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 6,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7402,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.00012966804979253112
+    },
+    "B2": {
+     "ber": 0.0003334321280379372
+    },
+    "O": {
+     "ber": 0.00012966804979253112,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 6,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7403,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 9.262003556609365e-05
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 6,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7404,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 6,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7405,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 6,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7406,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 6,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7407,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 6,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7408,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 6,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7409,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.00012966804979253112
+    },
+    "B2": {
+     "ber": 0.00042605216360403083
+    },
+    "O": {
+     "ber": 0.00012966804979253112,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 6,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7400,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 6,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7401,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 6,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7402,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.00027786010669828096
+    },
+    "B2": {
+     "ber": 0.0010743924125666865
+    },
+    "O": {
+     "ber": 0.00020376407824540603,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 6,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7403,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 1.852400711321873e-05
+    },
+    "B2": {
+     "ber": 0.0002963841138114997
+    },
+    "O": {
+     "ber": 3.704801422643746e-05,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 6,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7404,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 6,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7405,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 6,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7406,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 6,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7407,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 6,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7408,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 6,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7409,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.00042605216360403083
+    },
+    "B2": {
+     "ber": 0.0009632483698873741
+    },
+    "O": {
+     "ber": 0.00027786010669828096,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 6,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7400,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 6,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7401,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 6,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7402,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.00012966804979253112
+    },
+    "B2": {
+     "ber": 0.00046310017783046827
+    },
+    "O": {
+     "ber": 9.262003556609365e-05,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 6,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7403,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 3.704801422643746e-05
+    },
+    "B2": {
+     "ber": 9.262003556609365e-05
+    },
+    "O": {
+     "ber": 1.852400711321873e-05,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 6,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7404,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 6,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7405,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 6,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7406,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 6,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7407,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 6,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7408,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "operational",
+   "pilot_count": 6,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7409,
+   "n_eval": 13496,
+   "gamma_bar": 100.0,
+   "alpha": 4.2,
+   "beta": 1.4,
+   "arms": {
+    "B1": {
+     "ber": 0.00012966804979253112
+    },
+    "B2": {
+     "ber": 0.0005557202133965619
+    },
+    "O": {
+     "ber": 9.262003556609365e-05,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 4,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7400,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0002408120924718435
+    },
+    "B2": {
+     "ber": 0.0018709247184350917
+    },
+    "O": {
+     "ber": 0.00020376407824540603,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 4,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7401,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0009262003556609365
+    },
+    "B2": {
+     "ber": 0.00364922940130409
+    },
+    "O": {
+     "ber": 0.0007039122703023118,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 4,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7402,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.026026229994072315
+    },
+    "B2": {
+     "ber": 0.05210803200948429
+    },
+    "O": {
+     "ber": 0.023858921161825725,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 4,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7403,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.02204356846473029
+    },
+    "B2": {
+     "ber": 0.04682868998221695
+    },
+    "O": {
+     "ber": 0.020987700059276825,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 4,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7404,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.002000592768227623
+    },
+    "B2": {
+     "ber": 0.007668938944872555
+    },
+    "O": {
+     "ber": 0.0019079727326615295,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 4,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7405,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 4,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7406,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 4,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7407,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 4,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7408,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 4,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7409,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.04742145820983995
+    },
+    "B2": {
+     "ber": 0.08324688796680497
+    },
+    "O": {
+     "ber": 0.044772525192649675,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 4,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7400,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0005557202133965619
+    },
+    "B2": {
+     "ber": 0.0033713692946058093
+    },
+    "O": {
+     "ber": 0.0003334321280379372,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 4,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7401,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0015745406046235922
+    },
+    "B2": {
+     "ber": 0.0057794902193242445
+    },
+    "O": {
+     "ber": 0.0011484884410195614,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 4,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7402,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.035417901600474214
+    },
+    "B2": {
+     "ber": 0.06446354475400119
+    },
+    "O": {
+     "ber": 0.03275044457617071,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 4,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7403,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.029471695317131
+    },
+    "B2": {
+     "ber": 0.05872110254890338
+    },
+    "O": {
+     "ber": 0.026748666271487847,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 4,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7404,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0037788974510966212
+    },
+    "B2": {
+     "ber": 0.011336692353289865
+    },
+    "O": {
+     "ber": 0.0031490812092471844,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 4,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7405,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 4,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7406,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 4,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7407,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 4,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7408,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 4,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7409,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.058091286307053944
+    },
+    "B2": {
+     "ber": 0.099084914048607
+    },
+    "O": {
+     "ber": 0.05555349733254297,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 4,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7400,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0004075281564908121
+    },
+    "B2": {
+     "ber": 0.0021302608180201544
+    },
+    "O": {
+     "ber": 0.0003334321280379372,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 4,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7401,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0006668642560758743
+    },
+    "B2": {
+     "ber": 0.003704801422643746
+    },
+    "O": {
+     "ber": 0.0005742442205097807,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 4,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7402,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.02669309425014819
+    },
+    "B2": {
+     "ber": 0.051422643746295196
+    },
+    "O": {
+     "ber": 0.02478512151748666,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 4,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7403,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.021969472436277414
+    },
+    "B2": {
+     "ber": 0.04605068168346177
+    },
+    "O": {
+     "ber": 0.019876259632483698,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 4,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7404,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.001982068761114404
+    },
+    "B2": {
+     "ber": 0.007780082987551867
+    },
+    "O": {
+     "ber": 0.0018709247184350917,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 4,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7405,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 4,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7406,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 4,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7407,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 4,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7408,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 4,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7409,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.047625222288085356
+    },
+    "B2": {
+     "ber": 0.08810017783046828
+    },
+    "O": {
+     "ber": 0.0444020450503853,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 6,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7400,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.00031490812092471845
+    },
+    "B2": {
+     "ber": 0.0012040604623592176
+    },
+    "O": {
+     "ber": 0.00020376407824540603,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 6,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7401,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0008150563129816241
+    },
+    "B2": {
+     "ber": 0.0023525489033787788
+    },
+    "O": {
+     "ber": 0.0007039122703023118,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 6,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7402,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.025322317723770006
+    },
+    "B2": {
+     "ber": 0.0438092768227623
+    },
+    "O": {
+     "ber": 0.023858921161825725,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 6,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7403,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.021413752222880854
+    },
+    "B2": {
+     "ber": 0.037029490219324245
+    },
+    "O": {
+     "ber": 0.020987700059276825,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 6,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7404,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0020191167753408415
+    },
+    "B2": {
+     "ber": 0.005223770005927683
+    },
+    "O": {
+     "ber": 0.0019079727326615295,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 6,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7405,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 6,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7406,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 6,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7407,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 6,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7408,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 6,
+   "cell": "M0_control",
+   "model_id": "M0",
+   "pdl_db": 0.0,
+   "dgd_ps": 0.0,
+   "seed": 7409,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.04642116182572614
+    },
+    "B2": {
+     "ber": 0.07026155898043865
+    },
+    "O": {
+     "ber": 0.044772525192649675,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 6,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7400,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0005557202133965619
+    },
+    "B2": {
+     "ber": 0.0021117368109069357
+    },
+    "O": {
+     "ber": 0.0003334321280379372,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 6,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7401,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0014448725548310611
+    },
+    "B2": {
+     "ber": 0.004371665678719621
+    },
+    "O": {
+     "ber": 0.0011484884410195614,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 6,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7402,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.03476956135151156
+    },
+    "B2": {
+     "ber": 0.057128037937166566
+    },
+    "O": {
+     "ber": 0.03275044457617071,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 6,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7403,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.028304682868998222
+    },
+    "B2": {
+     "ber": 0.04690278601066983
+    },
+    "O": {
+     "ber": 0.026748666271487847,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 6,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7404,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.003593657379964434
+    },
+    "B2": {
+     "ber": 0.008243183165382336
+    },
+    "O": {
+     "ber": 0.0031490812092471844,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 6,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7405,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 6,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7406,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 6,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7407,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 6,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7408,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 6,
+   "cell": "M2_pdl1dB",
+   "model_id": "M2",
+   "pdl_db": 1.0,
+   "dgd_ps": 0.0,
+   "seed": 7409,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.05707246591582691
+    },
+    "B2": {
+     "ber": 0.08422866034380558
+    },
+    "O": {
+     "ber": 0.05555349733254297,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 6,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7400,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0004445761707172496
+    },
+    "B2": {
+     "ber": 0.0012040604623592176
+    },
+    "O": {
+     "ber": 0.0003334321280379372,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 6,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7401,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0007039122703023118
+    },
+    "B2": {
+     "ber": 0.002519264967397747
+    },
+    "O": {
+     "ber": 0.0005742442205097807,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 6,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7402,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.026359662122110255
+    },
+    "B2": {
+     "ber": 0.04416123295791345
+    },
+    "O": {
+     "ber": 0.02478512151748666,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 6,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7403,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.02093212803793717
+    },
+    "B2": {
+     "ber": 0.03641819798458802
+    },
+    "O": {
+     "ber": 0.019876259632483698,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 6,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7404,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.00203764078245406
+    },
+    "B2": {
+     "ber": 0.005798014226437463
+    },
+    "O": {
+     "ber": 0.0018709247184350917,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 6,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7405,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 6,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7406,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 6,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7407,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 6,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7408,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.0
+    },
+    "B2": {
+     "ber": 0.0
+    },
+    "O": {
+     "ber": 0.0,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  },
+  {
+   "condition": "adversarial",
+   "pilot_count": 6,
+   "cell": "M3_dgd6ps",
+   "model_id": "M3",
+   "pdl_db": 0.0,
+   "dgd_ps": 6.0,
+   "seed": 7409,
+   "n_eval": 13496,
+   "gamma_bar": 50.0,
+   "alpha": 2.0,
+   "beta": 1.0,
+   "arms": {
+    "B1": {
+     "ber": 0.04616182572614108
+    },
+    "B2": {
+     "ber": 0.07133595139300533
+    },
+    "O": {
+     "ber": 0.0444020450503853,
+     "info_class": "reference_truth_assisted"
+    }
+   }
+  }
+ ]
+}

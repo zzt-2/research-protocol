@@ -1,0 +1,156 @@
+{
+ "label": "T005 Phase A failure reproduction + Phase B semantic gates",
+ "experiment": "PILOT_JONES_TEMPORAL_SEMANTICS_ADJUDICATION_PACKAGE_phaseAB",
+ "phase_A": {
+  "t004_blockwise_redraw": {
+   "defect": "T004 build_jones_truth redraws component U/V every 64 symbols",
+   "block_duration_ns": 25.6,
+   "n_blocks": 32,
+   "max_adjacent_block_jones_diff": 1.632770511858027,
+   "all_blocks_identical": false,
+   "expected_semantics": "per-block redraw -> adjacent blocks differ (UNSOURCED 25.6 ns jumps)",
+   "reproduced": true,
+   "source_line": "explore/pilot-jones-complex-repair/semantic_channel.py:106-133 (build_jones_truth, per-block loop)"
+  },
+  "t004_hash_nondeterminism": {
+   "defect": "T004 seed formula uses built-in hash(model_id) (process-randomized)",
+   "uses_hash_model_id": true,
+   "source_line": "explore/pilot-jones-complex-repair/run_repair.py:163",
+   "seed_formula_snippet": "int(1e6 + seed * 31 + hash(model_id) % 997)",
+   "expected_semantics": "same seed/model/params in two processes -> DIFFERENT fingerprints",
+   "reproduced": true
+  },
+  "t004_contract_closure": {
+   "defect": "T004 contract N/seeds/SHA do not match the runner/raw",
+   "contract_N": 50000,
+   "runner_N": 20000,
+   "N_match": false,
+   "contract_test_seeds_count": 10,
+   "runner_test_seeds_count": 8,
+   "seeds_match": false,
+   "raw_contract_sha256": null,
+   "is_real_sha256": false,
+   "expected_semantics": "contract N=50000, runner N=20000; contract 10 test seeds, runner 8; raw contract_sha256 is the filename string not a hash",
+   "reproduced": true,
+   "source_lines": {
+    "contract_N": "explore/pilot-jones-complex-repair/repair-contract.yaml:97 (value: 50000)",
+    "runner_N": "explore/pilot-jones-complex-repair/run_all_repair.py:33 (N=20000)",
+    "contract_seeds": "explore/pilot-jones-complex-repair/repair-contract.yaml:119 (7200..7209)",
+    "runner_seeds": "explore/pilot-jones-complex-repair/run_all_repair.py:37 (7200..7207)",
+    "raw_contract_sha": "results/pilot-jones-complex-repair/result.json (contract_sha256 literal)"
+   }
+  },
+  "fixed_counterfactual": {
+   "defect": "fixed-component counterfactual: T004 positive signal vanishes",
+   "seeds": [
+    7500,
+    7501,
+    7502,
+    7503,
+    7504
+   ],
+   "per_seed": [
+    {
+     "model_id": "M2",
+     "seed": 7500,
+     "Q2_M0_B_dB": 11.095155942844151,
+     "Q2_M0_O_dB": 11.095155942844151,
+     "headroom_M0_dB": 0.0,
+     "Q2_imp_B_dB": 11.095155942844151,
+     "Q2_imp_O_dB": 11.095155942844151,
+     "headroom_imp_dB": 0.0,
+     "impairment_added_over_M0_dB": 0.0
+    },
+    {
+     "model_id": "M2",
+     "seed": 7501,
+     "Q2_M0_B_dB": 8.835787322770724,
+     "Q2_M0_O_dB": 9.350300031248711,
+     "headroom_M0_dB": 0.5145127084779872,
+     "Q2_imp_B_dB": 7.867241710667043,
+     "Q2_imp_O_dB": 8.564063280851778,
+     "headroom_imp_dB": 0.6968215701847349,
+     "impairment_added_over_M0_dB": 0.18230886170674765
+    },
+    {
+     "model_id": "M2",
+     "seed": 7502,
+     "Q2_M0_B_dB": 11.095155942844151,
+     "Q2_M0_O_dB": 11.095155942844151,
+     "headroom_M0_dB": 0.0,
+     "Q2_imp_B_dB": 11.095155942844151,
+     "Q2_imp_O_dB": 11.095155942844151,
+     "headroom_imp_dB": 0.0,
+     "impairment_added_over_M0_dB": 0.0
+    },
+    {
+     "model_id": "M2",
+     "seed": 7503,
+     "Q2_M0_B_dB": 8.720467797144885,
+     "Q2_M0_O_dB": 8.866267914718991,
+     "headroom_M0_dB": 0.14580011757410638,
+     "Q2_imp_B_dB": 8.084713418273436,
+     "Q2_imp_O_dB": 8.379346534477891,
+     "headroom_imp_dB": 0.2946331162044551,
+     "impairment_added_over_M0_dB": 0.1488329986303487
+    },
+    {
+     "model_id": "M2",
+     "seed": 7504,
+     "Q2_M0_B_dB": 11.095155942844151,
+     "Q2_M0_O_dB": 11.095155942844151,
+     "headroom_M0_dB": 0.0,
+     "Q2_imp_B_dB": 11.095155942844151,
+     "Q2_imp_O_dB": 11.095155942844151,
+     "headroom_imp_dB": 0.0,
+     "impairment_added_over_M0_dB": 0.0
+    }
+   ],
+   "mean_impairment_added_over_M0_dB": 0.06622837206741927,
+   "t004_iid_block_headroom_dB_reported": 0.77,
+   "expected_semantics": "fixed component -> impairment-added headroom << 0.5 dB (direction matches V039)",
+   "reproduced": true
+  }
+ },
+ "phase_B": {
+  "passive_pdl": {
+   "sigma_max": 1.0,
+   "sigma_min": 0.8912509381337456,
+   "pass": true
+  },
+  "fixed_component_across_frame": {
+   "jones_shape": [
+    2,
+    2
+   ],
+   "is_single_fixed_matrix": true,
+   "pass": true
+  },
+  "deterministic_seed_in_process": {
+   "seed_M2_7500": 1232502,
+   "reproducible": true,
+   "pass": true
+  },
+  "dgd0_degeneracy": {
+   "max_abs_diff_clean_vs_component": 0.0,
+   "pass": true
+  },
+  "noise_untouched": {
+   "max_abs_diff": 1.5700924586837752e-16,
+   "pass": true
+  },
+  "reference_recovery_m0_noiseless": {
+   "mean_abs_recovery_err_M0_noiseless": 0.0,
+   "pass": true
+  },
+  "reference_recovery_m2_m3_noiseless": {
+   "M2": {
+    "mean_abs_recovery_err_noiseless": 0.0
+   },
+   "M3": {
+    "mean_abs_recovery_err_noiseless": 9.9999949969528e-07
+   },
+   "pass": true
+  }
+ }
+}

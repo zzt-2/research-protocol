@@ -1,0 +1,215 @@
+# T005 contract — Pilot-Jones component TEMPORAL SEMANTICS adjudication
+#
+# FROZEN BEFORE any headroom probe (T005 Phase B, D065/V039 authorization).
+# Scope: GW Step 4a dimension D ONLY. Does NOT cross Step 5/Contract/Execute.
+#
+# This contract supersedes the per-block iid temporal model of T004's
+# `build_jones_truth()` (which redraws U/V every 64 symbols = every 25.6 ns
+# with no physical source) and fixes the three reproducibility closure defects
+# located by V039/D065 (Python `hash()` seed, contract N=50000 vs runner
+# N=20000, 10-seed contract vs 8-seed run, fake `contract_sha256`). The T004
+# signal/noise/pilot/target/gate engineering fixes (V038 defects #1-#5) are
+# INHERITED unchanged; T005 re-establishes the component channel on top of them.
+#
+# T003/T004 artifacts are IMMUTABLE failure/reusable evidence. This contract is
+# isolated in explore/pilot-jones-temporal-adjudication/ and must not modify any
+# shared/protected path or import T003 salvage code.
+#
+# owner: T005 (PILOT_JONES_TEMPORAL_SEMANTICS_ADJUDICATION_PACKAGE), epoch 7.
+
+schema_version: adjudication.pilot-jones-temporal.v1
+frozen: 2026-07-24
+authorization: D065 / V039 (epoch 7, temporal-semantics adjudication)
+worktree: "D:\\code\\study\\research-protocol\\.worktrees\\research-direction-lab-longitudinal-test"
+t004_commit_immutable: "9a250e1589bdd583ad2df2ca788eaa43c71aadfd"
+
+# ---------------------------------------------------------------------------
+# PRIMARY temporal model — the single decisive change of T005 (§3.1)
+# ---------------------------------------------------------------------------
+# canonical TX
+#   -> time-varying sqrt(h) R(theta)            [canonical, inherited]
+#   -> ONE FIXED passive component Jones / fixed PSP+DGD for the WHOLE frame
+#   -> same post-component AWGN (canonical n_post draw, inherited)
+#
+# The component truth (Jones / PSP basis / DGD) is generated ONCE per
+# realization and copied to every block of the frame. A real passive optical
+# component (fiber connector / PBS / ISO) does not redraw its principal states
+# every 25.6 ns; the canonical R(theta) already models the time-varying SOP.
+# Redrawing a random component basis per block is an UNSOURCED temporal model
+# (V039) and is only retained as an explicit UNVERIFIED_STRESS_ONLY reproduction
+# of the T004 artifact; it can never support a positive verdict.
+primary_temporal_model:
+  canonical_model: "r_canonical = sqrt(h)*R(theta)@s + n_post  (R=[[c,s],[-s,c]], inherited from T004)"
+  separation: "clean_original = sqrt(h)*R(theta)@s_original ; n_post = r_canonical - clean_original  (T004 defect #1 fix, inherited)"
+  repaired_model: "r_out = component_op_fixed(clean_pilot_frame) + n_post  (SAME n_post draw; component FIXED across frame)"
+  component_temporal_law:
+    primary: "ONE fixed component Jones U diag(1,10^(-PDL/20)) Vh / ONE fixed PSP basis + DGD, generated ONCE per realization, applied identically to every block"
+    rationale: "V039: per-block iid redraw = unsourced 25.6 ns jumps; canonical R(theta) already carries SOP dynamics. A passive component does not time-share its principal states at block rate."
+    sourcing_rule: "A SOURCED_SLOW_SENSITIVITY may be added ONLY if an already-read fulltext states a component time-scale; it must carry file:line and a time constant. No WebSearch. No file:line => not added."
+    sournced_slow_sensitivity_added: false
+  iid_per_block_retention:
+    status: "UNVERIFIED_STRESS_ONLY"
+    role: "ONLY to reproduce the T004 0.77-0.99 dB artifact and prove it vanishes under the fixed model; NEVER enters the primary table/verdict."
+
+pdl_model:
+  # PASSIVE PDL, sigma_max = 1 (a real component cannot amplify). Inherited
+  # unchanged from T004 defect #2 fix.
+  singular_values: "[1, 10^(-PDL_dB/20)]"
+  sigma_max: 1.0
+  cond: "10^(PDL_dB/20)"
+  verified_pdl_db: 1.0          # APPROXIMATE-verified (D064/D065), cond 1.12
+  note: "Primary cell uses verified 1 dB only. Stress PDL (3.5/6/9.5 dB) is UNVERIFIED_STRESS_ONLY."
+
+pmd_model:
+  pmd_acts_on: "the FULL pilot-bearing TX clean frame (T004 defect #3 fix, inherited)"
+  dgd0_degeneracy: "DGD=0 reduces to the SAME memoryless Jones (limiting-case gate)"
+  convolution_boundary: "FFT-circular forward AND oracle (identical convention) + PMD_GUARD=8 excluded from metric denominator (T004 §3.3, inherited)"
+  verified_dgd_ps: 6.0          # VERIFIED (Valjus sat.1553), 1.5% of T_S=400 ps
+  note: "Primary cell uses verified 6 ps only. Stress DGD (40/160 ps) is UNVERIFIED_STRESS_ONLY."
+  ordering: "h/theta/component ordering fixed: clean = sqrt(h)*R(theta)*s; component applied to clean; oracle undoes component, then R(-theta), then /sqrt(h) (T004 defect #5 fix, inherited)."
+
+# ---------------------------------------------------------------------------
+# DETERMINISTIC seed — the second decisive change of T005 (§3.2)
+# ---------------------------------------------------------------------------
+# No Python built-in hash() may enter a seed (V039: hash(model_id) is process-
+# randomized -> two subprocesses with the same seed/model/params disagree).
+# A fixed integer model_id + the canonical seed + a fixed offset is used. Same
+# params/seed -> bit-identical realization across two independent Python
+# subprocesses (regression-tested).
+deterministic_seed:
+  rule: "component-truth RNG seed = 1_000_000 + 31*canonical_seed + MODEL_ID_INT[model_id]"
+  forbidden: "built-in hash() of any object; string-derived seeds that depend on hash randomization"
+  model_id_int: {M0: 0, M2: 2, M3: 3}
+  reproducibility_target: "bit-identical realization fingerprint + jones_truth across two independent Python subprocesses with identical params/seed"
+
+# ---------------------------------------------------------------------------
+# FROZEN grid (§3.3) — two registered conditions, 4/6 pilots, three cells
+# ---------------------------------------------------------------------------
+# The grid is FROZEN here BEFORE any run. If runtime budget is insufficient, N
+# is shrunk here (and the code uses this same N); never change the grid after a
+# run. Total primary cells = 2 conditions x 2 pilots x 3 models = 12.
+grid:
+  conditions:
+    operational:   {alpha: 4.2, beta: 1.4, gamma_bar: 100.0}
+    adversarial:   {alpha: 2.0, beta: 1.0, gamma_bar: 50.0}
+  common:
+    block_size: 64
+    t_s: 4.0e-10                  # params.py SystemParams.T_S = 1/R_SYM, R_SYM=2.5e9
+    f_g: 100.0                    # params.py tau_c_from_fg -> tau_c=1.59 ms
+    sop_rate: 8.0e-6              # within sat.1553 LEO RSOP envelope (D053)
+    N: 20000                      # 20us << tau_c=1.59ms; bounded probe, runnable in-package
+    warmup_frac: 0.1
+    taps: 7
+    mu: 1.0e-3
+    r2: 1.0
+    n_taps_b3: 3
+  pilots: [4, 6]                  # registered sensitivity axis
+  cells:                          # primary cells only
+    - {model_id: M0, pdl_db: 0.0, dgd_ps: 0.0, verified: true,  tag: "M0_control"}
+    - {model_id: M2, pdl_db: 1.0, dgd_ps: 0.0, verified: true,  tag: "M2_pdl1dB"}     # APPROX-verified
+    - {model_id: M3, pdl_db: 0.0, dgd_ps: 6.0, verified: true,  tag: "M3_dgd6ps"}     # VERIFIED
+  stress_cells_for_iid_reproduction_only:
+    - {model_id: M2, pdl_db: 3.5, verified: UNVERIFIED_STRESS_ONLY}
+    - {model_id: M2, pdl_db: 6.0, verified: UNVERIFIED_STRESS_ONLY}
+    - {model_id: M2, pdl_db: 9.5, verified: UNVERIFIED_STRESS_ONLY}
+
+# ---------------------------------------------------------------------------
+# Seeds (disjoint from T002/T003/T004) (§3.3)
+# ---------------------------------------------------------------------------
+seed_plan:
+  excluded: [41,42,43,44,45,46,47,48,2000,2001,2002,2003,2004,3000,3001,3002,3003,3004,3005,3006,3007,3008,3009,5000,5001,5002,5003,5004,6000,6001,6002,6003,6004,6005,6006,6007,6008,6009,7001,7002,7100,7101,7102,7103,7104,7200,7201,7202,7203,7204,7205,7206,7207,7208,7209,7300,7301,7302,7303,7304,7305,7306,7307,7308,7309,4001]
+  reason: "T002/T003/T004 observed/val/test seeds excluded (T004 used 70xx/71xx/72xx/73xx); 4001 used by T004 tests."
+  semantic_validation_seeds: [7500, 7501]              # deterministic semantic gates
+  headroom_validation_seeds: [7400, 7401, 7402, 7403, 7404, 7405, 7406, 7407, 7408, 7409]   # B* selection (10 seeds)
+  headroom_test_seeds:        [7500, 7501, 7502, 7503, 7504, 7505, 7506, 7507, 7508, 7509]  # fresh test (10 seeds), disjoint from 74xx
+  disjoint_check: "all T005 seed pools ∩ T002/T003/T004 excluded = empty"
+
+# ---------------------------------------------------------------------------
+# Information access (inherited from T004, restated)
+# ---------------------------------------------------------------------------
+information_access:
+  receiver_visible: [pilot_RX_rX_rY, known_pilot_symbols, pilot_mask, own_previous_H_estimate, per_block_cond, per_block_RX_energy]
+  truth_never_used_by_deployable: [true_h, true_theta, true_Jones_fixed, TX_data_sX_sY, future_symbols, true_PSP_basis, true_DGD]
+  oracle_only_tagged: [fixed component Jones + R(theta) + h -> O arm; scoring/Kill only, NEVER a Go opponent (FR-25)]
+
+# ---------------------------------------------------------------------------
+# Legal baselines + truth-assisted reference (§4)
+# ---------------------------------------------------------------------------
+baseline_ladder:
+  B1:       {method: B1, role: "single-tap block pilot LS + frozen EMA09 (historical conventional)"}
+  B2:       {method: B2, role: "single-tap Tikhonov, lambda frozen on VALIDATION only"}
+  B_static: {method: B_static, role: "OPTIONAL pooled/cross-block tapped estimate; only if task-matched. Not added to pad the ladder."}
+  O:        {method: O, role: "truth-assisted reference; ceiling / Kill only, NEVER a Go opponent"}
+
+baseline_adjudication:
+  bstar_rule: "B* = strongest LEGAL CONVENTIONAL baseline (B1 or B2) FROZEN on VALIDATION. B2 lambda scanned on validation only. B_static only if task-matched; not added to pad numbers."
+  bstar_selection: "B* chosen using validation seeds ONLY, never test seeds. Test seeds only REUSE the frozen B*."
+  fairness: "B* and reference share pilot overhead, data mask, eval window, base realization, CMA config. Equal opportunity, not forced identical hyperparameters."
+  test_no_tuning: "B* frozen on validation; test seeds never feed back into B* selection or lambda."
+
+truth_assisted_reference:
+  M0_M2:
+    method: "per-symbol TRUE full channel exact inverse"
+    detail: "use the per-symbol true channel (sqrt(h)*R(theta) composed with the FIXED component Jones) to form the exact ML/nearest-channel decision on data symbols. For dual-QPSK implement >=16 joint symbol-pair candidates to avoid passing a colored-noise inverse off as an absolute ceiling."
+    property: "ceiling on what a deployable single-tap conventional estimator could approach; NOT a method Go opponent."
+  M3:
+    method: "exact frequency-domain inverse of the TRUE fixed PSP + DGD"
+    detail: "deconvolve the verified DGD=6 ps differential delay in the true PSP basis, then undo R(-theta) and /sqrt(h). Same FFT-circular convention as the forward apply."
+    noise_property: "PMD (unitary in PSP basis at DGD>0 with sigma=1) is noise-preserving up to the MMSE regularization; state the unitary-PMD noise-preservation property explicitly."
+    invalid_fallback: "if the reference cannot be proven a LEGAL ceiling, status = PARTIAL_ORACLE_INVALID and NO Kill is allowed from it."
+
+gate_separation:
+  problem_survives: >
+    Determined ONLY by: (1) semantic gates all PASS; (2) legal B* -> valid O has a
+    pre-registered headroom on the PRIMARY fixed/verified cells; (3) the gap is
+    impairment-ADDED over the paired M0 (not a common deep-fade floor); (4)
+    direction-stable across seeds (paired per-seed direction supports aggregate);
+    (5) the verified physical range supports a positive verdict. This gate NEVER
+    reads a proposed method (none are run in T005).
+  forbidden: "reading any method candidate into the problem gate; AND-ing anything method-side."
+
+# ---------------------------------------------------------------------------
+# Pre-registered adjudication (§5) — written BEFORE any primary run
+# ---------------------------------------------------------------------------
+thresholds:
+  semantic_oracle_recovery: 1.0e-10
+  oracle_anomaly: "any receiver-visible arm systematically better than the reference -> ORACLE_INVALID, stop, root-cause"
+  problem_gap_q2_dB: 0.5
+  bootstrap_ci: "per-cell paired (impairment_added_over_M0) point estimate + bootstrap 95% CI across test seeds; report CI upper bound"
+
+pre_registered_verdict:
+  KILL: >
+    M2 and M3 in BOTH conditions, at BOTH 4 and 6 pilots: the PRIMARY
+    impairment-added headroom (impairment_added_over_M0) POINT ESTIMATE and the
+    UPPER BOUND of its bootstrap 95% CI are BOTH <0.5 dB.
+    -> KILL_COMPLEX_COMPONENT_RESCUE_AXIS_TEMPORAL_PRIMARY.
+  SURVIVES: >
+    ANY verified primary cell has impairment-added headroom point estimate >=0.5
+    dB AND the CI / paired per-seed direction support it.
+    -> PROBLEM_SURVIVES_FIXED_COMPONENT. T005 STILL does NOT run any method; hands
+    back to main control for separate adjudication.
+  UNRESOLVED: >
+    CI straddles 0.5 dB OR the reference does not close (oracle anomaly / not a
+    legal ceiling).
+    -> UNRESOLVED_TEMPORAL_PRIMARY / PARTIAL_ORACLE_INVALID.
+  iid_stress_rule: "iid-per-block stress (T004 artifact reproduction) is NEVER allowed to trigger a positive verdict, regardless of magnitude."
+
+scope_ceiling:
+  - "Does NOT close the whole Pilot-Jones family."
+  - "The 4-paper fulltext debt (D056) remains BLOCKED."
+  - "Does NOT enter Step 5/Contract/Execute."
+
+# ---------------------------------------------------------------------------
+# Architecture summary (FR-11)
+# ---------------------------------------------------------------------------
+architecture_summary:
+  inputs_information_access: "pilot RX (rX,rY) where pilot/data share ONE fixed component operator; known pilot symbols; pilot mask; per-block single-tap LS estimate; per-block cond; per-pilot RX energy"
+  state: "per-block single-tap LS Jones estimate; optional EMA smoothing (B1) / Tikhonov regularization (B2)"
+  output_action: "per-data-symbol derotation (single-tap inverse); reference uses true fixed channel"
+  decision_granularity: "per-block estimate; per-symbol derotation"
+  comparison_paradigm: "all arms share ONE impaired realization / pilots / mask / eval window / CMA; differ only in how the inverse/reference is formed"
+  objective: "minimize fixed_label_ber (primary) and pi_ber (secondary) on data symbols"
+  task_matched_conventional: "B2 Tikhonov (M2) / B1 EMA09 (M3)"
+  known_simplification_bias:
+    - "Fixed passive component across frame under-states any real slow component drift -> biases AGAINST a positive signal (conservative for a Kill)."
+    - "PMD as short 2x2 FIR (sinc fractional delay); under-states ISI vs real fiber PMD -> bias AGAINST memory (conservative for a positive PMD signal)."
