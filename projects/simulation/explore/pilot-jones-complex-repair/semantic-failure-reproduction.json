@@ -1,0 +1,57 @@
+{
+  "schema": "t004.semantic-failure-reproduction.v1",
+  "generated": "2026-07-23",
+  "authorization": "D064 (T004 PILOT_JONES_SEMANTIC_REPAIR_RETEST_PACKAGE, epoch 6)",
+  "t003_commit": "5445a2e8899928b8f69d9df811212e913155f8f9",
+  "test_file": "projects/simulation/tests/test_pilot_jones_complex_repair.py",
+  "test_result": "25 passed (7 legacy-regression proving the defects + 18 repair-semantic gates)",
+  "note": "The legacy-regression tests IMPORT the immutable T003 modules and assert the BUG is present (test PASSES when the defect reproduces). They are NOT allowed to edit T003 to make the failure disappear. The repair tests assert the FIXED behavior.",
+  "defects": [
+    {
+      "id": "D1_noise_placement_identity",
+      "old_behavior": "complex_jones_channel.py:104 applies the component Jones to the canonical RX r_canonical that ALREADY contains AWGN: r_out = J_b @ r_canonical. Oracle/B3 then invert J, which simultaneously undoes the noise transform, so the PDL 0->9.5 dB impaired realizations are bit-identical after inversion (a construction identity, not a physical null result).",
+      "expected_semantics": "Separate clean_original = sqrt(h) R(theta) @ s from the canonical realization; n_post = r_canonical - clean_original; apply the component operator to the CLEAN signal only and ADD the same n_post. The component must never touch n_post.",
+      "reproduced": true,
+      "reproduction_test": "test_legacy_noise_placement_identity + test_legacy_pdl_headroom_bit_identical_across_pdl",
+      "source_line": "complex_jones_channel.py:104 (r_out = J_b @ r_canonical); legacy result.json M2 BER ratio 2.0282 identical across PDL 0/3.5/6/9.5 dB",
+      "fix": "semantic_channel.separate_canonical + build_impaired_realization (component op on clean_component + n_post)"
+    },
+    {
+      "id": "D2_pdl_nonpassive_sigma_max_gt_1",
+      "old_behavior": "complex_jones_channel.py:142 uses g=[cond,1] so the max singular value = cond > 1, i.e. the 'PDL component' amplifies. A real passive component cannot amplify.",
+      "expected_semantics": "Passive PDL: singular values = [1, 10^(-PDL_dB/20)]; sigma_max=1, cond=10^(PDL_dB/20). Max transmissivity <= 1.",
+      "reproduced": true,
+      "reproduction_test": "test_legacy_pdl_nonpassive_sigma_max (asserts legacy sigma_max=cond>1)",
+      "source_line": "complex_jones_channel.py:142 (g = np.array([cond_target, 1.0]))",
+      "fix": "semantic_channel.pdl_singular_values -> [1, 10^(-PDL/20)]"
+    },
+    {
+      "id": "D3_pmd_pilot_skips_fir",
+      "old_behavior": "conventional_baselines.py:78-94 reconstructs pilot RX with a memoryless J@atm and never passes the pilot through the PMD FIR; the residual carries old-data ISI. Pilot and data do NOT traverse the same channel.",
+      "expected_semantics": "Pilots are injected into the TX frame BEFORE the channel; pilot and data then traverse the SAME component operator (memoryless Jones or PMD FIR) + the SAME post-component noise.",
+      "reproduced": true,
+      "reproduction_test": "test_legacy_pmd_pilot_skips_fir (asserts legacy pilot RX = memoryless J@atm+noise)",
+      "source_line": "conventional_baselines.py:78 (sig = J[b] @ atm; memoryless, PMD FIR skipped for pilots)",
+      "fix": "pilot_and_baselines.inject_pre_channel_pilots (re-run atmosphere+component on pilot-bearing TX frame, same n_post)"
+    },
+    {
+      "id": "D4_tapped_rx_to_rx_self_prediction",
+      "old_behavior": "conventional_baselines.py:139 trains the tapped LS with target=RX center (rows_Y.append([rx[p], ry[p]])), a near-identity self-prediction rather than a legal tapped equalizer trained on known TX pilots.",
+      "expected_semantics": "Tapped LS target = KNOWN TX pilots (rows_Y = pilot symbols). Input = receiver window; output = TX pilot symbol.",
+      "reproduced": true,
+      "reproduction_test": "test_legacy_b3_tapped_rx_to_rx_target (inspects legacy source for rows_Y.append([rx[p], ry[p]]))",
+      "source_line": "conventional_baselines.py:139 (rows_Y.append([rx[p], ry[p]]))",
+      "fix": "pilot_and_baselines.estimate_jones_tapped (rows_Y.append(ps[:, p]) — known TX pilot)"
+    },
+    {
+      "id": "D5_pmd_oracle_non_ceiling_and_gate_mixing",
+      "old_behavior": "salvage_methods.oracle_fde only inverts the component PMD, leaving the per-symbol SOP rotation R(theta) uncompensated, so receiver-visible B1 beats it on M3 6ps/40ps (B1 BER 0.0123/0.0129 < oracle 0.0191/0.0193). run_all.decide AND-s P1-beats-B3 into the problem-survival gate (survives = (pdl_grows or pmd_grows) and p1_cell is not None), so a method failure is misread as model-not-justified.",
+      "expected_semantics": "Oracle inverts the FULL polarization channel (component + R(theta) + sqrt(h)) and is a ceiling/Kill only. The problem-survival gate and the method-success gate must be SEPARATE functions; the problem gate never reads P.",
+      "reproduced": true,
+      "reproduction_test": "test_legacy_result_pmd_oracle_non_ceiling (asserts M3 6ps/40ps B1 BER < oracle BER from result.json) + test_legacy_gate_mixes_problem_and_method (inspects legacy decide source)",
+      "source_line": "salvage_methods.py:138-187 (FDE oracle omits R(theta)); run_all.py:283 (survives = ... and p1_cell is not None)",
+      "fix": "repair_methods.oracle_full_inverse (inverts component + R(-theta) + sqrt(h)); run_all_repair.problem_survives (no P) and method_succeeds (P vs B*) separated"
+    }
+  ],
+  "conclusion": "All five V038/D064 semantic defects reproduce against the immutable T003 code, and all five are fixed in the T004 repair (25/25 tests pass: legacy defects reproduced + repair semantic gates satisfied). The repair is allowed to proceed to the headroom probe."
+}

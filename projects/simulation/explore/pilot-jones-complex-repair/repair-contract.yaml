@@ -1,0 +1,172 @@
+# Repair contract — Pilot-Jones complex-Jones / PMD / PDL SEMANTIC repair (T004)
+#
+# FROZEN BEFORE any headroom probe (T004 Phase 1). This contract fixes the five
+# semantic defects located by V038/D064 and re-establishes the correct physical
+# signal/noise/pilot/channel model. It is scoped to GW Step 4a dimension D
+# (semantic repair + paired retest + conditional MVE). It does NOT cross into
+# Step 5/Contract/Execute.
+#
+# owner: T004 (PILOT_JONES_SEMANTIC_REPAIR_RETEST_PACKAGE), epoch 6.
+# T003 artifacts (explore/pilot-jones-complex-salvage/, results/...salvage/,
+# test_pilot_jones_complex_salvage.py) are IMMUTABLE failure evidence.
+
+schema_version: repair.pilot-jones-complex.v1
+frozen: 2026-07-23
+authorization: D064 (semantic repair + retest, epoch 6)
+worktree: "D:\\code\\study\\research-protocol\\.worktrees\\research-direction-lab-longitudinal-test"
+
+# ---------------------------------------------------------------------------
+# Primary signal chain (T004 §3.1) — CORRECTED from T003
+# ---------------------------------------------------------------------------
+# TX full frame (pilots replaced BEFORE the channel)
+#   -> sqrt(h) R(theta) atmospheric clean signal            [clean_atm]
+#   -> passive component Jones / PMD / PDL channel          [component op]
+#   -> post-component receiver AWGN (same canonical draw)   [n_post]
+#   -> receiver
+#
+# The component channel operator acts on the CLEAN signal ONLY, never on the
+# noise. This is the single most important correction (V038 defect #1).
+primary_signal_chain:
+  canonical_model: "r_canonical = sqrt(h)*R(theta)@s + n_post  (R=[[c,s],[-s,c]])"
+  separation: "clean_original = sqrt(h)*R(theta)@s_original ; n_post = r_canonical - clean_original"
+  repaired_model: "r_out = component_op(clean_pilot_frame) + n_post  (same n_post draw)"
+  forbidden: "applying the component operator to n_post or to r_canonical (T003 defect #1)"
+
+pdl_model:
+  # PASSIVE PDL: max transmissivity <= 1 (a real component cannot amplify).
+  primary_passive:
+    singular_values: "[1, 10^(-PDL_dB/20)]"
+    sigma_max: 1.0
+    cond: "10^(PDL_dB/20)"
+    note: "V038 defect #2 fix. T003 used g=[cond,1] -> sigma_max=cond>1 (amplifier)."
+  sensitivity_avg_power_normalization:
+    applied: false
+    note: "Only as an explicit, separately-reported sensitivity; NEVER alters primary SNR. None added without a source."
+
+pmd_model:
+  pmd_acts_on: "the FULL pilot-bearing TX clean frame, not just pilot samples"
+  dgd0_degeneracy: "DGD=0 must reduce to the SAME memoryless Jones"
+  convolution_boundary: "explicit guard/overlap OR exclude theory-justified transient from metric denominator; report excluded count"
+  m4_joint: "M4=PDL+PMD reuses ONE composable channel operator. Joint-axis verdict requires a legal joint oracle/B*; otherwise claim ceiling narrows."
+
+# ---------------------------------------------------------------------------
+# Paired realization (T004 §3.4)
+# ---------------------------------------------------------------------------
+paired_realization:
+  per_cell_seed: "generate h/theta/TX/noise/component-truth ONCE per (cell,seed); ALL of B/P/O share it"
+  seed_disjoint: "verified/stress/validation/test seeds explicitly disjoint; disjoint from T002/T003 observed seeds"
+
+# ---------------------------------------------------------------------------
+# Information access (unchanged spirit from T003, clarified)
+# ---------------------------------------------------------------------------
+information_access:
+  receiver_visible: [pilot_RX_rX_rY, known_pilot_symbols, pilot_mask, own_previous_H_estimate, per_block_cond, per_block_RX_energy]
+  truth_never_used_by_deployable: [true_h, true_theta, true_Jones, TX_data_sX_sY, future_symbols, true_PSP_delays]
+  oracle_only_tagged: [full polarization channel (component + R(theta) + h) -> O arm; scoring/Kill only, NEVER a Go opponent]
+
+# ---------------------------------------------------------------------------
+# Baseline ladder (T004 §5) — Go opponent is B* chosen by VALIDATION
+# ---------------------------------------------------------------------------
+baseline_ladder:
+  B0: {method: B0, role: "no-op / identity diagnostic"}
+  B1: {method: B1, role: "single-tap block pilot LS + frozen EMA09 (historical conventional)"}
+  B2: {method: B2, role: "regularized single-tap/polar inverse"}
+  B3_pdl: {method: B3_pdl, role: "passive-PDL task-matched regularized inverse/whitening"}
+  B3_pmd: {method: B3_pmd, role: "TRUE 2x2 tapped pilot-LS/LMS, target=known TX pilots (RX->TX, NOT RX->RX)"}
+  B4_fde: {method: B4_fde, role: "conventional frequency-domain/tapped equalizer (same legal pilots/state), if pilot budget allows"}
+  O: {method: O, role: "true full polarization channel + noise variance ZF/MMSE oracle, ceiling/Kill ONLY"}
+
+baseline_adjudication:
+  bstar_rule: "B* = the strongest LEGAL CONVENTIONAL baseline in each model family, FROZEN on VALIDATION. Candidates include B1 and task-matched B3/B4. A name 'B3' does NOT auto-make it strongest."
+  bstar_selection: "B* chosen using validation seeds ONLY, never test seeds."
+  fairness: "B* and P have same pilot overhead, same data mask, same eval window, same channel/noise, comparable tuning budget. Equal opportunity, not forced identical hyperparameters."
+  if_b1_beats_b3: "B1 is B* for that slice; diagnose why B3 is task-misfit; do not hide it."
+  if_no_b3_beats_noop_on_synthetic_pmd: "BASELINE_INVALID — no method verdict allowed."
+
+# ---------------------------------------------------------------------------
+# Parameter sources (FR-20) — consistent gamma_bar (T003 had contract/run mismatch)
+# ---------------------------------------------------------------------------
+parameter_sources:
+  alpha: {value: 2.0, source: "adversarial deep fade (alpha<1 strong scintillation); matches T003 run_all deep-turb probe", verified: true}
+  beta: {value: 1.0, source: "adversarial deep fade", verified: true}
+  gamma_bar: {value: 50.0, source: "17 dB SNR; deep-fade probe so structural headroom is visible rather than floor at BER=0; matches T003 run_all", verified: true}
+  sop_rate: {value: 8.0e-6, source: "historical D053; within sat.1553 LEO RSOP envelope", verified: true}
+  f_g: {value: 100.0, source: "params.py tau_c_from_fg; f_g=100 -> tau_c=1.59ms", verified: true}
+  block_size: {value: 64, source: "historical D053 pilot seam; block 64 << tau_c/T_S", verified: true}
+  n_pilots: {value: 6, source: "historical D053; overhead 6/64=9.375% <= 10%", verified: true}
+  N: {value: 50000, source: "bounded probe size; 50k@2.5GBaud=20us << tau_c", verified: true}
+  t_s: {value: 4.0e-10, source: "params.py T_S = 1/R_SYM, R_SYM=2.5e9", verified: true}
+
+# ---------------------------------------------------------------------------
+# VERIFIED vs UNVERIFIED_STRESS_ONLY ranges (T004 rule 6)
+# ---------------------------------------------------------------------------
+impairment_ranges:
+  verified_range:
+    pdl_db: {value: 1.0, note: "<1 dB component PDL -> cond 1.12", verified: APPROXIMATE}
+    dgd_ps: {value: 6.0, note: "<=6 ps DGD, 1.5% of T_S=400ps (Valjus sat.1553)", verified: VERIFIED}
+  stress_only_range:
+    pdl_db_stress: {values: [3.5, 6.0, 9.5], note: "cond 1.5/2/3; UNVERIFIED_STRESS_ONLY", verified: UNVERIFIED_STRESS_ONLY}
+    dgd_ps_stress: {values: [40.0, 160.0], note: "10%/40% of T_S; crosses ISI threshold; UNVERIFIED_STRESS_ONLY", verified: UNVERIFIED_STRESS_ONLY}
+
+# ---------------------------------------------------------------------------
+# Seeds (T004 §3.4 — disjoint from T002/T003)
+# ---------------------------------------------------------------------------
+seed_plan:
+  excluded: [41, 42, 43, 44, 45, 46, 47, 48, 2000, 2001, 2002, 2003, 2004, 3000, 3001, 3002, 3003, 3004, 3005, 3006, 3007, 3008, 3009, 5000, 5001, 5002, 5003, 5004, 6000, 6001, 6002, 6003, 6004, 6005, 6006, 6007, 6008, 6009]
+  reason: "T002/T003 observed/val/test seeds excluded."
+  semantic_validation_seeds: [7001, 7002]   # semantic-gate deterministic checks
+  headroom_validation_seeds: [7100, 7101, 7102, 7103, 7104]  # B* selection
+  headroom_test_seeds: [7200, 7201, 7202, 7203, 7204, 7205, 7206, 7207, 7208, 7209]  # fresh test
+  mve_test_seeds: [7300, 7301, 7302, 7303, 7304, 7305, 7306, 7307, 7308, 7309]  # fresh, disjoint from 72xx
+  disjoint_check: "all T004 seed pools ∩ T002/T003 excluded = empty"
+
+# ---------------------------------------------------------------------------
+# Gate separation (T004 §6 — THE core fix of defect #5)
+# ---------------------------------------------------------------------------
+gate_separation:
+  problem_survives: >
+    Determined ONLY by: (1) semantic gates all PASS; (2) legal B* -> valid O has a
+    pre-registered practical headroom; (3) the gap is impairment-ADDED over paired M0,
+    not a common deep-fade floor; (4) multi-seed direction-stable; (5) verified
+    physical range supports a positive physical verdict. This gate NEVER reads P.
+  method_succeeds: >
+    Evaluated ONLY after problem survives. P (frozen on validation) beats B* (frozen on
+    validation) on fresh test seeds. P losing B* => METHOD_CANDIDATES_FAIL_ON_
+    SURVIVING_PROBLEM, NOT model-not-justified.
+  forbidden: "AND-ing P1-beats-B3 into the problem-survival gate (T003 defect #5)."
+
+# ---------------------------------------------------------------------------
+# Thresholds (pre-registered)
+# ---------------------------------------------------------------------------
+thresholds:
+  semantic_oracle_recovery: 1.0e-10   # noiseless exact-truth oracle recovery error
+  oracle_anomaly: "any receiver-visible arm systematically better than oracle -> ORACLE_INVALID, stop verdict, root-cause"
+  problem_gap_q2_dB: 0.5              # defensible B*->O headroom to claim problem survives
+  note_q2_mapping: "If no defensible 0.5 dB Q^2/SNR-equivalent mapping exists -> PARTIAL_BLOCKED_THRESHOLD_NOT_JUSTIFIED, never substitute a BER ratio."
+
+# ---------------------------------------------------------------------------
+# Architecture summary (FR-11)
+# ---------------------------------------------------------------------------
+architecture_summary:
+  inputs_information_access: "pilot RX (rX,rY) where pilot/data share ONE channel operator; known pilot symbols; pilot mask; per-block LS/tapped estimate; cond; per-pilot RX energy"
+  state: "per-block Jones/tapped estimate; optional EMA smoothing; CMA butterfly (secondary)"
+  output_action: "per-data-symbol derotation/equalization, then optional blind CMA"
+  decision_granularity: "per-block estimate; per-symbol CMA update"
+  comparison_paradigm: "all arms share ONE impaired realization/pilots/mask/window/CMA; differ only in how the inverse/equalizer is formed"
+  objective: "minimize fixed_label_ber (primary) and pi_ber (secondary) on data symbols"
+  strongest_simple_prior: "B1 fixed EMA09"
+  task_matched_conventional: "B3_pdl whitening (M2) / B3_pmd tapped RX->TX (M3)"
+  known_simplification_bias:
+    - "PMD as short 2x2 FIR (sinc fractional delay); under-states ISI vs real fiber PMD -> bias AGAINST memory (conservative for a positive PMD signal)."
+
+# ---------------------------------------------------------------------------
+# Stop conditions
+# ---------------------------------------------------------------------------
+stop_conditions:
+  - "any semantic gate FAIL after one same-package repair attempt -> PARTIAL_SEMANTIC_REPAIR_BLOCKED, stop before headroom"
+  - "any receiver-visible arm systematically better than oracle -> ORACLE_INVALID, stop verdict, root-cause"
+  - "no B3/B4 beats no-op on synthetic PMD semantic case -> BASELINE_INVALID"
+  - "no defensible 0.5 dB Q^2 mapping -> PARTIAL_BLOCKED_THRESHOLD_NOT_JUSTIFIED"
+  - "M4 not closed -> claim ceiling narrows (no 'family/complex closed')"
+  - "problem does NOT survive -> KILL_COMPLEX_AXIS_AFTER_VALID_SEMANTICS_AND_CONVENTIONAL_BASELINE"
+  - "problem survives but all P candidates lose B* -> PROBLEM_SURVIVES_METHOD_CANDIDATES_FAIL"
