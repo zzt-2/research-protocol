@@ -7,17 +7,18 @@
 ### thesis-fso
 
 - **方向**：双偏振星地 OSL 场景中的 ML 应用方向探索；正式研究与 Direction Lab Scout/Sandbox 分层管理。
-- **正式状态**：`HIGH_ORDER_CPR_COMBINATION GW Step 4a T006_READY`（step4a D012/S014）。Direction Lab campaign 仍 dormant（D022 SCIENCE_FREEZE）。
+- **正式状态**：`B1_ADAPTIVE_PHASE_WINDOW GW Step 4a T007_READY`（step4a D013/S015/V001）。Direction Lab campaign 仍 dormant（D022 SCIENCE_FREEZE）。
 - **Direction Lab Sandbox 历史**：B003 已完成，状态 `COMPLETED_SANDBOX_VERIFIED`；批次事实以 completion events 和不可变 projection 为证据，B001–B003 数字均不可进入论文或正式材料。
 - **Pilot-Jones（已退出 current carrier）**：T005/D066/V040 在 fixed/verified
   complex component 下关闭 rescue axis（max point/CI upper=0.0804/0.2372dB）。
   scoped scientific Kill PASS、integrity PARTIAL；4 篇全文债与 entire-family 完备性仍保留。
 - **当前 Scout（dormant）**：Direction Lab Scout campaign 已 dormant（D022 SCIENCE_FREEZE；D061 确认无当前科学执行授权）。P03/U19 Headroom Atlas Stage A 历史（2026-07-19，S077/D059/V033）保留：runnable 代表子域 `LOCAL_NEGATIVE`，candidate `P03_DOMAIN_ADEQUACY_UNRESOLVED`（16QAM/receiver-CSI/coded-output 三轴 INFRASTRUCTURE_BLOCKED），domain/family 未关闭。
 - **P03 状态（D061 选项①，已选定）**：`PAUSED_RETURNED_TO_PORTFOLIO`——P03 暂停回候选池（**不是 Kill**，family 不关闭，沿用 D057/D058）。Sandbox `NOT_ENTERED`，Stage B 不触发。
-- **下一合法边界**：执行 T006，恢复 B10/B12 source closure，建立 equal-overhead
-  strongest-simple baseline 与 truth-assisted headroom；门通过则同包完成三个高阶 CPR
-  组合方法。**不进入 Step 5/Contract/Execute；不启动 B004/P03；不改 shared generator；
-  不 push。**
+- **T006 接收**：工程 PARTIAL；B10/B12 source identity、pilot/data channel 与
+  robust headroom gate 失效，科学 verdict FAIL，family 保持 UNRESOLVED。
+- **下一合法边界**：执行 T007，先验证 B1 固定窗失效结构与 receiver-visible
+  observability；门通过则同包完成三个自适应相位窗方法。**不进入
+  Step 5/Contract/Execute；不修 T006；不启动 B004/P03；不改 shared generator；不 push。**
 - **Atlas 强门入口**：`projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/atlas_gate.py`（唯一 receipt-bound 入口，19 tests 含独立对抗审查）。
 - **入口**：`projects/thesis-fso/master-state.md` → `projects/thesis-fso/direction-lab/README.md`；机器状态溯源见 `projects/thesis-fso/direction-lab/state/completion-events.jsonl` 与 `state/projections/`，`canonical-state.yaml` 不是正式研究授权源。
 

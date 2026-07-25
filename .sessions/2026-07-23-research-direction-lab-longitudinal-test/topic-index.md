@@ -4,14 +4,14 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v1
-  control_epoch: 8
+  control_epoch: 9
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: HIGH_ORDER_CPR_COMBINATION_METHOD
-  authority_pointer: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D012
-  decision_gate: 在 uniform 16-QAM 星地 GG+CFO/linewidth 条件下先判断 strongest-simple CPR 到 truth-assisted reference 是否有合法 headroom；若存活，同包判断 B10/B12 组合方法能否同时胜过传统 baseline 与两个 standalone component
+  active_lane: B1_ADAPTIVE_PHASE_WINDOW
+  authority_pointer: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D013
+  decision_gate: 先证明最优相位估计窗随 receiver-visible SNR/phase-noise ratio 稳定变化且不存在普适固定窗；门过则同包完成三种自适应窗方法与 paired test
   allowed_actions:
-    - HIGH_ORDER_CPR_COMBINATION_METHOD_PACKAGE
+    - ADAPTIVE_PHASE_WINDOW_METHOD_PACKAGE
     - TASK_BRIEF_PREPARATION
   forbidden_actions:
     - PRIVATE_FULLTEXT_ACQUISITION
@@ -22,11 +22,12 @@ rdl_control:
     - SKILL_EDIT
     - GENERAL_INFRASTRUCTURE_BUILD
     - PILOT_JONES_REPAIR_OR_NEW_AXIS
-  next_legal_action: 执行 T006；先做 B10/B12 source closure、合法 baseline 与 0.5 dB headroom gate，门通过则同一 GLM 对话完成 cascade/confidence-gate/adaptive-forgetting 三个方法与 paired test
+    - HIGH_ORDER_CPR_COMBINATION_REPAIR
+  next_legal_action: 执行 T007；先做 source-native window-optimum sweep 与可观测性门，门通过则同一 GLM 对话完成 ratio rule、lookup/hysteresis、confidence controller 三方法与 paired test
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（T006_READY；D012 已授权）
+> 状态: active（T007_READY；D013 已授权）
 > 创建: 2026-07-23 | 最后更新: 2026-07-25
 
 ## 专题信息
@@ -49,8 +50,10 @@ rdl_control:
 - 在 control block 允许范围内串行推进，遇到 gate 更新控制块或交用户战略裁决；
 - 记录真实恢复、失败/阻断、轮换、晋级/不晋级和工作包重量。
 - T005 已完成并由 D066/V040 接收 scoped Kill；Pilot-Jones 退出当前 carrier。
-- 当前仅授权 T006 高阶调制 CPR 组合方法包：恢复 B10/B12 既有 Step 1–3 证据，
-  在 GW Step 4a 先验算合法 headroom，门过则同包实现并比较三个务实方法。
+- T006 工程资产保留，但科学 verdict 因 source identity/channel/statistics 多重缺口
+  被拒收；B10/B12 family 为 UNRESOLVED，不继续当前修复。
+- 当前仅授权 T007 B1 自适应相位窗方法包：复用既有 Step 1–3 证据，在 GW Step 4a
+  先验证固定窗失效结构，门过则同包实现并比较三个 receiver-visible 方法。
 
 ### 明确不含
 
@@ -90,6 +93,13 @@ rdl_control:
     不继续修 Pilot-Jones，不恢复 Scout/P03。
   - 影响的未决项：从“Pilot-Jones 是否有余量”转为“高阶 CPR 是否有合法余量并能
     形成同时胜过 standalone components 的组合方法”。
+- **[2026-07-25] [V001/D013]**：T006 科学 verdict 被主控拒收，carrier 转 B1。
+  - 原因：B10 未实现 128-pilot training→DD，B12 关键公式自行重构，pilot/data
+    channel 不同；唯一 headroom survivor 91.7% 来自单个 collapse seed。
+  - 新范围：不修 T006，不 Kill B10/B12 family；只做 B1 adaptive phase-window
+    Step 4a 大包，先结构门后方法。
+  - 影响的未决项：从“B10/B12 组合是否失败”改为“固定相位窗是否存在可实现的
+    condition-dependent 改进空间”。
 
 ## 已确认结论
 
@@ -125,17 +135,20 @@ rdl_control:
   scoped axis Kill；主控另发现 M3 contract/implementation 与 Windows encoding 两项
   integrity 缺口，并用真 exact inverse 证明 verdict 不变。epoch 8 合法换到已有
   B10/B12 Step 1–3 证据，授权一个 headroom 过门即直接做三方法的 T006 大包。
+- **S001 续接 / T006验收/V001/D013/T007**：T006 32 tests 在 UTF-8 下通过，但
+  source-native probe、pilot/data channel 审计与 robust headroom 统计共同推翻
+  “机制失败”裁决；另发现 T006 缺 task-control marker。epoch 9 停止该修复并切到
+  B1 自适应相位窗，授权一个结构门过即完成三方法的 T007 大包。
 
 ## 未决项
 
-- T006 能否在合法高阶 CPR 场景中先找到 `>=0.5 dB` headroom，再形成相对最强
-  standalone component `>=0.3 dB` 的组合方法；
+- B1 最优窗是否随可观测 SNR/phase-noise ratio 稳定变化，且三种自适应窗方法中
+  是否有一个能稳健胜过 validation-optimal fixed window；
 - live run 自然覆盖哪些恢复/轮换/晋级事件；
 - 何时由原 design 对话进行阶段性审计。
 
 ## 当前位置
 
-T006_READY。D066/V040 已接收 Pilot-Jones fixed complex component rescue axis 的
-scoped Kill并停止继续投资；D012 激活 B10/B12 高阶调制 CPR 组合方法。下一包先做
-source/baseline/headroom 闭包，门通过则在同一对话直接完成三个方法与 paired test；
-仍不得越过 Step 4a。
+T007_READY。V001/D013 已拒收 T006 科学 verdict 并停止 B10/B12 当前修复；B10/B12
+family 保持 UNRESOLVED。下一包先做 B1 source-native window optimum 与可观测性门，
+门通过则在同一对话直接完成三个自适应窗方法与 paired test；仍不得越过 Step 4a。

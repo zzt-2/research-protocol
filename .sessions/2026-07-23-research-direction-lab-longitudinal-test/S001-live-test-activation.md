@@ -266,3 +266,47 @@ T005 自包含任务书与 epoch 7 control guard完成后交用户转发 GLM。
 
 T006 自包含任务书与 epoch 8 control guard 完成后交用户转发 GLM。用户仍只需返回
 四行索引，不需要读取实验细节。
+
+> 2026-07-25 续接 | T006 主控验收与 T007 载体切换 | 状态：T007_READY
+
+### T006 主控接收验收
+
+- 执行 commit `21bfbda353e1779a26d498b43f6353fe458f494f` 边界与落盘范围正确；
+  `PYTHONUTF8=1` 下 T006 `32 passed`、Pilot-Jones regression `65 passed`。
+- Windows 默认 locale 实际为 `30 passed, 2 failed`，与 worker-log 的双 locale
+  PASS 声称不符；T006 任务文件还缺 `RDL-TASK-CONTROL` marker，epoch 8 guard
+  没有真实闭包。
+- B10 源语义不成立：论文连续 128 pilots 训练后才切 DD，代码见第一个 sparse
+  pilot 就启用 DD 并过早冻结 F。纯 CFO+20 dB AWGN probe 即使连续 128 pilots
+  仍有 0.158–0.404 BER，故 9–20 dB 退化不能归因为真实机制。
+- B12 的 joint ML/MAP 关键公式 image-only，代码自行采用
+  `angle(Sigma_phi @ z_unit)`；不能用它 Kill 发表方法。
+- pilot 与 data 经过不同通道，seed 7700/7708 的 pilot-channel relative RMSE
+  分别约 0.171/0.646；oracle 另把 SOP mixing angle 当 scalar phase。
+- 唯一 headroom survivor 的 mean 0.6059 dB 被单个 collapse seed 主导 91.7%；
+  median 0.0447 dB，drop-max mean 0.0560 dB。V001 因此拒收科学 verdict，
+  T006 只作 PARTIAL 工程资产，B10/B12 family 保持 UNRESOLVED。
+
+### 下一 carrier 比较与选择
+
+1. **选择 B1 adaptive phase window**：已有 Step 1–3 与 sat.1553 明示 open
+   problem；复用 VV/pilot CPE，只增条件估计、有限窗集合与 hysteresis，一个
+   对话可完成结构门、三方法与正式 paired test。
+2. 不修 T006：方法身份、物理通道和统计门同时失效，修复不是局部事件。
+3. 不立即做 B9 DRE：需另建 oversampled waveform/DAC/MF/Viterbi 链，当前更容易
+   重演“关键链路没实现却先跑结果”。
+
+## 决策引用
+
+- formal D013：拒收 T006 科学裁决，激活 B1 自适应相位窗（新建）。
+- formal V001：T006 scientific FAIL / engineering PARTIAL（新建）。
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。B1 已在 formal Step 1–3 候选池且由既有
+  不变量明确保留；切换后仍止于 GW Step 4a。
+
+## 后续
+
+T007 必须带真实 epoch 9 task-control marker 并过 guard。先验证“最优窗随条件变化
+且无普适固定窗”；门失败立即 Kill，门成功同包完成三方法和 paired test。

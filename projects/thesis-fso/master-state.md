@@ -5,7 +5,7 @@ method_type: 待定（精读后根据问题方法产出形态确定，见 glossa
 domain: comms
 created: 2026-06-21
 updated: 2026-07-25
-current_step: HIGH-ORDER-CPR-COMBINATION-GW-STEP4A-T006-READY
+current_step: B1-ADAPTIVE-PHASE-WINDOW-GW-STEP4A-T007-READY
 current_stage: FORMAL_GROUNDWORK_CARRIER_SYNC
 ---
 
@@ -22,27 +22,26 @@ current_stage: FORMAL_GROUNDWORK_CARRIER_SYNC
 
 ### 当前控制面桥接（唯一现行入口）
 
-> **2026-07-25 D066/V040 T005 收口 → D012/T006 准备**：T005 在 fixed/verified
-> component PDL/PMD 下 8/8 primary cells 最大 headroom point/CI upper 仅
-> 0.0804/0.2372 dB；真 exact-inverse adjudication 证明 M3 contract mismatch
-> 不改变 BER 裁决。Pilot-Jones current rescue axis 已 Kill 并退出 carrier。
-> 当前 formal carrier 转为 B10/B12 高阶调制 CPR 组合方法；复用既有 Step 1–3
-> 证据，在 Step 4a 先做合法 headroom，门通过才在同包实现三个方法。不进
+> **2026-07-25 V001/D013 T006 拒收 → T007 准备**：T006 的 B10 source identity、
+> B12 formula identity、pilot/data channel 与 robust headroom gate 同时失效；
+> `PROBLEM_SURVIVES_METHODS_FAIL` 不接收，B10/B12 family 保持 UNRESOLVED。
+> 当前 formal carrier 转为 B1 自适应相位估计窗；复用既有 Step 1–3 证据，在
+> Step 4a 先验证固定窗失效结构，门通过才在同包完成三个方法。不进
 > Step 5/Contract/Execute。
 
 - formal stage：`GROUNDWORK`（carrier-sync Step 4a 激活）。Direction Lab 的 Scout/Sandbox 结果对正式研究的 promotion effect 仍为 `none`；Direction Lab campaign 已 dormant（D022 SCIENCE_FREEZE），无当前科学执行授权。
-- **当前工作线**：B10/B12 高阶调制 CPR 组合方法，Step 1–3 证据已存在，
-  **Step 4a T006_READY（D012/S014）**。先做 strongest-simple CPR→truth-assisted
-  headroom；存活才实现 cascade/confidence-gate/adaptive-forgetting。
+- **当前工作线**：B1 自适应相位估计窗，Step 1–3 证据已存在，
+  **Step 4a T007_READY（D013/S015/V001）**。先做 source-native window-optimum
+  与 observability gate；存活才实现 ratio-rule/lookup-hysteresis/confidence controller。
 - **Pilot-Jones（退出 carrier）**：D066/V040 接收 fixed complex component rescue
   axis scoped Kill；4 篇 direct competitor 全文债继续保留，但不阻塞当前 carrier。
 - P03（暂停，回候选池）：Headroom Atlas Stage A（2026-07-19，S077/D059/V033）runnable 子域 LOCAL_NEGATIVE；16QAM/receiver-CSI/coded-output 三轴 INFRASTRUCTURE_BLOCKED，历史反例落在被阻轴上 → DOMAIN/CANDIDATE/FAMILY 仍 UNRESOLVED/OPEN。**用户选项①已选定：暂停回候选池，不关闭 family**。
 - Direction Lab sandbox history：last completed batch = `B003 / COMPLETED_SANDBOX_VERIFIED`；事实源为 `projects/thesis-fso/direction-lab/state/completion-events.jsonl`。`canonical-state.yaml` 仅为机器投影，不是正式研究授权源。
 - formal promotion effect：`none`；B001–B003 数字不得进入论文或正式材料。
-- 下一合法边界：执行 live-test T006。先闭合 B10/B12 source/parameter provenance、
-  equal-overhead baseline ladder、semantic smoke 和 0.5 dB headroom gate；门通过则
-  同包完成三个方法与 paired test。**不得进入 Step 5/Contract/Execute；不得复活
-  Scout/P03；不得改 shared generator 或启动通用基础设施。**
+- 下一合法边界：执行 live-test T007。先闭合 B1 source/theory contract、合法
+  ambiguity semantics、window-optimum sweep 与 receiver-visible feature gate；
+  门通过则同包完成三个方法与 paired test。**不得进入 Step 5/Contract/Execute；
+  不得修 T006、复活 Scout/P03、改 shared generator 或启动通用基础设施。**
 
 ### 历史 Groundwork 轨迹（保留审计，不授权当前执行）
 
@@ -112,7 +111,8 @@ current_stage: FORMAL_GROUNDWORK_CARRIER_SYNC
 | 晋级候选正式 GW Step 1→4a | ⬜ | — | 仅对批量胜者补齐 |
 | Pilot Jones Step4a unitary slice | 🔴 UNITARY_REAL_ROTATION_MCA_KILLED | D062 / T002 / S079 / V036 / V037 / D063 | 结构性 cond=1 结论成立；V037 修正 contract stale count 与无依据的 BER-ratio→dB 门。只 Kill 当前实例化，不 Kill family。 |
 | Pilot Jones Step4a complex-model salvage | 🔴 SCOPED_AXIS_KILLED / RETURNED | D063–D066 / T003–T005 / S080–S082 / V038–V040 | T005 fixed/verified primary 8/8 cells max point/CI upper=0.0804/0.2372dB；scientific scoped Kill PASS，integrity PARTIAL；不再是当前 carrier。 |
-| High-order CPR B10/B12 combination Step4a | 🟨 T006_READY | step4a D012 / S014 / live T006 | 已有 B10/B12 Step1–3 证据；先做合法 headroom，门过则同包完成 cascade/confidence-gate/adaptive-forgetting。 |
+| High-order CPR B10/B12 combination Step4a | 🔴 SCIENCE_VERDICT_REJECTED / UNRESOLVED | step4a D012–D013 / S014–S015 / V001 / live T006 | 工程 PARTIAL；source/channel/statistics 多重失效，不 Kill family，不继续修。 |
+| B1 adaptive phase-window Step4a | 🟨 T007_READY | step4a D013 / S015 / V001 / live T007 | 已有 B1 Step1–3 证据；先做固定窗结构门，门过则同包完成三种 receiver-visible adaptive-window 方法。 |
 
 > **FR-22 解释**：上方 2026-06-21 起的全项目历史表证明旧批次曾完成哪些步骤，**不能授权 2026-07-16 后出现的新候选直接进入 MVE**。新候选必须以本重开轨表为单一门控，从 Step 1 重新积累证据。
 

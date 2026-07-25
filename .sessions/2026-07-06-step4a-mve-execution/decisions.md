@@ -659,3 +659,54 @@ ML 加权增益来源：
 - 本专题新增 S014 与 T006 carrier。
 - 当前 action class 仅 `HIGH_ORDER_CPR_COMBINATION_METHOD_PACKAGE`。
 - 原 A4 adaptive CPR、B10/B12、NDA-ML 资产保持历史证据，不因本次切换被改写。
+
+---
+
+## D013: 拒收 T006 科学裁决并切换到 B1 自适应相位估计窗
+
+> status: active
+> date: 2026-07-25
+> 取代：D012（仅取代其“当前 carrier”身份；D012 对 T006 的历史授权仍有效）
+> 被取代：无
+> 依据：V001 / S015 / T006 source、raw rows 与主控数值探针
+
+### 决策
+
+1. T006 的工程产物按 `PARTIAL_REUSABLE_IMPLEMENTATION` 保留，但拒收
+   `HEADROOM_SURVIVES` 和 `PROBLEM_SURVIVES_METHODS_FAIL` 两项科学裁决。
+2. B10/B12 组合族状态为 `UNRESOLVED_IMPLEMENTATION_INVALID`，不得写成方法机制
+   已失败，也不得把 9–20 dB 退化写入论文。
+3. 不再为 T006 开无界修复包。原因不是一次局部 bug，而是 B10 source identity、
+   B12 公式身份、pilot/data channel、oracle/evaluation 与统计门同时失效；继续修
+   会把当前主线锁进实现考古。
+4. 当前 formal carrier 切换为 `B1_ADAPTIVE_PHASE_WINDOW`，仍在 GW Step 4a。
+   复用 B1 已完成的 Step 1–3 证据：固定窗相位估计在大 SNR 波动下的不足由
+   sat.1553 明确提出，最优窗长由 SNR/phase-noise 比驱动。
+5. 下一包 T007 必须先证明“最优窗确实随可观测条件变化且不存在普适固定窗”；
+   该门失败立即 Kill。门通过后同一包实现三种 receiver-visible 自适应窗策略并做
+   paired test，不另开小修包。
+
+### 理由
+
+- T006 的唯一 `0.6059 dB` survivor 被单个近随机 seed 主导：该 seed 贡献总和的
+  `91.7%`；median 仅 `0.0447 dB`，删去最大值后 mean 仅 `0.0560 dB`。
+- 当前 B10 在纯 CFO、20 dB AWGN 的 source-native probe 中，即使使用连续 128
+  导频也得到 `0.158–0.404 BER`，CFO 斜率估计与真值相差多个数量级。这是实现
+  身份失败，不是低线宽下机制无价值。
+- B1 的方法形态更轻：复用现有 VV/pilot CPE，只新增条件估计、有限窗集合和
+  hysteresis；可以在一个执行对话内完成理论门、方法和正式 test，符合“多做但不
+  陷入一块”的用户约束。
+
+### 排除的替代方案
+
+- 不做 T006 全量修复：多层语义同时失效，且 robust headroom 信号薄。
+- 不立即做 B9 DRE：DRE 依赖 oversampled waveform、低分辨率 DAC、匹配滤波与
+  block-wise Viterbi，容易再次出现“关键链路没实现却先跑结果”的身份风险。
+- 不恢复 Pilot-Jones/P03/Science Scout：现有 formal owner 没有给这些线新的动作授权。
+
+### 影响范围
+
+- 新建 S015/V001；live-test control epoch 递增到 9，T007 绑定
+  `ADAPTIVE_PHASE_WINDOW_METHOD_PACKAGE`。
+- T006 代码、raw artifacts 和 commit 不回滚、不改写；只修正 current scientific view。
+- 仍止于 GW Step 4a，不进入 Step 5、Contract 或 Execute。

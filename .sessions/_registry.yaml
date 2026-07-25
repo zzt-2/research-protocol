@@ -49,8 +49,8 @@ topics:
     title: Research Direction Lab 长程真实运行测试
     status: active
     created: "2026-07-23"
-    last_updated: "2026-07-25（V040/D066/D012；epoch 8 high-order CPR combination T006_READY）"
-    description: "D017 轻量前台控制协议的真实纵向运行 mission。T005 fixed/verified complex component 8-cell headroom max point/CI upper=0.0804/0.2372dB，D066/V040 接收 scoped axis Kill；M3 exact-inverse contract 与 Windows encoding 记 integrity PARTIAL，但真 exact inverse 重算不改 verdict。control epoch 8 合法换到已有 B10/B12 Step1–3 证据，T006 先做 headroom、门过即同包做三个高阶 CPR 组合方法，仍止于 Step4a。"
+    last_updated: "2026-07-25（V001/D013；epoch 9 B1 adaptive phase window T007_READY）"
+    description: "D017 轻量前台控制协议的真实纵向运行 mission。T006 虽有 32 tests 和完整 artifacts，但 B10/B12 source identity、pilot/data channel、oracle/eval 与 robust statistics 多重失败，V001 拒收科学 verdict、工程记 PARTIAL，family 保持 UNRESOLVED。control epoch 9 停止 T006 修复，切到已有 Step1–3 证据的 B1 adaptive phase window；T007 先结构门、门过即同包做三个方法，仍止于 Step4a。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 S014 现场故障、R003 场景演练、D017 控制接口和 guard
@@ -447,8 +447,8 @@ topics:
     title: Step 4a 维度 D MVE 执行（B11 单载波 NDA-ML 主推 + B7/B3 待开）
     status: active
     created: "2026-07-06"
-    last_updated: "2026-07-25（S014/D012：B10/B12 high-order CPR combination carrier 激活，T006_READY）"
-    description: "Step 4a carrier owner。历史 B11/NDA-ML/A1-A4 与 baseline 资产保留；D012 在 Pilot-Jones scoped axis Kill 后恢复 B10 pilot-RLS + B12 frequency-domain pilot/MAP 的既有 Step1–3 证据。T006 先做 source/parameter closure、equal-overhead strongest-simple baseline 与 truth-assisted headroom；门通过则同包实现 cascade、confidence gate、adaptive-forgetting RLS。止于 provisional Step4a，不进 Step5/Contract/Execute。"
+    last_updated: "2026-07-25（S015/V001/D013：T006 科学 verdict 拒收，B1 adaptive phase window T007_READY）"
+    description: "Step 4a carrier owner。历史 B11/NDA-ML/A1-A4 与 baseline 资产保留；T006 因 B10/B12 source identity、pilot/data channel、oracle/eval 与 robust statistics 多重失败，工程记 PARTIAL、科学 verdict FAIL，family 保持 UNRESOLVED。D013 激活已有 Step1–3 证据的 B1 adaptive phase window；T007 先验证固定窗结构门，门过则同包实现 ratio rule、lookup+hysteresis、confidence controller。止于 provisional Step4a，不进 Step5/Contract/Execute。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
         reason: 继承 S031 排优先级（B11/B3/B7 Conditional Go）+ 切法地图参照系（饱和池/稀池路径）+ D005 务实路线 + D006 红线 + 5 个口径警示
