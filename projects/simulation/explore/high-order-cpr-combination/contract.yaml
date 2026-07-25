@@ -1,0 +1,363 @@
+# Contract — T006 high-order CPR combination method (B10/B12 Step 4a package)
+#
+# FROZEN BEFORE any primary run (T006 Phase B, D012 authorization, epoch 8).
+# Scope: GW Step 4a dimension D ONLY. Does NOT cross Step 5/Contract/Execute.
+#
+# This contract revives B10 pilot-RLS + B12 MAP joint ML/MAP phase recovery
+# from the already-completed Step 1-3 evidence (source-closure.yaml) and
+# adjudicates whether, on the canonical star-ground GG link + uniform 16-QAM,
+# a strongest-simple conventional CPR has >=0.5 dB Q^2 legal headroom to a
+# truth-assisted reference. If the headroom survives, three combination
+# methods (P1 cascade / P2 confidence gate / P3 adaptive forgetting) are run
+# in the SAME package with a pre-registered method gate (>=0.3 dB Q^2 over
+# B* AND the strongest standalone component, paired wins >=7/10, clean/control
+# degradation <=0.1 dB, complexity/overhead-fair).
+#
+# The 0.5 dB headroom threshold is the T006-specific infrastructure-investment
+# gate authorized by D012; it explicitly overrides the older "FR-21 <0.5 dB is
+# reference-only" calibration for THIS carrier only and does NOT rewrite the
+# other historical candidates.
+#
+# owner: T006 (HIGH_ORDER_CPR_COMBINATION_METHOD_PACKAGE), epoch 8.
+
+schema_version: contract.high-order-cpr-combination.v1
+frozen: 2026-07-25
+authorization: D012 (epoch 8, B10/B12 combination method Step 4a)
+worktree: "D:\\code\\study\\research-protocol\\.worktrees\\research-direction-lab-longitudinal-test"
+
+# ---------------------------------------------------------------------------
+# Primary modulation + canonical link
+# ---------------------------------------------------------------------------
+primary_modulation:
+  type: "uniform 16-QAM"
+  bits_per_symbol: 4
+  gray_map: "{-3,-1,+3,+1} per axis (qam16_mod, _modulation.py)"
+  avg_power_normalized: 1.0   # E[|s|^2] = 1 via /sqrt(10)
+  source: "canonical _dual_pol_channel.generate_shared_realization_dp(modulation='qam16')"
+
+canonical_link:
+  model: >-
+    rX = sqrt(h) * (cos(theta)*sX + sin(theta)*sY) + sqrt(nv) * nX
+    rY = sqrt(h) * (-sin(theta)*sX + cos(theta)*sY) + sqrt(nv) * nY
+    where nv = 1/(2*gamma_bar), nX,nY ~ CN(0,1), h = GG time envelope,
+    theta = sop_rate * arange(N) (linear SOP for single-pol CPR isolation).
+  provenance: "common/_dual_pol_channel.py (SHARED, immutable); params.py for alpha/beta/gamma_bar"
+  scope_note: >-
+    T006 uses a SINGLE polarization (sY=0 effectively, or evaluate rX only)
+    to isolate the carrier-phase recovery question from polarization
+    demultiplexing. The canonical generator is dual-pol; we read rX and
+    recover its phase. This is consistent with B10 (single-pol 16-QAM
+    recovery) and B12 MAP (single-pol phase recovery).
+
+# ---------------------------------------------------------------------------
+# Conditions — clean/control + operational + adversarial-but-sourced
+# ---------------------------------------------------------------------------
+# All conditions use canonical params (alpha/beta from Gu 2022, gamma_bar from
+# SNR). The dimensional audit (below) fixes CFO/linewidth per condition.
+conditions:
+  clean_control:
+    alpha: 11.6           # weak GG (params.py turb_weak_alpha, Gu 2022)
+    beta: 10.1            # weak GG (params.py turb_weak_beta)
+    gamma_bar: 100.0      # SNR 20 dB
+    tag: "clean_control"
+    role: "no-impairment ceiling check; methods must not degrade >0.1 dB here"
+  operational:
+    alpha: 4.0            # moderate GG (params.py turb_moderate_alpha)
+    beta: 1.9             # moderate GG
+    gamma_bar: 100.0      # SNR 20 dB
+    tag: "operational"
+    role: "primary cell; operational star-ground turbulence"
+  adversarial_sourced:
+    alpha: 4.2            # strong GG (params.py turb_strong_alpha)
+    beta: 1.4             # strong GG
+    gamma_bar: 50.0       # SNR 17 dB (closer to HD-FEC edge)
+    tag: "adversarial_sourced"
+    role: "primary cell; adversarial but still canonical (Gu 2022 strong)"
+
+# ---------------------------------------------------------------------------
+# CFO / linewidth dimensional audit (T006 task §A)
+# ---------------------------------------------------------------------------
+# B10 paper reports CFO 1 MHz-10 GHz and linewidth 50 kHz-1.45 MHz at 28 GBaud.
+# At the canonical 2.5 GBaud (10x lower baud), the relevant dimensionless
+# quantity is delta_nu * T_s (linewidth normalized to symbol period) and
+# df * T_s (CFO normalized to symbol rate). We must NOT blindly reuse "10 GHz
+# / 1.45 MHz" because (a) the sampling rate differs and (b) at 2.5 GBaud the
+# B10-supported CFO range maps to a different normalized value.
+cfo_linewidth_audit:
+  canonical_baud: 2.5e9
+  canonical_t_s: 4.0e-10
+  canonical_laser_lw: 10.0e3     # params.py LASER_LW (D-007 unified, ECL typical)
+  canonical_lw_normalized: 4.0e-6   # 10 kHz * 4e-10 s
+
+  b10_paper_reference:
+    baud: 28e9
+    lw_min: 50e3
+    lw_max: 1.45e6
+    lw_normalized_min: 1.79e-6    # 50 kHz * (1/28e9)
+    lw_normalized_max: 5.18e-5    # 1.45 MHz * (1/28e9)
+    cfo_max: 10e9
+    cfo_normalized_max: 0.357     # 10 GHz / 28 GBaud (within +-Rs/2 with margin)
+
+  mapping_rule: >-
+    We pick (CFO, linewidth) such that the normalized quantities
+    (df*T_s, delta_nu*T_s) fall inside the B10-supported range, scaled to the
+    canonical 2.5 GBaud. The nominal point uses the canonical 10 kHz linewidth
+    (ECL-typical, D-007) and a small residual CFO representative of
+    post-ephemeris Doppler compensation on a star-ground link. The stress
+    point raises CFO/linewidth within the B10-supported normalized range while
+    remaining representable at 2.5 GBaud (df << R_SYM/2 = 1.25 GHz).
+
+  nominal_point:
+    laser_lw_hz: 10.0e3           # canonical ECL, single source of truth
+    cfo_hz: 1.0e5                 # 100 kHz residual post-ephemeris Doppler
+    lw_normalized: 4.0e-6         # within B10-supported range
+    cfo_normalized: 4.0e-5        # well within +-Rs/2; B10 range supports much larger
+    role: "primary; operational + clean_control + adversarial_sourced all use this"
+    source_type: "ECL linewidth from Valjus sat.1553 §4.2 (10 kHz typical, D-007); residual CFO from typical post-ephemeris compensation"
+
+  stress_point:
+    laser_lw_hz: 100.0e3          # 100 kHz — within B10 supported [50k, 1.45M]
+    cfo_hz: 1.0e7                 # 10 MHz — B10 supports up to 10 GHz at 28GBaud;
+                                  # at 2.5 GBaud 10 MHz is df*T_s=4e-3, well inside
+    lw_normalized: 4.0e-5         # within B10-supported range
+    cfo_normalized: 4.0e-3        # well within +-Rs/2 (1.25 GHz)
+    role: "STRESS_ONLY — used as a 4th SNR-stress cell to probe whether headroom
+           grows under harder CFO/linewidth; never the sole basis for a verdict"
+    source_type: "within B10 paper-supported range (50 kHz-1.45 MHz, content.md:L169/L181/L219);
+                  scaled to canonical 2.5 GBaud without exceeding representable range"
+
+# ---------------------------------------------------------------------------
+# SNR grid — at least 3 points in the HD-FEC waterfall neighborhood
+# ---------------------------------------------------------------------------
+# HD-FEC threshold for 16-QAM is conventionally BER = 3.8e-3. We pick 3 SNR
+# points that straddle the HD-FEC waterfall for uniform 16-QAM on the
+# canonical GG link. These are VALIDATION-LOCATED (we run a quick BER vs SNR
+# sweep on validation seeds to find the waterfall neighborhood, then freeze
+# the 3 points). Test seeds only REUSE the frozen points.
+snr_grid:
+  target_ber_waterfall: 3.8e-3     # HD-FEC threshold
+  n_points: 3
+  location_method: "validation-only BER-vs-SNR sweep on B* arm; pick 3 points bracketing the waterfall"
+  frozen_points_db: [14.0, 17.0, 20.0]   # representative; frozen after validation sweep
+  note: >-
+    The validation sweep may shift these by up to +-2 dB to land on the actual
+    waterfall; the FROZEN values (post-validation) are written into the result
+    JSON and asserted to match the runner. Test seeds reuse the frozen points.
+
+# ---------------------------------------------------------------------------
+# Fairness — equal pilot overhead, total TX energy, data mask, realizations
+# ---------------------------------------------------------------------------
+fairness:
+  pilot_overhead_rule: >-
+    ALL methods (B*, B10, B12, P1, P2, P3, O) share the SAME pilot pattern,
+    SAME total TX energy, SAME data mask, SAME base realization and SAME
+    effective BER denominator. Pilot symbols are drawn from the 16-QAM
+    constellation (known to RX at pilot positions only).
+  pilot_pattern:
+    type: "block-pilot, 1 pilot per L_pilot_block symbols"
+    l_pilot_block: 64            # validation-tuned; matches canonical block_size
+    pilot_positions: "indices 0, 64, 128, ... (1 pilot per 64 symbols = 1.5625% overhead)"
+    pilot_symbols: "known 16-QAM symbols (shared across all arms)"
+  total_energy: >-
+    Total TX energy is held constant across arms. Pilot energy is part of the
+    total; data symbols see slightly less energy when pilots are inserted,
+    identically for all arms. No arm gets "free" pilot energy.
+  data_mask: "data symbol positions are identical across arms; BER computed on data only"
+  realizations: "all arms run on the SAME generate_shared_realization_dp draw (TL-13)"
+  ber_denominator: "number of data bits in the eval window, identical across arms"
+
+# ---------------------------------------------------------------------------
+# Seeds — fresh disjoint validation (>=5) and test (>=10), disjoint from prior
+# ---------------------------------------------------------------------------
+seed_plan:
+  excluded: [41,42,43,44,45,46,47,48,2000,2001,2002,2003,2004,3000,3001,3002,3003,3004,3005,3006,3007,3008,3009,5000,5001,5002,5003,5004,6000,6001,6002,6003,6004,6005,6006,6007,6008,6009,7001,7002,7100,7101,7102,7103,7104,7200,7201,7202,7203,7204,7205,7206,7207,7208,7209,7300,7301,7302,7303,7304,7305,7306,7307,7308,7309,7400,7401,7402,7403,7404,7405,7406,7407,7408,7409,7500,7501,7502,7503,7504,7505,7506,7507,7508,7509,4001]
+  reason: "T002/T003/T004/T005 observed/val/test seeds excluded (T005 used 74xx val + 75xx test)"
+  semantic_validation_seeds: [7600, 7601]
+  headroom_validation_seeds: [7600, 7601, 7602, 7603, 7604]      # 5 val seeds
+  headroom_test_seeds: [7700, 7701, 7702, 7703, 7704, 7705, 7706, 7707, 7708, 7709]  # 10 test
+  method_validation_seeds: [7600, 7601, 7602, 7603, 7604]        # same 5 val seeds (frozen B*)
+  method_test_seeds: [7700, 7701, 7702, 7703, 7704, 7705, 7706, 7707, 7708, 7709]   # same 10 test seeds
+  disjoint_check: "all T006 seed pools intersect excluded = empty"
+
+# ---------------------------------------------------------------------------
+# Information access (receiver-visible vs oracle)
+# ---------------------------------------------------------------------------
+information_access:
+  receiver_visible:
+    - "rx (rX for single-pol)"
+    - "pilot positions and known pilot symbols"
+    - "pilot mask (which symbols are pilots)"
+    - "calibration params (SNR/gamma_bar, linewidth, CFO estimate)"
+    - "RLS innovation magnitude (B10 internal state)"
+    - "B12 residual likelihood (B12 internal state)"
+    - "hard decisions on data positions (DD mode)"
+  truth_never_used_by_deployable:
+    - "true per-symbol phase phi(k)"
+    - "true h, true theta_SOP"
+    - "true TX data symbols (beyond pilot positions)"
+    - "future symbols (no lookahead)"
+    - "true CFO/linewidth values (methods must estimate or use calibration only)"
+  oracle_only_tagged:
+    - "O arm uses true phi(k) to derotate; scoring / Kill bound ONLY, NEVER a Go opponent (FR-25)"
+
+# ---------------------------------------------------------------------------
+# Baseline ladder + truth-assisted reference
+# ---------------------------------------------------------------------------
+baseline_ladder:
+  B_star:
+    method: "strongest simple CONVENTIONAL CPR, validation-tuned"
+    candidates:
+      - "BPS (blind phase search, Pfau 2009) — common/_recovery.bps_cpr with mod='qam16'"
+      - "VV (Viterbi-Viterbi, M=4 raise-power) — common/_recovery.vv_cpr"
+      - "DD-DPLL — common/_recovery.dpll_track_dd with mod='qam16'"
+    selection_rule: >-
+      B* = the strongest of {BPS, VV, DD-DPLL} FROZEN ON VALIDATION ONLY.
+      All candidates share the SAME pilot overhead/energy/mask as the
+      combination methods (TL-14: baseline must be optimized, not default).
+      BPS gets a small grid search over (B, Nw) on VALIDATION ONLY; the
+      frozen config is reused on test. NO test-seed tuning.
+  B10:
+    method: "pilot-RLS standalone (B10 paper, source-closure)"
+    config: "lambda, delta=2, pilot_count frozen on VALIDATION"
+  B12:
+    method: "MAP joint ML/MAP standalone (B12 MAP paper, source-closure)"
+    config: "L_block, L_sub=1, ML window W frozen on VALIDATION"
+  O:
+    method: "truth-assisted reference"
+    detail: >-
+      Derotate rx by the TRUE per-symbol phase phi(k) from the canonical
+      generator, then hard-decide. This is the ceiling on what a deployable
+      estimator could approach; it is NEVER a Go opponent (FR-25). Used only
+      to compute the B* -> O legal headroom (Kill bound).
+    noise_property: >-
+      O does NOT denoise (it only removes the deterministic phase); the AWGN
+      remains. So O is a legal ceiling for the phase-recovery task and is not
+      an oracle-data detector.
+
+baseline_adjudication:
+  bstar_rule: "B* = strongest LEGAL CONVENTIONAL baseline FROZEN on VALIDATION."
+  bstar_selection: "B* chosen using validation seeds ONLY; test seeds REUSE frozen B*."
+  fairness: >-
+    B* and all combination arms share pilot overhead, data mask, eval window,
+    base realization, total TX energy. Equal opportunity, not forced identical
+    hyperparameters.
+  test_no_tuning: "B* frozen on validation; test seeds never feed back into B* selection."
+
+truth_assisted_reference:
+  method: "per-symbol TRUE phase derotation"
+  detail: >-
+    rx_O = rx * exp(-1j * phi_true(k)); BER computed on data positions only.
+    phi_true is the canonical generator's phi_fo + phi_dot + phi_laser phase.
+  property: >-
+    ceiling on phase-recovery-only performance; NOT a method Go opponent.
+    Does not remove AWGN, so a method CANNOT beat O without oracle info —
+    any deployable arm systematically beating O is an oracle leak (stop).
+  invalid_fallback: "if O cannot be proven a legal ceiling, status = PARTIAL_ORACLE_INVALID and no Kill."
+
+# ---------------------------------------------------------------------------
+# Combination methods (only run if headroom survives)
+# ---------------------------------------------------------------------------
+combination_methods:
+  P1_cascade:
+    description: "B10 RLS produces phi_hat_B10(k); B12 MAP runs on rx_res = rx*exp(-1j*phi_hat_B10)."
+    new_action: "B12 sees B10-compensated residual, NOT raw rx (different input)."
+    identity_check: "rx_res must differ from rx (B10 not identity); enforced in semantic smoke."
+    ablation: "P1 vs B10-only and B12-only on the SAME realization."
+  P2_confidence_gate:
+    description: >-
+      Receiver-visible confidence c(k) per symbol (RLS innovation magnitude or
+      B12 residual likelihood) routes between B10, P1, B12. Threshold frozen
+      on VALIDATION.
+    new_action: "per-symbol routing; threshold on validation only."
+    ablation: "P2 vs fixed-routing (always B10 or always B12)."
+  P3_adaptive_forgetting:
+    description: >-
+      B10 RLS forgetting factor lambda(k) modulated by innovation magnitude,
+      bounded [lambda_lo, lambda_hi]. Fixed-lambda B10 is the ablation control.
+    new_action: "lambda is time-varying inside B10; bounded and reproducible."
+    ablation: "P3 vs B10 with fixed lambda (the frozen B10 lambda)."
+
+method_ordering:
+  - "mechanism slice (small N, 1 SNR, 1 condition) — verify no degeneration/sign error"
+  - "primary paired test (3 conditions x 3 SNR x 10 test seeds x all arms)"
+  - "no second execution package for small bugs; fix in-package and record anomaly"
+
+# ---------------------------------------------------------------------------
+# Metrics
+# ---------------------------------------------------------------------------
+metrics:
+  primary: "BER -> Q^2 penalty/gain (Q^2_dB = 20*log10(sqrt(2)*erfcinv(2*BER)))"
+  also_report:
+    - "raw BER per arm per cell per seed"
+    - "paired wins (per-seed P vs B* and P vs strongest standalone component)"
+    - "bootstrap 95% CI on Q^2 gain (2000 resamples across test seeds)"
+    - "n_eval (effective BER denominator, identical across arms)"
+
+# ---------------------------------------------------------------------------
+# Pre-registered verdict (T006 task §D)
+# ---------------------------------------------------------------------------
+thresholds:
+  headroom_q2_dB: 0.5              # problem gate (B* -> O)
+  method_gain_q2_dB: 0.3           # method gate (P -> B* AND P -> strongest standalone)
+  ci_lower_q2_dB: 0.0              # 95% CI lower bound must be > 0 for method Go
+  paired_wins_min: 7               # >= 7 of 10 test seeds
+  clean_control_degradation_max_dB: 0.1
+
+pre_registered_verdict:
+  KILL_NO_LEGAL_HEADROOM: >-
+    All primary cells (clean_control, operational, adversarial_sourced) at the
+    frozen SNR points: B* -> O headroom POINT ESTIMATE AND bootstrap 95% CI
+    UPPER BOUND both < 0.5 dB.
+    Action: do NOT implement P1/P2/P3. Still complete raw rows, tests,
+    synthesis and worker-log. Stop the carrier.
+  GO_METHOD: >-
+    At least one P in {P1, P2, P3} on the primary test cells achieves
+    Q^2 gain >= 0.3 dB over B* AND over the strongest standalone component
+    (max(B10, B12)), with 95% CI lower bound > 0 dB, paired wins >= 7/10
+    against BOTH opponents, and clean_control degradation <= 0.1 dB, and
+    passes the complexity/overhead fairness audit.
+  COMPONENT_REPRO_ONLY: >-
+    At least one P beats B* but NONE beats the strongest standalone component.
+    Action: do NOT package as a combination method; record component
+    reproduction only.
+  PROBLEM_SURVIVES_METHODS_FAIL: >-
+    B* -> O headroom >= 0.5 dB on at least one primary cell, but no P reaches
+    the method gate. Action: keep the problem + failed mechanisms; next round
+    decides whether to change mechanism.
+  forbidden_when_unclosed: >-
+    If semantic / oracle / baseline identity gates are not all closed, status
+    is at most PARTIAL regardless of numeric outcome.
+
+scope_ceiling:
+  - "Does NOT close the high-order CPR family."
+  - "Does NOT enter Step 5/Contract/Execute."
+  - "Does NOT modify the shared canonical generator or params.py."
+  - "Does NOT continue Pilot-Jones (T005 scoped Kill received)."
+  - "Does NOT acquire new private fulltext."
+
+# ---------------------------------------------------------------------------
+# Architecture summary (FR-11)
+# ---------------------------------------------------------------------------
+architecture_summary:
+  inputs_information_access: >-
+    rx (single-pol rX), pilot positions + known pilot symbols, pilot mask,
+    calibration (SNR, linewidth), RLS innovation (B10 internal), B12 residual
+    likelihood (B12 internal), hard decisions on data positions.
+  state:
+    B10: "RLS weight vector h(k)=[h0,h1] + covariance R_x(k); per-symbol phi_hat."
+    B12: "per-block PA coarse phase + ML refinement + joint ML/MAP theta+theta_k."
+    P1: "B10 state + B12 state on residual."
+    P2: "B10+B12 states + per-symbol routing decision."
+    P3: "B10 state with time-varying lambda(k)."
+  output_action: "per-symbol phase derotation phi_hat(k); rx_out = rx*exp(-1j*phi_hat)."
+  decision_granularity: "per-symbol phase estimate; per-block for B12 internals."
+  comparison_paradigm: >-
+    All arms share ONE impaired realization, pilots, mask, eval window, total
+    TX energy; differ only in how phi_hat is formed. O differs by using true
+    phi (oracle, Kill-only).
+  objective: "minimize BER on data symbols (primary); report Q^2 gain, paired wins, CI."
+  task_matched_conventional: "B* in {BPS, VV, DD-DPLL} (all conventional, all 16-QAM-capable)."
+  known_simplification_bias:
+    - "Single-polarization isolates CPR from pol-demux; under-states dual-pol benefit."
+    - "Canonical 10 kHz linewidth is at the low end of B10-supported range; the stress cell probes higher."
+    - "Block-pilot pattern (1/64) is a conservative overhead; lower overhead would favor NDA."

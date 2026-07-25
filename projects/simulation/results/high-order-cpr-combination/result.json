@@ -1,0 +1,121 @@
+{
+ "label": "T006 high-order CPR combination consolidated",
+ "experiment": "HIGH_ORDER_CPR_COMBINATION_METHOD_PACKAGE",
+ "contract_sha256": "352a68af97e8ca91e8c541e88747482703a2dc893f2779a40b5cb7a8e7b55b58",
+ "source_closure_sha256": "4a830ea32561452094e9370ec67c057bfe7a9cb5d57c84e9abd7889f00b935ff",
+ "source_sha256": {
+  "generator": "5cefac97d120e5590905ae36ab20cabc8832a6c556368b1d9f154a2a8091818c",
+  "gg_time": "d8e7929d00d885eccf111eb96d80ecd3822b065cbf3eca09ed31912c3da73113",
+  "modulation": "036fb7aa4d0bef153ee53799f20a244492fb6294f93132d1ecc2b0530b5694d5",
+  "recovery": "afb8aed9508cc83ee13d05bfd4346a2e6f0852af0e9d6a182a85a441ff5d60e2",
+  "params": "0e87c53364461478eddcd81426d8e04646270c3ea7aa717e3c3b28c5dd2a99e9",
+  "contract": "352a68af97e8ca91e8c541e88747482703a2dc893f2779a40b5cb7a8e7b55b58",
+  "source_closure": "4a830ea32561452094e9370ec67c057bfe7a9cb5d57c84e9abd7889f00b935ff",
+  "components": "30895d8f2b3cb278911deb80cbe9c6c7486962bcec347b9a3d630f49e3a747fe",
+  "baselines": "99e6292fdeae583af2443958b181beee81f440239e0cc9651ce0d400242a3644",
+  "channel_helpers": "48ecf20e36ea6c26806c5583e5af6314f30b3d7fbecedd19f25f8e22fa0e78a1",
+  "semantic_gates": "36274230f7a5f8843e365f1564dd364f961e2009751c320398230b2f3f0b41c3",
+  "runner": "709773d58911bfd4241957b6e15e64101cfae3ce7dbb0a583b5bf7f89d60c418"
+ },
+ "params": {
+  "N": 8192,
+  "l_pilot_block": 64,
+  "f_g": 100.0,
+  "sop_rate": 8e-06,
+  "f_residual_hz": 100000.0,
+  "f_dot_hz_per_s": 0.0,
+  "laser_lw_hz": 10000.0,
+  "conditions": {
+   "clean_control": {
+    "alpha": 11.6,
+    "beta": 10.1,
+    "gamma_bar": 100.0,
+    "snr_db": 20.0
+   },
+   "operational": {
+    "alpha": 4.0,
+    "beta": 1.9,
+    "gamma_bar": 100.0,
+    "snr_db": 20.0
+   },
+   "adversarial_sourced": {
+    "alpha": 4.2,
+    "beta": 1.4,
+    "gamma_bar": 50.0,
+    "snr_db": 17.0
+   },
+   "stress_cfo_lw": {
+    "alpha": 4.0,
+    "beta": 1.9,
+    "gamma_bar": 100.0,
+    "snr_db": 20.0,
+    "f_residual_hz": 10000000.0,
+    "laser_lw_hz": 100000.0
+   }
+  },
+  "snr_grid_db": [
+   14.0,
+   17.0,
+   20.0
+  ],
+  "val_seeds": [
+   7600,
+   7601,
+   7602,
+   7603,
+   7604
+  ],
+  "test_seeds": [
+   7700,
+   7701,
+   7702,
+   7703,
+   7704,
+   7705,
+   7706,
+   7707,
+   7708,
+   7709
+  ],
+  "bstar_arm": "VV",
+  "bstar_cfg": {
+   "bps_B": 32,
+   "bps_Nw": 61,
+   "vv_Nw": 128,
+   "ddpll_omega": 20000000.0
+  },
+  "p_defaults": {
+   "lam": 0.99,
+   "delta": 2.0,
+   "l_block": 64,
+   "ml_window": 7,
+   "innov_thr": 0.3,
+   "lam_lo": 0.9,
+   "lam_hi": 0.999,
+   "innov_scale": 5.0
+  }
+ },
+ "phase_b_gates_pass": true,
+ "phase_c_bstar": {
+  "arm": "VV",
+  "cfg": {
+   "bps_B": 32,
+   "bps_Nw": 61,
+   "vv_Nw": 128,
+   "ddpll_omega": 20000000.0
+  }
+ },
+ "phase_d_headroom_verdict": "HEADROOM_SURVIVES",
+ "phase_d_headroom_summary": {
+  "max_point_dB": 0.6058630200821173,
+  "max_ci_upper_dB": 1.7191761258792604,
+  "survivors": [
+   "adversarial_sourced|snr14.0"
+  ]
+ },
+ "phase_e_method_verdict": "PROBLEM_SURVIVES_METHODS_FAIL",
+ "final_verdict": "PROBLEM_SURVIVES_METHODS_FAIL",
+ "ber_to_q2_formula": "Q=sqrt(2)*erfcinv(2*BER); Q^2_dB=20*log10(Q); BER=0 -> 0.5/N_eval bound; BER>=0.5 -> None",
+ "bootstrap": "per-cell paired (Q2_O - Q2_B*) or (Q2_P - Q2_opp) across 10 test seeds; 2000 resamples; 95% CI = [2.5%, 97.5%]",
+ "elapsed_s": 335.8634023666382
+}

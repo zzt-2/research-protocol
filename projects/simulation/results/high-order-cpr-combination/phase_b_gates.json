@@ -1,0 +1,74 @@
+{
+ "overall_pass": true,
+ "gates": {
+  "overall_pass": true,
+  "gates": {
+   "1_noiseless_recovery": {
+    "gate": "noiseless_recovery",
+    "pass": true,
+    "bers": {
+     "O": 0.0,
+     "B10": 0.0,
+     "B12": 0.0
+    },
+    "failures": {},
+    "tol": 1e-06
+   },
+   "2_cfo_phase_sign_and_units": {
+    "gate": "cfo_phase_sign_and_units",
+    "pass": true,
+    "expected_slope_rad_per_sym": 0.0002513274122871834,
+    "h1_final": 0.00025420639873088315,
+    "magnitude_ratio": 1.0114551230902342,
+    "sign_ok": true,
+    "magnitude_ok": true
+   },
+   "3_pilot_data_mask_overhead": {
+    "gate": "pilot_data_mask_overhead",
+    "pass": true,
+    "n_pilots": 16,
+    "n_data": 1008,
+    "overhead": 0.015625,
+    "expected_overhead": 0.015625,
+    "disjoint": true
+   },
+   "4_energy_fairness": {
+    "gate": "energy_fairness",
+    "pass": true,
+    "total_tx_energy": 1019.1999999999999,
+    "note": "all arms share tx_with_pilots, so TX energy is identical by construction"
+   },
+   "5_no_future_leakage": {
+    "gate": "no_future_leakage",
+    "pass": true,
+    "b10_causal_first_half": true,
+    "b12_causal_first_full_blocks": true,
+    "note": "BPS/VV use a declared Nw sliding window (allowed); B10/B12/P1/P2/P3 are causal"
+   },
+   "6_no_tx_truth_in_deployable": {
+    "gate": "no_tx_truth_in_deployable",
+    "pass": true,
+    "violations": {},
+    "note": "deployable arms take only (rx, pilot_idx, pilot_sym, hyperparams)"
+   },
+   "7_identity_non_degeneration": {
+    "gate": "identity_non_degeneration",
+    "pass": true,
+    "pairwise_max_abs_diff": {
+     "B10_vs_B12": 1.6099884656429644,
+     "B10_vs_P1": 1.6618531234493787,
+     "B10_vs_P2": 1.6618531234493787,
+     "B10_vs_P3": 1.634265959686103,
+     "B12_vs_P1": 0.5569737141275807,
+     "B12_vs_P2": 0.5561211099144443,
+     "B12_vs_P3": 1.600213918731913,
+     "P1_vs_P2": 0.5569737141275807,
+     "P1_vs_P3": 1.5861009752228763,
+     "P2_vs_P3": 1.5861009752228763
+    },
+    "alias_suspects": [],
+    "tol": 1e-09
+   }
+  }
+ }
+}

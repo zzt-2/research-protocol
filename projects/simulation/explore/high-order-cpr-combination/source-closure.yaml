@@ -1,0 +1,263 @@
+# Source closure — B10 pilot-RLS + B12 MAP phase recovery (T006)
+#
+# Frozen BEFORE any primary run. Restores the B10/B12 Step 1-3 evidence
+# (literature_notes L20/L22 + the two _read_notes increment files) so the
+# 4a headroom / method package can re-instantiate them without re-doing the
+# full-text acquisition. Per-task authorization: D012 (HIGH_ORDER_CPR_COMBINATION
+# _METHOD_PACKAGE), GW Step 4a only; does NOT enter Step 5/Contract/Execute.
+#
+# Closure rule (FR-26 evidence chain): every fact below carries a source
+# pointer. "PDF→md image-omitted" is flagged explicitly so no equation is
+# silently rebuilt from prose; anything rebuilt must be marked validation-tuned.
+# owner: T006, epoch 8.
+
+schema_version: closure.high-order-cpr-combination.v1
+frozen: 2026-07-25
+authorization: D012 (epoch 8, B10/B12 combination method Step 4a)
+worktree: "D:\\code\\study\\research-protocol\\.worktrees\\research-direction-lab-longitudinal-test"
+
+# ---------------------------------------------------------------------------
+# B10 — pilot-RLS joint CFO + Wiener phase-noise recovery
+# ---------------------------------------------------------------------------
+# Anchor fulltext: papers/doi/10.1007_s11107-024-01019-2/content.md
+# (Deka+Sharma+Krishnamurthy, Springer Photonic Netw Commun 2024, 47:164-171)
+# Read-note: papers/_read_notes/_B10-16qam-pilot-rls-increment.md
+# literature_notes: projects/thesis-fso/literature_notes.md [L20]
+b10:
+  mechanism:
+    one_liner: >-
+      pilot-driven RLS that folds CFO and Wiener phase noise into ONE linear
+      regression h0,k (PN offset) + h1,k (CFO slope -> 2*pi*df*Ts), then
+      switches to a decision-directed feedback loop after N_p pilots.
+    state_action:
+      state_vector: "h(k) = [h0,k, h1,k]^T  (2-tap, FIR by design)"
+      regression_input_pilot: "x(k) = [1, k]^T (training phase, content.md:L95)"
+      regression_input_dd: "x(k) = [1, mod(k, F)]^T (DD phase, F=360deg/h1,N; content.md:L109)"
+      desired_pilot: "y(k) = unwrap(angle(r(k)/s(k)))  (degrees)  [content.md:L97 image]"
+      desired_dd: "y(k) = phi_hat(k) + (angle(s_hat(k)) - angle(r_hat(k)))  [content.md:L107 image]"
+      r_hat_definition: "r_hat(k) = r(k) * exp(-1j*phi_hat(k)); s_hat = hard_decision_16QAM(r_hat)"
+      update: "standard RLS recursion h(k)=h(k-1)+kappa(k)*e(k) (content.md:L85-89 image)"
+      init: "h(0)=0; R_x(0)=delta^-1 * I, delta=2 (content.md:L91, L143)"
+      forgetting_factor: "lambda (paper sweeps, not fixed; L143/L189-207). lambda->1 hurts Q (L207)."
+      mod_trick_rationale: >-
+        Total wrapped phase is nearly periodic in k; mod(k,F) keeps input/output
+        bounded to prevent divergence (content.md:L109).
+    pilot_to_dd_switch: >-
+      At k = N_p (=128 per content.md:L53/L135) the desired output changes from
+      pilot-de-mod phase to DD residual; the input vector also becomes [1,mod(k,F)].
+      The DD residual is the per-symbol phase error between hard decision and
+      de-rotated sample; this is a feedback loop (content.md:L105-109).
+    complexity: "20 RM + 12 RA per symbol (Table 1, content.md:L191-203)"
+
+  information_sources:  # what each input is sourced from
+    regression_input_index_k: "symbol index k=0..N-1 (canonical simulator)"
+    pilot_symbols: "known pilot sequence (canonical, shared realization)"
+    desired_phase_observation: >-
+      angle(r(k)/s(k)) — pilot-de-mod phase, then DD residual; both are
+      receiver-visible (B10 paper). NO future symbols, NO TX truth beyond
+      the pilot positions used as known references.
+
+  output_limits:  # what the standalone component can and cannot do
+    estimates: "CFO slope h1 -> 2*pi*df*Ts; phase offset h0 -> per-symbol PN theta(k)"
+    per_symbol_phase_track: "phi_hat(k) = h0(k) + h1(k)*mod(k,F)  (degrees -> rad/2*pi etc)"
+    block_boundary: >-
+      paper assumes a single linear regression per frame; lambda controls
+      how fast h0,h1 adapt. No sub-block structure inside the regression.
+    standalone_caveat: >-
+      B10 is a SINGLE-COMPONENT estimator: one RLS track over the whole frame.
+      The combination methods must demonstrably CHANGE this (residual input,
+      confidence gate, adaptive lambda) — aliasing back to standalone B10
+      triggers the identity-non-degeneration smoke.
+
+  parameters_from_paper:  # for the dimensional audit + provenance
+    constellation: "16-QAM (paper uses PDM-16QAM; T006 uses uniform 16-QAM single-pol by canonical gen)"
+    baud_rate_paper: "28 GBaud (content.md:L113)"  # NOT used — canonical uses 2.5 GBaud
+    bits_per_frame: "2 x 25000 symbols per polarization (content.md:L113)"
+    pilot_count: "N_p = 128 (content.md:L53, L135)"
+    delta: "2.0 (regularization, content.md:L143)"
+    lambda_range_paper: "swept (content.md:L189-207); not a single fixed value"
+    osnr_paper: "26 dB main (content.md:L159/L181); 24/29 dB per span (L185)"
+    cfo_range_paper: "1 MHz - 10 GHz (content.md:L159/L165/L169/L219)"
+    linewidth_range_paper: "50 kHz - 1.45 MHz (content.md:L169/L181/L219)"
+    baselines_paper: "BPS [17 Pfau 2009] + 4OPM [8 Selmi 2009] (content.md:L163)"
+
+  parameters_from_star_ground_simulator:  # current canonical values
+    baud_rate: "2.5 GBaud (params.py SystemParams.R_SYM)"
+    t_s: "1/2.5e9 s (params.py SystemParams.T_S)"
+    laser_lw: "10 kHz single source (params.py SystemParams.LASER_LW; D-007 unified across AWGN+turb)"
+    modulation: "uniform 16-QAM (canonical _dual_pol_channel.py, modulation='qam16'; qam16_mod Gray + /sqrt(10))"
+    gg_channel: "Gamma-Gamma plane-wave (Gu 2022 alpha/beta, frozen per turb level)"
+    star_ground_link_only: "canonical r = sqrt(h)*exp(j*theta_SOP)*R(theta)*s + n; no fiber nonlinearity"
+
+  parameters_validation_tuned_only:  # explicit — NOT from literature
+    pilot_overhead_fraction: "validation-tuned (see contract.yaml; frozen on VALIDATION only)"
+    lambda_default: "validation-tuned (B10 paper sweeps, not a fixed value; frozen on VALIDATION)"
+    block_size_for_blockwise_resolve: "validation-tuned (resolve_qam16 8-rotation is global; blockwise optional)"
+    stress_cfo_hz: "validation-tuned stress point (see contract dimensional audit; B10-supported range only)"
+    stress_linewidth_hz: "validation-tuned stress point (B10 upper 1.45 MHz; see contract)"
+
+  combo_methods_new_actions:  # NEW actions vs the two standalone components
+    P1_cascade: >-
+      B10 RLS produces phi_hat_B10(k) over the whole frame; the residual
+      rx_res = rx * exp(-1j*phi_hat_B10) is fed to B12 MAP as its INPUT (not
+      the raw rx). B12 then estimates only the residual phase. This is a NEW
+      action because standalone B12 sees raw rx; P1 B12 sees B10-compensated
+      rx_res. Identity smoke: rx_res must differ from rx (B10 not identity).
+    P2_confidence_gate: >-
+      A receiver-visible confidence c(k) (RLS innovation magnitude or B12
+      residual likelihood) selects per-symbol between B10, P1 cascade and B12.
+      Threshold frozen on VALIDATION. NEW action: routing, not estimation.
+    P3_adaptive_forgetting: >-
+      B10 RLS forgetting factor lambda(k) is modulated by innovation magnitude,
+      bounded [lambda_lo, lambda_hi]. NEW action: lambda is time-varying inside
+      B10 itself, with fixed-lambda B10 as the ablation control.
+
+# ---------------------------------------------------------------------------
+# B12 — frequency-domain CW pilot (anchor) + MAP joint ML/MAP phase recovery
+# ---------------------------------------------------------------------------
+# Anchor fulltexts:
+#   B12 anchor: papers/doi/10.1109_TCOMM.2022.3171809/content.md
+#     (Gavert+Eriksson, IEEE TCOMM 2022, 70(7):4780-4792, "In-Band and
+#      Out-of-Band Frequency-Domain Pilot")
+#   MAP:        papers/doi/10.23919_oecc-psc62146.2025.11109607/content.md
+#     (Ma+Liu+Du+Wang+Kam, OECC/PSC 2025 WP-B-26, "MAP Phase Recovery 256-QAM")
+# Read-note: papers/_read_notes/_B12-freq-domain-pilot-increment.md
+# literature_notes: [L22]
+b12:
+  anchor_freq_domain_pilot:  # B12 anchor — used as the standalone B12 component here
+    mechanism: >-
+      Frequency-domain CW pilot tone injected at known f_CW; RX frequency-shift
+      + LPF extracts pilot; three estimators (BLUE / ML / improved) over a
+      2K+1 window estimate phase. improved filters the PHASOR (not phase) to
+      avoid unwrap noise amplification; approximates MVU.
+    why_not_used_directly: >-
+      B12 anchor is a CW tone in the frequency domain — it requires reserving
+      spectrum outside the data band (out-of-band) or paying in-band pilot
+      power. T006's uniform 16-QAM + equal pilot overhead contract cannot
+      reserve out-of-band spectrum without changing the data bandwidth, which
+      breaks the equal-overhead fairness rule. The TIME-DOMAIN pilot-aided
+      estimator (MAP paper, below) is the canonical B12 component under T006's
+      equal-overhead contract.
+
+  map_phase_recovery:  # the standalone B12 component used in T006
+    mechanism:
+      one_liner: >-
+        Time-domain pilot-aided joint ML/MAP phase estimator. Per L_block,
+        the first symbol is a pilot (PA coarse); after PA compensation a
+        sliding-window ML refines; the joint ML/MAP estimator (Wang [5]
+        framework) jointly estimates the deterministic initial phase theta
+        (ML) and the Wiener phase vector theta_k (MAP) using the composite
+        AOPN+Wiener covariance Sigma_phi = Sigma_theta + Sigma_eps.
+      stages:
+        pa_coarse: "phi_PA = angle(S_PA* . R_PA) per block (Eq 4, content.md:L65-67)"
+        pa_ml_fine: >-
+          ML refines per-symbol phase drift over window 2W+1 on PA-compensated
+          signal (content.md:L69-73; Eq 5 image-only — see closure caveat).
+        joint_ml_map: >-
+          Joint ML (initial theta) + MAP (Wiener theta_k) phasors using
+          Sigma_phi = Sigma_theta + Sigma_eps (Eq 6, content.md:L75-79;
+          Eq 6 image-only — see closure caveat). Wang [5] foundation
+          (content.md:L143).
+      aopn_model: >-
+        AWGN-induced phase noise epsilon_k ~ N(0, N_tilde/|alpha|) under high
+        SNR (content.md:L45-47). alpha replaced by |r[k]| pre-detection.
+      wiener_model: "theta[k]-theta[k-1] = pi[k], pi[k] ~ N(0, sigma_pi^2), sigma_pi^2 = 2*pi*dnu*T_s (content.md:L35)"
+      subblock_continuity: >-
+        Block split into L_sub-length sub-blocks; terminal phase of sub-block i
+        propagated to sub-block i+1 for continuity (content.md:L89).
+      parallelism: "blocks processed in parallel (content.md:L58, L121)"
+
+    information_sources:
+      pilot_symbols: "first symbol of each L_block block (known, content.md:L63)"
+      decisions: "hard decisions s_hat on PA-compensated data (content.md:L73)"
+      covariance_matrices: >-
+        Sigma_theta (Wiener, from linewidth) and Sigma_eps (AOPN, from SNR);
+        both receiver-visible (linewidth and SNR are calibration params).
+      forbidden: "future symbols, TX truth, true theta/theta_k (oracle-only in T006)"
+
+    output_limits:
+      estimates: "per-symbol phase track phi_hat(k) over the block"
+      block_boundary: "L_block=128 best; L_sub=1 best (content.md:L103, L113)"
+      standalone_caveat: >-
+        B12 MAP is a per-block estimator: it estimates theta + theta_k inside
+        each L_block. Combination methods must change what MAP sees (cascade)
+        or how it routes (gate) — aliasing back to standalone B12 triggers
+        the identity-non-degeneration smoke.
+
+    parameters_from_paper:
+      constellation_paper: "256-QAM (content.md:L25); T006 uses uniform 16-QAM"
+      baud_rate_paper: "100 / 64 GBaud (content.md:L113/L115)"  # NOT used
+      block_length: "L_block = 128 (content.md:L103)"
+      sub_block_length: "L_sub = 1 (best, content.md:L113)"
+      linewidths_swept: "100 / 150 / 500 kHz (content.md:L103/L108/L113)"
+      snr_swept: "32-40 dB (content.md:L103/L113)"
+      map_penalty_db: "MAP SNR penalty 4 dB @ 100GBaud/150kHz vs PA ML 5 dB vs PA 7.5 dB (content.md:L115)"
+      hd_fec_reach: "MAP reaches 7% HD-FEC @ SNR 32 dB (100GBaud) / 33 dB (64GBaud) (content.md:L115)"
+      wang_reference: "[5] Wang 2022 IEEE T-SP 70:337-350 joint ML/MAP sinusoid (content.md:L143)"
+
+    parameters_from_star_ground_simulator:
+      modulation: "uniform 16-QAM (NOT 256-QAM; contract constraint)"
+      baud_rate: "2.5 GBaud"
+      laser_lw: "10 kHz (canonical, single source)"
+      snr_range: "near HD-FEC waterfall for 16-QAM (see contract)"
+
+    parameters_validation_tuned_only:
+      ml_window_W: "validation-tuned (paper uses image-only Eq 5; T006 frozen on VALIDATION)"
+      pa_block_length: "validation-tuned (paper L_block=128 at 100GBaud; T006 frozen on VALIDATION at 2.5GBaud)"
+      l_sub: "validation-tuned (paper L_sub=1 best; T006 uses 1 unless validation shows otherwise)"
+
+# ---------------------------------------------------------------------------
+# Closure caveat (image-only equations, FR-26/C6)
+# ---------------------------------------------------------------------------
+closure_caveat:
+  b10_images_omitted:
+    - "content.md:L63 cost function J(k)"
+    - "content.md:L73 RLS cost image"
+    - "content.md:L85-89 RLS recursion (h, kappa, R_x^-1) — three images"
+    - "content.md:L97 linear model y(k)=h0+h1*k+n0"
+    - "content.md:L107 DD desired output image"
+  b12_images_omitted:
+    - "content.md:L71 PA-ML windowed estimator (Eq 5) — image"
+    - "content.md:L77 joint ML/MAP phasors (Eq 6) — image"
+    - "content.md:L83 amplitude vector a — image"
+  rule: >-
+    Per sim-preflight C6, these image-only equations are rebuilt from the
+    surviving prose + the canonical RLS/ML/MAP forms. Anything rebuilt is
+    marked validation-tuned above and the implementation file documents the
+    reconstruction. NO numeric dB from these images is used as a Go argument;
+    only the B10/B12 anchor dB numbers (which survive in prose) are cited as
+    context, never as the T006 threshold (T006 uses its own 0.5 dB / 0.3 dB
+    pre-registered thresholds on the canonical star-ground link).
+
+# ---------------------------------------------------------------------------
+# T005/Pilot-Jones immutability (forbidden_actions compliance)
+# ---------------------------------------------------------------------------
+protected_immutable:
+  - "T003 explore/results/tests (pilot-jones-complex-salvage) — zero touch"
+  - "T004 explore/results/tests (pilot-jones-complex-repair) — zero touch"
+  - "T005 explore/results/tests (pilot-jones-temporal-adjudication) — zero touch"
+  - "projects/thesis-fso/direction-lab/ (canonical-state.yaml, completion-events.jsonl) — zero touch"
+  - ".agents/skills/ (research-direction-lab, session-governance, sim-preflight) — zero touch"
+  - "common/_dual_pol_channel.py, common/_gg_time.py, params.py — SHARED, zero touch"
+  - "T005/Pilot-Jones method and semantics not continued"
+
+# ---------------------------------------------------------------------------
+# Authorization scope
+# ---------------------------------------------------------------------------
+authorization_scope:
+  stage: "GW Step 4a dimension D ONLY"
+  forbidden:
+    - "Step 5, Contract, Execute"
+    - "PRIVATE_FULLTEXT_ACQUISITION (no new private fulltext)"
+    - "ABSTRACT_AS_FULLTEXT"
+    - "POST_STEP4A_ADVANCE"
+    - "SCIENCE_SCOUT_REACTIVATION"
+    - "PROTECTED_HISTORY_EDIT"
+    - "SKILL_EDIT"
+    - "GENERAL_INFRASTRUCTURE_BUILD (no shared generator changes)"
+    - "PILOT_JONES_REPAIR_OR_NEW_AXIS"
+  produces:
+    - "explore/high-order-cpr-combination/ (this package)"
+    - "results/high-order-cpr-combination/"
+    - "tests/test_high_order_cpr_combination.py"
+    - "projects/thesis-fso/worker-logs/step-006-high-order-cpr-combination-method.md"
