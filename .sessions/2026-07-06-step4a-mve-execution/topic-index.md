@@ -1,7 +1,7 @@
 # Topic Index: Step 4a 维度 D MVE 执行
 
 > slug: 2026-07-06-step4a-mve-execution
-> status: active | created 2026-07-06 | last_updated 2026-07-09（S013 A4 条件适配 PASS + 30seed 数据 + 简报写完。4 种适配扫描全闭合：A1 参数 FAIL / A2 已做 D002 / A3 组合 FAIL / **A4 条件 PASS**（唯一出信号方向）。A4 = per-block 有效 SNR 驱动 DA/NDA 切换，crossover 区 30 seed 赢 max(DA,NDA) +0.27~+0.48dB CI 下界全正。物理发现：crossover 由 γ_eff 驱动汇聚 12~14dB。文献 16 组检索 ~130 篇确认 per-block pilot/blind 硬切换没人做过。fair_gain 30seed 链 AWGN+1.34→up_str+3.10dB。简报 ADVISOR_BRIEFING_2026-07-09 写完未发。详见 S013 + H008）
+> status: active | created 2026-07-06 | last_updated 2026-07-25（S014/D012：复用 B10/B12 已有 Step 1–3 证据，激活高阶调制 CPR 组合方法 Step 4a 大包 T006。）
 
 ## 专题定位（一句话）
 
@@ -27,6 +27,10 @@
 对 B11/B3/B7 走 Step 4a 维度 D MVE，守 FR-21/TL-20/FR-18/FR-12 + D005 务实路线 + D006 红线。
 
 ### 当前范围
+- **D012 当前 carrier**：B10 pilot-RLS + B12 frequency-domain pilot/MAP 高阶调制
+  CPR 组合方法。T006 先完成 source closure、合法 strongest-simple baseline 与
+  truth-assisted headroom；门通过则同包实现 cascade、confidence gate 和
+  adaptive-forgetting RLS。止于 Step 4a provisional verdict。
 - **复用 projects/simulation/common/ 基建**（GG+Doppler+phase noise 信道 + VV/BPS/DPLL/KF 载波恢复，TL-24/TL-13 已制度化）
 - **增量扩充 common**：
   - `_modulation.py` 加 M-APSK（8PSK / (8,8)-16APSK / 32APSK / 64APSK + Gray 映射）—— B11+B3 共用
@@ -48,16 +52,26 @@
 - ❌ 不污染 common（explore 阶段探针不直接进 experiments，MVE 通过才转正）
 
 ### 范围变更记录
+- **2026-07-25 D012 carrier reactivation**：原始目标的候选范围曾在 2026-07-06
+  校准时扩展到 B10-Q2/B12-Q3 等 D006 前馈边界；现正式恢复 B10/B12 已完成的
+  Step 1–3 证据，允许在 Step 4a 运行一个 headroom→methods 大包。
+  - 原因：Pilot-Jones D066/V040 scoped axis Kill 后需合法换 carrier；B10/B12
+    有全文、精读、QAM 方法链和现成 CPR 资产，最符合优先形成方法的目标。
+  - 不变边界：不进入 Step 5/Contract/Execute；不改 shared generator；问题
+    headroom 不存活时不建设方法。
+  - 显式旧决策覆盖：用户已批准 T006 采用 `<0.5 dB` headroom 作为**是否投资方法
+    实现**的强门，故 D012 只对 T006 覆盖下方不变量 2/4/6 的“FR-21 仅参考”校准；
+    其他历史候选和 D005 叙事不被追溯改写。
 - **2026-07-06 S001 标准校准**（用户质疑"十几个 Q 都不行是不是我考虑不周"触发）：①B1-Q1 不预设 Kill（不变量 11）②B9-Q1 不锁载波同步主题（不变量 12）③D006 边界 7 次升优先级（不变量 13）。**这不是违反不变量，是校准 S031 评估时过严的标准**——S031 用了期刊级标准（FR-21<0.5dB 砍 + A1 严查 + 主题锁窄）判会议级候选，是 profile"急于用严标准砍"的新表现。校准后范围扩大：B1-Q1/B9-Q1/D006 边界 7 次都进 MVE 评估范围（原本只 B11/B3/B7 三个）
 
 ## 不变量（动任何一条必须重新讨论）
 
 1. **继承上游专题 `2026-06-20-problem-driven-redirection` 全 9 条不变量**（D017/D018 判读框架 / D006 红线 / D005 务实路线最高优先级 / 范围硬门 / 问题从文献长出来 / 委托技术判断守 Go/Kill / 3 步上限 / 核查机制中性双向 / GW 流程强制门控）
-2. **D005 务实路线（INVARIANT 最高优先级）**：Go 判据=赢传统未优化 baseline 几 dB（参考同门 2-4dB，会议门槛放宽：纯仿真+鲁棒性 dB/范围/绝对指标/同族 dB 都算够格）；oracle 上界 FR-21 降级为参考不当 Kill 门（FR-21 <0.5dB 不再自动砍，但连传统 baseline 都赢不了仍不行）
+2. **D005 务实路线（INVARIANT 最高优先级）**：Go 判据=赢传统未优化 baseline 几 dB（参考同门 2-4dB，会议门槛放宽：纯仿真+鲁棒性 dB/范围/绝对指标/同族 dB 都算够格）；oracle 上界 FR-21 通常降级为参考不当 Kill 门。**D012/T006 是用户批准的显式例外**：`<0.5dB` 作为是否投入三个方法实现的强门。
 3. **FR-22 GW 流程强制门控**：当前在 Step 4a 维度 D（MVE），任何"试新方法/新方向"动作必须先回答"在 GW 哪一步"——B11/B3/B7 MVE 是 Step 4a 维度 D 合规动作，禁跳到 Contract/Execute
-4. **FR-25 Go/Kill 标准分离**：Go 标准=赢传统 baseline / Kill 标准=A0 致命+oracle 上界<0.5dB+MVE FAIL，FR-21 只在 A0 通过后做 Kill 工具禁当 Go 判据
+4. **FR-25 Go/Kill 标准分离**：Go 标准=赢传统 baseline / Kill 标准=A0 致命+oracle 上界<0.5dB+MVE FAIL，FR-21 只在 A0 通过后做 Kill 工具禁当 Go 判据；T006 的 0.5dB 仍只作 Kill/investment gate，不作 Go 对手。
 5. **切法地图是参照系不是答案**：判 Go/Kill 时引用切法地图模式（饱和池场景迁移/稀池独占/联合建模 dB 空间），但不直接搬"切法地图说这个好"
-6. **profile 第 8 次"急于推进"防线激活**：MVE 执行主线极易在压力下"先跑起来再说"跳过 oracle 上界前置。**防线：每候选必须先算 CRB 下界，<0.5dB 直接砍不跑 MVE（守 TL-27 / FR-21），≥0.5dB 才写 MVE 脚本。**
+6. **profile 第 8 次"急于推进"防线激活**：MVE 执行主线极易在压力下"先跑起来再说"跳过 oracle 上界前置。**防线：T006 必须先算合法 headroom，CI upper <0.5dB 直接砍不实现方法；≥0.5dB 才进入方法比较。其他候选仍按各自已登记决策执行。**
 7. **TL-26 参数溯源强制**：MVE 每个关键物理参数（Cn²/σ²/线宽/CLW/Doppler rate/FEC 阈值）必须标文献来源（Paillier / sat.1553 / Fernandes / B11/B7 锚论文），禁"为了让方法有用"拍参数
 8. **TL-13 共用同一信道实现**：B11/B7/B3 必须从 `common/_channel.py` 导入，禁自建信道（防仿真不公平）
 9. **TL-20 先建理论预期**：MVE 跑之前必须写明理论预期表（每湍流等级预期 dB + 量化锚点 + 偏离即停查代码），仿 n1-pcs-gain MVE-SPEC.md §2 模板
@@ -145,6 +159,13 @@ projects/simulation/
 
 ## 当前位置
 
+**🟡 S014/D012 高阶调制 CPR 组合方法 T006_READY（2026-07-25）**：
+当前 formal step 仍为 GW Step 4a。B10/B12 Step 1–3 证据已存在；下一动作不是再做
+泛检索，而是冻结 source/parameter contract、验证 strongest-simple CPR 到
+truth-assisted reference 的合法 headroom。若 primary headroom 不存活即 Kill；若存活，
+同包完成 cascade/confidence-gate/adaptive-forgetting 三方法，必须对照 B* 与两个
+standalone components。不得进入 Step 5。
+
 **🟢 S013 A4 条件适配 PASS + 简报写完待发（2026-07-09）**：4 种适配扫描全闭合（A1 参数 FAIL / A2 结构已做 D002 / A3 组合 FAIL / **A4 条件 PASS**）。A4 = per-block 有效 SNR 驱动 DA/NDA 切换，crossover 区（γd=15dB）30 seed 赢 max(DA,NDA) +0.27~+0.48dB（CI 下界全正）。物理发现：crossover 由 per-block γ_eff 驱动（非单纯 fade 深度），诊断实证汇聚在 γ_eff 12~14dB。文献两轮独立检索（16 组 ~130 篇）确认单载波 CPR per-block pilot/blind 硬切换没人做过（最接近是静态比较 Song 2020 / 级联组合 Moretti 2013 / 算法内自适应参数，都不是切换）。fair_gain 30 seed 链：AWGN+1.34→weak+1.43→mod+1.44→strong+2.51→up_mod+2.44→up_str+3.10dB（weak/mod CI 重叠，两段趋势非严格单调）。简报 `ADVISOR_BRIEFING_2026-07-09_adaptive_cpr.md` 写完未发。**下一步**：用户去新对话调研"自适应论文怎么组织 baseline/参数/叙述"（H008），回来完善简报后发老师。
 
 **（前 S011 DPLL 异族 baseline 仿真完成 + baseline 池立住 2026-07-08）**：跑 DPLL DD BER 仿真（5 seed × 4 场景，181s），TL-20 四判据全 PASS（DPLL≥oracle / <2×NDA / >0.7×NDA / @18dB AWGN=3.64e-3 在预期 0.003~0.006 内）。关键发现：DPLL 必须连续处理（全数组 VCO 累积），per-block 重置 VCO 丢符号间相位连续性致 BER 暴涨。omega_n=50e6。Fair gain：DPLL vs NDA AWGN +0.103dB（NDA 稍赢 CI 不跨 0），weak/moderate +0.02dB（CI 跨 0 持平），strong 工作区 -0.046dB；DPLL vs DA 全场景稳赢 +1.25~+1.68dB。DPLL 是异族（DD 闭环 vs 升幂前馈），D-010 标准 3 合规。**baseline 池立住**：DA-ML 主 + DPLL 异族 + VV/BPS fellow。
@@ -198,6 +219,9 @@ projects/simulation/
 - **S011** DPLL DD 异族 baseline 仿真 + baseline 池立住（2026-07-08）
 - **S012** 方法论转向：4 种适配 skill + 3 并行实验方向（2026-07-08，本对话产出）
 - **S013** 4 种适配扫描各方向实验日志（2026-07-08 新建，A3 NDA+DPLL FAIL 首条；2026-07-08 续接 A1 参数适配 FAIL 第二条；2026-07-09 续接 A4 条件适配 PASS + 改进版 + 30seed + 文献核查 + 简报；**2026-07-09 续接 A4 切换三 bug 修复重跑（D002/H003）—— 原"切换 PASS +0.27-0.48dB"基于 oracle max(DA,NDA) 假增益，三 bug 修复后切换无全场景增益，真实价值=低 SNR 避 NDA 崩溃 +1.3~+2.3dB + 强湍流高 SNR 微赢 DA +0.02~+0.20dB。切换 A4 信号从"全场景赢"修正为"条件性避险/鲁棒性"。切换叙事定位回 thesis-writing 待讨论**）
+- **S014/D012**（2026-07-25）：Pilot-Jones scoped axis Kill 后恢复 B10/B12 既有
+  Step 1–3 证据为当前 carrier；T006 预注册 headroom 前置门，门通过即同包跑三个
+  组合方法，目标是形成可包装方法而非再写纯分析。
 - **D-011** A1 参数适配（NDA 块长自适应 K）FAIL（2026-07-08，S013 新建）
 - **H008** 交接给新对话：自适应论文 baseline 组织/参数处理/叙述展开调研（2026-07-09，用户要去新对话搞清楚别人怎么弄 baseline + 参数照搬还是自调）
 - **H009** 切换三 bug 修复+30seed 重跑结果（2026-07-09，执行 thesis-writing D001 修复任务，实验在本专题 step4a 跑。代码 `_a4_switch_30seed_fixed.py` + 数据 + 报告 `_a4_switch_bugfix_report.md`。Bug2 非假增益源不修（独立核查修正用户诊断）。结论：切换无全场景增益，降级为鲁棒性补丁，net gain+1.2dB 不依赖切换。切换叙事定位回 thesis-writing 待讨论。完整交接见 thesis-writing/H003）

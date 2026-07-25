@@ -16,9 +16,12 @@ Direction Lab 是正式晋级前的候选发现/批量筛选层；Scout/Sandbox 
 
 ## 当前状态
 
-- 正式研究：当前 formal Groundwork 工作线 = **Pilot-Jones**，`Step 4a MODEL_ADEQUACY_SALVAGE_AUTHORIZED`（D063/T003；Step 3.5 非 PASS）。唯一正式入口为 [`../master-state.md`](../master-state.md)。Direction Lab Scout campaign 仍 dormant。
+- 正式研究：当前 formal Groundwork 工作线 = **B10/B12 高阶调制 CPR 组合方法**，
+  `Step 4a T006_READY`（step4a D012/S014）。唯一正式入口为
+  [`../master-state.md`](../master-state.md)。Direction Lab Scout campaign 仍 dormant。
 - Sandbox 历史：B003 已完成并独立验证；批次事实见 [`state/completion-events.jsonl`](state/completion-events.jsonl) 与 [`state/projections/`](state/projections/)。
-- Pilot-Jones formal GW（D061–D063）：Step 1/2/3 ✅；Step 3.5=`WAIVED_TO_STEP4A_WITH_BLOCKING_DEBT`。T002/V037 只 Kill unitary-real-rotation M-C-A；family unresolved。T003 检验 complex Jones/PMD/PDL + task-matched baseline，正面最高 Conditional Go。
+- Pilot-Jones formal GW 已退出 current carrier：T005/D066/V040 scoped Kill
+  fixed/verified complex component rescue axis；4 篇全文债和 entire-family 完备性保留。
 - P03 状态（D061 选项①，已选定）：`PAUSED_RETURNED_TO_PORTFOLIO`——P03 暂停回候选池，**不是 Kill**（family 不关闭，沿用 D057/D058 `P03_DOMAIN_ADEQUACY_UNRESOLVED`）。Sandbox `NOT_ENTERED`，ML 仍禁止训练，Stage B 不触发。
 - 历史 P03 Stage A 证据（2026-07-19，S077/D059/V033）保留：runnable 代表子域（11 cells × 10 paired seeds）`LOCAL_NEGATIVE`，exit=`NO_HEADROOM_IN_REPRESENTATIVE_DOMAIN_WITH_CERTIFICATE`；16QAM/receiver-CSI/coded-output 三轴 INFRASTRUCTURE_BLOCKED → DOMAIN/CANDIDATE/FAMILY 仍 UNRESOLVED/OPEN。
 - B004：不存在，也不允许启动。
@@ -35,13 +38,18 @@ B001–B003 的任何数字都不能进入论文、正式 Groundwork 或 canonic
 
 ## 当前阻断
 
-当前 formal debt = D056 的 4 篇直接竞品全文继续 `BLOCKED_NO_FULLTEXT`。D063 不把摘要当全文、不关闭新颖性债务；T003 正面最高只能 Conditional Go。
+Pilot-Jones formal debt = D056 的 4 篇直接竞品全文继续 `BLOCKED_NO_FULLTEXT`，
+但该路线已退出 current carrier，不阻塞 T006。T006 自身必须恢复 B10/B12 已有全文与
+参数 provenance，不能把摘要或光纤条件静默当作星地结论。
 
 历史 P03 阻断保留：Stage A 在 runnable 代表子域 LOCAL_NEGATIVE，但 3 轴 INFRASTRUCTURE_BLOCKED（16QAM / receiver-estimated CSI / coded output）+ 历史反例落在被阻轴上，不能形成 domain/candidate/family 退出。没有 ML 训练许可、PASS Queue、新 Registry 或 Sandbox 批次许可。
 
 ## 下一合法边界
 
-执行 live-test `T003-pilot-jones-complex-model-salvage.md`：在当前 formal Step 4a 内完成物理模型充分性、隔离 complex-Jones 模型梯、task-matched conventional baseline、正确 Q²/headroom 与条件式方法 MVE。止于 provisional verdict；不进入 Step 5，不启动 B004/P03 ML/Queue/Registry，不复活 dormant science-scout。
+执行 live-test `T006-high-order-cpr-combination-method.md`：在当前 formal Step 4a
+先完成 B10/B12 source closure、equal-overhead baseline 与合法 headroom；门通过则
+同包完成三个组合方法与 paired test。止于 provisional verdict；不进入 Step 5，
+不启动 B004/P03，不复活 dormant science-scout。
 
 历史 P03 Headroom Atlas 入口保留（P03 PAUSED，artifact 不删）：唯一 receipt-bound 入口 [`scout/P03-U19-residual-headroom/headroom-atlas/atlas_gate.py`](scout/P03-U19-residual-headroom/headroom-atlas/atlas_gate.py) 已建立并通过 19 tests（含独立对抗审查）；Stage A artifact 在 [`scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/`](scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/)。不得把 LOCAL_NEGATIVE 改写成候选退出，也不得启动 B004、ML 训练或正式性能结论。
 

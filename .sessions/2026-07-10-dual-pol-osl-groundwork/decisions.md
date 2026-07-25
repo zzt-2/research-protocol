@@ -3375,3 +3375,53 @@ live-test `voice.md` 2026-07-23。
 ### 来源
 
 V039 主控接收验收；live-test S001 续接。
+
+---
+
+## D066: 接收 T005 的 complex component rescue axis Kill，Pilot-Jones 退出当前 carrier
+
+> status: active
+> date: 2026-07-25
+> 取代：D065 的 `T005_TEMPORAL_ADJUDICATION_READY`
+> 被取代：无
+> 依据：V040 / S082 / T005 raw-result-source closure
+
+### 决策
+
+1. 接收 `KILL_COMPLEX_COMPONENT_RESCUE_AXIS_TEMPORAL_PRIMARY`：fixed/verified
+   component PDL/PMD 的 8 个 primary cells 最大 impairment-added headroom point
+   `0.0804126817 dB`，最大 95% CI upper `0.2371961896 dB`，均低于 0.5 dB。
+2. 该 Kill 只覆盖本轮已验证的 fixed complex component PDL/PMD rescue axis；
+   不把 D056 的 4 篇全文债改写为已解决，也不宣称整个 Pilot-Jones family 永久关闭。
+3. T005 科学裁决为 PASS，integrity 为 PARTIAL。contract 预注册 M3 exact recovery
+   `1e-10`，原实现却使用带 MMSE 正则的 reference 并以 `<1e-4` 测试；Windows 默认
+   locale 另有 3 个 UTF-8 portability failures。
+4. 主控用真酉矩阵精确逆重算 40 个 M3 test realizations，BER 40/40 与原 reference
+   相同且无噪误差 `1.1310e-15`，证明上述 integrity gap 不改变 Kill。
+5. 停止对 Pilot-Jones 当前路线继续补模型、加方法或修小轴；其 negative/boundary、
+   semantic-smoke 和 reproducibility 资产进入 harvest。当前 carrier 转回已有
+   carrier-sync B10/B12 高阶调制 CPR 组合方法的 GW Step 4a。
+
+### 理由
+
+- T002–T005 连续把 apparent headroom 归因为信道结构缺席、算子语义错误和无来源时间
+  模型；T005 的正式闭包又给出 CI upper 仍远低于门限。继续投资不符合失败截断。
+- B10/B12 已有 Step 1–3 证据和现成 CPR 资产，且能在同一包内先验算 headroom、门过
+  后直接实现方法，更符合当前“优先找方法与可用产出”的战略。
+
+### 排除的替代方案
+
+- 不因 M3 contract mismatch 推翻全部科学结果：真精确逆的独立重算已证明 decision-equivalent。
+- 不继续追求 verified DGD≫T_S 或 sub-symbol Jones 新轴：那会重新扩物理模型并延长
+  已连续失败的 family。
+- 不把局部 Kill 包装成 Pilot-Jones 全家族负面论文。
+
+### 影响范围
+
+- Pilot-Jones formal route：`SCOPED_AXIS_KILLED / RETURNED_TO_PORTFOLIO`。
+- Step 3.5 的 4 篇全文债继续存在，但不再阻塞当前 carrier。
+- 下一科学动作由 step4a-mve-execution D012/T006 拥有；仍不进入 Step 5。
+
+### 来源
+
+V040、S082、`projects/thesis-fso/worker-logs/step-005-pilot-jones-temporal-semantics-adjudication.md`。

@@ -23,7 +23,7 @@
 | 2 获取        | ✅   | 2026-06-26 + **2026-07-10 双偏振 9篇+sat.1553** | H004 块 A 7 篇 + H005 块 B 6 篇 + 双偏振 9 篇成功(download+blit 两轮) |
 | 3 精读        | ✅   | 2026-06-26 + **2026-07-10 双偏振 9篇+sat.1553§6补读** | 块 C 10 篇 + 载波同步 v2 35 Q# + **双偏振 9 篇+角度素材 schema 试用+3 Q#(Q-DP1/2/3)** |
 | 3.5 补充      | ⚠带债豁免 | 2026-06-27 起；2026-07-23 D062 更新 | 历史补充检索、Q11-Q13 召回与载波同步 v2 精读沉淀均保留；Pilot-Jones backward/收敛门已闭合，4 篇直接竞品保持 `BLOCKED_NO_FULLTEXT`。D062 只豁免进入 Step 4a，不记 PASS。|
-| 4a 可行性     | 🔄semantic repair + retest | 2026-06-28 起；2026-07-23 D064 更新 | 历史 Kill 保留；T002 只 Kill unitary-real-rotation Q2 实例化。T003 complex-model verdict 因 V038 科学语义缺陷失效；当前 T004 修复后重评，正面最高 Conditional Go，不进 Step 5。|
+| 4a 可行性     | 🔄T006 high-order CPR combination | 2026-06-28 起；2026-07-25 D012 更新 | Pilot-Jones fixed complex component rescue axis 已由 T005/D066/V040 scoped Kill；当前恢复 B10/B12 既有 Step1–3 证据，先做合法 headroom，门过才做组合方法。不进 Step 5。|
 | 5 Baseline    | ⬜   |          | 块 F：Go 的 Q# 进 baseline 复现 |
 | 4b 仿真可行性 | ⬜   |          | |
 | 6 仿真器      | ⬜   |          | |
@@ -1228,6 +1228,21 @@ R2按5种方法变体×2类场景得到31 raw/25 unique；R3围绕JLT 2023 PDL/F
 > 6-pilot 下 arbitrary per-block 3-tap LS 零残差自由度，不得外推为真实系统普遍
 > pilot-budget limit。另有 Python hash 与 contract/SHA 闭包债。complex axis 继续
 > `UNRESOLVED / T005_TEMPORAL_ADJUDICATION_READY`，T005 不运行新方法。
+
+> **2026-07-25 T005 closeout（S082/V040/D066）**：fixed/verified component 的
+> 8 个 primary cells 最大 impairment-added point/CI upper 为
+> `0.0804126817/0.2371961896 dB`，均低于 0.5 dB，故
+> `COMPLEX_COMPONENT_RESCUE_AXIS_TEMPORAL_PRIMARY` scoped Kill。原 M3 reference
+> 使用 MMSE regularization 而非 contract 声称的 exact inverse，Windows 默认 locale
+> 也有 3 个 encoding failures，故 integrity PARTIAL；主控用真正的 unitary
+> exact inverse 重算 40 个 M3 test realizations，BER 40/40 一致、无噪误差
+> `1.13e-15`，scientific verdict 不变。Pilot-Jones 退出当前 carrier；4 篇全文债
+> 和 entire-family 完备性不伪装为已闭合。
+
+> **2026-07-25 carrier switch（step4a D012/S014）**：当前 Step 4a 转到 B10/B12
+> 高阶调制 CPR 组合方法。B10/L20 与 B12/L22 的 Step 1–3 证据直接复用；T006
+> 先做 equal-overhead strongest-simple CPR→truth-assisted headroom，存活后同包
+> 评估 pilot-RLS→MAP residual cascade、confidence gate 和 adaptive-forgetting RLS。
 
 ### 实验完备性对标汇总
 

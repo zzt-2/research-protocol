@@ -1189,3 +1189,49 @@ raw contract_sha256="repair-contract.yaml"
 T005 只闭合 component temporal semantics、deterministic provenance 和正式
 fixed/slow primary headroom；不得继续增加 P 候选。若 verified primary 的
 impairment-added headroom <0.5 dB，关闭该 rescue axis 并回到候选轮换。
+
+---
+
+## V040: T005 独立接收、raw 重算与 exact-inverse adjudication
+
+> date: 2026-07-25
+> 关联：T005 / S082 / D065 / D066
+> verifier: fork 主控；与 GLM 执行上下文分离
+
+### 验证项
+
+- [x] commit/boundary：HEAD=`8f7dd0d323c8c35c47842ed34e6f68e9d4e9d4b3`；
+  13 个新增文件均在 T005 explore/result/test/worker-log；protected/formal/shared diff
+  为空；`git diff --check HEAD~1 HEAD` PASS。
+- [x] legacy regression：T003/T004 tests `38 passed`。
+- [x] T005 tests：`PYTHONUTF8=1` 时 `17 passed`；Windows 默认 GBK 为
+  `14 passed, 3 failed`，失败来自读 UTF-8 YAML/text 未显式 encoding。
+- [x] raw→aggregate：120 validation + 120 test rows逐格重算，8 个
+  impairment-added point/CI 与 result bit-identical；B* 12/12 一致。
+- [x] source closure：8 个 source SHA 与 contract SHA 均匹配实际文件。
+- [x] deterministic closure：`PYTHONHASHSEED=1/999` 的 fingerprint/J00/component seed
+  完全一致。
+- [x] primary gate：最大 point=`0.08041268169097786 dB`；最大 CI upper=
+  `0.23719618963591377 dB`；8/8 均 `<0.5 dB`。
+- [ ] contract identity：contract 冻结 `semantic_oracle_recovery=1e-10`，原
+  `reference_m3` 使用 `nv=1/(2*gamma_bar)` 的 MMSE solve；实际 recovery error
+  `9.9999949969528e-7`，test/worker 以 `<1e-4` 判 PASS。此项 FAIL。
+- [x] exact-inverse adjudication：对 40 个 M3 test realizations 用 unitary
+  `H(f)^H` 重算；stored MMSE reference 与 exact reference BER mismatch=`0/40`，
+  `max ||H^H H-I||=1.443316340022182e-15`，noiseless recovery error=
+  `1.1310398747129956e-15`。
+
+### 结论
+
+**PASS（scoped scientific verdict） / PARTIAL（integrity）**。
+
+- `KILL_COMPLEX_COMPONENT_RESCUE_AXIS_TEMPORAL_PRIMARY`：接收；
+- Pilot-Jones entire family Kill：不接收；
+- M3 “exact inverse”原实现与预注册阈值一致性：FAIL，但独立 exact-inverse
+  adjudication 证明不改变 BER/裁决；
+- Windows 默认 locale portability：FAIL，作为可复现性债记录，不为该已关闭路线另开修复包。
+
+### 后续
+
+Pilot-Jones 退出当前 carrier。下一合法科学动作由 step4a-mve-execution D012 的
+高阶调制 CPR 组合方法包拥有。

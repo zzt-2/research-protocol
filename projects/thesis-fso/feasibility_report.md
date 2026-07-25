@@ -1071,3 +1071,28 @@ D063 授权的 complex-Jones/PMD/PDL 模型充分性救活已完成，**provisio
 
 **MVE 基建共享**：Q-DP2 和 Q-DP3 都需要 GG 时间域衰落模型——建议先建这个共享基建，一次投入两个方向受益。
 
+---
+
+## Pilot-Jones T005 formal closeout 与下一 carrier（2026-07-25）
+
+T005 在 fixed/verified complex component PDL/PMD 下完成正式 paired closure：
+8/8 primary cells 的 impairment-added headroom point 与 95% CI upper 均低于
+0.5 dB，最大分别为 `0.0804126817 dB` 和 `0.2371961896 dB`。主控 raw 重算、
+source/contract SHA、B*、跨进程 determinism 均通过。
+
+完整性存在两个缺口：M3 contract 预注册 exact inverse recovery `1e-10`，原实现实际
+使用 MMSE regularized inverse 并以 `<1e-4` 测试；Windows 默认 locale 下 3 个
+UTF-8 读取测试失败。主控用真 unitary exact inverse 重算全部 40 个 M3 test
+realizations，BER mismatch=`0/40`、无噪恢复误差=`1.1310e-15`，故科学 scoped
+Kill 不受影响。正式状态：
+
+- scientific：`KILL_COMPLEX_COMPONENT_RESCUE_AXIS_TEMPORAL_PRIMARY`；
+- integrity：`PARTIAL`；
+- entire Pilot-Jones family：不宣称关闭；
+- investment：当前路线停止并返回 portfolio，不继续补模型/方法。
+
+下一 formal carrier 为 step4a-mve-execution D012 的 B10/B12 高阶调制 CPR
+组合方法。T006 先做合法 headroom；只有 `B*→O` 余量存活，才同包实现
+pilot-RLS→MAP residual cascade、confidence gate 与 adaptive-forgetting RLS。
+该动作仍为 GW Step 4a，不进入 Step 5/Contract/Execute。
+

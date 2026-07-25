@@ -1,18 +1,23 @@
 # 项目总览
 
-> 最后更新: 2026-07-19 | 活跃: 6 | 已归档: 5 | 总计: 11
+> 最后更新: 2026-07-25 | 活跃: 6 | 已归档: 5 | 总计: 11
 
 ## 活跃项目
 
 ### thesis-fso
 
 - **方向**：双偏振星地 OSL 场景中的 ML 应用方向探索；正式研究与 Direction Lab Scout/Sandbox 分层管理。
-- **正式状态**：`Pilot-Jones formal GW Step 4a COMPLEX_MODEL_SEMANTIC_REPAIR_T004_READY`（D064/V038；Step 3.5 非 PASS）。Direction Lab campaign 仍 dormant（D022 SCIENCE_FREEZE）。
+- **正式状态**：`HIGH_ORDER_CPR_COMBINATION GW Step 4a T006_READY`（step4a D012/S014）。Direction Lab campaign 仍 dormant（D022 SCIENCE_FREEZE）。
 - **Direction Lab Sandbox 历史**：B003 已完成，状态 `COMPLETED_SANDBOX_VERIFIED`；批次事实以 completion events 和不可变 projection 为证据，B001–B003 数字均不可进入论文或正式材料。
-- **Pilot-Jones formal GW（当前工作线，D061–D064/S079–S080）**：Step 1/2/3 ✅；Step 3.5=`WAIVED_TO_STEP4A_WITH_BLOCKING_DEBT`。T002/V037 的 `UNITARY_REAL_ROTATION_MCA_KILLED` 继续有效。**T003/S080 provisional Pivot 已被 V038/D064 否决**：13 tests/raw consistency 虽通过，但 post-noise PDL/PMD、PMD pilot、RX→RX tapped B3、非 ceiling PMD oracle 与混合 gate 使 M2/M3 结论无效。complex-Jones/PMD/PDL 与 family 均继续 `UNRESOLVED`；T004 semantic repair + retest 已授权。
+- **Pilot-Jones（已退出 current carrier）**：T005/D066/V040 在 fixed/verified
+  complex component 下关闭 rescue axis（max point/CI upper=0.0804/0.2372dB）。
+  scoped scientific Kill PASS、integrity PARTIAL；4 篇全文债与 entire-family 完备性仍保留。
 - **当前 Scout（dormant）**：Direction Lab Scout campaign 已 dormant（D022 SCIENCE_FREEZE；D061 确认无当前科学执行授权）。P03/U19 Headroom Atlas Stage A 历史（2026-07-19，S077/D059/V033）保留：runnable 代表子域 `LOCAL_NEGATIVE`，candidate `P03_DOMAIN_ADEQUACY_UNRESOLVED`（16QAM/receiver-CSI/coded-output 三轴 INFRASTRUCTURE_BLOCKED），domain/family 未关闭。
 - **P03 状态（D061 选项①，已选定）**：`PAUSED_RETURNED_TO_PORTFOLIO`——P03 暂停回候选池（**不是 Kill**，family 不关闭，沿用 D057/D058）。Sandbox `NOT_ENTERED`，Stage B 不触发。
-- **下一合法边界**：执行 T004，在隔离目录先通过 signal/noise/pilot/B3/oracle semantic tests，再重跑 M0–M4；problem 存活才进入方法 MVE。**不进入 Step 5/Contract/Execute；不启动 B004/P03 ML/Queue/Registry；不改 shared generator；不复活 Scout/P03；不 push。**
+- **下一合法边界**：执行 T006，恢复 B10/B12 source closure，建立 equal-overhead
+  strongest-simple baseline 与 truth-assisted headroom；门通过则同包完成三个高阶 CPR
+  组合方法。**不进入 Step 5/Contract/Execute；不启动 B004/P03；不改 shared generator；
+  不 push。**
 - **Atlas 强门入口**：`projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/atlas_gate.py`（唯一 receipt-bound 入口，19 tests 含独立对抗审查）。
 - **入口**：`projects/thesis-fso/master-state.md` → `projects/thesis-fso/direction-lab/README.md`；机器状态溯源见 `projects/thesis-fso/direction-lab/state/completion-events.jsonl` 与 `state/projections/`，`canonical-state.yaml` 不是正式研究授权源。
 

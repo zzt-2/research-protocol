@@ -220,3 +220,49 @@ T004 自包含任务书与 epoch 6 control guard 完成后交用户转发 GLM。
 ## 后续
 
 T005 自包含任务书与 epoch 7 control guard完成后交用户转发 GLM。
+
+> 2026-07-25 续接 | T005 主控验收与 T006 方法载体切换 | 状态：T006_READY
+
+### T005 主控接收验收
+
+- 执行 commit `8f7dd0d323c8c35c47842ed34e6f68e9d4e9d4b3` 边界正确；legacy
+  T003/T004 `38 passed`，T005 在 `PYTHONUTF8=1` 下 `17 passed`。
+- raw 240 行独立重算 bit-identical，8/8 primary cells point 与 CI upper 均低于
+  0.5 dB；最大 point=`0.0804126817 dB`、最大 upper=`0.2371961896 dB`。
+- 没有照单全收执行者的 PARTIAL：发现 M3 contract 冻结 exact recovery `1e-10`，
+  实现却用 MMSE regularized reference 且 tests 接受 `<1e-4`；Windows 默认 GBK
+  另有 3 个 encoding failures。
+- 真 unitary exact inverse 重算 40 个 M3 test realizations 与 stored BER 40/40
+  一致，无噪误差 `1.13e-15`。因此 scientific scoped Kill PASS，integrity PARTIAL。
+- formal D066/V040 关闭 `COMPLEX_COMPONENT_RESCUE_AXIS_TEMPORAL_PRIMARY`，但不杀
+  整个 family、不抹去 4 篇全文债。Pilot-Jones 退出当前 carrier。
+
+### 下一 carrier 比较与选择
+
+比较三条可用路径：
+
+1. **选择** B10/B12 高阶调制 CPR 组合方法：已有 Step 1–3 全文/精读、16/256-QAM
+   方法链和 CPR 仿真资产；headroom 存活时可在同包形成 cascade、confidence gate、
+   adaptive forgetting 三个务实方法。
+2. residual/CMA correction 暂不选：此前 receiver-visible information increment
+   仍不足，容易回到同信息源补丁。
+3. P03 暂不选：当前价值主要在 infrastructure/domain closure，离方法形成更远。
+
+用户同意方案 1。carrier owner D012 已明确：先做合法 problem/headroom，`<0.5 dB`
+立即 Kill；门通过则同一个 GLM 对话完成方法、paired test、raw/CI 和裁决。
+
+## 决策引用
+
+- formal dual-pol D066：接收 T005 scoped Kill，Pilot-Jones 退出 carrier（新建）。
+- formal carrier-sync D012：授权 B10/B12 高阶 CPR 组合方法 T006（新建）。
+- V040：T005 scientific PASS / integrity PARTIAL（新建）。
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。live-test mission 本就授权在局部失败后合法
+  换 carrier；新动作引用已有 formal Step 1–3 owner，且仍止于 GW Step 4a。
+
+## 后续
+
+T006 自包含任务书与 epoch 8 control guard 完成后交用户转发 GLM。用户仍只需返回
+四行索引，不需要读取实验细节。

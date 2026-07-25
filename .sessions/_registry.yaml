@@ -49,8 +49,8 @@ topics:
     title: Research Direction Lab 长程真实运行测试
     status: active
     created: "2026-07-23"
-    last_updated: "2026-07-24（V039/D065；epoch 7 Pilot-Jones temporal-semantics adjudication T005_READY）"
-    description: "D017 轻量前台控制协议的真实纵向运行 mission。T004 修复 T003 的算子语义且 25 tests PASS，但 V039 发现 component Jones 每 64 symbols iid redraw 的无来源时间语义、Python hash 跨进程不确定和 contract/SHA 闭包缺陷；固定器件反事实使 PDL 正面 headroom 近零。control epoch 7 只允许 T005 闭合 temporal semantics 与正式 headroom，不再堆方法，仍止于 Step 4a。"
+    last_updated: "2026-07-25（V040/D066/D012；epoch 8 high-order CPR combination T006_READY）"
+    description: "D017 轻量前台控制协议的真实纵向运行 mission。T005 fixed/verified complex component 8-cell headroom max point/CI upper=0.0804/0.2372dB，D066/V040 接收 scoped axis Kill；M3 exact-inverse contract 与 Windows encoding 记 integrity PARTIAL，但真 exact inverse 重算不改 verdict。control epoch 8 合法换到已有 B10/B12 Step1–3 证据，T006 先做 headroom、门过即同包做三个高阶 CPR 组合方法，仍止于 Step4a。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 S014 现场故障、R003 场景演练、D017 控制接口和 guard
@@ -447,8 +447,8 @@ topics:
     title: Step 4a 维度 D MVE 执行（B11 单载波 NDA-ML 主推 + B7/B3 待开）
     status: active
     created: "2026-07-06"
-    last_updated: "2026-07-08（S013 续接 A1 参数适配 FAIL。NDA 块长自适应 K 两阶段验证：标定 35 点 4 判据 ρ 全<0.6（J4 unwrap bug 修正后仍 -0.019），验证 8 点 5 seed adaptive-J4 gain vs K16=+0.000dB 退化 always-K16，0/8 点显著赢。oracle 上界仅 -0.474dB 且 -2.46dB 全来自 1000kHz 非主流极端点。D-011 记录 FAIL + 教训 8-10。4 种适配扫描进度：A2 已做/A3 FAIL/A1 FAIL/A4 待返回。详见 S013 + D-011）"
-    description: "承接上游 2026-06-20-problem-driven-redirection S031 排优先级（B11/B3/B7 三个 Conditional Go）+ 切法地图专题参照系。守 FR-21 oracle 上界前置门控（先算 CRB 下界 <0.5dB 直接砍不跑 MVE）+ TL-20 先建理论预期 + TL-26 参数溯源 + FR-18 竞争格局 + FR-12 MVE→Formal 架构差异。复用 projects/simulation/common/ 基建（GG+Doppler+phase noise 信道 + VV/BPS/DPLL/KF 载波恢复），增量扩 M-APSK 调制 + DA ML/NDA-ML/Gardner TED/FOE 估计器（B11+B3+B7 共用）+ params 扩 CLW/HD-FEC/LEO Doppler rate（全标 source）。explore/ 模式每候选一子目录（*-MVE-SPEC.md 契约 + _crb_lower_bound.py + mve 脚本 + results.json），MVE 通过后转 experiments/。拆对话：①基建扩充+B11 oracle 上界 ②B11 MVE 或 B7 全流程 ③B3 架构决策（多孔径阵列 vs 单链路）+ 视情况。"
+    last_updated: "2026-07-25（S014/D012：B10/B12 high-order CPR combination carrier 激活，T006_READY）"
+    description: "Step 4a carrier owner。历史 B11/NDA-ML/A1-A4 与 baseline 资产保留；D012 在 Pilot-Jones scoped axis Kill 后恢复 B10 pilot-RLS + B12 frequency-domain pilot/MAP 的既有 Step1–3 证据。T006 先做 source/parameter closure、equal-overhead strongest-simple baseline 与 truth-assisted headroom；门通过则同包实现 cascade、confidence gate、adaptive-forgetting RLS。止于 provisional Step4a，不进 Step5/Contract/Execute。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
         reason: 继承 S031 排优先级（B11/B3/B7 Conditional Go）+ 切法地图参照系（饱和池/稀池路径）+ D005 务实路线 + D006 红线 + 5 个口径警示
@@ -501,10 +501,10 @@ topics:
 
   - slug: 2026-07-10-dual-pol-osl-groundwork
     title: 双偏振星地光通信 DSP — Groundwork Step 1 地勘
-    status: active
+    status: dormant
     created: "2026-07-10"
-    last_updated: "2026-07-24（V039/D065：T004 正面 problem gate 因无来源 blockwise component redraw 失效；T005 temporal adjudication READY，complex axis 继续 UNRESOLVED，不进 Step 5。）"
-    description: "formal 双偏振 OSL Groundwork owner。D061 已暂停 P03 并激活 Pilot-Jones；D056 的 4 篇全文保持 BLOCKED_NO_FULLTEXT。T002/V037 只 Kill unitary-real-rotation 实例化。T003/S080 的 complex-model provisional Pivot 因 post-noise channel、PMD pilot、tapped B3、PMD oracle 与混合 gate 失效；V038/D064 不接收该结论并授权 T004 隔离语义修复重测。family/complex axis 均 UNRESOLVED，不进 Step 5。"
+    last_updated: "2026-07-25（S082/V040/D066：T005 scoped complex-component axis Kill；Pilot-Jones 返回 portfolio）"
+    description: "formal 双偏振 OSL Groundwork historical owner。D056 的 4 篇全文保持 BLOCKED_NO_FULLTEXT；T002 只 Kill unitary real-rotation。T003/T004 分别暴露算子与时间语义错误；T005 fixed/verified primary 8 cells max point/CI upper=0.0804/0.2372dB，D066/V040 接收 complex component rescue axis scoped Kill。entire family 不伪称关闭，但停止当前投资并转 dormant；下一 carrier 由 step4a-mve-execution D012/T006 拥有。"
     depends_on:
       - slug: 2026-07-10-scenario-transfer-pivot
         reason: D001 三维度调整 + D002 角度素材 schema + D003 双偏振空间解锁，方法论准备就绪后 GW 执行转出

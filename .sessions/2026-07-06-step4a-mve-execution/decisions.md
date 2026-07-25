@@ -609,3 +609,53 @@ ML 加权增益来源：
 ### 来源
 
 验证 `_a1_adaptive_k_results.json`（8 点 5 seed，adaptive_oracle ≡ fixed_k32 by_seed 一致已核查）+ 标定 `_a1_calibration.json`（35 点 4 判据 ρ）+ 主线独立核查 1000kHz 点 by_seed 原始数字 + adaptation-scan.md A1 失败信号判据 + TL-20 锚点 E4/E5 + D-009（K 扫描前置数据 + unwrap 教训 + 实测主流线宽 10-80kHz）。
+
+---
+
+## D012: 激活 B10/B12 高阶调制 CPR 组合方法 Step 4a 大包
+
+> status: active
+> date: 2026-07-25
+> 取代：无（恢复本专题已有 B10/B12 Step 1–3 证据为当前 carrier）
+> 被取代：无
+> 依据：literature_notes L20/L22；B10/B12 gw-read；dual-pol D066；live-test S001
+
+### 决策
+
+1. 当前 formal carrier 从 Pilot-Jones 转到
+   `HIGH_ORDER_CPR_COMBINATION_METHOD`，仍处于 GW Step 4a。
+2. 复用 B10 pilot-RLS 与 B12 frequency-domain pilot/MAP 已完成的 Step 1–3
+   证据，不重做全量文献检索；但必须在 T006 source closure 中逐项恢复其信息源、
+   输出动作、场景边界和参数 provenance。
+3. T006 先在 uniform 16-QAM、星地 GG 湍流、合法 CFO/linewidth 范围和公平
+   pilot overhead 下建立 strongest-simple baseline 与 truth-assisted Kill bound。
+   所有 primary cells 的合法 headroom CI upper `<0.5 dB` 时立即 Kill，不建设方法。
+   这是用户批准的 **T006 专属 infrastructure-investment gate**，显式覆盖本专题
+   不变量 2/4/6 中“FR-21 <0.5 dB 只作参考”的旧校准；不反向改写其他历史候选。
+4. headroom 存活时，同一包直接实现并比较：
+   - pilot-RLS coarse → MAP residual cascade；
+   - receiver-visible confidence/innovation gate；
+   - adaptive-forgetting RLS。
+   必须同时胜过 `B*` 和 B10/B12 standalone 最强组件，才可判组合方法 Go。
+5. T006 止于 provisional Step 4a verdict；不进入 Step 5、Contract 或 Execute，不改
+   shared generator，不建设通用基础设施。
+
+### 理由
+
+- 用户明确优先追求可包装方法和可用产出。B10/B12 有现成全文、精读、16/256-QAM
+  方法链和 simulator 资产，比再开纯分析方向更可能在一个大包内形成方法。
+- 组合不是无约束“拼算法”：三个候选分别对应 cascade、conditional routing 和
+  state adaptation，均有不同输出动作且可与 standalone component 做合法消融。
+- headroom 前置门阻止在物理空间不足时继续耗费实现成本。
+
+### 排除的替代方案
+
+- 不继续 Pilot-Jones：D066/V040 已关闭当前 complex component rescue axis。
+- 不优先 residual/CMA correction：当前仍缺 receiver-visible information increment。
+- 不恢复 P03：其主要阻断是 infrastructure/domain adequacy，不是短期方法形成机会。
+
+### 影响范围
+
+- 本专题新增 S014 与 T006 carrier。
+- 当前 action class 仅 `HIGH_ORDER_CPR_COMBINATION_METHOD_PACKAGE`。
+- 原 A4 adaptive CPR、B10/B12、NDA-ML 资产保持历史证据，不因本次切换被改写。

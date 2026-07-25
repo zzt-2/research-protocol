@@ -4,14 +4,14 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v1
-  control_epoch: 7
+  control_epoch: 8
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: PILOT_JONES_TEMPORAL_SEMANTICS_ADJUDICATION
-  authority_pointer: .sessions/2026-07-10-dual-pol-osl-groundwork/decisions.md#D065
-  decision_gate: 在固定或有来源慢变的 component Jones/PSP 时间模型与可复现闭包下，判断 verified PDL/PMD 是否仍产生相对 M0 超过 0.5 dB 的合法余量
+  active_lane: HIGH_ORDER_CPR_COMBINATION_METHOD
+  authority_pointer: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D012
+  decision_gate: 在 uniform 16-QAM 星地 GG+CFO/linewidth 条件下先判断 strongest-simple CPR 到 truth-assisted reference 是否有合法 headroom；若存活，同包判断 B10/B12 组合方法能否同时胜过传统 baseline 与两个 standalone component
   allowed_actions:
-    - PILOT_JONES_TEMPORAL_SEMANTICS_ADJUDICATION_PACKAGE
+    - HIGH_ORDER_CPR_COMBINATION_METHOD_PACKAGE
     - TASK_BRIEF_PREPARATION
   forbidden_actions:
     - PRIVATE_FULLTEXT_ACQUISITION
@@ -21,12 +21,13 @@ rdl_control:
     - PROTECTED_HISTORY_EDIT
     - SKILL_EDIT
     - GENERAL_INFRASTRUCTURE_BUILD
-  next_legal_action: 执行 T005，在一个 GLM 对话内闭合 component temporal semantics、deterministic seed/SHA 和 fixed/slow primary headroom；不运行新方法候选
+    - PILOT_JONES_REPAIR_OR_NEW_AXIS
+  next_legal_action: 执行 T006；先做 B10/B12 source closure、合法 baseline 与 0.5 dB headroom gate，门通过则同一 GLM 对话完成 cascade/confidence-gate/adaptive-forgetting 三个方法与 paired test
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（T005_READY；D065 已授权）
-> 创建: 2026-07-23 | 最后更新: 2026-07-24
+> 状态: active（T006_READY；D012 已授权）
+> 创建: 2026-07-23 | 最后更新: 2026-07-25
 
 ## 专题信息
 
@@ -47,9 +48,9 @@ rdl_control:
 - 使用顶部控制块、受 guard 约束的 T、worker-log、raw artifacts 和 commit；
 - 在 control block 允许范围内串行推进，遇到 gate 更新控制块或交用户战略裁决；
 - 记录真实恢复、失败/阻断、轮换、晋级/不晋级和工作包重量。
-- 当前仅授权 T005 temporal-semantics 终审包：固定或有来源慢变 component
-  Jones/PSP，修复 deterministic seed 与 SHA/contract 闭包，在 operational/adversarial
-  两条件和 4/6 pilots 下重算 M0/M2/M3；不运行新方法候选。
+- T005 已完成并由 D066/V040 接收 scoped Kill；Pilot-Jones 退出当前 carrier。
+- 当前仅授权 T006 高阶调制 CPR 组合方法包：恢复 B10/B12 既有 Step 1–3 证据，
+  在 GW Step 4a 先验算合法 headroom，门过则同包实现并比较三个务实方法。
 
 ### 明确不含
 
@@ -81,6 +82,14 @@ rdl_control:
     headroom；不再搜索方法。
   - 影响的未决项：从“哪种方法关闭 0.77 dB”改为“该 0.77 dB 是否由错误时间模型
     制造”；若 fixed primary <0.5 dB，则关闭 complex component rescue axis。
+- **[2026-07-25] [D066/D012]**：T005 关闭 verified fixed complex component rescue
+  axis，前台 carrier 转到 B10/B12 高阶调制 CPR 组合方法。
+  - 原因：8/8 primary cells 最大 point/CI upper 仅 0.0804/0.2372 dB；exact-inverse
+    adjudication 证明该 Kill 不依赖原 MMSE regularization。
+  - 新范围：在已有 B10/B12 Step 1–3 证据上执行 Step 4a headroom→method 大包；
+    不继续修 Pilot-Jones，不恢复 Scout/P03。
+  - 影响的未决项：从“Pilot-Jones 是否有余量”转为“高阶 CPR 是否有合法余量并能
+    形成同时胜过 standalone components 的组合方法”。
 
 ## 已确认结论
 
@@ -112,16 +121,21 @@ rdl_control:
   component 每 25.6 ns iid redraw 的无来源时间语义；固定器件反事实把正面
   headroom 降到近零，同时暴露跨进程 hash 与契约闭包缺陷。T004 工程 PARTIAL
   可复用、科学 verdict FAIL；epoch 7 授权终局 temporal adjudication，不再堆方法。
+- **S001 续接 / T005验收/D066/D012/T006**：raw 240 行与 8 cells 独立重算支持
+  scoped axis Kill；主控另发现 M3 contract/implementation 与 Windows encoding 两项
+  integrity 缺口，并用真 exact inverse 证明 verdict 不变。epoch 8 合法换到已有
+  B10/B12 Step 1–3 证据，授权一个 headroom 过门即直接做三方法的 T006 大包。
 
 ## 未决项
 
-- T005 在 fixed/有来源慢变 component 下对 complex-Jones/PMD/PDL rescue axis 的终局裁决；
+- T006 能否在合法高阶 CPR 场景中先找到 `>=0.5 dB` headroom，再形成相对最强
+  standalone component `>=0.3 dB` 的组合方法；
 - live run 自然覆盖哪些恢复/轮换/晋级事件；
 - 何时由原 design 对话进行阶段性审计。
 
 ## 当前位置
 
-T005_READY。D065/V039 已否决 T004 的正面 problem gate；T004 工程修复可复用，
-但 blockwise iid component 与跨进程不确定性使其科学 verdict 无效。下一包只做
-temporal semantics + deterministic closure + fixed/slow primary headroom；不得继续
-增加方法候选，也不得越过 Step 4a。
+T006_READY。D066/V040 已接收 Pilot-Jones fixed complex component rescue axis 的
+scoped Kill并停止继续投资；D012 激活 B10/B12 高阶调制 CPR 组合方法。下一包先做
+source/baseline/headroom 闭包，门通过则在同一对话直接完成三个方法与 paired test；
+仍不得越过 Step 4a。
