@@ -1,0 +1,228 @@
+# Source closure — B1 adaptive phase-estimation window (T007)
+#
+# Frozen BEFORE any primary run. Restores the B1 Step 1-3 evidence
+# (literature_notes L11 + the _B1-pilot-window-increment read-note + the
+# sat.1553 verbatim passages) so the 4a structural gate + three-method
+# package can re-instantiate the problem without re-acquiring fulltext.
+# Per-task authorization: D013 (ADAPTIVE_PHASE_WINDOW_METHOD_PACKAGE),
+# GW Step 4a only; does NOT enter Step 5/Contract/Execute.
+#
+# Closure rule (FR-26 evidence chain): every fact below carries a source
+# pointer. Equations present in sat.1553 are quoted verbatim with the
+# content.md line; anything rebuilt from prose is marked validation-tuned.
+# owner: T007, epoch 9.
+
+schema_version: closure.adaptive-phase-window.v1
+frozen: 2026-07-25
+authorization: D013 (epoch 9, B1 adaptive phase-window method Step 4a)
+worktree: "D:\\code\\study\\research-protocol\\.worktrees\\research-direction-lab-longitudinal-test"
+
+# ---------------------------------------------------------------------------
+# Source identity — sat.1553 (the open-problem owner)
+# ---------------------------------------------------------------------------
+# Anchor fulltext: papers/doi/10.1002_sat.1553/content.md
+# (Valjus + Chen + Lyras, Int J Satell Commun Netw 2025, sat.1553)
+# Read-note: papers/_read_notes/_B1-pilot-window-increment.md
+# literature_notes: projects/thesis-fso/literature_notes.md [L11]
+sat1553:
+  citation: "Valjus et al., Int. J. Satell. Commun. Netw. 2025 (DOI 10.1002/sat.1553)"
+  fulltext: papers/doi/10.1002_sat.1553/content.md
+  # The open problem (the source of the M-C-A gap). Quoted verbatim so no
+  # equation is rebuilt from memory.
+  open_problem_verbatim:
+    location: content.md L440
+    quote: >-
+      "However, because the optimal number of symbols for phase estimation is
+      a function of the ratio between SNR and phase noise [60], dynamically
+      adjusting the number of symbols used for phase estimation should improve
+      system performance in a channel with large SNR fluctuations. Further
+      research is necessary to identify practical methods for dynamically
+      adjusting the phase estimation window and to quantify the potential gain."
+  theory_anchor_verbatim:
+    location: content.md L440, citing [60] Leven
+    quote: >-
+      "the optimal number of symbols for phase estimation is a function of the
+      ratio between SNR and phase noise [60]"
+    ref60: "A. Leven, N. Kaneda, U.-V. Koc, Y.-K. Chen, IEEE PTL 19(6):366-368 (2007), DOI 10.1109/LPT.2007.891893"
+  # The pilot-rate negative evidence (B1-Q2 risk signal, kept as honest
+  # counter-evidence that adaptive space MAY be small).
+  pilot_rate_negative_evidence_verbatim:
+    location: content.md L440
+    quote: >-
+      "but the same pilot rate performs similarly for all scenarios as shown
+      in Figure 9"
+    context: "pilot rates tested 7/8, 15/16, 31/32 (content.md L435), 4 scenarios"
+  pilot_snr_penalty_formula:
+    location: content.md L424-430, Eq.(21)
+    formula: "P = 10*log10(R_pilot)"
+    note: >-
+      R_pilot is the pilot rate (data fraction). P<0 dB (pilot rate<1) so the
+      penalty is a SNR LOSS, consistent with overhead interpretation.
+  modulation_and_baud:
+    modulation: QPSK (content.md L434)
+    baud: 28 GBaud (content.md L438, L778)
+    symbols_per_snr_point: 1e7 (content.md L434)
+  scenarios:  # Table 1, content.md L152-157
+    s1_isl: {sigma_p2: null, theta0_urad: 25, sigma_jitt_urad: 3, desc: inter-satellite link}
+    s2_downlink: {sigma_p2: 0.029, theta0_urad: null, sigma_jitt_urad: null, desc: downlink}
+    s3_uplink_weak: {sigma_p2: 0.15, theta0_urad: 3, sigma_jitt_urad: 1.7, desc: uplink weak turbulence}
+    s4_uplink_strong: {sigma_p2: 0.25, theta0_urad: 34.5, sigma_jitt_urad: 25.6, desc: uplink strong turbulence}
+  window_n_settings:
+    location: content.md L434-435
+    quote: >-
+      "The Viterbi-Viterbi algorithm was implemented with a window N of 32 for
+      differential encoding ... a window of 64 and 256 is used for
+      nondifferential encoding ..."
+  pilot_filter:
+    location: content.md L424, L435
+    quote: >-
+      "The estimate can then be filtered by combining the estimates of several
+      pilot symbols [57]." + "linear interpolation is used between the pilots"
+    note: >-
+      sat.1553 does NOT give an explicit pilot moving-average tap count; the
+      window N=32/64/256 references apply to Viterbi-Viterbi. Our pilot CPE is
+      a finite moving-average over consecutive pilot phases (validation-tuned
+      to match the finite window grid below), NOT a rebuilit sat.1553 equation.
+
+# ---------------------------------------------------------------------------
+# [60] Leven — the N ∝ SNR/phase-noise theory anchor
+# ---------------------------------------------------------------------------
+ref60_leven:
+  citation: "Leven et al., IEEE PTL 19(6):366-368 (2007), DOI 10.1109/LPT.2007.891893"
+  mechanism: Mth-power feedforward CFO/phase estimator (intradyne QPSK, 20 Gb/s)
+  role: >-
+    sat.1553 cites [60] as the theoretical anchor that optimal phase-estimation
+    symbol count N is a function of SNR/phase-noise ratio. We use [60] as the
+    DIRECTION anchor for B1 (window N should move with SNR/phase-noise ratio),
+    not as a deployable equation (the closed-form N* function is not given in
+    sat.1553 nor reconstructed here).
+
+# ---------------------------------------------------------------------------
+# [58] Martins — static pilot-rate x linewidth optimization (the baseline)
+# ---------------------------------------------------------------------------
+ref58_martins:
+  citation: "Martins et al., OSA Continuum 4(11):2904-2917 (2021), DOI 10.1364/OSAC.438524"
+  mechanism: dual-stage pilot-BPS CPE (pilot coarse + BPS fine)
+  role: >-
+    [58] optimizes pilot rate STATICALLY for a fixed linewidth (ground-fiber,
+    no turbulence). It is the static-optimization baseline against which B1
+    "dynamic" adaptation is compared. NOT used as an OSL transfer curve (it is
+    ground-fiber 64 GBaud, per read-note p.72 line 27); per-task authorization
+    forbids re-deriving its curves here.
+
+# ---------------------------------------------------------------------------
+# Window definition (what "N" means in T007)
+# ---------------------------------------------------------------------------
+window_definition:
+  vv_block_mean_angle: >-
+    Block-mean Viterbi-Viterbi: raise rx to M=4, average the raised samples
+    over a contiguous block of N symbols, take the angle, divide by M. This is
+    the common/_recovery.vv_cpr sliding Nw window restricted to a block. N is
+    the number of symbols averaged (the phase-estimation window length).
+  pilot_moving_average: >-
+    Pilot CPE: collect the per-pilot phase estimates (angle(rx[pilot]/s_pilot))
+    over N pilot symbols (NOT N data symbols) and average; interpolate the
+    block carrier phase to data symbols. Equal pilot overhead is charged to
+    all arms (fair-comparison rule, D004 pilot-overhead accounting).
+  block_latency: 0
+  block_latency_note: >-
+    All comparators use block-buffered causal windows (read only the current
+    block). No centered window is used, so no extra latency is owed to any
+    arm; if a centered window were introduced it would report a fixed latency
+    and every comparator would receive the same latency (B1 gate rule).
+  phase_ambiguity_oral: >-
+    Evaluation permits ONLY legal pi/2 global resolve (M=4 raised QPSK/QAM
+    ambiguity). The forbidden "document says 4 rotations / code does 8 pi/4
+    rotations" mismatch (V001 T006 defect) is closed here: deployable code
+    applies the deterministic pi/4 fourth-power bias correction, then the only
+    remaining ambiguity is pi/2 (resolved per-block by majority vote on hard
+    decisions; evaluation uses legal pi/2 global resolve only).
+
+# ---------------------------------------------------------------------------
+# Parameter provenance (paper-sourced / canonical-project / validation-tuned)
+# ---------------------------------------------------------------------------
+param_provenance:
+  paper_sourced:
+    modulation: "QPSK (sat.1553 L434); we ALSO use uniform 16-QAM for the high-SNR
+      structural slice because the M=4 fourth-power bias correction and pi/2
+      ambiguity are QPSK-equivalent for a square constellation, and 16-QAM
+      stresses the per-symbol |rx|^2 weighting in a way QPSK cannot. 16-QAM is
+      marked canonical-project (uniform square QAM, common/_modulation.qam16_mod
+      Gray map), NOT paper-sourced for sat.1553."
+    baud_symbol_rate: "R_SYM=2.5e9 (params.py SystemParams.R_SYM, single truth source;
+      sat.1553 used 28 GBaud but we keep the project symbol rate as the frozen
+      canonical so the channel realization is identical to T002-T006)."
+    linewidth_clean: "10 kHz (params.py LASER_LW; D-007 single truth source,
+      ECL satellite-FSO typical, sat.1553 L438 0.1-1 MHz design-tolerance range,
+      D-009 cross-validated 22/20/80 kHz ECL measured values)"
+    linewidth_operational: "20 kHz (ECL measured typical, D-009 cross-validation table)"
+    linewidth_adversarial_sourced: "80 kHz (D-009 cross-validation table, 2024
+      Opt.Express OE.520452 PM-QAM FSO 20km measured value)"
+  canonical_project:
+    snr_grid: "{10,14,18,22} dB (B1 sweep grid, spans HD-FEC waterfall both sides;
+      frozen on validation, test reuses)"
+    gamma_bar: "params.py GAMMA_BAR_DEFAULT=100.0 (20 dB), used only to set nv=1/(2*gamma_bar)"
+    block_size: "params.py experiment.BLOCK (canonical block size, frozen)"
+    turbulence_alpha_beta: "params.py TurbulenceParams (Gu 2022 / Al-Habash 2001;
+      uplink_strong=(1.0,0.7) is the design choice matching sat.1553 uplink sigma_p2=0.25)"
+    tau_c: "params.py tau_c_from_fg (Conan 1995), f_G canonical, frozen"
+  validation_tuned:
+    window_grid: "{8,16,32,64,128,256} (covers sat.1553 N=32/64/256 plus the
+      1-octave neighbours; every method and every fixed baseline uses the SAME
+      candidate set, no per-method grid)"
+    snr_fec_crossing: "BER=3.8e-3 (HD-FEC threshold, params.py HD_FEC_THRESHOLD)"
+    fec_localization: "validation seeds locate the 3 SNR points bracketing the
+      waterfall; test reuses the frozen points, no test tuning"
+
+# ---------------------------------------------------------------------------
+# Theoretical expectations (must be falsifiable)
+# ---------------------------------------------------------------------------
+theoretical_expectations:
+  e1_snr_down_n_up: >-
+    Hold linewidth fixed. As SNR decreases, the optimal window N should
+    INCREASE (more averaging needed to suppress additive noise). A stable
+    trend where N* shrinks as SNR drops, with no component-level explanation,
+    FAILS the structural gate.
+  e2_linewidth_up_n_down: >-
+    Hold SNR fixed. As linewidth increases, the optimal window N should
+    DECREASE (less averaging to track faster Wiener phase drift). A stable
+    opposite trend FAILS the structural gate.
+  e3_no_universal_fixed: >-
+    If a single fixed N stays within 0.3 dB of the per-cell oracle window
+    across ALL primary working cells, there is no adaptive space worth
+    implementing (KILL condition 2).
+  falsifiable_relations: [e1_snr_down_n_up, e2_linewidth_up_n_down, e3_no_universal_fixed]
+
+# ---------------------------------------------------------------------------
+# Identity separations (defend against V001-class confusion)
+# ---------------------------------------------------------------------------
+identity_separations:
+  fixed_bstar: "B* fixed = single N chosen on validation across ALL conditions
+    (deployable baseline)"
+  fixed_per_condition: "one N per registered condition, chosen on validation
+    (a stronger but still deployable comparator)"
+  oracle_per_block: "per-block optimal N from the oracle (truth-assisted,
+    KILL-only bound, NEVER a deployable Go opponent)"
+  pilot_cpe: "legal pilot moving-average CPE (own arm, equal overhead)"
+  validation_tuned_bps: "validation-tuned BPS (own arm, B/Nw frozen on validation)"
+  v4_v8_oral_closing: >-
+    QPSK/16-QAM M=4 raised-power has a deterministic pi/4 bias (the raised
+    constellation lands on 4 spokes offset by pi/4) and a pi/2 global ambiguity.
+    Deployable code MUST correct the pi/4 bias deterministically; evaluation
+    uses ONLY legal pi/2 global resolve. The T006 "doc says 4 / code does 8"
+    mismatch is forbidden and explicitly tested.
+
+# ---------------------------------------------------------------------------
+# Forbidden in this closure
+# ---------------------------------------------------------------------------
+forbidden:
+  - "200 kHz - 1 MHz as the sole/primary positive signal (adversarial-sourced
+    80 kHz is the upper primary; 200 kHz-1 MHz may appear only as a STRESS
+    secondary, never as the sole source of a Go signal)"
+  - "oracle per-block N as a deployable Go opponent (Kill-only)"
+  - "Q^2 as the primary metric when BER is near 0.5 (near-random seeds would
+    dominate the verdict via the non-linear transform)"
+  - "rebuilding the B12 MAP equation or the B10 RLS training->DD identity (T006
+    family; out of scope, family stays UNRESOLVED)"
+  - "modifying common/_dual_pol_channel.py generator, protected history, the
+    Direction Lab Skill/controller, or general infrastructure"

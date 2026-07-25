@@ -1,0 +1,173 @@
+# Contract — B1 adaptive phase-estimation window (T007)
+#
+# Frozen numerical contract. The runner reads these literals ONLY. Any change
+# here is a contract amendment and must re-stamp the SHA + record a reason.
+# owner: T007, epoch 9. Authorization: D013.
+schema_version: contract.adaptive-phase-window.v1
+frozen: 2026-07-25
+authorization: D013 (epoch 9, B1 adaptive phase-window method Step 4a)
+
+# ---------------------------------------------------------------------------
+# Frozen literals (the only numbers the runner may read for primary runs)
+# ---------------------------------------------------------------------------
+window_grid: [8, 16, 32, 64, 128, 256]   # shared by all methods + fixed baselines
+modulations: ["qpsk", "qam16"]            # qpsk = sat.1553-native; qam16 = high-SNR stress
+fec_ber_threshold: 3.8e-3                 # HD-FEC, params.py HD_FEC_THRESHOLD
+hd_fec_required_snr_db: null              # located per (modulation, condition) on validation, frozen
+
+conditions:
+  # primary, paper-sourced linewidths (no 200kHz-1MHz sole primary)
+  clean:        {linewidth_hz: 10000,  role: primary,  source: "params.py LASER_LW (D-007 single truth)"}
+  operational:  {linewidth_hz: 20000,  role: primary,  source: "D-009 ECL measured Opt.Commun.129312"}
+  adversarial:  {linewidth_hz: 80000,  role: primary,  source: "D-09 ECL measured OE.520452"}
+  stress_200k:  {linewidth_hz: 200000, role: secondary, source: "sat.1553 L438 design tolerance; never sole positive signal"}
+  stress_1m:    {linewidth_hz: 1000000, role: secondary, source: "sat.1553 L438 design tolerance; never sole positive signal"}
+
+snr_grid_db: [10, 14, 18, 22]             # B2 source-native sweep (AWGN+Wiener slice)
+# GG block-fading primary SNR points are located on validation around the
+# HD-FEC waterfall and frozen; test reuses the frozen points, no tuning.
+
+# AWGN+Wiener slice (B2 source-native structural sweep)
+b2_slice:
+  channel: awgn_wiener          # flat-fading, no GG envelope
+  snr_grid_db: [10, 14, 18, 22]
+  linewidth_hz: [10000, 20000, 80000]
+  window_grid: [8, 16, 32, 64, 128, 256]
+  validation_seeds: [7800, 7801, 7802, 7803, 7804]   # 5 val seeds
+
+# GG block-fading oracle-window check (B2 second half)
+b2_gg:
+  channel: gg_block_fading
+  modulations: ["qpsk", "qam16"]
+  conditions: [clean, operational, adversarial]
+  turbulence_regime: uplink_strong       # params.py alpha=1.0 beta=0.7 (sat.1553 s4 sigma_p2=0.25)
+  snr_localization_seeds: [7800, 7801, 7802, 7803, 7804]
+  test_seeds: [7900, 7901, 7902, 7903, 7904, 7905, 7906, 7907, 7908, 7909]
+
+# ---------------------------------------------------------------------------
+# Structural KILL gate (Phase B) — pre-registered thresholds
+# ---------------------------------------------------------------------------
+structural_kill_gate:
+  e1_e2_majority_cells: 0.5     # E1/E2 must hold in the majority (>50%) of cells
+  universal_fixed_regret_db: 0.3 # KILL if a single fixed N stays < this everywhere
+  oracle_headroom_db: 0.5        # KILL if oracle median OR 20% trimmed gain < this
+  oracle_collapse_ber: 0.2       # signals only from cells with BER>=this do not count
+  feature_spearman_rho: 0.5      # receiver-visible features need |rho|>=this
+  feature_accuracy_vs_majority: 0.0  # exact-window accuracy must beat majority-fixed
+
+# ---------------------------------------------------------------------------
+# Phase C method parameters (frozen on validation, no test tuning)
+# ---------------------------------------------------------------------------
+methods:
+  p1_analytic_ratio:
+    description: "SNR_hat / phase_innovation_hat -> N in window_grid"
+    rule_family: monotone_analytic_with_bounds
+    direction_constraint: "SNR down -> N up (E1); linewidth up -> N down (E2)"
+    forbidden_input: [oracle_best_N, tx_bits, true_h, true_phase, true_snr]
+  p2_lookup_hysteresis:
+    description: "validation bin table on (SNR_hat, phase_innovation_hat) + hysteresis"
+    binning: validation_learned
+    hysteresis_band: validation_learned    # reported, not tuned on test
+    report: [switch_rate, latency, chatter_vs_no_hysteresis]
+  p3_confidence_safe:
+    description: "validation-learned per-window regret/confidence -> N; fallback to B*"
+    model_family: [ridge, logistic, shallow_table]   # NO deep learning framework
+    low_confidence_fallback: bstar_fixed
+    forbidden_input: [test_labels, oracle_best_N]
+
+# ---------------------------------------------------------------------------
+# Baseline ladder
+# ---------------------------------------------------------------------------
+baselines:
+  bstar_fixed:
+    description: "single N chosen on validation across all conditions"
+    selection_set: validation
+  fixed_per_condition:
+    description: "one N per registered condition, chosen on validation"
+    selection_set: validation
+  pilot_cpe:
+    description: "legal pilot moving-average CPE, equal overhead"
+    equal_overhead: true
+  validation_tuned_bps:
+    description: "BPS with B/Nw frozen on validation"
+    selection_set: validation
+  oracle_per_block:
+    description: "per-block optimal N (truth-assisted); KILL-only, never a Go opponent"
+    role: kill_only
+
+# ---------------------------------------------------------------------------
+# Seed plan (disjoint from T002-T006)
+# ---------------------------------------------------------------------------
+seed_plan:
+  excluded:
+    - "T002/T003/T004/T005 used 74xx/75xx; T006 used 76xx/77xx"
+  semantic_validation_seeds: [7800, 7801]
+  structural_validation_seeds: [7800, 7801, 7802, 7803, 7804]      # 5 val
+  structural_test_seeds: [7900, 7901, 7902, 7903, 7904, 7905, 7906, 7907, 7908, 7909]  # 10 test
+  method_validation_seeds: [7800, 7801, 7802, 7803, 7804]          # same 5 val (frozen B*, mapping)
+  method_test_seeds: [7900, 7901, 7902, 7903, 7904, 7905, 7906, 7907, 7908, 7909]   # same 10 test
+  disjoint_check: "all T007 seed pools intersect excluded = empty"
+  # Deterministic seed rule (V039 T004 lesson): no Python built-in hash() of
+  # objects; channel realization seed == canonical integer seed (the generator
+  # already uses np.random.default_rng(seed) deterministically).
+  forbidden_seed_rule: "no built-in hash(); no string-derived seeds dependent on hash randomization"
+
+# ---------------------------------------------------------------------------
+# Metrics & verdict thresholds (pre-registered)
+# ---------------------------------------------------------------------------
+metrics:
+  primary:
+    - required_snr_at_fec_db     # interpolation difference (dB)
+    - paired_raw_ber
+    - paired_log_ber
+    - paired_wins                # per-seed
+    - bootstrap_ci_95            # 2000 resamples across test seeds
+    - median_gain_db
+    - trimmed_mean_gain_db       # 20% trimmed
+  secondary:
+    - q2_only_in_working_region  # forbidden to dominate when any seed BER>=0.2
+  collapse_sensitivity:
+    rule: "if a single seed contributes >40% of aggregate gain -> positive verdict auto-downgrades to UNRESOLVED_OUTLIER_DOMINATED"
+
+verdict_thresholds:
+  go_adaptive_window_method:
+    min_gain_db: 0.5
+    min_conditions: 2                # non-stress primary
+    ci_lower_db: 0.0                 # 95% CI lower bound > 0
+    paired_wins_min: 7               # >=7 of 10 test seeds
+    not_worse_than_fixed_per_condition: true
+    clean_degradation_max_db: 0.1
+    closes_oracle_regret_pct: 50
+  robustness_only:
+    below_0p5db_but: [lowers_worst_decile_ber, lowers_cycle_slip, widens_fec_coverage]
+  method_fail_with_space:
+    oracle_space_exists: true
+    methods_cannot_close: true
+  kill_no_adaptive_window_space:
+    structural_gate_failed: true
+  unresolved:
+    identity_or_ci_or_fec_does_not_close: true
+
+# ---------------------------------------------------------------------------
+# Determinism & integrity (V001/V039-class defenses)
+# ---------------------------------------------------------------------------
+determinism:
+  subprocess_fingerprint_rule: "no built-in hash(); fixed integer seeds; bit-identical realization across two independent Python subprocesses"
+  utf8_io: "PYTHONUTF8=1; all file open() explicit encoding='utf-8'"
+  raw_aggregate_recompute: "bit-identical BER recomputation from raw rows"
+
+identity_guards:
+  receiver_visible_signature_forbidden: [tx_bits, true_h, true_phase, true_snr, oracle_best_N]
+  block_buffered_no_future: true
+  window_must_vary_with_conditions: true
+  pi4_bias_correct_deployable: true
+  legal_pi2_global_resolve_eval_only: true
+  forbidden_pi4_oral_mismatch: true   # the T006 "doc 4 / code 8" mismatch
+
+# ---------------------------------------------------------------------------
+# Closure & SHA (filled by the runner at freeze time; tests assert real hashes)
+# ---------------------------------------------------------------------------
+sha:
+  source_closure_yaml_sha256: TBD    # runner stamps; tests assert == actual file hash
+  contract_yaml_sha256: TBD
+  mve_spec_md_sha256: TBD

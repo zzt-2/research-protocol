@@ -1,0 +1,99 @@
+{
+  "modulation": "qpsk",
+  "sweep": {
+    "best_n_by_cell": {
+      "10.0_clean": 128,
+      "10.0_operational": 16,
+      "10.0_adversarial": 64,
+      "14.0_clean": 16,
+      "14.0_operational": 16,
+      "14.0_adversarial": 64,
+      "18.0_clean": 16,
+      "18.0_operational": 16,
+      "18.0_adversarial": 64,
+      "22.0_clean": 16,
+      "22.0_operational": 64,
+      "22.0_adversarial": 64
+    },
+    "e1_pass_count": 2,
+    "e1_total": 3,
+    "e2_pass_count": 0,
+    "e2_total": 4,
+    "rho_snr_hat_best_n": -0.07449421283888277,
+    "rho_innov_hat_best_n": 0.24018060829264787,
+    "feat_snr_ok": false,
+    "feat_innov_ok": false
+  },
+  "universal": {
+    "universal_regret": {
+      "8": {},
+      "16": {},
+      "32": {},
+      "64": {},
+      "128": {},
+      "256": {}
+    },
+    "kill2_triggered": false,
+    "reachable_lws": [],
+    "best_per_lw": {}
+  },
+  "gg_headroom": {
+    "median_gain_db": 1.0260576180599599,
+    "trimmed_gain_db": 1.7010588234525628,
+    "valid_median_gain_db": 2.008909736309267,
+    "kill3_triggered": false
+  },
+  "verdict": {
+    "e1_majority_pass": true,
+    "e2_majority_pass": false,
+    "n_varies": true,
+    "kills": {
+      "kill1_e1e2_direction_fails": true,
+      "kill2_universal_fixed_exists": false,
+      "kill3_oracle_headroom_too_small": false,
+      "kill4_features_cannot_predict": true
+    },
+    "gate_passed": false,
+    "verdict": "KILL_NO_ADAPTIVE_WINDOW_SPACE"
+  },
+  "n_symbols": 2048,
+  "block": 256,
+  "window_grid": [
+    8,
+    16,
+    32,
+    64,
+    128,
+    256
+  ],
+  "snr_grid": [
+    10.0,
+    14.0,
+    18.0,
+    22.0
+  ],
+  "linewidths_hz": {
+    "clean": 10000.0,
+    "operational": 20000.0,
+    "adversarial": 80000.0
+  },
+  "validation_seeds": [
+    7800,
+    7801,
+    7802,
+    7803,
+    7804
+  ],
+  "test_seeds": [
+    7900,
+    7901,
+    7902,
+    7903,
+    7904,
+    7905,
+    7906,
+    7907,
+    7908,
+    7909
+  ]
+}

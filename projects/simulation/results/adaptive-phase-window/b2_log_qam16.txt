@@ -1,0 +1,113 @@
+=== B2 structural gate (modulation=qam16) ===
+  awgn_wiener qam16 snr=10.0 lw=clean seed=7800: best_N=16 best_BER=2.391e-01
+  awgn_wiener qam16 snr=10.0 lw=clean seed=7801: best_N=256 best_BER=8.496e-02
+  awgn_wiener qam16 snr=10.0 lw=clean seed=7802: best_N=128 best_BER=1.119e-01
+  awgn_wiener qam16 snr=10.0 lw=clean seed=7803: best_N=256 best_BER=1.393e-01
+  awgn_wiener qam16 snr=10.0 lw=clean seed=7804: best_N=256 best_BER=1.914e-01
+  awgn_wiener qam16 snr=10.0 lw=operational seed=7800: best_N=16 best_BER=2.332e-01
+  awgn_wiener qam16 snr=10.0 lw=operational seed=7801: best_N=256 best_BER=8.655e-02
+  awgn_wiener qam16 snr=10.0 lw=operational seed=7802: best_N=256 best_BER=9.021e-02
+  awgn_wiener qam16 snr=10.0 lw=operational seed=7803: best_N=256 best_BER=1.404e-01
+  awgn_wiener qam16 snr=10.0 lw=operational seed=7804: best_N=128 best_BER=1.672e-01
+  awgn_wiener qam16 snr=10.0 lw=adversarial seed=7800: best_N=128 best_BER=2.203e-01
+  awgn_wiener qam16 snr=10.0 lw=adversarial seed=7801: best_N=128 best_BER=9.009e-02
+  awgn_wiener qam16 snr=10.0 lw=adversarial seed=7802: best_N=64 best_BER=9.131e-02
+  awgn_wiener qam16 snr=10.0 lw=adversarial seed=7803: best_N=64 best_BER=1.777e-01
+  awgn_wiener qam16 snr=10.0 lw=adversarial seed=7804: best_N=128 best_BER=1.938e-01
+  awgn_wiener qam16 snr=14.0 lw=clean seed=7800: best_N=16 best_BER=2.010e-01
+  awgn_wiener qam16 snr=14.0 lw=clean seed=7801: best_N=256 best_BER=3.784e-02
+  awgn_wiener qam16 snr=14.0 lw=clean seed=7802: best_N=256 best_BER=3.955e-02
+  awgn_wiener qam16 snr=14.0 lw=clean seed=7803: best_N=256 best_BER=1.023e-01
+  awgn_wiener qam16 snr=14.0 lw=clean seed=7804: best_N=128 best_BER=1.577e-01
+  awgn_wiener qam16 snr=14.0 lw=operational seed=7800: best_N=64 best_BER=1.981e-01
+  awgn_wiener qam16 snr=14.0 lw=operational seed=7801: best_N=128 best_BER=3.943e-02
+  awgn_wiener qam16 snr=14.0 lw=operational seed=7802: best_N=128 best_BER=4.077e-02
+  awgn_wiener qam16 snr=14.0 lw=operational seed=7803: best_N=256 best_BER=1.034e-01
+  awgn_wiener qam16 snr=14.0 lw=operational seed=7804: best_N=128 best_BER=1.583e-01
+  awgn_wiener qam16 snr=14.0 lw=adversarial seed=7800: best_N=128 best_BER=1.896e-01
+  awgn_wiener qam16 snr=14.0 lw=adversarial seed=7801: best_N=64 best_BER=4.236e-02
+  awgn_wiener qam16 snr=14.0 lw=adversarial seed=7802: best_N=64 best_BER=4.224e-02
+  awgn_wiener qam16 snr=14.0 lw=adversarial seed=7803: best_N=64 best_BER=1.428e-01
+  awgn_wiener qam16 snr=14.0 lw=adversarial seed=7804: best_N=256 best_BER=1.620e-01
+  awgn_wiener qam16 snr=18.0 lw=clean seed=7800: best_N=16 best_BER=1.943e-01
+  awgn_wiener qam16 snr=18.0 lw=clean seed=7801: best_N=256 best_BER=2.966e-02
+  awgn_wiener qam16 snr=18.0 lw=clean seed=7802: best_N=128 best_BER=2.979e-02
+  awgn_wiener qam16 snr=18.0 lw=clean seed=7803: best_N=256 best_BER=9.363e-02
+  awgn_wiener qam16 snr=18.0 lw=clean seed=7804: best_N=128 best_BER=1.522e-01
+  awgn_wiener qam16 snr=18.0 lw=operational seed=7800: best_N=16 best_BER=1.899e-01
+  awgn_wiener qam16 snr=18.0 lw=operational seed=7801: best_N=64 best_BER=3.003e-02
+  awgn_wiener qam16 snr=18.0 lw=operational seed=7802: best_N=256 best_BER=2.966e-02
+  awgn_wiener qam16 snr=18.0 lw=operational seed=7803: best_N=128 best_BER=1.173e-01
+  awgn_wiener qam16 snr=18.0 lw=operational seed=7804: best_N=128 best_BER=1.525e-01
+  awgn_wiener qam16 snr=18.0 lw=adversarial seed=7800: best_N=64 best_BER=1.919e-01
+  awgn_wiener qam16 snr=18.0 lw=adversarial seed=7801: best_N=64 best_BER=3.027e-02
+  awgn_wiener qam16 snr=18.0 lw=adversarial seed=7802: best_N=64 best_BER=2.954e-02
+  awgn_wiener qam16 snr=18.0 lw=adversarial seed=7803: best_N=16 best_BER=1.444e-01
+  awgn_wiener qam16 snr=18.0 lw=adversarial seed=7804: best_N=256 best_BER=1.544e-01
+  awgn_wiener qam16 snr=22.0 lw=clean seed=7800: best_N=16 best_BER=1.898e-01
+  awgn_wiener qam16 snr=22.0 lw=clean seed=7801: best_N=64 best_BER=3.003e-02
+  awgn_wiener qam16 snr=22.0 lw=clean seed=7802: best_N=128 best_BER=2.856e-02
+  awgn_wiener qam16 snr=22.0 lw=clean seed=7803: best_N=256 best_BER=9.241e-02
+  awgn_wiener qam16 snr=22.0 lw=clean seed=7804: best_N=64 best_BER=1.410e-01
+  awgn_wiener qam16 snr=22.0 lw=operational seed=7800: best_N=16 best_BER=1.880e-01
+  awgn_wiener qam16 snr=22.0 lw=operational seed=7801: best_N=64 best_BER=2.979e-02
+  awgn_wiener qam16 snr=22.0 lw=operational seed=7802: best_N=64 best_BER=2.869e-02
+  awgn_wiener qam16 snr=22.0 lw=operational seed=7803: best_N=128 best_BER=1.169e-01
+  awgn_wiener qam16 snr=22.0 lw=operational seed=7804: best_N=128 best_BER=1.530e-01
+  awgn_wiener qam16 snr=22.0 lw=adversarial seed=7800: best_N=64 best_BER=1.920e-01
+  awgn_wiener qam16 snr=22.0 lw=adversarial seed=7801: best_N=64 best_BER=3.015e-02
+  awgn_wiener qam16 snr=22.0 lw=adversarial seed=7802: best_N=32 best_BER=2.869e-02
+  awgn_wiener qam16 snr=22.0 lw=adversarial seed=7803: best_N=16 best_BER=1.467e-01
+  awgn_wiener qam16 snr=22.0 lw=adversarial seed=7804: best_N=256 best_BER=1.541e-01
+  E1 (SNR down -> N up) @ clean: N(snr 22->10) = [64, 128, 256, 256], monotone_nondec=True
+  E1 (SNR down -> N up) @ operational: N(snr 22->10) = [64, 128, 128, 256], monotone_nondec=True
+  E1 (SNR down -> N up) @ adversarial: N(snr 22->10) = [64, 64, 64, 128], monotone_nondec=True
+  E2 (linewidth up -> N down) @ snr=10.0: N(clean,operational,adversarial) = [256, 256, 128], monotone_noninc=True
+  E2 (linewidth up -> N down) @ snr=14.0: N(clean,operational,adversarial) = [256, 128, 64], monotone_noninc=True
+  E2 (linewidth up -> N down) @ snr=18.0: N(clean,operational,adversarial) = [128, 128, 64], monotone_noninc=True
+  E2 (linewidth up -> N down) @ snr=22.0: N(clean,operational,adversarial) = [64, 64, 64], monotone_noninc=True
+  feature Spearman: rho(SNR_hat, best_N)=-0.387 (want <=-0.5); rho(innov_hat, best_N)=0.353 (want >=0.5)
+  universal-regret: linewidth clean FEC UNREACHABLE (no fixed N crosses HD-FEC in the SNR grid) -> skip
+  universal-regret: linewidth operational FEC UNREACHABLE (no fixed N crosses HD-FEC in the SNR grid) -> skip
+  universal-regret: linewidth adversarial FEC UNREACHABLE (no fixed N crosses HD-FEC in the SNR grid) -> skip
+  KILL cond 2 NOT triggered: no fixed N has max regret < 0.3 dB across all 0 reachable linewidths
+  gg qam16 operational snr=14.0 seed=7800: B*=128 BER=2.463e-01, oracle BER=5.170e-02
+  gg qam16 operational snr=14.0 seed=7801: B*=16 BER=4.247e-01, oracle BER=3.868e-01
+  gg qam16 operational snr=14.0 seed=7802: B*=256 BER=2.074e-01, oracle BER=7.501e-02
+  gg qam16 operational snr=14.0 seed=7803: B*=256 BER=3.878e-01, oracle BER=3.745e-01
+  gg qam16 operational snr=14.0 seed=7804: B*=256 BER=2.551e-01, oracle BER=2.534e-01
+  gg qam16 operational snr=18.0 seed=7800: B*=128 BER=2.370e-01, oracle BER=3.522e-02
+  gg qam16 operational snr=18.0 seed=7801: B*=256 BER=3.976e-01, oracle BER=3.429e-01
+  gg qam16 operational snr=18.0 seed=7802: B*=128 BER=1.710e-01, oracle BER=4.474e-02
+  gg qam16 operational snr=18.0 seed=7803: B*=256 BER=3.394e-01, oracle BER=3.303e-01
+  gg qam16 operational snr=18.0 seed=7804: B*=128 BER=2.560e-01, oracle BER=2.545e-01
+  gg qam16 operational snr=22.0 seed=7800: B*=128 BER=2.357e-01, oracle BER=3.094e-02
+  gg qam16 operational snr=22.0 seed=7801: B*=32 BER=3.893e-01, oracle BER=3.118e-01
+  gg qam16 operational snr=22.0 seed=7802: B*=128 BER=1.625e-01, oracle BER=3.345e-02
+  gg qam16 operational snr=22.0 seed=7803: B*=256 BER=3.095e-01, oracle BER=2.960e-01
+  gg qam16 operational snr=22.0 seed=7804: B*=256 BER=2.640e-01, oracle BER=2.630e-01
+  gg qam16 adversarial snr=14.0 seed=7800: B*=128 BER=2.471e-01, oracle BER=5.450e-02
+  gg qam16 adversarial snr=14.0 seed=7801: B*=128 BER=4.199e-01, oracle BER=3.882e-01
+  gg qam16 adversarial snr=14.0 seed=7802: B*=128 BER=2.068e-01, oracle BER=7.709e-02
+  gg qam16 adversarial snr=14.0 seed=7803: B*=256 BER=3.811e-01, oracle BER=3.730e-01
+  gg qam16 adversarial snr=14.0 seed=7804: B*=256 BER=2.573e-01, oracle BER=2.543e-01
+  gg qam16 adversarial snr=18.0 seed=7800: B*=128 BER=2.382e-01, oracle BER=3.845e-02
+  gg qam16 adversarial snr=18.0 seed=7801: B*=256 BER=3.940e-01, oracle BER=3.434e-01
+  gg qam16 adversarial snr=18.0 seed=7802: B*=128 BER=1.733e-01, oracle BER=4.822e-02
+  gg qam16 adversarial snr=18.0 seed=7803: B*=256 BER=3.390e-01, oracle BER=3.299e-01
+  gg qam16 adversarial snr=18.0 seed=7804: B*=128 BER=2.559e-01, oracle BER=2.540e-01
+  gg qam16 adversarial snr=22.0 seed=7800: B*=128 BER=2.363e-01, oracle BER=3.333e-02
+  gg qam16 adversarial snr=22.0 seed=7801: B*=32 BER=3.834e-01, oracle BER=3.115e-01
+  gg qam16 adversarial snr=22.0 seed=7802: B*=128 BER=1.632e-01, oracle BER=3.522e-02
+  gg qam16 adversarial snr=22.0 seed=7803: B*=256 BER=2.972e-01, oracle BER=2.966e-01
+  gg qam16 adversarial snr=22.0 seed=7804: B*=256 BER=2.632e-01, oracle BER=2.620e-01
+  GG oracle headroom: median=0.413 dB, 20%-trimmed=1.403 dB, non-collapse-median=4.161 dB
+  --- structural KILL gate ---
+    kill1_e1e2_direction_fails: False
+    kill2_universal_fixed_exists: False
+    kill3_oracle_headroom_too_small: False
+    kill4_features_cannot_predict: True
+  GATE FAILED (KILL)
+  source-closure.yaml SHA256: 36204fd42787ec6bafd30d2a19a2129018136e2ff098d37fcbb835f26b5f6695
+  contract.yaml SHA256: 2882684d7ecbfabec6f38ab227331bd9f941a98bcd7fbde0b1dda6ec6b4bec7a
+  MVE-SPEC.md SHA256: 765ab36fa7bb216ff440a5c14246f1e72ecb46fa6e79d898f06978c5accf3398
