@@ -157,3 +157,45 @@ T008 worker 回执、V002 独立审查、用户 2026-07-26 Goal 模式安排。
 - 不恢复 B1/T008、T006 repair、Pilot-Jones、P03 或 dormant Scout；
 - 不进入 Step 5、Contract 或 Execute；
 - mission checkpoint 仍为 CP008，只有主控接收 T009 后才能追加 CP009。
+
+---
+
+## D004: 本对话主控端到端执行，取消用户中转 GLM
+
+> status: active
+> date: 2026-07-26
+> 取代：无（只修改运行与协作模式，不取代 D003/formal D015 的科学选择）
+> 被取代：无
+> 依据：用户原话: voice.md 2026-07-26
+> 触发原话：`voice.md` 2026-07-26
+
+### 决策
+
+1. 长期科学目标、A4 carrier、formal D015、CP008 与 T009 科学合同均不变。
+2. 撤销“用户另开 GLM 对话并中转 T 路径/四行回执”的运行方式；本 Codex 对话
+   继续担任长期主控，并端到端推进实现、实验、验收、owner/mission 更新和轮换。
+3. 为遵守项目的执行/审查分离与 MVE 强制委托规则，主控可在同一线程内部调用
+   executor/verifier 子 agent；这些不是用户需要管理的外部对话。
+4. control 升至 epoch 15，T009 同步重绑定；用户无需阅读日志或判断科学正确性。
+
+### 理由
+
+用户明确表示不想继续分出 GLM 对话，希望本对话自行完成全部工作。保留内部
+executor/verifier 分离既满足这一协作偏好，也不牺牲科学审查独立性。
+
+### 排除的替代方案
+
+- 不继续要求用户中转：该模式已被用户显式撤销。
+- 不由主控单上下文自审自验：违反项目 MVE 委托和独立 verifier 规则。
+- 不改变 A4 科学合同或改派 carrier：本次纠正只涉及执行模式，没有新的科学证据。
+
+### 影响范围
+
+- live control/T009 从 epoch 14 升至 epoch 15；
+- topic 当前范围与不变量改为“主控端到端 + 内部执行/审查分离”；
+- formal D015、master scientific carrier 与 mission checkpoint 保持不变；
+- T009 完成后仍由主控追加 CP009，并继续长期 Goal。
+
+### 来源
+
+S001 续接；用户 2026-07-26 运行模式纠正。

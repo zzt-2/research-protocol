@@ -4,7 +4,7 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 14
+  control_epoch: 15
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
   active_lane: A4_ADAPTIVE_CPR_METHOD_PRODUCTION
@@ -29,11 +29,11 @@ rdl_control:
     - UNAUTHORIZED_SCIENTIFIC_EXPERIMENT
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
   mission_checkpoint: CP008
-  next_legal_action: 用户仅转发 T009 路径给 GLM；主控接收后独立裁决 method delta 并更新 CP009，失败不结束 Goal
+  next_legal_action: 本对话主控调用线程内 executor 执行 T009，再由独立 verifier 审查；用户无需中转
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（T009_READY；A4 campaign carrier activated）
+> 状态: active（T009_INTERNAL_EXECUTION_READY；A4 campaign carrier activated）
 > 创建: 2026-07-23 | 最后更新: 2026-07-26
 
 ## 专题信息
@@ -63,6 +63,8 @@ rdl_control:
 - R001 已完成 campaign remap：比较 A4、B10/B12、B1 三条具有 formal 证据链的
   carrier，并逐项排除 B2/B3/B7/C15/B9/Pilot-Jones/P03/Scout 的 readiness。
 - formal D015 已激活 A4 deployable adaptive CPR；当前唯一科学动作是 T009。
+- D004 已把运行方式改为本对话端到端推进；用户不再中转 GLM，项目强制的
+  executor/verifier 分离改由本线程内部子 agent 完成。
 
 ### 明确不含
 
@@ -140,6 +142,13 @@ rdl_control:
     fresh paired comparison；不改论文、common、params 或 owner。
   - 影响的未决项：A4 是否能在 strongest fixed comparator 下形成
     `METHOD_SIGNAL`；若不能，不开第二个 A4 repair 包，自动回到 carrier remap。
+- **[2026-07-26] [D004]**：运行方式从“用户中转外部 GLM”改为“本对话主控
+  端到端执行”。
+  - 原因：用户明确不想拆分 GLM，希望本对话自行完成全部工作。
+  - 新范围：主控直接管理线程内 executor/verifier，用户无需搬运 T 或技术回执；
+    科学执行与审查仍保持不同 agent。
+  - 影响的未决项：仅改变任务执行接口，不改变 A4、formal D015、CP008 或 T009
+    科学门槛。
 
 ## 已确认结论
 
@@ -151,7 +160,8 @@ rdl_control:
 - candidate 轮换留在 exploration mission；formal 晋级才新建/恢复 formal topic。
 - 普通包只使用 T、worker-log、可选 artifact 和 commit。
 - master 与 executor 在同一 live-test worktree 串行操作，不同时写。
-- 用户只中转 T 路径和四项完成索引。
+- 本对话是长期主控并端到端推进；用户无需中转 T 或判断技术正确性。
+- MVE 执行与科学验收必须由不同的线程内 agent 完成，主控负责集成与拍板。
 
 ### 其他结论
 
@@ -193,8 +203,12 @@ rdl_control:
 - **V003**：CP008 状态协调与 H002 独立终验 PASS，P0/P1/P2 均为 0。
 - **R001 / D003 / formal D015 / T009**：三 carrier remap 选择 A4；control epoch
   14 只授权 deployable identity + P1–P3 方法生产大包。
+- **D004**：取消外部 GLM 中转，control 升至 epoch 15；本对话主控使用线程内
+  executor/verifier 端到端完成 T009。
 - **V004**：campaign remap、formal 激活与 T009 独立终验 PASS；两轮审查缺口
   关闭后 P0/P1/P2 均为 0，允许中转 T009，不预判方法结果。
+- **V005**：epoch 15 执行接口切换独立终验 PASS；P0/P1/P2 均为 0，确认
+  T009 科学合同未变，允许线程内 executor/verifier 分离执行。
 
 ## 未决项
 
@@ -205,7 +219,8 @@ rdl_control:
 
 ## 当前位置
 
-T009_READY。H002 接收验证与 R001 campaign remap 已完成；formal D015 激活
-`A4_DEPLOYABLE_ADAPTIVE_CPR`，控制面绑定 epoch 14 / CP008。用户只需转发 T009
-路径给 GLM。主控在包返回后独立裁决 `formal_science_disposition` 与
-`mission_method_delta`，追加 CP009；无论 T009 成败，Goal 都不因单包完成而结束。
+T009_INTERNAL_EXECUTION_READY。H002 接收验证与 R001 campaign remap 已完成；
+formal D015 激活 `A4_DEPLOYABLE_ADAPTIVE_CPR`，控制面绑定 epoch 15 / CP008。
+本对话主控直接调用线程内 executor 执行 T009，再由独立 verifier 裁决
+`formal_science_disposition` 与 `mission_method_delta`，追加 CP009；无论 T009
+成败，Goal 都不因单包完成而结束。

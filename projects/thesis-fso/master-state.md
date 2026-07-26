@@ -34,7 +34,8 @@ current_stage: FORMAL_GROUNDWORK_CARRIER_SYNC
   Scout/Sandbox 结果对正式研究的 promotion effect 仍为 `none`；Direction Lab
   campaign 已 dormant（D022 SCIENCE_FREEZE），无当前科学执行授权。
 - **当前工作线**：`A4_DEPLOYABLE_ADAPTIVE_CPR`，formal D015，live control
-  epoch 14 / CP008。T009 只允许一次有界 identity adjudication，过门即直接跑
+  epoch 15 / CP008。D004 已取消用户中转 GLM，改由本对话主控管理线程内
+  executor/verifier。T009 只允许一次有界 identity adjudication，过门即直接跑
   P1–P3；失败不再开第二个 A4 repair 包，Goal 自动回 remap。
 - **Pilot-Jones（退出 carrier）**：D066/V040 接收 fixed complex component rescue
   axis scoped Kill；4 篇 direct competitor 全文债继续保留，但不阻塞当前 carrier。

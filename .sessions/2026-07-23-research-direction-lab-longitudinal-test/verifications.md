@@ -162,3 +162,41 @@ experiment runs in remap turn: 0
 PASS。campaign remap、formal D015、live epoch 14 与 T009 科学任务合同一致；
 允许提交并把 T009 路径交给用户中转。此 PASS 只授权执行包，不构成
 `METHOD_SIGNAL`，也不完成长期 Goal。
+
+---
+
+## V005: epoch 15 线程内端到端执行切换独立终验
+
+> date: 2026-07-26
+> 关联：S001 / D004 / T009 / control epoch 15
+> verifier：独立只读 subagent
+
+### 验证项
+
+- [x] 控制一致性：独立核对 topic control、T009 task-control、formal D015 与
+  mission CP008 → epoch 15 / A4 / D015 / CP008 / T009 一致，task guard PASS。
+- [x] 科学合同不变：逐项比较 D004 前后的 method identity、comparator 与门槛 →
+  formal D015、A4 carrier、CP008 和 T009 科学判据均未改变。
+- [x] 治理闭包：核对 D004、voice、S001、topic scope-change、不变量、registry
+  与 master-state → 用户不再中转、线程内 executor/verifier 分离的表述一致。
+- [x] 依赖与范围：解析 registry 并检查 dependency/conflict、原始目标冻结段与
+  当前范围 → 依赖 active、无 conflict，历史原始目标由 D004 显式 scope change
+  覆盖，没有越权科学改动。
+- [x] 结构完整性：registry YAML 解析、`git diff --check` 与变更文件审计 →
+  YAML PASS、whitespace exit 0，仅授权治理文件发生变化。
+
+### 证据
+
+```text
+independent final review: PASS
+P0=0, P1=0, P2=0
+task-control: PASS
+registry YAML: PASS
+git diff --check: exit 0
+scientific contract changes: 0
+```
+
+### 结论
+
+PASS。允许本对话主控直接派线程内 executor 执行 T009，随后交给不同的独立
+verifier 做科学接收。此验证只授权执行接口切换，不构成方法产出。

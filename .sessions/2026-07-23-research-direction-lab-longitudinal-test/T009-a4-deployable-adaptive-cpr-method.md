@@ -11,7 +11,7 @@
 rdl_task_control:
   schema_version: rdl.task-control.v2
   control_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/topic-index.md
-  control_epoch: 14
+  control_epoch: 15
   action_class: A4_DEPLOYABLE_ADAPTIVE_CPR_METHOD_PACKAGE
   mission_checkpoint: CP008
 ```
@@ -19,7 +19,8 @@ rdl_task_control:
 
 ## 0. TL;DR
 
-你是执行者，不是主控。在**一个 GLM 对话**内终审并直接生产 A4 方法：
+你是本线程内部执行者，不是主控。在**一个受主控管理的内部执行包**内终审并
+直接生产 A4 方法：
 
 1. 把旧 A4 的 common-payload、pilot/ambiguity、receiver-visible input 与 comparator
    identity 写成可失败 smoke；只允许一次有界修复；
@@ -37,7 +38,7 @@ rdl_task_control:
 
 1. 确认当前目录、分支、HEAD、clean 状态；不得换到主 worktree。
 2. 完整读取本文件、同专题 `topic-index.md` 顶部控制块、`mission-log.md` 全表、
-   `R001`、`decisions.md#D003`。
+   `R001`、`decisions.md#D003`、`decisions.md#D004`。
 3. 运行：
 
    ```powershell
@@ -310,7 +311,7 @@ consolidated commit，不 push，commit 后 worktree clean。
 
 ## 10. 给主控的极短回执
 
-用户只需转发以下四行，不读取技术日志：
+内部 executor 只向本对话主控返回以下四行；用户无需中转或读取技术日志：
 
 ```text
 STATUS: <DONE|BLOCKED>

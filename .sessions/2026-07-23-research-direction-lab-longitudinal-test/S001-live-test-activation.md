@@ -367,3 +367,32 @@ T007 必须带真实 epoch 9 task-control marker 并过 guard。先验证“最�
 
 用户只需把 T009 路径转发给 GLM。主控接收执行包后独立验收科学身份，更新 CP009
 的 method delta、same-axis/repair/no-method streak 与 drift；无论正负都继续 Goal。
+
+> 2026-07-26 续接 | 用户撤销 GLM 中转，改由本对话端到端执行 | 状态：T009_INTERNAL_EXECUTION_READY
+
+## 目标
+
+保持 A4/formal D015/CP008/T009 科学合同不变，仅把执行接口从用户中转外部 GLM
+改为本对话主控管理线程内 executor/verifier。
+
+## 记录
+
+- 用户明确表示不想再分 GLM，希望本对话自行完成全部工作。
+- 尝试通过 `create_goal` 写入替代 objective，但工具因现有 blocked Goal 尚未结束
+  而拒绝；该工具限制不阻止执行，用户本轮消息已构成恢复与授权。
+- live D004 记录运行模式变更；control 与 T009 绑定同步从 epoch 14 升至 15。
+- 科学执行仍交给线程内 executor，独立 verifier 另行审查；用户不参与技术判断。
+
+## 决策引用
+
+- D004：本对话主控端到端执行，取消用户中转 GLM（新建）
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。只改变协作接口，不改变 formal stage、
+  carrier、实验合同或论文 claim。
+
+## 后续
+
+先独立审查 epoch 15/control/T009 一致性；PASS 后由线程内 executor 执行 T009，
+再由另一独立 verifier 做科学接收。

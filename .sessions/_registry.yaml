@@ -49,8 +49,8 @@ topics:
     title: Research Direction Lab 长程真实运行测试
     status: active
     created: "2026-07-23"
-    last_updated: "2026-07-26（R001/D003/formal D015；epoch 14，A4 T009_READY）"
-    description: "D017/D018 轻量长程运行协议的真实纵向 mission。T008 科学 Kill 拒收后，Goal 主控完成三 carrier campaign remap；formal D015 激活 A4 deployable adaptive CPR，epoch 14 只授权 T009 的有界 identity + method-production 包。"
+    last_updated: "2026-07-26（D004；epoch 15，A4 T009_INTERNAL_EXECUTION_READY）"
+    description: "D017/D018 轻量长程运行协议的真实纵向 mission。formal D015 激活 A4 deployable adaptive CPR；用户撤销外部 GLM 中转后，epoch 15 由本对话主控管理线程内 executor/verifier，唯一科学动作仍为 T009。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 S014 现场故障、R003 场景演练、D017 控制接口和 guard
