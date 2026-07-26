@@ -1451,3 +1451,38 @@ projections。P0/P1 关闭并形成 clean committed binding 后，派不同内�
 由不同内部 executor 执行 T016 Phase A；A1 任一质量门失败即
 `BLOCKED_SEARCH_COVERAGE`，全部 PASS 才由主控验收并准备独立 canonical
 Phase-B turn。
+
+> 2026-07-27 续接 | T016 Phase-A 科学接收 | 状态：POST_C15_REMAP
+
+## 目标
+
+独立验收 T016 Phase A，分离执行完整性、formal science disposition 与
+mission method delta；按冻结退出边界更新 owner/control/current projections。
+
+## 记录
+
+- executor 只写 candidate view 与 step-016 worker log；五个数量门局部 PASS。
+- 三组同 normalized title 的不同非空 DOI 触发冻结 identity hard block；
+  A2/A3/Phase B 未运行。
+- V047 结论为证据完整性 `PARTIAL`、科学停止裁决 PASS：
+  `BLOCKED_FORMAL_READINESS / BLOCKED_IDENTITY_CONFLICT`，
+  `mission_method_delta=NONE`。
+- persisted locator 只能回溯 375 条，不支持 summary 的 381；另有 singleton
+  与未列 conflict 缺口，因此 candidate view 不作完整 coverage 证明。
+- C15 按一次性退出条款返回池且不得第二个 source/formalization package。
+
+## 决策引用
+
+- D021：接收 T016 identity block 并返回 C15（新建）
+- formal D032：清空 C15 workline（新建）
+- V047：T016 Phase-A 独立科学验收（新建）
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。未运行网络、下载、精读、Step 3、seed、
+  MVE、Contract 或 Execute。
+
+## 后续
+
+epoch41 / CP016 只做 post-C15 机制级 remap；新 owner/task 经独立审查前不运行
+实验。

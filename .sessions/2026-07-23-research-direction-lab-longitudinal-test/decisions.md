@@ -1152,11 +1152,11 @@ Semantic Scholar/IEEE primary metadata；formal D029。
 
 ## D020: 选择 C15 一次性 Step 1–2 formalization workline
 
-> status: active
+> status: superseded
 > date: 2026-07-27
 > 取代：D019（只取代 post-B12 remap 下一动作；D019 对 T015/B12 的处置、
 > no-second-repair 与 CP015 记账保留）
-> 被取代：无
+> 被取代：D021
 > 依据：调研 R006 + B4/B6/C15 三项独立 formal-readiness audit +
 > `stages/gw-search.md` / `stages/gw-acquire.md`
 > 触发原话：无（技术推导）
@@ -1225,3 +1225,68 @@ Semantic Scholar/IEEE primary metadata；formal D029。
 
 S001 续接；R006；formal D030；T011/T012 receipts；B4/B6/C15 独立
 formal-readiness audits；`stages/gw-search.md`、`stages/gw-acquire.md`。
+
+## D021: 接收 T016 Phase-A identity block 并返回 C15
+
+> status: active
+> date: 2026-07-27
+> 取代：D020（只取代 C15 当前 workline 与下一动作；D020 的一次性合同、
+> no-second-source 与 science ceiling 保留）
+> 被取代：无
+> 依据：验证 V047 + T016 worker log + candidate-view raw artifact
+> 触发原话：无（独立科学验收）
+
+### 决策
+
+1. 接收 T016 Phase A 的正式科学处置为
+   `BLOCKED_FORMAL_READINESS / BLOCKED_IDENTITY_CONFLICT`；
+   `mission_method_delta=NONE`。该结论不是 C15 science Kill，也不是 Step 1
+   coverage PASS。
+2. 五个数量门的落盘值为 unique=326、actual source families=8、
+   published=`192/326=58.8957%`、必读=10、route coverage=5；但三组同
+   normalized title 的不同非空 DOI 触发冻结 identity hard block，故 A2/A3、
+   Phase B/C 均未执行。
+3. V047 只以 PARTIAL 接收 candidate view 的证据完整性：persisted provenance
+   只能回溯 375 个 locator，不支持 summary 的 `raw_rows_included=381`；
+   singleton retrieval 口径有偏差，且全 index closure 发现至少另外三组未列
+   conflict。上述缺陷不改变 hard block，但禁止把该 view 当作完整覆盖证明。
+4. 按 D020/D031 的一次性退出边界，C15 返回候选池，不给第二个 source/
+   formalization package，不派 Phase B，不修 alias/provenance/evaluator。
+5. CP016 记为 same-axis=1、repair=0、no-method=16，
+   `ADEQUATE / package ALIGNED`；mission 继续 `DRIFTED/STALLED`。
+6. foreground 升至 epoch41 / CP016 /
+   `POST_C15_FORMALIZATION_REMAP`。当前仍无 active scientific carrier；
+   下一动作只允许机制级 carrier remap 与 formal-readiness 比较，remap 完成前
+   不运行实验。
+
+### 理由
+
+冻结规则没有授权把 `.short`/`.v1` 后缀解释为 DOI alias；executor 正确
+fail-closed。即使这些后缀将来可由官方元数据归并，D020 已明确 T016 是 C15
+唯一 source package，且本包的 provenance view 还有独立可复现性缺陷。继续修
+会把 no-method mission 再次运行成接口/元数据 repair 链；轮换更符合方法生产
+目标。
+
+### 排除的替代方案
+
+- 不原地 canonicalize `.short`/`.v1` 后继续 A2/A3：这会修改冻结 identity
+  predicate，并构成第二个 C15 source repair。
+- 不派 Phase B：Phase A 终态不是
+  `PHASE_A_COMPLETE_AWAITING_PHASE_B`。
+- 不把 326/8/58.8957%/10/5 写成 coverage PASS：identity 与 provenance
+  completeness 均未闭合。
+- 不把 PARTIAL evidence quality 误写成 C15 方法或科学失败；旧 shared-mu
+  family 仍是 unresolved。
+
+### 影响范围
+
+- formal owner 新建 D032；active scientific carrier 保持 `NONE`；
+- mission-log 追加 CP016/no-method=16；
+- control/current projections 转 epoch41 / CP016 / post-C15 remap；
+- C15 标记 `BLOCKED_FORMAL_READINESS / RETURNED_TO_POOL /
+  NO_SECOND_SOURCE_PACKAGE`，禁止 Phase B、Step 3、seed/MVE。
+
+### 来源
+
+S001 续接；T016；step-016 worker log；candidate-view artifact；V047；
+formal D031。

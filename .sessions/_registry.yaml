@@ -49,8 +49,8 @@ topics:
     title: Research Direction Lab 长程真实运行测试
     status: active
     created: "2026-07-23"
-    last_updated: "2026-07-27（V046：T016 clean final binding PASS；epoch 40 / CP015，仅 Phase A ready，无 active scientific carrier）"
-    description: "D017/D018 轻量长程 mission。V038-V040 撤回 T015 并把 B12 回池后，R006 用六维 readiness 比较 B4/B6/C15：B4 缺 carrier-specific M-C-A，B6 无正向 residual construct，C15 仍非 runnable 但已有具名方法合同和 FIR 资产。D020/formal D031 新建 T016 一次性 disk-native Step 1-2 formalization，method delta 固定 NONE；V046 clean final binding PASS，epoch40/CP015，只授权内部 Phase A，禁止 seed/MVE。"
+    last_updated: "2026-07-27（V047/D021：T016 identity block 接收；epoch 41 / CP016，post-C15 remap，无 active scientific carrier）"
+    description: "D017/D018 轻量长程 mission。T016 Phase A 的五个数量门局部通过，但三组同标题双非空 DOI 触发冻结 identity hard block；V047 接收 BLOCKED_FORMAL_READINESS/BLOCKED_IDENTITY_CONFLICT、delta NONE，并把 evidence completeness 判为 PARTIAL。D021/formal D032 将 C15 返回池且禁止第二 source/formalization package；epoch41/CP016 只允许机制级 remap 与 formal-readiness 比较，禁止 seed/MVE。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 S014 现场故障、R003 场景演练、D017 控制接口和 guard
@@ -447,8 +447,8 @@ topics:
     title: Step 4a 维度 D MVE 执行（B11 单载波 NDA-ML 主推 + B7/B3 待开）
     status: active
     created: "2026-07-06"
-    last_updated: "2026-07-27（V046/live epoch40：T016 clean final binding PASS，仅 Phase A ready；无 active scientific carrier）"
-    description: "Formal carrier owner。D031 取代 D030 的 post-B12 remap 下一动作，但保留 T015/B12 撤回与 no-second-repair。R006 证明 B4/B6/C15 均非 runnable carrier；formal 只授权 T016 disk-native Step 1-2 source/recent/canonical/coverage formalization，method delta NONE。V046 已确认 clean final binding PASS；当前只授权 Phase A，禁止 seed/MVE、Step 3/5/Contract/Execute。"
+    last_updated: "2026-07-27（D032/live V047：T016 identity block 接收，C15 返回池；无 active scientific carrier）"
+    description: "Formal carrier owner。D032 接收 T016 为 BLOCKED_FORMAL_READINESS/BLOCKED_IDENTITY_CONFLICT，delta NONE；A2/A3/Phase B 未运行。C15 返回候选池且不得第二个 source/formalization package；formal carrier 为空，只允许 post-C15 机制级 remap，禁止 seed/MVE、Step 3/5/Contract/Execute。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
         reason: 继承 S031 排优先级（B11/B3/B7 Conditional Go）+ 切法地图参照系（饱和池/稀池路径）+ D005 务实路线 + D006 红线 + 5 个口径警示

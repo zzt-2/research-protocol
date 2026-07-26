@@ -1,7 +1,7 @@
 # Mission Log — Research Direction Lab 长程真实运行测试
 
 > original mission: 在用户只中转任务路径和极短回执的条件下，稳定推进真实研究并积累可用方法材料。
-> phase 1: `4af6f9d..aab425d` | audit cutoff: 2026-07-27 | next checkpoint: `CP016`
+> phase 1: `4af6f9d..aab425d` | audit cutoff: 2026-07-27 | next checkpoint: `CP017`
 
 | CP | 包 / intent / family | formal science disposition | mission method delta | streaks | weight / drift | 下一步为何优于替代项 |
 |---|---|---|---|---|---|---|
@@ -20,6 +20,7 @@
 | CP013 | T013 · log-013 · `16176c2/7ca3cbf` / CANDIDATE_FORMALIZATION / B9 Step 1 evidence adapter | `BLOCKED_SEARCH_COVERAGE`；61→58、21 nonexcluded、8 必读、21/21 正式发表，但实际来源仅 OpenAlex；Route A deep=0，Route B deep 仅一般 task-fit/adjacent FSO；非 B9 Go/Kill | NONE | same-axis=1, repair=0, no-method=13 | ADEQUATE / package ALIGNED；mission DRIFTED/STALLED | 一次 bounded multi-source/mechanism-deep repair 有正向全文锚、真实 EFNS comparator 和集中缺口，完成最小债务后最终 METHOD_SIGNAL 主观判断 15%–25%，高于 C15/B1/A4 最佳 5%–15%；失败即 B9 返回池，不做第三个 Step 1 包 |
 | CP014 | T014 · log-014 · `5ba5a54c` / CANDIDATE_FORMALIZATION / B9 Step 1 coverage repair | `BLOCKED_SEARCH_COVERAGE`；A1 raw=`0/0/1`，实际 source union=`openalex,ieee`、count=`2<3`；A2/A3/A4 未运行，非 B9 Go/Kill | NONE | same-axis=2, repair=1, no-method=14 | ADEQUATE / package ALIGNED；mission DRIFTED/STALLED | 唯一 coverage repair 已用尽，B9 返回池且禁止第三包；post-B9 remap 比继续检索补丁更可能恢复方法载体，下一轮比较 B12 standalone、C15 与至少一个机制不同替代项的 formal readiness |
 | CP015 | T015（dispatch review 后撤回，无 worker log/commit）/ METHOD_PREP / B12 standalone | `BLOCKED_NOVELTY_COLLISION / PACKAGE_WITHDRAWN_BEFORE_EXECUTION`；V038 发现非物理 GG lifecycle 与错误 Huber precision；V039/V040 确认 JLT 2025 Huber robust Bayesian CPR direct collision，全文不可得故 novelty fail-closed；未运行 seed，非 B12 science Kill | NONE | same-axis=1, repair=0, no-method=15 | ADEQUATE / package ALIGNED；mission DRIFTED/STALLED | D029 的单包退出已触发，B12 回池且禁止第二 repair；比较 B4、B6、C15 等机制不同候选，比修公式或用摘要猜 novelty 更可能恢复合法方法载体 |
+| CP016 | T016 · log-016 · candidate `177e2038` / CANDIDATE_FORMALIZATION / C15 | `BLOCKED_FORMAL_READINESS / BLOCKED_IDENTITY_CONFLICT`；五个数量门局部 PASS，但三组同标题双非空 DOI 触发冻结 hard block；V047 又确认 provenance summary PARTIAL；A2/A3/Phase B 未运行，非 C15 science Kill | NONE | same-axis=1, repair=0, no-method=16 | ADEQUATE / package ALIGNED；mission DRIFTED/STALLED | D020/D031 的唯一 source-package 退出已触发；C15 回池且禁止第二 source repair。机制级 remap 比 alias/provenance 修补更可能恢复方法载体 |
 
 ## 使用规则
 

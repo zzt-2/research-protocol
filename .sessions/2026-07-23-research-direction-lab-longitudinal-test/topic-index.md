@@ -4,18 +4,18 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 40
+  control_epoch: 41
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: C15_FORMALIZATION_PHASE_A_READY
-  authority_pointer: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D031
-  decision_gate: R006/D020/D031 只选择 C15 一次性 formalization workline，active scientific carrier 仍为 NONE；V046 已确认 epoch39 clean final binding PASS，只授权内部 Phase A disk-native Step 1 view/recent identity；Phase A 验收前不得进入 Phase B，任何情况下不得运行 seed/MVE
+  active_lane: POST_C15_FORMALIZATION_REMAP
+  authority_pointer: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D032
+  decision_gate: D021/D032/V047 已接收 T016 为 BLOCKED_FORMAL_READINESS/BLOCKED_IDENTITY_CONFLICT，mission_method_delta=NONE；C15 返回候选池且不得第二个 source/formalization package，active scientific carrier 仍为 NONE；机制级 remap 完成并经独立审查前不得运行任何新实验
   allowed_actions:
     - RECOVER
     - TASK_PREPARATION
     - CONTRACT_REVIEW
     - FORMAL_READINESS_REVIEW
-    - CANDIDATE_FORMALIZATION
+    - PORTFOLIO_MAP
   forbidden_actions:
     - UNRELATED_SCIENTIFIC_EXPERIMENT
     - PRIVATE_FULLTEXT_ACQUISITION
@@ -32,14 +32,15 @@ rdl_control:
     - B9_STEP1_THIRD_PACKAGE
     - T012_AMENDMENT_OR_OLD_C15_SANDBOX
     - B12_SECOND_REPAIR_PACKAGE
+    - C15_PHASE_B_OR_SECOND_SOURCE_PACKAGE
     - UNAUTHORIZED_SCIENTIFIC_EXPERIMENT
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
-  mission_checkpoint: CP015
-  next_legal_action: 由未参加 dispatch review 的内部 Phase-A executor 执行 T016 A0-A3；若 A1 任一质量门失败立即 BLOCKED_SEARCH_COVERAGE，全部 PASS 才由主控验收并准备独立 canonical Phase-B turn，不运行 seed/MVE
+  mission_checkpoint: CP016
+  next_legal_action: 基于 authoritative portfolio、formal history 与机制级证据比较至少三个候选 carrier；逐项审查方法形态、预期增量、可包装句、formal readiness、最小补债成本和失败轮换点，在独立审查前不运行实验
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（R006/D020/formal D031 已选择 C15 一次性 formalization；epoch 40 / CP015，无 active scientific carrier，V046 final binding PASS，仅 T016 Phase A ready）
+> 状态: active（D021/formal D032/V047 已接收 T016 identity block；epoch 41 / CP016，无 active scientific carrier，进入 post-C15 机制级 remap）
 > 创建: 2026-07-23 | 最后更新: 2026-07-27
 
 ## 专题信息
@@ -103,7 +104,7 @@ rdl_control:
   scientific carrier。B4 缺 carrier-specific M-C-A 与 PADE/双环实现；B6
   被 direct sources 与 D006 边界压缩到无正向合同；C15 仍缺 Step 1–3，但
   已有具体 construct、合法 comparator 与可复用 FIR runner。
-- D020/formal D031 只授权
+- **历史（已由 D021/D032/V047 取代）**：D020/formal D031 只授权
   `C15_DISK_NATIVE_FORMALIZATION_ADAPTER` 一次性 Step 1–2 workline，
   formal active scientific carrier 仍为 `NONE`。T016 预期 method delta
   固定为 NONE；独立 review 与 clean binding 前不得执行。
@@ -124,11 +125,16 @@ rdl_control:
   branch，P1/P2/P3 共用初始化。V026 接收
   `BLOCKED_IDENTITY / P0=0/P1=0/P2=1 / mission_method_delta=NONE`；不补矩阵、
   不改 gate、不运行 held-out，也不开第二个 B10 包。
-- D011/formal D022 已把 B10 返回候选池。当前 formal D031 仍保持无 active
-  scientific carrier，只授权 T016 Step 1 view/recent identity/canonical
-  worktree staging；旧 C15 unequal-step sandbox 只作失败事实，禁止运行 MVE。
+- D011/formal D022 已把 B10 返回候选池。当前 formal D032 仍保持无 active
+  scientific carrier；T016 已停止，C15 回池且不得第二个 source/formalization
+  package；旧 C15 unequal-step sandbox 只作失败事实，禁止运行 MVE。
 - D004 已把运行方式改为本对话端到端推进；用户不再中转 GLM，项目强制的
   executor/verifier 分离改由本线程内部子 agent 完成。
+- T016 Phase A 已由 V047 独立验收：五个数量门局部通过，但三组同标题双非空
+  DOI 触发冻结 identity hard block；A2/A3/Phase B 未运行。正式处置为
+  `BLOCKED_FORMAL_READINESS / BLOCKED_IDENTITY_CONFLICT`，delta `NONE`。
+  C15 返回池且不得第二个 source/formalization package；candidate view 只作
+  PARTIAL defensive evidence，不作 coverage PASS 或方法材料。
 
 ### 明确不含
 
@@ -417,13 +423,20 @@ rdl_control:
   DOI↔IEEE arnumber/document URL；V045 以 `P0/P1/P2=0/0/1` 接收静态合同。
   V046 又对 commit `a392bc0` 完成 clean final-binding 复核，
   `P0/P1/P2=0/0/0`，只授权 Phase A。
+- **V047 / D021 / formal D032 / CP016**：T016 在三组同标题双非空 DOI
+  identity conflict 处正确 fail-closed；五个数量门局部 PASS 不能覆盖 identity
+  与 provenance 缺口。接收 `BLOCKED_FORMAL_READINESS /
+  BLOCKED_IDENTITY_CONFLICT` 与 delta `NONE`，C15 返回池且不得第二个 source
+  包；foreground 转 post-C15 remap。
 
 ## 未决项
 
 - B1 family 保持 `UNRESOLVED`；若未来复用必须重建 evaluator，而非继续修 T008；
 - T010 最终接收 `BLOCKED_IDENTITY / method delta NONE`；B10 当前包终止；
 - T012 已接收为 `BLOCKED_TASK_INTERFACE / PACKAGE_NOT_EXECUTED`；其接口不再
-  修订。D020/D031 另建 T016 一次性 disk-native formalization；
+  修订。T016 已由 D021/D032/V047 接收为
+  `BLOCKED_FORMAL_READINESS / BLOCKED_IDENTITY_CONFLICT`；C15 不得第二个
+  source/formalization package；
 - B9 未激活 scientific carrier；T014 已接收为 coverage blocker并返回池，
   唯一 Step 1 repair 已消费，不得第三包；
 - post-B9 remap 曾由 R005 选择 B12；V038–V040 已在 dispatch 前撤回 T015，
@@ -433,15 +446,13 @@ rdl_control:
 
 ## 当前位置
 
-T014 仍是 `BLOCKED_SEARCH_COVERAGE / delta NONE`，B9 回池且不得第三包。
-V038–V040/D019/formal D030 已把 T015 接收为
-`BLOCKED_NOVELTY_COLLISION / PACKAGE_WITHDRAWN_BEFORE_EXECUTION`；B12 回池，
-无 family Kill、无 seed、无方法 delta。mission 在 CP015/no-method=15、
-`DRIFTED/STALLED`。R006/D020/formal D031 已完成 post-B12 remap：control
-epoch 40 维持 C15 一次性 Step 1–2 formalization workline，但 formal active
-scientific carrier 仍为 `NONE`。T016 只允许 source view、recent identity、
-canonical worktree staging 与 preliminary coverage report，预期 method delta
-固定为 NONE。V046 已确认 clean final binding PASS；当前只授权内部 Phase A
-执行 A0–A3，Phase A 验收前不派 Phase B。禁止 T006 combination/B10 回接、T012
-amendment/旧 C15 sandbox、B1/A4/B10 旧修复、第三个 B9 包、第二个 B12
-repair、任何 seed/MVE、Scout/P03 与 Step 5/Contract/Execute。
+T016 已由 V047/D021/formal D032 接收为
+`BLOCKED_FORMAL_READINESS / BLOCKED_IDENTITY_CONFLICT`，method delta
+`NONE`；A2/A3/Phase B 未运行。C15 回池且不得第二个 source/formalization
+package，不作 science Kill。mission 在 CP016/no-method=16、
+`DRIFTED/STALLED`；control epoch 41 进入
+`POST_C15_FORMALIZATION_REMAP`，formal active scientific carrier 仍为
+`NONE`。下一合法动作是机制级 carrier remap 与 formal-readiness 比较。禁止
+T006 combination/B10 回接、T012 amendment/旧 C15 sandbox、C15 Phase B、
+B1/A4/B10 旧修复、第三个 B9 包、第二个 B12 repair、任何 seed/MVE、
+Scout/P03 与 Step 5/Contract/Execute。

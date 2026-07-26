@@ -7,12 +7,12 @@
 ### thesis-fso
 
 - **方向**：双偏振星地 OSL 场景中的 ML 应用方向探索；正式研究与 Direction Lab Scout/Sandbox 分层管理。
-- **正式状态**：当前 `NO_ACTIVE_SCIENTIFIC_CARRIER`（formal D031；
-  live R006/D020/V046，epoch 40 / CP015）。R006 已以六维比较证明 B4、B6、C15
-  均非 runnable carrier；只选择 C15 一次性 Step 1–2 formalization workline，
-  T016 预期 method delta 固定为 NONE；V046 已确认 clean final binding PASS，
-  当前只授权内部 Phase A，
-  且不得运行 seed/MVE。T011 只接收
+- **正式状态**：当前 `NO_ACTIVE_SCIENTIFIC_CARRIER`（formal D032；
+  live D021/V047，epoch 41 / CP016）。T016 在三组同标题双非空 DOI identity
+  conflict 处正确停止；五个数量门局部 PASS 不构成 coverage PASS。正式处置为
+  `BLOCKED_FORMAL_READINESS / BLOCKED_IDENTITY_CONFLICT`，method delta
+  `NONE`；C15 返回池且不得第二个 source/formalization package。当前只允许
+  post-C15 机制级 remap 与 formal-readiness 比较，不得运行 seed/MVE。T011 只接收
   `BLOCKED_SEARCH_COVERAGE` 与 method delta
   NONE；T012 在 §2.2 前因三项 task-interface contract 缺口终止为
   `BLOCKED_TASK_INTERFACE / PACKAGE_NOT_EXECUTED`。V033 拒绝 epoch29 final
@@ -53,14 +53,13 @@
   moderate/14 dB/seed `131004` 暴露 128-pilot unwrap 的错误 `-2π` branch；
   V026 接收 `BLOCKED_IDENTITY / P0=0/P1=0/P2=1 /
   mission_method_delta=NONE`。无 aggregate，未消费 held-out；不补矩阵、不改 gate。
-- **下一合法边界**：内部 executor 执行 T016 Phase A 的 disk-native source
-  view、acquisition pool 与 recent
-  identity 与 canonical worktree staging。3/3 staging 也只到
-  `AWAITING_CANONICAL_PROMOTION`，不构成 active carrier 或方法。
-  **不运行 seed/MVE；coverage confirmation 前不进 Step 3；不进入
-  Step 5/Contract/Execute；不修 T006 combination、A4/T009、B1/T008、
-  B10/T010，不做 B9 第三包、T012 amendment 或 B12 第二 repair；不启动
-  B004/P03，不改 shared generator/params，不 push。**
+- **下一合法边界**：post-C15 机制级 remap，至少比较三个候选的正式准备度、
+  方法形态、预期方法增量、可包装句、最小补债成本与失败轮换点；新
+  owner/control/task 通过独立审查前不运行实验。
+  **C15 不运行 Phase B、第二个 source/formalization package、Step 3 或
+  seed/MVE；不进入 Step 5/Contract/Execute；不修 T006 combination、
+  A4/T009、B1/T008、B10/T010，不做 B9 第三包、T012/T016 amendment 或
+  B12 第二 repair；不启动 B004/P03，不改 shared generator/params，不 push。**
 - **Atlas 强门入口**：`projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/atlas_gate.py`（唯一 receipt-bound 入口，19 tests 含独立对抗审查）。
 - **入口**：`projects/thesis-fso/master-state.md` → `projects/thesis-fso/direction-lab/README.md`；机器状态溯源见 `projects/thesis-fso/direction-lab/state/completion-events.jsonl` 与 `state/projections/`，`canonical-state.yaml` 不是正式研究授权源。
 

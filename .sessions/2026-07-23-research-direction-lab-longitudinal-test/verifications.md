@@ -2451,3 +2451,80 @@ FORBIDDEN_COMMIT_PATH_COUNT=0
 PASS。允许把 foreground 切换为 Phase A ready；只授权 T016 Phase A 的
 disk-native Step 1 view 与 recent identity，不授权 Phase B、检索下载、精读、
 Step 3、seed 或 MVE。
+
+## V047: T016 Phase-A 执行与科学身份独立验收
+
+> date: 2026-07-27
+> 关联：S001 / D020 / formal D031 / T016 / CP016
+> verifier：`t016_phase_a_science_verifier`；只读，未修改文件、未运行网络、
+> 下载、转换或实验 seed
+
+### 验证项
+
+- [x] task/integrity：epoch40 / CP015 task-control PASS；executor 窗口内只写
+  candidate view 与 step-016 worker log，无 `.sessions`、owner、mission、
+  simulation、staging、A2/A3 或 Phase-B 产物。
+- [x] frozen inputs：七份 archive 原始行数
+  `56=20/16/19/1/0/0/0`；shared index 流式扫描 20,747 行，size/hash 与冻结值
+  一致。
+- [x] identity hard block：artifact 报告的三组同 normalized-title/双非空 DOI
+  均在原始 index 中存在；冻结规则未授权 `.short`/`.v1` alias 推断，必须
+  `BLOCKED_IDENTITY_CONFLICT`。
+- [x] stop discipline：A2/A3 与 Phase B 未执行符合合同；formal disposition
+  为 `BLOCKED_FORMAL_READINESS`，delta NONE。
+- [x] priority encoding：candidate JSON 与 worker log 均为合法 UTF-8，
+  U+FFFD=0；实际枚举为必读10、建议读181、待确认63、备选72。主控
+  PowerShell 乱码来自读取端，不是落盘 corruption。
+- [ ] provenance completeness：artifact 声称 `raw_rows_included=381`，但
+  persisted locator 只能回溯
+  `375=44 archive+331 index`；OpenAlex singleton event 独立重算为 122，
+  非 summary 114；全 index closure 另发现三组未列 multi-DOI conflict → P1。
+- [ ] deterministic classification reproduction：priority/route assignment
+  predicate 未冻结，独立验收可核对落盘枚举与计数，但不能从原始行完全重生成
+  分类 → P2。
+
+### 证据
+
+```text
+VERDICT=PARTIAL
+P0=0
+P1=1
+P2=1
+RAW_ARCHIVE_ROWS=56
+FROZEN_INDEX_ROWS=20747
+PERSISTED_INCLUDED_LOCATORS=375
+UNIQUE_IDENTITIES=326
+PUBLISHED_PREPRINT_UNKNOWN=192/5/129
+PUBLISHED_RATIO=58.8957%
+PRIORITY=10/181/63/72
+ROUTE_COVERAGE=5
+CANDIDATE_SHA256=177e20384be334fcb00dc3c9a6bb1f789f6f427baa9da3740f4a5ec79e6acd39
+WORKER_LOG_SHA256=57f2e051ba90ba5590dbfa4bb0daa17b2f8352d84f2476bdafc30311e41fd34b
+```
+
+### 结论
+
+PARTIAL（证据完整性）；科学停止裁决 PASS。
+
+```text
+formal_science_disposition=BLOCKED_FORMAL_READINESS
+specific_block=BLOCKED_IDENTITY_CONFLICT
+mission_method_delta=NONE
+package_weight=ADEQUATE
+package_drift=ALIGNED
+mission_drift=DRIFTED/STALLED
+same_axis_streak=1
+repair_streak=0
+no_method_streak=16
+PHASE_B_AUTHORIZED=FALSE
+```
+
+C15 返回候选池且不得第二个 source package。P1/P2 不改变 hard block，也不授权
+repair；candidate view 只能作 partial defensive evidence，不能作完整 coverage
+证明或方法材料。
+
+### 后续（FAIL/PARTIAL 时）
+
+主控按 D020/D031 退出边界接收 CP016，更新 live/formal owner 与 current
+projections到 post-C15 remap；禁止 Phase B、alias/provenance repair、Step 3、
+seed/MVE。下一包先做机制级 carrier remap。

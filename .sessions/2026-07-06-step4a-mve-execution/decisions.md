@@ -1681,11 +1681,11 @@ DOI `10.1109/JLT.2025.3600402`。
 
 ## D031: 授权 C15 一次性 Step 1–2 formalization，不激活 scientific carrier
 
-> status: active
+> status: superseded
 > date: 2026-07-27
 > 取代：D030（只取代 post-B12 remap 下一动作；D030 对 T015/B12 的接收、
 > no-second-repair 与实验禁令保留）
-> 被取代：无
+> 被取代：D032
 > 依据：live R006/D020 + B4/B6/C15 独立 formal-readiness audits +
 > Groundwork Step 1–2 规范
 > 触发原话：无（技术推导）
@@ -1737,3 +1737,57 @@ DOI `10.1109/JLT.2025.3600402`。
 
 live S001/R006/D020；formal D030；T011/T012 receipts；B4/B6/C15 三项
 readiness audit；`stages/gw-search.md`、`stages/gw-acquire.md`。
+
+---
+
+## D032: 接收 C15 formal-readiness identity block 并清空 workline
+
+> status: active
+> date: 2026-07-27
+> 取代：D031（取代 C15 当前 formalization workline；D031 的一次性退出、
+> method-delta NONE 与实验禁令保留）
+> 被取代：无
+> 依据：验证 live V047 + T016 Phase-A artifact/worker log
+> 触发原话：无（独立科学验收）
+
+### 决策
+
+1. formal 接收
+   `BLOCKED_FORMAL_READINESS / BLOCKED_IDENTITY_CONFLICT`。T016 在 A1
+   正确停止，未形成 acquisition pool、recent identity、canonical staging、
+   coverage confirmation、Step 3 或任何实验。
+2. T016 的 `mission_method_delta=NONE`。数量门的局部 PASS 不能激活 scientific
+   carrier，也不能形成方法或论文结论。
+3. candidate view 的三组 DOI conflict 足以触发冻结 hard block；V047 又确认
+   provenance summary 不完全可复现，故该 artifact 只保留为 partial defensive
+   evidence。
+4. C15 family 不 Kill，返回候选池；不得第二个 source/formalization package，
+   不得 Phase B、alias repair、旧 shared-mu sandbox、Step 3 或 MVE。
+5. formal active scientific carrier 继续为 `NONE`；foreground 转 epoch41 /
+   CP016 / post-C15 remap。新 owner 与 task 通过独立审查前不得运行任何新实验。
+
+### 理由
+
+D031 已预注册任一 source/canonical/coverage hard gate 失败即返回池。按冻结
+合同接收 stop、同时拒绝不完整 coverage 声称，既保留 C15 未被科学 Kill 的正确
+边界，也阻止 no-method mission 继续积累元数据 repair。
+
+### 排除的替代方案
+
+- 不修 `.short`/`.v1` alias 后继续 T016；
+- 不把数量门 PASS 晋级为 Step 1/2 PASS；
+- 不运行 Phase B、Step 3、旧 C15 sandbox 或 seed/MVE；
+- 不恢复 B1/A4/B10/B9/B12 等已禁止 repair。
+
+### 影响范围
+
+- live authority 指向 D021；
+- C15=`BLOCKED_FORMAL_READINESS / RETURNED_TO_POOL /
+  NO_SECOND_SOURCE_PACKAGE`；
+- foreground=epoch41 / CP016 / post-C15 remap；
+- formal stage 保持 Groundwork，无 active scientific carrier。
+
+### 来源
+
+live S001/D021/V047；T016；step-016 worker log；candidate-view artifact；
+formal D031。

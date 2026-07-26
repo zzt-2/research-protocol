@@ -14,12 +14,12 @@ recovery_entry: .sessions/2026-07-23-research-direction-lab-longitudinal-test/to
 formal_active_carrier:
   id: NONE
   status: NO_ACTIVE_SCIENTIFIC_CARRIER
-  readiness: C15_FORMALIZATION_ONLY
-  authority: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D031
+  readiness: POST_C15_MECHANISM_REMAP
+  authority: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D032
   positive_method_target: null
   fair_comparators: []
   claim_ceiling: NO_METHOD_CLAIM
-  stop: T016_PHASE_A_ONLY_PHASE_B_REQUIRES_ACCEPTANCE_NO_SEED_OR_MVE
+  stop: REMAP_AND_INDEPENDENT_REVIEW_REQUIRED_BEFORE_ANY_NEW_EXPERIMENT
 
 candidates:
   # ── Cluster 1-2: Failure observability (CEILINGED) ──
@@ -61,14 +61,15 @@ candidates:
   - id: C15
     name: reduced_constellation_cost
     family: equalizer_cost_function
-    status: FORMALIZATION_IN_PREP_UNRESOLVED_UNEQUAL_STEP_CONFOUND
+    status: BLOCKED_FORMAL_READINESS_RETURNED_NO_SECOND_SOURCE_PACKAGE
     last_result: {verdict: EXACT_SHARED_MU_VARIANTS_WORSE, delta_collapse: +0.036, delta_pi_ser: +0.033}
     note: >-
       Exact shared-mu variants were worse, but gradient scales differed by about
       19x. Without equal tuning opportunity or gradient normalization this does
-      not establish a family-level mechanism negative. R006/D020/D031 authorize
-      only the one-shot T016 Step 1-2 formalization workline; this is not an
-      active scientific carrier and does not authorize the old sandbox.
+      not establish a family-level mechanism negative. T016 later stopped at
+      BLOCKED_IDENTITY_CONFLICT before A2/A3/Phase B; V047 accepts only partial
+      defensive evidence and delta NONE. D021/D032 return C15 to the pool with
+      no second source/formalization package; the old sandbox remains forbidden.
 
   - id: C16
     name: nonmodulus_hos_paradigm
@@ -172,17 +173,18 @@ next_action: >-
   retain T011's BLOCKED_SEARCH_COVERAGE evidence and close T012 as
   BLOCKED_TASK_INTERFACE/PACKAGE_NOT_EXECUTED
   before §2.2; no source recovery, metadata closure or canonical acquisition ran.
-  C15 remains HYPOTHESIS_ONLY without a science verdict. Live R006/D020 and
-  formal D031 authorize only a one-shot disk-native Step 1-2 formalization
-  workline; this does not activate a scientific carrier and its method delta is
-  frozen to NONE. B9 remains returned after
+  C15 remains scientifically unresolved, but T016 is formally blocked on
+  identity conflict. Live D021/V047 and formal D032 return it with no second
+  source/formalization package; A2/A3/Phase B did not run and method delta is
+  NONE. B9 remains returned after
   T014 and cannot receive a third Step 1 package. Live D019/V040 and formal D030
   withdraw T015 before execution: the contract contained an invalid GG lifecycle
   and incorrect Huber precision, and JLT 2025 establishes a direct Huber Bayesian
   CPR family collision that could not be resolved to a distinct method without
   fulltext. B12 returns to pool with no second repair. The B4/B6/C15 comparison
   is now closed by R006: B4 lacks a carrier-specific M-C-A,
-  B6 lacks a positive residual construct, and C15 alone has a named method
-  contract plus reusable FIR assets. T016 awaits independent review and clean
-  binding; it may not run seed/MVE or enter Step 3. Step 5 remains unauthorized.
-  Do NOT resume Scout/P03.
+  B6 lacks a positive residual construct, and C15 alone had a named method
+  contract plus reusable FIR assets. T016 has now exhausted its one-shot
+  formalization path. The next legal action is a mechanism-level remap comparing
+  at least three candidates; no new experiment, Step 3, Step 5, Scout/P03, or
+  C15 Phase B is authorized.

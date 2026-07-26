@@ -175,6 +175,8 @@ no_durable_harvest:
     reason: each is a mechanism negative, durable only as part of the aggregate H060 spine; not individually harvestable as standalone thesis material
   - item: T011 C15 search-coverage package
     reason: BLOCKED_SEARCH_COVERAGE is a pipeline/formalization blocker with mission_method_delta NONE; it is not a C15 negative, method failure, or thesis method material
+  - item: T016 C15 disk-native formalization package
+    reason: BLOCKED_FORMAL_READINESS / BLOCKED_IDENTITY_CONFLICT with mission_method_delta NONE; numeric gates and defensive provenance do not constitute coverage, a method result, or thesis material
 
 historical_thesis_spines_e15ae60:
   - spine: >-
@@ -214,7 +216,7 @@ historical_thesis_spines_e15ae60:
 # ─────────────────────────────────────────────────────────────────────────────
 current_view:
   recovery_entry: .sessions/2026-07-23-research-direction-lab-longitudinal-test/topic-index.md
-  source: S013 / D021 / V010 / V011 / H014 -> FROZEN S014 / D022 / V012 / H015 (SCIENCE_FREEZE) -> D061/V035/H017 -> Pilot-Jones T005/D066/V040 scoped axis Kill -> T006 science verdict rejected -> T010 BLOCKED_IDENTITY/returned -> live D013/V029 + step4a D024 accept T011 BLOCKED_SEARCH_COVERAGE -> live D014/V033 + formal D025 close T012 as task-interface blocked and return C15 -> live V035/R004/D016 + formal D027 accept T013 BLOCKED_SEARCH_COVERAGE -> live V037/D017 + formal D028 accept T014 BLOCKED_SEARCH_COVERAGE and return B9 -> live R005/D018 + formal D029 activate B12 -> live D019/V038-V040 + formal D030 withdraw T015 before execution and return B12 on novelty/physics gate -> live R006/D020 + formal D031 select C15 one-shot Step 1-2 formalization with no active scientific carrier and no method delta. Prior S012/D020/V009 superseded.
+  source: S013 / D021 / V010 / V011 / H014 -> FROZEN S014 / D022 / V012 / H015 (SCIENCE_FREEZE) -> D061/V035/H017 -> Pilot-Jones T005/D066/V040 scoped axis Kill -> T006 science verdict rejected -> T010 BLOCKED_IDENTITY/returned -> live D013/V029 + step4a D024 accept T011 BLOCKED_SEARCH_COVERAGE -> live D014/V033 + formal D025 close T012 as task-interface blocked and return C15 -> live V035/R004/D016 + formal D027 accept T013 BLOCKED_SEARCH_COVERAGE -> live V037/D017 + formal D028 accept T014 BLOCKED_SEARCH_COVERAGE and return B9 -> live R005/D018 + formal D029 activate B12 -> live D019/V038-V040 + formal D030 withdraw T015 before execution and return B12 on novelty/physics gate -> live R006/D020 + formal D031 select C15 one-shot Step 1-2 formalization -> live D021/V047 + formal D032 accept T016 BLOCKED_FORMAL_READINESS and return C15 with no method delta. Prior S012/D020/V009 superseded.
 
   dispositions:
     - id: H060_DOWNGRADED
@@ -417,10 +419,11 @@ current_view:
     formal D030 withdraw T015 before execution: the invalid GG lifecycle,
     incorrect Huber precision and direct JLT-2025 Huber Bayesian CPR collision
     produce no harvest and no method delta. B12 returns to pool without a family
-    Kill and cannot receive a second repair. Live R006/D020 and formal D031
-    complete the B4/B6/C15 remap and authorize only C15 disk-native Step 1-2
-    formalization. The formal scientific carrier remains empty; T016 has
-    method delta frozen to NONE and creates no harvest. Do NOT resume Scout/P03;
+    Kill and cannot receive a second repair. Live D021/V047 and formal D032
+    accept T016 as BLOCKED_FORMAL_READINESS / BLOCKED_IDENTITY_CONFLICT. The
+    formal scientific carrier remains empty; C15 returns to the pool with no
+    second source package, and T016 creates no harvest. Next is mechanism-level
+    carrier remap. Do NOT resume Scout/P03;
     do NOT enter Step 5/Contract/Execute;
     do NOT push.
 
