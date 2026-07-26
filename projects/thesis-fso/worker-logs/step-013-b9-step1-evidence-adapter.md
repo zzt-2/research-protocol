@@ -354,7 +354,7 @@ semantic fields. The nonexcluded portfolio is:
 
 | class | unique | key roles |
 |---|---:|---|
-| 必读 | 8 | DRE/B9/100G canonical, EFNS direct competitor, KK/DC comparators |
+| 必读 | 8 | DRE optimization/B9/100G lineage, EFNS direct competitor, KK/DC comparators |
 | 建议读 | 10 | FSO task-fit, adjacent shaping, KK/DC lineage |
 | 备选 | 3 | adjacent/task-fit context |
 | 排除 | 37 | false positives retained for audit |
@@ -362,7 +362,7 @@ semantic fields. The nonexcluded portfolio is:
 ## Route A — low-resolution DAC/noise shaping
 
 - `8` inclusive unique candidates: `4` A-only and `4` BOTH.
-- Broad evidence contains DRE canonical papers, EFNS, joint shaping, and
+- Broad evidence contains DRE lineage papers, EFNS, joint shaping, and
   task-linked carrier+DRE records. The two deep archives contribute `0`
   nonexcluded candidates.
 - EFNS is a direct competitor: its metadata reports similar DRE performance at
@@ -375,6 +375,10 @@ semantic fields. The nonexcluded portfolio is:
 - `17` inclusive unique candidates: `13` B-only and `4` BOTH.
 - Broad evidence covers B9/100G FSO, KK/DC-Value comparators, and FSO task-fit
   records. Deep evidence contributes `2` general task-fit/adjacent FSO records.
+- Neither of those two nonexcluded deep records contains self-coherent,
+  virtual-carrier, CSPR, or phase-reconstruction evidence. They therefore do
+  not independently reproduce Route B's broad mechanism coverage, and
+  `route_B_independent_broad_and_deep=false`.
 - The satellite-ground self-coherent directional archive returned `0` results;
   therefore current metadata cannot positively establish a star-ground
   turbulence-specific problem.
@@ -383,22 +387,25 @@ semantic fields. The nonexcluded portfolio is:
 
 Route A is directly collided by EFNS and adjacent shaping work. Route B has no
 result proving complete direct-competition coverage of satellite-ground
-turbulent FSO, but the targeted search also returned no supporting evidence.
-Absence is not promoted to a gap. This is a coverage/remap block, not a B9
-family Kill and not a method signal.
+turbulent FSO. Its two nonexcluded deep records are generic task-fit/adjacent
+FSO only and contain no self-coherent, virtual-carrier, CSPR, or
+phase-reconstruction evidence; the targeted search also returned no supporting
+evidence. Absence is not promoted to a gap. This is a coverage/remap block, not
+a B9 family Kill and not a method signal.
 
 ## Acquisition debt
 
 | role | exact title/id | why Step 2 needs it | current availability |
 |---|---|---|---|
-| DRE canonical | Digital Resolution Enhancer Employing Clipping for High-Speed Optical Transmission / `10.1109/jlt.2020.2988377` | recover original DRE construct and boundary | METADATA_ONLY |
+| DRE optimization lineage | Digital Resolution Enhancer Employing Clipping for High-Speed Optical Transmission / `10.1109/jlt.2020.2988377` | recover clipping/DRE optimization and low-resolution boundary; abstract cites DRE as prior work | METADATA_ONLY |
+| DRE canonical citation chase | original DRE canonical cited as prior work in clipping paper / `UNRESOLVED_CITATION_FROM_10.1109/jlt.2020.2988377` | Step 2 must chase the citation; do not guess title or DOI | UNRESOLVED_CITATION |
 | DRE canonical | Kramers-Kronig Receiver With Digitally Added Carrier Combined With Digital Resolution Enhancer / `10.1109/jlt.2022.3142353` | separate carrier reconstruction from DRE | METADATA_ONLY |
 | DRE canonical | Simplified Self-Coherent FSO Transmission Boosted by Digital Resolution Enhancer / `10.1109/jlt.2023.3270673` | exact B9 scenario and claim ceiling | EXISTING_FULLTEXT |
 | DC-Value/virtual-carrier lineage | DC Component Recovery in Kramers-Kronig Receiver Utilizing AC-Coupled Photo-Detector / `10.1109/jlt.2020.2990905` | recover DC-component assumptions | METADATA_ONLY |
 | DC-Value/virtual-carrier lineage | Comparison of DC-Value Method and Kramers–Kronig Receiver in Optical OFDM SSB-DD Transmission / `10.1109/jphot.2022.3192263` | compare DC-Value and KK tasks | METADATA_ONLY |
 | traditional noise-shaping comparator | Performance Investigation of Error-Feedback Noise Shaping in Low-Resolution High-Speed IM/DD and Coherent Transmission Systems / `10.1109/jlt.2022.3153387` | audit direct EFNS comparator | METADATA_ONLY |
 | traditional noise-shaping comparator | Low-resolution optical transmission using joint shaping technique of signal probability and quantization noise / `10.3788/col202321.050602` | cover non-DRE shaping comparator | METADATA_ONLY |
-| traditional noise-shaping comparator | Real-Time Experimental Demonstration of Hybrid FSO/Wireless Transmission Based on Coherent Detection and Delta-Sigma Modulation / `10.1109/jphot.2022.3219558` | distinguish delta-sigma from transmitter DRE | METADATA_ONLY |
+| adjacent FSO/delta-sigma context | Real-Time Experimental Demonstration of Hybrid FSO/Wireless Transmission Based on Coherent Detection and Delta-Sigma Modulation / `10.1109/jphot.2022.3219558` | contextualize coherent FSO/delta-sigma only; abstract does not support low-bit-DAC, DRE, or transmitter quantization-noise task matching | METADATA_ONLY |
 | self-coherent/FSO task-fit | 100G FSO Transmission Using 3-Bit DAC and Self-Coherent Detection / `10.23919/ofc49934.2023.10116945` | closest 3-bit self-coherent FSO task lineage | METADATA_ONLY |
 | self-coherent/FSO task-fit | Revolutionizing Free-Space Optics: A Survey of Enabling Technologies, Challenges, Trends, and Prospects of Beyond 5G Free-Space Optical (FSO) Communication Systems / `10.3390/s24248036` | define FSO deployment constraints without projecting satellite evidence | METADATA_ONLY |
 
@@ -423,3 +430,23 @@ family Kill and not a method signal.
 ## Next gate
 
 等待主控独立验收；未进入 Step 2。
+
+## Post-verifier evidence amendment
+
+- verifier disposition remains accepted
+  `BLOCKED_SEARCH_COVERAGE / mission_method_delta=NONE`; this amendment changes
+  evidence semantics only.
+- Route B's two deep nonexcluded records are now explicitly classified as
+  generic task-fit/adjacent FSO, not independent self-coherent coverage; the
+  Route B broad-and-deep gate is `false`.
+- `10.1109/jphot.2022.3219558` is downgraded from a traditional noise-shaping
+  comparator to adjacent FSO/delta-sigma context because its abstract does not
+  support the low-bit-DAC task.
+- `10.1109/jlt.2020.2988377` is DRE optimization lineage, not the original DRE
+  canonical. The unresolved original canonical is a separate Step 2 citation
+  chase with no guessed title or DOI.
+- acquisition debt is `11`, within the frozen `8–12` bound.
+- post-amendment validation: candidate-view JSON parse PASS; Route B gate
+  `false` and present in `failed_gates`; clipping role=`DRE optimization
+  lineage`; delta-sigma role=`adjacent FSO/delta-sigma context`; unresolved
+  citation count=`1`; `git diff --check` PASS.
