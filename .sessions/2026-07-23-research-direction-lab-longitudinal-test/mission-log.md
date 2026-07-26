@@ -1,7 +1,7 @@
 # Mission Log — Research Direction Lab 长程真实运行测试
 
 > original mission: 在用户只中转任务路径和极短回执的条件下，稳定推进真实研究并积累可用方法材料。
-> phase 1: `4af6f9d..aab425d` | audit cutoff: 2026-07-27 | next checkpoint: `CP014`
+> phase 1: `4af6f9d..aab425d` | audit cutoff: 2026-07-27 | next checkpoint: `CP016`
 
 | CP | 包 / intent / family | formal science disposition | mission method delta | streaks | weight / drift | 下一步为何优于替代项 |
 |---|---|---|---|---|---|---|
@@ -18,6 +18,8 @@
 | CP011 | T011 · log-011 · `700864d` / CANDIDATE_FORMALIZATION / C15 blind-equalization cost | `BLOCKED_SEARCH_COVERAGE`；56 rows/53 unique/49 published，但 actual source 仅 OpenAlex，关键 deep query 未闭合；Step 2 未启动 | NONE | same-axis=1, repair=0, no-method=11 | ADEQUATE / package ALIGNED；mission DRIFTED/STALLED | 共享索引已有 Semantic Scholar/SerpAPI/OpenAlex/Exa 四源，论文库已有 5 篇近期 content；一次 T012 合并三源恢复、metadata closure 与 3 篇 canonical 获取，比 B1 第三 evaluator repair、A4 第二 identity repair、B9 新全链更可能解锁方法空间；失败即轮换 |
 | CP012 | T012 · log-012 · `81ab4a0` / CANDIDATE_FORMALIZATION / C15 source recovery | `BLOCKED_TASK_INTERFACE / PACKAGE_NOT_EXECUTED`；两次 executor preflight 与 epoch29 final binding 共暴露 receipt、owner/process predicate、CIM fail-open 三项 task-contract 缺口；§2.2–2.5 均未执行 | NONE | same-axis=2, repair=1, no-method=12 | UNDERWEIGHT / package DRIFT_RISK；mission DRIFTED/STALLED | 遵守 one-last-attempt，不做第四次 T012 amendment；post-T012 remap 比继续接口修补、B1 第三 evaluator repair或 A4/B10 第二 identity repair更可能恢复方法载体，C15 仅返回池不作 science Kill |
 | CP013 | T013 · log-013 · `16176c2/7ca3cbf` / CANDIDATE_FORMALIZATION / B9 Step 1 evidence adapter | `BLOCKED_SEARCH_COVERAGE`；61→58、21 nonexcluded、8 必读、21/21 正式发表，但实际来源仅 OpenAlex；Route A deep=0，Route B deep 仅一般 task-fit/adjacent FSO；非 B9 Go/Kill | NONE | same-axis=1, repair=0, no-method=13 | ADEQUATE / package ALIGNED；mission DRIFTED/STALLED | 一次 bounded multi-source/mechanism-deep repair 有正向全文锚、真实 EFNS comparator 和集中缺口，完成最小债务后最终 METHOD_SIGNAL 主观判断 15%–25%，高于 C15/B1/A4 最佳 5%–15%；失败即 B9 返回池，不做第三个 Step 1 包 |
+| CP014 | T014 · log-014 · `5ba5a54c` / CANDIDATE_FORMALIZATION / B9 Step 1 coverage repair | `BLOCKED_SEARCH_COVERAGE`；A1 raw=`0/0/1`，实际 source union=`openalex,ieee`、count=`2<3`；A2/A3/A4 未运行，非 B9 Go/Kill | NONE | same-axis=2, repair=1, no-method=14 | ADEQUATE / package ALIGNED；mission DRIFTED/STALLED | 唯一 coverage repair 已用尽，B9 返回池且禁止第三包；post-B9 remap 比继续检索补丁更可能恢复方法载体，下一轮比较 B12 standalone、C15 与至少一个机制不同替代项的 formal readiness |
+| CP015 | T015（dispatch review 后撤回，无 worker log/commit）/ METHOD_PREP / B12 standalone | `BLOCKED_NOVELTY_COLLISION / PACKAGE_WITHDRAWN_BEFORE_EXECUTION`；V038 发现非物理 GG lifecycle 与错误 Huber precision；V039/V040 确认 JLT 2025 Huber robust Bayesian CPR direct collision，全文不可得故 novelty fail-closed；未运行 seed，非 B12 science Kill | NONE | same-axis=1, repair=0, no-method=15 | ADEQUATE / package ALIGNED；mission DRIFTED/STALLED | D029 的单包退出已触发，B12 回池且禁止第二 repair；比较 B4、B6、C15 等机制不同候选，比修公式或用摘要猜 novelty 更可能恢复合法方法载体 |
 
 ## 使用规则
 

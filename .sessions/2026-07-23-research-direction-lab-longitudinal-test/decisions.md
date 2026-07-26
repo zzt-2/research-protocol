@@ -889,10 +889,10 @@ S001 续接；R003；B9 主仓 metadata/content；旧 S005 与
 
 ## D016: 接收 T013 coverage blocker 并授权一次 B9 Step 1 覆盖修复
 
-> status: active
+> status: superseded
 > date: 2026-07-27
 > 取代：D015
-> 被取代：无
+> 被取代：D017
 > 依据：调研 R004 + 验证 V035 + T013 worker log/candidate view +
 > independent science verifier
 > 触发原话：无（技术推导）
@@ -950,3 +950,278 @@ B9 比至少两个替代项更可能最终产生方法信号：相对 C15，它�
 
 S001 续接；R004；V035；T013 worker log 与 ignored candidate view；独立 science
 verifier 最终复核。
+
+## D017: 接收 T014 coverage block，B9 返回候选池并强制轮换
+
+> status: superseded
+> date: 2026-07-27
+> 取代：D016（只取代 B9 当前 workline 与下一动作；D016 对 T014 的历史授权和
+> 唯一修复边界保留）
+> 被取代：D018
+> 依据：验证 V037 + T014 worker log/receipt/raw archives + executor commit
+> `5ba5a54cce3705186d8a921d4e4f2ec3c34bb7c8`
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. 正式接收 T014 为
+   `BLOCKED_SEARCH_COVERAGE / mission_method_delta=NONE`。A1 两个
+   S2/arXiv archive 各为 0 结果，IEEE Route A 为 1 条、Route B 为 0；连同
+   T013 OpenAlex 后实际 source-family union 只有 `[openalex, ieee]`，
+   `count=2<3`。
+2. T014 按冻结合同正确停止在 A1；A2/A3/A4、两份 deep archive 与 candidate
+   view v2 均未产生，未下载、精读、实现或实验。该处置只证明来源覆盖阻断，
+   不是 B9 science Kill、空白证据、方法信号或 promotion。
+3. B9 立即返回候选池；D016/formal D027 允许的唯一 coverage repair 已消费，
+   不得第三个 B9 Step 1 包，也不得降低三源或 mechanism-deep 门槛。
+4. 当前继续 `NO_ACTIVE_SCIENTIFIC_CARRIER`。foreground 转
+   `POST_B9_CARRIER_REMAP`，只允许 Recover、Portfolio Map、Task Preparation
+   与 candidate formalization；完成至少三 carrier 六维比较并更新 formal owner
+   前禁止实验。
+
+### 核心失败机制
+
+公开检索能力没有形成足够的 candidate-specific 多源闭包：S2 实际无返回、
+arXiv 两条 broad query 均为 0，IEEE 只在 Route A 返回 1 条。该失败属于
+Groundwork Step 1 source capability/coverage，不支持对 B9 机制是否成立作正负
+科学判断。
+
+### 排除的替代方案
+
+- 不重试第三个 B9 Step 1 包；唯一修复退出条件已经触发。
+- 不把配置过 S2/arXiv、历史共享索引来源或零结果计入实际 source family。
+- 不把 `BLOCKED_SEARCH_COVERAGE` 改写成“文献空白”或 B9 family Kill。
+- 不直接进入 B9 Step 2/3/4a，也不在 remap 前运行 C15/B12/B1/A4 的代码或实验。
+
+### 影响范围
+
+- mission 追加 CP014：same-axis=2、repair=1、no-method=14，
+  `ADEQUATE / package ALIGNED`，mission 继续 `DRIFTED/STALLED`；
+- formal authority 转 D028；B9 标为
+  `RETURNED_TO_POOL / STEP1_SEARCH_COVERAGE_BLOCKED`；
+- foreground control 递增到 epoch 35 / CP014 /
+  `POST_B9_CARRIER_REMAP`；
+- 下一动作必须比较至少三个合法 carrier；不足三个时逐项证明 formal readiness
+  不成立。
+
+### 来源
+
+S001 续接；V037；T014 worker log、ignored receipt/raw archives；executor commit
+`5ba5a54c`；independent science/package verifier。
+
+## D018: 激活 B12 standalone fade-reliability MAP 方法包
+
+> status: superseded
+> date: 2026-07-27
+> 取代：D017（只取代“无 active carrier”与 post-B9 remap 下一动作；D017 对
+> T014/B9 的处置和第三包禁令保留）
+> 被取代：D019
+> 依据：调研 R005 + formal D012/D013/D014/D022/D028 + B12 两篇本地全文与
+> `literature_notes.md` B12-Q2
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. post-B9 remap 激活
+   `B12_MAP_FADE_AOPN_STANDALONE`，formal 阶段仍是 GW Step 4a 维度 D。
+   该 carrier 是 source-native B12-Q2 standalone，不是 T006 的 B10+B12
+   combination repair。
+2. 正向方法合同为：按 OECC 2025 Eq.4–7 与 TSP 2022 [5] 的 Σθ/Σε 定义
+   重建 source-structured PA/PA-ML/MAP，以接收端可见幅度/innovation 构造
+   异方差 AOPN 权重，并加入一个预注册的 observation-precision/
+   standardized-residual clip；身份门通过后同包完成因果稳健构造与公平 paired
+   comparison。
+3. 主对照必须同时包含 source-native PA、PA-ML、exact MAP、obvious cheap
+   fixed-variance/hard-skip 和同一 waveform/pilot/data population 上
+   validation-frozen 的传统 BPS 或 DD-DPLL。只有同时胜过 exact MAP、
+   cheap rule 与传统 B*，且 clean/source-like 退化门、共同 working region、
+   seed/metric/statistics 门均闭合，才可记 `METHOD_SIGNAL`。
+4. T015 是单包制：source-like 排序不能复现即
+   `BLOCKED_IDENTITY`；共同 working region 不存在则只记 boundary；方法不胜
+   三类主对照则最多记 `FAIR_COMPARISON_RUN`。OECC 未给 W、pilot sequence、
+   sample count/seed 与 penalty 精确定义，这些必须标
+   `PROJECT_VALIDATION_ASSUMPTION`；不得宣称 bit-exact 或完整数值复现。任一
+   退出条件触发后 B12 回池，
+   不开第二个 B12 repair 包。
+5. dispatch 前必须由独立 verifier 审查 R005、D018/formal D029、control、
+   T015 和 task-control binding。审查 PASS 前禁止 seed/MVE。
+
+### 理由
+
+- B12-Q2 已有 candidate-specific M-C-A/Q#、Step 1–3、OECC 2025 与其
+  TSP 2022 [5] 本地全文；Eq.4–7、Σθ 与单正弦 AOPN Σε 可闭合，但数值复现
+  仍有显式 project assumptions。T006 只使组合实现
+  `UNRESOLVED_IMPLEMENTATION_INVALID`，未 Kill
+  standalone family。当前缺口是一个隔离 source-native MAP/256QAM adapter，
+  可在同一包的身份门后直接创建和比较方法。
+- C15 的下一包仍只能补三源/canonical/Step 2，至少还需独立 Step 3 才能进入
+  方法；B1/A4/B10 分别需要被禁止的第三或第二 identity/evaluator repair；
+  B9 已消费唯一 Step 1 repair。B12 因而比至少这四类替代项更可能在下一包产生
+  `CONSTRUCT_CREATED / FAIR_COMPARISON_RUN / METHOD_SIGNAL`。
+- 选择 B12 不预支 Go：exact source ordering、物理参数、传统比较器和稳健增量
+  均由可失败的预注册门约束。
+
+### 排除的替代方案
+
+- 不做 C15 的第三个无方法包：C15 保持
+  `HYPOTHESIS_ONLY / FORMALIZATION_CANDIDATE`，等未来新 source capability
+  或更高价值 workline 再议。
+- 不返回 B1 第三 evaluator repair、A4 第二 identity repair、B10 第二
+  lifecycle repair，也不做第三个 B9 Step 1 包。
+- 不复用 T006 的 B12 公式代码，不接回 B10，不做 coarse→MAP cascade、
+  CW+MAP 双导频或未经来源闭合的联合 CFO ML。
+- 不把 source identity、测试 PASS、negative/boundary 或 metadata repair
+  记作方法产出。
+
+### 影响范围
+
+- formal owner 新建 D029 并激活 B12 standalone carrier；
+- foreground 升到 epoch 36，checkpoint 仍为 CP014；只有
+  `B12_STANDALONE_METHOD_PACKAGE` task preparation/dispatch 被授权；
+- 新建 T015；T015 被独立科学接收前不追加 CP015，no-method=14 保持；
+- T015 后必须由不同 agent 独立裁决 formal disposition、method delta、三类
+  streak、package weight 与 drift，并自动轮换或晋级。
+
+### 来源
+
+S001 续接；R005；formal D012/D013/D014/D022/D028；B12 OECC/TSP 本地全文、
+`literature_notes.md` B12-Q2 与独立 readiness audits。
+
+## D019: T015 因物理合同错误与 direct novelty collision 撤回，B12 返回池
+
+> status: superseded
+> date: 2026-07-27
+> 取代：D018（取代 B12 active carrier 与 T015 派遣；D018 对 R005 历史比较、
+> source identity 边界和 no-second-repair 约束保留）
+> 被取代：D020
+> 依据：验证 V038/V039/V040 + IEEE primary metadata
+> 触发原话：无（独立科学审查）
+
+### 决策
+
+1. T015 在 dispatch 前撤回，状态为
+   `BLOCKED_NOVELTY_COLLISION / PACKAGE_WITHDRAWN_BEFORE_EXECUTION`。没有运行
+   seed、没有创建方法实现，不产生 science Kill，也不产生 method delta。
+2. V038 的两个 P0 单独已足以禁止派遣：原任务把无来源的 100-symbol iid block
+   与 128-symbol algorithm/pilot block 混为大气湍流生命周期；Huber
+   `w=min(1,c/u)` 又错误使用 `precision=w²/sigma_eps`，而标准 IRLS 是
+   `precision=w/sigma_eps`。
+3. V039/V040 进一步确认 DOI `10.1109/JLT.2025.3600402` 已把 Huber
+   M-estimator robust update、variational-Bayesian covariance adaptation、
+   nonlinear Bayesian filtering 与 carrier phase recovery 直接组合，并相对
+   BPS 报告最高 0.66 dB OSNR gain。合法全文恢复失败，无法证明 B12 的
+   one-step batch adapter 形成未被覆盖的可包装 M-C-A；fail-closed 处理。
+4. B12-Q2 standalone 返回候选池，不作 family Kill；但 D018/D029 的单包退出与
+   “不得第二个 B12 repair”立即生效。不得把 Huber 公式修正后原样重派，也不得
+   用摘要之外的猜测宣称 novelty。
+5. formal carrier 恢复为 `NO_ACTIVE_SCIENTIFIC_CARRIER`。foreground 升到
+   epoch 37 / CP015 / `POST_B12_NOVELTY_REMAP`；只允许比较 B4、B6、C15 与
+   其他机制不同候选的 formal readiness，以及准备下一份独立审查任务。新
+   formal owner 与 task clean binding 完成前禁止 seed/MVE。
+
+### 理由
+
+当前发现不是 negative experiment，而是方法合法性前置门失败。继续 T015 会同时
+把非物理 iid fade lifecycle 和已被直接竞品占据的 generic Huber CPR 组合成
+“方法信号”，违反 FR-22/FR-23、method-production 的 source/novelty gate 与
+mission 对 negative/repair 不冒充方法的约束。立即轮换比再做一个 B12 adapter
+更可能恢复方法产出。
+
+### 排除的替代方案
+
+- 不把 `sigma_eps/w²` 改成 `sigma_eps/w` 后直接执行：这只修公式，不闭合
+  direct novelty collision。
+- 不把 JLT 全文不可得解释成“没有碰撞”：官方题名、摘要和 IEEE identity 已证明
+  direct method-family overlap；缺全文只会降低放行能力，不会提高 readiness。
+- 不运行一个 exploratory B12 probe 来“看看是否有效”：有效性不能替代新颖性，
+  且原 channel lifecycle 会制造假增益。
+- 不恢复 B1/A4/B10/B9 被禁止的 repair，也不恢复 Scout/P03。
+
+### 影响范围
+
+- formal owner 新建 D030 并清空 active carrier；
+- T015 标记 withdrawn，CP015 记录 `mission_method_delta=NONE`；
+- current state/portfolio/harvest/master/projects-overview 与 registry 投影到
+  epoch 37 / CP015 / post-B12 remap；
+- 下一轮先完成候选六维比较和独立 readiness review，不进入 Step 5/Contract/Execute。
+
+### 来源
+
+S001 续接；V038/V039/V040；T015；DOI `10.1109/JLT.2025.3600402` 的
+Semantic Scholar/IEEE primary metadata；formal D029。
+
+## D020: 选择 C15 一次性 Step 1–2 formalization workline
+
+> status: active
+> date: 2026-07-27
+> 取代：D019（只取代 post-B12 remap 下一动作；D019 对 T015/B12 的处置、
+> no-second-repair 与 CP015 记账保留）
+> 被取代：无
+> 依据：调研 R006 + B4/B6/C15 三项独立 formal-readiness audit +
+> `stages/gw-search.md` / `stages/gw-acquire.md`
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. post-B12 remap 选择
+   `C15_DISK_NATIVE_FORMALIZATION_ADAPTER` 作为下一 foreground workline，
+   action class 为 `CANDIDATE_FORMALIZATION`。C15 仍是
+   `HYPOTHESIS_ONLY / FORMALIZATION_CANDIDATE`，formal active scientific
+   carrier 保持 `NONE`，不得运行 seed/MVE。
+2. T016 是取代 T012 的全新一次性 Step 1–2 包，不是第四次 T012 amendment。
+   它只可复用 T011 七份 archives、T011 worker receipt、项目 shared index 和
+   明列的 shared papers；形成 actual-source ≥3、去重 ≥20、正式发表 ≥50%、
+   必读 ≥5、覆盖 ≥2 技术子方向的 candidate view，以及 8–12 篇 acquisition
+   pool。
+3. T016 只读闭合五项 recent fulltext identity/content quality，并对 Sato 1975、
+   Godard 1980、Yang–Werner–Dumont 2002 三篇 canonical 各执行一次 bounded
+   exact-title worktree staging。T016 禁止写 shared main repo；3/3 staging
+   PASS 时产出 preliminary coverage report 并停在
+   `AWAITING_CANONICAL_PROMOTION`。promotion 必须另包独立审查；不精读、不写
+   Q#、不实现、不实验。
+4. T016 的预期 `mission_method_delta=NONE`。它若成功，只解除 C15 具体正向
+   方法合同的上游 formal readiness 硬门；不得把 source、metadata、canonical、
+   governance 或 coverage PASS 记成方法。
+5. T016 是 C15 唯一 source/formalization package。actual source、pool、
+   fulltext/canonical 或 coverage 任一硬门失败即
+   `BLOCKED_FORMAL_READINESS`，C15 返回池，不再给第二个 source repair；
+   若 Step 3 后无 task-specific residual M-C-A 或发生 direct collision，也不进
+   MVE。
+6. foreground 升至 epoch 38 / CP015 /
+   `C15_FORMALIZATION_PREP`。R006、D020/formal D031、control、T016 与
+   current projections 必须先经独立 dispatch verifier；clean binding 前不得
+   执行。
+
+### 理由
+
+- R006 证明当前三候选均非 runnable carrier。B4-Q3 仍缺 carrier-specific M-C-A、
+  合法 source 参数和 PADE/双环基础实现；B6 的 atan2/Z-domain/FPGA-delay/Doppler
+  形态已被 2023/2025 direct sources 覆盖，且湍流相位环路会撞 D006。
+- C15 虽仍缺 Step 1–3，却已有具体的 collapse-safe、scale-fair staged
+  equalizer construct、合法 tuned comparator、cheap rule、退出点和可复用 2×2
+  FIR runner。T016 本身不产方法，但它是三者中唯一会解除一条已定义正向方法链
+  上游硬门的包，因而比 B4、B6 更可能最终产生 `METHOD_SIGNAL`。
+
+### 排除的替代方案
+
+- 不激活 B4：不以源论文双环 reproduction、PCS/Rs 旧轴或 timing-recovery
+  时延证据冒充 carrier-specific 方法。
+- 不激活 B6：不把 source-native atan2 或 Z 域分析工具包装成新方法，也不重开
+  D006 环路旧轴。
+- 不恢复 B1/A4/B10/B9/B12 的被禁止 repair，不恢复 B2/B3/B5/B7/B11 的
+  formal Kill/伪增量路线。
+- 不续改 T012，不把用户当 executor/verifier，也不要求用户阅读技术日志。
+
+### 影响范围
+
+- formal owner 新建 D031；active scientific carrier 仍为 `NONE`；
+- 新建 T016；其独立接收前 mission 保持 CP015/no-method=15；
+- current state/portfolio/harvest/master/projects-overview 与 registry 投影到
+  epoch 38 / CP015 / C15 formalization prep；
+- formal stage 保持 Groundwork Step 1–2 workline，不进入 Step 3、Step 4a
+  experiment、Step 5、Contract 或 Execute。
+
+### 来源
+
+S001 续接；R006；formal D030；T011/T012 receipts；B4/B6/C15 独立
+formal-readiness audits；`stages/gw-search.md`、`stages/gw-acquire.md`。

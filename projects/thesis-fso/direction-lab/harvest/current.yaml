@@ -213,8 +213,8 @@ historical_thesis_spines_e15ae60:
 # H060_PRIMARY spine above, until a legal-expert retest (Macro A) resolves it.
 # ─────────────────────────────────────────────────────────────────────────────
 current_view:
-  recovery_entry: .sessions/2026-07-23-research-direction-lab-longitudinal-test/T014-b9-step1-multisource-coverage-repair.md
-  source: S013 / D021 / V010 / V011 / H014 -> FROZEN S014 / D022 / V012 / H015 (SCIENCE_FREEZE) -> D061/V035/H017 -> Pilot-Jones T005/D066/V040 scoped axis Kill -> T006 science verdict rejected -> T010 BLOCKED_IDENTITY/returned -> live D013/V029 + step4a D024 accept T011 BLOCKED_SEARCH_COVERAGE -> live D014/V033 + formal D025 close T012 as task-interface blocked and return C15 -> live V035/R004/D016 + formal D027 accept T013 BLOCKED_SEARCH_COVERAGE and authorize one bounded B9 Step 1 coverage repair without an active carrier. Prior S012/D020/V009 superseded.
+  recovery_entry: .sessions/2026-07-23-research-direction-lab-longitudinal-test/topic-index.md
+  source: S013 / D021 / V010 / V011 / H014 -> FROZEN S014 / D022 / V012 / H015 (SCIENCE_FREEZE) -> D061/V035/H017 -> Pilot-Jones T005/D066/V040 scoped axis Kill -> T006 science verdict rejected -> T010 BLOCKED_IDENTITY/returned -> live D013/V029 + step4a D024 accept T011 BLOCKED_SEARCH_COVERAGE -> live D014/V033 + formal D025 close T012 as task-interface blocked and return C15 -> live V035/R004/D016 + formal D027 accept T013 BLOCKED_SEARCH_COVERAGE -> live V037/D017 + formal D028 accept T014 BLOCKED_SEARCH_COVERAGE and return B9 -> live R005/D018 + formal D029 activate B12 -> live D019/V038-V040 + formal D030 withdraw T015 before execution and return B12 on novelty/physics gate -> live R006/D020 + formal D031 select C15 one-shot Step 1-2 formalization with no active scientific carrier and no method delta. Prior S012/D020/V009 superseded.
 
   dispositions:
     - id: H060_DOWNGRADED
@@ -409,14 +409,18 @@ current_view:
     route is returned to portfolio. T006's science verdict is rejected. Live D013/V029 and
     formal D025 close T012 as BLOCKED_TASK_INTERFACE/PACKAGE_NOT_EXECUTED with
     method delta NONE; source recovery, metadata closure and canonical acquisition
-    never ran. C15 is returned to the pool without a science verdict. Live V035
-    accepts T013 as BLOCKED_SEARCH_COVERAGE with method delta NONE; it adds no
-    harvest or thesis method. Live R004/D016 and formal D027 authorize exactly one
-    T014 multi-source/mechanism-deep Step 1 repair while retaining no active
-    scientific carrier. V036 approved the contract; epoch34 clean final binding
-    is next and only Phase A1 is then authorized; failure returns B9 to the pool.
-    Do not download,
-    enter Step 2/3, or run MVE. Do NOT resume Scout/P03;
+    never ran. C15 is returned to the pool without a science verdict. Live V037
+    accepts T014 as BLOCKED_SEARCH_COVERAGE with method delta NONE; raw=0/0/1
+    and actual source union=OpenAlex+IEEE, count 2<3. This adds no harvest or
+    thesis method. Live D017 and formal D028 return B9 to the pool after its only
+    bounded repair and forbid a third Step 1 package. Live D019/V038-V040 and
+    formal D030 withdraw T015 before execution: the invalid GG lifecycle,
+    incorrect Huber precision and direct JLT-2025 Huber Bayesian CPR collision
+    produce no harvest and no method delta. B12 returns to pool without a family
+    Kill and cannot receive a second repair. Live R006/D020 and formal D031
+    complete the B4/B6/C15 remap and authorize only C15 disk-native Step 1-2
+    formalization. The formal scientific carrier remains empty; T016 has
+    method delta frozen to NONE and creates no harvest. Do NOT resume Scout/P03;
     do NOT enter Step 5/Contract/Execute;
     do NOT push.
 

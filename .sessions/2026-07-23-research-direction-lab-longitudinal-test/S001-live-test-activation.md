@@ -1148,3 +1148,302 @@ Verified claims:
 
 提交 epoch34 control/task clean gate；由独立 verifier 做 final binding。PASS 后
 由不同 executor 只执行 T014 Phase A1。
+
+> 2026-07-27 续接 | T014 科学接收与 B9 强制轮换 | 状态：POST_B9_CARRIER_REMAP
+
+## 目标
+
+闭合 T014 executor commit 与独立科学验收，更新 CP014/owner/control，并在不把
+coverage block 冒充科学结论的前提下轮换 B9。
+
+## 记录
+
+### Goal 接收方恢复
+
+- current control：**PASS** — live topic 为 epoch34 / CP013 / formal D027，
+  当前无 active scientific carrier。
+- H002 关键事实：**PASS** — T008 Kill 仍被 D002/V002 拒收；完整 mission-log
+  CP001–CP013 的 method delta 全为 NONE；registry 依赖
+  `2026-07-20-research-direction-lab-system` active 且 conflicts 为空。
+- 范围：**PASS** — 恢复与 T014 均止于 Groundwork Step 1；未进入 Step 2/3/
+  3.5/4a/MVE、Step 5/Contract/Execute。
+
+### T014 package closure
+
+- executor commit `5ba5a54c` 只新增
+  `projects/thesis-fso/worker-logs/step-014-b9-step1-multisource-coverage-repair.md`；
+  ignored raw/receipt 未入提交，tracked worktree clean。
+- 独立 verifier V037 复算三个 raw 为 `0/0/1`，实际 source union 为
+  `[openalex, ieee]`、count=`2<3`；A2/A3/A4、Route-B broad、deep 与 view-v2
+  均不存在，P0/P1/P2=`0/0/0`。
+- 正式接收
+  `BLOCKED_SEARCH_COVERAGE / mission_method_delta=NONE`。该结果不是 B9
+  Go/Kill、创新空白、方法信号或 promotion。
+
+### Mission accounting 与轮换
+
+- CP014：same-axis=2、repair=1、no-method=14，
+  `ADEQUATE / package ALIGNED`；mission 继续 `DRIFTED/STALLED`。
+- D017/formal D028 将 B9 标为
+  `RETURNED_TO_POOL / STEP1_SEARCH_COVERAGE_BLOCKED`；唯一 coverage repair
+  已消费，不得第三个 B9 Step 1 包。
+- foreground 转 epoch35 / CP014 / `POST_B9_CARRIER_REMAP`；下一轮至少比较
+  三个 candidate 的六个维度，完成 formal owner 更新前禁止实验。
+
+## 决策引用
+
+- V037：T014 执行与科学身份独立验收 PASS（新建）
+- D017：接收 T014 coverage blocker，B9 回池并轮换（新建）
+- formal D028：正式 owner 接收 T014 并恢复 carrier remap（新建）
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。只做 T014 Step 1 接收、mission accounting
+  和控制面轮换；未下载、精读、实现或实验。
+
+## 后续
+
+比较 B12 standalone、C15 与至少一个机制不同候选；不足三个合法 carrier 时逐项
+证明 formal readiness 不成立。选择下一包前写清其相对至少两个替代项更可能产生
+METHOD_SIGNAL 的理由。
+
+> 2026-07-27 续接 | post-T014 remap 与 B12 standalone 激活 | 状态：T015_DISPATCH_REVIEW
+
+## 目标
+
+完成至少三候选不足时的 formal-readiness 证明，选择下一正向方法 carrier，冻结
+control/formal owner/T015，并在独立审查前继续阻止实验。
+
+## 记录
+
+### Carrier remap
+
+- R005 比较 B12、C15、B1、A4、B10、B9 的方法形态、预期增量、包装句、
+  formal readiness、最小补债与失败轮换点。
+- 只有 B12-Q2 standalone 为 `NEEDS_SMALL_ADAPTER`；C15 仍缺 Step 1–3，
+  B1/A4/B10/B9 各自受已记录的 no-repair/return 边界约束。
+- 相对 C15，B12 下一包可在 identity 后直接创建/比较方法；相对 B1/A4/B10，
+  它不是第三/第二 evaluator repair；相对 B9，它不依赖新的 source capability
+  和 self-coherent 全链。
+
+### B12 source identity ceiling
+
+- OECC 2025 Eq.4–7 与 Wang TSP 2022 [5] 的 Σθ/Σε 可由本地全文闭合。
+- OECC 未给 PA-ML W、pilot sequence、sample count/seed 与 penalty 精确定义；
+  T015 只能主张 `SOURCE_STRUCTURAL_IDENTITY`，这些项均登记为 project
+  assumptions，禁止 bit-exact/full-numeric reproduction。
+- 正向方法为 receiver-visible one-pass robust MAP：对 standardized phase
+  residual 做有界 clipping；主对照为 MAP、hard-skip cheap rule 与 BPS256。
+
+### Control 与任务
+
+- live D018/formal D029 激活
+  `B12_MAP_FADE_AOPN_STANDALONE`，仍在 GW Step 4a 维度 D。
+- control 升到 epoch36 / CP014 / `B12_STANDALONE_METHOD_PREP`；T015 被独立
+  dispatch review 且提交 clean binding 前不得执行。
+- T015 是单包制；identity、working region 或方法门失败后 B12 回池，不开
+  第二个 B12 repair。CP015 与 no-method streak 要等包被独立科学接收后更新。
+
+## 决策引用
+
+- R005：post-T014 六维 carrier remap（新建）
+- D018：激活 B12 standalone（新建）
+- formal D029：B12 positive method contract（新建）
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。只做 remap、source/formula 只读核验、
+  formal 激活与任务准备；未运行 seed/MVE，未修改 common/params/旧实验。
+
+## 后续
+
+由独立 verifier 静态审查 R005、D018/D029、epoch36 control、T015 与所有 current
+projection。P0/P1 关闭并提交 clean binding 后，交不同 executor 执行 T015。
+
+> 2026-07-27 续接 | T015 派遣失败、B12 novelty gate 与自动轮换 | 状态：POST_B12_REMAP
+
+## 目标
+
+独立审查 T015 的物理、公式、比较器、统计与 novelty readiness；失败时不运行
+seed，按单包退出更新 formal/control/mission 并自动进入下一 carrier remap。
+
+## 记录
+
+### Dispatch review 与 Step 3.5 collision adjudication
+
+- V038 首轮独立审查为 FAIL：原 contract 把 `params.BLOCK=100`
+  （`NO VERIFIED SOURCE`）的 iid channel block、128-symbol algorithm/pilot
+  block 与真实大气湍流 coherence 混用；`w=min(1,c/u)` 又错误实现为
+  `precision=w²/sigma_eps`，标准 Huber IRLS 应为 `w/sigma_eps`。
+- V039 的独立 robust-prior 审计在本地索引发现 DOI
+  `10.1109/JLT.2025.3600402`：Huber M-estimator robust update 已与
+  variational-Bayesian UKF carrier phase recovery 直接组合，并相对 BPS 报告
+  最高 0.66 dB OSNR gain。
+- V040 两条合法全文恢复链均失败：DOI/OA=`all_failed`；IEEE document
+  `11129614` 精确命中但 PDF HTTP 202、download 0/1。缺全文时不能证明
+  one-step batch adapter 有公式级可包装差异，故 novelty fail-closed。
+- 全过程未运行 seed、未实现方法；T015 标记 withdrawn。该结论是
+  `BLOCKED_NOVELTY_COLLISION / PACKAGE_WITHDRAWN_BEFORE_EXECUTION`，不是
+  B12 family Kill，也不是方法产出。
+
+### Mission accounting 与轮换
+
+- CP015：same-axis=1、repair=0、no-method=15，
+  `ADEQUATE / package ALIGNED`；mission 继续 `DRIFTED/STALLED`。
+- D019/formal D030 清空 active carrier，B12 返回池且 no-second-repair 生效。
+- foreground 升到 epoch37 / CP015 / `POST_B12_NOVELTY_REMAP`；只允许 B4、
+  B6、C15 等机制不同候选的六维 readiness 比较与下一 task preparation。
+
+## 决策引用
+
+- V038：T015 首次 dispatch review FAIL（新建）
+- V039：Huber robust-method prior 审计 FAIL（新建）
+- V040：direct-collision 全文恢复与派遣终局 FAIL（新建）
+- D019：T015 撤回、B12 回池并自动轮换（新建）
+- formal D030：撤销 B12 active carrier（新建）
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。仅做 task preparation、独立审查、合法
+  source recovery 与控制面轮换；未运行 seed/MVE，未进入 Step 5。
+
+## 后续
+
+等待 B4/B6 独立 readiness audit，与既有 C15 audit 合并成 R006 六维比较。
+选定下一包前说明其相对至少两个替代项更可能产生 METHOD_SIGNAL；更新 formal
+owner/task 并独立审查 clean binding 后才执行。
+
+> 2026-07-27 续接 | post-B12 三候选 remap 与 C15 formalization 绑定 | 状态：T016_DISPATCH_REVIEW
+
+## 目标
+
+以独立证据比较 B4、B6、C15 的六维 formal readiness；不足三个 runnable
+carrier 时逐项证明原因，并选择最能缩短到 METHOD_SIGNAL 的一次性包，冻结
+live/formal owner、control 与 T016。仍禁止 seed/MVE。
+
+## 记录
+
+### 独立 readiness 事实
+
+- B4：源论文的 PADE 外环 + V–V 内环只能作 baseline；唯一 residual Q3
+  “时延约束多速率双环”没有 carrier-specific M-C-A，且缺 PADE/双环基础实现。
+  下一包即使成功也只完成问题 formalization。
+- B6：atan2 鉴相器已是 2023 源方法；2025 ODPLL 又直接组合 Z-transform、
+  VV/atan2、FPGA 时延与 Doppler。Q2 是分析工具且湍流环路撞 D006，当前没有
+  positive residual construct。
+- C15：T011 Step 1 单源、T012 未执行使其仍为
+  `HYPOTHESIS_ONLY`；旧 shared-mu 结果有约 19× gradient-scale confound。
+  但它已有 collapse-safe/scale-fair staged construct、tuned comparator、
+  cheap rule、一次性退出点和可复用 2×2 FIR runner。
+
+### Remap 与下一包
+
+- R006 在方法形态、预期增量、包装句、formal readiness、最小补债、失败轮换
+  六维比较三者，并列出 B2/B3/B5/B7/B11 与 B1/A4/B10/B9/B12 的既有退出证据。
+- 选择 `C15_DISK_NATIVE_FORMALIZATION_ADAPTER`，不是因为 formalization 算
+  方法，而是它是唯一会解除一条已定义正向方法链上游硬门的包。相对 B4，它已
+  有 M-C-A 候选和实现资产；相对 B6，它仍有可由 Step 3 fail-closed 裁决的
+  residual contract。
+- D020/formal D031 继续保持
+  `NO_ACTIVE_SCIENTIFIC_CARRIER`，control 升至 epoch38 / CP015 /
+  `C15_FORMALIZATION_PREP`。
+- T016 取代而非修订 T012：Phase A 只形成 atomic-source candidate view、
+  acquisition pool 与五项 recent identity；三个串行 Phase B turn 各 stage
+  一篇 canonical 到 worktree，Phase C 只做 preliminary coverage report。
+  T016 禁止写 shared main repo；3/3 staging 后仍须另建 promotion package。
+  预期 method delta 固定为 NONE，promotion/coverage confirmation 前不进 Step 3。
+
+### 首轮 dispatch review
+
+- V041 已把 B4、B6、C15 三项独立 readiness audit 的摘要、绝对 shared-main
+  路径和 hash 落盘，修复只存在于 agent 回执、无法 disk-only 恢复的问题。
+- V042 首轮审查为 `FAIL / P0=2/P1=3/P2=1`：复合
+  `source_apis` 可能凑出假三源；首版 blit CLI 不存在 `--doi` 且写入边界混乱；
+  Phase B 未按单 agent 15 分钟拆分；current projections 有 stale present tense；
+  clean binding 尚未形成。
+- T016 已按 fail-closed 修订：冻结 shared-index size/hash、atomic-family alias/
+  split/singleton 与 identity-conflict 规则；三篇 canonical 改为三个串行
+  exact-title IEEE worktree-staging turn，禁止写主仓；另设 disk-only Phase C。
+  本次修订仍未执行任何检索、下载、转换或 seed。
+
+## 决策引用
+
+- R006：B4/B6/C15 六维 formal-readiness remap（新建）
+- D020：选择 C15 一次性 Step 1–2 formalization workline（新建）
+- formal D031：授权 T016、保持无 active scientific carrier（新建）
+- V041：三候选 readiness audit 可恢复性验证（新建）
+- V042：T016 首轮 dispatch review FAIL（新建）
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。只做磁盘证据审计、carrier remap、
+  Step 1–2 task preparation 与控制面投影；未运行 seed/MVE、未精读、未写 Q#，
+  未进入 Step 3/5/Contract/Execute。
+
+## 后续
+
+由独立 verifier 静态审查 R006、D020/D031、epoch38 control、T016 与 current
+projections。P0/P1 关闭并形成 clean committed binding 后，派不同内部 executor
+执行 T016 Phase A；用户不转发任务、不读技术日志、不判断科学正确性。
+
+> 2026-07-27 续接 | Goal 激活与 H002 接收方复核 | 状态：T016_CONTRACT_REPAIR
+
+## 目标
+
+从磁盘权威 owner、control、mission-log、任务与产物恢复科学状态，完成 H002
+接收方验证；保持实验冻结，只修复 T016 dispatch 合同并交独立 verifier 复审。
+
+## 记录
+
+### H002 接收方验证
+
+- 声称 1：当前前台为 epoch 38 / CP015 / formal D031，且没有 active
+  scientific carrier → **PASS**。证据为 live `topic-index.md` 控制块、
+  formal `decisions.md#D031`、`state/current.yaml`、
+  `portfolio/current.yaml` 与 `master-state.md` 的一致投影。
+- 声称 2：T008 的历史 Kill 未被接收，正式身份为
+  `BLOCKED_IDENTITY / SCIENCE_VERDICT_REJECTED` → **PASS**。证据为 live
+  `decisions.md#D002` 与 `verifications.md#V002`；17 项工程测试不覆盖
+  required-SNR、oracle identity 与 working-region 缺陷。
+- 声称 3：CP015 对 T015 的记录是
+  `BLOCKED_NOVELTY_COLLISION / PACKAGE_WITHDRAWN_BEFORE_EXECUTION`，
+  `mission_method_delta=NONE`，未运行 seed → **PASS**。证据为完整
+  `mission-log.md` CP015、live `topic-index.md` 当前位置与
+  `verifications.md#V038–V040` 血缘。
+- 注册表检查 → **PASS**：本专题 `depends_on`
+  `2026-07-20-research-direction-lab-system`，该专题为 active；
+  `conflicts_with=[]`。
+- 接口与并行依赖 → **PASS**：当前唯一合法动作是 T016 静态合同复审与
+  clean binding；无 scientific executor、seed/MVE 或并行实验处于运行状态。
+
+### 当前修复边界
+
+- T016 的 task-control validator 当前 PASS，但 V042 后续复审仍发现
+  IEEE JSON 固定空 DOI、sidecar 不含 DOI，导致原 identity gate 必然误阻断；
+  `--max 5` 与“唯一 PDF”合同冲突，累积 diff allowlist 也不完整。
+- 先由内部只读 metadata agent 冻结三篇 canonical 的 IEEE
+  arnumber/document URL，再把运行时身份门改为 exact title + arnumber；
+  DOI 保留为独立、事先审计的 bibliographic binding。
+- V044 已以 exact-title IEEE 查询和 DOI resolver 交叉冻结
+  `1092854 / 1094608 / 1007381` 三个 arnumber；V045 第三轮静态复审为
+  `PASS / P0=0/P1=0/P2=1`，唯一 P2 是 clean committed final binding。
+- decision gate 因而从“等待静态复审”切换为“等待 final binding”，control 与
+  T016 一致递增至 epoch39 / CP015；scientific carrier 仍为 NONE。
+- clean committed binding 前不执行 Phase A；任何情况下不运行 seed/MVE。
+
+## 决策引用
+
+- D020：C15 一次性 Step 1–2 formalization workline（沿用）
+- formal D031：无 active scientific carrier；T016 仅 formalization（沿用）
+- 无新决策
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。仅做恢复、handoff 接收验证与
+  dispatch-contract repair；未检索、下载、精读、实现或实验。
+
+## 后续
+
+形成只含 intended owner/control/R/V/T/current projection 的 clean committed
+binding，并由独立 verifier 完成 final-binding 起飞审查；PASS 后再由不同内部
+executor 执行 Phase A。

@@ -1901,3 +1901,504 @@ P2=CLEAN_BINDING_NOT_YET_FORMED
 PASS（合同）/ PARTIAL（派发前 clean binding）。允许 control/task 递增到 final
 binding epoch并提交；clean worktree 下的 task-control 与 owner/projection 独立
 复核 PASS 前不得执行 A1。
+
+## V037: T014 B9 Step 1 coverage repair 执行与科学身份独立验收
+
+> date: 2026-07-27
+> 关联：S001 / D016 / formal D027 / T014 / CP014
+> verifier：T014 independent science/package verifier；只读，未修改 owner/control
+
+### 验证项
+
+- [x] commit 闭包：HEAD `5ba5a54cce3705186d8a921d4e4f2ec3c34bb7c8`
+  继承 clean-binding `211160e`，只新增 T014 worker log；tracked worktree clean，
+  owner/control 无 diff → PASS。
+- [x] raw 复算：两个 S2/arXiv archive 各 `results=0`；IEEE Route A
+  `results=1, source=ieee`；连同 T013 OpenAlex 后 union 为
+  `[openalex, ieee]`、count=`2` → PASS。
+- [x] 停止条件：`2<3` 触发 A1 stop；receipt 为
+  `next_phase_authorized=false`，A2/A3/A4、Route-B broad、两份 deep archive
+  与 view-v2 均不存在 → PASS。
+- [x] 边界：没有下载、精读、实现、仿真或 seed；没有进入 Step 2/3/3.5/4a，
+  没有修改正式 owner、live control、mission-log 或共享论文库 → PASS。
+- [x] 科学身份：coverage gate failure 只支持
+  `BLOCKED_SEARCH_COVERAGE / mission_method_delta=NONE`；不得解释成
+  B9 Go/Kill、创新空白或方法产出 → PASS。
+- [x] 轮换合同：D016/D027 的唯一 coverage repair 已消费；B9 必须返回候选池，
+  不得第三个 Step 1 包 → PASS。
+
+### 证据
+
+```text
+HEAD=5ba5a54cce3705186d8a921d4e4f2ec3c34bb7c8
+PARENT=211160e2ab43132b67e47776713a6653e70840d2
+COMMIT_SCOPE=projects/thesis-fso/worker-logs/step-014-b9-step1-multisource-coverage-repair.md
+TRACKED_STATUS=CLEAN
+TASK_CONTROL=PASS
+RAW_RESULT_COUNTS=0,0,1
+ACTUAL_SOURCE_FAMILIES=openalex,ieee
+ACTUAL_SOURCE_FAMILY_COUNT=2
+GATE_AT_LEAST_THREE_SOURCES=false
+NEXT_PHASE_AUTHORIZED=false
+A2_A3_A4_OUTPUTS=ABSENT
+P0/P1/P2=0/0/0
+FORMAL_SCIENCE_DISPOSITION=BLOCKED_SEARCH_COVERAGE
+MISSION_METHOD_DELTA=NONE
+SIMULATION_OR_SEED_RUN=false
+```
+
+### 结论
+
+PASS。接收 `BLOCKED_SEARCH_COVERAGE / mission_method_delta=NONE`。建议
+CP014 为 same-axis=2、repair=1、no-method=14，
+`ADEQUATE / package ALIGNED`；mission 保持 `DRIFTED/STALLED`。B9 返回候选池并
+立即轮换。
+
+## V038: T015 B12 standalone 首次 dispatch 独立审查
+
+> date: 2026-07-27
+> 关联：S001 / R005 / D018 / formal D029 / T015 / CP014
+> verifier：`t015_dispatch_verifier`；只读，未运行任何实验 seed
+
+### 验证项
+
+- [ ] channel lifecycle：逐字段核对 T015、`params.py` 与现有 GG generator →
+  T015 同时声称 primary `BLOCK` 从配置读取、又把算法/pilot block 固定为 128；
+  配置中的 `BLOCK=100` 为 `NO VERIFIED SOURCE`，旧 iid block generator 会把
+  40 ns 量级块误作独立大气湍流状态，足以人为制造 robust gain，P0。
+- [ ] robust update：由 Huber score/IRLS 正规方程核对 T015 权重 →
+  `w=min(1,c/u)` 应把 observation precision 改为 `w/sigma_eps`
+  （等价 variance=`sigma_eps/w`）；原 `sigma_eps/w**2` 错把标准权重平方，
+  会改变方法本体与方法信号，P0。
+- [ ] source identity：核对 OECC Eq.4–7 与 TSP covariance 定义 →
+  Σθ/Σε 与 QAM decision-aided 映射可形成有上限的 source adapter，但 T015
+  未冻结 phase correction sign、Δφ/C 维度、terminal propagation、
+  `L_sub=1` 生命周期，2/3 BER 排序不足以单独证明 identity，P1。
+- [ ] comparator identity：静态核对 BPS 合同 → 64 phases/window 尚未冻结
+  phase grid、decision metric、edge policy、unwrap/cycle-slip、跨 block state
+  与 pilot branch 时机，强比较器结果可被实现选择左右，P1。
+- [ ] statistics：静态核对 METHOD_SIGNAL 两入口 → bootstrap unit、replicate
+  count、analysis seed 与 crossing curve resampling 未冻结；outage 门的
+  “BER 不恶化”未指明相对全部三个比较器，P1。
+- [ ] runtime：按 Phase B/C cell、block 与 BPS phase 数静态核算 →
+  Phase B=90 realizations、Phase C=180 realizations；dense MAP 约
+  369000 个 128×128 block solve，BPS 至少约
+  `270*64*32768=566231040` 个 slicer metrics，未满足单 agent 15 分钟门，P1。
+- [ ] parameter provenance：核对 `params.py` → `R_SYM=2.5e9` 指向占位
+  DOI `10.1109/JLT.2025.xxx`，`LASER_LW=10 kHz` 为 WARNING，
+  `BLOCK=100` 为无验证假设；T015 不得把这些字段统称为已闭合真相源，P1。
+- [x] control/scope：epoch36 / CP014 / D018 / formal D029 / T015
+  task-control validator PASS；FR-22 保持 GW Step 4a，且本审查未运行 seed。
+
+### 证据
+
+```text
+VERDICT=FAIL
+P0_1=UNFROZEN_AND_PHYSICALLY_INVALID_GG_LIFECYCLE
+P0_2=HUBER_WEIGHT_SQUARED_IN_PRECISION
+PHASE_B_REALIZATIONS=90
+PHASE_C_REALIZATIONS=180
+BPS_MIN_SLICER_METRICS=566231040
+PARAMS_R_SYM_SOURCE=Zhao 2025 (doi:10.1109/JLT.2025.xxx)
+PARAMS_LASER_LW_AUDIT=WARNING
+PARAMS_BLOCK=100
+PARAMS_BLOCK_SOURCE=NO VERIFIED SOURCE
+TASK_CONTROL=PASS
+SIMULATION_SEED_RUN=FALSE
+```
+
+### 结论
+
+FAIL
+
+### 后续（FAIL/PARTIAL 时）
+
+在同一 T015、同一 B12 package 内完成一次派遣前修订：把 channel 明确定义为
+有物理含义的独立 128-symbol snapshot ensemble 或使用已验证的相关 GG
+lifecycle；把方法改为标准 Huber IRLS precision；补齐 Eq.4–7、BPS、bootstrap、
+parameter provenance 与可分片 runtime contract；独立 verifier 重新 PASS 且
+clean binding 提交前不得运行任何 seed。该 FAIL 是 task preparation failure，
+不消费 B12 scientific repair，也不产生 mission checkpoint/method delta。
+
+## V039: T015 Huber robust-method prior 独立审计
+
+> date: 2026-07-27
+> 关联：S001 / R005 / D018 / formal D029 / T015 / V038 / CP014
+> verifier：`b12_robust_prior_audit`；只读，未运行任何实验 seed
+
+### 验证项
+
+- [x] Gaussian MAP anchor：核对本地 TSP 全文 → B12 的 Σθ/Σε 与
+  amplitude-dependent AOPN measurement variance 已有 source anchor。
+- [ ] robust formula：按 Huber score/IRLS 正规方程核对 →
+  T015 原 `sigma_eps/w**2` 不是 Huber；标准 one-step update 必须是
+  `sigma_eps/w`，与 V038 的 P0 一致。
+- [ ] novelty collision：检索既有本地全局论文索引 →
+  DOI `10.1109/JLT.2025.3600402` 已直接提出用于 carrier phase recovery 的
+  Huber M-estimator robust variational-Bayesian UKF，并对比 BPS 报告最高
+  0.66 dB OSNR gain；另有 arXiv `2603.11280` 将 Huber/outlier filtering
+  用于卫星同步。原 T015 不得在未精读碰撞源时主张 robust CPR 方法差异。
+- [ ] claim ceiling：把 source MAP 与成熟 Huber adapter 分开核对 →
+  当前最多可称
+  `ONE_STEP_HUBER_REWEIGHTED_SOURCE_MAP` 工程 adapter；是否有论文方法增量
+  取决于 direct-collision Step 3.5 的输入、更新、复杂度和适用条件差异。
+
+### 证据
+
+```text
+TSP_LOCAL_FULLTEXT=papers/doi/10.1109_tsp.2021.3137966/content.md
+HUBER_IRLS_PRECISION=w/sigma_eps
+HUBER_IRLS_VARIANCE=sigma_eps/w
+DIRECT_COLLISION_DOI=10.1109/JLT.2025.3600402
+DIRECT_COLLISION_TITLE=Laser FM Noise Compensation in Fiber-THz Convergence Systems Employing Robust Variational Bayesian Unscented Kalman Filter
+DIRECT_COLLISION_ABSTRACT=Huber M-estimator robust update for CPR; up to 0.66 dB OSNR gain vs BPS
+SATELLITE_HUBER_PREPRINT=arXiv:2603.11280
+SIMULATION_SEED_RUN=FALSE
+```
+
+### 结论
+
+FAIL
+
+### 后续（FAIL/PARTIAL 时）
+
+T015 不得直接派遣。先在同一 B12 preparation package 内完成有界 Step 3.5：
+获取并精读 DOI `10.1109/JLT.2025.3600402`，逐项比较 measurement/state、
+Huber update、covariance adaptation、复杂度、比较器与场景；只有形成未被该
+先例覆盖的明确 M-C-A 和可包装句，才能修订 T015 进入实现。否则 B12 立即回池，
+不运行 seed，不把 collision adjudication 记为方法 delta。
+
+## V040: B12 direct-collision 全文恢复与派遣终局裁决
+
+> date: 2026-07-27
+> 关联：S001 / R005 / D018 / formal D029 / T015 / V038 / V039 / CP014
+> verifier：`b12_collision_reader` + `b12_collision_source_recovery`；
+> 未运行任何实验 seed
+
+### 验证项
+
+- [ ] OA/DOI 获取：项目 `tools/download --doi
+  10.1109/JLT.2025.3600402` → `all_failed`，无 source PDF/content。
+- [ ] IEEE 获取：项目 IEEE blit 精确命中文档 `11129614`，但 PDF 返回
+  HTTP 202、download 0/1 → 仍无合法全文，公式级 novelty adjudication 阻断。
+- [x] primary identity：IEEE metadata 与 Semantic Scholar official record →
+  DOI、题名、作者、JLT 2025 身份一致。
+- [x] direct family collision：primary abstract 明示 robust VB-UKF CPR 同时使用
+  covariance adaptation 与 Huber M-estimator robust update，并相对 BPS 报告
+ 最高 0.66 dB OSNR gain → generic Huber robust CPR 新颖性已被直接覆盖。
+- [x] fail-closed：全文缺失时不推断其具体公式，也不把“未能证明完全相同”偷换为
+  B12 novelty；T015 保持不派遣且 seed census 未消费。
+
+### 证据
+
+```text
+DOI=10.1109/JLT.2025.3600402
+IEEE_DOCUMENT_ID=11129614
+TOOLS_DOWNLOAD=all_failed
+IEEE_PDF_HTTP=202
+IEEE_DOWNLOAD=0/1
+SOURCE_PDF=ABSENT
+CONTENT_MD=ABSENT
+PRIMARY_ABSTRACT_HUBER_CPR=true
+PRIMARY_ABSTRACT_VB_COVARIANCE_ADAPTATION=true
+PRIMARY_ABSTRACT_BPS_GAIN_DB=0.66
+FORMULA_LEVEL_NOVELTY=UNRESOLVED_NO_FULLTEXT
+DIRECT_METHOD_FAMILY_COLLISION=ESTABLISHED
+SIMULATION_SEED_RUN=FALSE
+```
+
+### 结论
+
+FAIL
+
+### 后续（FAIL/PARTIAL 时）
+
+接收 `BLOCKED_NOVELTY_COLLISION / PACKAGE_WITHDRAWN_BEFORE_EXECUTION`；
+B12-Q2 family 不 Kill，但按 T015/D029 的一次性退出边界返回池且不得第二个 B12
+repair。formal active carrier 清空，更新 CP015 后立即比较下一批 mechanism
+family；不能把公式修复、下载 blocker 或 direct-collision negative 记为方法产出。
+
+## V041: B4、B6、C15 formal-readiness 独立审计
+
+> date: 2026-07-27
+> 关联：S001 / R006 / D019 / formal D030 / CP015
+> verifier：`b4_formal_readiness_audit`、`b6_formal_readiness_audit`、
+> `c15_formal_readiness_audit`；只读，未修改文件、未运行实验 seed
+
+### 验证项
+
+- [x] B4 方法身份：主仓全文/精读笔记确认 PADE 粗频偏外环 + V–V
+  残频/相位内环是 source-native baseline；Q2 PCS/Rs 维度错位，Q3
+  “时延约束多速率双环”尚无 carrier-specific M-C-A。当前为
+  `HYPOTHESIS_ONLY / MCA_BLOCKED`，不是 runnable carrier。
+- [x] B6 方法身份：2023 全文确认逐样本 atan2 鉴相器已是源方法；2025
+  ODPLL 又直接组合 Z-transform、VV/atan2、FPGA 时延与 Doppler。Q2 单独是
+  分析工具，纳入湍流环路则撞 D006；当前为
+  `NOT_READY / NO_POSITIVE_METHOD_CONTRACT`。
+- [x] C15 science/task 拆分：T011 为
+  `BLOCKED_SEARCH_COVERAGE`（53 unique/49 published 但 actual source 仅
+  OpenAlex）；T012 为 `BLOCKED_TASK_INTERFACE / PACKAGE_NOT_EXECUTED`，
+  source/canonical science 未运行。旧 shared `mu=0.03` 跨约 19× gradient
+  scale，机制 verdict 不可继承；family 仍为
+  `HYPOTHESIS_ONLY / FORMALIZATION_CANDIDATE`。
+- [x] C15 可复用资产：2×2 FIR cost engine、Godard/MMA/DD-LMS comparator、
+  paired evaluator 与 source schema 存在；因此它比 B4（尚无 M-C-A/核心实现）
+  与 B6（无 residual construct）更接近一条可失败的正向方法链，但仍不能直接
+  运行 seed。
+- [x] 六维覆盖：三份审计均明确方法形态、预期增量、可包装句、formal
+  readiness、最小补债与失败轮换点；R006 已逐项合并，不足三个 runnable
+  carrier 的证明成立。
+
+### 证据
+
+```text
+B4_CONTENT=D:\code\study\research-protocol\papers\doi\10.1016_j.optcom.2023.129312\content.md
+B4_CONTENT_SHA256=ce080cd42c22205b10d5de28ad1655631d3a4b41a101bfa289ea23d469de9e36
+B4_NOTE=D:\code\study\research-protocol\papers\_read_notes\_B4-dual-feedback-loop-increment.md
+B4_NOTE_SHA256=f80c8d10a5a98032250c16e944be236e16b96119a9d261ad802dd1759672c8a5
+B6_CONTENT=D:\code\study\research-protocol\papers\doi\10.3390_photonics10121312\content.md
+B6_CONTENT_SHA256=f8eed543e1779aa64cc7303bff3e1fe9c1544378e8458d2b7608f33ce9de5b61
+B6_DIRECT_2025=D:\code\study\research-protocol\papers\doi\10.1109_ICSOS66026.2025.11443174\content.md
+B6_DIRECT_2025_SHA256=52ec61d5a486a1a8d93dc2f0223b6490026a5520e96c71d6b8d60b7508a3360b
+B6_NOTE=D:\code\study\research-protocol\papers\_read_notes\_B6-z-odpll-opll-increment.md
+B6_NOTE_SHA256=e319e0094ac963e82d2247a584bbcefafc7701efcf62f1da13504d8c406c92c2
+C15_T011_RECEIPT_SHA256=713f4d3e957b09dcf84a33c156a78396225bc943c05a6fa8973bd84c025f1feb
+C15_T012_RECEIPT_SHA256=b40b0c29365d82e6c03d864605f8cd9bc64cdea4f29d36f9d4b5485631571b17
+C15_COST_ENGINE_SHA256=44ccbd9b83f41850301a35dff5f68a450f50efec48b2c2cfcd2a712542724e79
+RUNNABLE_CARRIERS=0/3
+SIMULATION_SEED_RUN=FALSE
+```
+
+### 结论
+
+PASS（readiness audit 完整性）；科学结论为三者均非 runnable carrier。
+
+该 PASS 只是候选审计 PASS，不是方法、promotion 或 scientific carrier PASS。
+选择 C15 只授权一次性 formalization workline；`mission_method_delta=NONE`。
+
+## V042: T016 首轮 dispatch 静态审查
+
+> date: 2026-07-27
+> 关联：S001 / R006 / D020 / formal D031 / T016 / V041 / CP015
+> verifier：`t016_dispatch_verifier`；只读，未运行下载或实验 seed
+
+### 验证项
+
+- [ ] source provenance：T016 首版未冻结 atomic-family alias/split、
+  singleton provenance 与 DOI/title conflict fail-closed；shared index 存在
+  `serpapi_scholar+semantic_scholar` 等复合标签，可能虚构三源，P0。
+- [ ] Phase B CLI/write boundary：首版
+  `tools/blit --download --doi <DOI>` 与实际 CLI 不兼容；`tools/blit.py`
+  要 positional query、required `--source`，且 `--download` 接目录。任务又把
+  worktree cwd 与 shared-main 写入混用，可能参数失败或写错仓，P0。
+- [ ] timebox：首版把三次 browser download 与最多三次 convert 放进一个
+  Phase B，没有 per-turn wall-clock stop，不能证明每 agent ≤15 分钟，P1。
+- [ ] current projections：`projects-overview.md`、master GW table 与 live
+  topic current-range 仍有 post-B12/B10 present-tense stale state，P1。
+- [ ] disk-only audit recovery：三项 readiness audit 只在 agent 回执中，
+  未登记 V；R006 对 B4/B6 的相对路径在 worktree 不存在，P1。
+- [ ] clean binding：owner/task/current edits 与 tracked `tools/**/__pycache__`
+  改动使 worktree 非 clean；T016 A0 会正确阻断，P2。
+- [x] science ceiling：R006/D020/D031/T016 始终保持
+  `NO_ACTIVE_SCIENTIFIC_CARRIER`、`mission_method_delta=NONE`，并禁止
+  coverage confirmation 前 Step 3、seed/MVE。
+
+### 证据
+
+```text
+VERDICT=FAIL
+P0=2
+P1=3
+P2=1
+SHARED_INDEX_SIZE=39099216
+SHARED_INDEX_SHA256=7530fa6fb9ae0234eee8d98902c8bcc936e278401dc61d0daded300542a4d27a
+BLIT_QUERY_POSITIONAL=true
+BLIT_SOURCE_REQUIRED=true
+BLIT_DOWNLOAD_ARGUMENT=DIR
+BLIT_DOI_FLAG=false
+TASK_CONTROL_INITIAL=PASS
+SIMULATION_SEED_RUN=FALSE
+```
+
+### 结论
+
+FAIL
+
+### 后续（FAIL/PARTIAL 时）
+
+修订同一 T016 的 dispatch contract，但不执行：恢复 atomic-family/singleton/
+identity-conflict 规则并冻结 shared-index hash；改为三个串行 exact-title IEEE
+worktree-staging turn + disk-only synthesis，禁止写 shared main repo；更新 stale
+projection；以 V041 落盘三项 readiness audit。随后由同一独立 verifier 复审；
+P0/P1 关闭且 clean committed binding 前不得派 Phase A。
+
+## V043: T016 第二轮 dispatch 静态审查
+
+> date: 2026-07-27
+> 关联：S001 / D020 / formal D031 / T016 / V042 / CP015
+> verifier：`t016_dispatch_verifier`；只读，未运行检索、下载、转换或实验 seed
+
+### 验证项
+
+- [ ] canonical identity gate：`tools/blit.py` 的 IEEE JSON 固定写
+  `doi=""`，下载 sidecar 只含 `expected_title`、`real_title`、
+  `title_check`、`title_overlap`、`checked_at`；T016 却要求 JSON 与 sidecar
+  DOI 等于冻结 DOI，因此正确 PDF 也必然失败 → P0。
+- [ ] bounded download：T016 命令使用 `--max 5 --download`，而
+  `ieee_download()` 会遍历所有返回结果；任务同时要求 staging 目录恰好一个
+  PDF，存在由额外搜索结果制造的假阻塞 → P1。
+- [ ] cumulative diff allowlist：B0 只概括“已完成 canonical staging
+  receipt”，未显式允许前序 query JSON、PDF、sidecar 与 converted markdown，
+  合法跨 turn 产物可能被 resume gate 误判 → P1。
+- [ ] clean committed binding：owner/task/current edits 尚未提交，且 tracked
+  `tools/**/__pycache__` 仍有工作树改动；A0 必须继续阻断 → P2。
+- [x] V042 其余问题：atomic/singleton source provenance、shared-index
+  size/hash、主仓只读、每 canonical 独立 turn/timebox、V041 disk-only
+  readiness 与 current projections 已闭合。
+- [x] science ceiling：仍为
+  `NO_ACTIVE_SCIENTIFIC_CARRIER / mission_method_delta=NONE`，未运行
+  seed/MVE。
+
+### 证据
+
+```text
+tools/blit.py:267-278
+  "doi": "",
+  "url": p.get("url", ""),
+  "source": "ieee"
+
+tools/blit.py:39-58
+  sidecar fields =
+  expected_title, real_title, title_check, title_overlap, checked_at
+
+tools/blit.py:327-346
+  ieee_download iterates every result and downloads each arnumber
+
+VERDICT=FAIL
+P0=1
+P1=2
+P2=1
+SIMULATION_SEED_RUN=FALSE
+```
+
+### 结论
+
+FAIL
+
+### 后续（FAIL/PARTIAL 时）
+
+先独立冻结三篇 canonical 的 `exact title + DOI + IEEE arnumber/document URL`。
+运行时只按 exact normalized title、result URL/arnumber 与 PDF sidecar title
+验证；DOI 是事先审计的 bibliographic binding，不伪称由 blit JSON/sidecar
+返回。把命令改为 `--max 1`，并显式列出跨 turn 累积 allowlist。修订后由独立
+verifier 复审；clean committed binding 前仍不得执行 Phase A。
+
+## V044: C15 三篇 canonical IEEE 身份独立审计
+
+> date: 2026-07-27
+> 关联：S001 / D020 / formal D031 / T016 / V043
+> verifier：`c15_canonical_identity_audit`；只读，未写文件、未下载 PDF、
+> 未运行实验 seed
+
+### 验证项
+
+- [x] Sato 1975：exact normalized-title 唯一命中
+  `https://ieeexplore.ieee.org/document/1092854/`；arnumber=`1092854`；
+  DOI `10.1109/TCOM.1975.1092854` 的 resolver 302 指向同一 document URL。
+- [x] Godard 1980：exact normalized-title 唯一命中
+  `https://ieeexplore.ieee.org/document/1094608/`；arnumber=`1094608`；
+  DOI `10.1109/TCOM.1980.1094608` 的 resolver 302 指向同一 document URL。
+  同次查询的 comments 论文 `1095475` 标题不同，不构成 identity 冲突。
+- [x] Yang–Werner–Dumont 2002：exact normalized-title 唯一命中
+  `https://ieeexplore.ieee.org/document/1007381/`；arnumber=`1007381`；
+  DOI `10.1109/JSAC.2002.1007381` 的 resolver 302 指向同一 document URL。
+  同次查询的 2026 GFDM 论文 `11422838` 标题不同，不构成 identity 冲突。
+- [x] 工具语义：三项 blit IEEE 结果的 DOI 字段均为 `""`；因此运行时不得用
+  JSON DOI 或 sidecar DOI 作 gate，bibliographic DOI 必须保持为本次独立
+  resolver binding。
+- [x] 边界：三次查询均 exit=0；未使用 `--output` 或 `--download`，未下载
+  PDF、未写盘、未运行 seed/MVE。
+
+### 证据
+
+```text
+SATO_TITLE=A Method of Self-Recovering Equalization for Multilevel Amplitude-Modulation Systems
+SATO_IEEE_ARNUMBER=1092854
+SATO_BLIT_DOI=""
+SATO_DOI_LOCATION=http://ieeexplore.ieee.org/document/1092854/
+
+GODARD_TITLE=Self-Recovering Equalization and Carrier Tracking in Two-Dimensional Data Communication Systems
+GODARD_IEEE_ARNUMBER=1094608
+GODARD_BLIT_DOI=""
+GODARD_DOI_LOCATION=http://ieeexplore.ieee.org/document/1094608/
+
+YANG_TITLE=The multimodulus blind equalization and its generalized algorithms
+YANG_IEEE_ARNUMBER=1007381
+YANG_BLIT_DOI=""
+YANG_DOI_LOCATION=http://ieeexplore.ieee.org/document/1007381/
+
+QUERY_EXIT=0/0/0
+PDF_DOWNLOAD_COUNT=0
+SIMULATION_SEED_RUN=FALSE
+```
+
+### 结论
+
+PASS。三篇 canonical 的 `exact title + DOI + IEEE arnumber/document URL`
+绑定可作为 T016 fail-closed identity gate；该 PASS 不是全文获取、coverage、
+formal carrier 或 method PASS。
+
+## V045: T016 第三轮静态合同独立复审
+
+> date: 2026-07-27
+> 关联：S001 / D020 / formal D031 / T016 / V043 / V044 / CP015
+> verifier：`t016_dispatch_verifier`；只读，未运行检索、下载、转换或实验 seed
+
+### 验证项
+
+- [x] canonical identity：V044 已冻结 exact title、DOI、IEEE
+  arnumber/document URL；T016 运行时只按唯一 normalized title、URL arnumber、
+  PDF filename 与 sidecar title 验证，明确 JSON `doi=""` 不作 PASS，关闭
+  V043 P0。
+- [x] bounded download：命令已冻结 `--max 1`；`tools/blit.py` 最多下载唯一
+  result，与 staging 恰好一个 PDF/sidecar 的门一致。
+- [x] cumulative allowlist：Phase A 三 JSON+worker log，以及每个已完成 slug 的
+  query JSON、receipt、PDF、sidecar、converted markdown 均显式允许；同时禁止
+  `.sessions/**`、owners、mission/master/current、simulation/common/params、
+  旧任务与旧 worker log 产生新 diff。
+- [x] source provenance：atomic alias/split/singleton、identity conflict 与
+  frozen shared-index size/hash 合同完整。
+- [x] execution boundary：三篇 canonical 串行独立 turn、12 分钟 stop、shared
+  main read-only/worktree staging 与 Phase C disk-only 均闭合。
+- [x] science ceiling：formal scientific carrier 仍为 NONE，
+  `mission_method_delta=NONE`，禁止 Step 3、seed/MVE。
+- [x] task-control：复审时 epoch38 / CP015 /
+  `CANDIDATE_FORMALIZATION` validator PASS，D020/D031 active，current
+  projections 一致。
+- [ ] clean committed final binding：intended owner/control/R/V/T/projection
+  尚未提交，tracked pycache 仍有工作树改动 → 唯一 P2。
+
+### 证据
+
+```text
+STATIC_CONTRACT=PASS
+P0=0
+P1=0
+P2=1
+TASK_CONTROL=PASS
+FORMAL_ACTIVE_SCIENTIFIC_CARRIER=NONE
+MISSION_METHOD_DELTA=NONE
+SIMULATION_SEED_RUN=FALSE
+ONLY_PENDING=clean committed final binding
+```
+
+### 结论
+
+PARTIAL。T016 静态合同 PASS；只因 final binding 尚未形成，不允许起飞。
+
+### 后续（FAIL/PARTIAL 时）
+
+隔离并保留 tracked pycache 变化，只提交 intended owner/control/R/V/T/current
+projection；工作树 clean 后由独立 verifier 用 `PYTHONDONTWRITEBYTECODE=1` /
+`python -B` 重跑 task-control，核对 current epoch/checkpoint、D020/D031 血缘、
+shared-index hash、主仓 target diff 与 commit 内容。全部 PASS 后才允许 Phase A。

@@ -1,7 +1,7 @@
 # Topic Index: Step 4a 维度 D MVE 执行
 
 > slug: 2026-07-06-step4a-mve-execution
-> status: active | created 2026-07-06 | last_updated 2026-07-27（D027/live V036：T014 dispatch review PASS，等待 epoch34 clean binding；仍无 active carrier。）
+> status: active | created 2026-07-06 | last_updated 2026-07-27（D031/live R006/D020：选择 C15 一次性 Step 1–2 formalization；无 active scientific carrier。）
 
 ## 专题定位（一句话）
 
@@ -27,14 +27,21 @@
 对 B11/B3/B7 走 Step 4a 维度 D MVE，守 FR-21/TL-20/FR-18/FR-12 + D005 务实路线 + D006 红线。
 
 ### 当前范围
-- **D027 当前状态**：live V035 已接收 T013 为
-  `BLOCKED_SEARCH_COVERAGE / mission_method_delta=NONE`。T013 有 21 条
-  nonexcluded、8 条必读和 21/21 正式发表，但实际 source family 只有 OpenAlex，
-  Route A/Route B 的 mechanism-deep support 均未闭合。
-- **当前无 active scientific carrier**。R004/D016/D027 只授权一次 T014
-  multi-source/mechanism-deep Groundwork Step 1 repair；失败即 B9 返回候选池，
-  不得第三个 Step 1 包。V036 已批准合同；epoch34 clean binding PASS 前不执行。
-  Step 2/3/3.5、Step 4a/MVE、Step 5/Contract/Execute 继续锁定。
+- **D031 当前状态**：R006 的 B4/B6/C15 六维比较证明三者都不是 runnable
+  scientific carrier；C15 因已有具名 construct、comparator 与 FIR runner，
+  被选为一次性 Step 1–2 formalization workline。
+- **当前 active scientific carrier**：无。T016 只允许用既有 archives/frozen
+  shared index/fulltext 闭合 source/recent identity、canonical worktree staging
+  与 preliminary coverage report，
+  预期 method delta 固定为 NONE。
+- foreground epoch39 / CP015。V045 已确认静态合同 PASS；clean committed
+  final binding 独立复核前不得执行 T016；任何情况下都不得运行 seed/MVE。
+  覆盖面确认前不进 Step 3，
+  Step 5/Contract/Execute 继续锁定。
+- V041 已把三候选 readiness audit 落盘；V042/V043 两轮审查发现的 source、
+  CLI、identity、timebox 与 cumulative-diff 问题均已修订。V044 冻结 canonical
+  DOI↔IEEE arnumber，V045 静态合同 `PASS / P0=0/P1=0/P2=1`；唯一 P2 是
+  clean committed final binding。
 
 ### 明确不含
 - ❌ 不回头救 6 次 Kill（Q1/Q2/Q3/Q8 切入点 2/4B/Q12/Q#-A，D005 诚实重评"大概率没几个能救"）
@@ -43,8 +50,30 @@
 - ❌ 不跳框架（FR-22：当前在 Step 4a 维度 D，禁跳到 Contract/Execute）
 - ❌ 不推翻 D006（前馈不撞 / 环路 TF 联合建模则撞，7 边界只标不砍）
 - ❌ 不污染 common（explore 阶段探针不直接进 experiments，MVE 通过才转正）
+- ❌ 不复用 T006 combination、不接回 B10、不做 CW+MAP/联合 CFO ML
+- ❌ 不做第三个 B9 包、T012 第四 amendment 或第二个 B12 repair
+- ❌ 不运行旧 C15 shared-mu sandbox，不把 T016 formalization 记作方法
 
 ### 范围变更记录
+- **2026-07-27 R005/live D018/formal D029 B12 standalone 激活**：post-B9
+  remap 比较 B12/C15/B1/A4/B10/B9；只有 B12-Q2 可在一个隔离 adapter 后同包
+  形成 construct + fair comparison。
+  - 新范围：T015 source-structural identity、robust AOPN clipping、MAP/cheap/BPS
+    paired test；独立 dispatch review PASS 前不执行。
+  - 冻结边界：不声称完整数值复现；identity/negative/test PASS 不算方法；
+    任一退出后 B12 回池且不开第二 repair。
+- **2026-07-27 live D019/V038-V040/formal D030 B12 撤回**：首次 dispatch
+  review FAIL；方法公式、信道生命周期与 direct novelty gate 均未闭合。
+  - 新范围：无 active carrier；只做 B4/B6/C15 等机制不同候选 remap。
+  - 冻结边界：T015 不执行，B12 不二修；新 owner/clean binding 前无实验。
+- **2026-07-27 live R006/D020/formal D031 C15 formalization workline**：
+  B4、B6、C15 独立 readiness audit 均不支持直接 scientific carrier；C15 是
+  唯一已有具体正向方法合同和可复用实现资产的候选。
+  - 新范围：T016 一次性闭合 Step 1 atomic-source/priority/coverage、五项 recent
+    identity、三篇 canonical worktree staging 与 preliminary coverage report；
+    shared-main promotion 必须另包。
+  - 冻结边界：active scientific carrier 仍为空，method delta=NONE；不续修
+    T012，不精读、不写 Q#、不运行 seed/MVE，coverage confirmation 前不进 Step 3。
 - **2026-07-26 V012/D020 Phase-C 分段授权**：clean confirm 以 seed `130003`
   在 1/10 GHz 两格均 `0/99488`，独立 verifier 接收
   `SOURCE_IDENTITY_PASS / PHASE_B_CONFIRM_ACCEPTED`，method delta 仍为 `NONE`。
@@ -364,10 +393,25 @@ strongest-fixed comparator 仍需 formal 闭合。D015 不继承旧 PASS，而�
   remap 选择 B9 evidence-adapter；V034 已独立批准 T013，只在 clean final
   binding 后从 Phase A1 执行 Step 1。Step 1 PASS 仍是 method delta NONE，
   Step 2/3/MVE 未授权。
-- **live V035/R004/D016 / formal D027 / epoch 33 / CP013**（2026-07-27，当前）：
+- **live V035/R004/D016 / formal D027 / epoch 33 / CP013**（2026-07-27，历史）：
   T013 接收为 `BLOCKED_SEARCH_COVERAGE / delta NONE`；只授权一次 T014
   multi-source/mechanism-deep Step 1 repair。V036 dispatch PASS 后 control/task
-  递增 epoch34，等待 clean binding；失败即轮换，当前仍无 active carrier。
+  递增 epoch34；该 repair 后由 D028 取代。
+- **live V037/D017 / formal D028 / epoch 35 / CP014**（2026-07-27，历史）：
+  T014 A1 raw=`0/0/1`，实际 source union 仅 OpenAlex+IEEE 两源，三源门失败；
+  接收 `BLOCKED_SEARCH_COVERAGE / delta NONE`。B9 返回池且不得第三个 Step 1
+  包，当前无 active carrier，只允许 post-B9 remap 与任务准备。
+- **live R005/D018 / formal D029 / epoch 36 / CP014**（2026-07-27，历史）：
+  post-B9 remap 曾激活 B12 standalone；T015 只到 dispatch review，未执行。
+- **live V038-V040/D019 / formal D030 / epoch 37 / CP015**（2026-07-27，历史）：
+  T015 因非物理 GG lifecycle、错误 Huber precision 与 JLT 2025 direct robust-CPR
+  collision 在 dispatch 前撤回；seed 未消费，delta NONE。B12 回池且不得第二
+  repair；随后进入 post-B12 remap。
+- **live R006/D020 / formal D031 / epoch 38 / CP015**（2026-07-27，历史激活）：
+  三候选比较后选择 C15 一次性 Step 1–2 formalization workline；scientific
+  carrier 仍为 NONE。
+- **live V045 / epoch 39 / CP015**（2026-07-27，当前）：T016 静态合同 PASS，
+  只等待 clean committed final binding 独立复核；绝不运行 seed/MVE。
 - **D-011** A1 参数适配（NDA 块长自适应 K）FAIL（2026-07-08，S013 新建）
 - **H008** 交接给新对话：自适应论文 baseline 组织/参数处理/叙述展开调研（2026-07-09，用户要去新对话搞清楚别人怎么弄 baseline + 参数照搬还是自调）
 - **H009** 切换三 bug 修复+30seed 重跑结果（2026-07-09，执行 thesis-writing D001 修复任务，实验在本专题 step4a 跑。代码 `_a4_switch_30seed_fixed.py` + 数据 + 报告 `_a4_switch_bugfix_report.md`。Bug2 非假增益源不修（独立核查修正用户诊断）。结论：切换无全场景增益，降级为鲁棒性补丁，net gain+1.2dB 不依赖切换。切换叙事定位回 thesis-writing 待讨论。完整交接见 thesis-writing/H003）

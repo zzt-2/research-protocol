@@ -49,8 +49,8 @@ topics:
     title: Research Direction Lab 长程真实运行测试
     status: active
     created: "2026-07-23"
-    last_updated: "2026-07-27（V036：T014 dispatch review PASS；epoch 34 / CP013，等待 clean final binding）"
-    description: "D017/D018 轻量长程 mission。V035 接收 T013 为 BLOCKED_SEARCH_COVERAGE / delta NONE：61→58、21 nonexcluded、8 必读、21/21 正式发表，但实际来源仅 OpenAlex，两个 deep route 未闭合；no-method=13。R004/D016/formal D027 只授权一次 B9 multi-source/mechanism-deep Step1 repair，仍无 active scientific carrier。V036 批准 T014 合同；epoch34 clean binding PASS 前不执行，失败即轮换。"
+    last_updated: "2026-07-27（V045：T016 静态合同 PASS；epoch 39 / CP015，仅待 clean final binding，无 active scientific carrier）"
+    description: "D017/D018 轻量长程 mission。V038-V040 撤回 T015 并把 B12 回池后，R006 用六维 readiness 比较 B4/B6/C15：B4 缺 carrier-specific M-C-A，B6 无正向 residual construct，C15 仍非 runnable 但已有具名方法合同和 FIR 资产。D020/formal D031 新建 T016 一次性 disk-native Step 1-2 formalization，method delta 固定 NONE；V045 静态合同 PASS，epoch39/CP015，只待 clean committed final binding 独立复核，禁止 seed/MVE。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 S014 现场故障、R003 场景演练、D017 控制接口和 guard
@@ -447,8 +447,8 @@ topics:
     title: Step 4a 维度 D MVE 执行（B11 单载波 NDA-ML 主推 + B7/B3 待开）
     status: active
     created: "2026-07-06"
-    last_updated: "2026-07-27（D027/live V036：T014 dispatch review PASS，等待 epoch34 clean binding）"
-    description: "Formal carrier owner。D027 取代 D026：当前仍无 active scientific carrier；V035 接收 T013 为 BLOCKED_SEARCH_COVERAGE / delta NONE。R004/D016/D027 只授权一次 T014 multi-source/mechanism-deep Groundwork Step1 repair；V036 批准合同，epoch34 clean binding PASS 前不执行。失败即 B9 返回池。"
+    last_updated: "2026-07-27（V045/live epoch39：T016 静态合同 PASS，仅待 clean final binding；无 active scientific carrier）"
+    description: "Formal carrier owner。D031 取代 D030 的 post-B12 remap 下一动作，但保留 T015/B12 撤回与 no-second-repair。R006 证明 B4/B6/C15 均非 runnable carrier；formal 只授权 T016 disk-native Step 1-2 source/recent/canonical/coverage formalization，method delta NONE。V045 已确认静态合同 PASS，clean final binding 独立复核前不执行；禁止 seed/MVE、Step 3/5/Contract/Execute。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
         reason: 继承 S031 排优先级（B11/B3/B7 Conditional Go）+ 切法地图参照系（饱和池/稀池路径）+ D005 务实路线 + D006 红线 + 5 个口径警示

@@ -4,16 +4,17 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 34
+  control_epoch: 39
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: B9_STEP1_BOUNDED_COVERAGE_REPAIR
-  authority_pointer: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D027
-  decision_gate: V036 已独立批准 T014 合同；当前仍无 active scientific carrier，只有 clean worktree 与 fresh epoch34 task-control PASS 后才可执行 Phase A1，失败即轮换
+  active_lane: C15_FORMALIZATION_PREP
+  authority_pointer: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D031
+  decision_gate: R006/D020/D031 只选择 C15 一次性 formalization workline，active scientific carrier 仍为 NONE；V045 已确认静态合同 PASS，唯一剩余 P2 是 clean committed final binding，完成并独立复核前不得执行，任何情况下不得运行 seed/MVE
   allowed_actions:
     - RECOVER
     - TASK_PREPARATION
-    - PORTFOLIO_MAP
+    - CONTRACT_REVIEW
+    - FORMAL_READINESS_REVIEW
     - CANDIDATE_FORMALIZATION
   forbidden_actions:
     - UNRELATED_SCIENTIFIC_EXPERIMENT
@@ -28,14 +29,17 @@ rdl_control:
     - HIGH_ORDER_CPR_COMBINATION_REPAIR
     - B1_OR_T008_REPAIR
     - B10_OR_T010_REPAIR
+    - B9_STEP1_THIRD_PACKAGE
+    - T012_AMENDMENT_OR_OLD_C15_SANDBOX
+    - B12_SECOND_REPAIR_PACKAGE
     - UNAUTHORIZED_SCIENTIFIC_EXPERIMENT
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
-  mission_checkpoint: CP013
-  next_legal_action: 提交 control/task clean gate；独立 final binding PASS 后由不同 executor 只执行 T014 Phase A1，完成即停回主控
+  mission_checkpoint: CP015
+  next_legal_action: 形成包含 R006、D020/D031、V041-V045、epoch39 control、T016 与 current projections 的 clean committed binding；独立 final-binding verifier PASS 后，只允许内部 Phase-A executor 执行 disk-native Step 1 view/recent identity，不运行 seed/MVE
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（V036 已批准 T014 合同；epoch 34 / CP013，等待 clean final binding 与 Phase A1，仍无 active scientific carrier）
+> 状态: active（R006/D020/formal D031 已选择 C15 一次性 formalization；epoch 39 / CP015，无 active scientific carrier，T016 静态合同 PASS、等待 clean final binding）
 > 创建: 2026-07-23 | 最后更新: 2026-07-27
 
 ## 专题信息
@@ -79,25 +83,50 @@ rdl_control:
 - R004/D016/formal D027 只授权一次 T014 multi-source/mechanism-deep Step 1
   repair；若仍不足三源或没有 route-level residual-problem support，B9 返回池并
   轮换，不得第三个 B9 Step 1 包。
-- formal D021 维持 `B10_SOURCE_NATIVE_ADAPTIVE_RLS_CPR`；V021 已独立接收 C1，
-  `mission_method_delta=NONE`。epoch 22 的当前动作是先完成 C2 起飞合同独立审查；
+- T014 已由 V037/D017/formal D028 接收为
+  `BLOCKED_SEARCH_COVERAGE / mission_method_delta=NONE`：A1 raw=`0/0/1`，
+  实际 source union 只有 OpenAlex+IEEE 两源，三源门失败；A2/A3/A4 未运行。
+  B9 已返回候选池且不得第三个 Step 1 包，当前进入 post-B9 carrier remap。
+- R005 曾在六个方法生产维度比较 B12、C15、B1、A4、B10、B9。当时不足三个
+  direct-ready scientific carrier：只有 B12-Q2 standalone 被判为
+  `NEEDS_SMALL_ADAPTER`；C15 是 `HYPOTHESIS_ONLY`，其余受 no-repair/return
+  边界约束。
+- D018/formal D029 曾激活
+  `B12_MAP_FADE_AOPN_STANDALONE`。它只主张 OECC Eq.4–7 + TSP [5]
+  协方差闭合后的 source-structural identity；W/pilot/seed/penalty 是
+  project assumptions，不冒充完整数值复现。
+- V038–V040/D019/formal D030 已在 dispatch 前撤回 T015：非物理 GG
+  lifecycle、错误 Huber precision 与 JLT 2025 direct robust-CPR collision
+  使 novelty readiness FAIL。未运行 seed；B12 回池且不得第二 repair，
+  当前无 active carrier。
+- R006 以六个方法生产维度比较 B4、B6、C15，并逐项证明三者均非 runnable
+  scientific carrier。B4 缺 carrier-specific M-C-A 与 PADE/双环实现；B6
+  被 direct sources 与 D006 边界压缩到无正向合同；C15 仍缺 Step 1–3，但
+  已有具体 construct、合法 comparator 与可复用 FIR runner。
+- D020/formal D031 只授权
+  `C15_DISK_NATIVE_FORMALIZATION_ADAPTER` 一次性 Step 1–2 workline，
+  formal active scientific carrier 仍为 `NONE`。T016 预期 method delta
+  固定为 NONE；独立 review 与 clean binding 前不得执行。
+- **历史（已由 D022/D031 取代）**：formal D021 曾维持
+  `B10_SOURCE_NATIVE_ADAPTIVE_RLS_CPR`；V021 曾独立接收 C1，
+  `mission_method_delta=NONE`。当时 epoch 22 的动作是先完成 C2 起飞合同独立审查；
   通过后只用 validation seeds `131001–131005` 跑完整预注册矩阵并全局冻结设置，
   C2 不消费 test/held-out。
-- V022 首次 C2 起飞审查以 P0/P1/P2=`0/3/1` 拒收：checkpoint/resume、
+- **历史**：V022 首次 C2 起飞审查以 P0/P1/P2=`0/3/1` 拒收：checkpoint/resume、
   SNR-freeze objective、parameter/normalization 三项合同不确定。T010 与隔离
   `contract.yaml` 已做确定性补约；epoch 22 / CP009 保持不变，复审 PASS 前不运行
   validation。
-- V023 新增的 B* exact-tie 阻断已补约；V024 第三轮以
+- **历史**：V023 新增的 B* exact-tie 阻断已补约；V024 第三轮以
   `P0/P1/P2=0/0/1` 批准完整 C2 amendment。control 已递增到 epoch 23，但仍须
   final binding 独立复核后才可由不同 executor 起飞。
-- T010 C2 已在 28 cells / 840 canonical rows 触发 source-native lifecycle
+- **历史终局**：T010 C2 已在 28 cells / 840 canonical rows 触发 source-native lifecycle
   identity failure：moderate/14 dB/seed `131004` 的 128-pilot unwrap 选错 `-2π`
   branch，P1/P2/P3 共用初始化。V026 接收
   `BLOCKED_IDENTITY / P0=0/P1=0/P2=1 / mission_method_delta=NONE`；不补矩阵、
   不改 gate、不运行 held-out，也不开第二个 B10 包。
-- D011/formal D022 已把 B10 返回候选池；当前无 active scientific carrier。
-  下一路线为 C15 Step 1–3 formalization，旧 C15 unequal-step sandbox 只作失败事实，
-  readiness 独立审查前不得运行 MVE。
+- D011/formal D022 已把 B10 返回候选池。当前 formal D031 仍保持无 active
+  scientific carrier，只授权 T016 Step 1 view/recent identity/canonical
+  worktree staging；旧 C15 unequal-step sandbox 只作失败事实，禁止运行 MVE。
 - D004 已把运行方式改为本对话端到端推进；用户不再中转 GLM，项目强制的
   executor/verifier 分离改由本线程内部子 agent 完成。
 
@@ -294,6 +323,10 @@ rdl_control:
   `BLOCKED_SEARCH_COVERAGE / delta NONE` 接收；61→58、21 nonexcluded、8 必读，
   但实际只有 OpenAlex。四候选六维复核后授权一次 bounded multi-source/
   mechanism-deep repair；失败即 B9 返回池。
+- **V037 / D017 / formal D028 / CP014**：T014 executor commit `5ba5a54c`
+  仅新增 worker log；独立 raw 复算为 `0/0/1`，实际 source union
+  `openalex,ieee`、count=2。A2–A4 未运行；接收
+  `BLOCKED_SEARCH_COVERAGE / delta NONE`，B9 返回池且禁止第三包。
 - **D001 / phase-2 entry**：B1 作为唯一合法 formal carrier 续接；C15 保留候选，
   不以 portfolio readiness 冒充 formal authorization。
 - **V001 / T008 dispatch review**：独立终验 PASS；formal/guard/identity/method
@@ -360,26 +393,55 @@ rdl_control:
   56 rows/53 unique/49 published，但 actual source 只有 OpenAlex；正确停止于
   `BLOCKED_SEARCH_COVERAGE`，未进 Step 2，method delta NONE。共享索引四源与
   5 篇近期 content 证明一次 T012 恢复包可行；三篇 canonical 任一失败即轮换。
+- **R005 / D018 / formal D029 / T015**：post-T014 remap 证明只有 B12-Q2
+  standalone 可直接承担下一方法包；C15 仍缺 Step 1–3，B1/A4/B10/B9 均有
+  明示退出边界。B12 正向合同为 source-structured MAP 上的
+  receiver-visible robust AOPN clipping；该历史任务后来被 V038–V040 在
+  dispatch 前撤回。
+- **V038–V040 / D019 / formal D030 / CP015**：首次 T015 dispatch review
+  发现非物理 GG lifecycle 与错误 Huber precision；robust-prior 与 source
+  recovery 又确认 JLT 2025 direct Huber Bayesian CPR family collision，且合法
+  全文不可得，无法建立可包装差异。T015 未执行、seed 未消费、delta NONE；
+  B12 回池且不得第二 repair，foreground 转 post-B12 remap。
+- **R006 / D020 / formal D031 / epoch 38 / CP015**：三项独立 readiness
+  audit 证明 B4、B6、C15 均非 runnable carrier；选择 C15 是因为它已有具名
+  construct、comparator 和实现资产，T016 会解除其 Step 1–2 硬门，而 B4 尚无
+  M-C-A、B6 无 residual construct。active scientific carrier 仍为空；T016
+  等待独立 dispatch review。该激活时点随后由 V045 静态 PASS 与 epoch39
+  final-binding gate 合法取代。
+- **V041–V045 / epoch 39**：V041 将三项 readiness audit 的摘要、absolute shared-main
+  path 与 hash 落盘；V042 首轮 T016 dispatch review 以
+  `P0/P1/P2=2/3/1` 拒收假三源风险、错误 blit CLI/写入边界、timebox、stale
+  projection 与 dirty binding。V043 第二轮识别 JSON/sidecar 无 DOI、
+  `--max 5` 与 cumulative allowlist 缺陷；V044 冻结三篇 canonical 的
+  DOI↔IEEE arnumber/document URL；V045 以 `P0/P1/P2=0/0/1` 接收静态合同。
+  唯一剩余项是 clean committed final binding。
 
 ## 未决项
 
 - B1 family 保持 `UNRESOLVED`；若未来复用必须重建 evaluator，而非继续修 T008；
 - T010 最终接收 `BLOCKED_IDENTITY / method delta NONE`；B10 当前包终止；
-- T012 已接收为 `BLOCKED_TASK_INTERFACE / PACKAGE_NOT_EXECUTED`；C15 返回池；
-- B9 仍未激活 scientific carrier；T013 已接收为 coverage blocker；
-- V036 已批准 T014 合同，P0/P1/P2=`0/0/1`；唯一 P2 是尚未提交 clean
-  binding。这是唯一一次 B9 Step 1 coverage repair，失败后必须轮换；
+- T012 已接收为 `BLOCKED_TASK_INTERFACE / PACKAGE_NOT_EXECUTED`；其接口不再
+  修订。D020/D031 另建 T016 一次性 disk-native formalization；
+- B9 未激活 scientific carrier；T014 已接收为 coverage blocker并返回池，
+  唯一 Step 1 repair 已消费，不得第三包；
+- post-B9 remap 曾由 R005 选择 B12；V038–V040 已在 dispatch 前撤回 T015，
+  B12 返回池且不得第二 repair；
 - live run 自然覆盖哪些恢复/轮换/晋级事件；
 - 何时由原 design 对话进行阶段性审计。
 
 ## 当前位置
 
-T013 已由 V035/D016/formal D027 接收为
-`BLOCKED_SEARCH_COVERAGE / mission_method_delta=NONE`，不是 B9 Go/Kill。
-mission 在 CP013/no-method=13、`DRIFTED/STALLED`；当前无 active scientific
-carrier。R004 比较 B9/C15/B1/A4 后只授权一次 T014 source/mechanism coverage
-repair；V036 已批准合同，control epoch 34 等待 clean final binding。T014 不下载、不进入
-Step 2/3/3.5/4a，不实现或实验；PASS 也只能形成 method delta NONE，失败即 B9
-返回池并轮换。不得修
-T006/B12、B1/T008、A4/T009、B10/T010，不恢复 Scout/P03，也不进入 Step 4a
-实验、Step 5/Contract/Execute。
+T014 仍是 `BLOCKED_SEARCH_COVERAGE / delta NONE`，B9 回池且不得第三包。
+V038–V040/D019/formal D030 已把 T015 接收为
+`BLOCKED_NOVELTY_COLLISION / PACKAGE_WITHDRAWN_BEFORE_EXECUTION`；B12 回池，
+无 family Kill、无 seed、无方法 delta。mission 在 CP015/no-method=15、
+`DRIFTED/STALLED`。R006/D020/formal D031 已完成 post-B12 remap：control
+epoch 39 维持 C15 一次性 Step 1–2 formalization workline，但 formal active
+scientific carrier 仍为 `NONE`。T016 只允许 source view、recent identity、
+canonical worktree staging 与 preliminary coverage report，预期 method delta
+固定为 NONE。V045 已确认静态合同 PASS，唯一 remaining P2 为 clean
+committed final binding；完成并由独立 verifier 复核前不得执行。禁止 T006
+combination/B10 回接、T012
+amendment/旧 C15 sandbox、B1/A4/B10 旧修复、第三个 B9 包、第二个 B12
+repair、任何 seed/MVE、Scout/P03 与 Step 5/Contract/Execute。
