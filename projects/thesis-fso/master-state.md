@@ -27,7 +27,7 @@ current_stage: FORMAL_GROUNDWORK_CANDIDATE_FORMALIZATION
 
 ### 当前控制面桥接（唯一现行入口）
 
-> **2026-07-27 live R006/D020/V045 + formal D031 → epoch39 / CP015 C15 FORMALIZATION PREP**：
+> **2026-07-27 live R006/D020/V046 + formal D031 → epoch40 / CP015 C15 PHASE-A READY**：
 > T009 的独立审查只接收 `BLOCKED_IDENTITY` 与 `mission_method_delta=NONE`；
 > 随机 TX payload 被当 pilot、DA/NDA frequency stage 不对称、无来源且无 FEC
 > crossing 的 working region，以及 raw/result 未进提交，共同否定“DA 在可靠条件
@@ -48,20 +48,20 @@ current_stage: FORMAL_GROUNDWORK_CANDIDATE_FORMALIZATION
   Scout/Sandbox 结果对正式研究的 promotion effect 仍为 `none`；Direction Lab
   campaign 已 dormant（D022 SCIENCE_FREEZE），无当前科学执行授权。
 - **当前工作线**：`C15_DISK_NATIVE_FORMALIZATION_ADAPTER`，formal D031，
-  live control epoch 39 / CP015。R006 的独立 readiness 证据证明 B4、B6、C15
+  live control epoch 40 / CP015。R006 的独立 readiness 证据证明 B4、B6、C15
   均非 runnable carrier；选择 C15 仅因其已有具名 construct、comparator 与
-  可复用 FIR runner。T016 只闭合 Step 1–2，预期 method delta=NONE；V045
-  已确认静态合同 PASS，clean final binding 独立复核前不执行，任何情况下
-  不运行 seed/MVE。
+  可复用 FIR runner。T016 只闭合 Step 1–2，预期 method delta=NONE；V046
+  已确认 clean final binding PASS，当前只授权内部 Phase A，任何情况下不运行
+  seed/MVE。
   D004 的 Goal 主控模式继续有效。
 - **Pilot-Jones（退出 carrier）**：D066/V040 接收 fixed complex component rescue
   axis scoped Kill；4 篇 direct competitor 全文债继续保留，但不阻塞当前 carrier。
 - P03（暂停，回候选池）：Headroom Atlas Stage A（2026-07-19，S077/D059/V033）runnable 子域 LOCAL_NEGATIVE；16QAM/receiver-CSI/coded-output 三轴 INFRASTRUCTURE_BLOCKED，历史反例落在被阻轴上 → DOMAIN/CANDIDATE/FAMILY 仍 UNRESOLVED/OPEN。**用户选项①已选定：暂停回候选池，不关闭 family**。
 - Direction Lab sandbox history：last completed batch = `B003 / COMPLETED_SANDBOX_VERIFIED`；事实源为 `projects/thesis-fso/direction-lab/state/completion-events.jsonl`。`canonical-state.yaml` 仅为机器投影，不是正式研究授权源。
 - formal promotion effect：`none`；B001–B003 数字不得进入论文或正式材料。
-- 下一合法边界：形成 R006、D020/D031、V041–V045、epoch39 control、T016 与
-  current projections 的 clean committed binding并独立复核；PASS 后只派内部
-  Phase-A executor 做 disk-native Step 1 view 与 recent identity。
+- 下一合法边界：派内部 Phase-A executor 做 disk-native Step 1 view、
+  acquisition pool 与 recent identity；A1 任一质量门失败即停止，全部 PASS
+  才准备独立 Phase-B canonical turn。
   **T016 不得运行 seed/MVE、精读或写 Q#；不得复用/修 T006、T008/B1、
   T009/A4、T010/B10，不得做第三个 B9 包、T012 amendment、旧 C15 sandbox
   或第二个 B12 repair；coverage confirmation 前不进 Step 3，不复活

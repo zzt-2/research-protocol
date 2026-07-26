@@ -8,10 +8,10 @@
 
 - **方向**：双偏振星地 OSL 场景中的 ML 应用方向探索；正式研究与 Direction Lab Scout/Sandbox 分层管理。
 - **正式状态**：当前 `NO_ACTIVE_SCIENTIFIC_CARRIER`（formal D031；
-  live R006/D020/V045，epoch 39 / CP015）。R006 已以六维比较证明 B4、B6、C15
+  live R006/D020/V046，epoch 40 / CP015）。R006 已以六维比较证明 B4、B6、C15
   均非 runnable carrier；只选择 C15 一次性 Step 1–2 formalization workline，
-  T016 预期 method delta 固定为 NONE；V045 已确认静态合同 PASS，clean
-  committed final binding 独立复核前不执行，
+  T016 预期 method delta 固定为 NONE；V046 已确认 clean final binding PASS，
+  当前只授权内部 Phase A，
   且不得运行 seed/MVE。T011 只接收
   `BLOCKED_SEARCH_COVERAGE` 与 method delta
   NONE；T012 在 §2.2 前因三项 task-interface contract 缺口终止为
@@ -53,9 +53,8 @@
   moderate/14 dB/seed `131004` 暴露 128-pilot unwrap 的错误 `-2π` branch；
   V026 接收 `BLOCKED_IDENTITY / P0=0/P1=0/P2=1 /
   mission_method_delta=NONE`。无 aggregate，未消费 held-out；不补矩阵、不改 gate。
-- **下一合法边界**：形成 R006、D020/D031、V041–V045、epoch39 control 与
-  T016 的 clean committed binding并独立复核；PASS 后只执行 T016 disk-native
-  source view、recent
+- **下一合法边界**：内部 executor 执行 T016 Phase A 的 disk-native source
+  view、acquisition pool 与 recent
   identity 与 canonical worktree staging。3/3 staging 也只到
   `AWAITING_CANONICAL_PROMOTION`，不构成 active carrier 或方法。
   **不运行 seed/MVE；coverage confirmation 前不进 Step 3；不进入

@@ -2402,3 +2402,52 @@ PARTIAL。T016 静态合同 PASS；只因 final binding 尚未形成，不允许
 projection；工作树 clean 后由独立 verifier 用 `PYTHONDONTWRITEBYTECODE=1` /
 `python -B` 重跑 task-control，核对 current epoch/checkpoint、D020/D031 血缘、
 shared-index hash、主仓 target diff 与 commit 内容。全部 PASS 后才允许 Phase A。
+
+## V046: T016 epoch39 clean final-binding 独立起飞审查
+
+> date: 2026-07-27
+> 关联：S001 / D020 / formal D031 / T016 / V045 / CP015
+> verifier：`t016_final_binding_verifier`；只读，未修改文件、未运行检索、
+> 下载、转换或实验 seed
+
+### 验证项
+
+- [x] clean worktree：HEAD
+  `a392bc0ec077e61ba532152d26563b7cb921f74f`；
+  `git status --short` 计数为 0。
+- [x] task-control：`PYTHONDONTWRITEBYTECODE=1` + `python -B` 实测
+  validator PASS；epoch39 / CP015 / `CANDIDATE_FORMALIZATION`。
+- [x] owner 血缘：live D020/formal D031 active；D019/D030 superseded。
+- [x] binding content：HEAD 包含 T016、live control/owner、formal owner/topic、
+  current projections、master-state 与 V041–V045。
+- [x] frozen shared index：size=`39099216`；
+  sha256=`7530fa6fb9ae0234eee8d98902c8bcc936e278401dc61d0daded300542a4d27a`。
+- [x] shared-main boundary：Sato/Godard/Yang 三个 canonical target 均不存在，
+  限定 target 的 `git status --short` 为空。
+- [x] commit boundary：HEAD 共 17 个路径；不含 tools/pycache、
+  `papers/downloads`、`search-archive/2026-07-27`、simulation/seed/MVE
+  产物。
+- [x] science ceiling：state/portfolio 均为
+  `NO_ACTIVE_SCIENTIFIC_CARRIER`；CP015/T016 的 method delta 均为 NONE。
+
+### 证据
+
+```text
+VERDICT=PASS
+P0=0
+P1=0
+P2=0
+AUTHORIZATION=PHASE_A_ONLY
+HEAD=a392bc0ec077e61ba532152d26563b7cb921f74f
+WORKTREE_STATUS_COUNT=0
+TASK_CONTROL=PASS
+INDEX_SIZE=39099216
+INDEX_SHA256=7530fa6fb9ae0234eee8d98902c8bcc936e278401dc61d0daded300542a4d27a
+FORBIDDEN_COMMIT_PATH_COUNT=0
+```
+
+### 结论
+
+PASS。允许把 foreground 切换为 Phase A ready；只授权 T016 Phase A 的
+disk-native Step 1 view 与 recent identity，不授权 Phase B、检索下载、精读、
+Step 3、seed 或 MVE。

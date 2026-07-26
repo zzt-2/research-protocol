@@ -34,9 +34,9 @@
   shared index/fulltext 闭合 source/recent identity、canonical worktree staging
   与 preliminary coverage report，
   预期 method delta 固定为 NONE。
-- foreground epoch39 / CP015。V045 已确认静态合同 PASS；clean committed
-  final binding 独立复核前不得执行 T016；任何情况下都不得运行 seed/MVE。
-  覆盖面确认前不进 Step 3，
+- foreground epoch40 / CP015。V046 已确认 epoch39 clean final binding PASS；
+  当前只授权内部 executor 执行 T016 Phase A，Phase A 验收前不派 Phase B；
+  任何情况下都不得运行 seed/MVE。覆盖面确认前不进 Step 3，
   Step 5/Contract/Execute 继续锁定。
 - V041 已把三候选 readiness audit 落盘；V042/V043 两轮审查发现的 source、
   CLI、identity、timebox 与 cumulative-diff 问题均已修订。V044 冻结 canonical
@@ -410,8 +410,10 @@ strongest-fixed comparator 仍需 formal 闭合。D015 不继承旧 PASS，而�
 - **live R006/D020 / formal D031 / epoch 38 / CP015**（2026-07-27，历史激活）：
   三候选比较后选择 C15 一次性 Step 1–2 formalization workline；scientific
   carrier 仍为 NONE。
-- **live V045 / epoch 39 / CP015**（2026-07-27，当前）：T016 静态合同 PASS，
-  只等待 clean committed final binding 独立复核；绝不运行 seed/MVE。
+- **live V045 / epoch 39 / CP015**（2026-07-27，历史）：T016 静态合同 PASS，
+  只等待 clean committed final binding 独立复核。
+- **live V046 / epoch 40 / CP015**（2026-07-27，当前）：clean final binding
+  `P0/P1/P2=0/0/0`；只授权 T016 Phase A，绝不运行 seed/MVE。
 - **D-011** A1 参数适配（NDA 块长自适应 K）FAIL（2026-07-08，S013 新建）
 - **H008** 交接给新对话：自适应论文 baseline 组织/参数处理/叙述展开调研（2026-07-09，用户要去新对话搞清楚别人怎么弄 baseline + 参数照搬还是自调）
 - **H009** 切换三 bug 修复+30seed 重跑结果（2026-07-09，执行 thesis-writing D001 修复任务，实验在本专题 step4a 跑。代码 `_a4_switch_30seed_fixed.py` + 数据 + 报告 `_a4_switch_bugfix_report.md`。Bug2 非假增益源不修（独立核查修正用户诊断）。结论：切换无全场景增益，降级为鲁棒性补丁，net gain+1.2dB 不依赖切换。切换叙事定位回 thesis-writing 待讨论。完整交接见 thesis-writing/H003）

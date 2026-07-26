@@ -1429,7 +1429,11 @@ projections。P0/P1 关闭并形成 clean committed binding 后，派不同内�
   `PASS / P0=0/P1=0/P2=1`，唯一 P2 是 clean committed final binding。
 - decision gate 因而从“等待静态复审”切换为“等待 final binding”，control 与
   T016 一致递增至 epoch39 / CP015；scientific carrier 仍为 NONE。
-- clean committed binding 前不执行 Phase A；任何情况下不运行 seed/MVE。
+- V046 已独立复核 commit `a392bc0` 的 clean binding、task-control、owner
+  血缘、shared-index hash、主仓 target diff 与提交边界，
+  `P0/P1/P2=0/0/0`。control/task 因而切换为 epoch40
+  `C15_FORMALIZATION_PHASE_A_READY`，只授权 Phase A。
+- Phase A 验收前不派 Phase B；任何情况下不运行 seed/MVE。
 
 ## 决策引用
 
@@ -1444,6 +1448,6 @@ projections。P0/P1 关闭并形成 clean committed binding 后，派不同内�
 
 ## 后续
 
-形成只含 intended owner/control/R/V/T/current projection 的 clean committed
-binding，并由独立 verifier 完成 final-binding 起飞审查；PASS 后再由不同内部
-executor 执行 Phase A。
+由不同内部 executor 执行 T016 Phase A；A1 任一质量门失败即
+`BLOCKED_SEARCH_COVERAGE`，全部 PASS 才由主控验收并准备独立 canonical
+Phase-B turn。

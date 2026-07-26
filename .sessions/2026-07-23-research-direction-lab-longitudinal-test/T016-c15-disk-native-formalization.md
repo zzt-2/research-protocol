@@ -11,7 +11,7 @@
 rdl_task_control:
   schema_version: rdl.task-control.v2
   control_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/topic-index.md
-  control_epoch: 39
+  control_epoch: 40
   action_class: CANDIDATE_FORMALIZATION
   mission_checkpoint: CP015
 ```
@@ -173,8 +173,8 @@ git status --short
   均存在；
 - shared index size 与 SHA256 精确匹配 §1.2；
 - 没有 simulation/MVE/seed 进程；
-- current control 为 epoch 39 / CP015 /
-  `C15_FORMALIZATION_PREP`。
+- current control 为 epoch 40 / CP015 /
+  `C15_FORMALIZATION_PHASE_A_READY`。
 
 任一失败：只写 worker log，状态
 `BLOCKED_PREFLIGHT / mission_method_delta=NONE` 后停止。

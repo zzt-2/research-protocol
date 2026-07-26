@@ -19,7 +19,7 @@ formal_active_carrier:
   positive_method_target: null
   fair_comparators: []
   claim_ceiling: NO_METHOD_CLAIM
-  stop: T016_CLEAN_FINAL_BINDING_REVIEW_REQUIRED_NO_SEED_OR_MVE
+  stop: T016_PHASE_A_ONLY_PHASE_B_REQUIRES_ACCEPTANCE_NO_SEED_OR_MVE
 
 candidates:
   # ── Cluster 1-2: Failure observability (CEILINGED) ──

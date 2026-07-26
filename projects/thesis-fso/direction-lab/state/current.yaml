@@ -35,12 +35,13 @@ authorization:
   scope: dormant Scout campaign — no active multi-mechanism Scout rotation (D022). Formal GW has selected the C15 one-shot Step 1-2 formalization workline under D031; this does not reactivate Scout/P03 or activate a scientific carrier.
   formal_gw_line: >-
     NO_ACTIVE_SCIENTIFIC_CARRIER (formal D031 / live R006/D020 /
-    epoch 39 / CP015). R006 independently compares B4, B6 and C15: all are not
+    epoch 40 / CP015). R006 independently compares B4, B6 and C15: all are not
     runnable carriers. C15 is selected only as CANDIDATE_FORMALIZATION because
     it already has a named construct, fair comparator and reusable FIR runner.
-    V045 accepts the T016 static contract. T016 may close disk-native Step 1-2
-    evidence only after clean committed final-binding review;
-    mission_method_delta is frozen to NONE and no seed/MVE is authorized.
+    V046 accepts the clean final binding. Only T016 Phase A disk-native Step 1
+    view and recent identity are authorized; Phase B waits for Phase A
+    acceptance. mission_method_delta is frozen to NONE and no seed/MVE is
+    authorized.
   prohibits:
     - modify or rerun B001-B003 / P03 Atlas / canonical-state / completion-events
     - create legacy B004

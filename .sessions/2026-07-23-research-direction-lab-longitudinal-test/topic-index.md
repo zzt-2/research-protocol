@@ -4,12 +4,12 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 39
+  control_epoch: 40
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: C15_FORMALIZATION_PREP
+  active_lane: C15_FORMALIZATION_PHASE_A_READY
   authority_pointer: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D031
-  decision_gate: R006/D020/D031 只选择 C15 一次性 formalization workline，active scientific carrier 仍为 NONE；V045 已确认静态合同 PASS，唯一剩余 P2 是 clean committed final binding，完成并独立复核前不得执行，任何情况下不得运行 seed/MVE
+  decision_gate: R006/D020/D031 只选择 C15 一次性 formalization workline，active scientific carrier 仍为 NONE；V046 已确认 epoch39 clean final binding PASS，只授权内部 Phase A disk-native Step 1 view/recent identity；Phase A 验收前不得进入 Phase B，任何情况下不得运行 seed/MVE
   allowed_actions:
     - RECOVER
     - TASK_PREPARATION
@@ -35,11 +35,11 @@ rdl_control:
     - UNAUTHORIZED_SCIENTIFIC_EXPERIMENT
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
   mission_checkpoint: CP015
-  next_legal_action: 形成包含 R006、D020/D031、V041-V045、epoch39 control、T016 与 current projections 的 clean committed binding；独立 final-binding verifier PASS 后，只允许内部 Phase-A executor 执行 disk-native Step 1 view/recent identity，不运行 seed/MVE
+  next_legal_action: 由未参加 dispatch review 的内部 Phase-A executor 执行 T016 A0-A3；若 A1 任一质量门失败立即 BLOCKED_SEARCH_COVERAGE，全部 PASS 才由主控验收并准备独立 canonical Phase-B turn，不运行 seed/MVE
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（R006/D020/formal D031 已选择 C15 一次性 formalization；epoch 39 / CP015，无 active scientific carrier，T016 静态合同 PASS、等待 clean final binding）
+> 状态: active（R006/D020/formal D031 已选择 C15 一次性 formalization；epoch 40 / CP015，无 active scientific carrier，V046 final binding PASS，仅 T016 Phase A ready）
 > 创建: 2026-07-23 | 最后更新: 2026-07-27
 
 ## 专题信息
@@ -409,13 +409,14 @@ rdl_control:
   M-C-A、B6 无 residual construct。active scientific carrier 仍为空；T016
   等待独立 dispatch review。该激活时点随后由 V045 静态 PASS 与 epoch39
   final-binding gate 合法取代。
-- **V041–V045 / epoch 39**：V041 将三项 readiness audit 的摘要、absolute shared-main
+- **V041–V046 / epoch 40**：V041 将三项 readiness audit 的摘要、absolute shared-main
   path 与 hash 落盘；V042 首轮 T016 dispatch review 以
   `P0/P1/P2=2/3/1` 拒收假三源风险、错误 blit CLI/写入边界、timebox、stale
   projection 与 dirty binding。V043 第二轮识别 JSON/sidecar 无 DOI、
   `--max 5` 与 cumulative allowlist 缺陷；V044 冻结三篇 canonical 的
   DOI↔IEEE arnumber/document URL；V045 以 `P0/P1/P2=0/0/1` 接收静态合同。
-  唯一剩余项是 clean committed final binding。
+  V046 又对 commit `a392bc0` 完成 clean final-binding 复核，
+  `P0/P1/P2=0/0/0`，只授权 Phase A。
 
 ## 未决项
 
@@ -437,11 +438,10 @@ V038–V040/D019/formal D030 已把 T015 接收为
 `BLOCKED_NOVELTY_COLLISION / PACKAGE_WITHDRAWN_BEFORE_EXECUTION`；B12 回池，
 无 family Kill、无 seed、无方法 delta。mission 在 CP015/no-method=15、
 `DRIFTED/STALLED`。R006/D020/formal D031 已完成 post-B12 remap：control
-epoch 39 维持 C15 一次性 Step 1–2 formalization workline，但 formal active
+epoch 40 维持 C15 一次性 Step 1–2 formalization workline，但 formal active
 scientific carrier 仍为 `NONE`。T016 只允许 source view、recent identity、
 canonical worktree staging 与 preliminary coverage report，预期 method delta
-固定为 NONE。V045 已确认静态合同 PASS，唯一 remaining P2 为 clean
-committed final binding；完成并由独立 verifier 复核前不得执行。禁止 T006
-combination/B10 回接、T012
+固定为 NONE。V046 已确认 clean final binding PASS；当前只授权内部 Phase A
+执行 A0–A3，Phase A 验收前不派 Phase B。禁止 T006 combination/B10 回接、T012
 amendment/旧 C15 sandbox、B1/A4/B10 旧修复、第三个 B9 包、第二个 B12
 repair、任何 seed/MVE、Scout/P03 与 Step 5/Contract/Execute。
