@@ -49,8 +49,8 @@ topics:
     title: Research Direction Lab 长程真实运行测试
     status: active
     created: "2026-07-23"
-    last_updated: "2026-07-26（system D018；phase-1 audit freeze，CP001–CP007 回填）"
-    description: "D017/D018 轻量长程运行协议的真实纵向 mission。phase 1 冻结于 aab425d，方法产出为零。epoch 12 / D001 依 formal owner 续接 B1：T008 只授权五项 identity 修复后同包完成三个方法与 fresh-seed paired comparison；C15 因未完成 Step 1–3 暂不运行。"
+    last_updated: "2026-07-26（D002/V002/CP008；T008 Kill 拒收，Goal handoff ready）"
+    description: "D017/D018 轻量长程运行协议的真实纵向 mission。T008 工程测试通过，但科学 Kill 因 no-crossing dB proxy、oracle identity、eval population 与 artifact closure 失败而拒收；八包 method delta 均为 NONE，epoch 13 停止 B1/T009，转新 Goal 对话先做 campaign remap。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 S014 现场故障、R003 场景演练、D017 控制接口和 guard
@@ -447,8 +447,8 @@ topics:
     title: Step 4a 维度 D MVE 执行（B11 单载波 NDA-ML 主推 + B7/B3 待开）
     status: active
     created: "2026-07-06"
-    last_updated: "2026-07-25（S015/V001/D013：T006 科学 verdict 拒收，B1 adaptive phase window T007_READY）"
-    description: "Step 4a carrier owner。历史 B11/NDA-ML/A1-A4 与 baseline 资产保留；T006 因 B10/B12 source identity、pilot/data channel、oracle/eval 与 robust statistics 多重失败，工程记 PARTIAL、科学 verdict FAIL，family 保持 UNRESOLVED。D013 激活已有 Step1–3 证据的 B1 adaptive phase window；T007 先验证固定窗结构门，门过则同包实现 ratio rule、lookup+hysteresis、confidence controller。止于 provisional Step4a，不进 Step5/Contract/Execute。"
+    last_updated: "2026-07-26（S015/V002/D014：T008 Kill 拒收，B1 返回候选池，等待 Goal remap）"
+    description: "Step 4a carrier owner。历史 B11/NDA-ML/A1-A4 与 baseline 资产保留；T006 的 B10/B12 verdict 拒收。D014 又因 no-crossing dB proxy、oracle candidate、eval population 与 evidence closure 失败拒收 T008 Kill；B1 为 BLOCKED_IDENTITY/RETURNED_TO_POOL，当前无 active carrier，等待 Goal campaign remap。仍止于 Step4a，不进 Step5/Contract/Execute。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
         reason: 继承 S031 排优先级（B11/B3/B7 Conditional Go）+ 切法地图参照系（饱和池/稀池路径）+ D005 务实路线 + D006 红线 + 5 个口径警示

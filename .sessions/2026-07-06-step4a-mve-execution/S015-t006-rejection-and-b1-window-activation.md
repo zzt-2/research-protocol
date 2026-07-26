@@ -36,3 +36,28 @@ T006 完成了大量代码、raw rows 和测试，但其科学结论不能成立
 
 执行 live-test `T007-b1-adaptive-phase-window-method.md`。先过“最优窗随条件变化且
 不存在普适固定窗”的结构门；失败即 Kill，成功则同包完成三种方法和正式 test。
+
+> 2026-07-26 续接
+
+## 记录（T008 接收）
+
+T008 完成 17 项定向测试和一套隔离实现，但未闭合 D013 要求的科学身份。所有主
+cell 无真实 FEC crossing，执行器改用 `dB-equiv` 下 Kill；gate 实际没有计算合法
+per-block oracle，且跳过包含实际 B*=256 的候选。去 pilot 标签重算后，20 dB BER
+仍处 0.17–0.32，暴露逐窗 π/2 branch resolve 与 evaluator working-region 问题。
+
+因此 T008 科学 verdict 拒收，B1 不 Kill、也不再修当前实现。八包无方法增量后，
+下一动作转由 live Goal campaign remap 选择新的合法 carrier。
+
+## 决策引用（续接）
+
+- D014：T008 身份修复失败，B1 返回候选池（新建）
+
+## 范围确认（续接）
+
+- 本轮是否在 scope boundary 内：是。只做 Step 4a 接收与 carrier 回收，不运行
+  新实验，不进入 Step 5/Contract/Execute。
+
+## 后续（续接）
+
+接收 live-test H002；完成 campaign remap 前，本专题无 active carrier。

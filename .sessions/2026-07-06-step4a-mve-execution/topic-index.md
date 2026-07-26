@@ -1,7 +1,7 @@
 # Topic Index: Step 4a 维度 D MVE 执行
 
 > slug: 2026-07-06-step4a-mve-execution
-> status: active | created 2026-07-06 | last_updated 2026-07-25（S015/V001/D013：拒收 T006 科学 verdict，激活 B1 自适应相位窗 Step 4a 大包 T007。）
+> status: active | created 2026-07-06 | last_updated 2026-07-26（S015/V002/D014：拒收 T008 Kill，B1 返回候选池，等待 Goal campaign remap。）
 
 ## 专题定位（一句话）
 
@@ -27,10 +27,8 @@
 对 B11/B3/B7 走 Step 4a 维度 D MVE，守 FR-21/TL-20/FR-18/FR-12 + D005 务实路线 + D006 红线。
 
 ### 当前范围
-- **D013 当前 carrier**：B1 adaptive phase-estimation window。T007 先验证最优窗
-  是否随 receiver-visible SNR/phase-noise ratio 稳定变化且无普适固定窗；门通过
-  则同包实现 ratio rule、lookup+hysteresis 和 confidence controller。止于
-  Step 4a provisional verdict。
+- **D014 当前状态**：无 active carrier。T008 因 metric/oracle/evaluator identity
+  失败被拒收；B1 返回候选池，等待 Goal campaign remap。仍止于 Step 4a。
 - **复用 projects/simulation/common/ 基建**（GG+Doppler+phase noise 信道 + VV/BPS/DPLL/KF 载波恢复，TL-24/TL-13 已制度化）
 - **增量扩充 common**：
   - `_modulation.py` 加 M-APSK（8PSK / (8,8)-16APSK / 32APSK / 64APSK + Gray 映射）—— B11+B3 共用
@@ -52,6 +50,11 @@
 - ❌ 不污染 common（explore 阶段探针不直接进 experiments，MVE 通过才转正）
 
 ### 范围变更记录
+- **2026-07-26 V002/D014 carrier return**：T008 工程测试通过，但
+  `KILL_NO_ADAPTIVE_WINDOW_SPACE` 因 no-crossing dB proxy、oracle candidate、
+  eval population 与 evidence closure 失败被拒收。
+  - 新范围：B1 返回候选池且不再修当前实现；formal 暂无 active carrier。
+  - 不变边界：Goal campaign remap 前不运行新科学实验，不进入 Step 5。
 - **2026-07-25 V001/D013 carrier switch**：T006 的 source identity、pilot/data
   channel、oracle/eval 与 robust statistics 同时失效，拒收其
   `PROBLEM_SURVIVES_METHODS_FAIL`，但不 Kill B10/B12 family。
@@ -160,6 +163,9 @@ projects/simulation/
 - **D013** T006 科学 verdict 拒收并激活 B1 adaptive phase window（2026-07-25
   新建）：T006 工程 PARTIAL、B10/B12 family UNRESOLVED；T007 先验证最优窗随
   条件变化且不存在普适 fixed N，门过才实现三种 receiver-visible 方法。
+- **D014** T008 科学 verdict 拒收并将 B1 返回候选池（2026-07-26 新建）：
+  no-crossing dB proxy、oracle candidate、eval population 与 evidence closure
+  失败；不作 family Kill，不再修当前实现。
 
 ## 悬而未决
 
@@ -171,11 +177,10 @@ projects/simulation/
 
 ## 当前位置
 
-**🟡 S015/V001/D013 B1 自适应相位窗 T007_READY（2026-07-25）**：
-当前 formal step 仍为 GW Step 4a。B1 Step 1–3 证据已存在；下一动作先验证固定窗
-失效结构与 receiver-visible observability。若最优窗不随条件稳定变化或存在普适固定窗，
-立即 Kill；若存活，同包完成 ratio rule、lookup+hysteresis、confidence controller
-三方法，必须对照 validation-optimal fixed window、pilot CPE 与 BPS。不得进入 Step 5。
+**🔴 S015/V002/D014 NO ACTIVE CARRIER（2026-07-26）**：当前 formal step 仍为
+GW Step 4a，但 T008 Kill 被拒收，B1 为 `BLOCKED_IDENTITY / RETURNED_TO_POOL`。
+下一动作不是修 T008，而是由 live Goal campaign remap 比较合法 carrier；remap
+前不得运行新实验或进入 Step 5。
 
 **🟢 S013 A4 条件适配 PASS + 简报写完待发（2026-07-09）**：4 种适配扫描全闭合（A1 参数 FAIL / A2 结构已做 D002 / A3 组合 FAIL / **A4 条件 PASS**）。A4 = per-block 有效 SNR 驱动 DA/NDA 切换，crossover 区（γd=15dB）30 seed 赢 max(DA,NDA) +0.27~+0.48dB（CI 下界全正）。物理发现：crossover 由 per-block γ_eff 驱动（非单纯 fade 深度），诊断实证汇聚在 γ_eff 12~14dB。文献两轮独立检索（16 组 ~130 篇）确认单载波 CPR per-block pilot/blind 硬切换没人做过（最接近是静态比较 Song 2020 / 级联组合 Moretti 2013 / 算法内自适应参数，都不是切换）。fair_gain 30 seed 链：AWGN+1.34→weak+1.43→mod+1.44→strong+2.51→up_mod+2.44→up_str+3.10dB（weak/mod CI 重叠，两段趋势非严格单调）。简报 `ADVISOR_BRIEFING_2026-07-09_adaptive_cpr.md` 写完未发。**下一步**：用户去新对话调研"自适应论文怎么组织 baseline/参数/叙述"（H008），回来完善简报后发老师。
 
@@ -236,6 +241,8 @@ projects/simulation/
 - **S015/V001/D013**（2026-07-25）：T006 工程 PARTIAL、科学 verdict FAIL；
   B10/B12 family 标 UNRESOLVED，停止当前修复。下一 carrier 为 B1 adaptive
   phase window，T007 先结构门后同包三方法。
+- **S015续接/V002/D014**（2026-07-26）：T008 工程测试 PASS、科学 Kill FAIL；
+  B1 不关闭但返回候选池，formal 暂无 active carrier，等待 Goal campaign remap。
 - **D-011** A1 参数适配（NDA 块长自适应 K）FAIL（2026-07-08，S013 新建）
 - **H008** 交接给新对话：自适应论文 baseline 组织/参数处理/叙述展开调研（2026-07-09，用户要去新对话搞清楚别人怎么弄 baseline + 参数照搬还是自调）
 - **H009** 切换三 bug 修复+30seed 重跑结果（2026-07-09，执行 thesis-writing D001 修复任务，实验在本专题 step4a 跑。代码 `_a4_switch_30seed_fixed.py` + 数据 + 报告 `_a4_switch_bugfix_report.md`。Bug2 非假增益源不修（独立核查修正用户诊断）。结论：切换无全场景增益，降级为鲁棒性补丁，net gain+1.2dB 不依赖切换。切换叙事定位回 thesis-writing 待讨论。完整交接见 thesis-writing/H003）

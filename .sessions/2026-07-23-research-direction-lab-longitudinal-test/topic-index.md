@@ -4,15 +4,16 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 12
+  control_epoch: 13
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: B1_IDENTITY_REPAIRED_METHOD
-  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D001
-  decision_gate: B1 是 master-state 当前唯一已完成 Step 1–3 的合法 carrier；T008 必须修五项 identity 后同包完成方法
+  active_lane: GOAL_MODE_CAMPAIGN_REMAP
+  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D002
+  decision_gate: T008 的 Kill 因 metric/oracle/evaluator identity 失败被拒收；八包无方法增量后必须先做 campaign remap
   allowed_actions:
-    - B1_IDENTITY_REPAIRED_METHOD_PACKAGE
-    - TASK_BRIEF_PREPARATION
+    - GOAL_HANDOFF_PREPARATION
+    - CAMPAIGN_REMAP
+    - FORMAL_CARRIER_COMPARISON
   forbidden_actions:
     - UNRELATED_SCIENTIFIC_EXPERIMENT
     - PRIVATE_FULLTEXT_ACQUISITION
@@ -24,13 +25,15 @@ rdl_control:
     - GENERAL_INFRASTRUCTURE_BUILD
     - PILOT_JONES_REPAIR_OR_NEW_AXIS
     - HIGH_ORDER_CPR_COMBINATION_REPAIR
+    - B1_REPAIR_OR_T009
+    - SCIENTIFIC_EXPERIMENT_BEFORE_REMAP
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
-  mission_checkpoint: CP007
-  next_legal_action: 执行 T008；修正 baseline/metric/oracle/observability 身份后，同包完成 P1–P3 与 fresh-seed paired comparison
+  mission_checkpoint: CP008
+  next_legal_action: 新 Goal 主控接收 H002，回顾 CP001–CP008 并完成 campaign remap；remap 前不派科学 T
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（T008_READY；仅授权 B1 Step 4a 单包）
+> 状态: active（GOAL_HANDOFF_READY；T008 verdict rejected）
 > 创建: 2026-07-23 | 最后更新: 2026-07-26
 
 ## 专题信息
@@ -55,9 +58,9 @@ rdl_control:
 - T005 已完成并由 D066/V040 接收 scoped Kill；Pilot-Jones 退出当前 carrier。
 - T006 工程资产保留，但科学 verdict 因 source identity/channel/statistics 多重缺口
   被拒收；B10/B12 family 为 UNRESOLVED，不继续当前修复。
-- T007 verdict 尚未接收；B1 仍是 master-state 当前唯一完成 Step 1–3 的合法 carrier。
-- 当前仅授权 T008：修正 T007 五项 identity 后，同包实现 P1–P3 并作 fresh-seed
-  paired comparison。
+- T008 的 17 项工程测试通过，但 Kill 因 required-SNR、oracle candidate 与
+  evaluator working-region 身份失败被拒收；B1 只保留为未决 family。
+- 当前只授权 Goal handoff 与 campaign remap；remap 前不派 T009 或新科学实验。
 
 ### 明确不含
 
@@ -118,6 +121,14 @@ rdl_control:
   - 新范围：只授权 T008 在 GW Step 4a 做五项 identity 修复，并在合法空间仍在时
     同包完成三个方法；不再派纯 repair 包。
   - 影响的未决项：corrected headroom 是否存活，P1–P3 能否形成方法信号。
+- **[2026-07-26] [D002/V002]**：T008 `KILL_NO_ADAPTIVE_WINDOW_SPACE`
+  被拒收，B1 转 `BLOCKED_IDENTITY / RETURNED_TO_POOL`。
+  - 原因：所有 primary cell 无 FEC crossing，却用 `dB-equiv` 触发 Kill；实际 gate
+    不是 per-block oracle，且跳过包含真实 B*=256 的候选；BER population 与
+    π/2 branch resolve 使基线不在可靠 working region。
+  - 新范围：停止 B1 修复；只做 Goal handoff 和 campaign remap。
+  - 影响的未决项：下一合法 carrier 必须由 remap 比较方法产出潜力、补债成本与
+    formal readiness 后确定，不能从旧 portfolio 标签直接挑。
 
 ## 已确认结论
 
@@ -164,16 +175,21 @@ rdl_control:
   不以 portfolio readiness 冒充 formal authorization。
 - **V001 / T008 dispatch review**：独立终验 PASS；formal/guard/identity/method
   continuation/statistical gate/≤1 天预算均闭合，无 P0/P1。
+- **CP008 / D002 / V002**：T008 工程测试 17/17 PASS，但主控与独立 critic
+  发现 metric、oracle、eval population 和 artifact closure P0/P1；正式 Kill 拒收。
+  mission method delta 连续八包为 NONE，状态为 DRIFTED/STALLED，停止 T009。
+- **H002**：新 GPT Goal 对话恢复入口；先验三条事实并做 campaign remap。
+- **V003**：CP008 状态协调与 H002 独立终验 PASS，P0/P1/P2 均为 0。
 
 ## 未决项
 
-- T007 当前 structural Kill 的完整 contract 与 claim ceiling尚未接收；
-- B1 corrected headroom 与三个 deployable 方法的 provisional verdict；
+- B1 family 保持 `UNRESOLVED`；若未来复用必须重建 evaluator，而非继续修 T008；
+- 下一合法 carrier 与下一 METHOD_CONSTRUCT 包由 Goal remap 决定；
 - live run 自然覆盖哪些恢复/轮换/晋级事件；
 - 何时由原 design 对话进行阶段性审计。
 
 ## 当前位置
 
-T008_READY。D001 已确认 B1 是当前唯一合法 formal carrier；任务绑定 epoch 12 /
-CP007，先修五项 identity，corrected space 存活则在同一 GLM 对话完成 P1–P3 和
-fresh-seed paired comparison。executor 不更新 formal/current/mission owners。
+GOAL_HANDOFF_READY。T008 commit `61f8c53` 已审查：工程资产保留，科学 Kill
+拒收；控制面绑定 epoch 13 / CP008 / D002。下一对话先接收 H002、建立 Goal 并做
+campaign remap；在明确选出合法 carrier 前不得派 T009 或运行新科学实验。

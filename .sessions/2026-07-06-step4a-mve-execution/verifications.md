@@ -42,3 +42,31 @@
 - “9–20 dB 为真实机制失败而非 bug”：FAIL，被 source-native probe 反驳。
 - T006 工程资产：PARTIAL，可作为错误实现、测试与失败模式素材。
 - B10/B12 family：`UNRESOLVED_IMPLEMENTATION_INVALID`，不作 Kill。
+
+---
+
+## V002: T008 B1 自适应相位窗主控接收审查
+
+> 日期：2026-07-26
+> 关联：T008 / S015 / D013 / D014
+> 结论：FAIL（科学裁决与证据闭包）/ PASS（17 项定向工程测试）
+
+### 新鲜验证
+
+- 定向测试：`17 passed in 10.64s`。
+- task 要求无 FEC crossing 时只报 `UNRESOLVED_NO_CROSSING`；runner 实际用
+  `dB-equiv` 触发 Kill。所有 primary cell required-SNR 均为 NaN。
+- gate 只算 B-cond vs B*；per-block oracle 跳过 `N>100`，而 B*=256。
+  独立两 seed 诊断用完整 N 集合重算，oracle-vs-B* log-BER gain 为
+  QPSK≈0.021、16QAM≈0.009–0.015，不能支持“空间为零”。
+- data-only validation 重算：20 dB QPSK clean/operational
+  `0.173963/0.178046`，16QAM `0.271821/0.280207`，仍不在 FEC working region。
+- commit `61f8c53` 未包含 gitignored results/raw/log；fresh-test 8100–8119
+  只有 synthesis 数字，无可审 raw artifact。
+
+### 裁决
+
+- `KILL_NO_ADAPTIVE_WINDOW_SPACE`：FAIL，不接收。
+- metric：`UNRESOLVED_NO_CROSSING`。
+- T008 工程资产：PARTIAL，可保留测试和 evaluator 失败模式。
+- B1 family：`BLOCKED_IDENTITY / RETURNED_TO_POOL`，不作 Kill。

@@ -664,10 +664,10 @@ ML 加权增益来源：
 
 ## D013: 拒收 T006 科学裁决并切换到 B1 自适应相位估计窗
 
-> status: active
+> status: superseded
 > date: 2026-07-25
 > 取代：D012（仅取代其“当前 carrier”身份；D012 对 T006 的历史授权仍有效）
-> 被取代：无
+> 被取代：D014
 > 依据：V001 / S015 / T006 source、raw rows 与主控数值探针
 
 ### 决策
@@ -710,3 +710,49 @@ ML 加权增益来源：
   `ADAPTIVE_PHASE_WINDOW_METHOD_PACKAGE`。
 - T006 代码、raw artifacts 和 commit 不回滚、不改写；只修正 current scientific view。
 - 仍止于 GW Step 4a，不进入 Step 5、Contract 或 Execute。
+
+---
+
+## D014: T008 身份修复失败，B1 返回候选池
+
+> status: active
+> date: 2026-07-26
+> 取代：D013（仅取代当前 carrier 与下一动作；D013 对 T007/T008 的历史授权保留）
+> 被取代：无
+> 依据：验证 V002 + live-test D002/CP008 + T008 task/runner/data-only 重算
+
+### 决策
+
+1. T008 的 `KILL_NO_ADAPTIVE_WINDOW_SPACE` 不接收；formal disposition 为
+   `SCIENCE_VERDICT_REJECTED / BLOCKED_IDENTITY`，metric 子状态为
+   `UNRESOLVED_NO_CROSSING`。
+2. B1 family 不关闭，返回候选池；当前实现不再追加修复包。
+3. 本专题暂时没有 active carrier。下一 carrier 必须由 live Goal campaign remap
+   明确选择后，再以新的 formal 决策激活。
+
+### 理由
+
+- 所有 primary cell 都没有真实 HD-FEC crossing；执行器违反冻结任务，使用
+  非 FEC 区域的 log-BER slope 生成 `dB-equiv` 触发 `<0.5 dB` Kill。
+- 所谓 corrected oracle gate 只比较 B-cond 与 B*；per-block oracle 还跳过
+  `N>BLOCK=100`，而冻结 B*=256，故 oracle identity 并未闭合。
+- pilot 覆盖符号仍按原 data bits 计错，逐窗 VV 又缺跨窗 π/2 unwrap。去 pilot
+  后 20 dB 仍有 QPSK BER 0.174–0.178、16QAM 0.272–0.280，不能称 working region。
+- raw/fresh-test artifacts 未进入 commit，formal evidence closure 不完整。
+
+### 排除的替代方案
+
+- 不作 local/family Kill：当前数据只说明受污染 evaluator 下两个 fixed baseline
+  接近，不能证明合法自适应空间消失。
+- 不做第三个 B1 修复包：当前 mission 已连续八包无方法增量，继续修会偏离
+  method-production 目标。
+
+### 影响范围
+
+- master-state 转为 `CAMPAIGN-REMAP-GOAL-HANDOFF-READY`。
+- B1 的来源、测试和失败机制可复用；T008 数字不得作为论文方法/性能结论。
+- 仍在 GW Step 4a 总阶段，不进入 Step 5/Contract/Execute。
+
+### 来源
+
+S015 续接 / V002 / live-test D002。
