@@ -1,0 +1,29 @@
+schema: t009.a4-v2.contract.v1
+status: frozen
+stage: GW_STEP_4A
+formal_owner: D015
+waveform:
+  modulation: "(8,8)-16APSK"
+  block_symbols: 256
+  pilot_spacing: 4
+  data_population: "symbols not at pilot positions; identical for every arm"
+conditions:
+  turbulence: [weak, moderate, strong]
+  snr_db_evaluator_only: [16.0, 24.0, 36.0]
+  order:
+    - weak@16
+    - moderate@24
+    - strong@36
+    - strong@16
+    - weak@36
+    - moderate@16
+    - moderate@36
+    - strong@24
+    - weak@24
+  dwell_blocks: 6
+selectors:
+  inputs: [received_block_power, hard_decision_innovation]
+  capacity: "two thresholds / three monotone bins / confidence fallback"
+comparators: [fixed_DA, fixed_NDA, continuous_DPLL, B_star, B_condition, per_block_oracle]
+verdict_gate: T009_section_7
+

@@ -1,0 +1,10 @@
+schema: t009.seed-census.v1
+history_rule: "old A4 and T002-T008 are excluded; fresh pools use new 91xxx/92xxx namespaces"
+identity_seed:
+  value: 20240701
+  purpose: "S011 reproduction only; never validation/test"
+validation_seeds: [91001, 91002, 91003, 91004, 91005, 91006, 91007, 91008, 91009, 91010]
+test_seeds: [92001, 92002, 92003, 92004, 92005, 92006, 92007, 92008, 92009, 92010]
+pairing_key: "(pool, seed, block)"
+disjoint: true
+

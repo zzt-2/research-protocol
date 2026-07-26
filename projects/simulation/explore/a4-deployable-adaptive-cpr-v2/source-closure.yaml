@@ -1,0 +1,25 @@
+schema: t009.source-closure.v1
+formal_owner: D015
+carrier: A4_DEPLOYABLE_ADAPTIVE_CPR
+sources:
+  b11_pdf:
+    path: D:/code/study/research-protocol/papers/doi/10.1109_lpt.2024.3523478/source.pdf
+    sha256: 8df0d3117507835e0881d331d200dfa0348b33c736ef6c0d8ff50650498efe53
+    formulas: "p.560 Eq.(5)-(12); p.561 Eq.(13)-(18)"
+  common_channel:
+    path: projects/simulation/common/_channel.py
+    sha256: 800e437510372a53a2e821c7e3ca2a84a5595b3b240cd696cf7998cfbce9f8e3
+  common_modulation:
+    path: projects/simulation/common/_modulation.py
+    sha256: 036fb7aa4d0bef153ee53799f20a244492fb6294f93132d1ecc2b0530b5694d5
+  common_recovery:
+    path: projects/simulation/common/_recovery.py
+    sha256: afb8aed9508cc83ee13d05bfd4346a2e6f0852af0e9d6a182a85a441ff5d60e2
+  s011_dpll:
+    path: projects/simulation/simulator/run_dpll_ablation.py
+    sha256: 4f31989f553cf42828be344ee47e6655e76493a03e2588f4ad15786c7a19649d
+excluded:
+  - "B11 genie-aided phase unwrapping (p.561 Table I)"
+  - "old resolve_m16apsk_blockwise because it reads tx_bits"
+  - "old mixed/full denominator and post-hoc oracle"
+
