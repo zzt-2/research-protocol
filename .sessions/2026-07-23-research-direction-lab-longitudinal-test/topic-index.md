@@ -4,17 +4,17 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 11
+  control_epoch: 12
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: PHASE2_ENTRY_SELECTION
-  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D018
-  decision_gate: v2 协议已实现；C15 是推荐入口，但科学执行须等 v2 commit 与新 T 通过 checkpoint guard
+  active_lane: B1_IDENTITY_REPAIRED_METHOD
+  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D001
+  decision_gate: B1 是 master-state 当前唯一已完成 Step 1–3 的合法 carrier；T008 必须修五项 identity 后同包完成方法
   allowed_actions:
-    - PORTFOLIO_REMAP
+    - B1_IDENTITY_REPAIRED_METHOD_PACKAGE
     - TASK_BRIEF_PREPARATION
   forbidden_actions:
-    - SCIENTIFIC_EXPERIMENT
+    - UNRELATED_SCIENTIFIC_EXPERIMENT
     - PRIVATE_FULLTEXT_ACQUISITION
     - ABSTRACT_AS_FULLTEXT
     - POST_STEP4A_ADVANCE
@@ -26,11 +26,11 @@ rdl_control:
     - HIGH_ORDER_CPR_COMBINATION_REPAIR
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
   mission_checkpoint: CP007
-  next_legal_action: 以 C15 公平步长/梯度归一化的 constellation-aware cost 为首选，准备一个同包 identity smoke→minimal construct→paired compare 的 v2 T；当前不执行
+  next_legal_action: 执行 T008；修正 baseline/metric/oracle/observability 身份后，同包完成 P1–P3 与 fresh-seed paired comparison
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（PHASE2_ENTRY_SELECTION；尚未授权科学执行）
+> 状态: active（T008_READY；仅授权 B1 Step 4a 单包）
 > 创建: 2026-07-23 | 最后更新: 2026-07-26
 
 ## 专题信息
@@ -55,8 +55,9 @@ rdl_control:
 - T005 已完成并由 D066/V040 接收 scoped Kill；Pilot-Jones 退出当前 carrier。
 - T006 工程资产保留，但科学 verdict 因 source identity/channel/statistics 多重缺口
   被拒收；B10/B12 family 为 UNRESOLVED，不继续当前修复。
-- 当前仅授权 T007 B1 自适应相位窗方法包：复用既有 Step 1–3 证据，在 GW Step 4a
-  先验证固定窗失效结构，门过则同包实现并比较三个 receiver-visible 方法。
+- T007 verdict 尚未接收；B1 仍是 master-state 当前唯一完成 Step 1–3 的合法 carrier。
+- 当前仅授权 T008：修正 T007 五项 identity 后，同包实现 P1–P3 并作 fresh-seed
+  paired comparison。
 
 ### 明确不含
 
@@ -111,6 +112,12 @@ rdl_control:
     科学实验，不改变 phase-1 scientific disposition。
   - 影响的未决项：phase 2 从哪个 READY/NEEDS_SMALL_ADAPTER carrier 开始，
     必须等 v2 终验后按方法生产价值比较。
+- **[2026-07-26] [D001]**：C15 推荐被 formal owner 核查推翻，首包续接 B1。
+  - 原因：C15 未完成新候选 Step 1–3，直接运行违反 FR-22；B1 已有 formal
+    Step 1–3，T007 Kill 又因 baseline/metric/oracle/observability 缺口未被接收。
+  - 新范围：只授权 T008 在 GW Step 4a 做五项 identity 修复，并在合法空间仍在时
+    同包完成三个方法；不再派纯 repair 包。
+  - 影响的未决项：corrected headroom 是否存活，P1–P3 能否形成方法信号。
 
 ## 已确认结论
 
@@ -153,17 +160,20 @@ rdl_control:
 - **mission-log / phase-1 audit**：CP001–CP007 已回填。审计确认无严重跨 lane，
   但 formal success 多次没有 mission method delta；T007 暂不接收 family Kill，
   T008 停止。
+- **D001 / phase-2 entry**：B1 作为唯一合法 formal carrier 续接；C15 保留候选，
+  不以 portfolio readiness 冒充 formal authorization。
+- **V001 / T008 dispatch review**：独立终验 PASS；formal/guard/identity/method
+  continuation/statistical gate/≤1 天预算均闭合，无 P0/P1。
 
 ## 未决项
 
-- T007 当前 structural Kill 的完整 contract 与 claim ceiling 尚未接收；
-- phase 2 最佳 READY/NEEDS_SMALL_ADAPTER 方法入口；
+- T007 当前 structural Kill 的完整 contract 与 claim ceiling尚未接收；
+- B1 corrected headroom 与三个 deployable 方法的 provisional verdict；
 - live run 自然覆盖哪些恢复/轮换/晋级事件；
 - 何时由原 design 对话进行阶段性审计。
 
 ## 当前位置
 
-PHASE2_ENTRY_SELECTION。v2 方法生产、双账、owner 边界、固定 mission-log 和
-checkpoint guard 已实现并进入终验。当前排序：C15 首选，B1 保留但不立即修，
-C04 需先解决自指 target，C16 适配偏大。下一步仅准备一个 C15 v2 T；在 v2 commit
-完成且 task/control/checkpoint guard PASS 前，不运行科学实验。
+T008_READY。D001 已确认 B1 是当前唯一合法 formal carrier；任务绑定 epoch 12 /
+CP007，先修五项 identity，corrected space 存活则在同一 GLM 对话完成 P1–P3 和
+fresh-seed paired comparison。executor 不更新 formal/current/mission owners。
