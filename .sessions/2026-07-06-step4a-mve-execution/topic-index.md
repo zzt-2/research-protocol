@@ -1,7 +1,7 @@
 # Topic Index: Step 4a 维度 D MVE 执行
 
 > slug: 2026-07-06-step4a-mve-execution
-> status: active | created 2026-07-06 | last_updated 2026-07-26（D017：激活 B10 source-native adaptive pilot-RLS carrier，T010 待独立审查。）
+> status: active | created 2026-07-06 | last_updated 2026-07-26（D022/live V026/V027：T010 闭环；B10 返回池，转 C15 Step 1–3 formalization。）
 
 ## 专题定位（一句话）
 
@@ -27,22 +27,14 @@
 对 B11/B3/B7 走 Step 4a 维度 D MVE，守 FR-21/TL-20/FR-18/FR-12 + D005 务实路线 + D006 红线。
 
 ### 当前范围
-- **D017 当前状态**：T009 的 `BLOCKED_IDENTITY / NONE` 与 A4
-  `RETURNED_TO_POOL` 保留；post-T009 remap 已激活
-  `B10_SOURCE_NATIVE_ADAPTIVE_RLS_CPR`。T010 必须从 128 contiguous pilot→DD
-  原文生命周期重建 fixed B10，identity 过门后同包比较 innovation freeze 与
-  adaptive forgetting。仍止于 Step 4a。
-- **复用 projects/simulation/common/ 基建**（GG+Doppler+phase noise 信道 + VV/BPS/DPLL/KF 载波恢复，TL-24/TL-13 已制度化）
-- **增量扩充 common**：
-  - `_modulation.py` 加 M-APSK（8PSK / (8,8)-16APSK / 32APSK / 64APSK + Gray 映射）—— B11+B3 共用
-  - `_recovery.py` 加 DA ML（B11 baseline + B3 CPE 子组件）+ NDA-ML（B11 方法）+ Gardner TED（B7 方法 + B3 FOE 子组件）+ FOE（B7 baseline）
-  - `_channel.py` 加 generate_shared_realization_apsk（含 CLW/HD-FEC 阈值扩展）
-  - `params.py` 加 B11/B7 参数族（CLW 500kHz / 7% HD-FEC / LEO Doppler rate，全标 source TL-26）
-- **explore/ 模式**（每候选一子目录）：
-  - `explore/b11-nda-ml-sto-cpe/`（B11 NDA-ML STO+CPE 星地湍流迁移 MVE）
-  - `explore/b7-gardner-ted-foe/`（B7 Gardner TED 复用 FOE 星地 LEO 适配 MVE）
-  - `explore/b3-subsystem-coordination/`（B3 子系统协同联合估计，需先决架构假设）
-- **MVE 通过后转 experiments/**（正式实验区）
+- **D022 当前状态**：live V026 已接收 T010 为
+  `BLOCKED_IDENTITY / P0=0/P1=0/P2=1 / mission_method_delta=NONE`。C2 停于
+  28 cells / 840 canonical rows；primary transfer 的 128-pilot unwrap 在
+  moderate/14 dB/seed `131004` 选错 `-2π` branch，P1/P2/P3 共用初始化。
+  B10 已返回候选池且禁止第二修复包；held-out/Phase D 从未授权。
+- **当前无 active scientific carrier**。唯一开放动作是
+  `C15_REDUCED_CONSTELLATION_FORMALIZATION` 的 Step 1–3 evidence/formal readiness；
+  独立审查前不得直接运行旧 C15 sandbox、Step 4a/MVE、Step 5/Contract/Execute。
 
 ### 明确不含
 - ❌ 不回头救 6 次 Kill（Q1/Q2/Q3/Q8 切入点 2/4B/Q12/Q#-A，D005 诚实重评"大概率没几个能救"）
@@ -53,6 +45,31 @@
 - ❌ 不污染 common（explore 阶段探针不直接进 experiments，MVE 通过才转正）
 
 ### 范围变更记录
+- **2026-07-26 V012/D020 Phase-C 分段授权**：clean confirm 以 seed `130003`
+  在 1/10 GHz 两格均 `0/99488`，独立 verifier 接收
+  `SOURCE_IDENTITY_PASS / PHASE_B_CONFIRM_ACCEPTED`，method delta 仍为 `NONE`。
+  - 新范围：C1 只实现 P2/P3、cheap rule、conventional B*、source-smoke seal 与
+    direct/clean/noiseless tests，不消费 validation；独立审查后才允许 C2 使用
+    `131001–131005` 冻结参数与 SNR cells。
+  - 冻结边界：C2 不消费 test；held-out/Phase D 必须等 C2 独立科学验收和新的
+    递增 control，source PASS 不构成方法或性能信号。
+- **2026-07-26 live V021/D010/D021 C1 接收与 C2 授权**：V019/V020 的 P1
+  全部关闭；C1 最终独立复审为 P0/P1/P2=`0/0/1`，legacy snapshot P2 不补造。
+  - 新范围：epoch 22 先独立审查 C2 起飞合同；PASS 后只运行 75-cell/2250-row
+    validation matrix，完整后按预注册 score 全局冻结各臂与 SNR points。
+  - 冻结边界：C1/C2 method delta 仍为 NONE；C2 不读取 test/held-out，不作
+    `METHOD_SIGNAL`，完成后暂停独立科学验收。
+- **2026-07-26 live V022–V024 C2 dispatch amendment**：V022 三个 P1 与
+  V023 B* exact-tie P1 均已关闭；V024 为
+  `PASS / P0=0/P1=0/P2=1`。control/task 递增到 epoch 23，最终 binding 复核
+  PASS 前不运行 validation。
+- **2026-07-26 live V025 C2 epoch23 binding**：
+  `PASS / P0=0/P1=0/P2=1`；只允许不同 executor 运行 validation freeze，
+  held-out/Phase D 与 CP010 继续锁定。
+- **2026-07-26 live V026/D011/D022 T010 identity early stop**：
+  840-row checkpoint 与 17/17 source hash 闭合；独立接收
+  `BLOCKED_IDENTITY / method delta NONE`。不补剩余矩阵、不定义事后 exception row、
+  不修 positive-slope gate；B10 返回池，下一动作转 C15 Step 1–3 formalization。
 - **2026-07-26 R002/D017 B10 source-native activation**：比较 B10、C15、B1、
   B9 后，B10 是唯一能在现存 Step 1–3 与可获取全文上直接形成方法包的 carrier。
   - 新范围：只允许 T010 隔离实现 source-native fixed B10、P2 innovation freeze、
@@ -201,25 +218,40 @@ projects/simulation/
   基于 live R002/D006 恢复 B10 formal carrier；T010 必须先重建 128 contiguous
   pilot→DD fixed B10，identity 过门后同包比较 innovation freeze、adaptive
   forgetting、amplitude-only cheap rule 与 conventional B*。
+- **D018/D019** T010 Phase-B identity repair 与 clean-confirm 合同（2026-07-26）：
+  初次 verdict 因 residual 反号和无来源 `.999` 被拒收；保留 invalid artifact，
+  改用唯一 clean confirm seed `130003` 和 source-only `.99`，confirm 后必须暂停。
+- **D020/V012** B10 source identity 接收并分段授权 Phase C（2026-07-26）：
+  method delta `NONE`；C1 不消费 validation，C1 独立审查后才可 C2，held-out 锁定。
+- **D021/live V021** T010 C1 接收并授权 C2 validation freeze（2026-07-26）：
+  C1 P0/P1/P2=`0/0/1`，method delta `NONE`；epoch 22 先做起飞独立审查，
+  PASS 后只运行 validation matrix，held-out/Phase D 锁定。
+- **live V024 / epoch 23** C2 deterministic amendment 已 PASS；最终
+  task-control/owner/binding 独立复核前不运行 validation。
 
 ## 悬而未决
 
-1. **T010 当前方法包**：source-native fixed B10、innovation freeze 与 adaptive
-   forgetting 的身份、working region 与方法信号待独立执行/验收。
+1. **T010 已终止**：live V026 已接收
+   `BLOCKED_IDENTITY / mission_method_delta=NONE`；B10 为
+   `RETURNED_TO_POOL`，C2 不再有待执行/待验收项，不补矩阵、不运行 held-out、
+   不开第二修复包。
 2. **B10/B12 历史身份债务**：T006 未实现 source-native 128-pilot
    training→decision-directed 生命周期，B12 关键公式与 pilot/data channel 未闭合；
    family 保持 `UNRESOLVED`，不得继承 T006 的科学 verdict。
-3. **历史后置材料**：跨块 KF、BPS 迁移、decision-feedback DA ML、SPEC.md §8
-   与 B11 叙事仍只属历史写作/消融债务；在新 carrier 激活前均非当前动作。
-4. **阶段边界**：仍止于 GW Step 4a；不得进入 Step 5/Contract/Execute，也不得
-   直接运行 C15、修 B1/T008、二修 A4/T009 或复活 Scout/P03。
+3. **C15 formal readiness**：Groundwork Step 1–3 formalization 尚待执行，
+   之后须由独立 verifier 审查 problem/source/传统 comparator/四判据 readiness；
+   审查 PASS 前 C15 不是 active scientific carrier。
+4. **阶段边界**：允许 C15 Step 1–3 formalization；禁止运行旧 C15 sandbox、
+   Step 4a/MVE、Step 5/Contract/Execute，禁止修 T006/T008/T009/T010，禁止
+   复活 Scout/P03。
 
 ## 当前位置
 
-**🔵 D017 B10 SOURCE-NATIVE CARRIER ACTIVE（2026-07-26）**：R002 完成
-post-T009 比较并激活 B10。T010 先闭合 128 contiguous pilot→DD、TX 侧同通道、
-原文 RLS/单位和 positive-CFO smoke，再同包比较 P1–P3、cheap rule 与 conventional
-B*。独立 verifier 通过前不执行；仍止于 GW Step 4a。
+**🟠 D022 NO ACTIVE CARRIER / C15 FORMALIZATION NEXT（2026-07-26）**：
+T010 已由 live V026 接收为 `BLOCKED_IDENTITY`，method delta `NONE`。840-row
+strict-prefix raw 保留，aggregate/held-out 均不存在；B10 不补第二包。当前只允许
+C15 从 Step 1 开始闭合 Step 1–3 formal readiness，未通过独立审查不得进入
+Step 4a/MVE。formal stage 保持 Groundwork。
 
 **（历史）D016/V003 NO ACTIVE CARRIER**：T009 在一次有界 repair 后
 于 identity gate 停止，P1–P3 未运行。formal 接受
@@ -310,9 +342,18 @@ strongest-fixed comparator 仍需 formal 闭合。D015 不继承旧 PASS，而�
   物理支配。shared transmitter/pilot 随机、1 MHz 频率不对称、无来源可靠工作区/
   FEC crossing、raw/result ignored 和 diff-check FAIL 均入账；A4 返回候选池，
   formal 无 active carrier。
-- **live R002/D006 / D017 / T010**（2026-07-26）：post-T009 比较 B10、C15、
-  B1、B9 后激活 B10 source-native adaptive pilot-RLS；T010 已准备，等待独立
-  起飞审查，尚未运行实验。
+- **live R002/D006 / D017 / T010**（2026-07-26，历史激活）：post-T009 比较
+  B10、C15、B1、B9 后激活 B10 source-native adaptive pilot-RLS。
+- **live V012/D009 / formal D020 / T010**（2026-07-26，历史）：clean Phase-B
+  source identity 已独立接收，method delta `NONE`。
+- **live V015 / epoch 21 / T010 C1**（2026-07-26，历史）：C1 派发终验 PASS；
+  只授权 isolated implementation/direct tests，不消费 validation/test；C2、
+  held-out/Phase D 锁定。
+- **live V025/D010 / formal D021 / epoch 23**（2026-07-26，历史）：C1 独立接收，
+  delta `NONE`；C2 final binding PASS，只授权 validation。
+- **live V026/D011 / formal D022 / epoch 24 / CP010**（2026-07-26，当前）：
+  T010 `BLOCKED_IDENTITY / method delta NONE`；B10 返回池且不再修。当前无 active
+  carrier，下一合法动作是 C15 Step 1–3 formalization。
 - **D-011** A1 参数适配（NDA 块长自适应 K）FAIL（2026-07-08，S013 新建）
 - **H008** 交接给新对话：自适应论文 baseline 组织/参数处理/叙述展开调研（2026-07-09，用户要去新对话搞清楚别人怎么弄 baseline + 参数照搬还是自调）
 - **H009** 切换三 bug 修复+30seed 重跑结果（2026-07-09，执行 thesis-writing D001 修复任务，实验在本专题 step4a 跑。代码 `_a4_switch_30seed_fixed.py` + 数据 + 报告 `_a4_switch_bugfix_report.md`。Bug2 非假增益源不修（独立核查修正用户诊断）。结论：切换无全场景增益，降级为鲁棒性补丁，net gain+1.2dB 不依赖切换。切换叙事定位回 thesis-writing 待讨论。完整交接见 thesis-writing/H003）

@@ -1,0 +1,32 @@
+schema: t010.seed-census.v1
+facts_reparsed_in_phase_a:
+  t006:
+    source:
+      - projects/simulation/explore/high-order-cpr-combination/contract.yaml
+      - projects/thesis-fso/worker-logs/step-006-high-order-cpr-combination-method.md
+  t008:
+    source:
+      - projects/simulation/explore/b1-adaptive-phase-window-v2/seed-census.yaml
+  t009:
+    source:
+      - projects/simulation/explore/a4-deployable-adaptive-cpr-v2/seed-census.yaml
+historical:
+  t006:
+    validation: [7600, 7601, 7602, 7603, 7604]
+    test: [7700, 7701, 7702, 7703, 7704, 7705, 7706, 7707, 7708, 7709]
+  t008:
+    validation: [8000, 8001, 8002, 8003, 8004, 8005, 8006, 8007, 8008, 8009]
+    test: [8100, 8101, 8102, 8103, 8104, 8105, 8106, 8107, 8108, 8109, 8110, 8111, 8112, 8113, 8114, 8115, 8116, 8117, 8118, 8119]
+  t009:
+    validation: [91001, 91002, 91003, 91004, 91005, 91006, 91007, 91008, 91009, 91010]
+    test: [92001, 92002, 92003, 92004, 92005, 92006, 92007, 92008, 92009, 92010]
+t010:
+  invalid_development: [130001]
+  canonical_only: [130002]
+  source_smoke: [130003]
+  validation: [131001, 131002, 131003, 131004, 131005]
+  test: [132001, 132002, 132003, 132004, 132005, 132006, 132007, 132008, 132009, 132010]
+disjointness:
+  assertion: "All listed pools are pairwise elementwise-disjoint."
+  verified_phase_a: true
+  rule: "Runner, contract, census, and tests must be elementwise equal; test seeds never tune."

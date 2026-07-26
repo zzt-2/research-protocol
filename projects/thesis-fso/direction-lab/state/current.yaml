@@ -5,8 +5,8 @@
 # NO legal main-method signal. F1=TESTBED_BLOCKED / F3=UNRESOLVED / F4=INFRASTRUCTURE_BLOCKED.
 # F2 pilot lineage merges into existing Pilot-Jones formal Groundwork (no parallel Scout).
 # Negative material -> harvest/limitations only; NOT a full negative paper.
-# Next authoritative work = independently review, then if PASS execute
-# step4a D017-authorized B10 source-native adaptive pilot-RLS T010.
+# Next authoritative work = live D011/V026 + formal D022 accepted T010
+# BLOCKED_IDENTITY; C15 may only undergo Groundwork Step 1-3 formalization.
 # Updated 2026-07-23 (T001 current-owner reconciliation): D061 strategic switch reflected — P03 = PAUSED_RETURNED_TO_PORTFOLIO
 # (option 1, family not closed); Pilot-Jones was then formal GW line; D066/V040 later returned it.
 # (V035 backward PASS, 4 direct-competitor full-text BLOCKED).
@@ -33,8 +33,8 @@ formal_goal: >-
 authorization:
   current_mode: DORMANT  # was SCIENCE_SCOUT; D022 SCIENCE_FREEZE paused the campaign (topic dormant). D061 confirms: no current science-execution authorization in the Scout campaign.
   science_authorized: false  # the Scout campaign is dormant; formal science advances via master-state.md, not this campaign
-  scope: dormant campaign — no active multi-mechanism Scout rotation (D022). P03 remains paused. Pilot-Jones fixed complex rescue is scoped-Killed and returned; T006 was scientifically rejected without killing B10/B12; current formal carrier is B10 source-native adaptive pilot-RLS.
-  formal_gw_line: B10_SOURCE_NATIVE_ADAPTIVE_RLS_CPR GW Step 4a T010_PREPARED (step4a D017 / live D006 / epoch 17 / CP009). Independent T010 pre-dispatch review must PASS before execution. Pilot-Jones T005/D066/V040 closes only the fixed complex component rescue axis; entire family and 4-paper debt are not claimed closed.
+  scope: dormant Scout campaign — no active multi-mechanism Scout rotation (D022). P03 remains paused. Pilot-Jones fixed complex rescue is scoped-Killed and returned; T006 was scientifically rejected without killing B10/B12; T010/B10 is now BLOCKED_IDENTITY and returned without a second repair package. No active scientific carrier.
+  formal_gw_line: NO_ACTIVE_SCIENTIFIC_CARRIER (step4a D022 / live D011/V026 / epoch 24 / CP010). T010 stopped at 840 canonical rows with no aggregate or held-out and mission method delta NONE. C15_REDUCED_CONSTELLATION_FORMALIZATION is a Step 1-3 preparation line only; independent readiness review must PASS before any Step 4a MVE authorization. Pilot-Jones T005/D066/V040 closes only the fixed complex component rescue axis; entire family and 4-paper debt are not claimed closed.
   prohibits:
     - modify or rerun B001-B003 / P03 Atlas / canonical-state / completion-events
     - create legacy B004
@@ -239,6 +239,10 @@ next_action:
     scoped-Kills the fixed complex component rescue axis (max point/CI upper 0.0804/0.2372 dB);
     entire family and D056's 4-paper debt remain open but are no longer current carrier.
     T006's source/channel/statistics verdict was rejected; it is history, not a runnable alias.
-    Formal work is step4a D017/live D006 B10_SOURCE_NATIVE_ADAPTIVE_RLS_CPR. Independently
-    review T010 first; only after PASS execute estimator identity and the same-package P1-P3,
-    cheap-rule, and conventional-B* comparison. Stop before Step 5. Do NOT resume Scout/P03.
+    Live D011/V026 and formal D022 accept T010 as BLOCKED_IDENTITY with method delta NONE.
+    C2 stopped at 840 canonical rows; no aggregate or held-out exists. B10 is returned and
+    receives no second repair package. There is no active scientific carrier. The only current
+    formal workline is C15 Groundwork Step 1-3 formalization: close the problem, source,
+    conventional comparator, and four-criterion readiness, then obtain independent review.
+    Do not run the old C15 sandbox or any MVE before that review. Stop before Step 5.
+    Do NOT resume Scout/P03.

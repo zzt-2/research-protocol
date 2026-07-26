@@ -4,16 +4,15 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 17
+  control_epoch: 24
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: B10_SOURCE_NATIVE_ADAPTIVE_RLS_CPR
-  authority_pointer: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D017
-  decision_gate: B10 仅在 128 contiguous pilot 到 DD 的 source-native identity 成立后，才可接受 innovation-gated/adaptive-forgetting 方法比较
+  active_lane: C15_REDUCED_CONSTELLATION_FORMALIZATION
+  authority_pointer: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D022
+  decision_gate: V026 已独立接收 T010 为 BLOCKED_IDENTITY / method delta NONE；B10 无第二修复包，当前无 active scientific carrier。C15 只可从 Step 1–3 formalization 开始，readiness 独立审查前不得运行 MVE
   allowed_actions:
     - RECOVER
     - TASK_PREPARATION
-    - METHOD_CONSTRUCT
   forbidden_actions:
     - UNRELATED_SCIENTIFIC_EXPERIMENT
     - PRIVATE_FULLTEXT_ACQUISITION
@@ -26,14 +25,15 @@ rdl_control:
     - PILOT_JONES_REPAIR_OR_NEW_AXIS
     - HIGH_ORDER_CPR_COMBINATION_REPAIR
     - B1_OR_T008_REPAIR
+    - B10_OR_T010_REPAIR
     - UNAUTHORIZED_SCIENTIFIC_EXPERIMENT
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
-  mission_checkpoint: CP009
-  next_legal_action: 独立审查 T010；通过后由线程内 executor 执行 source-native B10 identity 与同包 P1-P3 fair comparison
+  mission_checkpoint: CP010
+  next_legal_action: 准备 C15 Step 1–3 formalization T；先闭合 problem、source、传统 comparator 与四判据 readiness，再由独立 verifier 审查。不得直接运行旧 C15 sandbox、MVE 或任何新科学实验
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（B10 SOURCE-NATIVE METHOD PACKAGE READY FOR INDEPENDENT REVIEW）
+> 状态: active（V026 接收 T010 BLOCKED_IDENTITY；V027 控制面终验 PASS；epoch 24 / CP010 转 C15 formalization）
 > 创建: 2026-07-23 | 最后更新: 2026-07-26
 
 ## 专题信息
@@ -67,9 +67,25 @@ rdl_control:
 - A4 已由 formal D016 返回候选池，不作 family Kill，也不开第二个 A4 repair 包。
 - R002 已比较 B10、C15、B1、B9；只有 B10 具有现存 Step 1–3、可获取全文和
   不依赖第三 repair/新基础设施的直接激活路径。
-- formal D017 已激活 `B10_SOURCE_NATIVE_ADAPTIVE_RLS_CPR`；epoch 17 只授权
-  T010 的 source-native identity 与同包 P1–P3 method construct。独立 verifier
-  通过前不执行。
+- formal D021 维持 `B10_SOURCE_NATIVE_ADAPTIVE_RLS_CPR`；V021 已独立接收 C1，
+  `mission_method_delta=NONE`。epoch 22 的当前动作是先完成 C2 起飞合同独立审查；
+  通过后只用 validation seeds `131001–131005` 跑完整预注册矩阵并全局冻结设置，
+  C2 不消费 test/held-out。
+- V022 首次 C2 起飞审查以 P0/P1/P2=`0/3/1` 拒收：checkpoint/resume、
+  SNR-freeze objective、parameter/normalization 三项合同不确定。T010 与隔离
+  `contract.yaml` 已做确定性补约；epoch 22 / CP009 保持不变，复审 PASS 前不运行
+  validation。
+- V023 新增的 B* exact-tie 阻断已补约；V024 第三轮以
+  `P0/P1/P2=0/0/1` 批准完整 C2 amendment。control 已递增到 epoch 23，但仍须
+  final binding 独立复核后才可由不同 executor 起飞。
+- T010 C2 已在 28 cells / 840 canonical rows 触发 source-native lifecycle
+  identity failure：moderate/14 dB/seed `131004` 的 128-pilot unwrap 选错 `-2π`
+  branch，P1/P2/P3 共用初始化。V026 接收
+  `BLOCKED_IDENTITY / P0=0/P1=0/P2=1 / mission_method_delta=NONE`；不补矩阵、
+  不改 gate、不运行 held-out，也不开第二个 B10 包。
+- D011/formal D022 已把 B10 返回候选池；当前无 active scientific carrier。
+  下一路线为 C15 Step 1–3 formalization，旧 C15 unequal-step sandbox 只作失败事实，
+  readiness 独立审查前不得运行 MVE。
 - D004 已把运行方式改为本对话端到端推进；用户不再中转 GLM，项目强制的
   executor/verifier 分离改由本线程内部子 agent 完成。
 
@@ -174,6 +190,36 @@ rdl_control:
     cheap rule 与 4OPM+BPS/DD-DPLL。
   - 影响的未决项：T010 是否产生 `METHOD_SIGNAL/PACKAGING_BOUNDARY`；失败后不开
     第二个 B10 repair，优先转 C15 Step 1–3 formalization。
+- **[2026-07-26] [V008/D007/formal D018]**：T010 初次 Phase-B
+  `BLOCKED_IDENTITY` 被独立科学 verifier 拒收为
+  `SCIENCE_VERDICT_REJECTED / IMPLEMENTATION_INVALID`。
+  - 原因：旧任务在正相位/负去旋约定下把 operational residual 写反，并用无 source
+    依据的 `.999` 承担 identity Kill；
+  - 新范围：仍是同一 T010、同一 Phase B；固定 operational residual、source-only
+    `.99`，保留 seed `130001` 为 invalid-development，使用 unseen seed `130002`
+    只确认一次；
+  - 边界：先独立审查 epoch 18 / D018 / T010；confirm 前后都禁止自行进入 Phase C；
+    confirm 失败或再次合同失效即轮换，不得再修 B10。
+- **[2026-07-26] [D008/formal D019]**：amendment 独立审查发现 seed `130002`
+  已被 canonical/RNG test 执行，且 Phase-B→科学验收暂停回执不自包含。
+  - confirm seed 改为仓库 exact-token 零命中的 `130003`；
+  - 新增 synthetic residual-direction regression 与 seed `130003` 的唯一 1/10 GHz
+    BER confirm；
+  - confirm PASS 必须返回 `PARTIAL_CONFIRM_AWAITING_SCIENCE_REVIEW` 并停止，
+    新的递增 control 才能授权 Phase C。
+- **[2026-07-26] [V012/D009/formal D020]**：clean Phase-B confirm 独立科学接收。
+  - disposition：`SOURCE_IDENTITY_PASS / PHASE_B_CONFIRM_ACCEPTED`；
+  - method delta：`NONE`，source PASS 不是方法或性能信号；
+  - 新范围：先做 C1 方法/对照实现、source-smoke seal 与 direct information tests，
+    独立审查后才用 validation seeds 做 C2 freeze；
+  - 边界：C1 不消费 validation，C2 不消费 test；Phase D/held-out 未授权。
+- **[2026-07-26] [V021/D010/formal D021]**：T010 C1 独立接收并切换到 C2
+  validation freeze。
+  - disposition：`C1_IMPLEMENTATION_CONTRACT_PASS`，P0/P1/P2=`0/0/1`；
+  - method delta：`NONE`，direct tests 与 contract closure 不是 fair comparison；
+  - 新范围：epoch 22 先做 C2 起飞合同独立审查；PASS 后只运行 5 个 validation
+    seeds 的 75-cell/2250-row 预注册矩阵，完整后才全局冻结设置；
+  - 边界：C2 不读 test/held-out，不作 `METHOD_SIGNAL`，完成后暂停独立科学验收。
 
 ## 已确认结论
 
@@ -244,19 +290,53 @@ rdl_control:
   source-native adaptive pilot-RLS。T010 明确 128 contiguous pilot→DD、TX 侧
   同通道、source smoke、P1 fixed/P2 innovation freeze/P3 adaptive forgetting、
   amplitude-only cheap rule 与 conventional B*；等待独立起飞审查。
+- **V012 / D009 / formal D020**：初次 invalid verdict 的证据链保留；clean confirm
+  已关闭 source identity，Phase C 按 C1→独立审查→C2→独立科学验收推进。
+  epoch 19 / formal D019 的历史边界只授权一次 fixed-contract unseen-seed confirm，
+  当时不授权 Phase C；epoch 20 / formal D020 随后只把 C1 交付独立派发终验。
+- **V015 / epoch 21 / formal D020**：C1 派发终验已 PASS；当前只授权 C1
+  implementation/direct/clean/noiseless tests且不消费 validation/test，完成后暂停
+  独立审查。C2、held-out/Phase D 未授权。
+- **V021 / D010 / formal D021 / epoch 22**：V019/V020 的 P1 已全部关闭，C1
+  独立终验 PASS，legacy pre-C1 snapshot P2 保留且不补造。C1 delta 为 NONE；
+  当前先审查 C2 起飞合同，审查 PASS 后才运行 validation，held-out/Phase D 锁定。
+- **V022 / C2 dispatch amendment**：首次起飞审查为
+  `FAIL / P0=0/P1=3/P2=1`；三个 P1 已在 T010/isolated contract 中补为
+  canonical 2250-key + atomic checkpoint、精确 pooled-BER SNR objective 和
+  setting/GG/Es/AWGN normalization 合同，等待独立复审，未运行任何 scientific seed。
+- **V023 / B* exact tie amendment**：第二轮确认 V022 三个 P1 全部关闭，但以
+  `P0/P1/P2=0/1/1` 新增 BPS/DPLL exact-tie 阻断；已按预注册 arm index 冻结
+  exact tie→BPS 并增加 order-invariance test，等待第三轮静态复审。
+- **V024 / epoch 23 binding preparation**：第三轮
+  `PASS / P0=0/P1=0/P2=1`，只批准 C2 amendment；foreground control/task
+  递增到 epoch 23，等待最终 binding 独立复核后才派 executor。
+- **V025 / C2 executor authorization**：epoch 23 最终 binding
+  `PASS / P0=0/P1=0/P2=1`；只允许不同 executor 执行 C2 validation freeze，
+  test/held-out/Phase D 与 CP010 继续锁定。
+- **V026 / D011 / formal D022 / CP010**：C2 在 840-row strict prefix 处暴露
+  deterministic pilot-unwrap identity failure；独立接收 `BLOCKED_IDENTITY`，
+  method delta `NONE`，no-method=10。B10 停止且不补第二包，转 C15 Step 1–3
+  formalization。
+- **V027 / CP010 control closure**：独立 verifier 首轮发现 formal topic-index
+  残留 pending-C2 P1；修正后同一 verifier 复审
+  `PASS / P0=0/P1=0/P2=1`。live/formal/mission/current projections/registry
+  一致，P2 仅为既有 pre-C1 snapshot 债务。
 
 ## 未决项
 
 - B1 family 保持 `UNRESOLVED`；若未来复用必须重建 evaluator，而非继续修 T008；
-- T010 的 source-native identity、合法 working region和方法信号尚待执行/验收；
-- C15 保留为 T010 失败后的 Step 1–3 formalization 轮换点；
+- T010 最终接收 `BLOCKED_IDENTITY / method delta NONE`；B10 当前包终止；
+- C15 Step 1–3 formalization 尚待执行与独立 readiness 审查；
 - live run 自然覆盖哪些恢复/轮换/晋级事件；
 - 何时由原 design 对话进行阶段性审计。
 
 ## 当前位置
 
-B10 SOURCE-NATIVE PACKAGE PREPARED。T009/CP009 的
-`BLOCKED_IDENTITY / SCIENCE_VERDICT_REJECTED / method delta NONE` 保持不变。
-R002/D006/formal D017 已激活 B10 carrier，control 绑定 epoch 17 / CP009。
-下一合法动作是独立审查 T010；通过后由线程内 executor 执行 source-native identity
-与同包方法比较。不得修 T006/B12 组合、B1/T008、A4/T009，也不进入 Step 5。
+T010 已由 V026/D011/formal D022 接收为
+`BLOCKED_IDENTITY / P0=0/P1=0/P2=1 / mission_method_delta=NONE`。C2 停于
+28 cells / 840 canonical rows；未生成 aggregate，未消费 held-out。mission 已到
+CP010/no-method=10，仍为 `DRIFTED/STALLED`。B10 已返回候选池且禁止第二修复包。
+control 为 epoch 24，当前无 active scientific carrier；下一合法动作是准备 C15
+Step 1–3 formalization T，并在独立 readiness 审查前禁止 MVE。不得修
+T006/B12、B1/T008、A4/T009、B10/T010，不恢复 Scout/P03，也不进入 Step 4a
+实验、Step 5/Contract/Execute。

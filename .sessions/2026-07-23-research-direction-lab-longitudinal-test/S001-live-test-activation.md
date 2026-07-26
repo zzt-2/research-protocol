@@ -436,3 +436,281 @@ T007 必须带真实 epoch 9 task-control marker 并过 guard。先验证“最�
 
 独立 verifier 审查 epoch 17 / CP009 / D017 / T010；PASS 后先提交 remap 治理基线，
 再由线程内 executor 按 TDD 执行 T010，并由不同 verifier 独立验收。
+
+> 2026-07-26 续接 | T010 Phase-B 初次 verdict 拒收与包内确认修订 | 状态：AMENDMENT_REVIEW
+
+## 目标
+
+独立验收 T010 Phase A 和初次 Phase B；若身份 verdict 无效，先修订 owner/control/
+task 合同并独立审查，不把 evaluator/任务错误冒充 B10 身份失败。
+
+## 记录
+
+- Phase A 初审发现 3 个 P1、1 个 P2；修复后独立复审
+  `PASS / P0=0 / P1=0 / P2=0`，扩大回归 `117 passed, 2 skipped`。这些只关闭
+  contract/TDD，不是方法或身份信号。
+- 初次 Phase-B artifact 可确定性重算：1 GHz/10 GHz data BER 分别为
+  `0.2504322129302026 / 0.4185931971695079`，executor 候选 verdict 为
+  `BLOCKED_IDENTITY`，未运行 Phase C。
+- 独立科学 verifier 的 V008 拒收该 verdict：
+  operational residual 在当前正相位/负去旋约定下反号，且 source smoke
+  硬编码无来源 `.999`。`mission_method_delta=NONE`，Phase C 继续禁止。
+- D007/formal D018 维持 B10 carrier，只授权同一 T010 的一次包内 confirm：
+  固定正确 operational residual、source-only `.99`，保留 seed `130001`
+  为 invalid-development，使用 unseen seed `130002`。这不是 CP010、第二个
+  B10 package 或方法产出。
+
+## 决策引用
+
+- D007：驳回初次 Phase-B verdict，并授权一次包内合同纠错确认（新建）
+- formal D018：T010 Phase-B operational identity 合同纠错与一次确认授权
+- V008：独立科学拒收初次 `BLOCKED_IDENTITY`
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。仍是 GW Step 4a、同一 B10/T010；不运行
+  Phase C/primary/validation/held-out，不修旧包，不进入 Step 5。
+
+## 后续
+
+独立 verifier 审查 epoch 18 / CP009 / D018 / T010 amendment；PASS 后只重跑一次
+Phase-B confirm。confirm 结果再经独立科学验收后，主控才决定 Phase C 或轮换。
+
+> 2026-07-26 续接 | amendment 独立审查修订 | 状态：EPOCH19_REVIEW
+
+## 目标
+
+修清独立 amendment review 的 seed 与中间回执缺口，再审查一次；不预跑 confirm。
+
+## 记录
+
+- 独立 amendment review 为 `FAIL / P0=0 / P1=3 / P2=1`。
+- seed `130002` 已在 canonical/RNG test 中生成 realization，不能满足严格 unseen
+  合同；D008/formal D019 改用仓库 exact-token 零命中的 `130003`。
+- T010 已明确新增 residual-direction regression、seed `130003` 唯一 BER confirm，
+  以及 `PARTIAL_CONFIRM_AWAITING_SCIENCE_REVIEW` 暂停回执；confirm PASS 后也不能
+  自动进入 Phase C。
+- registry 和全部 current projections 同步到 epoch 19 / CP009 / D019；mission-log
+  仍不更新。
+
+## 决策引用
+
+- D008：clean confirm seed 与 Phase-B 暂停回执修订（新建）
+- formal D019：T010 clean confirm seed 与 Phase-B 科学暂停门
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。只修 owner/control/task 证据合同，未执行
+  seed `130003`，未运行 Phase C 或任何新实验。
+
+## 后续
+
+独立复审 epoch 19 / D019 / T010；PASS 后由内部 executor 只运行一次 confirm 并暂停。
+
+> 2026-07-26 续接 | Phase-B clean confirm 科学接收与 Phase-C 分段授权 | 状态：C1_REVIEW
+
+## 目标
+
+独立接收 clean confirm；只在 source identity 合法后递增 owner/control，并将方法
+实现与 validation freeze 分离。
+
+## 记录
+
+- seed `130003` 唯一 confirm 两格均 `0/99488`；CFO relative errors
+  `9.952903443384171e-5 / 4.499364865190506e-4`，旧 invalid artifact 保持原 SHA。
+- V012 独立科学结论：
+  `SOURCE_IDENTITY_PASS / PHASE_B_CONFIRM_ACCEPTED`，
+  `P0=0/P1=0/P2=3`，`mission_method_delta=NONE`。
+- P2 为 source-smoke 缺二次运行锁、artifact lifecycle 原值未落盘、旧 T006 默认
+  locale GBK 失败；前两项纳入 C1 guard，第三项不修改旧包。
+- D009/formal D020、epoch 20 将 Phase C 拆为 C1 implementation/tests 与
+  C2 validation freeze；C1 独立审查前不运行 C2，C2 科学验收前不运行 held-out。
+
+## 决策引用
+
+- D009：接收 source identity，并授权分段 Phase C（新建）
+- formal D020：接收 B10 source identity 并授权 T010 Phase C
+- V012：Phase-B clean confirm 独立科学接收
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。仍为 GW Step 4a T010；Phase-B PASS 未写成
+  方法信号，mission-log/CP009 未变，未运行 validation/held-out。
+
+## 后续
+
+独立审查 epoch 20 / D020 / T010 Phase-C amendment；PASS 后只执行 C1 并暂停。
+
+> 2026-07-26 续接 | Phase-C C1 派发终验 | 状态：C1_AUTHORIZED
+
+## 目标
+
+关闭 T010 Phase-C C1 派发规范缺口；只有独立终验 PASS 才把下一动作切到 C1。
+
+## 记录
+
+- 首轮独立审查 V013 为 `FAIL / P0=0/P1=5/P2=0`：formal 投影 stale、live
+  epoch 19/20 歧义、C1/C2 comparison 边界、source-contract migration schema 和
+  P2/P3 best-of 风险。
+- 修复后第二轮 V014 关闭上述 5 项，但发现 formal current scope 仍残留早期
+  common/params/旧 explore/experiments 授权，结论
+  `FAIL / P0=0/P1=1/P2=0`。
+- 移除 stale current scope 后，V015 最终
+  `PASS / P0=0/P1=0/P2=0`；task-control、YAML/JSON、diff、protected paths 与
+  artifact 边界全部通过，审查未运行测试或科学实验。
+- control 递增为 epoch 21 / CP009，formal authority 仍为 D020。该 PASS 只授权
+  C1 isolated implementation/direct/clean/noiseless tests；C2/held-out 未授权，
+  method delta 仍为 `NONE`，mission-log 不追加。
+- epoch 21 起飞绑定又经 V016/V017 两轮 stale-projection FAIL 清理后，由 V018
+  最终 `PASS / P0=0/P1=0/P2=0`；V012/epoch 20 已历史化，所有 current projection、
+  T010 task-control 与 CP009 一致，才允许派内部 executor。
+
+## 决策引用
+
+- D009/formal D020：Phase C 分段授权（沿用）
+- V013：Phase-C C1 派发规范首轮 FAIL
+- V014：Phase-C C1 派发规范第二轮 FAIL
+- V015：Phase-C C1 派发终验 PASS
+- V016/V017：epoch 21 起飞绑定 stale projection 两轮 FAIL
+- V018：epoch 21 起飞绑定独立终验 PASS
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。只修 formal/current/control/task 投影与派发
+  合同，未运行 C1、validation、held-out 或任何科学实验。
+
+## 后续
+
+内部 executor 只执行 T010 Phase C1；返回 `PARTIAL_C1_AWAITING_REVIEW` 后暂停，
+由不同独立 verifier 审查，未获新 control 前不得运行 C2。
+
+> 2026-07-26 续接 | T010 C1 独立接收与 C2 起飞合同 | 状态：C2_DISPATCH_REVIEW
+
+## 目标
+
+接收 C1 的独立 code/science-contract 复审；只在全部 P1 关闭后递增
+control/formal owner，并为 C2 冻结可审查的 validation 网格、运行顺序和选择规则。
+
+## 记录
+
+- C1 executor 在 V019/V020 两轮拒收后完成 finite/domain/contract、隐藏时标和
+  π/2 ambiguity 修复；未运行 source smoke、validation/test 或 comparison matrix。
+- V021 最终独立复审：
+  `PASS / C1_IMPLEMENTATION_CONTRACT_PASS / P0=0/P1=0/P2=1`。唯一 P2 是
+  pre-C1 immutable snapshot 缺失，作为 legacy attribution debt 保留且不补造。
+- 主控 fresh 复核：task-control PASS；Windows 默认 locale 与 UTF-8 全文件各
+  `32 passed`；artifact 仍只有两份 Phase-B source-smoke 文件，SHA 未变；
+  validation/test artifact 与 seed token 均为 0。
+- C1 的 `mission_method_delta=NONE`；没有 fair comparison、性能结论或 CP010。
+- D010/formal D021 把 control 递增为 epoch 22 / CP009；当前先做 C2 起飞合同
+  独立审查。T010 新增 75-cell/2250-row validation 网格、精确 checkpoint 顺序、
+  全局 setting/B*/main-arm freeze 规则和每 GG 最多 3 点的 crossing 选择规则。
+
+## 决策引用
+
+- D010：接收 C1 并只授权 C2 validation freeze（新建）
+- formal D021：接收 T010 C1 并授权 C2 validation freeze（新建）
+- V019/V020：C1 两轮独立拒收
+- V021：C1 最终独立复审 PASS
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。仍止于 GW Step 4a；只更新 master-owned
+  control/formal/task/current projections，未运行 C2/held-out，mission-log/CP009
+  未变。
+
+## 后续
+
+由独立 verifier 审查 epoch 22 / D010 / formal D021 / T010 C2 起飞合同。只有
+PASS 后才派不同内部 executor 运行 validation；完成后停在
+`PARTIAL_C2_AWAITING_SCIENCE_REVIEW`。
+
+> 2026-07-26 续接 | T010 C2 起飞合同首次拒收与确定性补约 | 状态：C2_DISPATCH_REREVIEW
+
+## 目标
+
+接收独立 C2 dispatch review；在不运行 validation/test 的前提下关闭 checkpoint、
+SNR freeze 与参数/归一化三项 P1，再交同一独立 verifier 复审。
+
+## 记录
+
+- V022 首次审查结论：
+  `FAIL / C2_DISPATCH_REJECTED_NEEDS_FIXES / P0=0/P1=3/P2=1`，
+  `mission_method_delta=NONE`。
+- P1-1：原合同没有完整 2250-key 序列、strict-prefix/30-row cell 校验、exact
+  source hash bundle 与原子 checkpoint；现有 shared `save_results()` 直接覆盖。
+- P1-2：共同 FEC bracket、pooled zero-error log-distance、等号方向与 tie chain
+  没有确定定义。
+- P1-3：30 settings 缺 setting index/单位/阈值语义，GG/Es/AWGN/无 AGC 约定
+  未闭合。
+- T010 与隔离 `contract.yaml` 已补齐上述确定性合同；shared common/params 未改，
+  validation/test/held-out 均未运行。
+- V021 的 legacy `PRE_C1_IMMUTABLE_SNAPSHOT_ABSENT` P2 继续保留，不补造。
+- V023 第二轮确认 V022 三项原始 P1 全部关闭，但新增发现 conventional B*
+  完整 score exact tie 未冻结，结论 `FAIL / P0=0/P1=1/P2=1`。现已按派遣前
+  arm index `BPS=0,DPLL=1` 冻结 exact tie→BPS，并加入遍历顺序不影响 winner
+  的 deterministic test 义务；仍未运行 scientific seed。
+- V024 第三轮为 `PASS / C2_DISPATCH_AMENDMENT_PASS / P0=0/P1=0/P2=1`；
+  只批准 amendment，未直接授权执行。主控据此把 foreground control 与 T010
+  task binding 递增到 epoch 23，等待最终 binding 独立复核。
+- V025 最终 binding 为
+  `PASS / C2_EPOCH23_BINDING_PASS / P0=0/P1=0/P2=1`；只允许不同内部 executor
+  执行 C2 validation freeze 与起飞迁移，test/held-out/Phase D 继续锁定。
+
+## 决策引用
+
+- D010/formal D021：C2 conditional authorization（沿用，未扩大）
+- V022/V023：C2 起飞合同两轮独立审查 FAIL
+- V024：C2 deterministic amendment 第三轮独立审查 PASS
+- V025：epoch 23 最终 binding 独立复核 PASS
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。只做 TASK_PREPARATION/dispatch-contract
+  repair；epoch 22 / CP009 不变，未运行任何 scientific seed。
+
+## 后续
+
+由不同内部 executor 按 T010 起飞，先迁移 source/experiment contract，再实现
+deterministic tests/checkpoint runner 并只运行 validation `131001–131005`。
+完成后停在 `PARTIAL_C2_AWAITING_SCIENCE_REVIEW`，不得运行 test/held-out。
+
+> 2026-07-26 续接 | T010 C2 runtime identity 早停与 CP010 轮换 | 状态：ACCEPTED_ROTATING
+
+## 目标
+
+接收 C2 runtime anomaly 的独立科学裁决；不改预注册 identity/row schema，完成
+T010 正式收口并选择下一合法 formalization 路线。
+
+## 记录
+
+- executor 先完成 45 项定向测试，随后按 30-row cell 原子 checkpoint；C2 在
+  28 cells / 840 rows 停止。weak 25 cells 完整，moderate/14 dB 完成 seeds
+  `131001–131003`，seed `131004` 的 P1 setting 0 在写 row 前抛 positive-slope
+  identity exception。
+- 只读重复诊断 2/2 同一 RX/GG SHA：true slope `+0.00251327`，含 PN true-phase
+  LS `+0.00277341`，observed unwrap LS `-0.0138504`；λ `.98/.99/.999` 的 RLS
+  slope 均负。根因是低幅 pilot 的错误 `-2π` unwrap branch，早于 P1/P2/P3 的
+  DD/adaptation。
+- V026 独立审查确认 raw 为 exact canonical prefix、17/17 hash 匹配、无 aggregate、
+  heldout=false；合同没有合法 exception row，skip/synthetic BER 都会改变统计。
+- 接收 `BLOCKED_IDENTITY / P0=0/P1=0/P2=1 / mission_method_delta=NONE`。不补矩阵、
+  不修 positive-slope gate、不开第二个 B10 包。
+- D011/formal D022 将 mission 追加 CP010/no-method=10，并转 C15 Step 1–3
+  formalization；C15 尚不是 active scientific carrier，独立 readiness 审查前不跑 MVE。
+
+## 决策引用
+
+- D011：接收 T010 BLOCKED_IDENTITY 并轮换到 C15 formalization（新建）
+- formal D022：接收 B10 identity block 并返回 formalization（新建）
+- V026：T010 C2 runtime identity failure 独立科学接收
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。仍止于 Groundwork；只消费已授权 validation，
+  未运行 test/held-out/Phase D，未修改 common/params/旧包或恢复 Scout/P03。
+
+## 后续
+
+epoch 24 / CP010 只准备 C15 Step 1–3 formalization T；先闭合 problem/baseline/source
+readiness，再由独立 verifier 审查。不得直接运行旧 C15 sandbox 或新 MVE。

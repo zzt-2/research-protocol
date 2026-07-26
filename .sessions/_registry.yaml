@@ -49,8 +49,8 @@ topics:
     title: Research Direction Lab 长程真实运行测试
     status: active
     created: "2026-07-23"
-    last_updated: "2026-07-26（R002/D006；epoch 17 / CP009，激活 B10 source-native adaptive pilot-RLS，T010 待独立审查）"
-    description: "D017/D018 轻量长程运行协议的真实纵向 mission。T009 只接收 BLOCKED_IDENTITY 与 method delta NONE；R002 比较 B10/C15/B1/B9 后激活 B10 source-native adaptive pilot-RLS，epoch 17 绑定 T010，由本 Goal 主控继续执行/独立验收。"
+    last_updated: "2026-07-26（D011/V026/V027；epoch 24 / CP010，T010 闭环，转 C15 formalization）"
+    description: "D017/D018 轻量长程运行协议的真实纵向 mission。T010 C2 在 840-row strict prefix 暴露 deterministic pilot-unwrap identity failure；V026 接收 BLOCKED_IDENTITY / method delta NONE，no-method=10，V027 独立终验 owner/control/current projections PASS。B10 不开第二修复包；当前无 active scientific carrier，只允许 C15 Step 1–3 formalization 与独立 readiness 审查，禁止直接 MVE、held-out 或 Phase D。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 S014 现场故障、R003 场景演练、D017 控制接口和 guard
@@ -447,8 +447,8 @@ topics:
     title: Step 4a 维度 D MVE 执行（B11 单载波 NDA-ML 主推 + B7/B3 待开）
     status: active
     created: "2026-07-06"
-    last_updated: "2026-07-26（D017：激活 B10 source-native adaptive pilot-RLS；T010 待独立审查）"
-    description: "Step 4a carrier owner。D016 保留 T009 BLOCKED_IDENTITY 与 A4 RETURNED_TO_POOL；D017 基于 live R002/D006 激活 B10 source-native adaptive pilot-RLS，只允许 T010 的原文身份门和同包方法比较；仍止于 Step4a。"
+    last_updated: "2026-07-26（D022/live V026/V027：T010 闭环；C15 Step 1–3 formalization）"
+    description: "Formal carrier owner。D022 接收 T010 840-row identity block，B10 返回候选池且不开第二修复包；当前无 active scientific carrier。下一工作线只允许 C15 从 Groundwork Step 1–3 补齐 problem/source/传统 comparator/四判据 readiness，独立审查前禁止 MVE；仍不进入 Step5/Contract/Execute。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
         reason: 继承 S031 排优先级（B11/B3/B7 Conditional Go）+ 切法地图参照系（饱和池/稀池路径）+ D005 务实路线 + D006 红线 + 5 个口径警示

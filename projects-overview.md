@@ -7,8 +7,10 @@
 ### thesis-fso
 
 - **方向**：双偏振星地 OSL 场景中的 ML 应用方向探索；正式研究与 Direction Lab Scout/Sandbox 分层管理。
-- **正式状态**：GW Step 4a active carrier =
-  `B10_SOURCE_NATIVE_ADAPTIVE_RLS_CPR`（step4a D017；live epoch 17 / CP009）。
+- **正式状态**：当前无 active scientific carrier（step4a D022；live D011/V026，
+  epoch 24 / CP010）。T010 只接收 `BLOCKED_IDENTITY` 与 method delta NONE，
+  B10 已返回候选池且不开第二修复包；C15 仅进入 Groundwork Step 1–3
+  formalization，独立 readiness 审查前不得运行 MVE。
   T009 仍只接收 `BLOCKED_IDENTITY` 与 method delta NONE，A4 已返回候选池；
   Direction Lab Scout campaign 仍 dormant（D022 SCIENCE_FREEZE）。
 - **Direction Lab Sandbox 历史**：B003 已完成，状态 `COMPLETED_SANDBOX_VERIFIED`；批次事实以 completion events 和不可变 projection 为证据，B001–B003 数字均不可进入论文或正式材料。
@@ -22,10 +24,25 @@
 - **T009 接收**：5 项定向测试与 DPLL smoke 可复现，但 pilot/TX-truth、
   frequency-stage、working-region、seed/source 与提交内 raw closure 未闭合；
   `DA 9/9` 只属错误 evaluator 下的诊断观察，不形成物理或方法结论。
-- **下一合法边界**：R002 已比较 B10/C15/B1/B9并由 D017 激活 B10；T010 等待
-  独立起飞审查，通过后由线程内 executor 执行 source-native identity 与同包方法
-  比较。**不进入 Step 5/Contract/Execute；不修 T006/B12 组合、不二修 A4/T009、
-  不修 B1/T008、不启动 B004/P03、不改 shared generator、不 push。**
+- **T010 Phase-B 接收**：初次 `BLOCKED_IDENTITY` 因 operational residual 反号与
+  无来源 `.999` 被独立 verifier 拒收为 `SCIENCE_VERDICT_REJECTED /
+  IMPLEMENTATION_INVALID`；clean confirm 后 V012 接收 source identity，method delta
+  仍为 NONE。
+- **T010 C1 接收**：V021 以 P0/P1/P2=`0/0/1` 接收 implementation contract，
+  legacy pre-C1 snapshot P2 不补造，method delta 仍为 NONE。
+- **T010 C2 起飞审查**：V022 首轮的 checkpoint/resume、SNR-freeze objective
+  与 parameter/normalization 三项 P1 已由 V023 确认关闭；V023 新增 B* exact-tie
+  P1 已按预注册 arm index 冻结为 tie→BPS；V024 第三轮 amendment PASS，未运行
+  validation。V025 final binding PASS。
+- **T010 C2 最终接收**：validation 在 28 cells / 840 canonical rows 后，于
+  moderate/14 dB/seed `131004` 暴露 128-pilot unwrap 的错误 `-2π` branch；
+  V026 接收 `BLOCKED_IDENTITY / P0=0/P1=0/P2=1 /
+  mission_method_delta=NONE`。无 aggregate，未消费 held-out；不补矩阵、不改 gate。
+- **下一合法边界**：准备 C15 Groundwork Step 1–3 formalization，闭合
+  problem、source、传统 comparator 与四判据 readiness，再由独立 verifier 审查。
+  **不得直接运行 C15 sandbox/MVE；不进入 Step 5/Contract/Execute；不修
+  T006/B12、A4/T009、B1/T008、B10/T010，不启动 B004/P03，不改 shared
+  generator，不 push。**
 - **Atlas 强门入口**：`projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/atlas_gate.py`（唯一 receipt-bound 入口，19 tests 含独立对抗审查）。
 - **入口**：`projects/thesis-fso/master-state.md` → `projects/thesis-fso/direction-lab/README.md`；机器状态溯源见 `projects/thesis-fso/direction-lab/state/completion-events.jsonl` 与 `state/projections/`，`canonical-state.yaml` 不是正式研究授权源。
 

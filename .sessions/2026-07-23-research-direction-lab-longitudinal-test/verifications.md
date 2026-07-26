@@ -383,3 +383,1072 @@ exit 0
 PASS。允许由本线程内部 executor 按 Phase A–D 执行 T010。此 PASS 只证明派发
 合同、身份门与证据边界可审查，不预判 source smoke、科学结果、formal disposition
 或 `mission_method_delta`，也不完成长期 Goal。
+
+---
+
+## V008: T010 初次 Phase-B 身份 verdict 独立科学拒收
+
+> date: 2026-07-26
+> 关联：T010 / D007 / formal D018
+> verifier：独立只读 scientific subagent
+
+### 验证项
+
+- [x] artifact 确定性重算：只重跑预注册 source smoke，移除动态 `_meta` 后逐字段
+  比较 → 与 `artifacts/source-smoke.json` 完全一致。
+- [x] 初次 gate 数字：核 raw integer errors/denominator →
+  1 GHz `24915/99488=0.2504322129302026`；
+  10 GHz `41645/99488=0.4185931971695079`，均未过 `3.8e-3`。
+- [x] PDF/source operational sign：核 B10 PDF p.165 Eq.(1)、p.166–167
+  Eq.(8)/Fig.1 与代码 → Eq.(8) 文本虽被 literal 抄录，但在
+  `r=s·exp(+jφ)+n`、`exp(-j predicted)` 约定下 residual 代数符号相反；
+  operational residual 应为 `angle(derotated*conj(decision))`。
+- [x] `λ` 身份：核 T010、PDF 与 runner → `.999` 无 source parameter 依据；
+  论文要求优化 `λ` 且说明接近 1 会降质，不能用 `.999` 作 source identity Kill。
+- [x] 不落盘诊断：只在 seed `130001` 上判断根因，不作 confirm 或 method evidence →
+  operational sign + `.999`：1 GHz `6/99488`、10 GHz `41166/99488`；
+  operational sign + `.99`：两格均 `0/99488`。
+- [x] 其余身份边界：Gray 16-QAM、128 contiguous pilots、runtime data RNG、
+  TX-side shared channel/noise、receiver information boundary、`h0/P0/δ/F`、
+  indexing、CFO 换算与 data-only denominator → 未发现其他 P0。
+- [x] 实现/证据闭包：fresh tests `12 passed, 1 skipped`，其中 skip 仅 Phase C；
+  `git diff --check` exit 0；artifact 未 ignored 但尚未 final tracked/committed。
+
+### 证据
+
+```text
+science_verdict=REJECT_VERDICT_IMPLEMENTATION_INVALID
+formal_science_disposition=SCIENCE_VERDICT_REJECTED / IMPLEMENTATION_INVALID
+mission_method_delta=NONE
+phase_c=NO
+
+literal Eq.(8), lambda=.999:
+1GHz 24915/99488 = 0.2504322129302026
+10GHz 41645/99488 = 0.4185931971695079
+
+operational residual diagnostic, lambda=.999:
+1GHz 6/99488 = 6.030878e-5
+10GHz 41166/99488 = 0.413778546
+
+operational residual diagnostic, lambda=.99:
+1GHz 0/99488
+10GHz 0/99488
+
+pytest:
+12 passed, 1 skipped in 1.61s
+
+git diff --check:
+exit 0
+```
+
+### 结论
+
+FAIL。拒收当前 `BLOCKED_IDENTITY` 为可信 B10 身份失败；只接受
+`SCIENCE_VERDICT_REJECTED / IMPLEMENTATION_INVALID`，且
+`mission_method_delta=NONE`、Phase C 禁止。D007/formal D018 只能授权一次包内
+Phase-B 合同纠错与全新 seed 确认；不能把诊断数字当方法信号。
+
+### 后续（FAIL/PARTIAL 时）
+
+先独立审查 epoch 18 / D018 / T010 amendment；PASS 后固定 operational residual、
+source-only `λ=.99` 和 confirm seed `130002`，只重跑 Phase B。confirm 失败即轮换，
+通过也仍需另一独立科学 verifier 才可进入 Phase C。
+
+---
+
+## V009: T010 Phase-B amendment 独立派发审查
+
+> date: 2026-07-26
+> 关联：D007 / formal D018 / T010
+> verifier：独立只读 subagent
+
+### 验证项
+
+- [x] owner/control/task：核 epoch 18 / CP009 / D018 / T010 → task-control PASS，
+  operational residual 与 source-only `.99` 边界一致。
+- [x] confirm seed 洁净性：repository exact-token 与已执行 tests →
+  `130002` 已在 canonical/RNG test 生成 realization，不能称为严格 unseen。
+- [x] T010 自包含回归：核 D007 与 T010 §7 → D007 要求的 synthetic
+  residual-direction 和 1/10 GHz BER regression 未被显式写入。
+- [x] Phase-B 暂停门：核 §1.4 与 §8 → “confirm 后独立验收”与“只有 final receipt
+  才触发验收”冲突，存在 executor 直接进入 Phase C 的歧义。
+- [x] registry/current/protected：YAML 与 diff → registry 仍停 epoch 17/D017；
+  current YAML parse PASS，protected/common/params/旧包零 diff。
+
+### 证据
+
+```text
+Spec Compliance=FAIL
+Review=NEEDS_FIXES
+P0=0
+P1=3
+P2=1
+
+task-control validator:
+PASS
+
+seed fact:
+tests/test_b10_source_native_adaptive_rls_cpr.py:170
+generate_shared_b10_realization(seed=130002, ...)
+
+git diff --check:
+PASS
+```
+
+### 结论
+
+FAIL。epoch 18 amendment 不得派发；不运行 confirm 或 Phase C。
+
+### 后续（FAIL/PARTIAL 时）
+
+D008/formal D019 将 confirm seed 改为 exact-token 零命中的 `130003`，在 T010
+显式加入 residual-direction/BER regression 与
+`PARTIAL_CONFIRM_AWAITING_SCIENCE_REVIEW` 暂停回执，并同步 registry/current
+projections 后重新独立审查。
+
+---
+
+## V010: epoch-19 T010 amendment 二轮独立审查
+
+> date: 2026-07-26
+> 关联：D008 / formal D019 / T010
+> verifier：独立只读 subagent
+
+### 验证项
+
+- [x] seed 与暂停门：核 `130003`、regression、receipt → clean seed、唯一 confirm
+  与 `PARTIAL_CONFIRM_AWAITING_SCIENCE_REVIEW` 均闭合。
+- [x] current owner：核 epoch 19 / CP009 / D008 / D019 / registry/current →
+  一致，task-control 与 YAML PASS。
+- [x] stale formal 起飞引用：核 T010 §1.1 → 仍指 superseded D017。
+- [x] source-contract 迁移：核 T010 §0.1 与旧 contract → task 未自包含要求把
+  authority/status/residual/invalid-history/current-confirm plan 迁移到 D019。
+- [x] protected diff：`git diff --check` PASS，common/params/旧包零 diff。
+
+### 证据
+
+```text
+Spec Compliance=FAIL
+Review=NEEDS_FIXES
+P0=0
+P1=2
+P2=0
+
+task-control=PASS
+YAML=PASS
+git diff --check=PASS
+```
+
+### 结论
+
+FAIL。不得派发 confirm。
+
+### 后续（FAIL/PARTIAL 时）
+
+T010 起飞 authority 改为 D019，并在 §0.1 明列 source-contract 的 D019 authority、
+invalid-history、pending confirm、operational residual/`.99`/seed `130003` 与
+artifact non-overwrite 迁移要求；不需要改变 epoch 19 的科学 gate，修后复审。
+
+---
+
+## V011: epoch-19 T010 clean confirm 独立派发终验
+
+> date: 2026-07-26
+> 关联：D008 / formal D019 / T010
+> verifier：独立只读 subagent
+
+### 验证项
+
+- [x] stale authority 修复：T010 §1.1 指向 D019，D017/D018 仅作 superseded
+  历史 → PASS。
+- [x] source-contract 迁移自包含：authority、initial invalid history、
+  `source-smoke-invalid-v1.json`、pending confirm、operational residual、
+  `.99` 类型、seed `130003` 与 non-overwrite 均明确 → PASS。
+- [x] clean confirm/暂停门：唯一 seed `130003` 1/10 GHz gate，PASS 后返回
+  `PARTIAL_CONFIRM_AWAITING_SCIENCE_REVIEW` 并停止 → PASS。
+- [x] owner/current：epoch 19 / CP009 / D008 / D019、registry、master、
+  state/portfolio/harvest 一致 → PASS。
+- [x] deterministic guards：task-control、四份 YAML、`git diff --check` →
+  PASS；protected/common/params/T006/T008/T009 零 diff。
+
+### 证据
+
+```text
+Spec Compliance=PASS
+Review=APPROVED
+P0=0
+P1=0
+P2=0
+
+task-control=PASS
+registry/state/portfolio/harvest YAML=PASS
+git diff --check=PASS
+```
+
+### 结论
+
+PASS。只授权 seed `130003` 的一次 Phase-B confirm；confirm 后必须暂停并独立
+科学验收。本 PASS 不授权 Phase C、method delta、第二个 repair/package、
+Step 5/Contract/Execute 或 push。
+
+---
+
+## V012: T010 Phase-B clean confirm 独立科学接收
+
+> date: 2026-07-26
+> 关联：D008 / formal D019 / T010
+> verifier：独立只读 scientific subagent
+
+### 验证项
+
+- [x] 历史 artifact 保留：SHA/bytes 与 V008 → invalid artifact
+  `010662e1...f20f4`、2565 bytes，旧两格 `24915/99488` 与 `41645/99488`
+  完全一致；新旧文件并存。
+- [x] clean confirm 合同：核 seed/`λ`/claim ceiling → seed `130003`、
+  source-only `.99`、`performance_claim=NONE`，confirm 前无性能观察。
+- [x] artifact 独立重算：不重跑 smoke，只从 integer counts/config 重算 →
+  1/10 GHz 均 `0/99488`；row bound `5.0257317465422965e-6`；
+  Q² `12.900705909907302 dB`；CFO relative errors
+  `9.952903443384171e-5 / 4.499364865190506e-4`；所有 gate 一致。
+- [x] source identity 与信息边界：核 operational residual、RLS lifecycle、
+  manifest/channel/noise/data mask → 无 TX truth/future/post-hoc、mask/mapping/noise
+  P0/P1。
+- [x] confirm invocation closure：报告只记录一次 runner；post-confirm test monkeypatch
+  证明 read gate 不调用 smoke → 接受为一次 confirm，记录缺少 runtime lock 的 P2。
+- [x] fresh non-smoke checks：task-control/YAML/diff/artifact-ignore/protected →
+  PASS；`PYTHONUTF8=1` T010+T006 `46 passed, 1 skipped`，扩大回归
+  `122 passed, 1 skipped`。
+
+### 证据
+
+```text
+science_verdict=ACCEPT_SOURCE_IDENTITY_PASS
+formal_science_disposition=SOURCE_IDENTITY_PASS / PHASE_B_CONFIRM_ACCEPTED
+mission_method_delta=NONE
+P0=0
+P1=0
+P2=3
+
+1GHz: 0/99488, CFO rel=9.952903443384171e-5
+10GHz: 0/99488, CFO rel=4.499364865190506e-4
+BER bound=5.0257317465422965e-6
+Q2=12.900705909907302 dB
+
+expanded non-smoke regression:
+122 passed, 1 skipped in 19.58s
+```
+
+### 结论
+
+PASS。接收 `SOURCE_IDENTITY_PASS / PHASE_B_CONFIRM_ACCEPTED`；source-native P1
+身份门关闭，`mission_method_delta=NONE`，不是 `METHOD_SIGNAL`。epoch 19 不授权
+Phase C；formal/live owner 递增并经独立派发审查后才可继续。
+
+### 后续
+
+- Phase C 起飞前封死 source-smoke 二次运行入口；
+- read-only artifact gate 全量重算可重算的 BER/Q²/CFO/gates，并显式登记
+  finite/switch/freeze 原值未落盘的 legacy P2；
+- 默认 locale 的两项失败属于旧 T006 YAML/GBK，不扩到当前实现；T010 自身默认
+  locale 必须继续通过。
+
+---
+
+## V013: T010 Phase-C C1 派发规范首轮独立审查
+
+> date: 2026-07-26
+> 关联：D009 / formal D020 / T010 / control epoch 20
+> verifier：独立只读 subagent
+
+### 验证项
+
+- [x] task-control 与静态边界：validator、YAML/JSON、`git diff --check`、
+  protected/common/params/旧包 diff → PASS；未发现 validation/test artifact。
+- [ ] formal current projection：formal topic-index 与 registry formal entry 仍停在
+  D017/T010 pre-review，未投影 D020/V012/C1→review→C2/held-out lock → FAIL。
+- [ ] live snapshot：V012 条目同时写“Phase C 推进”与“仍不授权 Phase C”，未区分
+  epoch 19 历史和 epoch 20 当前授权 → FAIL。
+- [ ] C1/C2 行为边界：T010 最高纪律仍可被解释为 C1 直接跑 P1–P3 comparison，
+  未显式禁止 C1 创建 validation/test artifact → FAIL。
+- [ ] source-contract migration：未给 exact path/schema，也未明确保留
+  `current_confirm.*` confirm-time history并新增 D020 current authorization → FAIL。
+- [ ] candidate arm identity：working-region 中使用未定义 `P`，可能导致逐 cell
+  post-hoc 选择 P2/P3 → FAIL。
+
+### 证据
+
+```text
+independent Phase-C dispatch review:
+SPEC FAIL / NEEDS_FIXES
+P0=0
+P1=5
+
+static positives:
+task-control PASS
+YAML/JSON PASS
+git diff --check PASS
+protected/common/params/old packages diff=0
+validation/test artifacts=0
+```
+
+### 结论
+
+FAIL。不得派发 C1，不得运行实验。
+
+### 后续（FAIL/PARTIAL 时）
+
+更新 formal topic-index/registry，消除 live epoch 19/20 歧义；把 C1 与 C2
+comparison 边界、source-contract exact migration 和 P2/P3 no-best-of 规则写入
+T010，再交同一独立 verifier 复审。
+
+---
+
+## V014: T010 Phase-C C1 派发规范第二轮独立审查
+
+> date: 2026-07-26
+> 关联：D009 / formal D020 / T010 / V013
+> verifier：同一独立只读 subagent
+
+### 验证项
+
+- [x] V013 五项 P1：formal projection、live epoch 19/20、C1/C2 边界、
+  source-contract exact migration、P2/P3 no-best-of → 全部关闭。
+- [ ] formal current scope：仍保留早期 active `增量扩充 common`、`params.py`
+  B11/B7 参数、旧 explore 路径与“转 experiments”清单；与 D020/T010 的隔离 C1、
+  禁改 common/params/旧轴冲突 → FAIL。
+- [x] fresh 静态门：task-control、7 YAML + 3 JSON、`git diff --check`、
+  protected/common/params/T006/T008/T009 diff → PASS。
+- [x] artifact/运行边界：只有两份 Phase-B source-smoke artifact，无
+  validation/test artifact；审查未运行测试或科学实验 → PASS。
+
+### 证据
+
+```text
+independent Phase-C dispatch re-review:
+SPEC FAIL / NEEDS_FIXES
+P0=0
+P1=1
+P2=0
+
+V013 targeted P1 closed=5/5
+task-control PASS
+7 YAML + 3 JSON parse PASS
+git diff --check exit 0
+protected/common/params/T006/T008/T009 diff PASS
+validation/test artifacts=0
+tests/scientific experiments run by reviewer=0
+```
+
+### 结论
+
+FAIL。C1 继续锁定。
+
+### 后续（FAIL/PARTIAL 时）
+
+从 formal topic-index 的 current scope 移除早期 B11/B7/B3
+common/params/旧 explore/experiments 授权，只保留 T010 隔离 C1 路径后复审。
+
+---
+
+## V015: T010 Phase-C C1 派发独立终验
+
+> date: 2026-07-26
+> 关联：D009 / formal D020 / T010 / V013 / V014
+> verifier：同一独立只读 subagent
+
+### 验证项
+
+- [x] V014 唯一 P1：formal current scope 只授权 T010 isolated C1；旧
+  common/params/旧 explore/experiments 明确不再授权 → PASS。
+- [x] V013 五项：formal/registry D020/V012、live epoch 19/20、C1/C2 边界、
+  exact source-contract migration、P2/P3 no-best-of → 保持 PASS。
+- [x] 静态门：task-control、7 YAML + 3 JSON、`git diff --check`、
+  protected/common/params/T006/T008/T009 diff → PASS。
+- [x] artifact/运行边界：仅两份 Phase-B source-smoke artifact；无
+  validation/test artifact；reviewer 未运行测试或科学实验 → PASS。
+
+### 证据
+
+```text
+independent final Phase-C C1 dispatch review:
+SPEC COMPLIANCE PASS / APPROVED
+P0=0
+P1=0
+P2=0
+
+task-control PASS
+7 YAML + 3 JSON parse PASS
+git diff --check PASS
+protected/common/params/T006/T008/T009 diff PASS
+validation/test artifacts=0
+tests/scientific experiments run by reviewer=0
+```
+
+### 结论
+
+PASS。只授权 T010 Phase C1 implementation/direct/clean/noiseless tests，不授权
+C2 validation、Phase D/held-out、method delta 或 push。
+
+---
+
+## V016: T010 epoch 21 起飞绑定首轮独立复审
+
+> date: 2026-07-26
+> 关联：D009 / formal D020 / V015 / T010 / control epoch 21
+> verifier：同一独立只读 subagent
+
+### 验证项
+
+- [x] control/task binding：live epoch 21 / CP009 / D020 / V015 / C1-only 与
+  T010 epoch 21，task-control → PASS。
+- [ ] current projections：live 当前范围仍写 epoch 20/review 前禁执行，master
+  方法轨仍标 `C1 REVIEW` 且未引用 V015 → FAIL。
+- [x] 其他投影与边界：formal、registry、projects-overview、state、portfolio、
+  harvest、C2/held-out lock、mission CP009/no-method=9 → PASS。
+- [x] 静态与 artifact：`git diff --check`、protected/common/params/旧包、
+  无 validation/test artifact，reviewer 未运行测试/科学实验 → PASS。
+
+### 证据
+
+```text
+epoch21 binding review:
+FAIL / NEEDS_FIXES
+P0=0
+P1=1
+P2=0
+
+task-control PASS
+mission checkpoint=CP009
+mission no-method=9
+git diff --check PASS
+protected diff PASS
+validation/test artifacts=0
+```
+
+### 结论
+
+FAIL。不得派 executor。
+
+### 后续（FAIL/PARTIAL 时）
+
+把 live 当前范围与 master 方法轨表统一为 epoch 21 / V015 / C1 AUTHORIZED，
+明确 C1 完成后才独立 review，再复审。
+
+---
+
+## V017: T010 epoch 21 起飞绑定第二轮独立复审
+
+> date: 2026-07-26
+> 关联：D009 / formal D020 / V015 / V016 / T010 / control epoch 21
+> verifier：同一独立只读 subagent
+
+### 验证项
+
+- [x] V016 两处 P1：live 当前范围与 master 方法轨已统一为
+  epoch 21 / V015 / C1 AUTHORIZED → PASS。
+- [ ] live 进展线索：V012 条目仍把 epoch 20/formal D020 称为“当前只授权 C1”，
+  与顶部 epoch 21/V015/current position 冲突 → FAIL。
+- [x] 其余 binding、投影、task-control、C2/held-out lock、mission CP009/
+  no-method=9、diff/protected/artifact 边界 → PASS。
+
+### 证据
+
+```text
+epoch21 binding second review:
+FAIL / NEEDS_FIXES
+P0=0
+P1=1
+P2=0
+
+task-control PASS
+git diff --check PASS
+protected diff PASS
+validation/test artifacts=0
+tests/scientific experiments run by reviewer=0
+```
+
+### 结论
+
+FAIL。不得派 executor。
+
+### 后续（FAIL/PARTIAL 时）
+
+把 live V012/epoch20 条目改为历史时态，并明确 V015/epoch21 才是当前 C1-only
+授权，再复审。
+
+---
+
+## V018: T010 epoch 21 起飞绑定独立终验
+
+> date: 2026-07-26
+> 关联：D009 / formal D020 / V015–V017 / T010 / control epoch 21
+> verifier：同一独立只读 subagent
+
+### 验证项
+
+- [x] live lineage：V012/epoch 20 已历史化，V015/epoch 21 是唯一当前 C1-only
+  binding → PASS。
+- [x] current projections：formal、registry、master、projects-overview、state、
+  portfolio、harvest 均为 D020/V015/epoch 21/CP009/C1 AUTHORIZED → PASS。
+- [x] task/mission：task-control fresh PASS；mission-log 仍为 CP009/no-method=9，
+  未误记 method delta → PASS。
+- [x] 静态/artifact：`git diff --check`、protected/common/params/T006/T008/T009
+  diff → PASS；仅两份 Phase-B source artifact，无 validation/test artifact。
+- [x] reviewer 行为：未运行测试或科学实验 → PASS。
+
+### 证据
+
+```text
+epoch21 final binding review:
+PASS / APPROVED
+P0=0
+P1=0
+P2=0
+
+task-control PASS
+git diff --check PASS
+protected diff PASS
+mission checkpoint=CP009
+mission no-method=9
+validation/test artifacts=0
+```
+
+### 结论
+
+PASS。允许内部 executor 执行 T010 Phase C1
+implementation/direct/clean/noiseless tests；完成后必须暂停。不授权 C2、
+Phase D/held-out、method delta 或 push。
+
+---
+
+## V019: T010 Phase C1 独立代码与科学合同审查
+
+> date: 2026-07-26
+> 关联：D009 / formal D020 / V018 / T010 / control epoch 21
+> verifier：独立 code + science-contract subagent
+
+### 验证项
+
+- [ ] finite gate：P2/cheap 遇非有限 DD 样本时可冻结 `h/P` 而仍报告
+  `state_finite=true`，但 corrected/innovation 已非有限 → FAIL。
+- [ ] conventional identity：BPS 接受非 32 phases；DPLL API 的 `symbol_rate`
+  未约束 common 隐藏 `T_S`，可能产生接口/科学身份错配 → FAIL。
+- [ ] direct tests：shared-realization 未覆盖 P1/conventional；comparator 使用
+  QPSK-like 波形；clean/noiseless 只断言 identity/finite，错误相位补偿也可通过
+  → FAIL。
+- [ ] primary contract：`contract.yaml` 仍为 `phase: B / NO_PHASE_C`，并把
+  methods/baselines 标为未实现，与 C1 现状和 source contract 冲突 → FAIL。
+- [x] source-contract migration、smoke seal、P2/P3 因果边界、cheap
+  amplitude-only、P2/P3 no-best-of → PASS。
+- [x] default locale 与 `PYTHONUTF8=1` 非-smoke C1 tests → 各 `6 passed`。
+- [x] task/artifact/protected/mission：task-control、3 YAML + 3 JSON、两份 source
+  artifact SHA、无 validation/test artifact、HEAD/CP009/no-method=9 → PASS。
+- [ ] P2 债务：read-only recompute 固定返回 PASS；方法参数合法域未校验；
+  pre-C1 owner/status/hash 无不可变快照，executor 的边界归因只能部分复核 → PARTIAL。
+
+### 证据
+
+```text
+Spec Compliance: FAIL
+Code/Science Contract: NEEDS_FIXES
+P0=0
+P1=4
+P2=3
+
+finite adversarial probe:
+reported_state_finite=True
+corrected_finite=False
+innovation_finite=False
+
+comparator identity probe:
+test_phases=7 accepted
+
+default Windows locale non-smoke C1 tests: 6 passed
+PYTHONUTF8=1 non-smoke C1 tests: 6 passed
+task-control PASS
+artifact SHA accepted=f36901ff...105786
+artifact SHA invalid=010662e1...f20f4
+validation/test artifacts=0
+HEAD=69e2d186...
+mission=CP009 / no-method=9
+```
+
+### 结论
+
+FAIL / `C1_REJECTED_NEEDS_FIXES`。`mission_method_delta=NONE`。不得运行 C2、
+validation、held-out 或 Phase D。
+
+### 后续（FAIL/PARTIAL 时）
+
+同一 C1 内以 TDD 修复四项 P1 和两个可修 P2；扩大 direct 16-QAM shared-realization
+与 clean/noiseless tests。pre-C1 snapshot 缺失作为 legacy attribution P2 保留，
+不得事后伪造。修复后由同一独立 reviewer 复审。
+
+---
+
+## V020: T010 Phase C1 V019 修复独立复审
+
+> date: 2026-07-26
+> 关联：D009 / formal D020 / V019 / T010 / control epoch 21
+> verifier：同一独立 code + science-contract subagent
+
+### 验证项
+
+- [x] V019 已关闭：finite adversarial path、BPS 32 phases/window、参数合法域、
+  C1-only contract、read-only evidence audit、基础 all-arm 16-QAM sanity → PASS。
+- [ ] DPLL 时标来源：`baselines.py` 仍导入 `common._config.T_S`，该值派生自本 T
+  明令禁止的 `SystemParams.R_SYM`；wrapper 只检查数值相等，未消除来源违约
+  → FAIL。
+- [ ] DPLL 全局模糊：未像 BPS 一样用 receiver-known pilot manifest 处理 π/2
+  ambiguity；同一 clean canonical Gray-16QAM realization 乘 `j` 后，
+  BPS=`0/7680`，DPLL=`3838/7680≈0.49974` → FAIL。
+- [x] task/default+UTF8/YAML/JSON/artifact/protected/mission 边界 → PASS。
+- [ ] pre-C1 immutable snapshot 缺失 → legacy attribution P2，不能补造，不单独拒收。
+
+### 证据
+
+```text
+Spec Compliance: FAIL
+Code/Science Contract: NEEDS_FIXES
+P0=0
+P1=2
+P2=1
+
+pi/2 adversarial clean probe:
+BPS errors=0/7680
+DPLL errors=3838/7680
+DPLL BER=0.49973958333333335
+
+default locale targeted: 11 passed, 20 deselected
+PYTHONUTF8=1 targeted: 11 passed, 20 deselected
+task-control PASS
+artifact SHA unchanged
+validation/test artifacts=0
+HEAD=69e2d186...
+mission=CP009 / no-method=9
+```
+
+### 结论
+
+FAIL / `C1_REJECTED_NEEDS_FIXES`。`mission_method_delta=NONE`。不得运行 C2、
+validation、held-out 或 Phase D。
+
+### 后续（FAIL/PARTIAL 时）
+
+在隔离 `baselines.py` 中实现显式消费传入 `symbol_rate` 的 continuous DD-DPLL，
+移除 `T_S/SystemParams.R_SYM` 依赖；用 pilot manifest 同步闭合 π/2 ambiguity 与
+phase estimate，并增加 `rx·exp(jπ/2)` 对抗测试。修复后再次独立复审。
+
+---
+
+## V021: T010 Phase C1 最终独立复审
+
+> date: 2026-07-26
+> 关联：D009 / formal D020 / V019–V020 / T010 / control epoch 21
+> verifier：同一独立 code + science-contract subagent；主控只做确定性证据复核
+
+### 验证项
+
+- [x] V020 两项 P1：隔离 Python 不再读取 `T_S`、`SystemParams/R_SYM`、
+  `dpll_track_dd` 或 `_config`；continuous DD-DPLL 显式使用
+  `t_s=1/symbol_rate` → PASS。
+- [x] π/2 全局模糊：BPS 与 DPLL 都只用冻结的 128-symbol receiver-known pilot
+  manifest 解模糊，并把 offset 同步写入 `phase_estimate`；`rx·exp(jπ/2)`
+  Gray-16QAM 对抗测试两臂 data errors 均为 0 → PASS。
+- [x] V019 回归：finite gate、exactly-32、参数域、all-arm shared realization、
+  C1-only contract、read-only evidence audit 均保持闭合 → PASS。
+- [x] fresh 主控复核：task-control PASS；Windows 默认 locale 与
+  `PYTHONUTF8=1` 全文件各 `32 passed`；3 YAML + 2 JSON 可解析；
+  `git diff --check` exit 0 → PASS。
+- [x] artifact/seed 边界：artifact 仍只有两份 Phase-B source-smoke 文件且 SHA
+  未变；validation/test/result artifact 均不存在；validation/test seed exact-token
+  命中为 0 → PASS。
+- [x] protected/mission 边界：common/params/旧包 numstat 为 0；HEAD 仍为
+  `69e2d186...`；mission-log 仍为 CP009 / no-method=9 → PASS。
+- [ ] pre-C1 immutable snapshot 缺失：无法事后证明 confirm-time fields
+  byte-identical；当前实现没有补造或夸大证据 → legacy attribution P2，不阻断 C1。
+
+### 证据
+
+```text
+independent final C1 review:
+Spec Compliance: PASS
+Code/Science Contract: APPROVED
+P0=0
+P1=0
+P2=1
+
+reviewer targeted evidence:
+default locale V020/conventional/all-arm: 3 passed
+PYTHONUTF8=1 same group: 3 passed
+V019 finite/domain/recompute regression: 11 passed
+YAML/JSON: 3 + 3 parse PASS
+validation/test scientific runs by reviewer: 0
+
+master fresh deterministic verification:
+task-control PASS
+default locale full file: 32 passed in 2.31s
+PYTHONUTF8=1 full file: 32 passed in 2.27s
+PARSE_PASS yaml=3 json=2
+FORBIDDEN_SCAN_EXIT=1 (zero matches)
+DIFF_CHECK_EXIT=0
+PROTECTED_NUMSTAT_EXIT=0
+validation/test/result artifacts=False
+SEED_ARTIFACT_EXACT_TOKEN_HITS=0
+accepted SHA=f36901ffdc59dfdde7102db545b6f46c3de3fb28ffaeed8b2368293663105786
+invalid SHA=010662e1d6fa918ccf03b29e54428dbe66fd8e98316d2b4c88f2e5d37bef20f4
+HEAD=69e2d186500c356ebc4a0b288cc416dcbc5d0d48
+mission=CP009 / no-method=9
+```
+
+### 结论
+
+PASS / `C1_ACCEPTED_AWAITING_CONTROL`。`mission_method_delta=NONE`。本验证只接收
+C1 方法/对照实现与 direct information-contract closure；它不是 fair comparison、
+方法信号或 package final receipt。C2、validation、held-out 与 Phase D 仍须等待
+递增 control/formal owner 和独立起飞审查。
+
+## V022: T010 C2 起飞合同首次独立审查
+
+> date: 2026-07-26
+> 关联：D010 / formal D021 / V021 / T010 / control epoch 22
+> verifier：独立 science + dispatch-contract subagent；只读审查，未运行 validation/test
+
+### 验证项
+
+- [ ] checkpoint/resume identity：T010 只要求累计 rows、row key、SHA 与首个缺失
+  row，没有冻结 2250 个 expected keys、严格前缀/30-row cell 完整性、完整 SHA
+  bundle 和原子保存语义；现有 `common._experiment.save_results()` 直接覆盖目标
+  文件 → FAIL（P1）。
+- [ ] GG SNR freeze：`collective log-distance` 与共同 bracket 多解时的目标函数、
+  pooled BER=0 的 log 替代值、等号方向和完整 tie chain 未闭合 → FAIL（P1）。
+- [ ] C2 参数/归一化：T010/`contract.yaml` 未逐项冻结 setting index、单位、阈值
+  语义、`gg_method=gar`、`block=100`、Es=1/AWGN 约定、无 AGC/无 per-cell
+  renormalization → FAIL（P1）。
+- [x] legacy pre-C1 snapshot：V021 已接受为不可补造 attribution debt；本次未补造，
+  但 C2 artifact 必须继续显式携带 → PASS with P2。
+- [x] 静态边界：task-control PASS；6 YAML + 3 JSON 可解析；30 settings ×
+  75 cells = 2250 rows；当前仅两份 Phase-B smoke artifact；protected
+  numstat=0；mission 仍为 CP009/no-method=9 → PASS。
+
+### 证据
+
+```text
+Spec Compliance: FAIL
+Science/Dispatch Contract: NEEDS_FIXES
+P0=0
+P1=3
+P2=1
+mission_method_delta=NONE
+
+task-control=PASS
+YAML=6 parse PASS
+JSON=3 parse PASS
+grid=30 settings * 75 realization cells = 2250 rows
+validation/test/result artifacts=0
+protected/common/params/old-package numstat=0
+mission=CP009 / no-method=9
+
+P1-1: no canonical expected-key sequence, strict-prefix/cell-completeness
+       validation, exact execution hash bundle, or atomic checkpoint replace
+P1-2: SNR freeze objective/ties and zero-error pooled log-distance undefined
+P1-3: setting units/indexes and GG/Es/AWGN/AGC normalization contract incomplete
+P2-1: PRE_C1_IMMUTABLE_SNAPSHOT_ABSENT remains historical debt; do not fabricate
+```
+
+### 结论
+
+FAIL / `C2_DISPATCH_REJECTED_NEEDS_FIXES`。`mission_method_delta=NONE`。不得运行
+C2 validation、test/held-out 或 Phase D；先在同一 epoch 22 / D010 / formal D021
+授权范围内补齐三个 P1 的确定性合同，再由独立 verifier 重新审查。
+
+### 后续（FAIL/PARTIAL 时）
+
+1. 冻结 canonical row-key/expected sequence/strict-prefix/cell-completeness、完整 SHA
+   bundle 与临时文件 `fsync` + `os.replace` 原子 checkpoint 语义。
+2. 冻结 pooled zero-error bound、共同 bracket 与无共同 crossing 的精确
+   log-distance 目标、方向等号和 tie chain。
+3. 在 T010 与 `contract.yaml` 逐项登记 30 settings 的 index/单位/语义，并冻结
+   GG、16-QAM Es、AWGN、无 AGC/无 per-cell renormalization 约定。
+4. 只做静态 parse/control/diff 检查后交独立 verifier 复审；复审 PASS 前不执行。
+
+## V023: T010 C2 amendment 第二轮独立复审
+
+> date: 2026-07-26
+> 关联：D010 / formal D021 / V022 / T010 / control epoch 22
+> verifier：同一独立 science + dispatch-contract subagent；只读审查，未运行 pytest/seed
+
+### 验证项
+
+- [x] V022 P1-1：2250 canonical keys、strict prefix、30-row cell、17-file exact
+  hash map、existing-prefix SHA/deep equality 与 temp+fsync+replace 原子保存 →
+  PASS。
+- [x] V022 P1-2：pooled zero-error bound、bracket 等号、common/no-common
+  max-log objective 与 pair/window tie chain → PASS。
+- [x] V022 P1-3：30 settings index/unit/threshold、numerical guard、
+  gar/block100、h→sqrt(h)、Es=1/AWGN、无 AGC/renormalization 与对应测试义务
+  → PASS。
+- [ ] conventional B* exact tie：BPS/DPLL 使用同一 score，但完整 score 相等时
+  winner 未冻结；实现遍历顺序可能改变 B*、GG SNR freeze 和 strongest comparator
+  → FAIL（新增 P1）。
+- [x] legacy pre-C1 P2：`PRE_C1_IMMUTABLE_SNAPSHOT_ABSENT` 继续携带且未补造
+  → PASS with P2。
+
+### 证据
+
+```text
+Spec Compliance: FAIL
+Science/Dispatch Contract: NEEDS_FIXES
+P0=0
+P1=1
+P2=1
+mission_method_delta=NONE
+
+V022-P1-1=PASS
+V022-P1-2=PASS
+V022-P1-3=PASS
+NEW-P1=B* exact-tie winner undefined
+
+task-control=PASS
+YAML=6 parse PASS
+JSON=3 parse PASS
+settings=[3,9,3,9,3,3] / total=30
+cells=75 / rows=2250
+hash_paths=17 / all exist
+contract validation=false / heldout=false
+scientific seed runs=0
+protected numstat=0
+git diff --check=PASS
+mission=CP009 / no-method=9
+```
+
+### 结论
+
+FAIL / `C2_DISPATCH_AMENDMENT_REJECTED`。`mission_method_delta=NONE`。V022 的三项
+原始 P1 已全部关闭，但 B* exact tie 是新的确定性阻断；复审 PASS 前仍不得运行 C2。
+
+### 后续（FAIL/PARTIAL 时）
+
+在 T010 与 `contract.yaml` 冻结科学中性的 conventional arm tie index，并明确完整
+score 相等时的 B* winner；加入 deterministic exact-tie test 后仅做静态复审。
+
+## V024: T010 C2 amendment 第三轮独立复审
+
+> date: 2026-07-26
+> 关联：D010 / formal D021 / V022–V023 / T010 / control epoch 22
+> verifier：同一独立 science + dispatch-contract subagent；只读审查，未运行 pytest/seed
+
+### 验证项
+
+- [x] V023 B* exact tie：T010 与 `contract.yaml` 一致冻结
+  `BPS=0,DPLL=1`、完整 score exact tie→BPS，理由仅为派遣前固定 arm order；
+  deterministic test 要求反转实现遍历顺序不改变 winner → PASS。
+- [x] V022 三项 P1 无回归：2250-key/checkpoint、SNR objective/ties、
+  30-setting/normalization 全部保持闭合 → PASS。
+- [x] legacy pre-C1 P2：`PRE_C1_IMMUTABLE_SNAPSHOT_ABSENT` 仍在 C1 acceptance
+  与 every-artifact obligation 中，未补造 → PASS with P2。
+- [x] 静态边界：task-control PASS；30 settings/2250 rows/17 hash paths；
+  contract validation=false/heldout=false；仅两份 Phase-B smoke；protected
+  numstat=0；mission CP009/no-method=9 → PASS。
+
+### 证据
+
+```text
+Spec Compliance: PASS
+Science/Dispatch Contract: APPROVED
+P0=0
+P1=0
+P2=1
+mission_method_delta=NONE
+final=C2_DISPATCH_AMENDMENT_PASS
+
+task-control=PASS
+YAML=6 parse PASS
+JSON=3 parse PASS
+settings=30
+rows=2250
+hash_paths=17 / all exist
+bstar_exact_tie=4OPM_BPS
+contract validation=false / heldout=false
+scientific seed runs=0
+protected numstat=0
+git diff --check=PASS
+mission=CP009 / no-method=9
+```
+
+### 结论
+
+PASS / `C2_DISPATCH_AMENDMENT_PASS`。`mission_method_delta=NONE`。本 PASS 只批准
+C2 amendment，不直接授权执行；主控必须先递增 foreground control 与 T010 task
+binding，再经独立 binding 复审。held-out/Phase D 继续锁定。
+
+## V025: T010 C2 epoch 23 最终 binding 独立复核
+
+> date: 2026-07-26
+> 关联：D010 / formal D021 / V024 / T010 / control epoch 23
+> verifier：同一独立 binding subagent；只读审查，未运行 pytest/seed
+
+### 验证项
+
+- [x] control/task binding：live control 与 T010 均为
+  epoch 23 / CP009 / formal D021 / `METHOD_CONSTRUCT`；task-control fresh PASS。
+- [x] activation preflight：`contract.yaml` 记录 V024 amendment PASS，但
+  validation/heldout/performance 均 false；`source-contract.yaml` 保持规定的
+  executor 起飞前 C1/D020 状态，T010 已精确定义迁移。
+- [x] current projections：master/projects-overview/formal topic-index/live+formal
+  registry/state/portfolio/harvest 七组 current view 均指
+  epoch23/V024/binding pending；残余 epoch22 只在历史段。
+- [x] V024 合同无回归：30 settings、2250 rows、17 hash paths、B* tie→BPS、
+  checkpoint/SNR/normalization obligations 全部闭合。
+- [x] evidence boundary：仅两份 Phase-B smoke；protected numstat=0；mission
+  CP009/no-method=9；未运行 scientific seed。
+
+### 证据
+
+```text
+Spec Compliance: PASS
+Binding: APPROVED
+P0=0
+P1=0
+P2=1
+mission_method_delta=NONE
+final=C2_EPOCH23_BINDING_PASS
+
+task-control=PASS
+YAML=7 parse PASS
+JSON=3 parse PASS
+projection_assertions=7/7
+contract validation=false / heldout=false
+source_contract=preflight C1/D020
+settings=30 / rows=2250 / hash_paths=17
+scientific seed runs=0
+protected numstat=0
+git diff --check=PASS
+mission=CP009 / no-method=9
+```
+
+### 结论
+
+PASS / `C2_EPOCH23_BINDING_PASS`。`mission_method_delta=NONE`。只允许不同内部
+executor 按 T010 执行 C2 validation freeze 与规定的起飞迁移；不授权 test、
+held-out、Phase D、CP010、方法信号或正式性能结论。
+
+## V026: T010 C2 runtime identity failure 独立科学接收
+
+> date: 2026-07-26
+> 关联：D010 / formal D021 / T010 / control epoch 23
+> verifier：与 executor 分离的独立合同/科学 subagent；只读审查，未运行新 seed
+
+### 验证项
+
+- [x] checkpoint 完整性：独立读取 `validation-raw.json`，声明/实际均为
+  840 rows，整除 30；keys 精确等于 canonical prefix，最后 key
+  `[1,0,2,5,2]`、下一 key `[1,0,3,0,0]`；17/17 frozen source hash 匹配，
+  aggregate 不存在、`heldout_consumed=false` → PASS。
+- [x] 异常可复现性：executor 对同一 moderate/14 dB/seed `131004` frozen RX
+  只读重建两次，RX/GG SHA 和 traceback 一致；真实 slope
+  `+0.00251327`，含 PN true-phase LS `+0.00277341`，observed unwrap LS
+  `-0.0138504` → deterministic identity failure。
+- [x] 根因边界：低幅 pilot 的 raw angle 从 `-0.4179` 到 `+3.0458`，unwrap
+  选择 `-3.2374` 并继续到 `-6.3042`；λ `.98/.99/.999` 的 RLS slope 均为负。
+  P1/P2/P3 共用该 pilot 初始化，失败早于 DD/adaptation → 不是 runner、RNG、
+  RLS 递推或某个 candidate gate 的局部 bug。
+- [x] 合同处置：T010/contract 要求每行有真实 `bit_errors/denominator/BER`，
+  但未定义 corrected data 产生前的 exception row；skip 违反 strict prefix，
+  synthetic collapse/nonfinite row 会改变 setting score → 均禁止。
+- [x] 预注册早停：T010 §6 规定 RLS lifecycle 任一失败即
+  `BLOCKED_IDENTITY / mission_method_delta=NONE / no second package`；
+  positive slope 与 `F=2π/h1` 是 deliberate source identity，不能按实现 bug
+  在 epoch 23 内修改 → 当前证据足够，不要求完成 2250 rows。
+
+### 证据
+
+```text
+raw rows actual/declared=840/840
+complete cells=28
+last key=[1,0,2,5,2]
+next key=[1,0,3,0,0]
+frozen hashes=17/17 exact match
+aggregate=ABSENT
+heldout_consumed=false
+
+true slope=+0.00251327 rad/symbol
+true-phase LS with PN=+0.00277341
+observed unwrap LS=-0.0138504
+RLS h1 lambda .98/.99/.999=-0.0062947/-0.0109464/-0.0164973
+same frozen RX reproduction=2/2
+
+P0=0
+P1=0
+P2=1
+formal_science_disposition=BLOCKED_IDENTITY
+mission_method_delta=NONE
+```
+
+### 结论
+
+PASS / 接收 `BLOCKED_IDENTITY`。禁止继续 C2、跳过失败 cell、伪造
+BER/collapse row、修改 positive-slope gate、运行 test/held-out/Phase D 或开启第二个
+B10 package。该接收是科学身份失败，不是方法、fair comparison、negative method
+claim 或治理产出。主控应保留 840-row 证据，更新 formal/mission/control 后轮换。
+
+## V027: CP010 owner/control/current projection 独立终验
+
+> date: 2026-07-26
+> 关联：D011 / formal D022 / V026 / CP010 / H002
+> verifier：与 executor/master 分离的同一独立只读 subagent；未改文件、未运行
+> test 或 scientific seed
+
+### 验证项
+
+- [x] T010 evidence snapshot：fresh read-only 复核 raw 声明/实际均为 840 rows，
+  整除 30，keys 为 canonical strict prefix，last/next key 为
+  `[1,0,2,5,2]` / `[1,0,3,0,0]`；17/17 current byte SHA256 匹配，
+  aggregate 不存在、heldout=false、method delta NONE → PASS。
+- [x] CP010 双账：mission-log 精确记录
+  `BLOCKED_IDENTITY / NONE / same-axis=1 / repair=1 / no-method=10 /
+  package ALIGNED / mission DRIFTED-STALLED`，与 live D011、formal D022 和
+  V026 一致；没有把 45 tests 或 identity diagnostic 写成方法 → PASS。
+- [x] 首轮 owner/projection 审查：发现 formal topic-index “悬而未决”仍把
+  C2 写为待执行且笼统禁止 C15，与 D022/current projections 冲突 →
+  `FAIL / P0=0/P1=1/P2=1`。
+- [x] 修正后同一 verifier 复审：formal topic-index 已明确 T010 终止、B10
+  `RETURNED_TO_POOL`、C2 无待执行项；允许 C15 Step 1–3 formalization，但
+  readiness PASS 前禁止旧 sandbox/Step 4a MVE。live control、formal owner、
+  mission-log、projects-overview、master-state、state/portfolio/harvest current
+  views、registry 与 H002 全部一致 → PASS。
+- [x] 禁止项：未授权 T006/T008/T009/T010 repair、Scout/P03、旧 C15
+  sandbox、Step 4a/MVE、Step 5/Contract/Execute；历史授权仍保留在 superseded
+  血缘中，不构成当前动作 → PASS。
+
+### 证据
+
+```text
+round1=FAIL
+round1_P0/P1/P2=0/1/1
+round1_only_P1=formal topic-index stale pending-C2/current-C15 wording
+
+round2=PASS
+round2_P0/P1/P2=0/0/1
+final=CP010_CONTROL_PLANE_PASS
+
+raw rows declared/actual=840/840
+strict_prefix=true
+last_key=[1,0,2,5,2]
+next_key=[1,0,3,0,0]
+source_hashes=17/17
+aggregate=ABSENT
+heldout_consumed=false
+
+active_scientific_carrier=NONE
+next_workline=C15_REDUCED_CONSTELLATION_FORMALIZATION_STEP1_3_ONLY
+MVE_authorized=false
+mission_method_delta=NONE
+no_method_streak=10
+```
+
+### 结论
+
+PASS / `CP010_CONTROL_PLANE_PASS`。P2=1 仅为既有
+`PRE_C1_IMMUTABLE_SNAPSHOT_ABSENT`，无新增阻断。T010/CP010 可作为下一包的
+权威恢复基点；此 PASS 是控制面终验，不是方法产出或科学 performance PASS。

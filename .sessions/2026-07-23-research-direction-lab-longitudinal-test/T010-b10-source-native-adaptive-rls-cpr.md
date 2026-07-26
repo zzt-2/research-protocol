@@ -1,6 +1,6 @@
 # Task Brief: B10 source-native adaptive pilot-RLS CPR
 
-> 来源: S001（live D006 / R002 / formal D017）
+> 来源: S001（live D010 / R002 / formal D021）
 > 产出位置: `projects/thesis-fso/worker-logs/step-010-b10-source-native-adaptive-rls-cpr.md`
 > 日期: 2026-07-26
 > 唯一文档: executor 只需本 T、其中明确列出的仓库源码与共享论文文件
@@ -10,7 +10,7 @@
 rdl_task_control:
   schema_version: rdl.task-control.v2
   control_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/topic-index.md
-  control_epoch: 17
+  control_epoch: 23
   action_class: METHOD_CONSTRUCT
   mission_checkpoint: CP009
 ```
@@ -30,6 +30,224 @@ bounded adaptive forgetting，判断是否形成论文可包装的方法信号�
 只描述 B10 estimator 的 pilot/RLS/DD 身份；星地 2.5 GBd GG primary 是显式
 `SOURCE_TRANSFER`，不得冒充 B10 原生光纤系统复现。
 
+### 0.1 Phase-B amendment（2026-07-26，owner D008 / formal D019）
+
+初次 Phase-B `BLOCKED_IDENTITY` 已被独立科学 verifier 以
+`SCIENCE_VERDICT_REJECTED / IMPLEMENTATION_INVALID` 拒收，不得作为 B10 身份失败：
+
+- 旧合同在 `r=s·exp(+jφ)+n`、`exp(-j predicted)` 去旋约定下使用了相反的
+  operational residual；
+- runner 硬编码无 source 依据的 `λ=.999`，不能承担 identity Kill；
+- seed `130001` 已用于失败定位和反事实诊断，只是 invalid-development evidence。
+
+本 amendment 只授权一次同包 Phase-B confirmation：
+
+1. residual 固定为
+   `angle(derotated_received * conj(hard_decision))`，desired phase 为
+   `predicted_phase + residual`；
+2. source-only `λ=.99` 固定标为
+   `IDENTITY_REPAIR_PREREGISTERED_AFTER_INVALID_RUN`；它不是论文参数、primary
+   tuning 或方法信号；
+3. 原 artifact 保留为 `source-smoke-invalid-v1.json`；seed `130002` 只作既有
+   canonical/RNG test，不作性能证据；使用仓库 exact-token 零命中的 confirm seed
+   `130003` 重跑完全相同的 1/10 GHz smoke，输出新 `source-smoke.json`；
+4. control/formal/task amendment 必须先独立审查；confirm 通过仍需独立科学
+   verifier 与新的递增 control 才能进入 Phase C。confirm 失败即轮换，不得再改
+   sign、`λ`、seed 或补第二个 B10 repair/package；
+5. 执行前新增 synthetic residual-direction regression；seed `130003` 的实际
+   1/10 GHz BER gate 是唯一 confirm，派发前禁止预跑。confirm PASS 后必须返回
+   `PARTIAL_CONFIRM_AWAITING_SCIENCE_REVIEW` 并停止；
+6. confirm 前迁移 `source-contract.yaml`：
+   - `authority.formal_decision` 改为 formal D019；
+   - 旧 run 记为 `SCIENCE_VERDICT_REJECTED / IMPLEMENTATION_INVALID` 历史，并指向
+     原样保留的 `source-smoke-invalid-v1.json`；
+   - current confirm 状态设为 pending，固定 operational residual、source-only
+     `.99` 类型与 seed `130003`；
+   - 新 `source-smoke.json` 只能由唯一 confirm 写入，禁止覆盖 invalid history。
+
+### 0.2 Phase-C authorization（2026-07-26，owner D009 / formal D020）
+
+V012 已独立接收
+`SOURCE_IDENTITY_PASS / PHASE_B_CONFIRM_ACCEPTED`（P0=0/P1=0/P2=3）；
+`mission_method_delta=NONE`。epoch 20 只授权分段 Phase C：
+
+1. **C1 implementation/tests（≤15 min，不消费 validation）**：
+   - 起飞时按以下精确 schema 迁移 `source-contract.yaml`：
+     - `authority.formal_decision` =
+       `.sessions/2026-07-06-step4a-mve-execution/decisions.md#D020`；
+     - `source_native_identity.phase_b_status` =
+       `SOURCE_IDENTITY_PASS_ACCEPTED`；
+     - `source_identity_smoke.initial_run.*` 和
+       `source_identity_smoke.current_confirm.*` 全部作为 confirm-time immutable
+       history 原样保留，包括 `current_confirm.status=PASS_AWAITING_SCIENCE_REVIEW`
+       与 `current_confirm.phase_c_authorized=false`，不得覆写历史；
+     - 新增根级 `current_authorization`：
+       `formal_decision=.../decisions.md#D020`、
+       `phase_c_status=C1_AUTHORIZED_NO_VALIDATION`、
+       `validation_authorized=false`、`heldout_authorized=false`、
+       `mission_method_delta=NONE`；
+   - `run_source_smoke()` 在 current PASS artifact 已存在时必须立即拒绝，测试证明
+     不生成 realization；
+   - read-only gate 重算 artifact 中可重算的 BER/Q²/CFO/gates；finite/switch/freeze
+     原值未落盘，必须标 `LEGACY_NON_RECOMPUTABLE_PHASE_B_P2`，禁止事后伪造；
+   - 实现 P2/P3、amplitude-only cheap rule、4OPM+BPS 与 4OPM+DD-DPLL；
+   - 完成 direct information-increment、no-truth、shared-realization、comparator
+     frequency-responsibility 与 clean/noiseless sanity tests；
+   - 不调用 validation/test seeds，不产生 validation artifact。
+2. C1 完成后返回 `PARTIAL_C1_AWAITING_REVIEW` 并停止。独立 review PASS 后才允许
+   **C2 validation freeze**。
+3. **C2 validation freeze（每 turn ≤15 min）**：只用 `131001–131005` 按预注册
+   Cartesian order生成 raw；若需续 turn，只追加未运行 rows，全矩阵完成前不得选
+   参数。完成后冻结 P1/P2/P3/cheap/B* 与每个 GG 档最多 3 个相邻 SNR 点，返回
+   `PARTIAL_C2_AWAITING_SCIENCE_REVIEW` 并停止。
+4. Phase D/held-out/test seeds 始终未授权；C2 独立科学验收与新的递增 control
+   是进入 Phase D 的必要条件。
+
+### 0.3 C2 validation authorization（2026-07-26，owner D010 / formal D021）
+
+V021 已独立接收 C1 为 `C1_IMPLEMENTATION_CONTRACT_PASS`
+（P0/P1/P2=`0/0/1`）；唯一 P2 是不可事后补造的 pre-C1 immutable snapshot
+债务。`mission_method_delta=NONE`。V022 首次起飞审查以 P0/P1/P2=`0/3/1`
+拒绝派遣；以下 amendment 精确补齐 checkpoint、SNR freeze 与归一化合同。
+V023 新增的 B* exact-tie P1 随后补齐；V024 第三轮以
+P0/P1/P2=`0/0/1` 批准 amendment。epoch 23 只在最终 binding 独立复核 PASS 后
+授权 C2：
+
+1. 起飞时把 `source-contract.yaml` 迁移为：
+   - `authority.formal_decision` =
+     `.sessions/2026-07-06-step4a-mve-execution/decisions.md#D021`；
+   - `current_authorization.formal_decision` 同上；
+   - `current_authorization.phase_c_status=C2_AUTHORIZED_VALIDATION_ONLY`；
+   - `validation_authorized=true`、`heldout_authorized=false`、
+     `mission_method_delta=NONE`；
+   - 新增 `phase_c1_acceptance`，精确记录
+     `verification=.../verifications.md#V021`、
+     `status=C1_IMPLEMENTATION_CONTRACT_PASS`、`p0=0`、`p1=0`、`p2=1`、
+     `legacy_debt=PRE_C1_IMMUTABLE_SNAPSHOT_ABSENT` 和
+     `mission_method_delta=NONE`；
+   - `source_identity_smoke.initial_run.*`、
+     `source_identity_smoke.current_confirm.*` 与
+     `phase_c1_method_contract.*` 原样保留，禁止借迁移覆写 Phase-B/C1 历史。
+2. 派遣复审前，`contract.yaml` 必须是 `phase=C2`、
+   `execution_status=C2_DISPATCH_CONTRACT_AWAITING_REVIEW`；
+   `authorization.validation=false`、`heldout=false`、
+   `performance_conclusion=false`。独立派遣复审 PASS 并由主控更新递增 control
+   后，executor 起飞时只把
+   `execution_status` 改为 `C2_VALIDATION_AUTHORIZED`、
+   `authorization.validation=true`，其余 C2 合同不得改变。C2 可生成 validation
+   raw/aggregate 和冻结设置，但不能给正式性能或方法 verdict。
+3. **精确 validation 参数网格、setting index 与单位**。所有扫描值均为
+   `UNVERIFIED_PROJECT_DECLARED_RANGE / PREREGISTERED_C2_GRID`，不是文献最优：
+   - `arm_family_index=0 / P1_FIXED`：setting `0,1,2` 分别为
+     dimensionless forgetting factor `0.98,0.99,0.999`；
+   - `arm_family_index=1 / P2_INNOVATION_FREEZE`：setting `0..8` 按
+     forgetting factor major、threshold minor 排列
+     `[0.98,0.99,0.999] × [0.05,0.11,0.20]`。threshold 是 dimensionless
+     normalized innovation，逐 DD symbol 在更新前计算
+     `abs(desired-h^T x)/sqrt(max(lambda_base+x^T P x,1e-15))`；`1e-15`
+     只是固定 numerical finite guard，不是 validation tuning；P2 的
+     `lambda_base=forgetting_factor`，只决定当前 update 是否冻结；
+   - `arm_family_index=2 / P3_BOUNDED_ADAPTIVE_FORGETTING`：setting `0,1,2`
+     按下列 tuple 原顺序，不做隐含 Cartesian 扩展：
+     `(lambda_min,lambda_max,ema_alpha,innovation_scale)` =
+     `(0.95,0.999,0.20,2.0)`、
+     `(0.98,0.995,0.10,1.0)`、
+     `(0.99,0.999,0.10,1.0)`。四项均 dimensionless；当前 innovation 的
+     `lambda_base=lambda_max`，`lambda_k` 只依赖更新至 `k-1` 的 EMA；
+   - `arm_family_index=3 / CHEAP_AMPLITUDE_FREEZE`：setting `0..8` 按
+     forgetting factor major、threshold minor 排列
+     `[0.98,0.99,0.999] × [0.10,0.20,0.40]`。threshold 是 Es=1
+     Gray-16QAM 接收机链上的 dimensionless raw receiver amplitude
+     `abs(derotated_received)`；无 AGC、无按 frame/cell/seed 归一化；
+   - `arm_family_index=4 / 4OPM_BPS`：setting `0,1,2` 为 window
+     `31,63,127 symbols`，每项 exactly 32 test phases；
+   - `arm_family_index=5 / 4OPM_CONTINUOUS_DD_DPLL`：setting `0,1,2` 为
+     `omega_n=4e6,8e6,20e6 Hz`；8e6/20e6 只作 project WARNING/既有 sweep
+     anchor，不能冒充本场景文献值。
+4. **精确运行顺序**：
+   `GG=[weak,moderate,strong]` →
+   `EsN0=[14,17,20,23,26] dB` →
+   `seed=[131001,131002,131003,131004,131005]` →
+   arm/settings 按第 3 条书写顺序。canonical row key 固定为五整数数组
+   `[gg_index,snr_index,seed_index,arm_family_index,setting_index]`，每个 index
+   都是上述冻结列表的零基索引。按 GG→SNR→seed→arm→setting 的 lexicographic
+   顺序预先生成完整 `expected_row_keys`，长度必须精确为 2250；不得用字符串排序
+   或运行结果决定顺序。每个 `(GG,EsN0,seed)` 只生成一次 shared realization，
+   所有 30 个 arm/settings 消费同一对象。共 75 realization cells、2250 raw rows。
+5. **shared realization 与归一化合同**：
+   - `gg_method=gar`，`block=100 symbols`，GG intensity
+     `h=X*Y` 的理论边缘均值为 1；有限 frame 的 sample mean 不重归一；
+   - field amplitude 只取 `sqrt(h)`，不对 fade 后 waveform 做功率补偿；
+   - Gray 16-QAM 使用 `qam16_mod`，未衰落发射星座平均
+     `E_s=E[|s|^2]=1`；
+   - electrical `gamma=10^(EsN0_dB/10)` 参照上述未衰落 `E_s=1`；
+     complex circular AWGN 固定为
+     `n=sqrt(1/(2*gamma))*(N(0,1)+j*N(0,1))`，故
+     `E[|n|^2]=1/gamma`；
+   - 禁止 AGC、按 realization/cell/seed 的 waveform/noise/h/sample-power
+     renormalization，禁止按 realized `mean(h)` 调整 noise。
+6. **checkpoint/resume identity 与原子保存**：
+   - 只在一个 30-row realization cell 全部完成后 checkpoint；合法累计 row 数
+     只能是 `0,30,...,2250`；
+   - resume 时先重新生成完整 2250-key `expected_row_keys`。现有 rows 的 key
+     必须唯一、无 gap，且逐项精确等于
+     `expected_row_keys[:len(rows)]`；每个连续 30-row group 必须共享同一前三个
+     cell index 并完整覆盖第 3 条的全部 arm/settings。任一不符返回
+     `BLOCKED_STALE_OR_CORRUPT_CHECKPOINT`，不得修补、跳行或重跑覆盖；
+   - 首次 checkpoint 前，以文件原始 bytes 的 SHA256 冻结 exact hash map：
+     本 T、`source-contract.yaml`、`contract.yaml`、`pilot-manifest.json`、
+     `seed-census.yaml`、`shared_realization.py`、`source_native_rls.py`、
+     `methods.py`、`baselines.py`、`run_all.py`、`projects/simulation/params.py`、
+     `common/_config.py`、`common/_modulation.py`、`common/_gg_time.py`、
+     `common/_channel.py`、`common/_recovery.py`、`common/_experiment.py`。
+     `validation-raw.json` 每次都保存完整 map；resume 必须 exact-match，否则
+     `BLOCKED_STALE_OR_CORRUPT_CHECKPOINT`；
+   - 每次 append 前保存既有 rows 的 canonical JSON SHA256，append 后证明既有
+     prefix deep-equal 且 SHA 不变；禁止修改或覆盖任何 existing row key；
+   - 原子保存只允许隔离 `run_all.py` wrapper：在目标同目录创建唯一临时文件，
+     先调用 `save_results(payload,temp,...)` 注入元数据，再 flush + `os.fsync`
+     临时文件，最后 `os.replace(temp,validation-raw.json)`；支持目录 fsync 的平台
+     再 fsync parent directory，不支持时在 artifact 记录
+     `directory_fsync=UNSUPPORTED_PLATFORM`。异常时删除临时文件并保留旧 target；
+     禁止修改 shared `common/_experiment.py`；
+   - 全 2250 rows 完成前不得生成 aggregate、查看局部排名、选择设置或改变网格。
+7. **全局 setting freeze 规则**：
+   - 对每个 arm family，以 75 个 validation cells 的同分母 rows 按以下固定
+     lexicographic score 选一个全局设置：
+     `(nonfinite_rows, BER>=0.2_rows, outage_rows_at_3.8e-3,
+     total_bit_errors, preregistered_setting_index)`，全字段从小到大；
+   - P2、P3 分别冻结；cheap、P1、BPS、DPLL 分别冻结；
+   - conventional `B*` 在已全局冻结的 BPS/DPLL 两臂间用同一 score 选择；
+     若完整 score exact tie，则按预注册 conventional arm index
+     `BPS=0,DPLL=1` 选择 BPS。该 tie 只按派遣前固定顺序，不表示 BPS 有性能优势；
+   - primary method arm 在已冻结的 P2/P3 两臂间用同一 score 选择，tie 固定选
+     P2；另一个臂仍完整保留且 Phase D 不得按 cell/seed 替换主臂；
+   - score 只用于 validation freeze，不构成 `METHOD_SIGNAL` 或 held-out claim。
+8. **每个 GG 档的 SNR freeze**：
+   - 使用已冻结的 primary method、P1、cheap 与 B* 的 validation pooled raw BER；
+   - 每个 arm/SNR 的 pooled raw BER 固定为
+     `sum(bit_errors)/sum(denominator)`；若 pooled errors=0，仅为 log-distance
+     定义 `effective_BER=0.5/sum(denominator)`，否则
+     `effective_BER=pooled_raw_BER`。不得加任意 epsilon；
+   - 正常方向共同 bracket 的精确定义：同一相邻 pair `(i,i+1)` 上，四臂各自都
+     满足低端 `pooled_raw_BER>3.8e-3`、高端
+     `pooled_raw_BER<=3.8e-3`。等号只算高端；低端等号不成 bracket；
+   - 对每个合法共同 pair，目标为四臂×pair 两端的
+     `max(abs(log10(effective_BER/3.8e-3)))`；按
+     `(objective,lower_snr_index)` 从小到大选唯一 pair；
+   - 为已选 pair 枚举所有包含它的连续 3-point window；window 目标为四臂×三点
+     的同一 max-log-distance，按 `(objective,window_start_index)` 选唯一 window；
+   - 若不存在共同 bracket，对三个可能的连续 3-point window 全部计算同一
+     max-log-distance，按 `(objective,window_start_index)` 选唯一 window，并标
+     `NO_COMMON_VALIDATION_CROSSING`；该 GG 档以后不得触发 Q²
+     `METHOD_SIGNAL`，只能作 raw BER/outage/boundary。
+9. C2 artifact 必须继续显式携带
+   `legacy_debt=PRE_C1_IMMUTABLE_SNAPSHOT_ABSENT`，不得补造 pre-C1 snapshot，
+   也不得用该债务扩大或否定 C2 结论。
+10. C2 完成后只返回 `PARTIAL_C2_AWAITING_SCIENCE_REVIEW` 并停止。不得运行
+   test seeds `132001–132010`、Phase D、held-out、Step 5/Contract/Execute，
+   不得 commit/push 或更新 owner/mission-log。
+
 **产出**：隔离实现、tracked raw/aggregate artifacts、定向 tests、synthesis 和
 worker-log；一次 consolidated commit，不 push。
 
@@ -41,8 +259,10 @@ worker-log；一次 consolidated commit，不 push。
    pilot 与 data 必须在 TX 侧进入同一物理 channel/noise realization。
 3. deployable arm 不得读取 runtime TX payload、bits、true phase/CFO、future samples
    或 post-hoc ambiguity label；oracle 仅作 bound。
-4. source smoke 通过后必须同包跑 P1–P3 和 cheap/conventional comparison；不得把
-   smoke、测试 PASS、代码创建或 evaluator 修复记为方法信号。
+4. source smoke 已由 V012 接收，C1 已由 V021 接收；当前只按 §0.3 运行 C2
+   preregistered validation comparison。禁止重跑 smoke、消费 test seed、运行
+   held-out/Phase D 或把 smoke、测试 PASS、代码创建、evaluator 修复、局部
+   validation 排名记为方法信号。
 5. 只改本 T 授权的隔离路径；不改 `common/`、`params.py`、旧 T006/T008/T009、
    paper、formal/current/mission owner、Skill 或 protected history。
 
@@ -62,7 +282,8 @@ python C:\Users\zzt\.agents\skills\research-direction-lab\scripts\validate_task_
 必须 PASS。随后核对：
 
 - `projects/thesis-fso/master-state.md`：current step 为 GW Step 4a、carrier=B10；
-- `.sessions/2026-07-06-step4a-mve-execution/decisions.md#D017`；
+- `.sessions/2026-07-06-step4a-mve-execution/decisions.md#D021`；D017–D020 只作
+  superseded 历史血缘，不能通过 stale-control check；
 - 本包不进入 Step 5/Contract/Execute。
 
 任一不一致：返回 `BLOCKED_STALE_CONTROL`，不写代码、不跑实验。
@@ -72,7 +293,8 @@ python C:\Users\zzt\.agents\skills\research-direction-lab\scripts\validate_task_
 完整读取：
 
 1. 本 T；
-2. live `R002-post-t009-carrier-remap.md` 与 formal D017；
+2. live `R002-post-t009-carrier-remap.md`、D010/V021 与 formal D021；D009/V012/
+   D020 是 Phase-B→C1 历史血缘，D008/V008/D019 是 Phase-B repair 历史血缘；
 3. `stages/groundwork.md`、`stages/gw-feasibility.md`；
 4. `thesis-lessons.md` 速查及 TL-20/22/23/25–33；
 5. `code-quality.md`；
@@ -147,11 +369,13 @@ consolidated commit：
    写 source/experiment contract、pilot manifest、seed census 与先失败后通过的
    identity/metric 单元测试骨架。安全点：所有合同可解析，未运行 source smoke。
 2. **Phase B — P1 identity（≤15 min）**：完成 shared realization 与 source-native
-   fixed B10，只运行定向 tests 和 1/10 GHz source smoke。任一 identity gate 失败
-   即收口 `BLOCKED_IDENTITY`；通过才允许 Phase C。
-3. **Phase C — methods + validation freeze（≤15 min）**：实现 P2/P3、cheap rule、
-   BPS/DPLL，完成 direct information-increment tests；只用 validation seeds 冻结
-   P1/P2/P3/cheap/B* 参数与每个 GG 档最多 3 个相邻 SNR 点。不得运行 held-out test。
+   fixed B10，只运行定向 tests 和 1/10 GHz source smoke。初次 run 已由 V008
+   拒收；本轮只按 §0.1 固定合同在 confirm seed `130003` 重跑一次。任一 identity
+   gate 失败即收口 `BLOCKED_IDENTITY`；通过返回
+   `PARTIAL_CONFIRM_AWAITING_SCIENCE_REVIEW` 并停止，须独立科学验收与新 control
+   才允许 Phase C。
+3. **Phase C — methods + validation freeze**：严格按 §0.2 拆为 C1 与 C2；每个
+   executor turn ≤15 min，C1 review PASS 前禁止 C2，C2 完成前禁止 held-out。
 4. **Phase D — held-out + closure（≤15 min）**：只读取已冻结设置运行 test seeds，
    保存 raw/aggregate/result，完成重算、synthesis、worker-log、全套定向/回归检查
    与唯一 final commit。若预计本段超时，先停止在 raw 已完整落盘的安全点，下一
@@ -160,7 +384,7 @@ consolidated commit：
 阶段回执格式固定为：
 
 ```text
-status: PARTIAL_CONTINUE|BLOCKED|FAIL
+status: PARTIAL_CONTINUE|PARTIAL_CONFIRM_AWAITING_SCIENCE_REVIEW|PARTIAL_C1_AWAITING_REVIEW|PARTIAL_C2_AWAITING_SCIENCE_REVIEW|BLOCKED|FAIL
 phase: A|B|C|D
 safe_point: <one line>
 next_phase: <A|B|C|D|NONE>
@@ -168,8 +392,12 @@ anomaly: <NONE or one concise anomaly>
 ```
 
 `PARTIAL_CONTINUE` 只表示同一 T010 尚未收口，不是新 package、method delta 或 formal
-progress；主控不得据此更新 owner/mission-log。只有 §8 final receipt 才触发独立
-科学验收。
+progress；主控不得据此更新 owner/mission-log。
+`PARTIAL_CONFIRM_AWAITING_SCIENCE_REVIEW` 只用于 Phase-B confirm PASS 后的强制暂停：
+它触发中间独立科学验收，但仍不是 final receipt、CP010 或 method delta。§8 final
+receipt 只触发整个 T010 的最终科学验收，不能替代 Phase-B→Phase-C 中间门。
+`PARTIAL_C1_AWAITING_REVIEW` 与 `PARTIAL_C2_AWAITING_SCIENCE_REVIEW` 分别强制
+阻断 validation 与 held-out；两者都不是 CP010、method delta 或 final receipt。
 
 ---
 
@@ -191,6 +419,7 @@ projects/simulation/explore/b10-source-native-adaptive-rls-cpr/
   run_all.py
   synthesis.md
   artifacts/
+    source-smoke-invalid-v1.json
     source-smoke.json
     validation-raw.json
     validation-aggregate.json
@@ -259,7 +488,11 @@ noiseless limit，且在 worker-log 说明差异。
 - 训练结束一次冻结 `F=2π/h_{1,128}`；只跑 positive residual CFO，禁止擅自
   `abs(h1)`、P-norm reset 或首次非零 `h1` 即冻结；
 - DD 期使用原文 periodic regressor，先预测/去旋/16-QAM hard decision，再以
-  residual phase 更新；无额外 runtime pilot、无 truth reset。
+  operational residual
+  `angle(derotated_received * conj(hard_decision))` 更新 desired phase；无额外
+  runtime pilot、无 truth reset。论文 Eq.(8) 的 literal 文本与 Eq.(1)/Fig.1 在
+  当前正相位/负去旋约定下存在符号张力；D008/D019/V008 的 operational adjudication
+  是本实现唯一合法约定，禁止恢复旧反号。
 
 公式来源必须在 `source-contract.yaml` 和代码注释中逐项标注：Deka 等 2024
 p.166 Eq.(3)–(6) 为 RLS 递推，p.166–167 Eq.(7)–(8) 与 Fig. 1 为
@@ -267,8 +500,10 @@ training→DD、周期 regressor 和 residual update；`F=2π/h_{1,128}` 是把�
 degree 表达全链一致地换成 radians 的实现约定。PDF/原页与提取笔记不一致时以
 PDF 原页为准并 `BLOCKED_IDENTITY`，禁止靠文字描述补公式。
 
-`λ` 只在 validation 候选网格中选择并冻结。原文未给精确最优表，必须标
-`validation_tuned`，不能冒充 source parameter。
+primary 的 `λ` 只在 validation 候选网格中选择并冻结。原文未给精确最优表，必须
+标 `validation_tuned`，不能冒充 source parameter。source confirmation 例外固定
+`λ=.99`，类型为 `IDENTITY_REPAIR_PREREGISTERED_AFTER_INVALID_RUN`；它只关闭
+source identity，不进入 primary freeze，也不能触发方法或性能 claim。
 
 ### 3.4 Source identity smoke
 
@@ -277,7 +512,8 @@ source-only AWGN/control（非论文性能复现、非 thesis result）：
 - 28 GBd、25,000 symbols、**electrical \(E_s/N_0=26\) dB**、
   linewidth 50 kHz；
 - positive CFO 1 GHz 与 10 GHz；
-- 同一 pilot manifest、P1 fixed B10；
+- 同一 pilot manifest、P1 fixed B10、confirm seed `130003`、固定
+  source-only `λ=.99`；
 - 检查 CFO sign/relative error、finite state、training→DD 切换点、10 GHz
   phase-slope recovery、data BER/Q² 单调改善；
 - 至少要求 P1 在两个 source cells 的 data BER 低于 HD-FEC `3.8e-3`，否则
@@ -313,6 +549,14 @@ source-native B10，`λ` validation-frozen，作为方法同族主 baseline。
   look-ahead；
 - 映射单调、有界、validation-frozen；其余更新与 P1 相同；
 - 不允许 P reset、truth clamp 或按 condition/test seed 单独选参数。
+
+### Candidate-arm freeze rule
+
+P2 与 P3 是两个分别预注册、分别评估的 candidate arms，不存在未定义的通用 `P`。
+C2 必须先完成全部预注册 validation Cartesian matrix，再分别冻结 P2 与 P3 的
+全局设置。禁止按 seed、GG/SNR cell 或观察到的结果在 P2/P3 之间取 best-of；若在
+Phase D 前只选择一个主 method arm，必须依据完整 C2 矩阵和预注册的全局选择准则
+一次冻结，另一个 arm 仍完整报告，不得逐 cell 切换。
 
 ### Cheap rule
 
@@ -374,8 +618,10 @@ raw BER/outage/boundary。
     `8000–8009`，test `8100–8119`；
   - T009：`a4-deployable-adaptive-cpr-v2/seed-census.yaml`，validation
     `91001–91010`，test `92001–92010`；
-- T010 冻结 source-smoke seed `130001`、validation seeds
-  `131001–131005`、test seeds `132001–132010`。三池两两不交，且与上述
+- T010 保留 invalid-development source-smoke seed `130001` 和非性能 canonical-test
+  seed `130002`，冻结 clean confirm seed `130003`、validation seeds
+  `131001–131005`、test seeds
+  `132001–132010`。所有池两两不交，且与上述
   T006/T008/T009 全部观察池不交；
 - runner、contract、seed census 和 tests 必须逐元素相等；确定性测试还要重新解析
   三份历史事实源并证明交集为空，不能只信 `disjoint: true` 文本；
@@ -403,9 +649,11 @@ raw BER/outage/boundary。
 
 一个 GG/SNR cell 只有同时满足以下条件，才进入 Q² `METHOD_SIGNAL` mask：
 
-1. P、P1、cheap rule、conventional B* 的全部冻结 test seed 均 finite 且
+1. 被裁决的 candidate arm（P2 或 P3）、P1、cheap rule、conventional B* 的全部
+   冻结 test seed 均 finite 且
    `BER<0.2`；任一 seed `BER>=0.2` 即该 cell 为 collapse/out-of-region；
-2. 该 GG 档冻结的相邻 SNR 点中，P、P1、cheap rule、conventional B* 各自都以
+2. 该 GG 档冻结的相邻 SNR 点中，被裁决的 candidate arm、P1、cheap rule、
+   conventional B* 各自都以
    **实际 pooled raw BER** 在 HD-FEC `3.8e-3` 两侧形成至少一个相邻 bracket：
    低 SNR 点 `BER>3.8e-3`，高 SNR 点 `BER<=3.8e-3`，且局部方向不反常；
 3. 没有 no-crossing、non-monotone、state-nonfinite、denominator/mask mismatch、
@@ -439,8 +687,9 @@ frequency responsibility、raw closure 任一失败。`mission_method_delta=NONE
 - outage 不劣于 strongest comparator；
 - clean/weak high-SNR degradation `<=0.1 dB`；
 - 至少两个 GG/SNR cells 方向一致，且都不含 collapse/no-crossing seed；
-- P、P1、cheap rule 与 conventional B* 都有真实 FEC crossing 才允许该 GG
-  档的 Q² METHOD_SIGNAL 或 required-SNR/dB crossing claim；
+- 被裁决的 candidate arm（P2 或 P3）、P1、cheap rule 与 conventional B* 都有
+  真实 FEC crossing 才允许该 GG 档的 Q² METHOD_SIGNAL 或 required-SNR/dB
+  crossing claim；
 - 机制诊断显示 gain 与 fewer erroneous/high-innovation updates 一致。
 
 对应 `mission_method_delta=METHOD_SIGNAL`；若证据同时闭合正式推广所需边界，主控
@@ -474,17 +723,29 @@ rule 完全解释/支配 P2/P3。formal 可作 scoped negative；mission delta �
 2. pilot manifest SHA、合法 16-QAM、128 contiguous、data RNG independence；
 3. pilot/data 同一 TX-side channel/noise；
 4. source RLS equations、`h0/P0/δ/F`、训练→DD 切换点；
-5. radians only、positive CFO sign/units、1/10 GHz smoke；
-6. no TX truth/future/post-hoc resolve；
-7. shared realization across every arm；
-8. P2/P3 information increment 与 cheap-rule non-alias；
-9. conventional arms 共享 coarse-frequency responsibility；
-10. validation/test/excluded seed census；
-11. BER/Q²/working-region mask 与 raw→aggregate bit-identical；no-crossing、
-    `BER>=0.2`、non-monotone 和 denominator mismatch 的 verdict boundary；
-12. `save_results` metadata、source/contract/pilot/source-code SHA closure；
-13. verdict boundary tests；
-14. Windows default locale 与 `PYTHONUTF8=1`。
+5. synthetic residual-direction regression：同一正 residual 下旧反号沿错误方向、
+   operational residual 沿真实相位方向更新；
+6. radians only、positive CFO sign/units、seed `130003` 的 1/10 GHz BER confirm；
+   该测试实际执行就是唯一 confirm，派发前不得预跑；
+7. no TX truth/future/post-hoc resolve；
+8. shared realization across every arm；
+9. P2/P3 information increment 与 cheap-rule non-alias；
+10. conventional arms 共享 coarse-frequency responsibility；
+11. validation/test/excluded seed census；
+12. BER/Q²/working-region mask 与 raw→aggregate bit-identical；no-crossing、
+    `BER>=0.2`、non-monotone、denominator mismatch、pooled zero-error bound、
+    bracket 等号、common/no-common SNR objective 与完整 tie chain；
+13. 30-setting index mapping、gar/block100、h→sqrt(h)、Es=1/AWGN 方差、无
+    AGC/无 per-cell renormalization；
+14. exact 2250 expected keys、strict-prefix、30-row cell 完整性、duplicate/gap/
+    stale-hash 拒绝、existing-prefix SHA 不变，以及模拟 write/replace failure 时旧
+    target 保持 byte-identical 的 atomic checkpoint；
+15. `save_results` metadata、source/contract/pilot/source-code exact SHA closure，
+    每份 C2 artifact 携带 legacy pre-C1 debt；
+16. BPS/DPLL 完整 score exact tie 时 B* 确定选择 BPS，且反转实现遍历顺序不改变
+    winner；
+17. verdict boundary tests；
+18. Windows default locale 与 `PYTHONUTF8=1`。
 
 还必须：
 

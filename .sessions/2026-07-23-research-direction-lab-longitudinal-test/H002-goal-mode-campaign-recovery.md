@@ -88,13 +88,31 @@ contracts:
 
 ## 接收方验证（续接对话时必须完成）
 
-- [ ] 已读取 topic-index 的不变量段落
-- [ ] 已验证本文件中的至少 3 条关键事实声称
-  - 声称1：control 为 epoch 13 / CP008 / D002 → [PASS/FAIL + 文件证据]
-  - 声称2：T008 formal disposition 为 `BLOCKED_IDENTITY`，非 Kill → [PASS/FAIL + 文件证据]
-  - 声称3：master-state 当前无 active carrier → [PASS/FAIL + 文件证据]
-- [ ] 已检查 `_registry.yaml` 中本专题的 depends_on 和 conflicts_with
-- [ ] 已确认当前范围未违反“明确不含”
+- [x] 已读取 topic-index 的不变量段落
+- [x] 已验证本文件中的至少 3 条关键事实声称
+  - 声称1：control 为 epoch 13 / CP008 / D002 → **PASS（交接时点）**：
+    `verifications.md#V003` 独立终验记录 live
+    `epoch=13 / CP008 / authority=D002`；该状态后来按决策血缘合法演进为
+    epoch 21 / CP009 / formal D020，不把历史 checkpoint 冒充当前状态。
+  - 声称2：T008 formal disposition 为 `BLOCKED_IDENTITY`，非 Kill →
+    **PASS**：`verifications.md#V002` 结论为
+    `BLOCKED_IDENTITY / SCIENCE_VERDICT_REJECTED`，明确拒收
+    `KILL_NO_ADAPTIVE_WINDOW_SPACE`。
+  - 声称3：master-state 当前无 active carrier → **PASS（交接时点）**：
+    `verifications.md#V003` 记录 formal D014 / no active carrier；该事实后来由
+    R001/D003、R002/D006 和 D009/formal D020 的合法 carrier 激活血缘取代，
+    当前 active carrier 为 B10。
+- [x] 已检查 `_registry.yaml` 中本专题的 depends_on 和 conflicts_with：
+  depends_on 的 `2026-07-20-research-direction-lab-system` 为 active，
+  `conflicts_with=[]`。
+- [x] 已确认当前范围未违反“明确不含”：恢复与 C1 direct tests 均止于
+  GW Step 4a；未运行 C2/held-out、未恢复 Scout/P03、未修改 Skill/common/params
+  或旧 T006/T008/T009。
+- [x] 已核对接口变更 C001：`verifications.md#V003` 证明
+  epoch 12/CP007/D001 → epoch 13/CP008/D002 的历史切换；后续 epoch 14–21
+  由显式 D/V 血缘继续演进。
+- [x] 已核对并行依赖：当前 C1 executor 已停止，独立 reviewer 已返回
+  `C1_ACCEPTED_AWAITING_CONTROL`；C2 仍由 foreground control 阻断，未提前执行。
 
 ## 下一轮
 
@@ -105,3 +123,22 @@ contracts:
    成本和可包装性。至少比较三个；不足三个则逐项证明不合法。
 4. remap 必须回答“为什么该包比另外至少两个合法替代项更可能产生
    METHOD_SIGNAL”，再更新 control/formal owner 并准备下一 T。
+
+## Goal 续接接收方复核（2026-07-26，CP010）
+
+- [x] 已重新读取 topic-index 的不变量、当前范围与明确不含。
+- [x] 已从磁盘重新验证至少 3 条当前事实：
+  - 当前 control 为 epoch 24 / CP010 / authority formal D022 → **PASS**：
+    live `topic-index.md` 控制块与 formal `decisions.md#D022` 一致。
+  - T010 为 `BLOCKED_IDENTITY / mission_method_delta=NONE` → **PASS**：
+    `verifications.md#V026`、worker-log 与 synthesis 一致；raw 实际 840 rows，
+    strict-prefix，17/17 SHA256 匹配，last/next key 为
+    `[1,0,2,5,2]` / `[1,0,3,0,0]`，无 aggregate，held-out=false。
+  - 当前无 active scientific carrier，C15 只允许 Step 1–3 formalization →
+    **PASS**：live D011、formal D022、master-state 与 current projections 一致。
+- [x] 已检查 `_registry.yaml`：本专题 depends_on
+  `2026-07-20-research-direction-lab-system`（active），`conflicts_with=[]`；
+  formal owner 的依赖项均存在，未发现冲突。
+- [x] 已确认未违反“明确不含”：本次只做恢复、只读复核与控制面协调；未运行
+  新 seed/MVE/held-out，未修 T006/T008/T009/T010，未恢复 Scout/P03，未修改
+  Skill/common/params。

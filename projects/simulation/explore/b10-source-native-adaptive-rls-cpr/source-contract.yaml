@@ -1,0 +1,153 @@
+schema: t010.source-contract.v1
+phase: C2
+authority:
+  task: .sessions/2026-07-23-research-direction-lab-longitudinal-test/T010-b10-source-native-adaptive-rls-cpr.md
+  formal_decision: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D021
+current_authorization:
+  formal_decision: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D021
+  phase_c_status: C2_AUTHORIZED_VALIDATION_ONLY
+  validation_authorized: true
+  heldout_authorized: false
+  mission_method_delta: NONE
+phase_c1_acceptance:
+  verification: .sessions/2026-07-23-research-direction-lab-longitudinal-test/verifications.md#V021
+  status: C1_IMPLEMENTATION_CONTRACT_PASS
+  p0: 0
+  p1: 0
+  p2: 1
+  legacy_debt: PRE_C1_IMMUTABLE_SNAPSHOT_ABSENT
+  mission_method_delta: NONE
+phase_c1_method_contract:
+  evidence_scope: implementation/direct/clean/noiseless tests only
+  performance_conclusion: PROHIBITED
+  candidate_arm_freeze:
+    arms: [P2_INNOVATION_FREEZE, P3_BOUNDED_ADAPTIVE_FORGETTING]
+    separate_global_freeze_required: true
+    per_cell_or_per_seed_best_of_prohibited: true
+  p2_innovation_freeze:
+    information: current and past receiver-visible normalized innovation
+    action: freeze current DD h/P update while retaining predicted phase
+    pilot_rule: initial 128 pilots always update
+  p3_bounded_adaptive_forgetting:
+    information: normalized-innovation EMA completed through k-1
+    action: monotone bounded lambda_k mapping
+    p_reset: prohibited
+  cheap_rule:
+    information: receiver amplitude only
+    action: freeze DD update below a frozen amplitude threshold
+  conventional:
+    shared_coarse_stage: 4OPM
+    arms: [4OPM_BPS_32_PHASES, 4OPM_CONTINUOUS_DD_DPLL]
+  legacy_phase_b_recomputation:
+    recomputable: [bit_errors, denominator, ber, q2_db, cfo_relative_error, positive_cfo, cfo_relative_error_le_5pct, ber_improved, q2_improved, ber_below_hd_fec]
+    non_recomputable:
+      finite_state: LEGACY_NON_RECOMPUTABLE_PHASE_B_P2
+      switch_at_128: LEGACY_NON_RECOMPUTABLE_PHASE_B_P2
+      period_frozen_once: LEGACY_NON_RECOMPUTABLE_PHASE_B_P2
+      positive_phase_slope: LEGACY_NON_RECOMPUTABLE_PHASE_B_P2
+source_paper:
+  title: Low-complexity high linewidth-tolerant carrier synchronization for 16QAM using pilot-assisted RLS algorithm
+  doi: 10.1007/s11107-024-01019-2
+  pdf: D:/code/study/research-protocol/papers/doi/10.1007_s11107-024-01019-2/source.pdf
+  pdf_sha256: a4796201a14fa4d62617723a5f444e678ab52091c4345d168f0207155e370ee0
+  extracted_text: D:/code/study/research-protocol/papers/doi/10.1007_s11107-024-01019-2/content.md
+  extracted_text_sha256: 056969b06634dab965fbf7586c6e18665397f55e7884e6b8bd5f7725915cdbfd
+  authority_rule: PDF original pages override extraction notes
+source_native_identity:
+  scope: estimator-only; source paper fiber link is not reproduced
+  phase_b_status: SOURCE_IDENTITY_PASS_ACCEPTED
+  channel_equation:
+    formula: "r(k)=s(k)*exp(j*(2*pi*k*delta_f*T_s+theta(k)))+n(k)"
+    source: "Deka et al. 2024 p.165 Eq.(1)"
+  rls:
+    source: "Deka et al. 2024 p.166 Eq.(3)-(7)"
+    pilot_symbols: 128
+    indexing: "k=1..128 training; k>128 decision-directed"
+    units: radians
+    x_training: "[1,k]^T"
+    y_training: "unwrap(angle(r(k)/s(k)))"
+    apriori_error: "e(k)=y(k)-h(k-1)^H*x(k)"
+    gain: "kappa(k)=P(k-1)*x(k)/(lambda+x(k)^H*P(k-1)*x(k))"
+    coefficient_update: "h(k)=h(k-1)+kappa(k)*e(k)"
+    inverse_correlation_update: "P(k)=lambda^-1*(P(k-1)-kappa(k)*x(k)^H*P(k-1))"
+    h0: [0.0, 0.0]
+    p0: [[0.5, 0.0], [0.0, 0.5]]
+    delta: 2.0
+    freeze_period_formula: "F=2*pi/h1_at_k128"
+    period_rule: "freeze once after the complete 128-pilot training interval; positive residual CFO only"
+    prohibited_changes:
+      - abs(h1)
+      - P-norm reset
+      - freeze on first nonzero h1
+  decision_directed:
+    source: "Deka et al. 2024 p.166-167 Eq.(8) and Fig.1"
+    regressor: "[1,mod(k,F)]^T"
+    order: predict phase; derotate; hard-decision 16-QAM; form residual; update RLS
+    operational_residual: "angle(derotated_received*conj(hard_decision))"
+    desired_output: "predicted_phase + operational_residual"
+    information_boundary: receiver-visible samples, initial manifest pilots, hard decisions, and past/current residual only
+    forbidden_information:
+      - transmitted data symbols or bits after the pilot interval
+      - true phase
+      - true CFO
+      - future residual or post-hoc decision correctness
+  implementation_convention:
+    statement: "The paper expresses F in degrees; T010 converts the entire phase chain consistently to radians."
+    source_type: SOURCE_DERIVED_CONVENTION
+source_identity_smoke:
+  initial_run:
+    science_disposition: SCIENCE_VERDICT_REJECTED
+    implementation_status: IMPLEMENTATION_INVALID
+    artifact: artifacts/source-smoke-invalid-v1.json
+    seed: 130001
+    forgetting_factor: 0.999
+    operational_residual: "angle(hard_decision)-angle(derotated_received)"
+  current_confirm:
+    status: PASS_AWAITING_SCIENCE_REVIEW
+    artifact: artifacts/source-smoke.json
+    artifact_must_not_overwrite_invalid_history: true
+    seed: 130003
+    operational_residual: "angle(derotated_received*conj(hard_decision))"
+    forgetting_factor:
+      value: 0.99
+      type: IDENTITY_REPAIR_PREREGISTERED_AFTER_INVALID_RUN
+    phase_c_authorized: false
+    invocation_count: 1
+    results:
+      cfo_1ghz:
+        bit_errors: 0
+        denominator: 99488
+        ber: 0.0
+        cfo_relative_error: 0.00009952903443384171
+      cfo_10ghz:
+        bit_errors: 0
+        denominator: 99488
+        ber: 0.0
+        cfo_relative_error: 0.0004499364865190506
+  symbol_rate:
+    value: 28000000000.0
+    unit: sym/s
+    type: LITERATURE_SOURCE_IDENTITY
+    source: "Deka et al. 2024 p.166 simulation setup"
+  frame_symbols:
+    value: 25000
+    unit: symbols
+    type: LITERATURE_SOURCE_IDENTITY
+    source: "Deka et al. 2024 p.166 simulation setup"
+  electrical_esn0:
+    value: 26.0
+    unit: dB
+    type: PREREGISTERED_IDENTITY_SMOKE
+    source: "T010; not the paper's 26 dB OSNR"
+  linewidth:
+    value: 50000.0
+    unit: Hz
+    type: LITERATURE_SOURCE_IDENTITY
+    source: "Deka et al. 2024 figures/discussion"
+  positive_cfo:
+    value: [1000000000.0, 10000000000.0]
+    unit: Hz
+    type: LITERATURE_SOURCE_IDENTITY
+    source: "Deka et al. 2024 p.168-170"
+  seed: 130003
+  prohibition: "No OSNR/SNR equivalence and no figure-level reproduction claim."

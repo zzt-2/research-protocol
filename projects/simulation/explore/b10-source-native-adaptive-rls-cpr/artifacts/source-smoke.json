@@ -1,0 +1,93 @@
+{
+  "schema": "t010.source-smoke.v1",
+  "scope": "source_identity_smoke_only",
+  "performance_claim": "NONE",
+  "config": {
+    "symbol_rate": 28000000000.0,
+    "n_symbols": 25000,
+    "esn0_db": 26.0,
+    "linewidth_hz": 50000.0,
+    "cfo_hz": [
+      1000000000.0,
+      10000000000.0
+    ],
+    "seed": 130003
+  },
+  "forgetting_factor": {
+    "value": 0.99,
+    "type": "IDENTITY_REPAIR_PREREGISTERED_AFTER_INVALID_RUN"
+  },
+  "cells": [
+    {
+      "cfo_hz": 1000000000.0,
+      "estimated_cfo_hz": 999900470.9655662,
+      "cfo_relative_error": 9.952903443384171e-05,
+      "training_slope_rad_per_symbol": 0.22437714099331404,
+      "raw": {
+        "bit_errors": 41324,
+        "denominator": 99488,
+        "ber": 0.41536667738822775,
+        "ber_bound": null,
+        "q2_db": -13.40142613870567
+      },
+      "p1": {
+        "bit_errors": 0,
+        "denominator": 99488,
+        "ber": 0.0,
+        "ber_bound": 5.0257317465422965e-06,
+        "q2_db": 12.900705909907302
+      },
+      "gates": {
+        "positive_cfo": true,
+        "cfo_relative_error_le_5pct": true,
+        "finite_state": true,
+        "switch_at_128": true,
+        "period_frozen_once": true,
+        "positive_phase_slope": true,
+        "ber_improved": true,
+        "q2_improved": true,
+        "ber_below_hd_fec": true
+      },
+      "pass": true
+    },
+    {
+      "cfo_hz": 10000000000.0,
+      "estimated_cfo_hz": 9995500635.13481,
+      "cfo_relative_error": 0.0004499364865190506,
+      "training_slope_rad_per_symbol": 2.242985097449402,
+      "raw": {
+        "bit_errors": 41091,
+        "denominator": 99488,
+        "ber": 0.41302468639433904,
+        "ber_bound": null,
+        "q2_db": -13.160585548174142
+      },
+      "p1": {
+        "bit_errors": 0,
+        "denominator": 99488,
+        "ber": 0.0,
+        "ber_bound": 5.0257317465422965e-06,
+        "q2_db": 12.900705909907302
+      },
+      "gates": {
+        "positive_cfo": true,
+        "cfo_relative_error_le_5pct": true,
+        "finite_state": true,
+        "switch_at_128": true,
+        "period_frozen_once": true,
+        "positive_phase_slope": true,
+        "ber_improved": true,
+        "q2_improved": true,
+        "ber_below_hd_fec": true
+      },
+      "pass": true
+    }
+  ],
+  "verdict": "PASS",
+  "_meta": {
+    "script": "t010_b10_source_identity_smoke",
+    "common_md5": "49acdfa4",
+    "git_commit": "69e2d18",
+    "timestamp": "2026-07-26T20:14:13"
+  }
+}

@@ -270,10 +270,10 @@ V006；formal D016/V003；T009 worker-log、raw/result 与 executor commit
 
 ## D006: 激活 B10 source-native adaptive pilot-RLS carrier
 
-> status: active
+> status: superseded
 > date: 2026-07-26
 > 取代：D005（只取代“无 active carrier / 仅 remap”的当前动作；T009 拒收、A4 回池与 no-second-repair 事实保留）
-> 被取代：无
+> 被取代：D007
 > 依据：调研 R002 + formal D017 + B10 Springer 2024 全文/metadata + formal D012/V001 + 两条摘要级邻近方法先例（R002 §2.1）
 > 触发原话：无（技术推导）
 
@@ -334,3 +334,304 @@ V006；formal D016/V003；T009 worker-log、raw/result 与 executor commit
 R002；formal D017；B10 shared-paper metadata/content；formal D012/V001；
 DOI `10.1109/ICAIT66450.2025.11353303` 与
 `10.1016/J.CJA.2015.05.001` 的本地检索元数据（只作邻近先例）。
+
+---
+
+## D007: 驳回 T010 初次身份 verdict，并授权一次包内 Phase-B 合同纠错确认
+
+> status: superseded
+> date: 2026-07-26
+> 取代：D006（只取代 T010 Phase-B 的 operational residual、source-smoke `λ` 与确认 seed 合同；B10 carrier、P1–P3 方法目标和 no-second-package 边界保留）
+> 被取代：D008
+> 依据：验证 V008 + T010 初次 `source-smoke.json` + B10 PDF p.165–170 Eq.(1)/(8) 与 Fig.1 + 独立科学 verifier 的不落盘反事实
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. T010 初次 `BLOCKED_IDENTITY` 不接收。其 1/10 GHz BER 为
+   `0.250432213 / 0.418593197`，但独立 verifier 证明 verdict 同时受两个
+   P0 污染：
+   - 正相位 `r=s·exp(+jφ)+n`、`exp(-j predicted)` 去旋约定下，任务把论文
+     Eq.(8) 的文字符号直接落成了相反的 operational residual；
+   - source smoke 使用无来源硬编码 `λ=.999`，而论文要求优化 `λ`，且 verifier
+     证明该值会制造 10 GHz failure。
+   因此 formal disposition 仅为
+   `SCIENCE_VERDICT_REJECTED / IMPLEMENTATION_INVALID`，
+   `mission_method_delta=NONE`；不能宣称 B10 身份失败或 family Kill。
+2. CP009 尚未更新、T010 尚未最终提交或接受，本次不是第二个 B10 package。
+   只授权同一 T010、同一 Phase B 的一次 bounded contract correction：
+   - operational residual 固定为
+     `angle(derotated_received * conj(hard_decision))`，desired phase 为
+     `predicted_phase + residual`；
+   - `λ=.99` 标为
+     `IDENTITY_REPAIR_PREREGISTERED_AFTER_INVALID_RUN`，只用于 source identity
+     confirmation，不是论文 source parameter、primary tuning 或方法信号；
+   - seed `130001` 降为 invalid-development evidence；全新 confirm seed
+     `130002` 在代码和任务审查通过前保持未观察；
+   - 原 artifact 保留为 `source-smoke-invalid-v1.json`；新确认结果写
+     `source-smoke.json`，不得覆盖失败来源链。
+3. 修订后必须新增 residual-direction 与 1/10 GHz BER regression；先由独立 verifier
+   审查 epoch 18 / formal D018 / T010 amendment，PASS 后才可只重跑 Phase B。
+4. confirm 任一 gate 失败即接受 `BLOCKED_IDENTITY` 并轮换；confirm 通过才可由
+   另一独立科学 verifier 授权 Phase C。不得再改 residual、`λ`、seed 或开第二个
+   B10 repair/package。
+
+### 理由
+
+直接接受当前 `BLOCKED_IDENTITY` 会把任务合同的符号错误和任意参数造成的假失败
+归因给 B10；直接进入 Phase C 又会绕过 source identity gate。一次包内、全新 seed
+的确认既保留失败可追溯性，又以最小增量判断 source-native estimator 是否成立。
+
+### 排除的替代方案
+
+- 不接受当前 `BLOCKED_IDENTITY`：verdict 被两个 P0 污染。
+- 不把 seed `130001` 的反事实当 confirm：该 seed 已被 verifier 用于开发诊断。
+- 不做 `λ` grid/test 同池调参：会把 post-hoc tuning 冒充确认。
+- 不立即转 C15：B10 仍是 formal-ready carrier，且一个全新 confirm seed 可以
+  低成本关闭任务自身造成的 identity debt；若该确认失败再轮换。
+- 不进入 Phase C：当前 source identity 尚未获得独立接受。
+
+### 影响范围
+
+- live control 升至 epoch 18，authority 指向 formal D018，checkpoint 保持 CP009；
+- 只允许更新 T010、其隔离实现/tests/artifacts 与 owner current projections；
+- 不改 common/params、旧包、论文或 protected history，不运行 primary/validation/
+  held-out，不更新 mission-log。
+
+### 来源
+
+S001 续接；V008；T010 Phase-B artifact/report；B10 原 PDF p.165–170。
+
+---
+
+## D008: T010 confirm seed 与 Phase-B 暂停回执修订
+
+> status: superseded
+> date: 2026-07-26
+> 取代：D007（仅更正 confirm seed 与 Phase-B→科学验收暂停协议；D007 的 operational residual、source-only `.99`、单次包内确认与 no-further-repair 边界全部保留）
+> 被取代：D009
+> 依据：独立 amendment review（P0=0/P1=3/P2=1）+ repository exact-token seed census + V008
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. `130002` 已在 Phase-B canonical/RNG test 中生成 realization，不能再称为
+   “代码和任务审查前未观察”。confirm seed 改为仓库 exact-token 搜索零命中的
+   `130003`；`130002` 仅保留为非性能 canonical-test seed。
+2. T010 必须自包含新增：
+   - synthetic residual-direction regression，明确旧符号沿错误方向更新、D007
+     operational residual 沿真实相位方向更新；
+   - seed `130003` 的 1/10 GHz BER gate；该 gate 的实际执行就是唯一 Phase-B
+     confirm，派发前禁止预跑。
+3. confirm PASS 后 executor 必须返回
+   `PARTIAL_CONFIRM_AWAITING_SCIENCE_REVIEW` 并停止；只有主控接收独立科学 verifier
+   后，新的递增 control 才能授权 Phase C。§8 final receipt 仍只用于整个 T010
+   最终收口，不能覆盖中间科学门。
+4. 本修订不新增科学 run、不改变 `.99` 或 method target。confirm 失败即轮换；
+   confirm 通过也不自动产生 method delta。
+
+### 理由
+
+clean confirm 必须避免已执行 seed，并消除“Phase-B PASS 后可直接继续 Phase C”与
+“只有最终 receipt 才验收”的操作冲突。该修订发生在 confirm 前，未消费新科学
+数据。
+
+### 排除的替代方案
+
+- 不把 `130002` 辩解为“只看 RNG 所以仍 unseen”；硬合同要求更严格。
+- 不在 epoch 18 静默换 seed；seed 属 decision gate，必须递增 owner/control。
+- 不让 executor 在 confirm PASS 后自行进入 Phase C。
+- 不新增另一组 `λ` 或 confirm seed。
+
+### 影响范围
+
+- live control 升至 epoch 19，authority 指向 formal D019，CP009 保持不变；
+- 更新 T010、registry/current projections；confirm 前不改隔离实现或运行实验；
+- mission-log 不更新，Phase C 仍禁止。
+
+### 来源
+
+S001 续接；独立 amendment reviewer；V008；现有 Phase-B test line 170。
+
+---
+
+## D009: 接收 T010 source identity，并授权分段 Phase C 方法构造与 validation
+
+> status: superseded
+> date: 2026-07-26
+> 取代：D008（只取代“Phase C 未授权”的当前动作；D008 的 confirm 历史、operational residual、source-only `.99` 和 no-further-repair 事实保留）
+> 被取代：D010
+> 依据：验证 V012 + formal D020 + T010 clean-confirm artifact/source contract
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. 接收 T010 Phase B 为
+   `SOURCE_IDENTITY_PASS / PHASE_B_CONFIRM_ACCEPTED`。1/10 GHz clean confirm
+   均 `0/99488`，CFO relative errors 为
+   `9.952903443384171e-5 / 4.499364865190506e-4`；独立 verifier 为
+   `P0=0/P1=0/P2=3`。`mission_method_delta=NONE`，不是性能或方法信号。
+2. live control 升至 epoch 20 / CP009，只授权同一 T010 的 Phase C：
+   - **C1 implementation**：封死 source-smoke 二次运行入口、补 read-only
+     artifact 重算/legacy P2，再实现 P2/P3、amplitude-only cheap rule、
+     4OPM+BPS 与 4OPM+DD-DPLL，完成 direct information-increment 与 comparator
+     sanity tests；不得消费 validation seeds；
+   - C1 必须独立 code/science-contract review PASS；
+   - **C2 validation freeze**：只用 `131001–131005` 完成预注册 validation grid，
+     冻结 P1/P2/P3/cheap/B* 与每个 GG 档最多 3 个相邻 SNR 点；不得运行 held-out。
+     若单 turn 超时，只能按预注册 Cartesian order 增量保存 raw，未完成全矩阵前
+     不得选择参数或看 test seeds。
+3. C2 完成后必须暂停并独立科学验收；新的递增 control 才能授权 Phase D。
+4. Phase-B P2 债务：
+   - runner 缺 source-smoke 防二次运行锁，C1 必须补；
+   - source artifact 未保存 finite/switch/freeze 原值，不得事后伪造；read gate 只重算
+     可重算字段，并标 legacy non-recomputable；
+   - 默认 locale 的 T006 GBK 失败是旧包债，不修改旧包；T010 自身默认 locale 必须过。
+
+### 理由
+
+source identity 已由独立科学证据关闭，B10 是当前 formal-ready carrier；相对转 C15
+仍少完整 Step 1–3 周期，相对 B1/A4 避免第三/第二 evaluator repair，相对 B9 不需
+新接收架构。进入受控 Phase C 比在 identity 层继续停留更可能产生 METHOD_SIGNAL，
+同时 C1/C2 分段避免把实现自洽、validation tuning 和 held-out 混在一起。
+
+### 排除的替代方案
+
+- 不把 Phase-B PASS 记为 method delta。
+- 不再运行 source smoke，不改 sign/`.99`/seed。
+- 不在 C1 消费 validation，不在 C2 消费 test。
+- 不直接进入 Phase D，不修改 common/params/旧包。
+- 不立即转 C15/B1/B9：B10 identity 已成立，当前方法动作比这些候选更接近可检验
+  增量；若 C2 无方法空间或方法不增量，再按 D019 边界轮换。
+
+### 影响范围
+
+- authority 递增到 formal D020；T010 task-control 升到 epoch 20，CP009 不变；
+- 只允许 T010 隔离路径/tests/artifacts 与 current projections；
+- mission-log 暂不追加 CP010；no-method=9、same-axis/repair/drift 保持到整个
+  T010 final receipt。
+
+### 来源
+
+S001 续接；V012；T010 Phase-B artifacts/source contract；formal D020。
+
+---
+
+## D010: 接收 T010 C1 并只授权 C2 validation freeze
+
+> status: superseded
+> date: 2026-07-26
+> 取代：D009（只取代 C1 当前动作；D009 对 Phase-B identity、C1/C2 分段和
+> no-second-package 的科学合同保留）
+> 被取代：D011
+> 依据：验证 V021 + formal D021 + T010 C1 source/experiment contract 与定向 tests
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. 接收 T010 Phase C1 为 `C1_IMPLEMENTATION_CONTRACT_PASS`。P2/P3、amplitude-only
+   cheap rule、4OPM+BPS 与 4OPM+continuous-DD-DPLL 已形成可运行但尚未
+   validation-frozen 的实现；direct information、no-truth、shared-realization、
+   comparator responsibility 与 clean/noiseless tests 已闭合。
+2. `mission_method_delta=NONE`。C1 PASS 只证明方法身份与比较接口可进入
+   validation，不是 fair comparison、性能信号、方法信号或 CP010。
+3. live control 升至 epoch 22 / CP009，只授权同一 T010 的 **C2 validation
+   freeze**：
+   - 只用 validation seeds `131001–131005`；
+   - 严格按 T010 预注册 Cartesian order 逐行运行并保存 tracked raw；
+   - 全矩阵完成前不得查看 test seeds、选择参数、选择 P2/P3 主臂或生成性能结论；
+   - 全矩阵完成后才分别全局冻结 P1/P2/P3/cheap/B*，并为每个 GG 档选择最多
+     3 个相邻 SNR 点；
+   - 完成后返回 `PARTIAL_C2_AWAITING_SCIENCE_REVIEW` 并暂停。
+4. held-out/Phase D、Step 5/Contract/Execute 仍未授权。C2 独立科学验收和新的
+   递增 control 是进入 Phase D 的必要条件。
+5. pre-C1 immutable snapshot 缺失保留为 legacy attribution P2；不得补造，也不得
+   用它扩大或否定 C2 的科学结论。
+
+### 理由
+
+V021 已把 V019/V020 的全部 P1 关闭；B10 目前拥有合法 source identity、隔离方法
+实现和 conventional comparator，C2 是第一个能回答“P2/P3 是否在完整 validation
+矩阵中相对 P1、cheap 与 conventional B* 产生可冻结增量”的动作。相比立即转
+C15，它无需重做 Step 1–3；相比 B1/A4，它不依赖第三/第二 evaluator repair；
+相比继续 C1 微调，C2 直接产生 fair-comparison 所需信息。因此它比这些替代项更
+接近 `METHOD_SIGNAL`，但仍不预判结果。
+
+### 排除的替代方案
+
+- 不把 C1 tests/contract PASS 记为方法增量。
+- 不在 C2 使用 held-out/test seeds，不按 seed/cell 在 P2/P3 之间 best-of。
+- 不重跑 source smoke，不再修改 sign、`.99` 或 Phase-B history。
+- 不修 T006/B12、B1/T008、A4/T009，不恢复 Scout/P03。
+- 不立即转 C15：当前 B10 已越过 source/C1 门，而 C15 仍需完整 Step 1–3；
+  若 C2/后续科学验收没有可冻结方法空间，则按既定 no-second-package 边界转 C15。
+
+### 影响范围
+
+- foreground control 递增到 epoch 22；authority 递增到 formal D021；
+- T010 task-control 与 C2 amendment 绑定 epoch 22 / CP009；
+- 只允许 T010 隔离 package/tests/tracked validation artifacts 和 worker-log；
+- mission-log 仍停在 CP009/no-method=9，直到整个 T010 final receipt。
+
+### 来源
+
+S001 续接；V021；T010 C1 executor report；formal D021。
+
+## D011: 接收 T010 BLOCKED_IDENTITY 并轮换到 C15 formalization
+
+> status: active
+> date: 2026-07-26
+> 取代：D010（只取代 C2 当前动作；D010/D009 的历史 source/C1 接收、held-out
+> lock、no-second-package 与 method-claim 门保留）
+> 被取代：无
+> 依据：验证 V026 + T010 840-row raw checkpoint + worker-log deterministic diagnosis
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. 接收 T010 最终科学身份为 `BLOCKED_IDENTITY`，P0/P1/P2=`0/0/1`，
+   `mission_method_delta=NONE`。840-row strict-prefix artifact 与 17-file frozen
+   hash 是本包终局证据；不是 fair comparison、negative method、包装边界或方法信号。
+2. 核心失败机制为 primary transfer 的 128-pilot phase unwrap 在
+   moderate/14 dB/seed `131004` 选择错误 `-2π` branch，使进入 RLS 前的 LS slope
+   已从真实正值变为负值；P1/P2/P3 共用该初始化，故失败属于 RLS lifecycle
+   identity，不是 candidate DD gate 的局部实现 bug。
+3. 立即停止 T010/B10：不补齐剩余 1410 rows，不生成 aggregate，不运行
+   test/held-out/Phase D，不跳 cell、不伪造 collapse row、不改 positive-slope gate，
+   也不开第二个 B10 repair package。
+4. 按 R002 与 formal D021 的预注册轮换边界转
+   `C15_REDUCED_CONSTELLATION_FORMALIZATION`。C15 当前不是 active scientific
+   carrier；下一包只完成新候选 Step 1–3 formal readiness，独立审查通过前不得
+   运行 MVE。
+
+### 理由
+
+继续 B10 必须改变 source identity 或异常 row schema，会污染预注册 setting score，
+且违反 no-second-package。C15 虽需完整 Step 1–3，但机制与 B10 不同、旧 C15
+unequal-step confound 已给出明确公平性问题，完成 formalization 能直接判断是否存在
+可包装的复杂度/性能方法形态。相比 B1，它不需要第三次 evaluator 重建；相比 B9，
+它不需要 oversampling/quantization/matched-filter/self-coherent 全链基础设施；
+相比 A4/T009，它不重复第二个 identity repair。因此它是当前合法替代项中最可能
+解锁后续 `METHOD_SIGNAL` 的下一动作，但本次轮换本身没有 method delta。
+
+### 排除的替代方案
+
+- 不把 45 tests、840 rows、identity diagnostic 或独立 PASS 记为方法产出。
+- 不把异常编码成 nonfinite/BER=0.5 等未预注册 row。
+- 不修 B10/T010、T006/B12、B1/T008、A4/T009，不恢复 Scout/P03。
+- 不直接运行 C15 旧 sandbox 或 MVE；旧 C15 的共同 μ=`0.03` 与约 19× gradient
+  scale 差是 confounded history，只作 Step 1–3 的失败证据。
+- 不选 B9；其新接收架构成本和归因风险显著高于先 formalize C15。
+
+### 影响范围
+
+- mission 接收 CP010，no-method streak 增至 10，mission 继续
+  `DRIFTED/STALLED`；
+- formal D022 返回 B10，并只开放 C15 Step 1–3 formalization；
+- foreground control 递增至 epoch 24 / CP010，action class 只允许
+  recover/map/task preparation，不授权科学实验；
+- T010 hashed execution contract/raw 保持不改，详细结论见 package synthesis。
+
+### 来源
+
+S001 续接；V026；T010 worker-log；R002；formal D021。

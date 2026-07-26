@@ -1,0 +1,93 @@
+{
+  "schema": "t010.source-smoke.v1",
+  "scope": "source_identity_smoke_only",
+  "performance_claim": "NONE",
+  "config": {
+    "symbol_rate": 28000000000.0,
+    "n_symbols": 25000,
+    "esn0_db": 26.0,
+    "linewidth_hz": 50000.0,
+    "cfo_hz": [
+      1000000000.0,
+      10000000000.0
+    ],
+    "seed": 130001
+  },
+  "forgetting_factor": {
+    "value": 0.999,
+    "type": "PREREGISTERED_IDENTITY_SMOKE_ONLY_NOT_SOURCE_PARAMETER"
+  },
+  "cells": [
+    {
+      "cfo_hz": 1000000000.0,
+      "estimated_cfo_hz": 999892185.8530377,
+      "cfo_relative_error": 0.00010781414696228504,
+      "training_slope_rad_per_symbol": 0.2243752818184102,
+      "raw": {
+        "bit_errors": 41246,
+        "denominator": 99488,
+        "ber": 0.41458266323576715,
+        "ber_bound": null,
+        "q2_db": -13.320090590327709
+      },
+      "p1": {
+        "bit_errors": 24915,
+        "denominator": 99488,
+        "ber": 0.2504322129302026,
+        "ber_bound": null,
+        "q2_db": -3.438017745634931
+      },
+      "gates": {
+        "positive_cfo": true,
+        "cfo_relative_error_le_5pct": true,
+        "finite_state": true,
+        "switch_at_128": true,
+        "period_frozen_once": true,
+        "positive_phase_slope": true,
+        "ber_improved": true,
+        "q2_improved": true,
+        "ber_below_hd_fec": false
+      },
+      "pass": false
+    },
+    {
+      "cfo_hz": 10000000000.0,
+      "estimated_cfo_hz": 9993341893.726797,
+      "cfo_relative_error": 0.0006658106273202897,
+      "training_slope_rad_per_symbol": 2.24250067701023,
+      "raw": {
+        "bit_errors": 41095,
+        "denominator": 99488,
+        "ber": 0.41306489224831133,
+        "ber_bound": null,
+        "q2_db": -13.164666937162233
+      },
+      "p1": {
+        "bit_errors": 41645,
+        "denominator": 99488,
+        "ber": 0.4185931971695079,
+        "ber_bound": null,
+        "q2_db": -13.744028387834259
+      },
+      "gates": {
+        "positive_cfo": true,
+        "cfo_relative_error_le_5pct": true,
+        "finite_state": true,
+        "switch_at_128": true,
+        "period_frozen_once": true,
+        "positive_phase_slope": true,
+        "ber_improved": false,
+        "q2_improved": false,
+        "ber_below_hd_fec": false
+      },
+      "pass": false
+    }
+  ],
+  "verdict": "BLOCKED_IDENTITY",
+  "_meta": {
+    "script": "t010_b10_source_identity_smoke",
+    "common_md5": "49acdfa4",
+    "git_commit": "69e2d18",
+    "timestamp": "2026-07-26T19:39:02"
+  }
+}

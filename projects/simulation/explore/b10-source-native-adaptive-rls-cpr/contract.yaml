@@ -1,0 +1,361 @@
+schema: t010.experiment-contract.v2
+phase: C2
+scientific_stage: "Groundwork Step 4a dimension D"
+execution_status: C2_VALIDATION_AUTHORIZED
+authorization:
+  validation: true
+  heldout: false
+  performance_conclusion: false
+  dispatch_review_required: true
+  dispatch_review_last_result: "V024 / C2_DISPATCH_AMENDMENT_PASS"
+  final_binding_review: "V025 / C2_EPOCH23_BINDING_PASS"
+  activation_rule: >-
+    V025 permits the executor to
+    change execution_status to C2_VALIDATION_AUTHORIZED and validation to true.
+implementation_status:
+  p1: implemented
+  p2: implemented_unfrozen
+  p3: implemented_unfrozen
+  cheap: implemented_unfrozen
+  4opm_bps: implemented_unfrozen
+  4opm_dd_dpll: implemented_unfrozen
+  comparison_runner: not_implemented_c1
+phase_c1_acceptance:
+  verification: .sessions/2026-07-23-research-direction-lab-longitudinal-test/verifications.md#V021
+  status: C1_IMPLEMENTATION_CONTRACT_PASS
+  p0: 0
+  p1: 0
+  p2: 1
+  legacy_debt: PRE_C1_IMMUTABLE_SNAPSHOT_ABSENT
+  mission_method_delta: NONE
+mechanism_hypothesis: >-
+  Gamma-Gamma deep fades and low electrical Es/N0 increase decision errors in
+  decision-directed RLS. Receiver-visible normalized innovation can identify
+  risky updates, so freezing or bounded adjustment of lambda may reduce
+  divergence.
+expected_direction:
+  primary: "P2/P3 advantage, if any, should concentrate in moderate/strong GG or low Es/N0."
+  diagnostic: "A large clean/high-SNR gain is an implementation/comparator warning, not positive evidence."
+physical_timescale:
+  greenwood_frequency_hz: 100.0
+  coherence_time_s: 0.0015915494309189533
+  frame_duration_s: 0.00001
+  interpretation: "GG is nearly slow-varying within a 25,000-symbol frame at 2.5 GBd; only fade-conditioned DD robustness may be claimed."
+rejection_conditions:
+  - "The preregistered 1/10 GHz positive-CFO source smoke does not close."
+  - "P1 is not 128 contiguous pilots followed by DD, or needs transmitter truth."
+  - "Primary has no legal BER working region or conventional comparator cannot be reproduced."
+  - "P2/P3 beat P1 only but lose to amplitude-only cheap rule or conventional B*."
+  - "Positive evidence is single-seed, post-hoc cell, or stress-only."
+  - "Positive evidence relies on proxy dB without actual pooled-BER crossings."
+c2_validation_contract:
+  scope: "validation freeze only; no held-out, performance verdict, method signal, or formal advance"
+  mission_method_delta_before_science_review: NONE
+  legacy_debt_carried_into_every_artifact: PRE_C1_IMMUTABLE_SNAPSHOT_ABSENT
+  frozen_axes:
+    gg:
+      values: [weak, moderate, strong]
+      index: [0, 1, 2]
+    esn0_db:
+      values: [14.0, 17.0, 20.0, 23.0, 26.0]
+      index: [0, 1, 2, 3, 4]
+    validation_seed:
+      values: [131001, 131002, 131003, 131004, 131005]
+      index: [0, 1, 2, 3, 4]
+  settings:
+    - arm_family_index: 0
+      arm: P1_FIXED
+      source_type: UNVERIFIED_PROJECT_DECLARED_RANGE
+      subtype: PREREGISTERED_C2_GRID
+      setting_index_order: [0, 1, 2]
+      forgetting_factor:
+        values: [0.98, 0.99, 0.999]
+        unit: dimensionless
+        semantics: "RLS forgetting factor"
+    - arm_family_index: 1
+      arm: P2_INNOVATION_FREEZE
+      source_type: UNVERIFIED_PROJECT_DECLARED_RANGE
+      subtype: PREREGISTERED_C2_GRID
+      setting_index_order: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+      nesting: "forgetting_factor major, innovation_threshold minor"
+      forgetting_factor:
+        values: [0.98, 0.99, 0.999]
+        unit: dimensionless
+      innovation_threshold:
+        values: [0.05, 0.11, 0.20]
+        unit: dimensionless
+        pre_update_formula: "abs(desired-h^T*x)/sqrt(max(lambda_base+x^T*P*x,1e-15))"
+        finite_guard: "1e-15 fixed numerical guard; not validation tuned"
+        lambda_base: "the setting's forgetting_factor"
+        information: "current receiver-visible DD residual and pre-update state only"
+    - arm_family_index: 2
+      arm: P3_BOUNDED_ADAPTIVE_FORGETTING
+      source_type: UNVERIFIED_PROJECT_DECLARED_RANGE
+      subtype: PREREGISTERED_C2_GRID
+      setting_index_order: [0, 1, 2]
+      tuple_fields: [lambda_min, lambda_max, ema_alpha, innovation_scale]
+      tuples:
+        - [0.95, 0.999, 0.20, 2.0]
+        - [0.98, 0.995, 0.10, 1.0]
+        - [0.99, 0.999, 0.10, 1.0]
+      unit: dimensionless
+      current_innovation_lambda_base: lambda_max
+      causality: "lambda_k depends only on the normalized-innovation EMA completed through k-1"
+    - arm_family_index: 3
+      arm: CHEAP_AMPLITUDE_FREEZE
+      source_type: UNVERIFIED_PROJECT_DECLARED_RANGE
+      subtype: PREREGISTERED_C2_GRID
+      setting_index_order: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+      nesting: "forgetting_factor major, amplitude_threshold minor"
+      forgetting_factor:
+        values: [0.98, 0.99, 0.999]
+        unit: dimensionless
+      amplitude_threshold:
+        values: [0.10, 0.20, 0.40]
+        unit: "dimensionless receiver amplitude on Es=1 Gray-16QAM"
+        sample: "abs(derotated_received) before the current DD update"
+        agc: prohibited
+        per_cell_or_seed_normalization: prohibited
+    - arm_family_index: 4
+      arm: 4OPM_BPS
+      source_type: UNVERIFIED_PROJECT_DECLARED_RANGE
+      subtype: PREREGISTERED_C2_GRID
+      setting_index_order: [0, 1, 2]
+      test_phases: 32
+      test_phases_unit: phases
+      window:
+        values: [31, 63, 127]
+        unit: symbols
+    - arm_family_index: 5
+      arm: 4OPM_CONTINUOUS_DD_DPLL
+      source_type: UNVERIFIED_PROJECT_DECLARED_RANGE
+      subtype: PREREGISTERED_C2_GRID
+      setting_index_order: [0, 1, 2]
+      omega_n:
+        values: [4000000.0, 8000000.0, 20000000.0]
+        unit: Hz
+        limitation: "8e6/20e6 are project WARNING/existing sweep anchors, not scenario literature values"
+  cardinality:
+    settings_per_realization_cell: 30
+    realization_cells: 75
+    expected_raw_rows: 2250
+  row_identity:
+    key_schema: [gg_index, snr_index, seed_index, arm_family_index, setting_index]
+    index_base: 0
+    expected_sequence: "lexicographic GG -> EsN0 -> seed -> arm family -> local setting"
+    exact_length: 2250
+    string_sorting: prohibited
+    result_dependent_ordering: prohibited
+  shared_realization:
+    one_per_cell: true
+    consumed_by_all_30_settings: true
+    gg_method: gar
+    gg_block:
+      value: 100
+      unit: symbols
+    gg_intensity:
+      definition: "h=X*Y with Gamma marginal factors of theoretical mean one"
+      finite_frame_sample_mean_renormalization: prohibited
+    field_amplitude: "sqrt(h)"
+    constellation:
+      modulation: "Gray 16-QAM via common._modulation.qam16_mod"
+      unfaded_average_es: 1.0
+      unit: normalized_symbol_energy
+    awgn:
+      gamma: "10^(EsN0_dB/10), referenced to unfaded Es=1"
+      sample: "sqrt(1/(2*gamma))*(N(0,1)+j*N(0,1))"
+      expected_complex_power: "1/gamma"
+      realized_h_or_waveform_power_scaling: prohibited
+    agc: prohibited
+    per_realization_cell_seed_power_renormalization: prohibited
+  checkpoint_resume:
+    checkpoint_boundary: "after each complete 30-row realization cell only"
+    legal_row_counts: "0,30,...,2250"
+    resume_validation:
+      - "rebuild all 2250 expected_row_keys"
+      - "stored row keys are unique and exactly equal expected_row_keys[:len(rows)]"
+      - "len(rows) is divisible by 30"
+      - "every 30-row group has one common cell prefix and all 30 frozen arm/settings"
+      - "stored exact source hash map matches current raw-byte SHA256 map"
+    mismatch_disposition: BLOCKED_STALE_OR_CORRUPT_CHECKPOINT
+    existing_row_overwrite: prohibited
+    prefix_integrity: "canonical-JSON SHA256 and deep equality before/after append"
+    hash_algorithm: SHA256
+    hash_freeze: "compute after final dispatch binding and before the first row"
+    hash_paths:
+      - .sessions/2026-07-23-research-direction-lab-longitudinal-test/T010-b10-source-native-adaptive-rls-cpr.md
+      - projects/simulation/explore/b10-source-native-adaptive-rls-cpr/source-contract.yaml
+      - projects/simulation/explore/b10-source-native-adaptive-rls-cpr/contract.yaml
+      - projects/simulation/explore/b10-source-native-adaptive-rls-cpr/pilot-manifest.json
+      - projects/simulation/explore/b10-source-native-adaptive-rls-cpr/seed-census.yaml
+      - projects/simulation/explore/b10-source-native-adaptive-rls-cpr/shared_realization.py
+      - projects/simulation/explore/b10-source-native-adaptive-rls-cpr/source_native_rls.py
+      - projects/simulation/explore/b10-source-native-adaptive-rls-cpr/methods.py
+      - projects/simulation/explore/b10-source-native-adaptive-rls-cpr/baselines.py
+      - projects/simulation/explore/b10-source-native-adaptive-rls-cpr/run_all.py
+      - projects/simulation/params.py
+      - projects/simulation/common/_config.py
+      - projects/simulation/common/_modulation.py
+      - projects/simulation/common/_gg_time.py
+      - projects/simulation/common/_channel.py
+      - projects/simulation/common/_recovery.py
+      - projects/simulation/common/_experiment.py
+    atomic_save:
+      shared_common_change: prohibited
+      temp_location: "unique file in validation-raw.json parent directory"
+      sequence:
+        - "save_results(payload,temp,script_name)"
+        - "flush temp and os.fsync(temp)"
+        - "os.replace(temp,validation-raw.json)"
+        - "fsync parent directory where supported"
+      unsupported_directory_fsync_record: "directory_fsync=UNSUPPORTED_PLATFORM"
+      failure_rule: "remove temp and preserve the old target"
+  setting_freeze:
+    score_fields:
+      - nonfinite_rows
+      - ber_ge_0p2_rows
+      - outage_rows_at_0p0038
+      - total_bit_errors
+      - preregistered_setting_index
+    ordering: lexicographic_ascending
+    separate_global_freeze: [P1_FIXED, P2_INNOVATION_FREEZE, P3_BOUNDED_ADAPTIVE_FORGETTING, CHEAP_AMPLITUDE_FREEZE, 4OPM_BPS, 4OPM_CONTINUOUS_DD_DPLL]
+    bstar:
+      comparison: "same score across the globally frozen BPS and DPLL arms"
+      conventional_arm_index: {4OPM_BPS: 0, 4OPM_CONTINUOUS_DD_DPLL: 1}
+      exact_tie_winner: 4OPM_BPS
+      rationale: "pre-dispatch arm order only; not a performance claim"
+      implementation_iteration_order_must_not_change_winner: true
+    primary: "same score across globally frozen P2 and P3; exact tie selects P2"
+    per_cell_or_seed_best_of: prohibited
+  snr_freeze:
+    required_arms: [PRIMARY_METHOD, P1_FIXED, CHEAP_AMPLITUDE_FREEZE, BSTAR]
+    fec_threshold: 0.0038
+    pooled_raw_ber: "sum(bit_errors)/sum(denominator)"
+    effective_ber_for_log_distance: >-
+      pooled_raw_ber when pooled bit_errors>0; otherwise
+      0.5/sum(denominator). No arbitrary epsilon.
+    normal_bracket:
+      lower: "pooled_raw_ber > 0.0038"
+      upper: "pooled_raw_ber <= 0.0038"
+      equality_rule: "equality is high-side only and never a low-side bracket"
+      common_rule: "all four required arms satisfy the same adjacent pair"
+    common_pair_selection:
+      objective: "max over four arms and the pair's two endpoints of abs(log10(effective_ber/0.0038))"
+      tie_chain: [objective, lower_snr_index]
+    common_pair_to_three_point_window:
+      candidates: "all contiguous 3-point windows containing the selected pair"
+      objective: "max over four arms and all three points of abs(log10(effective_ber/0.0038))"
+      tie_chain: [objective, window_start_index]
+    no_common_bracket:
+      candidates: "all three contiguous 3-point windows on the five-point grid"
+      objective: "max over four arms and all three points of abs(log10(effective_ber/0.0038))"
+      tie_chain: [objective, window_start_index]
+      marker: NO_COMMON_VALIDATION_CROSSING
+      future_q2_method_signal: prohibited
+  completion:
+    complete_only_at_rows: 2250
+    aggregate_before_complete: prohibited
+    local_ranking_before_complete: prohibited
+    return_status: PARTIAL_C2_AWAITING_SCIENCE_REVIEW
+    heldout_and_phase_d: prohibited
+parameter_provenance:
+  params_file:
+    path: projects/simulation/params.py
+    sha256: 0e87c53364461478eddcd81426d8e04646270c3ea7aa717e3c3b28c5dd2a99e9
+  symbol_rate:
+    value: 2500000000.0
+    unit: sym/s
+    type: SOURCE_TRANSFER
+    source: "B5Params.R_SYM_B5; doi:10.1016/j.optcom.2024.130981, 2.5-GBaud PM-QPSK source applied to 16-QAM transfer test"
+  laser_linewidth:
+    value: 10000.0
+    unit: Hz
+    type: PARAMS_WARNING
+    source: "SimulationConfig.system.LASER_LW; limitation retained verbatim from params.py"
+  residual_cfo:
+    value: 1000000.0
+    unit: Hz
+    type: PARAMS_WARNING
+    source: "SimulationConfig.doppler.F_RESIDUAL; FOE-resolution-derived assumption"
+  gamma_gamma:
+    weak:
+      value: [11.6, 10.1]
+      unit: dimensionless
+      type: LITERATURE
+      source: "SimulationConfig.turbulence weak alpha/beta; Gu et al. 2022 doi:10.3390/app12073331 p.5"
+    moderate:
+      value: [4.0, 1.9]
+      unit: dimensionless
+      type: LITERATURE
+      source: "SimulationConfig.turbulence moderate alpha/beta; Gu et al. 2022 doi:10.3390/app12073331 p.5"
+    strong:
+      value: [4.2, 1.4]
+      unit: dimensionless
+      type: LITERATURE
+      source: "SimulationConfig.turbulence strong alpha/beta; Gu et al. 2022 doi:10.3390/app12073331 p.5"
+  greenwood_frequency:
+    value: 100.0
+    unit: Hz
+    type: PARAMS_WARNING
+    source: "SimulationConfig.gg_time.GREENWOOD_FREQ_DEFAULT"
+  frame_symbols:
+    value: 25000
+    unit: symbols
+    type: LITERATURE_SOURCE_IDENTITY_TRANSFER
+    source: "Deka et al. 2024 p.166; reused as the fixed T010 frame size"
+  pilot_symbols:
+    value: 128
+    unit: symbols
+    type: LITERATURE_SOURCE_IDENTITY
+    source: "Deka et al. 2024 p.165-166"
+  electrical_esn0_grid:
+    value: [14.0, 17.0, 20.0, 23.0, 26.0]
+    unit: dB
+    type: UNVERIFIED_PROJECT_DECLARED_RANGE
+    subtype: PREREGISTERED_EXPLORATORY_CANDIDATE_GRID
+    source: "T010 preregistration; not B10 OSNR and not a star-ground link budget"
+forbidden_parameter_consumption:
+  - kf.Q_fine_df
+  - kf.q_params_weak.sigma2_turb
+  - kf.q_params_moderate.sigma2_turb
+  - kf.q_params_strong.sigma2_turb
+  - SystemParams.R_SYM
+pilot:
+  manifest: pilot-manifest.json
+  manifest_sha256: 36c6179b4207407af75ff5a58b0ad52bf566dfe4844d35f6b613816afdf5f5c8
+  contiguous_positions_zero_based: [0, 127]
+  data_start_zero_based: 128
+  runtime_data_rng_independent: true
+seed_contract:
+  census: seed-census.yaml
+  invalid_development: [130001]
+  canonical_only: [130002]
+  source_smoke: [130003]
+  validation: [131001, 131002, 131003, 131004, 131005]
+  test: [132001, 132002, 132003, 132004, 132005, 132006, 132007, 132008, 132009, 132010]
+metric_contract:
+  modulation: Gray 16-QAM
+  error_population: "data symbols k=128..N-1 only"
+  denominator: "4*(N-128)"
+  per_row: [bit_errors, denominator, ber, condition, snr_db, seed, arm, update_rate, freeze_rate, innovation_stats, state_finite]
+  ber: "bit_errors/denominator"
+  aggregation:
+    pooled: "sum(bit_errors)/sum(denominator)"
+    per_seed_distribution: required
+    mean_of_means_as_pooled: forbidden
+  q2:
+    formula: "Q=sqrt(2)*erfcinv(2*BER); Q2_dB=20*log10(Q)"
+    zero_error_bound: "BER_bound=0.5/denominator for that row only"
+    undefined: "BER>=0.5"
+  fec_threshold: 0.0038
+  working_region:
+    finite_and_ber_limit: "all frozen test seeds for P, P1, cheap, B* finite and BER<0.2"
+    crossing: "each required arm has an adjacent pooled raw-BER bracket around 3.8e-3 with locally normal direction"
+    exclusions: [no-crossing, non-monotone, state-nonfinite, denominator-mismatch, mask-mismatch, source-transfer-only, single-seed-dominance]
+phase_boundaries:
+  phase_a: "contracts, manifest, seed census, and identity/metric test skeleton only"
+  phase_b: "P1 shared realization, source-native RLS, directed identity tests, and 1/10 GHz source smoke"
+  phase_c1: "accepted by V021; implementation and direct/clean/noiseless tests only"
+  phase_c2: "dispatch contract repaired after V022; validation remains blocked until independent re-review PASS plus newer foreground control"
+  phase_d: "held-out test and deterministic closure"
+  current_unimplemented: [comparison_runner, atomic_checkpoint_resume, validation_freeze, heldout_runner]
