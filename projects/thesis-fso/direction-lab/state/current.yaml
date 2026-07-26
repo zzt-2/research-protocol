@@ -5,8 +5,8 @@
 # NO legal main-method signal. F1=TESTBED_BLOCKED / F3=UNRESOLVED / F4=INFRASTRUCTURE_BLOCKED.
 # F2 pilot lineage merges into existing Pilot-Jones formal Groundwork (no parallel Scout).
 # Negative material -> harvest/limitations only; NOT a full negative paper.
-# Next authoritative work = live R003/D015 + formal D026: B9 Step 1
-# evidence-adapter after post-T012 remap.
+# Next authoritative work = live V035/R004/D016 + formal D027: one bounded B9
+# Step 1 multi-source/mechanism-deep coverage repair.
 # Updated 2026-07-23 (T001 current-owner reconciliation): D061 strategic switch reflected — P03 = PAUSED_RETURNED_TO_PORTFOLIO
 # (option 1, family not closed); Pilot-Jones was then formal GW line; D066/V040 later returned it.
 # (V035 backward PASS, 4 direct-competitor full-text BLOCKED).
@@ -16,11 +16,11 @@
 # Explicit disposition lineage governs; protected history untouched.
 # Role of protected files (recorded here, NOT edited): STATUS.v1.md = STALE_PROTECTED
 # (not the current scientific-fact source); project.v1.yaml = historical read-only-preview
-# adapter (not the current authorized owner). Current trusted fact source = this file + formal D026 + live R003/D015.
+# adapter (not the current authorized owner). Current trusted fact source = this file + formal D027 + live R004/D016/V035.
 
 schema_version: research-direction-lab.state.current.v1
 project_id: thesis-fso.dual-pol-osl.direction-lab
-last_recovery_entry: .sessions/2026-07-23-research-direction-lab-longitudinal-test/T013-b9-step1-evidence-adapter.md
+last_recovery_entry: .sessions/2026-07-23-research-direction-lab-longitudinal-test/T014-b9-step1-multisource-coverage-repair.md
 
 formal_goal: >-
   Systematically identify whether machine learning provides a real, legally
@@ -35,14 +35,13 @@ authorization:
   science_authorized: false  # the Scout campaign is dormant; formal science advances via master-state.md, not this campaign
   scope: dormant Scout campaign — no active multi-mechanism Scout rotation (D022). P03 remains paused. Pilot-Jones fixed complex rescue is scoped-Killed and returned; T006 was scientifically rejected without killing B10/B12; T010/B10 is now BLOCKED_IDENTITY and returned without a second repair package. No active scientific carrier.
   formal_gw_line: >-
-    NO_ACTIVE_SCIENTIFIC_CARRIER (step4a D026 / live R003/D015/V034 / epoch 32 /
-    CP012). T012 terminated as BLOCKED_TASK_INTERFACE/PACKAGE_NOT_EXECUTED
-    before source recovery, metadata closure or canonical acquisition; method
-    delta is NONE. C15 is RETURNED_TO_POOL, not scientifically Killed. R003
-    selected B9 evidence-adapter as the next workline. V034 independently
-    approved T013; it is authorized only for candidate-specific Groundwork
-    Step 1 after the epoch32 clean final binding.
-    No Step 2, Step 3 or MVE is authorized.
+    NO_ACTIVE_SCIENTIFIC_CARRIER (step4a D027 / live R004/D016/V035/V036 / epoch 34 /
+    CP013). T013 is accepted as BLOCKED_SEARCH_COVERAGE with method delta NONE:
+    61 raw -> 58 unique, 21 nonexcluded, 8 must-read and 21/21 published, but
+    only OpenAlex actually returned and neither mechanism route has adequate
+    deep support. T014 is the one bounded multi-source/mechanism-deep
+    Groundwork Step 1 repair. Failure returns B9 to the pool; no third B9
+    Step 1 package is allowed. No Step 2, Step 3 or MVE is authorized.
     Pilot-Jones T005/D066/V040 closes only the fixed complex component rescue axis;
     entire family and 4-paper debt are not claimed closed.
   prohibits:
@@ -249,14 +248,13 @@ next_action:
     scoped-Kills the fixed complex component rescue axis (max point/CI upper 0.0804/0.2372 dB);
     entire family and D056's 4-paper debt remain open but are no longer current carrier.
     T006's source/channel/statistics verdict was rejected; it is history, not a runnable alias.
-    Live D014/V033 and formal D025 close T012 as
-    BLOCKED_TASK_INTERFACE/PACKAGE_NOT_EXECUTED with method delta NONE. Source
-    recovery, metadata closure and canonical acquisition did not start. C15 is
-    returned to the pool without a science verdict. Live R003/D015 and formal
-    D026 select B9 evidence-adapter while retaining no active scientific carrier.
-    V034 approved the T013 dispatch contract. The next action is the epoch32
-    clean final binding, followed only by Phase A1 Groundwork Step 1 search if
-    PASS. Do not download, enter Step 2/3, run B9 or
+    Live V035 and D016/formal D027 accept T013 as
+    BLOCKED_SEARCH_COVERAGE with method delta NONE. B9 remains not active.
+    Live R004 compares B9/C15/B1/A4 and authorizes exactly one T014
+    multi-source/mechanism-deep Step 1 repair. V036 approved the dispatch
+    contract. The next action is the epoch34 clean final binding and only
+    Phase A1 if PASS. Failure returns B9 to the pool and forces rotation. Do not
+    download, enter Step 2/3, run B9 or
     C15 code, or run any MVE before a later independent activation. Stop
     before Step 5.
     Do NOT resume Scout/P03.

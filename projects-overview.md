@@ -7,14 +7,17 @@
 ### thesis-fso
 
 - **方向**：双偏振星地 OSL 场景中的 ML 应用方向探索；正式研究与 Direction Lab Scout/Sandbox 分层管理。
-- **正式状态**：当前无 active scientific carrier（step4a D026；live R003/D015/V034，
-  epoch 32 / CP012）。T011 只接收 `BLOCKED_SEARCH_COVERAGE` 与 method delta
+- **正式状态**：当前无 active scientific carrier（step4a D027；live
+  V035/R004/D016/V036，epoch 34 / CP013）。T011 只接收
+  `BLOCKED_SEARCH_COVERAGE` 与 method delta
   NONE；T012 在 §2.2 前因三项 task-interface contract 缺口终止为
   `BLOCKED_TASK_INTERFACE / PACKAGE_NOT_EXECUTED`。V033 拒绝 epoch29 final
   binding 并执行 one-last-attempt 退出；C15 返回候选池，不作 science Kill。
-  R003 已从 B9/C15/B1/A4 中选择 B9 Step 1 evidence-adapter，但不激活 carrier；
-  V034 已以 P0/P1/P2=`0/0/0` 批准 T013；clean final binding 后也只允许 Step 1，
-  Step 2/3/MVE 继续锁定。
+  T013 已由 V035 接收为 `BLOCKED_SEARCH_COVERAGE / delta NONE`：61→58、
+  21 nonexcluded、8 必读、21/21 正式发表，但实际仅 OpenAlex；不是 B9
+  Go/Kill。R004/D016/D027 只授权一次 T014 多源/mechanism-deep Step 1 repair；
+  V036 已批准合同，clean binding 前不执行。失败即 B9 返回池；Step 2/3/MVE
+  继续锁定。
   T010 仍只接收 `BLOCKED_IDENTITY`，B10 已返回候选池且不开第二修复包。
   T009 仍只接收 `BLOCKED_IDENTITY` 与 method delta NONE，A4 已返回候选池；
   Direction Lab Scout campaign 仍 dormant（D022 SCIENCE_FREEZE）。
@@ -43,9 +46,9 @@
   moderate/14 dB/seed `131004` 暴露 128-pilot unwrap 的错误 `-2π` branch；
   V026 接收 `BLOCKED_IDENTITY / P0=0/P1=0/P2=1 /
   mission_method_delta=NONE`。无 aggregate，未消费 held-out；不补矩阵、不改 gate。
-- **下一合法边界**：提交 epoch32 clean gate 并完成 final binding；PASS 后由
-  不同 executor 先执行 T013 Phase A1，随后按 A2/A3-n/A4 串行推进并停在 acquire
-  前。新 carrier 激活前禁止实验。
+- **下一合法边界**：提交 epoch34 control/task clean gate并做独立 final binding；
+  PASS 后由不同 executor 先执行 T014 Phase A1，只有三源门通过才按 A2/A3-n/A4 串行并
+  停在 acquire 前。新 carrier 激活前禁止实验。
   **不得下载或进入 Step 2/3，不得运行 B9/C15 sandbox/MVE；不进入
   Step 5/Contract/Execute；不修
   T006/B12、A4/T009、B1/T008、B10/T010，不启动 B004/P03，不改 shared

@@ -1080,3 +1080,71 @@ Verified claims:
 
 提交 clean gate；由独立 verifier 对 epoch32 做 final binding。PASS 后由不同
 executor 只执行 T013 Phase A1。
+
+> 2026-07-27 续接 | T013 科学接收与唯一一次覆盖修复 | 状态：T014_AWAITING_DISPATCH_REVIEW
+
+## 目标
+
+独立验收 T013 的 formal science disposition 与 method delta，更新长程控制链，
+并在至少三个替代项比较后准备下一合法包。
+
+## 记录
+
+### Handoff Verification
+
+Verified claims:
+
+- 当前恢复入口：**PASS** — 恢复时 live control 为 epoch32 / CP012 /
+  formal D026，mission-log 下一 checkpoint 为 CP013；旧 H002 状态只作历史。
+- 当前无 active scientific carrier：**PASS** — live/formal owner、master-state
+  和三个 current projection 均明确 B9 仅为 Step 1 workline。
+- T013 已执行且未越界：**PASS** — commits `16176c2/7ca3cbf` 只提交 worker
+  log；ignored archives/view 显示未下载、未精读、未实现、未实验。
+- dependency/conflict：**PASS** — 本专题依赖的
+  `2026-07-20-research-direction-lab-system` 为 active，`conflicts_with=[]`。
+- 明确不含：**PASS** — T013 与本轮只在 Groundwork Step 1；未进入 Step 2/3/
+  4a/MVE、Step 5/Contract/Execute，未修旧 evaluator 或恢复 Scout/P03。
+
+### T013 acceptance
+
+- V035 独立复算 `61→58`、21 nonexcluded、8 必读、21/21 正式发表；实际源仅
+  OpenAlex，Route A deep=0，Route B deep 不含目标机制。
+- 初审三个 P2 已由独立 mapper 修正，终审
+  `PASS / P0/P1/P2=0/0/0`。
+- 正式接收
+  `BLOCKED_SEARCH_COVERAGE / mission_method_delta=NONE`，不是 B9 Go/Kill 或
+  方法产出。
+- CP013：same-axis=1、repair=0、no-method=13，
+  `ADEQUATE / package ALIGNED`；mission 仍 `DRIFTED/STALLED`。
+
+### Repair-versus-rotation
+
+- R004 重新比较 B9、C15、B1、A4 的方法形态、预期增量、包装句、formal
+  readiness、最小补债与失败轮换点。
+- 所有候选下一包立即产生 METHOD_SIGNAL 的可能性均为 0；按完成最小债务后最终
+  进入方法比较的主控判断，B9 repair 为 15%–25%，替代项最佳为 5%–15%，该数值
+  仅是路线判断。
+- 选择 T014 的原因是 B9 已有正向全文锚、21 条非排除、8 条必读与真实 EFNS
+  comparator，缺口集中在来源和 deep mechanism；C15 两包未触及科学内容，B1
+  需要第三 evaluator rebuild，A4 需要第二 identity rebuild。
+- T014 是唯一一次 coverage repair；若仍不足三源或没有 mechanism-deep residual
+  problem support，B9 返回池并立即轮换。
+- V036 独立 dispatch review 为 `PASS / P0/P1/P2=0/0/1`；唯一 P2 是尚未提交
+  clean binding。control/task 已递增到 epoch34，scientific contract 与 CP013
+  不变。
+
+## 决策引用
+
+- V035：T013 科学身份独立验收 PASS（新建）
+- R004：T013 后 repair-versus-rotation 六维比较（新建）
+- D016 / formal D027：接收 coverage blocker，授权唯一 T014（新建）
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。只做 Step 1 接收、比较、控制与任务准备；
+  未下载、精读、实现、仿真或进入后续 Step。
+
+## 后续
+
+提交 epoch34 control/task clean gate；由独立 verifier 做 final binding。PASS 后
+由不同 executor 只执行 T014 Phase A1。

@@ -1795,3 +1795,109 @@ FORMAL_TOPIC_CURRENT=D026/B9_STEP1
 ### 结论
 
 PASS
+
+## V035: T013 B9 Step 1 执行与科学身份独立验收
+
+> date: 2026-07-27
+> 关联：S001 / D015 / formal D026 / T013 / CP013
+> verifier：T013 independent science verifier；只读复算，未修改 owner/control
+
+### 验证项
+
+- [x] 执行与边界：HEAD `7ca3cbf`、tracked worktree clean；两个 T013 commit
+  都只提交 worker log，未下载、精读、实现、仿真或进入 Step 2 → PASS。
+- [x] raw/candidate view：七个 archive 全部 JSON parse；`61/61` raw result
+  有完整人工语义字段；DOI/normalized-title 去重 `61→58` → PASS。
+- [x] 数量与发表：非排除 `21`、排除 `37`、必读 `8`；正式发表
+  `21/21`，数量门/必读门/发表门均通过 → PASS。
+- [x] 真实来源：本次实际 search-run family 只有 OpenAlex；S2 被 rate limit，
+  未配置源没有返回；历史 index 字符串未拆分计数 → PASS。
+- [x] route 复算：Route A inclusive=`8`、deep nonexcluded=`0`；Route B
+  inclusive=`17`、deep nonexcluded=`2`，但两条只属一般 task-fit/adjacent FSO，
+  不含 self-coherent/virtual-carrier/CSPR/phase-reconstruction → PASS。
+- [x] 三项 P2 修正：Route B broad+deep gate=`false`；delta-sigma 降为 adjacent
+  context；clipping 改为 DRE optimization lineage并新增未猜 title/DOI 的 original
+  DRE citation debt → PASS。
+- [x] acquisition debt：`11`，覆盖 DRE optimization/canonical citation、
+  traditional comparator、self-coherent/FSO task-fit；没有把 metadata 当全文
+  → PASS。
+
+### 证据
+
+```text
+HEAD=7ca3cbf
+TRACKED_STATUS=CLEAN
+T013_COMMITS=16176c2,7ca3cbf
+COMMIT_SCOPE=worker-log-only
+RAW_RESULTS=61
+DEDUPLICATED_UNIQUE=58
+NONEXCLUDED_UNIQUE=21
+EXCLUDED_UNIQUE=37
+MUST_READ_UNIQUE=8
+FORMALLY_PUBLISHED_UNIQUE=21
+PUBLISHED_RATIO=1.0
+ACTUAL_SOURCE_FAMILIES=1
+ACTUAL_SOURCE_FAMILY=openalex
+ROUTE_A_INCLUSIVE=8
+ROUTE_A_DEEP_NONEXCLUDED=0
+ROUTE_B_INCLUSIVE=17
+ROUTE_B_DEEP_NONEXCLUDED=2
+ROUTE_B_INDEPENDENT_BROAD_AND_DEEP=false
+ACQUISITION_DEBT=11
+INITIAL_REVIEW_P0/P1/P2=0/0/3
+FINAL_REVIEW_P0/P1/P2=0/0/0
+CANDIDATE_VIEW_SHA256=C46EC7815671F003A28C12421D74F84AF8259BB71E0F50B49C7456CB1539E636
+FORMAL_SCIENCE_DISPOSITION=BLOCKED_SEARCH_COVERAGE
+MISSION_METHOD_DELTA=NONE
+SIMULATION_OR_SEED_RUN=false
+```
+
+### 结论
+
+PASS。接收 `BLOCKED_SEARCH_COVERAGE / mission_method_delta=NONE`。这不是 B9
+science Go、Kill、`METHOD_SIGNAL` 或 promotion；只证明 T013 在授权边界内可靠地
+发现了来源与 mechanism-deep 覆盖不足。
+
+## V036: T014 B9 Step 1 coverage repair dispatch 独立审查
+
+> date: 2026-07-27
+> 关联：S001 / R004 / D016 / formal D027 / T014 / CP013
+> verifier：T014 independent dispatch quickcheck；只读，未运行检索/下载/实验
+
+### 验证项
+
+- [x] control binding：epoch33 / CP013 / D016 / formal D027 /
+  `CANDIDATE_FORMALIZATION` 与 T014 一致，task-control validator PASS。
+- [x] carrier comparison：R004 比较 B9、C15、B1、A4 的方法形态、预期增量、
+  包装句、formal readiness、最小补债与失败轮换点，并说明 B9 优于至少两个替代。
+- [x] bounded repair：A1/A2/A3-n/A4 各 ≤15 分钟；A1 union `<3` 必须停止；
+  A3-n 每次最多两个 archive；失败后禁止第三个 B9 Step 1 包。
+- [x] source integrity：只按 raw archive 实际返回平台计 source family；配置名、
+  rate-limit、零结果和共享 index 历史 provenance 不计数。
+- [x] output/interface：T014 使用新 query slug 与 `t014-ieee-*`/v2 view，不覆盖
+  T013 archives/candidate view；executor 不修改 owner/control。
+- [x] scope/current：FR-22、禁止下载/精读/实现/实验、无 active carrier，以及
+  registry/master/state/portfolio/harvest/projects-overview 当前投影一致。
+- [ ] clean binding：审查时 13 个 tracked 文件修改、R004/T014 未跟踪；符合
+  “审查后提交”阶段，但提交并复核 clean 前不得执行 → P2。
+
+### 证据
+
+```text
+DISPATCH_REVIEW_PASS
+P0/P1/P2=0/0/1
+TASK_CONTROL=PASS
+GIT_DIFF_CHECK=PASS
+CONTROL=epoch33/CP013/D027
+LIVE_OWNER=D016
+FORMAL_OWNER=D027
+CURRENT_ACTIVE_CARRIER=NONE
+REPAIR_COUNT_ALLOWED=ONE
+P2=CLEAN_BINDING_NOT_YET_FORMED
+```
+
+### 结论
+
+PASS（合同）/ PARTIAL（派发前 clean binding）。允许 control/task 递增到 final
+binding epoch并提交；clean worktree 下的 task-control 与 owner/projection 独立
+复核 PASS 前不得执行 A1。

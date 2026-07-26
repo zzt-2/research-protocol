@@ -1,7 +1,7 @@
 # Mission Log — Research Direction Lab 长程真实运行测试
 
 > original mission: 在用户只中转任务路径和极短回执的条件下，稳定推进真实研究并积累可用方法材料。
-> phase 1: `4af6f9d..aab425d` | audit cutoff: 2026-07-27 | next checkpoint: `CP013`
+> phase 1: `4af6f9d..aab425d` | audit cutoff: 2026-07-27 | next checkpoint: `CP014`
 
 | CP | 包 / intent / family | formal science disposition | mission method delta | streaks | weight / drift | 下一步为何优于替代项 |
 |---|---|---|---|---|---|---|
@@ -17,6 +17,7 @@
 | CP010 | T010 · log-010 · `tag:rdl-t010-closure` / METHOD_CONSTRUCT / B10 source-native adaptive pilot-RLS | `BLOCKED_IDENTITY`；primary transfer 的 128-pilot unwrap 在 moderate/14 dB/seed 131004 选错 −2π branch，P1/P2/P3 共用初始化；840-row strict-prefix 终止 | NONE | same-axis=1, repair=1, no-method=10 | ADEQUATE / package ALIGNED；mission DRIFTED/STALLED | 不改 identity/row schema、不补第二包；转 C15 Step 1–3 formalization，比 B1 第三次 evaluator repair 与 B9 新全链更可能解锁方法载体 |
 | CP011 | T011 · log-011 · `700864d` / CANDIDATE_FORMALIZATION / C15 blind-equalization cost | `BLOCKED_SEARCH_COVERAGE`；56 rows/53 unique/49 published，但 actual source 仅 OpenAlex，关键 deep query 未闭合；Step 2 未启动 | NONE | same-axis=1, repair=0, no-method=11 | ADEQUATE / package ALIGNED；mission DRIFTED/STALLED | 共享索引已有 Semantic Scholar/SerpAPI/OpenAlex/Exa 四源，论文库已有 5 篇近期 content；一次 T012 合并三源恢复、metadata closure 与 3 篇 canonical 获取，比 B1 第三 evaluator repair、A4 第二 identity repair、B9 新全链更可能解锁方法空间；失败即轮换 |
 | CP012 | T012 · log-012 · `81ab4a0` / CANDIDATE_FORMALIZATION / C15 source recovery | `BLOCKED_TASK_INTERFACE / PACKAGE_NOT_EXECUTED`；两次 executor preflight 与 epoch29 final binding 共暴露 receipt、owner/process predicate、CIM fail-open 三项 task-contract 缺口；§2.2–2.5 均未执行 | NONE | same-axis=2, repair=1, no-method=12 | UNDERWEIGHT / package DRIFT_RISK；mission DRIFTED/STALLED | 遵守 one-last-attempt，不做第四次 T012 amendment；post-T012 remap 比继续接口修补、B1 第三 evaluator repair或 A4/B10 第二 identity repair更可能恢复方法载体，C15 仅返回池不作 science Kill |
+| CP013 | T013 · log-013 · `16176c2/7ca3cbf` / CANDIDATE_FORMALIZATION / B9 Step 1 evidence adapter | `BLOCKED_SEARCH_COVERAGE`；61→58、21 nonexcluded、8 必读、21/21 正式发表，但实际来源仅 OpenAlex；Route A deep=0，Route B deep 仅一般 task-fit/adjacent FSO；非 B9 Go/Kill | NONE | same-axis=1, repair=0, no-method=13 | ADEQUATE / package ALIGNED；mission DRIFTED/STALLED | 一次 bounded multi-source/mechanism-deep repair 有正向全文锚、真实 EFNS comparator 和集中缺口，完成最小债务后最终 METHOD_SIGNAL 主观判断 15%–25%，高于 C15/B1/A4 最佳 5%–15%；失败即 B9 返回池，不做第三个 Step 1 包 |
 
 ## 使用规则
 

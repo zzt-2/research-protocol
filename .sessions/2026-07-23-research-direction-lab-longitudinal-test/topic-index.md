@@ -4,12 +4,12 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 32
+  control_epoch: 34
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: B9_STEP1_FORMALIZATION
-  authority_pointer: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D026
-  decision_gate: V034 已独立批准 T013 Step 1 合同；当前仍无 active scientific carrier，只有 clean worktree 与 fresh task-control PASS 后才可执行 Phase A1
+  active_lane: B9_STEP1_BOUNDED_COVERAGE_REPAIR
+  authority_pointer: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D027
+  decision_gate: V036 已独立批准 T014 合同；当前仍无 active scientific carrier，只有 clean worktree 与 fresh epoch34 task-control PASS 后才可执行 Phase A1，失败即轮换
   allowed_actions:
     - RECOVER
     - TASK_PREPARATION
@@ -30,12 +30,12 @@ rdl_control:
     - B10_OR_T010_REPAIR
     - UNAUTHORIZED_SCIENTIFIC_EXPERIMENT
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
-  mission_checkpoint: CP012
-  next_legal_action: 提交 remap/control clean gate；fresh final binding PASS 后由不同 executor 只执行 T013 Phase A1，完成即停回主控
+  mission_checkpoint: CP013
+  next_legal_action: 提交 control/task clean gate；独立 final binding PASS 后由不同 executor 只执行 T014 Phase A1，完成即停回主控
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（V034 已批准 T013；epoch 32 / CP012，等待 clean final binding 与 Phase A1，仍无 active scientific carrier）
+> 状态: active（V036 已批准 T014 合同；epoch 34 / CP013，等待 clean final binding 与 Phase A1，仍无 active scientific carrier）
 > 创建: 2026-07-23 | 最后更新: 2026-07-27
 
 ## 专题信息
@@ -72,6 +72,13 @@ rdl_control:
 - R003 已比较 B9、C15、B1、A4；选择 B9 evidence-adapter 只做 Step 1
   coverage/collision adjudication。B9 仍非 active carrier，T013 不下载、不精读、
   不实现或实验。
+- T013 已由 V035 独立接收为
+  `BLOCKED_SEARCH_COVERAGE / mission_method_delta=NONE`：61→58、21
+  nonexcluded、8 必读、21/21 正式发表，但实际 source 只有 OpenAlex，两个
+  mechanism route 的 deep support 均未闭合。
+- R004/D016/formal D027 只授权一次 T014 multi-source/mechanism-deep Step 1
+  repair；若仍不足三源或没有 route-level residual-problem support，B9 返回池并
+  轮换，不得第三个 B9 Step 1 包。
 - formal D021 维持 `B10_SOURCE_NATIVE_ADAPTIVE_RLS_CPR`；V021 已独立接收 C1，
   `mission_method_delta=NONE`。epoch 22 的当前动作是先完成 C2 起飞合同独立审查；
   通过后只用 validation seeds `131001–131005` 跑完整预注册矩阵并全局冻结设置，
@@ -283,6 +290,10 @@ rdl_control:
 - **R003 / D015 / formal D026 / T013**：四候选 remap 选择 B9 evidence-adapter；
   control 升至 epoch31 / CP012，只准备 candidate-specific Step 1。active carrier
   仍为空，独立 dispatch review PASS 前不得执行，Step 2/3/MVE 继续锁定。
+- **V035 / R004 / D016 / formal D027 / T014**：T013 以
+  `BLOCKED_SEARCH_COVERAGE / delta NONE` 接收；61→58、21 nonexcluded、8 必读，
+  但实际只有 OpenAlex。四候选六维复核后授权一次 bounded multi-source/
+  mechanism-deep repair；失败即 B9 返回池。
 - **D001 / phase-2 entry**：B1 作为唯一合法 formal carrier 续接；C15 保留候选，
   不以 portfolio readiness 冒充 formal authorization。
 - **V001 / T008 dispatch review**：独立终验 PASS；formal/guard/identity/method
@@ -355,21 +366,20 @@ rdl_control:
 - B1 family 保持 `UNRESOLVED`；若未来复用必须重建 evaluator，而非继续修 T008；
 - T010 最终接收 `BLOCKED_IDENTITY / method delta NONE`；B10 当前包终止；
 - T012 已接收为 `BLOCKED_TASK_INTERFACE / PACKAGE_NOT_EXECUTED`；C15 返回池；
-- B9 已被选为 Step 1 formalization workline，但仍未激活 scientific carrier；
-- V034 已独立批准 T013，P0/P1/P2=`0/0/0`；当前等待 clean final binding 与
-  A1/A2/A3-n/A4 串行执行；
+- B9 仍未激活 scientific carrier；T013 已接收为 coverage blocker；
+- V036 已批准 T014 合同，P0/P1/P2=`0/0/1`；唯一 P2 是尚未提交 clean
+  binding。这是唯一一次 B9 Step 1 coverage repair，失败后必须轮换；
 - live run 自然覆盖哪些恢复/轮换/晋级事件；
 - 何时由原 design 对话进行阶段性审计。
 
 ## 当前位置
 
-T012 已由 V033/D014/formal D025 接收为
-`BLOCKED_TASK_INTERFACE / PACKAGE_NOT_EXECUTED / mission_method_delta=NONE`。
-R003/D015/formal D026 已从 B9、C15、B1、A4 中选择 B9 evidence-adapter。
-mission 仍在 CP012/no-method=12、`DRIFTED/STALLED`；当前无 active scientific
-carrier。V034 已独立批准 T013 合同；control epoch 32 只允许 T013 Groundwork
-Step 1，且先做 clean final binding。T013 不下载、不进入 Step 2/3/3.5/4a，
-不实现或实验；PASS 也只能形成
-`mission_method_delta=NONE`。不得修
+T013 已由 V035/D016/formal D027 接收为
+`BLOCKED_SEARCH_COVERAGE / mission_method_delta=NONE`，不是 B9 Go/Kill。
+mission 在 CP013/no-method=13、`DRIFTED/STALLED`；当前无 active scientific
+carrier。R004 比较 B9/C15/B1/A4 后只授权一次 T014 source/mechanism coverage
+repair；V036 已批准合同，control epoch 34 等待 clean final binding。T014 不下载、不进入
+Step 2/3/3.5/4a，不实现或实验；PASS 也只能形成 method delta NONE，失败即 B9
+返回池并轮换。不得修
 T006/B12、B1/T008、A4/T009、B10/T010，不恢复 Scout/P03，也不进入 Step 4a
 实验、Step 5/Contract/Execute。

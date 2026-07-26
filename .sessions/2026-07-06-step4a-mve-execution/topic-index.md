@@ -1,7 +1,7 @@
 # Topic Index: Step 4a 维度 D MVE 执行
 
 > slug: 2026-07-06-step4a-mve-execution
-> status: active | created 2026-07-06 | last_updated 2026-07-27（D026/live R003/D015：B9 Step 1 formalization workline，仍无 active carrier。）
+> status: active | created 2026-07-06 | last_updated 2026-07-27（D027/live V036：T014 dispatch review PASS，等待 epoch34 clean binding；仍无 active carrier。）
 
 ## 专题定位（一句话）
 
@@ -27,15 +27,14 @@
 对 B11/B3/B7 走 Step 4a 维度 D MVE，守 FR-21/TL-20/FR-18/FR-12 + D005 务实路线 + D006 红线。
 
 ### 当前范围
-- **D026 当前状态**：live V033 已接收 T012 为
-  `BLOCKED_TASK_INTERFACE / PACKAGE_NOT_EXECUTED /
-  mission_method_delta=NONE`。两次 executor 与 epoch29 final binding 在 §2.2
-  前暴露三个 task-contract 缺口；source recovery、metadata closure、canonical
-  acquisition 均未执行。
-- **当前无 active scientific carrier**。C15 返回候选池，不作 source/canonical
-  negative 或 science Kill。R003 已比较 B9/C15/B1/A4，D026 只激活 B9 Step 1
-  evidence-adapter workline；T013 独立审查通过后才能执行。Step 2/3/3.5、
-  Step 4a/MVE、Step 5/Contract/Execute 继续锁定。
+- **D027 当前状态**：live V035 已接收 T013 为
+  `BLOCKED_SEARCH_COVERAGE / mission_method_delta=NONE`。T013 有 21 条
+  nonexcluded、8 条必读和 21/21 正式发表，但实际 source family 只有 OpenAlex，
+  Route A/Route B 的 mechanism-deep support 均未闭合。
+- **当前无 active scientific carrier**。R004/D016/D027 只授权一次 T014
+  multi-source/mechanism-deep Groundwork Step 1 repair；失败即 B9 返回候选池，
+  不得第三个 Step 1 包。V036 已批准合同；epoch34 clean binding PASS 前不执行。
+  Step 2/3/3.5、Step 4a/MVE、Step 5/Contract/Execute 继续锁定。
 
 ### 明确不含
 - ❌ 不回头救 6 次 Kill（Q1/Q2/Q3/Q8 切入点 2/4B/Q12/Q#-A，D005 诚实重评"大概率没几个能救"）
@@ -243,21 +242,21 @@ projects/simulation/
    `BLOCKED_SEARCH_COVERAGE`；T012 随后由 live V033 接收为
    `BLOCKED_TASK_INTERFACE / PACKAGE_NOT_EXECUTED`。C15 返回候选池；Step 3 与后续
    readiness 仍未授权；readiness PASS 前 C15 不是 active scientific carrier。
-4. **当前阶段边界**：D026 只允许 T013 完成 B9 candidate-specific Groundwork
-   Step 1；Step 2/3/3.5/4a/MVE、Step 5/Contract/Execute 均未授权。禁止运行旧
+4. **当前阶段边界**：D027 只允许 T014 完成一次 B9 candidate-specific
+   Groundwork Step 1 coverage repair；Step 2/3/3.5/4a/MVE、Step 5/Contract/
+   Execute 均未授权。禁止运行旧
    C15/B9 sandbox，禁止修 T006/T008/T009/T010，禁止复活 Scout/P03。
 
 ## 当前位置
 
-**🟠 D026 NO ACTIVE CARRIER / B9 STEP 1 FORMALIZATION（2026-07-27）**：
-T012 由 live V033 接收为
-`BLOCKED_TASK_INTERFACE / PACKAGE_NOT_EXECUTED / method delta NONE`。
-receipt、owner/process predicate 与 CIM fail-open 三项缺口均发生在 §2.2 前；
-共享 source view、existing-fulltext closure 与 canonical acquisition 未执行。
-C15 返回候选池而非 science Kill。R003/D015/D026 已选择 B9 evidence-adapter，
-但不激活 scientific carrier；T013 只做 candidate-specific Step 1 search 与
-coverage/collision adjudication。Step 2/3 尚未授权，readiness 前不得进入
-Step 4a/MVE。formal stage 保持 Groundwork。
+**🟠 D027 NO ACTIVE CARRIER / B9 STEP 1 BOUNDED COVERAGE REPAIR
+（2026-07-27）**：T013 由 live V035 接收为
+`BLOCKED_SEARCH_COVERAGE / method delta NONE`。数量、必读、发表和标注门通过，
+但实际仅 OpenAlex 一源，Route A deep=0，Route B deep 只属一般 adjacent/task-fit。
+R004/D016/D027 只允许 T014 用 S2/arXiv/IEEE 做一次多源与 mechanism-deep 修复；
+V036 已批准合同，等待 epoch34 clean binding；失败后 B9 返回池。Step 2/3
+尚未授权，readiness 前不得进入 Step 4a/MVE。
+formal stage 保持 Groundwork。
 
 **（历史）D016/V003 NO ACTIVE CARRIER**：T009 在一次有界 repair 后
 于 identity gate 停止，P1–P3 未运行。formal 接受
@@ -361,10 +360,14 @@ strongest-fixed comparator 仍需 formal 闭合。D015 不继承旧 PASS，而�
   T012 `BLOCKED_TASK_INTERFACE / PACKAGE_NOT_EXECUTED / method delta NONE`；
   当前无 active carrier。C15 返回候选池；只允许 post-T012 remap/task
   preparation，新 carrier 激活前禁止实验。
-- **live R003/D015/V034 / formal D026 / epoch 32 / CP012**（2026-07-27，当前）：
+- **live R003/D015/V034 / formal D026 / epoch 32 / CP012**（2026-07-27，历史）：
   remap 选择 B9 evidence-adapter；V034 已独立批准 T013，只在 clean final
   binding 后从 Phase A1 执行 Step 1。Step 1 PASS 仍是 method delta NONE，
   Step 2/3/MVE 未授权。
+- **live V035/R004/D016 / formal D027 / epoch 33 / CP013**（2026-07-27，当前）：
+  T013 接收为 `BLOCKED_SEARCH_COVERAGE / delta NONE`；只授权一次 T014
+  multi-source/mechanism-deep Step 1 repair。V036 dispatch PASS 后 control/task
+  递增 epoch34，等待 clean binding；失败即轮换，当前仍无 active carrier。
 - **D-011** A1 参数适配（NDA 块长自适应 K）FAIL（2026-07-08，S013 新建）
 - **H008** 交接给新对话：自适应论文 baseline 组织/参数处理/叙述展开调研（2026-07-09，用户要去新对话搞清楚别人怎么弄 baseline + 参数照搬还是自调）
 - **H009** 切换三 bug 修复+30seed 重跑结果（2026-07-09，执行 thesis-writing D001 修复任务，实验在本专题 step4a 跑。代码 `_a4_switch_30seed_fixed.py` + 数据 + 报告 `_a4_switch_bugfix_report.md`。Bug2 非假增益源不修（独立核查修正用户诊断）。结论：切换无全场景增益，降级为鲁棒性补丁，net gain+1.2dB 不依赖切换。切换叙事定位回 thesis-writing 待讨论。完整交接见 thesis-writing/H003）

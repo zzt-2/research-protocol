@@ -9,7 +9,7 @@
 schema_version: research-direction-lab.portfolio.current.v1
 project_id: thesis-fso.dual-pol-osl.direction-lab
 completeness_claim: OPEN_PORTFOLIO_NO_COMPLETENESS_CLAIM
-recovery_entry: .sessions/2026-07-23-research-direction-lab-longitudinal-test/T013-b9-step1-evidence-adapter.md
+recovery_entry: .sessions/2026-07-23-research-direction-lab-longitudinal-test/T014-b9-step1-multisource-coverage-repair.md
 
 candidates:
   # ── Cluster 1-2: Failure observability (CEILINGED) ──
@@ -160,10 +160,13 @@ next_action: >-
   retain T011's BLOCKED_SEARCH_COVERAGE evidence and close T012 as
   BLOCKED_TASK_INTERFACE/PACKAGE_NOT_EXECUTED
   before §2.2; no source recovery, metadata closure or canonical acquisition ran.
-  C15 is RETURNED_TO_POOL without a science verdict. Live R003/D015 and formal D026
-  select B9 evidence-adapter as a Step 1 formalization workline, not an active
-  scientific carrier. V034 approved T013; the epoch32 clean final binding is
-  next, and only Groundwork Step 1 Phase A1 is then authorized. Step 2/3, MVE,
+  C15 is RETURNED_TO_POOL without a science verdict. Live V035 accepts T013 as
+  BLOCKED_SEARCH_COVERAGE with method delta NONE. Live R004/D016 and formal D027
+  keep B9 as a non-active Step 1 workline and authorize exactly one T014
+  multi-source/mechanism-deep coverage repair. V036 approved the contract;
+  epoch34 clean final binding is next, and only Phase A1 is then authorized.
+  Failure returns B9 to the
+  pool and forces rotation. Step 2/3, MVE,
   held-out/Phase D and Step 5
   remain unauthorized.
   Do NOT resume Scout/P03.

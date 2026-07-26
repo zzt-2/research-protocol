@@ -820,10 +820,10 @@ S001 续接；V031/V032/V033；T012 worker log；独立 final-binding 审查。
 
 ## D015: 选择 B9 evidence-adapter 作为下一 formalization workline
 
-> status: active
+> status: superseded
 > date: 2026-07-27
 > 取代：D014
-> 被取代：无
+> 被取代：D016
 > 依据：调研 R003 + formal D025/live V033/CP012 + B9 JLT 2023 主仓全文与旧
 > Step-3-like 提取
 > 触发原话：无（技术推导）
@@ -886,3 +886,67 @@ T012 科学内容仍未执行。相对 B1，B9 不需要被禁止的第三次 ev
 
 S001 续接；R003；B9 主仓 metadata/content；旧 S005 与
 `_cut-b8b9-self-coherent.md`；Groundwork Step 1 规范。
+
+## D016: 接收 T013 coverage blocker 并授权一次 B9 Step 1 覆盖修复
+
+> status: active
+> date: 2026-07-27
+> 取代：D015
+> 被取代：无
+> 依据：调研 R004 + 验证 V035 + T013 worker log/candidate view +
+> independent science verifier
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. 正式接收 T013 为
+   `BLOCKED_SEARCH_COVERAGE / mission_method_delta=NONE`。该处置不是 B9
+   science Go、Kill、方法信号或 promotion；当前继续
+   `NO_ACTIVE_SCIENTIFIC_CARRIER`。
+2. T013 的有效事实为：`61` raw → `58` unique，`21` nonexcluded、`8` 必读、
+   正式发表 `21/21`；实际 search-run source 只有 OpenAlex，Route A deep
+   nonexcluded=`0`，Route B 的两条 deep 只属一般 task-fit/adjacent FSO。
+3. 授权一次且仅一次的 T014 B9 Step 1 coverage repair：只用 S2、arXiv、IEEE
+   补真实来源与 mechanism-specific deep evidence，不下载、不精读、不实现或实验。
+4. T014 后若实际 source families 仍 `<3`，或两条 route 都没有非 OpenAlex 的
+   mechanism-specific deep 证据支撑 candidate-specific residual problem，则 B9
+   返回候选池，不得再派第三个 B9 Step 1 包；随后必须轮换。
+5. 若 T014 Step 1 PASS，也只允许
+   `FORMALIZATION_STEP1_COMPLETE_AWAITING_ACQUIRE / method delta NONE`；主控独立
+   接收并重新比较替代项后，才能另行授权 Step 2。
+
+### 理由
+
+T013 已经建立可复核候选池、直接 EFNS comparator 和 acquisition debt，失败集中在
+真实来源与 deep mechanism coverage，属于一次检索包能直接裁决的有界缺口。所有
+候选下一包立即产生 `METHOD_SIGNAL` 的可能性都为 0；按完成最小债务后进入方法比较
+的主控判断，B9 修复约 `15%–25%`，最佳替代约 `5%–15%`，这是路线判断而非频率学
+概率。
+
+B9 比至少两个替代项更可能最终产生方法信号：相对 C15，它已有正向全文锚、
+21 条非排除和真实 EFNS comparator，而 C15 连续两包仍未开始科学内容；相对 B1，
+它不需要被禁止的第三次 evaluator rebuild；相对 A4，它不需要第二次四层 identity
+重建。一次 T014 的成本小、可逆，且失败条件明确。
+
+### 排除的替代方案
+
+- 不立即重启 C15；T011/T012 已连续两包无方法增量，source/canonical 科学内容仍
+  未执行。
+- 不返回 B1 第三 evaluator repair、A4 第二 identity repair或 B10 第二 identity
+  repair。
+- 不因 T013 coverage block 降低 Step 1 门槛、外推星地空白或提前进入 acquire/read。
+- 不把多源 PASS、检索量增加或 metadata gap 当方法产出。
+
+### 影响范围
+
+- formal authority 转 D027；
+- mission 追加 CP013：same-axis=1、repair=0、no-method=13，
+  `ADEQUATE / package ALIGNED`，mission 仍 `DRIFTED/STALLED`；
+- control 转 epoch 33 / CP013 /
+  `B9_STEP1_BOUNDED_COVERAGE_REPAIR`；
+- 新建 T014；独立 dispatch review PASS 前不得执行。
+
+### 来源
+
+S001 续接；R004；V035；T013 worker log 与 ignored candidate view；独立 science
+verifier 最终复核。

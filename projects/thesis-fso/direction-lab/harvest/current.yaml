@@ -213,8 +213,8 @@ historical_thesis_spines_e15ae60:
 # H060_PRIMARY spine above, until a legal-expert retest (Macro A) resolves it.
 # ─────────────────────────────────────────────────────────────────────────────
 current_view:
-  recovery_entry: .sessions/2026-07-23-research-direction-lab-longitudinal-test/T013-b9-step1-evidence-adapter.md
-  source: S013 / D021 / V010 / V011 / H014 -> FROZEN S014 / D022 / V012 / H015 (SCIENCE_FREEZE) -> D061/V035/H017 -> Pilot-Jones T005/D066/V040 scoped axis Kill -> T006 science verdict rejected -> T010 BLOCKED_IDENTITY/returned -> live D013/V029 + step4a D024 accept T011 BLOCKED_SEARCH_COVERAGE -> live D014/V033 + formal D025 close T012 as task-interface blocked and return C15 -> live R003/D015 + formal D026 select B9 Step 1 evidence-adapter without an active carrier. Prior S012/D020/V009 superseded.
+  recovery_entry: .sessions/2026-07-23-research-direction-lab-longitudinal-test/T014-b9-step1-multisource-coverage-repair.md
+  source: S013 / D021 / V010 / V011 / H014 -> FROZEN S014 / D022 / V012 / H015 (SCIENCE_FREEZE) -> D061/V035/H017 -> Pilot-Jones T005/D066/V040 scoped axis Kill -> T006 science verdict rejected -> T010 BLOCKED_IDENTITY/returned -> live D013/V029 + step4a D024 accept T011 BLOCKED_SEARCH_COVERAGE -> live D014/V033 + formal D025 close T012 as task-interface blocked and return C15 -> live V035/R004/D016 + formal D027 accept T013 BLOCKED_SEARCH_COVERAGE and authorize one bounded B9 Step 1 coverage repair without an active carrier. Prior S012/D020/V009 superseded.
 
   dispositions:
     - id: H060_DOWNGRADED
@@ -409,10 +409,13 @@ current_view:
     route is returned to portfolio. T006's science verdict is rejected. Live D013/V029 and
     formal D025 close T012 as BLOCKED_TASK_INTERFACE/PACKAGE_NOT_EXECUTED with
     method delta NONE; source recovery, metadata closure and canonical acquisition
-    never ran. C15 is returned to the pool without a science verdict. Live
-    R003/D015 and formal D026 select B9 evidence-adapter while retaining no active
-    scientific carrier. V034 approved T013; the epoch32 clean final binding is
-    next and only Phase A1 Groundwork Step 1 is then authorized. Do not download,
+    never ran. C15 is returned to the pool without a science verdict. Live V035
+    accepts T013 as BLOCKED_SEARCH_COVERAGE with method delta NONE; it adds no
+    harvest or thesis method. Live R004/D016 and formal D027 authorize exactly one
+    T014 multi-source/mechanism-deep Step 1 repair while retaining no active
+    scientific carrier. V036 approved the contract; epoch34 clean final binding
+    is next and only Phase A1 is then authorized; failure returns B9 to the pool.
+    Do not download,
     enter Step 2/3, or run MVE. Do NOT resume Scout/P03;
     do NOT enter Step 5/Contract/Execute;
     do NOT push.

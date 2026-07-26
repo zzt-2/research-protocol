@@ -1372,10 +1372,10 @@ final-binding independent review。
 
 ## D026: 激活 B9 Step 1 formalization workline，保持无 active carrier
 
-> status: active
+> status: superseded
 > date: 2026-07-27
 > 取代：D025
-> 被取代：无
+> 被取代：D027
 > 依据：调研 live R003 + live D015 + B9 JLT 2023 主仓全文/metadata +
 > Groundwork `gw-search.md`
 > 触发原话：无（技术推导）
@@ -1435,3 +1435,70 @@ R003 比较 B9、C15、B1、A4 后确认：B9 是唯一同时拥有正式全文�
 live R003/D015；B9 主仓
 `papers/doi/10.1109_jlt.2023.3270673/{metadata.json,content.md}`；
 `stages/gw-search.md`。
+
+---
+
+## D027: 接收 B9 Step 1 coverage block 并授权唯一一次多源修复
+
+> status: active
+> date: 2026-07-27
+> 取代：D026
+> 被取代：无
+> 依据：调研 live R004 + 验证 live V035 + T013 worker log/candidate view +
+> Groundwork `gw-search.md`
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. formal owner 接收 T013：
+   `BLOCKED_SEARCH_COVERAGE / mission_method_delta=NONE`。B9 不是 Go/Kill，
+   formal owner 继续 `NO_ACTIVE_SCIENTIFIC_CARRIER`。
+2. T013 已满足数量、必读、发表和人工语义标注门，但实际 source family 只有
+   OpenAlex；Route A 无 nonexcluded deep，Route B deep 不含 self-coherent/
+   virtual-carrier/CSPR/phase-reconstruction 机制证据。
+3. 只授权 T014 在 Groundwork Step 1 使用 S2、arXiv、IEEE 做一次多源与
+   mechanism-deep coverage repair。禁止下载、Step 2/3/3.5/4a/MVE、实现和实验。
+4. T014 若仍不足三源，或没有任一 route 以非 OpenAlex 的 mechanism-specific
+   deep abstract 支持 candidate-specific residual problem，则 B9 返回候选池，
+   不得第三次 Step 1 repair；live mission 必须轮换。
+5. T014 PASS 也只完成 Step 1 并等待 acquire；`minimal_construct`、方法比较和
+   active carrier 身份继续冻结。
+
+### 候选正向方法合同（仍待 Step 1–3 验证）
+
+- `positive_method_target`：低比特 virtual-carrier self-coherent 星地 FSO 中，
+  用因果可部署或预配置链路状态选择 DRE/CSPR 复杂度—稳健性设置，并保留
+  source-native fixed-DRE/RO 安全回退。
+- `minimal_construct`：未冻结；Step 3/3.5/4a 前不得定义或实现。
+- `fair_comparator`：RO without DRE、source-native fixed DRE、EFNS 与经全文
+  闭合的任务匹配传统 quantization-noise-shaping 方法。
+- `primary_packaging`：星地低比特 DAC 自相干 FSO 的数字分辨率增强与稳健适配。
+- `fallback_packaging`：固定 DRE 的星地迁移边界或复杂度/性能折中。
+- `next_positive_action`：T014 Step 1 multi-source/mechanism-deep repair。
+
+### 理由
+
+本次缺口是来源和定向机制覆盖，不是模型、evaluator 或仿真 identity 重建。
+T013 已留下 21 条非排除、8 条必读、EFNS 直接 comparator 和 11 项 acquisition
+debt；一次标准检索包可以明确通过或失败。相较 C15 两包未触及科学内容、B1 第三
+evaluator rebuild、A4/B10 第二 identity repair，该动作成本最低且最接近恢复合法
+carrier。其选择依据与六维比较见 live R004，不把概率判断当科学结果。
+
+### 排除的替代方案
+
+- 不把 OpenAlex 单源 metadata view 当 formal Step 1 完成。
+- 不用共享索引历史来源字符串补算三源，不把零搜索结果推成创新空白。
+- 不立即重启 C15、B1、A4 或 B10。
+- 不提前获取 canonical papers；Step 2 仍未授权。
+
+### 影响范围
+
+- live authority 指向本 D027；foreground epoch 33 / CP013 只允许
+  `CANDIDATE_FORMALIZATION`；
+- T014 dispatch review 与 clean binding PASS 后才能执行；
+- formal stage 保持 Groundwork，无 active scientific carrier。
+
+### 来源
+
+live R004/D016/V035；T013 commits `16176c2`、`7ca3cbf`；T013 worker log 与
+`search-archive/2026-07-27/b9-step1-candidate-view.json`。
