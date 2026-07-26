@@ -4,12 +4,12 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v1
-  control_epoch: 3
+  control_epoch: 5
   role: SYSTEM_DESIGN
   mission: 设计并验证轻量长程研究运行协议
-  active_lane: DESIGN_COMPLETE
-  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D017
-  decision_gate: 协议、消费者同步和 live-test 入口已终验；等待独立 worktree 中的 fork 真实运行
+  active_lane: DESIGN_COMPLETE_V2
+  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D018
+  decision_gate: v2 方法生产、双账、三层 mission-log 与 checkpoint guard 已实现；等待 live topic 启动 phase 2
   allowed_actions:
     - PROTOCOL_AUDIT
     - LIVE_TEST_PREPARATION
@@ -17,11 +17,11 @@ rdl_control:
     - SCIENTIFIC_DISPATCH
     - SKILL_SCIENCE_CAMPAIGN
     - FORMAL_STAGE_CHANGE
-  next_legal_action: 在独立 live-test worktree 中 fork 当前对话并按 H001 完成 Recover/Map
+  next_legal_action: 保留为 v2 审查基线；phase-2 入口与任务由 live topic 持有
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-07-23（R003/D017：轻量协议实现、消费者同步与 live-test 入口终验完成）
+> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-07-26（D018：phase-1 审计后实施 method-production v2）
 
 ## 专题信息
 
@@ -163,6 +163,8 @@ rdl_control:
 - **S014 / D016**：R002 后首次真实压缩恢复中，主控把“Pilot-Jones 是正式候选”误推成“下一步推进 Pilot-Jones”，越过 system-design gate；用户纠正后撤回。该现场故障成为 R003/D017 的 RED 样本。实现后本对话再次自动压缩，主控按 epoch 2 控制块恢复并仅继续终验，形成首个真实正向恢复样本（1/1，不足以宣称长程 PASS）。
 - **R003**：承接 S014 的详细设计分析，完成必要能力/非目标/owner 边界、四种架构比较和两轮历史组合场景演练；提出轻量协议 v0.1 与纵向事件验收。详细设计从长程 S 下沉到 R，避免 S014 膨胀。
 - **D017 / implementation**：采用 R003 的轻量前台控制接口；guard 与 Skill 路由完成 TDD/回归（repo 97 passed, 1 skipped），59 个非缓存 Skill 文件已与个人消费者镜像逐字节一致，消费者 guard 6/6 PASS。longitudinal live-test mission 仅以 Recover/Map 权限准备，不携带科学授权。
+- **D018 / v2 amendment**：phase-1 审计确认无严重跨 lane，但 mission success 漂移为反证/修复闭包。v2 改用正向方法合同、formal/method 双账、固定 `mission-log.md` 三层记录、checkpoint guard 和 master-only owner 更新；不建 controller。
+- **V012**：独立终验 PASS；两项初审 P2（旧 checkpoint 缺证据指针、registry epoch 过期）已关闭，P0/P1/P2=0。
 
 ## 未决项
 
@@ -179,4 +181,7 @@ rdl_control:
 
 ## 当前位置
 
-R003/D017 的轻量协议、个人 Skill 消费端和 live-test 入口已完成终验。system design topic 进入 `DESIGN_COMPLETE`，保留为后续只读审查基线。当前唯一入口是在独立 live-test worktree 中 fork 当前对话并按 H001 做 Recover/Map；仍未授权任何具体科学方向或实验。运行一段时间后回到本专题，按真实事件审计恢复、轮换、晋级和治理重量。
+Phase 1 已在 `aab425d` 冻结并完成审计。D018 v2 的方法生产、formal/method
+双账、固定 `mission-log.md`、checkpoint guard 和 owner 边界已实现；system
+topic 进入 `DESIGN_COMPLETE_V2` 并保留为审查基线。phase-2 入口与后续任务由
+live topic 持有。

@@ -73,6 +73,33 @@ def write_task(repo_root, payload=None):
     return path
 
 
+def valid_control_v2():
+    control = valid_control()
+    control.update(
+        {
+            "schema_version": "rdl.foreground-control.v2",
+            "mission_log_ref": ".sessions/example/mission-log.md",
+            "mission_checkpoint": "CP007",
+        }
+    )
+    return control
+
+
+def write_task_v2(repo_root, payload=None):
+    task = {
+        "schema_version": "rdl.task-control.v2",
+        "control_ref": ".sessions/example/topic-index.md",
+        "control_epoch": 1,
+        "action_class": "PROTOCOL_IMPLEMENTATION",
+        "mission_checkpoint": "CP007",
+    }
+    if payload:
+        task.update(payload)
+    path = repo_root / ".sessions/example/T008-example.md"
+    write_marked_yaml(path, TASK_START, TASK_END, "rdl_task_control", task)
+    return path
+
+
 def test_matching_epoch_and_allowed_action_passes(tmp_path):
     write_control(tmp_path)
     task_path = write_task(tmp_path)
@@ -135,4 +162,44 @@ def test_task_reference_cannot_escape_repo_root(tmp_path):
 
     assert validate_task_control(tmp_path, task_path) == [
         "control_ref_outside_repo"
+    ]
+
+
+def test_v2_matching_checkpoint_and_existing_mission_log_passes(tmp_path):
+    write_control(tmp_path, valid_control_v2())
+    mission_log = tmp_path / ".sessions/example/mission-log.md"
+    mission_log.write_text("# Mission log\n", encoding="utf-8")
+    task_path = write_task_v2(tmp_path)
+
+    assert validate_task_control(tmp_path, task_path) == []
+
+
+def test_v2_stale_mission_checkpoint_is_rejected(tmp_path):
+    write_control(tmp_path, valid_control_v2())
+    mission_log = tmp_path / ".sessions/example/mission-log.md"
+    mission_log.write_text("# Mission log\n", encoding="utf-8")
+    task_path = write_task_v2(tmp_path, {"mission_checkpoint": "CP006"})
+
+    assert validate_task_control(tmp_path, task_path) == [
+        "stale_mission_checkpoint"
+    ]
+
+
+def test_v2_missing_mission_log_is_rejected(tmp_path):
+    write_control(tmp_path, valid_control_v2())
+    task_path = write_task_v2(tmp_path)
+
+    assert validate_task_control(tmp_path, task_path) == [
+        "missing_mission_log:.sessions/example/mission-log.md"
+    ]
+
+
+def test_v1_task_cannot_bind_to_v2_control(tmp_path):
+    write_control(tmp_path, valid_control_v2())
+    mission_log = tmp_path / ".sessions/example/mission-log.md"
+    mission_log.write_text("# Mission log\n", encoding="utf-8")
+    task_path = write_task(tmp_path)
+
+    assert validate_task_control(tmp_path, task_path) == [
+        "control_task_schema_mismatch"
     ]

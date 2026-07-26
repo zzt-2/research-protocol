@@ -3,17 +3,18 @@
 <!-- RDL-CONTROL:START -->
 ```yaml
 rdl_control:
-  schema_version: rdl.foreground-control.v1
-  control_epoch: 9
+  schema_version: rdl.foreground-control.v2
+  control_epoch: 11
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: B1_ADAPTIVE_PHASE_WINDOW
-  authority_pointer: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D013
-  decision_gate: 先证明最优相位估计窗随 receiver-visible SNR/phase-noise ratio 稳定变化且不存在普适固定窗；门过则同包完成三种自适应窗方法与 paired test
+  active_lane: PHASE2_ENTRY_SELECTION
+  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D018
+  decision_gate: v2 协议已实现；C15 是推荐入口，但科学执行须等 v2 commit 与新 T 通过 checkpoint guard
   allowed_actions:
-    - ADAPTIVE_PHASE_WINDOW_METHOD_PACKAGE
+    - PORTFOLIO_REMAP
     - TASK_BRIEF_PREPARATION
   forbidden_actions:
+    - SCIENTIFIC_EXPERIMENT
     - PRIVATE_FULLTEXT_ACQUISITION
     - ABSTRACT_AS_FULLTEXT
     - POST_STEP4A_ADVANCE
@@ -23,12 +24,14 @@ rdl_control:
     - GENERAL_INFRASTRUCTURE_BUILD
     - PILOT_JONES_REPAIR_OR_NEW_AXIS
     - HIGH_ORDER_CPR_COMBINATION_REPAIR
-  next_legal_action: 执行 T007；先做 source-native window-optimum sweep 与可观测性门，门通过则同一 GLM 对话完成 ratio rule、lookup/hysteresis、confidence controller 三方法与 paired test
+  mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
+  mission_checkpoint: CP007
+  next_legal_action: 以 C15 公平步长/梯度归一化的 constellation-aware cost 为首选，准备一个同包 identity smoke→minimal construct→paired compare 的 v2 T；当前不执行
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（T007_READY；D013 已授权）
-> 创建: 2026-07-23 | 最后更新: 2026-07-25
+> 状态: active（PHASE2_ENTRY_SELECTION；尚未授权科学执行）
+> 创建: 2026-07-23 | 最后更新: 2026-07-26
 
 ## 专题信息
 
@@ -100,6 +103,14 @@ rdl_control:
     Step 4a 大包，先结构门后方法。
   - 影响的未决项：从“B10/B12 组合是否失败”改为“固定相位窗是否存在可实现的
     condition-dependent 改进空间”。
+- **[2026-07-26] [system D018]**：phase 1 冻结在 `aab425d`，停止派 T008，
+  进入只读审计后的 v2 协议修订。
+  - 原因：运行未严重跨 lane，但 mission 成功从“积累方法材料”漂移为问题存活、
+    修复闭包和 scoped Kill；普通包治理过重，executor/owner 边界也未闭合。
+  - 新范围：只修改 RDL Skill、最小 task guard、三层记录和当前控制面；不运行
+    科学实验，不改变 phase-1 scientific disposition。
+  - 影响的未决项：phase 2 从哪个 READY/NEEDS_SMALL_ADAPTER carrier 开始，
+    必须等 v2 终验后按方法生产价值比较。
 
 ## 已确认结论
 
@@ -139,16 +150,20 @@ rdl_control:
   source-native probe、pilot/data channel 审计与 robust headroom 统计共同推翻
   “机制失败”裁决；另发现 T006 缺 task-control marker。epoch 9 停止该修复并切到
   B1 自适应相位窗，授权一个结构门过即完成三方法的 T007 大包。
+- **mission-log / phase-1 audit**：CP001–CP007 已回填。审计确认无严重跨 lane，
+  但 formal success 多次没有 mission method delta；T007 暂不接收 family Kill，
+  T008 停止。
 
 ## 未决项
 
-- B1 最优窗是否随可观测 SNR/phase-noise ratio 稳定变化，且三种自适应窗方法中
-  是否有一个能稳健胜过 validation-optimal fixed window；
+- T007 当前 structural Kill 的完整 contract 与 claim ceiling 尚未接收；
+- phase 2 最佳 READY/NEEDS_SMALL_ADAPTER 方法入口；
 - live run 自然覆盖哪些恢复/轮换/晋级事件；
 - 何时由原 design 对话进行阶段性审计。
 
 ## 当前位置
 
-T007_READY。V001/D013 已拒收 T006 科学 verdict 并停止 B10/B12 当前修复；B10/B12
-family 保持 UNRESOLVED。下一包先做 B1 source-native window optimum 与可观测性门，
-门通过则在同一对话直接完成三个自适应窗方法与 paired test；仍不得越过 Step 4a。
+PHASE2_ENTRY_SELECTION。v2 方法生产、双账、owner 边界、固定 mission-log 和
+checkpoint guard 已实现并进入终验。当前排序：C15 首选，B1 保留但不立即修，
+C04 需先解决自指 target，C16 适配偏大。下一步仅准备一个 C15 v2 T；在 v2 commit
+完成且 task/control/checkpoint guard PASS 前，不运行科学实验。

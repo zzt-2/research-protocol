@@ -10,7 +10,7 @@ CONTROL_END = "<!-- RDL-CONTROL:END -->"
 TASK_START = "<!-- RDL-TASK-CONTROL:START -->"
 TASK_END = "<!-- RDL-TASK-CONTROL:END -->"
 
-CONTROL_FIELDS = {
+CONTROL_FIELDS_V1 = {
     "schema_version",
     "control_epoch",
     "role",
@@ -22,12 +22,17 @@ CONTROL_FIELDS = {
     "forbidden_actions",
     "next_legal_action",
 }
-TASK_FIELDS = {
+CONTROL_FIELDS_V2 = CONTROL_FIELDS_V1 | {
+    "mission_log_ref",
+    "mission_checkpoint",
+}
+TASK_FIELDS_V1 = {
     "schema_version",
     "control_ref",
     "control_epoch",
     "action_class",
 }
+TASK_FIELDS_V2 = TASK_FIELDS_V1 | {"mission_checkpoint"}
 
 
 def _extract_marked_mapping(
@@ -87,7 +92,14 @@ def validate_task_control(repo_root: Path, task_path: Path) -> list[str]:
     )
     if errors:
         return errors
-    errors = _schema_errors(task, TASK_FIELDS, "task")
+    task_schema = task.get("schema_version")
+    if task_schema == "rdl.task-control.v1":
+        task_fields = TASK_FIELDS_V1
+    elif task_schema == "rdl.task-control.v2":
+        task_fields = TASK_FIELDS_V2
+    else:
+        return [f"task_schema_unsupported:{task_schema}"]
+    errors = _schema_errors(task, task_fields, "task")
     if errors:
         return errors
 
@@ -114,9 +126,20 @@ def validate_task_control(repo_root: Path, task_path: Path) -> list[str]:
     )
     if errors:
         return errors
-    errors = _schema_errors(control, CONTROL_FIELDS, "control")
+    control_schema = control.get("schema_version")
+    if control_schema == "rdl.foreground-control.v1":
+        control_fields = CONTROL_FIELDS_V1
+        expected_task_schema = "rdl.task-control.v1"
+    elif control_schema == "rdl.foreground-control.v2":
+        control_fields = CONTROL_FIELDS_V2
+        expected_task_schema = "rdl.task-control.v2"
+    else:
+        return [f"control_schema_unsupported:{control_schema}"]
+    errors = _schema_errors(control, control_fields, "control")
     if errors:
         return errors
+    if task_schema != expected_task_schema:
+        return ["control_task_schema_mismatch"]
 
     task_epoch = task["control_epoch"]
     control_epoch = control["control_epoch"]
@@ -147,6 +170,33 @@ def validate_task_control(repo_root: Path, task_path: Path) -> list[str]:
         return [f"forbidden_action:{action_class}"]
     if action_class not in allowed:
         return [f"action_not_allowed:{action_class}"]
+
+    if control_schema == "rdl.foreground-control.v2":
+        mission_log_ref = control["mission_log_ref"]
+        if not isinstance(mission_log_ref, str):
+            return ["control_field_type:mission_log_ref"]
+        relative_log = Path(mission_log_ref)
+        if relative_log.is_absolute():
+            return ["mission_log_ref_outside_repo"]
+        mission_log_path = (repo_root / relative_log).resolve()
+        try:
+            mission_log_path.relative_to(repo_root)
+        except ValueError:
+            return ["mission_log_ref_outside_repo"]
+        if not mission_log_path.is_file():
+            return [f"missing_mission_log:{mission_log_ref}"]
+
+        task_checkpoint = task["mission_checkpoint"]
+        control_checkpoint = control["mission_checkpoint"]
+        if (
+            not isinstance(task_checkpoint, str)
+            or not task_checkpoint.strip()
+            or not isinstance(control_checkpoint, str)
+            or not control_checkpoint.strip()
+        ):
+            return ["mission_checkpoint_type"]
+        if task_checkpoint != control_checkpoint:
+            return ["stale_mission_checkpoint"]
     return []
 
 

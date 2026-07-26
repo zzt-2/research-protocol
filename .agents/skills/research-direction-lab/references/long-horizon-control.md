@@ -15,6 +15,10 @@ The block records a judgment already made by the master. It never computes or
 selects the next action. Do not implement a scheduler or automatic candidate
 selector.
 
+Long-running RDL topics use three record layers: `topic-index.md` for the
+current snapshot, fixed `mission-log.md` for one compact checkpoint per
+accepted package, and T/worker-log/artifacts/commit for package detail.
+
 ## Topic control block
 
 Place exactly one block near the top of the mission topic index:
@@ -22,7 +26,7 @@ Place exactly one block near the top of the mission topic index:
 <!-- RDL-CONTROL:START -->
 ```yaml
 rdl_control:
-  schema_version: rdl.foreground-control.v1
+  schema_version: rdl.foreground-control.v2
   control_epoch: 1
   role: LIVE_TEST
   mission: validate long-horizon research operation on real feedback
@@ -34,6 +38,8 @@ rdl_control:
     - PORTFOLIO_MAP
   forbidden_actions:
     - SCIENTIFIC_EXPERIMENT
+  mission_log_ref: <mission-log-path>
+  mission_checkpoint: CP001
   next_legal_action: recover current owners and select one legal decision package
 ```
 <!-- RDL-CONTROL:END -->
@@ -49,15 +55,19 @@ The exact fields are:
 - `decision_gate`
 - `allowed_actions`
 - `forbidden_actions`
+- `mission_log_ref`
+- `mission_checkpoint`
 - `next_legal_action`
 
-`schema_version` is metadata; the remaining nine fields are the semantic
-foreground contract. Replace the block in place. Do not append history to it.
+`schema_version` is metadata; the remaining fields are the semantic foreground
+contract. Replace the block in place. Do not append history to it.
 Increment `control_epoch` only when its role, lane, gate, authorization classes,
-or next legal action changes.
+mission checkpoint, or next legal action changes.
 
 Keep the block small. Do not copy candidate lists, metrics, conclusions,
 experiment details, formal progress tables, or user voice into it.
+Schema v1 remains valid for historical tasks. New long-running method missions
+use v2.
 
 ## Task binding
 
@@ -66,39 +76,48 @@ Before handing an executor a T task, include exactly one binding block:
 <!-- RDL-TASK-CONTROL:START -->
 ```yaml
 rdl_task_control:
-  schema_version: rdl.task-control.v1
+  schema_version: rdl.task-control.v2
   control_ref: <mission-topic-index-path>
   control_epoch: 1
   action_class: PORTFOLIO_MAP
+  mission_checkpoint: CP001
 ```
 <!-- RDL-TASK-CONTROL:END -->
 
-The exact fields are `schema_version`, `control_ref`, `control_epoch`, and
-`action_class`.
+The v2 exact fields are `schema_version`, `control_ref`, `control_epoch`,
+`action_class`, and `mission_checkpoint`.
 
 Run `scripts/validate_task_control.py` before dispatch. The validator only
 checks that `control_ref` resolves inside the repository, `control_epoch`
-matches, and `action_class` is allowed and not forbidden. It must not inspect
-scientific vocabulary or rank work.
+matches, `action_class` is allowed and not forbidden, `mission_log_ref` exists,
+and the task checkpoint matches the foreground checkpoint. It must not inspect
+scientific vocabulary or rank work. The executor repeats this validation before
+starting; a missing marker or failed validation means the task was not
+dispatched.
 
 ## Master loop
 
 1. Read the foreground block after startup, context loss, a fork, or a material
    user correction.
 2. Read only the owner at `authority_pointer` needed for the current decision.
-3. Choose one scientific decision uncertainty and record why it is more
-   informative than the alternatives.
-4. Bind and validate one T. A package may perform several bounded actions until
-   it closes that uncertainty or reaches its stop condition.
+3. Read the complete compact mission-log chain. Separate formal science
+   disposition from mission method delta and compare the proposed action with
+   the best legal ready alternative.
+4. Bind and validate one T against the current accepted mission checkpoint. A
+   package may perform several bounded actions until it closes that uncertainty
+   or reaches its stop condition.
 5. Receive only status, commit, worker-log path, and one-line anomaly. Read the
    worker log and artifacts from disk.
 6. Judge execution integrity separately from scientific information.
-7. Update the scientific owner first. Then replace the foreground block and
-   increment its epoch if the control meaning changed.
+7. The executor never updates formal/current owners. After accepting evidence,
+   the master updates those owners, appends the new mission checkpoint, then
+   replaces the foreground block and increments its epoch.
 8. Continue, rotate, transition, or escalate within the recorded action classes.
 
 If the block and `authority_pointer` disagree, allow only reconciliation. A
 conversation summary is a locator, not authority to change the active lane.
+Read `method-production.md` for checkpoint fields, method packaging, drift
+review, and repair-versus-rotation judgment.
 
 ## Disposition and topic lifecycle
 

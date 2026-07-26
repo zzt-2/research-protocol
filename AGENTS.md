@@ -446,7 +446,7 @@
 
 **禁止**使用 `NOTE-001`、`HANDOFF-001`、`handoff-v3.md`、`session-note.md`、`postmortem.md` 等无前缀或随机命名。
 
-**无编号辅助文件**（每个专题最多各一个，与 `topic-index.md` 同构，不进 S/R/H/D/V 编号体系）：`topic-index.md`（必须）、`decisions.md`、`verifications.md`、`voice.md`（用户原话映射，见下节）。这些是索引/聚合文件，不是 session/research/handoff 记录。
+**无编号辅助文件**（每个专题最多各一个，与 `topic-index.md` 同构，不进 S/R/H/D/V 编号体系）：`topic-index.md`（必须）、`decisions.md`、`verifications.md`、`voice.md`（用户原话映射，见下节）。跨多个工作包运行的 Research Direction Lab 专题可额外使用固定 `mission-log.md`；普通专题不创建。它只保存每包一行的整链 checkpoint，详细过程仍在 T/worker-log/artifact。这些是索引/聚合文件，不是 session/research/handoff 记录。
 
 #### decisions.md 和 verifications.md（每个专题可选）
 
@@ -473,6 +473,7 @@
 #### 新建 vs 追加规则
 
 - 专题起步时建 `S001-主题简述.md`
+- 长程 RDL 普通工作包不新建或追加 S；主控接收后只向 `mission-log.md` 追加一个 checkpoint。S 仅用于大量讨论、阶段审计、用户纠偏或无法压成一行 checkpoint 的重要事件。
 - 后续对话续接同一专题时，**默认追加到当前最后一个 S###**，不新建
 - 只有以下情况才开新 S###：
   - 有大量新内容需要记录，且与当前 S### 的主题有明显区别
@@ -504,7 +505,7 @@
 - `dormant`：暂停，可能续接
 - `closed`：已完成，不再更新
 
-续接专题时先读 `topic-index.md`，再读最新 session note / handoff。续接后更新注册表 last_updated。
+续接普通专题时先读 `topic-index.md`，再读最新 session note / handoff。续接长程 RDL 专题时先读 `topic-index.md` 和完整的紧凑 `mission-log.md`，只有 checkpoint 需要追查时才下钻 T/worker-log/artifact。续接后更新注册表 last_updated。
 
 #### Session note 模板
 

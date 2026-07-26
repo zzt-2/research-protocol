@@ -15,6 +15,7 @@ REFERENCE_NAMES = (
     "recovery-and-rotation.md",
     "project-layout.md",
     "long-horizon-control.md",
+    "method-production.md",
 )
 EXPECTED_REFERENCE_FILES = {ROOT / "references" / name for name in REFERENCE_NAMES}
 ALLOWED_NESTED_FILES = {
@@ -113,6 +114,31 @@ def test_skill_routes_long_horizon_foreground_control_without_owning_science_sta
         "Do not implement a scheduler or automatic candidate selector"
         in normalized_control
     )
+
+
+def test_skill_routes_method_production_and_mission_drift_review():
+    skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
+    method = (ROOT / "references/method-production.md").read_text(
+        encoding="utf-8"
+    )
+    normalized = " ".join(method.split())
+
+    assert "method-production.md" in skill
+    for phrase in (
+        "positive_method_target",
+        "minimal_construct",
+        "fair_comparator",
+        "primary_packaging",
+        "fallback_packaging",
+        "formal_science_disposition",
+        "mission_method_delta",
+        "mission-log.md",
+        "UNDERWEIGHT",
+        "READY alternative",
+    ):
+        assert phrase in normalized
+    assert "fixed package count" in normalized
+    assert "executor must not update formal or current owners" in normalized
 
 
 def test_probe_semantics_precede_evidence_scaling_and_default_artifacts_stay_small():

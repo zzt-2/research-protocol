@@ -561,3 +561,45 @@ S014 / R003 / 用户认可后要求继续实施。
 - 消费者同步：repo/global 共 59 个非缓存文件，相对路径与 SHA256 全部一致。
 - 消费者 smoke：`test_long_horizon_control.py` 6/6 PASS，个人 Skill 解析真实 live control PASS。
 - 自动压缩后的真实恢复：1/1 按 control epoch/lane 继续终验；样本不足，不宣称 longitudinal PASS。
+
+## D018: v2 改为方法生产与三层长程记录
+
+> status: active
+> date: 2026-07-26
+> 取代：无
+> 扩展：D014、D017
+> 被取代：无
+> 依据：只读 phase-1 审计 `4af6f9d..aab425d` + 用户 2026-07-26 确认
+
+### 决策
+
+长程 RDL 同时维护科学裁决和方法增量，不再把可靠 Kill/修复 PASS 当作方法进展。运行记录固定为三层：
+
+1. `topic-index.md` 保存当前快照；
+2. `mission-log.md` 每包追加一行整链 checkpoint；
+3. T/worker-log/artifact/commit 保存单包细节。
+
+普通包不再追加 S；executor 不更新 formal/current/mission owner。下一 T 必须绑定当前 mission checkpoint，连续同轴、repair、no-method 或 UNDERWEIGHT 触发整链比较，但不使用自动 scheduler。
+
+### 理由
+
+Phase 1 没有严重跨 lane，却把 mission 成功逐渐降级成问题存活、修复闭包和 scoped Kill。T003/T004/T006 也证明测试/一致性 PASS 不保护科学语义。固定 mission-log、formal/method 双账和正向方法合同能直接修正这两个缺口，且比新增 controller 更轻。
+
+### 排除
+
+- 不用 S002 充当日常流水账；
+- 不把全链复制进 topic-index；
+- 不新增方法评分器、自动轮换器或固定包数成功标准；
+- 不修改 phase-1 科学结论。
+
+### 来源
+
+用户：“前两个是不是最好别加Sxxx？直接固定文件名，以后别的专题都在这？”以及“核心是别一个劲堆复杂度，没啥用的可以省省”。
+
+### 实施验证
+
+- 仓库 Skill：`102 passed, 1 skipped`；`quick_validate.py` 与 compileall PASS。
+- v2 guard：新增 checkpoint、缺失 mission-log、v1/v2 错配回归；v1 历史接口保持可用。
+- 三层恢复：live control epoch 11 与 `CP007`、`mission-log.md` 一致；旧包已补 worker-log/commit 指针。
+- 消费者同步：repo/个人 Skill 60 个非缓存文件 SHA256 全部一致。
+- 独立终验：V012 PASS；不含 T008、科学实验或 phase-1 科学产物修改。

@@ -494,3 +494,29 @@ PASS。两项真实失效已由最小 Skill/reference 修订、fresh-agent 行�
 ### 结论
 
 PASS。D013 本轮范围内 P0=0、P1=0、P2=0。允许从 H004/T001 启动新的连续科学 campaign；本验证不代表长期自动运行永不偏离，也不把任何 Scout 结果自动晋级论文。
+
+## V012: 方法生产 v2 与三层长程记录独立终验
+
+> date: 2026-07-26
+> 关联：D018 / phase-1 audit `4af6f9d..aab425d`
+> verifier 上下文：独立只读 subagent，未参与实现
+> FINAL VERDICT: PASS
+
+### 验证项
+
+- [x] 正向方法合同与 formal science disposition / mission method delta 分账。
+- [x] `topic-index.md`、固定 `mission-log.md`、T/worker-log/artifact 三层记录成立。
+- [x] 每轮回看原始 mission 与整链，并检查同轴、repair、no-method、UNDERWEIGHT。
+- [x] 未新增 scheduler、controller、评分器、固定包数或日常 S 流水账。
+- [x] v1 control 向后兼容；v2 task 绑定 epoch 与 mission checkpoint。
+- [x] phase-1 科学结论与 `projects/` 科学产物未改，且未创建 T008。
+- [x] C15 只作为 phase-2 推荐入口；当前 control 仍禁止科学实验。
+
+### 初审 P2 与关闭
+
+- CP001–CP007 初版缺 worker-log/commit 指针：已补 `log-NNN` 与 commit，并给出 artifact 下钻规则。
+- registry 初版仍写 epoch 10：已同步为 epoch 11 / `PHASE2_ENTRY_SELECTION`。
+
+### 结论
+
+PASS。P0=0、P1=0、P2=0。本验证只证明 v2 实现与 phase-2 入口控制一致，不宣称长程方法生产已被真实运行证明。

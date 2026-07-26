@@ -30,8 +30,8 @@ topics:
     title: Research Direction Lab 完整体系设计
     status: active
     created: "2026-07-20"
-    last_updated: "2026-07-23（R003/D017：轻量协议、消费者同步和 live-test 入口终验完成）"
-    description: "从零/从地基的长期自动研究探索体系。R002 确认验收对象错位、semantic smoke 晚门、工作强度/科学信息错配及 current/release/formal owner 未原子收敛；S014 现场复现压缩后把正式候选误推成下一动作。R003/D017 已用小前台控制块、T guard、既有分层日志和独立 live-test mission 完成最小修补；system topic 现为 DESIGN_COMPLETE 审查基线，不授权具体科学方向。"
+    last_updated: "2026-07-26（D018：phase-1 审计后实施 method-production v2）"
+    description: "从零/从地基的长期自动研究探索体系。R002/S014/R003/D017 建立轻量前台控制并启动纵向 live test；phase-1 审计确认无严重跨 lane，但 mission success 漂移为反证/修复闭包。D018 以正向方法合同、formal/method 双账、固定 mission-log 三层记录、checkpoint guard 和 master-only owner 更新做最小修订，不建 controller。"
     depends_on:
       - slug: framework-evolution
         reason: 继承 R002 Direction Lab 设计和唯一拥有者原则
@@ -49,8 +49,8 @@ topics:
     title: Research Direction Lab 长程真实运行测试
     status: active
     created: "2026-07-23"
-    last_updated: "2026-07-25（V001/D013；epoch 9 B1 adaptive phase window T007_READY）"
-    description: "D017 轻量前台控制协议的真实纵向运行 mission。T006 虽有 32 tests 和完整 artifacts，但 B10/B12 source identity、pilot/data channel、oracle/eval 与 robust statistics 多重失败，V001 拒收科学 verdict、工程记 PARTIAL，family 保持 UNRESOLVED。control epoch 9 停止 T006 修复，切到已有 Step1–3 证据的 B1 adaptive phase window；T007 先结构门、门过即同包做三个方法，仍止于 Step4a。"
+    last_updated: "2026-07-26（system D018；phase-1 audit freeze，CP001–CP007 回填）"
+    description: "D017/D018 轻量长程运行协议的真实纵向 mission。phase 1 冻结于 aab425d；审计确认 lane 基本稳定，但方法产出为零、formal success 多次冒充 mission progress、普通包过重。epoch 11 进入 PHASE2_ENTRY_SELECTION；C15 仅为推荐入口，T008 和科学实验仍未授权。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 S014 现场故障、R003 场景演练、D017 控制接口和 guard
