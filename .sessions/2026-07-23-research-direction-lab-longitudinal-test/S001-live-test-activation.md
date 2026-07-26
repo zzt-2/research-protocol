@@ -860,3 +860,41 @@ canonical exact-title 单次调用和失败止损；PASS 后才交不同 executo
 
 提交 CP011/T012 dispatch 准备形成 clean gate；由与 V030 不同的 executor 在
 15 分钟内只执行 Phase A。主控从磁盘验收其 partial receipt 后才决定 Phase B。
+
+> 2026-07-27 续接 | T012 Phase A preflight path amendment | 状态：PASS_AWAITING_CLEAN_RETRY
+
+## 目标
+
+接收首次 Phase A preflight 的唯一接口阻断，修复 T012 自包含路径，不触及科学
+范围或全文获取。
+
+## 记录
+
+- 首次 Phase A 组合 preflight 的 task-control、clean、owners、ancestry、7
+  archives、禁止进程和主仓 target diff 全部通过；唯一失败是 executor 把未在 T
+  中写明的 T011 receipt 猜成不存在的
+  `step-011-c15-search-coverage.md`，立即停止为 `BLOCKED_PREFLIGHT`。
+- 实际已提交 receipt 为
+  `projects/thesis-fso/worker-logs/step-011-c15-step1-step2-formalization.md`。
+  T012 只补 header/§2.1 的唯一合法路径与七 archive pattern。
+- 独立 verifier 复核为
+  `PATH_AMENDMENT_PASS / P0=0/P1=0/P2=0`；未发现 search/download/owner 或
+  shared-papers 修改。
+- control/task 递增至 epoch 28 / CP011；mission checkpoint/streak 不变，
+  `mission_method_delta=NONE`。该事件是 task interface preflight repair，不是
+  formal science progress。
+
+## 决策引用
+
+- D013 / formal D024：T012 科学边界不变
+- V031：Phase A preflight path amendment 独立 PASS
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。只保存 preflight receipt、补唯一输入路径并
+  协调 control；未运行 search/blit/download/convert、Step 3、仿真或 MVE。
+
+## 后续
+
+提交 preflight receipt 与 path amendment 形成 clean gate；由与 V030/V031 不同的
+executor 在 15 分钟内重试 Phase A。

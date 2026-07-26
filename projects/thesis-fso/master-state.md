@@ -5,7 +5,7 @@ method_type: 待定（精读后根据问题方法产出形态确定，见 glossa
 domain: comms
 created: 2026-06-21
 updated: 2026-07-27
-current_step: GW-C15-SOURCE-RECOVERY-PHASE-A-CP011
+current_step: GW-C15-SOURCE-RECOVERY-PHASE-A-RETRY-CP011
 current_stage: FORMAL_GROUNDWORK_CANDIDATE_FORMALIZATION
 ---
 
@@ -27,7 +27,7 @@ current_stage: FORMAL_GROUNDWORK_CANDIDATE_FORMALIZATION
 
 ### 当前控制面桥接（唯一现行入口）
 
-> **2026-07-27 live V030 + formal D024 → CP011 T012 PHASE A DISPATCH**：
+> **2026-07-27 live V031 + formal D024 → CP011 T012 PHASE A CLEAN RETRY**：
 > T009 的独立审查只接收 `BLOCKED_IDENTITY` 与 `mission_method_delta=NONE`；
 > 随机 TX payload 被当 pilot、DA/NDA frequency stage 不对称、无来源且无 FEC
 > crossing 的 working region，以及 raw/result 未进提交，共同否定“DA 在可靠条件
@@ -48,11 +48,12 @@ current_stage: FORMAL_GROUNDWORK_CANDIDATE_FORMALIZATION
   Scout/Sandbox 结果对正式研究的 promotion effect 仍为 `none`；Direction Lab
   campaign 已 dormant（D022 SCIENCE_FREEZE），无当前科学执行授权。
 - **当前工作线**：`C15_SOURCE_RECOVERY_AND_CANONICAL_ACQUIRE`，formal D024，
-  live control epoch 27 / CP011。V029 已接收 T011 single-source block；V030
+  live control epoch 28 / CP011。V029 已接收 T011 single-source block；V030
   以 P0/P1/P2=`0/0/0` 批准拆分后的 T012 dispatch。T012 只
   允许一次 shared-index multi-source recovery、现有全文 metadata closure 与三篇
   canonical 单次获取；当前先由不同 executor 执行 Phase A，Phase B 须通过
-  resume gate。确认前不进入 Step 3，
+  resume gate。首次 Phase A 仅因 T011 receipt 路径未自包含而 preflight stop；
+  V031 已以 0/0/0 确认 amendment，等待 clean retry。确认前不进入 Step 3，
   readiness 前不运行 MVE。
   D004 的本 Goal 主控端到端模式继续有效。
 - **Pilot-Jones（退出 carrier）**：D066/V040 接收 fixed complex component rescue
@@ -60,8 +61,9 @@ current_stage: FORMAL_GROUNDWORK_CANDIDATE_FORMALIZATION
 - P03（暂停，回候选池）：Headroom Atlas Stage A（2026-07-19，S077/D059/V033）runnable 子域 LOCAL_NEGATIVE；16QAM/receiver-CSI/coded-output 三轴 INFRASTRUCTURE_BLOCKED，历史反例落在被阻轴上 → DOMAIN/CANDIDATE/FAMILY 仍 UNRESOLVED/OPEN。**用户选项①已选定：暂停回候选池，不关闭 family**。
 - Direction Lab sandbox history：last completed batch = `B003 / COMPLETED_SANDBOX_VERIFIED`；事实源为 `projects/thesis-fso/direction-lab/state/completion-events.jsonl`。`canonical-state.yaml` 仅为机器投影，不是正式研究授权源。
 - formal promotion effect：`none`；B001–B003 数字不得进入论文或正式材料。
-- 下一合法边界：提交 dispatch 准备形成 clean gate；由与 V030 不同的 executor
-  在 15 分钟内只执行 T012 Phase A，再按 resume gate 决定 Phase B，完整包后由
+- 下一合法边界：提交首次 preflight receipt/path amendment 形成 clean gate；由与
+  V030/V031 不同的 executor 在 15 分钟内重试 T012 Phase A，再按 resume gate
+  决定 Phase B，完整包后由
   独立 verifier 验收。**不得提前进入 Step 3，不得直接
   运行旧 C15 sandbox 或 MVE，不得运行
   held-out/Phase D，不得进入 Step 5/Contract/Execute，不得复用/修 T006、

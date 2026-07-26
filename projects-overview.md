@@ -7,13 +7,15 @@
 ### thesis-fso
 
 - **方向**：双偏振星地 OSL 场景中的 ML 应用方向探索；正式研究与 Direction Lab Scout/Sandbox 分层管理。
-- **正式状态**：当前无 active scientific carrier（step4a D024；live D013/V030，
-  epoch 27 / CP011）。T011 只接收 `BLOCKED_SEARCH_COVERAGE` 与 method delta
+- **正式状态**：当前无 active scientific carrier（step4a D024；live D013/V031，
+  epoch 28 / CP011）。T011 只接收 `BLOCKED_SEARCH_COVERAGE` 与 method delta
   NONE：56 rows/53 unique/49 published，但 actual source 只有 OpenAlex，
   acquisition pool 不存在且 Step 2 未启动。D024 只授权一次 T012
   shared-index multi-source recovery、现有全文 metadata closure 与三篇 canonical
   单次获取；V030 已以 P0/P1/P2=`0/0/0` 批准拆分后的 dispatch contract，当前
-  只允许 clean gate 后执行 Phase A。coverage confirmation 前不得进入 Step 3，
+  只允许 clean gate 后执行 Phase A。首次 preflight 仅因 T011 receipt 路径未
+  自包含而停止；V031 已确认 path amendment PASS，等待 clean retry。coverage
+  confirmation 前不得进入 Step 3，
   readiness 审查前不得运行 MVE。
   T010 仍只接收 `BLOCKED_IDENTITY`，B10 已返回候选池且不开第二修复包。
   T009 仍只接收 `BLOCKED_IDENTITY` 与 method delta NONE，A4 已返回候选池；
@@ -43,8 +45,9 @@
   moderate/14 dB/seed `131004` 暴露 128-pilot unwrap 的错误 `-2π` branch；
   V026 接收 `BLOCKED_IDENTITY / P0=0/P1=0/P2=1 /
   mission_method_delta=NONE`。无 aggregate，未消费 held-out；不补矩阵、不改 gate。
-- **下一合法边界**：提交 CP011/T012 dispatch 准备形成 clean gate；由与 V030
-  不同的 executor 在 15 分钟内只执行 Phase A，随后按 resume gate 执行 Phase B，
+- **下一合法边界**：提交首次 preflight receipt/path amendment 形成 clean gate；
+  由与 V030/V031 不同的 executor 在 15 分钟内重试 Phase A，随后按 resume gate
+  执行 Phase B，
   完整包再由独立 verifier 验收。任一 canonical 获取失败即
   返回候选池，不开第二个 source repair；全部成功也只停在 coverage
   confirmation。**不得直接进入 Step 3 或运行 C15 sandbox/MVE；不进入

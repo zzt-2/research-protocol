@@ -161,7 +161,8 @@ next_action: >-
   from OpenAlex and Step 2 did not start. There is no active scientific carrier. T012 is the
   only current workline: one bounded shared-index multi-source recovery, existing-fulltext
   metadata closure, and one exact-title acquisition attempt for each of three canonical papers.
-  V030 approved the split dispatch contract; Phase A is next and Phase B requires its resume
-  gate. Any canonical failure returns C15 to the pool, while success
+  V030 approved the split dispatch contract and V031 accepted the receipt-path
+  amendment after a preflight-only stop; a clean Phase A retry is next and Phase B
+  requires its resume gate. Any canonical failure returns C15 to the pool, while success
   stops at coverage confirmation. Step 3, MVE, held-out/Phase D and Step 5 remain unauthorized.
   Do NOT resume Scout/P03.

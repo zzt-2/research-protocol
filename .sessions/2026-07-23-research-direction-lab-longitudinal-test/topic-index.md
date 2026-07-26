@@ -4,12 +4,12 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 27
+  control_epoch: 28
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
   active_lane: C15_SOURCE_RECOVERY_AND_CANONICAL_ACQUIRE
   authority_pointer: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D024
-  decision_gate: V030 已独立批准 T012 dispatch contract；当前只允许不同 executor 执行 Phase A（Step 1 multi-source recovery + existing-fulltext closure），Phase B 须通过 task 内 resume gate
+  decision_gate: V031 已独立确认首次 Phase A 仅因 T011 receipt 路径未自包含而 BLOCKED_PREFLIGHT，路径 amendment PASS；当前只允许 clean gate 后由不同 executor 重试 Phase A
   allowed_actions:
     - RECOVER
     - TASK_PREPARATION
@@ -30,11 +30,11 @@ rdl_control:
     - UNAUTHORIZED_SCIENTIFIC_EXPERIMENT
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
   mission_checkpoint: CP011
-  next_legal_action: 提交 CP011/T012 dispatch 准备形成 clean gate，再由与 V030 不同的 executor 在 15 分钟内只执行 T012 Phase A
+  next_legal_action: 提交首次 preflight receipt 与唯一路径 amendment 形成 clean gate，再由与 V030/V031 不同的 executor 在 15 分钟内重试 T012 Phase A
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（T011 已由 V029 正确阻断；V030 批准 T012 dispatch；epoch 27 / CP011 等待 Phase A executor）
+> 状态: active（V031 已确认 T012 首次 Phase A 仅为路径接口阻断并完成 amendment；epoch 28 / CP011 等待 clean retry）
 > 创建: 2026-07-23 | 最后更新: 2026-07-27
 
 ## 专题信息
@@ -349,10 +349,10 @@ rdl_control:
 T011 已由 V029/D013/formal D024 接收为
 `BLOCKED_SEARCH_COVERAGE / P0=0/P1=0/P2=1 / mission_method_delta=NONE`。
 mission 到 CP011/no-method=11，仍为 `DRIFTED/STALLED`。当前无 active scientific
-carrier；control epoch 27 只准备一次 T012：从共享索引恢复 ≥3 actual source，
+carrier；control epoch 28 只准备一次 T012：从共享索引恢复 ≥3 actual source，
 闭合已有近期全文 metadata，并各尝试一次 Sato/Godard/Yang canonical 获取。
-V030 dispatch 与 final binding 均 PASS；当前先提交形成 clean gate，再由不同
-executor 只执行 Phase A。任一 canonical 失败即返回候选池，全部通过也只停在
+V030 dispatch/final binding 与 V031 path amendment 均 PASS；当前先提交形成
+clean gate，再由不同 executor 重试 Phase A。任一 canonical 失败即返回候选池，全部通过也只停在
 `AWAITING_COVERAGE_CONFIRMATION`。coverage 未确认前不得进入
 Step 3，readiness 未审查前禁止 MVE。不得修
 T006/B12、B1/T008、A4/T009、B10/T010，不恢复 Scout/P03，也不进入 Step 4a

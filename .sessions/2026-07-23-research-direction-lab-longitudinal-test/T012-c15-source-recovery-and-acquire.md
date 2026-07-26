@@ -11,7 +11,7 @@
 rdl_task_control:
   schema_version: rdl.task-control.v2
   control_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/topic-index.md
-  control_epoch: 27
+  control_epoch: 28
   action_class: CANDIDATE_FORMALIZATION
   mission_checkpoint: CP011
 ```
@@ -69,6 +69,10 @@ IEEE/blit 获取。三篇 canonical 与至少两篇近期 comparator 都有效�
 - T011 acceptance：
   `.sessions/2026-07-23-research-direction-lab-longitudinal-test/verifications.md#V029`
   与 commit `700864de9ac2d928681201312121d178ff243ccb`
+- T011 worker receipt（唯一合法路径）：
+  `projects/thesis-fso/worker-logs/step-011-c15-step1-step2-formalization.md`
+- T011 archives（恰好七个）：
+  `search-archive/2026-07-26/c15-*.json`
 - checkpoint：
   `.sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md#CP011`
 - validator 与工具：
@@ -128,7 +132,9 @@ python C:\Users\zzt\.agents\skills\research-direction-lab\scripts\validate_task_
 - D024/D013 active；
 - `git merge-base --is-ancestor
   700864de9ac2d928681201312121d178ff243ccb HEAD` exit 0；
-- T011 七个 archive 与 worker log 存在；
+- T011 七个 `search-archive/2026-07-26/c15-*.json` archive 与唯一合法 worker
+  log `projects/thesis-fso/worker-logs/step-011-c15-step1-step2-formalization.md`
+  存在；不得按任务语义猜测或改写 receipt 文件名；
 - 未运行 simulation/MVE/seed 进程。
 - 主仓以下目标在 Phase A 起飞前无既有 diff：
   `papers/index.json`、上表五个 DOI 目录，以及

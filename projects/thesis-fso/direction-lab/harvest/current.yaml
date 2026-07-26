@@ -410,7 +410,8 @@ current_view:
     formal D024 accept T011 as BLOCKED_SEARCH_COVERAGE with method delta NONE; all retained
     results were OpenAlex-only and acquisition did not start. There is no active scientific
     carrier. One bounded T012 source/canonical recovery is the only current workline; V030
-    approved the split dispatch contract, Phase A is next, and Phase B requires its resume gate.
+    approved the split dispatch contract and V031 accepted the receipt-path amendment after
+    a preflight-only stop. A clean Phase A retry is next, and Phase B requires its resume gate.
     Success stops at coverage confirmation, and any canonical
     failure returns C15 to the pool. Do not enter Step 3 or MVE. Do NOT resume Scout/P03;
     do NOT enter Step 5/Contract/Execute;

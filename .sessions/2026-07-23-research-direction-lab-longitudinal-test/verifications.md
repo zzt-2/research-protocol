@@ -1608,3 +1608,45 @@ final_binding_P0/P1/P2=0/0/0
 PASS。T012 dispatch contract 与 epoch 27 final binding 均已通过，可先交给与
 verifier 不同的 executor 执行 Phase A。本 PASS 只证明任务合同可执行，不证明
 C15 formal readiness、科学正/负结论、`METHOD_SIGNAL` 或 promotion。
+
+## V031: T012 Phase A preflight receipt 路径 amendment 独立复核
+
+> date: 2026-07-27
+> 关联：S001 / D013 / formal D024 / T012 / CP011
+> verifier：V030 同一独立只读 verifier；未修改文件，未运行
+> search/blit/download/convert、仿真或 seed
+
+### 验证项
+
+- [x] 首次 preflight：task-control、clean、owners、ancestry、7 archives、
+  forbidden process=0、main target diff=0 均 PASS；唯一 failure 为 executor
+  猜测不存在的 T011 worker-log 路径 → PASS（单一接口阻断）。
+- [x] 实际 receipt：已提交的
+  `projects/thesis-fso/worker-logs/step-011-c15-step1-step2-formalization.md`
+  存在；七个 `search-archive/2026-07-26/c15-*.json` 恰好存在 → PASS。
+- [x] amendment diff：T012 只在 header/§2.1 冻结上述唯一 receipt 与 archive
+  pattern，未改变 action、authority、科学范围、禁止边界或 delta → PASS。
+- [x] integrity：首次 executor 阻断后立即停止；共享 papers、owners、Step 3、
+  simulation/MVE 均无修改/运行 → PASS。
+
+### 证据
+
+```text
+PATH_AMENDMENT_PASS
+P0/P1/P2=0/0/0
+task_control_epoch27=PASS
+actual_receipt_exists=true
+t011_archive_count=7
+preflight_only_failure=t011_worker_log_missing
+executor_guessed_path=projects/thesis-fso/worker-logs/step-011-c15-search-coverage.md
+authorized_path=projects/thesis-fso/worker-logs/step-011-c15-step1-step2-formalization.md
+search_or_download_run=false
+shared_papers_modified=false
+mission_method_delta=NONE
+```
+
+### 结论
+
+PASS。接收 `BLOCKED_PREFLIGHT` 为已修复的 task-interface receipt path 缺口；
+formal D024/T012 科学边界与 CP011 保持不变。control/task 可递增后形成 clean
+retry gate。本 PASS 不是 formal science disposition、方法进展或 coverage 结论。
