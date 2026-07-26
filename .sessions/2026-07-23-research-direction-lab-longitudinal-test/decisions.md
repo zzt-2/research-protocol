@@ -692,10 +692,10 @@ S001 续接；R002；formal D022；旧 C15
 
 ## D013: 接收 T011 source-coverage block 并授权一次 T012 恢复包
 
-> status: active
+> status: superseded
 > date: 2026-07-27
 > 取代：D012
-> 被取代：无
+> 被取代：D014
 > 依据：验证 V029 + T011 worker log/7 archives + 只读共享索引/论文库复核
 > 触发原话：无（技术推导）
 
@@ -751,3 +751,138 @@ identity repair，因此比至少这三个替代项更可能解锁后续方法�
 
 S001 续接；V029；T011 worker log/archives；共享
 `all-papers.jsonl` 与 `papers/` 只读映射。
+
+## D014: T012 因 task-interface contract 终止，C15 返回候选池并重开 remap
+
+> status: superseded
+> date: 2026-07-27
+> 取代：D013
+> 被取代：D015
+> 依据：验证 V031/V032/V033 + T012 worker log + 独立 final-binding 审查
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. 接收 T012 为
+   `BLOCKED_TASK_INTERFACE / PACKAGE_NOT_EXECUTED /
+   mission_method_delta=NONE`。两次 executor 均在 Phase A 组合 preflight
+   停止，source view、acquisition pool、metadata closure 和 canonical acquire
+   都未执行；这不是 C15 positive/negative science verdict。
+2. 冻结命令的 final binding 又发现 CIM 查询失败时可能 fail-open。V032/T012
+   已预注册“冻结命令缺陷也终止、不得第四次 amendment”，因此不再修补 T012。
+3. C15 返回候选池，当前继续无 active scientific carrier。foreground 转
+   `POST_T012_CARRIER_REMAP`，只允许 Recover/Portfolio Map/Task Preparation；
+   新 carrier 正式激活前禁止实验。
+4. 下一路线从未执行的新机制候选与已阻断路线中重新比较；不得借此次治理失败
+   Kill C15 family，也不得把 preflight 审查写成方法材料。
+
+### 核心失败机制
+
+T012 没有冻结第一版组合命令，导致两个 executor 先后自拟 receipt 路径、
+owner regex 与 process predicate；冻结第三版后，独立终验又发现 CIM
+enumeration 没有 fail-closed。三个接口缺口属于 task contract 架构脆弱性，而非
+source/canonical 获取或 C15 科学机制失败。
+
+### 排除的替代方案
+
+- 不做第四次 T012 amendment；这是 V032/T012 明示的退出条件，也符合连续修复后
+  质疑架构而非继续补丁的纪律。
+- 不把 `BLOCKED_PREFLIGHT` 改写为 `BLOCKED_CANONICAL_FULLTEXT`；canonical
+  acquisition 从未启动。
+- 不返回 B1 第三 evaluator repair、A4 第二 identity repair、B10 第二 identity
+  repair；既有 no-second-package 边界继续有效。
+- 不运行 B9 或其他候选实验；先完成 post-T012 formal-readiness remap。
+
+### 可复用部分
+
+T012 的三源 identity schema、五篇 existing-fulltext storage contract 与三篇
+canonical exact binding 仍可作为未来 C15 formalization 资产；不得将本次失败
+归因到这些尚未执行的科学/文献合同。
+
+### 具体数据
+
+- preflight attempt 1：唯一失败为错误 receipt 路径；
+- attempt 2：owner old/new regex=`False/True`，broad/restricted process
+  count=`79/0`；
+- final binding：`P0/P1/P2=0/1/0`，唯一 P1 为 CIM query 未 fail-closed；
+- source view/pool 不存在，main paper targets diff=`0`，科学命令执行=`false`。
+
+### 影响范围
+
+- mission 追加 CP012：same-axis=2、repair=1、no-method=12，
+  `UNDERWEIGHT / mission DRIFTED/STALLED`；
+- formal D025 与 live control epoch 30 接收终止；
+- T012 历史保留，不再派发；下一 T 必须来自 remap 且继续禁止实验跳步。
+
+### 来源
+
+S001 续接；V031/V032/V033；T012 worker log；独立 final-binding 审查。
+
+## D015: 选择 B9 evidence-adapter 作为下一 formalization workline
+
+> status: active
+> date: 2026-07-27
+> 取代：D014
+> 被取代：无
+> 依据：调研 R003 + formal D025/live V033/CP012 + B9 JLT 2023 主仓全文与旧
+> Step-3-like 提取
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. post-T012 remap 选择 **B9 virtual-carrier self-coherent + DRE
+   evidence-adapter** 作为下一 formalization workline；当前仍为
+   `HYPOTHESIS_ONLY / FORMALIZATION_CANDIDATE`，不激活 scientific carrier。
+2. T013 只授权 Groundwork Step 1：建立 candidate-specific ≥20 篇、≥3 个真实
+   source families、≥2 mechanism routes、≥5 必读、正式发表 ≥50% 的文献视图，
+   并完成 AI 语义审查、竞争碰撞和 acquisition debt 映射。
+3. T013 不下载全文、不进入 Step 2/3/3.5/4a/MVE，不实现 DRE/DC-Value/
+   virtual-carrier 链路，不运行仿真或 seed。Step 1 PASS 只允许
+   `FORMALIZATION_STEP1_COMPLETE_AWAITING_ACQUIRE`，
+   `mission_method_delta=NONE`。
+4. candidate positive method contract 仅作待验证假设：
+   - `positive_method_target`：低比特 virtual-carrier self-coherent 星地 FSO 中，
+     使用因果可部署或预配置链路状态选择 DRE/CSPR 复杂度—稳健性设置，并保留
+     source-native fixed-DRE/RO 安全回退；
+   - `minimal_construct`：等待 Step 3/3.5/4a 后冻结，当前未授权；
+   - `fair_comparator`：RO without DRE、source-native fixed DRE、以及经全文闭合
+     的任务匹配传统 noise-shaping 方法；
+   - `primary_packaging`：星地低比特 DAC 自相干 FSO 的数字分辨率增强与稳健适配；
+   - `fallback_packaging`：固定 DRE 的星地迁移边界或复杂度/性能折中；
+   - `next_positive_action`：T013 Step 1 coverage/collision adjudication。
+
+### 理由
+
+B9 的 JLT 2023 accepted fulltext、DOI/title metadata 与 42 m FSO 实验已落盘；
+source-native DRE 相对同架构 RO 对照在 3/4/5 PNOB 报告约 3/1/0.5 dB SNR，
+提供了真实正向锚和明确技术旋钮。它仍缺星地 M-C-A、canonical lineage、传统
+comparator 与 formal Step 1–3，因此只能先 formalize，不能直接实验。
+
+相对 C15，B9 是未消耗 repair 配额的新机制并已有正向锚；C15 已连续两个同轴包且
+T012 科学内容仍未执行。相对 B1，B9 不需要被禁止的第三次 evaluator rebuild；
+相对 A4，B9 不需要第二次修复四类 identity P0。一次 Step 1 能直接裁决 B9 是否有
+足够证据池、独立机制路线和传统 comparator 支撑，比继续上述至少三个替代项更
+可能恢复方法生产。
+
+### 排除的替代方案
+
+- 不把 JLT 内部 DRE-vs-RO 的 dB 增益写成相对传统 coherent CPR 的优势。
+- 不把旧 S005/read-note 当当前 formal Step 1–3 完成证据。
+- 不建设 B9 oversampled self-coherent 全链，不运行实验。
+- 不做第四次 T012 amendment，不返回 B1 第三 evaluator repair、A4 第二
+  identity repair或 B10 第二 identity repair。
+- Step 1 若不足三源、无星地 task-fit 或竞争已饱和，B9 返回池；不降低门槛。
+
+### 影响范围
+
+- formal authority 转 D026；
+- foreground control 递增为 epoch 31 / CP012，active lane 改为
+  `B9_STEP1_FORMALIZATION`，允许 `CANDIDATE_FORMALIZATION`；
+- 新建 T013；独立 verifier PASS 前不得执行；
+- mission-log 暂不追加 CP013，streak 与 delta 保持 CP012，直到 T013 被主控
+  独立接收。
+
+### 来源
+
+S001 续接；R003；B9 主仓 metadata/content；旧 S005 与
+`_cut-b8b9-self-coherent.md`；Groundwork Step 1 规范。

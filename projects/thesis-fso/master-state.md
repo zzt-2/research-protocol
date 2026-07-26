@@ -5,7 +5,7 @@ method_type: 待定（精读后根据问题方法产出形态确定，见 glossa
 domain: comms
 created: 2026-06-21
 updated: 2026-07-27
-current_step: GW-C15-SOURCE-RECOVERY-PHASE-A-RETRY-CP011
+current_step: GW-B9-STEP1-FORMALIZATION-CP012
 current_stage: FORMAL_GROUNDWORK_CANDIDATE_FORMALIZATION
 ---
 
@@ -27,7 +27,7 @@ current_stage: FORMAL_GROUNDWORK_CANDIDATE_FORMALIZATION
 
 ### 当前控制面桥接（唯一现行入口）
 
-> **2026-07-27 live V031 + formal D024 → CP011 T012 PHASE A CLEAN RETRY**：
+> **2026-07-27 live R003/D015 + formal D026 → CP012 B9 STEP 1 FORMALIZATION**：
 > T009 的独立审查只接收 `BLOCKED_IDENTITY` 与 `mission_method_delta=NONE`；
 > 随机 TX payload 被当 pilot、DA/NDA frequency stage 不对称、无来源且无 FEC
 > crossing 的 working region，以及 raw/result 未进提交，共同否定“DA 在可靠条件
@@ -43,29 +43,28 @@ current_stage: FORMAL_GROUNDWORK_CANDIDATE_FORMALIZATION
 > identity failure；V026 接收 `BLOCKED_IDENTITY`、P0/P1/P2=`0/0/1` 与
 > `mission_method_delta=NONE`。不补矩阵、不改 positive-slope gate、不运行 held-out。
 
-- formal stage：`GROUNDWORK`；当前 **无 active scientific carrier**。C15 只是
-  Step 1–3 formalization 工作线，不是已激活的方法 carrier。Direction Lab 的
+- formal stage：`GROUNDWORK`；当前 **无 active scientific carrier**。B9 只是
+  Step 1 evidence-adapter workline，不是已激活的方法 carrier。Direction Lab 的
   Scout/Sandbox 结果对正式研究的 promotion effect 仍为 `none`；Direction Lab
   campaign 已 dormant（D022 SCIENCE_FREEZE），无当前科学执行授权。
-- **当前工作线**：`C15_SOURCE_RECOVERY_AND_CANONICAL_ACQUIRE`，formal D024，
-  live control epoch 28 / CP011。V029 已接收 T011 single-source block；V030
-  以 P0/P1/P2=`0/0/0` 批准拆分后的 T012 dispatch。T012 只
-  允许一次 shared-index multi-source recovery、现有全文 metadata closure 与三篇
-  canonical 单次获取；当前先由不同 executor 执行 Phase A，Phase B 须通过
-  resume gate。首次 Phase A 仅因 T011 receipt 路径未自包含而 preflight stop；
-  V031 已以 0/0/0 确认 amendment，等待 clean retry。确认前不进入 Step 3，
-  readiness 前不运行 MVE。
+- **当前工作线**：`B9_STEP1_FORMALIZATION`，formal D026，live control
+  epoch 32 / CP012。T012 在 §2.2 前因 receipt、owner/process predicate 与 CIM
+  fail-open 三项 task-interface 缺口终止；V033 接收
+  `BLOCKED_TASK_INTERFACE / PACKAGE_NOT_EXECUTED`，delta `NONE`。
+  C15 返回候选池而非 science Kill。R003 比较 B9/C15/B1/A4 后选择 B9
+  evidence-adapter；当前仍无 active scientific carrier。V034 已以
+  P0/P1/P2=`0/0/0` 批准 T013；clean final binding 后只做 candidate-specific
+  Step 1，Step 2/3/MVE 继续锁定。
   D004 的本 Goal 主控端到端模式继续有效。
 - **Pilot-Jones（退出 carrier）**：D066/V040 接收 fixed complex component rescue
   axis scoped Kill；4 篇 direct competitor 全文债继续保留，但不阻塞当前 carrier。
 - P03（暂停，回候选池）：Headroom Atlas Stage A（2026-07-19，S077/D059/V033）runnable 子域 LOCAL_NEGATIVE；16QAM/receiver-CSI/coded-output 三轴 INFRASTRUCTURE_BLOCKED，历史反例落在被阻轴上 → DOMAIN/CANDIDATE/FAMILY 仍 UNRESOLVED/OPEN。**用户选项①已选定：暂停回候选池，不关闭 family**。
 - Direction Lab sandbox history：last completed batch = `B003 / COMPLETED_SANDBOX_VERIFIED`；事实源为 `projects/thesis-fso/direction-lab/state/completion-events.jsonl`。`canonical-state.yaml` 仅为机器投影，不是正式研究授权源。
 - formal promotion effect：`none`；B001–B003 数字不得进入论文或正式材料。
-- 下一合法边界：提交首次 preflight receipt/path amendment 形成 clean gate；由与
-  V030/V031 不同的 executor 在 15 分钟内重试 T012 Phase A，再按 resume gate
-  决定 Phase B，完整包后由
-  独立 verifier 验收。**不得提前进入 Step 3，不得直接
-  运行旧 C15 sandbox 或 MVE，不得运行
+- 下一合法边界：提交 epoch32 clean gate并完成 final binding；PASS 后由不同
+  executor 先执行 A1，再按 A2/A3-n/A4 串行推进，停止在 acquire 前。**不得提前
+  进入 Step 2/3，不得直接
+  运行 B9/C15 代码或 MVE，不得运行
   held-out/Phase D，不得进入 Step 5/Contract/Execute，不得复用/修 T006、
   T008/B1、T009/A4、T010/B10，复活 Scout/P03、改 shared generator 或启动
   通用基础设施。**
@@ -140,7 +139,8 @@ current_stage: FORMAL_GROUNDWORK_CANDIDATE_FORMALIZATION
 | Pilot Jones Step4a complex-model salvage | 🔴 SCOPED_AXIS_KILLED / RETURNED | D063–D066 / T003–T005 / S080–S082 / V038–V040 | T005 fixed/verified primary 8/8 cells max point/CI upper=0.0804/0.2372dB；scientific scoped Kill PASS，integrity PARTIAL；不再是当前 carrier。 |
 | High-order CPR B10/B12 combination Step4a（历史 T006） | 🔴 SCIENCE_VERDICT_REJECTED / UNRESOLVED | step4a D012–D013 / S014–S015 / V001 / live T006 | 工程 PARTIAL；source/channel/statistics 多重失效，不 Kill family，不继续修组合实现。 |
 | B10 source-native adaptive pilot-RLS Step4a | 🔴 BLOCKED_IDENTITY / RETURNED_TO_POOL | step4a D022 / live D011/V026/T010 | C2 在 840-row strict prefix 暴露 128-pilot unwrap 错误 branch；method delta NONE，不补矩阵、不改 gate、不开第二修复包。 |
-| C15 blind-equalization cost family | 🟠 SOURCE_COVERAGE_BLOCK / T012 PREP / NOT_ACTIVE_CARRIER | step4a D024 / live D013/V029 / T011-T012 | T011 actual source 仅 OpenAlex；共享索引四源与本地近期全文支持一次 canonical recovery。三篇 canonical 任一失败即轮换；coverage confirmation 前禁止 Step 3，readiness 前禁止 MVE。 |
+| C15 blind-equalization cost family | 🟠 RETURNED_TO_POOL / T012 TASK_INTERFACE_BLOCK / NOT_ACTIVE_CARRIER | step4a D025 / live D014/V033 / T011-T012 | T012 在 §2.2 前因 task contract 终止；source/canonical science 未执行，不作 Kill。R003 后未选；readiness 前禁止 MVE。 |
+| B9 virtual-carrier self-coherent + DRE | 🟡 STEP1_FORMALIZATION_PREPARED / NOT_ACTIVE_CARRIER | step4a D026 / live R003/D015 / T013 | JLT 2023 正向锚与旧 Step-3-like 提取存在，但当前 Step 1–3、星地 M-C-A、canonical/comparator 未闭合。T013 只做 Step 1；Step 2/3/MVE 禁止。 |
 | B1 adaptive phase-window Step4a | 🔴 BLOCKED_IDENTITY / RETURNED_TO_POOL | step4a D014 / live D002 / V002 / T008 | T008 工程 17/17 PASS，但 no-crossing dB proxy、oracle candidate、eval population 与 artifact closure 失败；不接收 Kill，不再修当前实现。 |
 | A4 deployable adaptive CPR Step4a | 🔴 BLOCKED_IDENTITY / RETURNED_TO_POOL | step4a D015–D016 / V003 / live D005–V006 / T009 | pilot/TX-truth、frequency-stage、working-region 与 evidence closure 失败；只接收停止裁决和 method delta NONE，不接收 DA 物理支配；不再同轴 repair。 |
 

@@ -9,7 +9,7 @@
 schema_version: research-direction-lab.portfolio.current.v1
 project_id: thesis-fso.dual-pol-osl.direction-lab
 completeness_claim: OPEN_PORTFOLIO_NO_COMPLETENESS_CLAIM
-recovery_entry: .sessions/2026-07-23-research-direction-lab-longitudinal-test/T012-c15-source-recovery-and-acquire.md
+recovery_entry: .sessions/2026-07-23-research-direction-lab-longitudinal-test/T013-b9-step1-evidence-adapter.md
 
 candidates:
   # ── Cluster 1-2: Failure observability (CEILINGED) ──
@@ -156,13 +156,14 @@ next_action: >-
   authorized. D061 routing remains: P03 PAUSED_RETURNED_TO_PORTFOLIO. Pilot-Jones
   T005/D066/V040 scoped-Kills the fixed complex component rescue axis; family and D056 four-paper
   debt remain open, but the route is returned to portfolio. T006's source/channel/statistics
-  verdict was rejected and is not a runnable current alias. Live D013/V029 and formal D024
-  accept T011 as BLOCKED_SEARCH_COVERAGE with method delta NONE; all 56 retained rows came
-  from OpenAlex and Step 2 did not start. There is no active scientific carrier. T012 is the
-  only current workline: one bounded shared-index multi-source recovery, existing-fulltext
-  metadata closure, and one exact-title acquisition attempt for each of three canonical papers.
-  V030 approved the split dispatch contract and V031 accepted the receipt-path
-  amendment after a preflight-only stop; a clean Phase A retry is next and Phase B
-  requires its resume gate. Any canonical failure returns C15 to the pool, while success
-  stops at coverage confirmation. Step 3, MVE, held-out/Phase D and Step 5 remain unauthorized.
+  verdict was rejected and is not a runnable current alias. Live D014/V033 and formal D025
+  retain T011's BLOCKED_SEARCH_COVERAGE evidence and close T012 as
+  BLOCKED_TASK_INTERFACE/PACKAGE_NOT_EXECUTED
+  before §2.2; no source recovery, metadata closure or canonical acquisition ran.
+  C15 is RETURNED_TO_POOL without a science verdict. Live R003/D015 and formal D026
+  select B9 evidence-adapter as a Step 1 formalization workline, not an active
+  scientific carrier. V034 approved T013; the epoch32 clean final binding is
+  next, and only Groundwork Step 1 Phase A1 is then authorized. Step 2/3, MVE,
+  held-out/Phase D and Step 5
+  remain unauthorized.
   Do NOT resume Scout/P03.

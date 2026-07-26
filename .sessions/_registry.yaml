@@ -49,8 +49,8 @@ topics:
     title: Research Direction Lab 长程真实运行测试
     status: active
     created: "2026-07-23"
-    last_updated: "2026-07-27（D013/D024/V031；epoch 28 / CP011，T012 path amendment PASS，等待 clean retry）"
-    description: "D017/D018 轻量长程 mission。V029 接收 T011 BLOCKED_SEARCH_COVERAGE / method delta NONE：53 unique 但 actual source 仅 OpenAlex，Step2 未启动，no-method=11。V030 以 0/0/0 批准拆分后的 T012；首次 Phase A 仅因 receipt 路径未自包含而 preflight stop，V031 已确认 amendment。当前只允许 clean retry Phase A，Phase B 受 resume gate。任一 canonical 失败即轮换。当前无 active scientific carrier，禁止 Step3/MVE/held-out/Phase D。"
+    last_updated: "2026-07-27（V034：T013 dispatch review PASS；epoch 32 / CP012，等待 clean final binding 与 A1）"
+    description: "D017/D018 轻量长程 mission。T012 因 task-interface 缺口在科学执行前终止，V033 接收 BLOCKED_TASK_INTERFACE / PACKAGE_NOT_EXECUTED / delta NONE；no-method=12。R003 比较 B9/C15/B1/A4 后选择 B9 evidence-adapter，但当前仍无 active scientific carrier。V034 以 P0/P1/P2=0/0/0 批准 T013；epoch32 只允许 clean final binding 后执行 Groundwork Step1 Phase A1，Step2/3/MVE/held-out/Phase D 禁止。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 S014 现场故障、R003 场景演练、D017 控制接口和 guard
@@ -447,8 +447,8 @@ topics:
     title: Step 4a 维度 D MVE 执行（B11 单载波 NDA-ML 主推 + B7/B3 待开）
     status: active
     created: "2026-07-06"
-    last_updated: "2026-07-27（D024/live V031：T012 path amendment PASS；等待 Phase A clean retry）"
-    description: "Formal carrier owner。D024 接收 T011 BLOCKED_SEARCH_COVERAGE，当前无 active scientific carrier；V030 已批准拆分后的 T012，首次 Phase A 仅因 receipt 路径未自包含而 preflight stop，V031 已确认 amendment。当前 clean retry Phase A，Phase B 受 resume gate；失败即轮换，成功也只停在 coverage confirmation；确认前不进 Step3，readiness 前禁止 MVE，仍不进入 Step5/Contract/Execute。"
+    last_updated: "2026-07-27（D026/live V034：T013 dispatch review PASS，等待 epoch32 clean final binding）"
+    description: "Formal carrier owner。D026 取代 D025：当前仍无 active scientific carrier；R003/D015 选择 B9 evidence-adapter，V034 已独立批准 T013 candidate-specific Groundwork Step 1。当前只允许 epoch32 clean final binding 后执行 Phase A1；C15 已返回候选池；Step2/3/3.5/4a/MVE、Step5/Contract/Execute 均未授权。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
         reason: 继承 S031 排优先级（B11/B3/B7 Conditional Go）+ 切法地图参照系（饱和池/稀池路径）+ D005 务实路线 + D006 红线 + 5 个口径警示

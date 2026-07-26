@@ -11,7 +11,7 @@
 rdl_task_control:
   schema_version: rdl.task-control.v2
   control_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/topic-index.md
-  control_epoch: 28
+  control_epoch: 29
   action_class: CANDIDATE_FORMALIZATION
   mission_checkpoint: CP011
 ```
@@ -124,6 +124,85 @@ python C:\Users\zzt\.agents\skills\research-direction-lab\scripts\validate_task_
   .sessions\2026-07-23-research-direction-lab-longitudinal-test\T012-c15-source-recovery-and-acquire.md
 ```
 
+Phase A executor 的第一条且唯一合法的 preflight 命令冻结如下。**必须逐字执行，
+不得自行重写 owner regex、process predicate、路径或失败聚合**：
+
+```powershell
+$ErrorActionPreference = 'Continue'
+$env:PYTHONDONTWRITEBYTECODE = '1'
+$main = 'D:\code\study\research-protocol'
+$failures = [System.Collections.Generic.List[string]]::new()
+
+Write-Output 'GATE task_control'
+python 'C:\Users\zzt\.agents\skills\research-direction-lab\scripts\validate_task_control.py' --repo-root . '.sessions\2026-07-23-research-direction-lab-longitudinal-test\T012-c15-source-recovery-and-acquire.md'
+if ($LASTEXITCODE -ne 0) { $failures.Add("task_control_exit=$LASTEXITCODE") }
+
+Write-Output 'GATE worktree_clean'
+$wtStatus = @(git status --short)
+$wtStatus | ForEach-Object { Write-Output $_ }
+if ($LASTEXITCODE -ne 0) { $failures.Add("worktree_status_exit=$LASTEXITCODE") }
+if ($wtStatus.Count -ne 0) { $failures.Add('worktree_not_clean') }
+
+Write-Output 'GATE owners_active'
+$d024Text = Get-Content -LiteralPath '.sessions\2026-07-06-step4a-mve-execution\decisions.md' -Raw
+$d013Text = Get-Content -LiteralPath '.sessions\2026-07-23-research-direction-lab-longitudinal-test\decisions.md' -Raw
+$d024Section = [regex]::Match($d024Text, '(?ms)^## D024:.*?(?=^## D\d{3}:|\z)').Value
+$d013Section = [regex]::Match($d013Text, '(?ms)^## D013:.*?(?=^## D\d{3}:|\z)').Value
+$d024Active = $d024Section -match '(?im)^>\s*status:\s*active\s*$'
+$d013Active = $d013Section -match '(?im)^>\s*status:\s*active\s*$'
+Write-Output "D024_ACTIVE=$d024Active"
+Write-Output "D013_ACTIVE=$d013Active"
+if (-not $d024Active) { $failures.Add('D024_active_not_confirmed') }
+if (-not $d013Active) { $failures.Add('D013_active_not_confirmed') }
+
+Write-Output 'GATE ancestry'
+git merge-base --is-ancestor '700864de9ac2d928681201312121d178ff243ccb' HEAD
+Write-Output "ancestry_exit=$LASTEXITCODE"
+if ($LASTEXITCODE -ne 0) { $failures.Add('t011_commit_not_ancestor') }
+
+Write-Output 'GATE t011_inputs'
+$archives = @(Get-ChildItem -LiteralPath 'search-archive\2026-07-26' -Filter 'c15-*.json' -File -ErrorAction SilentlyContinue)
+$archives | Sort-Object Name | ForEach-Object { Write-Output ("archive=" + $_.FullName) }
+Write-Output "archive_count=$($archives.Count)"
+if ($archives.Count -ne 7) { $failures.Add("t011_archive_count=$($archives.Count)") }
+$receipt = 'projects\thesis-fso\worker-logs\step-011-c15-step1-step2-formalization.md'
+Write-Output "worker_log=$receipt exists=$(Test-Path -LiteralPath $receipt -PathType Leaf)"
+if (-not (Test-Path -LiteralPath $receipt -PathType Leaf)) { $failures.Add('t011_worker_log_missing') }
+
+Write-Output 'GATE forbidden_processes'
+$scienceProcessPattern = '(?i)(?:[\\/](?:simulation|mve)(?:[\\/]|$)|(?:^|\s)[^"\s]*mve[^"\s]*(?:\s|$)|(?:^|\s)--?seed(?:\s|=|$))'
+$forbidden = @(Get-CimInstance Win32_Process | Where-Object {
+  $_.Name -match '^(python|python3|wsl|bash)(\.exe)?$' -and
+  $_.CommandLine -and $_.CommandLine -match $scienceProcessPattern
+})
+$forbidden | ForEach-Object { Write-Output ("pid=$($_.ProcessId) name=$($_.Name) cmd=$($_.CommandLine)") }
+Write-Output "forbidden_process_count=$($forbidden.Count)"
+if ($forbidden.Count -ne 0) { $failures.Add("forbidden_process_count=$($forbidden.Count)") }
+
+Write-Output 'GATE main_repo_target_diffs'
+$mainTargets = @(
+  'papers/index.json',
+  'papers/doi/10.1109_jlt.2025.3547459',
+  'papers/doi/10.1109_jphot.2021.3062727',
+  'papers/doi/10.1109_tccn.2025.3631007',
+  'papers/doi/10.1109_acp66871.2025.11350394',
+  'papers/doi/10.1109_jsac.2022.3191346',
+  'papers/downloads/2026-07-27',
+  'papers/manual/c15-sato-1975',
+  'papers/manual/c15-godard-1980',
+  'papers/manual/c15-yang-2002'
+)
+$mainDiff = @(git -C $main status --short -- $mainTargets)
+$mainDiff | ForEach-Object { Write-Output $_ }
+Write-Output "main_target_diff_count=$($mainDiff.Count)"
+if ($LASTEXITCODE -ne 0) { $failures.Add("main_status_exit=$LASTEXITCODE") }
+if ($mainDiff.Count -ne 0) { $failures.Add('main_targets_have_existing_diff') }
+
+if ($failures.Count -eq 0) { Write-Output 'COMBINED_PREFLIGHT=PASS'; exit 0 }
+Write-Output ('COMBINED_PREFLIGHT=FAIL ' + ($failures -join ','))
+exit 1
+```
+
 必须同时确认：
 
 - task-control PASS；
@@ -140,8 +219,8 @@ python C:\Users\zzt\.agents\skills\research-direction-lab\scripts\validate_task_
   `papers/index.json`、上表五个 DOI 目录，以及
   `papers/downloads/2026-07-27/c15-*` / 本任务可能创建的 canonical target。
 
-Phase A 的第一个动作是执行一个组合起飞门；门返回后、任何第二条命令之前，
-立即用 `apply_patch` 创建 worker log 并原样记录该命令、stdout、stderr 和 exit。
+Phase A 的第一个动作是逐字执行上述组合起飞门；门返回后、任何第二条命令之前，
+立即用 `apply_patch` 追加 worker log 并原样记录该命令、stdout、stderr 和 exit。
 非 PASS 立即停止。此后每个外部命令的 transcript 也必须立即用 `apply_patch`
 追加，不得只写“exit 0”。统一分隔格式：
 
@@ -166,6 +245,10 @@ mission_method_delta=NONE
 
 然后停止，不执行 blit/convert。若时间耗尽但尚未闭合 §2.3，写
 `BLOCKED_EXECUTION_TIMEBOX` 并停止，不把半成品冒充 Phase A complete。
+
+这是 T012 的最后一次 preflight retry。下一次只要组合门非 PASS（真实 gate、
+冻结命令缺陷或 executor 偏离均包括），立即停止 T012，不再做第四次 amendment，
+由主控接收精确 blocker 并轮换 carrier。
 
 Phase B 的 resume gate 必须同时满足：
 

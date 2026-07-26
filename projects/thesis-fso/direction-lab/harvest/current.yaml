@@ -213,8 +213,8 @@ historical_thesis_spines_e15ae60:
 # H060_PRIMARY spine above, until a legal-expert retest (Macro A) resolves it.
 # ─────────────────────────────────────────────────────────────────────────────
 current_view:
-  recovery_entry: .sessions/2026-07-23-research-direction-lab-longitudinal-test/T012-c15-source-recovery-and-acquire.md
-  source: S013 / D021 / V010 / V011 / H014 -> FROZEN S014 / D022 / V012 / H015 (SCIENCE_FREEZE) -> D061/V035/H017 -> Pilot-Jones T005/D066/V040 scoped axis Kill -> T006 science verdict rejected -> T010 BLOCKED_IDENTITY/returned -> live D013/V029 + step4a D024 accept T011 BLOCKED_SEARCH_COVERAGE and authorize one bounded T012 recovery. Prior S012/D020/V009 superseded.
+  recovery_entry: .sessions/2026-07-23-research-direction-lab-longitudinal-test/T013-b9-step1-evidence-adapter.md
+  source: S013 / D021 / V010 / V011 / H014 -> FROZEN S014 / D022 / V012 / H015 (SCIENCE_FREEZE) -> D061/V035/H017 -> Pilot-Jones T005/D066/V040 scoped axis Kill -> T006 science verdict rejected -> T010 BLOCKED_IDENTITY/returned -> live D013/V029 + step4a D024 accept T011 BLOCKED_SEARCH_COVERAGE -> live D014/V033 + formal D025 close T012 as task-interface blocked and return C15 -> live R003/D015 + formal D026 select B9 Step 1 evidence-adapter without an active carrier. Prior S012/D020/V009 superseded.
 
   dispositions:
     - id: H060_DOWNGRADED
@@ -407,13 +407,13 @@ current_view:
     Pilot-Jones T005/D066/V040 scoped-Kills the fixed complex component rescue axis
     (max point/CI upper 0.0804/0.2372dB); entire family and four-paper debt remain open, but the
     route is returned to portfolio. T006's science verdict is rejected. Live D013/V029 and
-    formal D024 accept T011 as BLOCKED_SEARCH_COVERAGE with method delta NONE; all retained
-    results were OpenAlex-only and acquisition did not start. There is no active scientific
-    carrier. One bounded T012 source/canonical recovery is the only current workline; V030
-    approved the split dispatch contract and V031 accepted the receipt-path amendment after
-    a preflight-only stop. A clean Phase A retry is next, and Phase B requires its resume gate.
-    Success stops at coverage confirmation, and any canonical
-    failure returns C15 to the pool. Do not enter Step 3 or MVE. Do NOT resume Scout/P03;
+    formal D025 close T012 as BLOCKED_TASK_INTERFACE/PACKAGE_NOT_EXECUTED with
+    method delta NONE; source recovery, metadata closure and canonical acquisition
+    never ran. C15 is returned to the pool without a science verdict. Live
+    R003/D015 and formal D026 select B9 evidence-adapter while retaining no active
+    scientific carrier. V034 approved T013; the epoch32 clean final binding is
+    next and only Phase A1 Groundwork Step 1 is then authorized. Do not download,
+    enter Step 2/3, or run MVE. Do NOT resume Scout/P03;
     do NOT enter Step 5/Contract/Execute;
     do NOT push.
 

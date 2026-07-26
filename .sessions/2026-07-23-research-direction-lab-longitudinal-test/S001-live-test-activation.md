@@ -898,3 +898,185 @@ canonical exact-title 单次调用和失败止损；PASS 后才交不同 executo
 
 提交 preflight receipt 与 path amendment 形成 clean gate；由与 V030/V031 不同的
 executor 在 15 分钟内重试 Phase A。
+
+> 2026-07-27 续接 | T012 Phase A exact-preflight amendment | 状态：PASS_AWAITING_FINAL_CLEAN_RETRY
+
+## 目标
+
+接收第二次 Phase A preflight 的确定性假阳性，冻结唯一组合命令并决定继续或
+轮换，不触及 T012 科学范围。
+
+## 记录
+
+- 第二次 executor 按任务自行构造 preflight，task-control、clean、ancestry、七个
+  archives、正确 receipt 与主仓 target diff 均 PASS，但因两条 predicate 假阳性
+  停止，未进入 §2.2：
+  1. D024/D013 实际是 `> status: active`，自拟 regex 只匹配行首 `status`；
+  2. 进程检查未先限定 executable，并把普通应用参数
+     `--variations-seed-version` 的 substring `seed` 当成实验。
+- 主控最小复现：旧/new owner regex 对 D024/D013 分别为
+  `False/True`；broad process count=`79`，限定
+  `python|python3|wsl|bash` 且使用独立 seed token 后为 `0`。
+- 独立 verifier 判定 `PASS / P0=0/P1=0/P2=1`：纯 task
+  self-containment/preflight false-positive；P2 仅为 79 条进程明细被执行环境
+  截断，不影响保守停止与根因闭合，不补造缺失 transcript。
+- T012 现冻结 exact combined preflight，executor 不得改写 regex/predicate/path。
+  这是最后一次 preflight retry；再次非 PASS 即停止 T012 并轮换，不做第四次
+  amendment。
+- 继续该最小修订优于 B1 第三 evaluator repair、A4 第二 identity repair和 B9
+  新全链：T012 的真实前置门均已通过，只剩两个已本地复现的 predicate；后三者
+  分别被禁止或需要显著更高的新基础设施成本。
+- control/task 递增到 epoch 29 / CP011；checkpoint、streak 与
+  `mission_method_delta=NONE` 不变。该事件仍不是 formal science progress。
+
+## 决策引用
+
+- D013 / formal D024：T012 科学边界不变
+- V032：第二次 preflight 根因与最后一次 bounded amendment 独立 PASS
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。只保存 preflight receipt、冻结组合门并协调
+  current projection；未运行 search/blit/download/convert、Step 3、仿真或 MVE。
+
+## 后续
+
+完成 epoch 29 final binding 后提交 clean gate；由与 V030–V032 及前两次 executor
+不同的 executor 在 15 分钟内最后重试 Phase A。再次非 PASS 立即轮换。
+
+> 2026-07-27 续接 | T012 final binding 终止与 carrier remap | 状态：CLOSED_ROTATING
+
+## 目标
+
+执行 V032 预注册的 one-last-attempt 退出条件，科学诚实地关闭 T012 并恢复
+carrier remap。
+
+## 记录
+
+- epoch 29 final binding 为 `FAIL / P0=0/P1=1/P2=0`：冻结命令的 CIM 枚举
+  没有 fail-closed，权限/provider/瞬时错误时可能把“无法检查”写成 0 进程。
+- 其余 task-control、owner、ancestry、archives、receipt、YAML、PowerShell
+  syntax、主仓 target diff 全 PASS；source view/pool/canonical acquisition
+  均未发生。
+- 根据 T012/V032 明示边界，不再做第四次 amendment。T012 接收为
+  `BLOCKED_TASK_INTERFACE / PACKAGE_NOT_EXECUTED`，
+  `mission_method_delta=NONE`；C15 只返回候选池，不作 science Kill。
+- D014/formal D025 接收处置；mission 追加 CP012：
+  same-axis=2、repair=1、no-method=12，`UNDERWEIGHT / package DRIFT_RISK`，
+  mission 继续 `DRIFTED/STALLED`。
+- foreground control 转 epoch 30 / CP012 / `POST_T012_CARRIER_REMAP`，
+  当前仍无 active scientific carrier，remap 完成前禁止实验。
+
+## 决策引用
+
+- D014：关闭 T012 并重开 remap（新建）
+- formal D025：撤销当前 C15 workline（新建）
+- V033：final binding FAIL，保守终止处置 PASS
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。没有运行 source recovery、canonical
+  acquisition、Step 3、仿真或 MVE。
+
+## 后续
+
+基于 R001/R002、CP001–CP012 与 post-T012 只读 asset map，至少比较 B9、C15、
+B1、A4 的六维 readiness；选择下一 formalization 包并做独立 dispatch review。
+
+> 2026-07-27 续接 | Goal 接收方恢复与 post-T012 remap | 状态：T013_AWAITING_INDEPENDENT_REVIEW
+
+## 目标
+
+只从磁盘权威状态完成 H002 接收方恢复，比较至少三个合法候选并准备下一
+formalization 包；恢复和 remap 期间不运行实验。
+
+## 记录
+
+### Handoff Verification
+
+Verified claims:
+
+- 当前 control/owner/checkpoint：**PASS** —
+  `topic-index.md` 在 remap 前为 epoch30 / CP012 /
+  `authority_pointer=formal D025`，mission-log CP012 与 formal D025/live D014
+  一致；旧 H002 的 epoch13/CP008 只属历史。
+- T012 disposition：**PASS** —
+  `verifications.md#V033` 记录
+  `BLOCKED_TASK_INTERFACE / PACKAGE_NOT_EXECUTED /
+  mission_method_delta=NONE`，source view/pool/canonical acquisition 均未发生；
+  不是 C15 science negative。
+- 当前无 active scientific carrier：**PASS** —
+  formal D025、live D014、master-state 与三个 current projection 均一致；C15
+  只是 `RETURNED_TO_POOL`。
+- dependency/conflict：**PASS** —
+  `_registry.yaml` 中 depends_on
+  `2026-07-20-research-direction-lab-system` 为 active，`conflicts_with=[]`。
+- scope：**PASS** —
+  本轮只做恢复、磁盘只读映射、决策与任务准备；未进入 Step 3、MVE、Step 5、
+  Contract/Execute，未修 T006/T008/T009/T010/T012，未恢复 Scout/P03。
+
+### Remap
+
+- R003 比较 B9、C15、B1、A4 的方法形态、预期增量、包装句、formal
+  readiness、最小补债与失败轮换点。
+- B9 被选为 **Step 1 evidence-adapter workline**，不是 active carrier。理由是
+  它有 JLT 2023 正向 DRE-vs-RO 锚、明确方法旋钮和未消耗 repair 配额；相对
+  C15 不再重复同轴 task-interface 路径，相对 B1/A4 不违反第三/第二 repair
+  退出边界。
+- live D015/formal D026 建立待验证 positive method contract；minimal construct
+  明确延后到 Step 3/3.5/4a 后冻结。
+- control 升为 epoch31 / CP012 / `B9_STEP1_FORMALIZATION`；T013 只做
+  candidate-specific Step 1，分 A1、A2、最多四个 A3-n 与 A4 串行 phase，
+  每个 phase ≤15 分钟，停在 acquire 前。Step 1 PASS 仍为
+  `mission_method_delta=NONE`。
+
+## 决策引用
+
+- R003：post-T012 四候选 remap（新建）
+- D015：选择 B9 Step 1 evidence-adapter（新建）
+- formal D026：保持无 active carrier并授权 T013 Step 1（新建）
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。未运行 search、下载、精读、实现、仿真、
+  seed 或 MVE；只恢复、比较、更新权威投影并准备 T013。
+
+## 后续
+
+由独立 verifier 审查 R003、D015、formal D026、epoch31 control 与 T013；PASS
+后提交 clean gate，再由不同 executor 先执行 T013 Phase A1。
+
+> 2026-07-27 续接 | T013 dispatch 独立复审 | 状态：PASS_AWAITING_CLEAN_BINDING
+
+## 目标
+
+关闭首次审查的四个 P1，形成可派发但尚未执行的 Step 1 合同。
+
+## 记录
+
+- 首轮独立审查为 `FAIL / P0/P1/P2=0/4/0`：`-o` 导致重复 archive 与 index
+  副作用未入合同、A2 超过 15 分钟、priority 未写回原 archive、两处 current
+  projection 仍停在 D025/C15。
+- 修订后 T013 使用七个自动 archive 和本地 ignored index；拆为 A1/A2
+  search-only、每次最多两个 archive 的 A3-n、A4 synthesis；所有 phase 串行且
+  ≤15 分钟；priority/reason 回写原 archive；registry/formal topic 已收敛 D026/B9。
+- V034 第二轮独立复审为 `PASS / P0/P1/P2=0/0/0`。task-control、diff、四个
+  YAML 和 current projection 检查均通过。
+- review gate 关闭后，foreground control/task 递增为 epoch32 / CP012；formal
+  D026 与 method contract 不变，仍无 active scientific carrier。下一步只允许
+  clean final binding 后执行 A1。
+
+## 决策引用
+
+- D015 / formal D026：科学边界不变
+- V034：T013 dispatch review PASS
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。只修任务合同与 current projection，未运行
+  search、下载、精读、仿真、seed 或 MVE。
+
+## 后续
+
+提交 clean gate；由独立 verifier 对 epoch32 做 final binding。PASS 后由不同
+executor 只执行 T013 Phase A1。

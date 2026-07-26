@@ -1650,3 +1650,148 @@ mission_method_delta=NONE
 PASS。接收 `BLOCKED_PREFLIGHT` 为已修复的 task-interface receipt path 缺口；
 formal D024/T012 科学边界与 CP011 保持不变。control/task 可递增后形成 clean
 retry gate。本 PASS 不是 formal science disposition、方法进展或 coverage 结论。
+
+## V032: T012 第二次 preflight 假阳性与最后一次 bounded amendment 独立复核
+
+> date: 2026-07-27
+> 关联：S001 / D013 / formal D024 / T012 / CP011
+> verifier：V030/V031 同一独立只读 verifier；未修改文件，未运行
+> search/blit/download/convert、仿真或 seed
+
+### 验证项
+
+- [x] execution boundary：task-control、clean、ancestry、7 archives、正确
+  receipt、主仓 target diff 均 PASS；source view/pool 不存在，只有 Step-012
+  worker log 有 diff，未进入 §2.2 → PASS。
+- [x] owner root cause：D024/D013 section 的 `^status` 均 False，
+  `^>\s*status` 均 True → PASS（确定性 predicate 假阴性）。
+- [x] process root cause：未限 executable 的 broad predicate 命中 79 个普通应用；
+  限 `python|python3|wsl|bash` 且 seed 为独立 CLI token 后为 0 → PASS
+  （确定性 substring 假阳性）。
+- [x] repair-vs-rotation：真实前置门已通过；冻结两个 predicate 的成本和不确定性
+  均低于 B1 第三 evaluator repair、A4 第二 identity repair、B9 新全链 → PASS。
+- [x] stop boundary：只批准最后一次 exact-command retry；下一次任一
+  preflight 非 PASS 都停止 T012，不再 amendment 并轮换 → PASS。
+
+### 证据
+
+```text
+SECOND_PREFLIGHT_ROOT_CAUSE=PASS
+P0/P1/P2=0/0/1
+old_owner_regex_D024/D013=False/False
+correct_owner_regex_D024/D013=True/True
+broad_process_count=79
+restricted_science_process_count=0
+task_control=PASS
+worktree_clean_at_takeoff=true
+ancestry=PASS
+archive_count=7
+receipt_exists=true
+main_target_diff=0
+source_view_exists=false
+acquisition_pool_exists=false
+search_or_download_run=false
+shared_papers_modified=false
+mission_method_delta=NONE
+P2=79-process verbatim listing truncated by execution harness; do not fabricate
+```
+
+### 结论
+
+PASS。第二次 `BLOCKED_PREFLIGHT` 是 task self-containment/predicate 假阳性，
+不是科学或主仓 blocker。批准在同一 T012 内冻结 exact combined preflight 并做
+最后一次 retry；再次非 PASS 必须停止 T012 并轮换。当前
+`formal_science_disposition=PENDING_PACKAGE_COMPLETION`、
+`mission_method_delta=NONE`，不追加 mission checkpoint。
+
+## V033: T012 epoch 29 final binding 与 package disposition 独立终验
+
+> date: 2026-07-27
+> 关联：S001 / D014 / formal D025 / T012 / CP012
+> verifier：V030–V032 同一独立只读 verifier；未修改文件，未运行科学命令
+
+### 验证项
+
+- [x] frozen command syntax：T012 三个 PowerShell block parse error=`0` → PASS。
+- [x] current binding：epoch 29 / CP011 / `CANDIDATE_FORMALIZATION`、D024、
+  task-control、owners、ancestry、archives、receipt、YAML 与主仓 target diff
+  均闭合 → PASS。
+- [ ] fail-closed process gate：`Get-CimInstance Win32_Process` 在
+  `$ErrorActionPreference='Continue'` 下未使用 `-ErrorAction Stop` 或捕获异常；
+  查询失败可返回空集合并被当成 `forbidden_process_count=0` → FAIL（P1）。
+- [x] stop rule：T012 已明确“冻结命令缺陷也终止，不再第四次 amendment”；
+  当前 P1 正好触发该退出条件 → PASS（必须停止/轮换）。
+- [x] evidence boundary：source view/pool/canonical targets 不存在，主仓五 DOI/
+  index 无 diff，§2.2–§2.5 与 Step 3/MVE 未运行 → PASS。
+
+### 证据
+
+```text
+FINAL_BINDING_FAIL
+P0/P1/P2=0/1/0
+task_control_epoch29=PASS
+powershell_parse_errors=0
+owner_D024/D013_active=true/true
+ancestry_exit=0
+t011_archive_count=7
+t011_receipt_exists=true
+restricted_science_process_count=0
+main_target_diff_count=0
+source_view_exists=false
+acquisition_pool_exists=false
+canonical_targets_exist=false
+P1=Get-CimInstance failure is not fail-closed
+formal_science_disposition=BLOCKED_TASK_INTERFACE/PACKAGE_NOT_EXECUTED
+mission_method_delta=NONE
+```
+
+### 结论
+
+FAIL（binding）/ PASS（保守终止处置）。epoch 29 冻结命令不能安全派发；按 V032
+和 T012 的 one-last-attempt 规则，不再修复，接收
+`BLOCKED_TASK_INTERFACE / PACKAGE_NOT_EXECUTED`。该结果不是 C15 science
+negative、coverage failure、方法或 promotion；C15 返回候选池，mission 追加
+CP012/no-method=12 后进入 post-T012 remap。
+
+## V034: T013 B9 Step 1 dispatch contract 独立复审
+
+> date: 2026-07-27
+> 关联：S001 / R003 / D015 / formal D026 / T013 / CP012
+> verifier：T013 独立 dispatch verifier；只读复审，未运行 search/下载/实验
+
+### 验证项
+
+- [x] 输出接口：七条 search 命令均无 `-o/--output`，自动 archive 与本地
+  ignored `_index/all-papers.jsonl` 已显式授权，最终只提交 worker log → PASS。
+- [x] 阶段预算：A1/A2 为 search-only；A3-n 每次最多两个 archive；A4 只综合；
+  全部 phase ≤15 分钟并串行停止 → PASS。
+- [x] Step 1 artifact：每条 result 的 priority/reason/route/collision/evidence
+  scope 必须写回原 archive，A4 只接收已标注 archive → PASS。
+- [x] current projection：registry formal topic 与 formal topic-index 已收敛为
+  D026/B9-only Step 1，C15 只保留历史状态 → PASS。
+- [x] R003/D015/D026/control/task：四候选六维比较、正向合同、无 active
+  carrier、epoch31/CP012/action class 一致 → PASS。
+- [x] deterministic integrity：task-control、`git diff --check`、四个 current
+  YAML parse 与同日 archive 不存在检查 → PASS。
+
+### 证据
+
+```text
+DISPATCH_REVIEW_PASS
+P0/P1/P2=0/0/0
+SEARCH_COMMANDS=7
+OUTPUT_ARG_COMMANDS=0
+TASK_CONTROL=PASS
+GIT_DIFF_CHECK=PASS
+YAML_PASS=.sessions/_registry.yaml
+YAML_PASS=projects/thesis-fso/direction-lab/state/current.yaml
+YAML_PASS=projects/thesis-fso/direction-lab/portfolio/current.yaml
+YAML_PASS=projects/thesis-fso/direction-lab/harvest/current.yaml
+SEARCH_DIR_EXISTS=False
+FORMAL_REGISTRY_CURRENT=D026/B9_STEP1
+FORMAL_TOPIC_CURRENT=D026/B9_STEP1
+```
+
+### 结论
+
+PASS

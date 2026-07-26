@@ -1272,10 +1272,10 @@ live D012/T011；R002；旧 C15 synthesis/contract；`stages/gw-search.md`；
 
 ## D024: 接收 T011 检索覆盖阻断并授权 T012 canonical recovery
 
-> status: active
+> status: superseded
 > date: 2026-07-27
 > 取代：D023
-> 被取代：无
+> 被取代：D025
 > 依据：验证 live V029 + T011 worker log/archives + 共享多源索引与本地全文只读复核
 > 触发原话：无（技术推导）
 
@@ -1319,3 +1319,119 @@ B9 新接收全链更可能产生 formal-ready 方法空间；但 T012 本身不
 ### 来源
 
 live D013/V029/T012；T011 worker log/archives；共享索引与论文库只读映射。
+
+## D025: 接收 T012 task-interface blocker 并撤销当前 C15 workline
+
+> status: superseded
+> date: 2026-07-27
+> 取代：D024
+> 被取代：D026
+> 依据：验证 live V031/V032/V033 + T012 worker log + epoch 29 final-binding FAIL
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. T012 正式处置为
+   `BLOCKED_TASK_INTERFACE / PACKAGE_NOT_EXECUTED`，不是 C15 science
+   disposition；`mission_method_delta=NONE`。
+2. T012 在 source recovery、metadata closure、canonical acquire 前终止；
+   C15 family 保持 `UNRESOLVED / RETURNED_TO_POOL`，不得伪称 source/canonical
+   negative 或 Kill。
+3. 撤销 D024 的当前 T012 workline，formal owner 继续无 active scientific
+   carrier。下一步只做 post-T012 carrier remap，激活新 carrier 前不运行实验。
+4. V032 已冻结最后一次 retry 退出条件；CIM fail-open P1 触发该条件，不做第四次
+   task-interface amendment。
+
+### 理由
+
+继续修 T012 会把第三个确定性接口缺口变成第四次补丁，而仍未触及任何 formal
+science uncertainty。停止并轮换比继续治理更符合 method-production mission：
+当前 no-method streak 已到 12，且 C15 的 source/canonical 合同没有被执行，既
+不能晋级也不能科学否决。
+
+### 排除的替代方案
+
+- 不把治理终验 PASS/FAIL 当方法产出。
+- 不降 source/fulltext/readiness 门，也不绕过 Step 1–3 直接跑旧 C15 sandbox。
+- 不恢复 B1/A4/B10 的下一 repair 包。
+- 不在 remap 完成前运行 B9 或其他新实验。
+
+### 影响范围
+
+- live authority 转本 D025；foreground epoch 30 / CP012 只允许 remap/task
+  preparation；
+- master/current projections 标记 `NO_ACTIVE_SCIENTIFIC_CARRIER`；
+- T012 关闭，C15 返回 pool；Step 3/4a/MVE/Step 5/Contract/Execute 仍未授权。
+
+### 来源
+
+live D014/V033；T012 worker log；V032 one-last-attempt contract；epoch 29
+final-binding independent review。
+
+---
+
+## D026: 激活 B9 Step 1 formalization workline，保持无 active carrier
+
+> status: active
+> date: 2026-07-27
+> 取代：D025
+> 被取代：无
+> 依据：调研 live R003 + live D015 + B9 JLT 2023 主仓全文/metadata +
+> Groundwork `gw-search.md`
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. formal owner 保持 `NO_ACTIVE_SCIENTIFIC_CARRIER`，但将当前合法 workline
+   切换为 **B9 virtual-carrier self-coherent + DRE Step 1 formalization**。
+2. 只授权 T013 完成 candidate-specific Step 1 search/evidence adapter：
+   ≥20 candidates、≥3 个真实 source families、≥2 mechanism routes、≥5 必读、
+   正式发表 ≥50%，并由执行 agent 对 title/abstract/venue/year/citation/
+   publication status 做语义审查。
+3. T013 结束于
+   `FORMALIZATION_STEP1_COMPLETE_AWAITING_ACQUIRE`、
+   `BLOCKED_SEARCH_COVERAGE` 或 `STEP1_NO_DISTINCT_PROBLEM_FOUND`；三者都必须
+   `mission_method_delta=NONE`，且都不得被写成 B9 science Go/Kill。
+4. Step 2/3/3.5/4a/MVE、Step 5、Contract、Execute 均未授权；B9 的
+   `minimal_construct` 在 Step 3/3.5/4a 前不得冻结或实现。
+
+### 候选正向方法合同（待 Step 1–3 验证）
+
+- `positive_method_target`：在低比特 virtual-carrier self-coherent 星地 FSO 中，
+  用因果可部署或预配置链路状态选择 DRE/CSPR 的复杂度—稳健性设置，并保留
+  source-native fixed-DRE/RO 安全回退。
+- `minimal_construct`：未冻结；只能在 Step 3/3.5/4a 完成后定义。
+- `fair_comparator`：RO without DRE、source-native fixed DRE，以及经全文闭合的
+  任务匹配传统 quantization-noise-shaping 方法。
+- `primary_packaging`：星地低比特 DAC 自相干 FSO 的数字分辨率增强与稳健适配。
+- `fallback_packaging`：固定 DRE 的星地迁移边界或复杂度/性能折中。
+- `next_positive_action`：完成 T013 Step 1 coverage/collision adjudication。
+
+### 理由
+
+R003 比较 B9、C15、B1、A4 后确认：B9 是唯一同时拥有正式全文正向锚、明确方法
+旋钮、未消耗 repair 配额且不违反既定 no-second/third-repair 边界的候选。其约
+3/1/0.5 dB 只支持低 PNOB 下 DRE-vs-RO 的量化噪声动机；42 m FSO 也不自动迁移
+到星地。Step 1 是裁决证据覆盖、竞争碰撞和 comparator 债务的最小合法动作。
+
+### 排除的替代方案
+
+- C15 保持 `UNRESOLVED / RETURNED_TO_POOL`；不把 T012 接口失败作 science Kill，
+  也不做第四次 T012 amendment。
+- B1/A4/B10 继续受既有第三/第二/第二 repair 禁止边界约束。
+- 不用旧 read-note、search metadata 或内部 DRE-vs-RO 增益替代 formal Step 1–3。
+- 不运行 B9 代码、实验、seed 或 MVE。
+
+### 影响范围
+
+- live authority 指向本 D026；foreground epoch 31 / CP012 只授权
+  `CANDIDATE_FORMALIZATION`；
+- T013 独立 dispatch review PASS 后，才可由不同 executor 执行 Step 1；
+- formal stage 仍是 Groundwork；B9 在 Step 1–3/3.5 与 Step 4a readiness 审查
+  之前不是 active scientific carrier。
+
+### 来源
+
+live R003/D015；B9 主仓
+`papers/doi/10.1109_jlt.2023.3270673/{metadata.json,content.md}`；
+`stages/gw-search.md`。

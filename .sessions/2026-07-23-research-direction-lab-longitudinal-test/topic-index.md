@@ -4,15 +4,16 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 28
+  control_epoch: 32
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: C15_SOURCE_RECOVERY_AND_CANONICAL_ACQUIRE
-  authority_pointer: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D024
-  decision_gate: V031 已独立确认首次 Phase A 仅因 T011 receipt 路径未自包含而 BLOCKED_PREFLIGHT，路径 amendment PASS；当前只允许 clean gate 后由不同 executor 重试 Phase A
+  active_lane: B9_STEP1_FORMALIZATION
+  authority_pointer: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D026
+  decision_gate: V034 已独立批准 T013 Step 1 合同；当前仍无 active scientific carrier，只有 clean worktree 与 fresh task-control PASS 后才可执行 Phase A1
   allowed_actions:
     - RECOVER
     - TASK_PREPARATION
+    - PORTFOLIO_MAP
     - CANDIDATE_FORMALIZATION
   forbidden_actions:
     - UNRELATED_SCIENTIFIC_EXPERIMENT
@@ -29,12 +30,12 @@ rdl_control:
     - B10_OR_T010_REPAIR
     - UNAUTHORIZED_SCIENTIFIC_EXPERIMENT
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
-  mission_checkpoint: CP011
-  next_legal_action: 提交首次 preflight receipt 与唯一路径 amendment 形成 clean gate，再由与 V030/V031 不同的 executor 在 15 分钟内重试 T012 Phase A
+  mission_checkpoint: CP012
+  next_legal_action: 提交 remap/control clean gate；fresh final binding PASS 后由不同 executor 只执行 T013 Phase A1，完成即停回主控
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（V031 已确认 T012 首次 Phase A 仅为路径接口阻断并完成 amendment；epoch 28 / CP011 等待 clean retry）
+> 状态: active（V034 已批准 T013；epoch 32 / CP012，等待 clean final binding 与 Phase A1，仍无 active scientific carrier）
 > 创建: 2026-07-23 | 最后更新: 2026-07-27
 
 ## 专题信息
@@ -68,6 +69,9 @@ rdl_control:
 - A4 已由 formal D016 返回候选池，不作 family Kill，也不开第二个 A4 repair 包。
 - R002 已比较 B10、C15、B1、B9；只有 B10 具有现存 Step 1–3、可获取全文和
   不依赖第三 repair/新基础设施的直接激活路径。
+- R003 已比较 B9、C15、B1、A4；选择 B9 evidence-adapter 只做 Step 1
+  coverage/collision adjudication。B9 仍非 active carrier，T013 不下载、不精读、
+  不实现或实验。
 - formal D021 维持 `B10_SOURCE_NATIVE_ADAPTIVE_RLS_CPR`；V021 已独立接收 C1，
   `mission_method_delta=NONE`。epoch 22 的当前动作是先完成 C2 起飞合同独立审查；
   通过后只用 validation seeds `131001–131005` 跑完整预注册矩阵并全局冻结设置，
@@ -268,6 +272,17 @@ rdl_control:
   修订后复审 `PASS / 0/0/0`；T012 按 15 分钟上限拆 Phase A/Phase B，冻结
   identity/provenance、shared index/metadata、exact arnumber→PDF、formal outcome
   与 transcript 合同。当前只允许 clean gate 后由不同 executor 执行 Phase A。
+- **V031–V032 / T012 preflight amendments**：前两次 Phase A 均在组合门停止，
+  未进入 §2.2。V031 关闭 receipt 路径缺口；V032 独立复现 owner `>` status 与
+  进程 substring 两个 predicate 假阳性，批准冻结 exact combined preflight 的
+  最后一次 retry。再次非 PASS 即停止 T012 并轮换。
+- **V033 / D014 / formal D025 / CP012**：epoch29 final binding 发现 CIM query
+  未 fail-closed，触发 one-last-attempt 退出。T012 接收为
+  `BLOCKED_TASK_INTERFACE / PACKAGE_NOT_EXECUTED / delta NONE`，C15 返回池，
+  no-method=12；epoch30 只允许 post-T012 remap。
+- **R003 / D015 / formal D026 / T013**：四候选 remap 选择 B9 evidence-adapter；
+  control 升至 epoch31 / CP012，只准备 candidate-specific Step 1。active carrier
+  仍为空，独立 dispatch review PASS 前不得执行，Step 2/3/MVE 继续锁定。
 - **D001 / phase-2 entry**：B1 作为唯一合法 formal carrier 续接；C15 保留候选，
   不以 portfolio readiness 冒充 formal authorization。
 - **V001 / T008 dispatch review**：独立终验 PASS；formal/guard/identity/method
@@ -339,21 +354,22 @@ rdl_control:
 
 - B1 family 保持 `UNRESOLVED`；若未来复用必须重建 evaluator，而非继续修 T008；
 - T010 最终接收 `BLOCKED_IDENTITY / method delta NONE`；B10 当前包终止；
-- T011 已接收为 `BLOCKED_SEARCH_COVERAGE`；V030 已批准 T012 dispatch，
-  当前等待 clean gate 后执行 Phase A；
+- T012 已接收为 `BLOCKED_TASK_INTERFACE / PACKAGE_NOT_EXECUTED`；C15 返回池；
+- B9 已被选为 Step 1 formalization workline，但仍未激活 scientific carrier；
+- V034 已独立批准 T013，P0/P1/P2=`0/0/0`；当前等待 clean final binding 与
+  A1/A2/A3-n/A4 串行执行；
 - live run 自然覆盖哪些恢复/轮换/晋级事件；
 - 何时由原 design 对话进行阶段性审计。
 
 ## 当前位置
 
-T011 已由 V029/D013/formal D024 接收为
-`BLOCKED_SEARCH_COVERAGE / P0=0/P1=0/P2=1 / mission_method_delta=NONE`。
-mission 到 CP011/no-method=11，仍为 `DRIFTED/STALLED`。当前无 active scientific
-carrier；control epoch 28 只准备一次 T012：从共享索引恢复 ≥3 actual source，
-闭合已有近期全文 metadata，并各尝试一次 Sato/Godard/Yang canonical 获取。
-V030 dispatch/final binding 与 V031 path amendment 均 PASS；当前先提交形成
-clean gate，再由不同 executor 重试 Phase A。任一 canonical 失败即返回候选池，全部通过也只停在
-`AWAITING_COVERAGE_CONFIRMATION`。coverage 未确认前不得进入
-Step 3，readiness 未审查前禁止 MVE。不得修
+T012 已由 V033/D014/formal D025 接收为
+`BLOCKED_TASK_INTERFACE / PACKAGE_NOT_EXECUTED / mission_method_delta=NONE`。
+R003/D015/formal D026 已从 B9、C15、B1、A4 中选择 B9 evidence-adapter。
+mission 仍在 CP012/no-method=12、`DRIFTED/STALLED`；当前无 active scientific
+carrier。V034 已独立批准 T013 合同；control epoch 32 只允许 T013 Groundwork
+Step 1，且先做 clean final binding。T013 不下载、不进入 Step 2/3/3.5/4a，
+不实现或实验；PASS 也只能形成
+`mission_method_delta=NONE`。不得修
 T006/B12、B1/T008、A4/T009、B10/T010，不恢复 Scout/P03，也不进入 Step 4a
 实验、Step 5/Contract/Execute。
