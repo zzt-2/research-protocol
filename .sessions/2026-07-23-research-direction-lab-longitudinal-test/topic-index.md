@@ -4,12 +4,12 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 25
+  control_epoch: 27
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: C15_REDUCED_CONSTELLATION_FORMALIZATION
-  authority_pointer: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D023
-  decision_gate: V028 已以 P0/P1/P2=0/0/0 通过 T011 独立 dispatch review；只允许不同 executor 执行 Step 1 search + Step 2 acquire，coverage confirmation 前不得进入 Step 3
+  active_lane: C15_SOURCE_RECOVERY_AND_CANONICAL_ACQUIRE
+  authority_pointer: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D024
+  decision_gate: V030 已独立批准 T012 dispatch contract；当前只允许不同 executor 执行 Phase A（Step 1 multi-source recovery + existing-fulltext closure），Phase B 须通过 task 内 resume gate
   allowed_actions:
     - RECOVER
     - TASK_PREPARATION
@@ -29,13 +29,13 @@ rdl_control:
     - B10_OR_T010_REPAIR
     - UNAUTHORIZED_SCIENTIFIC_EXPERIMENT
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
-  mission_checkpoint: CP010
-  next_legal_action: 由与 V028 verifier 不同的 executor 按 T011 执行结构化检索和全文获取，停在 AWAITING_COVERAGE_CONFIRMATION
+  mission_checkpoint: CP011
+  next_legal_action: 提交 CP011/T012 dispatch 准备形成 clean gate，再由与 V030 不同的 executor 在 15 分钟内只执行 T012 Phase A
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（T010 已封存；epoch 25 / CP010 的 T011 dispatch 已由 V028 PASS，等待不同 executor）
-> 创建: 2026-07-23 | 最后更新: 2026-07-26
+> 状态: active（T011 已由 V029 正确阻断；V030 批准 T012 dispatch；epoch 27 / CP011 等待 Phase A executor）
+> 创建: 2026-07-23 | 最后更新: 2026-07-27
 
 ## 专题信息
 
@@ -264,6 +264,10 @@ rdl_control:
 - **mission-log / phase-1 audit**：CP001–CP007 已回填。审计确认无严重跨 lane，
   但 formal success 多次没有 mission method delta；T007 暂不接收 family Kill，
   T008 停止。
+- **V030 / T012 dispatch**：独立 reviewer 首轮以 P0/P1/P2=`0/6/1` 阻断，
+  修订后复审 `PASS / 0/0/0`；T012 按 15 分钟上限拆 Phase A/Phase B，冻结
+  identity/provenance、shared index/metadata、exact arnumber→PDF、formal outcome
+  与 transcript 合同。当前只允许 clean gate 后由不同 executor 执行 Phase A。
 - **D001 / phase-2 entry**：B1 作为唯一合法 formal carrier 续接；C15 保留候选，
   不以 portfolio readiness 冒充 formal authorization。
 - **V001 / T008 dispatch review**：独立终验 PASS；formal/guard/identity/method
@@ -326,24 +330,30 @@ rdl_control:
   检索门、CRLF wrapper、blit JSON、acquisition schema、共享论文库与 IEEE
   入库闭环；最终 `PASS / P0=0/P1=0/P2=0`。只授权不同 executor 执行 Step 1–2，
   method delta 仍为 NONE。
+- **V029 / D013 / formal D024 / CP011**：T011 七个 archive 经独立复算为
+  56 rows/53 unique/49 published，但 actual source 只有 OpenAlex；正确停止于
+  `BLOCKED_SEARCH_COVERAGE`，未进 Step 2，method delta NONE。共享索引四源与
+  5 篇近期 content 证明一次 T012 恢复包可行；三篇 canonical 任一失败即轮换。
 
 ## 未决项
 
 - B1 family 保持 `UNRESOLVED`；若未来复用必须重建 evaluator，而非继续修 T008；
 - T010 最终接收 `BLOCKED_IDENTITY / method delta NONE`；B10 当前包终止；
-- T011 C15 Step 1 search + Step 2 acquire 已通过独立 dispatch review，尚待执行；
+- T011 已接收为 `BLOCKED_SEARCH_COVERAGE`；V030 已批准 T012 dispatch，
+  当前等待 clean gate 后执行 Phase A；
 - live run 自然覆盖哪些恢复/轮换/晋级事件；
 - 何时由原 design 对话进行阶段性审计。
 
 ## 当前位置
 
-T010 已由 V026/D011/formal D022 接收为
-`BLOCKED_IDENTITY / P0=0/P1=0/P2=1 / mission_method_delta=NONE`。C2 停于
-28 cells / 840 canonical rows；未生成 aggregate，未消费 held-out。mission 已到
-CP010/no-method=10，仍为 `DRIFTED/STALLED`。B10 已返回候选池且禁止第二修复包。
-control 为 epoch 25，当前无 active scientific carrier；V028 已批准 T011，只授权
-C15 Step 1 search + Step 2 acquire，由不同 executor 执行后停在
-`AWAITING_COVERAGE_CONFIRMATION`。coverage 未确认前不得进入 Step 3，readiness
-未审查前禁止 MVE。不得修
+T011 已由 V029/D013/formal D024 接收为
+`BLOCKED_SEARCH_COVERAGE / P0=0/P1=0/P2=1 / mission_method_delta=NONE`。
+mission 到 CP011/no-method=11，仍为 `DRIFTED/STALLED`。当前无 active scientific
+carrier；control epoch 27 只准备一次 T012：从共享索引恢复 ≥3 actual source，
+闭合已有近期全文 metadata，并各尝试一次 Sato/Godard/Yang canonical 获取。
+V030 dispatch 与 final binding 均 PASS；当前先提交形成 clean gate，再由不同
+executor 只执行 Phase A。任一 canonical 失败即返回候选池，全部通过也只停在
+`AWAITING_COVERAGE_CONFIRMATION`。coverage 未确认前不得进入
+Step 3，readiness 未审查前禁止 MVE。不得修
 T006/B12、B1/T008、A4/T009、B10/T010，不恢复 Scout/P03，也不进入 Step 4a
 实验、Step 5/Contract/Execute。

@@ -638,10 +638,10 @@ S001 续接；V026；T010 worker-log；R002；formal D021。
 
 ## D012: 授权 T011 只做 C15 Step 1–2 evidence formalization
 
-> status: active
+> status: superseded
 > date: 2026-07-26
 > 取代：无（细化 D011 的 C15 Step 1–3 顺序）
-> 被取代：无
+> 被取代：D013
 > 依据：调研 R002 + formal D022/D023 + 旧 C15 synthesis/contract 的
 > equalizer-cost identity 与 unequal-step confound
 > 触发原话：无（技术推导）
@@ -689,3 +689,65 @@ A4 第二 identity repair 和 B9 新全链，这仍是最可能重新形成合�
 
 S001 续接；R002；formal D022；旧 C15
 `synthesis.v1.md` / `batch-contract.v1.yaml`；Groundwork Step 1/2 规范。
+
+## D013: 接收 T011 source-coverage block 并授权一次 T012 恢复包
+
+> status: active
+> date: 2026-07-27
+> 取代：D012
+> 被取代：无
+> 依据：验证 V029 + T011 worker log/7 archives + 只读共享索引/论文库复核
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. 接收 T011 Step 1 的
+   `BLOCKED_SEARCH_COVERAGE / P0=0/P1=0/P2=1 /
+   mission_method_delta=NONE`。56 rows/53 unique/49 published 可信，但 actual
+   source 只有 OpenAlex；未创建 acquisition pool、未进入 Step 2 的止损正确。
+2. 该结果只阻断当次检索管道，不是 C15 negative/Kill。共享主仓索引已由
+   Semantic Scholar、SerpAPI Scholar、OpenAlex、Exa 四个真实 source family
+   召回直接相关候选；共享论文库已有 5 篇近期相关 content，其中 2 篇立即满足
+   metadata/title gate，3 篇可作有界本地闭环。
+3. 授权一次 T012，把以下工作合并为同一个可失败包：
+   - 从共享索引恢复 candidate-specific ≥3-source view 和 8–12 篇 acquisition pool；
+   - 核验/闭合现有近期全文 metadata/title；
+   - 对 Sato 1975、Godard 1980、Yang–Werner–Dumont 2002 三篇 canonical 各执行
+     一次 exact-title IEEE/blit 获取；
+   - 任一 canonical 失败即 `BLOCKED_CANONICAL_FULLTEXT`；全部 3/3 且 recent≥2
+     才停在 `AWAITING_COVERAGE_CONFIRMATION`。
+4. T012 仍为 `CANDIDATE_FORMALIZATION`，不进入 Step 3 或 MVE，
+   `mission_method_delta=NONE`。
+
+### 理由
+
+T011 已证明默认 fresh search 只有单源，但没有证明项目资产或 C15 文献只有单源。
+共享索引存在四源直接证据，现有全文也已覆盖 JR-CMA pointing-jitter 和
+modulus-rings VAE coherent-FSO 等 task-fit/collision；核心债务集中为三篇
+canonical 全文。一次 T012 的可逆成本明显低于 B9 新建 oversampled
+self-coherent/quantization 全链，也不重复 B1 第三 evaluator repair 或 A4 第二
+identity repair，因此比至少这三个替代项更可能解锁后续方法判断。
+
+这仍不是方法进展：JR-CMA 与 VAE collision 甚至可能在 Step 3 缩窄或推翻原包装。
+但先闭合 canonical/source 是判断这种碰撞与合法方法空间的最小动作。
+
+### 排除的替代方案
+
+- 不降低三源门，不把 shared index 的合并来源字符串重复计数。
+- 不把 53 篇数量、92.5% published 或本地 5 篇 content 写成 formal readiness。
+- 不要求用户配置 API key、手工找论文或判断技术正确性。
+- 不修 B1/T008、A4/T009、B10/T010、T006/B12；不建设 B9 全链。
+- T012 失败后不再给 C15 第二个 source/canonical repair 包；返回候选池并轮换。
+
+### 影响范围
+
+- mission 追加 CP011/no-method=11，C15 same-axis=1，mission 继续
+  `DRIFTED/STALLED`；
+- formal D024 接收 T011 并授权 T012；
+- foreground control 递增至 epoch 26 / CP011；
+- 新建 T012；独立 dispatch review PASS 前不得执行。
+
+### 来源
+
+S001 续接；V029；T011 worker log/archives；共享
+`all-papers.jsonl` 与 `papers/` 只读映射。

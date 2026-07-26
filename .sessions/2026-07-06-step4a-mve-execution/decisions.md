@@ -1214,10 +1214,10 @@ live D011/V026；T010 worker-log/synthesis；R002；D021。
 
 ## D023: C15 formalization 先执行 Step 1 search 与 Step 2 acquire
 
-> status: active
+> status: superseded
 > date: 2026-07-26
 > 取代：无（细化 D022，不改变无 active carrier 与禁止 MVE 边界）
-> 被取代：无
+> 被取代：D024
 > 依据：调研 live R002 + 旧 C15 synthesis/contract 的 equalizer-cost identity +
 > Groundwork `gw-search.md` / `gw-acquire.md` 硬门
 > 触发原话：无（技术推导）
@@ -1267,3 +1267,55 @@ live D011/V026；T010 worker-log/synthesis；R002；D021。
 
 live D012/T011；R002；旧 C15 synthesis/contract；`stages/gw-search.md`；
 `stages/gw-acquire.md`。
+
+---
+
+## D024: 接收 T011 检索覆盖阻断并授权 T012 canonical recovery
+
+> status: active
+> date: 2026-07-27
+> 取代：D023
+> 被取代：无
+> 依据：验证 live V029 + T011 worker log/archives + 共享多源索引与本地全文只读复核
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. 接收 T011 为 `BLOCKED_SEARCH_COVERAGE`：53 unique candidates 不能弥补
+   1/3 actual sources；未进入 acquire 的止损合法。该处置不是 C15 scientific
+   negative，`mission_method_delta=NONE`。
+2. formal owner 继续保持 **无 active scientific carrier**。只授权 T012 一次
+   source/canonical recovery：
+   - 共享索引恢复至少三个真实 source families；
+   - 现有近期全文只做可证的 metadata/title closure；
+   - 三篇 canonical 原文各一次 exact-title IEEE/blit；
+   - canonical 3/3 且 recent comparator/task-fit ≥2 后停在 coverage confirmation。
+3. 任一 canonical 获取失败即 `BLOCKED_CANONICAL_FULLTEXT`，C15 返回候选池；
+   不降低 fulltext/source 门，不给第二次获取 repair。
+4. Step 3、3.5、4a/MVE、Step 5、Contract、Execute 均未授权。
+
+### 理由
+
+fresh single-source failure 是局部管道阻断。共享历史索引已有 Semantic Scholar、
+SerpAPI Scholar、OpenAlex、Exa 直接相关召回；共享论文库已有 5 篇近期相关
+content，包含 JR-CMA pointing-jitter 与 modulus-rings VAE coherent-FSO 的直接
+碰撞。剩余债务集中为 Sato/Godard/Yang 三篇 canonical，而非新 evaluator 或仿真
+基础设施。一次 T012 因此比 B1 第三 evaluator repair、A4 第二 identity repair 和
+B9 新接收全链更可能产生 formal-ready 方法空间；但 T012 本身不能产生方法信号。
+
+### 排除的替代方案
+
+- 不把 shared historical metadata 当全文或创新性结论。
+- 不修改正确 source/content，不猜 canonical DOI。
+- 不修已禁止的 B1/A4/B10/T006，不恢复 Scout/P03。
+- 不在 coverage confirmation 前进入 Step 3，不运行任何 MVE。
+
+### 影响范围
+
+- live authority 指向本 D024；control epoch 26 / CP011；
+- T012 action class 为 `CANDIDATE_FORMALIZATION`；
+- D022 的 B10 no-second-package 与所有阶段禁止边界继续有效。
+
+### 来源
+
+live D013/V029/T012；T011 worker log/archives；共享索引与论文库只读映射。

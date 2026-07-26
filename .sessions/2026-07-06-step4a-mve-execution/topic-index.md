@@ -1,7 +1,7 @@
 # Topic Index: Step 4a 维度 D MVE 执行
 
 > slug: 2026-07-06-step4a-mve-execution
-> status: active | created 2026-07-06 | last_updated 2026-07-26（D023/live V028：T011 Step 1–2 dispatch PASS；等待执行与 coverage confirmation。）
+> status: active | created 2026-07-06 | last_updated 2026-07-27（D024/live V029：T011 source coverage block；准备一次 T012 canonical recovery。）
 
 ## 专题定位（一句话）
 
@@ -27,15 +27,17 @@
 对 B11/B3/B7 走 Step 4a 维度 D MVE，守 FR-21/TL-20/FR-18/FR-12 + D005 务实路线 + D006 红线。
 
 ### 当前范围
-- **D023 当前状态**：live V026 已接收 T010 为
-  `BLOCKED_IDENTITY / P0=0/P1=0/P2=1 / mission_method_delta=NONE`。C2 停于
-  28 cells / 840 canonical rows；primary transfer 的 128-pilot unwrap 在
-  moderate/14 dB/seed `131004` 选错 `-2π` branch，P1/P2/P3 共用初始化。
-  B10 已返回候选池且禁止第二修复包；held-out/Phase D 从未授权。
-- **当前无 active scientific carrier**。live V028 已批准 T011 dispatch；唯一开放
-  动作是 `C15_REDUCED_CONSTELLATION_FORMALIZATION` 的 Step 1 search + Step 2
-  acquire，完成后停在 coverage confirmation。确认前不得进入 Step 3；readiness
-  前不得运行旧 C15 sandbox、Step 4a/MVE、Step 5/Contract/Execute。
+- **D024 当前状态**：live V029 已接收 T011 为
+  `BLOCKED_SEARCH_COVERAGE / P0=0/P1=0/P2=1 /
+  mission_method_delta=NONE`。56 retained rows / 53 unique / 49 published
+  可信，但 56/56 actual source 都是 OpenAlex；acquisition pool 不存在，
+  Step 2 未启动。该结果是当次检索管道阻断，不是 C15 negative 或 Kill。
+- **当前无 active scientific carrier**。T011 已因 actual source 仅 1/3 正确停止，
+  未进入 Step 2。唯一开放动作是一次 T012 多源恢复 + 现有全文 metadata closure +
+  三篇 canonical 单次获取；live V030 dispatch/final binding 已 PASS，当前只允许
+  clean gate 后由不同 executor 执行 Phase A。任一 canonical 失败即返回候选池；
+  成功也只停在 coverage confirmation。确认前不得进入 Step 3；
+  readiness 前不得运行旧 C15 sandbox、Step 4a/MVE、Step 5/Contract/Execute。
 
 ### 明确不含
 - ❌ 不回头救 6 次 Kill（Q1/Q2/Q3/Q8 切入点 2/4B/Q12/Q#-A，D005 诚实重评"大概率没几个能救"）
@@ -239,20 +241,23 @@ projects/simulation/
 2. **B10/B12 历史身份债务**：T006 未实现 source-native 128-pilot
    training→decision-directed 生命周期，B12 关键公式与 pilot/data channel 未闭合；
    family 保持 `UNRESOLVED`，不得继承 T006 的科学 verdict。
-3. **C15 formal readiness**：T011 Step 1–2 dispatch 已由 live V028 PASS，尚待
-   executor 执行并经 coverage confirmation；Step 3 与后续 readiness 仍未授权。
-   readiness PASS 前 C15 不是 active scientific carrier。
+3. **C15 formal readiness**：T011 已由 live V029 接收为
+   `BLOCKED_SEARCH_COVERAGE`；T012 已由 live V030 独立批准 dispatch，当前只
+   等待 clean gate 后执行 Phase A。Step 3 与后续
+   readiness 仍未授权；readiness PASS 前 C15 不是 active scientific carrier。
 4. **阶段边界**：允许 C15 Step 1–3 formalization；禁止运行旧 C15 sandbox、
    Step 4a/MVE、Step 5/Contract/Execute，禁止修 T006/T008/T009/T010，禁止
    复活 Scout/P03。
 
 ## 当前位置
 
-**🟠 D023 NO ACTIVE CARRIER / T011 STEP 1–2 DISPATCH PASS（2026-07-26）**：
-T010 已由 live V026 接收为 `BLOCKED_IDENTITY`，method delta `NONE`。840-row
-strict-prefix raw 保留，aggregate/held-out 均不存在；B10 不补第二包。live V028
-已以 `P0/P1/P2=0/0/0` 批准 T011；当前只允许不同 executor 完成 C15 Step 1
-search + Step 2 acquire，并停在 coverage confirmation。Step 3 尚未授权，
+**🟠 D024 NO ACTIVE CARRIER / T012 PHASE A DISPATCH（2026-07-27）**：
+T011 由 live V029 接收为 `BLOCKED_SEARCH_COVERAGE`，method delta `NONE`；
+56 rows/53 unique 不能弥补 actual source 只有 OpenAlex，Step 2 未启动。
+共享索引四源和 5 篇近期 content 只支持一次 T012 恢复尝试；live V030 已以
+P0/P1/P2=`0/0/0` 批准拆分后的 dispatch contract。当前只执行 Phase A；Phase B
+须通过 resume gate。三篇 canonical 任一失败即返回候选池，成功也只到 coverage
+confirmation。Step 3 尚未授权，
 readiness 前不得进入 Step 4a/MVE。formal stage 保持 Groundwork。
 
 **（历史）D016/V003 NO ACTIVE CARRIER**：T009 在一次有界 repair 后
@@ -353,10 +358,10 @@ strongest-fixed comparator 仍需 formal 闭合。D015 不继承旧 PASS，而�
   held-out/Phase D 锁定。
 - **live V025/D010 / formal D021 / epoch 23**（2026-07-26，历史）：C1 独立接收，
   delta `NONE`；C2 final binding PASS，只授权 validation。
-- **live V028/D012 / formal D023 / epoch 25 / CP010**（2026-07-26，当前）：
-  T010 `BLOCKED_IDENTITY / method delta NONE`；B10 返回池且不再修。当前无 active
-  carrier，T011 Step 1–2 dispatch 已 PASS，等待不同 executor 执行并停在
-  coverage confirmation。
+- **live V030/D013 / formal D024 / epoch 27 / CP011**（2026-07-27，当前）：
+  T011 `BLOCKED_SEARCH_COVERAGE / method delta NONE`；当前无 active carrier。
+  T012 dispatch 已 PASS；先由不同 executor 执行 Phase A，Phase B 受 resume
+  gate 与独立终验约束；失败后不再同轴 source repair。
 - **D-011** A1 参数适配（NDA 块长自适应 K）FAIL（2026-07-08，S013 新建）
 - **H008** 交接给新对话：自适应论文 baseline 组织/参数处理/叙述展开调研（2026-07-09，用户要去新对话搞清楚别人怎么弄 baseline + 参数照搬还是自调）
 - **H009** 切换三 bug 修复+30seed 重跑结果（2026-07-09，执行 thesis-writing D001 修复任务，实验在本专题 step4a 跑。代码 `_a4_switch_30seed_fixed.py` + 数据 + 报告 `_a4_switch_bugfix_report.md`。Bug2 非假增益源不修（独立核查修正用户诊断）。结论：切换无全场景增益，降级为鲁棒性补丁，net gain+1.2dB 不依赖切换。切换叙事定位回 thesis-writing 待讨论。完整交接见 thesis-writing/H003）

@@ -784,3 +784,79 @@ executor。
 
 由与 V028 verifier 不同的内部 executor 按 T011 执行结构化检索与全文获取；主控
 只从落盘 archive、共享论文库和 worker log 验收，覆盖面未经确认不得进入 Step 3。
+
+> 2026-07-27 续接 | T011 Step 1 acceptance and T012 source recovery | 状态：AWAITING_T012_DISPATCH_REVIEW
+
+## 目标
+
+独立接收 T011 的检索覆盖阻断，比较继续恢复与轮换的预期方法价值，并准备一次
+有界 T012。
+
+## 记录
+
+- T011 executor 运行七组检索；V029 独立复算 56 rows、53 unique、49 published，
+  actual source 仅 OpenAlex。三组关键 deep=0，FSO 唯一命中为泛 survey。
+- 正确接收 `BLOCKED_SEARCH_COVERAGE / P0=0/P1=0/P2=1 /
+  mission_method_delta=NONE`；acquisition pool 不存在，Step 2 未启动。
+- 只读共享索引确认直接相关 singleton provenance 至少覆盖 Semantic Scholar、
+  SerpAPI Scholar、OpenAlex、Exa；共享论文库已有 5 篇近期相关 content，但严格
+  metadata/title gate 当前只有 2 篇，canonical lineage 为 0/3。
+- 比较后选择一次 T012：合并多源 view、现有全文 metadata closure 与
+  Sato/Godard/Yang 三篇 canonical 单次获取。它比 B1 第三 evaluator repair、
+  A4 第二 identity repair、B9 新全链更可能解锁 formal-ready 方法空间。
+- JR-CMA pointing-jitter 与 modulus-rings VAE coherent-FSO 是必须保留的 novelty
+  collision；T012 不产生方法信号，任一 canonical 失败即轮换。
+- mission 追加 CP011：same-axis=1、repair=0、no-method=11，package ALIGNED，
+  mission 仍 `DRIFTED/STALLED`。
+
+## 决策引用
+
+- V029：T011 Step 1 search-coverage block 独立接收
+- D013：授权一次 T012 恢复包（新建）
+- formal D024：接收 T011 并授权 canonical recovery（新建）
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。只接收检索包、比较替代项并准备 T012；
+  未运行下载、Step 3、仿真、MVE 或 seed。
+
+## 后续
+
+独立 verifier 先审查 T012 的 shared-index source 计数、现有全文修改边界、三篇
+canonical exact-title 单次调用和失败止损；PASS 后才交不同 executor。
+
+> 2026-07-27 续接 | T012 dispatch contract closure | 状态：PASS_AWAITING_PHASE_A
+
+## 目标
+
+关闭 T012 派发合同的独立审查，并在不运行下载、精读或实验的前提下把执行拆到
+每个子 agent 不超过 15 分钟。
+
+## 记录
+
+- 独立 verifier 首轮为 `FAIL / P0=0/P1=6/P2=1`：owner/hash 自包含、
+  DOI/title alias、provenance/unique/pool 三套计数、shared metadata/index schema、
+  exact result→arnumber→PDF 绑定、15 分钟切分与 formal outcome 未闭合。
+- T012 已逐项补约：Phase A 只做 §2.1–2.3，Phase B 只做 §2.4–2.5；首次起飞
+  transcript、resume gate、timebox stop 与最终独立验收均冻结。
+- 同一 verifier 复审为 `PASS / P0=0/P1=0/P2=0`，task-control 在 epoch 26 下
+  PASS；V030 记录 dispatch contract PASS。
+- control/task 递增至 epoch 27 / CP011，只允许 clean gate 后由与 V030 不同的
+  executor 执行 Phase A；同一 verifier 的 final binding 复核为
+  `PASS / P0=0/P1=0/P2=0`。此 PASS 不是 science PASS 或方法产出，
+  `mission_method_delta=NONE`。
+
+## 决策引用
+
+- D013 / formal D024：T012 一次性 source/canonical recovery 边界
+- V030：T012 dispatch contract 独立复审 PASS
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。只修订 task contract、完成独立审查并协调
+  current projections；未运行 search/blit/download/convert、Step 3、仿真或 MVE。
+
+## 后续
+
+提交 CP011/T012 dispatch 准备形成 clean gate；由与 V030 不同的 executor 在
+15 分钟内只执行 Phase A。主控从磁盘验收其 partial receipt 后才决定 Phase B。

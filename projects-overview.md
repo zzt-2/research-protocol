@@ -1,16 +1,21 @@
 # 项目总览
 
-> 最后更新: 2026-07-26 | 活跃: 6 | 已归档: 5 | 总计: 11
+> 最后更新: 2026-07-27 | 活跃: 6 | 已归档: 5 | 总计: 11
 
 ## 活跃项目
 
 ### thesis-fso
 
 - **方向**：双偏振星地 OSL 场景中的 ML 应用方向探索；正式研究与 Direction Lab Scout/Sandbox 分层管理。
-- **正式状态**：当前无 active scientific carrier（step4a D022；live D011/V026，
-  epoch 24 / CP010）。T010 只接收 `BLOCKED_IDENTITY` 与 method delta NONE，
-  B10 已返回候选池且不开第二修复包；C15 仅进入 Groundwork Step 1–3
-  formalization，独立 readiness 审查前不得运行 MVE。
+- **正式状态**：当前无 active scientific carrier（step4a D024；live D013/V030，
+  epoch 27 / CP011）。T011 只接收 `BLOCKED_SEARCH_COVERAGE` 与 method delta
+  NONE：56 rows/53 unique/49 published，但 actual source 只有 OpenAlex，
+  acquisition pool 不存在且 Step 2 未启动。D024 只授权一次 T012
+  shared-index multi-source recovery、现有全文 metadata closure 与三篇 canonical
+  单次获取；V030 已以 P0/P1/P2=`0/0/0` 批准拆分后的 dispatch contract，当前
+  只允许 clean gate 后执行 Phase A。coverage confirmation 前不得进入 Step 3，
+  readiness 审查前不得运行 MVE。
+  T010 仍只接收 `BLOCKED_IDENTITY`，B10 已返回候选池且不开第二修复包。
   T009 仍只接收 `BLOCKED_IDENTITY` 与 method delta NONE，A4 已返回候选池；
   Direction Lab Scout campaign 仍 dormant（D022 SCIENCE_FREEZE）。
 - **Direction Lab Sandbox 历史**：B003 已完成，状态 `COMPLETED_SANDBOX_VERIFIED`；批次事实以 completion events 和不可变 projection 为证据，B001–B003 数字均不可进入论文或正式材料。
@@ -38,9 +43,12 @@
   moderate/14 dB/seed `131004` 暴露 128-pilot unwrap 的错误 `-2π` branch；
   V026 接收 `BLOCKED_IDENTITY / P0=0/P1=0/P2=1 /
   mission_method_delta=NONE`。无 aggregate，未消费 held-out；不补矩阵、不改 gate。
-- **下一合法边界**：准备 C15 Groundwork Step 1–3 formalization，闭合
-  problem、source、传统 comparator 与四判据 readiness，再由独立 verifier 审查。
-  **不得直接运行 C15 sandbox/MVE；不进入 Step 5/Contract/Execute；不修
+- **下一合法边界**：提交 CP011/T012 dispatch 准备形成 clean gate；由与 V030
+  不同的 executor 在 15 分钟内只执行 Phase A，随后按 resume gate 执行 Phase B，
+  完整包再由独立 verifier 验收。任一 canonical 获取失败即
+  返回候选池，不开第二个 source repair；全部成功也只停在 coverage
+  confirmation。**不得直接进入 Step 3 或运行 C15 sandbox/MVE；不进入
+  Step 5/Contract/Execute；不修
   T006/B12、A4/T009、B1/T008、B10/T010，不启动 B004/P03，不改 shared
   generator，不 push。**
 - **Atlas 强门入口**：`projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/atlas_gate.py`（唯一 receipt-bound 入口，19 tests 含独立对抗审查）。

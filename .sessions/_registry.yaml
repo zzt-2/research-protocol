@@ -49,8 +49,8 @@ topics:
     title: Research Direction Lab 长程真实运行测试
     status: active
     created: "2026-07-23"
-    last_updated: "2026-07-26（D012/D023/V028；epoch 25 / CP010，T011 Step 1–2 dispatch PASS）"
-    description: "D017/D018 轻量长程运行协议的真实纵向 mission。T010 已由 V026 接收 BLOCKED_IDENTITY / method delta NONE，no-method=10；B10 不开第二修复包。V028 以 P0/P1/P2=0/0/0 批准 T011，只允许不同 executor 完成 C15 blind-equalization Step 1 search + Step 2 acquire，并停在 coverage confirmation；当前仍无 active scientific carrier，禁止提前 Step 3、MVE、held-out 或 Phase D。"
+    last_updated: "2026-07-27（D013/D024/V030；epoch 27 / CP011，T012 dispatch PASS，等待 Phase A）"
+    description: "D017/D018 轻量长程 mission。V029 接收 T011 BLOCKED_SEARCH_COVERAGE / method delta NONE：53 unique 但 actual source 仅 OpenAlex，Step2 未启动，no-method=11。V030 以 0/0/0 批准拆分后的 T012 multi-source/canonical recovery；当前只允许 clean gate 后由不同 executor 执行 Phase A，Phase B 受 resume gate。任一 canonical 失败即轮换。当前无 active scientific carrier，禁止 Step3/MVE/held-out/Phase D。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 S014 现场故障、R003 场景演练、D017 控制接口和 guard
@@ -447,8 +447,8 @@ topics:
     title: Step 4a 维度 D MVE 执行（B11 单载波 NDA-ML 主推 + B7/B3 待开）
     status: active
     created: "2026-07-06"
-    last_updated: "2026-07-26（D023/live V028：T011 Step 1–2 dispatch PASS）"
-    description: "Formal carrier owner。D023 细化 D022：B10 返回池且不开第二修复包，当前无 active scientific carrier；T011 只允许 C15 blind-equalization Groundwork Step 1 search + Step 2 acquire，完成后停在 coverage confirmation。确认前不进入 Step 3，readiness 前禁止 MVE；仍不进入 Step5/Contract/Execute。"
+    last_updated: "2026-07-27（D024/live V030：T012 dispatch PASS；等待 Phase A）"
+    description: "Formal carrier owner。D024 接收 T011 BLOCKED_SEARCH_COVERAGE，当前无 active scientific carrier；V030 已批准拆分后的 T012 shared-index multi-source recovery、existing-fulltext metadata closure 与 Sato/Godard/Yang canonical 单次获取合同。当前先执行 Phase A，Phase B 受 resume gate；失败即轮换，成功也只停在 coverage confirmation；确认前不进 Step3，readiness 前禁止 MVE，仍不进入 Step5/Contract/Execute。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
         reason: 继承 S031 排优先级（B11/B3/B7 Conditional Go）+ 切法地图参照系（饱和池/稀池路径）+ D005 务实路线 + D006 红线 + 5 个口径警示

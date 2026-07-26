@@ -1,7 +1,7 @@
 # Mission Log — Research Direction Lab 长程真实运行测试
 
 > original mission: 在用户只中转任务路径和极短回执的条件下，稳定推进真实研究并积累可用方法材料。
-> phase 1: `4af6f9d..aab425d` | audit cutoff: 2026-07-26 | next checkpoint: `CP011`
+> phase 1: `4af6f9d..aab425d` | audit cutoff: 2026-07-27 | next checkpoint: `CP012`
 
 | CP | 包 / intent / family | formal science disposition | mission method delta | streaks | weight / drift | 下一步为何优于替代项 |
 |---|---|---|---|---|---|---|
@@ -15,6 +15,7 @@
 | CP008 | T008 · log-008 · `61f8c53` / METHOD_CONSTRUCT / B1 phase window | `KILL_NO_ADAPTIVE_WINDOW_SPACE` 拒收；`BLOCKED_IDENTITY`，仅保留 evaluator 负面资产 | NONE | same-axis=2, no-method=8 | OVERWEIGHT / DRIFTED | 停止 B1 修复和 T009；新 Goal 主控先做 campaign remap，再选能直接产方法的合法 carrier |
 | CP009 | T009 · log-009 · `8ea886e` / METHOD_CONSTRUCT / A4 deployable CPR | `BLOCKED_IDENTITY / SCIENCE_VERDICT_REJECTED`；拒绝“可靠工作区 DA 9/9 物理支配” | NONE | same-axis=1, repair=1, no-method=9 | ADEQUATE / package ALIGNED；mission DRIFTED/STALLED | 不开第二个 A4 repair；campaign remap 比较 B10 source-native 与新候选，比修当前多层失效 evaluator 更可能产生方法信号 |
 | CP010 | T010 · log-010 · `tag:rdl-t010-closure` / METHOD_CONSTRUCT / B10 source-native adaptive pilot-RLS | `BLOCKED_IDENTITY`；primary transfer 的 128-pilot unwrap 在 moderate/14 dB/seed 131004 选错 −2π branch，P1/P2/P3 共用初始化；840-row strict-prefix 终止 | NONE | same-axis=1, repair=1, no-method=10 | ADEQUATE / package ALIGNED；mission DRIFTED/STALLED | 不改 identity/row schema、不补第二包；转 C15 Step 1–3 formalization，比 B1 第三次 evaluator repair 与 B9 新全链更可能解锁方法载体 |
+| CP011 | T011 · log-011 · `700864d` / CANDIDATE_FORMALIZATION / C15 blind-equalization cost | `BLOCKED_SEARCH_COVERAGE`；56 rows/53 unique/49 published，但 actual source 仅 OpenAlex，关键 deep query 未闭合；Step 2 未启动 | NONE | same-axis=1, repair=0, no-method=11 | ADEQUATE / package ALIGNED；mission DRIFTED/STALLED | 共享索引已有 Semantic Scholar/SerpAPI/OpenAlex/Exa 四源，论文库已有 5 篇近期 content；一次 T012 合并三源恢复、metadata closure 与 3 篇 canonical 获取，比 B1 第三 evaluator repair、A4 第二 identity repair、B9 新全链更可能解锁方法空间；失败即轮换 |
 
 ## 使用规则
 

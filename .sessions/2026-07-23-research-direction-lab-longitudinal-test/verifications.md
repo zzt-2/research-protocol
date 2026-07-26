@@ -1503,3 +1503,108 @@ PASS。T011 可由与 verifier 不同的 executor 执行 Step 1–2，并必须�
 `AWAITING_COVERAGE_CONFIRMATION`。该结论只证明派发合同可执行，不证明 C15
 formal readiness、方法有效性、传统 comparator 充分性或 `METHOD_SIGNAL`；
 `mission_method_delta=NONE`，mission 仍为 `DRIFTED/STALLED`。
+
+## V029: T011 Step 1 search-coverage block 独立接收
+
+> date: 2026-07-27
+> 关联：D012 / formal D023 / T011 / CP011
+> verifier：与 T011 executor 分离的独立只读 subagent；未调用新 search/download，
+> 未修改文件，未运行仿真或 seed
+
+### 验证项
+
+- [x] archive/数量：七个 JSON 均可解析，query 与 T011 一致，SHA256 与 worker
+  log 一致；56 retained rows，DOI 优先/否则 normalized title 去重为 53 →
+  PASS。
+- [x] publication/source：53 unique 中 published/preprint/unknown=`49/3/1`；
+  56/56 actual `source_api=openalex`，planned `sources` 不能算实际覆盖 →
+  三源门 FAIL。
+- [x] deep/task-fit：staged/normalized/lineage retained 均 0；FSO retained=1，
+  但为泛 ML/DL optical survey，有效 direct task-fit=0 → 不能排除单源漏召。
+- [x] 止损：archive 没有 priority/priority_reason，acquisition pool 不存在；
+  Step 2/IEEE/ingest/download 均未启动，共享 papers 未写 → 正确止损 PASS。
+- [x] integrity：禁止的 sessions/master/simulation/common 无 executor diff，tracked
+  pyc 与 HEAD 一致，worktree 只有 T011 worker log → PASS。
+
+### 证据
+
+```text
+verifier=PASS_CORRECT_BLOCK
+P0/P1/P2=0/0/1
+task_control=PASS
+archives=7/7 parse+query+sha PASS
+retained_rows=56
+unique=53
+published/preprint/unknown=49/3/1
+actual_sources=openalex
+actual_source_count=1
+deep_staged/normalized/lineage=0/0/0
+deep_fso=1 generic survey; direct_task_fit=0
+acquisition_pool=ABSENT
+step2=NOT_STARTED
+formal_science_disposition=BLOCKED_SEARCH_COVERAGE
+mission_method_delta=NONE
+```
+
+P2=1：executor 未保留逐条原始 stdout/stderr/exit transcript；archive 和时间/hash
+只能旁证成功产出，不能独立证明 S2 rate-limit/缺 key 等完整输出。该 P2 不影响
+保守阻断。
+
+### 结论
+
+PASS，接收 `BLOCKED_SEARCH_COVERAGE`。这只是当次检索覆盖阻断，不是 C15
+negative result、Kill、方法失败或方法产出；不得进入 Step 2。下一动作只有在独立
+证明共享多源/全文恢复路径可行并更新 control 后，才可派一次有界恢复包。
+
+## V030: T012 source/canonical recovery dispatch 独立终审
+
+> date: 2026-07-27
+> 关联：S001 / D013 / formal D024 / T012 / CP011
+> verifier：与任务编写者、后续 executor 分离的独立只读 subagent；未修改文件，
+> 未调用 search/blit/download/convert、仿真或 seed
+
+### 验证项
+
+- [x] control/receipt：独立运行 task-control validator，epoch 26 /
+  `CANDIDATE_FORMALIZATION` / CP011 PASS；`700864d` 为 HEAD ancestor → PASS。
+- [x] 首轮审查：发现 owner/hash 自包含、identity/provenance、shared storage、
+  exact PDF binding、15 分钟切分、formal outcome 六项 P1 与 transcript 一项 P2
+  → `FAIL / P0=0/P1=6/P2=1`。
+- [x] 修订复审：normalized-title+DOI union、retrieval provenance/candidate/pool
+  三口径、五项 metadata/index 字段与历史、exact arnumber→PDF/sidecar/content、
+  Phase A/B/resume/timebox、outcome taxonomy 与 transcript 模板均闭合 → PASS。
+- [x] 科学边界：成功也只到 coverage confirmation；Step 3/MVE/owner edit 禁止，
+  `mission_method_delta=NONE` → PASS。
+- [x] final binding：control/task 同步递增为 epoch 27 / CP011 后 fresh validator
+  PASS；authority D024 active，action allowed 且不在 forbidden，下一动作只到
+  Phase A → `FINAL_BINDING_PASS / P0=0/P1=0/P2=0`。
+
+### 证据
+
+```text
+round1=FAIL
+round1_P0/P1/P2=0/6/1
+round1_P1=self-contained gate; dedupe/provenance; metadata/index storage;
+          exact-result-to-PDF binding; <=15min phases; formal outcome taxonomy
+round1_P2=initial preflight transcript creation/format
+
+round2=PASS
+round2_P0/P1/P2=0/0/0
+task_control_epoch26=PASS
+acceptance_commit=700864de9ac2d928681201312121d178ff243ccb
+acceptance_commit_is_HEAD_ancestor=true
+search_or_download_run=false
+simulation_or_seed_run=false
+formal_science_disposition=DISPATCH_CONTRACT_PASS
+mission_method_delta=NONE
+
+final_binding_epoch=27
+final_binding=PASS
+final_binding_P0/P1/P2=0/0/0
+```
+
+### 结论
+
+PASS。T012 dispatch contract 与 epoch 27 final binding 均已通过，可先交给与
+verifier 不同的 executor 执行 Phase A。本 PASS 只证明任务合同可执行，不证明
+C15 formal readiness、科学正/负结论、`METHOD_SIGNAL` 或 promotion。
