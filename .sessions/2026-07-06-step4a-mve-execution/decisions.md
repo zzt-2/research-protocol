@@ -761,10 +761,10 @@ S015 续接 / V002 / live-test D002。
 
 ## D015: Goal campaign remap 激活 A4 deployable adaptive CPR
 
-> status: active
+> status: superseded
 > date: 2026-07-26
 > 取代：D014（只取代“无 active carrier / 等待 remap”的当前动作；B1 返回池事实保留）
-> 被取代：无
+> 被取代：D016
 > 依据：live R001/D003 + CP001–CP008 + S013 + thesis-writing D001–D008/H003
 > 触发原话：live topic `voice.md` 2026-07-26
 
@@ -821,3 +821,138 @@ S015 续接 / V002 / live-test D002。
 ### 来源
 
 live R001/D003；S013；thesis-writing H003 与 D001–D008；mission-log CP001–CP008。
+
+---
+
+## D016: T009 身份裁决失败，A4 返回候选池
+
+> status: superseded
+> date: 2026-07-26
+> 取代：D015（只取代当前 carrier 与 next action；D015 对 T009 的历史授权、身份门和“不再二修”约束保留）
+> 被取代：D017
+> 依据：验证 V003 + T009 worker-log + executor commit `8ea886e4b5c1e3318fd9426dcc7e8aebcdf8a558`
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. 接受 T009 的 formal disposition：
+   `BLOCKED_IDENTITY / SCIENCE_VERDICT_REJECTED`，`mission_method_delta=NONE`。
+   T009 在身份门停止，P1–P3 primary comparison 未运行，因此没有方法信号或方法
+   包装结论。
+2. `A4_DEPLOYABLE_ADAPTIVE_CPR` 返回候选池；不作 A4 family Kill，也不为当前
+   A4 evaluator 开第二个 repair package。formal owner 当前无 active carrier，
+   等待 live Goal campaign remap 产生新的 formal 激活决策。
+3. 拒绝把“DA 在 9/9 validation conditions 获胜”写成可靠工作区内的物理支配或
+   普适排序。该数字最多是错误 evaluator 下的局部观察，不得进入论文、方法卡、
+   family Kill 或后续 carrier 排名依据。
+
+### 核心失败机制
+
+- shared transmitter/pilot 路径含随机生成，未闭合 common-payload 与已知导频身份；
+  DA/NDA 的输入和评价人口因此不可证明同一。
+- 1 MHz 频率条件在 DA/NDA 路径间存在不对称，不能把排序差异归因于 DA/NDA
+  机制本身。
+- validation 条件缺少足以支撑“可靠工作区”的来源，且没有合法 FEC crossing；
+  因而既不能形成 dB 增益结论，也不能宣称可靠工作区内的物理支配。
+- `raw.json` 与 `result.json` 位于 gitignored results 目录，未进入 executor
+  commit；`git diff --check 8ea886e^ 8ea886e` 另因 8 个 EOF 空行告警失败。
+  原提交可定位执行资产，但不构成可移植、格式闭合的 formal evidence package。
+
+### 否决了什么
+
+- 否决“DA 9/9 因而物理上支配 NDA”及据此关闭 A4 family。
+- 否决把工程测试、DPLL smoke 或 identity abort 冒充 `METHOD_SIGNAL`。
+- 否决在当前 A4 evaluator 上再开第二个 repair 包；D015 已预注册失败后回池。
+
+### 可复用部分
+
+- T009 task-control、DPLL 连续 VCO smoke、隔离实现和失败机制可作为 evaluator
+  防错资产。
+- executor commit `8ea886e4…` 与本地 ignored raw/result 保留为原始审计指针，
+  但引用时必须同时标注其证据闭包限制。
+
+### 影响范围
+
+- 本专题仍处于 GW Step 4a；不进入 Step 5、Contract 或 Execute。
+- D015 仅在“当前 carrier/next action”上被取代；其旧假增益禁继承、strongest
+  comparator 要求、T009 历史授权和 no-second-repair 约束不被推翻。
+- B1 的 D014 返回池事实、T008 拒收，以及更早 A4/NDA-ML 历史证据均不追溯改写。
+
+### 来源
+
+S016 / V003 / T009 worker-log / executor commit `8ea886e4…`。
+
+---
+
+## D017: 激活 B10 source-native adaptive pilot-RLS Step 4a carrier
+
+> status: active
+> date: 2026-07-26
+> 取代：D016（只取代“无 active carrier / 等待 remap”的当前动作；T009 拒收、A4 返回池与 no-second-repair 事实保留）
+> 被取代：无
+> 依据：live R002/D006 + B10 L20/Q1/Q2 + D012/V001 + Springer 2024 DOI metadata/fulltext + R002 §2.1 摘要级邻近方法先例
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. 当前 formal carrier 激活为 `B10_SOURCE_NATIVE_ADAPTIVE_RLS_CPR`，仍处于
+   GW Step 4a 维度 D；不进入 Step 5/Contract/Execute。
+2. B10 的 readiness 为 `FORMAL_READY_WITH_SOURCE_NATIVE_IDENTITY_GATE`：
+   - L20/B10-Q1/Q2 的 Step 1–3 证据与 2024 全文存在；
+   - D012 曾合法激活 B10/B12，但 V001 拒收 T006 的 estimator/channel/statistics
+     身份，family 保持 `UNRESOLVED`；
+   - T010 必须从原文重建 fixed B10，不得把 T006 组件改名复用。
+3. T010 的 source-native gate 必须闭合：128 连续 pilot、训练→DD 生命周期、
+   independently frozen pilot manifest、pilot/data 同一 TX 侧通道、standard RLS
+   递推和 `h0/P0/δ/F` 初始化、全 radians、positive-CFO source smoke、无
+   TX-truth/future/post-hoc resolve。
+   `source-native` 仅指 estimator 身份；2.5 GBd 星地 GG primary 从
+   `B5Params.R_SYM_B5` 读取并标 `SOURCE_TRANSFER`，不能把 B10 原文
+   26 dB OSNR 等同于 electrical SNR。
+4. gate 通过后同包比较：
+   - P1：validation-frozen fixed-`λ` source-native B10；
+   - P2：receiver-visible normalized-innovation update freeze；
+   - P3：只由滞后一拍/EMA innovation 形成的有界 `λ_k`；
+   - cheap amplitude-only freeze 与 conventional 4OPM+BPS /
+     4OPM+DD-DPLL。
+5. `METHOD_SIGNAL` 必须在 held-out paired test 同时胜 P1、cheap rule 与
+   conventional B*，并闭合 working region、clean degradation、信息边界和统计门；
+   其中 required comparator 必须共同具有真实 HD-FEC crossing，且所有纳入 Q²
+   Go 的 seed 均 `BER<0.2`；no-crossing/collapse 只允许 outage/boundary 包装。
+   oracle 只作上界。source smoke、代码创建、测试 PASS 或 negative result 均不是
+   方法产出。
+6. T010 若 `BLOCKED_IDENTITY` 或方法无增量，不开第二个 B10 repair；返回 live
+   Goal 轮换到 C15 Step 1–3 formalization 或其他新 carrier。
+
+### 正向方法合同
+
+- `positive_method_target`：receiver-visible innovation-aware robust pilot-RLS
+  CFO/PN tracking under GG fade-induced DD errors。
+- `minimal_construct`：P1 fixed B10；P2 innovation freeze；P3 adaptive forgetting。
+- `fair_comparator`：source-native P1、amplitude-only cheap gate、task-matched
+  validation-frozen 4OPM+BPS 与 4OPM+DD-DPLL；相同 waveform、pilot/data mask、
+  energy、realization、frequency-stage responsibility 和 tuning opportunity。
+- `primary_packaging`：星地高阶 QAM 的创新量门控自适应 pilot-RLS CPR。
+- `fallback_packaging`：source-native B10 星地迁移边界、低复杂度 update-freeze
+  或 robustness/complexity operating regime。
+- `next_positive_action`：执行 live T010；identity 通过后同包跑完整方法 slice。
+
+### 排除的替代方案
+
+- 不做 B10+B12 组合：B12 公式身份未闭合，会复刻 T006 多重归因混淆。
+- 不直接跑 C15：Step 1–3 未完成，违反 FR-22。
+- 不继续 B1/A4 evaluator：分别违反第三 repair 与 no-second-repair 边界。
+- 不转 B9：当前星地 formal migration 与自相干基础设施均未闭合。
+
+### 影响范围
+
+- 更新本专题 current carrier 与 live authority；历史 D012–D016 血缘保留；
+- 只允许 T010 隔离路径，不改 shared generator、common、params、论文或 owner；
+- negative/blocked evidence 只作 scoped Step 4a 资产，不作 family/domain Kill。
+
+### 来源
+
+live R002/D006；B10 L20/Q1/Q2；D012/V001；DOI
+`10.1007/s11107-024-01019-2` metadata/content；DOI
+`10.1109/ICAIT66450.2025.11353303` 与 `10.1016/J.CJA.2015.05.001`
+本地检索元数据（仅支持邻近方法族，不作精确公式来源）。

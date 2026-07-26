@@ -396,3 +396,43 @@ T007 必须带真实 epoch 9 task-control marker 并过 guard。先验证“最�
 
 先独立审查 epoch 15/control/T009 一致性；PASS 后由线程内 executor 执行 T009，
 再由另一独立 verifier 做科学接收。
+
+> 2026-07-26 续接 | T009 接收、post-remap 与 B10 T010 准备 | 状态：T010_REVIEW
+
+## 目标
+
+接收 T009 的独立科学审查，更新 CP009；不修 A4 evaluator，在至少三条后继路线间
+完成 carrier remap，并准备一个比替代项更可能产生 `METHOD_SIGNAL` 的方法包。
+
+## 记录
+
+- T009 的工程测试与 DPLL smoke 通过，但独立 verifier 报
+  `FAIL / P0=4 / P1=5 / P2=1`。主控只接收
+  `BLOCKED_IDENTITY / SCIENCE_VERDICT_REJECTED` 与
+  `mission_method_delta=NONE`；pilot/TX truth、DA/NDA frequency-stage、
+  working region 和 artifact closure 失败使 DA 9/9 不能成为方法或物理结论。
+- mission-log 已追加 CP009：`same-axis=1, repair=1, no-method=9`；当前 package
+  为 `ADEQUATE / ALIGNED`，完整 mission 仍为 `DRIFTED / STALLED`。
+- D005/formal D016 将 A4 返回候选池并禁止二修。R002 比较 B10、C15、B1、B9：
+  B10 已有 Step 1–3、全文与可重建 source-native 生命周期；C15 尚缺完整
+  Step 1–3，B1 会成为第三 evaluator repair，B9 需新接收架构。
+- D006/formal D017 激活 B10。T010 只授权 128 contiguous pilot→DD 的
+  source-native fixed B10，以及 identity 过门后的 innovation freeze、adaptive
+  forgetting、amplitude-only cheap rule 和 conventional B* fair comparison。
+- 本轮只准备 control/formal/task 与独立起飞审查，尚未运行 T010 实验。
+
+## 决策引用
+
+- D005：接受 T009 身份阻断并撤销 A4 当前 carrier（新建）
+- D006：激活 B10 source-native adaptive pilot-RLS（新建）
+- formal D016/D017：T009 formal 接收与 B10 carrier 激活
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。仍处于 GW Step 4a；未修 T006/B12、
+  B1/T008、A4/T009，未进入 Step 5/Contract/Execute。
+
+## 后续
+
+独立 verifier 审查 epoch 17 / CP009 / D017 / T010；PASS 后先提交 remap 治理基线，
+再由线程内 executor 按 TDD 执行 T010，并由不同 verifier 独立验收。

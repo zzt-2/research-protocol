@@ -5,7 +5,8 @@
 # NO legal main-method signal. F1=TESTBED_BLOCKED / F3=UNRESOLVED / F4=INFRASTRUCTURE_BLOCKED.
 # F2 pilot lineage merges into existing Pilot-Jones formal Groundwork (no parallel Scout).
 # Negative material -> harvest/limitations only; NOT a full negative paper.
-# Next authoritative work = execute step4a D012-authorized high-order CPR combination T006.
+# Next authoritative work = independently review, then if PASS execute
+# step4a D017-authorized B10 source-native adaptive pilot-RLS T010.
 # Updated 2026-07-23 (T001 current-owner reconciliation): D061 strategic switch reflected — P03 = PAUSED_RETURNED_TO_PORTFOLIO
 # (option 1, family not closed); Pilot-Jones was then formal GW line; D066/V040 later returned it.
 # (V035 backward PASS, 4 direct-competitor full-text BLOCKED).
@@ -19,7 +20,7 @@
 
 schema_version: research-direction-lab.state.current.v1
 project_id: thesis-fso.dual-pol-osl.direction-lab
-last_recovery_entry: .sessions/2026-07-23-research-direction-lab-longitudinal-test/T006-high-order-cpr-combination-method.md
+last_recovery_entry: .sessions/2026-07-23-research-direction-lab-longitudinal-test/T010-b10-source-native-adaptive-rls-cpr.md
 
 formal_goal: >-
   Systematically identify whether machine learning provides a real, legally
@@ -32,8 +33,8 @@ formal_goal: >-
 authorization:
   current_mode: DORMANT  # was SCIENCE_SCOUT; D022 SCIENCE_FREEZE paused the campaign (topic dormant). D061 confirms: no current science-execution authorization in the Scout campaign.
   science_authorized: false  # the Scout campaign is dormant; formal science advances via master-state.md, not this campaign
-  scope: dormant campaign — no active multi-mechanism Scout rotation (D022). P03 remains paused. Pilot-Jones current rescue axis is scoped-Killed and returned; formal carrier is high-order CPR.
-  formal_gw_line: HIGH_ORDER_CPR_COMBINATION GW Step 4a T006_READY (step4a D012/S014). Pilot-Jones T005/D066/V040 closes only the fixed complex component rescue axis; entire family and 4-paper debt are not claimed closed.
+  scope: dormant campaign — no active multi-mechanism Scout rotation (D022). P03 remains paused. Pilot-Jones fixed complex rescue is scoped-Killed and returned; T006 was scientifically rejected without killing B10/B12; current formal carrier is B10 source-native adaptive pilot-RLS.
+  formal_gw_line: B10_SOURCE_NATIVE_ADAPTIVE_RLS_CPR GW Step 4a T010_PREPARED (step4a D017 / live D006 / epoch 17 / CP009). Independent T010 pre-dispatch review must PASS before execution. Pilot-Jones T005/D066/V040 closes only the fixed complex component rescue axis; entire family and 4-paper debt are not claimed closed.
   prohibits:
     - modify or rerun B001-B003 / P03 Atlas / canonical-state / completion-events
     - create legacy B004
@@ -237,6 +238,7 @@ next_action:
     D061 routing remains: P03 PAUSED_RETURNED_TO_PORTFOLIO. Pilot-Jones T005/D066/V040 now
     scoped-Kills the fixed complex component rescue axis (max point/CI upper 0.0804/0.2372 dB);
     entire family and D056's 4-paper debt remain open but are no longer current carrier.
-    Formal work moves to step4a D012/T006 HIGH_ORDER_CPR_COMBINATION: restore B10/B12
-    source closure, test legal headroom, and only if it survives run three bounded methods in the
-    same package. Stop before Step 5. Do NOT resume Scout/P03.
+    T006's source/channel/statistics verdict was rejected; it is history, not a runnable alias.
+    Formal work is step4a D017/live D006 B10_SOURCE_NATIVE_ADAPTIVE_RLS_CPR. Independently
+    review T010 first; only after PASS execute estimator identity and the same-package P1-P3,
+    cheap-rule, and conventional-B* comparison. Stop before Step 5. Do NOT resume Scout/P03.

@@ -1,7 +1,7 @@
 # Topic Index: Step 4a 维度 D MVE 执行
 
 > slug: 2026-07-06-step4a-mve-execution
-> status: active | created 2026-07-06 | last_updated 2026-07-26（D015：Goal campaign remap 激活 A4 deployable adaptive CPR，T009_READY。）
+> status: active | created 2026-07-06 | last_updated 2026-07-26（D017：激活 B10 source-native adaptive pilot-RLS carrier，T010 待独立审查。）
 
 ## 专题定位（一句话）
 
@@ -27,9 +27,11 @@
 对 B11/B3/B7 走 Step 4a 维度 D MVE，守 FR-21/TL-20/FR-18/FR-12 + D005 务实路线 + D006 红线。
 
 ### 当前范围
-- **D015 当前状态**：`A4_DEPLOYABLE_ADAPTIVE_CPR` active，T009_READY。T008
-  拒收与 B1 返回池事实保留，但 D014 的“无 active carrier / 等待 remap”动作已被
-  取代。仍止于 Step 4a。
+- **D017 当前状态**：T009 的 `BLOCKED_IDENTITY / NONE` 与 A4
+  `RETURNED_TO_POOL` 保留；post-T009 remap 已激活
+  `B10_SOURCE_NATIVE_ADAPTIVE_RLS_CPR`。T010 必须从 128 contiguous pilot→DD
+  原文生命周期重建 fixed B10，identity 过门后同包比较 innovation freeze 与
+  adaptive forgetting。仍止于 Step 4a。
 - **复用 projects/simulation/common/ 基建**（GG+Doppler+phase noise 信道 + VV/BPS/DPLL/KF 载波恢复，TL-24/TL-13 已制度化）
 - **增量扩充 common**：
   - `_modulation.py` 加 M-APSK（8PSK / (8,8)-16APSK / 32APSK / 64APSK + Gray 映射）—— B11+B3 共用
@@ -51,6 +53,26 @@
 - ❌ 不污染 common（explore 阶段探针不直接进 experiments，MVE 通过才转正）
 
 ### 范围变更记录
+- **2026-07-26 R002/D017 B10 source-native activation**：比较 B10、C15、B1、
+  B9 后，B10 是唯一能在现存 Step 1–3 与可获取全文上直接形成方法包的 carrier。
+  - 新范围：只允许 T010 隔离实现 source-native fixed B10、P2 innovation freeze、
+    P3 adaptive forgetting、amplitude-only cheap rule 与 task-matched conventional
+    B*；不复用 T006 estimator。
+  - 退出边界：identity 或方法门失败后不开第二个 B10 repair，优先返回 live Goal
+    做 C15 Step 1–3 formalization。
+  - 不变边界：不进入 Step 5/Contract/Execute，不改 common/params/paper/owner，
+    不恢复 B1/A4/Pilot-Jones/P03/Scout。
+- **2026-07-26 V003/D016 A4 carrier return**：T009 在一次有界 repair 后于
+  identity gate 停止；独立 verifier 为 `FAIL, P0=4/P1=5/P2=1`。
+  - 接受边界：`BLOCKED_IDENTITY / SCIENCE_VERDICT_REJECTED` 与
+    `mission_method_delta=NONE`；P1–P3 primary 未运行。
+  - 拒绝边界：shared transmitter/pilot 随机、1 MHz 频率不对称、validation
+    缺可靠工作区来源且无 FEC crossing；DA 9/9 只作错误 evaluator 下观察，不作
+    物理支配或 family Kill。
+  - 新范围：A4 返回候选池；不再修当前 evaluator，formal 无 active carrier，
+    等待 live Goal campaign remap。
+  - 证据闭包：raw/result 位于 gitignored results，且 executor commit
+    `8ea886e4…` 的 `git diff --check` 因 8 个 EOF 空行告警失败。
 - **2026-07-26 V002/D014 carrier return**：T008 工程测试通过，但
   `KILL_NO_ADAPTIVE_WINDOW_SPACE` 因 no-crossing dB proxy、oracle candidate、
   eval population 与 evidence closure 失败被拒收。
@@ -171,21 +193,44 @@ projects/simulation/
   新建）：A4 以 `READY_WITH_BOUNDED_IDENTITY_ADJUDICATION` 进入 T009；先关闭
   common-payload/pilot/ambiguity/deployable-input/strongest-fixed identity，过门后
   同包完成 P1–P3；失败不再开第二个 A4 repair 包。
+- **D016** T009 身份裁决失败，A4 返回候选池（2026-07-26 新建）：
+  接受 `BLOCKED_IDENTITY / SCIENCE_VERDICT_REJECTED` 与 method delta NONE；
+  DA 9/9 只作错误 evaluator 下观察，不作物理支配/family Kill。A4 不再二修，
+  formal 当前无 active carrier。
+- **D017** B10 source-native adaptive pilot-RLS 激活（2026-07-26 新建）：
+  基于 live R002/D006 恢复 B10 formal carrier；T010 必须先重建 128 contiguous
+  pilot→DD fixed B10，identity 过门后同包比较 innovation freeze、adaptive
+  forgetting、amplitude-only cheap rule 与 conventional B*。
 
 ## 悬而未决
 
-1. **用户拍板下一步方向**（GW Step 4a/4b/5/6/7 全闭合后）：①进 Contract 阶段（落假设+信号+success_signal）②补消融（跨块 KF + BPS 迁移，论文写作前）③B7 Gardner TED FOE MVE（并行第二候选）④B3 架构决策（多孔径阵列 vs 单链路）
-2. **消融后置状态**：跨块 KF（FR-18 预判 cross-over 移动）+ BPS 迁移对比（田野调查候选补充）+ decision-feedback DA ML（债务①）—— 都标"论文写作前补"，主实验已 PASS 不卡
-3. **SPEC.md §8 NDA-ML 段补完**：Step 7 后用实际参数补更准（当前 QPSK §1-7 与 NDA-ML 新参数双套共存）
-4. **B11 作理论参考的具体叙事方式**：论文里如何引用 B11（背景 / 思想源头 / 对比锚？）待写作阶段定
-5. **债务提示**：①单载波 DA ML 近最优（pilot sp=4）vs B11 论文 DA ML（decision-feedback）不对等，论文写作前视情况补对照 ②B11 genie-aided 解卷绕非可实现，MVE/Formal 用 resolve_m16apsk_blockwise（非 oracle）已落实 ③田野调查 BPS 候选补充行（光纤 CPR 主流基准，主面 QAM 场景不同），作迁移对比二级 baseline ④MVE 脚本是 `_time_domain_crlb.py` 薄包装，Formal 仿真器已独立实现（simulator/，不复用 explore 探针，§4.5 MVE 一致性 bit-exact 验证）⑤simulator-design.md §4.4 自相关 h lag-1=0.99 是块内恒定物理特性（块间 lag-100=0.0164 非平滑假象），阈值分块内/块间
+1. **T010 当前方法包**：source-native fixed B10、innovation freeze 与 adaptive
+   forgetting 的身份、working region 与方法信号待独立执行/验收。
+2. **B10/B12 历史身份债务**：T006 未实现 source-native 128-pilot
+   training→decision-directed 生命周期，B12 关键公式与 pilot/data channel 未闭合；
+   family 保持 `UNRESOLVED`，不得继承 T006 的科学 verdict。
+3. **历史后置材料**：跨块 KF、BPS 迁移、decision-feedback DA ML、SPEC.md §8
+   与 B11 叙事仍只属历史写作/消融债务；在新 carrier 激活前均非当前动作。
+4. **阶段边界**：仍止于 GW Step 4a；不得进入 Step 5/Contract/Execute，也不得
+   直接运行 C15、修 B1/T008、二修 A4/T009 或复活 Scout/P03。
 
 ## 当前位置
 
-**🟢 D015/T009 A4 CARRIER ACTIVE（2026-07-26）**：live Goal 已完成 R001
-campaign remap，比较 A4、B10/B12、B1 后激活 `A4_DEPLOYABLE_ADAPTIVE_CPR`。
-当前 formal step 仍为 GW Step 4a，唯一科学动作是 T009 的一次有界 identity
-adjudication + P1–P3 fresh paired method comparison；不修 T008/T006，不进入 Step 5。
+**🔵 D017 B10 SOURCE-NATIVE CARRIER ACTIVE（2026-07-26）**：R002 完成
+post-T009 比较并激活 B10。T010 先闭合 128 contiguous pilot→DD、TX 侧同通道、
+原文 RLS/单位和 positive-CFO smoke，再同包比较 P1–P3、cheap rule 与 conventional
+B*。独立 verifier 通过前不执行；仍止于 GW Step 4a。
+
+**（历史）D016/V003 NO ACTIVE CARRIER**：T009 在一次有界 repair 后
+于 identity gate 停止，P1–P3 未运行。formal 接受
+`BLOCKED_IDENTITY / SCIENCE_VERDICT_REJECTED` 与 method delta NONE，但拒绝把
+错误 evaluator 下的 DA 9/9 写成可靠工作区物理支配。A4 已返回候选池，不作 family
+Kill、不再二修；等待 live Goal campaign remap 的新 formal 激活决策。仍止于 GW
+Step 4a，不进入 Step 5/Contract/Execute。
+
+**（历史）D015/T009 A4 CARRIER ACTIVE**：D015 对 T009 的激活、身份门和
+no-second-repair 约束已执行；其“当前 carrier/next action”由 D016 取代，历史授权
+与退出条件保留。
 
 **（历史）S015/V002/D014 NO ACTIVE CARRIER**：T008 Kill 被拒收，B1 为
 `BLOCKED_IDENTITY / RETURNED_TO_POOL`；该“无 carrier / 等待 remap”动作已被 D015
@@ -260,6 +305,14 @@ strongest-fixed comparator 仍需 formal 闭合。D015 不继承旧 PASS，而�
 - **D015/T009**（2026-07-26）：Goal R001 campaign remap 选择 A4；以统一
   waveform/common mask、deployable input 与 strongest fixed comparator 重建一次
   可失败身份门，过门后同包生产 P1–P3 方法。
+- **S016/V003/D016**（2026-07-26）：T009 独立接收 FAIL
+  (`P0=4/P1=5/P2=1`)；接受 identity block 与 method delta NONE，拒绝 DA 9/9
+  物理支配。shared transmitter/pilot 随机、1 MHz 频率不对称、无来源可靠工作区/
+  FEC crossing、raw/result ignored 和 diff-check FAIL 均入账；A4 返回候选池，
+  formal 无 active carrier。
+- **live R002/D006 / D017 / T010**（2026-07-26）：post-T009 比较 B10、C15、
+  B1、B9 后激活 B10 source-native adaptive pilot-RLS；T010 已准备，等待独立
+  起飞审查，尚未运行实验。
 - **D-011** A1 参数适配（NDA 块长自适应 K）FAIL（2026-07-08，S013 新建）
 - **H008** 交接给新对话：自适应论文 baseline 组织/参数处理/叙述展开调研（2026-07-09，用户要去新对话搞清楚别人怎么弄 baseline + 参数照搬还是自调）
 - **H009** 切换三 bug 修复+30seed 重跑结果（2026-07-09，执行 thesis-writing D001 修复任务，实验在本专题 step4a 跑。代码 `_a4_switch_30seed_fixed.py` + 数据 + 报告 `_a4_switch_bugfix_report.md`。Bug2 非假增益源不修（独立核查修正用户诊断）。结论：切换无全场景增益，降级为鲁棒性补丁，net gain+1.2dB 不依赖切换。切换叙事定位回 thesis-writing 待讨论。完整交接见 thesis-writing/H003）

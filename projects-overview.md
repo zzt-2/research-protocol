@@ -1,13 +1,16 @@
 # 项目总览
 
-> 最后更新: 2026-07-25 | 活跃: 6 | 已归档: 5 | 总计: 11
+> 最后更新: 2026-07-26 | 活跃: 6 | 已归档: 5 | 总计: 11
 
 ## 活跃项目
 
 ### thesis-fso
 
 - **方向**：双偏振星地 OSL 场景中的 ML 应用方向探索；正式研究与 Direction Lab Scout/Sandbox 分层管理。
-- **正式状态**：`B1_ADAPTIVE_PHASE_WINDOW GW Step 4a T007_READY`（step4a D013/S015/V001）。Direction Lab campaign 仍 dormant（D022 SCIENCE_FREEZE）。
+- **正式状态**：GW Step 4a active carrier =
+  `B10_SOURCE_NATIVE_ADAPTIVE_RLS_CPR`（step4a D017；live epoch 17 / CP009）。
+  T009 仍只接收 `BLOCKED_IDENTITY` 与 method delta NONE，A4 已返回候选池；
+  Direction Lab Scout campaign 仍 dormant（D022 SCIENCE_FREEZE）。
 - **Direction Lab Sandbox 历史**：B003 已完成，状态 `COMPLETED_SANDBOX_VERIFIED`；批次事实以 completion events 和不可变 projection 为证据，B001–B003 数字均不可进入论文或正式材料。
 - **Pilot-Jones（已退出 current carrier）**：T005/D066/V040 在 fixed/verified
   complex component 下关闭 rescue axis（max point/CI upper=0.0804/0.2372dB）。
@@ -16,9 +19,13 @@
 - **P03 状态（D061 选项①，已选定）**：`PAUSED_RETURNED_TO_PORTFOLIO`——P03 暂停回候选池（**不是 Kill**，family 不关闭，沿用 D057/D058）。Sandbox `NOT_ENTERED`，Stage B 不触发。
 - **T006 接收**：工程 PARTIAL；B10/B12 source identity、pilot/data channel 与
   robust headroom gate 失效，科学 verdict FAIL，family 保持 UNRESOLVED。
-- **下一合法边界**：执行 T007，先验证 B1 固定窗失效结构与 receiver-visible
-  observability；门通过则同包完成三个自适应相位窗方法。**不进入
-  Step 5/Contract/Execute；不修 T006；不启动 B004/P03；不改 shared generator；不 push。**
+- **T009 接收**：5 项定向测试与 DPLL smoke 可复现，但 pilot/TX-truth、
+  frequency-stage、working-region、seed/source 与提交内 raw closure 未闭合；
+  `DA 9/9` 只属错误 evaluator 下的诊断观察，不形成物理或方法结论。
+- **下一合法边界**：R002 已比较 B10/C15/B1/B9并由 D017 激活 B10；T010 等待
+  独立起飞审查，通过后由线程内 executor 执行 source-native identity 与同包方法
+  比较。**不进入 Step 5/Contract/Execute；不修 T006/B12 组合、不二修 A4/T009、
+  不修 B1/T008、不启动 B004/P03、不改 shared generator、不 push。**
 - **Atlas 强门入口**：`projects/thesis-fso/direction-lab/scout/P03-U19-residual-headroom/headroom-atlas/atlas_gate.py`（唯一 receipt-bound 入口，19 tests 含独立对抗审查）。
 - **入口**：`projects/thesis-fso/master-state.md` → `projects/thesis-fso/direction-lab/README.md`；机器状态溯源见 `projects/thesis-fso/direction-lab/state/completion-events.jsonl` 与 `state/projections/`，`canonical-state.yaml` 不是正式研究授权源。
 

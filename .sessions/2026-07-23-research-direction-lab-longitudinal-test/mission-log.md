@@ -1,7 +1,7 @@
 # Mission Log — Research Direction Lab 长程真实运行测试
 
 > original mission: 在用户只中转任务路径和极短回执的条件下，稳定推进真实研究并积累可用方法材料。
-> phase 1: `4af6f9d..aab425d` | audit cutoff: 2026-07-26 | next checkpoint: `CP009`
+> phase 1: `4af6f9d..aab425d` | audit cutoff: 2026-07-26 | next checkpoint: `CP010`
 
 | CP | 包 / intent / family | formal science disposition | mission method delta | streaks | weight / drift | 下一步为何优于替代项 |
 |---|---|---|---|---|---|---|
@@ -13,6 +13,7 @@
 | CP006 | T006 · log-006 · `21bfbda/3a67c7a` / METHOD_CONSTRUCT / B10-B12 | source identity、channel、statistics 不闭合；verdict 拒收 | NONE | repair=0, no-method=6 | OVERWEIGHT / DRIFT_RISK | 多层缺陷不值得同轴修复；转已有 B1 载体 |
 | CP007 | T007 · log-007 · `aab425d` / METHOD_CONSTRUCT / B1 phase window | 未接收；当前 Kill 未满足完整预注册门且 claim 越界 | NONE | no-method=7 | ADEQUATE / DRIFTED | 暂停 T008；先修订 method-production 与整链防偏协议 |
 | CP008 | T008 · log-008 · `61f8c53` / METHOD_CONSTRUCT / B1 phase window | `KILL_NO_ADAPTIVE_WINDOW_SPACE` 拒收；`BLOCKED_IDENTITY`，仅保留 evaluator 负面资产 | NONE | same-axis=2, no-method=8 | OVERWEIGHT / DRIFTED | 停止 B1 修复和 T009；新 Goal 主控先做 campaign remap，再选能直接产方法的合法 carrier |
+| CP009 | T009 · log-009 · `8ea886e` / METHOD_CONSTRUCT / A4 deployable CPR | `BLOCKED_IDENTITY / SCIENCE_VERDICT_REJECTED`；拒绝“可靠工作区 DA 9/9 物理支配” | NONE | same-axis=1, repair=1, no-method=9 | ADEQUATE / package ALIGNED；mission DRIFTED/STALLED | 不开第二个 A4 repair；campaign remap 比较 B10 source-native 与新候选，比修当前多层失效 evaluator 更可能产生方法信号 |
 
 ## 使用规则
 

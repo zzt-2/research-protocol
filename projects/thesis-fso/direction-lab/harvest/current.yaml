@@ -211,8 +211,8 @@ historical_thesis_spines_e15ae60:
 # H060_PRIMARY spine above, until a legal-expert retest (Macro A) resolves it.
 # ─────────────────────────────────────────────────────────────────────────────
 current_view:
-  recovery_entry: .sessions/2026-07-23-research-direction-lab-longitudinal-test/T006-high-order-cpr-combination-method.md
-  source: S013 / D021 / V010 / V011 / H014 -> FROZEN S014 / D022 / V012 / H015 (SCIENCE_FREEZE) -> D061/V035/H017 -> Pilot-Jones T005/D066/V040 scoped axis Kill -> step4a D012/T006 high-order CPR carrier. Prior S012/D020/V009 superseded.
+  recovery_entry: .sessions/2026-07-23-research-direction-lab-longitudinal-test/T010-b10-source-native-adaptive-rls-cpr.md
+  source: S013 / D021 / V010 / V011 / H014 -> FROZEN S014 / D022 / V012 / H015 (SCIENCE_FREEZE) -> D061/V035/H017 -> Pilot-Jones T005/D066/V040 scoped axis Kill -> T006 science verdict rejected -> step4a D017/live D006 B10 source-native adaptive pilot-RLS carrier. Prior S012/D020/V009 superseded.
 
   dispositions:
     - id: H060_DOWNGRADED
@@ -404,8 +404,10 @@ current_view:
     limitations material. D061 routing remains: P03 = PAUSED_RETURNED_TO_PORTFOLIO.
     Pilot-Jones T005/D066/V040 scoped-Kills the fixed complex component rescue axis
     (max point/CI upper 0.0804/0.2372dB); entire family and four-paper debt remain open, but the
-    route is returned to portfolio. Formal carrier is step4a D012/T006 high-order CPR combination.
-    Do NOT resume Scout/P03; do NOT enter Step 5/Contract/Execute; do NOT push.
+    route is returned to portfolio. T006's science verdict is rejected. Formal carrier is
+    step4a D017/live D006 B10 source-native adaptive pilot-RLS; independently review T010 and
+    execute only after PASS. Do NOT resume Scout/P03; do NOT enter Step 5/Contract/Execute;
+    do NOT push.
 
   pilot_jones_step4a_gate_kill_2026_07_23:
     # NEW durable harvest (negative/boundary + reusable infra), from T002/S079/V036.

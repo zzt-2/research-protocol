@@ -16,9 +16,12 @@ Direction Lab 是正式晋级前的候选发现/批量筛选层；Scout/Sandbox 
 
 ## 当前状态
 
-- 正式研究：当前 formal Groundwork 工作线 = **B10/B12 高阶调制 CPR 组合方法**，
-  `Step 4a T006_READY`（step4a D012/S014）。唯一正式入口为
-  [`../master-state.md`](../master-state.md)。Direction Lab Scout campaign 仍 dormant。
+- 正式研究：当前 formal Groundwork 工作线 =
+  **B10 source-native adaptive pilot-RLS CPR**，`Step 4a T010_PREPARED`
+  （step4a D017 / live D006，control epoch 17 / CP009）。T006 的工程资产保留，
+  但其 source/channel/statistics verdict 已拒收且不得当作 P1。唯一正式入口为
+  [`../master-state.md`](../master-state.md)；Direction Lab Scout campaign 仍
+  dormant。
 - Sandbox 历史：B003 已完成并独立验证；批次事实见 [`state/completion-events.jsonl`](state/completion-events.jsonl) 与 [`state/projections/`](state/projections/)。
 - Pilot-Jones formal GW 已退出 current carrier：T005/D066/V040 scoped Kill
   fixed/verified complex component rescue axis；4 篇全文债和 entire-family 完备性保留。
@@ -39,17 +42,19 @@ B001–B003 的任何数字都不能进入论文、正式 Groundwork 或 canonic
 ## 当前阻断
 
 Pilot-Jones formal debt = D056 的 4 篇直接竞品全文继续 `BLOCKED_NO_FULLTEXT`，
-但该路线已退出 current carrier，不阻塞 T006。T006 自身必须恢复 B10/B12 已有全文与
-参数 provenance，不能把摘要或光纤条件静默当作星地结论。
+但该路线已退出 current carrier，不阻塞 T010。T010 起飞前必须闭合 B10 estimator
+原文身份、2.5 GBd 星地 `SOURCE_TRANSFER`、electrical SNR/OSNR 区分、合法
+working region 和 seed census；不得把光纤 OSNR 静默当作星地电 SNR。
 
 历史 P03 阻断保留：Stage A 在 runnable 代表子域 LOCAL_NEGATIVE，但 3 轴 INFRASTRUCTURE_BLOCKED（16QAM / receiver-estimated CSI / coded output）+ 历史反例落在被阻轴上，不能形成 domain/candidate/family 退出。没有 ML 训练许可、PASS Queue、新 Registry 或 Sandbox 批次许可。
 
 ## 下一合法边界
 
-执行 live-test `T006-high-order-cpr-combination-method.md`：在当前 formal Step 4a
-先完成 B10/B12 source closure、equal-overhead baseline 与合法 headroom；门通过则
-同包完成三个组合方法与 paired test。止于 provisional verdict；不进入 Step 5，
-不启动 B004/P03，不复活 dormant science-scout。
+独立审查 live-test `T010-b10-source-native-adaptive-rls-cpr.md`；只有任务合同、
+参数溯源、Q² working-region 与 seed closure 全部 PASS，才由线程内 executor 在
+当前 formal Step 4a 执行 source-native B10 identity，并在同包完成 P1–P3、
+cheap rule 与 conventional B* paired comparison。止于 provisional verdict；
+不进入 Step 5，不启动 B004/P03，不复活 dormant science-scout。
 
 历史 P03 Headroom Atlas 入口保留（P03 PAUSED，artifact 不删）：唯一 receipt-bound 入口 [`scout/P03-U19-residual-headroom/headroom-atlas/atlas_gate.py`](scout/P03-U19-residual-headroom/headroom-atlas/atlas_gate.py) 已建立并通过 19 tests（含独立对抗审查）；Stage A artifact 在 [`scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/`](scout/P03-U19-residual-headroom/artifacts/headroom-atlas-v1/)。不得把 LOCAL_NEGATIVE 改写成候选退出，也不得启动 B004、ML 训练或正式性能结论。
 

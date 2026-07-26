@@ -104,10 +104,10 @@ T008 worker 回执、V002 独立审查、用户 2026-07-26 Goal 模式安排。
 
 ## D003: Campaign remap 激活 A4 deployable adaptive CPR
 
-> status: active
+> status: superseded
 > date: 2026-07-26
 > 取代：D002（只取代“无 active carrier / 仅 remap”的当前动作；T008 拒收事实保留）
-> 被取代：无
+> 被取代：D005
 > 依据：R001 + formal D015 + CP001–CP008 + A4 bugfix/common-768/写作资产
 > 触发原话：`voice.md` 2026-07-26（长期 Goal 的 carrier 比较、方法优先与独立验收要求）
 
@@ -199,3 +199,138 @@ executor/verifier 分离既满足这一协作偏好，也不牺牲科学审查�
 ### 来源
 
 S001 续接；用户 2026-07-26 运行模式纠正。
+
+---
+
+## D005: 接受 T009 身份阻断，A4 返回候选池并重开 campaign remap
+
+> status: superseded
+> date: 2026-07-26
+> 取代：D003（只取代 A4 active carrier 与下一动作；D003 的 T009 历史任务合同、身份门和“不再二修”约束保留）
+> 被取代：D006
+> 依据：验证 V006 + formal D016/V003 + T009 worker-log + executor commit `8ea886e4b5c1e3318fd9426dcc7e8aebcdf8a558`
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. 接受 T009 的 formal disposition：
+   `BLOCKED_IDENTITY / SCIENCE_VERDICT_REJECTED`；mission 的
+   `mission_method_delta=NONE`。P1–P3 primary 未运行，没有方法信号、包装边界或
+   promotion 结论。
+2. 拒绝把“DA 在 9/9 validation conditions 获胜”解释成可靠工作区中的物理支配。
+   该观察来自未闭合 pilot/TX-truth、DA/NDA 频率处理不对称、无来源工作区和未提交
+   raw/result 的 evaluator，不能用于论文 claim、family Kill 或 carrier 排名。
+3. A4 返回候选池，不作 family Kill，也不为当前 evaluator 开第二个 repair package。
+   前台恢复 `GOAL_MODE_CAMPAIGN_REMAP`，formal 当前无 active carrier。
+4. remap 先比较 B10 source-native 最小重建与新的 formal-ready candidates；比较完成并
+   更新 formal owner 前，只允许恢复、portfolio mapping 和任务准备，不运行科学实验。
+
+### 核心失败机制
+
+- `generate_shared_realization_apsk` 生成全 256 符号随机 payload，runner 又直接把
+  `shared["tx"][PILOT_IDX]` 交给 deployable arm；没有独立冻结且接收端可重建的 pilot
+  manifest，common-payload/pilot 身份未闭合。
+- shared channel 保留 `F_RESIDUAL=1 MHz`，DA 用 64 个所谓 pilot 回归频率，NDA 却
+  以 `assume_df_zero=True` 运行；该不对称足以制造 DA/NDA 排序。
+- contract 的 16/24/36 dB 条件无来源且越过 formal 湍流网格上限 26 dB；所有 arm
+  的最佳聚合 BER 仍为 `0.005056 > 3.8e-3`，没有合法 FEC crossing，高 SNR 曲线还
+  非单调，不能称为可靠工作区。
+- `raw.json`、`result.json` 被 `results*/` 规则忽略且 metadata 仍指向执行前
+  `220e477`；commit `8ea886e` 无法复现 headline。该 commit 另有 8 个 EOF
+  whitespace errors。
+
+### 否决了什么
+
+- 否决“DA 9/9 因而物理上支配 NDA”、A4 family Kill 和任何 dB/论文结论。
+- 否决把 5 项工程测试、DPLL smoke、negative result 或治理闭包记为方法增量。
+- 否决在当前 A4 evaluator 上继续修；这既违反 D003 的 no-second-repair 契约，也比
+  remap 到 B10 source-native 或新候选更不可能产生 `METHOD_SIGNAL`。
+
+### 可复用部分
+
+- T009 的 task-control、连续 VCO DPLL smoke、隔离实现、540 行本地 raw 和四类身份
+  失败机制可作为 evaluator 防错资产。
+- commit `8ea886e4…` 与 ignored raw/result 保留为带证据闭包限制的审计指针；不得
+  作为正式性能证据。
+
+### 影响范围
+
+- live control 升至 epoch 16、checkpoint 升至 CP009，lane 改为
+  `GOAL_MODE_CAMPAIGN_REMAP`，authority 指向 formal D016。
+- D004 的“本对话主控端到端执行”协作模式保持 active；只更换科学 carrier 与下一
+  动作。
+- 仍停留在 GW Step 4a；不进入 Step 5、Contract 或 Execute。
+
+### 来源
+
+V006；formal D016/V003；T009 worker-log、raw/result 与 executor commit
+`8ea886e4…`。
+
+---
+
+## D006: 激活 B10 source-native adaptive pilot-RLS carrier
+
+> status: active
+> date: 2026-07-26
+> 取代：D005（只取代“无 active carrier / 仅 remap”的当前动作；T009 拒收、A4 回池与 no-second-repair 事实保留）
+> 被取代：无
+> 依据：调研 R002 + formal D017 + B10 Springer 2024 全文/metadata + formal D012/V001 + 两条摘要级邻近方法先例（R002 §2.1）
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. post-T009 remap 选择 `B10_SOURCE_NATIVE_ADAPTIVE_RLS_CPR` 作为当前
+   active carrier，仍处于 GW Step 4a 维度 D。
+2. formal readiness 为 `FORMAL_READY_WITH_SOURCE_NATIVE_IDENTITY_GATE`：
+   B10 L20/Q1/Q2 Step 1–3、formal D012 与可获取全文均存在；T006 verdict 已被
+   V001 拒收、family 未 Kill，但 T006 estimator 不具 source identity，禁止复用为 P1。
+3. T010 必须先闭合前 128 连续 pilot→DD 生命周期、TX 侧同通道 pilot 注入、
+   receiver-reconstructable manifest、RLS 递推/初始化/单位与 positive-CFO source
+   smoke；identity 过门后同包完成 P1–P3 和 cheap-rule/conventional comparison。
+   `source-native` 只指 B10 estimator；2.5 GBd 星地 GG primary 必须引用
+   `B5Params.R_SYM_B5` 并标 `SOURCE_TRANSFER`，不得把 B10 的 26 dB OSNR
+   当 electrical SNR。
+4. 不把 source smoke、测试 PASS、construct 创建或 evaluator 修复记为
+   `METHOD_SIGNAL`。正信号必须来自 held-out paired test，同时胜
+   source-native fixed B10、幅度门控 cheap rule 与 conventional B*；所有 required
+   comparator 必须在共同真实 HD-FEC crossing/`BER<0.2` working region 内。
+   no-crossing/collapse 只能支持 outage/boundary，不能触发 Q² Go。
+5. T010 失败后不开第二个 B10 implementation repair，也不恢复 B12 组合、B1/T008
+   或 A4/T009；优先转 C15 Step 1–3 formalization。
+
+### 正向方法合同
+
+- `positive_method_target`：在星地 GG 深衰落/低 SNR 使 DD residual 不可靠时，
+  以 receiver-visible innovation 抑制错误 RLS 更新，并有界调整 forgetting factor。
+- `minimal_construct`：P1 source-native fixed-`λ` B10；P2 innovation freeze；
+  P3 lagged/EMA innovation variable forgetting。
+- `fair_comparator`：P1、receiver-amplitude-only cheap gate，以及在同一 waveform、
+  data mask、coarse-frequency responsibility 和 validation budget下冻结的
+  4OPM+BPS / 4OPM+DD-DPLL；truth-assisted arm 仅作 bound。
+- `primary_packaging`：面向星地高阶 QAM 深衰落决策错误的创新量门控
+  adaptive pilot-RLS CPR。
+- `fallback_packaging`：固定 B10 的 source-native 星地迁移边界、update-freeze
+  低复杂度鲁棒规则或工作区/复杂度 trade-off。
+- `next_positive_action`：独立审查 T010 后，由线程内 executor 执行；identity
+  过门后不得停在纯 smoke。
+
+### 为什么优于替代项
+
+- 相对 C15：B10 已有 formal Step 1–3 和全文；C15 尚需完整 Step 1–3，当前不能跑。
+- 相对 B1：B10 是新方法轴；B1 再继续是第三个 evaluator repair。
+- 相对 B9：B10 只需隔离 source-native estimator/generator；B9 需新建自相干、
+  oversampling、quantization 和检测链。
+
+### 影响范围
+
+- live control 升至 epoch 17，authority 指向 formal D017，mission checkpoint
+  保持 CP009；
+- 只授权 T010 的 `METHOD_CONSTRUCT`；不进入 Step 5/Contract/Execute，不改
+  common/params/paper/owner，不运行 C15/B1/A4/B9；
+- D004 的本 Goal 主控端到端 + 内部 executor/verifier 分离保持 active。
+
+### 来源
+
+R002；formal D017；B10 shared-paper metadata/content；formal D012/V001；
+DOI `10.1109/ICAIT66450.2025.11353303` 与
+`10.1016/J.CJA.2015.05.001` 的本地检索元数据（只作邻近先例）。

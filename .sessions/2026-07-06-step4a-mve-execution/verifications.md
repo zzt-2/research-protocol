@@ -70,3 +70,70 @@
 - metric：`UNRESOLVED_NO_CROSSING`。
 - T008 工程资产：PARTIAL，可保留测试和 evaluator 失败模式。
 - B1 family：`BLOCKED_IDENTITY / RETURNED_TO_POOL`，不作 Kill。
+
+---
+
+## V003: T009 A4 deployable adaptive CPR 独立接收审查
+
+> 日期：2026-07-26
+> 关联：T009 / S016 / D015 / D016
+> verifier：独立只读 agent
+
+### 验证项
+
+- [x] 独立严重度汇总：读取 verifier 终审 →
+  `FAIL, P0=4, P1=5, P2=1`。
+- [x] formal disposition：对照 T009 stop gate、worker-log 与 synthesis →
+  接受 `BLOCKED_IDENTITY / SCIENCE_VERDICT_REJECTED`；
+  `mission_method_delta=NONE`，P1–P3 primary 未运行。
+- [x] common-payload/pilot identity：审查 shared transmitter/pilot 路径 →
+  导频含随机生成，DA/NDA 输入与评价人口未证明同一，FAIL。
+- [x] 频率条件身份：审查 1 MHz 条件在 DA/NDA 路径中的使用 →
+  存在频率不对称，不能把 9/9 排序归因于 DA/NDA 物理机制，FAIL。
+- [x] working-region/source identity：审查 validation 条件来源与 crossing →
+  缺少可靠工作区来源，且无合法 FEC crossing，FAIL。
+- [x] 物理 claim ceiling：审查 worker-log、synthesis、method-card 的
+  “DA wins 9/9”表述 → 只允许保留为错误 evaluator 下的局部观察；拒绝
+  “可靠工作区 DA 9/9 物理支配”、family Kill、dB claim 和论文结论。
+- [x] artifact closure：检查 executor commit 与 ignore 状态 →
+  `raw.json`、`result.json` 位于 gitignored results，未进入提交，FAIL。
+- [x] diff hygiene：运行
+  `git diff --check 8ea886e^ 8ea886e` → 8 个 `new blank line at EOF`
+  告警，FAIL。
+
+### 证据
+
+```text
+independent verifier: FAIL
+P0=4, P1=5, P2=1
+
+executor commit:
+8ea886e4b5c1e3318fd9426dcc7e8aebcdf8a558
+
+executor disposition:
+formal_science_disposition=BLOCKED_IDENTITY
+mission_method_delta=NONE
+primary_run=false
+bounded_repairs_used=1
+
+executor observation:
+DA won 9/9 validation conditions
+
+ignored artifacts:
+projects/simulation/results/a4-deployable-adaptive-cpr-v2/raw.json
+projects/simulation/results/a4-deployable-adaptive-cpr-v2/result.json
+
+git diff --check 8ea886e^ 8ea886e:
+8 files: new blank line at EOF
+```
+
+### 结论
+
+FAIL。接受 T009 的身份阻断与 `mission_method_delta=NONE`；拒绝 DA 9/9 的物理
+支配解释、A4 family Kill 和任何性能/论文 claim。A4 状态为
+`BLOCKED_IDENTITY / SCIENCE_VERDICT_REJECTED / RETURNED_TO_POOL`。
+
+### 后续（FAIL/PARTIAL 时）
+
+不修当前 T009 evaluator，不开第二个 A4 repair package。formal 当前无 active
+carrier；等待 live Goal campaign remap 后由新的 formal 决策激活下一 carrier。

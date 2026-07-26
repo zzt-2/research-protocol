@@ -4,16 +4,16 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 15
+  control_epoch: 17
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: A4_ADAPTIVE_CPR_METHOD_PRODUCTION
-  authority_pointer: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D015
-  decision_gate: R001 已完成三 carrier remap；只允许 T009 在统一 waveform/common-payload 与 deployable identity 过门后直接生产 A4 方法
+  active_lane: B10_SOURCE_NATIVE_ADAPTIVE_RLS_CPR
+  authority_pointer: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D017
+  decision_gate: B10 仅在 128 contiguous pilot 到 DD 的 source-native identity 成立后，才可接受 innovation-gated/adaptive-forgetting 方法比较
   allowed_actions:
-    - A4_DEPLOYABLE_ADAPTIVE_CPR_METHOD_PACKAGE
+    - RECOVER
+    - TASK_PREPARATION
     - METHOD_CONSTRUCT
-    - FAIR_COMPARISON_RUN
   forbidden_actions:
     - UNRELATED_SCIENTIFIC_EXPERIMENT
     - PRIVATE_FULLTEXT_ACQUISITION
@@ -28,12 +28,12 @@ rdl_control:
     - B1_OR_T008_REPAIR
     - UNAUTHORIZED_SCIENTIFIC_EXPERIMENT
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
-  mission_checkpoint: CP008
-  next_legal_action: 本对话主控调用线程内 executor 执行 T009，再由独立 verifier 审查；用户无需中转
+  mission_checkpoint: CP009
+  next_legal_action: 独立审查 T010；通过后由线程内 executor 执行 source-native B10 identity 与同包 P1-P3 fair comparison
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（T009_INTERNAL_EXECUTION_READY；A4 campaign carrier activated）
+> 状态: active（B10 SOURCE-NATIVE METHOD PACKAGE READY FOR INDEPENDENT REVIEW）
 > 创建: 2026-07-23 | 最后更新: 2026-07-26
 
 ## 专题信息
@@ -62,7 +62,14 @@ rdl_control:
   evaluator working-region 身份失败被拒收；B1 只保留为未决 family。
 - R001 已完成 campaign remap：比较 A4、B10/B12、B1 三条具有 formal 证据链的
   carrier，并逐项排除 B2/B3/B7/C15/B9/Pilot-Jones/P03/Scout 的 readiness。
-- formal D015 已激活 A4 deployable adaptive CPR；当前唯一科学动作是 T009。
+- T009 已执行并经独立 verifier/主控接收为
+  `BLOCKED_IDENTITY / SCIENCE_VERDICT_REJECTED`；method delta 为 `NONE`。
+- A4 已由 formal D016 返回候选池，不作 family Kill，也不开第二个 A4 repair 包。
+- R002 已比较 B10、C15、B1、B9；只有 B10 具有现存 Step 1–3、可获取全文和
+  不依赖第三 repair/新基础设施的直接激活路径。
+- formal D017 已激活 `B10_SOURCE_NATIVE_ADAPTIVE_RLS_CPR`；epoch 17 只授权
+  T010 的 source-native identity 与同包 P1–P3 method construct。独立 verifier
+  通过前不执行。
 - D004 已把运行方式改为本对话端到端推进；用户不再中转 GLM，项目强制的
   executor/verifier 分离改由本线程内部子 agent 完成。
 
@@ -149,6 +156,24 @@ rdl_control:
     科学执行与审查仍保持不同 agent。
   - 影响的未决项：仅改变任务执行接口，不改变 A4、formal D015、CP008 或 T009
     科学门槛。
+- **[2026-07-26] [D005]**：T009 身份阻断后撤销 A4 当前 carrier，重开
+  post-T009 campaign remap。
+  - 原因：独立 verifier 发现 pilot/TX-truth、DA/NDA frequency-stage、公认工作区
+    与提交内 raw closure 四类 P0；P1–P3 未运行，method delta 为 `NONE`。
+  - 新范围：A4 返回候选池且不再修当前 evaluator；formal 暂无 active carrier，
+    只允许 Recover、Portfolio Map 和 Task Preparation，激活下一 carrier 前禁止实验。
+  - 影响的未决项：下一动作改为比较 B10 source-native 最小重建与其他
+    formal-ready candidates，并说明为何所选项比至少两个替代项更可能产生
+    `METHOD_SIGNAL`。
+- **[2026-07-26] [D006/R002/formal D017]**：post-T009 remap 激活 B10
+  source-native adaptive pilot-RLS。
+  - 原因：B10 已有 L20/Q1/Q2 Step 1–3、formal D012 与可获取全文；相对 C15
+    少完整前置周期，相对 B1 避免第三 evaluator repair，相对 B9 不需新接收架构。
+  - 新范围：只授权 T010 重建 128 contiguous pilot→DD 的 source-native fixed B10，
+    identity 过门后同包比较 innovation freeze、adaptive forgetting、amplitude-only
+    cheap rule 与 4OPM+BPS/DD-DPLL。
+  - 影响的未决项：T010 是否产生 `METHOD_SIGNAL/PACKAGING_BOUNDARY`；失败后不开
+    第二个 B10 repair，优先转 C15 Step 1–3 formalization。
 
 ## 已确认结论
 
@@ -209,18 +234,29 @@ rdl_control:
   关闭后 P0/P1/P2 均为 0，允许中转 T009，不预判方法结果。
 - **V005**：epoch 15 执行接口切换独立终验 PASS；P0/P1/P2 均为 0，确认
   T009 科学合同未变，允许线程内 executor/verifier 分离执行。
+- **CP009 / V006 / D005 / formal D016**：T009 的 5 项工程测试与 DPLL smoke
+  通过，但独立终审为 `FAIL, P0=4, P1=5, P2=1`。主控重算复现 540 行与 DA
+  9/9 算术，同时确认 pilot/TX truth、1 MHz frequency-stage 不对称、无来源且
+  无 crossing 的 working region、ignored raw/result 四项 P0；接受
+  `BLOCKED_IDENTITY / NONE`，拒绝物理支配 claim。A4 回池，epoch 16 重开
+  campaign remap。
+- **R002 / D006 / formal D017 / T010**：比较 B10、C15、B1、B9 后激活 B10
+  source-native adaptive pilot-RLS。T010 明确 128 contiguous pilot→DD、TX 侧
+  同通道、source smoke、P1 fixed/P2 innovation freeze/P3 adaptive forgetting、
+  amplitude-only cheap rule 与 conventional B*；等待独立起飞审查。
 
 ## 未决项
 
 - B1 family 保持 `UNRESOLVED`；若未来复用必须重建 evaluator，而非继续修 T008；
-- A4 T009 的 identity、strongest-fixed 对照与 method delta 尚待执行；
+- T010 的 source-native identity、合法 working region和方法信号尚待执行/验收；
+- C15 保留为 T010 失败后的 Step 1–3 formalization 轮换点；
 - live run 自然覆盖哪些恢复/轮换/晋级事件；
 - 何时由原 design 对话进行阶段性审计。
 
 ## 当前位置
 
-T009_INTERNAL_EXECUTION_READY。H002 接收验证与 R001 campaign remap 已完成；
-formal D015 激活 `A4_DEPLOYABLE_ADAPTIVE_CPR`，控制面绑定 epoch 15 / CP008。
-本对话主控直接调用线程内 executor 执行 T009，再由独立 verifier 裁决
-`formal_science_disposition` 与 `mission_method_delta`，追加 CP009；无论 T009
-成败，Goal 都不因单包完成而结束。
+B10 SOURCE-NATIVE PACKAGE PREPARED。T009/CP009 的
+`BLOCKED_IDENTITY / SCIENCE_VERDICT_REJECTED / method delta NONE` 保持不变。
+R002/D006/formal D017 已激活 B10 carrier，control 绑定 epoch 17 / CP009。
+下一合法动作是独立审查 T010；通过后由线程内 executor 执行 source-native identity
+与同包方法比较。不得修 T006/B12 组合、B1/T008、A4/T009，也不进入 Step 5。
