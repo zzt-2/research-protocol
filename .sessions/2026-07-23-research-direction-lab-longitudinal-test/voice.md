@@ -20,3 +20,8 @@
 - "以及，是不是最好让它每轮分析结果之后，强制它去回顾最初以及整个链条（得有一个专门文件，简短记录，我记得有来着？），想想偏没偏？有没有连续多次在小范围打转或者工作量太少之类？" → system D018
 - "也就是三层？一个简单的，一个相对详细的，一层每次单独的？这样的话，前两个是不是最好别加Sxxx？直接固定文件名，以后别的专题都在这？" → system D018
 - "然后，目前我好像额度用不完，要重置了，打算之后gpt开个新对话去开goal模式一直做" → D002 / H002
+- "当前无 active scientific carrier；campaign remap 完成前不得运行新实验、修 T008/B1 或派 T009。" → D003
+- "首轮比较至少三个合法 carrier；不足三个时逐项证明其他候选为何不满足 formal readiness。" → R001
+- "选择下一包前，明确说明它为什么比至少两个替代项更可能产生 METHOD_SIGNAL。" → D003
+- "完成一个 T 不等于 Goal 完成。每包必须记录 method delta、no-method/repair/same-axis streak 和 drift；继续自动推进下一决策。" → D003
+- "不把测试 PASS、治理 PASS、negative result 或 evaluator 修复冒充方法产出。" → D003

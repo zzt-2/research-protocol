@@ -614,10 +614,10 @@ ML 加权增益来源：
 
 ## D012: 激活 B10/B12 高阶调制 CPR 组合方法 Step 4a 大包
 
-> status: active
+> status: superseded
 > date: 2026-07-25
 > 取代：无（恢复本专题已有 B10/B12 Step 1–3 证据为当前 carrier）
-> 被取代：无
+> 被取代：D013
 > 依据：literature_notes L20/L22；B10/B12 gw-read；dual-pol D066；live-test S001
 
 ### 决策
@@ -715,10 +715,10 @@ ML 加权增益来源：
 
 ## D014: T008 身份修复失败，B1 返回候选池
 
-> status: active
+> status: superseded
 > date: 2026-07-26
 > 取代：D013（仅取代当前 carrier 与下一动作；D013 对 T007/T008 的历史授权保留）
-> 被取代：无
+> 被取代：D015
 > 依据：验证 V002 + live-test D002/CP008 + T008 task/runner/data-only 重算
 
 ### 决策
@@ -756,3 +756,68 @@ ML 加权增益来源：
 ### 来源
 
 S015 续接 / V002 / live-test D002。
+
+---
+
+## D015: Goal campaign remap 激活 A4 deployable adaptive CPR
+
+> status: active
+> date: 2026-07-26
+> 取代：D014（只取代“无 active carrier / 等待 remap”的当前动作；B1 返回池事实保留）
+> 被取代：无
+> 依据：live R001/D003 + CP001–CP008 + S013 + thesis-writing D001–D008/H003
+> 触发原话：live topic `voice.md` 2026-07-26
+
+### 决策
+
+1. 当前 formal carrier 激活为 `A4_DEPLOYABLE_ADAPTIVE_CPR`，仍处于 GW Step 4a。
+2. A4 的正式 readiness 为 `READY_WITH_BOUNDED_IDENTITY_ADJUDICATION`：
+   - 已有 B11/NDA-ML Step 1–3、A4 选择器、30-seed 数据、corrected/common-768
+     资产和论文方法结构；
+   - 旧 `+0.27–0.48 dB` 已确认是混合分母与 post-hoc oracle 假增益，禁止继承；
+   - T009 必须重新关闭 common-payload、pilot/ambiguity、receiver-visible input、
+     strongest-fixed comparator 与 real-crossing identity。
+3. T009 的 positive method target 是统一 waveform/common mask 上的 receiver-visible
+   block-wise DA/NDA selector。一次有界 identity 修复通过后，同包完成：
+   - P1 validation-frozen two-stage rule；
+   - P2 monotone validation selector；
+   - P3 confidence-safe selector。
+4. 主 comparator 是“不做适配”的 validation-frozen global fixed strategy；
+   candidate set 必须包含 fixed DA、fixed NDA 与已在 S011 立住的 DPLL 异族传统
+   baseline；B-cond 从同一集合选择，per-block oracle 只作 ceiling。
+5. `METHOD_SIGNAL` 必须胜 global B*、不被 always-DA 或 DPLL 支配，并满足 T009 的
+   paired CI、win fraction、regret closure 与 clean-degradation 门。只胜 fixed
+   NDA 时最高 `PACKAGING_BOUNDARY`。
+6. identity 或方法门失败后不再为 A4 开第二个 repair 包；A4 返回
+   `PACKAGING_BOUNDARY / METHOD_FAIL_WITH_SPACE / BLOCKED_IDENTITY` 的精确状态，
+   Goal 主控继续下一轮 remap。
+
+### 正向方法合同
+
+- `positive_method_target`：receiver-visible block-wise DA/NDA adaptive CPR。
+- `minimal_construct`：P1 frozen two-stage；P2 monotone selector；P3
+  confidence-safe selector。
+- `fair_comparator`：fixed DA、fixed NDA、validation-frozen DPLL；
+  global B*/B-cond 从三者选择，per-block oracle 仅作上界。
+- `primary_packaging`：Gamma–Gamma 湍流下接收功率感知的自适应 CPR。
+- `fallback_packaging`：NDA safeguard、工作区边界或 complexity/robustness
+  trade-off。
+- `next_positive_action`：执行 live T009；不另派纯 audit 或纯 repair 包。
+
+### 为什么比两个替代项更可能产生 METHOD_SIGNAL
+
+- 比 B10/B12 少一个方法本体重建层：A4 的动作和输出分支已经存在；B10/B12
+  source-native estimator、channel 与核心公式身份仍未闭合。
+- 比 B1 少两个同轴失败包：B1 已连续 T007/T008 且 evaluator 不在可靠 working
+  region，继续是第三个 evaluator repair；A4 是本轮第一次 formal adjudication。
+
+### 边界
+
+- T009 不修改旧 A4、paper、common、params、formal/current/mission owner；
+- 不恢复 B1/T008、T006 repair、Pilot-Jones、P03 或 dormant Scout；
+- 不进入 Step 5、Contract 或 Execute；
+- live checkpoint 在主控接收 T009 前保持 CP008。
+
+### 来源
+
+live R001/D003；S013；thesis-writing H003 与 D001–D008；mission-log CP001–CP008。

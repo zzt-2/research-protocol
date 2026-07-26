@@ -310,3 +310,60 @@ T006 自包含任务书与 epoch 8 control guard 完成后交用户转发 GLM。
 
 T007 必须带真实 epoch 9 task-control marker 并过 guard。先验证“最优窗随条件变化
 且无普适固定窗”；门失败立即 Kill，门成功同包完成三方法和 paired test。
+
+> 2026-07-26 续接 | Goal campaign remap 与 A4 carrier 激活 | 状态：T009_READY
+
+## 目标
+
+严格接收 H002 后，回顾 CP001–CP008，比较至少三条具有 formal 证据链的 carrier，
+选择比两个替代项更可能产生 `METHOD_SIGNAL` 的下一包；本轮不运行科学实验。
+
+## 记录
+
+- H002 接收方验证逐项完成：
+  1. **PASS — 接收时控制权威**：live `verifications.md#V003` 与
+     `topic-index.md` 的接收快照共同确认 epoch 13 / CP008 / D002 是 H002
+     接收时权威；本轮通过 D003/D015 才合法升级为 epoch 14。
+  2. **PASS — T008 身份**：formal
+     `.sessions/2026-07-06-step4a-mve-execution/verifications.md#V002` 与
+     `decisions.md#D014` 均将 T008 记为
+     `BLOCKED_IDENTITY / SCIENCE_VERDICT_REJECTED`，不是 Kill，也没有方法增量。
+  3. **PASS — 接收时无 active carrier**：live `verifications.md#V003`、
+     formal `decisions.md#D014` 与 `projects/thesis-fso/master-state.md` 的接收
+     快照一致确认 no-active-carrier；D015 是接收验证通过后新建的 carrier 激活。
+  4. **PASS — 依赖与冲突**：`.sessions/_registry.yaml` 显示本专题仅依赖
+     research-direction-lab-system，`conflicts_with: []`；依赖专题处于 active，
+     无冲突专题。
+  5. **PASS — scope**：本轮仅做 campaign remap、formal/control/task 落盘和
+     独立审查，仍止于 thesis-fso GW Step 4a；没有运行实验、修 T008/B1 或派 T009。
+- 按用户要求调用 `create_goal` 时，工具返回本 task 已有 unfinished Goal；
+  `get_goal` 确认 `/goal` 入口已自动建立 active Goal，objective 包含本轮完整长期
+  使命与八条运行约束，因此复用现有 Goal，不把单包完成标为 Goal 完成。
+- 比较 A4、B10/B12、B1，六维明细见 R001。A4 排第一，不是因为旧论文已经证明
+  方法，而是它已有方法动作、可运行分支和写作结构，剩余债可压成一次可失败
+  identity adjudication；B10/B12 要先重建 source-native estimator，B1 则会成为
+  第三个同轴 evaluator repair。
+- B2/B3/B7 已有专题级 Kill；C15 缺新候选 Step 1–3；B9 缺 executable chain 与
+  formal activation；Pilot-Jones/P03/Scout 当前无正向 method contract。
+- formal D015 激活 A4，live D003 将 control 升至 epoch 14。T009 只有在统一
+  waveform/common payload、deployable information 与 strongest-fixed comparator
+  身份通过后，才运行 P1–P3。
+- 独立 verifier 经两轮 FAIL 驱动修正：先把 S011 DPLL 纳入 B*/B-cond，再把
+  16-APSK hard decision、跨 block 连续 VCO、validation-only tuning 与 AWGN
+  working-region smoke 写成硬门；V004 终验 PASS，P0/P1/P2 均为 0。
+- 本轮没有运行仿真、修改实验参数或预支科学结论。
+
+## 决策引用
+
+- D003：campaign remap 激活 A4 deployable adaptive CPR（新建）
+- formal D015：A4 GW Step 4a 方法生产包授权（新建）
+- V004：campaign remap、formal 激活与 T009 独立终验 PASS（新建）
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。
+
+## 后续
+
+用户只需把 T009 路径转发给 GLM。主控接收执行包后独立验收科学身份，更新 CP009
+的 method delta、same-axis/repair/no-method streak 与 drift；无论正负都继续 Goal。

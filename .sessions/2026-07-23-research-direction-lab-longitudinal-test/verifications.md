@@ -108,3 +108,57 @@ master: CAMPAIGN-REMAP-GOAL-HANDOFF-READY
 ### 结论
 
 PASS。允许提交 CP008 接收、formal 回收与 H002 Goal 恢复入口。
+
+---
+
+## V004: Campaign remap、A4 formal 激活与 T009 独立终验
+
+> date: 2026-07-26
+> 关联：R001 / D003 / formal D015 / T009
+> verifier：独立只读 subagent
+
+### 验证项
+
+- [x] H002 接收：S001 已逐项记录 epoch 13 / CP008 / D002 接收权威、
+  T008=`BLOCKED_IDENTITY / SCIENCE_VERDICT_REJECTED`、接收时 no-active-carrier，
+  并核对 registry 依赖/冲突与 scope。
+- [x] carrier remap：R001 比较 A4、B10/B12、B1 三条 formal-eligible carrier，
+  六个必需维度齐全，并逐项说明其他候选为何不 ready。
+- [x] 相对选择：D003/D015/R001 明确 A4 比 B10/B12 少 source-native estimator
+  重建、比 B1 少第三个同轴 evaluator repair，因此更可能在单包形成方法增量。
+- [x] strongest conventional baseline：T009 将 fixed DA、fixed NDA 与 formal
+  S011 DPLL 纳入 B*/B-cond；被 DPLL 支配时禁止 `METHOD_SIGNAL /
+  PROMOTION_READY`。
+- [x] DPLL 实现身份：T009 强制最近邻 16-APSK hard decision、跨 block 连续
+  VCO、validation-only tuning，并在 primary 前复现 S011 AWGN/18 dB smoke；
+  失败即 `BLOCKED_IDENTITY`。
+- [x] 执行边界：只授权 T009；未运行实验，未修 T008/B1，未修改旧科学产物；
+  回执覆盖 task-control、stage-owner、identity 与 shared-change 阻塞。
+- [x] 结构验证：task-control PASS；registry YAML 可解析；`git diff --check`
+  exit 0。
+
+### 审查轨迹
+
+1. 首轮 `FAIL`（P0=0, P1=1, P2=2）：缺 DPLL strongest baseline、H002
+   三事实逐项证据、stage/task-control 阻塞回执。
+2. 二轮 `FAIL`（P0=0, P1=1, P2=0）：DPLL 已进 comparator，但缺连续 VCO、
+   16-APSK decision、validation-only tuning 与 S011 working-region smoke。
+3. 终轮 `PASS`（P0=0, P1=0, P2=0）：上述缺口全部关闭，全量 diff 未发现
+   越权科学产物、控制面冲突或新增缺陷。
+
+### 证据
+
+```text
+independent final review: PASS
+P0=0, P1=0, P2=0
+task-control: PASS
+registry YAML: PASS
+git diff --check: exit 0
+experiment runs in remap turn: 0
+```
+
+### 结论
+
+PASS。campaign remap、formal D015、live epoch 14 与 T009 科学任务合同一致；
+允许提交并把 T009 路径交给用户中转。此 PASS 只授权执行包，不构成
+`METHOD_SIGNAL`，也不完成长期 Goal。

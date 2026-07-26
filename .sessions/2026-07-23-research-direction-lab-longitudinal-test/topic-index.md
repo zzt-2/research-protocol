@@ -4,16 +4,16 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 13
+  control_epoch: 14
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: GOAL_MODE_CAMPAIGN_REMAP
-  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D002
-  decision_gate: T008 的 Kill 因 metric/oracle/evaluator identity 失败被拒收；八包无方法增量后必须先做 campaign remap
+  active_lane: A4_ADAPTIVE_CPR_METHOD_PRODUCTION
+  authority_pointer: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D015
+  decision_gate: R001 已完成三 carrier remap；只允许 T009 在统一 waveform/common-payload 与 deployable identity 过门后直接生产 A4 方法
   allowed_actions:
-    - GOAL_HANDOFF_PREPARATION
-    - CAMPAIGN_REMAP
-    - FORMAL_CARRIER_COMPARISON
+    - A4_DEPLOYABLE_ADAPTIVE_CPR_METHOD_PACKAGE
+    - METHOD_CONSTRUCT
+    - FAIR_COMPARISON_RUN
   forbidden_actions:
     - UNRELATED_SCIENTIFIC_EXPERIMENT
     - PRIVATE_FULLTEXT_ACQUISITION
@@ -25,15 +25,15 @@ rdl_control:
     - GENERAL_INFRASTRUCTURE_BUILD
     - PILOT_JONES_REPAIR_OR_NEW_AXIS
     - HIGH_ORDER_CPR_COMBINATION_REPAIR
-    - B1_REPAIR_OR_T009
-    - SCIENTIFIC_EXPERIMENT_BEFORE_REMAP
+    - B1_OR_T008_REPAIR
+    - UNAUTHORIZED_SCIENTIFIC_EXPERIMENT
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
   mission_checkpoint: CP008
-  next_legal_action: 新 Goal 主控接收 H002，回顾 CP001–CP008 并完成 campaign remap；remap 前不派科学 T
+  next_legal_action: 用户仅转发 T009 路径给 GLM；主控接收后独立裁决 method delta 并更新 CP009，失败不结束 Goal
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（GOAL_HANDOFF_READY；T008 verdict rejected）
+> 状态: active（T009_READY；A4 campaign carrier activated）
 > 创建: 2026-07-23 | 最后更新: 2026-07-26
 
 ## 专题信息
@@ -60,7 +60,9 @@ rdl_control:
   被拒收；B10/B12 family 为 UNRESOLVED，不继续当前修复。
 - T008 的 17 项工程测试通过，但 Kill 因 required-SNR、oracle candidate 与
   evaluator working-region 身份失败被拒收；B1 只保留为未决 family。
-- 当前只授权 Goal handoff 与 campaign remap；remap 前不派 T009 或新科学实验。
+- R001 已完成 campaign remap：比较 A4、B10/B12、B1 三条具有 formal 证据链的
+  carrier，并逐项排除 B2/B3/B7/C15/B9/Pilot-Jones/P03/Scout 的 readiness。
+- formal D015 已激活 A4 deployable adaptive CPR；当前唯一科学动作是 T009。
 
 ### 明确不含
 
@@ -129,6 +131,15 @@ rdl_control:
   - 新范围：停止 B1 修复；只做 Goal handoff 和 campaign remap。
   - 影响的未决项：下一合法 carrier 必须由 remap 比较方法产出潜力、补债成本与
     formal readiness 后确定，不能从旧 portfolio 标签直接挑。
+- **[2026-07-26] [D003/R001/formal D015]**：campaign remap 选择 A4 deployable
+  adaptive CPR 作为首个 active carrier。
+  - 原因：A4 已有方法动作、Step 1–3/Step 4a 证据、30-seed 数据和写作资产；
+    相比 B10/B12 的 source-native 重建与 B1 的第三个 evaluator repair，更可能
+    在一个包内直接产生可验收 method delta。
+  - 新范围：只授权 T009 做一次有界 identity adjudication，并在同包完成 P1–P3
+    fresh paired comparison；不改论文、common、params 或 owner。
+  - 影响的未决项：A4 是否能在 strongest fixed comparator 下形成
+    `METHOD_SIGNAL`；若不能，不开第二个 A4 repair 包，自动回到 carrier remap。
 
 ## 已确认结论
 
@@ -180,16 +191,21 @@ rdl_control:
   mission method delta 连续八包为 NONE，状态为 DRIFTED/STALLED，停止 T009。
 - **H002**：新 GPT Goal 对话恢复入口；先验三条事实并做 campaign remap。
 - **V003**：CP008 状态协调与 H002 独立终验 PASS，P0/P1/P2 均为 0。
+- **R001 / D003 / formal D015 / T009**：三 carrier remap 选择 A4；control epoch
+  14 只授权 deployable identity + P1–P3 方法生产大包。
+- **V004**：campaign remap、formal 激活与 T009 独立终验 PASS；两轮审查缺口
+  关闭后 P0/P1/P2 均为 0，允许中转 T009，不预判方法结果。
 
 ## 未决项
 
 - B1 family 保持 `UNRESOLVED`；若未来复用必须重建 evaluator，而非继续修 T008；
-- 下一合法 carrier 与下一 METHOD_CONSTRUCT 包由 Goal remap 决定；
+- A4 T009 的 identity、strongest-fixed 对照与 method delta 尚待执行；
 - live run 自然覆盖哪些恢复/轮换/晋级事件；
 - 何时由原 design 对话进行阶段性审计。
 
 ## 当前位置
 
-GOAL_HANDOFF_READY。T008 commit `61f8c53` 已审查：工程资产保留，科学 Kill
-拒收；控制面绑定 epoch 13 / CP008 / D002。下一对话先接收 H002、建立 Goal 并做
-campaign remap；在明确选出合法 carrier 前不得派 T009 或运行新科学实验。
+T009_READY。H002 接收验证与 R001 campaign remap 已完成；formal D015 激活
+`A4_DEPLOYABLE_ADAPTIVE_CPR`，控制面绑定 epoch 14 / CP008。用户只需转发 T009
+路径给 GLM。主控在包返回后独立裁决 `formal_science_disposition` 与
+`mission_method_delta`，追加 CP009；无论 T009 成败，Goal 都不因单包完成而结束。

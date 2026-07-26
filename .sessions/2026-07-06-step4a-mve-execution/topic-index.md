@@ -1,7 +1,7 @@
 # Topic Index: Step 4a 维度 D MVE 执行
 
 > slug: 2026-07-06-step4a-mve-execution
-> status: active | created 2026-07-06 | last_updated 2026-07-26（S015/V002/D014：拒收 T008 Kill，B1 返回候选池，等待 Goal campaign remap。）
+> status: active | created 2026-07-06 | last_updated 2026-07-26（D015：Goal campaign remap 激活 A4 deployable adaptive CPR，T009_READY。）
 
 ## 专题定位（一句话）
 
@@ -27,8 +27,9 @@
 对 B11/B3/B7 走 Step 4a 维度 D MVE，守 FR-21/TL-20/FR-18/FR-12 + D005 务实路线 + D006 红线。
 
 ### 当前范围
-- **D014 当前状态**：无 active carrier。T008 因 metric/oracle/evaluator identity
-  失败被拒收；B1 返回候选池，等待 Goal campaign remap。仍止于 Step 4a。
+- **D015 当前状态**：`A4_DEPLOYABLE_ADAPTIVE_CPR` active，T009_READY。T008
+  拒收与 B1 返回池事实保留，但 D014 的“无 active carrier / 等待 remap”动作已被
+  取代。仍止于 Step 4a。
 - **复用 projects/simulation/common/ 基建**（GG+Doppler+phase noise 信道 + VV/BPS/DPLL/KF 载波恢复，TL-24/TL-13 已制度化）
 - **增量扩充 common**：
   - `_modulation.py` 加 M-APSK（8PSK / (8,8)-16APSK / 32APSK / 64APSK + Gray 映射）—— B11+B3 共用
@@ -166,6 +167,10 @@ projects/simulation/
 - **D014** T008 科学 verdict 拒收并将 B1 返回候选池（2026-07-26 新建）：
   no-crossing dB proxy、oracle candidate、eval population 与 evidence closure
   失败；不作 family Kill，不再修当前实现。
+- **D015** Goal campaign remap 激活 A4 deployable adaptive CPR（2026-07-26
+  新建）：A4 以 `READY_WITH_BOUNDED_IDENTITY_ADJUDICATION` 进入 T009；先关闭
+  common-payload/pilot/ambiguity/deployable-input/strongest-fixed identity，过门后
+  同包完成 P1–P3；失败不再开第二个 A4 repair 包。
 
 ## 悬而未决
 
@@ -177,12 +182,21 @@ projects/simulation/
 
 ## 当前位置
 
-**🔴 S015/V002/D014 NO ACTIVE CARRIER（2026-07-26）**：当前 formal step 仍为
-GW Step 4a，但 T008 Kill 被拒收，B1 为 `BLOCKED_IDENTITY / RETURNED_TO_POOL`。
-下一动作不是修 T008，而是由 live Goal campaign remap 比较合法 carrier；remap
-前不得运行新实验或进入 Step 5。
+**🟢 D015/T009 A4 CARRIER ACTIVE（2026-07-26）**：live Goal 已完成 R001
+campaign remap，比较 A4、B10/B12、B1 后激活 `A4_DEPLOYABLE_ADAPTIVE_CPR`。
+当前 formal step 仍为 GW Step 4a，唯一科学动作是 T009 的一次有界 identity
+adjudication + P1–P3 fresh paired method comparison；不修 T008/T006，不进入 Step 5。
 
-**🟢 S013 A4 条件适配 PASS + 简报写完待发（2026-07-09）**：4 种适配扫描全闭合（A1 参数 FAIL / A2 结构已做 D002 / A3 组合 FAIL / **A4 条件 PASS**）。A4 = per-block 有效 SNR 驱动 DA/NDA 切换，crossover 区（γd=15dB）30 seed 赢 max(DA,NDA) +0.27~+0.48dB（CI 下界全正）。物理发现：crossover 由 per-block γ_eff 驱动（非单纯 fade 深度），诊断实证汇聚在 γ_eff 12~14dB。文献两轮独立检索（16 组 ~130 篇）确认单载波 CPR per-block pilot/blind 硬切换没人做过（最接近是静态比较 Song 2020 / 级联组合 Moretti 2013 / 算法内自适应参数，都不是切换）。fair_gain 30 seed 链：AWGN+1.34→weak+1.43→mod+1.44→strong+2.51→up_mod+2.44→up_str+3.10dB（weak/mod CI 重叠，两段趋势非严格单调）。简报 `ADVISOR_BRIEFING_2026-07-09_adaptive_cpr.md` 写完未发。**下一步**：用户去新对话调研"自适应论文怎么组织 baseline/参数/叙述"（H008），回来完善简报后发老师。
+**（历史）S015/V002/D014 NO ACTIVE CARRIER**：T008 Kill 被拒收，B1 为
+`BLOCKED_IDENTITY / RETURNED_TO_POOL`；该“无 carrier / 等待 remap”动作已被 D015
+取代，T008 拒收与 B1 返回池事实保留。
+
+**（历史，已由 H003/D001–D008 修正）S013 A4 条件适配**：原
+“赢 max(DA,NDA) +0.27~+0.48 dB”来自混合分母与 post-hoc oracle，已作废。
+修复后旧 selector 的可信定位仅为低 SNR NDA safeguard 与强湍流高 SNR 微弱条件
+收益；固定 13 dB 阈值、common-payload、pilot/ambiguity、receiver-visible input 与
+strongest-fixed comparator 仍需 formal 闭合。D015 不继承旧 PASS，而是授权 T009
+做一次可失败的 deployable identity + method-production 终审。
 
 **（前 S011 DPLL 异族 baseline 仿真完成 + baseline 池立住 2026-07-08）**：跑 DPLL DD BER 仿真（5 seed × 4 场景，181s），TL-20 四判据全 PASS（DPLL≥oracle / <2×NDA / >0.7×NDA / @18dB AWGN=3.64e-3 在预期 0.003~0.006 内）。关键发现：DPLL 必须连续处理（全数组 VCO 累积），per-block 重置 VCO 丢符号间相位连续性致 BER 暴涨。omega_n=50e6。Fair gain：DPLL vs NDA AWGN +0.103dB（NDA 稍赢 CI 不跨 0），weak/moderate +0.02dB（CI 跨 0 持平），strong 工作区 -0.046dB；DPLL vs DA 全场景稳赢 +1.25~+1.68dB。DPLL 是异族（DD 闭环 vs 升幂前馈），D-010 标准 3 合规。**baseline 池立住**：DA-ML 主 + DPLL 异族 + VV/BPS fellow。
 
@@ -243,6 +257,9 @@ GW Step 4a，但 T008 Kill 被拒收，B1 为 `BLOCKED_IDENTITY / RETURNED_TO_PO
   phase window，T007 先结构门后同包三方法。
 - **S015续接/V002/D014**（2026-07-26）：T008 工程测试 PASS、科学 Kill FAIL；
   B1 不关闭但返回候选池，formal 暂无 active carrier，等待 Goal campaign remap。
+- **D015/T009**（2026-07-26）：Goal R001 campaign remap 选择 A4；以统一
+  waveform/common mask、deployable input 与 strongest fixed comparator 重建一次
+  可失败身份门，过门后同包生产 P1–P3 方法。
 - **D-011** A1 参数适配（NDA 块长自适应 K）FAIL（2026-07-08，S013 新建）
 - **H008** 交接给新对话：自适应论文 baseline 组织/参数处理/叙述展开调研（2026-07-09，用户要去新对话搞清楚别人怎么弄 baseline + 参数照搬还是自调）
 - **H009** 切换三 bug 修复+30seed 重跑结果（2026-07-09，执行 thesis-writing D001 修复任务，实验在本专题 step4a 跑。代码 `_a4_switch_30seed_fixed.py` + 数据 + 报告 `_a4_switch_bugfix_report.md`。Bug2 非假增益源不修（独立核查修正用户诊断）。结论：切换无全场景增益，降级为鲁棒性补丁，net gain+1.2dB 不依赖切换。切换叙事定位回 thesis-writing 待讨论。完整交接见 thesis-writing/H003）

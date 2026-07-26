@@ -5,7 +5,7 @@ method_type: 待定（精读后根据问题方法产出形态确定，见 glossa
 domain: comms
 created: 2026-06-21
 updated: 2026-07-26
-current_step: CAMPAIGN-REMAP-GOAL-HANDOFF-READY
+current_step: GW-STEP4A-A4-METHOD-PACKAGE-READY
 current_stage: FORMAL_GROUNDWORK_CARRIER_SYNC
 ---
 
@@ -22,26 +22,29 @@ current_stage: FORMAL_GROUNDWORK_CARRIER_SYNC
 
 ### 当前控制面桥接（唯一现行入口）
 
-> **2026-07-26 live D002/V002/CP008 → Goal campaign remap**：T008 的 17 项
-> 工程测试通过，但所有 primary cells 无真实 FEC crossing，runner 仍用
-> `dB-equiv` 触发 Kill；gate 未计算合法 per-block oracle，且候选跳过实际
-> `B*=256`；BER population/π/2 branch resolve 又使基线不在可靠 working region。
-> 因此 `KILL_NO_ADAPTIVE_WINDOW_SPACE` 拒收，B1 为
-> `BLOCKED_IDENTITY / RETURNED_TO_POOL`。八包 method delta 均为 NONE，停止
-> B1/T009；下一动作只允许新 Goal 主控恢复并做 campaign remap。
+> **2026-07-26 live R001/D003 + formal D015 → A4 T009 READY**：H002 接收验证与
+> campaign remap 已完成。首轮比较 A4、B10/B12、B1，并逐项排除其余候选的
+> formal readiness；A4 因已有方法动作、Step 1–3/Step 4a 证据、30-seed 资产和
+> 写作结构，且剩余身份债可压成一次可失败 adjudication，优先于 B10/B12 的
+> source-native 重建和 B1 的第三个 evaluator repair。当前唯一科学动作是 T009：
+> 统一 waveform/common payload、deployable input 与含 DPLL 的 strongest-conventional comparator
+> 过门后，同包完成 P1–P3 fresh paired method comparison。
 
-- formal stage：`GROUNDWORK`（Step 4a carrier remap pending）。Direction Lab 的 Scout/Sandbox 结果对正式研究的 promotion effect 仍为 `none`；Direction Lab campaign 已 dormant（D022 SCIENCE_FREEZE），无当前科学执行授权。
-- **当前工作线**：无激活科学 carrier。B1 family 未被 Kill，但 T008 evaluator
-  identity 失败且不再修；新 Goal 对话必须先比较合法 carrier 与方法包装潜力，
-  再显式更新 formal owner。
+- formal stage：`GROUNDWORK`（Step 4a，A4 carrier active）。Direction Lab 的
+  Scout/Sandbox 结果对正式研究的 promotion effect 仍为 `none`；Direction Lab
+  campaign 已 dormant（D022 SCIENCE_FREEZE），无当前科学执行授权。
+- **当前工作线**：`A4_DEPLOYABLE_ADAPTIVE_CPR`，formal D015，live control
+  epoch 14 / CP008。T009 只允许一次有界 identity adjudication，过门即直接跑
+  P1–P3；失败不再开第二个 A4 repair 包，Goal 自动回 remap。
 - **Pilot-Jones（退出 carrier）**：D066/V040 接收 fixed complex component rescue
   axis scoped Kill；4 篇 direct competitor 全文债继续保留，但不阻塞当前 carrier。
 - P03（暂停，回候选池）：Headroom Atlas Stage A（2026-07-19，S077/D059/V033）runnable 子域 LOCAL_NEGATIVE；16QAM/receiver-CSI/coded-output 三轴 INFRASTRUCTURE_BLOCKED，历史反例落在被阻轴上 → DOMAIN/CANDIDATE/FAMILY 仍 UNRESOLVED/OPEN。**用户选项①已选定：暂停回候选池，不关闭 family**。
 - Direction Lab sandbox history：last completed batch = `B003 / COMPLETED_SANDBOX_VERIFIED`；事实源为 `projects/thesis-fso/direction-lab/state/completion-events.jsonl`。`canonical-state.yaml` 仅为机器投影，不是正式研究授权源。
 - formal promotion effect：`none`；B001–B003 数字不得进入论文或正式材料。
-- 下一合法边界：接收 live-test H002 并完成 campaign remap。**remap 前不得进入
-  Step 5/Contract/Execute，不得修 T006/T008、运行 C15、复活 Scout/P03、改
-  shared generator、启动通用基础设施或派发科学 T。**
+- 下一合法边界：执行
+  `.sessions/2026-07-23-research-direction-lab-longitudinal-test/T009-a4-deployable-adaptive-cpr-method.md`。
+  **不得进入 Step 5/Contract/Execute，不得修 T006/T008、运行 C15、复活
+  Scout/P03、改 shared generator、启动通用基础设施或运行 T009 以外的科学包。**
 
 ### 历史 Groundwork 轨迹（保留审计，不授权当前执行）
 
@@ -113,6 +116,7 @@ current_stage: FORMAL_GROUNDWORK_CARRIER_SYNC
 | Pilot Jones Step4a complex-model salvage | 🔴 SCOPED_AXIS_KILLED / RETURNED | D063–D066 / T003–T005 / S080–S082 / V038–V040 | T005 fixed/verified primary 8/8 cells max point/CI upper=0.0804/0.2372dB；scientific scoped Kill PASS，integrity PARTIAL；不再是当前 carrier。 |
 | High-order CPR B10/B12 combination Step4a | 🔴 SCIENCE_VERDICT_REJECTED / UNRESOLVED | step4a D012–D013 / S014–S015 / V001 / live T006 | 工程 PARTIAL；source/channel/statistics 多重失效，不 Kill family，不继续修。 |
 | B1 adaptive phase-window Step4a | 🔴 BLOCKED_IDENTITY / RETURNED_TO_POOL | step4a D014 / live D002 / V002 / T008 | T008 工程 17/17 PASS，但 no-crossing dB proxy、oracle candidate、eval population 与 artifact closure 失败；不接收 Kill，不再修当前实现。 |
+| A4 deployable adaptive CPR Step4a | 🟢 ACTIVE / T009_READY | step4a D015 / live R001 / D003 / T009 | 旧假增益不继承；一次闭合 common-payload/pilot/ambiguity/deployable-input/strongest-fixed identity，过门后同包 P1–P3；失败不再同轴 repair。 |
 
 > **FR-22 解释**：上方 2026-06-21 起的全项目历史表证明旧批次曾完成哪些步骤，**不能授权 2026-07-16 后出现的新候选直接进入 MVE**。新候选必须以本重开轨表为单一门控，从 Step 1 重新积累证据。
 
