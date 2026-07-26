@@ -1,0 +1,86 @@
+# Seed census — B1 adaptive phase-estimation window v2 (T008)
+#
+# Deterministic census of ALL integer seeds observed in T002–T007 / Direction Lab
+# / simulation artifacts, used to pick FRESH disjoint validation/test pools for
+# the v2 reproduction. The census is generated from contract excluded-lists +
+# result `"seed":` rows + worker-log seed statements (see explore agent census
+# run, 2026-07-26). T007 78xx/79xx were held-out in T007's contract but T008
+# treats them as NO LONGER held-out (D001: "T007 及历史 seed 不再作 held-out");
+# nevertheless T008 picks a fresh 8xxx band so it is disjoint from the ENTIRE
+# historical observation pool (including 78xx/79xx), keeping the disjointness
+# assertion strongest possible.
+#
+# owner: T008, epoch 12. Authorization: D001 / formal D013 / system D018 / CP007.
+schema_version: seed-census.b1-adaptive-phase-window-v2.v1
+frozen: 2026-07-26
+
+# ---------------------------------------------------------------------------
+# Full historical observation pool (exclusion set) — verified by explore census
+# ---------------------------------------------------------------------------
+# Sources (per T002-T007 contracts + result rows + worker logs + direction-lab):
+#   - direction-lab / CMA batches: 11-20 (train), 41-45 (test observed 41-48)
+#   - b-series / smoke / MVE constants: 0, 1, 2, 42
+#   - T002: val 2000-2004, test 3000-3009
+#   - T003: val 5000-5004, test 6000-6009 (b5 also uses 6000-6019)
+#   - T004: semantic 7001-7002, val 7100-7104, test 7200-7209, mve_test 7300-7309
+#           (7300-7309 contract-claimed but never executed; 4001 used by T004)
+#   - T005: val 7400-7409, test 7500-7509
+#   - T006: val 7600-7604, test 7700-7709
+#   - T007: val 7800-7804, test 7900-7909 (7900-7909 never executed; KILL)
+#   - cma-fade-divergence: 1000-1049
+#   - b5: calib 9000-9007, 9100-9111, 9200-9211
+#   - large MVE bases: 20000, 20240701, 20260707, 30000, 40000
+historical_observation_bands:
+  - {band: "0-2",      role: smoke/MVE constants}
+  - {band: "11-20",    role: direction-lab train}
+  - {band: "41-48",    role: direction-lab test observed}
+  - {band: "1000-1049", role: cma-fade-divergence + sim sweeps}
+  - {band: "2000-2004", role: T002 val (+ SEED_TURB0=2000 base)}
+  - {band: "3000-3009", role: T002 test}
+  - {band: "4001",      role: T004 test (contract-claimed)}
+  - {band: "5000-5004", role: T003 val}
+  - {band: "6000-6019", role: T003 test + b5 eval}
+  - {band: "7001-7002", role: T004 semantic}
+  - {band: "7100-7104", role: T004 val}
+  - {band: "7200-7209", role: T004 test}
+  - {band: "7300-7309", role: T004 mve_test (claimed, not executed)}
+  - {band: "7400-7409", role: T005 val}
+  - {band: "7500-7509", role: T005 test}
+  - {band: "7600-7604", role: T006 val}
+  - {band: "7700-7709", role: T006 test}
+  - {band: "7800-7804", role: T007 val}
+  - {band: "7900-7909", role: T007 test (claimed, not executed)}
+  - {band: "9000-9007", role: b5 calib}
+  - {band: "9100-9111", role: b5 adaptation}
+  - {band: "9200-9211", role: b5 adaptation}
+  - {band: "20000",     role: b7 fairness-check RNG base}
+  - {band: "30000",     role: b7 fairness-check RNG base}
+  - {band: "40000",     role: b7 fairness-check RNG base}
+  - {band: "20240701",  role: SEED_AWGN base}
+  - {band: "20260707",  role: b7 TX signal seed}
+
+# ---------------------------------------------------------------------------
+# Fresh T008 pools (8xxx band — completely unused historically)
+# ---------------------------------------------------------------------------
+# Validation >= 10 seeds (T008 §3.1) and test >= 10 seeds (T008 §3.1).
+# We use 12 validation seeds and 20 test seeds for a more robust paired
+# bootstrap on the corrected, validation-frozen comparison. Each (cell, seed)
+# realization is generated ONCE and shared by all methods/baselines/oracle.
+fresh_pools:
+  semantic_validation_seeds: [8000, 8001]            # deterministic semantic gates
+  bstar_validation_seeds:    [8000, 8001, 8002, 8003, 8004, 8005, 8006, 8007, 8008, 8009]   # 10 val — frozen B*
+  bcond_validation_seeds:    [8000, 8001, 8002, 8003, 8004, 8005, 8006, 8007, 8008, 8009]   # same 10 val — frozen B-cond per condition
+  feature_mapping_seeds:     [8000, 8001, 8002, 8003, 8004, 8005, 8006, 8007, 8008, 8009]   # same 10 val — feature mapping / P1 rule / P2 bins / P3 regret table
+  test_seeds:                [8100, 8101, 8102, 8103, 8104, 8105, 8106, 8107, 8108, 8109,
+                             8110, 8111, 8112, 8113, 8114, 8115, 8116, 8117, 8118, 8119]   # 20 test
+
+disjointness_assertions:
+  - "val ∩ test = ∅  (8000-8009 vs 8100-8119)"
+  - "(val ∪ test) ∩ historical_observation_bands = ∅  (8xxx is fully unused)"
+  - "every (cell, seed) realization generated ONCE; shared by all arms/oracle"
+
+forbidden_seed_rules:
+  - "no Python built-in hash() of objects (V039 T004 lesson)"
+  - "no string-derived seeds dependent on PYTHONHASHSEED"
+  - "channel realization seed == canonical integer passed to np.random.default_rng"
+  - "B*/B-cond selection reads ONLY bstar/bcond_validation_seeds; test truth never reselects"
