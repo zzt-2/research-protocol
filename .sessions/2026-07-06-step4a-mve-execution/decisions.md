@@ -1209,3 +1209,61 @@ source identity 或 raw score contract，违反 no-second-package。C15 的补�
 ### 来源
 
 live D011/V026；T010 worker-log/synthesis；R002；D021。
+
+---
+
+## D023: C15 formalization 先执行 Step 1 search 与 Step 2 acquire
+
+> status: active
+> date: 2026-07-26
+> 取代：无（细化 D022，不改变无 active carrier 与禁止 MVE 边界）
+> 被取代：无
+> 依据：调研 live R002 + 旧 C15 synthesis/contract 的 equalizer-cost identity +
+> Groundwork `gw-search.md` / `gw-acquire.md` 硬门
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. C15 的 formal 对象是 **blind equalization cost/update family**，不是 carrier
+   phase recovery。目标术语族包含 reduced constellation/Sato、CMA/MMA、
+   RDE/radius-directed 与 staged CMA→RDE/MMA；这些关系必须由全文重新闭合。
+2. 授权 T011 只完成：
+   - Step 1：≥20 candidate、≥3 sources、≥2 mechanism routes、≥5 必读、正式发表
+     占比 ≥50%，并做两个子方向的定向深搜；
+   - Step 2：按三轮止损获取 ≥5 篇有效全文，逐篇 title/DOI/content quality 核对，
+     产出覆盖面缺口报告。
+3. T011 完成后必须停止于 `AWAITING_COVERAGE_CONFIRMATION`。覆盖面未经用户确认，
+   不得派 Step 3 close read；Step 3/3.5/4a/MVE 继续锁定。
+4. 旧 C15 Scout 的 `mu=0.03` unequal-step 对比、性能数字、seed 与
+   `LOCAL_NEGATIVE` 都不是 formal evidence；只允许作为检索待核查的失败事实。
+5. T011 不是 scientific experiment，不能产生 method delta；最多形成 formal
+   readiness input。
+
+### 理由
+
+旧 C15 资产明确实现的是 2×2 blind equalizer cost，但对 Sato/RCCMA/RDE/MMA
+血缘使用了未由本地全文闭合的注释，且共同步长使 convergence opportunity 不公平。
+直接重跑会违反 FR-22 与 comparator fairness。先完成 Step 1–2 可以用最小成本
+判断是否有足够 source、传统 comparator 和星地 task-fit 证据，并为后续 Step 3
+提供合法输入。相对 B1/A4 的重复 identity/evaluator repair 与 B9 的新接收全链，
+该 formalization 仍更可能解锁 `METHOD_SIGNAL`，但不能预支为方法进展。
+
+### 排除的替代方案
+
+- 不把 C15 写成 CPR，不用“相位代价”检索。
+- 不运行旧 sandbox/MVE，不调 `mu`，不复用旧 seed 或 negative verdict。
+- 不以摘要、旧注释或 source code docstring 替代全文。
+- 不越过 coverage confirmation 进入 Step 3。
+- 不进入 Step 4a、Step 5、Contract 或 Execute。
+
+### 影响范围
+
+- live authority 指向本 D023；control 递增至 epoch 25 / CP010；
+- T011 action class 为 `CANDIDATE_FORMALIZATION`；
+- C15 仍为 `NOT_ACTIVE_CARRIER`，formal stage 保持 Groundwork；
+- D022 的 B10 no-second-package 与所有禁止边界继续有效。
+
+### 来源
+
+live D012/T011；R002；旧 C15 synthesis/contract；`stages/gw-search.md`；
+`stages/gw-acquire.md`。

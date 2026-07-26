@@ -4,15 +4,16 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 24
+  control_epoch: 25
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
   active_lane: C15_REDUCED_CONSTELLATION_FORMALIZATION
-  authority_pointer: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D022
-  decision_gate: V026 已独立接收 T010 为 BLOCKED_IDENTITY / method delta NONE；B10 无第二修复包，当前无 active scientific carrier。C15 只可从 Step 1–3 formalization 开始，readiness 独立审查前不得运行 MVE
+  authority_pointer: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D023
+  decision_gate: V028 已以 P0/P1/P2=0/0/0 通过 T011 独立 dispatch review；只允许不同 executor 执行 Step 1 search + Step 2 acquire，coverage confirmation 前不得进入 Step 3
   allowed_actions:
     - RECOVER
     - TASK_PREPARATION
+    - CANDIDATE_FORMALIZATION
   forbidden_actions:
     - UNRELATED_SCIENTIFIC_EXPERIMENT
     - PRIVATE_FULLTEXT_ACQUISITION
@@ -29,11 +30,11 @@ rdl_control:
     - UNAUTHORIZED_SCIENTIFIC_EXPERIMENT
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
   mission_checkpoint: CP010
-  next_legal_action: 准备 C15 Step 1–3 formalization T；先闭合 problem、source、传统 comparator 与四判据 readiness，再由独立 verifier 审查。不得直接运行旧 C15 sandbox、MVE 或任何新科学实验
+  next_legal_action: 由与 V028 verifier 不同的 executor 按 T011 执行结构化检索和全文获取，停在 AWAITING_COVERAGE_CONFIRMATION
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（V026 接收 T010 BLOCKED_IDENTITY；V027 控制面终验 PASS；epoch 24 / CP010 转 C15 formalization）
+> 状态: active（T010 已封存；epoch 25 / CP010 的 T011 dispatch 已由 V028 PASS，等待不同 executor）
 > 创建: 2026-07-23 | 最后更新: 2026-07-26
 
 ## 专题信息
@@ -321,12 +322,16 @@ rdl_control:
   残留 pending-C2 P1；修正后同一 verifier 复审
   `PASS / P0=0/P1=0/P2=1`。live/formal/mission/current projections/registry
   一致，P2 仅为既有 pre-C1 snapshot 债务。
+- **V028 / T011 dispatch closure**：五轮独立静态审查关闭 control/location、
+  检索门、CRLF wrapper、blit JSON、acquisition schema、共享论文库与 IEEE
+  入库闭环；最终 `PASS / P0=0/P1=0/P2=0`。只授权不同 executor 执行 Step 1–2，
+  method delta 仍为 NONE。
 
 ## 未决项
 
 - B1 family 保持 `UNRESOLVED`；若未来复用必须重建 evaluator，而非继续修 T008；
 - T010 最终接收 `BLOCKED_IDENTITY / method delta NONE`；B10 当前包终止；
-- C15 Step 1–3 formalization 尚待执行与独立 readiness 审查；
+- T011 C15 Step 1 search + Step 2 acquire 已通过独立 dispatch review，尚待执行；
 - live run 自然覆盖哪些恢复/轮换/晋级事件；
 - 何时由原 design 对话进行阶段性审计。
 
@@ -336,7 +341,9 @@ T010 已由 V026/D011/formal D022 接收为
 `BLOCKED_IDENTITY / P0=0/P1=0/P2=1 / mission_method_delta=NONE`。C2 停于
 28 cells / 840 canonical rows；未生成 aggregate，未消费 held-out。mission 已到
 CP010/no-method=10，仍为 `DRIFTED/STALLED`。B10 已返回候选池且禁止第二修复包。
-control 为 epoch 24，当前无 active scientific carrier；下一合法动作是准备 C15
-Step 1–3 formalization T，并在独立 readiness 审查前禁止 MVE。不得修
+control 为 epoch 25，当前无 active scientific carrier；V028 已批准 T011，只授权
+C15 Step 1 search + Step 2 acquire，由不同 executor 执行后停在
+`AWAITING_COVERAGE_CONFIRMATION`。coverage 未确认前不得进入 Step 3，readiness
+未审查前禁止 MVE。不得修
 T006/B12、B1/T008、A4/T009、B10/T010，不恢复 Scout/P03，也不进入 Step 4a
 实验、Step 5/Contract/Execute。

@@ -1452,3 +1452,54 @@ no_method_streak=10
 PASS / `CP010_CONTROL_PLANE_PASS`。P2=1 仅为既有
 `PRE_C1_IMMUTABLE_SNAPSHOT_ABSENT`，无新增阻断。T010/CP010 可作为下一包的
 权威恢复基点；此 PASS 是控制面终验，不是方法产出或科学 performance PASS。
+
+## V028: T011 C15 Step 1–2 dispatch 独立终审
+
+> date: 2026-07-26
+> 关联：S001 / D012 / formal D023 / T011 / control epoch 25
+> verifier：与任务编写者分离的独立只读 subagent；未修改文件，未运行搜索、下载、
+> 精读、仿真或 seed
+
+### 验证项
+
+- [x] control binding：独立运行 `validate_task_control.py`，epoch 25 /
+  `CANDIDATE_FORMALIZATION` / CP010 与 foreground control 一致 → PASS。
+- [x] 科学边界：C15 全程定义为 PM-16QAM/高阶 QAM blind-equalization
+  cost/update family；T011 只授权 Groundwork Step 1 search + Step 2 acquire，
+  coverage confirmation 前禁止 Step 3，readiness 前禁止 MVE → PASS。
+- [x] 检索/下载合同：六词族、每源请求量、定向深搜、priority 标注、三轮止损、
+  ≥5 篇全文及 canonical/recent comparator 组成均可查 → PASS。
+- [x] 可执行性修订：CRLF wrapper 改为 `tools/` 目录只读 `sed` 管道；blit 冻结
+  JSON；acquisition pool 冻结 `results` schema；共享主仓索引与
+  `--output-dir`、IEEE PDF 的 source/content/metadata/index 闭环均冻结 → PASS。
+- [x] 最终独立终审：第五轮结果 `PASS / P0=0/P1=0/P2=0`；task-control 独立复跑
+  PASS → 可由不同 executor 派发。
+
+### 证据
+
+```text
+round1=FAIL P0/P1/P2=0/3/1
+round1_closed=current-location, per-source/deep-gap gate, exact-command placeholders
+
+round2=FAIL P0/P1/P2=0/1/0
+round2_closed=wrapper cwd/script resolution + exact convert command
+
+round3=FAIL P0/P1/P2=0/3/0
+round3_closed=blit --format json + acquisition results schema + IEEE ingest closure
+
+round4=FAIL P0/P1/P2=0/3/0
+round4_closed=shared absolute indexes + manual index key + relative index path
+
+round5=PASS P0/P1/P2=0/0/0
+task_control=PASS
+simulation_or_seed_run=false
+formal_science_disposition=DISPATCH_CONTRACT_PASS
+mission_method_delta=NONE
+```
+
+### 结论
+
+PASS。T011 可由与 verifier 不同的 executor 执行 Step 1–2，并必须停止于
+`AWAITING_COVERAGE_CONFIRMATION`。该结论只证明派发合同可执行，不证明 C15
+formal readiness、方法有效性、传统 comparator 充分性或 `METHOD_SIGNAL`；
+`mission_method_delta=NONE`，mission 仍为 `DRIFTED/STALLED`。

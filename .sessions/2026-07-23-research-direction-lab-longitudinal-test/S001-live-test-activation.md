@@ -714,3 +714,73 @@ T010 正式收口并选择下一合法 formalization 路线。
 
 epoch 24 / CP010 只准备 C15 Step 1–3 formalization T；先闭合 problem/baseline/source
 readiness，再由独立 verifier 审查。不得直接运行旧 C15 sandbox 或新 MVE。
+
+> 2026-07-26 续接 | T011 C15 Step 1–2 dispatch preparation | 状态：AWAITING_INDEPENDENT_REVIEW
+
+## 目标
+
+在不运行实验的前提下，把 C15 从错误的 CPR 命名纠正为 blind-equalization
+cost/update family，并准备只覆盖 Groundwork Step 1 search 与 Step 2 acquire 的
+自包含任务。
+
+## 记录
+
+- 重新读取 formal D022、live D011、R002、GW Progress 与旧 C15
+  `synthesis.v1.md` / `batch-contract.v1.yaml`。
+- 确认旧资产实现的是 equalizer cost，而非 CPR；共同 `mu=0.03` 面对约 19×
+  初始梯度 scale 差，旧 `LOCAL_NEGATIVE` 与性能数字不能进入 formal evidence。
+- 新建 D012/formal D023 与 T011。T011 要求 structured search、canonical lineage、
+  conventional comparator、≥5 篇全文及 coverage gap，完成后停在
+  `AWAITING_COVERAGE_CONFIRMATION`。
+- control 递增到 epoch 25 / CP010，新增
+  `CANDIDATE_FORMALIZATION`，但独立 dispatch review PASS 前不执行。
+- 本次只准备任务；`mission_method_delta=NONE`，mission 仍
+  `DRIFTED/STALLED`。
+
+## 决策引用
+
+- D012：授权 T011 只做 C15 Step 1–2 evidence formalization（新建）
+- formal D023：C15 formalization 先执行 Step 1 search 与 Step 2 acquire（新建）
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。只做 TASK_PREPARATION/control/formal owner
+  协调；未运行检索、下载、Step 3、MVE 或任何 seed。
+
+## 后续
+
+由独立 verifier 静态审查 T011 的 task-control、C15 术语、Step 1/2 门槛、下载止损、
+coverage confirmation 和禁止边界。PASS 后才交给不同 executor 执行。
+
+> 2026-07-26 续接 | T011 dispatch review closure | 状态：PASS_AWAITING_EXECUTOR
+
+## 目标
+
+关闭 T011 派发合同的独立审查，并在不运行科学工作的前提下确定是否可交给不同
+executor。
+
+## 记录
+
+- 独立 verifier 共审查五轮；前四轮分别关闭定位/检索门、CRLF wrapper 执行、
+  blit JSON/acquisition schema/IEEE 入库，以及共享索引路径/index key/path 三组
+  P1。
+- 第五轮独立复审为 `PASS / P0=0/P1=0/P2=0`，task-control 独立复跑 PASS。
+- V028 接收 `DISPATCH_CONTRACT_PASS`；下一动作只执行 T011 Step 1–2，结束于
+  `AWAITING_COVERAGE_CONFIRMATION`。
+- 本轮未运行搜索、下载、精读、仿真或 seed；`mission_method_delta=NONE`，
+  mission 仍 `DRIFTED/STALLED`。
+
+## 决策引用
+
+- D012 / formal D023：T011 Step 1–2 边界
+- V028：T011 dispatch 独立终审 PASS
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。只完成任务合同审查与投影协调；未进入
+  Step 3、Step 4a/MVE、Step 5/Contract/Execute。
+
+## 后续
+
+由与 V028 verifier 不同的内部 executor 按 T011 执行结构化检索与全文获取；主控
+只从落盘 archive、共享论文库和 worker log 验收，覆盖面未经确认不得进入 Step 3。

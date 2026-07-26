@@ -635,3 +635,57 @@ unequal-step confound 已给出明确公平性问题，完成 formalization 能�
 ### 来源
 
 S001 续接；V026；T010 worker-log；R002；formal D021。
+
+## D012: 授权 T011 只做 C15 Step 1–2 evidence formalization
+
+> status: active
+> date: 2026-07-26
+> 取代：无（细化 D011 的 C15 Step 1–3 顺序）
+> 被取代：无
+> 依据：调研 R002 + formal D022/D023 + 旧 C15 synthesis/contract 的
+> equalizer-cost identity 与 unequal-step confound
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. 将 C15 的对象纠正为 **PM-16QAM/高阶 QAM blind equalization cost/update
+   family**，不是 CPR。R002 旧包装句“高阶 QAM CPR 相位代价”作事实性纠正，
+   不能进入 T011 的搜索或包装判断。
+2. T011 只授权 Groundwork Step 1 search 与 Step 2 acquire：
+   - 结构化检索 reduced-constellation/Sato、CMA/MMA、RDE/radius-directed、
+     staged CMA→RDE/MMA 与 coherent-FSO task-fit；
+   - 闭合至少五篇可读全文、canonical lineage、传统 comparator 和覆盖面缺口；
+   - 完成后必须停在 `AWAITING_COVERAGE_CONFIRMATION`，不进入 Step 3。
+3. T011 的 formal disposition 与 mission delta 分开：搜索/下载/覆盖门最多形成
+   `FORMALIZATION_STEP1_STEP2_COMPLETE`，`mission_method_delta=NONE`。
+4. foreground control 递增为 epoch 25 / CP010，action class
+   `CANDIDATE_FORMALIZATION`；独立 dispatch review PASS 前不得执行。
+
+### 理由
+
+旧 C15 Scout 改的是均衡器 Godard cost，R002 的 CPR 表述会把方法形态、传统
+comparator 和检索词全部带偏。旧结果又以共同 `mu=0.03` 比较约 19× 初始梯度
+scale 差的 cost，不能证明方法族失败。当前最小合法动作不是修旧代码或直接重跑，
+而是先用全文恢复 canonical cost 血缘与 task-fit。相对 B1 第三 evaluator repair、
+A4 第二 identity repair 和 B9 新全链，这仍是最可能重新形成合法方法载体的路线；
+但 Step 1–2 本身不是方法进展。
+
+### 排除的替代方案
+
+- 不运行旧 C15 sandbox、tests、seed 或 MVE。
+- 不把 Sato/RCCMA/RDE/MMA 的旧代码注释当 canonical source。
+- 不把 abstract、网页或 search metadata 当全文。
+- 不越过 `gw-acquire.md` 的 coverage confirmation 硬门进入 Step 3。
+- 不修 B10/T010、B1/T008、A4/T009、T006/B12，不恢复 Scout/P03。
+
+### 影响范围
+
+- 新建 T011，绑定 epoch 25 / CP010 / `CANDIDATE_FORMALIZATION`；
+- formal owner 以 D023 细化 D022；
+- master-state 将 C15 标为 Step 1–2 dispatch prepared，仍非 active carrier；
+- mission-log 保持 CP010/no-method=10，直到 T011 被独立接收。
+
+### 来源
+
+S001 续接；R002；formal D022；旧 C15
+`synthesis.v1.md` / `batch-contract.v1.yaml`；Groundwork Step 1/2 规范。
