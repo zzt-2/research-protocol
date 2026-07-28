@@ -87,3 +87,10 @@ FR-22。
 按本记录更新 RDL Skill、FR-22 窄例外与当前状态；完成最小结构检查后，向用户交付
 一个普通 GLM 对话提示词，由 GLM 执行首个 method-factory sprint 的底座选择与批次
 设计/实现，不创建 Goal。
+
+> 2026-07-28 续接：T019 已完成，产出在
+> `projects/thesis-fso/direction-lab/scout/preformal-method-factory-sprint-001/`，
+> commit `e1c479e`。V052/D027 部分接收：工程比较与
+> `FAIR_COMPARISON_RUN` 成立；因旧 `μ=0.001` baseline、M3/M5 非因果、
+> smoke receipt 缺失与机制归因越界，广义 `NO_DIAGNOSTIC_SIGNAL` 拒收。M5
+> 只保留为一次 corrected-baseline/fresh-seed 扩展的弱种子。

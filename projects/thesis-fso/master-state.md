@@ -5,7 +5,7 @@ method_type: 待定（精读后根据问题方法产出形态确定，见 glossa
 domain: comms
 created: 2026-06-21
 updated: 2026-07-28
-current_step: PREFORMAL-METHOD-FACTORY-SPRINT-001-READY
+current_step: CAUSAL-CONSTELLATION-PRIOR-SPRINT-002-READY
 current_stage: DIRECTION_LAB_DIAGNOSTIC_DISCOVERY
 ---
 
@@ -27,7 +27,7 @@ current_stage: DIRECTION_LAB_DIAGNOSTIC_DISCOVERY
 
 ### 当前控制面桥接（唯一现行入口）
 
-> **2026-07-28 live S002/D026/T019 → epoch48 / CP017 PREFORMAL METHOD FACTORY READY**：
+> **2026-07-28 live V052/D027/T020 → epoch50 / CP018 CAUSAL CONSTELLATION-PRIOR SPRINT READY**：
 > T009 的独立审查只接收 `BLOCKED_IDENTITY` 与 `mission_method_delta=NONE`；
 > 随机 TX payload 被当 pilot、DA/NDA frequency stage 不对称、无来源且无 FEC
 > crossing 的 working region，以及 raw/result 未进提交，共同否定“DA 在可靠条件
@@ -47,20 +47,19 @@ current_stage: DIRECTION_LAB_DIAGNOSTIC_DISCOVERY
   B9 与 B12 均已返回候选池。Direction Lab 的
   Scout/Sandbox 结果对正式研究的 promotion effect 仍为 `none`；Direction Lab
   campaign 已 dormant（D022 SCIENCE_FREEZE），无当前科学执行授权。
-- **当前工作线**：无 active scientific carrier；mission 在 CP017/no-method=17
-  暂停。S002/D026 已冻结 Q14/T018，不做 final-binding、Phase A 或 CP018；
-  Q14 保持 `UNRESOLVED`。RDL Skill/FR-22 已加入唯一 diagnostic-only 的
-  `PREFORMAL_METHOD_FACTORY` 窄例外，T019 已绑定 epoch48。下一包由普通
-  GLM 在可靠共享测试床上同包构造并公平比较 3–5 个方法；诊断 winner 后续
-  必须返回完整 Groundwork。
+- **当前工作线**：无 active scientific carrier。T019 已追加 CP018，工程
+  `FAIR_COMPARISON_RUN` 接收，但 V052 因 under-tuned `μ=0.001` baseline、
+  M3/M5 非因果与归因越界拒收科学 verdict。D027 只保留 M5 弱线索并授权
+  T020：current `μ=0.03`、prefix-only、fresh held-out 的一次 causal
+  constellation-prior shell-family sprint；失败后退出 CB1 z-only。
 - **Pilot-Jones（退出 carrier）**：D066/V040 接收 fixed complex component rescue
   axis scoped Kill；4 篇 direct competitor 全文债继续保留，但不阻塞当前 carrier。
 - P03（暂停，回候选池）：Headroom Atlas Stage A（2026-07-19，S077/D059/V033）runnable 子域 LOCAL_NEGATIVE；16QAM/receiver-CSI/coded-output 三轴 INFRASTRUCTURE_BLOCKED，历史反例落在被阻轴上 → DOMAIN/CANDIDATE/FAMILY 仍 UNRESOLVED/OPEN。**用户选项①已选定：暂停回候选池，不关闭 family**。
 - Direction Lab sandbox history：last completed batch = `B003 / COMPLETED_SANDBOX_VERIFIED`；事实源为 `projects/thesis-fso/direction-lab/state/completion-events.jsonl`。`canonical-state.yaml` 仅为机器投影，不是正式研究授权源。
 - formal promotion effect：`none`；B001–B003 数字不得进入论文或正式材料。
-- 下一合法边界：用户将 T019 路径交给普通 GLM；GLM 先校验 control 与 clean
-  worktree，再执行 pre-formal method-factory sprint。除共享测试床阻断外，
-  正常包必须至少构造或公平比较方法，不得再返回固定 delta `NONE`。
+- 下一合法边界：用户将 T020 路径交给普通 GLM；GLM 先校验 control 与 clean
+  worktree，再用 current baseline、prefix/eval 因果隔离和 fresh dev/test
+  完成一次方法构造比较。无信号不得申请第三包。
   **T017 不得运行 Phase B、旧 C16 sandbox、seeds 71–80、Step 3/Q#/实现/
   seed/MVE，不得第二个 C16 source/formalization package；T016/C15 不得运行 Phase B、
   第二个 source package、seed/MVE、精读或写 Q#；

@@ -4,12 +4,12 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 48
+  control_epoch: 50
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: PREFORMAL_METHOD_FACTORY_SPRINT_READY
-  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D026
-  decision_gate: D026 的 Skill/FR-22 窄例外已落盘；T018 冻结。T019 只允许在可靠共享测试床上同包构造并公平比较 3–5 个方法，输出 diagnostic-only 信号
+  active_lane: CAUSAL_CONSTELLATION_PRIOR_SPRINT_READY
+  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D027
+  decision_gate: V052 部分接收 T019 的 FAIR_COMPARISON_RUN，但拒收旧 μ=0.001 baseline、M3/M5 非因果及结构性总论；T020 只允许 current μ=0.03 + prefix-only + fresh held-out 的一次 M5 family 扩展
   allowed_actions:
     - RECOVER
     - TASK_PREPARATION
@@ -42,12 +42,12 @@ rdl_control:
     - FORMALIZATION_ONLY_PACKAGE
     - UNAUTHORIZED_SCIENTIFIC_EXPERIMENT
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
-  mission_checkpoint: CP017
-  next_legal_action: 用户把 T019 路径交给一个普通 GLM 对话；GLM 校验 control 与 clean worktree 后执行首个 pre-formal 方法工厂 sprint，不执行 T018
+  mission_checkpoint: CP018
+  next_legal_action: 用户把 T020 路径交给普通 GLM；GLM 用 current μ=0.03 baseline、严格 prefix-only 统计和 fresh dev/test seeds 完成一次 causal constellation-prior shell family sprint；无信号即退出 CB1 z-only
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（D026 已停止 Goal/T018；epoch 48 / CP017，T019 普通 GLM 方法工厂 sprint 已就绪）
+> 状态: active（V052/D027 已部分接收 T019；epoch 50 / CP018，T020 corrected-baseline causal shell-family sprint 已就绪）
 > 创建: 2026-07-23 | 最后更新: 2026-07-28
 
 ## 专题信息
@@ -476,6 +476,13 @@ rdl_control:
   diagnostic-only 窄例外，并冻结首个普通 GLM 方法工厂任务：同一可靠测试床
   上实际构造并公平比较 3–5 个方法；除测试床阻断外，正常包不得再返回
   `mission_method_delta=NONE`。
+- **T019 / V052 / D027 / CP018**：工程 paired compare 与
+  `FAIR_COMPARISON_RUN` 接收；科学 verdict 因旧 `μ=0.001` baseline、M3/M5
+  非因果、smoke receipt 空和机制归因越界拒收。M5 仅保留
+  15 help/5 hurt 的弱种子。
+- **T020 / epoch 50 / CP018**：只授权一次 current `μ=0.03` baseline、
+  prefix-only、fresh held-out 的公开星座先验 shell-family 扩展；无信号即退出
+  CB1 z-only/post-processing，不给第三包。
 
 ## 未决项
 
@@ -496,10 +503,9 @@ rdl_control:
 
 ## 当前位置
 
-D026 已冻结 Q14/T018：不做 final-binding、Phase A 或 CP018；Q14 保持
-`UNRESOLVED`，不是科学 Kill。formal active scientific carrier 仍为 `NONE`；
-mission 暂停在 CP017/no-method=17、`DRIFTED/STALLED`。control epoch48 为
-`PREFORMAL_METHOD_FACTORY_SPRINT_READY`。T019 已绑定普通 GLM 的首个
-diagnostic-only 方法工厂 sprint；下一合法动作是校验 clean worktree 后，在
-一个可靠共享测试床上实际构造并公平比较 3–5 个方法。禁止 T018、逐个候选
-形式化和 formal experiment。
+T019 已由 V052/D027 部分接收并追加 CP018：method delta 为
+`FAIR_COMPARISON_RUN`，但科学 verdict 拒收；formal active carrier 仍为
+`NONE`。control epoch50 为 `CAUSAL_CONSTELLATION_PRIOR_SPRINT_READY`。
+T020 是 CB1 z-only 轴唯一一次 corrected-baseline 扩展：current `μ=0.03`、
+prefix-only、fresh dev/test、seed-cluster 统计。若无 held-out 信号，本轴退出且
+不得第三包。T018/Q14 继续冻结。

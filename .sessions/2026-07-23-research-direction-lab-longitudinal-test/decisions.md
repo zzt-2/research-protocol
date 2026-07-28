@@ -1632,3 +1632,63 @@ R007 又给出 `READY=0 / NEEDS_SMALL_ADAPTER=0 / HYPOTHESIS_ONLY=5`。继续
 ### 来源
 
 S002；R007；R008；mission-log CP001–CP017；用户 2026-07-28 原话。
+
+---
+
+## D027: 部分接收 T019 并只授权一次 corrected-baseline M5 family 扩展
+
+> status: active
+> date: 2026-07-28
+> 取代：D026 的首个 sprint 当前执行状态；保留方法工厂总合同
+> 被取代：无
+> 依据：T019 commit `e1c479e` / worker log / raw / V052
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. 接收 T019 的工程事实与 `mission_method_delta=FAIR_COMPARISON_RUN`；追加
+   CP018。科学处置为
+   `SCIENCE_VERDICT_REJECTED / DIAGNOSTIC_BATCH_PARTIAL`。
+2. 只接受“这五个具体实现未过诊断门”。拒收“CB1 是结构性不可恢复
+   attractor”“五族 receiver-visible gap≈0”及任何 family Kill。
+3. M1/M2/M3/M4 不继续：其 baseline、因果性、去重或机制设计不足以支持二修。
+   M5 保留为 `WEAK_DIAGNOSTIC_SEED`，依据是 15 help / 5 hurt / 40 tie 和
+   trimmed mean `-0.00895`，但旧结果本身不能晋级。
+4. 只授权一个 corrected-baseline 扩展包：以 B01-R current fixed-μ CMA
+   `μ=0.03` 为系统 baseline，并加入合法 C11-causal 与 receiver-visible
+   blind-affine；用 calibration prefix 与 eval window 严格分离、fresh dev/test
+   seeds 和 B01-R 四分类。
+5. 新包不是重跑旧 M5。它必须构造 3–4 个公开星座先验驱动、统计结构不同的
+   因果 shell-distribution 方法，并在 fresh held-out test 上比较。只有 test
+   信号算 `DIAGNOSTIC_METHOD_SIGNAL`。
+6. 若 corrected-baseline 下没有 held-out 信号，CB1 z-only/post-processing
+   轴退出方法工厂，不给第三包；下一轮必须换真实信息源或换测试床。
+
+### 理由
+
+T019 首次实现了方法工厂所需的实际构造与 paired compare，证明流程改造能提高
+工作量；但它也暴露“历史 runnable baseline 被误当 current fair baseline”和
+“whole-window statistics 被误当 causal”的新漏洞。直接接受总阴性会重复过去
+的假 Kill；完全丢弃 M5 又会忽略唯一有方向性的 raw 弱迹象。一次 corrected
+baseline + fresh held-out 扩展是最小且可证伪的折中。
+
+### 排除的替代方案
+
+- 不修 T019 文档/结果 JSON 后原样重跑：不会解决 baseline 与因果 P0；
+- 不继续 M1–M4：没有比 best legal weak seed 更强的二修依据；
+- 不直接把 M5 包装成方法：旧信号使用复用 seeds、under-tuned comparator 且
+  非因果；
+- 不立即开 pilot/history/decoder 三条接口：当前均有已知接口或物理动态债，
+  更可能再次停在基础设施阻断；M5 有现成弱迹象，先消费一次有界机会。
+
+### 影响范围
+
+- mission 新增 CP018；no-method streak 结束，但 method-signal 仍为 0；
+- live foreground 转 corrected-baseline M5 family sprint；
+- Research Direction Lab Skill 增加 current baseline、prefix causality、
+  去重和 smoke receipt 四条首轮实测约束；
+- 普通 GLM 执行下一包；失败后不再留在 CB1 z-only 轴。
+
+### 来源
+
+T019；step-019 worker log；raw/result；V052；B01-R；C11 legality。

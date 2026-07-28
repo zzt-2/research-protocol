@@ -40,13 +40,22 @@ shortage. This lane is diagnostic discovery, not a Groundwork Step 4a MVE.
 
 A method-factory sprint must:
 
-1. reuse one already validated simulator/evaluator, task-matched conventional
-   baseline, paired realization, and shared diagnostic seed set;
+1. reuse one already validated simulator/evaluator, the **current
+   authority-approved and adequately tuned** task-matched conventional
+   baseline, paired realization, and shared diagnostic seed set; a runnable
+   historical anchor is insufficient when a later baseline correction exists;
 2. freeze the receiver-visible input and output contract before construction;
-3. build 3–5 mechanism-distinct minimal constructs in one package;
+3. deduplicate against prior/rejected constructs, then build 3–5 genuinely
+   mechanism-distinct minimal constructs in one package;
 4. run semantic smoke and a fair comparison in that same package;
 5. record at least `CONSTRUCT_CREATED` or `FAIR_COMPARISON_RUN`, unless the
    shared testbed itself fails identity or fairness checks.
+
+For a strict-causal construct, selection, fitting, gating, and normalization
+must use only a calibration prefix or past state disjoint from the scored eval
+window. Whole-window statistics cannot select or transform that same window.
+Persist smoke results in the terminal result artifact; a separately executed
+smoke whose receipt is overwritten does not close the package.
 
 The only terminal outputs are:
 

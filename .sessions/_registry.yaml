@@ -49,8 +49,8 @@ topics:
     title: Research Direction Lab 长程真实运行测试
     status: active
     created: "2026-07-23"
-    last_updated: "2026-07-28（S002/D026/T019：17 包 delta 全 NONE；停止 Goal/T018，epoch48 / CP017 普通 GLM 方法工厂已就绪）"
-    description: "D017/D018 轻量长程 mission。CP001–CP017 未产生 METHOD_SIGNAL，R007 为 READY=0/NEEDS_SMALL_ADAPTER=0。S002/D026 冻结 Q14/T018、停止 Goal 自动续跑并恢复普通 GLM 接力；RDL Skill/FR-22 已加入 diagnostic-only 窄例外，T019 只授权在可靠共享测试床上同包构造并公平比较 3–5 个方法。"
+    last_updated: "2026-07-28（V052/D027/T020：T019 PARTIAL；epoch50 / CP018 corrected-baseline causal shell-family 已就绪）"
+    description: "D017/D018 轻量长程 mission。T019 完成首个五构造 FAIR_COMPARISON_RUN，但 V052 因旧 μ=0.001 baseline、M3/M5 非因果和结构性归因越界拒收科学 verdict。D027 只保留 M5 弱线索；T020 授权普通 GLM 用 current μ=0.03、prefix-only、fresh held-out 做一次 constellation-prior shell-family 扩展，无信号即退出 CB1 z-only。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 S014 现场故障、R003 场景演练、D017 控制接口和 guard

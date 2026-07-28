@@ -14,8 +14,8 @@ recovery_entry: .sessions/2026-07-23-research-direction-lab-longitudinal-test/to
 formal_active_carrier:
   id: NONE
   status: NO_ACTIVE_SCIENTIFIC_CARRIER
-  readiness: PREFORMAL_METHOD_FACTORY_SPRINT_READY_NOT_ACTIVE
-  authority: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D026
+  readiness: CAUSAL_CONSTELLATION_PRIOR_SPRINT_READY_NOT_ACTIVE
+  authority: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D027
   positive_method_target: null
   fair_comparators: []
   claim_ceiling: NO_METHOD_CLAIM
@@ -190,12 +190,11 @@ remaining_open:
     note: needs action hook; co-blocked
 
 next_action: >-
-  D026 freezes Q14/T018 and stops Goal auto-continuation after CP001-CP017 all
-  produced mission_method_delta NONE. T019 is the next legal package: one
-  ordinary GLM must build and fairly compare 3-5 deployable constructs on a
-  validated shared testbed. Results are diagnostic-only; any winner returns to
-  full Groundwork. No T018, candidate-by-candidate formalization, formal MVE,
-  promotion, or paper claim.
+  V052/D027 partially accept T019's FAIR_COMPARISON_RUN but reject its science
+  verdict. T020 is the next legal package: one ordinary GLM compares 3-4 causal
+  constellation-prior shell methods using current μ=0.03, prefix-only mapping
+  and fresh held-out seeds. No signal exits CB1 z-only; any winner returns to
+  full Groundwork. No T018, formal MVE, promotion, or paper claim.
   Historical context:
   D022 (SCIENCE_FREEZE): SCIENCE_SCOUT candidate rotation PAUSED (topic dormant). NO legal
   main-method signal. F1=TESTBED_BLOCKED, F3=UNRESOLVED, F4=INFRASTRUCTURE_BLOCKED. F2 pilot lineage

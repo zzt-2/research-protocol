@@ -5,8 +5,8 @@
 # NO legal main-method signal. F1=TESTBED_BLOCKED / F3=UNRESOLVED / F4=INFRASTRUCTURE_BLOCKED.
 # F2 pilot lineage merges into existing Pilot-Jones formal Groundwork (no parallel Scout).
 # Negative material -> harvest/limitations only; NOT a full negative paper.
-# Next authoritative work = live S002/D026/T019: epoch48 pre-formal method factory;
-# Q14/T018 frozen, no active scientific carrier, diagnostic-only comparison.
+# Next authoritative work = live V052/D027/T020: epoch50 corrected-baseline
+# causal constellation-prior sprint; Q14/T018 frozen, no active carrier.
 # Updated 2026-07-23 (T001 current-owner reconciliation): D061 strategic switch reflected — P03 = PAUSED_RETURNED_TO_PORTFOLIO
 # (option 1, family not closed); Pilot-Jones was then formal GW line; D066/V040 later returned it.
 # (V035 backward PASS, 4 direct-competitor full-text BLOCKED).
@@ -35,10 +35,10 @@ authorization:
   science_authorized: false  # the Scout campaign is dormant; formal science advances via master-state.md, not this campaign
   scope: dormant legacy Scout campaign; D026 separately authorizes one diagnostic-only pre-formal method-factory sprint without activating a formal scientific carrier.
   formal_gw_line: >-
-    NO_ACTIVE_SCIENTIFIC_CARRIER (live D026 / epoch 48 / CP017). Q14/T018 is
-    frozen without a science Kill. T019 authorizes one diagnostic-only
-    pre-formal method-factory sprint on an already validated shared testbed.
-    Any winner must return to complete Groundwork Step 1-3/3.5/4a.
+    NO_ACTIVE_SCIENTIFIC_CARRIER (live D027 / epoch 50 / CP018). T019 engineering
+    compare is accepted but its science verdict is rejected by V052. T020 is
+    the only authorized corrected-baseline, prefix-only, fresh-held-out
+    constellation-prior sprint. Any winner returns to full Groundwork.
   prohibits:
     - modify or rerun B001-B003 / P03 Atlas / canonical-state / completion-events
     - create legacy B004
@@ -232,7 +232,7 @@ dispositions:
     reason: reused across >=6 batches (c04/c09/c14/c15/c16/corrector + c12 subset)
 
 next_action:
-  mode: PREFORMAL_METHOD_FACTORY_SPRINT_READY
+  mode: CAUSAL_CONSTELLATION_PRIOR_SPRINT_READY
   description: >-
     D022 campaign-level verdict: SCIENCE_SCOUT candidate rotation PAUSED (topic dormant).
     NO legal main-method signal. F1=TESTBED_BLOCKED, F3=UNRESOLVED, F4=INFRASTRUCTURE_BLOCKED.
@@ -254,10 +254,11 @@ next_action:
     at A6: source family 1<3 and must-read 2<5. V049/D023/D034 accept
     BLOCKED_FORMAL_READINESS / BLOCKED_SEARCH_OR_IDENTITY, delta NONE, and
     return C16-open to the pool with no second package. CP017 has no-method=17.
-    S002/D026 freeze Q14/T018 after CP001-CP017 all produced method delta NONE.
-    The next legal action is T019: a normal GLM builds and fairly compares 3-5
-    deployable constructs on one validated shared testbed. This is diagnostic
-    only, not formal Step4a MVE. Do not run T018, T017 Phase B, old C16, Q14
+    V052/D027 partially accept T019 as FAIR_COMPARISON_RUN but reject its science
+    verdict. The next legal action is T020: a normal GLM compares 3-4 causal
+    constellation-prior constructs using current μ=0.03, prefix-only mapping
+    and fresh held-out seeds. No signal exits CB1 z-only. Do not run T018,
+    T017 Phase B, old C16, Q14
     Step 3.5/4a, or a second C16/Q14 source/problem-evidence package. Do not amend T012/T016,
     run C15 Phase B or the old sandbox, reuse T006/B10, repair B1/A4/B10/B9/B12,
     Stop before Step 4a and before Step 5 unconditionally.

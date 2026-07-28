@@ -7,10 +7,10 @@
 ### thesis-fso
 
 - **方向**：双偏振星地 OSL 场景中的 ML 应用方向探索；正式研究与 Direction Lab Scout/Sandbox 分层管理。
-- **正式状态**：当前 `NO_ACTIVE_SCIENTIFIC_CARRIER`；mission 暂停在
-  CP017/no-method=17。S002/D026 已冻结 Q14/T018 并停止 Goal 自动续跑；
-  Q14 保持 `UNRESOLVED`。RDL Skill/FR-22 已加入 diagnostic-only 的
-  pre-formal 方法工厂窄例外，T019（epoch48）已准备给普通 GLM。
+- **正式状态**：当前 `NO_ACTIVE_SCIENTIFIC_CARRIER`。T019 已形成 CP018 /
+  `FAIR_COMPARISON_RUN`，但 V052 拒收其旧 `μ=0.001` baseline、非因果 M3/M5
+  与结构性总论。D027 只保留 M5 弱线索；T020（epoch50）已准备给普通 GLM，
+  做一次 current `μ=0.03` + prefix-only + fresh held-out 扩展。
   T017 的历史处置仍为
   `BLOCKED_FORMAL_READINESS / BLOCKED_SEARCH_OR_IDENTITY`、delta NONE：
   53 rows→44 unique、published=`41/44=93.18%`、R1/R2 direct=`1/3`、
@@ -60,9 +60,9 @@
   moderate/14 dB/seed `131004` 暴露 128-pilot unwrap 的错误 `-2π` branch；
   V026 接收 `BLOCKED_IDENTITY / P0=0/P1=0/P2=1 /
   mission_method_delta=NONE`。无 aggregate，未消费 held-out；不补矩阵、不改 gate。
-- **下一合法边界**：普通 GLM 执行 T019，在一个可靠共享测试床上同包构造并
-  公平比较 3–5 个 deployable 方法；本包只产 diagnostic signal，不是 formal
-  MVE，winner 仍须返回完整 Groundwork。
+- **下一合法边界**：普通 GLM 执行 T020，构造并比较 3–4 个因果
+  constellation-prior shell-distribution 方法；无信号即退出 CB1 z-only，
+  有信号也只进入正式 Groundwork，不直接写论文。
   **不运行 T017 Phase B、旧 C16 sandbox/seeds 71–80，不进入 Step 3/Q#/
   实现/实验或第二个
   C16 source package；C15 不运行 Phase B、第二个 source/formalization package、

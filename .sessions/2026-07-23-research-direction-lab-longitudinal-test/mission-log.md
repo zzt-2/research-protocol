@@ -1,7 +1,7 @@
 # Mission Log — Research Direction Lab 长程真实运行测试
 
 > original mission: 在用户只中转任务路径和极短回执的条件下，稳定推进真实研究并积累可用方法材料。
-> phase 1: `4af6f9d..aab425d` | audit cutoff: 2026-07-27 | next checkpoint: `CP017`
+> phase 1: `4af6f9d..aab425d` | latest accepted: CP018 / 2026-07-28 | next checkpoint: `CP019`
 
 | CP | 包 / intent / family | formal science disposition | mission method delta | streaks | weight / drift | 下一步为何优于替代项 |
 |---|---|---|---|---|---|---|
@@ -22,6 +22,7 @@
 | CP015 | T015（dispatch review 后撤回，无 worker log/commit）/ METHOD_PREP / B12 standalone | `BLOCKED_NOVELTY_COLLISION / PACKAGE_WITHDRAWN_BEFORE_EXECUTION`；V038 发现非物理 GG lifecycle 与错误 Huber precision；V039/V040 确认 JLT 2025 Huber robust Bayesian CPR direct collision，全文不可得故 novelty fail-closed；未运行 seed，非 B12 science Kill | NONE | same-axis=1, repair=0, no-method=15 | ADEQUATE / package ALIGNED；mission DRIFTED/STALLED | D029 的单包退出已触发，B12 回池且禁止第二 repair；比较 B4、B6、C15 等机制不同候选，比修公式或用摘要猜 novelty 更可能恢复合法方法载体 |
 | CP016 | T016 · log-016 · candidate `177e2038` / CANDIDATE_FORMALIZATION / C15 | `BLOCKED_FORMAL_READINESS / BLOCKED_IDENTITY_CONFLICT`；五个数量门局部 PASS，但三组同标题双非空 DOI 触发冻结 hard block；V047 又确认 provenance summary PARTIAL；A2/A3/Phase B 未运行，非 C15 science Kill | NONE | same-axis=1, repair=0, no-method=16 | ADEQUATE / package ALIGNED；mission DRIFTED/STALLED | D020/D031 的唯一 source-package 退出已触发；C15 回池且禁止第二 source repair。机制级 remap 比 alias/provenance 修补更可能恢复方法载体 |
 | CP017 | T017 · log-017 · candidate `2d167ec7` / CANDIDATE_FORMALIZATION / C16-open | `BLOCKED_FORMAL_READINESS / BLOCKED_SEARCH_OR_IDENTITY`；53 rows→44 unique，正确 published ratio=41/44=93.18%，R1/R2 direct=1/3、pool=10、quarantine=0，但 actual source 仅 OpenAlex（1<3）且必读2<5；V049 证据质量 PARTIAL，Phase B 未运行，非 C16 science Kill | NONE | same-axis=1, repair=0, no-method=17 | ADEQUATE / package ALIGNED；mission DRIFTED/STALLED | D022/D033 的唯一 source/formalization 包退出已触发；C16-open 回池且不二修。按 R007 预注册轮换到 Q14 problem-evidence closure，比补 source receipt/第六查询、B4 基础链或 Q-ML4 四重迁移更接近可证伪方法入口 |
+| CP018 | T019 · log-019 · `e1c479e` / PREFORMAL_METHOD_FACTORY / CB1 five-construct batch | `SCIENCE_VERDICT_REJECTED / DIAGNOSTIC_BATCH_PARTIAL`；420 raw rows 与 paired aggregate 成立，但 baseline 回退 μ=0.001、M3/M5 非因果、smoke receipt 空且结构性归因越界；只保留“5 个实现未过门”，M5=15 help/5 hurt 弱线索 | FAIR_COMPARISON_RUN | same-axis=1, repair=0, no-method=0, no-signal=1 | ADEQUATE / package ALIGNED；mission RECOVERING | corrected-baseline M5 family 一次扩展比修 M1–M4 或立刻建 pilot/decoder 接口更接近已有弱信号；须 μ=0.03 + prefix-only + fresh held-out，失败后退出 CB1 z-only 且无第三包 |
 
 ## 使用规则
 

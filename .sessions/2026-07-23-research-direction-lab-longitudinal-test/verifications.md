@@ -2775,3 +2775,61 @@ PASS
 scientific carrier，不形成 method delta，也不追加 mission checkpoint。主控可把
 foreground 递增到新 epoch，只授权不同 executor 执行 Phase A；epoch/task
 重绑定后仍需独立 final-binding PASS。
+
+## V052: T019 pre-formal 方法工厂独立科学审查
+
+> date: 2026-07-28
+> 关联：S002 / D026 / T019 / commit `e1c479e`
+> verifier：独立 agent `verify_t019_science` + 主线 raw 重算；只读审查
+
+### 验证项
+
+- [x] 工程主链：commit 只含 T019 授权路径；420 raw rows =
+  7 methods × 60 paired `(cell,seed)`，键唯一，共享 realization 成立；
+  raw→median/help-hurt-tie 可复算，7/7 tests PASS。
+- [ ] 当前公平 baseline：FAIL。T019 使用历史 `μ=0.001` anchor；B01-R 已将
+  validation-optimal fixed-μ CMA 修正为 `μ=0.03`。
+- [ ] 严格因果：FAIL。M3 用 `[cal,eval_end]` 选择同一 eval window；M5 用
+  整个 eval window 的功率统计后回判该窗口。
+- [ ] semantic smoke 闭包：FAIL。terminal `result.v1.json` 中
+  `smoke_results={}`；单独 smoke 被后续 `--compare` 覆盖。
+- [ ] clean boundary：FAIL。M3 在 30 个 clean pairs 中有 2 个退化超过 MDE，
+  最大 ΔPI-SER=`+0.7461`，与 worker-log“全部 intact”矛盾。
+- [ ] 机制归因：FAIL。未做 basin/state-space 扫描；M1 与 C15 modulus、M3
+  与 C14 init/multistart、M4 与 blind-affine 高度重合；M3 第四 init 只是
+  PI-SER 不变的中心 tap 符号翻转。
+- [x] M5 弱线索：raw 为 15 help / 5 hurt / 40 tie，trimmed mean
+  ΔPI-SER=`-0.00895`，但改善集中在少数复用 seed，且实现非因果，不能晋级。
+
+### 证据
+
+```text
+VERDICT=PARTIAL
+P0=2
+P1=5
+P2=2
+RAW_ROWS=420
+PAIRS=60
+PYTEST=7/7_PASS
+ACCEPTED_METHOD_DELTA=FAIR_COMPARISON_RUN
+ACCEPTED_SCIENCE=THESE_FIVE_IMPLEMENTATIONS_DID_NOT_PASS_THE_GATE
+REJECTED_SCIENCE=STRUCTURAL_ATTRACTOR_OR_RECEIVER_GAP_ZERO
+M5_WEAK=15_HELP_5_HURT_40_TIE
+```
+
+### 结论
+
+PARTIAL
+
+接收“确实完成了一次五构造 paired comparison”和
+`mission_method_delta=FAIR_COMPARISON_RUN`；拒收 T019 的广义真阴性、结构性
+吸引子和 receiver-recoverable gap≈0 解释。`NO_DIAGNOSTIC_SIGNAL` 只能机械地
+描述这五个具体实现未过预设门，不能关闭五个机制族。
+
+### 后续
+
+只允许一个有界的 corrected-baseline 方法包：回到 current `μ=0.03` CMA，
+使用严格 prefix-only 统计、fresh disjoint seeds、B01-R 四分类和合法
+receiver-visible comparators。M5 只作为弱种子扩成公开星座先验的因果
+shell-distribution family；若仍无 held-out 信号，则退出 CB1 z-only
+post-processing，不给第三包。
