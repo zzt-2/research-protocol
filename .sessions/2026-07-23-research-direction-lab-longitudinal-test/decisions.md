@@ -1935,3 +1935,67 @@ Q-ML4/B4/C04-C09 等 hypothesis-only 候选，会重新回到只做形式化、�
 
 T023；step-023 worker log；raw/result；V058；D030/D039；method-production；
 groundwork/gw-supplement/gw-feasibility。
+
+---
+
+## D032: 拒收 T024 的 Gate6 No-Go 与 formal confirm，G1 退出实验修复线并转有界包装待决
+
+> status: active
+> date: 2026-07-28
+> 取代：D031 的 G1 terminal confirm workline
+> 被取代：无
+> 依据：验证 V060 + T024 commit `323c43bc8464e39b299ff405dbd884576d544bda`
+> + 两路独立审查 `audit_t023_gate/audit_t023_science`
+> 触发原话：无（技术推导；包装偏好见 `voice.md` 2026-07-24 原话）
+
+### 决策
+
+1. 不接受执行者自报的 `G1_FORMAL_CONFIRM_NO_GO`。任务书要求对 seed cluster
+   重采样后重算 pooled confusion matrix；该口径的 balanced-accuracy 95% CI
+   为约 `[0.885, 1.000]`，明确高于 Gate6 的 `0.5` 下限。执行器实际做的是
+   `(cell,seed)` pair bootstrap；随后人工把单类 seed 的缺失 recall 记为 0，
+   得到的 `0.50` 也不是冻结 estimand。
+2. 同时不接受执行器原始 `G1_FORMAL_RECOMMENDATION_READY`。Phase A 的检索、
+   引用链与 D1 read-note 收据未进入可提交证据闭包，`g1-step1-candidate-map.md`
+   不存在；因此四判据与 `0 HIGH collision` 不能独立复核。
+3. D4 recent comparator 不是任务要求的 likelihood-gated tap-update receiver。
+   当前实现直接返回 post-CMA `z`，140/140 行与 CMA bit-identical；它是恒等
+   占位符，不能支撑 target-comparator Gate4/Gate7。
+4. T024 Phase B 只接收为 `NONBINDING_DIAGNOSTIC`。其余六门和 G1 的局部机制
+   信号可回收：collapse stratum 相对 tuned CMA `−0.5598`，
+   CI 约 `[-0.695,-0.406]`，help/hurt=`12/0`；healthy worst=`0`；
+   G1−M4=`−0.03546`，CI 约 `[-0.0466,-0.0243]`。
+5. binding disposition 改为
+   `G1_GROUNDWORK_EVIDENCE_INCOMPLETE / PHASE_B_NONBINDING_DIAGNOSTIC`。
+   按 D031/T024 的 one-shot 边界，不给第二个 G1 repair、补收据包或重实验。
+6. 当前无 active scientific carrier。下一步不再 remap、修 evaluator 或开新
+   候选；优先向用户提交一次最小设计确认：是否把 G1 现有证据整理为
+   `NONBINDING_LOCAL_PACKAGING_BOUNDARY` 的毕业方法备选材料。
+
+### 理由
+
+T024 的失败不是“方法没有判别力”，而是 formal evidence closure 与 comparator
+identity 失效。继续修会违反一次性退出边界；把它写成科学 No-Go 又会抹掉已经
+重复出现的 receiver-visible 安全门控信号。最诚实且符合 mission 的处理，是停止
+实验晋级，同时把算法动作、局部收益、适用边界和证据债分开包装，供毕业论文
+择优使用，而不是再启动一轮零载体分析。
+
+### 排除的替代方案
+
+- 不按错误 `0.50` 维持 Gate6 No-Go；
+- 不用 pair bootstrap 或事后改阈值“救活” formal Go；
+- 不把恒等 D4 当直接竞品；
+- 不补第二个 G1 Groundwork/实验包；
+- 不在 0 READY 候选池上再做一轮纯 remap。
+
+### 影响范围
+
+- foreground 递增到 epoch55 / CP023；
+- G1 formal workline 关闭，active scientific carrier 归零；
+- G1 保留为 local diagnostic method signal，包装动作需用户确认；
+- Step 5/Contract/Execute、论文正式声称与新实验继续禁止。
+
+### 来源
+
+T024；step-024 worker log；`prefix-receipt.csv`、`raw-rows.csv`、
+`result.json`；T024 §A4/B1/B4；V060；D031/D040。

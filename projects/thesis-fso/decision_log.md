@@ -130,3 +130,20 @@ collapse recovery）独立确认成立且方向稳定，但**不是 formal metho
 - 可回收：evaluator/normalization + identity-fallback safety 方法论教训（与 T023
   相同主题，可合并）；G1 healthy-safety vs collapse-recovery trade-off 作 fallback
   packaging 证据（由主控/用户决定是否进 thesis harvest）。
+
+---
+
+## MASTER ACCEPTANCE AMENDMENT — T024/G1（2026-07-28）
+
+> authority: live V060/D032 / formal D041。若与上方 T024 executor proposal
+> 冲突，以本段为准。
+
+- `G1_FORMAL_CONFIRM_NO_GO` **拒收**：冻结口径是 seed cluster 重采样后
+  重算 pooled confusion；balanced-accuracy CI 下界约 `0.885>0.5`，Gate6 PASS。
+- `G1_FORMAL_RECOMMENDATION_READY` **同样拒收**：Phase-A search/citation/
+  read-note 未形成可提交证据闭包；D4 实现是 post-CMA 恒等映射，不是冻结的
+  likelihood-gated tap-update comparator。
+- binding disposition =
+  `G1_GROUNDWORK_EVIDENCE_INCOMPLETE / PHASE_B_NONBINDING_DIAGNOSTIC`。
+- G1 不二修、不进 Step 5/Contract/Execute；局部 method signal 仅作为 bounded
+  thesis fallback packaging 输入，等待用户确认。

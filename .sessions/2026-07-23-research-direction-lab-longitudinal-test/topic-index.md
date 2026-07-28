@@ -4,12 +4,12 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 54
+  control_epoch: 55
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: G1_SAFE_GATED_NORMALIZATION_FORMAL_CONFIRM_READY
-  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D031
-  decision_gate: V058 拒收 T023 binding Step4a；Q15 nonlinear map 以 Step3.5 No-Q 退出，越门 Phase B 只作 diagnostic。独立重算接收 gated_scalar 为 METHOD_SIGNAL；T024 先闭合 G1-specific collision/四判据，全部 PASS 后才条件式 formal confirm
+  active_lane: G1_BOUNDED_PACKAGING_DECISION_PENDING
+  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D032
+  decision_gate: V060 推翻 T024 的 Gate6 No-Go，但 Phase-A evidence closure 与 D4 comparator identity 均失败；formal Go/No-Go 均拒收，G1 实验修复线关闭，只保留 local diagnostic method signal
   allowed_actions:
     - RECOVER
     - TASK_PREPARATION
@@ -19,6 +19,7 @@ rdl_control:
     - PREFORMAL_METHOD_FACTORY
     - PORTFOLIO_MAP
     - CANDIDATE_FORMALIZATION
+    - THESIS_METHOD_PACKAGING_PREPARATION
   forbidden_actions:
     - UNRELATED_SCIENTIFIC_EXPERIMENT
     - PRIVATE_FULLTEXT_ACQUISITION
@@ -49,13 +50,14 @@ rdl_control:
     - Q15_NONLINEAR_MAP_REPAIR
     - G1_EXPERIMENT_OUTSIDE_T024
     - G1_SECOND_REPAIR_PACKAGE
+    - G1_NEW_EXPERIMENT_OR_FORMAL_REPAIR
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
-  mission_checkpoint: CP022
-  next_legal_action: 用户把 T024 路径交给普通 GLM；GLM 先完成 G1 candidate-specific Groundwork/collision/四判据，全部 PASS 后才同包用全新 seeds 和完整 gate/raw receipt 做 formal Step4a confirm；失败即退出 G1，不进 Step5/Contract/Execute
+  mission_checkpoint: CP023
+  next_legal_action: 主控先向用户提交最小包装设计并取得确认；确认后才可准备一个不新增实验、不补 formal closure 的 G1 bounded thesis-packaging 任务。不得 remap、修 T024 或进入 Step5/Contract/Execute
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（V058/D031 拒收 T023 binding 终态并接收 G1 diagnostic METHOD_SIGNAL；V059 双独立终验 PASS；epoch 54 / CP022，T024 可派发）
+> 状态: active（V060/D032 拒收 T024 的错误 Gate6 No-Go，同时拒收 formal Go；epoch 55 / CP023，等待 G1 有边界包装确认）
 > 创建: 2026-07-23 | 最后更新: 2026-07-28
 
 ## 专题信息
@@ -516,6 +518,10 @@ rdl_control:
 - **T024 / V059**：任务显式重入 G1 Step 1→2→3→3.5，冻结 task-native
   recoverability label、seed-cluster 分层统计与无 post-hoc rescue 门；流程/
   科学两位独立 reviewer 均 PASS（P0/P1/P2=`0/0/0`），可交普通 GLM。
+- **T024 / V060 / D032 / formal D041 / CP023**：执行者的 Gate6 No-Go
+  被正确 seed-cluster pooled bootstrap 推翻（CI_lo≈`0.885`）；但 Phase-A
+  收据不闭包且 D4 为恒等占位，formal Go/No-Go 均拒收。Phase B 只作
+  nonbinding diagnostic；G1 保留 local method signal，但实验修复线关闭。
 
 ## 未决项
 
@@ -536,9 +542,10 @@ rdl_control:
 
 ## 当前位置
 
-T023 已由 V058/D031 部分接收并追加 CP022：Q15 nonlinear map 的 binding
-Step4a 拒收并 formal No-Go；Phase B 仅作 nonbinding diagnostic。诊断中的
-gated-scalar 是当前唯一 runnable positive carrier，mission delta=`METHOD_SIGNAL`。
-formal D040 / control epoch54 只授权 T024：先完成 G1-specific Groundwork、
-recent comparator、collision 与四判据；全过后才同包 formal confirm。失败即退出
-G1，不修 Q15 map，不留第二个 G1 repair；Step 5、Contract、Execute 继续禁止。
+T024 已由 V060/D032 追加 CP023。其 `G1_FORMAL_CONFIRM_NO_GO` 的 Gate6
+理由错误：正确 seed-cluster pooled bootstrap 明确 PASS；但 Phase-A evidence
+closure 与 D4 comparator identity 失败，使 formal recommendation 同样不能接收。
+当前无 active scientific carrier，G1 仅保留
+`NONBINDING_LOCAL_DIAGNOSTIC_METHOD_SIGNAL`，且不再修实验。control epoch55
+等待用户确认是否把现有机制、局部收益与证据债整理为毕业方法备选材料；
+确认前不开 T025，不 remap，不进 Step 5/Contract/Execute。

@@ -133,3 +133,13 @@ FR-22。
 > 继承边界、task-native tuned-CMA recoverability label、divergence/nonfinite
 > receipt、seed 内分层聚合与无 post-hoc rescue 门；流程与科学 reviewer 均
 > PASS（P0/P1/P2=`0/0/0`）。本轮未运行新科学实验。
+
+> 2026-07-28 续接：T024 已完成，commit
+> `323c43bc8464e39b299ff405dbd884576d544bda`。V060/D032 拒收执行者的
+> `G1_FORMAL_CONFIRM_NO_GO`：正确 seed-cluster pooled bootstrap 的 Gate6
+> CI 下界约 `0.885`，不是 `0.50`。但 Phase A 检索/引用/read-note 未形成
+> 可提交闭包，D4 comparator 又只是 post-CMA 恒等映射，因此
+> `G1_FORMAL_RECOMMENDATION_READY` 也不能接收。T024 Phase B 降为
+> `NONBINDING_DIAGNOSTIC`；G1 局部 method signal 保留，不给第二修复包。
+> 当前无 active scientific carrier，下一步只等待用户确认是否把 G1 整理为
+> 有边界的毕业方法备选材料。

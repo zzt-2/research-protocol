@@ -3181,3 +3181,68 @@ PASS
 
 T024 可交普通 GLM 执行。它先回答 G1 是否通过合法 Groundwork；只有全部门
 PASS 才可在同包运行一次 fresh formal confirm。该 PASS 不预支 G1 科学 Go。
+
+---
+
+## V060: T024 G1 Groundwork、Gate6 与 comparator identity 独立接收审查
+
+> date: 2026-07-28
+> 关联：S002 / D032 / formal D041 / T024
+
+### 验证项
+
+- [x] Gate6 原始计数：eligible 49 对；TP/FP/FN/TN=`19/1/1/28`，
+  point balanced accuracy=`0.957759`。
+- [x] 统计单位重算：按 seed ID 重采样、合并该 seed 的所有 eligible cells 后
+  重算 confusion/balanced accuracy，10k bootstrap 95% CI 约
+  `[0.885,1.000]`；Gate6 PASS。pair bootstrap 约 `[0.891,1.000]`，
+  但不是冻结单位。
+- [x] 错误 `0.50` 定位：人工更正把单类 seed 的缺失 recall 记为 0 后先算
+  per-seed balanced accuracy；该统计量不是任务合同中的 pooled
+  seed-cluster estimand。报告称 both-class seeds=3，raw 实际为 5：
+  `262/264/270/275/278`。
+- [x] Phase A evidence closure：G1 search/citation raw 与 D1 read-note 位于
+  gitignored 路径，executor commit 中缺失；声称的
+  `g1-step1-candidate-map.md` 不存在。四判据与 collision closure 不可独立复核。
+- [x] D4 identity：`methods.py` 的 D4 apply 直接返回输入 post-CMA `z`；
+  140/140 D4 PI-SER 与 CMA bit-identical，不是 likelihood-gated tap-update
+  receiver，Gate4/Gate7 的 target-comparator 语义无效。
+- [x] 其余局部数字复核：class support=`healthy 11/collapse 13`；
+  G1−CMA collapse=`−0.559796`、CI 约 `[-0.6947,-0.4064]`、help/hurt=`12/0`；
+  healthy worst=`0`；G1−M4=`−0.035457`、CI 约
+  `[-0.0466,-0.0243]`。
+- [x] 边界核查：D031/T024 禁止第二个 G1 repair；因此审查只改 binding
+  disposition，不修 runner、不补收据、不重跑 seed。
+
+### 证据
+
+```text
+executor commit: 323c43bc8464e39b299ff405dbd884576d544bda
+raw eligible pairs: 49
+confusion: TP=19 FP=1 FN=1 TN=28
+seed-cluster pooled bootstrap: CI95 ≈ [0.885, 1.000] -> Gate6 PASS
+independent science audit: UNRESOLVED_STAT_IMPLEMENTATION
+independent process/identity audit: FAIL, P0/P1/P2=3/1/1
+current-owner YAML parse: PASS (4/4)
+current-owner cross-file assertions: PASS
+git diff --check: PASS
+independent reconciliation review after active-carrier fix: PASS, P0/P1/P2=0/0/0
+legacy adapter tests: 10 passed / 3 failed
+  - 2 failures: protected STATUS.v1.md is intentionally stale (D021 gap #10)
+  - 1 failure: pre-existing H001 source hash drift in an untouched source/ledger
+```
+
+### 结论
+
+FAIL。
+
+`G1_FORMAL_CONFIRM_NO_GO` 的 Gate6 理由不成立；但 Phase A evidence closure
+与 D4 comparator identity 失败，使 formal recommendation 同样不能接收。
+binding disposition 为
+`G1_GROUNDWORK_EVIDENCE_INCOMPLETE / PHASE_B_NONBINDING_DIAGNOSTIC`。
+局部 G1 method signal 可 harvest，不构成 Step 4a Go。
+
+### 后续（FAIL/PARTIAL 时）
+
+执行 D032/D041：不修 T024、不做第二个 G1 包、不进 Step 5。先让用户确认是否
+把现有机制与局部证据整理成有边界的毕业方法备选材料。

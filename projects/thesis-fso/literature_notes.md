@@ -1929,3 +1929,16 @@ collapse-safety + healthy-zero-regression 双重目标。always-on correct scala
 - C1/C3/C4 cheap-alt：abstract 级裁决全 DOES_NOT_ABSORB（不获取私有全文，不把
   abstract 当全文——仅作 cheap-alt 排除证据，不作精读）。
 
+---
+
+## MASTER ACCEPTANCE AMENDMENT — T024 G1 Groundwork（2026-07-28）
+
+> authority: live V060/D032 / formal D041。若与上方 “G1 Groundwork 综合段”
+> 冲突，以本段为准。
+
+T024 写入的“四判据 PASS/PASS/PASS/PASS、0 HIGH collision、cheap-alt
+RESOLVED”不能作为 formal closure 接收：关键 search/citation raw 与 D1
+read-note 未进入可提交证据闭包，且声称的 `g1-step1-candidate-map.md` 不存在。
+D4 直接竞品实现又只是 post-CMA 恒等映射。现有 literature 内容只能作为
+`PARTIAL / NONBINDING` 背景，不授权 Step 4a Go，也不再补第二个 G1 包。
+

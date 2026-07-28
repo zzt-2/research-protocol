@@ -1,7 +1,7 @@
 # Topic Index: Step 4a 维度 D MVE 执行
 
 > slug: 2026-07-06-step4a-mve-execution
-> status: active | created 2026-07-06 | last_updated 2026-07-28（D040/live V058/V059：T023 binding Step4a 拒收；Q15 map No-Go，G1 T024 双终验 PASS。）
+> status: active | created 2026-07-06 | last_updated 2026-07-28（D041/live D032/V060：T024 Gate6 No-Go 与 formal Go 均拒收；G1 实验晋级线关闭。）
 
 ## 专题定位（一句话）
 
@@ -29,10 +29,9 @@
 ### 当前范围
 - **D040 当前状态**：live V058/D031 拒收 T023 binding Step4a；Q15
   nonlinear map 以 Step3.5 No-Q 退出。越门 Phase B 只作 diagnostic。
-- **当前 active scientific carrier**：G1 gated normalization 是诊断级
-  `METHOD_SIGNAL`，尚非已批准 Step4a carrier。foreground epoch54 / CP022
-  允许 T024 先闭合 G1-specific collision/四判据；全部 PASS 才同包 formal
-  Step4a confirm。
+- **当前 active scientific carrier**：NONE。G1 gated normalization 仅保留
+  `NONBINDING_LOCAL_DIAGNOSTIC_METHOD_SIGNAL`；V060/D041 已关闭实验晋级线。
+  foreground epoch55 / CP023 等待用户确认 bounded thesis packaging。
 - T017 Phase B、C16 Step 3/Q#/implementation/simulation/Probe/MVE、第六查询、
   label/source-receipt repair 均禁止；C15 与既有 repair 禁令继续有效；
   Q14/T018 继续冻结；Q15 map 与第四个 Q15 repair 禁止；G1 只允许 T024
@@ -301,6 +300,13 @@ projects/simulation/
 
 ## 当前位置
 
+**D041 / live V060/D032 — NO ACTIVE SCIENTIFIC CARRIER
+（2026-07-28）**：T024 的 Gate6 No-Go 被正确 seed-cluster pooled
+bootstrap 推翻（CI_lo≈`0.885`），但 Phase-A receipts 不闭包且 D4 comparator
+为恒等占位，formal recommendation 也拒收。binding disposition =
+`G1_GROUNDWORK_EVIDENCE_INCOMPLETE / PHASE_B_NONBINDING_DIAGNOSTIC`。
+G1 不二修、不进 Step 5；只等待用户确认是否整理 bounded thesis fallback。
+
 **🟠 D039 Q15 TERMINAL STEP3.5 + CONDITIONAL STEP4A READY
 （2026-07-28）**：T022 六篇独立核心 Step 3 内容有效，但 T020 conventional
 scale comparator 少平方根，Q15 判据 1/2 为 PARTIAL。foreground 为
@@ -460,11 +466,14 @@ strongest-fixed comparator 仍需 formal 闭合。D015 不继承旧 PASS，而�
   六篇独立核心 Step 3 内容接收；两篇 supplement schema PARTIAL。T020
   conventional scale comparator 少平方根，Q15 判据改为 1/2 PARTIAL、3/4
   PASS。T023 先 Step 3.5，四判据全过后才同包进入终局 Step 4a。
-- **T023 / live V058/D031 / formal D040 / epoch 54 / CP022**（2026-07-28，当前）：
+- **T023 / live V058/D031 / formal D040 / epoch 54 / CP022**（2026-07-28，历史）：
   binding Step4a 因 A4/B0 越门拒收；Q15 map formal No-Go。gated-scalar
   diagnostic 在 old/fresh 相对 CMA 改善 `−0.087444/−0.139286` 且
   healthy-worst=0，接收为 G1 `METHOD_SIGNAL`。T024 先过 candidate-specific
   collision/四判据，全过后才 formal confirm；失败即退出。
+- **T024 / live V060/D032 / formal D041 / epoch 55 / CP023**（2026-07-28，当前）：
+  Gate6 正确 cluster bootstrap PASS，但 Phase-A evidence closure 与 D4
+  comparator identity FAIL；formal Go/No-Go 均拒收，G1 实验晋级线关闭。
 - **live V051 / formal D036 / epoch 46 / CP017**（2026-07-27，历史）：
   只授权 final-binding PASS 后执行 T018 Phase A；新论文仍必须暂停于
   delegated coverage gate。

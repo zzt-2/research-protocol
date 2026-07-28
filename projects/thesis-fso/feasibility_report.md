@@ -1427,3 +1427,21 @@ fresh test 调参。→ 进维度 D（B1-B4 formal confirm）。
 recovery + M4 ablation）独立确认成立，但预注册的 activation-CI 正式门未达，按
 §B4 "任一不满足即 NO_GO，不救活" 执行。**不修 gate、不改 cells、不挑 seed 子集、不降
 阈值。无第二个 G1 repair 包。不进 Step 5/Contract/Execute。**
+
+---
+
+## MASTER ACCEPTANCE AMENDMENT — T024 G1 Step 4a（2026-07-28）
+
+> authority: live V060/D032 / formal D041。若与上方 T024 Step 4a 决策冲突，
+> 以本段为准。
+
+1. Gate6 不是 FAIL。按 seed cluster 重采样并对每次样本重算 pooled confusion，
+   balanced-accuracy 95% CI 约 `[0.885,1.000]`；执行器的 pair bootstrap
+   `[0.891,1.000]` 单位不对，人工 `0.50` 又换成了 per-seed 缺失类记零的
+   另一 estimand。
+2. formal confirm 仍不成立：Phase-A evidence closure 不完整，D4 comparator
+   是 post-CMA 恒等映射，Gate4/Gate7 无 target-comparator 语义。
+3. binding disposition =
+   `G1_GROUNDWORK_EVIDENCE_INCOMPLETE / PHASE_B_NONBINDING_DIAGNOSTIC`。
+   其余局部效果数字可回收，但不构成 formal Go。
+4. 继承 one-shot 边界：不重跑、不补第二个 G1 包、不进 Step 5/Contract/Execute。

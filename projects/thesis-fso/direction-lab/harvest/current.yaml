@@ -365,14 +365,15 @@ current_view:
 
   current_valid_spines:
     - spine: >-
-        DIAGNOSTIC METHOD SIGNAL, not yet a thesis spine: G1 receiver-visible
-        prefix-gated correct-sqrt normalization. T023 binding Step4a is rejected,
-        but independent paired recompute shows old/fresh delta PI-SER versus
-        tuned CMA = -0.087444/-0.139286 with bootstrap CI below zero and
-        healthy-worst=0. T024 must close direct collision and formal fresh confirm.
-      status: diagnostic_method_signal_pending_groundwork
-      ceiling: NONBINDING_DIAGNOSTIC / LOCAL_SLICE
-      paper_value: POTENTIAL_PRIMARY_OR_FALLBACK_AFTER_T024
+        LOCAL DIAGNOSTIC METHOD ASSET, not a formal thesis spine: G1
+        receiver-visible prefix-gated correct-sqrt normalization. T024 fresh
+        diagnostic confirms collapse improvement versus tuned CMA about -0.5598
+        with healthy-worst=0, and correct seed-cluster Gate6 CI lower about
+        0.885. However Phase-A evidence closure is incomplete and D4 is an
+        identity placeholder, so formal Go/No-Go are both rejected.
+      status: nonbinding_local_diagnostic_packaging_pending
+      ceiling: NONBINDING_DIAGNOSTIC / LOCAL_SLICE / NO FORMAL GO
+      paper_value: BOUNDED_FALLBACK_IF_USER_APPROVES_PACKAGING
 
     - spine: >-
         WITHDRAWN (was PRIMARY): F1-B dual-pol GG/SOP model-based tracker -> MMSE. The F1-A Probe
@@ -412,12 +413,12 @@ current_view:
       paper_value: SECONDARY (limitations / threats-to-validity)
 
   next_action: >-
-    V058/D031 reject T023 binding Step4a and close Q15 nonlinear map without
-    repair. Phase B remains nonbinding diagnostic. It does create a method
-    signal for G1 gated normalization: old/fresh delta PI-SER versus tuned CMA
-    is -0.087444/-0.139286 with healthy-worst 0. Formal D040 selects T024 to
-    complete G1-specific Groundwork and conditionally run a fresh formal
-    confirm. This is not yet a thesis spine or formal Go.
+    V060/D032/formal D041 reject T024's Gate6 No-Go because the correct
+    seed-cluster pooled CI lower is about 0.885, but also reject formal Go
+    because Phase-A evidence closure is incomplete and D4 is an identity
+    placeholder. G1 receives no repair and remains a local diagnostic asset.
+    Await user confirmation for a bounded packaging-only bundle; this is not
+    a formal thesis spine or Step4a Go.
     Historical context:
     D022 (SCIENCE_FREEZE): SCIENCE_SCOUT candidate rotation PAUSED (topic dormant). NO legal
     main-method signal; NO active thesis spine. Local-negative + methodology-lesson material ->
@@ -450,8 +451,8 @@ current_view:
     independent verifier -> delegated master gate -> read sequence. The next
     V051 historically accepted the revised static contract with no method delta
     or harvest, but D026 later froze Q14/T018 before execution. Current live
-    V058/D031 and formal D040 route to T024: G1-specific Groundwork plus
-    conditional fresh formal confirm. Do NOT repair Q15 map or run T017 Phase B,
+    V060/D032 and formal D041 close the G1 formal experiment line after T024.
+    Do NOT repair Q15/G1 or run T017 Phase B,
     old C16, Q14 Step 4a, implementation, experiment, or a second C16/Q14
     source/problem-evidence package. Do NOT resume Scout/P03;
     do NOT enter Step 5/Contract/Execute;

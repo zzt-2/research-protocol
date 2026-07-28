@@ -2239,3 +2239,46 @@ receiver-visible identity fallback + correct scale 则在两组诊断 slices 上
 ### 来源
 
 live D031/V058；T023 raw/result/source；D039；FR-22/FR-25。
+
+---
+
+## D041: T024 formal disposition 改为证据闭包不足，关闭 G1 实验晋级线
+
+> status: active
+> date: 2026-07-28
+> 取代：D040 的 G1 terminal confirm workline
+> 被取代：无
+> 依据：live V060 / D032 + T024 commit
+> `323c43bc8464e39b299ff405dbd884576d544bda`
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. 拒收 `G1_FORMAL_CONFIRM_NO_GO`：按冻结 seed-cluster pooled bootstrap
+   重算，Gate6 balanced-accuracy CI 下界约 `0.885>0.5`。
+2. 拒收 `G1_FORMAL_RECOMMENDATION_READY`：Phase-A search/citation/read-note
+   未形成可提交闭包，且 D4 comparator 是 post-CMA 恒等映射而非
+   likelihood-gated tap-update receiver。
+3. formal disposition 固定为
+   `G1_GROUNDWORK_EVIDENCE_INCOMPLETE / PHASE_B_NONBINDING_DIAGNOSTIC`。
+   formal stage 保持 Groundwork，但当前 active carrier 为 NONE。
+4. 继承 D040 的一次性退出边界：不补第二个 G1 Groundwork/实验包，不进入
+   Step 5/Contract/Execute。
+5. G1 的局部安全门控机制和 fresh diagnostic 数字可作为 thesis fallback
+   packaging 输入；是否整理该材料由用户确认，不等同 formal Go。
+
+### 理由
+
+统计实现错误不能成为科学 Kill；缺失的 provenance 与失真的 direct comparator
+也不能被六个通过门替代。formal 路线到此停止，避免继续修复机器；同时不丢弃
+可用于毕业叙述的局部方法资产。
+
+### 影响范围
+
+- G1 从 formal carrier 移出；
+- 项目 current workline 改为 bounded packaging decision pending；
+- 所有新仿真、formal repair、Step 5/Contract/Execute 继续禁止。
+
+### 来源
+
+live D032/V060；T024；D040；FR-22/FR-25。

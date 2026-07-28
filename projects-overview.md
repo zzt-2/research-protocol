@@ -8,14 +8,13 @@
 
 - **方向**：双偏振星地 OSL 场景中的 ML 应用方向探索；正式研究与 Direction Lab Scout/Sandbox 分层管理。
 - **正式状态**：当前
-  `G1_GROUNDWORK_CONDITIONAL_CONFIRM_SELECTED_NOT_YET_STEP4A_ACTIVE`。
-  V058/D031/formal D040 拒收 T023 binding Step4a：它在四判据未全过时越过
-  A4/B0；Q15 nonlinear map 以 Step3.5 No-Q 退出且不 repair。T023 Phase B
-  仅作 nonbinding diagnostic，但独立 paired 重算显示 gated-scalar 在 old/fresh
-  相对 tuned CMA 改善 `−0.087444/−0.139286`、CI 均低于 0、
-  healthy-worst=`0`，因此接收为 G1 diagnostic `METHOD_SIGNAL`。T024 先闭合
-  G1-specific recent baseline/direct collision/四判据，全部 PASS 后才同包
-  fresh formal confirm；失败即退出，不留第二包。
+  `NO_ACTIVE_SCIENTIFIC_CARRIER / G1_BOUNDED_PACKAGING_DECISION_PENDING`。
+  V060/D032/formal D041 拒收 T024 的两个相反终态：正确 seed-cluster pooled
+  bootstrap 的 Gate6 CI_lo≈`0.885`，所以 `G1_FORMAL_CONFIRM_NO_GO` 理由错误；
+  但 Phase-A search/citation/read-note 未形成可提交闭包，D4 comparator 又是
+  post-CMA 恒等映射，因此 formal recommendation 也不能接收。binding =
+  `G1_GROUNDWORK_EVIDENCE_INCOMPLETE / PHASE_B_NONBINDING_DIAGNOSTIC`。
+  G1 局部 method signal 保留，不给第二修复包。
   T017 的历史处置仍为
   `BLOCKED_FORMAL_READINESS / BLOCKED_SEARCH_OR_IDENTITY`、delta NONE：
   53 rows→44 unique、published=`41/44=93.18%`、R1/R2 direct=`1/3`、
@@ -65,10 +64,10 @@
   moderate/14 dB/seed `131004` 暴露 128-pilot unwrap 的错误 `-2π` branch；
   V026 接收 `BLOCKED_IDENTITY / P0=0/P1=0/P2=1 /
   mission_method_delta=NONE`。无 aggregate，未消费 held-out；不补矩阵、不改 gate。
-- **下一合法边界**：普通 GLM 执行 T024，先完成 G1-specific recent baseline、
-  direct collision、read receipt 与四判据；只有全过才运行同包 fresh formal
-  Step 4a confirm。禁止 Step 5/Contract/Execute、Q15 map repair、第二个 G1
-  package，不直接写论文。
+- **下一合法边界**：主控先取得用户对 G1 bounded thesis packaging 的确认；
+  确认后才准备一个只整理既有算法动作、局部数字、适用边界和证据债的 GLM
+  任务。禁止新实验、formal repair、Step 5/Contract/Execute、Q15 map repair
+  与第二个 G1 science package。
   **不运行 T017 Phase B、旧 C16 sandbox/seeds 71–80，不进入 Step 3/Q#/
   实现/实验或第二个
   C16 source package；C15 不运行 Phase B、第二个 source/formalization package、

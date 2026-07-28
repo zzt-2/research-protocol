@@ -1,7 +1,7 @@
 # Mission Log — Research Direction Lab 长程真实运行测试
 
 > original mission: 在用户只中转任务路径和极短回执的条件下，稳定推进真实研究并积累可用方法材料。
-> phase 1: `4af6f9d..aab425d` | latest accepted: CP022 / 2026-07-28 | next checkpoint: `CP023`
+> phase 1: `4af6f9d..aab425d` | latest accepted: CP023 / 2026-07-28 | next checkpoint: `CP024`
 
 | CP | 包 / intent / family | formal science disposition | mission method delta | streaks | weight / drift | 下一步为何优于替代项 |
 |---|---|---|---|---|---|---|
@@ -27,6 +27,7 @@
 | CP020 | T021 · log-021 · `287fb6a` / CANDIDATE_FORMALIZATION / Q15 Step 1–2 | `PARTIAL_WITH_INTEGRITY_REPAIR_REQUIRED`；129 unique、121/129 published、11 必读、六篇独立核心+两篇补充全文成立；三源 PASS 撤回（merged raw 实际两源），五篇 blit 缺 canonical/index receipt；D1/C1/C4 为关键 debt | NONE | same-axis=1, repair=0, no-method=1 | ADEQUATE / package ALIGNED；mission RECOVERING | T022 把两项确定性 receipt repair 与 Step 3 精读合并，比纯修复包、用户手动补全文或直接 Kill 更能产生 collision/cheap-alt/Q# 判断材料；D1/C1/C4 留给 mandatory Step 3.5 |
 | CP021 | T022 · log-022 · `f3a47260` / CANDIDATE_FORMALIZATION / Q15 Step 3 | `STEP3_CONTENT_COMPLETE_WITH_SCIENTIFIC_REFRAME`；六篇独立核心满足内容门，2 supplement schema PARTIAL；D1 公开可得、D3 非 shell radius；T020 M1 功率比直接乘振幅且 evaluator 无尺度恢复，故判据 1/2 PARTIAL、3/4 PASS | NONE | same-axis=2, repair=0, no-method=2 | ADEQUATE / package ALIGNED；mission RECOVERING | Q15 已有构造与诊断 slice，T023 用一个终局包合并 Step 3.5 与条件式 Step 4a correct-normalization 审判，比纯检索、纯修公式或轮换到 hypothesis-only 候选更可能直接产出 packaging boundary；失败即退出且不再 repair |
 | CP022 | T023 · log-023 · `89d8174c` / CANDIDATE_FORMALIZATION / Q15 map → G1 gated normalization | `Q15_MAP_STEP35_NO_Q_NO_GO`；Phase B 因 A4/B0 越门只作 NONBINDING_DIAGNOSTIC。Map 无 gate+scale 外增量；gated-scalar old/fresh ΔPI-SER=`−0.087444/−0.139286`、CI<0、healthy-worst=0 | METHOD_SIGNAL | Q15 same-axis=3 closed；G1 same-axis=1, repair=0, no-method=0 | OVERWEIGHT / package DRIFT_RISK；mission RECOVERING | 不修 Q15 map；T024 以已有 runnable G1 + fresh signal 做一次 collision-first、条件式 formal confirm，比轮换到 0 READY 的 hypothesis-only 候选更可能形成毕业方法；失败即退出 G1 |
+| CP023 | T024 · log-024 · `323c43b` / CANDIDATE_FORMALIZATION / G1 gated normalization | executor Gate6 No-Go 被推翻：正确 seed-cluster CI_lo≈`0.885`；但 Phase-A receipts 不闭包且 D4 为恒等占位，formal Go/No-Go 均拒收。binding=`G1_GROUNDWORK_EVIDENCE_INCOMPLETE / PHASE_B_NONBINDING_DIAGNOSTIC`；G1 实验修复线关闭 | NONE（既有 METHOD_SIGNAL 被 fresh diagnostic 加强，未晋级新类别） | G1 same-axis=2 closed, repair=0；active-carrier=0 | OVERWEIGHT / package DRIFT_RISK；mission STALLED_WITH_PACKAGING_ASSET | 不再 remap 或修实验；向用户确认一次有边界 packaging，把算法动作、局部收益与证据债整理为毕业备选，比继续在 0 READY 池中制造分析更符合原 mission |
 
 ## 使用规则
 
