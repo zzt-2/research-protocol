@@ -8,12 +8,14 @@
 
 - **方向**：双偏振星地 OSL 场景中的 ML 应用方向探索；正式研究与 Direction Lab Scout/Sandbox 分层管理。
 - **正式状态**：当前
-  `Q15_STEP3_WITH_RECEIPT_PREFLIGHT_SELECTED_NOT_STEP4A_ACTIVE`。T020 已形成
+  `Q15_TERMINAL_STEP35_STEP4A_SELECTED_NOT_YET_STEP4A_ACTIVE`。T020 已形成
   CP019 / `METHOD_SIGNAL`；V053 接收 M4 为 current `μ=0.03`、strict
   prefix-only、fresh held-out 上的工厂级诊断信号，但限定为 7/20
-  CMA-collapse seeds 的条件性恢复，不是 formal Go。T021 得到六篇独立核心+
-  两篇补充全文，但三源 PASS 与五篇 blit index receipt 未闭合。V054/D029/
-  formal D038 准备 T022：先修收据，再同包完成 Q15 Step 3。
+  CMA-collapse seeds 的条件性恢复，不是 formal Go。T022 的六篇独立核心
+  Step 3 内容已接收，但 V056 发现 T020 conventional scalar baseline 把功率比
+  直接当振幅因子，Q15 判据改为 1/2 PARTIAL、3/4 PASS。V056/D030/formal
+  D039 准备 T023：先完成 D1+normalization/MMA Step 3.5，四判据全过后才同包
+  进入 correct-normalization Step 4a。
   T017 的历史处置仍为
   `BLOCKED_FORMAL_READINESS / BLOCKED_SEARCH_OR_IDENTITY`、delta NONE：
   53 rows→44 unique、published=`41/44=93.18%`、R1/R2 direct=`1/3`、
@@ -63,10 +65,9 @@
   moderate/14 dB/seed `131004` 暴露 128-pilot unwrap 的错误 `-2π` branch；
   V026 接收 `BLOCKED_IDENTITY / P0=0/P1=0/P2=1 /
   mission_method_delta=NONE`。无 aggregate，未消费 held-out；不补矩阵、不改 gate。
-- **下一合法边界**：普通 GLM 执行 T022，先补 IEEE raw 和五篇 blit
-  canonical/index receipt，再精读六篇独立核心+两篇补充全文，然后暂停。
-  禁止 Step 3.5+、实验、第三个 CB1 z-only factory，
-  不直接写论文。
+- **下一合法边界**：普通 GLM 执行 T023，先完成 Q15 Step 3.5；只有形成
+  四判据全过 Q# 才运行同包 Step 4a correct-normalization 终局审判。禁止
+  Step 5/Contract/Execute、后续 Q15 repair，不直接写论文。
   **不运行 T017 Phase B、旧 C16 sandbox/seeds 71–80，不进入 Step 3/Q#/
   实现/实验或第二个
   C16 source package；C15 不运行 Phase B、第二个 source/formalization package、

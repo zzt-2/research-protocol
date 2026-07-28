@@ -14,20 +14,20 @@ recovery_entry: .sessions/2026-07-23-research-direction-lab-longitudinal-test/to
 formal_active_carrier:
   id: NONE
   status: NO_ACTIVE_STEP4A_SCIENTIFIC_CARRIER
-  readiness: Q15_GROUNDWORK_STEP3_WITH_RECEIPT_PREFLIGHT_SELECTED
-  authority: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D038
+  readiness: Q15_TERMINAL_STEP35_STEP4A_SELECTED
+  authority: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D039
   positive_method_target: null
   fair_comparators: []
   claim_ceiling: DIAGNOSTIC_ONLY_NOT_FORMAL_GW_MVE
   stop: >-
-    T022 stops after receipt preflight and Step3 reading;
-    no Step3.5+, experiment, paper claim, or third CB1 z-only factory package
+    T023 must complete Step3.5 before conditional Step4a;
+    no Step5, Contract, Execute, paper claim, or later Q15 repair package
 
 selected_formalization_workline:
   id: Q15
-  status: GROUNDWORK_STEP3_WITH_RECEIPT_PREFLIGHT_READY
+  status: TERMINAL_STEP35_STEP4A_READY
   readiness: DIAGNOSTIC_WINNER_REQUIRES_FULL_GROUNDWORK
-  authority: formal D038 / live D029
+  authority: formal D039 / live D030
   positive_method_target: >-
     receiver-visible prefix-gated identity/quantile-shell radius calibration
     after fixed-mu blind FIR CMA
@@ -36,13 +36,13 @@ selected_formalization_workline:
     - restart, multistart, or reinitialization of the same CMA
     - blind AGC / scale normalization / radius-directed post-processing
     - C11 legal causal and blind affine as inherited diagnostics
-  expected_mission_method_delta: NONE
+  expected_mission_method_delta: NONE_OR_PACKAGING_BOUNDARY
   current_gate: >-
-    T022 must first close IEEE raw and five blit canonical/index receipts;
-    if that passes, it reads six independent core works plus two supplements.
+    T023 first closes D1 and targeted normalization/MMA Step3.5;
+    only a four-criteria Q# may enter correct-normalization Step4a.
   stop: >-
-    no Step3.5+, Step4a, implementation, experiment, or third factory package;
-    D1/C1/C4 debt blocks novelty and problem-survival claims
+    T023 must return No-Go or Step4a recommendation-ready;
+    no Step5/Contract/Execute or fourth Q15 repair package
 
 candidates:
   # ── Cluster 1-2: Failure observability (CEILINGED) ──
@@ -192,11 +192,11 @@ remaining_open:
     note: needs action hook; co-blocked
 
 next_action: >-
-  V054/D029 accept T021 as PARTIAL: six independent core works plus two
-  supplements exist, while the three-source PASS and five blit index receipts
-  are not closed. Formal D038 selects Q15 Step3 with receipt preflight. T022
-  closes those receipts and then performs fulltext reading in the same package.
-  No Step3.5+, third factory, T018, formal MVE, promotion, or paper claim.
+  V056/D030 accept T022 six-core Step3 content but reframe Q15 criteria as
+  1/2 PARTIAL and 3/4 PASS. Formal D039 selects one terminal T023: complete
+  D1 plus normalization/MMA Step3.5, then conditionally run correct-normalization
+  Step4a only if a four-criteria Q# exists. No later Q15 repair, Step5,
+  Contract, Execute, promotion, or paper claim.
   Historical context:
   D022 (SCIENCE_FREEZE): SCIENCE_SCOUT candidate rotation PAUSED (topic dormant). NO legal
   main-method signal. F1=TESTBED_BLOCKED, F3=UNRESOLVED, F4=INFRASTRUCTURE_BLOCKED. F2 pilot lineage
@@ -228,8 +228,8 @@ next_action: >-
   no second package and delta NONE. Historical live R008/D024 and formal D035
   then selected Q14 for one mandatory Step 3.5/problem-evidence package after
   comparing Q-ML4, B4 and C04/C09-open. T018 never executed and was later
-  frozen by D026. Current live V054/D029 and formal D038 select Q15 for bounded
-  Groundwork Step 3 with receipt preflight; active carrier is still NONE. No old-C16
+  frozen by D026. Current live V056/D030 and formal D039 select Q15 for terminal
+  Step3.5 plus conditional Step4a; active approved Step4a carrier is still NONE. No old-C16
   execution, Phase B, Q14 Step 4a, implementation, experiment, second
   C16/Q14 source/problem-evidence package, Step 5, Scout/P03, or C15 Phase B is
   authorized.

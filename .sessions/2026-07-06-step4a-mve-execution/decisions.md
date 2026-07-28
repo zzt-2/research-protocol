@@ -2089,10 +2089,10 @@ live D028/V053；T020；groundwork/gw-search/gw-acquire；FR-22。
 
 ## D038: 接收 Q15 Step 1–2 PARTIAL 并授权带收据前置门的 Step 3
 
-> status: active
+> status: superseded
 > date: 2026-07-28
 > 取代：D037 的 Step 1–2 workline
-> 被取代：无
+> 被取代：D039
 > 依据：验证 live V054 + live D029 + T021 commit `287fb6a`
 > 触发原话：无（技术推导）
 
@@ -2132,3 +2132,56 @@ method-production 的产出约束。
 ### 来源
 
 live D029/V054；T021；groundwork/gw-acquire/gw-read；FR-22。
+
+---
+
+## D039: 接收 Q15 Step 3 PARTIAL 并授权终局 Step 3.5 + 条件式 Step 4a
+
+> status: active
+> date: 2026-07-28
+> 取代：D038 的 Step 3 workline
+> 被取代：无
+> 依据：验证 live V056 + live D030 + T022 commit `f3a47260f732e0987743f32bffc6d21d7f92e6aa`
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. formal stage 保持 `GROUNDWORK`；T022 只接收为
+   `STEP3_CONTENT_COMPLETE_WITH_SCIENTIFIC_REFRAME`。
+2. Q15 四判据当前为 `1=PARTIAL / 2=PARTIAL / 3=PASS / 4=PASS`，不是合法
+   Step 4a Q#。D1 公开全文和定向 normalization/MMA 证据必须先在 Step 3.5
+   闭合。
+3. T023 Phase A 只做 Step 3.5。只有 Phase A 形成四判据全过 Q#，才允许同包
+   进入 Phase B Step 4a。
+4. Phase B 的首要对手是 correct sqrt amplitude normalization，而不是裸 CMA
+   或 oracle。必须同时比较 pooled/per-pol/robust/gated scalar 与 M2/M4，
+   使用严格 prefix、共享 realization、seed-cluster CI 和 fresh seeds。
+5. T023 是 Q15 最后一个 work package。No-Go/blocked 均退出；只有
+   `Q15_STEP4A_RECOMMENDATION_READY` 才返回主控请求用户确认，不自动进 Step 5。
+
+### 理由
+
+Step 3 精读确认 equalizer-internal radius/switching 先例很多，但没有排除输出端
+Q15 的信息增量。与此同时，T020 conventional scalar comparator 的振幅公式错误，
+使当前正信号不能支撑问题存活。把 Step 3.5 与条件式 Step 4a 合并，既遵守
+FR-22 的顺序门控，也避免再产生一个只修文档或只修 baseline 的空包。
+
+### 排除的替代方案
+
+- 不把 T022 直接标 Step 3 全 PASS；
+- 不在 Step 3.5 前运行 Step 4a；
+- 不恢复第三个普通 method factory；
+- 不把 D1/C1/C4 全文数量当唯一门；真正门是 direct collision 和合法强简单
+  comparator；
+- 不授权 Step 5/Contract/Execute。
+
+### 影响范围
+
+- formal current workline 更新为 Q15 terminal Step 3.5 + conditional Step 4a；
+- live epoch53 / CP021 / T023；
+- T020 artifacts 保持只读，所有新实证进入隔离目录。
+
+### 来源
+
+live D030/V056；T022；T020 source audit；groundwork/gw-supplement/
+gw-feasibility；FR-22/FR-25。

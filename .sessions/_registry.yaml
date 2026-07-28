@@ -49,8 +49,8 @@ topics:
     title: Research Direction Lab 长程真实运行测试
     status: active
     created: "2026-07-23"
-    last_updated: "2026-07-28（V054/D029/T022：T021 PARTIAL；V055 派工终审 PASS；epoch52 / CP020 Q15 Step3+receipt preflight 就绪）"
-    description: "D017/D018 轻量长程 mission。T020 得到工厂级 M4 DIAGNOSTIC_METHOD_SIGNAL。T021 获得六篇独立核心+两篇补充全文，但三源 PASS 与五篇 blit canonical/index receipt 未闭合。V054/D029 不单开纯修复包；V055 终审 T022 PASS，先补收据，再同包完成 Q15 Step3，D1/C1/C4 留作 mandatory Step3.5 debt。"
+    last_updated: "2026-07-28（V056/D030/T023：T022 Step3 PARTIAL；V057 派工终审 PASS；epoch53 / CP021 Q15 终局 Step3.5+条件式 Step4a 就绪）"
+    description: "D017/D018 轻量长程 mission。T020 得到工厂级 M4 诊断信号；T022 完成六篇独立核心 Step3 内容。V056 发现 conventional scalar baseline 少平方根，Q15 判据 1/2 PARTIAL、3/4 PASS。D030/T023 先完成 D1+normalization/MMA Step3.5，四判据全过才同包进入 correct-normalization Step4a；V057 终审派工 PASS，本包后不再 repair Q15。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 S014 现场故障、R003 场景演练、D017 控制接口和 guard
@@ -447,8 +447,8 @@ topics:
     title: Step 4a 维度 D MVE 执行（B11 单载波 NDA-ML 主推 + B7/B3 待开）
     status: active
     created: "2026-07-06"
-    last_updated: "2026-07-28（D038/live V054/V055：T021 PARTIAL；T022 终审 PASS，授权 Q15 Step3 with receipt preflight）"
-    description: "Formal carrier owner。D038 接收 Q15 Step1-2 PARTIAL：六篇独立核心+两篇补充全文有效，三源与五篇 blit receipt 待补。foreground epoch52/CP020 只允许 T022 先修收据再精读 Step3；禁止 Step3.5+、实验、第三个 factory、Step5/Contract/Execute。"
+    last_updated: "2026-07-28（D039/live V056：T022 Step3 PARTIAL；授权 Q15 终局 Step3.5+条件式 Step4a）"
+    description: "Formal carrier owner。D039 接收六篇独立核心 Step3 内容，但判据 1/2 PARTIAL，且 T020 conventional scale comparator 少平方根。foreground epoch53/CP021 只允许 T023 先 Step3.5，四判据全过后同包进入 correct-normalization Step4a；禁止 Step5/Contract/Execute 与后续 Q15 repair。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
         reason: 继承 S031 排优先级（B11/B3/B7 Conditional Go）+ 切法地图参照系（饱和池/稀池路径）+ D005 务实路线 + D006 红线 + 5 个口径警示

@@ -108,3 +108,12 @@ FR-22。
 > 但 merged raw 实际仅两源，IEEE 第三源无结构化 receipt，五篇 blit 未进
 > papers index。T022 不单开纯修复包，而是先闭合这两项收据，随后同包完成
 > Q15 Step 3 精读。D1/C1/C4 保留为 Step 3.5 mandatory debt。
+
+> 2026-07-28 续接：T022 已完成，实际 commit
+> `f3a47260f732e0987743f32bffc6d21d7f92e6aa`。V056/D030 接收六篇独立核心
+> Step 3 内容与 `mission_method_delta=NONE`，但拒收“8/8 全结构 PASS”和
+> “只差 D1/C1/C4”。独立源码复核发现 T020 M1 把功率比直接作为复振幅乘子，
+> 正确 conventional normalization 应取平方根；evaluator 不恢复尺度。Q15
+> 判据改为 1/2 PARTIAL、3/4 PASS。T023 是唯一终局包：先 Step 3.5 纳入公开
+> D1 与定向 normalization/MMA 证据；四判据全过后才同包进入 Step 4a 正确
+> baseline 审判，失败/blocked 均退出且不再 repair。

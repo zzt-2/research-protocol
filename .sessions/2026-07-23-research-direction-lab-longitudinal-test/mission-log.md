@@ -1,7 +1,7 @@
 # Mission Log — Research Direction Lab 长程真实运行测试
 
 > original mission: 在用户只中转任务路径和极短回执的条件下，稳定推进真实研究并积累可用方法材料。
-> phase 1: `4af6f9d..aab425d` | latest accepted: CP020 / 2026-07-28 | next checkpoint: `CP021`
+> phase 1: `4af6f9d..aab425d` | latest accepted: CP021 / 2026-07-28 | next checkpoint: `CP022`
 
 | CP | 包 / intent / family | formal science disposition | mission method delta | streaks | weight / drift | 下一步为何优于替代项 |
 |---|---|---|---|---|---|---|
@@ -25,6 +25,7 @@
 | CP018 | T019 · log-019 · `e1c479e` / PREFORMAL_METHOD_FACTORY / CB1 five-construct batch | `SCIENCE_VERDICT_REJECTED / DIAGNOSTIC_BATCH_PARTIAL`；420 raw rows 与 paired aggregate 成立，但 baseline 回退 μ=0.001、M3/M5 非因果、smoke receipt 空且结构性归因越界；只保留“5 个实现未过门”，M5=15 help/5 hurt 弱线索 | FAIR_COMPARISON_RUN | same-axis=1, repair=0, no-method=0, no-signal=1 | ADEQUATE / package ALIGNED；mission RECOVERING | corrected-baseline M5 family 一次扩展比修 M1–M4 或立刻建 pilot/decoder 接口更接近已有弱信号；须 μ=0.03 + prefix-only + fresh held-out，失败后退出 CB1 z-only 且无第三包 |
 | CP019 | T020 · log-020 · `5cf76d5` / PREFORMAL_METHOD_FACTORY / causal constellation-prior shell family | `DIAGNOSTIC_METHOD_SIGNAL_ACCEPTED_WITH_LIMITS`；M4 对 μ=0.03 CMA 的 seed-cluster ΔPI-SER=`-0.08259`、CI=`[-0.13812,-0.03178]`、7/0/13，严格 prefix-only；但 raw 缺逐 pair gate receipt、四分类只保留每 cell 首 seed，且信号集中于 7/20 collapse seeds | METHOD_SIGNAL | same-axis=2, repair=0, no-method=0, no-signal=0 | ADEQUATE / package ALIGNED；mission RECOVERING | 停止方法工厂并把 M4/Q15 送回正式 Groundwork Step 1–2；先查 direct collision 与稳健 CMA/重启/多初值廉价替代，比第三个 CB1 包或直接实验更能判断它能否成为毕业方法 |
 | CP020 | T021 · log-021 · `287fb6a` / CANDIDATE_FORMALIZATION / Q15 Step 1–2 | `PARTIAL_WITH_INTEGRITY_REPAIR_REQUIRED`；129 unique、121/129 published、11 必读、六篇独立核心+两篇补充全文成立；三源 PASS 撤回（merged raw 实际两源），五篇 blit 缺 canonical/index receipt；D1/C1/C4 为关键 debt | NONE | same-axis=1, repair=0, no-method=1 | ADEQUATE / package ALIGNED；mission RECOVERING | T022 把两项确定性 receipt repair 与 Step 3 精读合并，比纯修复包、用户手动补全文或直接 Kill 更能产生 collision/cheap-alt/Q# 判断材料；D1/C1/C4 留给 mandatory Step 3.5 |
+| CP021 | T022 · log-022 · `f3a47260` / CANDIDATE_FORMALIZATION / Q15 Step 3 | `STEP3_CONTENT_COMPLETE_WITH_SCIENTIFIC_REFRAME`；六篇独立核心满足内容门，2 supplement schema PARTIAL；D1 公开可得、D3 非 shell radius；T020 M1 功率比直接乘振幅且 evaluator 无尺度恢复，故判据 1/2 PARTIAL、3/4 PASS | NONE | same-axis=2, repair=0, no-method=2 | ADEQUATE / package ALIGNED；mission RECOVERING | Q15 已有构造与诊断 slice，T023 用一个终局包合并 Step 3.5 与条件式 Step 4a correct-normalization 审判，比纯检索、纯修公式或轮换到 hypothesis-only 候选更可能直接产出 packaging boundary；失败即退出且不再 repair |
 
 ## 使用规则
 

@@ -1760,10 +1760,10 @@ T020；step-020 worker log；factory-contract.v2；raw/result；V053；D026/D027
 
 ## D029: 部分接收 T021，并把收据修复与 Q15 Step 3 合并执行
 
-> status: active
+> status: superseded
 > date: 2026-07-28
 > 取代：D028 的 Q15 Step 1–2 执行状态；保留其方法工厂终止与 claim ceiling
-> 被取代：无
+> 被取代：D030
 > 依据：验证 V054 + T021 commit `287fb6a` / worker log / raw / paper receipts
 > 触发原话：无（技术推导）
 
@@ -1810,3 +1810,62 @@ direct-collision、cheap-alt 和 Q# 判断材料。
 ### 来源
 
 T021；step-021 worker log；q15 annotated raw；paper artifacts；V054；D028/D037。
+
+---
+
+## D030: 部分接收 T022，并以正确归一化终局审判 Q15
+
+> status: active
+> date: 2026-07-28
+> 取代：D029 的 Step 3 workline
+> 被取代：无
+> 依据：验证 V056 + T022 commit `f3a47260f732e0987743f32bffc6d21d7f92e6aa` +
+> critic `audit_t022_science`
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. 接收 T022 的保守终态：六篇独立核心满足 Step 3 内容门，Q15 仍为
+   `PENDING_STEP35`，`mission_method_delta=NONE`；追加 CP021。
+2. 不接受“8/8 全结构合同 PASS”：两篇补充 D3′/D4′ 已读但未各自完整展开
+   15 字段和七个独立子表。该 P1 不推翻六篇独立核心门。
+3. 不接受“四判据 1/3/4 已过、只差 D1/C1/C4”。判据 1/2 均降为
+   `PARTIAL`，3/4 为 PASS。D1 官方全文公开可得；D3 的 \(R_n\) 是 decision
+   error radius，不是星座 shell radius。
+4. T020 的 M1 用功率比直接乘复振幅，正确因子应取平方根；evaluator 又不恢复
+   尺度。这一 P0 使 M4 的收益可能只是补常规 gain normalization。
+5. T023 是 Q15 唯一终局包：先完成真正 Step 3.5；仅在四判据全过后，同包进入
+   Step 4a，用 correct sqrt normalization、gated scalar 等强简单先验复判。
+6. 本包必须输出 Q15 `NO-GO` 或 `STEP4A_RECOMMENDATION_READY`。无论 blocked
+   或 No-Go，均不再给第四个 Q15 repair/factory 包。
+
+### 理由
+
+继续只补 D1/C1/C4 会围绕错误 blocker 工作。源码显示
+`scale=E|s|²/E|z|²` 被直接用于 `scale*z`；这会把功率归一化写成振幅过校正。
+T020 没有合法的 conventional amplitude-normalization comparator，因而不能证明
+非线性 shell map 有独立信息增量。
+
+Q15 仍比轮换到 hypothesis-only 候选更接近方法：它已有实际构造和诊断 slice；
+一次同时闭合 D1/定向文献与正确 baseline 的终局包，能直接给出方法包装边界或
+No-Go。相比纯文献包、纯修公式包或重新方法工厂，其决策价值更高。
+
+### 排除的替代方案
+
+- 不原样派 D1/C1/C4 acquisition：D1 已公开，C1/C3 与目标相关性弱；
+- 不直接轮换：尚有一个小而决定性的 conventional-normalization 解释可验证；
+- 不只修 M1 后再留下一轮：T023 合并 Step 3.5 与条件式 Step 4a，失败即退出；
+- 不把 corrected scalar 当“更严苛 SOTA”：它是接收链最基本、任务匹配的
+  conventional comparator，符合 D005/FR-25 的务实 baseline 标准。
+
+### 影响范围
+
+- foreground 递增到 epoch53 / CP021 /
+  `Q15_TERMINAL_STEP35_STEP4A_READY`；
+- formal owner 新建 D039；T023 获得 Step 3.5 + 条件式 Step 4a 授权；
+- Step 5、Contract、Execute、论文声称与后续 Q15 repair 继续禁止。
+
+### 来源
+
+T022；step-022 worker log；V056；T020 methods/evaluator 源码；D029/D038；
+groundwork/gw-supplement/gw-feasibility；TL-20/TL-22/TL-30/TL-32。

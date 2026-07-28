@@ -2982,3 +2982,95 @@ PASS
 
 T022 可交普通 GLM 执行；它仍是 Groundwork Step 3 内容生产包，不是方法
 Go、novelty 结论或实验授权。
+
+## V056: T022 内容、收据与 Q15 科学接收审查
+
+> date: 2026-07-28
+> 关联：S002 / D029 / D038 / T022 / commit `f3a47260`
+> verifier：独立 agents `audit_t022_integrity`、`audit_t022_science` + 主线源码复核
+
+### 验证项
+
+- [x] commit/scope：实际 HEAD=`f3a47260...`，tree clean；只提交
+  literature_notes/read-log/worker-log，未改代码或越界 owner。
+- [ ] worker binding：worker log 仍写 amend 前 SHA `3555f615...`。
+- [x] 收据：一份 IEEE raw 非空；五套 canonical PDF/MD/metadata、原件 SHA、
+  index 5 条 success receipt 全部闭合；8 篇 title Jaccard 均为 1.0。
+- [x] 六篇独立核心：结构化精读达到 Step 3 最低门。
+- [ ] 两篇补充：D3′/D4′ 已读，但未各自完整展开 15 字段 + 七个独立子表，
+  故“8/8 全合同 PASS”过强。
+- [ ] scientific baseline：T020 M1 在
+  `preformal-method-factory-sprint-002/src/methods.py:55-85` 用
+  `E|s|²/mean|z|²` 直接乘复振幅；正确功率归一化需平方根。
+- [ ] evaluator：`cb1_evaluator.py:172-237` 只搜索极化排列和四象限旋转，
+  不做幅度尺度恢复；M4 增益尚未排除常规 gain normalization。
+- [ ] collision：D3 的 \(R_n=|z_n-\hat{s}_n|\) 是 decision-error radius；
+  D1 官方公开全文可得，不应继续记为不可获取 debt。
+
+### 证据
+
+```text
+INTEGRITY=P0=0 P1=2 P2=0
+SCIENCE=P0=1 P1=3 P2=1
+ACTUAL_HEAD=f3a47260f732e0987743f32bffc6d21d7f92e6aa
+INDEPENDENT_CORE=6_PASS
+SUPPLEMENTS=2_READ_SCHEMA_PARTIAL
+M1_IMPLEMENTED_SCALE=E_ABS2/trimmed_power
+M1_APPLIED_AS=scale*z
+CORRECT_AMPLITUDE_FACTOR=sqrt(E_ABS2/trimmed_power)
+EVALUATOR_SCALE_RECOVERY=NONE
+```
+
+### 结论
+
+PARTIAL
+
+接收 `STEP3_CONTENT_COMPLETE_Q_PENDING_STEP35` 与
+`mission_method_delta=NONE`；不接收“只差 D1/C1/C4”或“Q15 已是可包装方法
+胚胎”。四判据改记 `1=PARTIAL / 2=PARTIAL / 3=PASS / 4=PASS`。
+
+### 后续（FAIL/PARTIAL 时）
+
+T023 先完成 D1+定向 normalization/MMA Step 3.5；仅当四判据全过时运行
+条件式 Step 4a correct-normalization 审判。该包后不再修 Q15。
+
+## V057: T023 终局 Step 3.5 + 条件式 Step 4a 派工终审
+
+> date: 2026-07-28
+> 关联：D030 / D039 / V056 / T023
+> verifier：独立 agent `verify_t023_dispatch`
+
+### 验证项
+
+- [x] Step 顺序：任何实现/seed 前强制
+  `Step3.5 → A0§0–6 → A′ → A → B → D`。
+- [x] 起飞合同：FR-11/12/14/15/18/20/21 均在维度 D 前冻结。
+- [x] 文献未收敛：三轮仍未收敛直接
+  `Q15_STEP35_NONCONVERGED_NO_GO`，不自动进 Phase B。
+- [x] target comparator：Step 3.5 认定的最强 direct/cheap-alt 无法忠实实现时
+  直接 No-Go，不允许 recommendation-ready。
+- [x] blocked/no-repair：identity、comparator、A0 与非收敛阻断全部归顶层
+  No-Go，禁止后续 Q15 repair。
+- [x] 实证公平性：correct sqrt normalization、旧/fresh seeds、共享
+  realization、seed-cluster bootstrap、MDE 与 strongest-comparator 门完整。
+- [x] 控制投影：epoch53 / CP021 / D030 / D039 / V056 / T023 一致；
+  task validator、4 YAML 与 `git diff --check` PASS。
+
+### 证据
+
+```text
+FINAL_BINDING=PASS
+P0=0
+P1=0
+P2=0
+TASK_CONTROL=PASS
+YAML=4/4_PASS
+GIT_DIFF_CHECK=PASS
+```
+
+### 结论
+
+PASS
+
+T023 可交普通 GLM 执行；它必须终局回答 Q15 No-Go 或
+Step4a recommendation-ready，不授权 Step 5/Contract/Execute。

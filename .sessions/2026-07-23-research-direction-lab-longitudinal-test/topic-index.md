@@ -4,12 +4,12 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 52
+  control_epoch: 53
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: Q15_STEP3_WITH_RECEIPT_PREFLIGHT_READY
-  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D029
-  decision_gate: V054 接收 T021 的检索与六篇独立核心全文，但撤回三源 PASS；V055 独立终审 T022 派工合同 PASS；T022 必须先补 IEEE raw 和五篇 blit canonical/index receipt，再进入限定 Step 3；D1/C1/C4 未闭合前禁止 novelty/problem-survival
+  active_lane: Q15_TERMINAL_STEP35_STEP4A_READY
+  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D030
+  decision_gate: V056 接收 T022 六篇独立核心 Step3 内容，但发现 T020 conventional scale comparator 振幅公式错误；V057 终审 T023 PASS；T023 先完成 D1+normalization/MMA Step3.5，只有四判据全过才进入条件式 Step4a correct-normalization 审判；本包后不再 repair Q15
   allowed_actions:
     - RECOVER
     - TASK_PREPARATION
@@ -43,15 +43,16 @@ rdl_control:
     - FORMALIZATION_ONLY_PACKAGE
     - UNAUTHORIZED_SCIENTIFIC_EXPERIMENT
     - THIRD_CB1_Z_ONLY_FACTORY_PACKAGE
-    - Q15_STEP3_5_OR_LATER
-    - Q15_SCIENTIFIC_EXPERIMENT
+    - Q15_STEP5_CONTRACT_OR_EXECUTE
+    - Q15_EXPERIMENT_OUTSIDE_T023
+    - Q15_FOURTH_REPAIR_OR_FACTORY_PACKAGE
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
-  mission_checkpoint: CP020
-  next_legal_action: 用户把 T022 路径交给普通 GLM；GLM 先补 IEEE 第三源 raw 与五篇 blit canonical/index receipt，前置门通过后同包完成 Q15 Groundwork Step 3 精读；不得进入 Step 3.5、Step 4a 或实验
+  mission_checkpoint: CP021
+  next_legal_action: 用户把 T023 路径交给普通 GLM；GLM 先完成 Q15 Step3.5，四判据全过后才同包运行 Step4a correct-normalization 终局审判；不得进入 Step5/Contract/Execute，也不得留下下一次 Q15 repair
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（V054/D029 部分接收 T021；V055 终审 T022 PASS；epoch 52 / CP020，Q15 带收据前置门的 Step 3 已就绪）
+> 状态: active（V056/D030 部分接收 T022；V057 终审 T023 PASS；epoch 53 / CP021，Q15 终局 Step 3.5 + 条件式 Step 4a 已就绪）
 > 创建: 2026-07-23 | 最后更新: 2026-07-28
 
 ## 专题信息
@@ -497,6 +498,13 @@ rdl_control:
   收据前置修复与 Step 3；D1/C1/C4 留作 Step 3.5 mandatory debt。
 - **T022 / V055**：派工合同独立终审 PASS（P0/P1/P2=`0/0/0`）；八篇
   title identity、完整精读 schema、综合分析字段与 Step 3 停止边界均闭合。
+- **T022 / V056 / D030 / formal D039 / CP021**：接收六篇独立核心 Step 3
+  内容，但两篇补充结构合同 PARTIAL；D1 公开可得，D3 非 shell radius。T020
+  M1 conventional scale 少平方根且 evaluator 不恢复尺度，Q15 判据改为
+  1/2 PARTIAL、3/4 PASS。T023 是 Step 3.5 + 条件式 Step 4a 终局包。
+- **T023 / V057**：派工终审 PASS（P0/P1/P2=`0/0/0`）；Step 3.5、
+  A0/A′/A/B/D 顺序、correct-normalization comparator、No-Go/ready 终态与
+  no-fourth-repair 边界闭合。
 
 ## 未决项
 
@@ -517,10 +525,10 @@ rdl_control:
 
 ## 当前位置
 
-T021 已由 V054/D029 部分接收并追加 CP020：method delta 为 `NONE`，Q15
-仍不是 Step 4a active carrier。V055 已终审 T022 派工合同 PASS；formal D038
-授权 control epoch52
-`Q15_STEP3_WITH_RECEIPT_PREFLIGHT_READY`：T022 先闭合 IEEE raw 与五篇
-blit canonical/index receipt，再精读六篇独立核心和两篇补充全文。Step 3.5、
-Step 4a、实验与第三个 CB1 factory 均禁止；D1/C1/C4 未闭合前不得声称
-novelty/problem-survival；T018/Q14 继续冻结。
+T022 已由 V056/D030 部分接收并追加 CP021：method delta 为 `NONE`，Q15
+仍不是已批准的 Step 4a carrier。V057 已终审 T023 PASS；formal D039 授权
+control epoch53
+`Q15_TERMINAL_STEP35_STEP4A_READY`：T023 先纳入 D1、修正 D3 并完成
+normalization/MMA 定向 Step 3.5；只有四判据全过才运行 correct-normalization
+Step 4a。该包必须给出 No-Go 或 recommendation-ready，之后不得再修 Q15；
+Step 5、Contract、Execute 继续禁止，T018/Q14 继续冻结。
