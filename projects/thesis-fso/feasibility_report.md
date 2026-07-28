@@ -1290,3 +1290,140 @@ conventional baseline" 状态**未达**。
    NONBINDING_DIAGNOSTIC`，不是 formal Go。
 5. T024 必须补 candidate-specific Groundwork 和完整 raw receipt；只有全门
    PASS 才能形成 G1 Step 4a recommendation。
+
+---
+
+## G1 Step 4a（T024 Phase B / 2026-07-28）— 起飞硬门 B0（先于 seed）
+
+> authority: T024。G1 Phase A 四判据全过（见 literature_notes.md "G1 Groundwork
+> 综合段"），0 direct collision，cheap-alt RESOLVED → 进入条件式 Phase B。
+> 本节是 seed 前冻结的 A0/A'/A/B + FR 冻结。任一致命项 → `G1_STEP4A_A0_NO_GO`，
+> 不得运行维度 D。
+
+### 维度 A0 §0 前置门控（问题合法性）
+
+1. **候选是否对应 literature_notes 研究问题清单 Q#？** 是。G1 对应 G1-Q1（M-C-A
+   见 literature_notes "G1 Groundwork 综合段"）。
+2. **该 Q# 四判据全过？** 是（A3 表 PASS/PASS/PASS/PASS）。→ 进 A0 §1-§6。
+
+### 维度 A0 §1-§6（问题-方法适配性）
+
+1. **性能间隙 [FR-02]**：[实证] T023 fresh 241-260 slice，always-on robust_scalar
+   healthy-worst=`0.015625` > MDE=`0.005`（V058 §comparator_safety 独立重算）；
+   gated_scalar 相对 CMA ΔPI-SER=`−0.139286`（NONBINDING diagnostic，仅证 gap 存在
+   方向，不证 formal win）。healthy 退化 gap = 0.015625/0.005 ≈ 3.1× MDE，> 5% 相对
+   gap → 有空间。
+2. **问题结构适配**：N/A（G1 非 ML；是确定性 prefix-frozen 决策规则，无需学习）。
+   G1 的"ML 擅长特性"不适用——它是基于物理（amplitude collapse 是纯尺度）的
+   detector+safety-layer，不依赖学习。
+3. **跨域成功先例**：N/A（G1 非 ML，无 ML 先例要求）。相邻"receiver-visible
+   confidence gate + DSP safety layer"无直接先例（收敛信号，非致命）。
+4. **MDP 非平凡性**：N/A（G1 非 MDP/RL）。
+5. **负面证据搜索**：T023 已实证"nonlinear map 无 gate+scale 外增量"；G1 恰是
+   去掉 map、保留 gate+correct-scale 的构造。无"试过 G1 并失败"的报告（0 collision）。
+6. **先验覆盖检查 [FR-01]**：主指标 PI-SER 被 always-on correct scalar 覆盖（恢复
+   塌缩），但**次指标 healthy-safety 未覆盖**（always-on 退化 >MDE）。主指标已覆盖
+   但次指标（healthy zero-regression）未覆盖 → 不致命，必须在 A' 明确竞争维度。
+
+### 维度 A′ 竞争维度分解 [FR-05]
+
+| 维度 | 先验覆盖度 | ML/方法改善空间 | G1 方法增量 |
+|---|---|---|---|
+| collapse recovery (PI-SER on collapse stratum) | 高（always-on correct scalar 已恢复） | <5%（G1 用同 correct scalar，机制等价） | ≈0（不在此竞争） |
+| **healthy safety (degradation ≤MDE)** | **低**（always-on 0.016–0.027 >MDE） | **≥3× MDE headroom** | **identity branch → healthy-worst=0** |
+| activation non-degeneracy (detector precision/recall) | 无（always-on 无 detector） | N/A（新维度） | gate 在 collapse 命中、healthy 不误激活 |
+
+G1 创新声称只建在"healthy safety 低覆盖 + ≥3×MDE headroom"维度 → 符合 A′。
+
+### 维度 A 结构优势论证
+
+1. 核心方法相比最简 baseline（always-on correct scalar）的结构优势：**identity
+   branch 在 healthy prefix 上 bit-identical to baseline CMA**，避免 always-on 的
+   >MDE healthy 退化。这不是"特征不同所以复杂"，而是"always-on 在 healthy 上
+   引入信息损失（错配的尺度估计方差），G1 的 gate 检测到 healthy 并跳过"。
+2. 信息损失量化：healthy 退化 0.015625–0.027344 >MDE（V058 独立重算）。
+3. [FR-03] 增强基线（always-on robust median scalar）对比：healthy-worst=0.015625
+   仍 >MDE；G1 identity branch = 0.0。差距不消失。
+4. [FR-08] 范式对齐：G1 非 ML，无学习范式对齐要求；是确定性 DSP safety layer，
+   与该领域（CMA/RDE/MMA 传统 DSP）范式一致。
+
+### 维度 B 新颖性-可行性解耦 + 空白零假设
+
+1. 新颖性：G1 exact action（gated identity-or-correct-scalar, prefix-frozen,
+   DP-16QAM collapse-safety）0 direct collision（candidate-screen + D4 citation
+   chain 确认）。
+2. 可行性：[NONBINDING diagnostic] T023 fresh gated_scalar ΔPI-SER=−0.139286、
+   healthy-worst=0 → 构造可运行且方向正向（但非 formal win，需 B4 重验）。
+3. 空白原因：receiver-only post-proc safety layer 在该子领域非主流（主流在
+   equalizer-internal tap-update 或 TX-side）；非"试过不好"。
+4. **空白零假设检查（≥3 结构性原因，逐一反驳）**：
+   - (a) "always-on normalization 已足够" → 反驳：healthy 退化 >MDE（V058 实证），
+     safety headroom 真实存在。
+   - (b) "collapse 检测可用 hard-decision SER 代替，无需 prefix detector" → 反驳：
+     hard-decision SER 是 suffix 评分（违反 prefix-frozen 因果边界）；G1 的
+     prefix-only detector 是 receiver-visible、因果的，information boundary 不同。
+   - (c) "safety layer 可织入 equalizer tap-update（如 D1 soft-switch）" → 反驳：
+     D1 always-online 非 prefix-frozen、SISO 256/1024 非 DP-16QAM、无 identity
+     branch（read-note 确认 collision=NONE）；post-proc layer 与 tap-update 是
+     不同 action 层。
+   - (d) "nonlinear map 比 scalar 强" → 反驳：T023 ablation 已证 map 无 gate+scale
+     外增量；G1 恰是去 map 留 gate+scalar。
+   无致命结构性原因 → B 通过。
+
+### seed 前冻结（FR-11/12/14/15/18/20/21）
+
+| FR | 冻结值 | 依据 |
+|---|---|---|
+| FR-11 架构摘要 | 动作=policy∈{identity, per-pol correct sqrt scale}；决策粒度=per-prefix-frozen-policy（非 per-symbol）；对比范式=G1 vs always-on scalar vs CMA identity（同 prefix-frozen footing）；奖励语义=N/A（确定性规则，无 reward）；先验对照=always-on robust_scalar（healthy-worst 0.015625 vs G1 0.0） | contract.yaml + T023 |
+| FR-12 MVE→Formal | G1 是 per-prefix frozen policy，MVE=formal 架构（无 per-symbol 在线状态），无架构差异 | contract.yaml |
+| FR-14 先验对照 | always-on robust_scalar（最强简单先验）；pass 标准 G1 healthy-worst ≤ robust_scalar healthy-worst | B4 |
+| FR-15 贡献目标 baseline | tuned fixed-μ CMA μ=0.03（identity）+ always-on correct normalization（cheap-alt）；G1 须在 collapse stratum ≥ CMA 且 healthy safety 优于 always-on | B4 |
+| FR-18 环境保真度 | CB1 testbed 简化对所有 comparator 等价影响（共享 realization、同 evaluator）；无 G1-specific 环境偏置 | T020/T023 |
+| FR-20 关键参数溯源 | 全继承 T020/B01-R：μ=0.03（B01-R hotfix v2 interior optimum）、R2=1.32（16QAM Godard）、block_size=64、n_tap=11、calibration prefix=128、gate {collapse=0.6, spread=0.1}（T020 dev-freeze）。**不为 G1 改场景/参数** | frozen-params-b01r-v1.yaml + dev-freeze-receipt.v1.json |
+| FR-21 oracle 上界 | oracle affine（TX-truth prefix fit）只作 offline label/Kill，不作 Go 对手；pass 标准 G1 collapse recovery 不要求 beat oracle | B2/B4 |
+
+**A0/A'/A/B 无致命信号**。gate 阈值完全继承 T020 diagnostic freeze，不为 G1 或
+fresh test 调参。→ 进维度 D（B1-B4 formal confirm）。
+
+
+### 维度 D：B1-B4 formal confirm 结果（T024，独立 master 重算后）
+
+**fresh slice = 261-280（token-clean，receipt 见 g1 confirm dir）**；8 方法 × 7 cells ×
+20 seeds = 1120 paired realizations；raw-rows.csv + prefix-receipt.csv + result.json
+全闭合（1120 unique key，0 blank pi_ser，deterministic）。语义 smoke 9/9 PASS（先于 compare）。
+
+**seed-cluster paired ΔPI-SER（10k bootstrap 95% CI，MDE=0.005）— 独立 master 重算确认：**
+
+| 方法 | collapse mean Δ vs CMA | CI95 | healthy worst-pair Δ | healthy-safe? |
+|---|---|---|---|---|
+| baseline CMA μ=0.03 | (baseline) | — | 0.0 | PASS |
+| correct_pooled_sqrt | −0.5640 | [−0.695,−0.411] | +0.0156 | **FAIL (>MDE)** |
+| correct_per_pol_sqrt | −0.5637 | [−0.694,−0.412] | +0.0156 | **FAIL (>MDE)** |
+| robust_scalar (primary always-on) | −0.5633 | [−0.694,−0.411] | +0.0195 | **FAIL (>MDE)** |
+| **G1 gated_scalar** | **−0.5598** | **[−0.694,−0.403]** | **0.0000** | **PASS** |
+| M4 nonlinear map (ablation) | −0.5243 | [−0.654,−0.371] | 0.0 | PASS |
+| D4 likelihood-gated RDE | 0.0000 | [0,0] | 0.0 | PASS (gates tap-update, no effect at post-CMA layer) |
+| oracle affine (KILL-only) | −0.5628 | [−0.694,−0.410] | +0.0273 | FAIL (>MDE) |
+
+**B4 7 门（master 独立重算）：**
+1. class support: PASS（11 healthy / 13 collapse seed-clusters）。
+2. G1 vs CMA collapse: PASS（−0.5598 ≤ −0.005，CI_upper −0.4031<0，help>hurt）。
+3. healthy safety: PASS（G1 worst=0.0 ≤ 0.005；always-on 0.016–0.020 全 FAIL，正是 G1
+   差异化空间）。
+4. strongest safe-feasible: PASS（safe 集 = {CMA, M4, G1, D4}；CMA/M4/D4 在 collapse
+   均不优于 G1；always-on + oracle 因 healthy safety FAIL 被排除）。
+5. G1 vs M4 ablation: PASS（G1−M4 −0.0355，CI_upper −0.0242 ≤ 0.005；收益来自
+   gate+correct-scale 非 nonlinear map）。
+6. **activation non-degeneracy: FAIL**。executor 自报 PASS（pair-bootstrap pooled bacc
+   CI_lo=0.8905），但 task §B4 明确要求 **seed-cluster** bootstrap（cluster=seed）。
+   master 独立重算 seed-cluster bacc CI_lo = **0.50**（NOT >0.5）—— 因 healthy 与
+   collapse 罕在同一 seed 共现（19 个 clf seed 中仅 3 个同时含两类；单类 seed 的
+   per-seed bacc 饱和到 0.5，把 CI 下界拉到正好 0.5）。point precision/recall=0.95/0.95
+   强，但不满足预注册的 CI 门。
+7. D4 target comparator: PASS（D4 healthy-safe 但 collapse 不优于 G1）。
+
+**Step 4a 决策：`G1_FORMAL_CONFIRM_NO_GO`**（6/7 PASS，GATE6 在正确 seed-cluster unit
+下 FAIL）。mission_method_delta = `NONE`。机制证据（healthy zero-regression + collapse
+recovery + M4 ablation）独立确认成立，但预注册的 activation-CI 正式门未达，按
+§B4 "任一不满足即 NO_GO，不救活" 执行。**不修 gate、不改 cells、不挑 seed 子集、不降
+阈值。无第二个 G1 repair 包。不进 Step 5/Contract/Execute。**

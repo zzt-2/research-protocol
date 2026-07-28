@@ -1,0 +1,2011 @@
+{
+  "status": "G1_FORMAL_CONFIRM_NO_GO",
+  "candidate": "G1_SAFE_GATED_NORMALIZATION",
+  "claim_ceiling": "CANDIDATE/LOCAL_SLICE (NO_GO on preregistered activation-CI gate; core safety/recovery mechanism independently confirmed)",
+  "method_identity": {
+    "candidate": "gated_scalar (T020 gate collapse=0.6/spread=0.1 + per-pol correct sqrt scale)",
+    "M": "baseline_cma_mu0p03 (tuned fixed-mu CMA identity)",
+    "primary_always_on_comparator": "robust_scalar",
+    "lineage_ablation": "M4_gated_policy (Q15 nonlinear map, NOT re-tuned)",
+    "target_comparator": "D4_likelihood_gated_rde (Di Rosa JLT 2021 likelihood RDE)",
+    "kill_only": "oracle_affine_bound (FR-21/FR-25; label only)"
+  },
+  "source_hashes": {
+    "parent_commit": "1773ee915fca413893d0a526f39bd3be1f08c992",
+    "methods_py_sha256": "8a277c51553eee357bc583aee77a495887642aa0cbe1a8e5fbfb6cbd4dcf92de",
+    "run_g1_confirm_py_sha256": "799f094efce5005632bc7226c2fd79ba97cf753cc9159923f1fc23ceeaf1f780",
+    "contract_yaml_sha256": "86687452322ee520e40670fb694bb7869e28a8de1130f4caea4152b4d1e8ed53",
+    "t020_methods_py_sha256": "13a441ff86d54cb596aae527669869327520178f8f59e2fbe8dfcadebea4d73c",
+    "cb1_evaluator_py_sha256": "46b81b9dbbc508ecd96126525e523e2c4e51ba06f39ecdb7c03dc37d5c4f157d",
+    "cb1_cell_runner_py_sha256": "2d9660338c302c3107b97c7e51a353b1c79b5ca3da565d8521f774b477e2a59e",
+    "dual_pol_channel_py_sha256": "5cefac97d120e5590905ae36ab20cabc8832a6c556368b1d9f154a2a8091818c"
+  },
+  "seed_receipt": {
+    "FRESH_SEEDS": [
+      261,
+      262,
+      263,
+      264,
+      265,
+      266,
+      267,
+      268,
+      269,
+      270,
+      271,
+      272,
+      273,
+      274,
+      275,
+      276,
+      277,
+      278,
+      279,
+      280
+    ],
+    "n_seeds": 20,
+    "disjoint_from": {
+      "T020_T023_old_201_220": [
+        201,
+        202,
+        203,
+        204,
+        205,
+        206,
+        207,
+        208,
+        209,
+        210,
+        211,
+        212,
+        213,
+        214,
+        215,
+        216,
+        217,
+        218,
+        219,
+        220
+      ],
+      "T023_fresh_241_260": [
+        241,
+        242,
+        243,
+        244,
+        245,
+        246,
+        247,
+        248,
+        249,
+        250,
+        251,
+        252,
+        253,
+        254,
+        255,
+        256,
+        257,
+        258,
+        259,
+        260
+      ],
+      "T020_dev_181_190": [
+        181,
+        182,
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        189,
+        190
+      ]
+    },
+    "receipt_file": "artifacts/seed-freeze-receipt.md"
+  },
+  "formula_receipt": {
+    "G1_identity": "gate(healthy) -> z'=z (bit-identical to baseline)",
+    "G1_collapsed": "gate(collapsed) -> a_x=sqrt(E|s|^2/robust_trim_mean(|z_pref_x|^2)), a_y similarly, z'=a*z",
+    "E_abs2_Ps": 1.0,
+    "gate_thresholds": {
+      "collapse": 0.6,
+      "spread": 0.1
+    },
+    "gate_features": [
+      "mean_abs2",
+      "spread_coeff_of_var"
+    ],
+    "calib_prefix_symbols": 128,
+    "offline_label": "run_factory._offline_label:558 (healthy b<0.1; awgn b>=0.1 & (b-o)<0.005; recoverable b>=0.1 & o<0.1 & (b-o)>=0.005; else ambiguous)",
+    "MDE": 0.005,
+    "bootstrap": 10000,
+    "stat_unit": "seed_cluster",
+    "primary_always_on_comparator": "robust_scalar"
+  },
+  "frozen_axes": {
+    "alpha": 4.2,
+    "beta": 1.4,
+    "block": 100,
+    "t_s": 4e-10,
+    "method": "gar",
+    "cma_mu_current": 0.03,
+    "cma_mu_stale": 0.001,
+    "cma_taps": 11,
+    "r2_qam16": 1.32,
+    "cma_block_size": 64,
+    "affine_ridge": 1e-06,
+    "constellation_amplitude_per_axis": 0.7071067811865475
+  },
+  "cells": [
+    "16qam-snr05-nominal-short",
+    "16qam-snr10-nominal-short",
+    "16qam-snr15-nominal-short",
+    "16qam-snr25-nominal-short",
+    "16qam-snr20-fg100-short",
+    "16qam-snr10-fg100-long",
+    "16qam-snr15-fg1000-long"
+  ],
+  "method_order": [
+    "baseline_cma_mu0p03",
+    "correct_pooled_sqrt_rms",
+    "correct_per_pol_sqrt_rms",
+    "robust_scalar",
+    "gated_scalar",
+    "M4_gated_policy",
+    "D4_likelihood_gated_rde",
+    "oracle_affine_bound"
+  ],
+  "n_pairs": 140,
+  "n_raw_rows": 1120,
+  "wall_seconds": 2.883667469024658,
+  "aggregation": {
+    "cluster_stats": {
+      "overall": {
+        "baseline_cma_mu0p03": {
+          "n_seeds": 20,
+          "mean_delta": 0.0,
+          "ci_95": [
+            0.0,
+            0.0
+          ],
+          "help": 0,
+          "hurt": 0,
+          "tie": 20,
+          "healthy_worst": NaN,
+          "seed_mean_method": 0.5063616071428572
+        },
+        "correct_pooled_sqrt_rms": {
+          "n_seeds": 20,
+          "mean_delta": -0.171875,
+          "ci_95": [
+            -0.23284040178571427,
+            -0.11327357700892868
+          ],
+          "help": 19,
+          "hurt": 1,
+          "tie": 0,
+          "healthy_worst": NaN,
+          "seed_mean_method": 0.33448660714285716
+        },
+        "correct_per_pol_sqrt_rms": {
+          "n_seeds": 20,
+          "mean_delta": -0.17154017857142856,
+          "ci_95": [
+            -0.23245117187499997,
+            -0.11311314174107143
+          ],
+          "help": 18,
+          "hurt": 1,
+          "tie": 1,
+          "healthy_worst": NaN,
+          "seed_mean_method": 0.33482142857142855
+        },
+        "robust_scalar": {
+          "n_seeds": 20,
+          "mean_delta": -0.17363281249999998,
+          "ci_95": [
+            -0.23395647321428573,
+            -0.11537248883928575
+          ],
+          "help": 19,
+          "hurt": 1,
+          "tie": 0,
+          "healthy_worst": NaN,
+          "seed_mean_method": 0.33272879464285715
+        },
+        "gated_scalar": {
+          "n_seeds": 20,
+          "mean_delta": -0.16478794642857145,
+          "ci_95": [
+            -0.22672991071428572,
+            -0.1060546875
+          ],
+          "help": 16,
+          "hurt": 0,
+          "tie": 4,
+          "healthy_worst": NaN,
+          "seed_mean_method": 0.34157366071428574
+        },
+        "M4_gated_policy": {
+          "n_seeds": 20,
+          "mean_delta": -0.15622209821428573,
+          "ci_95": [
+            -0.21520786830357141,
+            -0.10030691964285714
+          ],
+          "help": 16,
+          "hurt": 0,
+          "tie": 4,
+          "healthy_worst": NaN,
+          "seed_mean_method": 0.3501395089285714
+        },
+        "D4_likelihood_gated_rde": {
+          "n_seeds": 20,
+          "mean_delta": 0.0,
+          "ci_95": [
+            0.0,
+            0.0
+          ],
+          "help": 0,
+          "hurt": 0,
+          "tie": 20,
+          "healthy_worst": NaN,
+          "seed_mean_method": 0.5063616071428572
+        },
+        "oracle_affine_bound": {
+          "n_seeds": 20,
+          "mean_delta": -0.15055803571428572,
+          "ci_95": [
+            -0.21043526785714284,
+            -0.09238281250000001
+          ],
+          "help": 15,
+          "hurt": 5,
+          "tie": 0,
+          "healthy_worst": NaN,
+          "seed_mean_method": 0.35580357142857144
+        }
+      },
+      "healthy": {
+        "baseline_cma_mu0p03": {
+          "n_seeds": 11,
+          "mean_delta": 0.0,
+          "ci_95": [
+            0.0,
+            0.0
+          ],
+          "help": 0,
+          "hurt": 0,
+          "tie": 11,
+          "healthy_worst": 0.0,
+          "seed_mean_method": 0.016660748106060608
+        },
+        "correct_pooled_sqrt_rms": {
+          "n_seeds": 11,
+          "mean_delta": -0.0045040246212121205,
+          "ci_95": [
+            -0.011050100615530302,
+            0.0005800189393939393
+          ],
+          "help": 5,
+          "hurt": 3,
+          "tie": 3,
+          "healthy_worst": 0.015625,
+          "seed_mean_method": 0.012156723484848486
+        },
+        "correct_per_pol_sqrt_rms": {
+          "n_seeds": 11,
+          "mean_delta": -0.004539535984848484,
+          "ci_95": [
+            -0.011050396543560605,
+            0.0005211292613636321
+          ],
+          "help": 6,
+          "hurt": 3,
+          "tie": 2,
+          "healthy_worst": 0.015625,
+          "seed_mean_method": 0.012121212121212121
+        },
+        "robust_scalar": {
+          "n_seeds": 11,
+          "mean_delta": -0.0038648200757575757,
+          "ci_95": [
+            -0.010446259469696968,
+            0.0010949337121212122
+          ],
+          "help": 5,
+          "hurt": 3,
+          "tie": 3,
+          "healthy_worst": 0.01953125,
+          "seed_mean_method": 0.012795928030303032
+        },
+        "gated_scalar": {
+          "n_seeds": 11,
+          "mean_delta": -0.002840909090909091,
+          "ci_95": [
+            -0.008522727272727272,
+            0.0
+          ],
+          "help": 1,
+          "hurt": 0,
+          "tie": 10,
+          "healthy_worst": 0.0,
+          "seed_mean_method": 0.013819839015151514
+        },
+        "M4_gated_policy": {
+          "n_seeds": 11,
+          "mean_delta": -0.002840909090909091,
+          "ci_95": [
+            -0.008522727272727272,
+            0.0
+          ],
+          "help": 1,
+          "hurt": 0,
+          "tie": 10,
+          "healthy_worst": 0.0,
+          "seed_mean_method": 0.013819839015151514
+        },
+        "D4_likelihood_gated_rde": {
+          "n_seeds": 11,
+          "mean_delta": 0.0,
+          "ci_95": [
+            0.0,
+            0.0
+          ],
+          "help": 0,
+          "hurt": 0,
+          "tie": 11,
+          "healthy_worst": 0.0,
+          "seed_mean_method": 0.016660748106060608
+        },
+        "oracle_affine_bound": {
+          "n_seeds": 11,
+          "mean_delta": -0.001864346590909091,
+          "ci_95": [
+            -0.008937026515151514,
+            0.0034623579545454545
+          ],
+          "help": 4,
+          "hurt": 5,
+          "tie": 2,
+          "healthy_worst": 0.02734375,
+          "seed_mean_method": 0.014796401515151514
+        }
+      },
+      "collapse": {
+        "baseline_cma_mu0p03": {
+          "n_seeds": 13,
+          "mean_delta": 0.0,
+          "ci_95": [
+            0.0,
+            0.0
+          ],
+          "help": 0,
+          "hurt": 0,
+          "tie": 13,
+          "healthy_worst": NaN,
+          "seed_mean_method": 0.5869891826923077
+        },
+        "correct_pooled_sqrt_rms": {
+          "n_seeds": 13,
+          "mean_delta": -0.5640024038461539,
+          "ci_95": [
+            -0.6959172175480769,
+            -0.41496018629807696
+          ],
+          "help": 13,
+          "hurt": 0,
+          "tie": 0,
+          "healthy_worst": NaN,
+          "seed_mean_method": 0.022986778846153848
+        },
+        "correct_per_pol_sqrt_rms": {
+          "n_seeds": 13,
+          "mean_delta": -0.5637019230769231,
+          "ci_95": [
+            -0.6947115384615384,
+            -0.415857872596154
+          ],
+          "help": 13,
+          "hurt": 0,
+          "tie": 0,
+          "healthy_worst": NaN,
+          "seed_mean_method": 0.023287259615384616
+        },
+        "robust_scalar": {
+          "n_seeds": 13,
+          "mean_delta": -0.5632512019230769,
+          "ci_95": [
+            -0.694414813701923,
+            -0.41451322115384615
+          ],
+          "help": 13,
+          "hurt": 0,
+          "tie": 0,
+          "healthy_worst": NaN,
+          "seed_mean_method": 0.023737980769230768
+        },
+        "gated_scalar": {
+          "n_seeds": 13,
+          "mean_delta": -0.5597956730769231,
+          "ci_95": [
+            -0.6947115384615384,
+            -0.40639648437500003
+          ],
+          "help": 12,
+          "hurt": 0,
+          "tie": 1,
+          "healthy_worst": NaN,
+          "seed_mean_method": 0.027193509615384616
+        },
+        "M4_gated_policy": {
+          "n_seeds": 13,
+          "mean_delta": -0.5243389423076923,
+          "ci_95": [
+            -0.6567007211538461,
+            -0.3758901742788463
+          ],
+          "help": 12,
+          "hurt": 0,
+          "tie": 1,
+          "healthy_worst": NaN,
+          "seed_mean_method": 0.06265024038461539
+        },
+        "D4_likelihood_gated_rde": {
+          "n_seeds": 13,
+          "mean_delta": 0.0,
+          "ci_95": [
+            0.0,
+            0.0
+          ],
+          "help": 0,
+          "hurt": 0,
+          "tie": 13,
+          "healthy_worst": NaN,
+          "seed_mean_method": 0.5869891826923077
+        },
+        "oracle_affine_bound": {
+          "n_seeds": 13,
+          "mean_delta": -0.5628004807692307,
+          "ci_95": [
+            -0.6948617788461539,
+            -0.41360051081730786
+          ],
+          "help": 13,
+          "hurt": 0,
+          "tie": 0,
+          "healthy_worst": NaN,
+          "seed_mean_method": 0.024188701923076924
+        }
+      }
+    },
+    "collapse_seed_deltas": {
+      "baseline_cma_mu0p03": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "correct_pooled_sqrt_rms": [
+        -0.7109375,
+        -0.720703125,
+        -0.20703125,
+        -0.14453125,
+        -0.724609375,
+        -0.32421875,
+        -0.76953125,
+        -0.73046875,
+        -0.74609375,
+        -0.7421875,
+        -0.04296875,
+        -0.734375,
+        -0.734375
+      ],
+      "correct_per_pol_sqrt_rms": [
+        -0.712890625,
+        -0.720703125,
+        -0.20703125,
+        -0.14453125,
+        -0.724609375,
+        -0.32421875,
+        -0.76953125,
+        -0.73046875,
+        -0.74609375,
+        -0.73828125,
+        -0.05078125,
+        -0.728515625,
+        -0.73046875
+      ],
+      "robust_scalar": [
+        -0.708984375,
+        -0.72265625,
+        -0.20703125,
+        -0.140625,
+        -0.724609375,
+        -0.32421875,
+        -0.76953125,
+        -0.73046875,
+        -0.74609375,
+        -0.73828125,
+        -0.05078125,
+        -0.724609375,
+        -0.734375
+      ],
+      "gated_scalar": [
+        -0.712890625,
+        -0.720703125,
+        -0.20703125,
+        -0.14453125,
+        -0.724609375,
+        -0.32421875,
+        -0.76953125,
+        -0.73046875,
+        -0.74609375,
+        -0.73828125,
+        0.0,
+        -0.728515625,
+        -0.73046875
+      ],
+      "M4_gated_policy": [
+        -0.6640625,
+        -0.666015625,
+        -0.18359375,
+        -0.07421875,
+        -0.69140625,
+        -0.314453125,
+        -0.7109375,
+        -0.701171875,
+        -0.70703125,
+        -0.68359375,
+        0.0,
+        -0.716796875,
+        -0.703125
+      ],
+      "D4_likelihood_gated_rde": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "oracle_affine_bound": [
+        -0.71484375,
+        -0.720703125,
+        -0.20703125,
+        -0.13671875,
+        -0.724609375,
+        -0.32421875,
+        -0.76953125,
+        -0.728515625,
+        -0.75,
+        -0.72265625,
+        -0.04296875,
+        -0.736328125,
+        -0.73828125
+      ]
+    },
+    "g1_vs_m4_collapse": {
+      "n": 13,
+      "mean_delta_G1_minus_M4": -0.03545673076923077,
+      "ci_95": [
+        -0.04657451923076923,
+        -0.024338942307692308
+      ]
+    },
+    "activation": {
+      "bacc_point": 0.9577586206896551,
+      "bacc_ci_95": [
+        0.8905172413793103,
+        1.0
+      ],
+      "n_pos_recoverable": 20,
+      "n_neg_healthy": 29,
+      "tp": 19,
+      "fp": 1,
+      "fn": 1,
+      "tn": 28,
+      "precision": 0.95,
+      "recall": 0.95,
+      "collapse_pairs_hit_by_gate": 19,
+      "false_activation_healthy": 1,
+      "n_healthy_pairs": 29
+    },
+    "healthy_degradation_distribution": {
+      "baseline_cma_mu0p03": [
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 262,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 264,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 265,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 265,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 265,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 268,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 268,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 268,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 268,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 269,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 269,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 269,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 270,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 273,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 273,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 273,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 273,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 275,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 275,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 277,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 277,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 277,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 277,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 278,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr10-fg100-long",
+          "seed": 279,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 279,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 279,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 279,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 279,
+          "delta": 0.0
+        }
+      ],
+      "correct_pooled_sqrt_rms": [
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 262,
+          "delta": -0.00390625
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 264,
+          "delta": -0.03125
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 265,
+          "delta": 0.00390625
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 265,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 265,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 268,
+          "delta": -0.00390625
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 268,
+          "delta": 0.015625
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 268,
+          "delta": 0.0078125
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 268,
+          "delta": 0.0078125
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 269,
+          "delta": -0.0078125
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 269,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 269,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 270,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 273,
+          "delta": -0.0078125
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 273,
+          "delta": -0.015625
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 273,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 273,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 275,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 275,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 277,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 277,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 277,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 277,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 278,
+          "delta": -0.015625
+        },
+        {
+          "cell": "16qam-snr10-fg100-long",
+          "seed": 279,
+          "delta": 0.015625
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 279,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 279,
+          "delta": -0.0078125
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 279,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 279,
+          "delta": 0.0
+        }
+      ],
+      "correct_per_pol_sqrt_rms": [
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 262,
+          "delta": -0.00390625
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 264,
+          "delta": -0.03125
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 265,
+          "delta": 0.00390625
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 265,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 265,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 268,
+          "delta": -0.00390625
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 268,
+          "delta": 0.015625
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 268,
+          "delta": 0.0078125
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 268,
+          "delta": 0.0078125
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 269,
+          "delta": -0.0078125
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 269,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 269,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 270,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 273,
+          "delta": -0.0078125
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 273,
+          "delta": -0.015625
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 273,
+          "delta": 0.00390625
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 273,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 275,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 275,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 277,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 277,
+          "delta": 0.00390625
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 277,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 277,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 278,
+          "delta": -0.015625
+        },
+        {
+          "cell": "16qam-snr10-fg100-long",
+          "seed": 279,
+          "delta": 0.00390625
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 279,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 279,
+          "delta": -0.0078125
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 279,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 279,
+          "delta": 0.0
+        }
+      ],
+      "robust_scalar": [
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 262,
+          "delta": -0.00390625
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 264,
+          "delta": -0.03125
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 265,
+          "delta": 0.00390625
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 265,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 265,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 268,
+          "delta": -0.00390625
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 268,
+          "delta": 0.01953125
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 268,
+          "delta": 0.01171875
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 268,
+          "delta": 0.0078125
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 269,
+          "delta": -0.0078125
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 269,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 269,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 270,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 273,
+          "delta": -0.00390625
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 273,
+          "delta": -0.015625
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 273,
+          "delta": 0.00390625
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 273,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 275,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 275,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 277,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 277,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 277,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 277,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 278,
+          "delta": -0.01171875
+        },
+        {
+          "cell": "16qam-snr10-fg100-long",
+          "seed": 279,
+          "delta": 0.0078125
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 279,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 279,
+          "delta": -0.00390625
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 279,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 279,
+          "delta": 0.0
+        }
+      ],
+      "gated_scalar": [
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 262,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 264,
+          "delta": -0.03125
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 265,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 265,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 265,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 268,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 268,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 268,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 268,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 269,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 269,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 269,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 270,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 273,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 273,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 273,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 273,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 275,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 275,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 277,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 277,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 277,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 277,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 278,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr10-fg100-long",
+          "seed": 279,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 279,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 279,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 279,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 279,
+          "delta": 0.0
+        }
+      ],
+      "M4_gated_policy": [
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 262,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 264,
+          "delta": -0.03125
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 265,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 265,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 265,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 268,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 268,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 268,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 268,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 269,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 269,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 269,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 270,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 273,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 273,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 273,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 273,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 275,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 275,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 277,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 277,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 277,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 277,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 278,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr10-fg100-long",
+          "seed": 279,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 279,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 279,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 279,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 279,
+          "delta": 0.0
+        }
+      ],
+      "D4_likelihood_gated_rde": [
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 262,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 264,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 265,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 265,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 265,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 268,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 268,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 268,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 268,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 269,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 269,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 269,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 270,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 273,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 273,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 273,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 273,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 275,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 275,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 277,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 277,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 277,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 277,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 278,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr10-fg100-long",
+          "seed": 279,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 279,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 279,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 279,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 279,
+          "delta": 0.0
+        }
+      ],
+      "oracle_affine_bound": [
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 262,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 264,
+          "delta": -0.03125
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 265,
+          "delta": 0.0078125
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 265,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 265,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 268,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 268,
+          "delta": 0.0234375
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 268,
+          "delta": 0.0078125
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 268,
+          "delta": 0.0078125
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 269,
+          "delta": 0.00390625
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 269,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 269,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 270,
+          "delta": 0.0078125
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 273,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 273,
+          "delta": -0.00390625
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 273,
+          "delta": 0.00390625
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 273,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 275,
+          "delta": -0.00390625
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 275,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 277,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 277,
+          "delta": -0.00390625
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 277,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 277,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 278,
+          "delta": -0.01171875
+        },
+        {
+          "cell": "16qam-snr10-fg100-long",
+          "seed": 279,
+          "delta": 0.02734375
+        },
+        {
+          "cell": "16qam-snr15-fg1000-long",
+          "seed": 279,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr15-nominal-short",
+          "seed": 279,
+          "delta": -0.0078125
+        },
+        {
+          "cell": "16qam-snr20-fg100-short",
+          "seed": 279,
+          "delta": 0.0
+        },
+        {
+          "cell": "16qam-snr25-nominal-short",
+          "seed": 279,
+          "delta": 0.0
+        }
+      ]
+    },
+    "label_counts": {
+      "healthy": 29,
+      "awgn_dominated_error": 38,
+      "inner_ring_recoverable_collapse": 20,
+      "ambiguous": 53
+    },
+    "n_seeds": 20,
+    "n_cells": 7,
+    "n_pairs": 140
+  },
+  "b4_gate_verdicts": {
+    "gate1_class_support": {
+      "pass": true,
+      "n_healthy_seeds": 11,
+      "n_collapse_seeds": 13,
+      "rule": ">=5 healthy AND >=5 recoverable_failure seed-clusters"
+    },
+    "gate2_g1_vs_cma_collapse": {
+      "pass": true,
+      "mean_delta": -0.5597956730769231,
+      "ci_95": [
+        -0.6947115384615384,
+        -0.40639648437500003
+      ],
+      "help": 12,
+      "hurt": 0,
+      "rule": "mean<=-0.005 AND CI_hi<0 AND help>hurt"
+    },
+    "gate3_healthy_safety": {
+      "pass": true,
+      "g1_healthy_worst_pair": 0.0,
+      "g1_healthy_cluster_mean": -0.002840909090909091,
+      "g1_healthy_ci_95": [
+        -0.008522727272727272,
+        0.0
+      ],
+      "false_activation_healthy": 1,
+      "n_healthy_pairs": 29,
+      "rule": "every healthy pair delta<=0.005"
+    },
+    "gate4_strongest_safe_feasible": {
+      "pass": true,
+      "safe_feasible": {
+        "correct_pooled_sqrt_rms": {
+          "healthy_worst": 0.015625,
+          "safe": false
+        },
+        "correct_per_pol_sqrt_rms": {
+          "healthy_worst": 0.015625,
+          "safe": false
+        },
+        "robust_scalar": {
+          "healthy_worst": 0.01953125,
+          "safe": false
+        },
+        "M4_gated_policy": {
+          "healthy_worst": 0.0,
+          "safe": true
+        },
+        "D4_likelihood_gated_rde": {
+          "healthy_worst": 0.0,
+          "safe": true
+        }
+      },
+      "comp_vs_g1_collapse_paired": {
+        "correct_pooled_sqrt_rms": {
+          "mean_comp_minus_g1": -0.004206730769230769,
+          "ci_95": [
+            -0.011268028846153846,
+            -0.00015024038461538462
+          ],
+          "healthy_worst": 0.015625,
+          "safe": false
+        },
+        "correct_per_pol_sqrt_rms": {
+          "mean_comp_minus_g1": -0.00390625,
+          "ci_95": [
+            -0.01171875,
+            0.0
+          ],
+          "healthy_worst": 0.015625,
+          "safe": false
+        },
+        "robust_scalar": {
+          "mean_comp_minus_g1": -0.003455528846153846,
+          "ci_95": [
+            -0.011868990384615384,
+            0.0015024038461538462
+          ],
+          "healthy_worst": 0.01953125,
+          "safe": false
+        },
+        "M4_gated_policy": {
+          "mean_comp_minus_g1": 0.03545673076923077,
+          "ci_95": [
+            0.024338942307692308,
+            0.04657451923076923
+          ],
+          "healthy_worst": 0.0,
+          "safe": true
+        },
+        "D4_likelihood_gated_rde": {
+          "mean_comp_minus_g1": 0.5597956730769231,
+          "ci_95": [
+            0.406396484375,
+            0.6947115384615384
+          ],
+          "healthy_worst": 0.0,
+          "safe": true
+        }
+      },
+      "absorbed_by_competitor": null,
+      "rule": "no safe-feasible competitor improves over G1 on collapse by >0.005 (paired CI_hi<0)"
+    },
+    "gate5_g1_vs_m4_ablation": {
+      "pass": true,
+      "mean_G1_minus_M4": -0.03545673076923077,
+      "ci_95": [
+        -0.04657451923076923,
+        -0.024338942307692308
+      ],
+      "rule": "mean<=0 AND CI_hi<=0.005"
+    },
+    "gate6_activation_non_degeneracy": {
+      "pass": false,
+      "active_seen": true,
+      "identity_seen": true,
+      "collapse_pairs_hit": 19,
+      "precision": 0.95,
+      "recall": 0.95,
+      "bacc_point": 0.9577586206896551,
+      "bacc_ci_95": [
+        0.8905172413793103,
+        1.0
+      ],
+      "n_pos_recoverable": 20,
+      "n_neg_healthy": 29,
+      "tp": 19,
+      "fp": 1,
+      "fn": 1,
+      "tn": 28,
+      "rule": "both policies seen AND >=1 collapse hit AND prec>0.5 AND rec>0.5 AND bacc_CI_lo>0.5",
+      "bacc_method_subagent_used": "pair_bootstrap_pooled_bacc (VIOLATES task seed_cluster unit)",
+      "bacc_ci_95_subagent_reported": [
+        0.8905172413793103,
+        1.0
+      ],
+      "bacc_ci_95_seed_cluster_CORRECT": [
+        0.5,
+        0.6579
+      ],
+      "per_seed_bacc_values": {
+        "261": 0.5,
+        "262": 1.0,
+        "263": 0.5,
+        "264": 0.5,
+        "265": 0.5,
+        "266": 0.5,
+        "267": 0.5,
+        "268": 0.5,
+        "269": 0.5,
+        "270": 1.0,
+        "271": 0.5,
+        "272": 0.5,
+        "273": 0.5,
+        "274": 0.5,
+        "275": 0.5,
+        "276": 0.5,
+        "277": 0.5,
+        "278": 1.0,
+        "279": 0.5
+      },
+      "n_seeds_with_both_classes": 3,
+      "fail_reason": "task \u00a7B4 requires balanced-accuracy CLUSTER-bootstrap (cluster=seed) 95% CI lower >0.5 (strict). Seed-cluster bacc CI_lo=0.5 is NOT >0.5 (only 3/19 seeds contain BOTH healthy+collapse pairs; single-class seeds saturate per-seed bacc at 0.5, dragging CI_lo to 0.5). Subagent used pair-bootstrap (CI_lo=0.8905) which violates the declared seed_cluster unit.",
+      "note_no_rescue": "Point precision/recall (0.95/0.95) and point bacc (0.958) are real and strong, but the PREREGISTERED seed-cluster CI gate is not met. Per task \u00a7B4 'any unsatisfied -> G1_FORMAL_CONFIRM_NO_GO, no rescue by re-tuning/seed-subset/threshold-lowering'. No rescue applied."
+    },
+    "gate7_d4_target_comparator": {
+      "pass": true,
+      "d4_healthy_worst": 0.0,
+      "d4_absorbs_g1": false,
+      "rule": "if D4 safe AND beats G1 on collapse by >0.005 (CI_lo>0) -> ABSORBED"
+    }
+  },
+  "smoke_results": {},
+  "_executor_self_reported_status": "G1_FORMAL_RECOMMENDATION_READY",
+  "_executor_gate6_self_reported_pass": true,
+  "_independent_master_audit": {
+    "audit": "master deterministic recompute from raw-rows.csv (TL-21/P6)",
+    "gates_independently_confirmed_PASS": [
+      "gate1",
+      "gate2",
+      "gate3",
+      "gate4",
+      "gate5",
+      "gate7"
+    ],
+    "gate6_corrected": "FAIL \u2014 seed-cluster bacc CI_lo=0.50 not >0.5 (subagent used pair-bootstrap, violating declared seed_cluster unit)",
+    "raw_closure": "1120 unique (cell,seed,method); 0 blank pi_ser; deterministic",
+    "all_other_stats_confirmed": true
+  },
+  "formal_science_disposition": "G1_FORMAL_CONFIRM_NO_GO",
+  "mission_method_delta": "NONE"
+}

@@ -1,0 +1,109 @@
+# G1_SAFE_GATED_NORMALIZATION — candidate contract (frozen at T024 startup)
+# Authority: T024 / CP022 / epoch54; source decision D031; receipt V058/V059
+# Lineage: Q15-derived fallback / salvaged component (NOT Q15 nonlinear-map repair).
+# T023 Phase B is NONBINDING_DIAGNOSTIC only (A4/B0 越门); its old/fresh seeds
+# and numbers are hypothesis-generating, never a formal Go.
+
+schema_version: rdl.g1-candidate-contract.v1
+candidate: G1_SAFE_GATED_NORMALIZATION
+lineage:
+  parent: Q15 (formal No-Go for the nonlinear monotone-radius map)
+  origin_decision: D031
+  origin_receipt: V058  # independent paired recompute
+  construct_source_file: >
+    projects/thesis-fso/direction-lab/scout/q15-step4a-normalization-adjudication/src/methods.py
+    :: gated_scalar_ablation_freeze / _apply_continuous
+  gate_rule_source_file: >
+    projects/thesis-fso/direction-lab/scout/preformal-method-factory-sprint-002/src/methods.py
+    :: m4_gated_policy_freeze (gate rule inherited; map action dropped)
+  what_changed_vs_q15: >
+    The nonlinear monotone-radius map (M2/M3 transport) is DROPPED. When the
+    prefix gate OPENS, G1 applies the correct per-pol complex amplitude scalar
+    a = sqrt(Ps/Pz_hat), NOT a nonlinear map. The identity branch (healthy
+    prefix) is preserved unchanged.
+  what_is_forbidden: >
+    Do NOT restore / re-tune the M4 nonlinear map (FR: Q15_NONLINEAR_MAP_REPAIR).
+    Do NOT treat T023 old/fresh seeds or numbers as formal evidence.
+
+# ── Frozen positive method contract (task §1) ──────────────────────────────
+positive_method_target: >
+  receiver-visible prefix detector activates correct sqrt amplitude
+  normalization only when collapse risk is present; otherwise identity
+minimal_construct: >
+  T020-frozen gate + per-pol correct sqrt scale
+primary_packaging: >
+  collapse-triggered safe normalization layer
+fallback_packaging: >
+  low-complexity risk/performance trade-off and operating boundary
+
+# ── THEORETICAL EXPECTATION (frozen BEFORE any seed; from T023 §2) ─────────
+theoretical_expectation:
+  amplitude_recovery: >
+    For a collapsed stream z = c*s (c real < 1) with prefix power estimate
+    Pz_hat, the correct complex amplitude multiplier a satisfies |a|^2*Pz = Ps,
+    hence a = sqrt(Ps/Pz_hat), NOT Ps/Pz_hat. A correct scalar recovers the
+    amplitude EXACTLY (audit SER=0 for all c; T023 methods.py:9-12).
+  gate_safety: >
+    The identity branch must be bit-identical to baseline on healthy prefixes
+    (prefix-freeze invariance). The gate opens only on a collapsed prefix.
+  healthy_degradation_truth: >
+    always-on pooled/per-pol/robust correct scalars degrade healthy prefixes by
+    0.015625-0.027344 (all > MDE=0.005); this is the safety headroom G1's
+    identity branch is designed to protect (V058 §comparator_safety; the
+    executor report's "<MDE" claim was a magnitude error, corrected by master).
+  what_must_NOT_be_inferred: >
+    The T023 old/fresh gated_scalar deltas (-0.087444 / -0.139286 vs CMA,
+    healthy-worst=0) are NONBINDING_DIAGNOSTIC from a 越门 Phase B. They motivate
+    G1 formalization; they do NOT prove G1 wins. Formal judgment requires this
+    package's fresh seeds + full receipt + preregistered B4 gate.
+
+# ── Information / output / metric contract (frozen) ─────────────────────────
+information_boundary:
+  freeze_reads_only: z[eval_start:calibration_end]   # calibration prefix = 128 symbols
+  apply_reads_only:  z[calibration_end:eval_end]      # scored suffix
+  feedback: none  # no suffix signal feeds back into gate/scale/selection
+  caller: standard_cma_godard_with_z  # the tuned-CMA whose output z is scored
+  cma_params: { n_tap: 11, mu: 0.03, R2: 1.32, block_size: 64 }  # FR-20 inherited, not changed for G1
+
+metric:
+  primary: PI-SER (permutation-invariant)
+  dual: [pi_ser, fixed_label_ser, pi_ber]
+  evaluator: evaluate_dual_16qam  # 8-way {±1,±j} × perm + nearest-grid; rotation-only, cannot undo magnitude scale
+  MDE: 0.005
+  stat_unit: seed_cluster   # one seed = one cluster; cells within a seed averaged equally
+  bootstrap: 10000
+  ci: 95
+
+# ── Gate identity (inherited from T020 diagnostic freeze; NOT re-tuned) ────
+gate_freeze:   # T020 dev-freeze-receipt.v1.json; read-only on fresh, never re-tuned
+  collapse_threshold: 0.6
+  spread_threshold: 0.1
+  features: [mean_abs2, spread_coeff_of_var]
+  branches:
+    healthy: "mean_abs2 >= 0.6 AND spread >= 0.1 -> identity (bit-identical to baseline)"
+    collapsed_multishell: "mean_abs2 < 0.6 AND spread >= 0.1 -> per-pol correct sqrt scale"
+    collapsed_singlemode: "else -> per-pol correct sqrt scale (ablation: scalar in all gate branches)"
+
+# ── statistical plan (pre-registered, dual report) ─────────────────────────
+statistical_plan:
+  layers: [overall, healthy, collapse]   # paired seed-cluster effect + 10k CI each
+  primary_always_on_comparator: robust_scalar   # pre-selected by T023 diagnostic; NOT re-selected on fresh
+  always_on_methods_all_reported: [correct_pooled_sqrt_rms, correct_per_pol_sqrt_rms, robust_scalar]
+  collapse_stratum_label: recoverable_failure   # task-native task-label, NOT B01-R mu=0.001 threshold
+  binary_classification: { positive: recoverable_failure, negative: healthy }
+  no_post_hoc_rescue: >
+    Failure of any B4 gate => G1_FORMAL_CONFIRM_NO_GO. No re-tuning gate,
+    changing cells, selecting seed subsets, or lowering thresholds.
+
+# ── Phase A / B gating ─────────────────────────────────────────────────────
+phase_gating:
+  A4_proceed_to_B_requires:
+    - "Step 1/2/3/3.5 all closed and converged (>=2 sources, bidir citation, read-notes/read-logs)"
+    - "G1 four-criteria PASS/PASS/PASS/PASS"
+    - "no exact action+information+problem collision"
+    - "strongest target-matched comparator identified and faithfully implementable"
+    - "literature_notes.md appended with G1 Groundwork synthesis"
+  else_output: G1_GROUNDWORK_NO_GO
+  B0_proceed_to_D_requires: "A0/A'/A/B no fatal signal; FR-11/12/14/15/18/20/21 frozen"
+  else_output_B0: G1_STEP4A_A0_NO_GO
+  no_second_repair_package: true

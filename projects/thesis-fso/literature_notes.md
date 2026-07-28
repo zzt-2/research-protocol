@@ -1853,5 +1853,79 @@ for all c）。M4 的非线性 monotone radius map 无法 beat 精确标量恢�
   `MAP_COMPONENT_NO_GO`；同时 receiver-visible prefix-gated correct-sqrt scalar
   形成 `G1_SAFE_GATED_NORMALIZATION / METHOD_SIGNAL`。
 - G1 不继承 Q15 的“Step 4a 已完成”表述。T024 必须先以 G1 自身的
-  M-C-A、recent baseline、direct collision 和四判据重新过门，全部 PASS 后
+  M-C-A、recent baseline、direct collision 和 四判据重新过门，全部 PASS 后
   才能条件式 formal confirm。
+
+---
+
+## G1 Groundwork 综合段（T024 / 2026-07-28）
+
+> authority: T024 Phase A。继承 Q15 Step 1–3 检索/精读 + 本包 G1-specific
+> Step 1 定向检索 + Step 3.5（D1 read-note/read-log 补齐、D4 双向引用链、
+> C1/C3/C4 cheap-alt abstract 级裁决）。Q15 nonlinear map 已 No-Go；G1 action =
+> **prefix-gated identity + per-pol correct sqrt scalar**，不是 nonlinear map。
+
+### G1 的 M-C-A（句子级，A3 输出）
+
+- **M（失效 baseline）**：tuned fixed-μ CMA（μ=0.03）在部分 seed 塌缩到内环且
+  无 receiver-visible 安全激活；always-on correct sqrt normalization 虽恢复塌缩
+  但在 healthy seed 上退化 `0.015625–0.027344` > MDE=`0.005`。
+- **C（条件）**：dual-polarization coherent 16QAM，CMA 后 prefix-frozen receiver
+  post-proc，healthy/collapse 混合种群。
+- **A（失效假设）**：always-on 归一化隐含“healthy 上零代价”假设，实际 >MDE 退化；
+  裸 CMA 隐含“不需安全激活”假设，塌缩时缺 receiver-visible detector。
+
+### G1 四判据（A3）
+
+| 判据 | 状态 | 理由（证据指针） |
+|---|---|---|
+| 1 具体技术矛盾（M-C-A） | ✅ PASS | M/C/A 三要素明确、句子级可解（见上） |
+| 2 方法产出形态 | ✅ PASS | collapse-triggered safe normalization layer = 可复用算法/设计规则（prefix detector + frozen gate + correct scalar + identity branch），非一次性数值计算。**贡献是 gate+identity safety layer 结构增量，不是 correct normalization 本身**（后者已被 always-on 实现吸收；T023 已确认） |
+| 3 近期 baseline 可对标 | ✅ PASS | tuned fixed-μ CMA μ=0.03（传统未优化 baseline，FR-25/TL-32）+ always-on correct normalization（cheap-alt）+ **D4 Di Rosa JLT 2021**（task-matched 2019+，已精读） |
+| 4 能做可量化对标 | ✅ PASS | collapse recovery、healthy safety（degradation ≤MDE）、overall PI-SER、activation precision/recall/balanced-accuracy、复杂度均可测（B4 预注册门） |
+| **综合** | **PASS/PASS/PASS/PASS** | 四判据全过；进 Phase B 条件式 Step 4a |
+
+### direct collision（A3，基于 G1 action+information+problem 三轴）
+
+0 篇 HIGH collision（candidate-screen 30 on-topic unique + 6 G1-specific 吸收威胁
+轴 query 全 0 + D4 双向引用链 forward 9 / backward 26 无新增直接碰撞）。最近邻
+MEDIUM：D1（shell-partitioned MMA soft-switch，**tap-update cost 非 post-proc**、
+**always-online 非 prefix-frozen**、**SISO 256/1024 非 DP-16QAM**、**无 identity
+branch** → collision=NONE，read-note 已建）→ collision 全轴 NONE。
+
+### cheap alternative（A3）
+
+| 候选 | 来源 | 吸收 G1？ |
+|---|---|---|
+| always-on correct sqrt scalar (pooled/per-pol/robust) | T023 实证 | **部分**：恢复塌缩但 healthy 退化 0.016–0.027 >MDE，正是 G1 要保护的 headroom |
+| null-space init CMA (C1, PIERS 2019) | abstract 级 | DOES_NOT_ABSORB（init 层，非 post-CMA safety） |
+| MMA steady-state (C3, SigProc 2014) | abstract 级 | DOES_NOT_ABSORB（理论/分析，非方法） |
+| analytical MMA (C4, IJDMB 2010) | abstract 级 | DOES_NOT_ABSORB（tap-update cost 变体，非 output transform） |
+| D4 likelihood-gated RDE (JLT 2021) | 全文精读 | DOES_NOT_ABSORB（gate tap-update 非 output；assume known TX PDF；target PMD/SOP 非 collapse-safety） |
+| dual-mode switching threshold (Li 2024 TCCN) | 标题+citation | DOES_NOT_ABSORB（switch tap-update algo，非 identity/correct-scalar；**全文不可得**，IEEE paywall + blit 0-hit，入 coverage gap，不作 comparator） |
+| VAE/VQ-VAE equalizer (2022–2025) | abstract 级 | DOES_NOT_ABSORB（替换整个 equalizer，非 safety layer；非 prefix-frozen） |
+
+**cheap-alt closure = RESOLVED（无吸收）**。无 conventional 方法以更便宜方式吸收 G1 的
+collapse-safety + healthy-zero-regression 双重目标。always-on correct scalar 是
+最强 conventional cheap-alt，但 healthy >MDE 退化正是 G1 的差异化空间（非被吸收）。
+
+### primary / fallback packaging 边界（A3）
+
+- **primary**：collapse-triggered safe normalization layer（prefix detector + frozen
+  gate + identity/correct-sqrt 分支）。claim ceiling = `CANDIDATE/LOCAL_SLICE`
+  （DP-coherent 16QAM after tuned fixed-μ CMA，CB1 testbed）。
+- **fallback**：low-complexity risk/performance trade-off + operating boundary
+  （healthy-safety vs collapse-recovery 的可量化权衡；activation detector 的
+  precision/recall operating curve）。
+- **明确不含**：不主张 always-on 平均性能冠军；不迁移 B01-R μ=0.001 z² 阈值；
+  不恢复 Q15 nonlinear map；不进 Step 5/Contract/Execute。
+
+### Step 3.5 收敛
+
+- 检索充分性：5 类全覆盖（3 继承 + 2 本包新增），2 结构化源（S2+OpenAlex）+ IEEE
+  继承第三源，6 G1-specific 吸收轴 query 全 0 → 强收敛。
+- 引用链：D4 双向链已分析（forward 9 + backward 26），无新增直接碰撞。
+- D1 read-note/read-log：已建（V058 debt 闭合）。
+- C1/C3/C4 cheap-alt：abstract 级裁决全 DOES_NOT_ABSORB（不获取私有全文，不把
+  abstract 当全文——仅作 cheap-alt 排除证据，不作精读）。
+
