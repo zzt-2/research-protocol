@@ -1356,3 +1356,269 @@ Time-Reverse Eq 16QAM PDM (Access 2021)。三轮止损（OA / force / IEEE-blit�
 主控可选：(a) 接受 D1/C1/C3/C4 债务进 Step 3 精读已获取 8 篇；(b) 要求用户手动获取
 D1/C1/C3/C4 后再进 Step 3；(c) 因 D1 碰撞风险判 `BLOCKED_DIRECT_COLLISION`。
 **worker log 终态**: `AWAITING_DELEGATED_COVERAGE_GATE`，mission_method_delta = `NONE`。
+
+---
+
+## Q15 Step 3 精读 + 综合分析（2026-07-28，T022 / CP020）
+
+> 来源：T022（CANDIDATE_FORMALIZATION，foreground epoch52 / CP020）。承接 T021 的
+> `AWAITING_DELEGATED_COVERAGE_GATE`（主控选 (a)：接受 D1/C1/C3/C4 债务进 Step 3 精读
+> 已获取 8 篇）。本节是 GW Step 3 精读产物（6 篇独立核心 + 2 篇补充早期/长版）。
+> **claim ceiling**：Q15 四判据最终状态、novelty、cheap-alt closure 因 D1/C1/C4 全文缺失
+> 保持 `PENDING_STEP35`——**不是 formal Go/Kill**，不宣称 problem survives conventional
+> baseline。详细逐篇笔记见 `papers/_read_notes/`，receipt 见
+> `worker-logs/step-022-q15-step3-read.md`。
+> **不改全局步骤进度表**（Q15 是 RDL formal owner 下的独立 formalization 候选）。
+
+### Step 3 精读完成矩阵（6 独立核心 + 2 补充）
+
+| ID | 角色 | 标题 Jaccard | title verdict | 行数 | 源路径 | 笔记 |
+|---|---|---|---|---|---|---|
+| D2 | modified RDE direct collision | 1.0 | PASS | 102 | papers/doi/10.1109_ecoc.2015.7341620/content.md | _read_notes/10.1109_ecoc.2015.7341620.md |
+| D5 | distribution/K-means radius direct collision | 1.0 | PASS | 216 | papers/doi/10.3788_col202220.080601/content.md | _read_notes/10.3788_col202220.080601.md |
+| C2 | CMA divergence theory | 1.0 | PASS | 647 | papers/doi/10.1186_s13634-015-0289-8/content.md | _read_notes/10.1186_s13634-015-0289-8.md |
+| D4 | likelihood RDE direct collision (JLT 2021) | 1.0 | PASS | 418 | papers/manual/ieee-9492010-likelihood-rde/content.md | _read_notes/ieee-9492010-likelihood-rde.md |
+| D3 | radius-adjusted switching direct collision (SPL 2006) | 1.0 | PASS | 682 | papers/manual/ieee-1561206-radius-adjusted-equalization/content.md | _read_notes/ieee-1561206-radius-adjusted-equalization.md |
+| C6 | temporal-correlation/pr-MMA cheap alternative (=L010) | 1.0 | PASS | 514 | papers/manual/ieee-10251763-temporal-correlation-demux/content.md | _read_notes/ieee-10251763-temporal-correlation-demux.md |
+| D4′ | (补充, D4 ECOC 2020 早期版, 非独立核心) | 1.0 | PASS | 112 | papers/manual/ieee-9333378-blind-rde-likelihood/content.md | _read_notes/ieee-9333378-blind-rde-likelihood.md |
+| D3′ | (补充, D3 ISCC 2005 长版, 非独立核心) | 1.0 | PASS | 299 | papers/manual/ieee-1493739-hybrid-blind-equalization/content.md | _read_notes/ieee-1493739-hybrid-blind-equalization.md |
+
+**独立核心计数：6 ≥ 5（gw-read 单步门槛 PASS）**。8 篇全部 title Jaccard=1.0 PASS，无
+ABORT_TITLE_MISMATCH。D3′/D4′ 按 task 规则 5 不计独立核心数。
+
+### 1. 机制与作用点分类 + Q15 同 action/information/problem 判定
+
+按机制与作用点分 5 类：
+
+| 类 | 代表论文 | 机制 | 作用点 |
+|---|---|---|---|
+| equalizer-internal switching | D3 (RMMA/RMDA, region-dependent µ_i/λ_i) | 半径分区选步长+误差模式权重 | equalizer 抽头更新（always-on） |
+| output remap / radius reweighting | D2 (PRDE, P(r) scalar reweight) | 半径键控标量乘误差项 | equalizer 抽头更新（always-on, 软标量） |
+| distribution-aware radius tracking | D5 (peak-density K-means), D4/D4′ (likelihood α-gated) | 从数据估半径/分布 或 likelihood 门控 payload 更新 | equalizer 抽头更新（D5 batch；D4 在线 pilot+payload 门控） |
+| temporal-correlation alternative | C6 (FDJD-pr-MMA) | TX 注入时间相关 + RX 二阶统计分离 + pr-MMA | **TX 端修改 + RX pol-demux**（非 receiver-only） |
+| divergence theory | C2 (l2-stability vs MSE) | 小增益定理 + SVD 逆发散测试 | 分析框架（非方法） |
+
+**D2/D3/D4/D5 与 Q15 的同 action/information/problem 判定**：
+
+- **同 action？** 部分是。D2/D3/D4/D5 都做"半径/shell-键控更新调制"——这与 Q15 M4
+  (gated identity/quantile-shell transport) 的 *动作族* 同源。但 Q15 的动作是 **post-CMA
+  frozen map + identity fallback**（输出端 frozen 映射，含"不修正"安全分支），而 D2-D5
+  全部是 **equalizer 抽头/代价的 always-on 在线更新**，无 identity fallback、无 frozen map。
+  → **动作族同源，但 Q15 的 identity-fallback 分支 + post-proc frozen map 是 D2-D5 未有的
+  新动作元素**。
+- **同 information boundary？** 否。D2-D5 全是 always-on 在线更新（用全窗/逐符号统计）；
+  Q15 是 **prefix-only 因果边界**（128-sym prefix frozen，suffix 不进 selection）。D4 虽用
+  pilot+payload 但 payload 仍在线更新，非 prefix-frozen。→ **信息边界不同**。
+- **同 problem？** 部分是。D2-D5 解决的是"高阶/PS-QAM 下盲均衡跟踪/收敛"（PMD、SOP、
+  amplitude-distribution）；Q15 解决的是"dual-pol 16QAM 内环 shell collapse 的部分恢复 +
+  健康 prefix 零回归"。C6 经验示 CMA 对 shaped QAM ~50% 实现崩（实现依赖失败）——这是 Q15 C
+  的**实证现象佐证**，但 C6 的解是 TX 端，Q15 的解是 receiver-only post-proc。→ **问题部分
+  重叠（collapse 现象），但解决范式不同**。
+
+**碰撞结论（基于已获取 6 核心，D1 全文缺失为关键未知）**：Q15 action space **不是空白**
+（D2-D5 在 equalizer 层有 radius/shell-键控成熟先例）；但 Q15 的三差异化（prefix-only 因果
+边界 + identity fallback 健康零回归 + post-proc frozen map）**未被 D2-D5 等价覆盖**。是否
+被 **D1（shell-partitioned MMA + soft switching，全文缺失）** 等价覆盖仍未知 → collision
+评估 **未闭合**，保持 `PENDING_STEP35`。
+
+### 2. 现有方法已知局限（原文证据，非"尚无人做"空白）
+
+| 局限 | 原文证据（论文+章节） |
+|---|---|
+| 半径/shell-键控切换服务**性能优化**非安全，无 collapse detector、无 identity fallback | D3 Sec.II/Sec.VII（"region 假设健康收敛轨迹，映射到 MSE 阶段"）；D2/D4/D5 均无 detector/fallback 字段 |
+| 固定 PDF/归一化假设（D4/D4′）无法区分健康 vs 塌缩输出 | D4 Sec.II-E + D4′（"transmitted Maxwell-Boltzmann f(R_k) 假设已知固定"——正是 Q15 A 命名的失效假设） |
+| CMA 对 shaped QAM 实现依赖失败（~50% 崩）但解需 TX 端修改 | C6 Sec.I + Fig.5a（"only ~half of realizations equalize"）+ Sec.VIII（"require filters at the transmitter"） |
+| MSE 稳定 ≠ 无发散（固定参数 CMA 可名义稳定但最坏序列发散） | C2 Sec.8（"many practically relevant adaptive algorithms are non-robust although they are MSE-stable"） |
+| PRDE 对 16QAM 无增益（Q15 的目标调制） | D2 Results（"PRDE gives no advantage over RDE for 16QAM"——显式负面结果） |
+| D5 数据驱动半径估计假设内环保靠（正是 shell collapse 违反的） | D5 Sec.2（"用最内 5 环"）+ 适用边界（"requires innermost rings visible; extreme shell collapse untested"） |
+
+**注意（FR-23）**：上表是新颖性原料（空白/局限，领域级），**不是问题**。必须经下方 Q15
+problem table 转译成 M-C-A 矛盾、过四判据才是 Q#。
+
+### 3. 最近 2-3 年趋势
+
+样本：D4 (2021), D5 (2022), C6 (2024) 为近期（2021+）；D2 (2015), D3 (2006), C2 (2015) 为经典。
+
+- **趋势 1（PS-QAM 盲均衡）**：从"固定 PDF 半径决策"(D2 2015 PRDE) → "likelihood 门控
+  payload 更新"(D4 2021 LBS-RDE) → "数据驱动半径估计"(D5 2022 K-means)。方向是 **越来越
+  少依赖发射端先验、越来越多从接收信号本身估统计**。证据：D2 用固定 P(r) LUT；D4 用已知
+  f(R_k) 算 α 但门控 payload；D5 完全从接收直方图估 K 和 R_k。
+- **趋势 2（shaped QAM CMA 失败的认知）**：从"高阶 QAM 跟踪差"(D2/D3) → "shaped QAM
+  Gaussian 致 HOS 对比度消失"(C6 2024 峰度问题框架)。C6 首次系统量化 CMA 对 shaped QAM 的
+  实现依赖失败率（~50%）。
+- **趋势 3（解的位置）**：D2/D3/D4/D5 全在 **equalizer 抽头/代价**；C6 移到 **TX+RX 联合**
+  （TX 注入相关）。**无一篇在 receiver-only post-proc frozen map 层做**（Q15 的位置）。
+
+**样本充足性**：仅 3 篇 2021+（D4/D5/C6），**不足以强外推趋势**。标注 `INSUFFICIENT_EVIDENCE`
+对"全面趋势"，但上述 3 条方向性观察有原文支撑。
+
+### 4. 背景时间线、核心挑战、Q15 研究定位
+
+**历史演进**：
+- 1990s-2005：CMA/MMA 经典盲均衡（Godard CMA, Ready&Gooch RDE[9], Yang/Werner MMA[8]）；
+  hybrid 方法（CMA+DD, dual-mode, BCMA, CCA）—— D3′(ISCC 2005) 综述。
+- 2006：D3 radius-adjusted region switching（首次 radius-keyed 联合 µ/λ 切换）。
+- 2010s：PS-QAM 商用化（Maxwell-Boltzmann, Kschischang&Pasupathy[20]）；RDE 对 PS 不适配
+  暴露。
+- 2015：D2 PRDE（概率半径加权）；C2 发散理论（l2 vs MSE）。
+- 2020-2021：D4/D4′ likelihood-gated RDE（pilot+payload 门控）。
+- 2022：D5 数据驱动半径估计（K-means）。
+- 2024：C6 temporal-correlation pr-MMA（TX+RX 联合解 shaped QAM CMA 失败）。
+
+**核心挑战**：高阶/PS-QAM 下盲均衡的 (a) 跟踪动态信道（PMD/SOP）；(b) 收敛可靠性（实现/
+初始化依赖失败）；(c) fixed-normalization vs data-driven radius 的权衡。
+
+**Q15 研究定位**：Q15 不在 equalizer 抽头/代价层（D2-D5 的位置），也不在 TX+RX 联合层
+（C6 的位置），而在 **receiver-only post-CMA frozen map + identity fallback** 层。区分：
+- **历史演进**：radius-keyed switching 思想源自 D3（2006），经 D2/D4/D5 演化到 PS-QAM。
+- **当前 comparator**：D4（likelihood RDE，JLT 2021 Q1）+ D5（K-means，COL 2022）是最近
+  PS-QAM 盲均衡 comparator；C6（pr-MMA，JLT 2024）是 shaped-QAM CMA 失败的最近实证。
+- **候选包装**：Q15 差异化 = (a) prefix-only 因果边界（D2-D5/C6 全无）；(b) identity
+  fallback 健康零回归（D2-D5/C6 全无安全分支）；(c) post-proc frozen map（D2-D5 是
+  equalizer 内部，C6 是 TX+RX）。**这三点是否构成可辩护新颖性，待 D1 全文 + Step 3.5**。
+
+### 5. Q15 三差异化的信息增量审计
+
+| 差异化 | D2 | D3 | D4 | D5 | C6 | 信息增量判断 |
+|---|---|---|---|---|---|---|
+| prefix-only 因果边界（128-sym prefix frozen，suffix 不进 selection） | 无（always-on 全窗 P(r)） | 无（always-on 逐符号 R_n 选 region） | 部分（pilot+payload 但 payload 在线更新，非 prefix-frozen） | 无（batch 全块聚类） | 无（TX+RX，非 prefix） | **有增量**——无一篇做 prefix-only frozen selection（因果隔离） |
+| identity fallback 健康零回归（gate 关闭 = bit-identical baseline） | 无（P(r) 恒更新） | 无（λ∈[0,1] 混合，绝不"不修正"） | 部分（α<α_th 丢样本但滤波器仍更新 pilot） | 无（重聚类后恒更新） | 无（pr-MMA 恒更新） | **有增量**——D3 λ 混合两误差但不产生"bit-identical passthrough"；D4 丢样本但 pilot 仍更新。无一篇保证健康 prefix 零回归 |
+| post-proc frozen map（不改 equalizer 抽头/代价） | 否（改 RDE 代价） | 否（改抽头更新） | 否（改 RDE 更新） | 否（改半径喂 RDE） | 否（TX+RX pol-demux） | **有增量**——全部在 equalizer/代价/TX 层；Q15 在 post-proc 输出端 frozen map |
+
+**结论**：三差异化相对 D2-D5/C6 **各有真实信息增量**（无一篇等价覆盖）。但这是相对**已获取
+6 核心**的判断；**D1（shell-partitioned MMA + soft switching）全文缺失是关键未知**——若 D1
+的 shell 分区 + soft switching 已含 identity 分支或 post-proc 映射，则增量缩水。
+
+### 6. C2/C6 及各论文 baseline 是否表明 robust CMA/MMA/RDE 能更便宜吸收问题
+
+| 候选 cheap-alt | 来源 | 能否吸收 Q15 问题（shell collapse） | 证据 |
+|---|---|---|---|
+| robust CMA（JR-CMA: AGC+重置+变步长） | L-DP8（既有 identity） | **部分**——AGC 稳功率 + 误差阈值重置可防深衰落发散，但 **无 collapse detector + 无 identity fallback**，无法保证健康零回归 | L-DP8 基线仅 CMA |
+| 换 MMA/RDE 代价（D2 PRDE, D4 LBS-RDE） | D2/D4 | **部分**——PRDE 对 16QAM 无增益（D2 显式负面）；LBS-RDE 解 PMD/SOP 非 collapse | D2 Results; D4 scope |
+| radius-adjusted switching（D3 RMMA/RMDA） | D3 | **部分**——region 切换服务性能优化非安全，假设健康轨迹 | D3 Sec.VII |
+| equalizer state caching | C5（gap，未获取） | **未知**——全文缺失 | — |
+| dual-mode switching（CMA+DD） | C7（gap） | **未知**——全文缺失 | — |
+| CMA 初始化修复（null-space, GA） | C1/C8（gap） | **未知**——全文缺失，且 C1 解 MIMO>3 singularity 非 dual-pol 16QAM 内环 | — |
+| temporal-correlation pr-MMA | C6 | **否**——需 TX 端修改，非 receiver-only；不解 collapse detector/fallback | C6 Sec.VIII |
+| l2-stability 理论（步长界） | C2 | **否**——分析框架非方法；给步长界但不提供 detector/fallback | C2 Sec.8 |
+
+**结论**：已获取论文中 **无一条 cheap-alt 能完整吸收 Q15 问题**（都缺 collapse detector +
+identity fallback）。但 C1/C3/C4/C5（初始化/MMA 稳态/analytical MMA/state caching）全文
+缺失，**无法确认这些 cheaper 路径能否吸收** → cheap-alt closure **保持 PENDING_STEP35**。
+
+### 7. Baseline 出现频次/任务匹配矩阵 + 当前传统 comparator 候选
+
+| Baseline | 出现论文 | 任务匹配（dual-pol 16QAM collapse） | 代码 | 推荐优先级 |
+|---|---|---|---|---|
+| CMA（fixed-µ FIR） | D2/D3/D4/D5/C6 全引 | ✅ 直接（Q15 的 M） | 无（经典，易自实现） | 1（Go comparator，传统未优化 baseline，FR-25） |
+| RDE（标准 radius-directed） | D2/D4/D5 | ✅ 直接（Q15 post-proc 在 RDE 输出后） | 无（经典） | 1 |
+| MMA / pr-MMA | D3/D5/C6 | ✅ 直接（shaped QAM 对口） | C6 部分（Optilux 仅信道模型） | 1 |
+| DD-LMS（decision-directed） | D4 | ⚠️ 部分（D4 用作反馈 eq baseline） | 无 | 2 |
+| STD-RDE（最近半径分配） | D4 | ✅ 直接 | 无 | 1 |
+| CMA-MMA 两阶段 | C6 | ✅ 直接（C6 的 benchmark） | 无 | 1 |
+| FDA-RDE（fully-data-aided） | D4 | ⚠️ oracle 上界（FR-25: 只作 Kill 工具非 Go） | 无 | 3（Kill 工具） |
+
+**当前传统 comparator 候选**（FR-25: Go 判据 = 赢传统未优化 baseline）：
+1. **fixed-µ CMA FIR**（Q15 的 M 本身，最直接 Go comparator）
+2. **STD-RDE / CMA-RDE 两阶段**（radius-directed 主流）
+3. **CMA-MMA / CMA-pr-MMA**（shaped QAM 对口，C6 benchmark）
+
+oracle 上界（FDA-RDE）按 FR-25/FR-21 只作 Step 4a 维度 D 收尾 Kill 工具，**禁当 Go 判据**。
+
+### 8. D3/D4/C6 写作架构汇总 + 可复用叙述骨架
+
+**共性模式**：
+- **章节结构**：D4 有独立 System Model(Sec III)+Algorithm Design(Sec II)；D3（letter）和 C6
+  融合无独立章。**D4 的分离模式更适 Q15 期刊论文**。
+- **参数展示**：D3 表驱动（4 表/4 页）；D4/C6 散落散文。**D3 的表驱动 + D4 的 Notation
+  内嵌**是折中。
+- **图表**：D4 9 图 0 表；C6 14 图 0 表；D3 4 图 4 表。**性能曲线(NGMI/MI/MSE vs SNR/DGD)
+  + 决策区/块图**是标配。
+- **实验组织**：D4 4 baseline + 多轴消融(POH×DGD×entropy×损伤×延迟)；C6 5 algo + CPRS
+  on/off；D3 3 baseline + region 数。**D4 的多轴消融最完整**。
+- **叙述**：D4/C6 "问题→先验分类→空白→我们思想" Intro；D3 紧密动机链。**贡献列表非
+  bullet，织入散文**（letter/期刊均常见）。
+- **公式**：变量内嵌引入；推导叙述在场；方程编号交叉引用。
+- **参考**：D4 cite-then-build；C6 括号数值聚句末。**基础 ref（Godard CMA, Ready&Gooch
+  RDE, Savory 数字相干, Kschischang PS）多未在 GW** → Step 3.5 补。
+
+**可复用叙述骨架**（综合 D3/D4/C6）：
+1. Intro: PS/高阶 QAM 商用动机 → 盲均衡挑战 → radius/shell-键控先验(D2-D5) → 空白(无
+   prefix-only + identity fallback + post-proc) → Q15 贡献预览
+2. System Model: dual-pol 16QAM 接收机 + fixed-µ CMA 内环 + shell collapse 现象定义
+3. Algorithm Design: prefix-gated identity/quantile-shell transport policy + collapse
+   detector + identity fallback
+4. Experiments: vs fixed-µ CMA / STD-RDE / CMA-MMA（传统 comparator）+ FDA-RDE oracle 上界
+   （Kill 工具）+ 消融（prefix 长度 / gate 阈值 / shell 数）
+
+**经典段落仿写**（D4/C6）：
+- D4 Sec IV-C 收尾："We conclude that a strong deviation from the AWGN assumption…has an
+  impact on the blind operation…Nevertheless, the impairments values…are much larger than
+  what is usually found…" → 仿写：定量适用边界作收尾结论。
+- C6 Sec.I 峰度问题段："PCS-QAM signals tend to have a Gaussian distribution…separating a
+  mixture of two iid Gaussian signals…is not possible…the contrast function…decreases or
+  even vanishes…" → 仿写：先陈述常规方法失败的机制原因再提修复。
+
+### 9. D2/D3/D4/D5/C6 实验完备性 benchmark 对标汇总
+
+| 维度 | D2 | D3 | D4 | D5 | C6 | 领域惯例/盲点 |
+|---|---|---|---|---|---|---|
+| seeds/运行数 | 1($2^{18}$ sym) | 40(R)/1000(MSE) | 未明(D4′ 200) | 无 | 101 实现 | **多数无 error bars/CI/检验**——盲点 |
+| baseline 矩阵 | 1(RDE) | 3(MCMA/CCA/CMA+SDD) | 4(CME/STD-RDE/FDA-RDE/DD-LMS) | 2(STD-CMMA/STD-RDE) | 5 algo | 数 1-5；**D4 最完整** |
+| 公平调参声明 | 是(µ 扫) | 是(Table III) | 是(per-algo/SNR) | **否** | **否**(hand-tuned) | D5/C6 是盲点 |
+| 消融 | 无正式 | region 数 | POH×DGD×entropy×损伤×延迟 | **无** | CPRS/MMA↔pr-MMA | **D5 无消融**——盲点 |
+| 信道模型 | 真实光+理想化数字 pol 旋转 | SPIB 微波(真实场测量) | 仿真粗步双折射+Jones SOP | **真实光纤实验** | Optilux 一阶 PMD(理想化) | D5 V=3 最高；C6/D4 理想化 |
+| 拓扑多样性 | 2 调制+仿/实 | 2 调制×7 SPIB | 单拓扑(30×100km) | 单链路/格式 | 单链路/格式 | **多低**——盲点 |
+| 复杂度 | 理论(+2 实乘) | D3 无(D3′ FLOPS) | 无 O() | **无** | 理论 O() | **D4/D5 无**——盲点 |
+| VVUQ | V2/V'2/U2 | V2/V'2/U2 | V2/V'1/U2 | V3/V'2/U1 | V2/V'2/U2 | **U 普遍弱**(无 CI/检验) |
+
+**领域惯例**：多数用多实现/多条件但 **无统计检验、无 error bars**；baseline 数 1-5；复杂度
+多仅理论 O()。**盲点**：统计显著性检验、拓扑多样性、推理延迟。
+
+### 10. Q15 problem table（M-C-A + 四判据 + 证据指针 + 反证 + 未决债务）
+
+> **纪律（task §3 纪律 3 + FR-23/FR-25）**：下表是 Step 3 精读后的 *暂定* problem formalization。
+> D1/C1/C4 全文缺失使四判据最终状态、novelty、cheap-alt closure 保持 `PENDING_STEP35`。
+> **不因 T020 有诊断信号自动 PASS**。不宣称 problem survives conventional baseline。
+
+| 要素 | 内容 | 证据指针 | 状态 |
+|---|---|---|---|
+| **M** | fixed-parameter blind FIR CMA + always-on blind output calibration（标准 CMA-RDE 链） | D2/D3/D4/D5 全引 CMA；C6 示 CMA 对 shaped QAM 失败 | confirmed（精读验证） |
+| **C** | dual-pol 16QAM 接收机在部分随机实现/初始化下产生低功率 shell collapse | C6 Fig.5a（~50% 实现崩）；C2 Sec.8（MSE 稳定但最坏序列发散）；T020/M4 诊断信号（DIAGNOSTIC_ONLY） | partial confirmed（C6 是 64QAM 非 16QAM；T020 是 diagnostic 非 formal） |
+| **A** | 传统方法缺 receiver-visible collapse detector + 安全 identity fallback；或固定归一化无法区分健康 vs 塌缩输出 | D4 Sec.II-E（固定 f(R_k) 假设）；D3 Sec.VII（region 假设健康轨迹）；D2/D4/D5 无 detector/fallback 字段 | partial confirmed（精读确认 D2-D5 无 detector/fallback；但 D1 未知） |
+| **产出形态（待检验）** | prefix-gated identity/quantile-shell transport policy（post-CMA frozen map + identity fallback） | Q15 假说；T020/M4 diagnostic | tentative（T020 是 diagnostic_only_non_formal） |
+
+**四判据**：
+
+| 判据 | 状态 | 理由 |
+|---|---|---|
+| 1 具体技术矛盾（M-C-A 完整） | ✅（形式过）| M/C/A 三要素明确，是句子级可解陈述 |
+| 2 方法产出形态 | ⚠️ UNKNOWN→partial | prefix-gated policy 形态有 T020 diagnostic 支撑，但信息增量待 D1 + Step 3.5 验证（§5 示相对 D2-D5/C6 有增量，D1 未知） |
+| 3 近期 baseline 可对标 | ✅（精读确认）| fixed-µ CMA / STD-RDE / CMA-MMA 是 2019+ 顶刊 comparator（D4 JLT2021/D5 COL2022/C6 JLT2024）|
+| 4 能做可量化对标 | ✅（框架确认）| PI-SER/BER/NGMI vs fixed-µ CMA 可量化（D4 NGMI 框架可借鉴）|
+| **综合** | **PENDING_STEP35** | 判据 2（信息增量）依赖 D1 全文；cheap-alt closure（§6）依赖 C1/C3/C4/C5 全文 |
+
+**Q# 候选**：Q15 可形成 *暂定* Q# 候选（M-C-A 形式过判据 1/3/4，判据 2 partial）。但 **不
+记为四判据全过的 Q#**，保持 `PENDING_STEP35`。不进 Contract Step 1 假设引用。
+
+### 11. D1/C1/C4 缺失分别改变哪项结论 + Step 3.5 mandatory query/citation targets
+
+| 缺失论文 | 改变哪项结论 | Step 3.5 mandatory target |
+|---|---|---|
+| **D1**（shell-partitioned MMA + soft switching, EUSIPCO 2007） | **最关键**。决定 Q15 的 shell-transport + gated action 是否已被 D1 等价覆盖（§5 信息增量审计、§10 判据 2、collision 闭合）。若 D1 的 shell 分区 + soft switching 已含 identity 分支或 post-proc 映射 → Q15 novelty 大幅缩水 | 必须获取 D1 全文（Zenodo OA flag 但 tools/download 解析失败；非 IEEE blit 不可用）。Step 3.5 query: "shell partitioned MMA soft switching identity fallback"；citation target: EUSIPCO 2007 Poznan proceedings |
+| **C1**（null-space init CMA, PIERS 2019） | 决定"更便宜的 CMA 初始化修复"能否吸收 Q15 问题（§6 cheap-alt closure）。C1 解 MIMO>3 singularity 非 dual-pol 16QAM 内环，但需全文确认 | 获取 C1 全文（IEEE PIERS paywall；blit 标题搜不到）。Step 3.5 query: "null space initialization CMA singularity dual polarization" |
+| **C4**（analytical MMA, IJDMB 2010） | 决定"换更聪明的 MMA 代价"能否吸收 Q15 问题（§6）。C4 是 analytical MMA batch+adaptive，比 MMA 更低残差 | 获取 C4 全文（Hindawi OA pdf_url 解析失败；非 IEEE）。Step 3.5 query: "analytical multimodulus algorithm blind demodulation time-varying MIMO" |
+| (附带) C3（MMA steady-state, Signal Processing 2014） | 决定"MMA 稳态 EMSE"对标"换 MMA 代价就行吗"基线（§6） | 获取 C3 全文（Elsevier OA 解析失败） |
+
+**Step 3.5 mandatory debt 总结**：D1（direct collision 闭合）+ C1/C3/C4（cheap-alt closure）
+是 Step 3.5 必补。不做第四轮 D1/C1/C4 下载（task 纪律 6）；它们进入 Step 3.5 mandatory
+query/citation targets，由主控/用户裁决获取路径（机构 VPN / 作者邮件 / 等 OA）。
+
+### Q15 Step 3 终态
+
+- **status**: `STEP3_CONTENT_COMPLETE_Q_PENDING_STEP35`（6 独立核心精读合格 ≥5 门槛；
+  综合分析完整；暂定 Q# 候选形成但四判据 2 + cheap-alt closure pending D1/C1/C4）
+- **mission_method_delta**: `NONE`（GW Step 3 精读是 formal 必经步骤，不冒充新方法进展）
+- **未进入**: Step 3.5 / Step 4a / Contract / Execute / 任何实验
+- **未宣称**: novelty / problem survives conventional baseline / Q15 四判据全过
+- **未改**: 全局步骤进度表、`.sessions/**` owner/mission/log/decisions/master-state/current YAML
