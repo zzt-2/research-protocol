@@ -5,8 +5,8 @@
 # NO legal main-method signal. F1=TESTBED_BLOCKED / F3=UNRESOLVED / F4=INFRASTRUCTURE_BLOCKED.
 # F2 pilot lineage merges into existing Pilot-Jones formal Groundwork (no parallel Scout).
 # Negative material -> harvest/limitations only; NOT a full negative paper.
-# Next authoritative work = live V053/D028/T021 + formal D037: epoch51 Q15
-# Groundwork Step 1–2; Q14/T018 frozen, no Step4a active carrier.
+# Next authoritative work = live V054/D029/T022 + formal D038: epoch52 Q15
+# Groundwork Step 3 with receipt preflight; Q14/T018 frozen, no Step4a carrier.
 # Updated 2026-07-23 (T001 current-owner reconciliation): D061 strategic switch reflected — P03 = PAUSED_RETURNED_TO_PORTFOLIO
 # (option 1, family not closed); Pilot-Jones was then formal GW line; D066/V040 later returned it.
 # (V035 backward PASS, 4 direct-competitor full-text BLOCKED).
@@ -16,7 +16,7 @@
 # Explicit disposition lineage governs; protected history untouched.
 # Role of protected files (recorded here, NOT edited): STATUS.v1.md = STALE_PROTECTED
 # (not the current scientific-fact source); project.v1.yaml = historical read-only-preview
-# adapter (not the current authorized owner). Current trusted fact source = this file + live D028/V053/T020.
+# adapter (not the current authorized owner). Current trusted fact source = this file + live D029/V054/T021.
 
 schema_version: research-direction-lab.state.current.v1
 project_id: thesis-fso.dual-pol-osl.direction-lab
@@ -33,12 +33,13 @@ formal_goal: >-
 authorization:
   current_mode: DORMANT  # was SCIENCE_SCOUT; D022 SCIENCE_FREEZE paused the campaign (topic dormant). D061 confirms: no current science-execution authorization in the Scout campaign.
   science_authorized: false  # the Scout campaign is dormant; formal science advances via master-state.md, not this campaign
-  scope: dormant legacy Scout campaign; D028 accepts one factory-level diagnostic winner and returns Q15 to formal Groundwork Step 1–2 without activating Step4a science.
+  scope: dormant legacy Scout campaign; D029 accepts T021 PARTIAL and advances Q15 to bounded formal Groundwork Step 3 without activating Step4a science.
   formal_gw_line: >-
-    Q15_GROUNDWORK_STEP1_2_WORKLINE_SELECTED (live D028 / formal D037 /
-    epoch 51 / CP019). T020/M4 is accepted only as a factory-level diagnostic
-    signal. T021 may search and acquire public fulltext, then must stop at the
-    coverage gate. No Step 3+, MVE, formal claim, or third factory package.
+    Q15_STEP3_WITH_RECEIPT_PREFLIGHT_SELECTED (live D029 / formal D038 /
+    epoch 52 / CP020). T021 is PARTIAL: six independent core fulltexts are
+    usable, but IEEE raw and five blit canonical/index receipts are missing.
+    T022 repairs those receipts and then reads Step 3; no Step 3.5+, MVE,
+    formal claim, or third factory package.
   prohibits:
     - modify or rerun B001-B003 / P03 Atlas / canonical-state / completion-events
     - create legacy B004
@@ -232,7 +233,7 @@ dispositions:
     reason: reused across >=6 batches (c04/c09/c14/c15/c16/corrector + c12 subset)
 
 next_action:
-  mode: CAUSAL_CONSTELLATION_PRIOR_SPRINT_READY
+  mode: Q15_STEP3_WITH_RECEIPT_PREFLIGHT_READY
   description: >-
     D022 campaign-level verdict: SCIENCE_SCOUT candidate rotation PAUSED (topic dormant).
     NO legal main-method signal. F1=TESTBED_BLOCKED, F3=UNRESOLVED, F4=INFRASTRUCTURE_BLOCKED.
@@ -254,10 +255,10 @@ next_action:
     at A6: source family 1<3 and must-read 2<5. V049/D023/D034 accept
     BLOCKED_FORMAL_READINESS / BLOCKED_SEARCH_OR_IDENTITY, delta NONE, and
     return C16-open to the pool with no second package. CP017 has no-method=17.
-    V053/D028 accept T020/M4 as a factory-level diagnostic signal and append
-    CP019. The next legal action is T021: a normal GLM completes Q15
-    Groundwork Step1 search and Step2 public-fulltext coverage, then stops.
-    Do not run a third CB1 factory, Q15 Step3+, T018, T017 Phase B, old C16,
+    V054/D029 accept T021 as PARTIAL and append CP020. The next legal action
+    is T022: a normal GLM repairs IEEE source raw plus five blit canonical/index
+    receipts, then completes Q15 Groundwork Step3 reading in the same package.
+    Do not run a third CB1 factory, Q15 Step3.5+, T018, T017 Phase B, old C16,
     Q14 Step 3.5/4a, or a second C16/Q14 source/problem-evidence package. Do not amend T012/T016,
     run C15 Phase B or the old sandbox, reuse T006/B10, repair B1/A4/B10/B9/B12,
     Stop before Step 4a and before Step 5 unconditionally.

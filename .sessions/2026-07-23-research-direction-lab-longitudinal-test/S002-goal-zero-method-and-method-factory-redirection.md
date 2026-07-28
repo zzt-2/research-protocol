@@ -102,3 +102,9 @@ FR-22。
 > receipt、完整四分类和 comparator gate 实现仍有债，信号主要集中在 7/20 个
 > CMA collapse seeds。方法工厂到此结束，M4 暂登记为 Q15；下一轮 T021 只做
 > Groundwork Step 1–2，coverage-gap report 后暂停。
+
+> 2026-07-28 续接：T021 已完成，commit `287fb6a`。V054/D029 部分接收：
+> 129 unique、121/129 published、11 必读和六篇独立核心+两篇补充全文成立；
+> 但 merged raw 实际仅两源，IEEE 第三源无结构化 receipt，五篇 blit 未进
+> papers index。T022 不单开纯修复包，而是先闭合这两项收据，随后同包完成
+> Q15 Step 3 精读。D1/C1/C4 保留为 Step 3.5 mandatory debt。

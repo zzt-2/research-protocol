@@ -2896,3 +2896,89 @@ PARTIAL
 停止方法工厂并返回正式 Groundwork。Step 1–2 先核查 direct collision 与
 robust-CMA/restart/multistart/radius-calibration 廉价替代；正式阶段必须保存逐
 pair gate receipt、完整四分类与 paired comparator CI。
+
+## V054: T021 Q15 Step 1–2 coverage 与收据独立验收
+
+> date: 2026-07-28
+> 关联：S002 / D028 / T021 / commit `287fb6a`
+> verifier：独立 agent `verify_t021_coverage` + 主线 raw/path 复算
+
+### 验证项
+
+- [x] annotated raw：129 unique；published=`121/129=93.8%`；
+  priority=`11/13/2/16/87` 可重算。
+- [ ] source union：merged raw 只有 OpenAlex+Semantic Scholar；IEEE
+  `2/2/0 hits` 只有 markdown 叙述，无结构化 raw，故“3 源 PASS”不可重算。
+- [x] 全文存在性：8 份 PDF/markdown 非空，报告行数与 SHA 匹配；三份 DOI
+  artifact identity PASS，五份 blit 可由 markdown 实际标题核验。
+- [ ] paper index/path：五份 blit 仍在 `papers/downloads/` 且未追加
+  `papers/index.json`；需 canonical/index receipt。
+- [ ] coverage closure：D1 会改变 direct collision；C1/C4 会改变 cheap-alt
+  吸收判断；C3 重要但不是同级阻断。
+- [x] 任务边界：未精读、未实验、未进入 Step 3+；commit 只含
+  literature_notes 与 worker log，ignored raw/papers 在本地存在。
+
+### 证据
+
+```text
+RAW_UNIQUE=129
+PUBLISHED=121/129=93.8%
+PRIORITY=11/13/2/16/87
+ACTUAL_MERGED_SOURCE_UNION=2
+FULLTEXT_RECEIPTS=8_PRESENT
+INDEPENDENT_CORE_WORKS=6
+P0=1 P1=3 P2=1
+VERDICT=PARTIAL_WITH_INTEGRITY_REPAIR_REQUIRED
+```
+
+### 结论
+
+PARTIAL
+
+T021 的检索和全文资产可继续使用，但 Step 1“全门 PASS”撤回。主控不采纳
+“再开一个纯 repair 包”的建议，改为 T022 前置修复通过后同包进入限定 Step 3。
+
+### 后续（FAIL/PARTIAL 时）
+
+T022 补 IEEE raw 与五篇 blit canonical/index receipt；通过后精读六篇独立核心
+和两篇补充。D1/C1/C4 作为 Step 3.5 mandatory debt，未闭合前禁止 novelty、
+problem-survival、Step 4a 或实验。
+
+## V055: T022 Q15 Step 3 派工合同独立终审
+
+> date: 2026-07-28
+> 关联：D029 / D038 / V054 / T022
+> verifier：独立 agent `verify_t020_acceptance_state`
+
+### 验证项
+
+- [x] 八篇派遣身份：expected title、canonical path 与独立/补充计数完整。
+- [x] title abort：明确 `Jaccard >=0.4` 继续、`<0.4` abort，以及
+  `title-unverifiable` 的前 20 行人工核对。
+- [x] 精读 schema：15 个标准字段、七个结构化子表、预印本正式版核查、
+  开源代码与 verification status 均为显式要求。
+- [x] 综合分析：方法分类、已知局限、2–3 年趋势、背景时间线、baseline
+  频次、写作架构、实验完备性与 Q15 problem table 均有交付位。
+- [x] 边界：只允许收据修复后进入 Step 3；D1/C1/C4 继续阻断最终四判据、
+  novelty、cheap-alt closure、Step 3.5+、Step 4a 与实验。
+- [x] 控制完整性：epoch52 / CP020 / D029 / V054 / D038 / T022 投影一致；
+  task-control validator、4 YAML 与 `git diff --check` 均 PASS。
+
+### 证据
+
+```text
+FINAL_BINDING=PASS
+P0=0
+P1=0
+P2=0
+TASK_CONTROL=PASS
+YAML=4/4_PASS
+GIT_DIFF_CHECK=PASS
+```
+
+### 结论
+
+PASS
+
+T022 可交普通 GLM 执行；它仍是 Groundwork Step 3 内容生产包，不是方法
+Go、novelty 结论或实验授权。

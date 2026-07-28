@@ -14,20 +14,20 @@ recovery_entry: .sessions/2026-07-23-research-direction-lab-longitudinal-test/to
 formal_active_carrier:
   id: NONE
   status: NO_ACTIVE_STEP4A_SCIENTIFIC_CARRIER
-  readiness: Q15_GROUNDWORK_STEP1_2_WORKLINE_SELECTED
-  authority: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D037
+  readiness: Q15_GROUNDWORK_STEP3_WITH_RECEIPT_PREFLIGHT_SELECTED
+  authority: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D038
   positive_method_target: null
   fair_comparators: []
   claim_ceiling: DIAGNOSTIC_ONLY_NOT_FORMAL_GW_MVE
   stop: >-
-    T021 stops after Step1 search and Step2 public-fulltext coverage report;
-    no Step3+, experiment, paper claim, or third CB1 z-only factory package
+    T022 stops after receipt preflight and Step3 reading;
+    no Step3.5+, experiment, paper claim, or third CB1 z-only factory package
 
 selected_formalization_workline:
   id: Q15
-  status: GROUNDWORK_STEP1_2_READY
+  status: GROUNDWORK_STEP3_WITH_RECEIPT_PREFLIGHT_READY
   readiness: DIAGNOSTIC_WINNER_REQUIRES_FULL_GROUNDWORK
-  authority: formal D037 / live D028
+  authority: formal D038 / live D029
   positive_method_target: >-
     receiver-visible prefix-gated identity/quantile-shell radius calibration
     after fixed-mu blind FIR CMA
@@ -38,11 +38,11 @@ selected_formalization_workline:
     - C11 legal causal and blind affine as inherited diagnostics
   expected_mission_method_delta: NONE
   current_gate: >-
-    T021 may complete Step1 search and Step2 public-fulltext coverage only;
-    coverage report must return to master before Step3.
+    T022 must first close IEEE raw and five blit canonical/index receipts;
+    if that passes, it reads six independent core works plus two supplements.
   stop: >-
-    no Step3+, Step4a, implementation, experiment, or third factory package;
-    direct collision or robust cheap-alternative absorption must be reported
+    no Step3.5+, Step4a, implementation, experiment, or third factory package;
+    D1/C1/C4 debt blocks novelty and problem-survival claims
 
 candidates:
   # ── Cluster 1-2: Failure observability (CEILINGED) ──
@@ -192,11 +192,11 @@ remaining_open:
     note: needs action hook; co-blocked
 
 next_action: >-
-  V053/D028 accept T020/M4 as a factory-level DIAGNOSTIC_METHOD_SIGNAL.
-  Formal D037 selects Q15 Groundwork Step1-2 only. T021 performs multi-source
-  search, direct-collision/cheap-alternative mapping and public-fulltext
-  coverage, then stops for master review. No Step3+, third factory, T018,
-  formal MVE, promotion, or paper claim.
+  V054/D029 accept T021 as PARTIAL: six independent core works plus two
+  supplements exist, while the three-source PASS and five blit index receipts
+  are not closed. Formal D038 selects Q15 Step3 with receipt preflight. T022
+  closes those receipts and then performs fulltext reading in the same package.
+  No Step3.5+, third factory, T018, formal MVE, promotion, or paper claim.
   Historical context:
   D022 (SCIENCE_FREEZE): SCIENCE_SCOUT candidate rotation PAUSED (topic dormant). NO legal
   main-method signal. F1=TESTBED_BLOCKED, F3=UNRESOLVED, F4=INFRASTRUCTURE_BLOCKED. F2 pilot lineage
@@ -228,8 +228,8 @@ next_action: >-
   no second package and delta NONE. Historical live R008/D024 and formal D035
   then selected Q14 for one mandatory Step 3.5/problem-evidence package after
   comparing Q-ML4, B4 and C04/C09-open. T018 never executed and was later
-  frozen by D026. Current live V053/D028 and formal D037 select Q15 for bounded
-  Groundwork Step 1-2 formalization; active carrier is still NONE. No old-C16
+  frozen by D026. Current live V054/D029 and formal D038 select Q15 for bounded
+  Groundwork Step 3 with receipt preflight; active carrier is still NONE. No old-C16
   execution, Phase B, Q14 Step 4a, implementation, experiment, second
   C16/Q14 source/problem-evidence package, Step 5, Scout/P03, or C15 Phase B is
   authorized.

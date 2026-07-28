@@ -1697,10 +1697,10 @@ T019；step-019 worker log；raw/result；V052；B01-R；C11 legality。
 
 ## D028: 接收 T020 工厂级方法信号并转入 Q15 正式 Groundwork
 
-> status: active
+> status: superseded
 > date: 2026-07-28
 > 取代：D027 的 corrected-baseline 扩展执行状态；保留 D026 方法工厂总合同
-> 被取代：无
+> 被取代：D029
 > 依据：验证 V053 + T020 commit `5cf76d5` / worker log / raw / result
 > 触发原话：无（技术推导）
 
@@ -1755,3 +1755,58 @@ CMA tuning、restart 或 multistart。直接实验会再次把 baseline 脆弱�
 ### 来源
 
 T020；step-020 worker log；factory-contract.v2；raw/result；V053；D026/D027。
+
+---
+
+## D029: 部分接收 T021，并把收据修复与 Q15 Step 3 合并执行
+
+> status: active
+> date: 2026-07-28
+> 取代：D028 的 Q15 Step 1–2 执行状态；保留其方法工厂终止与 claim ceiling
+> 被取代：无
+> 依据：验证 V054 + T021 commit `287fb6a` / worker log / raw / paper receipts
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. 接收 T021 的 129 unique、121/129 published、11 必读、4 路线，以及
+   6 篇独立核心工作 + 2 篇早期/长版全文获取事实；追加 CP020，
+   `mission_method_delta=NONE`。
+2. 不接受“Step 1 三源门全过”：merged raw 只含 Semantic Scholar 与
+   OpenAlex；IEEE 只有文字 hits，无结构化 raw。T021 终态改记为
+   `PARTIAL_WITH_INTEGRITY_REPAIR_REQUIRED`。
+3. 不把这项收据债拆成纯修复包。T022 先补 IEEE raw、五篇 blit canonical/index
+   receipt；前置门通过后在同一包内精读六篇独立核心和两篇补充全文。
+4. D1/C1/C4 是会改变 direct-collision/cheap-alt 判断的 mandatory debt，
+   但三轮下载已经耗尽。本轮不做第四轮获取；它们进入 Step 3.5 输入。
+5. D1 未闭合前禁止 novelty、`PROBLEM_SURVIVES_CONVENTIONAL_BASELINE`、
+   Step 4a 或实验。Step 3 只允许形成结构化文献证据和 Q# 候选。
+
+### 理由
+
+V054 重算确认 T021 的核心检索规模和八份全文真实，但 actual source union=2，
+五篇 blit 未入 `papers/index.json`，且 ignored raw/papers 不由 commit 自包含。
+这些缺陷推翻“全门 PASS”，不推翻已经存在且标题/哈希可核验的全文。
+
+单开纯收据修复会重现本 mission 的“审计/修复机器”失败模式。把两个确定性收据
+修复放进 Step 3 前置门，修通后立即精读，既不降证据标准，也确保下一包产生
+direct-collision、cheap-alt 和 Q# 判断材料。
+
+### 排除的替代方案
+
+- 不直接无条件进入 Step 3：source receipt 与 paper index 确有缺口；
+- 不单开纯 repair 包：决策价值过低，会再次把方法生产线变成流程修复线；
+- 不要求用户现在手动找 D1/C1/C4：已有六篇独立核心全文足以开始精读，缺口可由
+  mandatory Step 3.5 处理；
+- 不因 D1 风险直接 Kill Q15：现有证据只证明思想同源，尚未证明 action、
+  information boundary 与 problem 三者完全重合。
+
+### 影响范围
+
+- foreground 递增到 epoch52 / CP020 / `Q15_STEP3_WITH_RECEIPT_PREFLIGHT_READY`；
+- formal owner 新建 D038；T022 只做两项收据修复 + Step 3；
+- 第三个 factory、Step 3.5+、实验及论文声称继续禁止。
+
+### 来源
+
+T021；step-021 worker log；q15 annotated raw；paper artifacts；V054；D028/D037。

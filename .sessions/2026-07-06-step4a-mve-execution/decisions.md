@@ -2032,10 +2032,10 @@ tools/search CLI。
 
 ## D037: 激活 Q15 prefix-gated shell calibration 的 Groundwork Step 1–2
 
-> status: active
+> status: superseded
 > date: 2026-07-28
 > 取代：D036 的 Q14/T018 当前 formal workline；Q14 保持冻结未决
-> 被取代：无
+> 被取代：D038
 > 依据：验证 live V053 + live D028 + T020 commit `5cf76d5`
 > 触发原话：无（技术推导）
 
@@ -2084,3 +2084,51 @@ Step 1–2 能以最低成本回答新颖性碰撞、近期 baseline 和 cheap-a
 ### 来源
 
 live D028/V053；T020；groundwork/gw-search/gw-acquire；FR-22。
+
+---
+
+## D038: 接收 Q15 Step 1–2 PARTIAL 并授权带收据前置门的 Step 3
+
+> status: active
+> date: 2026-07-28
+> 取代：D037 的 Step 1–2 workline
+> 被取代：无
+> 依据：验证 live V054 + live D029 + T021 commit `287fb6a`
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. Q15 formal stage 保持 `GROUNDWORK`，无 active Step 4a carrier。
+2. T021 接收为 `STEP1_EVIDENCE_PARTIAL / STEP2_COVERAGE_PARTIAL`：129、
+   121/129、11 必读和六篇独立核心全文有效；三源 PASS 因 IEEE raw receipt
+   缺失撤回。
+3. T022 获得一次 `GROUNDWORK_STEP3_WITH_RECEIPT_PREFLIGHT` workline：
+   先闭合 IEEE raw 与五篇 blit canonical/index receipt，再精读六篇独立核心与
+   两篇补充全文。
+4. Step 3 产出必须包含 direct-collision、cheap-alt、传统 comparator 与 Q15
+   M-C-A/四判据表；D1/C1/C4 固定为 Step 3.5 mandatory debt。
+5. D1/C1/C4 未闭合时，Step 3 只能形成 `PENDING_STEP35` 的 Q# 候选，
+   不得把四判据写成最终全过；未经新决策不得进入 Step 3.5、4a、实现或实验。
+
+### 理由
+
+T021 已有足够多的真实全文开始形成科学判断，但完整性收据不满足“Step 1 全门
+PASS”。合并前置修复与精读，比降低门槛或新增纯修复包更符合 FR-22 和
+method-production 的产出约束。
+
+### 排除的替代方案
+
+- 不把 T021 直接记为 Step 1 PASS；
+- 不因一项 raw receipt 否定全部全文；
+- 不越过 Step 3 精读直接使用 T020 诊断信号；
+- 不恢复 Q14/T018 或第三轮方法工厂。
+
+### 影响范围
+
+- formal workline 更新为 Q15 Step 3 with receipt preflight；
+- foreground epoch52 / CP020 / T022；
+- Step 3.5/4a/实验继续锁定。
+
+### 来源
+
+live D029/V054；T021；groundwork/gw-acquire/gw-read；FR-22。
