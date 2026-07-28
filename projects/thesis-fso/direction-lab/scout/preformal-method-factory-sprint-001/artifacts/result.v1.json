@@ -1,0 +1,358 @@
+{
+  "status": "NO_DIAGNOSTIC_SIGNAL",
+  "mission_method_delta": "FAIR_COMPARISON_RUN",
+  "testbed_identity": {
+    "source_entry": "cb1-modulation-generic-closure/baseline-atlas",
+    "qpsk_regression_pi_ser": 0.0,
+    "inherited_verdict": "PROBLEM_SURVIVES_CONVENTIONAL_BASELINE",
+    "paired_realization": "generate_shared_realization_dp",
+    "frozen_baseline": "standard_cma_godard_z (R2=1.32)",
+    "primary_metric": "PI-SER (lower is better)",
+    "cells": [
+      "snr15-nominal-short",
+      "snr20-fg1000-short",
+      "snr20-nominal-long",
+      "snr20-nominal-short",
+      "snr20-sop40e-short",
+      "snr25-nominal-short"
+    ],
+    "seeds": [
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ]
+  },
+  "constructs_built": [
+    "M1_reduced_modulus",
+    "M2_trace_reinit",
+    "M3_multistart_select",
+    "M4_conditional_dd",
+    "M5_radius_remap"
+  ],
+  "constructs_compared": [
+    "M1_reduced_modulus",
+    "M2_trace_reinit",
+    "M3_multistart_select",
+    "M4_conditional_dd",
+    "M5_radius_remap"
+  ],
+  "paired_results": {
+    "M1_reduced_modulus": {
+      "n_pairs": 60,
+      "median_delta_pi_ser": 0.0,
+      "trimmed_mean_delta_pi_ser": 0.000732421875,
+      "bootstrap_ci_95_median": [
+        0.0,
+        0.0
+      ],
+      "help_count": 2,
+      "hurt_count": 15,
+      "tie_count": 43,
+      "half_a_median_delta": 0.0,
+      "half_b_median_delta": 0.0,
+      "direction_consistent_across_halves": true,
+      "per_cell": {
+        "snr15-nominal-short": {
+          "n": 10,
+          "median_delta": 0.0,
+          "help": 2,
+          "hurt": 3
+        },
+        "snr20-fg1000-short": {
+          "n": 10,
+          "median_delta": 0.0,
+          "help": 0,
+          "hurt": 4
+        },
+        "snr20-nominal-long": {
+          "n": 10,
+          "median_delta": 0.0,
+          "help": 0,
+          "hurt": 2
+        },
+        "snr20-nominal-short": {
+          "n": 10,
+          "median_delta": 0.0,
+          "help": 0,
+          "hurt": 2
+        },
+        "snr20-sop40e-short": {
+          "n": 10,
+          "median_delta": 0.0,
+          "help": 0,
+          "hurt": 3
+        },
+        "snr25-nominal-short": {
+          "n": 10,
+          "median_delta": 0.0,
+          "help": 0,
+          "hurt": 1
+        }
+      },
+      "diagnostic_signal_gate": {
+        "positive_median": false,
+        "help_gt_hurt": false,
+        "direction_consistent": true,
+        "not_single_cell": false,
+        "passed": false,
+        "label": "NO_SIGNAL"
+      }
+    },
+    "M2_trace_reinit": {
+      "n_pairs": 60,
+      "median_delta_pi_ser": 0.0,
+      "trimmed_mean_delta_pi_ser": 0.034098307291666664,
+      "bootstrap_ci_95_median": [
+        0.0,
+        0.05078125
+      ],
+      "help_count": 0,
+      "hurt_count": 29,
+      "tie_count": 31,
+      "half_a_median_delta": 0.0,
+      "half_b_median_delta": 0.0546875,
+      "direction_consistent_across_halves": false,
+      "per_cell": {
+        "snr15-nominal-short": {
+          "n": 10,
+          "median_delta": 0.013671875,
+          "help": 0,
+          "hurt": 5
+        },
+        "snr20-fg1000-short": {
+          "n": 10,
+          "median_delta": 0.025390625,
+          "help": 0,
+          "hurt": 5
+        },
+        "snr20-nominal-long": {
+          "n": 10,
+          "median_delta": 0.0,
+          "help": 0,
+          "hurt": 4
+        },
+        "snr20-nominal-short": {
+          "n": 10,
+          "median_delta": 0.02734375,
+          "help": 0,
+          "hurt": 5
+        },
+        "snr20-sop40e-short": {
+          "n": 10,
+          "median_delta": 0.02734375,
+          "help": 0,
+          "hurt": 5
+        },
+        "snr25-nominal-short": {
+          "n": 10,
+          "median_delta": 0.015625,
+          "help": 0,
+          "hurt": 5
+        }
+      },
+      "diagnostic_signal_gate": {
+        "positive_median": false,
+        "help_gt_hurt": false,
+        "direction_consistent": false,
+        "not_single_cell": false,
+        "passed": false,
+        "label": "NO_SIGNAL"
+      }
+    },
+    "M3_multistart_select": {
+      "n_pairs": 60,
+      "median_delta_pi_ser": 0.009765625,
+      "trimmed_mean_delta_pi_ser": 0.041341145833333336,
+      "bootstrap_ci_95_median": [
+        0.0,
+        0.0546875
+      ],
+      "help_count": 2,
+      "hurt_count": 30,
+      "tie_count": 28,
+      "half_a_median_delta": 0.0,
+      "half_b_median_delta": 0.060546875,
+      "direction_consistent_across_halves": false,
+      "per_cell": {
+        "snr15-nominal-short": {
+          "n": 10,
+          "median_delta": 0.01171875,
+          "help": 2,
+          "hurt": 5
+        },
+        "snr20-fg1000-short": {
+          "n": 10,
+          "median_delta": 0.033203125,
+          "help": 0,
+          "hurt": 5
+        },
+        "snr20-nominal-long": {
+          "n": 10,
+          "median_delta": 0.0,
+          "help": 0,
+          "hurt": 4
+        },
+        "snr20-nominal-short": {
+          "n": 10,
+          "median_delta": 0.02734375,
+          "help": 0,
+          "hurt": 5
+        },
+        "snr20-sop40e-short": {
+          "n": 10,
+          "median_delta": 0.02734375,
+          "help": 0,
+          "hurt": 5
+        },
+        "snr25-nominal-short": {
+          "n": 10,
+          "median_delta": 0.033203125,
+          "help": 0,
+          "hurt": 6
+        }
+      },
+      "diagnostic_signal_gate": {
+        "positive_median": false,
+        "help_gt_hurt": false,
+        "direction_consistent": false,
+        "not_single_cell": false,
+        "passed": false,
+        "label": "NO_SIGNAL"
+      }
+    },
+    "M4_conditional_dd": {
+      "n_pairs": 60,
+      "median_delta_pi_ser": 0.0,
+      "trimmed_mean_delta_pi_ser": 0.005045572916666667,
+      "bootstrap_ci_95_median": [
+        0.0,
+        0.0
+      ],
+      "help_count": 2,
+      "hurt_count": 21,
+      "tie_count": 37,
+      "half_a_median_delta": 0.0,
+      "half_b_median_delta": 0.00390625,
+      "direction_consistent_across_halves": false,
+      "per_cell": {
+        "snr15-nominal-short": {
+          "n": 10,
+          "median_delta": 0.0,
+          "help": 0,
+          "hurt": 4
+        },
+        "snr20-fg1000-short": {
+          "n": 10,
+          "median_delta": 0.0,
+          "help": 1,
+          "hurt": 4
+        },
+        "snr20-nominal-long": {
+          "n": 10,
+          "median_delta": 0.0,
+          "help": 0,
+          "hurt": 4
+        },
+        "snr20-nominal-short": {
+          "n": 10,
+          "median_delta": 0.0,
+          "help": 0,
+          "hurt": 4
+        },
+        "snr20-sop40e-short": {
+          "n": 10,
+          "median_delta": 0.0,
+          "help": 0,
+          "hurt": 4
+        },
+        "snr25-nominal-short": {
+          "n": 10,
+          "median_delta": 0.0,
+          "help": 1,
+          "hurt": 1
+        }
+      },
+      "diagnostic_signal_gate": {
+        "positive_median": false,
+        "help_gt_hurt": false,
+        "direction_consistent": false,
+        "not_single_cell": false,
+        "passed": false,
+        "label": "NO_SIGNAL"
+      }
+    },
+    "M5_radius_remap": {
+      "n_pairs": 60,
+      "median_delta_pi_ser": 0.0,
+      "trimmed_mean_delta_pi_ser": -0.008951822916666666,
+      "bootstrap_ci_95_median": [
+        0.0,
+        0.0
+      ],
+      "help_count": 15,
+      "hurt_count": 5,
+      "tie_count": 40,
+      "half_a_median_delta": 0.0,
+      "half_b_median_delta": -0.001953125,
+      "direction_consistent_across_halves": false,
+      "per_cell": {
+        "snr15-nominal-short": {
+          "n": 10,
+          "median_delta": 0.0,
+          "help": 2,
+          "hurt": 1
+        },
+        "snr20-fg1000-short": {
+          "n": 10,
+          "median_delta": 0.0,
+          "help": 3,
+          "hurt": 1
+        },
+        "snr20-nominal-long": {
+          "n": 10,
+          "median_delta": 0.0,
+          "help": 2,
+          "hurt": 0
+        },
+        "snr20-nominal-short": {
+          "n": 10,
+          "median_delta": 0.0,
+          "help": 3,
+          "hurt": 1
+        },
+        "snr20-sop40e-short": {
+          "n": 10,
+          "median_delta": 0.0,
+          "help": 3,
+          "hurt": 1
+        },
+        "snr25-nominal-short": {
+          "n": 10,
+          "median_delta": 0.0,
+          "help": 2,
+          "hurt": 1
+        }
+      },
+      "diagnostic_signal_gate": {
+        "positive_median": false,
+        "help_gt_hurt": true,
+        "direction_consistent": false,
+        "not_single_cell": false,
+        "passed": false,
+        "label": "NO_SIGNAL"
+      }
+    }
+  },
+  "diagnostic_winners": [],
+  "smoke_results": {},
+  "wall_seconds": 2.655144214630127,
+  "claim_ceiling": "DIAGNOSTIC_ONLY_NOT_FORMAL_GW_MVE",
+  "next_formal_action": null
+}

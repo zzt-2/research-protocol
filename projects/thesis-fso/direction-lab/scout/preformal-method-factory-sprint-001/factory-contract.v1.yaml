@@ -1,0 +1,201 @@
+# =============================================================================
+# Pre-formal Method Factory Sprint 001 — Factory Contract v1
+# Task: T019 (PREFORMAL_METHOD_FACTORY, CP017)
+# Date: 2026-07-28
+# =============================================================================
+# Diagnostic-only sprint. NOT a Groundwork Step 4a MVE. Output is a diagnostic
+# method signal, never a formal Go/Kill, paper number, or promotion.
+# =============================================================================
+
+schema_version: direction-lab.preformal-method-factory.v1
+task_source: .sessions/2026-07-23-research-direction-lab-longitudinal-test/T019-preformal-method-factory-sprint-001.md
+control_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/topic-index.md
+control_epoch: 48
+action_class: PREFORMAL_METHOD_FACTORY
+mission_checkpoint: CP017
+claim_ceiling: DIAGNOSTIC_ONLY_NOT_FORMAL_GW_MVE
+
+# === Shared testbed (reused, not rebuilt) ====================================
+testbed:
+  source_entry: projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/baseline-atlas/
+  inherited_artifacts:
+    atlas: projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/baseline-atlas/artifacts/cb1-baseline-atlas-v1.json
+    adjudication: projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/baseline-adjudication-batch/artifacts/baseline-adjudication-v1.json
+    adjudication_synthesis: projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/baseline-adjudication-batch/artifacts/baseline-adjudication-v1-synthesis.md
+  source_hashes_sha256_prefix:
+    cb1_cell_runner.py: 2d9660338c302c31
+    cb1_evaluator.py: 46b81b9dbbc508ec
+    run_baseline_atlas.py: 37ac9bba2cbb6b99
+    common/_dual_pol_channel.py: 5cefac97d120e559
+    common/_modulation.py: 036fb7aa4d0bef15
+    common/_gg_time.py: d8e7929d00d885ec
+    params.py: 0e87c53364461478
+  run_command: |
+    python projects/thesis-fso/direction-lab/scout/cb1-modulation-generic-closure/baseline-atlas/run_baseline_atlas.py --qpsk
+    python projects/thesis-fso/direction-lab/scout/preformal-method-factory-sprint-001/src/run_factory.py --smoke
+    python projects/thesis-fso/direction-lab/scout/preformal-method-factory-sprint-001/src/run_factory.py --compare
+  python_interpreter: C:\Users\zzt\scoop\apps\python311\current\python.exe
+  qpsk_regression_check: PI-SER == 0.0 on qpsk-snr20-nominal-short-P03v1-anchor seed=11 (verified 2026-07-28)
+
+  # Why CB1 (not P03):
+  #   P03-U19-residual-headroom is QPSK-only and reports LOCAL_NEGATIVE /
+  #   NO_VISIBLE_HEADROOM (10 cells x 10 seeds all-zero BER/SER); scout-contract
+  #   is CLOSED and explicitly forbids training ML. It is NOT a usable testbed.
+  #   CB1 modulation-generic-closure has a real, adjudicated, PROBLEM_SURVIVES
+  #   headroom on 16QAM (inner-ring collapse, 0.31-0.33 PI-SER gap, invariant
+  #   to N and to MMA), with a runnable runner, frozen baseline, paired
+  #   realization and clear metric direction.
+  selection_rationale: |
+    P03 (entry 2) rejected: LOCAL_NEGATIVE / NO_VISIBLE_HEADROOM, QPSK only,
+    CLOSED contract, "do not train ML". CB1 (entry 1) accepted: real headroom
+    (PROBLEM_SURVIVES_CONVENTIONAL_BASELINE), runnable, paired, metric-clear.
+
+# === Frozen physical axes (inherited, DO NOT MODIFY) ========================
+# All constructs reuse generate_shared_realization_dp with these exact axes.
+# Modifying any of these = violation of discipline #6.
+frozen_common_axes:
+  alpha: 4.2            # Gamma-Gamma turbulence parameter
+  beta: 1.4             # Gamma-Gamma turbulence parameter
+  block: 100            # GG envelope block structure
+  t_s: 4.0e-10          # symbol period (2.5 GBaud)
+  method: gar           # GG envelope method
+  cma_mu: 0.001         # CMA step size (frozen, sat.1553 L760)
+  cma_taps: 11          # CMA filter length (frozen)
+  r2_qpsk: 1.0          # CMA dispersion constant QPSK
+  r2_qam16: 1.32        # CMA dispersion constant 16QAM
+  cma_block_size: 64    # CMA block-end update size (frozen, prompt013 parity)
+  affine_ridge: 1.0e-6  # ridge for blind/oracle affine fits
+  constellation_amplitude_per_axis: 0.7071067811865475
+
+# === Diagnostic cells (frozen subset) ========================================
+# Reduced from Atlas v1's 11 cells to a 6-cell diagnostic slice that captures
+# the failure mechanism across SNR x f_g axes. Two cells are anchor/stress,
+# four are the core collapse regime. Selection: every short-N cell where
+# nearest PI-SER >= 0.30 AND oracle PI-SER <= 0.03 (the clean collapse regime).
+cells:
+  - {id: snr20-nominal-short, modulation: qam16, snr_db: 20.0, f_g_hz: 30.0,   sop_rate: 4.0e-6, n_symbols: 512}   # head=0.31 core
+  - {id: snr25-nominal-short, modulation: qam16, snr_db: 25.0, f_g_hz: 30.0,   sop_rate: 4.0e-6, n_symbols: 512}   # head=0.33 core
+  - {id: snr20-fg1000-short,  modulation: qam16, snr_db: 20.0, f_g_hz: 1000.0, sop_rate: 4.0e-6, n_symbols: 512}   # head=0.32 high f_g
+  - {id: snr20-sop40e-short,  modulation: qam16, snr_db: 20.0, f_g_hz: 30.0,   sop_rate: 4.0e-5, n_symbols: 512}   # head=0.31 high SOP
+  - {id: snr15-nominal-short, modulation: qam16, snr_db: 15.0, f_g_hz: 30.0,   sop_rate: 4.0e-6, n_symbols: 512}   # head=0.22 mid-SNR
+  - {id: snr20-nominal-long,  modulation: qam16, snr_db: 20.0, f_g_hz: 30.0,   sop_rate: 4.0e-6, n_symbols: 8192}  # head=0.23 long-N
+
+# === Diagnostic seeds (frozen, paired-realization) ===========================
+# Full paired seeds 11-20 (shared realization per (cell,seed) across ALL
+# methods). Two non-overlapping halves for direction-consistency check:
+#   half_A = [11,12,13,14,15], half_B = [16,17,18,19,20]
+diagnostic_seeds: [11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+seed_halves:
+  half_A: [11, 12, 13, 14, 15]
+  half_B: [16, 17, 18, 19, 20]
+
+# Collision check: these seeds and cell ids are byte-identical to Atlas v1 /
+# baseline-adjudication's frozen covering design, so constructs are compared
+# on the EXACT same channel realizations as the inherited baseline results.
+collision_check: "seeds 11-20 and cell axes match Atlas v1 covering_design; generate_shared_realization_dp is the single source of truth for (cell,seed) -> realization."
+
+# === Receiver-visible input/output contract (frozen) ========================
+# Privileged inputs (FORBIDDEN in any construct's deployable action):
+#   - true channel / Jones matrix
+#   - TX truth symbols sX/sY or bitsX/bitsY
+#   - future window (symbols not yet received)
+#   - fixed-label BER (oracle assignment)
+#   - oracle affine coefficients (Kill-tool only, FR-21/FR-25)
+receiver_visible_input_contract:
+  allowed_runtime_inputs:
+    - z_stream: "equalizer output zX/zY (complex, length N) — the receiver-visible signal"
+    - cma_trace: "block-level CMA trace {output_power, w_norm, cm_error, update_norm, z_amp_max} — causal, receiver-internal"
+    - r_stream: "raw received rX/rY (complex, length N) — available to any equalizer re-init"
+    - known_constellation: "public 16QAM alphabet (modulation is public knowledge)"
+    - frozen_axes: "the frozen physical axes above (public, not TX/channel truth)"
+  forbidden_runtime_inputs:
+    - true_channel_or_jones
+    - tx_truth_symbols_or_bits
+    - future_window_symbols
+    - fixed_label_oracle_assignment
+    - oracle_affine_coefficients
+  causal_contract: "construct at symbol index n may only consume inputs with index <= n (online) or <= calibration_end (offline calibration on z only)"
+
+output_contract:
+  deployable_output: "predicted 16QAM symbols (complex, length N) on the eval slice"
+  evaluation: "evaluate_dual_16qam from cb1_evaluator (permutation+quadrant invariant PI-SER)"
+
+# === Traditional baseline (frozen comparator) ===============================
+traditional_baseline:
+  id: standard_cma_godard_z
+  implementation: cb1_cell_runner.standard_cma_godard_with_z
+  cost_function: "J = E[(R^2 - |z|^2)^2], R2=1.32 for 16QAM"
+  gradient: "Godard-with-z: Dw ∝ (R2-|z|^2)·z·r*"
+  provenance: "Godard 1980 TCOM 28(11):1867-1875 Eq.(10); sat.1553 §6 Eq.(50)"
+  identity_gate: "provenance.gradient == 'Godard-with-z'"
+  frozen_hyperparams: {mu: 0.001, n_tap: 11, block_size: 64, R2: 1.32, init: center-tap}
+  inherited_atlas_result: "nearest PI-SER 0.33 (core collapse); oracle PI-SER 0.02; headroom 0.31-0.33 on 8 short-N cells"
+  note: "This is the FROZEN traditional baseline. Every construct is paired against it on the same (cell,seed) realization. Constructs must beat this (and ideally MMA) to register a diagnostic signal."
+
+# Strong cheap alternative (run once, shared across constructs that need it):
+strong_cheap_alternative:
+  id: blind_affine_16qam
+  implementation: cb1_evaluator.blind_affine_compare_16qam
+  cost_function: "closed-form ridge LS, z-derived 16QAM pseudo-labels, single 2x2 complex affine"
+  inherited_atlas_result: "PI-SER 0.30-0.33 (marginally better than nearest, far from oracle)"
+  note: "Same-information as nearest decision. Run once per (cell,seed); shared."
+
+# === Primary / secondary metric (frozen direction) ==========================
+primary_metric:
+  name: PI-SER
+  definition: "permutation-invariant symbol error rate (min over 2! stream perms x 4 quadrant rotations)"
+  direction: lower_is_better
+  MDE: 0.005  # per-symbol, inherited
+  evaluator: cb1_evaluator.evaluate_dual_16qam
+secondary_metric:
+  name: fixed_label_SER
+  direction: lower_is_better
+
+# === Paired-realization method (frozen) =====================================
+paired_realization:
+  generator: common._dual_pol_channel.generate_shared_realization_dp
+  contract: "ONE call per (cell, seed) -> {rX,rY,sX,sY,bitsX,bitsY}. ALL methods (baseline + every construct) consume the SAME realization object. No method generates its own channel."
+  receiver_visible_fields: [rX, rY]            # raw received
+  truth_fields_for_eval_only: [sX, sY, bitsX, bitsY]  # NEVER enter a construct
+
+# === Runtime budget =========================================================
+runtime_budget:
+  per_construct_smoke_seconds: 60
+  full_compare_wall_minutes: 30
+  python: "C:\\Users\\zzt\\scoop\\apps\\python311\\current\\python.exe"
+
+# === Terminal states (only these three may end the sprint) ==================
+terminal_states:
+  - DIAGNOSTIC_METHOD_SIGNAL   # >= 1 construct passes the diagnostic signal gate
+  - NO_DIAGNOSTIC_SIGNAL       # >= 3 valid constructs compared, none pass the gate
+  - BLOCKED_SHARED_TESTBED     # testbed identity/fairness cannot be established
+
+# === Diagnostic signal gate (promotion screen, NOT paper significance) ======
+diagnostic_signal_gate:
+  all_of:
+    - "not dependent on a single seed or single cell (no evaluator artifact)"
+    - "primary paired delta (construct_PI_SER - baseline_PI_SER) direction is consistent across both non-overlapping seed halves"
+    - "positive median improvement (negative median delta since lower_is_better) AND help_count > hurt_count across (cell,seed) pairs"
+    - "no unacceptable clean-boundary collapse (QPSK regression still PI-SER=0; high-SNR 16QAM cell does not regress > MDE)"
+    - "receiver-visible + causal contract passes (no privileged input in deployable action)"
+  weak_signal_label: WEAK_DIAGNOSTIC_SIGNAL  # edge results preserved, not force-killed
+
+# === Forbidden in this sprint (inherited + factory-specific) ================
+forbidden:
+  - modify_common_or_params_py
+  - modify_protected_history_B001_B002_B003_P03_Atlas_bytes
+  - modify_frozen_physical_axes_or_modulation_mapping_or_evaluator_working_region
+  - use_true_channel_or_jones_or_TX_truth_or_future_window_in_deployable_action
+  - treat_oracle_affine_as_Go_baseline
+  - tune_baseline_hyperparameters_to_make_constructs_win
+  - execute_or_modify_T018_or_Q14
+  - reopen_explicitly_rejected_axes:
+      rejected:
+        - "unitary real-rotation pilot->Jones->inverse + EMA/Tikhonov/condition-guard (step-002 KILL)"
+        - "complex Jones/PMD/PDL model upgrade at 2.5GBaud/64-100 block (step-003 PIVOT_NOT_JUSTIFIED)"
+        - "complex-component rescue axis temporal primary (step-005 KILL)"
+        - "B10/B12 high-order CPR combination family at canonical 10kHz lw (step-006 FAIL)"
+        - "B1 adaptive phase-window in main regime (step-007/008 KILL_NO_ADAPTIVE_WINDOW_SPACE)"
+        - "second A4 repair package (step-009 BLOCKED_IDENTITY)"
+  - update_sessions_or_mission_log_or_owner_or_master_state
+  - push_or_merge
