@@ -1096,3 +1096,179 @@ Kill 不受影响。正式状态：
 pilot-RLS→MAP residual cascade、confidence gate 与 adaptive-forgetting RLS。
 该动作仍为 GW Step 4a，不进入 Step 5/Contract/Execute。
 
+
+---
+
+## Q15 Step 4a — 正确归一化终局审判（2026-07-28，T023 / CP021）
+
+> 来源：T023（CANDIDATE_FORMALIZATION，foreground epoch53 / CP021）。承接 Q15 Step 3.5
+> （`STEP35_CONVERGED_D1_ZERO_COLLISION_Q2_PENDING_PHASE_B`）。本节是 Groundwork Step 4a
+> 维度 A0/A′/A/B/D，用 correct sqrt-normalization 等 strong simple prior 对 M4 做终局公平
+> 审判。隔离目录：`direction-lab/scout/q15-step4a-normalization-adjudication/`。
+> contract.yaml 含 FR-11/12/14/15/18/20/21 全部冻结项。
+
+### A0 §0：合法性门控（Q# + 四判据）
+
+- **Q#**：Q15（lit notes Step 3.5）。判据 1 PASS（句子级 M-C-A 成立 + Step 3.5 检索尽 + D1
+  零碰撞），判据 2 PARTIAL（须本节维度 D 实证闭合），判据 3 PASS（comparator 存在），
+  判据 4 PASS（PI-SER 可量化）。**进入 A0 §1-§6**（判据 2 的 PARTIAL 由维度 D 闭合，非 A0 阻断）。
+
+### A0 §1：性能间隙 [FR-02]
+
+- **来源类型 [实证]**：T020/M4 diagnostic（`DIAGNOSTIC_METHOD_SIGNAL`，ΔPI-SER=−0.0826，
+  CI=[−0.138,−0.032]，7/0/13 help/hurt/tie，claim ceiling=DIAGNOSTIC_ONLY）示 fixed-µ CMA 在
+  7/20 collapse seeds 上 PI-SER 0.4-0.77，oracle affine 示可恢复 headroom 大。
+- **来源类型 [实证]**：C6 Fig.5a 示 CMA 对 shaped QAM ~50% 实现崩（64QAM，但现象佐证）。
+- **来源类型 [论证]**：M1 振幅公式 audit——collapsed z=c·s（c<1）经正确 sqrt-RMS 应精确恢复；
+  M1 用功率比乘复振幅致过校正 1/c，evaluator 不恢复尺度。correct normalization 是否吸收
+  M4 收益 = 本节核心未知。
+- **间隙评估**：collapse seeds 上 baseline 离 oracle 上界差 ≥0.3 PI-SER（远 >15%），有空间。
+  但空间是否被 correct normalization 占据 = 维度 D 实证。
+
+### A0 §2：问题结构适配（ML 才擅长？）
+
+Q15 **不是 ML 方法**——是确定性 prefix-frozen 输出变换（scalar/map/identity 三分支）。
+问题结构：collapse 是 receiver-visible prefix 的低功率/窄展布特征；prefix-only 统计 +
+门控规则可检测。**不需 ML**，是 rule-based post-proc。A0 §2 "ML 才擅长"判据对 Q15
+**N/A**（Q15 非 ML 方向），跳过此项，记录跳过原因（符合 gw-feasibility 方法类型标注 [通用]）。
+
+### A0 §3：跨域成功先例（同类方法成功 ≥2）
+
+- prefix-frozen calibration + apply to disjoint eval：D4（likelihood RDE pilot+payload 门控）、
+  C6（pilot 统计）——post-proc / pilot-frozen 先例 ≥2。
+- monotone radius map（CDF→shell transport）：optimal-transport / histogram-matching 在图像
+  增强、均衡化领域成熟先例。Q15 的 map 是其 1-D |z| 版本。
+- **≥2 先例成立**（虽然 Q15 不是 ML，A0 §3 仍记录同 action 族先例）。
+
+### A0 §4：MDP 非平凡性 — N/A
+
+Q15 非 RL/MDP。prefix-frozen 输出变换无状态/转移/奖励。**跳过**。
+
+### A0 §5：负面证据搜索（有人试过并失败？）
+
+Step 3.5 query p6/a2/a3 全 0 命中——**无前人试 post-CMA identity-fallback monotone radius
+output transform**。这是真空白（无失败报告也无成功报告）。结合 A0 §3（同 action 族先例有）
+判断：方法-问题匹配有间接支撑，未被前人失败证伪。
+
+### A0 §6：先验覆盖检查 [FR-01]（简单规则已达 oracle ≥90%？）
+
+- **主指标 PI-SER**：correct sqrt-RMS normalization（pooled/per-pol）+ gated scalar +
+  robust scalar = 4 个 strong simple prior 候选。**这是 A0 §6 的核心**：correct normalization
+  是否已达 oracle ≥90%？**未知——须维度 D 实证**。
+- 若 correct normalization 在 collapse seeds 上恢复 ≥90% oracle headroom → Q15 被 simple
+  prior 覆盖 → **致命（Q15 ABSORBED）**。
+- 若 correct normalization 不能区分健康 vs 塌缩（在健康 prefix 上引入 >MDE 退化，正如 T020
+  M1 的 healthy catastrophe +0.129）→ Q15 的 identity-fallback gate 有独立价值。
+
+**A0 致命信号判定**：无致命信号触发（A0 §1-§5 无致命；A0 §6 的"simple prior 覆盖"是维度 D
+要回答的，非 A0 阻断）。**进入维度 A′**。
+
+### 维度 A′：竞争维度分解 [FR-05]
+
+| 优化维度 | 先验覆盖度 | ML/rule 改善空间 | Q15 方法增量 |
+|---|---|---|---|
+| collapse seeds 的 PI-SER 恢复 | 中（correct normalization 可能覆盖） | 待 D 验证 | gated identity + monotone radius map |
+| 健康 prefix 零回归 | 低（correct scalar 在健康上退化，T020 M1 +0.129） | identity-fallback 是独立维度 | gate 选 identity 保证 bit-identical |
+| prefix-only 因果边界 | 低（前人均 always-on 在线） | prefix-frozen 是结构增量 | suffix 不进 selection |
+
+**创新声称**：建立在"健康零回归 + prefix-only 因果边界"两维度（先验覆盖低）+ "collapse
+恢复"维度（须 D 验证 correct normalization 是否覆盖）。无致命。
+
+### 维度 A：结构优势论证
+
+- **核心结构优势**：identity-fallback gate。correct sqrt-RMS normalization 是 always-on
+  scalar（健康 prefix 也应用 scale，T020 示引入 +0.129 PI-SER 灾难退化）。M4 的 gate 在
+  健康 prefix 选 identity = bit-identical baseline，**零回归**。这是 correct scalar 无法
+  提供的结构性安全属性。
+- **信息损失条件**：当 prefix 是 collapsed（低 mean|z|² + 高 spread），correct scalar 的
+  假设（z=c·s 单一全局尺度）成立，恢复有效；当 prefix 是 healthy（mean|z|²≈1.37），
+  correct scalar 强行缩放引入损失。M4 的 gate 用 prefix 特征区分两者——**这是信息增量
+  的具体条件**。
+- **[FR-03] 增强基线**：correct pooled/per-pol sqrt-RMS + gated-scalar + robust scalar =
+  增强后的 conventional comparator，非裸 CMA。差距是否消失 = 维度 D。
+- **[FR-08] 范式对齐**：Q15 是 rule-based post-proc，与 D4/C6 的 pilot-stat 门控范式对齐。
+
+### 维度 B：新颖性-可行性解耦 + 空白零假设
+
+- **新颖性**：Step 3.5 确认无前人做 post-CMA prefix-frozen identity-fallback monotone
+  radius output transform（p6/a2/a3 全 0）。
+- **可行性**：T020/M4 diagnostic 示 collapse seeds 有可恢复 headroom（机制可行）。
+- **空白原因**：(1) collapse 被视为 equalizer 问题（D2-D5 在 equalizer 层解）；(2) post-proc
+  output transform 被忽视（领域默认改抽头/代价）；(3) identity-fallback 安全属性未被显式
+  追求。三个结构性原因，无"试过效果不好"信号。
+- **空白零假设检查**（≥3 个）：
+  1. "collapse 被 equalizer 内部方法吸收" → 反驳：D2-D5 假设健康轨迹，无 detector/fallback；
+     C6 需 TX 端。receiver-only post-proc 仍是空白。
+  2. "correct normalization 已覆盖" → 反驳/确认：**这是维度 D 要回答的**。若覆盖 → Kill。
+  3. "identity-fallback 是 trivial safety，无研究价值" → 反驳：correct scalar 在健康上
+     +0.129 退化示 identity-fallback 有量化安全价值。
+  4. "prefix-only 因果边界使方法在真实在线场景无用" → 反驳：prefix-frozen 与 pilot-aided
+     实际部署范式一致（D4 pilot+payload）。
+
+**B 致命信号**：无（除非维度 D 证 correct normalization 覆盖）。
+
+### B0 起飞硬门结论
+
+A0/A′/A/B 均无致命信号；FR-11/12/14/15/18/20/21 全部冻结（见 contract.yaml）。
+**允许进入维度 D（B1-B4）**。判据 2 的实证闭合 = 维度 D 核心任务。
+
+### 维度 D：MVE 终局审判（correct-normalization 吸收裁决）
+
+**假设**：若 M4 的 prefix-gated identity/monotone-radius-map 收益只是补 T020
+M1 缺失的正确 gain normalization（功率比 vs 平方根振幅），则 correct sqrt-RMS
+normalization comparator 将在 collapse seeds 上 match 或 beat M4，且不引入
+> MDE 的 healthy 退化 → Q15 被 conventional normalization 吸收。
+
+**FR-11 架构摘要**（见 contract.yaml）：输入 post-CMA z；action = per-prefix
+frozen scalar/map/identity；决策粒度 per-prefix；信息边界 prefix-only 因果隔离；
+identity fallback YES；comparator 范式 M4 vs correct sqrt normalization。
+
+**执行**：7 cells × 40 seeds（old 201-220 + fresh 241-260），seed-cluster 聚合，
+10k bootstrap 95% CI，MDE=0.005。8/8 semantic smoke PASS（correct sqrt 恢复
+amplitude SER=0；M1 wrong 过校正 c=0.45 SER=0.743；identity unbiased；prefix
+freeze 不变；info increment；clean 不退化；collapsed 开 gate）。
+
+**结果（seed-cluster mean PI-SER）**：
+
+| slice | baseline | M4 | robust_scalar(最强correct) | M4 vs robust |
+|---|---|---|---|---|
+| old 201-220 | 0.3143 | 0.2317 | **0.2232** | M4 输 +0.0085 (>MDE) |
+| fresh 241-260 | 0.4150 | 0.2830 | **0.2686** | M4 输 +0.0144 (>MDE) |
+
+M4 在**两个 slice 都输给**最强 correct normalization（robust_scalar，median
+sqrt-RMS），差距 > MDE。gated_scalar_ablation（M4 gate + correct scale）≈ M4
+（overall 0.2513 vs 0.2574）→ map 不提供 gate+scale 之外的增量。
+
+**吸收机制**：collapse 是纯幅度尺度（z=c·s）；correct scalar 已精确恢复（audit
+SER=0 for all c）。M4 的非线性 monotone radius map 无法 beat 精确标量恢复——
+至多 tie，实际略输（quantile 锚引入轻微畸变）。M4 的 gate 值在 healthy 零回归
+（healthy-worst Δ=0.0），但 correct scalar 的 healthy 退化（0.016-0.027）已 < MDE，
+是可用 conventional comparator。
+
+**致命信号（维度 D）**：M4 未过"提出方法 > 最强正确归一化 comparator"（FR-15）。
+判据 2（信息增量）实证 **FAIL**：三差异化（prefix-only/identity/post-proc map）
+不产生比 correct conventional normalization 更好的可测结果。"problem survives
+conventional baseline" 状态**未达**。
+
+### 4a 决策
+
+| 决策 | 条件 | 本案 |
+|---|---|---|
+| Go | A0 通过 + A'/A/B 无致命 + MVE 通过 + FR-20 参数溯源 | **否**（MVE FAIL） |
+| Kill | 核心假设无法修复 | **是** |
+
+**终态**：`Q15_ABSORBED_BY_CONVENTIONAL_NORMALIZATION_NO_GO`。
+- formal_science_disposition: Q15 被 conventional normalization 吸收；
+- mission_method_delta: `NONE`（可靠负面 + evaluator/normalization 方法论教训）；
+- **无 Step 4a recommendation，无 thesis-facing method card，无 Step 5/Contract/Execute**；
+- **无第四个 Q15 repair/factory 包**，Q15 退出。
+
+### 可回收沉淀（Kill 路径，非方法）
+
+- **evaluator/normalization 方法论教训**：任何 post-CMA output transform
+  comparator 族 MUST 含 correct pooled + per-pol sqrt-RMS 作 baseline-ladder
+  floor；功率比乘复振幅的 bug 在 rotation-only evaluator 下静默。未来 CB1 z-only
+  工作必须先冻结 correct-sqrt normalization 作首 comparator，才能声称非线性 map
+  有价值。
+- **identity-fallback 安全属性**是真实可测的设计属性（healthy-worst Δ=0.0），
+  但当 always-on correct scalar 已在 healthy 上 < MDE 时，它是约束非贡献。

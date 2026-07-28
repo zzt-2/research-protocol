@@ -1,0 +1,163 @@
+# =============================================================================
+# Q15 Step 4a Terminal Adjudication — Correct-Normalization comparator
+#
+# Schema: q15.step4a-normalization-adjudication.v1
+# Authority: T023 (CANDIDATE_FORMALIZATION, CP021, epoch 53);
+#   source decision formal D039 / live D030; accepted T022 = STEP3_PENDING_STEP35.
+# Date: 2026-07-28
+# Claim ceiling: STEP4A_RECOMMENDATION_READY or Q15_ABSORBED_BY_CONVENTIONAL_NORMALIZATION_NO_GO
+#
+# WHY THIS BATCH EXISTS (TL;DR)
+#   V056/D030 found T020's M1 multiplies a COMPLEX signal by a POWER RATIO
+#   (scale = E|s|^2 / E|z|^2 applied as scale*z). The correct complex amplitude
+#   multiplier a satisfies |a|^2 = Ps/Pz, so a = sqrt(Ps/Pz). The evaluator
+#   (cb1_evaluator.evaluate_dual_16qam) does an 8-way rotation {+1,+j,-1,-j} x
+#   stream-permutation search + nearest-16QAM hard decision, which CANNOT
+#   compensate an arbitrary magnitude scale (rotations are unit-modulus). So
+#   M1's wrong scale over-corrects a collapsed stream by 1/c instead of 1.
+#   This makes M4's "DIAGNOSTIC_METHOD_SIGNAL" suspect: M4's gate selects
+#   identity on healthy prefixes and M2_transport on collapsed prefixes, but
+#   M2_transport is a monotone radius MAP, not a pure scale. The open question
+#   is whether a CORRECT pooled/per-pol sqrt-RMS normalization (the cheapest
+#   conventional comparator) absorbs the M4 gain entirely.
+#   This batch answers that with ONE bounded fair comparison. Negative result
+#   => Q15 exits (NO-GO); positive => STEP4A_RECOMMENDATION_READY.
+# =============================================================================
+
+# === THEORETICAL EXPECTATION (written BEFORE any seed) ===
+# Given z = a_true * s + noise, where |a_true|^2 = Pz/Ps maps received power Pz
+# to target 16QAM power Ps (E|s|^2 = 1 for avg-power-normalized 16QAM):
+#   - prefix power estimate: Pz_hat = robust_mean(|z_prefix|^2)
+#   - to recover the constellation, the complex multiplier must satisfy
+#     |a|^2 * Pz = Ps  =>  a = sqrt(Ps / Pz_hat).
+#   - T020 M1 used scale = Ps/Pz_hat (= a^2) and multiplied scale*z; this
+#     yields a^2 * z = a^2 * a_true * s, whose AMPLITUDE is a^2*|a_true| = a^2/a
+#     (since |a_true|=1/a), i.e. amplitude too large by factor a = sqrt(Ps/Pz).
+#     For a collapsed c=0.45 stream, a = 1/0.45 = 2.22, so M1 over-corrects 2.22x.
+#   - The CORRECT comparator: a_correct = sqrt(Ps/Pz_hat); z' = a_correct * z.
+#   - Per-pol version: estimate Pz separately on each polarization's prefix.
+#   - These are the STRONGEST SIMPLE PRIORS (FR-14) and the contribution target
+#     comparators (FR-25 Go comparator = conventional, task-matched).
+
+# === Q# (from literature_notes Step 3.5) ===
+q15_problem:
+  M: "fixed-parameter blind FIR CMA + always-on blind output calibration (standard CMA-RDE chain)"
+  C: "dual-pol 16QAM receiver produces low-power inner-ring shell collapse on a subset of realizations/initializations"
+  A: "conventional methods lack a receiver-visible collapse detector + safe identity fallback; or their fixed normalization cannot distinguish healthy vs collapsed output"
+  output_form: "prefix-gated identity / monotone radius calibration policy (post-CMA frozen output map + identity fallback)"
+  criteria_status: "1 PASS, 2 PARTIAL (to be closed empirically here), 3 PASS, 4 PASS"
+
+# === Shared testbed (reused READ-ONLY, NOT modified) ===
+shared_testbed:
+  source: cb1-modulation-generic-closure/baseline-atlas
+  generator: common._dual_pol_channel.generate_shared_realization_dp
+  evaluator: cb1_evaluator.evaluate_dual_16qam  # 8-way rotation {±1,±j} x perm + nearest-grid
+  primary_baseline: fixed_mu_cma_mu_0_03  # mu=0.03, B01-R hotfix v2 interior optimum
+  cells: 7  # held-out, frozen from T020 (unchanged)
+  paired_realization: true  # same (cell,seed) generated once, shared across all methods
+  forbidden_changes:
+    - "DO NOT modify T020 directory (preformal-method-factory-sprint-002)"
+    - "DO NOT modify common/, params.py, cb1_evaluator.py, cb1_cell_runner.py"
+    - "DO NOT re-tune M4 gate params on test (inherit T020 dev freeze {0.6, 0.1})"
+
+# === FR-11 Architecture summary (frozen BEFORE dimension D) ===
+architecture_summary_FR11:
+  input: "receiver-equalized z stream (post fixed-mu CMA); calibration prefix z[eval_start:calibration_end] (128 sym) only"
+  action_space: "per-prefix frozen scalar OR monotone radius map OR identity (3 discrete branches selected by prefix features)"
+  decision_granularity: "per-prefix (one frozen decision per (cell,seed,pol)); applied uniformly to the eval suffix"
+  information_boundary: "prefix-only causal isolation; suffix z[calibration_end:eval_end] NEVER feeds freeze/gate/scale"
+  objective_metric: "PI-SER (permutation-invariant symbol error rate), dual-report fixed-label SER + BER"
+  identity_fallback: "YES — healthy prefix gate selects identity (bit-identical to baseline)"
+  comparator_paradigm: "M4 gated policy vs correct sqrt-RMS scalar vs gated-scalar ablation"
+
+# === FR-20 Physical parameter provenance (inherited, NOT re-tuned for Q15) ===
+param_provenance_FR20:
+  cma_mu: { value: 3.0e-2, source: "B01-R hotfix v2 frozen-params-b01r-v1.yaml (best_score=-0.20390625); interior optimum" }
+  cma_taps: { value: 11, source: "B01-R inherited" }
+  cma_R2: { value: 1.32, source: "E|s|^4/E|s|^2 for full 16QAM alphabet (Godard-with-z)" }
+  cma_block_size: { value: 64, source: "B01-R inherited" }
+  affine_ridge: { value: 1.0e-6, source: "P03 probe_evaluator convention" }
+  alpha: { value: 4.2, source: "CB1 frozen channel axes (turbulence)" }
+  beta: { value: 1.4, source: "CB1 frozen channel axes" }
+  t_s: { value: 4.0e-10, source: "CB1 frozen (symbol period)" }
+  block: { value: 100, source: "CB1 frozen" }
+  method: { value: gar, source: "CB1 frozen (gamma adaptation rule)" }
+  M4_gate_collapse_threshold: { value: 0.6, source: "T020 dev-freeze-receipt.v1.json (dev 181-183; NOT test-tuned)" }
+  M4_gate_spread_threshold: { value: 0.1, source: "T020 dev-freeze-receipt.v1.json (dev 181-183; NOT test-tuned)" }
+  M1_trim_frac: { value: 0.2, source: "T020 dev-freeze-receipt.v1.json (dev 181-183; NOT test-tuned)" }
+  public_16qam_E_abs2: { value: 1.0, source: "avg-power-normalized 16QAM alphabet {-3,-1,+1,+3}/sqrt(10) per axis" }
+  forbidden_retuning: "NO parameter is tuned to make Q15 look good; all inherited from T020/B01-R or analytic"
+
+# === FR-21 oracle affine applicability (Kill tool ONLY, NOT Go comparator) ===
+oracle_FR21:
+  applicable: true
+  use: "OFFLINE 4-category label + headroom bound ONLY (inherited T020 oracle_affine_bound_16qam, TX-truth)"
+  kill_role: "If M4 cannot beat correct-normalization by MDE on collapsed seeds where oracle headroom is large, Kill."
+  forbidden: "oracle affine is NEVER a Go baseline (FR-25). It only measures the recoverable headroom ceiling."
+
+# === FR-18 testbed simplification / competitive landscape ===
+testbed_fidelity_FR18:
+  simplification: "CB1 baseline-atlas: 7 held-out cells, frozen channel axes; dual-pol 16QAM"
+  impact_on_main: "post-CMA output transform operates on already-equalized z; the testbed's CMA-collapse regime is the target phenomenon, not a simplification bias"
+  impact_on_comparators: "ALL methods (correct-normalization, M2/M3/M4, blind-affine, C11) operate on the SAME z-stream, so the simplification affects them EQUALLY — no relative advantage/disadvantage introduced"
+  predicted_realization_change: "NONE — this is not a topology/fidelity upgrade; it is the same testbed with corrected comparators"
+
+# === FR-12 MVE vs Formal architecture difference ===
+mve_vs_formal_FR12:
+  mve_action_space: "per-prefix frozen scalar/map/identity (this batch)"
+  formal_action_space: "same (Q15 IS a per-prefix frozen policy; no architecture change expected for formal)"
+  difference_affects_comparison: "NO — MVE architecture = formal architecture for Q15. No action-space/granularity/reward change between this Step 4a and a future formal experiment."
+
+# === FR-14 / FR-15 comparator lists (frozen BEFORE seeds) ===
+strongest_simple_prior_FR14:
+  - correct_pooled_sqrt_rms: "a = sqrt(E|s|^2 / robust_mean(|z_prefix_x|^2 U |z_prefix_y|^2)); same a both pols"
+  - correct_per_pol_sqrt_rms: "a_x = sqrt(E|s|^2 / robust_mean(|z_prefix_x|^2)); a_y similarly; per-pol"
+contribution_target_comparators_FR15:
+  - correct_pooled_sqrt_rms   # the contribution claim is M4 > correct normalization
+  - correct_per_pol_sqrt_rms
+  - gated_scalar_ablation     # M4's gate + correct scale (isolates gate vs map)
+  - robust_scalar             # median/trimmed estimator
+legal_conventional_anchor:
+  - baseline_cma_mu0p03       # fixed-mu CMA (Q15's M)
+  - blind_affine              # z-only 2x2 affine
+  - C11_legal_causal          # one-pass CMA+DD
+kill_bound_FR21:
+  - oracle_affine_bound       # TX-truth, label + headroom ONLY
+
+# === Fairness & seeds (frozen BEFORE seeds) ===
+fairness:
+  shared_realization: "same (cell,seed) generated ONCE; all methods see identical z"
+  cell_set: "7 T020 cells unchanged"
+  m4_gate_params: "inherit T020 dev freeze {collapse=0.6, spread=0.1}; NOT re-tuned on test"
+  aggregation_unit: "seed-cluster (each SEED = 1 independent cluster; 7 cells within a seed are NOT independent)"
+  primary_metric: pi_ser
+  MDE: 0.005
+  uncertainty: "10k-resample seed-cluster bootstrap 95% CI on per-seed mean delta"
+  dual_report: [fixed_label_ser, pi_ber]
+seed_schedule:
+  old_slice: "T020 seeds 201-220 (post-hoc mechanism adjudication: add correct-normalization to existing signal)"
+  fresh_slice: "fresh disjoint 20 seeds; prefer 241-260; if token-collision, step forward and record"
+  new_baseline_rule: "correct-normalization comparators are NOT tuned on fresh test; only formula-determined robust estimators"
+  persisted_per_row: [cell_id, seed, method, pi_ser, fixed_label_ser, pi_ber, gate, prefix_features, scale_or_map_params, offline_4category]
+
+# === B4 terminal gates ===
+terminal_gates:
+  Q15_ABSORBED_BY_CONVENTIONAL_NORMALIZATION_NO_GO:
+    when_any:
+      - "M4 vs strongest correct-normalization: NOT simultaneously (mean dPI-SER <= -0.005 AND 95% CI upper < 0 AND help>hurt)"
+      - "original T020 signal mostly explained by correct/gated scalar"
+      - "fresh-slice direction unstable"
+      - "clean/healthy catastrophic regression > MDE"
+    action: "Q15 exits; NO repair; mission_method_delta=NONE; keep evaluator/normalization methodology lesson"
+  Q15_STEP4A_RECOMMENDATION_READY:
+    when_all:
+      - "D1/Step 3.5 non-exact collision (DONE: zero collision)"
+      - "M4 significantly beats strongest correct normalization on BOTH old and fresh slices"
+      - "no regression vs C11/blind-affine"
+      - "clean/healthy safe"
+      - "mechanism ablation shows gain from NONLINEAR monotone radius map, not pure scale/gate"
+    action: "Step 4a A0/A'/A/B/D complete; write thesis-facing method card; mission_method_delta=PACKAGING_BOUNDARY; return to master for Go/No-Go user confirmation; DO NOT enter Step 5"
+
+# === Scope guardrails ===
+scope_guardrails:
+  must_not: ["Step 5", "Contract", "Execute", "paper victory claims", "push", "modify .sessions/master-state/current YAML", "4th Q15 repair/factory"]

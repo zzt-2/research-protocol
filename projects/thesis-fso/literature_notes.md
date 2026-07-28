@@ -1622,3 +1622,220 @@ query/citation targets，由主控/用户裁决获取路径（机构 VPN / 作�
 - **未进入**: Step 3.5 / Step 4a / Contract / Execute / 任何实验
 - **未宣称**: novelty / problem survives conventional baseline / Q15 四判据全过
 - **未改**: 全局步骤进度表、`.sessions/**` owner/mission/log/decisions/master-state/current YAML
+
+---
+
+## Q15 Step 3.5 定向补充检索 + D1 精读（2026-07-28，T023 / CP021）
+
+> 来源：T023（CANDIDATE_FORMALIZATION，foreground epoch53 / CP021）。承接 T022
+> `STEP3_CONTENT_COMPLETE_Q_PENDING_STEP35`。本节闭合 D1 全文缺失 + cheap-alt closure
+> 两项 Step 3 mandatory debt，并修正 D3 collision 解释。D1 全文经 EURASIP 官方公开 PDF
+> 获取；定向检索 12 query/2 源/收敛。详细 receipt 见
+> `worker-logs/step-023-q15-terminal-adjudication.md`。
+> **claim ceiling**：Q15 四判据最终状态由本节闭合后，进 Step 4a 实证审判（Phase B）。
+> **不改全局步骤进度表**（Q15 是 RDL formal owner 下的独立 formalization 候选）。
+
+### A1. D1 正式纳入（EURASIP 官方公开 PDF）
+
+**身份 receipt**：
+
+| 字段 | 值 |
+|---|---|
+| 标题 | Joint Blind Adaptive Equalization Based on Shell Partitioned Multi-Modulus with Soft Switching and Orthogonal Basis for 256 and 1024 QAM |
+| 作者 | Grzegorz Haza, Ryszard Makowski（Wroclaw University of Technology） |
+| venue | EUSIPCO 2007, Poznan, Poland |
+| DOI | 10.5281/zenodo.40308 |
+| EURASIP 官方 PDF | https://www.eurasip.org/Proceedings/Eusipco/Eusipco2007/Papers/a4p-h07.pdf |
+| 获取路径 | DOI tools/download FAIL（与 T021 一致）；EURASIP 官方 PDF 公开下载 → `papers/downloads/2026-07-28/` → `tools/pdf_convert.py` 转 md → canonical `papers/manual/eurasip-2007-d1-shell-partitioned-mma/` |
+| SHA256(source.pdf) | `0e104edda9c418d4…`（5,293,869 bytes, %PDF-1.6 magic） |
+| content.md 行数 | 271 |
+| title_check | PASS（expected ↔ verified Jaccard=1.0） |
+
+**D1 机制提取（子 agent 全文精读，逐项 + 章节/公式指针）**：
+
+1. **Shell 定义**：D1 的 "shell" 是 **1-D PAM 级幅度子集**，不是 2-D |y|² 同心圆环。
+   按 √M-PAM 分解，实/虚轴各取 Q=√M/2 个 level 子集 {G_R;k}、{G_I;l}，ML 判决边界，
+   子集半径 R²_R;k = E[|a_R|²|subset]（§1.2）。对 256-QAM Q=8/轴。
+2. **ShMMA 更新规则**：是 **stochastic-gradient 抽头更新代价**（eq.5 代价 → eq.6 梯度 →
+   eq.24 滤波器系数 w(n) 更新），不是 post-proc 输出 remap / frozen map。
+3. **Soft switching**：由 **Edge-MSE 估计器**（eq.10，指数衰减窗 λ_E=0.98，§4）驱动，
+   在 EMSE 阈值 Jstart=10^-1.8、Jstop=10^-3.3 间用 switching 函数 T(x)（eq.11-13）平滑混合
+   MMA 与 ShMMA 梯度。**always-on 在线 per-symbol**，用整个 running eval 流——**非
+   prefix-frozen，无因果隔离**。
+4. **Identity passthrough 分支**：**无**。两分支（MMA、ShMMA）都恒更新抽头；soft switch
+   是连续混合，非"门关=零修改"。**无 frozen map，无 healthy 零回归保证**。
+5. **Problem target**：256-QAM 与 1024-QAM，**SISO 单通道**（FIR 非最小相位 h，SNR=45dB，
+   相位偏移 φ=π/6）。**不涉及 16QAM、不涉及 dual-pol、不涉及内环 shell collapse / 低功率失效**。
+   问题是常规高阶收敛跟踪 / eye-opening。
+
+**D1 与 Q15 的 action+information+problem 三维碰撞（核心裁决）**：
+
+| Q15 维度 | D1 覆盖？ | 证据指针 |
+|---|---|---|
+| (a) prefix-only 因果边界（suffix 不进 selection/gate/scale） | **NO** | Edge-MSE（eq.8/10）+ switch（eq.11-13）用整个 running eval 流，指数窗——无 disjoint calibration prefix，无因果隔离 |
+| (b) identity fallback 分支（healthy prefix gate 选 identity） | **NO** | 无 identity/passthrough 分支；两分支恒更新抽头；soft switch 连续混合永不零修改（§2.2 eq.13） |
+| (c) post-proc frozen 输出 remap（suffix 的 monotone radius map） | **NO** | D1 是抽头更新代价函数（eq.5→6→24），非输出变换；无"frozen" |
+| (d) dual-pol 16QAM 内环 shell collapse 恢复 | **NO** | 目标 256/1024-QAM SISO；16QAM、dual-pol、collapse/低功率失效均未涉及（§4） |
+| (e) gain/constellation normalization | **PARTIAL** | ShMMA 半径 R²_R;k/R²_I;l 隐式强制每 shell 目标功率（软归一化），但织入抽头更新代价，非独立归一化级（§1.2） |
+
+**碰撞裁决**：**NONE**。D1 是**完全不同的机制**——在线 adaptive equalizer 抽头更新代价
+（ShMMA）+ MMA/ShMMA 梯度 soft blend，针对 **SISO 256/1024-QAM 收敛**。Q15 是 **post-equalizer、
+prefix-frozen、identity-fallback 输出变换**，针对 **dual-pol 16QAM collapse 恢复**。两者仅在
+"shell"一词（且 D1 的 shell 是 1-D PAM 级幅度子集，非 2-D 半径环）和模糊的"调制相关半径
+目标"上重合。**判据 2 的 D1 等价覆盖威胁解除**。
+
+### A2. 定向检索（12 query / 2 源 / 收敛）
+
+按 Step 3.5 矩阵（方法轴 × 问题轴）构造 12 组合，覆盖 conventional normalization /
+regional-sliced MMA / dual-mode gated / post-eq radial calibration / collapse & scale
+ambiguity。结构化源 = Semantic Scholar + OpenAlex（≥2）。每个组合结果存
+`projects/thesis-fso/search-archive/2026-07-28/q15-step35-{slug}.json`。
+
+| slug | query | hits |
+|---|---|---|
+| q15-step35-m1-agc-16qam | blind gain control amplitude normalization 16QAM coherent receiver | 4 |
+| q15-step35-m2-agc-blind-equal-const | automatic gain control blind equalization constellation normalization | 5 |
+| q15-step35-m3-radius-shell-partitioned | radius directed equalization multimodulus shell partitioned blind | 1 |
+| q15-step35-m4-regional-sliced-mma | regional sliced multimodulus algorithm blind equalization | 2 |
+| q15-step35-m5-dual-mode-gated-identity | dual mode gated blind equalization switching identity bypass | 2 |
+| q15-step35-p6-dp-16qam-collapse | dual polarization 16QAM collapse singularity blind equalization | **0** |
+| q15-step35-p7-receiver-prefix-scale-ambiguity | receiver prefix blind scale ambiguity calibration | 4 |
+| q15-step35-p8-cma-inner-ring-collapse-lowpower | CMA inner ring collapse low power 16QAM | 1 |
+| q15-step35-p9-posteq-radial-quantile | post equalization radial quantile calibration QAM | **0** |
+| q15-step35-a1-rms-normalize-recover-collapse | RMS constellation normalization recover low power stream coherent | 6 |
+| q15-step35-a2-monotone-radius-calibration-output | monotone radius calibration receiver output transform QAM | **0** |
+| q15-step35-a3-identity-fallback-postcmA | post CMA identity fallback zero regression safety policy equalizer | **0** |
+
+**收敛证据**：4 条最 Q15-specific 的吸收威胁轴 query（p6 dual-pol 16QAM collapse、p9 post-eq
+radial quantile、a2 monotone radius output transform、a3 post-CMA identity fallback）**全 0
+命中**。第 1 轮 method-axis（M1-M5）只返回 generic AGC/DSP/抽头更新（多在已知集或 off-topic）。
+新增 must-read = **0**。**满足 gw-supplement 收敛判据（最后一轮新增必读/建议读=0）**。
+
+**D1 引用链（双向）**：
+- **前向（被引）**：**0**（S2 citationCount=0 + OpenAlex cited_by_count=0，filter=cites 交叉验证）。
+  D1 是未被引叶节点——无新增前向竞品。
+- **后向（参考文献）**：11 条。对 Q15 最相关的 foundation：
+  - Lee 2000 "Shell partition-based joint blind equalization for QAM systems"（10.1109/30.846661）—
+    D1 引用的 ShCMA [4] 源头；
+  - Yang 2002 "The multimodulus blind equalization and its generalized algorithms"（10.1109/jsac.2002.1007381）—
+    MMA 基础；
+  - Godard 1980 "Self-Recovering Equalization and Carrier Tracking"（10.1109/tcom.1980.1094608）—
+    CMA 基础。
+  均为经典基础 ref，非 Q15 直接竞品。
+
+### A3. 综合结论修正
+
+1. **D3 collision 等级修正**：D3 的 `R_n=|z_n−ŝ_n|` 是 **decision-error radius**（z_n 到其
+   hard-decision ŝ_n 的距离），**不是星座 shell radius**。D3 的 "regions" 是绕星座点的同心圆
+   （MSE 阶段代理），不是 |z| 功率环。其机制仍是 **抽头更新**（µ_i/λ_i region 切换），
+   非 output remap。→ collision 从 "HIGH（思想源头）/ shell radius" 下修为
+   "decision-error-radius region switching（抽头更新层）"。这不改变 D3 与 Q15 信息边界
+   不同（D3 always-on 全窗 vs Q15 prefix-only）的结论，仅修正 R_n 的物理含义。
+2. **D1 不再列"全文缺失"**：已精读，collision = NONE（见 A1）。
+3. **Q15 判据 1 修正**：M-C-A 句子级成立（M/C/A 三要素明确、可解）。Step 3.5 检索显示
+   无论文直接记录 dual-pol 16QAM 内环 collapse + 接收端恢复（p6=0、p8=1 低优），但 Step 3.5
+   已尽检索义务且 D1 零碰撞。**按主控授权的宽松解读，判据 1 = PASS**（句子级 M-C-A 成立 +
+   检索尽 + D1 无等价覆盖；C 的直接发表证据缺失由 T020 diagnostic + C6 现象佐证补强，进入
+   Step 4a 实证闭合而非文献闭合）。
+4. **Q15 判据 2 修正**：D1 零碰撞解除判据 2 的 D1 等价覆盖威胁。但判据 2 仍只能由
+   **可执行构造 + 相对合法常规链的信息增量** 支持——prefix-only / identity fallback /
+   post-proc 的结构差异**不自动当信息增量**。T020 M1 振幅公式错误（功率比直接乘复振幅，缺
+   平方根）+ evaluator 不恢复尺度，使 M4 收益可能只是补常规 gain normalization。
+   → 判据 2 = **PARTIAL**，**必须由 Phase B 正确归一化 comparator 实证裁决**。
+5. **判据 3/4 保持 PASS**：fixed-µ CMA / STD-RDE / CMA-MMA 是 2019+ 顶刊 comparator（存在
+   comparator）；PI-SER/BER 可量化对标（框架确认）。但判据 3 PASS 仅表示 comparator 存在，
+   **不表示 comparator 已公平实现**——correct sqrt-normalization comparator 尚未在 T020 出现，
+   是 Phase B 必测项。
+
+### Q15 四判据表（Step 3.5 修正后）
+
+| 判据 | 状态 | 理由 | 证据指针 |
+|---|---|---|---|
+| 1 具体技术矛盾（M-C-A） | ✅ PASS | M/C/A 三要素明确，句子级可解；Step 3.5 检索尽 + D1 零碰撞；主控授权宽松解读 | 本节 A3.3；A2 收敛表 |
+| 2 方法产出形态 | ⚠️ PARTIAL | D1 零碰撞解除等价覆盖威胁；但 prefix-only/identity/post-proc 结构差异不自动当信息增量，须 Phase B correct-normalization 实证 | 本节 A3.4；M1 振幅公式 audit（worker log §B0） |
+| 3 近期 baseline 可对标 | ✅ PASS | fixed-µ CMA / STD-RDE / CMA-MMA 是 2019+ 顶刊 comparator（D4 JLT2021/D5 COL2022/C6 JLT2024） | lit notes §7（Step 3） |
+| 4 能做可量化对标 | ✅ PASS | PI-SER/BER/NGMI vs fixed-µ CMA 可量化 | lit notes §7 |
+| **综合** | **3 PASS + 1 PARTIAL** | 判据 2 由 Phase B Step 4a 实证闭合 | — |
+
+**Q# 状态**：Q15 在 Step 3.5 后 3 判据 PASS + 判据 2 PARTIAL。**判据 2 的实证闭合是 Phase B
+Step 4a 维度 D 的核心任务**：用 correct pooled/per-pol sqrt-RMS + gated scalar + robust scalar
+等正确归一化 comparator，裁决 M4 收益是否只是补常规 gain normalization（吸收）还是非线性
+monotone radius map 的独立信息增量。**Phase B 之前不记为四判据全过 Q#**。
+
+### Step 3.5 cheap-alt closure
+
+| 候选 | 来源 | 吸收 Q15？ | 证据 |
+|---|---|---|---|
+| robust CMA（JR-CMA） | L-DP8 | 部分（防深衰落发散，无 detector/fallback） | L-DP8 |
+| correct pooled sqrt-RMS normalization | 本节 Phase B 必测 | **未知——Phase B 实证** | M1 audit |
+| correct per-pol sqrt-RMS normalization | 本节 Phase B 必测 | **未知——Phase B 实证** | M1 audit |
+| gated scalar（M4 gate + correct scale） | 本节 Phase B 必测 | **未知——Phase B 实证** | M1 audit |
+| robust scalar（median/trimmed） | 本节 Phase B 必测 | **未知——Phase B 实证** | M1 audit |
+| 换 MMA/RDE 代价 | D2/D4 | 部分（PRDE 对 16QAM 无增益[D2]） | D2 Results |
+| radius-adjusted switching（D3） | D3 | 部分（decision-error-radius region 切换，抽头更新非 output remap） | D3 §VII |
+| temporal-correlation pr-MMA | C6 | 否（需 TX 端，非 receiver-only） | C6 §VIII |
+
+**cheap-alt closure**：已获取论文无一条完整吸收 Q15；C1/C3/C4 全文缺失但 Step 3.5 定向检索
+（m4 regional-sliced MMA=2、m3 shell-partitioned=1）未发现能改变判断的直接竞品。
+**吸收威胁的核心未知 = correct normalization comparator 是否吸收**，由 Phase B 实证闭合。
+
+### Q15 Step 3.5 终态
+
+- **status**: `STEP35_CONVERGED_D1_ZERO_COLLISION_Q2_PENDING_PHASE_B`（检索收敛、
+  D1 零碰撞、cheap-alt closure 完成；判据 1/3/4 PASS、判据 2 PARTIAL 待 Phase B 实证）
+- **mission_method_delta**: `NONE`（Step 3.5 是 formal 必经步骤，不冒充新方法进展）
+- **进入**: Phase B Step 4a 条件式审判（correct-normalization 吸收裁决）
+- **D1 debt 闭合**；cheap-alt closure 完成（C1/C3/C4 缺失不影响目标判断）
+- **未改**: 全局步骤进度表、`.sessions/**` owner/mission/log/decisions/master-state/current YAML
+
+---
+
+## Q15 Step 4a 终局审判结果（2026-07-28，T023 / CP021）
+
+> 来源：T023 Phase B（条件式 Groundwork Step 4a 维度 D）。承接 Q15 Step 3.5
+> （`STEP35_CONVERGED_D1_ZERO_COLLISION_Q2_PENDING_PHASE_B`）。本节闭合判据 2 的
+> 实证裁决。隔离目录 `direction-lab/scout/q15-step4a-normalization-adjudication/`，
+> 详细数字见该目录 `synthesis.md` 与 `artifacts/result.json`。
+
+### 判据 2 实证闭合：FAIL（被吸收）
+
+用 correct pooled/per-pol sqrt-RMS + gated-scalar ablation + robust scalar
+（median）四个正确归一化 comparator 对 M4 做终局公平审判（7 cells × 40 seeds =
+old 201-220 + fresh 241-260，seed-cluster 聚合，10k bootstrap 95% CI，MDE=0.005）：
+
+| slice | baseline | M4 | 最强 correct（robust_scalar） | M4 vs robust |
+|---|---|---|---|---|
+| old 201-220 | 0.3143 | 0.2317 | **0.2232** | M4 输 +0.0085（>MDE） |
+| fresh 241-260 | 0.4150 | 0.2830 | **0.2686** | M4 输 +0.0144（>MDE） |
+
+**M4 在两个 slice 都输给最强正确归一化**，方向稳定（无符号翻转）。
+gated_scalar_ablation（M4 gate + correct scale）≈ M4（overall 0.2513 vs 0.2574）→
+map 不提供 gate+scale 之外的增量。correct scalar 在 healthy 上退化 0.016-0.027 < MDE，
+是可用 conventional comparator。
+
+**吸收机制**：collapse 是纯幅度尺度（z=c·s），correct sqrt 已 audit 精确恢复（SER=0
+for all c）。M4 的非线性 monotone radius map 无法 beat 精确标量恢复，quantile 锚
+引入轻微畸变致略输。M4 的 gate identity-on-healthy（healthy-worst Δ=0.0）是真实安全
+属性，但 correct scalar 的 healthy 退化已 < MDE，故 always-on correct normalization
+是公平 conventional comparator，problem 未 survive。
+
+### Q15 四判据最终表
+
+| 判据 | Step 3.5 状态 | Step 4a 终态 | 理由 |
+|---|---|---|---|
+| 1 具体技术矛盾 | PASS | PASS | M-C-A 句子级成立（不推翻） |
+| 2 方法产出形态 | PARTIAL | **FAIL** | 实证：M4 输给 correct normalization 两 slice；map 无 gate+scale 外增量；problem 未 survive conventional baseline |
+| 3 近期 baseline 可对标 | PASS | PASS | comparator 存在（correct normalization 已公平实现） |
+| 4 能做可量化对标 | PASS | PASS | PI-SER 可量化 |
+| **综合** | 3P+1PARTIAL | **判据 2 FAIL → Kill** | Q15 被 conventional normalization 吸收 |
+
+### Q15 终态
+
+- **status**: `Q15_ABSORBED_BY_CONVENTIONAL_NORMALIZATION_NO_GO`（判据 2 实证 FAIL）
+- **mission_method_delta**: `NONE`（可靠负面 + evaluator/normalization 方法论教训，非方法）
+- **未进入**: Step 5 / Contract / Execute / 论文声称
+- **未给**: Step 4a recommendation / thesis-facing method card / 第四个 Q15 repair
+- **Q15 退出**：本包后无 Q15 repair/factory 包
+- **可回收**：evaluator/normalization 方法论教训（post-CMA output transform comparator
+  族 MUST 含 correct pooled+per-pol sqrt-RMS 作 floor；功率比乘复振幅 bug 在
+  rotation-only evaluator 下静默）

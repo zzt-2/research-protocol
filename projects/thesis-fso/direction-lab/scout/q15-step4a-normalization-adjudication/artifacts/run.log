@@ -1,0 +1,38 @@
+======================================================================
+PHASE A: SMOKE GATES
+======================================================================
+  synthetic_c0.45: {'correct_sqrt_SER': 0.0, 'm1_wrong_SER': 0.74325}
+  synthetic_c0.7: {'correct_sqrt_SER': 0.0, 'm1_wrong_SER': 0.0}
+  synthetic_c1.0: {'correct_sqrt_SER': 0.0, 'm1_wrong_SER': 0.0}
+  synthetic_c1.3: {'correct_sqrt_SER': 0.0, 'm1_wrong_SER': 0.0}
+  synthetic_c1.8: {'correct_sqrt_SER': 0.0, 'm1_wrong_SER': 0.746}
+  m1_wrong_audit: {'m1_ser_c1.0': 0.0, 'm1_ser_c0.45': 0.74325, 'm1_ser_c0.7': 0.0, 'pass': True}
+  identity_per_pol: {'mean_a_x': 1.001446129029886, 'mean_a_y': 1.0022150389396103, 'pass': True}
+  prefix_freeze_invariance: {'pass': True}
+  info_increment: {'pass': True}
+  clean_not_degraded: {'policy': 'identity', 'pass': True}
+  all_smoke_pass: True
+
+=== PHASE A: SMOKE PASS ===
+
+======================================================================
+PHASE B: COMPARE (old 201-220 + fresh 241-260)
+======================================================================
+  [1/7] 16qam-snr05-nominal-short    done (1.6s)
+  [2/7] 16qam-snr10-nominal-short    done (3.2s)
+  [3/7] 16qam-snr15-nominal-short    done (4.8s)
+  [4/7] 16qam-snr25-nominal-short    done (6.4s)
+  [5/7] 16qam-snr20-fg100-short      done (7.9s)
+  [6/7] 16qam-snr10-fg100-long       done (23.4s)
+  [7/7] 16qam-snr15-fg1000-long      done (39.0s)
+  wrote D:\code\study\research-protocol\.worktrees\rdl-method-production-v2\projects\thesis-fso\direction-lab\scout\q15-step4a-normalization-adjudication\artifacts\raw-rows.csv (3080 rows)
+
+Wrote terminal result: D:\code\study\research-protocol\.worktrees\rdl-method-production-v2\projects\thesis-fso\direction-lab\scout\q15-step4a-normalization-adjudication\artifacts\result.json
+
+=== STATUS: Q15_ABSORBED_BY_CONVENTIONAL_NORMALIZATION_NO_GO | delta: NONE ===
+  strongest_norm_old: robust_scalar
+  strongest_norm_fresh: robust_scalar
+  m4_old_beats_strongest_norm: False
+  m4_fresh_beats_strongest_norm: False
+  m4_old_healthy_worst: 0.0
+  m4_fresh_healthy_worst: 0.0
