@@ -50,6 +50,13 @@ For a method-producing mission, keep a positive method contract and separate
 formal science disposition from mission method delta. A valid Kill is not
 method progress. Read `references/method-production.md`.
 
+When a method-producing mission has no active scientific carrier and its
+current remap reports `READY=0 / NEEDS_SMALL_ADAPTER=0`, do not serially
+formalize hypothesis-only candidates. Route to the restricted
+`PREFORMAL_METHOD_FACTORY` contract in `references/method-production.md` or
+escalate the strategic shortage. The factory is diagnostic-only; any winner
+must return to Groundwork Step 1–3/3.5/4a before formal experiment or claim.
+
 ## Seven-phase loop
 
 Run one continuous loop:
@@ -98,4 +105,4 @@ Load only the reference needed for the current decision:
 - `references/recovery-and-rotation.md` — startup modes, state recovery, blocker handling, rotation, and handoff.
 - `references/project-layout.md` — canonical artifact ownership, compact status, and anti-duplication layout.
 - `references/long-horizon-control.md` — foreground lane binding, task authorization, topic lifecycle, and longitudinal recovery.
-- `references/method-production.md` — positive method contracts, thesis packaging, mission checkpoints, work-size review, and drift control.
+- `references/method-production.md` — positive method contracts, restricted pre-formal method factory, thesis packaging, mission checkpoints, work-size review, and drift control.

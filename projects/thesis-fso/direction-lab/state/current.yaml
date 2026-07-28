@@ -5,7 +5,8 @@
 # NO legal main-method signal. F1=TESTBED_BLOCKED / F3=UNRESOLVED / F4=INFRASTRUCTURE_BLOCKED.
 # F2 pilot lineage merges into existing Pilot-Jones formal Groundwork (no parallel Scout).
 # Negative material -> harvest/limitations only; NOT a full negative paper.
-# Next authoritative work = live D021/V047 + formal D032: post-C15 mechanism-level remap.
+# Next authoritative work = live S002/D026/T019: epoch48 pre-formal method factory;
+# Q14/T018 frozen, no active scientific carrier, diagnostic-only comparison.
 # Updated 2026-07-23 (T001 current-owner reconciliation): D061 strategic switch reflected — P03 = PAUSED_RETURNED_TO_PORTFOLIO
 # (option 1, family not closed); Pilot-Jones was then formal GW line; D066/V040 later returned it.
 # (V035 backward PASS, 4 direct-competitor full-text BLOCKED).
@@ -15,7 +16,7 @@
 # Explicit disposition lineage governs; protected history untouched.
 # Role of protected files (recorded here, NOT edited): STATUS.v1.md = STALE_PROTECTED
 # (not the current scientific-fact source); project.v1.yaml = historical read-only-preview
-# adapter (not the current authorized owner). Current trusted fact source = this file + formal D032 + live D021/V047.
+# adapter (not the current authorized owner). Current trusted fact source = this file + live D026/T019.
 
 schema_version: research-direction-lab.state.current.v1
 project_id: thesis-fso.dual-pol-osl.direction-lab
@@ -32,15 +33,12 @@ formal_goal: >-
 authorization:
   current_mode: DORMANT  # was SCIENCE_SCOUT; D022 SCIENCE_FREEZE paused the campaign (topic dormant). D061 confirms: no current science-execution authorization in the Scout campaign.
   science_authorized: false  # the Scout campaign is dormant; formal science advances via master-state.md, not this campaign
-  scope: dormant Scout campaign — no active multi-mechanism Scout rotation (D022). Formal GW has accepted T016's identity block under D032 and returned C15; this does not reactivate Scout/P03 or activate a scientific carrier.
+  scope: dormant legacy Scout campaign; D026 separately authorizes one diagnostic-only pre-formal method-factory sprint without activating a formal scientific carrier.
   formal_gw_line: >-
-    NO_ACTIVE_SCIENTIFIC_CARRIER (formal D032 / live D021/V047 /
-    epoch 41 / CP016). T016 stopped at a frozen identity conflict before A2/A3
-    or Phase B; formal_science_disposition is BLOCKED_FORMAL_READINESS /
-    BLOCKED_IDENTITY_CONFLICT and mission_method_delta is NONE. C15 is returned
-    to the pool with NO_SECOND_SOURCE_PACKAGE. Only mechanism-level portfolio
-    remap, formal-readiness review and task preparation are authorized; no
-    seed/MVE is authorized.
+    NO_ACTIVE_SCIENTIFIC_CARRIER (live D026 / epoch 48 / CP017). Q14/T018 is
+    frozen without a science Kill. T019 authorizes one diagnostic-only
+    pre-formal method-factory sprint on an already validated shared testbed.
+    Any winner must return to complete Groundwork Step 1-3/3.5/4a.
   prohibits:
     - modify or rerun B001-B003 / P03 Atlas / canonical-state / completion-events
     - create legacy B004
@@ -234,7 +232,7 @@ dispositions:
     reason: reused across >=6 batches (c04/c09/c14/c15/c16/corrector + c12 subset)
 
 next_action:
-  mode: POST_C15_FORMALIZATION_REMAP
+  mode: PREFORMAL_METHOD_FACTORY_SPRINT_READY
   description: >-
     D022 campaign-level verdict: SCIENCE_SCOUT candidate rotation PAUSED (topic dormant).
     NO legal main-method signal. F1=TESTBED_BLOCKED, F3=UNRESOLVED, F4=INFRASTRUCTURE_BLOCKED.
@@ -251,8 +249,16 @@ next_action:
     Phase B did not run. CP016 has method delta NONE and no-method=16. C15 is
     returned to the pool with no second source/formalization package; the
     candidate view is partial defensive evidence, not coverage or method
-    material. The next legal action is a mechanism-level carrier remap comparing
-    at least three candidates and their formal readiness. Do not amend T012/T016,
+    material. Live R007/D022 and formal D033 then compare five mechanism-distinct
+    candidates and select one-shot C16-open Step 1-2 formalization. T017 stops
+    at A6: source family 1<3 and must-read 2<5. V049/D023/D034 accept
+    BLOCKED_FORMAL_READINESS / BLOCKED_SEARCH_OR_IDENTITY, delta NONE, and
+    return C16-open to the pool with no second package. CP017 has no-method=17.
+    S002/D026 freeze Q14/T018 after CP001-CP017 all produced method delta NONE.
+    The next legal action is T019: a normal GLM builds and fairly compares 3-5
+    deployable constructs on one validated shared testbed. This is diagnostic
+    only, not formal Step4a MVE. Do not run T018, T017 Phase B, old C16, Q14
+    Step 3.5/4a, or a second C16/Q14 source/problem-evidence package. Do not amend T012/T016,
     run C15 Phase B or the old sandbox, reuse T006/B10, repair B1/A4/B10/B9/B12,
-    or run any seed/MVE. Stop before Step 3 and before Step 5 unconditionally.
+    Stop before Step 4a and before Step 5 unconditionally.
     Do NOT resume Scout/P03.

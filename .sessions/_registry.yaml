@@ -49,8 +49,8 @@ topics:
     title: Research Direction Lab 长程真实运行测试
     status: active
     created: "2026-07-23"
-    last_updated: "2026-07-27（V047/D021：T016 identity block 接收；epoch 41 / CP016，post-C15 remap，无 active scientific carrier）"
-    description: "D017/D018 轻量长程 mission。T016 Phase A 的五个数量门局部通过，但三组同标题双非空 DOI 触发冻结 identity hard block；V047 接收 BLOCKED_FORMAL_READINESS/BLOCKED_IDENTITY_CONFLICT、delta NONE，并把 evidence completeness 判为 PARTIAL。D021/formal D032 将 C15 返回池且禁止第二 source/formalization package；epoch41/CP016 只允许机制级 remap 与 formal-readiness 比较，禁止 seed/MVE。"
+    last_updated: "2026-07-28（S002/D026/T019：17 包 delta 全 NONE；停止 Goal/T018，epoch48 / CP017 普通 GLM 方法工厂已就绪）"
+    description: "D017/D018 轻量长程 mission。CP001–CP017 未产生 METHOD_SIGNAL，R007 为 READY=0/NEEDS_SMALL_ADAPTER=0。S002/D026 冻结 Q14/T018、停止 Goal 自动续跑并恢复普通 GLM 接力；RDL Skill/FR-22 已加入 diagnostic-only 窄例外，T019 只授权在可靠共享测试床上同包构造并公平比较 3–5 个方法。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 S014 现场故障、R003 场景演练、D017 控制接口和 guard
@@ -447,8 +447,8 @@ topics:
     title: Step 4a 维度 D MVE 执行（B11 单载波 NDA-ML 主推 + B7/B3 待开）
     status: active
     created: "2026-07-06"
-    last_updated: "2026-07-27（D032/live V047：T016 identity block 接收，C15 返回池；无 active scientific carrier）"
-    description: "Formal carrier owner。D032 接收 T016 为 BLOCKED_FORMAL_READINESS/BLOCKED_IDENTITY_CONFLICT，delta NONE；A2/A3/Phase B 未运行。C15 返回候选池且不得第二个 source/formalization package；formal carrier 为空，只允许 post-C15 机制级 remap，禁止 seed/MVE、Step 3/5/Contract/Execute。"
+    last_updated: "2026-07-27（D036/live V051：修订版 T018 PASS；epoch46/CP017，只授权 final binding 后 Phase A）"
+    description: "Formal carrier owner。D036 持有 Q14 one-shot Step 3.5 与 delegated coverage/receipt contract；V051 复审 P0/P1/P2=0/0/0。foreground epoch46/CP017 只授权 final-binding PASS 后由不同 executor 执行 Phase A并暂停；active carrier仍为空。禁止 Q14 Step4a/实现/实验、第二个 Q14 package及既有 repair/Scout/Step5/Contract/Execute。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
         reason: 继承 S031 排优先级（B11/B3/B7 Conditional Go）+ 切法地图参照系（饱和池/稀池路径）+ D005 务实路线 + D006 红线 + 5 个口径警示

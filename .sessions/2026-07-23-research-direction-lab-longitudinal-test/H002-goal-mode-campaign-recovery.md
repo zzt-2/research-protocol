@@ -142,3 +142,131 @@ contracts:
 - [x] 已确认未违反“明确不含”：本次只做恢复、只读复核与控制面协调；未运行
   新 seed/MVE/held-out，未修 T006/T008/T009/T010，未恢复 Scout/P03，未修改
   Skill/common/params。
+
+## Goal 续接接收方复核（2026-07-27，CP016）
+
+- [x] 已重新读取 live topic-index 的不变量、当前范围、明确不含和前台 control。
+- [x] 已从磁盘独立验证至少 3 条当前事实：
+  - 当前 control 为 epoch 41 / CP016 / authority formal D032 → **PASS**：
+    live `topic-index.md`、formal `decisions.md#D032`、`master-state.md`、
+    `state/current.yaml` 与 `portfolio/current.yaml` 一致。
+  - T016 正式处置为
+    `BLOCKED_FORMAL_READINESS / BLOCKED_IDENTITY_CONFLICT` 且
+    `mission_method_delta=NONE` → **PASS**：live `verifications.md#V047`、
+    formal D032 与 step-016 worker log 一致；candidate 与 worker-log SHA256
+    分别为 `177e20384...e6acd39`、`57f2e051...e41fd34b`。
+  - 当前无 active scientific carrier，C15 不得第二个 source/formalization
+    package → **PASS**：formal D032、live D021、portfolio/current 与
+    master-state 均明确 `NO_ACTIVE_SCIENTIFIC_CARRIER`；仓库中无 T017、
+    C15 Phase B、Step 3 或 MVE 后继产物。
+- [x] 已检查 `_registry.yaml`：本专题 depends_on
+  `2026-07-20-research-direction-lab-system`（active），`conflicts_with=[]`；
+  依赖专题产出路径存在。
+- [x] 已确认当前范围未违反“明确不含”：恢复期间 git worktree clean，未运行
+  新 seed/MVE/held-out，未修 T008/B1 或 T016/C15，未恢复 Scout/P03，未修改
+  Skill/common/params。
+- [x] 已核对 session inflation：本专题仅 `S001` 一个 session note，无膨胀阻断。
+
+## Goal 激活后接收方复核（2026-07-27，CP017 / epoch45）
+
+- [x] 已重新读取 live topic-index 的原始目标、当前范围、明确不含、不变量、
+  foreground control，并完整读取 mission-log CP001–CP017。
+- [x] 已从磁盘独立验证至少 3 条当前事实：
+  - T017 正式处置仍为
+    `BLOCKED_FORMAL_READINESS / BLOCKED_SEARCH_OR_IDENTITY`、
+    `mission_method_delta=NONE` → **PASS**：V049、D023/D034、worker log
+    一致；candidate 与 worker-log SHA256 分别为
+    `2d167ec74759a2f460b923cbf516e627a18003843f47729f5689d5a1da20e2d8`
+    和
+    `0fc319ac0f61043d8858cf21978bae66bd8faa5779d7a11272957dab168b57d0`。
+  - 当前无 active scientific carrier，且没有 step-018 worker、Q14 Step 4a/MVE
+    或 C16 Phase-B 后继产物 → **PASS**：portfolio/current 的
+    `formal_active_carrier.id=NONE`；受控 T018 存在但未执行。
+  - R008/D024/D035 的 Q14 选择不是 active carrier 或方法增量 →
+    **PASS**：四候选 readiness 均为 HYPOTHESIS_ONLY，T018 固定 delta NONE；
+    V050 初审为 `FAIL / P0/P1/P2=1/5/1`，未运行检索或实验。
+  - V050 暴露的 current projection 不一致已完成 bounded reconciliation →
+    **PASS**：D025/formal D036、epoch45/CP017、formal topic-index“当前位置”、
+    registry、state/portfolio/harvest、master-state 与 projects-overview 已协调；
+    task-control validator PASS、四个 YAML `safe_load` PASS、`git diff --check`
+    无 whitespace error。
+- [x] 已检查 `_registry.yaml`：本专题 depends_on
+  `2026-07-20-research-direction-lab-system`（active），`conflicts_with=[]`；
+  依赖专题与 produces 路径存在。
+- [x] 已确认当前范围未违反“明确不含”：恢复与修订只涉及 owner/control/task/
+  current projections；未运行检索、下载、精读、Step 4a、实现、
+  simulation/Probe/MVE/seed，未修任何既有 no-repair workline。
+- [x] 已核对接口与并行依赖：T017 executor/验收均已终止；T018 初版未执行；
+  当前只等待修订版独立 dispatch review，不存在并行写者或悬空 Phase B。
+- [x] 已核对 session inflation：本专题仅 `S001` 一个 session note，无膨胀阻断。
+
+## Goal 续接接收方复核（2026-07-27，CP017）
+
+- [x] 已重新读取 live topic-index 的前台 control、范围边界、不变量、当前位置，
+  并完整读取 mission-log CP001–CP017。
+- [x] 已从磁盘独立验证至少 3 条当前事实：
+  - 当前 control 为 epoch 43 / CP017 / authority formal D034 → **PASS**：
+    live `topic-index.md`、formal `decisions.md#D034`、`master-state.md`、
+    `state/current.yaml` 与 `portfolio/current.yaml` 一致。
+  - T017 正式处置为
+    `BLOCKED_FORMAL_READINESS / BLOCKED_SEARCH_OR_IDENTITY` 且
+    `mission_method_delta=NONE` → **PASS**：live `verifications.md#V049`、
+    live D023、formal D034 与 step-017 worker log 一致；candidate 与
+    worker-log SHA256 分别为
+    `2d167ec74759a2f460b923cbf516e627a18003843f47729f5689d5a1da20e2d8`
+    和
+    `0fc319ac0f61043d8858cf21978bae66bd8faa5779d7a11272957dab168b57d0`。
+  - 当前无 active scientific carrier，C16-open 不得第二个
+    source/formalization package → **PASS**：
+    `portfolio/current.yaml` 明确
+    `formal_active_carrier.id=NONE/status=NO_ACTIVE_SCIENTIFIC_CARRIER`；
+    formal D034、live D023 与 `master-state.md` 一致；仓库中未发现 T017/C16
+    Phase B、Step 3、seed 或 MVE 后继产物。
+  - T017 的冻结数量门确实失败 → **PASS**：candidate view SHA256 与 V049
+    一致，含 44 个 candidate、10 个 acquisition-pool 条目、0 quarantine；
+    TechRxiv DOI `10.36227/techrxiv.14775957.v1` 在原 artifact 中被误标为
+    published，V049 的纠正计数 `41/3/0` 与 formal D034 一致。
+- [x] 已检查 `_registry.yaml`：本专题 depends_on
+  `2026-07-20-research-direction-lab-system`（active），`conflicts_with=[]`；
+  依赖专题及其产出路径存在。
+- [x] 已确认当前范围未违反“明确不含”：恢复只做只读核验与本接收记录；
+  未运行新实验、Step 3、seed/MVE，未修 T008/B1、T016/C15 或 T017/C16，
+  未恢复 Scout/P03，未修改 Skill/common/params。
+- [x] 已核对接口与并行依赖：C001 的 epoch13 历史切换仍由 V003 保留；
+  当前由 D023/D034 合法演进至 epoch43。T017 executor 已停止，V049 独立验收
+  已完成，无悬空 Phase B 或并行执行依赖。
+- [x] 已核对 session inflation：本专题仅 `S001` 一个 session note，无膨胀阻断。
+
+## 长期 Goal 激活接收方验证（2026-07-27，CP017 / epoch46）
+
+- [x] 已重新读取本 H002、live topic-index 的范围边界/不变量/foreground
+  control、完整 mission-log CP001–CP017，以及 authority formal D036；
+  未用对话摘要恢复科学状态。
+- [x] 已从磁盘独立验证至少 3 条当前事实：
+  - 当前 control 为 epoch46 / CP017 /
+    `Q14_STEP35_PHASE_A_AUTHORIZED`，authority formal D036 →
+    **PASS**：live topic-index、T018 task binding、state/current、
+    portfolio/current、harvest/current、master-state 与 registry 一致；
+    `validate_task_control.py` 返回 `PASS`。
+  - V051 只接收修订版 T018 静态合同，formal active scientific carrier
+    仍为 `NONE`，下一动作是 final binding 而非直接执行 →
+    **PASS**：`verifications.md#V051`、formal D036、live D025 与
+    foreground `next_legal_action` 一致。
+  - T018 尚未执行，CP/no-method/streak 不应前移 →
+    **PASS**：没有 step-018 worker log、Q14 search/citation raw、
+    `CP018` 或 `no-method=18`；mission-log 仍止于 CP017/no-method=17。
+  - T017 的正式处置仍为
+    `BLOCKED_FORMAL_READINESS / BLOCKED_SEARCH_OR_IDENTITY`、delta
+    `NONE` → **PASS**：mission-log CP017、V049、D023/formal D034 与
+    step-017 worker log 一致；该历史结论未被 Q14 workline 冒充为 active
+    carrier。
+- [x] 已检查 `_registry.yaml`：本专题 depends_on
+  `2026-07-20-research-direction-lab-system`，其状态为 active 且 produces
+  路径存在；`conflicts_with=[]`。
+- [x] 已确认当前范围未违反“明确不含”：本次只做只读恢复、确定性 binding/
+  YAML/diff 检查和本接收记录；未运行检索、下载、精读、Step 4a、实现、
+  simulation/Probe/MVE/seed，未修任何旧路线。
+- [x] 已核对接口与并行依赖：V051 reviewer 已结束；当前无 executor、无
+  acquisition/read writer。必须先由独立 verifier 完成 epoch46 final binding，
+  PASS 后再由不同 executor 只执行 T018 Phase A。
+- [x] 已核对 session inflation：本专题仅 `S001` 一个 session note，无膨胀阻断。

@@ -14,12 +14,33 @@ recovery_entry: .sessions/2026-07-23-research-direction-lab-longitudinal-test/to
 formal_active_carrier:
   id: NONE
   status: NO_ACTIVE_SCIENTIFIC_CARRIER
-  readiness: POST_C15_MECHANISM_REMAP
-  authority: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D032
+  readiness: PREFORMAL_METHOD_FACTORY_SPRINT_READY_NOT_ACTIVE
+  authority: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D026
   positive_method_target: null
   fair_comparators: []
   claim_ceiling: NO_METHOD_CLAIM
-  stop: REMAP_AND_INDEPENDENT_REVIEW_REQUIRED_BEFORE_ANY_NEW_EXPERIMENT
+  stop: T018_FROZEN; DIAGNOSTIC_ONLY_NO_FORMAL_STEP4A_OR_CLAIM
+
+selected_formalization_workline:
+  id: Q14
+  status: FROZEN_UNRESOLVED
+  readiness: HYPOTHESIS_ONLY
+  authority: live D026
+  positive_method_target: >-
+    strictly-causal receiver-visible additive residual correction after
+    always-online standard CMA
+  fair_comparators:
+    - tuned standard CMA
+    - tuned CMA plus task-matched DD-LMS or RDE
+    - equally-budgeted simple residual DSP
+  expected_mission_method_delta: NONE
+  current_gate: >-
+    T018 frozen; no final binding or Phase A. Reconsider only after a
+    diagnostic method signal is selected for full Groundwork.
+  stop: >-
+    no Step4a, implementation or experiment; any coverage/fulltext/convergence
+    failure or criterion2 UNKNOWN/FAIL returns Q14 with no second
+    problem-evidence package
 
 candidates:
   # ── Cluster 1-2: Failure observability (CEILINGED) ──
@@ -74,7 +95,9 @@ candidates:
   - id: C16
     name: nonmodulus_hos_paradigm
     family: equalizer_paradigm
-    status: AMENDED_TASK_MISMATCHED   # was MECHANISM_NEGATIVE; D017/V006
+    status: RETURNED_TO_POOL_NO_SECOND_SOURCE_PACKAGE
+    readiness: HYPOTHESIS_ONLY
+    formalization_authority: live V049/D023 + formal D034
     last_result: {verdict: HOS_WORSE_THAN_CMA_BUT_TASK_MISMATCHED, macro_pi_ser_hos: 0.466, collapse_rate_hos: 0.791}
     note: >-
       D017 AMENDMENT: numbers reproducible but C16 is a spatial 2x2 whitening +
@@ -83,7 +106,12 @@ candidates:
       diagnostic complementarity (26/37 HOS-better-in-collapse) is real in the
       data but rests on this task-mismatched expert + contaminated seeds 71-80 +
       post-hoc PI-SER oracle, so it is DIAGNOSTIC ONLY and seeds the hybrid-routing
-      study (S011), not a Go signal.
+      study (S011), not a Go signal. R007 therefore selects a one-shot Step 1-2
+      formalization for a source-backed full-complex FIR method family. T017 then
+      stopped at A6 because actual source family=1<3 and must-read=2<5. V049
+      corrects published ratio to 41/44 and accepts only a formal-readiness block,
+      not a science Kill. C16-open is returned with no second source/formalization
+      package; old code, Phase B, Step 3 and experiments remain forbidden.
 
 closed_axes_summary:   # D017: "exhausted" claims invalidated; per-axis validity noted
   post_equalizer_correction: REOPENED (C04/C09 UNRESOLVED — O1 target self-referential; C12 scale-artifact not a bound)
@@ -162,6 +190,13 @@ remaining_open:
     note: needs action hook; co-blocked
 
 next_action: >-
+  D026 freezes Q14/T018 and stops Goal auto-continuation after CP001-CP017 all
+  produced mission_method_delta NONE. T019 is the next legal package: one
+  ordinary GLM must build and fairly compare 3-5 deployable constructs on a
+  validated shared testbed. Results are diagnostic-only; any winner returns to
+  full Groundwork. No T018, candidate-by-candidate formalization, formal MVE,
+  promotion, or paper claim.
+  Historical context:
   D022 (SCIENCE_FREEZE): SCIENCE_SCOUT candidate rotation PAUSED (topic dormant). NO legal
   main-method signal. F1=TESTBED_BLOCKED, F3=UNRESOLVED, F4=INFRASTRUCTURE_BLOCKED. F2 pilot lineage
   merged into existing Pilot-Jones formal Groundwork (no parallel Scout; F2 collision check NOT run).
@@ -185,6 +220,14 @@ next_action: >-
   is now closed by R006: B4 lacks a carrier-specific M-C-A,
   B6 lacks a positive residual construct, and C15 alone had a named method
   contract plus reusable FIR assets. T016 has now exhausted its one-shot
-  formalization path. The next legal action is a mechanism-level remap comparing
-  at least three candidates; no new experiment, Step 3, Step 5, Scout/P03, or
-  C15 Phase B is authorized.
+  formalization path. R007/D022/D033 compare C16-open, Q14, B4, Q-ML4 and
+  C04/C09-open, find 0 READY / 0 NEEDS_SMALL_ADAPTER / 5 HYPOTHESIS_ONLY, and
+  select a one-shot C16-open Step 1-2 formalization workline. T017 stops at A6
+  on source family=1<3 and must-read=2<5; V049/D023/D034 return C16-open with
+  no second package and delta NONE. Live R008/D024 and formal D035 then select
+  Q14 for one mandatory Step 3.5/problem-evidence package after comparing
+  Q-ML4, B4 and C04/C09-open. T018 remains pre-execution pending independent
+  review; active carrier is still NONE and expected delta is NONE. No old-C16
+  execution, Phase B, Q14 Step 4a, implementation, experiment, second
+  C16/Q14 source/problem-evidence package, Step 5, Scout/P03, or C15 Phase B is
+  authorized.

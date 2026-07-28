@@ -1486,3 +1486,129 @@ mission method delta；按冻结退出边界更新 owner/control/current project
 
 epoch41 / CP016 只做 post-C15 机制级 remap；新 owner/task 经独立审查前不运行
 实验。
+
+> 2026-07-27 续接 | Post-C15 机制级 remap 与 T017 准备 | 状态：DISPATCH_REVIEW_PENDING
+
+## 目标
+
+按 CP016/epoch41 的唯一合法动作比较至少三个机制不同候选，选择一个最可能
+缩短到 METHOD_SIGNAL 的一次性 formalization workline；更新 owner/control/task
+后交独立 verifier，不运行实验。
+
+## 记录
+
+- H002 Goal 接收复核已追加：epoch41/CP016/formal D032、T016 hashes、
+  no-active-carrier、registry dependency 与无后继实验五项均从磁盘 PASS。
+- R007 比较 C16-open、Q14、B4、Q-ML4、C04/C09-open 六个方法生产维度；
+  readiness census 为 `READY=0 / NEEDS_SMALL_ADAPTER=0 /
+  HYPOTHESIS_ONLY=5`。
+- 选择 C16-open 的依据是 current authority 已证明旧 C16 comparator 缺
+  11-tap FIR capability，从而留下 task-matched complex FIR non-modulus
+  source/competitor 问题；不继承旧 HOS negative 或 complementarity。
+- D022/formal D033 只授权 T017 一次性 Step 1–2 formalization；active
+  scientific carrier 保持 NONE，T017 预期 delta 固定 NONE。
+- T017 分 Phase A Step 1 与 Phase B Step 2；形成 coverage-gap report 后停止。
+  任一 hard gate 失败即返回池且不二修；PASS 也停在 coverage confirmation，
+  不授权 Step 3、实现或实验。
+
+## 决策引用
+
+- R007：Post-C15 五候选机制级 remap（新建）
+- D022：选择 C16-open 一次性 Step 1–2 formalization workline（新建）
+- formal D033：授权 T017、保持无 active scientific carrier（新建）
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。只做恢复、磁盘证据比较、owner/control/
+  task/current projection 更新；未运行网络检索、下载、精读、实现、seed/MVE、
+  Contract 或 Execute。
+
+## 后续
+
+由未参与执行的独立 verifier 审查 R007、D022/D033、epoch42 control、T017
+与 current projections。PASS 后由不同内部 executor 分相执行 T017；用户无需
+转发任务、阅读日志或判断科学正确性。
+
+> 2026-07-27 续接 | T017 Phase-A 科学接收 | 状态：POST_C16_REMAP
+
+## 目标
+
+独立验收 T017 Phase A，分离 raw/source 证据质量、formal science
+disposition 与 mission method delta；按一次性退出边界更新 mission 与 owner。
+
+## 记录
+
+- V048 以两名 verifier 的 P0/P1/P2=`0/0/0` 通过 dispatch review；不同
+  executor 随后只执行 Phase A。
+- 五份冻结查询产生 53 rows、44 unique；只有 OpenAlex actual source，
+  source family=`1<3`，必读=`2<5`，A6 因两项硬门失败。
+- V049 纠正一篇 TechRxiv preprint 误标，正确 published ratio 为
+  `41/44=93.18%`；raw 又缺 per-source error receipt，因此证据质量 PARTIAL。
+- 正式停止裁决可接收：
+  `BLOCKED_FORMAL_READINESS / BLOCKED_SEARCH_OR_IDENTITY`，
+  `mission_method_delta=NONE`。Phase B、Step 3、实现和实验均未运行。
+- C16-open 返回候选池且不得第二个 source/formalization package；不修
+  published label、source receipt 或追加第六查询。
+
+## 决策引用
+
+- V048：T017 dispatch review PASS（新建）
+- V049：T017 Phase-A 独立科学验收（新建）
+- D023：接收 T017 并返回 C16-open（新建）
+- formal D034：清空 C16-open workline（新建）
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。未运行 Phase B、下载、全文精读、
+  Step 3、实现、simulation/Probe/MVE/seed。
+
+## 后续
+
+epoch43 / CP017 只做 post-C16 mechanism remap；按 R007 的失败轮换点优先
+审查 Q14 problem-evidence closure，相对 B4、Q-ML4 与 C04/C09-open 重新说明
+METHOD_SIGNAL 路径后再准备下一 task。
+
+> 2026-07-27 续接 | Q14 remap 与 T018 初审修订 | 状态：AMENDMENT_REVIEW
+
+## 目标
+
+从 CP017/无 active carrier 恢复，比较至少三个合法 workline，选择下一包并完成
+formal/task/current projection 更新；独立 dispatch review PASS 前不执行。
+
+## 记录
+
+- H002 当前接收核验重新从磁盘确认：control epoch44/CP017/formal D035、
+  T017 disposition/hash、无后继实验、registry dependency 与 session inflation
+  均成立；同时发现 formal topic-index“当前位置”、harvest next_action 与 formal
+  registry 三处 stale，科学动作按 RDL reconciliation 规则阻断。
+- R008 已在 Q14、Q-ML4、B4、C04/C09-open 四个 HYPOTHESIS_ONLY workline
+  中完成六维比较。Q14 因已有 Step 1–3、5 篇全文、receiver-visible 接口和
+  conventional comparator，较 Q-ML4 多重场景迁移、B4 问题/实现双债与
+  C04/C09 退化 target 更接近可证伪方法入口。
+- D024/formal D035 选择 Q14 一次性 Step 3.5；carrier 保持 NONE，T018
+  delta 固定 NONE且禁止 A0/实验。
+- V050 初审为 `FAIL / P0/P1/P2=1/5/1`，T018 未执行。P0 是新论文
+  acquire 后绕过 coverage-gap 确认门；P1/P2 是固定 receipt、continuation
+  schema 与 stale projection。
+- D025/formal D036 将 acquisition 与 read 分开：coverage report 后由独立
+  verifier 审查，再由 D004 授权的 Goal 主控作 delegated gate；私有全文仍作为
+  真实外部资源阻塞。control 递增 epoch45/CP017，修订版必须重审。
+
+## 决策引用
+
+- R008：Post-C16 四候选 Q14 problem-evidence remap（新建）
+- V050：T018 初版 dispatch review FAIL（新建）
+- D025：修复 T018 coverage/receipt/continuation contract（新建）
+- formal D036：formal task amendment owner（新建）
+
+## 范围确认
+
+- 本轮是否在 scope boundary 内：是。只做恢复、候选比较、task-contract
+  修订与 current reconciliation；未运行检索、下载、精读、实现、Step 4a、
+  simulation/Probe/MVE/seed。
+
+## 后续
+
+由同一独立 verifier 复审 epoch45/D025/D036/T018 与 current projections。
+PASS 后由不同内部 executor 只执行 T018 Phase A；若出现新论文，必须停在
+delegated coverage gate，不能同 turn 进入 read/synthesis。

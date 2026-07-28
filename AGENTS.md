@@ -99,6 +99,12 @@
 
 `stages/groundwork.md` 等 stage 文件定义的是**唯一合法的研究推进路径**，不是"参考流程"或"可选项"。不允许脱离 stage 文件定义的步骤序列，凭"标题联想+物理直觉"自创"找方法→试 MVE→Kill"的循环。
 
+唯一显式例外是 Research Direction Lab 的
+`PREFORMAL_METHOD_FACTORY`：仅在无 active carrier 且 remap 为
+`READY=0 / NEEDS_SMALL_ADAPTER=0` 时，按
+`research-direction-lab/references/method-production.md` 做 diagnostic-only
+构造比较。它不算 MVE、不完成 GW Step；winner 仍须返回完整 Groundwork。
+
 具体强制：
 
 - 任何"试新方法 / 开新方向 / 跑 MVE"的动作，**必须先回答"当前在 GW（或 Contract/Execute）的哪一步"**。指不到具体 Step（如"GW Step 4a 维度 D"）= 跳框架，**禁止开跑**。
@@ -182,12 +188,12 @@
 | 指标模型假设敏感性 FR-19      | `stages/contract.md` S2 + `stages/execute.md` S4 — 指标依赖模型假设时记录假设+做替代假设对比                                             |
 | MVE 关键参数溯源 FR-20        | `stages/gw-feasibility.md` §D 维度 D step 4 + `thesis-lessons.md` TL-26 — MVE 每个关键物理参数必须标文献来源，禁止"为了让方法有用"拍参数 |
 | oracle 上界前置门控 FR-21     | `stages/gw-feasibility.md` §D 维度 D step 5 + `thesis-lessons.md` TL-27 — 可解析上界的增益先算上界，<0.5dB 直接 Kill 不跑 MVE            |
-| GW 流程强制门控 FR-22         | `stages/groundwork.md` 全文（含"跨 Step 硬门控"段）+ `templates/master-state-template.md` GW Progress 表 + `thesis-lessons.md` TL-30 — 任何"试新方法/新方向"动作必须先查 master-state.md 的 GW Progress 表回答"当前在 GW 哪一步"，指不到具体 Step = 跳框架禁止开跑；Step 3（精读）+ Step 4a（可行性 Go/No-Go）是硬门控不可跳过，GW Progress 表/literature_notes 进度表任一上游项 ⬜ 时禁止进 MVE/Contract |
+| GW 流程强制门控 FR-22         | `stages/groundwork.md` 全文（含"跨 Step 硬门控"与 RDL `PREFORMAL_METHOD_FACTORY` 唯一窄例外）+ `templates/master-state-template.md` GW Progress 表 + `thesis-lessons.md` TL-30 — 除该 diagnostic-only 例外外，任何"试新方法/新方向"动作必须先查 GW Progress；Step 3 + Step 4a 不可跳过，例外 winner 仍须返回完整 Groundwork |
 | 增量改进非填补空白 FR-23      | `stages/glossary.md`（问题/空白/研究主题定义 + 问题四判据，唯一拥有者）+ `.sessions/2026-06-17-thesis-method-redirection/decisions.md` D005 + `thesis-lessons.md` TL-04/TL-12/TL-31 — 研究起点 = 找 baseline 指出其具体不足（问题 = "M 在 C 下因 A 失效"，过四判据），不是找"没人做过 X"（空白）；空白只是新颖性证据，须转译成 M-C-A 才是问题 |
 | 方法论/教训强制重读 FR-24     | `thesis-lessons.md` TL-31 — 涉及方法论、方向判断、创新定位、问题定义的输出，动笔前必须 Read 当前专题 decisions.md + thesis-lessons.md；发现自己要写"新方法论"时先 grep 是否已覆盖，已覆盖复用编号不新建；"我感觉/我记得"不是证据 |
 | Go/Kill 对手标准分离 FR-25    | `thesis-lessons.md` TL-32 + `.sessions/2026-06-20-problem-driven-redirection/decisions.md` D004-a — Step 3 精读 + Step 4a 维度 A 的对手**默认=传统未优化 baseline**（跟同门学位论文套路对齐）；oracle 上界（FR-21）**只做 Step 4a 维度 D 收尾 Kill 工具**（TL-27 原意），**禁当 Go 判据**；Go 标准（赢传统 baseline）与 Kill 标准（oracle 上界<0.5dB 或 MVE FAIL）必须分离；FR-21 只在 Step 3 走完+判据 A 成立后才触发 |
 | 证据链强制 FR-26              | `thesis-lessons.md` TL-33 + `.sessions/2026-06-20-problem-driven-redirection/decisions.md` D004-c — 宣称"当前在 Step X"/"已读/已下载/已确认 Y"必须附**证据指针**（文件+行号/路径/meta.json 来源），没有=未走；用 papers/ 下文件做"外部输入"判断前必查 meta.json 来源，不能只看日期目录联想；用户纠正事实错误即停核查 PDF 原文，不脑补理由；"我以为查过了"不是证据 |
-| 开放式研究方向探索路由 FR-27  | `.agents/skills/research-direction-lab/SKILL.md`（开放式研究方向探索流程的**唯一拥有者**）+ `projects/{name}/direction-lab/STATUS.v1.md`（日常唯一人类入口）+ `.sessions/2026-07-20-research-direction-lab-system/decisions.md` D001/D008 — 开放式找方向、候选族批量探索、Scout/Sandbox/harvest 由 research-direction-lab Skill 拥有；**Direction Lab 是正式晋级前的候选发现/批量筛选层，不等于 GW 完成**，Scout/Sandbox 数字不得自动进入论文；正式候选晋级后仍必须走 Groundwork → Contract → Execute（继续遵守 FR-22）；科学仿真仍必须用 sim-preflight；AGENTS.md/process.md/项目状态文件只加路由索引行，不复制 Skill 内容；旧 method-family-batch-exploration Skill 已 superseded 但保留历史不删 |
+| 开放式研究方向探索路由 FR-27  | `.agents/skills/research-direction-lab/SKILL.md`（开放式研究方向探索流程的**唯一拥有者**）+ `references/method-production.md`（受限 pre-formal 方法工厂合同）+ `projects/{name}/direction-lab/STATUS.v1.md`（日常唯一人类入口）— Direction Lab 是正式晋级前的发现/筛选层，不等于 GW 完成；诊断数字不得自动进入论文，winner 仍须走 Groundwork → Contract → Execute；科学仿真仍须用 sim-preflight |
 
 ## 上下文管理规则（跨步骤强制）
 

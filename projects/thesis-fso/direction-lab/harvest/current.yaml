@@ -216,7 +216,7 @@ historical_thesis_spines_e15ae60:
 # ─────────────────────────────────────────────────────────────────────────────
 current_view:
   recovery_entry: .sessions/2026-07-23-research-direction-lab-longitudinal-test/topic-index.md
-  source: S013 / D021 / V010 / V011 / H014 -> FROZEN S014 / D022 / V012 / H015 (SCIENCE_FREEZE) -> D061/V035/H017 -> Pilot-Jones T005/D066/V040 scoped axis Kill -> T006 science verdict rejected -> T010 BLOCKED_IDENTITY/returned -> live D013/V029 + step4a D024 accept T011 BLOCKED_SEARCH_COVERAGE -> live D014/V033 + formal D025 close T012 as task-interface blocked and return C15 -> live V035/R004/D016 + formal D027 accept T013 BLOCKED_SEARCH_COVERAGE -> live V037/D017 + formal D028 accept T014 BLOCKED_SEARCH_COVERAGE and return B9 -> live R005/D018 + formal D029 activate B12 -> live D019/V038-V040 + formal D030 withdraw T015 before execution and return B12 on novelty/physics gate -> live R006/D020 + formal D031 select C15 one-shot Step 1-2 formalization -> live D021/V047 + formal D032 accept T016 BLOCKED_FORMAL_READINESS and return C15 with no method delta. Prior S012/D020/V009 superseded.
+  source: S013 / D021 / V010 / V011 / H014 -> FROZEN S014 / D022 / V012 / H015 (SCIENCE_FREEZE) -> D061/V035/H017 -> Pilot-Jones T005/D066/V040 scoped axis Kill -> T006 science verdict rejected -> T010 BLOCKED_IDENTITY/returned -> live D013/V029 + step4a D024 accept T011 BLOCKED_SEARCH_COVERAGE -> live D014/V033 + formal D025 close T012 as task-interface blocked and return C15 -> live V035/R004/D016 + formal D027 accept T013 BLOCKED_SEARCH_COVERAGE -> live V037/D017 + formal D028 accept T014 BLOCKED_SEARCH_COVERAGE and return B9 -> live R005/D018 + formal D029 activate B12 -> live D019/V038-V040 + formal D030 withdraw T015 before execution and return B12 on novelty/physics gate -> live R006/D020 + formal D031 select C15 one-shot Step 1-2 formalization -> live D021/V047 + formal D032 accept T016 BLOCKED_FORMAL_READINESS and return C15 with no method delta -> live R007/D022 + formal D033 select C16-open Step 1-2 formalization -> live V049/D023 + formal D034 accept T017 BLOCKED_FORMAL_READINESS and return C16-open with no method delta -> live R008/D024 + formal D035 select Q14 one-shot mandatory Step 3.5/problem-evidence workline with no method delta -> live V050/D025 + formal D036 amend T018 coverage/receipt contract -> live V051 accepts revised static contract and advances only to epoch46 final binding/Phase-A authorization. Prior S012/D020/V009 superseded.
 
   dispositions:
     - id: H060_DOWNGRADED
@@ -402,6 +402,12 @@ current_view:
       paper_value: SECONDARY (limitations / threats-to-validity)
 
   next_action: >-
+    D026 freezes Q14/T018 and stops Goal auto-continuation after CP001-CP017
+    all produced method delta NONE. T019 is now the only authorized next
+    package: a normal GLM runs one diagnostic-only pre-formal method-factory
+    sprint and builds/compares 3-5 constructs on a validated shared testbed.
+    This does not create harvest or a thesis spine by itself; any winner must
+    return to complete Groundwork. Historical context:
     D022 (SCIENCE_FREEZE): SCIENCE_SCOUT candidate rotation PAUSED (topic dormant). NO legal
     main-method signal; NO active thesis spine. Local-negative + methodology-lesson material ->
     harvest/limitations ONLY; NOT a full negative paper. F1/F3 spines WITHDRAWN. F4 BOUNDARY kept as
@@ -422,8 +428,19 @@ current_view:
     Kill and cannot receive a second repair. Live D021/V047 and formal D032
     accept T016 as BLOCKED_FORMAL_READINESS / BLOCKED_IDENTITY_CONFLICT. The
     formal scientific carrier remains empty; C15 returns to the pool with no
-    second source package, and T016 creates no harvest. Next is mechanism-level
-    carrier remap. Do NOT resume Scout/P03;
+    second source package, and T016 creates no harvest. Live R007/D022 and
+    formal D033 then select C16-open for one-shot Step 1-2 formalization after
+    finding 0 READY candidates. T017 stops at source family=1<3 and must-read=2<5;
+    V049/D023/D034 accept no method delta and return C16-open with no second
+    source/formalization package. T017 creates no harvest. R008/D024/D035 then
+    select Q14 one-shot mandatory Step 3.5/problem-evidence workline, still with
+    no active carrier or method delta. V050 rejects the initial T018 contract;
+    D025/D036 revise it with fixed receipts and an acquire -> coverage report ->
+    independent verifier -> delegated master gate -> read sequence. The next
+    V051 now accepts the revised static contract with no method delta or harvest.
+    The next action is epoch46 final binding, then T018 Phase A only. Do NOT run T017 Phase B,
+    old C16, Q14 Step 4a, implementation, experiment, or a second C16/Q14
+    source/problem-evidence package. Do NOT resume Scout/P03;
     do NOT enter Step 5/Contract/Execute;
     do NOT push.
 

@@ -2528,3 +2528,250 @@ repair；candidate view 只能作 partial defensive evidence，不能作完整 c
 主控按 D020/D031 退出边界接收 CP016，更新 live/formal owner 与 current
 projections到 post-C15 remap；禁止 Phase B、alias/provenance repair、Step 3、
 seed/MVE。下一包先做机制级 carrier remap。
+
+## V048: T017 C16-open Step 1–2 dispatch 独立审查
+
+> date: 2026-07-27
+> 关联：S001 / R007 / D022 / formal D033 / T017 / CP016
+> verifier：`t016_phase_a_science_verifier` + `b6_formal_readiness_audit`；
+> 只读，未修改文件、未运行网络、下载、转换或实验 seed
+
+### 验证项
+
+- [x] carrier remap：R007 以方法形态、预期增量、可包装句、formal
+  readiness、最小补债成本、失败轮换点比较五个机制不同候选；readiness
+  census 为 `READY=0 / NEEDS_SMALL_ADAPTER=0 /
+  HYPOTHESIS_ONLY=5`。
+- [x] 选择理由：C16-open 相对 Q14、B4、Q-ML4 的问题可判定性、接口同域性
+  与迁移债更优；本包仍固定 `mission_method_delta=NONE`，没有预支方法产出。
+- [x] 正向合同：full-complex 2×2 FIR non-modulus target 与 tuned 11-tap
+  CMA/MMA comparators 明确，并冻结相同 samples/taps/warm-up/update budget。
+- [x] FR-22：formal active scientific carrier 保持 `NONE`；T017 只允许
+  Groundwork Step 1–2，不允许 Step 3/Q#/实现/simulation/Probe/MVE。
+- [x] 执行合同：五种 terminal state、Phase-A/Phase-B authorization 映射、
+  candidate-view 顶层 `results[8–12]` + stable IDs、download `--only`、
+  exact-title IEEE `blit` 与所有 Bash wrapper 调用均与当前 CLI 一致。
+- [x] EOL/integrity：按 wrapper 原始 `w/lf`/`w/crlf` 条件适配并恢复，
+  object hash 与 diff 为硬门；不允许工具适配污染 owner/control。
+- [x] current projections：epoch42 / CP016 / D022 / D033 / carrier NONE /
+  T017 formalization-only 一致；task-control validator 实测 PASS。
+- [x] 独立复审：首轮发现 5 个 P1、1 个 P2；修正后两个 verifier 均返回
+  `PASS / P0=0 / P1=0 / P2=0`。
+
+### 证据
+
+```text
+VERDICT=PASS
+P0=0
+P1=0
+P2=0
+TASK_CONTROL=PASS
+FORMAL_ACTIVE_SCIENTIFIC_CARRIER=NONE
+MISSION_METHOD_DELTA=NONE
+AUTHORIZATION=T017_PHASE_A
+STEP3_AUTHORIZED=FALSE
+SIMULATION_SEED_RUN=FALSE
+```
+
+### 结论
+
+PASS。允许由未参与本审查的不同 executor 执行 T017 Phase A / Groundwork
+Step 1。只有 A6 全门 PASS 后才可在另一个 executor turn 进入 Phase B；任何
+失败按冻结终态停止。V048 不激活 scientific carrier，也不形成方法增量。
+
+## V049: T017 Phase-A 执行与正式科学身份独立验收
+
+> date: 2026-07-27
+> 关联：S001 / R007 / D022 / formal D033 / T017 / CP017
+> verifier：`t016_phase_a_science_verifier`；只读，未修改文件、未运行网络、
+> 下载、转换或实验 seed
+
+### 验证项
+
+- [x] raw/source：五份冻结查询分别保留 `16/8/11/17/1=53` rows；每篇
+  singleton provenance 均只来自 OpenAlex，actual source family=`1<3`。
+- [x] identity/review：冻结 DOI/title/year/first-author 规则独立去重为 44；
+  normalized-title 双非空 DOI conflict=0，quarantine=0；53/53 review 字段
+  完整，25/25 排除项有理由。
+- [x] priority/route/pool：必读2、建议读4、待确认1、备选12、排除25；
+  R1 direct/adjacent=`1/3`，R2=`3/1`；pool=10、stable IDs 唯一且均精确
+  匹配一个 candidate。
+- [x] published correction：一篇 `10.36227/techrxiv.14775957.v1` 明确是
+  TechRxiv preprint，candidate view 误标 published；独立正确计数为
+  `published/preprint/unknown=41/3/0`、ratio=`41/44=0.9318181818`，门仍 PASS。
+- [x] A6：source `1<3` FAIL，must-read `2<5` FAIL；unique、published
+  ratio、R1/R2、pool 与 quarantine 其余门 PASS。
+- [x] integrity：raw/candidate/worker SHA256 与 executor receipt 一致；
+  15/15 protected hashes 未变；`tools/search` 与五个 tracked pyc 均恢复到
+  HEAD object 且零 diff。
+- [x] stop discipline：未出现 Phase B、download/convert、全文精读、Step 3、
+  Q#、实现、simulation/Probe/MVE/seed 产物。
+- [ ] per-source failure receipt：raw JSON 未持久化 source status/error，只能
+  证明 S2/arXiv 没有 singleton rows，不能独立区分 executor 所报的
+  “S2 rate-limited”与“arXiv empty”原因。
+
+### 证据
+
+```text
+VERDICT=PARTIAL
+P0=0
+P1=2
+P2=0
+RAW_ROWS=53
+ACTUAL_SOURCE_FAMILY=1
+UNIQUE_NONQUARANTINE=44
+PUBLISHED_PREPRINT_UNKNOWN=41/3/0
+PUBLISHED_RATIO=0.9318181818
+MUST_READ=2
+DIRECT_R1_R2=1/3
+ACQUISITION_POOL=10
+IDENTITY_QUARANTINE=0
+CANDIDATE_SHA256=2d167ec74759a2f460b923cbf516e627a18003843f47729f5689d5a1da20e2d8
+WORKER_LOG_SHA256=0fc319ac0f61043d8858cf21978bae66bd8faa5779d7a11272957dab168b57d0
+```
+
+### 结论
+
+PARTIAL（published/source-receipt 证据质量）；正式科学停止裁决 PASS：
+
+```text
+terminal_status=BLOCKED_SEARCH_OR_IDENTITY
+formal_science_disposition=BLOCKED_FORMAL_READINESS
+mission_method_delta=NONE
+package_weight=ADEQUATE
+package_drift=ALIGNED
+mission_drift=DRIFTED/STALLED
+same_axis_streak=1
+repair_streak=0
+no_method_streak=17
+PHASE_B_AUTHORIZED=FALSE
+STEP3_AUTHORIZED=FALSE
+```
+
+两项 P1 不改变 source/must-read 双硬失败，不授权 artifact/source repair。
+C16-open 返回候选池且不得第二个 source/formalization package；该 candidate
+view 只作 partial defensive evidence，不作 coverage 或方法材料。
+
+### 后续（FAIL/PARTIAL 时）
+
+主控按 D022/D033 的一次性退出边界接收 CP017，更新 live/formal owner 与
+current projections 到 post-C16 remap；禁止修 published label、补 per-source
+receipt、追加第六查询、运行 Phase B/Step 3/seed/MVE。
+
+## V050: T018 初版独立 dispatch review
+
+> date: 2026-07-27
+> 关联：S001 / R008 / D024 / formal D035 / T018 / CP017
+> verifier：`t016_phase_a_science_verifier`；只读，未修改文件、未运行网络、
+> 下载、转换、检索或实验
+
+### 验证项
+
+- [ ] Step2→3 coverage gate：T018 B3 原先允许新论文直接
+  `gw-acquire→gw-read→synthesis`，没有 `gw-acquire.md` 的 coverage-gap
+  report 与确认阻塞门 → **P0 FAIL**。
+- [ ] 固定 receipt：两条 citation 命令没有 `-o`，不能产生声明的
+  `q14-step35-core-forward/backward.json` → **P1 FAIL**。
+- [ ] 状态机：`BLOCKED_EXECUTION_TIMEBOX` 同时被列为 final 与 continuation，
+  terminal report 又会提前提出 no-method=18 → **P1 FAIL**。
+- [ ] current projections：formal topic-index“当前位置”、harvest next_action、
+  formal registry 仍停 D034/epoch43/post-C16 → **P1 FAIL ×3**。
+- [ ] 可复制命令：六条检索只给 query、参数与输出名，未给含 `-o` 的完整命令
+  → **P2 FAIL**。
+- [x] 科学合同：R008 的四候选六维比较、Q14 相对至少两个替代项的选择理由、
+  carrier=`NONE`、delta=`NONE`、actual-source/引用链/三轮收敛、criterion-2
+  四联条件和 tuned CMA+DD-LMS/RDE/simple DSP comparator 均成立。
+- [x] 控制完整性：初版 task-control validator PASS；四个 current YAML
+  `safe_load` PASS；无 CP018/no-method18/epoch45 提前推进；T018 未执行。
+
+### 证据
+
+```text
+VERDICT=FAIL
+P0=1
+P1=5
+P2=1
+TASK_CONTROL_INITIAL=PASS
+YAML_SAFE_LOAD=4/4
+T018_EXECUTED=FALSE
+CP018_CREATED=FALSE
+METHOD_DELTA=NONE
+```
+
+```text
+P0-1=T018:314-326 vs stages/gw-acquire.md coverage-gap/user-confirmation gate
+P1-1=T018:242-250 missing fixed -o
+P1-2=T018 final/continuation timebox conflict
+P1-3=formal topic-index:295-307 stale
+P1-4=harvest/current.yaml:404-433 stale
+P1-5=_registry.yaml formal owner:450-451 stale
+P2-1=Round-1 commands not fully copyable
+```
+
+### 结论
+
+FAIL
+
+初版 T018 不得执行。该结论是 task-contract/gate 审查，不是 Q14 science Kill，
+不是 package checkpoint，也不改变 CP017、no-method=17 或
+`mission_method_delta=NONE`。
+
+### 后续（FAIL/PARTIAL 时）
+
+由 D025/formal D036 持有修订合同：新增论文 acquisition 后先写 coverage-gap
+report并暂停，由独立 verifier + delegated Goal master 确认；显式冻结 search/
+citation `-o`；分离七个 terminal 与两个 continuation；协调三处 stale current
+projection。修订后必须由独立 verifier 重新完成 dispatch review。
+
+## V051: T018 修订版独立 dispatch re-review
+
+> date: 2026-07-27
+> 关联：S001 / V050 / D025 / formal D036 / T018 / CP017
+> verifier：`t016_phase_a_science_verifier`；只读，未修改文件、未联网、
+> 下载、转换、检索或运行科学任务
+
+### 验证项
+
+- [x] coverage gate：`acquire → 完整 coverage report →
+  AWAITING_DELEGATED_COVERAGE_GATE → 独立 V → Goal master approval →
+  epoch/task 重绑 → B2 read` 全链冻结；任一 must/advised 全文失败即
+  `BLOCKED_STEP35_FULLTEXT`。
+- [x] user-delegated adapter：D004 明确用户把端到端技术/科学判断交 Goal；
+  D025/D036 只替代本 mission 的技术确认接口，不放宽全文、identity、source、
+  convergence 或私有材料阻塞。
+- [x] terminal/continuation：七个 terminal 与两个 continuation 分离；
+  continuation 禁 formal disposition、CP、streak 与 no-method。
+- [x] receipt：六条 search 与两条 citation 均显式
+  `--format json -o <frozen path>`，与 CLI parser/output 实现一致。
+- [x] shared-paper identity：WORKTREE/SHARED_REPO/SHARED_PAPERS 三根明确；
+  五篇 corpus 路径 5/5 存在，L04 正确为 `9695357.md`，均可生成 SHA256。
+- [x] current projections：formal topic、registry、state、portfolio、harvest、
+  master 与 projects-overview 一致指向 D036/epoch45/CP017；carrier NONE。
+- [x] 无提前推进：无 CP018/epoch46/no-method18、step-018 worker 或
+  q14-step35 raw；T018 未执行。
+
+### 证据
+
+```text
+VERDICT=PASS
+P0=0
+P1=0
+P2=0
+TASK_CONTROL=PASS
+YAML_SAFE_LOAD=4/4
+TRACKED_DIFF_CHECK=PASS
+UNTRACKED_T018_DIFF_CHECK=PASS
+SHARED_CORPUS_EXISTS=5/5
+T018_EXECUTED=FALSE
+MISSION_CHECKPOINT=CP017
+NO_METHOD_STREAK=17
+```
+
+### 结论
+
+PASS
+
+修订版 T018 的科学合同与静态 dispatch interface 可接受。V051 不激活
+scientific carrier，不形成 method delta，也不追加 mission checkpoint。主控可把
+foreground 递增到新 epoch，只授权不同 executor 执行 Phase A；epoch/task
+重绑定后仍需独立 final-binding PASS。

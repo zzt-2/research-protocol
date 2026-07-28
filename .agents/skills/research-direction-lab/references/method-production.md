@@ -23,6 +23,46 @@ artifacts. When those checks pass, run `minimal_construct` in the same package.
 Do not make method execution the unreachable last step behind repeated generic
 headroom gates.
 
+## Pre-formal method factory
+
+Use `PREFORMAL_METHOD_FACTORY` only when all of these are true:
+
+- the mission is explicitly method-producing;
+- there is no active scientific carrier;
+- a current portfolio remap reports both `READY=0` and
+  `NEEDS_SMALL_ADAPTER=0`;
+- the remaining candidates are hypothesis-only or would need serial
+  formalization before any construct can be compared.
+
+At that gate, do not keep formalizing hypothesis-only candidates one by one.
+Either run one bounded method-factory sprint or escalate the strategic
+shortage. This lane is diagnostic discovery, not a Groundwork Step 4a MVE.
+
+A method-factory sprint must:
+
+1. reuse one already validated simulator/evaluator, task-matched conventional
+   baseline, paired realization, and shared diagnostic seed set;
+2. freeze the receiver-visible input and output contract before construction;
+3. build 3–5 mechanism-distinct minimal constructs in one package;
+4. run semantic smoke and a fair comparison in that same package;
+5. record at least `CONSTRUCT_CREATED` or `FAIR_COMPARISON_RUN`, unless the
+   shared testbed itself fails identity or fairness checks.
+
+The only terminal outputs are:
+
+- `DIAGNOSTIC_METHOD_SIGNAL` — at least one construct shows a stable,
+  non-artifactual advantage worth formalizing;
+- `NO_DIAGNOSTIC_SIGNAL` — the tested batch has no usable signal under the
+  frozen slice;
+- `BLOCKED_SHARED_TESTBED` — the common evaluator, baseline, or data contract
+  cannot support a fair diagnostic comparison.
+
+Diagnostic seeds, comparisons, and winners cannot support paper claims,
+formal Go/Kill, or promotion. A winner must re-enter Groundwork at Step 1 and
+complete Step 1–3/3.5/4a before formal experiment or thesis use. Do not use
+this exception to reopen an explicitly rejected axis or to disguise
+candidate-specific formalization as a factory sprint.
+
 ## Separate science from mission progress
 
 After every accepted package record both:
@@ -77,6 +117,10 @@ These conditions trigger explicit reconsideration, not an automatic decision:
   the same package.
 - Repeated formal progress with method delta `NONE`: report the mission as
   stalled, not progressing.
+- If the mission has no active carrier and a remap gives
+  `READY=0 / NEEDS_SMALL_ADAPTER=0`, stop serial formalization. Select the
+  pre-formal method factory or strategic escalation before preparing another
+  hypothesis-only evidence package.
 
 Classify package weight by decision value, not lines or compute:
 

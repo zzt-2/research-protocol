@@ -1742,11 +1742,11 @@ readiness audit；`stages/gw-search.md`、`stages/gw-acquire.md`。
 
 ## D032: 接收 C15 formal-readiness identity block 并清空 workline
 
-> status: active
+> status: superseded
 > date: 2026-07-27
 > 取代：D031（取代 C15 当前 formalization workline；D031 的一次性退出、
 > method-delta NONE 与实验禁令保留）
-> 被取代：无
+> 被取代：D033（只取代下一 formal workline；T016/C15 正式处置继续有效）
 > 依据：验证 live V047 + T016 Phase-A artifact/worker log
 > 触发原话：无（独立科学验收）
 
@@ -1791,3 +1791,239 @@ D031 已预注册任一 source/canonical/coverage hard gate 失败即返回池�
 
 live S001/D021/V047；T016；step-016 worker log；candidate-view artifact；
 formal D031。
+
+## D033: 授权 C16-open 一次性 Step 1–2 formalization
+
+> status: superseded
+> date: 2026-07-27
+> 取代：D032（只取代 post-C15 remap 的下一 formal workline；D032 的 T016
+> identity block、C15 return/no-second-source 边界保留）
+> 被取代：D034（只取代当前 formal workline 与下一动作；D033 的 T017
+> 一次性合同、C16-open no-second-source 与 science ceiling 保留）
+> 依据：调研 live R007 + current portfolio/harvest + Q14 D044 + formal D032
+> 触发原话：无（机制级 remap 的技术推导）
+
+### 决策
+
+1. 当前 formal stage 继续为 `GROUNDWORK`，active scientific carrier 继续
+   `NONE`。R007 的 readiness census 为
+   `READY=0 / NEEDS_SMALL_ADAPTER=0 / HYPOTHESIS_ONLY=5`。
+2. 只授权 C16-open
+   `FULL_COMPLEX_2X2_FIR_NONMODULUS_FORMALIZATION` 一次性 Step 1–2
+   workline。候选 positive target 是 capability-aligned complex FIR
+   non-modulus blind equalizer，不是旧 spatial whitening+real-Givens code。
+3. T017 action class 为 `CANDIDATE_FORMALIZATION`，预期
+   `mission_method_delta=NONE`。允许多源检索、AI candidate review、
+   bounded acquisition、title/source identity/content-quality 检查与
+   coverage-gap report；禁止精读、Q#、实现、simulation/Probe/MVE。
+4. Step 1 门为 actual source≥3、unique≥20、正式发表≥50%、必读≥5、
+   route≥2；Step 2 门为 priority pool 8–12 且合法 fulltext≥5。
+5. 成功终态只能是 `AWAITING_COVERAGE_CONFIRMATION`，未经用户极短确认不得
+   进入 Step 3。失败终态为 `BLOCKED_FORMAL_READINESS`，C16-open 返回池且
+   不得第二个 source/formalization package。
+6. task、owner、control 与 current projections 必须先经独立 dispatch review；
+   review PASS 前不得执行 T017。
+
+### 理由
+
+current portfolio 已明确旧 C16 的机制负面无效：其 comparator 缺 11-tap FIR
+能力，且使用污染 seeds/post-hoc oracle。这个 amendment 只证明 axis reopened，
+不证明新方法有效。一次 Step 1–2 formalization 是把“可能存在 task-matched
+非模 FIR 方法族”转成可审查文献身份的最小合法动作；它比直接改代码更符合
+FR-22，也比继续 C15/B1/B10 等 repair 更符合 method-production rotation。
+
+### 排除的替代方案
+
+- 不把旧 C16 synthesis 恢复为 current science；
+- 不把 generic JADE/ICA provenance 当 complex convolutional FIR 身份；
+- 不在检索/全文门前实现 FIR HOS；
+- 不因 formalization PASS 直接激活 carrier 或记 method delta；
+- 不绕过 `gw-acquire.md` coverage confirmation 人工门。
+
+### 影响范围
+
+- live authority 转 D022；foreground=epoch42 / CP016；
+- formal carrier 仍 NONE，new workline=C16 Step 1–2 only；
+- C15、B1、A4、B10、B9、B12 的退出/repair 禁令不变；
+- T017 验收前不改变 GW Progress 或 literature_notes 的完成状态。
+
+### 来源
+
+live S001/R007/D022；formal D032；portfolio/current；harvest/current；
+Q14 S039/D044；R006。
+
+## D034: 接收 T017 formal-readiness block 并清空 C16-open workline
+
+> status: superseded
+> date: 2026-07-27
+> 取代：D033（只取代 C16-open 当前 formal workline 与下一动作；D033 的
+> 一次性退出、method-delta NONE 与实验禁令保留）
+> 被取代：D035
+> 依据：验证 live V049 + T017 worker/candidate/raw artifacts
+> 触发原话：无（独立科学验收）
+
+### 决策
+
+1. formal 接收
+   `BLOCKED_FORMAL_READINESS / BLOCKED_SEARCH_OR_IDENTITY`，delta=`NONE`。
+   T017 在 A6 正确停止，未进入 Phase B、coverage confirmation、Step 3、
+   Q#、实现或实验。
+2. 正确冻结数字为 source family=`1<3`、unique=44、
+   published/preprint/unknown=`41/3/0`、ratio=`0.9318181818`、
+   must-read=`2<5`、R1/R2 direct=`1/3`、pool=10、quarantine=0。
+3. V049 的 TechRxiv 误标与缺 per-source receipt 使 artifact 证据质量
+   PARTIAL；两项均不改变 source/must-read 双硬失败，不能触发 repair。
+4. C16-open family 不 Kill，返回候选池；不得第二个 source/formalization
+   package、Phase B、第六查询、label/receipt repair、旧 spatial HOS 或 seed。
+5. formal active scientific carrier 继续为 `NONE`；foreground 转
+   epoch43 / CP017 / post-C16 remap。新 owner/task 通过独立审查前不得运行
+   任何新实验。
+
+### 理由
+
+D033 已预注册 source 或必读密度门失败即返回池。接收局部数量/route 信号但
+拒绝跨过多源与核心材料门，既不把检索失败冒充方法负面，也阻止 no-method
+mission 继续消耗第二个元数据修复包。
+
+### 排除的替代方案
+
+- 不修 TechRxiv label、source receipt 或追加第六查询后继续 T017；
+- 不运行 Phase B、Step 3、旧 C16 sandbox 或 seed/MVE；
+- 不把 published ratio、route 命中或 task PASS 晋级为方法增量；
+- 不恢复 C15/B1/A4/B10/B9/B12 等已禁止 repair。
+
+### 影响范围
+
+- live authority 指向 D023；
+- C16-open=`BLOCKED_FORMAL_READINESS / RETURNED_TO_POOL /
+  NO_SECOND_SOURCE_PACKAGE`；
+- foreground=epoch43 / CP017 / post-C16 remap；
+- formal stage 保持 Groundwork，无 active scientific carrier。
+
+### 来源
+
+live S001/D023/V049；T017；step-017 worker log；candidate/raw artifacts；
+formal D033。
+
+---
+
+## D035: 激活 Q14 mandatory Step 3.5 problem-evidence formal workline
+
+> status: superseded
+> date: 2026-07-27
+> 取代：D034（只取代 post-C16 当前 formal workline 与下一动作；D034 对
+> T017/C16-open 的正式处置与退出边界继续有效）
+> 被取代：D036
+> 依据：调研 live R008 + Q14 S037/S038/S039/D044 + current
+> portfolio/master-state + framework gw-supplement/gw-feasibility
+> 触发原话：无（技术推导；长期 Goal 自主推进授权见 live D004）
+
+### 决策
+
+1. formal 选择 Q14 获得一次 Groundwork Step 3.5 /
+   problem-evidence workline；这不是 active scientific carrier，formal
+   active carrier 继续为 `NONE`。
+2. T018 只执行关键词矩阵、多源检索、核心竞品双向引用链、新论文合法
+   acquire/read、收敛检查与四判据 2 裁决；固定 delta=`NONE`。
+3. positive method contract：
+   - target：strictly-causal receiver-visible additive residual after
+     always-online standard CMA；
+   - minimal construct 仅在未来 gates 后为
+     `z_out=z_CMA+gφ(z_CMA, causal trace/context)` + no-op gate；
+   - fair comparator：tuned standard CMA、tuned CMA+DD-LMS/RDE、
+     equally-budgeted simple residual DSP；
+   - primary packaging：保留盲跟踪的轻量因果 residual correction；
+   - fallback：条件式触发规则与复杂度/性能边界。
+4. Step 3.5 只有 actual Semantic Scholar + 至少一源、双向引用链、最多三轮
+   收敛与新增高相关论文处理全闭合后才可裁决问题证据。
+5. `PROBLEM_EVIDENCE_READY_FOR_STEP4A_ZERO` 也只允许主控另建 A0 owner/task；
+   executor 无权激活 carrier 或进入 Step 4a。
+6. coverage/fulltext/convergence 失败或判据 2 仍 UNKNOWN/FAIL 时，Q14 返回池，
+   不给第二个 problem-evidence package；按 live R008 轮换。
+7. foreground 为 epoch44 / CP017；独立 dispatch review PASS 前禁止执行
+   T018。禁止所有 simulation/Probe/MVE/seed、旧路线修补、Scout/P03、
+   Step 5/Contract/Execute。
+
+### 理由
+
+Q14 已有合法 Step 1–3 与 5 篇全文，问题接口和 strongest cheap comparator
+均可从现有 receiver 资产定义；未完成的是框架明确强制的 Step 3.5 和判据 2。
+相对 Q-ML4 的多重场景迁移、B4 的问题/实现双债和 C04/C09 的退化 target，
+该 workline 最接近一个可证伪的 Step 4a 入口，同时失败成本最低。
+
+### 排除的替代方案
+
+- 不运行 residual MVE 反向证明问题；
+- 不把 local negative、oracle gap、TX truth residual 或无直接先例写成合法性；
+- 不先做 Q-ML4 scene transfer、B4 PADE 实现或 C04/C09 GRU；
+- 不修 T017/C16 source receipt、label 或任何既有 no-repair workline。
+
+### 影响范围
+
+- formal stage 保持 Groundwork；
+- active scientific carrier=`NONE`；
+- Q14=`STEP35_PROBLEM_EVIDENCE_WORKLINE_SELECTED_NOT_ACTIVE`；
+- foreground=epoch44 / CP017；T018 最终验收前不进入 A0 或实验。
+
+### 来源
+
+live R008/D024；Q14 R009/S037/S038/S039/D044；R006/R007；
+portfolio/current；master-state；gw-supplement；gw-feasibility。
+
+---
+
+## D036: T018 delegated coverage gate 与 receipt contract formal amendment
+
+> status: active
+> date: 2026-07-27
+> 取代：D035（保留 Q14 一次性 Step 3.5 workline、positive method contract、
+> carrier=`NONE`、delta=`NONE` 与失败即轮换；只取代 dispatch contract）
+> 被取代：无
+> 依据：critic live V050 + framework gw-acquire/gw-supplement + tools/search CLI/source
+> 触发原话：live `voice.md` 2026-07-26（D004 已记录 Goal 主控端到端授权；本次无新原话）
+
+### 决策
+
+1. formal 继续授权 Q14 一次 mandatory Step 3.5/problem-evidence workline；
+   active scientific carrier 仍为 `NONE`，T018 固定 delta=`NONE`。
+2. 若检索新增 1–5 篇必读/建议读，Phase B 分为：
+   `acquire + coverage-gap report → independent verification → delegated master
+   approval → read`。前一步未形成磁盘 PASS receipt 时不得进入后一步。
+3. D004 的用户端到端授权只在本 mission 中把 `gw-acquire` 的技术 coverage
+   confirmation 委托给 Goal 主控；不允许 executor 自认通过，也不修改通用
+   framework。私有全文或用户独占材料仍是外部资源阻塞。
+4. T018 必须使用冻结 `-o` 路径，分开七个 terminal 与两个 continuation
+   状态；continuation 不形成 CP、formal disposition、streak 或 no-method 计数。
+5. 既有与新增论文全文的权威根冻结为共享主仓库
+   `D:\code\study\research-protocol\papers`；worktree 稀疏 `papers/` 不得用来
+   判断全文缺失。executor 必须记录共享 content path/hash并保护既有改动。
+6. foreground=epoch45 / CP017 /
+   `Q14_STEP35_TASK_AMENDMENT_REVIEW`；独立复审 PASS 前不得执行。
+7. Q14 Step 4a/A0、实现、实验、第二个 problem-evidence package和既有
+   no-repair workline继续禁止。
+
+### 理由
+
+初版科学方向与正向合同由 V050 确认成立，但 task 在 Step2→3 coverage gate、
+固定 citation receipt 与 continuation schema 上不合法。把 acquisition 与 read
+拆开，并在中间加入独立 verifier + delegated master gate，既保留框架防偏目的，
+又执行用户“不负责阅读技术日志或判断科学正确性”的最新明确授权。
+
+### 排除的替代方案
+
+- 不删 coverage gate，也不把 report 当形式性 PASS；
+- 不让 executor 同时获取、确认、精读和综合；
+- 不因 task-contract 修复把 Q14 冒充 active carrier 或方法进展；
+- 不运行 Step 4a/MVE 反向证明问题合法性。
+
+### 影响范围
+
+- formal authority 切换到 D036；
+- live D025/T018/control/current projections 同步 epoch45；
+- mission checkpoint 仍为 CP017，方法 streak 不变；
+- T018 必须重新经过独立 dispatch review。
+
+### 来源
+
+live V050/D025/D004；R008；D035；Q14 S037/S038；T018；gw-acquire；gw-supplement；
+tools/search CLI。

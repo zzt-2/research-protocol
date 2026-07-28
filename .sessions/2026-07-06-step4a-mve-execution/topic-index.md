@@ -1,7 +1,7 @@
 # Topic Index: Step 4a 维度 D MVE 执行
 
 > slug: 2026-07-06-step4a-mve-execution
-> status: active | created 2026-07-06 | last_updated 2026-07-27（D032/live D021/V047：T016 identity block 接收；C15 返回池，无 active scientific carrier。）
+> status: active | created 2026-07-06 | last_updated 2026-07-27（D036/live V051：修订版 T018 PASS；epoch46/CP017，无 active scientific carrier，只授权 final binding 后 Phase A。）
 
 ## 专题定位（一句话）
 
@@ -27,16 +27,15 @@
 对 B11/B3/B7 走 Step 4a 维度 D MVE，守 FR-21/TL-20/FR-18/FR-12 + D005 务实路线 + D006 红线。
 
 ### 当前范围
-- **D032 当前状态**：V047 接收 T016 为
-  `BLOCKED_FORMAL_READINESS / BLOCKED_IDENTITY_CONFLICT`，delta `NONE`；
-  C15 返回池且不得第二个 source/formalization package。
-- **当前 active scientific carrier**：无。只允许 post-C15 机制级 remap 与
-  formal-readiness 比较；新 owner/task 经独立审查前不运行实验。
-- foreground epoch41 / CP016。C15 Phase B、alias/provenance repair、
-  second source package、旧 sandbox、Step 3 与 seed/MVE 均禁止；
+- **D036 当前状态**：R008 选择 Q14 一次性 mandatory Step 3.5/
+  problem-evidence workline；D025/D036 已修复 T018，V051 复审
+  P0/P1/P2=`0/0/0`。
+- **当前 active scientific carrier**：无。foreground epoch46 / CP017，只在
+  final binding PASS 后由不同 executor 执行 Phase A 并暂停；不得进入 A0。
+- T017 Phase B、C16 Step 3/Q#/implementation/simulation/Probe/MVE、第六查询、
+  label/source-receipt repair 均禁止；C15 与既有 repair 禁令继续有效；
+  Q14 Step 4a/实现/实验和第二个 problem-evidence package也禁止；
   Step 5/Contract/Execute 继续锁定。
-- V047 对 T016 的证据完整性为 PARTIAL、科学停止裁决 PASS；数量门局部通过
-  不构成 coverage PASS、方法信号或论文材料。
 
 ### 明确不含
 - ❌ 不回头救 6 次 Kill（Q1/Q2/Q3/Q8 切入点 2/4B/Q12/Q#-A，D005 诚实重评"大概率没几个能救"）
@@ -48,6 +47,8 @@
 - ❌ 不复用 T006 combination、不接回 B10、不做 CW+MAP/联合 CFO ML
 - ❌ 不做第三个 B9 包、T012 第四 amendment 或第二个 B12 repair
 - ❌ 不运行旧 C15 shared-mu sandbox，不把 T016 formalization 记作方法
+- ❌ 不运行旧 C16 spatial HOS sandbox/seeds 71–80，不把 T017 Step 1/2
+  formalization 记作方法
 
 ### 范围变更记录
 - **2026-07-27 R005/live D018/formal D029 B12 standalone 激活**：post-B9
@@ -75,6 +76,24 @@
     remap 与 formal-readiness review。
   - 冻结边界：无 active scientific carrier；不修 alias/provenance，不运行
     seed/MVE、Step 3/5/Contract/Execute。
+- **2026-07-27 live R007/D022/formal D033 C16-open formalization prep**：
+  五候选机制级 remap 后只选择 C16-open 的上游 Step 1–2 门，不激活 carrier。
+  - 新范围：T017 多源 Step 1、8–12 acquisition pool、≥5 合法全文与
+    coverage-gap report；独立 dispatch review PASS 后由不同 executor 分相执行。
+  - 冻结边界：delta NONE；不运行旧 C16、Step 3/Q#/实现/seed/MVE；任一 hard
+    gate 失败即返回池且不二修，通过也停在 coverage confirmation。
+- **2026-07-27 live V049/D023/formal D034 C16-open return**：T017 的
+  source=`1<3` 与 must-read=`2<5` 双硬门 FAIL；Phase B 未运行。
+  - 新范围：C16-open 返回池且不二修；只做 post-C16 mechanism remap。
+  - 冻结边界：不修 TechRxiv label/per-source receipt，不追加第六查询，不运行
+    Phase B/Step 3/实现/seed/MVE；无 active scientific carrier。
+- **2026-07-27 live R008/D024/formal D035 Q14 Step 3.5 prep**：四候选
+  readiness 比较后，Q14 因已有 Step 1–3、5 篇全文、receiver 接口与 conventional
+  comparator，获得一次 mandatory supplement/problem-evidence workline。
+  - 新范围：T018 只做 ≥6 关键词矩阵、actual S2+另一源、核心竞品双向引用链、
+    最多三轮收敛、新论文 acquire/read 与四判据 2 裁决。
+  - 冻结边界：active carrier 仍为空、delta NONE；不进入 Step 4a/实现/实验；
+    失败即 Q14 回池且不给第二个 problem-evidence package。
 - **2026-07-26 V012/D020 Phase-C 分段授权**：clean confirm 以 seed `130003`
   在 1/10 GHz 两格均 `0/99488`，独立 verifier 接收
   `SOURCE_IDENTITY_PASS / PHASE_B_CONFIRM_ACCEPTED`，method delta 仍为 `NONE`。
@@ -273,20 +292,19 @@ projects/simulation/
    `BLOCKED_TASK_INTERFACE / PACKAGE_NOT_EXECUTED`；T016 又由 V047 接收为
    `BLOCKED_FORMAL_READINESS / BLOCKED_IDENTITY_CONFLICT`。C15 返回候选池，
    不得第二个 source/formalization package、Phase B、Step 3 或 MVE。
-4. **当前阶段边界**：只允许 post-C15 机制级 remap、formal-readiness 比较和
-   task preparation；Step 2/3/3.5/4a/MVE、Step 5/Contract/Execute 均未授权。
-   禁止运行旧 C15/B9 sandbox，禁止修 T006/T008/T009/T010/T016，禁止复活
-   Scout/P03。
+4. **当前阶段边界**：只允许 Q14 mandatory Step 3.5 修订版 T018 的独立
+    final binding；PASS 后只执行 Phase A 检索、引用链与
+    actual-source/identity/priority gate，再暂停。Step 4a/A0/MVE、
+    Step 5/Contract/Execute 均未授权。禁止运行旧
+    C15/C16/B9 sandbox，禁止修 T006/T008/T009/T010/T016，禁止复活 Scout/P03。
 
 ## 当前位置
 
-**🟠 D032 NO ACTIVE CARRIER / POST-C15 MECHANISM REMAP
-（2026-07-27）**：T016 已由 live V047/D021 接收为
-`BLOCKED_FORMAL_READINESS / BLOCKED_IDENTITY_CONFLICT`，delta `NONE`。
-C15 返回候选池且不得第二个 source/formalization package；A2/A3/Phase B、
-Step 3 与 MVE 均未运行。foreground 为 epoch41 / CP016，只允许机制级
-carrier remap、formal-readiness review 与任务准备。formal stage 保持
-Groundwork。
+**🟠 D036 NO ACTIVE CARRIER / Q14 STEP 3.5 PHASE-A AUTHORIZED
+（2026-07-27）**：V051 以 P0/P1/P2=`0/0/0` 接收修订版 T018 静态合同。
+foreground 为 epoch46 / CP017，下一动作仅为独立 final binding；PASS 后由
+不同 executor 执行 Phase A并暂停。formal stage 保持 Groundwork，active
+scientific carrier 仍为空；Step 4a/A0/实验未授权。
 
 **（历史）D016/V003 NO ACTIVE CARRIER**：T009 在一次有界 repair 后
 于 identity gate 停止，P1–P3 未运行。formal 接受
@@ -415,9 +433,24 @@ strongest-fixed comparator 仍需 formal 闭合。D015 不继承旧 PASS，而�
   只等待 clean committed final binding 独立复核。
 - **live V046 / epoch 40 / CP015**（2026-07-27，历史）：clean final binding
   `P0/P1/P2=0/0/0`；只授权 T016 Phase A，绝不运行 seed/MVE。
-- **live V047/D021 / formal D032 / epoch 41 / CP016**（2026-07-27，当前）：
+- **live V047/D021 / formal D032 / epoch 41 / CP016**（2026-07-27，历史）：
   T016 identity hard block 接收，delta `NONE`；C15 回池且无第二 source 包，
   foreground 转 post-C15 remap。
+- **live R007/D022 / formal D033 / epoch 42 / CP016**（2026-07-27，历史）：
+  五候选 remap 得到 0 READY；选择 C16-open 一次性 Step 1–2 formalization，
+  carrier 仍为 NONE；V048 后只执行 Phase A。
+- **live V049/D023 / formal D034 / epoch 43 / CP017**（2026-07-27，历史）：
+  T017 在 source/must-read 双硬门停止，delta NONE；C16-open 返回池且不得
+  第二包，随后进入 post-C16 remap。
+- **live R008/D024 / formal D035 / epoch 44 / CP017**（2026-07-27，历史）：
+  选择 Q14 mandatory Step 3.5/problem-evidence workline；scientific carrier
+  仍为 NONE；初版 T018 后由 V050 拒收。
+- **live V050/D025 / formal D036 / epoch 45 / CP017**（2026-07-27，当前）：
+  修复 T018 coverage/receipt/continuation contract；修订版独立 dispatch review
+  由 V051 PASS，carrier 与 mission streak 均不变。
+- **live V051 / formal D036 / epoch 46 / CP017**（2026-07-27，当前）：
+  只授权 final-binding PASS 后执行 T018 Phase A；新论文仍必须暂停于
+  delegated coverage gate。
 - **D-011** A1 参数适配（NDA 块长自适应 K）FAIL（2026-07-08，S013 新建）
 - **H008** 交接给新对话：自适应论文 baseline 组织/参数处理/叙述展开调研（2026-07-09，用户要去新对话搞清楚别人怎么弄 baseline + 参数照搬还是自调）
 - **H009** 切换三 bug 修复+30seed 重跑结果（2026-07-09，执行 thesis-writing D001 修复任务，实验在本专题 step4a 跑。代码 `_a4_switch_30seed_fixed.py` + 数据 + 报告 `_a4_switch_bugfix_report.md`。Bug2 非假增益源不修（独立核查修正用户诊断）。结论：切换无全场景增益，降级为鲁棒性补丁，net gain+1.2dB 不依赖切换。切换叙事定位回 thesis-writing 待讨论。完整交接见 thesis-writing/H003）

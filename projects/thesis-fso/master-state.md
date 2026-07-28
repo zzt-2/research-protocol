@@ -4,9 +4,9 @@ direction: 星地激光通信（FSO）——子地带由地勘（S003 方法论 
 method_type: 待定（精读后根据问题方法产出形态确定，见 glossary 判据 2）
 domain: comms
 created: 2026-06-21
-updated: 2026-07-27
-current_step: POST-C15-MECHANISM-CARRIER-REMAP
-current_stage: FORMAL_GROUNDWORK_PORTFOLIO_REMAP
+updated: 2026-07-28
+current_step: PREFORMAL-METHOD-FACTORY-SPRINT-001-READY
+current_stage: DIRECTION_LAB_DIAGNOSTIC_DISCOVERY
 ---
 
 # Master Agent: thesis-fso
@@ -20,14 +20,14 @@ current_stage: FORMAL_GROUNDWORK_PORTFOLIO_REMAP
 `templates/master-state-template.md` §1。禁止项同模板（不直接读论文
 `content.md`、不直接 WebSearch、不由主控运行长脚本）。D004 与当前长期 Goal
 取代旧的“用户中转/用户判断科学正确性”接口：主控自行作科学裁决，项目规则要求
-执行与验收分离时使用不同内部子 agent；只有战略授权、私有材料或不可逆范围变更
-才交用户。
+执行与验收分离。D026 已停止长期 Goal 自动续跑并恢复普通 GLM 接力：Master
+提供短启动提示词，技术细节写入文件，用户只中转任务路径与五项回执。
 
 ## §2 项目状态
 
 ### 当前控制面桥接（唯一现行入口）
 
-> **2026-07-27 live D021/V047 + formal D032 → epoch41 / CP016 POST-C15 REMAP**：
+> **2026-07-28 live S002/D026/T019 → epoch48 / CP017 PREFORMAL METHOD FACTORY READY**：
 > T009 的独立审查只接收 `BLOCKED_IDENTITY` 与 `mission_method_delta=NONE`；
 > 随机 TX payload 被当 pilot、DA/NDA frequency stage 不对称、无来源且无 FEC
 > crossing 的 working region，以及 raw/result 未进提交，共同否定“DA 在可靠条件
@@ -47,25 +47,28 @@ current_stage: FORMAL_GROUNDWORK_PORTFOLIO_REMAP
   B9 与 B12 均已返回候选池。Direction Lab 的
   Scout/Sandbox 结果对正式研究的 promotion effect 仍为 `none`；Direction Lab
   campaign 已 dormant（D022 SCIENCE_FREEZE），无当前科学执行授权。
-- **当前工作线**：无 active scientific carrier；formal D032，live control
-  epoch 41 / CP016。V047 接收 T016 为
-  `BLOCKED_FORMAL_READINESS / BLOCKED_IDENTITY_CONFLICT`，delta `NONE`；
-  C15 返回池且不得第二个 source/formalization package。当前只允许机制级
-  carrier remap、formal-readiness review 与 task preparation，任何情况下不运行
-  seed/MVE。
-  D004 的 Goal 主控模式继续有效。
+- **当前工作线**：无 active scientific carrier；mission 在 CP017/no-method=17
+  暂停。S002/D026 已冻结 Q14/T018，不做 final-binding、Phase A 或 CP018；
+  Q14 保持 `UNRESOLVED`。RDL Skill/FR-22 已加入唯一 diagnostic-only 的
+  `PREFORMAL_METHOD_FACTORY` 窄例外，T019 已绑定 epoch48。下一包由普通
+  GLM 在可靠共享测试床上同包构造并公平比较 3–5 个方法；诊断 winner 后续
+  必须返回完整 Groundwork。
 - **Pilot-Jones（退出 carrier）**：D066/V040 接收 fixed complex component rescue
   axis scoped Kill；4 篇 direct competitor 全文债继续保留，但不阻塞当前 carrier。
 - P03（暂停，回候选池）：Headroom Atlas Stage A（2026-07-19，S077/D059/V033）runnable 子域 LOCAL_NEGATIVE；16QAM/receiver-CSI/coded-output 三轴 INFRASTRUCTURE_BLOCKED，历史反例落在被阻轴上 → DOMAIN/CANDIDATE/FAMILY 仍 UNRESOLVED/OPEN。**用户选项①已选定：暂停回候选池，不关闭 family**。
 - Direction Lab sandbox history：last completed batch = `B003 / COMPLETED_SANDBOX_VERIFIED`；事实源为 `projects/thesis-fso/direction-lab/state/completion-events.jsonl`。`canonical-state.yaml` 仅为机器投影，不是正式研究授权源。
 - formal promotion effect：`none`；B001–B003 数字不得进入论文或正式材料。
-- 下一合法边界：比较至少三个机制不同候选的正式准备度、方法形态、预期方法
-  增量、可包装句、最小补债成本与失败轮换点；独立审查 owner/control/task 后
-  才能授权下一包。
-  **T016/C15 不得运行 Phase B、第二个 source package、seed/MVE、精读或写 Q#；
+- 下一合法边界：用户将 T019 路径交给普通 GLM；GLM 先校验 control 与 clean
+  worktree，再执行 pre-formal method-factory sprint。除共享测试床阻断外，
+  正常包必须至少构造或公平比较方法，不得再返回固定 delta `NONE`。
+  **T017 不得运行 Phase B、旧 C16 sandbox、seeds 71–80、Step 3/Q#/实现/
+  seed/MVE，不得第二个 C16 source/formalization package；T016/C15 不得运行 Phase B、
+  第二个 source package、seed/MVE、精读或写 Q#；
   不得复用/修 T006、T008/B1、
   T009/A4、T010/B10，不得做第三个 B9 包、T012/T016 amendment、旧 C15 sandbox
   或第二个 B12 repair；C15 无条件不进 Step 3，不复活
+  Q14/T018 不得执行 final-binding、Phase A、Step 4a/实现/实验或第二个
+  problem-evidence package；
   Scout/P03，不进入 Step 5/Contract/Execute。**
 
 ### 历史 Groundwork 轨迹（保留审计，不授权当前执行）
@@ -108,7 +111,7 @@ current_stage: FORMAL_GROUNDWORK_PORTFOLIO_REMAP
 | residual cascade Step 1 search | ✅ | R009 | 已完成；结论 DEFER，未发现直接 additive-residual 先例 |
 | residual cascade Step 2 acquire | ✅ | S037 | 5 篇可读全文输入达到质量门 |
 | residual cascade Step 3 read | ✅ | S038 | 5/5 精读；四判据 1/3/4 PASS、2 UNKNOWN |
-| 新候选 Step 3.5 supplement | ⬜（按需） | — | 若 Step 3 暴露缺口则必须补齐 |
+| Q14 mandatory Step 3.5 supplement | 🟠 PHASE-A AUTHORIZED / final binding待审 | R008 / V050–V051 / live D025 / formal D036 / T018 | final binding PASS 后只跑 Phase A；执行只补外部 problem evidence，PASS 后仍需新 owner 才可进入 A0 |
 | residual cascade Step 4a §0/A0 | **DEFER** | S039 / D044 | Q14 判据 2 UNKNOWN；不作为唯一主线 |
 | 候选族地图（CMA-fade/SOP 基点） | ✅ | S041 / D045 | 6 类方法族、约 30 个变体，已按作用时段/接口/成本分组 |
 | Batch 0 基线审计 | **PARTIAL** | S042 | paired 基线/口径可重算；CRITICAL=4，recovery-delay 缺口 |
@@ -139,6 +142,7 @@ current_stage: FORMAL_GROUNDWORK_PORTFOLIO_REMAP
 | High-order CPR B10/B12 combination Step4a（历史 T006） | 🔴 SCIENCE_VERDICT_REJECTED / UNRESOLVED | step4a D012–D013 / S014–S015 / V001 / live T006 | 工程 PARTIAL；source/channel/statistics 多重失效，不 Kill family，不继续修组合实现。 |
 | B10 source-native adaptive pilot-RLS Step4a | 🔴 BLOCKED_IDENTITY / RETURNED_TO_POOL | step4a D022 / live D011/V026/T010 | C2 在 840-row strict prefix 暴露 128-pilot unwrap 错误 branch；method delta NONE，不补矩阵、不改 gate、不开第二修复包。 |
 | C15 blind-equalization cost family | 🟠 BLOCKED_FORMAL_READINESS / RETURNED / NO_SECOND_SOURCE_PACKAGE | formal D032 / live D021/V047 / T016 | 五个数量门局部 PASS，但三组同标题双非空 DOI 触发 identity hard block；A2/A3/Phase B 未运行，delta NONE。candidate view 仅 partial defensive evidence；禁止 Phase B、第二 source 包、Step 3 与 seed/MVE。 |
+| C16-open full-complex FIR non-modulus family | 🟠 BLOCKED_FORMAL_READINESS / RETURNED / NO_SECOND_SOURCE_PACKAGE | formal D034 / live V049/D023 / T017 | 旧 C16 paradigm negative 仍撤回；T017 Phase A 得到 44 unique、R1/R2 direct=1/3，但 source=1<3、must-read=2<5，A6 停止。delta NONE，Phase B 未运行；不修 label/receipt，不给第二包。 |
 | B9 virtual-carrier self-coherent + DRE | 🟠 RETURNED_TO_POOL / STEP1_SEARCH_COVERAGE_BLOCKED / NOT_ACTIVE_CARRIER | step4a D028 / live V037/D017 / T013–T014 | T014 A1 raw=0/0/1，实际 source union 仅 OpenAlex+IEEE 两源，三源门失败；唯一 repair 已消费，不得第三包。Step 2/3/MVE 禁止。 |
 | B1 adaptive phase-window Step4a | 🔴 BLOCKED_IDENTITY / RETURNED_TO_POOL | step4a D014 / live D002 / V002 / T008 | T008 工程 17/17 PASS，但 no-crossing dB proxy、oracle candidate、eval population 与 artifact closure 失败；不接收 Kill，不再修当前实现。 |
 | A4 deployable adaptive CPR Step4a | 🔴 BLOCKED_IDENTITY / RETURNED_TO_POOL | step4a D015–D016 / V003 / live D005–V006 / T009 | pilot/TX-truth、frequency-stage、working-region 与 evidence closure 失败；只接收停止裁决和 method delta NONE，不接收 DA 物理支配；不再同轴 repair。 |

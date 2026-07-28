@@ -4,17 +4,19 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 41
+  control_epoch: 48
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: POST_C15_FORMALIZATION_REMAP
-  authority_pointer: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D032
-  decision_gate: D021/D032/V047 已接收 T016 为 BLOCKED_FORMAL_READINESS/BLOCKED_IDENTITY_CONFLICT，mission_method_delta=NONE；C15 返回候选池且不得第二个 source/formalization package，active scientific carrier 仍为 NONE；机制级 remap 完成并经独立审查前不得运行任何新实验
+  active_lane: PREFORMAL_METHOD_FACTORY_SPRINT_READY
+  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D026
+  decision_gate: D026 的 Skill/FR-22 窄例外已落盘；T018 冻结。T019 只允许在可靠共享测试床上同包构造并公平比较 3–5 个方法，输出 diagnostic-only 信号
   allowed_actions:
     - RECOVER
     - TASK_PREPARATION
-    - CONTRACT_REVIEW
-    - FORMAL_READINESS_REVIEW
+    - PROCESS_DESIGN
+    - SKILL_EDIT
+    - METHOD_FACTORY_TASK_PREPARATION
+    - PREFORMAL_METHOD_FACTORY
     - PORTFOLIO_MAP
   forbidden_actions:
     - UNRELATED_SCIENTIFIC_EXPERIMENT
@@ -23,7 +25,6 @@ rdl_control:
     - POST_STEP4A_ADVANCE
     - SCIENCE_SCOUT_REACTIVATION
     - PROTECTED_HISTORY_EDIT
-    - SKILL_EDIT
     - GENERAL_INFRASTRUCTURE_BUILD
     - PILOT_JONES_REPAIR_OR_NEW_AXIS
     - HIGH_ORDER_CPR_COMBINATION_REPAIR
@@ -33,15 +34,21 @@ rdl_control:
     - T012_AMENDMENT_OR_OLD_C15_SANDBOX
     - B12_SECOND_REPAIR_PACKAGE
     - C15_PHASE_B_OR_SECOND_SOURCE_PACKAGE
+    - C16_STEP3_OR_EXPERIMENT
+    - C16_SECOND_SOURCE_OR_FORMALIZATION_PACKAGE
+    - Q14_STEP4A_OR_EXPERIMENT
+    - Q14_SECOND_PROBLEM_EVIDENCE_PACKAGE
+    - T018_EXECUTION_OR_FINAL_BINDING
+    - FORMALIZATION_ONLY_PACKAGE
     - UNAUTHORIZED_SCIENTIFIC_EXPERIMENT
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
-  mission_checkpoint: CP016
-  next_legal_action: 基于 authoritative portfolio、formal history 与机制级证据比较至少三个候选 carrier；逐项审查方法形态、预期增量、可包装句、formal readiness、最小补债成本和失败轮换点，在独立审查前不运行实验
+  mission_checkpoint: CP017
+  next_legal_action: 用户把 T019 路径交给一个普通 GLM 对话；GLM 校验 control 与 clean worktree 后执行首个 pre-formal 方法工厂 sprint，不执行 T018
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（D021/formal D032/V047 已接收 T016 identity block；epoch 41 / CP016，无 active scientific carrier，进入 post-C15 机制级 remap）
-> 创建: 2026-07-23 | 最后更新: 2026-07-27
+> 状态: active（D026 已停止 Goal/T018；epoch 48 / CP017，T019 普通 GLM 方法工厂 sprint 已就绪）
+> 创建: 2026-07-23 | 最后更新: 2026-07-28
 
 ## 专题信息
 
@@ -125,8 +132,10 @@ rdl_control:
   branch，P1/P2/P3 共用初始化。V026 接收
   `BLOCKED_IDENTITY / P0=0/P1=0/P2=1 / mission_method_delta=NONE`；不补矩阵、
   不改 gate、不运行 held-out，也不开第二个 B10 包。
-- D011/formal D022 已把 B10 返回候选池。当前 formal D032 仍保持无 active
-  scientific carrier；T016 已停止，C15 回池且不得第二个 source/formalization
+- D011/formal D022 已把 B10 返回候选池。当前 formal D034 仍保持无 active
+  scientific carrier；formal D032/D033 只保留为 T016/C15 与 T017/C16 的历史
+  处置权威。T016
+  已停止，C15 回池且不得第二个 source/formalization
   package；旧 C15 unequal-step sandbox 只作失败事实，禁止运行 MVE。
 - D004 已把运行方式改为本对话端到端推进；用户不再中转 GLM，项目强制的
   executor/verifier 分离改由本线程内部子 agent 完成。
@@ -135,6 +144,11 @@ rdl_control:
   `BLOCKED_FORMAL_READINESS / BLOCKED_IDENTITY_CONFLICT`，delta `NONE`。
   C15 返回池且不得第二个 source/formalization package；candidate view 只作
   PARTIAL defensive evidence，不作 coverage PASS 或方法材料。
+- R007 以六个方法生产维度比较 C16-open、Q14、B4、Q-ML4 与
+  C04/C09-open，得到 `READY=0 / NEEDS_SMALL_ADAPTER=0 /
+  HYPOTHESIS_ONLY=5`。D022/formal D033 只授权 C16-open 一次性 Step 1–2
+  formalization；T017 预期 delta 固定为 NONE，coverage confirmation 前禁止
+  Step 3，失败即返回池且不给第二个 source/formalization package。
 
 ### 明确不含
 
@@ -428,6 +442,40 @@ rdl_control:
   与 provenance 缺口。接收 `BLOCKED_FORMAL_READINESS /
   BLOCKED_IDENTITY_CONFLICT` 与 delta `NONE`，C15 返回池且不得第二个 source
   包；foreground 转 post-C15 remap。
+- **R007 / D022 / formal D033 / epoch 42 / CP016**：比较五个机制不同候选
+  后选择 C16-open full-complex 2×2 FIR non-modulus workline。formal carrier
+  仍为空；T017 只闭合 Step 1–2，必须先过独立 dispatch review，不运行旧 C16、
+  Step 3、实现或实验。
+- **V048 / T017 dispatch**：两名独立 verifier 在首轮发现并关闭终态映射、
+  EOL 恢复、current status/owner、downloader/blit CLI 与公平预算合同缺口；
+  最终均为 `PASS / P0=0 / P1=0 / P2=0`。只授权不同 executor 执行 Phase A，
+  method delta 仍为 NONE。
+- **V049 / D023 / formal D034 / CP017**：T017 在 source=`1<3` 与
+  must-read=`2<5` 双硬门处停止；正确 published ratio=`41/44=93.18%`，
+  R1/R2 direct=`1/3`、pool=10、quarantine=0。接收
+  `BLOCKED_FORMAL_READINESS / BLOCKED_SEARCH_OR_IDENTITY` 与 delta NONE；
+  C16-open 回池且不得第二个 source/formalization package。
+- **R008 / D024 / formal D035 / epoch 44 / CP017**：比较 Q14、Q-ML4、
+  B4 与 C04/C09-open 后，选择 Q14 一次性 mandatory Step 3.5 /
+  problem-evidence workline。Q14 已有 Step 1–3 与 5 篇全文，缺口集中在
+  gw-supplement 与判据 2；formal carrier 仍为空。初版 T018 随后由 V050
+  拒收，未执行。
+- **V050 / D025 / formal D036 / epoch 45 / CP017**：独立 dispatch review
+  `FAIL / P0/P1/P2=1/5/1`；已补 delegated coverage gate、冻结 `-o` receipts、
+  terminal/continuation schema，并协调 current projections。修订版复审 PASS
+  前不得执行，且本包禁止 Step 4a/实现/实验。
+- **V051 / epoch 46 / CP017**：修订版独立复审
+  `PASS / P0/P1/P2=0/0/0`；只把 control 切到 Phase-A authorization。final
+  binding PASS 前仍不执行，carrier/mission streak 不变。
+- **S002 / D026 / epoch 47 / CP017**：阶段审计确认 CP001–CP017 的
+  `mission_method_delta` 全为 `NONE`，R007 为
+  `READY=0 / NEEDS_SMALL_ADAPTER=0`。停止 Goal 自动续跑并冻结 T018/Q14
+  Phase A；转为最小更新 Skill/FR-22，建立 diagnostic-only 的 pre-formal
+  方法工厂，随后恢复普通 GLM 提示词接力。
+- **Skill update / T019 / epoch 48 / CP017**：已给 FR-22 加入唯一
+  diagnostic-only 窄例外，并冻结首个普通 GLM 方法工厂任务：同一可靠测试床
+  上实际构造并公平比较 3–5 个方法；除测试床阻断外，正常包不得再返回
+  `mission_method_delta=NONE`。
 
 ## 未决项
 
@@ -441,18 +489,17 @@ rdl_control:
   唯一 Step 1 repair 已消费，不得第三包；
 - post-B9 remap 曾由 R005 选择 B12；V038–V040 已在 dispatch 前撤回 T015，
   B12 返回池且不得第二 repair；
+- C16-open 的唯一 T017 Step 1–2 formalization 已在 A6 source/must-read 双门
+  失败；V049/D023/D034 已将其返回池且禁止第二包。该结论不是 science Kill；
 - live run 自然覆盖哪些恢复/轮换/晋级事件；
 - 何时由原 design 对话进行阶段性审计。
 
 ## 当前位置
 
-T016 已由 V047/D021/formal D032 接收为
-`BLOCKED_FORMAL_READINESS / BLOCKED_IDENTITY_CONFLICT`，method delta
-`NONE`；A2/A3/Phase B 未运行。C15 回池且不得第二个 source/formalization
-package，不作 science Kill。mission 在 CP016/no-method=16、
-`DRIFTED/STALLED`；control epoch 41 进入
-`POST_C15_FORMALIZATION_REMAP`，formal active scientific carrier 仍为
-`NONE`。下一合法动作是机制级 carrier remap 与 formal-readiness 比较。禁止
-T006 combination/B10 回接、T012 amendment/旧 C15 sandbox、C15 Phase B、
-B1/A4/B10 旧修复、第三个 B9 包、第二个 B12 repair、任何 seed/MVE、
-Scout/P03 与 Step 5/Contract/Execute。
+D026 已冻结 Q14/T018：不做 final-binding、Phase A 或 CP018；Q14 保持
+`UNRESOLVED`，不是科学 Kill。formal active scientific carrier 仍为 `NONE`；
+mission 暂停在 CP017/no-method=17、`DRIFTED/STALLED`。control epoch48 为
+`PREFORMAL_METHOD_FACTORY_SPRINT_READY`。T019 已绑定普通 GLM 的首个
+diagnostic-only 方法工厂 sprint；下一合法动作是校验 clean worktree 后，在
+一个可靠共享测试床上实际构造并公平比较 3–5 个方法。禁止 T018、逐个候选
+形式化和 formal experiment。

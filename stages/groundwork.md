@@ -71,6 +71,16 @@ Agent 进入新方向时，先确认方法类型。遇到不适用的标签规�
 - literature_notes 进度表 / master-state GW Progress 任一 Step 2/3/3.5/4a 为 ⬜ 时，**禁止进 MVE / Contract / 任意"试新方法/新方向"动作**。
 - 进 Step 4a 额外要求：literature_notes 研究问题清单至少含 1 条四判据全过的 Q#（gw-feasibility §A0 §0 会再查一次）。
 
+**唯一窄例外：Research Direction Lab 的 `PREFORMAL_METHOD_FACTORY`。**
+只有在 method-producing mission 无 active scientific carrier，且当前 remap
+同时为 `READY=0 / NEEDS_SMALL_ADAPTER=0` 时，才可按
+`.agents/skills/research-direction-lab/references/method-production.md` 运行。
+它必须复用已验证的共享测试床与传统 baseline，只能使用 diagnostic seeds，
+并且只产生诊断信号；**不算 MVE、不完成任何 GW Step、不产生 Go/Kill 或论文
+结论**。任何 winner 都必须从 Step 1 返回并补齐 Step 1–3/3.5/4a，之后才能做
+正式实验。不得借此重开已明确 rejected 的轴，也不得把单候选 formalization
+改名为方法工厂。
+
 > **跳步识别信号**：候选的论证起点是"标题联想"（如"PCS 能不能提升""交织能不能省东西"）而非 GW Step 4a 维度 A0 的产物（某个过四判据的 Q#）→ 一定跳了 Step 3-4a，**禁止开跑**。判断"现在在 GW 哪一步"时，以 master-state.md GW Progress 表为准，不靠记忆。
 
 ### 环境检查
