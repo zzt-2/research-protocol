@@ -1839,3 +1839,19 @@ for all c）。M4 的非线性 monotone radius map 无法 beat 精确标量恢�
 - **可回收**：evaluator/normalization 方法论教训（post-CMA output transform comparator
   族 MUST 含 correct pooled+per-pol sqrt-RMS 作 floor；功率比乘复振幅 bug 在
   rotation-only evaluator 下静默）
+## MASTER ACCEPTANCE AMENDMENT — T023/Q15/G1（2026-07-28）
+
+> authority：live D031 / formal D040 / V058。若与上方 T023 executor 综合段冲突，
+> 以本 amendment 为准。
+
+- T023 Step 3.5 未形成四判据全过 Q#：D1 本地身份/机制判断和 D3 radius 修正可用，
+  但 D1 global read-note/read-log、query/citation-chain raw、C1/C3/C4 cheap-alt
+  closure 不完整。
+- Q15 nonlinear monotone-radius map 的合法 formal disposition 为
+  `STEP35_NO_Q_NO_GO`；T023 Phase B 因越过 A4/B0 只作 nonbinding diagnostic。
+- 诊断不支持“整个 Q15 被 always-on normalization 吸收”。它支持：
+  `MAP_COMPONENT_NO_GO`；同时 receiver-visible prefix-gated correct-sqrt scalar
+  形成 `G1_SAFE_GATED_NORMALIZATION / METHOD_SIGNAL`。
+- G1 不继承 Q15 的“Step 4a 已完成”表述。T024 必须先以 G1 自身的
+  M-C-A、recent baseline、direct collision 和四判据重新过门，全部 PASS 后
+  才能条件式 formal confirm。

@@ -1,7 +1,7 @@
 # portfolio/current.yaml — reconciled 2026-07-22 after S012/D020/V009; AMENDED 2026-07-22 S013/D021/V010/V011;
 # FROZEN 2026-07-22 S014/D022/V012/H015 (SCIENCE_FREEZE + campaign-level reconciliation).
 # Campaign-level verdict (D022): SCIENCE_SCOUT candidate rotation PAUSED (topic dormant).
-# NO legal main-method signal. F1=TESTBED_BLOCKED / F3=UNRESOLVED / F4=INFRASTRUCTURE_BLOCKED.
+# G1 gated normalization has a diagnostic METHOD_SIGNAL; formal status remains Groundwork.
 # F2 pilot lineage merges into existing Pilot-Jones formal Groundwork (no parallel Scout; F2 NOT run).
 # Duplicate contradictory F2/F3 entries (stale S012/D020 copies) removed; each entity now has ONE status.
 # (Original S012/D020 reading preserved inline as historical notes; current authoritative status below.)
@@ -12,25 +12,29 @@ completeness_claim: OPEN_PORTFOLIO_NO_COMPLETENESS_CLAIM
 recovery_entry: .sessions/2026-07-23-research-direction-lab-longitudinal-test/topic-index.md
 
 formal_active_carrier:
-  id: NONE
-  status: NO_ACTIVE_STEP4A_SCIENTIFIC_CARRIER
-  readiness: Q15_TERMINAL_STEP35_STEP4A_SELECTED
-  authority: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D039
-  positive_method_target: null
-  fair_comparators: []
-  claim_ceiling: DIAGNOSTIC_ONLY_NOT_FORMAL_GW_MVE
+  id: G1_SAFE_GATED_NORMALIZATION
+  status: DIAGNOSTIC_METHOD_SIGNAL_AWAITING_GROUNDWORK
+  readiness: G1_GROUNDWORK_CONDITIONAL_CONFIRM_SELECTED
+  authority: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D040
+  positive_method_target: receiver-visible prefix-gated identity/correct-sqrt normalization safety layer
+  fair_comparators:
+    - tuned fixed-mu CMA
+    - always-on correct pooled/per-pol/robust normalization
+    - Q15 nonlinear map lineage ablation
+    - strongest target-matched recent method from T024 Step3.5
+  claim_ceiling: NONBINDING_DIAGNOSTIC_METHOD_SIGNAL
   stop: >-
-    T023 must complete Step3.5 before conditional Step4a;
-    no Step5, Contract, Execute, paper claim, or later Q15 repair package
+    T024 must complete G1-specific Groundwork before conditional formal confirm;
+    no Step5, Contract, Execute, paper claim, Q15 repair, or second G1 package
 
 selected_formalization_workline:
-  id: Q15
-  status: TERMINAL_STEP35_STEP4A_READY
+  id: G1_SAFE_GATED_NORMALIZATION
+  status: GROUNDWORK_AND_CONDITIONAL_CONFIRM_READY
   readiness: DIAGNOSTIC_WINNER_REQUIRES_FULL_GROUNDWORK
-  authority: formal D039 / live D030
+  authority: formal D040 / live D031
   positive_method_target: >-
-    receiver-visible prefix-gated identity/quantile-shell radius calibration
-    after fixed-mu blind FIR CMA
+    receiver-visible prefix detector activates per-pol correct sqrt scale only
+    under collapse risk; healthy outputs retain identity
   fair_comparators:
     - tuned robust CMA / RDE / MMA / MCMA
     - restart, multistart, or reinitialization of the same CMA
@@ -38,11 +42,11 @@ selected_formalization_workline:
     - C11 legal causal and blind affine as inherited diagnostics
   expected_mission_method_delta: NONE_OR_PACKAGING_BOUNDARY
   current_gate: >-
-    T023 first closes D1 and targeted normalization/MMA Step3.5;
-    only a four-criteria Q# may enter correct-normalization Step4a.
+    T024 first closes G1-specific direct collision, recent comparator and all
+    four criteria; only then may it enter fresh formal Step4a confirm.
   stop: >-
-    T023 must return No-Go or Step4a recommendation-ready;
-    no Step5/Contract/Execute or fourth Q15 repair package
+    T024 must return No-Go or formal recommendation-ready;
+    no Step5/Contract/Execute, Q15 map repair, or second G1 package
 
 candidates:
   # ── Cluster 1-2: Failure observability (CEILINGED) ──
@@ -192,11 +196,13 @@ remaining_open:
     note: needs action hook; co-blocked
 
 next_action: >-
-  V056/D030 accept T022 six-core Step3 content but reframe Q15 criteria as
-  1/2 PARTIAL and 3/4 PASS. Formal D039 selects one terminal T023: complete
-  D1 plus normalization/MMA Step3.5, then conditionally run correct-normalization
-  Step4a only if a four-criteria Q# exists. No later Q15 repair, Step5,
-  Contract, Execute, promotion, or paper claim.
+  V058/D031 reject T023 binding Step4a because A4/B0 was crossed with an
+  incomplete Q#. Q15 nonlinear map exits. The nonbinding diagnostic accepts
+  G1 gated normalization as METHOD_SIGNAL: old/fresh delta PI-SER versus tuned
+  CMA is -0.087444/-0.139286 with healthy-worst 0. Formal D040 selects one
+  T024: complete G1-specific Groundwork/collision/four-criteria closure, then
+  conditionally run a fresh formal confirm. No Q15 or second G1 repair,
+  Step5, Contract, Execute, promotion, or paper claim.
   Historical context:
   D022 (SCIENCE_FREEZE): SCIENCE_SCOUT candidate rotation PAUSED (topic dormant). NO legal
   main-method signal. F1=TESTBED_BLOCKED, F3=UNRESOLVED, F4=INFRASTRUCTURE_BLOCKED. F2 pilot lineage
@@ -228,8 +234,9 @@ next_action: >-
   no second package and delta NONE. Historical live R008/D024 and formal D035
   then selected Q14 for one mandatory Step 3.5/problem-evidence package after
   comparing Q-ML4, B4 and C04/C09-open. T018 never executed and was later
-  frozen by D026. Current live V056/D030 and formal D039 select Q15 for terminal
-  Step3.5 plus conditional Step4a; active approved Step4a carrier is still NONE. No old-C16
+  frozen by D026. Current live V058/D031 and formal D040 select G1 for
+  candidate-specific Groundwork plus conditional formal confirm; active approved
+  Step4a carrier is still NONE. No old-C16
   execution, Phase B, Q14 Step 4a, implementation, experiment, second
   C16/Q14 source/problem-evidence package, Step 5, Scout/P03, or C15 Phase B is
   authorized.

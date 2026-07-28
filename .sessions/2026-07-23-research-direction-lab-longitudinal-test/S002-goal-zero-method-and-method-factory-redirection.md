@@ -117,3 +117,19 @@ FR-22。
 > 判据改为 1/2 PARTIAL、3/4 PASS。T023 是唯一终局包：先 Step 3.5 纳入公开
 > D1 与定向 normalization/MMA 证据；四判据全过后才同包进入 Step 4a 正确
 > baseline 审判，失败/blocked 均退出且不再 repair。
+
+> 2026-07-28 续接：T023 已完成，commit
+> `89d8174c56a7729c34a1268ef52394c58e889924`。V058/D031/formal D040
+> 拒收其 binding `Q15_ABSORBED...`：Phase A 四判据未全过却越过 A4/B0；
+> D1/read-log、检索 raw、relative comparator CI 和 gate/raw receipt 也不完整。
+> Q15 nonlinear map 合法终态为 `STEP35_NO_Q_NO_GO`，不再 repair。
+> 但独立 paired 重算确认 gated-scalar old/fresh 相对 tuned CMA 改善
+> `−0.087444/−0.139286`，CI 均低于 0，healthy-worst=`0`；因此任务的
+> method delta 从执行者自报 `NONE` 改接收为 diagnostic `METHOD_SIGNAL`。
+> T024 将该派生构造登记为 G1，先过 candidate-specific Groundwork/collision/
+> 四判据，全部 PASS 后才条件式 formal confirm；失败即退出，不留修复包。
+
+> 2026-07-28 续接：V059 完成 T024 派发终验。任务已补齐 Step 1→2→3→3.5
+> 继承边界、task-native tuned-CMA recoverability label、divergence/nonfinite
+> receipt、seed 内分层聚合与无 post-hoc rescue 门；流程与科学 reviewer 均
+> PASS（P0/P1/P2=`0/0/0`）。本轮未运行新科学实验。

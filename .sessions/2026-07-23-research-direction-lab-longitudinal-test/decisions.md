@@ -1815,10 +1815,10 @@ T021；step-021 worker log；q15 annotated raw；paper artifacts；V054；D028/D
 
 ## D030: 部分接收 T022，并以正确归一化终局审判 Q15
 
-> status: active
+> status: superseded
 > date: 2026-07-28
 > 取代：D029 的 Step 3 workline
-> 被取代：无
+> 被取代：D031
 > 依据：验证 V056 + T022 commit `f3a47260f732e0987743f32bffc6d21d7f92e6aa` +
 > critic `audit_t022_science`
 > 触发原话：无（技术推导）
@@ -1869,3 +1869,69 @@ No-Go。相比纯文献包、纯修公式包或重新方法工厂，其决策价
 
 T022；step-022 worker log；V056；T020 methods/evaluator 源码；D029/D038；
 groundwork/gw-supplement/gw-feasibility；TL-20/TL-22/TL-30/TL-32。
+
+---
+
+## D031: 拒收 T023 的绑定式 Step 4a 终态，接收 gated normalization 诊断方法信号
+
+> status: active
+> date: 2026-07-28
+> 取代：D030 的 T023 终局 workline
+> 被取代：无
+> 依据：验证 V058 + T023 commit `89d8174c56a7729c34a1268ef52394c58e889924`
+> + 三路独立审查 `audit_t023_gate/audit_t023_science/audit_t023_literature`
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. T023 不作为合法 Step 4a 完成接收。Phase A 明确得到的四判据没有全部
+   PASS，却越过 A4/B0 硬门运行 Phase B；合法 formal disposition 为
+   `Q15_MAP_STEP35_NO_Q_NO_GO`。
+2. Q15 primary（nonlinear monotone-radius map）退出，不给第四个 Q15 repair；
+   T023 Phase B 只保留为 `NONBINDING_DIAGNOSTIC`。
+3. 不接受 “全部被 conventional normalization 吸收 / delta=NONE”。独立重算
+   显示低复杂度 `gated_scalar` 在 old/fresh slice 相对 tuned CMA 分别
+   `−0.087444/−0.139286`，95% CI 均在 0 以下，help/hurt/tie 分别
+   `7/0/13`、`13/0/7`，且 healthy-worst=`0`。
+4. 因此本包的 mission method delta 记为 `METHOD_SIGNAL`，但 claim ceiling 仅为
+   `NONBINDING_DIAGNOSTIC`。该信号对应 Q15-derived fallback / salvaged
+   component `G1_SAFE_GATED_NORMALIZATION`，不是 nonlinear-map repair。
+5. T024 只给 G1 一次终局 Groundwork 闭合：先做 candidate-delta 的 direct
+   collision/四判据门；全部 PASS 才同包用全新 seeds 和完整 gate/raw receipt
+   做正式 Step 4a confirm。失败即退出 G1，不留纯修复包。
+
+### 理由
+
+always-on pooled/per-pol/robust normalization 的 healthy-worst 为
+`0.015625–0.027344`，均大于 MDE=`0.005`，执行报告把大小关系写反；因此
+identity fallback 的安全价值没有被 always-on conventional normalization 吸收。
+同门控的 correct-sqrt scalar 又在 old/fresh 两组都优于 M4 map，说明应淘汰的是
+nonlinear map，而不是 gate+safety-layer 构造。
+
+这一构造已经存在、可运行且有 fresh diagnostic signal。把它直接丢掉再轮换到
+Q-ML4/B4/C04-C09 等 hypothesis-only 候选，会重新回到只做形式化、没有方法动作
+的旧循环。T024 仍先守 Groundwork 碰撞门，不能把越门数字反向当 formal Go。
+
+### 排除的替代方案
+
+- 不接受 T023 的绑定式 `Q15_ABSORBED...`：A4/B0 越门、D1/read-log 与检索
+  closure 不完整、relative comparator 统计和 raw receipt 均有缺口；
+- 不修 Q15 nonlinear map：独立消融已显示 map 无 gate+scale 外增量；
+- 不把 G1 直接标 `PACKAGING_BOUNDARY`：现有数字来自越门诊断，尚未完成
+  candidate-specific collision 和 formal fresh confirm；
+- 不立刻轮换到 hypothesis-only 候选：G1 是当前唯一已有 runnable construct、
+  fair-comparator diagnostic 和正向安全-性能信号的 carrier。
+
+### 影响范围
+
+- foreground 递增到 epoch54 / CP022 /
+  `G1_SAFE_GATED_NORMALIZATION_FORMAL_CONFIRM_READY`；
+- formal owner 新建 D040；T024 获得 delta-specific Step 3/3.5 + 条件式
+  Step 4a confirm 授权；
+- Q15 map、T023 Phase B binding claim、Step 5/Contract/Execute 和旧轴 repair
+  继续禁止。
+
+### 来源
+
+T023；step-023 worker log；raw/result；V058；D030/D039；method-production；
+groundwork/gw-supplement/gw-feasibility。

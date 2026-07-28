@@ -3074,3 +3074,110 @@ PASS
 
 T023 可交普通 GLM 执行；它必须终局回答 Q15 No-Go 或
 Step4a recommendation-ready，不授权 Step 5/Contract/Execute。
+
+---
+
+## V058: T023 Phase-A gate、Step 3.5、代码统计与科学结论独立验收
+
+> date: 2026-07-28
+> 关联：S002 / D031 / T023
+
+### 验证项
+
+- [x] control/file boundary：task validator fresh PASS；commit
+  `89d8174c56a7729c34a1268ef52394c58e889924` 只改 12 个允许或条件允许路径，
+  未改 `.sessions/**`、master/current、T020/common/evaluator；worktree clean。
+- [x] deterministic integrity：semantic smoke fresh `8 passed`；JSON valid；
+  raw=`3080` 行，`11 methods × 7 cells × 40 seeds`，主键闭合。
+- [x] Phase A/A4：T023:48,164–178,197–221 要求四判据全 PASS 才进
+  Phase B；worker:128–143 与 feasibility:1110–1114 明记判据 2 PARTIAL 后
+  仍运行 seed，P0 越门成立。
+- [x] Step 3.5 literature：D1 本地 PDF/MD/metadata 身份可核，D3
+  `R_n=|z_n-s_hat_n|` 修正为 decision-error radius 正确；但 D1 未进入全局
+  read-note/read-log，C1/C3/C4 closure 与 query/citation-chain raw 不完整。
+- [x] comparator safety：contract MDE=`0.005`；result 中 always-on
+  pooled/per-pol/robust healthy-worst=`0.0234375/0.02734375/0.015625`，
+  均大于 MDE；worker/synthesis/feasibility/decision_log 写成 `<MDE` 错误。
+- [x] relative statistics：runner 的 CI/help-hurt 相对裸 CMA，不是 strongest
+  normalization；raw 又缺 gate/prefix_features/scale-map/offline-class 字段。
+- [x] independent paired recompute：
+  - M4−robust old=`+0.008510`，CI=`[+0.004604,+0.012388]`，
+    better/worse/tie=`4/15/1`；fresh=`+0.014397`，
+    CI=`[+0.009207,+0.020117]`，`1/19/0`。
+  - M4−gated-scalar old=`+0.004855`，CI=`[+0.001758,+0.008399]`，
+    `0/7/13`；fresh=`+0.007254`，CI=`[+0.004074,+0.010882]`，
+    `0/13/7`。
+  - gated-scalar−CMA old=`−0.087444`，CI=`[-0.145675,-0.033761]`，
+    `7/0/13`；fresh=`−0.139286`，CI=`[-0.199108,-0.082226]`，
+    `13/0/7`；两组 healthy-worst=`0`。
+
+### 证据
+
+```text
+task-control: PASS
+pytest: 8 passed in 5.71s
+raw closure: 3080 rows / 11 methods / 7 cells / 40 seeds / unique key PASS
+independent reviews:
+  audit_t023_gate: REJECT_AS_T023_COMPLETION, P0/P1/P2=1/1/0
+  audit_t023_literature: STEP3.5 PARTIAL / formal gate FAIL
+  audit_t023_science: REJECT_BINDING_ABSORBED_NO_GO,
+                      NONBINDING_DIAGNOSTIC, P0/P1/P2=1/3/1
+```
+
+### 结论
+
+PARTIAL
+
+T023 的合法 binding 终态不是 `Q15_ABSORBED_BY_CONVENTIONAL_NORMALIZATION_NO_GO`，
+而是 `Q15_MAP_STEP35_NO_Q_NO_GO`；Phase B 只能作 nonbinding diagnostic。
+同时，不能接收执行者的 `mission_method_delta=NONE`：数据支持
+`G1_SAFE_GATED_NORMALIZATION` 的诊断级 `METHOD_SIGNAL`，但不支持直接
+`PACKAGING_BOUNDARY` 或 thesis claim。
+
+### 后续（FAIL/PARTIAL 时）
+
+不修 T023、不重跑 Q15 map。D031/D040 记录 binding amendment；T024 仅给 G1
+一次 candidate-specific collision/四判据闭合，并在全过后条件式 formal confirm。
+
+---
+
+## V059: T024 G1 Groundwork + 条件式 formal confirm 派发终验
+
+> date: 2026-07-28
+> 关联：S002 / D031 / D040 / T024 / V058
+
+### 验证项
+
+- [x] Groundwork 顺序：显式重入 Step 1→2→3→3.5；逐 Step 写明可继承/
+  不可继承证据；任一 FAIL/PARTIAL 顶层 No-Go，禁止由实验反向补证。
+- [x] lineage 与 claim：G1 明确为 Q15-derived fallback/salvaged component；
+  Q15 nonlinear map 关闭，T023 Phase B 只作 hypothesis-generating diagnostic。
+- [x] literature gate：direct/cheap-alt、recent task-matched comparator、
+  canonical read-note/read-log、引用链 raw、四判据与收敛均有独立硬门。
+- [x] label identity：正式 strata 精确绑定 T020 tuned-CMA `μ=0.03` caller、
+  prefix oracle fit、suffix scoring 与 finite/divergence 分支；不迁移 B01-R
+  `μ=0.001` z² threshold；raw 字段足以逐 row 重算。
+- [x] statistics：primary robust comparator 与 recent comparator fresh 前冻结；
+  healthy safety、recoverable-failure、M4 ablation、activation
+  precision/recall/balanced-accuracy 均有量化门；每 seed 内先对同 stratum cells
+  等权聚合，再对 seed-cluster 做 10k bootstrap。
+- [x] no post-hoc rescue：禁止 fresh 选 comparator、调 gate、改 cells、挑 seed
+  或降低阈值；任一门失败退出 G1，不留第二个 repair 包。
+- [x] task integrity：fresh task-control validator PASS；`git diff --check`
+  PASS；两位独立审查者最终均为 P0/P1/P2=`0/0/0`。
+
+### 证据
+
+```text
+TASK_CONTROL=PASS
+GIT_DIFF_CHECK=PASS
+audit_t023_gate: PASS, P0/P1/P2=0/0/0
+audit_t023_science: PASS, P0/P1/P2=0/0/0
+```
+
+### 结论
+
+PASS
+
+T024 可交普通 GLM 执行。它先回答 G1 是否通过合法 Groundwork；只有全部门
+PASS 才可在同包运行一次 fresh formal confirm。该 PASS 不预支 G1 科学 Go。

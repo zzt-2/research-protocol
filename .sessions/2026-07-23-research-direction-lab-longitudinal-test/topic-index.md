@@ -4,12 +4,12 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 53
+  control_epoch: 54
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: Q15_TERMINAL_STEP35_STEP4A_READY
-  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D030
-  decision_gate: V056 接收 T022 六篇独立核心 Step3 内容，但发现 T020 conventional scale comparator 振幅公式错误；V057 终审 T023 PASS；T023 先完成 D1+normalization/MMA Step3.5，只有四判据全过才进入条件式 Step4a correct-normalization 审判；本包后不再 repair Q15
+  active_lane: G1_SAFE_GATED_NORMALIZATION_FORMAL_CONFIRM_READY
+  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D031
+  decision_gate: V058 拒收 T023 binding Step4a；Q15 nonlinear map 以 Step3.5 No-Q 退出，越门 Phase B 只作 diagnostic。独立重算接收 gated_scalar 为 METHOD_SIGNAL；T024 先闭合 G1-specific collision/四判据，全部 PASS 后才条件式 formal confirm
   allowed_actions:
     - RECOVER
     - TASK_PREPARATION
@@ -46,13 +46,16 @@ rdl_control:
     - Q15_STEP5_CONTRACT_OR_EXECUTE
     - Q15_EXPERIMENT_OUTSIDE_T023
     - Q15_FOURTH_REPAIR_OR_FACTORY_PACKAGE
+    - Q15_NONLINEAR_MAP_REPAIR
+    - G1_EXPERIMENT_OUTSIDE_T024
+    - G1_SECOND_REPAIR_PACKAGE
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
-  mission_checkpoint: CP021
-  next_legal_action: 用户把 T023 路径交给普通 GLM；GLM 先完成 Q15 Step3.5，四判据全过后才同包运行 Step4a correct-normalization 终局审判；不得进入 Step5/Contract/Execute，也不得留下下一次 Q15 repair
+  mission_checkpoint: CP022
+  next_legal_action: 用户把 T024 路径交给普通 GLM；GLM 先完成 G1 candidate-specific Groundwork/collision/四判据，全部 PASS 后才同包用全新 seeds 和完整 gate/raw receipt 做 formal Step4a confirm；失败即退出 G1，不进 Step5/Contract/Execute
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（V056/D030 部分接收 T022；V057 终审 T023 PASS；epoch 53 / CP021，Q15 终局 Step 3.5 + 条件式 Step 4a 已就绪）
+> 状态: active（V058/D031 拒收 T023 binding 终态并接收 G1 diagnostic METHOD_SIGNAL；V059 双独立终验 PASS；epoch 54 / CP022，T024 可派发）
 > 创建: 2026-07-23 | 最后更新: 2026-07-28
 
 ## 专题信息
@@ -505,6 +508,14 @@ rdl_control:
 - **T023 / V057**：派工终审 PASS（P0/P1/P2=`0/0/0`）；Step 3.5、
   A0/A′/A/B/D 顺序、correct-normalization comparator、No-Go/ready 终态与
   no-fourth-repair 边界闭合。
+- **T023 / V058 / D031 / formal D040 / CP022**：执行者在四判据未全过时
+  越过 A4/B0，binding Step4a 拒收；Q15 nonlinear map formal No-Go。越门
+  diagnostic 独立重算确认 map 无增量，但 gated-scalar 在 old/fresh 相对 CMA
+  分别 `−0.087444/−0.139286`、healthy-worst=`0`，接收为 G1 diagnostic
+  `METHOD_SIGNAL`。T024 只给 G1 一次合法闭合。
+- **T024 / V059**：任务显式重入 G1 Step 1→2→3→3.5，冻结 task-native
+  recoverability label、seed-cluster 分层统计与无 post-hoc rescue 门；流程/
+  科学两位独立 reviewer 均 PASS（P0/P1/P2=`0/0/0`），可交普通 GLM。
 
 ## 未决项
 
@@ -525,10 +536,9 @@ rdl_control:
 
 ## 当前位置
 
-T022 已由 V056/D030 部分接收并追加 CP021：method delta 为 `NONE`，Q15
-仍不是已批准的 Step 4a carrier。V057 已终审 T023 PASS；formal D039 授权
-control epoch53
-`Q15_TERMINAL_STEP35_STEP4A_READY`：T023 先纳入 D1、修正 D3 并完成
-normalization/MMA 定向 Step 3.5；只有四判据全过才运行 correct-normalization
-Step 4a。该包必须给出 No-Go 或 recommendation-ready，之后不得再修 Q15；
-Step 5、Contract、Execute 继续禁止，T018/Q14 继续冻结。
+T023 已由 V058/D031 部分接收并追加 CP022：Q15 nonlinear map 的 binding
+Step4a 拒收并 formal No-Go；Phase B 仅作 nonbinding diagnostic。诊断中的
+gated-scalar 是当前唯一 runnable positive carrier，mission delta=`METHOD_SIGNAL`。
+formal D040 / control epoch54 只授权 T024：先完成 G1-specific Groundwork、
+recent comparator、collision 与四判据；全过后才同包 formal confirm。失败即退出
+G1，不修 Q15 map，不留第二个 G1 repair；Step 5、Contract、Execute 继续禁止。

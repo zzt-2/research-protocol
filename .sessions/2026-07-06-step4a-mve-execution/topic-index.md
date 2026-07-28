@@ -1,7 +1,7 @@
 # Topic Index: Step 4a 维度 D MVE 执行
 
 > slug: 2026-07-06-step4a-mve-execution
-> status: active | created 2026-07-06 | last_updated 2026-07-28（D039/live V056：T022 Step 3 PARTIAL；Q15 授权终局 Step 3.5 + 条件式 Step 4a。）
+> status: active | created 2026-07-06 | last_updated 2026-07-28（D040/live V058/V059：T023 binding Step4a 拒收；Q15 map No-Go，G1 T024 双终验 PASS。）
 
 ## 专题定位（一句话）
 
@@ -27,15 +27,16 @@
 对 B11/B3/B7 走 Step 4a 维度 D MVE，守 FR-21/TL-20/FR-18/FR-12 + D005 务实路线 + D006 红线。
 
 ### 当前范围
-- **D039 当前状态**：live V056/D030 部分接收 T022；六篇独立核心达到 Step 3
-  内容门，但 Q15 判据 1/2 PARTIAL、3/4 PASS。
-- **当前 active scientific carrier**：尚无已批准 Step 4a carrier。foreground
-  epoch53 / CP021 允许 T023 先完成 Step 3.5；只有四判据全过才同包进入
-  correct-normalization Step 4a。
+- **D040 当前状态**：live V058/D031 拒收 T023 binding Step4a；Q15
+  nonlinear map 以 Step3.5 No-Q 退出。越门 Phase B 只作 diagnostic。
+- **当前 active scientific carrier**：G1 gated normalization 是诊断级
+  `METHOD_SIGNAL`，尚非已批准 Step4a carrier。foreground epoch54 / CP022
+  允许 T024 先闭合 G1-specific collision/四判据；全部 PASS 才同包 formal
+  Step4a confirm。
 - T017 Phase B、C16 Step 3/Q#/implementation/simulation/Probe/MVE、第六查询、
   label/source-receipt repair 均禁止；C15 与既有 repair 禁令继续有效；
-  Q14/T018 继续冻结；Q15 只允许 T023 明列的 Step 3.5 与条件式 Step 4a；
-  第四个 Q15 repair、Step 5/Contract/Execute 继续锁定。
+  Q14/T018 继续冻结；Q15 map 与第四个 Q15 repair 禁止；G1 只允许 T024
+  明列的 Groundwork 与条件式 confirm；Step 5/Contract/Execute 继续锁定。
 
 ### 明确不含
 - ❌ 不回头救 6 次 Kill（Q1/Q2/Q3/Q8 切入点 2/4B/Q12/Q#-A，D005 诚实重评"大概率没几个能救"）
@@ -455,10 +456,15 @@ strongest-fixed comparator 仍需 formal 闭合。D015 不继承旧 PASS，而�
 - **T021 / live V054/D029 / formal D038 / epoch 52 / CP020**（2026-07-28，历史）：
   Step 1–2 接收为 PARTIAL；T022 先补 IEEE raw 与五篇 blit canonical/index
   receipt，再完成限定 Step 3，D1/C1/C4 留作 mandatory Step 3.5 debt。
-- **T022 / live V056/D030 / formal D039 / epoch 53 / CP021**（2026-07-28，当前）：
+- **T022 / live V056/D030 / formal D039 / epoch 53 / CP021**（2026-07-28，历史）：
   六篇独立核心 Step 3 内容接收；两篇 supplement schema PARTIAL。T020
   conventional scale comparator 少平方根，Q15 判据改为 1/2 PARTIAL、3/4
   PASS。T023 先 Step 3.5，四判据全过后才同包进入终局 Step 4a。
+- **T023 / live V058/D031 / formal D040 / epoch 54 / CP022**（2026-07-28，当前）：
+  binding Step4a 因 A4/B0 越门拒收；Q15 map formal No-Go。gated-scalar
+  diagnostic 在 old/fresh 相对 CMA 改善 `−0.087444/−0.139286` 且
+  healthy-worst=0，接收为 G1 `METHOD_SIGNAL`。T024 先过 candidate-specific
+  collision/四判据，全过后才 formal confirm；失败即退出。
 - **live V051 / formal D036 / epoch 46 / CP017**（2026-07-27，历史）：
   只授权 final-binding PASS 后执行 T018 Phase A；新论文仍必须暂停于
   delegated coverage gate。

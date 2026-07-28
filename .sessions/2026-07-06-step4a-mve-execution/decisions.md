@@ -2137,10 +2137,10 @@ live D029/V054；T021；groundwork/gw-acquire/gw-read；FR-22。
 
 ## D039: 接收 Q15 Step 3 PARTIAL 并授权终局 Step 3.5 + 条件式 Step 4a
 
-> status: active
+> status: superseded
 > date: 2026-07-28
 > 取代：D038 的 Step 3 workline
-> 被取代：无
+> 被取代：D040
 > 依据：验证 live V056 + live D030 + T022 commit `f3a47260f732e0987743f32bffc6d21d7f92e6aa`
 > 触发原话：无（技术推导）
 
@@ -2185,3 +2185,57 @@ FR-22 的顺序门控，也避免再产生一个只修文档或只修 baseline �
 
 live D030/V056；T022；T020 source audit；groundwork/gw-supplement/
 gw-feasibility；FR-22/FR-25。
+
+---
+
+## D040: Q15 map formal No-Go，派生 G1 gated normalization 诊断 carrier
+
+> status: active
+> date: 2026-07-28
+> 取代：D039 的 Q15 terminal workline
+> 被取代：无
+> 依据：验证 live V058 + live D031 + T023 commit
+> `89d8174c56a7729c34a1268ef52394c58e889924`
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. T023 因 Phase A 四判据未全过却进入 Phase B，不接收为合法 Step 4a。
+   Q15 nonlinear-map formal disposition 为 `STEP35_NO_Q_NO_GO`，不得 repair。
+2. 越门 Phase B 仅作 diagnostic：M4 map 在 old/fresh 都输给同门控 correct-sqrt
+   scalar；但 `gated_scalar` 相对 tuned CMA 的诊断改善与 healthy-worst=`0`
+   成立，登记为 `METHOD_SIGNAL / NONBINDING_DIAGNOSTIC`。
+3. 以 Q15-derived fallback / salvaged component
+   `G1_SAFE_GATED_NORMALIZATION` 进入 T024。先完成 gated
+   normalization 自身的 recent-baseline/direct-collision/四判据闭合；全部 PASS
+   后才允许同包 formal Step 4a confirm。
+4. T024 使用全新 seeds、完整 gate/prefix/scale/offline-class raw receipt，并把
+   gated scalar 与 tuned CMA、always-on correct normalization、M4 map 和最强
+   target-matched cheap alternative 逐对比较。
+5. T024 无论 collision、blocked 或 confirm FAIL 都退出 G1；PASS 只形成
+   recommendation-ready method card，不进 Step 5。
+
+### 理由
+
+T023 的 binding 终态不合法，但它意外分离了两个机制：nonlinear map 没有增量，
+receiver-visible identity fallback + correct scale 则在两组诊断 slices 上兼有恢复
+和健康安全。该低复杂度构造比当前 hypothesis-only 候选更接近毕业方法，值得一次
+守门后的正式确认。
+
+### 排除的替代方案
+
+- 不恢复 Q15 map 或第四次 Q15 repair；
+- 不把越门实验直接当 formal Step 4a；
+- 不把 always-on normalization 的健康退化误写成低于 MDE；
+- 不先做纯文献包再另留实验包；T024 合并碰撞门与条件式 confirm。
+
+### 影响范围
+
+- formal stage 仍为 Groundwork；
+- active formalization workline 改为 G1 delta-specific closure + conditional
+  Step 4a；
+- live control 由 D031/V058/epoch54/CP022 管理。
+
+### 来源
+
+live D031/V058；T023 raw/result/source；D039；FR-22/FR-25。

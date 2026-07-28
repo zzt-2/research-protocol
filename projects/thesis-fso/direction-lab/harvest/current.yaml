@@ -365,6 +365,16 @@ current_view:
 
   current_valid_spines:
     - spine: >-
+        DIAGNOSTIC METHOD SIGNAL, not yet a thesis spine: G1 receiver-visible
+        prefix-gated correct-sqrt normalization. T023 binding Step4a is rejected,
+        but independent paired recompute shows old/fresh delta PI-SER versus
+        tuned CMA = -0.087444/-0.139286 with bootstrap CI below zero and
+        healthy-worst=0. T024 must close direct collision and formal fresh confirm.
+      status: diagnostic_method_signal_pending_groundwork
+      ceiling: NONBINDING_DIAGNOSTIC / LOCAL_SLICE
+      paper_value: POTENTIAL_PRIMARY_OR_FALLBACK_AFTER_T024
+
+    - spine: >-
         WITHDRAWN (was PRIMARY): F1-B dual-pol GG/SOP model-based tracker -> MMSE. The F1-A Probe
         "headroom 0.133 + observability 0.65" is INVALIDATED (D021/D022: privileged CSI + TX-truth
         genie gap; F1-A0 strict-causal repair FAILED). F1 = TESTBED_BLOCKED. NOT a primary method
@@ -402,11 +412,12 @@ current_view:
       paper_value: SECONDARY (limitations / threats-to-validity)
 
   next_action: >-
-    V056/D030 accept T022 six-core Step3 content with no formal or thesis claim.
-    Q15 criteria are 1/2 PARTIAL and 3/4 PASS because T020's conventional scale
-    comparator applies a power ratio as an amplitude factor. Formal D039 selects
-    T023: D1+normalization/MMA Step3.5, then conditional correct-normalization
-    Step4a only if all four criteria pass. This does not yet create a thesis spine.
+    V058/D031 reject T023 binding Step4a and close Q15 nonlinear map without
+    repair. Phase B remains nonbinding diagnostic. It does create a method
+    signal for G1 gated normalization: old/fresh delta PI-SER versus tuned CMA
+    is -0.087444/-0.139286 with healthy-worst 0. Formal D040 selects T024 to
+    complete G1-specific Groundwork and conditionally run a fresh formal
+    confirm. This is not yet a thesis spine or formal Go.
     Historical context:
     D022 (SCIENCE_FREEZE): SCIENCE_SCOUT candidate rotation PAUSED (topic dormant). NO legal
     main-method signal; NO active thesis spine. Local-negative + methodology-lesson material ->
@@ -439,8 +450,8 @@ current_view:
     independent verifier -> delegated master gate -> read sequence. The next
     V051 historically accepted the revised static contract with no method delta
     or harvest, but D026 later froze Q14/T018 before execution. Current live
-    V056/D030 and formal D039 route to T023: Q15 terminal Step3.5 plus conditional
-    Step4a normalization adjudication. Do NOT run T017 Phase B,
+    V058/D031 and formal D040 route to T024: G1-specific Groundwork plus
+    conditional fresh formal confirm. Do NOT repair Q15 map or run T017 Phase B,
     old C16, Q14 Step 4a, implementation, experiment, or a second C16/Q14
     source/problem-evidence package. Do NOT resume Scout/P03;
     do NOT enter Step 5/Contract/Execute;

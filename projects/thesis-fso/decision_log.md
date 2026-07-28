@@ -4,13 +4,23 @@
 > 历史决策散落在 `.sessions/`（Pilot-Jones / B10 / B1 / A4 / B12 / C15 / C16 / B9
 > / Q14 等），本文件从 Q15 开始正式维护。
 
+> **MASTER ACCEPTANCE AMENDMENT（2026-07-28 / live D031 / formal D040 /
+> V058）**：下方 T023 “Q15 被 conventional normalization 全吸收”的 binding
+> Kill **拒收**。T023 在四判据未全过时越过 A4/B0 运行 Phase B；always-on
+> correct scalar 的 healthy-worst=`0.015625–0.027344`，实际大于
+> MDE=`0.005`。合法 formal disposition 是
+> `Q15_MAP_STEP35_NO_Q_NO_GO`；越门数据仅作 `NONBINDING_DIAGNOSTIC`。
+> 诊断中 nonlinear map 无增量，但 `gated_scalar` 在 old/fresh 相对 tuned CMA
+> 改善 `−0.087444/−0.139286` 且 healthy-worst=`0`，故派生
+> `G1_SAFE_GATED_NORMALIZATION / METHOD_SIGNAL`，等待 T024 合法闭合。
+
 ---
 
-## Q15 — Step 4a 终局审判：KILL（被 conventional normalization 吸收）
+## Q15 — T023 执行方原始 Step 4a 终态（REJECTED_AS_BINDING）
 
 > 日期：2026-07-28 | 来源：T023 (CP021, epoch 53) / live D030 / formal D039
 > 阶段：Groundwork Step 4a 维度 D
-> 决策类型：**Kill**（核心假设无法修复）
+> 决策类型：**executor proposal；已由 D031/D040/V058 拒收为 binding Kill**
 
 ### 决策
 

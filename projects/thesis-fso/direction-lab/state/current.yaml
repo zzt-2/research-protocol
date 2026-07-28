@@ -2,11 +2,11 @@
 # Rebuilt 2026-07-22 from S012 / D020 / V009; AMENDED 2026-07-22 S013 / D021 / V010 / V011;
 # FROZEN 2026-07-22 S014 / D022 / V012 / H015 (SCIENCE_FREEZE + campaign-level reconciliation).
 # Campaign-level verdict (D022): SCIENCE_SCOUT candidate rotation PAUSED (topic dormant).
-# NO legal main-method signal. F1=TESTBED_BLOCKED / F3=UNRESOLVED / F4=INFRASTRUCTURE_BLOCKED.
+# G1 gated normalization now has a diagnostic METHOD_SIGNAL, not yet formal Go.
 # F2 pilot lineage merges into existing Pilot-Jones formal Groundwork (no parallel Scout).
 # Negative material -> harvest/limitations only; NOT a full negative paper.
-# Next authoritative work = live V056/D030/T023 + formal D039: epoch53 Q15
-# terminal Step 3.5 + conditional Step4a normalization adjudication.
+# Next authoritative work = live V058/D031/T024 + formal D040: epoch54 G1
+# candidate-specific Groundwork + conditional formal Step4a confirm.
 # Updated 2026-07-23 (T001 current-owner reconciliation): D061 strategic switch reflected — P03 = PAUSED_RETURNED_TO_PORTFOLIO
 # (option 1, family not closed); Pilot-Jones was then formal GW line; D066/V040 later returned it.
 # (V035 backward PASS, 4 direct-competitor full-text BLOCKED).
@@ -16,7 +16,7 @@
 # Explicit disposition lineage governs; protected history untouched.
 # Role of protected files (recorded here, NOT edited): STATUS.v1.md = STALE_PROTECTED
 # (not the current scientific-fact source); project.v1.yaml = historical read-only-preview
-# adapter (not the current authorized owner). Current trusted fact source = this file + live D030/V056/T022.
+# adapter (not the current authorized owner). Current trusted fact source = this file + live D031/V058/T023.
 
 schema_version: research-direction-lab.state.current.v1
 project_id: thesis-fso.dual-pol-osl.direction-lab
@@ -33,13 +33,13 @@ formal_goal: >-
 authorization:
   current_mode: DORMANT  # was SCIENCE_SCOUT; D022 SCIENCE_FREEZE paused the campaign (topic dormant). D061 confirms: no current science-execution authorization in the Scout campaign.
   science_authorized: false  # the Scout campaign is dormant; formal science advances via master-state.md, not this campaign
-  scope: dormant legacy Scout campaign; D030 accepts T022 Step3 PARTIAL and routes Q15 to one terminal Step3.5 plus conditional Step4a package.
+  scope: dormant legacy Scout campaign; D031 rejects T023 binding Step4a, closes Q15 map, and routes diagnostic G1 to one lawful Groundwork plus conditional confirm package.
   formal_gw_line: >-
-    Q15_TERMINAL_STEP35_STEP4A_SELECTED (live D030 / formal D039 /
-    epoch 53 / CP021). T022 completed six-core Step3 content, but criteria
-    1/2 remain PARTIAL because T020's conventional scalar comparator applies
-    a power ratio as an amplitude factor. T023 first completes Step3.5 and
-    only then conditionally runs a correct-normalization Step4a adjudication.
+    G1_SAFE_GATED_NORMALIZATION_FORMAL_CONFIRM_SELECTED (live D031 /
+    formal D040 / epoch 54 / CP022). T023 binding Step4a is rejected because
+    Phase A did not form a four-criteria Q#. Q15 nonlinear map exits. T023's
+    nonbinding diagnostic supports G1 gate+correct-scale METHOD_SIGNAL; T024
+    first closes G1-specific Groundwork and only then conditionally confirms it.
   prohibits:
     - modify or rerun B001-B003 / P03 Atlas / canonical-state / completion-events
     - create legacy B004
@@ -233,7 +233,7 @@ dispositions:
     reason: reused across >=6 batches (c04/c09/c14/c15/c16/corrector + c12 subset)
 
 next_action:
-  mode: Q15_TERMINAL_STEP35_STEP4A_READY
+  mode: G1_SAFE_GATED_NORMALIZATION_FORMAL_CONFIRM_READY
   description: >-
     D022 campaign-level verdict: SCIENCE_SCOUT candidate rotation PAUSED (topic dormant).
     NO legal main-method signal. F1=TESTBED_BLOCKED, F3=UNRESOLVED, F4=INFRASTRUCTURE_BLOCKED.
@@ -255,12 +255,14 @@ next_action:
     at A6: source family 1<3 and must-read 2<5. V049/D023/D034 accept
     BLOCKED_FORMAL_READINESS / BLOCKED_SEARCH_OR_IDENTITY, delta NONE, and
     return C16-open to the pool with no second package. CP017 has no-method=17.
-    V056/D030 accept T022 Step3 content with scientific reframing and append
-    CP021. The next legal action is T023: a normal GLM first completes D1 plus
-    normalization/MMA Step3.5; only if all four problem criteria pass may it
-    run the same package's correct-normalization Step4a terminal adjudication.
-    Do not run any Q15 work outside T023, T018, T017 Phase B, old C16,
+    V058/D031 reject T023 binding Step4a and append CP022. Q15 nonlinear map
+    exits with no repair. The nonbinding diagnostic accepts G1 gated scalar as
+    METHOD_SIGNAL. The next legal action is T024: a normal GLM first closes
+    G1-specific recent baseline, collision and all four problem criteria; only
+    then may it run the same package's fresh formal Step4a confirm with complete
+    gate/prefix/scale/offline-class receipt.
+    Do not run any Q15 map or G1 work outside T024, T018, T017 Phase B, old C16,
     Q14 Step 3.5/4a, or a second C16/Q14 source/problem-evidence package. Do not amend T012/T016,
     run C15 Phase B or the old sandbox, reuse T006/B10, repair B1/A4/B10/B9/B12,
-    Stop before Step 5/Contract/Execute unconditionally; no fourth Q15 repair.
+    Stop before Step 5/Contract/Execute unconditionally; no Q15 or second G1 repair.
     Do NOT resume Scout/P03.

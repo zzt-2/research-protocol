@@ -1272,3 +1272,21 @@ conventional baseline" 状态**未达**。
   有价值。
 - **identity-fallback 安全属性**是真实可测的设计属性（healthy-worst Δ=0.0），
   但当 always-on correct scalar 已在 healthy 上 < MDE 时，它是约束非贡献。
+## MASTER ACCEPTANCE AMENDMENT — T023 Phase B（2026-07-28）
+
+> authority：live D031 / formal D040 / V058。若与上方 T023 executor Step 4a
+> 段冲突，以本 amendment 为准。
+
+1. T023 在 Q15 四判据未全过时进入 Phase B，违反 A4/B0；不得登记为合法
+   Step 4a 或 binding `Q15_ABSORBED_BY_CONVENTIONAL_NORMALIZATION_NO_GO`。
+2. always-on pooled/per-pol/robust correct scalar 的 healthy-worst 分别为
+   `0.0234375/0.02734375/0.015625`，均 **大于** MDE=`0.005`；原报告中的
+   `<MDE` 是数量级错误。
+3. 独立 paired 重算确认 M4 nonlinear map 在 old/fresh 都输给同门控
+   correct-sqrt scalar；map component 仅作 diagnostic No-Go。
+4. `gated_scalar` 相对 tuned CMA 在 old/fresh 的 ΔPI-SER 为
+   `−0.087444/−0.139286`，bootstrap CI 均低于 0，healthy-worst=`0`。
+   该构造登记为 `G1_SAFE_GATED_NORMALIZATION / METHOD_SIGNAL /
+   NONBINDING_DIAGNOSTIC`，不是 formal Go。
+5. T024 必须补 candidate-specific Groundwork 和完整 raw receipt；只有全门
+   PASS 才能形成 G1 Step 4a recommendation。
