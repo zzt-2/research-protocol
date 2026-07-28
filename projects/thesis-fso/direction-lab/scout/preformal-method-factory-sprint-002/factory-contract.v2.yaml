@@ -1,0 +1,329 @@
+# =============================================================================
+# Pre-formal Method Factory Sprint 002 — Corrected-baseline causal constellation-
+# prior shell-distribution family.
+#
+# Schema: direction-lab.preformal-method-factory-sprint-002.v2
+# Authority: T020 (PREFORMAL_METHOD_FACTORY, CP018); source decision D027;
+#   accepted delta of T019 = FAIR_COMPARISON_RUN; V052 rejected the science
+#   verdict but kept M5 weak seed (15 help / 5 hurt / 40 tie).
+# Date: 2026-07-28
+# Claim ceiling: DIAGNOSTIC_ONLY_NOT_FORMAL_GW_MVE
+# =============================================================================
+
+# === Why this batch exists (TL;DR) ===
+# T019 built 5 constructs and ran a fair paired comparison, but:
+#   (a) used the STALE μ=0.001 anchor as the Go comparator instead of the
+#       current validation-optimal fixed-μ CMA at μ=0.03 (B01-R hotfix v2);
+#   (b) M3/M5 were not strictly causal (M3 selected using [cal, eval_end];
+#       M5 used whole-eval-window power stats then re-judged that window);
+#   (c) the terminal result.v1.json had smoke_results={} because --compare
+#       clobbered the smoke run.
+# This batch fixes all three with one bounded package: current μ=0.03
+# baseline, strict prefix-only calibration, fresh disjoint dev/test seeds,
+# and at least 3 strictly-causal public-constellation-prior shell-distribution
+# methods. Per D027 it is the ONLY corrected-baseline extension; a negative
+# result exits CB1 z-only/post-processing (no third package).
+
+# === Primary baseline (FROZEN, current fair baseline) ===
+primary_baseline:
+  id: fixed_mu_cma_mu_0_03
+  implementation: cb1_cell_runner.standard_cma_godard_with_z
+  mu: 0.03  # B01-R hotfix v2 interior optimum (frozen-params-b01r-v1.yaml)
+  R2: 1.32  # E[|s|^4]/E[|s|^2], full 16QAM alphabet (Godard-with-z)
+  block_size: 64
+  n_tap: 11
+  source: B01-R frozen-params-b01r-v1.yaml (best_score=-0.20390625)
+  note: >-
+    The genuine Go comparator. Inherited from B01-R hotfix v2: μ grid
+    [1e-4, 3e-4, 1e-3, 3e-3, 1e-2, 3e-2, 1e-1] was extended under HF6 and
+    μ=0.03 (3e-2) was the interior optimum. μ=1e-1 diverged on long cells,
+    so this is a defensible interior optimum, not a grid edge.
+    This batch does NOT re-tune μ; it inherits the frozen value.
+  forbidden: >-
+    Using the historical μ=0.001 anchor (T019 / B01-R diagnostic_anchor) as a
+    Go comparator. It is the Atlas v1 identity only, NOT a fair baseline.
+
+# === Legal comparators ===
+legal_comparators:
+  - id: C11_legal_causal_one_pass
+    implementation: c11-legality-batch-v1.c11_causal.c11_cma_dd_lms_causal
+    stage1_mu: 0.03
+    stage2_dd_step_size: 1.0e-4  # C11-legality-batch-v1 frozen best
+    complex_convention: bilinear_r_at_w
+    access_budget_per_sample: 1
+    source_verdict: C11_EXACT_CAUSAL_RAW_DECISION_POLICY_NO_BENEFIT
+      # macro paired Δ(C11_legal − fixed_mu) = +0.01445 (worse); 0/7 cells
+      # significantly better, 2/7 significantly worse. Kept as the strongest
+      # legal causal conventional cascade target.
+    note: >-
+      Strictly causal one-pass (no future info). The legal version of C11.
+      Inherited from c11-legality-batch-v1 (Verdict B re-scoped to exact
+      variant under test).
+  - id: blind_affine_compare_16qam
+    implementation: cb1_evaluator.blind_affine_compare_16qam
+    runtime_inputs: [z_calibration, z_evaluation, known_16QAM_alphabet]
+    receiver_state_changed: false
+    ridge: 1.0e-6
+    note: >-
+      Receiver-visible z-only affine fit on calibration prefix, applied to
+      eval suffix. Pseudo-labels = hard_16qam(z_calibration). NO TX truth.
+      This is the "blind_affine_compare_16qam" (z-only) comparator corrected
+      by c11-legality-batch-v1 forward_rule (H2). Distinct from
+      oracle_affine_bound_16qam (TX-truth, Kill-only FR-21).
+
+# === Kill-only bound (NEVER a Go baseline, FR-21/FR-25) ===
+kill_bound_only:
+  - id: oracle_affine_bound_16qam
+    implementation: cb1_evaluator.oracle_affine_bound_16qam
+    use: OFFLINE_4_CATEGORY_LABEL_AND_HEADROOM_ONLY
+    note: >-
+      TX-truth affine fit. Used only for (1) offline 4-category collapse
+      labelling and (2) visible-headroom reporting. NEVER a Go comparator.
+      NEVER enters any deployable method action.
+
+# === Testbed (frozen, reused from CB1 baseline-atlas) ===
+testbed:
+  source: cb1-modulation-generic-closure/baseline-atlas
+  generator: common._dual_pol_channel.generate_shared_realization_dp
+  evaluator: cb1_evaluator.evaluate_dual_16qam
+  paired_realization_rule: >-
+    Every method on a given (cell, seed) runs on the SAME shared realization.
+    A (cell, seed) realization is generated exactly ONCE.
+  frozen_common_axes:
+    alpha: 4.2
+    beta: 1.4
+    block: 100
+    t_s: 4.0e-10
+    method: gar
+    cma_taps: 11
+    cma_block_size: 64
+    r2_qam16: 1.32
+    constellation_amplitude_per_axis: 0.7071067811865475  # {-3,-1,+1,+3}/sqrt(10)
+    affine_ridge: 1.0e-6
+  qpsk_identity_regression_pi_ser: 0.0
+  source_hashes:  # frozen BEFORE running, never modified
+    cb1_cell_runner.py: 2d9660338c302c3107b97c7e51a353b1c79b5ca3da565d8521f774b477e2a59e
+    cb1_evaluator.py:  46b81b9dbbc508ecd96126525e523e2c4e51ba06f39ecdb7c03dc37d5c4f157d
+    _dual_pol_channel.py: 5cefac97d120e5590905ae36ab20cabc8832a6c556368b1d9f154a2a8091818c
+    _modulation.py: 036fb7aa4d0bef153ee53799f20a244492fb6294f93132d1ecc2b0530b5694d5
+
+# === Cells: B01-R 7 held-out cells (FROZEN) ===
+# These are the same 7 held-out cells used by B01-R and C11-legality-batch-v1
+# for the aggregate Go/Kill decision. They span SNR (5/10/15/25 dB), fog
+# (nominal 30 / fg100 / fg1000 Hz) and length (short 512 / long 8192).
+cells:
+  - {id: 16qam-snr05-nominal-short, modulation: qam16, snr_db: 5.0,  f_g_hz: 30.0,   sop_rate: 4.0e-6, n_symbols: 512}
+  - {id: 16qam-snr10-nominal-short, modulation: qam16, snr_db: 10.0, f_g_hz: 30.0,   sop_rate: 4.0e-6, n_symbols: 512}
+  - {id: 16qam-snr15-nominal-short, modulation: qam16, snr_db: 15.0, f_g_hz: 30.0,   sop_rate: 4.0e-6, n_symbols: 512}
+  - {id: 16qam-snr25-nominal-short, modulation: qam16, snr_db: 25.0, f_g_hz: 30.0,   sop_rate: 4.0e-6, n_symbols: 512}
+  - {id: 16qam-snr20-fg100-short,   modulation: qam16, snr_db: 20.0, f_g_hz: 100.0,  sop_rate: 4.0e-6, n_symbols: 512}
+  - {id: 16qam-snr10-fg100-long,    modulation: qam16, snr_db: 10.0, f_g_hz: 100.0,  sop_rate: 4.0e-6, n_symbols: 8192}
+  - {id: 16qam-snr15-fg1000-long,   modulation: qam16, snr_db: 15.0, f_g_hz: 1000.0, sop_rate: 4.0e-6, n_symbols: 8192}
+
+# === 4-category collapse label (inherited from B01-R, OFFLINE only) ===
+collapse_labels:
+  source: fairness-batch-b01r/batch-contract.v1.yaml detector_label_audit
+  categories:
+    inner_ring_recoverable_collapse:
+      definition: z2_ratio < 0.3 sustained AND oracle_affine PI-SER recovers < 0.1
+      oracle_use: LABEL ONLY
+    awgn_dominated_error:
+      definition: nearest_pi_ser - oracle_pi_ser < MDE (oracle does not help) AND nearest_pi_ser high
+      oracle_use: LABEL ONLY
+    healthy:
+      definition: nearest_pi_ser < 0.1
+    ambiguous:
+      definition: none of the above cleanly applies
+  rule: >-
+    Oracle/TX truth used ONLY for offline 4-category labelling and headroom
+    reporting. NEVER influences a deployable action, a gate, a mapping, or
+    a selection. The labels only DESCRIBE the held-out population; they do
+    NOT decide deployment.
+
+# === Eval window: strict prefix / suffix separation ===
+eval_window:
+  geometry: >-
+    cb1_cell_runner.eval_window_for(n_symbols, cma_taps=11, window_symbols=256,
+    block_size=64). Returns (eval_start, calibration_end, eval_end).
+    N=512: eval_start=133, calibration_end=261, eval_end=389 (prefix 128, suffix 128).
+    N=8192: eval_start=2181, calibration_end=2309, eval_end=2437.
+  calibration_prefix: [eval_start, calibration_end)   # 128 symbols, z-prefix
+  scored_eval_suffix: [calibration_end, eval_end)      # 128 symbols, scored
+  strict_causality_rule: >-
+    Every method may ONLY consume the calibration prefix z[es:cal] for:
+    estimating a frozen scale, fitting a frozen mapping, fitting a frozen
+    mixture, or selecting a frozen gate. The scored eval suffix z[cal:ee]
+    receives the FROZEN transform and MUST NOT feed back into any mapping /
+    selection / gate / normalization choice. Identity-off at zero correction
+    must be bit-identical to the μ=0.03 baseline on the eval suffix.
+
+# === Seeds (fresh, disjoint, frozen) ===
+seeds:
+  collision_scan: >-
+    Repository-wide exact-token scan of thesis-fso/direction-lab/scout/ for
+    seed tokens in [181..190] and [201..220] returned ZERO hits. B01-R used
+    [11..15] tuning / [21..30] test; C11-legality used [31..35] validation /
+    [41..50] test; T019 sprint-001 used [11..20]. None collide with this batch.
+  dev_seeds: [181, 182, 183, 184, 185, 186, 187, 188, 189, 190]  # 10 fresh dev
+  test_seeds: [201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220]  # 20 fresh test
+  leakage_check: >-
+    set(dev_seeds) ∩ set(test_seeds) = ∅ (asserted in code);
+    set({dev, test} seeds) ∩ set(B01-R {11-15,21-30}) = ∅ (asserted);
+    set({dev, test} seeds) ∩ set(C11-legality {31-35,41-50}) = ∅ (asserted);
+    set({dev, test} seeds) ∩ set(T019 sprint-001 {11-20}) = ∅ (asserted).
+  rule: >-
+    Dev seeds ONLY select tiny gate/regularization grids and finite params;
+    Test seeds are NEVER observed during dev and never feed back into any
+    selection. A (cell, seed) realization is generated exactly once per side.
+
+# === Identity gates (MUST PASS before any evaluation) ===
+identity_gates:
+  gate_1_baseline_alignment:
+    description: >-
+      μ=0.03 fixed-μ CMA in this batch MUST reproduce the B01-R
+      frozen-params-b01r-v1.yaml fixed_mu_cma baseline behavior on the same
+      testbed (same generator, same evaluator, same realization). The
+      implementation (cb1_cell_runner.standard_cma_godard_with_z with mu=0.03,
+      R2=1.32, block_size=64, n_tap=11) is byte-identical to the B01-R
+      fixed_mu_cma_validation_optimal comparator. QPSK identity regression
+      PI-SER must equal 0.0.
+  gate_2_eval_population_identity:
+    description: >-
+      baseline / C11-legal / blind-affine / new-methods all run on the SAME
+      (cell, seed) realization with the SAME eval window. Paired delta is
+      meaningful only when methods share eval population.
+  gate_3_prefix_only_freeze_invariance:
+    description: >-
+      Fixing the calibration prefix and perturbing the eval suffix (e.g.
+      adding a deterministic non-collapsing offset) MUST NOT change the
+      frozen transform parameters or gate decisions. Equivalently: the
+      method's frozen output must be bit-identical regardless of the eval
+      suffix content (only the calibration prefix is read).
+  terminal_state_on_identity_block: BLOCKED_CURRENT_TESTBED
+    # only if an identity gate cannot be closed; NOT allowed to fix infra.
+
+# === Statistical preregistration (seed-cluster) ===
+statistical_preregistration:
+  primary_metric: PI-SER (lower is better)
+  secondary_metric: fixed_label_SER
+  MDE: 0.005  # per-symbol absolute PI-SER, same as B01-R / C11-legality
+  paired_ci_method: cluster_bootstrap_over_seeds  # 10k resamples, 95% CI
+  clustering_rule: >-
+    Each SEED is ONE independent cluster. The 7 cells within a seed are NOT
+    7 independent samples; they are correlated observations of the same
+    random channel realization across operating points. Aggregate as:
+      (1) per-seed paired delta = mean over cells of (method_pi_ser - baseline_pi_ser);
+      (2) seed-cluster bootstrap CI on the per-seed mean;
+      (3) help/hurt/tie SEEDS (a seed helps if its per-seed mean delta < -1e-9).
+    Per-cell stats are reported only as heterogeneity description.
+  signal_grading:
+    DIAGNOSTIC_METHOD_SIGNAL:
+      all_of:
+        - "seed-cluster mean ΔPI-SER ≤ −0.005 vs μ=0.03 CMA"
+        - "95% CI upper < 0"
+        - "help seeds > hurt seeds"
+        - "no significant regression vs strongest legal receiver-visible comparator (C11-legal or blind-affine)"
+        - "no catastrophic regression on clean/healthy cells (per-seed delta not worse than +MDE on healthy cluster)"
+    WEAK_DIAGNOSTIC_SIGNAL:
+      all_of:
+        - "direction consistent (seed-cluster mean < 0) AND help seeds > hurt seeds"
+        - "BUT CI or MDE not simultaneously satisfied"
+      next_step_rule: >-
+        Must state whether next step is formalize or harvest; NOT an automatic
+        third package.
+    NO_DIAGNOSTIC_SIGNAL_EXIT_CB1_Z_ONLY:
+      otherwise: >-
+        Exit CB1 z-only/post-processing axis. No third package. Next batch
+        must change information source or change testbed.
+    BLOCKED_CURRENT_TESTBED:
+      only_if: identity_gate_cannot_close_within_budget
+
+# === Method family spec (Phase B) ===
+method_family:
+  common_information_source:
+    - "calibration prefix receiver-visible z[eval_start:calibration_end]"
+    - "public 16QAM alphabet, shell radii, theoretical shell occupancy"
+    - "frozen public receiver parameters (FROZEN_AXES above)"
+  forbidden:
+    - "use the whole eval suffix mean/CDF/clustering/performance to choose its own transform"
+    - "reproduce T019 per-symbol nearest-shell remap (M5 v1)"
+    - "consume TX truth, true channel/Jones, future window, oracle affine coefficients at runtime"
+  required_constructs:  # at least 3 of these 4 must be implemented and run
+    M1_prefix_scalar_calibration:
+      lever: prefix scalar calibration
+      action: >-
+        Estimate ONE robust global scale from the prefix (e.g. a trimmed /
+        quantile-based estimate of E[|z|^2]); eval applies the FROZEN scale
+        as z' = scale * z then hard-decides. Strongest cheap control.
+      prefix_input: prefix z magnitudes
+      frozen_params: [scale_estimate_type, trim_fraction_or_quantile]
+      strict_causality: scale frozen from prefix only; suffix only multiplied
+    M2_prefix_quantile_shell_transport:
+      lever: prefix quantile shell transport
+      action: >-
+        Build a monotone map from the prefix radial CDF onto the public
+        16QAM shell radii at the theoretical 0.25/0.50/0.25 occupancy. Eval
+        applies the FROZEN monotone map to suffix |z| (phase preserved).
+      prefix_input: prefix |z| CDF
+      frozen_params: [monotone_map_type, shell_radii, occupancy_targets]
+      strict_causality: map frozen from prefix only; suffix only mapped
+    M3_constrained_three_shell_mixture:
+      lever: prefix constrained three-shell mixture calibration
+      action: >-
+        Fit a low-parameter mixture or monotone calibration constrained by
+        public shell radii/priors on the prefix (e.g. two-segment piecewise
+        linear map with one knot, or a 3-pole soft assignment). Eval applies
+        the FROZEN map.
+      prefix_input: prefix |z| histogram
+      frozen_params: [mixture_knot_or_knots, shell_radii, prior_weights]
+      strict_causality: params frozen from prefix only; suffix only transformed
+    M4_prefix_gated_policy:  # optional 4th
+      lever: prefix-gated identity/transport policy
+      action: >-
+        Use ONLY prefix features (e.g. prefix mean |z|^2, prefix shell spread)
+        to select identity / M2 / M3. Gate frozen on dev seeds; test unchanged.
+      prefix_input: prefix scalar features
+      frozen_params: [gate_thresholds, gate_rule]
+      strict_causality: gate frozen from prefix only; suffix only dispatched
+  per_method_required_fields:
+    - deployable_action
+    - prefix_input
+    - frozen_params
+    - difference_from_T019_M5_C15_C14_blind_affine
+    - primary_thesis_packaging_draft
+    - fallback_thesis_packaging_draft
+
+# === Forbidden within this batch ===
+forbidden:
+  - use_mu_0_001_anchor_as_go_comparator        # FR-22 / V052 root cause
+  - modify_common_or_params_or_baseline_atlas    # sim-preflight / testbed freeze
+  - modify_T019_sprint_001_artifacts             # history
+  - modify_B01_B01R_C11_or_any_owner             # protected history
+  - modify_any_sessions_owner                    # governance freeze
+  - execute_T018_or_Q14                          # out of scope
+  - use_eval_suffix_for_own_transform_selection  # causality
+  - reproduce_T019_M5_per_symbol_nearest_shell_remap
+  - treat_oracle_affine_as_go_baseline           # FR-21, FR-25
+  - tune_on_test_seeds                           # leakage
+  - treat_7_cells_as_7_independent_samples       # seed-cluster
+  - let_smoke_be_clobbered_by_compare            # V052 semantic closure gap
+  - main_thread_WebSearch_or_webReader           # context discipline
+  - push_or_merge
+  - suggest_third_package_on_no_signal           # D027 exit discipline
+  - jump_to_step5_contract_execute_or_formal     # FR-22
+
+# === Outputs ===
+outputs:
+  contract: factory-contract.v2.yaml
+  method_map: method-map.v2.md
+  src: src/methods.py, src/run_factory.py
+  tests: tests/test_causality_and_identity.py
+  dev_freeze_receipt: artifacts/dev-freeze-receipt.v1.json
+  raw_rows: artifacts/raw-rows.v2.csv
+  result: artifacts/result.v2.json
+  synthesis: synthesis.v2.md
+  worker_log: projects/thesis-fso/worker-logs/step-020-causal-constellation-prior-shell-family.md
+
+# === Time budget ===
+time_budget_minutes: 150
+commit_policy: single_consolidated_commit_at_session_end_no_push

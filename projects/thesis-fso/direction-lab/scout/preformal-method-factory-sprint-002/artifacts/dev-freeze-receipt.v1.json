@@ -1,0 +1,32 @@
+{
+  "frozen_dev_params": {
+    "M1_prefix_scalar": {
+      "trim_frac": 0.2,
+      "dev_mean_delta": -0.023003472222222224
+    },
+    "M4_gated_policy": {
+      "collapse_threshold": 0.6,
+      "spread_threshold": 0.1,
+      "dev_mean_delta": -0.015190972222222222
+    },
+    "M2_quantile_transport": {
+      "parameter_free": true,
+      "dev_mean_delta": -0.017361111111111112
+    },
+    "M3_three_shell_mixture": {
+      "parameter_free": true,
+      "dev_mean_delta": 0.16276041666666666
+    }
+  },
+  "dev_cells": [
+    "16qam-snr05-nominal-short",
+    "16qam-snr10-nominal-short",
+    "16qam-snr20-fg100-short"
+  ],
+  "dev_subseeds": [
+    181,
+    182,
+    183
+  ],
+  "note": "Frozen from prefix-only dev pool; test seeds never observed."
+}
