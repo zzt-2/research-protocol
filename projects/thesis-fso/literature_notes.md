@@ -1266,3 +1266,93 @@ R2按5种方法变体×2类场景得到31 raw/25 unique；R3围绕JLT 2023 PDL/F
 | JLT 2020 | 仿真、无seed/CI | Schmidl/Minn/Park/CRLB | 联合/顺序、SNR/CPN/CD | 3/1/1 |
 
 领域惯例是少量参数扫描和传统 baseline，几乎没有多 seed 统计或显著性检验；本项目 Contract 应补多 seed、固定标签、深衰落扫描和逐组件消融。
+
+---
+
+## Q15 Step 1–2 pending（2026-07-28，T021 / CP019，**非 Step 3 精读**）
+
+> 来源：T021（CANDIDATE_FORMALIZATION，foreground epoch51 / CP019）。承接 T020/M4
+> 工厂级诊断信号（D028/V053，claim ceiling = `DIAGNOSTIC_ONLY_NOT_FORMAL_GW_MVE`）。
+> **本节只记录 Step 1 检索 + Step 2 公共全文获取/coverage-gap 状态与证据指针。**
+> **Q15 四判据全部 UNKNOWN / NOT_ADJUDICATED**；不改全局 Step 3/3.5/4a 状态。
+> 详细候选图与 coverage report 见 `search-archive/2026-07-28/q15-step1-candidate-map.md`
+> 与 `worker-logs/step-021-q15-groundwork-step1-2.md`。
+
+### Q15 暂定问题假说（**不是已过四判据的 Q#**，待 Step 3+ 检验）
+
+- **M**: 固定参数 blind FIR CMA 及 always-on blind output calibration
+- **C**: dual-pol 16QAM 接收机在部分随机实现/初始化下产生低功率 shell collapse
+- **A**: 传统方法缺少 receiver-visible 的 collapse detector 与安全 identity fallback，
+  或其固定归一化无法区分健康和塌缩输出
+- **产出形态（待检验）**: prefix-gated identity/quantile-shell transport policy
+
+### Step 1 检索状态（PASS，门全过）
+
+| 门 | 阈值 | 实测 |
+|---|---|---|
+| unique | ≥20 | 129（11 query × 2 轮，4 线） |
+| source | ≥3 | 3（Semantic Scholar + OpenAlex + IEEE/blit） |
+| 必读 | ≥5 | 11 |
+| published | ≥50% | 93.8% (121/129) |
+| 技术路线 | ≥2 | 4（radius/MMA/shell；CMA singularity/restart/init；blind AGC/scale；distribution/quantile） |
+
+priority 分布：必读 11 / 建议读 13 / 待确认 2 / 备选 16 / 排除 87。
+证据指针：`search-archive/2026-07-28/q15-merged-annotated.json`（含 _priority/_q15_flags）+
+`q15-step1-candidate-map.md`（direct collision D1–D6 + cheap alternative C1–C8 分表）。
+
+**全仓既有 identity 命中**：Q14/S038（同族 adjacent，四判据 2 UNKNOWN，Step 3 暂存）+
+L-DP8 JR-CMA（CMA+AGC+重置+变步长，cheap-alt 实证先例）+ sat.1553§6（领域共识盲区）+
+L07（CMA/RDE 并行，范围 out）。
+
+### Step 2 公共全文获取状态（8 成功 + 1 质量不达标 + 5 失败进 gap）
+
+**成功获取（8 篇，content ≥50 行，title identity + SHA256 PASS）**:
+- D2 Modified RDE high-order QAM (ECOC 2015) → `papers/doi/10.1109_ecoc.2015.7341620/`
+- D5 Optimized blind eq PS high-order QAM (COL 2022) → `papers/doi/10.3788_col202220.080601/`
+- C2 Adaptive filters: stable but divergent (EURASIP 2015) → `papers/doi/10.1186_s13634-015-0289-8/`
+- D4 Likelihood-Based Selection RDE+pilot PS-QAM (JLT 2021) → `papers/downloads/2026-07-28/9492010.{pdf,md}`
+- D4′ ECOC 2020 早期版 → `papers/downloads/2026-07-28/9333378.{pdf,md}`
+- D3 A Novel Radius-Adjusted Approach (SPL 2006) → `papers/downloads/2026-07-28/1561206.{pdf,md}`
+- D3′ ISCC 2005 长版 Hybrid Methods → `papers/downloads/2026-07-28/1493739.{pdf,md}`
+- C6/L010 Blind Pol Demux shaped QAM temporal corr (JLT 2024) → `papers/downloads/2026-07-28/10251763.{pdf,md}`
+
+**内容不达标（1，弃）**: 4458069 FPGA equalizer（IEEE 反爬 watermark-only，8 行）。
+
+**下载失败进 coverage gap（5）**: D1 Shell-Partitioned MMA+Soft Switching (EUSIPCO 2007,
+10.5281/zenodo.40308，**最关键 direct-collision 未知**)；C1 Null-Space Init (PIERS 2019)；
+C3 MMA steady-state (Signal Processing 2014)；C4 Analytical MMA (IJDMB 2010)；L011
+Time-Reverse Eq 16QAM PDM (Access 2021)。三轮止损（OA / force / IEEE-blit）均失败。
+
+### Step 1–2 初步观察（**非四判据结论**，仅供主控 coverage gate）
+
+- Q15 action space（prefix-gated identity/quantile-shell radius transport）**不是空白**：
+  radius/shell 分区切换在 equalizer 层有成熟先例（已获取的 D2/D3/D4/D5）。
+- Q15 差异化候选：(a) prefix-only 因果边界；(b) identity fallback 健康零回归；
+  (c) post-proc frozen map 而非 equalizer 抽头/代价修改。
+- **关键未知**：D1（shell-partitioned MMA + soft switching）全文缺失，摘要仅 1 行，
+  无法确认 Q15 gated identity/transport 是否已被等价覆盖。
+- **cheap-alt 未知**：C1/C3/C4 全文缺失，无法确认 cheaper 初始化/MMA 代价修复能否
+  吸收 Q15 问题。
+
+### Q15 四判据状态
+
+| 判据 | 状态 |
+|---|---|
+| 1 具体技术矛盾（M-C-A） | **UNKNOWN**（M-C-A 是暂定假说，未由精读验证） |
+| 2 方法产出形态 | **UNKNOWN**（prefix-gated policy 形态待 Step 3 验证信息增量） |
+| 3 近期 baseline 可对标 | **UNKNOWN**（baseline 池待 Step 3 确认；CMA/MMA/RDE/restart 均候选） |
+| 4 能做可量化对标 | **UNKNOWN**（PI-SER/BER 对比框架待 Step 3+ 确认） |
+| **综合** | **NOT_ADJUDICATED**（Step 1–2 不判；禁入 Step 4a/MVE） |
+
+### 范围确认
+
+- 本轮在 Q15 Step 1–2 / T021 授权范围内（检索 + 公共全文获取 + coverage report）。
+- **未**进入 Step 3 精读 / Step 3.5 / Step 4a / Contract / Execute / 任何实验。
+- **未**改全局步骤进度表（上方"步骤进度"表的 Step 1/2/3/3.5/4a 行不变；Q15 是 RDL
+  formal owner 下的独立 formalization 候选，不回写全局 GW 进度）。
+
+### 后续（待主控 coverage gate 裁决）
+
+主控可选：(a) 接受 D1/C1/C3/C4 债务进 Step 3 精读已获取 8 篇；(b) 要求用户手动获取
+D1/C1/C3/C4 后再进 Step 3；(c) 因 D1 碰撞风险判 `BLOCKED_DIRECT_COLLISION`。
+**worker log 终态**: `AWAITING_DELEGATED_COVERAGE_GATE`，mission_method_delta = `NONE`。
