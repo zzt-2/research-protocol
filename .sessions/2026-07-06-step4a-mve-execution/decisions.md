@@ -1974,11 +1974,11 @@ portfolio/current；master-state；gw-supplement；gw-feasibility。
 
 ## D036: T018 delegated coverage gate 与 receipt contract formal amendment
 
-> status: active
+> status: superseded
 > date: 2026-07-27
 > 取代：D035（保留 Q14 一次性 Step 3.5 workline、positive method contract、
 > carrier=`NONE`、delta=`NONE` 与失败即轮换；只取代 dispatch contract）
-> 被取代：无
+> 被取代：D037
 > 依据：critic live V050 + framework gw-acquire/gw-supplement + tools/search CLI/source
 > 触发原话：live `voice.md` 2026-07-26（D004 已记录 Goal 主控端到端授权；本次无新原话）
 
@@ -2027,3 +2027,60 @@ portfolio/current；master-state；gw-supplement；gw-feasibility。
 
 live V050/D025/D004；R008；D035；Q14 S037/S038；T018；gw-acquire；gw-supplement；
 tools/search CLI。
+
+---
+
+## D037: 激活 Q15 prefix-gated shell calibration 的 Groundwork Step 1–2
+
+> status: active
+> date: 2026-07-28
+> 取代：D036 的 Q14/T018 当前 formal workline；Q14 保持冻结未决
+> 被取代：无
+> 依据：验证 live V053 + live D028 + T020 commit `5cf76d5`
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. formal active scientific carrier 仍不记为 Step 4a carrier；只建立 Q15 的
+   `GROUNDWORK_STEP1_2_WORKLINE_SELECTED`。
+2. Q15 候选动作是：在 fixed-μ blind FIR CMA 后，用 receiver-visible
+   calibration prefix 检测低功率/多壳层塌缩；健康时 identity，触发时应用
+   frozen public-16QAM quantile-shell radius transport。
+3. T020 只作为 Step 1 的 diagnostic seed，不完成任何 GW Step。它支持的上限是
+   “值得检索和获取全文”，不支持 Q15 四判据、novelty、formal comparator 或
+   MVE Go。
+4. T021 只执行 Groundwork Step 1 与 Step 2：完成多源候选检索、AI 初筛、二轮
+   定向检索、direct-collision/cheap-alternative map、公共全文获取与
+   coverage-gap report，然后暂停。
+5. Q15 的必查替代解释包括：robust/tuned CMA、RDE/MMA/MCMA、restart/
+   multistart/reinitialization、blind AGC/normalization、radius-directed 或
+   distribution-matching post-equalization。若 direct competitor 已覆盖同一
+   M-C-A，或稳健传统替代直接吸收问题，必须如实报告，不得靠改名保留候选。
+6. coverage report 未经主控验收前，禁止 Step 3 精读；即使 coverage PASS，也
+   必须由新递增 formal/live decision 授权下一包。
+
+### 理由
+
+live V053 接收了本 campaign 第一个 P0=0 的 factory-level 方法信号，但也确认
+改善由 7/20 seeds 的 CMA collapse 主导。继续工厂会违反 one-last package；
+直接实验会跳过 FR-22，并可能把初始化/传统 baseline 脆弱性误包装为方法贡献。
+Step 1–2 能以最低成本回答新颖性碰撞、近期 baseline 和 cheap-alternative
+三项决定性问题。
+
+### 排除的替代方案
+
+- 不恢复 Q14/T018：Q15 已有实际构造与 held-out 诊断信号，方法产出距离更短；
+- 不直接进入 Step 3 或 4a：尚无 Q15 专属全文池与合法 Q#；
+- 不补 T020 artifact 后重跑：这些是 formal experiment 前的证据合同债，不是
+  Step 1–2 的前置阻塞；
+- 不创建新 scientific topic：Q15 仍属于既有 dual-pol OSL Groundwork owner。
+
+### 影响范围
+
+- formal topic 的 current workline 切换到 Q15 Step 1–2；
+- live epoch51/CP019/T021 与本决策绑定；
+- master-state/current projections 更新；Q14/T018 保留冻结历史，不作 Kill。
+
+### 来源
+
+live D028/V053；T020；groundwork/gw-search/gw-acquire；FR-22。

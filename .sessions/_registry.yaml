@@ -49,8 +49,8 @@ topics:
     title: Research Direction Lab 长程真实运行测试
     status: active
     created: "2026-07-23"
-    last_updated: "2026-07-28（V052/D027/T020：T019 PARTIAL；epoch50 / CP018 corrected-baseline causal shell-family 已就绪）"
-    description: "D017/D018 轻量长程 mission。T019 完成首个五构造 FAIR_COMPARISON_RUN，但 V052 因旧 μ=0.001 baseline、M3/M5 非因果和结构性归因越界拒收科学 verdict。D027 只保留 M5 弱线索；T020 授权普通 GLM 用 current μ=0.03、prefix-only、fresh held-out 做一次 constellation-prior shell-family 扩展，无信号即退出 CB1 z-only。"
+    last_updated: "2026-07-28（V053/D028/T021：T020 M4 诊断信号接收；epoch51 / CP019 Q15 Step1-2 就绪）"
+    description: "D017/D018 轻量长程 mission。T020 在 current μ=0.03、prefix-only、fresh held-out 下得到 M4 DIAGNOSTIC_METHOD_SIGNAL；V053 复算通过但限定为 7/20 CMA-collapse seeds 的工厂级信号。D028 停止方法工厂并把 Q15 送回 formal Groundwork；T021 只做 Step1-2 检索/全文 coverage。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 S014 现场故障、R003 场景演练、D017 控制接口和 guard
@@ -447,8 +447,8 @@ topics:
     title: Step 4a 维度 D MVE 执行（B11 单载波 NDA-ML 主推 + B7/B3 待开）
     status: active
     created: "2026-07-06"
-    last_updated: "2026-07-27（D036/live V051：修订版 T018 PASS；epoch46/CP017，只授权 final binding 后 Phase A）"
-    description: "Formal carrier owner。D036 持有 Q14 one-shot Step 3.5 与 delegated coverage/receipt contract；V051 复审 P0/P1/P2=0/0/0。foreground epoch46/CP017 只授权 final-binding PASS 后由不同 executor 执行 Phase A并暂停；active carrier仍为空。禁止 Q14 Step4a/实现/实验、第二个 Q14 package及既有 repair/Scout/Step5/Contract/Execute。"
+    last_updated: "2026-07-28（D037/live V053：Q15 工厂级信号回流；只授权 Groundwork Step1-2）"
+    description: "Formal carrier owner。D037 冻结 Q14/T018 当前 workline，并选择 Q15 prefix-gated shell calibration 的 Groundwork Step1-2。foreground epoch51/CP019 只允许 T021 检索、公共全文获取与 coverage report；禁止 Step3+、实验、第三个 factory、Step5/Contract/Execute。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
         reason: 继承 S031 排优先级（B11/B3/B7 Conditional Go）+ 切法地图参照系（饱和池/稀池路径）+ D005 务实路线 + D006 红线 + 5 个口径警示

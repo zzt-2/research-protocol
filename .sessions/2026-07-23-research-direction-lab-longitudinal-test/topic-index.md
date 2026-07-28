@@ -4,12 +4,12 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 50
+  control_epoch: 51
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: CAUSAL_CONSTELLATION_PRIOR_SPRINT_READY
-  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D027
-  decision_gate: V052 部分接收 T019 的 FAIR_COMPARISON_RUN，但拒收旧 μ=0.001 baseline、M3/M5 非因果及结构性总论；T020 只允许 current μ=0.03 + prefix-only + fresh held-out 的一次 M5 family 扩展
+  active_lane: Q15_GROUNDWORK_STEP1_2_READY
+  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D028
+  decision_gate: V053 接收 T020/M4 为冻结 slice 上的 DIAGNOSTIC_METHOD_SIGNAL；它主要修复 7/20 seeds 的 CMA collapse，尚未排除稳健 CMA、重启/多初值等廉价替代，也没有 formal novelty/problem evidence
   allowed_actions:
     - RECOVER
     - TASK_PREPARATION
@@ -18,6 +18,7 @@ rdl_control:
     - METHOD_FACTORY_TASK_PREPARATION
     - PREFORMAL_METHOD_FACTORY
     - PORTFOLIO_MAP
+    - CANDIDATE_FORMALIZATION
   forbidden_actions:
     - UNRELATED_SCIENTIFIC_EXPERIMENT
     - PRIVATE_FULLTEXT_ACQUISITION
@@ -41,13 +42,16 @@ rdl_control:
     - T018_EXECUTION_OR_FINAL_BINDING
     - FORMALIZATION_ONLY_PACKAGE
     - UNAUTHORIZED_SCIENTIFIC_EXPERIMENT
+    - THIRD_CB1_Z_ONLY_FACTORY_PACKAGE
+    - Q15_STEP3_OR_LATER
+    - Q15_SCIENTIFIC_EXPERIMENT
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
-  mission_checkpoint: CP018
-  next_legal_action: 用户把 T020 路径交给普通 GLM；GLM 用 current μ=0.03 baseline、严格 prefix-only 统计和 fresh dev/test seeds 完成一次 causal constellation-prior shell family sprint；无信号即退出 CB1 z-only
+  mission_checkpoint: CP019
+  next_legal_action: 用户把 T021 路径交给普通 GLM；GLM 只完成 Q15 Groundwork Step 1 检索与 Step 2 公共全文获取/coverage-gap report，然后暂停等待主控验收；不得精读、Step 3.5、Step 4a 或实验
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（V052/D027 已部分接收 T019；epoch 50 / CP018，T020 corrected-baseline causal shell-family sprint 已就绪）
+> 状态: active（V053/D028 已接收 T020 的 M4 工厂级诊断信号；epoch 51 / CP019，Q15 Groundwork Step 1–2 已就绪）
 > 创建: 2026-07-23 | 最后更新: 2026-07-28
 
 ## 专题信息
@@ -483,6 +487,10 @@ rdl_control:
 - **T020 / epoch 50 / CP018**：只授权一次 current `μ=0.03` baseline、
   prefix-only、fresh held-out 的公开星座先验 shell-family 扩展；无信号即退出
   CB1 z-only/post-processing，不给第三包。
+- **T020 / V053 / D028 / formal D037 / CP019**：M4 工厂级
+  `DIAGNOSTIC_METHOD_SIGNAL` 接收；ΔPI-SER=`-0.08259`，
+  CI=`[-0.13812,-0.03178]`，7/0/13。信号集中于 7/20 CMA-collapse seeds，
+  gate artifact 与完整四分类仍有债。停止方法工厂，Q15 回到正式 Step 1–2。
 
 ## 未决项
 
@@ -503,9 +511,9 @@ rdl_control:
 
 ## 当前位置
 
-T019 已由 V052/D027 部分接收并追加 CP018：method delta 为
-`FAIR_COMPARISON_RUN`，但科学 verdict 拒收；formal active carrier 仍为
-`NONE`。control epoch50 为 `CAUSAL_CONSTELLATION_PRIOR_SPRINT_READY`。
-T020 是 CB1 z-only 轴唯一一次 corrected-baseline 扩展：current `μ=0.03`、
-prefix-only、fresh dev/test、seed-cluster 统计。若无 held-out 信号，本轴退出且
-不得第三包。T018/Q14 继续冻结。
+T020 已由 V053/D028 接收并追加 CP019：method delta 为 `METHOD_SIGNAL`，
+claim ceiling 仍是 diagnostic-only。formal D037 只选择 Q15 Groundwork
+Step 1–2 workline，不是 Step 4a active carrier。control epoch51 为
+`Q15_GROUNDWORK_STEP1_2_READY`；T021 完成多源检索、公共全文获取与 coverage
+report 后必须暂停。第三个 CB1 z-only factory、Q15 Step 3+ 与实验均禁止；
+T018/Q14 继续冻结。

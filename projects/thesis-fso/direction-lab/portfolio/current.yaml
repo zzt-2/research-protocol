@@ -13,34 +13,36 @@ recovery_entry: .sessions/2026-07-23-research-direction-lab-longitudinal-test/to
 
 formal_active_carrier:
   id: NONE
-  status: NO_ACTIVE_SCIENTIFIC_CARRIER
-  readiness: CAUSAL_CONSTELLATION_PRIOR_SPRINT_READY_NOT_ACTIVE
-  authority: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D027
+  status: NO_ACTIVE_STEP4A_SCIENTIFIC_CARRIER
+  readiness: Q15_GROUNDWORK_STEP1_2_WORKLINE_SELECTED
+  authority: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D037
   positive_method_target: null
   fair_comparators: []
-  claim_ceiling: NO_METHOD_CLAIM
-  stop: T018_FROZEN; DIAGNOSTIC_ONLY_NO_FORMAL_STEP4A_OR_CLAIM
+  claim_ceiling: DIAGNOSTIC_ONLY_NOT_FORMAL_GW_MVE
+  stop: >-
+    T021 stops after Step1 search and Step2 public-fulltext coverage report;
+    no Step3+, experiment, paper claim, or third CB1 z-only factory package
 
 selected_formalization_workline:
-  id: Q14
-  status: FROZEN_UNRESOLVED
-  readiness: HYPOTHESIS_ONLY
-  authority: live D026
+  id: Q15
+  status: GROUNDWORK_STEP1_2_READY
+  readiness: DIAGNOSTIC_WINNER_REQUIRES_FULL_GROUNDWORK
+  authority: formal D037 / live D028
   positive_method_target: >-
-    strictly-causal receiver-visible additive residual correction after
-    always-online standard CMA
+    receiver-visible prefix-gated identity/quantile-shell radius calibration
+    after fixed-mu blind FIR CMA
   fair_comparators:
-    - tuned standard CMA
-    - tuned CMA plus task-matched DD-LMS or RDE
-    - equally-budgeted simple residual DSP
+    - tuned robust CMA / RDE / MMA / MCMA
+    - restart, multistart, or reinitialization of the same CMA
+    - blind AGC / scale normalization / radius-directed post-processing
+    - C11 legal causal and blind affine as inherited diagnostics
   expected_mission_method_delta: NONE
   current_gate: >-
-    T018 frozen; no final binding or Phase A. Reconsider only after a
-    diagnostic method signal is selected for full Groundwork.
+    T021 may complete Step1 search and Step2 public-fulltext coverage only;
+    coverage report must return to master before Step3.
   stop: >-
-    no Step4a, implementation or experiment; any coverage/fulltext/convergence
-    failure or criterion2 UNKNOWN/FAIL returns Q14 with no second
-    problem-evidence package
+    no Step3+, Step4a, implementation, experiment, or third factory package;
+    direct collision or robust cheap-alternative absorption must be reported
 
 candidates:
   # ── Cluster 1-2: Failure observability (CEILINGED) ──
@@ -190,11 +192,11 @@ remaining_open:
     note: needs action hook; co-blocked
 
 next_action: >-
-  V052/D027 partially accept T019's FAIR_COMPARISON_RUN but reject its science
-  verdict. T020 is the next legal package: one ordinary GLM compares 3-4 causal
-  constellation-prior shell methods using current μ=0.03, prefix-only mapping
-  and fresh held-out seeds. No signal exits CB1 z-only; any winner returns to
-  full Groundwork. No T018, formal MVE, promotion, or paper claim.
+  V053/D028 accept T020/M4 as a factory-level DIAGNOSTIC_METHOD_SIGNAL.
+  Formal D037 selects Q15 Groundwork Step1-2 only. T021 performs multi-source
+  search, direct-collision/cheap-alternative mapping and public-fulltext
+  coverage, then stops for master review. No Step3+, third factory, T018,
+  formal MVE, promotion, or paper claim.
   Historical context:
   D022 (SCIENCE_FREEZE): SCIENCE_SCOUT candidate rotation PAUSED (topic dormant). NO legal
   main-method signal. F1=TESTBED_BLOCKED, F3=UNRESOLVED, F4=INFRASTRUCTURE_BLOCKED. F2 pilot lineage
@@ -223,10 +225,11 @@ next_action: >-
   C04/C09-open, find 0 READY / 0 NEEDS_SMALL_ADAPTER / 5 HYPOTHESIS_ONLY, and
   select a one-shot C16-open Step 1-2 formalization workline. T017 stops at A6
   on source family=1<3 and must-read=2<5; V049/D023/D034 return C16-open with
-  no second package and delta NONE. Live R008/D024 and formal D035 then select
-  Q14 for one mandatory Step 3.5/problem-evidence package after comparing
-  Q-ML4, B4 and C04/C09-open. T018 remains pre-execution pending independent
-  review; active carrier is still NONE and expected delta is NONE. No old-C16
+  no second package and delta NONE. Historical live R008/D024 and formal D035
+  then selected Q14 for one mandatory Step 3.5/problem-evidence package after
+  comparing Q-ML4, B4 and C04/C09-open. T018 never executed and was later
+  frozen by D026. Current live V053/D028 and formal D037 select Q15 for bounded
+  Groundwork Step 1-2 formalization; active carrier is still NONE. No old-C16
   execution, Phase B, Q14 Step 4a, implementation, experiment, second
   C16/Q14 source/problem-evidence package, Step 5, Scout/P03, or C15 Phase B is
   authorized.

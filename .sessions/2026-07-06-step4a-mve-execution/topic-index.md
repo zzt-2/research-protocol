@@ -1,7 +1,7 @@
 # Topic Index: Step 4a 维度 D MVE 执行
 
 > slug: 2026-07-06-step4a-mve-execution
-> status: active | created 2026-07-06 | last_updated 2026-07-27（D036/live V051：修订版 T018 PASS；epoch46/CP017，无 active scientific carrier，只授权 final binding 后 Phase A。）
+> status: active | created 2026-07-06 | last_updated 2026-07-28（D037/live V053：T020 M4 工厂级诊断信号已接收；Q15 只授权 Groundwork Step 1–2。）
 
 ## 专题定位（一句话）
 
@@ -27,14 +27,14 @@
 对 B11/B3/B7 走 Step 4a 维度 D MVE，守 FR-21/TL-20/FR-18/FR-12 + D005 务实路线 + D006 红线。
 
 ### 当前范围
-- **D036 当前状态**：R008 选择 Q14 一次性 mandatory Step 3.5/
-  problem-evidence workline；D025/D036 已修复 T018，V051 复审
-  P0/P1/P2=`0/0/0`。
-- **当前 active scientific carrier**：无。foreground epoch46 / CP017，只在
-  final binding PASS 后由不同 executor 执行 Phase A 并暂停；不得进入 A0。
+- **D037 当前状态**：live V053/D028 接收 T020/M4 为工厂级诊断信号；Q15
+  获得一次 Groundwork Step 1–2 workline，T020 不完成任何 formal GW Step。
+- **当前 active scientific carrier**：无 Step 4a carrier。foreground
+  epoch51 / CP019 只允许 T021 完成 Q15 检索、公共全文获取与 coverage-gap
+  report，随后暂停；不得精读或进入 Step 3+。
 - T017 Phase B、C16 Step 3/Q#/implementation/simulation/Probe/MVE、第六查询、
   label/source-receipt repair 均禁止；C15 与既有 repair 禁令继续有效；
-  Q14 Step 4a/实现/实验和第二个 problem-evidence package也禁止；
+  Q14/T018 继续冻结；Q15 Step 3/3.5/4a/实现/实验均禁止；
   Step 5/Contract/Execute 继续锁定。
 
 ### 明确不含
@@ -292,18 +292,19 @@ projects/simulation/
    `BLOCKED_TASK_INTERFACE / PACKAGE_NOT_EXECUTED`；T016 又由 V047 接收为
    `BLOCKED_FORMAL_READINESS / BLOCKED_IDENTITY_CONFLICT`。C15 返回候选池，
    不得第二个 source/formalization package、Phase B、Step 3 或 MVE。
-4. **当前阶段边界**：只允许 Q14 mandatory Step 3.5 修订版 T018 的独立
-    final binding；PASS 后只执行 Phase A 检索、引用链与
-    actual-source/identity/priority gate，再暂停。Step 4a/A0/MVE、
-    Step 5/Contract/Execute 均未授权。禁止运行旧
+4. **当前阶段边界**：只允许 Q15 Groundwork Step 1-2 / T021 的检索、
+   公开全文获取与 coverage report；必须在 Step 3 前停止。
+   Step 4a/A0/MVE、Step 5/Contract/Execute 均未授权。Q14/T018 已冻结，
+   不是当前 workline。禁止运行旧
     C15/C16/B9 sandbox，禁止修 T006/T008/T009/T010/T016，禁止复活 Scout/P03。
 
 ## 当前位置
 
-**🟠 D036 NO ACTIVE CARRIER / Q14 STEP 3.5 PHASE-A AUTHORIZED
-（2026-07-27）**：V051 以 P0/P1/P2=`0/0/0` 接收修订版 T018 静态合同。
-foreground 为 epoch46 / CP017，下一动作仅为独立 final binding；PASS 后由
-不同 executor 执行 Phase A并暂停。formal stage 保持 Groundwork，active
+**🟠 D037 NO ACTIVE STEP4A CARRIER / Q15 STEP1-2 READY
+（2026-07-28）**：T020 产生首个可保留的 factory-level diagnostic signal，
+live V053/D028 接收其为候选方法胚子，但不接收为论文方法或 Step 4a Go。
+foreground 为 epoch51 / CP019，下一动作仅为 T021 的 Step 1-2
+检索、公开全文获取与 coverage report，并在 Step 3 前暂停。formal stage 保持 Groundwork，active
 scientific carrier 仍为空；Step 4a/A0/实验未授权。
 
 **（历史）D016/V003 NO ACTIVE CARRIER**：T009 在一次有界 repair 后
@@ -445,9 +446,12 @@ strongest-fixed comparator 仍需 formal 闭合。D015 不继承旧 PASS，而�
 - **live R008/D024 / formal D035 / epoch 44 / CP017**（2026-07-27，历史）：
   选择 Q14 mandatory Step 3.5/problem-evidence workline；scientific carrier
   仍为 NONE；初版 T018 后由 V050 拒收。
-- **live V050/D025 / formal D036 / epoch 45 / CP017**（2026-07-27，当前）：
+- **live V050/D025 / formal D036 / epoch 45 / CP017**（2026-07-27，历史）：
   修复 T018 coverage/receipt/continuation contract；修订版独立 dispatch review
   由 V051 PASS，carrier 与 mission streak 均不变。
+- **T020 / live V053/D028 / formal D037 / epoch 51 / CP019**（2026-07-28，当前）：
+  接收 M4 为工厂级诊断信号，停止方法工厂；Q15 只进入 Groundwork Step 1–2，
+  T021 在 coverage report 后暂停。
 - **live V051 / formal D036 / epoch 46 / CP017**（2026-07-27，当前）：
   只授权 final-binding PASS 后执行 T018 Phase A；新论文仍必须暂停于
   delegated coverage gate。

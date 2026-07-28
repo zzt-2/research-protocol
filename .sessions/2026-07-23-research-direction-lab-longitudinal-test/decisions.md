@@ -1637,10 +1637,10 @@ S002；R007；R008；mission-log CP001–CP017；用户 2026-07-28 原话。
 
 ## D027: 部分接收 T019 并只授权一次 corrected-baseline M5 family 扩展
 
-> status: active
+> status: superseded
 > date: 2026-07-28
 > 取代：D026 的首个 sprint 当前执行状态；保留方法工厂总合同
-> 被取代：无
+> 被取代：D028
 > 依据：T019 commit `e1c479e` / worker log / raw / V052
 > 触发原话：无（技术推导）
 
@@ -1692,3 +1692,66 @@ baseline + fresh held-out 扩展是最小且可证伪的折中。
 ### 来源
 
 T019；step-019 worker log；raw/result；V052；B01-R；C11 legality。
+
+---
+
+## D028: 接收 T020 工厂级方法信号并转入 Q15 正式 Groundwork
+
+> status: active
+> date: 2026-07-28
+> 取代：D027 的 corrected-baseline 扩展执行状态；保留 D026 方法工厂总合同
+> 被取代：无
+> 依据：验证 V053 + T020 commit `5cf76d5` / worker log / raw / result
+> 触发原话：无（技术推导）
+
+### 决策
+
+1. 接收 T020 的 `mission_method_delta=METHOD_SIGNAL` 与 M4
+   `DIAGNOSTIC_METHOD_SIGNAL`，追加 CP019；claim ceiling 固定为
+   `DIAGNOSTIC_ONLY_NOT_FORMAL_GW_MVE`。
+2. M4 暂命名为 Q15 候选：
+   `prefix-gated identity/quantile-shell transport after fixed-μ CMA`。它只用
+   128-symbol receiver-visible prefix 的功率与幅度离散度选择 identity 或
+   frozen quantile transport。
+3. 不接受“普遍均衡增益”或“信道条件自适应已证实”。38/140 个触发样本集中
+   在 7/20 seeds；当前证据更准确地表明 M4 能检测并部分修复固定
+   `μ=0.03` CMA 的某类随机实现/初始化塌缩。
+4. CB1 z-only 方法工厂到此结束，不给第三包。Q15 必须从 Groundwork Step 1
+   返回，补齐 Step 1–3/3.5/4a 后才可能进入正式实验。
+5. 下一包 T021 只做 Step 1 检索与 Step 2 公共全文获取/coverage-gap report。
+   检索必须同时覆盖 direct collision、CMA/RDE/MMA 稳健化、restart/multistart/
+   reinitialization、blind AGC/radius calibration/distribution matching 四条线。
+6. Step 2 后暂停。未经过主控 coverage gate，不得精读、写 Q15 四判据 PASS、
+   进入 Step 3.5/4a、补 gate artifact 或运行新 seed。
+
+### 理由
+
+V053 独立复算 1120 raw rows，M4 相对 `μ=0.03` CMA 的 seed-cluster
+mean/CI/help-hurt-tie 为 `-0.082589 / [-0.138115,-0.031779] / 7-0-13`；
+相对 blind-affine 与 C11 的 paired CI 也均低于 0。实现严格 prefix-only，
+test 不使用 truth 选择动作，因此达到方法工厂的诊断门。
+
+但这不是 formal Go：逐 pair gate receipt 未保存；offline 四分类只保留每 cell
+首个 seed；方法只在 7 个 seed 上产生 seed-level gain，且当前未比较更稳健的
+CMA tuning、restart 或 multistart。直接实验会再次把 baseline 脆弱性包装成
+贡献；先做 formal collision/problem-survival 是最小合法动作。
+
+### 排除的替代方案
+
+- 不开第三个 CB1 z-only 工厂包：D027 已明确 one-last extension，且已有 winner；
+- 不把 M4 直接写成论文方法：尚无 Step 1–3/3.5/4a、近期 direct competitor 或
+  cheap-alternative closure；
+- 不因 artifact 债务否决本轮信号：paired comparator 复算与只读重跑均支持
+  诊断终态，债务可以在正式阶段闭合；
+- 不恢复 Q14/T018：Q15 已有实际构造与 held-out 诊断信号，更接近方法产出。
+
+### 影响范围
+
+- foreground 更新到 epoch51 / CP019 / `Q15_GROUNDWORK_STEP1_2_READY`；
+- formal owner 新建 D037，Q14/T018 继续冻结；
+- current state/portfolio/harvest/master/projects-overview 投影到 Q15；
+- 新建 T021；禁止第三个 factory、Q15 Step 3+ 与科学实验。
+
+### 来源
+
+T020；step-020 worker log；factory-contract.v2；raw/result；V053；D026/D027。

@@ -2833,3 +2833,66 @@ PARTIAL
 receiver-visible comparators。M5 只作为弱种子扩成公开星座先验的因果
 shell-distribution family；若仍无 held-out 信号，则退出 CB1 z-only
 post-processing，不给第三包。
+
+## V053: T020 causal constellation-prior 方法工厂独立科学审查
+
+> date: 2026-07-28
+> 关联：S002 / D027 / T020 / commit `5cf76d5`
+> verifier：独立 agent `verify_t020_science` + 主线 raw/代码只读复算
+
+### 验证项
+
+- [x] raw 与统计：1120 rows，键重复/缺失/diverged=`0/0/0`；M4 相对
+  baseline 的 mean/CI/help-hurt-tie 精确复现为
+  `-0.0825893 / [-0.138115,-0.031779] / 7-0-13`。
+- [x] baseline 与因果边界：primary 为 current `μ=0.03` CMA；M4 的 test
+  动作只读 128-symbol prefix 的 `mean|z|²` 与 spread，未用 suffix/truth
+  选 branch；5/5 tests PASS。
+- [x] comparator 补算：M4−blind-affine mean=`-0.08661`，
+  CI=`[-0.14244,-0.03423]`；M4−C11 mean=`-0.09049`，
+  CI=`[-0.14470,-0.04096]`。因此结果确实未退化于两者。
+- [ ] comparator gate 实现：代码只比较总均值
+  `method_mean <= comparator_mean+0.005`，没有执行合同所称 paired CI；
+  本次由 verifier 补算后结论仍成立 → P1。
+- [ ] gate artifact：raw CSV 未保存逐 `(cell,seed)` policy、prefix features
+  与 frozen map。只读重跑得到 identity=`102/140`、M2=`38/140`、
+  M3=`0/140`，但原 artifact 自身不闭包 → P1。
+- [ ] offline 四分类：`setdefault` 使每 cell 只保留第一个 test seed 标签，
+  不能支撑 140 pairs 的类别分布叙述 → P2。
+- [ ] dev 表述：合同声明 10 dev seeds，实际 grid 只用 3 cells×3 seeds；
+  `ct=0.6` 在 grid 上界。但敏感性复算 `ct=0.4/0.5/0.6` 的 test mean 分别
+  `-0.07575/-0.07952/-0.08259`，CI upper 均<0 → P2，不推翻 signal。
+- [x] 机制边界：140 pairs 中 37 改善、1 退化、102 相同；38 次触发集中于
+  7/20 seeds，说明主要是固定 CMA 的随机实现/初始化脆弱性修复，不是普遍信道
+  增益。57 个 baseline<0.1 pairs 的实测最坏 delta=0。
+
+### 证据
+
+```text
+VERDICT=ACCEPT_DIAGNOSTIC_METHOD_SIGNAL
+P0=0
+P1=3
+P2=2
+RAW_ROWS=1120
+UNIQUE_KEYS=1120
+DIVERGED=0
+PYTEST=5/5_PASS
+M4_VS_BASELINE=-0.0825893 CI[-0.138115,-0.031779] H/H/T=7/0/13
+M4_VS_BLIND=-0.08661 CI[-0.14244,-0.03423]
+M4_VS_C11=-0.09049 CI[-0.14470,-0.04096]
+POLICY_COUNTS=identity:102,M2:38,M3:0
+```
+
+### 结论
+
+PARTIAL
+
+接收 M4 为冻结 diagnostic slice 上的 `DIAGNOSTIC_METHOD_SIGNAL`，并接收
+`mission_method_delta=METHOD_SIGNAL`。不接收 formal Groundwork Go、论文方法
+胜利、普遍均衡增益或信道条件归因。
+
+### 后续（FAIL/PARTIAL 时）
+
+停止方法工厂并返回正式 Groundwork。Step 1–2 先核查 direct collision 与
+robust-CMA/restart/multistart/radius-calibration 廉价替代；正式阶段必须保存逐
+pair gate receipt、完整四分类与 paired comparator CI。

@@ -5,8 +5,8 @@ method_type: 待定（精读后根据问题方法产出形态确定，见 glossa
 domain: comms
 created: 2026-06-21
 updated: 2026-07-28
-current_step: CAUSAL-CONSTELLATION-PRIOR-SPRINT-002-READY
-current_stage: DIRECTION_LAB_DIAGNOSTIC_DISCOVERY
+current_step: Q15-GROUNDWORK-STEP1-2-READY
+current_stage: GROUNDWORK
 ---
 
 # Master Agent: thesis-fso
@@ -27,7 +27,7 @@ current_stage: DIRECTION_LAB_DIAGNOSTIC_DISCOVERY
 
 ### 当前控制面桥接（唯一现行入口）
 
-> **2026-07-28 live V052/D027/T020 → epoch50 / CP018 CAUSAL CONSTELLATION-PRIOR SPRINT READY**：
+> **2026-07-28 live V053/D028/formal D037/T021 → epoch51 / CP019 Q15 GROUNDWORK STEP 1–2 READY**：
 > T009 的独立审查只接收 `BLOCKED_IDENTITY` 与 `mission_method_delta=NONE`；
 > 随机 TX payload 被当 pilot、DA/NDA frequency stage 不对称、无来源且无 FEC
 > crossing 的 working region，以及 raw/result 未进提交，共同否定“DA 在可靠条件
@@ -43,23 +43,23 @@ current_stage: DIRECTION_LAB_DIAGNOSTIC_DISCOVERY
 > identity failure；V026 接收 `BLOCKED_IDENTITY`、P0/P1/P2=`0/0/1` 与
 > `mission_method_delta=NONE`。不补矩阵、不改 positive-slope gate、不运行 held-out。
 
-- formal stage：`GROUNDWORK`；当前仍为 `NO_ACTIVE_SCIENTIFIC_CARRIER`。
+- formal stage：`GROUNDWORK`；当前为
+  `Q15_GROUNDWORK_STEP1_2_WORKLINE_SELECTED_NOT_STEP4A_ACTIVE`。
   B9 与 B12 均已返回候选池。Direction Lab 的
   Scout/Sandbox 结果对正式研究的 promotion effect 仍为 `none`；Direction Lab
   campaign 已 dormant（D022 SCIENCE_FREEZE），无当前科学执行授权。
-- **当前工作线**：无 active scientific carrier。T019 已追加 CP018，工程
-  `FAIR_COMPARISON_RUN` 接收，但 V052 因 under-tuned `μ=0.001` baseline、
-  M3/M5 非因果与归因越界拒收科学 verdict。D027 只保留 M5 弱线索并授权
-  T020：current `μ=0.03`、prefix-only、fresh held-out 的一次 causal
-  constellation-prior shell-family sprint；失败后退出 CB1 z-only。
+- **当前工作线**：T020 已追加 CP019；V053 接收 M4 为工厂级
+  `DIAGNOSTIC_METHOD_SIGNAL`，不接受 formal Go。M4/Q15 的改善集中在 7/20
+  CMA-collapse seeds，尚未排除 robust CMA、RDE/MMA、restart/multistart 与
+  blind normalization。D037 只授权 T021 完成 Q15 Step 1–2。
 - **Pilot-Jones（退出 carrier）**：D066/V040 接收 fixed complex component rescue
   axis scoped Kill；4 篇 direct competitor 全文债继续保留，但不阻塞当前 carrier。
 - P03（暂停，回候选池）：Headroom Atlas Stage A（2026-07-19，S077/D059/V033）runnable 子域 LOCAL_NEGATIVE；16QAM/receiver-CSI/coded-output 三轴 INFRASTRUCTURE_BLOCKED，历史反例落在被阻轴上 → DOMAIN/CANDIDATE/FAMILY 仍 UNRESOLVED/OPEN。**用户选项①已选定：暂停回候选池，不关闭 family**。
 - Direction Lab sandbox history：last completed batch = `B003 / COMPLETED_SANDBOX_VERIFIED`；事实源为 `projects/thesis-fso/direction-lab/state/completion-events.jsonl`。`canonical-state.yaml` 仅为机器投影，不是正式研究授权源。
 - formal promotion effect：`none`；B001–B003 数字不得进入论文或正式材料。
-- 下一合法边界：用户将 T020 路径交给普通 GLM；GLM 先校验 control 与 clean
-  worktree，再用 current baseline、prefix/eval 因果隔离和 fresh dev/test
-  完成一次方法构造比较。无信号不得申请第三包。
+- 下一合法边界：用户将 T021 路径交给普通 GLM；GLM 先校验 control 与 clean
+  worktree，再完成 Q15 多源检索、direct-collision/cheap-alternative map 与
+  公共全文获取。coverage-gap report 后必须暂停；禁止第三个 factory 和 Step 3+。
   **T017 不得运行 Phase B、旧 C16 sandbox、seeds 71–80、Step 3/Q#/实现/
   seed/MVE，不得第二个 C16 source/formalization package；T016/C15 不得运行 Phase B、
   第二个 source package、seed/MVE、精读或写 Q#；
@@ -110,7 +110,8 @@ current_stage: DIRECTION_LAB_DIAGNOSTIC_DISCOVERY
 | residual cascade Step 1 search | ✅ | R009 | 已完成；结论 DEFER，未发现直接 additive-residual 先例 |
 | residual cascade Step 2 acquire | ✅ | S037 | 5 篇可读全文输入达到质量门 |
 | residual cascade Step 3 read | ✅ | S038 | 5/5 精读；四判据 1/3/4 PASS、2 UNKNOWN |
-| Q14 mandatory Step 3.5 supplement | 🟠 PHASE-A AUTHORIZED / final binding待审 | R008 / V050–V051 / live D025 / formal D036 / T018 | final binding PASS 后只跑 Phase A；执行只补外部 problem evidence，PASS 后仍需新 owner 才可进入 A0 |
+| Q14 mandatory Step 3.5 supplement | ⏸ FROZEN_UNRESOLVED | R008 / V050–V051 / live D025 / formal D036 / T018 / D026 | T018 未执行且不是当前 workline |
+| Q15 prefix-gated shell calibration Step 1-2 | 🟠 READY | T020 / live V053 / live D028 / formal D037 / T021 | 只做检索、公开全文获取与 coverage；Step 3 前停止 |
 | residual cascade Step 4a §0/A0 | **DEFER** | S039 / D044 | Q14 判据 2 UNKNOWN；不作为唯一主线 |
 | 候选族地图（CMA-fade/SOP 基点） | ✅ | S041 / D045 | 6 类方法族、约 30 个变体，已按作用时段/接口/成本分组 |
 | Batch 0 基线审计 | **PARTIAL** | S042 | paired 基线/口径可重算；CRITICAL=4，recovery-delay 缺口 |

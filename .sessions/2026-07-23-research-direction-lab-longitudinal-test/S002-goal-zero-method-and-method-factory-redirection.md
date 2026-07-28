@@ -94,3 +94,11 @@ FR-22。
 > `FAIR_COMPARISON_RUN` 成立；因旧 `μ=0.001` baseline、M3/M5 非因果、
 > smoke receipt 缺失与机制归因越界，广义 `NO_DIAGNOSTIC_SIGNAL` 拒收。M5
 > 只保留为一次 corrected-baseline/fresh-seed 扩展的弱种子。
+
+> 2026-07-28 续接：T020 已完成，产出在
+> `projects/thesis-fso/direction-lab/scout/preformal-method-factory-sprint-002/`，
+> commit `5cf76d5`。V053/D028 以 PARTIAL 接收 M4 为工厂级
+> `DIAGNOSTIC_METHOD_SIGNAL`：主数字可复算、严格 prefix-only、P0=0；但 gate
+> receipt、完整四分类和 comparator gate 实现仍有债，信号主要集中在 7/20 个
+> CMA collapse seeds。方法工厂到此结束，M4 暂登记为 Q15；下一轮 T021 只做
+> Groundwork Step 1–2，coverage-gap report 后暂停。
