@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="460" viewBox="0 0 1000 460" font-family="'DejaVu Sans','Noto Sans CJK SC','Microsoft YaHei',sans-serif">
+  <title>接收端前缀门控的安全幅度归一化方法流程</title>
+  <desc>CMA 均衡输出经 128 符号接收前缀冻结门控特征 m2 与 cv，判别健康则后缀保持不变，否则逐偏振平方根幅度缩放；后缀不反馈到门控。</desc>
+
+  <defs>
+    <!-- arrowhead for solid data flow -->
+    <marker id="arrowData" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2b2b2b"/>
+    </marker>
+    <!-- arrowhead for dashed control flow -->
+    <marker id="arrowCtrl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7a5a1f"/>
+    </marker>
+    <!-- arrowhead for merge into suffix multiplier -->
+    <marker id="arrowMerge" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#1f5f8f"/>
+    </marker>
+  </defs>
+
+  <!-- legend (top-right) -->
+  <g id="legend" font-size="12">
+    <rect x="760" y="14" width="226" height="60" rx="5" fill="#ffffff" stroke="#cfcfcf"/>
+    <line x1="774" y1="34" x2="816" y2="34" stroke="#2b2b2b" stroke-width="2.2" marker-end="url(#arrowData)"/>
+    <text x="824" y="38">数据流 data flow</text>
+    <line x1="774" y1="58" x2="816" y2="58" stroke="#7a5a1f" stroke-width="2" stroke-dasharray="7 4" marker-end="url(#arrowCtrl)"/>
+    <text x="824" y="62">控制流 control flow</text>
+  </g>
+
+  <!-- ===== Stage column x anchors ===== -->
+  <!-- input ~30, prefix-feature ~210, gate ~430, branches ~640, merge/output ~880 -->
+
+  <!-- 1. CMA equalizer output (input) -->
+  <g id="nodeCMA">
+    <rect x="30" y="200" width="150" height="62" rx="8" fill="#eef3fb" stroke="#3a5d8f" stroke-width="1.4"/>
+    <text x="105" y="226" text-anchor="middle" font-size="13" font-weight="bold" fill="#1f3f66">CMA 均衡输出</text>
+    <text x="105" y="246" text-anchor="middle" font-size="11" fill="#444">双偏振复数流 (x, y)</text>
+  </g>
+
+  <!-- split into prefix / suffix annotation (split point) -->
+  <g id="split">
+    <circle cx="220" cy="231" r="4.5" fill="#2b2b2b"/>
+    <text x="220" y="214" text-anchor="middle" font-size="11" fill="#666">前缀 / 后缀切分</text>
+    <text x="220" y="255" text-anchor="middle" font-size="10" fill="#888">prefix 不与 suffix 重叠</text>
+  </g>
+
+  <!-- 2. 128-symbol received prefix -->
+  <g id="nodePrefix">
+    <rect x="285" y="60" width="170" height="58" rx="8" fill="#fff4e6" stroke="#b06a1f" stroke-width="1.4"/>
+    <text x="370" y="86" text-anchor="middle" font-size="13" font-weight="bold" fill="#7a4a0f">128 符号接收前缀</text>
+    <text x="370" y="105" text-anchor="middle" font-size="10.5" fill="#555">仅接收信号，无发送端真值</text>
+  </g>
+
+  <!-- 3. pooled gate features -->
+  <g id="nodeFeat">
+    <rect x="285" y="150" width="170" height="66" rx="8" fill="#fff4e6" stroke="#b06a1f" stroke-width="1.4"/>
+    <text x="370" y="172" text-anchor="middle" font-size="12.5" font-weight="bold" fill="#7a4a0f">双偏振拼接特征</text>
+    <text x="370" y="191" text-anchor="middle" font-size="11.5" fill="#333">m₂ = mean(|z|²)</text>
+    <text x="370" y="208" text-anchor="middle" font-size="11.5" fill="#333">cv = std(|z|)/(mean(|z|)+ε)</text>
+  </g>
+
+  <!-- 4. decision gate (diamond) -->
+  <g id="nodeGate">
+    <polygon points="370,250 470,305 370,360 270,305" fill="#eafaf1" stroke="#1f7a3a" stroke-width="1.6"/>
+    <text x="370" y="298" text-anchor="middle" font-size="12" font-weight="bold" fill="#14532d">是否满足健康条件？</text>
+    <text x="370" y="316" text-anchor="middle" font-size="11" fill="#333">m₂ ≥ 0.6 且 cv ≥ 0.1</text>
+    <text x="370" y="332" text-anchor="middle" font-size="10" fill="#666">阈值开发集冻结</text>
+  </g>
+
+  <!-- 5a. YES branch -> identity -->
+  <g id="nodeIdentity">
+    <rect x="555" y="92" width="190" height="64" rx="8" fill="#eafaf1" stroke="#1f7a3a" stroke-width="1.4"/>
+    <text x="650" y="116" text-anchor="middle" font-size="13" font-weight="bold" fill="#14532d">是：后缀保持不变</text>
+    <text x="650" y="136" text-anchor="middle" font-size="11" fill="#444">a_x = a_y = 1（逐复样本恒等）</text>
+    <text x="650" y="150" text-anchor="middle" font-size="10" fill="#777">健康分支零后缀变换扰动</text>
+  </g>
+
+  <!-- 5b. NO branch -> per-pol robust power + sqrt scale -->
+  <g id="nodeScale">
+    <rect x="555" y="252" width="190" height="92" rx="8" fill="#fdecef" stroke="#9b2340" stroke-width="1.4"/>
+    <text x="650" y="274" text-anchor="middle" font-size="13" font-weight="bold" fill="#6b1228">否：逐偏振稳健功率估计</text>
+    <text x="650" y="294" text-anchor="middle" font-size="11.5" fill="#333">P̂_p = trimmean(|z_pref,p|²)</text>
+    <text x="650" y="314" text-anchor="middle" font-size="11.5" fill="#333">a_p = √(1 / P̂_p)</text>
+    <text x="650" y="332" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#6b1228">平方根幅度缩放 a_x, a_y</text>
+  </g>
+
+  <!-- 6. suffix multiplier (merge point) -->
+  <g id="nodeMult">
+    <rect x="800" y="196" width="150" height="70" rx="8" fill="#eef3fb" stroke="#3a5d8f" stroke-width="1.4"/>
+    <text x="875" y="222" text-anchor="middle" font-size="13" font-weight="bold" fill="#1f3f66">后缀标量变换</text>
+    <text x="875" y="242" text-anchor="middle" font-size="11.5" fill="#333">z′_p = a_p · z_suffix,p</text>
+    <text x="875" y="258" text-anchor="middle" font-size="10" fill="#888">逐复样本，无状态</text>
+  </g>
+
+  <!-- 7. decision input (output) -->
+  <g id="nodeOutput">
+    <rect x="800" y="60" width="150" height="58" rx="8" fill="#ffffff" stroke="#555555" stroke-width="1.4"/>
+    <text x="875" y="86" text-anchor="middle" font-size="13" font-weight="bold" fill="#222">判决输入</text>
+    <text x="875" y="105" text-anchor="middle" font-size="10.5" fill="#666">送入符号判决</text>
+  </g>
+
+  <!-- ===== ARROWS ===== -->
+
+  <!-- CMA output -> split point (data flow) -->
+  <line x1="180" y1="231" x2="215" y2="231" stroke="#2b2b2b" stroke-width="2.2" marker-end="url(#arrowData)"/>
+
+  <!-- split -> prefix node (data flow, up) -->
+  <path d="M220,227 L220,116 L282,116" fill="none" stroke="#2b2b2b" stroke-width="2.2" marker-end="url(#arrowData)"/>
+  <!-- split -> suffix multiplier (data flow, across; suffix bypasses the gate) -->
+  <path d="M220,231 L705,231 L800,231" fill="none" stroke="#2b2b2b" stroke-width="2.2" marker-end="url(#arrowData)"/>
+  <text x="455" y="224" text-anchor="middle" font-size="10.5" fill="#666">被评分后缀（不反馈到门控）</text>
+
+  <!-- prefix node -> features (data flow) -->
+  <line x1="370" y1="118" x2="370" y2="148" stroke="#2b2b2b" stroke-width="2.2" marker-end="url(#arrowData)"/>
+
+  <!-- features -> gate (control flow) -->
+  <line x1="370" y1="216" x2="370" y2="248" stroke="#7a5a1f" stroke-width="2" stroke-dasharray="7 4" marker-end="url(#arrowCtrl)"/>
+
+  <!-- gate YES -> identity (control flow) -->
+  <path d="M420,268 L520,160 L553,160" fill="none" stroke="#7a5a1f" stroke-width="2" stroke-dasharray="7 4" marker-end="url(#arrowCtrl)"/>
+  <text x="492" y="200" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#14532d">是</text>
+
+  <!-- gate NO -> scale (control flow) -->
+  <path d="M420,342 L520,300 L553,300" fill="none" stroke="#7a5a1f" stroke-width="2" stroke-dasharray="7 4" marker-end="url(#arrowCtrl)"/>
+  <text x="492" y="338" text-anchor="middle" font-size="11.5" font-weight="bold" fill="#6b1228">否</text>
+
+  <!-- identity -> multiplier (control flow: sets a=1) -->
+  <path d="M745,124 L770,124 L770,210 L798,210" fill="none" stroke="#1f5f8f" stroke-width="2" stroke-dasharray="7 4" marker-end="url(#arrowMerge)"/>
+  <text x="760" y="116" text-anchor="middle" font-size="10" fill="#1f5f8f">a = 1</text>
+
+  <!-- scale -> multiplier (control flow: sets a_x,a_y) -->
+  <path d="M745,298 L770,298 L770,252 L798,252" fill="none" stroke="#1f5f8f" stroke-width="2" stroke-dasharray="7 4" marker-end="url(#arrowMerge)"/>
+  <text x="760" y="294" text-anchor="middle" font-size="10" fill="#1f5f8f">a_x, a_y</text>
+
+  <!-- multiplier -> output (data flow) -->
+  <line x1="875" y1="196" x2="875" y2="120" stroke="#2b2b2b" stroke-width="2.2" marker-end="url(#arrowData)"/>
+
+  <!-- ===== annotations ===== -->
+  <text x="20" y="30" font-size="11" fill="#999">门控由 128 符号前缀冻结；仅冻结后的后缀标量变换是逐样本、无记忆的。</text>
+  <text x="20" y="445" font-size="11" fill="#999">公式、阈值与 10% 截尾均值均与实现一致；ε=10⁻⁹ 为数值稳定项。</text>
+</svg>

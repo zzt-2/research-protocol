@@ -1,0 +1,88 @@
+stratum,seed,cell,method,delta_pi_ser
+collapse,261,16qam-snr20-fg100-short,gated_scalar,-0.6875000000
+collapse,261,16qam-snr25-nominal-short,gated_scalar,-0.7382812500
+collapse,262,16qam-snr20-fg100-short,gated_scalar,-0.6914062500
+collapse,262,16qam-snr25-nominal-short,gated_scalar,-0.7500000000
+collapse,263,16qam-snr20-fg100-short,gated_scalar,-0.2695312500
+collapse,263,16qam-snr25-nominal-short,gated_scalar,-0.1445312500
+collapse,264,16qam-snr20-fg100-short,gated_scalar,-0.1445312500
+collapse,266,16qam-snr20-fg100-short,gated_scalar,-0.6835937500
+collapse,266,16qam-snr25-nominal-short,gated_scalar,-0.7656250000
+collapse,267,16qam-snr20-fg100-short,gated_scalar,-0.3437500000
+collapse,267,16qam-snr25-nominal-short,gated_scalar,-0.3046875000
+collapse,270,16qam-snr25-nominal-short,gated_scalar,-0.7695312500
+collapse,271,16qam-snr20-fg100-short,gated_scalar,-0.7148437500
+collapse,271,16qam-snr25-nominal-short,gated_scalar,-0.7460937500
+collapse,272,16qam-snr25-nominal-short,gated_scalar,-0.7460937500
+collapse,274,16qam-snr25-nominal-short,gated_scalar,-0.7382812500
+collapse,275,16qam-snr15-nominal-short,gated_scalar,0.0000000000
+collapse,276,16qam-snr20-fg100-short,gated_scalar,-0.6914062500
+collapse,276,16qam-snr25-nominal-short,gated_scalar,-0.7656250000
+collapse,278,16qam-snr25-nominal-short,gated_scalar,-0.7304687500
+healthy,262,16qam-snr15-fg1000-long,gated_scalar,0.0000000000
+healthy,264,16qam-snr25-nominal-short,gated_scalar,-0.0312500000
+healthy,265,16qam-snr15-nominal-short,gated_scalar,0.0000000000
+healthy,265,16qam-snr20-fg100-short,gated_scalar,0.0000000000
+healthy,265,16qam-snr25-nominal-short,gated_scalar,0.0000000000
+healthy,268,16qam-snr15-fg1000-long,gated_scalar,0.0000000000
+healthy,268,16qam-snr15-nominal-short,gated_scalar,0.0000000000
+healthy,268,16qam-snr20-fg100-short,gated_scalar,0.0000000000
+healthy,268,16qam-snr25-nominal-short,gated_scalar,0.0000000000
+healthy,269,16qam-snr15-nominal-short,gated_scalar,0.0000000000
+healthy,269,16qam-snr20-fg100-short,gated_scalar,0.0000000000
+healthy,269,16qam-snr25-nominal-short,gated_scalar,0.0000000000
+healthy,270,16qam-snr15-fg1000-long,gated_scalar,0.0000000000
+healthy,273,16qam-snr15-fg1000-long,gated_scalar,0.0000000000
+healthy,273,16qam-snr15-nominal-short,gated_scalar,0.0000000000
+healthy,273,16qam-snr20-fg100-short,gated_scalar,0.0000000000
+healthy,273,16qam-snr25-nominal-short,gated_scalar,0.0000000000
+healthy,275,16qam-snr20-fg100-short,gated_scalar,0.0000000000
+healthy,275,16qam-snr25-nominal-short,gated_scalar,0.0000000000
+healthy,277,16qam-snr15-fg1000-long,gated_scalar,0.0000000000
+healthy,277,16qam-snr15-nominal-short,gated_scalar,0.0000000000
+healthy,277,16qam-snr20-fg100-short,gated_scalar,0.0000000000
+healthy,277,16qam-snr25-nominal-short,gated_scalar,0.0000000000
+healthy,278,16qam-snr15-fg1000-long,gated_scalar,0.0000000000
+healthy,279,16qam-snr10-fg100-long,gated_scalar,0.0000000000
+healthy,279,16qam-snr15-fg1000-long,gated_scalar,0.0000000000
+healthy,279,16qam-snr15-nominal-short,gated_scalar,0.0000000000
+healthy,279,16qam-snr20-fg100-short,gated_scalar,0.0000000000
+healthy,279,16qam-snr25-nominal-short,gated_scalar,0.0000000000
+healthy,262,16qam-snr15-fg1000-long,robust_scalar,-0.0039062500
+healthy,264,16qam-snr25-nominal-short,robust_scalar,-0.0312500000
+healthy,265,16qam-snr15-nominal-short,robust_scalar,0.0039062500
+healthy,265,16qam-snr20-fg100-short,robust_scalar,0.0000000000
+healthy,265,16qam-snr25-nominal-short,robust_scalar,0.0000000000
+healthy,268,16qam-snr15-fg1000-long,robust_scalar,-0.0039062500
+healthy,268,16qam-snr15-nominal-short,robust_scalar,0.0195312500
+healthy,268,16qam-snr20-fg100-short,robust_scalar,0.0117187500
+healthy,268,16qam-snr25-nominal-short,robust_scalar,0.0078125000
+healthy,269,16qam-snr15-nominal-short,robust_scalar,-0.0078125000
+healthy,269,16qam-snr20-fg100-short,robust_scalar,0.0000000000
+healthy,269,16qam-snr25-nominal-short,robust_scalar,0.0000000000
+healthy,270,16qam-snr15-fg1000-long,robust_scalar,0.0000000000
+healthy,273,16qam-snr15-fg1000-long,robust_scalar,-0.0039062500
+healthy,273,16qam-snr15-nominal-short,robust_scalar,-0.0156250000
+healthy,273,16qam-snr20-fg100-short,robust_scalar,0.0039062500
+healthy,273,16qam-snr25-nominal-short,robust_scalar,0.0000000000
+healthy,275,16qam-snr20-fg100-short,robust_scalar,0.0000000000
+healthy,275,16qam-snr25-nominal-short,robust_scalar,0.0000000000
+healthy,277,16qam-snr15-fg1000-long,robust_scalar,0.0000000000
+healthy,277,16qam-snr15-nominal-short,robust_scalar,0.0000000000
+healthy,277,16qam-snr20-fg100-short,robust_scalar,0.0000000000
+healthy,277,16qam-snr25-nominal-short,robust_scalar,0.0000000000
+healthy,278,16qam-snr15-fg1000-long,robust_scalar,-0.0117187500
+healthy,279,16qam-snr10-fg100-long,robust_scalar,0.0078125000
+healthy,279,16qam-snr15-fg1000-long,robust_scalar,0.0000000000
+healthy,279,16qam-snr15-nominal-short,robust_scalar,-0.0039062500
+healthy,279,16qam-snr20-fg100-short,robust_scalar,0.0000000000
+healthy,279,16qam-snr25-nominal-short,robust_scalar,0.0000000000
+
+# summary,method,stratum,stat,value
+# summary,gated_scalar,collapse,cluster_mean,-0.5597956731
+# summary,gated_scalar,collapse,ci_lo,-0.6947115385
+# summary,gated_scalar,collapse,ci_hi,-0.4063964844
+# summary,gated_scalar,collapse,help,12
+# summary,gated_scalar,collapse,hurt,0
+# summary,gated_scalar,healthy,pair_worst,0.0000000000
+# summary,gated_scalar,healthy,cluster_mean,-0.0028409091
