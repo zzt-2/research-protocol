@@ -4,12 +4,12 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 59
+  control_epoch: 60
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: NEXT_LIVE_TEST_SELECTION_READY
+  active_lane: SPRINT003_DISPATCH_READY
   authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D034
-  decision_gate: D019/V013 v2.1 已终验并同步；当前无 active carrier，T027 前先选择能验证 signal→formal 转化的合法入口
+  decision_gate: 入口已选（S003）：两 signal promotion preflight 均 STRATEGIC_GATE（comparator 不闭合），硬路由到 method factory；T027=频域/子带均衡族 sprint-003（仅诊断）已就绪待用户中转
   allowed_actions:
     - RECOVER
     - TASK_PREPARATION
@@ -28,11 +28,11 @@ rdl_control:
     - PROTECTED_HISTORY_EDIT
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
   mission_checkpoint: CP025
-  next_legal_action: 重读 current portfolio 与完整 mission-log，按恢复三问比较现有可转化入口和新方法工厂 testbed，再准备 T027
+  next_legal_action: 用户中转 T027 后，executor 在新对话执行频域/子带均衡族诊断 sprint-003；本对话不再动作，等回执
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（T026 已接收；epoch 59 / CP025，v2.1 已终验，下一 live-test 入口选择就绪）
+> 状态: active（S003 入口已选；epoch 60 / CP025，T027 频域/子带均衡族诊断 sprint 已就绪待中转）
 > 创建: 2026-07-23 | 最后更新: 2026-07-29
 
 ## 专题信息
@@ -116,16 +116,23 @@ rdl_control:
 | CP020–CP023 | Q15→G1 formalization：产生第二 signal，但 formal conversion 失败 | mission-log |
 | CP024–CP025 | G1 bounded package→论文小节与两图；science ceiling 不变 | mission-log / T025–T026 |
 | R009 / D034 | 纵向效果审计完成；进入 system D019 最小修订 | R009 / decisions.md |
+| S003 | 下一入口选择：两 signal preflight=STRATEGIC_GATE，硬路由 method factory；T027 频域/子带均衡族诊断 sprint 就绪 | S003 / T027 |
 
 ## 未决项
 
-- 下一 live test 的具体 scientific carrier/factory testbed 尚未选择；
+- T027（频域/子带均衡族诊断 sprint）待用户中转后由 executor 执行；
+- 若 sprint-003 仍无 signal 或仍无真实不同 comparator，触发战略 gate 升级（私域全文/论文范围决策），届时交用户；
 - 下一真实压缩事件需量化 elapsed time、files read、lane/gate match；
 - G1 只保留 bounded thesis asset，不重开科学修复。
 
 ## 当前位置
 
-T026 已由 D034 接收为 `artifact_delta=WRITING_MATERIAL /
-mission_method_delta=NONE`，CP025。当前无 active scientific carrier。system
-D019/V013 v2.1 已终验并同步。下一步先按恢复三问比较现有可转化入口与新的方法
-工厂 testbed，选择能验证 signal→formal 转化的下一 live-test 入口，再生成 T027。
+S003 已完成下一 live-test 入口选择：两个 diagnostic signal（M4 / 派生 G1）的 promotion
+preflight 均为 `STRATEGIC_GATE`（共同 blocker = collapse-recovery 族在当前切片无真实、
+不同、已调谐的 receiver-visible comparator；新颖性收据闭包卡在私域全文可达性）。按
+method-production 硬路由（`READY=0 / NEEDS_SMALL_ADAPTER=0` 且无 active carrier），选择
+入口 A = 在已验证的 CB1 16QAM corrected-μ=0.03 testbed 上对**频域/子带均衡族**做一次
+bounded 诊断 sprint（sprint-001 §8 明确的未测第六族，portfolio 三轴 REOPENED，不破坏
+identity parity），并**把"自带真实不同 comparator"内化为 factory 硬要求**。T027 已生成
+并 `validate_task_control.py` PASS（epoch 60 / CP025 / 动作类合法）。当前无 active
+scientific carrier；本对话不再动作，等用户中转 T027。
