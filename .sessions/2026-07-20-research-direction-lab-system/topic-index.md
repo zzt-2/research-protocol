@@ -4,12 +4,12 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v1
-  control_epoch: 5
+  control_epoch: 7
   role: SYSTEM_DESIGN
   mission: 设计并验证轻量长程研究运行协议
-  active_lane: DESIGN_COMPLETE_V2
-  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D018
-  decision_gate: v2 方法生产、双账、三层 mission-log 与 checkpoint guard 已实现；等待 live topic 启动 phase 2
+  active_lane: DESIGN_COMPLETE_V21
+  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D019
+  decision_gate: v2.1 最小修订、个人 Skill 同步与 V013 独立终验均 PASS；下一 live-test 入口由 live topic 选择
   allowed_actions:
     - PROTOCOL_AUDIT
     - LIVE_TEST_PREPARATION
@@ -17,11 +17,11 @@ rdl_control:
     - SCIENTIFIC_DISPATCH
     - SKILL_SCIENCE_CAMPAIGN
     - FORMAL_STAGE_CHANGE
-  next_legal_action: 保留为 v2 审查基线；phase-2 入口与任务由 live topic 持有
+  next_legal_action: 保留为 v2.1 审查基线；下一 live-test 入口与任务由 live topic 持有
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-07-26（D018：phase-1 审计后实施 method-production v2）
+> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-07-29（D019/V013：v2.1 最小修订终验 PASS）
 
 ## 专题信息
 
@@ -48,6 +48,7 @@ rdl_control:
 - 基于 S009 的科学语义审计，当前范围扩展为 Probe/Scout/Deep Evidence 分层、单一恢复投影、current-view/lineage、harvest 状态索引和抗膨胀目录的设计、推演、Skill 实施与独立验证；不借此运行科学实验。
 - 基于真实 science-scout campaign 的 SCIENCE_FREEZE，当前先冻结四层记忆与双日志，复盘 system 设计在真实长跑中的兑现差距；不改变 Pilot-Jones 正式 Groundwork。
 - R002 完成后，先记录并分析一次真实压缩恢复跑偏，设计、演练和审查轻量长程运行协议；用户认可后以 fork 做真实纵向运行，设计完成前不修改 Skill/controller、不派具体科学方向。
+- 基于 live-test R009 对 T001–T026 的效果审计，允许只修恢复三问、方法工厂硬路由、signal promotion preflight 与真实恢复 receipt；不新增 controller，不改变科学 verdict。
 
 ### 明确不含
 
@@ -100,6 +101,10 @@ rdl_control:
 - **[2026-07-23] 运行协议设计与 fork 纵向测试（D016）**：R002 后的首次压缩恢复现场复现主线偏离，用户要求先落日志、仔细设计，不根据单次事故急改规则。
   - 新范围：分析 S014 现场故障及历史同类，比较并演练少量轻量运行协议候选；设计获认可后再一次性落到唯一 owner，并 fork 当前对话真实运行。
   - 明确排除：当前直接修改 Skill/controller、派 Pilot-Jones 或其他科学方向、把单次事故直接固化成全局规则。
+- **[2026-07-29] T001–T026 效果审计后的最小修订（D019）**：用户确认基本每次交互都会压缩，并授权审计后修改。
+  - 原因：CP001–CP017 方法增量 0/17；T019 后出现 2 个 signal，但 formal 转化仍为 0/2，且 current snapshot 已混入 package history。
+  - 新范围：只改 RDL 恢复路由、方法工厂硬触发、promotion preflight、真实恢复 receipt 和 live current-view 压缩。
+  - 影响的未决项：下一 live test 以至少一个 signal 转为 active carrier/`PROMOTION_READY` 为成功，不以包装或写作材料替代。
 
 ## 已确认结论
 
@@ -165,6 +170,7 @@ rdl_control:
 - **D017 / implementation**：采用 R003 的轻量前台控制接口；guard 与 Skill 路由完成 TDD/回归（repo 97 passed, 1 skipped），59 个非缓存 Skill 文件已与个人消费者镜像逐字节一致，消费者 guard 6/6 PASS。longitudinal live-test mission 仅以 Recover/Map 权限准备，不携带科学授权。
 - **D018 / v2 amendment**：phase-1 审计确认无严重跨 lane，但 mission success 漂移为反证/修复闭包。v2 改用正向方法合同、formal/method 双账、固定 `mission-log.md` 三层记录、checkpoint guard 和 master-only owner 更新；不建 controller。
 - **V012**：独立终验 PASS；两项初审 P2（旧 checkpoint 缺证据指针、registry epoch 过期）已关闭，P0/P1/P2=0。
+- **live R009 / D019**：T001–T026 审计确认方法工厂改善近端发现，但 signal→formal 为 0/2；授权 v2.1 最小路由修订，不重写体系。
 
 ## 未决项
 
@@ -177,11 +183,10 @@ rdl_control:
 - ~~H004/T001 已冻结下一科学 campaign 的恢复入口~~（D015 暂停执行；仅保留为历史入口，不再作为当前 next action）。
 - 新科学项目首次采用 current layout 时，需要渐进生成 `state/current.yaml`、`portfolio/current.yaml`、`harvest/current.yaml`；禁止为了迁移整洁批量改写旧 artifacts。
 - ~~R002 历史复盘尚未执行~~（已完成）：见 `R002-long-horizon-runtime-retrospective.md`。
-- 长程运行协议尚未设计完成：主控选题、方向 disposition/轮换、专题生命周期、压缩恢复强约束、单 GLM 工作包边界、Skill/治理/current owner 分工和纵向验收仍待分析与演练；不得把 D013/D014 当作已经自动解决这些问题。
+- D019 v2.1 已终验并同步；下一 live test 的具体 signal→formal 转化入口由 live topic 选择。
 
 ## 当前位置
 
-Phase 1 已在 `aab425d` 冻结并完成审计。D018 v2 的方法生产、formal/method
-双账、固定 `mission-log.md`、checkpoint guard 和 owner 边界已实现；system
-topic 进入 `DESIGN_COMPLETE_V2` 并保留为审查基线。phase-2 入口与后续任务由
-live topic 持有。
+T001–T026 效果审计已形成 live R009。D019 v2.1 保留 D018 架构，只补恢复三问、
+工厂硬路由、promotion preflight 和事件式 recovery receipt；V013 已 PASS，个人
+Skill 已同步。system topic 返回审查基线，下一 live-test 入口由 live topic 持有。

@@ -18,6 +18,10 @@ selector.
 Long-running RDL topics use three record layers: `topic-index.md` for the
 current snapshot, fixed `mission-log.md` for one compact checkpoint per
 accepted package, and T/worker-log/artifacts/commit for package detail.
+The current snapshot contains no package-by-package history: keep the frozen
+mission, current scope, invariants, foreground block, current gate, and next
+legal action there. Keep the compact chain in `mission-log.md` and detailed
+history in decisions, verification, worker logs, and artifacts.
 
 ## Topic control block
 
@@ -99,20 +103,26 @@ dispatched.
 
 1. Read the foreground block after startup, context loss, a fork, or a material
    user correction.
-2. Read only the owner at `authority_pointer` needed for the current decision.
+2. Read the frozen original mission, current scope, invariants, and only the
+   owner at `authority_pointer` needed for the current decision.
 3. Read the complete compact mission-log chain. Separate formal science
    disposition from mission method delta and compare the proposed action with
    the best legal ready alternative.
-4. Bind and validate one T against the current accepted mission checkpoint. A
+4. Complete a **recovery route check** in three sentences:
+   - Does the next action create, compare, promote, or write a method?
+   - If not, why is it necessary for the next positive method action?
+   - Do same-axis, repair, or no-method streaks require factory routing,
+     rotation, or escalation?
+5. Bind and validate one T against the current accepted mission checkpoint. A
    package may perform several bounded actions until it closes that uncertainty
    or reaches its stop condition.
-5. Receive only status, commit, worker-log path, and one-line anomaly. Read the
+6. Receive only status, commit, worker-log path, and one-line anomaly. Read the
    worker log and artifacts from disk.
-6. Judge execution integrity separately from scientific information.
-7. The executor never updates formal/current owners. After accepting evidence,
+7. Judge execution integrity separately from scientific information.
+8. The executor never updates formal/current owners. After accepting evidence,
    the master updates those owners, appends the new mission checkpoint, then
    replaces the foreground block and increments its epoch.
-8. Continue, rotate, transition, or escalate within the recorded action classes.
+9. Continue, rotate, transition, or escalate within the recorded action classes.
 
 If the block and `authority_pointer` disagree, allow only reconciliation. A
 conversation summary is a locator, not authority to change the active lane.
@@ -140,3 +150,8 @@ local failure or blocking, rotation, promotion or non-promotion, ordinary
 package weight, and later reconstruction from files. Record uncovered event
 classes as unverified; never fabricate scientific events to make the process
 test pass.
+
+Only after a real context-loss, compression, fork, or master replacement,
+append one compact **recovery receipt** to the mission log: elapsed time, files
+read, and whether the recovered lane and gate match the foreground authority.
+Do not add a receipt to ordinary packages.

@@ -2056,3 +2056,36 @@ T025 已完成“能不能包”的回答，继续打磨同一内部方法卡只
 
 T025 package/worker log；V060；D032/D041；research-direction-lab
 `method-production.md`、`thesis-harvest.md`；external-output 出门审查。
+
+## D034: 接收 T026 写作材料并暂停 T027 完成长程协议最小修订
+
+> status: active
+> date: 2026-07-29
+> 取代：无
+> 被取代：无
+> 依据：调研: R009 + 验证: step-026 worker-log 双 reviewer + 用户原话: voice.md 2026-07-29
+
+### 决策
+
+接收 T026 为 `artifact_delta=WRITING_MATERIAL / mission_method_delta=NONE`，追加 CP025。G1 仍为 `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`，不是 formal method 或 active carrier。
+
+在派 T027 前，授权依 system D019 完成 RDL Skill 最小修订、live current snapshot 压缩和独立终验。终验后下一轮专门验证 `METHOD_SIGNAL → PROMOTION_READY/active carrier` 的端到端转化，不以包装或写作材料替代成功。
+
+### 理由
+
+T026 已把有边界 G1 包变成可复用小节和两张图，完成当前科学上限内的写作物化；R009 同时证明旧阶段 17/17 无方法增量、后段 signal→formal 转化仍为 0/2。继续直接派科学包会在未修复动作路由前重复旧问题。
+
+### 排除的替代方案
+
+- 不继续修 G1 科学线或把 T026 升成主方法；
+- 不立即派 T027 新实验；
+- 不新增完整 controller、固定批次门或每包恢复表；
+- 不删除 mission-log、D/V、worker-log 或历史科学证据。
+
+### 影响范围
+
+foreground checkpoint 更新到 CP025；当前 allowed action 暂收敛为 Skill/current-view 修订与验证；R009 成为本阶段效果审计。既有 formal owners、thesis framework 和 protected history 不变。
+
+### 来源
+
+T026、step-026 worker-log、R009、system D019、用户 2026-07-29 授权。

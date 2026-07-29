@@ -520,3 +520,37 @@ PASS。D013 本轮范围内 P0=0、P1=0、P2=0。允许从 H004/T001 启动新�
 ### 结论
 
 PASS。P0=0、P1=0、P2=0。本验证只证明 v2 实现与 phase-2 入口控制一致，不宣称长程方法生产已被真实运行证明。
+
+## V013: T001–T026 审计后的 RDL v2.1 最小修订独立终验
+
+> date: 2026-07-29
+> 关联：D019 / live R009 / live D034 / CP025
+> verifier 上下文：独立只读 subagent，未参与实现
+> FINAL VERDICT: PASS
+
+### 验证项
+
+- [x] 恢复三问只检查下一动作与 streak 路由，不新增 scheduler/controller。
+- [x] `READY=0 / NEEDS_SMALL_ADAPTER=0` 时工厂/战略 gate 为硬路由，不再串行 formalize hypothesis-only candidate。
+- [x] accepted `METHOD_SIGNAL` 后 promotion preflight 只产生 bounded workline、harvest 或 strategic gate；setup incident 不计 accepted checkpoint。
+- [x] recovery receipt 只在真实压缩/fork/主控替换时记录，不进入普通包。
+- [x] live `topic-index.md` 保留逐字冻结原目标、当前 control、范围和不变量；package history 仍由 mission-log、D/V、worker-log 恢复。
+- [x] T026 正确登记 CP025：`mission_method_delta=NONE / artifact=WRITING_MATERIAL / active-carrier=0`，G1 claim ceiling 未升级。
+- [x] system control 已从 stale D018 修到 D019；live/system scope、voice、registry 与 R009 一致。
+
+### 初审 P1 与关闭
+
+- live frozen goal 曾被瘦身改写：已恢复“T 路径和四项完成索引”“fork 主控”“原 system design”逐字原文。
+- system control 曾仍指向 D018/等待 phase 2：已递增 epoch、指向 D019 并绑定 v2.1 实施/验证/同步。
+
+### 验证证据
+
+- repo Skill：`102 passed, 1 skipped`。
+- `quick_validate.py`：PASS。
+- system/live control YAML 与 registry YAML：PASS；`git diff --check`：PASS。
+- repo→个人 Skill：60 个非缓存文件 SHA256 全等。
+- 个人 Skill quick validation：PASS；全套 `99 passed, 1 skipped`，另 3 项为既有 repo-context 测试在个人目录缺项目 artifacts 的预期 failure，同项在 canonical repo 全部 PASS。
+
+### 结论
+
+PASS。P0=0、P1=0、P2=0。v2.1 可部署并进入下一轮 live-test 入口选择；本验证不宣称已经产生 formal thesis method。

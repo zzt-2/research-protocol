@@ -114,6 +114,16 @@ def test_skill_routes_long_horizon_foreground_control_without_owning_science_sta
         "Do not implement a scheduler or automatic candidate selector"
         in normalized_control
     )
+    for phrase in (
+        "recovery route check",
+        "create, compare, promote, or write",
+        "recovery receipt",
+        "elapsed time",
+        "files read",
+        "lane and gate match",
+        "package-by-package history",
+    ):
+        assert phrase in normalized_control
 
 
 def test_skill_routes_method_production_and_mission_drift_review():
@@ -135,10 +145,18 @@ def test_skill_routes_method_production_and_mission_drift_review():
         "mission-log.md",
         "UNDERWEIGHT",
         "READY alternative",
+        "PROMOTION_WORKLINE_READY",
+        "HARVEST_ONLY",
+        "setup incident",
     ):
         assert phrase in normalized
     assert "fixed package count" in normalized
     assert "executor must not update formal or current owners" in normalized
+    assert (
+        "do not prepare another candidate-specific formalization task"
+        in normalized
+    )
+    assert "promotion preflight" in normalized
 
 
 def test_probe_semantics_precede_evidence_scaling_and_default_artifacts_stay_small():

@@ -603,3 +603,40 @@ Phase 1 没有严重跨 lane，却把 mission 成功逐渐降级成问题存活�
 - 三层恢复：live control epoch 11 与 `CP007`、`mission-log.md` 一致；旧包已补 worker-log/commit 指针。
 - 消费者同步：repo/个人 Skill 60 个非缓存文件 SHA256 全部一致。
 - 独立终验：V012 PASS；不含 T008、科学实验或 phase-1 科学产物修改。
+
+## D019: 以真实 T001–T026 审计最小修订压缩恢复与方法转化路由
+
+> status: active
+> date: 2026-07-29
+> 取代：无
+> 被取代：无
+> 依据：调研: live-test R009 + 对照: mission-log CP001–CP025 + 用户原话: system voice.md 2026-07-29
+
+### 决策
+
+保留 D018 的三层记录、formal/method 双账、独立审查和方法工厂，只做三项最小修订：
+
+1. 压缩恢复后必须用三问检查下一动作是否构造、比较、晋级或写作方法，以及是否已触发换路；
+2. 无 active carrier 且 `READY=0 / NEEDS_SMALL_ADAPTER=0` 时，方法工厂或战略 gate 是硬路由；
+3. accepted `METHOD_SIGNAL` 先做一次 promotion preflight，再决定进入有界 formal workline、降为 harvest，或进入战略 gate。
+
+真实压缩/fork/主控替换只记一次极简 recovery receipt；普通包不新增治理项。task/interface 未通过且未执行的 brief 记 setup incident，不计 accepted scientific checkpoint。
+
+### 理由
+
+CP001–CP017 为 17/17 `mission_method_delta=NONE`；T019 后方法工厂第 2 包产生 signal，但两个 signal 的 formal 转化率仍为 0/2。事实说明 D018 的发现机制有效，缺口在恢复后的动作路由与 signal→formal 转化，不需要重写 Skill 或新增 controller。
+
+### 排除的替代方案
+
+- 不重建强 controller、scheduler、自动候选评分或固定包数成功标准；
+- 不把更多 checklist 加到每个普通包；
+- 不把 `PACKAGING_BOUNDARY/WRITING_MATERIAL` 当作 formal method；
+- 不因本次流程修订重开 G1、Q15、B1 或其他已关闭科学轴。
+
+### 影响范围
+
+更新 `research-direction-lab` 的 `SKILL.md`、`long-horizon-control.md`、`method-production.md` 及对应测试；压缩 live-test `topic-index.md` 当前视图；同步个人 Skill。既有科学 verdict、formal owner、protected history 与论文框架不变。
+
+### 来源
+
+R009；用户 2026-07-29 对“基本每次交互都会发生压缩”及“改完之后继续”的确认。

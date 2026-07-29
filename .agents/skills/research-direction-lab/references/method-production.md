@@ -37,6 +37,9 @@ Use `PREFORMAL_METHOD_FACTORY` only when all of these are true:
 At that gate, do not keep formalizing hypothesis-only candidates one by one.
 Either run one bounded method-factory sprint or escalate the strategic
 shortage. This lane is diagnostic discovery, not a Groundwork Step 4a MVE.
+This is a hard routing choice: while the predicate remains true, do not prepare
+another candidate-specific formalization task. Record factory routing or the
+strategic shortage as the next legal action.
 
 A method-factory sprint must:
 
@@ -44,7 +47,7 @@ A method-factory sprint must:
    authority-approved and adequately tuned** task-matched conventional
    baseline, paired realization, and shared diagnostic seed set; a runnable
    historical anchor is insufficient when a later baseline correction exists;
-2. freeze the receiver-visible input and output contract before construction;
+2. freeze the runtime-visible input and output contract before construction;
 3. deduplicate against prior/rejected constructs, then build 3–5 genuinely
    mechanism-distinct minimal constructs in one package;
 4. run semantic smoke and a fair comparison in that same package;
@@ -71,6 +74,31 @@ formal Go/Kill, or promotion. A winner must re-enter Groundwork at Step 1 and
 complete Step 1–3/3.5/4a before formal experiment or thesis use. Do not use
 this exception to reopen an explicitly rejected axis or to disguise
 candidate-specific formalization as a factory sprint.
+
+## Method-signal promotion preflight
+
+After accepting a `METHOD_SIGNAL`, do one bounded promotion preflight before
+serial Groundwork work. Reuse existing evidence to check:
+
+- fit with the current thesis problem and a plausible chapter role;
+- direct collision and accessible must-read sources;
+- a real, task-matched comparator and the strongest cheap alternative;
+- frozen estimand, claim ceiling, and evidence-closure budget;
+- whether Step 1–3/3.5/4a can close without a chain of receipt-only repairs.
+
+Record one outcome:
+
+- `PROMOTION_WORKLINE_READY` — prepare one bounded formal workline that closes
+  the remaining Groundwork gates;
+- `HARVEST_ONLY` — preserve the bounded method card or writing asset without
+  presenting it as a formal method;
+- `STRATEGIC_GATE` — the only plausible promotion needs materially larger
+  access, infrastructure, compute, or a thesis-scope decision.
+
+Combine deterministic receipt repair with the scientific package it unlocks.
+Run task-control and interface validation before assigning a scientific
+checkpoint. A brief that never starts because its interface is invalid is a
+setup incident, not an accepted method package and not a no-method increment.
 
 ## Separate science from mission progress
 

@@ -1,7 +1,7 @@
 # Mission Log — Research Direction Lab 长程真实运行测试
 
 > original mission: 在用户只中转任务路径和极短回执的条件下，稳定推进真实研究并积累可用方法材料。
-> phase 1: `4af6f9d..aab425d` | latest accepted: CP024 / 2026-07-29 | next checkpoint: `CP025`
+> phase 1: `4af6f9d..aab425d` | latest accepted: CP025 / 2026-07-29 | next checkpoint: `CP026`
 
 | CP | 包 / intent / family | formal science disposition | mission method delta | streaks | weight / drift | 下一步为何优于替代项 |
 |---|---|---|---|---|---|---|
@@ -29,6 +29,11 @@
 | CP022 | T023 · log-023 · `89d8174c` / CANDIDATE_FORMALIZATION / Q15 map → G1 gated normalization | `Q15_MAP_STEP35_NO_Q_NO_GO`；Phase B 因 A4/B0 越门只作 NONBINDING_DIAGNOSTIC。Map 无 gate+scale 外增量；gated-scalar old/fresh ΔPI-SER=`−0.087444/−0.139286`、CI<0、healthy-worst=0 | METHOD_SIGNAL | Q15 same-axis=3 closed；G1 same-axis=1, repair=0, no-method=0 | OVERWEIGHT / package DRIFT_RISK；mission RECOVERING | 不修 Q15 map；T024 以已有 runnable G1 + fresh signal 做一次 collision-first、条件式 formal confirm，比轮换到 0 READY 的 hypothesis-only 候选更可能形成毕业方法；失败即退出 G1 |
 | CP023 | T024 · log-024 · `323c43b` / CANDIDATE_FORMALIZATION / G1 gated normalization | executor Gate6 No-Go 被推翻：正确 seed-cluster CI_lo≈`0.885`；但 Phase-A receipts 不闭包且 D4 为恒等占位，formal Go/No-Go 均拒收。binding=`G1_GROUNDWORK_EVIDENCE_INCOMPLETE / PHASE_B_NONBINDING_DIAGNOSTIC`；G1 实验修复线关闭 | NONE（既有 METHOD_SIGNAL 被 fresh diagnostic 加强，未晋级新类别） | G1 same-axis=2 closed, repair=0；active-carrier=0 | OVERWEIGHT / package DRIFT_RISK；mission STALLED_WITH_PACKAGING_ASSET | 不再 remap 或修实验；向用户确认一次有边界 packaging，把算法动作、局部收益与证据债整理为毕业备选，比继续在 0 READY 池中制造分析更符合原 mission |
 | CP024 | T025 · log-025 · `5e355c6` / THESIS_METHOD_PACKAGING / G1 bounded package | formal science disposition 不变；接收一个 `LOCAL_SLICE / NONBINDING_DIAGNOSTIC` 内部方法包，算法、局部证据、论文叙事、图表计划和证据债已集中，非 formal Go/主方法 | PACKAGING_BOUNDARY | G1 science line closed；active-carrier=0 | ADEQUATE / package ALIGNED；mission HAS_ONE_BOUNDED_ASSET | T026 直接生成论文小节+可编辑流程图+raw-derived 分层结果图，比继续写评价、修 G1 科学线或在 0 READY 池做第三个 z-only factory 更能把首个正向包装转成可用毕业材料 |
+| CP025 | T026 · log-026 · `d453e56` / THESIS_ARTIFACT_PRODUCTION / G1 writing material | 双 reviewer 最终 P0/P1/P2=`0/0/0`；模块化小节、可编辑流程图、raw-derived 分层结果图和重算脚本接收。formal disposition 与 G1 claim ceiling 不变 | NONE；artifact=`WRITING_MATERIAL` | G1 science line closed；active-carrier=0 | ADEQUATE / package ALIGNED；mission HAS_ONE_BOUNDED_ASSET | 停止 T027；R009 审计后先完成 D019/D034 最小协议修订和终验，再以 signal→formal carrier 转化为下一 live-test 主判据 |
+
+## Recovery events
+
+- `RC001 / 2026-07-29 / real context compression`：elapsed time=`UNMEASURED`；files read=`UNMEASURED`（规则生效前）；lane and gate match=`PASS`——恢复后仍保持“停止 T027、先做效果审计与最小协议修订”。下一真实恢复事件开始量化。
 
 ## 使用规则
 

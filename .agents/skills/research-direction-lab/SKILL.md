@@ -57,6 +57,11 @@ formalize hypothesis-only candidates. Route to the restricted
 escalate the strategic shortage. The factory is diagnostic-only; any winner
 must return to Groundwork Step 1–3/3.5/4a before formal experiment or claim.
 
+After context loss or compression, complete the recovery route check in
+`references/long-horizon-control.md` before preparing work. After an accepted
+`METHOD_SIGNAL`, complete the promotion preflight in
+`references/method-production.md` before starting serial formalization.
+
 ## Seven-phase loop
 
 Run one continuous loop:
