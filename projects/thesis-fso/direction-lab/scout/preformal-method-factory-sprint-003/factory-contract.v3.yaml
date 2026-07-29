@@ -1,0 +1,358 @@
+# =============================================================================
+# Pre-formal Method Factory Sprint 003 — update-granularity CMA family.
+#
+# Schema: direction-lab.preformal-method-factory-sprint-003.v3
+# Authority: T027 (PREFORMAL_METHOD_FACTORY, epoch 61 / CP025); source decisions
+#   D035 / V061 (problem-bearing testbed preflight, 4-gate pass);
+#   V052 REJECTED_SCIENCE=STRUCTURAL_ATTRACTOR_OR_RECEIVER_GAP_ZERO (gate-2
+#   evidence-grade correction: block-end update is a SUSPECTED lever, NOT a
+#   confirmed mechanism).
+# Date: 2026-07-29
+# Claim ceiling: DIAGNOSTIC_ONLY_NOT_FORMAL_GW_MVE (no formal MVE, no Step 5,
+#   no paper claim, no protected-owner edit).
+# =============================================================================
+
+# === Why this batch exists (TL;DR) ===
+# Sprint-001/002 built z-only post-processing / triggering / initialization
+# families that act on the OUTPUT of the block-64 CMA. Sprint-001 synthesis
+# §4/§8 listed "block-end update geometry" as a SUSPECTED collapse lever and
+# "per-symbol / finer update granularity" as the most informative next lever.
+# That structural-attractor attribution was REJECTED by V052 (no basin scan,
+# overlap with existing candidates) — so block-end update is only a
+# source-backed, unconfirmed SUSPECTED lever. This sprint is the CAUSALITY
+# TEST: does finer update granularity produce a stable signal beyond a TUNED
+# traditional per-symbol Godard-with-z CMA comparator?
+#   - constructs (a)/(b)/(c) act directly on RAW rX/rY, producing their OWN z
+#     (NOT z-only post-processing of the block-64 output).
+#   - The Go comparator is the tuned per-symbol standard CMA (canonical
+#     Godard-with-z gradient). A win requires STABLY beating THAT comparator.
+
+# === Shared anchor identity (reused, frozen) ===
+shared_anchor:
+  source: cb1-modulation-generic-closure/baseline-atlas
+  generator: common._dual_pol_channel.generate_shared_realization_dp
+  evaluator: cb1_evaluator.evaluate_dual_16qam
+  paired_realization_rule: >-
+    Every method on a given (cell, seed) runs on the SAME shared realization.
+    A (cell, seed) realization is generated exactly ONCE per side.
+  frozen_common_axes:
+    alpha: 4.2
+    beta: 1.4
+    block: 100
+    t_s: 4.0e-10
+    method: gar
+    cma_taps: 11
+    cma_block_size: 64          # inherited block-end granularity (anchor only)
+    r2_qam16: 1.32              # E[|s|^4]/E[|s|^2], Godard-with-z
+    constellation_amplitude_per_axis: 0.7071067811865475  # {-3,-1,+1,+3}/sqrt(10)
+    affine_ridge: 1.0e-6
+  qpsk_identity_regression_pi_ser: 0.0
+  source_hashes:                # frozen BEFORE running, unchanged vs sprint-002
+    cb1_cell_runner.py: 2d9660338c302c3107b97c7e51a353b1c79b5ca3da565d8521f774b477e2a59e
+    cb1_evaluator.py:  46b81b9dbbc508ecd961265252e523e2c4e51ba06f39ecdb7c03dc37d5c4f157d
+    _dual_pol_channel.py: 5cefac97d120e5590905ae36ab20cabc8832a6c556368b1d9f154a2a8091818c
+    _modulation.py: 036fb7aa4d0bef153ee53799f20a244492fb6294f93132d1ecc2b0530b5694d5
+
+# === Inherited anchor (a): tuned block-64 CMA, mu FROZEN (NOT re-tuned) ===
+inherited_anchor:
+  id: block64_cma_mu0p03
+  implementation: cb1_cell_runner.standard_cma_godard_with_z
+  mu: 0.03                      # inherited from frozen-params-b01r-v1.yaml (NOT re-tuned here)
+  R2: 1.32
+  block_size: 64
+  n_tap: 11
+  update_granularity: block_end_averaged
+  gradient: Godard-with-z
+  gradient_provenance: cb1_cell_runner.py:124-129
+  note: >-
+    The inherited shared-anchor baseline AND identity reference. mu is FROZEN
+    from B01-R hotfix v2 (frozen-params-b01r-v1.yaml, interior optimum
+    best_score=-0.20390625). This batch does NOT re-tune its mu. Reported for
+    context; it is NOT the Go comparator (the tuned per-symbol CMA is).
+
+# === Traditional comparator (b): tuned per-symbol standard CMA ===
+traditional_comparator:
+  id: persymbol_cma_godard_with_z
+  implementation: methods.persymbol_cma_godard_with_z
+  update_granularity: per_symbol_immediate   # every symbol, canonical Godard 1980 form
+  gradient: Godard-with-z
+  gradient_provenance: >-
+    cb1_cell_runner.py:124-129 formula. The block-end runner computes
+    (eX*zx_blk)[:,None]*conj(rX_blk) then mean over the block (per-block
+    averaged Godard-with-z). The per-symbol analogue DROPS the mean and updates
+    weights immediately after every symbol: dw = mu*(R2-|z|^2)*z*conj(r).
+    Gradient IDENTITY is identical (canonical Godard-with-z); only the update
+    GRANULARITY changes (block-averaged -> per-symbol immediate).
+  entry: per-symbol standard-CMA (canonical Godard-with-z)
+  R2: 1.32
+  n_tap: 11
+  center_tap_init: true         # w[center]=1, others 0 (matches cb1_cell_runner)
+  divergence_criteria: >-
+    Same as cb1_cell_runner: w-norm > 10*init_norm OR max|z| > 1e3 OR
+    non-finite. Checked every `check_every` symbols (default 64) so the
+    per-symbol loop is not dominated by divergence checks.
+  mu_tuning:
+    grid: [1.0e-3, 3.0e-3, 1.0e-2, 3.0e-2, 1.0e-1]
+    pool: dev cells x dev subseeds (prefix-only selection; test never observed)
+    freeze: dev-optimal mu, then held-out test (no feedback)
+    note: >-
+      Per-symbol mu must be tuned SEPARATELY (each update is full-strength, no
+      block-averaging attenuation, so the per-symbol mu is typically ~10x-30x
+      smaller than the block-end mu). mu=1e-1 is expected to diverge on long
+      cells.
+  forbidden_imitation: >-
+    MUST NOT use common/_cma.py CMAEqualizer2x2 as the comparator. That class
+    implements the SCALAR-error gradient dw ∝ (R2-|z|^2)*conj(r) (missing the z
+    factor; _cma.py:161-166). Using it as the comparator gives a WRONG gradient
+    identity and is EXECUTION_INVALID. The comparator MUST be canonical
+    Godard-with-z (contains the z factor), provenance cb1_cell_runner.py:124-129.
+
+# === Deployable candidates (c): mechanism-distinct from (b) ===
+# All candidates use the SAME canonical Godard-with-z gradient identity as the
+# comparator; only the update GRANULARITY (when/how often weights move) differs.
+deployable_candidates:
+  - id: block8_cma_godard_with_z
+    update_granularity: block_end_averaged (smaller block)
+    difference_from_comparator: >-
+      Same block-end averaged gradient, but block_size=8 (8x more weight updates
+      per symbol than block-64). Tests whether a SMALLER block granularity beats
+      per-symbol at a matched effective-update budget.
+    mu_tuning: dev grid (per-block-size mu)
+  - id: block16_cma_godard_with_z
+    update_granularity: block_end_averaged (smaller block)
+    difference_from_comparator: >-
+      Same block-end averaged gradient, but block_size=16 (4x more weight updates
+      per symbol than block-64). Intermediate granularity.
+    mu_tuning: dev grid (per-block-size mu)
+  - id: sliding_window_recursive_cma
+    update_granularity: per_symbol_recursive_running_mean
+    difference_from_comparator: >-
+      Updates every symbol like per-symbol, BUT accumulates the gradient with a
+      running exponential/recursive mean (a leaky block memory) instead of the
+      pure instantaneous per-symbol gradient. Mechanism = recursive block memory
+      on top of per-symbol update rate.
+    mu_tuning: dev grid
+
+# === Kill-only bound (NEVER a Go comparator, FR-21/FR-25) ===
+kill_bound_only:
+  - id: oracle_affine_bound_16qam
+    implementation: cb1_evaluator.oracle_affine_bound_16qam
+    use: OFFLINE_4_CATEGORY_LABEL_AND_HEADROOM_ONLY
+    note: >-
+      TX-truth affine fit. Used only for (1) offline 4-category collapse
+      labelling and (2) visible-headroom reporting. NEVER a Go comparator.
+      NEVER enters any deployable method action.
+
+# === Cells: B01-R 7 held-out cells (FROZEN) ===
+cells:
+  - {id: 16qam-snr05-nominal-short, modulation: qam16, snr_db: 5.0,  f_g_hz: 30.0,   sop_rate: 4.0e-6, n_symbols: 512}
+  - {id: 16qam-snr10-nominal-short, modulation: qam16, snr_db: 10.0, f_g_hz: 30.0,   sop_rate: 4.0e-6, n_symbols: 512}
+  - {id: 16qam-snr15-nominal-short, modulation: qam16, snr_db: 15.0, f_g_hz: 30.0,   sop_rate: 4.0e-6, n_symbols: 512}
+  - {id: 16qam-snr25-nominal-short, modulation: qam16, snr_db: 25.0, f_g_hz: 30.0,   sop_rate: 4.0e-6, n_symbols: 512}
+  - {id: 16qam-snr20-fg100-short,   modulation: qam16, snr_db: 20.0, f_g_hz: 100.0,  sop_rate: 4.0e-6, n_symbols: 512}
+  - {id: 16qam-snr10-fg100-long,    modulation: qam16, snr_db: 10.0, f_g_hz: 100.0,  sop_rate: 4.0e-6, n_symbols: 8192}
+  - {id: 16qam-snr15-fg1000-long,   modulation: qam16, snr_db: 15.0, f_g_hz: 1000.0, sop_rate: 4.0e-6, n_symbols: 8192}
+
+# === 4-category collapse label (inherited, OFFLINE only) ===
+collapse_labels:
+  categories:
+    inner_ring_recoverable_collapse:
+      definition: baseline PI-SER >= 0.1 AND oracle_affine PI-SER < 0.1 (oracle recovers)
+      oracle_use: LABEL ONLY
+    awgn_dominated_error:
+      definition: baseline PI-SER >= 0.1 AND (baseline - oracle) < MDE (oracle does NOT help)
+      oracle_use: LABEL ONLY
+    healthy:
+      definition: baseline PI-SER < 0.1
+    ambiguous:
+      definition: none of the above cleanly applies
+  rule: >-
+    Oracle/TX truth used ONLY for offline 4-category labelling and headroom
+    reporting. NEVER influences a deployable action, gate, mapping, or selection.
+
+# === Eval window: SAME geometry as sprint-002, applied to each method's OWN z ===
+eval_window:
+  geometry: >-
+    cb1_cell_runner.eval_window_for(n_symbols, cma_taps=11, window_symbols=256,
+    block_size=64). Returns (eval_start, calibration_end, eval_end).
+    N=512: es=133, cal=261, ee=389 (prefix 128, suffix 128).
+    N=8192: es=2181, cal=2309, ee=2437 (prefix 128, suffix 128).
+  scored_eval_suffix: [calibration_end, eval_end)   # 128 symbols, scored
+  parity_rule: >-
+    EVERY method (anchor + comparator + candidates + oracle) consumes the SAME
+    eval window [cal, ee) of its OWN z-stream and is scored by the SAME
+    evaluator on the SAME paired (cell, seed) realization. The equalizer runs
+    over the FULL signal (it needs prefix to converge); only [cal, ee) is scored.
+    This is the SAME window geometry the block-64 anchor uses — no method gets a
+    different scored population.
+
+# === Seeds (fresh disjoint, frozen; identical to sprint-002 collision-scan) ===
+seeds:
+  collision_scan: >-
+    Repository-wide exact-token scan returned ZERO hits for [181..190] and
+    [201..220]. B01-R used [11..15]/[21..30]; C11-legality used [31..35]/[41..50];
+    T019 sprint-001 used [11..20]; sprint-002 used [181..190]/[201..220]. None
+    collide with this batch.
+  dev_seeds: [181, 182, 183, 184, 185, 186, 187, 188, 189, 190]
+  test_seeds: [201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220]
+  forbidden_seeds: [71, 72, 73, 74, 75, 76, 77, 78, 79, 80]   # contaminated, FORBIDDEN
+  leakage_check: >-
+    set(dev) ∩ set(test) = empty (asserted in code);
+    set({dev,test}) ∩ forbidden(71-80) = empty (asserted in code).
+  rule: >-
+    Dev seeds ONLY select the comparator mu grid and candidate granularity/mu;
+    Test seeds are NEVER observed during dev and never feed back.
+
+# === Identity gates (MUST PASS before any evaluation) ===
+identity_gates:
+  gate_1_qpsk_regression:
+    description: >-
+      QPSK anchor at mu=0.03 fixed-mu CMA reproduces PI-SER = 0.0 (wiring
+      regression). Confirms the inherited anchor + comparator gradient identity.
+  gate_2_eval_population_identity:
+    description: >-
+      All methods run on the SAME (cell, seed) realization with the SAME eval
+      window; the equalizer divergence flag is the only accept/reject.
+  gate_3_prefix_only_freeze_invariance:
+    description: >-
+      Re-running a method on the SAME raw rX/rY yields bit-identical z (the
+      equalizer is deterministic given the realization; no suffix-dependent
+      selection enters the equalizer itself). Each method's mu/granularity is
+      frozen on dev and applied unchanged on test.
+  gate_4_gradient_identity:
+    description: >-
+      The comparator and ALL candidates use the canonical Godard-with-z gradient
+      (contains the z factor). Verified by TDD test that the per-symbol update
+      vector equals mu*(R2-|z|^2)*z*conj(r) (NOT the scalar-error form without z).
+
+# === Statistical preregistration (seed-cluster; comparator-aware gate) ===
+statistical_preregistration:
+  primary_metric: PI-SER (lower is better)
+  MDE: 0.005
+  paired_ci_method: cluster_bootstrap_over_seeds   # 10k resamples, 95% CI
+  clustering_rule: >-
+    Each SEED is ONE independent cluster. The 7 cells within a seed are NOT
+    independent samples. Aggregate as:
+      (1) per-seed, per-method mean PI-SER over the 7 cells;
+      (2) per-seed paired delta vs the TUNED PER-SYMBOL COMPARATOR (not the
+          inherited anchor) for the signal gate;
+      (3) seed-cluster bootstrap CI on the per-seed mean delta vs comparator;
+      (4) help/hurt/tie SEEDS (help = per-seed mean delta < -1e-9).
+  comparator_aware_signal_gate:
+    DIAGNOSTIC_METHOD_SIGNAL:
+      all_of:
+        - "seed-cluster mean ΔPI-SER ≤ −0.005 vs TUNED PER-SYMBOL comparator"
+        - "95% CI upper < 0 (vs comparator)"
+        - "help seeds > hurt seeds (vs comparator)"
+        - "no catastrophic regression on healthy cells (per-seed delta not worse than +MDE on healthy cluster, measured vs comparator)"
+        - "ablation rules OUT {tuning, more-updates-per-symbol, gradient-identity} as the sole explanation"
+    PROBLEM_RESOLVED_BY_CONVENTIONAL_COMPARATOR:
+      all_of:
+        - "tuned per-symbol Godard-with-z CMA removes the block-64 collapse (collapse cells: comparator PI-SER < 0.1 where anchor >= 0.1)"
+        - "no new construct stably beats the tuned per-symbol comparator"
+      note: >-
+        This is NOT a METHOD_SIGNAL and forms NO active carrier. It is the
+        causal verdict on the gate-2 SUSPECTED lever: block-end update WAS a
+        collapse contributor, but the conventional per-symbol update already
+        resolves it.
+    NO_DIAGNOSTIC_SIGNAL:
+      all_of:
+        - "no construct stably beats the tuned per-symbol comparator"
+        - "the comparator did NOT remove the collapse"
+    BLOCKED_SHARED_TESTBED:
+      only_if: testbed cannot support fair comparison (identity gate cannot close)
+    EXECUTION_INVALID:
+      any_of:
+        - "wrong gradient identity used as comparator (scalar-error _cma.py imitating Godard-with-z)"
+        - "identity gate fail / causality leak un-repaired / smoke clobbered"
+
+# === Required ablation (block_size × mu / effective-update budget) ===
+ablation:
+  purpose: >-
+    A winner's advantage may be FULLY explained by "more weight updates per
+    symbol" rather than the update-granularity MECHANISM. For any winner, check
+    whether a block-64 CMA at an equivalent effective update budget (or the
+    tuned per-symbol comparator at matched mu) ALREADY matches it.
+  method: >-
+    Effective-update-budget = number of weight updates per symbol.
+    block-64 = 1/64 updates/sym; block-16 = 1/16; block-8 = 1/8;
+    per-symbol = 1 update/sym. Report a winner's delta vs comparator AND vs a
+    block-64 CMA given the SAME number of updates (matched mu sweep). If a
+    matched-budget block-64 already ties the winner, the win is "more-updates",
+    NOT granularity -> NO_SIGNAL.
+  verdict_mapping:
+    granularity: win survives matched effective-update-budget comparison
+    more_updates: win disappears when block-64 given equivalent update budget
+    tuning: win disappears at comparator's dev-optimal mu (pure mu sensitivity)
+
+# === Gate-2 evidence-grade correction note (MANDATORY) ===
+gate2_evidence_grade_correction:
+  sprint_001_attribution: >-
+    Sprint-001 synthesis §4/§8 attributed the collapse to "block-end update
+    geometry + channel time-variation structural attractor" and listed it as a
+    SUSPECTED bottleneck with per-symbol variants as the most-informative next
+    lever.
+  v052_rejection: >-
+    V052 REJECTED_SCIENCE=STRUCTURAL_ATTRACTOR_OR_RECEIVER_GAP_ZERO. Reason: no
+    basin/state-space scan was performed; the constructs overlapped existing
+    candidates. So "block-end update = structural attractor cause" is NOT a
+    confirmed mechanism.
+  correct_statement: >-
+    Block-end update is a SOURCE-BACKED, SUSPECTED lever (the update granularity
+    is a real knob in cb1_cell_runner.py:106-129 and _cma.py:100-166), and the
+    SUSPECTED lever coincides with the OBSERVED failure location. This sprint is
+    the CAUSALITY TEST, not engineering on a confirmed mechanism.
+
+# === Update-granularity DOF evidence (file:line, four-gate) ===
+update_granularity_dof_evidence:
+  gate1_physical_dof_exists: >-
+    cb1_cell_runner.py:106-129 (block loop, intra-block vectorized filter at
+    :114-116, block-end averaged Godard-with-z gradient at :124-129) and
+    _cma.py:100-166 (same block structure). The block_size and the update
+    instant (block-end vs per-symbol vs recursive) are REAL, code-imposed
+    knobs. Finer granularity is a real transformation the receiver applies.
+  gate2_failure_lever_coincidence: >-
+    sprint-001 synthesis.v1.md §4 (L97-130) localized the collapse to block-end
+    update geometry + channel time-variation; §8 (L176-179) listed the frozen
+    block-64/mu protocol as a SUSPECTED bottleneck and per-symbol/finer
+    granularity as the most-informative next lever — coincident with the
+    observed failure location. (Evidence-grade: SUSPECTED, NOT confirmed — see
+    gate2_evidence_grade_correction.)
+  gate3_named_same_task_same_info_comparator: >-
+    Per-symbol stochastic-gradient CMA = Godard 1980 original per-symbol form;
+    same task (blind equalization of the same z-stream); same information
+    (receiver-visible, no TX truth); independently tunable (own mu, dev freeze).
+  gate4_file_line_evidence: cb1_cell_runner.py:124-129; _cma.py:100-166,159-166.
+
+# === Forbidden within this batch ===
+forbidden:
+  - use_scalar_error_cma_as_comparator       # _cma.py CMAEqualizer2x2 missing z factor
+  - z_only_post_processing_variants          # that is sprint-001/002 family M1-M5, NOT this batch
+  - modify_common_or_params_or_baseline_atlas
+  - modify_B01_B01R_C11_or_any_owner
+  - modify_any_sessions_owner
+  - treat_oracle_affine_as_go_baseline        # FR-21, FR-25
+  - tune_on_test_seeds
+  - treat_7_cells_as_7_independent_samples    # seed-cluster
+  - let_smoke_be_clobbered_by_compare
+  - let_more_updates_masquerade_as_granularity_win  # ablation required
+  - use_forbidden_seeds_71_to_80
+  - push_or_merge
+  - jump_to_step5_or_formal_MVE               # claim ceiling = DIAGNOSTIC_ONLY
+  - write_paper_claim_or_auto_promote
+
+# === Outputs ===
+outputs:
+  contract: factory-contract.v3.yaml
+  method_map: method-map.v3.md
+  src: src/methods.py, src/run_factory.py
+  tests: tests/test_gradient_identity_and_causality.py
+  dev_freeze_receipt: artifacts/dev-freeze-receipt.v1.json
+  raw_rows: artifacts/raw-rows.v3.csv
+  result: artifacts/result.v3.json
+  synthesis: synthesis.v3.md
+  worker_log: projects/thesis-fso/worker-logs/step-027-frequency-domain-update-granularity-sprint.md
+
+# === Time budget & commit policy ===
+time_budget_minutes: 12
+commit_policy: single_consolidated_commit_at_session_end_no_push

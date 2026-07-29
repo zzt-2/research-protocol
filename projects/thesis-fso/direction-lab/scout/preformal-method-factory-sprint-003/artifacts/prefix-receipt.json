@@ -1,0 +1,90 @@
+{
+  "frozen_common_axes": {
+    "alpha": 4.2,
+    "beta": 1.4,
+    "block": 100,
+    "t_s": 4e-10,
+    "method": "gar",
+    "cma_taps": 11,
+    "r2_qam16": 1.32,
+    "cma_block_size": 64,
+    "affine_ridge": 1e-06,
+    "constellation_amplitude_per_axis": 0.7071067811865475
+  },
+  "cells": [
+    "16qam-snr05-nominal-short",
+    "16qam-snr10-nominal-short",
+    "16qam-snr15-nominal-short",
+    "16qam-snr25-nominal-short",
+    "16qam-snr20-fg100-short",
+    "16qam-snr10-fg100-long",
+    "16qam-snr15-fg1000-long"
+  ],
+  "dev_seeds": [
+    181,
+    182,
+    183,
+    184,
+    185,
+    186,
+    187,
+    188,
+    189,
+    190
+  ],
+  "test_seeds": [
+    201,
+    202,
+    203,
+    204,
+    205,
+    206,
+    207,
+    208,
+    209,
+    210,
+    211,
+    212,
+    213,
+    214,
+    215,
+    216,
+    217,
+    218,
+    219,
+    220
+  ],
+  "forbidden_seeds": [
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80
+  ],
+  "eval_window_geometry": {
+    "n512": [
+      133,
+      261,
+      389
+    ],
+    "n8192": [
+      2181,
+      2309,
+      2437
+    ]
+  },
+  "inherited_anchor_mu": 0.03,
+  "comparator_gradient_provenance": "cb1_cell_runner.py:124-129 (Godard-with-z, per-symbol analogue drops mean)",
+  "identity_gate_summary": {
+    "qpsk_regression": true,
+    "eval_population_identity": true,
+    "prefix_only_freeze_invariance": true,
+    "gradient_identity": true,
+    "all_gates_pass": true
+  }
+}

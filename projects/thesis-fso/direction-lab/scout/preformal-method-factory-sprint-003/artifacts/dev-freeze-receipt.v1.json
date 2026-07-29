@@ -1,0 +1,55 @@
+{
+  "frozen_mu": {
+    "block64_cma_mu0p03": 0.03,
+    "persymbol_cma_godard_with_z": 0.001,
+    "block8_cma_godard_with_z": 0.003,
+    "block16_cma_godard_with_z": 0.003,
+    "sliding_window_recursive_cma": 0.0003
+  },
+  "frozen_lam": {
+    "sliding_window_recursive_cma": 0.9
+  },
+  "dev_cells": [
+    "16qam-snr05-nominal-short",
+    "16qam-snr10-nominal-short",
+    "16qam-snr20-fg100-short"
+  ],
+  "dev_subseeds": [
+    181,
+    182,
+    183
+  ],
+  "tuning_trace": {
+    "persymbol_cma_godard_with_z": {
+      "0.001": 0.3125,
+      "0.003": 0.3391927083333333,
+      "0.01": 0.6569010416666666,
+      "0.03": 0.70703125,
+      "0.1": Infinity
+    },
+    "block8_cma_godard_with_z": {
+      "0.001": 0.2803819444444444,
+      "0.003": 0.2690972222222222,
+      "0.01": 0.4075520833333333,
+      "0.03": 0.3736979166666667
+    },
+    "block16_cma_godard_with_z": {
+      "0.001": 0.3072916666666667,
+      "0.003": 0.2730034722222222,
+      "0.01": 0.3125,
+      "0.03": 0.5225694444444444
+    },
+    "sliding_window_recursive_cma": {
+      "0.0003": 0.2721354166666667,
+      "0.001": 0.37890625,
+      "0.003": 0.49609375,
+      "0.01": 0.6751302083333334
+    }
+  },
+  "comparator_provenance": {
+    "gradient": "Godard-with-z",
+    "entry": "per-symbol standard-CMA (canonical Godard-with-z)",
+    "gradient_provenance": "cb1_cell_runner.py:124-129"
+  },
+  "note": "Frozen from prefix-only dev pool; test seeds never observed."
+}
