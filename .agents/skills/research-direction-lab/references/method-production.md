@@ -41,6 +41,47 @@ This is a hard routing choice: while the predicate remains true, do not prepare
 another candidate-specific formalization task. Record factory routing or the
 strategic shortage as the next legal action.
 
+Before generating any factory task, the entry must pass a
+**problem-bearing testbed preflight**. A family is not a valid entry merely
+because it is untested, because a portfolio axis reads `REOPENED`, or because
+the shared testbed once produced a signal elsewhere. Each of the four gates
+below must hold, and each must cite `file:line` evidence in the simulator
+source; any failure routes to `STRATEGIC_GATE` or `BLOCKED_TESTBED`, not to a
+factory task:
+
+1. **Physical degree of freedom exists** — the candidate's lever
+   (e.g. update granularity, a tap structure, a cost term) corresponds to a
+   realizable transformation the simulator source actually applies. A family
+   that presupposes a physical effect the channel source does not model
+   (e.g. frequency-selective sub-band processing when the source has no
+   dispersion/multipath/FIR) fails this gate.
+2. **Baseline's observed failure aligns with the candidate's point of action**
+   — the frozen baseline's recorded failure mechanism (its synthesis,
+   diagnostic, or adjudication) must name the same lever the candidate would
+   move. "The baseline fails somewhere, and this family is untested" is not
+   alignment.
+3. **A named conventional comparator exists** — before construction, name one
+   comparator that has identity (a specific conventional algorithm, not a
+   placeholder or privileged method), is task-matched (same blind-equalization
+   job), uses the same runtime information (receiver-visible, no TX truth),
+   and is independently tunable (its own frozen settings and validation
+   budget). "The executor will freeze a comparator later" fails this gate.
+4. **Each gate has `file:line` evidence** in the simulator, the baseline
+   synthesis, or the authority record.
+
+A testbed that previously produced a signal does not satisfy these gates for a
+different family. Inherited `PROBLEM_SURVIVES_CONVENTIONAL_BASELINE` authorizes
+a method Scout for the *same* problem slice; it does not waive this preflight.
+
+**Shared anchor vs. identity parity.** The shared system anchor (identical
+paired realization, modulation, metric, seed set) must be preserved. Identity
+parity — keeping the *inherited baseline's* exact form (e.g. block-end update
+granularity) — protects comparison continuity for already-run packages; it is
+not a scientific ban on a *different conventional algorithm*. When a candidate
+acts on a different (e.g. finer) receiver step, choosing that step as the
+task-matched conventional comparator is a legal, re-adjudicated comparator
+change, not a reopen of a closed axis and not an identity-parity violation.
+
 A method-factory sprint must:
 
 1. reuse one already validated simulator/evaluator, the **current

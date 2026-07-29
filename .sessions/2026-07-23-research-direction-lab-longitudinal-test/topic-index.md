@@ -7,9 +7,9 @@ rdl_control:
   control_epoch: 60
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: SPRINT003_DISPATCH_READY
-  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D034
-  decision_gate: 入口已选（S003）：两 signal promotion preflight 均 STRATEGIC_GATE（comparator 不闭合），硬路由到 method factory；T027=频域/子带均衡族 sprint-003（仅诊断）已就绪待用户中转
+  active_lane: SPRINT003_DISPATCH_READY_ENTRY_REDIRECTED
+  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D035
+  decision_gate: 入口纠偏完成（S003→D035/V061）：频域/子带族 problem-bearing testbed preflight 门1 失败（channel 源码无色散/多径/FIR/频率选择性，物理自由度不存在），原 T027 DISPATCH_READY 撤回；原位重写为唯一四门全过的替代入口 = 逐符号/更新粒度均衡族，comparator 首选逐符号 stochastic-gradient CMA；T027 validate_task_control.py PASS（epoch 60 / CP025）
   allowed_actions:
     - RECOVER
     - TASK_PREPARATION
@@ -19,6 +19,7 @@ rdl_control:
   forbidden_actions:
     - SCIENTIFIC_EXPERIMENT
     - CLOSED_AXIS_REOPEN
+    - FREQUENCY_DOMAIN_SUBBAND_FAMILY
     - FORMALIZATION_ONLY_PACKAGE
     - GENERAL_INFRASTRUCTURE_BUILD
     - PRIVATE_FULLTEXT_ACQUISITION
@@ -28,11 +29,11 @@ rdl_control:
     - PROTECTED_HISTORY_EDIT
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
   mission_checkpoint: CP025
-  next_legal_action: 用户中转 T027 后，executor 在新对话执行频域/子带均衡族诊断 sprint-003；本对话不再动作，等回执
+  next_legal_action: 用户中转 T027 后，executor 在新对话执行逐符号/更新粒度均衡族诊断 sprint-003；本对话不再动作，等回执
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（S003 入口已选；epoch 60 / CP025，T027 频域/子带均衡族诊断 sprint 已就绪待中转）
+> 状态: active（S003 入口已纠偏；epoch 60 / CP025，T027 原位重写为逐符号/更新粒度均衡族诊断 sprint，频域/子带族因物理自由度不存在已撤回，作 rejected task brief 保留）
 > 创建: 2026-07-23 | 最后更新: 2026-07-29
 
 ## 专题信息
@@ -84,6 +85,18 @@ rdl_control:
   - 原因：R009 确认旧阶段方法增量 0/17，后段 signal→formal 转化仍为 0/2，且真实协作基本每次交互都会压缩。
   - 新范围：只修改恢复三问、工厂硬路由、promotion preflight、事件式 recovery receipt，并压缩 current snapshot。
   - 影响：下一 live test 必须验证 signal→active carrier/`PROMOTION_READY`；包装和写作材料不计毕业方法成功。
+- **2026-07-29，live D035 / V061**：T027 入口最小纠偏（用户中转指令）。
+  - 原因：原 T027（频域/子带均衡族）未过 problem-bearing testbed preflight 门1——
+    `_dual_pol_channel.py:127-132` 信道只有逐符号 GG 幅度、SOP 旋转、AWGN，**无色散/多径/FIR/频率选择性**，
+    频域/子带无可作用的物理自由度；其 comparator 也非已确认的传统/任务适配/同信息对象；task-control
+    `control_epoch=59` 与 topic epoch 60 不一致（validator `stale_control_epoch`）；`action_class` 写
+    preparation 但正文要求运行实验，语义不一致。
+  - 新范围：method-production.md 补入口四门（每门 file:line，禁"未测族/REOPENED/testbed 曾产 signal"放行）；
+    T027 **原位重写**为唯一四门全过的替代入口（逐符号/更新粒度均衡族，comparator 首选逐符号
+    stochastic-gradient CMA），不新建 T028；频域族作 rejected task brief 保留、不运行。
+  - 影响：active_lane → `SPRINT003_DISPATCH_READY_ENTRY_REDIRECTED`，authority → D035；
+    频域/子带族加入 `forbidden_actions`（`FREQUENCY_DOMAIN_SUBBAND_FAMILY`）；无科学 carrier 变更、
+    无 protected history / formal owner 改动。
 
 ## 已确认结论
 
@@ -116,23 +129,31 @@ rdl_control:
 | CP020–CP023 | Q15→G1 formalization：产生第二 signal，但 formal conversion 失败 | mission-log |
 | CP024–CP025 | G1 bounded package→论文小节与两图；science ceiling 不变 | mission-log / T025–T026 |
 | R009 / D034 | 纵向效果审计完成；进入 system D019 最小修订 | R009 / decisions.md |
-| S003 | 下一入口选择：两 signal preflight=STRATEGIC_GATE，硬路由 method factory；T027 频域/子带均衡族诊断 sprint 就绪 | S003 / T027 |
+| S003 | 下一入口选择：两 signal preflight=STRATEGIC_GATE，硬路由 method factory | S003 |
+| S003→D035/V061 | T027 入口纠偏：频域/子带族 preflight 门1 失败（无物理自由度）撤回；原位重写为逐符号/更新粒度均衡族（四门全过），comparator=逐符号 SGD-CMA | S003 / T027 / V061 |
 
 ## 未决项
 
-- T027（频域/子带均衡族诊断 sprint）待用户中转后由 executor 执行；
+- T027（**逐符号/更新粒度均衡族**诊断 sprint，频域族已撤回）待用户中转后由 executor 执行；
 - 若 sprint-003 仍无 signal 或仍无真实不同 comparator，触发战略 gate 升级（私域全文/论文范围决策），届时交用户；
 - 下一真实压缩事件需量化 elapsed time、files read、lane/gate match；
-- G1 只保留 bounded thesis asset，不重开科学修复。
+- G1 只保留 bounded thesis asset，不重开科学修复；
+- 频域/子带均衡族仅在信道源码被升级到含色散/多径/频率选择性后才可能重审，当前作 rejected task brief 保留。
 
 ## 当前位置
 
-S003 已完成下一 live-test 入口选择：两个 diagnostic signal（M4 / 派生 G1）的 promotion
-preflight 均为 `STRATEGIC_GATE`（共同 blocker = collapse-recovery 族在当前切片无真实、
-不同、已调谐的 receiver-visible comparator；新颖性收据闭包卡在私域全文可达性）。按
-method-production 硬路由（`READY=0 / NEEDS_SMALL_ADAPTER=0` 且无 active carrier），选择
-入口 A = 在已验证的 CB1 16QAM corrected-μ=0.03 testbed 上对**频域/子带均衡族**做一次
-bounded 诊断 sprint（sprint-001 §8 明确的未测第六族，portfolio 三轴 REOPENED，不破坏
-identity parity），并**把"自带真实不同 comparator"内化为 factory 硬要求**。T027 已生成
-并 `validate_task_control.py` PASS（epoch 60 / CP025 / 动作类合法）。当前无 active
-scientific carrier；本对话不再动作，等用户中转 T027。
+S003 入口选择后，经 2026-07-29 用户中转指令做**最小入口纠偏**（D035/V061）：原 T027 选的
+**频域/子带均衡族**未过 problem-bearing testbed preflight 门1（`_dual_pol_channel.py:127-132`
+信道只有逐符号 GG 幅度 + SOP 旋转 + AWGN，无色散/多径/FIR/频率选择性，频域/子带无可作用物理
+自由度；其 comparator 也未冻结；task-control epoch 59≠60；action_class 与正文语义不一致），
+故原 DISPATCH_READY 撤回，频域族作 rejected task brief 保留、不运行。
+
+method-production.md 补了入口四门（物理自由度存在 / 基线失败与作用点一致 / 命名传统同信息
+可独立调谐 comparator / 每门 file:line，禁"未测族/REOPENED/testbed 曾产 signal"放行；并厘清
+shared anchor vs. identity parity——后者只保护继承基线比较连续性，不禁止跑不同传统算法）。
+
+唯一四门全过的替代入口 = **逐符号/更新粒度均衡族**（门1：`_cma.py:100-166` 块末更新是真旋钮；
+门2：sprint-001 synthesis §4/§8 把块末协议列为 collapse 瓶颈；门3：逐符号 SGD-CMA 是 Godard
+1980 原始传统形式，同任务同信息可独立调谐；门4：均有 file:line）。T027 **原位重写**（不建 T028），
+`validate_task_control.py` PASS（epoch 60 / CP025）。当前无 active scientific carrier；本对话
+不再动作，等用户中转修订后 T027。

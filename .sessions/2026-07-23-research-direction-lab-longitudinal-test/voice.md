@@ -38,3 +38,10 @@
 - "这玩意能包吗？我最近一直没看。你先说说，顺便给我提示词" → T025
 - "不过我得说一下，基本每次交互都会发生压缩。这很难受。咱们目前把控的咋样？" → R009 / D034
 - "行，改完之后咱们继续？" → D034
+- "停止中转当前 T027。做一次最小入口纠偏，不运行科学实验，不开新专题" → D035 / V061
+  （附长指令：列出 T027 的四项绑定缺陷——信道源码无频域物理自由度、comparator 非已确认传统同信息对象、
+  control_epoch 59≠60、action_class 与正文语义不一致；要求 method-factory 入口补"problem-bearing
+  testbed preflight"四门、每门 file:line、禁"未测族/REOPENED/testbed 曾产 signal"放行；
+  只审判一个替代入口（CB1 逐符号/更新粒度族），判放宽 identity parity 是否科学合法；
+  四门全过则原位修订 T027 不建 T028，否则记 STRATEGIC_GATE 不生成新科学任务；明确边界不跑 seed/
+  不实现/不新建 testbed/不改 protected history 与 formal owners/Skill 只补入口门不扩 controller）

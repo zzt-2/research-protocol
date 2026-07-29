@@ -3246,3 +3246,74 @@ binding disposition 为
 
 执行 D032/D041：不修 T024、不做第二个 G1 包、不进 Step 5。先让用户确认是否
 把现有机制与局部证据整理成有边界的毕业方法备选材料。
+
+---
+
+## V061: T027 入口 problem-bearing testbed preflight 四门独立裁决
+
+> date: 2026-07-29
+> 关联：S003 / D035（新建）
+
+### 验证项
+
+对原 T027（频域/子带均衡族）和替代入口（逐符号/更新粒度均衡族）各跑 problem-bearing
+testbed preflight 四门，逐门核源码 file:line。
+
+- [x] **频域/子带族 门1（物理自由度存在）= FAIL**：`projects/simulation/common/_dual_pol_channel.py:127-132`
+      `rX/rY = sqrt(h)·(SOP 旋转后的 s) + sqrt(nv)·AWGN`；`h` 来自 `_gg_time.py` 的 AR(1) GG
+      包络（逐符号标量乘性衰落），`theta = sop_rate * np.arange(N)` 是逐符号 SOP 旋转。
+      **无任何色散、多径、FIR 卷积或频率选择性**——频域/子带均衡对 memoryless、flat 信道
+      退化为恒等/标量，无可作用物理自由度。
+- [x] **频域/子带族 门2（基线失败与作用点一致）= FAIL**：sprint-001 `synthesis.v1.md` §4
+      （L97-130）把 collapse 诊为"块末更新几何 + 信道时间变化"的结构性吸引子，与频域作用点不重合。
+- [x] **频域/子带族 门3（命名传统同信息可独立调谐 comparator）= FAIL**：原 T027 §2.3 把
+      comparator 冻结推迟给 executor，未给一个有身份、同任务、同运行信息、可单独调谐的传统对象。
+- [x] **频域/子带族 门4（file:line 证据）**：上三门证据齐全，但门1-3 FAIL，整体 FAIL。
+- [x] **逐符号/更新粒度族 门1（物理自由度存在）= PASS**：`projects/simulation/common/_cma.py:100-166`
+      `equalize` 在 `block_size=64` 块内向量化滤波、**块末**用块内平均梯度更新权重（L141-166）；
+      更新粒度（逐符号 / 更小块 / 事件触发即时更新等）是该代码真实施加的可调变换。
+- [x] **逐符号/更新粒度族 门2（基线失败与作用点一致）= PASS**：sprint-001 `synthesis.v1.md`
+      §4（L97-130）诊 collapse 为"块末更新几何 + 信道时间变化"吸引子；§8（L176-179）明确冻结
+      块末协议（block_size=64, μ）为"疑似瓶颈"，逐符号变体为"最有信息的下一杠杆"——与基线
+      失败点精确重合。
+- [x] **逐符号/更新粒度族 门3（命名传统同信息可独立调谐 comparator）= PASS**：逐符号
+      stochastic-gradient CMA = Godard 1980 原始形式；任务相同（同一 z-stream 盲均衡）、同信息
+      （receiver-visible，无 TX truth）、可独立调谐（自有 μ、validation freeze）。非候选占位、
+      非 blind_affine、非恒等、非特权方法。
+- [x] **逐符号/更新粒度族 门4（file:line 证据）= PASS**：每门均有 file:line（见上）。
+- [x] **identity parity 厘清**：`baseline-adjudication.md` §"Shared anchor and claim-specific
+      fairness"——共享 anchor 保端到端可比，但 identity parity（保持继承基线块末粒度）只保护
+      已跑历史包的比较连续性，不禁止跑不同传统算法；逐符号 SGD-CMA 作传统 comparator 是合法
+      re-adjudication，非重开关闭轴、非 identity 违例。
+- [x] **task-control 一致性**：修订后 T027 `control_epoch=60`（= topic-index）、`action_class=
+      METHOD_FACTORY_TASK_PREPARATION`、`mission_checkpoint=CP025`；`validate_task_control.py` PASS。
+      action_class 与正文一致（正文 §0/§2 显式"准备、待中转、本轮不跑实验"）。
+
+### 证据
+
+```text
+channel source (memoryless flat): projects/simulation/common/_dual_pol_channel.py:123-132
+  theta = sop_rate * arange(N)         # per-symbol SOP rotation
+  rX = sqrt(h)*(cos_t*sX+sin_t*sY) + sqrt(nv)*AWGN
+  rY = sqrt(h)*(-sin_t*sX+cos_t*sY) + sqrt(nv)*AWGN
+  # h = AR(1) GG envelope; NO dispersion/multipath/FIR/freq-selectivity
+CMA update granularity (real lever): projects/simulation/common/_cma.py:141-166
+  for blk in range(n_blocks):          # block_size=64
+    zx_blk = rX_blk @ wxx + rY_blk @ wxy   # in-block vectorized FIR
+    wxx += mu * mean(eX[:,None]*conj(rX_blk), axis=0)   # block-end update
+collapse diagnosis (baseline failure = update geometry): sprint-001 synthesis.v1.md:97-130, 176-179
+comparator identity (per-symbol SGD-CMA, Godard 1980): task-matched / same-info / tunable
+validate_task_control.py T027: PASS (epoch 60 / CP025 / action allowed)
+```
+
+### 结论
+
+**PARTIAL（按家族分）**：频域/子带族四门 = **FAIL**（门1 物理自由度不存在是 P0），原 T027
+DISPATCH_READY 撤回、作 rejected task brief 保留；逐符号/更新粒度族四门 = **全 PASS**，
+为唯一合法替代入口。T027 已原位重写，task-control PASS。整体入口纠偏 PASS。
+
+### 后续（FAIL/PARTIAL 时）
+
+执行 D035：method-production.md 补入口四门（最小补丁）；T027 重写为逐符号/更新粒度族；
+频域族加 forbidden_actions、保留 rejected brief；不动 formal owner / protected history / thesis
+framework；无实验。频域族仅在信道源码升级到含色散/多径/频率选择性后才可能重审。

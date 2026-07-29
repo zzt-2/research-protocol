@@ -1,7 +1,9 @@
 # [S003] 选择下一 live-test 入口（CP025 后恢复）
 
-> 2026-07-29 | 长程恢复 / 入口选择 | 状态：ENTRY_SELECTED_T027_PREPARED
+> 2026-07-29 | 长程恢复 / 入口选择 | 状态：ENTRY_REDIRECTED_TO_PER_SYMBOL_FAMILY
 > 来源: fork at HEAD `266b6940`（epoch 59 / CP025 / NEXT_LIVE_TEST_SELECTION_READY）
+> 2026-07-29 续接：用户中转指令做最小入口纠偏（D035 / V061），频域/子带族因物理自由度
+> 不存在撤回，T027 原位重写为逐符号/更新粒度族
 
 ## 目标
 
@@ -133,18 +135,25 @@ T027 硬约束（详见 T027 文件）：
 ## 决策引用
 
 - D034：接收 T026、压缩 current snapshot、下一 live-test 以 signal→formal 转化为毕业判据（既有）
-- 无新建 D###：本轮为入口选择，preflight 结论 `STRATEGIC_GATE` 是既有规则的直接应用，
-  无新架构决策；factory 硬路由依据 `method-production.md` 既有规则。
-- 触发原话：无（技术推导 + 既有恢复指令）
+- D035（新建，续接）：撤回频域/子带族入口（problem-bearing testbed preflight 门1 失败——
+  `_dual_pol_channel.py:127-132` 无色散/多径/FIR/频率选择性，物理自由度不存在）；
+  method-production.md 补入口四门；T027 原位重写为唯一四门全过的替代入口
+  （逐符号/更新粒度均衡族，comparator=逐符号 SGD-CMA）。
+- 触发原话：`voice.md` 2026-07-29（用户中转纠偏指令）
 
 ## 范围确认
 
 - 本轮是否在 scope boundary 内：是。当前范围明确含"选择能验证 signal→formal 转化的
   下一 live-test 入口，再生成 T027"。
+- 续接轮（入口纠偏）同样在范围内：用户中转指令只做最小入口纠偏 + 入口门修订，未跑实验、
+  未新建 testbed、未改 protected history / formal owner。
 
 ## 后续
 
-- 用户中转 T027 → executor 在新对话执行 sprint-003（diagnostic only）。
-- 收尾：本轮只提交 S003 + T027 + topic-index/mission-log 更新。
+- 用户中转**修订后 T027**（逐符号/更新粒度族）→ executor 在新对话执行 sprint-003（diagnostic only）。
+- 频域/子带族作 rejected task brief 保留在 T027 §3.1，不运行；仅在信道源码升级到含色散/
+  多径/频率选择性后才可能重审。
+- 收尾：本轮提交 S003 续接 + T027 重写 + topic-index/mission-log/decisions/verifications 更新 +
+  method-production.md 入口门补丁。
 - 若 sprint-003 仍无 signal 或仍无真实不同 comparator → 触发战略 gate 升级（私域全文/
   论文范围决策），届时交用户，不在主线强行推。

@@ -2089,3 +2089,76 @@ foreground checkpoint 更新到 CP025；当前 allowed action 暂收敛为 Skill
 ### 来源
 
 T026、step-026 worker-log、R009、system D019、用户 2026-07-29 授权。
+
+---
+
+## D035: 撤回频域/子带族 T027 入口，method-production 补入口四门，原位重写为逐符号/更新粒度族
+
+> status: active
+> date: 2026-07-29
+> 取代：无（不取代任何科学决策；只取代 S003 选定的"T027=频域/子带族"入口授权，并把
+> 入口改为唯一四门全过的替代项。T026/CP025、D019/D034 协议修订、所有 formal owner
+> 与 protected history 不变）
+> 被取代：无
+> 依据：调研: 无 + 验证: V061 + 源码 file:line（见下）+ 用户原话: voice.md 2026-07-29
+
+### 决策
+
+1. 撤回 S003 选定的 **频域/子带均衡族** 作为 sprint-003 入口。该族 problem-bearing testbed
+   preflight **门1 失败**：`projects/simulation/common/_dual_pol_channel.py:127-132` 的信道
+   只有逐符号 GG 幅度 `h`、SOP 旋转 `theta`、AWGN，**无色散/多径/FIR/频率选择性**——频域/子带
+   均衡对 memoryless、flat 信道退化为恒等/标量，**无可作用的物理自由度**。该族 comparator 也
+   未冻结为真实、传统、同信息对象（原 T027 只留给 executor 冻结）。
+2. method-production.md 补 **入口 problem-bearing testbed preflight 四门**（物理自由度存在 /
+   基线失败与作用点一致 / 命名传统同信息可独立调谐 comparator / 每门 file:line），并明确禁
+   "未测族 / REOPENED / testbed 曾产 signal"放行；另厘清 **shared anchor vs. identity parity**：
+   后者只保护继承基线的比较连续性，**不禁止跑不同的传统算法**（把更细更新粒度选作传统
+   comparator 是合法 re-adjudication，不是重开关闭轴、不是 identity 违例）。
+3. T027 **原位重写**（不新建 T028，以保血缘）为唯一四门全过的替代入口 =
+   **逐符号/更新粒度均衡族**：
+   - 门1：`_cma.py:100-166` 的块末更新（block_size=64 内向量化滤波、块末平均梯度更新）是真旋钮；
+   - 门2：sprint-001 `synthesis.v1.md` §4（L97-130）把 collapse 诊为"块末更新几何 + 信道时间
+     变化"的结构性吸引子，§8（L176-179）把冻结块末协议列为"疑似瓶颈"、逐符号变体列为"最有
+     信息的下一杠杆"——与基线失败点精确重合；
+   - 门3：逐符号 stochastic-gradient CMA 是 Godard 1980 原始传统形式，同任务（同一 z-stream
+     盲均衡）、同信息（receiver-visible）、可独立调谐；
+   - 门4：每门均有 file:line。
+4. task-control 同步修正：`control_epoch 59→60`、`action_class=METHOD_FACTORY_TASK_PREPARATION`
+   与正文一致（正文显式声明"准备、待中转、本轮不跑"）；`validate_task_control.py` PASS。
+5. 频域/子带族作 **rejected task brief** 保留在 T027 §3.1，不运行、不删除；仅在信道源码被升级
+   到含色散/多径/频率选择性后才可能重审。`FREQUENCY_DOMAIN_SUBBAND_FAMILY` 加入
+   `forbidden_actions`。
+6. **无**科学实验、无方法构造、无 carrier 变更、无 protected history / formal owner 改动。
+   CP026 记为入口纠偏治理包（`mission_method_delta=NONE`，不计 no-method streak，因非科学包）。
+
+### 理由
+
+继续按原 T027 派频域族 sprint，会在一个**物理自由度不存在的切片**上构造方法——频域处理对
+当前 memoryless flat 信道退化为恒等/标量，任何"signal"都不可信。而逐符号/更新粒度族：物理
+旋钮真实存在（代码即块末更新）、与已诊断的 collapse 机制（块末更新几何）精确重合、且有
+Godard 1980 这一无可争议的传统同信息 comparator。S003 当初以"未测第六族 + portfolio REOPENED"
+选频域族，正是新补的入口门要拦下的"未测族放行"。identity parity 的顾虑（S003 表 B）也需纠正：
+它保护的是继承基线比较连续性，不是禁止跑不同传统算法。
+
+### 排除的替代方案
+
+- 不删原 T027、不建 T028：前者丢血缘、后者增噪音；原位重写 + §3.1 rejected 理由最干净。
+- 不放宽门去"硬跑"频域族：物理自由度不存在是 P0，靠 executor 也无解。
+- 不把逐符号族标为"已 Go"：仍只是诊断入口，是否产 signal 由 sprint 决定，claim ceiling
+  `DIAGNOSTIC_*`。
+- 不做广泛 portfolio remap：本轮边界是最小入口纠偏 + 入口门，不重排其它候选。
+- 不改 controller/checklist 系统：method-production 只补入口门一段，不扩。
+
+### 影响范围
+
+- foreground `active_lane` → `SPRINT003_DISPATCH_READY_ENTRY_REDIRECTED`；authority → D035；
+  `control_epoch` 保持 60；CP025 不变（CP026 为治理行，不进 mission science streak）。
+- `method-production.md` 增入口四门 + shared-anchor/identity-parity 厘清（最小补丁）。
+- T027 重写为逐符号/更新粒度族；task-control PASS。
+- 无 formal owner / protected history / thesis framework 改动；无实验。
+
+### 来源
+
+S003、原 T027、`_dual_pol_channel.py:127-132`、`_cma.py:100-166`、sprint-001
+`synthesis.v1.md` §4/§8、method-production.md、baseline-adjudication.md、V061、
+用户 2026-07-29 中转指令（voice.md 2026-07-29）。
