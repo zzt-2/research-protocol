@@ -1,7 +1,7 @@
 # Topic Index: Step 4a 维度 D MVE 执行
 
 > slug: 2026-07-06-step4a-mve-execution
-> status: active | created 2026-07-06 | last_updated 2026-07-28（D041/live D032/V060：T024 Gate6 No-Go 与 formal Go 均拒收；G1 实验晋级线关闭。）
+> status: active | created 2026-07-06 | last_updated 2026-07-29（用户确认 bounded packaging；epoch56/T025 只做既有证据写作整理。）
 
 ## 专题定位（一句话）
 
@@ -31,11 +31,13 @@
   nonlinear map 以 Step3.5 No-Q 退出。越门 Phase B 只作 diagnostic。
 - **当前 active scientific carrier**：NONE。G1 gated normalization 仅保留
   `NONBINDING_LOCAL_DIAGNOSTIC_METHOD_SIGNAL`；V060/D041 已关闭实验晋级线。
-  foreground epoch55 / CP023 等待用户确认 bounded thesis packaging。
+  用户已确认 bounded thesis packaging；foreground epoch56 / CP023 的 T025
+  只允许整理既有机制、局部数字、适用边界和证据债。
 - T017 Phase B、C16 Step 3/Q#/implementation/simulation/Probe/MVE、第六查询、
   label/source-receipt repair 均禁止；C15 与既有 repair 禁令继续有效；
-  Q14/T018 继续冻结；Q15 map 与第四个 Q15 repair 禁止；G1 只允许 T024
-  明列的 Groundwork 与条件式 confirm；Step 5/Contract/Execute 继续锁定。
+  Q14/T018 继续冻结；Q15 map 与第四个 Q15 repair 禁止；G1 不再运行
+  Groundwork、confirm 或 repair，只允许 T025 packaging-only；Step
+  5/Contract/Execute 继续锁定。
 
 ### 明确不含
 - ❌ 不回头救 6 次 Kill（Q1/Q2/Q3/Q8 切入点 2/4B/Q12/Q#-A，D005 诚实重评"大概率没几个能救"）
@@ -300,12 +302,13 @@ projects/simulation/
 
 ## 当前位置
 
-**D041 / live V060/D032 — NO ACTIVE SCIENTIFIC CARRIER
-（2026-07-28）**：T024 的 Gate6 No-Go 被正确 seed-cluster pooled
+**D041 / live V060/D032 — NO ACTIVE SCIENTIFIC CARRIER；
+T025 PACKAGING-ONLY READY（2026-07-29）**：T024 的 Gate6 No-Go 被正确 seed-cluster pooled
 bootstrap 推翻（CI_lo≈`0.885`），但 Phase-A receipts 不闭包且 D4 comparator
 为恒等占位，formal recommendation 也拒收。binding disposition =
 `G1_GROUNDWORK_EVIDENCE_INCOMPLETE / PHASE_B_NONBINDING_DIAGNOSTIC`。
-G1 不二修、不进 Step 5；只等待用户确认是否整理 bounded thesis fallback。
+G1 不二修、不进 Step 5；用户已确认由 T025 整理 bounded thesis fallback，
+不新增实验、检索或 formal closure。
 
 **🟠 D039 Q15 TERMINAL STEP3.5 + CONDITIONAL STEP4A READY
 （2026-07-28）**：T022 六篇独立核心 Step 3 内容有效，但 T020 conventional
@@ -471,9 +474,12 @@ strongest-fixed comparator 仍需 formal 闭合。D015 不继承旧 PASS，而�
   diagnostic 在 old/fresh 相对 CMA 改善 `−0.087444/−0.139286` 且
   healthy-worst=0，接收为 G1 `METHOD_SIGNAL`。T024 先过 candidate-specific
   collision/四判据，全过后才 formal confirm；失败即退出。
-- **T024 / live V060/D032 / formal D041 / epoch 55 / CP023**（2026-07-28，当前）：
+- **T024 / live V060/D032 / formal D041 / epoch 55 / CP023**（2026-07-28，历史）：
   Gate6 正确 cluster bootstrap PASS，但 Phase-A evidence closure 与 D4
   comparator identity FAIL；formal Go/No-Go 均拒收，G1 实验晋级线关闭。
+- **T025 / epoch 56 / CP023**（2026-07-29，当前）：
+  用户确认 bounded thesis packaging；只整理既有算法动作、局部数字、适用
+  边界和证据债，不改变 D041，不新增实验、检索或 formal closure。
 - **live V051 / formal D036 / epoch 46 / CP017**（2026-07-27，历史）：
   只授权 final-binding PASS 后执行 T018 Phase A；新论文仍必须暂停于
   delegated coverage gate。

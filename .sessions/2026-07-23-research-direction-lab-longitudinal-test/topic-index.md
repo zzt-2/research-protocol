@@ -4,12 +4,12 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 55
+  control_epoch: 56
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: G1_BOUNDED_PACKAGING_DECISION_PENDING
+  active_lane: G1_BOUNDED_PACKAGING_TASK_READY
   authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D032
-  decision_gate: V060 推翻 T024 的 Gate6 No-Go，但 Phase-A evidence closure 与 D4 comparator identity 均失败；formal Go/No-Go 均拒收，G1 实验修复线关闭，只保留 local diagnostic method signal
+  decision_gate: 用户于 2026-07-29 接受有边界包装；V060/D032/D041 的证据上限不变，T025 只整理既有机制、局部数字、适用边界和证据债
   allowed_actions:
     - RECOVER
     - TASK_PREPARATION
@@ -20,6 +20,7 @@ rdl_control:
     - PORTFOLIO_MAP
     - CANDIDATE_FORMALIZATION
     - THESIS_METHOD_PACKAGING_PREPARATION
+    - THESIS_METHOD_PACKAGING
   forbidden_actions:
     - UNRELATED_SCIENTIFIC_EXPERIMENT
     - PRIVATE_FULLTEXT_ACQUISITION
@@ -53,12 +54,12 @@ rdl_control:
     - G1_NEW_EXPERIMENT_OR_FORMAL_REPAIR
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
   mission_checkpoint: CP023
-  next_legal_action: 主控先向用户提交最小包装设计并取得确认；确认后才可准备一个不新增实验、不补 formal closure 的 G1 bounded thesis-packaging 任务。不得 remap、修 T024 或进入 Step5/Contract/Execute
+  next_legal_action: 用户将 T025 交给普通 GLM；执行者只生成 bounded thesis-packaging 文档与 worker log，不新增实验、检索或 formal closure，不 remap、修 T024 或进入 Step5/Contract/Execute
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（V060/D032 拒收 T024 的错误 Gate6 No-Go，同时拒收 formal Go；epoch 55 / CP023，等待 G1 有边界包装确认）
-> 创建: 2026-07-23 | 最后更新: 2026-07-28
+> 状态: active（V060/D032 拒收 T024 的错误 Gate6 No-Go，同时拒收 formal Go；epoch 56 / CP023，T025 有边界包装任务就绪）
+> 创建: 2026-07-23 | 最后更新: 2026-07-29
 
 ## 专题信息
 
@@ -546,6 +547,6 @@ T024 已由 V060/D032 追加 CP023。其 `G1_FORMAL_CONFIRM_NO_GO` 的 Gate6
 理由错误：正确 seed-cluster pooled bootstrap 明确 PASS；但 Phase-A evidence
 closure 与 D4 comparator identity 失败，使 formal recommendation 同样不能接收。
 当前无 active scientific carrier，G1 仅保留
-`NONBINDING_LOCAL_DIAGNOSTIC_METHOD_SIGNAL`，且不再修实验。control epoch55
-等待用户确认是否把现有机制、局部收益与证据债整理为毕业方法备选材料；
-确认前不开 T025，不 remap，不进 Step 5/Contract/Execute。
+`NONBINDING_LOCAL_DIAGNOSTIC_METHOD_SIGNAL`，且不再修实验。用户已确认采用
+有边界的毕业方法备选包装；control epoch56 已准备 T025。该任务只允许整理
+现有机制、局部收益与证据债，不 remap，不进 Step 5/Contract/Execute。

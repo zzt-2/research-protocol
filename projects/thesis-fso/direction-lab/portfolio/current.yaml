@@ -26,7 +26,7 @@ formal_active_carrier:
 
 selected_formalization_workline:
   id: G1_SAFE_GATED_NORMALIZATION
-  status: FORMAL_LINE_CLOSED_PACKAGING_PENDING
+  status: FORMAL_LINE_CLOSED_PACKAGING_TASK_READY
   readiness: LOCAL_DIAGNOSTIC_ASSET_ONLY
   authority: formal D041 / live D032 / V060
   positive_method_target: >-
@@ -37,9 +37,9 @@ selected_formalization_workline:
     - restart, multistart, or reinitialization of the same CMA
     - blind AGC / scale normalization / radius-directed post-processing
     - C11 legal causal and blind affine as inherited diagnostics
-  expected_mission_method_delta: PACKAGING_BOUNDARY_IF_USER_APPROVES
+  expected_mission_method_delta: PACKAGING_BOUNDARY
   current_gate: >-
-    User confirmation is required before a bounded packaging-only package.
+    User confirmed a bounded packaging-only package on 2026-07-29; T025 is ready.
     T024 Phase-A evidence closure and D4 comparator identity are invalid.
   stop: >-
     No new science run or formal repair; no Step5/Contract/Execute,
@@ -196,8 +196,8 @@ next_action: >-
   V060/D032/formal D041 reject both T024 terminal claims. Correct seed-cluster
   pooled bootstrap makes Gate6 PASS (CI lower about 0.885), but Phase-A evidence
   closure and D4 comparator identity fail, so formal recommendation is invalid.
-  G1 remains a nonbinding local diagnostic asset. Await user confirmation for
-  bounded thesis packaging using existing evidence only. No Q15 or second G1
+  G1 remains a nonbinding local diagnostic asset. T025 may perform bounded
+  thesis packaging using existing evidence only. No Q15 or second G1
   repair, new experiment, Step5, Contract, Execute, promotion, or paper claim.
   Historical context:
   D022 (SCIENCE_FREEZE): SCIENCE_SCOUT candidate rotation PAUSED (topic dormant). NO legal

@@ -49,8 +49,8 @@ topics:
     title: Research Direction Lab 长程真实运行测试
     status: active
     created: "2026-07-23"
-    last_updated: "2026-07-28（V060/D032/D041：T024 Gate6 No-Go 与 formal Go 均拒收；epoch55 / CP023 G1 实验线关闭）"
-    description: "D017/D018 轻量长程 mission。V060 推翻 T024 的 Gate6 No-Go（正确 seed-cluster CI_lo≈0.885），但 Phase-A evidence closure 与 D4 comparator identity 均失败，formal Go 同样拒收。D032/D041 关闭 G1 实验修复线，保留 local diagnostic method signal；当前等待用户确认 bounded thesis packaging，不进 Step5/Contract/Execute。"
+    last_updated: "2026-07-29（用户确认 G1 bounded packaging；epoch56 / CP023，T025 就绪）"
+    description: "D017/D018 轻量长程 mission。V060 推翻 T024 的 Gate6 No-Go（正确 seed-cluster CI_lo≈0.885），但 Phase-A evidence closure 与 D4 comparator identity 均失败，formal Go 同样拒收。D032/D041 关闭 G1 实验修复线，保留 local diagnostic method signal；T025 只整理有边界毕业方法备选材料，不进 Step5/Contract/Execute。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 S014 现场故障、R003 场景演练、D017 控制接口和 guard
@@ -447,8 +447,8 @@ topics:
     title: Step 4a 维度 D MVE 执行（B11 单载波 NDA-ML 主推 + B7/B3 待开）
     status: active
     created: "2026-07-06"
-    last_updated: "2026-07-28（D041/live V060/D032：T024 formal 双终态拒收；G1 实验晋级线关闭）"
-    description: "Formal carrier owner。D041 接收 V060：T024 Gate6 正确 cluster bootstrap PASS，但 Phase-A closure 与 D4 comparator identity FAIL；formal Go/No-Go 均拒收。当前无 active carrier，G1 仅为 local diagnostic packaging asset；禁止新实验、repair、Step5/Contract/Execute。"
+    last_updated: "2026-07-29（用户确认 bounded packaging；epoch56/T025 packaging-only ready）"
+    description: "Formal carrier owner。D041 接收 V060：T024 Gate6 正确 cluster bootstrap PASS，但 Phase-A closure 与 D4 comparator identity FAIL；formal Go/No-Go 均拒收。当前无 active carrier；用户已确认 T025 只整理 G1 local diagnostic packaging asset，禁止新实验、检索、repair、Step5/Contract/Execute。"
     depends_on:
       - slug: 2026-06-20-problem-driven-redirection
         reason: 继承 S031 排优先级（B11/B3/B7 Conditional Go）+ 切法地图参照系（饱和池/稀池路径）+ D005 务实路线 + D006 红线 + 5 个口径警示
