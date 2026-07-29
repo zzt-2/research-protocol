@@ -371,9 +371,9 @@ current_view:
         with healthy-worst=0, and correct seed-cluster Gate6 CI lower about
         0.885. However Phase-A evidence closure is incomplete and D4 is an
         identity placeholder, so formal Go/No-Go are both rejected.
-      status: nonbinding_local_diagnostic_packaging_task_ready
+      status: nonbinding_local_diagnostic_packaging_accepted_artifact_task_ready
       ceiling: NONBINDING_DIAGNOSTIC / LOCAL_SLICE / NO FORMAL GO
-      paper_value: BOUNDED_FALLBACK_PACKAGING_AUTHORIZED
+      paper_value: BOUNDED_FALLBACK_INTERNAL_PACKAGE_ACCEPTED
 
     - spine: >-
         WITHDRAWN (was PRIMARY): F1-B dual-pol GG/SOP model-based tracker -> MMSE. The F1-A Probe
@@ -417,8 +417,9 @@ current_view:
     seed-cluster pooled CI lower is about 0.885, but also reject formal Go
     because Phase-A evidence closure is incomplete and D4 is an identity
     placeholder. G1 receives no repair and remains a local diagnostic asset.
-    User confirmed one bounded packaging-only bundle; T025 is ready. This is
-    not a formal thesis spine or Step4a Go.
+    D033/CP024 accept the T025 bounded internal package. T026 may create a
+    modular thesis insert and figures only. This is not a formal thesis spine
+    or Step4a Go.
     Historical context:
     D022 (SCIENCE_FREEZE): SCIENCE_SCOUT candidate rotation PAUSED (topic dormant). NO legal
     main-method signal; NO active thesis spine. Local-negative + methodology-lesson material ->

@@ -26,9 +26,9 @@ formal_active_carrier:
 
 selected_formalization_workline:
   id: G1_SAFE_GATED_NORMALIZATION
-  status: FORMAL_LINE_CLOSED_PACKAGING_TASK_READY
+  status: FORMAL_LINE_CLOSED_PACKAGING_ACCEPTED_ARTIFACT_TASK_READY
   readiness: LOCAL_DIAGNOSTIC_ASSET_ONLY
-  authority: formal D041 / live D032 / V060
+  authority: formal D041 / live D033 / CP024 / V060
   positive_method_target: >-
     receiver-visible prefix detector activates per-pol correct sqrt scale only
     under collapse risk; healthy outputs retain identity
@@ -37,13 +37,15 @@ selected_formalization_workline:
     - restart, multistart, or reinitialization of the same CMA
     - blind AGC / scale normalization / radius-directed post-processing
     - C11 legal causal and blind affine as inherited diagnostics
-  expected_mission_method_delta: PACKAGING_BOUNDARY
+  expected_mission_method_delta: NONE
   current_gate: >-
-    User confirmed a bounded packaging-only package on 2026-07-29; T025 is ready.
-    T024 Phase-A evidence closure and D4 comparator identity are invalid.
+    D033/CP024 accept T025 as an internal bounded packaging source. T026 may
+    create thesis writing/figure artifacts only. T024 Phase-A evidence closure
+    and D4 comparator identity remain invalid.
   stop: >-
     No new science run or formal repair; no Step5/Contract/Execute,
-    Q15 map repair, or second G1 package
+    Q15 map repair, second G1 science package, or scientific claim beyond the
+    bounded thesis insert authorized by T026
 
 candidates:
   # ── Cluster 1-2: Failure observability (CEILINGED) ──
@@ -196,9 +198,11 @@ next_action: >-
   V060/D032/formal D041 reject both T024 terminal claims. Correct seed-cluster
   pooled bootstrap makes Gate6 PASS (CI lower about 0.885), but Phase-A evidence
   closure and D4 comparator identity fail, so formal recommendation is invalid.
-  G1 remains a nonbinding local diagnostic asset. T025 may perform bounded
-  thesis packaging using existing evidence only. No Q15 or second G1
-  repair, new experiment, Step5, Contract, Execute, promotion, or paper claim.
+  G1 remains a nonbinding local diagnostic asset. T025 packaging is accepted;
+  T026 may materialize a thesis insert and figures using existing evidence only.
+  No Q15 or second G1
+  repair, new experiment, Step5, Contract, Execute, promotion, or claim beyond
+  the bounded thesis insert.
   Historical context:
   D022 (SCIENCE_FREEZE): SCIENCE_SCOUT candidate rotation PAUSED (topic dormant). NO legal
   main-method signal. F1=TESTBED_BLOCKED, F3=UNRESOLVED, F4=INFRASTRUCTURE_BLOCKED. F2 pilot lineage

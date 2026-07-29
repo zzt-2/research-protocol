@@ -4,12 +4,12 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 56
+  control_epoch: 57
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: G1_BOUNDED_PACKAGING_TASK_READY
-  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D032
-  decision_gate: 用户于 2026-07-29 接受有边界包装；V060/D032/D041 的证据上限不变，T025 只整理既有机制、局部数字、适用边界和证据债
+  active_lane: G1_THESIS_ARTIFACT_TASK_READY
+  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D033
+  decision_gate: T025 已接收为内部 PACKAGING_BOUNDARY；科学上限仍为 LOCAL_SLICE/NONBINDING_DIAGNOSTIC，T026 只把它物化为模块化论文小节与正式图
   allowed_actions:
     - RECOVER
     - TASK_PREPARATION
@@ -21,6 +21,7 @@ rdl_control:
     - CANDIDATE_FORMALIZATION
     - THESIS_METHOD_PACKAGING_PREPARATION
     - THESIS_METHOD_PACKAGING
+    - THESIS_ARTIFACT_PRODUCTION
   forbidden_actions:
     - UNRELATED_SCIENTIFIC_EXPERIMENT
     - PRIVATE_FULLTEXT_ACQUISITION
@@ -53,12 +54,12 @@ rdl_control:
     - G1_SECOND_REPAIR_PACKAGE
     - G1_NEW_EXPERIMENT_OR_FORMAL_REPAIR
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
-  mission_checkpoint: CP023
-  next_legal_action: 用户将 T025 交给普通 GLM；执行者只生成 bounded thesis-packaging 文档与 worker log，不新增实验、检索或 formal closure，不 remap、修 T024 或进入 Step5/Contract/Execute
+  mission_checkpoint: CP024
+  next_legal_action: 用户将 T026 交给普通 GLM；执行者只生成模块化论文小节、可编辑方法流程图、raw-derived 分层结果图和 worker log，不新增科学证据，不修改 thesis framework 或 current owners
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（V060/D032 拒收 T024 的错误 Gate6 No-Go，同时拒收 formal Go；epoch 56 / CP023，T025 有边界包装任务就绪）
+> 状态: active（T025 已接收为内部有边界方法包；epoch 57 / CP024，T026 论文资产生产任务就绪）
 > 创建: 2026-07-23 | 最后更新: 2026-07-29
 
 ## 专题信息
@@ -523,6 +524,9 @@ rdl_control:
   被正确 seed-cluster pooled bootstrap 推翻（CI_lo≈`0.885`）；但 Phase-A
   收据不闭包且 D4 为恒等占位，formal Go/No-Go 均拒收。Phase B 只作
   nonbinding diagnostic；G1 保留 local method signal，但实验修复线关闭。
+- **T025 / D033 / CP024**：接收 `PACKAGING_BOUNDARY`。算法、局部证据、
+  论文叙事、图表计划、不可声称项与 provenance 已集中为内部方法包；科学上限
+  不变。T026 只把该包转成模块化论文小节和正式图，不新增科学证据。
 
 ## 未决项
 
@@ -543,10 +547,7 @@ rdl_control:
 
 ## 当前位置
 
-T024 已由 V060/D032 追加 CP023。其 `G1_FORMAL_CONFIRM_NO_GO` 的 Gate6
-理由错误：正确 seed-cluster pooled bootstrap 明确 PASS；但 Phase-A evidence
-closure 与 D4 comparator identity 失败，使 formal recommendation 同样不能接收。
-当前无 active scientific carrier，G1 仅保留
-`NONBINDING_LOCAL_DIAGNOSTIC_METHOD_SIGNAL`，且不再修实验。用户已确认采用
-有边界的毕业方法备选包装；control epoch56 已准备 T025。该任务只允许整理
-现有机制、局部收益与证据债，不 remap，不进 Step 5/Contract/Execute。
+T025 已由 D033 接收为 `PACKAGING_BOUNDARY`，但不是 formal method 或 active
+thesis spine。当前无 active scientific carrier，G1 科学线保持关闭。control
+epoch57 已准备 T026：只把已接收包转成模块化论文小节、可编辑流程图和
+raw-derived 分层结果图，不修改 thesis framework，不进 Step 5/Contract/Execute。

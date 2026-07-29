@@ -5,7 +5,7 @@ method_type: 待定（精读后根据问题方法产出形态确定，见 glossa
 domain: comms
 created: 2026-06-21
 updated: 2026-07-29
-current_step: G1-BOUNDED-PACKAGING-TASK-READY
+current_step: G1-THESIS-ARTIFACT-TASK-READY
 current_stage: GROUNDWORK
 ---
 
@@ -27,7 +27,7 @@ current_stage: GROUNDWORK
 
 ### 当前控制面桥接（唯一现行入口）
 
-> **2026-07-29 user confirmation → epoch56 / CP023 G1 FORMAL LINE CLOSED；T025 BOUNDED PACKAGING TASK READY**：
+> **2026-07-29 D033/CP024 → epoch57 G1 FORMAL LINE CLOSED；T026 THESIS ARTIFACT TASK READY**：
 > T009 的独立审查只接收 `BLOCKED_IDENTITY` 与 `mission_method_delta=NONE`；
 > 随机 TX payload 被当 pilot、DA/NDA frequency stage 不对称、无来源且无 FEC
 > crossing 的 working region，以及 raw/result 未进提交，共同否定“DA 在可靠条件
@@ -44,7 +44,7 @@ current_stage: GROUNDWORK
 > `mission_method_delta=NONE`。不补矩阵、不改 positive-slope gate、不运行 held-out。
 
 - formal stage：`GROUNDWORK`；当前为
-  `NO_ACTIVE_SCIENTIFIC_CARRIER / G1_BOUNDED_PACKAGING_TASK_READY`。
+  `NO_ACTIVE_SCIENTIFIC_CARRIER / G1_THESIS_ARTIFACT_TASK_READY`。
   B9 与 B12 均已返回候选池。Direction Lab 的
   Scout/Sandbox 结果对正式研究的 promotion effect 仍为 `none`；Direction Lab
   campaign 已 dormant（D022 SCIENCE_FREEZE），无当前科学执行授权。
@@ -53,16 +53,17 @@ current_stage: GROUNDWORK
   引用/read-note 未形成可提交闭包，D4 comparator 又是 post-CMA 恒等映射，
   因而 formal recommendation 同样拒收。D041 固定 binding disposition 为
   `G1_GROUNDWORK_EVIDENCE_INCOMPLETE / PHASE_B_NONBINDING_DIAGNOSTIC`。
-  G1 不再 repair；用户已确认把局部 method signal 整理为 bounded thesis packaging，
-  T025 只做既有证据的写作包装。
+  G1 不再 repair；T025 已接收为 bounded internal packaging source。T026 只把
+  既有证据物化为模块化论文小节和正式图，不改变科学上限。
 - **Pilot-Jones（退出 carrier）**：D066/V040 接收 fixed complex component rescue
   axis scoped Kill；4 篇 direct competitor 全文债继续保留，但不阻塞当前 carrier。
 - P03（暂停，回候选池）：Headroom Atlas Stage A（2026-07-19，S077/D059/V033）runnable 子域 LOCAL_NEGATIVE；16QAM/receiver-CSI/coded-output 三轴 INFRASTRUCTURE_BLOCKED，历史反例落在被阻轴上 → DOMAIN/CANDIDATE/FAMILY 仍 UNRESOLVED/OPEN。**用户选项①已选定：暂停回候选池，不关闭 family**。
 - Direction Lab sandbox history：last completed batch = `B003 / COMPLETED_SANDBOX_VERIFIED`；事实源为 `projects/thesis-fso/direction-lab/state/completion-events.jsonl`。`canonical-state.yaml` 仅为机器投影，不是正式研究授权源。
 - formal promotion effect：`none`；B001–B003 数字不得进入论文或正式材料。
-- 下一合法边界：用户将 T025 交给普通 GLM。任务只生成一个有边界的方法包和
-  worker log；不新增实验、检索或 formal closure，不声称 Step4a Go。不得
-  remap、重跑 T024、进入 Step 5 或修 Q15/G1。
+- 下一合法边界：用户将 T026 交给普通 GLM。任务只生成模块化论文小节、
+  可编辑方法流程图、raw-derived 分层结果图和 worker log；不新增实验、检索
+  或 formal closure，不修改 thesis framework，不声称 Step4a Go。不得 remap、
+  重跑 T024、进入 Step 5 或修 Q15/G1。
   **T017 不得运行 Phase B、旧 C16 sandbox、seeds 71–80、Step 3/Q#/实现/
   seed/MVE，不得第二个 C16 source/formalization package；T016/C15 不得运行 Phase B、
   第二个 source package、seed/MVE、精读或写 Q#；
@@ -117,7 +118,7 @@ current_stage: GROUNDWORK
 | Q15 prefix-gated radius calibration Step 1-2 | 🟡 PARTIAL | T020 / T021 / live V054 | 检索与全文池可用；三源 PASS 撤回 |
 | Q15 Step 3 | 🟡 CONTENT_COMPLETE_REFRAMED | T022 / live V056 / formal D039 | 六篇独立核心内容门过；判据 1/2 PARTIAL，3/4 PASS |
 | Q15 nonlinear map | 🔴 NO-GO | live V058/D031 / formal D040 | T023 越过 A4/B0；map 无 gate+scale 外增量，不修复 |
-| G1 gated normalization | 🟡 FORMAL CLOSED / T025 BOUNDED PACKAGING READY | live V060/D032 / formal D041 / T024 | Gate6 正确重算 PASS；Phase-A closure 与 D4 identity FAIL；不二修，只可有边界包装 |
+| G1 gated normalization | 🟡 FORMAL CLOSED / T025 PACKAGING ACCEPTED / T026 ARTIFACT READY | live D033/CP024 / formal D041 | 内部有边界方法包已接收；只可生成论文资产，不二修、不晋级 |
 | residual cascade Step 4a §0/A0 | **DEFER** | S039 / D044 | Q14 判据 2 UNKNOWN；不作为唯一主线 |
 | 候选族地图（CMA-fade/SOP 基点） | ✅ | S041 / D045 | 6 类方法族、约 30 个变体，已按作用时段/接口/成本分组 |
 | Batch 0 基线审计 | **PARTIAL** | S042 | paired 基线/口径可重算；CRITICAL=4，recovery-delay 缺口 |

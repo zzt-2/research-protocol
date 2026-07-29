@@ -1999,3 +1999,60 @@ identity 失效。继续修会违反一次性退出边界；把它写成科学 N
 
 T024；step-024 worker log；`prefix-receipt.csv`、`raw-rows.csv`、
 `result.json`；T024 §A4/B1/B4；V060；D031/D040。
+
+---
+
+## D033: 接收 T025 为有边界内部方法材料，下一步直接产出论文小节与正式图
+
+> status: active
+> date: 2026-07-29
+> 取代：D032 的“包装待决/待执行”状态
+> 被取代：无
+> 依据：T025 commit `5e355c6738ecefe831ddc0530a356f988cf7473b`
+> + `g1-safe-gated-normalization-package.md`
+> + `step-025-g1-bounded-thesis-packaging.md`
+> 触发原话：无（T025 执行回执；包装偏好见 `voice.md` 2026-07-24、2026-07-29）
+
+### 决策
+
+1. 接收 T025 的 `PACKAGING_BOUNDARY`。G1 现已形成可追溯的内部方法包，包含
+   算法、局部正向证据、论文叙事、图表计划、不可声称项与 provenance。
+2. 科学上限不变：仍为
+   `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`，不构成 formal Go、直接竞品胜利、
+   新颖性闭合或 active scientific carrier。
+3. 当前包是写作源材料，不直接标“论文可粘贴”。主控复核发现需在对外版本修正：
+   “已知结构”不得暗示已知发送符号；“逐比特恒等”改为逐样本恒等；“零代价”
+   限定为零后缀变换扰动；always-on 退化只写当前切片观测；`−0.5598`
+   必须表述为 collapse 条件子集的 ΔPI-SER，而非“恢复后的错误率”。
+4. 不把这些措辞修正再做成一个纯审计/纯润色包。下一包 T026 必须把现有方法包
+   直接转成一个模块化论文小节、一个可编辑方法流程图和一张由 raw 重算的分层
+   结果图；不修改现行 thesis framework，不暗示 G1 已成为论文主线。
+5. T026 不新增科学证据，`mission_method_delta=NONE`；其价值是把已接收的
+   `PACKAGING_BOUNDARY` 物化为可选的 `WRITING_MATERIAL`。
+
+### 理由
+
+T025 已完成“能不能包”的回答，继续打磨同一内部方法卡只会产生治理/文字循环；
+直接制作论文小节与正式图，才把现有正向信号转成用户真正可用的毕业材料。由于
+当前无 active carrier、第三个 CB1 z-only factory 被禁止，立刻再做同测试床方法
+搜索的期望价值低于先把首个正向包装落实成可复用论文资产。
+
+### 排除的替代方案
+
+- 不把 T025 升为 formal method 或 active thesis spine；
+- 不开第二个 G1 科学 repair、补实验、补文献闭包或实现直接竞品；
+- 不只做措辞清单或再写一份包装评价；
+- 不直接改 `thesis-framework.md`，避免未经用户确认改变论文结构；
+- 不在本包后立即启动第三个 CB1 z-only factory。
+
+### 影响范围
+
+- foreground 递增到 epoch57 / CP024；
+- T025 状态改为 accepted internal packaging source；
+- T026 仅获 `THESIS_ARTIFACT_PRODUCTION` 授权；
+- formal science disposition、D041 和无 active carrier 状态不变。
+
+### 来源
+
+T025 package/worker log；V060；D032/D041；research-direction-lab
+`method-production.md`、`thesis-harvest.md`；external-output 出门审查。

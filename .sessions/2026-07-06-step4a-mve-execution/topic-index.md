@@ -1,7 +1,7 @@
 # Topic Index: Step 4a 维度 D MVE 执行
 
 > slug: 2026-07-06-step4a-mve-execution
-> status: active | created 2026-07-06 | last_updated 2026-07-29（用户确认 bounded packaging；epoch56/T025 只做既有证据写作整理。）
+> status: active | created 2026-07-06 | last_updated 2026-07-29（T025 已接收为内部包装；epoch57/T026 只做论文资产生产。）
 
 ## 专题定位（一句话）
 
@@ -31,12 +31,12 @@
   nonlinear map 以 Step3.5 No-Q 退出。越门 Phase B 只作 diagnostic。
 - **当前 active scientific carrier**：NONE。G1 gated normalization 仅保留
   `NONBINDING_LOCAL_DIAGNOSTIC_METHOD_SIGNAL`；V060/D041 已关闭实验晋级线。
-  用户已确认 bounded thesis packaging；foreground epoch56 / CP023 的 T025
-  只允许整理既有机制、局部数字、适用边界和证据债。
+  T025 已接收为内部 bounded thesis packaging；foreground epoch57 / CP024
+  的 T026 只允许生成模块化论文小节和正式图，不新增科学证据。
 - T017 Phase B、C16 Step 3/Q#/implementation/simulation/Probe/MVE、第六查询、
   label/source-receipt repair 均禁止；C15 与既有 repair 禁令继续有效；
   Q14/T018 继续冻结；Q15 map 与第四个 Q15 repair 禁止；G1 不再运行
-  Groundwork、confirm 或 repair，只允许 T025 packaging-only；Step
+  Groundwork、confirm 或 repair，只允许 T026 thesis-artifact-only；Step
   5/Contract/Execute 继续锁定。
 
 ### 明确不含
@@ -307,8 +307,8 @@ T025 PACKAGING-ONLY READY（2026-07-29）**：T024 的 Gate6 No-Go 被正确 see
 bootstrap 推翻（CI_lo≈`0.885`），但 Phase-A receipts 不闭包且 D4 comparator
 为恒等占位，formal recommendation 也拒收。binding disposition =
 `G1_GROUNDWORK_EVIDENCE_INCOMPLETE / PHASE_B_NONBINDING_DIAGNOSTIC`。
-G1 不二修、不进 Step 5；用户已确认由 T025 整理 bounded thesis fallback，
-不新增实验、检索或 formal closure。
+G1 不二修、不进 Step 5；T025 已形成内部 bounded thesis fallback。T026 只将
+其物化为可选论文小节与正式图，不新增实验、检索或 formal closure。
 
 **🟠 D039 Q15 TERMINAL STEP3.5 + CONDITIONAL STEP4A READY
 （2026-07-28）**：T022 六篇独立核心 Step 3 内容有效，但 T020 conventional
@@ -477,9 +477,12 @@ strongest-fixed comparator 仍需 formal 闭合。D015 不继承旧 PASS，而�
 - **T024 / live V060/D032 / formal D041 / epoch 55 / CP023**（2026-07-28，历史）：
   Gate6 正确 cluster bootstrap PASS，但 Phase-A evidence closure 与 D4
   comparator identity FAIL；formal Go/No-Go 均拒收，G1 实验晋级线关闭。
-- **T025 / epoch 56 / CP023**（2026-07-29，当前）：
+- **T025 / epoch 56 / CP023**（2026-07-29，历史）：
   用户确认 bounded thesis packaging；只整理既有算法动作、局部数字、适用
   边界和证据债，不改变 D041，不新增实验、检索或 formal closure。
+- **T026 / epoch 57 / CP024**（2026-07-29，当前）：
+  D033 接收 T025 `PACKAGING_BOUNDARY`；T026 只生成模块化论文小节、可编辑
+  方法流程图和 raw-derived 分层结果图，不改变 D041 或 thesis framework。
 - **live V051 / formal D036 / epoch 46 / CP017**（2026-07-27，历史）：
   只授权 final-binding PASS 后执行 T018 Phase A；新论文仍必须暂停于
   delegated coverage gate。

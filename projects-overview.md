@@ -1,6 +1,6 @@
 # 项目总览
 
-> 最后更新: 2026-07-28 | 活跃: 6 | 已归档: 5 | 总计: 11
+> 最后更新: 2026-07-29 | 活跃: 6 | 已归档: 5 | 总计: 11
 
 ## 活跃项目
 
@@ -8,7 +8,7 @@
 
 - **方向**：双偏振星地 OSL 场景中的 ML 应用方向探索；正式研究与 Direction Lab Scout/Sandbox 分层管理。
 - **正式状态**：当前
-  `NO_ACTIVE_SCIENTIFIC_CARRIER / G1_BOUNDED_PACKAGING_TASK_READY`。
+  `NO_ACTIVE_SCIENTIFIC_CARRIER / G1_THESIS_ARTIFACT_TASK_READY`。
   V060/D032/formal D041 拒收 T024 的两个相反终态：正确 seed-cluster pooled
   bootstrap 的 Gate6 CI_lo≈`0.885`，所以 `G1_FORMAL_CONFIRM_NO_GO` 理由错误；
   但 Phase-A search/citation/read-note 未形成可提交闭包，D4 comparator 又是
@@ -64,8 +64,9 @@
   moderate/14 dB/seed `131004` 暴露 128-pilot unwrap 的错误 `-2π` branch；
   V026 接收 `BLOCKED_IDENTITY / P0=0/P1=0/P2=1 /
   mission_method_delta=NONE`。无 aggregate，未消费 held-out；不补矩阵、不改 gate。
-- **下一合法边界**：用户已确认 G1 bounded thesis packaging；T025 已就绪，
-  只整理既有算法动作、局部数字、适用边界和证据债。禁止新实验、检索、
+- **下一合法边界**：T025 已由 D033/CP024 接收为内部 bounded packaging
+  source。T026 只生成模块化论文小节、可编辑方法流程图和 raw-derived 分层
+  结果图；不新增科学证据，不修改 thesis framework。禁止新实验、检索、
   formal repair、Step 5/Contract/Execute、Q15 map repair 与第二个 G1
   science package。
   **不运行 T017 Phase B、旧 C16 sandbox/seeds 71–80，不进入 Step 3/Q#/
