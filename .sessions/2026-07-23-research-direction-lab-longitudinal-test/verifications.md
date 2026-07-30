@@ -3622,3 +3622,41 @@ executor 的 `PROBLEM_RESOLVED_BY_UNIFORM_PRECISION` **成立**。P03 的"定点
 ### 主控 claim ceiling
 
 P03 产出**有效工程负面 + 定点可部署性证据**（DA/NDA CPR 选择器在 8-bit uniform Q(8,6) 下决策与浮点 byte-exact；定点非该选择器瓶颈；stage-2 噪声扣除高 SNR 下溢张力真实但 sub-MDE）。claim ceiling 维持 `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`：不构成 active carrier、不冒充 formal method、不写论文 claim。resource 措辞严格 proxy（无真实综合工具，不声称 FPGA LUT/DSP/功耗/吞吐）。作 thesis-harvest 的 engineering-robustness / deployment-feasibility 类记录（Ch5 FPGA §5.4/§5.5 可引用 bit-cost/resource proxy 证据）。B 族（定点/资源-性能协同设计）首包完成，连续=1。
+
+## V068: P04 连续 GG OOD 选择器鲁棒性独立验收（PROBLEM_ABSENT_ON_CONTINUOUS_GG）
+
+> 关联：D042 / P04 / worker-log step-031
+> verdict：**PASS**（8 项检查全过；executor 的 `PROBLEM_ABSENT_ON_CONTINUOUS_GG` 为唯一正确终态）
+> 日期：2026-07-30
+
+### 验收范围
+
+独立 verifier（非实现方）从 raw artifacts 起独立重算所有 aggregate、独立重跑锚点回归门、读源码审 Al-Habash 公式真实性、AST/grep 审信息边界、git status 查冻结文件改动、独立复算 sub-range 结构。
+
+### 8 项检查（逐项 PASS + 关键证据）
+
+1. **α/β 映射 + provenance — PASS**：`_p04_continuous_gg.py:59-63` `alhabash()` 与 `system_model.tex:16-21` 逐项吻合（`α=[exp(0.49σ²/(1+1.11σ²^(6/5))^(7/6))−1]⁻¹`、`β=[exp(0.51σ²/(1+0.69σ²^(6/5))^(5/6))−1]⁻¹`）。独立重算 σ_R²∈{0.2,1.6,3.5} = (11.6510,10.1224)/(4.0265,1.9105)/(4.2257,1.3622)，对冻结对偏离 0.44%/0.22%、0.66%/0.55%、0.61%/**2.700%**（≤ 论文自报 2.78%）。`sigma2_to_ab`（`:66-75`）在 3 锚点用冻结对、其余用 Al-Habash（6 held-out σ_R² 验证不走冻结分支）。mcs `rytov_to_gg` proxy 未被 import（仅 docstring 提及 NOT used）。
+
+2. **锚点回归门（独立重跑）— PASS**：独立调 `P4.run_case_contgg(sigma2_to_ab(s2)...)` vs `PR.run_case_multidelta(scene,...,deltas=[0.0])`，weak/moderate/strong × seeds 0-2 × γ{5,9} = 18 cell，比 selected_errors/n_select_da/n_select_nda/fixed_nda_errors/fixed_da_errors/lower_count_bound_errors = **108 字段 0 mismatch**。
+
+3. **raw→aggregate 独立复算 — PASS**：从 phaseA_heldout.json raw_rows（600 rows）独立重算 pooled interior regret = 30 interior cell 的 [mean over seeds of 10·log10(selected/min(fixed_DA,fixed_NDA))] 的均值 = **0.1458564869 dB**。存储 verdict.pooled_mean = 0.1458564869 → 相对误差 **0.000e+00（精确）**。CI 重算 [+0.082679,+0.209034] = 存储 CI 精确。per-row regret 重算与存储 `regret_sel_db` 相对误差 0.00e+00。cells > MDE 且 CI_low>0 = **9/30**（精确匹配声称计数），全在 weak-side-low-SNR（σ² 0.30/0.90/1.35 × γ 5-11）。交叉验证：dev interior +0.139271（声称 +0.1393 ✓）、dev anchor +0.230611（声称 +0.2306 ✓）、dev-heldout 差 0.0066 dB（声称 0.007 ✓）。
+
+4. **seed 隔离 — PASS（干净）**：dev seeds 恰 0-9（10）；held-out 恰 30-49（20）；disjoint；无 71-80 pollution；held-out 无 ≥50 seed。held-out σ² 恰 {0.3,0.9,1.35,1.85,2.3,3.15}，全严格 interior（无 = 锚点 0.2/1.6/3.5），全在 (0.2,3.5)。dev/held-out σ² 集 disjoint。所有 held-out `is_anchor==False`。
+
+5. **信息边界 — PASS（干净）**：AST 审：唯一 `decide` 调用在 `_p04_continuous_gg.py:165` → `decide(raw, gdb, glin)`，恰消费 (raw, gamma_db, gamma_lin)。运行时确认 `A.decide`（冻结，`_a4_switch_common768_30seed.py:97`）只读 rx_seg/gamma_db/gamma_lin。`alpha`/`beta` 仅在 `:115` 信道生成（turb_params）。`r['h']`/`r['phi']` 仅在 `:129-130` 离线 `ber_oracle_turb`（存 base，绝不达 decide）。无 turb_name/labels/tx_sym/tx_bits/true_h/true_phi/true_snr/true_gamma token。pw_tx/bits/tx 只喂默认 no-op pilot hook，不进 orig decide。
+
+6. **冻结文件未改 — PASS**：`git status`/`git diff HEAD` 对 `_a4_switch_common768_30seed.py`、`common/_channel.py`、`common/__init__.py`、`params.py`、所有 `_p01_*`、`_p03_*`、锚点 JSON — **全 CLEAN（无修改）**。仅新增 untracked：`_p04_continuous_gg.py`、`_p04_phaseA.py`、`_p04_phaseBC.py`、worker-log、results JSON。无 `A.decide =` 重赋值/monkeypatch。
+
+7. **verdict 正确性 — PASS**：§1 判据冻结**无结果数字**（0.1459/0.1393/0.2306/CI/9-30 全缺席）。门控冻结于 `:57` 为"≥ MDE=0.15 dB pooled across held-out continuous cells"——读结果前写。代码 `judge()`（`_p04_phaseA.py:98-123`）精确实现 pooled 门控，无 post-hoc 改。pooled regret 0.1459 < MDE 0.15 → Phase A 门 fail → 决策树唯一给 `PROBLEM_ABSENT_ON_CONTINUOUS_GG`。其余 5 终态不可达：RESOLVED/DIAGNOSTIC/NO_SIGNAL 全需 Phase A 过（未过）；BLOCKED/INVALID 为假（0 mismatch、确定性已证、信息边界干净、冻结文件未改）。Phase B/C 正确**未运行**（无 phaseBC artifact，仅 phaseA_dev/phaseA_heldout JSON 存在）。
+
+8. **子区间诚实 — PASS**：9/30 cell > MDE 真实（check 3 已重算）且 worker-log 显式报告（列全值、header 标"9/30 cells > MDE"）——非掩埋。future-work-seed 框架合理：weak-side-low-SNR regret 在 weak**训练锚点**更强（σ²=0.2: +0.39/+0.78/+0.98/+0.56 @ γ5-11）于 interior（σ²=0.45: +0.22/+0.37/+0.48/+0.34）。pooled anchor regret（+0.2306）> interior（+0.1393）。选择器是 weak turbulence/低 SNR 下的通用 NDA-over-selector，与训练无关——**非连续 GG OOD-specific 退化**。
+
+### 结论
+
+executor 的 `PROBLEM_ABSENT_ON_CONTINUOUS_GG` **成立**。Pooled held-out interior regret = +0.1459 dB（bit-exact 重算），恰低于冻结 MDE=0.15，在合法 disjoint seed 集（dev 0-9/held-out 30-49），信息边界干净，冻结文件未改，pooled 门控读结果前冻结，子区间结构诚实报告且确实非 OOD-specific。无可区分 deployable action → 不生成方法卡/不晋升。
+
+**包内确定性修复已正确执行并披露**：`sigma2_to_ab` 在 3 训练 σ_R² 用冻结四舍五入锚点对（保 byte-exact 回归），内部连续点用 Al-Habash 闭式（≤2.70% 偏离锚点）。原因：Al-Habash 精确值在 strong β（1.3622 vs 冻结 1.4）破坏 byte-exact 回归（85/108 mismatch）。V068 check 1/2 确认修复后 0 mismatch。无第二修复。
+
+### 主控 claim ceiling
+
+P04 产出**有效负面 + 连续 GG OOD 验证资产**（冻结 DA/NDA 选择器 AWGN 拟合 CV 边界在连续 GG 形状 off-anchor 上不产生 OOD-specific regret，pooled held-out +0.146 dB < MDE=0.15；anchor > interior 证明非 OOD-specific）。claim ceiling 维持 `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`：不构成 active carrier、不冒充 formal method、不写论文 claim。weak-side-low-SNR 子区间作 future-work seed（与已关闭 A 族工作区重叠，TL-30 禁换名重开）。C 族（连续 GG OOD 选择器鲁棒性）首包完成，连续=1。

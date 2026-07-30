@@ -2596,3 +2596,48 @@ profile（"务实可毕业"+"深耕已有基础"）支持：P03 深耕 P01/P02 �
 ### 范围确认
 
 本轮（撤回 T030 + P03 执行 + 接收 + 治理更新）在 scope boundary 内：D039 campaign 授权范围内第 3 个有效包，遵守 problem-first 三阶段门控（Phase A uniform-precision baseline → Phase B 仅因 Phase A 显现弱张力而运行 → 公平比较裁决 sub-MDE）。撤回 T030 是绑定裁决要求，保留 rejected brief 供审计。无 protected owner/formal/Skill/thesis framework 改动、无 push、无新大型基础设施。两次包内确定性修复（叙述分母 + Phase-BC 键名）均已披露。
+
+## D042: P04 连续 GG OOD 选择器鲁棒性 → PROBLEM_ABSENT_ON_CONTINUOUS_GG（C 族首包，有效负面）
+
+> status: active
+> date: 2026-07-30
+> 取代：无
+> 被取代：无
+> 依据：D039-D041 campaign 授权；method-production.md（PROBLEM_ABSENT_ON_CONTINUOUS_GG 终态）；evidence-and-claims.md（semantic smoke + claim ceiling）；baseline-adjudication.md（problem-bearing probe 门控）；worker-log step-031；V068 独立验收 8/8 PASS；FR-23（问题驱动——对已完成 DA/NDA 选择器注入连续 GG 形状新失效条件）；FR-26（证据链）；绑定裁决（撤回无效 16APSK 环比入口 + 湍流标签入口，端到端执行 C_CONTINUOUS_GG_OOD_SELECTOR_ROBUSTNESS）
+> 触发原话：用户本轮执行指令（绑定裁决：撤回无效 16APSK 环比/湍流标签入口，新 P04 family = C_CONTINUOUS_GG_OOD_SELECTOR_ROBUSTNESS，同对话端到端执行不得停在入口修订或 problem probe 后）
+
+### 决策
+
+1. **撤回无效 P04 入口**（16APSK 环比失配 + 湍流标签失配）。经绑定裁决独立审计四条 FAIL：①γ（环比）是调制格式配置非当前信道随机量；②冻结选择器 `decide(raw,γ_db,γ_lin)`（`_a4_switch_common768_30seed.py:97-107`）信息边界干净——不读取环比（环比只进 `per_block` 内 `m16apsk_demod` 即分支输出产生，selector 只读分支输出错误计数）也不读取 turbulence label（`main:312` 循环变量从不传入 decide；`method.tex:75`/`abstract.tex:2` 明确无湍流重调）；③matched/configured demod 是显然常规解；④两入口均无 selector 可作用面。保留 rejected brief（`P04-entry-selection-NOT-RUN.md` 加 REJECTED 段），**不计有效 P04**。
+2. 接收 P04 端到端结果，terminal verdict = **`PROBLEM_ABSENT_ON_CONTINUOUS_GG`**（method-production 终态集六选一）。绑定裁决改写的合法问题"固定/AWGN 拟合的 CV decision boundary 在文献参数范围内、训练未见过的连续 GG 分布上是否产生 selector-specific regret"被回答为**否**：pooled held-out interior regret = **+0.1459 dB**（CI=[+0.0827,+0.2090]），统计上存在（CI_low>0）但**量级低于冻结 MDE=0.15 dB**；dev（seeds 0-9）+0.1393 与 held-out（seeds 30-49）+0.1459 一致（差 0.007 dB）。Phase A problem gate（pooled，§1.1 P2 冻结于读结果前）未过 → Phase B/C 不运行 → 无方法构造。
+3. **诚实子区间结构**（已披露非掩埋）：9/30 interior cell 超 MDE 且 CI_low>0，集中在 weak-side interior（σ_R² 0.3/0.9/1.35 × γ 5-11 dB），最强 σ_R²=0.30 γ=9 +0.678 dB；但该 regret **非 OOD-specific**——同一 over-NDA-select 行为在 weak 训练锚点上更强（pooled anchor regret +0.2306 dB > interior +0.1393 dB；weak 锚点 σ_R²=0.2 γ{5,7,9,11} = +0.39/+0.78/+0.98/+0.56 dB 均 > interior σ_R²=0.45 同 cell）。regret 随 σ_R² 增大单调下降，强湍流侧（σ_R² 1.85/2.30/3.15）pooled <0.15、γ=13 dB 转负（selector 略有帮助）。**连续 GG 形状本身不让 AWGN 拟合边界退化**——regret 是跨 σ_R² 的平坦 selector 属性。
+4. **C 族（连续 GG OOD 选择器鲁棒性）首包完成**（连续=1，未达上限）。campaign `families_started` 追加 `C_CONTINUOUS_GG_OOD_SELECTOR_ROBUSTNESS`。P05 可选 C 族第 2 包（连续=2 达上限）或换 D/E 族。
+5. campaign 计数：`accepted_valid_packages` 3→**4**；`current_package` P04→P05；`same_family_consecutive` C 族=1。P04 是有效包（产出 terminal verdict，非 setup/治理/纯复现/入口 preflight）。
+6. 一次包内确定性修复已用并记录：`sigma2_to_ab` 在 3 个训练 σ_R² 用冻结四舍五入锚点对（11.6,10.1)/(4.0,1.9)/(4.2,1.4)（锚点训练于此非 Al-Habash 精确值）保证 byte-exact 回归，内部连续点用 Al-Habash 闭式（偏离锚点 ≤2.70%，受控外推非跳跃）。原因：Al-Habash 精确值 vs 冻结对偏离 ≤2.70%（验证：weak 0.44%/0.22%、moderate 0.66%/0.55%、strong 0.61%/2.70%），用精确值在 strong β（1.3622 vs 1.4）破坏 byte-exact 回归（85/108 mismatch）。V068 check 1/2 确认修复后 0 mismatch。
+7. claim ceiling 维持 `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`。仍 0 active carrier。P04 mission_method_delta = `NONE`（PROBLEM_ABSENT 非方法进度；它回答"否"而非创造方法信号）。
+8. harvest：P04 产出**有界负面 + 连续 GG OOD 验证资产**——(a) "冻结 DA/NDA 选择器的 AWGN 拟合 CV 边界在连续 GG 形状（σ_R²∈[0.2,3.5] 内 off-anchor）上不产生 OOD-specific regret（pooled held-out +0.146 dB < MDE=0.15）"——对 Ch4 selector 鲁棒性论证可作受界工程证据；(b) weak-side-low-SNR 子区间（σ_R² 0.3-1.35 × γ 5-11，9/30 cell > MDE）的 over-NDA-select 倾向作 future-work seed，但**与已关闭 A 族（SNR-mismatch/region-retune）工作区重叠**，TL-30 禁换名重开，降级不晋升。
+
+### 理由
+
+P04 的科学问题是"AWGN 拟合的 CV 边界是否在连续 GG 形状 OOD 下退化"。回答需要：(a) 可信的 σ_R²→(α,β) 映射（Al-Habash 闭式 `system_model.tex:16-21`，文献溯源 Gu 2022/Al-Habash 2001，验证复现 3 锚点 ≤2.70%）；(b) 显式 (α,β) 注入（`generate_shared_realization_apsk(turb_params=...)`，复用 TL-13 共享信道）；(c) 锚点 byte-exact 回归门控（0 mismatch 证明注入路径忠实）；(d) dev/held-out seed 隔离。结果：pooled regret 真实但 sub-MDE，且 anchor > interior 证明非 OOD-specific——这是 evidence-and-claims 的标准 PROBLEM_ABSENT 情形（semantic smoke 通过但 problem gate 未过），method-production 终态集判 `PROBLEM_ABSENT_ON_CONTINUOUS_GG`。诚实的 sub-MDE 负面 + 子区间 future-work seed 比强行在 9/30 cell 上构造一个 region-specific 方法更符合科学纪律（且会违反 TL-30 换名重开 A 族禁令）。
+
+profile（"务实可毕业"+"深耕已有基础"+"诚实负面可 harvest"）支持：P04 深耕 P01/P02 已有选择器代码抽基点（decide 控制路径 + per_block 分支输出全复用冻结探针），局部结果自动收敛为 PROBLEM_ABSENT，自然产出可复用连续 GG OOD 验证资产。
+
+### 排除的替代方案
+
+- 不把 9/30 cell > MDE 晋升为 DIAGNOSTIC_METHOD_SIGNAL（pooled 门控冻结为 pooled，0.1459<0.15；改门控违反 V067 check 9 / brief trap #9；且子区间 regret 在训练锚点上更强 → 非 OOD-specific）。
+- 不构造 weak-side region-specific 方法（与已关闭 A 族 SNR-mismatch/region-retune 工作区重叠，TL-30 禁换名重开；且 problem gate 未过不允许 method Scout）。
+- 不把连续 GG 负面外推成全部 turbulence robustness（绑定裁决明确禁止；saturation/新传播模型/拍定参数未用）。
+- 不用 mcs `rytov_to_gg` 经验 piecewise-symmetric proxy（强制 α=β，非引用公式；用 Al-Habash 闭式）。
+- 不重开已关闭轴（A 族 / NDA-ML 本体 / G1 / CB1 / Pilot-Jones / FOE-residual，TL-30）。
+
+### 影响范围
+
+- live control 升 epoch 67→68 / CP032→CP033；active_lane 维持 `CAMPAIGN_EXPLORATION_DISPATCH`；authority → D042。
+- `topic-index.md` control block 计数器更新（accepted_valid=4、current=P05、C 族连续=1、families_started 追加 C、rolling_queue 追加 P04）；`mission-log.md` 追加 CP033 行；`verifications.md` 追加 V068。
+- protected owner/formal/Skill/thesis framework 不改、无 push。无新 infrastructure（_p04_*.py 是独立新文件，复用 common 信道）。
+- 仍 0 active carrier；某 package 出 `DIAGNOSTIC_METHOD_SIGNAL` 且过 promotion preflight 前不晋级。
+
+### 范围确认
+
+本轮（撤回无效 16APSK/湍流标签入口 + P04 端到端执行 + 接收 + 治理更新）在 scope boundary 内：D039 campaign 授权范围内第 4 个有效包，遵守 problem-first 三阶段门控（Phase A problem-bearing probe → gate 未过 → 不进 Phase B/C）。撤回两入口是绑定裁决要求，保留 rejected brief 供审计。无 protected owner/formal/Skill/thesis framework 改动、无 push、无新大型基础设施。一次包内确定性修复（sigma2_to_ab 锚点对）已披露。

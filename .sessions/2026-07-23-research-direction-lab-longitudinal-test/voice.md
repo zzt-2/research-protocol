@@ -149,3 +149,30 @@
   加 B，同一对话选择 P04 不同机制族入口但不运行，统一一次 commit 不 push；最终只回 5 项）
   [绑定结论：本轮端到端完成 P03，中间不参与技术判断；verifier V067 10/10 PASS，verdict PROBLEM_RESOLVED_BY_
   UNIFORM_PRECISION，campaign→3/10]
+
+## 2026-07-30（P04 执行：撤回 16APSK 环比入口 + 连续 GG OOD）
+
+- [转述，绑定裁决长指令] "执行 10-package campaign 的 Package 04。先撤回无效的 16APSK ring-ratio 入口，再在同一对话
+  端到端执行'连续 GG 参数 OOD 下的 selector 鲁棒性'；不得停在入口修订或 problem probe 后。" → D042
+  （附绑定裁决：campaign=3/10；A_CPR_selector_robustness 已关闭；B_FIXED_POINT family 本轮结束 P04 必须换族；
+  原 P04 16APSK 环比失配入口 FAIL——γ 是调制格式配置不是当前信道随机量、selector 不读取环比、matched/configured
+  demod 是显然常规解、撤回保留 rejected brief 不计有效包；原备选湍流标签失配同样不成立 selector 不读 turbulence label；
+  合法新问题改写为"固定/AWGN 拟合的 CV decision boundary 在文献参数范围内训练未见过的连续 GG 分布上是否产生
+  selector-specific regret"；family=C_CONTINUOUS_GG_OOD_SELECTOR_ROBUSTNESS；只用已有来源支持的 GG 范围 σ_R² 位于
+  weak/moderate/strong 锚点覆盖区间、由已验证公式映射 α/β、不引入饱和湍流/新传播模型/拍定参数、generator 用已有
+  显式 (alpha,beta) 接口、原三锚点保留作回归控制；dev/held-out σ_R² 网格 + SNR cells + seeds + primary metric + MDE +
+  selector-specific regret 定义在读结果前冻结；Phase A problem-bearing probe 比较 frozen original selector / 固定 DA /
+  固定 NDA / 原三 turbulence anchor regression / per-cell best fixed branch 仅离线 diagnostic bound；运行时 selector 只用
+  receiver-visible 输入严禁 turbulence label/true α,β/true h/TX truth 进 decide；无 selector-specific problem 则
+  PROBLEM_ABSENT_ON_CONTINUOUS_GG 本包作有效负面 4/10 不构造方法；Phase B 最强廉价 comparator=独立 dev 连续 GG 网格上
+  统一重调的现有 CV_MARGIN/SNR threshold 全区间单组全局参数不读 turbulence label 给相同调优预算 test 前冻结，若统一
+  global retune 已消除问题则 PROBLEM_RESOLVED_BY_GLOBAL_RETUNE 不得包装方法，不得用'先估 turbulence level 再套规则'
+  作 comparator/候选除非有独立 receiver-visible estimator 和不同信息增量 单纯把 CV 再映射成 label 属循环包装；Phase C
+  仅当 global retune 后仍有残余 selector-specific regret 同包构造 3-5 机制不同最小候选仅用 receiver-visible 统计 dev freeze
+  后跑 fresh held-out 保存 raw rows/branch occupancy/gain/regret/CI/help-hurt-tie 做消融，只有候选稳定超过 global-retune
+  comparator 达冻结 MDE/CI/跨网格一致性才判 DIAGNOSTIC_METHOD_SIGNAL；其他终态 PROBLEM_ABSENT/RESOLVED_BY_GLOBAL_RETUNE/
+  NO_DIAGNOSTIC_SIGNAL/BLOCKED_SHARED_TESTBED/EXECUTION_INVALID；独立 verifier 查 α/β 映射范围来源/dev-test σ_R² 网格隔离/
+  seed 隔离/turbulence truth 未进 decide/original anchor regression/selector-specific regret 与共同分支退化区分/global retune
+  公平性/raw→aggregate 与 verdict；允许一次包内确定性修复；有效完成后 accepted_valid→4/10 families_started 加 C 同一对话
+  选择 P05 新机制族入口但不运行 不把连续 GG 负面外推成全部 turbulence robustness 统一一次 commit 不 push；最终只回 5 项）
+  [绑定结论：本轮端到端完成 P04，verifier V068 8/8 PASS，verdict PROBLEM_ABSENT_ON_CONTINUOUS_GG，campaign→4/10]
