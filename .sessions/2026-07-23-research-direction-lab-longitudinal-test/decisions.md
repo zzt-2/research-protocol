@@ -2510,3 +2510,45 @@ profile（"务实可毕业远胜理论最优"+"多挑候选保留余地"+"深耕
 ### 范围确认
 
 本轮（治理记录 + campaign 授权）在 scope boundary 内：用户授权 10 包预算是新的授权范围扩展，已记录为 scope change（见 topic-index 范围变更记录）。无科学实验、无 protected owner/formal 改动、无 push、无新 infrastructure。
+
+## D040: P02 cand_rank 工作区确认 → PROBLEM_RESOLVED_BY_REGION_RETUNING（A 族达同族上限）
+
+> status: active
+> date: 2026-07-30
+> 取代：无（P01 的"条件式子群体信号作 future-work seed"被本包 fresh confirmation 消解）
+> 被取代：无
+> 依据：D039 campaign 授权；method-production.md（PROBLEM_RESOLVED_BY_CONVENTIONAL_COMPARATOR 终态集 + cheap-alternative 门控）；baseline-adjudication.md（minimal baseline ladder 第 3 级 = 一个直接针对观察失效的廉价常规扩展）；evidence-and-claims.md（semantic smoke + claim ceiling）；worker-log step-029；V066 独立验收 PASS；TL-32/FR-25（Go 与 Kill 判据分离）/FR-23（问题驱动非空白）
+> 触发原话：用户 campaign 授权（voice.md 2026-07-30 "至少跑10大包？"）+ 本轮 P02 执行指令
+
+### 决策
+
+1. 接收 P02（T029）端到端结果，terminal verdict = **`PROBLEM_RESOLVED_BY_REGION_RETUNING`**（method-production 终态集五选一）。P01 的条件式子群体信号（cand_rank@weak/低SNR +0.32~+0.43 vs adapter）经 fresh held-out confirmation（seeds {60..70}∪{81..89}∪{90..99}=30，全 disjoint 历史）确认为**真实但非可区分方法**：cand_rank 冻结 ref=9.0 dB 不是 load-bearing，dev 调谐同一 conventional lever（ref 9→11，独立 dev seeds 50–59 选出）即捕获并略超其增益（weakretune−adapter=+0.4539 > cand_rank−adapter=+0.3578；cand_rank−weakretune=−0.0961 |mean|≤MDE）。无可区分 deployable action → 不生成 bounded method card、不晋升、不写论文 claim。
+2. **A 族（CPR 选择器鲁棒性）同族连续=2，达 D039 §4 同族上限**。P03 必须换机制族（B/C/D/E 任选）。cand_rank / weakretune / SNR-mismatch / region-retune 子轴关闭，不得换名重开（TL-30）。
+3. campaign 计数：`accepted_valid_packages` 0→**2**（P01+P02 两个有效科学包）；`current_package` P02→P03；`same_family_consecutive` A 族=2 重置待 P03 换族；`families_started` 仍=[A_CPR_selector_robustness]（P03 起新族才追加）。P02 是有效包（产出 terminal verdict，非 setup/治理/纯复现）。
+4. 一次包内确定性修复已用并记录：T029 §4 seed 集合算术（`{60..70}∪{81..89}`=20 而非 30）由主控授权补 seed 90–99 凑齐 30/cell；判据/dev-ref/方法身份/MDE/§5 顺序全不变；20-seed 与 30-seed verdict 同（PROBLEM_RESOLVED_BY_REGION_RETUNING），结果稳健。不另开 repair 包。
+5. claim ceiling 维持 `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`。仍 0 active carrier。P02 mission_method_delta = `NONE`（PROBLEM_RESOLVED 非方法进度；它消解而非创造方法信号）。
+6. harvest：P02 产出一条**有界负面 + operating-regime 收敛证据**——"γ-magnitude-free stage-1 边界的 weak/低SNR 增益可被廉价区域门限重调替代"。作 thesis-harvest 的 robustness-boundary / conventional-comparator-resolves 类记录，不冒充 formal method。
+
+### 理由
+
+P01 留下的 open question 是"cand_rank 的子群体信号是真实可晋升方法，还是常规改进的假象"。P02 用 method-production + baseline-adjudication 的标准门控回答：构造最强廉价常规替代（同一 conventional adapter 结构，仅把 stage-1 ref 当 dev-可调旋钮），在独立 dev 上调谐后 fresh held-out 比较。结果 weakretune 反超 cand_rank 且差异在 MDE 内 → §5 Step 1 触发 PROBLEM_RESOLVED_BY_REGION_RETUNING。这是 minimal baseline ladder 第 3 级（"一个直接针对观察失效的廉价常规扩展"）已解决问题的标准情形，不允许再为同一问题 slice 开 method Scout（baseline-adjudication.md）。诚实有界负面比强行晋升一个非可区分方法更符合 FR-23/TL-32 的科学纪律。
+
+profile（"务实可毕业"+"多挑候选保留余地"+"深耕已有基础"）支持：P02 深耕 P01 已有代码抽基点（cand_rank/adapter 全复用），局部结果自动收敛为常规 retune，自然轮换到 P03 新族，不早收敛、不造方法。
+
+### 排除的替代方案
+
+- 不把 cand_rank 晋升为 bounded method card（§5 Step 1 先于 Step 2 触发，cheap-alt 已达判据；强行取 Step 2 会违反冻结判决顺序）。
+- 不在 A 族开 P03（同族连续=2 达上限；TL-30 禁换名重开 cand_rank/weakretune/SNR-mismatch/region-retune 子轴）。
+- 不把 PROBLEM_RESOLVED 当方法进度（mission_method_delta=NONE；baseline-adjudication：常规替代已解决问题不允许 method Scout）。
+- 不用 oracle/true-truth 当部署输入或 Go 判据（TL-32/FR-25；true γ 仅信号生成 + 离线 oracle bound，V066 确认绝不进 decide）。
+
+### 影响范围
+
+- live control 升 epoch 65→66 / CP030→CP031；active_lane 维持 `CAMPAIGN_EXPLORATION_DISPATCH`；authority → D040。
+- `topic-index.md` control block 计数器更新（accepted_valid=2、current=P03、A 族连续=2、rolling_queue 追加 P02）；`mission-log.md` 追加 CP031 行；`verifications.md` 追加 V066。
+- protected owner/formal/Skill/thesis framework 不改、无 push。无新 infrastructure。
+- 仍 0 active carrier；某 package 出 `DIAGNOSTIC_METHOD_SIGNAL` 且过 promotion preflight 前不晋级。
+
+### 范围确认
+
+本轮（P02 执行 + 接收 + 治理更新）在 scope boundary 内：D039 campaign 授权范围内第 2 个有效包，遵守 problem-first 三阶段门控（Phase A problem 复用 P01 已立 → Phase B adapter 复用 P01 → Phase C 廉价替代裁决）。无 protected owner/formal/Skill/thesis framework 改动、无 push、无新 infrastructure。一次包内确定性修复已披露。

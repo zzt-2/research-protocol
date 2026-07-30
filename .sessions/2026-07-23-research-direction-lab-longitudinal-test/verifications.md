@@ -3558,3 +3558,34 @@ executor 的 `NO_DIAGNOSTIC_SIGNAL` **成立**。方法学稳健、纪律透明�
 ### 主控 claim ceiling
 
 P01 产出一个**有效科学负面 + 一个有界的条件式子群体观察**（cand_rank @ weak/低 SNR 超 adapter）。claim ceiling 维持 `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`：不构成 active carrier、不冒充 formal method、不写论文 claim。子群体信号作 harvest 记录（thesis-harvest 的 robustness-boundary / operating-regime 类），候选晋升需重走 Groundwork Step 1–3/3.5/4a。
+
+## V066: P02 cand_rank 工作区确认独立验收（PROBLEM_RESOLVED_BY_REGION_RETUNING）
+
+> 关联：D040 / P02 / T029 / worker-log step-029
+> verdict：**PASS**（8 项检查全过；executor 的 `PROBLEM_RESOLVED_BY_REGION_RETUNING` 为唯一正确终态）
+> 日期：2026-07-30
+
+### 验收范围
+
+独立 verifier（非实现方）从 raw rows 起独立重算所有 aggregate、独立重跑复现、AST/grep 审计信息边界、git status 查冻结文件改动。scratch 脚本审计后删除，不 commit。
+
+### 8 项检查（逐项 PASS + 关键证据）
+
+1. **raw→aggregate 独立复算 — PASS**：仅取 raw_rows 重算 per-seed gain_db=10·log10(nda_c768/selected_errors)，paired diff（cand_rank−adapter）target region n=90 mean=+0.357782 CI[+0.338054,+0.377510]；weakretune−adapter=+0.453867、cand_rank−weakretune=−0.096085。全部 7350 rows + 245 aggregate 与 artifact 存储值相对误差 **0.000e+00**。
+2. **seed 隔离 — PASS（干净）**：held-out = 恰好 {60..70}∪{81..89}∪{90..99}=30 seed（90–99 是主控授权包内修复补的，与 anchor 0–29/P01 dev 0–9/P01 held-out 30–49/dev 50–59/pollution 71–80 全 disjoint，零碰撞）；每 (scene,γ,method,δ=0) cell 恰 30 行无重无缺；dev 仅 50–59，dev∩heldout=∅。
+3. **方法身份（冻结码未改）— PASS**：`git diff --stat HEAD` 对 common/、params.py、_b11_params.py、_a4_switch_common768_30seed.py、_p01_adapter_and_candidates.py、_p01_cpr_snr_mismatch_probe.py、_p01_phaseBC.py、_a4_branchrouted_30seed.py、sc_nda_ml_sim.py、anchor JSON 全空。`decide_adapter_weakretune` body 与 `decide_cand_rank` 逐字节相同，唯一差异 ref_snr_db 从默认参数改为读 `_FROZEN_REF_SNRS["weakretune"]`；cand_rank 以默认 ref=9.0 调用（冻结设计常数，未被覆盖）。
+4. **信息边界（关键）— PASS（干净）**：AST 审计 `decide_adapter_pilot`/`decide_cand_rank`/`decide_adapter_weakretune`/`estimate_snr_pilot` 可执行代码中 true-gamma Name/arg 引用=0。唯一 true-γ-in-decide 路径是 `_oracle_decide_factory`（上界），所有 `paired_diff` 仅配对 cand_rank/adapter_pilot/weakretune，oracle_true 绝不进任何 aggregate。
+5. **dev 调谐诚实（无 test 泄漏）— PASS**：dev_seeds=[50..59]、dev_cells=3 target、search_refs={7,8,9,10,11}，mean 单调增（0.222→0.462），ref=11.0 唯一 argmax（无 tie 歧义），与存储 chosen_ref=11.0 一致，等于 heldout frozen_weakretune_ref=11.0；cand_rank−adapter audit 跨 5 dev run 恒为 0.369389（ref-不变，证明 cand_rank 9.0 是冻结常数）。无 heldout seed 出现于 dev。
+6. **判决顺序（§5）独立应用 — 吻合**：Step 1 触发：|cand_rank−weakretune|=0.0961≤0.15 AND weakretune−adapter(0.4539)≥cand_rank−adapter−MDE(0.2078) → `PROBLEM_RESOLVED_BY_REGION_RETUNING`，与 executor 一致。（注：即便 Step 1 不过，Step 2 也过——mean≥MDE、CI_low>0、3/3 cell 正、无单 cell 独占、无 boundary 灾难——结果稳健。）
+7. **语义 sanity — PASS**：δ=0 oracle_true==orig 全 210 行（抽检 weak@7 seed60: 81543==81543）；adapter_pilot/cand_rank/weakretune 跨全行 δ-不变（0 失败）；help+hurt+tie=90+0+0=90=n_paired。
+8. **fresh 独立重跑（identity parity）— PASS**：独立调 `PR.run_case_multidelta("weak",7.0,seed,deltas=(0.0,))` seed 60,61 weakretune ref 冻结 11.0 复现 artifact 精确一致：seed60 weakretune sel_err=76624(da=334,nda=66)、seed61=72011(da=328,nda=72)、base fixed_nda=108568/108721 全 MATCH。Artifact 可复现非伪造。
+
+### 结论
+
+executor 的 `PROBLEM_RESOLVED_BY_REGION_RETUNING` **成立**。P01 条件式子群体信号经 fresh held-out confirmation 确认为**真实但非可区分方法**：cand_rank 冻结 ref=9.0 dB 不是 load-bearing，dev 调谐同一 conventional lever（ref 9→11）即捕获并略超其增益（weakretune 反超 cand_rank +0.096 dB，|差|≤MDE）。无可区分 deployable action → 不生成方法卡/不晋升。
+
+**包内确定性修复已正确执行并披露**：seed-count 算术（20→30 补 90–99）由主控授权，判据/dev-ref/方法身份/MDE/§5 顺序全不变，artifact `meta.seed_consolidation` 记录原 20 + 补 10；20-seed 与 30-seed verdict 同。无需第二修复。
+
+### 主控 claim ceiling
+
+P02 产出**有效科学负面 + operating-regime 收敛证据**（γ-magnitude-free stage-1 边界的 weak/低SNR 增益可被廉价区域门限重调替代）。claim ceiling 维持 `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`：不构成 active carrier、不冒充 formal method、不写论文 claim。作 thesis-harvest 的 robustness-boundary / conventional-comparator-resolves 类记录。A 族（CPR 选择器鲁棒性）达同族上限 2，P03 必须换机制族。

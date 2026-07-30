@@ -4,24 +4,24 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 65
+  control_epoch: 66
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
   active_lane: CAMPAIGN_EXPLORATION_DISPATCH
-  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D039
+  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D040
   decision_gate: CP029/D038 段A 终止后，用户授权 10-有效包探索 campaign（D039）。在完成 10 个有效科学大包前不因 portfolio 0 READY 要求 thesis pivot。对已完成方法（DA-NDA 选择器等）的新失效条件/鲁棒性做子问题探索；每个 package 遵守 problem-bearing probe → conventional adapter → 条件式 method factory 三阶段门控；至少 5 机制族、同族≤2 连续、第 5 包内部校准不停线、第 10 包 campaign-level 裁决。
   campaign:
     exploration_budget_valid_packages: 10
-    accepted_valid_packages: 1
-    current_package: P02
+    accepted_valid_packages: 2
+    current_package: P03
     mechanism_families_min: 5
     same_family_consecutive_max: 2
     count_excludes: [setup, governance, task_preparation, interface_repair, pure_reproduction, entry_preflight_only]
     mid_calibration_at: P05   # 审计偏航与族覆盖，不停线
     campaign_level_decision_at: P10
-    families_started: [A_CPR_selector_robustness]   # P01
-    same_family_consecutive: 1
-    rolling_queue: [P01 DONE CPR-selector-SNR-mismatch-robustness-NO_SIGNAL, P02 TBD-different-family, P03 TBD]   # 允许滚动更新；P01 同族可再 1 包到上限
+    families_started: [A_CPR_selector_robustness]   # P01+P02（A 族已达同族上限 2，关闭）
+    same_family_consecutive: 2   # A 族连续=2 达上限；P03 必须换族，重置为 0
+    rolling_queue: [P01 DONE CPR-selector-SNR-mismatch-robustness-NO_SIGNAL, P02 DONE cand_rank-operating-regime-PROBLEM_RESOLVED_BY_REGION_RETUNING, P03 TBD-new-mechanism-family]   # A 族关闭；P03 起 B/C/D/E 新族
   allowed_actions:
     - RECOVER
     - PORTFOLIO_MAP
@@ -47,13 +47,14 @@ rdl_control:
     - PAPER_CLAIM
     - ORACLE_GAP_AS_GO
     - REPRODUCTION_AS_NEW_METHOD   # FR-23：复现旧结果不当新方法，须注入新失效条件
+    - A_CPR_SELECTOR_ROBUSTNESS_FAMILY_REOPEN   # D040：A 族达同族上限 2，P01 SNR-mismatch + P02 cand_rank 工作区子轴全关闭（TL-30 禁换名重开 cand_rank/weakretune/region-retune）
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
-  mission_checkpoint: CP030   # P01 NO_DIAGNOSTIC_SIGNAL 已接收
-  next_legal_action: Package 02（换机制族，B/C/D/E 任选）。本轮只准备 P02 唯一入口（不运行）。P01 同族连续=1，仍可再 1 包同族达上限后强制换族。下一对话由用户中转 P02 执行指令。
+  mission_checkpoint: CP031   # P02 PROBLEM_RESOLVED_BY_REGION_RETUNING 已接收
+  next_legal_action: Package 03（换机制族，B/C/D/E 任选）。本轮只准备 P03 唯一入口（不运行）。A 族已达同族上限 2，P03 必须换族。下一对话由用户中转 P03 执行指令。
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（CP030/P01→V065：D039 campaign P01 CPR 选择器 SNR 失配鲁棒性端到端完成，verdict `NO_DIAGNOSTIC_SIGNAL`，verifier PASS（8/8）；accepted_valid_packages=1/10，active_lane CAMPAIGN_EXPLORATION_DISPATCH，epoch 65；P01 同族连续=1；条件式子群体信号 cand_rank@weak/低SNR 作 harvest 不晋升；仍 0 active carrier）
+> 状态: active（CP031/P02→V066：D039 campaign P02 cand_rank 工作区确认端到端完成，verdict `PROBLEM_RESOLVED_BY_REGION_RETUNING`，verifier PASS（8/8）；accepted_valid_packages=2/10，active_lane CAMPAIGN_EXPLORATION_DISPATCH，epoch 66；A 族（CPR 选择器鲁棒性）连续=2 达上限关闭；P01 条件式子群体信号被 P02 消解为廉价区域门限重调，不晋升；仍 0 active carrier）
 > 创建: 2026-07-23 | 最后更新: 2026-07-30
 
 ## 专题信息
@@ -170,6 +171,21 @@ rdl_control:
     新增 forbidden：`NDA_ML_BODY_REOPEN`/`G1_SCIENCE_REPAIR`/`PILOT_JONES_SMALL_AXIS_REOPEN`/
     `REPRODUCTION_AS_NEW_METHOD`；移除 D038 末"交用户(2)/(3)"等待。仍 0 active carrier、无 protected
     owner/formal/Skill/thesis framework 改动、无 push。P01（CPR 选择器 SNR 失配鲁棒性）本轮立即端到端执行。
+- **2026-07-30，live D040 / V066**：P02 cand_rank 工作区确认端到端完成 → `PROBLEM_RESOLVED_BY_REGION_RETUNING`。
+  - 原因：P01 留下的条件式子群体信号（cand_rank@weak/低SNR +0.32~+0.43 vs adapter）需 fresh confirmation。
+    读新 test 数据前冻结目标区 weak×{5,7,9}、边界 weak@11/moderate@{5,7,9}、MDE=0.15、方法身份全复用 P01
+    冻结码、cheap alternative=weakretune（cand_rank body + dev 调谐 ref）。fresh held-out（{60..70}∪{81..89}∪
+    {90..99}=30 seed，全 disjoint 历史）primary cand_rank−adapter=+0.3578 [+0.3381,+0.3775] 90/0/0；cheap-alt
+    weakretune−adapter=+0.4539（反超 cand_rank）、cand_rank−weakretune=−0.0961 |mean|≤MDE → §5 Step 1 触发
+    PROBLEM_RESOLVED_BY_REGION_RETUNING。cand_rank 冻结 ref=9.0 非 load-bearing，dev 调谐同一 conventional
+    lever（ref 9→11）即捕获并略超其增益，无可区分 deployable action，不产方法卡/不晋升。
+  - 新范围：A 族（CPR 选择器鲁棒性）同族连续=2 达 D039 §4 上限，**关闭**；P03 必须换机制族（B/C/D/E）。
+    cand_rank/weakretune/SNR-mismatch/region-retune 子轴关闭，禁换名重开（TL-30）。一次包内确定性修复
+    （seed-count 算术 20→30 补 90–99，判据/dev-ref/方法/MDE/§5 顺序全不变，20 与 30 seed verdict 同）已披露。
+  - 影响：active_lane 维持 `CAMPAIGN_EXPLORATION_DISPATCH`，authority → D040，epoch 65→66；
+    campaign 计数 accepted_valid 1→2、current P02→P03、A 族连续=2（P03 换族重置）；新增 forbidden
+    `A_CPR_SELECTOR_ROBUSTNESS_FAMILY_REOPEN`。仍 0 active carrier、claim ceiling `LOCAL_SLICE /
+    NONBINDING_DIAGNOSTIC`、无 protected owner/formal/Skill/thesis framework 改动、无 push。
 
 ## 已确认结论
 
@@ -208,17 +224,18 @@ rdl_control:
 | S003→D037/V063 | CB1 轮换后三候选六门评估无一过门（A CPR/VV 仅 oracle-gap + verdict REJECTED；B NDA-ML 已完成赢家；C U24 检测线 D051 关闭 + 需 oracle 标签）；U05 hold 出路阻塞、U23 并入 U24；channel 物理自由度窄 → `STRATEGIC_GATE`，不制造第四弱候选 | D037 / V063（无 sprint/无 commit） |
 | S003→D038 段A/V064 | 用户选项(1) channel 物理扩展大包段A 三候选（complex time-varying Jones / PDL / PMD-色散-跨符号记忆）六门评估无一过门1-3 → `PHYSICS_BACKED_TESTBED_UNAVAILABLE`：fiber 现象无星地物理起源（各向同性大气无 birefringence）、四星地 primary 零命中、sat.1553 等三篇 dangling、唯一可溯源参数 D066 实测 headroom 0.0804dB≪0.5dB、时变复 Jones 轴已被 D066:3415-3416 关闭；段B/C/D 不运行、不造第四 impairment、诚实终止 | D038 / V064 / CP029（无 sprint/无 commit） |
 | D039 / P01→V065 | 用户授权 10-有效包探索 campaign（不因 0 READY 要求 thesis pivot）；P01 = CPR 选择器 SNR 失配鲁棒性端到端执行：Phase A 问题成立（weak@5/7/9 δ=−3 / weak@11 δ=+3 / moderate@13 δ=+3 损害≥0.3dB CI<0）→ Phase B 非相干 pilot adapter 恢复 4/5 cell → Phase C 5 候选最佳 cand_rank pooled +0.1358 未过 MDE=0.15 → `NO_DIAGNOSTIC_SIGNAL`；verifier 8/8 PASS；条件式子群体信号 cand_rank@weak/低SNR 降级 future-work | D039 / V065 / CP030 / worker-log step-028（无独立 commit，待主控统一） |
+| D040 / P02→V066 | P02 cand_rank 工作区确认（A 族第 2 包=上限）：fresh confirmation P01 条件式子群体信号。读新数据前冻结目标区/边界/MDE=0.15/方法身份全复用 P01 冻结码/cheap-alt=weakretune(dev 调谐 ref)。dev(50–59)选 ref=11.0；fresh held-out({60..70}∪{81..89}∪{90..99}=30)primary cand_rank−adapter=+0.3578[+0.3381,+0.3775]90/0/0；cheap-alt weakretune−adapter=+0.4539反超、cand_rank−weakretune=−0.0961|mean|≤MDE → §5 Step 1 触发 `PROBLEM_RESOLVED_BY_REGION_RETUNING`。cand_rank ref=9.0 非 load-bearing，同一 conventional lever dev 调谐即超，无可区分 deployable action，不产方法卡/不晋升。verifier 8/8 PASS（raw→aggregate 0.000e+00、seed 零碰撞、git diff 冻结文件空、true γ 绝不进 decide、独立重跑字节级一致）。A 族关闭，P03 必须换族 | D040 / V066 / CP031 / worker-log step-029（无独立 commit，待主控统一） |
 
 ## 未决项
 
 - CP028 `STRATEGIC_GATE` 已解决：先经 D038 段A（PHYSICS_BACKED_TESTBED_UNAVAILABLE，选项(1) 已尽），
   再由 D039 用户 campaign 授权覆盖（10-有效包预算，不要求 thesis pivot）；
 - 仍 0 active carrier；某 package 出 `DIAGNOSTIC_METHOD_SIGNAL` 且过 promotion preflight 前不晋级；
-- campaign 计数（topic-index control block `campaign` 段）：`accepted_valid_packages=0`，budget=10，
-  current=P01；setup/治理/任务准备/接口修复/纯复现/入口 preflight 不计；
+- campaign 计数（topic-index control block `campaign` 段）：`accepted_valid_packages=2`，budget=10，
+  current=P03；setup/治理/任务准备/接口修复/纯复现/入口 preflight 不计；
 - 第 5 包（P05）做内部校准（偏航 + 族覆盖审计），不停线；第 10 包（P10）做 campaign-level pivot/continue 裁决；
-- 同族连续≤2 包；至少 5 机制族（当前 A CPR 选择器鲁棒性 / B 同步估计器交互 / C 湍流场景边界 / D 调制编码层 / E 信息复杂度边界）；
-- 已关闭轴不得换名重开（TL-30）：NDA-ML 本体 / G1 science repair / CB1 collapse family / Pilot-Jones 小轴 / PMD-PDL-Jones-CD 星地移植；
+- 同族连续≤2 包；至少 5 机制族（A CPR 选择器鲁棒性**已关闭**（P01+P02 达上限）/ B 同步估计器交互 / C 湍流场景边界 / D 调制编码层 / E 信息复杂度边界）；
+- 已关闭轴不得换名重开（TL-30）：NDA-ML 本体 / G1 science repair / CB1 collapse family / Pilot-Jones 小轴 / PMD-PDL-Jones-CD 星地移植 / **A 族 CPR 选择器鲁棒性（cand_rank/weakretune/SNR-mismatch/region-retune 子轴）**；
 - 下一真实压缩事件需量化 elapsed time、files read、lane/gate match；
 - G1 只保留 bounded thesis asset，不重开科学修复；
 - 频域/子带均衡族仅在信道源码被升级到含色散/多径/频率选择性后才可能重审，当前作 rejected task brief 保留。
@@ -250,7 +267,22 @@ verdict 唯一正确）。条件式子群体信号 cand_rank 仅 weak@5/7/9 超 
 系统性非 cherry-pick，降级为 future-work seed。无 protected 文件改动；true γ 绝不进 decide；dev 0–9/held-out 30–49 隔离。
 worker-log `projects/thesis-fso/worker-logs/step-028-p01-cpr-snr-mismatch.md`；artifact `results/p01_cpr_snr_mismatch/`。
 
-**当前位置**：P01 是 campaign 第 1 个有效包（CPR 选择器鲁棒性族 A，同族连续=1）。accepted_valid_packages=1/10。
-仍 0 active carrier、claim ceiling `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`。下一合法动作：**Package 02（换机制族，
-B/C/D/E 任选），本轮只准备唯一入口不运行**；P01 同族仍可再 1 包到上限（若用户要求）后强制换族。下一对话由用户中转
-P02 执行指令。
+**P02 已完成（CP031/V066）**：P01 留下的条件式子群体信号（cand_rank@weak/低SNR +0.32~+0.43 vs adapter）
+的 fresh confirmation。读新 test 数据前冻结目标区 weak×{5,7,9}、边界 weak@11/moderate@{5,7,9}、MDE=0.15、
+方法身份全复用 P01 冻结码（adapter/cand_rank 不改一行）、cheap alternative=weakretune（cand_rank body +
+dev 调谐 ref，同一 conventional lever 仅把 stage-1 ref 当 dev-可调旋钮）。dev（seeds 50–59，3 target cell）
+调谐 ref∈{7..11} 单调增，选 ref=11.0（唯一 argmax）。fresh held-out（seeds {60..70}∪{81..89}∪{90..99}=30，
+全 disjoint anchor/P01 dev/P01 held-out/dev/pollution）：primary cand_rank−adapter=**+0.3578 [+0.3381,+0.3775]**
+90/0/0；per cell weak@5/7/9 +0.3665/+0.4279/+0.2790 全 CI_low>0，去最佳 cell 余 2 仍 +0.3228 无单 cell 独占。
+cheap-alt 裁决：weakretune−adapter=**+0.4539**（weakretune 反超 cand_rank）、cand_rank−weakretune=**−0.0961**
+|mean|≤MDE。§5 Step 1 触发 → **verdict `PROBLEM_RESOLVED_BY_REGION_RETUNING`**。cand_rank 冻结 ref=9.0 非
+load-bearing——dev 调谐同一 conventional lever（ref 9→11）即捕获并略超其增益，无可区分 deployable action，
+不产方法卡/不晋升。verifier V066 PASS（8/8，raw→aggregate 相对误差 0.000e+00、seed 零碰撞、git diff 冻结文件空、
+true γ 绝不进 decide、独立重跑 2 seed 字节级一致）。一次包内确定性修复（seed-count 算术 20→30 补 90–99，判据/dev-ref/
+方法/MDE/§5 顺序全不变，20 与 30 seed verdict 同）已披露。worker-log `step-029-p02-cand-rank-operating-regime.md`；
+artifact `results/p02_cand_rank_operating_regime/`。
+
+**当前位置**：P02 是 campaign 第 2 个有效包（CPR 选择器鲁棒性族 A，同族连续=2 **达上限关闭**）。
+accepted_valid_packages=2/10。仍 0 active carrier、claim ceiling `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`。
+下一合法动作：**Package 03（换机制族，B 同步估计器交互 / C 湍流场景边界 / D 调制编码层 / E 信息复杂度边界 任选），
+本轮只准备唯一入口不运行**；A 族已达同族上限 2，P03 必须换族。下一对话由用户中转 P03 执行指令。
