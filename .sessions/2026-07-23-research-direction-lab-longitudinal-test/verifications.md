@@ -3317,3 +3317,74 @@ DISPATCH_READY 撤回、作 rejected task brief 保留；逐符号/更新粒度�
 执行 D035：method-production.md 补入口四门（最小补丁）；T027 重写为逐符号/更新粒度族；
 频域族加 forbidden_actions、保留 rejected brief；不动 formal owner / protected history / thesis
 framework；无实验。频域族仅在信道源码升级到含色散/多径/频率选择性后才可能重审。
+
+## V062: sprint-003 更新粒度均衡族独立科学验收（含 Phase-0 四项纠偏核实）
+
+> date: 2026-07-29
+> 关联：D036（新建）/ D035 / V061 / T027 / commit `689151c`
+> verifier：独立 agent `verify_sprint003_science` + 主线复核；只读审查，未改 executor 产物
+
+### 验证项
+
+**Part A — Phase-0 四项纠偏核实**
+
+- [x] 门2 证据等级已纠正：T027 §0/§1/§1.1/§3 + method-production.md "Gate-2 evidence grade" 段
+      均把"块末更新=结构性吸引子成因"降级为"source-backed 疑似作用点"；V052
+      `REJECTED_SCIENCE=STRUCTURAL_ATTRACTOR_OR_RECEIVER_GAP_ZERO` 引用正确。
+- [x] comparator 身份冻结正确：comparator 与所有候选均用 canonical Godard-with-z（含 z 因子），
+      provenance 指向 `cb1_cell_runner.py:124-129`；`_cma.py` scalar-error 形式未冒充（见 Part B 核 1）。
+- [x] action_class 已改为 `PREFORMAL_METHOD_FACTORY`，control_epoch 61，`validate_task_control.py`
+      PASS；授权范围声明"仅本次 bounded 诊断 sprint"。
+- [x] 终态集已扩为 5 个（+ `PROBLEM_RESOLVED_BY_CONVENTIONAL_COMPARATOR` + `EXECUTION_INVALID`）。
+
+**Part B — sprint-003 科学验收（独立重算）**
+
+- [x] **Godard-with-z 梯度身份**：per-symbol comparator（`methods.py:141-148`，`(R2-|z|²)*z*conj(r)`）、
+      block-8/16（`methods.py:228-234`，`(eX*zx_blk)[:,None]*conj(rX_blk)`，与 runner 一致）、
+      recursive（`methods.py:313-322`，`eX*zx*conj(rx)`）**均含 z 因子**；无方法用 forbidden
+      scalar-error `(R²−|z|²)·r*`（`_cma.py:161-166`）。TDD `test_persymbol_gradient_is_godard_with_z`
+      显式断言。**无 EXECUTION_INVALID**。
+- [x] **信息公平**：同 paired realization、同 eval window（N=512→133/261/389，N=8192→2181/2309/2437）、
+      同 R2=1.32/n_tap=11；anchor μ=0.03 冻结未重调；comparator μ 在 dev only 调谐。
+- [x] **dev/test 隔离 + fresh seeds**：dev=[181..190]/test=[201..220] disjoint（代码断言）；
+      seeds 71–80 在 raw-rows.v3.csv 零命中；test seeds 不回灌选择；dev-freeze-receipt 记录 comparator
+      μ 调谐 trace（μ=0.001 dev-optimal=0.3125，非强制）。
+- [x] **μ 与更新预算公平**：候选场跨 64× 有效更新预算（0.0156→1.0 updates/sym）平坦，无赢家触发
+      matched-budget block-64 ablation（逻辑正确：无赢家则无需分离 more-updates vs granularity）。
+- [x] **raw→aggregate 复算**（独立脚本重算 840 行）：anchor=0.31431、comparator=0.29685、
+      comparator vs anchor Δ=−0.01747 CI[−0.0452,−0.0001] 11/9/0、block8 vs comparator
+      Δ=−0.00293 CI[−0.0112,+0.0056] 13/7/0、block16 Δ=+0.00313、recursive Δ=−0.00103 —— **全部
+      与 result.v3.json/synthesis 吻合（<1e-4）**。
+- [x] **机制归因不越界**：comparator 在 7 cells 中只 1 个（snr15-fg1000-long：0.158→0.090）降到
+      PI-SER<0.1，"1/7" 属实；synthesis 表述"疑似作用点未被确认为成因"遵守 Phase-0/V052 ceiling，
+      未把块末更新当已确认机制、也未越界判"已确认非成因"。
+- [x] **closure**：identity gates PASS（QPSK PI-SER=0.0 独立重跑）；smoke 在 result.v3.json 非空未覆盖；
+      TDD 7/7 PASS；`git show --stat 689151c` 仅 11 文件全在 sprint-003 目录 + worker-log，未改
+      common/params/owner/session；未 push。
+
+### terminal verdict 裁决
+
+`NO_DIAGNOSTIC_SIGNAL` 为五选一中**唯一正确**项：
+- 非 `DIAGNOSTIC_METHOD_SIGNAL`：无候选过 Δ≤−0.005 + CI upper<0 + help>hurt（最佳 block8 Δ=−0.00293，
+  CI 跨 0）；
+- 非 `PROBLEM_RESOLVED_BY_CONVENTIONAL_COMPARATOR`：comparator 只 1/7 cell 消除 collapse，6/7 仍 collapse；
+- 非 `BLOCKED_SHARED_TESTBED`/`EXECUTION_INVALID`：testbed 支持公平比较、梯度身份正确。
+
+### 非承重瑕疵（不改 verdict，不需修复）
+
+1. `result.v3.json` offline 4-category label 用单 seed（201）而非 cell 均值（cosmetic；LABEL ONLY
+   不影响 gate）；
+2. synthesis §4 "μ=0.003 在 2/3 长 cell 发散"独立复核为 1/3（wording）；
+3. synthesis §5 "healthy-cluster regression" 实为空 cluster（anchor 下无 healthy cell；wording）。
+verifier 明确"不需重跑/重判"。
+
+### 结论
+
+**PASS**。sprint-003 工程主链闭合、梯度身份正确、统计可复算、verdict 唯一正确。接收
+`NO_DIAGNOSTIC_SIGNAL`；不晋级、不写论文、不动 protected owner。Phase-0 四项纠偏已落实。
+
+### 后续
+
+CB1 更新粒度均衡族轴按 method-factory 纪律关闭（无 signal 即退出）。下一合法动作由主控在
+mission-log/CP027 后选择：portfolio remap 选下一个机制不同的合法入口，或战略 gate 升级
+（仍 0 active carrier）。

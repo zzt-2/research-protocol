@@ -104,17 +104,54 @@ smoke whose receipt is overwritten does not close the package.
 The only terminal outputs are:
 
 - `DIAGNOSTIC_METHOD_SIGNAL` — at least one construct shows a stable,
-  non-artifactual advantage worth formalizing;
+  non-artifactual advantage worth formalizing. This requires that the construct
+  stably beats a tuned, task-matched, same-information conventional
+  comparator, and that the advantage is not attributable to tuning, a larger
+  effective update budget, or a gradient-identity artifact (rule these out by
+  ablation before judging signal).
 - `NO_DIAGNOSTIC_SIGNAL` — the tested batch has no usable signal under the
   frozen slice;
+- `PROBLEM_RESOLVED_BY_CONVENTIONAL_COMPARATOR` — the tuned conventional
+  comparator already removes the baseline's observed problem (e.g. a
+  block-end-update collapse vanishes under a per-symbol update of the same
+  canonical algorithm), and no new construct stably beats it. This is **not**
+  a method signal and forms **no** active carrier; it is a causal adjudication
+  of the suspected lever (the suspected cause was real, but a conventional
+  algorithm already resolved it). When this holds, record the resolution and
+  do not manufacture a signal with a weaker comparator.
 - `BLOCKED_SHARED_TESTBED` — the common evaluator, baseline, or data contract
   cannot support a fair diagnostic comparison.
+
+A sprint whose execution itself violates the contract (identity gate fails,
+causality leaks and is not repaired, the comparator uses the wrong gradient
+identity, smoke is clobbered and not closed, or the verifier rejects and one
+in-package repair still cannot close) is `EXECUTION_INVALID`; it produces no
+scientific terminal and no mission delta.
 
 Diagnostic seeds, comparisons, and winners cannot support paper claims,
 formal Go/Kill, or promotion. A winner must re-enter Groundwork at Step 1 and
 complete Step 1–3/3.5/4a before formal experiment or thesis use. Do not use
 this exception to reopen an explicitly rejected axis or to disguise
 candidate-specific formalization as a factory sprint.
+
+**Gate-2 evidence grade.** Gate 2 (baseline failure aligns with the candidate's
+point of action) only proves the candidate's lever touches the same location
+as the baseline's *observed* failure and that the lever is real. It does not
+license treating a synthesis's mechanism attribution (e.g. "block-end update
+geometry is the structural attractor cause") as a confirmed causal mechanism
+when that attribution was rejected by an earlier review. State the suspected
+lever as a hypothesis to be tested; the factory sprint is where its causality
+is adjudicated, including via the `PROBLEM_RESOLVED_BY_CONVENTIONAL_COMPARATOR`
+outcome.
+
+**Comparator gradient identity.** When the conventional comparator is a
+Godard/CMA-family equalizer, its weight update must use the canonical
+Godard-with-z gradient `Δw ∝ (R²-|z|²)·z·r*`. A scalar-error implementation
+`Δw ∝ (R²-|z|²)·r*` (missing the `z` factor) is a different gradient identity
+and must not impersonate the canonical comparator; it may only demonstrate
+that a lever (e.g. block size) is a real knob. Provenance must point to the
+canonical implementation/formula, and the comparator's step size must be
+tuned independently on the dev set.
 
 ## Method-signal promotion preflight
 

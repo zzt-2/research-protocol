@@ -2162,3 +2162,110 @@ Godard 1980 这一无可争议的传统同信息 comparator。S003 当初以"未
 S003、原 T027、`_dual_pol_channel.py:127-132`、`_cma.py:100-166`、sprint-001
 `synthesis.v1.md` §4/§8、method-production.md、baseline-adjudication.md、V061、
 用户 2026-07-29 中转指令（voice.md 2026-07-29）。
+
+---
+
+## D036: 最终纠偏 + 接收 sprint-003（NO_DIAGNOSTIC_SIGNAL）：纠正门2 证据等级、冻结 Godard-with-z comparator、action_class 改为 PREFORMAL_METHOD_FACTORY、新增 PROBLEM_RESOLVED 终态
+
+> status: active
+> date: 2026-07-29
+> 取代：D035 的 T027 授权条款（门2 证据表述、comparator 身份未冻结、action_class=
+> METHOD_FACTORY_TASK_PREPARATION 掩盖实验、三选一终态集）；不改 D035 的频域族撤回结论
+> 与 protected history / formal owner
+> 被取代：D035 的"门2 PASS 因 sprint-001 诊为结构性吸引子"与"comparator 留 executor 冻结"表述
+> 依据：调研: 无 + 验证: V062 + 源码 file:line（见下）+ 用户原话: voice.md 2026-07-29
+
+### 决策
+
+本轮（用户中转指令）一次端到端完成"最终纠偏 → 科学执行 → 独立验证 → 主控接收"，
+**无中间停顿**。四项确定性纠偏 + 接收 sprint-003 终态 `NO_DIAGNOSTIC_SIGNAL`。
+
+#### A. 四项最终纠偏（修正 D035/T027/V061 的证据等级与授权语义）
+
+1. **门2 证据等级纠正**：sprint-001 §4/§8 把"块末更新几何是结构性吸引子原因"写成已确认
+   机制——该归因已在 CP018/D026/**V052 被拒收**（`REJECTED_SCIENCE=
+   STRUCTURAL_ATTRACTOR_OR_RECEIVER_GAP_ZERO`，理由：未做 basin/state-space 扫描、
+   构造与既有候选高度重合）。正确表述：**块末更新是 source-backed、值得验证的疑似作用点**
+   （`_cma.py:100-166` 块末更新是真旋钮；sprint-001 §4/§8 把它列为"疑似瓶颈"），**不是已确认
+   因果机制**。T027 正是检验该疑似作用点因果性的诊断 sprint。已改正 T027 §0/§1/§1.1/§3，
+   并在 method-production.md 补"Gate-2 evidence grade"段。
+2. **冻结 comparator 身份**：传统 comparator = **tuned per-symbol standard CMA，canonical
+   Godard-with-z 梯度 `Δw ∝ (R²−|z|²)·z·r*`**，provenance 指向 `cb1_cell_runner.py:124-129`
+   （`(eX*zx_blk)[:,None]*conj(rX_blk)`，含 z 因子）。**禁用** `common/_cma.py` 的
+   `CMAEqualizer2x2` 冒充 comparator——它是 **scalar-error** 梯度（`_cma.py:161-166`，缺 z，
+   `cb1_cell_runner.py:20-30` docstring 已明示无法过 standard-CMA identity gate），只能证明
+   block_size 是真旋钮。comparator 的 μ **在 dev 单独调谐**。已改正 T027 §0/§2.3。
+3. **action_class 纠正**：D035/T027 的 `action_class=METHOD_FACTORY_TASK_PREPARATION` 把实际
+   要跑的实验掩盖成"准备"。改为 `PREFORMAL_METHOD_FACTORY`（foreground 显式允许，control_epoch
+   60→61），正文显式声明"授权仅覆盖本次 bounded 诊断 sprint，不授权 formal MVE/Step 5/论文
+   claim/protected owner 修改"。`validate_task_control.py` PASS（epoch 61 / CP025）。已改正
+   topic-index control 块与 T027 task-control 块。
+4. **新增传统 comparator 裁决终态**：若 tuned per-symbol CMA 已消除 block-64 collapse 且新构造
+   没稳定超过它，必须判 `PROBLEM_RESOLVED_BY_CONVENTIONAL_COMPARATOR`（**不是 METHOD_SIGNAL、
+   不形成 active carrier**）。补 `EXECUTION_INVALID`（合同违反终态）。method-production.md 终态集
+   从 3 个扩到 5 个（+ PROBLEM_RESOLVED + EXECUTION_INVALID）。已改正 T027 §2.4。
+
+#### B. 接收 sprint-003 终态 `NO_DIAGNOSTIC_SIGNAL`（独立 verifier PASS）
+
+executor 在 CB1 16QAM 共享 anchor 上构造 4 个更新粒度构造（block-64 μ=0.03 anchor、
+tuned per-symbol Godard-with-z comparator μ=0.001、block-8 μ=0.003、block-16、
+sliding-window recursive），dev 冻结后跑 fresh held-out（7 cells × 20 test seeds = 140 paired
+realizations）。**结果**：
+- inherited block-64 anchor（μ=0.03）seed-cluster mean PI-SER = **0.31431**；
+- tuned per-symbol Godard-with-z comparator（μ=0.001）= **0.29685**（vs anchor Δ=−0.01747，
+  CI [−0.0452,−0.0001]，11 help/9 hurt）；
+- 最佳新候选 block-8（μ=0.003）= 0.29392，vs comparator Δ=**−0.00293**，CI [−0.0112,+0.0056]
+  （跨 0），help/hurt/tie = 13/7/0 —— **未过 MDE=−0.005 且 CI 跨 0**，无 signal；
+- comparator **未消除 collapse**：7 cells 中只 1 个（snr15-fg1000-long：0.158→0.090）降到
+  PI-SER<0.1，其余 6 cells 仍 collapse。
+- 消融：候选场在 64× 有效更新预算跨度（block64=0.0156 → per-symbol=1.0 updates/sym）上**平坦**，
+  既非"更多更新次数"也非"更新粒度"产生可分离优势 → 无赢家，`NO_DIAGNOSTIC_SIGNAL` 正确。
+
+**独立 verifier（V062）PASS**：Godard-with-z 公式逐方法核（`methods.py:141-148/228-234/313-322`
+均含 z 因子，无 scalar-error 冒充）；block-64/per-symbol/candidate 信息公平（同 paired
+realization、同 eval window、comparator μ dev-only 调谐）；dev/test 隔离 + fresh seeds（禁用
+71–80 零命中）；raw→aggregate 独立重算全部吻合（<1e-4）；机制归因不越界（疑似作用点未被当
+已确认机制）；terminal verdict `NO_DIAGNOSTIC_SIGNAL` 为五选一中唯一正确项。3 项微小非承重
+wording/label 瑕疵（4-category label 用单 seed、§4 "2/3" 应为 "some"、§5 healthy cluster 空）
+不改 verdict、不需修复。
+
+### 理由
+
+四项纠偏是科学诚实性要求：把被拒收的归因当已确认机制（门2）、用错误梯度身份冒充 canonical
+comparator、用 preparation 掩盖实际实验，任一都会让 sprint 的 signal/NO_SIGNAL 判据不可信。
+冻结 Godard-with-z comparator + 新增 PROBLEM_RESOLVED 终态后，sprint 才能真正裁决"块末更新是
+否是 collapse 成因、传统 per-symbol 更新是否已解决"——裁决结果是：comparator 略优于 anchor
+但未消除 collapse，且无新构造稳定超过它 → `NO_DIAGNOSTIC_SIGNAL`，疑似作用点（块末更新）的
+因果性**未被本 sprint 确认**（既未确认是成因，也未确认不是；collapse 在所有更新粒度下都持续）。
+
+### 排除的替代方案
+
+- 不判 `PROBLEM_RESOLVED_BY_CONVENTIONAL_COMPARATOR`：comparator 只在 1/7 cell 消除 collapse，
+  其余 6/7 仍 collapse，不满足"已消除问题"判据（V062 独立复核）。
+- 不判 `DIAGNOSTIC_METHOD_SIGNAL`：最佳候选 Δ=−0.00293 未过 MDE 且 CI 跨 0，无赢家。
+- 不做包内修复 verifier 发现的 3 项瑕疵：均非承重、不改 verdict/gate；verifier 明确"不需重跑"。
+- 不升级战略 gate：sprint 在合法 anchor 下诚实产出诊断结果，问题未被传统 comparator 解决、
+  也无新 signal，属合法 `NO_DIAGNOSTIC_SIGNAL` 终态，按 method-factory 纪律关闭本轴。
+
+### 影响范围
+
+- foreground `active_lane` → `SPRINT003_PREFORMAL_FACTORY_BOUND`；authority → D036；
+  `control_epoch` 60→61；CP025 不变（CP027 为本 sprint 接收行）。
+- method-production.md 终态集 3→5，补 Gate-2 evidence grade + comparator gradient identity 两段。
+- T027 task-control epoch→61、action_class→PREFORMAL_METHOD_FACTORY；T027 正文改 §0/§1/§1.1/§2.2/
+  §2.3/§2.4/§3/§4。
+- **无 formal owner / protected history / thesis framework 改动**；无 active carrier 变更；
+  `NO_DIAGNOSTIC_SIGNAL` 不形成 METHOD_SIGNAL、不晋级、不写论文。
+- CB1 更新粒度均衡族轴关闭（method-factory 纪律：无 signal 即退出，不强行收尾）。
+
+### 触发原话
+
+voice.md 2026-07-29（用户中转纠偏 + 端到端执行指令）。
+
+### 来源
+
+用户 2026-07-29 中转指令（voice.md 2026-07-29）；sprint-003 产物（commit `689151c`，
+`preformal-method-factory-sprint-003/`）；V062 独立验收；`cb1_cell_runner.py:20-30/124-129`、
+`_cma.py:100-166/161-166`；V052（`REJECTED_SCIENCE=STRUCTURAL_ATTRACTOR_OR_RECEIVER_GAP_ZERO`）；
+sprint-001 `synthesis.v1.md` §4/§8；method-production.md、baseline-adjudication.md、
+evidence-and-claims.md。

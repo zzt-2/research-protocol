@@ -45,3 +45,25 @@
   只审判一个替代入口（CB1 逐符号/更新粒度族），判放宽 identity parity 是否科学合法；
   四门全过则原位修订 T027 不建 T028，否则记 STRATEGIC_GATE 不生成新科学任务；明确边界不跑 seed/
   不实现/不新建 testbed/不改 protected history 与 formal owners/Skill 只补入口门不扩 controller）
+- ⟶ "在一个对话内完成'T027 最终纠偏 → 科学执行 → 独立验证 → 主控接收'，不要在任务准备后停下来等用户。" → D036 / V062
+  （附四项确定性纠偏长指令：①门2 证据等级——sprint-001"块末更新几何是结构性吸引子原因"已在
+  CP018/D026/V052 被拒收，不得继续写成已确认机制，正确表述=块末更新是 source-backed 值得验证的
+  疑似作用点、T027 正是检验其因果性的诊断 sprint；②冻结 comparator 身份——传统 comparator=
+  tuned per-symbol standard CMA，必须用 canonical Godard-with-z 梯度 Δw∝(R²−|z|²)·z·r*，
+  `_cma.py` scalar-error 缺 z 只能证明 block_size 是真旋钮不得冒充 comparator，provenance 指向
+  canonical cb1_cell_runner 实现/公式并单独 dev 调谐 μ；③修正执行授权——action_class 改
+  PREFORMAL_METHOD_FACTORY，foreground 显式允许本次 bounded factory，不再用
+  METHOD_FACTORY_TASK_PREPARATION 掩盖实验，更新 control epoch 重跑 validate_task_control.py，
+  授权只覆盖本次 diagnostic sprint 不授权 formal MVE/Step 5/论文 claim/protected owner 修改；
+  ④增加传统 comparator 裁决终态——tuned per-symbol CMA 已消除 block-64 问题而新构造没稳定超过
+  必须判 PROBLEM_RESOLVED_BY_CONVENTIONAL_COMPARATOR，不是 METHOD_SIGNAL 也不形成 active carrier。
+  Phase 1 由独立 executor 跑 3-5 个更新粒度构造（含 inherited block-64、tuned per-symbol comparator、
+  ≥2 个可部署候选，block size/μ/更新预算分别公平调谐，dev 冻结后跑 fresh held-out，paired/seed-cluster/
+  raw/prefix-only/identity-semantic smoke 全闭合，block size×μ/更新预算消融，禁用 seeds 71-80，
+  不改 common/params/protected owner、不 push），terminal verdict 五选一；Phase 2 独立 verifier
+  核 Godard-z 公式/provenance、信息公平、dev-test 隔离、μ 与更新预算公平、raw→aggregate 可复算、
+  归因不越界、verdict 符合五选一，verifier 不过只允许一次包内确定性修复不另开第二修复对话，无法
+  修复则 EXECUTION_INVALID；主控更新 mission-log/topic-index/D/V 与必要 owner，有 signal 只登记待
+  promotion 不冒充 formal method，统一一次 commit working tree clean；聊天只回 verdict+关键数字+
+  是否 signal+verifier 结论+worker-log/artifact/commit SHA）
+  [用户原话明确：本轮端到端完成，中间不参与技术判断]

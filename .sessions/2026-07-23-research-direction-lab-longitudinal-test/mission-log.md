@@ -1,7 +1,7 @@
 # Mission Log — Research Direction Lab 长程真实运行测试
 
 > original mission: 在用户只中转任务路径和极短回执的条件下，稳定推进真实研究并积累可用方法材料。
-> phase 1: `4af6f9d..aab425d` | latest accepted: CP026 / 2026-07-29 | next checkpoint: `CP027`
+> phase 1: `4af6f9d..aab425d` | latest accepted: CP027 / 2026-07-29 | next checkpoint: `CP028`
 
 | CP | 包 / intent / family | formal science disposition | mission method delta | streaks | weight / drift | 下一步为何优于替代项 |
 |---|---|---|---|---|---|---|
@@ -31,6 +31,7 @@
 | CP024 | T025 · log-025 · `5e355c6` / THESIS_METHOD_PACKAGING / G1 bounded package | formal science disposition 不变；接收一个 `LOCAL_SLICE / NONBINDING_DIAGNOSTIC` 内部方法包，算法、局部证据、论文叙事、图表计划和证据债已集中，非 formal Go/主方法 | PACKAGING_BOUNDARY | G1 science line closed；active-carrier=0 | ADEQUATE / package ALIGNED；mission HAS_ONE_BOUNDED_ASSET | T026 直接生成论文小节+可编辑流程图+raw-derived 分层结果图，比继续写评价、修 G1 科学线或在 0 READY 池做第三个 z-only factory 更能把首个正向包装转成可用毕业材料 |
 | CP025 | T026 · log-026 · `d453e56` / THESIS_ARTIFACT_PRODUCTION / G1 writing material | 双 reviewer 最终 P0/P1/P2=`0/0/0`；模块化小节、可编辑流程图、raw-derived 分层结果图和重算脚本接收。formal disposition 与 G1 claim ceiling 不变 | NONE；artifact=`WRITING_MATERIAL` | G1 science line closed；active-carrier=0 | ADEQUATE / package ALIGNED；mission HAS_ONE_BOUNDED_ASSET | 停止 T027；R009 审计后先完成 D019/D034 最小协议修订和终验，再以 signal→formal carrier 转化为下一 live-test 主判据 |
 | CP026 | T027 入口纠偏 · 无 worker-log/commit（未执行实验）/ METHOD_FACTORY_ENTRY_REDIRECT / CB1 频域族→逐符号族 | 频域/子带族 problem-bearing testbed preflight 门1 FAIL（`_dual_pol_channel.py:127-132` 无色散/多径/FIR/频率选择性，物理自由度不存在）；comparator 未冻结、task-control epoch 59≠60、action_class 语义不一致；原 T027 DISPATCH_READY 撤回，频域族作 rejected task brief 保留不运行 | NONE（无实验、无方法构造、无 carrier 变更） | 无 carrier 变更；no-method streak 不计（非科学包） | ADEQUATE / ALIGNED | method-production.md 补入口四门（file:line，禁未测族/REOPENED/testbed-signal 放行）；T027 原位重写为唯一四门全过的替代入口（逐符号/更新粒度族，comparator=逐符号 SGD-CMA），validate_task_control.py PASS（epoch 60）；不新建 T028、不改 protected history/formal owner |
+| CP027 | T027 · log-027 · `689151c` / PREFORMAL_METHOD_FACTORY / CB1 更新粒度均衡族（block-64/per-symbol/block-8/16/recursive CMA） | 最终纠偏+sprint-003 执行+独立验收一气呵成：门2 证据等级纠正（块末更新=结构性吸引子归因已被 V052 拒收，降级为 source-backed 疑似作用点）、comparator 冻结为 canonical Godard-with-z（`cb1_cell_runner.py:124-129`，禁 `_cma.py` scalar-error 冒充）、action_class→PREFORMAL_METHOD_FACTORY（epoch 61）、新增 PROBLEM_RESOLVED/EXECUTION_INVALID 终态；executor 跑 4 构造 7cells×20test-seeds，verifier PASS（梯度身份正确、raw→aggregate 复算吻合<1e-4）；verdict `NO_DIAGNOSTIC_SIGNAL`（最佳 block8 vs comparator Δ=−0.00293 CI 跨 0 未过 MDE；comparator 只 1/7 cell 消除 collapse，未达 PROBLEM_RESOLVED 判据） | NONE（诊断 sprint 无 signal；无 carrier 变更） | no-method=1（CP027 首个 method-factory 科学包）；CB1 更新粒度族轴关闭 | ADEQUATE / ALIGNED | 本轴 method-factory 纪律性关闭（无 signal 即退出）；疑似作用点因果性未被本 sprint 确认（collapse 在所有更新粒度下持续）；portfolio remap 选下一机制不同合法入口，或战略 gate 升级（仍 0 active carrier） |
 
 ## Recovery events
 

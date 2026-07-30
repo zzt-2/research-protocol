@@ -4,18 +4,18 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 60
+  control_epoch: 61
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: SPRINT003_DISPATCH_READY_ENTRY_REDIRECTED
-  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D035
-  decision_gate: 入口纠偏完成（S003→D035/V061）：频域/子带族 problem-bearing testbed preflight 门1 失败（channel 源码无色散/多径/FIR/频率选择性，物理自由度不存在），原 T027 DISPATCH_READY 撤回；原位重写为唯一四门全过的替代入口 = 逐符号/更新粒度均衡族，comparator 首选逐符号 stochastic-gradient CMA；T027 validate_task_control.py PASS（epoch 60 / CP025）
+  active_lane: SPRINT003_PREFORMAL_FACTORY_BOUND
+  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D036
+  decision_gate: 最终纠偏完成（S003→D036/V062）：纠正门2 证据等级（sprint-001 块末更新=结构性吸引子归因已被 V052 拒收，降级为 source-backed 疑似作用点）；冻结传统 comparator = tuned per-symbol canonical Godard-with-z CMA（provenance cb1_cell_runner:124-129，禁 scalar-error _cma.py 冒充）；action_class 改为 PREFORMAL_METHOD_FACTORY（不再用 METHOD_FACTORY_TASK_PREPARATION 掩盖实验）；新增 PROBLEM_RESOLVED_BY_CONVENTIONAL_COMPARATOR 终态；T027 validate_task_control.py PASS（epoch 61 / CP025）
   allowed_actions:
     - RECOVER
     - TASK_PREPARATION
     - PORTFOLIO_MAP
     - PROMOTION_PREFLIGHT
-    - METHOD_FACTORY_TASK_PREPARATION
+    - PREFORMAL_METHOD_FACTORY
   forbidden_actions:
     - SCIENTIFIC_EXPERIMENT
     - CLOSED_AXIS_REOPEN
@@ -27,13 +27,16 @@ rdl_control:
     - POST_STEP4A_ADVANCE
     - SCIENCE_SCOUT_REACTIVATION
     - PROTECTED_HISTORY_EDIT
+    - FORMAL_MVE
+    - PAPER_CLAIM
+    - PROTECTED_OWNER_MODIFY
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
   mission_checkpoint: CP025
-  next_legal_action: 用户中转 T027 后，executor 在新对话执行逐符号/更新粒度均衡族诊断 sprint-003；本对话不再动作，等回执
+  next_legal_action: 本对话内端到端执行 T027 诊断 sprint-003（PREFORMAL_METHOD_FACTORY，bounded）：executor 跑 3-5 个更新粒度构造，独立 verifier 验收，主控接收；授权仅覆盖本次诊断 sprint
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（S003 入口已纠偏；epoch 60 / CP025，T027 原位重写为逐符号/更新粒度均衡族诊断 sprint，频域/子带族因物理自由度不存在已撤回，作 rejected task brief 保留）
+> 状态: active（CP027：sprint-003 端到端完成，verdict NO_DIAGNOSTIC_SIGNAL；epoch 61 / CP027，CB1 更新粒度均衡族轴关闭；频域/子带族因物理自由度不存在已撤回，作 rejected task brief 保留）
 > 创建: 2026-07-23 | 最后更新: 2026-07-29
 
 ## 专题信息
@@ -97,6 +100,22 @@ rdl_control:
   - 影响：active_lane → `SPRINT003_DISPATCH_READY_ENTRY_REDIRECTED`，authority → D035；
     频域/子带族加入 `forbidden_actions`（`FREQUENCY_DOMAIN_SUBBAND_FAMILY`）；无科学 carrier 变更、
     无 protected history / formal owner 改动。
+- **2026-07-29，live D036 / V062**：T027 端到端完成（最终纠偏 → 科学执行 → 独立验证 → 主控接收，用户中转指令，一轮内无停顿）。
+  - 最终纠偏（修 D035/T027/V061 证据等级与授权语义）：①门2 证据等级——sprint-001"块末更新几何
+    =结构性吸引子原因"已被 V052 拒收，降级为 source-backed 疑似作用点；②comparator 冻结为
+    canonical Godard-with-z（`cb1_cell_runner.py:124-129`，禁 `_cma.py` scalar-error 缺 z 冒充），
+    μ dev 单独调谐；③action_class→`PREFORMAL_METHOD_FACTORY`（epoch 60→61，不再用 preparation 掩盖
+    实验），授权仅本次 bounded sprint；④method-production.md 终态集 3→5（+ `PROBLEM_RESOLVED_BY_
+    CONVENTIONAL_COMPARATOR` + `EXECUTION_INVALID`），补 Gate-2 evidence grade + comparator
+    gradient identity 两段。
+  - sprint-003 执行（commit `689151c`）：4 个更新粒度构造（block-64 anchor、tuned per-symbol
+    Godard-with-z comparator、block-8/16、sliding-window recursive），dev 冻结后跑 fresh held-out
+    （7 cells × 20 test seeds，禁 seeds 71–80）。独立 verifier V062 **PASS**（梯度身份逐方法核、
+    raw→aggregate 独立复算吻合<1e-4、verdict 唯一正确）。verdict = **`NO_DIAGNOSTIC_SIGNAL`**
+    （最佳 block8 vs comparator Δ=−0.00293、CI 跨 0、未过 MDE；comparator 只 1/7 cell 消除 collapse）。
+  - 影响：CB1 更新粒度均衡族轴关闭（无 signal 即退出）；active_lane →
+    `SPRINT003_PREFORMAL_FACTORY_BOUND`；authority → D036；仍 0 active carrier、无 protected owner
+    / formal 改动；method-production.md 终态集与 Gate-2/comparator 段更新（同步 Skill）。
 
 ## 已确认结论
 
@@ -131,11 +150,13 @@ rdl_control:
 | R009 / D034 | 纵向效果审计完成；进入 system D019 最小修订 | R009 / decisions.md |
 | S003 | 下一入口选择：两 signal preflight=STRATEGIC_GATE，硬路由 method factory | S003 |
 | S003→D035/V061 | T027 入口纠偏：频域/子带族 preflight 门1 失败（无物理自由度）撤回；原位重写为逐符号/更新粒度均衡族（四门全过），comparator=逐符号 SGD-CMA | S003 / T027 / V061 |
+| S003→D036/V062 | T027 端到端完成（最终纠偏+执行+验收一轮内无停顿）：verdict `NO_DIAGNOSTIC_SIGNAL`；CB1 更新粒度族轴关闭；疑似作用点（块末更新）因果性未被确认（collapse 在所有更新粒度下持续） | T027 / sprint-003 `689151c` / V062 |
 
 ## 未决项
 
-- T027（**逐符号/更新粒度均衡族**诊断 sprint，频域族已撤回）待用户中转后由 executor 执行；
-- 若 sprint-003 仍无 signal 或仍无真实不同 comparator，触发战略 gate 升级（私域全文/论文范围决策），届时交用户；
+- T027 sprint-003 已完成（`NO_DIAGNOSTIC_SIGNAL`，CB1 更新粒度族轴关闭）；
+- 仍 0 active carrier；下一入口由 portfolio remap 选机制不同的合法 carrier，或战略 gate 升级
+  （私域全文/论文范围决策），届时交用户；
 - 下一真实压缩事件需量化 elapsed time、files read、lane/gate match；
 - G1 只保留 bounded thesis asset，不重开科学修复；
 - 频域/子带均衡族仅在信道源码被升级到含色散/多径/频率选择性后才可能重审，当前作 rejected task brief 保留。
@@ -152,8 +173,21 @@ method-production.md 补了入口四门（物理自由度存在 / 基线失败�
 可独立调谐 comparator / 每门 file:line，禁"未测族/REOPENED/testbed 曾产 signal"放行；并厘清
 shared anchor vs. identity parity——后者只保护继承基线比较连续性，不禁止跑不同传统算法）。
 
-唯一四门全过的替代入口 = **逐符号/更新粒度均衡族**（门1：`_cma.py:100-166` 块末更新是真旋钮；
-门2：sprint-001 synthesis §4/§8 把块末协议列为 collapse 瓶颈；门3：逐符号 SGD-CMA 是 Godard
-1980 原始传统形式，同任务同信息可独立调谐；门4：均有 file:line）。T027 **原位重写**（不建 T028），
-`validate_task_control.py` PASS（epoch 60 / CP025）。当前无 active scientific carrier；本对话
-不再动作，等用户中转修订后 T027。
+**2026-07-29 CP027（D036/V062）**：用户中转指令要求一轮内端到端完成"最终纠偏 → 科学执行 →
+独立验证 → 主控接收"。最终纠偏（四项）：①门2 证据等级——sprint-001"块末更新几何=结构性吸引子
+原因"已被 V052 拒收，降级为 source-backed 疑似作用点（不是已确认机制）；②comparator 冻结为
+canonical Godard-with-z（`Δw ∝ (R²−|z|²)·z·r*`，provenance `cb1_cell_runner.py:124-129`，禁
+`_cma.py` scalar-error 缺 z 冒充）；③action_class→`PREFORMAL_METHOD_FACTORY`（epoch 60→61）；
+④终态集 3→5（+ `PROBLEM_RESOLVED_BY_CONVENTIONAL_COMPARATOR` + `EXECUTION_INVALID`）。
+
+sprint-003 由独立 executor 跑（commit `689151c`）：block-64 μ=0.03 anchor（PI-SER 0.31431）、
+tuned per-symbol Godard-with-z comparator μ=0.001（0.29685）、block-8/16、recursive CMA，4 构造
+× 7 cells × 20 fresh test seeds。独立 verifier V062 **PASS**（梯度身份逐方法核、raw→aggregate
+独立复算吻合<1e-4）。**verdict = `NO_DIAGNOSTIC_SIGNAL`**：最佳 block8 vs comparator
+Δ=−0.00293、CI [−0.0112,+0.0056] 跨 0、未过 MDE=−0.005；comparator 只 1/7 cell 消除 collapse，
+未达 PROBLEM_RESOLVED 判据；候选场在 64× 更新预算跨度上平坦，既非更多更新也非粒度产生可分离
+优势。**疑似作用点（块末更新）的因果性未被本 sprint 确认**——collapse 在所有更新粒度下都持续。
+
+CB1 更新粒度均衡族轴按 method-factory 纪律关闭（无 signal 即退出）。当前仍 0 active carrier；
+无 protected owner / formal / thesis framework 改动；无 push。下一合法动作：portfolio remap 选
+机制不同的合法 carrier，或战略 gate 升级（届时交用户）。
