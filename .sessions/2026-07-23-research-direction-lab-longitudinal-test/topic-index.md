@@ -4,24 +4,24 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 68
+  control_epoch: 69
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
   active_lane: CAMPAIGN_EXPLORATION_DISPATCH
-  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D042
+  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D043
   decision_gate: CP029/D038 段A 终止后，用户授权 10-有效包探索 campaign（D039）。在完成 10 个有效科学大包前不因 portfolio 0 READY 要求 thesis pivot。对已完成方法（DA-NDA 选择器等）的新失效条件/鲁棒性做子问题探索；每个 package 遵守 problem-bearing probe → conventional adapter → 条件式 method factory 三阶段门控；至少 5 机制族、同族≤2 连续、第 5 包内部校准不停线、第 10 包 campaign-level 裁决。
   campaign:
     exploration_budget_valid_packages: 10
-    accepted_valid_packages: 4
-    current_package: P05
+    accepted_valid_packages: 5
+    current_package: P06
     mechanism_families_min: 5
     same_family_consecutive_max: 2
     count_excludes: [setup, governance, task_preparation, interface_repair, pure_reproduction, entry_preflight_only]
-    mid_calibration_at: P05   # 审计偏航与族覆盖，不停线（P05 即校准包）
+    mid_calibration_at: P05   # P05 校准已完成（不停线，S005 §mid-calibration）：5 包全 honest negative 0 signal，但族覆盖健康（4 族 A/B/C/D），P05 首个换对象包
     campaign_level_decision_at: P10
-    families_started: [A_CPR_selector_robustness, B_FIXED_POINT_RESOURCE_PERFORMANCE_CODESIGN, C_CONTINUOUS_GG_OOD_SELECTOR_ROBUSTNESS]   # A 族关闭(P01+P02)；B 族 P03 开连续=1；C 族 P04 开连续=1
-    same_family_consecutive: 1   # C 族连续=1；P05 可选 C 族第2包（达上限2）或换 D/E 族；P05 同时是 mid-calibration 包
-    rolling_queue: [P01 DONE CPR-selector-SNR-mismatch-robustness-NO_SIGNAL, P02 DONE cand_rank-operating-regime-PROBLEM_RESOLVED_BY_REGION_RETUNING, P03 DONE fixed-point-codesign-PROBLEM_RESOLVED_BY_UNIFORM_PRECISION, P04 DONE continuous-gg-ood-PROBLEM_ABSENT_ON_CONTINUOUS_GG, P05 TBD-mid-calibration-and-C-second-or-new-family]
+    families_started: [A_CPR_selector_robustness, B_FIXED_POINT_RESOURCE_PERFORMANCE_CODESIGN, C_CONTINUOUS_GG_OOD_SELECTOR_ROBUSTNESS, D_ML_POLARIZATION_EQUALIZER_OOD_SAFE_ONLINE_ADAPTATION]   # A 关闭(P01+P02)；B P03 连续=1；C P04 连续=1；D P05 连续=1（首个换对象包：ButterflyCNN ML equalizer ≠ DA/NDA CPR selector）
+    same_family_consecutive: 1   # D 族连续=1；P06 需第 5 机制族（建议 E 信息复杂度边界，P06 达"≥5 族"）或 D 族第 2 包（连续≤2 允许）
+    rolling_queue: [P01 DONE CPR-selector-SNR-mismatch-robustness-NO_SIGNAL, P02 DONE cand_rank-operating-regime-PROBLEM_RESOLVED_BY_REGION_RETUNING, P03 DONE fixed-point-codesign-PROBLEM_RESOLVED_BY_UNIFORM_PRECISION, P04 DONE continuous-gg-ood-PROBLEM_ABSENT_ON_CONTINUOUS_GG, P05 DONE ml-equalizer-ood-online-adaptation-PROBLEM_RESOLVED_BY_CONVENTIONAL_ONLINE_EQUALIZER, P06 TBD-5th-mechanism-family-E-or-D-second]
   allowed_actions:
     - RECOVER
     - PORTFOLIO_MAP
@@ -50,12 +50,12 @@ rdl_control:
     - REPRODUCTION_AS_NEW_METHOD   # FR-23：复现旧结果不当新方法，须注入新失效条件
     - A_CPR_SELECTOR_ROBUSTNESS_FAMILY_REOPEN   # D040：A 族达同族上限 2，P01 SNR-mismatch + P02 cand_rank 工作区子轴全关闭（TL-30 禁换名重开 cand_rank/weakretune/region-retune）
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
-  mission_checkpoint: CP033   # P04 PROBLEM_ABSENT_ON_CONTINUOUS_GG 已接收
-  next_legal_action: Package 05（C 族第2包=达上限2，或换 D 调制编码层 / E 信息复杂度边界 族）。P05 是 mid-calibration 包：审计偏航与族覆盖（当前 3 族 A/B/C：A 关闭、B 连续=1、C 连续=1）但不**停线**——若偏航则调整后续 P06-P10 族选择，不回退已接收包。本轮选择 P05 新机制族入口（D 或 E，或 C 第2包）但不运行。下一对话由用户中转 P05 执行指令。
+  mission_checkpoint: CP034   # P05 PROBLEM_RESOLVED_BY_CONVENTIONAL_ONLINE_EQUALIZER 已接收（mid-calibration 完成）
+  next_legal_action: Package 06（需第 5 机制族以满足 D039 §4 "至少 5 机制族"——建议 E 信息复杂度边界，或 D 族第 2 包连续≤2）。P06 必须再选一个不同机制族，使前六包至少覆盖 5 个家族。本轮准备 P06 入口（不运行）。下一对话由用户中转 P06 执行指令。
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（CP033/P04→V068：D039 campaign P04 连续 GG OOD 选择器鲁棒性端到端完成，verdict `PROBLEM_ABSENT_ON_CONTINUOUS_GG`，verifier PASS（8/8）；accepted_valid_packages=4/10，active_lane CAMPAIGN_EXPLORATION_DISPATCH，epoch 68；C 族（连续 GG OOD 选择器鲁棒性）连续=1（首包）；无效 16APSK 环比/湍流标签入口经绑定裁决撤回（γ 是调制配置非信道随机量；selector 不读环比/标签；matched demod 是常规解；保留 rejected brief 不计有效 P04）；pooled held-out interior regret +0.1459 dB < MDE=0.15（anchor +0.2306 > interior +0.1393 证明非 OOD-specific）；weak-side-low-SNR 子区间（9/30 cell > MDE）作 future-work seed 与已关闭 A 族重叠不重开；仍 0 active carrier）
+> 状态: active（CP034/P05→V069：D039 campaign P05 ML polarization equalizer OOD safe online adaptation（D 族首包，mid-calibration 包）端到端完成，verdict `PROBLEM_RESOLVED_BY_CONVENTIONAL_ONLINE_EQUALIZER`，verifier ACCEPT（10/10 + 方法身份非混淆）；accepted_valid_packages=5/10，active_lane CAMPAIGN_EXPLORATION_DISPATCH，epoch 69；D 族（ML equalizer OOD online adaptation）连续=1（首个换对象包：ButterflyCNNEqualizer2x2 ≠ DA/NDA CPR selector）；binding decision 撤回 P05-D（FEC/旋转模糊：无真实 codec/threshold eval 非 FEC/TX-bit rotation privileged/pilot resolver 旧线裁决）与 P05-E（window/complexity：重复 B1/NDA 比 VV 复杂不成立/selector 非主计算量/P03 已覆盖定点轴）；Phase A 问题成立（fixed-label swap regret +0.4990/+0.4981 两 cell，PI-BER swap-blind 报 secondary，不变量 10）；Phase B standard-CMA-continuation（Godard-with-z 在线）recovered 两 cell（mean fixed-BER 0.00018/0.00117≪MDE）；Phase C 不运行；mid-calibration：5 包全 honest negative 0 signal 但族覆盖健康 4 族 A/B/C/D，P05 首个换对象包；仍 0 active carrier）
 > 创建: 2026-07-23 | 最后更新: 2026-07-30
 
 ## 专题信息
@@ -223,6 +223,11 @@ rdl_control:
     mechanism family）。一次包内确定性修复（sigma2_to_ab 在 3 训练 σ_R² 用冻结四舍五入锚点对保 byte-exact 回归，内部点用
     Al-Habash）已披露。仍 0 active carrier、claim ceiling `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`、无 protected owner/formal/
     Skill/thesis framework 改动、无 push。
+- **2026-07-30，live D043 / V069**：P05 ML polarization equalizer OOD safe online adaptation（D 族首包，mid-calibration 包）端到端完成 → `PROBLEM_RESOLVED_BY_CONVENTIONAL_ONLINE_EQUALIZER`。
+  - 原因：binding decision 撤回 P05-D（FEC/旋转模糊：无真实 codec / threshold eval 非 FEC / TX-bit rotation resolver privileged / pilot resolver 旧线 D032 已裁决）与 P05-E（window/complexity：重复 B1 adaptive phase-window / "NDA 比 VV 复杂"旧担忧不成立 / selector 统计非主计算量 / P03 已覆盖定点轴），上述准备不计有效 P05。新族 = `D_ML_POLARIZATION_EQUALIZER_OOD_SAFE_ONLINE_ADAPTATION`，对象 = `ButterflyCNNEqualizer2x2`（`common/_ml_equalizer.py:104`，双偏振蝶形 CNN MSE 监督，Q-CMA-FADE 方法层，contract H2/B4）——**与 NDA-ML CPR selector（P01-P04 对象）不同方法身份**（不同类别/explore 目录/session）。
+  - 执行：Phase 0 身份门 CLOSED（frozen-ML 确定性复现 state_hash byte-identical `03e91429dfed74c6`；corrected StandardCMA2x2 Godard-with-z byte-identical；provenance=当前 params.py strong=(4.2,1.4)，D036 已记 1.5/0.8→4.2/1.4 drift 用当前真值保可复现；in-dist anchor 坐实 D022 修正后不变量 9：ML swap fixed≈0.5 / standard-CMA no-swap fixed≈0）。Phase A fresh problem gate（PRIMARY=fixed-label BER swap-visible，不变量 10；PI-BER swap-blind 报 secondary）：两 cell（anchor N5M/fg30/20dB + provenance-OOD N5M/fg100/20dB，**不提高 SOP/f_G**）fixed-label ML−CMA = +0.4990/+0.4981 CI_low>0 wins=3/3 cma_div_frac=0（CMA 不共同退化）→ 问题成立。Phase B 三 comparator（同预算/prefix-only/receiver-visible）：standard-CMA-continuation recovered=True 两 cell（mean fixed-BER 0.00018/0.00117 ≪ MDE=0.05）；DD-LMS（~0.45，slicer 在 swap 喂错标签锁错盆地）与 periodic-pilot-finetune（~0.499，D032 weak 化身坐实 D032 KILL）均未恢复 → `PROBLEM_RESOLVED_BY_CONVENTIONAL_ONLINE_EQUALIZER`。Phase C 不运行。
+  - **mid-calibration（第 5 包内部校准，不停线）**：accepted 序列 P01 NO_SIGNAL / P02 RESOLVED_REGION / P03 RESOLVED_UNIFORM / P04 ABSENT / P05 RESOLVED_BY_CONVENTIONAL —— 5 包全 honest negative 0 signal；族覆盖 4（A 关闭/B/C/D 连续=1）；**P05 是首个换对象包**（前 4 包全 DA/NDA CPR 选择器，P05 换 ButterflyCNN ML equalizer，机制距离显著扩大，非在旧 selector 打转）；可写入 thesis 资产 = Ch3/Ch4 双口径警示（ML swap vs standard-CMA no-swap，contract H2/D023 适用边界）+ D032 KILL 独立佐证 + ML identity freeze 三阶段门控框架。趋势：每新失效条件要么 sub-MDE 要么被常规 comparator 解决；campaign 5/10 半预算仍 0 signal，但族覆盖健康递增。P06 需第 5 机制族（建议 E 信息复杂度边界）。
+  - 新范围：D 族（ML equalizer OOD online adaptation）连续=1（首包）。campaign 计数 accepted_valid 4→5、current P05→P06、families_started 追加 D。无新增 forbidden（P05-D/E 撤回是"无作用面/重复"非"换名重开已关闭轴"；D 族是独立 mechanism family；periodic-pilot 作 comparator 仅佐证 D032 KILL 非复活）。三次包内确定性修复（metric-signature PI→fixed-label 不变量10/D018强制；dtype complex128→64；recovered 判据方向）全披露 V069 复核。仍 0 active carrier、claim ceiling `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`、无 protected owner/formal/Skill/thesis framework 改动、无 push。
 
 ## 已确认结论
 
@@ -264,17 +269,18 @@ rdl_control:
 | D040 / P02→V066 | P02 cand_rank 工作区确认（A 族第 2 包=上限）：fresh confirmation P01 条件式子群体信号。读新数据前冻结目标区/边界/MDE=0.15/方法身份全复用 P01 冻结码/cheap-alt=weakretune(dev 调谐 ref)。dev(50–59)选 ref=11.0；fresh held-out({60..70}∪{81..89}∪{90..99}=30)primary cand_rank−adapter=+0.3578[+0.3381,+0.3775]90/0/0；cheap-alt weakretune−adapter=+0.4539反超、cand_rank−weakretune=−0.0961|mean|≤MDE → §5 Step 1 触发 `PROBLEM_RESOLVED_BY_REGION_RETUNING`。cand_rank ref=9.0 非 load-bearing，同一 conventional lever dev 调谐即超，无可区分 deployable action，不产方法卡/不晋升。verifier 8/8 PASS（raw→aggregate 0.000e+00、seed 零碰撞、git diff 冻结文件空、true γ 绝不进 decide、独立重跑字节级一致）。A 族关闭，P03 必须换族 | D040 / V066 / CP031 / worker-log step-029（无独立 commit，待主控统一） |
 | D041 / P03→V067 | P03 定点/资源-性能协同设计（B 族首包）：绑定裁决撤回无效 T030（FOE-residual→CPR，1MHz 是 FOE 前 warning 参数非 post-FOE residual），新 P03 = B_FIXED_POINT_RESOURCE_PERFORMANCE_CODESIGN。对已完成 DA/NDA 选择器注入"定点部署"新失效条件（FR-23）。可信 bit-true Q(W,F) 模型（饱和二补码/round-half-up/block-float 共享 exponent/accumulator 加宽/非线性 I/O 量化），float-bypass 0/132,000 逐 window 决策与浮点 `A.decide` 一致。Phase A uniform 阶梯 {(6,4)…(16,14)} dev 0–9：uniform(8,6) 已到 regret 地板（gain-bearing +0.027 dB），地板 branch-statistical（(16,14) Q≤2⁻⁴⁰ 仍持续，集中高 SNR 锚点增益 ~0 处）。Phase B 4 mixed candidate（dev 10–19/held-out 30–49）：最佳 two_exp(8,6) Pareto-主导 uniform(14,12) 但 +0.0166 dB = 0.11×MDE → `mixed_strictly_better_by_mde=[]`，无可区分 deployable action → `PROBLEM_RESOLVED_BY_UNIFORM_PRECISION`。verifier V067 10/10 PASS（raw→aggregate 0.000e+00、float-bypass 独立重跑 0/48000、信息边界 AST 干净、resource 措辞严格 proxy）。不产方法卡/不晋升。resource proxy（op×bit/storage_bit）明确标 proxy 无真实综合 | D041 / V067 / CP032 / worker-log step-030（无独立 commit，待主控统一） |
 | D042 / P04→V068 | P04 连续 GG OOD 选择器鲁棒性（C 族首包）：绑定裁决撤回无效 16APSK 环比/湍流标签入口（四条 FAIL：γ 是调制配置非信道随机量、selector 不读环比/标签、matched demod 常规解、无作用面），新 P04 = C_CONTINUOUS_GG_OOD_SELECTOR_ROBUSTNESS。合法问题"AWGN 拟合 CV 边界在连续 GG 形状 OOD 下是否产生 selector-specific regret"。σ_R²→(α,β) 用 Al-Habash 闭式（`system_model.tex:16-21`，验证复现锚点 ≤2.70%）；显式 (α,β) 注入经 `generate_shared_realization_apsk(turb_params=...)`；锚点回归 gate 0 mismatch。pooled held-out interior regret **+0.1459 dB**（CI=[+0.0827,+0.2090]）<冻结 MDE=0.15；dev +0.1393 一致（差 0.007）。Phase A 门（pooled，读结果前冻结）未过 → Phase B/C 不运行 → `PROBLEM_ABSENT_ON_CONTINUOUS_GG`。诚实子区间 9/30 cell > MDE（σ_R² 0.3/0.9/1.35 × γ 5-11，最强 +0.678 dB）但非 OOD-specific（weak 训练锚点 regret +0.39/+0.78/+0.98/+0.56 更强；anchor pooled +0.2306 > interior +0.1393）→ selector 是通用 NDA-over-selector，连续 GG 形状不让边界退化。verifier V068 8/8 PASS（raw→aggregate 0.000e+00、锚点门独立重跑 0 mismatch、seed 隔离干净、信息边界 AST 干净、冻结文件未改、verdict 唯一正确、子区间诚实）。不产方法卡/不晋升。weak-side-low-SNR 子区间作 future-work seed 与已关闭 A 族重叠不重开 | D042 / V068 / CP033 / worker-log step-031（无独立 commit，待主控统一） |
+| D043 / P05→V069 | P05 ML polarization equalizer OOD safe online adaptation（D 族首包，mid-calibration 包）：binding decision 撤回 P05-D（FEC/旋转模糊：无真实 codec/threshold eval 非 FEC/TX-bit rotation privileged/pilot resolver D032 旧线）+ P05-E（window/complexity：重复 B1/NDA 比 VV 复杂不成立/selector 非主计算量/P03 已覆盖定点轴），新族 D 对象=ButterflyCNNEqualizer2x2（**≠ NDA-ML CPR selector**）。Phase 0 身份门 CLOSED（frozen-ML 确定性复现 state_hash byte-identical `03e91429dfed74c6`；corrected StandardCMA2x2 Godard-with-z byte-identical；provenance=当前 params.py strong=(4.2,1.4)；in-dist anchor 坐实 D022 修正后不变量 9：ML swap fixed≈0.5 / standard-CMA no-swap fixed≈0）。Phase A PRIMARY=fixed-label BER（swap-visible 不变量 10；PI-BER swap-blind 报 secondary）两 cell（anchor N5M/fg30 + provenance-OOD N5M/fg100，**不提高 SOP/f_G**）fixed-label ML−CMA=+0.4990/+0.4981 CI_low>0 wins=3/3 cma_div_frac=0 → 问题成立。Phase B standard-CMA-continuation recovered=True 两 cell（mean fixed-BER 0.00018/0.00117≪MDE=0.05）；DD-LMS（~0.45 slicer 错标签）/periodic-pilot（~0.499 D032 weak 化身坐实 KILL）均未恢复 → **`PROBLEM_RESOLVED_BY_CONVENTIONAL_ONLINE_EQUALIZER`**。Phase C 不运行。verifier V069 ACCEPT（10/10 + 方法身份非混淆全 PASS；raw→aggregate relErr=0；gate/预算公平/Phase-C 抑制/verdict 唯一性源码级验）。不产方法卡/不晋升。harvest：Ch3/Ch4 双口径警示（强化 H2/D023 适用边界 + 不变量 9/10/11）+ D032 KILL 独立佐证 + ML identity freeze 三阶段门控框架。**mid-calibration**：5 包全 honest negative 0 signal，族覆盖健康 4 族 A/B/C/D，P05 首个换对象包（非旧 selector 打转）。3 次包内确定性修复（metric-signature/dtype/recovered-logic）全披露 | D043 / V069 / CP034 / worker-log step-032（无独立 commit，待主控统一） |
 
 ## 未决项
 
 - CP028 `STRATEGIC_GATE` 已解决：先经 D038 段A（PHYSICS_BACKED_TESTBED_UNAVAILABLE，选项(1) 已尽），
   再由 D039 用户 campaign 授权覆盖（10-有效包预算，不要求 thesis pivot）；
 - 仍 0 active carrier；某 package 出 `DIAGNOSTIC_METHOD_SIGNAL` 且过 promotion preflight 前不晋级；
-- campaign 计数（topic-index control block `campaign` 段）：`accepted_valid_packages=4`，budget=10，
-  current=P05；setup/治理/任务准备/接口修复/纯复现/入口 preflight 不计；
-- 第 5 包（P05）做内部校准（偏航 + 族覆盖审计），不停线；第 10 包（P10）做 campaign-level pivot/continue 裁决；
-- 同族连续≤2 包；至少 5 机制族（A CPR 选择器鲁棒性**已关闭**（P01+P02 达上限）/ B 定点资源协同设计**已开**（P03 连续=1）/ C 连续 GG OOD 选择器鲁棒性**已开**（P04 连续=1）/ D 调制编码层 / E 信息复杂度边界）；
-- 已关闭轴不得换名重开（TL-30）：NDA-ML 本体 / G1 science repair / CB1 collapse family / Pilot-Jones 小轴 / PMD-PDL-Jones-CD 星地移植 / **A 族 CPR 选择器鲁棒性（cand_rank/weakretune/SNR-mismatch/region-retune 子轴）** / **FOE-residual→CPR cascade（T030 撤回）**；
+- campaign 计数（topic-index control block `campaign` 段）：`accepted_valid_packages=5`，budget=10，
+  current=P06；setup/治理/任务准备/接口修复/纯复现/入口 preflight 不计；
+- 第 5 包（P05）内部校准**已完成**（S005 §mid-calibration，不停线）：5 包全 honest negative 0 signal，族覆盖 4（A 关闭/B/C/D 连续=1），P05 首个换对象包；第 10 包（P10）做 campaign-level pivot/continue 裁决；
+- 同族连续≤2 包；至少 5 机制族（A CPR 选择器鲁棒性**已关闭**（P01+P02 达上限）/ B 定点资源协同设计**已开**（P03 连续=1）/ C 连续 GG OOD 选择器鲁棒性**已开**（P04 连续=1）/ D ML polarization equalizer OOD online adaptation**已开**（P05 连续=1，首个换对象包）/ E 信息复杂度边界**未开**）；**P06 需第 5 机制族以满足 D039 §4 "至少 5 机制族"**——建议 E 以 P06 达成；
+- 已关闭轴不得换名重开（TL-30）：NDA-ML 本体 / G1 science repair / CB1 collapse family / Pilot-Jones 小轴 / PMD-PDL-Jones-CD 星地移植 / **A 族 CPR 选择器鲁棒性（cand_rank/weakretune/SNR-mismatch/region-retune 子轴）** / **FOE-residual→CPR cascade（T030 撤回）**；P05 periodic-pilot 作 comparator 仅佐证 D032 KILL 非复活（D032 明载"不否决更强化身但须重走 GW 门控"）；
 - 下一真实压缩事件需量化 elapsed time、files read、lane/gate match；
 - G1 只保留 bounded thesis asset，不重开科学修复；
 - 频域/子带均衡族仅在信道源码被升级到含色散/多径/频率选择性后才可能重审，当前作 rejected task brief 保留。
@@ -338,16 +344,18 @@ uniform Q(8,6) 决策与浮点 byte-exact（Ch5 FPGA §5.4/§5.5 bit-cost/resour
 （float-bypass 分母叙述 726k→132k；Phase-BC 键名 bug 修复并重跑）已披露。worker-log
 `step-030-p03-fixed-point-codesign.md`；artifact `results/p03_fixed_point_codesign/`。
 
-**当前位置**：P04 是 campaign 第 4 个有效包（连续 GG OOD 选择器鲁棒性族 C，同族连续=1 **未达上限**）。
-accepted_valid_packages=4/10。仍 0 active carrier、claim ceiling `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`。
+**P05 已完成（CP034/V069）**：campaign 第 5 个有效包（ML polarization equalizer OOD safe online adaptation 族 D，同族连续=1）。
+binding decision 撤回无效 P05-D（FEC/旋转模糊）/P05-E（window/complexity），新族 D 对象=ButterflyCNNEqualizer2x2（≠ NDA-ML CPR selector）。
+Phase 0 身份门 CLOSED；Phase A PRIMARY=fixed-label BER（swap-visible 不变量 10）问题成立（两 cell +0.4990/+0.4981）；Phase B standard-CMA-continuation
+（Godard-with-z 在线）recovered 两 cell（0.00018/0.00117≪MDE）→ `PROBLEM_RESOLVED_BY_CONVENTIONAL_ONLINE_EQUALIZER`；Phase C 不运行。verifier V069 ACCEPT。
+**mid-calibration（第 5 包内部校准，不停线，已完成）**：P01-P05 verdict 序列 NO_SIGNAL/RESOLVED_REGION/RESOLVED_UNIFORM/ABSENT/RESOLVED_BY_CONVENTIONAL
+—— 5 包全 honest negative 0 signal。族覆盖 4（A 关闭/B/C/D 连续=1）。**P05 是首个换对象包**（前 4 包全 DA/NDA CPR 选择器，P05 换 ButterflyCNN
+ML equalizer，机制距离显著扩大，非在旧 selector 打转）。校准结论：campaign 不是在旧 selector 周围打转，但仍 0 signal——每新失效条件要么 sub-MDE
+要么被常规 comparator 解决。campaign 5/10 半预算。可写入 thesis 资产：Ch3/Ch4 双口径警示（ML swap vs standard-CMA no-swap，H2/D023 适用边界）+ D032 KILL
+独立佐证 + ML identity freeze 三阶段门控框架。
 
-**P05 是 mid-calibration 包**（D039 §4 第 5 包内部校准，不停线）：审计偏航与族覆盖。当前族覆盖（3 族：A 关闭、
-B 连续=1、C 连续=1）。P01-P04 verdict 序列：NO_SIGNAL / RESOLVED_BY_REGION_RETUNING / RESOLVED_BY_UNIFORM_PRECISION /
-PROBLEM_ABSENT_ON_CONTINUOUS_GG —— 4 包全是 honest negative（问题不存在或被常规 comparator 解决），0 方法 signal。
-校准观察：4 包都在"对已完成 DA/NDA 选择器注入新失效条件"框架下，且都在低 SNR / weak turbulence 的同一作用区，
-导致问题要么 sub-MDE 要么被常规 retune 消解。**偏航信号**：若继续在同一选择器的相邻失效条件上打转，campaign 大概率
-仍 0 signal。P05 校准建议方向（不停线，仅影响 P06+ 选择）：换**机制距离更远**的族——D 调制编码层（HD/SD-FEC 边界、
-APSK 旋转模糊对 NDA-ML 的影响）或 E 信息复杂度边界（窗口长度 vs 估计方差、低复杂度降级），而非 C 族第 2 包或 A 族邻近轴。
+**当前位置**：P05 完成（D 族连续=1），accepted_valid_packages=5/10，仍 0 active carrier、claim ceiling `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`。
+P06 必须再选一个不同机制族，使前六包至少覆盖 5 个家族（D039 §4）——当前 4 族 A/B/C/D，P06 需第 5 族（建议 E 信息复杂度边界）或 D 族第 2 包（连续≤2 允许）。
 
-下一合法动作：**Package 05（C 族第 2 包=达上限 2，或换 D 调制编码层 / E 信息复杂度边界 族）**。P05 同时是 mid-calibration
-包（审计偏航与族覆盖但不**停线**）。本轮选择 P05 新机制族入口（推荐 D 或 E 以扩大机制距离）但不运行。下一对话由用户中转 P05 执行指令。
+下一合法动作：**Package 06（需第 5 机制族以满足 D039 §4 "至少 5 机制族"——建议 E 信息复杂度边界，或 D 族第 2 包连续≤2）**。
+本轮准备 P06 入口（不运行）。下一对话由用户中转 P06 执行指令。

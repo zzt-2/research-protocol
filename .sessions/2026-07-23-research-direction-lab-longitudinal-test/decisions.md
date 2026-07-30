@@ -2641,3 +2641,85 @@ profile（"务实可毕业"+"深耕已有基础"+"诚实负面可 harvest"）支
 ### 范围确认
 
 本轮（撤回无效 16APSK/湍流标签入口 + P04 端到端执行 + 接收 + 治理更新）在 scope boundary 内：D039 campaign 授权范围内第 4 个有效包，遵守 problem-first 三阶段门控（Phase A problem-bearing probe → gate 未过 → 不进 Phase B/C）。撤回两入口是绑定裁决要求，保留 rejected brief 供审计。无 protected owner/formal/Skill/thesis framework 改动、无 push、无新大型基础设施。一次包内确定性修复（sigma2_to_ab 锚点对）已披露。
+
+---
+
+## D043: P05 ML polarization equalizer OOD safe online adaptation — standard-CMA-continuation 恢复 swap regret → PROBLEM_RESOLVED_BY_CONVENTIONAL_ONLINE_EQUALIZER
+
+> status: active
+> date: 2026-07-30
+> 取代：无
+> 被取代：无
+> 依据: 验证: `projects/simulation/results/cma-fade-divergence/p05_phase0_identity.json`、`p05_ood_online_adaptation.json` + 脚本 `explore/cma-fade-divergence/p05_phase0_identity.py`、`p05_ood_online_adaptation.py` + 运行日志 `p05_run4.log` + V069 独立验收 + D022/D023/D032/不变量9/10/11 + binding decision
+
+### 决策
+
+**campaign 5/10，新机制族 D（D_ML_POLARIZATION_EQUALIZER_OOD_SAFE_ONLINE_ADAPTATION）首包。端到端一轮完成 Phase 0→A→B：frozen ButterflyCNN ML equalizer 在 (4.2,1.4) strong + N=5M SOP 累积旋转下产生稳定 +0.499 fixed-label BER swap regret（Phase A 问题成立），但 corrected standard-CMA-continuation（Godard 1980 with-z，在线）在两 cell 上 mean fixed-label BER 0.00018/0.00117 ≪ MDE=0.05 完全恢复 swap → `PROBLEM_RESOLVED_BY_CONVENTIONAL_ONLINE_EQUALIZER`。Phase C 不运行（B 已解决）。不产方法卡/不晋升。**
+
+对象 = `ButterflyCNNEqualizer2x2`（`common/_ml_equalizer.py:104`，双偏振蝶形 CNN MSE 监督，Q-CMA-FADE 方法层，contract H2/B4），**与 NDA-ML CPR selector（P01-P04 对象）不同方法身份**（不同类别/explore 目录/session）。
+
+### Phase 0：身份门 CLOSED
+
+无磁盘 checkpoint；frozen-ML identity = 冻结 seed+params 确定性复现。P0.1 ML 两次完整 train+equalize state_hash byte-identical（`03e91429dfed74c6`）；P0.2 StandardCMA2x2 byte-identical + z-factor 源 `prompt019:206-213`。channel provenance = 当前 params.py strong=(4.2,1.4) 真值（D036 记录的 1.5/0.8→4.2/1.4 drift；用当前真值保可复现）；F_G=30/SOP=4e-7/20dB/QPSK/N_TAP=11。in-dist anchor 复现 D022 修正后不变量 9：ML fixed-label≈0.5（swap）、standard-CMA fixed-label≈0（no-swap）。
+
+### Phase A：问题成立（PRIMARY=fixed-label BER，swap-visible）
+
+冻结（读结果前）：PRIMARY gate metric = fixed-label BER（dual-pol 不变量 10「PI-BER 对 swap 结构性失明」，PI 报告 secondary）；MDE_FIXED=0.05；两 cell（anchor N5M/fg30/20dB + provenance-OOD N5M/fg100/20dB，**不提高 SOP/f_G 制造问题**）。
+
+| cell | fixed-label ML−CMA | CI | wins | cma_div_frac | gate |
+|---|---|---|---|---|---|
+| anchor | **+0.4990** | [+0.4983,+0.4997] | 3/3 | 0.0 | True |
+| fg100 | **+0.4981** | [+0.4948,+0.5013] | 3/3 | 0.0 | True |
+
+四混淆分离：(1) ML 自身 swap 真实；(2) CMA 共同退化否（cma_div_before_late 全 False，CMA fixed≈0）；(3) metric 伪差否（PI swap-blind 是结构性非无问题，fixed-label swap-visible diff≈0.5 稳定）；(4) 单 seed 否（6/6 swap）。
+
+### Phase B：standard-CMA-continuation 恢复
+
+comparators（同预算/prefix-only/receiver-visible/独立 dev/无 future 回灌）：standard-CMA-continuation、DD-LMS（block-grained）、periodic-pilot-finetune（D032 weak 化身，声明 overhead 0.2%）。recovered = comparator mean fixed-BER < MDE AND (ML−comp) ≥ MDE：
+
+| cell | standard-CMA-cont | DD-LMS | periodic-pilot |
+|---|---|---|---|
+| anchor | 0.00018 **recovered** | 0.453 no | 0.499 no |
+| fg100 | 0.00117 **recovered** | 0.449 no | 0.499 no |
+
+standard-CMA-continuation 两 cell recovered → `PROBLEM_RESOLVED_BY_CONVENTIONAL_ONLINE_EQUALIZER`。DD-LMS（slicer 在 swap 下喂错标签锁错盆地）与 periodic-pilot（与 D032 KILL 一致，weak Adam 1-step 不足以翻 swap）均未恢复。Phase C 不运行。
+
+### 核心结论
+
+- **swap 是 ML 固定权重 SOP 泛化失败**（D015/D040 回归），不是 CMA 在线更新的问题——corrected Godard-with-z CMA 在线跟踪 SOP 不 swap（D022 修正后不变量 9 再验证）。
+- **standard-CMA 已是解决 swap 的常规在线 equalizer**——本包问题被常规 comparator 解决，无可区分 deployable ML-specific action，不产方法卡/不晋升。
+- **D032 C1 KILL 独立佐证**：periodic-pilot（D032 同 weak 化身）作 comparator 同样未恢复，坐实 D032 结论非可重开信号。
+- **强化 contract H2 适用边界（D023）**：ML 优于 standard-CMA 仅 PI-BER 窄域成立，fixed-label 口径 standard-CMA 远优于 ML；论文不得声称 ML 鲁棒优于 standard-CMA。
+
+### 否决了什么
+
+- 不构造 Phase C 在线适配方法（standard-CMA 已解决，门控顺序禁 B resolved 后跑 C）。
+- 不把 fixed-label +0.499 swap regret 当 DIAGNOSTIC_METHOD_SIGNAL（swap 不是 ML-可优于-常规-在线-CMA 的 deployable action；常规在线 CMA 已解决）。
+- 不重开 D032 C 类（本包 periodic-pilot 作 comparator 仅佐证 KILL，非复活；D032 明载"不否决更强化身但须重走 GW 门控"，本包未提更强化身方法）。
+- 不把 PI-BER diff≈0 当 PROBLEM_ABSENT（不变量 10：PI 对 swap 结构性失明；fixed-label 才是真记分牌）。
+
+### 可复用部分
+
+- `p05_phase0_identity.py` + `p05_ood_online_adaptation.py`：ML identity freeze + 三阶段门控框架（Phase A fixed-label gate + Phase B 三 comparator + Phase C 候选工厂未触发），可复用于后续 ML-equalizer 子问题。
+- corrected standard-CMA-continuation 作 swap 解决 baseline 的证据资产（Ch3/Ch4 双口径警示）。
+
+### 影响范围
+
+- live control 升 epoch 68→69 / CP033→CP034；active_lane 维持 `CAMPAIGN_EXPLORATION_DISPATCH`；authority → D043。
+- `topic-index.md` control block：accepted_valid 4→5、current P05→P06、families_started 追加 D、rolling_queue 追加 P05；`mission-log.md` 追加 CP034；`verifications.md` 追加 V069；新增 S005。
+- protected owner/formal/Skill/thesis framework 不改、无 push、无新 infrastructure（p05_*.py 独立新文件，复用 common/_ml_equalizer + prompt019 StandardCMA + ml_long_seq_failure 信道）。
+- 仍 0 active carrier；claim ceiling 维持 `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`。
+
+### 触发原话
+
+> 触发原话: 无（用户中转 binding decision 执行指令；P05 是 mid-calibration 包，结论来自数据验证非用户态度）
+
+### 包内确定性修复（3 次，全披露，V069 复核）
+
+1. metric-signature：Phase A PRIMARY gate 初版错用 PI-BER（swap-blind），改 fixed-label（D018 + 不变量 10 强制）。
+2. dtype：`periodic_pilot_finetune` complex128→complex64（纯类型）。
+3. recovered 判据方向：`(ML−comp)<MDE` → `comparator_mean<MDE AND (ML−comp)≥MDE`（对齐 binding decision「已恢复问题」）。
+
+### 来源
+
+worker-log `step-032-p05-ml-ood-online-adaptation.md` + V069

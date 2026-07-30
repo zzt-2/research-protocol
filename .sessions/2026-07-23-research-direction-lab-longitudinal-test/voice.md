@@ -176,3 +176,21 @@
   公平性/raw→aggregate 与 verdict；允许一次包内确定性修复；有效完成后 accepted_valid→4/10 families_started 加 C 同一对话
   选择 P05 新机制族入口但不运行 不把连续 GG 负面外推成全部 turbulence robustness 统一一次 commit 不 push；最终只回 5 项）
   [绑定结论：本轮端到端完成 P04，verifier V068 8/8 PASS，verdict PROBLEM_ABSENT_ON_CONTINUOUS_GG，campaign→4/10]
+
+## 2026-07-30（P05 binding decision 执行指令，用户中转）
+
+- "执行 10-package campaign 的 Package 05，并完成第5包内部校准。一个对话内完成入口纠偏、fresh problem gate、条件式在线适配 factory、独立验证和主控接收；不得在校准或问题验证后停下来等用户。"
+- "campaign=4/10；P01–P04 均围绕完成 selector/工程，P05 必须换对象"
+- "撤回 P05-D FEC/旋转模糊：无真实 codec；threshold eval 不是 FEC；TX-bit rotation resolver 为 privileged；pilot resolver 旧线已裁决"
+- "撤回 P05-E window/complexity：重复 B1 adaptive phase-window；'NDA 比 VV 复杂'的旧担忧不成立；selector 统计不是主要计算量；P03 已覆盖定点轴"
+- "上述准备不计有效 P05。新 family = D_ML_POLARIZATION_EQUALIZER_OOD_SAFE_ONLINE_ADAPTATION"
+- "必须明确：这里的 ML equalizer/ButterflyCNN 不是已完成的 NDA-ML CPR selector，不得混淆两条方法身份"
+- "若 checkpoint、训练分布或任务身份无法闭合：BLOCKED_ML_TESTBED_IDENTITY。不允许拿身份不明 checkpoint 继续跑。"
+- "只使用现有 provenance 支持的参数范围，不提高 SOP/Doppler/f_G 来制造问题。"
+- "真实 TX symbols 只用于离线评分，不能进入任何在线适配或 gate。"
+- "在 test 前冻结 problem gate，必须区分：1. ML 自身 OOD/时间漂移；2. corrected CMA 也共同退化；3. metric/alignment/warm-up 造成的伪差；4. 单 seed/checkpoint 偶然性。"
+- "若 corrected baseline 下没有稳定 ML-specific regret：PROBLEM_ABSENT_WITH_CORRECTED_BASELINE。作为有效 P05 计入 5/10，不构造在线方法。"
+- "已有 periodic-pilot fine-tune 仅可作为历史 cheap alternative，需计 pilot overhead，不能因旧 FAIL 而故意欠调。"
+- "P06 必须再选一个不同机制族，使前六包至少覆盖5个家族；同一对话准备 P06 入口但不运行；统一一次 commit，不 push。"
+- "最终只回：1. P05 terminal verdict；2. frozen ML、corrected CMA、传统在线 comparator、最佳候选关键数字与 CI；3. 是否形成 METHOD_SIGNAL/可包装的在线适配；4. campaign 5/10 中期校准与 P06 新机制族入口；5. worker-log、artifact、verifier、commit SHA。"
+  → D043 / V069 / CP034（P05 verdict = PROBLEM_RESOLVED_BY_CONVENTIONAL_ONLINE_EQUALIZER，5/10 mid-calibration 完成）

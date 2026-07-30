@@ -3660,3 +3660,51 @@ executor 的 `PROBLEM_ABSENT_ON_CONTINUOUS_GG` **成立**。Pooled held-out inte
 ### 主控 claim ceiling
 
 P04 产出**有效负面 + 连续 GG OOD 验证资产**（冻结 DA/NDA 选择器 AWGN 拟合 CV 边界在连续 GG 形状 off-anchor 上不产生 OOD-specific regret，pooled held-out +0.146 dB < MDE=0.15；anchor > interior 证明非 OOD-specific）。claim ceiling 维持 `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`：不构成 active carrier、不冒充 formal method、不写论文 claim。weak-side-low-SNR 子区间作 future-work seed（与已关闭 A 族工作区重叠，TL-30 禁换名重开）。C 族（连续 GG OOD 选择器鲁棒性）首包完成，连续=1。
+
+---
+
+## V069: P05 ML polarization equalizer OOD safe online adaptation 独立验收 — ACCEPT（10/10 + 方法身份非混淆）
+
+> date: 2026-07-30
+> 关联：D043 / CP034 / worker-log step-032 / campaign P05 (5/10)
+> 验收对象：`p05_phase0_identity.py`、`p05_ood_online_adaptation.py`、结果 `p05_phase0_identity.json`、`p05_ood_online_adaptation.json`、verdict `PROBLEM_RESOLVED_BY_CONVENTIONAL_ONLINE_EQUALIZER`
+
+### 10 项核查（全 PASS）
+
+1. **ML testbed identity (Phase 0) — PASS**：P0.1 state_hash_run1==run2==`03e91429dfed74c6` byte-identical；P0.2 StandardCMA byte-identical diverged=false。`_ml_equalizer.py:104` 确认 class=`ButterflyCNNEqualizer2x2`（双偏振蝶形 demux），非 NDA-ML CPR selector。无磁盘 checkpoint，确定性复现。
+
+2. **corrected StandardCMA baseline 合法性 — PASS**：`prompt019_mu_compress_mve.py:210-213` 更新 `(R2-|z|²)·z·conj(r)` **含 z 因子**（Godard 1980）；docstring 99-101 明确对比 `common/_cma.py` scalar-error 缺 z。mu=0.001/R2=1.0/block=64。
+
+3. **训练分布 provenance — PASS**：`params.py:149-150` turb_strong_alpha=4.2/beta=1.4（当前真值）；脚本 `p05_ood_online_adaptation.py:69` `CFG.turbulence.as_dict()['strong']` 活读非硬编码；JSON frozen_identity `[4.2,1.4]` 匹配。
+
+4. **信息访问边界 — PASS**：grep 确认 sX/sY/h/theta 仅用于信道生成、离线 BER 评分、DD-LMS warm-start（声明 `:362`）、periodic-pilot comparator（声明 `:366`）。两候选 `gated_cma_update`/`trust_region_update` 仅消费 `(rX,rY,state)`（`:581/583`），用 Godard CMA `(R²-|z|²)²`（`:428/462`）无 TX truth。无 future suffix/true channel/SOP 进任何 update path。
+
+5. **metric signature 正确性（关键修正）— PASS**：JSON `gate_metric`="fixed_label_BER (swap-visible, invariant10; PI-BER swap-blind reported secondary)"。`ml_long_seq_failure.py:143-147` `compute_ber_phase_corrected` 4 旋转 (0/90/180/270) 取 min。swap 可见：ML fx~0.5、CMA fx~0 坐实 polarization swap。PRIMARY=fixed-label 是不变量 10 + D018 双口径强制（PI 对 swap 结构性失明）。
+
+6. **raw→aggregate 独立复算 — PASS（relErr=0）**：anchor 重算 mean=0.49901393 CI=[0.49834919,0.49967867] **精确一致**；fg100 mean=0.49805660 CI=[0.49484103,0.50127217] **精确一致**。
+
+7. **Phase A problem gate 逻辑 — PASS**：两 cell m_fx≥0.05（0.4990/0.4981）✓ ci_lo>0 ✓ wins=3/3 ✓ cma_div_frac=0.0≤0.2 ✓。混淆分离：cma_div_before_late 全 False（CMA 不共同退化），wins=3/3（非单 seed）。slice PI 0.124→0.051→0.0007（swap 在 PI 被抹平，非 PI drift）。
+
+8. **Phase B recovery 逻辑 + 更新预算公平 — PASS**：recovered = comparator_mean<MDE AND (ML−comp)≥MDE。stdCMA-cont recovered=True 两 cell（0.00018/0.00117<0.05）；DD-LMS（~0.453/0.449）/periodic-pilot（~0.499/0.499）no。预算公平：stdCMA-cont 同 mu=1e-3/block=64（`:247`）；DD-LMS block-grained block=64（`:252`）；periodic-pilot 声明 overhead 1024 sym/5000·100=0.2%。无 comparator 用 future。
+
+9. **Phase C 正确未运行 — PASS**：main() `:640-645` Phase C 仅当 `vb != PROBLEM_RESOLVED` 运行；B resolved → C 不跑。JSON 无 `phases.C` key（grep count=0）。terminal=PROBLEM_RESOLVED_BY_CONVENTIONAL_ONLINE_EQUALIZER。
+
+10. **verdict 唯一性 — PASS**：唯一正确终态。PROBLEM_ABSENT 错（Phase A 两 cell gate True）；NO_DIAGNOSTIC_SIGNAL/DIAGNOSTIC_METHOD_SIGNAL 需 Phase C（未运行）；BLOCKED_* 需 identity/共享 testbed 失败（均无）。PROBLEM_RESOLVED 唯一 warranted：stdCMA 在线恢复 swap regret 两 cell。
+
+### 方法身份非混淆 — PASS
+
+`ButterflyCNNEqualizer2x2`（`common/_ml_equalizer.py:104`，双偏振蝶形 FIR demux，Q-CMA-FADE 方向，contract H2/B4）≠ NDA-ML CPR selector（`explore/single-carrier-nda-ml/sc_nda_ml_mve.py`，载波恢复 CPE/FOE per-block h 估计，session `2026-07-08-b11-nda-ml-*`）。不同 class/explore 目录/session。
+
+### 结论
+
+executor `PROBLEM_RESOLVED_BY_CONVENTIONAL_ONLINE_EQUALIZER` **成立**。raw→aggregate relErr=0；gate 逻辑、预算公平性、Phase-C 抑制、verdict 唯一性均源码级验证。三次包内确定性修复（metric-signature/dtype/recovered-logic）全明显修正非科学变更，已复核。无可区分 deployable action → 不生成方法卡/不晋升。
+
+### caveat
+
+- Phase A n=3 seed（但 wins=3/3、CI 远离 0 by 10×）。
+- 单一 testbed 分布族（strong anchor + 一 provenance-OOD f_G；不声称跨 testbed 泛化，与包 scope 一致）。
+- dtype bug 在 run2 暴露、run4 修复后终态 JSON 反映修正运行。
+
+### 主控 claim ceiling
+
+P05 产出**有效负面 + Ch3/Ch4 双口径警示资产**（frozen ButterflyCNN swap regret 被 corrected standard-CMA 在线恢复；强化 D022/D023 H2 适用边界 + 不变量 9/10/11）。claim ceiling 维持 `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`：不构成 active carrier、不冒充 formal method、不写论文 claim。D 族（ML polarization equalizer OOD safe online adaptation）首包完成，连续=1。
