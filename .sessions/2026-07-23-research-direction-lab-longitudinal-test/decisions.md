@@ -2269,3 +2269,128 @@ voice.md 2026-07-29（用户中转纠偏 + 端到端执行指令）。
 `_cma.py:100-166/161-166`；V052（`REJECTED_SCIENCE=STRUCTURAL_ATTRACTOR_OR_RECEIVER_GAP_ZERO`）；
 sprint-001 `synthesis.v1.md` §4/§8；method-production.md、baseline-adjudication.md、
 evidence-and-claims.md。
+
+---
+
+## D037: CB1 轮换后下一入口六门评估——三候选全不过门，输出 STRATEGIC_GATE（不制造第四弱候选）
+
+> status: active
+> date: 2026-07-30
+> 取代：无
+> 被取代：无
+> 依据：用户原话: voice.md 2026-07-30 + 调研: 既有资产（portfolio/current.yaml、candidate-universe.yaml、candidate-map.v2.yaml、candidate-coverage-audit.v3.yaml）+ 源码 file:line（见下各门）+ 验证: V063
+
+### 决策
+
+接 CP027（CB1 更新粒度均衡族轴 `NO_DIAGNOSTIC_SIGNAL` 关闭）后，主控在 CB1 collapse 家族之外评估
+**三个**候选入口（A: 传统 CPR VV 在 adversarial_sourced|snr14 切片；B: NDA-ML 跨问题扩展；
+C: U24 high-SOP non-swap BER failure detection）。**三候选无一逐项过六门**。遵守用户"不得制造第四
+个弱候选"的纪律，**输出 `STRATEGIC_GATE`**，不开 sprint、不派 executor/verifier、不建 T028。
+`active_lane` 仍为 `SPRINT003_PREFORMAL_FACTORY_BOUND`，仍 0 active carrier。
+
+#### 候选 A — 传统 CPR（VV Nw=128）在 adversarial_sourced|snr14 切片
+
+- **门1（M-C-A）FAIL**：M=VV Nw=128（传统 comparator）、C=adversarial_sourced|snr14。synthesis 记
+  两类事实：①VV 对 oracle O 留 ~0.6dB headroom（`high-order-cpr-combination/synthesis.md:56-68`，
+  CI upper 1.7、lower <0，宽且点值小）——**TL-32/FR-25 明确 oracle 上界只做 Kill 工具不当 Go 判据**；
+  ②P1/P2/P3 组合方法相对 VV 差 9–20dB、0/10 paired wins（`synthesis.md:75-92`），这是**已记录的
+  机制失败**——但属**已被拒收的 B10/B12 组合实例**（DD 反馈跟踪 AWGN 判决误差、MAP 过平滑；
+  master-state.md:149 `SCIENCE_VERDICT_REJECTED`），不是可合法轮换的开放轴。**关键**：synthesis
+  `:104-128` 自述"在 10 kHz 线宽范围内……设计用于光纤的盲/导频相位估计器在数值上收敛于 VV，没有
+  真正的机制优势"——即 VV（传统 comparator）本身**没有观察到可被不同传统 CPR 改善的具体机制失败**，
+  只有 oracle-gap；且先验上"不同窗口 VV 也很可能在 10 kHz 退化成 VV"（与 sprint-003 更新粒度候选场
+  在 comparator 周围平坦同构）。组合方法的失败不能重新洗成"VV 有待改善的失败"（用户门6）。
+- **门2 PASS**：相位跟踪窗口/块结构 DOF 真实存在（`channel_helpers.py:97-108` 注入 CFO+Wiener；
+  `baselines.py:31-45` arm_vv/arm_bps 有可调窗口）。
+- **门3 PASS**：VV Nw=128 是 frozen 传统 comparator（`run_all.py:274-305` validation 选出）。
+- **门4 PASS**：`high-order-cpr-combination/` runner+contract+source-closure 已 frozen，7 语义门 PASS。
+- **门5 PASS**：CPR 是独立子问题，primary/fallback 可包装（block-adaptive CPR / 复杂度-性能折中）。
+- **门6 FAIL-on-foundation-rejection**：master-state.md:149 记 B10/B12 combination verdict
+  `SCIENCE_VERDICT_REJECTED / UNRESOLVED`（"source/channel/statistics 多重失效"）；candidate-coverage-
+  audit.v3.yaml:164-165 明示 U10(CPR) "existing evidence is SOP/polarization/CMA BER failure, **not
+  CPR cycle-slip or lock-loss**"。**rejected 证据不得重新洗成 PASS**（用户门6 硬约束）。
+- **结论**：A 不开 sprint（属"只因未测/REOPENED/看起来新而放行"的禁止情形，且 verdict 被拒收）。
+
+#### 候选 B — NDA-ML 跨问题扩展到 CPR 切片
+
+- **门1 FAIL**：NDA-ML 在 AWGN +1.351dB / 弱湍 +1.53 / 中湍 +1.71（`single-carrier-nda-ml/_mve_results.json:67-130`）——它是**已完成的赢家**，不是失败的传统 M；DA-ML 是被它击败的 comparator。
+  这是已封闭 Step 4a 工作（`SC-NDA-ML-MVE-SPEC.md` GW Step 4a 维度 D），不是新 problem-bearing 入口。
+- **结论**：B 不构成新入口（已完成工作，非"传统方法失败"）。
+
+#### 候选 C — U24 high-SOP non-swap BER failure detection
+
+- **门1 部分**：U24 是 candidate-map.v2 唯一 `problem_truth:5` 候选（score 4.20，`BATCH_1_FAMILY`），
+  rationale："foundation has authentic high-SOP non-swap BER failures while historical single-statistic
+  threshold detector failed"（`candidate-universe.yaml:167`、`candidate-map.v2.yaml:41`）。但 D047
+  明确"`1e-5` 的 fixed=PI，说明当前失败不是 X/Y 标签 swap；把它当 lock-swap 会混淆问题定义"——
+  即**记录的失败是 BER tracking failure，不是 swap**（`decisions.md` D047）。
+- **门4（runnable testbed）FAIL**：检测线已在 **D051 关闭**——"control `4e-6` 的新 seed47/48 已出现
+  oracle events，control-only 阈值前提失效"（无干净 paired realization）；且"non-swap BER"标签需
+  **TX-truth oracle assignment**（`prompt013_swap_quality_q1.py` 用 PI-BER oracle），属用户禁止的
+  "oracle/genie 才能构造的动作"。evidence_gap = "event count and cross-domain validation"（候选未配
+  备 testbed）。SOP-tracking 出路（sparse pilot）已在 portfolio 终止（`SPARSE_PILOT_SEMIBLID =
+  RETURNED_WITH_PILOT_JONES_SCOPED_AXIS_KILLED`，`current.yaml:162-172`），model-based tracker F1
+  RETRACTED（privileged CSI genie gap，`current.yaml:144-161`）。
+- **结论**：C 的 detection 轴被 D051 阻塞且需 oracle 构造，禁止。
+
+### 综合判定：`STRATEGIC_GATE`
+
+三候选无一过门。**缺的是 problem-bearing 物理问题**（不是 testbed/comparator 基础设施）：portfolio
+中 CB1 collapse 家族以外的开放候选，要么只有 oracle-gap 无传统方法失败（A），要么是已完成赢家非新
+入口（B），要么标签本身需 oracle 构造且检测线已被 D051 关闭（C）。channel 源（`_dual_pol_channel.py`）
+只有 GG 幅度 + 实 SOP 旋转 + AWGN，无多径/色散/FIR/频率选择性，物理自由度本身窄（FR-23 起点"找
+baseline 指出其具体不足"在这条 channel 上，可作用的传统方法旋钮有限）。
+
+#### 候选扫描完整性（problem_truth ≥ 4 的候选，V063 独立核实）
+
+`candidate-map.v2.yaml` ranked_shortlist 中 problem_truth ≥ 4 的候选共四个：U24（pt5，=候选 C）、
+U10（pt4，=候选 A 的 CPR 族）、**U05（pt4，`HOLD_FOR_COMPETITOR_CLOSURE`，score 3.65）**、
+U23（pt4，`MERGE_WITH_U24_DIAGNOSTICS`，已并入 U24）。U05（GG/Jones/link-state 估计）是唯一未在
+A/B/C 单列的 pt4 候选——它被 `candidate-map.v2.yaml:53` 标记 `HOLD_FOR_COMPETITOR_CLOSURE`、`:104,109`
+标 observation-only（D047-D054）+ direct-competitor/crossref 未解（D056），**属 hold 状态不构成
+Go-eligible 入口**，且其 SOP-tracking 实现出路已由 SPARSE_PILOT_SEMIBLIND（KILLED）和 F1 model-based
+tracker（RETRACTED, privileged CSI）阻断。U05 不开为独立 sprint（hold + 出路已阻塞 = 无 runnable
+problem-bearing 入口），但此处显式登记以补全候选扫描完整性。
+
+### 综合判定：`STRATEGIC_GATE`
+
+三候选（A/B/C）无一过门，U05 hold 且出路阻塞。**缺的是 problem-bearing 物理问题**（不是 testbed/
+comparator 基础设施）：portfolio 中 CB1 collapse 家族以外的开放候选，要么只有 oracle-gap 无传统
+方法失败（A），要么是已完成赢家非新入口（B），要么标签本身需 oracle 构造且检测线已被 D051 关闭
+（C），要么 hold 状态出路已阻塞（U05）。channel 源（`_dual_pol_channel.py`）只有 GG 幅度 + 实 SOP
+旋转 + AWGN，无多径/色散/FIR/频率选择性，物理自由度本身窄（FR-23 起点"找 baseline 指出其具体不足"
+在这条 channel 上，可作用的传统方法旋钮有限）。
+
+按 RDL 升级规则与用户"不得制造第四弱候选"指令，**不开 sprint、不建 T028、不修 protected history/
+formal owner/Skill**。下一合法动作交用户：是 (1) 升级 channel 模型引入新物理自由度（complex
+Jones/PMD/PDL/色散，需授权 ~1 天基础设施，会改变所有方法的竞争格局——FR-18），还是 (2) 论文范围
+决策（把已有 G1 bounded package + 局部负面 harvest 作毕业材料，或开新子问题），还是 (3) 接受当前
+RDL live-test 在 0 active carrier 下达成"协议稳定 + 可靠负面 + 1 bounded asset"的结论、收尾审计。
+
+### 排除的替代方案
+
+- 不制造第四个弱候选（用户硬约束）。
+- 不把 CPR 0.6dB oracle-gap 重新包装成 Go（违反 TL-32/FR-25 + 用户"rejected/invalidated/privileged
+  证据不得重新洗成 PASS"）。
+- 不重开 D051 已关闭的 non-swap detection 线（control seeds 有 oracle events，无干净 paired
+  realization；标签需 TX-truth oracle）。
+- 不重开 CB1 collapse-recovery 任何变体（用户绑定结论 + D036 forbidden axis）。
+- 不把 STRATEGIC_GATE 当成方法进度（mission_method_delta 仍 `NONE`；这是可靠"无合法 problem-bearing
+  入口"的诚实判定，不是方法产出）。
+
+### 范围确认
+
+本轮在 scope boundary 内：无科学实验、无新 T、无 protected owner/formal 改动、无 push、无新
+infrastructure；仅做入口六门评估 + STRATEGIC_GATE 判定 + 治理记录。无 scope change。
+
+### 来源
+
+用户 2026-07-30 中转指令（voice.md 2026-07-30）；portfolio/current.yaml:121-161（closed axes +
+open candidates）；candidate-universe.yaml:163-167 + candidate-map.v2.yaml:41-65 + candidate-
+coverage-audit.v3.yaml:163-165；`high-order-cpr-combination/synthesis.md:56-68,75-92,104-128` +
+`baselines.py:31-45` + `channel_helpers.py:97-108` + `run_all.py:274-305`；`single-carrier-nda-ml/
+_mve_results.json` + `SC-NDA-ML-MVE-SPEC.md:19`；foundation decisions D047/D048-D051
+（`.sessions/2026-07-10-dual-pol-osl-groundwork/decisions.md` D047/D051；本 live topic 经 anchor
+`foundation.decisions` 导入）；`_dual_pol_channel.py:104-132`；master-state.md:149；method-production.md
+（入口四门）、baseline-adjudication.md、evidence-and-claims.md、TL-32/FR-25。V063 独立核实候选评估
+与既有证据一致（claim 1 已据 V063 纠正表述、claim 6 已补 U05 扫描）。

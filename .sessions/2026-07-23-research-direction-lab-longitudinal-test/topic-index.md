@@ -4,22 +4,21 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 61
+  control_epoch: 62
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: SPRINT003_PREFORMAL_FACTORY_BOUND
-  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D036
-  decision_gate: 最终纠偏完成（S003→D036/V062）：纠正门2 证据等级（sprint-001 块末更新=结构性吸引子归因已被 V052 拒收，降级为 source-backed 疑似作用点）；冻结传统 comparator = tuned per-symbol canonical Godard-with-z CMA（provenance cb1_cell_runner:124-129，禁 scalar-error _cma.py 冒充）；action_class 改为 PREFORMAL_METHOD_FACTORY（不再用 METHOD_FACTORY_TASK_PREPARATION 掩盖实验）；新增 PROBLEM_RESOLVED_BY_CONVENTIONAL_COMPARATOR 终态；T027 validate_task_control.py PASS（epoch 61 / CP025）
+  active_lane: STRATEGIC_GATE_AWAITING_USER_DECISION
+  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D037
+  decision_gate: CP028 STRATEGIC_GATE（S003→D037/V063）：CB1 轮换后三候选（A 传统 CPR VV / B NDA-ML 跨问题 / C U24 non-swap detection）六门评估，无一逐项过门；候选扫描 problem_truth≥4 四个（U24/U10/U05/U23）—— U05 HOLD_FOR_COMPETITOR_CLOSURE 且出路阻塞、U23 并入 U24；缺的是 problem-bearing 物理问题（非 testbed/comparator 基础设施）；channel 源（_dual_pol_channel.py:104-132）物理自由度窄。遵守"不制造第四弱候选"纪律，不开 sprint、不建 T028、不修 protected owner/Skill。仍 0 active carrier。
   allowed_actions:
     - RECOVER
-    - TASK_PREPARATION
     - PORTFOLIO_MAP
-    - PROMOTION_PREFLIGHT
-    - PREFORMAL_METHOD_FACTORY
   forbidden_actions:
     - SCIENTIFIC_EXPERIMENT
+    - PREFORMAL_METHOD_FACTORY
     - CLOSED_AXIS_REOPEN
     - FREQUENCY_DOMAIN_SUBBAND_FAMILY
+    - CB1_COLLAPSE_RECOVERY_FAMILY
     - FORMALIZATION_ONLY_PACKAGE
     - GENERAL_INFRASTRUCTURE_BUILD
     - PRIVATE_FULLTEXT_ACQUISITION
@@ -31,13 +30,13 @@ rdl_control:
     - PAPER_CLAIM
     - PROTECTED_OWNER_MODIFY
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
-  mission_checkpoint: CP025
-  next_legal_action: 本对话内端到端执行 T027 诊断 sprint-003（PREFORMAL_METHOD_FACTORY，bounded）：executor 跑 3-5 个更新粒度构造，独立 verifier 验收，主控接收；授权仅覆盖本次诊断 sprint
+  mission_checkpoint: CP028
+  next_legal_action: 等待用户在 STRATEGIC_GATE 三选项中决策：(1) 升级 channel 模型引入新物理自由度（complex Jones/PMD/PDL/色散，FR-18，需 ~1 天基础设施授权）；(2) 论文范围决策（G1 bounded package + 局部负面 harvest 作毕业材料，或开新子问题）；(3) 接受 0 active carrier 下"协议稳定+可靠负面+1 bounded asset"收尾审计。用户决策前不开新 sprint/T。
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（CP027：sprint-003 端到端完成，verdict NO_DIAGNOSTIC_SIGNAL；epoch 61 / CP027，CB1 更新粒度均衡族轴关闭；频域/子带族因物理自由度不存在已撤回，作 rejected task brief 保留）
-> 创建: 2026-07-23 | 最后更新: 2026-07-29
+> 状态: active（CP028：CB1 轮换后三候选六门评估无一过门，输出 STRATEGIC_GATE；epoch 62 / CP028，仍 0 active carrier；不制造第四弱候选，交用户三选项决策）
+> 创建: 2026-07-23 | 最后更新: 2026-07-30
 
 ## 专题信息
 
@@ -116,6 +115,21 @@ rdl_control:
   - 影响：CB1 更新粒度均衡族轴关闭（无 signal 即退出）；active_lane →
     `SPRINT003_PREFORMAL_FACTORY_BOUND`；authority → D036；仍 0 active carrier、无 protected owner
     / formal 改动；method-production.md 终态集与 Gate-2/comparator 段更新（同步 Skill）。
+- **2026-07-30，live D037 / V063**：CB1 轮换后入口六门评估 → STRATEGIC_GATE（用户中转指令）。
+  - 原因：用户要求在 CB1 collapse 家族之外选一个真正 problem-bearing 的新 testbed 跑一次新
+    method-factory sprint；主控评估三候选（A 传统 CPR VV 在 adversarial_sourced|snr14 / B NDA-ML
+    跨问题扩展 / C U24 high-SOP non-swap BER detection），**无一逐项过六门**：A 门1 FAIL（仅 oracle-gap
+    无传统机制失败，TL-32 禁当 Go；组合方法失败属已拒收 B10/B12 实例 master-state:149）+ 门6 FAIL
+    （verdict REJECTED）；B 门1 FAIL（NDA-ML 是已完成赢家非失败方法）；C 门4 FAIL（D051 已关闭检测线
+    control seeds 有 oracle events；non-swap 标签需 TX-truth oracle 属禁止动作）。候选扫描 problem_truth
+    ≥4 四个（U24/U10/U05/U23），U05 hold 且出路阻塞、U23 并入 U24。channel 源物理自由度窄。
+  - 新范围：**不开 sprint、不建 T028、不修 protected owner/Skill/thesis framework**；active_lane →
+    `STRATEGIC_GATE_AWAITING_USER_DECISION`，authority → D037；新增 `forbidden_actions`：
+    `PREFORMAL_METHOD_FACTORY`（暂移除允许，等用户授权新 problem-bearing 入口）、
+    `CB1_COLLAPSE_RECOVERY_FAMILY`。无 protected history / formal owner 改动、无 push。
+  - 影响：仍 0 active carrier；mission_method_delta `NONE`（STRATEGIC_GATE 非方法进度）；交用户三
+    选项决策：(1) 升级 channel 模型（FR-18 ~1 天基础设施），(2) 论文范围决策（G1 bounded + 局部负面
+    harvest），(3) 接受 0 carrier 下"协议稳定+可靠负面+1 bounded asset"收尾审计。
 
 ## 已确认结论
 
@@ -151,15 +165,16 @@ rdl_control:
 | S003 | 下一入口选择：两 signal preflight=STRATEGIC_GATE，硬路由 method factory | S003 |
 | S003→D035/V061 | T027 入口纠偏：频域/子带族 preflight 门1 失败（无物理自由度）撤回；原位重写为逐符号/更新粒度均衡族（四门全过），comparator=逐符号 SGD-CMA | S003 / T027 / V061 |
 | S003→D036/V062 | T027 端到端完成（最终纠偏+执行+验收一轮内无停顿）：verdict `NO_DIAGNOSTIC_SIGNAL`；CB1 更新粒度族轴关闭；疑似作用点（块末更新）因果性未被确认（collapse 在所有更新粒度下持续） | T027 / sprint-003 `689151c` / V062 |
+| S003→D037/V063 | CB1 轮换后三候选六门评估无一过门（A CPR/VV 仅 oracle-gap + verdict REJECTED；B NDA-ML 已完成赢家；C U24 检测线 D051 关闭 + 需 oracle 标签）；U05 hold 出路阻塞、U23 并入 U24；channel 物理自由度窄 → `STRATEGIC_GATE`，不制造第四弱候选 | D037 / V063（无 sprint/无 commit） |
 
 ## 未决项
 
-- T027 sprint-003 已完成（`NO_DIAGNOSTIC_SIGNAL`，CB1 更新粒度族轴关闭）；
-- 仍 0 active carrier；下一入口由 portfolio remap 选机制不同的合法 carrier，或战略 gate 升级
-  （私域全文/论文范围决策），届时交用户；
+- CP028 `STRATEGIC_GATE` 已输出：CB1 轮换后无合法 problem-bearing 入口（缺的是物理问题，非基础设施）；
+- 仍 0 active carrier；**交用户三选项决策**（channel 升级 / 论文范围决策 / 收尾审计），用户决策前不开新 sprint/T；
 - 下一真实压缩事件需量化 elapsed time、files read、lane/gate match；
 - G1 只保留 bounded thesis asset，不重开科学修复；
-- 频域/子带均衡族仅在信道源码被升级到含色散/多径/频率选择性后才可能重审，当前作 rejected task brief 保留。
+- 频域/子带均衡族仅在信道源码被升级到含色散/多径/频率选择性后才可能重审，当前作 rejected task brief 保留；
+- CB1 collapse-recovery 全族（block-size/μ/更新调度/频域/子带/z-only/初始化/cost 变体）按用户绑定结论 + D036/D037 forbidden，不再运行。
 
 ## 当前位置
 
@@ -191,3 +206,35 @@ tuned per-symbol Godard-with-z comparator μ=0.001（0.29685）、block-8/16、r
 CB1 更新粒度均衡族轴按 method-factory 纪律关闭（无 signal 即退出）。当前仍 0 active carrier；
 无 protected owner / formal / thesis framework 改动；无 push。下一合法动作：portfolio remap 选
 机制不同的合法 carrier，或战略 gate 升级（届时交用户）。
+
+**2026-07-30 CP028（D037/V063）**：用户中转指令要求在 CB1 collapse 家族之外选一个真正
+problem-bearing 的新 testbed 跑一次新 method-factory sprint，入口最多三个候选逐项过六门（M-C-A /
+物理自由度 / 命名传统 comparator / runnable testbed / primary-fallback packaging / file:line 证据；
+rejected/invalidated/privileged 证据不得重新洗成 PASS）。主控评估三候选：
+
+- **A 传统 CPR（VV Nw=128）在 adversarial_sourced|snr14 切片**：门2/3/4/5 PASS，但**门1 FAIL**
+  （synthesis 只记 VV 对 oracle O 留 ~0.6dB headroom，是 oracle-gap——TL-32/FR-25 明确 oracle 上界
+  只做 Kill 工具不当 Go 判据；P1/P2/P3 组合方法 9–20dB 失败属**已拒收的 B10/B12 实例**
+  master-state.md:149 `SCIENCE_VERDICT_REJECTED`，不是可轮换开放轴；VV 本身无可被不同传统 CPR 改善
+  的机制失败）+ **门6 FAIL**（verdict REJECTED；U10 evidence 是 SOP/CMA BER failure 非 CPR cycle-slip）。
+- **B NDA-ML 跨问题扩展**：**门1 FAIL**（`_mve_results.json` AWGN +1.35dB 等全正增益，是已完成赢家非
+  失败方法；`SC-NDA-ML-MVE-SPEC.md` GW Step 4a 维度 D 已封闭）。
+- **C U24 high-SOP non-swap BER detection**：门1 部分（U24 是 candidate-map 唯一 pt5 候选；但 D047
+  明确"1e-5 fixed=PI 非 swap"），**门4 FAIL**（D051 已关闭检测线——control 4e-6 新 seed 已有 oracle
+  events，control-only 失效；non-swap BER 标签需 TX-truth oracle assignment 属用户禁止的
+  "oracle/genie 才能构造的动作"；evidence_gap 无 testbed）。
+
+候选扫描完整性：problem_truth ≥4 共四个（U24=候选C、U10=候选A族、**U05 pt4 HOLD_FOR_COMPETITOR_
+CLOSURE** 出路阻塞、U23 pt4 MERGE_WITH_U24）。**无遗漏独立入口**。channel 源（`_dual_pol_channel.py:
+104-132`）只有 GG 幅度 + 实 SOP 旋转 + AWGN，无多径/色散/FIR/频率选择性，物理自由度本身窄。
+
+**verdict = `STRATEGIC_GATE`**：三候选无一过门，遵守"不得制造第四弱候选"纪律，不开 sprint、不建
+T028、不修 protected owner/Skill/thesis framework。独立 verifier V063 **PASS**（事实成立；2 项初版
+瑕疵——候选 A 门1 表述不准、U05 漏列——均非承重不改结论，已据 V063 在 D037 内纠正）。**缺的是
+problem-bearing 物理问题（非 testbed/comparator 基础设施）**。仍 0 active carrier、
+mission_method_delta `NONE`（STRATEGIC_GATE 非方法进度）、无 push。
+
+**下一合法动作交用户三选项**：(1) 升级 channel 模型引入新物理自由度（complex Jones/PMD/PDL/色散，
+FR-18，需 ~1 天基础设施授权，会改变所有方法竞争格局）；(2) 论文范围决策（G1 bounded package +
+局部负面 harvest 作毕业材料，或开新子问题）；(3) 接受 0 active carrier 下"协议稳定+可靠负面+1
+bounded asset"收尾审计。用户决策前不开新 sprint/T。

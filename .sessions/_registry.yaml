@@ -49,8 +49,8 @@ topics:
     title: Research Direction Lab 长程真实运行测试
     status: active
     created: "2026-07-23"
-    last_updated: "2026-07-29（S003 入口选择：两 signal preflight=STRATEGIC_GATE，硬路由 method factory；T027 频域/子带均衡族诊断 sprint 已就绪待中转）"
-    description: "D017/D018 轻量长程 mission。R009 审计确认 CP001–017 方法增量 0/17，T019 后有 2 个 signal 但 formal 转化 0/2；T026 已形成有边界写作材料，G1 科学线关闭。D019/V013 最小修订已终验。S003 完成下一入口选择：两 diagnostic signal 的 promotion preflight 均为 STRATEGIC_GATE（comparator 不闭合），按硬路由进入 method factory，T027 = CB1 16QAM 频域/子带均衡族诊断 sprint（仅诊断，强制自带真实不同 comparator）。"
+    last_updated: "2026-07-30（CP028 STRATEGIC_GATE：CB1 轮换后三候选六门评估无一过门，不制造第四弱候选，交用户三选项决策；仍 0 active carrier）"
+    description: "D017/D018 轻量长程 mission。R009 审计确认 CP001–017 方法增量 0/17，T019 后有 2 个 signal 但 formal 转化 0/2；T026 已形成有边界写作材料，G1 科学线关闭。D019/V013 最小修订已终验。CP027 sprint-003（CB1 更新粒度均衡族）verdict NO_DIAGNOSTIC_SIGNAL，族轴关闭。CP028 CB1 轮换后入口六门评估：三候选（传统 CPR VV / NDA-ML 跨问题 / U24 non-swap detection）无一过门，U05 hold 出路阻塞、U23 并入 U24，channel 物理自由度窄 → STRATEGIC_GATE，不开 sprint、不制造第四弱候选，交用户三选项（channel 升级 / 论文范围决策 / 收尾审计）。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 S014 现场故障、R003 场景演练、D017 控制接口和 guard

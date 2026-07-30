@@ -67,3 +67,23 @@
   promotion 不冒充 formal method，统一一次 commit working tree clean；聊天只回 verdict+关键数字+
   是否 signal+verifier 结论+worker-log/artifact/commit SHA）
   [用户原话明确：本轮端到端完成，中间不参与技术判断]
+
+## 2026-07-30
+
+- "接收 CP027/T027 为可靠局部负面，立即轮换，不修复、不追加 CB1 实验。…… 本轮目标：在 CB1
+  collapse 家族之外，从既有资产中选择一个真正 problem-bearing 的新 testbed，并在同一对话直接
+  完成一次新 method-factory sprint。入口比较最多三个候选，必须逐项满足：1.有明确 M-C-A … 2.源码
+  证明候选动作可作用的物理/算法自由度确实存在 3.开跑前已命名传统、同任务、同信息、可独立调谐的
+  comparator 4.有当前有效的 runnable testbed … 5.能形成明确的毕业论文 primary/fallback packaging
+  6.每项均给当前有效 evidence 的 file:line；rejected、invalidated 或 privileged 证据不得重新洗成
+  PASS。…… 入口通过后不要先写一个 T 再停。由独立 executor 立即：构造并运行 3–5 个机制不同的最小
+  方法 …… terminal verdict 至少区分 … DIAGNOSTIC_METHOD_SIGNAL / NO_DIAGNOSTIC_SIGNAL /
+  PROBLEM_RESOLVED_BY_CONVENTIONAL_COMPARATOR / BLOCKED_SHARED_TESTBED / EXECUTION_INVALID。
+  只 有新候选稳定超过调谐后的传统 comparator … 才能形成 METHOD_SIGNAL。再由独立 verifier 重算并
+  审查。主控完成接收、mission-log/topic/D/V 更新和一次统一 commit。若三个入口均过不了前置门，
+  不得制造第四个弱候选；直接输出 STRATEGIC_GATE，具体说明缺的是 testbed、comparator、物理问题
+  还是论文范围授权。" → D037 / V063
+  [绑定结论：CB1 z-only 后处理和更新粒度两条 factory 线均已跑完；tuned per-symbol CMA 只救活 1/7
+  cell；block-8 相对 per-symbol ΔPI-SER=-0.00293，CI 跨0；不再运行 CB1 collapse-recovery 的
+  block-size、μ、更新调度、频域/子带、z-only、初始化或 cost 变体；这是局部关闭，不外推为整个盲均衡
+  或接收机方向 Kill；当前 active carrier 仍为 0]

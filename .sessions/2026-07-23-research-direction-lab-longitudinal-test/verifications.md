@@ -3388,3 +3388,58 @@ verifier 明确"不需重跑/重判"。
 CB1 更新粒度均衡族轴按 method-factory 纪律关闭（无 signal 即退出）。下一合法动作由主控在
 mission-log/CP027 后选择：portfolio remap 选下一个机制不同的合法入口，或战略 gate 升级
 （仍 0 active carrier）。
+
+---
+
+## V063: CB1 轮换后三入口六门评估独立核实（STRATEGIC_GATE）
+
+> date: 2026-07-30
+> 关联：D037（新建）/ 用户 voice.md 2026-07-30
+> verifier：独立 Explore agent `verify_d037_gates` + 主线复核；只读审查，无 executor 产物（STRATEGIC_GATE 无 sprint）
+
+### 验证项
+
+D037 是 `STRATEGIC_GATE` 判定（三入口无一过六门、不制造第四弱候选）。这是强结论，须独立核实其事实
+声称与候选扫描完整性。
+
+**Part A — 三候选六门事实核实（file:line）**
+
+- [x] **候选 A 门1（CPR/VV 无传统机制失败，只有 oracle-gap）**：核实 `high-order-cpr-combination/
+      synthesis.md` —— headroom 表 `:59` adversarial_sourced|snr14 mean +0.606dB/CI upper +1.719
+      属实；`:123-127` 自述 10 kHz 下"盲/导频估计器数值收敛于 VV，无机制优势"属实。
+      **⚠️ 初版 D037 表述不准**：`:75-92` 同时记录 P1/P2/P3 vs VV 差 9–20dB、0/10 paired wins（**有**
+      已记录机制失败，属 DD/MAP 组合方法）。verifier 标 claim 1 PARTIAL/MISLEADING。**已纠正**：
+      D037 候选 A 门1 改写为"①VV 对 oracle 留 headroom（oracle-gap，TL-32 禁当 Go）+ ②P1/P2/P3 组合
+      失败属**已拒收的 B10/B12 实例**（master-state.md:149 REJECTED），不是可轮换开放轴；VV 本身无
+      可被不同传统 CPR 改善的机制失败"。**gate-1 FAIL 结论不变**（组合失败不能重新洗成 VV 有待改善）。
+- [x] **候选 A 门6（verdict 被拒收 + U10 非 cycle-slip 证据）**：master-state.md:149 字面
+      `SCIENCE_VERDICT_REJECTED / UNRESOLVED`；candidate-coverage-audit.v3.yaml:163-165 audit_finding
+      "existing evidence is SOP/polarization/CMA BER failure, **not CPR cycle-slip or lock-loss**"。
+      属实。
+- [x] **候选 B（NDA-ML 是已完成赢家非失败方法）**：`single-carrier-nda-ml/_mve_results.json`
+      AWGN fair_gain 全正（1.27–2.26）；`SC-NDA-ML-MVE-SPEC.md:19` "这是 Step 4a 维度 D MVE"。属实。
+      （D037 引用弱/中湍 +1.53/+1.71 与 json +1.20/+1.92 略有出入，但方向一致均为正。）
+- [x] **候选 C 4a（U24 pt5/score4.20/BATCH_1_FAMILY）**：candidate-map.v2.yaml:41-44 属实。
+- [x] **候选 C 4b（D047: 1e-5 fixed=PI 非 swap）**：`2026-07-10-.../decisions.md` D047 原文属实。
+- [x] **候选 C 4c（D051: control 4e-6 新 seed 已有 oracle events，control-only 失效）**：D051 原文属实。
+- [x] **候选 C 4d（non-swap BER 标签需 TX-truth oracle）**：`prompt013_swap_quality_q1.py` 用
+      permutation_invariant_ber + oracle_equalize（PI-BER oracle assignment）属实。
+- [x] **候选 C 4e（SPARSE_PILOT_SEMIBLID KILLED + F1 RETRACTED）**：portfolio/current.yaml:144-161
+      （F1 PROBE_FAIL/RETRACTED privileged CSI）、:162-172（SPARSE_PILOT returned killed）属实。
+- [x] **channel 物理（GG+实SOP+AWGN，无多径/色散/FIR）**：`_dual_pol_channel.py:104-132` 属实。
+
+**Part B — 候选扫描完整性（claim 6：无遗漏的 pt≥4 候选）**
+
+`candidate-map.v2.yaml` problem_truth ≥ 4 候选共四个：U24（=C）、U10（=A 族）、**U05（pt4，
+HOLD_FOR_COMPETITOR_CLOSURE）**、U23（pt4，MERGE_WITH_U24）。**⚠️ 初版 D037 漏列 U05**（文档缺口，
+非门控错误——U05 hold 状态非 Go-eligible）。**已补**：D037 增"候选扫描完整性"段，登记 U05 hold +
+出路阻塞（D056 crossref 未解 + SPARSE_PILOT/F1 出路已阻断）= 无 runnable 入口。U23 已显式并入 U24。
+**无 problem_truth ≥ 4 候选被遗漏为独立入口。**
+
+### 结论
+
+D037 的 `STRATEGIC_GATE` 判定**事实成立**：三候选（A/B/C）无一逐项过六门，U05 hold 且出路阻塞。
+verifier 发现 2 项初版瑕疵（claim 1 表述不准、claim 6 漏列 U05）**均非承重、不改 STRATEGIC_GATE
+结论**，已据 V063 在 D037 内纠正。无 sprint/无 executor 产物/无 commit 可验；本 V 仅核实入口评估的
+事实一致性。**结论 = PASS（D037 STRATEGIC_GATE 事实与候选扫描完整、表述已纠正）。**
+
