@@ -4,42 +4,56 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 64
+  control_epoch: 65
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: PHYSICS_EXTENSION_TERMINATED_AWAITING_USER_DECISION
-  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D038
-  decision_gate: CP029（D038 段A→V064）：用户选项(1) channel 物理扩展大包段A 三候选（complex time-varying Jones / PDL / PMD-色散-跨符号记忆）六门评估无一过门1-3 → PHYSICS_BACKED_TESTBED_UNAVAILABLE。根因：fiber 现象（PMD/PDL/CD/复 Jones 双折射）源于各向异性玻璃波导，自由空间大气各向同性无物理起源；四篇星地 coherent FSO primary（Paillier2020/Zhou2024/Zhang2023/Gu2022）全文 polarization-impairment 零命中；唯一可溯源参数（DGD≤6ps=1.5%T_S、PDL≤1dB）D066 实测 headroom 0.0804dB≪0.5dB；时变复 Jones 轴已被 D066:3415-3416 关闭。遵守"不制造第四 impairment"纪律，段B/C/D 不运行，诚实终止。选项(1)已尽。
+  active_lane: CAMPAIGN_EXPLORATION_DISPATCH
+  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D039
+  decision_gate: CP029/D038 段A 终止后，用户授权 10-有效包探索 campaign（D039）。在完成 10 个有效科学大包前不因 portfolio 0 READY 要求 thesis pivot。对已完成方法（DA-NDA 选择器等）的新失效条件/鲁棒性做子问题探索；每个 package 遵守 problem-bearing probe → conventional adapter → 条件式 method factory 三阶段门控；至少 5 机制族、同族≤2 连续、第 5 包内部校准不停线、第 10 包 campaign-level 裁决。
+  campaign:
+    exploration_budget_valid_packages: 10
+    accepted_valid_packages: 1
+    current_package: P02
+    mechanism_families_min: 5
+    same_family_consecutive_max: 2
+    count_excludes: [setup, governance, task_preparation, interface_repair, pure_reproduction, entry_preflight_only]
+    mid_calibration_at: P05   # 审计偏航与族覆盖，不停线
+    campaign_level_decision_at: P10
+    families_started: [A_CPR_selector_robustness]   # P01
+    same_family_consecutive: 1
+    rolling_queue: [P01 DONE CPR-selector-SNR-mismatch-robustness-NO_SIGNAL, P02 TBD-different-family, P03 TBD]   # 允许滚动更新；P01 同族可再 1 包到上限
   allowed_actions:
     - RECOVER
     - PORTFOLIO_MAP
+    - PROBLEM_BEARING_PROBE
+    - PREFORMAL_METHOD_FACTORY   # D039 解禁，为本 campaign 服务（problem-first 三阶段门控内）
+    - CONDITIONAL_INFRASTRUCTURE  # 有界、独立验证、按需
   forbidden_actions:
-    - SCIENTIFIC_EXPERIMENT
-    - PREFORMAL_METHOD_FACTORY            # 段A 终止，本大包解禁已耗尽
     - CLOSED_AXIS_REOPEN
     - FREQUENCY_DOMAIN_SUBBAND_FAMILY
     - CB1_COLLAPSE_RECOVERY_FAMILY
-    - FORMALIZATION_ONLY_PACKAGE
-    - GENERAL_INFRASTRUCTURE_BUILD        # 段A 终止，本大包解禁已耗尽
+    - NDA_ML_BODY_REOPEN          # 已完成赢家（_mve_results.json 全正增益），TL-30
+    - G1_SCIENCE_REPAIR           # CP024 bounded asset 已结，TL-30
+    - PILOT_JONES_SMALL_AXIS_REOPEN
+    - FIBER_IMPAIRMENT_RELOCATED_TO_STAR_GROUND  # D038 段A PHYSICS_BACKED_TESTBED_UNAVAILABLE
+    - SUB_SYMBOL_JONES_AXIS_REOPEN        # D066:3415-3416 已关闭
+    - FOURTH_IMPAIRMENT_MANUFACTURE       # D038 已穷尽 fiber→星地移植路径
     - PRIVATE_FULLTEXT_ACQUISITION
     - ABSTRACT_AS_FULLTEXT
     - POST_STEP4A_ADVANCE
-    - SCIENCE_SCOUT_REACTIVATION
     - PROTECTED_HISTORY_EDIT
+    - PROTECTED_OWNER_MODIFY
     - FORMAL_MVE
     - PAPER_CLAIM
-    - PROTECTED_OWNER_MODIFY
     - ORACLE_GAP_AS_GO
-    - FOURTH_IMPAIRMENT_MANUFACTURE       # 段A 已穷尽 fiber→星地移植路径
-    - FIBER_IMPAIRMENT_RELOCATED_TO_STAR_GROUND  # 物理上不成立
-    - SUB_SYMBOL_JONES_AXIS_REOPEN        # D066:3415-3416 已关闭
+    - REPRODUCTION_AS_NEW_METHOD   # FR-23：复现旧结果不当新方法，须注入新失效条件
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
-  mission_checkpoint: CP029
-  next_legal_action: 等待用户在 CP028 剩余选项中决策：(2) 论文范围决策（G1 bounded package + 局部负面 harvest 作毕业材料，或开新子问题）；(3) 接受 0 active carrier 下"协议稳定+可靠负面+1 bounded asset"收尾审计。选项(1) channel 物理扩展已尽（PHYSICS_BACKED_TESTBED_UNAVAILABLE）。用户决策前不开新 sprint/T。
+  mission_checkpoint: CP030   # P01 NO_DIAGNOSTIC_SIGNAL 已接收
+  next_legal_action: Package 02（换机制族，B/C/D/E 任选）。本轮只准备 P02 唯一入口（不运行）。P01 同族连续=1，仍可再 1 包同族达上限后强制换族。下一对话由用户中转 P02 执行指令。
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（CP029/D038 段A→V064：用户选项(1) channel 物理扩展大包段A 三候选六门评估无一过门1-3 → PHYSICS_BACKED_TESTBED_UNAVAILABLE；fiber 现象无星地物理起源、四 primary 零命中、D066 已关 sub-symbol Jones 轴；段B/C/D 不运行、不造第四 impairment、诚实终止；epoch 64 / CP029，仍 0 active carrier；交用户 CP028 剩余选项 (2)论文范围决策 / (3)收尾审计）
+> 状态: active（CP030/P01→V065：D039 campaign P01 CPR 选择器 SNR 失配鲁棒性端到端完成，verdict `NO_DIAGNOSTIC_SIGNAL`，verifier PASS（8/8）；accepted_valid_packages=1/10，active_lane CAMPAIGN_EXPLORATION_DISPATCH，epoch 65；P01 同族连续=1；条件式子群体信号 cand_rank@weak/低SNR 作 harvest 不晋升；仍 0 active carrier）
 > 创建: 2026-07-23 | 最后更新: 2026-07-30
 
 ## 专题信息
@@ -67,6 +81,11 @@ rdl_control:
 - 修订终验后，下一轮 live test 以
   `METHOD_SIGNAL → Step 1–3/3.5/4a → PROMOTION_READY/active carrier`
   的端到端转化作为毕业方法生产成功。
+- **2026-07-30 campaign 授权（D039）**：在完成 10 个有效科学大包前不因 0 READY 要求 thesis pivot。
+  对**已完成方法**（DA-NDA 选择器 `ccisp_family1_selector_a_30seed.json` 0.8–1.5 dB、SC-NDA-ML `_mve_results.json` 等）
+  的**新失效条件/鲁棒性**做子问题探索；每 package 遵守 problem-bearing probe → conventional adapter →
+  条件式 method factory 三阶段门控；至少 5 机制族、同族≤2 连续、第 5 包内部校准不停线、第 10 包 campaign 裁决。
+  `PREFORMAL_METHOD_FACTORY` 解禁为本 campaign 服务（problem-first 门控内）。
 
 ### 明确不含
 
@@ -75,7 +94,10 @@ rdl_control:
 - 不获取私有全文，不把摘要冒充全文；
 - 不修改 protected history、formal scientific owners 或 thesis framework；
 - 不把流程 PASS、包装或写作材料冒充正式方法；
-- 不要求用户读取技术日志或判断科学正确性。
+- 不要求用户读取技术日志或判断科学正确性；
+- **不换名重开已关闭轴（TL-30）**：NDA-ML 本体 / G1 science repair / CB1 collapse family / Pilot-Jones 小轴 / PMD-PDL-Jones-CD 星地移植；
+- **不把复现旧结果当新方法（FR-23）**：每个 package 必须注入新失效条件，复现 anchor 只是基线；
+- **不用 oracle/true-truth 当部署输入或 Go 判据（TL-32/FR-25）**：true SNR 只用于生成信号和离线评价。
 
 ### 范围变更记录
 
@@ -134,6 +156,20 @@ rdl_control:
   - 影响：仍 0 active carrier；mission_method_delta `NONE`（STRATEGIC_GATE 非方法进度）；交用户三
     选项决策：(1) 升级 channel 模型（FR-18 ~1 天基础设施），(2) 论文范围决策（G1 bounded + 局部负面
     harvest），(3) 接受 0 carrier 下"协议稳定+可靠负面+1 bounded asset"收尾审计。
+- **2026-07-30，live D038 段A→V064 / CP029**：用户选项(1) channel 物理扩展大包段A 三候选六门评估无一过门1-3
+  → `PHYSICS_BACKED_TESTBED_UNAVAILABLE`。fiber 现象（PMD/PDL/CD/复 Jones 双折射）无星地物理起源、
+  四 primary 零命中、D066 已关 sub-symbol Jones 轴；段B/C/D 不运行、不造第四 impairment。选项(1) 已尽。
+- **2026-07-30，live D039 / 用户 campaign 授权**：用户授权至少 10 个有效科学大包的新子问题探索预算；
+  完成 10 个有效包前不因 0 READY 要求 thesis pivot。
+  - 原因：D038 段A 穷尽了 channel 物理自由度路径（fiber→星地移植不成立），但"该领域无问题可做"不成立——
+    用户把对象转向对**已完成方法的新失效条件/鲁棒性**做子问题探索（FR-23 问题驱动，非空白驱动）。
+  - 新范围：`PREFORMAL_METHOD_FACTORY` 解禁为本 campaign 服务（problem-first 三阶段门控内）；建立最轻量
+    rolling queue（control block 计数器，不建 controller）；至少 5 机制族、同族≤2 连续、第 5 包内部校准不停线、
+    第 10 包 campaign 裁决；setup/治理/任务准备/接口修复/纯复现/入口 preflight 不计有效包数。
+  - 影响：active_lane → `CAMPAIGN_EXPLORATION_DISPATCH`，authority → D039，epoch 64→65；
+    新增 forbidden：`NDA_ML_BODY_REOPEN`/`G1_SCIENCE_REPAIR`/`PILOT_JONES_SMALL_AXIS_REOPEN`/
+    `REPRODUCTION_AS_NEW_METHOD`；移除 D038 末"交用户(2)/(3)"等待。仍 0 active carrier、无 protected
+    owner/formal/Skill/thesis framework 改动、无 push。P01（CPR 选择器 SNR 失配鲁棒性）本轮立即端到端执行。
 
 ## 已确认结论
 
@@ -171,139 +207,50 @@ rdl_control:
 | S003→D036/V062 | T027 端到端完成（最终纠偏+执行+验收一轮内无停顿）：verdict `NO_DIAGNOSTIC_SIGNAL`；CB1 更新粒度族轴关闭；疑似作用点（块末更新）因果性未被确认（collapse 在所有更新粒度下持续） | T027 / sprint-003 `689151c` / V062 |
 | S003→D037/V063 | CB1 轮换后三候选六门评估无一过门（A CPR/VV 仅 oracle-gap + verdict REJECTED；B NDA-ML 已完成赢家；C U24 检测线 D051 关闭 + 需 oracle 标签）；U05 hold 出路阻塞、U23 并入 U24；channel 物理自由度窄 → `STRATEGIC_GATE`，不制造第四弱候选 | D037 / V063（无 sprint/无 commit） |
 | S003→D038 段A/V064 | 用户选项(1) channel 物理扩展大包段A 三候选（complex time-varying Jones / PDL / PMD-色散-跨符号记忆）六门评估无一过门1-3 → `PHYSICS_BACKED_TESTBED_UNAVAILABLE`：fiber 现象无星地物理起源（各向同性大气无 birefringence）、四星地 primary 零命中、sat.1553 等三篇 dangling、唯一可溯源参数 D066 实测 headroom 0.0804dB≪0.5dB、时变复 Jones 轴已被 D066:3415-3416 关闭；段B/C/D 不运行、不造第四 impairment、诚实终止 | D038 / V064 / CP029（无 sprint/无 commit） |
+| D039 / P01→V065 | 用户授权 10-有效包探索 campaign（不因 0 READY 要求 thesis pivot）；P01 = CPR 选择器 SNR 失配鲁棒性端到端执行：Phase A 问题成立（weak@5/7/9 δ=−3 / weak@11 δ=+3 / moderate@13 δ=+3 损害≥0.3dB CI<0）→ Phase B 非相干 pilot adapter 恢复 4/5 cell → Phase C 5 候选最佳 cand_rank pooled +0.1358 未过 MDE=0.15 → `NO_DIAGNOSTIC_SIGNAL`；verifier 8/8 PASS；条件式子群体信号 cand_rank@weak/低SNR 降级 future-work | D039 / V065 / CP030 / worker-log step-028（无独立 commit，待主控统一） |
 
 ## 未决项
 
-- CP028 `STRATEGIC_GATE` **已由用户选项(1)解决（D038/2026-07-30）**：授权一次性端到端大包升级
-  channel 物理自由度（complex time-varying Jones / PDL / PMD-色散-跨符号记忆），解禁 PREFORMAL_METHOD_FACTORY
-  + GENERAL_INFRASTRUCTURE_BUILD 仅本大包，段间不停下等用户；
-- **CP029/D038 段A 已终止（V064）**：选项(1) channel 物理扩展段A 三候选六门评估无一过门1-3 →
-  `PHYSICS_BACKED_TESTBED_UNAVAILABLE`；fiber 现象无星地物理起源、四星地 primary 零命中、
-  sat.1553 等三篇 dangling、D066 已关 sub-symbol Jones 轴；段B/C/D 不运行、不造第四 impairment；
-  PREFORMAL_METHOD_FACTORY + GENERAL_INFRASTRUCTURE_BUILD 解禁已耗尽重归 forbidden；**选项(1) 已尽**；
-- 仍 0 active carrier；段D 出 METHOD_SIGNAL 且过 promotion preflight 前不晋级；
+- CP028 `STRATEGIC_GATE` 已解决：先经 D038 段A（PHYSICS_BACKED_TESTBED_UNAVAILABLE，选项(1) 已尽），
+  再由 D039 用户 campaign 授权覆盖（10-有效包预算，不要求 thesis pivot）；
+- 仍 0 active carrier；某 package 出 `DIAGNOSTIC_METHOD_SIGNAL` 且过 promotion preflight 前不晋级；
+- campaign 计数（topic-index control block `campaign` 段）：`accepted_valid_packages=0`，budget=10，
+  current=P01；setup/治理/任务准备/接口修复/纯复现/入口 preflight 不计；
+- 第 5 包（P05）做内部校准（偏航 + 族覆盖审计），不停线；第 10 包（P10）做 campaign-level pivot/continue 裁决；
+- 同族连续≤2 包；至少 5 机制族（当前 A CPR 选择器鲁棒性 / B 同步估计器交互 / C 湍流场景边界 / D 调制编码层 / E 信息复杂度边界）；
+- 已关闭轴不得换名重开（TL-30）：NDA-ML 本体 / G1 science repair / CB1 collapse family / Pilot-Jones 小轴 / PMD-PDL-Jones-CD 星地移植；
 - 下一真实压缩事件需量化 elapsed time、files read、lane/gate match；
 - G1 只保留 bounded thesis asset，不重开科学修复；
-- 频域/子带均衡族仅在信道源码被升级到含色散/多径/频率选择性后才可能重审，当前作 rejected task brief 保留；
-- CB1 collapse-recovery 全族（block-size/μ/更新调度/频域/子带/z-only/初始化/cost 变体）按用户绑定结论 + D036/D037 forbidden，不再运行。
+- 频域/子带均衡族仅在信道源码被升级到含色散/多径/频率选择性后才可能重审，当前作 rejected task brief 保留。
 
 ## 当前位置
 
-S003 入口选择后，经 2026-07-29 用户中转指令做**最小入口纠偏**（D035/V061）：原 T027 选的
-**频域/子带均衡族**未过 problem-bearing testbed preflight 门1（`_dual_pol_channel.py:127-132`
-信道只有逐符号 GG 幅度 + SOP 旋转 + AWGN，无色散/多径/FIR/频率选择性，频域/子带无可作用物理
-自由度；其 comparator 也未冻结；task-control epoch 59≠60；action_class 与正文语义不一致），
-故原 DISPATCH_READY 撤回，频域族作 rejected task brief 保留、不运行。
+**2026-07-30 D039（用户 campaign 授权）**：D038 段A 穷尽 channel 物理自由度路径后，用户授权 10-有效包
+探索 campaign（voice.md 2026-07-30 "至少跑10大包？"）。对象从"造新 channel 物理自由度"转向"对已完成
+方法的新失效条件/鲁棒性做子问题探索"（FR-23 问题驱动）。active_lane → `CAMPAIGN_EXPLORATION_DISPATCH`，
+authority → D039，epoch 64→65。建立最轻量 rolling queue（control block 计数器，不建 controller）：
+`exploration_budget_valid_packages=10` / `accepted_valid_packages=0` / `current_package=P01`；至少 5 机制族、
+同族≤2 连续、第 5 包内部校准不停线、第 10 包 campaign 裁决。`PREFORMAL_METHOD_FACTORY` 解禁为本 campaign
+服务（problem-first 三阶段门控内）；setup/治理/任务准备/接口修复/纯复现/入口 preflight 不计有效包数。
 
-method-production.md 补了入口四门（物理自由度存在 / 基线失败与作用点一致 / 命名传统同信息
-可独立调谐 comparator / 每门 file:line，禁"未测族/REOPENED/testbed 曾产 signal"放行；并厘清
-shared anchor vs. identity parity——后者只保护继承基线比较连续性，不禁止跑不同传统算法）。
+**P01（本轮端到端执行）= CPR 选择器 SNR 失配鲁棒性**。原 DA-NDA 两层 selector（`_a4_switch_common768_
+30seed.py:97-107`）在两处依赖运行时 nominal SNR：①stage-1 CV 边界 `cv_awgn_theory(gamma_db)=0.74+
+0.12exp(-gamma_db/5)`（`:93-94`）× margin 1.10；②stage-2 噪声扣除 `1/(2*gamma_lin)`（`:106`）+ γ_eff
+vs 13 dB。冻结 anchor `ccisp_family1_selector_a_30seed.json`（30 seed × weak/moderate/strong × 5–25 dB，
+common-768 口径）增益集中在 weak/moderate/strong 中低 SNR（5–13 dB，DA 占用 30–95%）：weak@9dB
++1.50dB、moderate@9dB +1.05dB、strong@9dB +0.83dB（oracle bound 仅作上限）。
 
-**2026-07-29 CP027（D036/V062）**：用户中转指令要求一轮内端到端完成"最终纠偏 → 科学执行 →
-独立验证 → 主控接收"。最终纠偏（四项）：①门2 证据等级——sprint-001"块末更新几何=结构性吸引子
-原因"已被 V052 拒收，降级为 source-backed 疑似作用点（不是已确认机制）；②comparator 冻结为
-canonical Godard-with-z（`Δw ∝ (R²−|z|²)·z·r*`，provenance `cb1_cell_runner.py:124-129`，禁
-`_cma.py` scalar-error 缺 z 冒充）；③action_class→`PREFORMAL_METHOD_FACTORY`（epoch 60→61）；
-④终态集 3→5（+ `PROBLEM_RESOLVED_BY_CONVENTIONAL_COMPARATOR` + `EXECUTION_INVALID`）。
+**P01 已完成（CP030/V065）**：Phase A problem-bearing probe（独立 executor 复现 anchor 150/150 cell 逐 seed 精确，
+verifier 独立重跑 3/3 一致；dev 前冻结损害判据 ≥0.3dB drop+CI<0；注入 δ∈{−3..+3}dB → 问题成立：weak@5/7/9 δ=−3
+−0.339/−0.393/−0.324、weak@11 δ=+3 −0.704、moderate@13 δ=+3 −0.344，CI 上界<0）→ Phase B 非相干块 pilot SNR 估计
+adapter（δ-invariant，true γ 不进 decide）恢复 4/5 损害 cell（+0.746/+1.113/+1.241/+0.957/+0.706 dB），仅 weak@9
+残余 −0.323 → Phase C 5 个机制不同 robust 候选 vs adapter（held-out seeds 30–49）：最佳 cand_rank pooled
+**+0.1358 [+0.1207,+0.1510]**，未过冻结 MDE=0.15 → **verdict `NO_DIAGNOSTIC_SIGNAL`**。verifier V065 PASS（8/8，
+verdict 唯一正确）。条件式子群体信号 cand_rank 仅 weak@5/7/9 超 adapter ≥MDE（+0.385/+0.432/+0.323），机制连贯、
+系统性非 cherry-pick，降级为 future-work seed。无 protected 文件改动；true γ 绝不进 decide；dev 0–9/held-out 30–49 隔离。
+worker-log `projects/thesis-fso/worker-logs/step-028-p01-cpr-snr-mismatch.md`；artifact `results/p01_cpr_snr_mismatch/`。
 
-sprint-003 由独立 executor 跑（commit `689151c`）：block-64 μ=0.03 anchor（PI-SER 0.31431）、
-tuned per-symbol Godard-with-z comparator μ=0.001（0.29685）、block-8/16、recursive CMA，4 构造
-× 7 cells × 20 fresh test seeds。独立 verifier V062 **PASS**（梯度身份逐方法核、raw→aggregate
-独立复算吻合<1e-4）。**verdict = `NO_DIAGNOSTIC_SIGNAL`**：最佳 block8 vs comparator
-Δ=−0.00293、CI [−0.0112,+0.0056] 跨 0、未过 MDE=−0.005；comparator 只 1/7 cell 消除 collapse，
-未达 PROBLEM_RESOLVED 判据；候选场在 64× 更新预算跨度上平坦，既非更多更新也非粒度产生可分离
-优势。**疑似作用点（块末更新）的因果性未被本 sprint 确认**——collapse 在所有更新粒度下都持续。
-
-CB1 更新粒度均衡族轴按 method-factory 纪律关闭（无 signal 即退出）。当前仍 0 active carrier；
-无 protected owner / formal / thesis framework 改动；无 push。下一合法动作：portfolio remap 选
-机制不同的合法 carrier，或战略 gate 升级（届时交用户）。
-
-**2026-07-30 CP028（D037/V063）**：用户中转指令要求在 CB1 collapse 家族之外选一个真正
-problem-bearing 的新 testbed 跑一次新 method-factory sprint，入口最多三个候选逐项过六门（M-C-A /
-物理自由度 / 命名传统 comparator / runnable testbed / primary-fallback packaging / file:line 证据；
-rejected/invalidated/privileged 证据不得重新洗成 PASS）。主控评估三候选：
-
-- **A 传统 CPR（VV Nw=128）在 adversarial_sourced|snr14 切片**：门2/3/4/5 PASS，但**门1 FAIL**
-  （synthesis 只记 VV 对 oracle O 留 ~0.6dB headroom，是 oracle-gap——TL-32/FR-25 明确 oracle 上界
-  只做 Kill 工具不当 Go 判据；P1/P2/P3 组合方法 9–20dB 失败属**已拒收的 B10/B12 实例**
-  master-state.md:149 `SCIENCE_VERDICT_REJECTED`，不是可轮换开放轴；VV 本身无可被不同传统 CPR 改善
-  的机制失败）+ **门6 FAIL**（verdict REJECTED；U10 evidence 是 SOP/CMA BER failure 非 CPR cycle-slip）。
-- **B NDA-ML 跨问题扩展**：**门1 FAIL**（`_mve_results.json` AWGN +1.35dB 等全正增益，是已完成赢家非
-  失败方法；`SC-NDA-ML-MVE-SPEC.md` GW Step 4a 维度 D 已封闭）。
-- **C U24 high-SOP non-swap BER detection**：门1 部分（U24 是 candidate-map 唯一 pt5 候选；但 D047
-  明确"1e-5 fixed=PI 非 swap"），**门4 FAIL**（D051 已关闭检测线——control 4e-6 新 seed 已有 oracle
-  events，control-only 失效；non-swap BER 标签需 TX-truth oracle assignment 属用户禁止的
-  "oracle/genie 才能构造的动作"；evidence_gap 无 testbed）。
-
-候选扫描完整性：problem_truth ≥4 共四个（U24=候选C、U10=候选A族、**U05 pt4 HOLD_FOR_COMPETITOR_
-CLOSURE** 出路阻塞、U23 pt4 MERGE_WITH_U24）。**无遗漏独立入口**。channel 源（`_dual_pol_channel.py:
-104-132`）只有 GG 幅度 + 实 SOP 旋转 + AWGN，无多径/色散/FIR/频率选择性，物理自由度本身窄。
-
-**verdict = `STRATEGIC_GATE`**：三候选无一过门，遵守"不得制造第四弱候选"纪律，不开 sprint、不建
-T028、不修 protected owner/Skill/thesis framework。独立 verifier V063 **PASS**（事实成立；2 项初版
-瑕疵——候选 A 门1 表述不准、U05 漏列——均非承重不改结论，已据 V063 在 D037 内纠正）。**缺的是
-problem-bearing 物理问题（非 testbed/comparator 基础设施）**。仍 0 active carrier、
-    mission_method_delta `NONE`（STRATEGIC_GATE 非方法进度）、无 push。
-- **2026-07-30，live D038**：用户选定 CP028 STRATEGIC_GATE 三选项之 (1)——升级 channel 模型引入新物理自由度。
-  - 原因：CP028 判定"缺的是 problem-bearing 物理问题（非基础设施）"——channel 源
-    `_dual_pol_channel.py:104-132` 只有 GG 幅度+实 SOP 旋转+AWGN，物理自由度本身窄。用户选项(1)
-    直接针对该根因，且要求端到端大包、段间不停下等用户（voice.md 2026-07-30）。
-  - 新范围：**解禁** `PREFORMAL_METHOD_FACTORY` + `GENERAL_INFRASTRUCTURE_BUILD`（仅本 D038 大包，一次性
-    有界）；四段串行链——段A 物理入口六门筛选（独立 subagent，≤3 候选：complex time-varying
-    Jones/differential phase / physically justified PDL / PMD-色散-跨符号记忆；每门 file:line；三全败即
-    `PHYSICS_BACKED_TESTBED_UNAVAILABLE` 不制造第四）→ 段B 只扩一个 channel 自由度（新 common/_*.py
-    + params.py FR-20 参数类，旧路径 byte-identical；独立物理 verifier 先确认）→ 段C conventional
-    baseline adjudication（shared anchor + 任务匹配传统 comparator + 廉价扩展，`PROBLEM_SURVIVES_`
-    `CONVENTIONAL_BASELINE` 才进段D）→ 段D 条件式 method factory（独立 executor 跑 3–5 机制不同最小
-    方法，vs tuned comparator，`DIAGNOSTIC_METHOD_SIGNAL`/`NO_DIAGNOSTIC_SIGNAL`）。
-  - 影响：active_lane → `CHANNEL_PHYSICS_EXTENSION_DISPATCH`；authority → D038；control epoch 62→63。
-    其余 D037 forbidden 全保留（`CB1_COLLAPSE_RECOVERY_FAMILY`、`FREQUENCY_DOMAIN_SUBBAND_FAMILY`、
-    `CLOSED_AXIS_REOPEN`、`POST_STEP4A_ADVANCE`、`PROTECTED_OWNER_MODIFY`、`PROTECTED_HISTORY_EDIT`、
-    `PAPER_CLAIM`、`PRIVATE_FULLTEXT_ACQUISITION`、`ABSTRACT_AS_FULLTEXT`、`FORMAL_MVE`）；新增
-    `ORACLE_GAP_AS_GO`、`FOURTH_IMPAIRMENT_MANUFACTURE`、`SCIENTIFIC_EXPERIMENT_BEFORE_TESTBED_VERIFICATION`。
-    无 protected history / formal owner / Skill / thesis framework 改动；无 push。仍 0 active carrier；
-    段D 出 METHOD_SIGNAL 且过 promotion preflight 前不晋级。
-- **2026-07-30，live D038 段A 终止 / V064 / CP029**：段A 物理入口六门评估完成，三候选全失败。
-  - 原因：fiber 现象（PMD/PDL/CD/复 Jones 双折射）源于各向异性玻璃波导介质，自由空间大气各向同性
-    **无物理起源**；四篇星地 coherent dual-pol FSO primary（Paillier 2020 `9120341.md` / Zhou 2024
-    `10305071.md` / Zhang 2023 `10301506.md` / Gu 2022 `app12073331`）全文 PMD/PDL/DGD/Jones/色散
-    **零命中**；本地+公开检索**无星地 polarization-impairment primary**；params.py 引用的
-    sat.1553/s24248036/photonics10121312 三篇 content.md **本地不存在**（dangling）。唯一可溯源参数
-    （Valjus DGD≤6ps=1.5%T_S、PDL≤1dB）D066 实测 headroom **0.0804 dB ≪ 0.5 dB**。**时变复 Jones 轴
-    已被 D066（groundwork `2026-07-10-dual-pol-osl-groundwork/decisions.md:3381`，排除项 :3415-3416
-    "不继续追求 verified DGD≫T_S 或 sub-symbol Jones 新轴"）关闭，非未测新问题。**
-  - 段B/C/D 不运行（用户授权终止：三候选均失败即 `PHYSICS_BACKED_TESTBED_UNAVAILABLE`，不制造第四
-    impairment）。PREFORMAL_METHOD_FACTORY + GENERAL_INFRASTRUCTURE_BUILD 解禁已耗尽，重归 forbidden。
-  - 影响：active_lane → `PHYSICS_EXTENSION_TERMINATED_AWAITING_USER_DECISION`；authority 仍 D038；
-    control epoch 63→64；mission CP029（no-method=3，无 sprint）；新增 forbidden：
-    `FIBER_IMPAIRMENT_RELOCATED_TO_STAR_GROUND`、`SUB_SYMBOL_JONES_AXIS_REOPEN`。仍 0 active carrier、
-    `mission_method_delta=NONE`（终止非方法进度）、无 protected owner/formal/Skill/thesis framework 改动、无 push。
-  - **选项(1) 已尽**。下一合法动作交用户 CP028 剩余：(2) 论文范围决策（G1 bounded + 局部负面 harvest
-    或开新子问题）；(3) 接受 0 active carrier 下"协议稳定+可靠负面+1 bounded asset"收尾审计。
-
-**下一合法动作交用户三选项**：(1) 升级 channel 模型引入新物理自由度（complex Jones/PMD/PDL/色散，
-FR-18，需 ~1 天基础设施授权，会改变所有方法竞争格局）；(2) 论文范围决策（G1 bounded package +
-局部负面 harvest 作毕业材料，或开新子问题）；(3) 接受 0 active carrier 下"协议稳定+可靠负面+1
-bounded asset"收尾审计。用户决策前不开新 sprint/T。
-
-**2026-07-30 D038（用户选定选项1）**：用户已以选项(1)解决 CP028 STRATEGIC_GATE（voice.md
-2026-07-30）。授权一次性端到端大包，四段串行、段间不停下等用户：
-
-- **段A 物理入口筛选**（进行中）：独立文献/物理 subagent 比最多 3 候选——(a) complex time-varying
-  Jones / differential phase coupling；(b) physically justified PDL；(c) PMD、色散或其他有跨符号记忆的
-  coherent dual-pol FSO impairment。不假定任何 fiber 现象在星地成立。每候选过**六门**：①与当前
-  coherent dual-pol 星地 FSO 范围直接相关（file:line）②≥2 篇可访问 primary/fulltext 支持存在/模型/
-  参数范围③真实参数量级核算（当前 symbol rate/frame/处理窗口内可见，差≥3 数量级 Kill）④明确传统/
-  同任务/同信息/可调谐 conventional comparator⑤能写成具体 M-C-A⑥约一天内可隔离实现+验证+小批诊断。
-  每门给全文或源码 file:line。oracle gap 不当 Go。三全败 → `PHYSICS_BACKED_TESTBED_UNAVAILABLE`，
-  不制造第四 impairment。
-- **段B**（段A 通过后）：只扩六门全过的排名第一 impairment；新 `common/_*.py` + `params.py` 新参数类
-  （FR-20 全溯源），旧默认路径 byte-identical（P4/TL-13）；建理论预期（TL-20）+ 退化/regression 测试；
-  独立物理 verifier 先确认公式/单位/时间尺度。
-- **段C**（段B 物理身份 PASS 后）：shared anchor + 任务匹配传统 comparator + 廉价扩展；paired
-  realization / dev 冻结 / fresh held-out / raw / CI。`PROBLEM_SURVIVES_CONVENTIONAL_BASELINE` 才进
-  段D；传统 comparator 已解决则 `PROBLEM_RESOLVED_BY_CONVENTIONAL_COMPARATOR`。
-- **段D**（段C 问题仍存才触发）：独立 executor 构造运行 3–5 机制不同最小方法，单独 dev 调谐，
-  vs tuned comparator，raw/paired CI/help-hurt-tie/语义 smoke/消融/复杂度 →
-  `DIAGNOSTIC_METHOD_SIGNAL` 或 `NO_DIAGNOSTIC_SIGNAL`；signal 同时给 primary + fallback packaging。
-- 段链完成后一次统一更新 topic-index/mission-log/D/V/必要 owner，一次 commit 不 push。
+**当前位置**：P01 是 campaign 第 1 个有效包（CPR 选择器鲁棒性族 A，同族连续=1）。accepted_valid_packages=1/10。
+仍 0 active carrier、claim ceiling `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`。下一合法动作：**Package 02（换机制族，
+B/C/D/E 任选），本轮只准备唯一入口不运行**；P01 同族仍可再 1 包到上限（若用户要求）后强制换族。下一对话由用户中转
+P02 执行指令。

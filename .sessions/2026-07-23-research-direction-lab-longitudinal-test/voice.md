@@ -121,3 +121,14 @@
   初始化、z-only 或频域换名变体；CB1 物理自由度窄是 CP028 根因，本大包针对此升级 channel；段A 六门是
   上游物理 DOF 筛选屏（选 impairment），独立于 method-production 入口四门（选 method）；段间不停下
   等用户]
+
+## 2026-07-30（campaign 授权）
+
+- "咱们得多跑一些。至少跑10大包？" → D039
+  （附长指令：授权至少 10 个有效科学大包的新子问题探索预算；完成 10 个有效包前，不再因为当前 portfolio
+  0 READY 而要求 thesis pivot；setup、治理、任务准备、接口修复不计包数；建立最轻量 rolling queue；
+  至少 5 个机制族、同族最多连续 2 包、第 5 包内部校准但不停线、第 10 包才做 campaign-level pivot/continue
+  裁决；已完成/关闭线不得换名重开——NDA-ML 本体、G1 science repair、CB1 collapse family、Pilot-Jones
+  已关闭小轴、PMD/PDL/Jones/CD 移植）
+  [绑定结论：本轮立即端到端执行 Package 01（CPR 选择器 SNR 失配鲁棒性），A 登记决策+队列、B 执行，
+  不在 A 后停止]

@@ -3526,3 +3526,35 @@ fiber 现象（PMD/PDL/CD/复 Jones 双折射）源于各向异性玻璃波导�
 不复活 fiber impairment、不把 abstract/dangling reference 当 primary、不强凑第四 impairment、
 不重开 D066 已关闭的 sub-symbol Jones 轴。诚实终止，建议转论文范围/新子问题。
 
+
+## V065: P01 CPR 选择器 SNR 失配鲁棒性独立验收（NO_DIAGNOSTIC_SIGNAL）
+
+> 关联：D039 / P01 / T028 / worker-log step-028
+> verdict：**PASS**（8 项检查全过；executor 的 `NO_DIAGNOSTIC_SIGNAL` 为唯一正确终态）
+> 日期：2026-07-30
+
+### 验收范围
+
+独立 verifier（非实现方）从 raw 数据起独立重算、重跑复现、grep 信息边界、git status 查改动。scratch 脚本审计后删除，不 commit。
+
+### 8 项检查（逐项 PASS/PARTIAL/FAIL + 证据）
+
+1. **复现正确性 — PASS**：①独立重跑（自己写脚本调 `generate_shared_realization_apsk` + 冻结 `A.decide`，非 executor wrapper）weak@9dB seed 0–2 δ=0 → 3/3 与 anchor `ccisp_family1_selector_a_30seed.json` 逐数完全一致（seed0 selected_errors=57991/n_da=265/n_nda=135/nda_c768=81504）。②executor `phaseA_dev.json` δ=0 rows vs anchor 全重叠 (scene,snr,seed) **150/150 match**。
+2. **信息边界（关键）— PASS（干净）**：true γ（`gl_true`）仅出现在信号生成 `_p01_cpr_snr_mismatch_probe.py:117` 和 TRUE-channel 离线 BER 评价 `:123-127`/`:133`（oracle trueh），与 anchor `run_case` 同构。所有 `decide()` 调用点审计：probe `:130` 用 biased γ̂；`_decide_original` `:283` 收 `gamma_true_db+delta`（`:237`）；adapter/candidate 用 pilot γ̂_est / γ̂-derived 区间 / γ̂ EMA。唯一 true-γ-in-decide 点是 `oracle_true` 上界（`_p01_phaseBC.py:87`，正确从候选判断排除）+ 一个死代码 lambda（未调用）。**true γ 绝不进任何可部署 selector。**
+3. **raw→aggregate 独立复算 — PASS**：从 raw rows 重算 gain_db（每 seed 10·log10(BER_NDA/BER_selected)），Student-t CI。所有量相对误差 **0.00e+00**。Phase A 损害 cell Δgain（weak@5/7/9 δ=−3 −0.339/−0.393/−0.324、weak@11 δ=+3 −0.704、moderate@13 δ=+3 −0.344）逐项吻合；Phase B adapter gain（+0.746/+1.113/+1.241/+0.957/+0.706）吻合；Phase C pooled cand_rank vs adapter **+0.1358 [+0.1207,+0.1510]** 吻合。
+4. **dev/test 隔离 — PASS**：phaseA_dev.json tag=dev seeds 0–9；phaseBC_heldout.json tag=heldout seeds 30–49；dev/heldout seed 交集=∅。最终 verdict 取自 held-out 30–49，非 dev；anchor seeds 0–29 未作最终 test 判据。
+5. **判据预冻结 — PASS**：损害判据（≥0.3 dB drop, CI<0）与 MDE=0.15 在 worker-log §1（line 32–50）冻结，**先于** test 结果（§2.1 line 58+、§3.2 line 82+、Phase C §5 line 142+）。`HARM_GAIN_DROP_DB=0.3` 硬编码于 `_p01_phaseA_dev.py:28`+`_p01_phaseBC.py:41`，MDE=0.15 于 `_p01_phaseBC.py:270`。冻结真实。
+6. **无 protected-file 改动 — PASS**：`git diff --stat HEAD` on common/、params.py、`_a4_switch_common768_30seed.py`、`run_ccisp_family1_selector_a_30seed.py`、anchor JSON = 空。仅新增 7×`_p01_*.py`（results JSON gitignored）+ T028 brief + 治理文档编辑。
+7. **verdict 正确性 — PASS**：cand_rank pooled held-out mean=+0.1358, CI=[+0.1207,+0.1510], MDE=0.15（冻结）。METHOD_SIGNAL 需 mean≥MDE AND CI_low>0；此处 mean=0.1358<0.15 → fails mean threshold → stable_beat=False。**`NO_DIAGNOSTIC_SIGNAL` 是唯一正确终态**（Phase A PROBLEM_PRESENT + Phase B adapter 未完全消除 → 非 PROBLEM_ABSENT；无执行阻断 → 非 EXECUTION_INVALID；无候选稳定超 adapter → 非 METHOD_SIGNAL）。executor 诚实注明 verdict 对 MDE 敏感（MDE=0.10 会翻为 METHOD_SIGNAL），非事后合理化。
+   - **条件式子群体信号 — 真实、值得记录（非 artifact）**：verifier 全网格重算显示 cand_rank 仅在 weak@5/7/9 超 adapter ≥MDE（+0.385/+0.432/+0.323, CI_low>0），其后单调退化（weak@11 +0.111、weak@13 +0.014 CI 跨 0、moderate/strong 全 +0.05–0.12）。机制连贯（弱湍流+低 SNR = 原 stage-1 CV 边界最 miscalibrated 处），系统性非 cherry-pick。正确降级为 future-work seed 而非过度声称。
+8. **语义 smoke — PASS**：δ=0 → `selection_error_rate_vs_d0`=0.0（全部 150 cell），gain retention 恒等 0。占用行为合理：weak@9 DA 占用 227→283（δ=−3→+1）后降 232（δ=+3），executor 明确记录的**真实非单调**性质（两阶段判据固有），端点正确（大 +δ→更多 NDA、大 −δ→更多 DA）。
+
+### 结论
+
+executor 的 `NO_DIAGNOSTIC_SIGNAL` **成立**。方法学稳健、纪律透明：复现逐数精确、信息边界严密、aggregate 可从 raw 复算到 0 相对误差、判据真实预冻结、无 protected 文件改动、verdict 唯一正确；条件式子群体信号（cand_rank @ weak/低 SNR）真实并正确降级为 future-work。
+
+**无需包内确定性修复。** 记两处无害代码质量问题（dead/no-op，不影响结果/verdict）：①`_p01_phaseBC.py:65-89` 未调用 `build_selector_specs` 含 stale oracle lambda；②`:198-220` `phaseC_judge` 空 body，真正判断在 `main()` inline。可留。
+
+### 主控 claim ceiling
+
+P01 产出一个**有效科学负面 + 一个有界的条件式子群体观察**（cand_rank @ weak/低 SNR 超 adapter）。claim ceiling 维持 `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`：不构成 active carrier、不冒充 formal method、不写论文 claim。子群体信号作 harvest 记录（thesis-harvest 的 robustness-boundary / operating-regime 类），候选晋升需重走 Groundwork Step 1–3/3.5/4a。

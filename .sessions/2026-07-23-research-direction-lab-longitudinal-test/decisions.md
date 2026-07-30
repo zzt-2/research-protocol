@@ -2452,3 +2452,61 @@ CP028 的核心结论是"缺的是 problem-bearing 物理问题，不是 testbed
 ### 来源
 
 用户 2026-07-30 voice.md（方案1授权，端到端大包）；CP028/D037/V063；method-production/baseline-adjudication/evidence-and-claims；code-quality.md/SIM-ORG.md/sim-preflight；TL-20/22/26/27/30/32 + FR-18/20/23/25；`_dual_pol_channel.py:104-132`；`cb1_cell_runner.py:124-129`。
+
+## D039: 用户授权 10-有效包探索 campaign（不因 0 READY 要求 thesis pivot）
+
+> status: active
+> date: 2026-07-30
+> 取代：D038 的 "active_lane=PHYSICS_EXTENSION_TERMINATED_AWAITING_USER_DECISION / 下一合法动作交用户"（D038 的段A 物理判定 PHYSICS_BACKED_TESTBED_UNAVAILABLE 与 forbidden axis 保留）
+> 被取代：无
+> 依据：用户原话: voice.md 2026-07-30（campaign 授权："至少跑10大包？"）；CP029/D038 段A 终止事实；method-production.md（DIAGNOSTIC_METHOD_SIGNAL/METHOD_SIGNAL 需 fresh held-out 稳定超过 tuned comparator + 语义 smoke + 消融 + 复杂度）；baseline-adjudication.md（pre-method gate 四门 + PROBLEM_SURVIVES_CONVENTIONAL_BASELINE 才进 method factory + minimal baseline ladder）；evidence-and-claims.md（claim ceiling 最小等级 + semantic smoke before scale）；D037/D038 已关闭轴清单（CB1 collapse family、频域/子带族、NDA-ML 本体、G1 science repair、Pilot-Jones 小轴、PMD/PDL/Jones/CD 星地移植）；TL-30（不得换名重开已关闭轴）/TL-32/FR-25（Go=赢传统 baseline，oracle 只做 Kill 工具）/FR-23（问题=M 在 C 下因 A 失效，非空白）
+> 触发原话：`voice.md` 2026-07-30（用户授权至少 10 个有效科学大包；setup/治理/任务准备/接口修复不计包数）
+
+### 决策
+
+1. 接收 CP029/D038 段A 的 `PHYSICS_BACKED_TESTBED_UNAVAILABLE` 已被用户以 **campaign 授权** 解决：在完成 **10 个有效科学大包**前，主控不再因为当前 portfolio 0 READY 而要求 thesis pivot（推翻 D038 末尾"交用户 (2)/(3)"的等待）。`PREFORMAL_METHOD_FACTORY` 永久解禁为本 campaign 服务（不再单大包绑定）；`GENERAL_INFRASTRUCTURE_BUILD` 仍按需、有界、独立验证。
+2. **建立最轻量 rolling queue**（不新建复杂 controller/scheduler，符合 profile"反对未收口设计散落成控制器补丁"）。rolling queue 保存在 `topic-index.md` 的 control block（轻量计数器 + 候选列表），**允许滚动更新，不要求现在证明数学完备**。计数器：
+   - `exploration_budget_valid_packages`: 10
+   - `accepted_valid_packages`: 0（每接收一个有效科学包 +1）
+   - `current_package`: P01
+3. **有效包定义**：一个端到端跑完且产出 **terminal verdict**（method-production 终态集五选一：`DIAGNOSTIC_METHOD_SIGNAL` / `NO_DIAGNOSTIC_SIGNAL` / `PROBLEM_RESOLVED_BY_CONVENTIONAL_COMPARATOR`(含 adapter) / `PROBLEM_ABSENT_UNDER_TESTED_CONDITION`(负面但端到端完成) / `BLOCKED_SHARED_TESTBED` / `EXECUTION_INVALID`）的科学大包计 1 个有效包。**不计包数**：setup、治理、任务准备、接口修复、纯复现无新子问题、入口筛 preflight（出 STRATEGIC_GATE 的入口评估也不计）。
+4. **机制族纪律**：至少跨 **5 个机制族**；**同族最多连续 2 包**（第 3 包必须换族，除非前 2 包其一产生 METHOD_SIGNAL 正走 promotion）；**第 5 包做一次内部校准（审计是否偏、族覆盖是否足），但不停线**；**第 10 包才做 campaign-level pivot/continue 裁决**。
+5. **禁止换名重开已关闭轴**（TL-30）：NDA-ML 本体（已完成赢家 `_mve_results.json` 全正增益）、G1 science repair（CP024 bounded asset 已结）、CB1 collapse family（CP027 `NO_DIAGNOSTIC_SIGNAL` + 用户绑定结论）、Pilot-Jones 已关闭小轴、PMD/PDL/Jones/CD 星地移植（D038 段A PHYSICS_BACKED_TESTBED_UNAVAILABLE）。**新子问题 = 找已有方法的新的失效条件/鲁棒性问题，不是复现旧结果当新方法**（FR-23）。
+6. 每个 package 遵守 **problem-bearing probe → conventional adapter → 条件式 method factory** 的三阶段门控结构（method-production + baseline-adjudication）：Phase A problem-first（先证明问题存在，dev 前冻结"实质失效"判据，判据相对原方法声称规模制定）；Phase B 仅当问题成立才跑 conventional adapter（receiver-visible plug-in），adapter 已解决则 `PROBLEM_RESOLVED_BY_CONVENTIONAL_COMPARATOR` 不产生 signal；Phase C 仅当 adapter 后仍残余才构造 3–5 个机制不同最小候选。oracle/true-truth 只作 bound 不作部署输入或 Go 判据（TL-32/FR-25）。
+7. 执行分离：科学实现由独立 executor；数值/信息边界由独立 verifier；主控负责最终接收与 claim ceiling。允许一次包内确定性修复，不另开 repair 包。完成一个 package 后一次统一更新 topic-index/mission-log/D/V/必要 owner。
+8. 仍 0 active carrier 直到某 package 产出 `DIAGNOSTIC_METHOD_SIGNAL` 且过 promotion preflight（method-production.md）。claim ceiling 默认 `LOCAL_SLICE / NONBINDING_DIAGNOSTIC` 直到晋升。
+
+### 候选队列（rolling，允许更新）
+
+> 不要求数学完备；随每个 package 关闭滚动补。当前已知机制族（≥5）：
+> A. **CPR 选择器鲁棒性族**（P01：SNR 失配；可延伸：CV 统计量分布漂移、pilot 稀疏度失配、噪声非平稳）
+> B. **同步/估计器交互族**（FOE 残差对 CPR 的级联、定时偏移对 selector）
+> C. **湍流场景边界族**（饱和/闪烁、上/下行差异、多普勒谱形变）
+> D. **调制/编码层族**（HD/SD-FEC 边界、APSK 环比失配、16APSK 旋转模糊）
+> E. **信息/复杂度边界族**（窗口长度 vs 估计方差、低复杂度降级、量化位宽）
+> 同族连续≤2 包由队列自然轮换保证（每接收 2 包同族后强制换族）。
+
+### 理由
+
+D038 段A 证明 channel 源物理自由度窄、fiber impairment 无星地物理起源——这是**物理 DOF 路径的穷尽**，不是"该领域无问题可做"。用户的 campaign 授权正解此：把"找 baseline 指出其具体不足"（FR-23）的对象从"造新 channel 物理自由度"转向"对**已完成方法**（DA-NDA 选择器，method.tex 已成稿、`ccisp_family1_selector_a_30seed.json` 已冻结 0.8–1.5 dB 增益）的**新失效条件/鲁棒性**做子问题探索"。这类问题：①有冻结 anchor（原方法结果可复现）；②有明确传统 comparator（原选择器自身 = conventional，plug-in estimator = conventional adapter）；③receiver-visible、不需 oracle 部署；④claim 规模相对原 0.8–1.5 dB 可定量。
+
+profile（"务实可毕业远胜理论最优"+"多挑候选保留余地"+"深耕已有基础、候选族批量排跑"+"不早收敛"）全部支持：不追 SOTA、扩大候选池、从已有代码抽基点展开机制族、局部失败只作组合内事件自动轮换。轻量 rolling queue 而非 controller 符合"反对未收口设计散落成控制器补丁"。
+
+### 排除的替代方案
+
+- 不因 0 READY 立即 thesis pivot（用户明确授权 10 包预算）。
+- 不重开 D037/D038 已关闭轴（TL-30）：不挖 CB1 collapse-recovery 变体、不移植 fiber PMD/PDL/Jones/CD、不重开 NDA-ML 本体（已完成赢家）、不重开 G1 science repair、不重开 Pilot-Jones 小轴。
+- 不把复现旧 selector 结果当新方法（FR-23）：P01 必须注入**新的 SNR 失配**这一新失效条件，复现 anchor 只是 Phase A 基线。
+- 不用 oracle/true-truth 当部署输入或 Go 判据（TL-32/FR-25）：P01 中 true SNR 只用于生成信号和离线评价。
+- 不预建复杂 controller/scheduler（profile）。
+
+### 影响范围
+
+- live control 升 epoch 64→65 / CP029→CP030（P01 关闭时追加）；active_lane → `CAMPAIGN_EXPLORATION_DISPATCH`；authority → D039。
+- `topic-index.md` control block 新增 campaign 计数器与候选队列段；`voice.md` 补 2026-07-30 campaign 原话；`mission-log.md` 待 P01 关闭追加 CP030 行。
+- protected owner/formal/Skill/thesis framework 不改、无 push。`PREFORMAL_METHOD_FACTORY` 从 forbidden 解禁为本 campaign 服务。
+- 仍 0 active carrier；mission_method_delta 在某 package 出 `DIAGNOSTIC_METHOD_SIGNAL` 前保持 `NONE`。
+
+### 范围确认
+
+本轮（治理记录 + campaign 授权）在 scope boundary 内：用户授权 10 包预算是新的授权范围扩展，已记录为 scope change（见 topic-index 范围变更记录）。无科学实验、无 protected owner/formal 改动、无 push、无新 infrastructure。
