@@ -3589,3 +3589,36 @@ executor 的 `PROBLEM_RESOLVED_BY_REGION_RETUNING` **成立**。P01 条件式子
 ### 主控 claim ceiling
 
 P02 产出**有效科学负面 + operating-regime 收敛证据**（γ-magnitude-free stage-1 边界的 weak/低SNR 增益可被廉价区域门限重调替代）。claim ceiling 维持 `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`：不构成 active carrier、不冒充 formal method、不写论文 claim。作 thesis-harvest 的 robustness-boundary / conventional-comparator-resolves 类记录。A 族（CPR 选择器鲁棒性）达同族上限 2，P03 必须换机制族。
+
+## V067: P03 定点/资源-性能协同设计独立验收（PROBLEM_RESOLVED_BY_UNIFORM_PRECISION）
+
+> 关联：D041 / P03 / T031 / worker-log step-030
+> verdict：**PASS**（10 项检查全过；executor 的 `PROBLEM_RESOLVED_BY_UNIFORM_PRECISION` 为唯一正确终态）
+> 日期：2026-07-30
+
+### 验收范围
+
+独立 verifier（非实现方）从 raw rows 起独立重算所有 aggregate、独立重跑 float-bypass gate、读源码审 bit-true 算术真实性、AST/grep 审信息边界、git status 查冻结文件改动、grep 审 resource 措辞。
+
+### 10 项检查（逐项 PASS + 关键证据）
+
+1. **float-bypass identity — PASS**：独立重跑 `decide_fp(raw,γ_db,γ_lin,64,40)` vs `A.decide` 逐 window，seeds 0–9 × {weak,mod,strong} × γ∈{5,9,13,25}：**0 / 48,000 window mismatch**。gate 实质成立（executor 报 0/132,000 全网格，分母经主控包内修复）。
+2. **bit-true 算术真实性（非 decimal rounding 冒充）— PASS**：`_p03_fixed_point.py:88` `floor(value*scale+0.5)` round-half-up；`:91-99` 饱和二补码 signed/unsigned 边界（验证 +100→31、−100→−32 无回绕）；`:66` `ceil(log2 N)+2`=10 guard；`:184` per-window 共享 exponent（cv 验证 1024×/1e-6× 缩放下尺度不变）；sqrt/log10/div 的 I/O 量化（`:298-299,:347-348,:313`）；bypass err 3.4e-14 ≤ 2⁻⁴⁰；**全文件无 `np.round`/`decimals=` 冒充**。
+3. **raw→aggregate 独立复算 — PASS**：仅取 raw rows 独立重算 pooled regret（`10log10(fp_sel/bypass_sel)` paired）、per-bitwidth、per-cell、held-out aggregate、Pareto、ablation、help/hurt/tie：全部 aggregate 相对误差 **0.00e+00**（Phase A 2310 rows + Phase BC 14,190 rows）。regret identity 全 16,500 rows 0 error。
+4. **seed 隔离 — PASS（干净）**：PhaseA dev=0–9；PhaseBC dev-tune=10–19；held-out=30–49；pollution 71–80 缺席。三集 disjoint（从 raw-row `seed_index` 跨全 artifact 验证）。
+5. **信息边界 — PASS（干净）**：AST/grep 审 `decide_fp` + 4 个 mixed-candidate body：zero `true_snr/true_h/true_phi/tx_sym/tx_bits/oracle/gamma_true/labels` token；`_p03_fixed_point.py` 无 `r["h"]`/`estimate_h_*`/`ber_oracle` 接收端调用。仅消费 `(raw, gamma_db, gamma_lin)`。
+6. **冻结文件未改 — PASS**：`git diff --stat HEAD` 对 common/、params.py、`_a4_switch_common768_30seed.py`、`_p01_cpr_snr_mismatch_probe.py`、`_a4_branchrouted_30seed.py`、`sc_nda_ml_sim.py`、anchor JSON 全空。仅新增 untracked `_p03_*.py` + results。
+7. **resource-proxy 措辞 — PASS**：所有 LUT/DSP/power/area 提及要么是非线性算子的 LUT-I/O *模型*、accumulator 加宽规则的 DSP *术语*、物理 "mean power" 量，要么是显式 disclaimer。proxy 一致标 `op_bit_proxy`/`storage_bit_proxy`；两 artifact 带 "NO real synthesis / LUT / DSP / power / area" 注。无 "LUT 减少 X%"/"DSP 节省" 声称。
+8. **verdict 正确性 — PASS**：数字完全支撑 `PROBLEM_RESOLVED_BY_UNIFORM_PRECISION`：地板是 branch-statistical（(16,14) 处 Q≤2⁻⁴⁰ 仍 regret +0.685 dB @moderate/25、+0.806 @strong/25 且 agreement ~10–13%；(6,4)→(16,14) 加宽在 γ≥21 处买 ≈0 dB）；mixed 最佳 `two_exp` 优势 +0.01661 dB = 0.11×MDE；`mixed_strictly_better_by_mde=[]`。verdict 唯一正确（非 METHOD_SIGNAL：无 mixed 过 MDE；非 NO_DIAGNOSTIC_SIGNAL：有真实工程发现）。
+9. **判据冻结顺序 — PASS**：worker-log §1（2,264 字符）只含预声明阈值（0.15 MDE、0-mismatch bar、2⁻⁴⁰、seed 范围、uniform-tension 定义）——**无结果数字**（0.2005/0.0166/0.027/0.1729/726000 全缺席）。唯一 "(16,14)" 引用是预声明的*诊断规则*（最宽阶梯 rung 作 probe 点），非 post-hoc 数字。
+10. **Phase-BC 命名 bug 修复 — PASS**：`heldout_raw_rows` 含全部 5 chosen 方法 × 660 rows（含 3 mixed candidate）；`chosen_configs` 名与 held-out 方法键精确匹配；regret identity 3,300 rows 0-error；mixed candidate 产生真正不同决策（583/660 cell 异于 uniform，agreement 50–55% 非 100%）——rows 未被丢/未塌缩。
+
+### 结论
+
+executor 的 `PROBLEM_RESOLVED_BY_UNIFORM_PRECISION` **成立**。P03 的"定点部署是否损害 DA/NDA 选择器分支选择/浪费资源"被回答为**否**：uniform-precision 已在 regret 地板，地板是 branch-statistical（浮点下仍持续，非量化伪影），mixed-precision 最佳候选 Pareto-主导但 sub-MDE（+0.0166 dB = 0.11×MDE）。无可区分 deployable action → 不生成方法卡/不晋升。
+
+**包内确定性修复已正确执行并披露**：①float-bypass 分母叙述 726,000→132,000（纯算术错，V067 check 1 独立重跑 gate 确认 0 mismatch 实质不变，主控已修 worker-log 3 处）；②Phase-BC 键名 bug（mixed-candidate held-out rows 首跑被丢）executor 已修并重跑，artifact 含全部 rows，regret identity 0-error。无需第三修复。
+
+### 主控 claim ceiling
+
+P03 产出**有效工程负面 + 定点可部署性证据**（DA/NDA CPR 选择器在 8-bit uniform Q(8,6) 下决策与浮点 byte-exact；定点非该选择器瓶颈；stage-2 噪声扣除高 SNR 下溢张力真实但 sub-MDE）。claim ceiling 维持 `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`：不构成 active carrier、不冒充 formal method、不写论文 claim。resource 措辞严格 proxy（无真实综合工具，不声称 FPGA LUT/DSP/功耗/吞吐）。作 thesis-harvest 的 engineering-robustness / deployment-feasibility 类记录（Ch5 FPGA §5.4/§5.5 可引用 bit-cost/resource proxy 证据）。B 族（定点/资源-性能协同设计）首包完成，连续=1。

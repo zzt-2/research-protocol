@@ -132,3 +132,20 @@
   已关闭小轴、PMD/PDL/Jones/CD 移植）
   [绑定结论：本轮立即端到端执行 Package 01（CPR 选择器 SNR 失配鲁棒性），A 登记决策+队列、B 执行，
   不在 A 后停止]
+
+## 2026-07-30（P03 执行：撤回 T030 + 定点协同设计）
+
+- [转述，绑定裁决长指令] "执行 10-package campaign 的 Package 03。先撤回无效 T030，再在同一对话端到端运行
+  新的 P03；不得停在入口修订或任务准备阶段。" → D041
+  （附绑定裁决：P01/P02 为 A_CPR_selector_robustness 两个有效包，campaign=2/10；A 族关闭不得继续；既有 T030
+  FOE-residual→CPR 入口经独立历史审计 FAIL——重开 B10/B12 机制、未证明真实 post-FOE residual、1 MHz 是 FOE 前
+  warning 参数、历史 Doppler 变化量级远低于 FOE 分辨率、comparator/残差范围未冻结；撤回 T030 保留 rejected brief
+  该准备工作不计有效 P03；新 P03 family=B_FIXED_POINT_RESOURCE_PERFORMANCE_CODESIGN；P03 目标=判断已完成 DA/NDA
+  CPR selector 定点部署时是否存在"统一位宽浪费资源或损害分支选择"真实工程问题，若存在构造并验证
+  sensitivity-aware mixed-precision；不是重开 NDA-ML 也不得把旧浮点增益重计作新成果；冻结作用范围优先 selector
+  控制路径；bit-true 基础模型必须真实定点合同禁止 decimal rounding 冒充；Phase A uniform-precision baseline、
+  Phase B 3-5 mixed-precision、公平比较 + Pareto + 消融 + resource proxy 明确标注；六终态；论文边界无实际综合只声称
+  bit-cost/resource proxy；独立 executor+verifier，允许一次包内确定性修复，有效完成后 campaign→3/10 families_started
+  加 B，同一对话选择 P04 不同机制族入口但不运行，统一一次 commit 不 push；最终只回 5 项）
+  [绑定结论：本轮端到端完成 P03，中间不参与技术判断；verifier V067 10/10 PASS，verdict PROBLEM_RESOLVED_BY_
+  UNIFORM_PRECISION，campaign→3/10]

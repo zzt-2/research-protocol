@@ -2552,3 +2552,47 @@ profile（"务实可毕业"+"多挑候选保留余地"+"深耕已有基础"）�
 ### 范围确认
 
 本轮（P02 执行 + 接收 + 治理更新）在 scope boundary 内：D039 campaign 授权范围内第 2 个有效包，遵守 problem-first 三阶段门控（Phase A problem 复用 P01 已立 → Phase B adapter 复用 P01 → Phase C 廉价替代裁决）。无 protected owner/formal/Skill/thesis framework 改动、无 push、无新 infrastructure。一次包内确定性修复已披露。
+
+## D041: P03 定点/资源-性能协同设计 → PROBLEM_RESOLVED_BY_UNIFORM_PRECISION（B 族首包，无 METHOD_SIGNAL）
+
+> status: active
+> date: 2026-07-30
+> 取代：无
+> 被取代：无
+> 依据：D039-D040 campaign 授权；method-production.md（PROBLEM_RESOLVED_BY_CONVENTIONAL_COMPARATOR 终态集的工程族近邻 = PROBLEM_RESOLVED_BY_UNIFORM_PRECISION，uniform-precision 即"常规 comparator 已解决"的定点等价）；baseline-adjudication.md（minimal baseline ladder：uniform-precision 是定点域的常规 baseline）；evidence-and-claims.md（semantic smoke + claim ceiling + resource proxy 标注）；worker-log step-030；V067 独立验收 10/10 PASS；FR-23（问题驱动非空白——对已完成 DA/NDA 选择器注入"定点部署"新失效条件）；TL-32/FR-25（Go/Kill 判据分离）；绑定裁决（撤回 T030 FOE-residual 入口）
+> 触发原话：用户本轮执行指令（绑定裁决：撤回无效 T030，新 P03 family = B_FIXED_POINT_RESOURCE_PERFORMANCE_CODESIGN，端到端运行不得停在入口修订）
+
+### 决策
+
+1. **撤回 T030**（FOE-residual→CPR cascade 入口）。T030 经独立历史审计 FAIL，五条独立依据：①1 MHz 是 FOE **前**的 warning 参数（`decisions.md:233`：shared channel 保留 `F_RESIDUAL=1 MHz`，是 FOE 步骤 `fft_foe_m0_omega` 要**移除**的 CFO，非移除后的残差）；②历史多普勒量级远低于 FOE 分辨率（A3 Kill D010 `decisions.md:614-638`：AO 相干时间 τ_c~1ms→Δν≈159Hz；MVE 时序 8.2µs；1MHz/s slew 仅移 8.2Hz；破 FFT-FOE 需 >7.4 GHz/s 非物理）；③未证明真实 post-FOE residual（FR-26）；④comparator/残差范围未冻结；⑤邻近已关闭的 B10/B12 高阶 CPR carrier（TL-30 不得换名重开）。T030 保留为 rejected brief（文件头加 REJECTED 段，正文保留供审计），该准备工作**不计有效 P03**。
+2. 接收 P03（T031）端到端结果，terminal verdict = **`PROBLEM_RESOLVED_BY_UNIFORM_PRECISION`**（method-production 终态集六选一）。问题"已完成 DA/NDA CPR 选择器定点部署时是否存在'统一位宽浪费资源或损害分支选择'的真实工程问题"被回答为**否**：可信 bit-true Q(W,F) 模型（float-bypass 0/132,000 逐 window 决策与浮点 `A.decide` 一致）下，uniform-precision 在 (8,6) 已到 regret 地板（gain-bearing 区 +0.027 dB），该地板是**branch-statistical 非 quantization**（(16,14) 处 Q-error≤2⁻⁴⁰ 仍持续 +0.685/+0.806 dB @高SNR cell，集中锚点增益本身 ~0 处）。mixed-precision 最佳候选 `two_exp(8,6)` Pareto-主导 uniform(14,12) 但优势 +0.0166 dB = 9×低于 MDE=0.15 → `mixed_strictly_better_by_mde=[]`。无可区分 deployable action → 不生成 bounded method card、不晋升、不写论文 claim。
+3. **B 族（定点/资源-性能协同设计）同族连续=1**（B 族首包）。campaign `families_started` 追加 `B_FIXED_POINT_RESOURCE_PERFORMANCE_CODESIGN`。P04 可选同族第 2 包（B 族连续=2 达上限）或换 C/D/E 族。
+4. campaign 计数：`accepted_valid_packages` 2→**3**；`current_package` P03→P04；`same_family_consecutive` B 族=1（P04 若换族重置）。P03 是有效包（产出 terminal verdict，非 setup/治理/纯复现）。
+5. 一次包内确定性修复已用并记录：worker-log float-bypass 分母叙述从 "726,000 implying 2200 windows/cell" 更正为 "132,000 = 3 scenes×11 SNR×10 seeds×400 windows/cell"（V067 指出，独立 verifier 重跑 gate 确认 0 mismatch 实质不变；纯叙述算术错，不涉数据/代码/verdict）。Phase-BC 命名 bug（mixed-candidate held-out rows 首跑被键名误丢）已由 executor 修复并重跑，V067 确认最终 artifact 含全部 5 方法×660 rows。
+6. claim ceiling 维持 `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`。仍 0 active carrier。P03 mission_method_delta = `NONE`（PROBLEM_RESOLVED 非方法进度；它消解了"定点会损害分支选择"的假设而非创造方法信号）。
+7. harvest：P03 产出两条**有界工程负面 + 定点可部署性证据**——(a) "DA/NDA CPR 选择器在 8-bit uniform Q(8,6) 定点下决策与浮点 byte-exact，定点非该选择器瓶颈"（Ch5 FPGA §5.4/§5.5 可引用的 resource-bitwidth 工程证据，**仅作 bit-cost/resource proxy，无真实综合**）；(b) "stage-2 噪声扣除 1/(2γ_lin) 在高 SNR 的下溢张力真实但量级 9×低于可检测阈值"（two_exp 的 mean-normalization 弱提示，作 future-work seed 不晋升）。作 thesis-harvest 的 engineering-robustness / deployment-feasibility 类记录，不冒充 formal method。
+
+### 理由
+
+P03 的科学问题是"定点部署是否给已完成的 DA/NDA 选择器引入新的失效条件（位宽损害分支选择）或资源浪费"。这是 FR-23 问题驱动（对已完成方法注入定点部署新条件），非空白驱动（"没人做过 X"）。回答需要可信的 bit-true 模型（非 decimal rounding 冒充）和公平的 uniform-vs-mixed 比较。结果：uniform-precision 已在 Pareto 地板，mixed 无可区分增益——这是 baseline-adjudication minimal ladder 在定点域的标准情形（uniform-precision 即定点域的常规 comparator），method-production 终态集判 `PROBLEM_RESOLVED_BY_UNIFORM_PRECISION`。诚实工程负面比强行晋升一个 sub-MDE 的 mixed 配置更符合科学纪律。bit-true 模型本身（Q-format 合同 + block-float + LUT-I/O 量化）是可复用的工程资产，支撑 Ch5 FPGA 章节的定点实现可行性论证。
+
+profile（"务实可毕业"+"深耕已有基础"）支持：P03 深耕 P01/P02 已有 selector 代码抽基点（decide 控制路径复用冻结探针），局部结果自动收敛为 uniform-resolved，自然产出可复用 bit-true 资产。
+
+### 排除的替代方案
+
+- 不把 two_exp 晋升为 bounded method card（优势 +0.0166 dB = 0.11×MDE，Pareto-主导但 sub-MDE；强行取 METHOD_SIGNAL 会违反冻结 MDE 判据）。
+- 不把 PROBLEM_RESOLVED 当方法进度（mission_method_delta=NONE；baseline-adjudication：常规 baseline 已解决问题不允许 method Scout）。
+- 不用真实综合工具声称 LUT/DSP/功耗（brief 六 + V067 check 7：resource proxy 明确标 proxy，无综合工具时只声称 bit-cost/resource proxy 改善，不声称 FPGA LUT/DSP/功耗/吞吐）。
+- 不在 B 族强行开第 2 包（B 族连续=1 未达上限 2，但 P03 已 RESOLVED，P04 应评估换族 vs B 族第 2 包哪个更可能产方法）。
+- 不重开 NDA-ML 本体或把旧浮点增益重新计作新成果（TL-30 + 绑定裁决：P03 只评估定点对已完成选择器的影响，不重跑/不重计 NDA-ML 浮点增益）。
+
+### 影响范围
+
+- live control 升 epoch 66→67 / CP031→CP032；active_lane 维持 `CAMPAIGN_EXPLORATION_DISPATCH`；authority → D041。
+- `topic-index.md` control block 计数器更新（accepted_valid=3、current=P04、B 族连续=1、families_started 追加 B、rolling_queue 追加 P03）；`mission-log.md` 追加 CP032 行；`verifications.md` 追加 V067。
+- protected owner/formal/Skill/thesis framework 不改、无 push。无新 infrastructure（bit-true 模型是独立 _p03_*.py 新文件，非大型 FPGA 综合基础设施）。
+- 仍 0 active carrier；某 package 出 `DIAGNOSTIC_METHOD_SIGNAL` 且过 promotion preflight 前不晋级。
+
+### 范围确认
+
+本轮（撤回 T030 + P03 执行 + 接收 + 治理更新）在 scope boundary 内：D039 campaign 授权范围内第 3 个有效包，遵守 problem-first 三阶段门控（Phase A uniform-precision baseline → Phase B 仅因 Phase A 显现弱张力而运行 → 公平比较裁决 sub-MDE）。撤回 T030 是绑定裁决要求，保留 rejected brief 供审计。无 protected owner/formal/Skill/thesis framework 改动、无 push、无新大型基础设施。两次包内确定性修复（叙述分母 + Phase-BC 键名）均已披露。

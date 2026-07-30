@@ -1,12 +1,39 @@
-# T030 — P03 ENTRY PREP (NOT RUN): FOE-residual → CPR cascade robustness (Family B)
+# T030 — P03 ENTRY PREP (REJECTED / WITHDRAWN): FOE-residual → CPR cascade (rejected brief)
 
-> **STATUS: ENTRY PREPARATION ONLY — DO NOT RUN in this dialog.** Next dialog, user
-> relays the P03 execution instruction; only then does an executor implement/run.
+> **STATUS: REJECTED — NEVER RAN. Withdrawn before execution by binding adjudication
+> (independent historical audit FAIL). This preparation does NOT count as valid P03.
+> Preserved as a rejected brief per governance rule; do not re-dispatch this entry.**
 > Source: S003 / D039-D040 campaign; A family closed at consecutive=2 (P01+P02);
-> P03 MUST switch mechanism family. This prep picks family B and freezes the entry
-> contract so the next dialog can execute without re-deriving scope.
+> P03 MUST switch mechanism family. This prep picked family B (FOE-residual→CPR) and
+> froze an entry contract; that entry has since been rejected (see rejection grounds below).
 > Worktree: `D:\code\study\research-protocol\.worktrees\rdl-method-production-v2`
 > Date: 2026-07-30
+
+## REJECTION GROUNDS (added 2026-07-30, binding adjudication)
+
+The FOE-residual→CPR cascade entry is rejected on five independent audit findings:
+
+1. **1 MHz is a PRE-FOE warning parameter, not a post-FOE residual.** `decisions.md:233`
+   records the shared channel retains `F_RESIDUAL=1 MHz` — this is the CFO the FOE step
+   (`fft_foe_m0_omega`) is *designed to remove* upstream of CPR, not a residual left after it.
+   T030 §1 assumes an unproven post-FOE residual; none was measured.
+2. **Historical Doppler magnitude is far below FOE resolution.** A3 Kill (D010,
+   `decisions.md:614-638`): AO coherence time τ_c~1ms → Δν≈159 Hz; MVE timescale
+   N=8192×1ns≈8.2µs; a 1 MHz/s Doppler slew shifts frequency only ~8.2 Hz within one
+   block; breaking FFT-FOE requires >7.4 GHz/s (non-physical). No real residual FOE
+   rotation reaches the CPR selector at the operating block timescale.
+3. **True post-FOE residual never demonstrated.** No measurement of the residual
+   rotation actually leaving `fft_foe_m0_omega` on the frozen anchor was ever recorded;
+   the harm premise is assumed, not evidenced (FR-26: "I assumed" is not evidence).
+4. **Comparator / residual range never frozen.** T030 §3 names a pilot-phase-slope
+   "CFO guard" only loosely ("e.g."); no frozen range, no independent tunability spec.
+5. **Reopening B10/B12-adjacent mechanism without the rejected identity.** This is a
+   cascade-robustness lever adjacent to the B10/B12 high-order-CPR carriers already
+   returned to pool; under TL-30 it cannot be re-entered by renaming.
+
+**Consequence:** T030 is withdrawn. Valid P03 = **B_FIXED_POINT_RESOURCE_PERFORMANCE_CODESIGN**
+(fixed-point deployment of the already-completed DA/NDA CPR selector). The body below is
+the original (now-rejected) entry-prep text, retained verbatim for the audit trail.
 
 ## 0. Why family B (sync/estimator interaction), not C/D/E
 
