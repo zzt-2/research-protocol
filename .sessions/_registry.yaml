@@ -49,8 +49,8 @@ topics:
     title: Research Direction Lab 长程真实运行测试
     status: active
     created: "2026-07-23"
-    last_updated: "2026-07-30（CP028 STRATEGIC_GATE：CB1 轮换后三候选六门评估无一过门，不制造第四弱候选，交用户三选项决策；仍 0 active carrier）"
-    description: "D017/D018 轻量长程 mission。R009 审计确认 CP001–017 方法增量 0/17，T019 后有 2 个 signal 但 formal 转化 0/2；T026 已形成有边界写作材料，G1 科学线关闭。D019/V013 最小修订已终验。CP027 sprint-003（CB1 更新粒度均衡族）verdict NO_DIAGNOSTIC_SIGNAL，族轴关闭。CP028 CB1 轮换后入口六门评估：三候选（传统 CPR VV / NDA-ML 跨问题 / U24 non-swap detection）无一过门，U05 hold 出路阻塞、U23 并入 U24，channel 物理自由度窄 → STRATEGIC_GATE，不开 sprint、不制造第四弱候选，交用户三选项（channel 升级 / 论文范围决策 / 收尾审计）。"
+    last_updated: "2026-07-30（CP029/D038 段A→V064：用户选项(1) channel 物理扩展大包段A 三候选六门评估无一过门1-3 → PHYSICS_BACKED_TESTBED_UNAVAILABLE，fiber 现象无星地物理起源、四 primary 零命中、D066 已关 sub-symbol Jones 轴；段B/C/D 不运行、不造第四 impairment、诚实终止；PREFORMAL/INFRASTRUCTURE 解禁已耗尽重归 forbidden；选项(1) 已尽，交用户 CP028 剩余 (2)/(3)；仍 0 active carrier）"
+    description: "D017/D018 轻量长程 mission。R009 审计确认 CP001–017 方法增量 0/17，T019 后有 2 个 signal 但 formal 转化 0/2；T026 已形成有边界写作材料，G1 科学线关闭。D019/V013 最小修订已终验。CP027 sprint-003（CB1 更新粒度均衡族）verdict NO_DIAGNOSTIC_SIGNAL，族轴关闭。CP028 CB1 轮换后入口六门评估三候选无一过门 → STRATEGIC_GATE。CP029 用户选项(1) channel 物理扩展大包段A 三候选（complex time-varying Jones / PDL / PMD-色散-跨符号记忆）六门评估无一过门1-3 → PHYSICS_BACKED_TESTBED_UNAVAILABLE（fiber 现象无星地物理起源、四星地 primary 零命中、sat.1553 等 dangling、D066 已关 sub-symbol Jones 轴），段B/C/D 不运行、不造第四 impairment、诚实终止；选项(1) 已尽，交用户 CP028 剩余 (2)论文范围决策/(3)收尾审计。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 S014 现场故障、R003 场景演练、D017 控制接口和 guard

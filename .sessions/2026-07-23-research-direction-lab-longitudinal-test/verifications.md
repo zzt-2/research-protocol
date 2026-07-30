@@ -3443,3 +3443,86 @@ verifier 发现 2 项初版瑕疵（claim 1 表述不准、claim 6 漏列 U05）
 结论**，已据 V063 在 D037 内纠正。无 sprint/无 executor 产物/无 commit 可验；本 V 仅核实入口评估的
 事实一致性。**结论 = PASS（D037 STRATEGIC_GATE 事实与候选扫描完整、表述已纠正）。**
 
+
+---
+
+## V064: D038 段A 物理入口六门评估独立科学接收（PHYSICS_BACKED_TESTBED_UNAVAILABLE）
+
+> date: 2026-07-30
+> 关联：D038 / CP029 / 段A / 独立物理/文献 subagent（agent_02236f7f）
+> verifier：主控确定性复核（grep / find / 行级读取），未运行仿真/seed
+
+### 验证项
+
+- [x] 候选数 ≤3：subagent 评 a/b/c 各一（complex time-varying Jones / PDL / PMD-CD-跨符号记忆），共 3，未超。
+- [x] 门1-2 文献零命中（独立复核）：对四篇星地 coherent dual-pol FSO primary 做
+  `grep -ic -e PMD -e "polarization mode dispersion" -e "polarization-dependent loss" -e PDL -e "differential group delay" -e DGD -e birefring -e "jones matrix" -e "chromatic dispersion"` →
+  `papers/downloads/2026-07-08/9120341.md`=0、`10305071.md`=0、`10301506.md`=0、
+  `papers/doi/10.3390_app12073331/content.md`=0。PASS（事实成立：无星地 polarization-impairment primary）。
+- [x] sat.1553/s24248036/photonics10121331 dangling：`ls papers/doi/10.1002_sat.1553/`、
+  `10.3390_s24248036/`、`10.3390_photonics10121312/` 全部 CONFIRMED absent。这些是 params.py
+  引用但本地不存在的 dangling reference，不能当 primary。PASS。
+- [x] 现有 channel 已建模 SOP 旋转：`_dual_pol_channel.py:123-132` 核实 `theta=sop_rate*arange(N)`、
+  `[[c,s],[-s,c]]` 实旋转；各向同性大气无 birefringence/PMD/PDL 物理起源——门1 物理根因成立。PASS。
+- [x] D066 kill 范围核实：D066 在 groundwork topic `2026-07-10-dual-pol-osl-groundwork/decisions.md:3381`（非
+  live topic；subagent 行号标注 live decisions.md:3391-3416 为小误，但实质引用正确）。D066:3391-3394
+  Kill verified component PDL/PMD（8 cells max headroom 0.0804 dB / CI upper 0.2372 dB < 0.5 dB）；
+  D066:3415-3416 排除项明令"不继续追求 verified DGD≫T_S 或 sub-symbol Jones 新轴"——
+  **时变复 Jones 轴确已被关闭，非未测新问题**。PASS。
+- [x] 量级核算（门3）：唯一可溯源参数 Valjus sat.1553 DGD≤6ps=1.5% T_S（T_S=400ps @ R_SYM=2.5GBaud）、
+  PDL≤1dB；D066 实测 headroom 0.0804 dB ≪ 0.5 dB。即便取 stress DGD 40ps（10% T_S）也仅 ~0.1 symbol
+  记忆。效应不可见。PASS（门3 即便前门过也要 Kill）。
+- [x] 纪律遵守：subagent 全程只读（未改文件、未跑仿真、未建 testbed），公开检索仅取 abstract/metadata
+  做 cross-check 未下载私有全文。PASS。
+- [x] 未制造第四 impairment：三候选全失败 → `PHYSICS_BACKED_TESTBED_UNAVAILABLE`，符合用户"不制造第四"
+  硬约束 + D038 段A 退出条件。PASS。
+
+### 证据
+
+```text
+star_ground_primary_PMD_PDL_hits:
+  9120341.md(Paillier2020)=0
+  10305071.md(Zhou2024)=0
+  10301506.md(Zhang2023)=0
+  app12073331(Gu2022_IMDD)=0
+
+dangling_references_absent:
+  papers/doi/10.1002_sat.1553/  -> ABSENT
+  papers/doi/10.3390_s24248036/ -> ABSENT
+  papers/doi/10.3390_photonics10121312/ -> ABSENT
+
+existing_channel:
+  _dual_pol_channel.py:123 theta=sop_rate*arange(N)
+  _dual_pol_channel.py:127-132 real orthogonal rotation [[c,s],[-s,c]] + GG amplitude + AWGN
+
+D066_kill_scope (groundwork topic decisions.md:3381):
+  D066:3391-3394 component PDL/PMD 8 cells max headroom 0.0804 dB / CI upper 0.2372 dB < 0.5 dB
+  D066:3415-3416 excludes "verified DGD>>T_S or sub-symbol Jones new axis"
+
+magnitude (gate 3):
+  verified DGD<=6ps = 1.5% of T_S=400ps; PDL<=1dB
+  D066 measured headroom 0.0804 dB << 0.5 dB threshold
+  stress DGD 40ps = ~0.1 symbol memory (sub-symbol, already closed by D066)
+
+candidates_evaluated=3
+fourth_impairment_manufactured=NO
+simulation_or_seed_run=false
+files_modified_by_subagent=0
+```
+
+### 结论
+
+PASS / 接收 `PHYSICS_BACKED_TESTBED_UNAVAILABLE`。三候选无一过门1-3：
+fiber 现象（PMD/PDL/CD/复 Jones 双折射）源于各向异性玻璃波导，自由空间大气各向同性无物理起源；
+本地+公开检索无星地 coherent dual-pol polarization-impairment primary；唯一可溯源参数实测 headroom
+0.08 dB ≪ 0.5 dB。**时变复 Jones 轴已被 D066:3415-3416 关闭，非未测新问题。**
+
+段B/C/D 不运行（用户授权终止：三候选均失败即 `PHYSICS_BACKED_TESTBED_UNAVAILABLE`，不制造第四 impairment）。
+本终止不是方法进度（`mission_method_delta=NONE`），是可靠的"无物理可信 channel 自由度可扩展"诚实判定。
+仍 0 active carrier。下一合法动作交用户：CP028 选项 (2) 论文范围决策 或 (3) 收尾审计（选项(1) 已尽）。
+
+### 后续（FAIL/PARTIAL 时）
+
+不复活 fiber impairment、不把 abstract/dangling reference 当 primary、不强凑第四 impairment、
+不重开 D066 已关闭的 sub-symbol Jones 轴。诚实终止，建议转论文范围/新子问题。
+

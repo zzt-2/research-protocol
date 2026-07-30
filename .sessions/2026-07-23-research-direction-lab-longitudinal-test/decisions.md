@@ -2394,3 +2394,61 @@ _mve_results.json` + `SC-NDA-ML-MVE-SPEC.md:19`；foundation decisions D047/D048
 `foundation.decisions` 导入）；`_dual_pol_channel.py:104-132`；master-state.md:149；method-production.md
 （入口四门）、baseline-adjudication.md、evidence-and-claims.md、TL-32/FR-25。V063 独立核实候选评估
 与既有证据一致（claim 1 已据 V063 纠正表述、claim 6 已补 U05 扫描）。
+
+---
+
+## D038: 用户选定 CP028 三选项 (1)：授权一次端到端 channel 物理自由度扩展大包
+
+> status: active
+> date: 2026-07-30
+> 取代：D037 的"等待用户决策 / 禁止 PREFORMAL_METHOD_FACTORY + GENERAL_INFRASTRUCTURE_BUILD"部分（D037 的 STRATEGIC_GATE 事实判定与 CB1 forbidden 轴保留）
+> 被取代：无
+> 依据：用户原话: voice.md 2026-07-30（方案1授权）；CP028 STRATEGIC_GATE（D037/V063）；method-production.md（入口四门+终态五选一）、baseline-adjudication.md、evidence-and-claims.md；`_dual_pol_channel.py:104-132`（当前物理自由度=GG幅度+实SOP旋转+AWGN）；FR-18（环境升级需分析对所有方法竞争格局的影响）；TL-26/27（参数溯源+物理量级核算）、TL-22（物理前提核查）、TL-32/FR-25（Go=赢传统baseline，oracle只做Kill）、FR-20（参数溯源）；code-quality.md（P4 只扩不改）+ SIM-ORG.md + sim-preflight（信道共享/参数溯源/元数据注入）；CB1 comparator provenance `cb1_cell_runner.py:124-129`（Godard-with-z，provenance 已核）
+> 触发原话：`voice.md` 2026-07-30（用户授权方案1，端到端大包，不在选择入口或建设基础设施后停下来等待用户）
+
+### 决策
+
+1. 接收 CP028 `STRATEGIC_GATE` 已被用户以**选项 (1)** 解决：升级 channel 模型引入新物理自由度。
+   - 解禁 `forbidden_actions` 中的 `PREFORMAL_METHOD_FACTORY` 与 `GENERAL_INFRASTRUCTURE_BUILD`，**仅限本 D038 端到端大包，一次性、有界**。
+   - 其余 D037 forbidden 项全部保留：`CB1_COLLAPSE_RECOVERY_FAMILY`、`FREQUENCY_DOMAIN_SUBBAND_FAMILY`、`CLOSED_AXIS_REOPEN`、`POST_STEP4A_ADVANCE`、`PROTECTED_OWNER_MODIFY`、`PROTECTED_HISTORY_EDIT`、`PAPER_CLAIM`、`PRIVATE_FULLTEXT_ACQUISITION`、`ABSTRACT_AS_FULLTEXT` 仍禁止。
+2. **本轮绝不开 CB1 collapse-recovery 任何变体**（block-size、μ、更新调度、频域/子带、z-only、初始化、cost 变体——用户绑定结论）。
+3. 大包为严格的**串行四段链**，前一段不过则后一段禁止开跑；段间不在选择入口或建基础设施处停下等用户：
+   - **段A 物理入口筛选**：由独立文献/物理 subagent，从以下候选最多比三个——(a) complex time-varying Jones / differential phase coupling；(b) physically justified PDL；(c) PMD、色散或其他有跨符号记忆的 coherent dual-pol FSO impairment。不得假定任何现象在 LEO/星地 FSO 成立（fiber 结果不可直接移植）。每个候选过**六门**：①与当前 coherent dual-pol 星地 FSO 范围直接相关（file:line）②≥2 篇可访问 primary/fulltext 支持其存在/模型/参数范围③真实参数量级核算（当前 symbol rate/frame length/处理窗口内可见，差≥3 数量级直接 Kill）④明确传统/同任务/同信息/可独立调谐 conventional comparator⑤能写成具体 M-C-A（不是"加复杂信道看看有没有增益"）⑥预计约一天内可隔离实现+验证+小批诊断。**每门须给全文或源码 file:line**。oracle gap 不能当 Go 依据（TL-32/FR-25）。三个均失败 → 终态 `PHYSICS_BACKED_TESTBED_UNAVAILABLE`，建议转论文范围/新子问题，**不制造第四个 impairment**（与 D037"不制造第四弱候选"一致）。
+   - **段B 只扩一个 channel 自由度**：若且仅若一个候选六门全过——只实现排名第一的单一 impairment；新模块/显式 mode 隔离，**旧 channel 默认路径 byte-identical**（守 P4 只扩不改：新 `common/_*.py` 文件 + `params.py` 新 Pydantic 参数类 FR-20 全溯源，默认 identity/off 退化恢复旧输出）；不为让方法有用而扩大参数；参数全部绑定文献范围；建理论预期（TL-20）+ 单位测试 + 极限退化测试 + seed 可复现 + 旧模型 regression（TL-13 信道共享）。独立 verifier 先确认模型公式/单位/时间尺度/实现一致。testbed 未过物理/身份验证，不得进方法实验。
+   - **段C conventional baseline adjudication**：在新 testbed 先跑——原有 shared anchor + 一个任务匹配/receiver-visible/充分调谐的传统 comparator + 一个明显廉价扩展（如适用）；paired realization、dev 冻结、fresh held-out、raw rows、CI。只有记 `PROBLEM_SURVIVES_CONVENTIONAL_BASELINE` 才允许进 method factory；若传统 comparator 已解决，终态 `PROBLEM_RESOLVED_BY_CONVENTIONAL_COMPARATOR`，不包装成新方法。
+   - **段D 条件式 method factory**：若问题仍存，同一对话立即由独立 executor 构造并运行 3–5 个机制不同的最小方法。每方法只用 deployable receiver-visible 信息；单独 dev 调谐、fresh held-out；与 tuned conventional comparator 比；raw rows、paired CI、help/hurt/tie、语义 smoke、消融、复杂度齐全。只有新候选稳定超过 comparator 且排除额外信息/调参预算/实现伪影，才判 `DIAGNOSTIC_METHOD_SIGNAL`；signal 同时给 primary + fallback packaging。
+4. **独立验证与接收**：至少分离——物理模型/source verifier（段A/B）、实现与数值 verifier（段B/C/D）、主控最终科学裁决。允许一次包内确定性修复，不开第二个修复对话。
+5. 关闭时一次统一更新 topic-index/mission-log/D/V/必要 owner，一次 commit；不 push。
+6. 仍 0 active carrier 直到段D 出现 METHOD_SIGNAL 且过 promotion preflight（method-production.md）。oracle 上界只做 Kill 工具（段A⑥ / Step 4a 收尾），绝不当 Go 判据。
+
+### 理由
+
+CP028 的核心结论是"缺的是 problem-bearing 物理问题，不是 testbed/comparator 基础设施"——channel 源（`_dual_pol_channel.py`）只有 GG 幅度+实 SOP 旋转+AWGN，物理自由度本身窄。用户选项 (1) 直接针对这个根因：引入一个**物理可信、文献支撑、量级可见、有传统对手**的新 channel 自由度，让"找 baseline 指出其具体不足"（FR-23）这条链有可作用的对象。
+
+用户明确要求端到端大包、不在选择入口或建基础设施后停下等用户（voice.md 2026-07-30），故本 D038 不把四段拆成多个 T，而是单对话内串行执行，各段门控（六门/物理身份/PROBLEM_SURVIVES/METHOD_SIGNAL）仍独立硬性。段A 的六门是用户授权的更严上游物理 DOF 筛选屏（用于**选 impairment**），独立于 method-production.md 的入口四门（用于**选 method**）——两者都适用、不冲突。
+
+风险控制：①不假定 fiber 的 PMD/PDL/CD 在星地成立（TL-22 物理前提）→ 六门②强制 primary 全文与量级核算；②参数不为方法服务拍（TL-26）→ 段B 参数绑定文献；③oracle 不当 Go（TL-32）→ 段A⑥/D 明确；④旧路径 byte-identical（P4/TL-13）→ 段B 退化测试；⑤不制造第四弱候选/impairment → 段A 三候选失败即终止。
+
+### 排除的替代方案
+
+- 不开 CB1 collapse-recovery 任何变体（用户绑定结论 + D036/D037 forbidden axis）。本轮不是继续挖 CB1。
+- 不选 CP028 选项 (2)（论文范围决策）或 (3)（收尾审计）——用户已选定 (1)。
+- 不预设 impairment：complex Jones / PDL / PMD/CD 须段A 六门实筛，不凭标题联想（TL-30 跳步信号）。注意 complex Jones 与已 scoped-Kill 的 Pilot-Jones complex rescue（D066，cond≈1 静态）部分重叠，但**时变**复 Jones/differential phase（跨符号记忆）是不同问题，须段A 独立过门判其是否在星地成立、是否已被 D066 关闭。
+- 不用 oracle gap 当 Go（TL-32/FR-25）；不把 abstract 当 fulltext（AGENTS.md）；不获取私有全文。
+- 段A 三候选全失败时不强凑第四 impairment（用户"不制造第四"硬约束），直接 `PHYSICS_BACKED_TESTBED_UNAVAILABLE`。
+
+### 影响范围
+
+- live control 升 epoch 62→63 / CP028→CP029（暂记；段A 终态后再定 CP029 是否追加 method delta）；active_lane → `CHANNEL_PHYSICS_EXTENSION_DISPATCH`；authority → D038。
+- 解禁 `PREFORMAL_METHOD_FACTORY` + `GENERAL_INFRASTRUCTURE_BUILD`（仅本 D038 大包）。
+- 其余 forbidden 全部保留；protected owner/formal/Skill/thesis framework 不改、无 push。
+- mission_method_delta 在段D 出现 METHOD_SIGNAL 前保持 `NONE`。
+- 文档：topic-index control block 升级、voice.md 补 2026-07-30 方案1原话、mission-log 待段链完成后追加 CP029 行；decisions.md 本条；如段A 出 sprint 则对应 V###。
+
+### 范围确认
+
+本轮（治理记录）在 scope boundary 内：仅做 STRATEGIC_GATE 解决 + 控制面解禁 + 用户 voice 记录，无科学实验、无 protected owner/formal 改动、无 push、无新 infrastructure（段B 才允许）。无 scope change（用户选项 (1) 本就是 CP028 预登记的三选项之一，未扩大原始目标）。
+
+### 来源
+
+用户 2026-07-30 voice.md（方案1授权，端到端大包）；CP028/D037/V063；method-production/baseline-adjudication/evidence-and-claims；code-quality.md/SIM-ORG.md/sim-preflight；TL-20/22/26/27/30/32 + FR-18/20/23/25；`_dual_pol_channel.py:104-132`；`cb1_cell_runner.py:124-129`。

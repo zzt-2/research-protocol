@@ -87,3 +87,37 @@
   cell；block-8 相对 per-symbol ΔPI-SER=-0.00293，CI 跨0；不再运行 CB1 collapse-recovery 的
   block-size、μ、更新调度、频域/子带、z-only、初始化或 cost 变体；这是局部关闭，不外推为整个盲均衡
   或接收机方向 Kill；当前 active carrier 仍为 0]
+
+- "用户授权方案 1：用一个端到端大包完成"物理可信的 channel 扩展 → problem-bearing testbed →
+  conventional baseline adjudication → 条件式 method factory"。预算约一天，不在选择入口或建设
+  基础设施后停下来等待用户。…… 一、物理入口筛选：由独立文献/物理 subagent 从以下候选中最多比较
+  三个：complex time-varying Jones / differential phase coupling；physically justified PDL；PMD、
+  色散或其他具有跨符号记忆的 coherent dual-pol FSO impairment。不得假定这些现象在 LEO/星地 FSO
+  中成立。每个候选必须过六门 … 1.与当前 coherent dual-pol 星地 FSO 论文范围直接相关 … 2.至少两篇
+  可访问 primary/fulltext 来源支持其存在、模型和参数范围；3.用真实参数做量级核算 … 差三个数量级
+  以上直接 Kill；4.明确传统、同任务、同信息、可调谐的 conventional comparator；5.能写成具体 M-C-A，
+  而不是"增加复杂信道看看有没有增益"；6.预计可在约一天内完成隔离实现、验证和小批诊断。所有门必须给
+  全文或源码 file:line。oracle gap 不能作 Go 依据。若三个候选均失败，直接终止为
+  PHYSICS_BACKED_TESTBED_UNAVAILABLE 并建议转论文范围/新子问题，不继续制造第四个 impairment。
+  二、只扩一个 channel 自由度：若且仅若一个候选六门全过——只实现排名第一的单一 impairment；新模块/
+  显式 mode 隔离，旧 channel 默认路径必须 byte-identical；不为让方法有用而扩大参数；参数全部绑定
+  文献范围；建理论预期、单位测试、极限退化测试、seed 可复现和旧模型 regression；独立 verifier 先确认
+  模型公式、单位、时间尺度和实现一致。testbed 未通过物理/身份验证，不得进入方法实验。三、conventional
+  baseline adjudication：在新 testbed 上先运行——原有 shared anchor；一个任务匹配、receiver-visible、
+  充分调谐的传统 comparator；一个明显廉价扩展（如适用）；paired realization、dev freeze、fresh held-out、
+  raw rows、CI。只有记录 PROBLEM_SURVIVES_CONVENTIONAL_BASELINE 才允许进入 method factory。若传统
+  comparator 已解决问题，终态 PROBLEM_RESOLVED_BY_CONVENTIONAL_COMPARATOR，不包装成新方法。四、条件式
+  method factory：若问题仍存，同一对话立即由独立 executor 构造并运行 3–5 个机制不同的最小方法，不再
+  返回用户等待授权。要求：每个方法只用 deployable receiver-visible 信息；单独 dev 调谐，fresh held-out；
+  与 tuned conventional comparator 比较；raw rows、paired CI、help/hurt/tie、语义 smoke、消融和复杂度
+  记录齐全；只有新候选稳定超过 comparator，且排除额外信息、调参预算和实现伪影，才能判
+  DIAGNOSTIC_METHOD_SIGNAL；signal 同时给 primary packaging 和 fallback packaging。五、独立验证和接收：
+  至少分离——物理模型/source verifier；实现与数值 verifier；主控最终科学裁决。允许一次包内确定性修复，
+  不开第二个修复对话。最后统一更新 topic-index、mission-log、D/V、必要 owner，并一次 commit；不 push。
+  最终只回：1.选中的物理自由度及六门证据，或 PHYSICS_BACKED_TESTBED_UNAVAILABLE；2.testbed 与
+  baseline-adjudication verdict；3.method-factory terminal verdict；4.comparator、最佳候选、CI、
+  METHOD_SIGNAL/active carrier；5.worker-log、artifact、verifier 和 commit SHA。" → D038
+  [绑定结论：本轮不是继续挖 CB1；CB1 collapse-recovery family 已关闭，不运行其 block-size、μ、cost、
+  初始化、z-only 或频域换名变体；CB1 物理自由度窄是 CP028 根因，本大包针对此升级 channel；段A 六门是
+  上游物理 DOF 筛选屏（选 impairment），独立于 method-production 入口四门（选 method）；段间不停下
+  等用户]

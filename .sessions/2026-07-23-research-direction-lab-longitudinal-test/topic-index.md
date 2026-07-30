@@ -4,23 +4,23 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 62
+  control_epoch: 64
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
-  active_lane: STRATEGIC_GATE_AWAITING_USER_DECISION
-  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D037
-  decision_gate: CP028 STRATEGIC_GATE（S003→D037/V063）：CB1 轮换后三候选（A 传统 CPR VV / B NDA-ML 跨问题 / C U24 non-swap detection）六门评估，无一逐项过门；候选扫描 problem_truth≥4 四个（U24/U10/U05/U23）—— U05 HOLD_FOR_COMPETITOR_CLOSURE 且出路阻塞、U23 并入 U24；缺的是 problem-bearing 物理问题（非 testbed/comparator 基础设施）；channel 源（_dual_pol_channel.py:104-132）物理自由度窄。遵守"不制造第四弱候选"纪律，不开 sprint、不建 T028、不修 protected owner/Skill。仍 0 active carrier。
+  active_lane: PHYSICS_EXTENSION_TERMINATED_AWAITING_USER_DECISION
+  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D038
+  decision_gate: CP029（D038 段A→V064）：用户选项(1) channel 物理扩展大包段A 三候选（complex time-varying Jones / PDL / PMD-色散-跨符号记忆）六门评估无一过门1-3 → PHYSICS_BACKED_TESTBED_UNAVAILABLE。根因：fiber 现象（PMD/PDL/CD/复 Jones 双折射）源于各向异性玻璃波导，自由空间大气各向同性无物理起源；四篇星地 coherent FSO primary（Paillier2020/Zhou2024/Zhang2023/Gu2022）全文 polarization-impairment 零命中；唯一可溯源参数（DGD≤6ps=1.5%T_S、PDL≤1dB）D066 实测 headroom 0.0804dB≪0.5dB；时变复 Jones 轴已被 D066:3415-3416 关闭。遵守"不制造第四 impairment"纪律，段B/C/D 不运行，诚实终止。选项(1)已尽。
   allowed_actions:
     - RECOVER
     - PORTFOLIO_MAP
   forbidden_actions:
     - SCIENTIFIC_EXPERIMENT
-    - PREFORMAL_METHOD_FACTORY
+    - PREFORMAL_METHOD_FACTORY            # 段A 终止，本大包解禁已耗尽
     - CLOSED_AXIS_REOPEN
     - FREQUENCY_DOMAIN_SUBBAND_FAMILY
     - CB1_COLLAPSE_RECOVERY_FAMILY
     - FORMALIZATION_ONLY_PACKAGE
-    - GENERAL_INFRASTRUCTURE_BUILD
+    - GENERAL_INFRASTRUCTURE_BUILD        # 段A 终止，本大包解禁已耗尽
     - PRIVATE_FULLTEXT_ACQUISITION
     - ABSTRACT_AS_FULLTEXT
     - POST_STEP4A_ADVANCE
@@ -29,13 +29,17 @@ rdl_control:
     - FORMAL_MVE
     - PAPER_CLAIM
     - PROTECTED_OWNER_MODIFY
+    - ORACLE_GAP_AS_GO
+    - FOURTH_IMPAIRMENT_MANUFACTURE       # 段A 已穷尽 fiber→星地移植路径
+    - FIBER_IMPAIRMENT_RELOCATED_TO_STAR_GROUND  # 物理上不成立
+    - SUB_SYMBOL_JONES_AXIS_REOPEN        # D066:3415-3416 已关闭
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
-  mission_checkpoint: CP028
-  next_legal_action: 等待用户在 STRATEGIC_GATE 三选项中决策：(1) 升级 channel 模型引入新物理自由度（complex Jones/PMD/PDL/色散，FR-18，需 ~1 天基础设施授权）；(2) 论文范围决策（G1 bounded package + 局部负面 harvest 作毕业材料，或开新子问题）；(3) 接受 0 active carrier 下"协议稳定+可靠负面+1 bounded asset"收尾审计。用户决策前不开新 sprint/T。
+  mission_checkpoint: CP029
+  next_legal_action: 等待用户在 CP028 剩余选项中决策：(2) 论文范围决策（G1 bounded package + 局部负面 harvest 作毕业材料，或开新子问题）；(3) 接受 0 active carrier 下"协议稳定+可靠负面+1 bounded asset"收尾审计。选项(1) channel 物理扩展已尽（PHYSICS_BACKED_TESTBED_UNAVAILABLE）。用户决策前不开新 sprint/T。
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（CP028：CB1 轮换后三候选六门评估无一过门，输出 STRATEGIC_GATE；epoch 62 / CP028，仍 0 active carrier；不制造第四弱候选，交用户三选项决策）
+> 状态: active（CP029/D038 段A→V064：用户选项(1) channel 物理扩展大包段A 三候选六门评估无一过门1-3 → PHYSICS_BACKED_TESTBED_UNAVAILABLE；fiber 现象无星地物理起源、四 primary 零命中、D066 已关 sub-symbol Jones 轴；段B/C/D 不运行、不造第四 impairment、诚实终止；epoch 64 / CP029，仍 0 active carrier；交用户 CP028 剩余选项 (2)论文范围决策 / (3)收尾审计）
 > 创建: 2026-07-23 | 最后更新: 2026-07-30
 
 ## 专题信息
@@ -166,11 +170,18 @@ rdl_control:
 | S003→D035/V061 | T027 入口纠偏：频域/子带族 preflight 门1 失败（无物理自由度）撤回；原位重写为逐符号/更新粒度均衡族（四门全过），comparator=逐符号 SGD-CMA | S003 / T027 / V061 |
 | S003→D036/V062 | T027 端到端完成（最终纠偏+执行+验收一轮内无停顿）：verdict `NO_DIAGNOSTIC_SIGNAL`；CB1 更新粒度族轴关闭；疑似作用点（块末更新）因果性未被确认（collapse 在所有更新粒度下持续） | T027 / sprint-003 `689151c` / V062 |
 | S003→D037/V063 | CB1 轮换后三候选六门评估无一过门（A CPR/VV 仅 oracle-gap + verdict REJECTED；B NDA-ML 已完成赢家；C U24 检测线 D051 关闭 + 需 oracle 标签）；U05 hold 出路阻塞、U23 并入 U24；channel 物理自由度窄 → `STRATEGIC_GATE`，不制造第四弱候选 | D037 / V063（无 sprint/无 commit） |
+| S003→D038 段A/V064 | 用户选项(1) channel 物理扩展大包段A 三候选（complex time-varying Jones / PDL / PMD-色散-跨符号记忆）六门评估无一过门1-3 → `PHYSICS_BACKED_TESTBED_UNAVAILABLE`：fiber 现象无星地物理起源（各向同性大气无 birefringence）、四星地 primary 零命中、sat.1553 等三篇 dangling、唯一可溯源参数 D066 实测 headroom 0.0804dB≪0.5dB、时变复 Jones 轴已被 D066:3415-3416 关闭；段B/C/D 不运行、不造第四 impairment、诚实终止 | D038 / V064 / CP029（无 sprint/无 commit） |
 
 ## 未决项
 
-- CP028 `STRATEGIC_GATE` 已输出：CB1 轮换后无合法 problem-bearing 入口（缺的是物理问题，非基础设施）；
-- 仍 0 active carrier；**交用户三选项决策**（channel 升级 / 论文范围决策 / 收尾审计），用户决策前不开新 sprint/T；
+- CP028 `STRATEGIC_GATE` **已由用户选项(1)解决（D038/2026-07-30）**：授权一次性端到端大包升级
+  channel 物理自由度（complex time-varying Jones / PDL / PMD-色散-跨符号记忆），解禁 PREFORMAL_METHOD_FACTORY
+  + GENERAL_INFRASTRUCTURE_BUILD 仅本大包，段间不停下等用户；
+- **CP029/D038 段A 已终止（V064）**：选项(1) channel 物理扩展段A 三候选六门评估无一过门1-3 →
+  `PHYSICS_BACKED_TESTBED_UNAVAILABLE`；fiber 现象无星地物理起源、四星地 primary 零命中、
+  sat.1553 等三篇 dangling、D066 已关 sub-symbol Jones 轴；段B/C/D 不运行、不造第四 impairment；
+  PREFORMAL_METHOD_FACTORY + GENERAL_INFRASTRUCTURE_BUILD 解禁已耗尽重归 forbidden；**选项(1) 已尽**；
+- 仍 0 active carrier；段D 出 METHOD_SIGNAL 且过 promotion preflight 前不晋级；
 - 下一真实压缩事件需量化 elapsed time、files read、lane/gate match；
 - G1 只保留 bounded thesis asset，不重开科学修复；
 - 频域/子带均衡族仅在信道源码被升级到含色散/多径/频率选择性后才可能重审，当前作 rejected task brief 保留；
@@ -232,9 +243,67 @@ CLOSURE** 出路阻塞、U23 pt4 MERGE_WITH_U24）。**无遗漏独立入口**�
 T028、不修 protected owner/Skill/thesis framework。独立 verifier V063 **PASS**（事实成立；2 项初版
 瑕疵——候选 A 门1 表述不准、U05 漏列——均非承重不改结论，已据 V063 在 D037 内纠正）。**缺的是
 problem-bearing 物理问题（非 testbed/comparator 基础设施）**。仍 0 active carrier、
-mission_method_delta `NONE`（STRATEGIC_GATE 非方法进度）、无 push。
+    mission_method_delta `NONE`（STRATEGIC_GATE 非方法进度）、无 push。
+- **2026-07-30，live D038**：用户选定 CP028 STRATEGIC_GATE 三选项之 (1)——升级 channel 模型引入新物理自由度。
+  - 原因：CP028 判定"缺的是 problem-bearing 物理问题（非基础设施）"——channel 源
+    `_dual_pol_channel.py:104-132` 只有 GG 幅度+实 SOP 旋转+AWGN，物理自由度本身窄。用户选项(1)
+    直接针对该根因，且要求端到端大包、段间不停下等用户（voice.md 2026-07-30）。
+  - 新范围：**解禁** `PREFORMAL_METHOD_FACTORY` + `GENERAL_INFRASTRUCTURE_BUILD`（仅本 D038 大包，一次性
+    有界）；四段串行链——段A 物理入口六门筛选（独立 subagent，≤3 候选：complex time-varying
+    Jones/differential phase / physically justified PDL / PMD-色散-跨符号记忆；每门 file:line；三全败即
+    `PHYSICS_BACKED_TESTBED_UNAVAILABLE` 不制造第四）→ 段B 只扩一个 channel 自由度（新 common/_*.py
+    + params.py FR-20 参数类，旧路径 byte-identical；独立物理 verifier 先确认）→ 段C conventional
+    baseline adjudication（shared anchor + 任务匹配传统 comparator + 廉价扩展，`PROBLEM_SURVIVES_`
+    `CONVENTIONAL_BASELINE` 才进段D）→ 段D 条件式 method factory（独立 executor 跑 3–5 机制不同最小
+    方法，vs tuned comparator，`DIAGNOSTIC_METHOD_SIGNAL`/`NO_DIAGNOSTIC_SIGNAL`）。
+  - 影响：active_lane → `CHANNEL_PHYSICS_EXTENSION_DISPATCH`；authority → D038；control epoch 62→63。
+    其余 D037 forbidden 全保留（`CB1_COLLAPSE_RECOVERY_FAMILY`、`FREQUENCY_DOMAIN_SUBBAND_FAMILY`、
+    `CLOSED_AXIS_REOPEN`、`POST_STEP4A_ADVANCE`、`PROTECTED_OWNER_MODIFY`、`PROTECTED_HISTORY_EDIT`、
+    `PAPER_CLAIM`、`PRIVATE_FULLTEXT_ACQUISITION`、`ABSTRACT_AS_FULLTEXT`、`FORMAL_MVE`）；新增
+    `ORACLE_GAP_AS_GO`、`FOURTH_IMPAIRMENT_MANUFACTURE`、`SCIENTIFIC_EXPERIMENT_BEFORE_TESTBED_VERIFICATION`。
+    无 protected history / formal owner / Skill / thesis framework 改动；无 push。仍 0 active carrier；
+    段D 出 METHOD_SIGNAL 且过 promotion preflight 前不晋级。
+- **2026-07-30，live D038 段A 终止 / V064 / CP029**：段A 物理入口六门评估完成，三候选全失败。
+  - 原因：fiber 现象（PMD/PDL/CD/复 Jones 双折射）源于各向异性玻璃波导介质，自由空间大气各向同性
+    **无物理起源**；四篇星地 coherent dual-pol FSO primary（Paillier 2020 `9120341.md` / Zhou 2024
+    `10305071.md` / Zhang 2023 `10301506.md` / Gu 2022 `app12073331`）全文 PMD/PDL/DGD/Jones/色散
+    **零命中**；本地+公开检索**无星地 polarization-impairment primary**；params.py 引用的
+    sat.1553/s24248036/photonics10121312 三篇 content.md **本地不存在**（dangling）。唯一可溯源参数
+    （Valjus DGD≤6ps=1.5%T_S、PDL≤1dB）D066 实测 headroom **0.0804 dB ≪ 0.5 dB**。**时变复 Jones 轴
+    已被 D066（groundwork `2026-07-10-dual-pol-osl-groundwork/decisions.md:3381`，排除项 :3415-3416
+    "不继续追求 verified DGD≫T_S 或 sub-symbol Jones 新轴"）关闭，非未测新问题。**
+  - 段B/C/D 不运行（用户授权终止：三候选均失败即 `PHYSICS_BACKED_TESTBED_UNAVAILABLE`，不制造第四
+    impairment）。PREFORMAL_METHOD_FACTORY + GENERAL_INFRASTRUCTURE_BUILD 解禁已耗尽，重归 forbidden。
+  - 影响：active_lane → `PHYSICS_EXTENSION_TERMINATED_AWAITING_USER_DECISION`；authority 仍 D038；
+    control epoch 63→64；mission CP029（no-method=3，无 sprint）；新增 forbidden：
+    `FIBER_IMPAIRMENT_RELOCATED_TO_STAR_GROUND`、`SUB_SYMBOL_JONES_AXIS_REOPEN`。仍 0 active carrier、
+    `mission_method_delta=NONE`（终止非方法进度）、无 protected owner/formal/Skill/thesis framework 改动、无 push。
+  - **选项(1) 已尽**。下一合法动作交用户 CP028 剩余：(2) 论文范围决策（G1 bounded + 局部负面 harvest
+    或开新子问题）；(3) 接受 0 active carrier 下"协议稳定+可靠负面+1 bounded asset"收尾审计。
 
 **下一合法动作交用户三选项**：(1) 升级 channel 模型引入新物理自由度（complex Jones/PMD/PDL/色散，
 FR-18，需 ~1 天基础设施授权，会改变所有方法竞争格局）；(2) 论文范围决策（G1 bounded package +
 局部负面 harvest 作毕业材料，或开新子问题）；(3) 接受 0 active carrier 下"协议稳定+可靠负面+1
 bounded asset"收尾审计。用户决策前不开新 sprint/T。
+
+**2026-07-30 D038（用户选定选项1）**：用户已以选项(1)解决 CP028 STRATEGIC_GATE（voice.md
+2026-07-30）。授权一次性端到端大包，四段串行、段间不停下等用户：
+
+- **段A 物理入口筛选**（进行中）：独立文献/物理 subagent 比最多 3 候选——(a) complex time-varying
+  Jones / differential phase coupling；(b) physically justified PDL；(c) PMD、色散或其他有跨符号记忆的
+  coherent dual-pol FSO impairment。不假定任何 fiber 现象在星地成立。每候选过**六门**：①与当前
+  coherent dual-pol 星地 FSO 范围直接相关（file:line）②≥2 篇可访问 primary/fulltext 支持存在/模型/
+  参数范围③真实参数量级核算（当前 symbol rate/frame/处理窗口内可见，差≥3 数量级 Kill）④明确传统/
+  同任务/同信息/可调谐 conventional comparator⑤能写成具体 M-C-A⑥约一天内可隔离实现+验证+小批诊断。
+  每门给全文或源码 file:line。oracle gap 不当 Go。三全败 → `PHYSICS_BACKED_TESTBED_UNAVAILABLE`，
+  不制造第四 impairment。
+- **段B**（段A 通过后）：只扩六门全过的排名第一 impairment；新 `common/_*.py` + `params.py` 新参数类
+  （FR-20 全溯源），旧默认路径 byte-identical（P4/TL-13）；建理论预期（TL-20）+ 退化/regression 测试；
+  独立物理 verifier 先确认公式/单位/时间尺度。
+- **段C**（段B 物理身份 PASS 后）：shared anchor + 任务匹配传统 comparator + 廉价扩展；paired
+  realization / dev 冻结 / fresh held-out / raw / CI。`PROBLEM_SURVIVES_CONVENTIONAL_BASELINE` 才进
+  段D；传统 comparator 已解决则 `PROBLEM_RESOLVED_BY_CONVENTIONAL_COMPARATOR`。
+- **段D**（段C 问题仍存才触发）：独立 executor 构造运行 3–5 机制不同最小方法，单独 dev 调谐，
+  vs tuned comparator，raw/paired CI/help-hurt-tie/语义 smoke/消融/复杂度 →
+  `DIAGNOSTIC_METHOD_SIGNAL` 或 `NO_DIAGNOSTIC_SIGNAL`；signal 同时给 primary + fallback packaging。
+- 段链完成后一次统一更新 topic-index/mission-log/D/V/必要 owner，一次 commit 不 push。
