@@ -3,6 +3,32 @@
 > 2026-07-30 | campaign 5/10 已完成（P05），P06 入口准备 | 状态: ENTRY-PREP-NOT-RUN
 > 来源: S005（P05 mid-calibration 结论）+ D043/V069/CP034 + D039 campaign §4
 
+---
+
+## REJECTED (2026-07-31，绑定裁决 D044 撤回本入口)
+
+**原 P06 入口（E 信息复杂度边界 / window-length vs 估计方差）已被绑定裁决 D044 撤回，不计科学包。**
+
+撤回四条独立依据：
+1. **与旧 B1/P05-E 重复**：旧 B1 adaptive phase-window、P05-E window/complexity 已覆盖"窗口长度/信息复杂度"作用点。B1（CP007/CP008，`KILL_NO_ADAPTIVE_WINDOW_SPACE`）和 P05-E（D043 撤回）均在窗口长度自适应上判定。"窗口长度 vs Cramér-Rao/估计方差"是同一作用点的信息论重述，非机制正交新族。
+2. **NDA 已有 whole-window/segmented time support**：`_gg_time.py` 的 `gg_time_envelope` / `gg_time_envelope_blockwise`、`generate_shared_realization_dp` 已提供块级/块内时间相关窗口，窗口长度是已冻结可调参数非新物理自由度。
+3. **当前没有真实 latency/resource budget**：无真实 codec/latency 约束驱动窗口长度的部署 regret（P03 已证定点 proxy 无真实综合；P05-D 撤回因无真实 FEC）。窗口长度权衡无真实代价对象。
+4. **不能把旧机制改名为第五族**：把"窗口长度/信息复杂度"从已关闭 B1/P05-E 重新命名为 E_INFO_COMPLEXITY 不满足"不同机制族"（D039 §4）。E 族必须是一个**旧 F3-A 科学无效性的修复型入口**，而非旧机制换名。
+
+以下"推荐：E 信息复杂度边界"段及"入口四门预检"为**被撤回的入口设计**，保留供审计（见决策 D044），**不计有效 P06**。
+
+---
+
+## 绑定裁决 D044 指定的新 P06（2026-07-31）
+
+新 P06 = **`E_CAUSAL_CROSS_FRAME_HISTORY_INFORMATION`**（一次性修复型 `PROBLEM_BEARING_PROBE`）。性质：
+- 修复旧 F3-A 的科学无效性（`run_f3a_history.py:195-196` 把 marginal-MI max-difference 当成 conditional-MI；`state/current.yaml:161-170` 已标 `INVALIDATED_AS_CONDITIONAL_MI`）。
+- 不继承旧数值 +0.060 bits 或 +0.036 R²（仅作历史保留）。
+- 不调窗口、不做 DA/NDA selector、不做 Pilot-Jones、不微调 ButterflyCNN。
+- 本轮失败后关闭，不允许再开第二个 evaluator-repair 包。
+
+详见决策 D044、冻结问题定义、Phase 0/A/B/C 执行记录。
+
 ## 背景（campaign 状态）
 
 - accepted_valid=5/10；families_started = [A, B, C, D]（4 族）；同族连续 = D=1。

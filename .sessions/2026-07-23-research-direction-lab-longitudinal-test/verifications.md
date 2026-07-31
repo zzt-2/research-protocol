@@ -3708,3 +3708,41 @@ executor `PROBLEM_RESOLVED_BY_CONVENTIONAL_ONLINE_EQUALIZER` **成立**。raw→
 ### 主控 claim ceiling
 
 P05 产出**有效负面 + Ch3/Ch4 双口径警示资产**（frozen ButterflyCNN swap regret 被 corrected standard-CMA 在线恢复；强化 D022/D023 H2 适用边界 + 不变量 9/10/11）。claim ceiling 维持 `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`：不构成 active carrier、不冒充 formal method、不写论文 claim。D 族（ML polarization equalizer OOD safe online adaptation）首包完成，连续=1。
+
+## V070: P06 E_CAUSAL_CROSS_FRAME_HISTORY_INFORMATION 独立验收 — ACCEPT（7/7，修复旧 F3-A 科学无效性）
+
+> 2026-07-31 | 关联：D044 / CP035 / step-033 | verdict: `NO_CAUSAL_HISTORY_INCREMENT`
+
+### 验证对象
+
+P06 一次性修复型 PROBLEM_BEARING_PROBE（撤回旧 window/complexity 入口，新 E_CAUSAL_CROSS_FRAME_HISTORY_INFORMATION 修复旧 F3-A 的 conditional-MI 误标）。独立 verifier `verify_p06.py` 对 Phase 0 物理身份门 + Phase A 严格因果信息门结果做源码 AST + 数据 + 逻辑审计。
+
+### 7 项检查（全 PASS）
+
+1. **V1 causality alignment [PASS]**：`build_feature_matrix` 源码审计——X_cur = frame fi 摘要，X_hist = frames fi-K..fi-1（全 < fi，严格因果）。证据：函数体含 `range(fi - history_k, fi)` 与 `X_cur[i] = cur_vec`。
+2. **V2 truth/future leakage [PASS]**：summary dict 只含 receiver-visible trace 字段（cm_error/output_power/update_norm/w_norm/z_amp_max）。禁入变量（next_fixed_ser/next_fail/sX/sY/bitsX/bitsY/h/alpha/beta/seed/cell-id）在 summary 段零命中。target（next_fixed_ser/next_fail）只用 TX-truth 离线评分，绝不进特征。
+3. **V3 trajectory split disjoint [PASS]**：train(200-214)∩dev(215-224)=∅、train∩test(225-239)=∅、dev∩test=∅。
+4. **V6 seed discipline vs history [PASS]**：P06 seeds 与历史禁用集（11-50/61-130/30-99/131-150）零重叠。
+5. **V4 raw→aggregate recompute [PASS]**：dev_fail 从 raw per-frame rows 独立重算 = 428 = reported；test mean next_ser(raw)=0.177 与评估口径一致。
+6. **V5 ACF (phase0) [PASS]**：Phase 0 artifact 块 ACF max_relerr per condition = [0.0003,0.0003,0.0006,0.0006,0.0018,0.0018]（全 <0.10），经验 ACF 与 ρ^lag 一致。
+7. **V7 verdict unique & logic [PASS]**：reported=`NO_CAUSAL_HISTORY_INCREMENT`，从报告数字独立重导 = `NO_CAUSAL_HISTORY_INCREMENT`（floor_met=True；history R²=0.32 未超最强 temporal persistence R²=0.85 → beats_temporal=False → NO_SIGNAL）；verdict 在允许集内、逻辑一致。
+
+### 关键数字复核（独立从 raw 重算/源码核）
+
+- Phase 0：GG 边缘 KS 0.056–0.144、块 ACF relerr<0.2%、rho_frame fg30/100/1000=0.99/0.97/0.70、CMA 身份重跑 relerr=0。全 condition PASS。
+- Phase A test（n=1260 feature rows, 180 traj macro bootstrap）：persistence R²=0.853 > EWMA 0.853 > AR(1) 0.848 > history 0.320 > current-only 0.040。history−current MSE 减少 CI=[4.72e-03, 4.68e-02] CI_lo>0（history 真实 > current-only），但 history ≪ persistence。
+- failure-target logistic：history brier 0.161 < current-only 0.208（history 更好），但同样 sub-persistence（连续目标已证 persistence 主导）。
+- dev fail events 428/1140 floor=30 MET（问题在物理条件下成立，非 PROBLEM_ABSENT_AT_PHYSICAL_TIMESCALE）。
+
+### 不变项确认
+
+- 旧 F3-A `state/current.yaml:161-170` / `portfolio/current.yaml:173-181` 的 `INVALIDATED_AS_CONDITIONAL_MI` 标记不动；旧 +0.060 bits/+0.036 R² 不被新 P06 继承（新 P06 用 held-out 预测增量，不报告 MI）。
+- 不调窗口、不做 selector、不做 Pilot-Jones、不微调 ButterflyCNN（绑定裁决禁）；E 族首包，本轮失败关闭，不允许第二个 evaluator-repair 包。
+
+### 结论
+
+**ACCEPT（7/7 PASS）**。P06 端到端有效执行：Phase 0 物理身份门全过、Phase A 严格因果信息门诚实判定 `NO_CAUSAL_HISTORY_INCREMENT`（history 增量统计真实但被更便宜常规 temporal baseline 完全吸收），Phase B/C 按 gate 顺序不运行。修复了旧 F3-A 科学无效性。accepted_valid_packages 5→6（有效负面包），families_started 追加 E（第 5 族，"≥5 族"达成），仍 0 active carrier、claim ceiling `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`。
+
+### 主控 claim ceiling
+
+P06 产出**有效负面 + receiver-observability 边界资产**（跨帧信息被帧间持续性主导；deployable frame rate ≪ τ_c 下跨帧动力学边界；旧 F3-A conditional-MI 误标的方法论教训）。claim ceiling 维持 `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`：不构成 active carrier、不冒充 formal method、不写论文 claim。E 族（因果跨帧历史信息）首包完成，连续=1，本轮失败关闭。

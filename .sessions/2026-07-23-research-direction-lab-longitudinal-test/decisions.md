@@ -2723,3 +2723,56 @@ standard-CMA-continuation 两 cell recovered → `PROBLEM_RESOLVED_BY_CONVENTION
 ### 来源
 
 worker-log `step-032-p05-ml-ood-online-adaptation.md` + V069
+
+## D044: P06 绑定裁决（撤回旧 window/complexity 入口）+ E_CAUSAL_CROSS_FRAME_HISTORY_INFORMATION → NO_CAUSAL_HISTORY_INCREMENT
+
+> status: active
+> date: 2026-07-31
+> 取代：无（撤回 P06-entry-selection-NOT-RUN.md 的旧"E 信息复杂度边界/window-length"入口为 rejected brief；不取代任何 active 决策）
+> 被取代：无
+> 依据: 验证: `projects/simulation/results/p06_causal_cross_frame_history/p06_phase0_physical_identity.json`、`p06_phaseA_result.json`、`p06_terminal_verdict.json`、`p06_verifier_result.json` + 脚本 `projects/thesis-fso/direction-lab/scout/info-source-portfolio-probe/src/p06/{run_p06,build_datasets,build_all,phaseA_eval,verify_p06}.py` + `FROZEN_CONTRACT.md` + V070 独立验收 + 旧 F3-A 无效性 (`run_f3a_history.py:195-196` + `state/current.yaml:161-170` + `portfolio/current.yaml:173-181`) + binding decision（本轮用户执行指令）
+> 触发原话: 用户本轮 P06 执行指令（绑定裁决：撤回旧 P06 window/complexity 入口，新 P06 = E_CAUSAL_CROSS_FRAME_HISTORY_INFORMATION 一次性修复型 PROBLEM_BEARING_PROBE，同对话端到端执行不得停在入口修订或 Phase 0/A 后）
+
+### 决策
+
+1. **撤回旧 P06 入口**（E 信息复杂度边界 / window-length vs Cramér-Rao）。经绑定裁决四条 FAIL：①与旧 B1 adaptive phase-window、P05-E window/complexity 作用点重复；②NDA 已有 whole-window/segmented time support（`_gg_time.py` 块级/块内窗口）；③当前无真实 latency/resource budget 驱动窗口长度部署 regret（P03 定点 proxy 无真实综合、P05-D 无真实 FEC）；④不能把旧机制改名为第五族（TL-30）。保留 rejected brief（`P06-entry-selection-NOT-RUN.md` 加 REJECTED 段），**不计有效 P06**。
+2. 新 P06 = **`E_CAUSAL_CROSS_FRAME_HISTORY_INFORMATION`**（一次性修复型 `PROBLEM_BEARING_PROBE`）。修复旧 F3-A 科学无效性：`run_f3a_history.py:195-196` 把 `max(history_mi) - max(block0_mi)`（两个不同特征集上的边际 MI 最大值之差）当成 conditional MI（无 block-0 条件化）；`state/current.yaml:161-170` / `portfolio/current.yaml:173-181` 已标 `INVALIDATED_AS_CONDITIONAL_MI`。**不继承旧数值** +0.060 bits / +0.036 R²（仅历史保留）。
+3. **Phase 0 物理与身份门 ALL PASS**（6 conditions）：frame-level GG state transition（`_gg_time.py` AR(1) 块级，frame=140k sym dt=56µs，不显式逐符号模拟）；GG 边缘 KS 0.056–0.144（<0.15）、块 ACF 与 ρ^lag 一致 relerr<0.2%、rho_frame 与 exp(-Δt/τ_c) 一致（fg30=0.99/fg100=0.97/fg1000=0.70）、冻结 CMA 身份重跑 relerr=0 byte-identical 0 divergence。
+4. **Phase A 问题与严格因果信息门**：dev fail events 428/1140（frac=0.375，floor=30 MET）。test（180 trajectory 配对）：history-expanded ridge R²=0.320 > current-only ridge R²=0.040（MSE 减少per-traj macro mean=2.25e-02 CI=[4.72e-03,4.68e-02] CI_lo>0，**严格因果增量统计存在**）；**但 persistence R²=0.853（EWMA 0.853 / AR(1) 0.848）远优 history**。逐 condition（含动态 fg1000 rho=0.70）：persistence 0.68–0.95 全胜 history 0.04–0.88。**更便宜的常规 temporal baseline（last-value persistence）已远优解决**，无可区分 deployable 方法 → terminal verdict = **`NO_CAUSAL_HISTORY_INCREMENT`**。
+5. Phase B/C **不运行**（Phase A 未过 signal 门）。只 harvest observability boundary。
+6. verifier V070 **7/7 PASS / ACCEPT**（causality alignment、truth/future leakage、trajectory split、raw→aggregate、ACF、seed discipline、verdict 唯一性与逻辑全过；raw→aggregate dev_fail raw=428=reported，ACF relerr<0.2% 全 condition，test seed 与历史 11-150/30-99 零重叠）。
+
+### 核心结论
+
+- **修复了旧 F3-A 的科学无效性**：用严格因果 held-out 预测增量取代错误的 conditional-MI 声明。旧 +0.060 bits/+0.036 R² 不继承，`state/current.yaml`/`portfolio/current.yaml` 的 INVALIDATED 标记不动（旧 F3-A 仍 invalidated，新 P06 单独登记）。
+- **物理诚实**：deployable frame rate（dt=56µs）≪ τ_c（0.16–5.3ms），只有 f_G=1000Hz（Greenwood 上界）有非平凡跨帧动力学（rho=0.70），f_G=30/100 准静态。即便 fg1000，下一帧失效/性能被 last-value persistence 以 R²=0.75 主导——**跨帧信息被帧间持续性主导，非新方法空间**。
+- **history 增量真实但 sub-persistence**：history features 在 current-only 之外有统计显著预测增量（CI_lo>0），证明旧 F3-A 的"history 携带信息"直觉方向正确，但其量级被更便宜的常规 temporal baseline 完全吸收，无可区分 deployable action。
+
+### 否决了什么
+
+- 不把 history R²=0.32 > current-only R²=0.04 当 `CAUSAL_HISTORY_INFORMATION_SIGNAL`（persistence R²=0.85 远优，门控顺序：history 必须超最强传统 temporal comparator 才算 signal）。
+- 不构造 Phase B/C 方法（Phase A 未过 signal 门；门控顺序禁 A 未过跑 B/C）。
+- 不重开旧 F3-A 数值（+0.060/+0.036 invalidated 保留；新 P06 不继承）。
+- 不调窗口、不做 DA/NDA selector、不做 Pilot-Jones、不微调 ButterflyCNN（绑定裁决禁止）。
+- 本轮失败后关闭 E 族，**不允许再开第二个 evaluator-repair 包**（绑定裁决）。
+
+### 可复用部分
+
+- `run_p06.py`（Phase 0 物理身份门 + frame-level 数据集构建）、`phaseA_eval.py`（严格因果预测增量评估：current-only/history-expanded ridge + persistence/EWMA/AR(1) temporal baselines + per-traj bootstrap CI + logistic failure-target）、`verify_p06.py`（独立 verifier 7 项）：可复用于后续 cross-frame observability 子问题。
+- frame-level GG state transition + rho 覆盖（fg30/100/1000）+ 冻结 CMA 身份 freeze 资产。
+- harvest：(a) Ch3/Ch4 receiver-observability 边界证据（跨帧信息被帧间持续性主导）；(b) 方法论附录教训（marginal-MI max-difference ≠ conditional-MI）；(c) 物理诚实资产（deployable frame rate ≪ τ_c 下跨帧动力学边界）。
+
+### 影响范围
+
+- live control 升 epoch 69→70 / CP034→CP035；active_lane 维持 `CAMPAIGN_EXPLORATION_DISPATCH`；authority → D044。
+- `topic-index.md` control block：accepted_valid 5→**6**、current P06→P07、families_started 追加 `E_CAUSAL_CROSS_FRAME_HISTORY_INFORMATION`（第 5 族，"≥5 族"达成）、same_family_consecutive E=1、rolling_queue 追加 P06；`mission-log.md` 追加 CP035；`verifications.md` 追加 V070；`P06-entry-selection-NOT-RUN.md` 加 REJECTED 段。
+- protected owner/formal/Skill/thesis framework 不改、无 push、无新 infrastructure（p06_*.py 独立新文件，复用 common/_gg_time + common/_dual_pol_channel + atlas standard_cma_godard_with_z + cb1_evaluator）。
+- 仍 0 active carrier；claim ceiling 维持 `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`。旧 F3-A `state/current.yaml`/`portfolio/current.yaml` INVALIDATED 标记不动。
+
+### 范围确认
+
+本轮（撤回旧 P06 入口 + P06 端到端执行 Phase 0/A + 接收 + 治理更新）在 scope boundary 内：D039 campaign 授权范围内第 6 个有效包，遵守 problem-first 门控（Phase A problem-bearing probe → gate 未过 signal → 不进 B/C）。撤回旧入口是绑定裁决要求，保留 rejected brief 供审计。无 protected owner/formal/Skill/thesis framework 改动、无 push、无新大型基础设施。无包内确定性修复需要披露（一次跑通）。
+
+### 来源
+
+worker-log `step-033-p06-causal-cross-frame-history.md` + artifacts `projects/simulation/results/p06_causal_cross_frame_history/*` + V070 + 旧 F3-A `run_f3a_history.py` / `state/current.yaml` / `portfolio/current.yaml`

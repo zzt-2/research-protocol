@@ -167,7 +167,23 @@ effective_conclusions:  # reflect S011/D017/V006 reconciliation (e15ae60 invalid
       secondary component. Numbers retained as history only.
     ceiling: OBSERVABILITY_LOCAL_SLICE  # but scientifically INVALID as conditional-MI
     source: S012 / D020 / V009 (history) -> AMENDED by S013 / D021
-    validity: INVALIDATED_AS_CONDITIONAL_MI  # was VALID; D021/D022 retraction governs
+    validity: INVALIDATED_AS_CONDITIONAL_MI  # was VALID; D021/D022 retraction governs; STAYS INVALIDATED (P06/D044 does not restore)
+
+  - id: P06_CAUSAL_CROSS_FRAME_HISTORY_REPAIR
+    statement: >-
+      One-shot repair-type PROBLEM_BEARING_PROBE (D044) that replaces the old F3-A conditional-MI mislabel
+      with a strict-causal held-out predictive increment. Verdict NO_CAUSAL_HISTORY_INCREMENT: under
+      source-closed GG dynamics (rho=exp(-dt/tau_c), f_G in {30,100,1000} Hz, frame=140k sym dt=56us,
+      rho_frame=0.99/0.97/0.70), the strictly-causal history of receiver-visible frame summaries provides
+      a small but real predictive increment over current-only (test R2 history 0.320 vs current-only 0.040;
+      MSE-reduction per-traj macro CI=[4.72e-03,4.68e-02] CI_lo>0), BUT a cheaper conventional temporal
+      baseline (last-value persistence) already solves next-frame prediction far better (test R2 0.853,
+      per-condition 0.68-0.95 incl. dynamic f_G=1000 rho=0.70). No deployable method distinguishable from
+      cheap persistence. Does NOT inherit old F3-A numbers (+0.060 bits/+0.036 R2 retained as history only).
+      E family closed on this negative; no second evaluator-repair package allowed.
+    ceiling: LOCAL_SLICE / NONBINDING_DIAGNOSTIC
+    source: D044 / V070 / CP035 / worker-log step-033 / artifacts results/p06_causal_cross_frame_history/
+    validity: VALID_NEGATIVE  # effective valid package 6/10, no METHOD_SIGNAL, no active carrier
 
   - id: F4A_SOFT_GMI_BOUNDARY_SCALE_ARTIFACT_CONFIRMED
     statement: >-

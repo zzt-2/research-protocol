@@ -173,12 +173,19 @@ remaining_open:
   - id: TEMPORAL_MODEL_HISTORY
     label: multi-block causal state continuity / prediction
     dimension: temporal_information
-    status: UNRESOLVED   # D022: F3 family open but no valid Probe conclusion; F3-A was marginal-MI not conditional-MI
+    status: RESOLVED_NEGATIVE   # D044/V070: P06 one-shot repair PROBLEM_BEARING_PROBE answered NO_CAUSAL_HISTORY_INCREMENT; old F3-A INVALIDATED stays
     note: >-
       FROZEN 2026-07-22 (D022). F3-A "conditional-MI PASS" RETRACTED (D021): run_f3a_history.py:195-196
       was a marginal-MI max-difference, not conditional MI. F3-B is NOT a justified secondary component.
-      Family UNRESOLVED (open) but no valid Probe conclusion; not a main-method signal. Historical
-      numbers (+0.060 bits, +0.036 R^2) retained as history only.
+      Historical numbers (+0.060 bits, +0.036 R^2) retained as history only.
+      AMENDED 2026-07-31 (D044/V070/CP035): P06 E_CAUSAL_CROSS_FRAME_HISTORY_INFORMATION one-shot repair-type
+      PROBLEM_BEARING_PROBE replaced the invalidated conditional-MI claim with a strict-causal held-out
+      predictive increment. Verdict NO_CAUSAL_HISTORY_INCREMENT: history of receiver-visible frame summaries
+      adds a real (CI_lo>0) but sub-persistence predictive increment (test R2 history 0.320 vs current-only
+      0.040, but persistence R2 0.853 far superior; per-condition incl. dynamic f_G=1000 rho=0.70 persistence
+      0.68-0.95 beats history 0.04-0.88). No deployable method distinguishable from cheap persistence.
+      Family RESOLVED as effective-valid-negative (campaign pkg 6/10); old F3-A INVALIDATED status unchanged.
+      E family closed; no second evaluator-repair package.
   - id: DECODER_FEEDBACK_SOFT
     label: decoder/CRC/soft-output feedback to the front end
     dimension: cross_layer_information
