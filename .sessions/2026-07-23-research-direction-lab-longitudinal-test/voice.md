@@ -194,3 +194,19 @@
 - "P06 必须再选一个不同机制族，使前六包至少覆盖5个家族；同一对话准备 P06 入口但不运行；统一一次 commit，不 push。"
 - "最终只回：1. P05 terminal verdict；2. frozen ML、corrected CMA、传统在线 comparator、最佳候选关键数字与 CI；3. 是否形成 METHOD_SIGNAL/可包装的在线适配；4. campaign 5/10 中期校准与 P06 新机制族入口；5. worker-log、artifact、verifier、commit SHA。"
   → D043 / V069 / CP034（P05 verdict = PROBLEM_RESOLVED_BY_CONVENTIONAL_ONLINE_EQUALIZER，5/10 mid-calibration 完成）
+
+## 2026-07-31（P07 binding decision 执行指令，用户中转）
+
+- "执行 campaign Package 07。必须在同一对话端到端完成入口纠偏、Phase 0、科学实验、独立验证、治理更新和一次统一 commit；不要只写任务简报后停止。" → D045
+  （附绑定裁决长指令：worktree=`rdl-method-production-v2`/expected HEAD=3487d5a/branch=codex/rdl-method-production-v2；
+  当前 accepted_valid_packages=6/10，五个机制族，0 METHOD_SIGNAL，0 active carrier；
+  一、入口纠偏——P07 文件中的 F/G/H 只是未冻结名称扫描非合法入口（F timing offset 当前 1-sps 信道无过采样/脉冲成形/分数延迟；G 场景扩展无冻结 M-C-A 易重入 P04/FOE；H FEC/APSK coded chain blocked/APSK 环比已撤回），保留为 rejected brief 不运行；正式 P07=F_AGC_ADC_DYNAMIC_RANGE_UNDER_GG，与 P03 必须严格区分（P03=DA/NDA selector 内部统计量数字定点精度；P07=接收模拟前端可变增益/ADC 满量程/削顶/量化分辨率，不得复用 P03 uniform precision 结论）；
+  二、冻结 M-C-A——M=固定增益/固定满量程/有限位宽 I/Q ADC 后接冻结现有接收链；C=来源闭合 GG 动态幅度深衰落与强峰值时间交替；A=固定增益必须在两损害间折中（增益过高峰值 clipping/过低深衰落有效量化分辨率不足），目标判断矛盾是否真实产生接收性能损失、能否被标准因果 AGC 解决、robust/clipping-aware AGC 是否还有可区分增量；
+  三、Phase 0 可信 ADC/AGC adapter——信号链固定 channel output→过去样本决定下一 block analog gain→I/Q rail clipping→有限位宽 uniform ADC→原冻结接收机；要求 1.明确定义 signed I/Q quantizer/full-scale/step size/saturation flag 2.gain 只能由过去已量化接收样本/rail-hit/接收机可见统计决定 3.禁止 true channel/TX symbol/未来 block/未量化幅度真值进 decide 4.float-bypass 必须与原接收链逐 realization 身份一致 5.固定增益/传统 AGC/新候选共享相同 realization/位宽/full-scale/更新周期/延迟 6.位宽/full-scale/update interval 必须来自已有硬件/论文资产或预先冻结敏感性范围 7.至少覆盖 6/8/10 bit 8.无法建立可信 adapter 则 EXECUTION_INVALID 不计 P07；
+  四、Phase A 问题存在性——比较 ideal float ADC/dev-tuned 最佳固定增益 ADC/oracle per-block gain 仅作 headroom/Kill bound 不作 Go comparator；主要指标 PI-SER 或冻结主指标/EVM/clipping rate/effective occupied codes/相对 ideal ADC paired regret；dev 前冻结 problem MDE/至少多少物理条件过门/CI/help-hurt/跨位宽一致性/fresh seed ledger；若最佳固定增益在来源闭合 GG 下没有稳定跨位宽实质 regret 则 PROBLEM_ABSENT_ON_SOURCED_ADC_RANGE Phase B/C 不运行但有效 P07 可计入 7/10；
+  五、Phase B 强传统 comparator——至少 causal RMS AGC/peak-hold attack-release AGC/可选标准 log-domain AGC；传统 comparator 必须使用相同过去信息/相同更新预算/增益上下限/slew-rate/延迟/dev-only 调谐/test 冻结/不读 true GG/channel；若最强传统 AGC 已恢复到冻结容差则 PROBLEM_RESOLVED_BY_CONVENTIONAL_AGC 不进方法包装；
+  六、Phase C 方法工厂——仅当问题存在且最强传统 AGC 未解决时运行，至少 4 种构造（dual-time-constant attack-release/clipping-aware anti-windup/robust Huber-percentile amplitude estimator/hysteretic two-range gain/可选 uncertainty-gated 但不得用 ML 充数），每候选必须不同作用机制不得同公式换超参，优先检查 cheap alternative，只有最佳新候选在 fresh held-out test 上超过最强传统 AGC/达冻结 MDE/paired CI 不跨零/跨多位宽湍流条件方向一致/没靠更多更新次数或更大信息预算获益/消融支持 clipping-resolution 机制才允许 DIAGNOSTIC_METHOD_SIGNAL，否则只能 NO_DIAGNOSTIC_METHOD_SIGNAL/PROBLEM_RESOLVED_BY_CONVENTIONAL_AGC/EXECUTION_INVALID，若得 signal 只登记 pre-formal carrier 不直接宣称论文主方法；
+  七、P06 措辞边界——不修改不重跑 P06 但后续记录必须准确表述 history-expanded>current-only、persistence>history-expanded 因此是"没有超过强传统 temporal baseline 的方法增量"不是"历史完全无信息"；
+  八、治理与验证——有效科学执行才把 campaign 6→7/新增 F_AGC_ADC_DYNAMIC_RANGE_UNDER_GG/不修改 Skill/controller/formal owner/protected history/P08 只准备不同机制入口不运行/executor verifier 分离/verifier 独立核查 ADC 数学/float bypass/causal AGC/truth leakage/dev-test 隔离/paired realization/raw→aggregate/跨位宽判据/terminal verdict/artifacts 保存 raw rows/aggregates/contract/source hashes/seed ledger/最后只统一 commit 一次不 push；
+  最终只汇报五项：1.P07 terminal verdict 2.ideal/fixed/传统AGC/最佳候选关键指标 paired Δ与CI 3.clipping-resolution 问题是否存在是否产生 METHOD_SIGNAL/active carrier 4.campaign 7/10 状态与 P08 入口 5.worker-log/artifact/verifier/changed files/commit SHA）
+  [绑定结论：本轮端到端完成 P07，中间不参与技术判断；verifier V071 10/10 ACCEPT，verdict NO_DIAGNOSTIC_METHOD_SIGNAL，campaign→7/10]

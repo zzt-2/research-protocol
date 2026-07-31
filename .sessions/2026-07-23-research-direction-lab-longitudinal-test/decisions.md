@@ -2776,3 +2776,58 @@ worker-log `step-032-p05-ml-ood-online-adaptation.md` + V069
 ### 来源
 
 worker-log `step-033-p06-causal-cross-frame-history.md` + artifacts `projects/simulation/results/p06_causal_cross_frame_history/*` + V070 + 旧 F3-A `run_f3a_history.py` / `state/current.yaml` / `portfolio/current.yaml`
+
+## D045: P07 绑定裁决（撤回旧 F/G/H 扫描）+ F_AGC_ADC_DYNAMIC_RANGE_UNDER_GG → NO_DIAGNOSTIC_METHOD_SIGNAL
+
+> status: active
+> date: 2026-07-31
+> 取代：无（撤回 P07-entry-selection-NOT-RUN.md 的旧 F/G/H 扫描为 rejected brief；不取代任何 active 决策）
+> 被取代：无
+> 依据: 验证: `projects/simulation/results/p07_agc_adc_dynamic_range/p07_phase0_smoke.json`、`p07_phaseA_dev.json`、`p07_phaseBC.json`、`p07_terminal_verdict.json`、`p07_verifier_result.json` + 脚本 `projects/simulation/explore/nda-awgn-tracking-sandbox/{_p07_adapters,_p07_runner,_p07_batch,_p07_smoke,_p07_phaseA,_p07_phaseBC,_p07_verify}.py` + `projects/thesis-fso/direction-lab/scout/info-source-portfolio-probe/src/p07/FROZEN_CONTRACT.md` + V071 独立验收 10/10 ACCEPT + binding decision（本轮用户执行指令）
+> 触发原话: 用户本轮 P07 执行指令（绑定裁决：撤回旧 P07-entry F/G/H 扫描，新 P07 = F_AGC_ADC_DYNAMIC_RANGE_UNDER_GG，同对话端到端执行不得停在入口修订或 Phase 0/A/B 后）
+
+### 决策
+
+1. **撤回旧 P07 入口**（F symbol-timing offset / G 场景扩展 / H FEC/APSK）。经绑定裁决独立审计三条 FAIL：①F——`common/_channel.py:97-169` 与 `common/_dual_pol_channel.py` 信道只有逐符号 `signal = tx*sqrt(h)*carrier` + AWGN，**无过采样 / 脉冲成形 / 分数延迟**（grep `oversamp|pulse_shape|rrc|rcos|upsample|fractional_delay` 零命中）；1-sps 下 symbol-timing offset 没有可作用物理自由度；②G——未冻结 M-C-A；易重入已关闭 P04（连续 GG OOD）/ FOE-residual 轴（T030 撤回）；③H——coded chain blocked（P05-D 撤回：无真实 codec / threshold eval 非 FEC）；APSK 环比入口 P04 已撤回（γ 是调制配置非信道随机量，selector 不读环比）。保留 rejected brief（`P07-entry-selection-NOT-RUN.md` 加 REJECTED 段），**不计有效 P07**。
+2. 新 P07 = **`F_AGC_ADC_DYNAMIC_RANGE_UNDER_GG`**（candidate-universe.yaml U07，ap=AP06）。**严格区别于 P03**：P03 = selector 内部定点 Q(W,F) 数字后处理（控制路径）；P07 = 模拟前端可变增益 + ADC 满量程/削顶/量化分辨率，作用于 **`rx_raw` 在整个冻结接收链之前**。
+3. **Phase 0 可信因果 AGC/ADC adapter ALL 5 BLOCKER gates PASS**：signed I/Q quantizer（`code=clip(round_half_up(gain·value/step), ±(2^(W-1)-1))`，`step=2·FS/2^W`，饱和不 wrap）；G1 ADC math（round-half-up +0.5LSB→+1/-0.5LSB→0、饱和不 wrap W4 100·FS→7 非 -8、signed 对称 ±0.3→±38 @W8）；G2 float-bypass 重构 ≤2^-40（W=64+FS=1e6）；G3 **float-bypass 接收链 byte-identical `run_case_multidelta`**（FixedGainAGC(g=1,W=64) 与原 run_case_multidelta 逐 cell 0 mismatch，weak/mod/strong ×{5,9,15,21}×seeds{0,1,2}）；G4 因果性（window-0=nominal，gain 随过去 RMS 单调，确定性重放）；G5 信息边界 AST（AGC class 体 + `quantize_iq` 体零 forbidden 子串 h/alpha/beta/tx/phi/bits/oracle/future）。
+4. **Phase A 问题成立**（dev grid 3 scenes×SNR{5,9,13,17,21}×dev seeds{0..4}=75 cell，FROZEN_CONTRACT §4 冻结代表性子集 5 SNR 跨低-高非单点；MDE=0.15；fixed-gain ladder {0.5,0.75,1.0,1.25,1.5,2.0,2.5,3.0,4.0} 预冻结非 cherry-pick）：dev-best fixed-gain g=0.75 pooled regret **+1.028/+0.924/+0.909 dB** W6/8/10（CI=[+0.886,+1.170]/[+0.799,+1.049]/[+0.788,+1.031]，CI_low 全>0），14-15/15 cell ≥MDE；clipping rate 随 gain 单调（g0.5→2.5%、g0.75→15%、g1.0→30%、g4.0→91%），低 gain 侧分辨率损失 + 高 gain 侧峰值 clipping —— **clipping–resolution 折中真实存在**。Phase A 门过 → 进入 Phase B。
+5. **Phase B 传统 comparator 部分缓解但未解决**：最强传统 AGC=causal-RMS（dev-tuned，公平 3-config 预注册集，相同过去信息/更新预算/增益上下限/延迟），把 regret 从 +0.91~+1.03 dB 降到 **+0.896/+0.794/+0.767 dB**（缓解 0.12-0.20 dB，仍 5-6×MDE），`conv_resolves=False` → 进入 Phase C。
+6. **Phase C 方法候选无一稳定超最强传统 AGC**（held-out 3 scenes×SNR{5,9,13,17,21}×seeds{30..34}=75 cell，paired delta=conv−cand 正=cand 更好）：最佳候选 dual_tc paired delta = **−0.016/−0.004/−0.017 dB**（CI 全跨 0，|Δ|≪MDE=0.15）；clipping_aware −0.21、robust_pct −0.12、hysteretic −0.47 全 ≤0（候选无一胜过 causal-RMS，多数更差）。无可区分 deployable action → terminal verdict = **`NO_DIAGNOSTIC_METHOD_SIGNAL`**。
+7. verifier V071 **10/10 PASS / ACCEPT**（V1 ADC math / V2 float-bypass 身份独立重跑 / V3 信息边界 AST / V4 因果性 / V5 raw→aggregate relErr≤1e-9 + paired_regret identity / V6 seed 隔离 dev0-4·held-out30-34 无71-80 / V7 paired realization batched 等价 direct / V8 Phase-A terminal verdict re-derive / V9 frozen 文件未改 / V10 Phase-BC aggregate recompute + verdict re-derive）。
+
+### 核心结论
+
+- **clipping–resolution 折中真实存在**（Phase A 固定增益 +0.9-1.0 dB，机制由 clipping rate 单调随 gain 证实）。
+- **标准 causal AGC 部分缓解但未解决**（Phase B +0.77-0.90 dB 仍远高于 MDE）。
+- **4 个机制不同的 robust/clipping-aware AGC 无一稳定超 dev-tuned causal-RMS**（Phase C 最佳 dual_tc |Δ|≪MDE CI 跨0，clipping_aware/robust_pct/hysteretic 全更差）。
+- **不是"问题不存在"也不是"常规已解决"**，是"问题真实存在、常规部分缓解、无方法增量"——迄今机制最完整的诚实负面。
+
+### 否决了什么
+
+- 不把 dual_tc 的 −0.016~−0.017 dB 当 `DIAGNOSTIC_METHOD_SIGNAL`（|Δ|≪MDE，CI 跨0；门控顺序：候选必须稳定超最强传统 AGC 达 MDE 才算 signal）。
+- 不构造 Phase C 之外的新候选（4 机制已覆盖 attack/release/anti-windup/percentile/hysteretic 主要轴；cheap-alternative 已检）。
+- 不重开已关闭轴（A/E 族 / NDA-ML 本体 / G1 / CB1 / Pilot-Jones / FOE-residual，TL-30）。
+- 不把 P07 的 symbol-timing-offset（F）/场景扩展（G）/FEC-APSK（H）子轴换名重开（已撤回"无可作用物理自由度/重入已关闭轴"）。
+- 不混淆 P07 与 P03（P03=selector 内部定点数字后处理；P07=模拟前端 AGC+ADC 在接收链之前——不同作用位置/不同对象）。
+
+### 可复用部分
+
+- `_p07_adapters.py`（signed I/Q quantizer + fixed/causal-RMS/peak-hold/log-domain AGC + 4 候选）、`_p07_runner.py`（float-bypass runner）、`_p07_batch.py`（批量评估，one channel-gen/cell）、`_p07_smoke.py`（Phase 0 五门）、`_p07_phaseA.py`、`_p07_phaseBC.py`、`_p07_verify.py`（独立 verifier 10 项）：可复用于后续 AGC/ADC 子问题。
+- float-bypass 身份验证资产（AGC+ADC 在 float-bypass 下 byte-identical 冻结接收链）作 Phase 0 模板。
+- harvest：(a) Ch5 接收机 8-10 bit uniform signed I/Q ADC + causal-RMS AGC 是该冻结接收链在源闭合 GG 下的合理模拟前端配置（fixed-gain 与 causal-RMS 的 clipping/量化边界曲线）；(b) Ch3/Ch4 鲁棒性边界（该 clipping–resolution 折中不是 ML/robust-AGC 可优于标准 causal-RMS 的 deployable 子问题）—— 与 P06 一致的 "receiver-visible 信号被常规 baseline 吸收" 趋势。
+
+### 影响范围
+
+- live control 升 epoch 70→71 / CP035→CP036；active_lane 维持 `CAMPAIGN_EXPLORATION_DISPATCH`；authority → D045。
+- `topic-index.md` control block：accepted_valid 6→**7**、current P07→P08、families_started 追加 `F_AGC_ADC_DYNAMIC_RANGE_UNDER_GG`（第 6 族）、same_family_consecutive F=1、rolling_queue 追加 P07；`mission-log.md` 追加 CP036；`verifications.md` 追加 V071；`P07-entry-selection-NOT-RUN.md` 加 REJECTED 段。
+- protected owner/formal/Skill/thesis framework 不改、无 push、无新 infrastructure（p07_*.py 独立新文件，复用 common/_channel + frozen receiver + _p01 probe）。
+- 仍 0 active carrier；claim ceiling 维持 `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`。
+
+### 范围确认
+
+本轮（撤回旧 P07 F/G/H 入口 + P07 端到端执行 Phase 0/A/B/C + 接收 + 治理更新）在 scope boundary 内：D039 campaign 授权范围内第 7 个有效包，遵守 problem-first 三阶段门控（Phase A problem-bearing probe 门过 → Phase B 传统 comparator 部分缓解未解决 → Phase C 方法候选无增量）。撤回旧入口是绑定裁决要求，保留 rejected brief 供审计。无 protected owner/formal/Skill/thesis framework 改动、无 push、无新大型基础设施。1 次包内确定性修复（Phase-BC JSON 序列化 numpy bool_ bug）已披露。
+
+### 来源
+
+worker-log `step-034-p07-agc-adc-dynamic-range.md` + artifacts `projects/simulation/results/p07_agc_adc_dynamic_range/*` + V071 + FROZEN_CONTRACT.md + binding decision

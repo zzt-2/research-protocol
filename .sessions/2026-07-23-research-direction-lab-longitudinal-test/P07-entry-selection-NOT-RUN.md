@@ -3,6 +3,27 @@
 > 2026-07-31 | campaign 6/10 已完成（P06），P07 入口准备 | 状态: ENTRY-PREP-NOT-RUN
 > 来源: D044/V070/CP035（P06 NO_CAUSAL_HISTORY_INCREMENT，E 族首包即关闭，第 5 族"≥5 族"达成）+ D039 campaign §4
 
+---
+
+## ⚠️ REJECTED BRIEF（2026-07-31，D045 撤回 — 不计有效 P07）
+
+下方原始 F/G/H 扫描经 binding decision D045 独立审计三条 FAIL，整体撤回为 rejected
+brief。**正式 P07 = `F_AGC_ADC_DYNAMIC_RANGE_UNDER_GG`**，完整冻结合同见
+`projects/thesis-fso/direction-lab/scout/info-source-portfolio-probe/src/p07/FROZEN_CONTRACT.md`。
+
+撤回理由：
+- **F symbol-timing offset**：`common/_channel.py:97-169` 与 `common/_dual_pol_channel.py`
+  信道只有逐符号 `signal = tx*sqrt(h)*carrier` + AWGN，**无过采样 / 脉冲成形 / 分数延迟**
+  （grep `oversamp|pulse_shape|rrc|rcos|upsample|fractional_delay` 零命中）。1-sps 下
+  symbol-timing offset 没有可作用物理自由度。
+- **G 场景扩展**：未冻结 M-C-A；易重入已关闭 P04（连续 GG OOD）/ FOE-residual 轴（T030 撤回）。
+- **H FEC/APSK**：coded chain blocked（P05-D 撤回：无真实 codec / threshold eval 非 FEC）；
+  APSK 环比入口 P04 已撤回（γ 是调制配置非信道随机量，selector 不读环比）。
+
+下方正文仅作审计保留，不得作为可运行入口。
+
+---
+
 ## 背景（campaign 状态）
 
 - accepted_valid=6/10；families_started = [A, B, C, D, E]（**5 族，"≥5 族"已达成**）；A/E 已关闭，B/C/D 连续=1。

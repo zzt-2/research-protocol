@@ -3746,3 +3746,24 @@ P06 一次性修复型 PROBLEM_BEARING_PROBE（撤回旧 window/complexity 入�
 ### 主控 claim ceiling
 
 P06 产出**有效负面 + receiver-observability 边界资产**（跨帧信息被帧间持续性主导；deployable frame rate ≪ τ_c 下跨帧动力学边界；旧 F3-A conditional-MI 误标的方法论教训）。claim ceiling 维持 `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`：不构成 active carrier、不冒充 formal method、不写论文 claim。E 族（因果跨帧历史信息）首包完成，连续=1，本轮失败关闭。
+
+---
+
+## V071: P07 F_AGC_ADC_DYNAMIC_RANGE_UNDER_GG — independent verifier (10/10 ACCEPT)
+
+> 2026-07-31 | 关联: D045 / P07 / CP036 | 结论: **PASS (10/10) / ACCEPT**
+
+独立 verifier `_p07_verify.py` 重算/审计 P07 结果（不依赖 executor 的聚合）：
+
+- **V1 ADC math**（PASS）：round-half-up（+0.5LSB→+1/-0.5LSB→0）、饱和不 wrap（W4 100·FS→7 非 -8）、signed I/Q 对称（±0.3→±38 @W8）。
+- **V2 float-bypass 身份**（PASS）：独立重跑 FixedGainAGC(g=1,W=64) 与 `run_case_multidelta` 逐 cell byte-identical（weak/strong/moderate ×{9,15,21}×seeds{0,1,2}，0 mismatch，含 per_window_da_err/nda_err 数组）。
+- **V3 信息边界 AST**（PASS）：`_p07_adapters.py` 所有 AGC class 体 + `quantize_iq` 体零 forbidden 子串（h/alpha/beta/tx/phi/bits/oracle/true_h/r['h']/future）。
+- **V4 因果性**（PASS）：window-0 gain=nominal（1.0），gain 随过去 RMS 单调（小 RMS→大 gain），确定性重放。
+- **V5 raw→aggregate recompute**（PASS）：重载 Phase-A raw_rows，重算 per-bitwidth pooled regret 匹配 executor 聚合 relErr≤1e-9；paired_regret identity（10log10(sel/ideal_sel)）对前 2000 row 零违反。
+- **V6 seed 隔离**（PASS）：dev seeds{0..4}，held-out seeds{30..34}，无 71-80 污染。
+- **V7 paired realization**（PASS）：`eval_cell_fixed_gains` 批量（one channel-gen/cell）的 ideal_float selected_errors == 直接 `run_case_with_adc` 在同 (scene,g,seed) 的结果（weak/strong ×{9,15}）。
+- **V8 terminal verdict (Phase A)**（PASS）：独立 re-derive problem_established（per-bitwidth pooled mean≥MDE AND CI_lo>0 AND ≥3 cell，跨位宽一致）与报告一致。
+- **V9 frozen files 未改**（PASS）：`git diff --stat HEAD` 对 common/、params.py、_a4_switch_common768_30seed.py、_a4_branchrouted_30seed.py、sc_nda_ml_sim.py、_p01_cpr_snr_mismatch_probe.py 全空。
+- **V10 Phase-BC aggregate recompute + verdict**（PASS）：重载 Phase-BC heldout_rows，重算 conventional regret per family|W 匹配 relErr≤1e-9；re-derive terminal verdict（conv_resolves → PROBLEM_RESOLVED / cross_consistent → DIAGNOSTIC_METHOD_SIGNAL / else NO_DIAGNOSTIC_METHOD_SIGNAL）与报告 `NO_DIAGNOSTIC_METHOD_SIGNAL` 一致。
+
+**结论**：P07 verdict `NO_DIAGNOSTIC_METHOD_SIGNAL` 唯一正确、数据可独立复算、信息边界干净、因果性成立、frozen 文件未改。claim ceiling 维持 `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`：不构成 active carrier、不冒充 formal method、不写论文 claim。F 族（AGC/ADC 动态范围）首包完成，连续=1，**未关闭**（NO_SIGNAL 非关闭裁决；P08 可选 F 第 2 包换子轴连续≤2，但 F/G/H timing/scenario/FEC 子轴已撤回不得重开）。
