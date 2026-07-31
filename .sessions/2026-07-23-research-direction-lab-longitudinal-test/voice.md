@@ -210,3 +210,15 @@
   八、治理与验证——有效科学执行才把 campaign 6→7/新增 F_AGC_ADC_DYNAMIC_RANGE_UNDER_GG/不修改 Skill/controller/formal owner/protected history/P08 只准备不同机制入口不运行/executor verifier 分离/verifier 独立核查 ADC 数学/float bypass/causal AGC/truth leakage/dev-test 隔离/paired realization/raw→aggregate/跨位宽判据/terminal verdict/artifacts 保存 raw rows/aggregates/contract/source hashes/seed ledger/最后只统一 commit 一次不 push；
   最终只汇报五项：1.P07 terminal verdict 2.ideal/fixed/传统AGC/最佳候选关键指标 paired Δ与CI 3.clipping-resolution 问题是否存在是否产生 METHOD_SIGNAL/active carrier 4.campaign 7/10 状态与 P08 入口 5.worker-log/artifact/verifier/changed files/commit SHA）
   [绑定结论：本轮端到端完成 P07，中间不参与技术判断；verifier V071 10/10 ACCEPT，verdict NO_DIAGNOSTIC_METHOD_SIGNAL，campaign→7/10]
+
+## 2026-07-31（P07-R 科学完整性修复执行指令，用户中转）
+
+- "执行 P07-R 科学完整性修复。不要启动 P08，不把本轮另计为第八包。"
+- "本轮必须在同一对话完成：根因复现 → 最小修复 → 物理消融 → fresh 重跑 → 独立 verifier → 治理纠偏 → 单次 commit。不 push。"
+- "一、先冻结审计结论 —— P07 当前科学结论不得继续使用。需要验证的三个根因假设：H1 SCALE…H2 CONTROL…H3 LIFECYCLE…在任何修复前，分别建立最小失败测试…必须保存修复前失败证据。不能一边改一边猜。"
+- "二、治理纠偏 —— 创建新的纠偏决策和验证血缘：D046 supersedes/amends D045 的科学有效性部分；V072 独立复核并取代 V071 的科学层结论；V071 保留，不删除，标为'合同一致性通过但物理正确性漏审'；原 P07 artifacts 保留并标 INVALIDATED，不覆盖。在修复重新得到有效科学结果前：accepted_valid_packages：7 → 6；current：P07-R；P08：暂停。最终若修复实验有效完成，再把计数恢复为 7/10；若仍 EXECUTION_INVALID，则保持 6/10。"
+- "三、实现正确的 gain-aware ADC 链…不要直接修改旧 P07 产物来隐藏错误。新建明确的 p07r repair 路径或版本化文件。"
+- "八、重新裁决问题…旧 P07 的 dev/test seeds 和输出已经观察，最终裁决必须使用全新且与 campaign 历史不相交的 dev/test trajectory ledger。保持原 MDE=0.15 dB，除非有预先登记且独立验证的理由，不得事后更改。"
+- "十、收尾…若修复后形成有效 P07：campaign 恢复 7/10，再准备 P08 但不运行。若 EXECUTION_INVALID：campaign 保持 6/10，不得用治理完成冒充科学包。不修改 Skill/controller/formal owner/protected history。写 sim-preflight usage log。单次统一 commit，不 push。"
+  → D046 / V072-PART1+2
+  [绑定结论：本轮端到端完成 P07-R 科学完整性修复；verifier V072 PART2 10/10 ACCEPT；verdict PROBLEM_ABSENT_AFTER_GAIN_CALIBRATION（旧 P07 +0.91dB 是 H1 SCALE artifact，corrected 链 W8/W10 +0.03~+0.07dB≪MDE）；campaign 恢复 7/10，F 族关闭]

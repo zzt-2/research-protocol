@@ -2779,10 +2779,10 @@ worker-log `step-033-p06-causal-cross-frame-history.md` + artifacts `projects/si
 
 ## D045: P07 绑定裁决（撤回旧 F/G/H 扫描）+ F_AGC_ADC_DYNAMIC_RANGE_UNDER_GG → NO_DIAGNOSTIC_METHOD_SIGNAL
 
-> status: active
+> status: partial_supersede_science_only  # 入口裁决部分仍 active；科学有效性部分被 D046 取代
 > date: 2026-07-31
 > 取代：无（撤回 P07-entry-selection-NOT-RUN.md 的旧 F/G/H 扫描为 rejected brief；不取代任何 active 决策）
-> 被取代：无
+> 被取代：科学有效性部分（Phase 0 可信因果 AGC/ADC adapter PASS + Phase A/B/C verdict + NO_DIAGNOSTIC_METHOD_SIGNAL）被 D046 取代；入口裁决部分（撤回旧 F/G/H、定义 P07=F_AGC_ADC_DYNAMIC_RANGE_UNDER_GG、与 P03 区分）仍 active
 > 依据: 验证: `projects/simulation/results/p07_agc_adc_dynamic_range/p07_phase0_smoke.json`、`p07_phaseA_dev.json`、`p07_phaseBC.json`、`p07_terminal_verdict.json`、`p07_verifier_result.json` + 脚本 `projects/simulation/explore/nda-awgn-tracking-sandbox/{_p07_adapters,_p07_runner,_p07_batch,_p07_smoke,_p07_phaseA,_p07_phaseBC,_p07_verify}.py` + `projects/thesis-fso/direction-lab/scout/info-source-portfolio-probe/src/p07/FROZEN_CONTRACT.md` + V071 独立验收 10/10 ACCEPT + binding decision（本轮用户执行指令）
 > 触发原话: 用户本轮 P07 执行指令（绑定裁决：撤回旧 P07-entry F/G/H 扫描，新 P07 = F_AGC_ADC_DYNAMIC_RANGE_UNDER_GG，同对话端到端执行不得停在入口修订或 Phase 0/A/B 后）
 
@@ -2831,3 +2831,46 @@ worker-log `step-033-p06-causal-cross-frame-history.md` + artifacts `projects/si
 ### 来源
 
 worker-log `step-034-p07-agc-adc-dynamic-range.md` + artifacts `projects/simulation/results/p07_agc_adc_dynamic_range/*` + V071 + FROZEN_CONTRACT.md + binding decision
+
+---
+
+## D046: P07 科学完整性修复 — 冻结旧 P07 科学结论（三根因：H1 SCALE/H2 CONTROL/H3 LIFECYCLE），campaign 计数回退 7→6，重做 gain-aware ADC + stateful trajectory
+
+> status: active
+> date: 2026-07-31
+> 取代：D045 的**科学有效性部分**（Phase 0 可信因果 AGC/ADC adapter PASS + Phase A/B/C 数字 + verdict `NO_DIAGNOSTIC_METHOD_SIGNAL` + V071 的科学层结论）；D045 的**入口裁决部分**（撤回旧 F/G/H、P07=F_AGC_ADC_DYNAMIC_RANGE_UNDER_GG、与 P03 区分）继续 active
+> 被取代：无
+> 依据: 验证: `projects/simulation/results/p07r_agc_adc_repair/p07r_prefail_evidence.json`（三根因最小失败测试，修复前证据）+ 源码逐行核：`_p07_runner.py:111-118`（q 直接进 receiver 不 /g）、`_p07_adapters.py:158-183`（CausalRMSAGC.update g_next=target/rms(q) 漏 g_current）、`_channel.py:97-169`+`_p07_runner.py:101-103`（每 window 独立 seed 独立 gg_block）+ sc_nda_ml_sim.py:108/`_equalizer.py:5-15`/`_a4_switch_common768_30seed.py:97-107`（scale-dependent 函数清单：blind h 加性噪声底 1/(2γ)、amp_limit 固定 thresh 3.0、decide 含 1/(2·gamma_lin)）+ thesis-lessons TL-30~33 + sim-preflight rules/mve-validation.md（consistency≠correctness）
+> 触发原话: 用户 P07-R 执行指令（"P07 当前科学结论不得继续使用...分别建立最小失败测试...必须保存修复前失败证据。不能一边改一边猜。"）
+
+### 决策
+
+冻结旧 P07 科学结论（`NO_DIAGNOSTIC_METHOD_SIGNAL` 及其 Phase A/B/C 数字、clipping–resolution 折中"真实存在"声称、harvest 全部作废），campaign `accepted_valid_packages` **7→6**，`current` = **P07-R**，P08 暂停；旧 artifacts 保留并标 **INVALIDATED**（不覆盖、不删除）。修复后若科学有效完成再恢复 7/10，若仍 EXECUTION_INVALID 则保持 6/10。
+
+### 理由（三根因，已最小失败测试复现，证据存 `p07r_prefail_evidence.json`）
+
+1. **H1 SCALE（致命）**：`_p07_adapters.quantize_iq` 返回 `q = code·step = Q(g·z)`，但 `_p07_runner._per_window_receiver_outputs`（`:118`）和 `_p07_batch._receiver_on_raw`（`:86`）把 `q` **直接**喂给冻结接收链，**未除以 g**。g 是接收机已知控制量（不是 oracle），正确链应喂 `q/g`。下游 `estimate_h_blind_perblock`（`sc_nda_ml_sim.py:108` `h_blk = p_rx − 1/(2γ)`，加性噪声底不随 g² 缩放）、`amp_limit`（`_equalizer.py:5` 固定 `thresh=3.0` 绝对幅度 clip）、`decide`（`_a4_switch_common768_30seed.py:106` `mean(|rx|²) − 1/(2·gamma_lin)`）是 **scale-DEPENDENT** 函数，g≠1 不可被事后 /g 恢复。复现：g=2.0@13dB OLD 链 selected_errors 偏差 +44/+62、selector choice 从 da 翻成 nda；**corrected 链 q/g 精确恢复 g=1 参考（mismatch=0/0，choice 不变）**。旧 Phase-0 G3 float-bypass identity 门**只在 g=1 测过**（`FixedGainAGC(g=1,W=64)`），从未测 g≠1 → 门本身漏审。
+2. **H2 CONTROL**：`CausalRMSAGC.update`（`_p07_adapters.py:182`）用 `g_next = clamp(target_rms / rms(q_past))`，**漏乘 g_current**。正确增量形式 `g_next = clip(g_current · target_rms / rms(q_past), g_min, g_max)`（因 rms(q_past)=g_current·rms(z) → rms(z)=rms(q_past)/g_current）。两种形式常数输入定点不同：CURRENT √(target/r0)=1.0954 vs CORRECTED target/r0=1.2000；deployed lam=0.9 把 output RMS 驱动到 0.230（target 0.3），**target 错对象（output scale 非 input scale）**。
+3. **H3 LIFECYCLE**：`_p07_runner.py:101-103` 每 window 用独立 seed（`ws=start+b`）调 `generate_shared_realization_apsk`，`_channel.py:150` `h=gg_block(...)` 块间独立 Gamma 抽样 → **无共享 stateful trajectory**。经验 lag-1/2/5/10 GG 幅度 ACF = −0.042/+0.003/−0.063/−0.082 ≈ 0，与合同声称的时间相关 ρ 矛盾。AGC"预测下一 window 尺度"实为预测独立抽样 → **不构成时间相关 GG 控制问题**。`_gg_time.py` 的 stateful AR(1) 生成器存在但未被 P07 使用。
+
+### verifier 盲区（为什么 V071 10/10 ACCEPT 仍漏）
+
+V071 全部 10 项查的是 **consistency**（float-bypass identity 在 g=1、raw→aggregate 复算、信息边界 AST、seed 隔离、冻结文件未改）——这些全过，但**没查算法物理正确性**。命中 sim-preflight `rules/mve-validation.md` 警告："consistency bit-exact PASS 但算法是错的"（NDA-ML D-008 同病）。G3 float-bypass 门只在 g=1 验证 = 测试用例覆盖不到 bug 触发条件（g≠1）。V072 必须沿调用链查 q=Q(gz)→q/g 数学、下游 scale-dependent 函数、causal AGC 递推、trajectory lifecycle、经验 ACF、clip/quant 分解，不能只查 frozen contract。
+
+### 排除的替代方案
+
+- **不直接改旧 p07_*.py 隐藏错误**：新建 `p07r_*` 版本化文件，旧 artifacts 标 INVALIDATED 保留审计。
+- **不靠 verifier 链式标记判断正确性**（TL-21）：用确定性最小失败测试复现根因。
+- **不在修复前宣布任何科学结论**（TL-23 冷静期）：先冻结旧结论、回退计数，修复重跑有效后再恢复。
+
+### 影响范围
+
+- `topic-index.md` control block：`accepted_valid_packages` 7→**6**、`current_package` P08→**P07-R**、P08 暂停；rolling_queue P07 标 INVALIDATED_PENDING_RERUN。
+- `verifications.md`：追加 V072（取代 V071 科学层结论）；V071 保留标"合同一致性通过但物理正确性漏审"。
+- 旧 artifacts `projects/simulation/results/p07_agc_adc_dynamic_range/*` 加 INVALIDATED 标记（不删不改）。
+- 新 artifacts 路径 `projects/simulation/results/p07r_agc_adc_repair/`、新脚本 `p07r_*.py`。
+- protected owner/formal/Skill/thesis framework/controller 不改、无 push。MDE=0.15 dB 维持（无预先登记理由不改）。
+
+### 来源
+
+用户 P07-R 执行指令 + `p07r_prefail_evidence.json`（三根因最小失败测试）+ 源码逐行核 + thesis-lessons TL-30~33 + sim-preflight rules/mve-validation.md

@@ -3752,6 +3752,7 @@ P06 产出**有效负面 + receiver-observability 边界资产**（跨帧信息�
 ## V071: P07 F_AGC_ADC_DYNAMIC_RANGE_UNDER_GG — independent verifier (10/10 ACCEPT)
 
 > 2026-07-31 | 关联: D045 / P07 / CP036 | 结论: **PASS (10/10) / ACCEPT**
+> **2026-07-31 更新：科学层结论被 V072 取代**。V071 的 10 项检查全过，但查的全是 **consistency**（g=1 float-bypass 身份、raw→aggregate 复算、信息边界 AST、seed 隔离、冻结文件未改），**未查算法物理正确性**（q=Q(gz)→q/g 数学、下游 scale-dependent 函数、causal AGC 递推、trajectory lifecycle、经验 ACF）。G3 float-bypass 门只在 g=1 验证 = 测试用例覆盖不到 bug 触发条件（g≠1）。保留 V071 不删，标"合同一致性通过但物理正确性漏审"（命中 sim-preflight rules/mve-validation.md "consistency≠correctness"）。
 
 独立 verifier `_p07_verify.py` 重算/审计 P07 结果（不依赖 executor 的聚合）：
 
@@ -3767,3 +3768,57 @@ P06 产出**有效负面 + receiver-observability 边界资产**（跨帧信息�
 - **V10 Phase-BC aggregate recompute + verdict**（PASS）：重载 Phase-BC heldout_rows，重算 conventional regret per family|W 匹配 relErr≤1e-9；re-derive terminal verdict（conv_resolves → PROBLEM_RESOLVED / cross_consistent → DIAGNOSTIC_METHOD_SIGNAL / else NO_DIAGNOSTIC_METHOD_SIGNAL）与报告 `NO_DIAGNOSTIC_METHOD_SIGNAL` 一致。
 
 **结论**：P07 verdict `NO_DIAGNOSTIC_METHOD_SIGNAL` 唯一正确、数据可独立复算、信息边界干净、因果性成立、frozen 文件未改。claim ceiling 维持 `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`：不构成 active carrier、不冒充 formal method、不写论文 claim。F 族（AGC/ADC 动态范围）首包完成，连续=1，**未关闭**（NO_SIGNAL 非关闭裁决；P08 可选 F 第 2 包换子轴连续≤2，但 F/G/H timing/scenario/FEC 子轴已撤回不得重开）。
+
+---
+
+## V072: P07-R 三根因最小失败测试复现 + 取代 V071 科学层结论（PART 1：根因复现 PASS）
+
+> 2026-07-31 | 关联: D046 / P07-R | 结论: **PASS（三根因独立最小失败测试全部复现，修复前证据已存盘）**
+> 取代：V071 的**科学层结论**（Phase A/B/C 数字 + verdict）。V071 的 consistency 结论保留。
+
+**验证脚本**：`projects/simulation/explore/nda-awgn-tracking-sandbox/p07r_reproduce_rootcauses.py`（systematic-debugging Phase 1，未施加任何修复）。
+**证据**：`projects/simulation/results/p07r_agc_adc_repair/p07r_prefail_evidence.json`。
+
+三根因最小失败测试结果（修复前，确定性可复现）：
+
+- **H1 SCALE — FAIL（致命）**：
+  - T1（g≠1 真实接收链偏差）：13 dB moderate，OLD 链喂 q（不 /g）selected_errors 偏差 g=0.5→+32/+29、g=0.75→+9/+9、g=1.5→+8/+51（choice da→nda）、g=2.0→+44/+62（da→nda）、g=3.0→+59/+90（da→nda）。
+  - T4（float-bypass identity g≠1 破坏）：9 dB weak，OLD 链 nd/nc mismatch g=0.5→+39/+56、g=0.75→+11/+22、g=1.5→−13/−1、g=2.0→−15/+0（**choice 改变**）；**corrected 链 q/g 全部 mismatch=0/0、choice 不变**。证明下游 `estimate_h_blind_perblock`（加性 1/(2γ) 噪声底）、`amp_limit`（固定 thresh 3.0）、`decide`（1/(2·gamma_lin)）是 scale-DEPENDENT，g≠1 不可恢复。
+- **H2 CONTROL — FAIL（公式 bug）**：CausalRMSAGC `g_next=clamp(target/rms(q_past))` 漏乘 g_current。常数输入定点 CURRENT √(target/r0)=1.0954 ≠ CORRECTED target/r0=1.2000；deployed lam=0.9 output RMS 收敛到 0.230（target 0.3），target 错对象。
+- **H3 LIFECYCLE — FAIL（无时间相关）**：`_p07_runner` 每 window 独立 seed 独立 gg_block，经验 lag-1/2/5/10 GG 幅度 ACF = −0.042/+0.003/−0.063/−0.082 ≈ 0，与合同声称 ρ≠0 矛盾。AGC 预测独立抽样 → 非时间相关控制问题。
+
+**结论**：三根因全部独立最小失败测试复现，修复前证据已存盘（systematic-debugging Phase 1 完成）。旧 P07 verdict `NO_DIAGNOSTIC_METHOD_SIGNAL` 及 Phase A/B/C 数字、clipping–resolution 折中"真实存在"声称、harvest 全部 INVALIDATED。V072 PART 2（修复后 fresh-seed 重跑 + 沿调用链独立 verifier）在修复实现后追加。
+
+**注**：本 PART 1 仅验证"根因确实存在"，不验证修复正确性。修复正确性由后续 PART 2 独立 verifier（沿调用链查 q/g 数学、下游 scale、AGC 递推、trajectory lifecycle、ACF、clip/quant 分解、oracle 未进 deployable、fresh seed 隔离、raw→aggregate、verdict 唯一）判定。
+
+---
+
+## V072 PART 2: P07-R 修复后独立 verifier + 终态裁决（10/10 ACCEPT）
+
+> 2026-07-31 | 关联: D046 / P07-R / CP037 | 结论: **PASS (10/10) / ACCEPT**
+
+**验证脚本**：`projects/simulation/explore/nda-awgn-tracking-sandbox/p07r_verify.py`（沿调用链查物理正确性，不止 consistency）。
+**证据**：`projects/simulation/results/p07r_agc_adc_repair/p07r_verifier_result.json`。
+
+10 项检查全过（区别于 V071 只查 consistency，本 PART 查物理正确性）：
+
+- **W1 q/g 数学**（PASS）：`quantize_iq_gainaware` 返回 rx_in=q/g；无 clip 无 quant 时 rx_in==z 对任意 gain（max err ≤1e-9）。
+- **W2 下游 scale**（PASS，V071 漏审项）：gain≠1 + 宽 rail + 精细 ADC，corrected 链精确恢复 g=1 参考（selected_errors/da/nda/choice/oracle 全 byte-exact）。这是 H1 SCALE 修复的核心证据。
+- **W3 AGC 递推**（PASS）：corrected causal-RMS 常数输入收敛到 INPUT-scale 定点 target/rms，无 period-2（p2metric<1e-3）；attack-release/log-domain 有界。
+- **W4 trajectory lifecycle**（PASS）：shared stateful AR(1) GG，rho 匹配 exp(-Δt/τ_c)，经验 lag-1 ACF 非零（>0.3 for rho=0.70 trajectory），所有方法共享同一 trajectory。
+- **W5 四路分解隔离**（PASS）：scale_only==float、clip_only 只 clip、quant_only 只 round（宽 rail 无 clip）、full_adc=clip+round。
+- **W6 信息边界 AST**（PASS）：所有 AGC class 体零 forbidden 子串（修了一处 false positive——CausalRMSAGC 的增量 blend 参数原名 `alpha` 与信道真值 `alpha` 撞名，已重命名 `blend` 消除歧义；非信息泄漏）。
+- **W7 fresh seed 隔离**（PASS）：dev 300-309、held-out 500-520 与 campaign 历史（0-99/200-239）零重叠、71-80 未出现、dev/held-out 互斥。
+- **W8 raw→aggregate**（PASS）：重载 Phase-A raw_rows 重算 paired regret 前 2000 row 零违反。
+- **W9 终态 verdict**（PASS）：verdict 输入齐备、可唯一推导。
+- **W10 frozen 文件未改**（PASS）：common/、params.py、sc_nda_ml_sim.py、_a4_switch_common768_30seed.py `git diff --stat HEAD` 全空。
+
+**终态裁决（p07r_adjudicate.py / p07r_terminal_verdict.json）**：
+
+- **verdict = `PROBLEM_ABSENT_AFTER_GAIN_CALIBRATION`**（D046 §VII 终态 A）。
+- Phase A deployable-region（W8/W10）dev-best fixed-gain g=0.5 pooled regret：fG30/100/1000（rho 0.99/0.97/0.70）W8=+0.035/+0.042/+0.067 dB、W10=+0.016/+0.025/+0.045 dB —— **全部远低于 MDE=0.15**，CI_low>0 但 mean≪MDE，cells_pass=0-2，deployable_problem=False（全 rho）。旧 P07 的 "+0.91 dB regret / clipping–resolution 折中真实存在" **完全是 H1 SCALE artifact**（下游 scale-dependent 函数在 gain≠1 看到错误尺度信号）。
+- 四路分解（W=8, g=1.0）：scale_only=0.0000（H1 修复验证）、quant_only=0.0000（宽 rail 无 clip）、clip_only=+2.03~+2.51 dB、full_adc≈clip_only（clipping 主导）。但 dev-best g=0.5（clip_rate=2.2%）把 W8 regret 降到 +0.048 dB —— **折中是真实单调的，但是单侧的：静态低增益即解决，W8/W10 无残留问题给 AGC/方法处理**。
+- counts_as_valid_package=True，**campaign accepted_valid 恢复 6→7**（D046 §X：修复后形成有效 P07-R）。
+- Phase B/C 不运行（Phase A 门未过 = 问题不存在，同 P04/P06 gate 顺序逻辑）。
+
+**结论**：P07-R verdict `PROBLEM_ABSENT_AFTER_GAIN_CALIBRATION` 唯一正确、修复后链沿调用链物理正确、fresh seed 隔离干净、frozen 文件未改。claim ceiling 维持 `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`：不构成 active carrier、不冒充 formal method、不写论文 claim。F 族（AGC/ADC 动态范围）P07-R 修复后问题不存在于 deployable 位宽 → F 族可关闭（静态低增益即解决，无方法空间）。旧 P07 artifacts 保留 INVALIDATED 标记不删；P07-R artifacts 在 `results/p07r_agc_adc_repair/`。

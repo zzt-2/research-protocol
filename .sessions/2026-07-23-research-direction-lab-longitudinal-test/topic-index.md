@@ -4,24 +4,24 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 71
+  control_epoch: 73
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
   active_lane: CAMPAIGN_EXPLORATION_DISPATCH
-  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D045
+  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D046
   decision_gate: CP029/D038 段A 终止后，用户授权 10-有效包探索 campaign（D039）。在完成 10 个有效科学大包前不因 portfolio 0 READY 要求 thesis pivot。对已完成方法（DA-NDA 选择器等）的新失效条件/鲁棒性做子问题探索；每个 package 遵守 problem-bearing probe → conventional adapter → 条件式 method factory 三阶段门控；至少 5 机制族、同族≤2 连续、第 5 包内部校准不停线、第 10 包 campaign-level 裁决。
   campaign:
     exploration_budget_valid_packages: 10
-    accepted_valid_packages: 7
-    current_package: P08
+    accepted_valid_packages: 7   # D046/V072-PART2：P07-R 修复有效完成，PROBLEM_ABSENT_AFTER_GAIN_CALIBRATION（旧 P07 +0.91dB 是 H1 SCALE artifact；corrected 链 W8/W10 regret +0.03~+0.07dB ≪MDE），恢复 6→7
+    current_package: P08   # P07-R 已完成（F 族关闭，静态低增益即解决无方法空间）；P08 入口准备（不运行）
     mechanism_families_min: 5
     same_family_consecutive_max: 2
-    count_excludes: [setup, governance, task_preparation, interface_repair, pure_reproduction, entry_preflight_only]
+    count_excludes: [setup, governance, task_preparation, interface_repair, pure_reproduction, entry_preflight_only, science_integrity_repair]
     mid_calibration_at: P05   # P05 校准已完成（不停线，S005 §mid-calibration）：5 包全 honest negative 0 signal，但族覆盖健康（4 族 A/B/C/D），P05 首个换对象包
     campaign_level_decision_at: P10
-    families_started: [A_CPR_selector_robustness, B_FIXED_POINT_RESOURCE_PERFORMANCE_CODESIGN, C_CONTINUOUS_GG_OOD_SELECTOR_ROBUSTNESS, D_ML_POLARIZATION_EQUALIZER_OOD_SAFE_ONLINE_ADAPTATION, E_CAUSAL_CROSS_FRAME_HISTORY_INFORMATION, F_AGC_ADC_DYNAMIC_RANGE_UNDER_GG]   # A 关闭(P01+P02)；B P03 连续=1；C P04 连续=1；D P05 连续=1；E P06 连续=1 首包即关闭；F P07 连续=1；"≥5 族"已达成（6 族）
-    same_family_consecutive: 1   # F 族连续=1（P07 首包 NO_SIGNAL 未关闭）；P08 必须换不同机制族（F 未关但同族≤2，候选 G/... 新族 或 B/C/D/F 第 2 包连续≤2；禁重开已关闭 A/E 族及所有 forbidden axis）
-    rolling_queue: [P01 DONE CPR-selector-SNR-mismatch-robustness-NO_SIGNAL, P02 DONE cand_rank-operating-regime-PROBLEM_RESOLVED_BY_REGION_RETUNING, P03 DONE fixed-point-codesign-PROBLEM_RESOLVED_BY_UNIFORM_PRECISION, P04 DONE continuous-gg-ood-PROBLEM_ABSENT_ON_CONTINUOUS_GG, P05 DONE ml-equalizer-ood-online-adaptation-PROBLEM_RESOLVED_BY_CONVENTIONAL_ONLINE_EQUALIZER, P06 DONE causal-cross-frame-history-NO_CAUSAL_HISTORY_INCREMENT-E-family-closed, P07 DONE agc-adc-dynamic-range-NO_DIAGNOSTIC_METHOD_SIGNAL, P08 TBD-different-mechanism-family]
+    families_started: [A_CPR_SELECTOR_ROBUSTNESS, B_FIXED_POINT_RESOURCE_PERFORMANCE_CODESIGN, C_CONTINUOUS_GG_OOD_SELECTOR_ROBUSTNESS, D_ML_POLARIZATION_EQUALIZER_OOD_SAFE_ONLINE_ADAPTATION, E_CAUSAL_CROSS_FRAME_HISTORY_INFORMATION, F_AGC_ADC_DYNAMIC_RANGE_UNDER_GG]   # A 关闭(P01+P02)；B/C/D 连续=1；E 关闭(P06)；F 关闭(P07-R 修复后问题不存在于 deployable 位宽)；"≥5 族"已达成（6 族）
+    same_family_consecutive: 0   # F 族 P07-R 后关闭（PROBLEM_ABSENT），P08 必须换不同机制族
+    rolling_queue: [P01 DONE CPR-selector-SNR-mismatch-robustness-NO_SIGNAL, P02 DONE cand_rank-operating-regime-PROBLEM_RESOLVED_BY_REGION_RETUNING, P03 DONE fixed-point-codesign-PROBLEM_RESOLVED_BY_UNIFORM_PRECISION, P04 DONE continuous-gg-ood-PROBLEM_ABSENT_ON_CONTINUOUS_GG, P05 DONE ml-equalizer-ood-online-adaptation-PROBLEM_RESOLVED_BY_CONVENTIONAL_ONLINE_EQUALIZER, P06 DONE causal-cross-frame-history-NO_CAUSAL_HISTORY_INCREMENT-E-family-closed, P07 INVALIDATED-then-P07R-DONE-PROBLEM_ABSENT_AFTER_GAIN_CALIBRATION-F-family-closed, P08 TBD-different-mechanism-family]
   allowed_actions:
     - RECOVER
     - PORTFOLIO_MAP
@@ -50,13 +50,14 @@ rdl_control:
     - REPRODUCTION_AS_NEW_METHOD   # FR-23：复现旧结果不当新方法，须注入新失效条件
     - A_CPR_SELECTOR_ROBUSTNESS_FAMILY_REOPEN   # D040：A 族达同族上限 2，P01 SNR-mismatch + P02 cand_rank 工作区子轴全关闭（TL-30 禁换名重开 cand_rank/weakretune/region-retune）
     - E_CAUSAL_CROSS_FRAME_HISTORY_FAMILY_REOPEN   # D044：E 族首包 P06 NO_CAUSAL_HISTORY_INCREMENT 后关闭，绑定裁决禁第二个 evaluator-repair 包（TL-30 禁换名重开 cross-frame history / F3-A-repair / temporal-prediction）
+    - F_AGC_ADC_DYNAMIC_RANGE_FAMILY_REOPEN   # D046/V072-PART2：P07-R 修复后 PROBLEM_ABSENT_AFTER_GAIN_CALIBRATION（旧 +0.91dB 是 H1 SCALE artifact，corrected 链 W8/W10 regret +0.03~+0.07dB≪MDE；静态低增益即解决，无方法空间），F 族关闭
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
-  mission_checkpoint: CP036   # P07 NO_DIAGNOSTIC_METHOD_SIGNAL 已接收（F 族首包，问题真实存在但常规 AGC 部分缓解+无方法增量；第 6 族，campaign 7/10）
-  next_legal_action: Package 08（必须换不同机制族——候选 G/... 新族 或 B/C/D/F 第 2 包连续≤2；禁重开已关闭 A/E 族及所有 forbidden axis）。本轮仅准备 P08 入口（不运行）。下一对话由用户中转 P08 执行指令。
+  mission_checkpoint: CP037   # P07-R 科学完整性修复完成：三根因复现→修复→fresh-seed 重跑→V072 PART2 10/10 ACCEPT→verdict PROBLEM_ABSENT_AFTER_GAIN_CALIBRATION（旧 P07 +0.91dB 是 H1 SCALE artifact；corrected 链 W8/W10 regret +0.03~+0.07dB ≪MDE），campaign 恢复 7/10，F 族关闭
+  next_legal_action: Package 08（必须换不同机制族——F 族已关闭；候选 G/... 新族 或 B/C/D 第 2 包连续≤2；禁重开已关闭 A/E/F 族及所有 forbidden axis）。本轮仅准备 P08 入口（不运行）。
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active（CP036/P07→V071：D039 campaign P07 F_AGC_ADC_DYNAMIC_RANGE_UNDER_GG（F 族首包）端到端完成，verdict `NO_DIAGNOSTIC_METHOD_SIGNAL`，verifier ACCEPT（10/10）；accepted_valid_packages=7/10，active_lane CAMPAIGN_EXPLORATION_DISPATCH，epoch 71；binding decision D045 撤回旧 P07-entry F/G/H 扫描（timing-offset 1-sps 无过采样/场景扩展重入 P04/FEC-APSK 已撤回）；Phase 0 可信 AGC/ADC adapter ALL 5 BLOCKER gates PASS（ADC math/float-bypass 重构≤2^-40/float-bypass 接收链 byte-identical run_case_multidelta/因果性/信息边界 AST）；Phase A 问题成立（dev-best fixed-gain g=0.75 regret +0.91~+1.03 dB across 6/8/10 bit，14-15/15 cell ≥MDE，clipping rate 随 gain 单调 g0.5→2.5%/g1.0→30%/g4.0→91% 证实 clipping-resolution 折中真实）；Phase B 传统 causal-RMS AGC 部分缓解（+0.77~+0.90 dB 仍 5-6×MDE，conv_resolves=False）；Phase C 4 候选无一稳定超最强传统 AGC（dual_tc Δ=−0.004~−0.017 dB CI 跨0，clipping_aware/robust_pct/hysteretic 全 ≤0 更差）→ 问题真实存在但常规 AGC 部分缓解+无方法增量；仍 0 active carrier；第 6 族 F 加入）
+> 状态: active（CP037/P07-R→V072-PART2：P07 科学完整性修复端到端完成——三根因（H1 SCALE：ADC 返回 q=Q(gz) 但 receiver 用 q 不 /g；H2 CONTROL：causal-RMS g_next=target/rms(q) 漏 g_current；H3 LIFECYCLE：每 window 独立 seed 独立 gg_block ACF≈0）最小失败测试复现→新建 p07r_* 修正链（gain-aware ADC q/g + corrected incremental AGC + stateful AR(1) trajectory ρ=exp(-Δt/τ_c)）→fresh-seed（dev 300-309）重跑→独立 verifier V072 PART2 10/10 ACCEPT→verdict `PROBLEM_ABSENT_AFTER_GAIN_CALIBRATION`（旧 P07 +0.91dB regret 完全是 H1 SCALE artifact；corrected 链 deployable 位宽 W8/W10 dev-best g=0.5 regret +0.03~+0.07dB≪MDE=0.15 全 rho；四路分解 scale_only=0/quant_only=0/clip_only 主导但静态低增益即解决）；accepted_valid_packages 恢复 7/10，F 族关闭（静态低增益即解决无方法空间），active_lane CAMPAIGN_EXPLORATION_DISPATCH，epoch 73；旧 P07 artifacts 标 INVALIDATED 保留不删；仍 0 active carrier；binding decision D046 取代 D045 科学有效性部分）
 > 创建: 2026-07-23 | 最后更新: 2026-07-31
 
 ## 专题信息
