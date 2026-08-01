@@ -3345,3 +3345,55 @@ P10 `RISK_BUDGETED_SINGLE_EXPERT_ML_CMA_ROUTER` 终态由 `PROBLEM_ABSENT_OR_RES
 ### 来源
 
 用户 P10 纠偏 + P11 执行指令（合同 §一 P10 最小纠偏 line 12-37）+ 主线程独立核实 P10 freeze receipt（`projects/simulation/results/p10_single_expert_router/p10_freeze_receipt.json`，`crossover_cells`/`dev_seeds_phaseA`/`held_out_test_run`/`phase_b_c_run` 字段）+ git chronology（`git show 56fee4c --stat` / `git show 345d9e3 --stat`）+ D054/V080 原始裁决（保留 chronology+raw，降级终态+count+campaign-complete）+ thesis-lessons TL-33（FR-26 证据链：诚实降级不强行保留过强终态）
+
+
+## D056: P11 PILOT_EFFICIENT_STRUCTURED_BUTTERFLY_FIR — verdict PROBLEM_RESOLVED_BY_COMPLEX_LS（有效科学负面包）；linear Butterfly FIR（4 复 FIR=8 实 Conv1d, bias=False, 无非线性层）的 Adam 监督开销不必要，B2 batch complex LS 在 1% pilot 下达/超 full-label B0 Adam；campaign accepted_valid 7→8
+
+> status: active
+> date: 2026-08-01
+> 取代：无（P11 首跑）
+> 被取代：无
+> 依据: P11 freeze receipt（`projects/simulation/results/p11_pilot_efficient_butterfly_fir/p11_freeze_receipt.json` Commit 1 `4d9c374` test_started=false pre held-out test）+ 入口四门全 PASS（`p11_entry_gate.md` file:line：门1 `common/_ml_equalizer.py:104` ButterflyCNNEqualizer2x2 = 4 复 FIR = 8 实 Conv1d bias=False 无非线性层，grep nn.ReLU/Tanh/BatchNorm 零命中 → linear Butterfly FIR；门2 `ml_long_seq_failure.py:78` ML_TRAIN_FRAC=0.5 前 50% 连续全段标签；门4 baseline ladder B0-B4 + candidate C1-C3 全 file:line）+ Phase A held-out test（seeds 16000-16007 fresh disjoint history，8 test seeds × 4 cells = 32 paired/pilot_frac）+ Phase A 结果 `p11_phaseA_test_raw.json`：B2 batch complex LS 在所有 pilot fractions 1%-50% 严格优于 B0 full-label Adam（paired Δ(B2−B0) mean −6.8e-5 ~ −7.6e-5，CI_high 4.0-4.4e-5 < non_inf=MDE=0.05，ci_hw_max 1.206e-4 ≪ MDE/2=0.025 ratio 4.8e-3 统计功效充足；B2 BER 3.10e-4 vs B0 3.86e-4 全 frac）；物理机制（TL-22 已查）：linear FIR MSE 最优解 = LS normal equation，Adam 迭代近似不应优于 LS，B2 用 1% pilot（5k symbols）达/超 B0（50%=250k symbols）；公平 pilot 合同（pilot 位置冻结所有方法共享，payload TX 只计分，goodput = payload_bits×(1-pilot_frac)×(1-BER)，B2@1% goodput ≈ B0@50% 1.98×）+ chronology 闭合（Commit 1 4d9c374 freeze receipt test_started=false pre held-out，V077 教训第三次落实）+ 独立 verifier V082 14/14 ACCEPT
+> 触发原话: 用户 P11 执行指令（"二、P11研究问题——P11 = PILOT_EFFICIENT_STRUCTURED_BUTTERFLY_FIR。研究对象必须按真实实现命名：M：当前4路复线性Butterfly FIR，以Adam和大量已知TX符号训练……不得称为新CNN。若源码确认没有非线性层，应明确称为linear Butterfly FIR。……如果complex LS/RLS在低pilot预算下已经达到full-label Adam的性能—开销Pareto：PROBLEM_RESOLVED_BY_COMPLEX_LS。这仍是有效科学负面包，但必须有held-out confirmation。"——voice.md 2026-08-01）
+
+### 决策
+
+P11 `PILOT_EFFICIENT_STRUCTURED_BUTTERFLY_FIR` **verdict `PROBLEM_RESOLVED_BY_COMPLEX_LS`**，**计为有效科学负面包**（完成 held-out confirmation + 诚实 verdict，用户指令 §九 line 207-208 "valid negative 7→8"）。campaign `accepted_valid_packages` **7→8/10**，`remaining_valid_packages` = 2，campaign **未终止**。本轮有 Phase A sprint（dev 8 + held-out 8）、有 freeze receipt、有 dev/test artifact，chronology 闭合正确建立（Commit 1 `4d9c374` freeze receipt `test_started=false` pre held-out；phase_all 模式 dev 先保存→翻 test_started=true→test→adjudicate→保存 verdict）。
+
+**核心发现（诚实）**：
+1. **模型身份确认 = linear Butterfly FIR**：源码核查 `ButterflyCNNEqualizer2x2`（`common/_ml_equalizer.py:104`）是 4 复 FIR = 8 实 Conv1d，全 bias=False，无 activation/normalization（grep 零命中）。**监督训练学的是 FIR 抽头系数，不是 CNN**。linear FIR 的 MSE 最优解 = LS normal equation；Adam 是迭代近似，同标签预算不应优于 LS。
+2. **当前训练标签开销真实存在但不必要**：当前 ML 用前 50% 连续全段 TX 符号（`ML_TRAIN_FRAC=0.5`，250k symbols）作 label = 50% pilot overhead（远高于实际系统 <10%）。
+3. **B2 batch complex LS 在 1% pilot 下就达/超 full-label Adam**：held-out test（32 paired/pilot_frac）B2 BER 3.10e-4 vs B0 3.86e-4 全 frac 严格优于（paired Δ mean 全负，CI_high < non_inf thr=MDE=0.05）。1% pilot = 5k symbols ≫ 4L=44 未知数仍远超定。
+4. **pilot-adjusted goodput B2@1% ≈ B0@50% 的 1.98×**：少 pilot → 多 payload → 高 goodput，B2 在性能-开销 Pareto 上严格支配 B0。
+5. **Phase B/C 不运行**（gate 顺序：传统 comparator B2 已解决问题，无方法空间，C1/C2/C3 候选不运行）。
+
+### 为什么是 PROBLEM_RESOLVED_BY_COMPLEX_LS（用户合同 §七明文终态）
+
+用户指令 §七明文："如果 complex LS/RLS 在低 pilot 预算下已经达到 full-label Adam 的性能—开销 Pareto：PROBLEM_RESOLVED_BY_COMPLEX_LS。这仍是有效科学负面包，但必须有 held-out confirmation。" Phase A held-out（8 test seeds × 4 cells = 32 paired/frac）证实 B2 complex LS 在 1% pilot 下就达/超 full-label Adam 性能-开销 Pareto（B2 BER ≤ B0 + goodput 1.98×）。→ **唯一合法诚实终态**。
+
+**有效科学负面包**（非 METHOD_SIGNAL）：完成 held-out confirmation + 诚实 verdict，但 verdict 是"传统 comparator 解决问题"非"候选方法信号"。无候选 C1/C2/C3 运行（gate 顺序）。**0 active carrier 维持**，不产方法卡/不晋升。
+
+### 排除的替代方案
+
+- **不判 PILOT_EFFICIENT_BUTTERFLY_METHOD_SIGNAL**：无候选运行（gate 顺序：B2 已解决），Phase C 未触发。误判 signal = 自欺跳步（TL-33）。
+- **不判 PROBLEM_ABSENT_AT_LOW_PILOT_OVERHEAD**：该终态隐含"问题不存在"。问题（标签开销）存在且真实，只是被传统 LS 解决。
+- **不判 NO_DIAGNOSTIC_METHOD_SIGNAL**：该终态隐含"候选无增量"。未到 Phase C 候选。
+- **不判 EVIDENCE_INSUFFICIENT**：统计功效充足（ci_hw_max/MDE ratio 4.8e-3 ≪ 0.5），held-out confirmation 完成。
+- **不重开 P05/D 族**：P11 对象（pilot-efficient label budget）≠ P05 对象（OOD online adaptation）；P11 是新机制族 H'。
+- **不重开 D032 periodic-pilot**：C1/C2/C3 非 D032 weak periodic-pilot 微调（gate 顺序未运行）。
+- **不动 protected owner/formal/Skill/thesis framework**、**无 push**。
+
+### 影响范围
+
+- `topic-index.md` 控制块：epoch 82→**83**，`authority_pointer` D055→**D056**，`mission_checkpoint` CP046→**CP047**；`rdl_campaign.accepted_valid_packages` 7→**8**，`remaining_valid_packages`=2，`current_package` P11（完成，verdict 非 signal）；rolling_queue P11 标 "PROBLEM_RESOLVED_BY_COMPLEX_LS (linear Butterfly FIR Adam 监督开销不必要, B2 complex LS 1% pilot 达/超 full-label Adam, valid negative 7→8)"。
+- `mission-log.md`：追加 CP047（P11 PROBLEM_RESOLVED_BY_COMPLEX_LS，Phase A 有 sprint/dev+test artifact/chronology 闭合，Phase B/C 不运行，valid negative 7→8）。
+- `verifications.md`：追加 V082（P11 独立 verifier 14/14 ACCEPT）。
+- worker-log `step-041-p11-pilot-efficient-butterfly-fir.md`（新建）。
+- artifact `results/p11_pilot_efficient_butterfly_fir/`（freeze receipt + sha256 + dev raw + test raw + verdict json + entry gate md + methods lib + run）。
+- **不建立 method card**（verdict 非 METHOD_SIGNAL）。claim ceiling 维持 LOCAL_SLICE / NONBINDING_DIAGNOSTIC。
+- `_registry.yaml`：last_updated 更新（P11 PROBLEM_RESOLVED_BY_COMPLEX_LS，campaign accepted_valid 7→8，remaining_valid=2）。
+- **campaign 未终止**（remaining_valid=2，D039 授权 10 有效包）；protected owner/formal/Skill/thesis framework/controller 不改、**无 push**。
+
+### 来源
+
+用户 P11 执行指令（合同 §一-十一）+ 入口四门 file:line 证据（`p11_entry_gate.md`）+ Phase A held-out test raw（`p11_phaseA_test_raw.json`，32 paired/pilot_frac）+ freeze receipt chronology（`git show 4d9c374`）+ 物理机制分析（linear FIR MSE 最优解 = LS，Adam 迭代近似不应优于 LS；B2 1% pilot 达/超 B0 50% label）+ thesis-lessons TL-22（震撼结果先查物理前提——linear FIR 闭式解优越性已查）+ 独立 verifier V082 14/14 ACCEPT + compute constraint 诚实记录（CPU-only 缩合同 N=500k/dev8/test8）

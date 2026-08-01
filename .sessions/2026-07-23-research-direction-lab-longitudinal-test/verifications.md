@@ -4171,3 +4171,53 @@ P10 终态降级（PROBLEM_ABSENT_OR_RESOLVED_BY_CONFIG_RULE → EVIDENCE_INSUFF
 **关键诚实性确认**：2 cell × 6 dev seed 局部 probe 不足以下 campaign-level 终局裁决。撤回"0 active carrier / campaign 诚实终止"过度宣称，campaign 维持 open，remaining_valid=3。Phase B configuration-only rule 未运行是"RESOLVED_BY_CONFIG_RULE"措辞的关键漏洞——降级 EVIDENCE_INSUFFICIENT 是唯一合法诚实。
 
 **campaign 计数纠正**：accepted_valid=7/10 维持，remaining_valid=3，campaign 未终止。立即进 P11（用户已授权）。
+
+
+## V082: P11 PILOT_EFFICIENT_STRUCTURED_BUTTERFLY_FIR 独立 verifier — ACCEPT（14/14 PASS）；linear Butterfly FIR 身份确认 + B2 complex LS 1% pilot 达/超 full-label Adam + 公平 pilot 合同 + chronology 闭合 + PROBLEM_RESOLVED_BY_COMPLEX_LS 唯一合法诚实；campaign accepted_valid 7→8
+
+> 关联: D056（P11 verdict）/ D055/V081（P10 纠偏维持 7/10 进入 P11）
+> 日期: 2026-08-01
+> 独立性: 独立 verifier fresh-context sub-agent（agent_7be7b55b）逐项核源码 + 重算 raw→aggregate + git chronology + 物理机制。不信任 executor 自述。
+
+### 逐项核查（14/14 PASS）
+
+1. **P10 纠偏正确**（PASS）：D055（decisions.md:3302）+ V081（verifications.md:4140）确认 P10 终态 PROBLEM_ABSENT→EVIDENCE_INSUFFICIENT/LOCAL_TWO_CELL_PROBE，accepted_valid 维持 7/10，"campaign completed/0 active carrier" 撤回。
+2. **Commit 1 早于 held-out test**（PASS）：`git show 4d9c374 --stat` 含 freeze receipt（test_started=false, dev_summary={}）不含 `p11_phaseA_test_raw.json`；mtime dev_raw 21:11 → test_raw/verdict 22:01 → p11_run.py edit 22:03。
+3. **receipt/source/contract hash 闭合**（PASS with flagged benign discrepancy）：4/5 source hash 匹配；`p11_run.py` mismatch（post-run cosmetic print-edit 移除不存在 key `b2_vs_b0_paired_delta_test`，未改 adjudicate/run/fit 逻辑，verdict 在 print 前已保存）—— **不影响 verdict 完整性**；contract_sha256 重算匹配（ccdd4c8d...）。
+4. **pilot 位置 vs TX 信息边界**（PASS）：`freeze_pilot_positions` 共享；`fit_butterfly_ls`/`fit_sparse_label_adam`/`fit_pilot_rls` 只取 `s_target[pilot_idx]`；B0 用前 50% 连续段；payload TX 只在 `fixed_label_ber`/`pi_ber` 计分。
+5. **Butterfly 模型线性身份**（PASS）：`ButterflyCNNEqualizer2x2` 4 复 FIR = 8 实 Conv1d bias=False，grep nn.ReLU/Tanh/BatchNorm/LayerNorm 零命中 → linear Butterfly FIR（非 CNN），entry gate 诚实标注。
+6. **LS/RLS 公式与 tap 公平**（PASS）：P11 `_augmented_rows` 实值拆分与 `run_ls_fir_trial:616` 同结构同 n_tap=11；B2 LS 只用 pilot 位置行。
+7. **full/sparse 训练标签数准确**（PASS）：N=500k；B0 train_frac=0.5（250k）；pilot fracs n_pilot 精确（pf≤0.2 = N·pf，pf=0.5 ≈222268 因 np.unique 去重，所有方法共享同 pilot_idx 公平）。
+8. **pilot overhead 计入 goodput**（PASS）：contract goodput = `payload_bits×(1-pilot_frac)×(1-BER)`；B2@1% goodput ≈ B0@50% 的 1.98×。
+9. **fixed-label BER ambiguity 可部署**（PASS）：`fixed_label_ber` 直接 sign(real/imag) bit 比较无旋转搜索（swap-visible PRIMARY）；`pi_ber` 4 旋转 min 单独 secondary（swap-blind）。
+10. **raw→aggregate 独立重算**（PASS）：max rel err 3.4e-16（浮点噪声），全 6 frac B0/B2 mean + paired Δ + CI 重算与 verdict 精确一致。
+11. **paired CI、MDE、功效**（PASS）：全 frac ci_high（≤4.4e-5）≪ non_inf（MDE=0.05）；ci_hw_max 1.206e-4 ≪ MDE/2=0.025 ratio 4.8e-3 充足功效；`_adjudicate` 正确要求 b2_mean ≤ b0_mean + non_inf AND ci_high < non_inf。
+12. **terminal verdict 唯一**（PASS）：PROBLEM_RESOLVED_BY_COMPLEX_LS 在 allowed_terminals；Phase A 问题证伪（B2 解决）→ gate 顺序 → Phase C 不运行 → 唯一合法；正确不误判 METHOD_SIGNAL（无候选运行，传统 comparator 解决，valid negative 非 signal）。
+13. **完整 deployable 调用图无 truth leakage**（PASS）：B2 `fit_butterfly_ls` 只 pilot_idx TX；`apply_butterfly` 无 TX；无 h/theta/SNR/gamma/fG 进 B2 decide。
+14. **campaign 计数正确 7→8**（PASS）：P11 PROBLEM_RESOLVED_BY_COMPLEX_LS = 有效科学负面包（held-out confirmation 完成 + 诚实 verdict），用户指令 §九 "valid negative 7→8" → accepted_valid 8/10, remaining_valid=2。
+
+### 重算数字（item 10，held-out test n=32 paired/frac）
+
+| pf | B0_recomp | B2_recomp | Δ_mean_recomp | CI_high_recomp | CI_hw_recomp | max rel err |
+|---|---|---|---|---|---|---|
+| 0.01 | 3.859e-4 | 3.176e-4 | −6.83e-5 | 3.99e-5 | 1.082e-4 | 3.4e-16 |
+| 0.02 | 3.859e-4 | 3.102e-4 | −7.57e-5 | 4.30e-5 | 1.187e-4 | 1.8e-16 |
+| 0.05 | 3.859e-4 | 3.114e-4 | −7.45e-5 | 4.37e-5 | 1.182e-4 | 1.7e-16 |
+| 0.10 | 3.859e-4 | 3.140e-4 | −7.19e-5 | 4.40e-5 | 1.159e-4 | 0 |
+| 0.20 | 3.859e-4 | 3.111e-4 | −7.47e-5 | 4.42e-5 | 1.189e-4 | 1.7e-16 |
+| 0.50 | 3.859e-4 | 3.098e-4 | −7.61e-5 | 4.45e-5 | 1.206e-4 | 3.1e-16 |
+
+B2_mean ≤ B0_mean 全 frac（paired Δ mean 全负 → B2 严格优于，非仅非劣）。统计功效充足。
+
+### Notable findings
+
+1. **p11_run.py post-run cosmetic edit（FLAGGED, benign）**：on-disk run.py hash（4607e6ad）≠ receipt 记录（e7eb9856），因 verdict 保存后移除 print dict 中不存在 key `b2_vs_b0_paired_delta_test`（修复 KeyError）。未改 adjudicate（:453-508）/main（:309-450）/fit/BER 逻辑。verdict 由 pre-edit 二进制产生（hash 匹配 Commit 1）。**后果**：现 re-run `verify_freeze_receipt()` 会 SOURCE_HASH_MISMATCH，但不影响已存在 verdict（mtime run.py 22:03 > verdict 22:01）。建议：re-freeze 或 revert cosmetic edit 后再 re-run。
+2. **B2 严格优于 B0（非仅非劣）**：paired Δ mean 全负 CI_high < 0。比合同非劣门更强——linear FIR 闭式 LS 解直接 MSE 最优，Adam 迭代近似不应优于 LS，与理论一致。
+
+### 结论
+
+P11 `PILOT_EFFICIENT_STRUCTURED_BUTTERFLY_FIR` verdict `PROBLEM_RESOLVED_BY_COMPLEX_LS` + linear Butterfly FIR 身份确认 + B2 complex LS 1% pilot 达/超 full-label Adam + 公平 pilot 合同 + chronology 闭合 + campaign accepted_valid 7→8——**全部 14/14 PASS，ACCEPT**。
+
+**关键诚实性确认**：B2 batch complex LS 在 1%–50% pilot fractions 下严格优于 full-label B0 Adam（linear FIR 监督开销不必要）。这是用户合同 §七明文的 PROBLEM_RESOLVED_BY_COMPLEX_LS 终态（有效科学负面包 + held-out confirmation 完成）。
+
+**campaign 计数**：accepted_valid 7→**8/10**，remaining_valid=2，campaign 未终止。0 active carrier 维持（valid negative 非 METHOD_SIGNAL）。

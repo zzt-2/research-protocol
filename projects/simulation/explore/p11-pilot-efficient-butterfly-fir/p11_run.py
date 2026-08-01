@@ -446,7 +446,7 @@ def main():
         print(f'\n=== VERDICT: {verdict["terminal_verdict"]} ===')
         print(json.dumps({k: verdict[k] for k in
                           ['terminal_verdict', 'b2_resolves_at_all_fracs_test',
-                           'b2_vs_b0_paired_delta_test', 'ci_hw_max_test', 'note']},
+                           'ci_hw_max_test', 'note']},
                          ensure_ascii=False, indent=2))
 
 

@@ -154,7 +154,69 @@
     "explore/cma-fade-divergence/ml_long_seq_failure.py": "5ed5ff9c5145292a59fab9688c1cbf823e7ae2ebea4fb60878ed81f8e10a3e1d"
   },
   "receipt_creation_time": "2026-08-01T20:26:14",
-  "test_started": false,
-  "dev_summary": {},
-  "receipt_sha256": "b6cb7ab9a688df96d3ddead1be5ec5ce4bd0087f61e680fb6ea8451fe0110822"
+  "test_started": true,
+  "dev_summary": {
+    "terminal_verdict": "PROBLEM_RESOLVED_BY_COMPLEX_LS",
+    "per_frac_test": {
+      "0.01": {
+        "b0_mean": 0.00038587500000000004,
+        "b2_mean": 0.00031762500000000004,
+        "paired_delta_b2_minus_b0_mean": -6.825000000000005e-05,
+        "ci_low": -0.0001764353996188073,
+        "ci_high": 3.993539961880719e-05,
+        "ci_hw": 0.00010818539961880724,
+        "n": 32
+      },
+      "0.02": {
+        "b0_mean": 0.00038587500000000004,
+        "b2_mean": 0.0003101666666666667,
+        "paired_delta_b2_minus_b0_mean": -7.570833333333338e-05,
+        "ci_low": -0.00019437875323856453,
+        "ci_high": 4.2962086571897776e-05,
+        "ci_hw": 0.00011867041990523115,
+        "n": 32
+      },
+      "0.05": {
+        "b0_mean": 0.00038587500000000004,
+        "b2_mean": 0.000311375,
+        "paired_delta_b2_minus_b0_mean": -7.450000000000002e-05,
+        "ci_low": -0.00019266933718565098,
+        "ci_high": 4.366933718565093e-05,
+        "ci_hw": 0.00011816933718565096,
+        "n": 32
+      },
+      "0.1": {
+        "b0_mean": 0.00038587500000000004,
+        "b2_mean": 0.00031395833333333335,
+        "paired_delta_b2_minus_b0_mean": -7.19166666666667e-05,
+        "ci_low": -0.0001877865359305345,
+        "ci_high": 4.3953202597201105e-05,
+        "ci_hw": 0.00011586986926386781,
+        "n": 32
+      },
+      "0.2": {
+        "b0_mean": 0.00038587500000000004,
+        "b2_mean": 0.0003111666666666667,
+        "paired_delta_b2_minus_b0_mean": -7.470833333333335e-05,
+        "ci_low": -0.00019358613289483363,
+        "ci_high": 4.416946622816693e-05,
+        "ci_hw": 0.00011887779956150028,
+        "n": 32
+      },
+      "0.5": {
+        "b0_mean": 0.00038587500000000004,
+        "b2_mean": 0.0003097916666666667,
+        "paired_delta_b2_minus_b0_mean": -7.608333333333336e-05,
+        "ci_low": -0.00019664635900662263,
+        "ci_high": 4.4479692339955906e-05,
+        "ci_hw": 0.00012056302567328928,
+        "n": 32
+      }
+    },
+    "b2_resolves_at_all_fracs_test": true,
+    "ci_hw_max_test": 0.00012056302567328928,
+    "mde": 0.05,
+    "note": "B2 batch complex LS 在低 pilot fractions 下是否达 full-label B0 Adam 性能-开销 Pareto (paired delta CI). PROBLEM_RESOLVED_BY_COMPLEX_LS = 有效科学负面包 (用户指令 §七/§九). Phase C 不运行 (gate 顺序: 传统已解决)."
+  },
+  "receipt_sha256": "433dafa78e9883bff8613485f2f393295adeff63dccb8e7b8e4963be71c96215"
 }

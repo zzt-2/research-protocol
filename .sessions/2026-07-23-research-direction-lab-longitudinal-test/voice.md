@@ -318,5 +318,6 @@
 - "十、包装边界——若形成信号，只能表述为：'面向当前双偏振FSO接收链的少导频结构化Butterfly FIR训练方法'。不得声称：首创MIMO LS/首创少导频均衡/新型深度CNN/完全盲均衡/通用光通信均衡器。必须给出：三步算法/pilot布局/结构约束/训练与推理复杂度/BER—pilot overhead—goodput Pareto/与complex LS/RLS的明确差异/文献collision和claim ceiling。"
 - "十一、独立verifier——fresh-context verifier必须检查：1. P10为何只能是EVIDENCE_INSUFFICIENT；2. campaign不是按编号凑10；3. Commit 1早于held-out；4. receipt/hash闭合；5. pilot位置与TX信息边界；6. Butterfly模型的真实线性/非线性身份；7. LS/RLS公式和tap公平性；8. full/sparse训练标签数准确；9. pilot overhead计入goodput；10. fixed-label ambiguity resolution可部署；11. raw→aggregate；12. paired CI、MDE和功效；13. terminal verdict唯一；14. 正确campaign计数。"
 - "最终只汇报：1. P10纠偏及P11 Commit 1/receipt；2. full-label、最强传统方法和最佳候选的性能、pilot overhead、goodput、成本与CI；3. 信息边界、模型身份及held-out验证；4. terminal verdict、METHOD_SIGNAL、active carrier、正确campaign计数；5. worker-log、artifact、verifier、Commit 1/Commit 2 SHA。不push。"
-  → D055 / V081（P10 终态降级 EVIDENCE_INSUFFICIENT）+ P11 PILOT_EFFICIENT_STRUCTURED_BUTTERFLY_FIR（进行中）
+  → D055 / V081（P10 终态降级 EVIDENCE_INSUFFICIENT）+ P11 PILOT_EFFICIENT_STRUCTURED_BUTTERFLY_FIR（已完成 verdict PROBLEM_RESOLVED_BY_COMPLEX_LS）
   [绑定结论：本轮端到端完成 P10 纠偏 + P11，中间不参与技术判断，不 push]
+  → P11 完成映射 D056 / V082（verdict PROBLEM_RESOLVED_BY_COMPLEX_LS，有效科学负面包 campaign accepted_valid 7→8）
