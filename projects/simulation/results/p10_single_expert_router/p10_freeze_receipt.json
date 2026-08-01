@@ -271,5 +271,46 @@
     "note": "\u57fa\u4e8e D015/S017/S020 \u8bc1\u636e\u65b9\u5411 (\u77edN\u5c0fSOP->ML; \u957fN\u5927SOP/OOD->CMA). fresh dev \u72ec\u7acb\u9a8c\u8bc1\u4e24\u65b9\u5411."
   },
   "receipt_creation_time": "2026-08-01T19:02:02+0800",
-  "test_started": false
+  "test_started": false,
+  "dev_summary": {
+    "phase_a_verdict": "FAIL",
+    "phase_a_terminal": "PROBLEM_ABSENT_OR_RESOLVED_BY_CONFIG_RULE",
+    "phase_a_crossover_directions_consistent": false,
+    "phase_a_cells": {
+      "ML_favored_N2M_fg30_SOP1e-7": {
+        "mean_ml_fx": 3.33e-07,
+        "mean_cma_fx": 6.12e-05,
+        "delta_ml_minus_cma": -6.08e-05,
+        "ml_wins": "6/6",
+        "crossover_pass": false,
+        "reason": "|delta|<<MDE=0.02, P05 \u8001\u8def corrected standard-CMA \u5df2\u89e3\u51b3 fixed-label swap"
+      },
+      "CMA_favored_N5M_fg1000_SOP4e-7": {
+        "mean_ml_fx": 0.4896,
+        "mean_cma_fx": 0.0396,
+        "delta_ml_minus_cma": 0.45,
+        "ml_wins": "0/6",
+        "crossover_pass": true,
+        "cma_advantage_is_swap_artifact": true,
+        "pi_ber_ml": 0.0237,
+        "pi_ber_cma": 0.0396,
+        "pi_delta": -0.0158,
+        "reason": "fixed-label CMA \u5360\u4f18\u4f46 PI-BER \u4e24\u8005\u76f8\u5f53, \u662f swap artifact \u975e ranking \u53cd\u8f6c"
+      }
+    },
+    "phase_b_c_run": false,
+    "reason_phase_b_c_not_run": "Phase A FAIL -> gate order -> PROBLEM_ABSENT_OR_RESOLVED_BY_CONFIG_RULE \u7ec8\u6001, Phase B/C \u4e0d\u8fd0\u884c",
+    "held_out_test_run": false,
+    "held_out_test_seeds_read": [],
+    "dev_seeds_read_phaseA": [
+      13000,
+      13001,
+      13002,
+      13003,
+      13004,
+      13005
+    ],
+    "final_verdict": "PROBLEM_ABSENT_OR_RESOLVED_BY_CONFIG_RULE",
+    "campaign_count": "7/10 maintained (P10 not counted as valid package)"
+  }
 }

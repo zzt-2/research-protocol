@@ -3243,3 +3243,57 @@ V078 11/11 ACCEPT 但漏掉全部 6 项承重缺陷：check 5（信息和延迟�
 ### 来源
 
 用户 P09 纠偏执行指令（合同 §一 P09 确定性纠偏六项 + 处理条款）+ 独立语义审计子 agent fresh-context 6/6 PASS 逐项 file:line + 数值复算（agent_d4ffc6b4，不信任 executor/V078）+ 源码 `p09_bps_methods.py`/`p09_run.py`/`_modulation.py`/freeze receipt `p09_freeze_receipt.json` + thesis-lessons TL-22（震撼结果先查物理前提——π/4 对称已查）+ "consistency≠correctness" 第四度重演（P07-R/P08/P08-R2/P09 verifier 漏审模式）
+
+---
+
+## D054: P10 RISK_BUDGETED_SINGLE_EXPERT_ML_CMA_ROUTER — verdict PROBLEM_ABSENT_OR_RESOLVED_BY_CONFIG_RULE（不计有效包）；Phase A fresh crossover confirmation FAIL——fixed-label PRIMARY 口径下 crossover 不成立（ML_favored cell 走 P05 老路 corrected standard-CMA 已解决 swap；CMA_favored cell 的 CMA 优势是 swap artifact PI-BER 显示两者相当）；campaign 维持 7/10，campaign-level 裁决完成 0 active carrier
+
+> status: active
+> date: 2026-08-01
+> 取代：无（P10 campaign-level 第 10 包裁决首跑）
+> 被取代：无
+> 依据: P10 freeze receipt (`p10_freeze_receipt.json` test_started=false, contract_sha256=8e603bd4, source_hashes 9 文件) + 入口四门 CONDITIONAL-PASS（`p10_entry_gate.md` file:line：门1 conditional 历史 crossover 存在但方向与用户 premise A 相反须 fresh dev 复现 / 门2-6 PASS `_ml_equalizer.py:104` ML vs `prompt019:96` CMA D036 冻结 Godard-with-z / `p10_methods.py` B0-B4 五 deployable comparator / D036 `:2168,2259` 只闭 CB1 更新粒度族 / `p10_run.py` CONTRACT primary_metric fixed-label PRIMARY 不用 TX truth 消歧）+ Phase A fresh dev（seeds 13000-13005 fresh disjoint from 全部 history）+ Phase A executor 子 agent fresh-context（agent_8c4b53c6，只读 dev seeds 不读 test seeds）+ Phase A 结果 `p10_phaseA_dev_raw.json`：ML_favored cell (N=2M fg30 SOP=1e-7) mean ML fx=3.3e-7 / CMA fx=6.1e-5 / Δ=-6.1e-5 (|Δ|≪MDE=0.02) ml_wins 6/6 crossover_pass=False（P05 老路 corrected standard-CMA 已解决 fixed-label swap 无 ML 优势空间）；CMA_favored cell (N=5M fg1000 SOP=4e-7) mean ML fx=0.4896 / CMA fx=0.0396 / Δ=+0.4500 ml_wins 0/6 crossover_pass=True（fixed-label CMA 占优但 PI-BER ML=0.024 vs CMA=0.040 Δ_pi=-0.016 两者相当，是 swap artifact 非 ranking 反转）；crossover_directions_consistent=False；phase_a_verdict=FAIL；TL-22（震撼结果先查物理前提——swap artifact 已查）+ TL-23（冷静期：crossover 不成立先查 P05 老路）+ TL-33（FR-26 证据链：诚实报 FAIL 不强行 PASS）+ 不变量 10（PI-BER 对 swap 结构性失明，fixed-label BER 是 swap 真记分牌）
+> 触发原话: 用户 P10 执行指令（"P10 = RISK_BUDGETED_SINGLE_EXPERT_ML_CMA_ROUTER……A：历史证据显示专家排名反转……目标：仅根据receiver-visible前缀与合法配置，在运行payload专家前选择ML或CMA，只执行被选中的一个……若fresh dev不能复现crossover，或configuration-only rule已经无遗憾解决，终止为 PROBLEM_ABSENT_OR_RESOLVED_BY_CONFIG_RULE"——voice.md 2026-08-01）
+
+### 决策
+
+P10 `RISK_BUDGETED_SINGLE_EXPERT_ML_CMA_ROUTER` **verdict `PROBLEM_ABSENT_OR_RESOLVED_BY_CONFIG_RULE`**，**不计有效包**（fresh crossover 复现失败属入口 Phase A 失败，count_excludes=entry_phase_A_fail）。campaign `accepted_valid_packages` **维持 7/10**（D053 纠正后正确计数；P10 非 signal 不增），`current_package` = P10（完成，verdict 非 signal）。本轮**有 Phase A sprint、有 freeze receipt、有 dev artifact**（不同于 D050 P09 NDA-ML STRATEGIC_GATE 无 sprint，但 Phase A FAIL Phase B/C 不运行故无 held-out test），chronology 闭合正确建立（Commit 1 `56fee4c` freeze receipt `test_started=false` 在任何 held-out test 前；Phase A 只读 dev seeds 13000-13005，未读 test seeds 14000-14039）。
+
+**核心发现（诚实）**：
+1. **crossover 在 fixed-label PRIMARY 口径下不成立**：ML_favored cell (N=2M fg30 SOP=1e-7) 走 P05 老路——corrected StandardCMA (Godard 1980 with-z) 已经在 fixed-label 上解决 swap（ML fx≈0, CMA fx≈6e-5，两者都接近完美），D015 历史 ML 优势（N=2M ML=0.050 vs CMA=0.219）针对的是 scalar-error 缺 z 的 current-CMA，corrected standard-CMA 在 fixed-label 下已无 ML 优势空间。
+2. **CMA_favored cell 的 CMA 优势是 swap artifact**：长 N + 高 f_G + 大 SOP 下 ML fixed-label BER≈0.49（swap 崩到 random），CMA fx≈0.04；但 PI-BER 显示两者相当（ML_pi=0.024 vs CMA_pi=0.040）。ML 的 fixed-label 失败是 π 级 polarization swap，CMA 在线跟踪能跟随，ML 冻结权重无法跟随；PI-BER 重排标签后抹掉 swap 影响（不变量 10）。**这是 swap artifact，非干净的可路由 ranking 反转**。
+3. **两 cell 在 fixed-label 和 PI-BER 双口径下方向不一致** → crossover_directions_consistent=False → Phase A 诚实判 FAIL。
+4. **chronology 闭合正确建立**（V077 教训第二次落实，P09 模式复用）：Commit 1 (`56fee4c`) freeze receipt `test_started=false` 在任何 held-out test 前；Phase A 只读 dev seeds 13000-13005（fresh disjoint from P09 11000-11019/12000-12039 + P08-R2 8000-8039/9000-9019 + P08-R 6000-6019/7000-7039 + P05 1000-1011）；未读 test seeds 14000-14039；freeze receipt `test_started` 维持 false（无 held-out test 执行）。
+
+### 为什么是 PROBLEM_ABSENT_OR_RESOLVED_BY_CONFIG_RULE（用户合同 §入口门明文终态）
+
+用户合同 §二明确："A：历史证据显示专家排名反转……"且 §入口门明文："若 fresh dev 不能复现 crossover，或 configuration-only rule 已经无遗憾解决，终止为 PROBLEM_ABSENT_OR_RESOLVED_BY_CONFIG_RULE。" Phase A fresh dev 在两 crossover cell 上**不能复现 fixed-label PRIMARY 口径下的排名反转**（ML_favored cell corrected standard-CMA 已解决；CMA_favored cell CMA 优势是 swap artifact）→ **唯一合法诚实终态**。
+
+**关键诚实点（premise A 反转）**：用户指令 §二 premise A 描述"长慢变条件 ML 占优，短快变/OOD 条件 CMA 明显占优"与历史证据（D015/S017/S020）方向**相反**——证据显示"短 N + 小 SOP → ML 占优；长 N + 大 SOP/OOD → CMA 占优"。Phase A fresh dev 用证据支持的方向（ML_favored=短 N 小 SOP；CMA_favored=长 N 大 SOP）测试，结果两方向都不成立 crossover。**无论用哪个方向的 premise，crossover 在 fixed-label PRIMARY 下都不成立**——这是 P05 老路的根本性结论：corrected standard-CMA 在 fixed-label 下已解决 swap，router 无可作用的 ranking 反转空间。
+
+### 排除的替代方案
+
+- **不强行判 RISK_BUDGETED_ROUTER_METHOD_SIGNAL**：crossover 不存在，无路由空间，强行 signal = 自欺跳步（TL-33）。
+- **不判 PROBLEM_RESOLVED_BY_SIMPLE_ROUTING**：该终态隐含"crossover 存在 + 简单路由已解决"。Phase A crossover 不存在，未到 Phase B 判简单规则（gate 顺序：Phase A FAIL 直接终止）。
+- **不判 NO_DIAGNOSTIC_METHOD_SIGNAL**：该终态隐含"crossover 存在 + 候选无增量"。Phase A crossover 不存在，未到 Phase C 候选。
+- **不判 EVIDENCE_INSUFFICIENT**：CI 宽度不是瓶颈（ML_favored Δ=6e-5 远小于 MDE=0.02；CMA_favored Δ=0.45 远大于 MDE）。问题是 crossover 本身不存在（非信号弱）。
+- **不重开 P05/P05-D**：P05 已判 PROBLEM_RESOLVED_BY_CONVENTIONAL_ONLINE_EQUALIZER（standard-CMA continuation 恢复 swap），P10 Phase A 是 fresh crossover 复现非 P05 重开；P05 对象（OOD online adaptation）与 P10 对象（payload 前单专家选择）不同。
+- **不重开 D 类 ML polarization equalizer 族**：P10 是新机制族（single-expert router），非 D 族（OOD online adaptation）重开。D 族在 P05 关闭（standard-CMA 已解决）。
+- **不重开 NDA-ML body**：P10 对象是 ButterflyCNN ML + StandardCMA 二选一，非 NDA-ML CPR selector。
+- **不动 protected owner/formal/Skill/thesis framework**、**无 push**。
+
+### 影响范围
+
+- `topic-index.md` 控制块：epoch 80→**81**，`authority_pointer` D053→**D054**，`mission_checkpoint` CP044→**CP045**；`accepted_valid_packages` 维持 **7/10**（P10 PROBLEM_ABSENT 不计有效包）；`current_package` P10（完成，verdict 非 signal）；rolling_queue P10 标 "PROBLEM_ABSENT_OR_RESOLVED_BY_CONFIG_RULE (Phase A fresh crossover FAIL: ML_favored P05 老路 corrected standard-CMA 已解决 swap; CMA_favored CMA 优势是 swap artifact PI-BER 两者相当); chronology 闭合正确 (Commit 1 56fee4c freeze receipt test_started=false pre held-out test)"。
+- `mission-log.md`：追加 CP045（P10 PROBLEM_ABSENT_OR_RESOLVED_BY_CONFIG_RULE，Phase A 有 sprint/dev artifact/chronology 闭合，Phase B/C 不运行，无 held-out test；**campaign-level 裁决完成 0 active carrier**）。
+- `verifications.md`：追加 V080（P10 Phase A fresh dev 独立复核 + chronology 闭合 + PROBLEM_ABSENT 唯一合法诚实）。
+- worker-log `step-040-p10-single-expert-router.md`（新建）。
+- artifact `results/p10_single_expert_router/`（freeze receipt + Phase A dev raw + executor script + verdict md + entry gate md + methods lib）。
+- **不建立 method card**（verdict 非 METHOD_SIGNAL）。claim ceiling 维持 LOCAL_SLICE / NONBINDING_DIAGNOSTIC。
+- `_registry.yaml`：last_updated 更新（P10 PROBLEM_ABSENT_OR_RESOLVED_BY_CONFIG_RULE，campaign 维持 7/10，campaign-level 裁决完成 0 active carrier）。
+- **campaign-level 裁决（P10 是第 10 包）**：D039 授权的 10-有效包探索完成（7 有效 + P09 EXECUTION_INVALID + P10 PROBLEM_ABSENT），所有候选 honest negative 0 signal，0 active carrier。campaign 诚实终止。
+- protected owner/formal/Skill/thesis framework/controller 不改、**无 push**。
+
+### 来源
+
+用户 P10 执行指令（合同 §一-九）+ 入口四门 file:line 证据（`p10_entry_gate.md`）+ Phase A fresh dev raw（`p10_phaseA_dev_raw.json`）+ Phase A executor 子 agent fresh-context（agent_8c4b53c6，只读 dev seeds 13000-13005）+ freeze receipt chronology（`git show 56fee4c`）+ 物理机制分析（P05 老路 corrected standard-CMA 已解决 swap + swap artifact PI-BER 两者相当）+ thesis-lessons TL-22/TL-23/TL-32/TL-33 + 不变量 10（PI-BER 对 swap 失明）+ premise A 反转诚实标注（用户指令 §二 与证据方向相反，Phase A 用证据方向测试仍 FAIL）

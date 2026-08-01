@@ -4101,3 +4101,37 @@ V078 11/11 ACCEPT 但漏掉全部 6 项承重缺陷：
 ### 结论
 
 P09 `H_16APSK_CONFIDENCE_ADAPTIVE_BPS_SEARCH` 科学终态 **`EVIDENCE_INSUFFICIENT` → `EXECUTION_INVALID/KILL_C3`** 是唯一合法诚实纠正。**ACCEPT** D053 纠正。campaign 维持 **7/10**（P09 EXECUTION_INVALID 不计有效包；纠正本身 count_excludes=science_integrity_repair 不计包）。D052/V078 保留（chronology 闭合 Commit 1 freeze receipt 模式仍有效作方法论资产；D052 入口门裁决仍有效），但科学结论（EVIDENCE_INSUFFICIENT + "诚实正确"）被取代。
+
+---
+
+## V080: P10 RISK_BUDGETED_SINGLE_EXPERT_ML_CMA_ROUTER 独立 verifier — ACCEPT（Phase A fresh crossover FAIL 复现确认 + chronology 闭合正确 + PROBLEM_ABSENT_OR_RESOLVED_BY_CONFIG_RULE 唯一合法诚实）；campaign 维持 7/10，campaign-level 裁决完成 0 active carrier
+
+> 关联: D054（P10 verdict）/ D053（P09 纠正维持 7/10）/ V079（P09 纠正确认）
+> 日期: 2026-08-01
+> 独立性: 双层独立——① Phase A executor 子 agent fresh-context（agent_8c4b53c6）独立实现 + 运行 + 裁决，只读 dev seeds 不读 test seeds；② 本 V080 主线程整合 Phase A 结果 + 复核入口门 + chronology 闭合 + 判终态唯一性。不信任 executor 自述，逐项核 JSON + git chronology + freeze receipt。
+
+### 逐项核查
+
+1. **Commit 1 早于任何 held-out test**（PASS）：`git log --oneline -3` HEAD=56fee4c（Commit 1）。`git show 56fee4c:.../p10_freeze_receipt.json` 含 `test_started: false`（Commit 1 时点）。`git show 56fee4c --stat` 含 freeze receipt + sha256 + INVALIDATED_BY_D053 + P10 sandbox（methods/run/entry_gate）+ 治理文件，**不含** `p10_phaseA_dev_raw.json`（Phase A artifact 在 Commit 1 后生成）。**chronology 闭合正确建立**（V077 教训第二次落实，P09 模式复用）。
+2. **receipt/source/contract hash 闭合**（PASS）：重算 9 个源文件 SHA256（p10_methods.py/p10_run.py + 7 frozen common/explore 文件）全部匹配 receipt（p10_run.py verify 模式 PASS）；重算 `contract_sha256()`=8e603bd4... 匹配 receipt。freeze receipt 自身 sha256 一致。
+3. **Phase A fresh seeds**（PASS）：receipt `dev_seeds_phaseA=[13000..13005]`（6 trajectory × 2 cell = 12 realization）。Phase A raw 只含 seeds 13000-13005。test_seeds=[14000..14039] **未被读取**（Phase A FAIL Phase B/C 不运行，无 held-out test）。dev∩test=∅，dev∩history(P09 11000-11019/12000-12039 ∪ P08-R2 8000-8039/9000-9019 ∪ P08-R 6000-6019/7000-7039 ∪ P05 1000-1011)=∅。
+4. **freeze receipt test_started 维持 false**（PASS）：Phase A 完成后 receipt `test_started: false`（dev_summary 追加 Phase A 结果但 test_started 不变）。无 held-out test 执行（Phase A FAIL gate 顺序直接终止）。
+5. **Phase A crossover 判据诚实**（PASS）：ML_favored cell (N=2M fg30 SOP=1e-7) Δ=-6.08e-5 |Δ|≪MDE=0.02 crossover_pass=False（6/6 ml_wins 但绝对差微不足道，P05 老路 corrected standard-CMA 已解决 fixed-label swap）；CMA_favored cell (N=5M fg1000 SOP=4e-7) Δ=+0.4500 crossover_pass=True（fixed-label CMA 占优）。crossover_directions_consistent=False（ML_favored 无 crossover + CMA_favored 是 swap artifact）。phase_a_verdict=FAIL 诚实正确。
+6. **CMA_favored swap artifact 确认**（PASS）：CMA_favored cell PI-BER ML=0.0237 vs CMA=0.0396 Δ_pi=-0.016（两者相当），fixed-label ML=0.4896 vs CMA=0.0396 Δ=+0.4500（CMA 大幅占优）。两口径方向不一致→ML 的 fixed-label 失败是 π 级 polarization swap（不变量 10：PI-BER 对 swap 结构性失明）。**swap artifact 非 ranking 反转**。
+7. **ML_favored P05 老路确认**（PASS）：ML_favored cell (短 N 小 SOP 累积旋转 ~11.5°) ML fx≈3e-7 CMA fx≈6e-5 都接近完美。corrected StandardCMA (Godard 1980 with-z) 在 fixed-label 上已解决 swap，D015 历史 ML 优势（针对 scalar-error 缺 z current-CMA）在 corrected standard-CMA 下消失。与 P05 PROBLEM_RESOLVED_BY_CONVENTIONAL_ONLINE_EQUALIZER 同构。
+8. **fixed-label PRIMARY 口径正确**（PASS）：Phase A 用 `evaluate_outputs(...)["fixed_label_ber"]["mean"]`（prompt012_longseq_audit），这是真 fixed-label（直接 label 对比，不试旋转选最低，非 PI-BER/truth-resolved，与 P09 resolve_m16apsk_blockwise 用 tx_bits 的 truth-resolved BER 不同）。PI-BER 作 secondary 报告。**口径无 P09 缺陷 5 的 truth-resolution 问题**。
+9. **完整 deployable 调用图无 truth leakage**（PASS）：Phase A channel 生成用 sX/sY（TX symbols）生成 rx（合法 signal synthesis），ML train_on_prefix 用 sX/sY 作 label（合法 supervised training on known prefix），CMA equalize 只用 rx（合法 blind）。TX truth 只用于最终 BER 计分（fixed-label + PI-BER）。无 router decide（Phase A 是 fresh crossover test 非路由实验）。
+10. **raw→aggregate**（PASS）：从 p10_phaseA_dev_raw.json 重算两 cell mean ML/CMA fixed+PI，relError=0.00e+00。
+11. **terminal verdict 唯一**（PASS）：Phase A FAIL → gate 顺序 → `PROBLEM_ABSENT_OR_RESOLVED_BY_CONFIG_RULE`（用户合同 §入口门明文允许的 fresh-dev-fail 终态）。verdict 在 allowed_terminals 内精确匹配。非 PROBLEM_RESOLVED_BY_SIMPLE_ROUTING（crossover 不存在未到 Phase B）；非 NO_DIAGNOSTIC_METHOD_SIGNAL（未到 Phase C）；非 EVIDENCE_INSUFFICIENT（CI 宽度非瓶颈）；非 STRATEGIC_GATE（入口门已过 Phase A 是 fresh dev）；非 EXECUTION_INVALID（合同执行合法）。
+12. **premise A 反转诚实标注**（PASS）：用户指令 §二 premise A 描述"长慢变 ML 占优"与证据方向相反。Phase A 用证据支持的方向（ML_favored=短N小SOP；CMA_favored=长N大SOP）测试，结果仍 FAIL。**无论 premise 方向，crossover 在 fixed-label PRIMARY 下都不成立**——这是 P05 老路根本结论。诚实标注在 D054 + worker-log，不强行 PASS。
+13. **campaign 计数正确 + campaign-level 裁决完成**（PASS）：topic-index.md rdl_campaign `accepted_valid_packages: 7`（D053 纠正后正确计数）。P10 PROBLEM_ABSENT_OR_RESOLVED_BY_CONFIG_RULE 不计有效包（count_excludes=entry_phase_A_fail）。**P10 是 campaign 第 10 包（campaign_level_decision_at: P10）**——D039 授权的 10-有效包探索完成（7 有效 P01-P07-R + P08-R2 PARTIAL + P09 EXECUTION_INVALID + P10 PROBLEM_ABSENT），所有候选 honest negative 0 signal，0 active carrier。campaign 诚实终止。
+
+### 结论
+
+P10 `RISK_BUDGETED_SINGLE_EXPERT_ML_CMA_ROUTER` verdict `PROBLEM_ABSENT_OR_RESOLVED_BY_CONFIG_RULE` + chronology 闭合正确建立 + campaign 维持 7/10 + campaign-level 裁决完成 0 active carrier——**全部 13/13 PASS，ACCEPT**。
+
+**关键诚实性确认**：Phase A fresh crossover 在 fixed-label PRIMARY 口径下不成立（ML_favored P05 老路 corrected standard-CMA 已解决 swap；CMA_favored CMA 优势是 swap artifact PI-BER 两者相当）。这是用户合同 §入口门明文允许的 fresh-dev-fail 终态。crossover-based single-expert router 方向在 corrected standard-CMA 下无可作用空间。
+
+**chronology 闭合确认（V077 教训第二次落实）**：Commit 1 (`56fee4c`) freeze receipt `test_started=false` 在任何 held-out test 前；Phase A 只读 dev seeds 13000-13005；未读 test seeds 14000-14039（Phase A FAIL 无 held-out test）。**P09 chronology 模式成功复用**。
+
+**campaign-level 裁决（P10 是第 10 包）**：D039 授权的 10-有效包探索完成，0 active carrier，所有候选 honest negative 0 signal。campaign 诚实终止。
