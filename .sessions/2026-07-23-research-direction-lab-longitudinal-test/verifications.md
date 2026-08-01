@@ -4135,3 +4135,39 @@ P10 `RISK_BUDGETED_SINGLE_EXPERT_ML_CMA_ROUTER` verdict `PROBLEM_ABSENT_OR_RESOL
 **chronology 闭合确认（V077 教训第二次落实）**：Commit 1 (`56fee4c`) freeze receipt `test_started=false` 在任何 held-out test 前；Phase A 只读 dev seeds 13000-13005；未读 test seeds 14000-14039（Phase A FAIL 无 held-out test）。**P09 chronology 模式成功复用**。
 
 **campaign-level 裁决（P10 是第 10 包）**：D039 授权的 10-有效包探索完成，0 active carrier，所有候选 honest negative 0 signal。campaign 诚实终止。
+
+
+## V081: P10 终态降级（PROBLEM_ABSENT_OR_RESOLVED_BY_CONFIG_RULE → EVIDENCE_INSUFFICIENT / LOCAL_TWO_CELL_PROBE）独立复核 — ACCEPT（五项承重不足确认 + chronology 闭合保留 + 终态降级唯一合法诚实 + campaign 未终止 remaining=3）
+
+> 关联: D055（P10 终态降级）/ D054/V080（原 P10 裁决，保留 chronology+raw，降级终态+count+campaign-complete）
+> 日期: 2026-08-01
+> 独立性: 主线程独立核实 P10 freeze receipt + git chronology，不信任 D054/V080 executor 自述。
+
+### 逐项核查
+
+1. **P10 freeze receipt 五项承重不足确认**（PASS，逐字段读 `projects/simulation/results/p10_single_expert_router/p10_freeze_receipt.json`）：
+   - ① **仅 2 预选 cell**：receipt `crossover_cells` = {ML_favored_hypothesis, CMA_favored_hypothesis} 两 cell。用户 P11 指令 §五"≥4 预声明 problem-bearing cells"对标，2 cell 远不足。
+   - ② **每 cell 仅 6 dev seed**：receipt `dev_seeds_phaseA=[13000,13001,13002,13003,13004,13005]`，6 trajectory。`held_out_test_run: false`，`held_out_test_seeds_read: []`（test_seeds 14000-14039 未读）。
+   - ③ **未满足 cell 多样性**：两 cell 同 `turb: strong`，仅 N(2M/5M) / f_G(30/1000) / SOP(1e-7/4e-7) 变化，无 weak/moderate 档覆盖。
+   - ④ **Phase B configuration rule 未运行**：receipt `phase_b_c_run: false`，`reason_phase_b_c_not_run: "Phase A FAIL -> gate order -> ... 终态, Phase B/C 不运行"`。contract `baseline_ladder.B3_configuration_only_rule` ("N>=N_thresh -> CMA else ML") 从未执行 → "RESOLVED_BY_CONFIG_RULE" 措辞无 Phase B 证据。
+   - ⑤ **git chronology 闭合正确**（保留有效）：`git show 56fee4c --stat` 含 freeze receipt+sha256+entry_gate+methods+run，**不含** `p10_phaseA_dev_raw.json`；`git show 345d9e3 --stat` 含 `p10_phaseA_dev_raw.json`（Phase A raw 在 Commit 1 后生成）。chronology 非 P08-R2 型缺陷。
+
+2. **终态降级唯一合法**（PASS）：EVIDENCE_INSUFFICIENT / LOCAL_TWO_CELL_PROBE 是唯一合法诚实降级——2 cell × 6 seed 局部 probe 既不能确认也不能推翻 crossover（外推过度归纳风险），Phase B configuration rule 未运行（"RESOLVED_BY_CONFIG_RULE" 措辞无据）。非保留 PROBLEM_ABSENT（证据不足确认 crossover 不存在）；非 EXECUTION_INVALID（chronology 合法无合同违反）；非 STRATEGIC_GATE（入口门已过）。
+
+3. **chronology + raw 数据保留有效**（PASS）：D054/V080 的 chronology 闭合（Commit 1 freeze receipt pre held-out）、Phase A fresh dev seeds（13000-13005 disjoint 全部 history）、Phase A raw（两 cell 局部发现 ML_favored P05 老路 + CMA_favored swap artifact）均保留作局部诊断 + 方法论资产。**降级只针对终态宣称 + count + campaign-complete，不动 chronology/raw**。
+
+4. **campaign 未终止 / remaining=3**（PASS）：D039 授权 10 有效包，当前 accepted_valid=7（D051 纠正后正确计数），P10 降级后仍不计有效包（count_excludes=evidence_insufficient_local_probe），**remaining_valid_packages=3**。撤回 D054/V080 "campaign-level 裁决完成 / 0 active carrier / campaign 诚实终止"——campaign **未终止**，用户已授权 P11 继续。
+
+5. **single-expert-router 族不关闭**（PASS）：用户指令 §一 line 31 明令。P10 证据不足以下族级裁决，族维持 open；本轮不补跑 P10（立即进 P11）。
+
+6. **accepted_valid 维持 7/10**（PASS）：P10 原本不计有效包（D054 count_excludes=entry_phase_A_fail），降级后仍不计（count_excludes=evidence_insufficient_local_probe），计数不变。remaining=3。
+
+7. **不篡改旧 checkpoint**（PASS）：用户指令 §一 line 34"不篡改旧 checkpoint，mission-log 追加新 checkpoint"。D054/V080/CP045 保留历史，标"被 D055/V081 部分取代"，新 CP046 追加。worker-log step-040 追加降级段不删旧内容。
+
+### 结论
+
+P10 终态降级（PROBLEM_ABSENT_OR_RESOLVED_BY_CONFIG_RULE → EVIDENCE_INSUFFICIENT / LOCAL_TWO_CELL_PROBE）+ chronology 闭合保留 + campaign 未终止 remaining=3 + single-expert-router 族不关闭——**全部 7/7 PASS，ACCEPT**。
+
+**关键诚实性确认**：2 cell × 6 dev seed 局部 probe 不足以下 campaign-level 终局裁决。撤回"0 active carrier / campaign 诚实终止"过度宣称，campaign 维持 open，remaining_valid=3。Phase B configuration-only rule 未运行是"RESOLVED_BY_CONFIG_RULE"措辞的关键漏洞——降级 EVIDENCE_INSUFFICIENT 是唯一合法诚实。
+
+**campaign 计数纠正**：accepted_valid=7/10 维持，remaining_valid=3，campaign 未终止。立即进 P11（用户已授权）。

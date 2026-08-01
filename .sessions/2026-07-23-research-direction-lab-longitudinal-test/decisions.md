@@ -3297,3 +3297,51 @@ P10 `RISK_BUDGETED_SINGLE_EXPERT_ML_CMA_ROUTER` **verdict `PROBLEM_ABSENT_OR_RES
 ### 来源
 
 用户 P10 执行指令（合同 §一-九）+ 入口四门 file:line 证据（`p10_entry_gate.md`）+ Phase A fresh dev raw（`p10_phaseA_dev_raw.json`）+ Phase A executor 子 agent fresh-context（agent_8c4b53c6，只读 dev seeds 13000-13005）+ freeze receipt chronology（`git show 56fee4c`）+ 物理机制分析（P05 老路 corrected standard-CMA 已解决 swap + swap artifact PI-BER 两者相当）+ thesis-lessons TL-22/TL-23/TL-32/TL-33 + 不变量 10（PI-BER 对 swap 失明）+ premise A 反转诚实标注（用户指令 §二 与证据方向相反，Phase A 用证据方向测试仍 FAIL）
+
+
+## D055: P10 RISK_BUDGETED_SINGLE_EXPERT_ML_CMA_ROUTER 终态纠正 PROBLEM_ABSENT_OR_RESOLVED_BY_CONFIG_RULE → EVIDENCE_INSUFFICIENT / LOCAL_TWO_CELL_PROBE — 2 cell × 6 dev seed 局部 probe 不足以下 campaign-level 终局裁决；撤回 D054/V080 "campaign-level 裁决完成 / 0 active carrier / campaign 诚实终止" 过度宣称；chronology 闭合与 raw 数据有效（保留作局部诊断），但终态降级；single-expert-router 族不关闭（本轮不补跑）；accepted_valid 维持 7/10，remaining_valid=3；纠正不计有效包
+
+> status: active
+> date: 2026-08-01
+> 取代：D054/V080 的 terminal verdict（PROBLEM_ABSENT_OR_RESOLVED_BY_CONFIG_RULE）、count 部分（campaign-level 第 10 包裁决完成）、campaign-complete 宣称（0 active carrier / campaign 诚实终止）
+> 被取代：无
+> 依据: 主线程独立核实 P10 freeze receipt（`projects/simulation/results/p10_single_expert_router/p10_freeze_receipt.json` Commit 1 `56fee4c`）五项承重不足——①**仅 2 预选 cell**（receipt `crossover_cells`: ML_favored_hypothesis + CMA_favored_hypothesis 两 cell），远低于冻结合同要求的"≥2 ML 优势 + ≥2 CMA 优势 cell"（contract baseline_ladder/method_signal 隐含 + 用户 P11 指令 §五"≥4 预声明 problem-bearing cells"对标）；②**每 cell 仅 6 dev seed**（receipt `dev_seeds_phaseA=[13000..13005]`，6 trajectory × 2 cell = 12 realization），无 held-out test（`held_out_test_run: false`，`held_out_test_seeds_read: []`，test_seeds 14000-14039 未读）；③**未满足冻结合同的 cell 多样性要求**（两 cell 同 turb=strong，仅 N/f_G/SOP 变化，无 weak/moderate 档覆盖）；④**Phase B configuration-only rule 未运行**（`phase_b_c_run: false`，contract baseline_ladder B3_configuration_only_rule "N>=N_thresh -> CMA else ML" 从未执行）→ 即便 Phase A crossover 不成立，configuration-only rule 的无遗憾解决路径也未被验证，"RESOLVED_BY_CONFIG_RULE" 措辞无 Phase B 证据支撑；⑤**git chronology 闭合正确**（Commit 1 `56fee4c` freeze receipt `test_started=false` 在 Commit 2 `345d9e3` Phase A raw 前，`git show 56fee4c --stat` 不含 `p10_phaseA_dev_raw.json`）—— chronology 非 P08-R2 型缺陷，本次降级是**终态宣称过度**非 chronology 缺陷
+> 触发原话: 用户 P10 纠偏 + P11 执行指令（"D039原始授权是10个'有效科学包'，不是10个编号或尝试。P10目前只有：2个预选cell；每cell 6个dev seeds；没有held-out test；没满足冻结合同要求的至少2个ML优势工况+2个CMA优势工况；Phase B configuration rule没有运行。因此：1.新增D/V血缘，取代D054/V080的terminal、count和campaign-complete部分；2.P10改为：EVIDENCE_INSUFFICIENT / LOCAL_TWO_CELL_PROBE……"——voice.md 2026-08-01）
+
+### 决策
+
+P10 `RISK_BUDGETED_SINGLE_EXPERT_ML_CMA_ROUTER` 终态由 `PROBLEM_ABSENT_OR_RESOLVED_BY_CONFIG_RULE` **降级为 `EVIDENCE_INSUFFICIENT / LOCAL_TWO_CELL_PROBE`**。**不计有效包**（局部 2-cell probe 证据不足，count_excludes=evidence_insufficient_local_probe）。**撤回 D054/V080 三项过度宣称**：(a) "campaign-level 第 10 包裁决完成"——P10 证据强度不足任 campaign-level 裁决；(b) "0 active carrier / campaign 诚实终止"——campaign **未终止**，remaining_valid_packages=3（D039 授权 10 有效包，当前 7，余 3 预算）；(c) "PROBLEM_ABSENT_OR_RESOLVED_BY_CONFIG_RULE" 终态——降级 EVIDENCE_INSUFFICIENT（2 cell × 6 seed 局部 probe 既不能确认也不能推翻 crossover，更未运行 Phase B 验证 configuration-only rule）。
+
+**保留有效（不动）**：
+- **chronology 闭合正确**（Commit 1 `56fee4c` freeze receipt `test_started=false` pre held-out test；V077 教训第二次落实）—— chronology 模式仍有效作方法论资产供 P11 复用。
+- **Phase A raw 数据有效作局部诊断**（ML_favored cell 走 P05 老路 corrected standard-CMA 已解决 swap；CMA_favored cell 的 CMA 优势是 swap artifact PI-BER 两者相当）—— 这是两 cell 的真实局部发现，保留作"两 cell 未确认实用 crossover"的局部诊断，**不作全局结论**。
+- D054/V080 的入口门 CONDITIONAL-PASS 裁决、chronology receipt 模式、Phase A fresh dev disjoint seeds（13000-13005 与全部 history 不相交）均保留有效。
+
+**不关闭 single-expert-router 族**（用户指令 §一 line 31）：本轮 P10 证据不足以下族级裁决，族维持 open；**本轮不补跑 P10**（用户指令：纠偏后立即进 P11，不补跑 P10）。
+
+### 为什么是 EVIDENCE_INSUFFICIENT / LOCAL_TWO_CELL_PROBE（唯一合法诚实降级）
+
+- **非保留 PROBLEM_ABSENT_OR_RESOLVED_BY_CONFIG_RULE**：该终态隐含"crossover 不存在已被充分证据确认"。但 2 cell × 6 seed（12 realization）+ 无 held-out test + Phase B configuration-only rule 未运行 → 证据强度不足确认 crossover 不存在。Phase A 的两 cell 发现是局部观察，外推到"crossover 在所有工况下不成立"是过度归纳。
+- **非 EXECUTION_INVALID**：合同执行本身合法（chronology 闭合 + fixed-label PRIMARY 口径正确 + fresh seeds disjoint），无合同违反。问题是**证据强度不足支撑终态宣称**，非执行违法。
+- **非 STRATEGIC_GATE**：入口门已过，Phase A 已跑（虽是局部），降级原因是证据不足非入口门失败。
+- **EVIDENCE_INSUFFICIENT / LOCAL_TWO_CELL_PROBE**：诚实标注"2 cell × 6 seed 局部 probe 既不能确认也不能推翻 crossover，须更大规模 held-out + Phase B configuration rule 才能裁决"。这保留局部诊断价值，同时不做过强宣称。
+
+### 排除的替代方案
+
+- **不补跑 P10 扩大 cell/seed**：用户明令"纠偏后立即执行 P11，不得只做治理提交"+"本轮不补跑"。P10 维持 EVIDENCE_INSUFFICIENT，single-expert-router 族留待未来 campaign 决定。
+- **不删旧 D054/V080/checkpoint**：用户指令 §一 line 34"不篡改旧 checkpoint，mission-log 追加新 checkpoint"。D054/V080/CP045 保留历史（标"被 D055/V081 部分取代：终态+count+campaign-complete"），新 CP046 追加。
+- **不改 accepted_valid 计数**：P10 原本就不计有效包（D054 count_excludes=entry_phase_A_fail），降级后仍不计（count_excludes=evidence_insufficient_local_probe），**accepted_valid 维持 7/10**，remaining_valid=3。
+- **不动 protected owner/formal/Skill/thesis framework**、**无 push**。
+
+### 影响范围
+
+- `topic-index.md` 控制块：epoch 81→**82**，`authority_pointer` D054→**D055**，`mission_checkpoint` CP045→**CP046**；`next_legal_action` 由"用户决定 campaign 后续"改为"执行 P11（用户已授权）"；删 `decision_gate` 中"campaign-level 裁决完成 0 active carrier"宣称；`rdl_campaign.current_package` P10→P11；rolling_queue P10 标降级。
+- `mission-log.md`：追加 CP046（P10 终态降级，chronology 保留，single-expert-router 族不关闭，campaign 未终止 remaining=3，立即进 P11）。
+- `verifications.md`：追加 V081（P10 终态降级独立复核 + 五项承重不足确认 + chronology 保留 + campaign 未终止）。
+- `_registry.yaml`：last_updated 更新（P10 降级 EVIDENCE_INSUFFICIENT，campaign 未终止 remaining=3，进 P11）。
+- worker-log：P10 `step-040` 追加降级段（不删旧内容）。
+- protected owner/formal/Skill/thesis framework/controller 不改、**无 push**。
+
+### 来源
+
+用户 P10 纠偏 + P11 执行指令（合同 §一 P10 最小纠偏 line 12-37）+ 主线程独立核实 P10 freeze receipt（`projects/simulation/results/p10_single_expert_router/p10_freeze_receipt.json`，`crossover_cells`/`dev_seeds_phaseA`/`held_out_test_run`/`phase_b_c_run` 字段）+ git chronology（`git show 56fee4c --stat` / `git show 345d9e3 --stat`）+ D054/V080 原始裁决（保留 chronology+raw，降级终态+count+campaign-complete）+ thesis-lessons TL-33（FR-26 证据链：诚实降级不强行保留过强终态）

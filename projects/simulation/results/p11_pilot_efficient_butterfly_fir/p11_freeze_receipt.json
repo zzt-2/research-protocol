@@ -1,0 +1,160 @@
+{
+  "package": "P11",
+  "id": "PILOT_EFFICIENT_STRUCTURED_BUTTERFLY_FIR",
+  "contract_sha256": "ccdd4c8d8478d7c507c42215986590d91f5ae703bb85288f359d15f047a0cf92",
+  "contract": {
+    "package": "P11",
+    "id": "PILOT_EFFICIENT_STRUCTURED_BUTTERFLY_FIR",
+    "problem": {
+      "M": "当前 4 路复线性 Butterfly FIR (8 实 Conv1d, bias=False, 无非线性层; common/_ml_equalizer.py:104), 以 Adam + 前 50% 连续 TX 标签训练",
+      "C": "pilot / training-symbol 预算受限 (部署级 pilot overhead)",
+      "A": "实现没有充分利用线性 MIMO-FIR 结构, 监督开销和训练计算可能不必要",
+      "goal": "在显式计入 pilot overhead 的前提下, 以更少已知符号保持均衡性能",
+      "claim_ceiling": "面向当前双偏振 FSO 接收链的少导频结构化 Butterfly FIR 训练方法"
+    },
+    "shared_anchor": {
+      "paired_realization": true,
+      "modulation": "QPSK (双偏振 PolMUX, P05 identity)",
+      "turbulence": "weak/moderate/strong (params.py provenance: strong=(4.2,1.4) Gu2022 doi:10.3390/app12073331; weak=(11.6,10.1); moderate=(4.0,1.9))",
+      "channel_gen": "gen_channel (ml_long_seq_failure.py:154, GG envelope + SOP rotation + AWGN)"
+    },
+    "fair_pilot_contract": {
+      "pilot_positions_frozen_pre_test": true,
+      "only_pilot_tx_in_training": true,
+      "payload_tx_only_for_scoring": true,
+      "no_full_payload_truth_into_adam_ls_rls": true,
+      "shared_realization_pilot_payload_eval_window": true,
+      "pilot_overhead_in_net_goodput": true,
+      "fixed_label_ber_needs_deployable_pilot_ambiguity": true
+    },
+    "primary_metric": {
+      "metric": "fixed-label BER (swap-visible, 不变量 10) PRIMARY; PI-BER secondary",
+      "goodput": "pilot-adjusted goodput = payload_bits × (1 - pilot_frac) × (1 - BER)",
+      "decision_rule": "pilot 位置 TX 符号进训练/估计; payload TX truth 只计分",
+      "forbidden_in_decide": [
+        "payload TX symbols/bits (除 pilot 位置)",
+        "true h/theta/SNR/gamma_bar/fG",
+        "post-hoc oracle 标签"
+      ]
+    },
+    "complexity_metric": {
+      "metric": "training compute proxy = (label positions seen) × (iterations) + inference FLOP",
+      "note": "op×bit as proxy, 无真实综合; wall-clock 只 secondary"
+    },
+    "baseline_ladder": {
+      "B0_full_label_adam": "前 50% 连续全段标签 (性能锚点, 50% overhead)",
+      "B1_sparse_label_adam": "同结构 Adam, 只 pilot 位置标签 (同 B2 pilot 位置)",
+      "B2_batch_complex_ls": "同 tap/pilot, 闭式 lstsq (run_ls_fir_trial 同结构, pilot-only)",
+      "B3_pilot_rls_lms": "pilot 位置 RLS/LMS 在线 (lambda/LMS-step 独立 dev 调谐)",
+      "B4_blind_cma": "Godard 1980 with-z, zero pilot"
+    },
+    "candidates": {
+      "C1_ls_init_pilot_adam_refine": "闭式 LS 初始化减少 Adam 收敛所需标签数",
+      "C2_structured_toeplitz_ls": "显式 Butterfly/FIR 结构 Tikhonov 正则 (非通用 LS)",
+      "C3_pilot_init_confidence_gated_dd": "receiver-visible confidence-gated decision-directed (伪标签来自 slicer + confidence, 不用 payload truth)"
+    },
+    "pilot_fractions": [
+      0.5,
+      0.2,
+      0.1,
+      0.05,
+      0.02,
+      0.01
+    ],
+    "compute_constraint_note": "Commit 1 原合同 N=2M dev 20 + held-out 40 全跑在 CPU-only 环境 ~8h 不可行 (smoke test 365s/seed, torch CUDA 不可用)。缩合同重冻: N=500k (pilot-efficient 问题 1% pilot=5k symbols 远超定 4L=44 未知数), dev 8 seeds + held-out 8 test seeds。pilot fractions 不变 (50%-1%)。cell 覆盖不变 (weak/moderate/strong 两档 + 两 SNR/SOP)。诚实记录算力约束为 scope 项; held-out confirmation 保留 (用户 指令 §五 \"不得再次用 6-seed dev probe 宣布全局 absence\"; 8 test seeds > 6)。若结论 CI_hw>MDE/2 → EVIDENCE_INSUFFICIENT 诚实终态。",
+    "cells_problem_bearing": {
+      "weak_fg30_9dB": {
+        "alpha": 11.6,
+        "beta": 10.1,
+        "f_g": 30.0,
+        "gamma_db": 9.0,
+        "sop_rate": 1e-07,
+        "N": 500000
+      },
+      "moderate_fg100_13dB": {
+        "alpha": 4.0,
+        "beta": 1.9,
+        "f_g": 100.0,
+        "gamma_db": 13.0,
+        "sop_rate": 2e-07,
+        "N": 500000
+      },
+      "strong_fg30_11dB": {
+        "alpha": 4.2,
+        "beta": 1.4,
+        "f_g": 30.0,
+        "gamma_db": 11.0,
+        "sop_rate": 4e-07,
+        "N": 500000
+      },
+      "strong_fg1000_15dB": {
+        "alpha": 4.2,
+        "beta": 1.4,
+        "f_g": 1000.0,
+        "gamma_db": 15.0,
+        "sop_rate": 4e-07,
+        "N": 500000
+      }
+    },
+    "mde": {
+      "fixed_ber_MDE": 0.05,
+      "MDE_rationale": "fixed-label BER 在 operating region 的可检测差 (P05 同域 MDE)",
+      "goodput_MDE": 0.02
+    },
+    "non_inferiority_threshold": "候选 fixed-BER 不劣于 full-label B0 (catastrophe rate)",
+    "method_signal_conditions": [
+      "1. 相同 pilot fraction 下稳定优于最强 LS/RLS/Adam comparator (paired CI_low>0)",
+      "2. paired improvement 达预冻结 MDE 且 CI 支持",
+      "3. 相对 full-label Adam 性能非劣 (fixed-label BER CI_upper < non-inf thr)",
+      "4. pilot-adjusted goodput 更高",
+      "5. catastrophe rate 不退化",
+      "6. 至少在预声明多数 cells 成立",
+      "7. 增益非由更多标签/更多迭代/payload truth 产生",
+      "8. direct prior 没完全覆盖该动作组合"
+    ],
+    "allowed_terminals": [
+      "PROBLEM_RESOLVED_BY_COMPLEX_LS",
+      "PROBLEM_ABSENT_AT_LOW_PILOT_OVERHEAD",
+      "NO_DIAGNOSTIC_METHOD_SIGNAL",
+      "PILOT_EFFICIENT_BUTTERFLY_METHOD_SIGNAL",
+      "EVIDENCE_INSUFFICIENT",
+      "EXECUTION_INVALID",
+      "STRATEGIC_GATE"
+    ],
+    "seeds": {
+      "dev_seeds": [
+        15000,
+        15001,
+        15002,
+        15003,
+        15004,
+        15005,
+        15006,
+        15007
+      ],
+      "test_seeds": [
+        16000,
+        16001,
+        16002,
+        16003,
+        16004,
+        16005,
+        16006,
+        16007
+      ],
+      "history_disjoint_check": "P10 13000-13005/14000-14039, P09 11000-11019/12000-12039, P08-R2 8000-8039/9000-9019, P08-R 6000-6019/7000-7039, P01-P07 0-99/200-239/300-309/1000-1011"
+    },
+    "sample_size_rationale": "Compute-constrained (CPU-only, torch CUDA 不可用, smoke 365s/seed@N=2M): 缩 N 2M→500k + dev 20→8 + held-out 40→8。pilot-efficient 问题 1% pilot@500k = 5k symbols >> 4L=44 未知数仍远超定; 8 held-out test seeds > 6 非 dev-only probe (用户指令 §五)。paired delta CI 按 1/sqrt(n) 缩放; 若 CI_hw > MDE/2 判 EVIDENCE_INSUFFICIENT (诚实终态, 非 PROBLEM_ABSENT)。算力约束诚实记录。"
+  },
+  "source_hashes": {
+    "common/_ml_equalizer.py": "db352990f6ca740955bba3b48136077d8b8147d5d2b6af700350ad9f62d631df",
+    "explore/p11-pilot-efficient-butterfly-fir/p11_entry_gate.md": "f6f775a66bbf8e82be8419e1f67869a31dc6f3dcc7850b230a5f2a3e2c2614ad",
+    "explore/p11-pilot-efficient-butterfly-fir/p11_methods.py": "b4fab595717c61152b7a1e15a1d8abebaf38ed5b52c3f067fa807e694c02eeab",
+    "explore/p11-pilot-efficient-butterfly-fir/p11_run.py": "e7eb9856386244d7e3710db34576311b2e98ceb80b67d1f630762f29e5ff6688",
+    "explore/cma-fade-divergence/ml_long_seq_failure.py": "5ed5ff9c5145292a59fab9688c1cbf823e7ae2ebea4fb60878ed81f8e10a3e1d"
+  },
+  "receipt_creation_time": "2026-08-01T20:26:14",
+  "test_started": false,
+  "dev_summary": {},
+  "receipt_sha256": "b6cb7ab9a688df96d3ddead1be5ec5ce4bd0087f61e680fb6ea8451fe0110822"
+}
