@@ -231,3 +231,17 @@
   Phase 0A 标准码来源门（优先 DVB-S2 r2/3 16QAM/BICM；只 LDPC 无 BCH 须称 component；检索须子 agent 用 tools/search 或 primary source 主对话禁灌网页；禁手写 parity/随机 H/pyldpc 冒充/凭包名/悄悄换码率帧长；无法闭合 terminal=CODED_BASELINE_SOURCE_UNAVAILABLE）→ Phase 0B 最小真实 coded-chain sandbox（coded_contract/codec_adapter/coded_realization_adapter/receiver_to_llr/coded_metrics，不破坏 frozen common，复用 GG/SOP/AWGN 物理模型，禁 TX truth 改善 receiver）→ 编解码算法正确性门 12 项 + AWGN waterfall 三区（失败 terminal=CODED_CHAIN_IDENTITY_UNAVAILABLE）→ Phase A 问题门（B0/B1/B2/oracle，dev/test 全隔离新 seeds，主指标 required-SNR@frozen FER，MDE≥0.15dB）→ Phase B 条件式方法工厂（仅 Phase A 问题存活，≥3 机制不同候选 C1/C2/C3+可选C4）→ Phase C 公平比较归因 → 独立 verifier 15 项 → 治理收尾单次 commit；
   最终只汇报五项：1.采用的标准码/来源hash/真实 coded-chain 身份与 AWGN waterfall 2.B0/B1/B2/oracle/最佳候选 FER/post-BER/required-SNR/iterations/CI 3.P08 terminal verdict/问题是否存在/是否 METHOD_SIGNAL/active carrier 4.campaign 8/10 状态与 P09 条件式入口 5.scope-change/D/V/worker-log/artifact/verifier/changed files/commit SHA）
   [绑定结论：本轮端到端完成 P08 coded-chain 扩展包]
+
+## 2026-08-01（P08-R coded-chain 科学完整性修复执行指令，用户中转）
+
+- "执行 P08-R coded-chain 科学完整性修复。暂停 P09，不把本轮另计为第九包。"
+- "本轮必须在同一对话完成：根因复现 → 治理回退 → coded-chain 身份澄清 → GG/信息/oracle/metric 修复 → fresh powered experiment → 条件式方法构造 → 独立 verifier → 一次统一 commit。不 push。"
+- "二、治理立即纠偏 —— 新增 D048…P08 codec/AWGN 基础设施保留为 PARTIAL reusable asset；V073 的科学 ACCEPT 撤回；PROBLEM_ABSENT_AFTER_STRONG_LLR_BASELINE 撤回；G family 暂不关闭；accepted_valid_packages：8→7；current：P08-R；P09 暂停。V073 保留，不删除…旧 P08 artifacts 保留并增加 INVALIDATED 标记，不覆盖、不删除。"
+- "三、修复前最小失败证据 —— 任何修改前，建立并保存确定性 prefail tests：H1 GG provenance…H2 runtime information…H3 oracle action space…H4 metric contract…H5 coded identity wording…H6 state lifecycle / sample size…prefail evidence 必须在修复前保存。"
+- "四、coded-chain 身份修复 —— 准确命名：'5G NR BG2 rate-matched LDPC component + Gray-16QAM BICM baseline'…对 bit interleaver 二选一并冻结：A 启用 num_bits_per_symbol=4 / B 保持禁用…不得在读取 test 后切换 A/B…补齐此前缺失项：reference vector 或独立第二实现交叉验证。"
+- "六、receiver-visible σ² —— 所有 deployable baseline 禁止读取 true gamma。优先采用冻结的已知 calibration/pilot prefix…若已有合法 pilot 接口，复用它；若没有，新增最小固定 calibration prefix，不得使用整帧 TX truth。"
+- "七、建立合法 oracle ladder —— 至少实现并区分：O0 global-truth oracle / O1 codeword/block-truth oracle / O2 finer/local truth bound…oracle 只作 Kill/headroom，不作 Go。如果 O1/O2 相对 strongest conventional 的 coded headroom 小于 MDE，问题直接关闭，不构造方法。"
+- "八、重新冻结 metric contract —— 旧 P08 test seeds 全部视为已观察，禁止复用。先用新的 dev trajectories 确定一个可达到的 SNR/FER 工作区，再冻结 test…不得在 test 后从 A 临时切到 B。"
+- "十一、独立 verifier V074 —— verifier 必须与 executor 分离，并逐项核查：1.五/六个 prefill 根因真实复现…V074 不得只复述合同或测试 PASS，必须沿 caller→callee 检查科学信息边界。"
+- "十二、治理与收尾 —— 若修复后科学包有效：accepted_valid_packages：7→8；G family 根据新 verdict 决定关闭或保留…若仍 EXECUTION_INVALID：保持7/10…不修改 protected history，不 push，最后统一 commit 一次。"
+  → D048 / V074

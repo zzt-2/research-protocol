@@ -2923,3 +2923,51 @@ baseline ladder（全方法同码/同 interleaver/同 decoder/同 iteration budg
 ### 来源
 
 用户"行"（voice.md 2026-08-01）+ P08 coded-chain 执行指令 + 源码事实核查 subagent + D045/D046 + FR-23/TL-13/TL-22/TL-23
+
+## D048: P08 coded-chain 科学完整性修复 — 冻结旧 P08 科学结论（六根因：H1 GG provenance / H2 runtime information / H3 oracle action space / H4 metric contract / H5 coded identity / H6 state lifecycle），campaign 计数回退 8→7，重做 GG 单一真相源 + receiver-visible σ² + oracle ladder + 重新冻结 metric contract
+
+> status: active
+> date: 2026-08-01
+> 取代：D047 的**科学有效性部分**（Phase 0A 选 5G NR LDPC、Phase 0B sandbox、算法正确性门 12 项 ALL PASS、Phase A 数字、verdict `PROBLEM_ABSENT_AFTER_STRONG_LLR_BASELINE`、V073 的科学层 ACCEPT 结论、G 族关闭裁决、accepted_valid 8）；D047 的**scope-change 入口裁决部分**（授权 coded-chain 场景扩展、M-C-A、信息边界、baseline ladder、明确不含）继续 active。**不取代 D046**（P07-R 终态维持）。
+> 被取代：无
+> 依据: 验证: `projects/results/p08r_coded_chain_repair/p08r_prefail_evidence.md`（六根因修复前确定性证据，逐 file:line）+ 源码逐行核（主线程读 + 3 个独立 Explore 子 agent 并行交叉核验）：`params.py:100-228`（TurbulenceParams 真值源 weak=11.6,10.1/moderate=4.0,1.9/strong=4.2,1.4）vs `p08_phaseA_gate.py:86`（硬编码 weak=1.2,1.2/moderate=4.2,1.4/strong=8.0,4.0，三档全错且 docstring 自称 matching params.py 谎报）；`p08_coded_chain.py:381`+`p08_phaseA_gate.py:300`（σ²=1/(2γ_bar) 来自循环变量，非 receiver-visible 估计，6 处）；`p08_phaseA_gate.py:185-190`（_oracle_sigma2 返回单一 global scalar，docstring 自承 per-symbol 降级为 global）；`p08_phaseA_gate.py:397-407`（MDE=0.15dB 从未生效，req 全 inf 时静默退到未冻结 raw FER-delta）；`p08_coded_chain.py:159`（LDPC5GEncoder 未传 num_bits_per_symbol，sionna encoding.py:792-793 交织被跳过）+ `p08_correctness_gate.py:236-238`（自承未启用 3GPP interleaver）vs worker-log step-036:34（谎称 triangle interleaver）；`p08_phaseA_raw_rows.json`（schema 缺逐 cw h/fade 字段，fer=1.0 双峰 15% 行 16/16 全失败当独立样本）+ thesis-lessons TL-21（确定性 grep 不靠链式标记）/TL-23（冷静期）/TL-33（FR-26 证据链）+ sim-preflight rules/mve-validation.md（consistency≠correctness，P07-R/D046 同病重演）
+> 触发原话: 用户 P08-R 执行指令（"P08 当前科学结论不得继续使用...建立并保存确定性 prefail tests...prefail evidence 必须在修复前保存"）
+
+### 决策
+
+冻结旧 P08 科学结论（`PROBLEM_ABSENT_AFTER_STRONG_LLR_BASELINE` 及其 Phase A 数字、"coded loss 主导是不可恢复突发深衰落"归因、worker-log 的 triangle interleaver 声称、harvest 全部作废），campaign `accepted_valid_packages` **8→7**，`current` = **P08-R**，P09 暂停，G family **暂不关闭**；旧 artifacts 保留并标 **INVALIDATED**（不覆盖、不删除）。修复后若科学有效完成再恢复 8/10，若仍 EXECUTION_INVALID 则保持 7/10。
+
+**PARTIAL reusable asset 保留**：P08 的 codec/AWGN 基础设施（5G NR LDPC source-auditable 选择、CodecAdapter 骨架、AWGN waterfall 三区、source_receipt）保留为可复用资产；但其 (α,β) 硬编码、σ² 来源、oracle 粒度、metric fallback、interleaver 身份、统计单位全部需修。
+
+### 理由（六根因，已确定性 prefail 证据复现，证据存 `p08r_prefail_evidence.md`）
+
+1. **H1 GG provenance（参数溯源违反）**：旧 P08 `p08_phaseA_gate.py:86` 硬编码 `scenes={weak:(1.2,1.2),moderate:(4.2,1.4),strong:(8.0,4.0)}`，与 params.py:100-228 唯一真相源（weak=11.6,10.1/moderate=4.0,1.9/strong=4.2,1.4）**三档全不一致**，且 docstring（:10）自称 "matching params.py" 谎报。最严重：moderate 的 (4.2,1.4) 实为 params.py 的 **strong** 值（档位错位），使 weak/strong 标签实质反转。违反 sim-preflight 核心 5 条之 #3。**修复要求**：所有 (α,β) 从 `SimulationConfig.get_turb_dict()`（params.py:1309）单一真相源导入，禁止脚本内硬编码。
+2. **H2 runtime information（信息边界违反）**：旧 P08 所有 deployable σ² 都是 `1/(2·γ_bar)`，γ_bar 是 SNR 循环变量（已知 Es/N0），非 receiver-visible 估计。6 处：`p08_coded_chain.py:314,348,381`、`p08_phaseA_gate.py:135,300`（Step3 test 主路径）等。B0/B1/B2 全用同一全局标量 σ²；均衡器虽逐 100-sym block 估 h（pbh）但**未传播到 LLR σ²**。⇒ LLR σ² 忽略 block-level fade。**修复要求**：deployable σ² 必须来自 receiver-visible estimator（冻结的 calibration/pilot prefix），true γ/h/θ/TX-residual/test-label 绝不进 decide；information-boundary AST 测试必须能捕获。
+3. **H3 oracle action space（上界无意义）**：旧 oracle（`p08_phaseA_gate.py:185-190` `_oracle_sigma2`）docstring 说 "per-symbol" 但实现返回单一 global scalar = `mean(|eq-s_true|²)`（每 polarization-realization 一标量）。候选 C1/C2/C3 声称 local/blockwise/heteroscedastic，oracle action space **不覆盖**候选。⇒ "no oracle headroom" 判决无意义——它在比 global-mean-residual vs AWGN，不是 per-block residual vs global。**修复要求**：建立 O0（global-truth）/O1（codeword/block-truth）/O2（finer/local-truth）oracle ladder，oracle action space ⊇ candidate，oracle 只作 Kill/headroom 不作 Go；O1/O2 coded headroom < MDE 则直接关闭问题不构造方法。
+4. **H4 metric contract（fallback 非法）**：旧 P08 Primary A（required SNR@FER=0.1）对 B0/B1/B2 **全 inf**（13dB FER=0.284 → 19dB 0.121 都 >0.1）。代码（`p08_phaseA_gate.py:397-407`）在 req 全 inf 时静默退到**未冻结的 raw FER-delta** bootstrap-CI 下界 >0 判，MDE=0.15dB 的 SNR-domain 交叉检查 NaN 从未生效。⇒ metric fallback 未在合同冻结，且 0.15dB 无合法 FER-delta 映射。**修复要求**：旧 test seeds 视为已观察禁复用；dev 先定可达 SNR/FER 工作区再冻结 test；Primary A/B 二选一在 test 前写死；MDE（required-SNR 用 0.15dB；FER/failure-prob 的 MDE 在 dev 上据毕业价值与统计功效冻结并记录换算）；禁 test 后 A 切 B。
+5. **H5 coded identity wording（身份谎报）**：Sionna `LDPC5GEncoder` 的 3GPP TS 38.212 §5.4.2.2 sub-block+triangle bit-interleaver **完全由 `num_bits_per_symbol` 参数门控**（encoding.py:172-180 注册、303-344 构置换换、792-793 应用）。旧 P08 `p08_coded_chain.py:159` 调用 `LDPC5GEncoder(k=contract.k, n=contract.n)` **从未传 num_bits_per_symbol=4** ⇒ interleaver 永不激活。correctness gate #10（`p08_correctness_gate.py:236-238`）**自承** "We do NOT apply the 3GPP bit-interleaver in this minimal chain"，只测 identity round-trip。但 worker-log step-036:34 谎称 "3GPP TS 38.212 §5.4.2.2 sub-block + triangle bit-interleaver（num_bits_per_symbol=4 for 16QAM）"——描述了一条从未构建的链。**修复要求**：准确命名 "5G NR BG2 rate-matched LDPC component + Gray-16QAM BICM baseline"；bit interleaver A（启用 num_bits_per_symbol=4 并验证语义/roundtrip/与无 interleaver 区别）或 B（保持禁用删 triangle 声称）二选一冻结，不得读 test 后切换；补 reference vector 或独立第二实现交叉验证。
+6. **H6 state lifecycle / sample size（统计单位错误 + 证据缺失）**：旧 P08 把 16 cw/polarization 当独立样本算 FER（`n_symbols=6144`=384 sym/cw×16 cw），但 16 cw 共享同一 trajectory（同 h/fade/θ）——独立单位应是 trajectory/seed。raw（`p08_phaseA_raw_rows.json` n=1440）双峰：~81% 行 0/16 失败、~15% 行 16/16 全失败；FER=0.2（worker-log 说的 13-17dB 多数 cell）实来自少数深衰落 trajectory 的 16/16 全失败被摊进池子。raw schema 缺逐 cw h/fade/θ/position 字段 ⇒ "突发深 GG" 归因**无法从 raw 验证**。**修复要求**：统计单位 trajectory/seed cluster（非 cw）；据 dev event rate 做 power/precision planning，冻最大样本+停止规则，禁提前停；CI 半宽过大判 evidence insufficient 不报 absent；raw 存 trajectory+cw 级 GG 幅度/h power-min-mean/cw position/pre-BER/FER/decoder convergence/iterations，evaluation-only truth 字段单独标记。
+
+### verifier 盲区（为什么 V073 15/15 ACCEPT 仍漏）
+
+V073 全部 15 项查的是 **consistency + provenance receipt**（source hash、H·c=0、noiseless roundtrip、LLR sign、AWGN waterfall、12 checks PASS、decoder no-TX、raw→aggregate relErr=0、seed 隔离、frozen 文件未改、governance lineage）——这些全过，但**没查科学合同六项**：H1 (α,β) 是否从 params 导入、H2 σ² 是否 receiver-visible、H3 oracle 粒度是否覆盖候选、H4 metric fallback 是否冻结、H5 interleaver 身份是否与声称一致、H6 统计单位是否 trajectory-cluster。V073 V5 "12 checks PASS" 只复述合同一致性（check #10 自承 identity interleaver 但 V073 没核 worker-log 的 triangle 声称）。**这是 P07-R/D046 "consistency≠correctness" 教训在 coded 层的重演**。V074 必须沿 caller→callee 检查科学信息边界（逐项核 H1-H6 + AST 信息边界 + raw→aggregate trajectory-cluster 复算），不能只复述合同或测试 PASS。
+
+### 排除的替代方案
+
+- **不直接改旧 p08_*.py 隐藏错误**：新建 `p08r_*` 版本化文件，旧 artifacts 标 INVALIDATED 保留审计（同 P07-R）。
+- **不靠 verifier 链式标记判断正确性**（TL-21）：用确定性 prefill 证据（p08r_prefail_evidence.md，逐 file:line）复现根因。
+- **不在修复前宣布任何科学结论**（TL-23 冷静期）：先冻结旧结论、回退计数，修复重跑有效后再恢复。
+- **不把 coded-chain 基础设施全废**：codec/AWGN 部分 PARTIAL reusable，只修六项缺陷。
+- **不在读 test 后切 bit-interleaver A/B**：身份冻结在 test 前。
+
+### 影响范围
+
+- `topic-index.md` control block：epoch 74→75，`accepted_valid_packages` 8→**7**、`current_package` P09→**P08-R**、P09 暂停；G family 状态从"关闭"改"暂不关闭"；rolling_queue P08 标 INVALIDATED_PENDING_RERUN；mission_checkpoint CP038→CP039（修复完成后）。
+- `verifications.md`：追加 V074（取代 V073 科学层结论）；V073 保留标"合同一致性通过但科学合同六项漏审"。
+- 旧 artifacts `projects/results/p08_coded_chain/*` 加 INVALIDATED_BY_P08R.md（不删不改）。
+- 新 artifacts 路径 `projects/results/p08r_coded_chain_repair/`、新脚本 `p08r_*.py`。
+- protected owner/formal/Skill/thesis framework/controller 不改、无 push。MDE=0.15 dB 维持（无预先登记理由不改）。
+
+### 来源
+
+用户 P08-R 执行指令 + `p08r_prefail_evidence.md`（六根因修复前确定性证据）+ 源码逐行核（主线程 + 3 Explore 子 agent 交叉）+ D046（P07-R 同模式先例）+ thesis-lessons TL-21/TL-23/TL-33 + sim-preflight rules/mve-validation.md

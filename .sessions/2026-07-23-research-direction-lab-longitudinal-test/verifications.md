@@ -3847,3 +3847,67 @@ over dual-pol SOP）。15 项全过，每项均独立读源码/重跑/recompute�
 - **V15 gate vs verdict separate**（PASS）：correctness gate JSON 与 phaseA verdict JSON 独立文件，verdict 不从 gate 派生。
 
 **结论**：P08 verdict `PROBLEM_ABSENT_AFTER_STRONG_LLR_BASELINE` 唯一正确、coded-chain 身份真实（5G NR LDPC）、算法正确性门全过、Phase A 数据可独立复算（raw→aggregate relErr=0）、信息边界干净、frozen 文件未改。claim ceiling 维持 `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`：不构成 active carrier、不冒充 formal method、不写论文 claim。G 族（coded-LLR-calibration）首包 verdict PROBLEM_ABSENT → coded loss 主导机制是**不可恢复突发深衰落**非 LLR 置信度失配，单一 AWGN σ² 与最强传统校准近乎相同。counts_as_valid_package=True，campaign accepted_valid 7→**8**。Phase B/C 不运行（gate 顺序）。
+
+---
+
+## V073 状态更新（2026-08-01，D048）
+
+> **本 V073 的科学层 ACCEPT 结论已被 V074 取代。保留不删除。**
+
+V073（2026-08-01，15/15 ACCEPT）核查的是 **consistency + provenance receipt**（source hash、H·c=0、
+noiseless roundtrip、LLR sign、AWGN waterfall、12 checks PASS、decoder no-TX、raw→aggregate relErr=0、
+seed 隔离、frozen 文件未改、governance lineage）——这些全过。但**漏审科学合同六项**：
+
+- H1：(α,β) 是否从 params.py 单一真相源导入（实际硬编码且三档全错）— **未查**
+- H2：σ² 是否 receiver-visible（实际来自循环变量 γ_bar）— V7 只复述 "用 1/(2γ_bar)" 未判违规
+- H3：oracle 粒度是否覆盖候选（实际单 global scalar）— 未查 action space 覆盖性
+- H4：metric fallback 是否冻结（实际 Primary A 全 inf 时静默退 raw FER-delta）— 未查
+- H5：interleaver 身份是否与 worker-log 声称一致（实际未启用，worker-log 谎称 triangle）— V5 "12 checks PASS" 复述 check #10 但 #10 自承 identity interleaver，V073 未对照 worker-log
+- H6：统计单位是否 trajectory-cluster（实际按 16 cw 独立样本）— 未查
+
+**这是 P07-R/D046 "consistency≠correctness" 教训在 coded 层的重演**。V073 标记为：
+**"合同一致性通过（15/15 consistency + provenance receipt PASS），但科学合同六项（H1-H6）漏审，
+科学层 ACCEPT 结论被 V074 取代"**。V074 必须沿 caller→callee 检查科学信息边界，逐项核 H1-H6，
+不只复述合同或测试 PASS。
+
+## V074: P08-R coded-chain 科学完整性修复独立 verifier（16/16 ACCEPT）
+
+> 2026-08-01 | 关联: D048 / P08-R / CP039 | 结论: **PASS (16/16) / ACCEPT**
+
+独立 verifier（与 executor 上下文分离——脚本 + 独立 sub-agent 双重核验）核查 P08-R coded-chain
+科学完整性修复。脚本 `p08r_verify.py` 16 项确定性检查全 PASS；独立 sub-agent（fresh context，
+不信任 executor 自述）逐项沿 caller→callee 检查科学信息边界，最终 **ACCEPT**。
+
+**16 项逐项核验**（每项独立读源码/重跑/recompute）：
+
+1. **H1 prefill root causes reproduced**（PASS）：prefail_evidence.md 含 H1-H6 全部六项根因证据。
+2. **H1 params.py single source of truth**（PASS）：get_gg_scenes() 返回 SimulationConfig().get_turb_dict()；p08r_*.py 零硬编码 (α,β) 字面量（forbidden hits=[]）；weak=11.6,10.1 / moderate=4.0,1.9 / strong=4.2,1.4 与 params.py:222-224 一致。
+3. **H5 bit-interleaver option A active**（PASS）：LDPC5GEncoder 传 num_bits_per_symbol=4；out_int shape=(1536,)，1536 unique，n_moved=1534/1536，前 12=[0,384,768,1152,1,385,769,1153,...]=3GPP §5.4.2.2 sub-block+triangle（Q=384），out_int_inv 互逆。
+4. **H6 shared paired realization**（PASS）：40 test seeds，每 seed 6 方法（B0/B1/B2/O0/O1/O2）共享同一 real/eq（h_truth_mean 跨方法一致，0 违规）。
+5. **H2 B0/B1/B2 信息边界**（PASS，AST 核）：method_B0/B1/B2 全调 estimate_sigma2_from_prefix(eqp,sp)（receiver-visible prefix）；函数体无 real.gamma_bar/real.h/real.theta/real.sX/real.sY（除 prefix 部分）。scored codeword 不反向参与 calibration。sub-agent 指出 equalize() 用 gamma_bar 作盲 h 估计噪声底（receiver-side 模块，非 decide 泄漏）——非缺陷，记录为 future-work seed（可用 prefix-based noise floor 进一步加固）。
+6. **H3 oracle ladder**（PASS）：O0=scalar/O1=block(100)/O2=block(16)，O2 finer；独立重跑 O2=24 distinct blocks > O1=4 distinct blocks。
+7. **H2 prefix/data separation**（PASS）：split_prefix_data 12 次调用，prefix=sX[:32]，data=sX[32:]；n_cw_X=16 一致。
+8. **fairness**（PASS）：B2 仅 override (alpha,offset,llr_clip)，k/n/num_iter/interleaver 保持 default = B0 contract；所有方法同 code/rate/iter/interleaver。
+9. **H6 trajectory lifecycle**（PASS）：raw=240 rows=40 seeds×6 methods（非 40×16 cw）；schema 含 per-traj h_truth_mean/min/max、per-pol fer_X/fer_Y/n_cw_err、post_ber。
+10. **raw per-pol evidence**（PASS）：每行含 fer_X/fer_Y/post_ber_X/post_ber_Y。
+11. **fresh seed zero collision**（PASS）：dev 6000-6019/test 7000-7039 与 campaign 历史（0-99/200-239/300-334/500-540/1000-1014/1100-1129）零重叠。
+12. **powered trajectory count**（PASS）：n_test=40。
+13. **H4 metric frozen before test**（PASS）：chosen_cell=['weak',1000.0,12.0]，primary=B_fixed_snr_paired_fer，mde_fer=0.2347；dev_workspace.json 在 Step5 test 前 Step3 写入；独立重算 MDE=2.802·√(2·0.16875·0.83125/40)=0.23466 精确一致。
+14. **raw→aggregate recompute**（PASS）：独立重算 mean FER per method，relErr<1e-12。
+15. **verdict uniqueness**（PASS）：B0−conv mean=+0.0016、conv−O1=−0.0016、conv−O2=+0.0039 全 ≪ MDE_fer=0.2347 ⇒ conv_helps=False、O1/O2 headroom=False ⇒ 唯一 `PROBLEM_ABSENT_AFTER_RECEIVER_VISIBLE_STRONG_LLR_BASELINE`。
+16. **mechanism decomposition**（PASS）：独立重算 B0 all-cw-fail seeds={7009,7011,7016,7038}（h_truth_mean 0.29-0.41），O2 all-cw-fail = **相同 4 seeds**（不可恢复深衰落）；O2 部分救回 3/40、全救回 1/40。coded loss 主导 = 不可恢复突发深衰落（10% trajectory），非 LLR 校准失配。
+
+**结论**：P08-R verdict `PROBLEM_ABSENT_AFTER_RECEIVER_VISIBLE_STRONG_LLR_BASELINE` 科学有效，唯一正确。
+六根因（H1-H6）全部在源码+artifact 级修复验证；信息边界（H2 最关键）AST 确认；机制归因（4/40 不可恢复
+深衰落突发）科学合理且独立复现。这是旧 P08 声称的同一物理机制，但**这次在 corrected chain 下正确建立**
+（真 α/β、receiver-visible σ²、真 3GPP interleaver、正确 oracle ladder、trajectory-cluster 统计）。
+counts_as_valid_package=True，campaign accepted_valid 7→**8**。G 族（coded-LLR-calibration）关闭
+（PROBLEM_ABSENT：coded loss 主导是不可恢复突发深衰落，非 LLR 失配；单一 AWGN σ²≈最强传统校准，
+oracle 仅 0.55% FER 局部 headroom≪MDE）。Phase B/C 不运行（gate 顺序）。claim ceiling 维持
+LOCAL_SLICE / NONBINDING_DIAGNOSTIC。
+
+**PARTIAL reusable asset 确认**：5G NR LDPC source-auditable 选择、CodecAdapter 骨架、AWGN waterfall
+三区在 P08-R 复用并修复（interleaver 激活、(α,β) import、σ² 来源、oracle ladder、统计单位全部修正）。
+
+**future-work seed**（诚实记录，非缺陷）：equalize() 的盲 h 估计用 gamma_bar 作噪声底（receiver-side
+模块，非 decide 泄漏）；后续可用 prefix-based noise floor 替代以进一步加固信息边界。
