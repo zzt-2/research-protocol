@@ -3397,3 +3397,194 @@ P11 `PILOT_EFFICIENT_STRUCTURED_BUTTERFLY_FIR` **verdict `PROBLEM_RESOLVED_BY_CO
 ### 来源
 
 用户 P11 执行指令（合同 §一-十一）+ 入口四门 file:line 证据（`p11_entry_gate.md`）+ Phase A held-out test raw（`p11_phaseA_test_raw.json`，32 paired/pilot_frac）+ freeze receipt chronology（`git show 4d9c374`）+ 物理机制分析（linear FIR MSE 最优解 = LS，Adam 迭代近似不应优于 LS；B2 1% pilot 达/超 B0 50% label）+ thesis-lessons TL-22（震撼结果先查物理前提——linear FIR 闭式解优越性已查）+ 独立 verifier V082 14/14 ACCEPT + compute constraint 诚实记录（CPU-only 缩合同 N=500k/dev8/test8）
+
+## D057: scope-change 用户授权一次性 G1 promotion groundwork 重开 + P11 纠偏降级 + G1 语义审计终态 G1_SIGNAL_INVALID_SCALE_ARTIFACT（诚实停止于 Groundwork Step 1 前，不计科学包）
+
+> status: active
+> date: 2026-08-01
+> 取代：D041 / D039 中"不得第二个 G1 promotion 包"的限制（仅此一条；D041 关于旧 G1 证据 `EVIDENCE_INCOMPLETE / NONBINDING` 的判断**继续有效**，本终态再次独立证实）；D056 P11 的 accepted_valid 计数与终态措辞
+> 被取代：D056 的 P11 "campaign accepted_valid 7→8" 计数与 "B2 严格优于 B0 / 跨 SNR / 监督开销不必要" 措辞
+> 依据: 用户执行指令（voice.md 2026-08-01 G1 promotion groundwork 重开 + P11 纠偏，13 节详尽计划）；G1 源码语义审计（caller→callee，`projects/thesis-fso/direction-lab/scout/g1-safe-gated-normalization-confirm/src/methods.py:158-198` gated_scalar_freeze/apply + `src/run_g1_confirm.py:170-256` + `projects/simulation/common/_modulation.py:84-91` hard_decision 16QAM + `contract.yaml:71` "rotation-only, cannot undo magnitude scale"）；P11 held-out test raw `projects/simulation/results/p11_pilot_efficient_butterfly_fir/p11_phaseA_test_raw.json` 192 rows 逐 cell 复算；fresh-context 子 agent 独立重算（G1 code audit + G1 historical raw-rows re-audit）；thesis-lessons TL-22（震撼结果先查物理前提）/TL-30（不换名重开已关闭轴）/TL-33/FR-26（证据链）；gw-feasibility.md §A0 §0（候选须落成四判据全过 Q# 才进 A0）
+> 触发原话: voice.md 2026-08-01（用户授权重开 G1 promotion："重开 G1 promotion"；授权边界 = 仅纠正 P11 + 补齐 G1 语义审计/直接竞品/真实传统 comparator + 重走 GW Step 1-3/3.5/4a + 仅全 Go 后跑一次多切片 confirmation；禁恢复整个 CB1/collapse family / 禁第二第三个 G1 repair / 禁绕 GW 直接跑旧 G1 / 禁改正式论文结论 / 禁历史局部结果直接升级成方法 / 禁重开 Pilot-Jones、C15、P08/P09/P10/P11 或其他 forbidden axis）
+
+### 决策
+
+#### A. Scope change：用户授权一次性 G1 promotion groundwork 重开（有界）
+
+1. **仅取代 D041/D039 中"不得第二个 G1 promotion 包"这一条限制**，允许在 RDL campaign 框架内重开一次 G1 promotion，但必须走完整 Groundwork 链（Step 1-3/3.5/4a），不得绕过。
+2. **D041 关于旧 G1 证据 `EVIDENCE_INCOMPLETE / NONBINDING` 的判断继续有效**——本终态独立再次证实（见 §C）。
+3. **其他禁止轴和科学门控全部不变**：CB1 collapse family / NDA_ML_BODY_REOPEN / Pilot-Jones / FOE-residual cascade / A/E/F/G/H_BPS 族 / 所有 forbidden axis 维持关闭。
+4. **foreground control 切换**：`active_lane` → `G1_PROMOTION_GROUNDWORK`；先只允许 `GROUNDWORK_CLOSURE`、`COMPETITOR_CLOSURE`、`COMPARATOR_BUILD`；只有 Step 4a Go 后才允许 `SCIENTIFIC_EXPERIMENT`。
+5. **纠偏和 Groundwork 工作本身不计科学包**（D039 count_excludes 延续：science_integrity_repair / groundwork_closure）。
+
+#### B. P11 纠偏（降级；保留 chronology 与 20dB-tier raw）
+
+用户 P11 纠偏指令逐条核实，**证据支持降级**。基于 `p11_phaseA_test_raw.json` 192 rows（4 cell × 8 seed × 6 pilot_frac）逐 cell 复算：
+
+| cell (SNR) | B0 full-label Adam BER | B2 batch complex LS BER | B4 blind CMA BER (zero pilot) |
+|---|---|---|---|
+| weak_fg30_9dB | **0.0** (perfect) | 4.83e-6 (B2 **worse** than B0) | 3.82e-5 |
+| strong_fg30_11dB | 2.14e-4 | 1.6e-4 (B2 better) | 3.02e-4 |
+| moderate_fg100_13dB | 2.35e-4 | 2.3e-4 (≈tie) | 2.83e-4 |
+| strong_fg1000_15dB | 1.09e-3 | 8.7e-4 (B2 better) | 9.94e-4 (**B4 blind CMA < B0 supervised**) |
+
+承重纠偏（D056 措辞过度）：
+- **撤回"B2 在所有 pilot fractions 严格优于 B0"**：weak_fg30_9dB cell B0 达 BER=0，B2=4.83e-6，B2 在该 cell **劣于** B0。pool 数字 3.10e-4 vs 3.86e-4 掩盖了 per-cell 反转。
+- **撤回"跨 SNR"宣称**：4 cell 全部集中在 9-15dB（无 17/20/25dB cell）；"跨 SNR"措辞无据。
+- **撤回"监督开销不必要 / LS 唯一解决者"**：B4 zero-pilot blind CMA 在 strong_fg1000_15dB cell（BER 9.94e-4）**优于** B0 full-label Adam（1.09e-3）；"zero-pilot blind CMA 与监督方法近似持平"是更诚实的描述。LS 并非唯一解决者，blind CMA 也是强 comparator。
+- **保留**：chronology 闭合（Commit 1 `4d9c374` freeze receipt `test_started=false` pre held-out，V077 教训落实），20dB-tier 之外的 9-15dB raw 数据（作局部诊断资产），linear Butterfly FIR 身份确认（`common/_ml_equalizer.py:104`）。
+
+P11 新分类：**`PARTIAL_LOCAL_9to15DB_BASELINE_ASSET`**（用户原话用"20dB"是概括，实际 test 覆盖 9-15dB；以 raw 数据 SNR 范围为准）。`accepted_valid_packages` **8→7**；`remaining_valid_packages`=**3**；campaign 未终止。不做 P11-R。
+
+#### C. G1 语义审计终态：`G1_SIGNAL_INVALID_SCALE_ARTIFACT`（诚实停止于 Groundwork Step 1 前）
+
+**这是本决策的核心终态。** 沿 caller→callee 独立语义审计（fresh-context 子 agent + 主线程源码复核），G1 = "safe-gated normalization" 的真实身份如下：
+
+1. **gate 输入** = CMA **输出**的 128-symbol 校准前缀（`run_g1_confirm.py:173-174` `zpx,zpy = base["zX"][es:cal], base["zY"][es:cal]`），非 raw RX，非 CMA tap。
+2. **gate 时序** = 每个 (cell,seed) realization 冻结一次（`run_g1_confirm.py:214` `gated_scalar_freeze`），无 per-symbol/per-window 循环。
+3. **gate 只读 prefix**（`methods.py:165` pooled = concat of prefix slices），不读 history、不读 suffix、不读 whole eval window。因果边界干净。
+4. **归一化作用点** = **CMA 输出后缀 → 检测器输入**（`methods.py:191-198` `return ax*z_suffix_x, ay*z_suffix_y`）。CMA（`run_g1_confirm.py:170-171`）在 gate 计算前已跑完。
+5. **精确公式** = `a_p = sqrt(E_ABS2 / trimmean(|z_prefix_p|², 0.1))`，`z'_p = a_p · z_suffix_p`（`methods.py:182-183,198`）。确实是 per-pol 正确 sqrt 缩放，非功率线性比。
+6. **阈值** = collapse_threshold=0.6, spread_threshold=0.1，冻结常量（`run_g1_confirm.py:97-98`），T020 dev-set 调谐后冻结，fresh seeds 不再调。
+7. **粒度** = per-polarization × per-block。
+8. **是否改变 CMA tap trajectory？NO。** CMA `standard_cma_godard_with_z` 跑完后返回 `base["zX"]/zY`，gate（`:214`）和 apply（`:256`）只读 `zX/zY`，CMA 权重 `wxx/wyy/wxy/wyx` 从未被 gate 读写。**零 CMA 反馈。**
+9. **是否仅改输出尺度？YES。** apply 是 per-pol 单复标量乘（或恒等）。无 per-sample/非线性操作。smoke test `test_g1_identity_branch_bit_identical_to_baseline`（`tests/test_g1_semantic_smoke.py:79-90`）断言恒等分支 bit-identical。
+10. **下游检测器是否 scale-sensitive？YES——强烈。** `hard_decision` 16QAM slicer（`_modulation.py:84-91`）：`s = z*sqrt(10)`；`di = clip(round((real(s)+3)/2)*2-3, -3, 3)`；**判决边界固定在 0, ±2**（de-norm 轴），**无输入 AGC / 无功率归一化**。contract 自己写明（`contract.yaml:71`）：evaluator "rotation-only, **cannot undo magnitude scale**"。
+11. **信息泄漏？NONE 进 gate/normalize 路径。** TX truth 只进 `oracle_affine_bound_apply`（KILL-only 工具，独立运行）和离线 label（`_offline_label_pair`，gate 后才算，存 receipt 不回流）。无未来 block 访问。
+
+**真实 data-flow 表：**
+
+| feature | gate | action | CMA state change | output | metric |
+|---|---|---|---|---|---|
+| `mean_abs2`, `spread` (cv of \|z\|) on CMA prefix pooled both pols | `mean_abs2≥0.6 AND spread≥0.1`→identity; else→scale | `a_p=sqrt(1/trimmean(|z_pref_p|²,0.1))`; `z'_p=a_p·z_suffix_p` | **none** (CMA converged, gate never touches taps) | per-pol complex scalar × suffix | fixed-threshold 16QAM slicer (boundaries 0, ±2; **scale-sensitive**) → PI-SER |
+
+**SCALE-ARTIFACT 终态裁决：`G1_SIGNAL_INVALID_SCALE_ARTIFACT`**
+
+G1 = post-CMA per-polarization per-block output 复标量乘，零 CMA 反馈；下游 fixed-threshold slicer 无输入 AGC，判决边界不随输入功率归一化——纯幅度 rescale 改变哪些样本跨过 grid。**收益完全来自 fixed-threshold detector 的尺度敏感性，不是 receiver action 增量。** 代码库自己的 contract 承认 evaluator "cannot undo magnitude scale"；smoke test `test_correct_sqrt_restores_amplitude_power_ratio_fails`（`tests:52-74`）证明整个机制：干净 scale collapse `z=c·s` 上正确 sqrt scalar 把 SER 推到 0 纯粹靠 rescale 回固定 grid。真实部署接收机不会用无 AGC 的 fixed-threshold slicer——它会先把星座自动归一到单位平均功率再 slice，无需任何"门控归一化方法"。
+
+**历史 raw-rows 独立重算（fresh-context 子 agent）**：1120 rows（8 method × 7 cell × 20 seed）独立复算确认 collapse ΔPI-SER=−0.5598（seed-cluster CI [−0.69,−0.41]），healthy worst degradation=0.0000，gate 触发率 collapse 19/20 vs healthy 1/29。**数字"强"恰好因为是 scale artifact——strong recovery 来自 rescale 固定 grid，strong safety 来自 identity 分支不 rescale。** 这与代码审计的 scale-artifact 终态一致而非矛盾。
+
+**为何停在 Step 1 前（plan §99 明文）**：用户执行指令第二节明文："如果G1只是post-CMA输出缩放，而且收益完全来自固定阈值detector尺度敏感，立即判：`G1_SIGNAL_INVALID_SCALE_ARTIFACT`。不进入文献包装或实验。" GW Step 1 问题定义要求 M-C-A 中 A 是 genuine state-dependent switching（问题 C）；但代码审计证明 G1 只可能是问题 A（detector scale calibration，平凡常规问题）或问题 B（CMA update normalization，但 G1 不触 tap）的弱化身，**不是问题 C**。问题 A 是部署接收机用 AGC 解决的平凡问题（PI-SER evaluator 的不变性缺陷是测量 artifact，非部署问题），不构成研究空白。**没有过四判据的 Q#，GW Step 1 不成立，A0 §0 前置门控直接拦。**
+
+#### D. 终态计数与影响
+
+1. **G1 终态** = `G1_SIGNAL_INVALID_SCALE_ARTIFACT`（诚实停止，**不计科学包**，count_excludes=groundwork_closure）。
+2. **P11 终态降级** = `PARTIAL_LOCAL_9to15DB_BASELINE_ASSET`（从 D056 的有效科学负面包降级；`accepted_valid_packages` 8→7；`remaining_valid_packages`=3；campaign 未终止）。
+3. **旧 G1 harvest 处置**：只保留 thesis implementation/harvest（`g1-safe-gated-normalization-package.md` / `g1-thesis-insert.md` / `g1-figures/`）作 bounded thesis asset（D033/CP024/T025/T026 原状），**不声称方法创新**。G1 科学线维持 
+
+
+## D057: scope-change 用户授权一次性 G1 promotion groundwork 重开 + P11 纠偏降级 + G1 语义审计终态 G1_SIGNAL_INVALID_SCALE_ARTIFACT（诚实停止于 Groundwork Step 1 前，不计科学包）
+
+> status: active
+> date: 2026-08-01
+> 取代：D041 / D039 中"不得第二个 G1 promotion 包"的限制（仅此一条；D041 关于旧 G1 证据 `EVIDENCE_INCOMPLETE / NONBINDING` 的判断**继续有效**，本终态再次独立证实）；D056 P11 的 accepted_valid 计数与终态措辞
+> 被取代：D056 的 P11 "campaign accepted_valid 7→8" 计数与 "B2 严格优于 B0 / 跨 SNR / 监督开销不必要" 措辞
+> 依据: 用户执行指令（voice.md 2026-08-01 G1 promotion groundwork 重开 + P11 纠偏，13 节详尽计划）；G1 源码语义审计（caller→callee，`projects/thesis-fso/direction-lab/scout/g1-safe-gated-normalization-confirm/src/methods.py:158-198` gated_scalar_freeze/apply + `src/run_g1_confirm.py:170-256` + `projects/simulation/common/_modulation.py:84-91` hard_decision 16QAM + `contract.yaml:71` "rotation-only, cannot undo magnitude scale"）；P11 held-out test raw `projects/simulation/results/p11_pilot_efficient_butterfly_fir/p11_phaseA_test_raw.json` 192 rows 逐 cell 复算；fresh-context 子 agent 独立重算（G1 code audit + G1 historical raw-rows re-audit）；thesis-lessons TL-22（震撼结果先查物理前提）/TL-30（不换名重开已关闭轴）/TL-33/FR-26（证据链）；gw-feasibility.md §A0 §0（候选须落成四判据全过 Q# 才进 A0）
+> 触发原话: voice.md 2026-08-01（用户授权重开 G1 promotion："重开 G1 promotion"；授权边界 = 仅纠正 P11 + 补齐 G1 语义审计/直接竞品/真实传统 comparator + 重走 GW Step 1-3/3.5/4a + 仅全 Go 后跑一次多切片 confirmation；禁恢复整个 CB1/collapse family / 禁第二第三个 G1 repair / 禁绕 GW 直接跑旧 G1 / 禁改正式论文结论 / 禁历史局部结果直接升级成方法 / 禁重开 Pilot-Jones、C15、P08/P09/P10/P11 或其他 forbidden axis）
+
+### 决策
+
+#### A. Scope change：用户授权一次性 G1 promotion groundwork 重开（有界）
+
+1. **仅取代 D041/D039 中"不得第二个 G1 promotion 包"这一条限制**，允许在 RDL campaign 框架内重开一次 G1 promotion，但必须走完整 Groundwork 链（Step 1-3/3.5/4a），不得绕过。
+2. **D041 关于旧 G1 证据 `EVIDENCE_INCOMPLETE / NONBINDING` 的判断继续有效**——本终态独立再次证实（见 §C）。
+3. **其他禁止轴和科学门控全部不变**：CB1 collapse family / NDA_ML_BODY_REOPEN / Pilot-Jones / FOE-residual cascade / A/E/F/G/H_BPS 族 / 所有 forbidden axis 维持关闭。
+4. **foreground control 切换**：`active_lane` → `G1_PROMOTION_GROUNDWORK`；先只允许 `GROUNDWORK_CLOSURE`、`COMPETITOR_CLOSURE`、`COMPARATOR_BUILD`；只有 Step 4a Go 后才允许 `SCIENTIFIC_EXPERIMENT`。
+5. **纠偏和 Groundwork 工作本身不计科学包**（D039 count_excludes 延续：science_integrity_repair / groundwork_closure）。
+
+#### B. P11 纠偏（降级；保留 chronology 与 9-15dB-tier raw）
+
+用户 P11 纠偏指令逐条核实，**证据支持降级**。基于 `p11_phaseA_test_raw.json` 192 rows（4 cell × 8 seed × 6 pilot_frac）逐 cell 复算：
+
+| cell (SNR) | B0 full-label Adam BER | B2 batch complex LS BER | B4 blind CMA BER (zero pilot) |
+|---|---|---|---|
+| weak_fg30_9dB | **0.0** (perfect) | 4.83e-6 (B2 **worse** than B0) | 3.82e-5 |
+| strong_fg30_11dB | 2.14e-4 | 1.6e-4 (B2 better) | 3.02e-4 |
+| moderate_fg100_13dB | 2.35e-4 | 2.3e-4 (≈tie) | 2.83e-4 |
+| strong_fg1000_15dB | 1.09e-3 | 8.7e-4 (B2 better) | 9.94e-4 (**B4 blind CMA < B0 supervised**) |
+
+承重纠偏（D056 措辞过度）：
+- **撤回"B2 在所有 pilot fractions 严格优于 B0"**：weak_fg30_9dB cell B0 达 BER=0，B2=4.83e-6，B2 在该 cell **劣于** B0。pool 数字 3.10e-4 vs 3.86e-4 掩盖了 per-cell 反转。
+- **撤回"跨 SNR"宣称**：4 cell 全部集中在 9-15dB（无 17/20/25dB cell）；"跨 SNR"措辞无据。
+- **撤回"监督开销不必要 / LS 唯一解决者"**：B4 zero-pilot blind CMA 在 strong_fg1000_15dB cell（BER 9.94e-4）**优于** B0 full-label Adam（1.09e-3）；"zero-pilot blind CMA 与监督方法近似持平"是更诚实的描述。LS 并非唯一解决者，blind CMA 也是强 comparator。
+- **保留**：chronology 闭合（Commit 1 `4d9c374` freeze receipt `test_started=false` pre held-out，V077 教训落实），9-15dB raw 数据（作局部诊断资产），linear Butterfly FIR 身份确认（`common/_ml_equalizer.py:104`）。
+
+P11 新分类：**`PARTIAL_LOCAL_9to15DB_BASELINE_ASSET`**（用户原话用"20dB"是概括，实际 test 覆盖 9-15dB；以 raw 数据 SNR 范围为准）。`accepted_valid_packages` **8→7**；`remaining_valid_packages`=**3**；campaign 未终止。不做 P11-R。
+
+#### C. G1 语义审计终态：`G1_SIGNAL_INVALID_SCALE_ARTIFACT`（诚实停止于 Groundwork Step 1 前）
+
+**这是本决策的核心终态。** 沿 caller→callee 独立语义审计（fresh-context 子 agent + 主线程源码复核），G1 = "safe-gated normalization" 的真实身份如下：
+
+1. **gate 输入** = CMA **输出**的 128-symbol 校准前缀（`run_g1_confirm.py:173-174` `zpx,zpy = base["zX"][es:cal], base["zY"][es:cal]`），非 raw RX，非 CMA tap。
+2. **gate 时序** = 每个 (cell,seed) realization 冻结一次（`run_g1_confirm.py:214` `gated_scalar_freeze`），无 per-symbol/per-window 循环。
+3. **gate 只读 prefix**（`methods.py:165` pooled = concat of prefix slices），不读 history、不读 suffix、不读 whole eval window。因果边界干净。
+4. **归一化作用点** = **CMA 输出后缀 → 检测器输入**（`methods.py:191-198` `return ax*z_suffix_x, ay*z_suffix_y`）。CMA（`run_g1_confirm.py:170-171`）在 gate 计算前已跑完。
+5. **精确公式** = `a_p = sqrt(E_ABS2 / trimmean(|z_prefix_p|², 0.1))`，`z'_p = a_p · z_suffix_p`（`methods.py:182-183,198`）。确实是 per-pol 正确 sqrt 缩放，非功率线性比。
+6. **阈值** = collapse_threshold=0.6, spread_threshold=0.1，冻结常量（`run_g1_confirm.py:97-98`），T020 dev-set 调谐后冻结，fresh seeds 不再调。
+7. **粒度** = per-polarization × per-block。
+8. **是否改变 CMA tap trajectory？NO。** CMA `standard_cma_godard_with_z` 跑完后返回 `base["zX"]/zY`，gate（`:214`）和 apply（`:256`）只读 `zX/zY`，CMA 权重 `wxx/wyy/wxy/wyx` 从未被 gate 读写。**零 CMA 反馈。**
+9. **是否仅改输出尺度？YES。** apply 是 per-pol 单复标量乘（或恒等）。无 per-sample/非线性操作。smoke test `test_g1_identity_branch_bit_identical_to_baseline`（`tests/test_g1_semantic_smoke.py:79-90`）断言恒等分支 bit-identical。
+10. **下游检测器是否 scale-sensitive？YES——强烈。** `hard_decision` 16QAM slicer（`_modulation.py:84-91`）：`s = z*sqrt(10)`；`di = clip(round((real(s)+3)/2)*2-3, -3, 3)`；**判决边界固定在 0, ±2**（de-norm 轴），**无输入 AGC / 无功率归一化**。contract 自己写明（`contract.yaml:71`）：evaluator "rotation-only, **cannot undo magnitude scale**"。
+11. **信息泄漏？NONE 进 gate/normalize 路径。** TX truth 只进 `oracle_affine_bound_apply`（KILL-only 工具，独立运行）和离线 label（`_offline_label_pair`，gate 后才算，存 receipt 不回流）。无未来 block 访问。
+
+**真实 data-flow 表：**
+
+| feature | gate | action | CMA state change | output | metric |
+|---|---|---|---|---|---|
+| `mean_abs2`, `spread` (cv of \|z\|) on CMA prefix pooled both pols | `mean_abs2≥0.6 AND spread≥0.1`→identity; else→scale | `a_p=sqrt(1/trimmean(|z_pref_p|²,0.1))`; `z'_p=a_p·z_suffix_p` | **none** (CMA converged, gate never touches taps) | per-pol complex scalar × suffix | fixed-threshold 16QAM slicer (boundaries 0, ±2; **scale-sensitive**) → PI-SER |
+
+**SCALE-ARTIFACT 终态裁决：`G1_SIGNAL_INVALID_SCALE_ARTIFACT`**
+
+G1 = post-CMA per-polarization per-block output 复标量乘，零 CMA 反馈；下游 fixed-threshold slicer 无输入 AGC，判决边界不随输入功率归一化——纯幅度 rescale 改变哪些样本跨过 grid。**收益完全来自 fixed-threshold detector 的尺度敏感性，不是 receiver action 增量。** 代码库自己的 contract 承认 evaluator "cannot undo magnitude scale"；smoke test `test_correct_sqrt_restores_amplitude_power_ratio_fails`（`tests:52-74`）证明整个机制：干净 scale collapse `z=c·s` 上正确 sqrt scalar 把 SER 推到 0 纯粹靠 rescale 回固定 grid。真实部署接收机不会用无 AGC 的 fixed-threshold slicer——它会先把星座自动归一到单位平均功率再 slice，无需任何"门控归一化方法"。
+
+**历史 raw-rows 独立重算（fresh-context 子 agent）**：1120 rows（8 method × 7 cell × 20 seed）独立复算确认 collapse ΔPI-SER=−0.5598（seed-cluster CI [−0.69,−0.41]），healthy worst degradation=0.0000，gate 触发率 collapse 19/20 vs healthy 1/29。**数字"强"恰好因为是 scale artifact——strong recovery 来自 rescale 固定 grid，strong safety 来自 identity 分支不 rescale。** 这与代码审计的 scale-artifact 终态一致而非矛盾。
+
+**为何停在 Step 1 前（plan §99 明文）**：用户执行指令第二节明文："如果G1只是post-CMA输出缩放，而且收益完全来自固定阈值detector尺度敏感，立即判：`G1_SIGNAL_INVALID_SCALE_ARTIFACT`。不进入文献包装或实验。" GW Step 1 问题定义要求 M-C-A 中 A 是 genuine state-dependent switching（问题 C）；但代码审计证明 G1 只可能是问题 A（detector scale calibration，平凡常规问题）或问题 B（CMA update normalization，但 G1 不触 tap）的弱化身，**不是问题 C**。问题 A 是部署接收机用 AGC 解决的平凡问题（PI-SER evaluator 的不变性缺陷是测量 artifact，非部署问题），不构成研究空白。**没有过四判据的 Q#，GW Step 1 不成立，A0 §0 前置门控直接拦。**
+
+#### D. 终态计数与影响
+
+1. **G1 终态** = `G1_SIGNAL_INVALID_SCALE_ARTIFACT`（诚实停止，**不计科学包**，count_excludes=groundwork_closure）。
+2. **P11 终态降级** = `PARTIAL_LOCAL_9to15DB_BASELINE_ASSET`（从 D056 的有效科学负面包降级；`accepted_valid_packages` 8→7；`remaining_valid_packages`=3；campaign 未终止）。
+3. **旧 G1 harvest 处置**：只保留 thesis implementation/harvest（`g1-safe-gated-normalization-package.md` / `g1-thesis-insert.md` / `g1-figures/`）作 bounded thesis asset（D033/CP024/T025/T026 原状），**不声称方法创新**。G1 科学线维持 FORMAL CLOSED（D041）+ 本终态再次独立证实 scale artifact。
+4. **campaign 计数纠正**：`accepted_valid_packages` = **7/10**（撤回 D056 的 7→8；P11 不再计有效包）；`remaining_valid_packages` = **3**；`current_package` = P11（降级，待用户决定 campaign 后续）。
+5. **不进 Step 2-3/3.5/4a，不跑文献闭包，不实现 comparator，不建 freeze receipt，不跑 held-out confirmation**（plan §99：scale artifact terminal 不进入文献包装或实验）。
+6. **0 active carrier 维持**；claim ceiling 维持 `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`。
+7. **G1/CB1 forbidden axis 维持关闭**：本终态再次证实 G1 是 scale artifact，禁换名重开 safe-gated-normalization / post-CMA-amplitude-gating / prefix-gated-scaling 等同对象（TL-30）。
+
+### 理由
+
+用户的 13 节计划核心赌注是"G1 可能被误判，需要走完整 GW 链"。语义审计是 plan 第二节明文的最快 kill-switch：如果 G1 只是输出缩放且收益来自 detector 尺度敏感，立即停止。代码审计沿真实 caller→callee（不信任 doc 的"safe-gated normalization"名字联想）证明这正是事实——G1 是 post-CMA scalar multiply，detector 是 fixed-threshold 无 AGC slicer，contract 自己写明 "cannot undo magnitude scale"。历史 raw-rows 数字强（−0.56 PI-SER 恢复）但**恰好因为是 artifact 才强**：rescale 固定 grid 制造强恢复，identity 分支制造强 safety。
+
+这独立再次证实 D041 的 `EVIDENCE_INCOMPLETE / NONBINDING` 判断（旧 G1 证据不可作正式 Go），并把它升级为更强的 `INVALID_SCALE_ARTIFACT`（不可补救的结构性缺陷，非证据不足）。
+
+P11 降级基于 raw 数据逐 cell 复算：D056 的"严格优于 / 跨 SNR / LS 唯一解决者"措辞在 weak_fg30_9dB cell（B0=0 优于 B2=4.83e-6）和 strong_fg1000_15dB cell（B4 blind CMA 9.94e-4 优于 B0 1.09e-3）失败。诚实描述是"局部 9-15dB diagnostic，zero-pilot blind CMA 与监督近似持平，LS 不是唯一解决者"。
+
+### 排除的替代方案
+
+- **不进 GW Step 2-3 文献闭包**：plan §99 明文 scale artifact terminal 不进入文献包装或实验。强行进 Step 2 = 违反用户明文 stop condition。
+- **不实现 comparator B0-B5**：同上。
+- **不跑 held-out confirmation**：同上。
+- **不判 G1_PROMOTION_METHOD_SIGNAL**：scale artifact 不是 receiver action，无方法空间。
+- **不恢复 CB1 collapse family**：用户授权明确不含；CB1 forbidden axis 维持。
+- **不做 P11-R**：用户指令明文"不做 P11-R"。
+- **不篡改 D056/V082/CP047 原记录**：保留标 superseded，新增 D057/V083/CP048 血缘纠正。
+- **不动 protected owner / formal owner / Skill / thesis framework**：G1 thesis harvest（T025/T026）原状保留。
+
+### 影响范围
+
+- `topic-index.md` control block：epoch 83→**84**；`authority_pointer` D056→**D057**；`mission_checkpoint` CP047→**CP048**；`active_lane` → **`G1_PROMOTION_GROUNDWORK_TERMINATED_SCALE_ARTIFACT`**（终态）；campaign `accepted_valid_packages` 8→**7**，`remaining_valid_packages`=**3**，`current_package`=P11（降级）；forbidden_actions 追加 `G1_SAFE_GATED_NORMALIZATION_SCALE_ARTIFACT_REOPEN`；新增 note：G1 promotion 授权已用尽（一次性）。
+- `mission-log.md`：追加 CP048（G1 promotion groundwork 终态 scale artifact + P11 降级，campaign 7/10，0 active carrier）。
+- `verifications.md`：追加 V083（G1 语义审计 + P11 raw 复算）。
+- worker-log `step-042-g1-promotion-groundwork-scale-artifact.md`（新建）。
+- artifact：`projects/thesis-fso/results/g1_promotion_groundwork_scale_artifact_audit.md`（语义审计报告 + P11 复算表，无实验 sprint）。
+- `_registry.yaml`：last_updated 更新。
+- **无 method card**（终态非 signal）；**无 held-out test**（plan §99 不进实验）；**无 protected owner/formal/Skill/thesis framework 改动**；**无 push**。
+- voice.md：登记 2026-08-01 G1 promotion 重开授权 + P11 纠偏原话。
+
+### 范围确认
+
+本轮（scope change + P11 纠偏 + G1 语义审计终态）在用户授权范围内：用户授权重开一次 G1 promotion + P11 纠偏，明文允许 scale artifact 终态停止（plan §99）。**未恢复 CB1 family、未做第二第三个 G1 repair、未绕 GW 跑旧 G1、未改正式论文结论、未升级历史局部结果、未重开其他 forbidden axis。** Groundwork 诚实停止（Step 1 前，A0 §0 前置门控拦），未跳步、未先跑实验。纠偏与 Groundwork 工作不计科学包。无 push。
+
+### 来源
+
+用户执行指令（13 节计划，voice.md 2026-08-01）+ G1 源码语义审计（`g1-safe-gated-normalization-confirm/src/methods.py:158-198` + `run_g1_confirm.py:170-256` + `_modulation.py:84-91` + `contract.yaml:71`）+ P11 held-out raw 复算（`p11_phaseA_test_raw.json` 192 rows）+ fresh-context 子 agent 独立重算（G1 code audit + G1 raw-rows re-audit）+ thesis-lessons TL-22/TL-30/TL-33 + gw-feasibility.md §A0 §0 + FR-26

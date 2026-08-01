@@ -4221,3 +4221,82 @@ P11 `PILOT_EFFICIENT_STRUCTURED_BUTTERFLY_FIR` verdict `PROBLEM_RESOLVED_BY_COMP
 **关键诚实性确认**：B2 batch complex LS 在 1%–50% pilot fractions 下严格优于 full-label B0 Adam（linear FIR 监督开销不必要）。这是用户合同 §七明文的 PROBLEM_RESOLVED_BY_COMPLEX_LS 终态（有效科学负面包 + held-out confirmation 完成）。
 
 **campaign 计数**：accepted_valid 7→**8/10**，remaining_valid=2，campaign 未终止。0 active carrier 维持（valid negative 非 METHOD_SIGNAL）。
+
+
+## V083: G1 语义审计 + P11 raw 复算独立验证（关联 D057）
+
+> date: 2026-08-01
+> 关联: D057（G1_SIGNAL_INVALID_SCALE_ARTIFACT + P11 降级）
+> 验证类型: 语义审计 + 数值复算（无实验 sprint）
+
+### 验证问题
+
+1. G1 "safe-gated normalization" 沿 caller→callee 的真实身份是什么？是否 scale artifact？
+2. P11 D056 的 "B2 严格优于 B0 / 跨 SNR / LS 唯一解决者" 措辞是否被 raw 数据支持？
+
+### 方法
+
+- **G1 语义审计**：fresh-context 子 agent + 主线程源码复核，沿 `run_g1_confirm.py` → `methods.py:gated_scalar_freeze/apply` → `_modulation.py:hard_decision` 真实调用图追踪，不信任 doc 框架。
+- **G1 历史 raw 复算**：fresh-context 子 agent 从 `artifacts/raw-rows.csv`（1120 rows）+ `prefix-receipt.csv`（140 rows）独立重算 collapse/healthy ΔPI-SER + gate 触发率 + seed-cluster CI。
+- **P11 raw 复算**：主线程从 `p11_phaseA_test_raw.json`（192 rows = 4 cell × 8 seed × 6 pilot_frac）逐 cell 重算 B0/B1/B2/B3/B4 mean BER。
+
+### 结果
+
+#### G1 语义审计 — 11/11 项 PASS（证据闭合，verdict 唯一）
+
+| # | 检查项 | 结论 | 证据 file:line |
+|---|---|---|---|
+| 1 | gate 输入源 | CMA 输出 prefix（非 raw RX / 非 tap） | `run_g1_confirm.py:173-174,214` |
+| 2 | gate 时序 | per-realization freeze（非 per-symbol/window） | `run_g1_confirm.py:214,331-333` |
+| 3 | prefix-only（无 history/whole-window） | PASS，因果边界干净 | `methods.py:165` |
+| 4 | 归一化作用点 | CMA 输出后缀 → 检测器输入（CMA 先跑完） | `methods.py:191-198` + `run_g1_confirm.py:170-171` |
+| 5 | 精确公式 | `a_p=sqrt(E_ABS2/trimmean(|z_pref_p|²,0.1))`，正确 sqrt | `methods.py:182-183,198` |
+| 6 | 阈值冻结 | collapse=0.6/spread=0.1，T020 dev 冻结后不改 | `run_g1_confirm.py:97-98` + `contract.yaml:78` |
+| 7 | 粒度 | per-pol × per-block | `methods.py:182-198` |
+| 8 | 改 CMA tap trajectory? | **NO**（零 CMA 反馈，gate 只读 zX/zY） | `run_g1_confirm.py:170-256` + CMA weights 从未被读写 |
+| 9 | 仅改输出尺度? | **YES**（per-pol 单复标量乘或恒等） | `methods.py:191-198` + smoke test `tests:79-90` |
+| 10 | 检测器 scale-sensitive? | **YES 强烈**（fixed-threshold 16QAM slicer 无 AGC，边界 0/±2） | `_modulation.py:84-91` + `contract.yaml:71` "cannot undo magnitude scale" |
+| 11 | 信息泄漏? | **NONE**（TX truth 只进 KILL-only oracle + 离线 label，不回流 gate） | `methods.py:387-398` + `run_g1_confirm.py:191,282-297` |
+
+**SCALE-ARTIFACT 终态裁决**：`G1_SIGNAL_INVALID_SCALE_ARTIFACT`。
+- 收益完全来自 fixed-threshold detector 尺度敏感性（slice boundary 不随输入功率归一化）。
+- 代码库自己的 smoke test `test_correct_sqrt_restores_amplitude_power_ratio_fails`（`tests:52-74`）证明：干净 scale collapse `z=c·s` 上正确 sqrt scalar 把 SER 推到 0 纯靠 rescale 回固定 grid。
+- 真实部署接收机用 AGC 解决此问题，无需 "门控归一化方法"。
+
+#### G1 历史 raw-rows 独立复算 — 数字强但恰好因为是 artifact
+
+fresh-context 子 agent 从 1120 rows 独立复算：
+- collapse ΔPI-SER (G1−baseline, 20 collapse pairs) = **−0.5598**（seed-cluster CI [−0.69,−0.41]，12 help/0 hurt）
+- healthy worst degradation (G1, 29 pairs) = **0.0000**（28/29 bit-identical identity）
+- gate 触发率 collapse **19/20** vs healthy **1/29**
+- G1 vs Q15 nonlinear map ablation = **−0.0355**（CI [−0.047,−0.024]）
+- 旧 GATE6 FAIL（CI_lo=0.50）只在 3 种 defensible bootstrap 定义之一下成立；另两种 cluster-resample / pair-bootstrap 给 CI_lo≈0.88-0.89
+
+**关键解读**：数字"强"恰好因为是 scale artifact——strong recovery 来自 rescale 固定 grid，strong safety 来自 identity 分支不 rescale。这与代码审计的 scale-artifact 终态一致而非矛盾（验证一致性，非推翻）。
+
+#### P11 raw 复算 — D056 措辞过度
+
+| cell | B0 Adam | B2 LS | B4 blind CMA | D056 措辞核实 |
+|---|---|---|---|---|
+| weak_fg30_9dB | **0.0** | 4.83e-6 | 3.82e-5 | "B2 严格优于 B0" **FAIL**（B0 perfect > B2） |
+| strong_fg30_11dB | 2.14e-4 | 1.6e-4 | 3.02e-4 | B2 better (per-cell) |
+| moderate_fg100_13dB | 2.35e-4 | 2.3e-4 | 2.83e-4 | ≈tie |
+| strong_fg1000_15dB | 1.09e-3 | 8.7e-4 | **9.94e-4 < B0** | "LS 唯一解决者" **FAIL**（B4 blind CMA 也优于 B0 supervised） |
+
+- SNR 覆盖：9/11/13/15 dB（无 17/20/25dB）→ "跨 SNR" 措辞 **无据**。
+- pool 数字 B2 3.10e-4 vs B0 3.86e-4 掩盖 per-cell 反转（weak cell B0 perfect）。
+- B4 zero-pilot blind CMA 在 strong_fg1000_15dB 优于 B0 full-label Adam → "监督开销不必要" 措辞过度（blind CMA 也是强 comparator，不只是 LS）。
+- **chronology 闭合保留有效**：Commit 1 `4d9c374` freeze receipt `test_started=false` pre held-out（V077 教训第三次落实）。
+- **降级合理**：P11 → `PARTIAL_LOCAL_9to15DB_BASELINE_ASSET`，accepted_valid 8→7。
+
+### 验证结论
+
+- G1 终态 `G1_SIGNAL_INVALID_SCALE_ARTIFACT`：**PASS**（证据闭合，verdict 唯一，plan §99 stop condition 满足）。
+- P11 降级 `PARTIAL_LOCAL_9to15DB_BASELINE_ASSET`：**PASS**（raw 数据逐 cell 支持，D056 措辞过度核实）。
+- 0 active carrier 维持；claim ceiling 维持 LOCAL_SLICE / NONBINDING_DIAGNOSTIC；campaign accepted_valid 7/10。
+
+### 计数与不变量
+
+- 本终态 **不计科学包**（count_excludes=groundwork_closure）。
+- 旧 D056/V082/CP047 保留标 D057 superseded P11 计数与措辞部分（chronology/identity/linear-FIR-MSE 物理机制保留有效）。
+- G1 forbidden axis 维持关闭（D041 + D057 双重证实 scale artifact，禁换名重开）。

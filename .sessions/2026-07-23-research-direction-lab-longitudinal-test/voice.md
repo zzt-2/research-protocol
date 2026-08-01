@@ -321,3 +321,17 @@
   → D055 / V081（P10 终态降级 EVIDENCE_INSUFFICIENT）+ P11 PILOT_EFFICIENT_STRUCTURED_BUTTERFLY_FIR（已完成 verdict PROBLEM_RESOLVED_BY_COMPLEX_LS）
   [绑定结论：本轮端到端完成 P10 纠偏 + P11，中间不参与技术判断，不 push]
   → P11 完成映射 D056 / V082（verdict PROBLEM_RESOLVED_BY_COMPLEX_LS，有效科学负面包 campaign accepted_valid 7→8）
+
+## 2026-08-01（G1 promotion groundwork 重开 + P11 纠偏，用户中转，13 节执行指令）
+
+- "在同一对话中完成一次有边界的 G1 promotion workline。尽可能走完整链条，但必须遵守 Groundwork 硬门；若 Step 3/3.5/4a 失败，诚实停止，不得先跑实验再补文献。"
+- "worktree：D:\code\study\research-protocol\.worktrees\rdl-method-production-v2 / 当前 HEAD：f13d489"
+- "用户已明确同意：'重开 G1 promotion'。"
+- "这项授权只允许：1. 纠正 P11 当前状态；2. 对 G1 补齐语义审计、直接竞品、真实传统 comparator；3. 重走 Groundwork Step 1–3/3.5/4a；4. 仅在全部 Go 后运行一次多切片 confirmation；5. 若形成正信号，建立 pre-formal carrier。"
+- "这项授权不允许：- 恢复整个 CB1/collapse family；- 任意第二、第三个 G1 repair；- 绕过 Groundwork 直接跑旧 G1；- 修改正式论文结论；- 把历史局部结果直接升级成方法；- 重开 Pilot-Jones、C15、P08/P09/P10/P11 或其他 forbidden axis。"
+- "二、恢复G1真实身份……不得根据'safe-gated normalization'这个名字猜方法。沿caller→callee确定并记录……输出一张真实data-flow表：feature → gate → action → CMA state → output → metric。如果G1只是post-CMA输出缩放，而且收益完全来自固定阈值detector尺度敏感，立即判：`G1_SIGNAL_INVALID_SCALE_ARTIFACT`。不进入文献包装或实验。" → D057（G1_SIGNAL_INVALID_SCALE_ARTIFACT 终态，plan §99 stop condition 满足）
+- "同时纠正P11：- P11降级为 `PARTIAL_LOCAL_20DB_BASELINE_ASSET`；- accepted_valid_packages从8改回7；- remaining_valid_packages=3；- 撤回'跨SNR、功效充足、LS唯一解决者'；- 保留chronology和20dB raw数据；- 记录实际最强结果是zero-pilot blind CMA与监督方法近似持平；- 不做P11-R。" → D057（P11 降级 PARTIAL_LOCAL_9to15DB_BASELINE_ASSET，raw 复算逐 cell 证实）
+- "纠偏和Groundwork工作本身不计科学包。"
+- "十三、最终只汇报五项：1. scope change、P11纠偏与Groundwork真实进度；2. G1语义审计、直接竞品和最强传统comparator；3. Step 4a Go/No-Go；若Go，报告confirmation关键数字和CI；4. terminal verdict、METHOD_SIGNAL、active carrier、campaign计数和论文包装；5. worker-log、literature artifacts、代码/实验artifact、verifier、Commit SHA。若Step 4a No-Go：- 单次最终commit。全程不push。"
+  → D057 / V083（G1 scale artifact 终态于 GW Step 1 前 + P11 降级；campaign accepted_valid 8→7，remaining_valid=3，0 active carrier）
+  [绑定结论：本轮端到端完成 G1 promotion groundwork 重开 + P11 纠偏，中间不参与技术判断；plan §99 明文允许 scale artifact 终态停止（不进入文献包装或实验），故 No-Go 单次最终 commit；不 push]
