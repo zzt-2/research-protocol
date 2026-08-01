@@ -4001,3 +4001,35 @@ verifier 必须递归遍历 deployable 调用图（不只复述合同/扫函数�
 **结论**：P09 入口门裁决 `STRATEGIC_GATE` 科学事实基础**唯一正确**。承重前提 A（NDA-ML = full-search 均匀穷举候选）在源码层被证伪（`_recovery.py:171-273` closed-form + grep 零命中 + 生产 driver `:180-187` 逐块 closed-form + BPS 是独立竞争对手）。双门 primary cost metric 失效（无 objective eval 可数），coarse-search 终态不适用（无 search 可被 coarse grid 解决），入口四门 3 FAIL 路由 STRATEGIC_GATE。动估计器本体减计算触发 `NDA_ML_BODY_REOPEN` forbidden。STRATEGIC_GATE 是唯一合法终态。**counts_as_valid_package=False**（count_excludes=entry_preflight_only），campaign accepted_valid 维持 **8/10**。本轮无实验/无 held-out seed/无 artifact/无 sprint。claim ceiling 不变（LOCAL_SLICE / NONBINDING_DIAGNOSTIC）。protected owner/formal/Skill/thesis framework 不改、无 push。
 
 **未运行独立 sub-agent 的说明**：本轮入口门核查对象是源码事实（closed-form vs search），主线程已逐行 Read + grep 复算 + Explore 子 agent（agent_c9883e0a，fresh context）交叉确认 NDA-ML 实现是 closed-form、无 candidate grid、BPS 是独立竞争对手。V075 教训（verifier 必须递归调用图 + 运行时 metamorphic 门）适用于有 deployable 路径的科学包；P09 入口门未运行 deployable 路径，无调用图可递归、无 runtime 可 metamorphic，故核查以静态源码 + grep 复算为主，辅以 Explore 子 agent fresh context 交叉。若用户授权重指定 P09 入口并启动新族 sprint，须按 V075 标准（递归 AST + metamorphic 门）核查。
+
+---
+
+## V077: 计数纠正（chronology 缺陷）独立复核 — PASS（P08-R2 缺独立 pre-test freeze receipt，"恢复第 8 包"效力被取代，campaign accepted_valid 8→7，G 族 STOPPED_WITH_PARTIAL_ASSET；纠正本身不计有效包）
+
+> 关联: D051（计数纠正）/ D049+V075（被取代"恢复第 8 包"效力，engineering asset 维持）/ D050+V076（NDA-ML STRATEGIC_GATE 维持，不动）
+> 日期: 2026-08-01
+> 独立性: 本复核不信任 D051 executor 自述，逐项核 git artifact + 源码 + JSON 内容；与 V075/V076 不同对象（chronology 闭合，非 receiver-info-boundary 或 NDA-ML 形态）
+
+### 复核方法
+
+主线程确定性 grep + Python JSON 核实 + git chronology 核对（chronology 缺陷是确定性事实，不需 sub-agent；同 TL-21 确定性证据原则）。
+
+### 逐项核查
+
+1. **单一 commit `a21fdba` 同时含 runner+dev+test raw+verifier+result+治理**（PASS）：`git show --stat a21fdba` 22 文件 9722 insertions，含 `p08r2_run.py`（runner）、`p08r2_dev_workspace.json`（dev 327 行）、`p08r2_phaseA_raw_rows.json`（test raw 6642 行）、`p08r2_verify.py`（verifier）、`p08r2_v075_result.json`（result）、decisions/verifications/mission-log/topic-index/voice/_registry（治理）。**无任何 freeze-only commit 在前**。
+2. **dev/test 在同一 runner 顺序执行，无跨进程 immutable freeze**（PASS）：`p08r2_run.py:99 def main()` 顺序 Step 0（`:120` metamorphic 门）→ Step 1（`:130` AWGN sanity）→ Step 2（`:143` dev workspace scan）→ Step 3（`:168` freeze metric，进程内步骤顺序）→ Step 4（`:221` tune B1/B2 on dev_tune）→ Step 5（`:248` test on FRESH test seeds）→ Step 6（`:276` CI）→ Step 7（`:330` verdict）。同一 Python 进程，dev 在 test 前已跑完，全部产物同 commit。"freeze"（`:5,:168` docstring）是文字描述的步骤顺序，**非密码学 receipt/hash 落盘、非 `test_started=false→true` 状态机、非 commit 边界**。
+3. **grep freeze/receipt/hash/test_started 零命中**（PASS）：`grep -nE "freeze|receipt|sha256|hashlib|test_started|prefreeze|pre_freeze|pre_test|pre-test" projects/simulation/explore/nda-awgn-tracking-sandbox/p08r2_*.py` → 零结果。确认 P08-R2 全流程无任何独立 freeze 凭据机制。
+4. **held-out test seeds 8000-8039 raw 与 dev/verifier/result 同 commit**（PASS）：`p08r2_phaseA.py:54 test_seeds=tuple(range(8000,8040))`；Python 核实 `p08r2_phaseA_raw_rows.json` seed range = 8000-8039（40 seeds，has 8000=True, has 8039=True）。这些 held-out seeds 的 raw 结果无任何 artifact 证明在首次被读取前合同/源码不可变。
+5. **V075 verifier 盲区确认**（PASS，chronology 角度）：`p08r2_verify.py:332-335` check c = `not (dev_seeds & history) and not (test_seeds & history)` —— 只验 dev/test seeds 与 campaign history 不相交，**未核 pre-test receipt/source/contract hash 闭合**。V075 19/19 ACCEPT 是 H7/H8/H9 修复 + consistency PASS，**不是 chronology 闭合证明**。这是 V075 的盲区（consistency≠correctness 第四度重演，本次是 chronology consistency 维度）。
+6. **fail-closed 判据正确**（PASS）：任务用户指令 confirmatory evidence fail-closed——无法证明 freeze 不可变 = freeze 不成立（确认性证据语境）。P08-R2 物理归因（coded loss 主导突发深衰落）**可能正确**，但其作为"有效科学包"的 chronology 证据链有缺陷，故降为 PARTIAL diagnostic + engineering asset，不计有效包。判据与 P07-R/D046、P08/D048、P08-R2/D049 同模式（科学完整性修复不计有效包）。
+7. **D049/V075 engineering asset 效力维持正确**（PASS）：D051 只取代 D049/V075 的"恢复第 8 包 / G 族关闭"效力，**不废** corrected-chain/receiver/oracle engineering 资产（prefix-LS σ²_pre + γ_vis MMSE + metamorphic 门 Δ=0.0 + AST 递归 + 先验 MDE + 去 min(B1,B2)）——这些是工程产物，物理上有效，作 PARTIAL reusable asset 保留同 D048 模式。
+8. **D050/V076 NDA-ML 结论维持正确**（PASS）：D051 不动 NDA-ML 是 closed-form 非 search 的源码事实结论；本纠正只动 P08-R2 计数效力，不触发 `NDA_ML_BODY_REOPEN`。NDA-ML STRATEGIC_GATE 裁决维持。
+9. **纠正本身不计有效科学包正确**（PASS）：属 `count_excludes: science_integrity_repair`，同前 3 轮修复模式（P07-R/D046、P08/D048、P08-R2/D049）。本次是 chronology 纠正不是新一轮实验。
+10. **计数纠正目标值正确**（PASS）：`accepted_valid_packages` 8→**7**（P08-R2 不计有效包，G 族 STOPPED_WITH_PARTIAL_ASSET）。rolling_queue P01-P07 有效序列维持（P07-R 是 P07 的修复型 PARTIAL，P07 本身是第 6 有效包 PROBLEM_ABSENT；P08-R2 原本试图作第 8 包恢复但 chronology 不足）。
+11. **不重开 G 族 / 不允许 P08-R3 正确**（PASS）：G 族 STOPPED_WITH_PARTIAL_ASSET，禁 coded/interleaving 换名重开（TL-30）。若未来恢复须用独立 freeze receipt 重跑（新 D### 授权）。
+
+### 结论
+
+计数纠正 `accepted_valid_packages 8→7`、G 族 `STOPPED_WITH_PARTIAL_ASSET`、D049/V075 engineering asset 维持、D050/V076 NDA-ML 结论维持、纠正本身不计有效包——**全部 PASS**，证据闭合（git chronology + grep 零命中 + seed range 实测 + verifier 盲区确认）。**counts_as_valid_package=False**（count_excludes=science_integrity_repair）。campaign accepted_valid = **7/10**。无 protected owner/formal/Skill/thesis framework 改动、无 push。
+
+**V075/V076 盲区教训（consistency≠correctness 第四度）**：V075 递归 AST + metamorphic 门覆盖了 receiver-info-boundary（H7/H8/H9）但**未覆盖 chronology 闭合**（pre-test freeze receipt）；V076 覆盖了 NDA-ML 形态源码事实但同样不涉 chronology。本轮 P09（`H_16APSK_CONFIDENCE_ADAPTIVE_BPS_SEARCH`）若启动 sprint，verifier **必须新增 chronology 闭合检查**：pre-test freeze receipt 含 contract SHA256 + source hash + `test_started=false`，独立 commit 在任何 held-out seed 读取前，runner 校验当前源码/contract hash 与 receipt 一致后才 `test_started=true`。

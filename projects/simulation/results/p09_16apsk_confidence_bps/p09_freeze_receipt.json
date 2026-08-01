@@ -1,0 +1,414 @@
+{
+  "package": "P09",
+  "id": "H_16APSK_CONFIDENCE_ADAPTIVE_BPS_SEARCH",
+  "contract_sha256": "007543e073f60bf0c33f370cea4c3879e6061e71ba1d4e0cff782a0d04333485",
+  "contract": {
+    "package": "P09",
+    "id": "H_16APSK_CONFIDENCE_ADAPTIVE_BPS_SEARCH",
+    "problem": {
+      "M": "16APSK full blind phase search (bps_cpr 真实 B×N exhaustive search)",
+      "C": "有限实时计算预算",
+      "A": "每 window 对全部相位候选计算星座距离, B×N 搜索开销",
+      "goal": "相同 receiver-visible 信息/相同延迟/相同 BPS objective 下减 distance evals 保持 full BPS 性能"
+    },
+    "shared_anchor": {
+      "paired_realization": true,
+      "modulation": "(8,8)-16APSK (B11 锚, DVB-S2)",
+      "turb_name": "weak",
+      "f_dot": 0.0,
+      "lw": 10000.0,
+      "n_dft": 256,
+      "block_size_resolve": 256,
+      "receiver_visible_info": "rx symbols only (no TX truth/true phase/noise/SNR)",
+      "latency": "per-block 256 sym, no cross-block state",
+      "bps_objective": "|rotated-dec|^2/(|dec|^2+eps) normalized distance"
+    },
+    "primary_performance": {
+      "metric": "required_SNR_dB_at_frozen_FER (dB-domain), with fixed-label BER + PI-BER dual report",
+      "primary": "required-SNR (dB), relative-to-full-BPS loss CI upper <= 0.10 dB"
+    },
+    "primary_complexity": {
+      "metric": "candidate_symbol_distance_evaluations (sum B_used*N over blocks)",
+      "includes": "refinement + confidence estimation + fallback 全部计入",
+      "reduction_target": ">= 4x relative to full BPS (B=64)",
+      "wall_clock": "secondary only"
+    },
+    "baseline_ladder": {
+      "B0_full_uniform_BPS": {
+        "B": 64,
+        "Nw": 101
+      },
+      "B1_fixed_coarse_BPS": {
+        "B_candidates": [
+          8,
+          16,
+          32
+        ],
+        "Nw": 101,
+        "tune": "dev"
+      },
+      "B2_fixed_two_stage_BPS": {
+        "B_coarse_candidates": [
+          16,
+          32
+        ],
+        "B_fine_candidates": [
+          4,
+          8
+        ],
+        "Nw": 101,
+        "tune": "dev"
+      }
+    },
+    "candidates": {
+      "C1_confidence_gated_local_refinement": {
+        "B_coarse": 16,
+        "B_fine": 8,
+        "conf_thresh_candidates": [
+          0.1,
+          0.3,
+          0.5,
+          1.0
+        ]
+      },
+      "C2_curvature_score_gap_guided_refinement": {
+        "B_coarse": 16,
+        "B_fine": 8,
+        "curv_thresh_candidates": [
+          0.005,
+          0.01,
+          0.05
+        ]
+      },
+      "C3_early_stop_adaptive_width": {
+        "B_max": 64,
+        "B_min_candidates": [
+          4,
+          8,
+          16
+        ],
+        "stop_thresh_candidates": [
+          1e-05,
+          0.0001,
+          0.001
+        ]
+      }
+    },
+    "mde": {
+      "performance_dB": 0.1,
+      "complexity_fold": 4.0
+    },
+    "non_inferiority_threshold": "performance loss CI upper <= 0.10 dB vs full BPS",
+    "forbidden_information": [
+      "true phase",
+      "true noise",
+      "true SNR/gamma_bar",
+      "TX symbols/bits in deployable decide"
+    ],
+    "seeds": {
+      "dev_seeds": [
+        11000,
+        11001,
+        11002,
+        11003,
+        11004,
+        11005,
+        11006,
+        11007,
+        11008,
+        11009,
+        11010,
+        11011,
+        11012,
+        11013,
+        11014,
+        11015,
+        11016,
+        11017,
+        11018,
+        11019
+      ],
+      "test_seeds": [
+        12000,
+        12001,
+        12002,
+        12003,
+        12004,
+        12005,
+        12006,
+        12007,
+        12008,
+        12009,
+        12010,
+        12011,
+        12012,
+        12013,
+        12014,
+        12015,
+        12016,
+        12017,
+        12018,
+        12019,
+        12020,
+        12021,
+        12022,
+        12023,
+        12024,
+        12025,
+        12026,
+        12027,
+        12028,
+        12029,
+        12030,
+        12031,
+        12032,
+        12033,
+        12034,
+        12035,
+        12036,
+        12037,
+        12038,
+        12039
+      ],
+      "history_disjoint_check": "P08-R2 8000-8039/9000-9019, P08-R 6000-6019/7000-7039, P08 1000-1014/1100-1114"
+    },
+    "sample_size_rationale": "40 test trajectories × 256 sym/block × 4 blocks = 40960 sym/trajectory-cluster; bootstrap CI trajectory-cluster (n=40)",
+    "cell": {
+      "turb": "weak",
+      "snr_scan_dB": [
+        14,
+        16,
+        18,
+        20,
+        22
+      ],
+      "frozen_snr_for_test": null
+    },
+    "gate_order": [
+      "Phase A full BPS quantify",
+      "Phase B conventional",
+      "Phase C conditional candidates"
+    ],
+    "allowed_terminals": [
+      "PROBLEM_RESOLVED_BY_CONVENTIONAL_TWO_STAGE_BPS",
+      "NO_DIAGNOSTIC_METHOD_SIGNAL",
+      "COMPUTE_EFFICIENT_BPS_METHOD_SIGNAL",
+      "EVIDENCE_INSUFFICIENT",
+      "EXECUTION_INVALID",
+      "STRATEGIC_GATE"
+    ]
+  },
+  "source_hashes": {
+    "explore/p09-16apsk-confidence-bps/p09_bps_methods.py": "4d654d4cc84d6b8c3d0bd369ff0879436b43b0ed039b8757f55b565eb9cca36d",
+    "explore/p09-16apsk-confidence-bps/p09_run.py": "673fc30ac328805f028dcab9b3c01bfb51967858710bc0a4d46136a08568aed0",
+    "common/_recovery.py": "afb8aed9508cc83ee13d05bfd4346a2e6f0852af0e9d6a182a85a441ff5d60e2",
+    "common/_modulation.py": "036fb7aa4d0bef153ee53799f20a244492fb6294f93132d1ecc2b0530b5694d5",
+    "common/_channel.py": "800e437510372a53a2e821c7e3ca2a84a5595b3b240cd696cf7998cfbce9f8e3",
+    "simulator/_b11_params.py": "6159a891337b0913a52f1dfa6bb9dee4cd14878ffce5130fda74ad2a9755d885"
+  },
+  "primary_metric": "required_SNR_dB_at_frozen_FER (dB-domain), with fixed-label BER + PI-BER dual report",
+  "dev_seeds": [
+    11000,
+    11001,
+    11002,
+    11003,
+    11004,
+    11005,
+    11006,
+    11007,
+    11008,
+    11009,
+    11010,
+    11011,
+    11012,
+    11013,
+    11014,
+    11015,
+    11016,
+    11017,
+    11018,
+    11019
+  ],
+  "test_seeds": [
+    12000,
+    12001,
+    12002,
+    12003,
+    12004,
+    12005,
+    12006,
+    12007,
+    12008,
+    12009,
+    12010,
+    12011,
+    12012,
+    12013,
+    12014,
+    12015,
+    12016,
+    12017,
+    12018,
+    12019,
+    12020,
+    12021,
+    12022,
+    12023,
+    12024,
+    12025,
+    12026,
+    12027,
+    12028,
+    12029,
+    12030,
+    12031,
+    12032,
+    12033,
+    12034,
+    12035,
+    12036,
+    12037,
+    12038,
+    12039
+  ],
+  "cell": {
+    "turb": "weak",
+    "snr_scan_dB": [
+      14,
+      16,
+      18,
+      20,
+      22
+    ],
+    "frozen_snr_for_test": null
+  },
+  "full_comparator_candidate_set": [
+    "B0_full",
+    "B1_coarse",
+    "B2_two_stage",
+    "C1_conf_gated",
+    "C2_curv",
+    "C3_early_stop"
+  ],
+  "mde": {
+    "performance_dB": 0.1,
+    "complexity_fold": 4.0
+  },
+  "non_inferiority_threshold": "performance loss CI upper <= 0.10 dB vs full BPS",
+  "complexity_threshold": ">= 4x relative to full BPS (B=64)",
+  "sample_size_rationale": "40 test trajectories × 256 sym/block × 4 blocks = 40960 sym/trajectory-cluster; bootstrap CI trajectory-cluster (n=40)",
+  "forbidden_information": [
+    "true phase",
+    "true noise",
+    "true SNR/gamma_bar",
+    "TX symbols/bits in deployable decide"
+  ],
+  "receipt_creation_time": "2026-08-01T17:24:53+0800",
+  "test_started": false,
+  "dev_summary": {
+    "phase_a": {
+      "14": {
+        "ber_mean": 0.051416015625,
+        "evals_per_sym": 64.0
+      },
+      "16": {
+        "ber_mean": 0.0362548828125,
+        "evals_per_sym": 64.0
+      },
+      "18": {
+        "ber_mean": 0.02569580078125,
+        "evals_per_sym": 64.0
+      },
+      "20": {
+        "ber_mean": 0.01954345703125,
+        "evals_per_sym": 64.0
+      },
+      "22": {
+        "ber_mean": 0.01614990234375,
+        "evals_per_sym": 64.0
+      }
+    },
+    "phase_b_b1": {
+      "8": 0.0727294921875,
+      "16": 0.03416748046875,
+      "32": 0.02637939453125
+    },
+    "phase_b_b2": {
+      "16+4": 0.036181640625,
+      "16+8": 0.05035400390625,
+      "32+4": 0.0264404296875,
+      "32+8": 0.02598876953125
+    },
+    "phase_c_c1": {
+      "0.1": {
+        "ber": 0.0480224609375,
+        "evals": 24.0
+      },
+      "0.3": {
+        "ber": 0.0480224609375,
+        "evals": 24.0
+      },
+      "0.5": {
+        "ber": 0.0480224609375,
+        "evals": 24.0
+      },
+      "1.0": {
+        "ber": 0.0480224609375,
+        "evals": 24.0
+      }
+    },
+    "phase_c_c2": {
+      "0.005": {
+        "ber": 0.049755859375,
+        "evals": 16.194140625
+      },
+      "0.01": {
+        "ber": 0.0583740234375,
+        "evals": 16.401953125
+      },
+      "0.05": {
+        "ber": 0.05943603515625,
+        "evals": 18.1125
+      }
+    },
+    "phase_c_c3": {
+      "4_1e-05": {
+        "ber": 0.02593994140625,
+        "evals": 6.825
+      },
+      "4_1e-04": {
+        "ber": 0.02718505859375,
+        "evals": 6.4375
+      },
+      "4_1e-03": {
+        "ber": 0.02744140625,
+        "evals": 5.6875
+      },
+      "8_1e-05": {
+        "ber": 0.02547607421875,
+        "evals": 8.0
+      },
+      "8_1e-04": {
+        "ber": 0.02547607421875,
+        "evals": 8.0
+      },
+      "8_1e-03": {
+        "ber": 0.02547607421875,
+        "evals": 8.0
+      },
+      "16_1e-05": {
+        "ber": 0.02640380859375,
+        "evals": 16.0
+      },
+      "16_1e-04": {
+        "ber": 0.02640380859375,
+        "evals": 16.0
+      },
+      "16_1e-03": {
+        "ber": 0.02640380859375,
+        "evals": 16.0
+      }
+    },
+    "operating_snr": 18
+  }
+}

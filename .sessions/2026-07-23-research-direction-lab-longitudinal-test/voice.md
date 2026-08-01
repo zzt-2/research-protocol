@@ -269,3 +269,25 @@
 - "若无法证明计算问题或 novelty boundary，终止为 STRATEGIC_GATE，不计包。"
 - "本轮端到端完成，不在入口选择后停下；只有入口门失败才停为 STRATEGIC_GATE。有效科学执行才计入 campaign；治理、修复、准备不计。"
   → D050 / V076
+
+## 2026-08-01（计数纠正 + P09 重定向执行指令，用户中转）
+
+- "在同一对话内完成两部分：A. 确定性纠正 campaign 当前计数；B. 端到端执行重定向后的 P09，不得在 A 或入口准备后停止。"
+- "上一轮 P09 对 NDA-ML 的 STRATEGIC_GATE 保留：NDA-ML 是 closed-form estimator，不是 candidate/objective search，禁止换名重开 NDA_ML_BODY_REOPEN。"
+- "但 campaign=8/10 是 stale/错误 current view：P08-R2 没有独立 pre-test contract/receipt/hash；dev 与 test 在同一 runner 中连续执行；最终合同、结果和 verifier 同时进入 a21fdba；无法证明最终合同在首次观察 test seeds 8000–8039 前不可变。"
+- "按 confirmatory evidence fail-closed：accepted_valid_packages = 7/10。P08-R2 只能保留为：PARTIAL — corrected coded-chain/receiver/oracle engineering asset and local diagnostic evidence。G 族状态：STOPPED_WITH_PARTIAL_ASSET。不允许 P08-R3，也不允许 coded/interleaving 换名重开。"
+- "纠正方法：1. 新增 D/V 血缘纠正，不删除旧记录；2. D049/V075 保留历史，但其'恢复第8包'的效力被新 D/V 取代；3. topic-index/current control block/registry 当前计数改为 7；4. mission-log 追加新 checkpoint，不篡改旧 checkpoint；5. D050/V076 的 NDA-ML STRATEGIC_GATE 保留；6. 纠正工作本身不计科学包；7. 完成纠正后立即进入下面 P09，禁止只提交治理修改。"
+- "P09 = H_16APSK_CONFIDENCE_ADAPTIVE_BPS_SEARCH。M：16APSK full blind phase search；C：有限实时计算预算；A：每个 window 对全部相位候选计算星座距离，存在 B×N 的搜索开销；目标：在相同 receiver-visible 信息、相同延迟和相同 BPS objective 下，减少 distance/objective evaluations，同时保持 full BPS 的恢复性能。这不是 NDA-ML 搜索，也不是重开 NDA-ML body。"
+- "源码入口：projects/simulation/common/_recovery.py 中真实 bps_cpr；当前实现只支持 qpsk/qam16，需做最小 16APSK adapter；16APSK constellation/判决器优先复用 sc_nda_ml_sim.py 等已有资产；不修改 NDA-ML 本体。"
+- "入口硬门（运行实验前逐项给出 file:line）：1.真实搜索自由度：BPS 确实枚举 B 个相位并逐候选计算距离；2.问题成立：full BPS 的主要复杂度确由该搜索产生；3.强传统 comparator 可实现（full uniform BPS/fixed coarse BPS/fixed two-stage coarse-to-fine BPS）；4.16APSK adapter 保持同一个 BPS objective 和信息边界；5.检查既有 ANN-CPR、2S-BPS、BMLPR 等 collision。"
+- "若发现 16APSK fixed two-stage 已被现有代码/文献完全覆盖，不得伪造新颖性；仍可把它作为传统 comparator。候选只能声称：'面向当前 16APSK 接收链的 confidence-adaptive/local-refinement 实现'，不能声称首创低复杂度 BPS。若连问题或可区分 action 都无法成立，终止 STRATEGIC_GATE，不计包。"
+- "四、真正的 pre-test freeze——不能再次使用'同一最终 commit + 最终字段一致'冒充 test 前冻结。在读取或运行任何 held-out seed 前，必须生成独立冻结凭据（contract 内容及 SHA256/runner/source hash/primary metric/dev/test seeds/cell/slice/full/comparator/candidate 集/MDE/non-inferiority threshold/complexity threshold/sample-size/power rationale/forbidden information/receipt creation time/test_started=false）。"
+- "由于此前已发生三次 chronology 缺陷，本轮允许使用一次实验前 checkpoint commit 作为自动提交规则的长实验例外：Commit 1：计数纠正 + frozen contract + receipt，必须发生在任何 held-out test 前。随后 runner 必须：1.校验当前源码/contract hash 与 receipt 一致；2.将 test_started=true、receipt hash 写入 raw artifact；3.hash 不一致立即 EXECUTION_INVALID；4.held-out seed 如在现有 artifacts/ledger 中出现过，立即更换。实验完成后再做最终 Commit 2。不得 squash 两个 commit。"
+- "比较合同共享：paired realization/modulation/SNR/GG-SOP/window/eval region/carrier-frequency-phase 输入/latency/receiver-visible 信息/downstream metric/dev-test seed isolation。传统 baseline ladder：B0 full uniform BPS/B1 dev-tuned fixed coarse BPS/B2 dev-tuned fixed two-stage BPS。候选最多三个（C1 confidence-gated local refinement/C2 curvature-score-gap guided refinement/C3 early-stop adaptive-width search），每个候选必须只有一个主要机制，并有消融，不得将三个机制堆成一个方法。"
+- "Primary performance：required-SNR 或等价 dB-domain metric；fixed-label BER 与 PI-BER 双报，明确哪个是 primary；相对 full BPS 的性能损失 CI upper ≤0.10 dB。Primary complexity：实际计算过的 candidate-symbol distance evaluations；refinement、confidence 估计和 fallback 全部计入；至少降低 4×；wall-clock 只作 secondary；不能只统计 coarse stage 而漏掉 refinement。"
+- "门控顺序：Phase A 确认 full BPS 有效并量化性能与搜索成本；Phase B 测试最强传统 fixed coarse/two-stage（若 B1/B2 同时满足性能损失 CI upper ≤0.10 dB + 复杂度降低 ≥4× → 终态 PROBLEM_RESOLVED_BY_CONVENTIONAL_TWO_STAGE_BPS）；Phase C 只在传统 comparator 未解决时运行候选。"
+- "只有候选在 fresh held-out test 上同时：1.对 full BPS 性能非劣；2.相对 full BPS 降低 ≥4×；3.稳定优于最强 fixed coarse/two-stage comparator；4.CI 和预设 MDE 均过门；才可判 COMPUTE_EFFICIENT_BPS_METHOD_SIGNAL。允许终态：PROBLEM_RESOLVED_BY_CONVENTIONAL_TWO_STAGE_BPS/NO_DIAGNOSTIC_METHOD_SIGNAL/COMPUTE_EFFICIENT_BPS_METHOD_SIGNAL/EVIDENCE_INSUFFICIENT/EXECUTION_INVALID/STRATEGIC_GATE。"
+- "METHOD_SIGNAL 后建立 bounded method card（方法名/三步算法/相位搜索流程/最坏-平均 candidate evaluations/与 full-fixed-two-stage 差别/性能-复杂度 Pareto/confidence 触发率与 fallback 率/可用于毕业论文的方法描述/novelty ceiling 和已有工作 collision 边界）；它只能作为 pre-formal carrier，后续仍须回到 GW Step 1–3/3.5/4a，不直接写成正式创新结论。"
+- "八、独立 verifier 必须由 fresh-context verifier 检查（11 项）：Commit 1 早于任何 held-out test/receipt-source-contract hash 闭合/held-out seeds fresh/16APSK BPS objective 实现正确/full-coarse-two-stage-candidate 信息和延迟公平/refinement 全部成本已计数/完整 deployable 调用图无 truth leakage/raw→aggregate/性能非劣和复杂度双门/terminal verdict 唯一/campaign 从正确的 7/10 更新/若本包有效无论正负才变成 8/10。"
+- "九、最终只汇报五项（1.计数纠正结果及 pre-test receipt/Commit 1；2.full/最强传统 comparator/最佳候选的性能、复杂度和 CI；3.terminal verdict、METHOD_SIGNAL 和 active carrier；4.正确 campaign 计数及论文包装；5.worker-log/artifact/verifier/Commit 1/Commit 2 SHA）。不 push。"
+  → D051 / V077（计数纠正）+ P09 H_16APSK_CONFIDENCE_ADAPTIVE_BPS_SEARCH（重定向，进行中）
