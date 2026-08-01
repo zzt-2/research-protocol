@@ -3911,3 +3911,65 @@ LOCAL_SLICE / NONBINDING_DIAGNOSTIC。
 
 **future-work seed**（诚实记录，非缺陷）：equalize() 的盲 h 估计用 gamma_bar 作噪声底（receiver-side
 模块，非 decide 泄漏）；后续可用 prefix-based noise floor 替代以进一步加固信息边界。
+
+> **本 V074 的科学层 ACCEPT 结论已被 V075 取代。保留不删除。**
+> V074（2026-08-01，16/16 ACCEPT）核查的是 **consistency + H1-H6 合同**（GG params import、
+> interleaver permutation、oracle ladder、metric freeze、trajectory-cluster、raw→aggregate 复算），
+> 全过。但**漏审三项承重科学合同**：H7（equalize 是否读 gamma_bar，#5 只扫 method 函数体不递归）、
+> H8（AST 是否覆盖调用图，#5 抽取逻辑本身有缺陷）、H9（MDE 是否先验、CI_lo=0 如何处理、是否有
+> min(B1,B2)）。V074 #5 sub-agent 把 equalize 用 gamma_bar 作盲 h 噪声底错标 "future-work seed 非缺陷"
+> ——H7 数值复现（p08r2_h7_reproduce.json）证伪此归类（max\|ΔLLR\| 高达 7.02，改 decode decision）。
+> **这是 P07-R/D046、P08/D048 "consistency≠correctness" 教训的第三度重演**。V074 标记为：
+> **"16/16 consistency + H1-H6 PASS 但 H7/H8/H9 漏审，科学层 ACCEPT 结论被 V075 取代"**。
+
+## V075: P08-R2 receiver 信息边界 + AST 门 + 统计功效合同三根因修复独立 verifier（19/19 ACCEPT）
+
+> 2026-08-01 | 关联: D049 / P08-R2 / CP040 | 结论: **PASS (19/19) / ACCEPT**
+
+独立 verifier（与 executor 上下文分离——脚本 + 独立 sub-agent 双重核验）核查 P08-R2 receiver
+信息边界 + AST 门 + 统计功效合同三根因修复。脚本 `p08r2_verify.py` 19 项确定性检查全 PASS；
+独立 sub-agent（fresh context，不信任 executor 自述）逐项沿 caller→callee 递归 AST + 数值复算，
+最终 **ACCEPT**。
+
+**19 项逐项核验**（每项独立读源码/重跑/recompute）：
+
+1. **H7/H8/H9 prefail evidence**（PASS）：prefail_evidence.md 含 H7/H8/H9 全部三项根因证据。
+2. **H7 leak 复现 pre-fix**（PASS）：p08r2_h7_reproduce.json `h7_leak_confirmed=true`，max\|ΔLLR\| 高达 7.02（独立 sub-agent 复核）。
+3. **params.py single source of truth**（PASS）：p08r2_* 零硬编码 (α,β) 字面量；get_gg_scenes() used。
+4. **bit-interleaver option A active**（PASS）：out_int 真 3GPP §5.4.2.2 置换（n_moved>1000/1536）。
+5. **coded bits injected & methods share realization**（PASS）：40 seeds，每 seed 6 方法 h_truth_mean 一致。
+6. **H7 receiver info boundary — RECURSIVE AST**（PASS，**H8 fix**）：source_by_name 从 3 个 p08r2_*.py 模块建，从 method_B0/B1/B2 + equalize + estimate_pre_eq_noise_from_prefix + gamma_vis_from_prefix + estimate_sigma2_from_prefix + llr_per_cw_from_eq 入口，forbidden_set={gamma_bar,h_truth,theta}，递归 max_depth=5，**访问 9 函数 0 违规**；equalize 调 gamma_vis_from_prefix 确认。独立 sub-agent 用 Python AST 复核：equalize 可执行代码零 gamma_bar/h_truth/theta 引用（docstring 内的字面不算）。
+7. **σ²_pre from prefix LS**（PASS）：equalize 可执行代码（去 docstring）零 gamma_bar；调 gamma_vis_from_prefix(σ²_pre)；estimate_pre_eq_noise_from_prefix 用 32-sym prefix LS（4 复未知数/64 方程/60 dof）。
+8. **O0/O1/O2 ladder**（PASS）：O0=scalar/O1=block(100)/O2=block(16)，O2 finer。
+9. **prefix separated from scored window**（PASS）：n_cw=16/pol，split_prefix_data 用。
+10. **fairness**（PASS）：B2 仅 override (alpha,offset,llr_clip)，k/n/num_iter/interleaver 保持 default。
+11. **trajectory lifecycle**（PASS）：raw 含 h_truth_mean/min/max per-traj。
+12. **raw stores σ²_pre + γ_vis + per-pol FER/BER**（PASS）：H7 诊断字段全存。
+13. **fresh seed zero collision**（PASS）：dev 9000-9019 / test 8000-8039 与 campaign 历史（含 P08-R 6000-6019/7000-7039）零重叠。独立 sub-agent 复核 dev∩hist=∅ test∩hist=∅ dev∩test=∅。
+14. **powered trajectory count**（PASS）：n_test=40。
+15. **metric frozen before test + H9 a-priori MDE=0.05**（PASS，**H9 fix**）：primary=B_fixed_snr_paired_fer，mde_fer=0.05 精确（非 0.2347 post-hoc）；dev workspace 记 n_required≈814 仅为透明度。独立 sub-agent grep 确认 "0.2347" 在 gate/dev artifacts 中 0 出现。
+16. **raw→aggregate recompute**（PASS）：独立重算 mean FER per method，relErr<1e-9（独立 sub-agent 复核 relErr=0.0）。
+17. **H7 metamorphic gate PASS**（PASS，**runtime proof**）：p08r2_metamorphic_gate.json `metamorphic_gate_pass=true`，所有 cell worst max\|ΔeqX\|=0.00e+00, worst max\|ΔLLR_X\|=0.00e+00（精确零）。独立 sub-agent 复核 30 cells 全 0.0。
+18. **H9 no min(B1,B2) + separate deltas + CI_hw**（PASS，**H9 fix**）：test_results 含 delta_B0_minus_B1 和 delta_B0_minus_B2 两条独立 delta；delta_B0_minus_strongest_conv 字段 ABSENT（旧 min(B1,B2) 已删）；CI half-width 报告。
+19. **verdict uniqueness + EVIDENCE_INSUFFICIENT reachable**（PASS）：verdict `PROBLEM_ABSENT_AFTER_RECEIVER_VISIBLE_STRONG_LLR_BASELINE` 在 5 个合法终态集合内；EVIDENCE_INSUFFICIENT 分支可达（CI_hw > MDE/2 触发，本轮 hw=0.0066/0.0090 ≤ 0.025 未触发但可达）。独立 sub-agent 复核 verdict 逻辑 + 重算 B2-O2 mean=+0.009375 hw=0.00898 ≪ MDE。
+
+**结论**：P08-R2 verdict `PROBLEM_ABSENT_AFTER_RECEIVER_VISIBLE_STRONG_LLR_BASELINE` 科学有效，
+唯一正确。三根因（H7/H8/H9）全部在源码+artifact 级修复验证；**H7 信息边界经递归 AST（0 违规）+
+运行时 metamorphic 门（Δ=0.0 精确）双重证明**；H8 verifier 真递归（9 函数访问）；H9 用先验
+MDE=0.05 + 独立 B0-B1/B0-B2 delta + 可达 EVIDENCE_INSUFFICIENT。机制归因（3/40 不可恢复深衰落
+突发，O2 也 2/40 不可恢复）独立复现。这是 P08-R 声称的同一物理机制，但**这次在真正 gamma_bar-free
+的 corrected receiver 链 + 先验 MDE + 新 seeds + 无 cherry-pick 下得出**。counts_as_valid_package=True，
+campaign accepted_valid 7→**8**。G 族（coded-LLR-calibration）关闭。Phase B/C 不运行（gate 顺序）。
+claim ceiling 维持 LOCAL_SLICE / NONBINDING_DIAGNOSTIC。
+
+**PARTIAL reusable asset 确认（D048 修复有效部分在 P08-R2 verbatim 复用）**：5G NR LDPC source-auditable
+选择、CodecAdapterR、3GPP §5.4.2.2 真 interleaver（option A）、GG (α,β) params.py import、O0/O1/O2 oracle
+ladder、H4 dev-freeze 流程、H6 trajectory-cluster 统计。
+
+**独立 sub-agent ACCEPT**（agent_a1ce4c5f，fresh context）：7 项独立复核全 PASS（H7 leak 复现、H7 fix
+正确性、metamorphic runtime、H8 verifier 递归、H9 统计合同、fresh seeds、verdict sanity + raw→aggregate
+relErr=0.0），无任何 executor 自述与实际 code/artifact 的差异。
+
+**TL 教训登记**：P07-R/D046 → P08/D048 → P08-R2/D049 是 "consistency≠correctness" 教训三度重演——
+verifier 必须递归遍历 deployable 调用图（不只复述合同/扫函数体字面）+ 跑运行时 metamorphic 门。
+此条作为 sim-preflight mve-validation.md 的强化项候选（跨 session 沉淀）。

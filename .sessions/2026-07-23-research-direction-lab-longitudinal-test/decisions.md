@@ -2926,10 +2926,10 @@ baseline ladder（全方法同码/同 interleaver/同 decoder/同 iteration budg
 
 ## D048: P08 coded-chain 科学完整性修复 — 冻结旧 P08 科学结论（六根因：H1 GG provenance / H2 runtime information / H3 oracle action space / H4 metric contract / H5 coded identity / H6 state lifecycle），campaign 计数回退 8→7，重做 GG 单一真相源 + receiver-visible σ² + oracle ladder + 重新冻结 metric contract
 
-> status: active
+> status: active（科学有效性部分被 D049 取代；GG/oracle/identity/H4-H6 修复 + 入口裁决部分继续 active 作 PARTIAL reusable asset）
 > date: 2026-08-01
 > 取代：D047 的**科学有效性部分**（Phase 0A 选 5G NR LDPC、Phase 0B sandbox、算法正确性门 12 项 ALL PASS、Phase A 数字、verdict `PROBLEM_ABSENT_AFTER_STRONG_LLR_BASELINE`、V073 的科学层 ACCEPT 结论、G 族关闭裁决、accepted_valid 8）；D047 的**scope-change 入口裁决部分**（授权 coded-chain 场景扩展、M-C-A、信息边界、baseline ladder、明确不含）继续 active。**不取代 D046**（P07-R 终态维持）。
-> 被取代：无
+> 被取代：D049（科学有效性部分：V074 ACCEPT / PROBLEM_ABSENT_AFTER_RECEIVER_VISIBLE_STRONG_LLR_BASELINE / G 族关闭 / accepted_valid 8 被 D049 取代；GG provenance import / oracle ladder O0-O1-O2 / coded identity option A 真 3GPP interleaver / H4 dev-freeze / H6 trajectory-cluster 修复继续 active 作 PARTIAL reusable asset）
 > 依据: 验证: `projects/results/p08r_coded_chain_repair/p08r_prefail_evidence.md`（六根因修复前确定性证据，逐 file:line）+ 源码逐行核（主线程读 + 3 个独立 Explore 子 agent 并行交叉核验）：`params.py:100-228`（TurbulenceParams 真值源 weak=11.6,10.1/moderate=4.0,1.9/strong=4.2,1.4）vs `p08_phaseA_gate.py:86`（硬编码 weak=1.2,1.2/moderate=4.2,1.4/strong=8.0,4.0，三档全错且 docstring 自称 matching params.py 谎报）；`p08_coded_chain.py:381`+`p08_phaseA_gate.py:300`（σ²=1/(2γ_bar) 来自循环变量，非 receiver-visible 估计，6 处）；`p08_phaseA_gate.py:185-190`（_oracle_sigma2 返回单一 global scalar，docstring 自承 per-symbol 降级为 global）；`p08_phaseA_gate.py:397-407`（MDE=0.15dB 从未生效，req 全 inf 时静默退到未冻结 raw FER-delta）；`p08_coded_chain.py:159`（LDPC5GEncoder 未传 num_bits_per_symbol，sionna encoding.py:792-793 交织被跳过）+ `p08_correctness_gate.py:236-238`（自承未启用 3GPP interleaver）vs worker-log step-036:34（谎称 triangle interleaver）；`p08_phaseA_raw_rows.json`（schema 缺逐 cw h/fade 字段，fer=1.0 双峰 15% 行 16/16 全失败当独立样本）+ thesis-lessons TL-21（确定性 grep 不靠链式标记）/TL-23（冷静期）/TL-33（FR-26 证据链）+ sim-preflight rules/mve-validation.md（consistency≠correctness，P07-R/D046 同病重演）
 > 触发原话: 用户 P08-R 执行指令（"P08 当前科学结论不得继续使用...建立并保存确定性 prefail tests...prefail evidence 必须在修复前保存"）
 
@@ -2971,3 +2971,50 @@ V073 全部 15 项查的是 **consistency + provenance receipt**（source hash�
 ### 来源
 
 用户 P08-R 执行指令 + `p08r_prefail_evidence.md`（六根因修复前确定性证据）+ 源码逐行核（主线程 + 3 Explore 子 agent 交叉）+ D046（P07-R 同模式先例）+ thesis-lessons TL-21/TL-23/TL-33 + sim-preflight rules/mve-validation.md
+
+## D049: P08-R2 receiver 信息边界 + AST 门 + 统计功效合同三根因修复 — 冻结 P08-R 科学结论（H7 equalize true-SNR 上游泄漏 / H8 AST verifier 不递归 / H9 MDE post-hoc + CI_lo=0 + min(B1,B2) cherry-pick），campaign 计数回退 8→7，重做 receiver-visible σ²_pre prefix-LS + metamorphic 门 + 先验 MDE
+
+> status: active
+> date: 2026-08-01
+> 取代：D048 的**科学有效性部分**（V074 ACCEPT、`PROBLEM_ABSENT_AFTER_RECEIVER_VISIBLE_STRONG_LLR_BASELINE` 及 Phase A 数字、G 族关闭裁决、accepted_valid 8、current=P09）；D048 的 **GG provenance / oracle ladder / coded identity / H4 metric freeze / H6 trajectory-cluster 修复 + D047 入口裁决部分**继续 active（PARTIAL reusable asset）。**不取代 D046**（P07-R 终态维持）、**不取代 D047 scope-change 入口裁决**。
+> 被取代：无
+> 依据: 验证: `projects/simulation/results/p08r2_receiver_info_repair/p08r2_prefail_evidence.md`（三根因 H7/H8/H9 修复前确定性证据，逐 file:line + 数值复现）+ `p08r2_h7_reproduce.json`（H7 数值复现：固定 realization 只翻 gamma_bar，ΔeqX 高达 0.145 / ΔLLR 高达 7.02，远超 tol）+ 源码逐行核（主线程读 + 2 个独立 Explore 子 agent 并行交叉核验 mmse_equalize 语义 & P07-R 不构成先例）：`p08r_chain.py:341-360`（equalize 读 self.gamma_bar 三处）、`_equalizer.py:13-15`（`mmse_equalize(rx,h,gamma_bar)` 第 3 参 = SNR γ，公式 `rx·√h/(h+1/γ)` 中 `1/γ` 为加性噪声功率）、`p08r_verify.py:109-129`（check #5 只抽 method 函数体字面，不递归进 real.equalize）、`p08r_run.py:197`（MDE=2.802·√(2·p·(1−p)/n)，固定 n 后算）、`p08r_run.py:286`（`strongest_conv=np.minimum(B1,B2)` per-trajectory 选优）、`p08r_phaseA_gate.json` `delta_B0_minus_O2=[0.00547, ci_lo=0, ci_hi=0.01406]`（CI_lo=0）+ thesis-lessons TL-21（确定性证据不靠链式标记）/TL-23（冷静期）/TL-32（oracle 不当 Go）/TL-33（FR-26 证据链）+ sim-preflight rules/mve-validation.md（consistency≠correctness，P07-R/D046、P08/D048 同病三演）
+> 触发原话: 用户 P08-R2 执行指令（"执行 P08-R2 最终科学修复。P09继续暂停...旧缺陷复现→campaign回退→receiver完整去除true-SNR→metamorphic信息门→正确功效设计→fresh crossing实验→条件式方法工厂→独立verifier→一次统一commit。不push。"——voice.md 2026-08-01）
+
+### 决策
+
+冻结 P08-R 科学结论（`PROBLEM_ABSENT_AFTER_RECEIVER_VISIBLE_STRONG_LLR_BASELINE` 及 Phase A 数字、"coded loss 主导不可恢复突发深衰落"归因、V074 ACCEPT 结论、harvest 全部作废），campaign `accepted_valid_packages` **8→7**，`current` = **P08-R2**，P09 继续暂停，G family **重开**（coded-LLR-calibration 不再判 PROBLEM_ABSENT）；旧 P08-R artifacts 保留并标 **INVALIDATED_BY_P08R2**（不覆盖、不删除）。修复后若科学有效完成再恢复 8/10，若仍 EXECUTION_INVALID 则保持 7/10。
+
+**PARTIAL reusable asset 保留**（D048 修复有效部分）：5G NR LDPC source-auditable 选择、CodecAdapterR 骨架、3GPP §5.4.2.2 真 interleaver（option A, num_bits_per_symbol=4）、GG (α,β) params.py 单一真相源 import、O0/O1/O2 oracle ladder、H4 dev-freeze 流程、H6 trajectory-cluster 统计单位、real bit interleaver、AWGN waterfall 三区。需修：equalize() 三处 gamma_bar、AST 递归、MDE 先验化 + min(B1,B2) 移除 + evidence_insufficient 终态。
+
+### 理由（三根因，已确定性 prefail 证据复现，证据存 `p08r2_prefail_evidence.md` + `p08r2_h7_reproduce.json`）
+
+1. **H7 receiver 信息边界（致命）**：P08-R `p08r_chain.py:341-360` `CodedRealizationR.equalize()` 读 `self.gamma_bar`（SNR 循环变量）三处——`:344` `nv=1/(2·γ)` 盲 h 噪声底 / `:354` `h_est=max(p−nv,1e-6)` / `:358-359` `mmse_equalize(rx,h,self.gamma_bar)`（第 3 参 SNR γ，`_equalizer.py:15` 公式 `rx·√h/(h+1/γ)`）。`amp_limit(thresh=3.0)` 固定绝对 clip，合法保留。**数值复现**（`p08r2_h7_reproduce.json`）：固定 rX/rY/sX/sY/h/theta/prefix/codeword/noise realization，只翻 `real.gamma_bar` 12→18/8 dB，max\|ΔeqX\| 高达 **0.145**、max\|Δprefix_resid\| 高达 0.108、max\|ΔB0 LLR\| 高达 **7.02**（远超 tol 1e-12/1e-9，会改 decode decision）。**deployable decide 间接消费 true SNR**：equalize 输出 eqX/eqY 进 `estimate_sigma2_from_prefix` → σ²_prefix → B0 LLR 全链污染。**修复要求**：deployable path 禁读 gamma_bar/h_truth/theta/sX/sY/future；pre-equalization 噪声来自 receiver-visible prefix LS 残差 σ²_pre；MMSE 第 3 参 = γ_vis=1/σ²_pre；metamorphic 门（固定 realization 只改隐藏 γ，Δ<tol）。
+2. **H8 AST verifier 盲区**：P08-R `p08r_verify.py:109-129` check #5 只抽 `method_B0/B1/B2` 函数体字面文本搜 `"real.gamma_bar"`，**不递归进入** `real.equalize()`（在 `p08r_run.build_realization:50` 于 method 前执行）→ 漏审 H7。V074 sub-agent 同样错归类（V074 #5：equalize 用 gamma_bar 作盲 h 估计噪声底"非 decide 泄漏，future-work seed"——但 equalize 输出直接进 LLR，是 decide 上游）。**修复要求**：AST 必须递归遍历 deployable 调用图（method → real.equalize → mmse_equalize → estimate_*_from_prefix → 新 prefix-LS 估计器），扫禁用字面量；metamorphic 门作运行时双重保险。
+3. **H9 统计合同三处非法**：① **MDE 来源非法**（`p08r_run.py:197` `mde_fer=2.802·√(2·0.16875·0.83125/40)=0.23466`，固定 n=40 后的 power-0.8 阈值冒充 MDE；MDE 须先验登记再反算 n）。② **CI_lo=0 不能称 >0**（`delta_B0_minus_O2=[+0.00547, lo=0, hi=0.01406]`，独立重算确认 lo=0.0；CI_lo=0 ≠ 效应不存在，只 ≠ 数据足以排除 0）。③ **per-trajectory min(B1,B2) cherry-pick**（`p08r_run.py:286 strongest_conv=np.minimum(B1,B2)`，逐 trajectory 选两 comparator 更优者再算统计，post-hoc selection 未在合同冻结；数值佐证 min(B1,B2) mean=0.1133 < min(meanB1,meanB2)=0.1148 引入 0.0015 偏移）。**修复要求**：MDE 先验登记（按 D005 务实路线 + 论文级 FER delta ~0.05），记录与 power 阈值换算；CI_lo=0 诚实标 evidence_insufficient；预登记单一 comparator（倾向 B2，因 B1=B0/T 数值无区分度）或两条独立 delta，去掉 min(B1,B2)。
+
+### verifier 盲区（为什么 V074 16/16 ACCEPT 仍漏）
+
+V074 16 项查的是 **consistency + H1-H6 合同**（GG params import、interleaver permutation、oracle ladder、metric freeze、trajectory-cluster、raw→aggregate 复算）——这些全过。但**漏审三项承重科学合同**：H7（equalize 是否读 gamma_bar，#5 只扫 method 函数体不递归）、H8（AST 是否覆盖调用图，#5 抽取逻辑本身有缺陷）、H9（MDE 是否先验、CI_lo=0 如何处理、是否有 min(B1,B2)）。V074 #5 sub-agent 把 equalize gamma_bar 错标 "future-work seed 非缺陷"——H7 数值复现证伪此归类（ΔLLR ±7 改 decide）。**这是 P07-R/D046、P08/D048 "consistency≠correctness" 教训的第三度重演**：V074 沿调用链查了 H1-H6 但停在 method 边界，没进 receiver 函数。V075 必须递归遍历整个 deployable 调用图 + 跑 metamorphic 门。
+
+### 排除的替代方案
+
+- **不直接改 p08r_*.py 隐藏错误**：新建 `p08r2_*.py` 版本化文件，旧 P08-R artifacts 标 INVALIDATED_BY_P08R2 保留审计（同 P07-R/P08-R 模式）。
+- **不靠 verifier 链式标记判断正确性**（TL-21）：用确定性 prefail 证据（p08r2_prefail_evidence.md + p08r2_h7_reproduce.json，逐 file:line + 数值）复现根因。
+- **不在修复前宣布任何科学结论**（TL-23 冷静期）：先冻结 P08-R 结论、回退计数，修复重跑有效后再恢复。
+- **不把 P08-R coded-chain 基础设施全废**：D048 的 GG/oracle/identity/H4-H6 修复 PARTIAL reusable，只修 H7/H8/H9 三项。
+- **不改 common/ frozen 文件**（守 sim-preflight 核心 #1）：mmse_equalize 第 3 参语义保持 SNR γ，P08-R2 在 caller 侧传 γ_vis=1/σ²_pre。
+- **不把 P08-R2 当论文正式方法**：claim ceiling 维持 LOCAL_SLICE / NONBINDING_DIAGNOSTIC；METHOD_SIGNAL 只产 pre-formal carrier。
+- **不重开已关闭的 A/E/F 族**（TL-30）：本轮是 G 族 coded-LLR-calibration 续修，不涉其他族。
+
+### 影响范围
+
+- `topic-index.md` 控制块：epoch 75→76，`accepted_valid_packages` 8→**7**（恢复）、`current_package` P09→**P08-R2**、P09 继续暂停；G family 状态从"关闭"改"重开"（coded-LLR-calibration 不再判 PROBLEM_ABSENT）；rolling_queue P08-R 标 INVALIDATED_PENDING_RERUN；mission_checkpoint CP039→CP040（修复完成后）。
+- `verifications.md`：追加 V075（取代 V074 科学层结论）；V074 保留标"16/16 consistency + H1-H6 PASS 但 H7/H8/H9 漏审"。
+- 旧 artifacts `projects/simulation/results/p08r_coded_chain_repair/*` 加 INVALIDATED_BY_P08R2.md（不删不改）。
+- 新 artifacts 路径 `projects/simulation/results/p08r2_receiver_info_repair/`、新脚本 `p08r2_*.py`。
+- protected owner/formal/Skill/thesis framework/controller 不改、无 push。MDE=0.15 dB 维持（required-SNR 用；FER-delta MDE 在 dev 上据毕业价值先验冻结）。
+
+### 来源
+
+用户 P08-R2 执行指令 + `p08r2_prefail_evidence.md`（三根因修复前确定性证据）+ `p08r2_h7_reproduce.json`（H7 数值复现）+ 源码逐行核（主线程 + 2 Explore 子 agent 交叉）+ D046/D048（同模式先例）+ thesis-lessons TL-21/TL-23/TL-32/TL-33 + sim-preflight rules/mve-validation.md

@@ -1,0 +1,256 @@
+{
+  "metric_contract_frozen": {
+    "dev_seeds": [
+      9000,
+      9001,
+      9002,
+      9003,
+      9004,
+      9005,
+      9006,
+      9007,
+      9008,
+      9009,
+      9010,
+      9011,
+      9012,
+      9013,
+      9014,
+      9015,
+      9016,
+      9017,
+      9018,
+      9019
+    ],
+    "test_seeds": [
+      8000,
+      8001,
+      8002,
+      8003,
+      8004,
+      8005,
+      8006,
+      8007,
+      8008,
+      8009,
+      8010,
+      8011,
+      8012,
+      8013,
+      8014,
+      8015,
+      8016,
+      8017,
+      8018,
+      8019,
+      8020,
+      8021,
+      8022,
+      8023,
+      8024,
+      8025,
+      8026,
+      8027,
+      8028,
+      8029,
+      8030,
+      8031,
+      8032,
+      8033,
+      8034,
+      8035,
+      8036,
+      8037,
+      8038,
+      8039
+    ],
+    "dev_tune_seeds": [
+      9000,
+      9001,
+      9002,
+      9003,
+      9004,
+      9005,
+      9006,
+      9007,
+      9008,
+      9009
+    ],
+    "dev_holdout_seeds": [
+      9010,
+      9011,
+      9012,
+      9013,
+      9014,
+      9015,
+      9016,
+      9017,
+      9018,
+      9019
+    ],
+    "scenes": [
+      "weak",
+      "moderate",
+      "strong"
+    ],
+    "f_G_Hz": [
+      100.0,
+      1000.0
+    ],
+    "dev_snr_dB": [
+      10.0,
+      12.0,
+      14.0,
+      16.0,
+      18.0,
+      20.0,
+      22.0
+    ],
+    "n_cw_per_pol": 16,
+    "eval_block": 100,
+    "o2_block": 16,
+    "mde_fer": 0.05,
+    "primary_metric_choice": "B_fixed_snr_paired_fer",
+    "fer_target": 0.1,
+    "mde_snr_dB": 0.15,
+    "fixed_snr_dB_primaryB": [
+      12.0
+    ],
+    "chosen_cell": [
+      "weak",
+      1000.0,
+      12.0
+    ],
+    "conventional_comparator": "B2",
+    "n_test_planned": 40,
+    "b1_temperature_grid": [
+      0.5,
+      0.7,
+      0.8,
+      0.9,
+      1.0,
+      1.1,
+      1.25,
+      1.5,
+      2.0
+    ],
+    "b2_alpha_grid": [
+      0.625,
+      0.75,
+      0.875
+    ],
+    "b2_offset_grid": [
+      0.0,
+      0.1,
+      0.2
+    ],
+    "b2_llr_clip_grid": [
+      20.0,
+      30.0
+    ],
+    "sop_rate": 1e-05,
+    "n_prefix_symbols": 32
+  },
+  "best_b1": {
+    "temperature": 0.5,
+    "dev_tune_fer": 0.209375
+  },
+  "best_b2": {
+    "alpha_offset_clip": [
+      0.875,
+      0.1,
+      20.0
+    ],
+    "dev_tune_fer": 0.203125
+  },
+  "chosen_cell": [
+    "weak",
+    1000.0,
+    12.0
+  ],
+  "test_results": {
+    "n_test_traj": 40,
+    "mean_fer": {
+      "B0": 0.1546875,
+      "B1": 0.1546875,
+      "B2": 0.1484375,
+      "O0": 0.1546875,
+      "O1": 0.153125,
+      "O2": 0.1390625
+    },
+    "delta_B0_minus_B1": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "delta_B0_minus_B2": [
+      0.00625,
+      0.00078125,
+      0.0140625
+    ],
+    "delta_B2_minus_O1": [
+      -0.0046875,
+      -0.01015625,
+      -0.00078125
+    ],
+    "delta_B2_minus_O2": [
+      0.009375,
+      0.0015625,
+      0.01953125
+    ],
+    "delta_B0_minus_O2": [
+      0.015625,
+      0.003125,
+      0.03203125
+    ],
+    "mechanism_decomposition": {
+      "n_test_traj": 40,
+      "n_deep_fade_b0_allcw_fail": 3,
+      "n_deep_fade_o2_allcw_fail": 2,
+      "n_b0_full_success": 31,
+      "n_o2_partial_rescue_vs_b0": 6
+    }
+  },
+  "awgn_sanity": [
+    {
+      "esn0_dB": 8.0,
+      "fer_X": 0.4375,
+      "n_cw_err_X": 7,
+      "n_cw_X": 16,
+      "post_ber_X": 0.014404296875,
+      "fer_Y": 0.6875,
+      "n_cw_err_Y": 11,
+      "n_cw_Y": 16,
+      "post_ber_Y": 0.02911376953125,
+      "fer_traj": 0.5625
+    },
+    {
+      "esn0_dB": 10.0,
+      "fer_X": 0.0,
+      "n_cw_err_X": 0,
+      "n_cw_X": 16,
+      "post_ber_X": 0.0,
+      "fer_Y": 0.0,
+      "n_cw_err_Y": 0,
+      "n_cw_Y": 16,
+      "post_ber_Y": 0.0,
+      "fer_traj": 0.0
+    },
+    {
+      "esn0_dB": 12.0,
+      "fer_X": 0.0,
+      "n_cw_err_X": 0,
+      "n_cw_X": 16,
+      "post_ber_X": 0.0,
+      "fer_Y": 0.0,
+      "n_cw_err_Y": 0,
+      "n_cw_Y": 16,
+      "post_ber_Y": 0.0,
+      "fer_traj": 0.0
+    }
+  ],
+  "metamorphic_gate_pass": true,
+  "exec_invalid": false,
+  "terminal_verdict": "PROBLEM_ABSENT_AFTER_RECEIVER_VISIBLE_STRONG_LLR_BASELINE",
+  "elapsed_sec": 400.9
+}

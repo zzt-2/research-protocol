@@ -1,0 +1,63 @@
+{
+  "seed": 7000,
+  "scene": "weak",
+  "f_g": 1000.0,
+  "gamma_ref_dB": 12.0,
+  "gamma_flip_hi_dB": 18.0,
+  "gamma_flip_lo_dB": 8.0,
+  "note": "realization arrays (rX,rY,sX,sY,h,theta) held fixed; only real.gamma_bar attribute flipped to demonstrate equalize() leak",
+  "per_pol": {
+    "X": {
+      "sigma2_prefix_ref": 0.06434424778223657,
+      "gamma_hi_dB": 18.0,
+      "max_abs_deq_hi": 0.07714518887296064,
+      "max_abs_dprefix_eq_hi": 0.05712171419463364,
+      "max_abs_dprefix_resid_hi": 0.05712171419463364,
+      "max_abs_dLLR_hi": 1.8813705444335938,
+      "mean_abs_dLLR_hi": 0.40335574746131897,
+      "sigma2_prefix_hi": 0.06263378069777119,
+      "gamma_lo_dB": 8.0,
+      "max_abs_deq_lo": 0.14536133487527753,
+      "max_abs_dprefix_eq_lo": 0.10807719258624869,
+      "max_abs_dprefix_resid_lo": 0.10807719258624869,
+      "max_abs_dLLR_lo": 5.168174743652344,
+      "mean_abs_dLLR_lo": 1.0665034055709839,
+      "sigma2_prefix_lo": 0.07446015244857809
+    },
+    "Y": {
+      "sigma2_prefix_ref": 0.049541648829855275,
+      "gamma_hi_dB": 18.0,
+      "max_abs_deq_hi": 0.0727541157273706,
+      "max_abs_dprefix_eq_hi": 0.04917397408302561,
+      "max_abs_dprefix_resid_hi": 0.04917397408302561,
+      "max_abs_dLLR_hi": 2.0067386627197266,
+      "mean_abs_dLLR_hi": 0.4778805077075958,
+      "sigma2_prefix_hi": 0.04856335416324087,
+      "gamma_lo_dB": 8.0,
+      "max_abs_deq_lo": 0.13629593536100826,
+      "max_abs_dprefix_eq_lo": 0.09311484848007445,
+      "max_abs_dprefix_resid_lo": 0.09311484848007445,
+      "max_abs_dLLR_lo": 7.024816513061523,
+      "mean_abs_dLLR_lo": 1.4682444334030151,
+      "sigma2_prefix_lo": 0.058351708873946015
+    }
+  },
+  "h7_leak_confirmed": true,
+  "leak_channels": [
+    "X.deq.hi=7.71e-02",
+    "X.dprefix.hi=5.71e-02",
+    "X.dLLR.hi=1.88e+00",
+    "X.deq.lo=1.45e-01",
+    "X.dprefix.lo=1.08e-01",
+    "X.dLLR.lo=5.17e+00",
+    "Y.deq.hi=7.28e-02",
+    "Y.dprefix.hi=4.92e-02",
+    "Y.dLLR.hi=2.01e+00",
+    "Y.deq.lo=1.36e-01",
+    "Y.dprefix.lo=9.31e-02",
+    "Y.dLLR.lo=7.02e+00"
+  ],
+  "tol_eq": 1e-12,
+  "tol_llr": 1e-09,
+  "verdict": "H7 CONFIRMED: equalize()/prefix-residual/LLR change when hidden gamma_bar is flipped (receiver consumes true SNR)"
+}

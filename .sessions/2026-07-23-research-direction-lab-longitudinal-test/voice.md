@@ -245,3 +245,14 @@
 - "十一、独立 verifier V074 —— verifier 必须与 executor 分离，并逐项核查：1.五/六个 prefill 根因真实复现…V074 不得只复述合同或测试 PASS，必须沿 caller→callee 检查科学信息边界。"
 - "十二、治理与收尾 —— 若修复后科学包有效：accepted_valid_packages：7→8；G family 根据新 verdict 决定关闭或保留…若仍 EXECUTION_INVALID：保持7/10…不修改 protected history，不 push，最后统一 commit 一次。"
   → D048 / V074
+
+
+## 2026-08-01（P08-R2 执行指令）
+
+- "执行 P08-R2 最终科学修复。P09继续暂停。本轮不是新包，不另计编号。"
+- "worktree：D:\code\study\research-protocol\.worktrees\rdl-method-production-v2 / expected HEAD：5a7823d / branch：codex/rdl-method-production-v2"
+- "必须在同一对话完成：旧缺陷复现→campaign回退→receiver完整去除true-SNR→metamorphic信息门→正确功效设计→fresh crossing实验→条件式方法工厂→独立verifier→一次统一commit。不push。"
+- "一、状态回退——新增D049/V075血缘：D048/V074保留，标为GG/oracle/identity层修复有效，但完整receiver信息边界与统计功效漏审；P08-R科学verdict撤回；accepted_valid_packages：8→7；G family重新打开；current=P08-R2；P09暂停；codec、5G-NR LDPC、真实bit interleaver、GG真相源、O0/O1/O2代码作为PARTIAL资产保留。旧P08/P08-R artifacts不覆盖，增加INVALIDATED标记。"
+- "二、修复前确定性复现——先保存prefail evidence：H7 true-SNR上游泄漏（固定完全相同的rX/rY/calibration prefix/receiver state/codeword/noise realization，只修改隐藏truth gamma_bar，验证旧P08-R：equalized output发生变化/prefix residual发生变化/B0B1B2 LLR发生变化；记录max absolute difference和调用链 p08r_run.build_realization→real.equalize→blind h estimate→MMSE→demapper）；H8 AST verifier盲区（证明旧verifier只扫描B0B1B2函数体内的real.gamma_bar字面量，没有递归进入real.equalize()→self.gamma_bar；记录为何V074漏审）；H9统计合同（复算并证明 MDE_fer=0.2347来自固定n后的非配对Bernoulli近似；实验真实单位是paired trajectory；先固定n再把detectable difference命名为MDE不合法；dev FER=0.1 crossing真实存在；weak/fG1000、weak/fG100、moderate/fG100的O2 required-SNR headroom约在0.15dB附近；[0,+0.0141]不能称CI_lo>0；test逐trajectory选择min(B1,B2)不合法）。修复前证据落盘后才能改代码。"
+- "三、receiver信息边界根修——禁止任何deployable路径读取：gamma_bar/true SNR；true h/theta；payload TX symbols/bits；evaluation residual；future samples。重新设计receiver接口：received prefix + known prefix symbols → receiver-visible pre-equalization noise/effective-residual estimate → blind amplitude/channel estimate → MMSE/equalizer → equalized prefix → demapper residual scale → payload LLR。"
+  → D049 / V075
