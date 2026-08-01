@@ -1,3 +1,10 @@
+# NOTE 2026-08-01 (P08 campaign): this file's authorization/effective_conclusions/
+# next_action reflect the D022 SCIENCE_FREEZE Scout/formal-G1 line (dormant).
+# The active P01-P08 sub-problem campaign (D039 authorization) is tracked in
+# .sessions/2026-07-23-research-direction-lab-longitudinal-test/topic-index.md
+# (control block) + mission-log.md (CP030-CP037). P07-R=D046/V072 closed F family
+# (PROBLEM_ABSENT_AFTER_GAIN_CALIBRATION). Read topic-index control block as the
+# current campaign state; the G1/Scout blocks below are dormant-history.
 # state/current.yaml — sole machine current view
 # Rebuilt 2026-07-22 from S012 / D020 / V009; AMENDED 2026-07-22 S013 / D021 / V010 / V011;
 # FROZEN 2026-07-22 S014 / D022 / V012 / H015 (SCIENCE_FREEZE + campaign-level reconciliation).

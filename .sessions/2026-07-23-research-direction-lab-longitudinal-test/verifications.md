@@ -3822,3 +3822,28 @@ P06 产出**有效负面 + receiver-observability 边界资产**（跨帧信息�
 - Phase B/C 不运行（Phase A 门未过 = 问题不存在，同 P04/P06 gate 顺序逻辑）。
 
 **结论**：P07-R verdict `PROBLEM_ABSENT_AFTER_GAIN_CALIBRATION` 唯一正确、修复后链沿调用链物理正确、fresh seed 隔离干净、frozen 文件未改。claim ceiling 维持 `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`：不构成 active carrier、不冒充 formal method、不写论文 claim。F 族（AGC/ADC 动态范围）P07-R 修复后问题不存在于 deployable 位宽 → F 族可关闭（静态低增益即解决，无方法空间）。旧 P07 artifacts 保留 INVALIDATED 标记不删；P07-R artifacts 在 `results/p07r_agc_adc_repair/`。
+
+## V073: P08 coded-chain 扩展包独立 verifier（15/15 ACCEPT）
+
+> 2026-08-01 | 关联: D047 / P08 / CP038 | 结论: **PASS (15/15) / ACCEPT**
+
+独立 verifier（与 executor 上下文分离）核查 P08 coded-chain 扩展包（5G NR LDPC + 16QAM BICM
+over dual-pol SOP）。15 项全过，每项均独立读源码/重跑/recompute：
+
+- **V1 source/hash real**（PASS）：bg2_csv_sha256=4f4db6f7... 是真 hash（recompute 自 5G_bg2.csv 吻合），encoder_sha256 真，sionna 2.0.1，bg=bg2 Z=104，非 UNAVAILABLE。
+- **V2 H·c=0 + noiseless roundtrip**（PASS）：fresh encode 随机 info → |Hc|=0，noiseless decode BER=0。
+- **V3 LLR sign/bit order**（PASS）：qam16_mod→_qam16_demod_to_bits round-trip 精确；maxlog LLR sign 匹配 bits 全 16 labels。
+- **V4 AWGN waterfall**（PASS）：FER=[1,1,1,0.54,0,0,0,0,0] 单调，3 区（fail/waterfall/success）覆盖。
+- **V5 12 checks**（PASS）：JSON 13 项（12 + 9b 子检查）全 PASS，all_pass=true。
+- **V6 decoder no TX truth**（PASS）：CodecAdapter.decode 只收 llr；_decode_pol* 用 cw_bits/info 仅 post-decode BER/FER scoring。
+- **V7 σ² call chain**（PASS）：B0/B1/B2 用 receiver-visible 1/(2γ_bar)；oracle 读 sX/sY 仅经 _oracle_sigma2 作 headroom，非 Go comparator。
+- **V8 scout oracle not migrated**（PASS）：p08_*.py 零引用 scout/oracle_soft_demap/cb1_evaluator；_oracle_sigma2 自含 numpy。
+- **V9 shared paired realization**（PASS）：Phase A 预建 ONE realizations list，4 方法 loop 同 list，paired by construction。
+- **V10 frozen files unchanged**（PASS）：git diff --stat HEAD common/params.py/sc_nda_ml_sim.py 空；p07/p07r 未改。
+- **V11 seed isolation**（PASS）：dev 1000-1009/test 1100-1114 互斥，与 P01-P07 历史（0-99/200-239/300-334/500-540）零重叠，71-80 缺席。
+- **V12 raw→aggregate**（PASS）：从 1440 raw rows 重算 pooled FER per method/SNR，max relErr vs test_summary=0.0（精确）。
+- **V13 verdict uniqueness**（PASS）：re-trace 分支 exec_invalid=F/conv_helps=F(CI_lo=0)/oracle_headroom=F(CI_lo=0) → 唯一 `PROBLEM_ABSENT_AFTER_STRONG_LLR_BASELINE`，非 METHOD_SIGNAL。
+- **V14 governance lineage**（PASS）：D047 active，control_epoch=74，families_started 含 G，mission_checkpoint=CP038，voice "行"→D047，task-control validator PASS。
+- **V15 gate vs verdict separate**（PASS）：correctness gate JSON 与 phaseA verdict JSON 独立文件，verdict 不从 gate 派生。
+
+**结论**：P08 verdict `PROBLEM_ABSENT_AFTER_STRONG_LLR_BASELINE` 唯一正确、coded-chain 身份真实（5G NR LDPC）、算法正确性门全过、Phase A 数据可独立复算（raw→aggregate relErr=0）、信息边界干净、frozen 文件未改。claim ceiling 维持 `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`：不构成 active carrier、不冒充 formal method、不写论文 claim。G 族（coded-LLR-calibration）首包 verdict PROBLEM_ABSENT → coded loss 主导机制是**不可恢复突发深衰落**非 LLR 置信度失配，单一 AWGN σ² 与最强传统校准近乎相同。counts_as_valid_package=True，campaign accepted_valid 7→**8**。Phase B/C 不运行（gate 顺序）。

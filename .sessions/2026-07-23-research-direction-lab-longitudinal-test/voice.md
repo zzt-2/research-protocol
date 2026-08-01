@@ -222,3 +222,12 @@
 - "十、收尾…若修复后形成有效 P07：campaign 恢复 7/10，再准备 P08 但不运行。若 EXECUTION_INVALID：campaign 保持 6/10，不得用治理完成冒充科学包。不修改 Skill/controller/formal owner/protected history。写 sim-preflight usage log。单次统一 commit，不 push。"
   → D046 / V072-PART1+2
   [绑定结论：本轮端到端完成 P07-R 科学完整性修复；verifier V072 PART2 10/10 ACCEPT；verdict PROBLEM_ABSENT_AFTER_GAIN_CALIBRATION（旧 P07 +0.91dB 是 H1 SCALE artifact，corrected 链 W8/W10 +0.03~+0.07dB≪MDE）；campaign 恢复 7/10，F 族关闭]
+
+## 2026-08-01（P08 coded-chain 场景扩展授权，用户中转）
+
+- "行" → D047
+  （附 P08 coded-chain 执行指令长 brief：worktree=rdl-method-production-v2/expected HEAD=0317e4a/branch=codex/rdl-method-production-v2，不 push，单次统一 commit；
+  scope-change：原范围 pre-FEC/无真实 codec 的 diagnostic method factory → 新范围允许建立 source-auditable 最小真实 coded baseline 并运行 P08-P10 coded-layer package；禁止阈值模型冒充译码/随机玩具 LDPC 冒充标准/TX-truth LLR/未验证 codec 写论文；
+  Phase 0A 标准码来源门（优先 DVB-S2 r2/3 16QAM/BICM；只 LDPC 无 BCH 须称 component；检索须子 agent 用 tools/search 或 primary source 主对话禁灌网页；禁手写 parity/随机 H/pyldpc 冒充/凭包名/悄悄换码率帧长；无法闭合 terminal=CODED_BASELINE_SOURCE_UNAVAILABLE）→ Phase 0B 最小真实 coded-chain sandbox（coded_contract/codec_adapter/coded_realization_adapter/receiver_to_llr/coded_metrics，不破坏 frozen common，复用 GG/SOP/AWGN 物理模型，禁 TX truth 改善 receiver）→ 编解码算法正确性门 12 项 + AWGN waterfall 三区（失败 terminal=CODED_CHAIN_IDENTITY_UNAVAILABLE）→ Phase A 问题门（B0/B1/B2/oracle，dev/test 全隔离新 seeds，主指标 required-SNR@frozen FER，MDE≥0.15dB）→ Phase B 条件式方法工厂（仅 Phase A 问题存活，≥3 机制不同候选 C1/C2/C3+可选C4）→ Phase C 公平比较归因 → 独立 verifier 15 项 → 治理收尾单次 commit；
+  最终只汇报五项：1.采用的标准码/来源hash/真实 coded-chain 身份与 AWGN waterfall 2.B0/B1/B2/oracle/最佳候选 FER/post-BER/required-SNR/iterations/CI 3.P08 terminal verdict/问题是否存在/是否 METHOD_SIGNAL/active carrier 4.campaign 8/10 状态与 P09 条件式入口 5.scope-change/D/V/worker-log/artifact/verifier/changed files/commit SHA）
+  [绑定结论：本轮端到端完成 P08 coded-chain 扩展包]

@@ -2874,3 +2874,52 @@ V071 全部 10 项查的是 **consistency**（float-bypass identity 在 g=1、ra
 ### 来源
 
 用户 P07-R 执行指令 + `p07r_prefail_evidence.json`（三根因最小失败测试）+ 源码逐行核 + thesis-lessons TL-30~33 + sim-preflight rules/mve-validation.md
+
+## D047: P08 coded-chain 场景扩展授权（scope-change）—— 建立 source-auditable 最小真实 coded baseline，运行 G_CODED_LLR_CALIBRATION_UNDER_GG_RESIDUAL
+
+> status: active
+> date: 2026-08-01
+> 取代：无（新增 scope-change 授权；不取代 D046，D046 P07-R 终态维持）
+> 被取代：无
+> 依据: 用户原话"行"（voice.md 2026-08-01，授权 coded-chain 场景扩展）+ 源码事实核查（subagent 确认：仓库无 parity-check matrix/syndrome/BP/min-sum/encoder/decoder；`run_sdfec_eval.py` 只读旧 BER 与门限比、无 encode/decode；`soft_demap.py` 有 16QAM max-log LLR+identity；`gmi.py` 仅 evaluator 非 decoder；C12/F4 oracle 路径用 TX-truth 非 deployable；dual-pol generator 内部生成随机 uncoded bits 无 codeword 注入接口）+ D045 §撤回旧 P07-entry H（coded chain blocked，P05-D 撤回无真实 codec）+ FR-23（问题驱动非空白驱动）+ TL-13/TL-22/TL-23
+> 触发原话: 用户"行"（voice.md 2026-08-01，授权 P08 coded-chain 执行指令的 scope-change）
+
+### 决策
+
+授权 P08 coded-chain 场景扩展。范围变更：
+
+- **原范围**：pre-FEC / 无真实 codec 的 diagnostic method factory（P01-P07 全在此范围，coded chain 一直 blocked）。
+- **新范围**：允许建立一个来源可审计（source-auditable）的最小真实 coded baseline（优先 DVB-S2 LDPC component rate 2/3 / 16QAM-BICM；若只实现 LDPC 而无 BCH/rate matching 必须称"DVB-S2 LDPC component"禁止称完整 DVB-S2 FEC），并运行 P08-P10 coded-layer package。
+- **明确不含 / 禁止**：阈值模型冒充译码；随机玩具 LDPC 冒充标准码；TX-truth LLR 进 deployable decide；未验证 codec 结果写入论文；凭记忆手写 DVB-S2 parity matrix；用临时随机 H；用 pyldpc 随机生成码后称标准码；仅凭包名认定实现正确；为方便悄悄换码率或帧长。
+
+P08 family = `G_CODED_LLR_CALIBRATION_UNDER_GG_RESIDUAL`（**新机制族 G，区别于已关闭 A/B/C/D/E/F**）。M=冻结 16QAM receiver 用标准 max-log LLR 配单一 receiver-visible 全局噪声尺度；C=GG/SOP/接收机残差使等化符号误差呈异方差/非高斯，有限码长 soft LDPC/min-sum 对 LLR 置信度敏感；A=单一 AWGN 尺度可能使 LLR 过/欠置信，增 FER、迭代数或所需 SNR。
+
+runtime 合法信息：equalized symbol / 已知 pilot / AGC-receiver metadata / calibration prefix / 严格过去的 decision residual / decoder convergence-iteration（只在其自然时序内）。禁止 runtime 信息：TX bits / true h-theta / 全 scored window 事后 residual / oracle affine / test-label fitting / future frame / CRC 翻标签路线。TX truth 仅用于 BER/FER/NLL/GMI scoring。
+
+baseline ladder（全方法同码/同 interleaver/同 decoder/同 iteration budget/同 LLR clipping/同 receiver/同 paired realization/同 net rate）：B0 uncalibrated receiver-visible max-log LLR；B1 dev-only global scalar temperature scaling（最强便宜传统 comparator，独立调谐）；B2 dev-only global LLR clipping + decoder normalization/offset tuning（防 decoder 常规调参包装成新方法）；Oracle TX-truth/per-symbol residual 仅作 scoring/headroom 上界，只 Kill 不 Go，不进 deployable decide。
+
+### 理由
+
+1. P05-D/P07-H 撤回 coded chain 的唯一障碍是"无真实 codec"，不是"coded 问题本身无科学价值"。用户授权建立 source-auditable 最小真实 coded baseline 即解锁该障碍（非空白驱动，是移除已知 blocker）。
+2. source-code 事实核查（subagent）确认仓库零 coded 基础设施，必须从外部来源引入标准码——这正是 Phase 0A 标准码来源门的职责。
+3. coded-LLR-calibration 是与 A-F 正交的新机制族（作用点是 LLR 置信度校准，非 selector/定点/OOD/在线适配/历史信息/AGC），满足 D039 §"至少 5 机制族"。
+4. claim ceiling 维持 `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`：METHOD_SIGNAL 只登记 pre-formal carrier，不直接宣称正式论文方法；后续需 promotion preflight + GW Step 1–3/3.5/4a。
+
+### 影响范围
+
+- `topic-index.md` control block：epoch 73→74，current_package=P08（执行中），families_started 追加 G，same_family_consecutive=0（新族），next_legal_action 更新；新增 allowed `CODED_CHAIN_BUILD`。
+- campaign 计数：P08 有效科学完成才 accepted_valid 7→8；CODED_BASELINE_SOURCE_UNAVAILABLE / CODED_CHAIN_IDENTITY_UNAVAILABLE / EXECUTION_INVALID 不计 P08。
+- P09 只准备不运行：若 P08 METHOD_SIGNAL → P09 做 promotion preflight/strong evidence；若 LLR 问题被传统方法解决 → P09 选 coded operating-boundary 或 receiver-ranking 但须重新过 problem gate；若 coded identity blocked → P09 不得启动。
+- protected owner/formal/Skill/thesis framework 不改、无 push。MDE=0.15 dB 维持。
+- D046 P07-R 终态（PROBLEM_ABSENT_AFTER_GAIN_CALIBRATION，F 族关闭，7/10）维持不变。
+
+### 排除的替代方案
+
+- **不退回 BER threshold 冒充 FEC**（D045 撤回 P07-H 已裁决 threshold eval 非 FEC）。
+- **不用随机 LDPC 冒充标准码**（用户指令明禁 + FR-20 关键参数溯源）。
+- **不跳过标准码来源门直接用任意 codec**（Phase 0A 是硬门控）。
+- **不把 P08 coded-chain 当论文正式方法**（METHOD_SIGNAL 只产 pre-formal carrier）。
+
+### 来源
+
+用户"行"（voice.md 2026-08-01）+ P08 coded-chain 执行指令 + 源码事实核查 subagent + D045/D046 + FR-23/TL-13/TL-22/TL-23

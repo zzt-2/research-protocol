@@ -1,3 +1,10 @@
+# NOTE 2026-08-01 (P08 campaign): this file still reflects the D022 SCIENCE_FREEZE
+# Scout/formal-G1 state (dormant Scout campaign + G1 bounded packaging asset).
+# The active P01-P08 sub-problem exploration campaign lives in
+# .sessions/2026-07-23-research-direction-lab-longitudinal-test/topic-index.md
+# (control block + mission-log.md CP030-CP037). P07-R=D046/V072 (F family closed,
+# PROBLEM_ABSENT_AFTER_GAIN_CALIBRATION, accepted_valid=7/10). Do NOT read the
+# G1/formal_active_carrier/next_action blocks below as the current P08 state.
 # portfolio/current.yaml — reconciled 2026-07-22 after S012/D020/V009; AMENDED 2026-07-22 S013/D021/V010/V011;
 # FROZEN 2026-07-22 S014/D022/V012/H015 (SCIENCE_FREEZE + campaign-level reconciliation).
 # Campaign-level verdict (D022): SCIENCE_SCOUT candidate rotation PAUSED (topic dormant).

@@ -1,7 +1,9 @@
-# P08 入口选择（NOT RUN — 本轮仅准备，不执行）
+# P08 入口选择（COMPLETED — coded-chain 场景扩展已端到端完成）
 
-> 2026-07-31 | campaign 7/10 已完成（P07），P08 入口准备 | 状态: ENTRY-PREP-NOT-RUN
-> 来源: D045/V071/CP036（P07 NO_DIAGNOSTIC_METHOD_SIGNAL，F 族首包未关闭）+ D039 campaign §4
+> 2026-07-31 创建（NOT-RUN 入口准备）→ **2026-08-01 完成（CP038/V073）** | campaign 8/10 | 状态: COMPLETED
+> 来源: D045/V071/CP036（旧 P07）→ D046/V072（P07-R 修正）→ D047（coded-chain scope-change 授权）→ CP038/V073（完成）
+
+**执行结果（2026-08-01）**：D047 授权 coded-chain 场景扩展。Phase 0A 选 5G NR LDPC（DVB-S2 不可闭合）+ 16QAM Gray BICM over dual-pol SOP。Phase 0B sandbox + 算法正确性门 12 项 ALL PASS + AWGN waterfall 三区。Phase A verdict **PROBLEM_ABSENT_AFTER_STRONG_LLR_BASELINE**（coded loss 主导是不可恢复突发深衰落，非 LLR 失配）。Phase B/C 不运行。verifier V073 15/15 ACCEPT。campaign accepted_valid 7→**8**/10，G 族关闭。详见 `worker-logs/step-036-p08-coded-chain.md` + `results/p08_coded_chain/`。
 
 ## 背景（campaign 状态）
 

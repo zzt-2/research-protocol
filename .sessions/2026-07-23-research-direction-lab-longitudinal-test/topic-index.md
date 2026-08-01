@@ -4,30 +4,19 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 73
+  control_epoch: 74
   role: LIVE_TEST
   mission: 在真实研究反馈中验证轻量长程运行协议能否稳定推进并积累可用方法材料
   active_lane: CAMPAIGN_EXPLORATION_DISPATCH
-  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D046
-  decision_gate: CP029/D038 段A 终止后，用户授权 10-有效包探索 campaign（D039）。在完成 10 个有效科学大包前不因 portfolio 0 READY 要求 thesis pivot。对已完成方法（DA-NDA 选择器等）的新失效条件/鲁棒性做子问题探索；每个 package 遵守 problem-bearing probe → conventional adapter → 条件式 method factory 三阶段门控；至少 5 机制族、同族≤2 连续、第 5 包内部校准不停线、第 10 包 campaign-level 裁决。
-  campaign:
-    exploration_budget_valid_packages: 10
-    accepted_valid_packages: 7   # D046/V072-PART2：P07-R 修复有效完成，PROBLEM_ABSENT_AFTER_GAIN_CALIBRATION（旧 P07 +0.91dB 是 H1 SCALE artifact；corrected 链 W8/W10 regret +0.03~+0.07dB ≪MDE），恢复 6→7
-    current_package: P08   # P07-R 已完成（F 族关闭，静态低增益即解决无方法空间）；P08 入口准备（不运行）
-    mechanism_families_min: 5
-    same_family_consecutive_max: 2
-    count_excludes: [setup, governance, task_preparation, interface_repair, pure_reproduction, entry_preflight_only, science_integrity_repair]
-    mid_calibration_at: P05   # P05 校准已完成（不停线，S005 §mid-calibration）：5 包全 honest negative 0 signal，但族覆盖健康（4 族 A/B/C/D），P05 首个换对象包
-    campaign_level_decision_at: P10
-    families_started: [A_CPR_SELECTOR_ROBUSTNESS, B_FIXED_POINT_RESOURCE_PERFORMANCE_CODESIGN, C_CONTINUOUS_GG_OOD_SELECTOR_ROBUSTNESS, D_ML_POLARIZATION_EQUALIZER_OOD_SAFE_ONLINE_ADAPTATION, E_CAUSAL_CROSS_FRAME_HISTORY_INFORMATION, F_AGC_ADC_DYNAMIC_RANGE_UNDER_GG]   # A 关闭(P01+P02)；B/C/D 连续=1；E 关闭(P06)；F 关闭(P07-R 修复后问题不存在于 deployable 位宽)；"≥5 族"已达成（6 族）
-    same_family_consecutive: 0   # F 族 P07-R 后关闭（PROBLEM_ABSENT），P08 必须换不同机制族
-    rolling_queue: [P01 DONE CPR-selector-SNR-mismatch-robustness-NO_SIGNAL, P02 DONE cand_rank-operating-regime-PROBLEM_RESOLVED_BY_REGION_RETUNING, P03 DONE fixed-point-codesign-PROBLEM_RESOLVED_BY_UNIFORM_PRECISION, P04 DONE continuous-gg-ood-PROBLEM_ABSENT_ON_CONTINUOUS_GG, P05 DONE ml-equalizer-ood-online-adaptation-PROBLEM_RESOLVED_BY_CONVENTIONAL_ONLINE_EQUALIZER, P06 DONE causal-cross-frame-history-NO_CAUSAL_HISTORY_INCREMENT-E-family-closed, P07 INVALIDATED-then-P07R-DONE-PROBLEM_ABSENT_AFTER_GAIN_CALIBRATION-F-family-closed, P08 TBD-different-mechanism-family]
+  authority_pointer: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D047
+  decision_gate: CP029/D038 段A 终止后，用户授权 10-有效包探索 campaign（D039）。在完成 10 个有效科学大包前不因 portfolio 0 READY 要求 thesis pivot。对已完成方法（DA-NDA 选择器等）的新失效条件/鲁棒性做子问题探索；每个 package 遵守 problem-bearing probe → conventional adapter → 条件式 method factory 三阶段门控；至少 5 机制族、同族≤2 连续、第 5 包内部校准不停线、第 10 包 campaign-level 裁决。**D047（2026-08-01）授权 P08 coded-chain 场景扩展（已完成 CP038/V073：PROBLEM_ABSENT_AFTER_STRONG_LLR_BASELINE）**。
   allowed_actions:
     - RECOVER
     - PORTFOLIO_MAP
     - PROBLEM_BEARING_PROBE
     - PREFORMAL_METHOD_FACTORY   # D039 解禁，为本 campaign 服务（problem-first 三阶段门控内）
     - CONDITIONAL_INFRASTRUCTURE  # 有界、独立验证、按需
+    - CODED_CHAIN_BUILD   # D047 解禁：仅本 P08-P10 coded-layer package，source-auditable 最小真实 coded baseline
   forbidden_actions:
     - CLOSED_AXIS_REOPEN
     - FREQUENCY_DOMAIN_SUBBAND_FAMILY
@@ -51,11 +40,29 @@ rdl_control:
     - A_CPR_SELECTOR_ROBUSTNESS_FAMILY_REOPEN   # D040：A 族达同族上限 2，P01 SNR-mismatch + P02 cand_rank 工作区子轴全关闭（TL-30 禁换名重开 cand_rank/weakretune/region-retune）
     - E_CAUSAL_CROSS_FRAME_HISTORY_FAMILY_REOPEN   # D044：E 族首包 P06 NO_CAUSAL_HISTORY_INCREMENT 后关闭，绑定裁决禁第二个 evaluator-repair 包（TL-30 禁换名重开 cross-frame history / F3-A-repair / temporal-prediction）
     - F_AGC_ADC_DYNAMIC_RANGE_FAMILY_REOPEN   # D046/V072-PART2：P07-R 修复后 PROBLEM_ABSENT_AFTER_GAIN_CALIBRATION（旧 +0.91dB 是 H1 SCALE artifact，corrected 链 W8/W10 regret +0.03~+0.07dB≪MDE；静态低增益即解决，无方法空间），F 族关闭
+    - G_CODED_LLR_CALIBRATION_FAMILY_REOPEN   # CP038/V073：P08 PROBLEM_ABSENT_AFTER_STRONG_LLR_BASELINE（5G NR LDPC + 16QAM BICM + dual-pol GG/SOP；coded loss 主导是不可恢复突发深衰落非 LLR 失配；单一 AWGN σ²≈最强传统校准，oracle 仅 19dB-moderate 局部 headroom），G 族关闭
   mission_log_ref: .sessions/2026-07-23-research-direction-lab-longitudinal-test/mission-log.md
-  mission_checkpoint: CP037   # P07-R 科学完整性修复完成：三根因复现→修复→fresh-seed 重跑→V072 PART2 10/10 ACCEPT→verdict PROBLEM_ABSENT_AFTER_GAIN_CALIBRATION（旧 P07 +0.91dB 是 H1 SCALE artifact；corrected 链 W8/W10 regret +0.03~+0.07dB ≪MDE），campaign 恢复 7/10，F 族关闭
-  next_legal_action: Package 08（必须换不同机制族——F 族已关闭；候选 G/... 新族 或 B/C/D 第 2 包连续≤2；禁重开已关闭 A/E/F 族及所有 forbidden axis）。本轮仅准备 P08 入口（不运行）。
+  mission_checkpoint: CP038   # P08 coded-chain 扩展包有效完成（D047 授权）：Phase 0A 选 5G NR LDPC（DVB-S2 不可闭合）→ Phase 0B coded-chain sandbox → 算法正确性门 12 项 ALL PASS + AWGN waterfall 三区 → Phase A 问题门 verdict PROBLEM_ABSENT_AFTER_STRONG_LLR_BASELINE（B1/B2≈B0；oracle 仅 19dB-moderate 局部 headroom，突发深衰落主导）→ Phase B/C 不运行（gate 顺序）→ 独立 verifier V073 15/15 ACCEPT → campaign 7→8。
+  next_legal_action: Package 09（必须换不同机制族——G 已关闭；候选 coded operating-boundary / receiver-ranking，但须重新过 problem gate；禁重开已关闭 A/E/F/G 族及所有 forbidden axis）。本轮仅准备 P09 入口（不运行）。
 ```
 <!-- RDL-CONTROL:END -->
+
+<!-- RDL-CAMPAIGN-STATE:START — campaign counters (not part of strict control schema) -->
+```yaml
+rdl_campaign:
+  exploration_budget_valid_packages: 10
+  accepted_valid_packages: 8   # CP038/V073：P08 coded-chain 扩展包有效完成，PROBLEM_ABSENT_AFTER_STRONG_LLR_BASELINE（5G NR LDPC + 16QAM BICM + dual-pol GG/SOP；coded loss 主导是不可恢复突发深衰落非 LLR 失配；单一 AWGN σ²≈最强传统校准），7→8
+  current_package: P09   # P08 已完成（G 族 coded-LLR-calibration 关闭，PROBLEM_ABSENT）；P09 入口准备（不运行）
+  mechanism_families_min: 5
+  same_family_consecutive_max: 2
+  count_excludes: [setup, governance, task_preparation, interface_repair, pure_reproduction, entry_preflight_only, science_integrity_repair]
+  mid_calibration_at: P05   # P05 校准已完成（不停线，S005 §mid-calibration）：5 包全 honest negative 0 signal，但族覆盖健康（4 族 A/B/C/D），P05 首个换对象包
+  campaign_level_decision_at: P10
+  families_started: [A_CPR_SELECTOR_ROBUSTNESS, B_FIXED_POINT_RESOURCE_PERFORMANCE_CODESIGN, C_CONTINUOUS_GG_OOD_SELECTOR_ROBUSTNESS, D_ML_POLARIZATION_EQUALIZER_OOD_SAFE_ONLINE_ADAPTATION, E_CAUSAL_CROSS_FRAME_HISTORY_INFORMATION, F_AGC_ADC_DYNAMIC_RANGE_UNDER_GG, G_CODED_LLR_CALIBRATION_UNDER_GG_RESIDUAL]   # A 关闭(P01+P02)；B/C/D 连续=1；E 关闭(P06)；F 关闭(P07-R)；G 关闭(P08 PROBLEM_ABSENT)；"≥5 族"已达成（7 族）
+  same_family_consecutive: 0   # G 族 P08 后关闭（PROBLEM_ABSENT），P09 必须换不同机制族
+    rolling_queue: [P01 DONE CPR-selector-SNR-mismatch-robustness-NO_SIGNAL, P02 DONE cand_rank-operating-regime-PROBLEM_RESOLVED_BY_REGION_RETUNING, P03 DONE fixed-point-codesign-PROBLEM_RESOLVED_BY_UNIFORM_PRECISION, P04 DONE continuous-gg-ood-PROBLEM_ABSENT_ON_CONTINUOUS_GG, P05 DONE ml-equalizer-ood-online-adaptation-PROBLEM_RESOLVED_BY_CONVENTIONAL_ONLINE_EQUALIZER, P06 DONE causal-cross-frame-history-NO_CAUSAL_HISTORY_INCREMENT-E-family-closed, P07 INVALIDATED-then-P07R-DONE-PROBLEM_ABSENT_AFTER_GAIN_CALIBRATION-F-family-closed, P08 IN-PROGRESS coded-LLR-calibration-under-GG-residual-G-family]
+```
+<!-- RDL-CAMPAIGN-STATE:END -->
 
 > 状态: active（CP037/P07-R→V072-PART2：P07 科学完整性修复端到端完成——三根因（H1 SCALE：ADC 返回 q=Q(gz) 但 receiver 用 q 不 /g；H2 CONTROL：causal-RMS g_next=target/rms(q) 漏 g_current；H3 LIFECYCLE：每 window 独立 seed 独立 gg_block ACF≈0）最小失败测试复现→新建 p07r_* 修正链（gain-aware ADC q/g + corrected incremental AGC + stateful AR(1) trajectory ρ=exp(-Δt/τ_c)）→fresh-seed（dev 300-309）重跑→独立 verifier V072 PART2 10/10 ACCEPT→verdict `PROBLEM_ABSENT_AFTER_GAIN_CALIBRATION`（旧 P07 +0.91dB regret 完全是 H1 SCALE artifact；corrected 链 deployable 位宽 W8/W10 dev-best g=0.5 regret +0.03~+0.07dB≪MDE=0.15 全 rho；四路分解 scale_only=0/quant_only=0/clip_only 主导但静态低增益即解决）；accepted_valid_packages 恢复 7/10，F 族关闭（静态低增益即解决无方法空间），active_lane CAMPAIGN_EXPLORATION_DISPATCH，epoch 73；旧 P07 artifacts 标 INVALIDATED 保留不删；仍 0 active carrier；binding decision D046 取代 D045 科学有效性部分）
 > 创建: 2026-07-23 | 最后更新: 2026-07-31
@@ -105,6 +112,12 @@ rdl_control:
 
 ### 范围变更记录
 
+- **2026-08-01，live D047（scope-change）**：用户授权 P08 coded-chain 场景扩展（voice "行"）。
+  - 原因：P05-D/P07-H 撤回 coded chain 的唯一障碍是"无真实 codec"（非"coded 问题无科学价值"）；用户授权建立 source-auditable 最小真实 coded baseline 即移除该 blocker。source-code 事实核查（subagent）确认仓库零 coded 基础设施。
+  - 新范围：允许建立来源可审计的最小真实 coded baseline（优先 DVB-S2 LDPC component r2/3 16QAM-BICM；只 LDPC 无 BCH 须称 component），并运行 P08-P10 coded-layer package。新增 family G_CODED_LLR_CALIBRATION_UNDER_GG_RESIDUAL。
+  - 明确不含：阈值模型冒充译码 / 随机玩具 LDPC 冒充标准码 / TX-truth LLR 进 deployable decide / 未验证 codec 结果写论文 / 凭记忆手写 DVB-S2 parity / 用临时随机 H / pyldpc 随机码冒充标准 / 凭包名认定 / 悄悄换码率帧长。
+  - **执行结果（CP038/V073，2026-08-01 完成）**：DVB-S2 不可闭合（sionna v2.0 已删 DVB-S2 / ldpc 是 QEC / commpy 仅 demo protograph），选 5G NR LDPC（sionna 2.0.1，3GPP TS 38.212 BG2）+ 16QAM Gray BICM over dual-pol SOP。Phase 0B sandbox + 算法正确性门 12 项 ALL PASS + AWGN waterfall 三区。Phase A verdict `PROBLEM_ABSENT_AFTER_STRONG_LLR_BASELINE`（coded loss 主导是不可恢复突发深衰落，非 LLR 失配；单一 AWGN σ²≈最强传统校准）。Phase B/C 不运行（gate 顺序）。独立 verifier V073 15/15 ACCEPT。
+  - 影响：active_lane 维持 CAMPAIGN_EXPLORATION_DISPATCH，authority → D047，epoch 73→74；families_started +G（关闭，PROBLEM_ABSENT），same_family_consecutive=0；新增 allowed CODED_CHAIN_BUILD + forbidden G_CODED_LLR_CALIBRATION_FAMILY_REOPEN；campaign accepted_valid 7→**8**。claim ceiling 维持 LOCAL_SLICE / NONBINDING_DIAGNOSTIC。仍 0 active carrier、无 protected owner/formal/Skill/thesis framework 改动、无 push。
 - 2026-07-23，system D017：建立只受 foreground control 授权的 live-test mission。
 - 2026-07-23 至 2026-07-28，formal D062–D066、live D001–D025：Pilot-Jones、
   B10/B12、B1、A4、C15、B9、C16/Q14 等依次运行、拒收、局部 Kill 或返回池；
@@ -281,7 +294,8 @@ rdl_control:
 | D042 / P04→V068 | P04 连续 GG OOD 选择器鲁棒性（C 族首包）：绑定裁决撤回无效 16APSK 环比/湍流标签入口（四条 FAIL：γ 是调制配置非信道随机量、selector 不读环比/标签、matched demod 常规解、无作用面），新 P04 = C_CONTINUOUS_GG_OOD_SELECTOR_ROBUSTNESS。合法问题"AWGN 拟合 CV 边界在连续 GG 形状 OOD 下是否产生 selector-specific regret"。σ_R²→(α,β) 用 Al-Habash 闭式（`system_model.tex:16-21`，验证复现锚点 ≤2.70%）；显式 (α,β) 注入经 `generate_shared_realization_apsk(turb_params=...)`；锚点回归 gate 0 mismatch。pooled held-out interior regret **+0.1459 dB**（CI=[+0.0827,+0.2090]）<冻结 MDE=0.15；dev +0.1393 一致（差 0.007）。Phase A 门（pooled，读结果前冻结）未过 → Phase B/C 不运行 → `PROBLEM_ABSENT_ON_CONTINUOUS_GG`。诚实子区间 9/30 cell > MDE（σ_R² 0.3/0.9/1.35 × γ 5-11，最强 +0.678 dB）但非 OOD-specific（weak 训练锚点 regret +0.39/+0.78/+0.98/+0.56 更强；anchor pooled +0.2306 > interior +0.1393）→ selector 是通用 NDA-over-selector，连续 GG 形状不让边界退化。verifier V068 8/8 PASS（raw→aggregate 0.000e+00、锚点门独立重跑 0 mismatch、seed 隔离干净、信息边界 AST 干净、冻结文件未改、verdict 唯一正确、子区间诚实）。不产方法卡/不晋升。weak-side-low-SNR 子区间作 future-work seed 与已关闭 A 族重叠不重开 | D042 / V068 / CP033 / worker-log step-031（无独立 commit，待主控统一） |
 | D043 / P05→V069 | P05 ML polarization equalizer OOD safe online adaptation（D 族首包，mid-calibration 包）：binding decision 撤回 P05-D（FEC/旋转模糊：无真实 codec/threshold eval 非 FEC/TX-bit rotation privileged/pilot resolver D032 旧线）+ P05-E（window/complexity：重复 B1/NDA 比 VV 复杂不成立/selector 非主计算量/P03 已覆盖定点轴），新族 D 对象=ButterflyCNNEqualizer2x2（**≠ NDA-ML CPR selector**）。Phase 0 身份门 CLOSED（frozen-ML 确定性复现 state_hash byte-identical `03e91429dfed74c6`；corrected StandardCMA2x2 Godard-with-z byte-identical；provenance=当前 params.py strong=(4.2,1.4)；in-dist anchor 坐实 D022 修正后不变量 9：ML swap fixed≈0.5 / standard-CMA no-swap fixed≈0）。Phase A PRIMARY=fixed-label BER（swap-visible 不变量 10；PI-BER swap-blind 报 secondary）两 cell（anchor N5M/fg30 + provenance-OOD N5M/fg100，**不提高 SOP/f_G**）fixed-label ML−CMA=+0.4990/+0.4981 CI_low>0 wins=3/3 cma_div_frac=0 → 问题成立。Phase B standard-CMA-continuation recovered=True 两 cell（mean fixed-BER 0.00018/0.00117≪MDE=0.05）；DD-LMS（~0.45 slicer 错标签）/periodic-pilot（~0.499 D032 weak 化身坐实 KILL）均未恢复 → **`PROBLEM_RESOLVED_BY_CONVENTIONAL_ONLINE_EQUALIZER`**。Phase C 不运行。verifier V069 ACCEPT（10/10 + 方法身份非混淆全 PASS；raw→aggregate relErr=0；gate/预算公平/Phase-C 抑制/verdict 唯一性源码级验）。不产方法卡/不晋升。harvest：Ch3/Ch4 双口径警示（强化 H2/D023 适用边界 + 不变量 9/10/11）+ D032 KILL 独立佐证 + ML identity freeze 三阶段门控框架。**mid-calibration**：5 包全 honest negative 0 signal，族覆盖健康 4 族 A/B/C/D，P05 首个换对象包（非旧 selector 打转）。3 次包内确定性修复（metric-signature/dtype/recovered-logic）全披露 | D043 / V069 / CP034 / worker-log step-032（无独立 commit，待主控统一） |
 | D044 / P06→V070 | P06 E_CAUSAL_CROSS_FRAME_HISTORY_INFORMATION（E 族首包，一次性修复型 PROBLEM_BEARING_PROBE，修复旧 F3-A 科学无效性）：binding decision 撤回旧 P06（E 信息复杂度边界/window-length 重复 B1/P05-E 四条 FAIL），新 P06 修复旧 F3-A（`run_f3a_history.py:195-196` marginal-MI max-diff 误标 conditional-MI；旧 +0.060 bits/+0.036 R² 不继承）。M=冻结 standard_cma_godard_with_z；C=源闭合 GG ρ=exp(-Δt/τ_c) frame=140k sym dt=56µs f_G∈{30,100,1000} ρ_frame=0.99/0.97/0.70。Phase 0 物理身份门 ALL PASS 6 conditions（GG 边缘 KS 0.056-0.144、块 ACF relerr<2%、冻结 CMA 重跑 relerr=0）。Phase A 严格因果信息门（fresh seeds 全 disjoint 历史，6 cond×40 traj=4800 frames，trajectory-level split，features 仅 frame≤t）：history-expanded ridge R²=0.320 > current-only 0.040（MSE 减少per-traj macro CI=[4.72e-03,4.68e-02] CI_lo>0 严格因果增量统计存在）**但 persistence R²=0.853 远优**（逐 condition 含动态 fg1000 persistence 0.68-0.95 全胜 history 0.04-0.88）→ **`NO_CAUSAL_HISTORY_INCREMENT`**。Phase B/C 不运行。verifier V070 **7/7 ACCEPT**（causality/leakage/split/raw→aggregate/ACF/seed/verdict 全过）。不产方法卡/不晋升。harvest：Ch3/Ch4 receiver-observability 边界（跨帧信息被帧间持续性主导）+ 方法论附录教训（marginal-MI≠conditional-MI）+ 物理诚实资产（deployable frame rate≪τ_c 跨帧动力学边界）。**第 5 族"≥5 族"达成**。E 族首包即关闭（禁第二个 evaluator-repair 包）。无包内确定性修复（一次跑通） | D044 / V070 / CP035 / worker-log step-033（无独立 commit，待主控统一） |
-| D045 / P07→V071 | P07 F_AGC_ADC_DYNAMIC_RANGE_UNDER_GG（F 族首包，**≠ P03 定点**）：binding decision 撤回旧 P07-entry F/G/H 扫描三条 FAIL（①F symbol-timing offset——信道无过采样/脉冲成形/分数延迟 1-sps 无可作用物理自由度；②G 场景扩展未冻结 M-C-A 易重入已关闭 P04/FOE-residual；③H FEC-APSK coded chain blocked+APSK 环比 P04 已撤回）。新 P07=模拟前端可变增益+ADC 满量程/削顶/量化分辨率作用于 rx_raw 在冻结接收链之前。M=冻结接收链 run_case_multidelta；C=源闭合 GG 动态幅度 α,β∈{weak/mod/strong} SNR 5/9/13/17/21 N_DFT=256 400 windows/cell。Phase 0 可信因果 AGC/ADC adapter ALL 5 BLOCKER gates PASS（ADC math round-half-up+饱和不 wrap+signed 对称；float-bypass 重构≤2^-40；**float-bypass 接收链 byte-identical run_case_multidelta**；window-0=nominal 因果性；AGC class 体+quantize_iq 体零 forbidden 子串 AST）。Phase A 问题成立（dev-best fixed-gain g=0.75 regret **+1.028/+0.924/+0.909 dB** W6/8/10 CI_low>0 14-15/15 cell ≥MDE；clipping rate 随 gain 单调 g0.5→2.5%/g1.0→30%/g4.0→91% 证实 clipping–resolution 折中真实）。Phase B 最强传统 AGC=causal-RMS 降到 **+0.896/+0.794/+0.767 dB**（缓解 0.12-0.20 仍 5-6×MDE conv_resolves=False 未解决）。Phase C 4 候选 paired delta 最佳 dual_tc=**−0.016/−0.004/−0.017 dB** CI 全跨0 |Δ|≪MDE，clipping_aware/robust_pct/hysteretic 全 ≤0 更差 → **`NO_DIAGNOSTIC_METHOD_SIGNAL`**（问题真实存在+常规 AGC 部分缓解+无方法增量）。Phase C 不运行（conv_resolves=False 但候选无增量）。verifier V071 **10/10 ACCEPT**（ADC math/float-bypass 身份/信息边界 AST/因果性/raw→aggregate relErr≤1e-9/seed 隔离/paired realization/Phase-A verdict/Phase-BC verdict/frozen 文件未改全过）。不产方法卡/不晋升。harvest：Ch5 接收机 8-10 bit ADC+causal-RMS AGC 工程证据 + Ch3/Ch4 鲁棒性边界（clipping-resolution 非 ML/robust-AGC 可优于标准 causal-RMS 的 deployable 子问题）。1 次包内确定性修复（Phase-BC JSON 序列化 numpy bool_ bug → _to_jsonable 重跑，数据/verdict 不变） | D045 / V071 / CP036 / worker-log step-034（无独立 commit，待主控统一） |
+| D045 / P07→V071 | P07 F_AGC_ADC_DYNAMIC_RANGE_UNDER_GG（F 族首包，**≠ P03 定点**）：binding decision 撤回旧 P07-entry F/G/H 扫描三条 FAIL。旧 P07 verdict `NO_DIAGNOSTIC_METHOD_SIGNAL`（Phase A +0.91~+1.03 dB / Phase B causal-RMS +0.77~+0.90 dB / Phase C 4 候选无增量）。**⚠️ 科学结论已被 D046/V072 取代——见下行**。V071 10/10 ACCEPT 但只查 consistency（保留标"合同一致性通过但物理正确性漏审"）。1 次包内确定性修复（Phase-BC JSON bool_ bug）。 | D045 / V071 / CP036 / worker-log step-034 |
+| D046 / P07-R→V072 | **P07-R 科学完整性修复（取代 D045 科学有效性部分；D045 入口裁决仍 active）**。systematic-debugging 三根因最小失败测试全部复现：H1 SCALE 致命（`quantize_iq` 返回 q=Q(gz) 但 receiver 喂 q 未 /g，下游 scale-DEPENDENT 函数不可恢复）/ H2 CONTROL（CausalRMSAGC g_next=target/rms(q) 漏 g_current）/ H3 LIFECYCLE（每 window 独立 seed 独立 gg_block ACF≈0 无时间相关）。新建 p07r_*（gain-aware ADC q/g + corrected incremental AGC + stateful AR(1) trajectory，旧 p07_* 不动标 INVALIDATED）。fresh-seed Phase A（dev 300-309 零重叠）deployable 位宽 W8/W10 dev-best g=0.5 regret **+0.03~+0.07 dB ≪MDE=0.15** 全 rho → **verdict `PROBLEM_ABSENT_AFTER_GAIN_CALIBRATION`**（旧 +0.91dB 完全是 H1 SCALE artifact；折中真实单调但单侧，静态低增益即解决）。Phase B/C 不运行。verifier **V072 PART2 10/10 ACCEPT**（沿调用链查物理正确性不止 consistency）。**campaign 恢复 7/10，F 族关闭**（静态低增益即解决无方法空间）。 | D046 / V072-PART1+2 / CP037 / worker-log step-035 |
 
 ## 未决项
 
@@ -291,9 +305,9 @@ rdl_control:
 - campaign 计数（topic-index control block `campaign` 段）：`accepted_valid_packages=7`，budget=10，
   current=P08；setup/治理/任务准备/接口修复/纯复现/入口 preflight 不计；
 - 第 5 包（P05）内部校准**已完成**（S005 §mid-calibration，不停线）：5 包全 honest negative 0 signal，族覆盖 4（A 关闭/B/C/D 连续=1），P05 首个换对象包；第 10 包（P10）做 campaign-level pivot/continue 裁决；
-- **P07 后族覆盖 6 族**（A 关闭/B/C/D/E 关闭/F 连续=1）；P01-P07 verdict 序列 NO_SIGNAL/RESOLVED_REGION/RESOLVED_UNIFORM/ABSENT/RESOLVED_BY_CONVENTIONAL/NO_CAUSAL_HISTORY_INCREMENT/NO_DIAGNOSTIC_METHOD_SIGNAL —— 7 包全 honest negative 0 signal，族覆盖健康递增至 6；**P07 是迄今首个"问题真实成立（Phase A +0.9-1.0 dB）+ 常规 AGC 仅部分缓解（Phase B +0.77-0.90 dB 未解决）+ 方法候选无增量（Phase C）"的包**——与前 6 包"问题 sub-MDE 或被常规完全解决"不同，机制更完整但仍 0 signal；
-- 同族连续≤2 包；至少 5 机制族（A CPR 选择器鲁棒性**已关闭**（P01+P02 达上限）/ B 定点资源协同设计**已开**（P03 连续=1）/ C 连续 GG OOD 选择器鲁棒性**已开**（P04 连续=1）/ D ML polarization equalizer OOD online adaptation**已开**（P05 连续=1，首个换对象包）/ E 因果跨帧历史信息**已开+已关闭**（P06 首包即关闭）/ F AGC/ADC 动态范围**已开**（P07 连续=1，NO_SIGNAL 未关闭））；**"≥5 族"已达成（6 族）**，P08 可选 G/... 新族或 B/C/D/F 第 2 包连续≤2；
-- 已关闭轴不得换名重开（TL-30）：NDA-ML 本体 / G1 science repair / CB1 collapse family / Pilot-Jones 小轴 / PMD-PDL-Jones-CD 星地移植 / **A 族 CPR 选择器鲁棒性（cand_rank/weakretune/SNR-mismatch/region-retune 子轴）** / **FOE-residual→CPR cascade（T030 撤回）** / **E 族因果跨帧历史（cross-frame history / F3-A-repair / temporal-prediction 子轴，P06 首包即关闭）**；P05 periodic-pilot 作 comparator 仅佐证 D032 KILL 非复活（D032 明载"不否决更强化身但须重走 GW 门控"）；P07 的 symbol-timing-offset（F）/场景扩展（G）/FEC-APSK（H）子轴已撤回（"无可作用物理自由度/重入已关闭轴"），F 族 AGC/ADC 主体**未关闭**（P08 可选 F 第 2 包换子轴）；
+- **P07-R 后族覆盖 6 族**（A 关闭/B/C/D/E 关闭/**F 关闭**）；P01-P07 verdict 序列 NO_SIGNAL/RESOLVED_REGION/RESOLVED_UNIFORM/ABSENT/RESOLVED_BY_CONVENTIONAL/NO_CAUSAL_HISTORY_INCREMENT/PROBLEM_ABSENT_AFTER_GAIN_CALIBRATION —— 7 包全 honest negative 0 signal；**P07-R 修正**：旧 P07 `NO_DIAGNOSTIC_METHOD_SIGNAL`（+0.91dB）已被 D046 冻结为 H1 SCALE artifact，corrected 链下静态低增益即解决（W8/W10 +0.03~+0.07dB≪MDE），F 族关闭；
+- 同族连续≤2 包；至少 5 机制族（A CPR 选择器鲁棒性**已关闭**（P01+P02 达上限）/ B 定点资源协同设计**已开**（P03 连续=1）/ C 连续 GG OOD 选择器鲁棒性**已开**（P04 连续=1）/ D ML polarization equalizer OOD online adaptation**已开**（P05 连续=1，首个换对象包）/ E 因果跨帧历史信息**已开+已关闭**（P06 首包即关闭）/ F AGC/ADC 动态范围**已开+已关闭**（P07-R 修复后问题不存在于 deployable 位宽））；**"≥5 族"已达成（6 族）**，P08 必须换不同机制族（候选 G coded-LLR-calibration 新族，或 B/C/D 第 2 包连续≤2）；
+- 已关闭轴不得换名重开（TL-30）：NDA-ML 本体 / G1 science repair / CB1 collapse family / Pilot-Jones 小轴 / PMD-PDL-Jones-CD 星地移植 / **A 族 CPR 选择器鲁棒性（cand_rank/weakretune/SNR-mismatch/region-retune 子轴）** / **FOE-residual→CPR cascade（T030 撤回）** / **E 族因果跨帧历史（cross-frame history / F3-A-repair / temporal-prediction 子轴，P06 首包即关闭）** / **F 族 AGC/ADC 动态范围（D046/V072-PART2：静态低增益即解决无方法空间）**；P05 periodic-pilot 作 comparator 仅佐证 D032 KILL 非复活；P07 的 symbol-timing-offset（F）/场景扩展（G）/FEC-APSK（H）子轴已撤回（"无可作用物理自由度/重入已关闭轴"）；
 - 下一真实压缩事件需量化 elapsed time、files read、lane/gate match；
 - G1 只保留 bounded thesis asset，不重开科学修复；
 - 频域/子带均衡族仅在信道源码被升级到含色散/多径/频率选择性后才可能重审，当前作 rejected task brief 保留。
@@ -373,8 +387,8 @@ Phase 0 物理身份门 ALL PASS 6 conditions（GG 边缘 KS 0.056-0.144、块 A
 history-expanded ridge R²=0.320 > current-only 0.040（MSE 减少per-traj macro CI_lo>0 严格因果增量统计存在）**但 persistence R²=0.853 远优**（逐 condition 含动态 fg1000 persistence 0.68-0.95 全胜 history 0.04-0.88）→ **`NO_CAUSAL_HISTORY_INCREMENT`**。Phase B/C 不运行。verifier V070 **7/7 ACCEPT**。
 E 族首包即关闭（绑定裁决禁第二个 evaluator-repair 包）。harvest：Ch3/Ch4 receiver-observability 边界（跨帧信息被帧间持续性主导）+ 方法论附录教训（marginal-MI≠conditional-MI）+ 物理诚实资产（deployable frame rate≪τ_c 跨帧动力学边界）。worker-log `step-033-p06-causal-cross-frame-history.md`；artifact `results/p06_causal_cross_frame_history/`。
 
-**当前位置**：P07 完成（F 族连续=1 首包 NO_SIGNAL 未关闭），accepted_valid_packages=7/10，仍 0 active carrier、claim ceiling `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`。
-**族覆盖 6 族**（A/B/C/D/E/F，A 与 E 已关闭，F 连续=1）。P01-P07 verdict 序列 NO_SIGNAL/RESOLVED_REGION/RESOLVED_UNIFORM/ABSENT/RESOLVED_BY_CONVENTIONAL/NO_CAUSAL_HISTORY_INCREMENT/NO_DIAGNOSTIC_METHOD_SIGNAL —— 7 包全 honest negative 0 signal。**P07 是迄今机制最完整的负面**：问题真实成立（Phase A +0.91~+1.03 dB）→ 常规 AGC 仅部分缓解（Phase B +0.77~+0.90 dB 未解决）→ 方法候选无增量（Phase C 4 候选无一稳定超 causal-RMS）。
+**当前位置**：P07-R 修复完成（D046/V072-PART2 取代旧 P07 科学结论），accepted_valid_packages=7/10，仍 0 active carrier、claim ceiling `LOCAL_SLICE / NONBINDING_DIAGNOSTIC`。
+**族覆盖 6 族**（A/B/C/D/E/F，A、E、F 已关闭）。P01-P07 verdict 序列 NO_SIGNAL/RESOLVED_REGION/RESOLVED_UNIFORM/ABSENT/RESOLVED_BY_CONVENTIONAL/NO_CAUSAL_HISTORY_INCREMENT/PROBLEM_ABSENT_AFTER_GAIN_CALIBRATION —— 7 包全 honest negative 0 signal。**P07-R 诚实结论**：旧 P07 的"clipping–resolution 折中真实存在 +0.91dB"完全是 H1 SCALE artifact（`quantize_iq` 返回 q=Q(gz) 但 receiver 喂 q 未 /g，下游 scale-DEPENDENT 函数不可恢复）；corrected 链下静态低增益（g=0.5）即把 deployable 位宽 W8/W10 regret 降到 +0.03~+0.07dB≪MDE，无方法增量空间 → F 族关闭。
 
-下一合法动作：**Package 08（必须换不同机制族——候选 G/... 新族 或 B/C/D/F 第 2 包连续≤2；禁重开已关闭 A/E 族及所有 forbidden axis）**。
-本轮仅准备 P08 入口（不运行）。下一对话由用户中转 P08 执行指令。
+下一合法动作：**Package 08（必须换不同机制族——F 已关闭；候选 G coded-LLR-calibration 新族，或 B/C/D 第 2 包连续≤2；禁重开已关闭 A/E/F 族及所有 forbidden axis）**。
+本轮（2026-08-01）用户已授权 coded-chain 场景扩展（voice "行" → D047 scope-change），P08 = G_CODED_LLR_CALIBRATION_UNDER_GG_RESIDUAL 端到端执行。
