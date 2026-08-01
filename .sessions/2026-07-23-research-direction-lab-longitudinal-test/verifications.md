@@ -4033,3 +4033,33 @@ verifier 必须递归遍历 deployable 调用图（不只复述合同/扫函数�
 计数纠正 `accepted_valid_packages 8→7`、G 族 `STOPPED_WITH_PARTIAL_ASSET`、D049/V075 engineering asset 维持、D050/V076 NDA-ML 结论维持、纠正本身不计有效包——**全部 PASS**，证据闭合（git chronology + grep 零命中 + seed range 实测 + verifier 盲区确认）。**counts_as_valid_package=False**（count_excludes=science_integrity_repair）。campaign accepted_valid = **7/10**。无 protected owner/formal/Skill/thesis framework 改动、无 push。
 
 **V075/V076 盲区教训（consistency≠correctness 第四度）**：V075 递归 AST + metamorphic 门覆盖了 receiver-info-boundary（H7/H8/H9）但**未覆盖 chronology 闭合**（pre-test freeze receipt）；V076 覆盖了 NDA-ML 形态源码事实但同样不涉 chronology。本轮 P09（`H_16APSK_CONFIDENCE_ADAPTIVE_BPS_SEARCH`）若启动 sprint，verifier **必须新增 chronology 闭合检查**：pre-test freeze receipt 含 contract SHA256 + source hash + `test_started=false`，独立 commit 在任何 held-out seed 读取前，runner 校验当前源码/contract hash 与 receipt 一致后才 `test_started=true`。
+
+---
+
+## V078: P09 H_16APSK_CONFIDENCE_ADAPTIVE_BPS_SEARCH 独立 verifier — ACCEPT (11/11 PASS)；verdict EVIDENCE_INSUFFICIENT 诚实正确；chronology 闭合正确建立；campaign 维持 7/10
+
+> 关联: D052（P09 verdict）/ D051（计数纠正维持 7/10）/ V077（chronology 教训落实到 P09 sprint）
+> 日期: 2026-08-01
+> 独立性: fresh-context sub-agent（agent_cd1c4b2a）逐项核 git artifact + 源码 + JSON + 重跑 sanity，不信任 executor 自述。本轮是 V077 教训（chronology 闭合必须查）的首次落实验证。
+
+### 逐项核查（11/11 PASS）
+
+1. **Commit 1 早于任何 held-out test**（PASS）：`git log --oneline -3` HEAD=20d5825（Commit 1）。`git show 20d5825:.../p09_freeze_receipt.json` 含 `test_started: false`（Commit 1 时点）。`git show 20d5825 --stat` 不含 `p09_test_raw_rows.json`/`p09_test_result.json`（test artifacts 未提交，test 后才生成）。`git ls-files` 确认两 test 文件 untracked。**chronology 闭合正确建立**（修复 P08-R2 缺陷）。
+2. **receipt/source/contract hash 闭合**（PASS）：重算 6 个源文件 SHA256 全部匹配 receipt（p09_bps_methods.py=4d654d4c, p09_run.py=673fc30a, _recovery.py=afb8aed9, _modulation.py=036fb7aa, _channel.py=800e4375, _b11_params.py=6159a891）；重算 `contract_sha256()`=007543e0...433485 匹配 receipt。`verify_freeze_receipt()` 逻辑（receipt 自身 hash + source hashes + contract SHA256 + test_started=false）正确。
+3. **held-out seeds fresh**（PASS）：receipt test_seeds=[12000..12039]（40），dev_seeds=[11000..11019]。test∩dev=∅，test∩history(P08-R2 8000-8039/9000-9019 ∪ P08-R 6000-6019/7000-7039 ∪ P08 1000-1014/1100-1114)=∅，dev∩history=∅。p09_test_raw_rows.json 只含 seeds 12000-12039，6 方法 × 40 行。
+4. **16APSK BPS objective 实现正确**（PASS）：`bps_objective_matrix`（p09_bps_methods.py:59-79）算 `|rotated-dec|²/(|dec|²+1e-10)` Pfau 2009 归一化距离 objective，B 个测试相位；`unwrap_phase(pe_raw, M0_fold=8)` 用 M0=8（16APSK 两环 8+8）非 QPSK M=4。sanity：clean 16APSK（phi_true=0.37, 30dB 无噪）经 full pipeline（含 M0-fold resolve）BER=0.0。
+5. **full/coarse/two-stage/candidate 信息和延迟公平**（PASS）：6 个 method fn 全只取 rx_block + 自身超参；grep `gamma_bar|true_phase|true_snr|tx_bits|h_true|phi_true|generate_shared_realization` 在 p09_bps_methods.py 代码零命中（仅 docstring）。全用 256-sym 块（P.N_DFT=256），同 BPS objective，无跨块状态。
+6. **refinement 全部成本已计数**（PASS）：实测验证——B0_full=64×256=16384 ✓；B1_coarse(32)=8192 ✓；B2_two_stage(16+8)=(16+8)×256=6144（两 stage 全计）✓；C1_conf_gated=16×N+n_refined×8=6144（refinement 全计）✓；C2_curv=16×N+n_refined×8=4688 ✓；C3_early_stop=B_used×N=2048 ✓。源码行 195(B2)/254(C1)/306(C2)/348(C3) 确认。
+7. **完整 deployable 调用图无 truth leakage**（PASS）：decide path `method_fn(seg)`→`bps_objective_matrix/per_symbol`→`hard_decision_m16apsk`→只用 `_M16APSK_CONST`（星座）+ rx_block。无 `generate_shared_realization_apsk` 内部（h/phi/bits/gamma_bar）调用。唯一 TX-truth 用途是 `resolve_m16apsk_blockwise(rx_comp, tb, ...)`（p09_bps_methods.py:381）——标准 BPS M0-fold 模糊消除后处理（同 run_bps_ablation.py），在 eval/resolve 步非 phase-decision 步，只试 8 个 π/4 旋转选最低 BER，不反馈进相位估计。
+8. **raw→aggregate**（PASS）：从 p09_test_raw_rows.json 重算 6 方法 ber_mean + evals_per_sym，relError=0.00e+00（<1e-9），n_traj=40/40 全匹配。B0_full bootstrap CI recheck lo=0.025641 hi=0.037433 精确匹配。
+9. **性能非劣和复杂度双门**（PASS，诚实性确认）：b0_ber=0.031427, mde_ber=0.005, non-inf thr=0.036427。逐方法：B1 ci_hi=0.03925(>thr FAIL)+reduction 2.0×(FAIL)；B2 ci_hi=0.03981(FAIL)+1.6×(FAIL)；C1 ci_hi=0.05905(FAIL)+2.67×(FAIL)；C2 ci_hi=0.06808(FAIL)+3.93×(FAIL)；**C3_early_stop ci_hi=0.03716(>thr 0.036427 by 0.00073, FAIL non_inf)+reduction 8.0×(PASS complexity only)**。无一方法双门全过。max ber_ci_hw=0.00816 > mde_ber/2=0.0025 → EVIDENCE_INSUFFICIENT。**verdict 诚实正确**：C3 是最强候选（8× reduction + BER 点估计持平）但 CI upper 略超 non-inf 且 CI 宽度远大于 MDE/2。
+10. **terminal verdict 唯一**（PASS）：p09_test_result.json 恰一个 `verdict`=`"EVIDENCE_INSUFFICIENT"`，在 allowed_terminals 内精确匹配（无括号后缀）。
+11. **campaign 从正确 7/10 更新**（PASS）：topic-index.md:54 rdl_campaign `accepted_valid_packages: 7`（D051 chronology fail-closed 纠正后正确计数）。P09 EVIDENCE_INSUFFICIENT 非 signal 包，不计有效包，campaign 正确维持 7/10（非 8/10）。
+
+### 结论
+
+P09 `H_16APSK_CONFIDENCE_ADAPTIVE_BPS_SEARCH` verdict `EVIDENCE_INSUFFICIENT` + chronology 闭合正确建立 + campaign 维持 7/10——**全部 11/11 PASS，ACCEPT**。
+
+**关键诚实性确认**：C3_early_stop 实测 8× complexity reduction + BER 点估计与 full BPS 持平（0.0312 vs 0.0314）是有前景的 bounded pre-formal carrier 信号，但其 BER CI upper (0.03716) 略超 non-inferiority 阈值 (0.036427) ~0.16 dB，且 CI half-width (~0.008 BER ~1.3 dB) ≫ MDE/2 (~0.0025 BER)，n=40 traj 不足以 resolve 0.10 dB MDE。EVIDENCE_INSUFFICIENT 是唯一合法诚实终态（FR-25 Go/Kill 标准分离：complexity 门 PASS ≠ METHOD_SIGNAL，须独立过 non-inf CI 门 + MDE 功效门）。
+
+**chronology 闭合确认（V077 教训首次落实）**：本包 freeze receipt 独立 Commit 1 (`20d5825`) `test_started=false` 在任何 held-out test 前；test 模式校验 source hash + contract SHA256 + receipt hash 一致后才 test_started=true；held-out seeds 12000-12039 fresh disjoint。**修复了 P08-R2 的 chronology 缺陷**——这正是 V077 提出的"后续 P09 sprint verifier 必须新增 chronology 闭合检查"的首次落实验证，且 PASS。

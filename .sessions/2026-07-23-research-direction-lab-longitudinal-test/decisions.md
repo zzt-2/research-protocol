@@ -3139,3 +3139,53 @@ P08-R2 的物理归因（corrected chain 下 coded loss 主导是不可恢复突
 ### 来源
 
 用户纠正指令（"campaign=8/10 是 stale/错误 current view……P08-R2 没有独立 pre-test contract/receipt/hash……按 confirmatory evidence fail-closed：accepted_valid_packages = 7/10……纠正工作本身不计科学包；完成纠正后立即进入下面 P09"）+ `git show --stat a21fdba`（单一 commit 含 runner+dev+test raw+verifier+result+治理）+ `p08r2_run.py:99 main()` 顺序 Step 0→7（同进程无 immutable freeze）+ grep 零命中 freeze/receipt/hash/test_started + `p08r2_phaseA.py:54` test_seeds 8000-8039 + `p08r2_phaseA_raw_rows.json` 实测 seed range + `p08r2_verify.py:332-335` verifier 盲区（只查 seed 不相交不查 chronology 闭合）+ thesis-lessons TL-21/TL-23/TL-33 + sim-preflight mve-validation.md（consistency≠correctness 第四度）
+
+---
+
+## D052: P09 H_16APSK_CONFIDENCE_ADAPTIVE_BPS_SEARCH — verdict EVIDENCE_INSUFFICIENT（不计有效包）；C3 early-stop 8× reduction + BER 持平点估计信号但 n=40 CI 不足以 resolve 0.10 dB MDE 非劣；chronology 闭合正确建立（Commit 1 freeze receipt pre held-out test）；campaign 维持 7/10
+
+> status: active
+> date: 2026-08-01
+> 取代：无（P09 重定向入口门首跑裁决；不取代 D051 计数纠正、D050 NDA-ML STRATEGIC_GATE、D049/V075 P08-R2 engineering asset）
+> 被取代：无
+> 依据: P09 实验 artifact + 独立 verifier V078 11/11 ACCEPT：① 入口门四门全 PASS（`p09_entry_gate.md` file:line：`common/_recovery.py:91-118` `bps_cpr` 真实 B×N exhaustive search 可裁剪 / `run_bps_ablation.py:82-130` 16APSK adapter 复用 / `p09_bps_methods.py` B0/B1/B2 传统 comparator 有身份）；② chronology 闭合（`git show 20d5825:p09_freeze_receipt.json` test_started=false 在任何 held-out test 前；`verify_freeze_receipt()` source hash + contract SHA256 + receipt 自身 hash 校验通过后才 test_started=true；held-out seeds 12000-12039 fresh disjoint from 全部 history）；③ Phase A/B/C dev（seeds 11000-11019）：full BPS @18dB BER=0.026 evals/sym=64；B1 coarse B=32 BER=0.0264 evals/sym=32 (2×)；C3 early-stop Bmin=8 BER=0.0255 evals/sym=8 (8×) 为最强候选；④ held-out test（n=40 fresh traj, frozen cell weak@18dB lw=1e4）：B0 BER=0.0314 CI[0.0256,0.0374]；**C3_early_stop BER=0.0312 CI[0.0255,0.0372] ΔBER=-0.0002 (~-0.05dB) reduction=8.0×** complexity 门 PASS 但 BER CI upper 0.03716 > non-inf thr 0.036427 FAIL by 0.00073 BER (~0.16dB)；CI half-width ~0.006 BER (~1.3dB) ≫ MDE/2 (~0.0025BER/0.05dB)，n=40 不足以 resolve 0.10dB MDE（需 n~2000+）；⑤ 复杂度计数审计 PASS（B2 (Bc+Bf)×N 两 stage 全计 / C1 16×N+n_refined×8 refinement 全计 / C3 B_used×N adaptive）；⑥ 物理机制：(8,8)-16APSK M0=8 模糊 → π/4 相位间距 = B=8 测试相位间距，一个相位落每模糊分支 → Bmin=8 足够 resolve（非 bug 非 overfitting）+ thesis-lessons TL-22（震撼结果先查物理前提——已查 M0=8 模糊）/TL-23（冷静期：好结果 C3 8× 先质疑 CI 宽度，确认 EVIDENCE_INSUFFICIENT）/TL-33（FR-26 证据链：8× reduction 信号有但 CI 不足，诚实报 EVIDENCE_INSUFFICIENT 不强行 METHOD_SIGNAL）+ FR-25（Go/Kill 标准分离：C3 complexity 门 PASS 不等于 METHOD_SIGNAL，须过 non-inf CI 门）
+> 触发原话: 用户 P09 重定向执行指令（"P09 = H_16APSK_CONFIDENCE_ADAPTIVE_BPS_SEARCH……M：16APSK full blind phase search……A：每个 window 对全部相位候选计算星座距离，存在 B×N 的搜索开销……若连问题或可区分 action 都无法成立，终止 STRATEGIC_GATE，不计包……只有候选在 fresh held-out test 上同时[非劣/≥4×/优于最强传统/CI 和 MDE 过门]才可判 COMPUTE_EFFICIENT_BPS_METHOD_SIGNAL"——voice.md 2026-08-01）
+
+### 决策
+
+P09 `H_16APSK_CONFIDENCE_ADAPTIVE_BPS_SEARCH` **verdict `EVIDENCE_INSUFFICIENT`**，**不计有效包**（属 verdict-set 中非 signal 终态；同 honest-negative 模式）。campaign `accepted_valid_packages` **维持 7/10**（D051 纠正后的正确计数；P09 未产 signal 故不增），`current_package` = P09（完成，待用户重新指定 P09 入口或授权 P10 campaign 裁决）。本轮**有 sprint、有 held-out test、有 artifact**（不同于 D050 P09 NDA-ML STRATEGIC_GATE 无 sprint），chronology 闭合正确建立。
+
+**核心发现（诚实）**：
+1. **C3 early-stop 是有前景的 bounded pre-formal carrier**：dev/test 一致的 8× complexity reduction + BER 点估计与 full BPS 持平（0.0312 vs 0.0314，dev 0.0255 vs 0.0257）。物理机制清晰（M0=8 模糊 → Bmin=8 相位间距匹配）。
+2. **但 n=40 统计功效不足以 confirm 0.10 dB MDE 非劣**：CI half-width ~0.006 BER (~1.3 dB) ≫ MDE/2；C3 BER CI upper (0.03716) 略超 non-inf 阈值 (0.036427) ~0.16 dB。要 resolve 0.10 dB MDE 需 n~2000+ traj（CI_hw ∝ 1/√n）。
+3. **传统 comparator 未达 4× reduction**：B1 coarse B=32 (2×)、B2 two-stage 32+8 (1.6×) 都不满足 complexity 门，故不触发 `PROBLEM_RESOLVED_BY_CONVENTIONAL_TWO_STAGE_BPS`。但它们点估计 BER 也近同 full（+0.36/+0.41 dB），同样受 CI 宽度限制。
+4. **chronology 闭合正确建立**（修复 P08-R2 缺陷）：freeze receipt 独立 Commit 1 (`20d5825`) `test_started=false` 在任何 held-out test 前；test 模式校验 source hash + contract SHA256 + receipt hash 一致后才 test_started=true；held-out seeds 12000-12039 fresh disjoint。V078 check 1-3 PASS。
+
+### 为什么不是 METHOD_SIGNAL（FR-25 Go/Kill 标准分离）
+
+用户合同 §六明确：METHOD_SIGNAL 须候选在 fresh held-out test 上**同时**满足四条件——(1) 对 full BPS 性能非劣 (2) ≥4× reduction (3) 稳定优于最强传统 comparator (4) **CI 和预设 MDE 均过门**。C3 满足 (2) 8× 和近似 (3)（BER 点估计略优于 B1 coarse），但 (1) 的 CI upper 略超 non-inf 阈值、(4) 的 CI half-width ≫ MDE/2。**complexity 门 PASS ≠ METHOD_SIGNAL**——性能非劣 CI 门和 MDE 功效门是独立硬门（FR-25 Go/Kill 标准分离，TL-32 oracle 不当 Go 的同源纪律：单门过不等于整体 Go）。诚实报 EVIDENCE_INSUFFICIENT 而非强行 METHOD_SIGNAL（TL-33 不自欺，TL-23 冷静期）。
+
+### 排除的替代方案
+
+- **不强行判 METHOD_SIGNAL**：C3 8× reduction 是强信号，但 CI 不足是硬事实（TL-23 冷静期：好结果先质疑证据强度）。强行 METHOD_SIGNAL = 自欺跳步（TL-33）。
+- **不判 PROBLEM_RESOLVED_BY_CONVENTIONAL_TWO_STAGE_BPS**：B1/B2 都未达 4× reduction（2×/1.6×），不满足该终态双门（性能 + ≥4×）。
+- **不判 NO_DIAGNOSTIC_METHOD_SIGNAL**：C3 有明确点估计信号（8× + BER 持平），非"无信号"，只是 CI 不足以 confirm。EVIDENCE_INSUFFICIENT 区别于 NO_SIGNAL（前者有点估计信号但 CI 不足，后者无任何信号）。
+- **不扩大 n 到 2000+ 以 resolve MDE**：超本 sprint 边界（D039 campaign bounded package）；若用户授权可后续单独 sprint。
+- **不重开已关闭族**：本轮是 16APSK BPS search 优化（新机制族），不涉 NDA_ML_BODY/G/A/E/F/coded/interleaving。
+- **不动 NDA-ML body**：D050 NDA-ML STRATEGIC_GATE 维持，NDA-ML 是 closed-form 非 search 结论不动。
+- **不改 protected owner/formal/Skill/thesis framework**、**无 push**。
+
+### 影响范围
+
+- `topic-index.md` 控制块：epoch 78→**79**，`authority_pointer` D051→**D052**，`mission_checkpoint` CP042→**CP043**；`accepted_valid_packages` 维持 **7/10**（P09 EVIDENCE_INSUFFICIENT 不计有效包）；`current_package` P09（完成，verdict 非信号）；rolling_queue P09 标 "EVIDENCE_INSUFFICIENT (C3 early-stop 8× reduction + BER 持平点估计但 CI 不足 resolve 0.10dB MDE); chronology 闭合正确建立"。
+- `mission-log.md`：追加 CP043（P09 EVIDENCE_INSUFFICIENT，有 sprint/有 held-out test/有 artifact/chronology 闭合）。
+- `verifications.md`：追加 V078（P09 独立 verifier 11/11 ACCEPT + chronology 闭合确认 + EVIDENCE_INSUFFICIENT 诚实性确认）。
+- worker-log `step-039-p09-16apsk-confidence-bps.md`。
+- artifact `results/p09_16apsk_confidence_bps/`（freeze receipt + dev raw + test raw + result）。
+- **不建立 method card**（verdict 非 METHOD_SIGNAL，用户合同 §七 仅 METHOD_SIGNAL 后才建 card）。C3 early-stop 作 bounded pre-formal carrier 记入 worker-log §物理机制，claim ceiling 维持 LOCAL_SLICE / NONBINDING_DIAGNOSTIC。
+- `_registry.yaml`：last_updated 更新（P09 EVIDENCE_INSUFFICIENT，campaign 维持 7/10）。
+- protected owner/formal/Skill/thesis framework/controller 不改、**无 push**。
+
+### 来源
+
+用户 P09 重定向执行指令（合同 §一-九）+ 入口门 file:line 证据（`p09_entry_gate.md`）+ Phase A/B/C dev raw（`p09_dev_phase{A,B,C}_raw.json`）+ held-out test raw/result（`p09_test_raw_rows.json`/`p09_test_result.json`）+ freeze receipt chronology（`git show 20d5825`）+ 独立 verifier V078 11/11 ACCEPT + 物理机制分析（M0=8 模糊 → Bmin=8 相位间距匹配）+ thesis-lessons TL-22/TL-23/TL-32/TL-33 + FR-25 Go/Kill 标准分离

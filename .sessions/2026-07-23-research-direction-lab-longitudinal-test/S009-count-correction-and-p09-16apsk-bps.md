@@ -1,6 +1,6 @@
 # [S009] 计数纠正（chronology fail-closed）+ P09 重定向 H_16APSK_CONFIDENCE_ADAPTIVE_BPS_SEARCH
 
-> 2026-08-01 | CAMPAIGN_EXPLORATION_DISPATCH / 计数纠正 + 有效科学大包 | 状态：进行中（A 计数纠正完成；B P09 端到端执行中）
+> 2026-08-01 | CAMPAIGN_EXPLORATION_DISPATCH / 计数纠正 + 有效科学大包 | 状态：完成（A 计数纠正完成；B P09 端到端完成 verdict EVIDENCE_INSUFFICIENT）
 > 来源: 用户纠正+重定向执行指令（同一对话完成两部分 A+B，不得在 A 或入口准备后停止）
 
 ## 目标
@@ -29,17 +29,32 @@
 
 **治理产物**：D051（计数纠正，取代 D049/V075"恢复第 8 包"效力，engineering asset 维持）/ V077（chronology 缺陷独立复核 11/11 PASS）/ CP042（mission-log checkpoint）/ topic-index 控制块 epoch 77→78、authority D050→D051、mission_checkpoint CP041→CP042、accepted_valid 8→7、G 族 STOPPED_WITH_PARTIAL_ASSET / _registry.yaml last_updated 更新 / voice.md 收录用户纠正+重定向原话。
 
-### Part B：P09 入口准备（进行中）
+### Part B：P09 H_16APSK_CONFIDENCE_ADAPTIVE_BPS_SEARCH 端到端执行（完成，verdict EVIDENCE_INSUFFICIENT）
 
-（见下方 §P09 执行记录，持续追加）
+**入口门四门全 PASS**（`p09_entry_gate.md` file:line）：门1 `bps_cpr:91-118` 真实 B×N exhaustive search 可裁剪（非 NDA-ML closed-form）；门2 full BPS 16384 evals/block 主导；门3 B0/B1/B2 传统 comparator 有身份；门4 file:line 已举；collision grep 零命中。
+
+**chronology 闭合正确建立**（V077 教训首次落实，修复 P08-R2 缺陷）：
+- freeze receipt 独立 **Commit 1 (`20d5825`)** `test_started=false` 在任何 held-out test 前（`git show 20d5825:.../p09_freeze_receipt.json` 确认）
+- `verify_freeze_receipt()` 校验 6 源文件 SHA256 + contract SHA256 + receipt 自身 hash 全一致后才 `test_started=true`
+- held-out seeds 12000-12039 fresh，disjoint from 全部 campaign history + dev 11000-11019
+
+**Phase A/B/C dev + held-out test 结果**（详见 worker-log step-039）：
+- dev (11000-11019): C3 early-stop Bmin=8 BER=0.0255 evals/sym=8 (**8× reduction**) 为最强候选
+- held-out test (n=40 fresh 12000-12039, frozen weak@18dB lw=1e4): **C3 BER=0.0312 CI[0.0255,0.0372] ΔBER=-0.0002 reduction=8.0×**（complexity 门 PASS，BER 点估计与 full BPS 持平）但 BER CI upper 0.03716 > non-inf thr 0.036427 ~0.16dB + CI_hw ~1.3dB≫MDE/2，**n=40 不足 resolve 0.10dB MDE**（须 n~2000+）
+- B1 coarse B=32 (2×) / B2 two-stage 32+8 (1.6×) 传统 comparator 未达 4×
+
+**Terminal verdict: `EVIDENCE_INSUFFICIENT`**（唯一合法诚实终态）：C3 8× reduction + BER 持平是有前景 bounded pre-formal carrier 信号，但 CI upper 略超 non-inf + CI 宽度≫MDE/2。FR-25 complexity 门 PASS ≠ METHOD_SIGNAL（须独立过 non-inf CI 门 + MDE 功效门；TL-23 冷静期 + TL-33 不自欺）。物理机制（TL-22 已查）：(8,8)-16APSK M0=8 模糊→π/4 相位间距=Bmin=8 测试相位间距匹配（非 bug 非 overfitting）。
+
+**独立 verifier V078: 11/11 ACCEPT**（fresh-context sub-agent agent_cd1c4b2a 逐项核 git chronology + source hash + JSON 重算 + sanity 重跑 + deployable 调用图 truth leakage + raw→aggregate relErr=0.00 + verdict 诚实性 + campaign 计数）。
 
 ## 决策引用
 
 - D051（新建）：计数纠正（chronology fail-closed）— P08-R2 缺独立 pre-test freeze receipt，"恢复第 8 包"效力被取代，campaign 8→7，G 族 STOPPED_WITH_PARTIAL_ASSET。
 - V077（新建）：计数纠正独立复核 11/11 PASS。
+- D052（新建）：P09 H_16APSK_CONFIDENCE_ADAPTIVE_BPS_SEARCH verdict EVIDENCE_INSUFFICIENT（不计有效包）；C3 early-stop 8× reduction + BER 持平点估计但 n=40 CI 不足 resolve 0.10dB MDE；chronology 闭合正确建立；campaign 维持 7/10。
+- V078（新建）：P09 独立 verifier 11/11 ACCEPT + chronology 闭合确认 + EVIDENCE_INSUFFICIENT 诚实性确认。
 - D050/V076（引用）：NDA-ML STRATEGIC_GATE 维持不动。
 - D049/V075（引用）：corrected-chain engineering asset 维持作 PARTIAL reusable asset。
-- 无其他新决策（P09 入口门 + 实验结论待 B 部分完成后记入 D052/V078）。
 
 ## 范围确认
 
@@ -47,6 +62,8 @@
 
 ## 后续
 
-- A 已完成（D051/V077/CP042 + 治理同步）。
-- B 端到端执行 P09 `H_16APSK_CONFIDENCE_ADAPTIVE_BPS_SEARCH`：入口门四门（file:line）→ 16APSK BPS adapter → **独立 Commit 1（计数纠正 + frozen contract + receipt，任何 held-out test 前）** → Phase A（full BPS 性能+搜索成本）→ Phase B（fixed coarse/two-stage）→ Phase C（条件：候选 C1/C2/C3）→ 独立 verifier 11 项 → Commit 2 → 五项汇报。不 push。
-- **chronology 闭合强制**（V077 教训）：P09 sprint 必须 pre-test freeze receipt 含 contract SHA256 + source hash + `test_started=false`，独立 Commit 1 在任何 held-out seed 读取前；runner 校验 hash 一致后才 `test_started=true`，hash 不一致即 EXECUTION_INVALID；held-out seed 如在现有 artifacts/ledger 出现过立即更换。
+- A + B 均已完成（D051/V077/CP042 计数纠正 + D052/V078/CP043 P09 EVIDENCE_INSUFFICIENT）。
+- campaign 维持 **7/10**（D051 纠正后正确计数；P09 非 signal 不增），仍 0 active carrier。
+- C3 early-stop 是有前景 bounded pre-formal carrier（8× reduction + BER 持平 + 物理机制清晰），但需 n~2000+ traj 才能 resolve 0.10dB MDE——若用户授权可新 D### 单独 sprint 扩大 n。
+- 下一合法动作：重新指定 P09 入口（须过入口四门+chronology receipt；P09 H_16APSK 同对象已跑完不重提），或用户授权 P10 campaign-level 裁决（campaign 7/10 还剩 3 有效包预算）。
+- **chronology 闭合已验证**（V077 教训首次落实 PASS）：后续所有 sprint 都须遵守 freeze receipt 独立 commit pre-test 模式。

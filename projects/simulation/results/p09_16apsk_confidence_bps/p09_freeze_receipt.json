@@ -304,7 +304,7 @@
     "TX symbols/bits in deployable decide"
   ],
   "receipt_creation_time": "2026-08-01T17:24:53+0800",
-  "test_started": false,
+  "test_started": true,
   "dev_summary": {
     "phase_a": {
       "14": {
@@ -410,5 +410,6 @@
       }
     },
     "operating_snr": 18
-  }
+  },
+  "test_started_time": "2026-08-01T17:26:45+0800"
 }
