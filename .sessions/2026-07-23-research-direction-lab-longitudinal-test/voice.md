@@ -256,3 +256,16 @@
 - "二、修复前确定性复现——先保存prefail evidence：H7 true-SNR上游泄漏（固定完全相同的rX/rY/calibration prefix/receiver state/codeword/noise realization，只修改隐藏truth gamma_bar，验证旧P08-R：equalized output发生变化/prefix residual发生变化/B0B1B2 LLR发生变化；记录max absolute difference和调用链 p08r_run.build_realization→real.equalize→blind h estimate→MMSE→demapper）；H8 AST verifier盲区（证明旧verifier只扫描B0B1B2函数体内的real.gamma_bar字面量，没有递归进入real.equalize()→self.gamma_bar；记录为何V074漏审）；H9统计合同（复算并证明 MDE_fer=0.2347来自固定n后的非配对Bernoulli近似；实验真实单位是paired trajectory；先固定n再把detectable difference命名为MDE不合法；dev FER=0.1 crossing真实存在；weak/fG1000、weak/fG100、moderate/fG100的O2 required-SNR headroom约在0.15dB附近；[0,+0.0141]不能称CI_lo>0；test逐trajectory选择min(B1,B2)不合法）。修复前证据落盘后才能改代码。"
 - "三、receiver信息边界根修——禁止任何deployable路径读取：gamma_bar/true SNR；true h/theta；payload TX symbols/bits；evaluation residual；future samples。重新设计receiver接口：received prefix + known prefix symbols → receiver-visible pre-equalization noise/effective-residual estimate → blind amplitude/channel estimate → MMSE/equalizer → equalized prefix → demapper residual scale → payload LLR。"
   → D049 / V075
+
+## 2026-08-01（P09 执行指令）
+
+- "执行一个新的有效科学大包：P09。"
+- "本轮目标：P09 = COMPUTE_CONSTRAINED_NDA_ML_SEARCH，围绕已有、已验证有效的 NDA-ML 方法做'低复杂度、性能保持'的毕业方法生产包。"
+- "不要重新证明 NDA-ML 是否有效，也不要把它当成新发现。"
+- "M = 当前 full-search NDA-ML；C = 有限计算量/实时接收约束；A = 均匀穷举大量候选导致计算冗余；目标 = 在 receiver-visible 信息不变的条件下，用结构化搜索显著减少 objective evaluations，同时保持原方法性能。"
+- "建议冻结的双门：A. 性能非劣……CI upper ≤0.10 dB；B. 复杂度：objective evaluations 至少减少 4×。算法计数为 primary cost，墙钟时间仅 secondary，不用 Python timing 冒充硬件复杂度。"
+- "命名最强廉价 comparator：至少包含 dev-tuned uniform coarse grid；如已有传统 hierarchical/coarse-to-fine search，必须纳入。"
+- "true phase/noise/SNR/TX truth 不得进入 deployable decide。"
+- "若无法证明计算问题或 novelty boundary，终止为 STRATEGIC_GATE，不计包。"
+- "本轮端到端完成，不在入口选择后停下；只有入口门失败才停为 STRATEGIC_GATE。有效科学执行才计入 campaign；治理、修复、准备不计。"
+  → D050 / V076

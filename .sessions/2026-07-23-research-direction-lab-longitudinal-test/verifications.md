@@ -3973,3 +3973,31 @@ relErr=0.0），无任何 executor 自述与实际 code/artifact 的差异。
 **TL 教训登记**：P07-R/D046 → P08/D048 → P08-R2/D049 是 "consistency≠correctness" 教训三度重演——
 verifier 必须递归遍历 deployable 调用图（不只复述合同/扫函数体字面）+ 跑运行时 metamorphic 门。
 此条作为 sim-preflight mve-validation.md 的强化项候选（跨 session 沉淀）。
+
+---
+
+## V076: P09 COMPUTE_CONSTRAINED_NDA_ML_SEARCH 入口门裁决独立 verifier（ACCEPT — STRATEGIC_GATE 唯一合法终态）
+
+> 2026-08-01 | 关联: D050 / P09 入口门 / CP041 | 结论: **PASS / ACCEPT（入口门事实核查）**
+
+独立 verifier（与入口评估上下文分离——主线程 Read 源码 + grep 复算 + Explore 子 agent fresh context 交叉）核查 P09 入口门裁决的科学事实基础。P09 入口门无实验产物（无 sprint/无 held-out seed/无 artifact），故核查对象是**入口门的事实前提与终态合法性**，而非 raw→aggregate 数值（无 raw 可核）。
+
+**逐项核验**（每项独立读源码/grep 复算）：
+
+1. **NDA-ML 估计器是否 closed-form（非 search）**（PASS）：`common/_recovery.py:171-273` `nda_ml_recovery` 逐行 Read——`assume_df_zero=True` 路径（`:209-237`）：`raised = rx ** M0`（`:213`，向量化元素升幂），segmented 变体 K=8 段每段一次 `np.angle(raised[lo:hi].mean())`（`:222-225`），段间 `np.unwrap`+`np.interp`（`:226-229`）；'none' 变体整块 `np.angle(raised.mean())`（`:232`）。`assume_df_zero=False` 路径（`:238-273`）：单次 `np.argmax(np.abs(R))`（`:249`）+ Quinn-Rife 插值（`:250-258`）+ 线性回归（`:262-270`）。**确认全程零 candidate 枚举、零 likelihood/objective 在候选集上求值**。每块成本 = 8 次闭式 mean-angle + unwrap/interp（segmented）/ 1 次闭式 mean-angle（none）/ 1 次 FFT argmax（Doppler）。
+2. **生产 driver 是否逐块 closed-form（无 per-window objective eval）**（PASS）：`simulator/sc_nda_ml_sim.py:173-191` `ber_nda_awgn`，`:180-187` for 循环逐 256-sym 块调一次 `nda_ml_recovery(seg, ..., intra_block_tracking='segmented')`。确认无候选集循环、无 objective 求值。
+3. **grep 零命中复算**（PASS）：`grep -rniE "full.?search|exhaustive|candidate|grid_search|phase_grid|coarse|coarse.?to.?fine|hierarchical|objective.*eval|search.*space|enumerate"` on `common/_recovery.py` + `simulator/sc_nda_ml_sim.py` + `simulator/_b11_params.py` → 零结果（独立复算）。证 NDA-ML 本体无 search/exhaustive/grid/coarse/hierarchical/objective-eval 词汇。
+4. **代码库唯一 exhaustive search 是 BPS（竞争对手非本体）**（PASS）：`_recovery.py:91-118` `bps_cpr`——B 测试相位 `phases = 2π·arange(B)/B`（`:97`）+ 向量化距离度量 `dist = np.abs(rotated-dec)**2`（`:104-106`）+ 滑窗平均（`:108-110`）+ `best_b = np.argmin(metrics, axis=0)`（`:113`）。docstring "Blind Phase Search (Pfau 2009, JLT)" 确认是独立算法。ADVISOR_BRIEFING 报 NDA-ML ≈ BPS 0.006-0.14 dB 证 BPS 是 comparator。确认 BPS 是 search 但**不是** NDA-ML 一部分，不能因 BPS 是 search 而称 NDA-ML 是 search。
+5. **用户冻结合同承重前提 A 证伪**（PASS）：用户冻结 A = "当前 full-search NDA-ML 均匀穷举大量候选导致计算冗余"。核查 1-4 证明：①不存在 "full-search NDA-ML"（本体是 closed-form）；②无 candidate 枚举；③无 objective 在候选集上求值。A 在源码层不成立。
+6. **双门 B primary cost metric 失效**（PASS）：双门 B = "objective evaluations 至少减少 4×" + "性能非劣 CI upper ≤0.10 dB"。核查确认无 objective evaluations 可数（核查 1-2），primary cost metric 无定义。双门不可执行（非"未过"，是 metric 不存在）。
+7. **最强廉价 comparator 无可作用对象**（PASS）：用户命名 "dev-tuned uniform coarse grid"。核查确认 NDA-ML 无网格（核查 1-3），coarse grid 无可 coarse 化对象。备选 "fixed two-stage coarse-to-fine / hierarchical/local refinement" 同理无对象。`_db_caliber_and_complexity.md:51-61` 确认无现有 coarse-grid/coarse-to-fine/historical comparator（grep `projects/thesis-fso/` 零命中）。
+8. **Phase A 备选终态 PROBLEM_RESOLVED_BY_CONVENTIONAL_COARSE_SEARCH 不适用**（PASS）：该终态触发条件 "full search 本身已很便宜或 coarse grid 已满足双门" 语义前提是存在 search。核查 1-5 证 search 不存在，无 search 可被 coarse grid 解决。强套 = TL-33 自欺。终态不适用。
+9. **method-production.md 入口四门**（PASS，3 门 FAIL 路由 STRATEGIC_GATE）：门1 physical degree of freedom——NDA-ML 估计器内无 search 自由度可裁剪 FAIL；门2 baseline failure align with candidate's lever——无 lever 可作用 FAIL；门3 named conventional comparator——dev-tuned coarse grid 无网格可 coarse 化 FAIL；门4 file:line evidence——本决策 §file:line 证据 1-6 已举。3 门 FAIL + 门4 满足，路由 STRATEGIC_GATE/BLOCKED_TESTBED 而非 factory task（method-production.md L49-50）。
+10. **动估计器本体减计算 = NDA_ML_BODY_REOPEN 禁止**（PASS）：topic-index control block forbidden_actions 含 `NDA_ML_BODY_REOPEN`（L24，TL-30）。核查确认减少逐块 closed-form 成本的唯一路径是替换估计器（跳块/块间状态复用/换升幂/减 K 段数）—— 这动 NDA-ML 本体核心，触发 forbidden。确认换研究对象路径被双重禁止（违反问题定义 + 触发 forbidden）。
+11. **终态 STRATEGIC_GATE 合法性与唯一性**（PASS）：用户合同允许终态集含 STRATEGIC_GATE（"若无法证明计算问题或 novelty boundary，终止为 STRATEGIC_GATE，不计包"）。核查 5-9 证前提 A 证伪、双门 metric 失效、coarse-search 终态不适用、入口四门 3 FAIL——STRATEGIC_GATE 是**唯一合法终态**（EXECUTION_INVALID 不适用因无执行；EVIDENCE_INSUFFICIENT 不适用因非 held-out 数据不足而是前提证伪；NO_DIAGNOSTIC_METHOD_SIGNAL/COMPUTE_EFFICIENT_METHOD_SIGNAL 要求实验产物，本轮无 sprint）。
+12. **不计有效包 + campaign 计数正确**（PASS）：P09 入口门否决 = `count_excludes: entry_preflight_only`（同 CP028/CP029 先例）。campaign `accepted_valid_packages` 维持 8/10，`current_package` 维持 P09（入口已否待重指定），不触发同族连续计数（P09 未启动新族），不重开 G 族（维持 D049 关闭）。
+13. **无 truth leakage 风险**（PASS，trivially）：P09 未运行任何 deployable 路径（入口门即否），无 receiver 调用图可泄漏 true SNR/h/θ。NDA-ML 本体历史 NDA_ML_BODY 不在本次核查范围（forbidden，未触碰）。
+
+**结论**：P09 入口门裁决 `STRATEGIC_GATE` 科学事实基础**唯一正确**。承重前提 A（NDA-ML = full-search 均匀穷举候选）在源码层被证伪（`_recovery.py:171-273` closed-form + grep 零命中 + 生产 driver `:180-187` 逐块 closed-form + BPS 是独立竞争对手）。双门 primary cost metric 失效（无 objective eval 可数），coarse-search 终态不适用（无 search 可被 coarse grid 解决），入口四门 3 FAIL 路由 STRATEGIC_GATE。动估计器本体减计算触发 `NDA_ML_BODY_REOPEN` forbidden。STRATEGIC_GATE 是唯一合法终态。**counts_as_valid_package=False**（count_excludes=entry_preflight_only），campaign accepted_valid 维持 **8/10**。本轮无实验/无 held-out seed/无 artifact/无 sprint。claim ceiling 不变（LOCAL_SLICE / NONBINDING_DIAGNOSTIC）。protected owner/formal/Skill/thesis framework 不改、无 push。
+
+**未运行独立 sub-agent 的说明**：本轮入口门核查对象是源码事实（closed-form vs search），主线程已逐行 Read + grep 复算 + Explore 子 agent（agent_c9883e0a，fresh context）交叉确认 NDA-ML 实现是 closed-form、无 candidate grid、BPS 是独立竞争对手。V075 教训（verifier 必须递归调用图 + 运行时 metamorphic 门）适用于有 deployable 路径的科学包；P09 入口门未运行 deployable 路径，无调用图可递归、无 runtime 可 metamorphic，故核查以静态源码 + grep 复算为主，辅以 Explore 子 agent fresh context 交叉。若用户授权重指定 P09 入口并启动新族 sprint，须按 V075 标准（递归 AST + metamorphic 门）核查。

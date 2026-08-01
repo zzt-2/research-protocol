@@ -3018,3 +3018,68 @@ V074 16 项查的是 **consistency + H1-H6 合同**（GG params import、interle
 ### 来源
 
 用户 P08-R2 执行指令 + `p08r2_prefail_evidence.md`（三根因修复前确定性证据）+ `p08r2_h7_reproduce.json`（H7 数值复现）+ 源码逐行核（主线程 + 2 Explore 子 agent 交叉）+ D046/D048（同模式先例）+ thesis-lessons TL-21/TL-23/TL-32/TL-33 + sim-preflight rules/mve-validation.md
+
+---
+
+## D050: P09 COMPUTE_CONSTRAINED_NDA_ML_SEARCH 入口门裁决 STRATEGIC_GATE — 用户冻结合同承重前提 A（"NDA-ML 均匀穷举大量候选导致计算冗余"）被源码证伪：NDA-ML 是 closed-form 升幂+mean-angle/单正弦 FFT-ML，无 candidate 枚举、无 objective 在候选集上求值、无可裁剪搜索结构；不存在 "full-search NDA-ML"；P09 不计有效包，campaign 维持 8/10
+
+> status: active
+> date: 2026-08-01
+> 取代：无（P09 入口门首次裁决；不取代 D049/D048/D047 任何有效包结论）
+> 被取代：无
+> 依据: 源码逐行核（主线程 Read + grep 零命中 + Explore 子 agent 交叉）：`projects/simulation/common/_recovery.py:171-273` `nda_ml_recovery`（三步 closed-form：`raised = rx ** M0`（`:213`/`:243`）→ `np.angle(raised.mean())` 整块（`:232`）或 K=8 段每段一次 `np.angle(raised[lo:hi].mean())`（`:224` segmented 变体）→ unwrap+线性插值（`:226-229`）；Doppler 分支单次 FFT argmax + Quinn-Rife 插值（`:249-258`）；全程无 candidate 枚举/无 likelihood 求值）+ `projects/simulation/simulator/sc_nda_ml_sim.py:180-187` `ber_nda_awgn` 生产 driver（逐块调一次 closed-form，无 per-window objective evaluations）+ grep `full-search|exhaustive|candidate|grid_search|phase_grid|coarse|hierarchical|objective.*eval|enumerate` on `_recovery.py`/`sc_nda_ml_sim.py`/`_b11_params.py` **零命中** + `_recovery.py:91-118` `bps_cpr`（代码库唯一 exhaustive search，B 测试相位×Nw 符号距离度量）是 Pfau 2009 竞争对手**非** NDA-ML 部分（ADVISOR_BRIEFING 报 NDA-ML vs BPS ~0.006-0.14 dB）+ `_db_caliber_and_complexity.md:51-61`（NDA-ML 已是 16 real mult/symbol vs VV 24，无 coarse-grid/coarse-to-fine/historical comparator 存在；唯一 complexity 框架是"已不输 VV"）+ `_mve_results.json` `fr11_architecture_summary`（action_space=NDA-ML 升 M0 次幂盲去调制连续相位估计，非 search）+ method-production.md 入口四门（门1 物理自由度：NDA-ML 估计器内无 search 自由度可裁剪 FAIL；门2 baseline failure align：无 lever 可作用 FAIL；门3 comparator：dev-tuned uniform coarse grid 无网格可 coarse 化 FAIL；门4 file:line 已举但前 3 门 FAIL）+ thesis-lessons TL-04（空白≠机会）/TL-30（框架强制 NDA_ML_BODY_REOPEN forbidden）/TL-33（FR-26 证据链：宣称前必查源码不脑补）+ FR-23（研究起点须 baseline 具体不足 M-C-A，A 证伪=问题不成立）+ FR-22（GW 硬门控，无 GW Step 3→4a 的新 NDA-ML 主体问题不能动）
+> 触发原话: 用户 P09 执行指令（"执行一个新的有效科学大包：P09……本轮目标：P09 = COMPUTE_CONSTRAINED_NDA_ML_SEARCH……M = 当前 full-search NDA-ML；C = 有限计算量/实时接收约束；A = 均匀穷举大量候选导致计算冗余；目标 = ……用结构化搜索显著减少 objective evaluations……若无法证明计算问题或 novelty boundary，终止为 STRATEGIC_GATE，不计包。"——voice.md 2026-08-01）
+
+### 决策
+
+P09 = `COMPUTE_CONSTRAINED_NDA_ML_SEARCH` **入口门裁决 `STRATEGIC_GATE`**，**不计有效包**（属 `count_excludes: entry_preflight_only`，同 CP028/CP029 入口评估无 sprint 模式）。campaign `accepted_valid_packages` **维持 8/10**，`current_package` 维持 **P09**（入口已否，待用户重新指定 P09 入口或授权换族），不重开 G 族（G 已在 D049 关闭），不触发同族连续计数（P09 未启动新族）。本轮**无实验、无 held-out seed 运行、无 pre-test receipt 落盘（合同未冻结即被入口门否）、无 commit 之外产物**。
+
+**核心结论**：用户冻结的承重前提 A——"当前 full-search NDA-ML 均匀穷举大量候选导致计算冗余"——**在源码层被证伪**。仓库内 NDA-ML（`common/_recovery.py:171` `nda_ml_recovery`，D005 Go / D007 linewidth 统一后的 GW Step 4a 维度 D 验证赢家）是 **closed-form 解析估计器**（升 M₀=8 次幂去调制 + mean-angle / 单正弦 FFT-ML），**不是 search、不枚举候选、不在候选集上求值 objective**。因此：① 不存在 "full-search NDA-ML" 作为 M；② 双门 B 的 primary cost metric "objective evaluations" 无定义（无可数对象）；③ 用户命名的最强廉价 comparator "dev-tuned uniform coarse grid" 无网格可 coarse 化；④ Phase A 备选终态 `PROBLEM_RESOLVED_BY_CONVENTIONAL_COARSE_SEARCH` 不适用（其触发前提"full search 本身已很便宜或 coarse grid 已满足双门"要求存在 search，这里连 search 都没有）。
+
+### file:line 证据（证明 NDA-ML 无可裁剪搜索结构）
+
+1. **`common/_recovery.py:171-273` `nda_ml_recovery`** — NDA-ML 估计器核心。`assume_df_zero=True`（生产 AWGN/turbulence 路径，`:209-237`）：`raised = rx ** M0`（`:213`，向量化）；segmented 变体切 K=8 段，每段**一次** `np.angle(raised[lo:hi].mean())`（`:222-225`，K 次闭式一阶矩，非候选枚举），段间 unwrap + `np.interp`（`:226-229`）；'none' 变体整块**一次** `np.angle(raised.mean())`（`:232`）。`assume_df_zero=False`（未来 Doppler 残余，`:238-273`）：单次 FFT argmax `idx = np.argmax(np.abs(R))`（`:249`）+ Quinn-Rife 插值（`:250-258`）+ 线性回归常相位（`:262-270`）。**全程零 candidate 枚举、零 likelihood/objective 在候选集上求值**。
+2. **`simulator/sc_nda_ml_sim.py:173-191` `ber_nda_awgn`** + **`:180-187`** — 生产 driver，逐 256-sym 块调一次 `nda_ml_recovery(seg, ..., intra_block_tracking='segmented')`。每块成本 = 8 次闭式 mean-angle + unwrap/interp。**无 "per-window objective evaluations" 可数**。
+3. **grep 零命中**（已运行）：`grep -rniE "full.?search|exhaustive|candidate|grid_search|phase_grid|coarse|coarse.?to.?fine|hierarchical|objective.*eval|search.*space|enumerate" common/_recovery.py simulator/sc_nda_ml_sim.py simulator/_b11_params.py` → **零结果**。
+4. **`_recovery.py:91-118` `bps_cpr`** — 代码库**唯一** exhaustive search（B 个测试相位 × Nw 符号滑动窗口距离度量，向量化 `:102-110`，`best_b = np.argmin(metrics, axis=0)` `:113`）。是 Pfau 2009 **竞争对手**（ADVISOR_BRIEFING 报 NDA-ML ≈ BPS 0.006-0.14 dB），**不是 NDA-ML 的一部分**。不能因 BPS 是 search 而称 NDA-ML 是 search。
+5. **`explore/nda-awgn-tracking-sandbox/_db_caliber_and_complexity.md:51-61`** — NDA-ML 已有 complexity 框架：raised M0=8 = 12 real mult/symbol（公共），NDA-seg = **16 real mult/symbol**，VV = 24，DA-ML = 5.5。结论 "复杂度不输 VV" 评 medium-strength "advantage small, do not over-claim"。**无 coarse-grid / coarse-to-fine / hierarchical comparator 存在**（grep `projects/thesis-fso/` 零命中）。
+6. **`explore/single-carrier-nda-ml/_mve_results.json` `fr11_architecture_summary`** — method-map：action_space="NDA-ML 升 M0 次幂盲去调制（连续相位估计）"，**非 search**。
+
+### 为什么不走 Phase A 的 PROBLEM_RESOLVED_BY_CONVENTIONAL_COARSE_SEARCH
+
+用户合同的 Phase A 终态集含 `PROBLEM_RESOLVED_BY_CONVENTIONAL_COARSE_SEARCH`，触发条件是"full search 本身已很便宜或 coarse grid 已满足双门"。但该终态**语义前提是存在 search 可被 coarse grid 解决**。本轮源码证伪 search 存在——NDA-ML 是 closed-form，**没有 search 可被 coarse search 替代**。强行套用 = 把不存在的 search 判成"已被 conventional 解决" = 自欺式跳步（TL-33）。正确终态是入口层的 `STRATEGIC_GATE`（用户合同明文："若无法证明计算问题或 novelty boundary，终止为 STRATEGIC_GATE，不计包"）。
+
+### 为什么不是换研究对象（动估计器本体以减计算）
+
+唯一可裁剪的"重复成本"是**逐块从零重算 closed-form DSP（无块间状态复用/无 early-stop）**。但减少它 = **替换估计器**（跳块/块间状态复用/用更廉价估计器替代 M0 升幂/减少 K 段数），**不是 "对同一 objective 做结构化搜索减少 evaluations"**。这是**不同研究对象**：① 违反用户冻结的问题定义（"减少 objective evaluations"）；② 动 NDA-ML 估计器本体 = 触发 `NDA_ML_BODY_REOPEN`（forbidden_actions，TL-30，topic-index control block L24）—— 估计器是 NDA-ML 本体的核心，改它即重开本体。故此路径被双重禁止。
+
+### 适用条款
+
+- 用户合同："若无法证明计算问题或 novelty boundary，**终止为 STRATEGIC_GATE，不计包**"。
+- `method-production.md` 入口四门：门1（physical degree of freedom）NDA-ML 估计器内无 search 自由度可裁剪 → FAIL；门2（baseline failure align with candidate's lever）无 lever 可作用 → FAIL；门3（named conventional comparator）"dev-tuned uniform coarse grid" 无网格可 coarse 化 → FAIL；门4 file:line 已举（本决策 §file:line 证据 1-6），但前三门 FAIL 路由至 STRATEGIC_GATE/BLOCKED_TESTBED 而非 factory task。
+- FR-23：研究起点须 baseline 具体不足（M-C-A），A 证伪 = 问题不成立。
+- FR-22 + topic-index forbidden `NDA_ML_BODY_REOPEN`：动 NDA-ML 估计器本体（减块/复用状态/换估计器）属重开本体，禁止。
+- FR-26/TL-33：宣告前必查源码（本轮 Read `_recovery.py:171-273` + `sc_nda_ml_sim.py:173-231` + grep 零命中 + Explore 子 agent 交叉），不脑补 "NDA-ML 是 search"。
+
+### 排除的替代方案
+
+- **不强行把 NDA-ML 闭式 DSP 包装成 "objective"**：`np.angle(mean())` 是闭式一阶矩，不是 objective 在候选集上求值。包装成 objective = 制造研究对象以适配合同 = TL-12（"近零空白+巨幅增益"警觉的反面：制造问题）。
+- **不动估计器本体（跳块/状态复用/换升幂）以凑 4× cost reduction**：触发 `NDA_ML_BODY_REOPEN`，且违反用户 "不要重新证明 NDA-ML 是否有效，也不要把它当成新发现" 的边界。
+- **不把 BPS（真 search 竞争对手）当成 NDA-ML 的一部分做 coarse-grid 化**：BPS 是 comparator 非 NDA-ML 本体；对 BPS 做 coarse-grid 化是 BPS 的低复杂度变体研究，与用户冻结的 "围绕 NDA-ML" 对象不符。
+- **不宣布 PROBLEM_RESOLVED_BY_CONVENTIONAL_COARSE_SEARCH**：语义前提（有 search 被 coarse grid 解决）不成立，强套 = TL-33 自欺。
+- **不重开已关闭 G 族**：P09 入口被否不是 G 族新证据；G 族维持 D049 关闭裁决。
+- **不改 protected owner/formal/Skill/thesis framework**（同 P09 入口评估无 sprint 模式，CP028/CP029 先例）。
+
+### 影响范围
+
+- `topic-index.md` 控制块：epoch 76→**77**，`authority_pointer` D049→**D050**，`mission_checkpoint` CP040→**CP041**；`accepted_valid_packages` 维持 **8/10**；`current_package` 维持 **P09**（入口已否）；`same_family_consecutive` 维持 0（P09 未启动新族）；`next_legal_action` 更新为"重新指定 P09 入口（须过 problem-bearing 入口四门，禁重开已关闭 A/E/F/G 族及 NDA_ML_BODY_REOPEN/FOE-residual 等所有 forbidden axis），或用户授权 campaign-level 裁决（P10 提前）"。
+- `mission-log.md`：追加 CP041 行（P09 入口门 STRATEGIC_GATE，无 sprint/无 commit，count_excludes=entry_preflight_only）。
+- `verifications.md`：追加 V076（P09 入口门独立 verifier，源码事实核查 + grep 复算 + 双门失效分析）。
+- 新增 session note `S008-p09-entry-strategic-gate.md`。
+- **不新增 worker-log step-039**（P09 未执行实验，无 worker 产物；CP041 标 "无 worker-log/commit（无 sprint）"，同 CP028/CP029 先例）。
+- **不新增 artifact**（无实验产物）。
+- protected owner/formal/Skill/thesis framework/controller 不改、**无 push**。
+
+### 来源
+
+用户 P09 执行指令（"执行一个新的有效科学大包：P09……COMPUTE_CONSTRAINED_NDA_ML_SEARCH……A = 均匀穷举大量候选导致计算冗余……若无法证明计算问题或 novelty boundary，终止为 STRATEGIC_GATE，不计包"）+ 源码逐行核（`_recovery.py:171-273` `nda_ml_recovery` closed-form + `sc_nda_ml_sim.py:173-191` driver + grep 零命中 + Explore 子 agent 交叉）+ `_recovery.py:91-118` `bps_cpr`（唯一 search 是竞争对手）+ `_db_caliber_and_complexity.md:51-61`（NDA-ML 已 16 mult/symbol，无 coarse-grid comparator）+ `_mve_results.json` `fr11_architecture_summary`（非 search）+ method-production.md 入口四门 + thesis-lessons TL-04/TL-30/TL-33 + FR-22/FR-23/FR-26 + topic-index forbidden `NDA_ML_BODY_REOPEN`
