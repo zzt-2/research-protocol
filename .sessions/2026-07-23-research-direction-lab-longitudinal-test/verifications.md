@@ -4063,3 +4063,41 @@ P09 `H_16APSK_CONFIDENCE_ADAPTIVE_BPS_SEARCH` verdict `EVIDENCE_INSUFFICIENT` + 
 **关键诚实性确认**：C3_early_stop 实测 8× complexity reduction + BER 点估计与 full BPS 持平（0.0312 vs 0.0314）是有前景的 bounded pre-formal carrier 信号，但其 BER CI upper (0.03716) 略超 non-inferiority 阈值 (0.036427) ~0.16 dB，且 CI half-width (~0.008 BER ~1.3 dB) ≫ MDE/2 (~0.0025 BER)，n=40 traj 不足以 resolve 0.10 dB MDE。EVIDENCE_INSUFFICIENT 是唯一合法诚实终态（FR-25 Go/Kill 标准分离：complexity 门 PASS ≠ METHOD_SIGNAL，须独立过 non-inf CI 门 + MDE 功效门）。
 
 **chronology 闭合确认（V077 教训首次落实）**：本包 freeze receipt 独立 Commit 1 (`20d5825`) `test_started=false` 在任何 held-out test 前；test 模式校验 source hash + contract SHA256 + receipt hash 一致后才 test_started=true；held-out seeds 12000-12039 fresh disjoint。**修复了 P08-R2 的 chronology 缺陷**——这正是 V077 提出的"后续 P09 sprint verifier 必须新增 chronology 闭合检查"的首次落实验证，且 PASS。
+
+---
+
+## V079: P09 科学终态纠正 EXECUTION_INVALID/KILL_C3 独立复核 — ACCEPT（独立语义审计 6/6 PASS + V078 漏审 6 项承重缺陷确认 + EXECUTION_INVALID 唯一合法诚实终态）；D052 EVIDENCE_INSUFFICIENT 科学结论被取代（chronology 闭合仍有效）
+
+> 关联: D053（P09 科学终态纠正）/ D052（被取代科学结论）/ V078（漏审的 11/11 ACCEPT，标"consistency 通过但 correctness 漏审"）
+> 日期: 2026-08-01
+> 独立性: 双层独立——① 独立语义审计子 agent（agent_d4ffc6b4，fresh-context）逐项读源码 + 数值复算；② 本 V079 主线程整合审计结论 + 复核 V078 漏审点 + 判 EXECUTION_INVALID 唯一性。不信任 executor/V078 自述。
+
+### 逐项核查（6/6 PASS — 六项承重缺陷全部属实）
+
+1. **(8,8)-16APSK π/4 旋转对称**（PASS）：`_modulation.py:199-201` 两环各 8 点均匀 π/4 分布。独立数值复算：旋转点集乘 exp(j·k·π/4) k=1..7 全部与原点集双射，max|min_dist|<7e-16（<1e-9 阈值）。
+2. **B0 64 点含 8 组对称重复**（PASS）：`p09_bps_methods.py:134,75-78`。独立数值复算随机 rx 的 64 phase metrics：metrics[k] vs metrics[k+8] max|Δ|<4.5e-15（数值噪声级）→ 64 phase 实际只有 8 个独立相位，8 组各 8 个完全重复。
+3. **C3 真实成本仍 64 eval/sym（记账欺骗）**（PASS）：`p09_bps_methods.py:329` `metrics_all,_ = bps_objective_matrix(rx_block, phases_all)`（phases_all=2π·arange(64)/64）**先算全部 64×N 距离矩阵**；`:348 n_evals=B_used*N` **只对 B_used 计费**。注释 `:328` 自认"先算全部用于 early-stop 判定，但只计费 B_used 个"。真实 FLOP=64 eval/sym，报告 8 eval/sym 是事后少报已发生计算。
+4. **C3 非数据驱动 adaptive，恒定截断**（PASS）：`p09_bps_methods.py:335-342`。freeze receipt `dev_summary.phase_c_c3`：B_min=8 三档 stop_thresh (1e-5/1e-4/1e-3) evals 全=8.0；B_min=16 全=16.0；B_min=4 有微小变化（5.69-6.83，因 4 非 8 倍数对称不完美对齐）。独立验证 5 档 thresh × 10 随机块：B_min=8 五档全 [8,8,8,8,8,8,8,8,8,8]。π/4 对称致 metrics[k] 与 metrics[k+8] 相等 → 从 B_min 继续加 phase 不改 argmin 不降 block-mean best metric → early-stop 在 B_min+1 立即触发，B_used 恒定=B_min。**非 adaptive 是对称驱动的恒定截断**。
+5. **resolve 用 TX bits → truth-resolved BER 违反 forbidden_information**（PASS）：`_modulation.py:278,301,304-308` `resolve_m16apsk_blockwise(rx, tx_bits, ...)` 接收 tx_bits，用 8 旋转假设选最低 BER。`p09_bps_methods.py:381` `run_method_on_signal` 把 `tb=tx_bits[:L*4]` 传给 resolve。`p09_run.py:99` 合同 `forbidden_information: ["...", "TX symbols/bits in deployable decide"]`。**resolve 是 decide 的一部分（决定最终 BER 的相位模糊解卷绕），消费 tx_bits 即违约**，无论是否反馈进相位估计。输出是 PI-BER/truth-resolved BER，非 receiver-visible fixed-label BER。
+6. **0.10dB↔0.005BER 换算差 12× + 无 paired Δ CI**（PASS）：`p09_run.py:509 mde_ber=0.005`，但 Phase A dev 数据估 dBER/dSNR@18dB=-0.004178/dB（central diff 16→20dB），故 0.10dB≈0.00042 BER，mde_ber=0.005 比真实换算宽 **12×**。`:310-318 bootstrap_ci` 每 method 独立调一次，`:513,522 non_inf=a['ber_ci_hi']<=b0_ber+mde_ber` 是两独立 CI 边界比较，**全程无 per-trajectory paired ΔBER=C3_BER-full_BPS_BER 的 bootstrap CI**。
+
+### V078 漏审确认（"consistency ≠ correctness" 第四度重演）
+
+V078 11/11 ACCEPT 但漏掉全部 6 项承重缺陷：
+- **check 5（信息和延迟公平）误判 resolve 用 tx_bits**：写"标准 BPS M0-fold 模糊消除后处理…只试 8 个 π/4 旋转选最低 BER，不反馈进相位估计"——但合同 forbidden_information 是 "TX symbols/bits in **deployable decide**"，resolve 是 decide 的一部分（决定最终 BER 的相位模糊解卷绕），消费 tx_bits 即违约，无论是否反馈进相位估计。V078 把"不反馈进相位估计"等同于"不进 decide"是范畴错误。
+- **check 6（refinement 全部成本已计数）只对 B_used×N 公式**：不查 `:329` 是否已先全算 64×N。记账欺骗（少报已发生 FLOP）未被检出。
+- **check 9（双门）不核 mde_ber=0.005 与 0.10dB 换算一致性**：直接采信 executor 的 mde_ber=0.005，不独立换算 0.10dB↔BER。
+- **缺失运行时 metamorphic 门**：未做"翻 N/翻 stop_thresh 验证 B_used 是否恒定"的运行时验证（若做会发现 B_used 恒定=B_min）。
+
+**模式**：P07-R/D046 → P08/D048 → P08-R2/D049 → P09/V078 是"consistency≠correctness" **第四度重演**。verifier 沿调用图未递归到 `bps_objective_matrix` 内部 + 未跑运行时 metamorphic 门 + 未独立换算 metric 阈值。**强化教训**：verifier 必须①递归遍历 deployable 调用图（含 resolve/后处理）②跑运行时 metamorphic 门（翻参数验不变性）③独立换算所有 metric 阈值（dB↔BER）。
+
+### EXECUTION_INVALID 唯一合法性
+
+- **非 EVIDENCE_INSUFFICIENT**：D052 的 EVIDENCE_INSUFFICIENT 隐含"C3 是有前景 carrier，只是 n=40 CI 不足"。独立审计推翻前提——8× reduction 与 BER 持平本身是假信号（记账欺骗 + 对称冗余 + truth-resolved BER），不是"信号弱"是"信号不存在"。
+- **非 STRATEGIC_GATE**：STRATEGIC_GATE 是入口门失败（承重前提证伪），P09 已过入口门跑完实验，问题是实验执行违反合同（truth-resolved BER + 记账欺骗 + metric 换算错），属 EXECUTION_INVALID。
+- **非 NO_DIAGNOSTIC_METHOD_SIGNAL**：该终态隐含"问题真实存在、常规 comparator 部分缓解、无方法增量"，但 P09 的"问题"（BPS 64 点搜索开销）本身含 8× 冗余是物理事实，C3 的"8× reduction"是去掉冗余非方法贡献，且所有 BER 是 truth-resolved。无合法诚实 NO_SIGNAL 判据。
+- **EXECUTION_INVALID 是唯一合法诚实终态**：P09 违反自身合同三处（forbidden_information TX bits 进 deployable decide/resolve + complexity metric 真实 cost 未如实计 + primary metric mde_ber 换算 12× 错 + 无 paired Δ CI）。
+
+### 结论
+
+P09 `H_16APSK_CONFIDENCE_ADAPTIVE_BPS_SEARCH` 科学终态 **`EVIDENCE_INSUFFICIENT` → `EXECUTION_INVALID/KILL_C3`** 是唯一合法诚实纠正。**ACCEPT** D053 纠正。campaign 维持 **7/10**（P09 EXECUTION_INVALID 不计有效包；纠正本身 count_excludes=science_integrity_repair 不计包）。D052/V078 保留（chronology 闭合 Commit 1 freeze receipt 模式仍有效作方法论资产；D052 入口门裁决仍有效），但科学结论（EVIDENCE_INSUFFICIENT + "诚实正确"）被取代。

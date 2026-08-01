@@ -1,0 +1,275 @@
+{
+  "package": "P10",
+  "id": "RISK_BUDGETED_SINGLE_EXPERT_ML_CMA_ROUTER",
+  "contract_sha256": "8e603bd443ff340db887602ea2e5e014c7b9424820faacc8cc419b348a64d610",
+  "contract": {
+    "package": "P10",
+    "id": "RISK_BUDGETED_SINGLE_EXPERT_ML_CMA_ROUTER",
+    "problem": {
+      "M": "\u56fa\u5b9a\u4f7f\u7528 ButterflyCNN ML \u5747\u8861\u5668 \u6216 \u56fa\u5b9a\u4f7f\u7528 StandardCMA (\u4e8c\u9009\u4e00, payload \u524d\u51bb\u7ed3)",
+      "C": "\u63a5\u6536\u5de5\u51b5\u5728 \u77ed/\u6162\u53d8 (\u5c0f SOP \u6f02\u79fb) \u4e0e \u957f/\u5feb\u53d8 (\u5927 SOP \u6f02\u79fb/OOD) \u4e4b\u95f4\u53d8\u5316, \u53ea\u5141\u8bb8\u6267\u884c\u4e00\u4e2a\u4e3b\u4e13\u5bb6",
+      "A": "\u5386\u53f2\u8bc1\u636e\u663e\u793a\u4e13\u5bb6\u6392\u540d\u53cd\u8f6c (D015/S017/S020/D022); \u7528\u6237\u6307\u4ee4\u63cf\u8ff0\u4e0e\u8bc1\u636e\u65b9\u5411\u76f8\u53cd, fresh dev \u72ec\u7acb\u590d\u73b0\u771f\u5b9e\u65b9\u5411",
+      "goal": "\u4ec5\u6839\u636e receiver-visible \u524d\u7f00\u4e0e\u5408\u6cd5\u914d\u7f6e, \u5728 payload \u524d\u9009 ML \u6216 CMA, \u53ea\u6267\u884c\u88ab\u9009\u4e2d\u7684\u4e00\u4e2a",
+      "claim_ceiling": "\u8de8\u5de5\u51b5\u98ce\u9669\u7ea6\u675f\u5355\u4e13\u5bb6\u9009\u62e9\u7b56\u7565 (\u975e\u65b0\u5747\u8861\u5668/\u975e\u9996\u521b ML-CMA \u6df7\u5408/\u975e\u901a\u7528\u667a\u80fd\u63a5\u6536\u673a)"
+    },
+    "shared_anchor": {
+      "paired_realization": true,
+      "modulation": "QPSK (\u53cc\u504f\u632f PolMUX, P05 identity)",
+      "turbulence": "weak/moderate/strong (params.py provenance, \u4e0d\u5236\u9020\u65b0\u6e4d\u6d41)",
+      "receiver_visible_info": "rx prefix + known pilot/training symbols \u6b8b\u5dee + raw RX stats + \u77ed CMA diagnostic + \u914d\u7f6e\u5b57\u6bb5",
+      "latency": "payload \u524d\u9009 expert (no cross-payload state in router decide)",
+      "ambiguity_resolution": "fixed-label BER PRIMARY (swap-visible \u4e0d\u53d8\u91cf 10); PI-BER secondary (swap-blind, \u62a5\u544a\u4e0d\u5224)"
+    },
+    "experts": {
+      "ML": "ButterflyCNNEqualizer2x2 (common/_ml_equalizer.py:104, P05 frozen identity, n_tap=11, lr=5e-3, batch=1024, n_epochs=15, MSE supervised)",
+      "CMA": "StandardCMA2x2 (prompt019_mu_compress_mve.py:96, Godard 1980 with-z, P05 corrected, n_tap=11, mu=1e-3, R2=1.0, block=64)"
+    },
+    "primary_metric": {
+      "metric": "fixed-label BER (swap-visible, \u4e0d\u53d8\u91cf 10) PRIMARY + PI-BER secondary",
+      "decision_rule": "router \u53ea\u7528 receiver-visible feature, payload TX truth \u53ea\u7528\u4e8e\u6700\u7ec8\u8ba1\u5206",
+      "forbidden_in_decide": [
+        "payload TX symbols/bits",
+        "true h/theta/SNR/gamma_bar/fG",
+        "\u4e24\u4e13\u5bb6 payload \u8f93\u51fa",
+        "post-hoc oracle \u6807\u7b7e"
+      ]
+    },
+    "complexity_metric": {
+      "metric": "total compute proxy = prefix feature \u63d0\u53d6 + \u77ed CMA diagnostic + router decide + \u88ab\u9009\u4e13\u5bb6 train+infer \u5168\u90e8 FLOP",
+      "includes": "\u672a\u9009\u4e13\u5bb6\u5fc5\u987b\u96f6\u8c03\u7528 (single-path \u95e8); oracle selector \u72ec\u7acb post-hoc \u5206\u652f\u4e0d\u5171\u4eab\u72b6\u6001",
+      "reduction_check": "router \u6210\u672c\u660e\u663e\u4f4e\u4e8e\u540c\u65f6\u8fd0\u884c\u4e24\u4e13\u5bb6 (\u5408\u540c \u00a7\u516b METHOD_SIGNAL \u6761\u4ef6 6)"
+    },
+    "baseline_ladder": {
+      "B0_always_CMA": "\u56fa\u5b9a\u9009 CMA",
+      "B1_always_ML": "\u56fa\u5b9a\u9009 ML",
+      "B2_best_global_single_expert": "dev-tuned \u5168\u5c40\u6700\u4f18\u5355\u4e13\u5bb6 pick (frozen at test)",
+      "B3_configuration_only_rule": "N >= N_thresh -> CMA else ML (deployable config only)",
+      "B4_dev_tuned_simple_prefix_threshold": "\u5355 receiver-visible stat \u9608\u503c"
+    },
+    "candidates": {
+      "C1_frozen_logistic_ridge_router": "\u51bb\u7ed3 logistic/ridge on receiver-visible prefix features (dev tune weights/bias/thresh)",
+      "C2_risk_constrained_router_with_CMA_safe_fallback": "risk score > thresh -> CMA; else regret sign \u51b3\u5b9a",
+      "C3_conservative_router_with_abstention": "\u4e0d\u786e\u5b9a\u65f6\u9009 CMA (abstain -> CMA)"
+    },
+    "mde": {
+      "fixed_ber_MDE": 0.02,
+      "MDE_rationale": "\u52a1\u5b9e\u53ef\u6bd5\u4e1a\u8def\u7ebf (D005); fixed-label BER \u5728 operating region \u7684\u53ef\u68c0\u6d4b\u5dee",
+      "complexity_fold": 2.0,
+      "complexity_rationale": "router \u6210\u672c\u987b\u660e\u663e\u4f4e\u4e8e\u540c\u65f6\u8dd1\u4e24\u4e13\u5bb6 (\u5355\u8def\u5f84\u6267\u884c\u4ef7\u503c); \u975e 4x (router \u672c\u8eab\u6709\u6210\u672c)"
+    },
+    "non_inferiority_threshold": "\u5019\u9009 fixed-BER \u4e0d\u52a3\u4e8e always-CMA safety margin (catastrophic event rate)",
+    "method_signal_conditions": [
+      "1. \u5019\u9009\u76f8\u5bf9\u6700\u5f3a deployable \u4f20\u7edf\u89c4\u5219\u6539\u5584\u8fbe\u9884\u51bb\u7ed3 MDE \u4e14 paired CI \u652f\u6301",
+      "2. \u6355\u83b7\u9884\u51bb\u7ed3\u6bd4\u4f8b\u7684 oracle headroom",
+      "3. catastrophic event rate \u4e0d\u52a3\u4e8e always-CMA safety margin",
+      "4. \u6bcf\u4e2a\u4e3b\u8981\u5de5\u51b5\u65e0\u707e\u96be\u6027\u9000\u5316",
+      "5. \u771f\u6b63\u53ea\u8fd0\u884c\u4e00\u4e2a payload \u4e13\u5bb6 (single-path \u95e8)",
+      "6. router \u6210\u672c\u660e\u663e\u4f4e\u4e8e\u540c\u65f6\u8fd0\u884c\u4e24\u4e13\u5bb6",
+      "7. \u4fe1\u53f7\u4e0d\u5b8c\u5168\u7531\u914d\u7f6e\u5b57\u6bb5\u6216 swap \u6807\u7b7e\u89e3\u91ca"
+    ],
+    "seeds": {
+      "dev_seeds_phaseA": [
+        13000,
+        13001,
+        13002,
+        13003,
+        13004,
+        13005
+      ],
+      "dev_seeds_phaseBC": [
+        13010,
+        13011,
+        13012,
+        13013,
+        13014,
+        13015,
+        13016,
+        13017,
+        13018,
+        13019
+      ],
+      "test_seeds": [
+        14000,
+        14001,
+        14002,
+        14003,
+        14004,
+        14005,
+        14006,
+        14007,
+        14008,
+        14009,
+        14010,
+        14011,
+        14012,
+        14013,
+        14014,
+        14015,
+        14016,
+        14017,
+        14018,
+        14019,
+        14020,
+        14021,
+        14022,
+        14023,
+        14024,
+        14025,
+        14026,
+        14027,
+        14028,
+        14029,
+        14030,
+        14031,
+        14032,
+        14033,
+        14034,
+        14035,
+        14036,
+        14037,
+        14038,
+        14039
+      ],
+      "history_disjoint_check": "P09 11000-11019/12000-12039, P08-R2 8000-8039/9000-9019, P08-R 6000-6019/7000-7039, P08 1000-1014/1100-1114, P05 1000-1011"
+    },
+    "crossover_cells": {
+      "ML_favored_hypothesis": {
+        "N": 2000000,
+        "f_G": 30.0,
+        "SNR_dB": 20.0,
+        "SOP_RATE": 1e-07,
+        "turb": "strong"
+      },
+      "CMA_favored_hypothesis": {
+        "N": 5000000,
+        "f_G": 1000.0,
+        "SNR_dB": 20.0,
+        "SOP_RATE": 4e-07,
+        "turb": "strong"
+      },
+      "note": "\u57fa\u4e8e D015/S017/S020 \u8bc1\u636e\u65b9\u5411 (\u77edN\u5c0fSOP->ML; \u957fN\u5927SOP/OOD->CMA). fresh dev \u72ec\u7acb\u9a8c\u8bc1\u4e24\u65b9\u5411."
+    },
+    "allowed_terminals": [
+      "PROBLEM_ABSENT_OR_RESOLVED_BY_CONFIG_RULE",
+      "PROBLEM_RESOLVED_BY_SIMPLE_ROUTING",
+      "NO_DIAGNOSTIC_METHOD_SIGNAL",
+      "RISK_BUDGETED_ROUTER_METHOD_SIGNAL",
+      "EVIDENCE_INSUFFICIENT",
+      "EXECUTION_INVALID",
+      "STRATEGIC_GATE"
+    ],
+    "single_path_execution_gate": {
+      "priority": "HIGHEST (\u5408\u540c \u00a7\u516d)",
+      "checks": [
+        "1. router \u5148\u4ea7\u751f expert_id",
+        "2. \u4e4b\u540e\u53ea\u8c03\u7528\u88ab\u9009\u4e13\u5bb6",
+        "3. runner \u8bb0\u5f55 ML/CMA \u8c03\u7528\u6b21\u6570\u548c\u8bad\u7ec3\u6210\u672c",
+        "4. \u672a\u9009\u4e13\u5bb6 monkeypatch \u4e3a \u8c03\u7528\u5373\u629b\u5f02\u5e38",
+        "5. verifier \u968f\u673a\u62bd >=20 realization \u9a8c\u8bc1\u672a\u9009\u4e13\u5bb6\u96f6\u8c03\u7528",
+        "6. \u6210\u672c\u542b prefix feature + \u77ed\u8bca\u65ad + router + \u88ab\u9009\u4e13\u5bb6\u5168\u90e8",
+        "7. oracle selector \u72ec\u7acb post-hoc \u5206\u652f\u8fd0\u884c\u4e24\u4e13\u5bb6, \u4e0d\u4e0e deployable \u5171\u4eab\u72b6\u6001/\u7279\u5f81"
+      ]
+    }
+  },
+  "source_hashes": {
+    "explore/p10-single-expert-router/p10_methods.py": "093dae011e4e68ed76777068843558847c366258d908ef158a3a80f2bc177d67",
+    "explore/p10-single-expert-router/p10_run.py": "8c4dfdbb9f03603610a5e198cee92c49c1b378a6ac497a61c02b934dcb394c15",
+    "common/_ml_equalizer.py": "db352990f6ca740955bba3b48136077d8b8147d5d2b6af700350ad9f62d631df",
+    "common/_cma.py": "63d4493dfa2ebd8ce04446aab311ad0f93a4abe3d336db3260903c3de6c30c46",
+    "common/_gg_time.py": "d8e7929d00d885eccf111eb96d80ecd3822b065cbf3eca09ed31912c3da73113",
+    "common/_config.py": "91b8664a3af1684a9be3c43e6aa125a403f6cec98bac7b8048fe3c9fee1a9bd9",
+    "explore/cma-fade-divergence/prompt019_mu_compress_mve.py": "d95f1c637ffcb63adbe9b22e4fcf8829bf4fa5357305cca0e62c2edbafb3193d",
+    "explore/cma-fade-divergence/ml_long_seq_failure.py": "5ed5ff9c5145292a59fab9688c1cbf823e7ae2ebea4fb60878ed81f8e10a3e1d",
+    "explore/cma-fade-divergence/prompt012_longseq_audit.py": "b4e55d6971cc370605309472cdb17c19996d41c1c11b0ba5b18bc6dceea837a1"
+  },
+  "primary_metric": "fixed-label BER (swap-visible, \u4e0d\u53d8\u91cf 10) PRIMARY + PI-BER secondary",
+  "complexity_metric": "total compute proxy = prefix feature \u63d0\u53d6 + \u77ed CMA diagnostic + router decide + \u88ab\u9009\u4e13\u5bb6 train+infer \u5168\u90e8 FLOP",
+  "mde": {
+    "fixed_ber_MDE": 0.02,
+    "MDE_rationale": "\u52a1\u5b9e\u53ef\u6bd5\u4e1a\u8def\u7ebf (D005); fixed-label BER \u5728 operating region \u7684\u53ef\u68c0\u6d4b\u5dee",
+    "complexity_fold": 2.0,
+    "complexity_rationale": "router \u6210\u672c\u987b\u660e\u663e\u4f4e\u4e8e\u540c\u65f6\u8dd1\u4e24\u4e13\u5bb6 (\u5355\u8def\u5f84\u6267\u884c\u4ef7\u503c); \u975e 4x (router \u672c\u8eab\u6709\u6210\u672c)"
+  },
+  "non_inferiority_threshold": "\u5019\u9009 fixed-BER \u4e0d\u52a3\u4e8e always-CMA safety margin (catastrophic event rate)",
+  "dev_seeds_phaseA": [
+    13000,
+    13001,
+    13002,
+    13003,
+    13004,
+    13005
+  ],
+  "dev_seeds_phaseBC": [
+    13010,
+    13011,
+    13012,
+    13013,
+    13014,
+    13015,
+    13016,
+    13017,
+    13018,
+    13019
+  ],
+  "test_seeds": [
+    14000,
+    14001,
+    14002,
+    14003,
+    14004,
+    14005,
+    14006,
+    14007,
+    14008,
+    14009,
+    14010,
+    14011,
+    14012,
+    14013,
+    14014,
+    14015,
+    14016,
+    14017,
+    14018,
+    14019,
+    14020,
+    14021,
+    14022,
+    14023,
+    14024,
+    14025,
+    14026,
+    14027,
+    14028,
+    14029,
+    14030,
+    14031,
+    14032,
+    14033,
+    14034,
+    14035,
+    14036,
+    14037,
+    14038,
+    14039
+  ],
+  "crossover_cells": {
+    "ML_favored_hypothesis": {
+      "N": 2000000,
+      "f_G": 30.0,
+      "SNR_dB": 20.0,
+      "SOP_RATE": 1e-07,
+      "turb": "strong"
+    },
+    "CMA_favored_hypothesis": {
+      "N": 5000000,
+      "f_G": 1000.0,
+      "SNR_dB": 20.0,
+      "SOP_RATE": 4e-07,
+      "turb": "strong"
+    },
+    "note": "\u57fa\u4e8e D015/S017/S020 \u8bc1\u636e\u65b9\u5411 (\u77edN\u5c0fSOP->ML; \u957fN\u5927SOP/OOD->CMA). fresh dev \u72ec\u7acb\u9a8c\u8bc1\u4e24\u65b9\u5411."
+  },
+  "receipt_creation_time": "2026-08-01T19:02:02+0800",
+  "test_started": false
+}

@@ -291,3 +291,12 @@
 - "八、独立 verifier 必须由 fresh-context verifier 检查（11 项）：Commit 1 早于任何 held-out test/receipt-source-contract hash 闭合/held-out seeds fresh/16APSK BPS objective 实现正确/full-coarse-two-stage-candidate 信息和延迟公平/refinement 全部成本已计数/完整 deployable 调用图无 truth leakage/raw→aggregate/性能非劣和复杂度双门/terminal verdict 唯一/campaign 从正确的 7/10 更新/若本包有效无论正负才变成 8/10。"
 - "九、最终只汇报五项（1.计数纠正结果及 pre-test receipt/Commit 1；2.full/最强传统 comparator/最佳候选的性能、复杂度和 CI；3.terminal verdict、METHOD_SIGNAL 和 active carrier；4.正确 campaign 计数及论文包装；5.worker-log/artifact/verifier/Commit 1/Commit 2 SHA）。不 push。"
   → D051 / V077（计数纠正）+ P09 H_16APSK_CONFIDENCE_ADAPTIVE_BPS_SEARCH（重定向，进行中）
+
+## 2026-08-01（P09 纠偏 + P10 执行指令，用户中转）
+
+- "在同一对话端到端完成：A. 将 P09 从 EVIDENCE_INSUFFICIENT 纠正为 EXECUTION_INVALID/KILL_C3；B. 执行 P10 = RISK_BUDGETED_SINGLE_EXPERT_ML_CMA_ROUTER。"
+- "worktree：D:\code\study\research-protocol\.worktrees\rdl-method-production-v2 / 当前 HEAD：51e9a8e"
+- "一、P09 确定性纠偏——独立语义审计已经发现四项承重缺陷，必须从源码重新核实：1.(8,8)-16APSK 具有 π/4 旋转对称性；2.B0在完整2π搜索64点，实际包含8组对称重复；3.C3先调用 bps_objective_matrix 计算全部64点，再事后只计前8点，因此真实执行成本仍为64 eval/symbol；4.C3所有dev/test realization均固定B_used=8，没有数据依赖动作，不是adaptive early-stop；5.resolve_m16apsk_blockwise使用TX bits选择旋转，只能作truth-resolved/PI-like指标，不能称receiver-visible fixed-label BER；6.frozen 0.10dB与mde_ber=0.005换算不一致，且未使用paired Δ CI。处理：新增D/V纠偏，不删除D052/V078；将P09科学终态改为 EXECUTION_INVALID；P09不计包，campaign仍为7/10；P09代码和artifact保留并加INVALIDATED标记；H_BPS轴关闭：只剩'将搜索域缩到π/4基本域'的传统实现纠错资产；禁止P09-R、禁止扩大n、禁止把fixed basic-domain BPS包装成方法；完成后立即执行P10，不得只做治理提交。"
+- "二、P10研究问题——P10 = RISK_BUDGETED_SINGLE_EXPERT_ML_CMA_ROUTER。禁止做已经Kill的'先跑ML，再检测失败，再切CMA'。本轮动作必须发生在payload处理前：M：固定使用ButterflyCNN或固定使用CMA；C：接收工况在长/慢变与短/快变之间变化，且只允许执行一个主专家；A：历史证据显示专家排名反转——长慢变条件ML占优，短快变/OOD条件CMA明显占优；目标：仅根据receiver-visible前缀与合法配置，在运行payload专家前选择ML或CMA，只执行被选中的一个。这是一种跨工况、风险约束的单专家接收策略，不声称新均衡器。"
+  → D053 / V079（P09 纠正 EXECUTION_INVALID）+ P10 RISK_BUDGETED_SINGLE_EXPERT_ML_CMA_ROUTER（进行中）
+  [绑定结论：本轮端到端完成 P09 纠偏 + P10，中间不参与技术判断]
