@@ -70,9 +70,11 @@ SCHEDULER_JUDGMENTS = {
 
 APPROVED_SCRIPT_APIS = {
     "append_event",
+    "build_execution_receipt",
     "hash_bundle",
     "rebuild_state",
     "render_status",
+    "validate_execution_receipt",
     "validate_receipt",
     "validate_task_control",
 }

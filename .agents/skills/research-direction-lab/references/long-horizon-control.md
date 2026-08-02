@@ -15,13 +15,25 @@ The block records a judgment already made by the master. It never computes or
 selects the next action. Do not implement a scheduler or automatic candidate
 selector.
 
-Long-running RDL topics use three record layers: `topic-index.md` for the
-current snapshot, fixed `mission-log.md` for one compact checkpoint per
-accepted package, and T/worker-log/artifacts/commit for package detail.
-The current snapshot contains no package-by-package history: keep the frozen
-mission, current scope, invariants, foreground block, current gate, and next
-legal action there. Keep the compact chain in `mission-log.md` and detailed
-history in decisions, verification, worker logs, and artifacts.
+Long-running RDL topics use three positive record layers:
+
+1. `topic-index.md` is the current snapshot. Keep only the frozen mission,
+   current scope and invariants, foreground control, current valid status,
+   latest checkpoint, next legal action, and key recovery pointers. Do not
+   embed package-by-package history, long numeric tables, or superseded
+   decision prose.
+2. `mission-log.md` is the compact checkpoint chain. For each accepted event,
+   record one entry with the package/evidence pointer, formal disposition,
+   mission method delta, weight and drift, and next action.
+3. The detail layer is D/V when governance genuinely triggers, plus T,
+   worker-log, raw artifacts, and research notes. Keep execution detail there;
+   a routine package does not create D/V/S merely because work occurred.
+
+At package close, check that the topic index can be recovered in one short
+read, the current fields contain no superseded history, the mission log never
+duplicates worker-log detail, and only necessary layers were written. A
+recommended size target may reveal drift, but line count is not a semantic
+decision and never replaces owner judgment.
 
 ## Topic control block
 

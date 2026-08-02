@@ -4,24 +4,24 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v1
-  control_epoch: 7
+  control_epoch: 8
   role: SYSTEM_DESIGN
   mission: 设计并验证轻量长程研究运行协议
-  active_lane: DESIGN_COMPLETE_V21
-  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D019
-  decision_gate: v2.1 最小修订、个人 Skill 同步与 V013 独立终验均 PASS；下一 live-test 入口由 live topic 选择
+  active_lane: SKILL_MINIMAL_PATCH_VERIFIED
+  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D020
+  decision_gate: 三类 Skill 最小 patch、六案审计重放、个人副本同步与 V014 独立终验均 PASS；本轮 patch 冻结
   allowed_actions:
     - PROTOCOL_AUDIT
-    - LIVE_TEST_PREPARATION
+    - AMC_GROUNDWORK_TOPIC_CREATION
   forbidden_actions:
     - SCIENTIFIC_DISPATCH
     - SKILL_SCIENCE_CAMPAIGN
     - FORMAL_STAGE_CHANGE
-  next_legal_action: 保留为 v2.1 审查基线；下一 live-test 入口与任务由 live topic 持有
+  next_legal_action: 新建AMC Groundwork专题并从Step 1开始
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-07-29（D019/V013：v2.1 最小修订终验 PASS）
+> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-02（D020/V014：三类 Skill 最小 patch 独立终验 PASS）
 
 ## 专题信息
 
@@ -49,6 +49,7 @@ rdl_control:
 - 基于真实 science-scout campaign 的 SCIENCE_FREEZE，当前先冻结四层记忆与双日志，复盘 system 设计在真实长跑中的兑现差距；不改变 Pilot-Jones 正式 Groundwork。
 - R002 完成后，先记录并分析一次真实压缩恢复跑偏，设计、演练和审查轻量长程运行协议；用户认可后以 fork 做真实纵向运行，设计完成前不修改 Skill/controller、不派具体科学方向。
 - 基于 live-test R009 对 T001–T026 的效果审计，允许只修恢复三问、方法工厂硬路由、signal promotion preflight 与真实恢复 receipt；不新增 controller，不改变科学 verdict。
+- 基于 H003/R004 的历史回归，只补 executable semantic gates、contribution tiers 与 lightweight persistence；不增加第四类 patch，不修改既有科学 verdict 或 formal owner。
 
 ### 明确不含
 
@@ -105,6 +106,10 @@ rdl_control:
   - 原因：CP001–CP017 方法增量 0/17；T019 后出现 2 个 signal，但 formal 转化仍为 0/2，且 current snapshot 已混入 package history。
   - 新范围：只改 RDL 恢复路由、方法工厂硬触发、promotion preflight、真实恢复 receipt 和 live current-view 压缩。
   - 影响的未决项：下一 live test 以至少一个 signal 转为 active carrier/`PROMOTION_READY` 为成功，不以包装或写作材料替代。
+- **[2026-08-02] 三类 Skill 最小 patch 与历史回归（D020）**：用户明确授权接收 H003 后修改 Research Direction Lab Skill。
+  - 原因：真实 campaign 暴露 scale/action 语义门、贡献分层与长程记录减负三个缺口。
+  - 新范围：只改 executable semantic gates、contribution tiers、lightweight persistence 及既有 receipt validator/测试，并同步个人运行副本。
+  - 影响的未决项：本轮 patch 在 V014 PASS 后冻结；不启动 AMC、不修科学包、不创建 P12、不改变 formal owner。
 
 ## 已确认结论
 
@@ -132,6 +137,7 @@ rdl_control:
 - `science_slots`、固定最小批次数求解和通用资源匹配不进入目标体系。
 - harvest 逐单元评估但不逐单元强制造条目；普通 Probe 不默认生成完整治理文档链。
 - `T###` 是不可变任务书，H 只用于主控续接；不得为每个轻量工作包机械生成 S/D/V/H 全套。
+- 方法产出分为 `THESIS_MAIN_METHOD`、`THESIS_ENGINEERING_COMPONENT`、`SUPPORTING_MATERIAL`；支持材料不成为 active carrier，真实且公平的 B 级工程组件保留合法入口。
 
 ## 进展线索
 
@@ -171,6 +177,7 @@ rdl_control:
 - **D018 / v2 amendment**：phase-1 审计确认无严重跨 lane，但 mission success 漂移为反证/修复闭包。v2 改用正向方法合同、formal/method 双账、固定 `mission-log.md` 三层记录、checkpoint guard 和 master-only owner 更新；不建 controller。
 - **V012**：独立终验 PASS；两项初审 P2（旧 checkpoint 缺证据指针、registry epoch 过期）已关闭，P0/P1/P2=0。
 - **live R009 / D019**：T001–T026 审计确认方法工厂改善近端发现，但 signal→formal 为 0/2；授权 v2.1 最小路由修订，不重写体系。
+- **R004 / D020 / V014**：接收 H003 后完成六案修改前后盲测；只补五门 executable evidence contract、三层贡献合同与三层轻量持久化，个人运行副本同步且独立终验 PASS（P0/P1/P2=0）。
 
 ## 未决项
 
@@ -183,10 +190,11 @@ rdl_control:
 - ~~H004/T001 已冻结下一科学 campaign 的恢复入口~~（D015 暂停执行；仅保留为历史入口，不再作为当前 next action）。
 - 新科学项目首次采用 current layout 时，需要渐进生成 `state/current.yaml`、`portfolio/current.yaml`、`harvest/current.yaml`；禁止为了迁移整洁批量改写旧 artifacts。
 - ~~R002 历史复盘尚未执行~~（已完成）：见 `R002-long-horizon-runtime-retrospective.md`。
-- D019 v2.1 已终验并同步；下一 live test 的具体 signal→formal 转化入口由 live topic 选择。
+- D020 三类 patch 已实现、同步并由 V014 独立终验 PASS；本轮不再增加规则或科学工作。
 
 ## 当前位置
 
-T001–T026 效果审计已形成 live R009。D019 v2.1 保留 D018 架构，只补恢复三问、
-工厂硬路由、promotion preflight 和事件式 recovery receipt；V013 已 PASS，个人
-Skill 已同步。system topic 返回审查基线，下一 live-test 入口由 live topic 持有。
+H003 已接收，R004/D020 只补 executable semantic gates、contribution tiers 与
+lightweight persistence。六案审计重放、自动测试、个人 Skill 同步与 V014 独立
+终验均 PASS（P0/P1/P2=0）；既有科学 verdict、dormant longitudinal topic 与
+formal owner 未变。下一合法动作：新建AMC Groundwork专题并从Step 1开始。

@@ -163,7 +163,7 @@ def test_probe_semantics_precede_evidence_scaling_and_default_artifacts_stay_sma
     evidence = (ROOT / "references/evidence-and-claims.md").read_text(encoding="utf-8")
     layout = (ROOT / "references/project-layout.md").read_text(encoding="utf-8")
     core = (ROOT / "references/core-loop.md").read_text(encoding="utf-8")
-    assert evidence.index("Semantic smoke before scale") < evidence.index("Protect evidence integrity")
+    assert evidence.index("Executable semantic gates before scale") < evidence.index("Protect evidence integrity")
     for phrase in ("constant or trivial solution", "no-op or identity", "output support"):
         assert phrase in evidence
     assert "probes/<probe-id>/record.yaml" in layout
@@ -173,6 +173,97 @@ def test_probe_semantics_precede_evidence_scaling_and_default_artifacts_stay_sma
     assert "receipt/verifier according to work intensity and risk" in core
     assert "conditional Scout or required Deep-Evidence integrity files" in layout
     assert "manifest, artifacts, receipt, execution facts" not in core
+
+
+def test_executable_semantic_gates_are_complete_and_fail_closed():
+    evidence = (ROOT / "references/evidence-and-claims.md").read_text(encoding="utf-8")
+    normalized = " ".join(evidence.split())
+
+    for gate in (
+        "parameter_injection",
+        "hidden_truth_metamorphic",
+        "state_lifecycle",
+        "metric_information",
+        "real_action_and_cost",
+    ):
+        assert f"`{gate}`" in evidence
+    assert (
+        "applicability | executable test | observed result | artifact pointer | PASS/FAIL/N/A reason"
+        in normalized
+    )
+    for blocked_action in (
+        "scale seeds or cells",
+        "freeze a METHOD_SIGNAL",
+        "enter promotion",
+    ):
+        assert blocked_action in normalized
+    assert "statistics cannot repair a semantic FAIL" in normalized
+    assert "scale or normalization action" in normalized
+    assert "invariant downstream evaluation" in normalized
+
+
+def test_contribution_tiers_keep_methods_components_and_support_distinct():
+    method = (ROOT / "references/method-production.md").read_text(encoding="utf-8")
+    harvest = (ROOT / "references/thesis-harvest.md").read_text(encoding="utf-8")
+    combined = " ".join((method + "\n" + harvest).split())
+
+    for tier in (
+        "THESIS_MAIN_METHOD",
+        "THESIS_ENGINEERING_COMPONENT",
+        "SUPPORTING_MATERIAL",
+    ):
+        assert f"`{tier}`" in combined
+    for phrase in (
+        "real deployable action",
+        "fair, tuned, task-matched conventional comparator",
+        "does not become an active carrier",
+        "valid negative is not method progress",
+        "packaging boundary is not a METHOD_SIGNAL",
+        "describes exploration coverage only",
+        "report a strategic shortage",
+    ):
+        assert phrase in combined
+
+
+def test_long_horizon_persistence_has_a_small_current_snapshot_and_detail_boundary():
+    control = (ROOT / "references/long-horizon-control.md").read_text(encoding="utf-8")
+    normalized = " ".join(control.split())
+
+    for phrase in (
+        "frozen mission",
+        "current scope and invariants",
+        "foreground control",
+        "current valid status",
+        "latest checkpoint",
+        "next legal action",
+        "key recovery pointers",
+        "formal disposition",
+        "mission method delta",
+        "weight and drift",
+        "detail layer",
+        "one short read",
+        "superseded history",
+        "duplicates worker-log detail",
+    ):
+        assert phrase in normalized
+    assert "line count is not a semantic decision" in normalized
+
+
+def test_historical_minimal_patch_replay_has_auditable_provenance():
+    run = ROOT / "tests" / "forward" / "runs" / "historical-minimal-patch"
+    provenance = (run / "provenance.md").read_text(encoding="utf-8")
+    baseline = (run / "baseline-manifest.md").read_text(encoding="utf-8")
+    comparison = (run / "comparison.md").read_text(encoding="utf-8")
+
+    assert "53085bb5d1b7cc3e759e62af5c55397979402acc" in baseline
+    assert "fbd44ac762114e54f2f6fae90226487ff0748a43c1fa6e8ba57ff9b521274a87" in baseline
+    assert "fork_turns=none" in provenance
+    assert "green-case6.md" in provenance and "superseded" in provenance
+    assert "authoritative" in comparison
+    for case in range(1, 7):
+        assert (run / "prompts" / f"case{case}.md").is_file()
+        assert (run / f"audit-red-case{case}.md").is_file()
+        assert (run / f"audit-green-case{case}.md").is_file()
 
 
 def test_recovery_uses_current_projection_not_mtime_or_old_handoffs():

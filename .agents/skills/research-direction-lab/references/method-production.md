@@ -23,6 +23,37 @@ artifacts. When those checks pass, run `minimal_construct` in the same package.
 Do not make method execution the unreachable last step behind repeated generic
 headroom gates.
 
+## Contribution tiers
+
+Assign every thesis-facing entry one current tier.
+
+### `THESIS_MAIN_METHOD`
+
+Require a real deployable action; a fair, tuned, task-matched conventional
+comparator; stable mechanism and evidence; and enough structure to state method
+steps, primary results, and a boundary. The claim need not assert unbounded
+field-wide novelty, but the contribution must remain distinguishable under its
+declared scope.
+
+### `THESIS_ENGINEERING_COMPONENT`
+
+Admit a genuine implementation contribution when it reduces measurement,
+compute, hardware, or latency at matched performance; improves bounded
+robustness at matched cost; makes an interpretable system-specific adaptation;
+or combines conventional parts into a real control or implementation action.
+It still requires a real action, fair comparator, valid evidence, and scoped
+claim. Identity behavior, artifacts, and privileged truth cannot create the
+component.
+
+### `SUPPORTING_MATERIAL`
+
+Use for valid negatives, boundaries, failure mechanisms, evaluation insights,
+partial infrastructure, and writing material. `SUPPORTING_MATERIAL` does not
+become an active carrier. Invalidated evidence may document a failure lesson
+but cannot supply contribution numbers. A valid negative is not method
+progress, and a packaging boundary is not a METHOD_SIGNAL. An old claim and
+its corrective amendment are one lineage, not two contributions.
+
 ## Pre-formal method factory
 
 Use `PREFORMAL_METHOD_FACTORY` only when all of these are true:
@@ -63,7 +94,7 @@ factory task:
 3. **A named conventional comparator exists** — before construction, name one
    comparator that has identity (a specific conventional algorithm, not a
    placeholder or privileged method), is task-matched (same blind-equalization
-   job), uses the same runtime information (receiver-visible, no TX truth),
+   job), uses the same deployable runtime information (no privileged truth),
    and is independently tunable (its own frozen settings and validation
    budget). "The executor will freeze a comparator later" fails this gate.
 4. **Each gate has `file:line` evidence** in the simulator, the baseline
@@ -78,7 +109,7 @@ paired realization, modulation, metric, seed set) must be preserved. Identity
 parity — keeping the *inherited baseline's* exact form (e.g. block-end update
 granularity) — protects comparison continuity for already-run packages; it is
 not a scientific ban on a *different conventional algorithm*. When a candidate
-acts on a different (e.g. finer) receiver step, choosing that step as the
+acts on a different (e.g. finer) execution step, choosing that step as the
 task-matched conventional comparator is a legal, re-adjudicated comparator
 change, not a reopen of a closed axis and not an identity-parity violation.
 
@@ -144,14 +175,12 @@ lever as a hypothesis to be tested; the factory sprint is where its causality
 is adjudicated, including via the `PROBLEM_RESOLVED_BY_CONVENTIONAL_COMPARATOR`
 outcome.
 
-**Comparator gradient identity.** When the conventional comparator is a
-Godard/CMA-family equalizer, its weight update must use the canonical
-Godard-with-z gradient `Δw ∝ (R²-|z|²)·z·r*`. A scalar-error implementation
-`Δw ∝ (R²-|z|²)·r*` (missing the `z` factor) is a different gradient identity
-and must not impersonate the canonical comparator; it may only demonstrate
-that a lever (e.g. block size) is a real knob. Provenance must point to the
-canonical implementation/formula, and the comparator's step size must be
-tuned independently on the dev set.
+**Comparator implementation identity.** A comparator must execute the
+canonical update defined by its cited implementation or formula. An
+implementation missing a required state- or output-dependent factor is a
+different algorithm and cannot impersonate the named comparator; it may only
+show that the tested lever is real. Bind the implementation identity and tune
+its settings independently on development data.
 
 ## Method-signal promotion preflight
 
@@ -190,6 +219,12 @@ After every accepted package record both:
 A reliable negative, integrity repair, or provenance PASS may advance the
 formal disposition while `mission_method_delta` remains `NONE`. Never describe
 that combination as method-production progress.
+
+Review mission progress as actual increments to the `main method / engineering
+component / supporting portfolio`, not as a package total. Package count
+describes exploration coverage only; it is not a success, completion, or
+automatic-stop criterion. If the portfolio contains no method-bearing entry,
+report a strategic shortage instead of manufacturing another package.
 
 ## Three record layers
 

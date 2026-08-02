@@ -554,3 +554,51 @@ PASS。P0=0、P1=0、P2=0。本验证只证明 v2 实现与 phase-2 入口控制
 ### 结论
 
 PASS。P0=0、P1=0、P2=0。v2.1 可部署并进入下一轮 live-test 入口选择；本验证不宣称已经产生 formal thesis method。
+
+## V014: 三类 Skill 最小 patch 与历史回归独立终验
+
+> date: 2026-08-02
+> 关联：R004 / D020 / H003
+> verifier 上下文：独立 fresh-context subagent；只读审查，未参与实现
+> FINAL VERDICT: PASS
+
+### 验证项
+
+- [x] 三类 patch：五门 executable semantic contract、三层 contribution tiers、三层 lightweight persistence 均进入既有 owner，无第四类规则。
+- [x] 六案行为：scale/action、hidden truth、real action/cost、局部 Probe、parameter injection/cluster、negative/partial packaging 均按行为通过；真实 B 级工程组件保留入口且不制造 P12。
+- [x] 回归身份：RED 固定 Git object 与可复算 bundle；六对同 prompt、`fork_turns=none`、独立 agent/output provenance；受 later marker 污染的两次尝试废弃后由 clean agent 重跑。
+- [x] receipt fail-close：空 contract、空 source、空 mapping、非空组但零 seed、hash mismatch 均拒绝；非空 seed 正常。
+- [x] 静态与消费者：全套测试、双端 quick validation、canonical/runtime 全文件 hash、YAML/reference/diff/pollution 检查通过。
+- [x] 范围：未启动 AMC/科学仿真，未修改 P07–P11/G1 科学资产、formal owner 或其他 Skill；dormant longitudinal topic 未回写。
+
+### 证据
+
+```text
+pytest .agents/skills/research-direction-lab/tests -q
+110 passed, 1 skipped in 2.27s
+
+quick_validate.py canonical
+Skill is valid!
+
+quick_validate.py runtime
+Skill is valid!
+
+canonical/runtime non-cache comparison
+canonical=94 runtime=94 only_canonical=0 only_runtime=0 mismatch=0
+
+reproducible RED baseline
+commit=53085bb5d1b7cc3e759e62af5c55397979402acc
+files=60
+bundle_sha256=fbd44ac762114e54f2f6fae90226487ff0748a43c1fa6e8ba57ff9b521274a87
+
+independent verifier final
+P0=0 P1=0 P2=0
+verdict=PASS; allow V014 PASS and unified commit
+
+git diff --check
+exit=0
+```
+
+### 结论
+
+PASS。D020 三类最小 patch、六案可审计 RED/GREEN、receipt 边界与个人 Skill 同步全部闭合，P0=0、P1=0、P2=0。该结论不改变既有科学 verdict，不代表产生了新的 thesis method，也不授权在本轮启动 AMC。

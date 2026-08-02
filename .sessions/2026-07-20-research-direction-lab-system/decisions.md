@@ -640,3 +640,35 @@ CP001–CP017 为 17/17 `mission_method_delta=NONE`；T019 后方法工厂第 2 
 ### 来源
 
 R009；用户 2026-07-29 对“基本每次交互都会发生压缩”及“改完之后继续”的确认。
+
+## D020: 以历史回归补强三类 Research Direction Lab 契约
+
+> status: active
+> date: 2026-08-02
+> 取代：无
+> 被取代：无
+> 依据：调研: R004 + 验证: V014 + 用户原话: voice.md 2026-08-02
+
+### 决策
+
+Research Direction Lab 只补三类最小契约：把 semantic smoke 落为五门 executable evidence contract；把论文收获分为 `THESIS_MAIN_METHOD`、`THESIS_ENGINEERING_COMPONENT`、`SUPPORTING_MATERIAL`；把长程状态固定为 topic-index、mission-log、detail 三层轻量持久化，并在既有 receipt validator 中实现最小 hash/时序/seed fail-close。
+
+### 理由
+
+R004 的六案修改前盲测只有 Case 1 出现真实新增失效，但真实 campaign 同时暴露方法层级漂移和专题记录膨胀。三处改动分别关闭“语义未执行即扩样/晋级”“负面或包装冒充方法且工程贡献被压成零”“current snapshot 与细节层重复”三个不同缺口；其余五案作为历史防回归，不夸大旧 Skill 的失败范围。
+
+### 排除的替代方案
+
+- 不增加第四类 patch，不重写主 Skill，不新增 controller、scheduler、README、CHANGELOG 或新治理层；
+- 不用更多 seeds/cells 或统计显著性修复 semantic FAIL；
+- 不把 negative、partial、writing material、旧 claim 及其纠偏升级为 active carrier；
+- 不修 P07–P11/G1、不创建 P12、不启动 AMC 或科学仿真、不改变 formal science owner；
+- 不修改 session-governance、sim-preflight 或其他 Skill。
+
+### 影响范围
+
+仅影响 `.agents/skills/research-direction-lab/` 的既有 evidence、method-production、thesis-harvest、long-horizon-control、receipt validator 与对应测试，并同步个人运行副本；系统专题记录 R004/D020/V014。既有科学 verdict、dormant longitudinal topic 与 formal owner 不变。
+
+### 来源
+
+H003；R004；用户 2026-08-02 执行指令。

@@ -17,6 +17,7 @@ from hash_bundle import hash_bundle
 from rebuild_state import rebuild_state
 from render_status import render_status
 from validate_receipt import validate_receipt
+import validate_receipt as receipt_tools
 
 
 def canonical(value):
@@ -106,6 +107,132 @@ def test_validate_receipt_reports_stable_missing_and_mismatch_errors():
         "missing:absent",
         "mismatch:wrong",
     ]
+
+
+def test_execution_receipt_binds_contract_source_chronology_and_seeds(tmp_path):
+    contract = tmp_path / "contract.yaml"
+    source = tmp_path / "runner.py"
+    contract.write_text("question: bounded\n", encoding="utf-8")
+    source.write_text("print('run')\n", encoding="utf-8")
+
+    receipt = receipt_tools.build_execution_receipt(
+        tmp_path,
+        [contract],
+        [source],
+        test_started=False,
+        seed_ledger={"development": [1, 2], "held_out": [3, 4]},
+        pre_test_state={"contract_frozen": True},
+        post_test_state=None,
+    )
+
+    assert set(receipt) == {
+        "schema_version",
+        "contract_hashes",
+        "source_hashes",
+        "test_started",
+        "seed_ledger",
+        "pre_test_state",
+        "post_test_state",
+    }
+    assert receipt_tools.validate_execution_receipt(
+        receipt, tmp_path, [contract], [source]
+    ) == []
+
+
+def test_execution_receipt_fails_closed_on_hash_mismatch(tmp_path):
+    contract = tmp_path / "contract.yaml"
+    source = tmp_path / "runner.py"
+    contract.write_text("question: bounded\n", encoding="utf-8")
+    source.write_text("print('old')\n", encoding="utf-8")
+    receipt = receipt_tools.build_execution_receipt(
+        tmp_path,
+        [contract],
+        [source],
+        test_started=True,
+        seed_ledger={"held_out": [9]},
+        pre_test_state={"contract_frozen": True},
+        post_test_state={"completed": True},
+    )
+
+    source.write_text("print('changed')\n", encoding="utf-8")
+
+    assert receipt_tools.validate_execution_receipt(
+        receipt, tmp_path, [contract], [source]
+    ) == ["mismatch:source_hashes:runner.py"]
+
+
+def test_execution_receipt_rejects_invalid_chronology_and_duplicate_seeds(tmp_path):
+    contract = tmp_path / "contract.yaml"
+    source = tmp_path / "runner.py"
+    contract.write_text("question: bounded\n", encoding="utf-8")
+    source.write_text("print('run')\n", encoding="utf-8")
+
+    with pytest.raises(ValueError, match="post-test state requires test_started"):
+        receipt_tools.build_execution_receipt(
+            tmp_path,
+            [contract],
+            [source],
+            test_started=False,
+            seed_ledger={"development": [1]},
+            pre_test_state={"contract_frozen": True},
+            post_test_state={"completed": True},
+        )
+
+
+def test_execution_receipt_rejects_empty_identity_and_seed_ledger(tmp_path):
+    contract = tmp_path / "contract.yaml"
+    source = tmp_path / "runner.py"
+    contract.write_text("question: bounded\n", encoding="utf-8")
+    source.write_text("print('run')\n", encoding="utf-8")
+
+    for contract_paths, source_paths, seed_ledger, message in (
+        ([], [source], {"held_out": [1]}, "contract paths must not be empty"),
+        ([contract], [], {"held_out": [1]}, "source paths must not be empty"),
+        ([contract], [source], {}, "seed ledger must not be empty"),
+        ([contract], [source], {"held_out": []}, "seed ledger must contain a seed"),
+    ):
+        with pytest.raises(ValueError, match=message):
+            receipt_tools.build_execution_receipt(
+                tmp_path,
+                contract_paths,
+                source_paths,
+                test_started=False,
+                seed_ledger=seed_ledger,
+                pre_test_state={"contract_frozen": True},
+                post_test_state=None,
+            )
+
+    forged = {
+        "schema_version": receipt_tools.EXECUTION_RECEIPT_SCHEMA,
+        "contract_hashes": {},
+        "source_hashes": {},
+        "test_started": False,
+        "seed_ledger": {},
+        "pre_test_state": {},
+        "post_test_state": None,
+    }
+    assert receipt_tools.validate_execution_receipt(
+        forged, tmp_path, [], []
+    ) == [
+        "invalid:contract_paths:must_not_be_empty",
+        "invalid:source_paths:must_not_be_empty",
+        "invalid:seed_ledger:seed ledger must not be empty",
+    ]
+
+    forged["seed_ledger"] = {"held_out": []}
+    assert receipt_tools.validate_execution_receipt(
+        forged, tmp_path, [contract], [source]
+    )[-1] == "invalid:seed_ledger:seed ledger must contain a seed"
+    with pytest.raises(ValueError, match="duplicate seed"):
+        receipt_tools.build_execution_receipt(
+            tmp_path,
+            [contract],
+            [source],
+            test_started=False,
+            seed_ledger={"development": [1], "held_out": [1]},
+            pre_test_state={"contract_frozen": True},
+            post_test_state=None,
+        )
 
 
 def test_append_event_builds_a_two_event_canonical_hash_chain(tmp_path):

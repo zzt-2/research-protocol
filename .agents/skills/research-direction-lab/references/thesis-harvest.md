@@ -28,4 +28,20 @@ If no durable value exists, record `no_durable_harvest_reason` in the Probe or b
 
 Create or update a candidate thesis spine only when multiple harvest items support a coherent problem, method, evidence plan, comparison story, and limitation boundary. Prefer a portfolio that can yield one main method contribution, one mechanism or boundary analysis, and one system/evaluation extension under a shared story. Keep competing spines visible until a strategic choice is needed.
 
+Project entries through the contribution tiers in `method-production.md`:
+`THESIS_MAIN_METHOD`, `THESIS_ENGINEERING_COMPONENT`, or
+`SUPPORTING_MATERIAL`. A main method needs a real deployable action and a fair,
+tuned, task-matched conventional comparator. An engineering component remains
+eligible when it makes a real, evidence-backed cost, implementation, or bounded
+robustness contribution; do not collapse legitimate engineering work to zero
+merely because it is not a new algorithm. Supporting material does not become
+an active carrier. A valid negative is not method progress, a packaging
+boundary is not a METHOD_SIGNAL, and invalidated evidence supplies no positive
+contribution number.
+
+Use package counts to describe exploration coverage only. If no method-bearing
+entry exists, report a strategic shortage and preserve the supporting
+portfolio; do not manufacture a new package or inflate a corrected claim into
+another contribution.
+
 Governance activity is not a scientific harvest by itself. Infrastructure becomes a harvest only when it is reusable, unlocks evidence, or teaches a bounded methodological lesson.

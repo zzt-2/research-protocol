@@ -1,0 +1,17 @@
+# RED Case 2 — hidden-truth leakage
+
+> baseline bundle: `91f306ef72b54dc883b52a9683629b4dff54a0f6ce985d22bd34c33e3822f1ab`
+> fresh context, read-only, raw adjudication reproduced verbatim below
+
+Decision: **REJECT / EXECUTION_INVALID**. The package does not support `PROBLEM_ABSENT_AFTER_RECEIVER_VISIBLE_STRONG_LLR_BASELINE` and may advance to neither larger evidence nor method packaging. `formal_science_disposition=EXECUTION_INVALID`; `mission_method_delta=NONE`.
+
+Evidence:
+
+- Internal arithmetic is consistent: 240 raw rows cover 40 seeds × 6 methods; reported means match the raw rows. This does not close semantic validity.
+- The supposedly receiver-visible chain uses generator truth: `build_realization()` converts the swept SNR into `gamma_bar` and calls `real.equalize()` ([p08r_run.py:41](D:/code/study/research-protocol/.worktrees/rdl-method-production-v2/projects/simulation/explore/nda-awgn-tracking-sandbox/p08r_run.py:41)); `equalize()` then uses `gamma_bar` both to subtract the true noise floor and in MMSE equalization ([p08r_chain.py:341](D:/code/study/research-protocol/.worktrees/rdl-method-production-v2/projects/simulation/explore/nda-awgn-tracking-sandbox/p08r_chain.py:341)). This violates the package’s own “γ only generates physics” information boundary.
+- V074 misses that leak because check 5 scans only `method_B0/B1/B2` bodies for `real.gamma_bar`, not the caller→equalizer path ([p08r_verify.py:109](D:/code/study/research-protocol/.worktrees/rdl-method-production-v2/projects/simulation/explore/nda-awgn-tracking-sandbox/p08r_verify.py:109)). Thus the reported 16/16 PASS is not a valid scientific clearance.
+- The frozen `mde_fer=0.234661` exceeds the strongest comparator’s entire mean FER, `0.113281`; even a perfect zero-FER oracle cannot exceed that MDE. The survival gate is therefore structurally unreachable at the chosen cell. The code converts “not above this unreachable MDE” directly into “problem absent” ([p08r_run.py:342](D:/code/study/research-protocol/.worktrees/rdl-method-production-v2/projects/simulation/explore/nda-awgn-tracking-sandbox/p08r_run.py:342)), contradicting its stated rule that insufficient precision must yield insufficient evidence, not absence.
+- `strongest_conv=np.minimum(B1,B2)` selects the better method separately on each test trajectory ([p08r_run.py:286](D:/code/study/research-protocol/.worktrees/rdl-method-production-v2/projects/simulation/explore/nda-awgn-tracking-sandbox/p08r_run.py:286)); it is not one dev-frozen deployable comparator. Here B2 tied/won every trajectory, so this defect does not change the reported mean, but the comparison contract remains invalid.
+- V074’s terminal check only tests whether the verdict string belongs to four allowed labels; it does not recompute or challenge the disposition logic ([p08r_verify.py:220](D:/code/study/research-protocol/.worktrees/rdl-method-production-v2/projects/simulation/explore/nda-awgn-tracking-sandbox/p08r_verify.py:220)).
+
+Next legal action: one bounded semantic-repair package—replace true-`gamma_bar` equalization with receiver-visible estimation, verify the full caller→callee information path, freeze one comparator on development data, and use a substantive equivalence margin plus an explicit `EVIDENCE_INSUFFICIENT` outcome. Treat the current test seeds as observed regression data and re-adjudicate on fresh held-out seeds before any scaling or packaging.
