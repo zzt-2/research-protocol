@@ -1,0 +1,471 @@
+{
+  "schema": "amc-gw-step1-receipt/v1",
+  "generated_at": "2026-08-02T22:17:31+08:00",
+  "topic": ".sessions/2026-08-02-fso-amc-groundwork/",
+  "purpose": "Persistent provenance receipt for GW Step 1 search contract, hashes, and shortlist. Force-added to git so a clean clone can reconstruct the search contract even though raw JSON is gitignored.",
+  "search_facts": {
+    "raw_json_files": 32,
+    "unique_queries": 17,
+    "nonzero_result_queries": 16,
+    "duplicate_query_groups": 15,
+    "duplicate_query_note": "32 raw files = 17 unique queries; each query stored twice by the wrapper (slug-archived + named-output JSON, identical results). 16 of 17 queries returned >=1 result.",
+    "requested_source_union": [
+      "arxiv",
+      "exa",
+      "openalex",
+      "serpapi"
+    ],
+    "result_bearing_source_union_note": "Result-level source_api tags observed only for: openalex, serpapi_scholar, cnki (plus 2 results tagged openalex+openalex). exa contributed candidates (171 digest items carry exa in source_set) but its results were not distinctly tagged at result level (provenance artifact). arxiv was requested twice (mcs-fer-goodput query) and returned 0 both times.",
+    "unique_candidates": 209,
+    "publication_status": {
+      "published": 115,
+      "unknown": 91,
+      "preprint": 3
+    },
+    "published_fraction": 0.5502,
+    "priority_distribution": {
+      "必读": 10,
+      "建议读": 17,
+      "待确认": 4,
+      "备选": 57,
+      "排除": 121
+    },
+    "empty_or_zero_result_files": [
+      "modulation-coding-scheme-adaptation-coherent-optical-link-fe.json",
+      "r1-axA-mcs-fer-goodput-coherent.json"
+    ],
+    "zero_byte_files_in_archive": [
+      "_cnki-r2-linkadapt.txt (auxiliary .txt, NOT a CNKI .json)"
+    ],
+    "published_miscount_history": "_manifest.json pub_status.published=153 is a duplicate-counted figure (merges r1-digest re-runs); the unique-_alldigest truth is 115 published / 209 = 55.0%.",
+    "sources_miscount_history": "R001/S001/V001 claimed 5 sources (openalex/exa/arxiv/serpapi/cnki) but conflated requested vs result-bearing. Correct: 4 requested API sources (arxiv returned 0) + cnki = 4 distinct data channels producing results."
+  },
+  "duplicate_abstract_groups": {
+    "group_count": 6,
+    "total_items": 18,
+    "mechanism": "Exa/SerpAPI abstract-scrape corruption: a small number of generic survey abstracts (6G-roadmap, OWC-survey, SATCOM-survey, ISAC-survey, FSO-enabling-tech-survey, IRS-survey) were repeatedly injected across many items with DIFFERENT titles. The abstract is NOT trustworthy for these items; title+DOI must be used for identity. Affects shortlist/flagged items L124, L020, L038, L090.",
+    "groups": [
+      {
+        "normalized_abstract_len": 600,
+        "normalized_abstract_preview": "optical wireless communication (owc) refers to transmission in unguided propagation media through the use of optical carriers, i.e., visible, infrared (ir), and",
+        "items": [
+          {
+            "L": "L038",
+            "title": "Channel estimation and adaptive coding dynamic control algorithm for satellite laser communication",
+            "year": 2026,
+            "venue": "",
+            "doi": "10.1080/24751839.2026.2637258",
+            "pub": "published"
+          },
+          {
+            "L": "L064",
+            "title": "Free space optical communication and network architecture",
+            "year": 2025,
+            "venue": "",
+            "doi": null,
+            "pub": "unknown"
+          },
+          {
+            "L": "L127",
+            "title": "Pre-distortion adaptive optics for free-space optical communications",
+            "year": 2025,
+            "venue": "",
+            "doi": null,
+            "pub": "unknown"
+          },
+          {
+            "L": "L134",
+            "title": "Review on modulation formats and channel coding in free space optical communication: Selection criteria, trade-offs, and emerging trends",
+            "year": 2026,
+            "venue": "",
+            "doi": null,
+            "pub": "unknown"
+          },
+          {
+            "L": "L091",
+            "title": "Model-free adaptive optics for free space optical communications: a comprehensive survey",
+            "year": 2026,
+            "venue": "",
+            "doi": "10.1007/s12596-025-03011-z",
+            "pub": "published"
+          },
+          {
+            "L": "L090",
+            "title": "Mitigating Turbulence-Induced Fading in Coherent FSO Links: An Adaptive Space-Time Code",
+            "year": 2019,
+            "venue": "",
+            "doi": null,
+            "pub": "unknown"
+          },
+          {
+            "L": "L020",
+            "title": "Adaptive Modulation Schemes for High-Capacity Free-Space Optics Communications",
+            "year": 2019,
+            "venue": "",
+            "doi": null,
+            "pub": "unknown"
+          }
+        ],
+        "same_title": false
+      },
+      {
+        "normalized_abstract_len": 600,
+        "normalized_abstract_preview": "satellite communications (satcoms) have recently entered a period of renewed interest motivated by technological advances and nurtured through private investmen",
+        "items": [
+          {
+            "L": "L010",
+            "title": "A Quality-Driven Adaptive Coding and Modulation Framework for Enhanced Digital Video Broadcasting over Satellite Networks",
+            "year": 2026,
+            "venue": "",
+            "doi": null,
+            "pub": "unknown"
+          },
+          {
+            "L": "L077",
+            "title": "Intelligent spectrum management in satellite communications",
+            "year": 2025,
+            "venue": "",
+            "doi": null,
+            "pub": "unknown"
+          },
+          {
+            "L": "L149",
+            "title": "Satellite Communications in the New Space Era: A Survey and Future Challenges",
+            "year": 2020,
+            "venue": "IEEE Communications Surveys & Tutorials",
+            "doi": "10.1109/comst.2020.3028247",
+            "pub": "published"
+          }
+        ],
+        "same_title": false
+      },
+      {
+        "normalized_abstract_len": 600,
+        "normalized_abstract_preview": "as the standardization of 5g solidifies, researchers are speculating what 6g will be. the integration of sensing functionality is emerging as a key feature of t",
+        "items": [
+          {
+            "L": "L030",
+            "title": "AI/ML-Enhanced Inter-Satellite Optical Wireless and Fiber Communication for Intelligent 5G/6G Networks",
+            "year": 2025,
+            "venue": "",
+            "doi": "10.1201/9781003599111-4",
+            "pub": "published"
+          },
+          {
+            "L": "L076",
+            "title": "Integrated Sensing and Communications: Toward Dual-Functional Wireless Networks for 6G and Beyond",
+            "year": 2022,
+            "venue": "IEEE Journal on Selected Areas in Communications",
+            "doi": "10.1109/jsac.2022.3156632",
+            "pub": "published"
+          }
+        ],
+        "same_title": false
+      },
+      {
+        "normalized_abstract_len": 600,
+        "normalized_abstract_preview": "as the demand for high-speed, low-latency communication continues to grow, free-space optical (fso) communication has gained prominence as a promising solution ",
+        "items": [
+          {
+            "L": "L176",
+            "title": "… free-space optics: A survey of enabling technologies, challenges, trends, and prospects of beyond 5G free-space optical (FSO) communication systems",
+            "year": 2024,
+            "venue": "",
+            "doi": null,
+            "pub": "unknown"
+          },
+          {
+            "L": "L135",
+            "title": "Revolutionizing Free-Space Optics: A Survey of Enabling Technologies, Challenges, Trends, and Prospects of Beyond 5G Free-Space Optical (FSO) Communication Systems",
+            "year": 2024,
+            "venue": "Sensors",
+            "doi": "10.3390/s24248036",
+            "pub": "published"
+          }
+        ],
+        "same_title": false
+      },
+      {
+        "normalized_abstract_len": 599,
+        "normalized_abstract_preview": "6g and beyond will fulfill the requirements of a fully connected world and provide ubiquitous wireless connectivity for all. transformative solutions are expect",
+        "items": [
+          {
+            "L": "L124",
+            "title": "Physics-informed adaptive transmission for coherent free-space optical communications: multi-dimensional amplitude–phase statistics",
+            "year": 2026,
+            "venue": "",
+            "doi": null,
+            "pub": "unknown"
+          },
+          {
+            "L": "L005",
+            "title": "6G and Beyond: The Future of Wireless Communications Systems",
+            "year": 2020,
+            "venue": "IEEE Access",
+            "doi": "10.1109/access.2020.3010896",
+            "pub": "published"
+          }
+        ],
+        "same_title": false
+      },
+      {
+        "normalized_abstract_len": 600,
+        "normalized_abstract_preview": "intelligent reflecting surface (irs) is an enabling technology to engineer the radio signal propagation in wireless networks. by smartly tuning the signal refle",
+        "items": [
+          {
+            "L": "L046",
+            "title": "Delay performance of wireless communications with imperfect CSI and finite-length coding",
+            "year": 2018,
+            "venue": "",
+            "doi": null,
+            "pub": "unknown"
+          },
+          {
+            "L": "L088",
+            "title": "Massive wireless energy transfer without channel state information via imperfect intelligent reflecting surfaces",
+            "year": 2024,
+            "venue": "",
+            "doi": null,
+            "pub": "unknown"
+          }
+        ],
+        "same_title": false
+      }
+    ]
+  },
+  "alias_collision_repair": {
+    "queries": [
+      {
+        "query": "coherent FSO ACM ModCod satellite",
+        "file": "coherent-fso-acm-modcod-satellite.json",
+        "n_results": 9,
+        "sha256": "98bab8f184348478e21893aa02c41c1180337b531735fe862141d21fac7be72c",
+        "size_bytes": 8340,
+        "direct_competitor": false
+      },
+      {
+        "query": "optical feeder link variable-rate FEC adaptive coding",
+        "file": "optical-feeder-link-variable-rate-fec.json",
+        "n_results": 7,
+        "sha256": "1cf66fde5b41ce6f6becbc481edc7f13253c102a5951f67b4b9fad05b7f9d3df",
+        "size_bytes": 6540,
+        "direct_competitor": false
+      },
+      {
+        "query": "free-space optical rate-compatible LDPC puncturing adaptive",
+        "file": "fso-rate-compatible-ldpc-puncturing.json",
+        "n_results": 1,
+        "sha256": "4fa6901cee513e1c4ec4044be4456136e016655e0a053dd2741d4f447a300bdc",
+        "size_bytes": 1071,
+        "direct_competitor": false
+      },
+      {
+        "query": "satellite optical DVB-S2X ACM",
+        "file": "satellite-optical-dvbs2x-acm.json",
+        "n_results": 15,
+        "sha256": "a408b9d0c593c32fececfe03f24d4fd612edf83543493f0f699b41aa4ec60a51",
+        "size_bytes": 13116,
+        "direct_competitor": false
+      }
+    ],
+    "total_alias_hits": 32,
+    "direct_competitors_found": 0,
+    "coverage_caveat": "Exa returned HTTP 402 NO_MORE_CREDITS on all 4 queries; OpenAlex returned 0 hits; S2 abstract-completion rate-limited. Only SerpAPI Scholar was live. A re-run after Exa top-up is advisable before declaring the gap fully closed.",
+    "near_miss_to_revisit": "L003 Softwarization/Virtualization EHF-FSO (2018) is the only hit co-locating coherent sat-ground + ACM, but it is a survey with no Gamma-Gamma channel model."
+  },
+  "l124_identity_resolution": {
+    "codename": "L124",
+    "local_title": "Physics-informed adaptive transmission for coherent free-space optical communications: multi-dimensional amplitude-phase statistics",
+    "local_abstract_status": "MISMATCHED (generic 6G-roadmap text, shared with L005) - confirmed corrupt",
+    "official_identity": {
+      "title": "Physics-informed adaptive transmission for coherent free-space optical communications: multi-dimensional amplitude-phase statistics",
+      "authors": [
+        "Shengsong Xiao",
+        "Bei Li",
+        "Xiuyuan Liu",
+        "Ruiheng Zhang",
+        "Bao Zhang",
+        "Kai Xie"
+      ],
+      "year": 2026,
+      "venue": "Optics Express",
+      "volume": "34",
+      "issue": "14",
+      "page": "26128",
+      "doi": "10.1364/oe.595557",
+      "publisher": "Optica Publishing Group",
+      "issn": "1094-4087",
+      "url": "https://doi.org/10.1364/oe.595557"
+    },
+    "verification_sources": [
+      "Semantic Scholar Graph API (paper/search, exact title match, with S2_API_KEY)",
+      "Crossref /works/10.1364/oe.595557 (title/authors/venue/pages/abstract)"
+    ],
+    "real_abstract_preview": "Coherent free-space optical (FSO) communications suffer from coupled amplitude fading and phase distortion. Conventional adaptive modulation and coding (AMC) relying solely on signal-to-noise ratio (SNR) feedback cannot capture phase dynamics, leading to error floors under strong turbulence. We propose a physics-informed AMC framework that extracts scintillation index and phase variance from pilots...",
+    "action_closure": "(a) coherent FSO AMC with a real transmitter-side control action (modulation selection driven by multi-dimensional CSI vector [SNR, scintillation index, phase variance]). NOT AO/DSP/receiver-side-only. Does NOT explicitly name Gamma-Gamma or satellite/feeder link in abstract; full-text confirmation required in Step 2.",
+    "pre_fix_status": "UNVERIFIED_BIBLIOGRAPHIC_HIT (identity resolved at bibliographic level; full-text not yet read)",
+    "implication_for_candidate_map": "L124 is a genuine coherent-FSO AMC paper with a real AMC action, so the prior claim of a 4-mechanism-distinct family F4 collapses into the MCS/power-control family - L124 is a real (coherent, phase-aware) instance of AMC, not a separate mechanism family."
+  },
+  "shortlist_provenance": [
+    {
+      "L": "L018",
+      "title": "Adaptive HARQ with Channel State Information in Inter-HAP FSO Links",
+      "year": 2017,
+      "venue": "elib (German Aerospace Center)",
+      "doi": null,
+      "pub": "published",
+      "source_set": "openalex,exa",
+      "url_or_doi": "(no DOI; search hit only)"
+    },
+    {
+      "L": "L096",
+      "title": "On the Design of FSO-Based Satellite Systems Using Incremental Redundancy Hybrid ARQ Protocols With Rate Adaptation",
+      "year": 2021,
+      "venue": "IEEE Transactions on Vehicular Technology",
+      "doi": "10.1109/tvt.2021.3127193",
+      "pub": "published",
+      "source_set": "openalex,exa",
+      "url_or_doi": "10.1109/tvt.2021.3127193"
+    },
+    {
+      "L": "L126",
+      "title": "Power Allocation for Reliable and Energy-Efficient Optical LEO-to-Ground Downlinks with Hybrid ARQ Schemes",
+      "year": 2022,
+      "venue": "Photonics",
+      "doi": "10.3390/photonics9020092",
+      "pub": "published",
+      "source_set": "openalex,exa",
+      "url_or_doi": "10.3390/photonics9020092"
+    },
+    {
+      "L": "L073",
+      "title": "HARQ Performance Limits for Free-Space Optical Communication Systems",
+      "year": 2025,
+      "venue": "Entropy",
+      "doi": "10.3390/e28010016",
+      "pub": "published",
+      "source_set": "openalex,exa",
+      "url_or_doi": "10.3390/e28010016"
+    },
+    {
+      "L": "L023",
+      "title": "Adaptive Transceiver Design for High-Capacity Multi-Modal Free-Space Optical Communications With Commercial Devices and Atmospheric Turbulence",
+      "year": 2023,
+      "venue": "Journal of Lightwave Technology",
+      "doi": "10.1109/jlt.2023.3242215",
+      "pub": "published",
+      "source_set": "openalex,exa",
+      "url_or_doi": "10.1109/jlt.2023.3242215"
+    },
+    {
+      "L": "L075",
+      "title": "Hybrid deep learning-based adaptive modulation for free space optical (FSO) communication",
+      "year": 2026,
+      "venue": "",
+      "doi": null,
+      "pub": "unknown",
+      "source_set": "exa,serpapi",
+      "url_or_doi": "(no DOI; search hit only)"
+    },
+    {
+      "L": "L020",
+      "title": "Adaptive Modulation Schemes for High-Capacity Free-Space Optics Communications",
+      "year": 2019,
+      "venue": "",
+      "doi": null,
+      "pub": "unknown",
+      "source_set": "exa,serpapi",
+      "url_or_doi": "(no DOI; search hit only)"
+    },
+    {
+      "L": "L124",
+      "title": "Physics-informed adaptive transmission for coherent free-space optical communications: multi-dimensional amplitude–phase statistics",
+      "year": 2026,
+      "venue": "",
+      "doi": null,
+      "pub": "unknown",
+      "source_set": "exa,serpapi",
+      "url_or_doi": "(no DOI; search hit only)"
+    },
+    {
+      "L": "L165",
+      "title": "Tbit/s line-rate satellite feeder links enabled by coherent modulation and full-adaptive optics",
+      "year": 2023,
+      "venue": "Light Science & Applications",
+      "doi": "10.1038/s41377-023-01201-7",
+      "pub": "published",
+      "source_set": "openalex,exa",
+      "url_or_doi": "10.1038/s41377-023-01201-7"
+    },
+    {
+      "L": "L146",
+      "title": "Robust joint optimization for efficient and reliable FSO/RF satellite-UAV-terrestrial networks with random fading and imperfect channel information",
+      "year": 2025,
+      "venue": "",
+      "doi": null,
+      "pub": "unknown",
+      "source_set": "exa,serpapi",
+      "url_or_doi": "(no DOI; search hit only)"
+    },
+    {
+      "L": "L050",
+      "title": "DFT-SAMP信道估计与概率整形联合优化的FSO系统",
+      "year": 2026,
+      "venue": "空间电子技术",
+      "doi": null,
+      "pub": "",
+      "source_set": "cnki",
+      "url_or_doi": "(no DOI; search hit only)"
+    },
+    {
+      "L": "L206",
+      "title": "面向快衰落信道的三维概率整形FSO系统研究",
+      "year": 2026,
+      "venue": "空间电子技术",
+      "doi": null,
+      "pub": "",
+      "source_set": "cnki",
+      "url_or_doi": "(no DOI; search hit only)"
+    }
+  ],
+  "raw_file_hashes": {
+    "adaptive-coding-modulation-satellite-optical-communication-2.json": "47a8a085b2a502dcd1171391c39307ad218ad4bfc0c29f1619689246d5f2ce28",
+    "adaptive-modulation-and-coding-coherent-free-space-optical-g.json": "5d1a78fc7f63b22ec4fe04f14bfaf7164971f67ebcae41b467aa3fd7e9ca97aa",
+    "adaptive-modulation-coding-scheme-satellite-optical-feeder-l.json": "59001d8df2261e0fd121cbb819cb192f24f4a5a15b3fd9f5c15ad460970528b7",
+    "adaptive-modulation-statistical-channel-state-information-op.json": "7365c5d5afe629ae464a01b636a59c53ba0b91cda50c0f9fba40828b92ffa3a2",
+    "channel-prediction-uncertainty-aware-adaptive-modulation-fre.json": "c15ed5c89a3ad45a2d176c01098368b4a45230e179d484f62e2165571f8263c4",
+    "cnki-r1-amc-fso-turbulence.json": "ec91fb98d38286e672c26df92669fa73376556b21670867a87a34367f25f9cfc",
+    "cnki-r2-linkadapt.json": "bace2725d016429ed38e5b79052293b0490302f2cae1abefc1f99ce31921806f",
+    "coherent-free-space-optical-adaptive-modulation-power-alloca.json": "7e4b4c5568304cf71871ff0d7073ff49f5b8f69ec9115eb15a83315a2e99ca22",
+    "coherent-free-space-optical-communication-adaptive-modulatio.json": "bf116688d3cd18109f85ed9ec3d9c041ad50b0ee07f9a0b1bfe0df064d0ad024",
+    "cross-layer-adaptive-power-modulation-coding-free-space-opti.json": "252fb41f11926946e1f6fc815988993c2e1d63c4943cbd29190465f57627dd59",
+    "hybrid-arq-incremental-redundancy-optical-satellite-downlink.json": "4e32641549fe9c56a3b7aba8d65d0f936ed420d89144d801a08fe929f2ad1c1b",
+    "hybrid-automatic-repeat-request-harq-rate-adaptation-free-sp.json": "10f259e7022f7f4309522eb9e5efb57a82f3722dd3ec8dd44e01480fb6fee699",
+    "link-adaptation-optical-feeder-downlink-gamma-gamma-fading-s.json": "089d785ac17009bb5922e33b2936d679bb7a613174c9666e5c8834987222b3cf",
+    "modulation-coding-scheme-adaptation-coherent-optical-link-fe.json": "b05f6776d4b7288a5e0866d1010953a9dc777b88093c7f5a0a5df24ccc1abadd",
+    "outage-constrained-robust-modulation-coding-imperfect-channe.json": "235eeb5c403959c5ac5ce36f803dd42ec5b5eea9890ffa9b9c54519e5f0e092a",
+    "r1-axA-coherent-fso-amc-gg.json": "ad5027f31d4acaa66f7048133d77f657237d826643850941fb746cc40aced1fc",
+    "r1-axA-mcs-fer-goodput-coherent.json": "bc1e757df1b5fa6283676ce1ef853d5a3931800c5840ccac84bb74a210b98403",
+    "r1-axA-mcs-satellite-optical.json": "2277f9540c203a8eada93467bd9c2460e580c2f2092776b2416a14a43a2f16c9",
+    "r1-axB-prediction-uncertainty-fso.json": "c9b4fd82005473f0cd650b5ee8a447907671ec48ccd07bcbc7d1f50dadc69bde",
+    "r1-axB-robust-amc-outdated-csi.json": "6b20efa7d5b36b4e387916b00bb7b387fcab76f30afd681cd6739f15297ccac5",
+    "r1-axC-crosslayer-pow-mod-fso.json": "a93233887d294443f9b60cae336c2647d82028244a1d96ae6b80dcc364c61855",
+    "r1-axC-harq-rate-fso.json": "27b0385cf63e9fffc94bc4e39fbf1640cad37fbb8d43a0bf0d45e78f16ea30a9",
+    "r2-c1-coherent-fso-adapmod-power.json": "b93d4503064f79501339bd98d419ebaaa8ee835c9015b0b80d4f885a6de10d61",
+    "r2-c2-harq-ir-optical-sat.json": "b19e53009ad84b9b6c30f3945ec40bbc5904611093c9508d1448edb7a2291cfd",
+    "r2-c2-rateldpc-fso-turbulence.json": "d8a57fb3e92f570b69abcf911e2c515c54766311ebf8f3c898276185b40107bd",
+    "r2-c3-adaptive-mod-statcsi-fso.json": "2e08cb0bce9289c42342c57d6c8789b63963ae73b61f458b6c04b792fd1160ab",
+    "r2-c3-outage-robust-mcs-imperfect-csi.json": "c95599fef808800bed261a0f28184e92d09dca1f8a066360d812745d2668f1af",
+    "r2-dc-amc-coherent-fso-gg.json": "54cbca1d657788bc5bf439b86cae7cadda0b52d4221164639b6a28d2d85eb3cc",
+    "r2-dc-linkadapt-feedergg.json": "c4eac4f4a1d91e804d4c2ff0f59f953ecd204eb8faab8478cad2272236547afc",
+    "r2-density-2024-2026-amc-fso.json": "4164b9ee85aeda72e3f9cb3b35939382ae71e4a4acfef8a3216ee24825e5d76f",
+    "rate-compatible-ldpc-free-space-optical-turbulence-adaptive-.json": "11b6f1670eeee971ce35635a754eb0c961b39459cf751ce5e944cb368a2b04c2",
+    "robust-adaptive-modulation-coding-outdated-imperfect-csi-del.json": "fe7c0f66ad62bf96550bb2461263f0037e5272767097334b8bf09978d4e8d543"
+  },
+  "replay": {
+    "recompute_script": "tools/amc_step1_recompute.py (deterministic, no network)",
+    "recompute_output": "tools/_amc_step1_recompute_out.json",
+    "command": "python tools/amc_step1_recompute.py",
+    "note": "Receipt fields search_facts/duplicate_abstract_groups/raw_file_hashes are produced by tools/amc_step1_recompute.py from the raw JSON in search-archive/2026-08-02/. Re-running the script regenerates them deterministically."
+  }
+}

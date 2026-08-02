@@ -155,3 +155,40 @@ $ git status --porcelain projects/simulation/explore/cma-fade-divergence/
 - **升级后总体判定：PASS（12/12）**。原 PARTIAL（Check 12 cosmetic）已闭合。
 
 GW Step 1 全部 12 项 checklist 实质内容 PASS，可进入用户验收。
+
+---
+
+## V002 — Step 1 限定完整性修复验证（2026-08-02）
+
+> 关联：D002 / S002 / R001（修订）。独立 verifier 视角复核 Phase A（A1-A5）修订。
+> 复算环境同 V001（worktree @ `007a7c4`，python `~/.venvs/torch/Scripts/python.exe`）。
+> 总体判定：**PASS**。本次修复闭合了 V001 漏审的两项（title-abstract identity + source provenance 口径）。
+
+### V001 漏审声明（保留 V001，明确其盲区）
+
+V001（12/12 PASS）仍有效，但其判定基于 R001 的表面计数，**漏审**：
+1. **source provenance 口径**：V001 Check 3 把 `_manifest.json` published=153（73%）与 _alldigest 115（55%）的差异当 cosmetic 误差，未追到 manifest 是 r1-digest 重复计数的根因；也未区分 requested-source（4 API）vs result-bearing-source（result-level source_api 仅 openalex/serpapi_scholar/cnki）。
+2. **title-abstract identity**：V001 未做 normalized-abstract 分组审计，未发现 6 个 dup-abstract 组覆盖 18 条 hit 的抓取污染，未发现 L124/L020/L038/L090 的 abstract 与 title 不匹配。
+
+本次 V002 闭合这两项，不推翻 V001 的其余 10 项（dedup/state/语义抽检/dead-end/未进 Step2-4a/未升级 negatives/YAML-JSON/4 p05 log）。
+
+### Phase A 修订复核
+
+| 复核项 | 方法 | 结果 |
+|---|---|---|
+| A1 计数可从 raw JSON 重算 | 重跑 `tools/amc_step1_recompute.py` | **PASS** — 32 文件=17 unique query/16 非零；published 115/209=55.0%；priority 必读10/建议读17/待确认4/备选57/排除121；0 字节文件仅 `_cnki-r2-linkadapt.txt`（辅助 .txt 非 CNKI json），2 个 240B json 是同一空 query（mcs-fer-goodput，openalex+arxiv 返 0）的双存。 |
+| A1 source 口径纠正 | result-level source_api 全量 tally | **PASS** — 仅 openalex(286)/serpapi_scholar(124)/cnki(38)/openalex+openalex(2)。exa 在 171 条 source_set 出现但 result-level 未单独打标（wrapper provenance 漏洞）；arxiv 被 request 2 次返 0。故"5 sources"是 requested(result)混合口径，真值=4 数据通道产结果。 |
+| A2 dup-abstract 全量可重算 | normalized-abstract 分组（len>=40） | **PASS** — 6 组 18 条（group1 OWC-survey 7 条含 L020/L038/L090；group2 SATCOM-survey 3 条；group3 ISAC-survey 2 条；group4 FSO-enabling-tech 2 条；group5 6G-roadmap 2 条含 L124；group6 IRS-survey 2 条）。 |
+| A2 L124 official identity vs 本地错配均有证据 | Crossref + S2 双源 | **PASS** — 官方：Optics Express 34(14):26128, 2026, DOI 10.1364/oe.595557，真实 abstract 是 coherent-FSO AMC（"AMC relying solely on SNR cannot capture phase dynamics…physics-informed AMC…scintillation index + phase variance"）；本地 abstract 是 6G-roadmap（与 L005 同），错配确认。 |
+| A3 R001/topic-index 不再宣称 4 独立族或"直接竞品 0 已确认" | grep | **PASS** — 见本文件 D002 + topic-index 修订后字段：候选族=3（A/B/C），"直接竞品 0"改为 `CURRENT_SEARCH_DID_NOT_CONFIRM_A_DIRECT_COMPETITOR`。 |
+| A3 alias collision ≤4 query 不扩成新地勘 | 文件清点 | **PASS** — 恰 4 query（32 命中），0 直接竞品；未重建 209 大表。 |
+| A4 receipt hash 与磁盘 raw 一致 | 重算 SHA256 比对 receipt | **PASS** — 抽查 r1-axA-coherent-fso-amc-gg.json / cnki-r1-amc-fso-turbulence.json / r2-c2-rateldpc-fso-turbulence.json + 4 alias 文件，全部 MATCH。receipt 23KB json parse OK。 |
+| A4 receipt force-add 可行 | git check-ignore | **PASS** — search-archive/ gitignored，receipt 需 `git add -f`（commit 时执行）。 |
+
+### 未变更项（V001 继续承继）
+
+- 未进入 Step 3/精读/方法设计/仿真（Phase B 是 Step 2 acquisition，合法）。
+- 4 个 p05_run*.log 仍 untracked 未动。
+- 9 条 dead-end ledger 仍完整，F1-F4→A/B/C 修订后 dead-end collision 逐条对照移到 D002/R002。
+
+**总体**：Phase A 限定修复 PASS。Step 1 修订为 `STEP1_ACCEPTED_AFTER_BOUNDED_INTEGRITY_REPAIR`，可进入 Phase B（Step 2 acquisition）。

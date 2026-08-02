@@ -1,8 +1,19 @@
 # [R001] AMC Step 1 Landscape + 候选问题族地图
 
 > 2026-08-02 | 关联：专题 slug 2026-08-02-fso-amc-groundwork / D001 / S001
-> 数据源：search-archive/2026-08-02/ 16 queries × 5 sources（openalex/exa/arxiv/serpapi/cnki）= 209 unique candidates
+> 数据源：search-archive/2026-08-02/ 17 unique queries × 4 data channels（openalex/exa/serpapi/cnki；arxiv 被 request 返 0）= 209 unique candidates
 > 阶段：GW Step 1（搜索级证据，非 Go/No-Go；候选问题假设，未过四判据）
+
+> ⚠️ **D002 修订声明（2026-08-02，本 R001 正文未逐行改写，以下口径以 D002/V002/R002/_step1_receipt.json 为准）**：
+> - **计数口径**：原"16 queries × 5 sources"是 requested/result 混合口径。真值=17 unique query（manifest 32 file 是 query 双存）/ 16 非零 query；published 115/209=55.0%（manifest 153 是 r1-digest 重复计数）；source 真值=4 数据通道产结果（exa 在 result-level 未单独打标，是 wrapper provenance 漏洞）。
+> - **候选族地图**：原 §4 的 **F1-F4（4 族）已被 D002 合并为 A/B/C（3 族）**。F1（delayed/statistical CSI）+ F3（instantaneous CSI）合并为 **A_MCS_POWER_CONTROL**（真实 action 相同）；F2 → **B_HARQ_IR_RATE_ADAPTATION**；F4（L124）→ **C_COHERENT_TX_ADAPTATION_UNVERIFIED**（L124 经 Crossref+S2 确认是真实 coherent-FSO AMC，Optics Express 34(14):26128 DOI 10.1364/oe.595557，不再是"机制不同的第 4 族"，而是 A 族的一个相干相位实例，全文身份待 Step 2/3 闭合）。
+> - **F1 headroom 纠正**：F1（现 A 族 delayed/statistical CSI 分支）并非完全避开 dead-end#3 的 0.09 dB MCS 天花板，headroom 未证。
+> - **"直接竞品 0 篇确认"改为 `CURRENT_SEARCH_DID_NOT_CONFIRM_A_DIRECT_COMPETITOR`**（4 alias query 32 命中 0 直接竞品，覆盖 caveat：Exa 透支/OpenAlex 0/S2 限速）。不把搜索未命中解释成真实空白（FR-23）。
+> - **title-abstract identity 审计**：6 normalized-abstract 重复组覆盖 18 条 hit（Exa/SerpAPI abstract 抓取污染），受影响 shortlist/flagged：L124（abstract 是 6G-roadmap，真实经 Crossref 确认）/ L020 / L038 / L090。
+> - **L038 标签纠正**：原 `chinese-FSO-AMC` 错误（英文标题 + T&F DOI 10.1080/24751839.2026.2637258）→ `IM/DD-FSO-AMC`。
+> - **L070 标签一致性**：文字声称属"mod-classification 排除"但 pri=备选（未排除）→ 维持备选，文字改为"borderline demod/AI-mod survey，pri=备选（保留观察）"。
+> - **L075 标签纠正（R002 新增）**：R001 §3 标 "DL AMC 对照"，但 R002 全文确认 L075 abstract 明说 "to classify real time modulation schemes…classification accuracy 96.3%" → 实为**调制分类（MFI，dead-end#8 族）**，非 AMC，Step 3 不当 AMC baseline。
+> - 下文 §2-§6 的原文保留作历史审计痕迹，**active 决策以 D002 + topic-index + R002 为准**。
 
 ---
 
@@ -39,7 +50,7 @@ Step 1 要回答的问题，逐条对应 §5 八问：
 | 待确认 | 4 | — | — |
 | 备选 | 57 | — | — |
 | 排除 | 121 | — | — |
-| 覆盖 ≥2 机制不同子方向 | F1 鲁棒/CSI-AMC、F2 HARQ-IR+速率、F3 自适应调制+功率、F4 相干物理 AMC，共 4 机制不同族 | ≥2 | **PASS** |
+| 覆盖 ≥2 机制不同子方向 | F1 鲁棒/CSI-AMC、F2 HARQ-IR+速率、F3 自适应调制+功率、F4 相干物理 AMC，共 4 机制不同族〔**D002 修订**：合并为 3 族 A_MCS_POWER_CONTROL/B_HARQ_IR_RATE_ADAPTATION/C_COHERENT_TX_ADAPTATION_UNVERIFIED，≥2 仍 PASS〕 | ≥2 | **PASS** |
 | 无明显空洞 | **有空洞**（见下）| — | **PARTIAL** |
 
 **空洞（§5 Q8 相关）**：
@@ -289,7 +300,7 @@ Step 1 要回答的问题，逐条对应 §5 八问：
 
 > **声明**：以下为**候选问题假设，未过四判据**。M-C-A = "现有方法 M 在条件 C 下因假设 A 失效/不足"——仅候选，不伪称成立。dead-end collision 逐条对照 topic-index.md 9 条 ledger。
 
-### F1 鲁棒 / CSI 不确定下的 AMC（outage / delayed / statistical CSI）
+### F1 鲁棒 / CSI 不确定下的 AMC（outage / delayed / statistical CSI）〔D002：合并入 A_MCS_POWER_CONTROL 的 delayed/statistical CSI 分支；headroom 未证〕
 
 **候选 M-C-A 假设**（未验证）：现有 FSO AMC 方法 M（多为 perfect-instantaneous-CSI 假设的 mod+power 切换，代表 L023/L020/L075）在条件 C（星地链 CSI 受大气相干时间 2–10 ms + 反馈 RTT 限制，只能拿到 statistical / delayed / partial CSI）下因假设 A（瞬时 CSI 可用且无差错）失效，导致 outage/掉包。
 
@@ -308,7 +319,7 @@ Step 1 要回答的问题，逐条对应 §5 八问：
 | Step2 获取全文 | **Y**（L018 / L146 / L108） |
 | 当前最大未知量 | 统计 CSI 下 AMC 增益上界是否 > dead-end#3 的 0.09 dB；是否撞 #2 反馈环；GG 下统计 CSI 估计算法的稳态收敛时间 |
 
-### F2 HARQ-IR + 速率适配（光卫星下行 cross-layer）
+### F2 HARQ-IR + 速率适配（光卫星下行 cross-layer）〔D002：→ B_HARQ_IR_RATE_ADAPTATION，保留为独立族〕
 
 **候选 M-C-A 假设**（未验证）：现有光卫星 HARQ 设计 M（代表 L096 stop-and-wait / sliding-window IR-HARQ、L126 power-alloc HARQ）在条件 C（真实 coded chain + GG 湍流 + LEO 短 pass）下因假设 A（理想 FEC + 无重传开销建模 / 固定 power）不足以最大化 coded goodput，需联合 rate+power+HARQ-IR 自适应。
 
@@ -327,7 +338,7 @@ Step 1 要回答的问题，逐条对应 §5 八问：
 | Step2 获取全文 | **Y**（L096 / L126 / L073 / L018） |
 | 当前最大未知量 | coherent + GG + 真实 LDPC（非 RS/理想 FEC）coded goodput 增益上界；LEO pass 内 HARQ round 数物理可达性；与既有 P08-R2 LDPC 工程资产能否复用 |
 
-### F3 CSI 驱动的自适应调制 + 功率分配（湍流下）
+### F3 CSI 驱动的自适应调制 + 功率分配（湍流下）〔D002：合并入 A_MCS_POWER_CONTROL 的 instantaneous CSI 分支〕
 
 **候选 M-C-A 假设**（未验证）：现有 IM/DD FSO 自适应调制+功率 M（代表 L023 multi-modal transceiver、L020、L075 DL）在条件 C（coherent sat-ground + GG）下因假设 A（IM/DD + 弱湍流 / 商用器件模型）不能直接迁移到相干强湍流场景，需针对相干接收重设 action 空间。
 
@@ -346,7 +357,7 @@ Step 1 要回答的问题，逐条对应 §5 八问：
 | Step2 获取全文 | **Y**（L023 / L075 / L020） |
 | 当前最大未知量 | coherent 相干接收下瞬时 CSI 估计是否能在 2–10 ms 内收敛并反馈；切换是否解耦于 CPR（#4/#9） |
 
-### F4 相干 FSO 物理信息自适应传输（multi-dim amplitude-phase）
+### F4 相干 FSO 物理信息自适应传输（multi-dim amplitude-phase）〔D002：→ C_COHERENT_TX_ADAPTATION_UNVERIFIED。L124 经 Crossref+S2 确认是真实 coherent-FSO AMC（Optics Express 34(14):26128 DOI 10.1364/oe.595557），不再是"机制不同的第 4 族"，而是 A 族的一个相干相位实例；C 族全文身份待 Step 2/3 闭合〕
 
 **候选 M-C-A 假设**（未验证）：现有方法 M（多为 6G 通用 / AO 补偿，代表 L124 physics-informed adaptive transmission、L165 feeder link AO demo）在条件 C（coherent sat-ground + GG 强湍流 + coded chain）下因假设 A（通用 6G 框架 / AO 层补偿 ≠ AMC 层）未真正形成 AMC 控制动作，存在把"自适应"做成 AO 或 receiver DSP 的风险。
 
@@ -370,7 +381,7 @@ Step 1 要回答的问题，逐条对应 §5 八问：
 ## §5 R001 必答 8 问
 
 **Q1. 搜到了哪些真实 AMC 机制族？**
-4 族机制真不同：(F1) 鲁棒/statistical-CSI AMC、(F2) HARQ-IR + 速率/功率适配、(F3) CSI 驱动自适应调制+功率、(F4) 相干物理信息自适应传输。必读 10 篇中 8 篇落在 F2/F3（IM/DD 与 hybrid FSO/RF 主导），2 篇（L124/L165）是仅有的 coherent-FSO-AMC 候选。
+4 族机制真不同：(F1) 鲁棒/statistical-CSI AMC、(F2) HARQ-IR + 速率/功率适配、(F3) CSI 驱动自适应调制+功率、(F4) 相干物理信息自适应传输。必读 10 篇中 8 篇落在 F2/F3（IM/DD 与 hybrid FSO/RF 主导），2 篇（L124/L165）是仅有的 coherent-FSO-AMC 候选。〔**D002 修订**：此处"4 族机制真不同"已废止——D002 将 F1+F3 合并入 A_MCS_POWER_CONTROL（真实 action 相同）、F4 经 L124 官方身份确认并入 A 族的相干相位实例，修订后为 3 族 A/B/C。详见本 R001 顶部 D002 修订声明。〕
 
 **Q2. 哪些只是 automatic modulation classification 或无关资源分配？**
 - mod-classification 一律排除 5 条：L087（MFI survey）、L188（OAM 模式识别）、L184（涡旋双任务识别）、L207（双参数反演）、L070（borderline demod）。

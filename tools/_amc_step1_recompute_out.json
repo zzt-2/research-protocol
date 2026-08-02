@@ -1,0 +1,802 @@
+{
+  "phase_a1": {
+    "raw_json_files": 32,
+    "unique_queries": 17,
+    "nonzero_result_queries": 16,
+    "duplicate_query_groups": 15,
+    "requested_source_union": [
+      "arxiv",
+      "exa",
+      "openalex",
+      "serpapi"
+    ],
+    "result_bearing_source_union": [
+      "cnki",
+      "openalex",
+      "openalex+openalex",
+      "serpapi_scholar"
+    ],
+    "unique_candidates": 209,
+    "publication_status": {
+      "published": 115,
+      "unknown": 91,
+      "preprint": 3
+    },
+    "priority_distribution": {
+      "必读": 10,
+      "建议读": 17,
+      "待确认": 4,
+      "备选": 57,
+      "排除": 121
+    },
+    "empty_or_zero_result_files": [
+      "modulation-coding-scheme-adaptation-coherent-optical-link-fe.json",
+      "r1-axA-mcs-fer-goodput-coherent.json"
+    ],
+    "per_file": [
+      {
+        "file": "adaptive-coding-modulation-satellite-optical-communication-2.json",
+        "size": 42741,
+        "sha256": "47a8a085b2a502dcd1171391c39307ad218ad4bfc0c29f1619689246d5f2ce28",
+        "zero_byte": false,
+        "is_cnki": false,
+        "query": "adaptive coding modulation satellite optical communication 2024 2025",
+        "timestamp": "2026-08-02T16:56:11.137674+08:00",
+        "requested_sources": [
+          "exa",
+          "serpapi"
+        ],
+        "n_results": 20,
+        "result_bearing_sources": [
+          "serpapi_scholar"
+        ]
+      },
+      {
+        "file": "adaptive-modulation-and-coding-coherent-free-space-optical-g.json",
+        "size": 42221,
+        "sha256": "5d1a78fc7f63b22ec4fe04f14bfaf7164971f67ebcae41b467aa3fd7e9ca97aa",
+        "zero_byte": false,
+        "is_cnki": false,
+        "query": "adaptive modulation and coding coherent free space optical Gamma-Gamma turbulence satellite",
+        "timestamp": "2026-08-02T16:55:14.027266+08:00",
+        "requested_sources": [
+          "exa",
+          "serpapi"
+        ],
+        "n_results": 20,
+        "result_bearing_sources": [
+          "serpapi_scholar"
+        ]
+      },
+      {
+        "file": "adaptive-modulation-coding-scheme-satellite-optical-feeder-l.json",
+        "size": 34966,
+        "sha256": "59001d8df2261e0fd121cbb819cb192f24f4a5a15b3fd9f5c15ad460970528b7",
+        "zero_byte": false,
+        "is_cnki": false,
+        "query": "adaptive modulation coding scheme satellite optical feeder link",
+        "timestamp": "2026-08-02T16:44:56.111593+08:00",
+        "requested_sources": [
+          "openalex",
+          "exa"
+        ],
+        "n_results": 15,
+        "result_bearing_sources": [
+          "openalex"
+        ]
+      },
+      {
+        "file": "adaptive-modulation-statistical-channel-state-information-op.json",
+        "size": 39509,
+        "sha256": "7365c5d5afe629ae464a01b636a59c53ba0b91cda50c0f9fba40828b92ffa3a2",
+        "zero_byte": false,
+        "is_cnki": false,
+        "query": "adaptive modulation statistical channel state information optical satellite turbulence",
+        "timestamp": "2026-08-02T16:53:39.701570+08:00",
+        "requested_sources": [
+          "openalex",
+          "exa"
+        ],
+        "n_results": 17,
+        "result_bearing_sources": [
+          "openalex"
+        ]
+      },
+      {
+        "file": "channel-prediction-uncertainty-aware-adaptive-modulation-fre.json",
+        "size": 29353,
+        "sha256": "c15ed5c89a3ad45a2d176c01098368b4a45230e179d484f62e2165571f8263c4",
+        "zero_byte": false,
+        "is_cnki": false,
+        "query": "channel prediction uncertainty aware adaptive modulation free space optical turbulence",
+        "timestamp": "2026-08-02T16:45:14.057125+08:00",
+        "requested_sources": [
+          "openalex",
+          "exa"
+        ],
+        "n_results": 12,
+        "result_bearing_sources": [
+          "openalex"
+        ]
+      },
+      {
+        "file": "cnki-r1-amc-fso-turbulence.json",
+        "size": 13999,
+        "sha256": "ec91fb98d38286e672c26df92669fa73376556b21670867a87a34367f25f9cfc",
+        "zero_byte": false,
+        "is_cnki": true,
+        "query": "自由空间光通信 自适应调制编码 大气湍流",
+        "timestamp": "",
+        "requested_sources": [],
+        "n_results": 20,
+        "result_bearing_sources": [
+          "cnki"
+        ]
+      },
+      {
+        "file": "cnki-r2-linkadapt.json",
+        "size": 12887,
+        "sha256": "bace2725d016429ed38e5b79052293b0490302f2cae1abefc1f99ce31921806f",
+        "zero_byte": false,
+        "is_cnki": true,
+        "query": "星地激光通信 链路自适应 编码调制",
+        "timestamp": "",
+        "requested_sources": [],
+        "n_results": 20,
+        "result_bearing_sources": [
+          "cnki"
+        ]
+      },
+      {
+        "file": "coherent-free-space-optical-adaptive-modulation-power-alloca.json",
+        "size": 44056,
+        "sha256": "7e4b4c5568304cf71871ff0d7073ff49f5b8f69ec9115eb15a83315a2e99ca22",
+        "zero_byte": false,
+        "is_cnki": false,
+        "query": "coherent free space optical adaptive modulation power allocation turbulence",
+        "timestamp": "2026-08-02T16:54:08.656635+08:00",
+        "requested_sources": [
+          "openalex",
+          "exa"
+        ],
+        "n_results": 17,
+        "result_bearing_sources": [
+          "openalex"
+        ]
+      },
+      {
+        "file": "coherent-free-space-optical-communication-adaptive-modulatio.json",
+        "size": 51359,
+        "sha256": "bf116688d3cd18109f85ed9ec3d9c041ad50b0ee07f9a0b1bfe0df064d0ad024",
+        "zero_byte": false,
+        "is_cnki": false,
+        "query": "coherent free-space optical communication adaptive modulation coding Gamma-Gamma turbulence",
+        "timestamp": "2026-08-02T16:43:48.245672+08:00",
+        "requested_sources": [
+          "openalex",
+          "exa"
+        ],
+        "n_results": 20,
+        "result_bearing_sources": [
+          "openalex"
+        ]
+      },
+      {
+        "file": "cross-layer-adaptive-power-modulation-coding-free-space-opti.json",
+        "size": 41815,
+        "sha256": "252fb41f11926946e1f6fc815988993c2e1d63c4943cbd29190465f57627dd59",
+        "zero_byte": false,
+        "is_cnki": false,
+        "query": "cross-layer adaptive power modulation coding free space optical satellite link",
+        "timestamp": "2026-08-02T16:45:24.096919+08:00",
+        "requested_sources": [
+          "openalex",
+          "exa"
+        ],
+        "n_results": 16,
+        "result_bearing_sources": [
+          "openalex"
+        ]
+      },
+      {
+        "file": "hybrid-arq-incremental-redundancy-optical-satellite-downlink.json",
+        "size": 24573,
+        "sha256": "4e32641549fe9c56a3b7aba8d65d0f936ed420d89144d801a08fe929f2ad1c1b",
+        "zero_byte": false,
+        "is_cnki": false,
+        "query": "hybrid ARQ incremental redundancy optical satellite downlink turbulence",
+        "timestamp": "2026-08-02T16:54:02.910624+08:00",
+        "requested_sources": [
+          "openalex",
+          "exa"
+        ],
+        "n_results": 11,
+        "result_bearing_sources": [
+          "openalex"
+        ]
+      },
+      {
+        "file": "hybrid-automatic-repeat-request-harq-rate-adaptation-free-sp.json",
+        "size": 36739,
+        "sha256": "10f259e7022f7f4309522eb9e5efb57a82f3722dd3ec8dd44e01480fb6fee699",
+        "zero_byte": false,
+        "is_cnki": false,
+        "query": "hybrid automatic repeat request HARQ rate adaptation free space optical communication",
+        "timestamp": "2026-08-02T16:45:17.126470+08:00",
+        "requested_sources": [
+          "openalex",
+          "exa"
+        ],
+        "n_results": 16,
+        "result_bearing_sources": [
+          "openalex"
+        ]
+      },
+      {
+        "file": "link-adaptation-optical-feeder-downlink-gamma-gamma-fading-s.json",
+        "size": 32525,
+        "sha256": "089d785ac17009bb5922e33b2936d679bb7a613174c9666e5c8834987222b3cf",
+        "zero_byte": false,
+        "is_cnki": false,
+        "query": "link adaptation optical feeder downlink Gamma-Gamma fading satellite",
+        "timestamp": "2026-08-02T16:55:20.548910+08:00",
+        "requested_sources": [
+          "openalex",
+          "exa"
+        ],
+        "n_results": 15,
+        "result_bearing_sources": [
+          "openalex",
+          "openalex+openalex"
+        ]
+      },
+      {
+        "file": "modulation-coding-scheme-adaptation-coherent-optical-link-fe.json",
+        "size": 240,
+        "sha256": "b05f6776d4b7288a5e0866d1010953a9dc777b88093c7f5a0a5df24ccc1abadd",
+        "zero_byte": false,
+        "is_cnki": false,
+        "query": "modulation coding scheme adaptation coherent optical link FER BLER goodput satellite",
+        "timestamp": "2026-08-02T16:44:32.072046+08:00",
+        "requested_sources": [
+          "openalex",
+          "arxiv"
+        ],
+        "n_results": 0,
+        "result_bearing_sources": []
+      },
+      {
+        "file": "outage-constrained-robust-modulation-coding-imperfect-channe.json",
+        "size": 39282,
+        "sha256": "235eeb5c403959c5ac5ce36f803dd42ec5b5eea9890ffa9b9c54519e5f0e092a",
+        "zero_byte": false,
+        "is_cnki": false,
+        "query": "outage constrained robust modulation coding imperfect channel state information",
+        "timestamp": "2026-08-02T16:53:31.312777+08:00",
+        "requested_sources": [
+          "exa",
+          "serpapi"
+        ],
+        "n_results": 20,
+        "result_bearing_sources": [
+          "serpapi_scholar"
+        ]
+      },
+      {
+        "file": "r1-axA-coherent-fso-amc-gg.json",
+        "size": 51359,
+        "sha256": "ad5027f31d4acaa66f7048133d77f657237d826643850941fb746cc40aced1fc",
+        "zero_byte": false,
+        "is_cnki": false,
+        "query": "coherent free-space optical communication adaptive modulation coding Gamma-Gamma turbulence",
+        "timestamp": "2026-08-02T16:43:48.243930+08:00",
+        "requested_sources": [
+          "openalex",
+          "exa"
+        ],
+        "n_results": 20,
+        "result_bearing_sources": [
+          "openalex"
+        ]
+      },
+      {
+        "file": "r1-axA-mcs-fer-goodput-coherent.json",
+        "size": 240,
+        "sha256": "bc1e757df1b5fa6283676ce1ef853d5a3931800c5840ccac84bb74a210b98403",
+        "zero_byte": false,
+        "is_cnki": false,
+        "query": "modulation coding scheme adaptation coherent optical link FER BLER goodput satellite",
+        "timestamp": "2026-08-02T16:44:32.070933+08:00",
+        "requested_sources": [
+          "openalex",
+          "arxiv"
+        ],
+        "n_results": 0,
+        "result_bearing_sources": []
+      },
+      {
+        "file": "r1-axA-mcs-satellite-optical.json",
+        "size": 34966,
+        "sha256": "2277f9540c203a8eada93467bd9c2460e580c2f2092776b2416a14a43a2f16c9",
+        "zero_byte": false,
+        "is_cnki": false,
+        "query": "adaptive modulation coding scheme satellite optical feeder link",
+        "timestamp": "2026-08-02T16:44:56.110308+08:00",
+        "requested_sources": [
+          "openalex",
+          "exa"
+        ],
+        "n_results": 15,
+        "result_bearing_sources": [
+          "openalex"
+        ]
+      },
+      {
+        "file": "r1-axB-prediction-uncertainty-fso.json",
+        "size": 29353,
+        "sha256": "c9b4fd82005473f0cd650b5ee8a447907671ec48ccd07bcbc7d1f50dadc69bde",
+        "zero_byte": false,
+        "is_cnki": false,
+        "query": "channel prediction uncertainty aware adaptive modulation free space optical turbulence",
+        "timestamp": "2026-08-02T16:45:14.055754+08:00",
+        "requested_sources": [
+          "openalex",
+          "exa"
+        ],
+        "n_results": 12,
+        "result_bearing_sources": [
+          "openalex"
+        ]
+      },
+      {
+        "file": "r1-axB-robust-amc-outdated-csi.json",
+        "size": 11621,
+        "sha256": "6b20efa7d5b36b4e387916b00bb7b387fcab76f30afd681cd6739f15297ccac5",
+        "zero_byte": false,
+        "is_cnki": false,
+        "query": "robust adaptive modulation coding outdated imperfect CSI delayed feedback outage constrained",
+        "timestamp": "2026-08-02T16:44:34.825758+08:00",
+        "requested_sources": [
+          "openalex",
+          "exa"
+        ],
+        "n_results": 5,
+        "result_bearing_sources": [
+          "openalex"
+        ]
+      },
+      {
+        "file": "r1-axC-crosslayer-pow-mod-fso.json",
+        "size": 41815,
+        "sha256": "a93233887d294443f9b60cae336c2647d82028244a1d96ae6b80dcc364c61855",
+        "zero_byte": false,
+        "is_cnki": false,
+        "query": "cross-layer adaptive power modulation coding free space optical satellite link",
+        "timestamp": "2026-08-02T16:45:24.095668+08:00",
+        "requested_sources": [
+          "openalex",
+          "exa"
+        ],
+        "n_results": 16,
+        "result_bearing_sources": [
+          "openalex"
+        ]
+      },
+      {
+        "file": "r1-axC-harq-rate-fso.json",
+        "size": 36739,
+        "sha256": "27b0385cf63e9fffc94bc4e39fbf1640cad37fbb8d43a0bf0d45e78f16ea30a9",
+        "zero_byte": false,
+        "is_cnki": false,
+        "query": "hybrid automatic repeat request HARQ rate adaptation free space optical communication",
+        "timestamp": "2026-08-02T16:45:17.125225+08:00",
+        "requested_sources": [
+          "openalex",
+          "exa"
+        ],
+        "n_results": 16,
+        "result_bearing_sources": [
+          "openalex"
+        ]
+      },
+      {
+        "file": "r2-c1-coherent-fso-adapmod-power.json",
+        "size": 44056,
+        "sha256": "b93d4503064f79501339bd98d419ebaaa8ee835c9015b0b80d4f885a6de10d61",
+        "zero_byte": false,
+        "is_cnki": false,
+        "query": "coherent free space optical adaptive modulation power allocation turbulence",
+        "timestamp": "2026-08-02T16:54:08.655285+08:00",
+        "requested_sources": [
+          "openalex",
+          "exa"
+        ],
+        "n_results": 17,
+        "result_bearing_sources": [
+          "openalex"
+        ]
+      },
+      {
+        "file": "r2-c2-harq-ir-optical-sat.json",
+        "size": 24573,
+        "sha256": "b19e53009ad84b9b6c30f3945ec40bbc5904611093c9508d1448edb7a2291cfd",
+        "zero_byte": false,
+        "is_cnki": false,
+        "query": "hybrid ARQ incremental redundancy optical satellite downlink turbulence",
+        "timestamp": "2026-08-02T16:54:02.909064+08:00",
+        "requested_sources": [
+          "openalex",
+          "exa"
+        ],
+        "n_results": 11,
+        "result_bearing_sources": [
+          "openalex"
+        ]
+      },
+      {
+        "file": "r2-c2-rateldpc-fso-turbulence.json",
+        "size": 3501,
+        "sha256": "d8a57fb3e92f570b69abcf911e2c515c54766311ebf8f3c898276185b40107bd",
+        "zero_byte": false,
+        "is_cnki": false,
+        "query": "rate compatible LDPC free space optical turbulence adaptive coding",
+        "timestamp": "2026-08-02T16:53:59.876468+08:00",
+        "requested_sources": [
+          "exa",
+          "serpapi"
+        ],
+        "n_results": 2,
+        "result_bearing_sources": [
+          "serpapi_scholar"
+        ]
+      },
+      {
+        "file": "r2-c3-adaptive-mod-statcsi-fso.json",
+        "size": 39509,
+        "sha256": "2e08cb0bce9289c42342c57d6c8789b63963ae73b61f458b6c04b792fd1160ab",
+        "zero_byte": false,
+        "is_cnki": false,
+        "query": "adaptive modulation statistical channel state information optical satellite turbulence",
+        "timestamp": "2026-08-02T16:53:39.700088+08:00",
+        "requested_sources": [
+          "openalex",
+          "exa"
+        ],
+        "n_results": 17,
+        "result_bearing_sources": [
+          "openalex"
+        ]
+      },
+      {
+        "file": "r2-c3-outage-robust-mcs-imperfect-csi.json",
+        "size": 39282,
+        "sha256": "c95599fef808800bed261a0f28184e92d09dca1f8a066360d812745d2668f1af",
+        "zero_byte": false,
+        "is_cnki": false,
+        "query": "outage constrained robust modulation coding imperfect channel state information",
+        "timestamp": "2026-08-02T16:53:31.300322+08:00",
+        "requested_sources": [
+          "exa",
+          "serpapi"
+        ],
+        "n_results": 20,
+        "result_bearing_sources": [
+          "serpapi_scholar"
+        ]
+      },
+      {
+        "file": "r2-dc-amc-coherent-fso-gg.json",
+        "size": 42221,
+        "sha256": "54cbca1d657788bc5bf439b86cae7cadda0b52d4221164639b6a28d2d85eb3cc",
+        "zero_byte": false,
+        "is_cnki": false,
+        "query": "adaptive modulation and coding coherent free space optical Gamma-Gamma turbulence satellite",
+        "timestamp": "2026-08-02T16:55:14.025463+08:00",
+        "requested_sources": [
+          "exa",
+          "serpapi"
+        ],
+        "n_results": 20,
+        "result_bearing_sources": [
+          "serpapi_scholar"
+        ]
+      },
+      {
+        "file": "r2-dc-linkadapt-feedergg.json",
+        "size": 32525,
+        "sha256": "c4eac4f4a1d91e804d4c2ff0f59f953ecd204eb8faab8478cad2272236547afc",
+        "zero_byte": false,
+        "is_cnki": false,
+        "query": "link adaptation optical feeder downlink Gamma-Gamma fading satellite",
+        "timestamp": "2026-08-02T16:55:20.537348+08:00",
+        "requested_sources": [
+          "openalex",
+          "exa"
+        ],
+        "n_results": 15,
+        "result_bearing_sources": [
+          "openalex",
+          "openalex+openalex"
+        ]
+      },
+      {
+        "file": "r2-density-2024-2026-amc-fso.json",
+        "size": 42741,
+        "sha256": "4164b9ee85aeda72e3f9cb3b35939382ae71e4a4acfef8a3216ee24825e5d76f",
+        "zero_byte": false,
+        "is_cnki": false,
+        "query": "adaptive coding modulation satellite optical communication 2024 2025",
+        "timestamp": "2026-08-02T16:56:11.135990+08:00",
+        "requested_sources": [
+          "exa",
+          "serpapi"
+        ],
+        "n_results": 20,
+        "result_bearing_sources": [
+          "serpapi_scholar"
+        ]
+      },
+      {
+        "file": "rate-compatible-ldpc-free-space-optical-turbulence-adaptive-.json",
+        "size": 3501,
+        "sha256": "11b6f1670eeee971ce35635a754eb0c961b39459cf751ce5e944cb368a2b04c2",
+        "zero_byte": false,
+        "is_cnki": false,
+        "query": "rate compatible LDPC free space optical turbulence adaptive coding",
+        "timestamp": "2026-08-02T16:53:59.877866+08:00",
+        "requested_sources": [
+          "exa",
+          "serpapi"
+        ],
+        "n_results": 2,
+        "result_bearing_sources": [
+          "serpapi_scholar"
+        ]
+      },
+      {
+        "file": "robust-adaptive-modulation-coding-outdated-imperfect-csi-del.json",
+        "size": 11621,
+        "sha256": "fe7c0f66ad62bf96550bb2461263f0037e5272767097334b8bf09978d4e8d543",
+        "zero_byte": false,
+        "is_cnki": false,
+        "query": "robust adaptive modulation coding outdated imperfect CSI delayed feedback outage constrained",
+        "timestamp": "2026-08-02T16:44:34.826966+08:00",
+        "requested_sources": [
+          "openalex",
+          "exa"
+        ],
+        "n_results": 5,
+        "result_bearing_sources": [
+          "openalex"
+        ]
+      }
+    ],
+    "raw_sha256": {
+      "adaptive-coding-modulation-satellite-optical-communication-2.json": "47a8a085b2a502dcd1171391c39307ad218ad4bfc0c29f1619689246d5f2ce28",
+      "adaptive-modulation-and-coding-coherent-free-space-optical-g.json": "5d1a78fc7f63b22ec4fe04f14bfaf7164971f67ebcae41b467aa3fd7e9ca97aa",
+      "adaptive-modulation-coding-scheme-satellite-optical-feeder-l.json": "59001d8df2261e0fd121cbb819cb192f24f4a5a15b3fd9f5c15ad460970528b7",
+      "adaptive-modulation-statistical-channel-state-information-op.json": "7365c5d5afe629ae464a01b636a59c53ba0b91cda50c0f9fba40828b92ffa3a2",
+      "channel-prediction-uncertainty-aware-adaptive-modulation-fre.json": "c15ed5c89a3ad45a2d176c01098368b4a45230e179d484f62e2165571f8263c4",
+      "cnki-r1-amc-fso-turbulence.json": "ec91fb98d38286e672c26df92669fa73376556b21670867a87a34367f25f9cfc",
+      "cnki-r2-linkadapt.json": "bace2725d016429ed38e5b79052293b0490302f2cae1abefc1f99ce31921806f",
+      "coherent-free-space-optical-adaptive-modulation-power-alloca.json": "7e4b4c5568304cf71871ff0d7073ff49f5b8f69ec9115eb15a83315a2e99ca22",
+      "coherent-free-space-optical-communication-adaptive-modulatio.json": "bf116688d3cd18109f85ed9ec3d9c041ad50b0ee07f9a0b1bfe0df064d0ad024",
+      "cross-layer-adaptive-power-modulation-coding-free-space-opti.json": "252fb41f11926946e1f6fc815988993c2e1d63c4943cbd29190465f57627dd59",
+      "hybrid-arq-incremental-redundancy-optical-satellite-downlink.json": "4e32641549fe9c56a3b7aba8d65d0f936ed420d89144d801a08fe929f2ad1c1b",
+      "hybrid-automatic-repeat-request-harq-rate-adaptation-free-sp.json": "10f259e7022f7f4309522eb9e5efb57a82f3722dd3ec8dd44e01480fb6fee699",
+      "link-adaptation-optical-feeder-downlink-gamma-gamma-fading-s.json": "089d785ac17009bb5922e33b2936d679bb7a613174c9666e5c8834987222b3cf",
+      "modulation-coding-scheme-adaptation-coherent-optical-link-fe.json": "b05f6776d4b7288a5e0866d1010953a9dc777b88093c7f5a0a5df24ccc1abadd",
+      "outage-constrained-robust-modulation-coding-imperfect-channe.json": "235eeb5c403959c5ac5ce36f803dd42ec5b5eea9890ffa9b9c54519e5f0e092a",
+      "r1-axA-coherent-fso-amc-gg.json": "ad5027f31d4acaa66f7048133d77f657237d826643850941fb746cc40aced1fc",
+      "r1-axA-mcs-fer-goodput-coherent.json": "bc1e757df1b5fa6283676ce1ef853d5a3931800c5840ccac84bb74a210b98403",
+      "r1-axA-mcs-satellite-optical.json": "2277f9540c203a8eada93467bd9c2460e580c2f2092776b2416a14a43a2f16c9",
+      "r1-axB-prediction-uncertainty-fso.json": "c9b4fd82005473f0cd650b5ee8a447907671ec48ccd07bcbc7d1f50dadc69bde",
+      "r1-axB-robust-amc-outdated-csi.json": "6b20efa7d5b36b4e387916b00bb7b387fcab76f30afd681cd6739f15297ccac5",
+      "r1-axC-crosslayer-pow-mod-fso.json": "a93233887d294443f9b60cae336c2647d82028244a1d96ae6b80dcc364c61855",
+      "r1-axC-harq-rate-fso.json": "27b0385cf63e9fffc94bc4e39fbf1640cad37fbb8d43a0bf0d45e78f16ea30a9",
+      "r2-c1-coherent-fso-adapmod-power.json": "b93d4503064f79501339bd98d419ebaaa8ee835c9015b0b80d4f885a6de10d61",
+      "r2-c2-harq-ir-optical-sat.json": "b19e53009ad84b9b6c30f3945ec40bbc5904611093c9508d1448edb7a2291cfd",
+      "r2-c2-rateldpc-fso-turbulence.json": "d8a57fb3e92f570b69abcf911e2c515c54766311ebf8f3c898276185b40107bd",
+      "r2-c3-adaptive-mod-statcsi-fso.json": "2e08cb0bce9289c42342c57d6c8789b63963ae73b61f458b6c04b792fd1160ab",
+      "r2-c3-outage-robust-mcs-imperfect-csi.json": "c95599fef808800bed261a0f28184e92d09dca1f8a066360d812745d2668f1af",
+      "r2-dc-amc-coherent-fso-gg.json": "54cbca1d657788bc5bf439b86cae7cadda0b52d4221164639b6a28d2d85eb3cc",
+      "r2-dc-linkadapt-feedergg.json": "c4eac4f4a1d91e804d4c2ff0f59f953ecd204eb8faab8478cad2272236547afc",
+      "r2-density-2024-2026-amc-fso.json": "4164b9ee85aeda72e3f9cb3b35939382ae71e4a4acfef8a3216ee24825e5d76f",
+      "rate-compatible-ldpc-free-space-optical-turbulence-adaptive-.json": "11b6f1670eeee971ce35635a754eb0c961b39459cf751ce5e944cb368a2b04c2",
+      "robust-adaptive-modulation-coding-outdated-imperfect-csi-del.json": "fe7c0f66ad62bf96550bb2461263f0037e5272767097334b8bf09978d4e8d543"
+    }
+  },
+  "phase_a2": {
+    "shared_abstract_group_count": 6,
+    "total_items_in_shared_abstract_groups": 18,
+    "empty_abstract_item_count": 39,
+    "shared_abstract_groups": [
+      {
+        "normalized_abstract_len": 600,
+        "normalized_abstract_preview": "optical wireless communication (owc) refers to transmission in unguided propagation media through the use of optical carriers, i.e., visible, infrared (ir), and",
+        "items": [
+          {
+            "L": "L038",
+            "title": "Channel estimation and adaptive coding dynamic control algorithm for satellite laser communication",
+            "year": 2026,
+            "venue": "",
+            "doi": "10.1080/24751839.2026.2637258",
+            "pub": "published"
+          },
+          {
+            "L": "L064",
+            "title": "Free space optical communication and network architecture",
+            "year": 2025,
+            "venue": "",
+            "doi": null,
+            "pub": "unknown"
+          },
+          {
+            "L": "L127",
+            "title": "Pre-distortion adaptive optics for free-space optical communications",
+            "year": 2025,
+            "venue": "",
+            "doi": null,
+            "pub": "unknown"
+          },
+          {
+            "L": "L134",
+            "title": "Review on modulation formats and channel coding in free space optical communication: Selection criteria, trade-offs, and emerging trends",
+            "year": 2026,
+            "venue": "",
+            "doi": null,
+            "pub": "unknown"
+          },
+          {
+            "L": "L091",
+            "title": "Model-free adaptive optics for free space optical communications: a comprehensive survey",
+            "year": 2026,
+            "venue": "",
+            "doi": "10.1007/s12596-025-03011-z",
+            "pub": "published"
+          },
+          {
+            "L": "L090",
+            "title": "Mitigating Turbulence-Induced Fading in Coherent FSO Links: An Adaptive Space-Time Code",
+            "year": 2019,
+            "venue": "",
+            "doi": null,
+            "pub": "unknown"
+          },
+          {
+            "L": "L020",
+            "title": "Adaptive Modulation Schemes for High-Capacity Free-Space Optics Communications",
+            "year": 2019,
+            "venue": "",
+            "doi": null,
+            "pub": "unknown"
+          }
+        ],
+        "same_title": false
+      },
+      {
+        "normalized_abstract_len": 600,
+        "normalized_abstract_preview": "satellite communications (satcoms) have recently entered a period of renewed interest motivated by technological advances and nurtured through private investmen",
+        "items": [
+          {
+            "L": "L010",
+            "title": "A Quality-Driven Adaptive Coding and Modulation Framework for Enhanced Digital Video Broadcasting over Satellite Networks",
+            "year": 2026,
+            "venue": "",
+            "doi": null,
+            "pub": "unknown"
+          },
+          {
+            "L": "L077",
+            "title": "Intelligent spectrum management in satellite communications",
+            "year": 2025,
+            "venue": "",
+            "doi": null,
+            "pub": "unknown"
+          },
+          {
+            "L": "L149",
+            "title": "Satellite Communications in the New Space Era: A Survey and Future Challenges",
+            "year": 2020,
+            "venue": "IEEE Communications Surveys & Tutorials",
+            "doi": "10.1109/comst.2020.3028247",
+            "pub": "published"
+          }
+        ],
+        "same_title": false
+      },
+      {
+        "normalized_abstract_len": 600,
+        "normalized_abstract_preview": "as the standardization of 5g solidifies, researchers are speculating what 6g will be. the integration of sensing functionality is emerging as a key feature of t",
+        "items": [
+          {
+            "L": "L030",
+            "title": "AI/ML-Enhanced Inter-Satellite Optical Wireless and Fiber Communication for Intelligent 5G/6G Networks",
+            "year": 2025,
+            "venue": "",
+            "doi": "10.1201/9781003599111-4",
+            "pub": "published"
+          },
+          {
+            "L": "L076",
+            "title": "Integrated Sensing and Communications: Toward Dual-Functional Wireless Networks for 6G and Beyond",
+            "year": 2022,
+            "venue": "IEEE Journal on Selected Areas in Communications",
+            "doi": "10.1109/jsac.2022.3156632",
+            "pub": "published"
+          }
+        ],
+        "same_title": false
+      },
+      {
+        "normalized_abstract_len": 600,
+        "normalized_abstract_preview": "as the demand for high-speed, low-latency communication continues to grow, free-space optical (fso) communication has gained prominence as a promising solution ",
+        "items": [
+          {
+            "L": "L176",
+            "title": "… free-space optics: A survey of enabling technologies, challenges, trends, and prospects of beyond 5G free-space optical (FSO) communication systems",
+            "year": 2024,
+            "venue": "",
+            "doi": null,
+            "pub": "unknown"
+          },
+          {
+            "L": "L135",
+            "title": "Revolutionizing Free-Space Optics: A Survey of Enabling Technologies, Challenges, Trends, and Prospects of Beyond 5G Free-Space Optical (FSO) Communication Systems",
+            "year": 2024,
+            "venue": "Sensors",
+            "doi": "10.3390/s24248036",
+            "pub": "published"
+          }
+        ],
+        "same_title": false
+      },
+      {
+        "normalized_abstract_len": 599,
+        "normalized_abstract_preview": "6g and beyond will fulfill the requirements of a fully connected world and provide ubiquitous wireless connectivity for all. transformative solutions are expect",
+        "items": [
+          {
+            "L": "L124",
+            "title": "Physics-informed adaptive transmission for coherent free-space optical communications: multi-dimensional amplitude–phase statistics",
+            "year": 2026,
+            "venue": "",
+            "doi": null,
+            "pub": "unknown"
+          },
+          {
+            "L": "L005",
+            "title": "6G and Beyond: The Future of Wireless Communications Systems",
+            "year": 2020,
+            "venue": "IEEE Access",
+            "doi": "10.1109/access.2020.3010896",
+            "pub": "published"
+          }
+        ],
+        "same_title": false
+      },
+      {
+        "normalized_abstract_len": 600,
+        "normalized_abstract_preview": "intelligent reflecting surface (irs) is an enabling technology to engineer the radio signal propagation in wireless networks. by smartly tuning the signal refle",
+        "items": [
+          {
+            "L": "L046",
+            "title": "Delay performance of wireless communications with imperfect CSI and finite-length coding",
+            "year": 2018,
+            "venue": "",
+            "doi": null,
+            "pub": "unknown"
+          },
+          {
+            "L": "L088",
+            "title": "Massive wireless energy transfer without channel state information via imperfect intelligent reflecting surfaces",
+            "year": 2024,
+            "venue": "",
+            "doi": null,
+            "pub": "unknown"
+          }
+        ],
+        "same_title": false
+      }
+    ]
+  }
+}

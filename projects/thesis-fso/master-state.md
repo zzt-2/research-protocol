@@ -38,7 +38,7 @@ current_stage: DORMANT
 - 当前授权：只做 Research Direction Lab Skill 三类最小 patch 与历史回归；**不运行仿真，不建 P12，不启动 AMC**。
 - 恢复条件：新物理自由度、新系统层级或用户明确 scope change。AMC 若获授权，另开 Groundwork 专题并从 Step 1 开始。
 - 恢复入口：`.sessions/2026-07-23-research-direction-lab-longitudinal-test/H003-skill-minimal-patch-and-regression.md`。
-- **AMC Groundwork（独立专题，2026-08-02 起）**：system 专题 D020 授权 `AMC_GROUNDWORK_TOPIC_CREATION` 已执行，转入 `.sessions/2026-08-02-fso-amc-groundwork/`。本 master-state 不再"等待创建 AMC 专题"；AMC Step 1 已完成（209 candidates / 5 sources / F1-F4 候选族 / shortlist 12 / 直接竞品搜索级 0），待用户验收后进 Step 2 全文获取。AMC 轨进度在本文件**不**计入上方历史 GW Progress 表（那是 receiver 轨），AMC 独立 GW Progress 见专题 topic-index。
+- **AMC Groundwork（独立专题，2026-08-02 起）**：system 专题 D020 授权 `AMC_GROUNDWORK_TOPIC_CREATION` 已执行，转入 `.sessions/2026-08-02-fso-amc-groundwork/`。本 master-state 不再"等待创建 AMC 专题"；AMC Step 1 经限定完整性修复（D002/V002）修订为 `STEP1_ACCEPTED_AFTER_BOUNDED_INTEGRITY_REPAIR`，**Step 2 acquisition PASS**（6 篇合格 content.md：L165/L023/L096/L146/L075/L090，覆盖 A_MCS_POWER_CONTROL + B_HARQ_IR_RATE_ADAPTATION + C_COHERENT_TX_ADAPTATION 三族，引用质量 0% 预印本；L124 bibliographic 级身份闭合 Optics Express 34(14):26128 DOI 10.1364/oe.595557 coherent-FSO AMC，全文待用户手动获取；5 篇下载失败 + 2 篇中文 manual_required 进用户 blocker 但不阻塞 PASS；候选族修订 4→3；直接竞品 `CURRENT_SEARCH_DID_NOT_CONFIRM_A_DIRECT_COMPETITOR`；`_step1_receipt.json` provenance 固化），待用户验收覆盖面后进 Step 3 全文精读。AMC 轨进度在本文件**不**计入上方历史 GW Progress 表（那是 receiver 轨），AMC 独立 GW Progress 见专题 topic-index。
 
 <details>
 <summary>2026-07-29 旧 G1 / Scout 控制面（历史，不授权执行）</summary>

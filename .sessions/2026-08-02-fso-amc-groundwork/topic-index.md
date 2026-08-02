@@ -1,6 +1,6 @@
 # Topic Index: 星地相干 FSO 自适应编码调制 (AMC) Groundwork
 
-> 状态: active | 创建: 2026-08-02 | 最后更新: 2026-08-02（GW Step 1 执行完成：209 candidates / 5 sources / F1-F4 候选族 / shortlist 12 篇 / 直接竞品搜索级 0 篇）
+> 状态: active | 创建: 2026-08-02 | 最后更新: 2026-08-02（GW Step 1 限定完整性修复完成 D002/V002：候选族 4→3 (A/B/C) / L124 身份闭合到 bibliographic 级 / 6 dup-abstract 组 18 条抓取污染确认 / provenance receipt 固化；进入 Phase B Step 2 acquisition）
 
 ## 专题信息
 
@@ -32,7 +32,7 @@
 
 ### 范围变更记录
 
-（暂无；首轮执行）
+- **2026-08-02 D002**：GW Step 1 从原授权的"Step 1 执行完成即停"修订为"Step 1 限定完整性修复后进入 Step 2 acquisition"。变更原因：用户 Phase A 执行提示词指示先做 Step 1 科学完整性限定修复（计数口径 / title-abstract identity / 候选族地图 / provenance receipt），修复 PASS 后**立即继续** Phase B Step 2 全文获取（同一对话内完成）。原始目标不变（找 AMC/链路适配问题作毕业第二贡献），仅把 Step 1→Step 2 的推进在同一对话内打通，并补做 Step 1 完整性修复。
 
 ## 已确认结论
 
@@ -46,10 +46,12 @@
 
 ### 其他结论
 
-- **Step 1 搜索级核心发现（R001）**：coherent sat-ground FSO + Gamma-Gamma + AMC/MCS + 真实 coded chain + 信息不确定性**四要素齐全的直接竞品搜索级 0 篇确认**（round-1 71 条 + round-2 扩展至 209 条交叉验证一致）。最接近的是 L124（physics-informed adaptive transmission for coherent FSO，2026）——abstract 偏 6G 通用，是否真做星地 GG + coded AMC 须 Step 2 全文确认；L165（Tbit/s feeder link）的 adaptive 动作在 AO 层非 AMC。
-- **4 候选问题族（均"候选假设，未过四判据"）**：F1 鲁棒/statistical-CSI AMC（最佳低风险，可绕相干时间 dead-end#2）/ F2 HARQ-IR（文献密集饱和，更适合 ENGINEERING_COMPONENT）/ F3 CSI 驱动调制+功率（dead-end#2/#9 双碰，时间尺度危险）/ F4 相干物理信息 AMC（L124 待全文定性，Step 1 最大未知量）。
+- **Step 1 搜索级核心发现（R001，经 D002 修订）**：coherent sat-ground FSO + Gamma-Gamma + AMC/MCS + 真实 coded chain + 信息不确定性**四要素齐全的直接竞品 `CURRENT_SEARCH_DID_NOT_CONFIRM_A_DIRECT_COMPETITOR`**（round-1 71 + round-2 扩至 209 + 4 alias collision query 32 命中均未确认直接竞品；但 Exa 透支/OpenAlex 0/S2 限速的覆盖 caveat 存在，不把搜索未命中解释成真实空白，FR-23）。最接近的 L124 经 Crossref+S2 双源确认是**真实的 coherent-FSO AMC 论文**（Optics Express 34(14):26128, 2026, DOI 10.1364/oe.595557，physics-informed AMC，modulation selection driven by [SNR, scintillation index, phase variance]），但 abstract 未提 Gamma-Gamma/satellite，pre-fix 状态 `UNVERIFIED_BIBLIOGRAPHIC_HIT`，须 Step 2 全文闭合 coding/CSI/channel/scenario。L165（Tbit/s feeder link）adaptive 动作在 AO 层非 AMC。
+- **候选族从 4（F1-F4）修订为 3（A/B/C），均"候选假设，未过四判据"**（D002）：**A_MCS_POWER_CONTROL**（瞬时 CSI 分支 + delayed/statistical/uncertain CSI 分支合并，真实 action 相同）/ **B_HARQ_IR_RATE_ADAPTATION**（真实独立 action，文献密集，更像 ENGINEERING_COMPONENT）/ **C_COHERENT_TX_ADAPTATION_UNVERIFIED**（原 F4，L124 全文身份闭合前不算正式族）。原 F4 不再算机制不同的第 4 族——L124 是 A 族的一个相干相位实例。
+- **F1 headroom 未证（D002 纠正）**：A 族 delayed/statistical CSI 分支**并非完全避开** dead-end#3 的 0.09 dB MCS 天花板；它与旧路线共享长时间尺度信息驱动 MCS/码率切换，新增点只是"不确定信息约束"，headroom 须 Step 4a 维度 D oracle 上界（FR-21）核算。
+- **title-abstract identity 审计（D002）**：6 个 normalized-abstract 重复组覆盖 18 条 hit，根因是 Exa/SerpAPI abstract 抓取污染（少数通用 survey 摘要被反复注入不同标题条目）。受影响 shortlist/flagged：L124（6G-roadmap abstract，真实经 Crossref 确认）/ L020 / L038 / L090。这些条目 abstract 不可信，须 title+DOI 定身份。
 - **诚实边界**：空白存在但非必然=问题（FR-23）——可能源于物理不成立（瞬时 CSI 撞相干时间 dead-end#2 被领域隐式放弃）。Step 2/3 必须区分"机会"vs"物理不可行"，不强造方向。
-- **中文检索**：CNKI 40 条命中但 0 条抓到摘要（cookie/IP 受限），38 条进 digest 全部低 confidence；5 条标题强相关（L050/L206 概率整形 FSO 等）须 Step 2 抓全文。中文摘要抓取记为 Step 2 前置债务。
+- **中文检索**：CNKI 40 条命中但 0 条抓到摘要（cookie/IP 受限），38 条进 digest 全部低 confidence；5 条标题强相关（L050/L206 概率整形 FSO 等）须 Step 2 抓全文。中文摘要抓取记为 Step 2 前置债务（仍 open，本轮 `tools/blit --source cnki` 未跑）。
 
 ## AMC 历史 dead-end ledger（继承边界，FR-26 证据指针）
 
@@ -73,8 +75,8 @@
 
 | Step | 状态 | 完成日期 | commit | 关键产出 | 下游门控 |
 | ---- | ---- | -------- | ------ | -------- | -------- |
-| 1 search | ✅ | 2026-08-02 | （本轮 commit 待 verifier PASS） | search-archive/2026-08-02/（16 queries × 5 sources = 209 unique）+ R001 候选问题族地图（F1-F4）+ Step 2 shortlist 12 篇 | — |
-| 2 acquire | ⬜ | | | papers/{arxiv\|doi}/{id}/content.md | 进 Step 3 前必 ✅（用户验收后） |
+| 1 search | ✅（ACCEPTED_AFTER_BOUNDED_INTEGRITY_REPAIR, D002/V002） | 2026-08-02 | （本轮统一 commit，SHA 见 H001） | search-archive/2026-08-02/（**17 unique queries × 4 data channels = 209 unique**，非"16×5"；published 115/209=55.0%）+ R001 候选问题族地图（**修订后 3 族 A/B/C**，原 F1-F4 合并）+ Step 2 shortlist 12 篇 + `_step1_receipt.json`（force-add provenance）+ 4 alias collision query（0 直接竞品） | — |
+| 2 acquire | ✅（PASS，6 篇合格 content.md，待用户验收覆盖面） | 2026-08-02 | （本轮统一 commit，SHA 见 H001） | papers/doi/{10.1038_s41377-023-01201-7, 10.1109_jlt.2023.3242215, 10.1109_tvt.2021.3127193, 10.1109_jiot.2025.3600439, 10.1109_access.2025.3650714}/ + papers/manual/L090-intechopen/ （6 篇 content.md 294–863 行）+ R002 覆盖面报告（A/B/C 三族覆盖）+ L124 bibliographic 级身份闭合 | 进 Step 3 前必 ✅（用户验收后） |
 | 3 read | ⬜ | | | literature_notes（AMC 专属） | 进 Step 3.5/4a 前必 ✅ |
 | 3.5 supplement | ⬜ | | | 补充检索 + 更新 notes | 进 Step 4a 前必 ✅ |
 | 4a feasibility | ⬜ | | | feasibility_report.md | 进 Step 5 前必 ✅ |
@@ -83,19 +85,26 @@
 ## 进展线索
 
 - **S001**：专题初始化 + GW Step 1 执行完成。
-- **D001**：新系统层范围与旧轴边界（新建）。
-- **R001**：AMC Step 1 landscape（209 条逐条审查 + F1-F4 候选问题族 + Step 2 shortlist 12 篇 + 8 问诚实结论）。
-- **V001**（待写）：独立 verifier 核验。
+- **S002**：Step 1 限定完整性修复（Phase A）+ Step 2 acquisition（Phase B）。
+- **D001**：新系统层范围与旧轴边界。
+- **D002**：Step 1 科学完整性限定修复 — 候选族 4→3（A/B/C）+ identity 审计 + provenance receipt（新建，修订 R001 口径不撤 Step 1）。
+- **R001**：AMC Step 1 landscape（209 条逐条审查 + 原始 F1-F4 候选问题族 + Step 2 shortlist 12 篇 + 8 问诚实结论；**candidate-family 计数与 source 口径已被 D002 修订**）。
+- **R002**：Step 2 acquisition 覆盖面报告（Phase B 产出）。
+- **V001**：Step 1 原 12 项 checklist 独立验证（PASS 12/12；漏审 identity + source provenance，V002 已闭合）。
+- **V002**：Step 1 限定完整性修复验证（Phase A 修订 PASS）。
+- **H001**：Step 2 → Step 3 交接。
 
 ## 当前位置
 
-GW Step 1 执行完成：209 unique candidates / 5 sources / 必读 10 / 4 候选族 / Step 2 shortlist 12 篇。直接竞品搜索级 0 篇确认（诚实结论）。待独立 verifier (V001) 核验后用户验收。
+Phase A（Step 1 限定修复）PASS（D002/V002）。Phase B（Step 2 acquisition）**PASS**：6 篇合格 content.md（L165/L023/L096/L146/L075/L090），覆盖 A/B/C 三族，引用质量 0% 预印本。L124 bibliographic 级身份闭合（Optics Express 34(14):26128, DOI 10.1364/oe.595557，coherent-FSO AMC），全文 coding/CSI 待用户手动获取。5 篇下载失败 + 2 篇中文 manual_required 进入用户 blocker，但不阻塞 Step 2 PASS（6 > 5 门槛，三族覆盖成立）。详见 R002/H001。
 
 ## 未决项
 
-- 中文检索（CNKI/Wanfang）是否可跑（依赖校园网 IP + cookie）。
-- R001 候选问题族最终数（2-4）待二轮检索后定。
+- L124 全文（coding/CSI/channel/scenario）——用户手动获取 DOI 10.1364/oe.595557。
+- L075 标签修正（实为 classification 非 AMC）——Step 3 待办。
+- 中文检索 cookie/IP（L050/L206）——校园网可用时重试。
+- 候选族最终数（2-3）待 Step 3/4a 后定。
 
 ## 下一合法动作
 
-本轮（Step 1）完成后唯一合法动作：**主控验收 Step 1 后，进入 Groundwork Step 2 全文获取**。不得直接启动 Step 2/精读/仿真/方法实现。
+Step 2 PASS 后唯一合法动作：**主控/用户确认覆盖面后进入 Step 3 全文精读**（独立新对话，先读 `stages/gw-read.md`）。L124 全文为 Step 3 第一优先（用户补全文后精读池 L023/L096/L146/L165/L090/L124）。禁止直接进入 Step 3.5/4a。
