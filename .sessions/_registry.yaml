@@ -619,3 +619,21 @@ topics:
     produces:
       - .sessions/2026-07-20-direction-lab-science-scout/
       - projects/thesis-fso/direction-lab/campaigns/science-scout-2026-07-20/
+
+  - slug: 2026-08-02-fso-amc-groundwork
+    title: 星地相干 FSO 编码自适应与 AMC Groundwork
+    status: active
+    created: "2026-08-02"
+    last_updated: "2026-08-02（专题初始化 + GW Step 1 执行中；D001 锁定系统层范围与旧轴边界）"
+    description: "独立系统层 Groundwork 专题。承接 system 专题 2026-07-20-research-direction-lab-system D020 授权的 AMC_GROUNDWORK_TOPIC_CREATION，从 GW Step 1 重新开始。目标：星地相干 FSO + Gamma-Gamma 湍流 + 真实编码链/信息不确定性背景下找自适应编码调制/链路适配问题作毕业论文潜在第二项贡献。本轮只做 Step 1（两轮检索+逐条语义初筛+候选问题族地图+Step 2 shortlist），不进 Step 2-4a/不下载全文/不设计方法/不跑仿真/不产生 METHOD_SIGNAL。继承 9 条历史 dead-end 边界（ISL AMC prediction/反馈-相干时间/MCS 0.09dB/AMC+CPR 联合设计/交织·PS·N1·coded-chain/P08-R2 工程资产/DA-NDA CPR 现有主贡献/automatic-modulation-classification 假命中/AMC↔Ch4 BER 循环依赖）作先验，不复活。"
+    depends_on:
+      - slug: 2026-07-20-research-direction-lab-system
+        reason: D020 授权 AMC_GROUNDWORK_TOPIC_CREATION（rdl_control allowed_actions）；本轮不修 Skill
+      - slug: 2026-07-23-research-direction-lab-longitudinal-test
+        reason: 继承 method-production campaign negatives 边界（P01-P07-R/P08/G1/P09/P10/P11 不计 AMC 证据）+ thesis-map 资产分级
+      - slug: 2026-05-30-ch3-direction-exploration
+        reason: 只继承旧 AMC 失败与竞争先验（AMC↔Ch4 BER 循环依赖、AMC+CPR 联合设计崩塌），不继承其 Groundwork 完成度
+    conflicts_with: []
+    produces:
+      - .sessions/2026-08-02-fso-amc-groundwork/
+      - search-archive/2026-08-02/

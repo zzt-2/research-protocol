@@ -197,4 +197,8 @@ rdl_control:
 H003 已接收，R004/D020 只补 executable semantic gates、contribution tiers 与
 lightweight persistence。六案审计重放、自动测试、个人 Skill 同步与 V014 独立
 终验均 PASS（P0/P1/P2=0）；既有科学 verdict、dormant longitudinal topic 与
-formal owner 未变。下一合法动作：新建AMC Groundwork专题并从Step 1开始。
+formal owner 未变。
+
+**2026-08-02 转移记录**：`AMC_GROUNDWORK_TOPIC_CREATION` 已执行——AMC 转入新独立专题
+`2026-08-02-fso-amc-groundwork`（D001），从 GW Step 1 开始。本 system 专题不再显示
+"等待创建 AMC 专题"；本轮 system 专题自身范围（D020 patch 冻结）不变，不再授权新动作。

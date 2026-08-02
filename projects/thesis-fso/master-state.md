@@ -5,7 +5,7 @@ method_type: 待定（精读后根据问题方法产出形态确定，见 glossa
 domain: comms
 created: 2026-06-21
 updated: 2026-08-02
-current_step: METHOD-PRODUCTION-CAMPAIGN-DORMANT
+current_step: METHOD-PRODUCTION-CAMPAIGN-DORMANT (AMC 轨转入独立专题 2026-08-02-fso-amc-groundwork，Step 1 完成)
 current_stage: DORMANT
 ---
 
@@ -38,6 +38,7 @@ current_stage: DORMANT
 - 当前授权：只做 Research Direction Lab Skill 三类最小 patch 与历史回归；**不运行仿真，不建 P12，不启动 AMC**。
 - 恢复条件：新物理自由度、新系统层级或用户明确 scope change。AMC 若获授权，另开 Groundwork 专题并从 Step 1 开始。
 - 恢复入口：`.sessions/2026-07-23-research-direction-lab-longitudinal-test/H003-skill-minimal-patch-and-regression.md`。
+- **AMC Groundwork（独立专题，2026-08-02 起）**：system 专题 D020 授权 `AMC_GROUNDWORK_TOPIC_CREATION` 已执行，转入 `.sessions/2026-08-02-fso-amc-groundwork/`。本 master-state 不再"等待创建 AMC 专题"；AMC Step 1 已完成（209 candidates / 5 sources / F1-F4 候选族 / shortlist 12 / 直接竞品搜索级 0），待用户验收后进 Step 2 全文获取。AMC 轨进度在本文件**不**计入上方历史 GW Progress 表（那是 receiver 轨），AMC 独立 GW Progress 见专题 topic-index。
 
 <details>
 <summary>2026-07-29 旧 G1 / Scout 控制面（历史，不授权执行）</summary>
