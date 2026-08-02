@@ -1,10 +1,6 @@
-# NOTE 2026-08-01 (P08 campaign): this file still reflects the D022 SCIENCE_FREEZE
-# Scout/formal-G1 state (dormant Scout campaign + G1 bounded packaging asset).
-# The active P01-P08 sub-problem exploration campaign lives in
-# .sessions/2026-07-23-research-direction-lab-longitudinal-test/topic-index.md
-# (control block + mission-log.md CP030-CP037). P07-R=D046/V072 (F family closed,
-# PROBLEM_ABSENT_AFTER_GAIN_CALIBRATION, accepted_valid=7/10). Do NOT read the
-# G1/formal_active_carrier/next_action blocks below as the current P08 state.
+# CURRENT 2026-08-02: method-production campaign is SATURATED_NO_ACTIVE_CARRIER / DORMANT.
+# The campaign_closeout block below is the sole current campaign projection.
+# Older Scout/G1/candidate blocks are retained as historical portfolio lineage.
 # portfolio/current.yaml — reconciled 2026-07-22 after S012/D020/V009; AMENDED 2026-07-22 S013/D021/V010/V011;
 # FROZEN 2026-07-22 S014/D022/V012/H015 (SCIENCE_FREEZE + campaign-level reconciliation).
 # Campaign-level verdict (D022): SCIENCE_SCOUT candidate rotation PAUSED (topic dormant).
@@ -18,11 +14,36 @@ project_id: thesis-fso.dual-pol-osl.direction-lab
 completeness_claim: OPEN_PORTFOLIO_NO_COMPLETENESS_CLAIM
 recovery_entry: .sessions/2026-07-23-research-direction-lab-longitudinal-test/topic-index.md
 
+campaign_closeout:
+  authority: D058 / V084 / CP049
+  status: SATURATED_NO_ACTIVE_CARRIER
+  lifecycle: DORMANT
+  accepted_valid_packages: 7
+  fixed_target_10_is_execution_goal: false
+  remaining_valid_packages: null
+  method_signal_count: 0
+  active_carrier_count: 0
+  p11_disposition: PARTIAL_LOCAL_20DB_BASELINE_ASSET
+  thesis_assets:
+    grade_a: [EXISTING_DA_NDA_ADAPTIVE_CPR]
+    grade_b: [BIT_TRUE_FIXED_POINT, CODED_CHAIN_PREFIX_LS, STRONG_CONVENTIONAL_COMPARATOR_BOUNDARIES]
+    grade_c: [P01_TO_P07R_LOCAL_BOUNDARIES, SEMANTIC_WITHDRAWAL_CHAIN, G1_P09_COUNTEREXAMPLES]
+  next_action: SKILL_MINIMAL_PATCH_AND_HISTORICAL_REGRESSION
+  restore_only_if: [NEW_PHYSICAL_DOF, NEW_SYSTEM_LEVEL, USER_SCOPE_CHANGE]
+  amc_rule: NEW_GROUNDWORK_TOPIC_NOT_THIS_CAMPAIGN
+
+next_action:
+  mode: SKILL_MINIMAL_PATCH_AND_HISTORICAL_REGRESSION
+  science_execution_authorized: false
+  description: >-
+    Apply only the three R010/H003 Skill patch categories and run historical
+    regression cases. Do not start AMC, create P12, reopen an old axis, or run simulation.
+
 formal_active_carrier:
   id: NONE
-  status: NO_ACTIVE_SCIENTIFIC_CARRIER
+  status: SATURATED_NO_ACTIVE_CARRIER
   readiness: NONE
-  authority: .sessions/2026-07-06-step4a-mve-execution/decisions.md#D041
+  authority: .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md#D058
   positive_method_target: null
   fair_comparators: []
   claim_ceiling: NONE
@@ -33,9 +54,9 @@ formal_active_carrier:
 
 selected_formalization_workline:
   id: G1_SAFE_GATED_NORMALIZATION
-  status: FORMAL_LINE_CLOSED_PACKAGING_ACCEPTED_ARTIFACT_TASK_READY
-  readiness: LOCAL_DIAGNOSTIC_ASSET_ONLY
-  authority: formal D041 / live D033 / CP024 / V060
+  status: INVALID_SCALE_ARTIFACT_HISTORICAL_ONLY
+  readiness: NO_METHOD_READINESS
+  authority: D057 / V083 -> D058 / V084
   positive_method_target: >-
     receiver-visible prefix detector activates per-pol correct sqrt scale only
     under collapse risk; healthy outputs retain identity
@@ -46,13 +67,12 @@ selected_formalization_workline:
     - C11 legal causal and blind affine as inherited diagnostics
   expected_mission_method_delta: NONE
   current_gate: >-
-    D033/CP024 accept T025 as an internal bounded packaging source. T026 may
-    create thesis writing/figure artifacts only. T024 Phase-A evidence closure
-    and D4 comparator identity remain invalid.
+    G1 is a post-CMA scalar rescaling whose apparent gain comes from a fixed-threshold
+    slicer's scale sensitivity. Historical packaging survives only as a bounded
+    threats-to-validity asset; it is not a method signal or thesis spine.
   stop: >-
-    No new science run or formal repair; no Step5/Contract/Execute,
-    Q15 map repair, second G1 science package, or scientific claim beyond the
-    bounded thesis insert authorized by T026
+    No new science run or repair. Do not promote G1, reopen the collapse family,
+    fill a fixed package count, or start AMC in this campaign.
 
 candidates:
   # ── Cluster 1-2: Failure observability (CEILINGED) ──
@@ -208,7 +228,7 @@ remaining_open:
     status: INFRASTRUCTURE_BLOCKED
     note: needs action hook; co-blocked
 
-next_action: >-
+historical_next_action_2026_07_22: >-
   V060/D032/formal D041 reject both T024 terminal claims. Correct seed-cluster
   pooled bootstrap makes Gate6 PASS (CI lower about 0.885), but Phase-A evidence
   closure and D4 comparator identity fail, so formal recommendation is invalid.

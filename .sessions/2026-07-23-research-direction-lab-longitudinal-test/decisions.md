@@ -2455,10 +2455,10 @@ CP028 的核心结论是"缺的是 problem-bearing 物理问题，不是 testbed
 
 ## D039: 用户授权 10-有效包探索 campaign（不因 0 READY 要求 thesis pivot）
 
-> status: active
+> status: superseded（固定 10 包自动执行目标由 D058 取代；历史包合同保留）
 > date: 2026-07-30
 > 取代：D038 的 "active_lane=PHYSICS_EXTENSION_TERMINATED_AWAITING_USER_DECISION / 下一合法动作交用户"（D038 的段A 物理判定 PHYSICS_BACKED_TESTBED_UNAVAILABLE 与 forbidden axis 保留）
-> 被取代：无
+> 被取代：D058（仅固定数量自动续跑与 campaign lifecycle；历史包合同和血缘保留）
 > 依据：用户原话: voice.md 2026-07-30（campaign 授权："至少跑10大包？"）；CP029/D038 段A 终止事实；method-production.md（DIAGNOSTIC_METHOD_SIGNAL/METHOD_SIGNAL 需 fresh held-out 稳定超过 tuned comparator + 语义 smoke + 消融 + 复杂度）；baseline-adjudication.md（pre-method gate 四门 + PROBLEM_SURVIVES_CONVENTIONAL_BASELINE 才进 method factory + minimal baseline ladder）；evidence-and-claims.md（claim ceiling 最小等级 + semantic smoke before scale）；D037/D038 已关闭轴清单（CB1 collapse family、频域/子带族、NDA-ML 本体、G1 science repair、Pilot-Jones 小轴、PMD/PDL/Jones/CD 星地移植）；TL-30（不得换名重开已关闭轴）/TL-32/FR-25（Go=赢传统 baseline，oracle 只做 Kill 工具）/FR-23（问题=M 在 C 下因 A 失效，非空白）
 > 触发原话：`voice.md` 2026-07-30（用户授权至少 10 个有效科学大包；setup/治理/任务准备/接口修复不计包数）
 
@@ -3400,7 +3400,7 @@ P11 `PILOT_EFFICIENT_STRUCTURED_BUTTERFLY_FIR` **verdict `PROBLEM_RESOLVED_BY_CO
 
 ## D057: scope-change 用户授权一次性 G1 promotion groundwork 重开 + P11 纠偏降级 + G1 语义审计终态 G1_SIGNAL_INVALID_SCALE_ARTIFACT（诚实停止于 Groundwork Step 1 前，不计科学包）
 
-> status: active
+> status: superseded（两份重复/首份截断历史均由 D058 消歧；不删除历史）
 > date: 2026-08-01
 > 取代：D041 / D039 中"不得第二个 G1 promotion 包"的限制（仅此一条；D041 关于旧 G1 证据 `EVIDENCE_INCOMPLETE / NONBINDING` 的判断**继续有效**，本终态再次独立证实）；D056 P11 的 accepted_valid 计数与终态措辞
 > 被取代：D056 的 P11 "campaign accepted_valid 7→8" 计数与 "B2 严格优于 B0 / 跨 SNR / 监督开销不必要" 措辞
@@ -3475,7 +3475,7 @@ G1 = post-CMA per-polarization per-block output 复标量乘，零 CMA 反馈；
 
 ## D057: scope-change 用户授权一次性 G1 promotion groundwork 重开 + P11 纠偏降级 + G1 语义审计终态 G1_SIGNAL_INVALID_SCALE_ARTIFACT（诚实停止于 Groundwork Step 1 前，不计科学包）
 
-> status: active
+> status: superseded（两份重复/首份截断历史均由 D058 消歧；不删除历史）
 > date: 2026-08-01
 > 取代：D041 / D039 中"不得第二个 G1 promotion 包"的限制（仅此一条；D041 关于旧 G1 证据 `EVIDENCE_INCOMPLETE / NONBINDING` 的判断**继续有效**，本终态再次独立证实）；D056 P11 的 accepted_valid 计数与终态措辞
 > 被取代：D056 的 P11 "campaign accepted_valid 7→8" 计数与 "B2 严格优于 B0 / 跨 SNR / 监督开销不必要" 措辞
@@ -3588,3 +3588,49 @@ P11 降级基于 raw 数据逐 cell 复算：D056 的"严格优于 / 跨 SNR / L
 ### 来源
 
 用户执行指令（13 节计划，voice.md 2026-08-01）+ G1 源码语义审计（`g1-safe-gated-normalization-confirm/src/methods.py:158-198` + `run_g1_confirm.py:170-256` + `_modulation.py:84-91` + `contract.yaml:71`）+ P11 held-out raw 复算（`p11_phaseA_test_raw.json` 192 rows）+ fresh-context 子 agent 独立重算（G1 code audit + G1 raw-rows re-audit）+ thesis-lessons TL-22/TL-30/TL-33 + gw-feasibility.md §A0 §0 + FR-26
+
+## D058: method-production campaign 收口为 SATURATED_NO_ACTIVE_CARRIER / DORMANT
+
+> status: active
+> date: 2026-08-02
+> 取代：D039 的固定 10 包自动续跑条款；D057 两份重复记录的 current-view 作用；D057/V083 的 P11 `PARTIAL_LOCAL_9to15DB_BASELINE_ASSET`
+> 被取代：无
+> 依据：R010 最终效果与根因审计；V084 12 项独立验证；P01–P11/G1 worker-log、D/V 血缘与 caller→generator 源码链；论文资产 map；用户 2026-08-02 收口指令
+> 触发原话：voice.md 2026-08-02（“不为了凑10包重开任何旧轴”；“停止继续以‘10个有效包’为自动目标”；“campaign状态改为：SATURATED_NO_ACTIVE_CARRIER / DORMANT”；“AMC属于新系统层级，必须另开Groundwork专题，不能塞入旧campaign。”）
+
+### 决策
+
+1. campaign 最终状态固定为 `SATURATED_NO_ACTIVE_CARRIER / DORMANT`。`accepted_valid_packages=7`，`METHOD_SIGNAL=0`，`active_carrier=0`；`remaining_valid_packages` 不再是执行目标，不派 P12。
+2. 7 个有效包为 P01–P06 与 P07-R；P07 被 P07-R 替换后只计一次。它们是可信局部负面/边界，不是七项贡献。
+3. P08/R/R2=`STOPPED_WITH_PARTIAL_ASSET`；P09=`EXECUTION_INVALID/KILL_C3`；P10=`EVIDENCE_INSUFFICIENT`；P11=`PARTIAL_LOCAL_20DB_BASELINE_ASSET`；G1=`G1_SIGNAL_INVALID_SCALE_ARTIFACT`，均不计有效包。
+4. P11 的 9/11/13/15 dB 只存在于 cell 标签；caller 未将 gamma 传入 generator，generator 使用默认 `GAMMA_BAR=100`，所以实际均为 20 dB。保留 raw、chronology、linear-FIR identity 与不同湍流/fG/SOP 的局部 baseline 价值，撤回跨 SNR 解释。
+5. “饱和”只指当前 testbed、物理自由度、证据和授权下没有 active carrier，不声明数学穷尽。仅在出现新物理自由度、新系统层级或用户明确 scope change 后恢复。
+6. AMC 属于新系统层级；若后续授权，必须另开 Groundwork 专题并从 Step 1 走硬门，不能塞回本 campaign。
+7. 论文资产按 A/B/C 分级：A 级只有既有 DA/NDA 自适应 CPR；本 campaign 的定点/coded-chain/comparator 进入 B 级，七包边界与撤回链进入 C 级。不得升级 partial/invalid/negative。
+8. 下一对话只做 Research Direction Lab Skill 三类最小 patch 与历史回归：executable semantic gates、contribution tiers、lightweight persistence；不启动 AMC。
+
+### 为什么这样做
+
+七个机制族已经产生七个可信负面/边界包，但所有 method-bearing 入口都被强传统 comparator、物理自由度不足或语义/统计合同拦截。继续执行固定包数会把数量代理置于研究问题之上，并诱发重开关闭轴或制造弱候选。收口保存了真实负面与工程资产，同时阻断无证据升级。
+
+### 为什么不那样做
+
+- 不补 P12：没有新的合法 M-C-A 或物理自由度。
+- 不修 P08/P09/P10/P11/G1：用户明确禁止，且会把 closeout 变成新科学执行。
+- 不把 7 包写成第二贡献：它们的 ceiling 是 local negative/boundary。
+- 不在本专题做 AMC：系统层级和 Groundwork 入口不同。
+- 不删除旧 D/V/worker/raw 或重复 D057：保留历史血缘，用 supersession 消歧。
+
+### 影响范围
+
+- topic-index 压缩为 current snapshot；mission-log 追加 CP049；registry 转 dormant。
+- portfolio/state/master/harvest 追加或改写 campaign closeout 当前投影。
+- 新增 R010、论文资产 map 与 H003；不新增 S，不修改 Skill，不运行仿真，不 push。
+
+### 范围确认
+
+本轮在原始 mission 的审计、资产沉淀与低负担恢复范围内。没有扩大到新科学问题或 AMC Groundwork。
+
+### 来源
+
+R010；V084；mission-log CP001–CP049；D039–D057 与 V065–V083；worker-logs step-028–042；P11 caller→generator 源码；thesis asset map；用户 2026-08-02 指令。

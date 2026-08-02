@@ -1,4 +1,4 @@
-# harvest/current.yaml — current thesis-consumption view after S011/D017/D018/D019
+# harvest/current.yaml — current thesis-consumption view; campaign closeout added 2026-08-02
 # Historical e15ae60 claims are retained below but are not current-active evidence.
 # Lineage: campaigns/science-scout-2026-07-20/harvest-addendum.v7 + this round's scout syntheses.
 # !!! D017 AMENDMENT (2026-07-22): the e15ae60 "PRIMARY THESIS SPINE — collapse is a channel
@@ -10,6 +10,44 @@
 # !!! as currently-valid without reading the amendment block.
 
 schema_version: research-direction-lab.harvest.current.v1
+
+method_production_campaign_closeout:
+  authority: D058 / V084 / CP049
+  status: SATURATED_NO_ACTIVE_CARRIER
+  lifecycle: DORMANT
+  accepted_valid_packages: 7
+  method_signal_count: 0
+  active_carrier_count: 0
+  fixed_target_10_is_execution_goal: false
+  p11_disposition: PARTIAL_LOCAL_20DB_BASELINE_ASSET
+  current_thesis_map: projects/thesis-fso/direction-lab/harvest/method-production-campaign-thesis-map.md
+  grade_a:
+    - EXISTING_DA_NDA_ADAPTIVE_CPR
+  grade_b:
+    - BIT_TRUE_FIXED_POINT
+    - CODED_CHAIN_AND_PREFIX_LS_PARTIAL
+    - STRONG_CONVENTIONAL_COMPARATOR_BOUNDARIES
+  grade_c:
+    - P01_TO_P07R_LOCAL_NEGATIVE_BOUNDARIES
+    - SEMANTIC_WITHDRAWAL_AND_METRIC_METHODOLOGY
+    - G1_AND_P09_COUNTEREXAMPLES
+  prohibited_promotions:
+    - SEVEN_NEGATIVE_PACKAGES_AS_SEVEN_CONTRIBUTIONS
+    - G1_AS_METHOD
+    - P09_AS_METHOD
+    - P11_AS_CROSS_SNR_EVIDENCE
+    - P08_CODED_CHAIN_AS_CONFIRMED_SCIENTIFIC_VERDICT
+  next_action: SKILL_MINIMAL_PATCH_AND_HISTORICAL_REGRESSION
+  amc_rule: NEW_GROUNDWORK_TOPIC_NOT_THIS_CAMPAIGN
+
+current_view:
+  authority: D058 / V084 / CP049
+  status: SATURATED_NO_ACTIVE_CARRIER
+  lifecycle: DORMANT
+  thesis_map: projects/thesis-fso/direction-lab/harvest/method-production-campaign-thesis-map.md
+  grade_a_only: EXISTING_DA_NDA_ADAPTIVE_CPR
+  campaign_produced_new_main_method: false
+  next_action: SKILL_MINIMAL_PATCH_AND_HISTORICAL_REGRESSION
 
 historical_e15ae60_snapshot:
   # ── PRIMARY THESIS SPINE: the collapse is a channel property ──
@@ -209,12 +247,12 @@ historical_thesis_spines_e15ae60:
     escalation: requires user strategy decision (material compute investment)
 
 # ─────────────────────────────────────────────────────────────────────────────
-# current_view (S011/D017/D018/D019) — SOLE CURRENT VALID PROJECTION
+# current_view (S011/D017/D018/D019) — LEGACY PROJECTION, SUPERSEDED FOR CAMPAIGN CLOSEOUT
 # The e15ae60 harvest entries above are retained as protected history.
-# The block below is the sole current-valid view. Cite this block, not the
-# H060_PRIMARY spine above, until a legal-expert retest (Macro A) resolves it.
+# The block below is retained as lineage. For method-production campaign claims,
+# cite method_production_campaign_closeout and the thesis map above.
 # ─────────────────────────────────────────────────────────────────────────────
-current_view:
+legacy_current_view_2026_07_22:
   recovery_entry: .sessions/2026-07-23-research-direction-lab-longitudinal-test/topic-index.md
   source: S013 / D021 / V010 / V011 / H014 -> FROZEN S014 / D022 / V012 / H015 (SCIENCE_FREEZE) -> D061/V035/H017 -> Pilot-Jones T005/D066/V040 scoped axis Kill -> T006 science verdict rejected -> T010 BLOCKED_IDENTITY/returned -> live D013/V029 + step4a D024 accept T011 BLOCKED_SEARCH_COVERAGE -> live D014/V033 + formal D025 close T012 as task-interface blocked and return C15 -> live V035/R004/D016 + formal D027 accept T013 BLOCKED_SEARCH_COVERAGE -> live V037/D017 + formal D028 accept T014 BLOCKED_SEARCH_COVERAGE and return B9 -> live R005/D018 + formal D029 activate B12 -> live D019/V038-V040 + formal D030 withdraw T015 before execution and return B12 on novelty/physics gate -> live R006/D020 + formal D031 select C15 one-shot Step 1-2 formalization -> live D021/V047 + formal D032 accept T016 BLOCKED_FORMAL_READINESS and return C15 with no method delta -> live R007/D022 + formal D033 select C16-open Step 1-2 formalization -> live V049/D023 + formal D034 accept T017 BLOCKED_FORMAL_READINESS and return C16-open with no method delta -> live R008/D024 + formal D035 select Q14 one-shot mandatory Step 3.5/problem-evidence workline with no method delta -> live V050/D025 + formal D036 amend T018 coverage/receipt contract -> live V051 accepts revised static contract -> D026 freezes Q14/T018 -> T019 no signal -> T020 M4 diagnostic signal -> live V053/D028 + formal D037 select Q15 Step 1-2 -> T021 PARTIAL -> live V054/D029 + formal D038 select Q15 Step 3 / T022 -> live V056/D030 + formal D039 select terminal Step3.5+conditional Step4a / T023. Prior S012/D020/V009 superseded.
 

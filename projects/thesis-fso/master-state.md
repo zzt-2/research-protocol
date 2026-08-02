@@ -4,9 +4,9 @@ direction: 星地激光通信（FSO）——子地带由地勘（S003 方法论 
 method_type: 待定（精读后根据问题方法产出形态确定，见 glossary 判据 2）
 domain: comms
 created: 2026-06-21
-updated: 2026-07-29
-current_step: G1-THESIS-ARTIFACT-TASK-READY
-current_stage: GROUNDWORK
+updated: 2026-08-02
+current_step: METHOD-PRODUCTION-CAMPAIGN-DORMANT
+current_stage: DORMANT
 ---
 
 # Master Agent: thesis-fso
@@ -27,7 +27,22 @@ current_stage: GROUNDWORK
 
 ### 当前控制面桥接（唯一现行入口）
 
-> **2026-07-29 D033/CP024 → epoch57 G1 FORMAL LINE CLOSED；T026 THESIS ARTIFACT TASK READY**：
+> **2026-08-02 D058/V084/CP049 → epoch85 `SATURATED_NO_ACTIVE_CARRIER / DORMANT`**。
+> 本段是唯一现行项目入口；下方旧 G1、Scout、Groundwork 轨迹只保留历史审计。
+
+- accepted valid packages：**7**（P01–P06 + P07-R）；它们是局部负面/边界，不是七项贡献。
+- method-production 结果：`METHOD_SIGNAL=0`，active carrier=0；固定 10 包不再是自动执行目标，`remaining_valid_packages` 退役。
+- 无效/部分资产：P08/R/R2 partial chronology；P09 execution invalid；P10 evidence insufficient；P11 实际固定 20 dB partial baseline；G1 scale artifact。
+- P11 纠偏证据：cell 标签的 gamma 没有传入 channel generator，generator 使用默认 `GAMMA_BAR=100`（20 dB）。
+- 论文资产：A 级仅既有 DA/NDA 自适应 CPR；B/C 级映射见 `direction-lab/harvest/method-production-campaign-thesis-map.md`。
+- 当前授权：只做 Research Direction Lab Skill 三类最小 patch 与历史回归；**不运行仿真，不建 P12，不启动 AMC**。
+- 恢复条件：新物理自由度、新系统层级或用户明确 scope change。AMC 若获授权，另开 Groundwork 专题并从 Step 1 开始。
+- 恢复入口：`.sessions/2026-07-23-research-direction-lab-longitudinal-test/H003-skill-minimal-patch-and-regression.md`。
+
+<details>
+<summary>2026-07-29 旧 G1 / Scout 控制面（历史，不授权执行）</summary>
+
+> **历史 D033/CP024 → epoch57 G1 FORMAL LINE CLOSED；T026 THESIS ARTIFACT TASK READY**：
 > T009 的独立审查只接收 `BLOCKED_IDENTITY` 与 `mission_method_delta=NONE`；
 > 随机 TX payload 被当 pilot、DA/NDA frequency stage 不对称、无来源且无 FEC
 > crossing 的 working region，以及 raw/result 未进提交，共同否定“DA 在可靠条件
@@ -73,6 +88,8 @@ current_stage: GROUNDWORK
   Q14/T018 不得执行 final-binding、Phase A、Step 4a/实现/实验或第二个
   problem-evidence package；
   Scout/P03，不进入 Step 5/Contract/Execute。**
+
+</details>
 
 ### 历史 Groundwork 轨迹（保留审计，不授权当前执行）
 

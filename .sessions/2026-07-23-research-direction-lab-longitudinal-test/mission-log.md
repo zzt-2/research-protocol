@@ -1,7 +1,15 @@
 # Mission Log — Research Direction Lab 长程真实运行测试
 
 > original mission: 在用户只中转任务路径和极短回执的条件下，稳定推进真实研究并积累可用方法材料。
-> phase 1: `4af6f9d..aab425d` | latest accepted: CP030 / 2026-07-30 (D039 campaign P01) | next checkpoint: `CP031`
+> phase 1: `4af6f9d..aab425d` | latest accepted: CP049 / 2026-08-02 (D058 campaign closeout) | next checkpoint: none (topic dormant)
+
+## Final closeout checkpoint
+
+| CP | 包 / intent / family | formal science disposition | mission method delta | streaks | weight / drift | 下一步为何优于替代项 |
+|---|---|---|---|---|---|---|
+| CP049 | campaign final audit / D058 / R010 / 无科学执行 | `SATURATED_NO_ACTIVE_CARRIER / DORMANT`；P01–P07-R 共 7 个有效局部负面/边界包；P08/P09/P10/P11/G1 不计；P11 caller 未注入 gamma，实际固定 20 dB，终态 `PARTIAL_LOCAL_20DB_BASELINE_ASSET` | NONE；累计 METHOD_SIGNAL=0，active carrier=0 | 固定 10 包目标退役；remaining 不再是执行计数器 | CLOSEOUT / ALIGNED | 只做 Skill 三类最小 patch 与历史回归；不建 P12、不修旧轴、不启动 AMC。详见 H003 |
+
+## Historical checkpoints
 
 | CP | 包 / intent / family | formal science disposition | mission method delta | streaks | weight / drift | 下一步为何优于替代项 |
 |---|---|---|---|---|---|---|

@@ -1,10 +1,5 @@
-# NOTE 2026-08-01 (P08 campaign): this file's authorization/effective_conclusions/
-# next_action reflect the D022 SCIENCE_FREEZE Scout/formal-G1 line (dormant).
-# The active P01-P08 sub-problem campaign (D039 authorization) is tracked in
-# .sessions/2026-07-23-research-direction-lab-longitudinal-test/topic-index.md
-# (control block) + mission-log.md (CP030-CP037). P07-R=D046/V072 closed F family
-# (PROBLEM_ABSENT_AFTER_GAIN_CALIBRATION). Read topic-index control block as the
-# current campaign state; the G1/Scout blocks below are dormant-history.
+# CURRENT 2026-08-02: the campaign_closeout block is the sole machine current projection.
+# Older Scout/G1/effective_conclusions/next_action blocks are retained as historical lineage.
 # state/current.yaml — sole machine current view
 # Rebuilt 2026-07-22 from S012 / D020 / V009; AMENDED 2026-07-22 S013 / D021 / V010 / V011;
 # FROZEN 2026-07-22 S014 / D022 / V012 / H015 (SCIENCE_FREEZE + campaign-level reconciliation).
@@ -29,6 +24,27 @@ schema_version: research-direction-lab.state.current.v1
 project_id: thesis-fso.dual-pol-osl.direction-lab
 last_recovery_entry: .sessions/2026-07-23-research-direction-lab-longitudinal-test/topic-index.md
 
+campaign_closeout:
+  authority: D058 / V084 / CP049
+  status: SATURATED_NO_ACTIVE_CARRIER
+  lifecycle: DORMANT
+  accepted_valid_packages: 7
+  fixed_target_10_is_execution_goal: false
+  remaining_valid_packages: null
+  mission_method_signal_count: 0
+  active_carrier_count: 0
+  p11_disposition: PARTIAL_LOCAL_20DB_BASELINE_ASSET
+  science_execution_authorized: false
+  next_action: SKILL_MINIMAL_PATCH_AND_HISTORICAL_REGRESSION
+  amc_groundwork_authorized_here: false
+
+next_action:
+  mode: SKILL_MINIMAL_PATCH_AND_HISTORICAL_REGRESSION
+  science_execution_authorized: false
+  description: >-
+    Apply only executable semantic gates, contribution tiers, and lightweight
+    persistence; regress P07/P08/P09/P10/P11/G1; do not start AMC or simulation.
+
 formal_goal: >-
   Systematically identify whether machine learning provides a real, legally
   comparable information increment anywhere in the complete dual-polarization
@@ -40,12 +56,11 @@ formal_goal: >-
 authorization:
   current_mode: DORMANT  # was SCIENCE_SCOUT; D022 SCIENCE_FREEZE paused the campaign (topic dormant). D061 confirms: no current science-execution authorization in the Scout campaign.
   science_authorized: false  # the Scout campaign is dormant; formal science advances via master-state.md, not this campaign
-  scope: dormant legacy Scout campaign; D041 closes the G1 formal experiment line after T024 evidence-closure and comparator-identity failures, while preserving only a local diagnostic packaging asset.
+  scope: dormant method-production campaign; D058 closes fixed-count execution with 7 valid local negative/boundary packages, zero method signal, and no active carrier.
   formal_gw_line: >-
-    NO_ACTIVE_SCIENTIFIC_CARRIER (live V060/D032 / formal D041 /
-    epoch 57 / CP024). T024 Gate6 passes under the specified seed-cluster
-    pooled bootstrap, but Phase-A evidence closure and D4 comparator identity
-    fail. G1 remains NONBINDING_LOCAL_DIAGNOSTIC only and receives no repair.
+    SATURATED_NO_ACTIVE_CARRIER (D058 / V084 / epoch 85 / CP049).
+    G1 is an invalid scale artifact, P11 is a partial fixed-20dB baseline,
+    and no package in this campaign produced a method signal.
   prohibits:
     - modify or rerun B001-B003 / P03 Atlas / canonical-state / completion-events
     - create legacy B004
@@ -254,7 +269,7 @@ dispositions:
     replaced_by: fresh disjoint seeds (TBD per Macro A contract)
     reason: reused across >=6 batches (c04/c09/c14/c15/c16/corrector + c12 subset)
 
-next_action:
+historical_next_action_2026_07_22:
   mode: G1_THESIS_ARTIFACT_TASK_READY
   description: >-
     D022 campaign-level verdict: SCIENCE_SCOUT candidate rotation PAUSED (topic dormant).

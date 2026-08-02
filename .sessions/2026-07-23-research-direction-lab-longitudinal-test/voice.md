@@ -335,3 +335,11 @@
 - "十三、最终只汇报五项：1. scope change、P11纠偏与Groundwork真实进度；2. G1语义审计、直接竞品和最强传统comparator；3. Step 4a Go/No-Go；若Go，报告confirmation关键数字和CI；4. terminal verdict、METHOD_SIGNAL、active carrier、campaign计数和论文包装；5. worker-log、literature artifacts、代码/实验artifact、verifier、Commit SHA。若Step 4a No-Go：- 单次最终commit。全程不push。"
   → D057 / V083（G1 scale artifact 终态于 GW Step 1 前 + P11 降级；campaign accepted_valid 8→7，remaining_valid=3，0 active carrier）
   [绑定结论：本轮端到端完成 G1 promotion groundwork 重开 + P11 纠偏，中间不参与技术判断；plan §99 明文允许 scale artifact 终态停止（不进入文献包装或实验），故 No-Go 单次最终 commit；不 push]
+
+## 2026-08-02（campaign 确定性收口与论文资产整理）
+
+- “不为了凑10包重开任何旧轴” → D058
+- “停止继续以‘10个有效包’为自动目标” → D058
+- “campaign状态改为：SATURATED_NO_ACTIVE_CARRIER / DORMANT” → D058
+- “AMC属于新系统层级，必须另开Groundwork专题，不能塞入旧campaign。” → D058
+- “下一对话只做Skill最小patch与历史回归，不启动AMC。” → H003

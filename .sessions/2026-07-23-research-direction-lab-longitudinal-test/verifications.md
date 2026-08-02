@@ -4300,3 +4300,40 @@ fresh-context 子 agent 从 1120 rows 独立复算：
 - 本终态 **不计科学包**（count_excludes=groundwork_closure）。
 - 旧 D056/V082/CP047 保留标 D057 superseded P11 计数与措辞部分（chronology/identity/linear-FIR-MSE 物理机制保留有效）。
 - G1 forbidden axis 维持关闭（D041 + D057 双重证实 scale artifact，禁换名重开）。
+
+## V084: D058 campaign closeout 与论文资产投影 12 项独立验证
+
+> 日期：2026-08-02
+> 关联：D058 / R010 / CP049 / H003
+> 验证者：fresh-context 独立 verifier（只读；未运行仿真、未编辑文件、未 web）
+> 结论：PASS
+
+### 验证范围与方法
+
+verifier 独立读取当前 git diff、新增 R010/D058/topic-index/CP049/voice/registry/portfolio/state/master/harvest map/H003，并沿历史 D/V/worker-log 与 P11 caller→generator 源码交叉核实。执行 `git diff --check`、PyYAML 解析、Skill diff 范围、untracked log hash/mtime 检查；不依赖主线程口头摘要。
+
+### 12 项结果
+
+1. **PASS — accepted_valid_packages 恰为 7**：P01–P06 + P07-R；P07 被 P07-R 替代后只计一次。证据：`topic-index.md:39,50,74-80`；`decisions.md:3603-3605`；V077 `verifications.md:4019-4033`。
+2. **PASS — P08/P09/P10/P11/G1 均未计入**：`topic-index.md:83-87`；`decisions.md:3605`；历史 V077/V079/V081/V083。
+3. **PASS — P11 实际固定 20 dB**：`p11_run.py:118-128` 仅有 9/11/13/15 标签；`:271-274` caller 未传 gamma；`ml_long_seq_failure.py:154-169` callee 无 gamma 参数并使用全局 `GAMMA_BAR`；`:60-61` 与 `params.py:502-504` 给出默认 100=20 dB。current views 均为 `PARTIAL_LOCAL_20DB_BASELINE_ASSET`。
+4. **PASS — METHOD_SIGNAL=0、active_carrier=0 一致**：topic-index、portfolio、state、harvest、master 与 CP049 一致。
+5. **PASS — lifecycle 与计数器一致**：统一 `SATURATED_NO_ACTIVE_CARRIER / DORMANT`；fixed target=false；remaining=null；registry 为 dormant。
+6. **PASS — 无范围外执行**：改动仅治理/投影/harvest 文档；未重开旧轴、未运行实验、未建 P12 或 AMC 专题。
+7. **PASS — A/B/C 分级无升级**：A级只有既有 DA/NDA CPR；coded-chain/定点/comparator 为 B；七包边界、G1/P09、撤回链为 C；partial/invalid/negative 均有禁止升级条款。
+8. **PASS — 两条 thesis spine 诚实**：AMC 成功路线要求独立 Groundwork 和完整证据合同；AMC 失败路线只保留一个方法主贡献，第二条明确是实现与评价扩展。
+9. **PASS — current owner 唯一 closeout 投影**：topic-index、portfolio/state/harvest `current_view`、master 顶部、registry 与 CP049 均指向 D058/V084；旧 G1/Scout 内容明确标记为 historical/legacy。
+10. **PASS — supersession 与治理链闭合**：D039、两份 D057 均标 D058 superseded；D058 active；CP049、R010、H003、voice 齐全；旧 D/V/worker/raw 未删除。
+11. **PASS — Skill 与 handoff 边界**：项目 Skill 目录零 diff；H003 只交接 executable semantic gates、contribution tiers、lightweight persistence，并明确不启动 AMC。
+12. **PASS — 机器检查与文件范围**：`git diff --check` exit 0；registry/portfolio/state/harvest PyYAML 解析通过；改动只有 9 个 tracked owner 文件加 R010/H003/harvest map；四个既有 `p05_run*.log` 的 size/mtime/SHA256 审查前后完全相同。
+
+### 风险与解释
+
+- D057 的两份历史记录（首份截断）仍在；D058 已显式消歧，但忽略 supersession 的简单 parser 仍可能误判。
+- CP048/V083/step-042 的 9–15 dB 是保留的历史错误血缘；消费方必须读取 CP049/D058/current projection。
+- H003 来源为 R010/D058 而非 S###，文件已解释这是 closeout audit 为落实轻量持久化而不新建 S 的有界例外，不得泛化。
+- 个人 Skill 目录不属于本 Git 仓库；“零 diff”由本项目改动范围证明。
+
+### 最终结论
+
+**PASS（12/12）**。D058 campaign closeout、P11 20 dB 纠偏、论文资产分级、current-owner 投影和 H003 交接彼此一致；没有新科学执行或资产升级。允许进入确定性复查与单次提交。
