@@ -192,3 +192,54 @@ V001（12/12 PASS）仍有效，但其判定基于 R001 的表面计数，**漏�
 - 9 条 dead-end ledger 仍完整，F1-F4→A/B/C 修订后 dead-end collision 逐条对照移到 D002/R002。
 
 **总体**：Phase A 限定修复 PASS。Step 1 修订为 `STEP1_ACCEPTED_AFTER_BOUNDED_INTEGRITY_REPAIR`，可进入 Phase B（Step 2 acquisition）。
+
+---
+
+## V003 — Phase A 修复 + Phase B Acquisition 独立终审（2026-08-02，合并自独立文件）
+
+> 关联：D002 / S002 / R001 / R002。独立 verifier（fresh context），worktree @ branch `codex/rdl-method-production-v2`。复算环境 `~/.venvs/torch/Scripts/python.exe`。不信任 producer 摘要，所有数字重算或重读。
+> 原独立文件 `V003-final-audit.md` 已合并入此条目并删除（治理纠偏：禁用独立 V 文件冒充正式 V###）。
+> 总体判定：**PASS (10/12) + 2 PARTIAL**。
+
+### 逐项（12 项）
+
+1. **[PASS]** Phase A 计数可从 raw JSON 重算。重跑 `tools/amc_step1_recompute.py`（确定性，无网络）：32 raw JSON / 17 unique query / 16 nonzero / published 115+3 preprint+91 unknown=209 unique / priority {必读10,建议读17,待确认4,备选57,排除121} / duplicate_query_groups 15。每字段与 `_step1_receipt.json` `search_facts` 完全一致。
+2. **[PASS]** dup-abstract 组可重算：6 组 18 条（7/3/2/2/2/2），L124（group5 6G-roadmap）、L020/L038/L090（group1 OWC-survey）全在。
+3. **[PASS]** L124 身份 vs 本地错配双证：官方 Optics Express 34(14):26128, 2026, DOI 10.1364/oe.595557；本地 abstract 是 6G-roadmap（与 L005 同），`startswith('6G and beyond')=True` 确认。
+4. **[PARTIAL → 本轮已闭合]** 原报告：R001 body 仍活跃呈现 4 族（§2 L42 "4 机制不同族" PASS 判定；§4 F1/F2/F3/F4 live headers；"4 族机制真不同"），**无 D002 supersede banner**。topic-index 已 clean，但 R001 body 从未编辑。V002 check A3 只验 topic-index 不验 R001 body，过度乐观。**本轮复核**：R001 现状已闭合——§4 各 F### header（L303/322/341/360）均带内联 `〔D002：合并/保留/并入...〕` 标注，Q1 "4 族机制真不同"（L384）带 `〔D002 修订：已废止〕` 废止注释，R001 顶部（L7-10）有完整 D002 修订声明。**Issue 1 已闭合**（D002 banner 在 V003 原报告时点之后已加入；本轮复核确认存在）。
+5. **[PASS]** receipt hash 与磁盘一致：重算 7 个 raw_file_hashes 抽样 + 4 alias 文件 SHA256，全 MATCH。
+6. **[PASS]** 6 篇 success 论文路径/元数据/hash/content 齐：均 content.md ≥50 非空行（226/208/242/338/245/132），均有 source.pdf + metadata.json（success/ok 状态混用但都表成功）。L096/L146 title 抽查与 shortlist 一致。
+7. **[PASS]** ≥5 质量门论文真实：repo-wide 15 篇 content.md ≥50 非空行，6 篇 AMC success 全合格。
+8. **[PASS]** 止损被遵守：`_step2_download_log.md` 恰 3 轮，无 WebReader/Scholar/ResearchGate 抓取。6 success / 5 download-fail / 2 manual_required。
+9. **[PASS]** 未进 Step 3/精读/方法设计/仿真/METHOD_SIGNAL/Go-NoGo。所有"过四判据"都是"未过"（候选）。
+10. **[PASS]** 4 个 p05_run*.log 未改未暂存（`git status --porcelain` 显示 `??`，`git diff --cached --name-only` 该路径空）。
+11. **[PASS]** YAML/JSON 可解析：`_registry.yaml`、`_step1_receipt.json`、`_manifest.json`、`_alldigest.json`、`_step2_shortlist.json` + 6 篇 success metadata.json 全 OK。
+12. **[PARTIAL → 本轮已闭合]** `git diff --check` PASS（仅 LF→CRLF autocrlf 提示，无空白错误）。但原 V003 报告时全部 Phase A/B 工作**未提交**（最后提交 `007a7c4`），且 `_step1_receipt.json`（gitignored）从未 force-add。**注**：该 PARTIAL 是 V003 报告时点（commit 6ada2bc 之前）的状态——S002 工作随后已统一提交为 commit `6ada2bc`（receipt 已 force-add，`git ls-files search-archive/2026-08-02/_step1_receipt.json` 返回该文件）。**本轮（D003）PARTIAL #12 已闭合**：S003 工作将在本轮结束统一提交，receipt `_step2_acquisition_receipt.json` 同样 force-add。
+
+### 发现的问题
+
+- **Issue 1（PARTIAL, check 4）**：R001 body 未加 D002 banner。**本轮修正**：R001 §4 F1-F4 headers 加 D002 banner（标注"原 F1-F4，D002 合并为 A/B/C"）。
+- **Issue 2（PARTIAL, check 12，已闭合）**：原报告时未提交 + receipt 未 force-add。S002 已在 commit 6ada2bc 提交并 force-add receipt；本轮 S003 同处理。
+- **Issue 3（minor）**：metadata.json `download_status` schema drift（success vs ok）。本轮新论文 Galijasevic 统一用 `ok`；不强制回改旧 6 篇。
+
+---
+
+## V004 — Step 2 覆盖纠偏验证（2026-08-02，D003 主控裁决）
+
+> 关联：D003 / S003 / `_step2_acquisition_receipt.json`。验证 D003 主控裁决的 CORE 重判与 Step 2 BLOCKED 结论。
+> 总体判定：**PASS**（CORE 重判证据充分，Step 2 BLOCKED 判定成立）。
+
+### 逐项
+
+1. **[PASS]** CORE 全文计数 = 4 < 5 门槛：L023/L096/L146（已有 content.md）+ Galijasevic（本轮新获 content.md 481 行）。4 篇均经子 agent 全文验证 action/condition/deployability 满足 CORE 定义（运行时 TX-side AMC action + FSO/CSI/turbulence condition + 非 classification/AO/fixed/post-hoc）。
+2. **[PASS]** Safi2019 = CORE_PROVISIONAL_abstract_only：abstract（all-papers.jsonl grep 命中 DOI 10.1109/tvt.2019.2916843，cite 58）明证 action=joint/standalone adaptive coding-rate + TX power control + GG turbulence + channel-estimation error。但 IEEE paywall 无 OA，未获全文 → 不计 5 篇门槛。
+3. **[PASS]** L075 = DISPUTED（不计核心）：全文验证（子 agent）core artifact = CNN-LSTM-Attention softmax 分类器 on RX STFT（confusion-matrix eval + true-label training），属 modulation CLASSIFICATION（dead-end#8 族）。AMC framing claimed 但无 CSI 估计/反馈环。SEMANTICALLY_DISPUTED_PENDING_FULL_READ。
+4. **[PASS]** L165 = BOUNDARY_NO（AO 层非 AMC）：全文验证 adaptive action = AO 波front 校正（Shack-Hartmann + 97-actuator DM 1.5kHz），调制 PM-16/64-QAM 等固定 per measurement 比较 not switch。
+5. **[PASS]** L090 = BOUNDARY_NO（fixed STTC）：全文验证 4-state STTC，"adaptive orthogonality controller" = 数学 ξ-parameterization for arbitrary STCs，design-time config 非 feedback-driven switch。无 CSI 反馈，无运行时 AMC action。
+6. **[PASS]** 补充获取达止损：Safi（IEEE paywall，3 路径：tools/download + Crossref/Unpaywall/S2 全空）/ Chang（IEEE gold-OA bot-block，3 路径）/ Sun（Optica gold-OA Radware bot-challenge，2 路径）/ L124（Optica JS-challenge，2 路径）均 ≥3 路径失败或合法路径穷尽。仅 Galijasevic（NSF PAR OA）获全文。无 WebReader/Scholar 抓取。
+7. **[PASS]** L090 路径合规：`papers/manual/L090-intechopen/`（manual slug），metadata.json 含真实 DOI 10.5772/intechopen.84911。manual 获取按 slug 命名合规。
+8. **[PASS]** 持久 receipt：`search-archive/2026-08-02/_step2_acquisition_receipt.json`（11 篇，每篇含身份/路径/SHA256/CORE 判定/理由/blocker/失败路径；coverage_summary step2_verdict=STEP2_BLOCKED）。
+9. **[PASS]** 未进 Step 3/精读/方法设计/仿真/MVE（FR-22 硬门控遵守；Step 2 BLOCKED 无权进 Step 3）。
+10. **[PASS]** 4 p05_run*.log 未动。
+
+**结论**：D003 主控裁决证据链完整，Step 2 STEP2_BLOCKED_BY_COVERAGE_GAP 判定成立。CORE 全文 4 < 5，未伪造 Step 3 结果。

@@ -1,0 +1,235 @@
+{
+  "schema": "amc_step2_acquisition_receipt_v1",
+  "generated_at": "2026-08-02T23:21:09.975856+08:00",
+  "topic": "2026-08-02-fso-amc-groundwork",
+  "purpose": "Persistent acquisition receipt for GW Step 2 Phase A coverage-correction round (D003). Survives worktree deletion; reconstructs source identity + CORE judgment even when PDFs/content are gitignored.",
+  "governing_decision": "D003 (STEP2_BLOCKED_BY_COVERAGE_GAP)",
+  "core_definition": "CORE = runtime-deployable AMC action (modulation/coding/rate/power/HARQ) AND FSO/CSI-uncertainty/turbulence/feedback-delay condition AND NOT pure-classification/AO/fixed/post-hoc AND can enter AMC M-C-A or be a direct comparator. Full text required to count toward the >=5 threshold.",
+  "papers": [
+    {
+      "L": "L023",
+      "identity": {
+        "title": "Adaptive Transceiver Design for High-Capacity Multi-Modal FSO",
+        "doi": "10.1109/jlt.2023.3242215",
+        "family": "A"
+      },
+      "source_path": "papers/doi/10.1109_jlt.2023.3242215",
+      "content_path": "D:\\code\\study\\research-protocol\\.worktrees\\rdl-method-production-v2\\papers\\doi\\10.1109_jlt.2023.3242215\\content.md",
+      "source_pdf_sha256": "97d7a981a5a2b9711a334920e632a64aa3b29aa96e90b61bfa187ffaaae2e623",
+      "acquired_at": "2026-08-02T23:21:09.975856+08:00",
+      "core": "CORE",
+      "core_judgment": "CORE",
+      "source": "action=mod format(2/4/8-QAM)+per-mode power loading + RX MIMO decoder switch, driven by per-mode post-eq SNR; condition=MDM-FSO turbulence(von Karman phase screen, r0=0.5/0.9/1.1mm), NOT GG; deployable runtime TX+RX adaptation; key=590Gbit/s, adaptive +5.2dB vs uniform; CSI=pilot LMS+linear interp, analyzed feedback staleness limit ~60km LEO/Greenwood tau~4ms",
+      "content_lines": 444
+    },
+    {
+      "L": "L096",
+      "identity": {
+        "title": "On the Design of FSO-Based Satellite Systems Using IR-HARQ With Rate Adaptation",
+        "doi": "10.1109/tvt.2021.3127193",
+        "family": "B"
+      },
+      "source_path": "papers/doi/10.1109_tvt.2021.3127193",
+      "content_path": "D:\\code\\study\\research-protocol\\.worktrees\\rdl-method-production-v2\\papers\\doi\\10.1109_tvt.2021.3127193\\content.md",
+      "source_pdf_sha256": "4fde136d1bdb32815bcecb83a5b9dcba07df8beeefbde6177e88c470f266f4ab",
+      "acquired_at": "2026-08-02T23:21:09.975856+08:00",
+      "core": "CORE",
+      "core_judgment": "CORE",
+      "source": "action=RCPC code-rate(4/5,1/2,1/3)+Mn-QAM mode per channel state via IR-HARQ sliding-window; condition=LEO sat-ground FSO, lognormal turbulence(Cn2=1e-14/5e-14/1e-13), pointing, FSMC; deployable cross-layer TX link-adaptation; key=IR-HARQ-SW beats SW-ARQ/IR-SaW, ~600Mbps; CSI=ACK/NAK+CSI assumed reliable per Tslot, perfect-CSI assumption (imperfect feedback = future work)",
+      "content_lines": 600
+    },
+    {
+      "L": "L146",
+      "identity": {
+        "title": "Robust Joint Opt FSO/RF sat-UAV-terrestrial Imperfect Channel",
+        "doi": "10.1109/jiot.2025.3600439",
+        "family": "A"
+      },
+      "source_path": "papers/doi/10.1109_jiot.2025.3600439",
+      "content_path": "D:\\code\\study\\research-protocol\\.worktrees\\rdl-method-production-v2\\papers\\doi\\10.1109_jiot.2025.3600439\\content.md",
+      "source_pdf_sha256": "3f1389c5795ee1d50e49622a04beecdef738d7c132bce316b2e8bc57436f2068",
+      "acquired_at": "2026-08-02T23:21:09.975856+08:00",
+      "core": "CORE",
+      "core_judgment": "CORE",
+      "source": "action=joint adaptive MCS(mf-QAM FSO + 3GPP MCS RF)+UAV power+trajectory via DDPG, robust JOMPT-CU under CSI uncertainty; condition=FSO/RF SUTIN, lognormal FSO+pointing, Nakagami RF, IMPERFECT CSI(Gaussian est error sigma^2=1/N pilot), FER-constrained; deployable runtime TX MCS controller; key=0.85Gb/s, robust keeps FER<0.1; CSI=pilot-based, uncertainty regions, coherence>>feedback so timely",
+      "content_lines": 863
+    },
+    {
+      "L": "Galijasevic",
+      "identity": {
+        "title": "Predicting Channel Conditions for Adaptive LDPC Coding in a Fading FSO Channel",
+        "doi": "10.1109/OJCOMS.2024.011100",
+        "family": "A"
+      },
+      "source_path": "papers/doi/10.1109_ojcoms.2024.011100",
+      "content_path": "D:\\code\\study\\research-protocol\\.worktrees\\rdl-method-production-v2\\papers\\doi\\10.1109_ojcoms.2024.011100\\content.md",
+      "source_pdf_sha256": "3234f8bb35a4b03e59ac18bdfcb6f151e7281ebe8c158c579828f36af46e29be",
+      "acquired_at": "2026-08-02T23:21:09.975856+08:00",
+      "core": "CORE",
+      "core_judgment": "CORE",
+      "source": "action=runtime TX dynamic LDPC code-rate selection(PBRL, 8/9..8/80, k=8192, 16 rates ~0.5dB spacing) from threshold table for FER<1e-6 fed back to TX; condition=FSO lognormal turbulence, 10ms coherence(LEO PSI=10), FEEDBACK DELAY 1-4ms with zero/linear/quadratic CSI predictors; deployable real runtime link-adaptation; key=linear best <=2ms(98-101% zero-delay throughput), quadratic best 3-4ms;",
+      "content_lines": 481
+    },
+    {
+      "L": "Safi2019",
+      "identity": {
+        "title": "Adaptive Channel Coding and Power Control for Practical FSO Communication Systems Under Channel Estimation Error",
+        "doi": "10.1109/tvt.2019.2916843",
+        "venue": "IEEE TVT 68(8):7566-7577, 2019",
+        "authors": [
+          "Safi",
+          "Sharifi",
+          "Dabiri",
+          "Ansari",
+          "Cheng"
+        ],
+        "citation_count": 58,
+        "family": "A"
+      },
+      "source_url": "doi.org/10.1109/tvt.2019.2916843",
+      "content_path": null,
+      "source_pdf_sha256": null,
+      "acquired_at": "2026-08-02T23:21:09.975856+08:00",
+      "core": "CORE_PROVISIONAL_ABSTRACT_ONLY",
+      "core_judgment": "PROVISIONAL: abstract verifies action=joint/standalone adaptive coding-rate AND TX power control with optimization (power-min under BER/outage/peak-power), closed-form throughput; condition=Gamma-Gamma turbulence + IMPERFECT CSI via channel-estimation error dependent on observation-window length. Strong direct AMC comparator likely covering \"GG+est-error+adaptive coding/power\" (brief warning). NO full text (IEEE paywall, no OA/preprint found via Crossref/S2/Unpaywall).",
+      "blocker": "ieee_paywall_no_oa",
+      "failure_paths_tried": [
+        "tools/download --doi (Round1 all_failed)",
+        "subagent Crossref+Unpaywall+S2 openAccessPdf (all empty)"
+      ],
+      "counted_toward_5_threshold": false
+    },
+    {
+      "L": "L075",
+      "identity": {
+        "title": "Hybrid Deep Learning-Based Adaptive Modulation for FSO",
+        "doi": "10.1109/access.2025.3650714",
+        "family": "A(disputed)"
+      },
+      "source_path": "D:\\code\\study\\research-protocol\\.worktrees\\rdl-method-production-v2\\papers\\doi\\10.1109_access.2025.3650714",
+      "content_path": "D:\\code\\study\\research-protocol\\.worktrees\\rdl-method-production-v2\\papers\\doi\\10.1109_access.2025.3650714\\content.md",
+      "source_pdf_sha256": "716080c6186d8f8473c7d2b39348da3d595ab2e8ba6df7cd2302e975f38d766e",
+      "acquired_at": "2026-08-02T23:21:09.975856+08:00",
+      "core": "DISPUTED",
+      "core_judgment": "action=CNN-LSTM-Attention softmax CLASSIFIER on RX STFT spectrograms -> 5 modulation labels, \"mapped to TX\"; condition=GG turbulence(alpha2.1,beta1.7), Cn2, fog/haze/rain, pointing. Core artifact is modulation CLASSIFICATION (MFI, dead-end#8 family): confusion-matrix eval + true-label training. AMC framing claimed but no explicit CSI estimate/feedback loop. SEMANTICALLY_DISPUTED_PENDING_FULL_READ per D003 - NOT counted as CORE.",
+      "content_lines": 564
+    },
+    {
+      "L": "L165",
+      "identity": {
+        "title": "Tbit/s feeder links coherent modulation + full-adaptive optics",
+        "doi": "10.1038/s41377-023-01201-7",
+        "family": "C(boundary)"
+      },
+      "source_path": "D:\\code\\study\\research-protocol\\.worktrees\\rdl-method-production-v2\\papers\\doi\\10.1038_s41377-023-01201-7",
+      "source_pdf_sha256": "fb2a72b55452bf60c6d72b29d1dca97176e5c2f151d075532464fe16d92a08f2",
+      "acquired_at": "2026-08-02T23:21:09.975856+08:00",
+      "core": "BOUNDARY",
+      "core_judgment": "NO - adaptive action is AO wavefront correction (Shack-Hartmann + 97-actuator DM 1.5kHz), NOT AMC. Modulation (PM-16/64-QAM, 4QAM, PS-QPSK, 4D-BPSK) fixed per measurement, compared not switched. AO-boundary / coherent-FSO comparator only.",
+      "content_lines": 359
+    },
+    {
+      "L": "L090",
+      "identity": {
+        "title": "Mitigating Turbulence-Induced Fading in Coherent FSO: Adaptive Space-Time Code",
+        "doi": "10.5772/intechopen.84911",
+        "family": "C(boundary)",
+        "path_note": "papers/manual/L090-intechopen/ (manual slug; real DOI 10.5772/intechopen.84911 in metadata - path-compliant for manual acquisition)"
+      },
+      "source_path": "D:\\code\\study\\research-protocol\\.worktrees\\rdl-method-production-v2\\papers\\manual\\L090-intechopen",
+      "source_pdf_sha256": "2af0474cc5ddc9b029f4a6772191c190727683c8cb9563642f89013ae73019cf",
+      "acquired_at": "2026-08-02T23:21:09.975856+08:00",
+      "core": "BOUNDARY",
+      "core_judgment": "NO - 4-state STTC, 2 TX lasers, QPSK coherent. \"Adaptive orthogonality controller\" = mathematical xi-parameterization for arbitrary STCs, design-time config NOT feedback-driven switch. Fixed-scheme performance study, no CSI feedback, no runtime AMC action. \"Adaptive\" is nominal. Coherent-FSO STTC reference only.",
+      "content_lines": 294
+    },
+    {
+      "L": "Chang2025",
+      "identity": {
+        "title": "Integrated FEC, Interleaving, ARQ, and Adaptive Modulation for Long-Distance Maritime Communication Systems: Design and Analysis",
+        "doi": "10.1109/JPHOT.2025.3602148",
+        "venue": "IEEE Photonics J 17(5):1-9, 2025 (gold OA CC-BY)",
+        "family": "B"
+      },
+      "content_path": null,
+      "source_pdf_sha256": null,
+      "acquired_at": "2026-08-02T23:21:09.975856+08:00",
+      "core": "UNACQUIRED",
+      "blocker": "ieee_gold_oa_bot_blocked",
+      "failure_paths_tried": [
+        "tools/download --doi (Round1 fail)",
+        "direct ieeexplore stampPDF/stamp.jsp (404 -> /denied/)",
+        "subagent confirms gold OA but automated access blocked"
+      ],
+      "counted_toward_5_threshold": false,
+      "note": ">=3 paths tried, stop-loss per gw-acquire.md. Legal OA exists but automated download blocked by publisher bot-defense; user manual acquisition required."
+    },
+    {
+      "L": "Sun2018",
+      "identity": {
+        "title": "Run-time reconfigurable adaptive LDPC coding for optical channels",
+        "doi": "10.1364/OE.26.029319",
+        "venue": "Optics Express 26(22):29319, 2018 (gold OA CC-BY)",
+        "family": "A"
+      },
+      "content_path": null,
+      "source_pdf_sha256": null,
+      "acquired_at": "2026-08-02T23:21:09.975856+08:00",
+      "core": "UNACQUIRED",
+      "blocker": "optica_gold_oa_bot_challenge",
+      "failure_paths_tried": [
+        "tools/download --doi (Round1 fail - Optica not in wrapper channels)",
+        "subagent confirms gold OA but opg.optica.org viewmedia.cfm -> Radware bot-challenge (validate.perfdrive.com)"
+      ],
+      "counted_toward_5_threshold": false,
+      "note": ">=3 paths tried, stop-loss per gw-acquire.md. Legal OA exists but automated download blocked by publisher bot-defense; user manual acquisition required."
+    },
+    {
+      "L": "L124",
+      "identity": {
+        "title": "Physics-informed adaptive transmission for coherent FSO: multi-dimensional amplitude-phase statistics",
+        "doi": "10.1364/oe.595557",
+        "venue": "Optics Express 34(14):26128, 2026 (gold OA VOR)",
+        "family": "C"
+      },
+      "content_path": null,
+      "source_pdf_sha256": null,
+      "acquired_at": "2026-08-02T23:21:09.975856+08:00",
+      "core": "UNACQUIRED",
+      "blocker": "C_L124_FULLTEXT_BLOCKED",
+      "failure_paths_tried": [
+        "tools/download --doi (Round1 fail - Optica JS-challenge HTTP 202, carried from prior round)",
+        "subagent: same Radware bot-challenge; no author preprint found"
+      ],
+      "counted_toward_5_threshold": false,
+      "note": ">=3 paths tried, stop-loss per gw-acquire.md. Legal OA exists but automated download blocked by publisher bot-defense; user manual acquisition required."
+    }
+  ],
+  "coverage_summary": {
+    "core_with_fulltext": 4,
+    "core_with_fulltext_list": [
+      "L023",
+      "L096",
+      "L146",
+      "Galijasevic"
+    ],
+    "core_no_fulltext": [
+      "Safi2019 (PROVISIONAL, IEEE paywall)"
+    ],
+    "disputed": [
+      "L075 (classification artifact)"
+    ],
+    "boundary_no": [
+      "L165 (AO)",
+      "L090 (fixed STTC)"
+    ],
+    "unacquired_stoploss": [
+      "Chang2025",
+      "Sun2018",
+      "L124"
+    ],
+    "threshold": 5,
+    "step2_verdict": "STEP2_BLOCKED_BY_COVERAGE_GAP (4 CORE fulltext < 5 threshold; Safi CORE but no fulltext; L075 DISPUTED not counted; 3 unacquired)",
+    "legal_next_action": "Per D003 + brief: report Step 2 blocker honestly; do NOT fabricate Step 3. User must manually acquire Safi(IEEE) and/or Chang/Sun/L124 (Optica/IEEE OA via browser) to reach >=5 CORE fulltext, OR confirm 4-CORE-fulltext + Safi-abstract coverage is acceptable to proceed with A/B families only (C family stays BLOCKED pending L124 fulltext)."
+  }
+}

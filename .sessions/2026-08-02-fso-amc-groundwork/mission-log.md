@@ -21,3 +21,13 @@
 - **forbidden**: 进 Step 3 精读 / 设计方法 / 跑仿真 / 写 Go-NoGo/METHOD_SIGNAL / 改 Skill / 改 4 个 p05_run*.log / WebReader/WebSearch 抓全文 / push / 把 alias query 扩成新地勘重建 209 大表。
 - **next_legal_action（Phase B 完成后）**: 主控/用户确认覆盖面 → Step 3 全文精读（独立新对话）。
 - **status**: STEP1_ACCEPTED_AFTER_BOUNDED_INTEGRITY_REPAIR（D002/V002 PASS）+ STEP2_PASS（6 篇合格 content.md 覆盖 A/B/C 三族，待用户验收覆盖面进 Step 3）。
+
+## CP003: 2026-08-02 Step 2 覆盖纠偏轮（D003 主控裁决）
+
+- **mission**: 同对话内完成 (A) Step 2 覆盖纠偏与补充获取；(B) 若补齐 ≥5 篇真正 CORE 全文，立即进 GW Step 3 全文精读。
+- **authority**: 用户执行提示词 §"必须先登记主控裁决"+ Phase A + Phase B（paste-attachment 2026-08-02-230536）。
+- **worktree**: `.worktrees/rdl-method-production-v2` @ `6ada2bc`（CP002 commit 之后）。
+- **allowed**: D003 主控裁决登记 / 确定性补充获取（tools/download + 合法 OA URL + 子 agent API 身份确认）/ CORE 判定（子 agent 全文验证）/ 持久 acquisition receipt（force-add）/ 治理纠偏（topic-index/registry/master-state/R002·H001 supersession banner/V003 合并 verifications.md/S003/V004）/ 独立验证 / 单次 commit 不 push。
+- **forbidden**: 进 Step 3.5/4a / 设计方法 / 跑仿真 / 写 Go-NoGo/METHOD_SIGNAL / 改 Skill / 改 4 个 p05_run*.log / WebReader/WebSearch 抓全文 / 绕过访问控制 / push / 把未达 ≥5 CORE 强行判 PASS / 伪造 Step 3 结果。
+- **next_legal_action（本轮完成后）**: 用户决策二选一 — (1) 手动补全文到 ≥5 CORE → Step 2 重判 PASS → 进 Step 3；(2) 确认 4 CORE+Safi-abstract 可接受 → 授权仅推 A/B 两族 Step 3（C 族 BLOCKED）。
+- **status**: STEP2_BLOCKED_BY_COVERAGE_GAP（D003/V004 PASS）— CORE 全文 4 篇（L023/L096/L146/Galijasevic）< 5 门槛；Safi CORE 无全文 PROVISIONAL；L075 DISPUTED；L165/L090 边界；L124 C 族 BLOCKED；Safi/Chang/Sun/L124 补充获取达 3 路径止损仅 Galijasevic 获全文；**未进 Step 3**（按 FR-22 + 执行提示词不伪造）。

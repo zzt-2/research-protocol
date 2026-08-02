@@ -624,7 +624,7 @@ topics:
     title: 星地相干 FSO 编码自适应与 AMC Groundwork
     status: active
     created: "2026-08-02"
-    last_updated: "2026-08-02（GW Step 1 限定修复完成 D002/V002 + Step 2 acquisition PASS：6 篇合格 content.md 覆盖 A/B/C 三族、L124 bibliographic 级身份闭合、待用户验收覆盖面进 Step 3）"
+    last_updated: "2026-08-02（D003 主控裁决：Step 2 由 PASS 修订为 STEP2_BLOCKED_BY_COVERAGE_GAP — 6 篇只过文件质量门未做 CORE 判定，逐篇 CORE 重判后全文 CORE 仅 4 篇 L023/L096/L146 + 新获 Galijasevic <5 门槛；L075 DISPUTED、L165 AO/L090 fixed-STTC 边界、L124 C 族 BLOCKED；Safi/Chang/Sun/L124 补充获取达止损，仅 Galijasevic 获全文；未进 Step 3）"
     description: "独立系统层 Groundwork 专题。承接 system 专题 2026-07-20-research-direction-lab-system D020 授权的 AMC_GROUNDWORK_TOPIC_CREATION，从 GW Step 1 重新开始。目标：星地相干 FSO + Gamma-Gamma 湍流 + 真实编码链/信息不确定性背景下找自适应编码调制/链路适配问题作毕业论文潜在第二项贡献。本轮只做 Step 1（两轮检索+逐条语义初筛+候选问题族地图+Step 2 shortlist），不进 Step 2-4a/不下载全文/不设计方法/不跑仿真/不产生 METHOD_SIGNAL。继承 9 条历史 dead-end 边界（ISL AMC prediction/反馈-相干时间/MCS 0.09dB/AMC+CPR 联合设计/交织·PS·N1·coded-chain/P08-R2 工程资产/DA-NDA CPR 现有主贡献/automatic-modulation-classification 假命中/AMC↔Ch4 BER 循环依赖）作先验，不复活。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system

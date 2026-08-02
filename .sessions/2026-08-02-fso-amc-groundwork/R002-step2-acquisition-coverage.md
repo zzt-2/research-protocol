@@ -1,5 +1,7 @@
 # [R002] Step 2 Acquisition 覆盖面报告
 
+> ⚠️ **SUPERSEDED 2026-08-02 by D003** — 本报告判定的"Step 2 PASS / 6 篇覆盖 A/B/C 三族"经主控复核**不成立**。6 篇只过文件/转换质量门，**未做 CORE 判定**。逐篇 CORE 重判后保守核心集缩窄到 L023/L096/L146 3 篇（L075 DISPUTED / L165 AO 边界 / L090 fixed-STTC 边界不计核心），本轮补获 Galijasevic 后 CORE 全文 = 4 < 5 门槛 → Step 2 终态 **STEP2_BLOCKED_BY_COVERAGE_GAP**。本报告保留作历史档案（身份+内容质量门判定仍有效，是 CORE 判定的输入），但其"PASS/三族覆盖"结论废止。最新判定见 S003 + `search-archive/2026-08-02/_step2_acquisition_receipt.json` + topic-index GW Progress 表。
+
 > 2026-08-02 | 关联：专题 slug 2026-08-02-fso-amc-groundwork / D002 / S002 / R001 shortlist
 > 阶段：GW Step 2（身份+内容质量门，**非全文精读**；不写方法结论）
 > 数据源：`search-archive/2026-08-02/_step2_shortlist.json`（13 篇）+ 3 轮下载止损（`search-archive/2026-08-02/_step2_download_log.md`）

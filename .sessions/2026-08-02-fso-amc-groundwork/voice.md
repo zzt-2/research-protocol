@@ -28,3 +28,21 @@
 - "禁止用 WebReader、ResearchGate、Scholar 页面抓全文。"
 - "下一合法动作只能是：Step 2 PASS：主控/用户确认覆盖面后进入 Step 3；Step 2 BLOCKED：用户补充关键全文或确认当前覆盖面。禁止直接进入 Step 3。"
 - "四个既有未跟踪 p05_run*.log 不修改、不暂存、不删除。"
+
+## 2026-08-02（Phase A+B 执行提示词纠偏轮，verbatim，paste-attachment 2026-08-02-230536）
+
+- "当前 Step 2 不是 PASS，而是 STEP2_BLOCKED_BY_COVERAGE_GAP。" → D003
+- "已获取的 6 篇只通过文件/转换质量门；当前保守核心集只有：L023/L096/L146" → D003
+- "L075 标记为 SEMANTICALLY_DISPUTED_PENDING_FULL_READ，不预判为纯 classification，也不提前计入核心。" → D003
+- "L165 是 AO/物理实验边界；L090 是否存在真实运行时 adaptation 待全文语义核查，均不得先计核心。" → D003
+- "L124 是关键 coherent-FSO AMC 直接竞品；没有全文时，coherent-C 族不得通过问题/新颖性判断。" → D003
+- "允许在其他 ≥5 篇核心全文齐备后推进 A/B 两族 Step 3，不允许因 L124 付费墙让全部 Groundwork 无限停滞；但必须显式保留 C_L124_FULLTEXT_BLOCKED。" → D003
+- "以上以新 D### 取代当前矛盾状态，不改写历史 checkpoint。"
+- ⟶ 推翻 R002/H001 "Step 2 PASS / 6 篇全部核心 / A/B/C 三族已全部覆盖" 的乐观判定。
+- "Safi 2019 很可能已经覆盖'GG + channel-estimation error + adaptive coding/power'，不得再把这一宽泛问题包装成空白。"
+- "Galijasevic predictive adaptive LDPC 很可能覆盖'反馈时延/信道预测 + 动态码率'，必须确定剩余切片。"
+- "重点寻找的不是'没人做过 AMC'，而是：现有 M 在星地 coherent/GG/coded-chain 的具体 C 下因 A 产生可验证失效，而且现有直接竞品没有解决。"
+- "不使用 oracle headroom 作为 Go 判据。"
+- "不进入 Step 3.5/4a，不跑 MVE，不提出最终算法。"
+- "若无 Q# 全过，终态为 STEP3_NO_VALID_PROBLEM，不包装空白、不设计方法。"
+- "全程一次统一 commit，不 push。"

@@ -1,5 +1,7 @@
 # Handoff: AMC GW Step 2 PASS → Step 3 全文精读
 
+> ⚠️ **SUPERSEDED 2026-08-02 by D003** — 本 handoff 的交接前提"Step 2 PASS / 6 篇覆盖 A/B/C 三族"**不成立**。主控复核（D003）将 Step 2 修订为 **STEP2_BLOCKED_BY_COVERAGE_GAP**（CORE 全文仅 4 篇 L023/L096/L146/Galijasevic < 5 门槛）。本 handoff 的"下一步进 Step 3"指令**作废**——Step 2 BLOCKED 时无权进 Step 3。本 handoff 保留作历史档案（其"已完成边界/失败数据附录/已知债务"段仍有参考价值），但"下一轮"指令以 D003/topic-index 最新"下一合法动作"为准。
+
 > 来源: S002 | 交接目标: 下一个对话进 Step 3 全文精读
 > 日期: 2026-08-02
 > 文件名: H001-step2-to-step3.md
