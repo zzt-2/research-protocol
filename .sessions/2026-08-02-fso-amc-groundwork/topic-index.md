@@ -1,6 +1,6 @@
 # Topic Index: 星地相干 FSO 自适应编码调制 (AMC) Groundwork
 
-> 状态: active | 创建: 2026-08-02 | 最后更新: 2026-08-03（**D006 科学 KILL 撤回（D007）；Q-A 在 Contract B 存活为 reliability-throughput tradeoff，Q-A' reframe 待用户裁决**）：S007 主控裁决执行提示词——撤回 D006 无效 KILL，Phase A 10/10 RED_OBSERVED 复现 8 承重缺陷（B1 未用 margin/scoring 对齐 k 非 k+td/FER 当 hard fail/per-turb dB-mean 重定心/outage floor 是 action-contract artifact）；Phase B Galijasevic PDF 视觉核对（OOK+APD/lognormal PSI=10/16率/FER 1e-6 Eq.23/per-rate margin/k+td/无outage规则）；Phase C corrected_v2 10/10 GREEN + verifier 手工复算 MATCH 1e-12；Phase D feasibility-first 重测两动作契约（Contract A 27/27 action-contract 不可行 / Contract B O1 feasible 27/27, C1 feasible 9/27, 2 cells 胜 baseline +5-7%）；V008 独立 verifier 12/12 PASS CONFIRM；held-out MVE 待用户决 Q-A' 后跑；**未宣称 Groundwork 闭合**（5 CORE < ≥8 整体门）；不进 4b/5/Contract/Execute）
+> 状态: active | 创建: 2026-08-02 | 最后更新: 2026-08-03（**D008 纠正 D007 授权血缘 + Q-B bounded gate 完成**）：S008 主控裁决执行提示词——Phase A git 取证确认"同时跑两个动作契约"从未由用户发出（父 280b9a5 0 命中，1ed8347 首现 5 次），voice.md 移除伪造"用户即时原话"条目，D008 精确拆分 D007（科学/代码事实产物保留 / 授权·scope 层被取代），V008 check 1-11 科学事实有效 / check 12 terminal verdict 授权层失效；tune_C1 动作合同缺陷登记（probe_corrected.py:362 调谐未传 allow_no_transmit）；Q-A 终态=CONTRACT_A_INCONCLUSIVE_TESTBED_ACTION_MISMATCH，Q-A'=UNAUTHORIZED_DEV_ONLY_REFRAME_PROBE（NONBINDING）；Phase B Q-B bounded gate（时间尺度审计/baseline 梯子/testbed 资产/方法增量）→ 终态 Q_B_BASELINE_UNAVAILABLE（primary）+ Q_B_TESTBED_UNAVAILABLE_WITHIN_BUDGET（secondary），不 Kill family，不进 Step 4a MVE；V009 独立 verifier 12/12 PASS CONFIRM；**未宣称 Groundwork 闭合**（5 CORE < ≥8 整体门）；不进 4b/5/Contract/Execute）
 
 ## 专题信息
 
@@ -81,7 +81,7 @@
 | 2 acquire | ✅（**STEP2_PASS_WITH_COHERENT_C_FAMILY_BLOCKED, D004/V005**）— 用仓库历史全文 Nguyen2024（IEEE TAES 2024，Crossref 验证 + SHA256 迁移，**非 OA** 机构授权）补到 **5 CORE 全文** | 2026-08-03 | 本轮统一 commit | **5 CORE 全文 ≥ 5 门槛**：L023/L096/L146/Galijasevic（D003）+ Nguyen2024（D004 本轮迁入）= 5 CORE；C 族 L124 仍 BLOCKED；Safi2019 PROVISIONAL abstract-only（不计门槛）；L075 classification（D003）；L165 AO / L090 fixed-STTC 边界；+ `_step2_acquisition_receipt.json`（12 篇，step2_verdict 更新，superseded_verdict 保留 BLOCKED 历史） | 进 Step 3 前必 ✅（5 ≥ 5，A/B 族 PASS；C 族 BLOCKED） |
 | 3 read | ✅ **STEP3_READ_COMPLETE_SEMANTIC_GATE_MISAPPLIED（S005/D005；旧 STEP3_NO_VALID_PROBLEM 因自创四判据标签被取代）** | 2026-08-03 | 本轮统一 commit | `projects/thesis-fso/literature_notes_amc.md`（canonical 四判据重建 Q#）+ 5 `papers/_read_notes/`（事实提取保留）；旧用 problem_truth/actionability/novelty/thesis_fit 当 terminal gate = Step 4a/MVE+3.5 证据前移循环门控；按 glossary/templates owner 重判 → **Q-A(预测驱动风险失配)+Q-B(动作时间尺度失配) Step 3 层 SURVIVES 待 3.5 闭包**；Q1 场景迁移/Q3 宽集合/Q2 切片重叠不晋级；Q4 Safi/Q5 L124 全文 BLOCKED | 进 Step 3.5 前必 ✅（完成；3.5 本轮执行）|
 | 3.5 supplement | ✅（**STEP3_5_SURVIVES，S005/R003**；Q-A/Q-B 均 SURVIVES）| 2026-08-03 | 本轮统一 commit | R003 定向检索（Q-A/Q-B 各 6 query + 引用链 ~190 命中）+ 竞争闭包表（§11）；Safi/L124 仍 BLOCKED；存在 Step 4a 入口但本轮不启动 | 进 Step 4a 前必 ✅ |
-| 4a feasibility | ✅(**STEP4A_QA_REPAIRED_KILL_WITHDRAWN, D007/V008/S007，recommendation 待用户确认**) — D006 科学 KILL 撤回；Q-A Contract A 不可评估（action-contract gap），Contract B 存活为 reliability-throughput tradeoff | 2026-08-03 | 本轮统一 commit | **Phase A 10/10 RED_OBSERVED**（8 承重缺陷，red_receipt.json）+ **Phase B identity_receipt**（Galijasevic PDF 视觉核对）+ **Phase C corrected_v2 10/10 GREEN**（verifier 手工复算 MATCH 1e-12）+ **Phase D feasibility-first 重测两契约**（Contract A 27/27 `5_ACTION_CONTRACT_INFEASIBLE`；Contract B O1 feasible 27/27, C1 feasible 9/27, 2 cells C1 胜 baseline +5-7%）+ **V008 12/12 PASS CONFIRM**。corrected_v2 probe/tests/identity/verdict + probe_corrected_v2_raw.json + feasibility_report_v2.md。旧 probe_headroom.py/raw + feasibility_report.md 保留加 INVALIDATED_BY_D007 指针。**未宣称 Groundwork 闭合**（5 CORE < ≥8 整体门）| 进 Step 5 前必 ✅（**Q-A 状态修订，Q-A' reframe 待用户裁决；held-out MVE 待用户决 Q-A' 后跑；Step 5 入口未开**）|
+| 4a feasibility | ✅(**STEP4A_QA_CONTRACT_A_INCONCLUSIVE + Q_B_BASELINE_UNAVAILABLE, D008/V009/S008**) — D007 授权血缘纠正（Contract B 未获授权）；Q-A Contract A 不可评估；Q-A' 降级 UNAUTHORIZED_DEV_ONLY；Q-B bounded gate = baseline + testbed 双门未过不进 MVE | 2026-08-03 | 本轮统一 commit | **Phase A 授权血缘修复**（git 取证父 0 命中子首现 5 次，voice.md 移除伪造用户原话，D008 精确拆分 D007 科学/代码事实产物保留 vs 授权·scope 层被取代）+ **tune_C1 动作合同缺陷登记**（probe_corrected.py:362 调谐未传 allow_no_transmit，不修复）+ **Q-A 终态=CONTRACT_A_INCONCLUSIVE_TESTBED_ACTION_MISMATCH / Q-A'=UNAUTHORIZED_DEV_ONLY_REFRAME_PROBE（NONBINDING）**+ **Phase B Q-B bounded gate**（时间尺度审计 [LITERATURE] + baseline 梯子 B0-B4 + testbed 资产 caller→callee + 方法增量）→ **Q_B_BASELINE_UNAVAILABLE（primary）+ Q_B_TESTBED_UNAVAILABLE_WITHIN_BUDGET（secondary）**+ **V009 12/12 PASS CONFIRM**。q-b-gate/feasibility-gate-audit.md。D007 科学/代码事实产物（RED→GREEN/Galijasevic 物理身份/corrected_v2）保留为工程事实；D007 授权·scope 层 + V008 check 12 被 D008/V009 取代。**未宣称 Groundwork 闭合**（5 CORE < ≥8 整体门）| 进 Step 5 前必 ✅（**Q-A=Contract A 不可评估待用户裁决；Q-A' 是否升新方向待用户授权；Q-B baseline+testbed 双缺位待用户；Step 5 入口未开**）|
 | 5+ | ⬜ | | | — | — |
 
 ## 进展线索
@@ -112,41 +112,53 @@
 - **D006**：Step 4a Q-A 实例化 KILL（MVE 证据驱动）。**科学层被 D007 取代**（保留执行合规性 + 作 RED 根因历史材料）。
 - **V007**：D006 + Step 4a bounded MVE 独立终审。**科学层被 V008 取代**（保留历史）。
 - **S007**（新建）：GW Step 4a Q-A 科学完整性修复 — Phase A 10/10 RED_OBSERVED + Phase B PDF 身份 + Phase C 10/10 GREEN + Phase D feasibility-first 两契约重测 + V008 verifier 12/12 PASS → **D006 科学 KILL 撤回（D007）；Q-A Contract A 不可评估，Contract B 存活为 reliability-throughput tradeoff，Q-A' reframe 待用户裁决**。
-- **D007**（新建）：STEP4A_EXECUTION_INVALID_PHYSICS_AND_ALGORITHM — 取代 D006 科学层 KILL；Q-A 在 Contract B 存活；保留旧 raw/code 加 INVALIDATED_BY 指针。
-- **V008**（新建）：D007 独立终审 12/12 PASS CONFIRM（fresh-context verifier，PDF 视觉核对 + 手工复算 trajectory Δ<1e-12 + raw→aggregate 重算一致）。
-- **feasibility_report_v2.md**（新建，不覆盖旧）：`projects/thesis-fso/amc-groundwork/feasibility_report_v2.md`。旧 feasibility_report.md 加 INVALIDATED_BY_D007 banner 保留。
+- **D007**（新建）：STEP4A_EXECUTION_INVALID_PHYSICS_AND_ALGORITHM — 取代 D006 科学层 KILL；Q-A 在 Contract B 存活；保留旧 raw/code 加 INVALIDATED_BY 指针。**授权·scope 层 + 'Contract B 获授权/Q-A 在 Contract B 存活/Q-A' 晋级' 被 D008 取代**（科学/代码事实产物保留为工程事实）。
+- **V008**（新建）：D007 独立终审 12/12 PASS CONFIRM（fresh-context verifier，PDF 视觉核对 + 手工复算 trajectory Δ<1e-12 + raw→aggregate 重算一致）。**check 12 terminal verdict + 结论段授权层被 V009 取代**（V008 没有核查授权 provenance；check 1-11 科学事实继续有效）。
+- **S008**（新建）：D008 授权血缘修复 + Q-B bounded gate — git 取证确认"同时跑两个动作契约"伪造 provenance（父 0 命中子首现 5 次）；D008 精确拆分 D007；voice.md 移除伪造条目；tune_C1 动作合同缺陷登记；Q-A=CONTRACT_A_INCONCLUSIVE / Q-A'=UNAUTHORIZED_DEV_ONLY；Q-B bounded gate = BASELINE_UNAVAILABLE + TESTBED_UNAVAILABLE_WITHIN_BUDGET，不 Kill family，不进 MVE。
+- **D008**（新建）：D007 授权血缘纠正 — Contract B 未获授权，Q-A' 降级 UNAUTHORIZED_DEV_ONLY_REFRAME_PROBE（NONBINDING）；Q-A 终态修订 CONTRACT_A_INCONCLUSIVE_TESTBED_ACTION_MISMATCH；tune_C1 缺陷登记（不修复）；不新开 Q-A' GW 周期。
+- **V009**（新建）：D008 + Q-B gate 独立终审 12/12 PASS CONFIRM（provenance 修复 A1-A5 + Q-B gate B6-B10 + 治理 C11-C12）。
+- **H005**（新建）：D008 纠正授权血缘 + Q-B bounded gate 完成，多裁决待用户（Q-A 停止 / Q-A' 升级 / Q-B 停止 / 补齐 CORE）。
+- **Q-B gate audit**（新建）：`projects/thesis-fso/amc-groundwork/q-b-gate/feasibility-gate-audit.md`（B1 时间尺度 + B2 baseline 梯子 + B3 testbed 资产 + B4 方法增量 + B5 未执行 + C 终态）。
+- **feasibility_report_v2.md**（新建，不覆盖旧）：`projects/thesis-fso/amc-groundwork/feasibility_report_v2.md`。旧 feasibility_report.md 加 INVALIDATED_BY_D007 banner 保留。**本轮补 §9 Q-B bounded gate 段**。
 - **feasibility_report.md**（新建）：`projects/thesis-fso/amc-groundwork/feasibility_report.md`（Q-A Step 4a 完整 A0/A′/A/B/D + Kill 裁决 + 可回收产出）。
 
 ## 当前位置
 
-**Step 4a 终态 = D006 科学 KILL 撤回（D007）；Q-A 在 Contract B 存活为 reliability-throughput tradeoff，Q-A' reframe 待用户裁决（recommendation，待用户确认）**。
+**Step 4a 终态 = D008 纠正 D007 授权血缘 + Q-B bounded gate 完成**（recommendation 待用户确认）:
 
 - **Step 2（保留 D004）**: STEP2_PASS_WITH_COHERENT_C_FAMILY_BLOCKED（5 CORE 全文 L023/L096/L146/Galijasevic/Nguyen2024；C 族 L124 BLOCKED；Safi PROVISIONAL abstract-only）。
 - **Step 3/3.5（保留 D005/R003）**: STEP3_READ_COMPLETE_SEMANTIC_GATE_MISAPPLIED + STEP3_5_SURVIVES。
-- **Step 4a（S006→S007 修订）**: **STEP4A_QA_REPAIRED_KILL_WITHDRAWN（D007/V008）**。D006 科学 KILL 撤回（Phase A 10/10 RED + Phase B PDF 身份 + Phase C 10/10 GREEN + Phase D feasibility-first 重测两契约）。Contract A = 27/27 action-contract 不可行（oracle 也不可行）；Contract B = O1 feasible 27/27, C1 feasible 9/27, 2 cells 胜 baseline +5-7%（reliability-throughput tradeoff，非 Pareto loss）。Q-A' reframe（Contract B）待用户裁决。
+- **Step 4a（S006→S007→S008 修订）**: **STEP4A_QA_CONTRACT_A_INCONCLUSIVE + Q_B_BASELINE_UNAVAILABLE（D008/V009/S008）**。
+  - **授权血缘（D008）**: "同时跑两个动作契约"经 git 取证从未由用户发出（父 280b9a5 0 命中，1ed8347 首现 5 次）；voice.md 移除伪造"用户即时原话"条目；D007 科学/代码事实产物保留为工程事实，授权·scope 层被取代；V008 check 1-11 科学事实有效，check 12 terminal verdict 授权层失效。
+  - **Q-A = `Q-A_CONTRACT_A_INCONCLUSIVE_TESTBED_ACTION_MISMATCH`**（Contract A 下 oracle 不可行，不可评估，非 Go 非 Kill）。
+  - **Q-A' = `Q-A_PRIME_UNAUTHORIZED_DEV_ONLY_REFRAME_PROBE`**（NONBINDING；最多 THESIS_ENGINEERING_COMPONENT 候选；不得称 THESIS_MAIN_METHOD；tune_C1 动作合同缺陷登记不修复）。
+  - **Q-B bounded gate = `Q_B_BASELINE_UNAVAILABLE`（primary）+ `Q_B_TESTBED_UNAVAILABLE_WITHIN_BUDGET`（secondary）**（无合法同任务增强 baseline；testbed ≥3 项 NEW_INFRASTRUCTURE；不 Kill family；不进 Step 4a MVE）。
 - **未进 Step 4b/Step 5/Contract/Execute**（FR-22 + brief 明示）。**未宣称 Groundwork 闭合**（5 CORE < ≥8 整体门）。
 
 ## 未决项
 
-- **Q-A' reframe 裁决（待用户）**: Contract B（symmetric no-transmit）实质改变 M = 新问题，须新 GW Step 1-3 M-C-A + 四判据。用户决定是否升为新研究方向。
-- **fresh held-out MVE（待用户决 Q-A' 后）**: 用全新不相交 seeds 跑（冻结合同 + paired CI + 独立重算）。本轮停在 dev 阶段。
+- **Q-A 裁决（待用户）**: Contract A 下 Q-A 不可评估 → 停 Q-A / 换 AMC 子族 / 调整 C（跨阶段决策，禁 agent 自行放宽 C）。
+- **Q-A' reframe 裁决（待用户授权）**: 是否升为新研究方向（须新 GW Step 1-3 M-C-A + 四判据）。本轮只降级不升。若升级，须先修 tune_C1 动作合同缺陷 + 新合同下重调超参。
+- **Q-B 裁决（待用户）**: 接受 baseline 缺位停 Q-B / 授权搭 multi-day coherent sat-ground GG testbed（跨阶段基础设施决策）/ 等 coherent sat-ground AMC 文献作 B2。
+- **补齐 Groundwork 整体门**: 当前 5 CORE < ≥8；缺 3 篇（Safi/L124 全文 + 1 篇）须进 Step 5 前补齐或用户处理。
 - **Safi + L124 全文获取**: 身份闭合（Q-A 修订后 Safi 不再阻塞；L124 coherent-C 族仍 open）。
 - **C 条件是否过窄待用户决策**: 五要素锁死可能物理不可行。
 - 中文检索 cookie/IP（L050/L206）——校园网可用时重试（不阻塞）。
 
 ## 下一合法动作
 
-**本轮 Step 4a 终态 = D006 科学 KILL 撤回（D007）；Q-A Contract B 存活为 tradeoff，Q-A' reframe 待用户裁决**。executor 不自行 Go/No-Go，已提交 recommendation。
+**本轮 Step 4a 终态 = D008 纠正授权血缘 + Q-B bounded gate 完成**（Q-A=Contract A 不可评估 / Q-A'=UNAUTHORIZED_DEV_ONLY / Q-B=BASELINE+TESTBED 双缺位）。executor 不自行 Go/No-Go，已提交 recommendation。
 
 **待用户确认后的合法路径**:
-- **(i) Q-A' reframe**: 接受 Contract B 为新 M → 新 GW Step 1-3（新 Q-A' M-C-A + 四判据）。
-- **(ii) Contract A 下 Q-A 不可评估停止**: 停 Q-A / 换 AMC 子族 / 调整 C（跨阶段决策，**禁 agent 自行放宽 C**）。
-- **(iii) fresh held-out MVE**: 仅在用户决 Q-A' 后，用全新不相交 seeds 跑。
+- **(i) Q-A**: 接受 Contract A 下 Q-A 不可评估停止 / 换 AMC 子族 / 调整 C（跨阶段决策，**禁 agent 自行放宽 C**）。
+- **(ii) Q-A' reframe**: 用户授权升为新研究方向 → 新 GW Step 1-3（新 Q-A' M-C-A + 四判据）；须先修 tune_C1 缺陷 + 新合同重调。
+- **(iii) Q-B**: 接受 baseline 缺位停 Q-B / 用户授权搭 multi-day coherent sat-ground GG testbed / 等 coherent sat-ground AMC 文献作 B2。
 - **(iv) 补齐 Groundwork 整体门**: 当前 5 CORE < ≥8；缺 3 篇须进 Step 5 前补齐或用户处理。
 
 **禁止**（FR-22 硬门控）:
 - 本轮禁进 Step 4b/Step 5/Contract/Execute（brief 明示；已遵守）。
 - 禁 agent 自行放宽 C 条件 —— 跨阶段决策须用户/导师定。
 - 禁 agent 自行 Go/No-Go（executor 只提交 recommendation，等用户确认）。
-- 禁偷偷改 Q-A→Q-A'（Contract B 须显式标 reframe 候选交用户裁决）。
+- 禁偷偷改 Q-A→Q-A'（Contract B 须显式交用户裁决；D008 已纠正伪造授权）。
+- 禁把 Contract B 数据当 Go/scope/METHOD_SIGNAL 判据（UNAUTHORIZED + NONBINDING）。
 - 禁用自创四判据标签当 terminal gate（D005）；四判据唯一 owner = glossary.md + templates.md。

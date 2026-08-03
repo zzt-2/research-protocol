@@ -77,9 +77,24 @@ O1 在 Contract B 27/27 feasible + 巨大 headroom；C1 在 9/27 feasible。Gate
 
 ## 7. Q-B 状态 & Groundwork 整体门
 
-- **Q-B**: A0§0 判据3 致命暂存（无合法 coherent 星地 AMC baseline），未变。
+- **Q-B（本轮 S008 bounded gate 细化）**: 从 D006 的"A0§0 判据3 致命暂存"细化为 **`Q_B_BASELINE_UNAVAILABLE`（primary）+ `Q_B_TESTBED_UNAVAILABLE_WITHIN_BUDGET`（secondary）**。bounded gate（判是否值得进正式 Step 4a MVE）结论: **不进 Step 4a MVE**。
+  - baseline 梯子: B0 固定（strawman 无 AMC action）/ B1 L023（地面自陈失效，是 M 本体非对手）/ B2 Nguyen+Galijasevic（IM/DD+lognormal+RX 无 AMC，三轴错位）/ B3 自建（无文献 backing）/ B4 RF split-timescale（全错位仅证路径非空）→ 无一个合法同任务增强 baseline。
+  - testbed: ≥3 项 NEW_INFRASTRUCTURE（coherent sat-ground GG 几何 / coded-chain / elevation-dependent RTT+τ_c）+ 与 brief"不修改 common/"冲突。
+  - 方法增量: 方向存在（RX-local reliability → TX-slow risk-state + split-timescale 接口契约，非纯拼接），但未量化（无 5% headroom 证据）+ 可能被固定双时间尺度/独立局部最优/hysteresis 覆盖（未证伪）。
+  - **不 Kill Q-B family**（基础设施缺位非假设证伪，与 Q-A family 处理一致）。完整 audit: `projects/thesis-fso/amc-groundwork/q-b-gate/feasibility-gate-audit.md`。
 - **Groundwork 整体完成门**: ≥8 篇；当前 5 CORE。**即使本轮修订也不宣称 Groundwork 闭合**。
 - **Safi/L124 全文 BLOCKED**: Q-A 修订后 Safi UNVERIFIED 尾巴不再是阻塞；L124 coherent-C 族身份闭合仍 open。
+
+## 8. 授权血缘纠正（D008，本轮新增）
+
+D007/V008 引用的"用户授权同时跑两个动作契约"经 git 取证确认**从未由用户发出**（父 280b9a5 0 命中，1ed8347 首现 5 次）。纠正:
+- voice.md 移除伪造"用户即时原话"条目（替换为 D008 纠正记录）。
+- D007 科学/代码事实产物（§1-6 本报告内容）保留为工程事实；授权·scope 层（"Contract B 获授权/Q-A 在 Contract B 存活/Q-A' 晋级"）被 D008 取代。
+- Q-A 终态修订为 `Q-A_CONTRACT_A_INCONCLUSIVE_TESTBED_ACTION_MISMATCH`（Contract A 下不可评估，非 Go 非 Kill）。
+- Q-A' 降级为 `Q-A_PRIME_UNAUTHORIZED_DEV_ONLY_REFRAME_PROBE`（NONBINDING；本报告 §3 Contract B 结论仅作 UNAUTHORIZED dev-only probe，不作 Go/scope 判据）。
+- tune_C1 动作合同缺陷登记（probe_corrected.py:362 调谐未传 allow_no_transmit → Contract B 候选超参按 Contract A 契约调谐，结论不可信；不修复）。
+
+> 本报告 §1-6 的 corrected_v2 工程事实（物理身份/RED-GREEN/raw→aggregate）继续作为工程产物保留，但 §5 的"Q-A 在 Contract B 存活"+"Q-A' reframe 待用户裁决" recommendation 在授权层被 D008 取代——Contract B 未获授权，Q-A' 降级为 NONBINDING probe。详见 decisions.md ## D008 / verifications.md ## V009。
 
 ## 8. 下一步合法动作（待用户确认）
 

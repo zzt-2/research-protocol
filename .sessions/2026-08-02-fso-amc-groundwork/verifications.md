@@ -364,3 +364,46 @@ D006 + Step 4a bounded MVE 全部 14 项独立验证通过（11 PASS + 3 PARTIAL
 
 ### 结论
 D007 科学完整性修复**独立 CONFIRM**（12/12 PASS）。Phase A 10 RED 缺陷真实（red_receipt.json）；Phase B 物理身份闭合（Eq.23/Table1/1e-6/lognormal 全 PDF 视觉核对）；Phase C GREEN 修复使 10/10 正确契约成立（手工复算 trajectory 匹配代码 1e-12）；Phase D feasibility-first 评估无 Pareto 残留；raw→aggregate 独立重算一致。**D006 科学层 KILL 撤回成立**。Terminal verdict 唯一可辩驳解读 = "Q-A 在 Contract A 不可评估（action-contract gap），在 Contract B 存活为 reliability-throughput tradeoff，非 Pareto loss；Q-A' reframe 需用户裁决"。3 小债务全部声明，不影响结论。**允许 commit**（单 commit，停在 dev 阶段，held-out MVE 待用户决 Q-A' 后跑）。
+
+> **[D008 授权血缘纠正，2026-08-03]** V008 的**科学/代码事实核验（check 1-11）继续有效**（PDF 身份/手工复算/RED-GREEN/raw→aggregate 都是事实产物）。但 V008 的 **terminal verdict（check 12）与结论段在授权层失效**: V008 **没有核查 D007 授权来源**——它接受了 identity_receipt §2 "USER DECISION — recorded verbatim" 的标注却未独立验证该"用户决策"是否真由用户发出。经 D008 git 取证，"同时跑两个动作契约"从未由用户发出（父提交 0 命中，1ed8347 首现 5 次），故 V008 check 12 的"Q-A 在 Contract B 存活"+"Q-A' reframe 需用户裁决"结论在授权层**被 V009 取代**——Contract B 未获授权，Q-A' 降级为 UNAUTHORIZED_DEV_ONLY_REFRAME_PROBE。回归候选: **fresh-context verifier 必须独立核查授权 provenance（用户原话的 git/session 来源），不能只核科学内容**。
+
+---
+
+## V009 — D008 授权血缘纠正 + Q-B bounded gate 独立终审（2026-08-03）
+
+> 关联: D008 / S008 / Q-B gate audit (`projects/thesis-fso/amc-groundwork/q-b-gate/feasibility-gate-audit.md`) | 取代: **V008 的 terminal verdict（check 12）+ 结论段授权层结论**（V008 科学/代码事实核验 check 1-11 继续有效）。
+> 验证方式: 主线独立 git 取证（provenance）+ 独立读 read-notes/testbed 资产（Q-B gate）。fresh-context 视角，不 trust producer 摘要。
+
+### A. provenance 修复独立核验（brief 独立 verifier 必查 1-5）
+
+1. **[PASS]** 真实用户消息中不存在伪造授权。`git grep -c "同时跑两个动作契约" 280b9a5 -- .sessions/` exit=1（**0 命中**）；`1ed8347` 5 命中。父零命中、子首现 = 该句与 Contract B 代码/D007/S007/H004 同 commit 产生，无真实用户血缘。brief 裁决 1/3 确认。
+2. **[PASS]** voice.md 已恢复忠实性。voice.md:122-124（旧"用户即时原话"段）已替换为"D008 纠正记录"段，明示伪造 provenance + 指向 D008 + 保留真实存在的用户约束（ACTION_SPACE_REFRAME_REQUIRES_USER_DECISION）。grep "同时跑两个动作契约" 在 voice.md 仅 1 处命中（纠正记录内的引述，非用户原话登记）。
+3. **[PASS]** D007/V008 有效/无效部分正确拆分。D008 §2 精确拆分: 继续有效 = D006 KILL 撤回 + H1-H8 RED→GREEN + 旧 probe 科学失效 + Galijasevic 物理身份 + Contract A oracle 不可行（科学/代码事实产物）；取代 = 用户授权 / Contract B 获授权 / Q-A 在 Contract B 存活 / held-out / Q-A' 晋级（授权/scope 层）。V008 标注: check 1-11 科学事实有效，check 12 terminal verdict + 结论段授权层失效。
+4. **[PASS]** Contract B 降级为 unauthorized dev-only。Q-A' 终态 = `Q-A_PRIME_UNAUTHORIZED_DEV_ONLY_REFRAME_PROBE` / HYPOTHESIS_GENERATING / NONBINDING；Q-A 终态 = `Q-A_CONTRACT_A_INCONCLUSIVE_TESTBED_ACTION_MISMATCH`（Contract A 下不可评估，非 Go 非 Kill）。
+5. **[PASS]** tune_C1 动作合同缺陷真实。`corrected_v2/probe_corrected.py:362` `sel = run_C1(pred_dev, extra)` 未传 `allow_no_transmit`（run_C1 默认 False，line 272）；`_feasibility_tune` line 309 `select_rate_from_gdb(pred_gain_dev, GAL_MARGIN_dB + m)` 同样未传；test 阶段 line 437 `run_C1(pred_gain_test, per_bin_c1, allow_no_tx)` 传 allow_no_tx。→ Contract B cells 下 C1/B2/B3/B4 超参数按 Contract A 契约调谐、按 Contract B 契约应用 = **调参合同错配**，Contract B 结论不可信。缺陷真实登记（D008 §4），本轮不修复。
+
+### B. Q-B 科学门独立核验（brief 独立 verifier 必查 6-10）
+
+6. **[PASS]** Q-B 时间尺度数字有文献来源。审计表 B1 全部时间尺度数字标 [LITERATURE]: Galijasevic RTT 2-10ms/τ₀=10ms/td∈{0,1,2,3,4}ms（content.md:19,57,66,68,114,156）；Nguyen sat-UAV τ<1ms/delayed CSI several ms（content.md:81fn2,93,355,357）；L023 Greenwood τ≈4ms/地面 ~10km/自陈 LEO 不可行（content.md:122,147,155,171）。无"RTT 大概很慢"作承重结论。
+7. **[PASS]** Q-B baseline 来源与 task mismatch 核实。B0 固定（无 AMC action，strawman）/ B1=L023（地面，自陈失效，是 M 本体非对手）/ B2=Nguyen+Galijasevic（IM/DD+lognormal+RX 无 AMC，三轴错位: 检测/湍流/RX-action）/ B3=自建（无文献 backing）/ B4=RF split-timescale（10.1049/cmu2.12389，RF 全错位，仅证路径非空）。**无一个近期、可部署、同任务或差异可校准的增强 baseline**。
+8. **[PASS]** testbed 资产沿调用链核实。corrected_v2 `probe_corrected.py:49,382` import `common._gg_time.gg_time_envelope_blockwise`（GG envelope READY）；`common/_channel.py`（coherent+多普勒+APSK，**无 sat 几何/RTT/elevation**）；`common/_recovery.py`（CPR READY 但被不变量锁定为论文主贡献，SCIENTIFICALLY_RESERVED）；`find projects/simulation -iname "*ldpc*"` **返回空**（coded-chain 缺位，NEW_INFRASTRUCTURE）。≥3 项 NEW_INFRASTRUCTURE（sat 几何/coded-chain/elevation-RTT）+ 与 brief"不修改 common/"冲突。
+9. **[PASS]** 候选信息/动作增量具体。增量方向 = RX-local 即时 reliability（ACK/NAK/CPR-lock/decoded-FER）→ TX-slow risk-state 输入 + split-timescale 接口契约（非纯 if/else 拼接）。但增量**未量化**（无 5% headroom 证据，[ARGUMENT_ONLY]）+ 可能被固定双时间尺度/独立局部最优/hysteresis 覆盖（未证伪）。不触发 MECHANICAL_COMBINATION_KILL。
+10. **[PASS]** smoke 不被当科学增益。B5 smoke **未执行**（B2 baseline 门 + B3 testbed 门双未过，brief 规定双门过才允许 smoke）。本轮零 smoke 零 MVE 零 METHOD_SIGNAL。
+
+### C. 治理与范围核验（brief 独立 verifier 必查 11-12）
+
+11. **[PASS]** 未运行 MVE。本轮 Phase B 是 bounded feasibility gate（判是否值得进 Step 4a MVE），非 MVE 本身。Q-B 终态 = 不进 Step 4a MVE。grep METHOD_SIGNAL/Go-NoGo 在本轮新文件（q-b-gate audit + D008 + S008）0 命中作 verdict。
+12. **[PASS]** terminal verdict 唯一且治理一致。Q-B 终态 = `Q_B_BASELINE_UNAVAILABLE`（primary）+ `Q_B_TESTBED_UNAVAILABLE_WITHIN_BUDGET`（secondary，根因同源）。baseline 门是上游根本（无合法 baseline 则 testbed 无意义）。不 Kill Q-B family（基础设施缺位非假设证伪，与 Q-A family 处理一致）。Q-A 终态 = Contract A 下不可评估；Q-A' = UNAUTHORIZED_DEV_ONLY。治理一致: D008 取代 D007 授权层、V009 取代 V008 terminal verdict、voice.md 已纠正、不修改 Skill/common/params.py/正式论文/dormant receiver/4 p05 log。
+
+### 结论
+
+**provenance 修复独立 CONFIRM（A1-A5 全 PASS）+ Q-B 科学门独立 CONFIRM（B6-B10 全 PASS）+ 治理一致 CONFIRM（C11-C12 全 PASS）= 12/12 PASS**。
+
+- 伪造 provenance 已纠正（voice.md 移除伪造用户原话，D008 记录纠正，git 历史保留审计）。
+- D007/V008 拆分正确（科学事实保留，授权/scope 层被取代）。
+- Contract B 降级为 unauthorized dev-only（Q-A' = NONBINDING probe）。
+- tune_C1 动作合同缺陷真实登记（不修复）。
+- Q-B 终态 = BASELINE_UNAVAILABLE（primary）+ TESTBED_UNAVAILABLE_WITHIN_BUDGET（secondary），不进 Step 4a MVE，不 Kill family。
+- 本轮未运行 MVE / held-out / METHOD_SIGNAL；未修改 Skill / common/ params.py / 正式论文 / dormant receiver / 4 p05 log。
+
+**允许 commit**（单 commit，不 push）。
