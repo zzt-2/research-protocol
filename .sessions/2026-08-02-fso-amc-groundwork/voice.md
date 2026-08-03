@@ -100,3 +100,25 @@
 - "executor 不能自行最终 Go/No-Go，只能提交 recommendation，等待用户确认。"
 - "即使本轮 RECOMMEND_GO，也不得宣称 Groundwork 完整闭合；缺少的 3 篇需在进入 Step 5 前补齐或由用户明确处理。"
 - "不得覆盖旧 receiver feasibility_report。不得修改 common/、params.py、正式论文结论、Skill 或 dormant receiver campaign。四个既有 p05_run*.log 不动。"
+
+## 2026-08-03（本轮主控裁决执行提示词，来源: paste-attachment 2026-08-03-141951；关键约束 verbatim）
+
+- "执行 AMC Q-A Step 4a 科学完整性修复与正确重测。" → S007
+- "本轮不是新方向，也不是 Q-A' reframe。必须先撤回无效 KILL，再用 RED→GREEN 的方式修复原 Q-A testbed。只有物理模型、baseline、目标函数和动作空间全部闭合后，才允许使用 fresh held-out data 重判。"
+- "当前 Q-A KILL recommendation 无效。" → D007（取代 D006 科学层）
+- "V007 保留历史，但标：raw 数字重算部分可复现；科学语义、算法身份和目标函数审查失败；不能支持 KILL。" → V008（取代 V007 科学层）
+- "不得删除或覆盖旧 probe/raw；添加 INVALIDATED 标识和 supersession 指针。"
+- "禁止测试写完立即显示全 PASS；未观察到对应 RED 的测试不算根因复现。"
+- "PDF→markdown 若丢公式，必须从 PDF 页面视觉核对。不得根据文字描述重建。"
+- "若无法可靠恢复 code-specific FER/BLER 公式：终态为 BLOCKED_BY_FER_MODEL_IDENTITY。"
+- "若 no-transmit 是常规合法动作，将其加入所有 deployable baseline、候选和 oracle，不能只给候选。若加入 no-transmit 实质改变研究对象，停止并标：ACTION_SPACE_REFRAME_REQUIRES_USER_DECISION。不得偷偷改成 Q-A'。"
+- "Primary 不是无条件 Pareto dominance，而是：在预注册可靠性约束下，最大化可实现 goodput。"
+- "不得再把'可行集为空'解释成 Q-A KILL。"
+- "不得使用旧的 0/27 Pareto 判据。"
+- "独立 verifier 必须由 fresh-context agent 完成，且不能只按新合同打勾。"
+- "若在模型身份、RED/GREEN 或 dev headroom 阶段停止：一次最终 commit。若进入 held-out：Commit 1（修复代码、测试、formula/parameter receipt、dev 结果、冻结合同，test_started=false）之后才运行 held-out；Commit 2（fresh test raw/result、科学终态和治理同步）。两 commit 不 squash，不 push。"
+- "不修改 Skill、common/、params.py、正式论文结论或 dormant receiver campaign；不碰四个 p05_run*.log。"
+
+## 2026-08-03（动作空间裁决，用户即时原话）
+
+- "同时跑两个动作契约（原契 + no-transmit 对称）" → identity_receipt §2 / D007 Contract A+B

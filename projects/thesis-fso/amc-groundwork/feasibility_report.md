@@ -1,5 +1,11 @@
 # Feasibility Report — 星地相干 FSO AMC Groundwork Step 4a
 
+> ⚠️ **INVALIDATED_BY_D007 (2026-08-03)** — 本报告的**科学层 KILL recommendation 被 D007 撤回**。
+> D006 建立在 8 个承重缺陷上（Phase A T1-T10 全部 RED_OBSERVED：B1 未用 per-rate margin/scoring 对齐 k 而非 k+td/FER 当 hard fail/per-turbulence dB-mean 重定心/outage floor 是 action-contract artifact）。
+> 正确重测见 **`feasibility_report_v2.md`**（同目录）。本文件**保留不删不改**作 D006 历史证据 + RED 根因材料。
+> D006 的**执行合规性声明继续有效**（canonical 顺序 / 不进 4b/5/Contract/Execute / executor 只提 recommendation）。
+> 撤回依据: S007/D007/V008（verifier 12/12 PASS CONFIRM）+ corrected_v2 raw + Galijasevic PDF receipt。
+
 > **Owner**: AMC 独立专题 `2026-08-02-fso-amc-groundwork`（S006/D006/V007）。
 > 创建: 2026-08-03 | 阶段: GW Step 4a | 状态: **Q-A 实例化 KILL（MVE 证据驱动），family 不 Kill**。
 > canonical owner: `stages/gw-feasibility.md` §A0/A′/A/B/D；本报告不覆盖旧 receiver `feasibility_report.md`。

@@ -331,3 +331,36 @@ D005 + Step 3.5 终审全部 11 项独立验证通过——canonical owner SHA25
 
 ### 结论
 D006 + Step 4a bounded MVE 全部 14 项独立验证通过（11 PASS + 3 PARTIAL，PARTIAL = CI 未给/metamorphic gate(2)(3)(4)未显式跑/V1 用阈值表绕过——均不改变 KILL 结论方向）。**KILL recommendation 证据充分**：C1 0/27 Pareto-dominate 传统 M（V5 主线独立重算确认）+ outage floor 使 1e-4 目标结构不可达（V5 scipy 独立确认）+ 命中预注册 Kill 条件。MVE 合规（TL-32/FR-25，非 oracle-Kill）。executor 已提交 recommendation 待用户确认。**允许 commit**（单 commit，未进 held-out MVE）。
+
+---
+
+## V008 — D007 Step 4a Q-A 科学完整性修复独立终审（2026-08-03，fresh-context verifier）
+
+> 关联: D007 / S007 | 取代: **V007 的科学层结论**（V007 验证的是 D006 的本地合同一致性 + raw 重算，**未核对 corrected 物理身份/算法身份/feasibility-first 评估**；V008 用独立 fresh-context agent 重做 12 项核验）。V007 保留历史不删。
+
+**验证者**: fresh-context subagent（agent_cc19d5f4），不 trust 任何主线声称，自己读 PDF + 跑代码 + 手工复算。
+
+**12 项核验结果**: **12/12 PASS → CONFIRM**
+
+| # | 核验项 | 结果 | 证据 |
+|---|--------|------|------|
+| 1 | PDF 公式身份（Eq.23/Table1/1e-6/1-4ms/lognormal PSI=10） | PASS | PyMuPDF 抽 source.pdf p.4-7 verbatim；Table1 16 阈值+16 margin byte-for-byte 匹配 corrected_v2；Eq.23 direct Q-form；FER target 1e-6（p.3,6,7）；channel lognormal PSI=10 τ₀=10ms（p.4）非 GG |
+| 2 | 手工复算 1 trajectory（dev seed0, α=5,β=2,sig=0,td=0.1） | PASS | 手算 fer_mean=3.3703e-10 = 代码 3.3703e-10（Δ<1e-12）；手算 exp_goodput=0.419365079 = 代码 0.419365079 |
+| 3 | k+td 对齐 | PASS | probe_corrected.py:413-414 `h_dev_outcome = h_dev[:, start_idx+td_blocks:]`；td_blocks=39, start_idx=40, outcome 在 h[79:]（=k+td） |
+| 4 | B1 margin load-bearing | PASS | 边界 gain -1.85dB：真 margin→idx5(8/14)；margin+5→idx15(8/77)；决策改变 |
+| 5 | C1 fallback（A=force-lowest, B=no-transmit） | PASS | probe_corrected.py:193-199；g=-20dB→A 返 idx15, B 返 idx16(NO_TRANSMIT_INDEX) |
+| 6 | threshold/FER 分开（连续 vs 二元） | PASS | evaluate_decision_cont 返 fer_mean + threshold_violation_rate 两键；at-threshold fer_mean=1.000e-6；just-below(-0.5dB) fer_mean=3.16e-6 (<1, 非 hard fail) |
+| 7 | 动作空间对称（A=16率, B=16率+no-tx, 全方法共享） | PASS | N_RATES=16, NO_TRANSMIT_INDEX=16；9 方法全 accept allow_no_transmit；O1/O2 deep-fade→idx16 确认 |
+| 8 | GG 归一化 + 参数 provenance（无 per-bin 重定心） | PASS | probe_corrected.py 无 calib_offset_dB；gain=10log10(h)（line 410-411,420-421）；GG E[h]=1.004-1.015（1e5 样本）；T_S=4e-10✓；BLOCK_SYM=32000 + TAU_C_S=5ms 声明为 scenario-transfer 债 |
+| 9 | constrained objective（feasibility-first, 无 Pareto） | PASS | verdict_evaluator.py 无 "pareto"/"dominate" 字符串；6 类 cell 分类 keyed on fer_mean<=TARGET first |
+| 10 | raw→aggregate feasibility 计数 | PASS | 独立从 probe_corrected_v2_raw.json 重算：A=O1feas 0/27, C1feas 0/27, any 0/27；B=O1feas 27/27, C1feas 9/27, any 27/27 — 与 verdict_evaluator 输出全一致 |
+| 11 | chronology + 旧文件完整性 | PASS | red_receipt 14:41 → green_receipt 14:49 → probe_corrected 14:50 → corrected_raw 14:54（生成在 GREEN 之后）；probe_headroom_raw.json 13:44 未改（top-keys 结构不同） |
+| 12 | terminal verdict 唯一性 | PASS（含细化） | "D006 KILL 无效；Q-A 在 Contract B 下存活为 reliability-throughput tradeoff 非 Pareto loss" 是唯一可辩驳解读。**细化**：Contract A 下 Q-A **不可评估**（oracle 本身不可行=action-contract gap），"存活"≠"已验证"；Contract B 信号微弱（9/27 feasible, 2 cells 胜 baseline 5-7%），不构成决定性 Go |
+
+### Verifier 发现的 3 小债务（主线未报，不影响结论）
+1. **run_C0 是占位**（==B1，line 268，未进 verdict_evaluator.METHODS）—— 内部自洽（C0==B1 冗余），docstring 略 overstated。Minor 文档债。
+2. **B0 在 Contract B 忽略 allow_no_transmit**（line 208 永远返最低率）—— 故意设计（strawman 下界，docstring 声明），但 T10 对称声称对 B0 略弱。Minor，声明。
+3. verifier 自身 bash 注释 slip（非代码缺陷）。
+
+### 结论
+D007 科学完整性修复**独立 CONFIRM**（12/12 PASS）。Phase A 10 RED 缺陷真实（red_receipt.json）；Phase B 物理身份闭合（Eq.23/Table1/1e-6/lognormal 全 PDF 视觉核对）；Phase C GREEN 修复使 10/10 正确契约成立（手工复算 trajectory 匹配代码 1e-12）；Phase D feasibility-first 评估无 Pareto 残留；raw→aggregate 独立重算一致。**D006 科学层 KILL 撤回成立**。Terminal verdict 唯一可辩驳解读 = "Q-A 在 Contract A 不可评估（action-contract gap），在 Contract B 存活为 reliability-throughput tradeoff，非 Pareto loss；Q-A' reframe 需用户裁决"。3 小债务全部声明，不影响结论。**允许 commit**（单 commit，停在 dev 阶段，held-out MVE 待用户决 Q-A' 后跑）。

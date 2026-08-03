@@ -1,0 +1,42 @@
+[
+  {
+    "check": "T1_k_plus_td_alignment",
+    "verdict": "GREEN ✅"
+  },
+  {
+    "check": "T2_B1_uses_per_rate_margin",
+    "verdict": "GREEN ✅"
+  },
+  {
+    "check": "T3_declared_fallback_contract_A_and_B",
+    "verdict": "GREEN ✅"
+  },
+  {
+    "check": "T4_continuous_FER_not_hard_fail",
+    "verdict": "GREEN ✅"
+  },
+  {
+    "check": "T5_full_ladder_with_margin",
+    "verdict": "GREEN ✅"
+  },
+  {
+    "check": "T6_linear_mean_no_per_bin_recenter",
+    "verdict": "GREEN ✅"
+  },
+  {
+    "check": "T7_feasibility_first_evaluator",
+    "verdict": "GREEN ✅"
+  },
+  {
+    "check": "T8_oracle_infeasibility_is_action_contract_gap",
+    "verdict": "GREEN ✅"
+  },
+  {
+    "check": "T9_td_metamorphic_action_invariant_outcome_shifts",
+    "verdict": "GREEN ✅"
+  },
+  {
+    "check": "T10_symmetric_no_transmit",
+    "verdict": "GREEN ✅"
+  }
+]

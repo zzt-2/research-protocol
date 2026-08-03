@@ -1,0 +1,92 @@
+[
+  {
+    "test": "T1_prediction_target_alignment",
+    "expected_failure": "predict_horizon predicts k+td but evaluate_decision scores vs h_true[k]; alignment mismatch undetected",
+    "actual_failure": "pred[30]=35.000 predicts future k+td=35.0 (pred correct? True); scoring aligned to present k? True",
+    "triggering_source": "probe_headroom.py:113 (pred index = (n-1)+td) vs 441-443 (true_gain aligned to k)",
+    "time": "2026-08-03T14:41:41",
+    "source_hash_sha256_16": "6e2978ef75316004",
+    "verdict": "RED_OBSERVED"
+  },
+  {
+    "test": "T2_galijasevic_margin_is_load_bearing",
+    "expected_failure": "B1 ignores per-rate margin (dead code); changing margin does not change rate decision near a threshold boundary",
+    "actual_failure": "GAL_MARGIN refs in source = ['GAL_MARGIN_dB = np.array([']; defined_only=True; margin_ignored_by_B1=True",
+    "triggering_source": "probe_headroom.py:56-59 (GAL_MARGIN_dB defn) ; 211-213 (run_B1 ignores it)",
+    "time": "2026-08-03T14:41:41",
+    "source_hash_sha256_16": "6e2978ef75316004",
+    "verdict": "RED_OBSERVED"
+  },
+  {
+    "test": "T3_c1_all_infeasible_fallback",
+    "expected_failure": "Below-lowest-threshold input silently clips to lowest rate; no declared outage/infeasible fallback action",
+    "actual_failure": "gain=-20dB (below lowest thr -6.80) -> selected index 15 (rate 0.1039); declares_outage_or_infeasible=False",
+    "triggering_source": "probe_headroom.py:138-139 (np.clip(pos, 0, N_RATES-1) silently forces lowest rate)",
+    "time": "2026-08-03T14:41:41",
+    "source_hash_sha256_16": "6e2978ef75316004",
+    "verdict": "RED_OBSERVED"
+  },
+  {
+    "test": "T4_threshold_is_not_fer_one",
+    "expected_failure": "Below-threshold frame scored as FER=1 hard failure; real FER per Eq.(23) is a continuous Q-function tail",
+    "actual_failure": "gain=-6.854dB (just below lowest thr -6.804); reported viol_rate=1.0000 (==1.0 hard fail? True); goodput=0.0000",
+    "triggering_source": "probe_headroom.py:158-161 (viol = h_true < THRESH; goodput zeros ~viol frames)",
+    "time": "2026-08-03T14:41:41",
+    "source_hash_sha256_16": "6e2978ef75316004",
+    "verdict": "RED_OBSERVED"
+  },
+  {
+    "test": "T5_complete_action_ladder",
+    "expected_failure": "Action ladder incomplete in USE: per-rate margin defined but not applied by B1, so B1 != Galijasevic point+margin",
+    "actual_failure": "rates_match=True; thresholds_match=True; margin_values_match=True; margin_applied_by_B1=False (GAL_MARGIN refs=['GAL_MARGIN_dB = np.array(['])",
+    "triggering_source": "probe_headroom.py:47-59 (constants) ; 211-213 (run_B1 omits margin)",
+    "time": "2026-08-03T14:41:41",
+    "source_hash_sha256_16": "6e2978ef75316004",
+    "verdict": "RED_OBSERVED"
+  },
+  {
+    "test": "T6_linear_mean_normalization",
+    "expected_failure": "GG is linear-mean-normalized (E[h]=1) but probe applies a per-turbulence dB-mean offset, shifting operating point per bin",
+    "actual_failure": "E[h]=0.3838 (≈1? False); E[10log10 h]=-7.5106dB (<0 by Jensen? True); probe applies per-bin calib_offset_dB? True",
+    "triggering_source": "probe_headroom.py:436-443 (calib_offset_dB = E[10log10 h]_dev; subtracted from gain)",
+    "time": "2026-08-03T14:41:41",
+    "source_hash_sha256_16": "6e2978ef75316004",
+    "verdict": "RED_OBSERVED"
+  },
+  {
+    "test": "T7_constrained_objective",
+    "expected_failure": "Feasibility-first constraint ignored: infeasible B1 with higher gp masks feasible C1 under Pareto-only verdict",
+    "actual_failure": "B1 feasible=False (viol=0.05); C1 feasible=True (viol=1e-05); c1_pareto_dominates=False; c1_wins_feasibility_first=True",
+    "triggering_source": "probe_headroom.py:D006 verdict (Pareto-dominate on 27 cells); feasibility not separated",
+    "time": "2026-08-03T14:41:41",
+    "source_hash_sha256_16": "6e2978ef75316004",
+    "verdict": "RED_OBSERVED"
+  },
+  {
+    "test": "T8_oracle_dominance",
+    "expected_failure": "Oracle O1 infeasible at target on N cells is misattributed to Q-A hypothesis failure instead of action-contract gap",
+    "actual_failure": "O1 infeasible at 1e-4 on 27/27 cells; feasibility_report misattributes to Q-A? True",
+    "triggering_source": "probe_headroom.py:D006 §C3.1 'outage floor ... even oracle' used as KILL reason",
+    "time": "2026-08-03T14:41:41",
+    "source_hash_sha256_16": "6e2978ef75316004",
+    "verdict": "RED_OBSERVED"
+  },
+  {
+    "test": "T9_delayed_metamorphic",
+    "expected_failure": "td>0: future-truth flip changes neither action nor outcome under present-index scoring (target should be k+td)",
+    "actual_failure": "action_invariant_to_future_flip=True; outcome_changes_under_orig_scoring=False (should be True for correct k+td target)",
+    "triggering_source": "probe_headroom.py:441-443 (true_gain aligned to present k, not k+td)",
+    "time": "2026-08-03T14:41:41",
+    "source_hash_sha256_16": "6e2978ef75316004",
+    "verdict": "RED_OBSERVED"
+  },
+  {
+    "test": "T10_action_fallback_semantics",
+    "expected_failure": "No outage/no-transmit action for any method; deep-fade frames force-attributed to a rate (outage floor is artifact)",
+    "actual_failure": "has_outage_action_in_source=False; every_method_forced_to_pick_rate=True",
+    "triggering_source": "probe_headroom.py:select_rate_from_gdb clip (138-139); no outage action defined",
+    "time": "2026-08-03T14:41:41",
+    "source_hash_sha256_16": "6e2978ef75316004",
+    "verdict": "RED_OBSERVED"
+  }
+]

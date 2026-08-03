@@ -51,3 +51,13 @@
 - **forbidden**: 进 Step 4a / 设计方法 / 跑仿真 / 写 Go-NoGo/METHOD_SIGNAL / 改 Skill / 改 4 个 p05_run*.log / 据 abstract 推 Safi/L124 失效机制 / 绕过访问控制 / 用自创四判据标签当 terminal gate / 制造第三个弱 Q / agent 自行放宽 C 条件 / push。
 - **next_legal_action（本轮完成后）**: **GW Step 4a**（需新对话+用户授权；§A0 §0 前置门控再查 Q# 四判据）。Step 4a 前建议关闭 3 个开放问题（Safi 全文 / Q-B 信道模型可行性 / Galijasevic citation 重跑）。或用户决策调整 C / 换 AMC 子族 / 停止。
 - **status**: STEP3_READ_COMPLETE_SEMANTIC_GATE_MISAPPLIED（D005/R001）+ **STEP3_5_SURVIVES（S005/R003/V006）** — 旧 STEP3_NO_VALID_PROBLEM 因用自创四判据（problem_truth 等）被取代；canonical 四判据 owner = glossary.md L22-31 + templates.md L301（SHA 固定）；重建 Q-A（预测驱动风险失配）+ Q-B（动作位置-时间尺度失配）；Step 3.5 ~190 命中+引用链闭包后 **Q-A（带 Safi UNVERIFIED 尾巴）+ Q-B（带 baseline 缺位风险）均 SURVIVES_STEP3_5** → 存在 Step 4a 入口但**本轮不启动**；Safi/L124 仍 BLOCKED（3 路径失败）；保留 Step 2 PASS+5 CORE+精读事实提取。
+
+## CP006: 2026-08-03 Step 4a Q-A 科学完整性修复（D007 撤回 D006 科学 KILL）
+
+- **mission**: 同对话内完成主控裁决执行提示词——撤回 D006 无效 Q-A KILL，Phase A RED 根因复现 + Phase B 物理身份闭合 + Phase C GREEN 修复 + Phase D feasibility-first 重测两动作契约 + 独立 verifier，输出修订 recommendation。
+- **authority**: 用户主控裁决执行提示词（2026-08-03，本轮）§"执行 AMC Q-A Step 4a 科学完整性修复与正确重测"。
+- **worktree**: `.worktrees/rdl-method-production-v2` @ `280b9a5`（CP005 之后无新 commit）。
+- **allowed**: Phase A 10 RED 测试（red_receipt.json）/ Phase B Galijasevic PDF 视觉核对（fresh-context 子 agent，identity_receipt.md）/ Phase C corrected_v2 实现 + green_check（green_receipt.json）/ Phase D verdict_evaluator（两动作契约 27 cells×9 methods）/ V008 独立 verifier（12 项核验）/ D007 取代 D006 科学层 / V008 取代 V007 科学层 / S007 / feasibility_report_v2.md（不覆盖旧）/ probe_corrected_v2_raw.json / 治理更新（topic-index/voice/H004）/ 单次 commit 不 push。
+- **forbidden**: 偷偷改 Q-A→Q-A'（Contract B 须显式标 reframe 候选交用户）/ 跑 fresh held-out MVE（须用户先决 Q-A'）/ 改 Skill / common/ params.py / 正式论文结论 / dormant receiver / 4 个 p05_run*.log / 删旧 probe_headroom.py/raw + feasibility_report.md（保留加 INVALIDATED_BY 指针）/ push / agent 自行最终 Go/No-Go。
+- **next_legal_action（本轮完成后）**: 用户裁决 (i) Q-A' reframe→新 GW Step 1-3 / (ii) Contract A 下 Q-A 不可评估停止 / (iii) fresh held-out MVE 仅在决 Q-A' 后 / (iv) 补齐 3 篇 CORE。
+- **status**: **STEP4A_QA_REPAIRED_KILL_WITHDRAWN（D007/V008/S007）** — Phase A 10/10 RED_OBSERVED 复现 8 承重缺陷（B1 未用 margin/scoring 对齐 k 非 k+td/FER 当 hard fail/per-turb dB-mean 重定心/outage floor 是 action-contract artifact）；Phase B Galijasevic PDF 视觉核对（OOK+APD/lognormal PSI=10/16率/FER 1e-6 Eq.23/per-rate margin/k+td/无outage规则）；Phase C corrected_v2 10/10 GREEN + verifier 手工复算 MATCH 1e-12；Phase D feasibility-first 重测（Contract A 27/27 action-contract 不可行 / Contract B O1 feasible 27/27, C1 feasible 9/27, 2 cells 胜 baseline +5-7%）；V008 12/12 PASS CONFIRM。held-out MVE 待用户决 Q-A' 后跑。**未宣称 Groundwork 闭合**（5 CORE < ≥8 整体门）。

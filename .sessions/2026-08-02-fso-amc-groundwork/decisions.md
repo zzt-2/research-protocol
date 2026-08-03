@@ -219,3 +219,40 @@ canonical 四判据（glossary L22-31 逐字）：①**具体技术矛盾**（M/
 **触发原话**: 用户执行提示词（2026-08-03）§"对 Q-A 完成 A′、A、B"+"只有全部前置门无致命项时，运行一个 bounded MVE"+"oracle 只作 Kill/headroom bound，不作 Go 判据"+"若 B2/B3/B4 已在主指标上覆盖候选或 oracle 空间的 ≥95%，直接 RECOMMEND_KILL_OR_ENGINEERING_COMPONENT"+"executor 不能自行最终 Go/No-Go，只能提交 recommendation，等待用户确认"。voice.md 待登记。
 
 **影响**: feasibility_report.md（projects/thesis-fso/amc-groundwork/）落盘；topic-index GW Progress 表 Step 4a 行填入；literature_notes_amc 步骤进度表 Step 4a 行填入；master-state §2 AMC 段更新 Step 4a 终态；S006 + V007 落盘；probe 脚本 + raw 落盘 projects/simulation/explore|results/amc-q-a-risk-aware-rate|amc_q_a_risk_aware_rate；不修改 common/ params.py / 正式论文结论 / Skill / dormant receiver / 4 个 p05 log。**未宣称 Groundwork 闭合**（5 CORE < ≥8 整体完成门）。下一合法动作待用户确认（接受 KILL / reframe / 调整 C / 换子族 / 停止）。
+
+---
+
+## D007: STEP4A_EXECUTION_INVALID_PHYSICS_AND_ALGORITHM — 撤回 D006 科学 KILL，Q-A 在 Contract B 下存活（reliability-throughput tradeoff，非 Pareto loss）
+
+> 2026-08-03 | status: active（待用户确认 Go/No-Go 与 Q-A' reframe 裁决）| 取代: **D006 的科学层 KILL recommendation（"C1 0/27 Pareto-dominate B1 + outage floor 即使 oracle 不可达 + 命中 2 预注册 Kill 条件"）**（**不取代 D006 的执行合规性声明 / 不进 4b/5/Contract/Execute / 不动 Skill/common/params.py/正式论文/dormant receiver/4 p05 log**）| 被取代: 无
+> 依据: S007 + V008（12/12 PASS，CONFIRM）+ Phase A RED receipt（10/10 RED_OBSERVED，red_receipt.json）+ Phase B identity_receipt.md + corrected_v2 raw（probe_corrected_v2_raw.json）+ verdict_evaluator.py + Galijasevic PDF receipt（视觉核对 Eq.23/Table1/p.4-7）+ 用户 2026-08-03 动作空间裁决（"同时跑两个动作契约"）
+
+**决策**: 主控裁决 D006 的 Q-A KILL recommendation **科学层无效**，必须撤回。理由（经 Phase A RED 根因复现 + Phase B 物理身份闭合 + Phase C GREEN 修复 + Phase D feasibility-first 重判 + 独立 verifier 12/12 PASS 确认）:
+
+D006 的 KILL 建立在 8 个承重缺陷上，全部经独立最小失败测试复现（T1-T10 RED receipt）:
+1. **H1 PREDICTION_ALIGNMENT**（T1 RED）: probe 用截至 k 的观测预测 k+td，却与 h_true[k] 比较；必须对齐 h_true[k+td]。corrected_v2 已修（`h_dev_outcome = h_dev[:, start_idx+td_blocks:]`）。
+2. **H2 BASELINE_IDENTITY**（T2 RED）: probe 定义 GAL_MARGIN_dB 但未使用（dead code）；B1 不是论文中的完整 Galijasevic 点预测+per-rate margin baseline。corrected_v2 B1 = 点预测 + GAL_MARGIN_dB（load-bearing，verifier sabotage 测试确认改变决策）。
+3. **H3 C1_FALLBACK**（T3 RED）: 全部 k 不可行时 probe 错误 clip，无声明 outage/infeasible fallback。corrected_v2 Contract A 声明 force-lowest，Contract B 声明 no-transmit。
+4. **H4 FER_SEMANTICS**（T4 RED）: Table 1 阈值只说明该点条件 FER 达 1e-6 目标；低于阈值不等于 FER=1。旧 goodput/FER/outage floor 语义失效。corrected_v2 用连续 FER（Galijasevic Eq.23 单调近似，阈值处=1e-6，verifier 手工复算 fer_mean 匹配代码 1e-12）+ threshold_violation_rate 分开报告。
+5. **H5 ACTION_SPACE**（T5 RED）: 码率集/阈值/margin 与论文一致但 margin 未在 B1 使用。corrected_v2 完整 ladder B0-B5+C0/C1+O1/O2，B1 用 margin。
+6. **H6 OPERATING_POINT**（T6 RED）: probe 按 E[10log10 h] per-turbulence 重定心（Jensen 偏移 1.6/3.0/6.1dB），改了实际平均工作点。corrected_v2 删 calib_offset_dB，用线性 E[h]=1 归一化（独立验证 E[h]=1.004-1.015）。
+7. **H7 PARAMETER_PROVENANCE**（identity_receipt §3）: GG (α,β)={(5,2),(2.5,1.2),(4,0.5)} 无 Galijasevic 来源（论文用 lognormal PSI=10）；TAU_C_S=5ms vs 论文 τ₀=10ms；BLOCK_SYM=32000 是近似。全部声明为 scenario-transfer 债务。
+8. **H8 OBJECTIVE_CONTRACT**（T7/T8 RED）: 原问题是可靠性约束下最大化 goodput；旧判决却要求 C1 无条件 Pareto-dominate 违约 baseline。corrected_v2 改 feasibility-first constrained-goodput（5 类 cell 分类）。
+
+**重测结果（corrected_v2，两动作契约，FER target 1e-6）**:
+- **Contract A（Galijasevic 原契，无 outage）**: 27/27 cells = `5_ACTION_CONTRACT_OR_OPERATING_POINT_INFEASIBLE`。**所有方法含 oracle O1 的 fer_mean = 8e-3 ~ 2.2e-1 ≫ 1e-6**。→ 在 Galijasevic 原动作契约下，1e-6 目标对所有方法（含 oracle）结构不可达 = **action-contract/operating-point gap，不是 Q-A 假设失败**。D006 把它当 Q-A KILL 理由 = T8 RED 缺陷。
+- **Contract B（symmetric no-transmit，= Q-A' reframe 候选）**: O1 feasible 27/27（fer 7e-8~1.5e-7 < 1e-6）；C1 feasible 9/27（弱湍流 α=5 cells）；2 cells C1 胜最强增强 baseline B2/B3/B4 +5.1-6.7% goodput；其余 18 中强湍流 cells = `4_ACTION_OR_INFORMATION_GAP`（仅 oracle 可行）。→ Q-A 假设**未被证伪**：C1 在弱湍流与 B2 竞争力相当，个别 cell 略胜；但 goodput 极低（0.001-0.011）因 no-transmit 丢帧多 = **reliability-throughput tradeoff，非 Pareto loss**。
+
+**verifier 细化（V008）**: Contract A 下 Q-A **不可评估**（oracle 本身不可行，action-contract gap）；"Q-A 存活" = "未被 Kill，在 Contract B 下进 Phase E/F"，**非**"Q-A 已验证"。Contract B 下信号微弱（9/27 feasible，2 cells 胜 baseline 5-7%），不构成决定性 Go。
+
+**保留（继续有效）**: D006 的执行合规性（canonical A0→A′→A/B→D 顺序；不进 4b/5/Contract/Execute；executor 只提 recommendation）；D001-D005 全部；Galijasevic PDF 身份（OOK+APD/lognormal PSI=10/16率/FER 1e-6/Eq.23/per-rate margin/k+td/τ₀=10ms/无outage规则）。
+
+**旧 raw/code 不删不改**: probe_headroom.py（buggy original）+ probe_headroom_raw.json 保留作 RED 证据，加 INVALIDATED_BY_D007 指针（在本 D### + topic-index 标注，不修改原文件内容）。
+
+**Q-A' reframe 决策点（交用户）**: Contract B（symmetric no-transmit）实质改变研究对象（M 不再是 Galijasevic，因 Galijasevic 无 outage action）= 新问题 Q-A'，须新 GW Step 1-3 M-C-A + 四判据。本轮**不偷偷改**，只在 Contract B 下报告 Q-A' 候选信号 + 交用户裁决是否升为新研究方向。
+
+**3 小债务（verifier 指出，不影响结论）**: (1) run_C0 是占位（==B1，未进 verdict_evaluator.METHODS）；(2) B0 在 Contract B 忽略 allow_no_transmit（strawman 下界，声明）；(3) TAU_C_S=5ms / BLOCK_SYM=32000 scenario-transfer（声明）。
+
+**触发原话**: 用户 2026-08-03 执行提示词（本轮）§"执行 AMC Q-A Step 4a 科学完整性修复与正确重测"+"本轮不是新方向，也不是 Q-A' reframe。必须先撤回无效 KILL"+"只有物理模型、baseline、目标函数和动作空间全部闭合后，才允许使用 fresh held-out data 重判"+ 动作空间裁决"同时跑两个动作契约（原契 + no-transmit 对称）"。voice.md 已登记。
+
+**影响**: D006 科学层 KILL 撤回；新 feasibility_report_v2.md 落盘（projects/thesis-fso/amc-groundwork/feasibility_report_v2.md，**不覆盖**旧 feasibility_report.md，旧报告加 INVALIDATED_BY 指针）；topic-index GW Progress 表 Step 4a 行修订；master-state §2 AMC 段更新；S007 + V008 落盘；corrected_v2 probe + tests + identity_receipt + RED/GREEN receipt + corrected raw 落盘 projects/simulation/explore|results/amc-q-a-risk-aware-rate/corrected_v2|amc_q_a_risk_aware_rate；不修改 common/ params.py / 正式论文结论 / Skill / dormant receiver / 4 个 p05 log / probe_headroom.py（buggy 原件保留）。**未宣称 Groundwork 闭合**（5 CORE < ≥8 整体完成门）。下一合法动作待用户确认（接受 Q-A' reframe 进新 GW / 接受 Contract A 下 Q-A 不可评估停止 / 跑 fresh held-out MVE 仅在用户决 Q-A' 后）。
