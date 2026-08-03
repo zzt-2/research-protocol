@@ -4,24 +4,25 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v1
-  control_epoch: 10
-  role: SYSTEM_DESIGN
-  mission: 设计并验证轻量长程研究运行协议
-  active_lane: THESIS_PACKAGING_TASKS_DISPATCH_READY
-  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D021
-  decision_gate: V015 PASS；只允许派发 T002/T003 两个只读包装诊断
+  control_epoch: 11
+  role: RDL_MASTER
+  mission: 将 2A/2B 两个论文方法候选各自闭合到可用终态
+  active_lane: PARALLEL_THESIS_BOUNDED_CLOSURES
+  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D022
+  decision_gate: V016 PASS；只允许 T004/T005，各自一个包、一次确定性修复、终态即停
   allowed_actions:
     - PROTOCOL_AUDIT
-    - THESIS_PACKAGING_TASK_DISPATCH
+    - THESIS_BOUNDED_PACKAGE_EXECUTION
   forbidden_actions:
-    - SCIENTIFIC_DISPATCH
-    - SCIENTIFIC_EXPERIMENT
+    - NEW_DIRECTION_DISPATCH
+    - OLD_CAMPAIGN_REOPEN
+    - COMMON_PARAMS_MUTATION
     - FORMAL_STAGE_CHANGE
-  next_legal_action: 创建两个隔离 Codex 任务，分别执行 T002 与 T003；不得运行实验
+  next_legal_action: 创建两个隔离执行任务，分别执行 T004/T005，持续到各自 terminal disposition
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-03（D021/V015：论文方法章保留门已验证，2A/2B 只读任务待派发）
+> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-03（D022/V016：2A/2B bounded closure 任务书终验 PASS，待派发）
 
 ## 专题信息
 
@@ -51,6 +52,7 @@ rdl_control:
 - 基于 live-test R009 对 T001–T026 的效果审计，允许只修恢复三问、方法工厂硬路由、signal promotion preflight 与真实恢复 receipt；不新增 controller，不改变科学 verdict。
 - 基于 H003/R004 的历史回归，只补 executable semantic gates、contribution tiers 与 lightweight persistence；不增加第四类 patch，不修改既有科学 verdict 或 formal owner。
 - 基于长程 campaign 与 12 篇硕士论文包装审计，允许最小增加论文方法章保留门，并对 2A/2B 做 RED→GREEN；不放松 scientific/formal 门，不运行实验，不修改既有科学 verdict。
+- 基于 D022 用户显式授权，允许在两个隔离 worktree 各执行一个已冻结的 2A/2B bounded packaging closure，直至得到章节就绪、支持材料、拒绝或真实外部阻塞终态；不开放新方向、不修改 common/params、不恢复旧 campaign。
 
 ### 明确不含
 
@@ -61,6 +63,11 @@ rdl_control:
 - 不批量迁移或删除旧科学目录；新布局渐进采用，旧历史继续 append-only 保留。
 
 ### 范围变更记录
+
+- **[2026-08-03] D022**：从 2A/2B 只读包装诊断扩展为两个隔离 bounded closure 执行包。
+  - 原因：T002/T003 均判 `NEEDS_ONE_BOUNDED_PACKAGE`，用户明确要求两个单独对话持续执行直到得到确实可用的终态。
+  - 新范围：T004 只闭合 calibration-aware robust CPR；T005 只闭合 fixed-point branch-routed CPR；允许必要的 sandbox 代码、仿真、benchmark、raw evidence、独立 verifier 和分支内提交。
+  - 影响的未决项：2A/2B 从“待决定是否派实验”改为“各执行一个包”；旧 campaign、其他轴、正式阶段与论文正文继续冻结。
 
 - 2026-07-20，D003：用户认可蓝图后，从“只设计”扩展为隔离实施 Task 1–3；仍明确排除科学实验、shadow 和旧控制器迁移。
 - **[2026-07-20] D004**：从 Phase 1 扩展到实施 Task 4–5。
@@ -184,7 +191,8 @@ rdl_control:
 - **V012**：独立终验 PASS；两项初审 P2（旧 checkpoint 缺证据指针、registry epoch 过期）已关闭，P0/P1/P2=0。
 - **live R009 / D019**：T001–T026 审计确认方法工厂改善近端发现，但 signal→formal 为 0/2；授权 v2.1 最小路由修订，不重写体系。
 - **R004 / D020 / V014**：接收 H003 后完成六案修改前后盲测；只补五门 executable evidence contract、三层贡献合同与三层轻量持久化，个人运行副本同步且独立终验 PASS（P0/P1/P2=0）。
-- **S015 / R005 / D021 / V015**：长程效果与同行包装审计确认剩余缺口是正常包收尾缺少独立章节能力检查；结构 RED、盲测 GREEN 与独立终验均已闭合，T002/T003 可派发。
+- **S015 / R005 / D021 / V015**：长程效果与同行包装审计确认剩余缺口是正常包收尾缺少独立章节能力检查；结构 RED、盲测 GREEN 与独立终验均已闭合。
+- **D022 / T004 / T005 / V016**：用户授权两个隔离对话各执行一个 bounded closure；任务合同独立终验 PASS，正面结果不预设，但必须闭合到可用 terminal disposition。
 
 ## 未决项
 
@@ -197,7 +205,7 @@ rdl_control:
 - ~~H004/T001 已冻结下一科学 campaign 的恢复入口~~（D015 暂停执行；仅保留为历史入口，不再作为当前 next action）。
 - 新科学项目首次采用 current layout 时，需要渐进生成 `state/current.yaml`、`portfolio/current.yaml`、`harvest/current.yaml`；禁止为了迁移整洁批量改写旧 artifacts。
 - ~~R002 历史复盘尚未执行~~（已完成）：见 `R002-long-horizon-runtime-retrospective.md`。
-- D021 已授权最小双门修订；完成前不创建科学实验包。GREEN 后只创建 2A/2B 包装诊断任务。
+- D021/V015 已完成；D022 仅授权 T004/T005 两个 bounded closure，不构成旧 campaign 或新方向的普遍解冻。
 
 ## 当前位置
 
@@ -206,6 +214,7 @@ lightweight persistence。六案审计重放、自动测试、个人 Skill 同�
 终验均 PASS（P0/P1/P2=0）；既有科学 verdict、dormant longitudinal topic 与
 formal owner 未变。
 
-**2026-08-03 当前入口**：D021 的最小 Skill 修订已由 V015 独立终验 PASS。
-当前只允许创建两个隔离只读任务，分别执行 T002/T003，研究 2A/2B 的方法包装与
-唯一 bounded package；不运行科学实验，不改变 formal science disposition。
+**2026-08-03 当前入口**：T002/T003 已完成只读诊断，均为
+`NEEDS_ONE_BOUNDED_PACKAGE`。D022 已将控制面递增到 epoch 11；当前只允许在两个
+隔离 worktree 执行 T004/T005，各自一个 bounded closure、一次确定性修复，并闭合到
+明确终态。V016 已确认 P0/P1/P2=0；任何新方向、common/params 修改、正式阶段变化仍禁止。

@@ -1,6 +1,7 @@
 # [S015] 论文方法包装门纠偏
 
 > 2026-08-03 | Skill 最小修订 | V015 PASS，待派发 T002/T003
+> 2026-08-03 续接 | 2A/2B bounded closure 授权 | V016 PASS，待创建两个执行任务
 
 ## 目标
 
@@ -19,14 +20,17 @@
 
 论文方法章门只产生 `THESIS_METHOD_READY`、`NEEDS_ONE_BOUNDED_PACKAGE`、`SUPPORTING_ONLY`、`REJECT` 四种状态。它不自动创建 active carrier，也不把 invalidated evidence 升级。当前 RED 对象为 2A 校准鲁棒 CPR 与 2B 单分支低复杂度/定点 CPR；G1/P09 等 invalidated 反例必须继续拒绝。
 
+T002/T003 两个独立只读诊断随后均返回 `NEEDS_ONE_BOUNDED_PACKAGE`：2A 的承重问题是在线 pilot-SNR calibration 是否超过静态 region retune；2B 的承重问题是完整 caller path 的真实成本下降与 Q(8,6) 端到端非劣。用户进一步授权两个单独对话持续运行到完成。D022 因此只解锁 T004/T005，各自一个包、最多一次确定性修复，正负结果均须形成可复现终态；未授权新方向、旧 campaign 或 formal stage。
+
 ## 决策引用
 
 - D021：增加独立的论文方法章保留门，并用 2A/2B 与 invalidated 反例做 RED→GREEN 回归（新建）
+- D022：授权 T004/T005 各执行一个 bounded closure，持续到明确终态（新建）
 
 ## 范围确认
 
-- 本轮是否在 scope boundary 内：否；用户已明确授权，见 D021 与 topic-index scope change。
+- 本轮是否在 scope boundary 内：否；D021 只覆盖 Skill 修订与只读诊断，用户现已通过 D022 显式授权 2A/2B 各一个 bounded closure。D022 不改 formal owner、不恢复 dormant campaign、不开放第三方向。
 
 ## 后续
 
-R005 已完成可审计 RED→GREEN：修改前结构测试因缺少独立 chapter-capability checkpoint 而 RED；补四状态、action-lineage 分拆与 bounded-closure 优先路由后，2/2 保留原文的 blind fresh-context 样本 GREEN。未留 raw 的探索性样本不承担数量结论。V015 独立终验 PASS（P0/P1/P2=0）。T002/T003 已绑定 control epoch 10；统一提交后创建两个隔离任务。两任务只诊断 2A/2B 的方法包装与唯一 bounded package，不运行仿真、不写正式论文。
+T004/T005 已写成自包含执行任务并由 V016 独立终验 PASS。统一提交后创建两个新 worktree 对话。主控只接收每个任务的终态、关键数字、证据路径和 commit SHA；执行细节全部留在各分支文件中。

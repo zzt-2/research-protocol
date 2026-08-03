@@ -706,3 +706,38 @@ Research Direction Lab 保留现有科学诚信与 formal promotion 门，另增
 ### 来源
 
 S015；用户 2026-08-03 明确要求先记录、修正 Skill，保证可包装内核不被丢弃，并另开两个对话分别研究 2A/2B 包装。
+
+## D022: 授权 2A/2B 各一个持续到终态的 bounded closure
+
+> status: active
+> date: 2026-08-03
+> 取代：无
+> 扩展：D021（只把已判 `NEEDS_ONE_BOUNDED_PACKAGE` 的 2A/2B 从只读诊断推进到各一个执行包）
+> 被取代：无
+> 依据：调研: T002/T003 两个独立包装诊断 + 验证: V015 + 用户原话: voice.md 2026-08-03
+
+### 决策
+
+在两个隔离 Codex worktree 中分别执行 T004（calibration-aware robust CPR）与 T005（fixed-point branch-routed CPR）。每个对话自主完成 preflight、合同冻结、实现/运行、独立 verifier、harvest 和分支内提交，持续到 `THESIS_METHOD_READY / SUPPORTING_ONLY / REJECT / EXTERNAL_BLOCKED` 之一，不得以“还差一轮”结束。
+
+“保证确实能用”定义为保证结论与资产可用，不预设正面结果：PASS 必须产生可复现方法包、算法/框图/主图数据、baseline/消融/claim ceiling；FAIL 必须产生可复用边界证据并立即降级。每个包最多一次确定性修复；修改方法语义、指标、信息边界或测试合同则须新 receipt 与全新 test seeds，不能修到通过。
+
+### 理由
+
+T002/T003 均证明已有证据形成了真实动作链，但各缺一个决定性闭包。继续开新方向会再次绕过最接近论文成章的资产；直接宣布方法成立又会重复历史 consistency≠correctness 与包装自欺。两个隔离包可并行推进事实审计和实现，但 T005 的 headline CPU timing 必须避开其他重负载进程，以免 T004 并发污染。
+
+### 排除的替代方案
+
+- 不保证两个包都得到正面方法；保证的是得到可信终态和可复用资产。
+- 不允许同一标签追加第二、第三个包装包；一次确定性修复后必须裁决。
+- 不恢复 dormant longitudinal campaign，不重开 G1/P09/P07/P08/AMC，不派第三个候选。
+- 不修改 `projects/simulation/common/` 或 `params.py`；若必须修改，终止为 `EXTERNAL_BLOCKED(reason=STAGE_SCOPE_EXCEEDED)` 并交主控重新授权。
+- 不在两个执行分支修改本 system topic、正式论文正文或 formal owner，避免并行治理冲突。
+
+### 影响范围
+
+新增 T004/T005；system foreground control 升到 epoch 11。两个执行分支仅可写各自 sandbox/results/worker-log/harvest dossier、任务专属 sim-preflight usage-entry fragment 和验证产物，并按长实验 chronology 允许 pre-test receipt commit + final commit；不直接修改共享月志、不 push。两个 fragment 由主控接收结果时串行并入月志。
+
+### 来源
+
+S015 续接；用户 2026-08-03 原话：“那要不两个单独对话，一直跑直到完成？保证确实能用？”

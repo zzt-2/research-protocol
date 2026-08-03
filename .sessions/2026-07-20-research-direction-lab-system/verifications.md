@@ -644,3 +644,41 @@ PASS; P0=0 P1=0 P2=0
 ### 结论
 
 PASS。D021 的轻量论文方法章保留门、可审计 RED/GREEN、个人运行副本和两个只读任务入口均闭合。该结论只证明可包装内核不会因 `METHOD_SIGNAL=0` 被自动丢弃；不证明 2A/2B 已成为论文方法，也不授权运行实验。
+
+## V016: 2A/2B bounded closure 任务书独立终验
+
+> date: 2026-08-03
+> 关联：S015 / D022 / T004 / T005
+> verifier 上下文：独立只读 subagent；未参与任务书设计
+> FINAL VERDICT: PASS
+
+### 验证项
+
+- [x] D022 的授权原话真实，且只保证可信闭环，不承诺正面结果。
+- [x] epoch 11、`THESIS_BOUNDED_PACKAGE_EXECUTION` 与 topic foreground control 一致；T004/T005 validator 均 PASS。
+- [x] 每个任务仅一个 package、最多一次确定性 repair，并强制闭合到四类 terminal disposition。
+- [x] T004 以 strongest static region retune 为 Go comparator，并用 shuffled/global-mean 消融验证 current information 是否 load-bearing。
+- [x] T005 分开裁决 single-branch scheduling 与 Q(8,6) 子链；Q 子链失败不会抹掉已闭合的 scheduling action lineage。
+- [x] T005 计完整 caller path，禁止先跑双支后少记成本；headline timing 有并发隔离、稳定阈值和 6 次/45 分钟有限边界。
+- [x] 两任务只写各自 sandbox/results/worker-log/harvest/usage fragment，不并发修改共享月志、system topic、common/params 或 formal owner。
+- [x] 越界终态统一为 `EXTERNAL_BLOCKED(reason=...)`，不存在隐式“再跑一轮”出口。
+
+### 验证证据
+
+```text
+validate_task_control.py T004 / T005
+PASS / PASS
+
+independent verifier initial
+PARTIAL; P0=0 P1=2 P2=2
+
+after deterministic task-contract repair
+PASS; P0=0 P1=0 P2=0
+
+git diff --check
+PASS
+```
+
+### 结论
+
+PASS。T004/T005 可分别派入隔离 worktree 并自主运行到可信终态。该结论证明任务合同可执行、正负结果均可用；不预判任一 package 将获得 `THESIS_METHOD_READY`。
