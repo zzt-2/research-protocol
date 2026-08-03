@@ -348,3 +348,39 @@ PASS（14/14）。本轮 packaging 诊断内部一致、证据支撑、守保护
 ### 来源
 
 独立 fresh-context verifier agent（agent_d9c184ce），2026-08-03，未参与 dossier 编写。
+
+## V013: 硕士论文方法包装逆向工程与内核重审独立终验
+
+> status: PASS
+> date: 2026-08-03
+> 关联: S018 / D026 / T011
+
+### 验证项
+
+1. PASS — 用户“每个核心技术章必须有方法”已进入 D025/D026 正式决策。
+2. PASS — 旧 34/32 篇调研为何失效有文件+行号证据，且区分目录、摘要和方法章。
+3. PASS — recipe library 含 12 篇真实硕士卡；A1/A7/A11/A12 已反查全文元数据、章节范围和 delta。
+4. PASS — 每张卡包含 baseline→actual delta、公式/流程、实验、消融与边界，不是创新点抄录。
+5. PASS — R1–R5 各有至少两篇真实实例；R6 经 A11/A12 定向反证后为 `0/12 REJECT_NOT_OBSERVED`，未硬凑。
+6. PASS — invalidated/unauthorized 数字仅处于 prohibited/boundary 语境，没有复活。
+7. PASS — 2A–2D 均有 action/baseline 或因缺 action 明确降级，grade 一致。
+8. PASS — Ch3/2A/2B 的框图、流程、实验、消融和否决条件均已定义。
+9. PASS — 两套 spine 均逐章审计；唯一推荐 S1 明标 B−/CONDITIONAL，未把 Ch4/Ch5 冒充完成。
+10. PASS — 2A/2B 已给具体 method shape，Phase G 不触发，未创建 missing-method-search-target。
+11. PASS — 未写正式论文正文、未跑实验、未改 Skill。
+12. PASS — voice、D023/D024→D025→D026 血缘、topic-index、registry 与 6 个 supersession banner 一致。
+13. PASS — `git diff --check` exit 0；两份 YAML 可解析；17 条 inventory evidence path 均存在；4 个 p05 logs 仍为 untracked 且不在 diff。
+
+### 证据
+
+- fresh-context verifier 逐文件读取四个主产物，并抽查 A1/A7/A11/A12 本地全文。
+- HEAD：`dd2aab4526a36a92a07bc6c7fd0a3eedaf7b6462`。
+- verdict：**READY_TO_COMMIT**；Critical 0 / Important 0 / Minor 0。
+
+### 结论
+
+PASS（13/13）。D026 的唯一推荐是条件式规划合同：Ch3 READY，Ch4/Ch5 各待一个 bounded package；本验证不把条件式方法宣称为完成。
+
+### 后续
+
+另开执行对话，先遵循 sim-preflight 与所属 GW gate，只执行 2A calibration-aware cross-grid bounded package；2A 通过后再单独处理 2B formal cost/latency+float-Q package。

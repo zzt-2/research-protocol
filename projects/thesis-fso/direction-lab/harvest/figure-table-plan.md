@@ -1,5 +1,7 @@
 # Figure/Table Plan — Thesis Blueprint
 
+> **SUPERSEDED / PAUSED — D025→D026 (2026-08-03)：旧图表蓝图保留作证据，当前不得作为 Ch4/Ch5 最终章节合同；当前条件式合同见 D026。**
+
 > 2026-08-03 | 关联: conference-to-thesis-map.md
 > 按唯一推荐 thesis blueprint（Ch1–Ch6）规划图表。每张图/表标注：来源（复用/重画/新增）、claim ceiling、缺口。
 

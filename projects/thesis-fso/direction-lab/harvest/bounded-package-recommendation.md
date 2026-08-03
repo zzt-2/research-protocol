@@ -1,5 +1,7 @@
 # Bounded Package Recommendation — Gap-to-Package Map + Single Small Package
 
+> **SUPERSEDED / PAUSED — D025→D026 (2026-08-03)：D024 小包执行已暂停；本文件不再授权统一鲁棒性表或正式 Ch4 写作，当前下一合法包见 D026。**
+
 > 2026-08-03 | 关联: conference-to-thesis-map.md、asset-claim-matrix.yaml
 > Phase E（gap-to-package map）+ 唯一小包推荐。**本轮只诊断不派实验**。任何执行需新合同 + 用户批准。
 

@@ -1,7 +1,7 @@
 # Topic Index: 论文写作专题（自适应 CPR 方向）
 
 > slug: 2026-07-09-thesis-writing
-> status: active | created 2026-07-09 | last_updated 2026-07-14（V011：Fig.2 两层控制带与 Fig.1 联动 PASS）
+> status: active | created 2026-07-09 | last_updated 2026-08-03（D026/V013：唯一条件式 thesis spine 锁定并通过独立终验）
 
 ## 专题定位（一句话）
 
@@ -28,10 +28,11 @@
 材料盘点 + 缺口识别 + 数据稳定性验证 + 论点审查 + 简报完善。守 FR-22（不跳框架）+ D005 务实路线 + D-010 baseline 标准。
 
 ### 当前范围
-- 盘点 projects/simulation/ 下所有简报/报告/数据文件的新鲜度
-- 验证 A4 + NDA-ML 主实验数据稳定性（30seed CI / 债务项）
-- 审查 A4 方向论点链（crossover → 切换 → 增益 → 新颖性）
-- 完善简报 ADVISOR_BRIEFING_2026-07-09_adaptive_cpr.md
+- 复盘此前“看别人怎么包装”工作的证据深度与失败根因
+- 盘点全项目历史资产中的 deployable method kernel，禁止复活 invalidated claim
+- 精读 8–12 篇真实硕士学位论文的核心方法章，提取 baseline→method delta 与章节包装 recipe
+- 将真实 recipe 映射到 Ch3/Ch4/Ch5 候选，构造至少两套“每个核心技术章都有方法”的 thesis spine 并选唯一推荐
+- 若内部资产仍不足，只定义 method-shaped search target 与下一轮提示词，本轮不执行检索后的新方法实验
 
 ### 明确不含
 - ❌ 不跑新实验 / 不进 Contract / 不写正式论文章节（FR-22）
@@ -40,6 +41,10 @@
 - ❌ 不做消融实验（跨块 KF / BPS 迁移等是 step4a 的债务，不在写作专题跑）
 
 ### 范围变更记录
+- **[2026-08-03] D025**：暂停 D023/D024 的最终合同效力，启动“硕士论文方法包装逆向工程 + 本项目方法内核重审”。
+  - 原因：D023/D024 允许 Ch4 仅作边界研究、Ch5 仅作实现验证，未满足用户“每个核心技术章必须有一个可命名、可画框图、可写流程、可与 baseline 比较的方法”的明确要求；当前专题已有 16 个 S 文件，按治理规范必须显式登记 scope change 后才能继续。
+  - 新范围：执行旧包装复盘、全资产方法内核盘点、8–12 篇硕士论文方法章精读、recipe 映射、候选方法分级、两套 thesis spine 与唯一推荐；只做 paper-writing INTAKE/DIAGNOSE/PROPOSE。
+  - 影响的未决项：D024 统一鲁棒性表执行暂停；Ch4/Ch5 重新进入 `METHOD_PACKAGING_AUDIT`；正式 Ch4 写作暂停；旧 dossier 保留并加 supersession banner。
 - **[2026-08-03]** 范围扩展（campaign-level synthesis + CCISP→thesis extension packaging 诊断）。本专题原范围 = 自适应 CPR 方向写作准备（CCISP/Ch3）。本轮承接 AMC 冻结（D009）后的 campaign-level thesis contribution synthesis，**临时扩展**到全项目论文资产分级 + 唯一推荐 thesis spine 判断 + CCISP→学位论文 extension packaging 诊断。产物：(1) `projects/thesis-fso/direction-lab/harvest/campaign-level-thesis-contribution-synthesis.md`（9 项 contribution inventory + 唯一推荐 spine = 一个主方法 Ch3 + 完整实现验证 Ch5 + 边界 Ch4；第二工程贡献 = NO_SECOND_CONTRIBUTION_YET）；(2) R023 CCISP→thesis extension packaging 诊断的 5 个 dossier 文件（conference-to-thesis-map / asset-claim-matrix / figure-table-plan / journal-extension-readiness / bounded-package-recommendation）+ D023 唯一 blueprint + D024 唯一小包（统一鲁棒性表）。**这不改变本专题"写作准备不跑实验不进 Contract/Execute"的定位**——诊断只做证据-backed 的论文落位判断，不跑仿真、不写正式正文、不修 Skill、不改 CCISP tex。扩展完成后本专题回归原范围。
 - **[2026-07-13]** D011：将原 Fig.1 架构准备拆为两张独立编号图。
   - 原因：系统上下文与自适应 CPR 机制需要不同信息层级；拆分可降低密度，避免在一张图内反复取舍总览、zoom 和 selector 细节。
@@ -92,6 +97,7 @@
 - D020：完整 Fig.2 在小 CPR 节点内只剩不可读纹理，故不嵌入；CPR 保留中性短标签和 `Detailed in Fig. 2`，其余五类真实微图不变。
 - D021：用户明确覆盖 D020；完整 Fig.2 thumbnail 恢复并允许不可读。中央接收公式删除，改为 `Composite FSO channel` + 同一 realization 的真实受损接收星座。
 - D022：Fig.2 保留三泳道、并行候选、raw bypass 和用户微调后的非控制连线，只把旧单层控制带升级为 CV gate → blind-h/effective-SNR → fixed 13 dB → branch command。
+- D026：唯一推荐条件式 spine = Ch3 CCISP（READY）→ Ch4 2A calibration-aware robustness（NEEDS_ONE_BOUNDED_PACKAGE）→ Ch5 2B branch-route+fixed-point（NEEDS_ONE_BOUNDED_PACKAGE）；正式 Ch4/Ch5 WRITE 在各自独立验证前暂停，2C/2D 不用于凑章。
 
 ## 悬而未决
 
@@ -99,10 +105,12 @@
 2. **strong/uplink 子图纵轴范围**：H002 建议收窄到 1e-4~1e-1（不硬凑 1e-5），待跟老师确认。
 3. **S002 原悬而未决**（图表清单 / fair_gain 呈现 / 主图子图数）：H002 把图 2 数据备齐，等老师反馈后定稿。
 4. **Fig.1/2 文字联动**：两图 draw.io 编辑源均已形成，Fig.1 v4 与 Fig.2 分别通过独立门控；caption、正文图号联动及投稿前检查仍未执行。
+5. **2A 方法闭合**：需在新执行对话完成 calibration-aware mismatch×GG×SNR cross-grid bounded package；未通过前 Ch4 不得进入正式 WRITE。
+6. **2B 方法闭合**：2A 通过后另开包完成 formal full-grid cost/latency、float-vs-Q BER 与可得的真实综合；未通过前 Ch5 不得进入正式 WRITE。
 
 ## 当前位置
 
-**✅ R023 / D023 / D024（2026-08-03）：CCISP→学位论文 extension packaging 诊断完成。** 5 个 dossier 文件落盘 `projects/thesis-fso/direction-lab/harvest/`：唯一推荐 Package A（学位论文扩展，Ch1–Ch6，不产第二算法）+ 唯一小包（统一鲁棒性表 P01+P04，预注册 PASS/FAIL）。投稿状态 = `CONFERENCE_MANUSCRIPT_COMPLETE / SUBMISSION_STATUS_UNKNOWN`（无投稿编号/回执/录用）。本轮不改 CCISP tex/正式 thesis/仿真代码/results/Skill，只做诊断和包装合同。下一合法动作 = 用户审 dossier + 若批准 D024 小包则新对话新合同执行（守 FR-22 + D040/D042 + sim-preflight）。
+**✅ S018 / D026 / V013（2026-08-03）：方法包装逆向工程与内核重审完成并通过独立终验。** 旧 R023/D023/D024 已标 superseded。12 篇真实硕士论文均精读至少两个核心技术/方法章；R1–R5 每类至少两例，R6 经两篇定向卫星样本核查仍为 `0/12 REJECT_NOT_OBSERVED`。唯一推荐 = Ch3 CCISP（READY）→ Ch4 2A calibration-aware robustness（NEEDS_ONE_BOUNDED_PACKAGE）→ Ch5 2B branch-route+fixed-point（NEEDS_ONE_BOUNDED_PACKAGE）。2C=SUPPORTING_ONLY，2D=NEEDS_NEW_GW。V013 对 13 项用户门给出 13/13 PASS，Critical/Important/Minor 均为 0。正式 Ch4/Ch5 WRITE 与任何新实验均未执行；下一合法动作 = 新对话先走 sim-preflight/GW gate，只执行 2A cross-grid bounded package。
 
 ---
 
@@ -236,3 +244,4 @@ F001 完成 F1（R010 20 条力度基准逐条对照**全对齐** + 8 条已知�
 - **W006** §III 批次改稿——Q17/Q16/Q15 三项 L4-L5 改动落地（2026-07-12，R013 改稿章程第一次实际改稿）。按"从底层到表层"顺序处理 §III 三项改动（Q17 L5 → Q16 L4-L5 → Q15 L4），全部落在 W002 §III 同一段 + R011 公式清单代码行溯源。**建 D008** 统一记录"§III 方法描述匹配代码实现"（切换阈值固定非 measured crossover/per-regime，DA 多 pilot 平均，γ_blk h_b 估计来源补足）。**Q17（L5）**：W002 §III L28 删三句声称不符代码的描述（"measured crossover SNR for each turbulence regime"+"determined separately for each regime rather than held fixed"+"per-regime calibration lets the switching boundary track"）+ 替换为"a fixed effective-SNR value, chosen to separate the low-SNR region where the DA estimator yields the lower BER from the high-SNR region where the NDA estimator does"；保留 trade-off 段 + 实现复杂度段；§IV-A 两处"crossover γ_th moves to lower SNR"→"crossover SNR moves to lower values"（去 γ_th 标签，数据观察非判据来源）。**Q16（L4-L5）**：W002 §III 公式 3 后加一句"Here h_b denotes the per-block channel amplitude, estimated from the received block"（模糊但诚实，不暴露判据用盲估计而 DA 路径用 pilot 估计的脱钩细节 D001 Bug2/D002，守 D007）；R011 #3 代码行 `_recovery.py:232-233`（指向错误文件）→ `sc_nda_ml_sim.py:95-110 / _a4_switch_experiment.py:127-135`。**Q15（L4）**：W002 §III 公式 1 描述"the received pilot sample r_p"（单数）→"dividing each received pilot sample by ... averages the resulting phases over the N_p pilot symbols within the block, and takes the argument"；公式形式保留（会议简化 OK）；R011 #1 代码行 `_recovery.py:153` 保留，描述更新匹配多 pilot LS 回归（补 `_recovery.py:153-161`）。**守纪律**：FR-22（只改文字不跑实验，选项②改代码已 R017 排除）+ D007/不变量 3（不提不好的——判据脱钩/γ_eff 噪声代理/13dB 偏保守弱点都不进正文）+ 不变量 7（crossover 只呈现数据不附归因）。**交叉检查 4 项全过**（无 measured crossover/per-regime 残留 + §IV-A 不暗示 γ_th 来源 + R011 代码行指向正确文件 + sample 单数→复数）。守 FR-22 + D007 + 不变量 7 + R013 三防错纪律。revision-queue Q15/Q16/Q17 状态 → done）
 - **W007** 数据呈现批次改稿——Q12/Q14/Q10 三项 L1-L2 改动落地（2026-07-12，R013 改稿章程第二次实际改稿）。处理数据呈现层三项改动（跨正文 W001/W002/W003 + 联动），涉及 §I Intro / §IV-B / §V Conclusion / Abstract，不动 §II SM / §III Method / §IV-A / 公式 / 图表规格。**Q12（L2，先改——删弱湍流归零，决定 §IV-B 重写）**：W002 §IV-B 删 "In the weak-turbulence and AWGN regimes the net gain narrows to $+0.09$/$+0.18$/$+0.19$ dB...strong-turbulence and uplink conditions." 整段（含归零数字 + "reported transparently rather than suppressed" + 弱湍流归零因果解释"two estimators' BER curves are close"），§IV-B 重写为只讲强湍流/上行有利结果（Low-SNR avoidance 1.3–2.3 dB + Strong-turbulence net gain 1.2–1.9 dB 三值 + 选对率 26/29）；W003 Conclusion 删 "while the gain narrows toward zero ($+0.09$/$+0.18$/$+0.19$ dB, within the $30$-seed confidence interval) in weak turbulence and AWGN, where the two estimators perform nearly identically" 整句。弱湍流/AWGN 不再出现在增益讨论段（连"gains concentrate in strong turbulence"定性暗示都不写）。Abstract 本就未报归零，不动。**Q14（L1，第二改——CI 收敛，和 Q12 联动）**：W002 §IV-B 删 "(CI lower bounds uniformly positive)"（改为直接陈述"yielding a net SNR gain of $1.3$–$2.3$ dB over a fixed NDA estimator"，不报 CI）；W003 Conclusion "within the $30$-seed confidence interval" 随 Q12 删归零句删除（同一句）；**保留** §IV 开头 L34 "averages over $30$ independent seeds"（设置段交代仿真规模，MC 次数是惯例 CI 不报是惯例，两者不同）。**Q10（L1，第三改——增益精度 2 位→1 位+about）**：1.85→about 1.9（四舍五入，⚠️ 非 1.8，原 queue 笔误已修）/ 1.26→about 1.3 / 1.19→about 1.2 / 1.3–2.3 区间保留（已 1 位）。逐处改（grep 全清单 7 处）：W001 Intro L20 "up to 1.85 dB"→"up to about 1.9 dB"；W002 §IV-B L42 四处（"$+1.26$ dB"→"about $1.3$ dB" / "$+1.19$ dB"→"about $1.2$ dB" / "$+1.85$ dB"→"about $1.9$ dB" / "1.19–1.85 dB"→"about $1.2$–$1.9$ dB"）；W003 Conclusion L16 "up to 1.85 dB"→"up to about 1.9 dB"；W003 Abstract L24 "up to 1.85 dB"→"up to about 1.9 dB"。脚注 1.25 dB ($10\log_{10}(4/3)$) + 768 bits 保留（精确定义值非结果增益）。**守纪律**：FR-22（只改文字不跑实验，Q10 是四舍五入非口径变更不触发 D004 代码行验证，Q12 删呈现非改数据，Q14 删标注非改数字）+ D007/不变量 3（弱湍流归零数字+定性解释+CI 标注全删，弱湍流/AWGN 不出现在增益讨论段）+ R016 §4.1/§7 红线 6（不利数字不进正文连定性都不提）+ R016 §4.3/§7 红线 7（增益 1 位+about）+ R015 惯例 5/§7 红线 8（不报 CI）+ 不变量 8（切换数字用 D002 修复版，本轮不改切换数字只改呈现精度）。**交叉检查 4 项 grep 全过**（grep 0.09/0.18/0.19 正文 0 处残留 + grep confidence interval 正文 0 处残留 + grep 1.85/1.26/1.19 正文增益全 about+1 位 + grep "transparently rather than suppressed" 正文 0 处；剩余命中全在元数据交叉检查表=债务待转 LaTeX 前清理）。revision-queue Q10/Q12/Q14 状态 → done）
 - **R023** CCISP→学位论文 extension packaging 诊断（2026-08-03，用户 brief 全流程任务，paper-writing DIAGNOSE/PROPOSE，只诊断不进 WRITE）。以 CCISP 会议稿为 Ch3 主锚，把 campaign 资产映射为鲁棒性/部署实现/可信验证扩展。**Phase A** contribution contract + conference_claim→thesis_extension_question→asset→missing_evidence 映射。**Phase B** 按 P0–P5 问题链重聚类（P1 SNR 失配/P2 连续 GG/P3 先选后跑/P4 定点/P5 coded）。**Phase C** 四包装评估：**Package A（学位论文扩展）= 唯一推荐**，Package B（journal extension，venue=N/A，当前不足）/C（engineering note）/D（边界论文）均不独立成稿归入 A。**Phase D** 唯一 blueprint Ch1–Ch6（Ch4 鲁棒性边界贡献成立非新算法 / Ch5 实现贡献成立限定实现可行性 / **不产第二算法**）。**Phase E** gap-to-package map 五级分类。**Phase F** 唯一小包 = 统一鲁棒性表（P01 adapter + P04 continuous GG）。**关键交叉验证**：(1) 投稿状态 = `CONFERENCE_MANUSCRIPT_COMPLETE / SUBMISSION_STATUS_UNKNOWN`（无投稿编号/回执/录用）；(2) tracked main.pdf 是旧 7/8 页构建非权威，权威 = LaTeX 源 + V026–V028（5 页）；(3) full-grid branch-compute timing **仅在 OLD-params 诊断 JSON（无 authority）**，formal B JSON 无 timing 字段 → full-grid formal timing 需新跑；(4) headline 数字 machine-checkable（selector_a JSON 每 cell 含 selected/fixed_nda errors + n_bits=768，G_C 一行确定性复算 0.8–1.5 dB）。**守纪律**：不改 CCISP tex/正式 thesis/仿真代码/results/Skill/dormant campaigns，不复活旧口径（26/29/uplink/1.2–1.9/3.1 dB）。产出 5 dossier 文件 `projects/thesis-fso/direction-lab/harvest/` + R023 + D023（唯一 blueprint）+ D024（唯一小包）+ voice.md 登记 + topic-index 更新。本轮 commit 一次不 push。）
+- **S018** 硕士论文方法包装逆向工程与本项目方法内核重审（2026-08-03，D025→D026，paper-writing INTAKE/DIAGNOSE/PROPOSE）。T002 证据化复盘旧 34/32 篇混合口径；T003 盘点全部方法 kernel；T004–T009 对 12 篇真实硕士逐篇精读至少两个方法/技术章并用统一 baseline→actual-delta 模板抽取；T010 独立交叉映射；T011/V013 fresh-context 独立终验 13/13 PASS、零 Critical/Important/Minor。产出 `peer-thesis-method-packaging-audit.md`、`internal-method-kernel-inventory.yaml`、`packaging-recipe-library.md`、`thesis-method-spines.md`。终态：R1–R5 有 ≥2 篇真实实例，R6=0/12 不硬贴；唯一推荐 Spine S1 = Ch3 CCISP / Ch4 2A / Ch5 2B，grade B−/CONDITIONAL；2A/2B 各差一个 bounded package，Phase G 不触发，不建 missing-method-search-target。本轮未写正式正文、未跑实验、未改 Skill、未触碰 p05 logs。

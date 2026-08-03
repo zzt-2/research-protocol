@@ -462,12 +462,17 @@ topics:
     title: 论文写作专题（自适应 CPR 方向）
     status: active
     created: "2026-07-09"
-    last_updated: "2026-07-14（V011：Fig.2 两层控制带与 Fig.1 联动 PASS）"
-    description: "自适应载波相位恢复（A4 per-block 有效 SNR 驱动 DA/NDA 切换）方向的论文写作准备专题。在 GW Step 4a 维度 D（A4 PASS 待 Go）阶段内做：材料盘点/缺口识别/数据稳定性验证/论点合理性审查/简报完善。**是写作准备不是进 Contract/Execute**——守 FR-22。step4a-mve-execution 保持 active（Go 决策+消融回那里），本专题只管写作准备。"
+    last_updated: "2026-08-03（D026/V013：12 篇硕士方法章逆向工程完成，唯一条件式 thesis spine 13/13 PASS）"
+    description: "自适应载波相位恢复方向的论文写作准备专题。S018/D026 已完成旧包装失败复盘、全项目方法内核盘点及 12 篇真实硕士论文双方法章精读；唯一推荐条件式 spine = Ch3 CCISP（READY）→ Ch4 2A calibration-aware robustness（NEEDS_ONE_BOUNDED_PACKAGE）→ Ch5 2B branch-route+fixed-point（NEEDS_ONE_BOUNDED_PACKAGE）。本专题仍是 paper-writing INTAKE/DIAGNOSE/PROPOSE，不进正式 WRITE、不跑实验；执行须回所属 GW gate。"
     depends_on:
       - slug: 2026-07-06-step4a-mve-execution
         reason: 继承 A4 数据（30seed fair_gain + A4 切换 CI）+ baseline 池（D-010 五条 + DA/NDA/DPLL/VV/BPS）+ R001 调研（baseline 组织/参数/叙述惯例 + 合法性背书矩阵）+ 简报 ADVISOR_BRIEFING_2026-07-09
     conflicts_with: []
+    produces:
+      - projects/thesis-fso/direction-lab/harvest/peer-thesis-method-packaging-audit.md
+      - projects/thesis-fso/direction-lab/harvest/internal-method-kernel-inventory.yaml
+      - projects/thesis-fso/direction-lab/harvest/packaging-recipe-library.md
+      - projects/thesis-fso/direction-lab/harvest/thesis-method-spines.md
 
   - slug: 2026-06-20-problem-driven-redirection
     title: 问题驱动方法论首次实战验证（批评汇总 → 地勘前置迭代 → 地勘执行 → Step 3 精读 → 综合分析 → 判地专项）

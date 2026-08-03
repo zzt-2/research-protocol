@@ -1,0 +1,187 @@
+schema_version: 1
+generated: 2026-08-03
+owner: .sessions/2026-07-09-thesis-writing/S018
+decision: D025
+authority_note: >-
+  本表盘点可部署动作，不以 METHOD_SIGNAL 数量代替方法能力。method_like=true
+  必须同时有统一 input-action-output 与传统 baseline；chapter_capable=true 必须通过
+  name/frame/steps/ablation/baseline/main_figure/unified_io/not_parameter_or_bugfix 八门。
+
+kernels:
+  - id: ccisp
+    name: Received-Power-Aware Adaptive CPR (CCISP)
+    m_c_a: 固定 DA/NDA 在窗口有效 SNR 变化下排序翻转；用接收功率统计判断并只执行合适分支
+    deployable_action: CV gate -> blind effective-SNR estimate -> fixed 13 dB gate -> execute DA or NDA only
+    information_source: raw |r|^2, nominal SNR, DA pilot
+    baseline: [fixed_DA, fixed_NDA]
+    existing_evidence: 完整方法、流程图、三档 downlink 30-seed 主结果、990/990 formal route identity
+    missing_evidence: 非 genie NDA ambiguity 的部署闭环仍是边界
+    method_like: true
+    chapter_capable: true
+    capability: {name: true, frame: true, steps: true, ablation: true, baseline: true, main_figure: true, unified_io: true, not_parameter_or_bugfix: true}
+    claim_ceiling: 三档 downlink、9 dB、相对 fixed NDA 的 common-payload BER-ratio 0.8–1.5 dB
+    evidence:
+      - projects/simulation/paper/ccisp2026/sections/method.tex:4,39-75
+      - projects/simulation/paper/ccisp2026/sections/results.tex:16,37-47
+      - projects/thesis-fso/direction-lab/harvest/asset-claim-matrix.yaml:24-30,40-57
+    prohibited_claims: [26/29, uplink, 1.2-1.9_dB, 3.1_dB]
+
+  - id: p01_snr_adapter
+    name: Receiver-Visible SNR Calibration Adapter
+    m_c_a: ±3 dB nominal-SNR mismatch 使 selector threshold/noise subtraction 错位；用当前窗 pilot-SNR estimate 校准工作点
+    deployable_action: pilots -> estimate gamma -> recalibrate selector operating point -> branch decision
+    information_source: receiver-known current-window pilots
+    baseline: [original_selector, conventional_SNR_estimators]
+    existing_evidence: 5 个 harm cells 中恢复 4 个；有 estimator 和 cand_rank 对照
+    missing_evidence: weak@9 bias floor；正式全网格、主结果图、与 CCISP+P02 的统一链验证
+    method_like: true
+    chapter_capable: false
+    capability: {name: true, frame: true, steps: true, ablation: true, baseline: true, main_figure: false, unified_io: true, not_parameter_or_bugfix: true}
+    claim_ceiling: LOCAL_SLICE robustness adapter；不能称新的 selector 算法
+    evidence:
+      - projects/thesis-fso/worker-logs/step-028-p01-cpr-snr-mismatch.md:86-96,106-149,189-223
+    terminal_status: NO_DIAGNOSTIC_SIGNAL
+
+  - id: p02_weak_region_retune
+    name: Weak-Region Reference Retuning
+    m_c_a: P01 在 weak/low-SNR 留有 bias；把 stage-1 reference 从 9 dB 调到 11 dB
+    deployable_action: region-specific threshold/reference selection
+    information_source: dev calibration data plus the same pilot estimator
+    baseline: [p01_ref9, cand_rank]
+    existing_evidence: 相对 adapter +0.4539 dB，略胜 cand_rank
+    missing_evidence: 独立机制不存在；需要作为 P01 校准规则的一部分而非单独方法
+    method_like: false
+    chapter_capable: false
+    capability: {name: true, frame: true, steps: true, ablation: true, baseline: true, main_figure: false, unified_io: true, not_parameter_or_bugfix: false}
+    claim_ceiling: conventional design rule / calibration component
+    evidence:
+      - projects/thesis-fso/worker-logs/step-029-p02-cand-rank-operating-regime.md:48-98,112-137
+    terminal_status: PROBLEM_RESOLVED_BY_REGION_RETUNING
+
+  - id: branch_route_b
+    name: Preselection Single-Branch Execution
+    m_c_a: route A 先计算 DA/NDA 两支再选，部署计算冗余；route B 在分支前判断并只运行一支
+    deployable_action: raw statistic -> controller command -> execute selected branch only
+    information_source: same receiver-visible controller inputs as CCISP
+    baseline: route_A_dual_branch_then_select
+    existing_evidence: 990/990 selected-output identity；真实 caller path 只执行所选分支
+    missing_evidence: authority-bound full-grid/multi-condition end-to-end operation count, latency, warm-up/repetition
+    method_like: true
+    chapter_capable: false
+    capability: {name: true, frame: true, steps: true, ablation: true, baseline: true, main_figure: false, unified_io: true, not_parameter_or_bugfix: true}
+    claim_ceiling: code-path equivalence；不能声称 74.6% 总接收机复杂度收益
+    evidence:
+      - projects/simulation/explore/nda-awgn-tracking-sandbox/_a4_branchrouted_30seed.py:356-400,445-451
+      - projects/thesis-fso/direction-lab/harvest/asset-claim-matrix.yaml:154-170
+
+  - id: p03_fixed_point
+    name: Bit-True Fixed-Point Selector Design
+    m_c_a: 浮点 selector 存在部署位宽问题；比较 Q(W,F)、uniform/mixed precision 与 resource proxy
+    deployable_action: quantize selector statistics and decision path with selected word length
+    information_source: selector raw statistics
+    baseline: [float_selector, uniform_precision_ladder]
+    existing_evidence: 0/132000 bypass mismatch；Q(8,6) gain-region regret +0.027 dB；mixed 相对 uniform 仅 +0.0166 dB
+    missing_evidence: float-vs-Q absolute BER、真实 LUT/DSP/power/throughput synthesis
+    method_like: false
+    chapter_capable: false
+    capability: {name: true, frame: true, steps: true, ablation: true, baseline: true, main_figure: false, unified_io: true, not_parameter_or_bugfix: false}
+    claim_ceiling: 数值精度与实现可行性组件；Q(8,6) 是实现点，不是独立算法
+    evidence:
+      - projects/thesis-fso/worker-logs/step-030-p03-fixed-point-codesign.md:10-18,96-138,166-207
+    terminal_status: PROBLEM_RESOLVED_BY_UNIFORM_PRECISION
+
+  - id: prefix_ls_coded_receiver
+    name: Receiver-Visible Prefix-LS Coded Receiver
+    m_c_a: 旧 coded chain 使用 hidden gamma；用 receiver-known prefix 估计 H_eff 与 noise 并校准 MMSE/LLR
+    deployable_action: prefix -> LS H_eff/noise estimate -> gamma_vis -> MMSE and LLR
+    information_source: receiver-known 32-symbol prefix
+    baseline: [corrected_B0, corrected_B2, oracle_ladder]
+    existing_evidence: metamorphic delta=0；FER B0=.155, B2=.148, O2=.139；CI 闭合
+    missing_evidence: immutable pre-test freeze；相对常规 prefix estimator 的独立有用性；与 CCISP 的统一 action
+    method_like: true
+    chapter_capable: false
+    capability: {name: true, frame: true, steps: true, ablation: true, baseline: true, main_figure: false, unified_io: true, not_parameter_or_bugfix: false}
+    claim_ceiling: LOCAL_SLICE/PARTIAL；当前是 receiver correctness infrastructure，不是新的 coded method
+    evidence:
+      - projects/thesis-fso/worker-logs/step-038-p08r2-receiver-info-repair.md:17-54
+      - projects/simulation/explore/nda-awgn-tracking-sandbox/p08r2_chain.py:74-145,237-275
+    terminal_status: STOPPED_WITH_PARTIAL_ASSET
+
+  - id: q_a_prime
+    name: Risk-Aware Rate/Outage Control
+    m_c_a: 无 no-transmit action 时 outage frame 被强制选率；引入 conditional risk-aware rate/no-transmit action
+    deployable_action: predicted receiver state -> select rate or no-transmit
+    information_source: predicted gain and receiver-visible state
+    baseline: [B5_conventional_outage_margin, B2_B4]
+    existing_evidence: unauthorized dev-only 9/27 feasible，2 cells +5.1–6.7%
+    missing_evidence: 用户授权、新 GW、修复 tune_C1、合法 testbed、held-out paired CI
+    method_like: false
+    chapter_capable: false
+    capability: {name: true, frame: true, steps: true, ablation: true, baseline: true, main_figure: false, unified_io: true, not_parameter_or_bugfix: true}
+    claim_ceiling: HYPOTHESIS_GENERATING only
+    evidence:
+      - .sessions/2026-08-02-fso-amc-groundwork/decisions.md:264-319,333-376
+      - projects/thesis-fso/amc-groundwork/feasibility_report_v2.md:46-65,92-106
+    terminal_status: UNAUTHORIZED_DEV_ONLY_REFRAME_PROBE
+
+  - id: p05_p06_p07r_g1_p09_boundaries
+    name: Closed or Invalidated Candidate Family
+    method_like: false
+    chapter_capable: false
+    components:
+      p05: standard CMA continuation fully resolves swap; no residual method action
+      p06: last-value persistence R2 0.85 exceeds causal-history R2 0.32
+      p07r: corrected fixed-gain regret 0.03-0.07 dB; problem absent after gain calibration
+      g1: gain is a scale-sensitive-slicer artifact removable by ordinary AGC
+      p09: 64 evaluations were already computed; B_used constant; truth-resolved BER; MDE conversion 12x wrong; no paired CI
+    claim_ceiling: local negatives and audit lessons only
+    evidence:
+      - projects/thesis-fso/worker-logs/step-032-p05-ml-ood-online-adaptation.md:29-96
+      - projects/thesis-fso/worker-logs/step-033-p06-causal-cross-frame-history.md:9-62
+      - projects/thesis-fso/worker-logs/step-035-p07r-agc-adc-science-repair.md:9-81
+      - projects/thesis-fso/worker-logs/step-042-g1-promotion-groundwork-scale-artifact.md:24-81,105-119
+      - .sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md:3202-3239
+    prohibited_promotions: [P05_method, P06_method, P07_R_method, G1_METHOD_SIGNAL, P09_8x_method]
+
+candidates:
+  - id: 2A
+    name: Calibration-Aware Robust Adaptive CPR
+    components: [ccisp, p01_snr_adapter, p02_weak_region_retune, continuous_GG_boundary]
+    unified_chain: pilot_SNR_estimator -> operating_region_calibration -> CCISP_branch_action
+    baseline: [original_CCISP_selector, global_retune, oracle_operating_point]
+    grade: NEEDS_ONE_BOUNDED_PACKAGE
+    rationale: P01 给出真实 receiver-visible action 且恢复 4/5 harm cells；P02 只能作为 region-aware calibration rule；缺正式交叉网格和 weak@9 残余机制闭合
+
+  - id: 2B
+    name: Low-Complexity Branch-Routed and Fixed-Point Adaptive CPR
+    components: [branch_route_b, p03_fixed_point]
+    unified_chain: quantized_receiver_statistic -> fixed_point_controller -> preselect -> execute_one_branch
+    baseline: [route_A_dual_branch, float_route_B, uniform_precision_ladder]
+    grade: NEEDS_ONE_BOUNDED_PACKAGE
+    rationale: route B 是真实方法增量；Q(8,6) 只能作为同一部署链的实现组成；缺 full-grid end-to-end operations/latency 和真实综合资源
+
+  - id: 2C
+    name: Receiver-Visible Coded Calibration Method
+    components: [prefix_ls_coded_receiver]
+    unified_chain: prefix_LS -> noise_channel_calibration -> coded_LLR
+    baseline: [standard_prefix_LS_receiver, corrected_B0_B2, oracle]
+    grade: SUPPORTING_ONLY
+    rationale: 当前 action 主要修复 hidden-information bug；没有证明相对标准 receiver 的独立有用性或新的 coded decision。若未来另找 coded method，必须重走新 GW，不能续包装本资产
+
+  - id: 2D
+    name: Risk-Aware Rate/Outage Control
+    components: [q_a_prime]
+    unified_chain: receiver_state -> conditional_risk -> rate_or_no_transmit
+    baseline: [conventional_outage_margin, fixed_rate, oracle]
+    grade: NEEDS_NEW_GW
+    rationale: 方法形状与传统 baseline 都可定义，但现有正结果 unauthorized，且 testbed/合同仍需重建
+
+invalidated_claims_not_to_revive:
+  - CCISP 26/29、uplink、1.2-1.9 dB 或 3.1 dB headline
+  - route B 节省 74.6% 总接收机计算
+  - P03 mixed precision 是独立方法
+  - P08/P08-R 旧 coded 科学结论闭合
+  - Q-A' 的 9/27 和 5.1-6.7% 支持 Go
+  - P07 固定增益 regret +0.91 dB
+  - G1 safe-gated normalization 是 METHOD_SIGNAL
+  - P09 adaptive early-stop BPS 有真实 8x reduction

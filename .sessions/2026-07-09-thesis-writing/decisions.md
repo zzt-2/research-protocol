@@ -778,10 +778,10 @@ S017；用户在确认语义不一致后授权修改，并要求保留其连线�
 
 ## D023: CCISP→学位论文唯一推荐 blueprint（一个主方法 + 鲁棒性边界 + 实现验证）
 
-> status: active
+> status: superseded
 > date: 2026-08-03
 > 取代：无
-> 被取代：无
+> 被取代：D025
 > 依据: 调研 campaign-level-thesis-contribution-synthesis.md (D058/V084 authority) + 调研 conference-to-thesis-map.md (本轮 R023) + 对照 ccisp_family1_*_30seed.json 权威 raw + 用户原话 voice.md 2026-08-03
 
 ### 决策
@@ -814,10 +814,10 @@ R023（本轮 CCISP→thesis extension packaging DIAGNOSE/PROPOSE）；用户 br
 
 ## D024: 唯一推荐下一执行小包 = 统一鲁棒性表（P01 adapter + P04 continuous GG）
 
-> status: active
+> status: superseded
 > date: 2026-08-03
 > 取代：无
-> 被取代：无
+> 被取代：D025
 > 依据: 调研 bounded-package-recommendation.md (本轮 R023) + 验证 P01/P04 现有数据 READY (D040/D042) + 用户原话 voice.md 2026-08-03
 
 ### 决策
@@ -843,3 +843,83 @@ R023（本轮 CCISP→thesis extension packaging DIAGNOSE/PROPOSE）；用户 br
 ### 来源
 
 R023；用户 brief 2026-08-03。
+
+## D025: 暂停旧 thesis blueprint，启动每个核心技术章的方法包装审计
+
+> status: superseded
+> date: 2026-08-03
+> 取代：D023、D024
+> 被取代：D026
+> 依据: 用户原话: voice.md 2026-08-03 + 对照: R023/D023/D024 + 规范: stages/glossary.md 方法产出形态判据
+
+### 决策
+
+D023/D024 不再作为最终 thesis contract；CCISP adaptive CPR 主方法保留，Ch4/Ch5 重新进入 `METHOD_PACKAGING_AUDIT`，正式 Ch4 写作与 D024 鲁棒性小包执行暂停。每个核心技术章必须有一个可命名、可画框图、可写算法流程或伪代码、可消融、可与传统 baseline 比较并能产生主结果图的方法。
+
+方法不要求达到顶刊级全新算法；鲁棒化、校准、低复杂度、分层/联合、工程实现、自适应阈值或动作规则均可进入审计。纯测试、纯 verifier、纯负面结果、纯 bugfix 不得冒充方法。
+
+### 理由
+
+D023 把 Ch4 定义为“鲁棒性边界”、Ch5 定义为“实现验证”，虽然符合当时 campaign 的 claim ceiling，却没有满足用户最新明确的学位论文结构要求。继续执行 D024 会在 thesis contract 未锁定前先补一张表，重复此前“有方向表但没有可执行方法 recipe”的失败模式。因此必须先复盘旧同行论文调研的深度，再按统一 method-kernel 模板审计内部资产与真实硕士论文方法粒度。
+
+### 排除的替代方案
+
+- **维持 D023，只把边界/验证改个方法名**：没有 deployable action 与 baseline delta，属于换标题不换内核，排除。
+- **把测试、verifier、负面结果或 bugfix 包成方法**：违反用户红线与 `stages/glossary.md` 的可复用方法产出判据，排除。
+- **立即执行 D024 或启动新方法实验**：当前处于 paper-writing INTAKE/DIAGNOSE/PROPOSE，且本轮明确不跑实验，排除。
+- **删除旧 dossier**：会破坏决策血缘与失败复盘证据，排除；改为保留并加 supersession banner。
+
+### 影响范围
+
+- `topic-index.md` 登记 scope change；`voice.md` 登记触发原话。
+- R023 与五个旧 packaging dossier 保留但标为“被 D025 暂停，非最终合同”。
+- 新增 S018 与本轮审计产物；最终是否形成新 thesis contract，必须等待同行方法章精读、内部 kernel 审计和独立 verifier。
+- 不修改 CCISP 正文、正式学位论文正文、仿真代码、结果、Skill 或四个 `p05_run*.log`。
+
+### 来源
+
+S018；用户 2026-08-03 主控纠偏。
+
+## D026: 唯一推荐 thesis spine = CCISP 主方法 + 校准鲁棒方法 + 低复杂度部署方法
+
+> status: active
+> date: 2026-08-03
+> 取代：D025
+> 被取代：无
+> 依据: 调研 peer-thesis-method-packaging-audit.md + internal-method-kernel-inventory.yaml + packaging-recipe-library.md（12 篇硕士、每篇至少两个核心技术/方法章）+ thesis-method-spines.md + 独立交叉审查 T010 + 用户原话 voice.md 2026-08-03
+
+### 决策
+
+学位论文唯一推荐规划合同采用 **Spine S1**：
+
+- Ch3：`Received-Power-Aware Adaptive CPR (CCISP)`，当前唯一 `THESIS_METHOD_READY` 主方法；
+- Ch4：`Calibration-Aware Robust Adaptive CPR (2A)`，当前 `NEEDS_ONE_BOUNDED_PACKAGE`；
+- Ch5：`Low-Complexity Branch-Routed and Fixed-Point Adaptive CPR (2B)`，当前 `NEEDS_ONE_BOUNDED_PACKAGE`。
+
+每个核心技术章都必须保留可命名方法、传统 baseline、deployable action、统一 input-action-output、流程/框图、主实验与消融合同。Ch4/Ch5 不再允许退回“边界章/实现验证章也行”；在 2A/2B 各自通过有界包并登记独立 V### 之前，正式 Ch4/Ch5 WRITE 继续暂停，也不得把 conditional spine 描述为已完成方法。
+
+2C receiver-visible coded calibration 当前定为 `SUPPORTING_ONLY`：prefix-LS/LLR 链主要是修复 hidden-information bug 的 correctness infrastructure；若未来寻找 coded method 必须新 GW。2D risk-aware rate/outage control 定为 `NEEDS_NEW_GW`：现有 9/27、+5.1%–6.7% 为 unauthorized dev-only，不能作正证据。R6 双时间尺度包装在 12 篇样本中 `0/12 REJECT_NOT_OBSERVED`，不映射本项目；粗细估计、顺序分解、流水线和集中训练/分布执行都不能硬称双时标控制。
+
+### 理由
+
+- 旧 34/32 篇口径混合目录、摘要和少量全文，只有单个交织候选形成 baseline→delta→执行合同，且被 0 dB 上界否决；本轮首次用统一模板逐篇核验真实方法动作。
+- 12 篇硕士论文证明，校准变量、阈值/可靠度权重、计算图替换、分支、定点与硬件映射都可以形成硕士方法，但前提是它们进入完整动作链并有 baseline/主结果/边界，不能只是参数或测试。
+- 2A 与 Ch3 的独立性来自“校准 selector 输入”；2B 的独立性来自“改变 branch execution schedule 与 numerical representation”。二者各自已有真实 action 和 baseline，且只差一个边界清楚的验证包。
+- 2C 没有新的 coded action；2D 没有合法正证据；以二者替换 2A/2B 会扩大风险并重演 D023 的换标题不换内核。
+
+### 排除的替代方案
+
+- **Spine S2：Ch3 CCISP / Ch4 2B / Ch5 2C**：Ch5 仍是 bugfix/标准 receiver，不能立章；部署章前置也使论述依赖倒置，排除。
+- **把 P02 `9→11 dB`、Q(8,6)、990/990 identity 单独命名为方法**：分别是参数规则、实现点和正确性门，排除。
+- **以 R6 双时标包装 Fig.2 的两层 gate 或离线/在线流程**：没有两个运行期时间尺度及慢层 action/state/downlink interface，排除。
+- **立即泛搜新 AMC/ML/FSO 方向**：2A/2B 已给出具体 method shape，Phase G 当前不触发，排除。
+
+### 影响范围
+
+- D025 的审计任务完成并由本决策取代；D023/D024 继续保持 superseded。
+- 唯一下一合法动作是另开执行对话，先按 sim-preflight/所属 GW gate 只执行 2A 的 calibration-aware cross-grid bounded package；2A 通过后再为 2B 单独建 formal cost/latency+float-Q package。
+- 本轮不跑实验、不写正式论文正文、不修改 Skill、不触碰四个 `p05_run*.log`；不创建 `missing-method-search-target.md`。
+
+### 来源
+
+S018；T002–T010；用户 2026-08-03 “每章至少都得有方法”主控要求。

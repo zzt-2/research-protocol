@@ -1,5 +1,7 @@
 # [R023] CCISP adaptive CPR 会议稿→学位论文 extension packaging 诊断与包装合同
 
+> **SUPERSEDED / PAUSED — D025→D026 (2026-08-03)：本文件保留为旧包装证据，不再代表最终 thesis contract。当前唯一条件式 spine 见 D026；禁止据此执行 D024 或开始正式 Ch4 写作。**
+
 > 2026-08-03 | 阶段: paper-writing DIAGNOSE/PROPOSE | 状态: 完成（只诊断，不进 WRITE）
 > 关联: thesis-writing 专题 2026-08-03 范围扩展 / campaign-level-thesis-contribution-synthesis / D023 / D024
 

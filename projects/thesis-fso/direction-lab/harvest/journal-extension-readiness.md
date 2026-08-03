@@ -1,5 +1,7 @@
 # Journal Extension Readiness Assessment
 
+> **SUPERSEDED / PAUSED — D025→D026 (2026-08-03)：旧评估保留作证据；当前唯一条件式 spine 与 Ch4/Ch5 方法状态见 D026。**
+
 > 2026-08-03 | 关联: conference-to-thesis-map.md、bounded-package-recommendation.md
 > venue = **N/A**（brief 指定：不查询/假设具体期刊要求）
 > 本文件评估 brief Phase C 的四种包装（A 学位论文 / B journal extension / C engineering note / D 边界论文），给出各包可行性 + **唯一推荐**。

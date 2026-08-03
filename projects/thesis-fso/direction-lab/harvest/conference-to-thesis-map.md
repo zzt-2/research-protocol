@@ -1,5 +1,7 @@
 # Conference-to-Thesis Extension Map
 
+> **SUPERSEDED / PAUSED — D025→D026 (2026-08-03)：保留为旧 dossier，不再代表最终 thesis contract；当前唯一条件式 spine 见 D026。**
+
 > 2026-08-03 | 关联专题: `2026-07-09-thesis-writing`（thesis-writing/thesis-structure owner）| 状态: DIAGNOSE/PROPOSE 产物，本轮不进 WRITE
 > 权威会议稿锚: `projects/simulation/paper/ccisp2026/main.tex` + sections/*（V026/V027/V028 = 当前 5 页权威构建）
 > 配套文件: `asset-claim-matrix.yaml`、`figure-table-plan.md`、`journal-extension-readiness.md`、`bounded-package-recommendation.md`

@@ -1,4 +1,5 @@
 # Asset-Claim Matrix
+# SUPERSEDED / PAUSED — D025→D026 (2026-08-03): retained as historical evidence; current conditional thesis contract is D026.
 # 2026-08-03 | 关联: conference-to-thesis-map.md
 # 每项资产 → 可写 claim ceiling + 口径合规性 + 部署 (READY/RECOMPUTE/SMALL_VAL/NEW_INFRA/INVALIDATED)
 # 本文件是 packaging 的"证据-声称"账本。任何 dossier 引用资产前必须核对此处 ceiling。
