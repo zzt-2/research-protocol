@@ -31,3 +31,13 @@
 - **forbidden**: 进 Step 3.5/4a / 设计方法 / 跑仿真 / 写 Go-NoGo/METHOD_SIGNAL / 改 Skill / 改 4 个 p05_run*.log / WebReader/WebSearch 抓全文 / 绕过访问控制 / push / 把未达 ≥5 CORE 强行判 PASS / 伪造 Step 3 结果。
 - **next_legal_action（本轮完成后）**: 用户决策二选一 — (1) 手动补全文到 ≥5 CORE → Step 2 重判 PASS → 进 Step 3；(2) 确认 4 CORE+Safi-abstract 可接受 → 授权仅推 A/B 两族 Step 3（C 族 BLOCKED）。
 - **status**: STEP2_BLOCKED_BY_COVERAGE_GAP（D003/V004 PASS）— CORE 全文 4 篇（L023/L096/L146/Galijasevic）< 5 门槛；Safi CORE 无全文 PROVISIONAL；L075 DISPUTED；L165/L090 边界；L124 C 族 BLOCKED；Safi/Chang/Sun/L124 补充获取达 3 路径止损仅 Galijasevic 获全文；**未进 Step 3**（按 FR-22 + 执行提示词不伪造）。
+
+## CP004: 2026-08-03 Step 2 blocker 解除（D004）+ GW Step 3 全文精读终态
+
+- **mission**: 同对话内完成 (1) 用仓库现有 Nguyen2024 全文解除 Step 2 blocker；(2) 重判 Step 2；(3) 若五篇 CORE 门成立，立即完成 GW Step 3 全文精读；(4) 到 Step 3 终态停止。
+- **authority**: 用户执行提示词（2026-08-03）Phase A + Phase B + 关键新事实独立验证要求。
+- **worktree**: `.worktrees/rdl-method-production-v2` @ `da180519`（CP003 之后无新 commit）。
+- **allowed**: Nguyen2024 身份独立验证（Crossref API）/ 规范迁移到 canonical DOI 路径（保留 provenance 不声称 OA）/ CORE 重判 / `_step2_acquisition_receipt.json` 更新 / D004 / Step 3 全文精读（fresh-context 子 agent ≤3 并发 ≤15min）/ 直接竞品矩阵 + Q# 四判据 / literature_notes_amc 专属 owner / papers/_read_notes / 治理更新（topic-index/registry/master-state/V005/S004/H002）/ 独立验证 / 单次 commit 不 push。
+- **forbidden**: 进 Step 3.5/4a / 设计方法 / 跑仿真 / 写 Go-NoGo/METHOD_SIGNAL / 改 Skill / 改 4 个 p05_run*.log / WebReader/WebSearch 抓全文 / 绕过访问控制 / 据 abstract 推 Safi/L124 失效机制 / push / 把 Nguyen 等已覆盖宽泛问题重命名为空白（FR-23）/ agent 自行放宽 C 条件。
+- **next_legal_action（本轮完成后）**: **GW Step 3.5 定向补充检索**（glossary 空集处置流程①回扩检索；需新对话 + 用户授权扩检索范围 + 优先获取 Safi/L124 全文）；扩检索后仍无 Q# → 上报用户决策调整 C 或换子方向。
+- **status**: STEP2_PASS_WITH_COHERENT_C_FAMILY_BLOCKED（D004）+ **STEP3_NO_VALID_PROBLEM（S004/V005）** — Nguyen2024（IEEE TAES 2024，Crossref 验证 + SHA256 迁移，非 OA 机构授权）补到 5 CORE 全文（L023/L096/L146/Galijasevic/Nguyen2024）；Step 3 精读 5 CORE+3 边界+2 abstract，直接竞品矩阵确认**无一篇 confirmed 覆盖 coherent+GG+coded+uncertainty 四要素**，5 候选 Q# 无一四判据全过（Q1 迁移/Q2 self-id future work/Q3 机械拼接/Q4 abstract-blocked/Q5 C-blocked）；C 族 L124 仍 BLOCKED；Safi PROVISIONAL；**未进 Step 3.5/4a**。

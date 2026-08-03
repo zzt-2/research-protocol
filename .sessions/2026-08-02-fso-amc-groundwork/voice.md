@@ -46,3 +46,16 @@
 - "不进入 Step 3.5/4a，不跑 MVE，不提出最终算法。"
 - "若无 Q# 全过，终态为 STEP3_NO_VALID_PROBLEM，不包装空白、不设计方法。"
 - "全程一次统一 commit，不 push。"
+
+## 2026-08-03（本轮执行提示词关键约束，verbatim，转述自执行提示词文本；非对话内即时原话，做触发锚）
+
+- "本轮在一个对话内完成：1. 用仓库现有 Nguyen 2024 全文解除 Step 2 blocker；2. 重判 Step 2；3. 若五篇 CORE 门成立，立即完成 GW Step 3 全文精读；4. 到 Step 3 终态停止，不进入 Step 3.5/4a，不设计方法、不跑仿真。" → D004
+- "Nguyen 2024 正式身份：…IEEE Transactions on Aerospace and Electronic Systems, vol. 60, no. 5, 2024, DOI 10.1109/TAES.2024.3403809。"
+- "保留原始 provenance，禁止声称它是公开 OA；正文页脚显示 IEEE Xplore 机构授权下载。" → D004 provenance
+- "L124 全文仍缺，因此必须保留 C_L124_FULLTEXT_BLOCKED。" → D004
+- "Safi 2019 无全文，仅作 PROVISIONAL_DIRECT_COMPETITOR，不计五篇门槛，也不得据摘要推导实现细节。" → D004
+- "全文精读必须委托 fresh-context 子 agent；最多同时 3 个，每个不超过 15 分钟。主线程只负责问题框定、结构化汇总和最终判断。"
+- "L124/Safi 全文缺失时：不允许 coherent-C 族或 Safi 邻近切片通过 novelty closure；不得以题目、摘要或引用描述替代全文事实。" → D004
+- "Step 3 终态只能二选一：STEP3_PASS_WITH_VALID_Q 或 STEP3_NO_VALID_PROBLEM。"
+- "禁止把这些宽泛问题重新命名成空白。"
+- "不修改 Skill；不修改 dormant receiver campaign；不碰四个既有 p05_run*.log；单次统一 commit，不 push。"

@@ -100,3 +100,42 @@
 **触发原话**: 无（用户执行提示词派发主控裁决；用户本轮 voice 见 voice.md "2026-08-02 Phase A+B 执行提示词（纠偏轮）" 段，登记后补）。
 
 **影响**: Step 2 状态从 PASS 修订为 `STEP2_BLOCKED_BY_COVERAGE_GAP`；保守核心集 3 篇（L023/L096/L146）；L075 DISPUTED、L165/L090 边界、L124 C 族 BLOCKED；Phase A 补充获取 5 篇目标（Safi/Chang/Sun/Galijasevic/L124）后重判 Step 2 PASS/BLOCKED；R002/H001 加 supersession banner；V003 独立文件合并进 verifications.md 作 V003 条目。
+
+## D004: Step 2 blocker 解除 — STEP2_PASS_WITH_COHERENT_C_FAMILY_BLOCKED，立即推进 A/B 族 Step 3
+
+> 2026-08-03 | status: active | 取代: D003 的 Step 2 BLOCKED 状态（**不取代 D003 的历史纠偏与 CORE 判据**，D003 第 6 点所列"L124 保留 C_L124_FULLTEXT_BLOCKED / Safi PROVISIONAL / L075 DISPUTED / L165·L090 边界 / 不改写历史 checkpoint"全部继续有效） | 被取代: 无
+
+**决策**: D003 判定 GW Step 2 = `STEP2_BLOCKED_BY_COVERAGE_GAP`（CORE 全文 4 < 5 门槛）。本轮（2026-08-03）用**仓库主工作区已有历史全文** Nguyen 2024 解除该 blocker。Nguyen 2024 身份独立验证 + 规范迁入当前 worktree 的 canonical DOI 路径 + CORE 判定后，**Step 2 终态修订为 `STEP2_PASS_WITH_COHERENT_C_FAMILY_BLOCKED`**，立即推进 A/B 族 GW Step 3 全文精读。具体：
+
+1. **Nguyen 2024 身份独立验证（Crossref）**：
+   - Crossref `/works/10.1109/TAES.2024.3403809` 返回：title="Adaptive Rate/Power Control With ML-Based Channel Prediction for Optical Satellite Systems"；authors=[Tinh V. Nguyen, Hoang D. Le, Anh T. Pham]；container=[IEEE Transactions on Aerospace and Electronic Systems]；volume=60, issue=5, page=7498-7509, published 2024-10, publisher=IEEE, type=journal-article, DOI=10.1109/taes.2024.3403809。
+   - content.md H1 标题与 Crossref title 词重叠 Jaccard = **1.0**（完全匹配）；与执行提示词给的正式身份逐字段一致。
+   - **不是公开 OA**：content.md 页脚明文 "Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on May 30, 2026 at 07:31:59 UTC from IEEE Xplore. Restrictions apply." —— 机构 IEEE Xplore 授权下载，**禁止 redistribute as OA**。metadata.json + receipt 的 `provenance` 字段完整保留此来源，**不声称 OA**。
+2. **迁移到 canonical DOI 路径**：
+   - `papers/downloads/2026-05-30/10535712.pdf` → `papers/doi/10.1109_taes.2024.3403809/source.pdf`
+   - `papers/downloads/2026-05-30/10535712.md` → `papers/doi/10.1109_taes.2024.3403809/content.md`（546 行，格式合格，**不重新转换**）
+   - SHA256 迁移前后完全一致（PDF `b49f5abf…4c95c51`、MD `27f25473…87103f`），迁移动作零字节改动。
+   - 新建 `metadata.json`（含 Crossref 身份、license_note="NOT public OA"、identity_verified_by、core_judgment=CORE）。
+3. **Nguyen 2024 CORE 判定（全文证据，action/condition/deployability）**：
+   - action = 运行时联合自适应 rate（subcarrier K-QAM 星座大小 K∈{4,8,16,32,64,128}）+ TX power（离散 EDFA 增益），per equal-duration channel state，由预测 CSI 驱动；AMP（理想连续功率）+ SAMP（离散功率，Algorithm 1-3）两 scheme。
+   - condition = LEO-satellite-to-UAV FSO 链路 + **弱湍流 lognormal 闪烁（Rytov variance，UAV<1km 论证，**非 Gamma-Gamma**）** + Beckmann 指向误差（非零均值 misalignment，modified-Rayleigh 近似）+ **outdated 反馈 CSI（LEO 反馈时延数 ms > 相干时间 <1ms）**由 ESN 多步信道预测克服。
+   - deployable = 运行时 TX-side AMC controller（QAM 调制器 + EDFA），非 classification/AO/fixed/post-hoc。
+   - objective = min 平均 TX 功率 under requested-rate + targeted-outage + targeted-BER + Pmax 约束，max 能效；key = AM/AMP/SAMP 对照（AM-vs-SAMP ~0.85dB @1Gb/s，SAMP 接近理想 AMP），ESN 在反馈时延下胜 ARMA/LSTM/Ridge。
+   - **关键覆盖缺口（AMC 目标 = 星地 coherent/GG/coded-chain/information uncertainty）**：Nguyen **非 coherent**（subcarrier K-QAM 瞬时 BER `0.2exp(-Pt²h²/(2σn²(K-1)))` = IM/DD-style SQNR-M² 约定，γ∝h²，**非 coherent 检测**）；**非 Gamma-Gamma**（弱 lognormal）；**无 coded chain**（action 是 rate+power，HARQ 仅作 related work [8] 引用，**不进 action**）。→ Nguyen 是 family-A（delayed-CSI/predictive rate+power）的直接竞品，**但与 coherent/GG/coded-chain 目标存在结构性差异**——这些差异是 Step 3 直接竞品矩阵区分它与目标的依据，**不是空白**。
+4. **CORE 全文 5 篇门槛成立**：L023/L096/L146/Galijasevic（D003 已全文 CORE）+ Nguyen2024（本轮）= **5 ≥ 5**。Step 2 PASS（A/B 族）。
+5. **C 族（coherent TX-side AMC）保持 BLOCKED**：L124（DOI 10.1364/oe.595557）全文仍未获（Optica gold-OA 但 Radware bot-block，无 author preprint）。**无 L124 全文时，coherent-C 族不得通过问题/新颖性判断**，C 族 Q# 不得过 novelty closure（沿用 D003 第 4/5 点）。本轮 Step 3 可建立 L124 的 bibliographic-only 条目（标题/DOI/venue/abstract 级），**但不得用 abstract/题目推导全文 coding/CSI/channel/方法空间**（FR-26）。
+6. **Safi 2019 保持 PROVISIONAL_DIRECT_COMPETITOR**：abstract 级 CORE（adaptive coding + power + GG + channel-estimation error）但 IEEE paywall 无全文。**不计 5 篇门槛**，Step 3 只能使用可验证 abstract/bibliographic 信息，**不得据摘要推导实现细节**。
+7. **不改写历史 checkpoint**：D003 的 CORE 判据、CORE 定义、L075 DISPUTED、L165 AO 边界、L090 fixed-STTC 边界、3 路径止损记录、持久 receipt 全部保留；本决策**只取代 D003 的 BLOCKED 终态**，不动 D003 的科学纠偏内容。`_step2_acquisition_receipt.json` 加 `last_updated_at` + Nguyen 条目 + coverage_summary 更新（保留 superseded_verdict 字段不删 BLOCKED 历史）。
+8. **literature notes owner 路径**：旧 `projects/thesis-fso/literature_notes.md`（197KB receiver 产物）**不覆盖**。AMC Step 3 产出写入**专属 owner** `projects/thesis-fso/literature_notes_amc.md`（与 receiver notes 同目录但独立文件，避免覆盖/混淆）。每篇精读同步 `papers/_read_notes/{paper_id}.md`，并在 receiver 项目 `read-log.md`（或新建专题级 read-log）追加一条。
+
+**依据**（证据链，FR-26）:
+- 用户本轮执行提示词（2026-08-03，paste-attachment）§Phase A 第 1-4 步 + "关键新事实必须先独立验证"段（Nguyen 仓库历史全文路径 + 正式身份）。
+- `papers/doi/10.1109_taes.2024.3403809/{source.pdf,content.md,metadata.json}`（本轮迁移创建；content.md 546 行格式合格；SHA256 与主工作区原始一致）。
+- Crossref API `/works/10.1109/TAES.2024.3403809`（身份逐字段匹配，URLError 无）。
+- `_step2_acquisition_receipt.json`（12 papers，coverage_summary.core_with_fulltext=5，step2_verdict=STEP2_PASS_WITH_COHERENT_C_FAMILY_BLOCKED，json parse OK）。
+- D003（被取代的 BLOCKED 状态；CORE 判据与历史纠偏继续有效）。
+- FR-22（GW 流程强制）/ FR-23（增量改进非填补空白）/ FR-26（证据链强制）/ TL-31（先读 decisions+thesis-lessons，本轮已读）/ TL-32（Go/Kill 标准分离，oracle 上界不当 Go 判据）/ TL-33（自欺式跳步防护，身份用 Crossref 独立验证不靠联想）。
+
+**触发原话**: 无（用户执行提示词派发 Phase A 解除 blocker；用户本轮 voice 见 voice.md "2026-08-03 本轮执行提示词关键约束" 段，已 verbatim 登记）。
+
+**影响**: Step 2 终态 `STEP2_PASS_WITH_COHERENT_C_FAMILY_BLOCKED`；A/B 族获权进 GW Step 3 全文精读（本轮 Phase B 立即执行）；C 族保持 BLOCKED；Safi 保持 PROVISIONAL；registry last_updated + master-state §2 AMC 指针 + topic-index GW Progress 表 Step 2 行更新；R002/H001 不再加新 banner（D003 banner 仍保留，D004 是 D003 blocker 的解除而非推翻）。

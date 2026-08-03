@@ -624,7 +624,7 @@ topics:
     title: 星地相干 FSO 编码自适应与 AMC Groundwork
     status: active
     created: "2026-08-02"
-    last_updated: "2026-08-02（D003 主控裁决：Step 2 由 PASS 修订为 STEP2_BLOCKED_BY_COVERAGE_GAP — 6 篇只过文件质量门未做 CORE 判定，逐篇 CORE 重判后全文 CORE 仅 4 篇 L023/L096/L146 + 新获 Galijasevic <5 门槛；L075 DISPUTED、L165 AO/L090 fixed-STTC 边界、L124 C 族 BLOCKED；Safi/Chang/Sun/L124 补充获取达止损，仅 Galijasevic 获全文；未进 Step 3）"
+    last_updated: "2026-08-03（D004 解除 Step 2 blocker：仓库历史全文 Nguyen2024 IEEE TAES 60(5):7498-7509 2024 Crossref 验证+SHA256 迁移补到 5 CORE 全文；Step 2 终态 STEP2_PASS_WITH_COHERENT_C_FAMILY_BLOCKED；完成 GW Step 3 全文精读 5 CORE+3 边界+2 abstract，直接竞品矩阵确认无一篇 confirmed 覆盖 coherent+GG+coded+uncertainty 四要素，5 候选 Q# 无一四判据全过；Step 3 终态 STEP3_NO_VALID_PROBLEM；C 族 L124 仍 BLOCKED；未进 Step 3.5/4a）"
     description: "独立系统层 Groundwork 专题。承接 system 专题 2026-07-20-research-direction-lab-system D020 授权的 AMC_GROUNDWORK_TOPIC_CREATION，从 GW Step 1 重新开始。目标：星地相干 FSO + Gamma-Gamma 湍流 + 真实编码链/信息不确定性背景下找自适应编码调制/链路适配问题作毕业论文潜在第二项贡献。本轮只做 Step 1（两轮检索+逐条语义初筛+候选问题族地图+Step 2 shortlist），不进 Step 2-4a/不下载全文/不设计方法/不跑仿真/不产生 METHOD_SIGNAL。继承 9 条历史 dead-end 边界（ISL AMC prediction/反馈-相干时间/MCS 0.09dB/AMC+CPR 联合设计/交织·PS·N1·coded-chain/P08-R2 工程资产/DA-NDA CPR 现有主贡献/automatic-modulation-classification 假命中/AMC↔Ch4 BER 循环依赖）作先验，不复活。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
@@ -637,3 +637,10 @@ topics:
     produces:
       - .sessions/2026-08-02-fso-amc-groundwork/
       - search-archive/2026-08-02/
+      - projects/thesis-fso/literature_notes_amc.md
+      - papers/doi/10.1109_taes.2024.3403809/
+      - papers/_read_notes/L023_jlt_2023.md
+      - papers/_read_notes/L096_tvt_2022.md
+      - papers/_read_notes/L146_jiot_2025.md
+      - papers/_read_notes/Galijasevic_ojcoms_2024.md
+      - papers/_read_notes/Nguyen2024_taes.md

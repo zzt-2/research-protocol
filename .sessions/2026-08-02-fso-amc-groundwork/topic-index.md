@@ -1,6 +1,6 @@
 # Topic Index: 星地相干 FSO 自适应编码调制 (AMC) Groundwork
 
-> 状态: active | 创建: 2026-08-02 | 最后更新: 2026-08-02（D003 主控裁决：Step 2 由 PASS 修订为 STEP2_BLOCKED_BY_COVERAGE_GAP — 保守核心集缩窄到 L023/L096/L146 + 新获 Galijasevic=4 篇 CORE 全文 <5 门槛；L075 DISPUTED、L165/L090 边界、L124 C 族 BLOCKED；补充获取 Safi/Chang/Sun/L124 达止损，仅 Galijasevic 获全文；**未进 Step 3**）
+> 状态: active | 创建: 2026-08-02 | 最后更新: 2026-08-03（D004 解除 Step 2 blocker：用仓库历史全文 Nguyen2024（IEEE TAES 2024，Crossref 独立验证 + SHA256 迁移）补到 **5 CORE 全文**；Step 2 终态修订 STEP2_PASS_WITH_COHERENT_C_FAMILY_BLOCKED；立即完成 GW Step 3 全文精读（5 CORE + 3 边界 + 2 abstract）；**Step 3 终态 STEP3_NO_VALID_PROBLEM**（5 候选 Q# 无一四判据全过；coherent+GG+coded-chain 四要素无 confirmed 同时覆盖的文献；Safi/L124 全文 BLOCKED；未进 Step 3.5/4a））
 
 ## 专题信息
 
@@ -34,6 +34,7 @@
 
 - **2026-08-02 D002**：GW Step 1 从原授权的"Step 1 执行完成即停"修订为"Step 1 限定完整性修复后进入 Step 2 acquisition"。变更原因：用户 Phase A 执行提示词指示先做 Step 1 科学完整性限定修复（计数口径 / title-abstract identity / 候选族地图 / provenance receipt），修复 PASS 后**立即继续** Phase B Step 2 全文获取（同一对话内完成）。原始目标不变（找 AMC/链路适配问题作毕业第二贡献），仅把 Step 1→Step 2 的推进在同一对话内打通，并补做 Step 1 完整性修复。
 - **2026-08-02 D003**：Step 2 覆盖纠偏——D002/R002/H001 宣称的"Step 2 PASS / 6 篇覆盖三族"不成立。主控重判：6 篇只过文件/转换质量门，未做 CORE 判定；逐篇 CORE 重判后保守核心集缩窄到 L023/L096/L146 3 篇，L075 改标 SEMANTICALLY_DISPUTED_PENDING_FULL_READ，L165（AO）/L090（fixed STTC）不计核心，L124（C 族）保持 C_L124_FULLTEXT_BLOCKED。本轮补充获取 Safi/Chang/Sun/Galijasevic/L124，仅 Galijasevic 获全文（NSF PAR），其余达 3 路径止损。**最终 CORE 全文 = 4 篇（L023/L096/L146/Galijasevic）< 5 门槛 → Step 2 终态 STEP2_BLOCKED_BY_COVERAGE_GAP，未进 Step 3**。范围不变（仍在 GW Step 2 acquisition 内），仅纠正 Step 2 PASS/BLOCKED 判定与 CORE 计数口径。
+- **2026-08-03 D004**：Step 2 blocker 解除——用仓库主工作区已有历史全文 Nguyen2024（IEEE TAES 60(5):7498-7509, 2024，DOI 10.1109/TAES.2024.3403809，Crossref 独立验证身份 + SHA256 迁移一致，**非公开 OA** = 机构 IEEE Xplore 授权）规范迁入 worktree canonical DOI 路径 `papers/doi/10.1109_taes.2024.3403809/`；CORE 判定 = family-A（delayed-CSI + ESN 预测 + 联合 rate/power SAMP，IM/DD K-QAM γ∝h² + lognormal 弱湍流 + Beckmann pointing + sat-UAV）。**CORE 全文 4→5 ≥ 5 门槛**。Step 2 终态修订 **STEP2_PASS_WITH_COHERENT_C_FAMILY_BLOCKED**（D003 历史 BLOCKED 保留作 superseded_verdict；C 族 L124 仍 C_L124_FULLTEXT_BLOCKED；Safi 仍 PROVISIONAL_direct_competitor）。立即推进 GW Step 3 全文精读。范围不变（A/B 族 Step 3 + 边界/abstract 核查，不进 3.5/4a）。
 
 ## 已确认结论
 
@@ -77,8 +78,8 @@
 | Step | 状态 | 完成日期 | commit | 关键产出 | 下游门控 |
 | ---- | ---- | -------- | ------ | -------- | -------- |
 | 1 search | ✅（ACCEPTED_AFTER_BOUNDED_INTEGRITY_REPAIR, D002/V002） | 2026-08-02 | （本轮统一 commit，SHA 见 H001） | search-archive/2026-08-02/（**17 unique queries × 4 data channels = 209 unique**，非"16×5"；published 115/209=55.0%）+ R001 候选问题族地图（**修订后 3 族 A/B/C**，原 F1-F4 合并）+ Step 2 shortlist 12 篇 + `_step1_receipt.json`（force-add provenance）+ 4 alias collision query（0 直接竞品） | — |
-| 2 acquire | 🔴（STEP2_BLOCKED_BY_COVERAGE_GAP, D003）— **不是 PASS**：D002 原判 PASS 经主控复核不成立（6 篇只过文件质量门，未做 CORE 判定） | 2026-08-02 | （本轮统一 commit） | **CORE 全文仅 4 篇 < 5 门槛**：L023/L096/L146（已有）+ Galijasevic（本轮新获 NSF PAR）= 4 CORE；Safi2019 CORE 但无全文（IEEE paywall，PROVISIONAL abstract-only）；L075 DISPUTED（classification）；L165（AO）/L090（fixed STTC）边界不计核心；L124/Chang/Sun 三篇达 3 路径止损未获（Optica/IEEE gold-OA 但 bot-block）+ `_step2_acquisition_receipt.json`（持久 receipt） | 进 Step 3 前必 ✅（≥5 CORE 全文齐备；当前 4 < 5，BLOCKED） |
-| 3 read | ⬜ | | | literature_notes（AMC 专属） | 进 Step 3.5/4a 前必 ✅ |
+| 2 acquire | ✅（**STEP2_PASS_WITH_COHERENT_C_FAMILY_BLOCKED, D004/V005**）— 用仓库历史全文 Nguyen2024（IEEE TAES 2024，Crossref 验证 + SHA256 迁移，**非 OA** 机构授权）补到 **5 CORE 全文** | 2026-08-03 | 本轮统一 commit | **5 CORE 全文 ≥ 5 门槛**：L023/L096/L146/Galijasevic（D003）+ Nguyen2024（D004 本轮迁入）= 5 CORE；C 族 L124 仍 BLOCKED；Safi2019 PROVISIONAL abstract-only（不计门槛）；L075 classification（D003）；L165 AO / L090 fixed-STTC 边界；+ `_step2_acquisition_receipt.json`（12 篇，step2_verdict 更新，superseded_verdict 保留 BLOCKED 历史） | 进 Step 3 前必 ✅（5 ≥ 5，A/B 族 PASS；C 族 BLOCKED） |
+| 3 read | ✅ **STEP3_NO_VALID_PROBLEM（S004/V005）** | 2026-08-03 | 本轮统一 commit | `projects/thesis-fso/literature_notes_amc.md`（专属 owner，不覆盖 receiver literature_notes）+ 5 `papers/_read_notes/`；5 篇 CORE 全文精读（fresh-context 子 agent，14+ 字段 + 7 结构化子表 + 问题提取 + 四判据）+ 3 边界（L075=classification/L165=AO/L090=fixed-STTC）+ 2 abstract-only（Safi/L124）；直接竞品矩阵 + 综合 + 5 候选 Q# **无一四判据全过** → 诚实终止 | 进 Step 3.5 前必 ✅（本步完成；Step 3.5 是下一轮合法动作） |
 | 3.5 supplement | ⬜ | | | 补充检索 + 更新 notes | 进 Step 4a 前必 ✅ |
 | 4a feasibility | ⬜ | | | feasibility_report.md | 进 Step 5 前必 ✅ |
 | 5+ | ⬜ | | | — | — |
@@ -88,33 +89,38 @@
 - **S001**：专题初始化 + GW Step 1 执行完成。
 - **S002**：Step 1 限定完整性修复（Phase A）+ Step 2 acquisition（Phase B）。
 - **S003**：Step 2 覆盖纠偏轮（D003 主控裁决）— 补充获取 + CORE 重判 + 治理纠偏；终态 STEP2_BLOCKED_BY_COVERAGE_GAP（4 CORE 全文 < 5）。
+- **S004**：Step 2 blocker 解除（D004）+ GW Step 3 全文精读 — Nguyen2024 迁移补到 5 CORE；Step 3 精读 5 CORE+3 边界+2 abstract；终态 STEP3_NO_VALID_PROBLEM（5 候选 Q# 无一四判据全过）。
 - **D001**：新系统层范围与旧轴边界。
 - **D002**：Step 1 科学完整性限定修复 — 候选族 4→3（A/B/C）+ identity 审计 + provenance receipt（新建，修订 R001 口径不撤 Step 1）。
 - **D003**：Step 2 覆盖纠偏 — 取代 D002/R002/H001 的"Step 2 PASS / 6 篇覆盖三族"判定，修订为 STEP2_BLOCKED_BY_COVERAGE_GAP；保守核心集 3→4（含本轮新获 Galijasevic）；L075 DISPUTED、L165/L090 边界、L124 C 族 BLOCKED。
+- **D004**：Step 2 blocker 解除 — Nguyen2024（IEEE TAES 2024，Crossref 验证 + SHA256 迁移，非 OA 机构授权）补到 5 CORE 全文；Step 2 终态 STEP2_PASS_WITH_COHERENT_C_FAMILY_BLOCKED；立即推 Step 3（取代 D003 的 BLOCKED 状态，保留 D003 历史纠偏与 C/Safi/L075/L165/L090 边界）。
 - **R001**：AMC Step 1 landscape（209 条逐条审查 + 原始 F1-F4 候选问题族 + Step 2 shortlist 12 篇 + 8 问诚实结论；**candidate-family 计数与 source 口径已被 D002 修订；§4 F1-F4 headers 待加 D002 banner，V003 Issue 1**）。
 - **R002**：Step 2 acquisition 覆盖面报告（Phase B 产出，**已被 D003 supersede，顶部加 banner**）。
 - **V001**：Step 1 原 12 项 checklist 独立验证（PASS 12/12；漏审 identity + source provenance，V002 已闭合）。
 - **V002**：Step 1 限定完整性修复验证（Phase A 修订 PASS）。
 - **V003**：独立 fresh-context 终审（PASS 10/12 + 2 PARTIAL；2 PARTIAL = R001 body 未加 D002 banner + receipt 未 force-add；本轮合并入 verifications.md，独立 V003 文件删除）。
+- **V005**：D004 + Step 3 终态独立验证（PASS；Nguyen 迁移 SHA 一致 + Crossref 身份匹配 + 5 CORE 精读完整 + 边界仲裁证据 + Safi/L124 全文缺失边界遵守 + 直接竞品矩阵 + Q# 四判据诚实 + 未进 3.5/4a）。
 - **H001**：Step 2 → Step 3 交接（**已被 D003 supersede，顶部加 banner**；交接前提"Step 2 PASS"不成立）。
+- **H002**：Step 3 终态 STEP3_NO_VALID_PROBLEM → Step 3.5 定向补充检索交接。
 
 ## 当前位置
 
-Phase A（Step 1 限定修复）PASS（D002/V002）。**Phase B（Step 2 acquisition）经 D003 主控复核修订为 STEP2_BLOCKED_BY_COVERAGE_GAP**：D002 原判 PASS 不成立——6 篇只过文件/转换质量门，未做 CORE 判定。逐篇 CORE 重判（3 个子 agent 全文验证）：CORE 全文仅 **4 篇**（L023/L096/L146 + 本轮新获 Galijasevic）< 5 门槛。Safi2019 是 CORE 但无全文（IEEE paywall，PROVISIONAL abstract-only）。L075 DISPUTED（实为 modulation classification，dead-end#8 族，不计核心）。L165（AO 层）/L090（fixed STTC，"adaptive" 名义）边界不计核心。补充获取 Safi/Chang/Sun/L124 达 3 路径止损（Optica/IEEE gold-OA 但 bot-block，仅 Galijasevic NSF PAR 获全文）。**未进 Step 3/精读/方法设计/仿真**。详见 S003 + `_step2_acquisition_receipt.json`。
+**Phase A（Step 2 blocker 解除，D004）+ Phase B（GW Step 3 全文精读）均完成**。用仓库历史全文 Nguyen2024（IEEE TAES 2024，Crossref 独立验证 + SHA256 迁移，**非公开 OA** 机构 IEEE Xplore 授权）规范迁入 canonical DOI 路径，CORE 全文 4→5 ≥ 5 门槛，Step 2 终态 STEP2_PASS_WITH_COHERENT_C_FAMILY_BLOCKED（A/B 族 PASS，C 族 L124 仍 BLOCKED，Safi PROVISIONAL abstract-only）。立即完成 GW Step 3：5 篇 CORE 全文精读（fresh-context 子 agent，14+ 字段 + 7 结构化子表 + 问题提取 + 四判据）+ 3 边界（L075=classification / L165=AO / L090=fixed-STTC，全部 confirmed 不计核心）+ 2 abstract-only（Safi/L124）。**直接竞品矩阵确认：无一篇 confirmed 同时覆盖 coherent + GG + coded-chain + info-uncertainty 四要素**（每篇缺 2-3 维度）。5 候选 Q# 逐条过四判据：Q1（Nguyen 迁移）/Q2（L096 self-id future work）/Q3（机械拼接待证假设，brief 明示 FAIL）/Q4（Safi abstract-blocked）/Q5（L124 C-blocked）**无一全过**。**Step 3 终态 = STEP3_NO_VALID_PROBLEM**（诚实终止问题提取）。详见 S004 + D004 + V005 + `literature_notes_amc.md`。
 
 ## 未决项
 
-- **Step 2 blocker（核心）**：CORE 全文 4 < 5 门槛。需用户手动获取 Safi（IEEE paywall，无 OA）和/或 Chang/Sun/L124（Optica/IEEE gold-OA，浏览器可下）补到 ≥5 CORE 全文；**或**确认"4 CORE 全文 + Safi abstract-only"覆盖面可接受，授权仅推进 A/B 两族 Step 3（C 族保持 BLOCKED）。
-- L124 全文（coding/CSI/channel/scenario）——用户手动获取 DOI 10.1364/oe.595557（C 族身份闭合关键，无全文则 C 族不得通过问题/新颖性判断）。
-- L075 语义仲裁（classification vs AMC）——Step 3 待办（若进 Step 3）。
-- 中文检索 cookie/IP（L050/L206）——校园网可用时重试（不阻塞 A/B 族）。
-- R001 §4 F1-F4 headers 加 D002 banner（V003 Issue 1，本轮治理纠偏已记，body 修订待做）。
-- 候选族最终数（2-3）待 Step 3/4a 后定。
+- **Step 3.5（定向补充检索）= 下一轮合法动作**（glossary"候选全被筛掉时"流程①回扩检索）。需补: (a) coherent FSO + GG + AMC 直接竞品（确认 L124 外是否有）；(b) coherent 检测下 CSI 反馈/预测 AMC；(c) GG 中/强湍流 AMC headroom 分析；(d) Nguyen[9/12/16]/L096[12/13/15]/Galijasevic[8/20] 共同引用基础文献延伸。
+- **Safi + L124 全文获取（用户手动）** 是关键身份闭合：Safi（IEEE paywall，DOI 10.1109/tvt.2019.2916843）+ L124（Optica gold-OA bot-block，DOI 10.1364/oe.595557）。二者全文可能改变 Q4/Q5 判定。
+- **C 条件是否过窄待用户决策**：coherent + GG + coded-chain + sat-ground + info-uncertainty 五要素同时锁死可能物理上不可行（LEO 反馈时延>相干时间 + coherent CSI 更高维 + GG 动态范围大）。扩检索后仍无 Q# → 上报用户决定调整 C 或换子方向（**禁止 agent 自行放宽 C**，glossary）。
+- 中文检索 cookie/IP（L050/L206）——校园网可用时重试（不阻塞）。
+- R001 §4 F1-F4 banner 已闭合（V003 Issue 1）。
 
 ## 下一合法动作
 
-**Step 2 BLOCKED，无权进 Step 3**。唯一合法动作 = 用户决策二选一：
-1. **手动补全文**：用户浏览器获取 Safi（IEEE）/ Chang（JPHOT gold-OA）/ Sun（Optica gold-OA）/ L124（Optica gold-OA）中至少 1 篇 CORE 全文 → 放入对应 `papers/doi/{doi}/source.pdf` 后 `bash tools/convert` → Step 2 重判 PASS（≥5 CORE 全文）→ 进 Step 3。
-2. **确认当前覆盖面**：用户确认"4 CORE 全文（L023/L096/L146/Galijasevic）+ Safi abstract-only"可接受 → 授权仅推进 **A/B 两族** Step 3（C 族 coherent 保持 BLOCKED，不判问题/新颖性）。
+**Step 3 终态 STEP3_NO_VALID_PROBLEM，本轮到此停止**（用户执行提示词"到 Step 3 终态停止"）。下一轮合法动作 = **GW Step 3.5 定向补充检索**（glossary 流程；需新对话 + 用户授权扩检索范围 + 优先获取 Safi/L124 全文）。
 
-无论哪条，进 Step 3 前必读 `stages/gw-read.md`（FR-22）。**禁止直接进入 Step 3.5/4a/方法设计/仿真/MVE**（FR-22 硬门控；Step 3 + Step 4a 不可跳）。
+**禁止**（FR-22 硬门控）：
+- 禁进 Step 4a/MVE/方法设计/仿真（无 Q# 全过）。
+- 禁 agent 自行放宽 C 条件（coherent+GG+coded-chain+info-uncertainty）—— 那是跨阶段决策，须用户/导师定。
+- 禁把 Nguyen/L096/Galijasevic/Safi 已覆盖的宽泛问题（rate/power、HARQ-rate、coding-rate+prediction）重新命名为空白（FR-23）。
+- 禁据 abstract 推导 Safi/L124 的失效机制（D003）。

@@ -1,9 +1,11 @@
 {
   "schema": "amc_step2_acquisition_receipt_v1",
   "generated_at": "2026-08-02T23:21:09.975856+08:00",
+  "last_updated_at": "2026-08-03T09:20:00+08:00",
+  "last_update_reason": "D004 / S004 unblock: Nguyen2024 migrated from pre-existing repository full text (papers/downloads/2026-05-30/10535712.{pdf,md}) into canonical DOI path; identity independently verified via Crossref; CORE re-judged. coverage_summary step2_verdict updated STEP2_BLOCKED -> STEP2_PASS_WITH_COHERENT_C_FAMILY_BLOCKED.",
   "topic": "2026-08-02-fso-amc-groundwork",
-  "purpose": "Persistent acquisition receipt for GW Step 2 Phase A coverage-correction round (D003). Survives worktree deletion; reconstructs source identity + CORE judgment even when PDFs/content are gitignored.",
-  "governing_decision": "D003 (STEP2_BLOCKED_BY_COVERAGE_GAP)",
+  "purpose": "Persistent acquisition receipt for GW Step 2 acquisition. Survives worktree deletion; reconstructs source identity + CORE judgment even when PDFs/content are gitignored.",
+  "governing_decision": "D004 (STEP2_PASS_WITH_COHERENT_C_FAMILY_BLOCKED), supersedes D003 STEP2_BLOCKED_BY_COVERAGE_GAP",
   "core_definition": "CORE = runtime-deployable AMC action (modulation/coding/rate/power/HARQ) AND FSO/CSI-uncertainty/turbulence/feedback-delay condition AND NOT pure-classification/AO/fixed/post-hoc AND can enter AMC M-C-A or be a direct comparator. Full text required to count toward the >=5 threshold.",
   "papers": [
     {
@@ -69,6 +71,35 @@
       "core_judgment": "CORE",
       "source": "action=runtime TX dynamic LDPC code-rate selection(PBRL, 8/9..8/80, k=8192, 16 rates ~0.5dB spacing) from threshold table for FER<1e-6 fed back to TX; condition=FSO lognormal turbulence, 10ms coherence(LEO PSI=10), FEEDBACK DELAY 1-4ms with zero/linear/quadratic CSI predictors; deployable real runtime link-adaptation; key=linear best <=2ms(98-101% zero-delay throughput), quadratic best 3-4ms;",
       "content_lines": 481
+    },
+    {
+      "L": "Nguyen2024",
+      "identity": {
+        "title": "Adaptive Rate/Power Control With ML-Based Channel Prediction for Optical Satellite Systems",
+        "doi": "10.1109/TAES.2024.3403809",
+        "venue": "IEEE Transactions on Aerospace and Electronic Systems 60(5):7498-7509, 2024",
+        "authors": ["Tinh V. Nguyen", "Hoang D. Le", "Anh T. Pham"],
+        "family": "A"
+      },
+      "source_path": "papers/doi/10.1109_taes.2024.3403809",
+      "content_path": "D:\\code\\study\\research-protocol\\.worktrees\\rdl-method-production-v2\\papers\\doi\\10.1109_taes.2024.3403809\\content.md",
+      "source_pdf_sha256": "b49f5abf8d37dd16d92c6cc046e1dfe106d500fe8cbafce061abf0faf4c95c51",
+      "content_md_sha256": "27f25473f4ef098614dfe45fd9729d239a6edf0b958fa53f3ee0a82a5787103f",
+      "acquired_at": "2026-08-03T09:20:00+08:00",
+      "acquisition_provenance": {
+        "mode": "migration_from_preexisting_repository_fulltext",
+        "original_path_pdf": "papers/downloads/2026-05-30/10535712.pdf",
+        "original_path_md": "papers/downloads/2026-05-30/10535712.md",
+        "original_download_timestamp": "2026-05-30T07:31:59Z",
+        "original_license": "Institutional IEEE Xplore licensed use (NOT public OA): content.md footer reads 'Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on May 30, 2026 at 07:31:59 UTC from IEEE Xplore. Restrictions apply.'",
+        "identity_verification": "Crossref API /works/10.1109/TAES.2024.3403809 — title/authors/venue/vol(60)/issue(5)/pages(7498-7509)/year(2024-10)/publisher(IEEE) EXACT match; content.md H1 title Jaccard overlap with Crossref title = 1.0; migration SHA256 identical to original (PDF+MD)."
+      },
+      "core": "CORE",
+      "core_judgment": "CORE",
+      "source": "action=runtime joint adaptive rate (subcarrier K-QAM constellation size K in {4,8,16,32,64,128}) + TX power (discrete EDFA gains) per equal-duration channel state, driven by predicted CSI; AMP (ideal continuous power) and SAMP (discrete power, Algorithm 1-3) schemes; condition=LEO-satellite-to-UAV FSO link, weak-turbulence LOGNORMAL scintillation (Rytov variance, justified by UAV<1km altitude, NOT Gamma-Gamma), Beckmann pointing error (nonzero-mean misalignment, modified-Rayleigh approx), OUTDATED feedback CSI (LEO feedback delay several ms > coherence time <1ms) overcome by ESN multi-step channel prediction; deployable runtime TX-side AMC controller (QAM modulator + EDFA); objective=min avg TX power under requested-rate + targeted-outage + targeted-BER + Pmax constraints, maximize energy efficiency; key=AM/AMP/SAMP comparison, AM-vs-SAMP ~0.85dB power gap at 1Gb/s, SAMP close to ideal AMP, ESN beats ARMA/LSTM/Ridge in prediction accuracy+complexity at feedback delay; CSI=ESN multi-step prediction from historical channel gains fed back to TX; detection=subcarrier K-QAM with instantaneous BER=0.2exp(-Pt^2 h^2/(2 sigma_n^2 (K-1))) [IM/DD-style SQNR-M^2 convention, NOT coherent detection]; NO coding/HARQ chain in the action (HARQ only cited as related work [8]); turbulence=weak (sigma_R^2 small).",
+      "content_lines": 546,
+      "counted_toward_5_threshold": true,
+      "note": "Existing repository full text (not a new acquisition). Identity independently verified (Crossref + SHA). Family-A delayed-CSI/predictive rate+power direct competitor. Coverage gaps vs AMC target: NOT coherent (IM/DD-style K-QAM), NOT Gamma-Gamma (weak lognormal), NO coded chain, NO HARQ action — these gaps are the structural basis for distinguishing it from the coherent/GG/coded-chain target in the Step-3 competitor matrix."
     },
     {
       "L": "Safi2019",
@@ -206,15 +237,16 @@
     }
   ],
   "coverage_summary": {
-    "core_with_fulltext": 4,
+    "core_with_fulltext": 5,
     "core_with_fulltext_list": [
       "L023",
       "L096",
       "L146",
-      "Galijasevic"
+      "Galijasevic",
+      "Nguyen2024"
     ],
     "core_no_fulltext": [
-      "Safi2019 (PROVISIONAL, IEEE paywall)"
+      "Safi2019 (PROVISIONAL, IEEE paywall) — CORE semantically but no full text; not counted toward threshold; Step-3 may use abstract+verified bibliography only"
     ],
     "disputed": [
       "L075 (classification artifact)"
@@ -226,10 +258,11 @@
     "unacquired_stoploss": [
       "Chang2025",
       "Sun2018",
-      "L124"
+      "L124 (C-family identity-closure key; remains C_L124_FULLTEXT_BLOCKED)"
     ],
     "threshold": 5,
-    "step2_verdict": "STEP2_BLOCKED_BY_COVERAGE_GAP (4 CORE fulltext < 5 threshold; Safi CORE but no fulltext; L075 DISPUTED not counted; 3 unacquired)",
-    "legal_next_action": "Per D003 + brief: report Step 2 blocker honestly; do NOT fabricate Step 3. User must manually acquire Safi(IEEE) and/or Chang/Sun/L124 (Optica/IEEE OA via browser) to reach >=5 CORE fulltext, OR confirm 4-CORE-fulltext + Safi-abstract coverage is acceptable to proceed with A/B families only (C family stays BLOCKED pending L124 fulltext)."
+    "step2_verdict": "STEP2_PASS_WITH_COHERENT_C_FAMILY_BLOCKED (D004): 5 CORE fulltext >= 5 threshold (L023/L096/L146/Galijasevic/Nguyen2024). Nguyen2024 supplied from pre-existing repository institutional full text (NOT public OA), identity verified via Crossref + SHA256. C-family (coherent TX-side AMC) stays BLOCKED pending L124 full text (Optica bot-block); C-family Q# must NOT pass novelty closure without L124. Safi2019 = CORE_PROVISIONAL_abstract_only (usable as bibliographic direct competitor, NOT for deriving implementation details).",
+    "superseded_verdict": "STEP2_BLOCKED_BY_COVERAGE_GAP (D003) — superseded by D004 on 2026-08-03 after Nguyen2024 migration closed the 4->5 CORE gap.",
+    "legal_next_action": "Per D004 + brief: Step 2 PASS for families A/B; proceed to GW Step 3 full-text close read of the 5 CORE papers (+ Safi2019 abstract-only, + L075 semantic arbitration, + L165/L090 boundary, + L124 bibliographic-only). Do NOT enter Step 3.5/4a/method design/simulation. C-family remains BLOCKED until L124 full text is obtained."
   }
 }

@@ -243,3 +243,30 @@ V001（12/12 PASS）仍有效，但其判定基于 R001 的表面计数，**漏�
 10. **[PASS]** 4 p05_run*.log 未动。
 
 **结论**：D003 主控裁决证据链完整，Step 2 STEP2_BLOCKED_BY_COVERAGE_GAP 判定成立。CORE 全文 4 < 5，未伪造 Step 3 结果。
+
+---
+
+## V005 — D004 Step 2 解除 blocker + Step 3 终态独立验证（2026-08-03）
+
+> 关联：D004 / S004 / `_step2_acquisition_receipt.json` / `literature_notes_amc.md` / 5 read-notes。独立 fresh-context verifier（producer 之外）复核 D004 + Step 3 终态。
+> 复算环境：worktree @ 本轮 commit（HEAD da180519 + 本轮改动），python `~/.venvs/torch/Scripts/python.exe`。
+> 总体判定：**PASS**（D004 证据链完整，Step 2 PASS 成立；Step 3 STEP3_NO_VALID_PROBLEM 诚实终态成立）。
+
+### 逐项
+
+1. **[PASS]** Nguyen 2024 迁移完整性：`papers/doi/10.1109_taes.2024.3403809/source.pdf` SHA256 = `b49f5abf8d37dd16d92c6cc046e1dfe106d500fe8cbafce061abf0faf4c95c51`，content.md SHA256 = `27f25473f4ef098614dfe45fd9729d239a6edf0b958fa53f3ee0a82a5787103f`，与主工作区原始 `papers/downloads/2026-05-30/10535712.{pdf,md}` SHA256 完全一致 → 迁移零字节改动。
+2. **[PASS]** Nguyen 2024 身份独立验证：Crossref API `/works/10.1109/TAES.2024.3403809` 返回 title/authors/venue(IEEE TAES)/vol(60)/issue(5)/pages(7498-7509)/year(2024-10) 与 content.md H1 + 执行提示词逐字段匹配；content.md 页脚含 "Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY... IEEE Xplore... Restrictions apply" → 确认**非公开 OA**（机构授权），metadata.json/receipt 未误称 OA。
+3. **[PASS]** Nguyen 2024 CORE 判定（全文证据）：subcarrier K-QAM 星座 K∈{4,8,16,32,64,128} + EDFA 离散功率（content.md:73,233,317）= 运行时 TX-side AMC action；ESN 多步预测克服反馈时延（content.md:133-175,381）；弱 lognormal 湍流 + Beckmann pointing（content.md:93,109-115）；非 classification/AO/fixed/post-hoc → CORE 成立。关键缺口（IM/DD γ∝h² / 非 GG / 无 coded chain）在 receipt + read-note 正确标注。
+4. **[PASS]** CORE 全文 5 ≥ 5 门槛：L023/L096/L146/Galijasevic（D003 已验）+ Nguyen2024（D004）= 5。`_step2_acquisition_receipt.json` coverage_summary.core_with_fulltext=5, core_with_fulltext_list 含 Nguyen2024, step2_verdict=STEP2_PASS_WITH_COHERENT_C_FAMILY_BLOCKED, superseded_verdict 保留 D003 BLOCKED 历史。json parse OK。
+5. **[PASS]** C 族 BLOCKED 边界保持：L124（C_L124_FULLTEXT_BLOCKED）+ Safi（PROVISIONAL_direct_competitor，不计门槛）+ L075（classification）+ L165（AO）+ L090（fixed-STTC）判定与 D003 一致，未被 D004 改写。
+6. **[PASS]** Step 3 精读完整性：5 `papers/_read_notes/{L023,L096,L146,Galijasevic,Nguyen2024}_*.md` 均存在，每篇含 M-C-A + 7 结构化子表 + AMC 关键语义字段 + 与目标重合/缺失 + 四判据 + file:line 证据；`literature_notes_amc.md` 含精读条目 + 直接竞品矩阵 + 综合 + Q# 表 + 写作架构 + 实验完备性对标。title self-check 全过（Jaccard ≥0.38，L096 dispatched 短形式致 0.50 临界但语义 PASS）。
+7. **[PASS]** 边界/语义仲裁证据：L075=classification（content.md:15,175,211,217,337 confusion-matrix + softmax + true-label）/ L165=AO（content.md:11,82,86,99,180 SH+DM 1.5kHz）/ L090=fixed-STTC（content.md:9,119,163,165 ξ-param design-time）证据链完整。
+8. **[PASS]** Safi/L124 全文缺失边界遵守：二者 read-note 标 PROVISIONAL/C_FAMILY_BIBLIOGRAPHIC，**未据 abstract 推导失效机制**；Q4/Q5 因 abstract-blocked / C-blocked 判未过，证据链符合 D003 约束。
+9. **[PASS]** 直接竞品矩阵：5 CORE + Safi 6 行 × 11 列，每格 ✓/✗/△ + 依据；**无一篇 confirmed 同时覆盖 coherent+GG+coded+uncertainty 四要素**结论有矩阵支撑（每篇至少 2 ✗）。
+10. **[PASS]** Q# 四判据诚实：5 候选 Q# 逐条标四判据，**无一全过**。Q1（迁移非失效）/Q2（self-id future work）/Q3（机械拼接待证假设，brief FAIL）/Q4（abstract-blocked）/Q5（C-blocked）判定理由与 glossary 四判据 + brief 一致。**Step 3 终态 STEP3_NO_VALID_PROBLEM 成立**（诚实终止，不包装空白）。
+11. **[PASS]** 未进 Step 3.5/4a/MVE/方法/仿真：literature_notes_amc.md §7 明确终态 + 下一步合法动作 = Step 3.5（下一轮）；无 METHOD_SIGNAL/Go-NoGo/算法设计/仿真代码。
+12. **[PASS]** literature notes owner 不冲突：`literature_notes_amc.md`（新建专属 owner）与 receiver `literature_notes.md`（197KB 未改）独立文件，D004 §8 登记 adapter 路径。
+13. **[PASS]** 治理合规：D004 含依据字段 + 触发原话（voice.md 已登记 2026-08-03 verbatim）；topic-index GW Progress 表 Step 2 ✅/Step 3 ✅ + 范围变更 D004 + 当前位置/未决项/下一合法动作改写；registry/master-state 待同步（producer 进行中）。
+14. **待复核**：`git diff --check` + 4 p05_run*.log 未动 + Skill 未改 — 由 commit 前最终核查。
+
+**结论**：D004 证据链完整，Step 2 STEP2_PASS_WITH_COHERENT_C_FAMILY_BLOCKED 成立；Step 3 STEP3_NO_VALID_PROBLEM 诚实终态成立。Nguyen 迁移 + Crossref 验证 + 5 CORE 精读 + 直接竞品矩阵 + Q# 四判据全部有 file:line / SHA / API 证据支撑。Safi/L124 全文缺失边界严格遵守。未伪造 Step 3.5/4a/方法/仿真。
