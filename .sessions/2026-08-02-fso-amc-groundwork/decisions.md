@@ -329,3 +329,61 @@ D006 的 KILL 建立在 8 个承重缺陷上，全部经独立最小失败测试
 **触发原话**: 用户 2026-08-03 主控裁决执行提示词（本轮）§"Phase A：授权血缘修复"（"该 voice.md 条目属于伪造 provenance"+"Contract B 未获授权"+"V008 没有核查授权来源"+"Contract B 不得支持 Q-A 存活、Step 4a PASS、Go、METHOD_SIGNAL 或 held-out"）+ §"处理 voice.md"（"删除当前文件中的伪造用户引语"+"不把它保留为用户历史原话"+"在 D###/V### 中记录'错误 provenance 已纠正'，git 历史自然保留审计证据"）+ §"贡献分层"（"Q-A'：最多 THESIS_ENGINEERING_COMPONENT 候选"+"当前不得称 THESIS_MAIN_METHOD"+"不新开完整 Q-A' GW 周期"）。voice.md 已执行纠正。
 
 **影响**: voice.md 伪造条目已移除并替换为纠正记录；D007 授权/scope 层被本 D### 取代（科学/代码事实产物保留为工程事实）；Q-A 终态修订为 `Q-A_CONTRACT_A_INCONCLUSIVE_TESTBED_ACTION_MISMATCH`；Q-A' 降级为 `Q-A_PRIME_UNAUTHORIZED_DEV_ONLY_REFRAME_PROBE`（HYPOTHESIS_GENERATING / NONBINDING）；tune_C1 动作合同缺陷登记（不修复）；topic-index GW Progress 表 Step 4a 行修订 + 当前位置/未决项/下一合法动作改写；V009（provenance 修复 + Q-B gate 独立验证）落盘；不修改 Skill / common/ params.py / 正式论文结论 / dormant receiver / 4 个 p05 log；不修复续跑 Q-A'。**本轮不宣称 Groundwork 闭合**（5 CORE < ≥8 整体完成门）。
+
+## D009: AMC Groundwork 科学冻结 — AMC_GROUNDWORK_SATURATED_NO_MAIN_METHOD / DORMANT
+
+> 2026-08-03 | status: active | 取代: D008 的"下一合法动作待用户裁决"四选项（Q-A/Q-A′/Q-B/CORE）的**开放状态**——本轮用户裁决 = 全部停止，专题转 dormant | 被取代: 无
+> **不取代**（继续有效）: D008 的全部科学/代码事实产物（D007 拆分保留的 corrected_v2 工程 + Q-A/Q-A′/Q-B 终态判定 + V009 12/12）+ D002-D006 的历史 D/V + 所有错误修复 + unauthorized probe 记录。历史不删不改写。
+> 依据: 用户 2026-08-03 campaign-level synthesis 执行提示词 §"主控决策"（verbatim，见 voice.md 2026-08-03 主控决策段）+ D008/V009（Q-A/Q-A′/Q-B 终态）+ `method-production-campaign-thesis-map.md`（A 级仅 DA/NDA CPR）+ R010（campaign 0 主方法）+ FR-23（增量非填补空白）+ profile "倾向务实可毕业远胜理论最优"
+
+**决策**: 主控裁决 AMC Groundwork 在当前目标条件和现有资产下**科学冻结，转 dormant**。
+
+### 1. 三条路线终态（统一冻结，非 Kill family）
+
+- **Q-A（预测驱动风险失配）**: `STOPPED_INCONCLUSIVE_TESTBED_ACTION_MISMATCH`。Contract A 下 oracle 不可行 = 不可评估（D008）；本轮停止，**非 Kill**（假设未被证伪，只是当前 testbed/action-contract 下无法评估）。
+- **Q-A′（no-transmit reframe）**: `HARVEST_ONLY_ENGINEERING_SEED`。Contract B 数据是 UNAUTHORIZED + NONBINDING dev-only probe（D008）；本轮**不升级为新方向**；corrected_v2 工程产物保留为可复用种子，但**不计入论文证据**（campaign synthesis §1 资产 7 = T0 UNAUTHORIZED_DEV_ONLY）。
+- **Q-B（动作位置-时间尺度失配）**: `STOPPED_BASELINE_AND_TESTBED_UNAVAILABLE`。无合法同任务增强 baseline + testbed ≥3 NEW_INFRASTRUCTURE（D008/V009）；本轮停止，**非 Kill**（基础设施缺位非假设证伪）。
+
+### 2. 不做的事（用户明令，verbatim 见 voice.md）
+
+- 不补 3 篇 CORE 只为满足 ≥8 数量门。
+- 不搭 multi-day coherent sat-ground AMC testbed。
+- 不重开 Safi/L124 blocker。
+- 不把 AMC 写成"领域无问题"——只能写"当前目标条件和现有资产下，没有得到可授权的第二项主方法"。
+- 不复活 INVALIDATED 资产；不把 unauthorized Q-A′ dev signal 晋级；不把多个弱资产机械拼成一个方法。
+
+### 3. 恢复条件（显式 scope-change 才能恢复）
+
+后续**只有**出现以下之一时，才允许显式 scope-change 恢复 AMC：
+- 出现新的直接论文（coherent sat-ground AMC 同任务）；
+- 现成合法 baseline（B2 同任务增强对手）可用；
+- 外部 testbed 资产（不搭 multi-day）可用。
+
+恢复须新开 Groundwork 专题并从 Step 1 开始（FR-22），不得在本 dormant 专题内续接。
+
+### 4. 保留范围（历史不删）
+
+- 全部历史 D001-D008 / V001-V009 / S001-S008 / H001-H005 保留作审计。
+- corrected_v2 工程产物（RED/GREEN receipt、identity receipt、raw→aggregate）保留为可复用工程种子（不计入论文证据）。
+- q-b-gate audit + feasibility_report_v2 保留作 future-work 参考。
+- tune_C1 缺陷登记保留（若未来授权 Q-A′ reframe 须先修）。
+
+### 5. 对论文的影响（campaign synthesis 已判）
+
+- AMC **不产生**第二项主方法（`method-production-campaign-thesis-map.md` 方案 B 生效）。
+- 唯一 T3 主贡献仍是既有 DA/NDA adaptive CPR。
+- 第二工程贡献 = `NO_SECOND_CONTRIBUTION_YET`（见 `direction-lab/harvest/campaign-level-thesis-contribution-synthesis.md` §2.3）。
+- Q-A′ corrected_v2 **最多**作 future-work 一句（"no-transmit reframe 是待授权的工程种子"），不进正文。
+
+**触发原话**: 用户 2026-08-03 campaign-level synthesis 执行提示词 §"主控决策"（verbatim）:
+- "AMC 当前终态：AMC_GROUNDWORK_SATURATED_NO_MAIN_METHOD / DORMANT"
+- "Q-A：STOPPED_INCONCLUSIVE_TESTBED_ACTION_MISMATCH"
+- "Q-A′：HARVEST_ONLY_ENGINEERING_SEED"
+- "Q-B：STOPPED_BASELINE_AND_TESTBED_UNAVAILABLE"
+- "不补 3 篇 CORE 只为满足数量"
+- "不搭 multi-day coherent sat-ground AMC testbed"
+- "不重开 Safi/L124 blocker"
+- "后续只有出现新的直接论文、现成合法 baseline 或外部 testbed 资产时，才允许显式 scope-change 恢复 AMC"
+- "不得把 AMC 写成'领域无问题'；只能写：当前目标条件和现有资产下，没有得到可授权的第二项主方法"
+
+**影响**: AMC 专题转 `DORMANT`（registry status 更新）；topic-index 状态行 + 当前位置 + 下一合法动作改写为冻结恢复条件；mission-log 加 CP008；master-state AMC 段更新；H006（最终交接）落盘；campaign synthesis §0 引用本 D###。**保留全部历史 D/V、错误修复和 unauthorized probe，不改写历史**。不修改 Skill / common/ params.py / 正式论文正文 / dormant receiver / 4 个 p05 log；不进 Contract/Execute；单次 commit 不 push。

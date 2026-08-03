@@ -40,6 +40,7 @@
 - ❌ 不做消融实验（跨块 KF / BPS 迁移等是 step4a 的债务，不在写作专题跑）
 
 ### 范围变更记录
+- **[2026-08-03]** 范围扩展（无 D### 编号，campaign-level synthesis 一次性记录）：本专题原范围 = 自适应 CPR 方向写作准备（CCISP/Ch3）。本轮承接 AMC 冻结（D009）后的 campaign-level thesis contribution synthesis，**临时扩展**到全项目论文资产分级 + 唯一推荐 thesis spine 判断。产物 = `projects/thesis-fso/direction-lab/harvest/campaign-level-thesis-contribution-synthesis.md`（9 项 contribution inventory + 唯一推荐 spine = 一个主方法 Ch3 + 完整实现验证 Ch5 + 边界 Ch4；第二工程贡献 = NO_SECOND_CONTRIBUTION_YET；可选 bounded package = fixed-point vs 浮点对比，不在本轮执行）。**这不改变本专题"写作准备不跑实验不进 Contract/Execute"的定位**——synthesis 只做证据-backed 的论文落位判断，不跑仿真、不写正式正文、不修 Skill。扩展完成后本专题回归原范围。
 - **[2026-07-13]** D011：将原 Fig.1 架构准备拆为两张独立编号图。
   - 原因：系统上下文与自适应 CPR 机制需要不同信息层级；拆分可降低密度，避免在一张图内反复取舍总览、zoom 和 selector 细节。
   - 新范围：Fig.1 系统总览（Tx—FSO/channel—coherent Rx—DSP）+ Fig.2 自适应 CPR 机制（measurement—threshold—DA/NDA—selector—compensation）；原 BER/crossover 图顺延为 Fig.3--5，Table I 保持独立。

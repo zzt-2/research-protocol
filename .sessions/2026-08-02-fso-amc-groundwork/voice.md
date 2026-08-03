@@ -129,3 +129,17 @@
 > - "若加入 no-transmit 实质改变研究对象，停止并标：ACTION_SPACE_REFRAME_REQUIRES_USER_DECISION。不得偷偷改成 Q-A'。"
 >
 > 该真实约束要求 executor 在 no-transmit 改变 M 时**停止交用户裁决**，而非自行裁决跑 Contract B。Contract B 未经授权——见 D008。
+
+## 2026-08-03（campaign-level synthesis 执行提示词主控决策，来源: paste-attachment；冻结裁决 verbatim）
+
+- "AMC 当前终态：AMC_GROUNDWORK_SATURATED_NO_MAIN_METHOD / DORMANT" → D009
+- "Q-A：STOPPED_INCONCLUSIVE_TESTBED_ACTION_MISMATCH"
+- "Q-A′：HARVEST_ONLY_ENGINEERING_SEED"
+- "Q-B：STOPPED_BASELINE_AND_TESTBED_UNAVAILABLE"
+- "不补 3 篇 CORE 只为满足数量"
+- "不搭 multi-day coherent sat-ground AMC testbed"
+- "不重开 Safi/L124 blocker"
+- "后续只有出现新的直接论文、现成合法 baseline 或外部 testbed 资产时，才允许显式 scope-change 恢复 AMC"
+- "不得把 AMC 写成'领域无问题'；只能写：当前目标条件和现有资产下，没有得到可授权的第二项主方法"
+- "不跑新方法仿真，不重开 Q-A/Q-A′/Q-B，不修改 Skill，不写正式论文正文"
+- "保留全部历史 D/V、错误修复和 unauthorized probe，不改写历史"

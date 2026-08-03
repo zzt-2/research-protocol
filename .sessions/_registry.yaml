@@ -622,9 +622,9 @@ topics:
 
   - slug: 2026-08-02-fso-amc-groundwork
     title: 星地相干 FSO 编码自适应与 AMC Groundwork
-    status: active
+    status: dormant
     created: "2026-08-02"
-    last_updated: "2026-08-03（D008/V009/S008 授权血缘修复 + Q-B bounded gate：git 取证确认'同时跑两个动作契约'从未由用户发出——父 280b9a5 0 命中 1ed8347 首现 5 次，voice.md 移除伪造'用户即时原话'条目；D008 精确拆分 D007——科学/代码事实产物保留 vs 授权·scope 层（Contract B 获授权/Q-A 在 Contract B 存活/Q-A' 晋级）被取代；V008 check 1-11 科学事实有效 / check 12 terminal verdict 授权层失效；tune_C1 动作合同缺陷登记 probe_corrected.py:362 调谐未传 allow_no_transmit；Q-A=CONTRACT_A_INCONCLUSIVE_TESTBED_ACTION_MISMATCH / Q-A'=UNAUTHORIZED_DEV_ONLY_REFRAME_PROBE（NONBINDING）；Q-B bounded gate = Q_B_BASELINE_UNAVAILABLE（primary）+ Q_B_TESTBED_UNAVAILABLE_WITHIN_BUDGET（secondary）——无合法同任务增强 baseline + testbed ≥3 NEW_INFRASTRUCTURE，不 Kill family 不进 Step 4a MVE；V009 12/12 PASS CONFIRM；未宣称 Groundwork 闭合 5 CORE<8；不进 4b/5/Contract/Execute）"
+    last_updated: "2026-08-03（D009 科学冻结 AMC_GROUNDWORK_SATURATED_NO_MAIN_METHOD/DORMANT：用户 campaign-level synthesis 裁决三路线全停——Q-A=STOPPED_INCONCLUSIVE_TESTBED_ACTION_MISMATCH / Q-A'=HARVEST_ONLY_ENGINEERING_SEED（corrected_v2 工程种子保留不晋级）/ Q-B=STOPPED_BASELINE_AND_TESTBED_UNAVAILABLE（非 Kill family）；不补 3 篇 CORE、不搭 multi-day testbed、不重开 Safi/L124；不得写成'领域无问题'，只能写'当前目标条件和现有资产下没有得到可授权的第二项主方法'；恢复须显式 scope-change（新直接论文/现成合法 baseline/外部 testbed）+ 新开 GW 专题；保留全部历史 D/V/S/H + corrected_v2 + unauthorized probe 不改写。campaign-level 论文综合在 direction-lab/harvest/campaign-level-thesis-contribution-synthesis.md：9 项 contribution inventory + 唯一推荐 thesis spine（一个主方法+完整实现验证+边界）+ 第二工程贡献=NO_SECOND_CONTRIBUTION_YET）"
     description: "独立系统层 Groundwork 专题。承接 system 专题 2026-07-20-research-direction-lab-system D020 授权的 AMC_GROUNDWORK_TOPIC_CREATION，从 GW Step 1 重新开始。目标：星地相干 FSO + Gamma-Gamma 湍流 + 真实编码链/信息不确定性背景下找自适应编码调制/链路适配问题作毕业论文潜在第二项贡献。当前进度：Step 1-3.5 完成（D002/D004/D005），Step 4a 经三轮——D006 科学 KILL → D007 撤回（科学/代码事实产物）→ D008 纠正授权血缘（Contract B 未获授权，伪造'用户授权同时跑两个动作契约'provenance 经 git 取证确认）→ Q-A=Contract A 不可评估 / Q-A'=UNAUTHORIZED_DEV_ONLY（NONBINDING）+ Q-B bounded gate = baseline+testbed 双缺位不进 MVE。继承 9 条历史 dead-end 边界作先验，不复活。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system

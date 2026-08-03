@@ -407,3 +407,30 @@ D007 科学完整性修复**独立 CONFIRM**（12/12 PASS）。Phase A 10 RED �
 - 本轮未运行 MVE / held-out / METHOD_SIGNAL；未修改 Skill / common/ params.py / 正式论文 / dormant receiver / 4 p05 log。
 
 **允许 commit**（单 commit，不 push）。
+
+---
+
+## V010 — D009 AMC freeze + campaign-level thesis synthesis 独立终审（2026-08-03，fresh-context verifier）
+
+> Authority: D009（AMC 科学冻结）+ `projects/thesis-fso/direction-lab/harvest/campaign-level-thesis-contribution-synthesis.md`
+> 范围：D009 三路线终态 + campaign-level thesis synthesis 12 项 governance/integrity 独立复核（不信任摘要，逐条读真实文件）。
+> 方法：Read 实文件 + ls 验证证据路径 + grep 取证 + git diff --check。
+
+| # | 检查 | 结果 | 证据 |
+|---|---|---|---|
+| 1 | AMC dormant 状态四源一致 | **PASS** | registry `.sessions/_registry.yaml:625` `status: dormant`；AMC `topic-index.md:3` `状态: **dormant**`；`master-state.md:8` `current_step: AMC-DORMANT-FROZEN`；`decisions.md:333` `## D009: AMC Groundwork 科学冻结 — AMC_GROUNDWORK_SATURATED_NO_MAIN_METHOD / DORMANT`——四源均 terminal dormant |
+| 2 | 所有正向 claim 的证据文件存在 | **PASS** | `abstract.tex` 存在（965 B）；`_p03_fixed_point.py` 存在（`projects/simulation/explore/nda-awgn-tracking-sandbox/`）；`p08r2_chain.py` 存在（同目录）；`pilot-jones-step4a/` 目录存在（含 `pilot_jones_methods.py` 等 6 文件）；另核 `_recovery.py`/`_a4_switch_30seed_fixed.py`/`p08_coded_chain.py`/`p08r_chain.py`/`p08r2_metamorphic_gate.py`/`p08r2_verify.py`/`corrected_v2/probe_corrected.py`/`phaseA_uniform.json`/`p08r2_receiver_info_repair/` 全部存在 |
+| 3 | INVALIDATED/unauthorized 资产未晋级 | **PASS** | synthesis §1 资产 7（line 27）tier = `T0（UNAUTHORIZED_DEV_ONLY）`；资产 9（line 29）`T0 / T1 方法论` + "INVALID scientific result (G1 scale artifact / P09)"；§2.3（line 70）`结论 = NO_SECOND_CONTRIBUTION_YET`；§3.3 bounded package 仅复用资产 2（fixed-point）+ 资产 6 comparator + CCISP testbed，**无** Q-A′ corrected_v2 作证据（line 86/97） |
+| 4 | DA/NDA 主方法身份真实 | **PASS** | `abstract.tex:2` 含 "adaptive CPR receiver"、"coefficient-of-variation gate"、"fixed 13~dB effective-signal-to-noise-ratio"、"0.8--1.5~dB" gain——四要素齐全 |
+| 5 | 工程贡献非机械拼接 | **PASS** | synthesis §2.2（line 56）明确"共享'部署接收机'容器，不共享'同一可复用设计规则'"；§2.3（lines 64-70）`NO_SECOND_CONTRIBUTION_YET` 列 3 理由：① 无统一 M-C-A ② 无"有用"证据（只有"正确"）③ 强传统 baseline 直接吸收 |
+| 6 | 贡献 tier 合法 | **PASS** | §1 唯一 T3 = 资产 1（DA/NDA CPR，line 21）；资产 7 = T0 非 T2/T3（line 27）；资产 9 = T0/T1 方法论反例，G1/P09 "不得当方法"（line 29）；其余 2-6/8 全 T1 |
+| 7 | 每条 thesis claim 有路径 | **PASS** | §4.1 章节表（lines 124-129）六行"证据来源"列均有具体路径或资产指针：Ch1 `CCISP W001 Intro + thesis-map A 行`；Ch3 `CCISP W002 Method + _recovery.py + _a4_switch_30seed_fixed.py`；Ch4/Ch5 用资产 6/8/2-6 指针（回指 §1 已验证路径）；Ch6 `全文`（结论章合理）。无空、无"TBD" |
+| 8 | bounded package 小且可判 | **PASS** | §3.3 line 86 `≤1 对话 + ≤半天计算`；line 86/107 复用现有 corrected asset `_p03_fixed_point.py`；line 108 comparator = `浮点 selector`；line 97 `预注册 PASS/FAIL`；line 114 `本 package 不在本轮执行`——五要素齐全 |
+| 9 | 无暗中开新方向 | **PASS** | topic-index.md:154 `下一合法动作 = 显式 scope-change 恢复`（line 156-160 三条件：新直接论文/合法 baseline/外部 testbed）；synthesis §3.3 line 105 `不开新科学方向 ✅ 复用 CCISP 主方法信道`；line 112 `不声称产生第二个主算法 ✅`；全文无 METHOD_SIGNAL claim |
+| 10 | thesis spine 单一推荐（非选项堆） | **PASS** | §4.1 line 120 标题 `唯一推荐章节结构`（一张表）；§4.2 line 131 标题 `保守 fallback（工程贡献证据最终不足时）`——明确 fallback 条件触发，非第二并行推荐 |
+| 11 | registry/session 治理正确 | **PASS** | registry `.sessions/_registry.yaml:625` `status: dormant` + line 627 `last_updated` 含 `D009 科学冻结`；thesis-writing `topic-index.md:43` 范围变更记录 `[2026-08-03] ...承接 AMC 冻结（D009）后的 campaign-level thesis contribution synthesis`；`H006-amc-dormant-closure.md` 存在（6281 B，AMC dir）；`mission-log.md:76` `## CP008: 2026-08-03 D009 AMC 科学冻结 + campaign-level thesis synthesis` |
+| 12 | git diff --check 干净 | **PASS** | `git diff --check` EXIT_CODE=0；仅 6 条 LF→CRLF 警告（Windows 行尾正常提示，非 whitespace error）；无 trailing whitespace / 无 conflict marker / 无 mixed indent error |
+
+**D009 AMC freeze + campaign-level thesis synthesis 独立 CONFIRM（12/12 PASS）**。AMC 三路线终态四源一致（registry/topic-index/master-state/decisions 全 dormant）；synthesis 9 项 inventory 证据路径全部 ls 通过；INVALIDATED（G1/P09）与 unauthorized（Q-A′）资产均未晋级、未作 bounded package 证据；DA/NDA 主方法 abstract 身份真实（adaptive CPR + CV gate + 13 dB + 0.8--1.5 dB）；工程贡献判定为 NO_SECOND_CONTRIBUTION_YET（3 理由，非机械拼接）；唯一 T3 = DA/NDA CPR；§4.1 单一推荐 spine + §4.2 标签化 fallback；bounded package 小（≤1 对话≤半天）+ 传统浮点 comparator + 预注册 PASS/FAIL + 不在本轮执行；无新方向/METHOD_SIGNAL 暗开；registry/thesis-writing/H006/CP008 治理记录齐全；git diff --check 干净。本轮未跑仿真、未修 Skill/common/params.py/正式论文/dormant receiver/4 p05 log、未进 Contract/Execute。
+
+**允许 commit**（单 commit，不 push）。

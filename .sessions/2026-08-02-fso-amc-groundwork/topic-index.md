@@ -1,6 +1,8 @@
 # Topic Index: 星地相干 FSO 自适应编码调制 (AMC) Groundwork
 
-> 状态: active | 创建: 2026-08-02 | 最后更新: 2026-08-03（**D008 纠正 D007 授权血缘 + Q-B bounded gate 完成**）：S008 主控裁决执行提示词——Phase A git 取证确认"同时跑两个动作契约"从未由用户发出（父 280b9a5 0 命中，1ed8347 首现 5 次），voice.md 移除伪造"用户即时原话"条目，D008 精确拆分 D007（科学/代码事实产物保留 / 授权·scope 层被取代），V008 check 1-11 科学事实有效 / check 12 terminal verdict 授权层失效；tune_C1 动作合同缺陷登记（probe_corrected.py:362 调谐未传 allow_no_transmit）；Q-A 终态=CONTRACT_A_INCONCLUSIVE_TESTBED_ACTION_MISMATCH，Q-A'=UNAUTHORIZED_DEV_ONLY_REFRAME_PROBE（NONBINDING）；Phase B Q-B bounded gate（时间尺度审计/baseline 梯子/testbed 资产/方法增量）→ 终态 Q_B_BASELINE_UNAVAILABLE（primary）+ Q_B_TESTBED_UNAVAILABLE_WITHIN_BUDGET（secondary），不 Kill family，不进 Step 4a MVE；V009 独立 verifier 12/12 PASS CONFIRM；**未宣称 Groundwork 闭合**（5 CORE < ≥8 整体门）；不进 4b/5/Contract/Execute）
+> 状态: **dormant** | 创建: 2026-08-02 | 最后更新: 2026-08-03（**D009 科学冻结 — AMC_GROUNDWORK_SATURATED_NO_MAIN_METHOD / DORMANT**）：用户 campaign-level synthesis 裁决三条路线全部停止——Q-A=STOPPED_INCONCLUSIVE_TESTBED_ACTION_MISMATCH / Q-A′=HARVEST_ONLY_ENGINEERING_SEED（corrected_v2 工程种子保留，不晋级不进正文）/ Q-B=STOPPED_BASELINE_AND_TESTBED_UNAVAILABLE（非 Kill family，基础设施缺位非假设证伪）；不补 3 篇 CORE、不搭 multi-day testbed、不重开 Safi/L124；**不得写成"领域无问题"**，只能写"当前目标条件和现有资产下没有得到可授权的第二项主方法"；恢复须显式 scope-change（新直接论文/现成合法 baseline/外部 testbed）+ 新开 GW 专题；保留全部历史 D/V/S/H + corrected_v2 工程产物 + unauthorized probe，不改写历史。campaign-level 论文综合判断在 `direction-lab/harvest/campaign-level-thesis-contribution-synthesis.md`（第二工程贡献 = NO_SECOND_CONTRIBUTION_YET）
+>
+> **上一轮（D008/V009/S008，保留历史）**：D008 纠正 D007 授权血缘 + Q-B bounded gate 完成——Phase A git 取证确认"同时跑两个动作契约"从未由用户发出（父 280b9a5 0 命中，1ed8347 首现 5 次），voice.md 移除伪造"用户即时原话"条目，D008 精确拆分 D007（科学/代码事实产物保留 / 授权·scope 层被取代），V008 check 1-11 科学事实有效 / check 12 terminal verdict 授权层失效；tune_C1 动作合同缺陷登记（probe_corrected.py:362 调谐未传 allow_no_transmit）；Q-A 终态=CONTRACT_A_INCONCLUSIVE_TESTBED_ACTION_MISMATCH，Q-A'=UNAUTHORIZED_DEV_ONLY_REFRAME_PROBE（NONBINDING）；Phase B Q-B bounded gate → 终态 Q_B_BASELINE_UNAVAILABLE（primary）+ Q_B_TESTBED_UNAVAILABLE_WITHIN_BUDGET（secondary），不 Kill family，不进 Step 4a MVE；V009 独立 verifier 12/12 PASS CONFIRM；未宣称 Groundwork 闭合（5 CORE < ≥8 整体门）
 
 ## 专题信息
 
@@ -118,47 +120,50 @@
 - **D008**（新建）：D007 授权血缘纠正 — Contract B 未获授权，Q-A' 降级 UNAUTHORIZED_DEV_ONLY_REFRAME_PROBE（NONBINDING）；Q-A 终态修订 CONTRACT_A_INCONCLUSIVE_TESTBED_ACTION_MISMATCH；tune_C1 缺陷登记（不修复）；不新开 Q-A' GW 周期。
 - **V009**（新建）：D008 + Q-B gate 独立终审 12/12 PASS CONFIRM（provenance 修复 A1-A5 + Q-B gate B6-B10 + 治理 C11-C12）。
 - **H005**（新建）：D008 纠正授权血缘 + Q-B bounded gate 完成，多裁决待用户（Q-A 停止 / Q-A' 升级 / Q-B 停止 / 补齐 CORE）。
+- **D009**（新建）：AMC Groundwork 科学冻结 — `AMC_GROUNDWORK_SATURATED_NO_MAIN_METHOD / DORMANT`。用户 campaign-level synthesis 裁决三条路线全部停止（Q-A STOPPED_INCONCLUSIVE / Q-A′ HARVEST_ONLY_ENGINEERING_SEED / Q-B STOPPED_BASELINE_AND_TESTBED_UNAVAILABLE）；不补 CORE、不搭 testbed、不重开 Safi/L124；保留全部历史不改写；恢复须显式 scope-change + 新开 GW 专题。
+- **H006**（新建）：AMC dormant 最终交接 — 专题冻结，恢复条件 + campaign-level 论文综合指针。
+- **campaign-level synthesis**（新建）：`projects/thesis-fso/direction-lab/harvest/campaign-level-thesis-contribution-synthesis.md` — 全项目 contribution inventory（9 项分级）+ 唯一推荐 thesis spine（一个主方法 + 完整实现验证 + 边界分析）+ 第二工程贡献判断（NO_SECOND_CONTRIBUTION_YET）+ 可选 bounded package（fixed-point vs 浮点对比，不在本轮执行）。
 - **Q-B gate audit**（新建）：`projects/thesis-fso/amc-groundwork/q-b-gate/feasibility-gate-audit.md`（B1 时间尺度 + B2 baseline 梯子 + B3 testbed 资产 + B4 方法增量 + B5 未执行 + C 终态）。
 - **feasibility_report_v2.md**（新建，不覆盖旧）：`projects/thesis-fso/amc-groundwork/feasibility_report_v2.md`。旧 feasibility_report.md 加 INVALIDATED_BY_D007 banner 保留。**本轮补 §9 Q-B bounded gate 段**。
 - **feasibility_report.md**（新建）：`projects/thesis-fso/amc-groundwork/feasibility_report.md`（Q-A Step 4a 完整 A0/A′/A/B/D + Kill 裁决 + 可回收产出）。
 
 ## 当前位置
 
-**Step 4a 终态 = D008 纠正 D007 授权血缘 + Q-B bounded gate 完成**（recommendation 待用户确认）:
+**专题已 dormant — AMC_GROUNDWORK_SATURATED_NO_MAIN_METHOD（D009，2026-08-03）**:
 
-- **Step 2（保留 D004）**: STEP2_PASS_WITH_COHERENT_C_FAMILY_BLOCKED（5 CORE 全文 L023/L096/L146/Galijasevic/Nguyen2024；C 族 L124 BLOCKED；Safi PROVISIONAL abstract-only）。
-- **Step 3/3.5（保留 D005/R003）**: STEP3_READ_COMPLETE_SEMANTIC_GATE_MISAPPLIED + STEP3_5_SURVIVES。
-- **Step 4a（S006→S007→S008 修订）**: **STEP4A_QA_CONTRACT_A_INCONCLUSIVE + Q_B_BASELINE_UNAVAILABLE（D008/V009/S008）**。
-  - **授权血缘（D008）**: "同时跑两个动作契约"经 git 取证从未由用户发出（父 280b9a5 0 命中，1ed8347 首现 5 次）；voice.md 移除伪造"用户即时原话"条目；D007 科学/代码事实产物保留为工程事实，授权·scope 层被取代；V008 check 1-11 科学事实有效，check 12 terminal verdict 授权层失效。
-  - **Q-A = `Q-A_CONTRACT_A_INCONCLUSIVE_TESTBED_ACTION_MISMATCH`**（Contract A 下 oracle 不可行，不可评估，非 Go 非 Kill）。
-  - **Q-A' = `Q-A_PRIME_UNAUTHORIZED_DEV_ONLY_REFRAME_PROBE`**（NONBINDING；最多 THESIS_ENGINEERING_COMPONENT 候选；不得称 THESIS_MAIN_METHOD；tune_C1 动作合同缺陷登记不修复）。
-  - **Q-B bounded gate = `Q_B_BASELINE_UNAVAILABLE`（primary）+ `Q_B_TESTBED_UNAVAILABLE_WITHIN_BUDGET`（secondary）**（无合法同任务增强 baseline；testbed ≥3 项 NEW_INFRASTRUCTURE；不 Kill family；不进 Step 4a MVE）。
-- **未进 Step 4b/Step 5/Contract/Execute**（FR-22 + brief 明示）。**未宣称 Groundwork 闭合**（5 CORE < ≥8 整体门）。
+用户 campaign-level synthesis 裁决三条路线全部停止，专题转 dormant:
+
+- **Q-A = `STOPPED_INCONCLUSIVE_TESTBED_ACTION_MISMATCH`**（Contract A 下不可评估，非 Kill）。
+- **Q-A′ = `HARVEST_ONLY_ENGINEERING_SEED`**（corrected_v2 工程种子保留，不晋级、不进论文正文）。
+- **Q-B = `STOPPED_BASELINE_AND_TESTBED_UNAVAILABLE`**（baseline + testbed 双缺位，非 Kill family）。
+- **不得写成"领域无问题"**——只能写"当前目标条件和现有资产下没有得到可授权的第二项主方法"。
+- **保留全部历史**：D001-D009 / V001-V009 / S001-S008 / H001-H005 + corrected_v2 工程产物 + unauthorized probe，不改写历史。
+
+**对论文的影响**（见 `direction-lab/harvest/campaign-level-thesis-contribution-synthesis.md`）:
+- AMC **不产生**第二项主方法（thesis-map 方案 B 生效）。
+- 唯一 T3 主贡献仍是既有 DA/NDA adaptive CPR。
+- 第二工程贡献 = `NO_SECOND_CONTRIBUTION_YET`。
+- Q-A′ corrected_v2 最多作 future-work 一句，不进正文。
 
 ## 未决项
 
-- **Q-A 裁决（待用户）**: Contract A 下 Q-A 不可评估 → 停 Q-A / 换 AMC 子族 / 调整 C（跨阶段决策，禁 agent 自行放宽 C）。
-- **Q-A' reframe 裁决（待用户授权）**: 是否升为新研究方向（须新 GW Step 1-3 M-C-A + 四判据）。本轮只降级不升。若升级，须先修 tune_C1 动作合同缺陷 + 新合同下重调超参。
-- **Q-B 裁决（待用户）**: 接受 baseline 缺位停 Q-B / 授权搭 multi-day coherent sat-ground GG testbed（跨阶段基础设施决策）/ 等 coherent sat-ground AMC 文献作 B2。
-- **补齐 Groundwork 整体门**: 当前 5 CORE < ≥8；缺 3 篇（Safi/L124 全文 + 1 篇）须进 Step 5 前补齐或用户处理。
-- **Safi + L124 全文获取**: 身份闭合（Q-A 修订后 Safi 不再阻塞；L124 coherent-C 族仍 open）。
-- **C 条件是否过窄待用户决策**: 五要素锁死可能物理不可行。
-- 中文检索 cookie/IP（L050/L206）——校园网可用时重试（不阻塞）。
+**专题 dormant，无活跃未决项。** 历史未决项（Q-A/Q-A′/Q-B/CORE/Safi/L124）已被 D009 统一裁决为"停止"。恢复条件见下一合法动作。
 
 ## 下一合法动作
 
-**本轮 Step 4a 终态 = D008 纠正授权血缘 + Q-B bounded gate 完成**（Q-A=Contract A 不可评估 / Q-A'=UNAUTHORIZED_DEV_ONLY / Q-B=BASELINE+TESTBED 双缺位）。executor 不自行 Go/No-Go，已提交 recommendation。
+**专题 dormant。下一合法动作 = 显式 scope-change 恢复**（用户决定）。
 
-**待用户确认后的合法路径**:
-- **(i) Q-A**: 接受 Contract A 下 Q-A 不可评估停止 / 换 AMC 子族 / 调整 C（跨阶段决策，**禁 agent 自行放宽 C**）。
-- **(ii) Q-A' reframe**: 用户授权升为新研究方向 → 新 GW Step 1-3（新 Q-A' M-C-A + 四判据）；须先修 tune_C1 缺陷 + 新合同重调。
-- **(iii) Q-B**: 接受 baseline 缺位停 Q-B / 用户授权搭 multi-day coherent sat-ground GG testbed / 等 coherent sat-ground AMC 文献作 B2。
-- **(iv) 补齐 Groundwork 整体门**: 当前 5 CORE < ≥8；缺 3 篇须进 Step 5 前补齐或用户处理。
+恢复条件（出现以下之一才允许，且须新开 GW 专题从 Step 1 开始，FR-22）:
+- 出现新的直接论文（coherent sat-ground AMC 同任务）；
+- 现成合法 baseline（B2 同任务增强对手）可用；
+- 外部 testbed 资产（不搭 multi-day）可用。
 
-**禁止**（FR-22 硬门控）:
-- 本轮禁进 Step 4b/Step 5/Contract/Execute（brief 明示；已遵守）。
-- 禁 agent 自行放宽 C 条件 —— 跨阶段决策须用户/导师定。
-- 禁 agent 自行 Go/No-Go（executor 只提交 recommendation，等用户确认）。
-- 禁偷偷改 Q-A→Q-A'（Contract B 须显式交用户裁决；D008 已纠正伪造授权）。
-- 禁把 Contract B 数据当 Go/scope/METHOD_SIGNAL 判据（UNAUTHORIZED + NONBINDING）。
-- 禁用自创四判据标签当 terminal gate（D005）；四判据唯一 owner = glossary.md + templates.md。
+**禁止**（专题 dormant 期间）:
+- 禁在本 dormant 专题内续接任何 Q-A/Q-A′/Q-B 工作。
+- 禁补 3 篇 CORE 只为满足 ≥8 数量门。
+- 禁搭 multi-day coherent sat-ground AMC testbed。
+- 禁重开 Safi/L124 blocker。
+- 禁把 AMC 写成"领域无问题"。
+- 禁复活 INVALIDATED 资产 / 晋级 unauthorized Q-A′ dev signal / 把弱资产机械拼成方法。
+- 禁修改 Skill / common/ params.py / 正式论文正文 / dormant receiver / 4 个 p05 log。
+- 禁进 Contract/Execute。
