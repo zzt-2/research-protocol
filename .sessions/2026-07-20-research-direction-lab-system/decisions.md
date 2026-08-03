@@ -646,6 +646,7 @@ R009；用户 2026-07-29 对“基本每次交互都会发生压缩”及“改�
 > status: active
 > date: 2026-08-02
 > 取代：无
+> 后续扩展：D021（仅增加独立论文方法章保留门；本决策其余契约继续 active）
 > 被取代：无
 > 依据：调研: R004 + 验证: V014 + 用户原话: voice.md 2026-08-02
 
@@ -672,3 +673,36 @@ R004 的六案修改前盲测只有 Case 1 出现真实新增失效，但真实 
 ### 来源
 
 H003；R004；用户 2026-08-02 执行指令。
+
+## D021: 科学主方法门与论文方法章门分账
+
+> status: active
+> date: 2026-08-03
+> 取代：无
+> 扩展：D020（局部增加第四个、但独立且轻量的论文方法章保留门；不改写 D020 其余三类契约）
+> 被取代：无
+> 依据：调研: `projects/thesis-fso/direction-lab/harvest/peer-thesis-method-packaging-audit.md` + `projects/thesis-fso/direction-lab/harvest/internal-method-kernel-inventory.yaml` + 对照: CCISP 方法形成史 + 用户原话: voice.md 2026-08-03
+
+### 决策
+
+Research Direction Lab 保留现有科学诚信与 formal promotion 门，另增一个轻量论文方法章保留门。语义有效但尚未达到 `METHOD_SIGNAL` 的中粒度内核，必须先判定 `THESIS_METHOD_READY / NEEDS_ONE_BOUNDED_PACKAGE / SUPPORTING_ONLY / REJECT`，不得仅因不是科学主方法而自动降为 supporting material。
+
+### 理由
+
+长程 campaign 得到 7 个可靠局部负面/边界包却没有新增方法，手工 CCISP 则从一个可部署 estimator/gate/branch action 形成了完整会议方法。12 篇硕士论文精读进一步确认，校准器、阈值、分支、计算图和字长都可能成为方法章，关键是形成完整动作链与有界证据，而不是必须先满足顶层 `METHOD_SIGNAL`。当前 Skill 已区分 contribution tier，却仍把 thesis-facing method card 放在 accepted `METHOD_SIGNAL` 之后，造成包装启动过晚。
+
+### 排除的替代方案
+
+- 不放松 artifact、truth leakage、metric、lifecycle、成本与授权门；
+- 不把所有工程组件写成主方法，不用章节数量制造贡献；
+- 不新增 controller、评分器、固定包数或重型治理链；
+- 不重开 G1/P09/P07/P08 等 invalidated 结果；
+- 不在本轮运行 2A/2B 仿真或写正式论文。
+
+### 影响范围
+
+只允许最小修改 `research-direction-lab` 的主路由、`method-production.md`、`thesis-harvest.md` 和对应行为回归；同步个人运行副本。新增 2A/2B 两个隔离只读包装任务。既有 scientific verdict、formal owner、dormant campaigns 与论文正文不变。
+
+### 来源
+
+S015；用户 2026-08-03 明确要求先记录、修正 Skill，保证可包装内核不被丢弃，并另开两个对话分别研究 2A/2B 包装。

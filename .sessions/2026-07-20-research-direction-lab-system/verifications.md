@@ -602,3 +602,45 @@ exit=0
 ### 结论
 
 PASS。D020 三类最小 patch、六案可审计 RED/GREEN、receipt 边界与个人 Skill 同步全部闭合，P0=0、P1=0、P2=0。该结论不改变既有科学 verdict，不代表产生了新的 thesis method，也不授权在本轮启动 AMC。
+
+## V015: 论文方法章保留门最小修订独立终验
+
+> date: 2026-08-03
+> 关联：R005 / S015 / D021 / T002 / T003
+> verifier 上下文：独立只读 subagent；未参与 Skill 实施或行为样本生成
+> FINAL VERDICT: PASS
+
+### 验证项
+
+- [x] 科学主方法门、`METHOD_SIGNAL`、active scientific carrier 与 formal promotion 标准未降低。
+- [x] 每个 evidence-valid accepted package 都必须另做 `THESIS_METHOD_READY / NEEDS_ONE_BOUNDED_PACKAGE / SUPPORTING_ONLY / REJECT` 判定。
+- [x] 混合包按可分离 real-action lineage 裁决；一个候选被传统方案吸收不抹掉另一条独立动作链。
+- [x] `NEEDS_ONE_BOUNDED_PACKAGE` 只允许一个决定性闭包，失败即降级，不形成无限包装链。
+- [x] invalidated、unauthorized、privileged 或 artifact 证据只能 `REJECT`，不得借包装门复活。
+- [x] 确定性 RED receipt 含修改前 commit/blob identity 与失败摘录。
+- [x] GREEN prompt 不含评分答案；scorer 独立；2/2 fresh-context 原始响应均自动保留 adapter，保持 `METHOD_SIGNAL=0`、active carrier=0，并优先唯一 bounded closure。
+- [x] D021 明确为 D020 的局部扩展，D020 其余三类契约继续 active。
+- [x] T002/T003 为只读包装诊断，task-control 与前台 epoch/action class 一致。
+
+### 验证证据
+
+```text
+pytest .agents/skills/research-direction-lab/tests -q
+111 passed, 1 skipped
+
+quick_validate.py canonical/runtime
+Skill is valid! / Skill is valid!
+
+canonical/runtime non-cache comparison
+canonical=99 runtime=99 only_canonical=0 only_runtime=0 mismatch=0
+
+validate_task_control.py T002 / T003
+PASS / PASS
+
+independent verifier final
+PASS; P0=0 P1=0 P2=0
+```
+
+### 结论
+
+PASS。D021 的轻量论文方法章保留门、可审计 RED/GREEN、个人运行副本和两个只读任务入口均闭合。该结论只证明可包装内核不会因 `METHOD_SIGNAL=0` 被自动丢弃；不证明 2A/2B 已成为论文方法，也不授权运行实验。

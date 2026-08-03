@@ -4,24 +4,24 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v1
-  control_epoch: 8
+  control_epoch: 10
   role: SYSTEM_DESIGN
   mission: 设计并验证轻量长程研究运行协议
-  active_lane: SKILL_MINIMAL_PATCH_VERIFIED
-  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D020
-  decision_gate: 三类 Skill 最小 patch、六案审计重放、个人副本同步与 V014 独立终验均 PASS；本轮 patch 冻结
+  active_lane: THESIS_PACKAGING_TASKS_DISPATCH_READY
+  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D021
+  decision_gate: V015 PASS；只允许派发 T002/T003 两个只读包装诊断
   allowed_actions:
     - PROTOCOL_AUDIT
-    - AMC_GROUNDWORK_TOPIC_CREATION
+    - THESIS_PACKAGING_TASK_DISPATCH
   forbidden_actions:
     - SCIENTIFIC_DISPATCH
-    - SKILL_SCIENCE_CAMPAIGN
+    - SCIENTIFIC_EXPERIMENT
     - FORMAL_STAGE_CHANGE
-  next_legal_action: 新建AMC Groundwork专题并从Step 1开始
+  next_legal_action: 创建两个隔离 Codex 任务，分别执行 T002 与 T003；不得运行实验
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-02（D020/V014：三类 Skill 最小 patch 独立终验 PASS）
+> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-03（D021/V015：论文方法章保留门已验证，2A/2B 只读任务待派发）
 
 ## 专题信息
 
@@ -50,6 +50,7 @@ rdl_control:
 - R002 完成后，先记录并分析一次真实压缩恢复跑偏，设计、演练和审查轻量长程运行协议；用户认可后以 fork 做真实纵向运行，设计完成前不修改 Skill/controller、不派具体科学方向。
 - 基于 live-test R009 对 T001–T026 的效果审计，允许只修恢复三问、方法工厂硬路由、signal promotion preflight 与真实恢复 receipt；不新增 controller，不改变科学 verdict。
 - 基于 H003/R004 的历史回归，只补 executable semantic gates、contribution tiers 与 lightweight persistence；不增加第四类 patch，不修改既有科学 verdict 或 formal owner。
+- 基于长程 campaign 与 12 篇硕士论文包装审计，允许最小增加论文方法章保留门，并对 2A/2B 做 RED→GREEN；不放松 scientific/formal 门，不运行实验，不修改既有科学 verdict。
 
 ### 明确不含
 
@@ -110,6 +111,10 @@ rdl_control:
   - 原因：真实 campaign 暴露 scale/action 语义门、贡献分层与长程记录减负三个缺口。
   - 新范围：只改 executable semantic gates、contribution tiers、lightweight persistence 及既有 receipt validator/测试，并同步个人运行副本。
   - 影响的未决项：本轮 patch 在 V014 PASS 后冻结；不启动 AMC、不修科学包、不创建 P12、不改变 formal owner。
+- **[2026-08-03] 论文方法章保留门（D021）**：用户明确要求记录当前失效、调整 Skill，保证可包装内核不因未达主方法信号而丢弃，并另开两个对话分别研究 2A/2B。
+  - 原因：长程运行擅长纠错但新方法产出为零；最新同行论文与内部资产审计确认 2A/2B 均有方法形状，只各缺一个 bounded package。
+  - 新范围：双门分账、当前 Skill RED、最小 Skill patch、GREEN/独立终验、两个隔离只读包装任务。
+  - 影响的未决项：D020 的科学诚信、贡献分层和轻量持久化继续有效；只解冻“不得再改 Skill”，不解冻科学实验或旧方向。
 
 ## 已确认结论
 
@@ -138,6 +143,7 @@ rdl_control:
 - harvest 逐单元评估但不逐单元强制造条目；普通 Probe 不默认生成完整治理文档链。
 - `T###` 是不可变任务书，H 只用于主控续接；不得为每个轻量工作包机械生成 S/D/V/H 全套。
 - 方法产出分为 `THESIS_MAIN_METHOD`、`THESIS_ENGINEERING_COMPONENT`、`SUPPORTING_MATERIAL`；支持材料不成为 active carrier，真实且公平的 B 级工程组件保留合法入口。
+- 科学主方法门与论文方法章门分账：未达 `METHOD_SIGNAL` 不自动等于 `SUPPORTING_ONLY`；语义有效的中粒度内核先做章节能力判定，invalidated evidence 仍不得晋级。
 
 ## 进展线索
 
@@ -178,6 +184,7 @@ rdl_control:
 - **V012**：独立终验 PASS；两项初审 P2（旧 checkpoint 缺证据指针、registry epoch 过期）已关闭，P0/P1/P2=0。
 - **live R009 / D019**：T001–T026 审计确认方法工厂改善近端发现，但 signal→formal 为 0/2；授权 v2.1 最小路由修订，不重写体系。
 - **R004 / D020 / V014**：接收 H003 后完成六案修改前后盲测；只补五门 executable evidence contract、三层贡献合同与三层轻量持久化，个人运行副本同步且独立终验 PASS（P0/P1/P2=0）。
+- **S015 / R005 / D021 / V015**：长程效果与同行包装审计确认剩余缺口是正常包收尾缺少独立章节能力检查；结构 RED、盲测 GREEN 与独立终验均已闭合，T002/T003 可派发。
 
 ## 未决项
 
@@ -190,7 +197,7 @@ rdl_control:
 - ~~H004/T001 已冻结下一科学 campaign 的恢复入口~~（D015 暂停执行；仅保留为历史入口，不再作为当前 next action）。
 - 新科学项目首次采用 current layout 时，需要渐进生成 `state/current.yaml`、`portfolio/current.yaml`、`harvest/current.yaml`；禁止为了迁移整洁批量改写旧 artifacts。
 - ~~R002 历史复盘尚未执行~~（已完成）：见 `R002-long-horizon-runtime-retrospective.md`。
-- D020 三类 patch 已实现、同步并由 V014 独立终验 PASS；本轮不再增加规则或科学工作。
+- D021 已授权最小双门修订；完成前不创建科学实验包。GREEN 后只创建 2A/2B 包装诊断任务。
 
 ## 当前位置
 
@@ -199,6 +206,6 @@ lightweight persistence。六案审计重放、自动测试、个人 Skill 同�
 终验均 PASS（P0/P1/P2=0）；既有科学 verdict、dormant longitudinal topic 与
 formal owner 未变。
 
-**2026-08-02 转移记录**：`AMC_GROUNDWORK_TOPIC_CREATION` 已执行——AMC 转入新独立专题
-`2026-08-02-fso-amc-groundwork`（D001），从 GW Step 1 开始。本 system 专题不再显示
-"等待创建 AMC 专题"；本轮 system 专题自身范围（D020 patch 冻结）不变，不再授权新动作。
+**2026-08-03 当前入口**：D021 的最小 Skill 修订已由 V015 独立终验 PASS。
+当前只允许创建两个隔离只读任务，分别执行 T002/T003，研究 2A/2B 的方法包装与
+唯一 bounded package；不运行科学实验，不改变 formal science disposition。

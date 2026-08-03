@@ -39,6 +39,13 @@ an active carrier. A valid negative is not method progress, a packaging
 boundary is not a METHOD_SIGNAL, and invalidated evidence supplies no positive
 contribution number.
 
+For every evidence-valid accepted package, also complete the independent
+`thesis_method_disposition` checkpoint from `method-production.md`. A package
+may be `NEEDS_ONE_BOUNDED_PACKAGE` without being a `METHOD_SIGNAL`; this
+preserves a method-shaped estimator, calibration, threshold, branch,
+computation graph, or word-length chain for one decisive closure. The status
+does not create an active scientific carrier or relax claim validity.
+
 Use package counts to describe exploration coverage only. If no method-bearing
 entry exists, report a strategic shortage and preserve the supporting
 portfolio; do not manufacture a new package or inflate a corrected claim into

@@ -71,7 +71,7 @@ Run one continuous loop:
 3. **Plan a batch portfolio** — group questions that share a system anchor, evidence slice, interface, or causal comparison; give active carriers a minimal construct, fair comparator, and primary/fallback packaging; adjudicate baseline adequacy before treating a gap as method-worthy.
 4. **Prepare and run** — freeze the batch contract, protect integrity boundaries, and use project-declared runners.
 5. **Synthesize** — interpret mechanisms and metrics, test alternative explanations, and set the smallest defensible claim scope.
-6. **Harvest** — assess durable thesis value; record an item only when one exists, otherwise record why there is no durable harvest.
+6. **Harvest** — assess durable thesis value and complete the separate thesis chapter-capability checkpoint for every evidence-valid accepted package; record an item only when one exists, otherwise record why there is no durable harvest.
 7. **Review, rotate, or deepen** — compare the original mission with the complete checkpoint chain, detect repeated repair/no-method/underweight work, then select the next informative legal action or promote a stable method signal.
 
 Read `references/core-loop.md` for phase inputs, outputs, and closure checks.

@@ -30,8 +30,8 @@ topics:
     title: Research Direction Lab 完整体系设计
     status: active
     created: "2026-07-20"
-    last_updated: "2026-08-02（D020/V014：三类 Skill 最小 patch 与六案历史回归终验 PASS）"
-    description: "长期研究探索体系唯一流程 owner。D018/D019 建立方法生产、长程记录与 signal 转化路由；D020 只补 executable semantic gates、三层贡献合同和 lightweight persistence，保留 B 级工程入口，不建 controller、不改变科学 verdict。"
+    last_updated: "2026-08-03（D021/S015：论文方法章保留门 RED→GREEN 进行中）"
+    description: "长期研究探索体系唯一流程 owner。D018/D019 建立方法生产与长程记录；D020 补 semantic gates、贡献分层和轻量持久化；D021 在不放松科学门的前提下增加独立论文方法章保留门，防止可包装中粒度内核在 METHOD_SIGNAL 前被误丢。"
     depends_on:
       - slug: framework-evolution
         reason: 继承 R002 Direction Lab 设计和唯一拥有者原则

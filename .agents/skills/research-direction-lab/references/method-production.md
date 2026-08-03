@@ -54,6 +54,59 @@ but cannot supply contribution numbers. A valid negative is not method
 progress, and a packaging boundary is not a METHOD_SIGNAL. An old claim and
 its corrective amendment are one lineage, not two contributions.
 
+## Thesis chapter-capability checkpoint
+
+Scientific promotion and thesis method packaging are separate decisions. After
+every evidence-valid accepted package, record `thesis_method_disposition` as
+exactly one of:
+
+- `THESIS_METHOD_READY` — the existing evidence closes a complete, bounded
+  method chapter;
+- `NEEDS_ONE_BOUNDED_PACKAGE` — a real method-shaped action chain exists and
+  exactly one decisive comparison or implementation closure can determine its
+  thesis status;
+- `SUPPORTING_ONLY` — the valid result is a boundary, negative, tool, or
+  component without a defensible complete method chain;
+- `REJECT` — the proposed positive chain depends on invalidated evidence,
+  artifact, privileged truth, false cost accounting, or unauthorized scope.
+
+Do not wait for a `METHOD_SIGNAL` to run this checkpoint. It does not create an
+active scientific carrier, waive Groundwork/formal promotion, or turn a valid
+negative into a method. Invalidated evidence routes to `REJECT` and cannot
+supply positive numbers.
+
+The checkpoint is a positive chapter recipe. Record:
+
+- `method name` and the specific `M-C-A` it addresses;
+- `deployable input → action → output`;
+- the sufficient conventional comparator and strongest cheap alternative;
+- `algorithm steps or flowchart`, `ablation`, `main result figure`, and
+  `claim ceiling`;
+- the one missing bounded closure, if the disposition is
+  `NEEDS_ONE_BOUNDED_PACKAGE`, plus the fallback if it fails.
+
+In a mixed package, evaluate each separable real-action lineage rather than
+copying the package terminal to every asset. A conventional comparator
+resolving one candidate does not erase a different deployable action chain
+that addresses an observed mismatch with valid evidence. Close the resolved
+candidate, then classify the surviving action on its own inputs, action,
+comparator, evidence, and missing closure. Use `SUPPORTING_ONLY` only when no
+real method chain survives or when its missing evidence is not one bounded
+closure.
+
+Estimator, calibration, threshold, branch-routing, computation-graph, and
+word-length changes are eligible when they form that complete action chain and
+support an honest scoped comparison. They are not rejected merely because
+they are not a new estimation primitive. Conversely, identity parity or a
+proxy resource count alone is supporting evidence, not a completed method.
+After the one bounded package, resolve the disposition; do not chain further
+packaging packages under the same label.
+
+When the best legal portfolio entry is `NEEDS_ONE_BOUNDED_PACKAGE`, select its
+single closure before method factory or strategic shortage. This is packaging
+an existing evidence-valid action, not serial formalization of a
+hypothesis-only candidate.
+
 ## Pre-formal method factory
 
 Use `PREFORMAL_METHOD_FACTORY` only when all of these are true:
@@ -215,6 +268,8 @@ After every accepted package record both:
 - `mission_method_delta` — `NONE`, `CONSTRUCT_CREATED`,
   `FAIR_COMPARISON_RUN`, `METHOD_SIGNAL`, `PACKAGING_BOUNDARY`, or
   `PROMOTION_READY`.
+- `thesis_method_disposition` — the independent chapter-capability outcome
+  defined above.
 
 A reliable negative, integrity repair, or provenance PASS may advance the
 formal disposition while `mission_method_delta` remains `NONE`. Never describe

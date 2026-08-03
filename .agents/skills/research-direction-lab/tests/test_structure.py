@@ -225,6 +225,38 @@ def test_contribution_tiers_keep_methods_components_and_support_distinct():
         assert phrase in combined
 
 
+def test_every_valid_package_gets_a_separate_thesis_chapter_capability_checkpoint():
+    method = (ROOT / "references/method-production.md").read_text(encoding="utf-8")
+    harvest = (ROOT / "references/thesis-harvest.md").read_text(encoding="utf-8")
+    skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
+    combined = " ".join((skill + "\n" + method + "\n" + harvest).split())
+
+    for status in (
+        "THESIS_METHOD_READY",
+        "NEEDS_ONE_BOUNDED_PACKAGE",
+        "SUPPORTING_ONLY",
+        "REJECT",
+    ):
+        assert f"`{status}`" in combined
+    for required_field in (
+        "thesis_method_disposition",
+        "method name",
+        "M-C-A",
+        "deployable input → action → output",
+        "algorithm steps or flowchart",
+        "ablation",
+        "main result figure",
+        "claim ceiling",
+    ):
+        assert required_field in combined
+    assert "Do not wait for a `METHOD_SIGNAL`" in combined
+    assert "does not create an active scientific carrier" in combined
+    assert "Invalidated evidence routes to `REJECT`" in combined
+    assert "each separable real-action lineage" in combined
+    assert "does not erase a different deployable action chain" in combined
+    assert "before method factory or strategic shortage" in combined
+
+
 def test_long_horizon_persistence_has_a_small_current_snapshot_and_detail_boundary():
     control = (ROOT / "references/long-horizon-control.md").read_text(encoding="utf-8")
     normalized = " ".join(control.split())

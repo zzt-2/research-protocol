@@ -105,3 +105,21 @@ revision; round 1 needed no Skill revision.
 - Post-hoc behavior scorer: `tests/score_probe_recovery.py`. It records RED→GREEN for Probe cost and semantic completeness, and PASS for bounded current-view recovery. It is explicitly post-hoc, not mislabelled as preregistered.
 - Independent terminal review first returned PARTIAL and found three P1 gaps: summary-only forward evidence, dangling/cross-entity disposition replacement, and raw-ledger STATUS consumption. Repairs added verbatim runs + scorer, strict current-disposition replacement, adapter-bound `--harvest-current`, and inactive-harvest filtering.
 - Fresh full Skill gate after repairs: 90 passed, 1 environment skip.
+
+# Thesis method packaging gate — 2026-08-03
+
+- **RED**: a deterministic structural test added before the Skill edit failed
+  against source commit `5b69a0e` because no mandatory thesis
+  chapter-capability checkpoint or `THESIS_METHOD_READY` state existed.
+- **GREEN**: 2/2 retained fresh-context, read-only responses preserved the
+  separable receiver-visible adapter as `NEEDS_ONE_BOUNDED_PACKAGE`, kept
+  `METHOD_SIGNAL=0` and active scientific carrier=0, and routed its one bounded
+  closure before method factory/strategic shortage.
+- Blind prompt: `tests/forward/runs/thesis-method-packaging-gate/prompt.md`;
+  PASS criteria were hidden in the separate post-hoc `scorer.md`.
+- Source identity and RED output:
+  `tests/forward/runs/thesis-method-packaging-gate/red-receipt.md`.
+- Agent identity/access and verbatim GREEN responses:
+  `tests/forward/runs/thesis-method-packaging-gate/green-responses.md`.
+- Exploratory samples without retained raw responses are explicitly
+  non-authoritative and carry no sample-count claim.
