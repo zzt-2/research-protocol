@@ -775,3 +775,71 @@ CCISP 当前正文与实现均采用两层规则：CV 条件先产生直接 NDA 
 ### 来源
 
 S017；用户在确认语义不一致后授权修改，并要求保留其连线微调。
+
+## D023: CCISP→学位论文唯一推荐 blueprint（一个主方法 + 鲁棒性边界 + 实现验证）
+
+> status: active
+> date: 2026-08-03
+> 取代：无
+> 被取代：无
+> 依据: 调研 campaign-level-thesis-contribution-synthesis.md (D058/V084 authority) + 调研 conference-to-thesis-map.md (本轮 R023) + 对照 ccisp_family1_*_30seed.json 权威 raw + 用户原话 voice.md 2026-08-03
+
+### 决策
+
+CCISP 会议稿作 Ch3 主锚，学位论文唯一推荐结构 = Ch1 绪论 / Ch2 系统模型 / Ch3 CCISP adaptive CPR 主方法 / Ch4 selector 鲁棒性边界 / Ch5 branch-routed+定点+coded 实现 / Ch6 结论。**不产第二算法**（与 campaign synthesis `NO_SECOND_CONTRIBUTION_YET` 一致）。Ch4 = 鲁棒性边界研究贡献（成立，但非新算法）；Ch5 = 部署实现贡献（成立，限定实现可行性，无 FPGA 资源/功耗声称）。
+
+### 理由
+
+- 资产匹配：A01 主方法(T3) + A02–A06 鲁棒性(T1) + A07–A09 实现(T1) 天然填满 Ch3/Ch4/Ch5。
+- claim ceiling 对齐：学位论文接受"主方法+鲁棒性深化+实现验证"，不要求新算法/新理论。
+- 与用户 profile 一致：D005 务实可毕业 + brief "不重新找第二方法" + "复杂流程先完整蓝图"。
+- AMC（D009）已冻结确认无第二主方法；G1（D057）/P09（D053）invalidated 不晋级。
+
+### 排除的替代方案
+
+- **Package B（journal extension）**：当前不足（无新机制/新理论，Ch3 与会议稿重复过高，Ch5 ceiling 受限），本轮不投、venue=N/A。
+- **Package C（branch-routed engineering note）独立成稿**：74.6% 单条件不可写，无 FPGA 数据，归入 Ch5。
+- **Package D（负面边界论文）独立成稿**：负面多为 LOCAL_SLICE，无统一 benchmark 理论，归入 Ch4。
+- **第二算法路线**：campaign D058 饱和 + AMC D009 冻结，不开。
+
+### 影响范围
+
+- 5 个 packaging dossier 文件落盘 `projects/thesis-fso/direction-lab/harvest/`（conference-to-thesis-map / asset-claim-matrix / figure-table-plan / journal-extension-readiness / bounded-package-recommendation）。
+- 不修改 CCISP tex / 正式 thesis / 仿真代码 / results / Skill / dormant campaigns。
+- 本决策只定蓝图，WRITE 需后续新合同 + 用户批准。
+
+### 来源
+
+R023（本轮 CCISP→thesis extension packaging DIAGNOSE/PROPOSE）；用户 brief 2026-08-03。
+
+## D024: 唯一推荐下一执行小包 = 统一鲁棒性表（P01 adapter + P04 continuous GG）
+
+> status: active
+> date: 2026-08-03
+> 取代：无
+> 被取代：无
+> 依据: 调研 bounded-package-recommendation.md (本轮 R023) + 验证 P01/P04 现有数据 READY (D040/D042) + 用户原话 voice.md 2026-08-03
+
+### 决策
+
+若用户批准执行，唯一推荐下一执行小包 = 统一鲁棒性表（P01 SNR-adapter + P04 continuous GG），直接增强 Ch4。预注册 PASS/FAIL：P01 adapter 恢复 ≥4/5 + P04 连续 GG held-out pooled regret < MDE 0.15 dB；FAIL 仍写成边界（合规）。**本轮只诊断不派实验**，执行需新对话+新合同(T###)+用户批准。
+
+### 理由
+
+满足 brief 推荐包 8 条标准全核（增强 Ch4 / 复用 CCISP anchor / 不开新方向 / 不需新 channel-coded infra / 有传统 comparator(region retune+fixed-NDA) / 有预注册 PASS-FAIL / 失败仍合规 / 不制造第二算法）。
+
+### 排除的替代方案
+
+- **full-grid branch-compute timing**：需 warm-up/重复/多条件新跑；74.6% 单条件不可写；Ch5 已有 990/990 bit-exact 支撑，timing 锦上添花。
+- **float-vs-Q BER**：claim ceiling 仍数值精度（非 FPGA）；Q-vs-oracle regret 已够 Ch5 T3。
+- **coded freeze rerun**：coded 是通用设施非主线；PARTIAL 不影响 Ch3/Ch4。
+- **figure/table regeneration**：纯 RECOMPUTE_ONLY 非"小验证"，归 Ch3 写作流程。
+
+### 影响范围
+
+- 标定 Ch4 下一执行入口；执行守 FR-22（Ch4 鲁棒性是 GW Step 4a 维度 D 延伸）+ D040/D042（A/C-family 封顶/首包，不 rename-reopen）+ sim-preflight。
+- 本轮不执行，只定推荐。
+
+### 来源
+
+R023；用户 brief 2026-08-03。

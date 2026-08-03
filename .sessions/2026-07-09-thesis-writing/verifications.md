@@ -313,3 +313,38 @@ PASS。Fig.2 两层控制资产及同步后的 Fig.1 v5 已达到技术嵌入门
 ### 后续
 
 向 CCISP 内容补强主控回传新资产路径和 V011；论文实际引用从 v3 切换到 v5、caption 联动与最终编译由主控执行。
+
+## V012: CCISP→学位论文 extension packaging 诊断独立终验
+
+> status: PASS
+> date: 2026-08-03
+> 关联: R023 / D023 / D024
+
+### 验证范围
+
+独立 fresh-context verifier（未参与本轮 dossier 编写）按 brief 14 项核查清单逐项验证。结论 **14/14 PASS**。
+
+### 验证项
+
+1. PASS — CCISP 是完整会议稿（main.tex + sections/* + V026/V027/V028 PASS）。
+2. PASS — 合法 headline 数字（abstract/results: 9 dB / 0.8–1.5 dB / fixed NDA / common-payload BER-ratio / 30 seeds / 400 windows / 三档 downlink）。
+3. PASS — 旧撤回数字未复活（26/29/uplink/1.2–1.9/3.1 dB/旧 error floor 全在"禁止复活/withdrawn"语境，无当真复活）。
+4. PASS — tracked main.pdf 非权威（hash 56f2fb… ≠ V026 D5EC13FE… ≠ V028 06D45979…）；权威 = LaTeX 源 + V026–V028。minor 表征偏差：dossier 写"旧 7/8 页构建"，实际 main.log 现为 5 页（历史构建痕迹），核心主张 TRUE。
+5. PASS — 投稿状态 = CONFERENCE_MANUSCRIPT_COMPLETE / SUBMISSION_STATUS_UNKNOWN，无投稿编号/回执/录用；未声称已投/已录。
+6. PASS — P01/P02/P04 确与 CCISP 两阶段 selector 主线相关（worker-logs/decisions 明示 selector robustness）。
+7. PASS — P03 定点 = 仅数值精度/实现可行性（无 FPGA LUT/DSP/功耗）；P08-R2 coded = PARTIAL（无 pre-test freeze receipt，D051）；均非新算法。
+8. PASS — G1（D057）/P09（D053）INVALIDATED 仅 threats-to-validity；AMC（D008/D009）背景一句不进主包装。
+9. PASS — Package A/B/C/D 各有统一中心问题。
+10. PASS — 唯一 thesis blueprint（Ch1–Ch6，非菜单）；明确答 Ch4 鲁棒性贡献（非新算法）、Ch5 实现贡献（限定）、不需要第二算法。
+11. PASS — 唯一小包（统一鲁棒性表 P01+P04）有价值非重复：预注册 PASS/FAIL、增强 Ch4、复用 anchor、不开新方向、3 个不推荐包均有理由。
+12. PASS — git status 改动仅限 5 harvest dossier + .sessions thesis-writing（R023/decisions/voice/topic-index）+ 既有 p05_run*.log；**未改** CCISP tex/results/仿真代码/Skill。
+13. PASS — 治理一致：R023 存在、D023/D024 带 依据、voice.md 2026-08-03 段、topic-index 三处更新；_registry.yaml 未新开专题（续 thesis-writing）；未放 AMC 专题。
+14. PASS — `git diff --check` exit 0，无空白错误。
+
+### 结论
+
+PASS（14/14）。本轮 packaging 诊断内部一致、证据支撑、守保护路径。minor 表征偏差（main.pdf 页数标签）不影响核心主张。
+
+### 来源
+
+独立 fresh-context verifier agent（agent_d9c184ce），2026-08-03，未参与 dossier 编写。

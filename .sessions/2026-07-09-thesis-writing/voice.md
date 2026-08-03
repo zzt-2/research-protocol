@@ -169,3 +169,14 @@
 - "中央公式框换成文字框吧？简短概况这是啥?或者用个什么图案？" → D021
 - "我微调了下线。你说啥？fig2要改吗" → D022
 - "改吧" → D022
+
+## 2026-08-03
+- "执行 CCISP adaptive CPR conference-to-thesis extension mapping" → R023
+- "以已完成的 CCISP 2026 会议稿为成熟主锚；将后续长程 campaign 资产重新映射为鲁棒性、部署实现和可信验证扩展"
+- "判断哪些内容能直接进入学位论文，哪些可形成 journal extension；找出真正只差的小实验，而不是重新找第二方法"
+- "输出唯一推荐的包装蓝图和下一执行包"
+- "不修改正式论文正文，不跑新实验，不重审'DA/NDA 是否存在'，不启动 AMC 或新方法搜索"
+- "venue 未指定，写 venue=N/A，不查询或假设具体期刊要求"
+- "本轮不修改：CCISP tex / 正式 thesis / 仿真代码 / results / Skill / dormant campaigns。只做诊断和包装合同"
+- "一次统一 commit，不 push。四个 p05_run*.log 不动"
+- "最终只汇报五项"（约束汇报范围）

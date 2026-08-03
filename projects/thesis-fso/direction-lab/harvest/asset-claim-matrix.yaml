@@ -1,0 +1,238 @@
+# Asset-Claim Matrix
+# 2026-08-03 | 关联: conference-to-thesis-map.md
+# 每项资产 → 可写 claim ceiling + 口径合规性 + 部署 (READY/RECOMPUTE/SMALL_VAL/NEW_INFRA/INVALIDATED)
+# 本文件是 packaging 的"证据-声称"账本。任何 dossier 引用资产前必须核对此处 ceiling。
+
+schema_version: "1.0"
+authority:
+  conference_paper: "projects/simulation/paper/ccisp2026/main.tex + sections/*"
+  conference_verification: "V026/V027/V028 (5-page authoritative)"
+  campaign_synthesis: "projects/thesis-fso/direction-lab/harvest/campaign-level-thesis-contribution-synthesis.md"
+  campaign_decision_authority: "D058 (SATURATED_NO_ACTIVE_CARRIER / DORMANT)"
+  legal_caliber:
+    scenes: [weak, moderate, strong]   # 三档 downlink
+    alpha_beta: {weak: [11.6, 10.1], moderate: [4.0, 1.9], strong: [4.2, 1.4]}
+    sigma_R2: [0.2, 1.6, 3.5]
+    headline_point_db: 9
+    headline_range_db: "0.8-1.5"        # 三档全正
+    comparator: "fixed NDA, common-payload BER-ratio"
+    montecarlo: "30 seeds x 400 windows, 768-bit common payload"
+    selector: "two-stage: CV gate + fixed 13 dB effective-SNR"
+    execution: "select-before-execute, single DA/NDA branch per 256-sample window"
+  forbidden_revival:                      # 禁止复活口径（本轮不得在任何 dossier 出现）
+    - "26/29 (aggregate proximity proxy, withdrawn by D018/V026)"
+    - "uplink scenarios (withdrawn by D018)"
+    - "1.2-1.9 dB / 3.1 dB total-energy headline (withdrawn, superseded by 0.8-1.5 dB common-payload)"
+    - "old error-floor claim (narrowed by V019 to 'residual turbulence-limited BER over evaluated SNR range')"
+    - "Fig.5 'BER reduction' old axis label (superseded by G_C common-payload)"
+
+# =============================================================================
+# Tier legend (from campaign-level synthesis)
+#   T3 = main-method-tier (only asset 1: CCISP adaptive CPR)
+#   T1 = deployment/boundary-tier (implementation-correct evidence, NOT new algorithm)
+#   T0 = unauthorized-dev-only / methodology-counter-example (NOT in main packaging body)
+# =============================================================================
+
+assets:
+  # ---------- Ch3 main method (T3) ----------
+  - id: A01
+    name: "CCISP adaptive CPR (two-stage selector, select-before-execute)"
+    tier: T3
+    status: validated
+    asset_locations:
+      - "projects/simulation/paper/ccisp2026/sections/method.tex"
+      - "projects/simulation/results/ccisp_family1_selector_a_30seed.json (authority, 990 cells)"
+      - "projects/simulation/results/ccisp_family1_formal_verification.json (A/B 990/990 exact)"
+    claim_ceiling:
+      - "9 dB common-payload BER-ratio reduction over fixed NDA ~0.8-1.5 dB across 3 downlink regimes"
+      - "benefit concentrated in low-to-intermediate SNR; approaches 0 at high SNR"
+      - "single frozen control boundary across 3 regimes (no turbulence-specific retuning)"
+      - "high-SNR error floor rises with turbulence severity"
+    implementation_truth:
+      information_access: "controller reads only raw |r|^2 and nominal SNR; NDA ambiguity resolution uses tx_bits (BER-eval-only, not in controller/statistic) [disclosed in method.tex:35]"
+      metric_signature: "768-bit common non-pilot payload, paired-seed G_C=10log10(fixed_nda_errors/selected_errors) [results.tex Eq.(7)]"
+      state_lifecycle: "per-256-sample window independent realization; within-window continuous phase [system_model.tex:35]"
+    deployment: READY                      # headline machine-checkable from authority raw
+    notes: "headline number recompute-able deterministically from selector_a JSON (no precomputed gain_db field, but 1-line recompute). NO second algorithm produced by campaign."
+
+  # ---------- Ch4 robustness / boundary (T1, merged NOT 7 innovations) ----------
+  - id: A02
+    name: "P01 SNR-mismatch robustness"
+    tier: T1
+    status: valid_local_boundary
+    asset_locations:
+      - "projects/thesis-fso/worker-logs/step-028-p01-cpr-snr-mismatch.md"
+      - ".sessions/2026-07-23-research-direction-lab-longitudinal-test/T028-p01-cpr-selector-snr-mismatch-robustness.md"
+    claim_ceiling:
+      - "5 substantial-harm cells at delta=+/-3: 0.32-0.70 dB damage (weak@11 +3 = -0.704 dB worst)"
+      - "receiver-visible pilot-SNR adapter recovers 4/5 cells (+0.002 to +0.384 dB net); weak@9 residual -0.323 dB (adapter own ~-2.5 dB bias floor)"
+      - "terminal: NO_DIAGNOSTIC_SIGNAL; cand_rank conditional signal +0.32 to +0.43 dB weak/low-SNR only, not pooled-stable over MDE 0.15"
+    deployment: READY                      # data exists, needs unified-table recompute (see bounded-package)
+    chapter: Ch4
+    ruling: "D040 closed A-family (SNR-mismatch/region-retune/cand_rank/weakretune axes CLOSED, TL-30 forbids rename-reopen)"
+    not_a_new_algorithm: true
+
+  - id: A03
+    name: "P02 region retuning (weak 9->11 dB)"
+    tier: T1
+    status: valid_local_boundary
+    asset_locations:
+      - ".sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md (D040)"
+    claim_ceiling:
+      - "weakretune vs adapter = +0.4539 dB; cand_rank vs adapter = +0.3578 dB; cand_rank vs weakretune = -0.0961 dB (|mean|<=MDE, indistinguishable)"
+      - "terminal: PROBLEM_RESOLVED_BY_REGION_RETUNING"
+    deployment: READY
+    chapter: Ch4
+    framing: "design rule / traditional-enhancement boundary (NOT new algorithm). 'gamma-magnitude-free stage-1 boundary weak/low-SNR gain can be replaced by cheap region-threshold retune.'"
+    ruling: "D040 A-family cap reached; axis CLOSED"
+
+  - id: A04
+    name: "P04 continuous GG applicability boundary"
+    tier: T1
+    status: valid_local_boundary
+    asset_locations:
+      - ".sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md (D042)"
+    claim_ceiling:
+      - "held-out pooled interior regret +0.1459 dB, CI [+0.0827, +0.2090] (exists but < MDE 0.15)"
+      - "NOT OOD-specific: regret is flat selector property, decreases monotonically with sigma_R2 (weak-side anchors +0.23-0.98 dB > interior; strong-side < 0.15, gamma=13 dB turns negative)"
+      - "terminal: PROBLEM_ABSENT_ON_CONTINUOUS_GG"
+    deployment: READY
+    chapter: Ch4
+    framing: "selector applicability boundary on continuous GG (AWGN-fitted CV boundary does not produce OOD-specific regret)"
+    future_work_seed: "weak-side-low-SNR sub-region (sigma_R2 0.3-1.35 x gamma 5-11, 9/30 cells > MDE) overlaps closed A-family, downgraded not promoted"
+
+  - id: A05
+    name: "P11 strong-traditional comparator boundary (Butterfly FIR / complex-LS)"
+    tier: T1
+    status: valid_local_boundary
+    asset_locations:
+      - "projects/simulation/explore/pilot-jones-step4a/ (B0/B1/B2 ladder)"
+      - ".sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md (D056)"
+    claim_ceiling:
+      - "complex LS matches/exceeds B0 at 1% pilot (B2 batch); Butterfly FIR's Adam overhead unnecessary"
+      - "terminal: PROBLEM_RESOLVED_BY_COMPLEX_LS"
+      - "P11 = fixed 20 dB PARTIAL only (NOT 9-15 dB; generator has no gamma param, default 100)"
+    deployment: PARTIAL
+    chapter: Ch4
+    framing: "strong traditional comparator absorbs the ML mods; Ch3/Ch4 boundary evidence"
+
+  - id: A06
+    name: "P05-P07-R local negatives (merged boundary pack)"
+    tier: T1
+    status: valid_local_boundary
+    asset_locations: "various worker-logs (see thesis-map)"
+    claim_ceiling: "LOCAL_SLICE only; ceiling = local slice, not campaign-generalizable"
+    deployment: READY
+    chapter: Ch4
+    framing: "merge into ONE robustness/boundary table; only negatives that directly explain selector/receiver design boundary enter body, rest to appendix/limitations"
+
+  # ---------- Ch5 implementation verification (T1) ----------
+  - id: A07
+    name: "P03 fixed-point (Q(8,6) bit-true identity)"
+    tier: T1
+    status: partial
+    asset_locations:
+      - "projects/thesis-fso/worker-logs/step-030-p03-fixed-point-codesign.md"
+      - "projects/simulation/explore/nda-awgn-tracking-sandbox/_p03_fixed_point.py"
+      - "results/p03_fixed_point_codesign/phaseA_uniform.json"
+    claim_ceiling:
+      - "Q(8,6) decide_fp byte-exact to A.decide: 0/132000 per-window mismatches (3 scenes x 11 SNR x 10 dev seeds x 400 windows)"
+      - "gain-bearing regret (8,6)=+0.027 dB, (16,14)=+0.022 dB, (6,4)=+0.107 dB (all < MDE 0.15 at (8,6)+)"
+      - "mixed-precision best two_exp(8,6) advantage over uniform = +0.0166 dB (9x below MDE); mixed_strictly_better_by_mde = []"
+      - "uniform Q-format floor: regret plateaus +0.1895 dB from (12,10) on held-out"
+      - "resource_proxy: op x bit and storage-bit are DETERMINISTIC SUMS only (resource_proxy_note: NO real synthesis, LUT, DSP, power, area)"
+    forbidden_claims:
+      - "NO real FPGA LUT/DSP/power/throughput (claim ceiling = numerical precision / implementation feasibility only)"
+      - "NO float-vs-Q absolute BER curve exists (only Q-vs-oracle regret on FROZEN per-window errors)"
+    deployment: SMALL_VALIDATION              # float-vs-Q BER on formal CCISP grid needs new run
+    chapter: Ch5
+    ruling: "D041 PROBLEM_RESOLVED_BY_UNIFORM_PRECISION"
+    missing: "float-vs-Q absolute BER under actual payload on formal CCISP three-regime full-grid"
+
+  - id: A08
+    name: "branch-routing (route B select-before-execute)"
+    tier: T1
+    status: validated_as_code_path_regression
+    asset_locations:
+      - "projects/simulation/explore/nda-awgn-tracking-sandbox/_a4_branchrouted_30seed.py:365-402 (decide then single-branch execute)"
+      - "projects/simulation/results/ccisp_family1_branchrouted_b_30seed.json (authority, 990 cells, NO timing fields)"
+      - "projects/simulation/explore/nda-awgn-tracking-sandbox/_a4_branchrouted_30seed_snr5_25_step2.json (OLD-params diagnostic, HAS timing fields, authority=NONE)"
+    claim_ceiling:
+      - "990/990 selector-output bit-exact (route B vs route A) at OLD params (V011); rebound to formal params authority signature (V015), 990/990 exact"
+      - "decide-then-execute confirmed: only SELECTED branch computed per window"
+      - "74.6% branch-compute saving = single-condition (weak@5 dB) diagnostic ONLY; NOT total-receiver complexity, NOT multi-condition, NOT end-to-end"
+    forbidden_claims:
+      - "74.6% NOT writable as-is (needs warm-up/repetition/multi-condition/end-to-end boundary before paper)"
+      - "non-genie deployability BLOCKED (NDA still uses tx_bits ambiguity resolution)"
+    deployment: RECOMPUTE_ONLY               # full-grid formal branch-compute timing needs new run
+    chapter: Ch5
+    critical_cross_verify: "OLD-params diagnostic JSON has full-grid (33-cell) branch_compute_per_window_sec_mean+ci95 but NO authority block; formal B JSON (authority) has NO timing fields. Full-grid formal timing = NEW run (warm-up + repetition + multi-condition)."
+
+  - id: A09
+    name: "P08-R2 coded receiver-visible chain"
+    tier: T1
+    status: partial
+    asset_locations:
+      - "projects/simulation/explore/.../p08r2_chain.py, p08r2_metamorphic_gate.py, p08r2_verify.py"
+      - "results/p08r2_receiver_info_repair/*"
+    claim_ceiling:
+      - "5G NR LDPC BG2 (3GPP TS 38.212) + true 3GPP sub-block+triangle bit-interleaver + Gray-16QAM BICM + prefix-LS (32-sym) + receiver-visible sigma^2_pre/gamma_vis MMSE"
+      - "hidden-gamma metamorphic gate (flip gamma_bar 6->22 dB -> Delta=0.00e+00 exact-zero) + recursive AST verifier (forbidden_set={gamma_bar,h_truth,theta})"
+      - "corrected-chain test (40 traj, weak@1000Hz@12dB): B0 FER=0.155, B2=0.148, O2=0.139; Delta(B0-B2)=+0.0063 CI[+0.0008,+0.0141] hw=0.0066 << MDE 0.05"
+    forbidden_claims:
+      - "NO independent pre-test freeze receipt (D051 chronology fail-closed); accepted_valid_packages 8->7"
+      - "terminal: STOPPED_WITH_PARTIAL_ASSET (no P08-R3; no coded/interleaving rename-reopen)"
+    deployment: NEW_INFRASTRUCTURE_for_freeze   # freeze rerun = new controlled run
+    chapter: Ch5_or_appendix
+    framing: "GENERAL VERIFICATION FACILITY (dual-pol 16QAM + GG/SOP, separate from DA/NDA CPR selector). Belongs in Ch5/appendix as verification infrastructure, NOT merged into selector method."
+
+  # ---------- T0 (NOT in main body) ----------
+  - id: A10
+    name: "AMC Q-A/Q-A'/Q-B (adaptive modulation coding)"
+    tier: T0
+    status: frozen_background_only
+    asset_locations:
+      - ".sessions/.../amc.../decisions.md (D008 authorization-lineage fix, D009 freeze)"
+    claim_ceiling:
+      - "Q-A: STOPPED_INCONCLUSIVE_TESTBED_ACTION_MISMATCH (oracle fer 8e-3~2.2e-1 >> 1e-6, hypothesis not falsified but untestable)"
+      - "Q-A': HARVEST_ONLY_ENGINEERING_SEED (corrected_v2 retained as seed, NOT in body; contract param bug line 362)"
+      - "Q-B: STOPPED_BASELINE_AND_TESTBED_UNAVAILABLE (no legitimate baseline + testbed >= 3 NEW_INFRASTRUCTURE)"
+      - "terminal: AMC_GROUNDWORK_SATURATED_NO_MAIN_METHOD / DORMANT"
+    deployment: INVALIDATED_for_packaging      # NOT in main packaging body
+    framing: "background-only: 'why not continue expanding direction' justification. NOT a method. Q-A' at most 1-sentence future-work if user authorizes new GW."
+
+  - id: A11
+    name: "G1 scale-artifact (signal invalid)"
+    tier: T0
+    status: invalidated
+    asset_locations:
+      - "projects/thesis-fso/direction-lab/harvest/g1-safe-gated-normalization-package.md"
+      - ".sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md (D057)"
+    claim_ceiling:
+      - "terminal: G1_SIGNAL_INVALID_SCALE_ARTIFACT (detector scale calibration, trivially solved by AGC; NOT problem C genuine state-dependent switching)"
+      - "NOT a method; count_excludes=groundwork_closure"
+    deployment: INVALIDATED
+    framing: "threats-to-validity / appendix methodology counter-example ONLY; MUST NOT promote to method"
+
+  - id: A12
+    name: "P09 consistency!=correctness"
+    tier: T0
+    status: invalidated
+    asset_locations:
+      - ".sessions/2026-07-23-research-direction-lab-longitudinal-test/decisions.md (D053)"
+    claim_ceiling:
+      - "terminal: EXECUTION_INVALID/KILL_C3 (6 load-bearing defects: (8,8) pi/4 symmetry, C3 accounting fraud, B_used constant, tx_bits truth-resolved, 0.10dB<->0.005BER off 12x, no paired CI)"
+      - "methodology counter-example (consistency!=correctness, 4th recurrence); H_BPS axis CLOSED"
+    deployment: INVALIDATED
+    framing: "appendix methodology counter-example ONLY; NOT a method"
+
+# =============================================================================
+# Cross-cutting ruling: NO_SECOND_CONTRIBUTION_YET
+# =============================================================================
+second_contribution_verdict:
+  status: "NO_SECOND_CONTRIBUTION_YET"
+  reasons:
+    - "no unified M-C-A across A02-A05 (independent deployment defects / boundaries)"
+    - "no 'useful' evidence, only 'correct' evidence (T2 requires engineering gain vs traditional impl)"
+    - "strong traditional baseline (A05) directly absorbs the ML mods"
+  implication: "thesis = ONE main method (Ch3, A01) + robustness boundary (Ch4, A02-A06) + implementation verification (Ch5, A07-A09). NO second algorithm. AMC (A10) future-work only with new GW."
