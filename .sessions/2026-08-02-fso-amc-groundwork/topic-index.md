@@ -1,6 +1,6 @@
 # Topic Index: 星地相干 FSO 自适应编码调制 (AMC) Groundwork
 
-> 状态: active | 创建: 2026-08-02 | 最后更新: 2026-08-03（**D005 Step 3 语义门纠偏 + R003 Step 3.5 竞争闭包完成**：旧 STEP3_NO_VALID_PROBLEM 用自创四判据标签 problem_truth/actionability/novelty/thesis_fit 当 terminal gate 被取代 → **STEP3_READ_COMPLETE_SEMANTIC_GATE_MISAPPLIED**；按 canonical 四判据 owner `stages/glossary.md` L22-31 + `templates.md` L301 重建 Q-A 预测驱动风险失配 + Q-B 动作位置-时间尺度失配；Step 3.5 定向检索 ~190 命中 + 引用链闭包后 **Q-A/Q-B 均 SURVIVES_STEP3_5 → 终态 STEP3_5_SURVIVES**；Q1 场景迁移/Q3 宽集合不晋级，Q4 Safi/Q5 L124 仍全文 BLOCKED；**保留** Step 2 PASS + 5 CORE 身份 + Safi·L124 blocker + 全文精读事实提取；**未进 Step 4a/MVE**；存在 Step 4a 入口但本轮不启动）
+> 状态: active | 创建: 2026-08-02 | 最后更新: 2026-08-03（**D006 Step 4a Q-A 实例化 KILL（MVE 证据驱动）完成，recommendation 待用户确认**：Q-B A0§0 判据3 致命暂存（无合法 coherent 星地 AMC baseline）；Q-A 唯一 survivor，A0§1-5 PASS / A0§6+A′/A/B 条件性通过；Phase C headroom probe（dev/test seed 隔离 + paired + metamorphic gate(a) PASS）+ V5 主线独立重算 → **C1 在 0/27 cells Pareto-dominate B1（传统 M 本体）**= 保守重缩放非前沿外推；**GG outage floor 5.74-19.79%（Galijasevic lognormal PSI=10 也有 15.60%）使 FER 1e-4 即使 oracle 不可达**；命中 2 预注册 Kill 条件 + 更深层诊断（主要失效=不可恢复 outage 非 prediction-uncertainty rate over-selection → Q-A 的 A 不是主要失效模式）；**family 不 Kill**（reframe(a)加 outage action 改 M=新 Q-A' / reframe(b)需 14.8-65.8dB 不可行，均需新 GW 周期）；可回收产出=probe 脚本 + outage-floor 诊断 + Pareto 评估方法；**未宣称 Groundwork 闭合**（5 CORE < ≥8 整体门）；不进 4b/5/Contract/Execute）
 
 ## 专题信息
 
@@ -81,7 +81,7 @@
 | 2 acquire | ✅（**STEP2_PASS_WITH_COHERENT_C_FAMILY_BLOCKED, D004/V005**）— 用仓库历史全文 Nguyen2024（IEEE TAES 2024，Crossref 验证 + SHA256 迁移，**非 OA** 机构授权）补到 **5 CORE 全文** | 2026-08-03 | 本轮统一 commit | **5 CORE 全文 ≥ 5 门槛**：L023/L096/L146/Galijasevic（D003）+ Nguyen2024（D004 本轮迁入）= 5 CORE；C 族 L124 仍 BLOCKED；Safi2019 PROVISIONAL abstract-only（不计门槛）；L075 classification（D003）；L165 AO / L090 fixed-STTC 边界；+ `_step2_acquisition_receipt.json`（12 篇，step2_verdict 更新，superseded_verdict 保留 BLOCKED 历史） | 进 Step 3 前必 ✅（5 ≥ 5，A/B 族 PASS；C 族 BLOCKED） |
 | 3 read | ✅ **STEP3_READ_COMPLETE_SEMANTIC_GATE_MISAPPLIED（S005/D005；旧 STEP3_NO_VALID_PROBLEM 因自创四判据标签被取代）** | 2026-08-03 | 本轮统一 commit | `projects/thesis-fso/literature_notes_amc.md`（canonical 四判据重建 Q#）+ 5 `papers/_read_notes/`（事实提取保留）；旧用 problem_truth/actionability/novelty/thesis_fit 当 terminal gate = Step 4a/MVE+3.5 证据前移循环门控；按 glossary/templates owner 重判 → **Q-A(预测驱动风险失配)+Q-B(动作时间尺度失配) Step 3 层 SURVIVES 待 3.5 闭包**；Q1 场景迁移/Q3 宽集合/Q2 切片重叠不晋级；Q4 Safi/Q5 L124 全文 BLOCKED | 进 Step 3.5 前必 ✅（完成；3.5 本轮执行）|
 | 3.5 supplement | ✅（**STEP3_5_SURVIVES，S005/R003**；Q-A/Q-B 均 SURVIVES）| 2026-08-03 | 本轮统一 commit | R003 定向检索（Q-A/Q-B 各 6 query + 引用链 ~190 命中）+ 竞争闭包表（§11）；Safi/L124 仍 BLOCKED；存在 Step 4a 入口但本轮不启动 | 进 Step 4a 前必 ✅ |
-| 4a feasibility | ⬜ | | | feasibility_report.md | 进 Step 5 前必 ✅ |
+| 4a feasibility | ✅(**STEP4A_QA_INSTANCE_KILLED_MVE_EVIDENCE, D006/V007, recommendation 待用户确认**) | 2026-08-03 | 本轮统一 commit | Q-A 唯一 survivor（Q-B A0§0 判据3 致命暂存）；A0§1-5 PASS / A0§6+A′/A/B 条件性通过；Phase C headroom probe（dev/test seed 隔离+paired+metamorphic gate(a)PASS）+ V5 主线独立重算：**C1 在 0/27 cells Pareto-dominate B1（传统 M 本体）**= 保守重缩放非前沿外推；**GG outage floor 5.74-19.79% 使 FER 1e-4 目标即使 oracle 也不可达**；命中 2 预注册 Kill 条件 + 更深层诊断（主要失效=不可恢复 outage 非 prediction-uncertainty rate over-selection）。**family 不 Kill**（2 reframe 路径均需新 GW 周期）。`projects/thesis-fso/amc-groundwork/feasibility_report.md` + probe 脚本/raw。**未宣称 Groundwork 闭合**（5 CORE < ≥8 整体门）| 进 Step 5 前必 ✅（**Q-A 当前实例化 KILL，须用户确认；Step 5 入口未开**）|
 | 5+ | ⬜ | | | — | — |
 
 ## 进展线索
@@ -107,16 +107,20 @@
 - **V006**：D005 + Step 3.5 终审验证（**本轮待写**，独立 verifier 核对 canonical owner + 竞争闭包 + 10 项 checklist）。
 - **H001**：Step 2 → Step 3 交接（**已被 D003 supersede，顶部加 banner**；交接前提"Step 2 PASS"不成立）。
 - **H002**：Step 3 终态 STEP3_NO_VALID_PROBLEM → Step 3.5 定向补充检索交接（**其前提"无 Q#"已被 D005 取代**；交接的"Step 3.5 是下一合法动作"方向正确，但理由从"无 Q#"改为"按 canonical 四判据 Q-A/Q-B SURVIVES 待 3.5 闭包"）。
-- **H003**：Step 3.5 终态 → Step 4a/用户决策 交接（**本轮待写**）。
+- **H003**：Step 3.5 终态 → Step 4a/用户决策 交接（已被本轮 S006/D006 执行交接内容；Step 4a 已执行）。
+- **S006**（本轮）：GW Step 4a Q-A — A0§0(Q-B 判据3致命暂存)/A0§1-6(PASS,§6条件性)/A′/A/B(条件性)/Phase C headroom probe + V5 独立重算 → **Q-A 实例化 KILL（recommendation）**，family 不 Kill，2 reframe 路径记录。
+- **D006**（新建）：Step 4a Q-A 实例化 KILL（MVE 证据驱动，非 oracle-Kill；C1 0/27 Pareto-dominate B1 + outage floor 5.74-19.79% 使 1e-4 不可达 + 命中 2 预注册 Kill 条件）；family 不 Kill；Q-B 判据3 致命暂存；2 reframe 路径均需新 GW 周期。
+- **V007**（新建）：D006 + Step 4a bounded MVE 独立终审（14 项 checklist：11 PASS + 3 PARTIAL，PARTIAL=CI未给/metamorphic gate(2)(3)(4)未显式跑/V1用阈值表绕过，均不改变 KILL 方向；V5 主线独立 scipy MC + raw 重算确认）。
+- **feasibility_report.md**（新建）：`projects/thesis-fso/amc-groundwork/feasibility_report.md`（Q-A Step 4a 完整 A0/A′/A/B/D + Kill 裁决 + 可回收产出）。
 
 ## 当前位置
 
-**Step 3 语义门纠偏（D005/R001）+ Step 3.5 定向检索进行中**。
+**Step 4a 终态 = Q-A 实例化 KILL（recommendation，待用户确认）**。
 
 - **Step 2（保留 D004）**: STEP2_PASS_WITH_COHERENT_C_FAMILY_BLOCKED（5 CORE 全文 L023/L096/L146/Galijasevic/Nguyen2024；C 族 L124 BLOCKED；Safi PROVISIONAL abstract-only）。
-- **Step 3（D005 纠偏）**: 旧 STEP3_NO_VALID_PROBLEM 因用自创四判据标签（problem_truth/actionability/novelty/thesis_fit）当 terminal gate 被取代 → **STEP3_READ_COMPLETE_SEMANTIC_GATE_MISAPPLIED**。R001 逐字核对 canonical 四判据 owner（glossary.md L22-31 SHA256 eafa43e3… + templates.md L301 SHA256 bdc93d41…）。按 canonical 四判据重建：**Q-A（预测驱动风险失配）+ Q-B（动作位置-时间尺度失配）Step 3 层 SURVIVES 待 3.5 竞争闭包**；Q1 场景迁移/Q3 宽集合/Q2 切片重叠不晋级；Q4 Safi/Q5 L124 全文 BLOCKED。Step 3 不再是"无 Q#"。全文精读事实提取 + 直接竞品矩阵 + 边界判定保留。
-- **Step 3.5（本轮执行）**: 2 个子 agent 并行（Q-A/Q-B 各 ≥6 query + 引用链 + Safi/L124 合法获取 + 合法星地 coherent baseline 确认），竞争闭包表 + closure verdict 待返回。详见 S005 + R003（待写）。
-- **未进 Step 4a/MVE/方法设计/仿真**（FR-22 + brief 明示到 Step 3.5 终态停止）。
+- **Step 3/3.5（保留 D005/R003）**: STEP3_READ_COMPLETE_SEMANTIC_GATE_MISAPPLIED + STEP3_5_SURVIVES（Q-A/Q-B 均 SURVIVES_STEP3_5）。
+- **Step 4a（本轮 D006/V007/S006）**: **STEP4A_QA_INSTANCE_KILLED_MVE_EVIDENCE**。Q-B A0§0 判据3 致命暂存；Q-A 唯一 survivor；A0§1-5 PASS / A0§6+A′/A/B 条件性通过；Phase C headroom probe + V5 主线独立重算 → **C1 在 0/27 cells Pareto-dominate B1（传统 M 本体）** + **GG outage floor 5.74-19.79% 使 FER 1e-4 即使 oracle 不可达** + 命中 2 预注册 Kill 条件 + 更深层诊断（主要失效=不可恢复 outage 非 prediction-uncertainty rate over-selection）。**family 不 Kill**（2 reframe 路径均需新 GW 周期，(b) 需 14.8-65.8dB 不可行）。feasibility_report.md 落盘 projects/thesis-fso/amc-groundwork/。
+- **未进 Step 4b/Step 5/Contract/Execute**（FR-22 + brief 明示）。**未宣称 Groundwork 闭合**（5 CORE < ≥8 整体门）。
 
 ## 未决项
 
@@ -128,15 +132,16 @@
 
 ## 下一合法动作
 
-**本轮 Step 3.5 终态 = STEP3_5_SURVIVES**（Q-A/Q-B 均 SURVIVES），已停止（brief 明示到 Step 3.5 终态停止）。
+**本轮 Step 4a 终态 = Q-A 实例化 KILL（recommendation，待用户确认）**。executor 不自行 Go/No-Go，已提交 recommendation。
 
-**下一合法动作 = GW Step 4a**（需新对话 + 用户授权；gw-feasibility §A0 §0 前置门控会再查 Q# 四判据）。**本轮未启动**。
-- Step 4a 启动前**建议优先关闭 3 个开放问题**（非硬前置）：(1) Q-A Safi 全文（IEEE 订阅/ILL）关闭 UNVERIFIED 尾巴；(2) Q-B 评估自建 coherent sat-ground GG 信道模型可行性（baseline 缺位）；(3) Galijasevic DOI 异常 + L023 backward citation 用正确 DOI/标题重跑。
-- **若用户不进 Step 4a**: 可调整 C 条件 / 换 AMC 子族 / 停止（跨阶段决策，禁 agent 自行放宽 C）。
+**待用户确认后的合法路径**:
+- **(i) 接受 KILL**: 评估 Q-B 自建 coherent 星地 AMC baseline 工程量（用户决策，多日工程）/ 调整 C 条件 / 换 AMC 子族 / 停止（跨阶段决策，**禁 agent 自行放宽 C**）。
+- **(ii) reframe（新 GW 周期，非本 Q-A 救援）**: (a) 加 outage/no-transmit action → 改变 M = 新问题 Q-A'（须回 GW Step 1-3 重新 M-C-A + 四判据）；(b) 提高 link operating point → 需 gamma_bar offset 14.8-65.8dB（不可行，提高后 AMC 可能 moot）。
+- **(iii) 补齐 Groundwork 整体门**: 当前 5 CORE < ≥8 整体完成门；缺 3 篇须进 Step 5 前补齐或用户处理。
 
-**禁止**（FR-22 硬门控）：
-- 本轮禁进 Step 4a/MVE/方法设计/仿真（brief 明示到 Step 3.5 终态停止；已遵守）。
+**禁止**（FR-22 硬门控）:
+- 本轮禁进 Step 4b/Step 5/Contract/Execute（brief 明示；已遵守）。
 - 禁 agent 自行放宽 C 条件（coherent+GG+coded-chain+info-uncertainty）—— 跨阶段决策须用户/导师定。
-- 禁把 Nguyen/L096/Galijasevic/Safi 已覆盖的宽泛问题（rate/power、HARQ-rate、coding-rate+prediction）重新命名为空白（FR-23）。
-- 禁据 abstract 推导 Safi/L124 的失效机制（D003/D005）。
-- 禁用自创四判据标签（problem_truth/actionability/novelty/thesis_fit）当 terminal gate（D005）；四判据唯一 owner = glossary.md + templates.md。
+- 禁 agent 自行 Go/No-Go（executor 只提交 recommendation，等用户确认）。
+- 禁把 Q-A 当前实例化的 KILL 当作 "AMC family 全死"（family 不 Kill；reframe 路径 open）。
+- 禁用自创四判据标签当 terminal gate（D005）；四判据唯一 owner = glossary.md + templates.md。

@@ -624,7 +624,7 @@ topics:
     title: 星地相干 FSO 编码自适应与 AMC Groundwork
     status: active
     created: "2026-08-02"
-    last_updated: "2026-08-03（D005 Step 3 语义门纠偏：旧 STEP3_NO_VALID_PROBLEM 用自创四判据标签 problem_truth/actionability/novelty/thesis_fit 当 terminal gate 被取代，修订为 STEP3_READ_COMPLETE_SEMANTIC_GATE_MISAPPLIED；按 canonical 四判据 owner glossary.md L22-31 + templates.md L301 重建 Q-A 预测驱动风险失配 + Q-B 动作时间尺度失配 两个候选 Step 3 层 SURVIVES 待 3.5 闭包；Q1 场景迁移/Q3 宽集合不晋级，Q4 Safi/Q5 L124 继续全文 BLOCKED；Step 2 PASS + 5 CORE + Safi·L124 blocker + 精读事实提取保留；执行 Step 3.5 定向检索+竞争闭包；未进 Step 4a/MVE）"
+    last_updated: "2026-08-03（D006/V007/S006 Step 4a Q-A 实例化 KILL MVE 证据驱动，recommendation 待用户确认：Q-B A0§0 判据3 致命暂存；Q-A 唯一 survivor，A0§1-5 PASS / A0§6+A′/A/B 条件性通过；Phase C headroom probe + V5 主线独立重算 → C1 在 0/27 cells Pareto-dominate B1（传统 M 本体）= 保守重缩放非前沿外推；GG outage floor 5.74-19.79% 使 FER 1e-4 即使 oracle 不可达；命中 2 预注册 Kill 条件 + 更深层诊断；family 不 Kill，2 reframe 路径均需新 GW 周期；feasibility_report 在 projects/thesis-fso/amc-groundwork/；未宣称 Groundwork 闭合 5 CORE<8；不进 4b/5/Contract/Execute）"
     description: "独立系统层 Groundwork 专题。承接 system 专题 2026-07-20-research-direction-lab-system D020 授权的 AMC_GROUNDWORK_TOPIC_CREATION，从 GW Step 1 重新开始。目标：星地相干 FSO + Gamma-Gamma 湍流 + 真实编码链/信息不确定性背景下找自适应编码调制/链路适配问题作毕业论文潜在第二项贡献。本轮只做 Step 1（两轮检索+逐条语义初筛+候选问题族地图+Step 2 shortlist），不进 Step 2-4a/不下载全文/不设计方法/不跑仿真/不产生 METHOD_SIGNAL。继承 9 条历史 dead-end 边界（ISL AMC prediction/反馈-相干时间/MCS 0.09dB/AMC+CPR 联合设计/交织·PS·N1·coded-chain/P08-R2 工程资产/DA-NDA CPR 现有主贡献/automatic-modulation-classification 假命中/AMC↔Ch4 BER 循环依赖）作先验，不复活。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system

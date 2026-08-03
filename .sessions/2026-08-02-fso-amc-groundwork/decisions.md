@@ -192,3 +192,30 @@ canonical 四判据（glossary L22-31 逐字）：①**具体技术矛盾**（M/
 **触发原话**: 用户执行提示词（2026-08-03）§"不接受当前 STEP3_NO_VALID_PROBLEM，原因不是论文读取失败，而是 Step 3 使用了错误的判据并产生循环门控"+"协议唯一合法的问题四判据必须从 owner 逐字读取，不得按本轮 prompt 转述自行重写"+ "`problem_truth/actionability/novelty/thesis_fit` 不是 owner 定义的四判据，不得继续作为 Step 3 terminal gate"。voice.md 已 verbatim 登记。
 
 **影响**: Step 3 终态 `STEP3_READ_COMPLETE_SEMANTIC_GATE_MISAPPLIED`；Phase B 按 canonical 四判据重建 Q-A/Q-B + Q1/Q3/Q4/Q5 verdict 映射；Phase C 执行 Step 3.5 定向补充检索（glossary 空集处置流程①）+ 竞争闭包；V005 标语义失效保留历史；topic-index GW Progress 表 Step 3 行修订 + Step 3.5 行开始；R001 receipt 落盘；不修改 Skill / dormant receiver / 4 个 p05 log。
+
+## D006: GW Step 4a Q-A 实例化 KILL（MVE 证据驱动）— family 不 Kill，2 reframe 路径记录
+
+> 2026-08-03 | status: active（待用户确认 Go/No-Go）| 取代: 无（Q-A 是首次 Step 4a 评估）| 被取代: 无
+> 依据: S006 + feasibility_report.md（projects/thesis-fso/amc-groundwork/）+ V007 + probe raw（projects/simulation/results/amc_q_a_risk_aware_rate/probe_headroom_raw.json）+ V5 主线独立重算
+
+**决策**: GW Step 4a 对唯一 survivor Q-A（预测驱动自适应编码的风险失配）执行 canonical 顺序 A0§0→A0§1-6→A′→A/B→D(headroom probe)。Q-B 在 A0§0 判据3 致命（无合法 coherent 星地 AMC baseline，须自建多日工程）暂存。Q-A 的 A0§1-5 全 PASS、A0§6/A′/A/B 条件性通过；Phase C headroom probe（dev/test seed 隔离 + paired + metamorphic gate (a) PASS）+ V5 主线独立重算闭合为 **recommendation = KILL（Q-A 当前实例化）**：
+
+1. **C1（risk-aware 候选）在 0/27 cells Pareto-dominate B1（Galijasevic 点预测 M 本体）** — 每 cell 是 TRADE（C1 更低 FER 违约但更低 goodput）= 保守重缩放，非 Pareto 前沿外推。**风险感知候选无法 Pareto-dominate 它要超越的传统 M。**
+2. **GG outage floor 5.74-19.79%（scipy N=2e6）使 FER 1e-4 目标结构上不可达，即使 oracle O1**（floor 是 2-3 量级高于目标）。Galijasevic 自身 lognormal PSI=10 也有 15.60% floor — 这是 Galijasevic 帧结构固有特性（块衰落下深衰使最低码率失败 + action ladder 无 outage/no-transmit 动作）。
+3. 命中预注册 Kill 条件（简单裕量覆盖 ≥95% 主指标 / 退化为静态 margin calibration）+ 更深层诊断（主要失效=不可恢复信道 outage，非预测不确定性驱动 rate over-selection → Q-A 的 A 不是主要失效模式）。
+
+**不 Kill family 的理由**: 当前 KILL 针对"Q-A 在 Galijasevic Table-1 阈值查表 + 无 outage action + 块衰落"具体实例化。失效模式诊断指出 2 reframe 路径（均需新 GW 周期，非本 Q-A 救援）:
+- Reframe (a): 加 outage/no-transmit action → 改变 M（Galijasevic 无此 action）= 新问题 Q-A'（须回 GW Step 1-3 重新 M-C-A + 四判据）。
+- Reframe (b): 提高 link operating point 使深衰不触底 → 需 gamma_bar offset **14.8-65.8 dB**（不可行；提高后 AMC 问题可能 moot）。
+
+**MVE 合规性（TL-32/FR-25）**: 这是 MVE 证据驱动 KILL（非 oracle-Kill）。未用 oracle 上界当 Go 判据；用 headroom probe（§D MVE-等价）证明候选无法 Pareto-dominate 传统 M 本体。符合 profile "务实可毕业 / Go=赢传统未优化 baseline / 候选连赢传统 M 都做不到 → KILL"。
+
+**可回收产出**（避免沉没成本归零）: probe 脚本（dev/test 隔离 + Table-1 阈值查表 + 7-method ladder）；outage-floor 诊断（GG 中强湍流 + 无 outage action 使 FER 目标不可达，可引用研究发现）；baseline ladder + Pareto-frontier 评估方法论。
+
+**保留（继续有效）**: D005 的 canonical 四判据框架 / Step 2 PASS / 5 CORE 身份 / Safi·L124 全文 blocker / Step 3.5 竞争闭包表 / 全文精读事实提取。Safi UNVERIFIED 尾巴不再阻塞（Q-A 已 KILL）。
+
+**Q-B 状态**: A0§0 判据3 致命暂存。Q-B 进 §1-6 须先自建合法 coherent 星地 AMC baseline（多日工程，brief 预注册 Kill 条件之一）。本轮不并行搭建。
+
+**触发原话**: 用户执行提示词（2026-08-03）§"对 Q-A 完成 A′、A、B"+"只有全部前置门无致命项时，运行一个 bounded MVE"+"oracle 只作 Kill/headroom bound，不作 Go 判据"+"若 B2/B3/B4 已在主指标上覆盖候选或 oracle 空间的 ≥95%，直接 RECOMMEND_KILL_OR_ENGINEERING_COMPONENT"+"executor 不能自行最终 Go/No-Go，只能提交 recommendation，等待用户确认"。voice.md 待登记。
+
+**影响**: feasibility_report.md（projects/thesis-fso/amc-groundwork/）落盘；topic-index GW Progress 表 Step 4a 行填入；literature_notes_amc 步骤进度表 Step 4a 行填入；master-state §2 AMC 段更新 Step 4a 终态；S006 + V007 落盘；probe 脚本 + raw 落盘 projects/simulation/explore|results/amc-q-a-risk-aware-rate|amc_q_a_risk_aware_rate；不修改 common/ params.py / 正式论文结论 / Skill / dormant receiver / 4 个 p05 log。**未宣称 Groundwork 闭合**（5 CORE < ≥8 整体完成门）。下一合法动作待用户确认（接受 KILL / reframe / 调整 C / 换子族 / 停止）。

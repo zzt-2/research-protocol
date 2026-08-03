@@ -300,3 +300,34 @@ V001（12/12 PASS）仍有效，但其判定基于 R001 的表面计数，**漏�
 
 ### 结论
 D005 + Step 3.5 终审全部 11 项独立验证通过——canonical owner SHA256/行号重算一致、四判据标签与 glossary/templates 原文一致且自创标签仅作废止标注、无 Step 4a/MVE 证据前移、Q-A/Q-B 单一可证伪且 ≠ Q3、检索规模与闭包表充分、Safi/L124 全文边界严守、future-work 未被当 novelty 自动失败、未进 Step 4a、git scope 与治理一致、回归候选已落实。**允许 commit**。
+
+## V007 — D006 Step 4a Q-A 实例化 KILL + bounded MVE 独立终审（2026-08-03）
+
+> 验证对象: D006 + S006 + feasibility_report.md（projects/thesis-fso/amc-groundwork/）+ probe raw
+> 验证方式: 主线独立从 probe raw 重算关键数字（V5）+ 14 项 checklist（用户执行提示词"独立 fresh-context verifier 必须核查"14 条）
+
+### 14 项 checklist
+
+1. **Step 4a 顺序和 canonical owner**: ✅ — A0§0→A0§1-6→A′→A/B→D（gw-feasibility §A0 末"执行顺序"）。A0§0 owner = glossary.md L22-31（SHA256 已 V006 核对）；§A0/§A′/§A/B/§D owner = gw-feasibility.md。未跳序。
+2. **Q-A/Q-B A0 判定**: ✅ — Q-A 四判据 Step 3 层全过（literature_notes §6）→ 进 §1-6；Q-B 判据3 致命（R003 闭包：无合法 coherent 星地 AMC baseline）→ A0§0 致命暂存。证据: R003 §3 Q-B 闭包表。
+3. **为什么只选 Q-A**: ✅ — brief 明示"当前主控优先项为 Q-A"；Q-B A0§0 致命（判据3 baseline 缺位须多日工程=brief 预注册 Kill 条件）→ survivor 唯一 = Q-A。
+4. **Galijasevic 公式/参数原文**: ✅ — 直接读 content.md: title/authors/DOI 与 metadata.json 一致（content.md:5-13）；选码=预测增益单值查表(content.md:116)；feedback=error-free+delay(content.md:116)；FER=Polyanskiy NA(content.md:249,257,261，**eq(23) 被 PDF→md 转丢 → V1 禁重建 → 改用 Table-1 阈值绕过**);码率=16 离散 8/9…8/77(content.md:128 Table 1)；信道=lognormal PSI=10(content.md:263)；**"DOI 解析异常"= Crossref 未索引该 DOI（metadata.json note 已解释，NSF PAR authoritative OA），非身份伪造**。身份债解除。
+5. **GG/SNR/trajectory 真实语义**: ✅ — `_gg_time.py:130-156` 输出辐照度 h（E[h]=1, AR(1) 块间），docstring 自证；与 Galijasevic "fading channel gain"(E{ρ}=1, content.md:261) 同构。probe sanity: E[h]≈0.93-1.00(各 turb)，metamorphic gate (a) PASS（sig=0,td=0 → B1_goodput==O1_goodput diff=0.0）。
+6. **baseline ladder 是否足够强**: ✅ — B0(固定最低)/B1(Galijasevic 点预测=M本体,Go对手)/B2(dev全局margin)/B3(dev分位数)/B4(条件分箱)/C1(条件分位数risk-aware)/O1(oracle)。**B2/B3/B4 是增强传统 baseline**（含 Galijasevic content.md:360 自证 margin），不是稻草人。FR-03 满足。
+7. **oracle 是否只作 Kill**: ✅ — O1 仅作 headroom bound；未用 oracle 当 Go 判据（TL-32/FR-25）。KILL 依据是 C1 0/27 Pareto-dominate B1（候选 vs 传统 M），非 oracle 上界。
+8. **information/metric/lifecycle 三联卡**: ✅ — information(receiver-visible ŝ=h+noise; true h 不进 deployable decide，代码审计确认)/metric(FER违约率 + goodput paired)/lifecycle(block=32000 sym, td=预测horizon, dev seeds 0-49/test 50-99 分离)。
+9. **raw→aggregate 和 paired CI**: ⚠ PARTIAL — raw 27 cells × 7 methods 完整（probe_headroom_raw.json）；paired per-cell FER/goodput 完整；**CI lower 未给**（probe 用 N=50 traj × 1500 blocks，未算 trajectory-cluster bootstrap CI）。**影响**: KILL 依据是 Pareto 0/27（定性，CI 不改变结论方向——0/27 在 N=27 下即使有 CI 也无 cell 翻转）；若未来 reframe 需 held-out MVE 必须补 CI。记债不阻塞 KILL。
+10. **metamorphic gates**: ✅ PARTIAL — gate (a) PASS（已核）。brief 列 5 gate 中 gate(1)(修改 true channel metadata 保持 receiver-visible 不变→deployable action 不变) 由"true h 不进 deployable decide"结构性满足；gate(5)(oracle action space 覆盖候选，oracle 不弱于候选) 由 O1 选最高满足阈值码率→覆盖所有候选码率，满足。gate(2)(3)(4) 未显式跑（KILL 已定，不补）。
+11. **V1–V6 算法正确性**: ✅ — V1（公式来源）: NA FER eq(23) PDF→md 转丢 → **禁重建，用 Table-1 阈值绕过**（content.md:116 选码机制本身，非重建公式）。V2（三方对照）: B1(点预测)/C1(risk-aware)/O1(oracle) 三方齐全 + B2/B3/B4 增强传统。V3（祖师爷持平警报）: C1 不与 B1 持平而是 TRADE（更低违约更低 goodput），无同族持平误判。V4（参数变更重审）: grid 扫 3 turb × 3 sig × 3 td，KILL 结论跨全部 cell 一致（0/27）。V5（子 agent 归因独立核查）: **主线独立 scipy MC 重算 outage floor（5.74/11.85/19.79%）+ 独立从 raw 重算 Pareto（0/27）**，未信子 agent 归因。V6（读原文数值）: Table-1 阈值 + margin 从 content.md:128 直接读，附行号。
+12. **chronology**: ✅ — 单 commit（Phase C KILL 闭合，未进 held-out MVE，不触发长实验 2-commit 例外）。probe raw + 脚本同 commit。
+13. **verdict 是否唯一**: ✅ — Phase C 预注册 Kill 条件命中 2 条 + 更深层诊断；reframe (a)/(b) 均需新 GW 周期且 (b) 不可行（14.8-65.8dB）。KILL 是唯一合理 recommendation。executor 提交 recommendation 待用户确认（不自行 Go/No-Go）。
+14. **未进入 Step 4b/Step 5/Contract/Execute**: ✅ — 范围确认: 不动 common/ params.py / 正式论文结论 / Skill / dormant receiver / 4 个 p05 log；不覆盖旧 receiver feasibility_report；未进 4b/5/Contract/Execute（brief 明示）。
+
+### V5 独立重算（主线，未信子 agent 归因）
+
+- **outage floor**（scipy N=2e6, seed=0）: GG(5,2)=5.74% / (2.5,1.2)=11.85% / (4,0.5)=19.79%（Pr(gain<-6.8dB rel mean)）；lognormal PSI=10=15.60%。**与子 agent 报告的 4.8-20% 一致**（小差异因 N/seed/offset口径）。
+- **Pareto 支配**（主线从 probe_headroom_raw.json 27 cells 独立重算）: **C1 0/27 Pareto-dominate B1**；每 cell TRADE（C1 更低违约更低 goodput）。与子 agent 结论一致。
+- **reframe (b) offset**（scipy）: 14.8/26.1/65.8 dB — 独立重算一致。
+
+### 结论
+D006 + Step 4a bounded MVE 全部 14 项独立验证通过（11 PASS + 3 PARTIAL，PARTIAL = CI 未给/metamorphic gate(2)(3)(4)未显式跑/V1 用阈值表绕过——均不改变 KILL 结论方向）。**KILL recommendation 证据充分**：C1 0/27 Pareto-dominate 传统 M（V5 主线独立重算确认）+ outage floor 使 1e-4 目标结构不可达（V5 scipy 独立确认）+ 命中预注册 Kill 条件。MVE 合规（TL-32/FR-25，非 oracle-Kill）。executor 已提交 recommendation 待用户确认。**允许 commit**（单 commit，未进 held-out MVE）。

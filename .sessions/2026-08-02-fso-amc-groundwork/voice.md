@@ -80,3 +80,23 @@
 - "V005 保留历史，不删除；标明它验证的是本地自写合同一致性，没有核对 canonical criteria owner，因此科学语义层失效。"
 - "但留下回归候选：'verifier 必须核对 canonical criteria owner，不能只验证本地 prompt/contract 自洽。'"
 - "不修改 dormant receiver campaign；不碰四个既有 p05_run*.log；单次统一 commit，不 push。"
+
+## 2026-08-03（Step 4a 执行提示词，来源: paste-attachment 2026-08-03-124917）
+
+- "进入 AMC Groundwork GW Step 4a。" → S006
+- "当前主控优先项为 Q-A；Q-B 暂存。"
+- "Q-B 仅完成 A0。不得并行搭建其完整 testbed。"
+- "若 Q-A 出现致命项，则不运行 Q-B MVE，也不制造第三个 Q；提交 Pivot/Kill recommendation。"
+- "任何数字必须标：EMPIRICAL；EXTRAPOLATED；ARGUMENT_ONLY。外推和论证不能单独支撑 Go。"
+- "Galijasevic DOI/题名/正式 venue 的异常；其公式、码率集合、预测输入和反馈模型必须从原 PDF 核对，不得只依赖 markdown 摘要。"
+- "Safi 和 L124 全文仍缺：Safi 只作 UNVERIFIED_DIRECT_COMPETITOR；不根据摘要推断实现细节。"
+- "A0/A′/A/B 任一致命，立即停止，不得靠 MVE 翻案。"
+- "Go/No-Go 最终决定属于用户；执行者只能提交 recommendation。"
+- "创新只能落在'简单先验覆盖低且改善空间 ≥5%'的维度。"
+- "若 B2/B3/B4 已在主指标上覆盖候选或 oracle 空间的 ≥95%，直接 RECOMMEND_KILL_OR_ENGINEERING_COMPONENT。不得为了保留复杂方法而弱化传统 baseline。"
+- "Oracle 只作 Kill/headroom bound，不作 Go 判据。"
+- "禁止因为现有 `_gg_time.py` 名字相似就直接复用。调用链语义不一致则在 MVE 前 BLOCKED。"
+- "不得在本轮新建真实 LDPC decoder。若真实 decoder 是验证该假设不可替代的承重前提，应停止为 INFRASTRUCTURE_BLOCKED，而不是搭建多日工程。"
+- "executor 不能自行最终 Go/No-Go，只能提交 recommendation，等待用户确认。"
+- "即使本轮 RECOMMEND_GO，也不得宣称 Groundwork 完整闭合；缺少的 3 篇需在进入 Step 5 前补齐或由用户明确处理。"
+- "不得覆盖旧 receiver feasibility_report。不得修改 common/、params.py、正式论文结论、Skill 或 dormant receiver campaign。四个既有 p05_run*.log 不动。"

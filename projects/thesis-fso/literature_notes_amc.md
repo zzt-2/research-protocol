@@ -13,7 +13,7 @@
 | 2 acquire | ✅（**STEP2_PASS_WITH_COHERENT_C_FAMILY_BLOCKED, D004/V005**）| 2026-08-03 | 本轮统一 commit | 5 CORE 全文（L023/L096/L146/Galijasevic/Nguyen2024）；C 族 BLOCKED |
 | 3 read | ✅/**STEP3_READ_COMPLETE_SEMANTIC_GATE_MISAPPLIED（D005 纠偏；旧 STEP3_NO_VALID_PROBLEM 已取代）**| 2026-08-03 | 本轮统一 commit | 本文件 + 5 read-notes + 直接竞品矩阵 + Q# 表（canonical 四判据重建：Q-A/Q-B SURVIVES 待 3.5 闭包）|
 | 3.5 supplement | ✅（**STEP3_5_SURVIVES，S005/R003**；Q-A/Q-B 均 SURVIVES）| 2026-08-03 | 本轮统一 commit | R003 定向检索（Q-A/Q-B 各 6 query + 引用链 ~190 命中）+ 竞争闭包表（§十一）；Safi/L124 仍 BLOCKED |
-| 4a feasibility | ⬜ | | | |
+| 4a feasibility | ✅/**STEP4A_QA_INSTANCE_KILLED_MVE_EVIDENCE（D006/V007/S006，recommendation 待用户确认）**| 2026-08-03 | 本轮统一 commit | Q-A 唯一 survivor（Q-B A0§0 判据3 致命暂存）；Phase C headroom probe + V5 主线独立重算：C1 0/27 cells Pareto-dominate B1（传统 M）+ GG outage floor 5.74-19.79% 使 FER 1e-4 即使 oracle 不可达 + 命中 2 预注册 Kill 条件；family 不 Kill（2 reframe 路径均需新 GW 周期）。`projects/thesis-fso/amc-groundwork/feasibility_report.md`。**未宣称 Groundwork 闭合**（5 CORE < ≥8）|
 
 ---
 
