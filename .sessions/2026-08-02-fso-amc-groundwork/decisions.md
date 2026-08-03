@@ -139,3 +139,56 @@
 **触发原话**: 无（用户执行提示词派发 Phase A 解除 blocker；用户本轮 voice 见 voice.md "2026-08-03 本轮执行提示词关键约束" 段，已 verbatim 登记）。
 
 **影响**: Step 2 终态 `STEP2_PASS_WITH_COHERENT_C_FAMILY_BLOCKED`；A/B 族获权进 GW Step 3 全文精读（本轮 Phase B 立即执行）；C 族保持 BLOCKED；Safi 保持 PROVISIONAL；registry last_updated + master-state §2 AMC 指针 + topic-index GW Progress 表 Step 2 行更新；R002/H001 不再加新 banner（D003 banner 仍保留，D004 是 D003 blocker 的解除而非推翻）。
+
+## D005: Step 3 语义门纠偏 — STEP3_READ_COMPLETE_SEMANTIC_GATE_MISAPPLIED，按 canonical 四判据重建 Q#
+
+> 2026-08-03 | status: active | 取代: **D004 末尾"S004/V005/literature_notes_amc §6-7 用自创四判据标签得到的 STEP3_NO_VALID_PROBLEM 终态 + Q1-Q5 terminal verdict"**（**不取代 D004 的 Step 2 PASS / 5 CORE 身份 / Safi·L124 全文 blocker / 全文精读事实提取**——这些继续有效） | 被取代: 无
+
+**决策**: D004/S004/V005/literature_notes_amc §6 在 GW Step 3 终态判定中，使用了**自创的四判据标签** `problem_truth / actionability / novelty / thesis_fit` 作为 Step 3 terminal gate（5 候选 Q# 逐条评这 4 项，无一全过 → STEP3_NO_VALID_PROBLEM）。主控裁决：该 terminal gate **语义失效**——它不是协议唯一合法的四判据 owner（`stages/glossary.md` L22-31 + `templates.md` L301/L308/L311/L371）的定义，且 `problem_truth`/`novelty` 两列把 Step 4a/MVE 与 Step 3.5 的职责前移到了 Step 3，形成循环门控。Step 3 终态纠正为 **`STEP3_READ_COMPLETE_SEMANTIC_GATE_MISAPPLIED`**。
+
+**保留 D004 中（继续有效）**：
+1. Step 2 PASS（STEP2_PASS_WITH_COHERENT_C_FAMILY_BLOCKED，5 CORE 全文 ≥ 5 门槛）。
+2. 5 篇 CORE 身份（L023/L096/L146/Galijasevic/Nguyen2024）+ Safi PROVISIONAL abstract-only + L124 C_L124_FULLTEXT_BLOCKED。
+3. Safi/L124 全文缺失 blocker（不得据 abstract 推导失效机制）。
+4. 全文精读的事实提取（M-C-A + 7 结构化子表 + AMC 关键语义字段 + 直接竞品矩阵 + file:line 证据）——这些是**事实**，不是判据，不受判据标签纠偏影响。
+5. D003 的 CORE 判据 + L075 classification / L165 AO / L090 fixed-STTC 边界判定。
+
+**只取代**：
+1. STEP3_NO_VALID_PROBLEM 终态（改为 STEP3_READ_COMPLETE_SEMANTIC_GATE_MISAPPLIED）。
+2. 用自创四判据（problem_truth/actionability/novelty/thesis_fit）得到的 Q1-Q5 terminal verdict。
+
+**semantic-gate owner receipt（R001，逐字核对 owner）**：
+
+| owner 文件 | 相对路径 | SHA256（本轮实测，HEAD 482d9ad） | 四判据定义行号 |
+| --- | --- | --- | --- |
+| 核心术语 owner | `stages/glossary.md` | `eafa43e3b0c941d90b36e4469e28346621ee82ee83d6fed558410073f610e74b` | L22-31 |
+| 模板 owner | `templates.md` | `bdc93d41a5e4eac726074d2754c45a2d563ca48bebb0e76a3edef01caa7b9e41` | L301/L308/L311/L371 |
+
+canonical 四判据（glossary L22-31 逐字）：①**具体技术矛盾**（M/C/A 明确、句子级、可解）②**有方法产出形态**（设计公式/准则/算法/框架/闭合解族）③**有近期 baseline 可对标**（嵌具体 SOTA 方法 M）④**能做可量化对标**（产出 vs baseline 有可量化对照）。
+
+**自创标签错位（R001 §C）**：
+- `problem_truth` ≈ 判据 1 但**不等价**——被要求"A 的失效已证明"（=Step 4a/MVE 证据），远超判据 1（只要求 M-C-A 明确可证伪，不要求已证伪）。
+- `novelty` **不属四判据**——新颖性是 glossary"问题 vs 空白"对照表内容，由 Step 3.5 竞争闭包 + Step 4a 维度 B 处理，不是 Step 3 terminal gate 的一列。
+- → Q1（problem_truth "⚠部分"理由"A 的失效需证明退化"）/ Q3（problem_truth "❌"理由"A 是待证假设需 oracle/MVE 证据"）= **把下游证据前移到 Step 3**，违反 FR-22。
+
+**职责分离（owner 逐字核对，R001 §D）**：
+- **Step 3（gw-read.md L86/L198）**：要求文献支持、具体、可证伪的失效假设 A（不要求已用 MVE 证明退化）；产出"问题候选"。
+- **Step 3.5（gw-supplement.md 全文）**：定向补充检索、相邻工作、novelty closure。
+- **Step 4a（gw-feasibility.md §A0/A'/A/B/D）**：性能间隙、方法适配性、空白零假设、MVE 实证、FR-21 oracle 上界（TL-32/FR-25：只做 Step 4a 维度 D 收尾 Kill 工具，禁当 Go 判据，且只在 Step 3 走完+判据 A 成立后才触发）。
+
+**V005 处置**：V005 保留历史不删；标明它验证的是**本地自写合同（problem_truth 等四列）的一致性**，**没有核对 canonical criteria owner**，因此科学语义层失效。登记回归候选："verifier 必须核对 canonical criteria owner（glossary/templates 原文 + SHA + 行号），不能只验证本地 prompt/contract 自洽。"
+
+**Phase B 重建 Q#（按 canonical 四判据）**：见 literature_notes_amc.md §6 重建。新建 **Q-A（预测驱动自适应编码的风险失配）** + **Q-B（相干星地 AMC 的动作位置-时间尺度失配）** 两个单一可证伪 M-C-A 候选；原 Q1（IM/DD→coherent、lognormal→GG、UAV→ground 场景迁移）维持 WEAK_SCENARIO_MIGRATION 不自动晋级；原 Q3（三层错配）维持 TOO_BROAD_MECHANICAL_COMBINATION 除非收窄成单一 baseline + 单一 load-bearing assumption + 单一可观察失效；Q4 Safi / Q5 L124 在无全文时继续 BLOCKED。**论文自列 future work ≠ novelty 自动失败**——只能作问题原料，仍须 Step 3.5 竞争闭包。**不得因"尚无 MVE"否决 Q-A/Q-B**（那是 Step 4a 的事）。
+
+**依据**（证据链，FR-26）:
+- 用户本轮执行提示词（2026-08-03，paste-attachment）§"本轮主控裁决"+"Phase A 确定性纠偏"+"协议唯一合法的问题四判据必须从 owner 逐字读取，不得按本轮 prompt 转述自行重写"。
+- `R001-semantic-gate-owner-receipt.md`（owner 路径 + SHA256 + 行号 + 四判据原文 + Step 职责逐字核对）。
+- `stages/glossary.md` L22-31 / L48-71 / L73-76（四判据 + 三概念对照 + 空集处置 + 常见误用）。
+- `templates.md` L301/L308/L311/L371（Q# 表头 + 填表规则 + 每篇提取）。
+- `stages/gw-read.md` L86/L198 + `stages/gw-supplement.md` 全文 + `stages/gw-feasibility.md` §A0（Step 职责边界）。
+- `thesis-lessons.md` TL-31（方法论教训复现——凭记忆不读 owner）+ TL-33（自欺式跳步——"以为查了证据"）+ TL-32（Go/Kill 标准分离，oracle 上界不当 Go 判据）。
+- D004（被取代 STEP3_NO_VALID_PROBLEM 终态；Step 2 PASS / 5 CORE / blocker / 事实提取保留）。
+
+**触发原话**: 用户执行提示词（2026-08-03）§"不接受当前 STEP3_NO_VALID_PROBLEM，原因不是论文读取失败，而是 Step 3 使用了错误的判据并产生循环门控"+"协议唯一合法的问题四判据必须从 owner 逐字读取，不得按本轮 prompt 转述自行重写"+ "`problem_truth/actionability/novelty/thesis_fit` 不是 owner 定义的四判据，不得继续作为 Step 3 terminal gate"。voice.md 已 verbatim 登记。
+
+**影响**: Step 3 终态 `STEP3_READ_COMPLETE_SEMANTIC_GATE_MISAPPLIED`；Phase B 按 canonical 四判据重建 Q-A/Q-B + Q1/Q3/Q4/Q5 verdict 映射；Phase C 执行 Step 3.5 定向补充检索（glossary 空集处置流程①）+ 竞争闭包；V005 标语义失效保留历史；topic-index GW Progress 表 Step 3 行修订 + Step 3.5 行开始；R001 receipt 落盘；不修改 Skill / dormant receiver / 4 个 p05 log。

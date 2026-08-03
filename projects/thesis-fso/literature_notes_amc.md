@@ -11,8 +11,8 @@
 | ---- | ---- | -------- | ------ | ---- |
 | 1 search | ✅（ACCEPTED_AFTER_BOUNDED_INTEGRITY_REPAIR, D002/V002） | 2026-08-02 | S003 commit | R001 landscape + shortlist 12 |
 | 2 acquire | ✅（**STEP2_PASS_WITH_COHERENT_C_FAMILY_BLOCKED, D004/V005**）| 2026-08-03 | 本轮统一 commit | 5 CORE 全文（L023/L096/L146/Galijasevic/Nguyen2024）；C 族 BLOCKED |
-| 3 read | ✅/**⚠ STEP3_VERDICT 见下**（本轮）| 2026-08-03 | 本轮统一 commit | 本文件 + 5 read-notes + 直接竞品矩阵 + Q# 表 |
-| 3.5 supplement | ⬜ | | | 进 Step 4a 前必 ✅ |
+| 3 read | ✅/**STEP3_READ_COMPLETE_SEMANTIC_GATE_MISAPPLIED（D005 纠偏；旧 STEP3_NO_VALID_PROBLEM 已取代）**| 2026-08-03 | 本轮统一 commit | 本文件 + 5 read-notes + 直接竞品矩阵 + Q# 表（canonical 四判据重建：Q-A/Q-B SURVIVES 待 3.5 闭包）|
+| 3.5 supplement | ✅（**STEP3_5_SURVIVES，S005/R003**；Q-A/Q-B 均 SURVIVES）| 2026-08-03 | 本轮统一 commit | R003 定向检索（Q-A/Q-B 各 6 query + 引用链 ~190 命中）+ 竞争闭包表（§十一）；Safi/L124 仍 BLOCKED |
 | 4a feasibility | ⬜ | | | |
 
 ---
@@ -172,104 +172,120 @@
 
 > 问题定义见 `stages/glossary.md`（问题四判据 + 三概念对照表）。
 > 每个 Q# 必须有具体 M（现有方法）+ C（具体条件）+ A（失效假设），最强直接竞品，机制差异，否决条件，证据缺口。
-> **Step 3 终态二选一**: ≥1 个 Q# 四判据全过 = STEP3_PASS_WITH_VALID_Q；无 Q# 全过 = STEP3_NO_VALID_PROBLEM。
+> **判据标签 = canonical 四判据**（D005 纠偏）：判据1 具体技术矛盾(M-C-A 明确可证伪) | 判据2 方法产出形态 | 判据3 近期 baseline | 判据4 可量化对标。
+> **旧自创标签（problem_truth/actionability/novelty/thesis_fit）已废止**（D005/R001）——`problem_truth` 把"已证伪"当 Step 3 判据=Step 4a/MVE 证据前移；`novelty` 不属四判据=Step 3.5/4a 职责前移。Step 3 只要求**文献支持、具体、可证伪**的失效假设 A，**不要求已用 MVE 证明退化**。
 
-### 候选 Q# 评估
+### 候选 Q# 评估（按 canonical 四判据，D005 重建）
 
-#### Q1: coherent 检测下，Nguyen 式 delayed-CSI + ESN-prediction 驱动的 rate+power SAMP，在 GG 中/强湍流 + sat-ground 几何下是否因 BER 度量（γ∝h² IM/DD → γ∝h coherent）+ 湍流强度（弱 lognormal → GG）+ 几何（sat-UAV → sat-ground）三者同时改变而失效？
+#### Q-A（新建，预测驱动自适应编码的风险失配）
 
-- M: Nguyen2024 的 SAMP（IM/DD K-QAM, γ∝h², lognormal, sat-UAV）
-- C: coherent 检测（γ∝h）+ Gamma-Gamma 中/强湍流 + sat-ground 固定站几何
-- A: Nguyen 的瞬时 BER 公式 `0.2exp(-3Pt²h²/(2σn²(K-1)))` 依赖 γ∝h²（IM/DD SQNR-M²），coherent 下 γ∝h 使门限 h* 与功率分配 Pt(h) 关系完全改变；lognormal 弱湍流 σ_R²≤0.1020 的门限设计在 GG 中/强（σ_R²>1）下信道动态范围扩大，SAMP 的 N 离散功率级 + M 调制模式分配失效；sat-UAV(<1km) 的 Beckmann pointing 与 sat-ground（数百-数千 km）的 pointing 统计不同
-- 最强直接竞品: **Nguyen2024**（family-A delayed-CSI/predictive rate+power 的 confirmed 直接竞品）
-- 机制差异: coherent γ∝h vs Nguyen IM/DD γ∝h² → BER 度量重写；GG vs lognormal → 信道 PDF 与 FSMC/状态划分重做；sat-ground vs sat-UAV → pointing 模型替换
-- 四判据:
-  - problem_truth (M-C-A 完整可解): **⚠ 部分** — M、C 明确，但 A 的"失效"需证明 coherent+GG 下 Nguyen 的 SAMP 门限/分配**真的退化**（不是简单换参数重算）。目前 A 是"度量改变导致需重做"，不是"现有方法在 C 下性能退化"——**这是迁移工作而非失效证明**。
-  - actionability: ✅（coherent+GG 下 SAMP 重设计 + ESN 预测，产出 algorithm + 设计准则）
-  - novelty: ⚠ — Nguyen 已覆盖 delayed-CSI+预测+rate+power 的**机制**；coherent+GG 的差异是**场景迁移**，机制 novelty 弱（TL-04/TL-12/FR-23：换条件≠新问题）
-  - thesis_fit: ✅（可量化对标 Nguyen 的 SAMP 在 coherent+GG 重做后的版本 vs Nguyen IM/DD lognormal 版本？**但对比对象不同场景，不是 head-to-head**）
-- **否决条件**: 若 coherent+GG 下重做 SAMP 后只是参数变化（门限重算、PDF 替换），无新的失效机制 → FAIL（机制 novelty 不足，TL-12"延伸"路线需证明出 bug 概率低但不是新问题）。
-- **证据缺口**: 需证明 coherent γ∝h + GG 下，Nguyen 的 SAMP **存在 Nguyen 未识别的失效模式**（如预测误差在 GG 深衰落下放大、离散功率级在 GG 动态范围下不够、BER 门限在 coherent 下与 IM/DD 行为质变），而非仅参数重算。**当前证据不足以区分"迁移"与"失效"**。
-- **判定**: **未过**（problem_truth 部分 + novelty 受限）。不进 Contract。
+- M: **Galijasevic 2024** 的预测驱动 PBRL-LDPC 码率自适应（点预测信道状态 → 逐码字选码率；零阶/线性/二次多项式点预测，IM/DD lognormal，反馈延迟 0-4ms）[papers/_read_notes/Galijasevic_ojcoms_2024.md；content.md:19,55,66,114,288]
+- C: 星地 FSO 中**反馈延迟与 CSI 估计误差同时存在 + 湍流具有深衰落尾部 + 真实 coded-chain 的 FER/码率门限高度非线性**（Nguyen2024 [content.md:81脚注2] 显式排除估计/量化误差仅建模反馈时延；Galijasevic 仅 error-free 反馈信道）
+- A: **单一点预测值没有表达预测后验不确定性**。即使均值预测准确，尾部误差也可能经非线性 FER 门限放大，使"预测值→码率"产生系统性可靠性违约或 goodput 损失。失效位置可证伪：Galijasevic 的码率选择是预测增益的单值函数（查表），FER 门限对增益非线性——存在一个可构造的预测误差分布（重尾）使点预测选码系统性偏高 → FER 约束违约。
+- 方法产出形态（判据2）: posterior-aware / risk-aware / outage-constrained code-rate rule（设计准则 + 算法 + 可引用的 outage/FER 闭式族）
+- 近期 baseline（判据3）: Galijasevic 2024（OJCOMS，直接竞品）；须同时比较 Safi 2019 / Nguyen 2024 / L096
+- 可量化对标（判据4）: FER 约束违约率、goodput、平均码率、功率、预测误差条件下的可靠性（产出 vs Galijasevic 点预测规则 head-to-head，同信道同 coded chain）
+- 最强反驳（待 Step 3.5 闭包）: Safi 可能已覆盖 GG + estimation-error + adaptive coding/power；robust link adaptation / posterior-aware rate adaptation 文献可能已有 risk-aware action。
+- 四判据初判（Step 3 层，不含 Step 3.5/4a 证据）:
+  - 判据1 具体技术矛盾: **✅** — M(Galijasevic 点预测选码) / C(延迟+估计误差+深衰尾+非线性 FER) / A(点预测无后验，尾部误差经非线性门限放大致系统性违约) 三要素明确、句子级、可证伪。**不要求已用 MVE 证明退化**（FR-22；D005）。
+  - 判据2 方法产出形态: **✅** — risk/posterior-aware code-rate rule 是可复用设计准则。
+  - 判据3 近期 baseline: **✅** — Galijasevic 2024 是近期直接竞品（待 Step 3.5 确认是否有更近/risk-aware 直接竞品）。
+  - 判据4 可量化对标: **✅** — FER 违约率/goodput/条件可靠性可对 Galijasevic head-to-head。
+- **否决条件（留 Step 3.5/4a）**: 若 Step 3.5 发现 Safi 或 robust/posterior-aware link adaptation 文献**已实质解决**"预测不确定性下的码率选择"→ COVERED_BY_EXISTING_WORK；若 Step 4a 维度 D MVE 证明 coherent+GG+真实估计误差下点预测与 risk-aware 的 FER/goodput gap < 阈值 → 由 Step 4a Kill。
+- **判定**: **Step 3 层 SURVIVES（待 Step 3.5 竞争闭包）**。不得因"尚无 MVE"否决（D005；brief 明示）。
 
-#### Q2: L096 的 IR-HARQ + rate 跨层设计假设完美 CSI/反馈，在 GG + sat-ground + 反馈时延>相干时间下，是否因 imperfect feedback 导致 IR-HARQ 的 burst-loss Markov 模型（基于 perfect ACK/NAK）失效，且 RCPC 增量冗余在过期 CSI 下无法正确选码率？
+#### Q-B（新建，相干星地 AMC 的动作位置-时间尺度失配）
 
-- M: L096（IR-HARQ-SW + RCPC + M-QAM，perfect CSI 假设，lognormal）
-- C: GG 中/强湍流 + sat-ground + 反馈时延>相干时间 + imperfect ACK/NAK + coherent 检测
-- A: L096 的 burst-loss Markov 模型（eq.25-28，Viterbi 距离谱）假设 CRC 完美检错 + ACK/NAK 无误 + 含 CSI [content.md:103,119]；过期 CSI + imperfect ACK/NAK 下，状态转移矩阵 P 与稳态 π 失真，throughput/EE/delay 闭式不再成立；future work 明确点名 imperfect feedback [content.md:507]
-- 最强直接竞品: **L096**（family-B coded-chain direct competitor）+ Galijasevic（coded-chain + 预测，但 IM/DD）
-- 机制差异: L096 perfect-CSI 闭式 → 目标 imperfect-feedback 下 burst-loss Markov 重做（ACK/NAK error + delayed CSI 进转移矩阵）
-- 四判据:
-  - problem_truth: **⚠** — A 的"imperfect feedback 导致闭式失效"成立，但 L096 future work 已**明确预留**这个口子 [content.md:507]，即 L096 已识别此局限。**已被现有工作 self-identified 的局限 → 新颖性弱**（glossary：已知局限是新颖性原料不是问题，须转译 M-C-A；这里转译后 M=L096 自己，C=imperfect feedback，A=自己 future work → 是"补完 future work"而非"现有方法失效"）。
-  - actionability: ✅（imperfect-feedback burst-loss Markov 重做 + 闭式）
-  - novelty: **❌** — L096 future work 已点名；Galijasevic 已在 coded-chain + feedback-delay 做了预测驱动（虽 IM/DD）。补 L096 的 future work + 换 GG+coherent = 组合迁移，机制 novelty 不足。
-  - thesis_fit: ⚠
-- **否决条件**: A 是 L096 self-identified future work → 自动 FAIL novelty（glossary 常见误用#1：把已知局限当问题）。
-- **判定**: **未过**（novelty ❌，A 是 self-identified future work）。
+- M: **L023** 将 TX modulation/power loading 与 RX detector switching 放在**同一个 per-frame CSI 反馈环**（coherent 外差，地面 MDM，自陈 receiver-directed adaptive loading 在 LEO 卫星不可行因往返 > Greenwood τ≈4ms）[papers/_read_notes/L023_jlt_2023.md；content.md:122,147,155,171,313]
+- C: **LEO 星地链路 RTT 大于或接近信道相干时间；接收端可本地快速动作，发射端只能慢速获得反馈；同时存在 coded chain**
+- A: **将 RX-local 快动作与 TX-side 慢动作绑定在同一个新鲜 CSI 控制环中**，会造成不可部署的信息契约：接收端动作可及时执行，发射端动作收到的状态已经过期。失效位置可证伪：L023 自陈 LEO 不可行（receiver-directed loading 往返 > Greenwood τ），即 L023 的 M 在 LEO 星地 C 下**已自认失效**。
+- 方法产出形态（判据2）: RX-local fast adaptation + TX-side slow robust rate/power control 的**分层控制和接口**（设计准则 + 接口契约 + 可引用的时延-吞吐/outage 闭式族）
+- 近期 baseline（判据3）: L023 / Nguyen / Galijasevic；L124 若取得全文必须作 coherent 直接竞品
+- 可量化对标（判据4）: goodput、FER/outage、反馈开销、动作陈旧度、复杂度（产出 vs L023 单环方案 head-to-head，同 LEO 星地几何）
+- 最强反驳（待 Step 3.5 闭包）: split-timescale / receiver-driven / hierarchical link adaptation 文献可能已解决；L023 可能因地面 MDM 场景而不是合法星地 baseline。
+- 四判据初判（Step 3 层）:
+  - 判据1 具体技术矛盾: **✅** — M(L023 单环 TX+RX) / C(LEO RTT≈/>相干时间，RX 快 TX 慢) / A(同环绑定致 TX 动作收过期状态) 明确可证伪（L023 自陈 LEO 不可行即为 A 的文献支持）。
+  - 判据2 方法产出形态: **✅** — 分层控制接口是可复用设计准则。
+  - 判据3 近期 baseline: **⚠→待 Step 3.5** — L023 是 coherent AMC 近期竞品，但场景是地面 MDM（自陈卫星失效）；须 Step 3.5 确认是否有合法星地 coherent split-timescale baseline。
+  - 判据4 可量化对标: **✅** — goodput/outage/反馈开销/动作陈旧度可对 L023 head-to-head。
+- **否决条件（留 Step 3.5/4a）**: 若 Step 3.5 发现 L023 因地面场景不是合法星地 baseline 且无其他 coherent 星地 AMC baseline → 判据3 失败；若 split-timescale/receiver-driven link adaptation 已实质解决 → COVERED_BY_EXISTING_WORK。
+- **判定**: **Step 3 层 SURVIVES（待 Step 3.5 竞争闭包）**。不得因"尚无 MVE"否决。
 
-#### Q3（cross-gap 候选，**待证假设**）: 现有预测驱动 rate/power 或 code-rate 控制（Nguyen/Galijasevic），在 coherent + GG + 真实 coded-chain + 接收机可见且不确定的 CSI + 反馈时延**共同存在**时，是否因**信息源 / 时间尺度 / 目标函数错配**而失效？
+#### Q1（原，IM/DD→coherent、lognormal→GG、UAV→ground 场景迁移）— 维持 WEAK_SCENARIO_MIGRATION 不晋级
 
-- M: Nguyen2024（rate+power SAMP + ESN，单维度 action）+ Galijasevic（code-rate + 多项式预测，单维度 action）
-- C: coherent（γ∝h）+ GG 中/强 + 真实 coded-chain（LDPC/HARQ）+ CSI 不确定（估计误差+反馈时延+量化）+ sat-ground
-- A: （**待证**）现有预测器只驱动单一 action（Nguyen 驱动 rate+power 无编码，Galijasevic 驱动 code-rate 无调制阶数无 HARQ），在 coded-chain + coherent + GG 共存时，预测的 CSI 量（IM/DD lognormal 信道增益 h）与 coherent 所需的 CSI 量（复振幅+相位统计，L124 physics-informed）不同 → 信息源错配；编码链的码字时间尺度（µs）与信道相干时间（<1ms）与反馈时延（ms）三层时间尺度嵌套，单一预测器无法同时服务 → 时间尺度错配；目标函数（Nguyen power-min / Galijasevic throughput）未含 coded-chain 的 FER/重传代价 → 目标函数错配。
-- 最强直接竞品: **Nguyen2024 + Galijasevic**（二者机制拼接的近邻）+ Safi2019（abstract 级 GG+est-error+coding/power）+ L096（coded-chain perfect CSI）
-- 机制差异: 三层错配（信息源/时间尺度/目标函数）需新的联合预测-控制架构
-- 四判据:
-  - problem_truth: **❌（当前）** — A 的"三层错配导致失效"是**假设**，无 confirmed 因果失效机制。brief 明示"若只是把 Nguyen、Galijasevic、Safi、L096 的要素机械拼接，必须 FAIL；只有存在具体因果失效机制和可区分 action 才能形成 Q#"。当前 A 是机制拼接的推测，**未证**。
-  - actionability: ⚠（联合架构可设计，但需先证失效）
-  - novelty: ⚠（每子维度有近邻，联合 novelty 依赖失效证明）
-  - thesis_fit: ⚠
-- **否决条件**: brief 明示 — 若只是机械拼接要素（信息源/时间尺度/目标函数的"错配"是叙述而非 proven 因果），必须 FAIL。需先证 coherent+GG+coded-chain 共存下，Nguyen/Galijasevic 的预测-控制**确实存在具体可观测的失效**（如预测 MSE 在 GG 深衰落爆炸、code-rate 选择在 coherent 度量下系统性偏移）。
-- **证据缺口**: 需 oracle/MVE 级证据证明三层错配**确实导致失效**——但这是 Step 4a/MVE 的事，**Step 3 无权做**（FR-22）。当前仅文献精读，无法证明失效。
-- **判定**: **未过**（problem_truth ❌ — A 是待证假设非 confirmed 失效；按 brief 机械拼接 FAIL）。
+- M: Nguyen2024 SAMP（IM/DD K-QAM, γ∝h², lognormal, sat-UAV）
+- C/A: coherent(γ∝h) + GG + sat-ground 三者同时替换
+- canonical 判据重判:
+  - 判据1: **❌** — A 是"度量/湍流/几何改变导致需重做"，不是"现有方法在 C 下因 A 失效"。换参数重算 ≠ 失效假设（glossary 常见误用#3 "把没人做过 X 当问题"；FR-23）。这是**场景迁移工作**不是 M-C-A 失效矛盾。
+  - 判据2/3/4: 形式上 ✅，但因判据1 不成立不晋级。
+- **判定**: **WEAK_SCENARIO_MIGRATION，不自动晋级**（brief 明示）。
 
-#### Q4（Safi 邻近切片，**abstract-blocked**）: Safi2019 的 adaptive coding+power under GG + estimation-error，在 coherent 检测 + sat-ground + 反馈时延 + 真实 coded-chain 下是否失效？
+#### Q3（原，三层错配）— 维持 TOO_BROAD_MECHANICAL_COMBINATION 除非收窄
 
-- **判定**: **未过（abstract-blocked）** — Safi 全文缺失，A 无法从 abstract 确认。按 brief + D003，Safi 邻近切片**不得**通过 novelty closure；只能用 abstract 级 M/C/A 作 bibliographic 参照。**禁据 abstract 推导 Safi 的失效机制**。
+- M: Nguyen + Galijasevic 拼接；A: 信息源/时间尺度/目标函数三层错配（待证）
+- canonical 判据重判:
+  - 判据1: **❌（当前）** — A 是三机制拼接的叙述，**不是单一可证伪的失效假设**。需收窄成单一 baseline + 单一 load-bearing assumption + 单一可观察失效才能过判据1。
+  - **可收窄路径**：Q-A 已收窄"预测后验缺失"单一切片（信息源错配的子集）；Q-B 已收窄"动作时间尺度失配"单一切片。Q3 作为宽集合不单独晋级。
+- **判定**: **TOO_BROAD_MECHANICAL_COMBINATION，除非收窄**（brief 明示）。其可收窄子集已由 Q-A/Q-B 承接。
 
-#### Q5（coherent-C 族，**C-family blocked**）: L124 的 physics-informed coherent AMC，在 GG + coded-chain + sat-ground 下是否失效？
+#### Q2（原，L096 self-id future work）— novelty 论据不再作 Step 3 terminal，但仍不晋级
 
-- **判定**: **未过（C-family blocked）** — L124 全文缺失（C_L124_FULLTEXT_BLOCKED），coherent-C 族**不得**通过问题/新颖性判断（D003 第 4/5 点）。本轮只能用 abstract 级 bibliographic 信息，**禁推导** L124 的 coding/CSI/channel/方法空间。
+- M: L096 IR-HARQ（perfect CSI 假设）；A: imperfect feedback 致 burst-loss Markov 闭式失效（L096 future work 自点 [content.md:507]）
+- canonical 判据重判:
+  - 判据1: **⚠→❌** — A 的"imperfect feedback 致闭式失效"是文献支持的可证伪假设（判据1 形式上可过），但**论文自列 future work ≠ novelty 自动失败**（D005/brief）——它只能作问题原料，仍须 Step 3.5 竞争闭包判断是否已被 Galijasevic 等实质解决。当前作为独立 Q# 不晋级，因其 coded-chain+imperfect-feedback 切片与 Q-A(Q-竞争闭包后)/Galijasevic 高度重叠，避免重复。
+- **判定**: **不单独晋级**（切片被 Q-A 竞争闭包过程覆盖；future-work 原料性保留，Step 3.5 一并查）。
 
-### Q# 清单汇总
+#### Q4（Safi 邻近切片）— 继续 BLOCKED
 
-| Q# | M | C | A | problem_truth | actionability | novelty | thesis_fit | 最强竞品 | 判定 |
+- **判定**: **BLOCKED_BY_MISSING_FULLTEXT** — Safi 全文缺失，A 无法从 abstract 确认（D003/D005）。abstract 级 M/C/A 仅作 bibliographic 参照，**禁据 abstract 推导失效机制**。Step 3.5 继续尝试合法获取。
+
+#### Q5（L124 coherent-C 族）— 继续 BLOCKED
+
+- **判定**: **BLOCKED_BY_MISSING_FULLTEXT** — L124 全文缺失（C_L124_FULLTEXT_BLOCKED），coherent-C 族**不得**通过问题/新颖性判断（D003）。Step 3.5 继续尝试合法获取；L124 全文到手后必须作 Q-A/Q-B 的 coherent 直接竞品重判。
+
+### Q# 清单汇总（canonical 四判据，D005 重建）
+
+| Q# | M | C | A | 判据1 矛盾 | 判据2 产出形态 | 判据3 近期baseline | 判据4 可量化对标 | Step 3 verdict | 备注 |
 |---|---|---|---|---|---|---|---|---|---|
-| Q1 | Nguyen SAMP | coherent+GG+sat-ground | 度量/湍流/几何改变 | ⚠部分 | ✅ | ⚠迁移 | ✅但非head-to-head | Nguyen2024 | **未过**（迁移非失效） |
-| Q2 | L096 IR-HARQ | GG+sat-ground+imperfect feedback | perfect-CSI 闭式失效 | ⚠ | ✅ | ❌self-id future work | ⚠ | L096 | **未过**（A=self-identified） |
-| Q3 | Nguyen+Galijasevic 拼接 | coherent+GG+coded+uncertain+delay | 三层错配（待证） | ❌（待证假设） | ⚠ | ⚠ | ⚠ | Nguyen+Galijasevic | **未过**（机械拼接 FAIL） |
-| Q4 | Safi2019 | coherent+sat-ground+coded+delay | ?（abstract 推不出） | ❌abstract-blocked | — | — | — | Safi | **未过**（abstract-blocked） |
-| Q5 | L124 | GG+coded+sat-ground | ?（abstract 推不出） | ❌C-family-blocked | — | — | — | L124 | **未过**（C-blocked） |
+| **Q-A** | Galijasevic 点预测选码 | 延迟+估计误差+深衰尾+非线性FER | 点预测无后验，尾部误差经非线性门限放大致系统性违约 | ✅ | ✅ risk/posterior-aware rule | ✅ Galijasevic（待3.5闭包） | ✅ FER违约率/goodput | **SURVIVES_STEP3（待3.5闭包）** | 不得因无MVE否决 |
+| **Q-B** | L023 单环 TX+RX CSI 反馈 | LEO RTT≈/>相干时间，RX快TX慢 | 同环绑定致TX动作收过期状态 | ✅ | ✅ 分层控制接口 | ⚠ L023地面自陈卫星失效（待3.5） | ✅ goodput/outage/反馈开销 | **SURVIVES_STEP3（待3.5闭包）** | 不得因无MVE否决 |
+| Q1 | Nguyen SAMP | coherent+GG+sat-ground | 度量/湍流/几何改变 | ❌（迁移非失效） | ✅ | ✅ | ✅ | **WEAK_SCENARIO_MIGRATION** | 不晋级 |
+| Q3 | Nguyen+Galijasevic 拼接 | coherent+GG+coded+uncertain | 三层错配（待证） | ❌（宽集合非单一可证伪） | ⚠ | ⚠ | ⚠ | **TOO_BROAD_MECHANICAL_COMBINATION** | 子集已由Q-A/Q-B承接 |
+| Q2 | L096 IR-HARQ | imperfect feedback | perfect-CSI闭式失效 | ⚠（future-work原料） | ✅ | ✅ | ✅ | **不单独晋级** | 切片被Q-A闭包覆盖 |
+| Q4 | Safi2019 | coherent+sat-ground+coded | ?（abstract推不出） | — | — | — | — | **BLOCKED_BY_MISSING_FULLTEXT** | 3.5继续获取 |
+| Q5 | L124 | GG+coded+sat-ground | ?（abstract推不出） | — | — | — | — | **BLOCKED_BY_MISSING_FULLTEXT** | 3.5继续获取 |
 
-**无 Q# 四判据全过。**
+**Q-A / Q-B 在 Step 3 层 SURVIVES（待 Step 3.5 竞争闭包）。Step 3 不再是无 Q#——按 canonical 四判据存在 2 个候选问题。**
 
 ---
 
 ## 七、Step 3 终态判定
 
-### STEP3_NO_VALID_PROBLEM（当前轮诚实终态）
+### STEP3_READ_COMPLETE_SEMANTIC_GATE_MISAPPLIED（D005 纠偏后终态）
 
-**依据**:
-1. 5 篇 CORE 全文精读 + 3 边界 + 2 bibliographic 完成结构化提取（每篇 read-note 含 M-C-A + 四判据 + file:line 证据）。
-2. 直接竞品矩阵确认：**无一篇 confirmed 同时覆盖 coherent + GG + coded-chain + info-uncertainty 四要素**；每篇缺 2-3 维度；rate/power（Nguyen）、HARQ-rate（L096）、coded-rate+prediction（Galijasevic）、robust-MCS（L146）等宽泛问题**已被覆盖**，禁止重命名为空白。
-3. 5 个候选 Q# 逐条过四判据，**无一全过**：
-   - Q1/Q2 是场景迁移（coherent+GG 替换 IM/DD+lognormal）或补 self-identified future work，机制 novelty 不足（TL-04/TL-12/FR-23）；
-   - Q3 是机械拼接要素的待证假设，brief 明示 FAIL；
-   - Q4/Q5 全文 BLOCKED，不得据 abstract 推导失效（D003）。
-4. 按 glossary"候选全被筛掉时"处置流程 + 用户执行提示词"若无 Q# 全过，终态为 STEP3_NO_VALID_PROBLEM，不包装空白、不设计方法"——**诚实终止问题提取**。
+**纠偏依据（D005/R001）**: 旧终态 STEP3_NO_VALID_PROBLEM（S004/V005）使用了**自创四判据标签** `problem_truth/actionability/novelty/thesis_fit` 作为 terminal gate，其中 `problem_truth` 被要求"A 的失效已证明"（=Step 4a/MVE 证据前移，违反 FR-22）、`novelty` 被当 Step 3 terminal 一列（=Step 3.5/4a 职责前移）。protocol 唯一合法四判据 owner = `stages/glossary.md` L22-31 + `templates.md` L301/L308/L311/L371（SHA256 + 行号见 R001）。按 canonical 四判据重判后，Step 3 终态修订为 **STEP3_READ_COMPLETE_SEMANTIC_GATE_MISAPPLIED**。
 
-**这不是"领域无问题"的结论**，而是"本轮精读范围（5 CORE + 边界 + abstract）内无四判据全过的 Q#"。两个关键全文缺失（Safi/L124）可能改变判断；且 coherent+GG+coded-chain 的联合失效机制需 Step 4a/MVE 级证据（FR-22 禁 Step 3 做）。
+**保留（D004 继续有效）**: Step 2 PASS / 5 CORE 身份 / Safi·L124 全文 blocker / 全文精读事实提取 / 直接竞品矩阵 / 边界判定（L075 classification / L165 AO / L090 fixed-STTC）。
 
-### 处置（按 glossary"候选全被筛掉时"）
+**Step 3 重建结论（canonical 四判据）**:
+1. 5 篇 CORE 全文精读 + 3 边界 + 2 bibliographic 事实提取完整保留。
+2. 直接竞品矩阵确认：**无一篇 confirmed 同时覆盖 coherent + GG + coded-chain + info-uncertainty 四要素**（事实保留）。
+3. 按 canonical 四判据重建 Q#：**Q-A（预测驱动风险失配）+ Q-B（动作位置-时间尺度失配）在 Step 3 层 SURVIVES（待 Step 3.5 竞争闭包）**；Q1 场景迁移 / Q3 宽集合 / Q2 切片重叠 不单独晋级；Q4 Safi / Q5 L124 全文 BLOCKED。
+4. **Step 3 不再是"无 Q#"**——存在 2 个 canonical 四判据形式上过的候选问题，但它们能否进 Step 4a 取决于 **Step 3.5 竞争闭包**（是否存在直接竞品已实质解决）。
 
-1. **先回 gw-search 扩关键词重检索（Step 3.5）**: 当前精读库可能偏窄。需补检索: (a) coherent FSO + Gamma-Gamma + adaptive modulation/coding 的直接竞品（确认 L124 之外是否有）；(b) coherent 检测下 CSI 反馈/预测的 AMC 工作；(c) Gamma-Gamma 中/强湍流下 AMC headroom 的分析论文；(d) **L124 + Safi 全文获取**（用户手动，关键身份闭合）。
-2. **扩检索后仍空 → 上报用户决策**: 可能 C 条件（coherent + GG + coded-chain + sat-ground + info-uncertainty 五要素同时锁死）本身太窄，换任何模块都撞同一物理事实（LEO 反馈时延>相干时间 + coherent CSI 更高维 + GG 动态范围大）。需用户/导师决定是否调整 C 条件或换子方向。**禁止 agent 自己拍板放宽 C 条件**（跨阶段决策）。
+### 处置（glossary"候选全被筛掉时"出口① → Step 3.5）
+
+Step 3 终态触发 **Step 3.5 定向补充检索**（不是终点）。Q-A/Q-B 各需：≥2 组不同表述专属 query + forward/backward citation + 直接竞品/近邻竞品/反例三类筛选 + 优先近五年正式发表。详见 R003（Step 3.5 检索记录）+ 竞争闭包表（§十一）。
 
 ### 下一步合法动作（FR-22）
 
-- **不进 Step 3.5（supplement）**: glossary 流程是"候选全空 → 回 Step 3.5 扩检索"，但本轮 Step 3 已在 topic 范围内诚实终止。Step 3.5 是**下一轮**的合法动作（需新对话 + 用户授权扩检索范围 + 优先获取 Safi/L124 全文）。
-- **禁进 Step 4a/MVE/方法设计/仿真**: 无 Q# 全过，FR-22 硬门控禁止。
-- **本轮到此停止**（用户执行提示词"到 Step 3 终态停止"）。
+- **本轮执行 Step 3.5**（glossary 流程①；brief 授权）。终态只能为：SURVIVES_STEP3_5 / COVERED_BY_EXISTING_WORK / WEAK_SCENARIO_MIGRATION / BLOCKED_BY_MISSING_FULLTEXT / TOO_BROAD_OR_MECHANISM_UNPROVEN。
+- **只有 ≥1 个 Q 为 SURVIVES_STEP3_5，下一合法动作才是 Step 4a**。**本轮不启动 Step 4a/MVE/方法设计/仿真**（brief 明示）。
+- **若 Q-A/Q-B 都失败**: 不制造第三个弱 Q；终态 STEP3_5_NO_SURVIVING_PROBLEM；交用户决定调整 C / 换 AMC 子族 / 停止。
+
+### Step 3.5 终态（R003 闭包后）
+
+**STEP3_5_SURVIVES**：Q-A（带 Safi UNVERIFIED 尾巴）+ Q-B（带 scenario-migration + baseline 缺位风险）**均 SURVIVES_STEP3_5** → **存在 Step 4a 入口**。竞争闭包详见 §十一 + R003。**本轮到此停止，不启动 Step 4a**（brief 明示）。下一合法动作 = Step 4a（需新对话 + 用户授权），启动前应优先关闭 Q-A Safi 尾巴 + 评估 Q-B 自建信道模型可行性。
 
 ---
 
@@ -329,5 +345,47 @@
 
 1. 本 Step 3 基于 5 CORE 全文 + 3 边界 + 2 abstract-only。**Safi2019（abstract-only）+ L124（abstract-only）全文缺失**，二者的 M-C-A 是 abstract-inferred，**不可据 abstract 推导失效机制**（FR-26）。
 2. **coherent + GG + coded-chain + info-uncertainty 五要素同时 confirmed 的工作 = 0**。这是文献事实，但"五要素同时锁死"的 C 条件可能物理上太窄（需 Step 3.5/4a 验证或用户决策放宽）。
-3. STEP3_NO_VALID_PROBLEM 是**本轮精读范围**的结论，不是"领域无问题"的终极判断。获取 Safi/L124 全文 + Step 3.5 扩检索后可能改变。
-4. 本轮**未进 Step 3.5/4a/MVE/方法设计/仿真**（FR-22 硬门控；无 Q# 全过禁进 Step 4a）。
+3. **Step 3 终态 STEP3_READ_COMPLETE_SEMANTIC_GATE_MISAPPLIED（D005）**：旧 STEP3_NO_VALID_PROBLEM 因用自创四判据标签（problem_truth 等）被取代；按 canonical 四判据 Q-A/Q-B 在 Step 3 层 SURVIVES（待 3.5 竞争闭包）。这不是"领域无问题"，也不是"Q-A/Q-B 已成立"——能否进 Step 4a 取决于 Step 3.5 竞争闭包结果。
+4. **本轮未进 Step 4a/MVE/方法设计/仿真**（FR-22 硬门控；brief 明示到 Step 3.5 终态停止）。Step 3.5 是本轮执行的合法动作（glossary 空集处置流程①）。
+5. **Q-A/Q-B 的 A 是文献支持、可证伪的失效假设，不是已证伪**——"已证伪"是 Step 4a/MVE 的事，Step 3 不要求（D005/R001；FR-22）。
+
+---
+
+## 十一、Step 3.5 竞争闭包表（D005/R003，Contract 引用源）
+
+> 2 个并行子 agent 执行（Q-A/Q-B 各 6 专属 query + 引用链 + Safi/L124 获取），全部检索 JSON 在 `search-archive/2026-08-03/`（55 文件）。详见 `.sessions/2026-08-02-fso-amc-groundwork/R003-step35-targeted-search-and-closure.md`。
+
+### 11.1 Q-A 闭包（预测驱动自适应编码的风险失配）
+
+| paper | DOI/year | 同 M | 同 C | 解决 A | verdict |
+|---|---|---|---|---|---|
+| Nguyen2024 (TAES) | 10.1109/TAES.2024.3403809 / 2024 | 是 | 是 | **否**（点预测，outdated CSI 当动机非纳入码率规则） | PARTIAL_OVERLAP（最强近邻，A 留缝）|
+| Galijasevic ICC 2024 | 10.1109/ICC51166.2024.10622619 / 2024 | 是（M 前身） | 部分 | 否 | PARTIAL_OVERLAP |
+| Safi 2019 (TVT) | 10.1109/TVT.2019.2916843 / 2019 | 部分 | 是（FSO+est-error） | abstract 看不出 risk-aware | **UNVERIFIED**（全文 BLOCKED，FR-26）|
+| ETRI 2026 rateless polar | 10.4218/etrij.2025-0461 / 2026 | 部分 | 部分 | 否 | DISTINCT |
+
+**Q-A closure verdict = SURVIVES_STEP3_5**（带 Safi UNVERIFIED 尾巴）。无任何 FSO 文献做 posterior/risk-aware/outage-constrained code-rate rule under prediction error；Nguyen2024 点预测印证 A 开放。
+
+### 11.2 Q-B 闭包（相干星地 AMC 动作位置-时间尺度失配）
+
+| paper | DOI/year | 同 M | 同 C | 解决 A | verdict |
+|---|---|---|---|---|---|
+| L023 (JLT 2023) | 10.1109/JLT.2023.3242215 / 2023 | 是（M 本体） | **否**（terrestrial，自陈 LEO 不可行） | 否（单环，是 Q-B 解构对象） | PARTIAL_OVERLAP |
+| Nguyen2024 (TAES) | 10.1109/TAES.2024.3403809 / 2024 | 部分（TX-only） | 是 | 部分（预测补偿非分层） | PARTIAL_OVERLAP |
+| Slow/Fast AMC massive MIMO | 10.1049/cmu2.12389 / 2022 | 否（RF） | 否（RF） | **是（FAMC+SAMC 分层）** | DISTINCT（**RF split-timescale 先例，路径非空，未迁移 FSO/sat**）|
+| L124 | 10.1364/oe.595557 / 2026 | 是（coherent AMC） | **否（terrestrial）** | 否 | PARTIAL_OVERLAP / UNVERIFIED（全文 BLOCKED）|
+| L165 sat feeder coherent+AO | 10.1038/s41377-023-01201-7 / 2023 | 否（AO 层） | 部分（sat） | 否 | DISTINCT（boundary AO）|
+| MaxSpecEff Coherent Terrestrial FSO (TCOMM 2026) | 10.1109/TCOMM.2026.3694829 / 2026 | 部分 | 否（terrestrial） | 否 | DISTINCT |
+
+**Q-B closure verdict = SURVIVES_STEP3_5**（带 scenario-migration + baseline 缺位风险）。FSO/sat 域无分层契约直接竞品；RF massive-MIMO 先例（10.1049/cmu2.12389）证路径非空。**关键风险**：无合法 coherent 星地 AMC baseline（L023/L124/TCOMM2026/LCOMM2026 全 terrestrial；L165 sat 但 AO）→ Step 4a 量化对标需自建 coherent sat-ground GG 信道模型。
+
+### 11.3 Step 3.5 终态
+
+**Q-A + Q-B 均 SURVIVES_STEP3_5 → 存在 Step 4a 入口**（但本轮不启动，brief 明示到 Step 3.5 终态停止）。
+
+**Safi/L124 全文获取**：均 3 路径失败仍 BLOCKED（Safi：tools/download all_failed + Unpaywall closed + 无作者稿；L124：tools/download all_failed + Optica HTTP 202 Radware JS-challenge + arXiv 0）。未绕过访问控制。
+
+**Step 4a 前开放问题（非本轮终止条件）**：
+1. Q-A Safi UNVERIFIED 尾巴：合法获取 Safi 全文关闭（IEEE 订阅/ILL）。
+2. Q-B baseline 缺位：评估自建 coherent sat-ground GG 信道模型可行性（判据4 量化对标工程前提）。
+3. Galijasevic DOI 异常（解析到 BELA 5G/6G）+ L023 backward citation 缺口：用正确 DOI/标题重跑 citation。

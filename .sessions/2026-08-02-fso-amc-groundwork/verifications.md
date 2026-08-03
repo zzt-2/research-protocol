@@ -270,3 +270,33 @@ V001（12/12 PASS）仍有效，但其判定基于 R001 的表面计数，**漏�
 14. **待复核**：`git diff --check` + 4 p05_run*.log 未动 + Skill 未改 — 由 commit 前最终核查。
 
 **结论**：D004 证据链完整，Step 2 STEP2_PASS_WITH_COHERENT_C_FAMILY_BLOCKED 成立；Step 3 STEP3_NO_VALID_PROBLEM 诚实终态成立。Nguyen 迁移 + Crossref 验证 + 5 CORE 精读 + 直接竞品矩阵 + Q# 四判据全部有 file:line / SHA / API 证据支撑。Safi/L124 全文缺失边界严格遵守。未伪造 Step 3.5/4a/方法/仿真。
+
+> **[D005 语义失效标注，2026-08-03]** V005 验证的是**本地自写合同**（自创四判据标签 problem_truth/actionability/novelty/thesis_fit 四列）的**一致性**，**没有核对 canonical criteria owner**（stages/glossary.md L22-31 + templates.md L301）。因此 V005 的 Step 3 verdict（"Q# 四判据诚实"check 10、"STEP3_NO_VALID_PROBLEM 成立"）在**科学语义层失效**——它验证的四判据不是协议合法的四判据。V005 保留历史不删；regression candidate 已登记（见 V006 check 11 + D005）。Nguyen 迁移 SHA / Crossref 身份 / 5 CORE 精读完整性 / 边界仲裁 / Safi·L124 全文缺失边界遵守 等纯事实性 check（1-9 除 verdict 部分）继续有效。
+
+---
+
+## V006 — D005 Step 3 语义门纠偏 + Step 3.5 终审独立验证（2026-08-03）
+
+> 关联：D005 / R001 / R003 / S005 / H003 / literature_notes_amc §6/§7/§11。独立 fresh-context verifier（producer 之外，复核 canonical owner + 竞争闭包 + 10 项 checklist）。
+> 复算环境：worktree @ 本轮改动（HEAD `482d9ad` + 未提交改动），sha256sum/grep/Read 重算。
+> 总体判定：**PASS（11/11）**。
+
+### 逐项
+
+1. **[PASS]** semantic-gate receipt owner — R001 §A 记 `stages/glossary.md` SHA256 `eafa43e3…073f610e74b`（L22-31）+ `templates.md` SHA256 `bdc93d41…caa7b9e41`（L301/L308/L311/L371）。重算 `sha256sum stages/glossary.md templates.md` 完全一致。D005 decisions.md 同 SHA + 同行号。
+2. **[PASS]** 四判据与 owner 一致 — R001 §B 四判据标签 = glossary L22-31 + templates L301 原文（具体技术矛盾/方法产出形态/近期baseline/可量化对标）。literature_notes §6 明示 canonical 标签 + 旧自创标签废止。grep 确认 `problem_truth/actionability/novelty/thesis_fit` 仅出现于废止标注/纠偏解释，未作 §6/§7 terminal verdict。
+3. **[PASS]** 没有把 Step 4a/MVE 证据前移 — Q-A/Q-B 判据1 只要求"M-C-A 明确可证伪"，明示"不要求已用 MVE 证明退化"。grep "需 MVE 证明/需 oracle/需证退化" 在 Q-A/Q-B verdict 段 0 命中（仅出现在解释旧错误时）。
+4. **[PASS]** Q-A/Q-B 单一可证伪 M-C-A，且 ≠ Q3 — Q-A 单一 baseline(Galijasevic)+单一失效假设(点预测无后验)+可观察失效(FER 违约)；Q-B 单一 baseline(L023)+单一失效假设(同环绑定)+可观察失效(L023 自陈 LEO 不可行)。Q3 仍 TOO_BROAD，子集由 Q-A/Q-B 承接。Q-A≠Q-B。
+5. **[PASS]** direct competitor search 足够针对 — `search-archive/2026-08-03/` 55 文件。Q-A 6 专属 query + Safi forward(49)；Q-B 9 专属 query + L023/Nguyen2024/Galijasevic citation。R003 §3 闭包表覆盖直接竞品(Nguyen2024/L023/Safi/L124)+近邻+反例(RF massive-MIMO split-timescale)。≥2 组不同表述 + 引用链 + 三类筛选均满足。
+6. **[PASS]** Safi/L124 缺全文边界未越界 — 两目录仍仅 metadata.json 无 content.md。Q4/Q5 BLOCKED_BY_MISSING_FULLTEXT。R003 §2 记 3 路径失败。闭包表标 UNVERIFIED 而非推机制。多处明示"禁据 abstract 推导失效机制（FR-26）"。
+7. **[PASS]** future-work 没被自动当 novelty FAIL — Q2 判定明示"论文自列 future work ≠ novelty 自动失败（D005/brief）"，作"问题原料保留待 Step 3.5 查"。D005 同原则。Q2 不晋级原因是切片重叠非 novelty 自动失败。
+8. **[PASS]** competitor closure 支持终态 — R003 §3 + literature_notes §11 闭包表覆盖最强竞品（Nguyen2024/L023/Safi/L124）+ 分类完整（PARTIAL_OVERLAP/DISTINCT/UNVERIFIED）。§11.3 终态 Q-A+Q-B 均 SURVIVES_STEP3_5。
+9. **[PASS]** 未进入 Step 4a/MVE — grep METHOD_SIGNAL/Go-NoGo 在本轮新文件 0 命中（唯一命中在旧 landscape 是否定约束）。literature_notes §7 + §10 + topic-index + H003 + master-state 均明示"本轮不启动 Step 4a/MVE/方法/仿真"。无算法设计/仿真代码。
+10. **[PASS]** git diff --check / scope / 治理一致 — `git diff --check` exit 0（仅 CRLF hint）。`git status --porcelain` 确认 4 个 p05_run*.log 仍 untracked 未动。`.agents/skills/research-direction-lab/` 未改。dormant receiver campaign 未触碰。改动路径全在预期范围（.sessions/专题 + literature_notes_amc + master-state + search-archive/2026-08-03 + _registry.yaml）。
+11. **[PASS]** 回归候选落实 — D005 "V005 处置"段标语义失效 + 登记 regression candidate "verifier 必须核对 canonical criteria owner，不能只验证本地 prompt/contract 自洽"。V005 保留历史不删。voice.md verbatim 登记同措辞。H003 纪律#4 + R001 §A 重申 canonical owner 唯一性。
+
+### 发现的问题
+无。所有 11 项 PASS。
+
+### 结论
+D005 + Step 3.5 终审全部 11 项独立验证通过——canonical owner SHA256/行号重算一致、四判据标签与 glossary/templates 原文一致且自创标签仅作废止标注、无 Step 4a/MVE 证据前移、Q-A/Q-B 单一可证伪且 ≠ Q3、检索规模与闭包表充分、Safi/L124 全文边界严守、future-work 未被当 novelty 自动失败、未进 Step 4a、git scope 与治理一致、回归候选已落实。**允许 commit**。

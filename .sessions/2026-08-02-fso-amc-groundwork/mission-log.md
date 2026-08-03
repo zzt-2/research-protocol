@@ -41,3 +41,13 @@
 - **forbidden**: 进 Step 3.5/4a / 设计方法 / 跑仿真 / 写 Go-NoGo/METHOD_SIGNAL / 改 Skill / 改 4 个 p05_run*.log / WebReader/WebSearch 抓全文 / 绕过访问控制 / 据 abstract 推 Safi/L124 失效机制 / push / 把 Nguyen 等已覆盖宽泛问题重命名为空白（FR-23）/ agent 自行放宽 C 条件。
 - **next_legal_action（本轮完成后）**: **GW Step 3.5 定向补充检索**（glossary 空集处置流程①回扩检索；需新对话 + 用户授权扩检索范围 + 优先获取 Safi/L124 全文）；扩检索后仍无 Q# → 上报用户决策调整 C 或换子方向。
 - **status**: STEP2_PASS_WITH_COHERENT_C_FAMILY_BLOCKED（D004）+ **STEP3_NO_VALID_PROBLEM（S004/V005）** — Nguyen2024（IEEE TAES 2024，Crossref 验证 + SHA256 迁移，非 OA 机构授权）补到 5 CORE 全文（L023/L096/L146/Galijasevic/Nguyen2024）；Step 3 精读 5 CORE+3 边界+2 abstract，直接竞品矩阵确认**无一篇 confirmed 覆盖 coherent+GG+coded+uncertainty 四要素**，5 候选 Q# 无一四判据全过（Q1 迁移/Q2 self-id future work/Q3 机械拼接/Q4 abstract-blocked/Q5 C-blocked）；C 族 L124 仍 BLOCKED；Safi PROVISIONAL；**未进 Step 3.5/4a**。
+
+## CP005: 2026-08-03 Step 3 语义门纠偏（D005）+ Step 3.5 定向检索终态
+
+- **mission**: 同对话内完成 (1) 纠正 Step 3 语义门误用（自创四判据标签当 terminal gate）；(2) 按 canonical 四判据 owner 重判 Q#；(3) 完成 Step 3.5 定向检索+竞争闭包；(4) 给出是否存在 Step 4a 入口；(5) 到 Step 3.5 终态停止。
+- **authority**: 用户执行提示词（2026-08-03-105947）§"本轮主控裁决"+ Phase A/B/C。
+- **worktree**: `.worktrees/rdl-method-production-v2` @ `482d9ad`（CP004 之后无新 commit）。
+- **allowed**: semantic-gate owner receipt（R001，SHA256+行号+原文逐字核对）/ D005 纠偏 STEP3_NO_VALID_PROBLEM → STEP3_READ_COMPLETE_SEMANTIC_GATE_MISAPPLIED / canonical 四判据重建 Q-A/Q-B / Step 3.5 定向检索（2 并行子 agent ≤15min，Q-A/Q-B 各 6 query+引用链）/ 竞争闭包表 / Safi·L124 ≤3 路径合法获取（失败止损）/ R003 / V006 独立验证 / 治理更新（topic-index/registry/master-state/S005/H003）/ 单次 commit 不 push。
+- **forbidden**: 进 Step 4a / 设计方法 / 跑仿真 / 写 Go-NoGo/METHOD_SIGNAL / 改 Skill / 改 4 个 p05_run*.log / 据 abstract 推 Safi/L124 失效机制 / 绕过访问控制 / 用自创四判据标签当 terminal gate / 制造第三个弱 Q / agent 自行放宽 C 条件 / push。
+- **next_legal_action（本轮完成后）**: **GW Step 4a**（需新对话+用户授权；§A0 §0 前置门控再查 Q# 四判据）。Step 4a 前建议关闭 3 个开放问题（Safi 全文 / Q-B 信道模型可行性 / Galijasevic citation 重跑）。或用户决策调整 C / 换 AMC 子族 / 停止。
+- **status**: STEP3_READ_COMPLETE_SEMANTIC_GATE_MISAPPLIED（D005/R001）+ **STEP3_5_SURVIVES（S005/R003/V006）** — 旧 STEP3_NO_VALID_PROBLEM 因用自创四判据（problem_truth 等）被取代；canonical 四判据 owner = glossary.md L22-31 + templates.md L301（SHA 固定）；重建 Q-A（预测驱动风险失配）+ Q-B（动作位置-时间尺度失配）；Step 3.5 ~190 命中+引用链闭包后 **Q-A（带 Safi UNVERIFIED 尾巴）+ Q-B（带 baseline 缺位风险）均 SURVIVES_STEP3_5** → 存在 Step 4a 入口但**本轮不启动**；Safi/L124 仍 BLOCKED（3 路径失败）；保留 Step 2 PASS+5 CORE+精读事实提取。

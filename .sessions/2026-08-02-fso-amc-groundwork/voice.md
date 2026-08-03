@@ -59,3 +59,24 @@
 - "Step 3 终态只能二选一：STEP3_PASS_WITH_VALID_Q 或 STEP3_NO_VALID_PROBLEM。"
 - "禁止把这些宽泛问题重新命名成空白。"
 - "不修改 Skill；不修改 dormant receiver campaign；不碰四个既有 p05_run*.log；单次统一 commit，不 push。"
+
+## 2026-08-03（本轮执行提示词关键约束，verbatim，paste-attachment 2026-08-03-105947）
+
+- "继续 AMC Groundwork。本轮一次完成：1. 纠正 Step 3 语义门误用；2. 按协议唯一四判据重判 Q#；3. 完成 GW Step 3.5 定向补充检索和竞争闭包；4. 给出是否存在可进入 Step 4a 的问题。5. 到 Step 3.5 终态停止，不进入 Step 4a/MVE，不设计方法、不跑仿真。"
+- "不接受当前：STEP3_NO_VALID_PROBLEM。原因不是论文读取失败，而是 Step 3 使用了错误的判据并产生循环门控。" → D005
+- "协议唯一合法的问题四判据必须从 owner 逐字读取，不得按本轮 prompt 转述自行重写：stages/glossary.md、templates.md。" → D005 / R001
+- "`problem_truth/actionability/novelty/thesis_fit` 不是 owner 定义的四判据，不得继续作为 Step 3 terminal gate。" → D005
+- "已知其核心含义为：1. 存在明确、具体的 M-C-A 技术矛盾；2. 能形成可复用的方法产出；3. 有近期、真实的 baseline；4. 能量化对标。"
+- "Step 3 要求的是文献支持、具体、可证伪的失效假设 A；Step 3 不要求已经用 MVE 证明退化；Step 3.5 负责定向补充检索、相邻工作和 novelty closure；Step 4a 才负责性能间隙、方法适配性和核心假设验证。"
+- "原 Q1…保持 WEAK_SCENARIO_MIGRATION，不自动晋级。"
+- "原 Q3…保持 TOO_BROAD_MECHANICAL_COMBINATION，除非收窄成单一 baseline、单一 load-bearing assumption 和单一可观察失效。"
+- "Q4 Safi、Q5 L124 在无全文时继续 BLOCKED。"
+- "论文自列 future work 不等于 novelty 自动失败；它只能作为问题原料，仍须做竞争闭包。"
+- "不得因为'尚无 MVE'否决 Q-A/Q-B。"
+- "每个 Q 至少：2 组不同表述的专属 query；forward/backward citation 检查；直接竞品、近邻竞品、反例三类筛选；优先检查最近五年正式发表论文。"
+- "每篇最多三类合法获取路径，失败即止损，不绕过访问控制。无法获取时保留 blocker，不根据摘要推断实现细节。"
+- "只有至少一个 Q 为 SURVIVES_STEP3_5，下一合法动作才是 Step 4a。不得在本轮启动 Step 4a。"
+- "若 Q-A/Q-B 都失败：不制造第三个弱 Q；终态为 STEP3_5_NO_SURVIVING_PROBLEM；交用户决定调整条件 C、换 AMC 子族或停止该方向。"
+- "V005 保留历史，不删除；标明它验证的是本地自写合同一致性，没有核对 canonical criteria owner，因此科学语义层失效。"
+- "但留下回归候选：'verifier 必须核对 canonical criteria owner，不能只验证本地 prompt/contract 自洽。'"
+- "不修改 dormant receiver campaign；不碰四个既有 p05_run*.log；单次统一 commit，不 push。"
