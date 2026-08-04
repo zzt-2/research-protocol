@@ -1,11 +1,14 @@
 schema_version: 1
-generated: 2026-08-03
+generated: 2026-08-04
 owner: .sessions/2026-07-09-thesis-writing/S018
 decision: D025
 authority_note: >-
   本表盘点可部署动作，不以 METHOD_SIGNAL 数量代替方法能力。method_like=true
   必须同时有统一 input-action-output 与传统 baseline；chapter_capable=true 必须通过
   name/frame/steps/ablation/baseline/main_figure/unified_io/not_parameter_or_bugfix 八门。
+collision_lookup_note: >-
+  本表是碰撞检索入口，不保证穷尽历史。概念卡必须从 action signature 派生检索词，
+  对 .sessions/*/decisions.md、worker-logs 和 thesis-lessons.md 做一次定向 rg；命中后回读原始证据。
 
 kernels:
   - id: ccisp
@@ -123,6 +126,30 @@ kernels:
       - .sessions/2026-08-02-fso-amc-groundwork/decisions.md:264-319,333-376
       - projects/thesis-fso/amc-groundwork/feasibility_report_v2.md:46-65,92-106
     terminal_status: UNAUTHORIZED_DEV_ONLY_REFRAME_PROBE
+
+  - id: a1_adaptive_segmented_cpe
+    name: Adaptive Intra-Window NDA Segmentation / Adaptive K
+    m_c_a: 固定 NDA 块内分段数在不同线宽与湍流条件下最优值变化；用当前窗可见判据选择 K
+    deployable_action: current-window amplitude/SNR/phase proxy -> choose K from 8/16/32 -> segmented NDA CPE
+    information_source: receiver-visible J1/J2/J3/J4 proxies
+    baseline: [fixed_K16, tuned_VV_Nw16, oracle_K]
+    existing_evidence: >-
+      可实现 adaptive-J4 退化为 always-K16，gain=0.000 dB，0/8 点显著胜 K16；
+      35 点中 K16 在 71% 场景持平 oracle，四判据最强 |rho|=0.361；
+      tuned VV Nw=16 在 200/500 kHz 分别反超 NDA-segmented 14%/68%。
+    missing_evidence: 无；现有 C3 动作签名与已否决 A1 相同
+    method_like: false
+    chapter_capable: false
+    capability: {name: true, frame: true, steps: true, ablation: true, baseline: true, main_figure: false, unified_io: true, not_parameter_or_bugfix: false}
+    claim_ceiling: 防御性负面材料；不能作为算法层创新或 concept survivor
+    evidence:
+      - .sessions/2026-07-06-step4a-mve-execution/decisions.md:564-611
+      - .sessions/2026-07-06-step4a-mve-execution/decisions.md:390-475
+      - projects/simulation/explore/nda-awgn-tracking-sandbox/_a1_param_scan_report.md
+    terminal_status: REJECTED_AS_ALGORITHM_INNOVATION
+    reopen_condition: >-
+      只有新的 receiver-visible 信息源与文献支持的主流工况同时出现，并预先证明相对 tuned VV
+      存在超过 MDE 的上界时才可重开；CV/SNR/线宽代理和极端 1000 kHz 不满足。
 
   - id: p05_p06_p07r_g1_p09_boundaries
     name: Closed or Invalidated Candidate Family

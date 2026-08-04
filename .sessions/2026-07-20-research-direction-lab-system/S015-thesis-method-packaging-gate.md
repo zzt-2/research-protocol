@@ -2,6 +2,7 @@
 
 > 2026-08-03 | Skill 最小修订 | V015 PASS，待派发 T002/T003
 > 2026-08-03 续接 | 2A/2B bounded closure 授权 | V016 PASS，待创建两个执行任务
+> 2026-08-04 续接 | 首个概念构造批次验收与候选源轮换
 
 ## 目标
 
@@ -34,3 +35,10 @@ T002/T003 两个独立只读诊断随后均返回 `NEEDS_ONE_BOUNDED_PACKAGE`：
 ## 后续
 
 T004/T005 已写成自包含执行任务并由 V016 独立终验 PASS。统一提交后创建两个新 worktree 对话。主控只接收每个任务的终态、关键数字、证据路径和 commit SHA；执行细节全部留在各分支文件中。
+
+T006 随后构造 4 张 Ch4 原型卡，但原报唯一 survivor C3 与历史 D-011 的 NDA 分段数
+adaptive-K 完全同轴。D-011 已实测可实现判据退化为 always-K16、gain=0.000 dB，D-009
+又证明 tuned VV Nw=16 在 200/500 kHz 反超 segmented 14%/68%。因此主控将 T006 验收为
+`NO_CONSTRUCT_SURVIVES`。根因是 inventory 漏记该旧 dead end，属于碰撞信息管道断裂；
+最小修复是补 inventory，并要求下一批按 action signature 定向 grep 历史，不增加新 registry
+或 Skill 规则。下一批切到 Ch5 部署/计算流程候选源，不修 C3。

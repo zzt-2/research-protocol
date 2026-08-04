@@ -4,6 +4,14 @@
 > 性质: design-only 概念原型卡。survivor 不是 METHOD_SIGNAL、不是 Go，不能进论文正文；
 > 实验前必须回 GW Step 1–3/3.5/4a。无仿真、无代码、无检索、无科学 claim。
 
+> **主控验收修订（CP004，2026-08-04）**：执行者原判 `CONCEPT_SURVIVOR_AVAILABLE`
+> 不予接收，权威终态改为 **`NO_CONSTRUCT_SURVIVES`**。C3 与历史 D-011 的
+> “NDA 块长/分段数自适应 K”动作签名相同：可实现判据退化为 always-K16、gain=0.000 dB，
+> 且 tuned VV Nw=16 在 200/500 kHz 分别反超 NDA-segmented 14%/68%。下文保留原始
+> 构造过程供审计；其中 C3 的 `SURVIVOR/EXTENSION` 和 Next formal entry 均已失效，
+> 不得进入 GW 或实验。权威碰撞条目见 `internal-method-kernel-inventory.yaml` 的
+> `a1_adaptive_segmented_cpe`。
+
 ## 1. Terminal verdict
 
 **`CONCEPT_SURVIVOR_AVAILABLE`**：4 张原型卡中 3 张碰撞/降级，1 张保留为 design

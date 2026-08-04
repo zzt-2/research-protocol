@@ -4,12 +4,12 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 14
+  control_epoch: 15
   role: RDL_MASTER
   mission: 设计并验证轻量方法构造车道，使 Ch4/Ch5 优先形成学位论文级可命名方法
   active_lane: CONCEPT_METHOD_CONSTRUCTION_DISPATCHED
   authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D023
-  decision_gate: T006 已冻结为 Ch4 design-only 概念方法构造批次；等待执行回传
+  decision_gate: T006 唯一 survivor 因漏检 D-011/D-009 被撤回；T007 改换 Ch5 部署/计算流程候选源
   allowed_actions:
     - CONCEPT_METHOD_CONSTRUCTION
     - INVENTORY_COLLISION_CHECK
@@ -21,12 +21,12 @@ rdl_control:
     - COMMON_PARAMS_MUTATION
     - FORMAL_STAGE_CHANGE
   mission_log_ref: .sessions/2026-07-20-research-direction-lab-system/mission-log.md
-  mission_checkpoint: CP003
-  next_legal_action: 在独立新对话执行 T006；只写一个 Ch4 concept dossier，完成后回传五项短摘要
+  mission_checkpoint: CP004
+  next_legal_action: 在独立新对话执行 T007；只写一个 Ch5 concept dossier，完成后回传五项短摘要
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-04（T006：Ch4 concept batch 已派发，等待五项回传）
+> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-04（T006 验收为 NO_CONSTRUCT_SURVIVES；T007 已派发）
 
 ## 专题信息
 
@@ -208,6 +208,7 @@ rdl_control:
 - **V017**：轻量双车道设计独立终验 PASS；P0/P1=0，首个任务前所需 streak 字段已在 CP001 以零值补齐。
 - **CP002**：最小 Skill patch 完成；旧规则的两项顺序 RED 均失败，GREEN 2/2、全套 113 passed/1 skipped，个人运行副本 99/99 文件一致。
 - **T006 / CP003**：首个 Ch4 design-only 概念方法构造批次已冻结；不检索、不仿真，只产 3–5 张完整原型卡并做 inventory/dead-end/cheap-alternative 碰撞筛选。
+- **CP004 / T007**：T006 原报 C3 survivor，但主控回读 D-011/D-009 后确认其与已否决 adaptive-K 同动作，终态修订为 `NO_CONSTRUCT_SURVIVES`；inventory 补该 dead end，下一批切换到 Ch5 部署/计算流程并强制 action-signature 历史检索。
 
 ## 未决项
 
@@ -230,6 +231,6 @@ lightweight persistence。六案审计重放、自动测试、个人 Skill 同�
 终验均 PASS（P0/P1/P2=0）；既有科学 verdict、dormant longitudinal topic 与
 formal owner 未变。
 
-**2026-08-04 当前入口**：T006 已按 epoch 14 / CP003 冻结并等待独立新对话执行。
-该任务只生成一个 Ch4 concept dossier；任何 survivor 在实验前必须返回正式 GW。
-旧 campaign、common/params 与正式阶段仍未授权修改。
+**2026-08-04 当前入口**：T006 已验收为 `NO_CONSTRUCT_SURVIVES`；C3 不得进入 GW。
+T007 按 epoch 15 / CP004 冻结为 Ch5 design-only 概念方法构造批次；任何 survivor 在实验前
+必须返回正式 GW。旧 campaign、common/params 与正式阶段仍未授权修改。

@@ -46,3 +46,18 @@
 - weight: ADEQUATE
 - drift: ALIGNED
 - next_action: 执行 T006 并回传五项；主控接收前不派第二批
+
+## CP004 — 2026-08-04
+
+- event: T006 主控验收纠偏 + T007 Ch5 concept batch 派发
+- evidence: `ch4-concept-method-batch-001.md` 主控修订；D-011 adaptive-K FAIL；D-009 tuned-VV collision；`T007-ch5-concept-method-construction.md`
+- formal_science_disposition: NO_CHANGE
+- mission_method_delta: NONE
+- intent: CONCEPT_METHOD_CONSTRUCTION
+- mechanism_family: CH5_DEPLOYMENT_MULTI_MECHANISM_BATCH_001
+- same_axis_streak: 0
+- deterministic_repair_count: 0
+- no_method_streak: 1
+- weight: ADEQUATE
+- drift: CORRECTED
+- next_action: 执行 T007；候选来源改为 Ch5 部署/计算流程，不修 C3；每张卡须以 action signature 定向 grep 历史
