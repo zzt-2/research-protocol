@@ -31,3 +31,18 @@
 - weight: ADEQUATE
 - drift: ALIGNED
 - next_action: 选择 Ch4 或 Ch5，派一个 design-only 概念方法构造批次；不先跑检索或实验
+
+## CP003 — 2026-08-04
+
+- event: T006 Ch4 concept batch 派发
+- evidence: `.sessions/2026-07-20-research-direction-lab-system/T006-ch4-concept-method-construction.md`
+- formal_science_disposition: NO_CHANGE
+- mission_method_delta: NONE
+- intent: CONCEPT_METHOD_CONSTRUCTION
+- mechanism_family: CH4_MULTI_MECHANISM_BATCH_001
+- same_axis_streak: 0
+- deterministic_repair_count: 0
+- no_method_streak: 0
+- weight: ADEQUATE
+- drift: ALIGNED
+- next_action: 执行 T006 并回传五项；主控接收前不派第二批

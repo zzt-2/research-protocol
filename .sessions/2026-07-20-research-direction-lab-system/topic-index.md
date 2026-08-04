@@ -4,12 +4,12 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 13
+  control_epoch: 14
   role: RDL_MASTER
   mission: 设计并验证轻量方法构造车道，使 Ch4/Ch5 优先形成学位论文级可命名方法
-  active_lane: CONCEPT_METHOD_CONSTRUCTION_READY
+  active_lane: CONCEPT_METHOD_CONSTRUCTION_DISPATCHED
   authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D023
-  decision_gate: R006 已获用户确认；最小 Skill RED→GREEN 已闭合，下一步可派首个概念方法构造批次
+  decision_gate: T006 已冻结为 Ch4 design-only 概念方法构造批次；等待执行回传
   allowed_actions:
     - CONCEPT_METHOD_CONSTRUCTION
     - INVENTORY_COLLISION_CHECK
@@ -21,12 +21,12 @@ rdl_control:
     - COMMON_PARAMS_MUTATION
     - FORMAL_STAGE_CHANGE
   mission_log_ref: .sessions/2026-07-20-research-direction-lab-system/mission-log.md
-  mission_checkpoint: CP002
-  next_legal_action: 为 Ch4 或 Ch5 派一个 design-only 概念方法构造批次，先产 3–5 张原型卡再碰撞筛选
+  mission_checkpoint: CP003
+  next_legal_action: 在独立新对话执行 T006；只写一个 Ch4 concept dossier，完成后回传五项短摘要
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-04（D023/R006：轻量方法构造双车道设计，待用户审阅后进入 Skill RED）
+> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-04（T006：Ch4 concept batch 已派发，等待五项回传）
 
 ## 专题信息
 
@@ -207,6 +207,7 @@ rdl_control:
 - **CP001**：新 mission-log 从 D023 设计转向开始，不回填 T004/T005 历史细节；method delta=`NONE`，当前只允许 R006 审阅和 Skill RED 设计。
 - **V017**：轻量双车道设计独立终验 PASS；P0/P1=0，首个任务前所需 streak 字段已在 CP001 以零值补齐。
 - **CP002**：最小 Skill patch 完成；旧规则的两项顺序 RED 均失败，GREEN 2/2、全套 113 passed/1 skipped，个人运行副本 99/99 文件一致。
+- **T006 / CP003**：首个 Ch4 design-only 概念方法构造批次已冻结；不检索、不仿真，只产 3–5 张完整原型卡并做 inventory/dead-end/cheap-alternative 碰撞筛选。
 
 ## 未决项
 
@@ -229,7 +230,6 @@ lightweight persistence。六案审计重放、自动测试、个人 Skill 同�
 终验均 PASS（P0/P1/P2=0）；既有科学 verdict、dormant longitudinal topic 与
 formal owner 未变。
 
-**2026-08-04 当前入口**：D023/R006 的最小 Skill RED→GREEN 已完成，控制面递增到
-epoch 13。下一步只派一个 design-only 概念方法构造批次；先形成 3–5 张完整原型卡，
-再查 existing action、dead end 与 cheap alternative。任何 survivor 在实验前必须返回正式
-GW；旧 campaign、common/params 与正式阶段仍未授权修改。
+**2026-08-04 当前入口**：T006 已按 epoch 14 / CP003 冻结并等待独立新对话执行。
+该任务只生成一个 Ch4 concept dossier；任何 survivor 在实验前必须返回正式 GW。
+旧 campaign、common/params 与正式阶段仍未授权修改。
