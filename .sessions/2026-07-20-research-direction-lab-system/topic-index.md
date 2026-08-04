@@ -4,26 +4,25 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 12
+  control_epoch: 13
   role: RDL_MASTER
   mission: 设计并验证轻量方法构造车道，使 Ch4/Ch5 优先形成学位论文级可命名方法
-  active_lane: METHOD_CONSTRUCTION_SYSTEM_DESIGN
+  active_lane: CONCEPT_METHOD_CONSTRUCTION_READY
   authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D023
-  decision_gate: 用户已确认 R006 的目标、双车道、检索后移与轻量碰撞入口；Skill 修改前仍需 RED
+  decision_gate: R006 已获用户确认；最小 Skill RED→GREEN 已闭合，下一步可派首个概念方法构造批次
   allowed_actions:
-    - PROTOCOL_AUDIT
-    - METHOD_CONSTRUCTION_DESIGN
-    - SKILL_TEST_DESIGN
+    - CONCEPT_METHOD_CONSTRUCTION
+    - INVENTORY_COLLISION_CHECK
+    - METHOD_PROTOTYPE_RANKING
   forbidden_actions:
-    - SKILL_MUTATION_BEFORE_RED
-    - NEW_DIRECTION_DISPATCH
-    - SCIENTIFIC_EXPERIMENT
+    - SCIENTIFIC_EXPERIMENT_BEFORE_GW
+    - BROAD_SEARCH_BEFORE_SURVIVOR
     - OLD_CAMPAIGN_REOPEN
     - COMMON_PARAMS_MUTATION
     - FORMAL_STAGE_CHANGE
   mission_log_ref: .sessions/2026-07-20-research-direction-lab-system/mission-log.md
-  mission_checkpoint: CP001
-  next_legal_action: 用户审阅 R006；确认后为最小 Skill patch 建立 CCISP/T004/T005/正向样本 RED
+  mission_checkpoint: CP002
+  next_legal_action: 为 Ch4 或 Ch5 派一个 design-only 概念方法构造批次，先产 3–5 张原型卡再碰撞筛选
 ```
 <!-- RDL-CONTROL:END -->
 
@@ -58,7 +57,7 @@ rdl_control:
 - 基于 H003/R004 的历史回归，只补 executable semantic gates、contribution tiers 与 lightweight persistence；不增加第四类 patch，不修改既有科学 verdict 或 formal owner。
 - 基于长程 campaign 与 12 篇硕士论文包装审计，允许最小增加论文方法章保留门，并对 2A/2B 做 RED→GREEN；不放松 scientific/formal 门，不运行实验，不修改既有科学 verdict。
 - 基于 D022 用户显式授权，允许在两个隔离 worktree 各执行一个已冻结的 2A/2B bounded packaging closure，直至得到章节就绪、支持材料、拒绝或真实外部阻塞终态；不开放新方向、不修改 common/params、不恢复旧 campaign。
-- 基于 D023，T004/T005 执行阶段已结束，当前只设计“概念方法构造→碰撞/廉价替代筛选→survivor 回正式 GW”的轻量双车道；复用现有 inventory，不新建 registry，不修改 Skill、不派新方向、不运行实验。
+- 基于 D023，T004/T005 执行阶段已结束；轻量双车道的最小 Skill RED→GREEN 已完成。当前允许 design-only 概念方法构造与 inventory 碰撞筛选；survivor 必须回正式 GW，仍不运行科学实验。
 
 ### 明确不含
 
@@ -207,6 +206,7 @@ rdl_control:
 - **R006 / D023**：三路只读审计和用户逐段确认后，采用轻量概念方法构造与正式科学晋级双车道；复用现有 inventory 做动作/dead-end 碰撞，不新建 registry。
 - **CP001**：新 mission-log 从 D023 设计转向开始，不回填 T004/T005 历史细节；method delta=`NONE`，当前只允许 R006 审阅和 Skill RED 设计。
 - **V017**：轻量双车道设计独立终验 PASS；P0/P1=0，首个任务前所需 streak 字段已在 CP001 以零值补齐。
+- **CP002**：最小 Skill patch 完成；旧规则的两项顺序 RED 均失败，GREEN 2/2、全套 113 passed/1 skipped，个人运行副本 99/99 文件一致。
 
 ## 未决项
 
@@ -229,6 +229,7 @@ lightweight persistence。六案审计重放、自动测试、个人 Skill 同�
 终验均 PASS（P0/P1/P2=0）；既有科学 verdict、dormant longitudinal topic 与
 formal owner 未变。
 
-**2026-08-04 当前入口**：T004/T005 已在隔离 worktree 得到终态并触发方法生产路线
-复盘。D023 将控制面递增到 epoch 12；当前只允许审阅 R006 和准备 Skill RED 测试。
-Skill GREEN、方法构造任务、科学实验、新方向、common/params 修改与正式阶段变化均未授权。
+**2026-08-04 当前入口**：D023/R006 的最小 Skill RED→GREEN 已完成，控制面递增到
+epoch 13。下一步只派一个 design-only 概念方法构造批次；先形成 3–5 张完整原型卡，
+再查 existing action、dead end 与 cheap alternative。任何 survivor 在实验前必须返回正式
+GW；旧 campaign、common/params 与正式阶段仍未授权修改。

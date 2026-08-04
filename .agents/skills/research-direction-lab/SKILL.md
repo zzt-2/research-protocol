@@ -54,8 +54,9 @@ When a method-producing mission has no active scientific carrier and its
 current remap reports `READY=0 / NEEDS_SMALL_ADAPTER=0`, do not serially
 formalize hypothesis-only candidates. Route to the restricted
 `PREFORMAL_METHOD_FACTORY` contract in `references/method-production.md` or
-escalate the strategic shortage. The factory is diagnostic-only; any winner
-must return to Groundwork Step 1–3/3.5/4a before formal experiment or claim.
+escalate the strategic shortage. The factory starts with a design-only
+construction batch; any survivor must return to Groundwork Step 1–3/3.5/4a
+before experiment or claim.
 
 After context loss or compression, complete the recovery route check in
 `references/long-horizon-control.md` before preparing work. After an accepted

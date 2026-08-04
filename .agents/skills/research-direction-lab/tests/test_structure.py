@@ -159,6 +159,52 @@ def test_skill_routes_method_production_and_mission_drift_review():
     assert "promotion preflight" in normalized
 
 
+def test_method_factory_constructs_complete_prototypes_before_heavy_closure():
+    method = (ROOT / "references/method-production.md").read_text(
+        encoding="utf-8"
+    )
+    normalized = " ".join(method.split())
+
+    assert method.index("## Concept construction batch") < method.index(
+        "problem-bearing testbed preflight"
+    )
+    for field in (
+        "chapter slot and method name",
+        "deployable input → action → output",
+        "algorithm steps",
+        "existing-action collision",
+        "historical dead end",
+        "strongest cheap alternative",
+        "main figure and ablation",
+        "minimal implementation slice",
+    ):
+        assert field in normalized
+    for classification in (
+        "NEW_ACTION",
+        "EXTENSION",
+        "ENGINEERING_COMPONENT",
+        "REJECT",
+    ):
+        assert f"`{classification}`" in method
+
+
+def test_concept_survivor_returns_to_groundwork_before_experiment():
+    skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
+    method = (ROOT / "references/method-production.md").read_text(
+        encoding="utf-8"
+    )
+    normalized = " ".join((skill + "\n" + method).split()).lower()
+
+    for phrase in (
+        "design-only",
+        "defer broad literature search",
+        "no scientific experiment",
+        "return to Groundwork Step 1–3/3.5/4a before experiment",
+        "two construction batches produce no survivor",
+    ):
+        assert phrase.lower() in normalized
+
+
 def test_probe_semantics_precede_evidence_scaling_and_default_artifacts_stay_small():
     evidence = (ROOT / "references/evidence-and-claims.md").read_text(encoding="utf-8")
     layout = (ROOT / "references/project-layout.md").read_text(encoding="utf-8")

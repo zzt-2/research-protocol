@@ -119,13 +119,41 @@ Use `PREFORMAL_METHOD_FACTORY` only when all of these are true:
   formalization before any construct can be compared.
 
 At that gate, do not keep formalizing hypothesis-only candidates one by one.
-Either run one bounded method-factory sprint or escalate the strategic
-shortage. This lane is diagnostic discovery, not a Groundwork Step 4a MVE.
-This is a hard routing choice: while the predicate remains true, do not prepare
-another candidate-specific formalization task. Record factory routing or the
-strategic shortage as the next legal action.
+Either run one bounded concept construction batch or escalate the strategic
+shortage. This lane creates method-shaped options; it is not a Groundwork Step
+4a MVE. While the predicate remains true, do not prepare another
+candidate-specific formalization task.
 
-Before generating any factory task, the entry must pass a
+## Concept construction batch
+
+Construct before closing evidence. Produce 3–5 mechanism-distinct prototype
+cards before broad search, testbed preflight, implementation, or experiment.
+Each card contains:
+
+- chapter slot and method name;
+- the specific M-C-A and deployable input → action → output;
+- algorithm steps;
+- existing-action collision and historical dead end checks against the
+  project's current method/contribution inventory;
+- the sufficient conventional comparator and strongest cheap alternative;
+- main figure and ablation;
+- minimal implementation slice, claim ceiling, and fallback packaging.
+
+Keep the collision receipt inside the card. Use five short fields: existing
+action collision, historical dead end, strongest cheap alternative, reopen
+condition, and classification. Classify the card as `NEW_ACTION`, `EXTENSION`,
+`ENGINEERING_COMPONENT`, or `REJECT`. Do not create a separate registry or
+governance chain for a prototype.
+
+This batch is design-only: no scientific experiment, raw result artifact, or
+claim. Defer broad literature search until one or two cards survive the action
+collision and cheap-alternative checks. A survivor is a design candidate, not
+a method signal; return to Groundwork Step 1–3/3.5/4a before experiment. If
+two construction batches produce no survivor, reconsider the candidate source,
+target chapter, or research object instead of repairing the same axis again.
+
+After a concept survivor has returned to the formal route, any executable
+method task must pass a
 **problem-bearing testbed preflight**. A family is not a valid entry merely
 because it is untested, because a portfolio axis reads `REOPENED`, or because
 the shared testbed once produced a signal elsewhere. Each of the four gates
@@ -166,18 +194,17 @@ acts on a different (e.g. finer) execution step, choosing that step as the
 task-matched conventional comparator is a legal, re-adjudicated comparator
 change, not a reopen of a closed axis and not an identity-parity violation.
 
-A method-factory sprint must:
+An authorized execution package must:
 
 1. reuse one already validated simulator/evaluator, the **current
    authority-approved and adequately tuned** task-matched conventional
    baseline, paired realization, and shared diagnostic seed set; a runnable
    historical anchor is insufficient when a later baseline correction exists;
 2. freeze the runtime-visible input and output contract before construction;
-3. deduplicate against prior/rejected constructs, then build 3–5 genuinely
-   mechanism-distinct minimal constructs in one package;
+3. implement the selected prototype without changing its action signature;
 4. run semantic smoke and a fair comparison in that same package;
-5. record at least `CONSTRUCT_CREATED` or `FAIR_COMPARISON_RUN`, unless the
-   shared testbed itself fails identity or fairness checks.
+5. record at least `FAIR_COMPARISON_RUN`, unless the shared testbed itself
+   fails identity or fairness checks.
 
 For a strict-causal construct, selection, fitting, gating, and normalization
 must use only a calibration prefix or past state disjoint from the scored eval
@@ -212,11 +239,10 @@ identity, smoke is clobbered and not closed, or the verifier rejects and one
 in-package repair still cannot close) is `EXECUTION_INVALID`; it produces no
 scientific terminal and no mission delta.
 
-Diagnostic seeds, comparisons, and winners cannot support paper claims,
-formal Go/Kill, or promotion. A winner must re-enter Groundwork at Step 1 and
-complete Step 1–3/3.5/4a before formal experiment or thesis use. Do not use
-this exception to reopen an explicitly rejected axis or to disguise
-candidate-specific formalization as a factory sprint.
+Concept cards cannot support paper claims, formal Go/Kill, or promotion. Their
+survivors must complete Groundwork Step 1–3/3.5/4a before an experiment or
+thesis use. Do not use the concept lane to reopen an explicitly rejected axis
+or disguise candidate-specific formalization as construction.
 
 **Gate-2 evidence grade.** Gate 2 (baseline failure aligns with the candidate's
 point of action) only proves the candidate's lever touches the same location
