@@ -682,3 +682,43 @@ PASS
 ### 结论
 
 PASS。T004/T005 可分别派入隔离 worktree 并自主运行到可信终态。该结论证明任务合同可执行、正负结果均可用；不预判任一 package 将获得 `THESIS_METHOD_READY`。
+
+## V017: 轻量方法构造双车道设计独立终验
+
+> date: 2026-08-04
+> 关联：R006 / D023 / CP001
+> verifier 上下文：独立只读 subagent；未参与 R006 设计或治理文件修改
+> FINAL VERDICT: PASS
+
+### 验证项
+
+- [x] 概念车道明确绑定现有 `PREFORMAL_METHOD_FACTORY`，且只在任务明确要求产方法、目标章节无 active carrier、inventory 无 `READY / NEEDS_SMALL_ADAPTER` 时进入。
+- [x] 概念车道只产方法原型卡，不运行实验、不形成 Go/claim；survivor 必须返回正式 GW Step 1–3/3.5/4a。
+- [x] 候选碰撞检查复用现有 inventory 和原型卡内嵌 receipt，没有新建 registry、controller 或逐卡治理链。
+- [x] 检索后移、cheap-alternative、工作量熔断和“先核心比较、后证据加固”均有明确边界。
+- [x] T004/T005 结果证据引用精确 commit，且 task brief 与结果证据分开。
+- [x] foreground control 已升级为 v2；`mission_log_ref` 和 `CP001` 可解析，结构化校验通过。
+- [x] registry YAML 无重复 slug；`git diff --check` 通过；四个既有 `p05_run*.log` 未纳入修改。
+
+### 验证证据
+
+```text
+independent verifier initial
+PARTIAL; P0=0 P1=2 P2=2
+
+after deterministic design repair
+PASS; P0=0 P1=0 P2=1
+
+registry/control/mission-log parse
+PASS
+
+git cat-file -e T004/T005 commit and method-package path
+4/4 exit 0
+
+git diff --check
+PASS
+```
+
+### 结论
+
+PASS。R006 足以进入用户审阅和后续 RED 设计，但不授权 Skill 修改或科学执行。残留 P2 是首个任务派发前需显式记录 `intent/mechanism/family` 与 streak 计数；CP001 已以零值字段前置关闭该操作债务，不增加新治理文件。

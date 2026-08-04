@@ -3,26 +3,31 @@
 <!-- RDL-CONTROL:START -->
 ```yaml
 rdl_control:
-  schema_version: rdl.foreground-control.v1
-  control_epoch: 11
+  schema_version: rdl.foreground-control.v2
+  control_epoch: 12
   role: RDL_MASTER
-  mission: 将 2A/2B 两个论文方法候选各自闭合到可用终态
-  active_lane: PARALLEL_THESIS_BOUNDED_CLOSURES
-  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D022
-  decision_gate: V016 PASS；只允许 T004/T005，各自一个包、一次确定性修复、终态即停
+  mission: 设计并验证轻量方法构造车道，使 Ch4/Ch5 优先形成学位论文级可命名方法
+  active_lane: METHOD_CONSTRUCTION_SYSTEM_DESIGN
+  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D023
+  decision_gate: 用户已确认 R006 的目标、双车道、检索后移与轻量碰撞入口；Skill 修改前仍需 RED
   allowed_actions:
     - PROTOCOL_AUDIT
-    - THESIS_BOUNDED_PACKAGE_EXECUTION
+    - METHOD_CONSTRUCTION_DESIGN
+    - SKILL_TEST_DESIGN
   forbidden_actions:
+    - SKILL_MUTATION_BEFORE_RED
     - NEW_DIRECTION_DISPATCH
+    - SCIENTIFIC_EXPERIMENT
     - OLD_CAMPAIGN_REOPEN
     - COMMON_PARAMS_MUTATION
     - FORMAL_STAGE_CHANGE
-  next_legal_action: 创建两个隔离执行任务，分别执行 T004/T005，持续到各自 terminal disposition
+  mission_log_ref: .sessions/2026-07-20-research-direction-lab-system/mission-log.md
+  mission_checkpoint: CP001
+  next_legal_action: 用户审阅 R006；确认后为最小 Skill patch 建立 CCISP/T004/T005/正向样本 RED
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-03（D022/V016：2A/2B bounded closure 任务书终验 PASS，待派发）
+> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-04（D023/R006：轻量方法构造双车道设计，待用户审阅后进入 Skill RED）
 
 ## 专题信息
 
@@ -53,6 +58,7 @@ rdl_control:
 - 基于 H003/R004 的历史回归，只补 executable semantic gates、contribution tiers 与 lightweight persistence；不增加第四类 patch，不修改既有科学 verdict 或 formal owner。
 - 基于长程 campaign 与 12 篇硕士论文包装审计，允许最小增加论文方法章保留门，并对 2A/2B 做 RED→GREEN；不放松 scientific/formal 门，不运行实验，不修改既有科学 verdict。
 - 基于 D022 用户显式授权，允许在两个隔离 worktree 各执行一个已冻结的 2A/2B bounded packaging closure，直至得到章节就绪、支持材料、拒绝或真实外部阻塞终态；不开放新方向、不修改 common/params、不恢复旧 campaign。
+- 基于 D023，T004/T005 执行阶段已结束，当前只设计“概念方法构造→碰撞/廉价替代筛选→survivor 回正式 GW”的轻量双车道；复用现有 inventory，不新建 registry，不修改 Skill、不派新方向、不运行实验。
 
 ### 明确不含
 
@@ -63,6 +69,11 @@ rdl_control:
 - 不批量迁移或删除旧科学目录；新布局渐进采用，旧历史继续 append-only 保留。
 
 ### 范围变更记录
+
+- **[2026-08-04] D023**：从 2A/2B bounded closure 切换为轻量方法构造双车道设计。
+  - 原因：T004/T005 暴露候选定义过晚——2A 先被廉价 retune 吸收，2B 与既有 CCISP action 重复；继续增强终态闭包不会提高方法产率。
+  - 新范围：形成 R006；设计概念方法原型卡、inventory 碰撞入口、检索后移、工作量熔断和 Skill RED/GREEN 验收；本阶段不实施 Skill。
+  - 影响的未决项：T004/T005 不再是当前入口；下一步改为用户审阅 R006，随后只建立 Skill RED。
 
 - **[2026-08-03] D022**：从 2A/2B 只读包装诊断扩展为两个隔离 bounded closure 执行包。
   - 原因：T002/T003 均判 `NEEDS_ONE_BOUNDED_PACKAGE`，用户明确要求两个单独对话持续执行直到得到确实可用的终态。
@@ -193,6 +204,9 @@ rdl_control:
 - **R004 / D020 / V014**：接收 H003 后完成六案修改前后盲测；只补五门 executable evidence contract、三层贡献合同与三层轻量持久化，个人运行副本同步且独立终验 PASS（P0/P1/P2=0）。
 - **S015 / R005 / D021 / V015**：长程效果与同行包装审计确认剩余缺口是正常包收尾缺少独立章节能力检查；结构 RED、盲测 GREEN 与独立终验均已闭合。
 - **D022 / T004 / T005 / V016**：用户授权两个隔离对话各执行一个 bounded closure；任务合同独立终验 PASS，正面结果不预设，但必须闭合到可用 terminal disposition。
+- **R006 / D023**：三路只读审计和用户逐段确认后，采用轻量概念方法构造与正式科学晋级双车道；复用现有 inventory 做动作/dead-end 碰撞，不新建 registry。
+- **CP001**：新 mission-log 从 D023 设计转向开始，不回填 T004/T005 历史细节；method delta=`NONE`，当前只允许 R006 审阅和 Skill RED 设计。
+- **V017**：轻量双车道设计独立终验 PASS；P0/P1=0，首个任务前所需 streak 字段已在 CP001 以零值补齐。
 
 ## 未决项
 
@@ -206,6 +220,7 @@ rdl_control:
 - 新科学项目首次采用 current layout 时，需要渐进生成 `state/current.yaml`、`portfolio/current.yaml`、`harvest/current.yaml`；禁止为了迁移整洁批量改写旧 artifacts。
 - ~~R002 历史复盘尚未执行~~（已完成）：见 `R002-long-horizon-runtime-retrospective.md`。
 - D021/V015 已完成；D022 仅授权 T004/T005 两个 bounded closure，不构成旧 campaign 或新方向的普遍解冻。
+- R006 设计待用户书面审阅；通过前禁止 Skill 修改、方法构造任务和科学实验。
 
 ## 当前位置
 
@@ -214,7 +229,6 @@ lightweight persistence。六案审计重放、自动测试、个人 Skill 同�
 终验均 PASS（P0/P1/P2=0）；既有科学 verdict、dormant longitudinal topic 与
 formal owner 未变。
 
-**2026-08-03 当前入口**：T002/T003 已完成只读诊断，均为
-`NEEDS_ONE_BOUNDED_PACKAGE`。D022 已将控制面递增到 epoch 11；当前只允许在两个
-隔离 worktree 执行 T004/T005，各自一个 bounded closure、一次确定性修复，并闭合到
-明确终态。V016 已确认 P0/P1/P2=0；任何新方向、common/params 修改、正式阶段变化仍禁止。
+**2026-08-04 当前入口**：T004/T005 已在隔离 worktree 得到终态并触发方法生产路线
+复盘。D023 将控制面递增到 epoch 12；当前只允许审阅 R006 和准备 Skill RED 测试。
+Skill GREEN、方法构造任务、科学实验、新方向、common/params 修改与正式阶段变化均未授权。

@@ -709,11 +709,11 @@ S015；用户 2026-08-03 明确要求先记录、修正 Skill，保证可包装�
 
 ## D022: 授权 2A/2B 各一个持续到终态的 bounded closure
 
-> status: active
+> status: superseded
 > date: 2026-08-03
 > 取代：无
 > 扩展：D021（只把已判 `NEEDS_ONE_BOUNDED_PACKAGE` 的 2A/2B 从只读诊断推进到各一个执行包）
-> 被取代：无
+> 被取代：D023（只取代当前控制入口；T004/T005 历史授权和分支结果继续保留）
 > 依据：调研: T002/T003 两个独立包装诊断 + 验证: V015 + 用户原话: voice.md 2026-08-03
 
 ### 决策
@@ -741,3 +741,50 @@ T002/T003 均证明已有证据形成了真实动作链，但各缺一个决定�
 ### 来源
 
 S015 续接；用户 2026-08-03 原话：“那要不两个单独对话，一直跑直到完成？保证确实能用？”
+
+## D023: 从可信闭包转向轻量方法构造双车道
+
+> status: active
+> date: 2026-08-04
+> 取代：D022（只取代当前控制入口；不推翻 T004/T005 的历史授权和结果）
+> 被取代：无
+> 依据：调研: R002 + R005 + R006 + 对照: CCISP + T004 commit `1140134e89e8b0571274944cb44471ab6403481f` + T005 commit `67970307a051dd8149e1a750498a20674dfcfe6f` + 用户原话: voice.md 2026-08-04
+
+### 决策
+
+冻结后续目标为：Ch4、Ch5 优先形成学位论文级、可命名、可运行、可与传统方法比较的
+方法，不把期刊级独立算法创新设为前置门。Research Direction Lab 增加轻量概念方法
+构造车道；构造和筛选先于外部检索与科学严审，胜者再回正式 Groundwork。当前只落
+设计，不修改 Skill、不派新方向、不运行实验。
+
+候选碰撞检查不得硬编码 CCISP；复用现有
+`internal-method-kernel-inventory.yaml` 作为已有方法、组件和 dead-end 的轻量入口，
+原型卡内嵌五行 collision receipt，不新建 registry 或治理链。
+
+### 理由
+
+CCISP 从稳定互补性出发形成新动作，后续 campaign 则把运行单元改成失效条件闭合，
+导致 17/17 早期包无方法增量、七个有效包全为局部负面/边界。T004 在重型闭包前已被
+普通 regional retune 压过，T005 的 single-branch scheduling 又与 CCISP 既有动作
+重复；说明缺口在候选构造与早期去重，不是继续增强 terminal 审查。用户长期要求记录
+踩坑且本轮再次强调流程不能过重；现有记录充分但分散，需把查询动作接入构造入口。
+
+### 排除的替代方案
+
+- 不采用每个粗想法先完整 GW 的严格 Stage-first 路线；成本过高且重复历史低产出。
+- 不采用纯章节标题倒推；只把同行章节 recipe 作为候选来源，真实 action 仍是硬门。
+- 不删除或放松现有 semantic、information-boundary、baseline 和 formal promotion 门。
+- 不新建 controller、registry、固定包数 scheduler 或每候选 S/D/V/H 全套。
+- 不再把“任一可信 terminal”当方法生产成功，也不保证未来候选一定有科学正收益。
+
+### 影响范围
+
+本阶段只新增 R006，更新 system topic 的 control/scope/current、registry 与 voice。下一
+阶段在用户审阅 R006 后，才允许设计并运行 Skill RED；GREEN patch 仍需另行验收。
+正式科学实验、common/params、dormant campaigns、论文正文和 formal owner 均不变。
+为满足既有 v2 长程控制合同，只增加一个固定、紧凑的 `mission-log.md` checkpoint 链，
+不回填历史包细节。
+
+### 来源
+
+用户 2026-08-04 对根因、目标、检索效率、已有记录和防踩坑设计的连续确认；R006。
