@@ -76,3 +76,35 @@
 - weight: ADEQUATE
 - drift: CORRECTED
 - next_action: 执行 T008，只完成新 P1 Groundwork 专题的 GW Step 1–2；覆盖面交用户确认，不实现、不实验
+
+## CP006 — 2026-08-06
+
+- event: P1 closed acceptance repair + C3 bounded Groundwork Step 1 准备
+- evidence: P1 D005/V005/H003；system D025；历史 D-011 / `internal-method-kernel-inventory.yaml#a1_adaptive_segmented_cpe`
+- formal_science_disposition: P1_RECENT_BASELINE_UNAVAILABLE_SUPPORTING_ONLY
+- mission_method_delta: NONE
+- thesis_method_disposition: SUPPORTING_ONLY
+- intent: C3_GROUNDWORK_STEP1_PREP
+- mechanism_family: ADAPTIVE_INTRA_WINDOW_SEGMENTED_CPE
+- same_axis_streak: 1
+- deterministic_repair_count: 1
+- no_method_streak: 1
+- weight: ADEQUATE
+- drift: ALIGNED
+- next_action: 新建 C3 专题并执行最多 4 组定向 query；先裁 historical adaptive-K collision 与物理前提，只有四判据 Q# 存活才进 Step 2
+
+## CP007 — 2026-08-06
+
+- event: C3 bounded Groundwork Step 1 terminal
+- evidence: C3 R001/D002/H001/V001；4 annotated search JSON；历史 D-011 / inventory `a1_adaptive_segmented_cpe`
+- formal_science_disposition: PHYSICAL_PREMISE_UNSUPPORTED
+- mission_method_delta: NONE
+- thesis_method_disposition: REJECT
+- intent: CLOSE_C3_AND_ROTATE
+- mechanism_family: ADAPTIVE_INTRA_WINDOW_SEGMENTED_CPE
+- same_axis_streak: 2
+- deterministic_repair_count: 1
+- no_method_streak: 2
+- weight: ADEQUATE
+- drift: ALIGNED
+- next_action: 返回候选池；只考虑机制不同、已有 2019+ 合法 baseline、且通过 inventory/dead-end collision 的候选

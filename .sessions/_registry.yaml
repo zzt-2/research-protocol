@@ -30,8 +30,8 @@ topics:
     title: Research Direction Lab 完整体系设计
     status: active
     created: "2026-07-20"
-    last_updated: "2026-08-05（T008 acceptance repair 完成：V002 PASS，P1 GW Step 2 终态=STEP2_ACCEPTED_READY_FOR_STEP3；承接 D024/CP005）"
-    description: "长期研究探索体系唯一流程 owner。D018-D021 建立方法生产、语义门、贡献分层、轻量持久化与论文方法章保留门；D023/R006 转入概念构造→inventory 碰撞→survivor 回正式 GW 的双车道。D024 修复假想 compiler/CSE 错杀工程组件的缺口，T007 P1 为唯一 survivor；当前只允许 T008 GW Step 1-2，不实现、不实验。"
+    last_updated: "2026-08-06（D026/CP007：C3=PHYSICAL_PREMISE_UNSUPPORTED/closed；current=CANDIDATE_ROTATION_REQUIRED）"
+    description: "长期研究探索体系唯一流程 owner。P1 已 closed 为 RECENT_BASELINE_UNAVAILABLE/SUPPORTING_ONLY；C3 bounded Step 1 完成4组query但未满足历史adaptive-K reopen condition，terminal=PHYSICAL_PREMISE_UNSUPPORTED、无Q#、Step2未执行。当前返回候选轮换门；下一候选须机制不同、已有2019+合法baseline并先过inventory/dead-end collision。"
     depends_on:
       - slug: framework-evolution
         reason: 继承 R002 Direction Lab 设计和唯一拥有者原则
@@ -668,3 +668,23 @@ topics:
       - projects/thesis-fso/literature_notes_shared_m0_foe_cpe.md
       - projects/thesis-fso/shared-m0-foe-cpe-groundwork/step2-coverage-report.md
       - papers/_read_notes/
+
+  - slug: 2026-08-05-adaptive-segmented-cpe-groundwork
+    title: Adaptive Intra-Window Segmented CPE Groundwork
+    status: closed
+    created: "2026-08-06"
+    last_updated: "2026-08-06（D002/V001 PASS：PHYSICAL_PREMISE_UNSUPPORTED；无Q#；Step 2未执行；H001）"
+    description: "承接 RDL system D025/CP006 的 bounded C3 Groundwork。4/4 query 找到近期 fixed-window baseline，但未发现满足历史 D-011 reopen condition 的新信息源或主流物理工况；terminal=PHYSICAL_PREMISE_UNSUPPORTED，无Q#，Step 2未执行，专题closed，不改名重开。"
+    depends_on:
+      - slug: 2026-07-20-research-direction-lab-system
+        reason: 继承 D025/CP006 的 current control 与方法生产边界
+      - slug: 2026-07-02-carrier-sync-v2-deep-read
+        reason: 复用既有 carrier-recovery 文献池与 read notes
+      - slug: 2026-07-06-step4a-mve-execution
+        reason: 继承 D-011 adaptive-K 失败证据与物理前提边界
+    conflicts_with: []
+    produces:
+      - .sessions/2026-08-05-adaptive-segmented-cpe-groundwork/
+      - search-archive/2026-08-06/
+      - projects/thesis-fso/literature_notes_adaptive_segmented_cpe.md
+      - projects/thesis-fso/adaptive-segmented-cpe-groundwork/step1-search-receipt.json

@@ -834,3 +834,82 @@ Step 1–2。既有科学 verdict、formal owner、common/params 与正式论文
 
 S015 续接；主控对 T007 dossier 与实际 caller 的技术复核。触发原话：无（技术推导；用户仅确认
 执行已提出的最小修正方案）。
+
+## D025: P1 closed 后转入 C3 bounded Groundwork Step 1
+
+> status: active
+> date: 2026-08-06
+> 取代：无
+> 扩展：D023（只授权 C3 的正式 Step 1 定向复核；不撤销 CP004 对 C3/A1 历史碰撞的裁决）
+> 被取代：无
+> 依据：用户原话: voice.md 2026-08-06 + P1 D005/V005/H003 + 历史 D-011 与 `internal-method-kernel-inventory.yaml#a1_adaptive_segmented_cpe`
+
+### 决策
+
+接收 P1 的 closed terminal：`RECENT_BASELINE_UNAVAILABLE`，P1=`SUPPORTING_ONLY`，禁止改名重开。
+当前入口切换为 `C3_GROUNDWORK_STEP1_PREP`，只允许新建 C3 专题并执行最多 4 组定向 query；仅在
+形成至少一个四判据候选 Q# 后，才可进入 Step 2 获取至少 5 篇 CORE 全文，并停在用户覆盖面确认门。
+
+本授权不把 C3 恢复为 concept survivor。C3 必须先面对 CP004/D-011 的同动作历史证据：若主流物理
+条件仍只支持 10–80 kHz，或 receiver-visible 自适应 K 仍被固定 K/tuned VV 吸收，则按
+`PHYSICAL_PREMISE_UNSUPPORTED` 停止；不得通过提高线宽、换名或复用旧 MVE 结果绕过 Step 1。
+
+### 理由
+
+用户明确要求修复 P1 stale state，并以 C3 为新的 bounded Groundwork 对象，同时给出 Step 1 三个硬停止
+条件。历史 inventory 已显示 C3 与 A1 adaptive K 动作签名相同且曾失败；因此合法执行方式不是忽略历史，
+而是把该历史作为 Step 1 的前置反证，并只用定向文献证据判断是否出现了足以重开的新基线、新信息源或
+真实物理工况。
+
+### 排除的替代方案
+
+- 不维持 P1 为当前入口，不把 P1 改名重开；
+- 不把 C3 预先写成 Step 1 完成、survivor、Go 或 active carrier；
+- 不进入 Step 3、Step 4a、方法实现、MVE 或仿真；
+- 不修改 D-011、CP004、P1 历史 D/V/R/H 或既有实验数据。
+
+### 影响范围
+
+修订 RDL current control、mission-log、registry 与 `projects/thesis-fso/master-state.md`；建立独立 C3
+Groundwork 专题。是否产生 Step 2 产物完全由 Step 1 terminal 决定。
+
+### 来源
+
+用户 2026-08-06 执行指令；P1 H003 接收核查；历史 adaptive-K 碰撞复核。
+
+## D026: 接收 C3 Step 1 物理前提停止并返回候选轮换
+
+> status: active
+> date: 2026-08-06
+> 取代：无
+> 扩展：D025（闭合其 bounded Step 1）
+> 被取代：无
+> 依据：调研: C3 R001 + C3 D002 + 历史 D-011
+> 触发原话: 无（技术推导）
+
+### 决策
+
+接收 C3 terminal=`PHYSICAL_PREMISE_UNSUPPORTED`。C3 无四判据 Q#，Step 2 不执行，专题 closed；
+不得改名重开。RDL current control 返回候选轮换，下一候选必须机制不同、已有 2019+ 合法 baseline，
+并在建立 Groundwork owner 前先通过 inventory/dead-end collision。
+
+### 理由
+
+四组 query 证明一般 window tradeoff 与近期 fixed-window baseline 存在，但没有提供 D-011 所要求的
+新 receiver-visible 信息源或主流物理工况；同动作历史量化反证仍占优。
+
+### 排除的替代方案
+
+- 不进入 C3 Step 2/3/4a、实现或仿真；
+- 不以 200–1000 kHz 极端条件制造物理空间；
+- 不把“外部直接竞品未发现”当作 novelty 或 Go；
+- 不自动选择或启动下一候选。
+
+### 影响范围
+
+关闭 C3 owner，更新 RDL current control、mission-log、registry 与 master-state；P1 closed 与所有历史
+证据不变。
+
+### 来源
+
+C3 S001/R001/D002/H001。

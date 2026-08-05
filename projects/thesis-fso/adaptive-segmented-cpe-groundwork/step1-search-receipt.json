@@ -1,0 +1,73 @@
+{
+  "schema_version": "c3.gw-step1-search-receipt.v1",
+  "date": "2026-08-06",
+  "terminal": "PHYSICAL_PREMISE_UNSUPPORTED",
+  "budget": {
+    "max_new_queries": 4,
+    "executed_queries": 4
+  },
+  "count_evidence_boundary": {
+    "raw_and_query_dedup": "captured from tools/search executor stdout; the search JSON schema retains only final records, so these two stages cannot be recomputed from the final JSON files",
+    "final_and_cross_query_dedup": "recomputable from the four annotated JSON files"
+  },
+  "queries": [
+    {
+      "id": "Q1",
+      "query": "adaptive window length blind phase search carrier phase recovery coherent optical",
+      "invoked_sources": ["s2", "openalex", "arxiv", "serpapi", "exa"],
+      "nonzero_sources": ["semantic_scholar", "openalex", "serpapi_scholar"],
+      "raw": 60,
+      "query_dedup": 57,
+      "final": 50,
+      "path": "search-archive/2026-08-06/c3-q1-adaptive-window-blind-phase-search.json",
+      "sha256": "fdf74b4035959c278d71b8155586ef85666ad04161517f008127a8b0e68bb68f"
+    },
+    {
+      "id": "Q2",
+      "query": "variable block length non-data-aided carrier phase estimation Wiener phase noise coherent",
+      "invoked_sources": ["s2", "openalex", "arxiv", "serpapi", "exa"],
+      "nonzero_sources": ["semantic_scholar", "openalex", "serpapi_scholar"],
+      "raw": 35,
+      "query_dedup": 35,
+      "final": 30,
+      "path": "search-archive/2026-08-06/c3-q2-variable-block-nda-cpe.json",
+      "sha256": "c40c22089a4351e1d1200c377b685ef1ce7d22bef40842df48068266e08336c5"
+    },
+    {
+      "id": "Q3",
+      "query": "fixed block window Viterbi-Viterbi blind carrier phase estimation coherent optical",
+      "invoked_sources": ["s2", "openalex", "arxiv", "serpapi", "exa"],
+      "nonzero_sources": ["semantic_scholar", "openalex", "serpapi_scholar"],
+      "raw": 47,
+      "query_dedup": 43,
+      "final": 37,
+      "path": "search-archive/2026-08-06/c3-q3-recent-fixed-block-cpe-baseline.json",
+      "sha256": "00041e0e4e0e681e9dd39a81181c347595dc3b53375daf7f4479b10c3fc187c8"
+    },
+    {
+      "id": "Q4",
+      "query": "laser linewidth SNR averaging window length phase noise tracking tradeoff carrier phase recovery",
+      "invoked_sources": ["s2", "openalex", "arxiv", "serpapi", "exa"],
+      "nonzero_sources": ["semantic_scholar", "openalex", "serpapi_scholar"],
+      "raw": 45,
+      "query_dedup": 44,
+      "final": 34,
+      "path": "search-archive/2026-08-06/c3-q4-linewidth-window-tradeoff.json",
+      "sha256": "3f187a74017f6dec522761313378c1bd117697a8d808746f70746ac0449038c2"
+    }
+  ],
+  "totals": {
+    "raw": 187,
+    "query_dedup": 179,
+    "final": 151,
+    "cross_query_dedup": 140,
+    "publication_status": {"published": 77, "unknown": 63},
+    "priority": {"must_read": 8, "recommended": 7, "backup": 20, "to_confirm": 36, "excluded": 69}
+  },
+  "step2": {
+    "executed": false,
+    "qualified_fulltexts": 0,
+    "failed_items": 0,
+    "reason": "Step 1 gate stop; no four-criterion Q#"
+  }
+}

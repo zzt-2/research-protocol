@@ -4,8 +4,8 @@ direction: 星地激光通信（FSO）——子地带由地勘（S003 方法论 
 method_type: 待定（精读后根据问题方法产出形态确定，见 glossary 判据 2）
 domain: comms
 created: 2026-06-21
-updated: 2026-08-05
-current_step: P1 Shared M0-Power GW Step 3 BLOCKED/IN PROGRESS（9 篇已读且 V004 结构终审 PASS；generic action collision；Q-P1-01 判据 3 FAIL；无合法 Q#，不得离开 Step 3）。历史背景：AMC 轨 2026-08-02-fso-amc-groundwork 已 D009 科学冻结 AMC_GROUNDWORK_SATURATED_NO_MAIN_METHOD/DORMANT；campaign-level 论文综合完成：第二工程贡献=NO_SECOND_CONTRIBUTION_YET
+updated: 2026-08-06
+current_step: C3_GROUNDWORK_STEP1_STOPPED（terminal=PHYSICAL_PREMISE_UNSUPPORTED；无四判据Q#；Step 2未执行；专题closed，不改名重开。P1保持RECENT_BASELINE_UNAVAILABLE / SUPPORTING_ONLY / closed。）
 current_stage: GROUNDWORK
 ---
 
@@ -27,26 +27,34 @@ current_stage: GROUNDWORK
 
 ### 当前控制面桥接
 
-> **2026-08-05 P1 Shared M0-Power GW Step 3 BLOCKED/IN PROGRESS**（V004 PASS；D004；H002）。
-> **当前现行入口仍为 P1 专题，但没有自动扩检索或下游授权**。
-> 下方 2026-08-02 dormant campaign（D058/V084/CP049）只作为**历史背景**保留，**不再是"唯一现行入口"**。
+> **2026-08-06 当前入口：C3 `PHYSICAL_PREMISE_UNSUPPORTED / CLOSED`**。4/4 query 已完成，
+> 无四判据 Q#，Step 2 未执行。当前没有自动下游授权；下一合法动作回上游 RDL 轮换机制不同的新候选。
+> 下方 P1 与 2026-08-02 dormant campaign 均只作历史背景，不再是现行入口。
 
-- **P1 Shared M0-Power FOE–CPE Groundwork（独立专题，2026-08-05 起，T008/CP005/D024）—— 当前现行入口**：
-  P1 = `THESIS_ENGINEERING_COMPONENT` 设计候选（非 METHOD_SIGNAL）。GW Step 1 ✅（raw=100→dedup=97；
-  实际贡献候选 API 源 3 类 Semantic Scholar/OpenAlex/SerpAPI-scholar，4 查询通道均调用但 Exa 贡献 0；
-  publication_status published 59/unknown 36/preprint 2，正式发表率下限 59/97=60.8%；3 语义类全覆盖）
-  + Step 2 ✅ **12 篇合格全文**（V002 复核 12/12 identity/≥50 行/SHA256 全过，含 CSNDSP 2014 +
-  udWDM-PON 2018 两篇 HIGH★ 直接竞品，blit-ieee 校园网通道补取），terminal=
-  `STEP2_ACCEPTED_READY_FOR_STEP3`；Step 3 已完成 9 篇内容读取，但阶段仍为 **BLOCKED/IN PROGRESS**；generic action 已被 OFC 2016/JLT 2018
-  吸收，Q-P1-01 因缺 2019+ task-matched recent baseline 而判据 3 FAIL。V003 证伪自造 terminal，D004
-  规定保持 **Step 3 BLOCKED/IN PROGRESS**。详见专题 topic-index / R001 / D003–D004 / V003 与
-  `literature_notes_shared_m0_foe_cpe.md`。**不得自动扩检索或进 Step 3.5/4a；不实现、不仿真、不改
-  Skill/common/params、不重开旧 campaign**。
+- **P1 Shared M0-Power FOE–CPE Groundwork（独立专题，2026-08-05）—— CLOSED / 历史背景**：
+  Step 1–2 已验收，Step 3 九篇精读由 V004 结构终审 PASS；最后一次 bounded closure 用尽 6/6 query，
+  仍无 2019+ task-matched baseline。最终 terminal=`RECENT_BASELINE_UNAVAILABLE`，P1=`SUPPORTING_ONLY`，
+  专题 closed。generic action 已碰撞，窄 delta 未形成合法 Q；禁止改名重开，不进 Step 3.5/4a/实现/仿真。
+  权威证据见 P1 `topic-index.md`、D005、V005 与 H003。
+
+- **C3 Adaptive Intra-Window Segmented CPE Groundwork（独立专题，2026-08-06）—— CLOSED**：
+  4/4 query 得到 140 unique；近期 fixed-window baseline 存在，外部同信息同动作竞品未发现，但历史
+  exact action 的 reopen condition 未满足。terminal=`PHYSICAL_PREMISE_UNSUPPORTED`，无 Q#，
+  Step 2 未执行；禁止提高 linewidth、换 proxy、改名重开或进入 Step 3/4a/实现/仿真。
+
+  | C3 GW Step | 状态 | 日期 | 证据 | 下游门控 |
+  |---|---|---|---|---|
+  | 1 search | STOPPED | 2026-08-06 | C3 R001/D002；4/4 query；140 unique | 无 Q#，Step 2 禁止 |
+  | 2 acquire | NOT_RUN | — | gate stop，非下载失败 | Step 3 禁止 |
+  | 3 read | FORBIDDEN | — | 用户范围 + D002 | Step 4a 禁止 |
+  | 3.5 supplement | FORBIDDEN | — | 用户范围 + D002 | Step 4a 禁止 |
+  | 4a feasibility | FORBIDDEN | — | 用户范围 + D002 | 实现/仿真禁止 |
 
 ### 历史背景：2026-08-02 dormant campaign（保留审计，不再称"唯一现行入口"）
 
 > **2026-08-02 D058/V084/CP049 → epoch85 `SATURATED_NO_ACTIVE_CARRIER / DORMANT`**（历史背景）。
-> 自 2026-08-05 起当前现行入口已切到上方 P1；本段只保留 dormant campaign 的历史审计与恢复条件。
+> 该 campaign 只保留历史审计与恢复条件；当前入口以本节上方 C3 closed terminal 与 RDL
+> `CANDIDATE_ROTATION_REQUIRED` 为准。
 
 - accepted valid packages：**7**（P01–P06 + P07-R）；它们是局部负面/边界，不是七项贡献。
 - method-production 结果：`METHOD_SIGNAL=0`，active carrier=0；固定 10 包不再是自动执行目标，`remaining_valid_packages` 退役。

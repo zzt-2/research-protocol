@@ -4,16 +4,15 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 16
+  control_epoch: 19
   role: RDL_MASTER
   mission: 设计并验证轻量方法构造车道，使 Ch4/Ch5 优先形成学位论文级可命名方法
-  active_lane: CONCEPT_SURVIVOR_TO_FORMAL_GROUNDWORK
-  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D024
-  decision_gate: T007 P1 作为工程候选存活；必须先完成正式 GW Step 1-3/3.5/4a，禁止直接实现
+  active_lane: CANDIDATE_ROTATION_REQUIRED
+  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D026
+  decision_gate: P1与C3均已closed；当前没有active carrier，下一候选必须机制不同且先过inventory/dead-end collision
   allowed_actions:
-    - CONCEPT_METHOD_CONSTRUCTION
+    - PORTFOLIO_MAP
     - INVENTORY_COLLISION_CHECK
-    - METHOD_PROTOTYPE_RANKING
     - FORMAL_GROUNDWORK_PREPARATION
   forbidden_actions:
     - SCIENTIFIC_EXPERIMENT_BEFORE_GW
@@ -21,13 +20,15 @@ rdl_control:
     - OLD_CAMPAIGN_REOPEN
     - COMMON_PARAMS_MUTATION
     - FORMAL_STAGE_CHANGE
+    - GROUNDWORK_STEP3_OR_LATER
+    - METHOD_IMPLEMENTATION_OR_SIMULATION
   mission_log_ref: .sessions/2026-07-20-research-direction-lab-system/mission-log.md
-  mission_checkpoint: CP005
-  next_legal_action: 在独立新对话执行 T008；新建 P1 Groundwork owner，只完成 GW Step 1-2 并停在覆盖面确认门
+  mission_checkpoint: CP007
+  next_legal_action: 返回候选池，比较机制不同且已有2019+合法baseline的候选；本轮不自动启动下一专题
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-05（T007 P1 恢复为工程候选；T008 待派发）
+> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-06（D026/CP007：P1/C3 均 closed；返回候选轮换门）
 
 ## 专题信息
 
@@ -60,6 +61,11 @@ rdl_control:
 - 基于 D022 用户显式授权，允许在两个隔离 worktree 各执行一个已冻结的 2A/2B bounded packaging closure，直至得到章节就绪、支持材料、拒绝或真实外部阻塞终态；不开放新方向、不修改 common/params、不恢复旧 campaign。
 - 基于 D023，T004/T005 执行阶段已结束；轻量双车道的最小 Skill RED→GREEN 已完成。当前允许 design-only 概念方法构造与 inventory 碰撞筛选；survivor 必须回正式 GW，仍不运行科学实验。
 - 基于 D024，T007 P1 是唯一 concept survivor；当前只允许准备并执行其 GW Step 1–2，禁止第三批构造或跳步实现。
+- 基于 D025，P1 已 closed 为 `RECENT_BASELINE_UNAVAILABLE / SUPPORTING_ONLY`；当前只允许 C3 的
+  bounded GW Step 1，且必须继承历史 adaptive-K/A1 反证。只有形成四判据 Q# 才可条件式执行 Step 2，
+  禁止 Step 3、Step 4a、实现或仿真。
+- 基于 D026，C3 已在 Step 1 触发 `PHYSICAL_PREMISE_UNSUPPORTED` 并 closed；当前返回候选轮换门，
+  不自动选择或启动下一候选。
 
 ### 明确不含
 
@@ -70,6 +76,18 @@ rdl_control:
 - 不批量迁移或删除旧科学目录；新布局渐进采用，旧历史继续 append-only 保留。
 
 ### 范围变更记录
+
+- **[2026-08-06] D026**：关闭 C3，返回候选轮换门。
+  - 原因：4/4 query 未提供历史 D-011 reopen condition 所需的新信息源或主流物理工况；无四判据 Q#。
+  - 新范围：仅允许比较机制不同、已有 2019+ 合法 baseline 且通过 inventory/dead-end collision 的候选；
+    本轮不自动建立下一专题。
+  - 影响的未决项：C3 Step 2 取消；Step 3/4a/实现/仿真继续禁止。
+
+- **[2026-08-06] D025**：接收 P1 closed terminal，当前入口转为 `C3_GROUNDWORK_STEP1_PREP`。
+  - 原因：P1 已由 D005/V005/H003 终结；用户显式指定 C3 做 bounded Step 1，并冻结 Step 2 条件门。
+  - 新范围：最多 4 组定向 query；先裁近期 baseline、direct adaptive-segmentation collision 与物理前提；
+    仅四判据 Q# 存活时获取至少 5 篇 CORE 全文并停在覆盖面确认门。
+  - 影响的未决项：D-011/CP004 的 C3/A1 历史否决不撤销；新证据不足以满足 reopen condition 时直接停止。
 
 - **[2026-08-05] D024**：T007 P1 从误判 collision 恢复为唯一工程设计候选，并进入正式 GW 准备。
   - 原因：原裁决把未在实际 CPython/NumPy 工具链出现的 compiler/CSE 当成已实现廉价替代；caller 实际执行两次 `rx**M0`。
@@ -218,6 +236,10 @@ rdl_control:
 - **CP004 / T007**：T006 原报 C3 survivor，但主控回读 D-011/D-009 后确认其与已否决 adaptive-K 同动作，终态修订为 `NO_CONSTRUCT_SURVIVES`；inventory 补该 dead end，下一批切换到 Ch5 部署/计算流程并强制 action-signature 历史检索。
 - **D024 / CP005 / T008**：T007 P1 原被假想 compiler/CSE 误吸收；实际 CPython/NumPy caller
   真实重复升幂，恢复为唯一工程候选。Skill 仅补实际工具链吸收门；T008 只进正式 GW Step 1–2。
+- **D025 / CP006**：P1 bounded closure 已接收为 `RECENT_BASELINE_UNAVAILABLE / SUPPORTING_ONLY`；
+  current entry 改为 C3 Step 1 prep。C3 必须继承 D-011/CP004 的同动作历史，不得预设 survivor。
+- **D026 / CP007**：C3 4/4 query 后触发 `PHYSICAL_PREMISE_UNSUPPORTED`；无 Q#、Step 2 未执行，
+  专题 closed。current control 返回机制不同候选的轮换门。
 
 ## 未决项
 
@@ -231,8 +253,8 @@ rdl_control:
 - 新科学项目首次采用 current layout 时，需要渐进生成 `state/current.yaml`、`portfolio/current.yaml`、`harvest/current.yaml`；禁止为了迁移整洁批量改写旧 artifacts。
 - ~~R002 历史复盘尚未执行~~（已完成）：见 `R002-long-horizon-runtime-retrospective.md`。
 - D021/V015 已完成；D022 仅授权 T004/T005 两个 bounded closure，不构成旧 campaign 或新方向的普遍解冻。
-- ~~R006 设计待用户书面审阅~~（已完成并经 T006/T007 live test）；D024 修正的 P1 进入正式
-  GW，仍禁止直接实验。
+- ~~R006 设计待用户书面审阅~~（已完成并经 T006/T007 live test）；P1 与 C3 均已 closed。
+  C3 无四判据 Q#，Step 2 未执行；当前只保留候选轮换门，不得直接实验。
 
 ## 当前位置
 
@@ -241,6 +263,7 @@ lightweight persistence。六案审计重放、自动测试、个人 Skill 同�
 终验均 PASS（P0/P1/P2=0）；既有科学 verdict、dormant longitudinal topic 与
 formal owner 未变。
 
-**2026-08-05 当前入口**：T007 修订为 `CONCEPT_SURVIVOR_AVAILABLE`，唯一 survivor=P1
-Shared Raised-Power Compute Graph（仅工程设计候选）。T008 按 epoch 16 / CP005 只执行新专题
-GW Step 1–2；Step 2 覆盖面须用户确认。旧 campaign、common/params、实现与实验仍未授权。
+**2026-08-06 当前入口**：`CANDIDATE_ROTATION_REQUIRED`（epoch 19 / CP007 / D026）。P1 已 closed 为
+`RECENT_BASELINE_UNAVAILABLE / SUPPORTING_ONLY`；C3 已 closed 为 `PHYSICAL_PREMISE_UNSUPPORTED`，
+无 Q# 且 Step 2 未执行。当前无 active carrier，不自动建立下一专题；下一候选必须机制不同、已有
+2019+ 合法 baseline，并先过 inventory/dead-end collision。Step 3、Step 4a、实现与实验仍未授权。
