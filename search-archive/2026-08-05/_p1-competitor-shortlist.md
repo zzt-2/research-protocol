@@ -9,25 +9,25 @@
 
 | 门槛 | 要求 | 实际 | 通过 |
 |---|---|---|---|
-| 去重候选数 | ≥20 | **97**（4 查询）+ 索引复用 ~35 命中 | ✅ |
-| 数据源数 | ≥3 | **4 API**（S2 / OpenAlex / SerpAPI-scholar / Exa）+ 全局索引复用 | ✅ |
+| 去重候选数 | ≥20 | **dedup=97**（raw=100，4 查询通道）+ 索引复用 ~35 命中 | ✅ |
+| 数据源数 | ≥3 | **3 API 源**（Semantic Scholar / OpenAlex / SerpAPI-scholar；4 查询通道均调用，**Exa 贡献 0**）+ 全局索引复用 | ✅ |
 | 必读数 | ≥5 | 见下方"必读"层（≥12 篇高相关） | ✅ |
-| 正式发表占比 | ≥50% | ~97%（venue 核对；unknown 多为 IEEE 作者页/旧会议，待 DOI 补） | ✅ |
+| 正式发表占比 | ≥50% | **下限 59/97 = 60.8%**（published 59 / unknown 36 / preprint 2；unknown 不计入分母，不冒充已发表）| ✅ |
 | 技术路线 | ≥2 | **3 类**（① VV/Mth-power/FF-joint FOE+CPE；② low-complexity/hw-efficient CR；③ coherent optical/FSO hw-CR） | ✅ |
 | 路径合规 | search-archive/2026-08-05/{slug}.json | 4 `r1-*.json` + 本矩阵 + 索引复用筛选 | ✅ |
 
 3 语义类覆盖（brief §4 要求）：
 1. **Mth-power / Viterbi-Viterbi / feedforward joint FOE+CPE**：✅（#1 查询命中 16 篇相关 + 索引复用 10 篇）
 2. **low-complexity / shared computation / common subexpression / joint FOE/CPE dataflow**：⚠️ 部分覆盖。
-   generic "common subexpression / computation reuse / compute graph" 在领域内近乎空集；命中均经
-   carrier-recovery 词汇进入（"shared correlation within FOE and CPE" 等）。**索引复用扫描已确认这一空白**——
-   对 P1 新颖性有利，但也意味着共享图数据流几乎无直接文献对标（Step 3 需精读确认）。
+   generic "common subexpression / computation reuse / compute graph"：当前 metadata/abstract 检索未发现
+   明确覆盖；命中均经 carrier-recovery 词汇进入（"shared correlation within FOE and CPE" 等）。
+   **不得据此判断新颖性，须由 Step 3 全文精读验证**。
 3. **coherent optical/FSO/PSK/APSK/QAM hardware-efficient CR 实现**：✅（#3/#4 查询 36 篇相关 + 索引复用 11 篇）
 
 > 二轮定向检索：已完成（4 查询本身就是按 3 语义类的定向深搜）。索引复用 + 定向查询交叉确认：
-> **没有论文显式提出"在 FFT-FOE 与 mean-angle CPE 之间共享单个 raised-power 中间量作为计算图优化"**。
-> 最接近的是方法级（同 VV/monomial 用于 FOE+CPE），不是实现级。此为 Step 1 metadata 级观察，
-> Step 3 精读须确认。
+> 当前 metadata/abstract 检索未发现明确覆盖"在 FFT-FOE 与 mean-angle CPE 之间共享单个 raised-power
+> 中间量作为计算图优化"的论文。**不得据此判断新颖性，须由 Step 3 全文精读验证**。最接近的是方法级
+> （同 VV/monomial 用于 FOE+CPE），不是实现级。此为 Step 1 metadata 级观察，Step 3 精读须确认。
 
 ## B. 直接竞品初筛矩阵（核心，按 P1 相关度排）
 

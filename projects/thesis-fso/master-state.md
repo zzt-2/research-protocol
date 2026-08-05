@@ -5,8 +5,8 @@ method_type: 待定（精读后根据问题方法产出形态确定，见 glossa
 domain: comms
 created: 2026-06-21
 updated: 2026-08-05
-current_step: AMC-DORMANT-FROZEN (AMC 轨 2026-08-02-fso-amc-groundwork 已 D009 科学冻结 AMC_GROUNDWORK_SATURATED_NO_MAIN_METHOD/DORMANT；Q-A=STOPPED_INCONCLUSIVE / Q-A'=HARVEST_ONLY_ENGINEERING_SEED / Q-B=STOPPED_BASELINE_AND_TESTBED_UNAVAILABLE；campaign-level 论文综合完成：第二工程贡献=NO_SECOND_CONTRIBUTION_YET)
-current_stage: DORMANT
+current_step: P1 Shared M0-Power GW Step 2 coverage accepted (STEP2_ACCEPTED_READY_FOR_STEP3；T008 acceptance repair V002 PASS；Step 3 未授权，待用户新对话显式授权)。历史背景：AMC 轨 2026-08-02-fso-amc-groundwork 已 D009 科学冻结 AMC_GROUNDWORK_SATURATED_NO_MAIN_METHOD/DORMANT；campaign-level 论文综合完成：第二工程贡献=NO_SECOND_CONTRIBUTION_YET
+current_stage: GROUNDWORK
 ---
 
 # Master Agent: thesis-fso
@@ -25,10 +25,26 @@ current_stage: DORMANT
 
 ## §2 项目状态
 
-### 当前控制面桥接（唯一现行入口）
+### 当前控制面桥接
 
-> **2026-08-02 D058/V084/CP049 → epoch85 `SATURATED_NO_ACTIVE_CARRIER / DORMANT`**。
-> 本段是唯一现行项目入口；下方旧 G1、Scout、Groundwork 轨迹只保留历史审计。
+> **2026-08-05 起 P1 Shared M0-Power GW Step 2 覆盖面已验收**：`STEP2_ACCEPTED_READY_FOR_STEP3`
+> （T008 acceptance repair V002 PASS）。**当前现行入口 = P1 Shared M0-Power FOE–CPE Groundwork**。
+> 下方 2026-08-02 dormant campaign（D058/V084/CP049）只作为**历史背景**保留，**不再是"唯一现行入口"**。
+
+- **P1 Shared M0-Power FOE–CPE Groundwork（独立专题，2026-08-05 起，T008/CP005/D024）—— 当前现行入口**：
+  P1 = `THESIS_ENGINEERING_COMPONENT` 设计候选（非 METHOD_SIGNAL）。GW Step 1 ✅（raw=100→dedup=97；
+  实际贡献候选 API 源 3 类 Semantic Scholar/OpenAlex/SerpAPI-scholar，4 查询通道均调用但 Exa 贡献 0；
+  publication_status published 59/unknown 36/preprint 2，正式发表率下限 59/97=60.8%；3 语义类全覆盖）
+  + Step 2 ✅ **12 篇合格全文**（V002 复核 12/12 identity/≥50 行/SHA256 全过，含 CSNDSP 2014 +
+  udWDM-PON 2018 两篇 HIGH★ 直接竞品，blit-ieee 校园网通道补取），terminal=
+  **`STEP2_ACCEPTED_READY_FOR_STEP3`**，**Step 3 未授权**。详见专题 topic-index / S001 / H001 与
+  `shared-m0-foe-cpe-groundwork/step2-coverage-report.md`。**Step 3 启动须用户新对话显式授权并先读
+  `stages/gw-read.md`；不实现、不仿真、不改 Skill/common/params、不重开旧 campaign**。
+
+### 历史背景：2026-08-02 dormant campaign（保留审计，不再称"唯一现行入口"）
+
+> **2026-08-02 D058/V084/CP049 → epoch85 `SATURATED_NO_ACTIVE_CARRIER / DORMANT`**（历史背景）。
+> 自 2026-08-05 起当前现行入口已切到上方 P1；本段只保留 dormant campaign 的历史审计与恢复条件。
 
 - accepted valid packages：**7**（P01–P06 + P07-R）；它们是局部负面/边界，不是七项贡献。
 - method-production 结果：`METHOD_SIGNAL=0`，active carrier=0；固定 10 包不再是自动执行目标，`remaining_valid_packages` 退役。
@@ -39,7 +55,6 @@ current_stage: DORMANT
 - 恢复条件：新物理自由度、新系统层级或用户明确 scope change。AMC 若获授权，另开 Groundwork 专题并从 Step 1 开始。
 - 恢复入口：`.sessions/2026-07-23-research-direction-lab-longitudinal-test/H003-skill-minimal-patch-and-regression.md`。
 - **AMC Groundwork（独立专题，2026-08-02 起，2026-08-03 D009 冻结 dormant）**：专题已 `AMC_GROUNDWORK_SATURATED_NO_MAIN_METHOD / DORMANT`（D009）。三路线终态：Q-A=`STOPPED_INCONCLUSIVE_TESTBED_ACTION_MISMATCH`（Contract A 下不可评估，非 Kill）/ Q-A′=`HARVEST_ONLY_ENGINEERING_SEED`（corrected_v2 工程种子保留，不晋级不进正文）/ Q-B=`STOPPED_BASELINE_AND_TESTBED_UNAVAILABLE`（baseline+testbed 双缺位，非 Kill family）。**不补 3 篇 CORE、不搭 multi-day testbed、不重开 Safi/L124**（用户明令）。**不得写成"领域无问题"**，只能写"当前目标条件和现有资产下没有得到可授权的第二项主方法"。恢复须显式 scope-change（新直接论文/现成合法 baseline/外部 testbed）+ 新开 GW 专题。保留全部历史 D001-D009/V001-V009/S001-S008/H001-H006 + corrected_v2 + unauthorized probe，不改写历史。**对论文**：AMC 不产生第二项主方法（thesis-map 方案 B 生效）；唯一 T3 主贡献仍是既有 DA/NDA adaptive CPR；第二工程贡献 = `NO_SECOND_CONTRIBUTION_YET`（见 `direction-lab/harvest/campaign-level-thesis-contribution-synthesis.md` §2.3）。详细 AMC GW Progress（Step 1-4a）见专题 topic-index（保留审计）。**禁在本 dormant 专题内续接 Q-A/Q-A′/Q-B；禁 agent 自行恢复 AMC**。
-- **P1 Shared M0-Power FOE–CPE Groundwork（独立专题，2026-08-05 起，T008/CP005/D024）**：P1 = `THESIS_ENGINEERING_COMPONENT` 设计候选（非 METHOD_SIGNAL）。GW Step 1 ✅（97 去重候选，4 API 源，3 语义类）+ Step 2 ✅ **12 篇合格全文**（含 CSNDSP 2014 + udWDM-PON 2018 两篇最高优先直接竞品，blit-ieee 校园网通道补取），terminal=`STEP2_READY_FOR_USER_CONFIRMATION`，**停在覆盖面确认门，Step 3 未授权**。详见专题 topic-index / S001 / H001 与 `shared-m0-foe-cpe-groundwork/step2-coverage-report.md`。**Step 3 启动前必读 `stages/gw-read.md`；不实现、不仿真、不改 Skill/common/params、不重开旧 campaign**。
 
 <details>
 <summary>2026-07-29 旧 G1 / Scout 控制面（历史，不授权执行）</summary>

@@ -1,7 +1,7 @@
 # Literature Notes — Shared M0-Power FOE–CPE Groundwork
 
 > Project: thesis-fso | 子方向: Ch5 工程方法候选 P1（Shared Raised-Power Compute Graph）
-> 状态: GW Step 1–2 执行中（T008）| 最后更新: 2026-08-05
+> 状态: GW Step 1–2 已完成并验收（T008，V002 PASS；Step 2 终态 = STEP2_ACCEPTED_READY_FOR_STEP3）| 最后更新: 2026-08-05
 > **本轮只到 Step 2 覆盖面门；Step 3 精读条目待后续授权专题建立，本文件不得伪造精读内容。**
 
 ## 0. 研究对象（冻结，仅用于检索/获取）
@@ -16,20 +16,22 @@
 | Step | 状态 | 完成日期 | commit | 关键产出 | 下游门控 |
 | ---- | ---- | -------- | ------ | -------- | -------- |
 | 1 search | ✅ | 2026-08-05 | — | search-archive/2026-08-05/ 4 `r1-*.json`（97 去重）+ 全局索引复用筛选；初筛矩阵见 `search-archive/2026-08-05/_p1-competitor-shortlist.md` | 进 Step 2 前 Step 1 必 ✅（已满足） |
-| 2 acquire | ✅（待用户确认覆盖面） | 2026-08-05 | — | **12 篇合格全文**（`papers/doi/`，含 2 篇 HIGH★ 直接竞品）；receipt + coverage report 见 `shared-m0-foe-cpe-groundwork/step2-coverage-report.md`；terminal=`STEP2_READY_FOR_USER_CONFIRMATION` | **进 Step 3 前覆盖面须用户确认** |
+| 2 acquire | ✅（已验收，V002 PASS） | 2026-08-05 | — | **12 篇合格全文**（`papers/doi/`，含 2 篇 HIGH★ 直接竞品）；receipt + coverage report 见 `shared-m0-foe-cpe-groundwork/step2-coverage-report.md`；terminal=`STEP2_ACCEPTED_READY_FOR_STEP3` | **进 Step 3 须用户新对话显式授权** |
 | 3 read | ⬜ 未授权 | | | （本轮不得建精读条目） | — |
 | 3.5 supplement | ⬜ 未授权 | | | | — |
 | 4a feasibility | ⬜ 未授权 | | | | — |
 
-> FR-22 跨 Step 硬门控：Step 2 覆盖面未用户确认前，禁止进 Step 3/3.5/4a/MVE/Contract。
+> FR-22 跨 Step 硬门控：Step 2 覆盖面已验收（V002 PASS），但 Step 3 仍须用户新对话显式授权才可启动；禁止跳过授权进 Step 3/3.5/4a/MVE/Contract。
 
 ## 2. Step 1 候选初筛（metadata/abstract 级，非精读结论）
 
 > 以下仅为 Step 1 metadata/abstract 级初筛，标注优先级；**不得当作 Step 3 精读后的方法/数据流/
 > 竞品结论**。详细矩阵见 `search-archive/2026-08-05/_p1-competitor-shortlist.md`（Step 1 末产出）。
 
-**检索质量门槛**（gw-search.md）：去重 97（≥20 ✅）；4 API 源 S2/OpenAlex/SerpAPI/Exa（≥3 ✅）；
-正式发表占比 ~97%（≥50% ✅）；3 语义类全覆盖（≥2 ✅）；必读 ≥12（≥5 ✅）。
+**检索质量门槛**（gw-search.md）：**raw=100 → dedup=97**（≥20 ✅）；实际贡献候选的 API 源 3 类
+（Semantic Scholar / OpenAlex / SerpAPI-scholar，4 查询通道均调用但 Exa 贡献 0）（≥3 ✅）；
+publication_status = published 59 / unknown 36 / preprint 2，**可直接证明的正式发表率下限 =
+59/97 = 60.8%**（≥50% ✅，unknown 不计入分母）；3 语义类全覆盖（≥2 ✅）；必读 ≥12（≥5 ✅）。
 
 **HIGH-RELEVANCE 直接对标（优先 Step 2 获取）**：
 - udWDM-PON Simplified CR PSK（10.1109/JLT.2018.2831918）— abstract 明言 shares correlation within

@@ -1,18 +1,22 @@
 # Step 2 Coverage Report — Shared M0-Power FOE–CPE Groundwork
 
-> 生成: 2026-08-05（初版）| 修订: 2026-08-05（blit 第三轮通道补取 7 篇 IEEE 全文后）
-> 阶段: GW Step 2 获取/覆盖面门 | 终态: **STEP2_READY_FOR_USER_CONFIRMATION**
+> 生成: 2026-08-05（初版）| 修订: 2026-08-05（blit 第三轮通道补取 7 篇 IEEE 全文后；acceptance repair V002 PASS 后终态升级）
+> 阶段: GW Step 2 获取/覆盖面门 | 终态: **STEP2_ACCEPTED_READY_FOR_STEP3**
 > 任务: T008 Phase C | 依据: `stages/gw-acquire.md`
 
-> **修订说明**（2026-08-05）：初版误判 `tools/blit` "不支持单 DOI 故跳过第三轮"。用户纠正后实测：
+> **修订说明**（2026-08-05）：① 初版误判 `tools/blit` "不支持单 DOI 故跳过第三轮"。用户纠正后实测：
 > blit 是 query 驱动（`--download DIR` + query 关键词），在校园网代理（`127.0.0.1:7897`）下是 IEEE
 > 付费墙论文的有效获取通道。补跑后取回 7 篇高优先 IEEE 全文，含 2 篇最高优先直接竞品。本轮教训
-> 已记（凭 `--help` 推断跳过实测 = TL-33 自欺式核查）。
+> 已记（凭 `--help` 推断跳过实测 = TL-33 自欺式核查）。② T008 acceptance repair（V001/V002）：澄清
+> 下文所有"正式发表"统计口径——§5 的 12/12=100% 指 **Step 2 实际下载的 12 篇**（venue 已逐篇核对），
+> 不是 Step 1 的 97 候选池；Step 1 池口径见 `_p1-competitor-shortlist.md`（published 59 / unknown 36 /
+> preprint 2，下限 59/97=60.8%）。
 
 ## 0. 覆盖面 terminal（唯一）
 
-**`STEP2_READY_FOR_USER_CONFIRMATION`**（12 篇身份+内容质量合格全文，含 2 篇最高优先直接竞品；
-仍列出剩余高优先级获取失败项，等用户确认；**不得自动进 Step 3**）。
+**`STEP2_ACCEPTED_READY_FOR_STEP3`**（12 篇身份+内容质量合格全文，含 2 篇最高优先直接竞品；
+V002 独立复核 12/12 SHA256/行数/identity 全过；仍列出剩余高优先级获取失败项；**不自动进 Step 3，
+Step 3 启动须用户新对话显式授权并先读 `stages/gw-read.md`**）。
 
 ---
 
@@ -80,15 +84,20 @@
 
 ## 5. 引用质量分析
 
-- 正式发表：**12/12 = 100%**。
+> **口径声明**：本节"12/12"指 **Step 2 实际下载并合格的 12 篇**（venue 已逐篇核对），**不是 Step 1
+> 的 97 候选池**。Step 1 候选池的 publication_status 口径见 `_p1-competitor-shortlist.md` §A：
+> published 59 / unknown 36 / preprint 2，**可直接证明的正式发表率下限 = 59/97 = 60.8%**。
+
+- 正式发表（Step 2 下载的 12 篇）：**12/12 = 100%**。
 - 预印本：0 篇。
 - 预印本占比：0%。
 
 ## 6. 用户行动项
 
-- [ ] **确认覆盖面**：12 篇合格全文（含 2 篇最高优先直接竞品）是否可作为 Step 3 精读起点；
+- [x] **覆盖面已验收**（V002 PASS）：12 篇合格全文（含 2 篇最高优先直接竞品）作为 Step 3 精读起点；
 - [ ] 视需要补取剩余 Optica/SPIE/MDPI 中等优先项（非阻塞，类别已有覆盖）；
 - [ ] 可选：blit 补取 10.1109/jlt.2017.2784804（"halve redundant compute"）等剩余 IEEE 项。
+- [ ] **开 Step 3**：用户新对话显式授权后启动 Step 3 精读（先读 `stages/gw-read.md`）。
 
 ## 7. Receipt 索引
 

@@ -1,6 +1,6 @@
 # Topic Index: Shared M0-Power FOE–CPE Groundwork (Step 1–2)
 
-> 状态: active | 创建: 2026-08-05 | 最后更新: 2026-08-05（T008 Phase A 建专题；GW Step 1–2 执行中）
+> 状态: active | 创建: 2026-08-05 | 最后更新: 2026-08-05（T008 acceptance repair 完成：V002 PASS，Step 2 终态 = STEP2_ACCEPTED_READY_FOR_STEP3）
 
 ## 专题信息
 
@@ -51,18 +51,29 @@
 - **P1 当前层级 = `THESIS_ENGINEERING_COMPONENT` 设计候选**（来自 D024），不是 METHOD_SIGNAL。
 - **廉价吸收判据**：必须在实际执行路径或工具链中存在；假想 compiler/CSE 不算。
 - **Step 2 覆盖面门必须用户确认**：terminal 只能是 `STEP2_READY_FOR_USER_CONFIRMATION` /
-  `STEP2_BLOCKED_BY_COVERAGE_GAP` / `ENTRY_INVALID`，不得自动进 Step 3。
+  `STEP2_BLOCKED_BY_COVERAGE_GAP` / `ENTRY_INVALID`，或经独立 fresh-context 验收（V### PASS）后升级为
+  `STEP2_ACCEPTED_READY_FOR_STEP3`；均不得自动进 Step 3（Step 3 启动须用户新对话显式授权）。
 - **区分显式共享 vs 改估计器统计**：后者触发 `NDA_ML_BODY_REOPEN`，不属于本候选。
 
 ### 其他结论
 
-（Step 1–2 完成后填充；本轮不写方法/数据流/竞品全文语义结论）
+- **统计口径（实测，来源 `search-archive/2026-08-05/_r1_merged_shortlist.json`）**：raw=100，dedup=97；
+  实际贡献候选的 API 源 3 类（Semantic Scholar / OpenAlex / SerpAPI-scholar），4 查询通道均调用但
+  Exa 贡献 0；publication_status = published 59 / unknown 36 / preprint 2；**可直接证明的正式发表率
+  下限 = 59/97 = 60.8%**（通过 ≥50% 门）。
+- **Step 2 覆盖面已验收（V002 PASS）**：12 篇合格全文（12/12 identity/≥50 行/SHA256 全过），含
+  2 篇 HIGH★ 直接竞品（CSNDSP 2014 method-level、udWDM-PON 2018 implementation-level）。无需再补
+  直接竞品全文；剩余 Optica/SPIE/MDPI 失败项为中等/低相关，非阻塞。
+- **Step 1–2 级不做方法/数据流/竞品全文语义结论**（属 Step 3，未授权）。"metadata 级未发现明确覆盖"
+  不得当作新颖性证据。
 
 ## 进展线索
 
-- **S001**：Phase A 建专题 + Phase B Step 1 检索（97 去重，3 语义类，门槛全过）+ Phase C Step 2
-  获取/覆盖面门（**12 篇合格全文**，含 2 篇 HIGH★ 直接竞品；blit 第三轮补取 7 篇 IEEE，
-  terminal=`STEP2_READY_FOR_USER_CONFIRMATION`）。H001 已交接。
+- **S001**：Phase A 建专题 + Phase B Step 1 检索（raw=100 → dedup=97，4 查询通道均调用、实际贡献
+  候选 API 源 3 类 S2/OpenAlex/SerpAPI（Exa 贡献 0），published 59/unknown 36/preprint 2，正式发表率
+  下限 59/97=60.8%，3 语义类全覆盖，门槛全过）+ Phase C Step 2 获取/覆盖面门（**12 篇合格全文**，含
+  2 篇 HIGH★ 直接竞品；blit 第三轮补取 7 篇 IEEE；V001 PARTIAL→V002 PASS 后
+  terminal=`STEP2_ACCEPTED_READY_FOR_STEP3`）。H001 已交接。
 - **D001**：冻结研究对象与范围边界（本专题新建，依据 T008/D024）。
 
 ## 未决项
@@ -71,15 +82,19 @@
 - coherent optical/FSO 中是否有同数据流、同动作的直接实现；
 - 共享图相对显式 conventional refactor 是否还有可区分工程 claim；
 - 哪些论文能提供 operation count、latency、hardware/dataflow 或 matched-performance comparator；
-- Step 2 覆盖面是否达标（≥5 篇身份+内容质量合格）——待用户确认。
+- Step 2 覆盖面是否达标（≥5 篇身份+内容质量合格）——已达标并验收（V002 PASS，12/12 ≥50 行 + SHA256 +
+  identity 全过）；Step 3 启动须用户新对话显式授权。
 
 ## 当前位置
 
-T008 已完成：GW Step 1（✅ 门槛全过）+ Step 2（✅ **12 篇合格全文**，含 2 篇 HIGH★ 直接竞品，
-待用户确认覆盖面）。terminal = **`STEP2_READY_FOR_USER_CONFIRMATION`**。停在覆盖面确认门，
-**Step 3 未授权**。下一合法动作 = 用户确认覆盖面后开新对话执行 Step 3（启动前必读
-`stages/gw-read.md`）。
+T008 已完成：GW Step 1（✅ 门槛全过：dedup 97 / 3 API 源 / 正式发表率下限 60.8% / 3 语义类）+
+Step 2（✅ **12 篇合格全文**，含 2 篇 HIGH★ 直接竞品，V002 复核 12/12 PASS）。T008 acceptance repair
+（V001 PARTIAL → V002 PASS）后 terminal = **`STEP2_ACCEPTED_READY_FOR_STEP3`**。**Step 3 未授权**。
+下一合法动作 = 用户在新对话显式授权后开 Step 3 精读（启动前必读 `stages/gw-read.md`）。
 
-> **修订**（2026-08-05）：Step 2 初版误判 blit 跳过 IEEE 第三轮通道（用户纠正），补跑 blit 后取回
-> 7 篇高优先 IEEE 全文（含 2 篇最高优先直接竞品），合格全文 5→12 篇。详见 S001 修订段与
-> coverage report 修订说明。
+> **修订**（2026-08-05）：① Step 2 初版误判 blit 跳过 IEEE 第三轮通道（用户纠正），补跑 blit 后取回
+> 7 篇高优先 IEEE 全文（含 2 篇最高优先直接竞品），合格全文 5→12 篇。② T008 acceptance repair
+> （V001/V002）修正统计口径（raw/dedup、3 API 源非 4、正式发表率下限 60.8% 而非 ~97%）、降级 novelty
+> 倾向措辞、清除残留 stale "5 篇/补两篇/手动获取"口径，详见 S001 acceptance repair 段与
+> `verifications.md` V001/V002。终态由 `STEP2_READY_FOR_USER_CONFIRMATION` 升级为
+> `STEP2_ACCEPTED_READY_FOR_STEP3`。
