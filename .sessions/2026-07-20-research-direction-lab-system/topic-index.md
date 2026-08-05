@@ -4,16 +4,17 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 15
+  control_epoch: 16
   role: RDL_MASTER
   mission: 设计并验证轻量方法构造车道，使 Ch4/Ch5 优先形成学位论文级可命名方法
-  active_lane: CONCEPT_METHOD_CONSTRUCTION_DISPATCHED
-  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D023
-  decision_gate: T006 唯一 survivor 因漏检 D-011/D-009 被撤回；T007 改换 Ch5 部署/计算流程候选源
+  active_lane: CONCEPT_SURVIVOR_TO_FORMAL_GROUNDWORK
+  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D024
+  decision_gate: T007 P1 作为工程候选存活；必须先完成正式 GW Step 1-3/3.5/4a，禁止直接实现
   allowed_actions:
     - CONCEPT_METHOD_CONSTRUCTION
     - INVENTORY_COLLISION_CHECK
     - METHOD_PROTOTYPE_RANKING
+    - FORMAL_GROUNDWORK_PREPARATION
   forbidden_actions:
     - SCIENTIFIC_EXPERIMENT_BEFORE_GW
     - BROAD_SEARCH_BEFORE_SURVIVOR
@@ -21,12 +22,12 @@ rdl_control:
     - COMMON_PARAMS_MUTATION
     - FORMAL_STAGE_CHANGE
   mission_log_ref: .sessions/2026-07-20-research-direction-lab-system/mission-log.md
-  mission_checkpoint: CP004
-  next_legal_action: 在独立新对话执行 T007；只写一个 Ch5 concept dossier，完成后回传五项短摘要
+  mission_checkpoint: CP005
+  next_legal_action: 在独立新对话执行 T008；新建 P1 Groundwork owner，只完成 GW Step 1-2 并停在覆盖面确认门
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-04（T006 验收为 NO_CONSTRUCT_SURVIVES；T007 已派发）
+> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-05（T007 P1 恢复为工程候选；T008 待派发）
 
 ## 专题信息
 
@@ -58,6 +59,7 @@ rdl_control:
 - 基于长程 campaign 与 12 篇硕士论文包装审计，允许最小增加论文方法章保留门，并对 2A/2B 做 RED→GREEN；不放松 scientific/formal 门，不运行实验，不修改既有科学 verdict。
 - 基于 D022 用户显式授权，允许在两个隔离 worktree 各执行一个已冻结的 2A/2B bounded packaging closure，直至得到章节就绪、支持材料、拒绝或真实外部阻塞终态；不开放新方向、不修改 common/params、不恢复旧 campaign。
 - 基于 D023，T004/T005 执行阶段已结束；轻量双车道的最小 Skill RED→GREEN 已完成。当前允许 design-only 概念方法构造与 inventory 碰撞筛选；survivor 必须回正式 GW，仍不运行科学实验。
+- 基于 D024，T007 P1 是唯一 concept survivor；当前只允许准备并执行其 GW Step 1–2，禁止第三批构造或跳步实现。
 
 ### 明确不含
 
@@ -68,6 +70,11 @@ rdl_control:
 - 不批量迁移或删除旧科学目录；新布局渐进采用，旧历史继续 append-only 保留。
 
 ### 范围变更记录
+
+- **[2026-08-05] D024**：T007 P1 从误判 collision 恢复为唯一工程设计候选，并进入正式 GW 准备。
+  - 原因：原裁决把未在实际 CPython/NumPy 工具链出现的 compiler/CSE 当成已实现廉价替代；caller 实际执行两次 `rx**M0`。
+  - 新范围：只允许 T008 新专题 GW Step 1 检索与 Step 2 获取/质量门；不实施、不实验、不进 Step 3。
+  - 影响的未决项：停止第三批概念构造；P1 的竞品、成本与成章性仍待正式 GW，P2–P5 不恢复。
 
 - **[2026-08-04] D023**：从 2A/2B bounded closure 切换为轻量方法构造双车道设计。
   - 原因：T004/T005 暴露候选定义过晚——2A 先被廉价 retune 吸收，2B 与既有 CCISP action 重复；继续增强终态闭包不会提高方法产率。
@@ -209,6 +216,8 @@ rdl_control:
 - **CP002**：最小 Skill patch 完成；旧规则的两项顺序 RED 均失败，GREEN 2/2、全套 113 passed/1 skipped，个人运行副本 99/99 文件一致。
 - **T006 / CP003**：首个 Ch4 design-only 概念方法构造批次已冻结；不检索、不仿真，只产 3–5 张完整原型卡并做 inventory/dead-end/cheap-alternative 碰撞筛选。
 - **CP004 / T007**：T006 原报 C3 survivor，但主控回读 D-011/D-009 后确认其与已否决 adaptive-K 同动作，终态修订为 `NO_CONSTRUCT_SURVIVES`；inventory 补该 dead end，下一批切换到 Ch5 部署/计算流程并强制 action-signature 历史检索。
+- **D024 / CP005 / T008**：T007 P1 原被假想 compiler/CSE 误吸收；实际 CPython/NumPy caller
+  真实重复升幂，恢复为唯一工程候选。Skill 仅补实际工具链吸收门；T008 只进正式 GW Step 1–2。
 
 ## 未决项
 
@@ -222,7 +231,8 @@ rdl_control:
 - 新科学项目首次采用 current layout 时，需要渐进生成 `state/current.yaml`、`portfolio/current.yaml`、`harvest/current.yaml`；禁止为了迁移整洁批量改写旧 artifacts。
 - ~~R002 历史复盘尚未执行~~（已完成）：见 `R002-long-horizon-runtime-retrospective.md`。
 - D021/V015 已完成；D022 仅授权 T004/T005 两个 bounded closure，不构成旧 campaign 或新方向的普遍解冻。
-- R006 设计待用户书面审阅；通过前禁止 Skill 修改、方法构造任务和科学实验。
+- ~~R006 设计待用户书面审阅~~（已完成并经 T006/T007 live test）；D024 修正的 P1 进入正式
+  GW，仍禁止直接实验。
 
 ## 当前位置
 
@@ -231,6 +241,6 @@ lightweight persistence。六案审计重放、自动测试、个人 Skill 同�
 终验均 PASS（P0/P1/P2=0）；既有科学 verdict、dormant longitudinal topic 与
 formal owner 未变。
 
-**2026-08-04 当前入口**：T006 已验收为 `NO_CONSTRUCT_SURVIVES`；C3 不得进入 GW。
-T007 按 epoch 15 / CP004 冻结为 Ch5 design-only 概念方法构造批次；任何 survivor 在实验前
-必须返回正式 GW。旧 campaign、common/params 与正式阶段仍未授权修改。
+**2026-08-05 当前入口**：T007 修订为 `CONCEPT_SURVIVOR_AVAILABLE`，唯一 survivor=P1
+Shared Raised-Power Compute Graph（仅工程设计候选）。T008 按 epoch 16 / CP005 只执行新专题
+GW Step 1–2；Step 2 覆盖面须用户确认。旧 campaign、common/params、实现与实验仍未授权。

@@ -4,14 +4,18 @@
 > 性质: design-only 概念原型卡。survivor 不是 METHOD_SIGNAL、不是 Go，不能进论文正文；
 > 实验前必须回 GW Step 1–3/3.5/4a。无仿真、无代码、无检索、无科学 claim。
 > 继承 T006（已修订为 `NO_CONSTRUCT_SURVIVES`）：候选源切换到 Ch5 部署/计算流程。
+> 2026-08-05 主控修订：原终态把假想 compiler/CSE 当作已实现廉价替代，误杀 P1；
+> 依 D024 修订为 1 个工程候选存活。P2–P5 裁决不变。
 
 ## 1. Terminal verdict
 
-**`NO_CONSTRUCT_SURVIVES`**：5 张原型卡全部碰撞或被廉价替代吸收。
+**`CONCEPT_SURVIVOR_AVAILABLE`**：5 张原型卡中，P1 作为
+`THESIS_ENGINEERING_COMPONENT` 设计候选存活；P2–P5 碰撞或被廉价替代吸收。
 
-- **P1 跨模块升幂中间量复用**（FOE 的 `rx**M0` 复用给 CPE）→ 被最强廉价替代吸收（编译器/单
-  算一次的 trivial DAG 重排；且 LMMSE 路径已存在幅度无关升幂 `rx/|rx| → **M0`，证明升幂表示
-  本身已是可替换组件而非方法动作）。分类 `ENGINEERING_COMPONENT`。
+- **P1 跨模块升幂中间量复用**（FOE 的 `rx**M0` 复用给 CPE）→ **survivor**。当前
+  CPython/NumPy caller 在两个独立函数调用中真实执行两次升幂，没有 JIT/graph optimizer/CSE
+  证据；显式共享正是候选动作，不是它的廉价替代。分类 `ENGINEERING_COMPONENT`，仅允许进入
+  正式 Groundwork，尚非方法信号。
 - **P2 选择后驱动 h 估计**（lazy-h，只算被选分支的 h）→ 碰撞：与 route-B select-before-execute
   同执行合同（2B/T005，`branch_route_b`），且 route-B 的 timed kernel 已把
   `estimate_h_*_perblock` 计入被选分支成本；P2 是 route-B 的动作重命名，不产生独立 action
@@ -32,17 +36,13 @@
   collision）。
 
 筛选维度按 brief §3 五条：部署动作真实发生 / 相对已有贡献独立 action delta / 复杂度下降由真实
-调用数定义 / 不被缓存/固定参数/编译器优化/CCISP action 吸收 / 能否形成完整一章 / 最小实现可在
-现有资产完成。P1/P3 命中"被廉价替代吸收"，P2 命中"与 CCISP action 重复"，P4 命中"被既有 KILL
-吸收 + 换估计器本体禁令"，P5 命中"物理前提不存在 + 既有 KILL"。无一张在五维上同时独立。
+调用数定义 / 不被实际缓存、固定参数、工具链优化或 CCISP action 吸收 / 能否形成完整一章 / 最小
+实现可在现有资产完成。P1 的重复调用真实存在，且无实际工具链吸收证据，因此保留；P2 命中
+"与 CCISP action 重复"，P3/P4 命中既有 KILL 或 forbidden body reopen，P5 命中物理前提不存在。
 
-**下一批必须更换的候选源/研究对象**：当前接收链的部署/计算流程自由度已被 route-B 执行合同
-（h 估计、分支选择、单支执行）、closed-form 估计器本体（不可重开）、每窗独立 seed（无跨窗
-缓存物理前提）和既有 KILL（P09 early-stop、P06 跨帧、A1 adaptive-K、A 族 selector 鲁棒）共同
-锁死。建议下一批把候选源切换到 **接收链之外或输入侧**（如发射侧 Tx-PMF 协同见 A9 recipe、或
-AMC/rate control 见 2D 但需新 GW+授权），或更换研究对象到 **真实存在跨窗物理连续性的信道**
-（如块间相关 GG / AR(1) 时间相关信道），否则 Ch5 在当前资产上无法产生独立于 route-B 的新部署
-方法动作。
+**下一动作不是第三批构造**：P1 必须回正式 GW Step 1–3/3.5/4a，先关闭“联合 FOE–CPE
+升幂图是否已被传统实现/文献吸收、是否存在真实部署成本差异”两项问题；在此之前不实现、不实验、
+不写论文 claim。
 
 ## 2. Current computation-action map
 
@@ -128,40 +128,40 @@ generate_shared_realization_apsk(seed=ws)
    1. 读均衡后 `blind`；
    2. `raised = blind ** M0`（算一次，存中间量）；
    3. FOE：`raised[:N_fft]` 加窗 → FFT → Quinn-Rife 插值 → omega；
-   4. CPE：`raised` 经 `exp(-jωk)` 去频后 mean-angle（或 `assume_df_zero` 直取 mean-angle）→ phi；
+   4. CPE：`raised` 经 `exp(-j·M0·ω·k)` 在升幂域去频后 mean-angle（或 `ω=0` 时直取
+      mean-angle）→ `phi=angle(mean)/M0`；
    5. 补偿 `blind*exp(-j(omega·k + phi))`；
    6. 输出 256-sample 校正序列。
 5. **相对 CCISP / inventory 的新增点**：相对 route-B NDA 路的"两次升幂"，改为 DAG 重排共享
    `raised` 中间量。
 6. **传统 comparator / strongest cheap alternative**：
    - comparator：route-B NDA 路（两次升幂）。
-   - strongest cheap alternative：**编译器/解释器级别的 trivial DAG 重排**（同一表达式
-     `rx**M0` 出现两次，任何合理的 lazy/共享计算或显式 `raised = ...` 一次即等价），不改变
-     数值结果（identity）。此外 LMMSE 已存在 `rx/|rx|→**M0` 的幅度无关升幂变体（`_recovery.py:360-361`），
-     证明"升幂表示"本身是可替换的内部数值组件，不是方法动作。
+   - strongest cheap alternative：部署工具链自动 CSE/graph fusion。它只有在实际 trace 证明第二次
+     `np.power` 已被消除时才构成替代；当前 CPython/NumPy 两个独立函数调用没有该优化。显式
+     `raised` 共享不是另一个替代，而是本候选的最小实现。
 7. **主图 / 核心消融 / 最小实现切片**：主图 = 操作数对比（两次 vs 一次 M0 升幂）；消融 =
    FOE-only / CPE-only / shared；最小切片 = 单窗 NDA 路操作计数。
-8. **claim ceiling / fallback**：ceiling = "联合计算图减少 NDA 路冗余乘幂"；fallback = 该重排
-   是 identity（数值不变），复杂度收益需真实综合数字，且可被编译器/CSE 自动完成。
+8. **claim ceiling / fallback**：ceiling = "在当前软件 caller 中，共享 M0 域中间量以保持输出
+   等价并减少一次真实复数升幂"；不声称 FPGA LUT/DSP/功耗。fallback = 若实际 trace 显示工具链
+   已消除重复，或端到端成本下降不可测，则降为实现说明。
 9. **标注**：`[FACT]` 升幂两次（`sim:150` + `rec:213`）；`[FACT]` 两次归约结构不同（FFT vs
    mean-angle）；`[FACT]` LMMSE 已有幅度无关升幂变体（`rec:360-361`）且 DEPRECATED（`:280-286`）；
-   `[INFERENCE]` 共享 `raised` 是数值 identity，不改变 BER；`[INFERENCE]` 该重排属 trivial DAG
-   优化，编译器/CSE 或一行 `raised = ...` 即等价。
+   `[INFERENCE]` 共享 `raised` 应保持输出在数值容差内等价；`[FACT]` 当前调用跨两个 Python 函数，
+   无 JIT/graph optimizer；`[INFERENCE]` 是否降低端到端成本仍需正式 bounded 验证。
 10. **action-signature 检索词 / 命中 / 结论**：检索词 = `复用|中间量|联合计算|fusion|raised.*M0|reuse.*intermediate|计算图融合`
     （`rg` 于 `.sessions/**/decisions.md`、`worker-logs/`、`thesis-lessons.md`、`harvest/`）。命中 =
     `packaging-recipe-library.md:30,179`（中间量复用是 R3 低复杂度 recipe 的已知生成源，非新动作）+
     `thesis-lessons.md:510`（复用已有编号）。结论：升幂复用属 R3 recipe 已知生成源，无既有同轴
-    KILL，但被编译器 CSE / 一行重排廉价吸收，不构成独立动作。
+    KILL；当前实际工具链没有自动吸收该重复调用，因此保留为工程候选。
 11. **Collision receipt**：
-    - existing action collision：**否（不是既有方法动作）**——但不是"动作不同"而是"不是动作"：
-      升幂共享是计算图微观重排，不构成 receiver-visible 的新执行合同。
+    - existing action collision：**否**——相对当前 caller 的两次真实升幂，显式共享改变执行图与
+      成本路径，同时保持 receiver 输出契约。
     - historical dead end：否（无直接同轴 KILL；LMMSE 是不同估计器变体，非同动作）。
-    - strongest cheap alternative：**编译器 CSE / 一行 `raised = ...` 一次**（数值 identity，
-      无 BER 变化，零成本吸收）。
-    - reopen condition：共享升幂后产生 *非 identity* 的数值或结构变化（如 FOE/CPE 联合优化改
-      变估计统计），但这已不是"复用中间量"而是新估计器（触发 `NDA_ML_BODY_REOPEN`）。
-    - classification：**`ENGINEERING_COMPONENT`**——最多算实现优化（trivial DAG 重排），本轮不
-      立为 survivor。
+    - strongest cheap alternative：实际部署工具链的自动 CSE/graph fusion；当前 caller trace 未实现。
+    - reopen condition：不适用——当前重复调用已成立。后续正式闭包须证明输出等价、真实操作/时延
+      下降，并检查定点影响；若工具链已自动消除或收益不可测则降级。
+    - classification：**`ENGINEERING_COMPONENT` survivor**（真实 caller-path 成本动作；不是
+      `METHOD_SIGNAL`，须回 GW Step 1–3/3.5/4a）。
 
 ---
 
@@ -353,22 +353,23 @@ generate_shared_realization_apsk(seed=ws)
 | 动作机制族 | 计算图中间量复用 | 执行合同（lazy h） | 数值表示/近似 | 计算预算自适应 | 跨窗状态缓存 |
 | 动作真实可部署 | 是（DAG 重排） | 是 | 是（改估计器本体） | 是（改 FOE 结构） | 否（每窗独立 seed） |
 | 与既有贡献重复 | 否（非既有方法动作） | **是**（route-B） | 否（改本体） | 否（非既有动作） | 否 |
-| 被廉价传统吸收 | **是**（CSE/一行） | route-B 本身 | **是**（AGC/LMMSE） | 固定零填充 | — |
+| 被廉价传统吸收 | 否（无实际 CSE trace） | route-B 本身 | **是**（AGC/LMMSE） | 固定零填充 | — |
 | 触发既有 KILL / 禁令 | 否 | 2B/T005 | LMMSE/G1/D050 | P09/D050 | P06/C2 |
 | 物理自由度存在 | 是 | 是 | 是 | 是 | **否**（Gate 1 不过） |
-| 复杂度下降由真实调用数定义 | 否（identity） | 是（但属 route-B） | 否（AGC 可移除） | 否（closed-form 无搜索） | 否（无连续性） |
-| 能否形成完整一章 | 否（实现优化） | 否（重复） | 否（边界） | 否（重复） | 否（物理前提缺） |
+| 复杂度下降由真实调用数定义 | 是（两次→一次升幂，待测） | 是（但属 route-B） | 否（AGC 可移除） | 否（closed-form 无搜索） | 否（无连续性） |
+| 能否形成完整一章 | 条件式（工程方法，待 GW） | 否（重复） | 否（边界） | 否（重复） | 否（物理前提缺） |
 | 最小实现可否现有资产 | 是 | 是（即 route-B） | 是（LMMSE 已在） | 是 | 否 |
-| **结论** | ENGINEERING_COMPONENT | **REJECT** | **REJECT** | **REJECT** | **REJECT** |
+| **结论** | **ENGINEERING_COMPONENT survivor** | **REJECT** | **REJECT** | **REJECT** | **REJECT** |
 
 ## 5. Survivor(s) and why
 
-**无 survivor。**
+**唯一 survivor：P1 Shared Raised-Power Compute Graph。**
 
-5 张卡全部碰撞或被廉价替代吸收：
+P2–P5 碰撞或被廉价替代吸收；P1 保留：
 
-- **P1**（ENGINEERING_COMPONENT）：升幂复用是数值 identity 的 trivial DAG 重排，被编译器
-  CSE / 一行 `raised = ...` 平凡吸收；不构成 receiver-visible 的新执行合同。
+- **P1**（ENGINEERING_COMPONENT survivor）：当前 caller 在两个独立 NumPy 函数调用中执行两次
+  `rx**M0`，无自动 CSE trace。显式共享改变真实执行图和成本；matched output 是工程非劣证据，
+  不是拒绝理由。它仍须正式 GW 关闭直接竞品、工具链吸收与可测成本三项，不是 METHOD_SIGNAL。
 - **P2**（REJECT）：demand-driven h 估计 = route-B select-before-execute 执行合同
   （`branch_route_b` / 2B / T005），动作重命名，无独立 action delta。
 - **P3**（REJECT）：幅度无关升幂的变体（LMMSE）已存在且 DEPRECATED；幅度归一化是 AGC/标准
@@ -379,33 +380,14 @@ generate_shared_realization_apsk(seed=ws)
 - **P5**（REJECT）：跨窗 CFO/相位缓存物理前提不存在（每窗独立 seed + 块常数 i.i.d. h + 每窗
   重置 RNG），Gate 1 不过；与 P06 跨帧历史 / Ch4 C2 跨窗记忆同轴（已 KILL）。
 
-**为何没有一张存活**：当前接收链的部署/计算流程自由度已被四个约束锁死——
-(a) **route-B 执行合同**（h 估计、分支选择、单支执行已统一，P2 无独立增量）；
-(b) **closed-form 估计器本体不可重开**（D050 `NDA_ML_BODY_REOPEN` 禁令，P3/P4 触发）；
-(c) **每窗独立 seed 无跨窗物理连续性**（P5 Gate 1 不过）；
-(d) **计算图微观重排是 identity**（P1 被廉价吸收）。
-在当前资产上，Ch5 部署/计算流程候选源已无独立于 route-B 的新方法动作空间。
-
-按 brief §3，连续两个构造周期无 survivor 时须判候选来源/thesis target 需调整。本批（Ch5）与
-T006（Ch4，已 `NO_CONSTRUCT_SURVIVES`）已是连续两个构造周期无 survivor。
+P1 存活不意味着成章成立：当前只确认了真实重复调用与独立成本动作。下一阶段若发现已有传统联合
+FOE–CPE 图完全覆盖、实际工具链已融合，或端到端成本下降不可测，仍应降级为实现说明。
 
 ## 6. Next formal entry
 
-**无 survivor → 无 GW 入口。** 不写任何实验任务、不进 GW、不进 Contract/Execute。
-
-**下一批必须更换的候选源或研究对象**（设计建议，非本轮可执行动作）：
-
-1. **候选源切到接收链之外/输入侧**：如发射侧 Tx-PMF 协同（A9 recipe，概率整形 + CPR 协同，
-   `packaging-recipe-library.md:113-123`），或 AMC/rate control（2D，但需新 GW + 用户授权，
-   `internal-method-kernel-inventory.yaml:113-128` `q_a_prime` 标 `UNAUTHORIZED_DEV_ONLY`）。
-2. **研究对象换到真实存在跨窗物理连续性的信道**：如块间相关 GG / AR(1) 时间相关信道
-   （`_gg_time.py` AR(1) 模型当前仅 Q-CMA-FADE 独立轨道用，CCISP 链不 import；接入后才解锁
-   跨窗缓存/记忆类方法，见 P5/C2 reopen condition）。
-3. **更换 testbed 到真实硬件**：若 Ch5 想成立"部署/硬件友好"章，需真实 FPGA/RTL 工具链
-   （R4 recipe，`packaging-recipe-library.md:172`）；当前无合法综合，复杂度/资源 claim 无
-   authority（`asset-claim-matrix.yaml:144-151` `resource_proxy_note: NO real synthesis`）。
-
-以上为设计层建议，需用户在新对话裁决是否换源/换对象/换 testbed；本轮不执行、不检索、不开 GW。
+**P1 → 正式 GW 入口。** 下一轮只执行 GW Step 1–2：围绕“共享 M0 域联合 FOE–CPE 计算图”做
+定向检索、全文获取与覆盖面门控；不实现、不实验、不进 Step 3.5/4a。Step 2 覆盖面须由用户确认
+后才能进入 Step 3。
 
 ---
 

@@ -188,6 +188,21 @@ def test_method_factory_constructs_complete_prototypes_before_heavy_closure():
         assert f"`{classification}`" in method
 
 
+def test_compute_graph_component_is_not_rejected_by_hypothetical_absorption():
+    method = (ROOT / "references/method-production.md").read_text(
+        encoding="utf-8"
+    )
+    normalized = " ".join(method.split()).lower()
+
+    for phrase in (
+        "must exist in the actual measured execution or toolchain",
+        "hypothetical compiler optimization is not an implemented cheap alternative",
+        "matched output is expected evidence for a compute-graph implementation component",
+        "removes real repeated operations from the measured caller path",
+    ):
+        assert phrase in normalized
+
+
 def test_concept_survivor_returns_to_groundwork_before_experiment():
     skill = (ROOT / "SKILL.md").read_text(encoding="utf-8")
     method = (ROOT / "references/method-production.md").read_text(

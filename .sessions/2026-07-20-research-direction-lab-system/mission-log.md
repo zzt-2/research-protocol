@@ -61,3 +61,18 @@
 - weight: ADEQUATE
 - drift: CORRECTED
 - next_action: 执行 T007；候选来源改为 Ch5 部署/计算流程，不修 C3；每张卡须以 action signature 定向 grep 历史
+
+## CP005 — 2026-08-05
+
+- event: T007 主控验收纠偏 + P1 formal-GW 入口准备
+- evidence: `ch5-concept-method-batch-001.md` D024 amendment；caller `sc_nda_ml_sim.py:137-166` + `_recovery.py:171-273`；Skill RED/GREEN `t007-compute-graph-absorption`
+- formal_science_disposition: NO_CHANGE
+- mission_method_delta: CONSTRUCT_CREATED
+- intent: FORMALIZE_CONCEPT_SURVIVOR
+- mechanism_family: SHARED_M0_POWER_FOE_CPE_COMPUTE_GRAPH
+- same_axis_streak: 1
+- deterministic_repair_count: 1
+- no_method_streak: 0
+- weight: ADEQUATE
+- drift: CORRECTED
+- next_action: 执行 T008，只完成新 P1 Groundwork 专题的 GW Step 1–2；覆盖面交用户确认，不实现、不实验

@@ -42,8 +42,10 @@ compute, hardware, or latency at matched performance; improves bounded
 robustness at matched cost; makes an interpretable system-specific adaptation;
 or combines conventional parts into a real control or implementation action.
 It still requires a real action, fair comparator, valid evidence, and scoped
-claim. Identity behavior, artifacts, and privileged truth cannot create the
-component.
+claim. A no-op that changes neither output nor real cost, artifacts, and
+privileged truth cannot create the component. Matched output is expected
+evidence for a compute-graph implementation component when it removes real
+repeated operations from the measured caller path.
 
 ### `SUPPORTING_MATERIAL`
 
@@ -144,6 +146,13 @@ action collision, historical dead end, strongest cheap alternative, reopen
 condition, and classification. Classify the card as `NEW_ACTION`, `EXTENSION`,
 `ENGINEERING_COMPONENT`, or `REJECT`. Do not create a separate registry or
 governance chain for a prototype.
+
+A strongest cheap alternative must exist in the actual measured execution or
+toolchain. A hypothetical compiler optimization is not an implemented cheap
+alternative. If the deployed compiler, JIT, graph optimizer, cache, or caller
+already removes the claimed work, cite its trace and reject the duplicate; if
+not, explicit sharing is the candidate action even when its implementation is
+short and its output is intentionally matched.
 
 This batch is design-only: no scientific experiment, raw result artifact, or
 claim. Defer broad literature search until one or two cards survive the action

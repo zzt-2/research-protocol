@@ -30,8 +30,8 @@ topics:
     title: Research Direction Lab 完整体系设计
     status: active
     created: "2026-07-20"
-    last_updated: "2026-08-04（D023/R006：轻量方法构造双车道设计，待用户审阅后进入 Skill RED）"
-    description: "长期研究探索体系唯一流程 owner。D018-D021 建立方法生产、语义门、贡献分层、轻量持久化与论文方法章保留门；D023/R006 在 T004/T005 暴露候选定义过晚后，转入轻量概念方法构造→inventory 碰撞/廉价替代筛选→survivor 回正式 GW 的双车道设计。当前不修改 Skill、不派方向、不跑实验。"
+    last_updated: "2026-08-05（D024/CP005：T007 P1 恢复为工程候选，T008 进入正式 GW Step 1-2）"
+    description: "长期研究探索体系唯一流程 owner。D018-D021 建立方法生产、语义门、贡献分层、轻量持久化与论文方法章保留门；D023/R006 转入概念构造→inventory 碰撞→survivor 回正式 GW 的双车道。D024 修复假想 compiler/CSE 错杀工程组件的缺口，T007 P1 为唯一 survivor；当前只允许 T008 GW Step 1-2，不实现、不实验。"
     depends_on:
       - slug: framework-evolution
         reason: 继承 R002 Direction Lab 设计和唯一拥有者原则

@@ -788,3 +788,49 @@ CCISP 从稳定互补性出发形成新动作，后续 campaign 则把运行单�
 ### 来源
 
 用户 2026-08-04 对根因、目标、检索效率、已有记录和防踩坑设计的连续确认；R006。
+
+## D024: P1 计算图工程候选恢复与实际工具链吸收门
+
+> status: active
+> date: 2026-08-05
+> 取代：无
+> 扩展：D023（修正 T007 对 P1 的 collision 裁决；双车道与其余四卡结论继续有效）
+> 被取代：无
+> 依据：验证: T007 caller-path 复核 + RED/GREEN 回归 `t007-compute-graph-absorption` + 用户确认 2026-08-05
+
+### 决策
+
+将 T007 终态从 `NO_CONSTRUCT_SURVIVES` 修订为 `CONCEPT_SURVIVOR_AVAILABLE`，唯一 survivor
+为 P1 “Shared Raised-Power Compute Graph for NDA FOE+CPE”，当前层级仅为
+`THESIS_ENGINEERING_COMPONENT` 设计候选。P2–P5 的 collision/Kill 裁决不变。
+
+廉价替代必须在实际执行路径或工具链中存在。假想 compiler/CSE、代码行数短或输出刻意等价，
+不能单独吸收计算图工程候选；若实际 caller trace 证明重复操作已被消除，才构成有效替代。
+P1 必须回正式 GW Step 1–3/3.5/4a，本决策不授权实现或实验。
+
+### 理由
+
+当前 CPython/NumPy 路径先在 `fft_foe_m0_omega` 计算 `rx**M0`，再将 CFO 补偿后的 `rx`
+交给 `nda_ml_recovery` 重算升幂。两次调用跨独立 Python 函数，无 JIT/graph optimizer/CSE
+证据；升幂域可用 `raised*exp(-j*M0*omega*k)` 复用。输出匹配是低复杂度工程方法的非劣
+证据，真实变化位于 caller 成本路径。T007 把假想优化当已实现 comparator，是
+`THESIS_ENGINEERING_COMPONENT` 语义的过严误用。
+
+### 排除的替代方案
+
+- 不把 P1 直接升级为 `METHOD_SIGNAL`、active carrier 或论文结论；
+- 不恢复 P2–P5，不开第三批概念构造；
+- 不因“一行即可实现”拒绝，也不因“两次变一次”直接宣称端到端成本显著；
+- 不声称 FPGA LUT/DSP/功耗收益；当前只允许软件 caller 与后续可验证的定点影响；
+- 不跳过 GW Step 1–3/3.5/4a 直接实现。
+
+### 影响范围
+
+最小修改 `method-production.md`、一个结构回归和一组 T007 历史 RED/GREEN 证据；同步个人
+运行副本。修订 Ch5 dossier、system current control、mission-log，并准备 T008 只执行 GW
+Step 1–2。既有科学 verdict、formal owner、common/params 与正式论文不变。
+
+### 来源
+
+S015 续接；主控对 T007 dossier 与实际 caller 的技术复核。触发原话：无（技术推导；用户仅确认
+执行已提出的最小修正方案）。

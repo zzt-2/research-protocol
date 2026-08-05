@@ -722,3 +722,51 @@ PASS
 ### 结论
 
 PASS。R006 足以进入用户审阅和后续 RED 设计，但不授权 Skill 修改或科学执行。残留 P2 是首个任务派发前需显式记录 `intent/mechanism/family` 与 streak 计数；CP001 已以零值字段前置关闭该操作债务，不增加新治理文件。
+
+## V018: T007 P1 纠偏、Skill 最小回归与 T008 入口终验
+
+> date: 2026-08-05
+> 关联：S015 / D024 / CP005 / T008
+> verifier 上下文：独立 fresh-context 只读 subagent；未参与修订
+> FINAL VERDICT: PASS
+
+### 首轮对抗审查
+
+首轮为 `BLOCK`（P0=0、P1=2、P2=1），捕获三项真实缺陷：T008 Step 2 越入全文语义
+精读、历史 GREEN prompt 未绑定旧 Git object、topic-index 缺 D024 scope-change。三项均做确定性
+修复，没有放宽 P1 科学层级或增加新流程。
+
+### 修复后验证项
+
+- [x] caller 在 FOE 与 CPE 两个独立 NumPy 调用中真实执行两次 `rx**M0`；无已证 JIT/CSE trace。
+- [x] 共享图的升幂域补偿 `raised*exp(-j*M0*omega*k)` 与原信号域 CFO 补偿数学一致。
+- [x] P1 仅恢复为 `THESIS_ENGINEERING_COMPONENT` design survivor；P2–P5 继续 `REJECT`，无 `METHOD_SIGNAL`。
+- [x] Skill 只补“廉价替代须存在于实际测量工具链”与“matched output 可作计算图非劣证据”两条。
+- [x] RED/GREEN prompt 绑定 baseline commit `64a88db`、blob `2af13b1f...` 和可复跑 `git show` 命令。
+- [x] T008 严格停在 GW Step 1 检索与 Step 2 acquisition/identity/SHA/内容质量门；全文方法语义留 Step 3。
+- [x] D024→S015→CP005→topic-index→registry→T008 血缘及 scope-change 一致。
+- [x] canonical/runtime Skill 非缓存文件 104/104 byte-identical；未触碰 common/params、旧 campaign 或四个 p05 logs。
+
+### 验证证据
+
+```text
+independent verifier initial
+BLOCK; P0=0 P1=2 P2=1
+
+independent verifier after deterministic repair
+ACCEPT; P0=0 P1=0 P2=0; 9/9 PASS
+
+pytest
+114 passed, 1 skipped
+
+canonical/runtime SHA256 comparison
+104/104; mismatch=0
+
+validate_task_control.py T008 / registry YAML / git diff --check
+PASS / PASS / PASS
+```
+
+### 结论
+
+PASS。D024 对 T007 P1 的恢复有 caller、公式与可复跑历史输入支撑；Skill 修订没有降低正式
+Groundwork 或科学晋级门。T008 可派发，但只授权 Step 1–2，不能据此实现、实验或宣称方法成立。
