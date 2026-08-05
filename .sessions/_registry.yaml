@@ -651,11 +651,11 @@ topics:
       - papers/_read_notes/Nguyen2024_taes.md
 
   - slug: 2026-08-05-shared-m0-foe-cpe-groundwork
-    title: 共享 M0 次幂 FOE–CPE 计算图正式 Groundwork（Step 1–2）
+    title: 共享 M0 次幂 FOE–CPE 计算图正式 Groundwork（Step 1–3）
     status: active
     created: "2026-08-05"
-    last_updated: "2026-08-05（T008 acceptance repair：V001 PARTIAL→V002 PASS；GW Step 1 ✅ raw=100/dedup=97（3 API 源，Exa 贡献 0，正式发表率下限 60.8%）+ Step 2 ✅ 12 篇合格全文含 2 篇 HIGH★ 直接竞品，V002 复核 12/12；blit 第三轮补取 7 篇 IEEE；terminal=STEP2_ACCEPTED_READY_FOR_STEP3，Step 3 未授权；H001 已交接）"
-    description: "派生专题。承接 RDL system 专题 T008/S015/D024/CP005；P1 Shared Raised-Power Compute Graph 为唯一 THESIS_ENGINEERING_COMPONENT 设计候选。Step 1 检索 raw=100→dedup=97（4 查询通道均调用；实际贡献候选 API 源 3 类 S2/OpenAlex/SerpAPI（Exa 贡献 0）；published 59/unknown 36/preprint 2，正式发表率下限 59/97=60.8%；全局索引复用，3 语义类）；Step 2 获取 12 篇合格全文（identity/≥50行/SHA256 全过，V002 复核 12/12，含 CSNDSP 2014 + udWDM-PON 2018 两篇 HIGH★ 直接竞品，blit-ieee 校园网通道）。T008 acceptance repair（V002 PASS）后 Step 2 终态=STEP2_ACCEPTED_READY_FOR_STEP3；Step 3 启动须用户新对话显式授权。不实现、不仿真。"
+    last_updated: "2026-08-05（GW Step 3：9 篇 fresh-context 已读；V003 FAIL→修复→V004 PASS；D004 撤销自造 terminal；当前 BLOCKED/IN PROGRESS；H002）"
+    description: "派生专题。承接 RDL system 专题 T008/S015/D024/CP005；P1 Shared Raised-Power Compute Graph 为 THESIS_ENGINEERING_COMPONENT 设计候选。Step 1 raw=100→dedup=97；Step 2 取得并验收 12 篇全文；Step 3 已读 9 篇，CSNDSP 2014 非同序列共享，JLT 2018/OFC 2016 覆盖 generic shared-compute action。仅余窄 raised-domain lifetime 候选，但缺 2019+ task-matched recent baseline，Q-P1-01 判据 3 FAIL。V003 证伪自造 terminal；当前 Step 3 BLOCKED/IN PROGRESS，不自动扩检索或进 Step 3.5/4a，不实现、不仿真。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 D024（P1 survivor 恢复）/CP005/T008 授权与实际工具链吸收门
@@ -667,3 +667,4 @@ topics:
       - search-archive/2026-08-05/
       - projects/thesis-fso/literature_notes_shared_m0_foe_cpe.md
       - projects/thesis-fso/shared-m0-foe-cpe-groundwork/step2-coverage-report.md
+      - papers/_read_notes/

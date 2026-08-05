@@ -11,4 +11,8 @@
 - "完成后仅按任务书规定的五项格式汇报。"
 - "之前没下过吗？或者blit不行吗" → 纠正 Step 2 初版误判（blit 第三轮通道被凭 `--help` 推断跳过；
   补跑后取回 7 篇高优先 IEEE 全文含 2 篇最高优先直接竞品）。TL-33 自欺式核查复现。
-
+- "现显式授权执行 P1 Shared M0-Power FOE–CPE Groundwork 的 GW Step 3 精读。" → D002
+- "本轮只执行 GW Step 3，不进入 Step 3.5、Step 4a、Contract、实现或仿真。" → D002
+- "全文精读必须委托 fresh-context 子 agent；主线程负责分组、汇总和科学裁决。" → S001
+- "必须由独立 fresh-context verifier 检查 title、引用证据、结构化字段、直接竞品裁决、Q# 四判据和 Step 3 边界。" → V003
+- "本轮单次统一 commit，不 push；不修改 Skill/common/params，四个 p05_run*.log 不触碰。" → D002

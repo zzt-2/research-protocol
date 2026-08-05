@@ -108,3 +108,89 @@ primary source（`_step2_receipt.json`、`_r1_merged_shortlist.json`、12 篇 PD
 **PASS → 终态升级为 `STEP2_ACCEPTED_READY_FOR_STEP3`**（V002 独立 fresh-context 复核 8/8 全过）。
 Step 3 仍未授权；下一合法动作 = 用户在新对话显式授权后开 Step 3 精读（启动前必读
 `stages/gw-read.md`）。本轮不实现、不仿真、不改 Skill/common/params、不重开旧 campaign。
+
+---
+
+## V003: GW Step 3 初版独立结构与边界审查
+
+> date: 2026-08-05
+> 关联：S001 / D003
+> 验证者：独立 fresh-context verifier agent `/root/step3_verifier`
+
+### 验证项
+
+- [x] title/身份与两篇 direct 原文：9/9 title exact；direct scientific adjudication PASS。
+- [ ] gw-read 标准字段/七子表/实验完备性：FAIL；精确字段仅 6/14 全覆盖，七个要求标签与 VVUQ 均 0/9。
+- [ ] terminal/治理闭合：FAIL；`STEP3_PARTIAL_NO_Q_CANDIDATE` 在框架定义中 0 命中，V003/H002 被前向引用但当时不存在。
+- [x] comparator/Q#/边界/禁区：PASS；Q-P1-01 判据 3 FAIL 有依据，未进入 Step 3.5/4a/实现/仿真。
+
+### 证据
+
+```text
+TITLE_EXACT=9/9
+READ_LOG=9/9
+LABEL[状态空间/动作空间/奖励函数/建模假设/网络架构/适配性分析/问题提取]=0/9
+LABEL[VVUQ]=0/9
+V003=0
+H002=0
+S001_IN_PROGRESS=1
+TERMINAL_DEFINED=0
+FORBIDDEN_DIFF=0
+STAGED=0
+DIFF_CHECK_EXIT=0
+REGISTRY_YAML=PASS
+```
+
+原文门控：`stages/gw-read.md` L49–86、L146–160、L198；`stages/glossary.md` L65–70。
+
+### 结论
+
+FAIL
+
+### 后续（FAIL/PARTIAL 时）
+
+1. 九份 read note 按标准字段、七个独立子表、实验完备性与 VVUQ 重写；
+2. 撤销自造 terminal，状态保持 Step 3 BLOCKED/IN PROGRESS；无合法 Q# 时按 glossary 回 search 扩检索，
+   但该动作需用户另行授权，本轮不执行；
+3. 去除 V003/H002 前向完成引用；修复后换新的 fresh-context verifier 记 V004，PASS 后方可写 H002。
+
+---
+
+## V004: GW Step 3 修复后独立终审
+
+> date: 2026-08-05
+> 关联：S001 / D004
+> 验证者：独立 fresh-context verifier agent `/root/step3_verifier_final`
+
+### 验证项
+
+- [x] title/identity/read-log：9/9 PASS；L01–L09 唯一，路径 9/9 存在。
+- [x] 结构与证据：标准字段 135/135、规范段落 72/72；五篇实验完备性均值可逐篇复算。
+- [x] direct/Q#/状态：CSNDSP/JLT2018 裁决、Q-P1-01 判据 1/2/4 PASS 与 3 FAIL、Step 3
+  BLOCKED/IN PROGRESS 及 search→Step 2→Step 3 恢复路径全部 PASS。
+- [x] 治理/范围/git：D003→D004 血缘、registry YAML、禁区、未暂存、diff check 全 PASS。
+
+### 证据
+
+```text
+NOTE_COUNT=9
+UNIQUE_IDS=9
+VENUE_UNKNOWN_REASON=9/9
+TITLE_SELFCHECK_PASS=9/9
+READLOG_PATHS=9/9
+TOTAL_FIELDS=135/135
+TOTAL_SECTIONS=72/72
+FRAMEWORK_TERMINAL_COUNT=0
+H002_EXISTS=False
+STAGED_COUNT=0
+DIFF_CHECK_LINES=0
+FORBIDDEN_COUNT=0
+YAML_REGISTRY_MATCHES=1
+EXPERIMENT_MEANS: statistics=0.4/3 baseline=2.6/3 ablation=2.0/3 VVUQ=2.8/2.2/1.4 baseline_count=2.6
+```
+
+审查 HEAD：`65ff349867fa863bb8cd6e8351f164f3231af54b`；复审确认目标文件哈希在审查期间稳定。
+
+### 结论
+
+PASS

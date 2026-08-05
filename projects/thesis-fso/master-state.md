@@ -5,7 +5,7 @@ method_type: 待定（精读后根据问题方法产出形态确定，见 glossa
 domain: comms
 created: 2026-06-21
 updated: 2026-08-05
-current_step: P1 Shared M0-Power GW Step 2 coverage accepted (STEP2_ACCEPTED_READY_FOR_STEP3；T008 acceptance repair V002 PASS；Step 3 未授权，待用户新对话显式授权)。历史背景：AMC 轨 2026-08-02-fso-amc-groundwork 已 D009 科学冻结 AMC_GROUNDWORK_SATURATED_NO_MAIN_METHOD/DORMANT；campaign-level 论文综合完成：第二工程贡献=NO_SECOND_CONTRIBUTION_YET
+current_step: P1 Shared M0-Power GW Step 3 BLOCKED/IN PROGRESS（9 篇已读且 V004 结构终审 PASS；generic action collision；Q-P1-01 判据 3 FAIL；无合法 Q#，不得离开 Step 3）。历史背景：AMC 轨 2026-08-02-fso-amc-groundwork 已 D009 科学冻结 AMC_GROUNDWORK_SATURATED_NO_MAIN_METHOD/DORMANT；campaign-level 论文综合完成：第二工程贡献=NO_SECOND_CONTRIBUTION_YET
 current_stage: GROUNDWORK
 ---
 
@@ -27,8 +27,8 @@ current_stage: GROUNDWORK
 
 ### 当前控制面桥接
 
-> **2026-08-05 起 P1 Shared M0-Power GW Step 2 覆盖面已验收**：`STEP2_ACCEPTED_READY_FOR_STEP3`
-> （T008 acceptance repair V002 PASS）。**当前现行入口 = P1 Shared M0-Power FOE–CPE Groundwork**。
+> **2026-08-05 P1 Shared M0-Power GW Step 3 BLOCKED/IN PROGRESS**（V004 PASS；D004；H002）。
+> **当前现行入口仍为 P1 专题，但没有自动扩检索或下游授权**。
 > 下方 2026-08-02 dormant campaign（D058/V084/CP049）只作为**历史背景**保留，**不再是"唯一现行入口"**。
 
 - **P1 Shared M0-Power FOE–CPE Groundwork（独立专题，2026-08-05 起，T008/CP005/D024）—— 当前现行入口**：
@@ -37,9 +37,11 @@ current_stage: GROUNDWORK
   publication_status published 59/unknown 36/preprint 2，正式发表率下限 59/97=60.8%；3 语义类全覆盖）
   + Step 2 ✅ **12 篇合格全文**（V002 复核 12/12 identity/≥50 行/SHA256 全过，含 CSNDSP 2014 +
   udWDM-PON 2018 两篇 HIGH★ 直接竞品，blit-ieee 校园网通道补取），terminal=
-  **`STEP2_ACCEPTED_READY_FOR_STEP3`**，**Step 3 未授权**。详见专题 topic-index / S001 / H001 与
-  `shared-m0-foe-cpe-groundwork/step2-coverage-report.md`。**Step 3 启动须用户新对话显式授权并先读
-  `stages/gw-read.md`；不实现、不仿真、不改 Skill/common/params、不重开旧 campaign**。
+  `STEP2_ACCEPTED_READY_FOR_STEP3`；Step 3 已完成 9 篇内容读取，但阶段仍为 **BLOCKED/IN PROGRESS**；generic action 已被 OFC 2016/JLT 2018
+  吸收，Q-P1-01 因缺 2019+ task-matched recent baseline 而判据 3 FAIL。V003 证伪自造 terminal，D004
+  规定保持 **Step 3 BLOCKED/IN PROGRESS**。详见专题 topic-index / R001 / D003–D004 / V003 与
+  `literature_notes_shared_m0_foe_cpe.md`。**不得自动扩检索或进 Step 3.5/4a；不实现、不仿真、不改
+  Skill/common/params、不重开旧 campaign**。
 
 ### 历史背景：2026-08-02 dormant campaign（保留审计，不再称"唯一现行入口"）
 

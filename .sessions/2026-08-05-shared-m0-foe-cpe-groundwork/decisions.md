@@ -55,3 +55,121 @@ verdict、common/params、Skill 与正式论文。
 
 T008 任务书；RDL system 专题 D024/CP005/S015。触发原话：无（技术推导；派生自 D024，用户仅
 确认执行 T008）。
+
+---
+
+## D002: 显式授权仅执行 GW Step 3 精读
+
+> status: active
+> date: 2026-08-05
+> 取代：无
+> 扩展：D001 的执行边界（不改其冻结 M/C/A 与工程组件层级）
+> 被取代：无
+> 依据：验证: V002 + 用户原话: voice.md 2026-08-05
+
+### 决策
+
+在 `STEP2_ACCEPTED_READY_FOR_STEP3` 基础上，仅将本专题当前执行范围扩展到 GW Step 3：完成至少
+6 篇 HIGH/MEDIUM 全文精读、直接竞品 collision、合法 comparator/action delta、Q# 四判据和独立
+fresh-context verifier；终止于 Step 3 terminal。
+
+### 理由
+
+H001 要求 Step 3 必须由用户在新对话显式授权；用户已给出该授权，并明确保持 Step 3.5、Step 4a、
+Contract、实现和仿真为禁区。V002 已独立验收 Step 2 的 12 篇全文与 receipt，满足 Step 3 入口门。
+
+### 排除的替代方案
+
+- 不停留在旧 Step 1–2 范围，因为用户已显式授权下一合法步骤；
+- 不顺带进入 Step 3.5/4a/Contract，也不实现或仿真，因为这些均未获授权；
+- 不用“当前检索未发现”代替 novelty 证据或直接给 Go/Kill。
+
+### 影响范围
+
+更新 topic-index 当前范围；续接 S001；写项目 literature notes、`papers/_read_notes/`、本专题 read-log、
+研究/验证/交接记录。禁改 Skill/common/params，四个 `p05_run*.log` 不触碰。
+
+### 来源
+
+用户 2026-08-05 显式授权；H001 接收验证；V002。
+
+---
+
+## D003: generic shared-compute action 碰撞，Step 3 无合法 Q#
+
+> status: superseded（terminal 部分由 D004 取代；collision/action-delta 科学裁决继续有效）
+> date: 2026-08-05
+> 取代：无
+> 扩展：D001 的 P1 工程组件候选边界
+> 被取代：D004（仅取代本决策第 3 条的自造 terminal；第 1/2/4 条继续有效）
+> 依据：研究: R001；V003 后续审查为 FAIL
+
+### 决策
+
+1. 把“FOE/FE 与 CPE/PR 共享一次 m-th-power/correlation 中间量”裁定为 existing-action collision，
+   不再作为 P1 的独立 action delta。
+2. 仅保留窄候选：当前串行 NDA QAM 链中 raised-domain CFO removal 与跨级 lifetime/matched-output
+   合同；其 exact novelty、工程价值和是否 trivial 均未闭合。
+3. Q-P1-01 因 canonical 判据 3（2019+ task-matched recent baseline）失败，不形成合法 Q#；Step 3
+   terminal 固定为 `STEP3_PARTIAL_NO_Q_CANDIDATE`。**此 terminal 后被 V003 证伪并由 D004 取代。**
+4. P1 贡献层级仍最多为 `THESIS_ENGINEERING_COMPONENT`，本轮不给 Go/Kill 或论文 claim。
+
+### 理由
+
+JLT 2018 正文不仅给出 shared correlation graph，还明确记载 OFC 2016 已共享 differential m-th-power
+FE 与 Viterbi PR 的 m-th power；这直接覆盖 generic 动作。CSNDSP 2014 则是不同输入/不同阶数的
+joint algorithm，不是 shared sequence。近年论文提供硬件 refactor 与 cheap alternative，却没有
+形成“2019+ baseline 在当前 C 下因重复 raised-domain 计算而失败”的证据链。
+
+### 排除的替代方案
+
+- 不以“当前九篇未发现 exact 公式”声称 novelty；论文池和一手 OFC 2016 证据均不完备。
+- 不把 CSNDSP 2014 误报为 same-sequence shared compute。
+- 不把窄 delta 直接判为 trivial/Go/Kill；这些属于后续证据或 Step 4a，而本轮没有授权。
+- 不用 estimator-changing DA/ML 方法冒充 same-estimator conventional refactor。
+
+### 影响范围
+
+更新 literature notes、read notes、topic index、S001 与 verifier 记录；不改代码、仿真或论文 claim。
+
+### 来源
+
+`R001-step3-direct-competitor-synthesis.md`；JLT 2018 `content.md` L63–89、L237；CSNDSP 2014
+`content.md` L47–55、L113–117、L151–161、L181–195。触发原话：见 `voice.md` 2026-08-05；D003
+的 collision/terminal 为技术裁决，无新增用户态度原话。
+
+---
+
+## D004: 撤销自造 terminal，Step 3 保持阻塞
+
+> status: active
+> date: 2026-08-05
+> 取代：D003 第 3 条的 terminal；不取代 D003 的 collision/action-delta 科学裁决
+> 被取代：无
+> 依据：验证: V003 FAIL + `stages/gw-read.md` L198 + `stages/glossary.md` L65–70
+
+### 决策
+
+撤销 `STEP3_PARTIAL_NO_Q_CANDIDATE`。在没有 canonical 四判据全过 Q# 时，本专题保持 **GW Step 3
+BLOCKED/IN PROGRESS**，不得宣称 Step 3 完成或离开 Step 3。框架规定的下一恢复路径是回
+`gw-search.md` 扩检索，再 Step 2 获取、Step 3 精读；本轮没有该新增授权，因此只记录，不执行。
+
+### 理由
+
+V003 独立复核确认该 terminal 在框架文件中定义数为 0；`gw-read.md` 明确无 Q# 时禁止离开 Step 3，
+`glossary.md` 指定回检索扩展。初版结构也未满足七子表/VVUQ 强制门，不能称“内容门完成”。
+
+### 排除的替代方案
+
+- 不以 Step 3.5 绕过 Q# 空集处置；
+- 不保留自造 terminal；
+- 不因 generic action collision 直接给 P1 Kill，scientific collision 与 stage completion 分开记录。
+
+### 影响范围
+
+修正 literature notes、topic-index、S001、registry、master-state；重写九份 read note；V004 复核前
+不写 H002、不宣称 Step 3 完成。
+
+### 来源
+
+V003；`stages/gw-read.md` L198；`stages/glossary.md` L65–70。触发原话：无（框架合规纠错）。

@@ -1,15 +1,26 @@
-# [S001] P1 Shared M0-Power FOE–CPE Groundwork Step 1–2 执行
+# [S001] P1 Shared M0-Power FOE–CPE Groundwork Step 1–3 执行
 
 > 2026-08-05 | GW Step 1–2 | 完成（terminal=STEP2_ACCEPTED_READY_FOR_STEP3，T008 acceptance repair 后）
 > 2026-08-05 续接（acceptance repair：V001 初审发现统计口径/措辞缺陷，V002 独立复核 PASS 后终态升级）
+> 2026-08-05 续接（D002：用户显式授权仅执行 GW Step 3；V003 FAIL 后 BLOCKED/IN PROGRESS）
+> 2026-08-05 续接（修复完成；V004 独立复核 PASS；科学状态仍 BLOCKED/IN PROGRESS）
 
 ## 目标
 
-执行 T008：在独立新专题内完成 P1 "Shared Raised-Power Compute Graph for NDA FOE+CPE" 的
-GW Step 1 检索 + Step 2 全文获取/覆盖面门，停在用户覆盖面确认门。不进 Step 3、不实现、不仿真、
-不跑 MVE、不写论文 claim。
+执行 T008 的 GW Step 1–2；在 D002 新授权下续接并仅完成 GW Step 3，停在 Step 3 terminal，
+不进 Step 3.5/4a，不实现、不仿真、不跑 MVE、不写论文 claim。
 
 ## 记录
+
+### GW Step 3 续接：接收验证与范围门（D002）
+
+- 按 H001 完成接收方验证：12/12 `content.md` 均 ≥50 行且 qualified；12/12 PDF SHA256 重算与
+  `_step2_receipt.json` 一致；`_r1_merged_shortlist.json` 重算 raw=100、dedup=97、published=59、
+  unknown=36、preprint=2、Exa=0、实际 API 家族 3 类。依赖专题均 active，`conflicts_with=[]`。
+- 初次 receipt 复核脚本把顶层 JSON 数组误当对象属性读取，输出无效；已废弃并改用
+  `ConvertFrom-Json -NoEnumerate` 重新逐条核对，最终三项均 PASS。
+- 用户新对话显式授权 Step 3；依 session-governance 记录 scope change 与 D002。当前仅允许精读、
+  综合裁决、独立 verifier 和治理收尾，不允许 Step 3.5/4a/Contract/实现/仿真。
 
 ### 报到与门控
 
@@ -95,24 +106,35 @@ V001 初审（本对话主线程，PARTIAL）发现 Step 1–2 产物存在统�
 未越界：repair 只动 current-view 文档措辞与统计口径，未进 Step 3、未新增检索、未下载论文、未实现、
 未仿真、未改 Skill/common/params、未动 4 个 `p05_run*.log`、未 amend 3495bb4。
 
+### GW Step 3 精读综合（D003）
+
+- 三个 fresh-context worker 共全文精读 9 篇；全部完成 title 自检、标准条目、七子表、baseline、
+  complexity、实验完备性与 M-C-A，逐篇笔记写入 `papers/_read_notes/`，项目 read-log 追加 9 行。
+- CSNDSP 2014 不是 same-sequence sharing：FOE 用相邻符号乘积的相位增量，CPR 用符号本身，最佳
+  monomial 阶数也不同；其“could possibly be shared”没有实现/资源证据。
+- JLT 2018 已明确共享单一 correlation node，且正文追溯 OFC 2016 已共享 differential m-th-power FE
+  与 Viterbi PR 的 m-th power；generic P1 action 发生 existing-action collision。
+- P1 仅余窄 raised-domain CFO-removal/lifetime + matched-output 候选；但缺 OFC 2016 一手全文与
+  2019+ task-matched recent baseline。Q-P1-01 判据 1/2/4 PASS、3 FAIL。
+- 初版自造 terminal 已被 V003 证伪；D004 修正为 Step 3 BLOCKED/IN PROGRESS。不是 Go/Kill，不构成
+  novelty claim。综合见 R001 与 `projects/thesis-fso/literature_notes_shared_m0_foe_cpe.md`。
+
 ## 决策引用
 
 - D001：冻结研究对象与范围边界（GW Step 1–2 入口）—— 新建。
+- D002：用户显式授权仅执行 GW Step 3 —— 新建。
+- D003：generic shared-compute action 碰撞；无合法 Q#，Step 3 partial terminal —— 新建。
+- D004：撤销 D003 自造 terminal，Step 3 保持 BLOCKED/IN PROGRESS —— 新建。
 - D024（system 专题）：P1 计算图工程候选恢复与实际工具链吸收门 —— 引用，本专题承接。
 
 ## 范围确认
 
-- 本轮是否在 scope boundary 内：**是**（严格只到 Step 2 覆盖面门，未越界）。
+- 本轮是否在 scope boundary 内：**是**（D002 后严格只执行 Step 3；未进入 Step 3.5/4a/实现/仿真）。
 
 ## 后续
 
-- **Step 2 覆盖面已验收**（V002 PASS）：12 篇合格全文（含 2 篇 HIGH★ 直接竞品 CSNDSP 2014、
-  udWDM-PON 2018）作为 Step 3 精读起点；无需再补直接竞品全文。剩余 Optica/SPIE/MDPI 失败项为
-  中等/低相关，类别已有覆盖，非阻塞。
-- **未决项（Step 3 关闭，本轮不关）**：① 是否有论文在 FFT-FOE + mean-angle CPE 间显式共享单次
-  raised-power；② 共享图相对 conventional refactor 是否还有可区分工程 claim；③ matched-performance
-  comparator 是否有现成数据。
-- **下一合法动作（待用户在新对话显式授权后）**：开新对话执行 Step 3 精读（读 12 篇 content.md 中
-  Step 2 标定的必读子集，按 gw-read 模板提取结构化数据）。Step 3 启动前必读 `stages/gw-read.md`。
-  Step 3 未授权前禁读全文下方法结论。
-- H001 交接已写：`.sessions/2026-08-05-shared-m0-foe-cpe-groundwork/H001-step2-coverage-ready.md`。
+- Step 3 当前 BLOCKED/IN PROGRESS；generic action collision 已关闭，exact narrow action 仍有 OFC 2016
+  一手证据与 recent baseline 债务。
+- 下一步不自动执行。若用户另行授权，严格按 glossary 回 `gw-search.md` 定向扩检索，再经过 Step 2
+  获取与 Step 3 精读重审 Q-P1-01；不得用 Step 3.5 绕过空集处置。
+- V004 已 PASS；H002 已写并交接 blocked 状态。H001 保留为 Step 2 历史交接。
