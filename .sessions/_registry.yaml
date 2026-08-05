@@ -649,3 +649,21 @@ topics:
       - papers/_read_notes/L146_jiot_2025.md
       - papers/_read_notes/Galijasevic_ojcoms_2024.md
       - papers/_read_notes/Nguyen2024_taes.md
+
+  - slug: 2026-08-05-shared-m0-foe-cpe-groundwork
+    title: 共享 M0 次幂 FOE–CPE 计算图正式 Groundwork（Step 1–2）
+    status: active
+    created: "2026-08-05"
+    last_updated: "2026-08-05（S001 修订：GW Step 1 ✅ + Step 2 ✅ 12 篇合格全文含 2 篇 HIGH★ 直接竞品，blit 第三轮补取 7 篇 IEEE，terminal=STEP2_READY_FOR_USER_CONFIRMATION，待用户确认覆盖面；H001 已交接）"
+    description: "派生专题。承接 RDL system 专题 T008/S015/D024/CP005；P1 Shared Raised-Power Compute Graph 为唯一 THESIS_ENGINEERING_COMPONENT 设计候选。Step 1 检索 97 去重候选（4 API 源 + 全局索引复用，3 语义类）；Step 2 获取 12 篇合格全文（identity/≥50行/SHA256 全过，含 CSNDSP 2014 + udWDM-PON 2018 两篇最高优先直接竞品，blit-ieee 校园网通道）。停在覆盖面确认门，不进 Step 3、不实现、不仿真。"
+    depends_on:
+      - slug: 2026-07-20-research-direction-lab-system
+        reason: 继承 D024（P1 survivor 恢复）/CP005/T008 授权与实际工具链吸收门
+      - slug: 2026-06-20-problem-driven-redirection
+        reason: 继承 carrier-sync/CPR 文献池（VV/BPS/Mth-power 集中在 carrier-sync v2 精读专题）
+    conflicts_with: []
+    produces:
+      - .sessions/2026-08-05-shared-m0-foe-cpe-groundwork/
+      - search-archive/2026-08-05/
+      - projects/thesis-fso/literature_notes_shared_m0_foe_cpe.md
+      - projects/thesis-fso/shared-m0-foe-cpe-groundwork/step2-coverage-report.md

@@ -1,0 +1,22 @@
+{
+  "query": "Frequency offset estimation carrier phase recovery Viterbi monomial high-order QAM",
+  "count": 1,
+  "results": [
+    {
+      "title": "Frequency offset estimation and carrier phase recovery for high-order QAM constellations using the Viterbi-Viterbi monomial estimator",
+      "authors": [
+        "Christos Spatharakis",
+        "Nikolaos Argyris",
+        "Stefanos Dris",
+        "Hercules Avramopoulos"
+      ],
+      "abstract": "",
+      "year": 2014,
+      "venue": "2014 9th International Symposium on Communication Systems, Networks & Digital Sign (CSNDSP)",
+      "citation_count": 2,
+      "doi": "",
+      "url": "https://ieeexplore.ieee.org/document/6923933/",
+      "source": "ieee"
+    }
+  ]
+}

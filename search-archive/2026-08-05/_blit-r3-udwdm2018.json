@@ -1,0 +1,22 @@
+{
+  "query": "Simplified Carrier Recovery Intradyne Optical PSK Receivers udWDM-PON",
+  "count": 1,
+  "results": [
+    {
+      "title": "Simplified Carrier Recovery for Intradyne Optical PSK Receivers in udWDM-PON",
+      "authors": [
+        "Jeison Tabares",
+        "Saeed Ghasemi",
+        "Víctor Polo",
+        "Josep Prat"
+      ],
+      "abstract": "",
+      "year": 2018,
+      "venue": "Journal of Lightwave Technology",
+      "citation_count": 10,
+      "doi": "",
+      "url": "https://ieeexplore.ieee.org/document/8352777/",
+      "source": "ieee"
+    }
+  ]
+}
