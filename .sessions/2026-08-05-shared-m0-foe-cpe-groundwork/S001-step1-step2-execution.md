@@ -4,11 +4,13 @@
 > 2026-08-05 续接（acceptance repair：V001 初审发现统计口径/措辞缺陷，V002 独立复核 PASS 后终态升级）
 > 2026-08-05 续接（D002：用户显式授权仅执行 GW Step 3；V003 FAIL 后 BLOCKED/IN PROGRESS）
 > 2026-08-05 续接（修复完成；V004 独立复核 PASS；科学状态仍 BLOCKED/IN PROGRESS）
+> 2026-08-05 续接（D005：最后一次 bounded evidence closure；terminal=`RECENT_BASELINE_UNAVAILABLE`）
 
 ## 目标
 
-执行 T008 的 GW Step 1–2；在 D002 新授权下续接并仅完成 GW Step 3，停在 Step 3 terminal，
-不进 Step 3.5/4a，不实现、不仿真、不跑 MVE、不写论文 claim。
+执行 T008 的 GW Step 1–2；在 D002 新授权下续接 GW Step 3；在 D005 用户授权下仅执行最后一次
+bounded `gw-search→gw-acquire→gw-read` 证据闭合。全程不进 Step 3.5/4a，不实现、不仿真、不跑
+MVE、不写论文 claim。
 
 ## 记录
 
@@ -119,22 +121,44 @@ V001 初审（本对话主线程，PARTIAL）发现 Step 1–2 产物存在统�
 - 初版自造 terminal 已被 V003 证伪；D004 修正为 Step 3 BLOCKED/IN PROGRESS。不是 Go/Kill，不构成
   novelty claim。综合见 R001 与 `projects/thesis-fso/literature_notes_shared_m0_foe_cpe.md`。
 
+### 最后一次 bounded evidence closure（D005 / R002）
+
+- H002 接收验证三项 PASS：CSNDSP 2014 不同输入/不同阶数、仅潜在共享；JLT 2018 正文支持 generic
+  shared-m-th-power collision；Q-P1-01 owner 仍为 1/2/4 PASS、3 FAIL。registry 依赖存在且
+  `conflicts_with=[]`，本轮范围由用户显式授权。
+- bounded gw-search 用满 6/6 组，final 结果数为 19/30/14/5/1/13；全局索引 21,398 条、宽命中
+  425 条、既有 P1 结果 75 条、2019+ 语义命中 50 条（未跨文件去重），严格按同输入/同估计器/
+  同 FOE→CFO-removal→CPE 任务复筛后合格 recent baseline=0。未运行第 7 组 query。
+- OFC 2016：tools/download 失败；Optica 摘要页 200 但 PDF 端点返回 Radware HTML。PTL 2016 同线
+  扩展文也经 tools/download/arXiv/IEEE blit 三轮止损失败。两者都没有有效全文，因此没有冒充
+  gw-read；OFC exact action=`UNRESOLVED_PRIMARY_FULLTEXT_UNAVAILABLE`。
+- fresh-context worker 对三篇已有有效 recent 全文做 targeted dataflow re-read：JLT 2019 的 correlation
+  重复已被 conventional refactor 吸收且提出方法改变 estimator；ISCAS 2022、LCOMM 2026 都是
+  CPE-only。三篇 title 均 PASS，但没有一篇是 P1 合法 M。
+- Q-P1-01 重判仍为 1/2/4 PASS、3 FAIL，触发 terminal=`RECENT_BASELINE_UNAVAILABLE`；P1=
+  `SUPPORTING_ONLY`，`mission_method_delta=NONE`。本结论关闭 Step 3 canonical Q 空集，不是 Step 4a
+  Go/Kill 或 METHOD_SIGNAL。
+
+**P1 的 generic action 已碰撞，窄 delta 未形成合法 Q；停止该方向，下一轮轮换新候选，不再改名重开。**
+
 ## 决策引用
 
 - D001：冻结研究对象与范围边界（GW Step 1–2 入口）—— 新建。
 - D002：用户显式授权仅执行 GW Step 3 —— 新建。
 - D003：generic shared-compute action 碰撞；无合法 Q#，Step 3 partial terminal —— 新建。
 - D004：撤销 D003 自造 terminal，Step 3 保持 BLOCKED/IN PROGRESS —— 新建。
+- D005：bounded evidence closure 触发 `RECENT_BASELINE_UNAVAILABLE`，P1 降为 `SUPPORTING_ONLY` —— 新建。
 - D024（system 专题）：P1 计算图工程候选恢复与实际工具链吸收门 —— 引用，本专题承接。
 
 ## 范围确认
 
-- 本轮是否在 scope boundary 内：**是**（D002 后严格只执行 Step 3；未进入 Step 3.5/4a/实现/仿真）。
+- 本轮是否在 scope boundary 内：**是**（D002/D005 后严格只执行 Step 3 与 bounded
+  search/acquire/read closure；未进入 Step 3.5/4a/实现/仿真）。
 
 ## 后续
 
-- Step 3 当前 BLOCKED/IN PROGRESS；generic action collision 已关闭，exact narrow action 仍有 OFC 2016
-  一手证据与 recent baseline 债务。
-- 下一步不自动执行。若用户另行授权，严格按 glossary 回 `gw-search.md` 定向扩检索，再经过 Step 2
-  获取与 Step 3 精读重审 Q-P1-01；不得用 Step 3.5 绕过空集处置。
-- V004 已 PASS；H002 已写并交接 blocked 状态。H001 保留为 Step 2 历史交接。
+- P1 已以 `RECENT_BASELINE_UNAVAILABLE` 关闭，exact OFC 一手缺口只保留为证据边界，不再触发扩检索。
+- 下一轮由上游 RDL 轮换机制不同的新候选；不得改名重开 P1，也不得进入 Step 3.5/4a/实现/仿真。
+- V004/H002 保留为 blocked 历史；H003 closed-state handoff 已完成。首轮 closure verifier 为
+  PARTIAL（科学/边界 PASS，治理模板 FAIL）；按最小清单修复后，第二个 fresh-context verifier 已以
+  V005 PASS 关闭六 JSON、acquire、三篇全文、Q/terminal、治理与 git 边界。

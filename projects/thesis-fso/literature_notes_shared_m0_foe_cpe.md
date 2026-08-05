@@ -1,7 +1,7 @@
 # Literature Notes — Shared M0-Power FOE–CPE Groundwork
 
 > Project: thesis-fso | 子方向: Ch5 工程方法候选 P1（Shared Raised-Power Compute Graph）
-> 状态: **GW Step 3 BLOCKED/IN PROGRESS（无 canonical Q#；V004 结构终审 PASS）** | 最后更新: 2026-08-05
+> 状态: **GW Step 3 证据闭合（terminal=`RECENT_BASELINE_UNAVAILABLE`；P1=`SUPPORTING_ONLY`）** | 最后更新: 2026-08-05
 > 边界: 本文件只给 Step 3 精读与问题提取裁决；不构成 Step 3.5、Step 4a Go/Kill、novelty 或实现授权。
 
 ## 0. 冻结研究对象
@@ -17,12 +17,13 @@
 |---|---|---|---|---|
 | 1 search | ✅ | 2026-08-05 | raw=100、dedup=97、3 个实际 API 家族 | 已满足 |
 | 2 acquire | ✅（V002 PASS） | 2026-08-05 | 12 篇合格全文，2 篇 HIGH★ direct | 已满足 |
-| 3 read | **🔴 BLOCKED/IN PROGRESS** | — | 9 篇全文已读；direct collision 与 Q-P1-01 初判完成；V004 结构终审 PASS | **无合法 Q#，禁止离开 Step 3** |
+| 3 read | **⛔ 证据闭合** | 2026-08-05 | 9 篇原精读 + 3 篇 recent targeted re-read；bounded search 6/6；Q-P1-01 仍无合法 Q# | terminal=`RECENT_BASELINE_UNAVAILABLE`；P1=`SUPPORTING_ONLY`，停止本方向 |
 | 3.5 supplement | ⬜ 未授权 | | | 禁止进入 |
 | 4a feasibility | ⬜ 未授权 | | | 禁止进入 |
 
-`stages/gw-read.md` L198 明定：没有通过 canonical 四判据的 Q# 时不得离开 Step 3；
-`stages/glossary.md` L65–70 指定回 search 扩检索。当前不是 terminal，更不是 Go/Kill。
+`stages/gw-read.md` L198 明定：没有通过 canonical 四判据的 Q# 时不得进入 Step 4a；
+`stages/glossary.md` L65–70 指定先回 search 扩检索。本专题已按 D005 完成最后一次 bounded 回查并触发
+用户定义的停止 terminal；这仍不是 Step 4a Go/Kill。
 
 ## 2. 精读论文与身份
 
@@ -56,9 +57,11 @@ JLT 2018 已经做了明确 shared correlation graph：只算一次 `w[n]=r[n]r*
 （L63–89, L119–127, L149）。更强的是正文 L73–75 明确说 Ferreira et al. OFC 2016 已把
 differential m-th-power FE 与 Viterbi PR 所需的 m-th power 只算一次并共享，参考文献题名在 L237。
 
-因此：P1 的宽泛工程动作“同一 m-th-power/correlation 中间量供 FOE+CPE 使用”已经被吸收；OFC
-2016 当前只有 JLT 2018 的二手全文陈述，尚缺一手全文，不能进一步裁剪其 exact implementation
-boundary，也不能据此声称 novelty。
+因此：P1 的宽泛工程动作“同一 m-th-power/correlation 中间量供 FOE+CPE 使用”已经被吸收。bounded
+closure 中，OFC 2016 官方摘要页可访问，但官方 PDF 端点被 Radware 拦截；同线 PTL 2016 也经
+tools/download、arXiv 与 IEEE blit 三轮止损后未取得有效全文。OFC exact-action 裁决为
+`UNRESOLVED_PRIMARY_FULLTEXT_UNAVAILABLE`，不能进一步裁剪其 exact implementation boundary，
+也不能据此声称 novelty。
 
 ## 4. Comparator、matched-output 与复杂度协议
 
@@ -79,12 +82,12 @@ hardware contribution，必须补 word length、critical path、area/power 或�
 
 - **已碰撞的宽动作**：share/reuse m-th power 或 correlation between FE/FOE and PR/CPE。JLT 2018
   L73–75 已明确记载 2016 m-power 版本；因此不能把“减少一次升幂”本身当独立贡献。
-- **仍可精确定义但未闭合的窄动作**：在当前 QAM 串行 NDA 链中，把一次 `raised=x^M0` 的生命周期
+- **可精确定义但未形成合法 Q 的窄动作**：在当前 QAM 串行 NDA 链中，把一次 `raised=x^M0` 的生命周期
   延长到 CFO correction 后，通过 `raised*exp(-j*M0*omega*k)` 生成 CPE 输入，并同时保持原信号域
   `exp(-j*(omega*k+phi))` 的 matched output。现有九篇没有给出这一精确公式链的直接证据，但“当前池
   未见”不是新颖性证明；OFC 2016 一手全文未读，exact collision 仍未关闭。
-- **贡献层级**：最多保留为 `THESIS_ENGINEERING_COMPONENT` 的窄设计候选；当前不能升格独立方法、
-  novelty claim 或 Ch5 主贡献。
+- **贡献层级**：bounded closure 后降为 `SUPPORTING_ONLY`。冻结预算内 recent task-matched baseline=0；
+  不得以 `THESIS_ENGINEERING_COMPONENT`、独立方法、novelty claim 或 Ch5 主贡献继续推进。
 
 ## 6. Q# canonical 四判据
 
@@ -98,12 +101,12 @@ hardware contribution，必须补 word length、critical path、area/power 或�
 |---|---|---|
 | 1. M/C/A 具体 | PASS | 冻结对象可具体表达；但 A 目前来自本地实现诊断，不是精读论文指出的 recent-baseline 缺陷 |
 | 2. 可产出可复用方法 | PASS | 可产出 shared raised-domain graph、接口与 matched-output protocol |
-| 3. recent baseline | **FAIL** | 项目参数要求 2019+ 顶刊；直接传统 shared-action 证据为 2018/2016，2019+ 论文是替代实现而非指出该重复的 task-matched baseline |
+| 3. recent baseline | **FAIL** | 6/6 bounded query + OpenAlex 引用链 + 全局索引严格复筛为 0 篇 task-matched baseline；不要求作者显式命名 failure A，但三篇有效 recent 全文均是 estimator-changing 或 CPE-only，不能从数据流建立同任务重复 raised-domain 动作 |
 | 4. 可量化对标 | PASS | output error、BER/SNR、op/memory/latency/throughput、hardware PPA 均可量化 |
 
 四判据必须全过；故当前没有合法 Q#。失败主因是 **existing-action collision + recent task-matched
-baseline 缺位 + OFC 2016 一手证据不足**。`trivial refactor` 是当前高风险解释，但 Step 3 证据不足以
-把它升级为最终判定；本轮不做 Step 4a Go/Kill。
+baseline 缺位**；OFC 2016 一手 exact boundary 因全文不可得保持未决，但不能覆盖 recent-baseline
+硬停止。terminal=`RECENT_BASELINE_UNAVAILABLE`，P1=`SUPPORTING_ONLY`；本轮不做 Step 4a Go/Kill。
 
 ## 7. 实验完备性对标汇总（5 篇核心竞品）
 
@@ -143,5 +146,15 @@ L02 JLT 2018、L04 JLT 2019、L06 ISCAS 2022、L07 LCOMM 2026。逐篇事实与�
 - 真正的数据流前例至少到 OFC 2016/JLT 2018，P1 的 generic action 已 collision。
 - 现代低复杂度赛道已经要求从 op-count 走到 fixed-point/FPGA/ASIC 的 latency/throughput/PPA；只报
   Python wall time 或少一次幂运算不足以支撑 hardware contribution。
-- 当前证据不能证明窄 raised-domain CFO-removal/lifetime 公式已被直接实现，也不能证明它未被实现。
-  因此当前保持 Step 3 BLOCKED/IN PROGRESS，不是 novelty、Go 或 Kill。
+- 当前证据不能证明窄 raised-domain CFO-removal/lifetime 公式已被 OFC 2016 直接实现，也不能证明它
+  未被实现；exact action 保持 `UNRESOLVED_PRIMARY_FULLTEXT_UNAVAILABLE`。
+- frozen 6/6 query 内没有 2019+ 合格 task-matched baseline；三篇 recent 有效全文中，JLT 2019 的
+  correlation 重复已被 conventional refactor 吸收且提出方法改估计器，ISCAS 2022/LCOMM 2026 均为
+  CPE-only。因此 Q-P1-01 判据 3 仍 FAIL，terminal=`RECENT_BASELINE_UNAVAILABLE`。
+- **P1 的 generic action 已碰撞，窄 delta 未形成合法 Q；停止该方向，下一轮轮换新候选，不再改名重开。**
+
+## 9. Bounded evidence closure（R002）
+
+完整 query/source/count、OFC/PTL acquire 止损、三篇 recent 数据流行号证据与四判据重判见
+`.sessions/2026-08-05-shared-m0-foe-cpe-groundwork/R002-bounded-evidence-closure.md`。本节结论仅关闭
+Step 3 canonical Q 空集，不构成 Step 3.5/4a、Go/Kill、METHOD_SIGNAL 或论文 claim。

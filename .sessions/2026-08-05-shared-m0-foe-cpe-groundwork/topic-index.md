@@ -1,6 +1,6 @@
 # Topic Index: Shared M0-Power FOE–CPE Groundwork (Step 1–3)
 
-> 状态: active | 创建: 2026-08-05 | 最后更新: 2026-08-05（GW Step 3 BLOCKED/IN PROGRESS；V004 PASS；H002）
+> 状态: closed | 创建: 2026-08-05 | 最后更新: 2026-08-05（bounded closure；terminal=`RECENT_BASELINE_UNAVAILABLE`；D005；V005 PASS；H003）
 
 ## 专题信息
 
@@ -24,6 +24,8 @@
   M-C-A 问题与 canonical 四判据；独立 fresh-context verifier 终审；
 - 写入项目 literature notes、全局 read notes、本专题 read-log、治理 D/V/H；
 - 单次统一 commit，不 push；四个既有 `p05_run*.log` 不修改、不暂存。
+- 执行最后一次 bounded evidence closure：最多 6 组 query，OFC 2016 一手获取与最多 5 篇 2019+
+  task-matched baseline；仅对有效全文做 targeted read，关闭 Q-P1-01 后停止。
 
 ### 明确不含
 
@@ -45,6 +47,10 @@
     独立 verifier 与 Step 3 terminal；仍禁止 Step 3.5/4a/Contract/实现/仿真。
   - 影响的未决项：允许关闭原未决项中的 joint FOE/CPE 数据流、显式共享动作、合法 comparator、
     matched-output 与复杂度证据；不授权其后的 Go/Kill 或实验判断。
+- **[2026-08-05] D005**：用户授权最后一次 bounded `gw-search→gw-acquire→gw-read` 证据闭合。
+  - 变更内容：冻结 6 组 query 上限，只处理 OFC 2016 exact boundary 与 2019+ task-matched baseline；
+    仍禁止 Step 3.5/4a/实现/仿真。
+  - 原因：关闭 D004/H002 的两个证据债务并给出 terminal；不是重开开放式检索。
 
 ## 已确认结论
 
@@ -56,6 +62,8 @@
   - **A**：用一个共享 M0-domain 表示同时驱动 FOE 与 CPE；升幂域 CFO 去除必须使用
     `raised * exp(-j*M0*omega*k)`，最终在原信号域补偿 `omega*k + phi`。
 - **P1 当前层级 = `THESIS_ENGINEERING_COMPONENT` 设计候选**（来自 D024），不是 METHOD_SIGNAL。
+- **D005 最终层级 = `SUPPORTING_ONLY`**；`THESIS_ENGINEERING_COMPONENT` 仅为进入本专题时的历史层级，
+  不再作为 active carrier 或后续执行授权。
 - **廉价吸收判据**：必须在实际执行路径或工具链中存在；假想 compiler/CSE 不算。
 - **Step 2 覆盖面门必须用户确认**：terminal 只能是 `STEP2_READY_FOR_USER_CONFIRMATION` /
   `STEP2_BLOCKED_BY_COVERAGE_GAP` / `ENTRY_INVALID`，或经独立 fresh-context 验收（V### PASS）后升级为
@@ -79,6 +87,9 @@
   `THESIS_ENGINEERING_COMPONENT`，不能作 novelty/Go/Kill。
 - **Q-P1-01**：canonical 判据 1/2/4 PASS、3 FAIL（缺 2019+ task-matched recent baseline）；无合法
   Q# 时必须停留在 Step 3，不能使用自造 terminal（D004）。
+- **Bounded closure（D005/R002）**：6/6 query + 引用链 + 全局索引严格复筛为 0 篇合格 recent
+  baseline；OFC exact action=`UNRESOLVED_PRIMARY_FULLTEXT_UNAVAILABLE`；terminal=
+  `RECENT_BASELINE_UNAVAILABLE`，P1=`SUPPORTING_ONLY`，专题关闭。
 
 ## 进展线索
 
@@ -95,22 +106,25 @@
 - **D004**：撤销自造 terminal，Step 3 保持 BLOCKED/IN PROGRESS。
 - **V004**：修复后 fresh-context 终审 PASS（9 篇、135/135 字段、72/72 规范段落）。
 - **H002**：交接无合法 Q# 的 blocked 状态与回 search 恢复路径。
+- **R002**：最后一次 bounded search/acquire/read 证据闭合；Q-P1-01 仍为 1/2/4 PASS、3 FAIL。
+- **D005**：触发 `RECENT_BASELINE_UNAVAILABLE`，P1 降为 `SUPPORTING_ONLY` 并停止该方向。
+- **H003**：closed-state handoff；下一轮回上游 RDL 轮换机制不同的新候选，不得改名重开 P1。
+- **V005**：bounded closure fresh-context 复验 PASS；六 JSON、acquire、三篇全文、Q/terminal、治理与 git 边界全过。
 
 ## 未决项
 
-- OFC 2016 “Hardware optimization for carrier recovery based on Mth power schemes” 一手全文及 exact
-  implementation boundary；
-- 是否存在 2019+ task-matched 顶刊 baseline 明确把重复 raised-domain 计算作为 failure A；
-- 窄 `raised*exp(-j*M0*omega*k)` lifetime 是否仍有独立 action delta，或只属 trivial refactor；
-- 上述债务只能按 canonical 空集处置回 `gw-search.md` 扩检索，再经 Step 2 acquire 与 Step 3 read
-  重审；不得以 Step 3.5 绕过无 Q# 门控，本专题不得自动推进。
+- OFC 2016 一手全文与 exact implementation boundary 仍是覆盖缺口；因本专题已触发冻结预算硬停止，
+  该缺口只作历史证据边界，不再触发继续检索或 P1 重开。
+- 下一轮由上游 RDL 轮换机制不同的新候选；不在本专题改名复活 P1。
 
 ## 当前位置
 
-GW Step 1–2 已验收；Step 3 已完成 9 篇全文读取，但 V003 初版审查 FAIL 后仍为
-**BLOCKED/IN PROGRESS**：没有 canonical 四判据全过的 P1 Q#，不允许离开 Step 3。
-恢复动作须用户另行授权：按 glossary 回 search，定向取得 OFC 2016 一手全文并寻找 2019+
-task-matched direct baseline，再经过 Step 2→Step 3 重审 Q-P1-01；当前不执行。
+GW Step 1–2 已验收；原 Step 3 九篇精读由 V004 结构复核 PASS。最后一次 bounded closure 已执行
+`gw-search→gw-acquire→gw-read`：6/6 query 用尽，OFC/PTL 未取得有效全文，三篇 recent 有效全文均
+非 task-matched，合格 2019+ baseline=0。Q-P1-01 仍为 1/2/4 PASS、3 FAIL，terminal=
+**`RECENT_BASELINE_UNAVAILABLE`**；P1=`SUPPORTING_ONLY`，专题 closed。
+
+**P1 的 generic action 已碰撞，窄 delta 未形成合法 Q；停止该方向，下一轮轮换新候选，不再改名重开。**
 
 > **修订**（2026-08-05）：① Step 2 初版误判 blit 跳过 IEEE 第三轮通道（用户纠正），补跑 blit 后取回
 > 7 篇高优先 IEEE 全文（含 2 篇最高优先直接竞品），合格全文 5→12 篇。② T008 acceptance repair

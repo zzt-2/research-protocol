@@ -16,3 +16,8 @@
 - "全文精读必须委托 fresh-context 子 agent；主线程负责分组、汇总和科学裁决。" → S001
 - "必须由独立 fresh-context verifier 检查 title、引用证据、结构化字段、直接竞品裁决、Q# 四判据和 Step 3 边界。" → V003
 - "本轮单次统一 commit，不 push；不修改 Skill/common/params，四个 p05_run*.log 不触碰。" → D002
+- "本轮是最后一次 bounded evidence closure，不是开放式检索，不得实现方法、跑仿真或进入 Step 4a。" → D005
+- "不要求论文作者显式写出“重复计算是 failure A”。" → D005
+- "只要近期 baseline 的公式、框图或数据流能够证明：raised/m-th-power 中间量被重复生成、过早丢弃、未跨 CFO-removal→CPE 保留，即可由证据建立 A。" → D005
+- "但不得把 generic CSE、不同估计器、不同输入序列或 estimator-changing 方法当成 task-matched baseline。" → D005
+- "P1 的 generic action 已碰撞，窄 delta 未形成合法 Q；停止该方向，下一轮轮换新候选，不再改名重开。" → D005

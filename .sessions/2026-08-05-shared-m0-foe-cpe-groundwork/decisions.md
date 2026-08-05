@@ -142,10 +142,10 @@ joint algorithm，不是 shared sequence。近年论文提供硬件 refactor 与
 
 ## D004: 撤销自造 terminal，Step 3 保持阻塞
 
-> status: active
+> status: superseded
 > date: 2026-08-05
 > 取代：D003 第 3 条的 terminal；不取代 D003 的 collision/action-delta 科学裁决
-> 被取代：无
+> 被取代：D005
 > 依据：验证: V003 FAIL + `stages/gw-read.md` L198 + `stages/glossary.md` L65–70
 
 ### 决策
@@ -173,3 +173,57 @@ V003 独立复核确认该 terminal 在框架文件中定义数为 0；`gw-read.
 ### 来源
 
 V003；`stages/gw-read.md` L198；`stages/glossary.md` L65–70。触发原话：无（框架合规纠错）。
+
+---
+
+## D005: bounded evidence closure 终止 P1
+
+> status: active
+> date: 2026-08-05
+> 取代：D004 的 blocked-waiting 状态；不取代 D003/R001 的 generic collision 历史
+> 被取代：无
+> 依据：调研: R002 + 验证: V005 + 用户原话: voice.md 2026-08-05
+
+### 决策
+
+最后一次 bounded `gw-search→gw-acquire→gw-read` 用尽 6/6 query 后仍无 2019+ 合格 task-matched
+baseline，触发 terminal=`RECENT_BASELINE_UNAVAILABLE`。Q-P1-01 判据 3 继续 FAIL，P1 降为
+`SUPPORTING_ONLY`，本专题关闭；不得改名重开、进入 Step 3.5/4a、实现或仿真。
+
+### 核心失败机制
+
+P1 的宽泛 shared m-th-power/correlation 动作已由 OFC 2016（二手全文陈述）/JLT 2018 碰撞；窄
+raised-domain lifetime 要形成合法 Q，还需 2019+、同输入序列、同估计器、同
+FOE→CFO-removal→CPE 任务的 baseline。冻结预算内严格复筛为 0：三篇 recent 有效全文分别是
+estimator-changing 或 CPE-only，不能从其公式/框图建立 P1 的重复 raised-domain 动作。
+
+### 否决了什么
+
+- 否决以 generic CSE、不同输入序列、不同估计器或 estimator-changing 方法冒充 task-matched M；
+- 否决因作者未显式写“failure A”就忽略数据流证据，也否决在数据流不匹配时强行推断 failure A；
+- 否决用 OFC 摘要、PTL 元数据或 JLT 2018 二手陈述冒充 OFC 一手 exact boundary；
+- 否决继续扩检索、把 P1 改名后重开、或用 Step 3.5/4a/实现/仿真绕过 canonical Q 空集。
+
+### 可复用部分
+
+保留 generic action collision、matched-output protocol、复杂度/PPA 指标、三篇 near-miss 的数据流
+排除证据，以及 OFC exact action=`UNRESOLVED_PRIMARY_FULLTEXT_UNAVAILABLE` 的证据边界，作为后续
+候选的防碰撞材料；不保留 P1 active carrier 身份。
+
+### 具体数据
+
+- query 预算 6/6；各组 final=19/30/14/5/1/13；严格 task-matched recent baseline=0；
+- OFC 官方摘要 HTTP 200，但 PDF 端点返回 15,088 B Radware HTML；PTL download/arXiv/blit 均失败；
+- Q-P1-01：1/2/4 PASS、3 FAIL；formal terminal=`RECENT_BASELINE_UNAVAILABLE`；
+- P1：`SUPPORTING_ONLY`，`mission_method_delta=NONE`。
+
+### 影响范围
+
+更新 R002、项目 literature notes、topic-index、registry、S001、verification 与 closed-state handoff。
+不修改 RDL 上游 formal/current owner，不产生实验、代码或论文 claim。
+
+### 来源
+
+S001 2026-08-05 bounded closure 续接；R002。触发原话见 `voice.md` 2026-08-05。
+
+**P1 的 generic action 已碰撞，窄 delta 未形成合法 Q；停止该方向，下一轮轮换新候选，不再改名重开。**

@@ -194,3 +194,58 @@ EXPERIMENT_MEANS: statistics=0.4/3 baseline=2.6/3 ablation=2.0/3 VVUQ=2.8/2.2/1.
 ### 结论
 
 PASS
+
+---
+
+## V005: bounded evidence closure 独立复验
+
+> date: 2026-08-05
+> 关联：S001 / D005
+> 验证者：独立 fresh-context verifier agent `/root/p1_closure_reverifier`
+
+### 验证项
+
+- [x] 六组 search artifact：逐个解析 JSON，`total == len(results)`，final=
+  `19/30/14/5/1/13`；query/source 与 R002 一致；R002 已把 raw/dedup 标为 worker-reported、
+  不可从现有 artifact 重算。
+- [x] acquire/OFC 边界：OFC/PTL 两目录均只有 398 B `metadata.json`，状态 `failed/all_failed`、
+  `content_file=""`；exact 裁决只能是 `UNRESOLVED_PRIMARY_FULLTEXT_UNAVAILABLE`。
+- [x] recent fulltext dataflow：JLT 2019 为 estimator/architecture change 且 conventional correlation
+  重复已吸收；ISCAS 2022 与 LCOMM 2026 均为 CPE-only；三篇都不是合法 P1 task-matched M。
+- [x] Q/terminal：Q-P1-01 为 1/2/4 PASS、3 FAIL；`RECENT_BASELINE_UNAVAILABLE`、
+  `SUPPORTING_ONLY`、`mission_method_delta=NONE` 有证据，且未写成 Step 4a Kill/METHOD_SIGNAL。
+- [x] 首轮 PARTIAL 四项修复：literature stale 终态 0；S001 时序正确；H003 十个强制锚点齐全；
+  R002 evidence limitation 准确。
+- [x] 治理/git：registry 56 个专题可解析；当前 topic closed、framework active、依赖存在、
+  `conflicts_with=[]`；D004→D005；必须句逐字存在；`git diff --check=0`、staged=0、禁区 diff=0；
+  四个 `p05_run*.log` 仅为 `??`。
+
+### 证据
+
+```text
+SEARCH_TOTAL_RESULTS=19/30/14/5/1/13
+SEARCH_JSON_TOP_KEYS=query,timestamp,sources,total,results
+ACQUIRE_OFC=metadata_only,398B,failed,content_file_empty
+ACQUIRE_PTL=metadata_only,398B,failed,content_file_empty
+RECENT_QUALIFIED_TASK_MATCH=0
+Q_P1_01=PASS/PASS/FAIL/PASS
+TERMINAL=RECENT_BASELINE_UNAVAILABLE
+P1_DISPOSITION=SUPPORTING_ONLY
+H003_REQUIRED_ANCHORS=10/10
+REGISTRY_TOPICS=56
+CURRENT_TOPIC_STATUS=closed
+FRAMEWORK_EVOLUTION_STATUS=active
+DIFF_CHECK_EXIT=0
+STAGED_COUNT=0
+FORBIDDEN_DIFF_COUNT=0
+P05_COUNT=4
+P05_NON_UNTRACKED=0
+```
+
+全文行证据：JLT 2019 `content.md:23,43,76,80`；ISCAS 2022 `:35,59-63,79-81,97-101,182`；
+LCOMM 2026 `:53,55-67,75-77,95-101,119-131`；JLT 2018 generic collision
+`content.md:73-75,89`。完整 verifier 回执见本轮 agent `/root/p1_closure_reverifier`。
+
+### 结论
+
+PASS
