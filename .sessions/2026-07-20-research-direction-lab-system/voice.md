@@ -127,3 +127,5 @@
 - "接受当前 7 篇 CORE 覆盖面，允许进入 GW Step 3。" → D029
 - "只有至少一个 Q# 通过 canonical 四判据，才继续 Step 3.5。" → D029
 - "完成 Step 3.5 后停止，不进入 Step 4a、方法实现、testbed 或仿真。" → D029
+- "这是已知 semantic-gate misapplication，与 AMC Groundwork D005 已纠正的问题相同：把 Step 4a/MVE 的 problem-truth 责任前移至 Step 3。" → D030
+- "如果 Q1 重判为 survivor，立即按 stages/gw-supplement.md 完成 Step 3.5，不停在纠偏。" → D030

@@ -11,3 +11,7 @@
 - "JOCN 2026（DOI 10.1364/JOCN.587273）全文缺失作为 Q1 的 HIGH_RISK novelty/collision blocker 保留。" → D004
 - "若 Step 3.5 后仍未取得全文，Q1 不得宣称 exact-action novelty closure；不得用 abstract 冒充全文裁决。" → D004
 - "完成 Step 3.5 后停止，不进入 Step 4a、方法实现、testbed 或仿真。" → D004
+- "当前 D005 / V004 / step3-deep-read-report / literature_notes / H001 将：‘CORE 尚未量化证明 baseline M 在条件 C 下因 A 失效’作为 canonical 判据 1 FAIL。这是已知 semantic-gate misapplication，与 AMC Groundwork D005 已纠正的问题相同：把 Step 4a/MVE 的 problem-truth 责任前移至 Step 3。" → D006
+- "Canonical 判据 1只要求 M/C/A 明确、句子级、可解；Step 3 要求 A 可证伪，不要求 A 已被 Step 4a/MVE 证实。" → D006
+- "如果 Q1 重判为 survivor，立即按 stages/gw-supplement.md 完成 Step 3.5，不停在纠偏。" → D006
+- "不进入 Step 4a；不写方法代码；不搭 5.5–7.5 日 testbed；不跑仿真；不称 METHOD_SIGNAL、Go 或论文方法成立；不修改 common/、params.py、旧实验或 Skill；不 push。" → D006

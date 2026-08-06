@@ -1,0 +1,432 @@
+{
+  "papers": {
+    "doi:10.1364/oe.595557": {
+      "path": "papers\\doi\\10.1364_oe.595557",
+      "doi": "10.1364/oe.595557",
+      "title": "Physics-informed adaptive transmission for coherent free-space optical communications: multi-dimensional amplitude–phase statistics",
+      "status": "failed",
+      "batches": [
+        "_step2_shortlist"
+      ],
+      "title_check": null
+    },
+    "doi:10.1038/s41377-023-01201-7": {
+      "path": "papers\\doi\\10.1038_s41377-023-01201-7",
+      "doi": "10.1038/s41377-023-01201-7",
+      "title": "Tbit/s line-rate satellite feeder links enabled by coherent modulation and full-adaptive optics",
+      "status": "success",
+      "batches": [
+        "_step2_shortlist"
+      ],
+      "title_check": "match"
+    },
+    "doi:10.1109/jlt.2023.3242215": {
+      "path": "papers\\doi\\10.1109_jlt.2023.3242215",
+      "doi": "10.1109/jlt.2023.3242215",
+      "title": "Adaptive Transceiver Design for High-Capacity Multi-Modal Free-Space Optical Communications With Commercial Devices and Atmospheric Turbulence",
+      "status": "success",
+      "batches": [
+        "_step2_shortlist"
+      ],
+      "title_check": "match"
+    },
+    "doi:10.1109/tvt.2021.3127193": {
+      "path": "papers\\doi\\10.1109_tvt.2021.3127193",
+      "doi": "10.1109/tvt.2021.3127193",
+      "title": "On the Design of FSO-Based Satellite Systems Using Incremental Redundancy Hybrid ARQ Protocols With Rate Adaptation",
+      "status": "failed",
+      "batches": [
+        "_step2_shortlist"
+      ],
+      "title_check": null
+    },
+    "doi:10.3390/photonics9020092": {
+      "path": "papers\\doi\\10.3390_photonics9020092",
+      "doi": "10.3390/photonics9020092",
+      "title": "Power Allocation for Reliable and Energy-Efficient Optical LEO-to-Ground Downlinks with Hybrid ARQ Schemes",
+      "status": "failed",
+      "batches": [
+        "_step2_shortlist"
+      ],
+      "title_check": null
+    },
+    "doi:10.3390/e28010016": {
+      "path": "papers\\doi\\10.3390_e28010016",
+      "doi": "10.3390/e28010016",
+      "title": "HARQ Performance Limits for Free-Space Optical Communication Systems",
+      "status": "failed",
+      "batches": [
+        "_step2_shortlist"
+      ],
+      "title_check": null
+    },
+    "doi:10.1109/tvt.2019.2916843": {
+      "path": "papers\\doi\\10.1109_tvt.2019.2916843",
+      "doi": "10.1109/tvt.2019.2916843",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1109/ojcoms.2024.011100": {
+      "path": "papers\\doi\\10.1109_ojcoms.2024.011100",
+      "doi": "10.1109/OJCOMS.2024.011100",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1109/jphot.2025.3602148": {
+      "path": "papers\\doi\\10.1109_jphot.2025.3602148",
+      "doi": "10.1109/JPHOT.2025.3602148",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1109/jlt.2019.2892901": {
+      "path": "papers\\doi\\10.1109_jlt.2019.2892901",
+      "doi": "10.1109/jlt.2019.2892901",
+      "title": "LUT-Free Carrier Recovery for Intradyne Optical DPSK Receivers in udWDM-PON",
+      "status": "success",
+      "batches": [
+        "_p1-step2-shortlist"
+      ],
+      "title_check": "match"
+    },
+    "doi:10.1109/csndsp.2014.6923933": {
+      "path": "papers\\doi\\10.1109_csndsp.2014.6923933",
+      "doi": "10.1109/CSNDSP.2014.6923933",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1364/oe.25.005217": {
+      "path": "papers\\doi\\10.1364_oe.25.005217",
+      "doi": "10.1364/OE.25.005217",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1109/tsp.2021.3137966": {
+      "path": "papers\\doi\\10.1109_tsp.2021.3137966",
+      "doi": "10.1109/TSP.2021.3137966",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1109/lpt.2016.2586076": {
+      "path": "papers\\doi\\10.1109_lpt.2016.2586076",
+      "doi": "10.1109/LPT.2016.2586076",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1109/iscas48785.2022.9937906": {
+      "path": "papers\\doi\\10.1109_iscas48785.2022.9937906",
+      "doi": "10.1109/ISCAS48785.2022.9937906",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1109/lcomm.2026.3653195": {
+      "path": "papers\\doi\\10.1109_lcomm.2026.3653195",
+      "doi": "10.1109/LCOMM.2026.3653195",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1109/jphot.2022.3161795": {
+      "path": "papers\\doi\\10.1109_jphot.2022.3161795",
+      "doi": "10.1109/jphot.2022.3161795",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1109/jlt.2009.2024963": {
+      "path": "papers\\doi\\10.1109_jlt.2009.2024963",
+      "doi": "10.1109/jlt.2009.2024963",
+      "title": "DSP for Coherent Single-Carrier Receivers",
+      "status": "success",
+      "batches": [
+        "_p1-step2-shortlist"
+      ],
+      "title_check": "match"
+    },
+    "doi:10.1109/jlt.2018.2831918": {
+      "path": "papers\\doi\\10.1109_jlt.2018.2831918",
+      "doi": "10.1109/jlt.2018.2831918",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1364/oe.26.004853": {
+      "path": "papers\\doi\\10.1364_oe.26.004853",
+      "doi": "10.1364/oe.26.004853",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.3390/photonics11090885": {
+      "path": "papers\\doi\\10.3390_photonics11090885",
+      "doi": "10.3390/photonics11090885",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.3390/e14020265": {
+      "path": "papers\\doi\\10.3390_e14020265",
+      "doi": "10.3390/e14020265",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.3390/electronics14020265": {
+      "path": "papers\\doi\\10.3390_electronics14020265",
+      "doi": "10.3390/electronics14020265",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.3389/fphy.2023.1099867": {
+      "path": "papers\\doi\\10.3389_fphy.2023.1099867",
+      "doi": "10.3389/fphy.2023.1099867",
+      "title": "",
+      "status": "success",
+      "batches": [],
+      "title_check": "unverifiable"
+    },
+    "doi:10.1109/jlt.2017.2784804": {
+      "path": "papers\\doi\\10.1109_jlt.2017.2784804",
+      "doi": "10.1109/jlt.2017.2784804",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.3390/photonics11020118": {
+      "path": "papers\\doi\\10.3390_photonics11020118",
+      "doi": "10.3390/photonics11020118",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1117/12.3059522": {
+      "path": "papers\\doi\\10.1117_12.3059522",
+      "doi": "10.1117/12.3059522",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1117/12.3048518": {
+      "path": "papers\\doi\\10.1117_12.3048518",
+      "doi": "10.1117/12.3048518",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.2991/icmmita-16.2016.71": {
+      "path": "papers\\doi\\10.2991_icmmita-16.2016.71",
+      "doi": "10.2991/icmmita-16.2016.71",
+      "title": "",
+      "status": "success",
+      "batches": [],
+      "title_check": "unverifiable"
+    },
+    "doi:10.23919/saiee.2019.8864145": {
+      "path": "papers\\doi\\10.23919_saiee.2019.8864145",
+      "doi": "10.23919/saiee.2019.8864145",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1364/oe.505931": {
+      "path": "papers\\doi\\10.1364_oe.505931",
+      "doi": "10.1364/oe.505931",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1364/oe.520452": {
+      "path": "papers/doi/10.1364_oe.520452",
+      "doi": "10.1364/OE.520452",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1186/s43593-025-00082-0": {
+      "path": "papers\\doi\\10.1186_s43593-025-00082-0",
+      "doi": "10.1186/s43593-025-00082-0",
+      "title": "",
+      "status": "success",
+      "batches": [],
+      "title_check": "unverifiable"
+    },
+    "doi:10.1364/ofc.2016.th2a.43": {
+      "path": "papers/doi/10.1364_ofc.2016.th2a.43",
+      "doi": "10.1364/OFC.2016.Th2A.43",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1109/lpt.2016.2598443": {
+      "path": "papers/doi/10.1109_lpt.2016.2598443",
+      "doi": "10.1109/LPT.2016.2598443",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1109/jphot.2019.2956086": {
+      "path": "papers/doi/10.1109_jphot.2019.2956086",
+      "doi": "10.1109/JPHOT.2019.2956086",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1109/jphot.2023.3265847": {
+      "path": "papers/doi/10.1109_jphot.2023.3265847",
+      "doi": "10.1109/JPHOT.2023.3265847",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1109/jlt.2020.3003561": {
+      "path": "papers/doi/10.1109_jlt.2020.3003561",
+      "doi": "10.1109/JLT.2020.3003561",
+      "title": "",
+      "status": "success",
+      "batches": [],
+      "title_check": "unverifiable"
+    },
+    "doi:10.1002/sat.1553": {
+      "path": "papers/doi/10.1002_sat.1553",
+      "doi": "10.1002/sat.1553",
+      "title": "Review and analysis of digital signal processing algorithms for coherent optical satellite links",
+      "status": "failed",
+      "batches": [
+        "oversampled-sync-q4-burst-coarse-fine"
+      ],
+      "title_check": null
+    },
+    "doi:10.1109/jlt.2025.3533197": {
+      "path": "papers/doi/10.1109_jlt.2025.3533197",
+      "doi": "10.1109/JLT.2025.3533197",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1364/oe.447448": {
+      "path": "papers/doi/10.1364_oe.447448",
+      "doi": "10.1364/OE.447448",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "arxiv:2409.14400": {
+      "path": "papers/arxiv/2409.14400",
+      "doi": "10.1109/jlt.2025.3533197",
+      "title": "Preamble design for joint frame synchronization, frequency offset estimation, and channel estimation in upstream burst-mode detection of coherent PON",
+      "status": "success",
+      "batches": [
+        "oversampled-sync-q4-burst-coarse-fine"
+      ],
+      "title_check": "match"
+    },
+    "doi:10.1364/jocn.587273": {
+      "path": "papers\\doi\\10.1364_jocn.587273",
+      "doi": "10.1364/JOCN.587273",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1109/jlt.2025.3528909": {
+      "path": "papers\\doi\\10.1109_jlt.2025.3528909",
+      "doi": "10.1109/JLT.2025.3528909",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1364/oe.566136": {
+      "path": "papers\\doi\\10.1364_oe.566136",
+      "doi": "10.1364/OE.566136",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1364/jocn.402591": {
+      "path": "papers\\doi\\10.1364_jocn.402591",
+      "doi": "10.1364/JOCN.402591",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "arxiv:2410.10080v1": {
+      "path": "papers\\arxiv\\2410.10080v1",
+      "doi": null,
+      "title": "",
+      "status": "success",
+      "batches": [],
+      "title_check": "unverifiable"
+    },
+    "doi:10.1109/jlt.2020.3042546": {
+      "path": "papers\\doi\\10.1109_jlt.2020.3042546",
+      "doi": "10.1109/JLT.2020.3042546",
+      "title": "An Optimum Signal Detection Approach to the Joint ML Estimation of Timing Offset, Carrier Frequency and Phase Offset for Coherent Optical OFDM",
+      "status": "success",
+      "batches": [],
+      "title_check": "match"
+    },
+    "doi:10.1007/s11082-024-06850-5": {
+      "path": "papers\\doi\\10.1007_s11082-024-06850-5",
+      "doi": "10.1007/s11082-024-06850-5",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1109/jlt.2025.3581618": {
+      "path": "papers/doi/10.1109_jlt.2025.3581618",
+      "doi": "10.1109/JLT.2025.3581618",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "arxiv:1801.01598": {
+      "path": "papers/arxiv/1801.01598",
+      "doi": "10.1109/LPT.2017.2759584",
+      "title": "Discrete FRFT-Based Frame and Frequency Synchronization for Coherent Optical Systems",
+      "status": "success",
+      "batches": [],
+      "title_check": "unverifiable"
+    }
+  }
+}

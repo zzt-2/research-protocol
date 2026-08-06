@@ -1,0 +1,110 @@
+{
+  "query": "fractional delay frame frequency joint estimator single carrier coherent optical burst",
+  "timestamp": "2026-08-06T18:20:03.365875+08:00",
+  "sources": [
+    "s2",
+    "openalex",
+    "arxiv"
+  ],
+  "total": 4,
+  "results": [
+    {
+      "title": "Preamble Design for Joint Frame Synchronization, Frequency Offset Estimation, and Channel Estimation in Upstream Burst-Mode Detection of Coherent PON",
+      "authors": [
+        "Yongxin Sun",
+        "Hexun Jiang",
+        "Yicheng Xu",
+        "Mengfan Fu",
+        "Yixiao Zhu",
+        "L. Yi",
+        "Weisheng Hu",
+        "Q. Zhuge"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 2024,
+      "doi": "10.1109/JLT.2025.3533197",
+      "arxiv_id": "2409.14400",
+      "abstract": "Coherent optics has shown significant potential as a viable solution for achieving 100 Gb/s and higher speeds in single-wavelength passive optical networks (PON). However, upstream coherent burst-mode detection is a major challenge in deploying coherent optics in access networks. To accelerate digital signal processing (DSP) convergence with minimal preamble length, we propose a novel burst-mode preamble design based on a constant amplitude zero auto-correlation (CAZAC) sequence. This design facilitates comprehensive frequency-domain estimation of various impairments, including state of polarization, chromatic dispersion and differential group delay, providing overall system response information for the equalization pre-convergence. Additionally, this preamble utilizes the same training unit to jointly achieve three key DSP functions: frame synchronization, frequency offset estimation, and channel estimation. This integration contributes to a significant reduction in the preamble length. The feasibility of the proposed preamble with a length of 400 symbols and corresponding DSP was experimentally verified in a 15 Gbaud coherent system using dual-polarization 16 quadrature amplitude modulation. The experimental results based on this scheme showed a superior performance of the convergence acceleration.",
+      "citation_count": 4,
+      "is_open_access": false,
+      "pdf_url": "",
+      "source_api": "semantic_scholar",
+      "relevance_score": 0.727,
+      "_score": 0.8235,
+      "id": "L001",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Efficient preamble scheme for burst-mode detection in coherent TFDM-PON.",
+      "authors": [
+        "Jie Li",
+        "zbang pi",
+        "Xiang Li",
+        "Ming Li",
+        "Hanyu Gong",
+        "Hanbing Li",
+        "Ming Luo"
+      ],
+      "venue": "Optics Express",
+      "year": 2025,
+      "doi": "10.1364/oe.578683",
+      "arxiv_id": null,
+      "abstract": "Coherent technology is a promising solution for the future passive optical networks (PONs) to meet the demand for higher bandwidth. Recently, time and frequency division multiplexing (TFDM) PON based on digital subcarrier multiplexing (DSCM) has attracted increasing interest due to its flexible bandwidth allocation and notably low latency advantages. However, upstream burst-mode detection is a critical challenge when adopting a coherent TFDM PON system. To accelerate digital signal processing (DSP) convergence with a minimal preamble length, we propose an upstream system scheme and an efficient burst-mode preamble design. The scheme employs single-polarization and residual carrier modulation combined with specialized spectrum allocation to reduce the cost and shorten the preamble length. The designed preamble uses the same training unit to jointly implement frame synchronization, fine frequency offset estimation (FOE), polarization compensation, and channel estimation. This integration significantly reduces the preamble length. The design is experimentally verified in a 200-Gb/s TFDM upstream transmission over 20-km standard single-mode fiber (SSMF). Using a 20.48-ns preamble with 256 training symbols (TS), a receiver sensitivity of approximately -27 dBm is achieved at the bit error rate (BER) threshold of 1 × 10-2.",
+      "citation_count": 1,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.1364/oe.578683",
+      "source_api": "semantic_scholar",
+      "relevance_score": 0.727,
+      "_score": 0.6185,
+      "id": "L002",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Unified Training-Sequence Joint Carrier Recovery for 200 Gbps FTN Coherent PON Upstream",
+      "authors": [
+        "Xiaoshuo Jia",
+        "Fengyu Cao",
+        "Junwei Li",
+        "Ning Wang",
+        "Tao Yang"
+      ],
+      "venue": "IEEE Access",
+      "year": 2026,
+      "doi": "10.1109/ACCESS.2026.3701043",
+      "arxiv_id": null,
+      "abstract": "To meet the 200 Gb/s per-wavelength capacity target of next-generation passive optical networks (PON), faster-than-Nyquist (FTN) signaling compresses the signal spectrum and relaxes the optoelectronic bandwidth requirement at the optical network unit (ONU), while 16-ary quadrature amplitude modulation (16QAM) with polarization-diversity coherent detection at the optical line terminal (OLT) jointly maximizes spectral efficiency and secures the receiver sensitivity for the 20 km power budget. However, this FTN-coherent architecture concentrates two mutually aggravating carrier impairments: the strong inter-symbol interference (ISI) intrinsic to FTN shaping amplifies cycle slips in conventional blind phase estimators, and the cost-driven ONU distributed-feedback laser (linewidth >1 MHz), together with burst-mode operation, produces large and ONU-dependent carrier frequency offsets (up to ±1.6 GHz) coupled with rapid phase noise accumulation. This paper proposes a unified training-sequence (TS) carrier recovery scheme that jointly estimates the carrier frequency offset and tracks the phase noise from a single short pilot block, keeping the training overhead as low as 1.56% — approximately half that of conventional two-pilot-set designs. The key innovations are: 1) a two-stage frequency-offset estimator that first computes intra-block phase differences of the pilot symbols for coarse acquisition over ±1.6 GHz, then applies a 128-point chirp-Z transform (CZT) to achieve 1.56 MHz spectral resolution — reducing computational complexity by 91% relative to a 4th-power fast-Fourier-transform (FFT) of equivalent resolution; 2) a reference-phase cycle-slip suppression mechanism that reuses the same training block as an absolute phase anchor, detecting cycle slips before they propagate, at negligible additional computational cost. Simulation under an acceleration factor $\\tau = 0.9$ yields residual frequency-offset error below 2.5 MHz over ±1.6 GHz, 3.2 MHz laser linewidth tolerance at 1 dB sensitivity penalty, and −34 dBm receiver sensitivity. A 200 Gbps single-polarization 16QAM FTN-PON offline experiment confirms −32 dBm sensitivity, residual frequency offset below 3 MHz, 1.6 MHz linewidth tolerance, and 100% cycle-slip detection rate, demonstrating that the proposed scheme provides a low-overhead, low-complexity, and polarization-insensitive carrier recovery solution that enables the use of megahertz-linewidth DFB lasers at the ONU, thereby substantially reducing the cost and power consumption of 200 Gbps coherent PON upstream deployment.",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.1109/access.2026.3701043",
+      "source_api": "semantic_scholar",
+      "relevance_score": 0.727,
+      "_score": 0.5635,
+      "id": "L003",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "LO-Free Phase and Amplitude Recovery of an RF Signal with a DC-Stark-Enabled Rydberg Receiver",
+      "authors": [
+        "V. Katkov",
+        "Nikola Zlatanov"
+      ],
+      "venue": "arXiv.org",
+      "year": 2026,
+      "doi": "10.48550/arXiv.2603.30023",
+      "arxiv_id": "2603.30023",
+      "abstract": "We present a theoretical framework for recovering the amplitude and carrier phase of a single received RF field with a Rydberg-atom receiver, without injecting an RF local oscillator (LO) into the atoms. The key enabling mechanism is a static DC bias applied to the vapor cell: by Stark-mixing a near-degenerate Rydberg pair, the bias activates an otherwise absent upper optical pathway and closes a phase-sensitive loop within a receiver driven only by the standard probe/coupling pair and the received RF field. For a spatially uniform bias, we derive an effective four-level rotating-frame Hamiltonian of Floquet form and show that the periodic steady state obeys an exact harmonic phase law, so that the $n$th probe harmonic carries the factor $e^{in\\Phi_S}$. This yields direct estimators for the signal phase and amplitude from a demodulated probe harmonic, with amplitude recovery obtained by inverting an injective harmonic response map. In the high-SNR regime, we derive explicit RMSE laws and use them to identify distinct phase-optimal and amplitude-optimal bias-controlled mixing angles, together with a weighted joint-design criterion and a balanced compromise angle that equalizes the fractional phase and amplitude penalties. We then extend the analysis to nonuniform DC bias through quasistatic spatial averaging and show that bias inhomogeneity reduces coherent gain for phase readout while also reshaping the amplitude-response slope. Numerical examples validate the phase law, illustrate response-map inversion and mixing-angle trade-offs, and quantify the penalties induced by bias nonuniformity. The results establish a minimal route to coherent Rydberg reception of a single RF signal without an auxiliary RF LO in the atoms.",
+      "citation_count": 0,
+      "is_open_access": false,
+      "pdf_url": "",
+      "source_api": "semantic_scholar",
+      "relevance_score": 0.727,
+      "_score": 0.5635,
+      "id": "L004",
+      "download": true,
+      "publication_status": "preprint"
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "query": "coherent optical synchronization fade reacquisition loss of lock",
+  "timestamp": "2026-08-06T17:55:46.012588+08:00",
+  "sources": [
+    "s2",
+    "openalex",
+    "arxiv"
+  ],
+  "total": 2,
+  "results": [
+    {
+      "title": "Design and validation of a CCSDS O3K synchronization front-end, tailor made for a non-coherent 10 Gbps GEO optical downlink",
+      "authors": [
+        "Alain Thomas",
+        "Alexandre Le Bian",
+        "Alain Quentel",
+        "Géraldine Artaud",
+        "Jean-Frédéric Chouteau",
+        "Sylvain Poulenard",
+        "Thomas Anfray",
+        "Raphaël Le Bidan"
+      ],
+      "venue": "",
+      "year": 2025,
+      "doi": "10.1109/icsos66026.2025.11443202",
+      "arxiv_id": null,
+      "abstract": "Radiofrequency spectrum congestion, SWaP constraints, link security requirements, and OISL maturity advocate for direct-to-Earth optical links, despite the challenges of trans-atmospheric optical communications. Several standards have been released, including CCSDS for non-coherent optical communications [1], SDA [2], and ESTOL [3], while others are under development [4]. For GEO direct-to-Earth optical communication links, preamplifier-based detection schemes provide high sensitivity but require adaptive optics for single-mode fiber coupling. Strong turbulence can generate deep signal fading, potentially causing loss of clock data recovery (CDR) lock, frame synchronization loss, or misdetection of in-band signaling. Rather than increasing onboard power or OGS aperture, robust solutions require appropriate framing structures and receiver algorithms resilient to signal fading. In the CCSDS non-coherent optical communications standard [1], the O3K (Optical On-Off Keying) framing scheme is well suited to this scenario and applicable to higher-performance modulation schemes such as DPSK. However, performance critically depends on CDR sensitivity, reacquisition time, and frame synchronizer strategy. This paper evaluates optical link performance, focusing on synchronization aspects from three perspectives: simulation, laboratory measurements, and real satellite-to-ground link measurements. We first present the simulation model for evaluating the communication chain between a GEO satellite and an optical ground station under strong turbulence, then provide results for different code rates and interleavings defined in the CCSDS non-coherent in-band signaling standard.",
+      "citation_count": 1,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex+semantic_scholar",
+      "relevance_score": 0.857,
+      "id": "L001",
+      "download": false,
+      "publication_status": "published"
+    },
+    {
+      "title": "Application of quantum-limited optical time transfer to space-based optical clock comparisons and coherent networks",
+      "authors": [
+        "Emily D. Caldwell",
+        "Laura C. Sinclair",
+        "Jean-Daniel Deschênes",
+        "Fabrizio R. Giorgetta",
+        "Nathan R. Newbury"
+      ],
+      "venue": "APL Photonics",
+      "year": 2024,
+      "doi": "10.1063/5.0170107",
+      "arxiv_id": null,
+      "abstract": "With the demonstration of quantum-limited optical time transfer capable of tolerating the losses associated with long ground-to-space links, two future applications of free-space time transfer have emerged: intercontinental clock comparisons for time dissemination and coherence transfer for future distributed sensing in the mm-wave region. In this paper, we estimated the projected performance of these two applications using quantum-limited optical time transfer and assuming existing low-size, low-weight, and low-power hardware. In both cases, we limit the discussion to the simplest case of a single geosynchronous satellite linked to either one or two ground stations. One important consideration for such future space-based operations is the choice of reference oscillator onboard the satellite. We find that with a modestly performing optical reference oscillator and low-power fiber-based frequency combs, quantum-limited time transfer could support intercontinental clock comparisons through a common-view node in geostationary orbit with a modified Allan deviation at the 10−16 level at 10-s averaging time, limited primarily by residual turbulence piston noise. In the second application of coherence transfer from ground-to-geosynchronous orbit, we find the system should support high short-term coherence with ∼10 millirad phase noise on a 300 GHz carrier at essentially unlimited integration times.",
+      "citation_count": 14,
+      "is_open_access": true,
+      "pdf_url": "https://pubs.aip.org/aip/app/article-pdf/doi/10.1063/5.0170107/18574039/016112_1_5.0170107.pdf",
+      "source_api": "openalex",
+      "relevance_score": 0.571,
+      "id": "L002",
+      "download": true,
+      "publication_status": "published"
+    }
+  ]
+}

@@ -54,7 +54,7 @@
 | 10.1109_jphot.2021.3062727 | papers/doi/10.1109_jphot.2021.3062727/content.md | papers/_read_notes/10.1109_jphot.2021.3062727.md | 2026-07-17 | 0 | Step 3 正式竞品（盲式NPCA RSOP baseline） | DOI；IEEE Photonics J 2021 |
 | 10.1109_tcomm.2022.3171809 | papers/doi/10.1109_tcomm.2022.3171809/content.md | papers/_read_notes/10.1109_tcomm.2022.3171809.md | 2026-07-17 | 0 | Step 3 邻近理论（CW pilot功率/相位估计） | DOI；IEEE TCOMM 2022 |
 | 10.1109_JLT.2025.3533422 | papers/doi/10.1109_JLT.2025.3533422/content.md | papers/_read_notes/10.1109_JLT.2025.3533422.md | 2026-07-17 | 0 | Step 3 邻近硬件（DSP-free Costas PLL） | DOI；IEEE JLT 2025 |
-| 10.1109_jlt.2020.3042546 | papers/doi/10.1109_jlt.2020.3042546/content.md | papers/_read_notes/10.1109_jlt.2020.3042546.md | 2026-07-17 | 0 | Step 3 邻近同步（OFDM pilot/ML timing-CFO-CPO） | DOI；IEEE JLT 2020 |
+| 10.1109_jlt.2020.3042546 | papers/doi/10.1109_jlt.2020.3042546/content.md | papers/_read_notes/10.1109_jlt.2020.3042546.md | 2026-07-17 | 1（oversampled-sync Q1 Step 3.5 重读） | Step 3 邻近同步 + Q1 joint-estimator method prior | DOI 10.1109/JLT.2020.3042546；IEEE doc 9281306 |
 | 10.1364_oe.419574 | papers/doi/10.1364_oe.419574/content.md | papers/_read_notes/10.1364_oe.419574.md | 2026-07-17 | 0 | Step 3.5 direct baseline 精读（三 pilot tones/block RSOP inverse/PSR） | DOI 10.1364/OE.419574；Optics Express 2021 |
 | 10.1109_ecoc.2015.7341620 | papers/doi/10.1109_ecoc.2015.7341620/content.md | papers/_read_notes/10.1109_ecoc.2015.7341620.md | 2026-07-28 | 0 | Q15 Step 3 精读（D2 direct collision, modified RDE/PRDE） | DOI 10.1109/ECOC.2015.7341620；ECOC 2015；OA |
 | 10.3788_col202220.080601 | papers/doi/10.3788_col202220.080601/content.md | papers/_read_notes/10.3788_col202220.080601.md | 2026-07-28 | 0 | Q15 Step 3 精读（D5 direct collision, peak-density K-means radius） | DOI 10.3788/COL202220.080601；COL 2022；OA |
@@ -79,3 +79,5 @@
 | 10.1364_oe.520452 | papers/doi/10.1364_oe.520452/content.md | papers/_read_notes/10.1364_oe.520452.md | 2026-08-06 | 0 | Oversampled-sync Q1 mixed-TS frame+carrier comparator | DOI 10.1364/OE.520452 |
 | 10.1109_icsos59710.2023.10490279 | papers/doi/10.1109_icsos59710.2023.10490279/content.md | papers/_read_notes/10.1109_icsos59710.2023.10490279.md | 2026-08-06 | 0 | Oversampled-sync Q1 2-sps ordered receiver comparator | DOI 10.1109/ICSOS59710.2023.10490279 |
 | 2409.14400 | papers/arxiv/2409.14400/content.md | papers/_read_notes/2409.14400.md | 2026-08-06 | 0 | Oversampled-sync Q1 recent clock/frame/FOE direct competitor | DOI 10.1109/JLT.2025.3533197；arXiv 2409.14400 |
+| 2410.10080v1 | papers/arxiv/2410.10080v1/content.md | papers/_read_notes/2410.10080v1.md | 2026-08-06 | 0 | Oversampled-sync Q1 Step 3.5 direct SPO/frame/CFO competitor | DOI 10.1109/JLT.2025.3528909；arXiv 2410.10080v1 |
+| 1801.01598 | papers/arxiv/1801.01598/content.md | papers/_read_notes/1801.01598.md | 2026-08-06 | 0 | Oversampled-sync Q1 Step 3.5 direct frame/CFO must-read | DOI 10.1109/LPT.2017.2759584；arXiv 1801.01598 |

@@ -152,10 +152,10 @@ S001 续接；用户 2026-08-06 主控裁决。
 
 ## D005: Step 3 无 canonical survivor，禁止触发 Step 3.5
 
-> status: active
+> status: superseded
 > date: 2026-08-06
 > 取代：无
-> 被取代：无
+> 被取代：D006（仅取代 terminal 与 Q1/Q2 判据 1；其余事实和边界保留）
 > 依据：调研: `step3-deep-read-report.md` + worker logs A/B/C + `stages/glossary.md`
 > 触发原话：无（技术推导）
 
@@ -185,3 +185,102 @@ Q2 没有共同失锁/cheap comparator 不足的正文证据，也没有 2019+ i
 ### 来源
 
 S001 续接；`projects/thesis-fso/oversampled-sync-groundwork/step3-deep-read-report.md`。
+
+## D006: Step 3 canonical 语义门纠偏并启动 Q1 Step 3.5
+
+> status: active
+> date: 2026-08-06
+> 取代：D005 的 terminal 与 Q1/Q2 判据 1 结论
+> 被取代：无
+> 依据：用户原话: voice.md 2026-08-06 + 对照: `.sessions/2026-08-02-fso-amc-groundwork/decisions.md` D005 + `stages/glossary.md` L22-31 + `stages/gw-read.md` + `stages/gw-supplement.md`
+
+### 决策
+
+D005 将“CORE 尚未量化证明 baseline M 在条件 C 下因 A 失效”当作 canonical 判据 1 FAIL，错误地把
+Step 4a/MVE 的 problem-truth 责任前移至 Step 3。Canonical 判据 1 只要求 M/C/A 明确、句子级、可解；
+Step 3 要求 A 可证伪，不要求 A 已被实验或 MVE 证实。按 owner 重判：Q1 四项均 PASS，成为
+`STEP3_SURVIVOR` 并立即进入 Step 3.5；Q2 判据 1 改为 PASS，但判据 3 仍 FAIL，故不成为 survivor。
+当前过渡 terminal 为 `STEP3_5_IN_PROGRESS_Q1_SURVIVOR`。
+
+### Canonical 四判据重判
+
+| Q# | M/C/A | 判据 1 | 判据 2 | 判据 3 | 判据 4 | Step 3 verdict |
+|---|---|---|---|---|---|---|
+| Q1 | M=`Le Bidan 2-sps 顺序 acquisition chain + Sun/Wang frame–FOE`；C=`RRC、≥2 sps coherent FSO，fractional timing、frame、CFO 同时未知`；A=`顺序 timing-first 处理在同时未知状态下可能传播误差或产生错误峰/误锁` | PASS：M/C/A 明确、句子级、可解且 A 可证伪；不要求已有 MVE 证明 | PASS：joint/coarse-to-fine estimator 或 design rule | PASS：Le Bidan 2023 + Sun/Wang 2019+ task-matched comparator | PASS：acquisition、误锁、估计误差、BER、开销、时延、复杂度 | `STEP3_SURVIVOR` |
+| Q2 | M=`timing/carrier 独立 maintenance/reacquisition`；C=`≥2-sps RRC coherent OSL，SCO/PN/CFO + dynamic deep fade`；A=`fade 可能使双环共同/异步失锁且廉价 shared-freeze/fixed-restart 可能不足` | PASS：M/C/A 明确、句子级、可解且 A 可证伪；“共同失锁尚未实验证实”不属于 Step 3 FAIL 理由 | PASS：shared-confidence FSM / lock rule | FAIL：现有 Gu/Paillier/Valjus 仅为 timing、carrier 或综述，跨论文拼接不能构成 2019+ integrated baseline M | PASS：error/slip/BER/recovery time | 非 survivor |
+
+### 保留 D005 中继续有效的事实与边界
+
+1. 7 篇 CORE 全文精读与 identity/provenance/read-note 事实；
+2. baseline/action/information/timing 边界；
+3. generic shared-preamble/resource reuse、框图合并或模块调序不构成真正 joint estimator；
+4. JOCN 2026 (`10.1364/JOCN.587273`) 全文缺失为 exact-action novelty/collision blocker；
+5. Q1 最强廉价 comparator 必须包含 polyphase/Farrow timing bank 与 sequential Le Bidan/Sun/FSTS/STSB chain；
+6. 禁止 Step 4a、方法实现、testbed、MVE、仿真、METHOD_SIGNAL/Go/论文方法 claim。
+
+### 理由
+
+`stages/glossary.md` L28 的判据 1没有“失效已被量化证明”要求；`gw-read.md` 要求的是具体、可证伪的
+失效假设，实证闭合属于后续 Step 4a。AMC Groundwork D005 已对同一错位作出确定性纠偏：把
+`problem_truth`/“A 已证明”当 Step 3 terminal gate 会形成循环门控。Q1 原判据 2/3/4 已 PASS，因此
+移除错误的判据 1附加要求后必须成为 Step 3 survivor。Q2 不能因同一语义错误继续 FAIL 判据 1，但其
+判据 3是独立 baseline 身份问题，不能随判据 1纠偏而自动通过。
+
+### 排除的替代方案
+
+- 不继续沿用“正文未证明失效/MVE 未跑”作为 Step 3 判据 1 FAIL；
+- 不把 Step 3 survivor 写成 Go、METHOD_SIGNAL 或问题已在 Step 4a 被证实；
+- 不把 Q2 的多篇单环文献拼成 integrated baseline；
+- 不因 JOCN 全文缺失而跳过有界 Step 3.5，也不以摘要完成 exact-action 裁决；
+- 不推翻 D005 所记录的 7 CORE 事实、动作边界与实现/仿真禁令。
+
+### 影响范围
+
+`step3-deep-read-report.md`、`literature_notes_oversampled_sync.md`、V004、H001、topic-index、master/RDL
+current state 需按该血缘纠偏。Step 3.5 限于最多三轮关键词矩阵、最高相关竞品双向引用链、JOCN 有界
+获取以及高相关新论文 acquire→read；完成后必须停止在新的 Step 3.5 terminal，不进入 Step 4a。
+
+### 来源
+
+S001 续接；用户 2026-08-06 确定性语义纠偏指令。
+
+## D007: 完成 Q1 Step 3.5 并冻结 exact-action 全文 blocker
+
+> status: active
+> date: 2026-08-06
+> 取代：无
+> 扩展：D006
+> 被取代：无
+> 依据：调研: `step3-5-supplement-report.md` + T005–T011 worker logs + Sun 双向引用链 + 3 篇新增全文 read notes
+> 触发原话：无（技术推导）
+
+### 决策
+
+Q1 完成 Step 3.5 后仍为 `STEP3_SURVIVOR`。两轮检索已收敛，当前全文池没有同信息、同动作、同任务的
+joint `(frame index, fractional τ, CFO)` estimator；但 JOCN 2026 `10.1364/JOCN.587273` 与 JLT 2025
+`10.1109/JLT.2025.3581618` 仍缺全文，exact-action novelty closure 保持 blocked。正式 terminal 冻结为
+`STEP3_5_COMPLETE_Q1_SURVIVOR_EXACT_ACTION_FULLTEXT_BLOCKED`。Q2 仍因判据 3 FAIL 而非 survivor。
+
+### 理由
+
+Round 2 真正新增 must/should=0，检索充分性达到收敛门；Sun 2025 双向引用链完整。新增全文证明：
+Zhou 2025 是分区 preamble 的顺序链；LPT 2017 joint 解 integer frame+CFO、无 fractional τ；JLT 2021
+joint 解 τ+CFO+CPO、无 frame 且 task/waveform 不匹配。它们关闭 generic 方法先例和最强顺序 comparator，
+但都不是 exact collision。两个 primary direct candidates 无全文，故不能把“未确认碰撞”升级成新颖性闭合。
+
+### 排除的替代方案
+
+- 不把 shared preamble、多模块框图或 module ordering 称为 true joint action；
+- 不把 LPT 2017/JLT 2021 的窄 joint 输出扩写成 exact 三参数 collision；
+- 不用 JOCN/JLT IQ-skew 摘要裁 exact jointness；
+- 不因 Step 3.5 收敛而自动进入 Step 4a、实现、testbed、MVE 或仿真；
+- 不把 strongest cheap comparator composite 伪称为单篇 baseline identity。
+
+### 影响范围
+
+更新 Step 3 report、literature notes、topic/master/RDL current state；写 V005/H002。下一合法动作仅为
+补齐/显式接受两个 primary-fulltext blocker；之后另起会话重读 `gw-feasibility.md` 再讨论 Step 4a。
+
+### 来源
+
+S001 续接；`projects/thesis-fso/oversampled-sync-groundwork/step3-5-supplement-report.md`。

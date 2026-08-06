@@ -1,0 +1,16 @@
+{
+  "storage_version": 2,
+  "id": "10.1109/JLT.2020.3042546",
+  "title": "An Optimum Signal Detection Approach to the Joint ML Estimation of Timing Offset, Carrier Frequency and Phase Offset for Coherent Optical OFDM",
+  "doi": "10.1109/JLT.2020.3042546",
+  "arxiv_id": null,
+  "download_status": "success",
+  "download_method": "ieee_blit_manual",
+  "content_type": "pdf",
+  "content_quality": "good",
+  "content_file": "content.md",
+  "downloaded_at": "2026-08-06T18:15:39.375425+08:00",
+  "real_title": "An Optimum Signal Detection Approach to the Joint ML Estimation of Timing Offset, Carrier Frequency and Phase Offset for Coherent Optical OFDM",
+  "title_check": "match",
+  "title_overlap": 1.0
+}

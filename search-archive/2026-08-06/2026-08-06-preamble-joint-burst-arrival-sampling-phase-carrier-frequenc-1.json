@@ -1,0 +1,76 @@
+{
+  "query": "preamble joint burst arrival sampling phase carrier frequency offset estimator",
+  "timestamp": "2026-08-06T18:23:16.655773+08:00",
+  "sources": [
+    "s2",
+    "openalex",
+    "arxiv"
+  ],
+  "total": 3,
+  "results": [
+    {
+      "title": "Timing, Carrier, and Frame Synchronization of Burst-Mode CPM",
+      "authors": [
+        "E. Hosseini",
+        "E. Perrins"
+      ],
+      "venue": "IEEE Transactions on Communications",
+      "year": 2013,
+      "doi": "10.1109/TCOMM.2013.111613.130667",
+      "arxiv_id": "1310.0757",
+      "abstract": "In this paper, we propose a complete synchronization algorithm for continuous phase modulation (CPM) signals in burst-mode transmission over additive white Gaussian noise (AWGN) channels. The timing and carrier recovery are performed through a data-aided (DA) maximum likelihood algorithm, which jointly estimates symbol timing, carrier phase, and frequency offsets based on an optimized synchronization preamble. Our algorithm estimates the frequency offset via a one-dimensional grid search, after which symbol timing and carrier phase are computed via simple closed-form expressions. The mean-square error (MSE) of the algorithm's estimates reveals that it performs very close to the theoretical Cramer-Rao bound (CRB) for various CPMs at signal-to-noise ratios (SNRs) as low as 0 dB. Furthermore, we present a frame synchronization algorithm that detects the arrival of bursts and estimates the start-of-signal. We simulate the performance of the frame synchronization algorithm along with the timing and carrier recovery algorithm. The bit error rate results demonstrate near ideal synchronization performance for low SNRs and short preambles.",
+      "citation_count": 62,
+      "is_open_access": true,
+      "pdf_url": "https://arxiv.org/pdf/1310.0757",
+      "source_api": "semantic_scholar",
+      "relevance_score": 0.8,
+      "_score": 0.7,
+      "id": "L001",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Low complexity estimation of carrier and sampling frequency offsets in burst-mode OFDM systems",
+      "authors": [
+        "Yonathan Murin",
+        "R. Dabora"
+      ],
+      "venue": "Wireless Communications and Mobile Computing",
+      "year": 2016,
+      "doi": "10.1002/wcm.2582",
+      "arxiv_id": null,
+      "abstract": null,
+      "citation_count": 27,
+      "is_open_access": false,
+      "pdf_url": "",
+      "source_api": "semantic_scholar",
+      "relevance_score": 0.5,
+      "_score": 0.38064516129032255,
+      "id": "L002",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Optimal blind carrier recovery for MPSK burst transmissions",
+      "authors": [
+        "Yan Wang",
+        "E. Serpedin",
+        "P. Ciblat"
+      ],
+      "venue": "IEEE Transactions on Communications",
+      "year": 2003,
+      "doi": "10.1109/TCOMM.2003.816979",
+      "arxiv_id": null,
+      "abstract": null,
+      "citation_count": 46,
+      "is_open_access": false,
+      "pdf_url": "",
+      "source_api": "semantic_scholar",
+      "relevance_score": 0.2,
+      "_score": 0.3225806451612903,
+      "id": "L003",
+      "download": true,
+      "publication_status": "published"
+    }
+  ]
+}

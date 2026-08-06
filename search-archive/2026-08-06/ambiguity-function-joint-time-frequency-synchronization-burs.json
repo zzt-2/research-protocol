@@ -1,0 +1,57 @@
+{
+  "query": "ambiguity function joint time frequency synchronization burst mode optical communication",
+  "timestamp": "2026-08-06T18:04:03.090430+08:00",
+  "sources": [
+    "s2",
+    "openalex",
+    "arxiv"
+  ],
+  "total": 2,
+  "results": [
+    {
+      "title": "Joint time-frequency domain feature exploitation for a single burst-mode preamble in a next-generation coherent optical access network",
+      "authors": [
+        "Jinqi Xiong",
+        "Yuheng Liu",
+        "Mingzhu Yin",
+        "J. Zhou",
+        "Fan Li"
+      ],
+      "venue": "Journal of Optical Communications and Networking",
+      "year": 2026,
+      "doi": "10.1364/JOCN.587273",
+      "arxiv_id": null,
+      "abstract": "For the next-generation optical access network, where the data rate may achieve 200 Gb/s, conventional intensity modulation and direct detection (IM/DD) schemes will face significant challenges. Coherent optical communication is considered a promising solution for next-generation optical access networks. However, conventional blind coherent digital signal processing (DSP) demonstrates insufficient convergence speed to fulfill burst-mode detection requirements. Designing specialized preamble sequences is an effective solution for simplifying coherent burst-mode DSP. This paper proposes an efficient preamble structure with a duration of 8.25 ns. The proposed preamble fully utilizes the frequency-domain and time-domain properties of the sequence, enabling chromatic dispersion (CD) estimation and clock recovery in the frequency-domain, while achieving frame synchronization, frequency offset estimation (FOE), and state of polarization (SOP) estimation in the time-domain. This allows the proposed scheme to achieve rapid CD estimation without introducing additional preamble overhead. We established a 32 GBaud dual-polarization 16-quadrature amplitude modulation (DP-16QAM) system incorporating the proposed scheme, and experimentally validated the effectiveness of the proposed preamble and the corresponding burst-mode DSP scheme. The proposed scheme provides a feasible solution for next-generation optical access networks.",
+      "citation_count": 1,
+      "is_open_access": false,
+      "pdf_url": "",
+      "source_api": "semantic_scholar",
+      "relevance_score": 0.8,
+      "_score": 0.75,
+      "id": "L001",
+      "download": false,
+      "publication_status": "published"
+    },
+    {
+      "title": "High-Performance Backbone Network Technology",
+      "authors": [
+        "N. Yamanaka",
+        "電子情報通信学会"
+      ],
+      "venue": "",
+      "year": 2004,
+      "doi": "10.1201/9781315214672",
+      "arxiv_id": null,
+      "abstract": "OVERVIEW Architectural Choices in Large Scale ATM Switches Requirements on ATM Switch Architectures for Quality -of-Service Guarantees Traffic Issues in ATM LAN: Principle and Practice Competitive Telecommunications Management and System Development A Construction Manager System Over an ATM Transport Network Operation System: Verification of the Basic Technique of Flow Through Operation in Configuration Management High-Speed Multi-Stage ATM Switch Based on Hierarchical Cell Resequencing Architecture and WDM Interconnection Hyper-Media Photonic Information Networks as Future Network Service Platforms Photonic Packet-Switching: An Overview ATM VP-Based Economical Transport Network Architecture for Multi-Reliability and Broadband Integrated Service Infrastructure New Self-Healing Scheme that Realizes Multiple Reliability on ATM Networks Autonomously Controlled Multiprotocol Wavelength Switching Network for Internet Backbones Network Control and Management for the Next Generation Internet Challenges for the Next-Generation Internet and the Role of IP Over Photonic Networks BROADBAND NETWORKS Issues in ATM Network Service Development, Standardization, and Deployment Quality of Service Guarantees and Charging in Multiservice Networks A Failure-Resistant Self-Healing Scheme in ATM Networks A Study on VP Network Designer Real-Time Traffic Characterization for Quality-of-Service Control in ATM Networks Voice Communication on Multimedia ATM Network Using Shared VCI Shell An Optimal Virtual Topology Configuration for Multicast in ATM and MPLS Networks A Failure-Resistant ATM Transport Method for the Transmission of High-Quality Real-Time Signals PNNI Internetworking Architecture Over ATM Public Networks Phase Assignment Algorithm Based on Traffic Measurement for Real-Time MPEG Sources in ATM Networks Performance Analysis of Layer3 Switch: Case of Flow-Driven Connection Setup ATM SWITCH ARCHITECTURE AND SYSTEMS Input and Output Queuing Nonblocking Switch with Feed-Back Loop The Odd-Even ATM Switch An Architecture Supporting Quality-of-Service in Virtual-Output-Queued Switches Bodhi: A Highly Modular Terabit ATM Switch Fabric Architecture Multicast Packet Switch Based on Dilated Network PPCN: A High-Performance Copy Network for Large Scale ATM Switching Systems A General Expansion Architecture for Large-Scale Multicast ATM Switches A Multicast ATM Switch Based on Broadcast Buses Hybrid Transmission Scheme in HIPPI-ATM Connection and Its Performance ATM Based Broadband Access System using Bearer Connection Control A Pipelined Maximal-Sized Matching Scheme for High-Speed Input-Buffered Switches Design and Analysis of a Packet Concentrator A Contention-Free Tbit/sec Packet-Switching Architecture for ATM Over WDM Networks A Distributed Traffic Control Scheme for Large-Scale Multi-Stage ATM Switching Systems ATM AND IP INTEGRATION Architecture of Cell Switch Router and Prototype System Implementation Scalable Internet Backbone Using Multi-Gigabit ATM-Based Connectionless Switching Experimental Demonstrations of IP over ATM with Congestion Avoidance Flow Control: CEFLAR ATM LAN Emulation for Mobile Cellular Networks Simulation and Measurement of TCP/IP Over ATM Wide Area Networks Performance Evaluation of SVC-Based IP-Over-ATM Networks Performance Analysis of Packet-Level Scheduling in an IP-Over-ATM Network with QoS Control A Study on Generalization of Packet Discard Schemes for TCP Over ATM Performance of TCP/IP Over ATM Over an ADSL Real-Time Cell Arrival Sequence Estimation and Simulation for IP-Over-ATM Networks A New Approach for Real-Time QoS Support in IP Over ATM Networks ATM and IP Integration by Built-In IP Handling Capability in an ATM Switching System An Experimental Study on Performance During Congestion for TCP/IP Traffic Over Wide Area ATM Network Using VBR with Selective Cell Discard Developing Customer-Focused IP Network Services PERFORMANCE STUDY ON SWITCH AND NETWORK A High-Speed Tandem-Crosspoint ATM Switch Architecture with Input and Output Buffers The Maximum Throughput of a Nonblocking Packet Switch with Window Policy Performance Evaluation of AAL1 Switch Networks Frame-Based Worst-Case Weighted Fair Queuing with Jitter Control Adaptive Thresholds of Buffer to Solve the Beat-Down Problem of Rate Control in ATM Networks Method of Implementing GFR Service in Large-Scale Networks Using ABR Control Mechanism and Its Performance Analysis Connection-Wise End-to-End Delay Analysis in ATM Networks End-to-End Call Admission Control in Service Guaranteed Networks Performance Analysis of Fast Reservation Protocols for Burst-Level Bandwidth Allocation in ATM Networks Diffserv-Based QoS Over ATM Access Networks Integration of Scheduling Real-Time Traffic and Cell Loss Control for ATM Networks TRAFFIC CONTROL The Worst Case Cell Arrival Patterns in ATM Networks Connection Admission Control Guaranteeing Negotiated Cell-Loss Ratio of Cell Streams Passing Through Usage Parameter Control A Measured-Traffic-Based Bandwidth Dimensioning Method for Internet ATM Backbone Networks Measurement-Based Real-Time Call Admission Control in ATM Networks Design and Analysis of the GCRA Traffic Shaper for VBR Services in ATM Networks Performance Analysis of Weighted Round Robin Cell Scheduling and Its Improvement in ATM Networks Adaptive Remote Rate Control Using Extrapolation and Correction Mechanism for Periodic Notification of Link Utilization Ratio VP Control for ATM Networks with Call-Level QoS Guarantees New Self-Healing Scheme that Realizes Differentiated Bandwidth Requirement on ATM Networks An Efficient Fizzy Based Traffic Policer for ATM Networks A Programmable ATM Multicast Service with Congestion Control A Buffer Management Mechanism for Achieving Approximately Fair Bandwidth Allocation in High-Speed Networks Controlling End-to-End TCP Flow Using ABR Rate Information PHOTONIC NETWORK Robust IP Backbone Network Utilizing WDM Optical Paths Ultrafast Optical TDM Networking: Extension to the Wide Area Multiwavelength Opaque Optical-Crossconnect Networks Feasibility Demonstrations of Hyper-Media Photonic Information Networks Using Prototype WDM Broadcast-and-Select Local Network Systems A Demonstration of an Optical Switch Circuit with \"Bridge and Switch\" Function in WDM Four-Fiber Ring Networks All-Optical Code Division Multiplexing Switching Network Based on Self-Routing Principle l-Ring System: An Application in Survivable WDM Networks of Interconnected Self-Healing Ring Systems A Comparison on Capacity Requirement of Optical WDM Mesh Network Protection Strategies A Realistically Architecture of WDM Ring Network Using OXC and OADM Internetworking Based on Wavelength Assignment Photonic Switching System (WAPS) IOG: A Protocol for IP Over Glass PHOTONIC SWITCH Comparative Evaluation of Photonic ATM Switch Architectures A High-Performance Switch Architecture for Free-Space Photonic Switching Systems Switching Node Consideration from the Aspect of Transmission Characteristics in Wavelength Assignment Photonic Network (WAPN) Photonic Core Node Based on a 2.56-Terabit/s Opto-Electronic Switching Fabric Large-Capacity Photonic Packet Switch Prototype Using Wavelength Routing Techniques Optical Code Based Label Swapping for Photonic Routing A Photonic IP Switching Technique Using Code Division Multiplexing Experimental 5-Tb/s Packet-by-Packet Wavelength-Switching System Using 2.5-Gb/s x 8-l WDM Links Optical Label Switching Using Optical Label Based on Wavelength and Pilot Tone Frequency PHOTONIC AND ADVANCED SWITCHING DEVICES Wavelength Converter Technology Polarization Insensitive SOA-PLC Hybrid Integrated Michelson Interferometric Wavelength Converter and Its Application to DWDM Networks Polarization-Independent Wavelength Conversion Using Four-Wave Mixing in Single-Mode Fibers Pumped with Cross-Polarized High Frequency Pulses Hybrid Integrated 4x4 Optical Matrix Switch Module on Silica Based Planar Waveguide Platform Merging Electronics and Photonics Towards the Terabit/s ATM Switching A 10-Gb/s Optical Asynchronous Packet Receiver with a Fast Bit-Synchronization Circuit Temperature Insensitive Micromachined GaAlAs/GaAs Vertical Cavity Wavelength Filter Para BIT: Parallel Optical Interconnection for Large-Capacity ATM Switching Systems High-Performance VCSELs for Optical Data Links 3D Control of Light in Waveguide-Based Two-Dimensional Photonic Crystals Passive Optical Devices for Photonic Networks",
+      "citation_count": 2,
+      "is_open_access": false,
+      "pdf_url": "",
+      "source_api": "semantic_scholar",
+      "relevance_score": 0.8,
+      "_score": 0.7,
+      "id": "L002",
+      "download": false,
+      "publication_status": "published"
+    }
+  ]
+}

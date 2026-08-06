@@ -172,3 +172,51 @@
 - weight: ADEQUATE
 - drift: ALIGNED
 - next_action: 等待用户显式战略决定；不自动扩检索、重抓JOCN、重构Q1/Q2或启动Step3.5/Step4a/实现/实验
+
+## CP012 — 2026-08-06
+
+- event: formal D006 semantic-gate 纠偏并重开 Q1 Step 3.5
+- evidence: formal D006；canonical glossary L22-31；AMC Groundwork D005；用户显式纠偏与执行授权
+- formal_science_disposition: STEP3_5_IN_PROGRESS_Q1_SURVIVOR
+- mission_method_delta: NONE
+- thesis_method_disposition: STEP3_SURVIVOR_ONLY_NO_METHOD_CLAIM
+- intent: FORMAL_GW_STEP3_5
+- mechanism_family: SAMPLE_LEVEL_ACQUISITION
+- same_axis_streak: 0
+- deterministic_repair_count: 2
+- no_method_streak: 0
+- weight: ADEQUATE
+- drift: ALIGNED
+- next_action: 完成最多三轮关键词矩阵、Sun双向引用链、JOCN有界获取与高相关论文acquire→read；随后停止，不进入Step4a/实现/仿真
+
+## CP013 — 2026-08-06
+
+- event: formal Q1 Step 3.5 两轮收敛与 exact-action 全文 blocker terminal
+- evidence: formal D007；step3-5-supplement-report；T005–T011；3篇新增全文 read notes
+- formal_science_disposition: STEP3_5_COMPLETE_Q1_SURVIVOR_EXACT_ACTION_FULLTEXT_BLOCKED
+- mission_method_delta: NONE
+- thesis_method_disposition: STEP3_SURVIVOR_ONLY_NO_NOVELTY_CLOSURE
+- intent: USER_FULLTEXT_COVERAGE_DECISION
+- mechanism_family: SAMPLE_LEVEL_ACQUISITION
+- same_axis_streak: 0
+- deterministic_repair_count: 2
+- no_method_streak: 0
+- weight: ADEQUATE
+- drift: ALIGNED
+- next_action: 补齐或显式接受JOCN 2026与JLT 2025 IQ-skew全文缺口；此前不进入Step4a/实现/仿真
+
+## CP014 — 2026-08-06
+
+- event: formal Step 3.5 fresh-context 复验与专题关闭
+- evidence: formal V005 PASS；H002；formal topic status=closed；canonical glossary与AMC D005语义复验报告
+- formal_science_disposition: STEP3_5_COMPLETE_Q1_SURVIVOR_EXACT_ACTION_FULLTEXT_BLOCKED
+- mission_method_delta: NONE
+- thesis_method_disposition: STEP3_SURVIVOR_ONLY_NO_NOVELTY_CLOSURE
+- intent: USER_FULLTEXT_COVERAGE_DECISION
+- mechanism_family: SAMPLE_LEVEL_ACQUISITION
+- same_axis_streak: 0
+- deterministic_repair_count: 2
+- no_method_streak: 0
+- weight: ADEQUATE
+- drift: ALIGNED
+- next_action: formal专题已关闭；补齐或显式接受JOCN 2026与JLT 2025 IQ-skew全文缺口，此前不进入Step4a/实现/仿真

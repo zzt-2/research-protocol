@@ -1,0 +1,35 @@
+{
+  "query": "\"Burst-Mode Digital Signal Processing for Coherent Optical Time-Division Multiple Access\"",
+  "timestamp": "2026-08-06T18:05:28.560118+08:00",
+  "sources": [
+    "arxiv"
+  ],
+  "total": 1,
+  "results": [
+    {
+      "title": "Burst-Mode Digital Signal Processing for Coherent Optical Time-Division Multiple Access",
+      "authors": [
+        "Ji Zhou",
+        "Cheng Li",
+        "Haide Wang",
+        "Zhiyang Liu",
+        "Weiping Liu",
+        "Changyuan Yu"
+      ],
+      "venue": "arXiv (cs.NI)",
+      "year": 2024,
+      "doi": null,
+      "arxiv_id": "2410.10080v1",
+      "abstract": "As the 50G optical access gradually matures, it is time to discuss Beyond 50G optical access. According to the evolution rules of optical access standards, Beyond 50G optical access data rate may achieve 200Gb/s. Direct detection faces great challenges for Beyond 50G optical access, which makes coherent detection a potential solution. Similar to 50G optical timing-division-multiple access (TDMA), burst-mode digital signal processing (BM-DSP) is also required for Beyond 50G coherent optical TDMA (CO-TDMA). This paper proposes coherent BM-DSP (Co-BM-DSP) based on approximately 10ns designed preambles to process the burst signal for 200G CO-TDMA, which can fast estimate the state of polarization, frequency offset, sampling phase offset, synchronization position, and equalizer coefficients. Meanwhile, for obtaining the equalizer coefficients based on the designed preamble, the channel estimation based on the minimum-mean-square-error criterion is theoretically proven to have a unique solution for ensuring reliability. In conclusion, the proposed Co-BM-DSP based on the designed preambles paves the way for the applications of Beyond 50G CO-TDMA.",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "https://arxiv.org/pdf/2410.10080v1",
+      "source_api": "arxiv",
+      "relevance_score": 1.0,
+      "_score": 0.66,
+      "id": "L001",
+      "download": true,
+      "publication_status": "preprint"
+    }
+  ]
+}

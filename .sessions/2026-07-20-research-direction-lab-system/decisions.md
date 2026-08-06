@@ -1001,11 +1001,11 @@ current inventory；历史 T004/T005/D023 不改。新专题 Step 1 最多 6 组
 
 ## D029: 接收过采样同步 formal GW Step 3 无 survivor 终态
 
-> status: active
+> status: superseded
 > date: 2026-08-06
 > 取代：无
 > 扩展：D028（闭合其用户确认后的 Step 3 路径）
-> 被取代：无
+> 被取代：D030
 > 依据：调研: formal topic D005 + `step3-deep-read-report.md` + 7 CORE read notes
 
 ### 决策
@@ -1035,3 +1035,76 @@ handoff 和单次提交后停止，后续只等待用户战略决定。
 ### 来源
 
 用户 2026-08-06 主控裁决；formal topic D004–D005/S001。
+
+## D030: 接收 formal D006 semantic-gate 纠偏并重开 Step 3.5
+
+> status: active
+> date: 2026-08-06
+> 取代：D029
+> 扩展：D028（恢复其条件式 Step 3.5 路径）
+> 被取代：无
+> 依据：用户原话 + formal topic D006 + 对照 AMC Groundwork D005 + `stages/glossary.md` L22-31
+
+### 决策
+
+D029 所接收的 formal D005 terminal 使用了错误的 Step 3 判据 1：要求 A 已被正文/MVE 证实，把
+Step 4a problem-truth 责任前移。接收 formal D006 重判：Q1 四判据 PASS、为唯一 Step 3 survivor；
+Q2 判据 1/2/4 PASS、判据 3 FAIL。当前只重开最多三轮 Step 3.5，禁止 Step 4a/实现/仿真。
+
+### 理由
+
+Canonical owner 只要求 M/C/A 明确、句子级、可解，Step 3 的 A 可证伪即可。AMC D005 已记录同型
+semantic-gate misapplication。用户本轮显式授权在 Q1 survivor 后立即完成 Step 3.5，因此 D029 的
+“只等待战略决定”已被新的用户授权和 formal D006 取代。
+
+### 排除的替代方案
+
+- 不把 V004/H001 的本地自洽 PASS 当 canonical semantic PASS；
+- 不把 Q1 survivor 称为 METHOD_SIGNAL/Go 或已证明 problem truth；
+- 不因 Q2 判据 1纠偏而拼接多篇文献伪造判据 3 baseline；
+- 不突破 JOCN 访问控制，不越过 Step 3.5。
+
+### 影响范围
+
+RDL control 转到 Step 3.5 in-progress；formal topic 重新 active。D029/CP010/CP011 保留为错误终态的
+历史血缘，当前 authority 改为 formal D006 / RDL D030。
+
+### 来源
+
+用户 2026-08-06 确定性语义纠偏指令；formal D006。
+
+## D031: 接收 formal Step 3.5 收敛与全文 blocker terminal
+
+> status: active
+> date: 2026-08-06
+> 取代：无
+> 扩展：D030
+> 被取代：无
+> 依据：formal D007 + `step3-5-supplement-report.md` + T005–T011 worker logs
+
+### 决策
+
+接收 formal terminal=`STEP3_5_COMPLETE_Q1_SURVIVOR_EXACT_ACTION_FULLTEXT_BLOCKED`。Q1 保留唯一
+survivor，当前全文池未确认 exact collision；Q2 仅判据 3 FAIL。JOCN 2026 与 JLT 2025 IQ-skew
+primary-fulltext 缺口阻断 novelty closure，因此当前不开放 Step 4a。
+
+### 理由
+
+Round 2 真正新增 must/should=0，检索已收敛；新增全文分别把最强 direct candidate、joint frame/CFO
+先例与 joint timing/CFO/CPO 先例定位为顺序链或不同输出/task，不构成 exact collision。缺全文的两个
+direct candidates 不能以摘要裁决，故正确终态是 survivor+blocker，而不是 Go 或 no-collision closure。
+
+### 排除的替代方案
+
+- 不把“未确认 collision”写成“确认 novelty”；
+- 不因检索收敛而绕过 primary-fulltext coverage gate；
+- 不自动进入 Step 4a、实现、testbed、MVE 或仿真。
+
+### 影响范围
+
+RDL control 转为用户 coverage decision；等待补齐或显式接受两个全文缺口。formal fresh verifier 与 H002
+完成前不关闭专题。
+
+### 来源
+
+formal topic D007/S001。

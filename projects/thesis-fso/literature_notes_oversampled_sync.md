@@ -1,11 +1,12 @@
 # 过采样相干 FSO 联合同步前端：Groundwork 文献状态
 
-> 2026-08-06 | GW Step 3 已完成 | terminal: `STEP3_NO_VALID_PROBLEM`
+> 2026-08-06 | GW Step 3 canonical 重判与 Step 3.5 完成 | terminal: `STEP3_5_COMPLETE_Q1_SURVIVOR_EXACT_ACTION_FULLTEXT_BLOCKED`
 
 ## 边界
 
-用户已接受 7 篇 CORE 覆盖面；本文档进入 Step 3 精读。当前仍不声称问题四判据、新颖性或方法可行性
-已经闭合；只有至少一个 Q# 全过四判据才进入 Step 3.5，且本轮不得进入 Step 4a、实现或仿真。
+用户已接受 7 篇 CORE 覆盖面；D006 已按 canonical owner 完成 Step 3 重判，Q1 四判据 PASS、Q2 仅
+判据 3 FAIL；D007 已完成 Step 3.5。当前不声称 exact-action novelty、Step 4a problem truth 或方法
+可行性闭合，且本轮不得进入 Step 4a、实现或仿真。
 
 ## GW 进度
 
@@ -13,9 +14,9 @@
 |---|---|---|---|
 | Step 1 search | ✅ | `oversampled-sync-groundwork/step1-search-report.md`；6 query，140 raw / 130 unique，2019+ 39 unique | 两张机制不同预卡存活，允许 Step 2 |
 | Step 2 acquire | ✅ 用户已确认 | `oversampled-sync-groundwork/step2-coverage-report.md`；7 CORE 全文通过 identity/SHA/≥50 行门 | D004 接受覆盖面 |
-| Step 3 read | ✅ | `oversampled-sync-groundwork/step3-deep-read-report.md`；7 篇 CORE 结构化全文精读 | Q1/Q2 均未全过 canonical 四判据 |
-| Step 3.5 supplement | N/A（门未触发） | Step 3 survivor=0 | 未检索、未重抓 JOCN 2026 |
-| Step 4a | ⬜ 禁止 | 无 survivor | 不存在入口 |
+| Step 3 read | ✅（D006 纠偏） | `oversampled-sync-groundwork/step3-deep-read-report.md`；7 篇 CORE 结构化全文精读 | Q1 四判据 PASS；Q2 仅判据 3 FAIL |
+| Step 3.5 supplement | ✅ / FULLTEXT BLOCKED | `step3-5-supplement-report.md`；Round 2 新增 must/should=0 | Q1 保留 survivor；exact novelty 未闭合 |
+| Step 4a | ⬜ 禁止 | 两个 primary-fulltext blocker + 本轮边界 | 无入口 |
 
 ## CORE 覆盖
 
@@ -81,6 +82,17 @@ preamble 周期重启。候选动作是单链路 timing NCO/interpolator 与 car
 | L06 | Le Bidan 2023 GEO chain | PASS | 2-sps timing/SCO→frame→carrier 顺序链 | 完整廉价 comparator；无 joint estimator | `papers/_read_notes/10.1109_icsos59710.2023.10490279.md` |
 | L07 | Sun 2025 CAZAC preamble | PASS | clock→frame→FOE→CE | joint=training-unit reuse；动作仍顺序 | `papers/_read_notes/2409.14400.md` |
 
+### Step 3.5 新增全文
+
+| 文献 | identity / 全文 | action-level 分类 | 与 Q1 的边界 | 全局笔记 |
+|---|---|---|---|---|
+| Zhou 2025 JLT, `10.1109/JLT.2025.3528909`, arXiv `2410.10080v1` | PASS；555 行 | `SEQUENTIAL_MODULAR_ESTIMATION_WITH_PARTITIONED_PREAMBLE_REUSE` | 当前最强直接顺序 comparator；不是 exact three-parameter joint | `papers/_read_notes/2410.10080v1.md` |
+| LPT 2017 FRFT, `10.1109/LPT.2017.2759584`, arXiv `1801.01598` | PASS；156 行 | true joint `(integer frame offset,CFO)` | 入口 1 sps、无 fractional τ/SCO | `papers/_read_notes/1801.01598.md` |
+| Du 2021 JLT, `10.1109/JLT.2020.3042546` | PASS；712 行 | true joint `(integer τ,CFO,CPO)` | 无 frame output；CP-removed OFDM/fiber task 不匹配 | `papers/_read_notes/10.1109_jlt.2020.3042546.md` |
+
+未获取全文的 direct candidates：JOCN 2026 `10.1364/JOCN.587273`、JLT 2025 IQ-skew
+`10.1109/JLT.2025.3581618`；两者均不得用摘要裁 exact-action collision。
+
 ### 现有方法分类
 
 - **frame+FOE 训练序列链**：Tang STSB、Wang FSTS 与 mixed PRBS/cyclic-QPSK 都以 known preamble
@@ -93,10 +105,10 @@ preamble 周期重启。候选动作是单链路 timing NCO/interpolator 与 car
 
 ### 已知局限
 
-- 当前 CORE 未量化强顺序 acquisition chain 在 simultaneous fractional timing/frame/CFO 下的失效；
+- 当前 CORE 未量化强顺序 acquisition chain 在 simultaneous fractional timing/frame/CFO 下的失效；这是 Step 4a 待证假设，不是 Step 3 判据 1 FAIL；
 - 未提供 GG/dynamic fade+SCO 下 timing/carrier 共同失锁与 post-fade recovery 数据；
 - 未对 shared freeze + fixed known-preamble reacquisition 这一明显廉价替代做完整链比较；
-- JOCN 2026 全文缺失仍限制任何 Q1 exact-action novelty closure，但不改变本轮更上游的四判据 FAIL。
+- JOCN 2026 全文缺失仍限制任何 Q1 exact-action novelty closure，但不改变 D006 已确认的 Q1 四判据 PASS。
 
 ### 2–3 年趋势
 
@@ -114,22 +126,31 @@ fine CFO 与 CPE 串成可运行链；最新 coherent-PON 工作进一步压缩�
 
 | Q# | M | C | A | 方法产出形态 | 判据1 矛盾 | 判据2 产出 | 判据3 2019+ baseline | 判据4 对标 | 四判据 | 来源 |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Q1 | Le Bidan 2-sps 顺序链 + Sun/Wang frame-FOE | RRC ≥2-sps coherent FSO，fractional timing/frame/CFO 同时未知 | 顺序链假设 timing 可先独立恢复；该假设在目标条件下失效 | coupled estimator / design rule | ❌ CORE 未证实顺序链失效 | ✅ 形态可复用 | ✅ GEO 2023、Sun 2025、Wang 2023/2024 | ✅ error/success/BER/overhead/latency | **未过** | L01/L03/L04/L06/L07 |
-| Q2 | Gardner/Gu timing + AGC/DPLL/VV/FOE；cheap shared-freeze+fixed-restart | ≥2-sps OSL，SCO/PN/CFO + dynamic deep fade | 双环共同失锁且 cheap comparator 仍不足 | shared-confidence FSM / lock rule | ❌ 共同失锁与 cheap comparator 失效未证实 | ✅ 形态可复用 | ❌ 无 2019+ integrated comparator | ✅ error/slip/BER/recovery time | **未过** | L02/L05 |
+| Q1 | Le Bidan 2-sps 顺序链 + Sun/Wang frame-FOE | RRC ≥2-sps coherent FSO，fractional timing/frame/CFO 同时未知 | 顺序 timing-first 处理在同时未知状态下可能传播误差或产生错误峰/误锁 | coupled estimator / design rule | ✅ M/C/A 明确、句子级、可解，A 可证伪；不要求已有 MVE | ✅ 形态可复用 | ✅ GEO 2023、Sun 2025、Wang 2023/2024 | ✅ error/success/BER/overhead/latency | **STEP3_SURVIVOR** | L01/L03/L04/L06/L07 |
+| Q2 | timing/carrier 独立 maintenance/reacquisition；cheap shared-freeze+fixed-restart | ≥2-sps OSL，SCO/PN/CFO + dynamic deep fade | fade 可能使双环共同/异步失锁且 cheap comparator 可能不足 | shared-confidence FSM / lock rule | ✅ M/C/A 明确、句子级、可解，A 可证伪；共同失锁尚未实证不构成 Step 3 FAIL | ✅ 形态可复用 | ❌ 无 2019+ integrated comparator，跨论文拼接不算 | ✅ error/slip/BER/recovery time | **未过（仅判据 3 FAIL）** | L02/L05 |
 
 ### Baseline 交叉验证
 
 | Q# | 最强 comparator | task fit | 当前未决 |
 |---|---|---|---|
-| Q1 | `2-sps coarse CFO → Lee/Gardner timing/interpolation → FSE/downsample → Sun CAZAC 或 FSTS/STSB frame/FOE` | information/action/output 均与 acquisition task 对齐 | 没有该顺序链失效的正文证据 |
+| Q1 | `polyphase/Farrow timing bank + 2-sps coarse CFO → timing/interpolation → FSE/downsample → Sun CAZAC 或 FSTS/STSB frame/FOE` | information/action/output 均与 acquisition task 对齐 | Step 3.5 需关闭这一最强廉价 comparator；其失效留待 Step 4a，不前移到 Step 3 |
 | Q2 | Gardner/Gu timing + AGC/DPLL/VV/FOE + shared quality freeze + fixed preamble/reference restart | 是必须先排除的廉价 conventional extension | 尚无全文完整链与量化结果，不能宣称已解决或已失败 |
 
 ## Step 3.5 与 JOCN 处理
 
-Step 3 survivor=0，故未触发 Step 3.5：没有执行定向检索、双向引用链或新一轮 JOCN 2026 获取。
-JOCN 2026 继续登记为 `UNRESOLVED_HIGH_RISK`，不得以 abstract 作 exact-action collision/full-text 裁决。
+- Round 1：6/6 query，100 rows / 80 unique，must=5、should=6；Round 2：3/3 focused query，27 rows /
+  25 unique，真正新增 must=0、should=0；收敛，未启动 Round 3。
+- Sun 2025 引用链：forward=8、backward=35，S2-only=0。
+- 新增全文：Zhou 2025（arXiv `2410.10080v1`）为分区 preamble 顺序链；LPT 2017（arXiv
+  `1801.01598`）为 joint integer frame+CFO、1 sps 无 fractional τ；JLT 2021 为 joint τ+CFO+CPO、
+  无 frame 且 OFDM/fiber task 不匹配。均非 exact 三参数 collision。
+- JOCN 2026 `10.1364/JOCN.587273` 与 JLT 2025 IQ-skew `10.1109/JLT.2025.3581618` 合法路径后仍
+  无全文，分别保持 `UNRESOLVED_HIGH_RISK` / `UNRESOLVED_PRIMARY_FULLTEXT_UNAVAILABLE`。
+- 最强廉价 comparator 冻结为 polyphase/Farrow timing bank + Zhou/Le Bidan/Sun/FSTS/STSB sequential
+  chain；这是公平 comparator contract，不是拼接出来的单篇 baseline identity。
 
 ## 当前结论
 
-terminal=`STEP3_NO_VALID_PROBLEM`。Q1、Q2 均未通过 canonical 四判据，唯一 survivor：无；不存在
-Step 4a 入口。本轮不产生 METHOD_SIGNAL、Go、论文方法或仿真授权。
+terminal=`STEP3_5_COMPLETE_Q1_SURVIVOR_EXACT_ACTION_FULLTEXT_BLOCKED`。Q1 是唯一 Step 3 survivor；Q2
+仅判据 3 FAIL。当前全文池未确认 exact collision，但不能声称 exact-action novelty closure。不存在
+Step 4a 入口，本轮不产生 METHOD_SIGNAL、Go、论文方法或仿真授权。

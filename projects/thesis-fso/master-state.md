@@ -5,7 +5,7 @@ method_type: 待定（精读后根据问题方法产出形态确定，见 glossa
 domain: comms
 created: 2026-06-21
 updated: 2026-08-06
-current_step: OVERSAMPLED_SYNC_STEP3_NO_VALID_PROBLEM（7篇CORE全文精读；Q1判据1 FAIL，Q2判据1/3 FAIL；Step3.5未触发，无Step4a入口。C3/P1保持closed。）
+current_step: OVERSAMPLED_SYNC_STEP3_5_COMPLETE_FULLTEXT_BLOCKED（D007/V005/H002；formal topic closed；Q1唯一survivor；无confirmed exact collision；JOCN 2026/JLT 2025 IQ-skew全文缺口；无Step4a入口。C3/P1保持closed。）
 current_stage: GROUNDWORK
 ---
 
@@ -27,27 +27,29 @@ current_stage: GROUNDWORK
 
 ### 当前控制面桥接
 
-> **2026-08-06 当前入口：`OVERSAMPLED_SYNC_STEP3_NO_VALID_PROBLEM`**。用户已接受 7 篇 CORE 与
-> JOCN 2026 高风险全文缺口；新专题完成 Phase 0 与 GW Step 1–3。Q1 因强顺序 acquisition chain 的
-> 具体失效假设未获正文证实而判据 1 FAIL；Q2 因共同失锁/cheap comparator 不足未证实且无 2019+
-> integrated baseline 而判据 1/3 FAIL。survivor=0，Step 3.5 未触发，无 Step 4a/实现/仿真入口。
-> formal V004 独立验收 PASS、H001 已交接，专题已 `closed`；RDL CP011 只保留用户战略决定门。
+> **2026-08-06 当前入口：`OVERSAMPLED_SYNC_STEP3_5_COMPLETE_FULLTEXT_BLOCKED`**。D006 已纠正
+> problem-truth 前移；D007 完成两轮 Step 3.5 收敛。Q1 是唯一 survivor，当前全文池无 confirmed exact
+> collision，但 JOCN 2026 与 JLT 2025 IQ-skew 全文缺失阻断 novelty closure；Q2 仅判据 3 FAIL。
+> V005 对照 canonical glossary 与 AMC D005 fresh-context 复验 PASS，H002 为恢复入口，formal topic
+> 已关闭；当前无 Step 4a/实现/仿真入口。
 > C3、P1、baseline-first batch 与 2026-08-02 dormant campaign均只作历史背景。
 
-- **过采样相干 FSO 联合同步前端（独立专题，2026-08-06）—— STEP 3 NO VALID PROBLEM**：
+- **过采样相干 FSO 联合同步前端（独立专题，2026-08-06）—— STEP 3.5 COMPLETE / FULLTEXT BLOCKED**：
   Q1 为 sample-level frame/fractional-timing/CFO acquisition；Q2 为 GG fade 与 SCO 下 timing/carrier
-  maintenance/reacquisition。7 篇 CORE 已通过子 agent 精读；Q1/Q2 均未过 canonical 四判据，故无
-  Step 3 survivor，Step 3.5 未触发，JOCN 2026 未重抓且仍为 `UNRESOLVED_HIGH_RISK`。完整 testbed
-  11–14 日与两个最小切片仅保留工程背景，不构成实现授权。权威证据见专题 D005、S001、
-  `literature_notes_oversampled_sync.md` 与 `oversampled-sync-groundwork/step3-deep-read-report.md`。
+  maintenance/reacquisition。7 篇 CORE 已通过子 agent 精读；D006 重判后 Q1 四判据 PASS，Q2 仅
+  判据 3 FAIL。Step 3.5 两轮收敛且未确认 exact collision；JOCN 2026 与 JLT 2025 IQ-skew 仍为全文
+  blockers。V005 复验 PASS 后专题已关闭，H002 为唯一恢复入口。完整 testbed
+  11–14 日与两个最小切片仅保留工程背景，不构成实现授权。权威证据见专题 D006–D007、S001、
+  `literature_notes_oversampled_sync.md`、`oversampled-sync-groundwork/step3-5-supplement-report.md` 与
+  `oversampled-sync-groundwork/step3-5-fresh-semantic-verifier-report.md`。
 
   | Oversampled Sync GW Step | 状态 | 证据 | 下游门控 |
   |---|---|---|---|
   | 1 search | ✅ | step1 search report/receipt | 两张预卡进入 Step 2 |
   | 2 acquire | ✅ | 7 CORE + V003 | 用户已确认 |
-  | 3 read | ✅ / no survivor | D005 + step3 report + 7 read notes | Q1/Q2 均未全过四判据 |
-  | 3.5 supplement | NOT_TRIGGERED | survivor=0 | Step 4a 禁止 |
-  | 4a feasibility | FORBIDDEN | 无合法 Q# | 实现/仿真禁止 |
+  | 3 read | ✅ / Q1 survivor | D006 + step3 report + 7 read notes | Q1 四判据 PASS；Q2 仅判据 3 FAIL |
+  | 3.5 supplement | ✅ / FULLTEXT BLOCKED | D007 + T005–T011 | Round 2 新增=0；Q1 保留 survivor |
+  | 4a feasibility | FORBIDDEN | 两个 primary-fulltext blocker + 本轮边界 | 实现/仿真禁止 |
 
 - **P1 Shared M0-Power FOE–CPE Groundwork（独立专题，2026-08-05）—— CLOSED / 历史背景**：
   Step 1–2 已验收，Step 3 九篇精读由 V004 结构终审 PASS；最后一次 bounded closure 用尽 6/6 query，
@@ -78,7 +80,7 @@ current_stage: GROUNDWORK
 
 > **2026-08-02 D058/V084/CP049 → epoch85 `SATURATED_NO_ACTIVE_CARRIER / DORMANT`**（历史背景）。
 > 该 campaign 只保留历史审计与恢复条件；当前入口以本节顶部
-> `OVERSAMPLED_SYNC_STEP3_NO_VALID_PROBLEM` 为准。
+> `OVERSAMPLED_SYNC_STEP3_5_COMPLETE_FULLTEXT_BLOCKED` 为准。
 
 - accepted valid packages：**7**（P01–P06 + P07-R）；它们是局部负面/边界，不是七项贡献。
 - method-production 结果：`METHOD_SIGNAL=0`，active carrier=0；固定 10 包不再是自动执行目标，`remaining_valid_packages` 退役。

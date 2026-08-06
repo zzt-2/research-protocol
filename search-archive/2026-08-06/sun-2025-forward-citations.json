@@ -1,0 +1,202 @@
+{
+  "query": "",
+  "timestamp": "2026-08-06T17:55:45.420252+08:00",
+  "sources": [
+    "citations_both"
+  ],
+  "total": 8,
+  "results": [
+    {
+      "title": "Partial Transmit Subcarrier Technology Based on m-Sequence for Simplified PAPR Reduction in 400G TFDM Coherent PON",
+      "authors": [
+        "Penghao Luo",
+        "An Yan",
+        "Shuhong He",
+        "Jian Zhao",
+        "Renle Zheng",
+        "Yongzhu Hu",
+        "Zhongya Li",
+        "Xuyu Deng",
+        "Aolong Sun",
+        "Yingjun Zhou",
+        "Jianyang Shi",
+        "Zhixue He",
+        "Nan Chi",
+        "Junwen Zhang"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 2025,
+      "doi": "10.1109/jlt.2025.3603788",
+      "arxiv_id": null,
+      "abstract": "Coherent passive optical networks (CPONs) are emerging as a promising solution for future 200G and even 400G optical access network. Recently, time-frequency division multiplexing (TFDM) PON has been proposed as a solution to the flexibility challenge in CPON, providing more flexible bandwidth allocation for downstream access. Implementing TFDM PON through digital subcarrier multiplexing is a simple and efficient approach, but it increases the peak-to-average power ratio (PAPR) of the transmitted signal, thereby reducing the overall power budget due to the peak power constraints of digital-to-analog converters (DACs), and this issue worsens as the number of subcarriers increases. In our previous work, we proposed the Partial Transmit Subcarrier (PTSC) technique, which reduces PAPR in TFDM PON systems through subcarrier phase rotation. In this work, we propose an m-sequence-based PTSC (m-PTSC) scheme that optimizes phase factor selection to reduce computational complexity. For 4- and 8-subcarrier systems, the proposed method reduces the number of phase factors by 93.75% and 99.90%, respectively. Experimental validation in a 400-Gbps TFDM PON system shows that m-PTSC reduces PAPR by 2.9 dB and improves the power budget by 0.95 dB in the 4-subcarrier system, while in the 8-subcarrier system, m-PTSC achieves a 5.5-dB PAPR reduction and a 2.14-dB power budget improvement, all with only 0.6% protection overhead and pilot.",
+      "citation_count": 2,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L001",
+      "download": false,
+      "publication_status": "published"
+    },
+    {
+      "title": "Polarization-independent preamble design in Alamouti code-based simplified coherent system for PON downstream",
+      "authors": [
+        "Taowei Jin",
+        "Hong Lin",
+        "Xuecheng Ren",
+        "Jing Zhang",
+        "Rui Wang",
+        "Shaohua Hu",
+        "Kun Qiu"
+      ],
+      "venue": "Optics Express",
+      "year": 2025,
+      "doi": "10.1364/oe.566136",
+      "arxiv_id": null,
+      "abstract": "Benefiting from the time slot orthogonality of Alamouti coding, the simplified coherent system for PON downstream using a single-polarization coherent receiver can achieve polarization-insensitive reception via a MIMO equalizer without PBS. However, frame synchronization (FS) and frequency offset estimation (FOE) in the digital signal processing (DSP) are still affected by link noise and polarization rotation, and it is difficult to make full use of this orthogonal property to achieve polarization insensitivity. To solve these problems, we propose and demonstrate a reliable and efficient preamble design for the Alamouti code-based simplified coherent system to realize the three DSP functions consisting of polarization-independent FS, polarization-independent FOE, and fast channel estimation (CE). The feasibility of the proposed preamble scheme is simulated and experimentally verified in a 30-GBaud simplified coherent system using 16 quadrature amplitude modulation (QAM). The simulation and experiment results demonstrate that the proposed preamble, jointly with the data-aided DSP, achieves polarization-independent FS and FOE, and fast convergence through CE even with only a single polarization detection. The optical power budget of about 34.8 dB is also experimentally achieved at the 20% soft-decision forward error correction (FEC) limit.",
+      "citation_count": 1,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.1364/oe.566136",
+      "source_api": "openalex_citations",
+      "id": "L002",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Cost-effective and Flexible Coherent Optics for Next-Generation Optical Access Networks",
+      "authors": [
+        "Junwen Zhang",
+        "Penghao Luo",
+        "An Yan",
+        "Jianyang Shi",
+        "Nan Chi"
+      ],
+      "venue": "",
+      "year": 2025,
+      "doi": "10.1109/ecoc66593.2025.11263143",
+      "arxiv_id": null,
+      "abstract": "Coherent Passive Optical Network (CPON) is emerging as a promising solution for next-generation 200G or even 400G optical access. This paper reviews recent advances in cost-effective optimization strategies and flexible rate allocation techniques, and further discusses the major challenges and potential solutions for CPON. ©2025 The Author(s).",
+      "citation_count": 1,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations+s2_citations",
+      "id": "L003",
+      "download": false,
+      "publication_status": "published"
+    },
+    {
+      "title": "Cost-effective and flexible coherent passive optical networks [Invited]",
+      "authors": [
+        "Penghao Luo",
+        "Junwen Zhang"
+      ],
+      "venue": "Journal of Optical Communications and Networking",
+      "year": 2026,
+      "doi": "10.1364/jocn.590228",
+      "arxiv_id": null,
+      "abstract": "Driven by the continuous growth of bandwidth-intensive services, optical access networks are required to support ever-increasing data rates. Benefiting from high receiver sensitivity, expanded modulation dimensions, and wavelength selectivity, coherent optics is emerging as a promising solution for next-generation 200G or even 400G optical access networks. Accordingly, coherent PON has been included by ITU-T Q2/SG15 as a candidate solution for very high-speed PON. As a point-to-multipoint system, cost is a critical factor in CPON deployment, making cost optimization particularly important, especially at the optical network unit side. In addition, enabling flexible rate allocation in CPON systems is essential to fully exploit heterogeneous channel conditions among users and to improve overall system efficiency. In this paper, building upon our recent work published in ECOC 2025, we review key enabling technologies for next-generation CPON from the perspectives of cost simplification and flexibility. Furthermore, the main challenges associated with cost-effective and flexible CPON systems are analyzed, and potential solution directions are discussed.",
+      "citation_count": 1,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations+s2_citations",
+      "id": "L004",
+      "download": false,
+      "publication_status": "published"
+    },
+    {
+      "title": "Joint time-frequency domain feature exploitation for a single burst-mode preamble in a next-generation coherent optical access network",
+      "authors": [
+        "Jinqi Xiong",
+        "Yuheng Liu",
+        "Mingzhu Yin",
+        "J. Zhou",
+        "Fan Li"
+      ],
+      "venue": "Journal of Optical Communications and Networking",
+      "year": 2026,
+      "doi": "10.1364/JOCN.587273",
+      "arxiv_id": null,
+      "abstract": "For the next-generation optical access network, where the data rate may achieve 200 Gb/s, conventional intensity modulation and direct detection (IM/DD) schemes will face significant challenges. Coherent optical communication is considered a promising solution for next-generation optical access networks. However, conventional blind coherent digital signal processing (DSP) demonstrates insufficient convergence speed to fulfill burst-mode detection requirements. Designing specialized preamble sequences is an effective solution for simplifying coherent burst-mode DSP. This paper proposes an efficient preamble structure with a duration of 8.25 ns. The proposed preamble fully utilizes the frequency-domain and time-domain properties of the sequence, enabling chromatic dispersion (CD) estimation and clock recovery in the frequency-domain, while achieving frame synchronization, frequency offset estimation (FOE), and state of polarization (SOP) estimation in the time-domain. This allows the proposed scheme to achieve rapid CD estimation without introducing additional preamble overhead. We established a 32 GBaud dual-polarization 16-quadrature amplitude modulation (DP-16QAM) system incorporating the proposed scheme, and experimentally validated the effectiveness of the proposed preamble and the corresponding burst-mode DSP scheme. The proposed scheme provides a feasible solution for next-generation optical access networks.",
+      "citation_count": 1,
+      "is_open_access": false,
+      "pdf_url": "",
+      "source_api": "s2_citations+openalex_citations",
+      "expanded_from": "DOI:10.1109/JLT.2025.3533197",
+      "id": "L005",
+      "download": false,
+      "publication_status": "published"
+    },
+    {
+      "title": "Hardware-Efficient Optical Frequency Comb-Based Self-Homodyne Joint WDM-SDM Reception",
+      "authors": [
+        "L Cao",
+        "jianwei tang",
+        "jianyu wang",
+        "H. Z. Shi",
+        "zhongliang sun",
+        "Linsheng Fan",
+        "gao ye",
+        "Shunfeng Wang",
+        "Junpeng Liang",
+        "Yaojun Qiao",
+        "Ivan Aldaya",
+        "Jie Wei"
+      ],
+      "venue": "SSRN Electronic Journal",
+      "year": 2026,
+      "doi": "10.2139/ssrn.6954091",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.2139/ssrn.6954091",
+      "source_api": "openalex_citations",
+      "id": "L006",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Short-Preamble DSP for Downstream Alamouti Coherent-Lite PON Using Gear-Shifted LMS Equalization",
+      "authors": [
+        "Dokhyl AlQahtani",
+        "Fady I. El-Nahal"
+      ],
+      "venue": "Photonics",
+      "year": 2026,
+      "doi": "10.3390/photonics13080695",
+      "arxiv_id": null,
+      "abstract": "We present a short-preamble digital signal processing (DSP) architecture for downstream Alamouti coherent-lite passive optical network (PON) reception using a simplified optical network unit (ONU) receiver. A four-branch gear-shifted least-mean-square (LMS) equalizer uses a large step during quadrature phase-shift keying (QPSK) preamble training and a small step during decision-directed payload tracking. In 50 GBaud 16-ary quadrature amplitude modulation (16-QAM) simulations over 20 km single-mode fiber, a 2048-symbol preamble is the first cold-start point whose mean bit-error rate (BER) falls below the selected uncoded BER target of 10−2. A 20-realization-per-point sweep gives a sub-1 dB penalty for 2048 symbols and a mean offline mean-square-error (MSE) settling time below 100 ns, with low-gain locking events retained. However, frame-level reliability improves with longer training: in an indicative 20-frame Monte Carlo test, 13 of 20 frames met the BER target with a 2048-symbol preamble, compared with 17 of 20 using 4096 symbols. For repeated frames to the same ONU after initial acquisition, warm-start tap reuse allows frames 4–5 in the tested sequence to fall below target with 512-symbol preambles, corresponding to a later-frame nominal coded payload rate of 163 Gb/s instead of 123 Gb/s. The results quantify the preamble/reliability/payload-rate trade-off and indicate that downstream Alamouti coherent-lite reception can support short-training equalizer acquisition after preamble synchronization with one balanced detector and one analog-to-digital converter.",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.3390/photonics13080695",
+      "source_api": "openalex_citations+s2_citations",
+      "id": "L007",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Fast-Reconfigurable Metro-Access Networks using SOA-based OADM Node and Burst-Mode Coherent Receiver",
+      "authors": [
+        "Ryosuke Matsumoto",
+        "Shiyi Xia",
+        "Menno van den Hout",
+        "Henrique Freire Santana",
+        "Vincent van Vliet",
+        "Satoshi Suda",
+        "Chigo Okonkwo",
+        "Nicola Calabretta"
+      ],
+      "venue": "",
+      "year": 2026,
+      "doi": "10.1364/cleo_si.2026.sth4f.2",
+      "arxiv_id": null,
+      "abstract": "We demonstrate a fast-reconfigurable metro-access network exploiting SOA-based OADM nodes and burst-mode coherent detection with nonlinear compensation. Short 200-Gb/s DP-16QAM bursts were successfully received within a 70-ns preamble after two-cascaded SOAs and 38.4-km fiber transmission.",
+      "citation_count": 0,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L008",
+      "download": false,
+      "publication_status": "published"
+    }
+  ]
+}
