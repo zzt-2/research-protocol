@@ -109,3 +109,13 @@
 
 - "你是 C3 Adaptive Intra-Window Segmented CPE Groundwork 的执行者。" → D025
 - "本轮只做三件事：A. 修复 P1 closed 后的 stale master-state；B. C3 Groundwork Step 1 定向检索；C. 若 Step 1 通过，继续完成 Step 2 全文获取并停在覆盖面确认门。不得进入 Step 3、Step 4a、方法实现或仿真。" → D025
+
+### baseline-first method synthesis 执行提示词
+
+> 来源：执行提示词（粘贴文本，非对话原话，按 voice-quote.md 的执行提示词规则标注）
+
+[转述:执行提示词] "本轮目标不是检索空白，也不是跑实验，而是从近期合法 baseline 反向合成真正可包装的方法候选。" → D027
+[转述:执行提示词] "近期合法 baseline → baseline 在目标条件下的具体失效 → deployable action → 方法步骤 → comparator/廉价替代 → 章节包装 → 历史碰撞审查；不得倒序。" → D027
+[转述:执行提示词] "C3 已由 CP004/D-011 否决，不得恢复；P1 已 SUPPORTING_ONLY，不得改名恢复；不修改 Skill/controller；不实现、不仿真、不跑 MVE。" → D027
+[转述:执行提示词] "只保留 0–2 个 survivor，不凑数；若无合法 survivor，终局为 STRATEGIC_SHORTAGE_CONFIRMED，不制造第六个弱候选。" → D027
+[转述:执行提示词] "单次最终 commit，不 push；四个既有 p05_run*.log 不修改、不暂存。" → D027

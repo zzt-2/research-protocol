@@ -913,3 +913,50 @@ Groundwork 专题。是否产生 Step 2 产物完全由 Step 1 terminal 决定�
 ### 来源
 
 C3 S001/R001/D002/H001。
+
+## D027: baseline-first 方法构造确认战略性候选短缺
+
+> status: active
+> date: 2026-08-06
+> 取代：无
+> 扩展：D026（执行其候选轮换门，并闭合本地 baseline-first 生产批次）
+> 被取代：无
+> 依据：`projects/thesis-fso/direction-lab/harvest/baseline-first-method-batch-001.md` + 验证: V019 + 用户执行提示词（voice.md 2026-08-06）
+
+### 决策
+
+接收 baseline-first batch terminal=`STRATEGIC_SHORTAGE_CONFIRMED`。本地共享论文库确认 7 篇
+2019+ 正式 baseline，基于其中 5 篇按 baseline→失效→deployable action→完整流程的顺序构造
+5 张机制不同的方法卡；五卡分别在 problem-evidence、inventory、dead-end 或
+strongest-cheap-alternative 门被拒，survivor=0。
+
+当前不推荐任何候选进入正式 GW Step 1，不自动开新 Groundwork 专题，不制造第六个弱候选。
+下一动作必须由用户显式改变 candidate source、target chapter 或 research object 后再授权；本决策本身
+不构成 scope change、formal stage change、检索、实现或实验授权。
+
+### 理由
+
+本批 baseline 身份、全文方法链和半天级算法适配入口均已在手，因此短缺不是“缺检索”；五张卡也先形成
+完整 input-action-output、算法步骤、主图、消融和 fallback，再做历史碰撞，因此短缺不是以负面审查替代
+方法构造。真正约束是 problem-bearing evidence 与动作空间：K01/K02 的承重失效在当前 testbed 未成立；
+粗 FOE 星历路径、mixed precision、AGC/radius calibration 则已有 active authority 或更强廉价传统替代。按 supersession 优先级，
+C3/P1/Ch4/Ch5 旧 survivor prose 不得覆盖其后续 closed terminal。
+
+### 排除的替代方案
+
+- 不把 K01–K05 中“最接近”的卡降门晋级；十项门要求同时通过，不能凑数；
+- 不恢复 C3、P1、B5、P03、Q15/G1/P07-R 或 dormant AMC；
+- 不以新增 broad search、实现、仿真或 MVE 继续同一批；
+- 不把 7 篇 baseline 库、五张 reject 卡或严格负面边界写成新的论文方法贡献；
+- 不替用户擅自选择 candidate source、target chapter 或 research object 的战略变化。
+
+### 影响范围
+
+更新 RDL current control 至 epoch 20 / CP008 / `STRATEGIC_SHORTAGE_CONFIRMED`；同步 mission-log、
+topic-index、registry 与 thesis-fso master-state。主产出固定在 harvest；独立 fresh-context verifier
+另记 V019。Skill/controller/common/params/formal stage/旧专题均不修改。
+
+### 来源
+
+用户 2026-08-06 baseline-first method synthesis 执行提示词；三个全文精读子池的结构化摘要；
+baseline-first batch；inventory、P01–P11/G1、AMC、P1、C3、Ch4/Ch5 及 active/superseded decisions。

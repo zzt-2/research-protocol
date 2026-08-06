@@ -770,3 +770,52 @@ PASS / PASS / PASS
 
 PASS。D024 对 T007 P1 的恢复有 caller、公式与可复跑历史输入支撑；Skill 修订没有降低正式
 Groundwork 或科学晋级门。T008 可派发，但只授权 Step 1–2，不能据此实现、实验或宣称方法成立。
+
+## V019: baseline-first method batch 001 独立终验
+
+> date: 2026-08-06
+> 关联：D027 / CP008 / `baseline-first-method-batch-001.md`
+> verifier 上下文：独立 fresh-context 只读 subagent；未参与 baseline 精读、方法卡构造或治理修改
+> FINAL VERDICT: PASS
+
+### 首轮对抗审查
+
+首轮为 `BLOCK`（P0=0、P1=3 类、P2=2 类），捕获三类实质问题：四篇 worktree-local 全文被
+误写为 root 论文库路径；K01/K02 把抽象 controller 结构相似误判为 exact action collision；
+master-state 历史背景残留旧 `CANDIDATE_ROTATION_REQUIRED` current。三类均做最小确定性修正，
+没有增加候选、降低生产门或改变 terminal。
+
+### 修复后验证项
+
+- [x] 7 篇 baseline 均为 2019+ 正式发表，本地有效全文存在，方法身份可确认。
+- [x] 自动解析 13 个全文引用实例，路径全部存在，行号/范围均未越界，关键段支持身份、方法链、输入输出、假设与限制。
+- [x] Ch4 supersession banner、D025 P1 closed、D026 C3 closed 与 D027 active authority 的优先级正确。
+- [x] C3、P1、P01–P11、G1、AMC 与 Ch4/Ch5 dead end 均未复活；survivor=0。
+- [x] K01 明确无 exact collision，以 `PROBLEM_EVIDENCE_INSUFFICIENT` 停止；不声称 cheap alternative 已实证吸收。
+- [x] K02 明确 controller 相似不作否决，以 `PROBLEM_ABSENT_IN_CURRENT_CALLER` 停止。
+- [x] K03–K05 的历史/常规替代约束有 authority；半天 adapter 为静态工程估算，不冒充执行验证。
+- [x] 五卡无人同时通过十门，`STRATEGIC_SHORTAGE_CONFIRMED` 是唯一合法 terminal。
+- [x] D027、CP008、epoch 20 topic-index、registry 与 master-state 一致，旧 current 已消除。
+- [x] 四个 `p05_run*.log` 仍为 untracked/未暂存；无 Skill/controller/common/params/formal-stage 越界修改。
+
+### 验证证据
+
+```text
+independent verifier initial
+BLOCK; P0=0 P1=3类 P2=2类
+
+after deterministic repair
+PASS; P0=0 P1=0 P2=0
+
+full-text pointers
+13/13 paths exist; all line ranges in bounds
+
+git boundary
+p05_run*.log untracked and unstaged; cached diff empty
+```
+
+### 结论
+
+PASS。7 篇 baseline、5 张完整方法卡、逐卡碰撞收据与 0 survivor 终局均有可复核证据；本批不授权
+Groundwork、检索、实现或实验。下一合法动作仍是用户显式选择改变 candidate source、target chapter
+或 research object。

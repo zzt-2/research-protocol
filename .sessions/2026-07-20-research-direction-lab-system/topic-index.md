@@ -4,16 +4,16 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 19
+  control_epoch: 20
   role: RDL_MASTER
   mission: 设计并验证轻量方法构造车道，使 Ch4/Ch5 优先形成学位论文级可命名方法
-  active_lane: CANDIDATE_ROTATION_REQUIRED
-  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D026
-  decision_gate: P1与C3均已closed；当前没有active carrier，下一候选必须机制不同且先过inventory/dead-end collision
+  active_lane: STRATEGIC_SHORTAGE_CONFIRMED
+  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D027
+  decision_gate: 7篇合法baseline已形成5张完整卡但survivor=0；改变candidate source、target chapter或research object前不得继续生产
   allowed_actions:
     - PORTFOLIO_MAP
     - INVENTORY_COLLISION_CHECK
-    - FORMAL_GROUNDWORK_PREPARATION
+    - STRATEGIC_SCOPE_CHANGE_DECISION
   forbidden_actions:
     - SCIENTIFIC_EXPERIMENT_BEFORE_GW
     - BROAD_SEARCH_BEFORE_SURVIVOR
@@ -23,12 +23,12 @@ rdl_control:
     - GROUNDWORK_STEP3_OR_LATER
     - METHOD_IMPLEMENTATION_OR_SIMULATION
   mission_log_ref: .sessions/2026-07-20-research-direction-lab-system/mission-log.md
-  mission_checkpoint: CP007
-  next_legal_action: 返回候选池，比较机制不同且已有2019+合法baseline的候选；本轮不自动启动下一专题
+  mission_checkpoint: CP008
+  next_legal_action: 等待用户显式选择改变candidate source、target chapter或research object；不自动建立GW专题
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-06（D026/CP007：P1/C3 均 closed；返回候选轮换门）
+> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-06（D027/CP008：baseline-first 7篇/5卡/0 survivor；STRATEGIC_SHORTAGE_CONFIRMED）
 
 ## 专题信息
 
@@ -66,6 +66,9 @@ rdl_control:
   禁止 Step 3、Step 4a、实现或仿真。
 - 基于 D026，C3 已在 Step 1 触发 `PHYSICAL_PREMISE_UNSUPPORTED` 并 closed；当前返回候选轮换门，
   不自动选择或启动下一候选。
+- 基于 D027，已在不新增 broad search 的前提下完成 baseline-first batch：7 篇合法 baseline、5 张完整
+  方法卡、0 survivor。当前停止自动候选生产；只有用户显式改变 candidate source、target chapter 或
+  research object 后才可继续，本决策不自动创建 GW 或授权实验。
 
 ### 明确不含
 
@@ -76,6 +79,12 @@ rdl_control:
 - 不批量迁移或删除旧科学目录；新布局渐进采用，旧历史继续 append-only 保留。
 
 ### 范围变更记录
+
+- **[2026-08-06] D027**：baseline-first 候选轮换闭合为 `STRATEGIC_SHORTAGE_CONFIRMED`。
+  - 原因：7 篇 2019+ 合法 baseline 已在手，5 张机制不同的方法卡分别在 problem evidence、action collision、
+    历史 dead end 或 strongest cheap alternative 门停止，十项门无同时通过者。
+  - 新范围：停止自动生产候选，等待用户显式选择改变 candidate source、target chapter 或 research object。
+  - 影响的未决项：没有候选进入 GW；Skill/controller/common/params/formal stage 继续冻结。
 
 - **[2026-08-06] D026**：关闭 C3，返回候选轮换门。
   - 原因：4/4 query 未提供历史 D-011 reopen condition 所需的新信息源或主流物理工况；无四判据 Q#。
@@ -240,6 +249,9 @@ rdl_control:
   current entry 改为 C3 Step 1 prep。C3 必须继承 D-011/CP004 的同动作历史，不得预设 survivor。
 - **D026 / CP007**：C3 4/4 query 后触发 `PHYSICAL_PREMISE_UNSUPPORTED`；无 Q#、Step 2 未执行，
   专题 closed。current control 返回机制不同候选的轮换门。
+- **D027 / CP008 / V019**：baseline-first batch 确认 7 篇合法 baseline，完成 5 张卡和逐卡碰撞收据；
+  fresh-context verifier 复验 PASS（P0/P1/P2=0/0/0），survivor=0，terminal=`STRATEGIC_SHORTAGE_CONFIRMED`，
+  停止自动候选生产。
 
 ## 未决项
 
@@ -263,7 +275,8 @@ lightweight persistence。六案审计重放、自动测试、个人 Skill 同�
 终验均 PASS（P0/P1/P2=0）；既有科学 verdict、dormant longitudinal topic 与
 formal owner 未变。
 
-**2026-08-06 当前入口**：`CANDIDATE_ROTATION_REQUIRED`（epoch 19 / CP007 / D026）。P1 已 closed 为
-`RECENT_BASELINE_UNAVAILABLE / SUPPORTING_ONLY`；C3 已 closed 为 `PHYSICAL_PREMISE_UNSUPPORTED`，
-无 Q# 且 Step 2 未执行。当前无 active carrier，不自动建立下一专题；下一候选必须机制不同、已有
-2019+ 合法 baseline，并先过 inventory/dead-end collision。Step 3、Step 4a、实现与实验仍未授权。
+**2026-08-06 当前入口**：`STRATEGIC_SHORTAGE_CONFIRMED`（epoch 20 / CP008 / D027）。P1 已 closed 为
+`RECENT_BASELINE_UNAVAILABLE / SUPPORTING_ONLY`；C3 已 closed 为 `PHYSICAL_PREMISE_UNSUPPORTED`。
+baseline-first batch 已确认 7 篇合法 baseline、构造 5 张完整卡，但 survivor=0。当前无 active carrier，
+不自动建立下一专题；下一合法动作是用户显式选择改变 candidate source、target chapter 或 research object。
+Step 3、Step 4a、实现与实验仍未授权。

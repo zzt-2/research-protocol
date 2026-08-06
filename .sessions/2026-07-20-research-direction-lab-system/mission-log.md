@@ -108,3 +108,19 @@
 - weight: ADEQUATE
 - drift: ALIGNED
 - next_action: 返回候选池；只考虑机制不同、已有 2019+ 合法 baseline、且通过 inventory/dead-end collision 的候选
+
+## CP008 — 2026-08-06
+
+- event: baseline-first method batch 001 terminal
+- evidence: `projects/thesis-fso/direction-lab/harvest/baseline-first-method-batch-001.md`；7 篇本地全文 baseline；5 张完整方法卡与碰撞收据；system D027/V019
+- formal_science_disposition: STRATEGIC_SHORTAGE_CONFIRMED
+- mission_method_delta: NONE
+- thesis_method_disposition: NO_NEW_METHOD_CANDIDATE
+- intent: BASELINE_FIRST_METHOD_SYNTHESIS_CLOSEOUT
+- mechanism_family: MULTI_MECHANISM_BASELINE_FIRST
+- same_axis_streak: 0
+- deterministic_repair_count: 1
+- no_method_streak: 3
+- weight: ADEQUATE
+- drift: ALIGNED
+- next_action: 等待用户显式选择改变 candidate source、target chapter 或 research object；本轮不建 GW、不检索、不实现、不实验

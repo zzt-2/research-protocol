@@ -5,7 +5,7 @@ method_type: 待定（精读后根据问题方法产出形态确定，见 glossa
 domain: comms
 created: 2026-06-21
 updated: 2026-08-06
-current_step: C3_GROUNDWORK_STEP1_STOPPED（terminal=PHYSICAL_PREMISE_UNSUPPORTED；无四判据Q#；Step 2未执行；专题closed，不改名重开。P1保持RECENT_BASELINE_UNAVAILABLE / SUPPORTING_ONLY / closed。）
+current_step: RDL_STRATEGIC_SHORTAGE_CONFIRMED（baseline-first 7篇合法baseline→5张完整方法卡→0 survivor；不建GW。等待用户显式改变candidate source、target chapter或research object。C3/P1保持closed。）
 current_stage: GROUNDWORK
 ---
 
@@ -27,9 +27,10 @@ current_stage: GROUNDWORK
 
 ### 当前控制面桥接
 
-> **2026-08-06 当前入口：C3 `PHYSICAL_PREMISE_UNSUPPORTED / CLOSED`**。4/4 query 已完成，
-> 无四判据 Q#，Step 2 未执行。当前没有自动下游授权；下一合法动作回上游 RDL 轮换机制不同的新候选。
-> 下方 P1 与 2026-08-02 dormant campaign 均只作历史背景，不再是现行入口。
+> **2026-08-06 当前入口：RDL `STRATEGIC_SHORTAGE_CONFIRMED`**。baseline-first batch 已确认
+> 7 篇 2019+ 合法 baseline，基于其中 5 篇形成 5 张完整动作卡，但 survivor=0。当前没有自动下游
+> 授权；下一合法动作只能由用户显式改变 candidate source、target chapter 或 research object。
+> C3、P1 与 2026-08-02 dormant campaign 均只作历史背景，不再是现行入口。
 
 - **P1 Shared M0-Power FOE–CPE Groundwork（独立专题，2026-08-05）—— CLOSED / 历史背景**：
   Step 1–2 已验收，Step 3 九篇精读由 V004 结构终审 PASS；最后一次 bounded closure 用尽 6/6 query，
@@ -50,11 +51,17 @@ current_stage: GROUNDWORK
   | 3.5 supplement | FORBIDDEN | — | 用户范围 + D002 | Step 4a 禁止 |
   | 4a feasibility | FORBIDDEN | — | 用户范围 + D002 | 实现/仿真禁止 |
 
+- **Baseline-first method batch 001（RDL harvest，2026-08-06）—— CLOSED / 当前入口**：
+  7 篇合法 baseline 覆盖 AGC+DPLL、STSB/FSTS、short-spectrum FOE、fixed-point VV、receiver-side
+  MIMO detection 与 blind radius calibration；5 张完整方法卡分别在 problem evidence、active inventory、
+  历史 dead end 或 strongest cheap alternative 门停止。terminal=`STRATEGIC_SHORTAGE_CONFIRMED`，不推荐候选进入 GW，
+  不制造第六个弱候选。证据见 `direction-lab/harvest/baseline-first-method-batch-001.md`、system D027/V019。
+
 ### 历史背景：2026-08-02 dormant campaign（保留审计，不再称"唯一现行入口"）
 
 > **2026-08-02 D058/V084/CP049 → epoch85 `SATURATED_NO_ACTIVE_CARRIER / DORMANT`**（历史背景）。
 > 该 campaign 只保留历史审计与恢复条件；当前入口以本节上方 C3 closed terminal 与 RDL
-> `CANDIDATE_ROTATION_REQUIRED` 为准。
+> `STRATEGIC_SHORTAGE_CONFIRMED` 为准。
 
 - accepted valid packages：**7**（P01–P06 + P07-R）；它们是局部负面/边界，不是七项贡献。
 - method-production 结果：`METHOD_SIGNAL=0`，active carrier=0；固定 10 包不再是自动执行目标，`remaining_valid_packages` 退役。

@@ -30,8 +30,8 @@ topics:
     title: Research Direction Lab 完整体系设计
     status: active
     created: "2026-07-20"
-    last_updated: "2026-08-06（D026/CP007：C3=PHYSICAL_PREMISE_UNSUPPORTED/closed；current=CANDIDATE_ROTATION_REQUIRED）"
-    description: "长期研究探索体系唯一流程 owner。P1 已 closed 为 RECENT_BASELINE_UNAVAILABLE/SUPPORTING_ONLY；C3 bounded Step 1 完成4组query但未满足历史adaptive-K reopen condition，terminal=PHYSICAL_PREMISE_UNSUPPORTED、无Q#、Step2未执行。当前返回候选轮换门；下一候选须机制不同、已有2019+合法baseline并先过inventory/dead-end collision。"
+    last_updated: "2026-08-06（D027/CP008：baseline-first 7篇合法baseline/5张完整卡/0 survivor；STRATEGIC_SHORTAGE_CONFIRMED）"
+    description: "长期研究探索体系唯一流程 owner。P1 与 C3 均 closed；baseline-first batch 已确认7篇2019+合法baseline并构造5张完整方法卡，分别在problem evidence、action collision、历史dead end或strongest cheap alternative门停止，survivor=0。当前等待用户显式改变candidate source、target chapter或research object；不自动建GW、不实现、不实验。"
     depends_on:
       - slug: framework-evolution
         reason: 继承 R002 Direction Lab 设计和唯一拥有者原则
