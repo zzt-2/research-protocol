@@ -960,3 +960,41 @@ topic-index、registry 与 thesis-fso master-state。主产出固定在 harvest�
 
 用户 2026-08-06 baseline-first method synthesis 执行提示词；三个全文精读子池的结构化摘要；
 baseline-first batch；inventory、P01–P11/G1、AMC、P1、C3、Ch4/Ch5 及 active/superseded decisions。
+
+## D028: 显式改变 research object，启动过采样相干 FSO 同步前端 Groundwork
+
+> status: active
+> date: 2026-08-06
+> 取代：无
+> 扩展：D027（满足其 strategic scope-change gate；不推翻 5 卡与历史 dead-end 结论）
+> 被取代：无
+> 依据：用户原话: voice.md 2026-08-06 + 对照: D027/CP008 + stages/groundwork.md / gw-search.md / gw-acquire.md
+
+### 决策
+
+接收用户对 research object 的显式改变：从“完成帧同步、定时恢复后的 carrier recovery”扩展到含
+RRC、≥2 sps、fractional timing、SCO/drift、frame offset、CFO、Wiener phase noise 与 Gamma-Gamma
+fading 的相干 FSO 接收机同步前端。建立独立 Groundwork 专题，只执行 Phase 0、GW Step 1 与条件式
+Step 2；Step 2 后停在用户覆盖面确认门。
+
+### 理由
+
+D027 的战略门只允许用户改变 candidate source、target chapter 或 research object。本轮直接引入旧
+caller 不具备的 waveform/timing/frame 自由度，属于合法的第三类改变；因此应从正式 GW Step 1
+重新取证，而不是以旧 caller 缺问题直接否决，或把既有 STSB/FSTS/FOE baseline 换场景包装。
+
+### 排除的替代方案
+
+- 不恢复 P1、C3、B5、P03、Q15/G1、AMC 或 dormant campaign；
+- 不把所有 impairment 预先绑成一个方法；
+- 不用 TX payload truth 或无来源极端参数制造问题；
+- 不进入 Step 3、Step 3.5、Step 4a、实现、MVE、仿真或论文 claim。
+
+### 影响范围
+
+RDL control 升到 epoch 21；新增 `2026-08-06-oversampled-coherent-sync-groundwork`。Phase 0 允许只修
+current inventory；历史 T004/T005/D023 不改。新专题 Step 1 最多 6 组 query，Step 2 仅在硬门通过后执行。
+
+### 来源
+
+用户 2026-08-06 过采样相干 FSO 联合同步前端执行提示词。

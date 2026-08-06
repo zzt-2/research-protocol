@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "step": "GW_STEP_2",
+  "date": "2026-08-06",
+  "mode": "bounded_tools_download_then_local_reuse",
+  "network_or_download_performed": true,
+  "initial_download_pipeline": {
+    "tool": "tools/download",
+    "doi_calls": 7,
+    "success": [
+      "10.1109/JLT.2020.3003561"
+    ],
+    "all_failed": [
+      "10.1109/JPHOT.2019.2956086",
+      "10.1109/JPHOT.2023.3265847",
+      "10.1364/OE.520452",
+      "10.1002/sat.1553",
+      "10.1109/JLT.2025.3533197",
+      "10.1364/OE.447448"
+    ],
+    "manual_fallback_paths_after_failure": 0,
+    "stop_loss_note": "Each DOI used one project-tool acquisition path; no manual second or third path was opened, so the three-path cap was not exceeded. Internal tool channels are not represented as separate manual paths."
+  },
+  "targeted_direct_competitor_repair": {
+    "receipt": "projects/thesis-fso/oversampled-sync-groundwork/direct-competitor-acquisition-receipt.json",
+    "jlt_2025": "round 2 success via official arXiv:2409.14400; round 3 not run",
+    "jocn_2026": "failed after three paths: tools/download DOI, official arXiv exact-title search, official Optica access page"
+  },
+  "terminal": "STEP2_READY_FOR_USER_CONFIRMATION",
+  "core_count": 7,
+  "core": [
+    {
+      "doi": "10.1109/JPHOT.2022.3161795",
+      "title": "Symmetric Training Sequence-Based Carrier Frequency Offset Estimation Scheme for Coherent Free-Space Optical Communication",
+      "year": 2022,
+      "origin": "evidence_worktree",
+      "path": "papers/doi/10.1109_jphot.2022.3161795/content.md",
+      "metadata_status": "failed/all_failed",
+      "provenance_warning": "content.md and source.pdf exist although metadata reports all_failed",
+      "content_sha256": "db526ba5e1787efbd05034bd7759e5ccc4ddca34311c979a35464176db40fb69",
+      "source_sha256": "e7d281a30fc15ebfc4ad20ac80985fd627c7b3fcc70e40e7bafb41231ddad1ce",
+      "line_count": 278,
+      "non_block_page": true,
+      "role": "Q1 direct CFSO frame-positioning and CFO baseline",
+      "classification": "CORE"
+    },
+    {
+      "doi": "10.1109/JLT.2020.3003561",
+      "arxiv_id": "1911.11851",
+      "title": "Space-Ground Coherent Optical Links: Ground Receiver Performance With Adaptive Optics and Digital Phase-Locked Loop",
+      "year": 2020,
+      "origin": "evidence_worktree",
+      "path": "papers/doi/10.1109_jlt.2020.3003561/content.md",
+      "metadata_status": "success/arxiv_latex",
+      "content_sha256": "52c1845701fb0fb388b9a359492c6ec77ce4fda34f8e8f405858449541a21e5f",
+      "source_sha256": "439f80ace73dc7dfa3ae7628f7dd054b485c1ff2df02107d535aa254e7c0fa6b",
+      "line_count": 244,
+      "non_block_page": true,
+      "role": "Q2 turbulence and AGC-DPLL carrier-maintenance baseline",
+      "classification": "CORE"
+    },
+    {
+      "doi": "10.1109/JPHOT.2023.3265847",
+      "title": "Carrier FOE Scheme Based on FSTS in Spatial Diversity PM Coherent FSO Communication",
+      "year": 2023,
+      "origin": "main_root_reuse",
+      "path": "D:/code/study/research-protocol/papers/doi/10.1109_jphot.2023.3265847/content.md",
+      "metadata_status": "success/firecrawl_scrape",
+      "content_sha256": "e30a66fe650ff065c65746943b52cc48afc0476900f90421febd1f9b5d351a9f",
+      "source_sha256": null,
+      "line_count": 455,
+      "non_block_page": true,
+      "role": "Q1 integrated frame-synchronization and FOE strong neighbor",
+      "classification": "CORE"
+    },
+    {
+      "doi": "10.1364/OE.520452",
+      "title": "Enhanced frame synchronization and carrier recovery in coherent FSO communication: a pseudo-random and cyclic QPSK approach",
+      "year": 2024,
+      "origin": "main_root_reuse",
+      "path": "D:/code/study/research-protocol/papers/doi/10.1364_oe.520452/content.md",
+      "metadata_status": "success/firecrawl_scrape",
+      "content_sha256": "49a7fd02db0a2758e3998c678f56190fbaa9d029d4cba346320a8e94f8193edd",
+      "source_sha256": null,
+      "line_count": 891,
+      "non_block_page": true,
+      "non_block_note": "login banner appears at top, but article body, methods and references are present",
+      "role": "Q1 strongest same-scene frame and carrier recovery neighbor",
+      "classification": "CORE"
+    },
+    {
+      "doi": "10.1002/sat.1553",
+      "title": "Review and Analysis of Digital Signal Processing Algorithms for Coherent Optical Satellite Links",
+      "year": 2025,
+      "origin": "main_root_reuse",
+      "path": "D:/code/study/research-protocol/papers/doi/10.1002_sat.1553/content.md",
+      "metadata_status": "success/firecrawl_scrape",
+      "content_sha256": "b40962d6e9f8c35e5f38dc2ce77aeefd93c4b4fba850d52c7dead95a463a7d0a",
+      "source_sha256": null,
+      "line_count": 1582,
+      "non_block_page": true,
+      "role": "satellite DSP review and timing/carrier baseline entry",
+      "classification": "CORE"
+    },
+    {
+      "doi": "10.1109/ICSOS59710.2023.10490279",
+      "title": "Frame format and DSP receiver design for a 56-GBaud GEO DP-QPSK coherent optical feeder link",
+      "year": 2023,
+      "origin": "main_root_reuse",
+      "path": "D:/code/study/research-protocol/papers/doi/10.1109_icsos59710.2023.10490279/content.md",
+      "metadata_status": "success/firecrawl_scrape",
+      "content_sha256": "70b0277f55c2207ff74085e4cd6ab2e571a823841ece1091dcd9002163d5927b",
+      "source_sha256": "0a2bd126de429c06845df40979678790ea66c7572d49b1072e03250f5643f67e",
+      "line_count": 873,
+      "non_block_page": true,
+      "role": "2-sps GEO DSP chain, coarse-CFO and timing-recovery baseline",
+      "classification": "CORE"
+    },
+    {
+      "doi": "10.1109/JLT.2025.3533197",
+      "arxiv_id": "2409.14400",
+      "title": "Preamble Design for Joint Frame Synchronization, Frequency Offset Estimation, and Channel Estimation in Upstream Burst-Mode Detection of Coherent PON",
+      "year": 2025,
+      "origin": "evidence_worktree_targeted_round2",
+      "path": "papers/arxiv/2409.14400/content.md",
+      "metadata_status": "success/arxiv_pdf",
+      "content_sha256": "73b2623b7d39199e31c801694dc78bfbc36fe5726ed5f5e28aa172bb525ccc81",
+      "source_sha256": "601cbe1cbedffbe904551e64f19b5bf0259266c4d10d5b896bc8b846b4ecc443",
+      "line_count": 466,
+      "non_block_page": true,
+      "role": "closest acquired direct competitor for clock recovery plus frame synchronization and FOE",
+      "classification": "CORE"
+    }
+  ],
+  "failed_direct_acquisitions": [
+    {
+      "doi": "10.1109/JPHOT.2019.2956086",
+      "metadata_path": "papers/doi/10.1109_jphot.2019.2956086/metadata.json",
+      "status": "failed/all_failed",
+      "content_present": false
+    },
+    {
+      "doi": "10.1364/OE.447448",
+      "metadata_path": "papers/doi/10.1364_oe.447448/metadata.json",
+      "status": "failed/all_failed",
+      "content_present": false
+    },
+    {
+      "doi": "10.1364/JOCN.587273",
+      "metadata_path": "papers/doi/10.1364_jocn.587273/metadata.json",
+      "status": "failed_after_three_paths",
+      "content_present": false,
+      "risk": "UNRESOLVED_HIGH_RISK_NEAR_COLLISION",
+      "receipt": "projects/thesis-fso/oversampled-sync-groundwork/direct-competitor-acquisition-receipt.json"
+    }
+  ],
+  "initial_acquisition_paths_attempted": 7,
+  "targeted_repair_additional_paths_attempted": 4,
+  "total_project_paths_attempted": 11,
+  "failed_path_counts": {
+    "10.1109/JPHOT.2019.2956086": 1,
+    "10.1364/OE.447448": 1,
+    "10.1364/JOCN.587273": 3
+  },
+  "internal_channel_breakdown_auditable": false,
+  "coverage": {
+    "q1": "direct-competitor coverage includes JLT 2025; generic shared-preamble clock/frame/frequency claim is occupied, but no same-information/action/task coupled fractional-timing collision is confirmed; JOCN 2026 remains a user-visible high-risk full-text gap; novelty not established",
+    "q2": "physical motivation covered; quantitative SCO/fade joint-loss-of-lock and reacquisition evidence remains open",
+    "requires_user_confirmation_before_step3": true
+  }
+}

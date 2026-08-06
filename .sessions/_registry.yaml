@@ -30,8 +30,8 @@ topics:
     title: Research Direction Lab 完整体系设计
     status: active
     created: "2026-07-20"
-    last_updated: "2026-08-06（D027/CP008：baseline-first 7篇合法baseline/5张完整卡/0 survivor；STRATEGIC_SHORTAGE_CONFIRMED）"
-    description: "长期研究探索体系唯一流程 owner。P1 与 C3 均 closed；baseline-first batch 已确认7篇2019+合法baseline并构造5张完整方法卡，分别在problem evidence、action collision、历史dead end或strongest cheap alternative门停止，survivor=0。当前等待用户显式改变candidate source、target chapter或research object；不自动建GW、不实现、不实验。"
+    last_updated: "2026-08-06（CP009/D003：过采样同步前端 Step 2 已就绪；等待用户确认）"
+    description: "长期研究探索体系唯一流程 owner。D027 的战略改变门已由用户显式改变 research object 满足；D028/CP009 已完成过采样相干 FSO 同步前端 GW Step 1–2。当前只允许用户确认 7 篇 CORE 与 JOCN 2026 高风险全文缺口，或指定补充/替换文献；不自动进入 Step 3、不实现、不实验。"
     depends_on:
       - slug: framework-evolution
         reason: 继承 R002 Direction Lab 设计和唯一拥有者原则
@@ -44,6 +44,23 @@ topics:
       - .sessions/2026-07-20-research-direction-lab-system/
       - docs/superpowers/specs/2026-07-20-research-direction-lab-system-blueprint.md
       - docs/superpowers/plans/2026-07-20-research-direction-lab-system-implementation.md
+
+  - slug: 2026-08-06-oversampled-coherent-sync-groundwork
+    title: 过采样相干 FSO 联合同步前端 Groundwork
+    status: active
+    created: "2026-08-06"
+    last_updated: "2026-08-06（D003：最近直接竞品补齐；等待用户确认 7 篇 CORE 与 JOCN 缺口）"
+    description: "显式改变 research object 的正式 Groundwork 专题。只执行 Phase 0、GW Step 1 与条件式 Step 2；包含 RRC/≥2sps/timing/SCO/frame/CFO/Wiener PN/Gamma-Gamma，Step 2 后停在用户覆盖面确认门，不进 Step 3/实现/仿真。"
+    depends_on:
+      - slug: 2026-07-20-research-direction-lab-system
+        reason: 继承 D027 战略短缺终态与 D028 显式 research-object scope change
+      - slug: framework-evolution
+        reason: 继承 FR-22/FR-23 与问题四判据唯一拥有者
+    conflicts_with: []
+    produces:
+      - .sessions/2026-08-06-oversampled-coherent-sync-groundwork/
+      - projects/thesis-fso/literature_notes_oversampled_sync.md
+      - projects/thesis-fso/oversampled-sync-groundwork/step2-coverage-report.md
 
   - slug: 2026-07-23-research-direction-lab-longitudinal-test
     title: Research Direction Lab 长程真实运行测试

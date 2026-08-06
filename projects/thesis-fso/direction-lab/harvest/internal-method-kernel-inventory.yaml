@@ -2,6 +2,8 @@ schema_version: 1
 generated: 2026-08-04
 owner: .sessions/2026-07-09-thesis-writing/S018
 decision: D025
+reconciled: 2026-08-06
+reconciliation_authority: ".sessions/2026-07-20-research-direction-lab-system/decisions.md#D023"
 authority_note: >-
   本表盘点可部署动作，不以 METHOD_SIGNAL 数量代替方法能力。method_like=true
   必须同时有统一 input-action-output 与传统 baseline；chapter_capable=true 必须通过
@@ -176,16 +178,39 @@ candidates:
     components: [ccisp, p01_snr_adapter, p02_weak_region_retune, continuous_GG_boundary]
     unified_chain: pilot_SNR_estimator -> operating_region_calibration -> CCISP_branch_action
     baseline: [original_CCISP_selector, global_retune, oracle_operating_point]
-    grade: NEEDS_ONE_BOUNDED_PACKAGE
-    rationale: P01 给出真实 receiver-visible action 且恢复 4/5 harm cells；P02 只能作为 region-aware calibration rule；缺正式交叉网格和 weak@9 残余机制闭合
+    grade: REJECT
+    rationale: >-
+      T004 bounded closure 已结束。历史诊断中 ordinary regional retune 相对 online candidate
+      高 0.0961 dB（candidate-retune=-0.0961 dB，95% CI [-0.1060,-0.0862]）；新 truth-isolated
+      dev full chain 中等容量 B2 regional retune 为 +0.30846 dB，online calibration 为 +0.26750 dB，
+      后者仍低 0.04096 dB。包在 held-out 前又因 immutable evidence gate 用尽一次修复后仍 FAIL，
+      terminal=REJECT；因此没有合法 held-out 增益，也不得把“吸收”扩大成正式科学 null。
+    evidence:
+      - "commit:1140134e89e8b0571274944cb44471ab6403481f:projects/thesis-fso/direction-lab/harvest/2a-calibration-aware-cpr-method-package.md"
+      - "commit:1140134e89e8b0571274944cb44471ab6403481f:projects/thesis-fso/worker-logs/step-043-2a-calibration-aware-cpr-closure.md"
+      - "commit:1140134e89e8b0571274944cb44471ab6403481f:projects/simulation/results/2a_calibration_aware_cpr_closure/independent-verifier-report.md"
+    prohibited_revival: >-
+      不得把 pilot-SNR online calibration、ordinary region retune 或 selector threshold 重调改名为新方法；
+      不得声称 current-window pilot information 已证明 load-bearing、存在 held-out gain，或 T004 已形成 Ch4 方法。
 
   - id: 2B
     name: Low-Complexity Branch-Routed and Fixed-Point Adaptive CPR
     components: [branch_route_b, p03_fixed_point]
     unified_chain: quantized_receiver_statistic -> fixed_point_controller -> preselect -> execute_one_branch
     baseline: [route_A_dual_branch, float_route_B, uniform_precision_ladder]
-    grade: NEEDS_ONE_BOUNDED_PACKAGE
-    rationale: route B 是真实方法增量；Q(8,6) 只能作为同一部署链的实现组成；缺 full-grid end-to-end operations/latency 和真实综合资源
+    grade: SUPPORTING_ONLY
+    rationale: >-
+      T005 已闭合 396000 窗的 single-branch scheduling 身份与软件时延，但该动作签名就是 CCISP
+      已有的 select-before-execute/只执行所选分支，不再构成独立 Ch5 方法。Q(8,6) 子链 verifier FAIL：
+      360 shards 漏记 459 次 stage-2，13 dB 状态不可表示；只保留受限 BER/负面边界材料。
+    evidence:
+      - "commit:67970307a051dd8149e1a750498a20674dfcfe6f:projects/thesis-fso/direction-lab/harvest/2b-fixed-point-branch-routed-cpr-method-package.md"
+      - "commit:67970307a051dd8149e1a750498a20674dfcfe6f:projects/thesis-fso/worker-logs/step-044-2b-fixed-point-branch-routed-cpr-closure.md"
+      - "commit:67970307a051dd8149e1a750498a20674dfcfe6f:projects/simulation/results/2b_fixed_point_branch_routed_cpr_closure/final-disposition.json"
+      - .sessions/2026-07-20-research-direction-lab-system/decisions.md#D023
+    prohibited_revival: >-
+      不得把 single-branch scheduling 从 CCISP 拆出后另称新方法；不得声称 Q(8,6) 全链 bit-true
+      成本闭合、全 SNR 无损、FPGA/PPA 已验证或总接收机复杂度下降 74.6%。
 
   - id: 2C
     name: Receiver-Visible Coded Calibration Method

@@ -5,7 +5,7 @@ method_type: 待定（精读后根据问题方法产出形态确定，见 glossa
 domain: comms
 created: 2026-06-21
 updated: 2026-08-06
-current_step: RDL_STRATEGIC_SHORTAGE_CONFIRMED（baseline-first 7篇合法baseline→5张完整方法卡→0 survivor；不建GW。等待用户显式改变candidate source、target chapter或research object。C3/P1保持closed。）
+current_step: OVERSAMPLED_SYNC_GW_STEP2_READY_FOR_USER_CONFIRMATION（6 query→2张机制不同预卡→7篇CORE含最近直接竞品；未经用户确认JOCN缺口不得进入Step3。C3/P1保持closed。）
 current_stage: GROUNDWORK
 ---
 
@@ -27,10 +27,18 @@ current_stage: GROUNDWORK
 
 ### 当前控制面桥接
 
-> **2026-08-06 当前入口：RDL `STRATEGIC_SHORTAGE_CONFIRMED`**。baseline-first batch 已确认
-> 7 篇 2019+ 合法 baseline，基于其中 5 篇形成 5 张完整动作卡，但 survivor=0。当前没有自动下游
-> 授权；下一合法动作只能由用户显式改变 candidate source、target chapter 或 research object。
-> C3、P1 与 2026-08-02 dormant campaign 均只作历史背景，不再是现行入口。
+> **2026-08-06 当前入口：`OVERSAMPLED_SYNC_GW_STEP2_READY_FOR_USER_CONFIRMATION`**。用户已依
+> D028 显式改变 research object；新专题完成 Phase 0、GW Step 1 与 Step 2：6 query、140 raw /
+> 130 unique、两张机制不同预卡、7 篇 CORE（含 JLT 2025 最近直接竞品）。下一合法动作仅为用户确认
+> 当前覆盖面与 JOCN 2026 三路径失败缺口，或指定补充/替换
+> 文献；未经确认不得进入 Step 3。C3、P1、baseline-first batch 与 2026-08-02 dormant campaign
+> 均只作历史背景，不再是现行入口。
+
+- **过采样相干 FSO 联合同步前端（独立专题，2026-08-06）—— STEP 2 READY / 待用户确认**：
+  Q1 为 sample-level frame/fractional-timing/CFO acquisition；Q2 为 GG fade 与 SCO 下 timing/carrier
+  maintenance/reacquisition。当前只有预卡，无方法 claim。完整 testbed 11–14 日，候选最小切片分别
+  5.5–7.5 日、7–9 日，均不满足“完整平台重建”的工程停止门。权威证据见专题 D003、S001、V003 PASS、
+  `literature_notes_oversampled_sync.md` 与 Step 1/2/direct-competitor receipts。
 
 - **P1 Shared M0-Power FOE–CPE Groundwork（独立专题，2026-08-05）—— CLOSED / 历史背景**：
   Step 1–2 已验收，Step 3 九篇精读由 V004 结构终审 PASS；最后一次 bounded closure 用尽 6/6 query，

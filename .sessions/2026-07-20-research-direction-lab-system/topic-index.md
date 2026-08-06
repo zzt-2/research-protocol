@@ -4,31 +4,29 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 20
+  control_epoch: 22
   role: RDL_MASTER
   mission: 设计并验证轻量方法构造车道，使 Ch4/Ch5 优先形成学位论文级可命名方法
-  active_lane: STRATEGIC_SHORTAGE_CONFIRMED
-  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D027
-  decision_gate: 7篇合法baseline已形成5张完整卡但survivor=0；改变candidate source、target chapter或research object前不得继续生产
+  active_lane: OVERSAMPLED_SYNC_STEP2_USER_CONFIRMATION
+  authority_pointer: .sessions/2026-08-06-oversampled-coherent-sync-groundwork/decisions.md#D003
+  decision_gate: Step1存活且Step2已核验7篇CORE含最近直接竞品；未经用户确认JOCN高风险缺口不得进入Step3
   allowed_actions:
-    - PORTFOLIO_MAP
-    - INVENTORY_COLLISION_CHECK
-    - STRATEGIC_SCOPE_CHANGE_DECISION
+    - USER_COVERAGE_CONFIRMATION
+    - CORE_LITERATURE_REPLACEMENT
   forbidden_actions:
     - SCIENTIFIC_EXPERIMENT_BEFORE_GW
-    - BROAD_SEARCH_BEFORE_SURVIVOR
     - OLD_CAMPAIGN_REOPEN
     - COMMON_PARAMS_MUTATION
     - FORMAL_STAGE_CHANGE
     - GROUNDWORK_STEP3_OR_LATER
     - METHOD_IMPLEMENTATION_OR_SIMULATION
   mission_log_ref: .sessions/2026-07-20-research-direction-lab-system/mission-log.md
-  mission_checkpoint: CP008
-  next_legal_action: 等待用户显式选择改变candidate source、target chapter或research object；不自动建立GW专题
+  mission_checkpoint: CP009
+  next_legal_action: 等待用户确认当前7篇CORE覆盖面及JOCN 2026全文缺口，或指定补充/替换文献；不自动进入Step3
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-06（D027/CP008：baseline-first 7篇/5卡/0 survivor；STRATEGIC_SHORTAGE_CONFIRMED）
+> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-06（CP009：过采样同步前端 Step 2 已就绪，等待用户确认）
 
 ## 专题信息
 
@@ -69,6 +67,8 @@ rdl_control:
 - 基于 D027，已在不新增 broad search 的前提下完成 baseline-first batch：7 篇合法 baseline、5 张完整
   方法卡、0 survivor。当前停止自动候选生产；只有用户显式改变 candidate source、target chapter 或
   research object 后才可继续，本决策不自动创建 GW 或授权实验。
+- 基于 D028，用户已显式选择改变 research object，建立过采样相干 FSO 联合同步前端专题；本轮只允许
+  Phase 0、GW Step 1 与条件式 Step 2，Step 2 后停在用户覆盖面确认门。
 
 ### 明确不含
 
@@ -79,6 +79,13 @@ rdl_control:
 - 不批量迁移或删除旧科学目录；新布局渐进采用，旧历史继续 append-only 保留。
 
 ### 范围变更记录
+
+- **[2026-08-06] D028**：显式改变 research object，启动过采样相干 FSO 同步前端 Groundwork。
+  - 原因：D027 已确认原 carrier-recovery caller 与本地候选源 `STRATEGIC_SHORTAGE_CONFIRMED`；用户明确
+    引入 waveform/timing/frame/SCO 等新物理与系统自由度。
+  - 新范围：先做 2A/2B authority reconciliation，再执行新专题 GW Step 1；只有至少两个机制不同 Q#
+    存活且未触发停止条件时才执行 Step 2，随后停门。
+  - 影响的未决项：D027 的“等待用户战略选择”已满足；Step 3/4a/实现/仿真继续禁止。
 
 - **[2026-08-06] D027**：baseline-first 候选轮换闭合为 `STRATEGIC_SHORTAGE_CONFIRMED`。
   - 原因：7 篇 2019+ 合法 baseline 已在手，5 张机制不同的方法卡分别在 problem evidence、action collision、

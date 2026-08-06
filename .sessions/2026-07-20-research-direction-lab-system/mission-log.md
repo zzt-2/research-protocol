@@ -124,3 +124,19 @@
 - weight: ADEQUATE
 - drift: ALIGNED
 - next_action: 等待用户显式选择改变 candidate source、target chapter 或 research object；本轮不建 GW、不检索、不实现、不实验
+
+## CP009 — 2026-08-06
+
+- event: 过采样相干 FSO 同步前端 GW Step 1–2 覆盖面门
+- evidence: 新专题 D001–D003/S001/V003 PASS；6 query=140 raw/130 unique；7 CORE（含JLT 2025最近直接竞品）；Step 1/2/direct-competitor receipts；静态 testbed BOM
+- formal_science_disposition: STEP2_READY_FOR_USER_CONFIRMATION
+- mission_method_delta: NONE
+- thesis_method_disposition: PRECARDS_ONLY_NO_CLAIM
+- intent: USER_COVERAGE_CONFIRMATION
+- mechanism_family: SAMPLE_LEVEL_ACQUISITION_AND_FADE_AWARE_SYNC_MAINTENANCE
+- same_axis_streak: 0
+- deterministic_repair_count: 1
+- no_method_streak: 0
+- weight: ADEQUATE
+- drift: ALIGNED
+- next_action: 等待用户确认7篇CORE与JOCN 2026三路径失败缺口，或指定补充/替换文献；不自动进入Step3/3.5/4a/实现/仿真

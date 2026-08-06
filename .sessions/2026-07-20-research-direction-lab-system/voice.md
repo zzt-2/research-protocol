@@ -119,3 +119,8 @@
 [转述:执行提示词] "C3 已由 CP004/D-011 否决，不得恢复；P1 已 SUPPORTING_ONLY，不得改名恢复；不修改 Skill/controller；不实现、不仿真、不跑 MVE。" → D027
 [转述:执行提示词] "只保留 0–2 个 survivor，不凑数；若无合法 survivor，终局为 STRATEGIC_SHORTAGE_CONFIRMED，不制造第六个弱候选。" → D027
 [转述:执行提示词] "单次最终 commit，不 push；四个既有 p05_run*.log 不修改、不暂存。" → D027
+
+### 过采样相干 FSO 联合同步前端执行提示词
+
+[转述:执行提示词] "从现有：‘完成帧同步、定时恢复后的 DA/NDA carrier recovery’显式扩展为：‘含脉冲成形、过采样、分数定时偏差、采样钟偏差/漂移、帧偏移、频偏和相位噪声的相干 FSO 接收机同步前端’。" → D028
+[转述:执行提示词] "不得进入 Step 3、Step 3.5、Step 4a、代码实现、仿真或方法 claim。" → D028

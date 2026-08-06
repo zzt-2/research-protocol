@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-08-06",
+  "scope": "Direct-competitor acquisition repair only; no Step 3 reading or method claim.",
+  "round_policy": {
+    "maximum_paths_per_paper": 3,
+    "path_1": "tools/download DOI",
+    "path_2": "official/author preprint search followed by tools/download",
+    "path_3": "IEEE blit for JLT, or official OA/publisher path for JOCN",
+    "paywall_or_antibot_bypass": false
+  },
+  "papers": [
+    {
+      "doi": "10.1109/JLT.2025.3533197",
+      "title": "Preamble Design for Joint Frame Synchronization, Frequency Offset Estimation, and Channel Estimation in Upstream Burst-Mode Detection of Coherent PON",
+      "authors": [
+        "Yongxin Sun",
+        "Hexun Jiang",
+        "Yicheng Xu",
+        "Mengfan Fu",
+        "Yixiao Zhu",
+        "Lilin Yi",
+        "Weisheng Hu",
+        "Qunbi Zhuge"
+      ],
+      "identity_sources": [
+        "https://api.crossref.org/works/10.1109%2FJLT.2025.3533197",
+        "https://arxiv.org/abs/2409.14400"
+      ],
+      "attempts": [
+        {
+          "round": 1,
+          "path": "tools/download DOI",
+          "result": "existing_same_day_all_failed",
+          "evidence": "papers/doi/10.1109_jlt.2025.3533197/metadata.json",
+          "rerun": false
+        },
+        {
+          "round": 2,
+          "path": "author preprint arXiv:2409.14400 via tools/download",
+          "result": "success",
+          "evidence": "papers/arxiv/2409.14400/metadata.json"
+        }
+      ],
+      "round_3": "not_run_after_success",
+      "acquisition": {
+        "status": "success",
+        "provenance": "official arXiv PDF",
+        "source_url": "https://arxiv.org/pdf/2409.14400",
+        "source_path": "papers/arxiv/2409.14400/source.pdf",
+        "source_sha256": "601cbe1cbedffbe904551e64f19b5bf0259266c4d10d5b896bc8b846b4ecc443",
+        "source_bytes": 5528235,
+        "content_path": "papers/arxiv/2409.14400/content.md",
+        "content_sha256": "73b2623b7d39199e31c801694dc78bfbc36fe5726ed5f5e28aa172bb525ccc81",
+        "content_bytes": 52664,
+        "content_line_count": 466,
+        "quality_gate": "PASS: >=50 lines, substantive sections/equations/results, and no interception or login page."
+      },
+      "receiver_action_evidence": {
+        "receiver_visible_input": [
+          "papers/arxiv/2409.14400/content.md:43-57 — burst waveform with TS-A and TS-B enters receiver DSP; TS-A supports frame detection/clock recovery and TS-B supports data-aided modules.",
+          "papers/arxiv/2409.14400/content.md:143 — the synchronization metric is computed from received X/Y-polarization samples."
+        ],
+        "clock_or_timing_action": [
+          "papers/arxiv/2409.14400/content.md:55-57 — clock recovery removes sampling-phase offset using the Godard algorithm before TS-B frame synchronization and FOE.",
+          "papers/arxiv/2409.14400/content.md:43 — TS-A, a distinct preamble section, is assigned to frame detection and clock recovery."
+        ],
+        "frame_and_cfo_action": [
+          "papers/arxiv/2409.14400/content.md:135-155 — frame synchronization uses received-sample sliding metrics robust to frequency offset and polarization rotation.",
+          "papers/arxiv/2409.14400/content.md:157-183 — frequency offset is estimated after frame synchronization from TS-B training units."
+        ],
+        "scene": [
+          "papers/arxiv/2409.14400/content.md:21-31 — upstream coherent TDMA-PON burst-mode receiver with per-burst power, laser-frequency, polarization, and clock differences.",
+          "papers/arxiv/2409.14400/content.md:349-367 — 15-Gbaud DP-16QAM, 11-km SSMF experiment digitized at 100 GSa/s and processed offline."
+        ],
+        "sample_level_fractional_timing": "present as sampling-phase-offset clock recovery, but algorithm detail is only identified as Godard and is separate from TS-B FS/FOE",
+        "sampling_clock_offset_sco": "not evidenced; an exhaustive term scan found no SCO, sampling-frequency-offset, ppm, or drift estimator/controller"
+      },
+      "collision_assessment": {
+        "same_receiver_information": "partial: a common burst preamble is receiver-visible, but timing uses TS-A/Godard while FS/FOE use TS-B",
+        "same_action": "partial: covers sampling-phase correction, FS, and FOE, but sequentially and across distinct preamble sections; no SCO action",
+        "same_task_and_scene": "no: coherent fiber PON burst reception, not coherent FSO",
+        "q1_collision": "NO_CONFIRMED_FULL_COLLISION",
+        "constraint": "The generic claim 'one preamble supports clock/frame/frequency acquisition' is already occupied; Q1 can only survive as an explicitly coupled sample-level estimator under FSO impairments, not as a scene rename or mere preamble sharing."
+      }
+    },
+    {
+      "doi": "10.1364/JOCN.587273",
+      "title": "Joint time-frequency domain feature exploitation for a single burst-mode preamble in a next-generation coherent optical access network",
+      "authors": [
+        "Jinqi Xiong",
+        "Yuheng Liu",
+        "Mingzhu Yin",
+        "Ji Zhou",
+        "Fan Li"
+      ],
+      "identity_sources": [
+        "https://api.crossref.org/works/10.1364%2FJOCN.587273",
+        "https://opg.optica.org/jocn/abstract.cfm?uri=jocn-18-5-433"
+      ],
+      "attempts": [
+        {
+          "round": 1,
+          "path": "tools/download DOI",
+          "result": "all_failed",
+          "evidence": "papers/doi/10.1364_jocn.587273/metadata.json"
+        },
+        {
+          "round": 2,
+          "path": "official arXiv API exact-title search",
+          "result": "no_match",
+          "query_url": "https://export.arxiv.org/api/query?search_query=all:%22Joint%20time-frequency%20domain%20feature%20exploitation%22&start=0&max_results=10",
+          "total_results": 0
+        },
+        {
+          "round": 3,
+          "path": "official Optica publisher page",
+          "result": "not_accessible",
+          "publisher_evidence": "The article page labels the paper Not Accessible and requires library/personal/institutional access."
+        }
+      ],
+      "acquisition": {
+        "status": "failed_after_three_paths",
+        "content_path": null,
+        "quality_gate": "FAIL: no lawful full text acquired"
+      },
+      "primary_source_abstract_scope": {
+        "receiver_visible_input": "single burst-mode preamble",
+        "clock_or_timing_action": "clock recovery in the frequency domain",
+        "frame_and_cfo_action": "frame synchronization and FOE in the time domain",
+        "scene": "32-GBaud DP-16QAM coherent optical access network",
+        "sample_level_fractional_timing_or_sco": "UNRESOLVED_WITHOUT_FULL_TEXT"
+      },
+      "collision_assessment": {
+        "q1_collision": "UNRESOLVED_HIGH_RISK",
+        "reason": "The official abstract overlaps Q1's receiver-known preamble and clock/frame/FOE action set more closely than the JLT paper, but the unavailable full text prevents verification of fractional-timing/SCO state, coupling, and exact comparator contract."
+      }
+    }
+  ],
+  "summary": {
+    "at_least_one_direct_competitor_full_text": true,
+    "successful_full_texts": 1,
+    "failed_full_texts": 1,
+    "q1_collision": "NO_CONFIRMED_FULL_COLLISION_BUT_JOCN_2026_REMAINS_A_BLOCKING_HIGH_RISK_NEAR_COLLISION_FOR_NOVELTY_CLAIMS",
+    "next_action": "Ask the user to supply DOI 10.1364/JOCN.587273 or explicitly accept the coverage gap before any Step 3 novelty or method claim."
+  }
+}

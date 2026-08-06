@@ -1,0 +1,84 @@
+{
+  "schema": "gw-step1-search-receipt/v1",
+  "research_object": "oversampled coherent FSO joint synchronization front-end",
+  "generated_at": "2026-08-06",
+  "evidence_level": "metadata_and_search_snippet_only",
+  "query_budget": {
+    "maximum": 6,
+    "used": 6,
+    "additional_queries": 0
+  },
+  "archives": [
+    {
+      "file": "search-archive/2026-08-06/oversampled-sync-q1-timing-sco.json",
+      "sha256": "2550ff4d5f13c273fefb87645ea0444ebb11d5606317543b40dc0571100f7f89",
+      "timestamp": "2026-08-06T11:50:47.146578+08:00",
+      "query": "coherent optical free-space optical symbol timing recovery Gardner Mueller Muller fractional delay sampling clock offset",
+      "declared_total": 29,
+      "parsed_result_count": 29,
+      "requested_sources": ["s2", "openalex", "serpapi", "tavily", "firecrawl", "exa"]
+    },
+    {
+      "file": "search-archive/2026-08-06/oversampled-sync-q2-feedforward-clock.json",
+      "sha256": "fecbc83e9f4fb072b3f7c141f70ae3c13811cd868c321a71def1bbb8008f006d",
+      "timestamp": "2026-08-06T11:52:12.201674+08:00",
+      "query": "coherent optical receiver feedforward timing recovery oversampling pulse shaping fractional timing sampling clock drift",
+      "declared_total": 36,
+      "parsed_result_count": 36,
+      "requested_sources": ["s2", "openalex", "serpapi", "tavily", "firecrawl", "exa"]
+    },
+    {
+      "file": "search-archive/2026-08-06/oversampled-sync-q3-frame-cfo.json",
+      "sha256": "89800bbacab3bed3af3af074dd932aaf960ce588bf3d16e47f634633dbfd4bd4",
+      "timestamp": "2026-08-06T11:52:49.518186+08:00",
+      "query": "coherent free-space optical joint frame synchronization carrier frequency offset Park Schmidl Cox STSB FSTS",
+      "declared_total": 13,
+      "parsed_result_count": 13,
+      "requested_sources": ["s2", "openalex", "serpapi", "tavily", "firecrawl", "exa"]
+    },
+    {
+      "file": "search-archive/2026-08-06/oversampled-sync-q4-burst-coarse-fine.json",
+      "sha256": "ec23f62cfc4fc2af7946757bdea44d7de4ba238d640cc0344f9c284652877aed",
+      "timestamp": "2026-08-06T11:53:40.125381+08:00",
+      "query": "burst-mode coherent optical FSO coarse fine joint frame frequency synchronization preamble Doppler carrier recovery",
+      "declared_total": 25,
+      "parsed_result_count": 25,
+      "requested_sources": ["s2", "openalex", "serpapi", "tavily", "firecrawl", "exa"]
+    },
+    {
+      "file": "search-archive/2026-08-06/oversampled-sync-q5-fade-reacquisition.json",
+      "sha256": "44bbefd169d7bc7b72aae078292243e389eed0a289a9d74e3f1b0e4ab3dc311d",
+      "timestamp": "2026-08-06T11:54:03.662845+08:00",
+      "query": "coherent free-space optical turbulence fading synchronization confidence loss of lock reacquisition joint timing carrier recovery",
+      "declared_total": 21,
+      "parsed_result_count": 21,
+      "requested_sources": ["s2", "openalex", "serpapi", "tavily", "firecrawl", "exa"]
+    },
+    {
+      "file": "search-archive/2026-08-06/oversampled-sync-q6-anchor-baselines.json",
+      "sha256": "47d26f171f5ce29d66b3b46d42a4c2e085595925a008621cbeb25eb1068cf043",
+      "timestamp": "2026-08-06T11:54:55.51721+08:00",
+      "query": "Tang STSB Wang FSTS Fan short-time spectrum Paillier space-ground coherent optical DPLL Gardner Mueller Muller FFT frequency offset",
+      "declared_total": 16,
+      "parsed_result_count": 16,
+      "requested_sources": ["s2", "openalex", "serpapi", "tavily", "firecrawl", "exa"]
+    }
+  ],
+  "recomputed_counts": {
+    "raw_results": 140,
+    "unique_results": 130,
+    "recent_2019_plus_raw": 42,
+    "recent_2019_plus_unique": 39,
+    "deduplication_key": "lowercase DOI; else lowercase arXiv id; else lowercase title with non-alphanumerics collapsed",
+    "result_source_api_counts": {
+      "tavily": 90,
+      "serpapi_scholar": 35,
+      "tavily+tavily": 7,
+      "openalex": 6,
+      "openalex+openalex": 1,
+      "serpapi_scholar+openalex": 1
+    }
+  },
+  "gate_recommendation": "PROCEED_TO_STEP2_ACQUISITION",
+  "caveat": "Counts and candidate claims are metadata-level. No paper was downloaded or read in full during Step 1. Step 2 must close identity, provenance, parameters, direct-competitor scope, and content quality."
+}
