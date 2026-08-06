@@ -115,3 +115,73 @@ D003；V001 保留为失败历史，需 fresh-context V002 复验后才能提交
 
 S001；`independent-verifier-report.md`；`direct-competitor-acquisition-receipt.json`；
 `step2-coverage-report.md`。
+
+## D004: 接受 7 篇 CORE 并授权 Step 3→条件式 Step 3.5
+
+> status: active
+> date: 2026-08-06
+> 取代：无
+> 被取代：无
+> 依据：用户原话: voice.md 2026-08-06 + 验证: V003 + `step2-coverage-report.md`
+
+### 决策
+
+接受当前 7 篇 CORE 覆盖面，允许进入 GW Step 3；只有至少一个 Q# 通过 canonical 四判据，才继续
+Step 3.5。完成 Step 3.5 后停止，不进入 Step 4a、方法实现、testbed 或仿真。
+
+### 理由
+
+V003 已核验 7 篇 CORE 的身份、正文质量和 provenance。JOCN 2026 全文仍缺，但用户明确接受其作为
+Q1 的 `HIGH_RISK` novelty/collision blocker：该缺口不阻止正文精读，却限制 Q1 的 claim ceiling。
+
+### 排除的替代方案
+
+- 不等待 JOCN 2026 无限重试后才开始 Step 3；
+- 不用 JOCN 2026 abstract 冒充全文裁决；
+- 不把 Step 3 survivor 称为 `METHOD_SIGNAL`、Go 或论文方法成立；
+- 不在本轮越过 Step 3.5 进入 Step 4a 或任何实现/实验。
+
+### 影响范围
+
+更新本专题 scope boundary、literature notes 的 GW 进度与 registry 当前状态；Step 3.5 对 JOCN 2026
+仅做有界重试。若仍失败，Q1 不得宣称 exact-action novelty closure。
+
+### 来源
+
+S001 续接；用户 2026-08-06 主控裁决。
+
+## D005: Step 3 无 canonical survivor，禁止触发 Step 3.5
+
+> status: active
+> date: 2026-08-06
+> 取代：无
+> 被取代：无
+> 依据：调研: `step3-deep-read-report.md` + worker logs A/B/C + `stages/glossary.md`
+> 触发原话：无（技术推导）
+
+### 决策
+
+Q1、Q2 均未通过 canonical 四判据，Step 3 terminal 固定为 `STEP3_NO_VALID_PROBLEM`。D004 的
+Step 3.5 条件门未满足，故不执行定向检索、引用链筛查或 JOCN 2026 新一轮获取。
+
+### 理由
+
+Q1 有 2019+ 强顺序 comparator 与可量化产出形态，但 CORE 没有证明该链在目标 C 下因具体 A 失效；
+Q2 没有共同失锁/cheap comparator 不足的正文证据，也没有 2019+ integrated baseline。两者均不能把
+待证假设或跨论文拼接当成 canonical 问题。
+
+### 排除的替代方案
+
+- 不把 Q1 的共享 preamble、框图合并或模块调序写成真正联合动作；
+- 不把 Q2 的单环 fade 失稳与独立 timing 结果拼成共同失锁事实；
+- 不因 JOCN 2026 仍有风险而跳过 survivor 门直接做 Step 3.5；
+- 不把“方法产出形态可想象”替代判据 1/3 的证据缺口。
+
+### 影响范围
+
+本专题停在 Step 3；无 Step 4a 入口、METHOD_SIGNAL、Go、方法实现、testbed 或仿真授权。JOCN 2026
+继续保留 `UNRESOLVED_HIGH_RISK`，但当前 terminal 由更上游的 canonical FAIL 决定。
+
+### 来源
+
+S001 续接；`projects/thesis-fso/oversampled-sync-groundwork/step3-deep-read-report.md`。

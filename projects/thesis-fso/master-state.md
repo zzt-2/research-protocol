@@ -5,7 +5,7 @@ method_type: 待定（精读后根据问题方法产出形态确定，见 glossa
 domain: comms
 created: 2026-06-21
 updated: 2026-08-06
-current_step: OVERSAMPLED_SYNC_GW_STEP2_READY_FOR_USER_CONFIRMATION（6 query→2张机制不同预卡→7篇CORE含最近直接竞品；未经用户确认JOCN缺口不得进入Step3。C3/P1保持closed。）
+current_step: OVERSAMPLED_SYNC_STEP3_NO_VALID_PROBLEM（7篇CORE全文精读；Q1判据1 FAIL，Q2判据1/3 FAIL；Step3.5未触发，无Step4a入口。C3/P1保持closed。）
 current_stage: GROUNDWORK
 ---
 
@@ -27,18 +27,27 @@ current_stage: GROUNDWORK
 
 ### 当前控制面桥接
 
-> **2026-08-06 当前入口：`OVERSAMPLED_SYNC_GW_STEP2_READY_FOR_USER_CONFIRMATION`**。用户已依
-> D028 显式改变 research object；新专题完成 Phase 0、GW Step 1 与 Step 2：6 query、140 raw /
-> 130 unique、两张机制不同预卡、7 篇 CORE（含 JLT 2025 最近直接竞品）。下一合法动作仅为用户确认
-> 当前覆盖面与 JOCN 2026 三路径失败缺口，或指定补充/替换
-> 文献；未经确认不得进入 Step 3。C3、P1、baseline-first batch 与 2026-08-02 dormant campaign
-> 均只作历史背景，不再是现行入口。
+> **2026-08-06 当前入口：`OVERSAMPLED_SYNC_STEP3_NO_VALID_PROBLEM`**。用户已接受 7 篇 CORE 与
+> JOCN 2026 高风险全文缺口；新专题完成 Phase 0 与 GW Step 1–3。Q1 因强顺序 acquisition chain 的
+> 具体失效假设未获正文证实而判据 1 FAIL；Q2 因共同失锁/cheap comparator 不足未证实且无 2019+
+> integrated baseline 而判据 1/3 FAIL。survivor=0，Step 3.5 未触发，无 Step 4a/实现/仿真入口。
+> formal V004 独立验收 PASS、H001 已交接，专题已 `closed`；RDL CP011 只保留用户战略决定门。
+> C3、P1、baseline-first batch 与 2026-08-02 dormant campaign均只作历史背景。
 
-- **过采样相干 FSO 联合同步前端（独立专题，2026-08-06）—— STEP 2 READY / 待用户确认**：
+- **过采样相干 FSO 联合同步前端（独立专题，2026-08-06）—— STEP 3 NO VALID PROBLEM**：
   Q1 为 sample-level frame/fractional-timing/CFO acquisition；Q2 为 GG fade 与 SCO 下 timing/carrier
-  maintenance/reacquisition。当前只有预卡，无方法 claim。完整 testbed 11–14 日，候选最小切片分别
-  5.5–7.5 日、7–9 日，均不满足“完整平台重建”的工程停止门。权威证据见专题 D003、S001、V003 PASS、
-  `literature_notes_oversampled_sync.md` 与 Step 1/2/direct-competitor receipts。
+  maintenance/reacquisition。7 篇 CORE 已通过子 agent 精读；Q1/Q2 均未过 canonical 四判据，故无
+  Step 3 survivor，Step 3.5 未触发，JOCN 2026 未重抓且仍为 `UNRESOLVED_HIGH_RISK`。完整 testbed
+  11–14 日与两个最小切片仅保留工程背景，不构成实现授权。权威证据见专题 D005、S001、
+  `literature_notes_oversampled_sync.md` 与 `oversampled-sync-groundwork/step3-deep-read-report.md`。
+
+  | Oversampled Sync GW Step | 状态 | 证据 | 下游门控 |
+  |---|---|---|---|
+  | 1 search | ✅ | step1 search report/receipt | 两张预卡进入 Step 2 |
+  | 2 acquire | ✅ | 7 CORE + V003 | 用户已确认 |
+  | 3 read | ✅ / no survivor | D005 + step3 report + 7 read notes | Q1/Q2 均未全过四判据 |
+  | 3.5 supplement | NOT_TRIGGERED | survivor=0 | Step 4a 禁止 |
+  | 4a feasibility | FORBIDDEN | 无合法 Q# | 实现/仿真禁止 |
 
 - **P1 Shared M0-Power FOE–CPE Groundwork（独立专题，2026-08-05）—— CLOSED / 历史背景**：
   Step 1–2 已验收，Step 3 九篇精读由 V004 结构终审 PASS；最后一次 bounded closure 用尽 6/6 query，
@@ -59,7 +68,7 @@ current_stage: GROUNDWORK
   | 3.5 supplement | FORBIDDEN | — | 用户范围 + D002 | Step 4a 禁止 |
   | 4a feasibility | FORBIDDEN | — | 用户范围 + D002 | 实现/仿真禁止 |
 
-- **Baseline-first method batch 001（RDL harvest，2026-08-06）—— CLOSED / 当前入口**：
+- **Baseline-first method batch 001（RDL harvest，2026-08-06）—— CLOSED / 历史背景**：
   7 篇合法 baseline 覆盖 AGC+DPLL、STSB/FSTS、short-spectrum FOE、fixed-point VV、receiver-side
   MIMO detection 与 blind radius calibration；5 张完整方法卡分别在 problem evidence、active inventory、
   历史 dead end 或 strongest cheap alternative 门停止。terminal=`STRATEGIC_SHORTAGE_CONFIRMED`，不推荐候选进入 GW，
@@ -68,8 +77,8 @@ current_stage: GROUNDWORK
 ### 历史背景：2026-08-02 dormant campaign（保留审计，不再称"唯一现行入口"）
 
 > **2026-08-02 D058/V084/CP049 → epoch85 `SATURATED_NO_ACTIVE_CARRIER / DORMANT`**（历史背景）。
-> 该 campaign 只保留历史审计与恢复条件；当前入口以本节上方 C3 closed terminal 与 RDL
-> `STRATEGIC_SHORTAGE_CONFIRMED` 为准。
+> 该 campaign 只保留历史审计与恢复条件；当前入口以本节顶部
+> `OVERSAMPLED_SYNC_STEP3_NO_VALID_PROBLEM` 为准。
 
 - accepted valid packages：**7**（P01–P06 + P07-R）；它们是局部负面/边界，不是七项贡献。
 - method-production 结果：`METHOD_SIGNAL=0`，active carrier=0；固定 10 包不再是自动执行目标，`remaining_valid_packages` 退役。

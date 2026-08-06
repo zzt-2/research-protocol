@@ -1,6 +1,6 @@
 # Topic Index: 过采样相干 FSO 联合同步前端 Groundwork
 
-> 状态: active | 创建: 2026-08-06 | 最后更新: 2026-08-06（D003：最近直接竞品补齐；Step 2 等待用户确认）
+> 状态: closed | 创建: 2026-08-06 | 最后更新: 2026-08-06（D005/V004/H001：Step 3 无 canonical survivor，验收与交接完成）
 
 ## 专题信息
 
@@ -25,11 +25,15 @@ baseline 且不与既有 CCISP 动作碰撞的候选研究问题。
 - 静态评估新增 testbed 的最小模块与工程量，不写代码、不运行仿真；
 - 只有 Step 1 未触发停止条件且至少两个机制不同 Q# 预卡存活，才执行 Step 2；
 - Step 2 至少 5 篇 CORE 全文，逐篇完成 identity/provenance/SHA256/≥50 行质量门，随后停在
-  `STEP2_READY_FOR_USER_CONFIRMATION`。
+  `STEP2_READY_FOR_USER_CONFIRMATION`；用户已接受该覆盖面并授权进入 Step 3。
+- GW Step 3：通过子 agent 精读 7 篇 CORE，Q1/Q2 分别形成 M-C-A 与 canonical 四判据；只有至少一个
+  Q# 全过，才进入 Step 3.5。
+- GW Step 3.5：只针对 Step 3 survivor 做最多三轮定向补检索、最高相关竞品双向引用链筛查，以及
+  JOCN 2026 全文有界重试；完成后停止。
 
 ### 明确不含
 
-- 不进入 Step 3、Step 3.5、Step 4a、Contract、方法实现、MVE 或仿真；
+- 不进入 Step 4a、Contract、方法实现、testbed、MVE 或仿真；
 - 不预设所有 impairment 必须同时进入最终问题，不以标题联想或场景换名造 Q#；
 - 不使用 TX payload truth 作部署决策；pilot/preamble 仅作为显式开销的 receiver-known 信息；
 - 不以极端参数制造问题，不用“旧 caller 没有该问题”直接否决新 testbed；
@@ -38,7 +42,12 @@ baseline 且不与既有 CCISP 动作碰撞的候选研究问题。
 
 ### 范围变更记录
 
-- 无。
+- **[2026-08-06] D004**：接受当前 7 篇 CORE 覆盖面，解除 Step 3 禁令，并仅在至少一个 Q# 通过
+  canonical 四判据时进入 Step 3.5。
+  - 原因：用户明确接受 JOCN 2026 全文缺口作为 Q1 的 `HIGH_RISK` novelty/collision blocker，要求按
+    Step 3→条件式 Step 3.5 推进。
+  - 新范围：精读 7 篇 CORE；Q1/Q2 分开裁决；survivor 存在时执行最多三轮 Step 3.5；随后停止。
+  - 影响的未决项：JOCN 2026 若 Step 3.5 后仍无全文，Q1 不得声称 exact-action novelty closure。
 
 ## 已确认结论
 
@@ -51,6 +60,7 @@ baseline 且不与既有 CCISP 动作碰撞的候选研究问题。
 - Step 1 只做问题预判，不声称 glossary 四判据已由全文精读闭合。
 - Step 1 terminal 是硬门；无至少两个机制不同候选 Q# 时不得进入 Step 2。
 - Step 2 后必须停在用户覆盖面确认门，不得自动进入 Step 3。
+- D004 已满足该用户确认门；本轮唯一允许的推进为 Step 3 与条件式 Step 3.5，终态不得越过 Step 4a 入口。
 
 ### 其他结论
 
@@ -58,11 +68,15 @@ baseline 且不与既有 CCISP 动作碰撞的候选研究问题。
   maintenance/reacquisition 两张机制不同预卡存活，但都未完成四判据闭合。
 - Step 2 核验 7 篇 CORE 全文。JLT 2025 最近直接竞品已补齐：其 clock recovery 与 frame/FOE 是
   TS-A/TS-B 顺序分区动作，无 SCO；泛化 preamble claim 已占用，但未证实 sample-level 联合动作碰撞。
-  JOCN 2026 三路径获取失败，保留为用户必须确认的高风险全文缺口。
+  JOCN 2026 三路径获取失败；用户已接受该缺口进入 Step 3，当前继续保留为高风险全文缺口。
 - Q2 有真实 SCO/timing/carrier/fade 物理动机，但双环共同失锁、恢复时间与联合动作增益仍是量化缺口。
 - 完整 testbed 约 11–14 日；Q1/Q2 最小切片分别约 5.5–7.5 日和 7–9 日，均非完整平台重建，
   不触发 `TESTBED_SCOPE_EXCESSIVE`。
-- 当前 terminal：`STEP2_READY_FOR_USER_CONFIRMATION`。
+- 用户接受 7 篇 CORE 覆盖面；JOCN 2026 全文缺失保留为 Q1 `HIGH_RISK` blocker，不阻止 Step 3，
+  但禁止用摘要作全文裁决或宣称 exact-action novelty closure。
+- Step 3 的 7 篇全文均完成身份/方法/实验/问题结构化提取；Q1 判据 1 FAIL，Q2 判据 1/3 FAIL。
+- Step 3 survivor=0；Step 3.5 条件门未触发，JOCN 2026 未新一轮获取。
+- 当前 terminal：`STEP3_NO_VALID_PROBLEM`；唯一 survivor：无。
 
 ## 进展线索
 
@@ -70,17 +84,21 @@ baseline 且不与既有 CCISP 动作碰撞的候选研究问题。
 - **D001**：冻结研究对象、Step 1 停止条件、条件式 Step 2 与禁止边界。
 - **D002**：首次 6-CORE 接收结论，已由 V001 否决并被 D003 取代。
 - **D003**：补入 JLT 2025 最近直接竞品后，以 7 CORE 重裁 Step 2；JOCN 2026 缺口显式留给用户确认。
-- **V001–V003**：独立验收从 FAIL→PARTIAL→PASS；最终只剩 JOCN 2026 全文缺口需用户确认。
+- **D004**：用户接受 7 CORE 与 JOCN 缺口条件，授权 Step 3→条件式 Step 3.5，并冻结本轮终止边界。
+- **D005**：Q1/Q2 均未通过 canonical 四判据；Step 3.5 不触发，本专题停在 Step 3。
+- **V001–V003**：Step 1–2 独立验收从 FAIL→PARTIAL→PASS。
+- **V004**：Step 3 初审 4 阻断项，最小修复后完整复验 PASS；科学裁决与状态链均通过。
+- **H001**：交接 `STEP3_NO_VALID_PROBLEM`、Q1/Q2 失败机制、JOCN 债务和唯一合法恢复条件。
 - 项目证据：`literature_notes_oversampled_sync.md`、Step 1 report/receipt、Step 2 coverage/receipt、
   `testbed-bom.md`。
 
 ## 未决项
 
-- 用户是否确认当前 7 篇 CORE 覆盖面，并接受 JOCN 2026 三路径失败这一高风险缺口；
-- 是否补取 Gu 2019、OE 2022 timing baseline 与 JOCN 2026 全文；
-- Q1 的 fractional timing/frame offset 分布与 Q2 的真实 fade 事件/SCO/双环失锁量化证据。
+- 若未来由用户显式扩大/重启范围，是否从扩关键词重新检索以寻找顺序链失效或双环共同失锁证据；
+- JOCN 2026 全文仍未取得，但当前不触发继续获取。
 
 ## 当前位置
 
-Phase 0、GW Step 1 与 Step 2 已完成；terminal=`STEP2_READY_FOR_USER_CONFIRMATION`。下一合法动作仅为
-用户确认、补充或替换 CORE 文献。未经确认，Step 3 及以后禁止。
+Phase 0、GW Step 1–3 已完成；terminal=`STEP3_NO_VALID_PROBLEM`。Step 3.5 未触发，无 Step 4a 入口。
+专题已验收并交接后关闭。没有自动科学动作；任何新检索、问题重构或重启都需要用户在后续对话
+显式 scope-change 授权。

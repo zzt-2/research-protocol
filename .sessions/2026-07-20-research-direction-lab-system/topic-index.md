@@ -4,29 +4,28 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 22
+  control_epoch: 24
   role: RDL_MASTER
   mission: 设计并验证轻量方法构造车道，使 Ch4/Ch5 优先形成学位论文级可命名方法
-  active_lane: OVERSAMPLED_SYNC_STEP2_USER_CONFIRMATION
-  authority_pointer: .sessions/2026-08-06-oversampled-coherent-sync-groundwork/decisions.md#D003
-  decision_gate: Step1存活且Step2已核验7篇CORE含最近直接竞品；未经用户确认JOCN高风险缺口不得进入Step3
+  active_lane: STRATEGIC_USER_DECISION_GATE
+  authority_pointer: .sessions/2026-08-06-oversampled-coherent-sync-groundwork/decisions.md#D005
+  decision_gate: 7篇CORE精读后Q1判据1失败、Q2判据1和3失败；survivor=0，Step3.5与Step4a均无入口
   allowed_actions:
-    - USER_COVERAGE_CONFIRMATION
-    - CORE_LITERATURE_REPLACEMENT
+    - STRATEGIC_USER_DECISION
   forbidden_actions:
     - SCIENTIFIC_EXPERIMENT_BEFORE_GW
     - OLD_CAMPAIGN_REOPEN
     - COMMON_PARAMS_MUTATION
     - FORMAL_STAGE_CHANGE
-    - GROUNDWORK_STEP3_OR_LATER
+    - GROUNDWORK_STEP3_5_OR_LATER
     - METHOD_IMPLEMENTATION_OR_SIMULATION
   mission_log_ref: .sessions/2026-07-20-research-direction-lab-system/mission-log.md
-  mission_checkpoint: CP009
-  next_legal_action: 等待用户确认当前7篇CORE覆盖面及JOCN 2026全文缺口，或指定补充/替换文献；不自动进入Step3
+  mission_checkpoint: CP011
+  next_legal_action: 等待用户战略决定；不自动扩检索、重构Q1/Q2或启动新的scientific action
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-06（CP009：过采样同步前端 Step 2 已就绪，等待用户确认）
+> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-06（CP011：formal V004/H001 收口，等待用户战略决定）
 
 ## 专题信息
 
@@ -69,6 +68,8 @@ rdl_control:
   research object 后才可继续，本决策不自动创建 GW 或授权实验。
 - 基于 D028，用户已显式选择改变 research object，建立过采样相干 FSO 联合同步前端专题；本轮只允许
   Phase 0、GW Step 1 与条件式 Step 2，Step 2 后停在用户覆盖面确认门。
+- 基于 D029，用户接受 7 篇 CORE 与 JOCN 缺口后，formal GW 已完成 Step 3；Q1/Q2 均无 canonical
+  survivor，Step 3.5 未触发。当前只允许 closeout 与等待下一次用户战略决定。
 
 ### 明确不含
 
@@ -79,6 +80,11 @@ rdl_control:
 - 不批量迁移或删除旧科学目录；新布局渐进采用，旧历史继续 append-only 保留。
 
 ### 范围变更记录
+
+- **[2026-08-06] D029**：接收 formal GW Step 3 terminal，结束本轮过采样同步候选推进。
+  - 原因：用户授权 Step 3→条件式 Step 3.5；7 篇 CORE 精读后 survivor=0。
+  - 新范围：只做独立验收、handoff 与提交；不启动 Step 3.5/4a/实现/仿真。
+  - 影响的未决项：JOCN 2026 继续是全文缺口，但不再是当前自动获取动作；下一方向需用户战略决定。
 
 - **[2026-08-06] D028**：显式改变 research object，启动过采样相干 FSO 同步前端 Groundwork。
   - 原因：D027 已确认原 carrier-recovery caller 与本地候选源 `STRATEGIC_SHORTAGE_CONFIRMED`；用户明确
@@ -259,6 +265,11 @@ rdl_control:
 - **D027 / CP008 / V019**：baseline-first batch 确认 7 篇合法 baseline，完成 5 张卡和逐卡碰撞收据；
   fresh-context verifier 复验 PASS（P0/P1/P2=0/0/0），survivor=0，terminal=`STRATEGIC_SHORTAGE_CONFIRMED`，
   停止自动候选生产。
+- **D028 / CP009**：用户改变 research object，过采样同步 formal GW 完成 Step 1–2 并通过覆盖面确认门。
+- **D029 / CP010**：7 CORE Step 3 精读后 Q1 判据 1 FAIL、Q2 判据 1/3 FAIL；
+  terminal=`STEP3_NO_VALID_PROBLEM`，Step 3.5 未触发，无方法载体。
+- **CP011**：formal V004 独立验收 PASS、H001 已交接且专题转 closed；当前无 active carrier，
+  RDL 只保留用户战略决定门。
 
 ## 未决项
 
@@ -282,8 +293,7 @@ lightweight persistence。六案审计重放、自动测试、个人 Skill 同�
 终验均 PASS（P0/P1/P2=0）；既有科学 verdict、dormant longitudinal topic 与
 formal owner 未变。
 
-**2026-08-06 当前入口**：`STRATEGIC_SHORTAGE_CONFIRMED`（epoch 20 / CP008 / D027）。P1 已 closed 为
-`RECENT_BASELINE_UNAVAILABLE / SUPPORTING_ONLY`；C3 已 closed 为 `PHYSICAL_PREMISE_UNSUPPORTED`。
-baseline-first batch 已确认 7 篇合法 baseline、构造 5 张完整卡，但 survivor=0。当前无 active carrier，
-不自动建立下一专题；下一合法动作是用户显式选择改变 candidate source、target chapter 或 research object。
-Step 3、Step 4a、实现与实验仍未授权。
+**2026-08-06 当前入口**：`STEP3_NO_VALID_PROBLEM`（epoch 24 / CP011 / D029）。过采样同步 formal GW
+已完成 Step 1–3，Q1/Q2 均无 canonical survivor；Step 3.5 未触发。P1、C3 与 baseline-first batch
+只保留历史 closed terminal。formal V004/H001 已收口，当前无 active carrier；下一合法动作仅是等待
+用户战略决定，不自动扩检索、重构 Q1/Q2 或进入 Step 4a、实现与实验。

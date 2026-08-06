@@ -140,3 +140,35 @@
 - weight: ADEQUATE
 - drift: ALIGNED
 - next_action: 等待用户确认7篇CORE与JOCN 2026三路径失败缺口，或指定补充/替换文献；不自动进入Step3/3.5/4a/实现/仿真
+
+## CP010 — 2026-08-06
+
+- event: 过采样相干 FSO 同步前端 GW Step 3 terminal
+- evidence: formal topic D004–D005/S001；7 CORE read notes；`step3-deep-read-report.md`；worker logs A/B/C
+- formal_science_disposition: STEP3_NO_VALID_PROBLEM
+- mission_method_delta: NONE
+- thesis_method_disposition: NO_METHOD_CARRIER
+- intent: FORMAL_CLOSEOUT
+- mechanism_family: SAMPLE_LEVEL_ACQUISITION_AND_FADE_AWARE_SYNC_MAINTENANCE
+- same_axis_streak: 0
+- deterministic_repair_count: 1
+- no_method_streak: 1
+- weight: ADEQUATE
+- drift: ALIGNED
+- next_action: 完成独立验收、handoff与单次提交后停止；不自动扩检索、重抓JOCN、重构Q1/Q2或进入Step4a
+
+## CP011 — 2026-08-06
+
+- event: 过采样同步 formal GW 验收与交接收口
+- evidence: formal V004 PASS；H001；formal topic status=closed；独立 verifier closeout recheck
+- formal_science_disposition: STEP3_NO_VALID_PROBLEM
+- mission_method_delta: NONE
+- thesis_method_disposition: NO_METHOD_CARRIER
+- intent: STRATEGIC_USER_DECISION
+- mechanism_family: SAMPLE_LEVEL_ACQUISITION_AND_FADE_AWARE_SYNC_MAINTENANCE
+- same_axis_streak: 0
+- deterministic_repair_count: 1
+- no_method_streak: 1
+- weight: ADEQUATE
+- drift: ALIGNED
+- next_action: 等待用户显式战略决定；不自动扩检索、重抓JOCN、重构Q1/Q2或启动Step3.5/Step4a/实现/实验

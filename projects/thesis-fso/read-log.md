@@ -20,7 +20,7 @@
 | 10.3390/app11219805 | papers/doi/10.3390_app11219805/content.md | papers/_read_notes/10.3390_app11219805.md | 2026-06-26 | 0 | Step 3 块B补精读（PS方向/PS-QAM Gamma-Gamma理论）| — |
 | 10.1109_JLT.2023.3276637 | papers/doi/10.1109_JLT.2023.3276637/content.md | papers/_read_notes/10.1109_JLT.2023.3276637.md | 2026-07-10 | 0 | 双偏振OSL-GW Step3批1（A多孔径MIMO 2N×2均衡 Ju团队）| blit IEEE doc 10124997 |
 | 10.1364_oe.498562 | papers/doi/10.1364_oe.498562/content.md | papers/_read_notes/10.1364_oe.498562.md | 2026-07-10 | 0 | 双偏振OSL-GW Step3批1（A多孔径WL 4N×2均衡 Ju团队姊妹篇）| — |
-| 10.1002_sat.1553 | papers/doi/10.1002_sat.1553/content.md | papers/_read_notes/10.1002_sat.1553.md | 2026-07-10 | 1(§6补读) | 双偏振OSL-GW Step3批1（sat.1553 §6偏振解复用层补读，原笔记§1-5不动）| 重读，方向=双偏振 |
+| 10.1002_sat.1553 | papers/doi/10.1002_sat.1553/content.md | papers/_read_notes/10.1002_sat.1553.md | 2026-07-10 | 2（§6补读 + oversampled-sync Q2 重读） | 双偏振 OSL + 过采样同步 Q2 maintenance/reacquisition | DOI 10.1002/sat.1553 |
 | 10.1109_RPIC59053.2023.10530744 | papers/doi/10.1109_RPIC59053.2023.10530744/content.md | papers/_read_notes/10.1109_RPIC59053.2023.10530744.md | 2026-07-10 | 0 | 双偏振OSL-GW Step3批2（F双偏振FSO 10Gbps相干接收机）| blit IEEE doc 10530744 |
 | 10.1155_jcnc_4243779 | papers/doi/10.1155_jcnc_4243779/content.md | papers/_read_notes/10.1155_jcnc_4243779.md | 2026-07-10 | 0 | 双偏振OSL-GW Step3批2（F双偏振FSO DP-16QAM MIMO性能分析）| — |
 | 10.1109_ICSOS59710.2023.10490279 | papers/doi/10.1109_ICSOS59710.2023.10490279/content.md | papers/_read_notes/10.1109_ICSOS59710.2023.10490279.md | 2026-07-10 | 0 | 双偏振OSL-GW Step3批2（F双偏振FSO 56GBaud GEO feeder DSP）| — |
@@ -73,4 +73,9 @@
 | 10.1109_iscas48785.2022.9937906 | papers/doi/10.1109_iscas48785.2022.9937906/content.md | papers/_read_notes/10.1109_iscas48785.2022.9937906.md | 2026-08-05 | 0 | Shared M0 FOE–CPE Step 3（FPGA comparator） | DOI 10.1109/ISCAS48785.2022.9937906 |
 | 10.1109_lcomm.2026.3653195 | papers/doi/10.1109_lcomm.2026.3653195/content.md | papers/_read_notes/10.1109_lcomm.2026.3653195.md | 2026-08-05 | 0 | Shared M0 FOE–CPE Step 3（recent ASIC comparator） | DOI 10.1109/LCOMM.2026.3653195 |
 | 10.1109_tsp.2021.3137966 | papers/doi/10.1109_tsp.2021.3137966/content.md | papers/_read_notes/10.1109_tsp.2021.3137966.md | 2026-08-05 | 0 | Shared M0 FOE–CPE Step 3（joint-estimation theory） | DOI 10.1109/TSP.2021.3137966 |
-| 10.1109_jphot.2022.3161795 | papers/doi/10.1109_jphot.2022.3161795/content.md | papers/_read_notes/10.1109_jphot.2022.3161795.md | 2026-08-05 | 0 | Shared M0 FOE–CPE Step 3（FSO FOE alternative） | DOI 10.1109/JPHOT.2022.3161795 |
+| 10.1109_jphot.2022.3161795 | papers/doi/10.1109_jphot.2022.3161795/content.md | papers/_read_notes/10.1109_jphot.2022.3161795.md | 2026-08-05 | 1 | Shared M0 FOE–CPE + oversampled-sync Q1 acquisition | DOI 10.1109/JPHOT.2022.3161795 |
+| 10.1109_jlt.2020.3003561 | papers/doi/10.1109_jlt.2020.3003561/content.md | papers/_read_notes/10.1109_jlt.2020.3003561.md | 2026-08-06 | 0 | Oversampled-sync Q2 carrier/fade maintenance | DOI 10.1109/JLT.2020.3003561；arXiv 1911.11851 |
+| 10.1109_jphot.2023.3265847 | papers/doi/10.1109_jphot.2023.3265847/content.md | papers/_read_notes/10.1109_jphot.2023.3265847.md | 2026-08-06 | 0 | Oversampled-sync Q1 FSTS frame+FOE comparator | DOI 10.1109/JPHOT.2023.3265847 |
+| 10.1364_oe.520452 | papers/doi/10.1364_oe.520452/content.md | papers/_read_notes/10.1364_oe.520452.md | 2026-08-06 | 0 | Oversampled-sync Q1 mixed-TS frame+carrier comparator | DOI 10.1364/OE.520452 |
+| 10.1109_icsos59710.2023.10490279 | papers/doi/10.1109_icsos59710.2023.10490279/content.md | papers/_read_notes/10.1109_icsos59710.2023.10490279.md | 2026-08-06 | 0 | Oversampled-sync Q1 2-sps ordered receiver comparator | DOI 10.1109/ICSOS59710.2023.10490279 |
+| 2409.14400 | papers/arxiv/2409.14400/content.md | papers/_read_notes/2409.14400.md | 2026-08-06 | 0 | Oversampled-sync Q1 recent clock/frame/FOE direct competitor | DOI 10.1109/JLT.2025.3533197；arXiv 2409.14400 |

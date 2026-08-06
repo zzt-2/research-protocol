@@ -998,3 +998,40 @@ current inventory；历史 T004/T005/D023 不改。新专题 Step 1 最多 6 组
 ### 来源
 
 用户 2026-08-06 过采样相干 FSO 联合同步前端执行提示词。
+
+## D029: 接收过采样同步 formal GW Step 3 无 survivor 终态
+
+> status: active
+> date: 2026-08-06
+> 取代：无
+> 扩展：D028（闭合其用户确认后的 Step 3 路径）
+> 被取代：无
+> 依据：调研: formal topic D005 + `step3-deep-read-report.md` + 7 CORE read notes
+
+### 决策
+
+接收 formal terminal=`STEP3_NO_VALID_PROBLEM`。Q1 因强顺序 acquisition comparator 的具体失效假设
+未获正文证实而判据 1 FAIL；Q2 因共同失锁/cheap comparator 不足未证实且缺 2019+ integrated
+baseline 而判据 1/3 FAIL。survivor=0，Step 3.5 未触发，无 Step 4a 或方法载体。
+
+### 理由
+
+用户允许 Step 3，并把 Step 3.5 绑定为“至少一个 Q# 通过 canonical 四判据”的条件动作。该条件不成立；
+继续定向检索会绕过 formal gate，而不是闭合 survivor。JOCN 2026 仍为高风险全文缺口，但当前 Q1 已在
+更上游的 problem-evidence 判据失败。
+
+### 排除的替代方案
+
+- 不把共享 preamble、完整顺序链或跨论文拼接包装为 joint method；
+- 不因 JOCN 缺失自动启动 Step 3.5 或循环获取；
+- 不进入 Step 4a、方法实现、testbed、MVE 或仿真；
+- 不由主控擅自扩关键词、放宽 C 或重造 Q1/Q2。
+
+### 影响范围
+
+RDL control 升到 epoch 23 / CP010；同步 registry 与 thesis-fso master-state。formal topic 完成独立验收、
+handoff 和单次提交后停止，后续只等待用户战略决定。
+
+### 来源
+
+用户 2026-08-06 主控裁决；formal topic D004–D005/S001。
