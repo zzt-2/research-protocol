@@ -925,3 +925,52 @@ exit 0
 ### 结论
 
 PASS
+
+## V022: Ch4 方法槽位门与 T010 decoder-feedback 预检终验
+
+> date: 2026-08-07
+> 关联：S019 / D039 / CP022 / T010
+> verifier 上下文：fresh-context 只读 subagent；未参与 Skill 修改、治理记录或 T010 撰写
+> FINAL VERDICT: PASS（P0/P1/P2=0/0/0）
+
+### RED→GREEN
+
+- RED：旧 `method-production.md` 没有规定 `SUPPORTING_ONLY` 不得关闭开放的方法章节槽位，CP021 因而
+  同时出现 `mission_method_delta=NONE / SUPPORTING_ONLY` 与 `weight=ADEQUATE / drift=ALIGNED`，形成
+  “审计完成=方法推进”的解释漏洞。新增结构测试先失败。
+- GREEN：只增加章节槽位/轮换窄规则与一个结构回归。`THESIS_METHOD_READY` 或 authority 显式映射的
+  task-local equivalent（如 `THESIS_ENGINEERING_METHOD_READY`）可关闭槽位；supporting/reject 保持
+  槽位开放、delta NONE，同一资产不得继续消耗 authority/package turn。
+
+### 独立验收
+
+- [x] 不误伤 Ch5：D036/CP019 的 `THESIS_ENGINEERING_METHOD_READY` 是显式 task-local equivalent。
+- [x] T010 真实引用 U38/U39/U47 的 owner 文件；C1/C2/C3 都要求 decoder extrinsic/syndrome 触发
+  causal CPR/recovery action，排除 scalar calibration、post-hoc relabel 与 TX truth。
+- [x] readiness 即使 blocked 也必须先完成三张 prototype/concept card，避免任务退化为纯审计。
+- [x] F4-A/F4-C、P08-R2、P05、CCISP collision，comparator 公平性、≤1 天 adapter 和回 GW Step 1
+  边界齐全；T010 不授权检索、GW、实现、仿真或 promoted method card。
+- [x] epoch 35 / CP022 / D039 / T010 / registry / topic / mission / voice 一致；CP022=`UNDERWEIGHT`、
+  `mission_method_delta=NONE`、Ch4 open。
+- [x] 四个既有 p05 logs 仍 untracked，mtime/hash/长度未变。
+
+### 验证证据
+
+```text
+RED targeted regression: 1 failed
+GREEN repo suite: 115 passed, 1 skipped
+task-control validator: PASS
+repo/global Skill: 104/104 non-cache files byte-identical
+registry YAML: PASS
+git diff --check: PASS
+independent verifier: PASS; P0/P1/P2=0/0/0
+```
+
+consumer 目录直接运行全套测试曾有 3 个环境性 FAIL：历史测试把 `REPO_ROOT` 推到
+`C:\Users\zzt`，因而找不到 worktree 中的 project artifacts。repo suite 全过、consumer 与 repo
+104/104 字节一致且新增 targeted regression 通过，因此不归因于本 patch。
+
+### 结论
+
+PASS。D038 科学终态保持不变，但不再被解释为 Ch4 方法进展；T010 是唯一下一入口，且只允许
+method-shaped decoder-feedback 构造预检。

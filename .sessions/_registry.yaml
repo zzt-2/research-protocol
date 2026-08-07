@@ -30,8 +30,8 @@ topics:
     title: Research Direction Lab 完整体系设计
     status: active
     created: "2026-07-20"
-    last_updated: "2026-08-07（CP021/D038/V021：2A authority reconciliation=SUPPORTING_ONLY）"
-    description: "长期研究探索体系唯一流程 owner。D038 已将 P01 adapter、P02 truth-defined slice/global scalar 与 T004 online map 分账：P02 不满足 deployable region 方法语义，未运行新 held-out，2A 唯一终态 SUPPORTING_ONLY；D036 Ch5 scheduling authority 独立保留。"
+    last_updated: "2026-08-07（CP022/D039/V022：Ch4 方法槽位纠偏，T010 待执行）"
+    description: "长期研究探索体系唯一流程 owner。Ch3 CCISP 与 Ch5 scheduling 已具方法 authority；D038 的 2A 仅 SUPPORTING_ONLY，不能关闭仍开放的 Ch4 方法槽位。D039 禁止继续包装同一 supporting 资产，当前唯一入口是 T010 decoder-feedback 方法构造预检。"
     depends_on:
       - slug: framework-evolution
         reason: 继承 R002 Direction Lab 设计和唯一拥有者原则

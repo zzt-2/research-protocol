@@ -331,3 +331,19 @@
 - weight: ADEQUATE
 - drift: ALIGNED
 - next_action: 2A 已关闭；不得补跑或改名恢复。D036 的 Ch5 scheduling-only 写作入口继续作为独立既有 authority，但不在本轮自动执行
+
+## CP022 — 2026-08-07
+
+- event: 用户纠正 supporting audit 被误算作方法推进，Ch4 方法槽位恢复为开放
+- evidence: D039/S019；CP021 自身 `mission_method_delta=NONE / SUPPORTING_ONLY`；Skill 结构回归 V022
+- formal_science_disposition: NO_CHANGE_D038_SUPPORTING_ONLY_REMAINS
+- mission_method_delta: NONE
+- thesis_method_disposition: CH4_METHOD_SLOT_OPEN
+- intent: METHOD_CONSTRUCTION_PREFLIGHT_PREP
+- mechanism_family: DECODER_AIDED_SOFT_FEEDBACK_CPR
+- same_axis_streak: 0
+- deterministic_repair_count: 0
+- no_method_streak: 1
+- weight: UNDERWEIGHT
+- drift: CORRECTED_AFTER_USER_FEEDBACK
+- next_action: 新对话执行 T010；仅做本地 decoder-feedback 方法形构造与 collision preflight，不检索、不进 GW、不实现或仿真

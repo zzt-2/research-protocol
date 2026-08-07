@@ -104,6 +104,18 @@ proxy resource count alone is supporting evidence, not a completed method.
 After the one bounded package, resolve the disposition; do not chain further
 packaging packages under the same label.
 
+An open thesis chapter method slot is closed only by `THESIS_METHOD_READY` or
+an authority-explicit task-local equivalent that maps to it (for example,
+`THESIS_ENGINEERING_METHOD_READY`).
+`SUPPORTING_ONLY` and `REJECT` leave that slot open and record
+`mission_method_delta=NONE`; a rigorous audit or useful supporting artifact is
+not chapter-method progress. Once such a terminal is evidence-valid, the same
+asset must not consume another authority-reconciliation or packaging-closure
+turn. Preserve it in harvest, then rotate to a method-shaped construct whose
+deployable action is identifiable before evidence expansion. If none exists,
+report the strategic shortage instead of marking the mission aligned merely
+because the audit completed.
+
 When the best legal portfolio entry is `NEEDS_ONE_BOUNDED_PACKAGE`, select its
 single closure before method factory or strategic shortage. This is packaging
 an existing evidence-valid action, not serial formalization of a

@@ -1436,3 +1436,53 @@ scheduling-only 工程方法 authority 继续独立有效。本轮不触发 sim-
 
 S018；T009；`projects/simulation/results/2a_region_calibration_authority_reconciliation/`；
 `projects/thesis-fso/direction-lab/harvest/region-calibrated-ccisp-authority-package.md`。
+
+## D039: 方法章节槽位只由方法终态关闭，并转入 decoder-feedback 正向构造预检
+
+> status: active
+> date: 2026-08-07
+> 取代：无
+> 扩展：D021、D023、D038（只修 mission progress 解释与下一入口；不改变 2A 科学终态）
+> 被取代：无
+> 依据：CP021 的 `mission_method_delta=NONE` / `SUPPORTING_ONLY` 与用户对“怎么又偏进这了”的纠偏；回归见 V022
+> 触发原话：见 `voice.md` 2026-08-07
+
+### 决策
+
+1. 开放的学位论文方法章节槽位只由 `THESIS_METHOD_READY`，或 authority 显式映射到它的
+   task-local equivalent（如 `THESIS_ENGINEERING_METHOD_READY`）关闭。
+   `SUPPORTING_ONLY` 与 `REJECT` 都必须保持槽位开放并记录
+   `mission_method_delta=NONE`；审计做得严谨、材料可以复用，不等于产生了章节方法。
+2. 同一 supporting/rejected 资产在证据终态有效后，不再消耗下一轮 authority reconciliation 或
+   packaging closure。它进入 harvest，主线立即轮换到具有可辨识 deployable action 的方法形构造；若无
+   合法构造，诚实报告战略短缺。
+3. 因此 Ch4 方法槽位仍开放。下一轮只执行 T010 的本地 design/collision preflight，比较：
+   decoder-aided phase-hypothesis feedback、extrinsic soft-symbol iterative CPR、
+   syndrome-triggered recovery control。必须与 F4-A/F4-C、P08-R2、P05 和 CCISP 既有动作逐一碰撞。
+4. T010 最多保留 1 个 design survivor；survivor 只能返回 GW Step 1，不能直接进入实现、仿真、
+   METHOD_SIGNAL、Go 或论文正文。
+
+### 为什么这样定
+
+CP021 的科学裁决本身有效，但其 `weight=ADEQUATE / drift=ALIGNED` 把“完成一次严谨否决”错误解释为
+“朝方法章推进”。这正是 M6 范围偏离：目标是方法槽位，产出却是 supporting audit。decoder feedback
+至少提供了与 selector 阈值不同的新 receiver-visible 信息源和闭环动作；历史 F4-B 是 coded-chain
+基础设施受阻而非方法假设已 Kill，因此值得做一次轻量构造预检。但 F4-A 的薄弱/smoothing-fragile
+headroom、F4-C 的 CRC relabel、P08-R2 的深衰落不可恢复边界，必须作为硬碰撞条件而非被遗忘。
+
+### 明确不含
+
+- 不重审或重新包装 P01/P02/T004；
+- 不降低“每章必须有方法”的目标，不把 supporting material 改名成方法；
+- 不检索、不进入 GW、不实现 coded feedback、不改 coded chain、不跑仿真；
+- 不恢复 F4-C CRC-flip、P08 LLR calibration、P05 online CMA 或其他旧 dead end；
+- 不修改 `common/`、`params.py`、CCISP 算法或论文正文。
+
+### 影响范围
+
+最小修改 `method-production.md` 的章节槽位解释及一个结构回归；新增 S019/T010/V022/CP022，
+foreground control 升到 epoch 35。没有科学实验或 contribution 晋级。
+
+### 来源
+
+S019；用户原话“还得是方法才行啊？怎么又偏进这了”；CP021；D038/V021；V022。

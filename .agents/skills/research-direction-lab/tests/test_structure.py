@@ -318,6 +318,22 @@ def test_every_valid_package_gets_a_separate_thesis_chapter_capability_checkpoin
     assert "before method factory or strategic shortage" in combined
 
 
+def test_supporting_material_does_not_close_an_open_method_chapter_slot():
+    method = (ROOT / "references/method-production.md").read_text(encoding="utf-8")
+    normalized = " ".join(method.split())
+
+    for phrase in (
+        "An open thesis chapter method slot is closed only by `THESIS_METHOD_READY` or",
+        "an authority-explicit task-local equivalent that maps to it",
+        "`THESIS_ENGINEERING_METHOD_READY`",
+        "`SUPPORTING_ONLY` and `REJECT` leave that slot open",
+        "`mission_method_delta=NONE`",
+        "must not consume another authority-reconciliation or packaging-closure turn",
+        "rotate to a method-shaped construct",
+    ):
+        assert phrase in normalized
+
+
 def test_long_horizon_persistence_has_a_small_current_snapshot_and_detail_boundary():
     control = (ROOT / "references/long-horizon-control.md").read_text(encoding="utf-8")
     normalized = " ".join(control.split())

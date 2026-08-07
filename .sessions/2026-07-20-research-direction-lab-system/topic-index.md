@@ -4,14 +4,14 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 34
+  control_epoch: 35
   role: RDL_MASTER
   mission: 设计并验证轻量方法构造车道，使 Ch4/Ch5 优先形成学位论文级可命名方法
-  active_lane: CCISP_REGION_CALIBRATION_SUPPORTING_ONLY
-  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D038
-  decision_gate: 2A已闭合为SUPPORTING_ONLY；不得补跑、改名恢复或把P01/P02/T004合并成方法
+  active_lane: CH4_DECODER_FEEDBACK_METHOD_CONSTRUCTION_PREFLIGHT_READY
+  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D039
+  decision_gate: Ch4方法槽位仍开放；SUPPORTING_ONLY不算方法进展；只允许T010本地设计与碰撞预检
   allowed_actions:
-    - CH5_METHOD_WRITE_INTEGRATION
+    - DECODER_FEEDBACK_METHOD_CONSTRUCTION_PREFLIGHT
   forbidden_actions:
     - OLD_CAMPAIGN_REOPEN
     - COMMON_PARAMS_MUTATION
@@ -22,13 +22,14 @@ rdl_control:
     - ONLINE_CALIBRATION_REVIVAL
     - CAND_RANK_REVIVAL
     - FPGA_PPA_CLAIM_WITHOUT_SYNTHESIS
+    - DECODER_FEEDBACK_GW_OR_EXPERIMENT
   mission_log_ref: .sessions/2026-07-20-research-direction-lab-system/mission-log.md
-  mission_checkpoint: CP021
-  next_legal_action: 本轮无自动动作；若用户另行要求，可按D036仅整合冻结的Ch5 scheduling-only方法包，不得借此恢复2A
+  mission_checkpoint: CP022
+  next_legal_action: 新对话执行T010；只读本地coded/decoder资产并构造最多三个非标量反馈动作，0–1个survivor
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-07（CP021/D038/V021：2A闭合为SUPPORTING_ONLY）
+> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-07（CP022/D039/V022：Ch4槽位门修复，T010待执行）
 
 ## 专题信息
 
@@ -94,6 +95,10 @@ rdl_control:
 - 基于 D038，P01/P02/T004 已完成分账：P01 只保留 local receiver-visible adapter，P02 实现是 truth-defined
   评估切片加一个全局 `ref=11` 标量而非 deployable region rule，T004 继续 held-out 前 `REJECT`。2A 唯一
   terminal=`SUPPORTING_ONLY`，未运行新 held-out；D036 的 Ch5 scheduling-only authority 独立有效。
+- 基于 D039，方法生产 mission 新增唯一最小章节槽位门：只有 `THESIS_METHOD_READY` 或 authority
+  显式映射的 task-local equivalent（如 `THESIS_ENGINEERING_METHOD_READY`）关闭方法槽位，
+  `SUPPORTING_ONLY/REJECT` 必须记 `mission_method_delta=NONE` 并轮换，不再为同一资产追加 authority/package
+  closure。当前只准备 decoder/soft-feedback CCISP 的 design-only T010，不检索、不进 GW、不实现或仿真。
 
 ### 明确不含
 
@@ -104,6 +109,11 @@ rdl_control:
 - 不批量迁移或删除旧科学目录；新布局渐进采用，旧历史继续 append-only 保留。
 
 ### 范围变更记录
+
+- **[2026-08-07] D039**：从 2A supporting terminal 切换为 Ch4 正向方法构造入口。
+  - 原因：用户指出“这种玩意不太能写，还得是方法”；CP021 虽为可信审计，却没有方法增量。
+  - 新范围：最小修订 `method-production.md` 的章节槽位门，并准备 T010 对 decoder feedback 三类非标量动作做本地设计/碰撞预检。
+  - 影响的未决项：Ch4 继续为空；T010 只可产 design survivor，任何 survivor 仍须返回正式 GW Step 1。
 
 - **[2026-08-07] D037**：从 Ch5 scheduling-only 写作入口切换为一次受限 2A authority reconciliation。
   - 原因：主控提出完整受限解冻方案后，用户回复“行”；授权只允许澄清 P01/P02 的 region-calibrated CCISP 设计规则是否被 T004 online-calibration 失败错误连带否定。
@@ -319,6 +329,8 @@ rdl_control:
   P02 被确认是 truth-defined 评估切片上的全局单标量 retune，不是 deployable region rule；语义门失败后未运行
   新 held-out。完成 authority artifact、cluster CI、original/global/region dev-only 表、Ch4 不升格包和流程图，
   唯一 terminal=`SUPPORTING_ONLY`。
+- **S019 / D039 / CP022 / V022 / T010**：把 CP021 作为真实 RED，补唯一章节槽位门；Ch4 仍为空，
+  supporting terminal 不再关闭槽位或消耗后续 packaging turn。T010 只做 decoder-feedback 方法构造与碰撞预检。
 
 ## 未决项
 
@@ -333,6 +345,7 @@ rdl_control:
 - ~~R002 历史复盘尚未执行~~（已完成）：见 `R002-long-horizon-runtime-retrospective.md`。
 - D021/V015 已完成；D022 仅授权 T004/T005 两个 bounded closure，不构成旧 campaign 或新方向的普遍解冻。
 - D037 一次性 2A reconciliation 已由 D038/CP021 闭合；没有 confirmation 或包装未决项，不得自动补跑。
+- Ch4 方法槽位仍开放；T010 尚未执行。它不授权 literature search、GW、实现、coded-chain 修改或仿真。
 - ~~R006 设计待用户书面审阅~~（已完成并经 T006/T007 live test）；P1 与 C3 均已 closed。
   C3 无四判据 Q#，Step 2 未执行；当前只保留候选轮换门，不得直接实验。
 
@@ -343,8 +356,7 @@ lightweight persistence。六案审计重放、自动测试、个人 Skill 同�
 终验均 PASS（P0/P1/P2=0）；既有科学 verdict、dormant longitudinal topic 与
 formal owner 未变。
 
-**2026-08-07 当前入口**：`CCISP_REGION_CALIBRATION_SUPPORTING_ONLY`（epoch 34 / CP021 / D038 /
-V021）。P01 是 local receiver-visible adapter；P02 是 truth-defined 目标切片上的全局单标量 retune；T004
-online map 继续在 held-out 前 `REJECT`。2A 不形成 Ch4 独立方法、没有新实验或待补确认。本轮无自动
-下一动作；D036 的 Ch5 scheduling-only 工程方法仍是独立既有 authority，只有用户另行要求时才可整合，
-不得借其恢复 2A、fixed-point 或其他旧方向。
+**2026-08-07 当前入口**：`CH4_DECODER_FEEDBACK_METHOD_CONSTRUCTION_PREFLIGHT_READY`（epoch 35 /
+CP022 / D039 / V022）。Ch3 CCISP 与 Ch5 scheduling-only 已有方法 authority，Ch4 仍为空；P01/P02/T004
+只作 supporting/negative lineage。下一动作只执行 T010 的本地设计预检，最多保留一个真正含 decoder
+feedback 闭环的 method-shaped survivor；通过后也只能返回正式 GW Step 1，不能直接实现或实验。
