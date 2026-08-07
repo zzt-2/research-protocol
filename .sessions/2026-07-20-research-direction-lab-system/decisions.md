@@ -1486,3 +1486,49 @@ foreground control 升到 epoch 35。没有科学实验或 contribution 晋级�
 ### 来源
 
 S019；用户原话“还得是方法才行啊？怎么又偏进这了”；CP021；D038/V021；V022。
+
+## D040: 三条 decoder-feedback 方法形均受 coded-chain 新基础设施阻断
+
+> status: active
+> date: 2026-08-07
+> 取代：无
+> 扩展：D039（执行其 T010 本地构造预检；不改变章节槽位规则）
+> 被取代：无
+> 依据：验证: V023 + `ch4-decoder-feedback-method-preflight.md` 的 caller→callee readiness 审计、三张完整 concept card 与七门裁决；本地 P08-R2/CCISP caller 事实
+> 触发原话：执行提示词见 `voice.md` 2026-08-07
+
+### 决策
+
+T010 的唯一 terminal=`CODED_CHAIN_ASSET_BLOCKED`，survivor=0/3。C2 extrinsic soft-symbol iterative CPR
+能定义不同于标量 calibration、CRC relabel、online-CMA 和原 CCISP gate 的 causal CPR update；C1
+phase-hypothesis switch 与 C3 syndrome-triggered recovery 则额外撞到 D047 已登记的 causal detection→
+relock/state-switch 动作族，且尚未解除 D028 持续 SOP 下 stale rollback 的 dwell/BER 边界。三者当前仍都
+同时缺少 decoder 中间信息与外层 callback/recovery 两类以上接口，未过“READY 或≤1天小适配”硬门。
+
+Ch4 方法槽位继续开放，`mission_method_delta=NONE`。本裁决是 asset-readiness blocker，不是 decoder-
+feedback 科学假设的 Kill；它不创建 active carrier、METHOD_SIGNAL、Go、GW 入口或实现任务。
+
+### 理由
+
+现有 `CodecAdapterR` 以 `hard_out=True` 创建 decoder，公开返回面只有最终 hard bits 与 configured-
+iteration diag；P08-R2 与 CCISP runner 都是 single-pass caller，没有 syndrome/CRC trajectory、分段 decoder
+iteration 或 decoder→CPR/recovery callback。码率、净码率和 20 次 iteration 字段可复用，外层 latency ledger
+也只需小适配，但不能替代前三项方法所需的新接口。按 T010，只要单候选依赖至少两项
+`NEW_INFRASTRUCTURE` 就必须拒绝。
+
+### 排除的替代方案
+
+- 不把 F4-A smoothing-fragile `+0.0089` bits/sym 当 decoder-feedback 正证据；
+- 不把 F4-C CRC flip、P08 B2 LLR calibration、P05 standard-CMA continuation 或 CCISP gate 改名恢复；
+- 不因为方法流程可写就虚构 testbed READY，也不因为资产 blocked 就省略三张 concept card；
+- 不自动补 coded callback、进入 GW、实现、仿真、检索或论文写作。
+
+### 影响范围
+
+RDL foreground control 升至 epoch 36 / CP023。只新增 T010 设计包、执行日志和必要治理/current 同步；
+Ch3 CCISP、Ch5 scheduling authority、D038 的 2A supporting terminal 与所有 formal GW owner 均不变。
+下一动作仅为用户战略选择：显式扩大 coded-chain 基础设施范围，或更换 candidate source/research object。
+
+### 来源
+
+S019；T010；V023；`projects/thesis-fso/direction-lab/harvest/ch4-decoder-feedback-method-preflight.md`。

@@ -143,3 +143,8 @@
 - “这种东西，不太能写吧？” → D038
 - “还得是方法才行啊？怎么又偏进这了” → D039
 - [转述] 主控提出以最小章节槽位规则纠偏并准备 decoder-feedback 方法构造预检后，用户回复“行”。 → D039
+
+### T010 decoder-feedback 构造预检执行提示词
+
+[转述:执行提示词] “本轮只做本地 decoder-feedback 方法构造预检，不检索、不进入 GW、不实现、不仿真。” → D040
+[转述:执行提示词] “必须完成三张 prototype/concept card，最多保留一个 survivor，并由 fresh-context verifier 独立终验。” → D040

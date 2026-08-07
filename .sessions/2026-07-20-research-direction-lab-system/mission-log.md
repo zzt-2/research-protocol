@@ -347,3 +347,19 @@
 - weight: UNDERWEIGHT
 - drift: CORRECTED_AFTER_USER_FEEDBACK
 - next_action: 新对话执行 T010；仅做本地 decoder-feedback 方法形构造与 collision preflight，不检索、不进 GW、不实现或仿真
+
+## CP023 — 2026-08-07
+
+- event: T010 三张 decoder-feedback concept card 完成，coded-chain callback readiness 阻断全部 survivor
+- evidence: D040/S019；`ch4-decoder-feedback-method-preflight.md`；P08-R2/CCISP caller-level readiness；fresh-context V023 PASS（P0/P1/P2=0/0/0）
+- formal_science_disposition: CODED_CHAIN_ASSET_BLOCKED
+- mission_method_delta: NONE
+- thesis_method_disposition: CH4_METHOD_SLOT_OPEN_NO_SURVIVOR
+- intent: STRATEGIC_USER_DECISION
+- mechanism_family: DECODER_AIDED_SOFT_FEEDBACK_CPR
+- same_axis_streak: 1
+- deterministic_repair_count: 0
+- no_method_streak: 2
+- weight: UNDERWEIGHT
+- drift: ALIGNED
+- next_action: 等待用户显式选择是否扩大 coded-chain 基础设施范围或更换 candidate source/research object；不得自动检索、进 GW、实现或仿真

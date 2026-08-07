@@ -30,8 +30,8 @@ topics:
     title: Research Direction Lab 完整体系设计
     status: active
     created: "2026-07-20"
-    last_updated: "2026-08-07（CP022/D039/V022：Ch4 方法槽位纠偏，T010 待执行）"
-    description: "长期研究探索体系唯一流程 owner。Ch3 CCISP 与 Ch5 scheduling 已具方法 authority；D038 的 2A 仅 SUPPORTING_ONLY，不能关闭仍开放的 Ch4 方法槽位。D039 禁止继续包装同一 supporting 资产，当前唯一入口是 T010 decoder-feedback 方法构造预检。"
+    last_updated: "2026-08-07（CP023/D040/V023：T010三卡完成，CODED_CHAIN_ASSET_BLOCKED，独立终验PASS）"
+    description: "长期研究探索体系唯一流程 owner。Ch3 CCISP 与 Ch5 scheduling 已具方法 authority；Ch4 仍开放。T010 已完整构造三张 decoder-feedback 卡，但现有 coded chain 缺 extrinsic/syndrome/callback 多项新基础设施，survivor=0；当前只等待用户战略选择，不自动进 GW、实现或仿真。"
     depends_on:
       - slug: framework-evolution
         reason: 继承 R002 Direction Lab 设计和唯一拥有者原则

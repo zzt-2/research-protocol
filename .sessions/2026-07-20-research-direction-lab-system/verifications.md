@@ -974,3 +974,63 @@ consumer 目录直接运行全套测试曾有 3 个环境性 FAIL：历史测试
 
 PASS。D038 科学终态保持不变，但不再被解释为 Ch4 方法进展；T010 是唯一下一入口，且只允许
 method-shaped decoder-feedback 构造预检。
+
+## V023: T010 decoder-feedback 方法构造预检独立终验
+
+> date: 2026-08-07
+> 关联：S019 / D040 / CP023 / T010
+> verifier 上下文：fresh-context 只读 subagent；未参与本地证据审计、三卡构造、终态裁决或治理撰写
+> FINAL VERDICT: PASS（P0/P1/P2=0/0/0）
+
+### 初验与唯一修复轮
+
+初验为 `BLOCK`（P0/P1/P2=0/2/1）：三卡虽有主图和承重消融，但未冻结主表；C1/C3 未与历史
+Q-DP4 detection→rollback 及后续 detection→relock/state-switch 动作族做签名级碰撞；执行前 epoch 35
+收据引用了已前移到 epoch 36 的 current 文件。主控只做一轮最小修复：
+
+- 三卡各自冻结未来主表的 comparator 行、指标列和计算/latency 字段；
+- 增加 D028/D047 本地证据，C1/C3 的 gate 3 改为 FAIL，并写明 stale snapshot、持续 SOP 下 dwell/BER
+  边界和 reopen condition；
+- 将执行前授权收据绑定到 commit `8110fc4cc2a129c856eea9819e0cc0d1908a8b99`。
+
+修复未改变 survivor=0、readiness 分类或 `CODED_CHAIN_ASSET_BLOCKED` terminal。
+
+### 验证项
+
+- [x] `git show` 独立确认 pre-execution commit 为 epoch 35 / CP022 / D039，T010 action class 合法。
+- [x] readiness 四项逐 caller→callee 成立：前三项 `NEW_INFRASTRUCTURE`，统一账本项
+  `NEEDS_SMALL_ADAPTER`。
+- [x] 恰好 C1/C2/C3 三卡；每卡 11 字段、7 步算法、主图、预注册主表、承重消融与五字段
+  collision receipt 完整。
+- [x] C1/C3 已与 D028/D047 动作签名碰撞并 FAIL gate 3；C2 未回落为 P08 scalar calibration、P05
+  online-CMA、F4-C relabel 或 CCISP gate。
+- [x] 三卡均依赖至少两项新基础设施，gate 5 FAIL；survivor=0，三个允许终态中只有
+  `CODED_CHAIN_ASSET_BLOCKED` 与证据一致，且没有错误 Kill 科学假设。
+- [x] D040/CP023/topic/registry/S019/worker log 的 terminal、mission delta 与 next action 一致。
+- [x] 无检索、GW、实现、仿真或 coded-chain/CCISP/common/params/论文修改；四个 p05 logs 未改未暂存。
+
+### 证据
+
+```text
+fresh-context initial
+FINAL VERDICT=BLOCK
+P0/P1/P2=0/2/1
+
+single bounded repair
+main-table definitions=3/3
+D028/D047 action-signature receipts present
+pre-execution control commit=8110fc4cc2a129c856eea9819e0cc0d1908a8b99
+
+fresh-context re-verification
+FINAL VERDICT=PASS
+P0/P1/P2=0/0/0
+registry YAML=PASS
+git diff --check=PASS
+cached diff=empty
+p05 hashes/mtime unchanged
+```
+
+### 结论
+
+PASS。允许写入 V023 并执行本轮统一提交；不 push。T010 只闭合本地方法构造预检，不授权检索、GW、
+coded-chain 基础设施建设、实现、仿真、active carrier、METHOD_SIGNAL、Go 或论文正文。

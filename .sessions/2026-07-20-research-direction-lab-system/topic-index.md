@@ -4,14 +4,14 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 35
+  control_epoch: 36
   role: RDL_MASTER
   mission: 设计并验证轻量方法构造车道，使 Ch4/Ch5 优先形成学位论文级可命名方法
-  active_lane: CH4_DECODER_FEEDBACK_METHOD_CONSTRUCTION_PREFLIGHT_READY
-  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D039
-  decision_gate: Ch4方法槽位仍开放；SUPPORTING_ONLY不算方法进展；只允许T010本地设计与碰撞预检
+  active_lane: CH4_DECODER_FEEDBACK_CODED_CHAIN_ASSET_BLOCKED
+  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D040
+  decision_gate: T010三卡均需至少两项新基础设施；survivor=0；Ch4槽位继续开放
   allowed_actions:
-    - DECODER_FEEDBACK_METHOD_CONSTRUCTION_PREFLIGHT
+    - STRATEGIC_USER_DECISION
   forbidden_actions:
     - OLD_CAMPAIGN_REOPEN
     - COMMON_PARAMS_MUTATION
@@ -23,13 +23,15 @@ rdl_control:
     - CAND_RANK_REVIVAL
     - FPGA_PPA_CLAIM_WITHOUT_SYNTHESIS
     - DECODER_FEEDBACK_GW_OR_EXPERIMENT
+    - CODED_CHAIN_INFRASTRUCTURE_BUILD_WITHOUT_SCOPE_CHANGE
+    - AUTOMATIC_GW_ENTRY
   mission_log_ref: .sessions/2026-07-20-research-direction-lab-system/mission-log.md
-  mission_checkpoint: CP022
-  next_legal_action: 新对话执行T010；只读本地coded/decoder资产并构造最多三个非标量反馈动作，0–1个survivor
+  mission_checkpoint: CP023
+  next_legal_action: 等待用户显式选择扩大coded-chain基础设施范围或更换candidate source/research object
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-07（CP022/D039/V022：Ch4槽位门修复，T010待执行）
+> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-07（CP023/D040/V023：T010三卡完成，coded-chain asset blocked）
 
 ## 专题信息
 
@@ -331,6 +333,10 @@ rdl_control:
   唯一 terminal=`SUPPORTING_ONLY`。
 - **S019 / D039 / CP022 / V022 / T010**：把 CP021 作为真实 RED，补唯一章节槽位门；Ch4 仍为空，
   supporting terminal 不再关闭槽位或消耗后续 packaging turn。T010 只做 decoder-feedback 方法构造与碰撞预检。
+- **S019 续 / D040 / CP023 / V023**：T010 完成 C1/C2/C3 三张完整卡；当前 coded chain 的
+  extrinsic、syndrome/CRC 因果状态和 decoder→CPR/recovery callback 均属新基础设施，三卡都未过
+  readiness 硬门，survivor=0，terminal=`CODED_CHAIN_ASSET_BLOCKED`；fresh-context verifier 复验
+  PASS（P0/P1/P2=0/0/0）。
 
 ## 未决项
 
@@ -345,7 +351,8 @@ rdl_control:
 - ~~R002 历史复盘尚未执行~~（已完成）：见 `R002-long-horizon-runtime-retrospective.md`。
 - D021/V015 已完成；D022 仅授权 T004/T005 两个 bounded closure，不构成旧 campaign 或新方向的普遍解冻。
 - D037 一次性 2A reconciliation 已由 D038/CP021 闭合；没有 confirmation 或包装未决项，不得自动补跑。
-- Ch4 方法槽位仍开放；T010 尚未执行。它不授权 literature search、GW、实现、coded-chain 修改或仿真。
+- Ch4 方法槽位仍开放；T010 已执行并以 `CODED_CHAIN_ASSET_BLOCKED` 闭合。不得自动把该阻塞转成
+  literature search、GW、coded-chain 实现或仿真任务。
 - ~~R006 设计待用户书面审阅~~（已完成并经 T006/T007 live test）；P1 与 C3 均已 closed。
   C3 无四判据 Q#，Step 2 未执行；当前只保留候选轮换门，不得直接实验。
 
@@ -356,7 +363,7 @@ lightweight persistence。六案审计重放、自动测试、个人 Skill 同�
 终验均 PASS（P0/P1/P2=0）；既有科学 verdict、dormant longitudinal topic 与
 formal owner 未变。
 
-**2026-08-07 当前入口**：`CH4_DECODER_FEEDBACK_METHOD_CONSTRUCTION_PREFLIGHT_READY`（epoch 35 /
-CP022 / D039 / V022）。Ch3 CCISP 与 Ch5 scheduling-only 已有方法 authority，Ch4 仍为空；P01/P02/T004
-只作 supporting/negative lineage。下一动作只执行 T010 的本地设计预检，最多保留一个真正含 decoder
-feedback 闭环的 method-shaped survivor；通过后也只能返回正式 GW Step 1，不能直接实现或实验。
+**2026-08-07 当前入口**：`CH4_DECODER_FEEDBACK_CODED_CHAIN_ASSET_BLOCKED`（epoch 36 / CP023 /
+D040 / V023 PASS）。T010 已完成三张卡且 survivor=0；Ch4 方法槽位仍为空。下一动作只等待用户显式
+决定是扩大 coded-chain 基础设施范围，还是更换 candidate source/research object；不得自动检索、进入 GW、
+实现或仿真。
