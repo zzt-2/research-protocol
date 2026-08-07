@@ -747,7 +747,7 @@ S015 续接；用户 2026-08-03 原话：“那要不两个单独对话，一直
 > status: active
 > date: 2026-08-04
 > 取代：D022（只取代当前控制入口；不推翻 T004/T005 的历史授权和结果）
-> 被取代：无
+> 被取代：D036（仅取代“因动作与 CCISP 重复而把 T005 scheduling lineage 整体降为支持材料”的过宽解释；双车道设计、不得另立 2B selector 与其余结论继续有效）
 > 依据：调研: R002 + R005 + R006 + 对照: CCISP + T004 commit `1140134e89e8b0571274944cb44471ab6403481f` + T005 commit `67970307a051dd8149e1a750498a20674dfcfe6f` + 用户原话: voice.md 2026-08-04
 
 ### 决策
@@ -1266,3 +1266,59 @@ deterministic repair count 记 3；等待用户 formal-carrier disposition。
 ### 来源
 
 formal D012/V008/H005；T015/T016。
+
+## D036: 拆分 2B 复合 authority 并接收 CCISP 先选后算工程方法
+
+> status: active
+> date: 2026-08-07
+> 取代：D023（仅取代其把 T005 scheduling lineage 随“动作碰撞”整体降为支持材料的解释）
+> 扩展：D021–D023、T005、V016
+> 被取代：无
+> 依据：T005 immutable commit `67970307a051dd8149e1a750498a20674dfcfe6f` raw artifacts + scheduling-only 确定性复算 + fresh-context V020
+> 触发原话：用户执行提示词见 `voice.md` 2026-08-07
+
+### 决策
+
+将历史 2B 复合候选拆成两条独立 authority：
+
+1. scheduling-only 动作归属于既有 CCISP，正式名称为 **CCISP select-before-execute single-branch
+   receiver architecture**。它不另立 selector、不改变 CPR estimator，但具备明确部署动作、396,000 窗
+   selected-output/BER identity、分支调用 -50.00%、typed-operation 下降与合法 seed-cluster timing 证据，
+   canonical contribution tier=`THESIS_ENGINEERING_COMPONENT`，task-local terminal=
+   `THESIS_ENGINEERING_METHOD_READY`。
+2. Q(8,6) fixed-point 子链继续保持 T005 verifier FAIL / `SUPPORTING_ONLY`；其 stage-2 计数遗漏、13 dB
+   状态不可表示及缺乏真实综合等失败证据不变。
+3. 旧“2B Low-Complexity Branch-Routed and Fixed-Point CPR”复合名继续 `SUPPORTING_ONLY /
+   SUPERSEDED_COMPOSITE`，因为它错误绑定 scheduling 与 fixed-point，且 scheduling 不能脱离 CCISP 改名为
+   新 selector 方法。该复合名的降级不得再被解释为 scheduling-only 的科学或工程失败。
+
+### 理由
+
+T005 合同、final disposition 与 V016 原已明确 fixed-point 失败不能 Kill scheduling。D023 正确发现了动作
+碰撞，却把“不能另立一个 2B 新方法”过度压缩为“只能作支持材料”，导致 inventory 的
+`branch_route_b.chapter_capable=false` 和“缺 full-grid timing”在 T005 闭合后仍未刷新。本决策按动作真实归属
+修正 authority，而不制造新算法、不推翻历史失败。
+
+本轮用户显式冻结的 terminal 四选一为 `THESIS_ENGINEERING_METHOD_READY /
+NEEDS_ONE_BOUNDED_TIMING_CONFIRMATION / SUPPORTING_ONLY / EXECUTION_INVALID`，其时间与任务特异性均晚于
+D021/D022 的通用包装枚举；因此本次终态必须使用 `THESIS_ENGINEERING_METHOD_READY`，不得回退成不在用户
+四选一内的 `THESIS_METHOD_READY`。它与 D020 的 canonical contribution tier 是两个字段：前者是本轮终态，
+后者继续取 `THESIS_ENGINEERING_COMPONENT`，不新增第四种 contribution tier。
+
+### 排除的替代方案
+
+- 不复活 Q(8,6)、P09、P1、C3、AMC 或 coded-burst；
+- 不把 scheduling 包装成新 selector、新 CPR estimator、fixed-point method 或通用双专家加速；
+- 不声称 FPGA LUT/DSP、功耗、吞吐或 74.6% 总接收机复杂度收益；
+- 不修改 CCISP 算法本体、不跑新物理场景、不补跑 timing（既有 formal timing 合同合法且完整）；
+- 不改写或删除 D021–D023、T005、V016 等历史记录。
+
+### 影响范围
+
+RDL control 升至 epoch 32 / CP019。本轮只允许 scheduling-only 权威协调、原始证据复算、Ch5 方法包与
+可编辑主图、独立验证和统一提交；不改变 thesis-fso 当前 Groundwork carrier 或其 stage gate。验证后下一
+合法动作仅为把已冻结的方法包整合进 Ch5 正文。
+
+### 来源
+
+S017；用户 2026-08-07 执行提示词；T005 raw artifacts；V020。

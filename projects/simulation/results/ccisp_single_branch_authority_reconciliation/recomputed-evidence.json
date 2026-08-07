@@ -1,0 +1,154 @@
+{
+  "branch_calls": {
+    "A-F": {
+      "da": 396000,
+      "nda": 396000
+    },
+    "B-F": {
+      "da": 144286,
+      "nda": 251714
+    },
+    "total_reduction": 0.5
+  },
+  "identity": {
+    "A-F": {
+      "ber": 0.1071559803766835,
+      "bits": 304128000,
+      "errors": 32589134
+    },
+    "B-F": {
+      "ber": 0.1071559803766835,
+      "bits": 304128000,
+      "errors": 32589134
+    },
+    "ber_count_mismatched_cells": 0,
+    "ber_equal": true,
+    "command_hash_mismatched_shards": 0,
+    "command_mismatches": 0,
+    "performance_timing_receipt_mismatched_cells": 0,
+    "selected_output_hash_mismatched_shards": 0,
+    "selected_output_mismatches": 0
+  },
+  "operation_reduction": {
+    "abs_sq": 0.23256397306397303,
+    "compare": 0.4982634258453471,
+    "complex_add": 0.4687484799746561,
+    "complex_multiply": 0.39450112233445567,
+    "dispatch_mux": 0.0,
+    "divide": 0.5128149853510614,
+    "fft": 0.3643585858585858,
+    "real_add": 0.355927342404169,
+    "real_multiply": 0.45478619528619524,
+    "sqrt_log_lut": 0.6107152443139479
+  },
+  "operations": {
+    "A-F": {
+      "abs_sq": 228096000,
+      "compare": 205842923,
+      "complex_add": 328284000,
+      "complex_multiply": 1140480000,
+      "dispatch_mux": 396000,
+      "divide": 231978923,
+      "fft": 396000,
+      "quantize": 0,
+      "real_add": 330186923,
+      "real_multiply": 456192000,
+      "saturate": 0,
+      "sqrt_log_lut": 26850923
+    },
+    "B-F": {
+      "abs_sq": 175049088,
+      "compare": 103278923,
+      "complex_add": 174401374,
+      "complex_multiply": 690559360,
+      "dispatch_mux": 396000,
+      "divide": 113016655,
+      "fft": 251714,
+      "quantize": 0,
+      "real_add": 212664369,
+      "real_multiply": 248722176,
+      "saturate": 0,
+      "sqrt_log_lut": 10452655
+    }
+  },
+  "schema": "ccisp.single-branch-evidence-recompute.v1",
+  "scope": {
+    "cells": 990,
+    "performance_shards": 990,
+    "seed_clusters": 30,
+    "timing_shards": 990,
+    "total_windows": 396000,
+    "windows_per_cell": 400
+  },
+  "selected_branch_counts": {
+    "A-F": {
+      "da": 144286,
+      "nda": 251714
+    },
+    "B-F": {
+      "da": 144286,
+      "nda": 251714
+    }
+  },
+  "source": {
+    "commit": "67970307a051dd8149e1a750498a20674dfcfe6f",
+    "fixed_point_excluded": true,
+    "raw_prefix": "projects/simulation/results/2b_fixed_point_branch_routed_cpr_closure"
+  },
+  "storage_peak": {
+    "A-F": {
+      "branch_workspace_bytes": 88064,
+      "controller_bits": 384,
+      "peak_live_bytes": 104448,
+      "selected_output_bytes": 4096
+    },
+    "B-F": {
+      "branch_workspace_bytes": 88064,
+      "controller_bits": 384,
+      "peak_live_bytes": 100352,
+      "selected_output_bytes": 4096
+    }
+  },
+  "timing": {
+    "average_400_window_batch_ms": {
+      "A-F": 271.68407545454545,
+      "B-F": 145.40348656565658
+    },
+    "average_per_window_us": {
+      "A-F": 679.2101886363636,
+      "B-F": 363.5087164141415
+    },
+    "bf_over_af_cluster_mean": 0.5424435601792953,
+    "bf_over_af_one_sided95_upper": 0.5472819331515957,
+    "cluster_count": 30,
+    "cluster_definition": "seed index; each cluster averages 3 scenes x 11 SNR cells",
+    "latency_reduction_from_cluster_mean": 0.4575564398207047
+  },
+  "timing_contract": {
+    "affinity_values": [
+      [
+        2
+      ]
+    ],
+    "contended_samples": 0,
+    "contention_samples": 1980,
+    "maximum_system_load_percent": 54.9,
+    "measured_repetitions_values": [
+      5
+    ],
+    "post_timing_cpu_load_ge_60_count": 3,
+    "post_timing_cpu_load_max_percent": 87.3,
+    "post_timing_load_is_non_gating": true,
+    "thread_env_values": [
+      {
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1"
+      }
+    ],
+    "warmups_per_method_values": [
+      3
+    ]
+  }
+}

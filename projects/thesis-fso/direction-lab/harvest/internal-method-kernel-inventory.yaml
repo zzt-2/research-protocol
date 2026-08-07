@@ -1,9 +1,9 @@
 schema_version: 1
 generated: 2026-08-04
 owner: .sessions/2026-07-09-thesis-writing/S018
-decision: D025
-reconciled: 2026-08-06
-reconciliation_authority: ".sessions/2026-07-20-research-direction-lab-system/decisions.md#D023"
+decision: RDL-D036
+reconciled: 2026-08-07
+reconciliation_authority: ".sessions/2026-07-20-research-direction-lab-system/decisions.md#D036"
 authority_note: >-
   本表盘点可部署动作，不以 METHOD_SIGNAL 数量代替方法能力。method_like=true
   必须同时有统一 input-action-output 与传统 baseline；chapter_capable=true 必须通过
@@ -64,20 +64,33 @@ kernels:
     terminal_status: PROBLEM_RESOLVED_BY_REGION_RETUNING
 
   - id: branch_route_b
-    name: Preselection Single-Branch Execution
+    name: CCISP Select-Before-Execute Single-Branch Receiver Architecture
     m_c_a: route A 先计算 DA/NDA 两支再选，部署计算冗余；route B 在分支前判断并只运行一支
-    deployable_action: raw statistic -> controller command -> execute selected branch only
+    deployable_action: receiver-visible selector -> branch command -> execute selected recovery branch only -> common downstream detector
     information_source: same receiver-visible controller inputs as CCISP
     baseline: route_A_dual_branch_then_select
-    existing_evidence: 990/990 selected-output identity；真实 caller path 只执行所选分支
-    missing_evidence: authority-bound full-grid/multi-condition end-to-end operation count, latency, warm-up/repetition
+    existing_evidence: >-
+      scheduling-only 原始证据确定性复算：990/990 performance 与 timing shards 完整；396000 窗
+      command/selected-output mismatch 均为 0；A-F/B-F pooled BER 同为 0.1071559804；BF/AF
+      seed-cluster timing ratio=0.5424435602，单侧 95% t-CI 上界=0.5472819332；分支调用
+      792000→396000（-50.00%），主要 typed operations 降低 23.26%–61.07%。
+    missing_evidence: 软件 scheduling claim 无缺口；真实硬件综合、功耗与吞吐不在本方法 claim 范围
     method_like: true
-    chapter_capable: false
-    capability: {name: true, frame: true, steps: true, ablation: true, baseline: true, main_figure: false, unified_io: true, not_parameter_or_bugfix: true}
-    claim_ceiling: code-path equivalence；不能声称 74.6% 总接收机复杂度收益
+    chapter_capable: true
+    capability: {name: true, frame: true, steps: true, ablation: true, baseline: true, main_figure: true, unified_io: true, not_parameter_or_bugfix: true}
+    claim_ceiling: >-
+      contribution tier=THESIS_ENGINEERING_COMPONENT；task-local terminal=THESIS_ENGINEERING_METHOD_READY。
+      在冻结软件 caller path 上，逐窗 selected-output/BER 等价，分支调用
+      降低 50.00%，BF/AF timing ratio=0.5424（单侧 95% 聚类上界 0.5473），并报告逐类
+      operation reductions；不得声称新 selector、新 CPR estimator、fixed-point method、FPGA/PPA
+      或通用双专家加速。
     evidence:
       - projects/simulation/explore/nda-awgn-tracking-sandbox/_a4_branchrouted_30seed.py:356-400,445-451
       - projects/thesis-fso/direction-lab/harvest/asset-claim-matrix.yaml:154-170
+      - projects/thesis-fso/direction-lab/harvest/ccisp-select-before-execute-single-branch-method-package.md
+      - projects/simulation/results/ccisp_single_branch_authority_reconciliation/recomputed-evidence.json
+      - "commit:67970307a051dd8149e1a750498a20674dfcfe6f:projects/simulation/results/2b_fixed_point_branch_routed_cpr_closure/{performance-*,timing-*}.json"
+      - .sessions/2026-07-20-research-direction-lab-system/decisions.md#D036
 
   - id: p03_fixed_point
     name: Bit-True Fixed-Point Selector Design
@@ -199,18 +212,25 @@ candidates:
     unified_chain: quantized_receiver_statistic -> fixed_point_controller -> preselect -> execute_one_branch
     baseline: [route_A_dual_branch, float_route_B, uniform_precision_ladder]
     grade: SUPPORTING_ONLY
+    authority_status: SUPERSEDED_COMPOSITE
     rationale: >-
-      T005 已闭合 396000 窗的 single-branch scheduling 身份与软件时延，但该动作签名就是 CCISP
-      已有的 select-before-execute/只执行所选分支，不再构成独立 Ch5 方法。Q(8,6) 子链 verifier FAIL：
-      360 shards 漏记 459 次 stage-2，13 dB 状态不可表示；只保留受限 BER/负面边界材料。
+      D036 将该复合候选拆回两条独立 authority。2B 作为“另立新 selector + fixed-point”的复合方法名继续
+      SUPPORTING_ONLY：其 scheduling 动作不能脱离 CCISP 另立新方法，Q(8,6) 子链 verifier FAIL（360
+      shards 漏记 459 次 stage-2，13 dB 状态不可表示）。但 scheduling-only 证据没有失败，已按真实动作
+      归属晋级为 branch_route_b / CCISP select-before-execute single-branch receiver architecture，terminal=
+      THESIS_ENGINEERING_METHOD_READY，canonical contribution tier=THESIS_ENGINEERING_COMPONENT。
+      fixed-point 失败不得连带否定该架构。
     evidence:
       - "commit:67970307a051dd8149e1a750498a20674dfcfe6f:projects/thesis-fso/direction-lab/harvest/2b-fixed-point-branch-routed-cpr-method-package.md"
       - "commit:67970307a051dd8149e1a750498a20674dfcfe6f:projects/thesis-fso/worker-logs/step-044-2b-fixed-point-branch-routed-cpr-closure.md"
       - "commit:67970307a051dd8149e1a750498a20674dfcfe6f:projects/simulation/results/2b_fixed_point_branch_routed_cpr_closure/final-disposition.json"
       - .sessions/2026-07-20-research-direction-lab-system/decisions.md#D023
+      - .sessions/2026-07-20-research-direction-lab-system/decisions.md#D036
+      - projects/simulation/results/ccisp_single_branch_authority_reconciliation/recomputed-evidence.json
     prohibited_revival: >-
       不得把 single-branch scheduling 从 CCISP 拆出后另称新方法；不得声称 Q(8,6) 全链 bit-true
-      成本闭合、全 SNR 无损、FPGA/PPA 已验证或总接收机复杂度下降 74.6%。
+      成本闭合、全 SNR 无损、FPGA/PPA 已验证或总接收机复杂度下降 74.6%。本条不得解释为
+      scheduling-only 失败或不得作为 CCISP 工程方法章。
 
   - id: 2C
     name: Receiver-Visible Coded Calibration Method

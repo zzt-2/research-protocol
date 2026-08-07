@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="610" viewBox="0 0 1200 610" role="img" aria-labelledby="title desc">
+  <title id="title">CCISP select-before-execute single-branch receiver architecture</title>
+  <desc id="desc">Comparison between dual-branch-then-select baseline and CCISP selector-first single-branch execution.</desc>
+  <defs>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#2563EB"/></marker>
+    <marker id="arrowOrange" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#D97706"/></marker>
+    <style>
+      .t{font-family:"Noto Sans CJK SC","Microsoft YaHei",Arial,sans-serif;fill:#172033}.h{font-size:25px;font-weight:700}.s{font-size:16px}.b{font-size:17px;font-weight:700}.small{font-size:14px}.box{fill:#F8FAFC;stroke:#64748B;stroke-width:1.6;rx:10}.sel{fill:#FFF7ED;stroke:#D97706;stroke-width:2;rx:10}.branch{fill:#EFF6FF;stroke:#2563EB;stroke-width:2;rx:10}.common{fill:#ECFDF5;stroke:#059669;stroke-width:2;rx:10}.panel{fill:#FFFFFF;stroke:#CBD5E1;stroke-width:1.5;rx:16}.data{fill:none;stroke:#2563EB;stroke-width:2.5;marker-end:url(#arrowBlue)}.ctrl{fill:none;stroke:#D97706;stroke-width:2.5;stroke-dasharray:8 6;marker-end:url(#arrowOrange)}
+    </style>
+  </defs>
+  <rect width="1200" height="610" fill="#F1F5F9"/>
+  <text x="600" y="40" text-anchor="middle" class="t h">CCISP 先选后算单分支接收机架构</text>
+  <text x="600" y="66" text-anchor="middle" class="t s">相同 selector、相同 DA/NDA 恢复分支、相同公共检测链；仅改变执行调度</text>
+
+  <rect x="35" y="95" width="535" height="435" class="panel"/>
+  <text x="302" y="128" text-anchor="middle" class="t b">Route A 公平基线：双分支后选择</text>
+  <rect x="65" y="245" width="120" height="62" class="box"/><text x="125" y="272" text-anchor="middle" class="t s">接收窗口</text><text x="125" y="293" text-anchor="middle" class="t small">r, config, pilot</text>
+  <rect x="230" y="150" width="135" height="62" class="branch"/><text x="297" y="178" text-anchor="middle" class="t b">DA 恢复</text><text x="297" y="198" text-anchor="middle" class="t small">每窗执行</text>
+  <rect x="230" y="340" width="135" height="62" class="branch"/><text x="297" y="368" text-anchor="middle" class="t b">NDA 恢复</text><text x="297" y="388" text-anchor="middle" class="t small">每窗执行</text>
+  <rect x="230" y="245" width="135" height="62" class="sel"/><text x="297" y="272" text-anchor="middle" class="t b">CCISP selector</text><text x="297" y="293" text-anchor="middle" class="t small">receiver-visible</text>
+  <rect x="405" y="245" width="70" height="62" class="sel"/><text x="440" y="282" text-anchor="middle" class="t b">MUX</text>
+  <rect x="495" y="245" width="55" height="62" class="common"/><text x="522" y="270" text-anchor="middle" class="t small">公共</text><text x="522" y="291" text-anchor="middle" class="t small">检测</text>
+  <path d="M185 276 H215 V181 H230" class="data"/><path d="M185 276 H230" class="data"/><path d="M185 276 H215 V371 H230" class="data"/>
+  <path d="M365 181 H390 V260 H405" class="data"/><path d="M365 371 H390 V292 H405" class="data"/><path d="M365 276 H405" class="ctrl"/><path d="M475 276 H495" class="data"/>
+  <text x="302" y="447" text-anchor="middle" class="t s">DA + NDA：792,000 次分支调用</text>
+  <text x="302" y="474" text-anchor="middle" class="t s">未选分支的计算已发生</text>
+
+  <rect x="630" y="95" width="535" height="435" class="panel"/>
+  <text x="897" y="128" text-anchor="middle" class="t b">本文方法：先选择、仅执行被选分支</text>
+  <rect x="655" y="245" width="120" height="62" class="box"/><text x="715" y="272" text-anchor="middle" class="t s">接收窗口</text><text x="715" y="293" text-anchor="middle" class="t small">r, config, pilot</text>
+  <rect x="805" y="245" width="140" height="62" class="sel"/><text x="875" y="272" text-anchor="middle" class="t b">CCISP selector</text><text x="875" y="293" text-anchor="middle" class="t small">branch command</text>
+  <rect x="990" y="150" width="135" height="62" class="branch"/><text x="1057" y="178" text-anchor="middle" class="t b">DA 恢复</text><text x="1057" y="198" text-anchor="middle" class="t small">按命令执行</text>
+  <rect x="990" y="340" width="135" height="62" class="branch"/><text x="1057" y="368" text-anchor="middle" class="t b">NDA 恢复</text><text x="1057" y="388" text-anchor="middle" class="t small">按命令执行</text>
+  <rect x="990" y="245" width="135" height="62" class="common"/><text x="1057" y="272" text-anchor="middle" class="t b">公共检测器</text><text x="1057" y="293" text-anchor="middle" class="t small">统一下游接口</text>
+  <path d="M775 276 H805" class="data"/><path d="M775 276 H965 V181 H990" class="data"/><path d="M775 276 H965 V371 H990" class="data"/>
+  <path d="M945 267 H970 V181 H990" class="ctrl"/><path d="M945 285 H970 V371 H990" class="ctrl"/>
+  <path d="M1057 212 V245" class="data"/><path d="M1057 340 V307" class="data"/>
+  <text x="897" y="447" text-anchor="middle" class="t s">DA 或 NDA：396,000 次分支调用（−50.00%）</text>
+  <text x="897" y="474" text-anchor="middle" class="t s">0 / 396,000 selected-output mismatch</text>
+
+  <line x1="320" y1="570" x2="370" y2="570" class="data"/><text x="380" y="575" class="t small">数据流</text>
+  <line x1="510" y1="570" x2="560" y2="570" class="ctrl"/><text x="570" y="575" class="t small">控制流 / branch command</text>
+  <text x="910" y="575" text-anchor="middle" class="t small">BF/AF = 0.5424（单侧 95% 上界 0.5473）</text>
+</svg>

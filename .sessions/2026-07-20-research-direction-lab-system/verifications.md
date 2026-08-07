@@ -819,3 +819,56 @@ p05_run*.log untracked and unstaged; cached diff empty
 PASS。7 篇 baseline、5 张完整方法卡、逐卡碰撞收据与 0 survivor 终局均有可复核证据；本批不授权
 Groundwork、检索、实现或实验。下一合法动作仍是用户显式选择改变 candidate source、target chapter
 或 research object。
+
+## V020: CCISP scheduling-only authority reconciliation 独立终验
+
+> date: 2026-08-07
+> 关联：D036 / S017 / CP019 / `ccisp-select-before-execute-single-branch-method-package.md`
+> verifier 上下文：fresh-context 独立 subagent；未参与 authority 修订、复算器实现、方法包或主图撰写
+> FINAL VERDICT: PASS
+
+### 首轮对抗审查与修复
+
+首轮为 `FAIL`（P0/P1/P2=0/2/1）：verifier 误用旧 D021/D022 的通用 terminal 枚举，未获得本轮用户
+task-local 四选一全文，因而把合法的 `THESIS_ENGINEERING_METHOD_READY` 误判为新枚举；同时准确发现
+canonical contribution tier 应为 `THESIS_ENGINEERING_COMPONENT`，以及 active thesis-writing registry
+仍保留复合 2B pending。最小修复后，D036 明确两字段分账与时间较新的用户 terminal authority，所有 current
+owner/projection 同步；没有改算法、raw artifacts、统计口径或 claim 数字。
+
+### 独立复算与验证项
+
+- [x] 直接流式读取 commit `67970307a051dd8149e1a750498a20674dfcfe6f` 的 raw blobs，未使用聚合结果作证据。
+- [x] 990 performance + 990 timing 是同一组 3 scenes×11 SNR×30 seeds cells；396,000 是逐窗总体。
+- [x] command/output mismatch=0/396,000；command/output SHA 990/990 相同；BER counts 每 cell 与 pooled 均一致。
+- [x] A-F/B-F pooled BER 均为 32,589,134/304,128,000=0.1071559803766835。
+- [x] BF/AF seed-cluster mean=0.5424435601792953，单侧 95% t upper=0.5472819331515957；30 clusters。
+- [x] 平均每窗 timing 为 679.210189 μs→363.508716 μs；正式 1,980 个 before/after contamination samples 全部 PASS。
+- [x] 3 个 post-timing load≥60% 样本属非门控字段，已披露，不改变 formal timing 合法性。
+- [x] route A/B 实际 recovery-branch calls 792,000→396,000（-50.00%）；主要 typed operations 与 raw totals 一致。
+- [x] comparator 仅改变执行调度；input、selector、branch command、DA/NDA implementation 与 common detector 相同。
+- [x] scheduling 归属 CCISP；旧复合 2B 与 Q(8,6) failure 历史保留，互不连带。
+- [x] 新 selector、新 estimator、fixed-point、FPGA/PPA、74.6% 总接收机与通用双专家 claim 均未复活。
+- [x] canonical tier=`THESIS_ENGINEERING_COMPONENT`；task-local terminal=`THESIS_ENGINEERING_METHOD_READY`。
+- [x] registry/inventory YAML 与 SVG XML 解析 PASS；active thesis-writing topic/registry 投影已刷新。
+
+### 验证证据
+
+```text
+fresh verifier raw recomputation
+coverage=990/990; windows=396000; identity mismatches=0; BER equal
+BF/AF=0.5424435601792953; one-sided95 upper=0.5472819331515957
+
+initial authority audit
+FAIL; P0=0 P1=2 P2=1
+
+after task-local terminal / canonical tier reconciliation
+PASS; P0=0 P1=0 P2=0
+terminal=THESIS_ENGINEERING_METHOD_READY
+contribution_tier=THESIS_ENGINEERING_COMPONENT
+```
+
+### 结论
+
+PASS。scheduling-only 已具备可部署动作、逐窗输出/BER 等价、合法软件 caller-path timing 与可审计
+operation reduction，可作为 CCISP 的学位论文工程方法章。无需 bounded timing rerun；下一步仅允许整合
+冻结的 Ch5 方法包、主图和主表，不授权 fixed-point、硬件 claim、算法修改或新实验。

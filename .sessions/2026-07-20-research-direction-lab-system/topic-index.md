@@ -4,31 +4,29 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 31
+  control_epoch: 32
   role: RDL_MASTER
   mission: 设计并验证轻量方法构造车道，使 Ch4/Ch5 优先形成学位论文级可命名方法
-  active_lane: FORMAL_STEP4A_KILL_OR_PIVOT_AWAITING_USER_DIRECTION
-  authority_pointer: .sessions/2026-08-06-oversampled-coherent-sync-groundwork/decisions.md#D012
-  decision_gate: semantic smoke已独立复验PASS并触发Kill/Pivot；当前Q1无正式MVE/testbed/Step5入口
+  active_lane: CCISP_SINGLE_BRANCH_ENGINEERING_METHOD_READY
+  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D036
+  decision_gate: scheduling-only已与failed fixed-point拆分；只允许按冻结claim ceiling进入Ch5写作
   allowed_actions:
-    - USER_FORMAL_CARRIER_DISPOSITION
+    - CH5_METHOD_WRITE_INTEGRATION
   forbidden_actions:
     - OLD_CAMPAIGN_REOPEN
     - COMMON_PARAMS_MUTATION
-    - FORMAL_STAGE_CHANGE
-    - Q1_FURTHER_EXPERIMENT_OR_GRID_EXPANSION
-    - FORMAL_MVE_OR_TESTBED
-    - PRODUCTION_METHOD_IMPLEMENTATION
-    - GROUNDWORK_STEP5_OR_LATER
-    - CONTRACT_OR_EXECUTE
-    - WEB_SEARCH_WITHOUT_NEW_USER_AUTHORIZATION
+    - NEW_GW_DIRECTION
+    - NEW_PHYSICAL_SCENARIO
+    - CCISP_ALGORITHM_MUTATION
+    - FIXED_POINT_REVIVAL
+    - FPGA_PPA_CLAIM_WITHOUT_SYNTHESIS
   mission_log_ref: .sessions/2026-07-20-research-direction-lab-system/mission-log.md
-  mission_checkpoint: CP018
-  next_legal_action: 用户决定归档Q1或显式授权latency/complexity新M-C-A pivot；不得自动推进
+  mission_checkpoint: CP019
+  next_legal_action: 将冻结的方法包、主图与主表整合进Ch5；不运行新实验
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-07（CP018/D035 + formal D012/V008/H005：Q1 KILL_OR_PIVOT）
+> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-07（CP019/D036/V020：CCISP scheduling-only 方法就绪）
 
 ## 专题信息
 
@@ -84,6 +82,9 @@ rdl_control:
   不开放正式 MVE、testbed、Step 5、Contract、Execute 或新 Web 检索。
 - 基于 D035，formal semantic smoke 已由 V008/T016 full re-verification PASS 并触发
   `STEP4A_PREFLIGHT_KILL_OR_PIVOT`；无 METHOD_SIGNAL，当前只等待用户决定归档或新 M-C-A pivot。
+- 基于 D036，允许仅对历史 T005 scheduling-only 做 authority reconciliation、raw artifact 确定性复算与
+  Ch5 方法包装；不新开 GW、不改 CCISP、不混入 Q(8,6)。复合 2B 继续 SUPPORTING_ONLY，CCISP
+  select-before-execute single-branch receiver architecture 已达到 `THESIS_ENGINEERING_METHOD_READY`。
 
 ### 明确不含
 
@@ -94,6 +95,11 @@ rdl_control:
 - 不批量迁移或删除旧科学目录；新布局渐进采用，旧历史继续 append-only 保留。
 
 ### 范围变更记录
+
+- **[2026-08-07] D036**：从等待 formal carrier disposition 切换为一次受限的 CCISP scheduling-only 方法收获。
+  - 原因：用户明确要求修正 2B authority 中 scheduling 与 failed fixed-point 的错误绑定，并闭合既有证据，不寻找新方向。
+  - 新范围：只做 raw 复算、authority 修订、Ch5 方法包/主图/主表、fresh-context verification 与统一 commit。
+  - 影响的未决项：oversampled Q1 terminal 与 thesis-fso 当前 Groundwork stage 不变；硬件综合与 fixed-point 不解冻。
 
 - **[2026-08-06] D029**：接收 formal GW Step 3 terminal，结束本轮过采样同步候选推进。
   - 原因：用户授权 Step 3→条件式 Step 3.5；7 篇 CORE 精读后 survivor=0。
@@ -222,6 +228,8 @@ rdl_control:
 - `T###` 是不可变任务书，H 只用于主控续接；不得为每个轻量工作包机械生成 S/D/V/H 全套。
 - 方法产出分为 `THESIS_MAIN_METHOD`、`THESIS_ENGINEERING_COMPONENT`、`SUPPORTING_MATERIAL`；支持材料不成为 active carrier，真实且公平的 B 级工程组件保留合法入口。
 - 科学主方法门与论文方法章门分账：未达 `METHOD_SIGNAL` 不自动等于 `SUPPORTING_ONLY`；语义有效的中粒度内核先做章节能力判定，invalidated evidence 仍不得晋级。
+- **D036 authority reconciliation**：D023 的“不得另立 2B 新 selector”继续有效；它不等于 scheduling-only 失败。
+  scheduling 归属 CCISP 并以工程方法成章，Q(8,6) fixed-point 失败独立保留。
 
 ## 进展线索
 
@@ -284,6 +292,9 @@ rdl_control:
   terminal=`STEP3_NO_VALID_PROBLEM`，Step 3.5 未触发，无方法载体。
 - **CP011**：formal V004 独立验收 PASS、H001 已交接且专题转 closed；当前无 active carrier，
   RDL 只保留用户战略决定门。
+- **S017 / D036 / CP019 / V020**：从 T005 immutable raw artifacts 独立复算 990 cells / 396,000 windows，
+  拆分 scheduling 与 fixed-point authority；完成 CCISP 先选后算单分支 Ch5 方法包、可编辑主图与 claim ceiling，
+  fresh-context verifier 接收为 `THESIS_ENGINEERING_METHOD_READY`。
 
 ## 未决项
 
@@ -307,7 +318,7 @@ lightweight persistence。六案审计重放、自动测试、个人 Skill 同�
 终验均 PASS（P0/P1/P2=0）；既有科学 verdict、dormant longitudinal topic 与
 formal owner 未变。
 
-**2026-08-07 当前入口**：`FORMAL_STEP4A_KILL_OR_PIVOT_AWAITING_USER_DIRECTION`（epoch 31 / CP018 /
-D035；formal D012）。T015 semantic smoke 与 T016 full re-verification 已完成，formal Q1 terminal=
-`STEP4A_PREFLIGHT_KILL_OR_PIVOT`，topic closed。下一合法动作只允许用户决定归档，或显式授权以
-latency/complexity 为唯一维度的新 M-C-A pivot；正式 MVE、testbed、Step 5、Contract、Execute 均冻结。
+**2026-08-07 当前入口**：`CCISP_SINGLE_BRANCH_ENGINEERING_METHOD_READY`（epoch 32 / CP019 / D036 /
+V020）。历史复合 2B 继续 `SUPPORTING_ONLY / SUPERSEDED_COMPOSITE`；Q(8,6) fixed-point 失败不变。
+scheduling-only 以 CCISP 真实动作身份完成 396,000 窗 identity、cluster timing、typed-operation 与 Ch5
+包装。下一合法动作只允许整合已冻结的 Ch5 文本、主图和主表；不新开 GW、不改算法、不跑新实验。

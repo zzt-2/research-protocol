@@ -129,3 +129,10 @@
 - "完成 Step 3.5 后停止，不进入 Step 4a、方法实现、testbed 或仿真。" → D029
 - "这是已知 semantic-gate misapplication，与 AMC Groundwork D005 已纠正的问题相同：把 Step 4a/MVE 的 problem-truth 责任前移至 Step 3。" → D030
 - "如果 Q1 重判为 survivor，立即按 stages/gw-supplement.md 完成 Step 3.5，不停在纠偏。" → D030
+
+### CCISP 单分支执行架构方法闭合提示词
+
+[转述:执行提示词] "本轮不是继续找新方向，而是完成 CCISP 单分支执行架构（2B scheduling-only）的学位论文方法包装与证据闭合。" → D036
+[转述:执行提示词] "不得让 fixed-point 失败连带否定 scheduling-only。" → D036
+[转述:执行提示词] "只要 scheduling-only 具备部署动作、输出等价性和可审计的显著计算下降，即可成为 THESIS_ENGINEERING_METHOD；不要求它是新的估计算法，也不要求超过 CCISP 的 BER。" → D036
+[转述:执行提示词] "不改 CCISP 算法本体；不 push；一次统一 commit；由 fresh-context verifier 独立复算承重数字和检查 claim ceiling。" → D036

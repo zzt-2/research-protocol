@@ -1,7 +1,7 @@
 # Topic Index: 论文写作专题（自适应 CPR 方向）
 
 > slug: 2026-07-09-thesis-writing
-> status: active | created 2026-07-09 | last_updated 2026-08-03（D026/V013：唯一条件式 thesis spine 锁定并通过独立终验）
+> status: active | created 2026-07-09 | last_updated 2026-08-07（RDL D036/V020：Ch5 scheduling-only authority 闭合）
 
 ## 专题定位（一句话）
 
@@ -97,7 +97,7 @@
 - D020：完整 Fig.2 在小 CPR 节点内只剩不可读纹理，故不嵌入；CPR 保留中性短标签和 `Detailed in Fig. 2`，其余五类真实微图不变。
 - D021：用户明确覆盖 D020；完整 Fig.2 thumbnail 恢复并允许不可读。中央接收公式删除，改为 `Composite FSO channel` + 同一 realization 的真实受损接收星座。
 - D022：Fig.2 保留三泳道、并行候选、raw bypass 和用户微调后的非控制连线，只把旧单层控制带升级为 CV gate → blind-h/effective-SNR → fixed 13 dB → branch command。
-- D026：唯一推荐条件式 spine = Ch3 CCISP（READY）→ Ch4 2A calibration-aware robustness（NEEDS_ONE_BOUNDED_PACKAGE）→ Ch5 2B branch-route+fixed-point（NEEDS_ONE_BOUNDED_PACKAGE）；正式 Ch4/Ch5 WRITE 在各自独立验证前暂停，2C/2D 不用于凑章。
+- D026：原条件式 spine 保留历史；其中 Ch5“2B branch-route+fixed-point pending”投影已被 RDL D036/V020 部分取代。当前 Ch5=CCISP select-before-execute single-branch receiver architecture（canonical tier=`THESIS_ENGINEERING_COMPONENT`，task-local terminal=`THESIS_ENGINEERING_METHOD_READY`）；Q(8,6) 继续 SUPPORTING_ONLY。
 
 ## 悬而未决
 
@@ -106,11 +106,16 @@
 3. **S002 原悬而未决**（图表清单 / fair_gain 呈现 / 主图子图数）：H002 把图 2 数据备齐，等老师反馈后定稿。
 4. **Fig.1/2 文字联动**：两图 draw.io 编辑源均已形成，Fig.1 v4 与 Fig.2 分别通过独立门控；caption、正文图号联动及投稿前检查仍未执行。
 5. **2A 方法闭合**：需在新执行对话完成 calibration-aware mismatch×GG×SNR cross-grid bounded package；未通过前 Ch4 不得进入正式 WRITE。
-6. **2B 方法闭合**：2A 通过后另开包完成 formal full-grid cost/latency、float-vs-Q BER 与可得的真实综合；未通过前 Ch5 不得进入正式 WRITE。
+6. ~~**2B 方法闭合**~~：已由 RDL D036/V020 拆分并关闭。scheduling-only Ch5 已具备 full-grid identity、
+   cluster timing 与 typed-operation 证据；fixed-point 和真实综合不进入该方法。下一步仅为 Ch5 文本/图表整合。
 
 ## 当前位置
 
-**✅ S018 / D026 / V013（2026-08-03）：方法包装逆向工程与内核重审完成并通过独立终验。** 旧 R023/D023/D024 已标 superseded。12 篇真实硕士论文均精读至少两个核心技术/方法章；R1–R5 每类至少两例，R6 经两篇定向卫星样本核查仍为 `0/12 REJECT_NOT_OBSERVED`。唯一推荐 = Ch3 CCISP（READY）→ Ch4 2A calibration-aware robustness（NEEDS_ONE_BOUNDED_PACKAGE）→ Ch5 2B branch-route+fixed-point（NEEDS_ONE_BOUNDED_PACKAGE）。2C=SUPPORTING_ONLY，2D=NEEDS_NEW_GW。V013 对 13 项用户门给出 13/13 PASS，Critical/Important/Minor 均为 0。正式 Ch4/Ch5 WRITE 与任何新实验均未执行；下一合法动作 = 新对话先走 sim-preflight/GW gate，只执行 2A cross-grid bounded package。
+**✅ RDL D036 / V020（2026-08-07）：Ch5 authority 与证据闭合。** 历史 D026 的复合 2B pending
+投影已拆分：scheduling-only 归属既有 CCISP，动作链为 receiver-visible selector→branch command→only
+selected recovery branch→common detector，terminal=`THESIS_ENGINEERING_METHOD_READY`；Q(8,6) fixed-point
+继续 SUPPORTING_ONLY。Ch5 下一合法动作只允许整合冻结文本、主图与主表，不跑新实验、不改 CCISP。
+Ch4/2A 的独立终态不在本轮改写。
 
 ---
 

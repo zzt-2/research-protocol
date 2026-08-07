@@ -30,8 +30,8 @@ topics:
     title: Research Direction Lab 完整体系设计
     status: active
     created: "2026-07-20"
-    last_updated: "2026-08-07（CP018/D035 + formal D012/V008/H005：Q1 KILL_OR_PIVOT）"
-    description: "长期研究探索体系唯一流程 owner。formal Q1 semantic smoke 已独立复验 PASS 并触发 STEP4A_PREFLIGHT_KILL_OR_PIVOT；无 METHOD_SIGNAL。当前只等待用户决定归档或显式授权 latency/complexity 新 M-C-A pivot；正式 MVE/testbed/Step5 仍关闭。"
+    last_updated: "2026-08-07（CP019/D036/V020：CCISP scheduling-only THESIS_ENGINEERING_METHOD_READY）"
+    description: "长期研究探索体系唯一流程 owner。D036 拆分历史 2B 复合 authority：Q(8,6) fixed-point 继续 SUPPORTING_ONLY；scheduling-only 归属既有 CCISP，已闭合 396000 窗 identity、cluster timing 与 operation evidence，terminal=THESIS_ENGINEERING_METHOD_READY。当前只允许 Ch5 写作整合，不开放新实验或算法修改。"
     depends_on:
       - slug: framework-evolution
         reason: 继承 R002 Direction Lab 设计和唯一拥有者原则
@@ -44,6 +44,9 @@ topics:
       - .sessions/2026-07-20-research-direction-lab-system/
       - docs/superpowers/specs/2026-07-20-research-direction-lab-system-blueprint.md
       - docs/superpowers/plans/2026-07-20-research-direction-lab-system-implementation.md
+      - projects/thesis-fso/direction-lab/harvest/ccisp-select-before-execute-single-branch-method-package.md
+      - projects/simulation/figures/ccisp_select_before_execute_single_branch.svg
+      - projects/simulation/results/ccisp_single_branch_authority_reconciliation/
 
   - slug: 2026-08-06-oversampled-coherent-sync-groundwork
     title: 过采样相干 FSO 联合同步前端 Groundwork
@@ -494,8 +497,8 @@ topics:
     title: 论文写作专题（自适应 CPR 方向）
     status: active
     created: "2026-07-09"
-    last_updated: "2026-08-03（D026/V013：12 篇硕士方法章逆向工程完成，唯一条件式 thesis spine 13/13 PASS）"
-    description: "自适应载波相位恢复方向的论文写作准备专题。S018/D026 已完成旧包装失败复盘、全项目方法内核盘点及 12 篇真实硕士论文双方法章精读；唯一推荐条件式 spine = Ch3 CCISP（READY）→ Ch4 2A calibration-aware robustness（NEEDS_ONE_BOUNDED_PACKAGE）→ Ch5 2B branch-route+fixed-point（NEEDS_ONE_BOUNDED_PACKAGE）。本专题仍是 paper-writing INTAKE/DIAGNOSE/PROPOSE，不进正式 WRITE、不跑实验；执行须回所属 GW gate。"
+    last_updated: "2026-08-07（RDL D036/V020：Ch5 CCISP scheduling-only 方法就绪）"
+    description: "自适应载波相位恢复方向的论文写作准备专题。RDL D036/V020 已取代 D026 中 Ch5 的复合 2B pending 投影：Ch5 当前为 CCISP select-before-execute single-branch receiver architecture，canonical tier=THESIS_ENGINEERING_COMPONENT，task-local terminal=THESIS_ENGINEERING_METHOD_READY；Q(8,6) fixed-point 继续 SUPPORTING_ONLY 且不进入正文。Ch4/2A 独立终态不在本轮改写；不跑新实验。"
     depends_on:
       - slug: 2026-07-06-step4a-mve-execution
         reason: 继承 A4 数据（30seed fair_gain + A4 切换 CI）+ baseline 池（D-010 五条 + DA/NDA/DPLL/VV/BPS）+ R001 调研（baseline 组织/参数/叙述惯例 + 合法性背书矩阵）+ 简报 ADVISOR_BRIEFING_2026-07-09

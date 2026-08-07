@@ -25,6 +25,14 @@ current_stage: GROUNDWORK
 
 ## §2 项目状态
 
+### 论文方法收获旁路（不改变当前 Groundwork stage gate）
+
+> **2026-08-07 D036/V020**：历史 T005 scheduling-only 证据已从失败的 Q(8,6) fixed-point 复合
+> authority 中拆出，并按真实动作归属闭合为 `CCISP select-before-execute single-branch receiver
+> architecture`，terminal=`THESIS_ENGINEERING_METHOD_READY`。该结论只授权 Ch5 方法写作与图表整合；
+> 不创建新 GW 方向，不改变本文件 frontmatter 的 current_step/current_stage，不修改 CCISP 算法本体，
+> 也不授权 fixed-point、硬件综合或新物理场景。
+
 ### 当前控制面桥接
 
 > **2026-08-07 当前入口：`STRONG_TURBULENCE_CODED_BURST_STEP1_EVIDENCE_INSUFFICIENT`**。用户已显式授权把物理条件 C

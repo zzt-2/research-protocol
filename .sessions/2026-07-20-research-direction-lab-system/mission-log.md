@@ -283,3 +283,19 @@
 - weight: ADEQUATE
 - drift: ALIGNED
 - next_action: 用户选择归档Q1或显式授权latency/complexity新M-C-A pivot；不得自动建testbed、跑正式MVE或进入Step5
+
+## CP019 — 2026-08-07
+
+- event: CCISP scheduling-only authority reconciliation 与 Ch5 工程方法闭合
+- evidence: D036/S017；T005 immutable raw artifacts；scheduling-only recomputed-evidence；fresh-context V020
+- formal_science_disposition: EXISTING_CCISP_ACTION_UNCHANGED
+- mission_method_delta: CCISP_SINGLE_BRANCH_EXECUTION_ARCHITECTURE_PACKAGED
+- thesis_method_disposition: THESIS_ENGINEERING_METHOD_READY
+- intent: CH5_METHOD_WRITE_INTEGRATION
+- mechanism_family: EXECUTION_SCHEDULING
+- same_axis_streak: 0
+- deterministic_repair_count: 0
+- no_method_streak: 0
+- weight: ADEQUATE
+- drift: ALIGNED
+- next_action: 仅将冻结方法包、主图与主表整合进Ch5；不得恢复fixed-point、修改CCISP算法或启动新实验

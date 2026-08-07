@@ -1,0 +1,31 @@
+{
+  "schema": "ccisp.single-branch-terminal-disposition.v1",
+  "method": "CCISP select-before-execute single-branch receiver architecture",
+  "canonical_contribution_tier": "THESIS_ENGINEERING_COMPONENT",
+  "terminal": "THESIS_ENGINEERING_METHOD_READY",
+  "authority": {
+    "decision": ".sessions/2026-07-20-research-direction-lab-system/decisions.md#D036",
+    "verification": ".sessions/2026-07-20-research-direction-lab-system/verifications.md#V020",
+    "historical_source_commit": "67970307a051dd8149e1a750498a20674dfcfe6f"
+  },
+  "scheduling_only": {
+    "cells": 990,
+    "windows": 396000,
+    "command_mismatches": 0,
+    "selected_output_mismatches": 0,
+    "ber": 0.1071559803766835,
+    "bf_over_af_cluster_mean": 0.5424435601792953,
+    "bf_over_af_one_sided95_upper": 0.5472819331515957,
+    "branch_call_reduction": 0.5
+  },
+  "fixed_point": {
+    "included_in_method": false,
+    "historical_disposition": "SUPPORTING_ONLY",
+    "cannot_kill_scheduling": true
+  },
+  "verifier": {
+    "report": "projects/simulation/results/ccisp_single_branch_authority_reconciliation/independent-verifier-report.md",
+    "verdict": "PASS",
+    "blockers": {"P0": 0, "P1": 0, "P2": 0}
+  }
+}
