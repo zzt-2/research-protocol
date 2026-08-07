@@ -62,6 +62,21 @@ topics:
       - projects/thesis-fso/literature_notes_oversampled_sync.md
       - projects/thesis-fso/oversampled-sync-groundwork/step2-coverage-report.md
 
+  - slug: 2026-08-07-strong-turbulence-coded-burst-groundwork
+    title: 低仰角强湍流 coded-burst reliability Groundwork
+    status: closed
+    created: "2026-08-07"
+    last_updated: "2026-08-07（D002/V001/H001：6/6 query 后 STEP1_EVIDENCE_INSUFFICIENT；fresh verifier ACCEPT；Step 2 未执行）"
+    description: "独立 Groundwork 专题，已以 STEP1_EVIDENCE_INSUFFICIENT 关闭。6/6 query 后：大天顶角强起伏/GG 有物理支持，但真实低仰角强条件 occurrence+threshold-conditioned AFD 未闭合；严格 2019+ task-matched baseline 仅 1 篇；outage-vs-burst 语义门未通过。三张预卡均为 HYPOTHESIS_ONLY，不产生 Go/METHOD_SIGNAL/claim；Step 2 未执行。"
+    depends_on:
+      - slug: 2026-06-19-4b1-adaptive-interleaving-groundwork
+        reason: 继承 B=27、Lburst=60–428、容量约810、0/15超容与自适应-vs-static 0dB 的永久事实及旧方向排除边界
+      - slug: 2026-07-23-research-direction-lab-longitudinal-test
+        reason: 继承 P08/P08-R2 coded-chain 科学修复、receiver 信息边界和不可恢复 outage 的历史证据边界
+    conflicts_with: []
+    produces:
+      - .sessions/2026-08-07-strong-turbulence-coded-burst-groundwork/
+
   - slug: 2026-07-23-research-direction-lab-longitudinal-test
     title: Research Direction Lab 长程真实运行测试
     status: dormant

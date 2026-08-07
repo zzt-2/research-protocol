@@ -5,7 +5,7 @@ method_type: 待定（精读后根据问题方法产出形态确定，见 glossa
 domain: comms
 created: 2026-06-21
 updated: 2026-08-07
-current_step: OVERSAMPLED_SYNC_STEP4A_KILL_OR_PIVOT（D012/V008/H005；Q1无正式MVE/testbed/Step5入口，等待用户归档或新M-C-A pivot决定。C3/P1保持closed。）
+current_step: STRONG_TURBULENCE_CODED_BURST_STEP1_EVIDENCE_INSUFFICIENT（2026-08-07 D002；6/6 query 收口，无候选通过六项 reopen gate，Step 2 未执行。）
 current_stage: GROUNDWORK
 ---
 
@@ -27,11 +27,28 @@ current_stage: GROUNDWORK
 
 ### 当前控制面桥接
 
-> **2026-08-07 当前入口：`OVERSAMPLED_SYNC_STEP4A_KILL_OR_PIVOT`**。D010/H004 semantic smoke 已由
-> T015 执行并经 T016/V008 full re-verification PASS。B1/C common-grid 180/180 exact-equivalent；noiseless
-> 四法 0/75，-6 dB diagnostic B0/B2=58/75、B1/C=59/75，无 stable 2×2。formal D012/topic closed；
-> 不开放正式 MVE、testbed、Step 5、Contract 或 Execute，只等待用户归档或新 M-C-A pivot 决定。
-> C3、P1、baseline-first batch 与 2026-08-02 dormant campaign均只作历史背景。
+> **2026-08-07 当前入口：`STRONG_TURBULENCE_CODED_BURST_STEP1_EVIDENCE_INSUFFICIENT`**。用户已显式授权把物理条件 C
+> 从旧 4b#1 的“LEO 中弱湍流”改为有一手依据的“低仰角强湍流/outage 切片”，并要求另开正式
+> Groundwork 专题从 Step 1 开始。当前只开放最多 6 组定向检索、历史碰撞审计、物理来源分级、
+> outage-vs-burst 语义门和 P08-R2/Sionna 资产的只读 BOM。至少一张候选预卡同时通过六项 reopen gate
+> 才能进入 Step 2。6/6 query 已收口：target occurrence/AFD、recoverable cross-block span 与第二篇严格
+> 2019+ task-matched baseline 均未闭合，D002 选择 `STEP1_EVIDENCE_INSUFFICIENT`；V001/fresh verifier
+> `ACCEPT`、blocker=0；Step 2 未执行。
+> 禁止 coded-chain/MVE/Step 3/4a/Step 5/Contract/Execute。
+> oversampled-sync Q1、C3、P1、baseline-first batch 与 2026-08-02 dormant campaign均只作历史背景。
+
+- **低仰角强湍流 coded-burst reliability Groundwork（独立专题，2026-08-07）—— CLOSED / STEP 1 EVIDENCE INSUFFICIENT**：
+  原始目标、六项 reopen gate、outage-vs-burst terminal 与禁止项已在新专题 S001/D001/topic-index 冻结。
+  旧 4b#1 的 `Lburst=60–428`、B=27 容量约 810、0/15 超容和 0 dB 上界保持永久有效；只有一手证据
+  支持的新物理切片可重开。P08-R2 只作工程资产和不可恢复 outage 反例，不继承方法 verdict。
+
+  | Strong-turbulence coded-burst GW Step | 状态 | 证据 | 下游门控 |
+  |---|---|---|---|
+  | 1 search | 🛑 STOPPED | S001/R001–R004/D002 | `STEP1_EVIDENCE_INSUFFICIENT` |
+  | 2 acquire | NOT_RUN | D002 | Step 1 未通过，禁止 |
+  | 3 read | ⬜ FORBIDDEN | — | Step 2 用户确认前禁止 |
+  | 3.5 supplement | ⬜ FORBIDDEN | — | Step 3 未完成前禁止 |
+  | 4a feasibility | ⬜ FORBIDDEN | — | Step 3/3.5 未完成前禁止 |
 
 - **过采样相干 FSO 联合同步前端（独立专题，2026-08-06）—— STEP 4a KILL_OR_PIVOT / CLOSED**：
   Q1 为 sample-level frame/fractional-timing/CFO acquisition；Q2 为 GG fade 与 SCO 下 timing/carrier
