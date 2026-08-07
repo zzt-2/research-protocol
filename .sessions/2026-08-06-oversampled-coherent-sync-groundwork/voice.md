@@ -25,3 +25,4 @@
 - "不得再次要求‘A 已被 MVE 证明’才允许进入 A0。" → D010
 - "不得给 Go/Conditional Go，因为维度 D 尚未执行。" → D010
 - "不 push；不修改 common/、params.py、旧实验、Skill 或四个 p05_run*.log。" → D009
+- "执行" → D011

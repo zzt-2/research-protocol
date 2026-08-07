@@ -335,7 +335,7 @@ S001 续接；T013；`projects/thesis-fso/worker-logs/step-3-5-jlt-iq-skew-fullt
 > status: active
 > date: 2026-08-07
 > 取代：无
-> 被取代：无
+> 被取代：D011（仅 semantic-smoke 执行禁令）
 > 依据：用户原话: voice.md 2026-08-07 + H003 + D006–D008 + `stages/gw-feasibility.md`
 
 ### 决策
@@ -374,7 +374,7 @@ S002；用户 2026-08-07 明确执行范围。
 > status: active
 > date: 2026-08-07
 > 取代：无
-> 被取代：无
+> 被取代：D011（仅 awaiting-approval gate）；D012（preflight terminal）
 > 依据：分析: `projects/thesis-fso/oversampled-sync-groundwork/step4a-preflight-discussion.md` + 调研: `literature_notes_oversampled_sync.md` / `step3-5-supplement-report.md` / `testbed-bom.md` + critic: `projects/thesis-fso/oversampled-sync-groundwork/step4a-preflight-independent-verifier-report.md`
 > 触发原话：用户原话: voice.md 2026-08-07
 
@@ -419,3 +419,93 @@ formal topic terminal、RDL foreground control、master-state 与 handoff 更新
 ### 来源
 
 S002；`projects/thesis-fso/oversampled-sync-groundwork/step4a-preflight-discussion.md`。
+
+## D011: 用户批准执行受限 deterministic semantic smoke
+
+> status: active
+> date: 2026-08-07
+> 取代：D009 的 semantic-smoke 执行禁令；D010 的 awaiting-approval gate
+> 扩展：D010 的 ≤1 天 semantic smoke 合同
+> 被取代：D012（execution/result gate）
+> 依据：用户原话: voice.md 2026-08-07 + 验证: V007 + H004
+> 触发原话：用户原话: voice.md 2026-08-07
+
+### 决策
+
+用户以“执行”明确批准运行 D010/H004 已冻结的 ≤1 天 deterministic semantic smoke。专题受限恢复为
+active，只允许 Groundwork Step 4a 维度 D 的 Probe：执行前完成本地负面证据有界核查与参数来源清单，
+随后用同一 paired realization 比较 B0/B1/B2/C-oracle，执行 identity、truth-isolation、score-comparability
+和真实计算量门控，并按 D010 的三个科学终态裁决。
+
+本授权不等于正式 MVE、Go/Conditional Go、testbed、方法实现或仿真平台建设；不授权新 Web 检索。
+新 Web 检索如确有必要，须另获用户授权并由子 agent 执行。
+
+### 理由
+
+D010 已把当前不确定性压缩为一个可由 ≤1 天 Probe 回答的语义问题，V007/H004 已独立确认合同可执行但
+尚未运行。用户已越过 H004 记录的唯一人工批准门，因此可以解除等待状态，但不能扩大已冻结的 waveform、
+比较对象、主要指标或退出阈值。
+
+### 排除的替代方案
+
+- 不把“执行”解释为正式 MVE、完整 Step 4a Go/No-Go 或 Step 5 入口；
+- 不建 5.5–7.5 日 acquisition testbed，不接入 production runner；
+- 不修改 `projects/simulation/common/`、`params.py`、旧实验、Skill 或四个 `p05_run*.log`；
+- 不讨论 Q2，不引入 ML，不扩 seed/cell 规模来追逐正结果；
+- 不 push；本对话仍只做一次最终 commit。
+
+### 影响范围
+
+新增 S003、受控 T015、临时 Probe 实现/测试/结果与 worker log；formal topic、master-state 与 RDL control
+从 awaiting approval 切换到 authorized/preparing。执行结果须由独立 verifier 验收后，主控才能建立新的
+科学 terminal、V/H 与下游建议。
+
+### 来源
+
+S003；用户 2026-08-07 明确回复“执行”。
+
+## D012: Q1 Step 4a preflight Kill/Pivot，不进入正式 MVE 或 testbed
+
+> status: active
+> date: 2026-08-07
+> 取代：D010 的 `EVIDENCE_GAP` terminal；D011 的 Probe execution gate
+> 扩展：D010 的方法身份、单一指标、阈值与 claim ceiling
+> 被取代：无
+> 依据：T015 artifacts + `semantic-smoke-report.md` + 验证: V008 / T016
+> 触发原话：无（技术验证结论）
+
+### 决策
+
+Q1 Groundwork Step 4a preflight 正式终态冻结为 `STEP4A_PREFLIGHT_KILL_OR_PIVOT`。不得建立正式 MVE、
+5.5–7.5 日 acquisition testbed，不进入 Step 5、Contract 或 Execute。
+
+本次 Probe 的四项 semantic gates 全 PASS；但 operational B1 timing bank 与 C-grid 在 180/180 cells 上使用
+相同 receiver-visible input、候选集、normalized GLRT、窗口与 lexicographic tie-break 后 exact-equivalent。
+noiseless residual 中四法均 0/75 false locks；-6 dB diagnostic residual 中 B0/B2=58/75、B1/C=59/75，
+C 相对 B0 的 `G_C=-1.7241%`；两层均无可用正 headroom，B0 也没有稳定相邻 2×2 wrong-basin 区。
+surface 数值非 exact-separable，但该耦合没有形成 C 相对 B1/B2 的不可替代动作增量。
+
+### 理由
+
+D010 的任一硬退出已满足：B1/C common-grid exact equivalence；noiseless B0 零 false lock；没有稳定 2×2
+错误盆；C 的主指标改善低于 5%（noiseless 0%，-6 dB 为负）。继续建 testbed 只会扩大一个已被廉价
+hypothesis bank 吸收的搜索实现问题，不能支撑“coupled estimator”独立方法贡献。
+
+### 排除的替代方案
+
+- 不把一般 likelihood 非可分或 AIR 非零解释成方法可行性；
+- 不以换 preamble、扩 seed、加更低 SNR 或更细 grid 追逐正结果；
+- 不把 B1/C 的有限网格等价外推成连续 estimator 等价；
+- 不把 deterministic grid false-lock frequency 外推为外场概率或论文数字；
+- 不将“工程组件”直接包装成独立方法节。若以后转 latency/complexity，必须作为新的 M-C-A 问题重新过
+  Step 1–4a，并证明相对 B1/B2 的 caller-path 结构增量；不能沿用本 Q1 的方法 claim。
+
+### 影响范围
+
+formal topic 关闭；Q1 不再拥有 semantic-smoke、正式 MVE 或 testbed 入口。Probe 代码/artifacts 只保留为
+negative-evidence receipt。RDL 转为等待用户决定“归档 Q1”或“另立 complexity pivot 问题”；两者都不是
+自动授权。
+
+### 来源
+
+S003；T015；V008；`projects/thesis-fso/oversampled-sync-groundwork/semantic-smoke-independent-verifier-report.md`。

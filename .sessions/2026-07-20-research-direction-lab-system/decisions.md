@@ -1154,7 +1154,7 @@ formal D008/S001/T013。
 > date: 2026-08-07
 > 取代：D032 的 foreground lane / next action
 > 扩展：formal D009–D010
-> 被取代：无
+> 被取代：D034（foreground lane / next action）
 > 依据：formal D009–D010/S002 + `projects/thesis-fso/oversampled-sync-groundwork/step4a-preflight-discussion.md`
 > 触发原话：用户原话见 formal `voice.md` 2026-08-07
 
@@ -1189,3 +1189,80 @@ RDL control 升 epoch 29 / CP016；authority pointer 转 formal D010。master-st
 ### 来源
 
 formal D009–D010/S002。
+
+## D034: 接收用户对 Q1 semantic smoke 的执行批准
+
+> status: active
+> date: 2026-08-07
+> 取代：D033 的 awaiting-approval foreground lane
+> 扩展：formal D011/S003
+> 被取代：D035（foreground lane / next action）
+> 依据：用户原话: formal voice.md 2026-08-07 + formal D011/H004
+> 触发原话：用户原话见 formal `voice.md` 2026-08-07
+
+### 决策
+
+接收用户“执行”作为 D010/H004 deterministic semantic smoke 的明确批准。foreground lane 转为
+`FORMAL_STEP4A_SEMANTIC_SMOKE_AUTHORIZED_PREPARING`，允许 formal Probe 的 preparation、execution 与
+independent verification；authority pointer 转 formal D011。
+
+### 理由
+
+H004 把用户批准登记为唯一人工门，formal D011 已用 scope change 解除旧执行禁令。该 Probe 直接闭合
+当前 carrier 的 B1/C 等价性与 headroom 缺口，不需要 factory/rotation，也不构成正式 MVE 或 method signal。
+
+### 排除的替代方案
+
+- 不把批准扩大为正式 MVE、testbed、Step 5、Contract 或 Execute；
+- 不把 Probe PASS 记为 METHOD_SIGNAL；
+- 不修改 common/params/旧实验/Skill，不新开 Web 检索；
+- 不恢复旧 campaign 或并行另派候选。
+
+### 影响范围
+
+RDL control 升 epoch 30 / CP017；允许绑定并验证一个 formal T015。执行证据被主控接收前，
+`formal_science_disposition` 仍为 `STEP4A_PREFLIGHT_EVIDENCE_GAP`，`mission_method_delta=NONE`。
+
+### 来源
+
+formal D011/S003；用户 2026-08-07 明确回复“执行”。
+
+## D035: 接收 Q1 Step 4a semantic-smoke Kill/Pivot
+
+> status: active
+> date: 2026-08-07
+> 取代：D034 的 authorized-execution foreground lane
+> 扩展：formal D012/V008/H005
+> 被取代：无
+> 依据：formal T015 artifacts + T016 full re-verification PASS
+
+### 决策
+
+接收 formal Q1 terminal=`STEP4A_PREFLIGHT_KILL_OR_PIVOT`，`mission_method_delta=NONE`。B1/C 在冻结的
+common grid/score 上 180/180 exact-equivalent；noiseless C 无 headroom，-6 dB diagnostic C 反而比 B0
+多 1/75 false lock，且没有稳定 2×2 wrong-basin。formal topic 已关闭，无正式 MVE、testbed 或 Step 5 入口。
+
+foreground lane 转为 `FORMAL_STEP4A_KILL_OR_PIVOT_AWAITING_USER_DIRECTION`。只允许用户选择归档 Q1，
+或显式授权把 latency/complexity 作为新的 M-C-A pivot 重走前置步骤；不得沿当前 Q1 自动实现。
+
+### 理由
+
+Probe 通过语义与完整性门，但同时触发 D010 的多个科学 Kill 条件。非 exact-separable surface 没有转化为
+相对 B1/B2 的不可替代动作增量，因此不形成 METHOD_SIGNAL。T016 首轮 3 个实现 blocker 已经 RED→GREEN
+修复并 full re-verification PASS；最终科学计数未随修复改变。
+
+### 排除的替代方案
+
+- 不恢复 old campaign、factory 或并行新候选；
+- 不把 Kill/Pivot 自动解释成 complexity pivot 授权；
+- 不扩 seed/SNR/preamble/grid 追逐正结果；
+- 不进入正式 MVE、testbed、Step 5、Contract 或 Execute。
+
+### 影响范围
+
+RDL control 升 epoch 31 / CP018；authority pointer 转 formal D012。same-axis/no-method streak 各记 1，
+deterministic repair count 记 3；等待用户 formal-carrier disposition。
+
+### 来源
+
+formal D012/V008/H005；T015/T016。

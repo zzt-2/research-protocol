@@ -30,8 +30,8 @@ topics:
     title: Research Direction Lab 完整体系设计
     status: active
     created: "2026-07-20"
-    last_updated: "2026-08-07（CP016/D033 + formal V007/H004：Q1 Step4a preflight=EVIDENCE_GAP）"
-    description: "长期研究探索体系唯一流程 owner。formal Q1 已完成 Step 4a preflight discussion，但维度 D 未执行；B1/C 离散等价性、性能间隙与稳定误锁区未闭合，terminal=STEP4A_PREFLIGHT_EVIDENCE_GAP。当前只等待用户决定是否批准≤1天 deterministic semantic smoke；未批准前不执行脚本/实现/仿真。"
+    last_updated: "2026-08-07（CP018/D035 + formal D012/V008/H005：Q1 KILL_OR_PIVOT）"
+    description: "长期研究探索体系唯一流程 owner。formal Q1 semantic smoke 已独立复验 PASS 并触发 STEP4A_PREFLIGHT_KILL_OR_PIVOT；无 METHOD_SIGNAL。当前只等待用户决定归档或显式授权 latency/complexity 新 M-C-A pivot；正式 MVE/testbed/Step5 仍关闭。"
     depends_on:
       - slug: framework-evolution
         reason: 继承 R002 Direction Lab 设计和唯一拥有者原则
@@ -49,8 +49,8 @@ topics:
     title: 过采样相干 FSO 联合同步前端 Groundwork
     status: closed
     created: "2026-08-06"
-    last_updated: "2026-08-07（D009-D010/S002/V007/H004：Q1 Step4a preflight=EVIDENCE_GAP）"
-    description: "正式 Groundwork 已受限完成 Q1 Step 4a preflight discussion 并重新关闭。维度 D 未执行；B1/C 离散等价性、性能间隙与稳定误锁区未闭合，terminal=STEP4A_PREFLIGHT_EVIDENCE_GAP。下一合法动作只允许用户决定是否批准≤1天 deterministic semantic smoke；不自动实现、建testbed或仿真。"
+    last_updated: "2026-08-07（D012/V008/H005：Step4a semantic smoke KILL_OR_PIVOT）"
+    description: "正式 Q1 Groundwork 已关闭。semantic smoke 四门 PASS，但 B1/C 180/180 exact-equivalent、C 无≥5% headroom且无稳定2×2错误盆；terminal=STEP4A_PREFLIGHT_KILL_OR_PIVOT。禁止正式 MVE/testbed/Step5；只等待用户归档或新 M-C-A pivot 决定。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 D027 战略短缺终态与 D028 显式 research-object scope change

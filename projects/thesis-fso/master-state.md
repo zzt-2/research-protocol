@@ -5,7 +5,7 @@ method_type: 待定（精读后根据问题方法产出形态确定，见 glossa
 domain: comms
 created: 2026-06-21
 updated: 2026-08-07
-current_step: OVERSAMPLED_SYNC_STEP4A_PREFLIGHT_EVIDENCE_GAP（D009-D010/S002；维度D未执行；等待用户决定是否批准≤1天semantic smoke。C3/P1保持closed。）
+current_step: OVERSAMPLED_SYNC_STEP4A_KILL_OR_PIVOT（D012/V008/H005；Q1无正式MVE/testbed/Step5入口，等待用户归档或新M-C-A pivot决定。C3/P1保持closed。）
 current_stage: GROUNDWORK
 ---
 
@@ -27,19 +27,20 @@ current_stage: GROUNDWORK
 
 ### 当前控制面桥接
 
-> **2026-08-07 当前入口：`OVERSAMPLED_SYNC_STEP4A_PREFLIGHT_EVIDENCE_GAP`**。D009 受限重开
-> discussion；D010 已冻结 B0/B1/B2/C 方法身份、wrong-basin false-lock rate 单一主维度与 ≤1 天 semantic smoke 合同。
-> 维度 D 尚未执行；B1/C 离散等价性、性能间隙和稳定误锁区仍未闭合。V007 独立复验 PASS、H004 已建立；formal topic closed，等待用户决定
-> 是否批准 smoke；当前无脚本、MVE、testbed、方法实现或仿真入口。
+> **2026-08-07 当前入口：`OVERSAMPLED_SYNC_STEP4A_KILL_OR_PIVOT`**。D010/H004 semantic smoke 已由
+> T015 执行并经 T016/V008 full re-verification PASS。B1/C common-grid 180/180 exact-equivalent；noiseless
+> 四法 0/75，-6 dB diagnostic B0/B2=58/75、B1/C=59/75，无 stable 2×2。formal D012/topic closed；
+> 不开放正式 MVE、testbed、Step 5、Contract 或 Execute，只等待用户归档或新 M-C-A pivot 决定。
 > C3、P1、baseline-first batch 与 2026-08-02 dormant campaign均只作历史背景。
 
-- **过采样相干 FSO 联合同步前端（独立专题，2026-08-06）—— STEP 4a PREFLIGHT / EVIDENCE GAP**：
+- **过采样相干 FSO 联合同步前端（独立专题，2026-08-06）—— STEP 4a KILL_OR_PIVOT / CLOSED**：
   Q1 为 sample-level frame/fractional-timing/CFO acquisition；Q2 为 GG fade 与 SCO 下 timing/carrier
   maintenance/reacquisition。7 篇 CORE 已通过子 agent 精读；D006 重判后 Q1 四判据 PASS，Q2 仅
   判据 3 FAIL。Step 3.5 两轮收敛且未确认 exact collision；JLT 2025 IQ-skew 全文已裁为非 exact
-  collision，JOCN 2026 由用户确认不可得并保留 claim limitation。D009–D010/S002 已完成 Step 4a preflight
-  discussion：不预设 ML，B1 可能与 C 同 grid/score 数学等价，当前 terminal=`STEP4A_PREFLIGHT_EVIDENCE_GAP`。
-  V007 独立复验 PASS、blocker=0；H004 为当前恢复入口。完整 testbed 11–14 日与 5.5–7.5 日 acquisition slice 仅作工程背景。权威证据见 formal D006–D010、
+  collision，JOCN 2026 由用户确认不可得并保留 claim limitation。D009–D012/S002–S003 已完成 Step 4a
+  discussion 与受限 Probe：B1/C exact-equivalent，joint C 无可用 headroom，terminal=
+  `STEP4A_PREFLIGHT_KILL_OR_PIVOT`。V008 独立复验 PASS、blocker=0；H005 为当前恢复入口。完整 testbed
+  11–14 日与 5.5–7.5 日 acquisition slice 仅作历史工程背景，不再有执行入口。权威证据见 formal D006–D012、
   `literature_notes_oversampled_sync.md`、`oversampled-sync-groundwork/step3-5-supplement-report.md` 与
   `oversampled-sync-groundwork/step4a-preflight-discussion.md`。
 
@@ -49,7 +50,7 @@ current_stage: GROUNDWORK
   | 2 acquire | ✅ | 7 CORE + V003 | 用户已确认 |
   | 3 read | ✅ / Q1 survivor | D006 + step3 report + 7 read notes | Q1 四判据 PASS；Q2 仅判据 3 FAIL |
   | 3.5 supplement | ✅ / COVERAGE HANDLED | D007–D008 + T005–T013 | Round 2 新增=0；Q1 保留 survivor |
-  | 4a feasibility | PREFLIGHT EVIDENCE GAP / D NOT RUN | D009–D010/S002/V007/H004 + step4a preflight report | 只等待用户决定是否批准 semantic smoke；无 Go/Conditional Go |
+  | 4a feasibility | **KILL_OR_PIVOT / CLOSED** | D009–D012/S002–S003/V007–V008/H005 + T015/T016 | 不建testbed/正式MVE；等待用户归档或新M-C-A pivot决定 |
 
 - **P1 Shared M0-Power FOE–CPE Groundwork（独立专题，2026-08-05）—— CLOSED / 历史背景**：
   Step 1–2 已验收，Step 3 九篇精读由 V004 结构终审 PASS；最后一次 bounded closure 用尽 6/6 query，

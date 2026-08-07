@@ -223,3 +223,48 @@ DIMENSION_D_EXECUTION=0
 PASS。该 PASS 只覆盖 Step 4a preflight discussion 与“可执行但未执行”的 semantic smoke 合同；不证明
 joint estimator 有收益，不完成维度 D，也不产生 Go/Conditional Go。下一动作仍须由用户决定是否批准
 D010 冻结的 ≤1 天 deterministic semantic smoke。
+
+## V008: Q1 deterministic semantic smoke 独立复验
+
+> 日期：2026-08-07
+> 关联：S003 / D010–D012 / T015 / T016
+> 结论：PASS
+
+### 验证项
+
+- [x] T015/T016 task-control 均 PASS；focused pytest `28/28` PASS；fresh identity-only PASS。
+- [x] identity、paired-realization、truth-isolation、score-comparability 四项 semantic gate 全 PASS；estimator
+  API 不接收 truth metadata。
+- [x] artifacts 为 180 observations、180 truth、720 method rows、180 surfaces；residual noiseless 75、
+  residual minus6db 75、stress 30 严格隔离，hash/reference 无孤儿或重复。
+- [x] 独立重算得到 noiseless 四法 `0/75`；minus6db B0/B2=`58/75`、B1/C=`59/75`；
+  `G_C=0/-0.0172413793`，coverage N/A，无 stable 2×2；B1/C 180/180 exact-equivalent。
+- [x] B1/C 为不同 accessor/result 的独立完整 traversal，不是 alias 或相互调用；共同 helper 仅实现冻结的
+  score/tie-break 合同。
+- [x] 首轮 verifier 的 3 Important + 1 Minor 已经 RED→GREEN 修复并全量复验：traversal/cache-miss 分账、
+  worst-margin plot 标记、stress/reducer 隔离、TDD evidence 降级标记与 fresh GREEN hash 均闭合。
+- [x] `common/`、所有 `params.py`、Skill、旧实验与四个 protected logs 未变；`git diff --check` exit 0。
+
+### 复验过程与确定性证据
+
+首轮为 FAIL，blocker=`3`；执行 agent 只修复合同完整性，不改 waveform、grid、方法身份或阈值。full re-verification：
+
+```text
+SPEC_COMPLIANCE=PASS
+CODE_SCIENCE_QUALITY=PASS
+FOCUSED_TESTS=28/28
+IDENTITY_GATES=4/4
+OBSERVATIONS/TRUTH/METHOD_ROWS/SURFACES=180/180/720/180
+B1_C_EQUIVALENCE=180/180
+STABLE_B0_2X2=0
+PROTECTED_LOG_SHA=4/4
+BLOCKERS_AFTER_REPAIR=0
+```
+
+完整报告：
+`projects/thesis-fso/oversampled-sync-groundwork/semantic-smoke-independent-verifier-report.md`。
+
+### 结论
+
+PASS。当前 artifacts 足以独立重算 `STEP4A_PREFLIGHT_KILL_OR_PIVOT`。该 PASS 仅覆盖受限 semantic smoke，
+不构成正式 MVE、Go/Conditional Go、testbed、论文数字或连续 estimator 等价。

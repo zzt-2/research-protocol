@@ -1,0 +1,168 @@
+{
+  "classification": "GROUNDWORK_STEP4A_SEMANTIC_SMOKE",
+  "compute": {
+    "candidate_score_calls": "unique cache-miss candidate evaluations; not traversal visits",
+    "complex_macs": "one complex inner-product MAC per observation sample per newly scored candidate",
+    "fft": "calls/sizes separate; none used",
+    "interpolation": "one diagnostic fractional-delay interpolation per newly scored candidate",
+    "visited_candidate_indices": "ordered traversal ledger with repeated visits preserved",
+    "wall_time": "warm-up then five same-process calls; median plus raw"
+  },
+  "evidence_ceiling": "DIAGNOSTIC_ONLY_NOT_PAPER_NUMBER",
+  "hypotheses": {
+    "d_samples": [
+      -10,
+      -9,
+      -8,
+      -7,
+      -6,
+      -5,
+      -4,
+      -3,
+      -2,
+      -1,
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "residual_cfo_hz": [
+      -150000000.0,
+      -100000000.0,
+      -50000000.0,
+      0.0,
+      50000000.0,
+      100000000.0,
+      150000000.0
+    ],
+    "stress_cfo_hz": [
+      -5000000000.0,
+      -2500000000.0,
+      0.0,
+      2500000000.0,
+      5000000000.0
+    ],
+    "tau_samples": [
+      -0.4,
+      -0.2,
+      0.0,
+      0.2,
+      0.4
+    ]
+  },
+  "information_contract": {
+    "forbidden_in_method": [
+      "payload_truth",
+      "true_alignment",
+      "oracle_rotation",
+      "truth_selected_grid_or_branch"
+    ],
+    "receiver_visible": [
+      "rx_samples",
+      "known_preamble",
+      "sample_rate_and_rrc",
+      "frozen_search_grid",
+      "common_score",
+      "tie_break",
+      "B2_stop_rule"
+    ],
+    "truth_scoring_only": [
+      "true_d",
+      "true_tau",
+      "true_cfo_hz",
+      "noise_seed",
+      "tx_waveform"
+    ]
+  },
+  "layers": {
+    "minus6db": "deterministic AWGN numerical-stress sentinel, not occurrence distribution",
+    "minus6db_snr_db": -6.0,
+    "noiseless": "semantic identity/surface"
+  },
+  "manifest_sha256": "5f7e60d5ac7f8350e02cdc4ad111ebf456b006f21f60e9fd082f0a2d0309dfcb",
+  "methods": {
+    "B0": "coarse-CFO then timing then frame/adjacent-fine-CFO; discarded tau branches not revisited",
+    "B1": "complete timing bank over the complete common (d,CFO) grid and global terminal score",
+    "B2": "B0 initialization; tau then joint (d,CFO) non-decreasing coordinate updates; fixed point or 8 iterations",
+    "C": "receiver-visible complete common 3-D grid global argmax; no truth and no continuous refinement"
+  },
+  "metric": {
+    "miss": null,
+    "primary": "wrong_basin_false_lock_rate",
+    "stress_pooling": false,
+    "success": "1-R_FL"
+  },
+  "observation_window": {
+    "crop": "none_after_full_RX_convolution",
+    "frame_guard_samples_each_side": 10,
+    "length": 188
+  },
+  "reference_plane": {
+    "aggregate_group_delay_samples": 20,
+    "cfo_sign": "positive CFO multiplies exp(+j2*pi*f*n/Fs)",
+    "d_zero": "TX-shaped waveform starts at frame_guard before RX matched filtering",
+    "fractional_delay_sign": "positive tau delays y[n]=x[n-tau]"
+  },
+  "schema_version": "oversampled-sync-q1.semantic-smoke.v1",
+  "score": {
+    "complex_gain": "profiled",
+    "formula": "abs(x^H r)^2/(||x||^2||r||^2)",
+    "identity": "normalized-profiled-complex-gain-glrt-v1",
+    "normalization": "template-energy times received-window-energy",
+    "score_hash": "a62b5f8ed9947c255de10a59771a0794de1bba7ec9671e0ff6b842cdc3bbe682",
+    "tie_break": "lexicographically smallest (d,tau,cfo) inside tolerance",
+    "tie_tolerance": 2.6716406864579767e-12
+  },
+  "seeds": {
+    "awgn_master": 20260808,
+    "cell_derivation": "first64bits(SHA256(master_seed|cell_id))",
+    "preamble": 20260807
+  },
+  "truth_population": {
+    "d_samples": [
+      -8,
+      0,
+      8
+    ],
+    "residual_cells_per_layer": 75,
+    "residual_cfo_hz": [
+      -100000000.0,
+      -50000000.0,
+      0.0,
+      50000000.0,
+      100000000.0
+    ],
+    "stress_cells": 30,
+    "stress_cfo_hz": [
+      -5000000000.0,
+      5000000000.0
+    ],
+    "tau_samples": [
+      -0.4,
+      -0.2,
+      0.0,
+      0.2,
+      0.4
+    ]
+  },
+  "waveform": {
+    "modulation": "QPSK",
+    "preamble_status": "fixed_seed_diagnostic_exact_literature_sequence_unavailable",
+    "preamble_symbols": 64,
+    "rrc_beta": 0.1,
+    "rrc_span_status": "implementation_sentinel",
+    "rrc_span_symbols": 10,
+    "rx_matched_filtering": "full_convolution",
+    "sample_rate_hz": 112000000000.0,
+    "sps": 2,
+    "symbol_rate_hz": 56000000000.0,
+    "tx_filtering": "full_convolution"
+  }
+}

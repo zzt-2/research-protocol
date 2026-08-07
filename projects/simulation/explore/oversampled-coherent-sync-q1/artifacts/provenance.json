@@ -1,0 +1,31 @@
+{
+  "artifact_sha256": {
+    "ambiguity_surface.png": "4d9c9c08f9232c4dde1397ff4592109b78f2eb3dd55c84718facea830b615ce3",
+    "ambiguity_surfaces.npz": "483fa92dd7c55cc2cf5c62ad49ef15c79bf3744ea34944ebf4f65bc36a8d88ca",
+    "focused-pytest-green.txt": "cb9de6713d94e14366a8d8977ef484aa14034a8fdfb7b69aae05358225c8e09f",
+    "manifest.json": "aaa60458d56aabc7696cc69ec348913859117ee51f02f10b8298072fcc463695",
+    "method_results.jsonl": "69c43139f65a55ccab990ecd0b56b05aea1e2b7f59cb699b8639e842dc52db5b",
+    "observations.jsonl": "ba8a1ef6557f2fa69eed92c585a64e76f6f4511b883a830d057f3ec8d632d961",
+    "summary.json": "e0204cddebb2a3ff47fa647612191704f378a457184ebb7d04c08b4030d97eaa",
+    "surface_index.json": "0d5b138b1594dd853dc135fe3138fb31f341444eaff1849fda5c94e462bd7797",
+    "tdd-evidence.jsonl": "ef6f9c1052a51319353bfc16a4a69e68278ee9d7b083f26c470587f955479831",
+    "terminal.json": "dc36ca65759218b315aa6dfc46329af121ca1040b4807d9f24bc2be45d3bdfcc",
+    "truth.jsonl": "b1bd861df59bf326d0405549d05ad39888b80c94be9e26e33d81c322f5f2eecb"
+  },
+  "claim_ceiling": "diagnostic semantic smoke only; not paper-ready and not field probability",
+  "command": "python projects/simulation/explore/oversampled-coherent-sync-q1/run_semantic_smoke.py --run-grid --output-dir projects/simulation/explore/oversampled-coherent-sync-q1/artifacts",
+  "dependencies": {
+    "matplotlib": "3.10.8",
+    "numpy": "2.4.3",
+    "scipy": "1.17.1"
+  },
+  "git_head": "9af2280b083d636902514ec1065ca74b423bec36",
+  "manifest_sha256": "5f7e60d5ac7f8350e02cdc4ad111ebf456b006f21f60e9fd082f0a2d0309dfcb",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "python": "3.11.9 (tags/v3.11.9:de54cf5, Apr  2 2024, 10:12:12) [MSC v.1938 64 bit (AMD64)]",
+  "schema_version": "oversampled-sync-q1.provenance.v1",
+  "script_sha256": {
+    "run_semantic_smoke.py": "1a04f80f0c0b41cfbc23c885879ac95c453d06a45b466614a5ecce0ca4abbf35",
+    "semantic_smoke_core.py": "de2dfd608f2d5cd41a289607868846d7d3cddbd1182c1220d6c995636e3b4489"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "reasons": [
+    "B1_C_EXACT_COMMON_GRID_EQUIVALENCE",
+    "NO_STABLE_B0_ADJACENT_2X2_WRONG_BASIN",
+    "B0_ZERO_FALSE_LOCKS_noiseless",
+    "G_C_BELOW_5_PERCENT_noiseless",
+    "G_C_BELOW_5_PERCENT_minus6db"
+  ],
+  "science_terminal_present": true,
+  "terminal": "STEP4A_PREFLIGHT_KILL_OR_PIVOT"
+}

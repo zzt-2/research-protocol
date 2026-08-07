@@ -251,3 +251,35 @@
 - weight: ADEQUATE
 - drift: ALIGNED
 - next_action: 用户审阅并决定是否批准≤1天deterministic semantic smoke；未批准前不派执行T、不运行脚本、不建testbed
+
+## CP017 — 2026-08-07
+
+- event: 用户批准 formal Q1 deterministic semantic smoke
+- evidence: formal D011/S003；H004；用户原话“执行”
+- formal_science_disposition: STEP4A_PREFLIGHT_EVIDENCE_GAP
+- mission_method_delta: NONE
+- thesis_method_disposition: STEP3_SURVIVOR_ONLY_NO_METHOD_CLAIM
+- intent: FORMAL_STEP4A_SEMANTIC_SMOKE_EXECUTION
+- mechanism_family: SAMPLE_LEVEL_COUPLED_ACQUISITION
+- same_axis_streak: 0
+- deterministic_repair_count: 2
+- no_method_streak: 0
+- weight: ADEQUATE
+- drift: ALIGNED
+- next_action: 绑定并验证formal T015，执行≤1天semantic smoke；不扩大为正式MVE/testbed/Step5/Contract/Execute
+
+## CP018 — 2026-08-07
+
+- event: formal Q1 semantic smoke 触发 Step 4a Kill/Pivot
+- evidence: formal D012/V008/H005；T015 artifacts；T016 full re-verification PASS/blocker=0
+- formal_science_disposition: STEP4A_PREFLIGHT_KILL_OR_PIVOT
+- mission_method_delta: NONE
+- thesis_method_disposition: NO_INDEPENDENT_COUPLED_ESTIMATOR_METHOD
+- intent: USER_FORMAL_CARRIER_DISPOSITION
+- mechanism_family: SAMPLE_LEVEL_COUPLED_ACQUISITION
+- same_axis_streak: 1
+- deterministic_repair_count: 3
+- no_method_streak: 1
+- weight: ADEQUATE
+- drift: ALIGNED
+- next_action: 用户选择归档Q1或显式授权latency/complexity新M-C-A pivot；不得自动建testbed、跑正式MVE或进入Step5
