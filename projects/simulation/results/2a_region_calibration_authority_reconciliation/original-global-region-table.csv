@@ -1,0 +1,5 @@
+method,evidence_stage,mean_db,ci95_low,ci95_high,n_seed_clusters,action
+original_B0,dev_only,0.0,0.0,0.0,6,nominal receiver configuration
+global_B1,dev_only,0.13687595525908872,0.05117243227199049,0.22257947824618696,6,one global +3 dB offset
+region_B2,dev_only,0.30845545110428707,0.17454993316774453,0.4423609690408296,6,"nominal-SNR regions [<7, 7-11, >=11] -> [+3,-3,-3] dB"
+online_M,dev_only,0.2674971825885184,0.13718883293355358,0.39780553224348325,6,"current-pilot-estimate regions [<7, 7-11, >=11] -> [+3,+3,-3] dB"

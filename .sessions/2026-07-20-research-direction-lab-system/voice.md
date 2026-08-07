@@ -136,3 +136,8 @@
 [转述:执行提示词] "不得让 fixed-point 失败连带否定 scheduling-only。" → D036
 [转述:执行提示词] "只要 scheduling-only 具备部署动作、输出等价性和可审计的显著计算下降，即可成为 THESIS_ENGINEERING_METHOD；不要求它是新的估计算法，也不要求超过 CCISP 的 BER。" → D036
 [转述:执行提示词] "不改 CCISP 算法本体；不 push；一次统一 commit；由 fresh-context verifier 独立复算承重数字和检查 claim ceiling。" → D036
+
+### 2A authority reconciliation 受限授权
+
+- [转述] 主控提出完整受限解冻方案后，用户回复“行”，授权本次一次性 2A authority reconciliation；方案内容来自主控提案，不是用户逐字原话。 → D037
+- “这种东西，不太能写吧？” → D038

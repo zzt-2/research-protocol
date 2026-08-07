@@ -30,8 +30,8 @@ topics:
     title: Research Direction Lab 完整体系设计
     status: active
     created: "2026-07-20"
-    last_updated: "2026-08-07（CP019/D036/V020：CCISP scheduling-only THESIS_ENGINEERING_METHOD_READY）"
-    description: "长期研究探索体系唯一流程 owner。D036 拆分历史 2B 复合 authority：Q(8,6) fixed-point 继续 SUPPORTING_ONLY；scheduling-only 归属既有 CCISP，已闭合 396000 窗 identity、cluster timing 与 operation evidence，terminal=THESIS_ENGINEERING_METHOD_READY。当前只允许 Ch5 写作整合，不开放新实验或算法修改。"
+    last_updated: "2026-08-07（CP021/D038/V021：2A authority reconciliation=SUPPORTING_ONLY）"
+    description: "长期研究探索体系唯一流程 owner。D038 已将 P01 adapter、P02 truth-defined slice/global scalar 与 T004 online map 分账：P02 不满足 deployable region 方法语义，未运行新 held-out，2A 唯一终态 SUPPORTING_ONLY；D036 Ch5 scheduling authority 独立保留。"
     depends_on:
       - slug: framework-evolution
         reason: 继承 R002 Direction Lab 设计和唯一拥有者原则
@@ -47,6 +47,9 @@ topics:
       - projects/thesis-fso/direction-lab/harvest/ccisp-select-before-execute-single-branch-method-package.md
       - projects/simulation/figures/ccisp_select_before_execute_single_branch.svg
       - projects/simulation/results/ccisp_single_branch_authority_reconciliation/
+      - projects/thesis-fso/direction-lab/harvest/region-calibrated-ccisp-authority-package.md
+      - projects/simulation/figures/ccisp_region_calibration_authority_reconciliation.svg
+      - projects/simulation/results/2a_region_calibration_authority_reconciliation/
 
   - slug: 2026-08-06-oversampled-coherent-sync-groundwork
     title: 过采样相干 FSO 联合同步前端 Groundwork

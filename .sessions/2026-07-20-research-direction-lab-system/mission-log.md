@@ -299,3 +299,35 @@
 - weight: ADEQUATE
 - drift: ALIGNED
 - next_action: 仅将冻结方法包、主图与主表整合进Ch5；不得恢复fixed-point、修改CCISP算法或启动新实验
+
+## CP020 — 2026-08-07
+
+- event: 用户批准一次受限 2A authority reconciliation
+- evidence: D037/S018；用户对主控完整受限解冻方案回复“行”（voice 仅作转述授权）；T009
+- formal_science_disposition: NO_CHANGE_T004_REJECT_REMAINS
+- mission_method_delta: NONE
+- thesis_method_disposition: AUTHORITY_RECONCILIATION_IN_PROGRESS
+- intent: THESIS_AUTHORITY_RECONCILIATION
+- mechanism_family: CCISP_REGION_CALIBRATION
+- same_axis_streak: 0
+- deterministic_repair_count: 0
+- no_method_streak: 0
+- weight: ADEQUATE
+- drift: ALIGNED
+- next_action: 验证T009控制绑定；确定性复算P01/P02 raw evidence并执行deployable-region语义门，门不过不运行新held-out
+
+## CP021 — 2026-08-07
+
+- event: 2A region-calibration authority reconciliation 闭合
+- evidence: D038/S018/T009；deterministic raw→aggregate artifacts；Ch4 不升格包与流程图；fresh-context V021
+- formal_science_disposition: NO_CHANGE_T004_REJECT_REMAINS
+- mission_method_delta: NONE
+- thesis_method_disposition: SUPPORTING_ONLY
+- intent: NO_AUTOMATIC_ACTION
+- mechanism_family: CCISP_REGION_CALIBRATION
+- same_axis_streak: 1
+- deterministic_repair_count: 0
+- no_method_streak: 1
+- weight: ADEQUATE
+- drift: ALIGNED
+- next_action: 2A 已关闭；不得补跑或改名恢复。D036 的 Ch5 scheduling-only 写作入口继续作为独立既有 authority，但不在本轮自动执行

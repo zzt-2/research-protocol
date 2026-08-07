@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="540" viewBox="0 0 1100 540" role="img" aria-labelledby="title desc">
+  <title id="title">2A authority reconciliation for CCISP calibration evidence</title>
+  <desc id="desc">Three separate evidence paths: the deployable P01 pilot-SNR adapter, the P02 global scalar retune evaluated on a truth-defined weak slice, and the T004 online three-region map rejected before held-out testing.</desc>
+  <defs>
+    <marker id="blueArrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#2563EB"/></marker>
+    <marker id="orangeArrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#B45309"/></marker>
+    <marker id="redArrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#B91C1C"/></marker>
+    <style>
+      .t{font-family:"Noto Sans CJK SC","Microsoft YaHei",Arial,sans-serif;fill:#172033}.h{font-size:24px;font-weight:700}.sh{font-size:17px;font-weight:700}.s{font-size:15px}.xs{font-size:13px}.panel{fill:#FFFFFF;stroke:#CBD5E1;stroke-width:1.5;rx:14}.dataBox{fill:#EFF6FF;stroke:#2563EB;stroke-width:1.7;rx:9}.tuneBox{fill:#FFF7ED;stroke:#B45309;stroke-width:1.7;rx:9}.stopBox{fill:#FEF2F2;stroke:#B91C1C;stroke-width:1.7;rx:9}.neutral{fill:#F8FAFC;stroke:#64748B;stroke-width:1.5;rx:9}.data{fill:none;stroke:#2563EB;stroke-width:2.3;marker-end:url(#blueArrow)}.offline{fill:none;stroke:#B45309;stroke-width:2.2;stroke-dasharray:8 6;marker-end:url(#orangeArrow)}.stopped{fill:none;stroke:#B91C1C;stroke-width:2.2;stroke-dasharray:5 5;marker-end:url(#redArrow)}
+    </style>
+  </defs>
+  <rect width="1100" height="540" fill="#F1F5F9"/>
+  <text x="550" y="36" text-anchor="middle" class="t h">2A 权威协调：三条证据链必须分开</text>
+  <text x="550" y="62" text-anchor="middle" class="t s">蓝色＝部署数据流；橙色虚线＝离线调参；红色虚线＝未进入 held-out 的尝试</text>
+
+  <rect x="30" y="88" width="1040" height="126" class="panel"/>
+  <text x="50" y="116" class="t sh">P01：receiver-visible pilot-SNR adapter</text>
+  <rect x="55" y="138" width="160" height="50" class="dataBox"/><text x="135" y="160" text-anchor="middle" class="t s">当前接收窗口</text><text x="135" y="179" text-anchor="middle" class="t xs">接收样本 + 已知导频</text>
+  <rect x="265" y="138" width="175" height="50" class="dataBox"/><text x="352" y="160" text-anchor="middle" class="t s">导频 SNR 估计</text><text x="352" y="179" text-anchor="middle" class="t xs">不读取 true SNR</text>
+  <rect x="490" y="138" width="165" height="50" class="dataBox"/><text x="572" y="160" text-anchor="middle" class="t s">原 CCISP selector</text><text x="572" y="179" text-anchor="middle" class="t xs">继承阈值与分支逻辑</text>
+  <rect x="705" y="138" width="155" height="50" class="dataBox"/><text x="782" y="160" text-anchor="middle" class="t s">DA / NDA 命令</text><text x="782" y="179" text-anchor="middle" class="t xs">5 个 harm cell 恢复 4 个</text>
+  <rect x="910" y="138" width="130" height="50" class="neutral"/><text x="975" y="160" text-anchor="middle" class="t s">保留</text><text x="975" y="179" text-anchor="middle" class="t xs">局部 adapter 证据</text>
+  <path d="M215 163 H265" class="data"/><path d="M440 163 H490" class="data"/><path d="M655 163 H705" class="data"/><path d="M860 163 H910" class="data"/>
+
+  <rect x="30" y="230" width="1040" height="126" class="panel"/>
+  <text x="50" y="258" class="t sh">P02：weak/low-SNR retune（实际是全局单标量）</text>
+  <rect x="55" y="280" width="190" height="50" class="tuneBox"/><text x="150" y="302" text-anchor="middle" class="t s">truth-defined 评估切片</text><text x="150" y="321" text-anchor="middle" class="t xs">weak × 5/7/9 dB</text>
+  <rect x="295" y="280" width="180" height="50" class="tuneBox"/><text x="385" y="302" text-anchor="middle" class="t s">dev 搜索 ref</text><text x="385" y="321" text-anchor="middle" class="t xs">{7,8,9,10,11} dB</text>
+  <rect x="525" y="280" width="165" height="50" class="tuneBox"/><text x="607" y="302" text-anchor="middle" class="t s">冻结 ref = 11 dB</text><text x="607" y="321" text-anchor="middle" class="t xs">所有 cell 共用一个值</text>
+  <rect x="740" y="280" width="155" height="50" class="neutral"/><text x="817" y="302" text-anchor="middle" class="t s">CCISP 命令变化</text><text x="817" y="321" text-anchor="middle" class="t xs">但无 runtime region 输入</text>
+  <rect x="945" y="280" width="95" height="50" class="stopBox"/><text x="992" y="301" text-anchor="middle" class="t s">停止</text><text x="992" y="321" text-anchor="middle" class="t xs">非区域方法</text>
+  <path d="M245 305 H295" class="offline"/><path d="M475 305 H525" class="offline"/><path d="M690 305 H740" class="offline"/><path d="M895 305 H945" class="stopped"/>
+
+  <rect x="30" y="372" width="1040" height="126" class="panel"/>
+  <text x="50" y="400" class="t sh">T004：online estimated-SNR three-region map</text>
+  <rect x="55" y="422" width="175" height="50" class="dataBox"/><text x="142" y="444" text-anchor="middle" class="t s">当前导频估计</text><text x="142" y="463" text-anchor="middle" class="t xs">receiver-visible</text>
+  <rect x="280" y="422" width="200" height="50" class="dataBox"/><text x="380" y="444" text-anchor="middle" class="t s">三区域冻结 map</text><text x="380" y="463" text-anchor="middle" class="t xs">[+3,+3,-3] dB</text>
+  <rect x="530" y="422" width="170" height="50" class="dataBox"/><text x="615" y="444" text-anchor="middle" class="t s">原 CCISP selector</text><text x="615" y="463" text-anchor="middle" class="t xs">dev：+0.26750 dB</text>
+  <rect x="750" y="422" width="175" height="50" class="stopBox"/><text x="837" y="444" text-anchor="middle" class="t s">pre-test gate REJECT</text><text x="837" y="463" text-anchor="middle" class="t xs">唯一 repair 后仍 FAIL</text>
+  <rect x="960" y="422" width="80" height="50" class="stopBox"/><text x="1000" y="444" text-anchor="middle" class="t s">无</text><text x="1000" y="463" text-anchor="middle" class="t xs">held-out</text>
+  <path d="M230 447 H280" class="data"/><path d="M480 447 H530" class="data"/><path d="M700 447 H750" class="stopped"/><path d="M925 447 H960" class="stopped"/>
+
+  <text x="550" y="525" text-anchor="middle" class="t sh">终态：SUPPORTING_ONLY——保留 P01 adapter 与 P02 重调边界，不形成 Ch4 独立方法</text>
+</svg>

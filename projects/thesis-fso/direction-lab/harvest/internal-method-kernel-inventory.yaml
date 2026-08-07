@@ -1,9 +1,9 @@
 schema_version: 1
 generated: 2026-08-04
 owner: .sessions/2026-07-09-thesis-writing/S018
-decision: RDL-D036
+decision: RDL-D038
 reconciled: 2026-08-07
-reconciliation_authority: ".sessions/2026-07-20-research-direction-lab-system/decisions.md#D036"
+reconciliation_authority: ".sessions/2026-07-20-research-direction-lab-system/decisions.md#D038"
 authority_note: >-
   本表盘点可部署动作，不以 METHOD_SIGNAL 数量代替方法能力。method_like=true
   必须同时有统一 input-action-output 与传统 baseline；chapter_capable=true 必须通过
@@ -48,20 +48,29 @@ kernels:
     terminal_status: NO_DIAGNOSTIC_SIGNAL
 
   - id: p02_weak_region_retune
-    name: Weak-Region Reference Retuning
+    name: Global Reference Retuning on a Weak/Low-SNR Target Slice
     m_c_a: P01 在 weak/low-SNR 留有 bias；把 stage-1 reference 从 9 dB 调到 11 dB
-    deployable_action: region-specific threshold/reference selection
-    information_source: dev calibration data plus the same pilot estimator
+    deployable_action: one dev-frozen ref_snr_db=11 scalar applied to every evaluated cell
+    information_source: >-
+      offline dev tuning；weak/low-SNR region 由 scene/true-SNR truth labels 定义评估切片，
+      不进入 runtime decide
     baseline: [p01_ref9, cand_rank]
-    existing_evidence: 相对 adapter +0.4539 dB，略胜 cand_rank
-    missing_evidence: 独立机制不存在；需要作为 P01 校准规则的一部分而非单独方法
+    existing_evidence: >-
+      相对 adapter +0.45387 dB，seed-cluster 95% CI [+0.43404,+0.47370]；
+      cand_rank-retune=-0.09609 dB，seed-cluster 95% CI [-0.10275,-0.08942]；
+      聚合 branch occupancy 在 207/210 cell-seed pairs 改变
+    missing_evidence: >-
+      无 deployable region identity、无至少二区不同动作、无 global-vs-region comparator ladder；
+      30-seed 汇总含观察首批结果后的 10-seed 追加，不是 pristine one-shot confirmation
     method_like: false
     chapter_capable: false
     capability: {name: true, frame: true, steps: true, ablation: true, baseline: true, main_figure: false, unified_io: true, not_parameter_or_bugfix: false}
-    claim_ceiling: conventional design rule / calibration component
+    claim_ceiling: conventional one-scalar tuning rule / supporting calibration boundary；不是 region-calibrated method
     evidence:
       - projects/thesis-fso/worker-logs/step-029-p02-cand-rank-operating-regime.md:48-98,112-137
-    terminal_status: PROBLEM_RESOLVED_BY_REGION_RETUNING
+      - projects/simulation/results/2a_region_calibration_authority_reconciliation/recomputed-evidence.json
+      - .sessions/2026-07-20-research-direction-lab-system/decisions.md#D038
+    terminal_status: SUPPORTING_ONLY
 
   - id: branch_route_b
     name: CCISP Select-Before-Execute Single-Branch Receiver Architecture
@@ -191,20 +200,24 @@ candidates:
     components: [ccisp, p01_snr_adapter, p02_weak_region_retune, continuous_GG_boundary]
     unified_chain: pilot_SNR_estimator -> operating_region_calibration -> CCISP_branch_action
     baseline: [original_CCISP_selector, global_retune, oracle_operating_point]
-    grade: REJECT
+    grade: SUPPORTING_ONLY
     rationale: >-
-      T004 bounded closure 已结束。历史诊断中 ordinary regional retune 相对 online candidate
-      高 0.0961 dB（candidate-retune=-0.0961 dB，95% CI [-0.1060,-0.0862]）；新 truth-isolated
-      dev full chain 中等容量 B2 regional retune 为 +0.30846 dB，online calibration 为 +0.26750 dB，
-      后者仍低 0.04096 dB。包在 held-out 前又因 immutable evidence gate 用尽一次修复后仍 FAIL，
-      terminal=REJECT；因此没有合法 held-out 增益，也不得把“吸收”扩大成正式科学 null。
+      D038 将三个对象分账：P01 保留为 receiver-visible local adapter；P02 caller 无 runtime region
+      输入，truth-defined weak slice 只用于评分，实际只有全局 ref=11 单标量，因此 region-calibrated
+      method 的六项语义门失败；T004 online map 则继续保持 held-out 前 immutable gate REJECT。
+      P02 相对 adapter +0.45387 dB、cand_rank-retune=-0.09609 dB 只支持 conventional tuning boundary，
+      不足以形成 Ch4 方法。整体 terminal=SUPPORTING_ONLY，不改变 T004 的 REJECT，也不否定 P01 局部事实。
     evidence:
+      - projects/thesis-fso/direction-lab/harvest/region-calibrated-ccisp-authority-package.md
+      - projects/simulation/results/2a_region_calibration_authority_reconciliation/recomputed-evidence.json
+      - .sessions/2026-07-20-research-direction-lab-system/decisions.md#D038
       - "commit:1140134e89e8b0571274944cb44471ab6403481f:projects/thesis-fso/direction-lab/harvest/2a-calibration-aware-cpr-method-package.md"
       - "commit:1140134e89e8b0571274944cb44471ab6403481f:projects/thesis-fso/worker-logs/step-043-2a-calibration-aware-cpr-closure.md"
       - "commit:1140134e89e8b0571274944cb44471ab6403481f:projects/simulation/results/2a_calibration_aware_cpr_closure/independent-verifier-report.md"
     prohibited_revival: >-
-      不得把 pilot-SNR online calibration、ordinary region retune 或 selector threshold 重调改名为新方法；
-      不得声称 current-window pilot information 已证明 load-bearing、存在 held-out gain，或 T004 已形成 Ch4 方法。
+      不得把 P01 adapter、P02 truth-defined slice/global scalar 与 T004 online map 合并成一个方法；
+      不得把 ordinary retune 或 selector threshold 重调改名为 region-calibrated method；不得声称
+      current-window region information 已证明 load-bearing、存在合法 held-out gain，或 T004 已形成 Ch4 方法。
 
   - id: 2B
     name: Low-Complexity Branch-Routed and Fixed-Point Adaptive CPR

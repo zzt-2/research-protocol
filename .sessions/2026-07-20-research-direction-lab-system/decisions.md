@@ -1322,3 +1322,117 @@ RDL control 升至 epoch 32 / CP019。本轮只允许 scheduling-only 权威协�
 ### 来源
 
 S017；用户 2026-08-07 执行提示词；T005 raw artifacts；V020。
+
+## D037: 受限解冻 2A region-calibration authority reconciliation
+
+> status: active
+> date: 2026-08-07
+> 取代：无
+> 扩展：D021–D023、D036（只增加一次 2A authority reconciliation；不覆盖其历史裁决）
+> 被取代：无
+> 依据：用户授权: `voice.md` 2026-08-07 转述授权 + 对照: P01/P02 raw artifacts + T004 commit `1140134e89e8b0571274944cb44471ab6403481f`
+> 触发原话：见 `voice.md` 2026-08-07；完整受限方案来自主控提案，用户只回复“行”，不得把提案冒充用户逐字原话
+
+### 决策
+
+授权一次且仅一次 2A authority reconciliation，分别裁决：P01 receiver-visible pilot-SNR adapter、P02
+weak/low-SNR region retune、T004 online estimated-SNR calibration map。执行顺序固定为既有 raw evidence
+确定性复算与 caller-level 语义门；只有 region identity 在部署时可知、无 truth leakage、动作是可复用的
+region observation→frozen rule/table→CCISP threshold/reference→branch command、至少二区产生不同合法动作，
+且 original/global comparator 公平时，才允许条件式运行一个 bounded held-out confirmation。
+
+最终 terminal 必须是 `THESIS_METHOD_EXTENSION_READY / THESIS_ENGINEERING_COMPONENT_READY /
+SUPPORTING_ONLY / REJECT / EXECUTION_INVALID / EXTERNAL_BLOCKED` 之一。scientific campaign verdict 与 thesis
+contribution tier 分账；最高 claim 仅为“工作点失配下的 region-calibrated robust CCISP extension”。
+
+### 理由
+
+历史 authority 把“P02 静态 retune 吸收 cand_rank”“T004 online calibration 在 immutable pre-test gate REJECT”
+压缩在同一 2A 记录中，存在把对象混同的风险。用户已批准受限解冻以核对 P02 是否其实形成可部署、可复用
+的区域设计规则；但授权不允许借 P02 局部数字复活 T004，也不允许因 T004 失败自动否定 P02。先做语义门
+可以在已有证据闭合时避免重复实验，并阻止把 truth-defined slice 或单标量 `ref 9→11` 包装成方法。
+
+### 排除的替代方案
+
+- 不覆盖、删除或静默改写 D023/D036；只以新 D/V/authority 血缘追加裁决。
+- 不把 P01/P02/T004 合并成一个方法，也不把 P02 局部 held-out 数字当作 T004 正证据。
+- 不临时发明 region classifier；若 P02 区域仅由 truth label 确定或动作只是离线单标量调参，直接降级。
+- 不恢复 cand_rank、T004 online calibration、P1、C3、AMC、coded-burst 或旧 campaign。
+- 不改 `common/`、`params.py`、CCISP 本体或正式论文正文；不 push。
+
+### 影响范围
+
+RDL foreground control 升到 epoch 33 / CP020，并新增 T009。允许写 2A reconciliation result、确定性复算
+artifact、Ch4 包、流程图、主表、worker-log、D/V/mission/topic/inventory 同步和一次 fresh-context verifier。
+若语义门不过，不触发 sim-preflight 或新 held-out；若触发 held-out，必须按用户冻结的 Commit 1/Commit 2
+chronology 执行且禁止 squash。
+
+### 来源
+
+S018；用户对主控完整受限解冻提案的“行”回复（按转述授权记录）；本轮执行提示词。
+
+## D038: 2A region-calibrated CCISP 方法身份失败记录
+
+> status: active
+> date: 2026-08-07
+> 取代：无
+> 扩展：D037（执行其一次性 reconciliation）；D023/T004 与 D036 均不被覆盖
+> 被取代：无
+> 依据：验证: V021 + T009 deterministic raw→aggregate artifacts + caller-level P01/P02 audit + T004 immutable commit `1140134e89e8b0571274944cb44471ab6403481f`
+> 触发原话：`voice.md` 2026-08-07 “这种东西，不太能写吧？”；该疑问与证据相符，但裁决依据仍是 raw/caller 事实
+
+### 决策
+
+“region-calibrated robust CCISP extension”在本次 2A 方法身份门失败，唯一 terminal=`SUPPORTING_ONLY`。
+三个对象分账如下：
+
+1. P01 是 receiver-visible pilot-SNR local robustness adapter；历史 5 个 harm cells 恢复 4 个，可保留为
+   supporting adapter，不与 P02/T004 合并。
+2. P02 的 `weak@{5,7,9}` 由 scene/true-SNR truth labels 选择评估切片；runtime decide 无 region 输入，
+   实际只把同一 dev-frozen `ref_snr_db=11` 用于所有 cell。它是 conventional one-scalar tuning rule，
+   不是可部署 multi-region method。
+3. T004 online estimated-SNR three-region map 继续保持 immutable pre-test gate `REJECT`；没有合法 held-out
+   结果。其 gate failure 不否定 P01/P02，P02 的局部数字也不证明 T004。
+
+### 核心失败机制
+
+P02 缺少运行时区域身份与不同区域的不同合法动作：六项语义门仅“truth 不进入 decide”一项通过。其
+branch occupancy 在 207/210 个 cell-seed pairs 发生变化，只证明一个全局标量会改变原 selector 的聚合
+DA/NDA 数量，不能把离线 truth-defined slice 变成 observation→region rule/table→CCISP action 的方法链。
+因此 shuffled-region/global-mean 消融没有合法对象，也不能形成 Ch4 名称、算法步骤和主图的承重方法身份。
+
+### 否决了什么
+
+- 否决把 P01、P02、T004 拼接成“工作点失配下的 region-calibrated robust CCISP extension”；
+- 否决把 P02 的 `ref 9→11` 改名为 region rule，或临时发明 classifier；
+- 否决运行新 held-out 以替一个未过语义门的对象补正结果；
+- 否决用 P02 数字复活 T004，或用 T004 的证据失败连带否定 P01/P02。
+
+### 可复用部分
+
+- P01 receiver-visible adapter：历史 local robustness supporting asset；
+- P02 conventional tuning boundary：相对 adapter `+0.45387 dB`，seed-cluster 95% CI
+  `[+0.43404,+0.47370]`；cand_rank-retune `-0.09609 dB`，seed-cluster 95% CI
+  `[-0.10275,-0.08942]`；
+- T004 dev-only comparator ladder：B0 `0`、B1 `+0.13688`、B2 `+0.30846`、M `+0.26750 dB`，
+  仅用于说明尝试与失败边界，不形成 held-out claim。
+
+### 具体数据
+
+P01 dev/held-out seeds 为 `0–9` / `30–49`；15 个 nominal-safety cells 中 `weak@9` 是唯一达到
+`-0.3 dB` material-degradation 门的 cell（1/15）。P02 dev/held-out seeds 为 `50–59` /
+`60–70 ∪ 81–99`，互斥；但首批 20 held-out seeds 结果被观察后才追加 `90–99`，不是 pristine one-shot
+30-seed confirmation。P01 `weak@9,-3 dB` 仍为 `-0.32285 dB`，cluster CI
+`[-0.35679,-0.28891]`。T004 online M 比 nominal-region B2 低 `0.04096 dB`，且不存在 held-out
+chronology/raw/summary artifacts。
+
+### 影响范围
+
+2A 只保留 `SUPPORTING_MATERIAL`，不写成 Ch4 独立方法，不恢复 active scientific carrier；D036 的 Ch5
+scheduling-only 工程方法 authority 继续独立有效。本轮不触发 sim-preflight、不运行新仿真、不修改算法或
+论文正文。control 进入 epoch 34 / CP021，2A reconciliation 关闭且无自动下一动作。
+
+### 来源
+
+S018；T009；`projects/simulation/results/2a_region_calibration_authority_reconciliation/`；
+`projects/thesis-fso/direction-lab/harvest/region-calibrated-ccisp-authority-package.md`。

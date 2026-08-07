@@ -4,12 +4,12 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 32
+  control_epoch: 34
   role: RDL_MASTER
   mission: 设计并验证轻量方法构造车道，使 Ch4/Ch5 优先形成学位论文级可命名方法
-  active_lane: CCISP_SINGLE_BRANCH_ENGINEERING_METHOD_READY
-  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D036
-  decision_gate: scheduling-only已与failed fixed-point拆分；只允许按冻结claim ceiling进入Ch5写作
+  active_lane: CCISP_REGION_CALIBRATION_SUPPORTING_ONLY
+  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D038
+  decision_gate: 2A已闭合为SUPPORTING_ONLY；不得补跑、改名恢复或把P01/P02/T004合并成方法
   allowed_actions:
     - CH5_METHOD_WRITE_INTEGRATION
   forbidden_actions:
@@ -19,14 +19,16 @@ rdl_control:
     - NEW_PHYSICAL_SCENARIO
     - CCISP_ALGORITHM_MUTATION
     - FIXED_POINT_REVIVAL
+    - ONLINE_CALIBRATION_REVIVAL
+    - CAND_RANK_REVIVAL
     - FPGA_PPA_CLAIM_WITHOUT_SYNTHESIS
   mission_log_ref: .sessions/2026-07-20-research-direction-lab-system/mission-log.md
-  mission_checkpoint: CP019
-  next_legal_action: 将冻结的方法包、主图与主表整合进Ch5；不运行新实验
+  mission_checkpoint: CP021
+  next_legal_action: 本轮无自动动作；若用户另行要求，可按D036仅整合冻结的Ch5 scheduling-only方法包，不得借此恢复2A
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-07（CP019/D036/V020：CCISP scheduling-only 方法就绪）
+> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-07（CP021/D038/V021：2A闭合为SUPPORTING_ONLY）
 
 ## 专题信息
 
@@ -85,6 +87,13 @@ rdl_control:
 - 基于 D036，允许仅对历史 T005 scheduling-only 做 authority reconciliation、raw artifact 确定性复算与
   Ch5 方法包装；不新开 GW、不改 CCISP、不混入 Q(8,6)。复合 2B 继续 SUPPORTING_ONLY，CCISP
   select-before-execute single-branch receiver architecture 已达到 `THESIS_ENGINEERING_METHOD_READY`。
+- 基于 D037，允许一次且仅一次 2A authority reconciliation：把 P01 receiver-visible pilot-SNR adapter、
+  P02 weak/low-SNR retune 与 T004 online estimated-SNR calibration map 分开裁决；优先复用并复算已有 raw
+  evidence，只有 deployable-region 语义门通过且缺合法 confirmation 时才允许一个冻结的 bounded test。
+  本授权不覆盖 D023/D036，不恢复 cand_rank 或 T004 online calibration，也不开放其他方向。
+- 基于 D038，P01/P02/T004 已完成分账：P01 只保留 local receiver-visible adapter，P02 实现是 truth-defined
+  评估切片加一个全局 `ref=11` 标量而非 deployable region rule，T004 继续 held-out 前 `REJECT`。2A 唯一
+  terminal=`SUPPORTING_ONLY`，未运行新 held-out；D036 的 Ch5 scheduling-only authority 独立有效。
 
 ### 明确不含
 
@@ -95,6 +104,11 @@ rdl_control:
 - 不批量迁移或删除旧科学目录；新布局渐进采用，旧历史继续 append-only 保留。
 
 ### 范围变更记录
+
+- **[2026-08-07] D037**：从 Ch5 scheduling-only 写作入口切换为一次受限 2A authority reconciliation。
+  - 原因：主控提出完整受限解冻方案后，用户回复“行”；授权只允许澄清 P01/P02 的 region-calibrated CCISP 设计规则是否被 T004 online-calibration 失败错误连带否定。
+  - 新范围：只做控制面更新、P01/P02 raw→aggregate 复算、deployable-region/truth/action 语义门、条件式单次 bounded confirmation、Ch4 包装与 fresh-context verification。
+  - 影响的未决项：D023/D036、T004 REJECT、2B/Ch5 方法身份均不改；cand_rank、online calibration、P1/C3/AMC/coded-burst 不重开。
 
 - **[2026-08-07] D036**：从等待 formal carrier disposition 切换为一次受限的 CCISP scheduling-only 方法收获。
   - 原因：用户明确要求修正 2B authority 中 scheduling 与 failed fixed-point 的错误绑定，并闭合既有证据，不寻找新方向。
@@ -230,6 +244,12 @@ rdl_control:
 - 科学主方法门与论文方法章门分账：未达 `METHOD_SIGNAL` 不自动等于 `SUPPORTING_ONLY`；语义有效的中粒度内核先做章节能力判定，invalidated evidence 仍不得晋级。
 - **D036 authority reconciliation**：D023 的“不得另立 2B 新 selector”继续有效；它不等于 scheduling-only 失败。
   scheduling 归属 CCISP 并以工程方法成章，Q(8,6) fixed-point 失败独立保留。
+- **D037 restricted thaw**：P01、P02、T004 是三个独立对象；T004 online calibration 的 pre-test REJECT
+  不自动否定 P02，P02 的局部数字也不能证明 T004。region-calibrated extension 必须先证明部署时区域身份、
+  非 truth 输入、非单标量动作、至少二区不同合法动作和公平 comparator，否则只能降为 supporting/reject。
+- **D038 2A terminal**：P02 runtime decide 没有 region 输入，只有全局 `ref_snr_db=11`；六项语义门仅
+  truth-not-in-decide 一项 PASS。P01/P02 可作 supporting adapter/tuning boundary，不能形成 Ch4 独立方法；
+  T004 REJECT 与无合法 held-out 结果保持不变。唯一 terminal=`SUPPORTING_ONLY`。
 
 ## 进展线索
 
@@ -295,6 +315,10 @@ rdl_control:
 - **S017 / D036 / CP019 / V020**：从 T005 immutable raw artifacts 独立复算 990 cells / 396,000 windows，
   拆分 scheduling 与 fixed-point authority；完成 CCISP 先选后算单分支 Ch5 方法包、可编辑主图与 claim ceiling，
   fresh-context verifier 接收为 `THESIS_ENGINEERING_METHOD_READY`。
+- **S018 / D037–D038 / CP020–CP021 / V021**：受限 2A reconciliation 逐一复算和审计 P01/P02/T004。
+  P02 被确认是 truth-defined 评估切片上的全局单标量 retune，不是 deployable region rule；语义门失败后未运行
+  新 held-out。完成 authority artifact、cluster CI、original/global/region dev-only 表、Ch4 不升格包和流程图，
+  唯一 terminal=`SUPPORTING_ONLY`。
 
 ## 未决项
 
@@ -308,6 +332,7 @@ rdl_control:
 - 新科学项目首次采用 current layout 时，需要渐进生成 `state/current.yaml`、`portfolio/current.yaml`、`harvest/current.yaml`；禁止为了迁移整洁批量改写旧 artifacts。
 - ~~R002 历史复盘尚未执行~~（已完成）：见 `R002-long-horizon-runtime-retrospective.md`。
 - D021/V015 已完成；D022 仅授权 T004/T005 两个 bounded closure，不构成旧 campaign 或新方向的普遍解冻。
+- D037 一次性 2A reconciliation 已由 D038/CP021 闭合；没有 confirmation 或包装未决项，不得自动补跑。
 - ~~R006 设计待用户书面审阅~~（已完成并经 T006/T007 live test）；P1 与 C3 均已 closed。
   C3 无四判据 Q#，Step 2 未执行；当前只保留候选轮换门，不得直接实验。
 
@@ -318,7 +343,8 @@ lightweight persistence。六案审计重放、自动测试、个人 Skill 同�
 终验均 PASS（P0/P1/P2=0）；既有科学 verdict、dormant longitudinal topic 与
 formal owner 未变。
 
-**2026-08-07 当前入口**：`CCISP_SINGLE_BRANCH_ENGINEERING_METHOD_READY`（epoch 32 / CP019 / D036 /
-V020）。历史复合 2B 继续 `SUPPORTING_ONLY / SUPERSEDED_COMPOSITE`；Q(8,6) fixed-point 失败不变。
-scheduling-only 以 CCISP 真实动作身份完成 396,000 窗 identity、cluster timing、typed-operation 与 Ch5
-包装。下一合法动作只允许整合已冻结的 Ch5 文本、主图和主表；不新开 GW、不改算法、不跑新实验。
+**2026-08-07 当前入口**：`CCISP_REGION_CALIBRATION_SUPPORTING_ONLY`（epoch 34 / CP021 / D038 /
+V021）。P01 是 local receiver-visible adapter；P02 是 truth-defined 目标切片上的全局单标量 retune；T004
+online map 继续在 held-out 前 `REJECT`。2A 不形成 Ch4 独立方法、没有新实验或待补确认。本轮无自动
+下一动作；D036 的 Ch5 scheduling-only 工程方法仍是独立既有 authority，只有用户另行要求时才可整合，
+不得借其恢复 2A、fixed-point 或其他旧方向。

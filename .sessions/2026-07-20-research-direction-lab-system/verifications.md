@@ -872,3 +872,56 @@ contribution_tier=THESIS_ENGINEERING_COMPONENT
 PASS。scheduling-only 已具备可部署动作、逐窗输出/BER 等价、合法软件 caller-path timing 与可审计
 operation reduction，可作为 CCISP 的学位论文工程方法章。无需 bounded timing rerun；下一步仅允许整合
 冻结的 Ch5 方法包、主图和主表，不授权 fixed-point、硬件 claim、算法修改或新实验。
+
+## V021: 2A region-calibration authority reconciliation 独立终验
+
+> date: 2026-08-07
+> 关联：S018 / D037–D038 / T009 / CP021
+> verifier 上下文：fresh-context 只读 subagent；未参与实现、复算器设计、authority 裁决或文档撰写
+> FINAL VERDICT: PASS（P0/P1/P2=0/0/0）
+
+### 验证项
+
+- [x] 授权来源：核对 voice/D037 → “行”仅作主控提案后的转述授权，未伪造用户逐字提案。
+- [x] deployable identity/truth：沿 P02 caller/TARGET_CELLS → runtime 无 region 输入、truth 只选评分切片、
+  全域一个 `ref=11`，六项方法门仅 truth-not-in-decide PASS。
+- [x] chronology：直接读取 P01/P02 raw seeds 与 P02 append disclosure → dev/test 互斥；P02 非 pristine
+  one-shot 30-seed confirmation。
+- [x] raw→aggregate：独立复跑 recompute 与 pytest → P01 4/5、safety failure 1/15；P02 paired delta、
+  seed-cluster CI 与 207/210 occupancy 全匹配。
+- [x] comparator fairness：核对 T004 commit dev rows/receipt/tree → original/global/region/online 表均是
+  dev-only 6 clusters；held-out 不存在，未冒充 confirmation。
+- [x] terminal/owner：交叉核对 D038/CP021/topic/registry/inventory/package/worker/SVG → 唯一 terminal
+  `SUPPORTING_ONLY`；T004 REJECT 和 D036 Ch5 authority 分账。
+- [x] 范围：git diff/status → 未改 common/params/CCISP/论文正文，四个 p05 logs 未暂存。
+
+### 证据
+
+```text
+pytest
+...                                                                      [100%]
+3 passed in 2.44s
+
+recompute
+{"terminal": "SUPPORTING_ONLY", "semantic_gate": false}
+recomputed-evidence.json SHA256 identical=True
+p01-harm-cells.csv SHA256 identical=True
+original-global-region-table.csv SHA256 identical=True
+
+parsers
+JSON PASS
+YAML PASS
+XML PASS
+CSV PASS: p01 rows=5; original/global/region rows=4
+CONSISTENCY PASS: terminal=SUPPORTING_ONLY
+
+git diff --check
+exit 0
+```
+
+完整独立报告：
+`projects/simulation/results/2a_region_calibration_authority_reconciliation/fresh-context-verifier-report.md`。
+
+### 结论
+
+PASS
