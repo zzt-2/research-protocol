@@ -329,3 +329,93 @@ claim ceiling 必须永久保留 JOCN 未读限制。
 ### 来源
 
 S001 续接；T013；`projects/thesis-fso/worker-logs/step-3-5-jlt-iq-skew-fulltext-read.md`。
+
+## D009: 受限重开 Q1 Step 4a preflight discussion
+
+> status: active
+> date: 2026-08-07
+> 取代：无
+> 被取代：无
+> 依据：用户原话: voice.md 2026-08-07 + H003 + D006–D008 + `stages/gw-feasibility.md`
+
+### 决策
+
+将已关闭专题仅为 Q1 的 Step 4a preflight discussion 受限重开。本轮范围只包含 A0 §0–§6、A′/A/B
+竞争分析和维度 D 的 ≤1 天 deterministic semantic smoke 设计；不执行 semantic smoke/MVE，不建
+5.5–7.5 日 acquisition testbed，不实现方法、不跑仿真。Q2 保持非 survivor，不进入本轮。
+
+本轮仍禁止修改 `common/`、`params.py`、旧实验、Skill 或四个 `p05_run*.log`，禁止 push；只在所有
+文档与独立验证完成后做一次 commit。
+
+### 理由
+
+H003、RDL D032/control 与 master-state 已把“新会话重读框架并做 Step 4a preflight discussion”登记为
+唯一下一合法动作；用户本轮给出显式授权和更窄边界。旧 topic-index 的“明确不含 Step 4a”属于上轮
+Step 3.5 的冻结范围，必须用范围变更记录解除 discussion 层禁令，而不能静默越界。
+
+### 排除的替代方案
+
+- 不沿用 closed topic 的旧范围直接写 Step 4a 结论；
+- 不把 preflight discussion 解释为正式 Step 4a、Go、Conditional Go 或 MVE 授权；
+- 不讨论 Q2，不顺手搭平台或实现 B0/B1/B2/C；
+- 不因用户要求实验设计就实际运行任何脚本。
+
+### 影响范围
+
+新增 S002 与 `step4a-preflight-discussion.md`；更新 topic-index、voice、registry、master/RDL current state。
+本轮完成后专题重新 closed，等待用户决定是否授权 semantic smoke。
+
+### 来源
+
+S002；用户 2026-08-07 明确执行范围。
+
+## D010: Q1 preflight 终态为 EVIDENCE_GAP 并冻结 semantic smoke 合同
+
+> status: active
+> date: 2026-08-07
+> 取代：无
+> 被取代：无
+> 依据：分析: `projects/thesis-fso/oversampled-sync-groundwork/step4a-preflight-discussion.md` + 调研: `literature_notes_oversampled_sync.md` / `step3-5-supplement-report.md` / `testbed-bom.md` + critic: `projects/thesis-fso/oversampled-sync-groundwork/step4a-preflight-independent-verifier-report.md`
+> 触发原话：用户原话: voice.md 2026-08-07
+
+### 决策
+
+Q1 通过 A0 §0，但当前 Step 4a preflight 终态冻结为 `STEP4A_PREFLIGHT_EVIDENCE_GAP`。本候选默认是
+传统解析/DSP estimator，不预设 ML；B0/B1/B2/C 的 receiver-visible input 均为同一 receiver-known
+preamble samples，唯一主要贡献维度为 `wrong-basin false-lock rate`；本 smoke 的 `miss=N/A`。
+
+当前不能推荐正式 micro-MVE，原因是：(1) 没有 B0/B1/B2 相对 visible-only global joint oracle 的差距
+数字或稳定错误峰区域；(2) 若 B1 在 timing bank 上使用与 C 相同的全局 likelihood，二者在离散网格上
+可能数学等价，C 相对增强传统 baseline 的不可替代结构增量尚未成立；(3) 顺序链近似最优、联合收益小、
+preamble 参数近似正交和 coarse preprocessing 已解耦四个零假设均未被反驳；(4) 本地材料未完成专门的
+coupled-acquisition 负面证据搜索，A0 该项仍为 `EVIDENCE_GAP`。
+
+冻结 `step4a-preflight-discussion.md` §4 的 ≤1 天 deterministic semantic smoke 合同。只有后续用户显式
+批准后才可派子 agent 执行；本决策本身不授权运行。
+
+### 理由
+
+一般 RRC preamble likelihood 对 frame index、fractional timing 与 CFO 非可分，但“解析上非可分”不等于
+目标 preamble/coarse-CFO 工作点有足够数值耦合。B1/B2 是 FR-03/FR-01 要求的增强传统 baseline，必须
+先排除其对 joint gain 的廉价吸收。现有材料明确把强顺序链失效留作 Step 4a 待证假设，不能用
+“无人 exact collision”替代 problem-truth。
+
+### 排除的替代方案
+
+- 不把“A 尚未被 MVE 证明”重新当前门；Q1 已合法进入 A0；
+- 不硬套 ML、MDP 或 RL；不把有限维估计问题包装成学习问题；
+- 不以一般 likelihood 非可分直接推荐 micro-MVE；
+- 不因没有现成数字而拍 ≥5%/≥15% headroom；
+- 不把 JOCN 不可得当无碰撞证据，也不声称“首次”；
+- 不给 Go/Conditional Go，不建正式 testbed。
+
+### 影响范围
+
+formal topic terminal、RDL foreground control、master-state 与 handoff 更新为等待用户批准 semantic smoke。
+若 smoke 显示 objective 可分、B1/B2 覆盖 ≥95%、无稳定错误峰或 joint 上界 <5%，转
+`STEP4A_PREFLIGHT_KILL_OR_PIVOT`；只有非可分且存在 B1/B2 不能廉价吸收的稳定差距，才可转
+`STEP4A_PREFLIGHT_RECOMMEND_MICRO_MVE`。
+
+### 来源
+
+S002；`projects/thesis-fso/oversampled-sync-groundwork/step4a-preflight-discussion.md`。

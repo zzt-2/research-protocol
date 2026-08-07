@@ -236,3 +236,18 @@
 - weight: ADEQUATE
 - drift: ALIGNED
 - next_action: 新会话重读gw-feasibility与formal D006-D008，只讨论是否进入Step4a；不自动转阶段/实现/仿真
+
+## CP016 — 2026-08-07
+
+- event: formal Q1 Step 4a preflight discussion terminal
+- evidence: formal D009–D010/S002/V007/H004；`projects/thesis-fso/oversampled-sync-groundwork/step4a-preflight-discussion.md`
+- formal_science_disposition: STEP4A_PREFLIGHT_EVIDENCE_GAP
+- mission_method_delta: NONE
+- intent: USER_SEMANTIC_SMOKE_DECISION
+- mechanism_family: SAMPLE_LEVEL_COUPLED_ACQUISITION
+- same_axis_streak: 0
+- deterministic_repair_count: 2
+- no_method_streak: 0
+- weight: ADEQUATE
+- drift: ALIGNED
+- next_action: 用户审阅并决定是否批准≤1天deterministic semantic smoke；未批准前不派执行T、不运行脚本、不建testbed

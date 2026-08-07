@@ -1115,7 +1115,7 @@ formal topic D007/S001。
 > date: 2026-08-06
 > 取代：D031 的 coverage-decision gate
 > 扩展：D030/D031 的 Q1 survivor 与 claim ceiling
-> 被取代：无
+> 被取代：D033（仅 foreground lane / next action）
 > 依据：formal D008 + T013 user-provided fulltext read + 用户原话
 
 ### 决策
@@ -1147,3 +1147,45 @@ RDL control 升 epoch 28 / CP015；formal topic保持 closed，等待下一会�
 ### 来源
 
 formal D008/S001/T013。
+
+## D033: 接收 Q1 Step 4a preflight EVIDENCE_GAP
+
+> status: active
+> date: 2026-08-07
+> 取代：D032 的 foreground lane / next action
+> 扩展：formal D009–D010
+> 被取代：无
+> 依据：formal D009–D010/S002 + `projects/thesis-fso/oversampled-sync-groundwork/step4a-preflight-discussion.md`
+> 触发原话：用户原话见 formal `voice.md` 2026-08-07
+
+### 决策
+
+接收 formal Q1 Step 4a preflight terminal=`STEP4A_PREFLIGHT_EVIDENCE_GAP`。Q1 已合法通过 A0 §0，
+但没有 B0/B1/B2 对 visible-only global joint oracle 的差距数字或稳定误锁区；若 B1 在 timing bank 上
+使用与 C 相同的 global likelihood，二者还可能在离散网格上数学等价。当前没有 METHOD_SIGNAL、
+Go/Conditional Go 或正式 MVE 入口，`mission_method_delta=NONE`。
+
+foreground lane 转为 `FORMAL_STEP4A_SEMANTIC_SMOKE_AWAITING_APPROVAL`。下一动作只允许用户审阅并
+决定是否批准 formal D010 冻结的 ≤1 天 deterministic semantic smoke；未获批准不得派执行 T 或运行脚本。
+
+### 理由
+
+本 preflight 关闭了“方法身份不明”与“直接搭 5.5–7.5 日 testbed”两个风险，但没有关闭性能 headroom、
+廉价替代覆盖或目标 preamble 数值耦合。继续自动推进会把解析非可分误写成可用方法差距，违反 formal
+D010 与 evidence/claim ceiling。
+
+### 排除的替代方案
+
+- 不把 `EVIDENCE_GAP` 写成 Kill、Pivot、Go、Conditional Go 或 micro-MVE 推荐；
+- 不恢复 pre-formal factory 或旧 campaign；Q1 仍是当前 formal carrier；
+- 不将 smoke 设计误报为已执行维度 D；
+- 不修改 common/params、搭 testbed、实现 B0/B1/B2/C 或运行仿真。
+
+### 影响范围
+
+RDL control 升 epoch 29 / CP016；authority pointer 转 formal D010。master-state 与 registry 同步为
+等待用户 semantic-smoke 决策。
+
+### 来源
+
+formal D009–D010/S002。

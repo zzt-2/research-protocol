@@ -1,6 +1,6 @@
 # Topic Index: 过采样相干 FSO 联合同步前端 Groundwork
 
-> 状态: closed | 创建: 2026-08-06 | 最后更新: 2026-08-06（D008/T013/H003：JLT全文已读；JOCN用户确认不可得）
+> 状态: closed | 创建: 2026-08-06 | 最后更新: 2026-08-07（D009–D010/S002：Step 4a preflight=`EVIDENCE_GAP`）
 
 ## 专题信息
 
@@ -30,10 +30,12 @@ baseline 且不与既有 CCISP 动作碰撞的候选研究问题。
   Q# 全过，才进入 Step 3.5。
 - GW Step 3.5：只针对 Step 3 survivor 做最多三轮定向补检索、最高相关竞品双向引用链筛查，以及
   JOCN 2026 全文有界重试；完成后停止。
+- GW Step 4a preflight discussion：只针对 Q1 完成 A0 §0–§6、A′/A/B 竞争分析，并设计 ≤1 天
+  deterministic semantic smoke；不执行维度 D。
 
 ### 明确不含
 
-- 不进入 Step 4a、Contract、方法实现、testbed、MVE 或仿真；
+- 不执行 semantic smoke/MVE，不完成正式 Step 4a，不进入 Contract、方法实现、testbed 或仿真；
 - 不预设所有 impairment 必须同时进入最终问题，不以标题联想或场景换名造 Q#；
 - 不使用 TX payload truth 作部署决策；pilot/preamble 仅作为显式开销的 receiver-known 信息；
 - 不以极端参数制造问题，不用“旧 caller 没有该问题”直接否决新 testbed；
@@ -48,6 +50,10 @@ baseline 且不与既有 CCISP 动作碰撞的候选研究问题。
     Step 3→条件式 Step 3.5 推进。
   - 新范围：精读 7 篇 CORE；Q1/Q2 分开裁决；survivor 存在时执行最多三轮 Step 3.5；随后停止。
   - 影响的未决项：JOCN 2026 若 Step 3.5 后仍无全文，Q1 不得声称 exact-action novelty closure。
+- **[2026-08-07] D009**：用户显式授权受限重开 Step 4a preflight discussion。
+  - 原因：H003/RDL D032 已把该 discussion 登记为唯一合法动作；旧 topic 范围仍显式排除 Step 4a。
+  - 新范围：仅做 Q1 A0/A′/A/B 与 semantic smoke 设计；Q2、运行、实现、testbed、仿真仍排除。
+  - 影响的未决项：是否执行 smoke 必须另获用户批准；本轮不能产生 Go/Conditional Go。
 
 ## 已确认结论
 
@@ -61,6 +67,7 @@ baseline 且不与既有 CCISP 动作碰撞的候选研究问题。
 - Step 1 terminal 是硬门；无至少两个机制不同候选 Q# 时不得进入 Step 2。
 - Step 2 后必须停在用户覆盖面确认门，不得自动进入 Step 3。
 - D004 已满足该用户确认门；本轮唯一允许的推进为 Step 3 与条件式 Step 3.5，终态不得越过 Step 4a 入口。
+- D009 只解除 Step 4a preflight discussion 禁令；维度 D 执行、正式 Step 4a 决策与所有实现入口仍冻结。
 
 ### 其他结论
 
@@ -84,6 +91,10 @@ baseline 且不与既有 CCISP 动作碰撞的候选研究问题。
 - JOCN 2026 由用户确认不可得并停止重试；它是永久 coverage/claim limitation，不是 negative collision 证据。
 - 当前 terminal：`STEP3_5_COMPLETE_Q1_SURVIVOR_JOCN_FULLTEXT_UNAVAILABLE_NO_CONFIRMED_EXACT_COLLISION`；
   coverage decision 已处理，但本轮仍未进入 Step 4a/实现/仿真。
+- Step 4a preflight 已完成分析/设计但未执行维度 D，terminal=`STEP4A_PREFLIGHT_EVIDENCE_GAP`：
+  无 B0/B1/B2 对 joint oracle 的差距与稳定误锁区；B1 在同 grid/score 下可能与 C 数学等价。
+- 方法身份冻结为传统解析/DSP：B0 强顺序链、B1 polyphase/Farrow timing bank、B2 coordinate refinement、
+  C visible-only coupled GLRT；唯一主要贡献维度为 wrong-basin false-lock rate，`miss=N/A`，不预设 ML。
 
 ## 进展线索
 
@@ -96,27 +107,33 @@ baseline 且不与既有 CCISP 动作碰撞的候选研究问题。
 - **D006**：纠正 problem-truth 前移；Q1 四判据 PASS 启动 Step 3.5，Q2 仅判据 3 FAIL。
 - **D007**：Step 3.5 两轮收敛；Q1 保留 survivor，无 confirmed exact collision，但 novelty closure 被两个全文缺口阻断。
 - **D008**：用户提供 JLT 2025 全文，裁为非 exact collision；JOCN 用户确认不可得，关闭 coverage-decision gate。
+- **S002**：Step 4a preflight discussion、H003 接收验证与 RDL recovery route check。
+- **D009**：受限重开 discussion，不开放 smoke/MVE/testbed/实现/仿真。
+- **D010**：冻结 `STEP4A_PREFLIGHT_EVIDENCE_GAP`、四类方法身份与 ≤1 天 smoke 合同。
 - **V001–V003**：Step 1–2 独立验收从 FAIL→PARTIAL→PASS。
 - **V004**：保留历史；文件/身份/字段/保护边界验证有效，但 canonical 语义结论被 D006 取代。
 - **V005**：fresh-context 对照 canonical glossary 与 AMC D005 复验 PASS；Step 3.5 数字、全文、
   terminal 与保护边界均通过。
 - **V006**：fresh-context 对 JLT 用户全文、非 exact-collision 动作裁决、JOCN 用户不可得边界与
   D008/current-state 复验 PASS，blocker=0。
+- **V007**：fresh-context 对 Step 4a preflight 全文、五项修复、terminal、合同与保护边界复验 PASS，
+  blocker=0；该 PASS 不覆盖维度 D 执行或 joint gain。
 - **H001**：错误终态历史快照，已标 superseded；不得作为恢复入口。
 - **H002**：D007 双 blocker 历史快照，已由 H003 取代。
-- **H003**：当前唯一恢复入口；下一会话只做 Step 4a preflight discussion。
+- **H003**：Step 3.5→Step 4a discussion 的历史恢复入口，已由 H004 取代。
+- **H004**：当前唯一恢复入口；下一动作只允许用户决定是否批准 semantic smoke。
 - 项目证据新增：`step3-5-supplement-report.md`、T005–T013 worker logs、4 篇新增全文 read notes。
 - 项目证据：`literature_notes_oversampled_sync.md`、Step 1 report/receipt、Step 2 coverage/receipt、
   `testbed-bom.md`。
 
 ## 未决项
 
-- 是否在下一会话重读 `gw-feasibility.md` 后授权进入 Step 4a；
+- 用户是否批准执行 D010 冻结的 ≤1 天 deterministic semantic smoke；
 - JOCN 2026 若未来出现合法全文，任何 exact novelty claim 前必须补 acquire→read。
 
 ## 当前位置
 
-Phase 0、GW Step 1–3.5 与用户 coverage decision 已完成；Q1 是唯一 survivor，terminal=
-`STEP3_5_COMPLETE_Q1_SURVIVOR_JOCN_FULLTEXT_UNAVAILABLE_NO_CONFIRMED_EXACT_COLLISION`。专题 closed；
-V006 已 PASS；下一合法动作仅为新会话重读 `gw-feasibility.md` 后讨论 Step 4a，当前无实现、testbed、
-MVE 或仿真入口。
+Q1 已完成 Step 4a preflight discussion，但维度 D 未执行；当前 terminal=
+`STEP4A_PREFLIGHT_EVIDENCE_GAP`。专题 closed；V007 已 PASS、H004 已建立。下一合法动作仅为用户审阅并决定
+是否授权 D010 的 semantic smoke；当前无脚本、MVE、testbed、实现、
+正式 Step 4a 或仿真入口。

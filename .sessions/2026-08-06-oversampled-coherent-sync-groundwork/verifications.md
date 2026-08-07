@@ -181,3 +181,45 @@ PASS，blocker=`0`。terminal=
 `STEP3_5_COMPLETE_Q1_SURVIVOR_JOCN_FULLTEXT_UNAVAILABLE_NO_CONFIRMED_EXACT_COLLISION`；专题维持
 closed，下一合法动作仅为新会话重读 `gw-feasibility.md` 后讨论 Step 4a。完整证据见
 `projects/thesis-fso/oversampled-sync-groundwork/jlt-fulltext-closeout-verifier-report.md`。
+
+## V007: Q1 Step 4a preflight 独立收口复验
+
+> 日期：2026-08-07
+> 关联：S002 / D009 / D010
+> 结论：PASS
+
+### 验证项
+
+- [x] fresh-context verifier 对照 `stages/gw-feasibility.md`、`stages/glossary.md`、H003、D006–D010
+  与项目证据，确认 A0 §0–§6、方法身份、离散模型、A′/A/B 和 semantic smoke 合同均已覆盖。
+- [x] 初审提出的 5 个 blocker 已逐项修复并由同一 verifier 全量复验：A0 负面证据搜索状态、
+  常相位参数去重、B1/C 公平性合同、`miss=N/A` 事件语义、D010 critic 证据指针均已闭合。
+- [x] terminal 仅为 `STEP4A_PREFLIGHT_EVIDENCE_GAP`；没有写 Go/Conditional Go，没有把一般非可分性、
+  “无人做过”或 JOCN 全文缺口冒充可用性能间隙。
+- [x] 维度 D 未执行；没有脚本、MVE、testbed、方法实现或仿真。`common/`、`params.py`、Skill、旧实验
+  与四个 `p05_run*.log` 均未改动。
+- [x] verifier 的确定性检查通过：Markdown/YAML 合同可解析，`git diff --check` exit 0，保护路径 diff
+  为空，当前 HEAD 不在任何 remote ref 中。
+
+### 复验过程与确定性证据
+
+初审为 PARTIAL、blocker=`5`；主控仅修复上述五项，不改变研究终态。fresh-context verifier 随后从框架
+owner 与原始证据重新核验，最终报告：
+
+```text
+VERDICT=PASS
+BLOCKERS=0
+YAML_PARSE=4/4
+GIT_DIFF_CHECK_EXIT=0
+PROTECTED_PATH_DIFF=0
+DIMENSION_D_EXECUTION=0
+```
+
+完整逐项报告：
+`projects/thesis-fso/oversampled-sync-groundwork/step4a-preflight-independent-verifier-report.md`。
+
+### 结论
+
+PASS。该 PASS 只覆盖 Step 4a preflight discussion 与“可执行但未执行”的 semantic smoke 合同；不证明
+joint estimator 有收益，不完成维度 D，也不产生 Go/Conditional Go。下一动作仍须由用户决定是否批准
+D010 冻结的 ≤1 天 deterministic semantic smoke。

@@ -17,3 +17,11 @@
 - "不进入 Step 4a；不写方法代码；不搭 5.5–7.5 日 testbed；不跑仿真；不称 METHOD_SIGNAL、Go 或论文方法成立；不修改 common/、params.py、旧实验或 Skill；不 push。" → D006
 - "给我url我看看。我拿不到就是拿不到了" → D008
 - "C:\\Users\\zzt\\Downloads\\Preamble_Design_for_Online_IQ-Skew_Estimation_in_Upstream_400G_Coherent_TFDM-PON.pdf 只弄到这一个" → D008
+
+## 2026-08-07
+
+- "本轮只做 Step 4a 的 A0→A′→A/B 分析和维度 D 的最小实验设计。不运行 MVE，不建 testbed，不实现方法，不跑仿真。" → D009
+- "Q1 canonical 四判据 PASS/PASS/PASS/PASS；Q1 是合法 Step 3 survivor；JOCN 2026 全文不可得，仅限制 novelty/claim ceiling；Q2 非 survivor，本轮不讨论；Q1 候选默认是传统解析/数字信号处理方法，不预设 ML。" → D009
+- "不得再次要求‘A 已被 MVE 证明’才允许进入 A0。" → D010
+- "不得给 Go/Conditional Go，因为维度 D 尚未执行。" → D010
+- "不 push；不修改 common/、params.py、旧实验、Skill 或四个 p05_run*.log。" → D009

@@ -4,15 +4,15 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 28
+  control_epoch: 29
   role: RDL_MASTER
   mission: 设计并验证轻量方法构造车道，使 Ch4/Ch5 优先形成学位论文级可命名方法
-  active_lane: FORMAL_STEP4A_DISCUSSION_READY
-  authority_pointer: .sessions/2026-08-06-oversampled-coherent-sync-groundwork/decisions.md#D008
-  decision_gate: Step3.5与coverage decision已完成；JLT2025非exact collision，JOCN用户确认不可得；进入Step4a前必须新会话重读framework并显式讨论
+  active_lane: FORMAL_STEP4A_SEMANTIC_SMOKE_AWAITING_APPROVAL
+  authority_pointer: .sessions/2026-08-06-oversampled-coherent-sync-groundwork/decisions.md#D010
+  decision_gate: Q1 preflight=EVIDENCE_GAP；B1可能与C同grid同score等价，性能间隙与稳定误锁区未闭合；semantic smoke须用户另行批准
   allowed_actions:
-    - FORMAL_GW_STEP4A_PREFLIGHT_DISCUSSION
-    - FORMAL_COVERAGE_CLOSEOUT_VERIFICATION
+    - USER_SEMANTIC_SMOKE_DECISION
+    - FORMAL_STEP4A_PREFLIGHT_CLOSEOUT_VERIFICATION
   forbidden_actions:
     - SCIENTIFIC_EXPERIMENT_BEFORE_GW
     - OLD_CAMPAIGN_REOPEN
@@ -20,13 +20,14 @@ rdl_control:
     - FORMAL_STAGE_CHANGE
     - GROUNDWORK_STEP4A_OR_LATER
     - METHOD_IMPLEMENTATION_OR_SIMULATION
+    - SEMANTIC_SMOKE_EXECUTION_WITHOUT_USER_APPROVAL
   mission_log_ref: .sessions/2026-07-20-research-direction-lab-system/mission-log.md
-  mission_checkpoint: CP015
-  next_legal_action: 新会话重读gw-feasibility与formal D006-D008，只讨论是否进入Step4a；不自动转阶段、实现或仿真
+  mission_checkpoint: CP016
+  next_legal_action: 用户审阅formal D010的≤1天deterministic semantic smoke合同并决定是否批准；未批准前不派执行T或运行脚本
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-06（CP015/D032：JLT全文已读，coverage decision处理完毕）
+> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-07（CP016/D033 + formal V007/H004：Q1 preflight=`EVIDENCE_GAP`）
 
 ## 专题信息
 
@@ -75,6 +76,9 @@ rdl_control:
   未确认 exact collision；当时两个 primary-fulltext 缺口阻断 novelty closure。
 - 基于 D032，JLT 2025 IQ-skew 用户全文已裁为 shared-preamble sequential/extra-action、非 exact collision；
   JOCN 2026 用户确认不可得并保留 claim limitation。当前只允许新会话 Step 4a preflight discussion。
+- 基于 D033，formal Q1 Step 4a preflight 已完成但维度 D 未执行；当前 terminal=
+  `STEP4A_PREFLIGHT_EVIDENCE_GAP`，formal V007 独立复验 PASS、H004 已建立；只等待用户决定是否批准
+  ≤1 天 deterministic semantic smoke。
 
 ### 明确不含
 
@@ -298,8 +302,7 @@ lightweight persistence。六案审计重放、自动测试、个人 Skill 同�
 终验均 PASS（P0/P1/P2=0）；既有科学 verdict、dormant longitudinal topic 与
 formal owner 未变。
 
-**2026-08-06 当前入口**：`STEP3_5_COMPLETE_Q1_SURVIVOR_JOCN_FULLTEXT_UNAVAILABLE_NO_CONFIRMED_EXACT_COLLISION`
-（epoch 28 / CP015 / D032）。JLT 2025 IQ-skew 用户全文已裁为 shared-preamble sequential/extra-action，
-不是 exact collision；JOCN 2026 用户确认不可得，停止获取但保留 novelty limitation。formal topic closed，
-H003 为恢复入口。下一合法动作仅为新会话重读 `gw-feasibility.md` 后做 Step 4a preflight discussion；
-不自动转阶段、实现、testbed、MVE 或仿真。
+**2026-08-07 当前入口**：`STEP4A_PREFLIGHT_EVIDENCE_GAP`（epoch 29 / CP016 / D033）。formal Q1
+已完成 A0/A′/A/B 与 semantic-smoke 设计，未执行维度 D；B1/C 离散等价性、性能间隙与稳定误锁区仍未闭合。
+formal topic closed，H004 为恢复入口。下一合法动作只允许用户决定是否批准 D010 的 ≤1 天 deterministic
+semantic smoke；未批准前不派执行 T、不实现、不建 testbed、不跑 MVE/仿真。
