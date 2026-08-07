@@ -4,15 +4,15 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 27
+  control_epoch: 28
   role: RDL_MASTER
   mission: 设计并验证轻量方法构造车道，使 Ch4/Ch5 优先形成学位论文级可命名方法
-  active_lane: USER_FULLTEXT_COVERAGE_DECISION
-  authority_pointer: .sessions/2026-08-06-oversampled-coherent-sync-groundwork/decisions.md#D007
-  decision_gate: Step3.5已收敛且Q1保留survivor；JOCN2026/JLT2025 IQ-skew全文缺口阻断novelty closure与Step4a
+  active_lane: FORMAL_STEP4A_DISCUSSION_READY
+  authority_pointer: .sessions/2026-08-06-oversampled-coherent-sync-groundwork/decisions.md#D008
+  decision_gate: Step3.5与coverage decision已完成；JLT2025非exact collision，JOCN用户确认不可得；进入Step4a前必须新会话重读framework并显式讨论
   allowed_actions:
-    - USER_FULLTEXT_PROVISION
-    - USER_COVERAGE_GAP_ACCEPTANCE
+    - FORMAL_GW_STEP4A_PREFLIGHT_DISCUSSION
+    - FORMAL_COVERAGE_CLOSEOUT_VERIFICATION
   forbidden_actions:
     - SCIENTIFIC_EXPERIMENT_BEFORE_GW
     - OLD_CAMPAIGN_REOPEN
@@ -21,12 +21,12 @@ rdl_control:
     - GROUNDWORK_STEP4A_OR_LATER
     - METHOD_IMPLEMENTATION_OR_SIMULATION
   mission_log_ref: .sessions/2026-07-20-research-direction-lab-system/mission-log.md
-  mission_checkpoint: CP014
-  next_legal_action: 补齐或显式接受两个primary-fulltext缺口；此前不进入Step4a、实现或仿真
+  mission_checkpoint: CP015
+  next_legal_action: 新会话重读gw-feasibility与formal D006-D008，只讨论是否进入Step4a；不自动转阶段、实现或仿真
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-06（CP014/D031：formal V005 PASS并关闭，等待全文覆盖决定）
+> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-06（CP015/D032：JLT全文已读，coverage decision处理完毕）
 
 ## 专题信息
 
@@ -72,7 +72,9 @@ rdl_control:
 - 基于 D030，formal D006 已纠正 D029 接收的 semantic-gate 错误：Q1 为唯一 Step 3 survivor，Q2
   仅判据 3 FAIL。当前只允许完成最多三轮 Step 3.5；仍禁止 Step 4a、实现、testbed、MVE 与仿真。
 - 基于 D031，formal Step 3.5 已在 Round 2 新增 must/should=0 后收敛；Q1 保留 survivor，当前全文池
-  未确认 exact collision，但两个 primary-fulltext 缺口阻断 novelty closure。当前只允许用户处理覆盖面门。
+  未确认 exact collision；当时两个 primary-fulltext 缺口阻断 novelty closure。
+- 基于 D032，JLT 2025 IQ-skew 用户全文已裁为 shared-preamble sequential/extra-action、非 exact collision；
+  JOCN 2026 用户确认不可得并保留 claim limitation。当前只允许新会话 Step 4a preflight discussion。
 
 ### 明确不含
 
@@ -296,8 +298,8 @@ lightweight persistence。六案审计重放、自动测试、个人 Skill 同�
 终验均 PASS（P0/P1/P2=0）；既有科学 verdict、dormant longitudinal topic 与
 formal owner 未变。
 
-**2026-08-06 当前入口**：`STEP3_5_COMPLETE_Q1_SURVIVOR_EXACT_ACTION_FULLTEXT_BLOCKED`（epoch 27 /
-CP014 / D031）。formal Step 3.5 已收敛并经 V005 fresh-context 复验 PASS，专题 closed，H002 为恢复入口；
-Q1 是唯一 survivor，Q2 仅判据 3 FAIL。当前全文池未确认 exact collision，但 JOCN 2026/JLT 2025
-IQ-skew 全文缺口阻断 novelty closure。下一合法动作仅为用户补齐或显式接受覆盖缺口；禁止进入
-Step 4a、实现、testbed、MVE 或仿真。
+**2026-08-06 当前入口**：`STEP3_5_COMPLETE_Q1_SURVIVOR_JOCN_FULLTEXT_UNAVAILABLE_NO_CONFIRMED_EXACT_COLLISION`
+（epoch 28 / CP015 / D032）。JLT 2025 IQ-skew 用户全文已裁为 shared-preamble sequential/extra-action，
+不是 exact collision；JOCN 2026 用户确认不可得，停止获取但保留 novelty limitation。formal topic closed，
+H003 为恢复入口。下一合法动作仅为新会话重读 `gw-feasibility.md` 后做 Step 4a preflight discussion；
+不自动转阶段、实现、testbed、MVE 或仿真。

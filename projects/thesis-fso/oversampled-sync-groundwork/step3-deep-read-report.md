@@ -62,18 +62,20 @@
 
 最强 comparator contract 是 Gardner/Gu timing + AGC/DPLL/VV/FOE，并以同一个 receiver-visible quality threshold 共同冻结，再按固定 known preamble/reference 重启。它尚未作为完整链被本组论文测试，因此既不能写成“已解决”，也不能写成“已经失效”。Paillier 的约 1.4 ms 是初始 carrier capture，不是 post-fade 双环 reacquisition。
 
-## 4. Step 3.5 与 JOCN 2026（D006 重开，D007 完成）
+## 4. Step 3.5 与全文覆盖处置（D006–D008）
 
 D005 把 problem-truth 责任前移到 Step 3，已由 D006 纠偏。Q1 重判为 survivor 后完成 Step 3.5：
 Round 1 为 6/6 query、80 unique，Round 2 为 3/3 focused query、25 unique，真正新增 must/should=0，
 未启动 Round 3；Sun 2025 前向 8/后向 35 引用链均核验。新增全文将 Zhou 2025 裁为分区 preamble
 顺序链、LPT 2017 裁为 joint integer frame+CFO、JLT 2021 裁为 joint τ+CFO+CPO；三者均非 exact
-`(frame,fractional τ,CFO)` collision。JOCN 2026 与 JLT 2025 IQ-skew 仍无全文，保留 blocker。
+`(frame,fractional τ,CFO)` collision。随后用户提供 JLT 2025 IQ-skew 全文：shared TS-A 上各模块顺序
+执行，Eq. 16–23 只估 IQ-skew，不是单一三参数 objective。JOCN 2026 由用户确认不可得，停止重试但
+保留 claim limitation。
 
 ## 5. Step 3 终态
 
-`STEP3_5_COMPLETE_Q1_SURVIVOR_EXACT_ACTION_FULLTEXT_BLOCKED`
+`STEP3_5_COMPLETE_Q1_SURVIVOR_JOCN_FULLTEXT_UNAVAILABLE_NO_CONFIRMED_EXACT_COLLISION`
 
-Q1 四判据全过，是唯一 Step 3 survivor；Q2 仅判据 3 FAIL。Step 3.5 已完成且未确认 exact collision，
-但 exact-action novelty closure 受两个 primary-fulltext 缺口阻断。仍不存在 Step 4a、METHOD_SIGNAL、Go、
-实现、testbed 或仿真入口。
+Q1 四判据全过，是唯一 Step 3 survivor；Q2 仅判据 3 FAIL。Step 3.5 与 coverage decision 已完成且
+可得全文未确认 exact collision，但 JOCN 未读意味着 exact-action novelty closure 仍不成立。下一合法动作
+仅为新会话 Step 4a preflight discussion；当前无 METHOD_SIGNAL、Go、实现、testbed 或仿真入口。

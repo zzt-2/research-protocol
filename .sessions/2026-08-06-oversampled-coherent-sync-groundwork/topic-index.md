@@ -1,6 +1,6 @@
 # Topic Index: 过采样相干 FSO 联合同步前端 Groundwork
 
-> 状态: closed | 创建: 2026-08-06 | 最后更新: 2026-08-06（V005/H002：fresh-context 复验 PASS 后关闭）
+> 状态: closed | 创建: 2026-08-06 | 最后更新: 2026-08-06（D008/T013/H003：JLT全文已读；JOCN用户确认不可得）
 
 ## 专题信息
 
@@ -79,9 +79,11 @@ baseline 且不与既有 CCISP 动作碰撞的候选研究问题。
 - Q1 判据 1/2/3/4 均 PASS，成为 `STEP3_SURVIVOR`；Q2 判据 1/2/4 PASS、判据 3 FAIL，仍非 survivor。
 - Step 3.5 两轮收敛：Round 1=80 unique、must 5/should 6；Round 2=25 unique、真正新增 must/should=0；
   Sun 双向引用链 forward=8/backward=35；未启动 Round 3。
-- 当前全文池未确认 exact `(frame,fractional τ,CFO)` collision；Zhou 2025、LPT 2017 与 JLT 2021 均
-  为顺序链或窄 joint 方法先例。JOCN 2026 与 JLT 2025 IQ-skew 仍为 primary-fulltext blockers。
-- 当前 terminal：`STEP3_5_COMPLETE_Q1_SURVIVOR_EXACT_ACTION_FULLTEXT_BLOCKED`；仍禁止 Step 4a/实现/仿真。
+- 当前可得全文池未确认 exact `(frame,fractional τ,CFO)` collision；JLT 2025 IQ-skew 全文已裁为
+  shared-preamble sequential/extra-action，不是 exact collision，但必须纳入 cheap comparator。
+- JOCN 2026 由用户确认不可得并停止重试；它是永久 coverage/claim limitation，不是 negative collision 证据。
+- 当前 terminal：`STEP3_5_COMPLETE_Q1_SURVIVOR_JOCN_FULLTEXT_UNAVAILABLE_NO_CONFIRMED_EXACT_COLLISION`；
+  coverage decision 已处理，但本轮仍未进入 Step 4a/实现/仿真。
 
 ## 进展线索
 
@@ -93,24 +95,28 @@ baseline 且不与既有 CCISP 动作碰撞的候选研究问题。
 - **D005**：错误 terminal 的历史记录；其 terminal 与 Q1/Q2 判据 1 已由 D006 取代。
 - **D006**：纠正 problem-truth 前移；Q1 四判据 PASS 启动 Step 3.5，Q2 仅判据 3 FAIL。
 - **D007**：Step 3.5 两轮收敛；Q1 保留 survivor，无 confirmed exact collision，但 novelty closure 被两个全文缺口阻断。
+- **D008**：用户提供 JLT 2025 全文，裁为非 exact collision；JOCN 用户确认不可得，关闭 coverage-decision gate。
 - **V001–V003**：Step 1–2 独立验收从 FAIL→PARTIAL→PASS。
 - **V004**：保留历史；文件/身份/字段/保护边界验证有效，但 canonical 语义结论被 D006 取代。
 - **V005**：fresh-context 对照 canonical glossary 与 AMC D005 复验 PASS；Step 3.5 数字、全文、
   terminal 与保护边界均通过。
+- **V006**：fresh-context 对 JLT 用户全文、非 exact-collision 动作裁决、JOCN 用户不可得边界与
+  D008/current-state 复验 PASS，blocker=0。
 - **H001**：错误终态历史快照，已标 superseded；不得作为恢复入口。
-- **H002**：当前唯一恢复入口；专题已关闭，等待两个 primary-fulltext coverage gaps 的用户决定。
-- 项目证据新增：`step3-5-supplement-report.md`、T005–T011 worker logs、3 篇新增全文 read notes。
+- **H002**：D007 双 blocker 历史快照，已由 H003 取代。
+- **H003**：当前唯一恢复入口；下一会话只做 Step 4a preflight discussion。
+- 项目证据新增：`step3-5-supplement-report.md`、T005–T013 worker logs、4 篇新增全文 read notes。
 - 项目证据：`literature_notes_oversampled_sync.md`、Step 1 report/receipt、Step 2 coverage/receipt、
   `testbed-bom.md`。
 
 ## 未决项
 
-- 用户能否提供或通过新合法 OA/preprint 入口取得 JOCN 2026 `10.1364/JOCN.587273` 与 JLT 2025
-  `10.1109/JLT.2025.3581618` 全文，或是否显式接受这两个 coverage gaps；
-- 只有该覆盖面门处理后，才可另起会话重读 `gw-feasibility.md` 讨论 Step 4a。
+- 是否在下一会话重读 `gw-feasibility.md` 后授权进入 Step 4a；
+- JOCN 2026 若未来出现合法全文，任何 exact novelty claim 前必须补 acquire→read。
 
 ## 当前位置
 
-Phase 0、GW Step 1–3.5 已完成；Q1 是唯一 survivor，terminal=
-`STEP3_5_COMPLETE_Q1_SURVIVOR_EXACT_ACTION_FULLTEXT_BLOCKED`。下一合法动作仅为处理两个
-primary-fulltext coverage gaps；V005 PASS 后专题已 closed，仍无 Step 4a、实现、testbed、MVE 或仿真入口。
+Phase 0、GW Step 1–3.5 与用户 coverage decision 已完成；Q1 是唯一 survivor，terminal=
+`STEP3_5_COMPLETE_Q1_SURVIVOR_JOCN_FULLTEXT_UNAVAILABLE_NO_CONFIRMED_EXACT_COLLISION`。专题 closed；
+V006 已 PASS；下一合法动作仅为新会话重读 `gw-feasibility.md` 后讨论 Step 4a，当前无实现、testbed、
+MVE 或仿真入口。

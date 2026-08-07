@@ -128,3 +128,35 @@
   全量重跑后 semantic/deterministic 均 PASS、blocker=0，登记为 V005。
 - H002 已写入并取代 H001；专题以
   `STEP3_5_COMPLETE_Q1_SURVIVOR_EXACT_ACTION_FULLTEXT_BLOCKED` 关闭。处理两个全文缺口前无 Step 4a 入口。
+
+## 2026-08-06 续接：用户提供 JLT 2025 全文
+
+### 目标
+
+只处理 D007 的两个 primary-fulltext blocker：对用户提供的 JLT 2025 IQ-skew PDF 执行 acquire→read；
+按用户访问结果处置 JOCN，不进入 Step 4a、实现或仿真。
+
+### 记录
+
+- 用户 PDF identity PASS：10 页、1,945,015 bytes、DOI/标题一致；source SHA256=`0a5c8865...311d`。
+- `tools/convert` 的 Windows CRLF wrapper 直接失败；未改工具文件，以只读去 CR 运行同一 wrapper，
+  产出 canonical content 344 行、SHA256=`56dd39ff...93b1`；10 页渲染目视可读。
+- T013 fulltext read：shared TS-A 顺序执行 frame detection/IQ-skew/SOP/timing/FOE，TS-B 再做 frame
+  synchronization/channel estimation；Eq. 16–23 的 IQ-skew tone/Godard estimator 不含 frame/timing/CFO
+  共同 objective。verdict=`NO_EXACT_Q1_COLLISION_SHARED_PREAMBLE_SEQUENTIAL_OR_EXTRA_ACTION`。
+- 用户明确“我拿不到就是拿不到了”且只取得 JLT；JOCN 记为 `USER_CONFIRMED_FULLTEXT_UNAVAILABLE`，
+  停止重试但保留 scientific coverage limitation。
+- D008 更新 terminal；H003 成为下一恢复入口。本轮未进入 Step 4a、实现、testbed、MVE 或仿真。
+
+### 决策引用
+
+- D008：接收用户提供 JLT 2025 全文并关闭 coverage-decision gate（新建）
+
+### 范围确认
+
+- 本轮是否在 scope boundary 内：是；属于 D007/H002 明确列出的 USER_FULLTEXT_PROVISION/coverage decision。
+
+### 后续
+
+- 独立 V006 已 PASS、blocker=0；专题维持 closed。下一合法动作仅为新会话 Step 4a preflight
+  discussion。

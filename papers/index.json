@@ -415,10 +415,10 @@
     "doi:10.1109/jlt.2025.3581618": {
       "path": "papers/doi/10.1109_jlt.2025.3581618",
       "doi": "10.1109/JLT.2025.3581618",
-      "title": "",
-      "status": "failed",
+      "title": "Preamble Design for Online IQ-Skew Estimation in Upstream 400G Coherent TFDM-PON",
+      "status": "success",
       "batches": [],
-      "title_check": null
+      "title_check": "match"
     },
     "arxiv:1801.01598": {
       "path": "papers/arxiv/1801.01598",

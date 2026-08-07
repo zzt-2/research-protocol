@@ -5,7 +5,7 @@ method_type: 待定（精读后根据问题方法产出形态确定，见 glossa
 domain: comms
 created: 2026-06-21
 updated: 2026-08-06
-current_step: OVERSAMPLED_SYNC_STEP3_5_COMPLETE_FULLTEXT_BLOCKED（D007/V005/H002；formal topic closed；Q1唯一survivor；无confirmed exact collision；JOCN 2026/JLT 2025 IQ-skew全文缺口；无Step4a入口。C3/P1保持closed。）
+current_step: OVERSAMPLED_SYNC_STEP3_5_COVERAGE_DECISION_HANDLED（D008/V006/H003；formal topic closed；Q1唯一survivor；JLT 2025非exact collision；JOCN用户确认不可得；下一动作仅Step4a preflight discussion。C3/P1保持closed。）
 current_stage: GROUNDWORK
 ---
 
@@ -27,18 +27,18 @@ current_stage: GROUNDWORK
 
 ### 当前控制面桥接
 
-> **2026-08-06 当前入口：`OVERSAMPLED_SYNC_STEP3_5_COMPLETE_FULLTEXT_BLOCKED`**。D006 已纠正
-> problem-truth 前移；D007 完成两轮 Step 3.5 收敛。Q1 是唯一 survivor，当前全文池无 confirmed exact
-> collision，但 JOCN 2026 与 JLT 2025 IQ-skew 全文缺失阻断 novelty closure；Q2 仅判据 3 FAIL。
-> V005 对照 canonical glossary 与 AMC D005 fresh-context 复验 PASS，H002 为恢复入口，formal topic
-> 已关闭；当前无 Step 4a/实现/仿真入口。
+> **2026-08-06 当前入口：`OVERSAMPLED_SYNC_STEP3_5_COVERAGE_DECISION_HANDLED`**。D006 已纠正
+> problem-truth 前移；D007 完成 Step 3.5；D008 接收用户提供 JLT 2025 全文并裁为 shared-preamble
+> sequential/extra-action、非 exact collision。Q1 是唯一 survivor，Q2 仅判据 3 FAIL；JOCN 2026 由用户
+> 确认不可得，停止重试但保留 novelty limitation。V006 fresh-context closeout PASS；formal topic closed，H003 为恢复入口；下一合法动作
+> 仅为新会话 Step 4a preflight discussion，当前无实现/仿真入口。
 > C3、P1、baseline-first batch 与 2026-08-02 dormant campaign均只作历史背景。
 
-- **过采样相干 FSO 联合同步前端（独立专题，2026-08-06）—— STEP 3.5 COMPLETE / FULLTEXT BLOCKED**：
+- **过采样相干 FSO 联合同步前端（独立专题，2026-08-06）—— STEP 3.5 COMPLETE / COVERAGE DECISION HANDLED**：
   Q1 为 sample-level frame/fractional-timing/CFO acquisition；Q2 为 GG fade 与 SCO 下 timing/carrier
   maintenance/reacquisition。7 篇 CORE 已通过子 agent 精读；D006 重判后 Q1 四判据 PASS，Q2 仅
-  判据 3 FAIL。Step 3.5 两轮收敛且未确认 exact collision；JOCN 2026 与 JLT 2025 IQ-skew 仍为全文
-  blockers。V005 复验 PASS 后专题已关闭，H002 为唯一恢复入口。完整 testbed
+  判据 3 FAIL。Step 3.5 两轮收敛且未确认 exact collision；JLT 2025 IQ-skew 全文已裁为非 exact
+  collision，JOCN 2026 由用户确认不可得并保留 claim limitation。专题已关闭，H003 为唯一恢复入口。完整 testbed
   11–14 日与两个最小切片仅保留工程背景，不构成实现授权。权威证据见专题 D006–D007、S001、
   `literature_notes_oversampled_sync.md`、`oversampled-sync-groundwork/step3-5-supplement-report.md` 与
   `oversampled-sync-groundwork/step3-5-fresh-semantic-verifier-report.md`。
@@ -48,8 +48,8 @@ current_stage: GROUNDWORK
   | 1 search | ✅ | step1 search report/receipt | 两张预卡进入 Step 2 |
   | 2 acquire | ✅ | 7 CORE + V003 | 用户已确认 |
   | 3 read | ✅ / Q1 survivor | D006 + step3 report + 7 read notes | Q1 四判据 PASS；Q2 仅判据 3 FAIL |
-  | 3.5 supplement | ✅ / FULLTEXT BLOCKED | D007 + T005–T011 | Round 2 新增=0；Q1 保留 survivor |
-  | 4a feasibility | FORBIDDEN | 两个 primary-fulltext blocker + 本轮边界 | 实现/仿真禁止 |
+  | 3.5 supplement | ✅ / COVERAGE HANDLED | D007–D008 + T005–T013 | Round 2 新增=0；Q1 保留 survivor |
+  | 4a feasibility | NOT STARTED | H003；下一会话须重读 framework | 只允许 preflight discussion |
 
 - **P1 Shared M0-Power FOE–CPE Groundwork（独立专题，2026-08-05）—— CLOSED / 历史背景**：
   Step 1–2 已验收，Step 3 九篇精读由 V004 结构终审 PASS；最后一次 bounded closure 用尽 6/6 query，

@@ -1,5 +1,7 @@
 # Handoff: Q1 Step 3.5 收敛，等待 exact-action 全文覆盖决定
 
+> **SUPERSEDED by H003 / D008**：JLT 2025 全文已取得并裁为非 exact collision；JOCN 由用户确认不可得。
+
 > 来源: S001 | 交接目标: 补齐或显式接受两个 primary-fulltext 缺口后，再决定是否讨论 Step 4a
 > 日期: 2026-08-06
 

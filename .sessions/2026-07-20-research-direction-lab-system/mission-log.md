@@ -220,3 +220,19 @@
 - weight: ADEQUATE
 - drift: ALIGNED
 - next_action: formal专题已关闭；补齐或显式接受JOCN 2026与JLT 2025 IQ-skew全文缺口，此前不进入Step4a/实现/仿真
+
+## CP015 — 2026-08-06
+
+- event: 用户提供 JLT 2025 IQ-skew 全文并完成 coverage decision
+- evidence: formal D008/V006/T013/H003；用户提供 PDF；JLT read note/worker log；fresh-context closeout PASS
+- formal_science_disposition: STEP3_5_COMPLETE_Q1_SURVIVOR_JOCN_FULLTEXT_UNAVAILABLE_NO_CONFIRMED_EXACT_COLLISION
+- mission_method_delta: NONE
+- thesis_method_disposition: STEP3_SURVIVOR_ONLY_NO_NOVELTY_CLOSURE
+- intent: FORMAL_STEP4A_DISCUSSION_READY
+- mechanism_family: SAMPLE_LEVEL_ACQUISITION
+- same_axis_streak: 0
+- deterministic_repair_count: 2
+- no_method_streak: 0
+- weight: ADEQUATE
+- drift: ALIGNED
+- next_action: 新会话重读gw-feasibility与formal D006-D008，只讨论是否进入Step4a；不自动转阶段/实现/仿真

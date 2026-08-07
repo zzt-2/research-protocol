@@ -81,3 +81,4 @@
 | 2409.14400 | papers/arxiv/2409.14400/content.md | papers/_read_notes/2409.14400.md | 2026-08-06 | 0 | Oversampled-sync Q1 recent clock/frame/FOE direct competitor | DOI 10.1109/JLT.2025.3533197；arXiv 2409.14400 |
 | 2410.10080v1 | papers/arxiv/2410.10080v1/content.md | papers/_read_notes/2410.10080v1.md | 2026-08-06 | 0 | Oversampled-sync Q1 Step 3.5 direct SPO/frame/CFO competitor | DOI 10.1109/JLT.2025.3528909；arXiv 2410.10080v1 |
 | 1801.01598 | papers/arxiv/1801.01598/content.md | papers/_read_notes/1801.01598.md | 2026-08-06 | 0 | Oversampled-sync Q1 Step 3.5 direct frame/CFO must-read | DOI 10.1109/LPT.2017.2759584；arXiv 1801.01598 |
+| 10.1109_jlt.2025.3581618 | papers/doi/10.1109_jlt.2025.3581618/content.md | papers/_read_notes/10.1109_jlt.2025.3581618.md | 2026-08-06 | 0 | Oversampled-sync Q1 Step 3.5 user-provided IQ-skew direct competitor；shared-preamble sequential，不是 exact collision | DOI 10.1109/JLT.2025.3581618；JLT 2025 |

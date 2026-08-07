@@ -1079,7 +1079,7 @@ RDL control 转到 Step 3.5 in-progress；formal topic 重新 active。D029/CP01
 > date: 2026-08-06
 > 取代：无
 > 扩展：D030
-> 被取代：无
+> 被取代：D032
 > 依据：formal D007 + `step3-5-supplement-report.md` + T005–T011 worker logs
 
 ### 决策
@@ -1108,3 +1108,42 @@ RDL control 转为用户 coverage decision；等待补齐或显式接受两个�
 ### 来源
 
 formal topic D007/S001。
+
+## D032: 接收 formal D008 的用户全文覆盖处置
+
+> status: active
+> date: 2026-08-06
+> 取代：D031 的 coverage-decision gate
+> 扩展：D030/D031 的 Q1 survivor 与 claim ceiling
+> 被取代：无
+> 依据：formal D008 + T013 user-provided fulltext read + 用户原话
+
+### 决策
+
+接收 JLT 2025 IQ-skew 全文 verdict：shared-preamble sequential/extra-action，不是 exact joint
+`(frame,fractional τ,CFO)` collision。JLT blocker 已关闭；JOCN 2026 由用户确认不可得并停止重试。
+formal terminal 更新为
+`STEP3_5_COMPLETE_Q1_SURVIVOR_JOCN_FULLTEXT_UNAVAILABLE_NO_CONFIRMED_EXACT_COLLISION`。
+
+覆盖面 decision gate 已处理，RDL 下一 lane 转为 `FORMAL_STEP4A_DISCUSSION_READY`；这只允许另起会话
+重读 `gw-feasibility.md` 并讨论是否进入 Step 4a，不等于阶段授权、Go、METHOD_SIGNAL 或 novelty closure。
+
+### 理由
+
+用户完成唯一可得付费全文的人工提供，另一篇明确不可得；继续 acquisition 无合法增量。JLT 全文动作
+语义没有推翻 Q1 survivor，也没有消除 JOCN 未读导致的 scientific uncertainty，因此流程 blocker 与
+claim limitation 必须分开记录。
+
+### 排除的替代方案
+
+- 不继续 USER_FULLTEXT_PROVISION 循环；
+- 不把 coverage gap acceptance 写成 exact novelty closure；
+- 不自动进入 Step 4a、实现或仿真。
+
+### 影响范围
+
+RDL control 升 epoch 28 / CP015；formal topic保持 closed，等待下一会话的 Step 4a preflight discussion。
+
+### 来源
+
+formal D008/S001/T013。

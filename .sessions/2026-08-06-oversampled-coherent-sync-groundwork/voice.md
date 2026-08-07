@@ -15,3 +15,5 @@
 - "Canonical 判据 1只要求 M/C/A 明确、句子级、可解；Step 3 要求 A 可证伪，不要求 A 已被 Step 4a/MVE 证实。" → D006
 - "如果 Q1 重判为 survivor，立即按 stages/gw-supplement.md 完成 Step 3.5，不停在纠偏。" → D006
 - "不进入 Step 4a；不写方法代码；不搭 5.5–7.5 日 testbed；不跑仿真；不称 METHOD_SIGNAL、Go 或论文方法成立；不修改 common/、params.py、旧实验或 Skill；不 push。" → D006
+- "给我url我看看。我拿不到就是拿不到了" → D008
+- "C:\\Users\\zzt\\Downloads\\Preamble_Design_for_Online_IQ-Skew_Estimation_in_Upstream_400G_Coherent_TFDM-PON.pdf 只弄到这一个" → D008

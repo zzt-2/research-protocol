@@ -1,6 +1,6 @@
 # 过采样相干 FSO 联合同步前端：Groundwork 文献状态
 
-> 2026-08-06 | GW Step 3 canonical 重判与 Step 3.5 完成 | terminal: `STEP3_5_COMPLETE_Q1_SURVIVOR_EXACT_ACTION_FULLTEXT_BLOCKED`
+> 2026-08-06 | GW Step 3 canonical 重判、Step 3.5 与用户全文覆盖处置完成 | terminal: `STEP3_5_COMPLETE_Q1_SURVIVOR_JOCN_FULLTEXT_UNAVAILABLE_NO_CONFIRMED_EXACT_COLLISION`
 
 ## 边界
 
@@ -15,8 +15,8 @@
 | Step 1 search | ✅ | `oversampled-sync-groundwork/step1-search-report.md`；6 query，140 raw / 130 unique，2019+ 39 unique | 两张机制不同预卡存活，允许 Step 2 |
 | Step 2 acquire | ✅ 用户已确认 | `oversampled-sync-groundwork/step2-coverage-report.md`；7 CORE 全文通过 identity/SHA/≥50 行门 | D004 接受覆盖面 |
 | Step 3 read | ✅（D006 纠偏） | `oversampled-sync-groundwork/step3-deep-read-report.md`；7 篇 CORE 结构化全文精读 | Q1 四判据 PASS；Q2 仅判据 3 FAIL |
-| Step 3.5 supplement | ✅ / FULLTEXT BLOCKED | `step3-5-supplement-report.md`；Round 2 新增 must/should=0 | Q1 保留 survivor；exact novelty 未闭合 |
-| Step 4a | ⬜ 禁止 | 两个 primary-fulltext blocker + 本轮边界 | 无入口 |
+| Step 3.5 supplement | ✅ / COVERAGE DECISION HANDLED | `step3-5-supplement-report.md`；Round 2 新增 must/should=0；T013 | Q1 保留 survivor；JOCN limitation 保留 |
+| Step 4a | ⬜ 未进入 | 下一会话必须重读 `gw-feasibility.md` | 只允许 preflight discussion，不自动授权 |
 
 ## CORE 覆盖
 
@@ -89,9 +89,10 @@ preamble 周期重启。候选动作是单链路 timing NCO/interpolator 与 car
 | Zhou 2025 JLT, `10.1109/JLT.2025.3528909`, arXiv `2410.10080v1` | PASS；555 行 | `SEQUENTIAL_MODULAR_ESTIMATION_WITH_PARTITIONED_PREAMBLE_REUSE` | 当前最强直接顺序 comparator；不是 exact three-parameter joint | `papers/_read_notes/2410.10080v1.md` |
 | LPT 2017 FRFT, `10.1109/LPT.2017.2759584`, arXiv `1801.01598` | PASS；156 行 | true joint `(integer frame offset,CFO)` | 入口 1 sps、无 fractional τ/SCO | `papers/_read_notes/1801.01598.md` |
 | Du 2021 JLT, `10.1109/JLT.2020.3042546` | PASS；712 行 | true joint `(integer τ,CFO,CPO)` | 无 frame output；CP-removed OFDM/fiber task 不匹配 | `papers/_read_notes/10.1109_jlt.2020.3042546.md` |
+| JLT 2025 IQ-skew, `10.1109/JLT.2025.3581618` | PASS；344 行；用户提供 | shared-preamble sequential/extra-action | 有 frame/timing/FOE 模块，但无单一三参数 objective | `papers/_read_notes/10.1109_jlt.2025.3581618.md` |
 
-未获取全文的 direct candidates：JOCN 2026 `10.1364/JOCN.587273`、JLT 2025 IQ-skew
-`10.1109/JLT.2025.3581618`；两者均不得用摘要裁 exact-action collision。
+未获取全文的 direct candidate 仅余 JOCN 2026 `10.1364/JOCN.587273`；用户已确认不可得，停止重试，
+但不得用摘要裁 exact-action collision。
 
 ### 现有方法分类
 
@@ -144,13 +145,14 @@ fine CFO 与 CPE 串成可运行链；最新 coherent-PON 工作进一步压缩�
 - 新增全文：Zhou 2025（arXiv `2410.10080v1`）为分区 preamble 顺序链；LPT 2017（arXiv
   `1801.01598`）为 joint integer frame+CFO、1 sps 无 fractional τ；JLT 2021 为 joint τ+CFO+CPO、
   无 frame 且 OFDM/fiber task 不匹配。均非 exact 三参数 collision。
-- JOCN 2026 `10.1364/JOCN.587273` 与 JLT 2025 IQ-skew `10.1109/JLT.2025.3581618` 合法路径后仍
-  无全文，分别保持 `UNRESOLVED_HIGH_RISK` / `UNRESOLVED_PRIMARY_FULLTEXT_UNAVAILABLE`。
+- JLT 2025 IQ-skew 用户全文已裁为 shared-preamble sequential/extra-action，非 exact collision；JOCN
+  2026 仍为 `USER_CONFIRMED_FULLTEXT_UNAVAILABLE`，停止重试但保留 claim limitation。
 - 最强廉价 comparator 冻结为 polyphase/Farrow timing bank + Zhou/Le Bidan/Sun/FSTS/STSB sequential
   chain；这是公平 comparator contract，不是拼接出来的单篇 baseline identity。
 
 ## 当前结论
 
-terminal=`STEP3_5_COMPLETE_Q1_SURVIVOR_EXACT_ACTION_FULLTEXT_BLOCKED`。Q1 是唯一 Step 3 survivor；Q2
-仅判据 3 FAIL。当前全文池未确认 exact collision，但不能声称 exact-action novelty closure。不存在
-Step 4a 入口，本轮不产生 METHOD_SIGNAL、Go、论文方法或仿真授权。
+terminal=`STEP3_5_COMPLETE_Q1_SURVIVOR_JOCN_FULLTEXT_UNAVAILABLE_NO_CONFIRMED_EXACT_COLLISION`。
+Q1 是唯一 Step 3 survivor；Q2 仅判据 3 FAIL。当前可得全文池未确认 exact collision，但 JOCN 未读
+限制意味着不能声称 exact-action novelty closure。coverage decision 已处理；下一合法动作仅为新会话
+Step 4a preflight discussion，本轮不产生 METHOD_SIGNAL、Go、论文方法或仿真授权。

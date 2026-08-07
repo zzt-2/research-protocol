@@ -153,3 +153,31 @@ BLOCKERS_AFTER_REPAIR=0
 
 PASS。D006/D007 的 canonical 语义、Step 3.5 证据链与保护边界均通过 fresh-context 复验；允许按
 `STEP3_5_COMPLETE_Q1_SURVIVOR_EXACT_ACTION_FULLTEXT_BLOCKED` 关闭本专题，但不产生 Step 4a 入口。
+
+## V006: JLT 用户全文与 coverage closeout fresh-context 复验
+
+> 日期：2026-08-06
+> 关联：S001 / D008 / T013 / T014
+> 结论：PASS
+
+### 验证项
+
+- [x] 用户提供的 JLT 2025 PDF 已按 DOI 归档；identity、10 页、source/content SHA256、344 行、
+  metadata、papers index、read note 与 read-log 均一致。
+- [x] 全文只支持 shared-preamble sequential/extra-action：TS-A 复用给 frame detection、IQ-skew、
+  SOP、timing recovery、FOE，TS-B 再做 frame synchronization/channel estimation；Eq. 16–23 只估
+  IQ-skew，不存在 joint `(frame,fractional τ,CFO)` objective/search/output。
+- [x] JLT 因而进入 strongest cheap comparator，但 verdict 为
+  `NO_EXACT_Q1_COLLISION_SHARED_PREAMBLE_SEQUENTIAL_OR_EXTRA_ACTION`，不构成 Q1 exact collision。
+- [x] JOCN 2026 仅按用户明确访问结果登记为 `USER_CONFIRMED_FULLTEXT_UNAVAILABLE`；未用摘要裁
+  jointness，也未据此声称 no-collision、exact novelty、“首次”或 Go。
+- [x] D008、formal current state、RDL D032/CP015/epoch28 与 H003 一致；未进入 Step 4a、实现、
+  testbed、MVE 或仿真。
+- [x] JSON `49/49`、YAML `2/2`、protected logs SHA `4/4`、`git diff --check` exit `0`；无越界改动。
+
+### 结论
+
+PASS，blocker=`0`。terminal=
+`STEP3_5_COMPLETE_Q1_SURVIVOR_JOCN_FULLTEXT_UNAVAILABLE_NO_CONFIRMED_EXACT_COLLISION`；专题维持
+closed，下一合法动作仅为新会话重读 `gw-feasibility.md` 后讨论 Step 4a。完整证据见
+`projects/thesis-fso/oversampled-sync-groundwork/jlt-fulltext-closeout-verifier-report.md`。

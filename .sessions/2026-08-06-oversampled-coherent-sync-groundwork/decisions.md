@@ -250,7 +250,7 @@ S001 续接；用户 2026-08-06 确定性语义纠偏指令。
 > date: 2026-08-06
 > 取代：无
 > 扩展：D006
-> 被取代：无
+> 被取代：D008（仅 terminal 与 blocker 数量/处置）
 > 依据：调研: `step3-5-supplement-report.md` + T005–T011 worker logs + Sun 双向引用链 + 3 篇新增全文 read notes
 > 触发原话：无（技术推导）
 
@@ -284,3 +284,48 @@ joint 解 τ+CFO+CPO、无 frame 且 task/waveform 不匹配。它们关闭 gene
 ### 来源
 
 S001 续接；`projects/thesis-fso/oversampled-sync-groundwork/step3-5-supplement-report.md`。
+
+## D008: 接收用户提供 JLT 2025 全文并关闭 coverage-decision gate
+
+> status: active
+> date: 2026-08-06
+> 取代：D007 的 terminal 与两个 primary-fulltext blocker 计数
+> 扩展：D007 的 action/collision 边界
+> 被取代：无
+> 依据：用户原话: voice.md 2026-08-06 + 全文精读: T013 worker log/read note + PDF identity/SHA/render receipt
+
+### 决策
+
+用户提供的 JLT 2025 IQ-skew 全文 `10.1109/JLT.2025.3581618` 已完成 acquire→read。正文证明它是
+shared-preamble 上的顺序多模块 DSP：TS-A 承载 frame detection、IQ-skew、SOP、timing recovery 与
+FOE，TS-B 再做 frame synchronization/channel estimation；IQ-skew 由独立 tone/Godard phase detector
+输出。不存在单一 `(frame index, fractional τ, CFO)` objective/search，故 verdict=`NO_EXACT_Q1_COLLISION_SHARED_PREAMBLE_SEQUENTIAL_OR_EXTRA_ACTION`。
+
+JLT blocker 已消解；JOCN 2026 `10.1364/JOCN.587273` 仍无全文。用户明确“我拿不到就是拿不到了”并
+只取得 JLT 一篇，因此 JOCN 记为 `USER_CONFIRMED_FULLTEXT_UNAVAILABLE`，停止任何获取重试。该用户
+coverage decision 关闭工作流 blocker，但不等于 JOCN action 已被全文裁决，也不支持 exact-action
+novelty/“首次”声称。新 terminal 为
+`STEP3_5_COMPLETE_Q1_SURVIVOR_JOCN_FULLTEXT_UNAVAILABLE_NO_CONFIRMED_EXACT_COLLISION`。
+
+### 理由
+
+Fig. 2、§II-A 与 Eq. 16–23 显示多个 output 共享训练资源但各自由不同模块/metric 顺序产生；摘要的
+“simultaneously enables”不能替代 estimator coupling 证据。用户已用其可用访问权完成最后一次人工
+获取并确认另一篇不可得，继续重试没有合法信息增量。覆盖面门可按“显式接受已知缺口”处置，但科学
+claim ceiling 必须永久保留 JOCN 未读限制。
+
+### 排除的替代方案
+
+- 不把 shared TS-A、多模块列表或零额外 skew overhead 称为 joint 三参数 estimator；
+- 不因 JLT 无 exact collision 就宣称 novelty closure；
+- 不再重试 JOCN、绕过访问控制或用 abstract 裁 jointness；
+- 不在本轮进入 Step 4a、实现、testbed、MVE 或仿真。
+
+### 影响范围
+
+更新 literature notes、Step 3.5 report、H002、topic/master/RDL current state。formal topic 仍 closed；
+下一合法动作是在新会话重读 `stages/gw-feasibility.md`，只讨论是否进入 Step 4a，不自动转阶段。
+
+### 来源
+
+S001 续接；T013；`projects/thesis-fso/worker-logs/step-3-5-jlt-iq-skew-fulltext-read.md`。
