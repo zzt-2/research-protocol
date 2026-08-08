@@ -1,6 +1,6 @@
 # Topic Index: Ch4 参考方法扩展
 
-> 状态: active | 创建: 2026-08-08 | 最后更新: 2026-08-08（T001：reference-method 入口选择任务已准备）
+> 状态: active | 创建: 2026-08-08 | 最后更新: 2026-08-08（R001/D002/V002：无 survivor 终态独立验收通过，等待战略决定）
 
 ## 专题信息
 
@@ -12,7 +12,7 @@
 
 **原始目标**：在星地相干 FSO 总伞下，为 Ch4 产出一个真实方法章；从可复现 reference baseline 出发，经 observed defect、one deployable action、fair comparator 与 bounded testbed，形成完整方法包。
 
-**当前范围**：只进行最多 3 个 research object / reference baseline 的入口选择，选出至多 1 个可进入后续 Groundwork 的对象；本专题当前不检索、不实现、不仿真。
+**当前范围**：入口选择已收口，terminal=`NO_ENTRY_SURVIVOR_STRATEGIC_DECISION_REQUIRED`。本专题等待用户决定是否改变 reference-object 来源或显式重开旧 rejected object；决定前不检索、不实现、不仿真、不进入 Groundwork。
 
 **明确不含**：
 
@@ -45,6 +45,7 @@
 
 1. 旧 RDL system 专题停止继续承载科学执行与新 S###；它只作为历史、方法论和 dead-end 证据源。
 2. P1 可作为 Ch5 内部数据流优化素材，但不占用本专题的 Ch4 方法对象名额。
+3. D002 裁决本地入口无 survivor：Paillier FG-DRC exact collision 于旧 K01 REJECT，LBS-RDE 缺星地 FSO defect；Ch4 方法槽位仍未关闭。
 
 ## 进展线索
 
@@ -52,12 +53,15 @@
 - **H001**：交接下一对话只做最多 3 个 research object / reference baseline 的入口选择。
 - **V001**：fresh-context verifier 12/12 PASS，P0/P1/P2=0/0/0；Skill 完整回归 116 passed, 1 skipped。
 - **T001**：自包含入口选择任务；最多比较 3 个机制不同对象、推荐至多 1 个，不检索、不实现、不仿真。
+- **R001 / D002**：比较 Paillier AGC+DPLL 与 LBS-RDE 两个机制不同对象；前者因 exact K01 rejected-package collision 失败，后者因星地 FSO defect 未建立失败；terminal=`NO_ENTRY_SURVIVOR_STRATEGIC_DECISION_REQUIRED`。
+- **V002**：fresh-context verifier 初审发现 exact K01 复活并 REJECT；修正后复核 ACCEPT，P0/P1/P2=0/0/0，范围纪律与日志隔离通过。
+- **H002**：交回用户作战略范围决定；没有决定前不得进入 Groundwork。
 
 ## 未决项
 
-- 哪个 reference baseline 具备可复现实现、具体缺陷、单一部署动作与公平 comparator？
-- 选中的对象能否在后续正式 Groundwork 中形成合法 Q#？
+- 是否改变 reference-object 来源，寻找未被旧 D027 覆盖的新对象？
+- 是否有新证据与显式 scope/decision change 足以授权重开旧 K01？
 
 ## 当前位置
 
-`ENTRY_SELECTION_READY`。下一对话只比较最多 3 个 research object / reference baseline 并推荐至多 1 个；不得直接检索、实现或仿真。
+`NO_ENTRY_SURVIVOR_STRATEGIC_DECISION_REQUIRED`。本对话停止；不得补候选、继续包装、检索、实现、仿真或进入 Groundwork，等待用户战略决定。

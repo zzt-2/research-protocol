@@ -31,3 +31,36 @@ CCISP 的可写性来自“真实缺陷—可部署动作—现成 testbed—公
 ### 来源
 
 S001；用户纠正与批准；三路 subagent 发散及交叉复核。
+
+## D002: 本地 reference-method 入口无 survivor，交回战略决定
+
+> status: active
+> date: 2026-08-08
+> 取代：无
+> 被取代：无
+> 依据：调研: R001 + critic: 两路 fresh-context 本地审计 + 验证: V002（fresh-context verifier 初审 REJECT、修正稿 ACCEPT）
+> 触发原话: 无（技术推导）
+
+### 决策
+
+terminal=`NO_ENTRY_SURVIVOR_STRATEGIC_DECISION_REQUIRED`。Paillier FG-DRC 与旧 K01 exact 相同且旧 D027 已接受为 `REJECT`；LBS-RDE 的星地 FSO defect 未建立。当前没有对象通过全部 7 门，不推荐入口，不进入 Groundwork。
+
+### 理由
+
+Paillier 论文只支持 fade 下失稳门限恶化，不支持承重的 post-fade NCO/state damage；现有 runner 也不是 time-correlated fade-exit testbed。更关键的是，本轮拟议方法名、动作、主图、消融与 comparator 均 exact collision 于旧 K01，而旧 D027 明确禁止降门晋级。LBS-RDE 则只有 fiber PMD/SOP defect，不能继承为星地 FSO 事实。
+
+### 排除的替代方案
+
+- 不选 Paillier FG-DRC：它是 exact K01 rejected package 复活；当前没有新 evidence 或授权推翻旧 D027。
+- 不选 LBS-RDE pilot-density switching：reference 与重建预算可接受，但星地 FSO defect 为 UNKNOWN，论文原 likelihood gate 不能冒充新增动作。
+- 不续 Pilot-Jones：fixed EMA 已吸收 gap，且对象包预算已超限。
+- 不续 block-CMA/per-symbol Godard：新增动作 exact collision 于传统 comparator，旧对象包预算已超限。
+- 不恢复 T001 明示禁止的 P1、decoder-feedback、CCISP 标量调参、C3、oversampled Q1、coded-burst 4b#1、AMC Q-A/Q-B、G1/P09。
+
+### 影响范围
+
+本轮只更新 R001、D002、V002、topic-index、registry current view 与 H002。D002 不创建 Q#、Go、METHOD_SIGNAL 或 thesis-ready 裁决；不授权检索、实现、仿真或 Groundwork。下一步必须由用户作战略范围决定。
+
+### 来源
+
+S001 / T001 / R001；两路 fresh-context 本地证据审计与 fresh-context verifier 对初稿的独立否决、修正后复核。
