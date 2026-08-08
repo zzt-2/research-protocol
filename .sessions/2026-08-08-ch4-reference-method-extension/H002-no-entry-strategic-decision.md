@@ -1,5 +1,7 @@
 # Handoff: Ch4 reference-method 无入口 survivor
 
+> **SUPERSEDED CURRENT ACTION**：D003 已取代本文“立即战略耗尽 / 两对象失败”的强度。R001 的 C1 exact K01 collision 与 C2 FSO defect unknown 事实仍有效；当前动作以 T002 为准。
+
 > 来源: S001（本轮执行 T001，并以 R001/D002 收口；未新建 S###）| 交接目标: 用户作战略范围决定
 > 日期: 2026-08-08
 

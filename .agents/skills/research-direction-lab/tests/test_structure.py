@@ -352,6 +352,25 @@ def test_reference_method_extension_lane_cannot_drift_into_audit_only_work():
         assert phrase in normalized
 
 
+def test_reference_method_extension_counts_only_executed_evidence_and_has_defect_smoke():
+    method = (ROOT / "references/method-production.md").read_text(encoding="utf-8")
+    normalized = " ".join(method.split())
+
+    for phrase in (
+        "`REFERENCE_CANDIDATE`",
+        "explicit defect-reproduction contract",
+        "`READY_FOR_DEFECT_SMOKE`",
+        "0.5–1 day",
+        "return to the legal Groundwork route before execution",
+        "`METHOD_PACKAGE`",
+        "3–7 day",
+        "Entry audit, blocked, or unknown",
+        "do not count toward the two-package or two-object stop",
+        "evidence-valid executed defect smoke or method package",
+    ):
+        assert phrase in normalized
+
+
 def test_long_horizon_persistence_has_a_small_current_snapshot_and_detail_boundary():
     control = (ROOT / "references/long-horizon-control.md").read_text(encoding="utf-8")
     normalized = " ".join(control.split())

@@ -55,8 +55,8 @@ topics:
     title: Ch4 参考方法扩展
     status: active
     created: "2026-08-08"
-    last_updated: "2026-08-08（R001/D002/V002：NO_ENTRY_SURVIVOR 修正稿独立 ACCEPT，等待战略决定）"
-    description: "星地相干 FSO 总伞下的 Ch4 方法生产专题。R001 比较 Paillier AGC+DPLL 与 LBS-RDE：前者 exact collision 于旧 K01 REJECT，后者缺星地 FSO defect；terminal=NO_ENTRY_SURVIVOR_STRATEGIC_DECISION_REQUIRED。当前不进入 Groundwork，不检索、实现或仿真。"
+    last_updated: "2026-08-08（D003/T002：入口审计不计对象失败，转 defect-reproduction gate）"
+    description: "星地相干 FSO 总伞下的 Ch4 方法生产专题。R001 的 Paillier exact K01 collision 与 LBS-RDE FSO defect unknown 事实保留；D003 取代过强的战略耗尽解读。当前 terminal=LOCAL_ENTRY_POOL_EXHAUSTED_DEFECT_REPRODUCTION_GATE_REQUIRED，T002 允许一次有界 candidate-source expansion，最多选 1 个 defect-reproduction GW 入口；本轮不实现、不仿真、不进 Groundwork。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承方法生产教训、dead-end inventory、章节槽位规则与历史证据

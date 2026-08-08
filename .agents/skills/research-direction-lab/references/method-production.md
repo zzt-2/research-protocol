@@ -145,8 +145,14 @@ candidate-specific formalization task.
 Use this lane when an open chapter slot needs a new method rather than another
 audit. Keep three rules:
 
-1. Start from a reproducible reference baseline and an observed defect; do not
-   start from supporting leftovers or repeatedly repackage them.
+1. Start from a reproducible reference baseline and an observed defect, or
+   from that baseline plus an explicit defect-reproduction contract; do not
+   start from supporting leftovers or repeatedly repackage them. Use three
+   stages: `REFERENCE_CANDIDATE` records a plausible baseline/transfer without
+   counting it as a failed object; `READY_FOR_DEFECT_SMOKE` marks a 0.5–1 day
+   defect-only check, but the candidate must return to the legal Groundwork
+   route before execution; `METHOD_PACKAGE` authorizes the 3–7 day minimal
+   construct only after the target defect is observed.
 2. Unless an exact existing-action collision is demonstrated, the strongest
    cheap alternative must enter the fair comparator or experiment instead of
    killing the construct by imagination. Infrastructure cost is a budget gate,
@@ -154,7 +160,10 @@ audit. Keep three rules:
    testbed authorization.
 3. Run at most two method-bearing packages per research object. If two
    mechanism-distinct research objects still produce no method delta, stop for
-   a strategic scope decision rather than continuing local repair.
+   a strategic scope decision rather than continuing local repair. Entry audit,
+   blocked, or unknown states do not count toward the two-package or two-object
+   stop. Count only an evidence-valid executed defect smoke or method package;
+   target-transfer uncertainty at entry is not an object failure.
 
 Construct before closing evidence. Produce 3–5 mechanism-distinct prototype
 cards before broad search, testbed preflight, implementation, or experiment.

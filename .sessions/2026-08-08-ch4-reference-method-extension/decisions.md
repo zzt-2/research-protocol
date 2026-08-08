@@ -34,10 +34,10 @@ S001；用户纠正与批准；三路 subagent 发散及交叉复核。
 
 ## D002: 本地 reference-method 入口无 survivor，交回战略决定
 
-> status: active
+> status: superseded
 > date: 2026-08-08
 > 取代：无
-> 被取代：无
+> 被取代：D003
 > 依据：调研: R001 + critic: 两路 fresh-context 本地审计 + 验证: V002（fresh-context verifier 初审 REJECT、修正稿 ACCEPT）
 > 触发原话: 无（技术推导）
 
@@ -64,3 +64,38 @@ Paillier 论文只支持 fade 下失稳门限恶化，不支持承重的 post-fa
 ### 来源
 
 S001 / T001 / R001；两路 fresh-context 本地证据审计与 fresh-context verifier 对初稿的独立否决、修正后复核。
+
+## D003: 入口审计不计对象失败，改设 defect-reproduction gate
+
+> status: active
+> date: 2026-08-08
+> 取代：D002 的“战略耗尽 / 两对象失败”强度；保留 R001 的候选事实与 exact-collision 裁决
+> 被取代：无
+> 依据：critic: S001 对 T001 G3 与停止计数的规则审查 + 调研: R001 + 验证: V002
+> 触发原话: 无（用户以零信息“行”批准纠偏，按 voice 规范不收录）
+
+### 决策
+
+terminal 修订为 `LOCAL_ENTRY_POOL_EXHAUSTED_DEFECT_REPRODUCTION_GATE_REQUIRED`。R001 只证明本地入口池没有可直接晋级的对象：C1/Paillier 仍因 exact K01 collision 保持 `REJECT`，C2/LBS-RDE 仍为 FSO defect `UNKNOWN`；它没有证明两个 research object 已完成 method-bearing package 并失败，也不足以触发全局战略耗尽。
+
+下一轮允许一次有界 candidate-source expansion：比较 2–4 个机制不同的外部 reference baseline，最多推荐 1 个 `READY_FOR_GW_STEP1_DEFECT_REPRODUCTION`。入口候选只需具备“外部已发表 defect + 向目标 FSO 条件迁移的物理机制 + 0.5–1 天可证伪 smoke 合同”，不要求目标 FSO defect 在入口期预先成立。
+
+### 理由
+
+T001 的 G3 一方面允许“低成本、可证伪的 defect reproduction”，另一方面禁止实验，却在入口裁决时要求 defect 已在目标场景成立；这一组合会系统性排除所有尚未做 smoke 的跨场景 reference extension。与此同时，D001 的“两对象失败”原意是两个机制不同对象真正完成 method-bearing package 后仍无增量，不是两个 entry-screening 候选没通过七门。把入口审计计入停止条件，会在方法构造之前重新运行成否决机器。
+
+### 排除的替代方案
+
+- 不恢复 C1/Paillier/K01：其方法动作、主图、消融与 comparator 是已证实 exact collision，仍受旧 `REJECT` 约束。
+- 不把 C2 的 fiber defect 直接写成星地 FSO defect：它只能作为未来候选源证据，必须另有迁移机制和 smoke 合同。
+- 不因邻域 prior art 自动封禁整个机制族：只有 exact object/action collision 才能入口期拒绝；邻近 prior art 只限制未来 claim。
+- 不在本轮执行 smoke、实现、仿真或 Groundwork；T002 只选入口。下一轮必须按 `stages/groundwork.md` 从 GW Step 1 开始，只有走完 Step 1–3 并进入 Step 4a 后才可执行预注册 smoke。
+- 不继续从当前两项本地 leftovers 补第三个名字；候选必须来自扩展后的外部 reference source。
+
+### 影响范围
+
+更新本专题 topic-index、S001、H002 supersession banner、registry current view，并新增自包含 T002。每对象 2 包 / 两对象停止计数从正式 method-bearing package 或已授权 defect-smoke 执行开始；T001/T002 入口筛选均不计数。T002 预留 R002、D004、V003、H003 作为执行产出编号。
+
+### 来源
+
+S001 规则纠偏；R001/V002 事实边界；用户批准继续。
