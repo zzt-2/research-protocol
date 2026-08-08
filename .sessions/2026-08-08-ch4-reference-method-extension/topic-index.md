@@ -1,6 +1,6 @@
 # Topic Index: Ch4 参考方法扩展
 
-> 状态: active | 创建: 2026-08-08 | 最后更新: 2026-08-08（D004/V003：RML-FSTS 唯一 defect-reproduction 入口，独立验收 PASS）
+> 状态: active | 创建: 2026-08-08 | 最后更新: 2026-08-08（T003：RML-FSTS 独立 Groundwork Step 1–2 待派发）
 
 ## 专题信息
 
@@ -12,7 +12,7 @@
 
 **原始目标**：在星地相干 FSO 总伞下，为 Ch4 产出一个真实方法章；从可复现 reference baseline 出发，经 observed defect、one deployable action、fair comparator 与 bounded testbed，形成完整方法包。
 
-**当前范围**：terminal=`ONE_DEFECT_REPRODUCTION_ENTRY_READY_FOR_GW_STEP1`。T002 已比较两个机制不同外部 reference baseline，唯一选择 RML-FSTS fixed-lag/`BL` condition-dependence research object。下一对话必须按 `stages/groundwork.md` 从 Step 1 开始；预注册 smoke 只复现 defect，不测试方法，且仅在 Step 1–3 通过并进入 Step 4a 后运行。本轮不实现、不仿真、不运行 smoke、不进入 Groundwork。
+**当前范围**：terminal=`ONE_DEFECT_REPRODUCTION_ENTRY_READY_FOR_GW_STEP1`。T003 已准备：下一执行对话先查 registry，再创建独立 RML-FSTS Groundwork 专题，只运行正式 GW Step 1 与 Step 2，输出覆盖面缺口报告后停止等待用户确认。Step 3/3.5/4a、预注册 smoke、实现和仿真均不授权。
 
 **明确不含**：
 
@@ -70,12 +70,14 @@
 - **R002 / D004**：4/4 组定向 query 后比较 RML-FSTS 与 BUM-CMA；前者 E1–E8 全过，成为唯一 GW Step 1 defect-reproduction 入口；后者因 E2/E4/E7/E8 失败不入场。entry screening 后计数仍为 `0/0`。
 - **H003**：交接下一对话先重读 `stages/groundwork.md`，只从 RML-FSTS research object 的 GW Step 1 启动；禁止直接跑 smoke。
 - **V003**：fresh-context verifier 初审 PARTIAL（0/1/2），修复 strongest cheap comparator、receipt 与 prior-art identity 后复核 PASS（P0/P1/P2=`0/0/0`）。
+- **T003**：自包含授权独立 RML-FSTS Groundwork 专题的 Step 1 检索初筛与 Step 2 全文获取；覆盖面报告后硬停止，不进 Step 3。
 
 ## 未决项
 
-- GW Step 1–3 是否能把 fixed-lag condition-dependence 问题、近期 baseline 与 FSO 迁移证据闭合到 Step 4a？
+- GW Step 1–2 能否形成 ≥5 篇合格 CORE 全文并覆盖 source defect、直接竞品/传统 baseline、FSO 迁移物理三类证据？
+- 用户是否接受 Step 2 覆盖面及关键全文缺口，从而授权未来 Step 3？
 - 若合法进入 Step 4a，0.5–1 天 faithful FSTS defect smoke 是否观察到预注册 lag-ranking crossover / fixed-lag regret？
 
 ## 当前位置
 
-`T002_COMPLETE_VERIFIED`，current terminal=`ONE_DEFECT_REPRODUCTION_ENTRY_READY_FOR_GW_STEP1`，V003 PASS。下一对话只允许重读 `stages/groundwork.md` 后从 RML-FSTS research object 的 GW Step 1 启动；不得从本专题直接实现、仿真或运行 smoke。
+`T003_DISPATCH_READY`，current terminal=`ONE_DEFECT_REPRODUCTION_ENTRY_READY_FOR_GW_STEP1`，V003 PASS。下一执行对话只允许按 T003 新建独立专题并完成 GW Step 1–2；覆盖面报告后停止，禁止 Step 3 及任何 smoke/实现/仿真。

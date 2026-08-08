@@ -55,8 +55,8 @@ topics:
     title: Ch4 参考方法扩展
     status: active
     created: "2026-08-08"
-    last_updated: "2026-08-08（D004/V003：RML-FSTS 唯一 defect-reproduction GW 入口；独立验收 PASS）"
-    description: "星地相干 FSO 总伞下的 Ch4 方法生产专题。T002 用满 4/4 定向 query 并比较 RML-FSTS 与 BUM-CMA；D004 唯一选择 RML-FSTS fixed-lag/BL condition-dependence research object，terminal=ONE_DEFECT_REPRODUCTION_ENTRY_READY_FOR_GW_STEP1，V003 PASS（P0/P1/P2=0/0/0），entry screening 后 object/package failure 仍为 0/0。下一对话须重读 groundwork 并从 Step 1 启动；本轮未实现、仿真、运行 smoke 或进入 Groundwork。"
+    last_updated: "2026-08-08（T003_DISPATCH_READY：RML-FSTS 独立 Groundwork Step 1–2）"
+    description: "星地相干 FSO 总伞下的 Ch4 方法生产控制专题。D004/V003 已选择 RML-FSTS fixed-lag/BL condition-dependence 为唯一 defect-reproduction GW 入口，entry screening 后 object/package failure 仍为 0/0。current=T003_DISPATCH_READY：下一执行对话查重后创建独立 RML-FSTS Groundwork 专题，只完成 Step 1–2 与覆盖面报告；禁止 Step 3/3.5/4a、smoke、实现或仿真。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承方法生产教训、dead-end inventory、章节槽位规则与历史证据
