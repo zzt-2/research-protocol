@@ -28,10 +28,10 @@ topics:
 
   - slug: 2026-07-20-research-direction-lab-system
     title: Research Direction Lab 完整体系设计
-    status: active
+    status: dormant
     created: "2026-07-20"
-    last_updated: "2026-08-07（CP023/D040/V023：T010三卡完成，CODED_CHAIN_ASSET_BLOCKED，独立终验PASS）"
-    description: "长期研究探索体系唯一流程 owner。Ch3 CCISP 与 Ch5 scheduling 已具方法 authority；Ch4 仍开放。T010 已完整构造三张 decoder-feedback 卡，但现有 coded chain 缺 extrinsic/syndrome/callback 多项新基础设施，survivor=0；当前只等待用户战略选择，不自动进 GW、实现或仿真。"
+    last_updated: "2026-08-08（CP024/D041：旧system专题转dormant，Ch4方法生产迁入独立reference-method extension专题）"
+    description: "长期研究探索体系历史与方法论 owner，现已 dormant。Task 1-10、长程复盘、CCISP/Ch5 authority、T010 blocker 与全部 dead-end 证据保留；不再新增 S### 或承载科学执行。Ch4 现行入口已迁入 2026-08-08-ch4-reference-method-extension。"
     depends_on:
       - slug: framework-evolution
         reason: 继承 R002 Direction Lab 设计和唯一拥有者原则
@@ -50,6 +50,21 @@ topics:
       - projects/thesis-fso/direction-lab/harvest/region-calibrated-ccisp-authority-package.md
       - projects/simulation/figures/ccisp_region_calibration_authority_reconciliation.svg
       - projects/simulation/results/2a_region_calibration_authority_reconciliation/
+
+  - slug: 2026-08-08-ch4-reference-method-extension
+    title: Ch4 参考方法扩展
+    status: active
+    created: "2026-08-08"
+    last_updated: "2026-08-08（V001：防偏合同与Skill最小补丁独立验收PASS，等待最多3个reference baseline/research object入口选择）"
+    description: "星地相干 FSO 总伞下的 Ch4 方法生产专题。从可复现 reference baseline、observed defect、one deployable action 与 fair comparator 出发；supporting/reject 不关闭槽位。当前只做最多3个research object/reference baseline入口选择，不直接检索、实现或仿真。"
+    depends_on:
+      - slug: 2026-07-20-research-direction-lab-system
+        reason: 继承方法生产教训、dead-end inventory、章节槽位规则与历史证据
+      - slug: 2026-07-09-thesis-writing
+        reason: Ch4 方法章目标、Ch3 CCISP 与 Ch5 scheduling authority 的论文结构约束
+    conflicts_with: []
+    produces:
+      - .sessions/2026-08-08-ch4-reference-method-extension/
 
   - slug: 2026-08-06-oversampled-coherent-sync-groundwork
     title: 过采样相干 FSO 联合同步前端 Groundwork

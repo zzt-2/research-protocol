@@ -4,14 +4,15 @@
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 36
+  control_epoch: 37
   role: RDL_MASTER
   mission: 设计并验证轻量方法构造车道，使 Ch4/Ch5 优先形成学位论文级可命名方法
-  active_lane: CH4_DECODER_FEEDBACK_CODED_CHAIN_ASSET_BLOCKED
-  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D040
-  decision_gate: T010三卡均需至少两项新基础设施；survivor=0；Ch4槽位继续开放
+  active_lane: DORMANT_REFERENCE_METHOD_HANDOFF_COMPLETE
+  authority_pointer: .sessions/2026-07-20-research-direction-lab-system/decisions.md#D041
+  decision_gate: 旧system专题停止膨胀；Ch4方法生产转入独立reference-method extension专题
   allowed_actions:
-    - STRATEGIC_USER_DECISION
+    - HISTORY_AND_DEAD_END_READ_ONLY
+    - NEW_TOPIC_RECOVERY
   forbidden_actions:
     - OLD_CAMPAIGN_REOPEN
     - COMMON_PARAMS_MUTATION
@@ -25,13 +26,15 @@ rdl_control:
     - DECODER_FEEDBACK_GW_OR_EXPERIMENT
     - CODED_CHAIN_INFRASTRUCTURE_BUILD_WITHOUT_SCOPE_CHANGE
     - AUTOMATIC_GW_ENTRY
+    - NEW_SCIENCE_EXECUTION_IN_THIS_TOPIC
+    - NEW_S_SESSION_IN_THIS_TOPIC
   mission_log_ref: .sessions/2026-07-20-research-direction-lab-system/mission-log.md
-  mission_checkpoint: CP023
-  next_legal_action: 等待用户显式选择扩大coded-chain基础设施范围或更换candidate source/research object
+  mission_checkpoint: CP024
+  next_legal_action: 从新专题H001恢复，只做最多3个research object/reference baseline的入口选择
 ```
 <!-- RDL-CONTROL:END -->
 
-> 状态: active | 创建: 2026-07-20 | 最后更新: 2026-08-07（CP023/D040/V023：T010三卡完成，coded-chain asset blocked）
+> 状态: dormant | 创建: 2026-07-20 | 最后更新: 2026-08-08（CP024/D041：转入独立 Ch4 reference-method extension 专题）
 
 ## 专题信息
 
@@ -101,6 +104,8 @@ rdl_control:
   显式映射的 task-local equivalent（如 `THESIS_ENGINEERING_METHOD_READY`）关闭方法槽位，
   `SUPPORTING_ONLY/REJECT` 必须记 `mission_method_delta=NONE` 并轮换，不再为同一资产追加 authority/package
   closure。当前只准备 decoder/soft-feedback CCISP 的 design-only T010，不检索、不进 GW、不实现或仿真。
+- 基于 D041，旧 system 专题停止继续承载科学执行与新增 S###，状态转为 dormant；Ch4 方法生产转入
+  `2026-08-08-ch4-reference-method-extension`，本专题只保留历史、方法论和 dead-end 只读证据。
 
 ### 明确不含
 
@@ -111,6 +116,11 @@ rdl_control:
 - 不批量迁移或删除旧科学目录；新布局渐进采用，旧历史继续 append-only 保留。
 
 ### 范围变更记录
+
+- **[2026-08-08] D041**：停止旧 system 专题膨胀，把 Ch4 方法生产转入独立 reference-method extension 专题。
+  - 原因：旧专题已有 19 个 S###，且近期多轮在 supporting 审计、概念期基础设施预杀与同一 caller 邻域打转；用户要求把防偏机制持久化。
+  - 新范围：旧专题只读 dormant；新专题只从可复现 reference baseline、observed defect、one deployable action 与 fair comparator 出发。
+  - 影响的未决项：T010 blocker 与所有旧 dead end 保留；下一轮只在新专题比较最多 3 个 research object / reference baseline，不直接检索、实现或仿真。
 
 - **[2026-08-07] D039**：从 2A supporting terminal 切换为 Ch4 正向方法构造入口。
   - 原因：用户指出“这种玩意不太能写，还得是方法”；CP021 虽为可信审计，却没有方法增量。
@@ -262,6 +272,8 @@ rdl_control:
 - **D038 2A terminal**：P02 runtime decide 没有 region 输入，只有全局 `ref_snr_db=11`；六项语义门仅
   truth-not-in-decide 一项 PASS。P01/P02 可作 supporting adapter/tuning boundary，不能形成 Ch4 独立方法；
   T004 REJECT 与无合法 held-out 结果保持不变。唯一 terminal=`SUPPORTING_ONLY`。
+- **D041 专题迁移**：旧 RDL system 专题转 dormant；Ch4 的现行方法生产 owner 为
+  `2026-08-08-ch4-reference-method-extension`。本专题不得再新增 S### 或启动科学任务。
 
 ## 进展线索
 
@@ -337,6 +349,8 @@ rdl_control:
   extrinsic、syndrome/CRC 因果状态和 decoder→CPR/recovery callback 均属新基础设施，三卡都未过
   readiness 硬门，survivor=0，terminal=`CODED_CHAIN_ASSET_BLOCKED`；fresh-context verifier 复验
   PASS（P0/P1/P2=0/0/0）。
+- **D041 / CP024**：用户批准把防偏合同持久化；旧 system 专题转 dormant，不建 S020。新建 Ch4
+  reference-method extension 专题，冻结入口、预算、每对象两包与两对象失败的停止条件。
 
 ## 未决项
 
@@ -363,7 +377,6 @@ lightweight persistence。六案审计重放、自动测试、个人 Skill 同�
 终验均 PASS（P0/P1/P2=0）；既有科学 verdict、dormant longitudinal topic 与
 formal owner 未变。
 
-**2026-08-07 当前入口**：`CH4_DECODER_FEEDBACK_CODED_CHAIN_ASSET_BLOCKED`（epoch 36 / CP023 /
-D040 / V023 PASS）。T010 已完成三张卡且 survivor=0；Ch4 方法槽位仍为空。下一动作只等待用户显式
-决定是扩大 coded-chain 基础设施范围，还是更换 candidate source/research object；不得自动检索、进入 GW、
-实现或仿真。
+**2026-08-08 当前入口**：本专题已 `dormant`（epoch 37 / CP024 / D041）。现行入口迁至
+`.sessions/2026-08-08-ch4-reference-method-extension/H001-reference-method-entry-selection.md`；旧专题只读，
+不再新增 S###、检索、进入 GW、实现或仿真。

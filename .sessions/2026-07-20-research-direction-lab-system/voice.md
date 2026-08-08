@@ -148,3 +148,7 @@
 
 [转述:执行提示词] “本轮只做本地 decoder-feedback 方法构造预检，不检索、不进入 GW、不实现、不仿真。” → D040
 [转述:执行提示词] “必须完成三张 prototype/concept card，最多保留一个 survivor，并由 fresh-context verifier 独立终验。” → D040
+
+## 2026-08-08
+
+- “行？可以。然后的问题就是怎么保证后续执行不偏离，你得记好了？” → D041

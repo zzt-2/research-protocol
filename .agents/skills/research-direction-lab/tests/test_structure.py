@@ -334,6 +334,24 @@ def test_supporting_material_does_not_close_an_open_method_chapter_slot():
         assert phrase in normalized
 
 
+def test_reference_method_extension_lane_cannot_drift_into_audit_only_work():
+    method = (ROOT / "references/method-production.md").read_text(encoding="utf-8")
+    normalized = " ".join(method.split())
+
+    for phrase in (
+        "reproducible reference baseline and an observed defect",
+        "do not start from supporting leftovers",
+        "exact existing-action collision",
+        "must enter the fair comparator or experiment",
+        "Infrastructure cost is a budget gate, not a scientific Kill",
+        "3–7 day minimal testbed",
+        "at most two method-bearing packages per research object",
+        "two mechanism-distinct research objects still produce no method delta",
+        "strategic scope decision",
+    ):
+        assert phrase in normalized
+
+
 def test_long_horizon_persistence_has_a_small_current_snapshot_and_detail_boundary():
     control = (ROOT / "references/long-horizon-control.md").read_text(encoding="utf-8")
     normalized = " ".join(control.split())

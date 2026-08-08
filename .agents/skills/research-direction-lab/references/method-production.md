@@ -140,6 +140,22 @@ candidate-specific formalization task.
 
 ## Concept construction batch
 
+### Reference-method extension lane
+
+Use this lane when an open chapter slot needs a new method rather than another
+audit. Keep three rules:
+
+1. Start from a reproducible reference baseline and an observed defect; do not
+   start from supporting leftovers or repeatedly repackage them.
+2. Unless an exact existing-action collision is demonstrated, the strongest
+   cheap alternative must enter the fair comparator or experiment instead of
+   killing the construct by imagination. Infrastructure cost is a budget gate,
+   not a scientific Kill; one selected winner may receive a 3–7 day minimal
+   testbed authorization.
+3. Run at most two method-bearing packages per research object. If two
+   mechanism-distinct research objects still produce no method delta, stop for
+   a strategic scope decision rather than continuing local repair.
+
 Construct before closing evidence. Produce 3–5 mechanism-distinct prototype
 cards before broad search, testbed preflight, implementation, or experiment.
 Each card contains:

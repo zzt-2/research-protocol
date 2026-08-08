@@ -363,3 +363,19 @@
 - weight: UNDERWEIGHT
 - drift: ALIGNED
 - next_action: 等待用户显式选择是否扩大 coded-chain 基础设施范围或更换 candidate source/research object；不得自动检索、进 GW、实现或仿真
+
+## CP024 — 2026-08-08
+
+- event: 旧 system 专题停止膨胀，Ch4 方法生产迁入独立 reference-method extension 专题
+- evidence: D041；用户要求持久记录防偏合同；三路独立过程/包装/范围审查与交叉复核
+- formal_science_disposition: NO_CHANGE_ALL_PRIOR_VERDICTS_PRESERVED
+- mission_method_delta: NONE
+- thesis_method_disposition: CH4_METHOD_SLOT_OPEN_NEW_TOPIC_ENTRY_SELECTION
+- intent: REFERENCE_METHOD_ENTRY_SELECTION
+- mechanism_family: UNSELECTED_REFERENCE_METHOD_EXTENSION
+- same_axis_streak: 0
+- deterministic_repair_count: 0
+- no_method_streak: 2
+- weight: UNDERWEIGHT
+- drift: CORRECTED_BY_SCOPE_AND_OWNER_SPLIT
+- next_action: 从新专题H001恢复；只比较最多3个research object/reference baseline并推荐至多1个，不直接检索、实现或仿真

@@ -1532,3 +1532,37 @@ Ch3 CCISP、Ch5 scheduling authority、D038 的 2A supporting terminal 与所有
 ### 来源
 
 S019；T010；V023；`projects/thesis-fso/direction-lab/harvest/ch4-decoder-feedback-method-preflight.md`。
+
+## D041: 旧 system 专题转 dormant，Ch4 方法生产迁入 reference-method extension
+
+> status: active
+> date: 2026-08-08
+> 取代：无
+> 扩展：D039、D040（保留槽位与 blocker 事实，只改变现行方法生产入口）
+> 被取代：无
+> 依据：critic: `.sessions/2026-08-08-ch4-reference-method-extension/S001-scope-and-execution-contract.md` + 用户原话: `voice.md` 2026-08-08
+> 触发原话：见 `voice.md` 2026-08-08
+
+### 决策
+
+旧 `2026-07-20-research-direction-lab-system` 专题转为 dormant，不再新增 S### 或承载科学执行；Ch4 方法生产迁入独立专题 `2026-08-08-ch4-reference-method-extension`。新专题从可复现 reference baseline、observed defect、one deployable action 与 fair comparator 出发，只把 3–7 天最小 testbed 预算给入口门通过的单一胜者。
+
+### 理由
+
+本专题已有 19 个 S###，继续追加会违反 session inflation guard。近期工作又反复把 supporting 审计、概念期基础设施 hard kill 和同一 caller 邻域候选轮换当作方法进度。CCISP 的成功条件表明，更直接的路径是先锁定可复现 baseline 与实际缺陷，再构造一个真实动作并用实验处置廉价替代。
+
+### 排除的替代方案
+
+- 不把 P1 shared-M0 reuse 恢复为 Ch4 独立方法；
+- 不建设 decoder-feedback coded-chain 基础设施；
+- 不继续包装 `SUPPORTING_ONLY` / `REJECT` 资产；
+- 不立即全领域 pivot；先在 coherent FSO 总伞内改变 research object；
+- 不允许单一对象无限重试：每对象最多 2 个 method-bearing package，两个机制不同对象均无方法增量后必须回用户决策。
+
+### 影响范围
+
+RDL foreground control 升至 epoch 37 / CP024 并进入 dormant。旧 D001–D040、V001–V023、R/H/T 与科学事实全部保留。新专题建立独立 topic-index/S001/D001/H001/voice，下一对话只做最多 3 个 research object / reference baseline 的入口选择，不直接检索、实现或仿真。`SUPPORTING_ONLY` / `REJECT` 继续不关闭 Ch4。
+
+### 来源
+
+用户批准；2026-08-08 三路 subagent 发散与交叉复核；本专题 inflation check（19 个 S###）。
