@@ -1,6 +1,6 @@
 # Topic Index: Ch4 参考方法扩展
 
-> 状态: active | 创建: 2026-08-08 | 最后更新: 2026-08-08（V001：防偏合同与 Skill 补丁独立验收 PASS）
+> 状态: active | 创建: 2026-08-08 | 最后更新: 2026-08-08（T001：reference-method 入口选择任务已准备）
 
 ## 专题信息
 
@@ -51,6 +51,7 @@
 - **S001 / D001**：冻结 reference-method extension 的目标、入口边界、预算与停止条件。
 - **H001**：交接下一对话只做最多 3 个 research object / reference baseline 的入口选择。
 - **V001**：fresh-context verifier 12/12 PASS，P0/P1/P2=0/0/0；Skill 完整回归 116 passed, 1 skipped。
+- **T001**：自包含入口选择任务；最多比较 3 个机制不同对象、推荐至多 1 个，不检索、不实现、不仿真。
 
 ## 未决项
 
