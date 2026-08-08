@@ -2,6 +2,7 @@
 
 > 2026-08-08 | 立项 | 完成
 > 2026-08-08 续接 | T001 回传纠偏 | T002 待派发
+> 2026-08-08 续接 | T002 回传 | 入口裁决完成，V003 PASS
 
 ## 目标
 
@@ -17,16 +18,24 @@ T001 回传后，主控复核发现规则本身造成过早停止：G3 允许低
 
 用户批准纠偏后，当前范围改为一次有界 candidate-source expansion。T002 只从外部 reference baseline 中比较 2–4 个机制不同对象，最多选 1 个进入“以 defect reproduction 为目标的 Groundwork”。入口期允许用“外部已发表 defect + FSO 迁移物理机制 + 0.5–1 天可证伪 smoke 合同”通过准备门；不在 T002 内真正运行 smoke。下一轮仍须从 GW Step 1 开始，不能把预注册 smoke 提前到 Step 3/4a 之前。
 
+T002 已完成 4/4 组定向 query 与两个机制不同候选的入口比较。C1 RML-FSTS 以 2023 FSTS 的 fixed lag/`BL` 条件依赖为 source defect，八门全过并成为唯一 `READY_FOR_GW_STEP1_DEFECT_REPRODUCTION` 入口；C2 BUM-CMA 因 weak-branch gradient defect 未被论文支持且 faithful smoke/testbed 未闭合而不入场。独立 verifier 初审要求把廉价替代从 global fixed lag 收紧为 modulation/TS/power-conditioned single-lag lookup，且它仍失败才允许 smoke PASS；该修复不改变入口层级。未来 smoke 只复现 fixed-lag defect，不测试 RML-FSTS 方法；本轮未实现、仿真、运行 smoke 或进入 Groundwork。
+
+T002 是 entry screening，当前 object/package failure 计数仍为 `0/0`。只有下一轮从 GW Step 1 合法启动、Step 1–3 通过并在 Step 4a evidence-valid 执行 smoke 后才开始计数。
+
+V003 fresh-context verifier 初审 `PARTIAL`，发现 cheap comparator 过弱、query receipt 未持久化、prior-art identity 缺失；主线程逐项修复后复核 `PASS`，P0/P1/P2=`0/0/0`。最终接受 RML-FSTS 唯一入口与 terminal，未留下修复项。
+
 ## 决策引用
 
 - D001：冻结 Ch4 reference-method extension 执行合同（新建）。
 - D002：本地入口池无直接 survivor；候选事实保留，战略耗尽强度被 D003 取代。
 - D003：入口审计不计对象失败，改设 defect-reproduction gate（新建）。
+- D004：选择 RML-FSTS 作为唯一 defect-reproduction Groundwork 入口（新建）。
+- V003：独立 verifier 初审 PARTIAL、修复后 PASS，P0/P1/P2=`0/0/0`。
 
 ## 范围确认
 
-- 本轮是否在 scope boundary 内：是（见 D003 scope change；只准备 T002，不进入科学执行）。
+- 本轮是否在 scope boundary 内：是（执行 D003/T002；只做入口筛选与合同冻结，不进入科学执行）。
 
 ## 后续
 
-下一对话执行 T002：允许一次有界检索与本地索引复用，只做 reference-source expansion 和未来 defect-smoke 合同入口选择；不实现、不仿真、不进入 Groundwork。若选中入口，再开新对话按 `stages/groundwork.md` 从 Step 1 推进。
+下一对话完整重读 `stages/groundwork.md`，以 RML-FSTS fixed-lag/`BL` condition-dependence research object 从 GW Step 1 推进。预注册 defect smoke 必须等 Step 1–3 完成并合法进入 Step 4a 后才能运行。

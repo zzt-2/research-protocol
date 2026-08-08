@@ -72,3 +72,67 @@ Fresh-context verifier 初审：`REJECT`，P0/P1/P2=`1/2/0`；修正项为撤销
 ### 结论
 
 PASS
+
+## V003: reference-source expansion 与 defect-reproduction 入口独立验收
+
+> date: 2026-08-08
+> 关联：S001 / R002 / D004 / T002
+
+### 验证项
+
+- [x] 恢复与计数：[重读 T002、topic、D001–D004、R001/H002 与 method-production lane] → D002 supersession 边界正确；T001/T002 均为 entry screening，object/package failure=`0/0`。
+- [x] 检索 receipt：[核四个 cache JSON、sidecar、SHA256 与 mtime] → 本地优先、4/4 query、requested/actual/error/raw/dedup/kept 与缓存路径齐全；修复未重跑 query。
+- [x] 候选与 E1–E8：[逐项核 RML-FSTS/BUM-CMA、共享论文全文/精读笔记、历史 collision] → 两个机制不同候选；C1 八门全过，C2 E2/E4/E7/E8 FAIL。
+- [x] 廉价替代与 claim ceiling：[初审提出 P1/P2 后复核] → conditioned single-lag lookup 是最强 cheap comparator，且它仍失败才可 smoke PASS；Yu et al. TVT 2023 identity 补齐，prior art 只限缩 claim。
+- [x] 范围纪律：[核 R002/D004/H003/current views 与 Git diff] → terminal 仅为 GW Step 1 defect-reproduction 入口；未写成 defect/Q#/Go/METHOD_SIGNAL/方法，未实现、仿真、运行 smoke 或进入 GW。
+- [x] 受保护日志：[SHA256/length/mtime 与启动基线逐项比对] → 四个 `p05_run*.log` 完全一致、未暂存、未进入 diff。
+
+### 证据
+
+Fresh-context verifier 初审：
+
+```text
+结论=PARTIAL
+P0/P1/P2=0/1/2
+P1: global fixed lag 不是最强廉价替代，C1 E4/E7 暂不成立
+P2: raw/dedup/source-error receipt 未持久化
+P2: external multi-lag prior-art claim 缺 identity
+```
+
+修复后同一 verifier fresh-context 复核：
+
+```text
+结论=PASS
+P0/P1/P2=0/0/0
+remaining_findings=none
+terminal=ONE_DEFECT_REPRODUCTION_ENTRY_READY_FOR_GW_STEP1 accepted
+unique_entry=RML-FSTS accepted
+object/package failure=0/0
+```
+
+确定性 receipt 复核：
+
+```text
+receipt_json_and_cache_hashes=PASS
+Q1 sha256=5D93B30A... kept=0
+Q2 sha256=DF29DBC3... kept=7
+Q3 sha256=55D58532... kept=1
+Q4 sha256=9C131227... kept=12
+query_rerun=false
+```
+
+Git 与日志复核：
+
+```text
+git diff --check -> exit 0
+git diff --cached --name-only -> [empty]
+R001/H002 historical diff -> exit 0
+p05_run.log  length=641  sha256=7843B048... mtime=2026-07-30T13:53:16.1107978Z
+p05_run2.log length=2417 sha256=735E4650... mtime=2026-07-30T14:08:08.3977355Z
+p05_run3.log length=929  sha256=C76887C6... mtime=2026-07-30T14:21:41.1167560Z
+p05_run4.log length=1430 sha256=95A1D184... mtime=2026-07-30T14:39:58.3099005Z
+```
+
+### 结论
+
+PASS。P0/P1/P2=`0/0/0`。接受 terminal=`ONE_DEFECT_REPRODUCTION_ENTRY_READY_FOR_GW_STEP1` 与唯一 RML-FSTS 入口；该入口不是 defect、Q#、Go、METHOD_SIGNAL 或方法，下一动作只能从 GW Step 1 开始。

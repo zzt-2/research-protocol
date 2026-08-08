@@ -1,6 +1,6 @@
 # Topic Index: Ch4 参考方法扩展
 
-> 状态: active | 创建: 2026-08-08 | 最后更新: 2026-08-08（D003：修正入口计数与 defect gate；T002 待派发）
+> 状态: active | 创建: 2026-08-08 | 最后更新: 2026-08-08（D004/V003：RML-FSTS 唯一 defect-reproduction 入口，独立验收 PASS）
 
 ## 专题信息
 
@@ -12,7 +12,7 @@
 
 **原始目标**：在星地相干 FSO 总伞下，为 Ch4 产出一个真实方法章；从可复现 reference baseline 出发，经 observed defect、one deployable action、fair comparator 与 bounded testbed，形成完整方法包。
 
-**当前范围**：terminal=`LOCAL_ENTRY_POOL_EXHAUSTED_DEFECT_REPRODUCTION_GATE_REQUIRED`。允许执行一次有界 candidate-source expansion：复用本地索引并做受限检索，比较 2–4 个机制不同外部 reference baseline，最多推荐 1 个 `READY_FOR_GW_STEP1_DEFECT_REPRODUCTION`。本轮不实现、不仿真、不进入 Groundwork；选中后下一轮必须按 `stages/groundwork.md` 从 Step 1 开始，预注册 smoke 仅在 Step 1–3 通过并进入 Step 4a 后运行。
+**当前范围**：terminal=`ONE_DEFECT_REPRODUCTION_ENTRY_READY_FOR_GW_STEP1`。T002 已比较两个机制不同外部 reference baseline，唯一选择 RML-FSTS fixed-lag/`BL` condition-dependence research object。下一对话必须按 `stages/groundwork.md` 从 Step 1 开始；预注册 smoke 只复现 defect，不测试方法，且仅在 Step 1–3 通过并进入 Step 4a 后运行。本轮不实现、不仿真、不运行 smoke、不进入 Groundwork。
 
 **明确不含**：
 
@@ -52,6 +52,9 @@
 2. P1 可作为 Ch5 内部数据流优化素材，但不占用本专题的 Ch4 方法对象名额。
 3. R001/D002 的事实边界保留：Paillier FG-DRC exact collision 于旧 K01 REJECT，LBS-RDE 缺星地 FSO defect；D003 只取代“两个对象已失败 / 必须战略耗尽”的强度。
 4. 邻近 prior art 只限制 claim，不得扩张成整族禁令；exact object/action collision（如 K01）仍可在入口期拒绝。
+5. RML-FSTS 入口的 source defect 仅是 fixed lag/`BL` 对调制、训练长度和低功率条件的依赖；目标星地 lag-ranking crossover 仍为待证伪假设，不能写成已观察事实。
+6. C2 BUM-CMA 的 weak-branch gradient pollution 缺 published defect 与 faithful smoke，不得并行启动或用物理推断补 E2。
+7. RML-FSTS future smoke 的最强廉价替代是 dev-frozen modulation/TS/receiver-power-conditioned single-lag lookup；论文 fixed `BL` 或较弱 global lag 单独失败不能过门，conditioned lookup 若在 MDE 内解决问题则退出。
 
 ## 进展线索
 
@@ -64,12 +67,15 @@
 - **H002**：历史交接；其“立即战略决定”current action 已由 D003 取代，候选事实附录仍有效。
 - **D003**：纠正 T001 G3 与停止计数；terminal 改为 `LOCAL_ENTRY_POOL_EXHAUSTED_DEFECT_REPRODUCTION_GATE_REQUIRED`。
 - **T002**：允许一次有界 candidate-source expansion，选择至多一个 `READY_FOR_GW_STEP1_DEFECT_REPRODUCTION`；预留 R002/D004/V003/H003。
+- **R002 / D004**：4/4 组定向 query 后比较 RML-FSTS 与 BUM-CMA；前者 E1–E8 全过，成为唯一 GW Step 1 defect-reproduction 入口；后者因 E2/E4/E7/E8 失败不入场。entry screening 后计数仍为 `0/0`。
+- **H003**：交接下一对话先重读 `stages/groundwork.md`，只从 RML-FSTS research object 的 GW Step 1 启动；禁止直接跑 smoke。
+- **V003**：fresh-context verifier 初审 PARTIAL（0/1/2），修复 strongest cheap comparator、receipt 与 prior-art identity 后复核 PASS（P0/P1/P2=`0/0/0`）。
 
 ## 未决项
 
-- 2–4 个扩展外部 reference baseline 中，是否存在一个满足 defect-reproduction 准备门的对象？
-- 若有，后续 Groundwork 如何从 Step 1 推进，并在 Step 4a 以 0.5–1 天 smoke 证伪目标 FSO defect？
+- GW Step 1–3 是否能把 fixed-lag condition-dependence 问题、近期 baseline 与 FSO 迁移证据闭合到 Step 4a？
+- 若合法进入 Step 4a，0.5–1 天 faithful FSTS defect smoke 是否观察到预注册 lag-ranking crossover / fixed-lag regret？
 
 ## 当前位置
 
-`T002_DISPATCH_READY`，current terminal=`LOCAL_ENTRY_POOL_EXHAUSTED_DEFECT_REPRODUCTION_GATE_REQUIRED`。下一对话只执行 T002 的 reference-source expansion 与 smoke 合同入口选择；不得实现、仿真或进入 Groundwork。
+`T002_COMPLETE_VERIFIED`，current terminal=`ONE_DEFECT_REPRODUCTION_ENTRY_READY_FOR_GW_STEP1`，V003 PASS。下一对话只允许重读 `stages/groundwork.md` 后从 RML-FSTS research object 的 GW Step 1 启动；不得从本专题直接实现、仿真或运行 smoke。

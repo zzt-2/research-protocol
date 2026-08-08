@@ -99,3 +99,38 @@ T001 的 G3 一方面允许“低成本、可证伪的 defect reproduction”，
 ### 来源
 
 S001 规则纠偏；R001/V002 事实边界；用户批准继续。
+
+## D004: 选择 RML-FSTS 作为唯一 defect-reproduction Groundwork 入口
+
+> status: active
+> date: 2026-08-08
+> 取代：无（执行 D003 授权的有界入口裁决，不改写 D003）
+> 被取代：无
+> 依据：调研: R002 + critic: 两个 fresh-context science agent 的 source/physics/collision 审查 + 验证: V003（初审 PARTIAL，修复后 PASS，P0/P1/P2=0/0/0）
+> 触发原话: 无（技术推导）
+
+### 决策
+
+terminal=`ONE_DEFECT_REPRODUCTION_ENTRY_READY_FOR_GW_STEP1`。唯一选择 C1 RML-FSTS research object：以 Wang et al. 2023 FSTS fixed lag/`BL` 的条件依赖与低功率退化为 source-domain defect，下一对话从 Groundwork Step 1 启动 defect-reproduction；C2 BUM-CMA 因 source-domain weak-branch gradient defect `UNVERIFIED` 不入场。
+
+该入口不是 Q#、Go、METHOD_SIGNAL、defect 成立、方法成立或章节完成；本轮 `mission_method_delta=NONE`，object/package failure 计数保持 `0/0`。
+
+### 理由
+
+C1 有具体 2023 主流 reference、本地全文精读证据、可证伪的 FSO transfer hypothesis、0.5–1 天 defect-only smoke 合同、一个 receiver-visible future-action identity、无 exact historical collision、可辨认的章节路径和 3–7 天条件预算。smoke 的最强廉价替代冻结为 modulation/TS length/receiver-power-conditioned single-lag lookup；只有该 lookup 在同一可见条件内仍留下超 MDE regret 才可 PASS。C2 虽有 2023 JLT baseline 与多孔径 FSO 迁移路径，但论文没有证明“弱分支污染固定步长 CMA gradient”，且当前无 0.5–1 天 faithful testbed；不能用推断填补 E2/E4。
+
+### 排除的替代方案
+
+- 不选 C2 BUM-CMA：E2/E4/E7/E8 失败；P05/C15 的 confidence/fade gating 还形成高邻近度，未来 claim 区分度不足。
+- 不恢复 Paillier/K01、B10 pilot-RLS、B3-Q2 Doppler-rate、C3/P09 adaptive CPR window 或合同所列其他 exact object。
+- 不把 multi-lag CFO 的邻域 prior art 当整族禁令；它只把未来 claim 限定为 FSTS 特定、湍流/低功率条件下的 receiver-visible reliability fusion。
+- 不在本轮运行 smoke 或测试未来 RML-FSTS action；预注册 smoke 只复现 fixed-lag defect，且须在下一对话完成 GW Step 1–3 后才能进入 Step 4a。
+- 不用较弱的 global fixed lag 制造 headroom：known modulation、TS length 与 receiver-visible received-power 必须进入 dev-frozen conditioned single-lag cheap comparator；它若在 MDE 内解决问题，则 future multi-lag action 不得晋级。
+
+### 影响范围
+
+新增 R002 与 H003，追加 V003，更新 S001、topic-index 与 registry current view。D001–D003、R001/V002/H002 历史保留；四个 `p05_run*.log`、科学代码、Skill、旧 dormant topic 与正式论文不变。
+
+### 来源
+
+S001 / T002 / R002；两个 fresh-context science agent 的独立 source 与机制审查。
