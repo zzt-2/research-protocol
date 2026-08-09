@@ -2,6 +2,7 @@
 
 > 2026-08-09 | Groundwork Step 3.5 | IN_PROGRESS
 > 2026-08-09 续接 | Groundwork Step 3.5 | EVIDENCE_BLOCKED
+> 2026-08-09 主控接收 | Groundwork Step 3.5 | PROVISIONAL_SURVIVOR
 
 ## 目标
 
@@ -20,12 +21,16 @@
 - R004/D007 将 Step 3.5 终止为 **证据阻塞**：qualified evidence 未确认 exact collision 或 cheap lookup 等价，但 8 项关键全文不可得，不能闭合 novelty/competition boundary，Step 4a 不开放。
 - T010/V004 fresh-context 独立终验 10/10 gates PASS，P0/P1/P2=`0/0/0`；唯一合法 terminal=`EVIDENCE_BLOCKED`，Step 4a=`NO ENTRY`。
 - 四个 `p05_run*.log` 的 size/mtime/SHA256 与启动基线一致，始终未跟踪、未暂存。
+- 主控接收审查发现 D007/V004 terminal 过严：框架三轮上限不要求所有候选全文齐备；8 项也不是等强 exact blocker。
+- 共享 canonical 已有 Optics Communications 130981 全文与 read-note，执行阶段因只查 worktree stale metadata 误报 unavailable；正文排除 condition→lag/`B_L`/window collision。
+- D008/V005 将 Q1 修订为带全文限制的 provisional survivor；当前只开放后续 Step 4a 讨论入口，本轮仍未执行 Step 4a/实验。
 
 ## 决策引用
 
 - D006：仅将当前范围扩展到 mandatory Step 3.5，并在 canonical terminal 停止（新建）。
 - D007：Step 3.5 终止为证据阻塞且不开放 Step 4a（新建）。
 - V004：Step 3.5 独立终验 PASS，确认唯一 terminal 与提交边界。
+- D008/V005：取代 D007/V004 的 terminal 科学语义；保留其机械证据与检索事实。
 
 ## 范围确认
 
@@ -33,4 +38,4 @@
 
 ## 后续
 
-V004 已 PASS；本轮只剩统一提交一次。下一科学动作仅为获得关键一手全文后重开 Step 3.5 action-level 裁决；不得进入 Step 4a。
+主控接收修订已完成。下一科学动作是用户授权后在新对话只执行 Step 4a feasibility；必须携带 cheap conditioned single-lag comparator 与全文限制，不得把 provisional survivor 当 Go。

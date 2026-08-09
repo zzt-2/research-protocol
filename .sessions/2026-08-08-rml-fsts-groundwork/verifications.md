@@ -99,3 +99,30 @@ Verifier 一度将 5 个 `cpython-312.pyc` 的“存在”初判为 P1；独立�
 ### 结论
 
 PASS。唯一证据支持的 Step 3.5 terminal 是 `EVIDENCE_BLOCKED`；Step 4a=`NO ENTRY`。允许把本轮预定证据、current views 与 verifier log 一次性提交；不得暂存四个 p05 日志，不得 push。下一科学动作仅限取得一个或多个未决一手全文后，重开 Step 3.5 action-level 裁决。
+
+## V005: 主控接收科学语义与共享 canonical 复核
+
+> status: PASS
+> date: 2026-08-09
+> 关联：R004 / D008 / H005
+> verifier: fresh-context `/root/step35_science_critic` + `/root/step35_blocker_feasibility`；机械一致性参考 `/root/step35_integrity_audit`
+
+### 验证项
+
+- [x] R1/R2/引用链/timeout/三轮止损：机械数字与 receipts 一致，V004 的完整性结论保留。
+- [x] canonical gate：`gw-supplement.md` 允许三轮上限后记录未覆盖方向；不要求所有候选全文齐备，D007 的 NO ENTRY 无框架依据。
+- [x] shared canonical：130981 PDF/content 实际存在；含 2026-07-04 全文增量核验的有效 read-note 为 `papers/_read_notes/_B5-short-time-spectrum-cfo-increment.md`，DOI 同名旧 note 仍是 stale 下载失败记录；执行 receipt 的 FULLTEXT_UNAVAILABLE 是 stale false negative。
+- [x] action read：130981 是固定 STFT/FFT coarse FOE，received power/FFT points 为评测或离线参数，不是 condition→lag/`B_L`/window selector。
+- [x] blocker 分层：SSRN=高风险 UNKNOWN；ACP=次级 comparator；其余为非阻断任务/条件/架构邻接或 generic prior-art 边界。
+- [x] claim boundary：Q1 仅 provisional survivor；不宣称首次、novelty closure、Go、METHOD_SIGNAL 或方法成立。
+
+### 证据
+
+- `stages/gw-supplement.md`“检索充分性判据/不达标时”。
+- 共享 `papers/doi/10.1016_j.optcom.2024.130981/source.pdf`：2,896,299 bytes，SHA256 `2a5728193de8fac0ffbd1c55f60847fe44b9d462c70e13c8325c798c84feefc2`。
+- 共享 `content.md`：38,504 bytes，SHA256 `67fa0ea9f1c8b8c37b48bc87474c4a7d7b565b2ebe3f0c12b44cca9d8aa66ecb`，承重行 47、71–87、127–141。
+- scientific critic 初审：`FAIL, P0/P1/P2=0/2/0`；blocker audit：8 项 blanket block 不成立。
+
+### 结论
+
+PASS。V004 的 receipts/hash/范围一致性仍有效，但其“唯一 terminal=EVIDENCE_BLOCKED / Step 4a NO ENTRY”科学语义被 V005 取代。D008 修订后的唯一当前状态为 provisional survivor with fulltext limitations；Step 4a 可在用户授权的新对话启动。

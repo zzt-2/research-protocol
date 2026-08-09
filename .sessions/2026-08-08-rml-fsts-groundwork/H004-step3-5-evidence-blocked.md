@@ -1,5 +1,7 @@
 # Handoff: RML-FSTS Step 3.5 证据阻塞
 
+> **SUPERSEDED BY D008/V005/H005**：本文件保留执行阶段历史。130981 共享全文漏查且 8 项 blocker 等强分类过严；不得再据本 Handoff 阻断 Step 4a。
+
 > 来源: S003 | 交接目标: 取得关键一手全文后只重开 Step 3.5 action-level 竞争裁决
 > 日期: 2026-08-09
 

@@ -2,7 +2,7 @@
 
 > 独立 owner：`.sessions/2026-08-08-rml-fsts-groundwork/`
 > 研究对象：Wang 2023 FSTS fixed-lag/`BL` condition-dependence
-> 当前记录 Step 1–3 已完成；mandatory Step 3.5 在三轮上限后终止为证据阻塞并由 V004 独立验收，不含 Step 4a、Go/No-Go、METHOD_SIGNAL 或方法实现裁决。
+> 当前记录 Step 1–3.5 已完成；D008/V005 将 Q1 修订为带全文限制的 provisional survivor。不含 Step 4a、Go/No-Go、METHOD_SIGNAL 或方法实现裁决。
 
 ## GW Progress
 
@@ -11,8 +11,8 @@
 | 1 search | ✅ PASS | 2026-08-08 | `a52bb5d6` | R001 + `rml-fsts-step1-search-receipt.json` + 7 query JSON | 允许 Step 2 |
 | 2 acquire | ✅ USER_CONFIRMED | 2026-08-09 | `a52bb5d6` | 5 篇合格 CORE + R002 + coverage/receipt + D003 | 允许 Step 3 |
 | 3 read | ✅ completed | 2026-08-09 | `80c337aa` | 5/5 fresh full-text read + R003 + D005/V003 | D006 已授权 mandatory Step 3.5 |
-| 3.5 supplement | ⛔ EVIDENCE_BLOCKED | 2026-08-09 | V004 PASS | R004/D007/V004 + search/citation/acquisition receipts；三轮上限 | 关键全文不可得；不开放 Step 4a |
-| 4a feasibility | ⬜ NOT_STARTED / NO ENTRY | — | — | — | Step 3.5 未闭合，禁止 |
+| 3.5 supplement | ✅ COMPLETE / PROVISIONAL SURVIVOR | 2026-08-09 | D008/V005 | R004 + search/citation receipts + shared 130981 fulltext；三轮上限 | 带全文限制开放 Step 4a 讨论入口 |
+| 4a feasibility | ⬜ NOT_STARTED / ENTRY AVAILABLE | — | — | — | 用户新对话授权后方可启动 |
 
 ## Step 1 候选表
 
@@ -148,16 +148,17 @@ Q1 通过只表示 Step 3 产生了可进入 mandatory Step 3.5 的问题候选�
 | WiSEE 2024 | `214343...14E` / 35,131 | 固定 header/pilot 的 frame/CFO/equalization/CPE | architecture adjacent | false / false |
 | ICAIT 2025 | `a65fe9...dc30` / 36,387 | 固定 960-symbol training-spectrum 两级 FOE | architecture adjacent | false / false |
 | JLT 2021 | `65571b...3346` / 48,595 | FO sweep+SCDF；参数离线统一优化后固定 | architecture adjacent | false / false |
+| Optics Communications 130981 | `67fa0e...66ecb` / 38,504（共享 canonical） | 固定分块 FFT、1024×16-point mean spectrum、正负谱功率比+星历；power/FFT points 为评测或离线参数 | architecture adjacent | false / false |
 
 Morelli/Yu 继续占用 generic multi-lag/stepwise correlation prior art；Wang/Enhanced 是 offline fixed-parameter/length design。Qualified evidence 中没有确认 receiver-visible condition→lag/`B_L`/window selection，也没有确认 dev-frozen conditioned single-lag lookup 等价实现。
 
 ### Unresolved primary evidence
 
-Cheng 2020、OE.505931、OE.448956、Dong 2009、OE.561252、ACP/IPOC 10809664、SSRN 6293357、Optics Communications 130981 共 8 项在 bounded 获取后仍无 qualified fulltext；动作、online/offline 与 exact/cheap-lookup 边界保持 UNKNOWN，不能用 abstract 排除。
+执行阶段的“8 项缺全文”是过度合并。130981 共享全文已关闭且排除 exact action；SSRN 6293357 保持唯一高风险 action-level UNKNOWN；ACP/IPOC 10809664 是次级直接 comparator 债。Cheng/OE.561252 为高相关任务/条件邻接，OE.505931/OE.448956/Dong 为非阻断架构或历史 prior-art 边界。
 
 ### Terminal 与 claim ceiling
 
-Step 3.5 canonical terminal=`证据阻塞`，已由 V004 fresh-context 独立终验 PASS。这不等于 Q1 新颖、存活闭包或被关闭；只表示检索/引用链/止损已执行，但关键一手全文不可得，competition boundary 不能诚实裁决。Conditioned single-lag lookup 继续作为 strongest cheap alternative；其胜负与 target crossover/headroom 仍属于 Step 4a，但当前无 Step 4a 入口。
+Step 3.5 当前 terminal=`STEP3_5_COMPLETE_Q1_PROVISIONAL_SURVIVOR_WITH_FULLTEXT_LIMITATIONS`（D008/V005）。这不等于首次、novelty closure、target failure 或方法成立。Conditioned single-lag lookup 继续作为 strongest cheap alternative；其胜负与 target crossover/headroom 属 Step 4a。Step 4a 入口已存在，但必须由用户在新对话授权。
 
 ## 五篇标准精读条目
 

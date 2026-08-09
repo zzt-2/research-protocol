@@ -192,10 +192,10 @@ S003 / 用户 2026-08-09 明确授权。
 
 ## D007: Step 3.5 终止为证据阻塞且不开放 Step 4a
 
-> status: active
+> status: superseded
 > date: 2026-08-09
 > 取代：无
-> 被取代：无
+> 被取代：D008
 > 依据：调研: R004 + 检索/引用链 receipts: `search-archive/2026-08-09/rml-fsts-step3-5-*.json` + 全文证据: T004/T006 worker-logs + 独立验证: V004
 > 触发原话: 无（技术推导；用户的终态约束已记录于 `voice.md` 2026-08-09）
 
@@ -222,3 +222,33 @@ Step 3.5 状态改为 `EVIDENCE_BLOCKED`；Q1 仍为 Step 3 合法问题候选�
 ### 来源
 
 S003 / R004 / T002-T010 / V004。
+
+## D008: 撤回 blanket evidence block，Q1 作为带全文限制的 provisional survivor
+
+> status: active
+> date: 2026-08-09
+> 取代：D007 的 terminal、8 项等强 blocker 分类与 Step 4a NO ENTRY；保留其检索/引用链/止损事实
+> 被取代：无
+> 依据：主控 scientific critic `/root/step35_science_critic` + blocker audit `/root/step35_blocker_feasibility` + `stages/gw-supplement.md` + 共享 canonical 130981 全文
+> 触发原话: 无（主控技术验收）
+
+### 决策
+
+Step 3.5 修订为 `STEP3_5_COMPLETE_Q1_PROVISIONAL_SURVIVOR_WITH_FULLTEXT_LIMITATIONS`。Q1 获得后续 Step 4a 讨论入口，但本轮不授权 Step 4a、smoke、仿真、MVE、设计或实现。
+
+### 理由
+
+`gw-supplement.md` 在三轮仍未收敛时要求记录未覆盖方向并由用户决定是否继续，不要求所有标题相邻论文全文齐备，也未规定缺任一全文就禁止 Step 4a。R2 三个完成 query 新 must/should=`0/0`，Q4/R3 timeout 只能形成 coverage caveat。
+
+D007 的 8 项等强 blocker 分类还包含一项确定性 stale false negative：Optics Communications 130981 全文与 read-note 早已存在于共享 canonical。正文证明其为固定 short-time-spectrum coarse FOE，received power 与 FFT points 不驱动运行时 lag/`B_L`/window 选择。其余缺件中，仅 SSRN 6293357 保持高风险 action-level UNKNOWN；ACP/IPOC 是次级 comparator 债，其他条目属于任务/条件邻接、动作不同或已有 generic prior-art 约束。
+
+### Claim ceiling 与下游合同
+
+- 不得宣称首次、exact novelty 已闭合、target fixed-lag failure 已证明或 METHOD_SIGNAL。
+- Step 4a 必须比较 Wang fixed-`B_L`、dev-frozen modulation/TS-length/receiver-power-conditioned single-lag lookup，以及任何拟议 receiver-visible controller。
+- SSRN/ACP/Cheng/OE 缺件作为竞争边界债持续保留；获得全文后可回填或推翻 provisional survivor。
+- object/package failure 保持 `0/0`。
+
+### 来源
+
+R004 主控接收审查；V005；共享 `papers/doi/10.1016_j.optcom.2024.130981/content.md:47,71-87,127-141`。

@@ -1,6 +1,6 @@
 # Topic Index: RML-FSTS Groundwork
 
-> 状态: active | 创建: 2026-08-08 | 最后更新: 2026-08-09（R004/D007/V004：Step 3.5 证据阻塞已独立验收）
+> 状态: active | 创建: 2026-08-08 | 最后更新: 2026-08-09（D008/V005/H005：Step 3.5 主控接收纠偏）
 
 ## 专题信息
 
@@ -12,7 +12,7 @@
 
 **原始目标**：验证 RML-FSTS fixed-lag condition-dependence 是否能经完整 Groundwork 成为 Ch4 方法入口。
 
-**当前范围**：Step 1–3 已完成；mandatory Step 3.5 已按三轮上限停止于证据阻塞，当前只允许独立验证、交接与一次统一提交。
+**当前范围**：Step 1–3.5 已完成；Q1 是带全文限制的 provisional survivor。当前只允许主控接收修订、交接与一次统一提交；Step 4a 须用户在新对话另行授权。
 
 **明确不含**：Step 4a、预注册 smoke、future action 设计/实现、仿真、MVE、Contract、Execute、METHOD_SIGNAL、Go/Kill；不复活 K01/B10/B3-Q2/C3/P09/P1/oversampled-Q1，不修改 dormant campaign、`common/`、`params.py` 或正式论文正文，不 push。
 
@@ -53,11 +53,12 @@
 - **R003 / D004 / V002 / H002**：5/5全文与结构化提取完成；canonical Q1 四判据4/4；Step 3=`✅ completed`，独立验证 PASS 后在边界停止。
 - **D005 / V003 / H003**：主控接收时修正 Q1 的 A 逻辑方向与 Wang venue 过度措辞；Step 3 completed 保留，Step 3.5 继续未授权。
 - **S003 / R004 / D006-D007 / T002-T010 / V004 / H004**：完成 scope change、仓库盘点、8-query R1、三类真实来源、Wang/Enhanced 双向引用链、R2/R3 止损与新增全文处理；Step 3.5 因 8 项关键全文不可得终止为证据阻塞，独立终验 10/10 PASS，未开放 Step 4a。
+- **D008 / V005 / H005**：主控接收发现 130981 共享全文漏查和 blanket blocker 过严；保留检索事实，撤回 D007 terminal。Q1 改为 provisional survivor with fulltext limitations，开放后续 Step 4a 讨论入口。
 
 ## 未决项
 
-- 8 项关键一手全文能否取得并完成 action-level 裁决：Cheng 2020、OE.505931、OE.448956、Dong 2009、OE.561252、ACP/IPOC 10809664、SSRN 6293357、Optics Communications 130981。
+- 高风险全文债：SSRN 6293357；次级 comparator 债：ACP/IPOC 10809664。Cheng、OE.561252、OE.505931、OE.448956、Dong 作为非阻断边界债保留；130981 已由共享全文关闭。
 
 ## 当前位置
 
-Groundwork Step 3=`✅ completed`（authority=D005/V003/H003）；Step 3.5=`⛔ EVIDENCE_BLOCKED`（R004/D007/V004，独立终验 PASS）。Qualified evidence 中 exact collision/conditioned-lookup equivalent 均为 0 confirmed，但 competition boundary 未闭合；Step 4a=`⬜ NOT_STARTED / NO ENTRY`。未运行 smoke、实现、仿真或 MVE，object/package failure=`0/0`。
+Groundwork Step 3=`✅ completed`；Step 3.5=`✅ COMPLETE / Q1 PROVISIONAL SURVIVOR WITH FULLTEXT LIMITATIONS`（authority=D008/V005/H005）。Exact collision/conditioned-lookup equivalent 均为 0 confirmed；不允许首次/novelty closure 措辞。Step 4a=`⬜ NOT_STARTED / ENTRY AVAILABLE AFTER USER AUTHORIZATION`。未运行 smoke、实现、仿真或 MVE，object/package failure=`0/0`。
