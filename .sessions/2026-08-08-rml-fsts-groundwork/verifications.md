@@ -126,3 +126,56 @@ PASS。唯一证据支持的 Step 3.5 terminal 是 `EVIDENCE_BLOCKED`；Step 4a=
 ### 结论
 
 PASS。V004 的 receipts/hash/范围一致性仍有效，但其“唯一 terminal=EVIDENCE_BLOCKED / Step 4a NO ENTRY”科学语义被 V005 取代。D008 修订后的唯一当前状态为 provisional survivor with fulltext limitations；Step 4a 可在用户授权的新对话启动。
+
+## V006: D010 semantic-smoke 合同 pre-run 独立审查
+
+> status: FAIL
+> date: 2026-08-09
+> 关联：S004 / D009-D010 / T014
+> verifier: fresh-context `/root/rml_contract_critic`
+
+### 验证范围
+
+只读检查 D010、immutable contract、T014 与 T011–T013 三份独立审计，覆盖方法身份、same-realization pairing、B2 可部署 power proxy、物理 provenance/calibration、MSE/outage oracle、crossover/reducer 与 terminal 唯一性；未运行实验、未联网、未修改文件。
+
+### 结果
+
+`FAIL`，P0/P1/P2=`2/5/2`。
+
+- P0-1：原 Q1 action 是联合 `(B_N,B_L)`，改变 `B_L` 必须重建发端 FSTS；D010 固定发端后扫描 known-TS de-rotated `L_rx`，只在 default 点退化 Wang，off-default 是不同 estimator family。其结果无权发原 Q1 terminal。
+- P0-2：`10/20 dB` 明标未验证，weak/strong 采用 Gu scalar-GG transfer而非 Wang `C_n^2` phase-screen calibration；缺 source power/SNR anchor、精确 channel equation 与 B0 qualitative anchor，局部 diagnostic 无权 Kill/Resolve Q1。
+- P1：off-default statistic 未唯一冻结；B2 power proxy/bin/fallback 未完全定义；MSE/outage 共用单 O1 不成立且缺 MDE；reducer/crossover/observability/扩容规则不可唯一执行；master seed/canonical cell 未冻结。
+- P2：GG provenance 应进 immutable contract；Wang 公式仅 HTML/MathJax，必须持续标 provenance limited。
+
+### 处置
+
+在首次 RED/scientific grid 前中断 T014 executor；D010 标 `rejected`。允许一次 pre-result 合同重构：保留 structural `B_L` 方法对象，action-specific waveform 只共享 exogenous latent seeds；补 source condition/calibration与独立 B0 anchor；拆 MSE/outage oracle并把 reducer写成可执行真相源。若无法闭合，才使用 D009 terminal 5。
+
+### 结论
+
+FAIL 是合同验证失败，不是 Q1 scientific Kill/Resolved，也不计 semantic-smoke 迭代。没有科学 raw rows 或 terminal 产出。
+
+## V007: Step 4a terminal 5 fresh-context 独立终验
+
+> status: PASS
+> date: 2026-08-09
+> 关联：S004 / D009-D011 / T011-T019 / H006
+> verifier: fresh-context `/root/rml_step4a_verifier`
+
+### 验证范围
+
+独立重放起点恢复、130981 action identity、A0 §0–§6、D010 pre-run P0、Wang structural `(B_N,B_L)` 公式身份、action-before 因果边界、phase-screen/SMF→scalar-GG 保真差异、dBm→离散噪声可辨识性、B0 calibration gate、D009 五终态排他性、owner/receipt 一致性、JSON/YAML/hash/git 与四个 protected `p05_run*.log`。未运行 estimator、performance grid、diagnostic structural run 或 MVE，未修改 owner/合同/artifact、未提交或 push。
+
+### 结果
+
+`PASS`，P0/P1/P2=`0/0/0`。独立 verifier 日志：`projects/thesis-fso/worker-logs/step-4a-rml-fsts-independent-verifier.md`，SHA-256=`9f855b33e2d5785682e9c4dcea3a8bd7eab9659355d80c12504159e04c9f744d`。
+
+- 三类 hard blocker 均经原文/代码重放成立：structural action-before causality；Wang phase-screen/0.2 m aperture/SMF/branch joint statistics 与 Gu scalar-GG 非等价；Wang dBm receiver power 到 post-ADC complex-noise variance 不可唯一。B0 numeric calibration gate因此不可执行。
+- Fig. 8/10/11/12 的 IEEE 403 只属 recoverable gap；即使恢复图也不能自动消除上述 hard blockers。
+- D010=`REJECTED_PRE_RUN`、`terminal_authority=NONE`；scientific raw rows=`0`，B0/B1/B2/O1/C1、paired delta/CI均=`N/A (NOT_RUN)`，C1与bounded MVE不存在。
+- terminal 1/2/3/4分别需要合法 crossover、B2评分、稳定 residual/observability 或 fresh held-out MVE；当前均无数据权限。唯一合法终态是 terminal 5。
+- owner/artifact、信息边界、failure count=`0/0`、SSRN 6293357 债务、strongest cheap comparator 与重开条件一致；source-log hash=`6/6`、protected-log hash=`4/4`、JSON/YAML/路径/diff/staging均 PASS。
+
+### 结论
+
+接收 D011：Groundwork Step 4a terminal=`STEP4A_INCONCLUSIVE_INVALID_OR_BLOCKED_TESTBED`；Q1=`INCONCLUSIVE`、`METHOD_SIGNAL=NONE`、贡献层级=`NONE`。这不是 Kill/Resolved/Go，也不构成性能结果。专题可转 dormant；只有取得 authors/source receiver+channel config并显式定义 action-before protocol、经 scope change 后，才可重开 Step 4a。Contract、Execute 与论文写作继续禁止。

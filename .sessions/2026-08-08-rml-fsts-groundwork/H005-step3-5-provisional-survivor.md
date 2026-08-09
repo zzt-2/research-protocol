@@ -64,11 +64,11 @@ Step 1–3.5 已完成。D008/V005 保留 R004/D007/V004 的检索、引用链�
 ---
 ## 接收方验证（续接对话时必须完成）
 
-- [ ] 已读取 topic-index 的不变量段落
-- [ ] 已验证 130981 shared canonical 路径/SHA/action 与 D008 一致
-- [ ] 已验证 Q1 当前仅为 provisional survivor，Step 4a=`NOT_STARTED`
-- [ ] 已检查 `_registry.yaml` 的 depends_on/conflicts_with
-- [ ] 已确认本轮不提前进入 Contract/Execute
+- [x] 已读取 topic-index 的不变量段落（S004 接收）
+- [x] 已验证 130981 shared canonical 路径/SHA/action 与 D008 一致：`D:/code/study/research-protocol/papers/doi/10.1016_j.optcom.2024.130981/`；PDF/content SHA256=`2a5728...eefc2`/`67fa0e...a66ecb`；正文 `:47,71-87,127-141` 为固定 FFT/均谱 coarse FOE，无 condition selector
+- [x] 已验证 Q1 当前仅为 provisional survivor，Step 4a 在 D009 scope change 前=`NOT_STARTED`：topic-index `:64`、literature owner GW Progress、master-state RML-FSTS 表三处一致
+- [x] 已检查 `_registry.yaml` 的 depends_on/conflicts_with：依赖专题为 dormant source owner，`conflicts_with=[]`
+- [x] 已确认本轮不提前进入 Contract/Execute：D009 只授权 Step 4a feasibility
 
 ## 下一轮
 

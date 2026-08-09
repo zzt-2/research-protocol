@@ -1,0 +1,113 @@
+{
+  "schema_version": "rml-fsts-step4a.terminal-receipt.v1",
+  "date": "2026-08-09",
+  "status": "VERIFIED",
+  "terminal": "STEP4A_INCONCLUSIVE_INVALID_OR_BLOCKED_TESTBED",
+  "terminal_authority": "D011_V007",
+  "decision_pointer": ".sessions/2026-08-08-rml-fsts-groundwork/decisions.md#D011",
+  "verification": {
+    "id": "V007",
+    "verdict": "PASS",
+    "findings": {"P0": 0, "P1": 0, "P2": 0},
+    "log_path": "projects/thesis-fso/worker-logs/step-4a-rml-fsts-independent-verifier.md",
+    "log_sha256": "9f855b33e2d5785682e9c4dcea3a8bd7eab9659355d80c12504159e04c9f744d"
+  },
+  "scientific_disposition": {
+    "q1": "INCONCLUSIVE",
+    "method_signal": "NONE",
+    "contribution_level": "NONE",
+    "object_failure_count": 0,
+    "method_bearing_package_failure_count": 0
+  },
+  "execution": {
+    "semantic_smoke_performance_grid": "NOT_RUN",
+    "bounded_mve": "NOT_RUN",
+    "diagnostic_structural_run": "NOT_RUN_TERMINAL_DISABLED",
+    "scientific_raw_rows": 0,
+    "paired_delta_ci": "N/A (NOT_RUN)",
+    "blocked_at_gate": "VALIDITY_CALIBRATION_PRE_RUN"
+  },
+  "performance_numerics": {
+    "B0": "N/A (NOT_RUN)",
+    "B1": "N/A (NOT_RUN)",
+    "B2": "N/A (NOT_RUN)",
+    "O1": "N/A (NOT_RUN)",
+    "C1": "N/A (NOT_RUN)"
+  },
+  "hard_blockers": [
+    {
+      "id": "STRUCTURAL_ACTION_BEFORE_CAUSALITY",
+      "summary": "The joint (B_N,B_L) action is embedded in the transmitted FSTS; current-FSTS receiver-power observations arrive after that action."
+    },
+    {
+      "id": "SOURCE_CHANNEL_NON_EQUIVALENCE",
+      "summary": "Gu scalar Gamma-Gamma does not reproduce Wang phase-screen, 0.2 m aperture, SMF coupling, phase, or branch joint statistics."
+    },
+    {
+      "id": "DBM_TO_DISCRETE_NOISE_NON_IDENTIFIABLE",
+      "summary": "Missing bandwidth, BPD/TIA/thermal/background/ADC conventions prevent a unique receiver-power-to-post-ADC complex-noise mapping."
+    }
+  ],
+  "dependent_gate_blocker": {
+    "id": "B0_NUMERIC_CALIBRATION_NOT_EXECUTABLE",
+    "summary": "No closed source point plus source equation plus pre-frozen numeric tolerance exists for B0 performance calibration."
+  },
+  "recoverable_gap": {
+    "id": "WANG_FIGURE_AXIS_403",
+    "summary": "Wang Fig. 8/10/11/12 axes, ticks, and point curves were not recovered because direct figure requests returned HTTP 403.",
+    "effect": "Recovering the PDF or figures can restore axes and some numeric targets but cannot automatically close any hard blocker."
+  },
+  "source_logs": [
+    {
+      "path": "projects/thesis-fso/worker-logs/step-4a-rml-fsts-formula-identity.md",
+      "sha256": "576876f253c9ff8bf66cd16a69a587b0084f3ed4741ac51bab1acb575e3e4013"
+    },
+    {
+      "path": "projects/thesis-fso/worker-logs/step-4a-rml-fsts-testbed-readiness.md",
+      "sha256": "0cebaba36eb472a1062c19b1f0d8095f00331ffbf175436b66b036a871fb610f"
+    },
+    {
+      "path": "projects/thesis-fso/worker-logs/step-4a-rml-fsts-a0-independent.md",
+      "sha256": "3a6aa2598cc9965b6d61e5bc640aac74786bfd93453d3ef984f8b7e65007131f"
+    },
+    {
+      "path": "projects/thesis-fso/worker-logs/step-4a-rml-fsts-source-calibration.md",
+      "sha256": "70b750f24480d7b173c986a30991e1989b012995b4a693f2c954c7ed7704e3d7"
+    },
+    {
+      "path": "projects/thesis-fso/worker-logs/step-4a-rml-fsts-wang-figure-axis.md",
+      "sha256": "e3fd20c27ed4b3410fc214a4c232d8fdd18d719bd5cdd996e23834ec9cb82fd7"
+    },
+    {
+      "path": "projects/thesis-fso/worker-logs/step-4a-rml-fsts-physical-transfer.md",
+      "sha256": "38f37f9379999e81438a959cf095c624428e6a94cf04472474ba0ca2105ba217"
+    }
+  ],
+  "prohibited_claims": [
+    "KILL",
+    "RESOLVED",
+    "GO",
+    "METHOD_SIGNAL_PRESENT",
+    "CONTRIBUTION_PRESENT",
+    "PERFORMANCE_GRID_COMPLETED",
+    "MVE_COMPLETED",
+    "NOVELTY_CLOSED",
+    "SSRN_6293357_DEBT_CLOSED"
+  ],
+  "preserved_invariants": [
+    "SSRN 6293357 remains a high-risk full-text debt.",
+    "The strongest cheap comparator remains the dev-frozen modulation/TS/receiver-power-conditioned single-lag lookup."
+  ],
+  "next_reopen_inputs": [
+    "Authors/source receiver and channel configuration closing phase-screen/SMF and P_rx[dBm] to post-ADC E[|w[k]|^2].",
+    "An explicit action-before protocol with feedback/state lifecycle, overhead, fallback, and stale-state semantics.",
+    "An explicit scope-change record before reopening Step 4a."
+  ],
+  "downstream_forbidden_until_reopen": [
+    "PERFORMANCE_GRID",
+    "BOUNDED_MVE",
+    "CONTRACT",
+    "EXECUTE",
+    "PAPER_WRITING"
+  ]
+}

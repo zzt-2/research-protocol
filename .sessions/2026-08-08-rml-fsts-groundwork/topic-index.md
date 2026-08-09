@@ -1,6 +1,6 @@
 # Topic Index: RML-FSTS Groundwork
 
-> 状态: active | 创建: 2026-08-08 | 最后更新: 2026-08-09（D008/V005/H005：Step 3.5 主控接收纠偏）
+> 状态: dormant | 创建: 2026-08-08 | 最后更新: 2026-08-09（D011/V007/H006：Step 4a Inconclusive terminal）
 
 ## 专题信息
 
@@ -12,9 +12,9 @@
 
 **原始目标**：验证 RML-FSTS fixed-lag condition-dependence 是否能经完整 Groundwork 成为 Ch4 方法入口。
 
-**当前范围**：Step 1–3.5 已完成；Q1 是带全文限制的 provisional survivor。当前只允许主控接收修订、交接与一次统一提交；Step 4a 须用户在新对话另行授权。
+**当前范围**：Step 1–3.5 已完成；Groundwork Step 4a 在任何 performance row 前由 validity/calibration hard blocker 终止为 `STEP4A_INCONCLUSIVE_INVALID_OR_BLOCKED_TESTBED`（D011/V007）。专题转 dormant；performance grid、diagnostic structural run、bounded MVE 与下游均禁止。只有重开输入齐备并显式 scope change 后才可恢复 Step 4a。
 
-**明确不含**：Step 4a、预注册 smoke、future action 设计/实现、仿真、MVE、Contract、Execute、METHOD_SIGNAL、Go/Kill；不复活 K01/B10/B3-Q2/C3/P09/P1/oversampled-Q1，不修改 dormant campaign、`common/`、`params.py` 或正式论文正文，不 push。
+**明确不含**：Contract、Execute、正式论文写作、无门控 controller、repair chain、首次/novelty closure 声称；不复活 K01/B10/B3-Q2/C3/P09/P1/oversampled-Q1，不修改 dormant campaign、`common/`、`params.py` 或四个既有 `p05_run*.log`，不 push。只有 D009 冻结合同内的 Step 4a smoke 与条件式 bounded MVE 获授权。
 
 **范围变更记录**：
 
@@ -26,6 +26,10 @@
   - 原因：Step 3 已由 D005/V003/H003 验收，mandatory Step 3.5 是关闭 Q1 文献竞争边界的下一框架步骤。
   - 新范围：仅执行 Step 3.5 关键词矩阵、多源检索、核心竞品双向引用链、必要全文处理、竞争闭包、独立验证与一次统一提交；到 canonical Step 3.5 terminal 停止。
   - 影响的未决项：启动 Cheng 2020、两篇 Optica 直接竞品、Wang/Enhanced 引用链与 Tang/WiSEE provenance 债务裁决；Step 4a 继续排除。
+- **2026-08-09 D009**：用户明确授权将当前范围从 Step 3.5 扩大到仅执行 Step 4a feasibility，并要求持续运行至唯一合法 terminal。
+  - 原因：D008/V005/H005 已给 Q1 带全文限制的 Step 4a 入口；用户已冻结 baseline ladder、defect-smoke 门限、廉价替代优先级和 bounded MVE 条件。
+  - 新范围：A0 §0–§6 → semantic smoke → 条件式 bounded MVE → fresh-context 独立验证 → Step 4a terminal；无 ranking crossover 或 B2 吸收时立即停止，不制造 controller。
+  - 影响的未决项：target crossover/headroom 从 UNKNOWN 进入实证裁决；SSRN 6293357 保持高风险全文债但不是 blanket blocker。
 
 ## 已确认结论
 
@@ -35,12 +39,14 @@
 2. 最强廉价替代必须保留为 dev-frozen modulation/TS/receiver-power-conditioned single-lag lookup；不得只与论文 fixed `BL` 或 global lag 比较。
 3. exact historical collision 边界保持：不复活 K01/B10/B3-Q2/C3/P09/P1/oversampled-Q1，不并行启动 BUM-CMA。
 4. 当前 research-object failure / method-bearing package failure 计数保持 `0/0`；Step 1/2 门控失败不改变计数。
+5. SSRN 6293357 高风险全文债继续保留；Step 4a testbed blocker 不构成 novelty closure，也不消除 strongest cheap comparator。
 
 ### 其他结论
 
 1. RML-FSTS 当前只是 research object，不是 Q#、Go、METHOD_SIGNAL、方法或章节贡献。
 2. `receiver-visible reliability-weighted multi-lag circular fusion` 仅是未来可能形态背景，本专题 Step 1–3 不设计、不实现、不验证、不宣称新颖。
 3. 用户已接受当前 5 篇 CORE 作为 Step 3 输入边界；该确认不改变 C1/C2 的 Wang 谱系偏斜、C3 仅作 prior-art ceiling、C4 仅作 transfer physics 的证据限制。
+4. D011/V007 已确认唯一 terminal 5：Q1=`INCONCLUSIVE`、`METHOD_SIGNAL=NONE`、贡献层级=`NONE`；B0/B1/B2/O1/C1 数字均为 `N/A (NOT_RUN)`。
 
 ## 进展线索
 
@@ -54,11 +60,14 @@
 - **D005 / V003 / H003**：主控接收时修正 Q1 的 A 逻辑方向与 Wang venue 过度措辞；Step 3 completed 保留，Step 3.5 继续未授权。
 - **S003 / R004 / D006-D007 / T002-T010 / V004 / H004**：完成 scope change、仓库盘点、8-query R1、三类真实来源、Wang/Enhanced 双向引用链、R2/R3 止损与新增全文处理；Step 3.5 因 8 项关键全文不可得终止为证据阻塞，独立终验 10/10 PASS，未开放 Step 4a。
 - **D008 / V005 / H005**：主控接收发现 130981 共享全文漏查和 blanket blocker 过严；保留检索事实，撤回 D007 terminal。Q1 改为 provisional survivor with fulltext limitations，开放后续 Step 4a 讨论入口。
+- **S004 / D009**：接收 H005 的 4 项关键事实并完成 scope change；冻结 Step 4a 连续执行边界、baseline ladder、门限和唯一终态集，A0/testbed readiness 审计启动。
+- **D010 / V006 / T015–T019 / D011 / V007 / H006**：D010 在 pre-run 独立审查中 rejected；source calibration 与 physical transfer 确认 structural causality、source-channel non-equivalence、power/noise non-identifiability 三类 hard blocker，B0 numeric gate 不可执行。Fig. 403 仅为 recoverable gap。未运行 performance grid/MVE；fresh-context V007 以 P0/P1/P2=`0/0/0` 接收唯一 terminal 5。
 
 ## 未决项
 
+- 科学重开输入：authors/source receiver+channel configuration，以及显式 action-before protocol/feedback/state lifecycle；须先做 scope change。
 - 高风险全文债：SSRN 6293357；次级 comparator 债：ACP/IPOC 10809664。Cheng、OE.561252、OE.505931、OE.448956、Dong 作为非阻断边界债保留；130981 已由共享全文关闭。
 
 ## 当前位置
 
-Groundwork Step 3=`✅ completed`；Step 3.5=`✅ COMPLETE / Q1 PROVISIONAL SURVIVOR WITH FULLTEXT LIMITATIONS`（authority=D008/V005/H005）。Exact collision/conditioned-lookup equivalent 均为 0 confirmed；不允许首次/novelty closure 措辞。Step 4a=`⬜ NOT_STARTED / ENTRY AVAILABLE AFTER USER AUTHORIZATION`。未运行 smoke、实现、仿真或 MVE，object/package failure=`0/0`。
+Groundwork Step 3=`✅ completed`；Step 3.5=`✅ COMPLETE / Q1 PROVISIONAL SURVIVOR WITH FULLTEXT LIMITATIONS`（authority=D008/V005/H005）。Exact collision/conditioned-lookup equivalent 均为 0 confirmed；不允许首次/novelty closure 措辞。Step 4a=`🛑 INCONCLUSIVE / VERIFIED`：terminal=`STEP4A_INCONCLUSIVE_INVALID_OR_BLOCKED_TESTBED`（D011/V007/H006）。semantic-smoke performance grid/MVE 均 `NOT_RUN`，object/package failure=`0/0`；专题 dormant，Contract/Execute/论文写作禁止。

@@ -5,7 +5,7 @@ method_type: 待定（精读后根据问题方法产出形态确定，见 glossa
 domain: comms
 created: 2026-06-21
 updated: 2026-08-09
-current_step: GROUNDWORK_STEP3_5（✅ COMPLETE；Q1 PROVISIONAL SURVIVOR；Step 4a awaiting authorization）
+current_step: GROUNDWORK_STEP4A（🛑 INCONCLUSIVE_VERIFIED；testbed validity/calibration blocker）
 current_stage: GROUNDWORK
 ---
 
@@ -35,11 +35,11 @@ current_stage: GROUNDWORK
 
 ### 当前控制面桥接
 
-> **2026-08-09 当前入口：Groundwork Step 1–3.5 `✅ completed`；Q1=`PROVISIONAL SURVIVOR WITH FULLTEXT LIMITATIONS`（D008/V005/H005）**。Ch4 reference-method extension D004/T003
+> **2026-08-09 当前入口：Groundwork Step 1–3.5 `✅ completed`；Step 4a=`INCONCLUSIVE / VERIFIED`，terminal=`STEP4A_INCONCLUSIVE_INVALID_OR_BLOCKED_TESTBED`（D011/V007/H006）**。Ch4 reference-method extension D004/T003
 > 选择 Wang 2023 FSTS fixed-lag/`BL` condition-dependence 作为唯一独立 Groundwork research object。
 > Step 1 已用满 7/7 query：121 unique、4 actual sources、正式发表 58.68%、12 篇 shortlist，质量门 PASS。
 > Step 2 已获得 5 篇合格 CORE 并覆盖 C1–C4；T001 已完成5/5全文精读，canonical target Q1四判据4/4。D005/V003 已修正 A 的逻辑方向与近期 baseline 身份措辞。
-> mandatory Step 3.5 已完成 8-query matrix、三类真实来源、Wang/Enhanced 双向引用链与三轮止损；qualified evidence 未确认 exact collision。主控接收发现 130981 共享全文漏查与 8 项 blanket blocker 过严，D008 撤回 D007 terminal。Step 4a 只在用户新对话授权后启动；预注册 smoke、实现、仿真、MVE、Contract 或 Execute本轮仍禁止；object/package计数仍为0/0。
+> mandatory Step 3.5 已完成 8-query matrix、三类真实来源、Wang/Enhanced 双向引用链与三轮止损；qualified evidence 未确认 exact collision。主控接收发现 130981 共享全文漏查与 8 项 blanket blocker 过严，D008 撤回 D007 terminal。D009 授权的 Step 4a 在 performance 起飞前被 structural action-before causality、source-channel non-equivalence、dBm→discrete-noise non-identifiability 三类 hard blocker 阻断，B0 numeric calibration gate 不可执行。没有 scientific raw rows、paired delta/CI、performance grid 或 MVE；B0/B1/B2/O1/C1 数字均 `N/A (NOT_RUN)`。Q1=`INCONCLUSIVE`、`METHOD_SIGNAL=NONE`、贡献层级=`NONE`；Contract/Execute/论文写作禁止，object/package计数仍为0/0。
 
 - **RML-FSTS fixed-lag condition-dependence Groundwork（独立专题，2026-08-08）—— STEP 3.5 COMPLETE / PROVISIONAL SURVIVOR**：
   source-domain defect 与 target FSO crossover 严格分离；future action 只作背景；最强廉价替代保持为
@@ -51,7 +51,9 @@ current_stage: GROUNDWORK
   | 2 acquire | ✅ USER_CONFIRMED | 5 篇合格 CORE + R002 + coverage/receipt + D003 | 允许 Step 3 |
   | 3 read | ✅ completed | 5篇 read-notes/read-log + R003/D005/V003/H003 + receipt；Q1=4/4 | 用户确认后新对话方可执行 mandatory Step 3.5 |
   | 3.5 supplement | ✅ COMPLETE / PROVISIONAL SURVIVOR | R004/D008/V005/H005 + receipts + shared 130981 fulltext；三轮上限 | 保留全文限制，允许讨论 Step 4a |
-  | 4a feasibility | ⬜ NOT_STARTED / ENTRY AVAILABLE | — | 用户新对话授权后启动 |
+  | 4a feasibility | 🛑 INCONCLUSIVE / VERIFIED | D009–D011/S004/V006–V007/T015–T019/H006 | terminal 5；performance grid/MVE `NOT_RUN`；专题 dormant，禁止 Step 5/Contract/Execute/论文写作 |
+
+  **Step 4a 终态边界**：Wang Fig. 403/缺坐标是 recoverable gap，不是 hard blocker 的替代；SSRN 6293357 全文债与 strongest cheap comparator 不变量继续保留。未来只可在取得 authors/source receiver+channel config、显式定义 action-before protocol 后，经 scope-change 重开；否则维持 Inconclusive 边界。
 
 - **低仰角强湍流 coded-burst reliability Groundwork（独立专题，2026-08-07）—— CLOSED / STEP 1 EVIDENCE INSUFFICIENT**：
   原始目标、六项 reopen gate、outage-vs-burst terminal 与禁止项已在新专题 S001/D001/topic-index 冻结。

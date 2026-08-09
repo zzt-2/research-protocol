@@ -1,0 +1,82 @@
+{
+  "schema_version": "rml-fsts-step4a.semantic-smoke.v1",
+  "status": "REJECTED_PRE_RUN",
+  "terminal_authority": "NONE",
+  "verification_pointer": ".sessions/2026-08-08-rml-fsts-groundwork/verifications.md#v006-d010-semantic-smoke-合同-pre-run-独立审查",
+  "disposition": "Preserved as rejected-contract evidence only; must not be executed or used to issue a Q1 terminal.",
+  "classification": "GROUNDWORK_STEP4A_SEMANTIC_SMOKE",
+  "claim_ceiling": "source-domain diagnostic falsifier; not complete FS/MRC, not satellite deployment, not novelty or METHOD_SIGNAL",
+  "waveform": {
+    "symbol_rate_hz": 10000000000.0,
+    "samples_per_symbol": 1,
+    "fsts_symbols_per_polarization": 320,
+    "paper_tx_structure": {
+      "qpsk": {"b_n": 16, "b_l_tx": 20},
+      "qam16": {"b_n": 8, "b_l_tx": 40}
+    },
+    "receiver_lag_actions": [10, 20, 40, 80],
+    "receiver_lag_semantics": "known-FSTS cross-polarization phase de-rotation; exact Wang Eq.8-11 at L_rx=B_L_tx"
+  },
+  "carrier": {
+    "cfo_distribution_hz": {"kind": "uniform_open", "low": -1100000000.0, "high": 1100000000.0},
+    "tx_linewidth_hz": 50000.0,
+    "lo_linewidth_hz": 50000.0
+  },
+  "channel": {
+    "stage_boundary": "after ideal frame alignment, branch combining, and polarization demultiplexing",
+    "turbulence": {
+      "weak": {"alpha": 11.6, "beta": 10.1},
+      "strong": {"alpha": 4.2, "beta": 1.4}
+    },
+    "fading_lifecycle": "one quasi-static Gamma-Gamma intensity per 320-symbol FSTS",
+    "average_electrical_snr_db": [10.0, 20.0],
+    "snr_provenance": "UNVERIFIED_DIAGNOSTIC_RANGE; not receiver optical power in dBm"
+  },
+  "splits": {
+    "dev_seeds_per_cell": 8,
+    "test_seeds_per_cell": 16,
+    "one_allowed_boundary_expansion": {"dev_seeds_per_cell": 16, "test_seeds_per_cell": 32},
+    "seed_derivation": "sha256(master|split|cell|seed_index|component)",
+    "paired_contract": "one immutable received X/Y FSTS per split/cell/seed; every lag consumes identical samples"
+  },
+  "baselines": {
+    "B0": "paper fixed receiver lag: qpsk=20, qam16=40",
+    "B1": "dev-global fixed receiver lag per modulation",
+    "B2": "dev-frozen lookup keyed by modulation,320,measured-power-bin; two median bins per modulation; unseen fallback B1",
+    "O1": "test hidden-cell expected-best receiver lag; headroom/Kill only",
+    "O1_hindsight": "per-realization best lag; diagnostic loose upper bound only",
+    "C1": "forbidden until B2 residual, stability, observability, and actionability gates all pass"
+  },
+  "selection_objective": ["onset_outage_rate", "normalized_cfo_mse", "smaller_lag"],
+  "metrics": {
+    "normalized_squared_error": "((f_hat_hz-f_true_hz)/symbol_rate_hz)^2",
+    "onset_outage_threshold": {"qpsk": 2.5e-7, "qam16": 6.25e-8},
+    "severe_outage_threshold": {"qpsk": 6.25e-6, "qam16": 2.25e-6},
+    "mse_regret": "(MSE_B2-MSE_O1)/max(MSE_O1,epsilon_floor)",
+    "bounded_reducible_fraction": "(MSE_B2-MSE_O1)/max(MSE_B2,epsilon_floor)",
+    "epsilon_floor": "max(1e-18,100*noiseless_identity_nmse)",
+    "paired_ci": "two-sided 95% Student-t CI over per-realization paired deltas"
+  },
+  "gates": {
+    "mse_regret_min": 0.20,
+    "outage_regret_percentage_points_min": 10.0,
+    "stable_crossover": "best-lag reversal across conditions with paired CI excluding zero on both sides",
+    "hard_stops": [
+      "no ranking crossover",
+      "B2 absorbs",
+      "residual not stable",
+      "residual not receiver-visible/actionable",
+      "execution or identity invalid"
+    ]
+  },
+  "information_boundary": {
+    "deployable": ["rx_x", "rx_y", "known_fsts_x", "known_fsts_y", "modulation", "ts_length", "measured_power_proxy", "frozen_receipt"],
+    "oracle_only": ["true_cfo_hz", "true_h", "true_snr", "turbulence_label", "component_seeds", "per_action_error", "best_action_label", "payload_bits"]
+  },
+  "source_pointers": [
+    "Wang 2023 content.md Eq.7-11 lines 175-215",
+    "Wang 2023 defaults/metrics lines 279-319",
+    "projects/simulation/params.py weak/strong Gamma-Gamma lines 100-170",
+    ".sessions/2026-08-08-rml-fsts-groundwork/decisions.md D010"
+  ]
+}

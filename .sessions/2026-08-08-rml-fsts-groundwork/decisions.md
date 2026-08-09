@@ -252,3 +252,148 @@ D007 的 8 项等强 blocker 分类还包含一项确定性 stale false negative
 ### 来源
 
 R004 主控接收审查；V005；共享 `papers/doi/10.1016_j.optcom.2024.130981/content.md:47,71-87,127-141`。
+
+## D009: 授权并冻结 Q1 Groundwork Step 4a 连续执行合同
+
+> status: active
+> date: 2026-08-09
+> 取代：无；延续 D008 的 provisional-survivor 边界
+> 被取代：无
+> 依据：用户原话: `voice.md` 2026-08-09 + D008/V005/H005 + `stages/gw-feasibility.md`
+> 触发原话: `voice.md` 2026-08-09
+
+### 决策
+
+将专题范围只扩展到 Groundwork Step 4a feasibility，并连续执行到唯一合法 Step 4a terminal。顺序冻结为：A0 §0–§6与 testbed readiness → semantic smoke → 只有门控全过时才执行 bounded MVE → fresh-context 独立验证 → owner/治理同步。不得在 A0 后停为计划稿。
+
+### 理由
+
+D008/V005 已证明 Q1 具备带全文限制的 Step 4a 入口，但 target lag/`B_L` ranking crossover、conditioned lookup 吸收能力与 receiver-visible action 增量仍全部 UNKNOWN。用户已显式批准触及旧“明确不含”的 Step 4a/smoke/条件式 MVE，并冻结了最强廉价 comparator、MDE、paired CI 与 stop rules，满足 scope-change 的显式授权条件。
+
+### 冻结合同
+
+- Q1 身份：`M=Wang/Enhanced fixed-lag/fixed-B_L FSTS`；`C=PM-4/16QAM、320-symbol FSTS、receiver-power/SNR、弱/强湍流等有依据的条件变化`；`A=固定 lag/B_L 的最优值或排序可能随 receiver-visible condition 改变并产生 CFO-MSE/outage regret`。
+- baseline ladder：`B0` 论文 fixed lag/`B_L`；`B1` dev 全局调优 fixed-lag；`B2` dev-frozen modulation/TS-length/receiver-power-conditioned single-lag lookup；`O1` truth/oracle lag 仅作 headroom/Kill；`C1` 仅在 B2 后稳定残差、可观测、可行动时构造。
+- defect-smoke 门：B2 后仍有 `>=20%` normalized CFO-MSE regret，或 `>=10 percentage-point` outage regret；残差须跨多个条件和 seeds 稳定，且不能由 baseline 未调谐、搜索不公平或单异常场景解释。
+- hard exits：无 ranking crossover → 立即 Kill，不构造 controller；B2 吸收 → conventional conditioned lookup resolved；残差不稳定/不可观测/不可行动 → Kill；只有全部门控成立才进入 fresh-disjoint-seed paired bounded MVE。
+- MVE：receiver-visible-only decide path；raw rows→aggregate；机制消融；合法传统 comparator；预冻结 MDE/paired CI；caller→callee 信息边界与 hidden-truth runtime metamorphic test。
+- claim ceiling：SSRN 6293357 保持高风险全文债但不是 blanket blocker；不得声称首次、novelty closure；consistency PASS 不等于 scientific correctness。
+
+### 唯一终态集
+
+1. `STEP4A_KILL_NO_RANKING_CROSSOVER`
+2. `STEP4A_RESOLVED_BY_CONDITIONED_LOOKUP`
+3. `STEP4A_KILL_NO_STABLE_OBSERVABLE_ACTIONABLE_RESIDUAL`
+4. `STEP4A_GO_BOUNDED_RECEIVER_VISIBLE_CONTROLLER_SIGNAL`
+5. `STEP4A_INCONCLUSIVE_INVALID_OR_BLOCKED_TESTBED`
+
+其中 1/3 为 Q1 Kill，2 为 Resolved，4 为 Go；5 仅限真实 shared-testbed/证据完整性硬 blocker，不能用来回避可修复的本地问题。`METHOD_SIGNAL` 与贡献层级必须依据 fresh held-out MVE 和独立 verifier 另判，不由 oracle headroom 或 semantic smoke 自动推出。
+
+### 排除的替代方案
+
+- 只比较 B0/B1：遗漏最强廉价 B2，会把普通查表包装成方法。
+- 先造 C1 再找信号：违反 ranking-crossover/B2-residual 前置门。
+- 用 truth SNR、true `h`、TX payload 或目标标签驱动动作：违反 deployable 信息边界。
+- 无 smoke 直接搭正式 testbed、扩搜索量或进入 Contract/Execute：超出本轮和框架阶段。
+
+### 影响范围
+
+允许新增本专题 Step 4a preflight/contract、隔离的 experiment/test/artifact/worker-log 与 D/V/H；允许同步 `literature_notes_rml_fsts.md`、`master-state.md` 和 registry。继续禁止修改 `common/`、`params.py`、dormant campaign、正式论文正文、四个 `p05_run*.log` 与 push。
+
+### 来源
+
+S004；用户 2026-08-09 明确授权。
+
+## D010: 冻结 Step 4a semantic-smoke 的 receiver-lag adapter 与统计合同
+
+> status: rejected
+> date: 2026-08-09
+> 取代：无；落实 D009 的 bounded-adapter 要求
+> 被取代：D011（仅取代待重构执行路线；本条 status 保持 rejected，作为 pre-run 失败合同证据）
+> 依据：T011 公式/身份审计 + T012 testbed readiness + T013 A0 独立审计
+> 触发原话：无（公式身份、可部署性与公平配对的技术推导）
+
+### 决策
+
+semantic smoke 固定每种 modulation 的发端 320-symbol FSTS：PM-4QAM 用论文 `(B_N,B_L^tx)=(16,20)`，PM-16QAM 用 `(8,40)`。动作不是事后改写发端 `B_L^tx`，而是在同一接收 FSTS 上选择 receiver-side fine-correlation lag `L_rx in {10,20,40,80}`；非默认 lag 使用 receiver-known FSTS 做 cross-polarization phase de-rotation。`L_rx=B_L^tx` 时去旋因子必须恒为 1，且输出必须逐项等价于 Wang Eq. (8)–(11)。因此 B0 保持论文身份，B1/B2/O1 是同一估计器的合法 single-lag receiver adapter；非默认 lag 不冒充论文原测点或 Enhanced 2024 精确公式。
+
+### 理由
+
+T011 证明 Wang 的 `B_L` 同时决定发端 block structure、`B_N=320/B_L`、fine divisor 与无模糊范围；直接为每个 action 重造 FSTS 会改变接收样值和协议配置，无法满足“同一 realization、receiver-visible-only decide path”的本轮合同。已知训练符号在接收机合法可得；用其只消除 off-default lag 的已知调制相位，既保持同一 320-symbol waveform、overhead、coarse stage 和样值 hash，又在论文默认点严格退化为原式。该 adapter 是最强廉价 comparator 的工程实现，不构成新方法声称。
+
+### 冻结执行合同
+
+- stage boundary：ideal frame start；输入为 source chain 中 MRC 与 polarization demultiplexing 后的双偏振 FSTS；不声称完整 FS/MRC/星地链路复现。
+- waveform/physics：10 GBaud、1 sps、Tx/LO linewidth 各 50 kHz；CFO uniform `(-1.1,+1.1) GHz`；320-symbol PM-4/16QAM FSTS。weak/strong 用有文献溯源的 Gamma-Gamma `(alpha,beta)=(11.6,10.1)/(4.2,1.4)`，单 FSTS 内按 `tau_c >> 32 ns` 准静态；不把它冒充 Wang `C_n^2` 的一一映射。
+- power axis：只称 dimensionless average electrical SNR，冻结 `10/20 dB` 诊断端点；不声称 dBm receiver optical power。该范围标 `UNVERIFIED_DIAGNOSTIC_RANGE`，不能单独承载星地 Go。
+- split/pairing：每个 `2 modulation x 2 SNR x 2 turbulence` cell 为 `8 dev + 16 disjoint test` seeds；同一 cell/seed 的 FSTS、GG、CFO、phase-noise、AWGN 只生成一次，所有 lag 消费同一 immutable receiver samples。只有 sign/CI 边界按预注册规则允许一次扩为 `16 dev + 32 test`，不得同时调参。
+- ladder：B0 按 modulation 用 `20/40`；B1 每个 modulation 在 dev 上冻结一个全局 lag；B2 用 `(modulation,320,dev-frozen measured-power bin)`，每 modulation 的两个 bin 由 dev power-proxy median 冻结，未覆盖走 B1；O1 主口径为 hidden-cell expected-best lag，per-realization hindsight 只作更松诊断上界；C1 门前不存在。
+- metric：`q=((f_hat-f_true)/R_s)^2`；normalized CFO-MSE 为完整 population 的 `mean(q)`。evaluation-only onset outage 用 PM-4QAM `q>2.5e-7`、PM-16QAM `q>6.25e-8`；另报 severe outage `6.25e-6/2.25e-6` 与 fine-range false lock，不把这些改名成论文原生 outage。
+- selection：B1/B2/O1 以 `(onset_outage_rate, NMSE, smaller_lag)` lexicographic 冻结；所有对象同 grid、同 dev budget、同 estimator、同 samples。
+- regret gate：MSE regret 主口径为 `(MSE_B2-MSE_O1)/max(MSE_O1,epsilon_floor)`，其中 `epsilon_floor=max(1e-18,100 x noiseless_identity_NMSE)`；同时报告 bounded reducible fraction、absolute paired delta 与 95% CI。outage regret 为 `outage_B2-outage_O1` percentage points。
+- terminal reducer：先 validity，再全条件 ranking crossover，再 B2 residual/stability，再 observability/actionability；无 crossover立即 D009 terminal 1，B2 吸收为 terminal 2，不稳定/不可观测/不可行动为 terminal 3，只有全过才派 fresh-seed bounded MVE。
+
+### 排除的替代方案
+
+- 每个 lag 重造不同发端 FSTS 后仍声称相同 receiver realization：改变了处理任务与样值，paired 语义不成立。
+- 直接把旧 `frame_sync_fsts.py` 或 `fft_foe(...)/B_L` 当 Wang estimator：T011/T012 已证 `B_L/B_N` 为 no-op 且无 Eq. (7)–(11)。
+- 把 `gamma_bar`、true `h`、true turbulence label或 action outcome直接作为 B2 key：属于 hidden-truth leakage。
+- 用 Enhanced 缺失公式补 Wang adapter：本地 Enhanced Eq. (1)–(21) 不可恢复，只保留竞争边界与 power/length dependence。
+
+### 影响范围
+
+只允许新增隔离的 `projects/simulation/explore/rml-fsts-step4a/`、聚焦测试、artifact、worker-log 与本专题治理/owner；不修改 `common/`、`params.py`、旧 B3、正式论文或保护日志。
+
+### 来源
+
+`projects/thesis-fso/worker-logs/step-4a-rml-fsts-formula-identity.md`；`step-4a-rml-fsts-testbed-readiness.md`；`step-4a-rml-fsts-a0-independent.md`。
+
+### 2026-08-09 pre-run 独立审查结论
+
+fresh critic 在任何 RED/grid 前判 `BLOCKED, P0/P1/P2=2/5/2`。P0-1：固定发端 waveform 后扫描 `L_rx`，off-default 已改变原 Q1 的联合 `(B_N,B_L)` 方法对象，不能据 adapter 的 crossover/no-crossover 发原 Q1 terminal。P0-2：明确标为未验证的 `10/20 dB` 与 Gu scalar-GG transfer 没有 source calibration/B0 qualitative anchor，不能承载原 Q1 scientific terminal。故 D010 路线按分层试错 F1 立即 rejected；没有运行科学 grid、没有结果驱动调参。下一合同必须保留 structural `B_L`、改用 shared exogenous latent pairing，并先闭合 source condition/calibration。
+
+## D011: Step 4a terminal 5——testbed validity/calibration 硬阻断
+
+> status: active
+> date: 2026-08-09
+> 取代：D010 的待重构执行路线；D010 保持 rejected 历史证据
+> 被取代：无
+> 依据：验证: V006/V007 + 审计: T015–T019 worker logs + 决策: D009 terminal 5
+> 触发原话: 无（技术推导；用户的 Step 4a terminal/stop 约束已登记于 `voice.md` 2026-08-09，本轮按 T018 不修改 voice）
+
+### 决策
+
+将当前唯一 Step 4a terminal 冻结为 `STEP4A_INCONCLUSIVE_INVALID_OR_BLOCKED_TESTBED`。fresh-context V007 已独立重放并判 `PASS, P0/P1/P2=0/0/0`；Q1=`INCONCLUSIVE`、`METHOD_SIGNAL=NONE`、贡献层级=`NONE`。
+
+### 理由
+
+performance grid 的 validity/calibration 起飞门在任何科学 raw row 之前被三类 hard blocker 阻断：
+
+1. **structural action-before causality**：联合 `(B_N,B_L)` 已写入当前发端 FSTS；当前 FSTS 的 receiver-power estimate 在动作之后才可得。common probe 或 previous-frame feedback 会改变 protocol、overhead/state lifecycle，超出原 Q1。
+2. **source channel non-equivalence**：Gu scalar Gamma-Gamma 只保留归一化 irradiance marginal，不等价于 Wang phase-screen、0.2 m aperture、SMF coupling、phase/branch joint statistics。
+3. **dBm→离散噪声不可辨识**：Wang 未给 noise-equivalent bandwidth、BPD/TIA/thermal/background/ADC 与功率参考面，无法唯一得到 post-ADC complex-noise variance。
+
+由此，B0 numeric calibration gate 也不可执行：当前材料不能同时冻结 source point、source equation 和 numeric tolerance。B0/B1/B2/O1/C1 的 performance 数字全部为 `N/A (NOT_RUN)`；没有 scientific raw rows、paired delta/CI、semantic-smoke performance grid 或 bounded MVE。
+
+### 可恢复缺口与 hard blocker 的区别
+
+Wang Fig. 8/10/11/12 direct figure 因 IEEE 403 未取得，坐标/ticks/逐点曲线属于可恢复缺口；恢复 PDF/原图可补图轴和部分 numeric target，却不能自动解决上述 causality、channel equivalence 与 noise-identifiability hard blockers。因此不得把“缺图可恢复”写成“testbed 可恢复后即可跑”。
+
+### 排除的替代方案
+
+- 不恢复或运行 T014 performance grid，不以 synthetic `10/20 dB` 或 Gu GG 诊断发 Q1 Kill/Resolved/Go。
+- 不运行 structural diagnostic；即便未来另跑，也必须标 `DIAGNOSTIC_ONLY / TERMINAL_DISABLED`，无原 Q1 terminal authority。
+- 不构造 C1、不进入 bounded MVE、Contract、Execute 或论文写作。
+- 不增加 object/package failure 计数；当前仍为 `0/0`。
+
+### 影响范围
+
+同步 S004、topic-index、`literature_notes_rml_fsts.md`、`master-state.md`、rejected `contract.json`、terminal receipt、worker logs、V007、registry 与 H006。专题转 `dormant`；不修改 voice 或四个 `p05_run*.log`。
+
+### 重开条件
+
+下一合法科学动作只可在显式 scope-change 后发生：取得 authors/source receiver+channel configuration（至少闭合 phase-screen/SMF 与 `P_rx[dBm] -> E[|w[k]|^2]`），并定义 action-before protocol、feedback/state lifecycle 与 overhead。否则保持该 Inconclusive 边界，不进入下游。
+
+### 来源
+
+S004 / T015–T019 / V006–V007。
