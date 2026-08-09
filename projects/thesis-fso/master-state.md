@@ -5,7 +5,7 @@ method_type: 待定（精读后根据问题方法产出形态确定，见 glossa
 domain: comms
 created: 2026-06-21
 updated: 2026-08-09
-current_step: RML_FSTS_STEP3_DISPATCH_READY（2026-08-09；用户接受当前 5 篇合格 CORE，T001 仅授权 Step 3。）
+current_step: GROUNDWORK_STEP3（✅ completed；Step 3.5 ⬜ NOT_STARTED）
 current_stage: GROUNDWORK
 ---
 
@@ -35,13 +35,13 @@ current_stage: GROUNDWORK
 
 ### 当前控制面桥接
 
-> **2026-08-09 当前入口：`RML_FSTS_STEP3_DISPATCH_READY`**。Ch4 reference-method extension D004/T003
+> **2026-08-09 当前入口：Groundwork Step 3 `✅ completed`，Step 3.5 `⬜ NOT_STARTED`**。Ch4 reference-method extension D004/T003
 > 选择 Wang 2023 FSTS fixed-lag/`BL` condition-dependence 作为唯一独立 Groundwork research object。
 > Step 1 已用满 7/7 query：121 unique、4 actual sources、正式发表 58.68%、12 篇 shortlist，质量门 PASS。
-> Step 2 已获得 5 篇合格 CORE 并覆盖 C1–C4；用户已接受该覆盖面，D003/T001 仅授权 Step 3 全文精读。
-> 禁止 Step 3.5/4a、预注册 smoke、实现、仿真、MVE、Contract 或 Execute；object/package 计数仍为 0/0。
+> Step 2 已获得 5 篇合格 CORE 并覆盖 C1–C4；T001 已完成5/5全文精读，canonical target Q1四判据4/4。
+> 本执行在 Step 3 边界停止；Step 3.5/4a、预注册 smoke、实现、仿真、MVE、Contract 或 Execute未执行；object/package计数仍为0/0。
 
-- **RML-FSTS fixed-lag condition-dependence Groundwork（独立专题，2026-08-08）—— STEP 3 DISPATCH READY**：
+- **RML-FSTS fixed-lag condition-dependence Groundwork（独立专题，2026-08-08）—— STEP 3 COMPLETED / STOPPED AT BOUNDARY**：
   source-domain defect 与 target FSO crossover 严格分离；future action 只作背景；最强廉价替代保持为
   dev-frozen modulation/TS/receiver-power-conditioned single-lag lookup。
 
@@ -49,7 +49,7 @@ current_stage: GROUNDWORK
   |---|---|---|---|
   | 1 search | ✅ PASS | R001 + step1 receipt + 7 query JSON | 允许 Step 2 |
   | 2 acquire | ✅ USER_CONFIRMED | 5 篇合格 CORE + R002 + coverage/receipt + D003 | 允许 Step 3 |
-  | 3 read | 🟦 DISPATCH_READY | S002 + D003 + T001 | 只执行当前 5 篇 CORE；完成/阻塞后停止 |
+  | 3 read | ✅ completed | 5篇 read-notes/read-log + R003/D004/V002/H002 + receipt；Q1=4/4 | 新对话方可执行 mandatory Step 3.5 |
   | 3.5 supplement | ⬜ NOT_STARTED | — | Step 3 未完成前禁止 |
   | 4a feasibility | ⬜ NOT_STARTED | — | Step 3/3.5 未完成前禁止 |
 

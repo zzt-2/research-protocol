@@ -1,0 +1,98 @@
+{
+  "date": "2026-08-09",
+  "task": "T001-rml-fsts-groundwork-step3-read",
+  "scope": "Groundwork Step 3 only",
+  "preflight_status": "PASS_5_OF_5",
+  "papers": [
+    {
+      "id": "L01",
+      "doi": "10.1109/JPHOT.2023.3265847",
+      "dispatched_title": "Carrier FOE Scheme Based on FSTS in Spatial Diversity PM Coherent FSO Communication",
+      "actual_title": "Carrier FOE Scheme Based on FSTS in Spatial Diversity PM Coherent FSO Communication",
+      "title_evidence": "content.md:11",
+      "title_overlap": 1.0,
+      "doi_evidence": "content.md:83",
+      "canonical_path": "D:/code/study/research-protocol/papers/doi/10.1109_jphot.2023.3265847/content.md",
+      "sha256": "E30A66FE650FF065C65746943B52CC48AFC0476900F90421FEBD1F9B5D351A9F",
+      "bytes": 55349,
+      "verdict": "PASS"
+    },
+    {
+      "id": "L02",
+      "doi": "10.1364/OE.520452",
+      "dispatched_title": "Enhanced Frame Synchronization and Carrier Recovery in Coherent FSO Communication: a Pseudo-Random and Cyclic QPSK Approach",
+      "actual_title": "Enhanced frame synchronization and carrier recovery in coherent FSO communication: a pseudo-random and cyclic QPSK approach",
+      "title_evidence": "content.md:14",
+      "title_overlap": 1.0,
+      "doi_evidence": "content.md:10",
+      "canonical_path": "D:/code/study/research-protocol/papers/doi/10.1364_oe.520452/content.md",
+      "sha256": "49A7FD02DB0A2758E3998C678F56190FBAA9D029D4CBA346320A8E94F8193EDD",
+      "bytes": 95745,
+      "verdict": "PASS"
+    },
+    {
+      "id": "L03",
+      "doi": "10.1155/2009/821819",
+      "dispatched_title": "A Practical Scheme for Frequency Offset Estimation in MIMO-OFDM Systems",
+      "actual_title": "Research Article A Practical Scheme for Frequency Offset Estimation in MIMO-OFDM Systems",
+      "title_evidence": "content.md:3",
+      "title_overlap": 0.8,
+      "doi_evidence": "content.md:1",
+      "canonical_path": "D:/code/study/research-protocol/.worktrees/rdl-method-production-v2/papers/doi/10.1155_2009_821819/content.md",
+      "sha256": "E565C4E846324013B276E0246FA087FD3518746F6A3791D7D95D300C4B78E132",
+      "bytes": 40638,
+      "verdict": "PASS"
+    },
+    {
+      "id": "L04",
+      "doi": "10.1109/JLT.2020.3003561",
+      "dispatched_title": "Space-Ground Coherent Optical Links: Ground Receiver Performance With Adaptive Optics and Digital Phase-Locked Loop",
+      "actual_title": "Space-Ground Coherent Optical Links: Ground Receiver Performance With Adaptive Optics and Digital Phase-Locked Loop",
+      "title_evidence": "source.tar.gz!bare_jrnl.tex:\\title{}; content.md arxiv_latex front matter absent",
+      "title_overlap": 1.0,
+      "doi_evidence": "metadata.json doi=10.1109/jlt.2020.3003561; Step 2 receipt identity=PASS_WITH_INCOMPLETE_FRONT_MATTER",
+      "canonical_path": "D:/code/study/research-protocol/papers/doi/10.1109_jlt.2020.3003561/content.md",
+      "sha256": "62E3BFDF6B803069342B49DC6D9F666899BD7257841E42D9A5003CFDFF5A9662",
+      "bytes": 46966,
+      "verdict": "PASS",
+      "limitation": "content.md has no title/DOI front matter; identity is closed by the frozen source archive title plus metadata DOI and content-theme inspection"
+    },
+    {
+      "id": "L05",
+      "doi": "10.1109/TVT.2022.3218937",
+      "dispatched_title": "Joint Physical Layer Frame Optimization and Carrier Synchronization for Satellite Communications",
+      "actual_title": "Joint Physical Layer Frame Optimization and Carrier Synchronization for Satellite Communications",
+      "title_evidence": "shared source.md:5",
+      "title_overlap": 1.0,
+      "doi_evidence": "shared source.md:23",
+      "shared_source_path": "D:/code/study/research-protocol/papers/doi/10.1109_tvt.2022.3218937/source.md",
+      "shared_source_sha256": "97DB13AB40E6548AE70A01C12027B7085CA3123976353C5683DAE3350D8924A6",
+      "adapter_path": "D:/code/study/research-protocol/.worktrees/rdl-method-production-v2/papers/doi/10.1109_tvt.2022.3218937/content.md",
+      "adapter_sha256": "97DB13AB40E6548AE70A01C12027B7085CA3123976353C5683DAE3350D8924A6",
+      "bytes": 72748,
+      "byte_identical": true,
+      "source_meta_title_check": "mismatch caused by journal-header extraction",
+      "verdict": "PASS"
+    }
+  ],
+  "boundaries": {
+    "source_defect": "Wang 2023 fixed lag/BL depends on modulation, training length, and received power; low-power timing/FOE degradation is source-supported",
+    "target_defect": "INFERENCE/UNKNOWN",
+    "strongest_cheap_alternative": "dev-frozen modulation/TS/receiver-power-conditioned single-lag lookup",
+    "research_object_failure": 0,
+    "method_package_failure": 0,
+    "step_3_5_authorized": false,
+    "step_4a_authorized": false
+  },
+  "fresh_reader_reports": [
+    "projects/thesis-fso/worker-logs/step-3-rml-fsts-l01-reader.md",
+    "projects/thesis-fso/worker-logs/step-3-rml-fsts-l02-reader.md",
+    "projects/thesis-fso/worker-logs/step-3-rml-fsts-l03-reader.md",
+    "projects/thesis-fso/worker-logs/step-3-rml-fsts-l04-reader.md",
+    "projects/thesis-fso/worker-logs/step-3-rml-fsts-l05-reader.md"
+  ],
+  "read_status": "COMPLETE_5_OF_5",
+  "canonical_q_count": 1,
+  "step3_status": "completed",
+  "next_legal_action": "new conversation: mandatory Groundwork Step 3.5"
+}

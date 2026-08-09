@@ -95,3 +95,35 @@ D002 要求的 Step 2 用户覆盖面确认已经满足。当前五篇全文达�
 ### 来源
 
 S002；用户在 Step 2 覆盖面确认关口的回复；R002/D002/coverage report。
+
+## D004: Groundwork Step 3 completed 并在边界停止
+
+> status: active
+> date: 2026-08-09
+> 取代：无
+> 被取代：无
+> 依据：调研: R003 + 验证: V002 + 全文证据: 五篇 fresh reader logs + receipt
+> 触发原话: 无（技术推导；本轮用户消息为纯操作指令，按 voice 规范不收录）
+
+### 决策
+
+Groundwork Step 3 标为 `✅ completed`：五篇冻结 CORE 全文完成，canonical target-relevant Q# 共 1 条且四判据 4/4；本轮在 Step 3 边界停止。
+
+### 理由
+
+5/5 source preflight、标准字段、7 子表、通信参数、实验完备性、三篇写作架构和 owner/read-note/read-log/receipt 均闭合。Q1 的 M/C/A、方法产出形态、近期 baseline 与量化对标同时满足 glossary canonical 四判据；A 保持可证伪的 target inference，不要求 Step 3 已用 MVE 证明。
+
+### 排除的替代方案
+
+- 不增加 `problem_truth/novelty/actionability/thesis_fit` 语义门。
+- 不把 Q1 通过写成 target defect、novelty、Go、METHOD_SIGNAL 或方法成立。
+- 不以 Morelli/Yu/Paillier 证明 coherent-FSO target defect。
+- 不进入 Step 3.5/4a，不运行 smoke、实现、仿真、MVE、Contract 或 Execute。
+
+### 影响范围
+
+更新 R003、literature owner、五篇全局 read-note、read-log、receipt、topic-index、registry、master-state、V002 与 H002。Step 3.5 保持 `NOT_STARTED`；object/package failure 保持 `0/0`。
+
+### 来源
+
+S002 / R003 / V002 / T001。

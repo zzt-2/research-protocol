@@ -26,3 +26,31 @@
 ### 结论
 
 PASS。允许按 T003 一次性提交 Step 1–2 与治理同步；不授权 Step 3/3.5/4a、smoke、实现或仿真，不改变 object/package failure=`0/0`，不得 push。
+
+## V002: T001 Groundwork Step 3 独立终验
+
+> status: PASS
+> date: 2026-08-09
+> 关联：S002 / D004 / R003
+> verifier: fresh-context `/root/step3_verifier`
+> 证据报告：`projects/thesis-fso/worker-logs/step-3-rml-fsts-verifier.md`
+
+### 验证范围
+
+按 T001 §7.1 独立检查 12 项：仅 Step 3 边界；五篇 title/DOI/path/SHA/bytes 与 Yu adapter；5×标准字段、7 子表、通信参数与非 DRL N/A；五篇实验完备性与三篇写作架构；read-notes/read-log/literature owner 一致性；source/target 与 C3/C4 角色；缺失竞品承重边界；canonical Q# 四判据；Step 3 状态；literature/master/topic/registry/D004/H002 同步；failure=`0/0`；git/YAML/JSON/p05/禁区。
+
+### 初审
+
+`PARTIAL`，P0/P1/P2=`0/2/1`。两个 P1 分别为 L01/L02/L04 的 owner/read-log 相对 source path 无法无歧义解析到 receipt 冻结文件，以及 L02/L04 reader 将强制 Verification/Validation/Uncertainty 三轴误写成 Validity/Verifiability/Utility；一个 P2 是 Step 2 历史段仍以“当前状态”描述旧状态。其余 identity、字段、边界、Q1、机械门均通过。
+
+### 唯一最小修复
+
+未补文献、未改科学结论、未进入下游步骤。将 L01/L02/L04 owner/read-log 路径改为 receipt 的 shared absolute canonical，并在 L04 read-note 明确排除 worktree 内不同哈希副本；将 L02/L04 reader 统一为 Verification/Validation/Uncertainty=`2/2/2` 与 `2/2/1`；把旧状态句标明为“Step 2 结束时状态”。
+
+### 复核结果
+
+`PASS`，P0/P1/P2=`0/0/0`。三篇 shared canonical 3/3 存在且 hash/bytes 与 receipt 一致；五篇 reader 5/5 使用统一三轴并与 owner/read-note 汇总一致；literature/master/topic/registry/D004/H002 current view 一致；`git diff --check`、YAML/JSON parse、staged=0、四个 p05 日志 hash/no-stage、禁止路径 diff 全部通过。
+
+### 结论
+
+PASS。允许按 T001 一次性提交 Groundwork Step 3 产出与治理同步；Step 3.5 保持 NOT_STARTED，不授权 Step 3.5/4a、smoke、实现、仿真或 MVE，不改变 research-object/method-package failure=`0/0`，不得 push。

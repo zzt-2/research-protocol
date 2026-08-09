@@ -1,6 +1,6 @@
 # Topic Index: RML-FSTS Groundwork
 
-> 状态: active | 创建: 2026-08-08 | 最后更新: 2026-08-09（用户确认覆盖面，Step 3 派发就绪）
+> 状态: active | 创建: 2026-08-08 | 最后更新: 2026-08-09（Step 3 completed，边界停止）
 
 ## 专题信息
 
@@ -12,7 +12,7 @@
 
 **原始目标**：验证 RML-FSTS fixed-lag condition-dependence 是否能经完整 Groundwork 成为 Ch4 方法入口。
 
-**当前范围**：Step 1–2 已完成且用户已接受当前 5 篇合格 CORE 覆盖面；当前仅授权正式 Groundwork Step 3 全文精读，并在 Step 3 完成或阻塞状态硬停止。
+**当前范围**：Step 1–3 已完成；本执行任务已在 Step 3 边界停止。Step 3.5 尚未开始，只有新对话按框架执行才是下一合法动作。
 
 **明确不含**：Step 3.5、Step 4a、预注册 smoke、future action 设计/实现、仿真、MVE、Contract、Execute、METHOD_SIGNAL、Go/Kill；也不补跑新的 Step 1/2 检索或全文获取（Yu 2023 canonical path/title preflight 的字节一致适配除外）。
 
@@ -46,12 +46,12 @@
 - **V001**：独立终验初审唯一 P1 经 canonical ledger 最小补证后闭合；12 项回归 PASS，P0/P1/P2=`0/0/0`。
 - **H001**：只交接覆盖面状态与用户确认动作。
 - **S002 / D003 / T001**：用户确认覆盖面后完成 scope change；Step 3 精读当前 5 篇 CORE 的自包含任务已派发就绪，继续禁止 Step 3.5+。
+- **R003 / D004 / V002 / H002**：5/5全文与结构化提取完成；canonical Q1 四判据4/4；Step 3=`✅ completed`，独立验证 PASS 后在边界停止。
 
 ## 未决项
 
-- T001 能否完成 5/5 title/identity/canonical-path preflight 与全部精读字段？
-- 综合分析能否形成至少 1 条 glossary canonical 四判据全过的 Q#？
+- mandatory Step 3.5 能否补齐直接竞品债务并完成 novelty/competition closure？（本轮未执行）
 
 ## 当前位置
 
-`STEP3_DISPATCH_READY`。Step 2 覆盖面已由用户确认；T001 只授权 Step 3，尚未开始精读。Step 3.5/4a、smoke、实现和仿真仍未授权，object/package failure=`0/0`。
+Groundwork Step 3=`✅ completed`；Step 3.5=`⬜ NOT_STARTED`。本轮未进入 Step 3.5/4a，未运行 smoke、实现或仿真，object/package failure=`0/0`。下一合法动作仅为新对话执行 mandatory Step 3.5。
