@@ -1,0 +1,13 @@
+{
+  "schema":"coded-decoder-c1-search-fallback-v1",
+  "round":2,
+  "query":"same-frame cycle-slip repair strongest receiver-only pilot likelihood decision-directed comparator",
+  "direction":"causal timing, same-frame legality, and non-decoder comparator",
+  "actual_sources":["web_search","semantic_scholar","spie","google_patents"],
+  "results":[
+    {"title":"An Error-Threshold Based Joint Phase Estimation and Decoding Method for Non-Pilot-Aided Systems","year":2025,"pointer":"DOI 10.1109/FCN66513.2025.11296777 / S2 abstract","trigger":"WNSSP soft-LDPC syndrome belief","action":"parallel phase compensation + joint ML recovery","timing":"iterative same-frame; finite one-switch not stated","c1_relation":"STRONG_NEIGHBOR","priority":"必读","priority_reason":"正式、近期、decoder syndrome 直接驱动 recovery。"},
+    {"title":"Cycle slip mitigation scheme aided blind carrier phase recovery algorithms","year":2026,"pointer":"DOI 10.1117/12.3107192 / SPIE abstract","trigger":"phase-pilot amplitude labels","action":"mitigate cycle slips in blind CPR","timing":"receiver path; exact latency not stated","c1_relation":"BASELINE","priority":"必读","priority_reason":"近期正式 pilot/front-end comparator。"},
+    {"title":"Cycle Slip Compensation in a Coherent Receiver","year":2017,"pointer":"US20170126328A1","trigger":"pilot symbols and carrier-phase-noise position estimate","action":"detect and correct cycle slips","timing":"receiver same stream","c1_relation":"BASELINE","priority":"备选","priority_reason":"公开 receiver-only pilot correction architecture；专利而非论文。"},
+    {"title":"Post-FEC Performance of Pilot-Aided Carrier Phase Estimation over Cycle Slip","year":2019,"pointer":"DOI 10.3390/app9132749","trigger":"pilot-aided phase estimator","action":"measure/mitigate cycle-slip impact","timing":"post-FEC evaluation; direct relabel/recovery action not abstract-verified","c1_relation":"BASELINE","priority":"备选","priority_reason":"正式 optical pilot comparator；direct repair action 不作已验证声称。"}
+  ]
+}

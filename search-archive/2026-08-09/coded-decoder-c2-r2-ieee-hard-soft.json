@@ -1,0 +1,27 @@
+{
+  "query": "Performance analysis code aided iterative hard soft decision directed carrier phase recovery",
+  "count": 1,
+  "results": [
+    {
+      "title": "Performance analysis of code-aided iterative hard/soft decision-directed carrier phase recovery",
+      "authors": [
+        "Nan Wu",
+        "Hua Wang",
+        "Zhixin Li",
+        "Jingming Kuang"
+      ],
+      "abstract": "",
+      "year": 2012,
+      "venue": "2012 IEEE Global Communications Conference (GLOBECOM)",
+      "citation_count": 1,
+      "doi": "",
+      "url": "https://ieeexplore.ieee.org/document/6503711/",
+      "source": "ieee",
+      "priority": "备选",
+      "priority_reason": "2012 GLOBECOM 正式论文；题名给出 hard/soft decision-directed CPR，正是 C2 的 strongest conventional comparator 候选；当前无摘要，公式与信息时点待全文确认。",
+      "c2_relation": "BASELINE",
+      "evidence_pointer": "IEEE/Crossref metadata + DOI 10.1109/GLOCOM.2012.6503711",
+      "publication_status": "published"
+    }
+  ]
+}

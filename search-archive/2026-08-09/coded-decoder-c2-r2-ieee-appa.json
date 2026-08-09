@@ -1,0 +1,68 @@
+{
+  "query": "a priori probability aided phase estimation extrinsic turbo carrier phase",
+  "count": 3,
+  "results": [
+    {
+      "title": "Turbo APPA carrier phase recovery and signal detection for OFDM systems",
+      "authors": [
+        "Li Jim",
+        "Hou Meng",
+        "He Bo",
+        "Li Ming-Ming",
+        "Wu Wei-ling"
+      ],
+      "abstract": "",
+      "year": 2010,
+      "venue": "2010 2nd IEEE International Conference on Information Management and Engineering",
+      "citation_count": 0,
+      "doi": "",
+      "url": "https://ieeexplore.ieee.org/document/5477483/",
+      "source": "ieee",
+      "priority": "备选",
+      "priority_reason": "2010 IEEE 正式论文；APPA carrier recovery 同族，但 IEEE 元数据无摘要，是否由 decoder extrinsic 驱动为 AI推断，未验证。",
+      "c2_relation": "STRONG_NEIGHBOR",
+      "evidence_pointer": "IEEE document 5477483 metadata",
+      "publication_status": "published"
+    },
+    {
+      "title": "Novel iterative APPA carrier phase recovery and detection for turbo-coded systems",
+      "authors": [
+        "Bo He",
+        "Jun Li",
+        "MingMing Li",
+        "Meng Hou"
+      ],
+      "abstract": "",
+      "year": 2009,
+      "venue": "2009 IEEE International Conference on Communications Technology and Applications",
+      "citation_count": 2,
+      "doi": "",
+      "url": "https://ieeexplore.ieee.org/document/5349142/",
+      "source": "ieee",
+      "priority": "备选",
+      "priority_reason": "2009 IEEE 正式会议论文；APPA/turbo iterative phase recovery 是 L001 同族扩展，但当前 IEEE 元数据无摘要，输入与公式待确认。",
+      "c2_relation": "STRONG_NEIGHBOR",
+      "evidence_pointer": "IEEE metadata + document 5349142 / DOI 10.1109/ICCOMTA.2009.5349142",
+      "publication_status": "published"
+    },
+    {
+      "title": "Iterative carrier phase recovery suited to turbo-coded systems",
+      "authors": [
+        "Li Zhang",
+        "A.G. Burr"
+      ],
+      "abstract": "",
+      "year": 2004,
+      "venue": "IEEE Transactions on Wireless Communications",
+      "citation_count": 48,
+      "doi": "",
+      "url": "https://ieeexplore.ieee.org/document/1374933/",
+      "source": "ieee",
+      "priority": "备选",
+      "priority_reason": "2004 IEEE TWC 正式论文；S2 摘要明确 turbo decoder extrinsic LLR 进入迭代最大似然相位估计，动作合同与 C2 核心重合；虽非近年且只覆盖 BPSK/QPSK/AWGN，仍是不可绕过的奠基竞品。",
+      "c2_relation": "EXACT_COLLISION",
+      "evidence_pointer": "S2 abstract + DOI 10.1109/TWC.2004.837407",
+      "publication_status": "published"
+    }
+  ]
+}

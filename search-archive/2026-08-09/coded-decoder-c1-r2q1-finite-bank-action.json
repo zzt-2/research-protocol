@@ -1,0 +1,12 @@
+{
+  "schema":"coded-decoder-c1-search-fallback-v1",
+  "round":2,
+  "query":"finite candidate phase models decoder evidence select once same received frame",
+  "direction":"direct competitor trigger-to-action and finite-bank identity",
+  "actual_sources":["web_search","arxiv","crossref","semantic_scholar"],
+  "results":[
+    {"title":"Phase-Aware Code-Aided EM Algorithm for Blind Channel Estimation in PSK-Modulated OFDM","year":2025,"pointer":"arXiv:2511.21340","trigger":"decoder extrinsic model-evidence metric","action":"select one most-likely model from a finite symmetry-derived bank","timing":"once after initialization","c1_relation":"EXACT_COLLISION","priority":"待确认","priority_reason":"动作签名最接近 C1；正式版本与 matched total-budget 未确认。"},
+    {"title":"Code-aided frame synchronization and phase ambiguity resolution","year":2006,"pointer":"DOI 10.1109/TSP.2006.874844","trigger":"code-aided hypothesis metrics","action":"phase ambiguity hypothesis selection","timing":"frame receiver; split-BP timing AI推断，未验证","c1_relation":"EXACT_COLLISION","priority":"备选","priority_reason":"正式奠基 competitor；年代较早但直接压缩 generic C1 novelty。"},
+    {"title":"LDPC Code Aided Phase Ambiguity Resolution","year":2007,"pointer":"DOI 10.1109/IDC.2007.374550","trigger":"local parity-check evidence","action":"resolve phase ambiguity per sub-block","timing":"same coded block; exact switch schedule AI推断，未验证","c1_relation":"STRONG_NEIGHBOR","priority":"备选","priority_reason":"parity evidence 承重，但依赖 code construction。"}
+  ]
+}

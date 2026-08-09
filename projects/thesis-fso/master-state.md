@@ -5,7 +5,7 @@ method_type: 待定（精读后根据问题方法产出形态确定，见 glossa
 domain: comms
 created: 2026-06-21
 updated: 2026-08-09
-current_step: GROUNDWORK_STEP4A（🛑 INCONCLUSIVE_VERIFIED；reopen inputs not closed / verified）
+current_step: GROUNDWORK_STEP1_CANDIDATE_SET_EXHAUSTED_VERIFIED（coded decoder-feedback）
 current_stage: GROUNDWORK
 ---
 
@@ -35,7 +35,20 @@ current_stage: GROUNDWORK
 
 ### 当前控制面桥接
 
-> **2026-08-09 当前入口：Groundwork Step 1–3.5 `✅ completed`；Step 4a=`INCONCLUSIVE / VERIFIED`，terminal=`STEP4A_INCONCLUSIVE_INVALID_OR_BLOCKED_TESTBED`（D011/V007/H006）**。Ch4 reference-method extension D004/T003
+> **2026-08-09 当前终态：coded decoder-feedback Groundwork Step 1 candidate-set exhausted / verified（D004/V002/H001/CP005）**。Integrated v2.1=93 annotated→66 unique、50/66 published、6 must-read、7 sources、R2 C1/C2=`2/2`；C1/C2 core action exact collision，replacement=0。local terminal=`STEP1_NO_METHOD_ACTION_SURVIVOR`，framework disposition=`STEP1_CANDIDATE_SET_EXHAUSTED`，`canonical_mapping=null`；因未进入 Step 2/3、未形成 canonical M-C-A Q#，problem disposition=`NOT_EVALUATED_NO_Q_FORMED`。T011 fresh verifier A/B/C/D 全 PASS、P0/P1/P2=`0/0/0`，最终复查 `00:04:08.356`；HEAD/staging 与 p05 4/4 保护边界无漂移。survivor=0、method delta/贡献=`NONE`；Step 2/3/3.5/4a、adapter、fair comparison、MVE、Contract、Execute、实验与论文方法声称均 `NOT_RUN / NOT_AUTHORIZED`。专题 closed；只有不同 carrier action 新证据加显式 scope change 可重开。权威入口为 `.sessions/2026-08-09-coded-decoder-feedback-groundwork/topic-index.md`。
+
+| Coded decoder-feedback GW Step | 状态 | 证据 | 下游门控 |
+|---|---|---|---|
+| 0 recover / candidate converge | ✅ COMPLETE | S001/D001–D002/CP001–CP002；step-047–049；主控 source 核证 | C2/C1 两张机制不同预卡 |
+| 1 search | 🛑 CANDIDATE SET EXHAUSTED / VERIFIED | step-050–057；D003–D004/V001(PARTIAL)–V002(PASS)/H001；integrated v2.1=93→66、50 published；C1/C2 exact collision、replacement=0；T011 PASS | 不授权 Step 2；topic closed |
+| 2 acquire | ⬜ FORBIDDEN | D004 | Step 1 无 method-action survivor；problem 未评估 |
+| 3 read | ⬜ FORBIDDEN | — | Step 2 用户确认与全文获取未完成 |
+| 3.5 supplement | ⬜ FORBIDDEN | — | Step 3 Q# 未形成 |
+| 4a feasibility | ⬜ FORBIDDEN | — | Step 3/必要 3.5 未完成；不得建设 adapter |
+
+### 上一 formal 轨迹（RML-FSTS，dormant）
+
+> **2026-08-09 既有状态：Groundwork Step 1–3.5 `✅ completed`；Step 4a=`INCONCLUSIVE / VERIFIED`，terminal=`STEP4A_INCONCLUSIVE_INVALID_OR_BLOCKED_TESTBED`（D011/V007/H006）**。Ch4 reference-method extension D004/T003
 > 选择 Wang 2023 FSTS fixed-lag/`BL` condition-dependence 作为唯一独立 Groundwork research object。
 > Step 1 已用满 7/7 query：121 unique、4 actual sources、正式发表 58.68%、12 篇 shortlist，质量门 PASS。
 > Step 2 已获得 5 篇合格 CORE 并覆盖 C1–C4；T001 已完成5/5全文精读，canonical target Q1四判据4/4。D005/V003 已修正 A 的逻辑方向与近期 baseline 身份措辞。

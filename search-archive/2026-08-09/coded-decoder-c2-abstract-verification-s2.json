@@ -1,0 +1,10 @@
+{
+  "query": "S2 batch abstract cross-verification for 10 key DOIs",
+  "timestamp": "2026-08-09T19:30:39.524475+08:00",
+  "source": "Semantic Scholar Graph API batch",
+  "status": "blocked_rate_limit",
+  "http_status": 429,
+  "message": "Too Many Requests; no result accepted",
+  "total": 0,
+  "results": []
+}

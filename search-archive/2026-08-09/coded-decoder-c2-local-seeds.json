@@ -1,0 +1,92 @@
+{
+  "query": "mandatory local seed verification: decoder-feedback/code-aided carrier synchronization",
+  "timestamp": "2026-08-09T19:30:39.4473969+08:00",
+  "sources": [
+    "search-archive/_index/all-papers.jsonl"
+  ],
+  "total": 3,
+  "results": [
+    {
+      "doi": "10.1109/tvt.2025.3600028",
+      "title": "Code-Aided CFOs and CPOs Estimation in Cooperative Satellite Communication",
+      "year": 2023,
+      "venue": "IEEE Transactions on Vehicular Technology",
+      "citation_count": 5,
+      "arxiv_id": "2309.12828",
+      "abstract": "Low Earth Orbit (LEO) satellites have recently emerged as promising candidates for secure Internet of Remote Things (IoRT). However, in scenarios involving miniaturized terminals, limited transmission power and long distances often lead to diminished Signal-to-Noise Ratio (SNR) at satellite receivers, resulting in degraded communication quality. To address this challenge, the implementation of cooperative satellite systems has been proposed, where signals from multiple satellites are combined to improve SNR. Achieving optimal gain necessitates precise synchronization of carrier frequency and phase across all received signals, particularly challenging under low SNR conditions, and in short burst transmissions without training sequences. We propose an iterative code-aided estimation algorithm for joint estimation of Carrier Frequency Offset (CFO) and Carrier Phase Offset (CPO), employing Iterative Cross Entropy (ICE) and Cooperative Taylor Expansion of Objective Function (CTEOF). Simulation results show that our algorithm achieves accurate estimation within the normalized frequency range that exceeds existing algorithms and phase interval (-$\\pi$, +$\\pi$]. Moreover, the algorithm demonstrates the ability to approach the Bit Error Rate (BER) performance bounds with deviations of 0.3 dB and 0.4 dB in dual-satellite and quad-satellite collaboration scenarios, respectively.",
+      "source_apis": [
+        "semantic_scholar"
+      ],
+      "queries": [
+        "code-aided carrier recovery iterative optical communication",
+        "carrier synchronization APSK phase noise satellite communication ML"
+      ],
+      "first_seen_date": "2026-06-03",
+      "last_seen_date": "2026-07-07",
+      "hit_count": 2,
+      "key": "doi:10.1109/tvt.2025.3600028",
+      "id": "S001",
+      "source": "local_index_seed",
+      "priority": "必读",
+      "priority_reason": "2025 IEEE TVT 正式版（arXiv 2309.12828）；S2 摘要明确 iterative code-aided joint CFO/CPO estimation，但未说明 true decoder extrinsic 或 soft-symbol expectation。",
+      "c2_relation": "STRONG_NEIGHBOR",
+      "evidence_pointer": "local index S2 abstract + DOI 10.1109/TVT.2025.3600028 / arXiv 2309.12828",
+      "publication_status": "published"
+    },
+    {
+      "doi": "10.1109/access.2026.3653159",
+      "title": "Pilotless Iterative Carrier Synchronization With LDPC Partial Decision Metrics in Satellite Communications at Low SNRs",
+      "year": 2026,
+      "venue": "IEEE Access",
+      "citation_count": 0,
+      "arxiv_id": null,
+      "abstract": "This article mainly proposes a pilotless iterative carrier synchronization (ICS) by using the partial decision metrics (PDMs) from low-density parity-check (LDPC) decoding in quadrature phase shift keying (QPSK) satellite communications. It is effective for use in low power satellite or wireless communication systems at low signal-to-noise ratios (SNRs). By maximizing the squared sum of the PDMs of just a few LDPC decoding iterations with approximate stochastic gradient algorithm, it converges jointly the carrier phase and frequency parameters for much more synchronization accuracy. Besides, a two-stage hybrid ICS based carrier synchronization scheme is also supplemented to solve the phase ambiguity problem. In addition, the Costas loop tracking and the LDPC decoding feedback are united together to further cut residual carrier offsets. Simulation results show that the proposed ICS scheme obtains rather perfect performance in an LDPC coded QPSK satellite communication system at rather large carrier phase offsets. It obtains good performance, i.e., just within 0.1 dB away from the perfect symmetrical performance with a moderate computational complexity increment. A typical rate-1/2 LDPC coded QPSK scheme performs well even at low bit SNR ( $E_{b}/N_{0}$ ) of $1\\sim 2$ dB. Therefore, it is significantly pragmatic in low-power satellite and wireless communications for better battery-powered transmission efficiency.",
+      "source_apis": [
+        "semantic_scholar"
+      ],
+      "queries": [
+        "satellite optical carrier synchronization",
+        "carrier synchronization APSK phase noise satellite communication ML"
+      ],
+      "first_seen_date": "2026-06-22",
+      "last_seen_date": "2026-07-07",
+      "hit_count": 3,
+      "key": "doi:10.1109/access.2026.3653159",
+      "id": "S002",
+      "source": "local_index_seed",
+      "priority": "必读",
+      "priority_reason": "2026 IEEE Access；S2 摘要明确 LDPC partial decision metrics 经近似随机梯度联合收敛 phase/frequency，并把 Costas tracking 与 decoder feedback 连接；未证明 true L_post-L_apriori。",
+      "c2_relation": "STRONG_NEIGHBOR",
+      "evidence_pointer": "local index S2 abstract + DOI 10.1109/ACCESS.2026.3653159",
+      "publication_status": "published"
+    },
+    {
+      "doi": "10.1109/iwcmc58020.2023.10182805",
+      "title": "Code-Aided Carrier Synchronization with Adjustable Operating Ranges for Satellite Communications",
+      "year": 2023,
+      "venue": "International Conference on Wireless Communications and Mobile Computing",
+      "citation_count": 2,
+      "arxiv_id": null,
+      "abstract": "Due to limited link resources and increasing demand for data transmission, receivers in satellite communications are required to achieve carrier synchronization, demodulation, and decoding operations at low signal-to-noise ratio (SNR) conditions, thus making full use of the link budget. In this context, code-aided (CA) carrier synchronization is a promising solution, synchronizing low-SNR signals without additional pilot overhead. However, traditional CA carrier synchronization suffers from a narrow operating range and, in practice, performs poorly in tracking dynamic signals with large Doppler frequency offsets. To solve such a problem, we presents a low-complexity algorithm to improve the operating range of CA carrier synchronization. This algorithm tolerates large carrier offsets through coarse correction based on a confidence metric function (CMF). Additionally, a candidate list mechanism is introduced to reduce the computational overhead. The operating range of the algorithm can be adjusted by varying its parameters to sustain carrier recovery under different dynamic scenarios. Simulations verify the effectiveness of the proposed algorithm.",
+      "source_apis": [
+        "semantic_scholar"
+      ],
+      "queries": [
+        "satellite optical carrier synchronization",
+        "non-data-aided carrier recovery optical satellite",
+        "satellite optical communication carrier synchronization pilot-aided"
+      ],
+      "first_seen_date": "2026-06-22",
+      "last_seen_date": "2026-07-15",
+      "hit_count": 4,
+      "key": "doi:10.1109/iwcmc58020.2023.10182805",
+      "id": "S003",
+      "source": "local_index_seed",
+      "priority": "必读",
+      "priority_reason": "2023 IEEE 正式会议；S2 摘要给出 traditional CA 窄 operating range、CMF coarse correction 与 candidate list，是 problem-bearing conventional baseline；不以 decoder extrinsic 为核心。",
+      "c2_relation": "BASELINE",
+      "evidence_pointer": "local index S2 abstract + DOI 10.1109/IWCMC58020.2023.10182805",
+      "publication_status": "published"
+    }
+  ]
+}

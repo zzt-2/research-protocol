@@ -66,6 +66,25 @@ topics:
     produces:
       - .sessions/2026-08-08-ch4-reference-method-extension/
 
+  - slug: 2026-08-09-coded-decoder-feedback-groundwork
+    title: Coded decoder-feedback 方法主线 Groundwork
+    status: closed
+    created: "2026-08-09"
+    last_updated: "2026-08-09（D004/V002/H001/CP005：Step-1 candidate-set exhausted 语义/治理终验 PASS，专题关闭）"
+    description: "Ch4 coded decoder-feedback 方法生产主线已关闭。Integrated v2.1=93→66；C1/C2 core action exact collision，replacement=0，local terminal=STEP1_NO_METHOD_ACTION_SURVIVOR，framework=STEP1_CANDIDATE_SET_EXHAUSTED。未形成 Q#，故 canonical_mapping=null、problem=NOT_EVALUATED_NO_Q_FORMED；V002 P0/P1/P2=0/0/0。无 Step 2/adapter/fair comparison/方法贡献。"
+    depends_on:
+      - slug: 2026-07-20-research-direction-lab-system
+        reason: 继承 T010 C1/C2/C3 concept cards、D039-D040/V023、method-production 与 dead-end 证据
+      - slug: 2026-07-23-research-direction-lab-longitudinal-test
+        reason: 继承 P08/P08-R/P08-R2 corrected coded-chain 源码、artifact 与科学纠偏边界
+      - slug: 2026-07-09-thesis-writing
+        reason: 继承 Ch4 方法章槽位、贡献库存与论文结构约束
+    conflicts_with: []
+    produces:
+      - .sessions/2026-08-09-coded-decoder-feedback-groundwork/
+      - projects/thesis-fso/coded-decoder-feedback-groundwork/
+      - projects/simulation/explore/coded-decoder-feedback/
+
   - slug: 2026-08-08-rml-fsts-groundwork
     title: RML-FSTS fixed-lag condition-dependence Groundwork
     status: dormant

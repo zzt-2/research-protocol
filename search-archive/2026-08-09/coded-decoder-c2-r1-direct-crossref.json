@@ -1,0 +1,379 @@
+{
+  "query": "decoder aided carrier phase recovery LDPC extrinsic",
+  "timestamp": "2026-08-09T19:28:47.015835+08:00",
+  "sources": [
+    "crossref"
+  ],
+  "total": 15,
+  "results": [
+    {
+      "id": "X001",
+      "title": "Iterative LDPC-Hadamard Code-Aided Carrier Phase Synchronization at Extremely Low SNR",
+      "year": 2010,
+      "venue": "2010 International Conference on Communications and Mobile Computing",
+      "doi": "10.1109/cmc.2010.93",
+      "url": "https://doi.org/10.1109/cmc.2010.93",
+      "sources": [
+        "crossref"
+      ],
+      "source": "crossref",
+      "citation_count": 0,
+      "publication_status": "published",
+      "abstract": null,
+      "authors": [
+        "Fajian Tang",
+        "Zhiping Shi"
+      ],
+      "raw_source": "Crossref REST /works query.bibliographic",
+      "priority": "备选",
+      "priority_reason": "2010 正式会议论文；题名直接覆盖 LDPC code-aided phase synchronization，但当前无摘要，decoder 信息合同与动作细节为 AI推断，未验证。",
+      "c2_relation": "STRONG_NEIGHBOR",
+      "evidence_pointer": "Crossref/S2 metadata + DOI 10.1109/CMC.2010.93"
+    },
+    {
+      "id": "X002",
+      "title": "Decision-Directed Carrier Phase and Symbol Timing Recovery for LDPC-Coded Systems",
+      "year": 2010,
+      "venue": "2010 IEEE 72nd Vehicular Technology Conference - Fall",
+      "doi": "10.1109/vetecf.2010.5594466",
+      "url": "https://doi.org/10.1109/vetecf.2010.5594466",
+      "sources": [
+        "crossref"
+      ],
+      "source": "crossref",
+      "citation_count": 0,
+      "publication_status": "published",
+      "abstract": null,
+      "authors": [
+        "Hua Wang",
+        "Nan Wu",
+        "Jingming Kuang",
+        "Chaoxing Yan"
+      ],
+      "raw_source": "Crossref REST /works query.bibliographic",
+      "priority": "备选",
+      "priority_reason": "2010 IEEE VTC 正式论文；题名表明 decision-directed 相位/定时恢复，是同预算 hard-DD comparator 候选；摘要与公式尚未取得。",
+      "c2_relation": "BASELINE",
+      "evidence_pointer": "Crossref/S2 metadata + DOI 10.1109/VETECF.2010.5594466"
+    },
+    {
+      "id": "X003",
+      "title": "Simplified Iterative Symbol Timing and Carrier Phase Recovery Scheme for LDPC-Coded Systems",
+      "year": 2006,
+      "venue": "2006 International Conference on Wireless Communications, Networking and Mobile Computing",
+      "doi": "10.1109/wicom.2006.138",
+      "url": "https://doi.org/10.1109/wicom.2006.138",
+      "sources": [
+        "crossref"
+      ],
+      "source": "crossref",
+      "citation_count": 1,
+      "publication_status": "published",
+      "abstract": null,
+      "authors": [
+        "Liu An",
+        "Luo Wu"
+      ],
+      "raw_source": "Crossref REST /works query.bibliographic",
+      "priority": "备选",
+      "priority_reason": "正式老文且题名直接覆盖 LDPC 迭代定时/相位恢复，但当前无摘要；具体 decoder 输入、continuous update 与预算均为 AI推断，未验证。",
+      "c2_relation": "UNKNOWN",
+      "evidence_pointer": "Crossref/S2 metadata + DOI 10.1109/WICOM.2006.138"
+    },
+    {
+      "id": "X004",
+      "title": "Pilot-tone-Aided Two-stage Carrier Phase Recovery in dual-carrier Nyquist m-QAM Transmission System",
+      "year": 2014,
+      "venue": "CLEO: 2014",
+      "doi": "10.1364/cleo_si.2014.stu3j.2",
+      "url": "https://doi.org/10.1364/cleo_si.2014.stu3j.2",
+      "sources": [
+        "crossref"
+      ],
+      "source": "crossref",
+      "citation_count": 2,
+      "publication_status": "published",
+      "abstract": null,
+      "authors": [
+        "Jiachuan Lin",
+        "Zhaomin Zhang",
+        "Lixia Xi",
+        "Xiaoguang Zhang"
+      ],
+      "raw_source": "Crossref REST /works query.bibliographic",
+      "priority": "备选",
+      "priority_reason": "2014 正式光通信论文；提供 optical pilot-aided CPR comparator，但不含 decoder feedback，不能作为 C2 新颖性正证据。",
+      "c2_relation": "BASELINE",
+      "evidence_pointer": "Crossref metadata + DOI 10.1364/CLEO_SI.2014.STu3J.2"
+    },
+    {
+      "id": "X005",
+      "title": "Low Complexity Neural Network-Aided NMS LDPC Decoder",
+      "year": 2021,
+      "venue": "2021 Computing, Communications and IoT Applications (ComComAp)",
+      "doi": "10.1109/comcomap53641.2021.9652964",
+      "url": "https://doi.org/10.1109/comcomap53641.2021.9652964",
+      "sources": [
+        "crossref"
+      ],
+      "source": "crossref",
+      "citation_count": 8,
+      "publication_status": "published",
+      "abstract": null,
+      "authors": [
+        "Honghao Shi",
+        "Mingyang Zhong",
+        "Zhiyong Luo",
+        "Congduan Li"
+      ],
+      "raw_source": "Crossref REST /works query.bibliographic",
+      "priority": "排除",
+      "priority_reason": "仅改 LDPC decoder，不执行 carrier phase/CFO action。",
+      "c2_relation": "IRRELEVANT",
+      "evidence_pointer": "Crossref metadata + DOI 10.1109/COMCOMAP53641.2021.9652964"
+    },
+    {
+      "id": "X006",
+      "title": "Code-aided carrier phase synchronization algorithm for non-binary LDPC-CPM system",
+      "year": 2020,
+      "venue": "Eleventh International Conference on Graphics and Image Processing (ICGIP 2019)",
+      "doi": "10.1117/12.2557492",
+      "url": "https://doi.org/10.1117/12.2557492",
+      "sources": [
+        "crossref"
+      ],
+      "source": "crossref",
+      "citation_count": 1,
+      "publication_status": "published",
+      "abstract": null,
+      "authors": [
+        "Jianchao Yang",
+        "Jingpeng Gao",
+        "Xiaolin Liu"
+      ],
+      "raw_source": "Crossref REST /works query.bibliographic",
+      "priority": "建议读",
+      "priority_reason": "2020 正式论文；摘要明确 decoding soft information 反哺同步参数估计、同步器/解调器/译码器联合迭代；调制与时点不同，未证明 true extrinsic。",
+      "c2_relation": "STRONG_NEIGHBOR",
+      "evidence_pointer": "S2 abstract + DOI 10.1117/12.2557492"
+    },
+    {
+      "id": "X007",
+      "title": "Carrier phase recovery of LDPC-coded systems based on the likelihood difference algorithm",
+      "year": 2023,
+      "venue": "EURASIP Journal on Advances in Signal Processing",
+      "doi": "10.1186/s13634-023-00975-7",
+      "url": "https://doi.org/10.1186/s13634-023-00975-7",
+      "sources": [
+        "crossref"
+      ],
+      "source": "crossref",
+      "citation_count": 0,
+      "publication_status": "published",
+      "abstract": "<jats:title>Abstract</jats:title><jats:p>The problem of blind phase offset recovery of low density parity-check (LDPC)-coded systems is considered in this paper. We propose a new algorithm of phase offset estimation that involves the computation and maximization of a likelihood difference (LD)-based cost function calculated from the parity-check matrix of the code. We show in this paper that the new cost function has a simplified form compared to another algorithm proposed in the literature and presents similar estimation performance. Mean squared error (MSE) curves show very good performance of the proposed phase offset estimation algorithm, even at low signal-to-noise ratios.</jats:p>",
+      "authors": [
+        "Rodrigue Imad",
+        "Sebastien Houcke"
+      ],
+      "raw_source": "Crossref REST /works query.bibliographic",
+      "priority": "必读",
+      "priority_reason": "2023 正式期刊且题名直接覆盖 LDPC-coded CPR；是近期 comparator/competitor 候选。当前 Crossref 无摘要，likelihood-difference 输入与 true extrinsic 关系为 AI推断，未验证。",
+      "c2_relation": "STRONG_NEIGHBOR",
+      "evidence_pointer": "Crossref metadata + DOI 10.1186/s13634-023-00975-7"
+    },
+    {
+      "id": "X008",
+      "title": "Deep Reinforcement Learning Aided Scheduling Design for Pipelined Layered QC-LDPC Decoder",
+      "year": 2026,
+      "venue": "ICC 2026 - IEEE International Conference on Communications",
+      "doi": "10.1109/icc59461.2026.11587464",
+      "url": "https://doi.org/10.1109/icc59461.2026.11587464",
+      "sources": [
+        "crossref"
+      ],
+      "source": "crossref",
+      "citation_count": 0,
+      "publication_status": "published",
+      "abstract": null,
+      "authors": [
+        "Xia An",
+        "Chao Zhang",
+        "Jian Song",
+        "Jintao Wang"
+      ],
+      "raw_source": "Crossref REST /works query.bibliographic",
+      "priority": "排除",
+      "priority_reason": "只做 LDPC decoder scheduling，不执行载波同步动作。",
+      "c2_relation": "IRRELEVANT",
+      "evidence_pointer": "Crossref metadata + DOI 10.1109/ICC59461.2026.11587464"
+    },
+    {
+      "id": "X009",
+      "title": "LDPC decoder architectures",
+      "year": 2018,
+      "venue": "Resource Efficient LDPC Decoders",
+      "doi": "10.1016/b978-0-12-811255-7.00005-8",
+      "url": "https://doi.org/10.1016/b978-0-12-811255-7.00005-8",
+      "sources": [
+        "crossref"
+      ],
+      "source": "crossref",
+      "citation_count": 0,
+      "publication_status": "published",
+      "abstract": null,
+      "authors": [
+        "Vikram Arkalgud Chandrasetty",
+        "Syed Mahfuzul Aziz"
+      ],
+      "raw_source": "Crossref REST /works query.bibliographic",
+      "priority": "排除",
+      "priority_reason": "decoder architecture 章节，不是载波恢复/反馈方法。",
+      "c2_relation": "IRRELEVANT",
+      "evidence_pointer": "Crossref metadata + DOI 10.1016/B978-0-12-811255-7.00005-8"
+    },
+    {
+      "id": "X010",
+      "title": "Pilot-Aided Carrier Recovery in the Presence of Phase Noise",
+      "year": 2011,
+      "venue": "IEEE Transactions on Communications",
+      "doi": "10.1109/tcomm.2011.051311.100047",
+      "url": "https://doi.org/10.1109/tcomm.2011.051311.100047",
+      "sources": [
+        "crossref"
+      ],
+      "source": "crossref",
+      "citation_count": 76,
+      "publication_status": "published",
+      "abstract": null,
+      "authors": [
+        "Arnaldo Spalvieri",
+        "Luca Barletta"
+      ],
+      "raw_source": "Crossref REST /works query.bibliographic",
+      "priority": "备选",
+      "priority_reason": "2011 IEEE TCOM 正式论文；提供 phase-noise 下 pilot-aided carrier recovery conventional baseline，不含 decoder feedback。",
+      "c2_relation": "BASELINE",
+      "evidence_pointer": "Crossref metadata + DOI 10.1109/TCOMM.2011.051311.100047"
+    },
+    {
+      "id": "X011",
+      "title": "A Low-Complexity Noise-Aided Selective-Symbol Flip Decoder for Non-Binary LDPC Codes over QAM Channel",
+      "year": 2026,
+      "venue": "2026 Intermountain Engineering, Technology and Computing (IETC)",
+      "doi": "10.1109/ietc69527.2026.11568597",
+      "url": "https://doi.org/10.1109/ietc69527.2026.11568597",
+      "sources": [
+        "crossref"
+      ],
+      "source": "crossref",
+      "citation_count": 0,
+      "publication_status": "published",
+      "abstract": null,
+      "authors": [
+        "Zinnia Muntaha Mowri",
+        "Chris Winstead"
+      ],
+      "raw_source": "Crossref REST /works query.bibliographic",
+      "priority": "排除",
+      "priority_reason": "仅做 decoder symbol flipping；没有 phase/CFO update。",
+      "c2_relation": "IRRELEVANT",
+      "evidence_pointer": "Crossref metadata + DOI 10.1109/IETC69527.2026.11568597"
+    },
+    {
+      "id": "X012",
+      "title": "Joint Carrier Phase Estimation and Turbo Decoding Using Bit Carrier Phase APP Decoder",
+      "year": 2007,
+      "venue": "IEEE Transactions on Communications",
+      "doi": "10.1109/tcomm.2007.906402",
+      "url": "https://doi.org/10.1109/tcomm.2007.906402",
+      "sources": [
+        "crossref"
+      ],
+      "source": "crossref",
+      "citation_count": 5,
+      "publication_status": "published",
+      "abstract": null,
+      "authors": [
+        "Amir Saroka",
+        "Dan Raphaeli"
+      ],
+      "raw_source": "Crossref REST /works query.bibliographic",
+      "priority": "备选",
+      "priority_reason": "2007 IEEE TCOM 正式论文；题名直接联合 phase estimation 与 turbo decoding，是奠基动作邻居；当前无摘要，APP 内部公式与 C2 soft-symbol update 等价性待确认。",
+      "c2_relation": "STRONG_NEIGHBOR",
+      "evidence_pointer": "Crossref metadata + DOI 10.1109/TCOMM.2007.906402"
+    },
+    {
+      "id": "X013",
+      "title": "Design of ultra high throughput rate NB-LDPC decoder",
+      "year": null,
+      "venue": null,
+      "doi": "10.70675/c396f604z6e16z43e8zb9c7z5ea36f30c1a0",
+      "url": "https://doi.org/10.70675/c396f604z6e16z43e8zb9c7z5ea36f30c1a0",
+      "sources": [
+        "crossref"
+      ],
+      "source": "crossref",
+      "citation_count": 0,
+      "publication_status": "published",
+      "abstract": "<jats:title>Conception du décodeur NB-LDPC à débit ultra-élevé</jats:title>\n                <jats:p xml:lang=\"fr\">Les codes correcteurs d’erreurs Non-Binaires Low Density Parity Check (NB-LDPC) sont connus pour avoir de meilleure performance que les codes LDPC binaires. Toutefois, la complexité de décodage des codes non-binaires est bien supérieure à celle des codes binaires. L’objectif de cette thèse est de proposer de nouveaux algorithmes et de nouvelles architectures matérielles de code NB-LDPC pour le décodage des NBLDPC. La première contribution de cette thèse consiste à réduire la complexité du nœud de parité en triant en amont ses messages d’entrées. Ce tri initial permet de rendre certains états très improbables et le matériel requis pour les traiter peut tout simplement être supprimé. Cette suppression se traduit directement par une réduction de la complexité du décodeur NB-LDPC, et ce, sans affecter significativement les performances de décodage. Un modèle d’architecture, appelée \"architecture hybride\" qui combine deux algorithmes de l’état de l’art (\"l’Extended Min Sum\" et le \"Syndrome Based\") a été proposé afin d’exploiter au maximum le pré-tri. La thèse propose aussi de nouvelles méthodes pour traiter les nœuds de variable dans le contexte d’une architecture pré-tri. Différents exemples d’implémentations sont donnés pour des codes NB-LDPC sur GF(64) et GF(256). En particulier, une architecture très efficace de décodeur pour un code de rendement 5/6 sur GF(64) est présentée. Cette architecture se caractérise par une architecture de check node nœud de parité entièrement parallèle. Enfin, une problématique récurrente dans les architectures NB-LDPC, qui est la recherche des P minimums parmi une liste de taille Ns, est abordée. La thèse propose une architecture originale appelée first-then-second minimum pour une implantation efficace de cette tâche.</jats:p>",
+      "authors": [
+        "Hassan Harb"
+      ],
+      "raw_source": "Crossref REST /works query.bibliographic",
+      "priority": "排除",
+      "priority_reason": "decoder throughput/hardware 主题，不是 carrier recovery。",
+      "c2_relation": "IRRELEVANT",
+      "evidence_pointer": "Crossref metadata"
+    },
+    {
+      "id": "X014",
+      "title": "LDPC Code Aided Phase Ambiguity Resolution",
+      "year": 2007,
+      "venue": "2007 Information, Decision and Control",
+      "doi": "10.1109/idc.2007.374550",
+      "url": "https://doi.org/10.1109/idc.2007.374550",
+      "sources": [
+        "crossref"
+      ],
+      "source": "crossref",
+      "citation_count": 3,
+      "publication_status": "published",
+      "abstract": null,
+      "authors": [
+        "Sridhar Karuppasami",
+        "William G. Cowley"
+      ],
+      "raw_source": "Crossref REST /works query.bibliographic",
+      "priority": "备选",
+      "priority_reason": "2007 IEEE 正式论文；更接近 C1 的 phase ambiguity resolution，也可限定 C2 边界；无摘要，continuous update 不得推断。",
+      "c2_relation": "STRONG_NEIGHBOR",
+      "evidence_pointer": "Crossref metadata + DOI 10.1109/IDC.2007.374550"
+    },
+    {
+      "id": "X015",
+      "title": "Hardware implementation of a modified SSD LDPC decoder",
+      "year": 2021,
+      "venue": "International Journal of Computer Aided Engineering and Technology",
+      "doi": "10.1504/ijcaet.2021.10036252",
+      "url": "https://doi.org/10.1504/ijcaet.2021.10036252",
+      "sources": [
+        "crossref"
+      ],
+      "source": "crossref",
+      "citation_count": 1,
+      "publication_status": "published",
+      "abstract": null,
+      "authors": [
+        "A. Rajagopal",
+        "K.S. Vasundara Patel",
+        "K. Karibasappa"
+      ],
+      "raw_source": "Crossref REST /works query.bibliographic",
+      "priority": "排除",
+      "priority_reason": "LDPC decoder hardware 实现，不含 carrier action。",
+      "c2_relation": "IRRELEVANT",
+      "evidence_pointer": "Crossref metadata + DOI 10.1504/IJCAET.2021.10036252"
+    }
+  ]
+}
