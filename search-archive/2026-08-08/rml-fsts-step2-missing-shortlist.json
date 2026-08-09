@@ -1,0 +1,12 @@
+{
+  "query": "RML-FSTS Step 2 missing shortlist acquisition input",
+  "results": [
+    {"id": "S02", "title": "Symmetric Training Sequence-Based Carrier Frequency Offset Estimation Scheme for Coherent Free-Space Optical Communication", "doi": "10.1109/JPHOT.2022.3161795", "year": 2022, "publication_status": "published"},
+    {"id": "S04", "title": "Training-Aided Joint Frame and Frequency Synchronization for Free Space Optical Communication Signals with Low OSNR", "doi": "10.1016/J.OPTCOM.2020.126046", "year": 2020, "publication_status": "published"},
+    {"id": "S05", "title": "Implementation of Training-Sequence Based Carrier Frequency Offset Estimator with Multi-Correlation-Lag", "doi": "10.1109/CHINACOM.2009.5339877", "year": 2009, "publication_status": "published"},
+    {"id": "S07", "title": "An Efficient Carrier Synchronization Scheme for Demodulation Systems", "doi": "10.3390/electronics10232942", "year": 2021, "publication_status": "published"},
+    {"id": "S08", "title": "A Practical Scheme for Frequency Offset Estimation in MIMO-OFDM Systems", "doi": "10.1155/2009/821819", "year": 2009, "publication_status": "published"},
+    {"id": "S10", "title": "Real-Time Low-Complexity Diversity Combining Algorithm for Free Space Coherent Optical Communication Systems over Atmospheric Turbulence Channel", "doi": "10.1364/OE.505931", "year": 2023, "publication_status": "published"},
+    {"id": "S11", "title": "Performance Analysis of a Spatial Diversity Coherent FSO System Based on Optimal Branch Block Phase Correction", "doi": "10.1364/OE.448956", "year": 2022, "publication_status": "published"}
+  ]
+}

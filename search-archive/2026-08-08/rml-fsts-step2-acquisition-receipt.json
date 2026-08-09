@@ -1,0 +1,64 @@
+{
+  "date": "2026-08-08",
+  "task": "T003-rml-fsts-groundwork-step1-step2",
+  "shortlist_count": 12,
+  "publication_status": {"published": 12, "preprint": 0, "unknown": 0},
+  "acquisition_rounds": [
+    {"round": 0, "tool": "python tools/paper_download.py (tools/download wrapper equivalent; wrapper CRLF failed before dispatch)", "mode": "--dry-run", "input": "search-archive/2026-08-08/rml-fsts-step2-missing-shortlist.json", "result": "PASS: seven initially missing shared-library identities were previewed"},
+    {"round": 1, "tool": "python tools/paper_download.py", "mode": "batch OA/arXiv/Unpaywall", "result": {"qualified_new": ["10.1155/2009/821819"], "tool_failed": ["10.1109/JPHOT.2022.3161795", "10.1016/J.OPTCOM.2020.126046", "10.1109/CHINACOM.2009.5339877", "10.3390/electronics10232942", "10.1364/OE.505931", "10.1364/OE.448956"]}, "notes": "controller timeout interrupted the first invocation after S05; the same first round was continued only for S07/S08/S10/S11. No semantic query was added."},
+    {"round": 2, "tool": "search-archive/_index/all-papers.jsonl + papers/index.json local formal-identity audit", "mode": "failed items only", "result": "No formal arXiv id or author-manuscript identity was present for the failed items; therefore no unverified manuscript URL was invented or retried."},
+    {"round": 3, "tool": "python tools/blit.py --source ieee --download", "mode": "single IEEE-specialized round for Tang 2022 and Dong 2009", "result": "IEEE identities resolved exactly; 0/2 PDFs downloaded because the local blit path raised a GBK encoding error. Non-IEEE failures were not retried through blit."}
+  ],
+  "qualified_core": [
+    {
+      "doi": "10.1109/JPHOT.2023.3265847", "title": "Carrier FOE Scheme Based on FSTS in Spatial Diversity PM Coherent FSO Communication", "core": ["C1", "C2", "C4"], "publication_status": "published",
+      "provenance": "shared library; metadata success/firecrawl_scrape/html; full text independently checked",
+      "content_path": "D:/code/study/research-protocol/papers/doi/10.1109_jphot.2023.3265847/content.md", "content_sha256": "E30A66FE650FF065C65746943B52CC48AFC0476900F90421FEBD1F9B5D351A9F", "content_bytes": 55349, "content_total_lines": 455, "content_effective_lines": 251,
+      "source_path": null, "source_sha256": null, "source_bytes": null, "identity": "PASS", "quality": "PASS"
+    },
+    {
+      "doi": "10.1364/OE.520452", "title": "Enhanced Frame Synchronization and Carrier Recovery in Coherent FSO Communication: a Pseudo-Random and Cyclic QPSK Approach", "core": ["C2", "C4"], "publication_status": "published",
+      "provenance": "shared library; metadata success/firecrawl_scrape/html; full text independently checked",
+      "content_path": "D:/code/study/research-protocol/papers/doi/10.1364_oe.520452/content.md", "content_sha256": "49A7FD02DB0A2758E3998C678F56190FBAA9D029D4CBA346320A8E94F8193EDD", "content_bytes": 95745, "content_total_lines": 891, "content_effective_lines": 497,
+      "source_path": null, "source_sha256": null, "source_bytes": null, "identity": "PASS", "quality": "PASS_WITH_FORMULA_RENDERING_LIMITATION"
+    },
+    {
+      "doi": "10.1155/2009/821819", "title": "A Practical Scheme for Frequency Offset Estimation in MIMO-OFDM Systems", "core": ["C3"], "publication_status": "published",
+      "provenance": "worktree acquisition round 1; Unpaywall PDF; title_check=match",
+      "content_path": "D:/code/study/research-protocol/.worktrees/rdl-method-production-v2/papers/doi/10.1155_2009_821819/content.md", "content_sha256": "E565C4E846324013B276E0246FA087FD3518746F6A3791D7D95D300C4B78E132", "content_bytes": 40638, "content_total_lines": 381, "content_effective_lines": 192,
+      "source_path": "D:/code/study/research-protocol/.worktrees/rdl-method-production-v2/papers/doi/10.1155_2009_821819/source.pdf", "source_sha256": "52896C0947E5F5B9F36402C18EBAD0D2FB4478F24EBBCB86B4D80024571E39D6", "source_bytes": 367272, "identity": "PASS", "quality": "PASS_WITH_FORMULA_IMAGE_LIMITATION"
+    },
+    {
+      "doi": "10.1109/JLT.2020.3003561", "title": "Space-Ground Coherent Optical Links: Ground Receiver Performance With Adaptive Optics and Digital Phase-Locked Loop", "core": ["C4"], "publication_status": "published",
+      "provenance": "shared library; arXiv 1911.11851 LaTeX conversion; full text independently checked",
+      "content_path": "D:/code/study/research-protocol/papers/doi/10.1109_jlt.2020.3003561/content.md", "content_sha256": "62E3BFDF6B803069342B49DC6D9F666899BD7257841E42D9A5003CFDFF5A9662", "content_bytes": 46966, "content_total_lines": 243, "content_effective_lines": 110,
+      "source_path": "D:/code/study/research-protocol/papers/doi/10.1109_jlt.2020.3003561/source.tar.gz", "source_sha256": "439F80ACE73DC7DFA3AE7628F7DD054B485C1FF2DF02107D535AA254E7C0FA6B", "source_bytes": 951304, "identity": "PASS_WITH_INCOMPLETE_FRONT_MATTER", "quality": "PASS"
+    },
+    {
+      "doi": "10.1109/TVT.2022.3218937", "title": "Joint Physical Layer Frame Optimization and Carrier Synchronization for Satellite Communications", "core": ["C3"], "publication_status": "published",
+      "provenance": "shared library PDF and full source.md; independent full-text identity check overrides header-only title checker mismatch",
+      "content_path": "D:/code/study/research-protocol/papers/doi/10.1109_tvt.2022.3218937/source.md", "content_sha256": "97DB13AB40E6548AE70A01C12027B7085CA3123976353C5683DAE3350D8924A6", "content_bytes": 72748, "content_total_lines": 718, "content_effective_lines": 318,
+      "source_path": "D:/code/study/research-protocol/papers/doi/10.1109_tvt.2022.3218937/source.pdf", "source_sha256": "C10EF0EB99F48865C94CC456FAAFDD59AE52E15144DAB9EC8FF47752E9A555EA", "source_bytes": 1644909, "identity": "PASS_BY_FULL_TEXT", "quality": "PASS_WITH_EQUATION_AND_FIGURE_OMISSIONS"
+    }
+  ],
+  "nonqualifying_content": [
+    {"doi": "10.1109/JPHOT.2022.3161795", "reason": "identity and 119 effective lines pass, but current metadata says failed/all_failed with an empty content_file despite the pre-existing PDF/content; provenance is internally inconsistent", "content_path": "D:/code/study/research-protocol/.worktrees/rdl-method-production-v2/papers/doi/10.1109_jphot.2022.3161795/content.md", "content_sha256": "DB526BA5E1787EFBD05034BD7759E5CCC4DDCA34311C979A35464176DB40FB69", "content_bytes": 36071, "content_total_lines": 278, "content_effective_lines": 119, "source_sha256": "E7D281A30FC15EBFC4AD20AC80985FD627C7B3FCC70E40E7BAFB41231DDAD1CE", "source_bytes": 2413149},
+    {"doi": "10.1109/WiSEE61249.2024.10850117", "reason": "identity and 112 effective lines pass, but metadata says failed/all_failed while PDF/content exist; excluded from the five-paper gate to avoid relying on inconsistent provenance", "content_path": "D:/code/study/research-protocol/papers/doi/10.1109_wisee61249.2024.10850117/content.md", "content_sha256": "214343F9705ADA66A469102BD72035761CD3CF235C1171EF7334946CE5ECC14E", "content_bytes": 35131, "content_total_lines": 268, "content_effective_lines": 112, "source_sha256": "87222B75547F88C038C43739C616865853787CA5B4FE5336DE145C061DD340CE", "source_bytes": 1185870}
+  ],
+  "failed_after_stop_loss": [
+    {"doi": "10.1016/J.OPTCOM.2020.126046", "core": ["C2", "C4"], "importance": "low-OSNR task-matched comparator", "manual_action": "obtain a lawful author/publisher PDF and run tools/convert"},
+    {"doi": "10.1109/CHINACOM.2009.5339877", "core": ["C3"], "importance": "exact-title multi-correlation-lag prior art", "manual_action": "download IEEE PDF manually and run tools/convert"},
+    {"doi": "10.3390/electronics10232942", "core": ["C3"], "importance": "multi-pilot-block correlation comparator", "manual_action": "obtain the publisher PDF and run tools/convert"},
+    {"doi": "10.1364/OE.505931", "core": ["C4"], "importance": "real-time low-SNR diversity/CPR transfer evidence", "manual_action": "obtain the Optica PDF and run tools/convert"},
+    {"doi": "10.1364/OE.448956", "core": ["C4"], "importance": "branch phase-asynchrony transfer evidence", "manual_action": "obtain the Optica PDF and run tools/convert"}
+  ],
+  "core_coverage": {
+    "C1_source_baseline": ["10.1109/JPHOT.2023.3265847"],
+    "C2_2019plus_task_matched": ["10.1109/JPHOT.2023.3265847", "10.1364/OE.520452"],
+    "C3_multilag_stepwise_or_strong_singlelag": ["10.1155/2009/821819", "10.1109/TVT.2022.3218937"],
+    "C4_coherent_fso_transfer": ["10.1109/JPHOT.2023.3265847", "10.1364/OE.520452", "10.1109/JLT.2020.3003561"]
+  },
+  "qualified_core_count": 5,
+  "terminal": "STEP2_READY_FOR_USER_CONFIRMATION",
+  "claim_boundary": "The full texts close only the acquisition coverage gate. They do not establish a target coherent-FSO lag-ranking crossover, conditioned-single-lag failure, novelty, Q#, Go/Kill, or authorization for Step 3."
+}

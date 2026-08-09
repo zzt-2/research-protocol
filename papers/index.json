@@ -258,10 +258,12 @@
     },
     "doi:10.1364/oe.505931": {
       "path": "papers\\doi\\10.1364_oe.505931",
-      "doi": "10.1364/oe.505931",
-      "title": "",
+      "doi": "10.1364/OE.505931",
+      "title": "Real-Time Low-Complexity Diversity Combining Algorithm for Free Space Coherent Optical Communication Systems over Atmospheric Turbulence Channel",
       "status": "failed",
-      "batches": [],
+      "batches": [
+        "rml-fsts-step2-missing-shortlist"
+      ],
       "title_check": null
     },
     "doi:10.1364/oe.520452": {
@@ -427,6 +429,36 @@
       "status": "success",
       "batches": [],
       "title_check": "unverifiable"
+    },
+    "doi:10.3390/electronics10232942": {
+      "path": "papers\\doi\\10.3390_electronics10232942",
+      "doi": "10.3390/electronics10232942",
+      "title": "An Efficient Carrier Synchronization Scheme for Demodulation Systems",
+      "status": "failed",
+      "batches": [
+        "rml-fsts-step2-missing-shortlist"
+      ],
+      "title_check": null
+    },
+    "doi:10.1364/oe.448956": {
+      "path": "papers\\doi\\10.1364_oe.448956",
+      "doi": "10.1364/OE.448956",
+      "title": "Performance Analysis of a Spatial Diversity Coherent FSO System Based on Optimal Branch Block Phase Correction",
+      "status": "failed",
+      "batches": [
+        "rml-fsts-step2-missing-shortlist"
+      ],
+      "title_check": null
+    },
+    "doi:10.1155/2009/821819": {
+      "path": "papers\\doi\\10.1155_2009_821819",
+      "doi": "10.1155/2009/821819",
+      "title": "A Practical Scheme for Frequency Offset Estimation in MIMO-OFDM Systems",
+      "status": "success",
+      "batches": [
+        "rml-fsts-step2-missing-shortlist"
+      ],
+      "title_check": "match"
     }
   }
 }

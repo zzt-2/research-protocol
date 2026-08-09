@@ -1,0 +1,3030 @@
+{
+  "schema": "rml-fsts-step1-canonical-ledger-v1",
+  "generation": {
+    "script": ".superpowers/sdd/rml_fsts_build_ledger.py",
+    "inputs": [
+      "rml-fsts-step1-q1-fixed-lag.json",
+      "rml-fsts-step1-q2-multilag.json",
+      "rml-fsts-step1-q3-fso-transfer.json",
+      "rml-fsts-step1-q6-route-b-prior-art.json",
+      "rml-fsts-step1-q7-route-b-conditioned.json"
+    ],
+    "local_index": "search-archive/_index/all-papers.jsonl",
+    "identity_rule": "manual collision map from staged second-round evidence, then DOI, then normalized title"
+  },
+  "query_audit": {
+    "Q1": {
+      "raw_stdout_observed": 40,
+      "dedup_stdout_observed": 40,
+      "raw_source_occurrences_observed": {
+        "serpapi_scholar": 20,
+        "tavily": 20
+      },
+      "retained": 15,
+      "evidence_semantics": "raw/dedup are contemporaneous captured stdout observations; retained artifact is independently hashed below"
+    },
+    "Q2": {
+      "raw_stdout_observed": 41,
+      "dedup_stdout_observed": 41,
+      "raw_source_occurrences_observed": {
+        "openalex": 1,
+        "serpapi_scholar": 20,
+        "tavily": 20
+      },
+      "retained": 27,
+      "evidence_semantics": "raw/dedup are contemporaneous captured stdout observations; retained artifact is independently hashed below"
+    },
+    "Q3": {
+      "raw_stdout_observed": null,
+      "source_occurrences_recomputed": 71,
+      "retained": 60,
+      "evidence_semantics": "stdout was unavailable after controller timeout; source occurrences and unique retained identities remain explicitly separated"
+    },
+    "filtered_artifacts": {
+      "Q1": {
+        "path": "search-archive/2026-08-08/frame-synchronous-training-sequence-fsts-carrier-frequency-o.json",
+        "sha256": "86E321440E067B0AF5191C48341645A03D7B2C53C21D75A9C2B3555AEDCE79A5",
+        "retained_results": 15,
+        "retained_source_api": {
+          "serpapi_scholar": 6,
+          "tavily": 9
+        }
+      },
+      "Q2": {
+        "path": "search-archive/2026-08-08/multi-lag-stepwise-autocorrelation-correlation-distance-carr.json",
+        "sha256": "D4BFBE4A3B5D99622E3EFF5DE3DB33E6AE1477B707DBF1B059160B201B514509",
+        "retained_results": 27,
+        "retained_source_api": {
+          "serpapi_scholar": 10,
+          "tavily": 17
+        }
+      },
+      "Q3": {
+        "path": "search-archive/2026-08-08/coherent-free-space-optical-spatial-diversity-turbulence-low.json",
+        "sha256": "4F17349DE0EDEF6A6D7774A4076A30373CAD0CBAF7D58ECDD86B3F6E43C8A211",
+        "retained_results": 60,
+        "retained_source_api": {
+          "semantic_scholar+semantic_scholar": 1,
+          "semantic_scholar": 20,
+          "serpapi_scholar": 22,
+          "serpapi_scholar+serpapi_scholar": 4,
+          "openalex+openalex+openalex": 1,
+          "serpapi_scholar+openalex": 1,
+          "serpapi_scholar+semantic_scholar": 2,
+          "openalex": 8,
+          "semantic_scholar+openalex": 1
+        }
+      }
+    }
+  },
+  "summary": {
+    "json_input_records": 123,
+    "route_report_supplements": 8,
+    "merged_input_records": 131,
+    "duplicates_removed": 10,
+    "canonical_unique": 121,
+    "published": 71,
+    "published_ratio": 0.5868,
+    "priority_after_identity_dedup": {
+      "必读": 10,
+      "待确认": 16,
+      "排除": 56,
+      "建议读": 14,
+      "备选": 25
+    }
+  },
+  "manual_collision_groups": {
+    "alias:wang-2023-fsts": [
+      "q1:L001",
+      "q3:L001"
+    ],
+    "alias:ttqp-2024": [
+      "q1:L004",
+      "q3:L002"
+    ],
+    "alias:satellite-low-power-title-collision": [
+      "q1:L005",
+      "q3:L010"
+    ],
+    "alias:dong-2009-multicorrelation": [
+      "q2:L010",
+      "q2:L011",
+      "q6:L006"
+    ],
+    "alias:underwater-time-varying-cfo": [
+      "q2:L014",
+      "q2:L023"
+    ],
+    "alias:morelli-2009": [
+      "q2:L016",
+      "q6:L004"
+    ],
+    "alias:oe-2022-branch-phase": [
+      "q3:L020",
+      "q3:L021"
+    ],
+    "alias:fine-cfo-comparative": [
+      "q1:L010",
+      "q2:L006"
+    ],
+    "alias:frame-based-title-collision": [
+      "q1:L009",
+      "q1:L014"
+    ]
+  },
+  "formal_identity_upgrades": {
+    "q1:L002": {
+      "doi": "10.1109/JPHOT.2022.3161795",
+      "venue": "IEEE Photonics Journal",
+      "basis": "route-a report + local index"
+    },
+    "q1:L003": {
+      "doi": "10.1109/ACCESS.2026.3701043",
+      "venue": "IEEE Access",
+      "basis": "route-a report + local index"
+    },
+    "q1:L007": {
+      "doi": "10.1109/LPT.2017.2759584",
+      "venue": "IEEE Photonics Technology Letters",
+      "basis": "route-a report + local index"
+    },
+    "alias:underwater-time-varying-cfo": {
+      "doi": "10.1016/j.sigpro.2021.108299",
+      "venue": "Signal Processing",
+      "basis": "route-b report + local index"
+    },
+    "q3:L009": {
+      "doi": "10.1364/OE.520452",
+      "venue": "Optics Express",
+      "basis": "route-a/route-c reports + local index"
+    }
+  },
+  "records": [
+    {
+      "identity_key": "alias:dong-2009-multicorrelation",
+      "title": "Implementation of training-sequence based carrier frequency offset estimator with multi-correlation-lag",
+      "doi": "10.1109/CHINACOM.2009.5339877",
+      "venue": "2009 Fourth International Conference on Communications and Networking in China",
+      "year": 2009,
+      "origin_refs": [
+        "q2:L010",
+        "q2:L011",
+        "q6:L006"
+      ],
+      "input_record_count": 3,
+      "dedup_basis": "manual identity collision listed in second-round report",
+      "priority": "必读",
+      "priority_inputs": [
+        "必读",
+        "排除",
+        "必读"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1109/CHINACOM.2009.5339877; venue=2009 Fourth International Conference on Communications and Networking in China",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21797,
+        "key": "doi:10.1109/chinacom.2009.5339877",
+        "title": "Implementation of training-sequence based carrier frequency offset estimator with multi-correlation-lag",
+        "venue": "2009 Fourth International Conference on Communications and Networking in China"
+      },
+      "canonical_id": "U001"
+    },
+    {
+      "identity_key": "alias:fine-cfo-comparative",
+      "title": "Fine carrier frequency offset estimation for OFDM and MIMO-OFDM systems: A comparative study",
+      "doi": null,
+      "venue": "[web]",
+      "year": null,
+      "origin_refs": [
+        "q1:L010",
+        "q2:L006"
+      ],
+      "input_record_count": 2,
+      "dedup_basis": "manual identity collision listed in second-round report",
+      "priority": "待确认",
+      "priority_inputs": [
+        "备选",
+        "待确认"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U002"
+    },
+    {
+      "identity_key": "alias:frame-based-title-collision",
+      "title": "(PDF) Carrier Frequency Offset Estimation Scheme Based on Frame ...",
+      "doi": null,
+      "venue": "[web]",
+      "year": null,
+      "origin_refs": [
+        "q1:L009",
+        "q1:L014"
+      ],
+      "input_record_count": 2,
+      "dedup_basis": "manual identity collision listed in second-round report",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除",
+        "排除"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U003"
+    },
+    {
+      "identity_key": "alias:morelli-2009",
+      "title": "A Practical Scheme for Frequency Offset Estimation in MIMO-OFDM Systems",
+      "doi": "10.1155/2009/821819",
+      "venue": "EURASIP Journal on Wireless Communications and Networking",
+      "year": 2009,
+      "origin_refs": [
+        "q2:L016",
+        "q6:L004"
+      ],
+      "input_record_count": 2,
+      "dedup_basis": "manual identity collision listed in second-round report",
+      "priority": "建议读",
+      "priority_inputs": [
+        "待确认",
+        "建议读"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1155/2009/821819; venue=EURASIP Journal on Wireless Communications and Networking",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21795,
+        "key": "doi:10.1155/2009/821819",
+        "title": "A Practical Scheme for Frequency Offset Estimation in MIMO-OFDM Systems",
+        "venue": "EURASIP Journal on Wireless Communications and Networking"
+      },
+      "canonical_id": "U004"
+    },
+    {
+      "identity_key": "alias:oe-2022-branch-phase",
+      "title": "Performance analysis of a spatial diversity coherent free-space optical communication system based on optimal branch block phase correction.",
+      "doi": "10.1364/OE.448956",
+      "venue": "Optics Express",
+      "year": 2022,
+      "origin_refs": [
+        "q3:L020",
+        "q3:L021"
+      ],
+      "input_record_count": 2,
+      "dedup_basis": "manual identity collision listed in second-round report",
+      "priority": "必读",
+      "priority_inputs": [
+        "必读",
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1364/OE.448956; venue=Optics Express",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 16296,
+        "key": "doi:10.1364/oe.448956",
+        "title": "Performance analysis of a spatial diversity coherent free-space optical communication system based on optimal branch block phase correction.",
+        "venue": "Optics Express"
+      },
+      "canonical_id": "U005"
+    },
+    {
+      "identity_key": "alias:satellite-low-power-title-collision",
+      "title": "Joint frame synchronization and frequency offset estimation for satellite-to-ground optical communication under low received optical power",
+      "doi": null,
+      "venue": null,
+      "year": null,
+      "origin_refs": [
+        "q1:L005",
+        "q3:L010"
+      ],
+      "input_record_count": 2,
+      "dedup_basis": "manual identity collision listed in second-round report",
+      "priority": "待确认",
+      "priority_inputs": [
+        "待确认",
+        "待确认"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U006"
+    },
+    {
+      "identity_key": "alias:ttqp-2024",
+      "title": "Low Complexity Parallel Carrier Frequency Offset Estimation Based on Time-Tagged QPSK Partitioning for Coherent Free-Space Optical Communication",
+      "doi": "10.3390/photonics11090885",
+      "venue": "Photonics",
+      "year": 2024,
+      "origin_refs": [
+        "q1:L004",
+        "q3:L002"
+      ],
+      "input_record_count": 2,
+      "dedup_basis": "manual identity collision listed in second-round report",
+      "priority": "建议读",
+      "priority_inputs": [
+        "建议读",
+        "建议读"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.3390/photonics11090885; venue=Photonics",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 10855,
+        "key": "doi:10.3390/photonics11090885",
+        "title": "Low Complexity Parallel Carrier Frequency Offset Estimation Based on Time-Tagged QPSK Partitioning for Coherent Free-Space Optical Communication",
+        "venue": "Photonics"
+      },
+      "canonical_id": "U007"
+    },
+    {
+      "identity_key": "alias:underwater-time-varying-cfo",
+      "title": "[PDF] Time-varying carrier frequency offset estimation in OFDM ... - Israel Cohen",
+      "doi": "10.1016/j.sigpro.2021.108299",
+      "venue": "Signal Processing",
+      "year": null,
+      "origin_refs": [
+        "q2:L014",
+        "q2:L023"
+      ],
+      "input_record_count": 2,
+      "dedup_basis": "manual identity collision listed in second-round report",
+      "priority": "建议读",
+      "priority_inputs": [
+        "建议读",
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: route-b report + local index; DOI=10.1016/j.sigpro.2021.108299; venue=Signal Processing",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 14597,
+        "key": "doi:10.1016/j.sigpro.2021.108299",
+        "title": "Time-varying carrier frequency offset estimation in OFDM underwater acoustic communication",
+        "venue": "Signal Processing"
+      },
+      "canonical_id": "U008"
+    },
+    {
+      "identity_key": "alias:wang-2023-fsts",
+      "title": "Carrier FOE Scheme Based on FSTS in Spatial Diversity PM Coherent FSO Communication",
+      "doi": "10.1109/JPHOT.2023.3265847",
+      "venue": "IEEE Photonics Journal",
+      "year": 2023,
+      "origin_refs": [
+        "q1:L001",
+        "q3:L001"
+      ],
+      "input_record_count": 2,
+      "dedup_basis": "manual identity collision listed in second-round report",
+      "priority": "必读",
+      "priority_inputs": [
+        "必读",
+        "必读"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1109/JPHOT.2023.3265847; venue=IEEE Photonics Journal",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 11156,
+        "key": "doi:10.1109/jphot.2023.3265847",
+        "title": "Carrier FOE Scheme Based on FSTS in Spatial Diversity PM Coherent FSO Communication",
+        "venue": "IEEE photonics journal"
+      },
+      "canonical_id": "U009"
+    },
+    {
+      "identity_key": "doi:10.1002/nap2.70021",
+      "title": "Turbulence‐Resilient Coherent Receiver Array on CMOS‐Compatible Silicon Photonics for Free Space Optical Communications",
+      "doi": "10.1002/nap2.70021",
+      "venue": "Nanophotonics",
+      "year": 2026,
+      "origin_refs": [
+        "q3:L007"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "建议读",
+      "priority_inputs": [
+        "建议读"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1002/nap2.70021; venue=Nanophotonics",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 11056,
+        "key": "doi:10.1002/nap2.70021",
+        "title": "Turbulence‐Resilient Coherent Receiver Array on CMOS‐Compatible Silicon Photonics for Free Space Optical Communications",
+        "venue": "Nanophotonics"
+      },
+      "canonical_id": "U010"
+    },
+    {
+      "identity_key": "doi:10.1002/sat.1553",
+      "title": "Review and Analysis of Digital Signal Processing Algorithms for Coherent Optical Satellite Links",
+      "doi": "10.1002/sat.1553",
+      "venue": "International Journal of Satellite Communications and Networking",
+      "year": 2025,
+      "origin_refs": [
+        "route-c:index-supplement"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "route-report local-index supplement absent as independent JSON identity",
+      "priority": "建议读",
+      "priority_inputs": [
+        "建议读"
+      ],
+      "published": true,
+      "published_basis": "published: route-c report + local index",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 10696,
+        "key": "doi:10.1002/sat.1553",
+        "title": "Review and Analysis of Digital Signal Processing Algorithms for Coherent Optical Satellite Links",
+        "venue": "International Journal of Satellite Communications and Networking"
+      },
+      "canonical_id": "U011"
+    },
+    {
+      "identity_key": "doi:10.1007/s00190-020-01441-0",
+      "title": "Reference system origin and scale realization within the future GNSS constellation “Kepler”",
+      "doi": "10.1007/s00190-020-01441-0",
+      "venue": "Journal of Geodesy",
+      "year": 2020,
+      "origin_refs": [
+        "q3:L035"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1007/s00190-020-01441-0; venue=Journal of Geodesy",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21779,
+        "key": "doi:10.1007/s00190-020-01441-0",
+        "title": "Reference system origin and scale realization within the future GNSS constellation “Kepler”",
+        "venue": "Journal of Geodesy"
+      },
+      "canonical_id": "U012"
+    },
+    {
+      "identity_key": "doi:10.1007/s10291-024-01652-4",
+      "title": "Leveraging machine learning techniques and GPS measurements for precise TEC rate predictions",
+      "doi": "10.1007/s10291-024-01652-4",
+      "venue": "",
+      "year": 2024,
+      "origin_refs": [
+        "q2:L009"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1007/s10291-024-01652-4; venue=",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21754,
+        "key": "doi:10.1007/s10291-024-01652-4",
+        "title": "Leveraging machine learning techniques and GPS measurements for precise TEC rate predictions",
+        "venue": ""
+      },
+      "canonical_id": "U013"
+    },
+    {
+      "identity_key": "doi:10.1007/s11269-014-0600-8",
+      "title": "Improving flood forecasting in a developing country: a comparative study of stepwise multiple linear regression and artificial neural network",
+      "doi": "10.1007/s11269-014-0600-8",
+      "venue": "",
+      "year": 2014,
+      "origin_refs": [
+        "q2:L015"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1007/s11269-014-0600-8; venue=",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21760,
+        "key": "doi:10.1007/s11269-014-0600-8",
+        "title": "Improving flood forecasting in a developing country: a comparative study of stepwise multiple linear regression and artificial neural network",
+        "venue": ""
+      },
+      "canonical_id": "U014"
+    },
+    {
+      "identity_key": "doi:10.1007/s11432-024-4408-1",
+      "title": "Distributed satellite information networks: architecture, enabling technologies, and trends",
+      "doi": "10.1007/s11432-024-4408-1",
+      "venue": "Science China Information Sciences",
+      "year": 2025,
+      "origin_refs": [
+        "q3:L055"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1007/s11432-024-4408-1; venue=Science China Information Sciences",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 2973,
+        "key": "doi:10.1007/s11432-024-4408-1",
+        "title": "Distributed satellite information networks: architecture, enabling technologies, and trends",
+        "venue": "Science China Information Sciences"
+      },
+      "canonical_id": "U015"
+    },
+    {
+      "identity_key": "doi:10.1016/j.optcom.2019.03.069",
+      "title": "Adaptive digital combining for coherent free space optical communications with spatial diversity reception",
+      "doi": "10.1016/J.OPTCOM.2019.03.069",
+      "venue": "Optics Communications",
+      "year": 2019,
+      "origin_refs": [
+        "q3:L054"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "建议读",
+      "priority_inputs": [
+        "建议读"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1016/J.OPTCOM.2019.03.069; venue=Optics Communications",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 10865,
+        "key": "doi:10.1016/j.optcom.2019.03.069",
+        "title": "Adaptive digital combining for coherent free space optical communications with spatial diversity reception",
+        "venue": "Optics Communications"
+      },
+      "canonical_id": "U016"
+    },
+    {
+      "identity_key": "doi:10.1016/j.optcom.2020.126046",
+      "title": "Training-Aided Joint Frame and Frequency Synchronization for Free Space Optical Communication Signals with Low OSNR",
+      "doi": "10.1016/J.OPTCOM.2020.126046",
+      "venue": "Optics Communications",
+      "year": 2020,
+      "origin_refs": [
+        "route-a:index-supplement"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "route-report local-index supplement absent as independent JSON identity",
+      "priority": "必读",
+      "priority_inputs": [
+        "必读"
+      ],
+      "published": true,
+      "published_basis": "published: route-a report + local index",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 10862,
+        "key": "doi:10.1016/j.optcom.2020.126046",
+        "title": "Training-aided joint frame and frequency synchronization for free space optical communication signals with low OSNR",
+        "venue": ""
+      },
+      "canonical_id": "U017"
+    },
+    {
+      "identity_key": "doi:10.1016/j.optlastec.2025.114480",
+      "title": "Clock Recovery Based on Timing Intensity MRC for Multi-Aperture Coherent Digital Combining FSO",
+      "doi": "10.1016/j.optlastec.2025.114480",
+      "venue": "Optics and Laser Technology",
+      "year": 2026,
+      "origin_refs": [
+        "route-c:index-supplement"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "route-report local-index supplement absent as independent JSON identity",
+      "priority": "待确认",
+      "priority_inputs": [
+        "待确认"
+      ],
+      "published": true,
+      "published_basis": "published: route-c report + local index",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 13397,
+        "key": "doi:10.1016/j.optlastec.2025.114480",
+        "title": "Clock recovery based on timing intensity maximum ratio combining for multi-aperture coherent digital combining FSO communication",
+        "venue": "Optics &amp; Laser Technology"
+      },
+      "canonical_id": "U018"
+    },
+    {
+      "identity_key": "doi:10.1016/j.physrep.2017.08.004",
+      "title": "Micro-combs: A novel generation of optical sources",
+      "doi": "10.1016/j.physrep.2017.08.004",
+      "venue": "Physics Reports",
+      "year": 2017,
+      "origin_refs": [
+        "q3:L051"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1016/j.physrep.2017.08.004; venue=Physics Reports",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21787,
+        "key": "doi:10.1016/j.physrep.2017.08.004",
+        "title": "Micro-combs: A novel generation of optical sources",
+        "venue": "Physics Reports"
+      },
+      "canonical_id": "U019"
+    },
+    {
+      "identity_key": "doi:10.1016/s1005-8885(08)60065-5",
+      "title": "Joint channel and carrier frequency offset estimation for multi-user MIMO-OFDM uplink transmissions",
+      "doi": "10.1016/S1005-8885(08)60065-5",
+      "venue": "",
+      "year": 2008,
+      "origin_refs": [
+        "q6:L011"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1016/S1005-8885(08)60065-5; venue=",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21801,
+        "key": "doi:10.1016/s1005-8885(08)60065-5",
+        "title": "Joint channel and carrier frequency offset estimation for multi-user MIMO-OFDM uplink transmissions",
+        "venue": ""
+      },
+      "canonical_id": "U020"
+    },
+    {
+      "identity_key": "doi:10.1029/2021wr031065",
+      "title": "A stepwise clustered hydrological model for addressing the temporal autocorrelation of daily streamflows in irrigated watersheds",
+      "doi": "10.1029/2021WR031065",
+      "venue": "",
+      "year": 2022,
+      "origin_refs": [
+        "q2:L005"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1029/2021WR031065; venue=",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21750,
+        "key": "doi:10.1029/2021wr031065",
+        "title": "A stepwise clustered hydrological model for addressing the temporal autocorrelation of daily streamflows in irrigated watersheds",
+        "venue": ""
+      },
+      "canonical_id": "U021"
+    },
+    {
+      "identity_key": "doi:10.1038/s41566-021-00877-w",
+      "title": "Turbulence-resilient pilot-assisted self-coherent free-space optical communications using automatic optoelectronic mixing of many modes",
+      "doi": "10.1038/s41566-021-00877-w",
+      "venue": "Nature Photonics",
+      "year": 2021,
+      "origin_refs": [
+        "q3:L029"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "建议读",
+      "priority_inputs": [
+        "建议读"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1038/s41566-021-00877-w; venue=Nature Photonics",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 11261,
+        "key": "doi:10.1038/s41566-021-00877-w",
+        "title": "Turbulence-resilient pilot-assisted self-coherent free-space optical communications using automatic optoelectronic mixing of many modes",
+        "venue": "Nature Photonics"
+      },
+      "canonical_id": "U022"
+    },
+    {
+      "identity_key": "doi:10.1038/s41598-025-31054-6",
+      "title": "A sparse wavelength aware learning framework for robust FSO channel estimation",
+      "doi": "10.1038/s41598-025-31054-6",
+      "venue": "Scientific Reports",
+      "year": 2025,
+      "origin_refs": [
+        "q3:L026"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1038/s41598-025-31054-6; venue=Scientific Reports",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 10992,
+        "key": "doi:10.1038/s41598-025-31054-6",
+        "title": "A sparse wavelength aware learning framework for robust FSO channel estimation",
+        "venue": "Scientific Reports"
+      },
+      "canonical_id": "U023"
+    },
+    {
+      "identity_key": "doi:10.1049/iet-com.2017.0308",
+      "title": "Compressive channel estimation for universal filtered multi-carrier system in high-speed scenarios",
+      "doi": "10.1049/iet-com.2017.0308",
+      "venue": "IET Communications",
+      "year": 2017,
+      "origin_refs": [
+        "q6:L016"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1049/iet-com.2017.0308; venue=IET Communications",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21806,
+        "key": "doi:10.1049/iet-com.2017.0308",
+        "title": "Compressive channel estimation for universal filtered multi-carrier system in high-speed scenarios",
+        "venue": "IET Communications"
+      },
+      "canonical_id": "U024"
+    },
+    {
+      "identity_key": "doi:10.1061/(asce)he.1943-5584.0001732",
+      "title": "Multiscale characterization and prediction of reservoir inflows using MEMD-SLR coupled approach",
+      "doi": "10.1061/(ASCE)HE.1943-5584.0001732",
+      "venue": "",
+      "year": 2019,
+      "origin_refs": [
+        "q2:L019"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1061/(ASCE)HE.1943-5584.0001732; venue=",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21764,
+        "key": "doi:10.1061/(asce)he.1943-5584.0001732",
+        "title": "Multiscale characterization and prediction of reservoir inflows using MEMD-SLR coupled approach",
+        "venue": ""
+      },
+      "canonical_id": "U025"
+    },
+    {
+      "identity_key": "doi:10.1061/ajrua6.0001083",
+      "title": "Scale of fluctuation for spatially varying soils: estimation methods and values",
+      "doi": "10.1061/AJRUA6.0001083",
+      "venue": "",
+      "year": 2020,
+      "origin_refs": [
+        "q2:L001"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1061/AJRUA6.0001083; venue=",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21746,
+        "key": "doi:10.1061/ajrua6.0001083",
+        "title": "Scale of fluctuation for spatially varying soils: estimation methods and values",
+        "venue": ""
+      },
+      "canonical_id": "U026"
+    },
+    {
+      "identity_key": "doi:10.1080/09500340.2017.1423408",
+      "title": "Channel correlation of free space optical communication systems with receiver diversity in non-Kolmogorov atmospheric turbulence",
+      "doi": "10.1080/09500340.2017.1423408",
+      "venue": "",
+      "year": 2018,
+      "origin_refs": [
+        "q3:L039"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "待确认",
+      "priority_inputs": [
+        "待确认"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1080/09500340.2017.1423408; venue=",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21781,
+        "key": "doi:10.1080/09500340.2017.1423408",
+        "title": "Channel correlation of free space optical communication systems with receiver diversity in non-Kolmogorov atmospheric turbulence",
+        "venue": ""
+      },
+      "canonical_id": "U027"
+    },
+    {
+      "identity_key": "doi:10.1109/access.2019.2924531",
+      "title": "Performance Enhancement of an Orbital-Angular-Momentum-Multiplexed Free-Space Optical Link Under Atmospheric Turbulence Effects Using Spatial-Mode Multiplexing and Hybrid Diversity Based on Adaptive MIMO Equalization",
+      "doi": "10.1109/access.2019.2924531",
+      "venue": "IEEE Access",
+      "year": 2019,
+      "origin_refs": [
+        "q3:L048"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "备选",
+      "priority_inputs": [
+        "备选"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1109/access.2019.2924531; venue=IEEE Access",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 11284,
+        "key": "doi:10.1109/access.2019.2924531",
+        "title": "Performance Enhancement of an Orbital-Angular-Momentum-Multiplexed Free-Space Optical Link Under Atmospheric Turbulence Effects Using Spatial-Mode Multiplexing and Hybrid Diversity Based on Adaptive MIMO Equalization",
+        "venue": "IEEE Access"
+      },
+      "canonical_id": "U028"
+    },
+    {
+      "identity_key": "doi:10.1109/access.2020.2990710",
+      "title": "Pilot Sequence Design for mmWave Cellular Systems With Relay Stations in the Presence of Blockage",
+      "doi": "10.1109/ACCESS.2020.2990710",
+      "venue": "IEEE Access",
+      "year": 2020,
+      "origin_refs": [
+        "q6:L005"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1109/ACCESS.2020.2990710; venue=IEEE Access",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21796,
+        "key": "doi:10.1109/access.2020.2990710",
+        "title": "Pilot Sequence Design for mmWave Cellular Systems With Relay Stations in the Presence of Blockage",
+        "venue": "IEEE Access"
+      },
+      "canonical_id": "U029"
+    },
+    {
+      "identity_key": "doi:10.1109/access.2021.3066415",
+      "title": "Joint Range Estimation Using Single Carrier Burst Signals for Networked UAVs",
+      "doi": "10.1109/ACCESS.2021.3066415",
+      "venue": "IEEE Access",
+      "year": 2021,
+      "origin_refs": [
+        "q7:L001"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1109/ACCESS.2021.3066415; venue=IEEE Access",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21810,
+        "key": "doi:10.1109/access.2021.3066415",
+        "title": "Joint Range Estimation Using Single Carrier Burst Signals for Networked UAVs",
+        "venue": "IEEE Access"
+      },
+      "canonical_id": "U030"
+    },
+    {
+      "identity_key": "doi:10.1109/access.2023.3239807",
+      "title": "Wireless and Optical Convergent Access Technologies Toward 6G",
+      "doi": "10.1109/access.2023.3239807",
+      "venue": "IEEE Access",
+      "year": 2023,
+      "origin_refs": [
+        "q3:L056"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1109/access.2023.3239807; venue=IEEE Access",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 19208,
+        "key": "doi:10.1109/access.2023.3239807",
+        "title": "Wireless and Optical Convergent Access Technologies Toward 6G",
+        "venue": "IEEE Access"
+      },
+      "canonical_id": "U031"
+    },
+    {
+      "identity_key": "doi:10.1109/andescon50619.2020.9272183",
+      "title": "Design and implementation in USRP of a preamble-based synchronizer for OFDM systems",
+      "doi": "10.1109/ANDESCON50619.2020.9272183",
+      "venue": "IEEE ANDESCON",
+      "year": 2020,
+      "origin_refs": [
+        "q3:L057"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1109/ANDESCON50619.2020.9272183; venue=IEEE ANDESCON",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21789,
+        "key": "doi:10.1109/andescon50619.2020.9272183",
+        "title": "Design and implementation in USRP of a preamble-based synchronizer for OFDM systems",
+        "venue": "IEEE ANDESCON"
+      },
+      "canonical_id": "U032"
+    },
+    {
+      "identity_key": "doi:10.1109/apcc62576.2024.10767981",
+      "title": "Extreme Learning Approach for Timing Synchronization of ACO-OFDM under Nonlinear Distortions",
+      "doi": "10.1109/APCC62576.2024.10767981",
+      "venue": "Asia-Pacific Conference on Communications",
+      "year": 2024,
+      "origin_refs": [
+        "q3:L031"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1109/APCC62576.2024.10767981; venue=Asia-Pacific Conference on Communications",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21778,
+        "key": "doi:10.1109/apcc62576.2024.10767981",
+        "title": "Extreme Learning Approach for Timing Synchronization of ACO-OFDM under Nonlinear Distortions",
+        "venue": "Asia-Pacific Conference on Communications"
+      },
+      "canonical_id": "U033"
+    },
+    {
+      "identity_key": "doi:10.1109/ceect53198.2021.9672646",
+      "title": "A Joint Scheme for Carrier Frequency Offset Estimation, Carrier Phase Correction and Timing",
+      "doi": "10.1109/CEECT53198.2021.9672646",
+      "venue": "2021 3rd International Conference on Electrical Engineering and Control Technologies (CEECT)",
+      "year": 2021,
+      "origin_refs": [
+        "q6:L008"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "待确认",
+      "priority_inputs": [
+        "待确认"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1109/CEECT53198.2021.9672646; venue=2021 3rd International Conference on Electrical Engineering and Control Technologies (CEECT)",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21798,
+        "key": "doi:10.1109/ceect53198.2021.9672646",
+        "title": "A Joint Scheme for Carrier Frequency Offset Estimation, Carrier Phase Correction and Timing",
+        "venue": "2021 3rd International Conference on Electrical Engineering and Control Technologies (CEECT)"
+      },
+      "canonical_id": "U034"
+    },
+    {
+      "identity_key": "doi:10.1109/compcomm.2017.8322505",
+      "title": "Timing and frequency synchronization using ZCZ sequences for multi-cell OFDM systems",
+      "doi": "10.1109/COMPCOMM.2017.8322505",
+      "venue": "2017 3rd IEEE International Conference on Computer and Communications (ICCC)",
+      "year": 2017,
+      "origin_refs": [
+        "q6:L013"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "备选",
+      "priority_inputs": [
+        "备选"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1109/COMPCOMM.2017.8322505; venue=2017 3rd IEEE International Conference on Computer and Communications (ICCC)",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21803,
+        "key": "doi:10.1109/compcomm.2017.8322505",
+        "title": "Timing and frequency synchronization using ZCZ sequences for multi-cell OFDM systems",
+        "venue": "2017 3rd IEEE International Conference on Computer and Communications (ICCC)"
+      },
+      "canonical_id": "U035"
+    },
+    {
+      "identity_key": "doi:10.1109/comst.2014.2329501",
+      "title": "Survey on Free Space Optical Communication: A Communication Theory Perspective",
+      "doi": "10.1109/comst.2014.2329501",
+      "venue": "IEEE Communications Surveys & Tutorials",
+      "year": 2014,
+      "origin_refs": [
+        "q3:L017"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "备选",
+      "priority_inputs": [
+        "备选"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1109/comst.2014.2329501; venue=IEEE Communications Surveys & Tutorials",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 10755,
+        "key": "doi:10.1109/comst.2014.2329501",
+        "title": "Survey on Free Space Optical Communication: A Communication Theory Perspective",
+        "venue": "IEEE Communications Surveys & Tutorials"
+      },
+      "canonical_id": "U036"
+    },
+    {
+      "identity_key": "doi:10.1109/icton.2018.8473664",
+      "title": "Training-Aided Joint Frame and Frequency Synchronization for THP FTN Coherent Optical Systems",
+      "doi": "10.1109/ICTON.2018.8473664",
+      "venue": "ICTON",
+      "year": 2018,
+      "origin_refs": [
+        "route-a:index-supplement"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "route-report local-index supplement absent as independent JSON identity",
+      "priority": "备选",
+      "priority_inputs": [
+        "备选"
+      ],
+      "published": true,
+      "published_basis": "published: route-a report + local index",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21681,
+        "key": "doi:10.1109/icton.2018.8473664",
+        "title": "Training-Aided Joint Frame and Frequency Synchronization for THP FTN Coherent Optical Systems",
+        "venue": "International Conference on Transparent Optical Networks"
+      },
+      "canonical_id": "U037"
+    },
+    {
+      "identity_key": "doi:10.1109/icwoc65853.2025.11151132",
+      "title": "Self-Coherent Detection with Hermite-Gaussian Beams for Turbulence-Resilient Free-Space Optical Communication",
+      "doi": "10.1109/ICWOC65853.2025.11151132",
+      "venue": "2025 13th International Conference on Intelligent Computing and Wireless Optical Communications (ICWOC)",
+      "year": 2025,
+      "origin_refs": [
+        "q3:L044"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "待确认",
+      "priority_inputs": [
+        "待确认"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1109/ICWOC65853.2025.11151132; venue=2025 13th International Conference on Intelligent Computing and Wireless Optical Communications (ICWOC)",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 11070,
+        "key": "doi:10.1109/icwoc65853.2025.11151132",
+        "title": "Self-Coherent Detection with Hermite-Gaussian Beams for Turbulence-Resilient Free-Space Optical Communication",
+        "venue": "2025 13th International Conference on Intelligent Computing and Wireless Optical Communications (ICWOC)"
+      },
+      "canonical_id": "U038"
+    },
+    {
+      "identity_key": "doi:10.1109/jlt.2014.2358933",
+      "title": "Training-Aided Frequency-Domain Channel Estimation and Equalization for Single-Carrier Coherent Optical Transmission Systems",
+      "doi": "10.1109/JLT.2014.2358933",
+      "venue": "Journal of Lightwave Technology",
+      "year": 2014,
+      "origin_refs": [
+        "q6:L007"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1109/JLT.2014.2358933; venue=Journal of Lightwave Technology",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 20670,
+        "key": "doi:10.1109/jlt.2014.2358933",
+        "title": "Training-Aided Frequency-Domain Channel Estimation and Equalization for Single-Carrier Coherent Optical Transmission Systems",
+        "venue": "Journal of Lightwave Technology"
+      },
+      "canonical_id": "U039"
+    },
+    {
+      "identity_key": "doi:10.1109/jlt.2015.2465385",
+      "title": "Free-Space Optical Communication With Spatial Modulation and Coherent Detection Over H-K Atmospheric Turbulence Channels",
+      "doi": "10.1109/JLT.2015.2465385",
+      "venue": "Journal of Lightwave Technology",
+      "year": 2015,
+      "origin_refs": [
+        "q3:L060"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "备选",
+      "priority_inputs": [
+        "备选"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1109/JLT.2015.2465385; venue=Journal of Lightwave Technology",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21791,
+        "key": "doi:10.1109/jlt.2015.2465385",
+        "title": "Free-Space Optical Communication With Spatial Modulation and Coherent Detection Over H-K Atmospheric Turbulence Channels",
+        "venue": "Journal of Lightwave Technology"
+      },
+      "canonical_id": "U040"
+    },
+    {
+      "identity_key": "doi:10.1109/jlt.2020.3003561",
+      "title": "Space-Ground Coherent Optical Links: Ground Receiver Performance With AO and DPLL",
+      "doi": "10.1109/JLT.2020.3003561",
+      "venue": "Journal of Lightwave Technology",
+      "year": 2020,
+      "origin_refs": [
+        "route-c:index-supplement"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "route-report local-index supplement absent as independent JSON identity",
+      "priority": "必读",
+      "priority_inputs": [
+        "必读"
+      ],
+      "published": true,
+      "published_basis": "published: route-c report + shared full text/index",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 11023,
+        "key": "doi:10.1109/jlt.2020.3003561",
+        "title": "Space-Ground Coherent Optical Links: Ground Receiver Performance With Adaptive Optics and Digital Phase-Locked Loop",
+        "venue": "Journal of Lightwave Technology"
+      },
+      "canonical_id": "U041"
+    },
+    {
+      "identity_key": "doi:10.1109/jlt.2025.3577382",
+      "title": "High-Speed Free-Space Optical Communication Using Mode Demultiplexers and Coherent Beam Combining",
+      "doi": "10.1109/JLT.2025.3577382",
+      "venue": "Journal of Lightwave Technology",
+      "year": 2025,
+      "origin_refs": [
+        "q3:L015"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "备选",
+      "priority_inputs": [
+        "备选"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1109/JLT.2025.3577382; venue=Journal of Lightwave Technology",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 10852,
+        "key": "doi:10.1109/jlt.2025.3577382",
+        "title": "High-Speed Free-Space Optical Communication Using Mode Demultiplexers and Coherent Beam Combining",
+        "venue": "Journal of Lightwave Technology"
+      },
+      "canonical_id": "U042"
+    },
+    {
+      "identity_key": "doi:10.1109/jsac.2008.080807",
+      "title": "Multiple Frequency Offset Estimation for the Downlink of Coordinated MIMO Systems",
+      "doi": "10.1109/JSAC.2008.080807",
+      "venue": "IEEE Journal on Selected Areas in Communications",
+      "year": 2008,
+      "origin_refs": [
+        "q7:L002"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1109/JSAC.2008.080807; venue=IEEE Journal on Selected Areas in Communications",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21811,
+        "key": "doi:10.1109/jsac.2008.080807",
+        "title": "Multiple Frequency Offset Estimation for the Downlink of Coordinated MIMO Systems",
+        "venue": "IEEE Journal on Selected Areas in Communications"
+      },
+      "canonical_id": "U043"
+    },
+    {
+      "identity_key": "doi:10.1109/lwc.2022.3214002",
+      "title": "Time and Frequency Synchronization for OTFS",
+      "doi": "10.1109/LWC.2022.3214002",
+      "venue": "IEEE Wireless Communications Letters",
+      "year": 2022,
+      "origin_refs": [
+        "q6:L001"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "备选",
+      "priority_inputs": [
+        "备选"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1109/LWC.2022.3214002; venue=IEEE Wireless Communications Letters",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21792,
+        "key": "doi:10.1109/lwc.2022.3214002",
+        "title": "Time and Frequency Synchronization for OTFS",
+        "venue": "IEEE Wireless Communications Letters"
+      },
+      "canonical_id": "U044"
+    },
+    {
+      "identity_key": "doi:10.1109/lwc.2025.3548687",
+      "title": "Enhanced Repetition Pilot-Based Timing Synchronization and Channel Estimation for DCO-OFDM OWC Systems",
+      "doi": "10.1109/LWC.2025.3548687",
+      "venue": "IEEE Wireless Communications Letters",
+      "year": 2025,
+      "origin_refs": [
+        "q3:L014"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1109/LWC.2025.3548687; venue=IEEE Wireless Communications Letters",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 12728,
+        "key": "doi:10.1109/lwc.2025.3548687",
+        "title": "Enhanced Repetition Pilot-Based Timing Synchronization and Channel Estimation for DCO-OFDM OWC Systems",
+        "venue": "IEEE Wireless Communications Letters"
+      },
+      "canonical_id": "U045"
+    },
+    {
+      "identity_key": "doi:10.1109/milcom.2015.7357491",
+      "title": "Hardware implementation of low-overhead data aided timing and Carrier Frequency Offset correction for OFDM signals",
+      "doi": "10.1109/MILCOM.2015.7357491",
+      "venue": "IEEE Military Communications Conference",
+      "year": 2015,
+      "origin_refs": [
+        "q6:L015"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "备选",
+      "priority_inputs": [
+        "备选"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1109/MILCOM.2015.7357491; venue=IEEE Military Communications Conference",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21805,
+        "key": "doi:10.1109/milcom.2015.7357491",
+        "title": "Hardware implementation of low-overhead data aided timing and Carrier Frequency Offset correction for OFDM signals",
+        "venue": "IEEE Military Communications Conference"
+      },
+      "canonical_id": "U046"
+    },
+    {
+      "identity_key": "doi:10.1109/pimrc.1998.734676",
+      "title": "A novel method for blind frequency offset correction in an OFDM system",
+      "doi": "10.1109/PIMRC.1998.734676",
+      "venue": "Ninth IEEE International Symposium on Personal, Indoor and Mobile Radio Communications (Cat. No.98TH8361)",
+      "year": 1998,
+      "origin_refs": [
+        "q6:L010"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1109/PIMRC.1998.734676; venue=Ninth IEEE International Symposium on Personal, Indoor and Mobile Radio Communications (Cat. No.98TH8361)",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21800,
+        "key": "doi:10.1109/pimrc.1998.734676",
+        "title": "A novel method for blind frequency offset correction in an OFDM system",
+        "venue": "Ninth IEEE International Symposium on Personal, Indoor and Mobile Radio Communications (Cat. No.98TH8361)"
+      },
+      "canonical_id": "U047"
+    },
+    {
+      "identity_key": "doi:10.1109/pimrc.2005.1651481",
+      "title": "Timing synchronization and frequency offset estimation for Ultra-Wideband (UWB) Multi-Band OFDM systems",
+      "doi": "10.1109/PIMRC.2005.1651481",
+      "venue": "IEEE International Symposium on Personal, Indoor and Mobile Radio Communications",
+      "year": 2005,
+      "origin_refs": [
+        "q6:L009"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "备选",
+      "priority_inputs": [
+        "备选"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1109/PIMRC.2005.1651481; venue=IEEE International Symposium on Personal, Indoor and Mobile Radio Communications",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21799,
+        "key": "doi:10.1109/pimrc.2005.1651481",
+        "title": "Timing synchronization and frequency offset estimation for Ultra-Wideband (UWB) Multi-Band OFDM systems",
+        "venue": "IEEE International Symposium on Personal, Indoor and Mobile Radio Communications"
+      },
+      "canonical_id": "U048"
+    },
+    {
+      "identity_key": "doi:10.1109/tpami.2020.3008413",
+      "title": "Event-Based Vision: A Survey",
+      "doi": "10.1109/tpami.2020.3008413",
+      "venue": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
+      "year": 2020,
+      "origin_refs": [
+        "q3:L046"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1109/tpami.2020.3008413; venue=IEEE Transactions on Pattern Analysis and Machine Intelligence",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21785,
+        "key": "doi:10.1109/tpami.2020.3008413",
+        "title": "Event-Based Vision: A Survey",
+        "venue": "IEEE Transactions on Pattern Analysis and Machine Intelligence"
+      },
+      "canonical_id": "U049"
+    },
+    {
+      "identity_key": "doi:10.1109/tvt.2022.3218937",
+      "title": "Joint Physical Layer Frame Optimization and Carrier Synchronization for Satellite Communications",
+      "doi": "10.1109/TVT.2022.3218937",
+      "venue": "IEEE Transactions on Vehicular Technology",
+      "year": 2023,
+      "origin_refs": [
+        "route-b:index-supplement"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "route-report local-index supplement absent as independent JSON identity",
+      "priority": "必读",
+      "priority_inputs": [
+        "必读"
+      ],
+      "published": true,
+      "published_basis": "published: route-b report + shared full text/index",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 17507,
+        "key": "doi:10.1109/tvt.2022.3218937",
+        "title": "Joint Physical Layer Frame Optimization and Carrier Synchronization for Satellite Communications",
+        "venue": "IEEE Transactions on Vehicular Technology"
+      },
+      "canonical_id": "U050"
+    },
+    {
+      "identity_key": "doi:10.1109/twc.2008.060846",
+      "title": "Frequency Offset Estimation and Training Sequence Design for MIMO OFDM",
+      "doi": "10.1109/TWC.2008.060846",
+      "venue": "IEEE Transactions on Wireless Communications",
+      "year": 2008,
+      "origin_refs": [
+        "q6:L002"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "备选",
+      "priority_inputs": [
+        "备选"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1109/TWC.2008.060846; venue=IEEE Transactions on Wireless Communications",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21793,
+        "key": "doi:10.1109/twc.2008.060846",
+        "title": "Frequency Offset Estimation and Training Sequence Design for MIMO OFDM",
+        "venue": "IEEE Transactions on Wireless Communications"
+      },
+      "canonical_id": "U051"
+    },
+    {
+      "identity_key": "doi:10.1109/vetecs.2008.187",
+      "title": "Joint Frequency Offset and Channel Estimation for MIMO Systems Based on Particle Swarm Optimization",
+      "doi": "10.1109/VETECS.2008.187",
+      "venue": "IEEE Vehicular Technology Conference",
+      "year": 2008,
+      "origin_refs": [
+        "q6:L018"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1109/VETECS.2008.187; venue=IEEE Vehicular Technology Conference",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21808,
+        "key": "doi:10.1109/vetecs.2008.187",
+        "title": "Joint Frequency Offset and Channel Estimation for MIMO Systems Based on Particle Swarm Optimization",
+        "venue": "IEEE Vehicular Technology Conference"
+      },
+      "canonical_id": "U052"
+    },
+    {
+      "identity_key": "doi:10.1109/wicom.2008.196",
+      "title": "Multiple Frequency Offset Estimation and Mitigation for Cooperative OFDM System",
+      "doi": "10.1109/WICOM.2008.196",
+      "venue": "International Conference on Wireless Communications, Networking and Mobile Computing",
+      "year": 2008,
+      "origin_refs": [
+        "q6:L014"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1109/WICOM.2008.196; venue=International Conference on Wireless Communications, Networking and Mobile Computing",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21804,
+        "key": "doi:10.1109/wicom.2008.196",
+        "title": "Multiple Frequency Offset Estimation and Mitigation for Cooperative OFDM System",
+        "venue": "International Conference on Wireless Communications, Networking and Mobile Computing"
+      },
+      "canonical_id": "U053"
+    },
+    {
+      "identity_key": "doi:10.1109/wisee61249.2024.10850117",
+      "title": "Data-Aided Multi-Format DSP for Robust Free-Space Coherent Optical Communication",
+      "doi": "10.1109/WiSEE61249.2024.10850117",
+      "venue": "International Conference on Wireless for Space and Extreme Environments",
+      "year": 2024,
+      "origin_refs": [
+        "q3:L019"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "必读",
+      "priority_inputs": [
+        "必读"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1109/WiSEE61249.2024.10850117; venue=International Conference on Wireless for Space and Extreme Environments",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 11559,
+        "key": "doi:10.1109/wisee61249.2024.10850117",
+        "title": "Data-Aided Multi-Format DSP for Robust Free-Space Coherent Optical Communication",
+        "venue": "International Conference on Wireless for Space and Extreme Environments"
+      },
+      "canonical_id": "U054"
+    },
+    {
+      "identity_key": "doi:10.1117/12.2288193.short",
+      "title": "Mode diversity coherent receiver with few-mode fiber-coupling for high-speed free-space optical communication under atmospheric turbulence",
+      "doi": "10.1117/12.2288193.short",
+      "venue": "",
+      "year": 2018,
+      "origin_refs": [
+        "q3:L037"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "待确认",
+      "priority_inputs": [
+        "待确认"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1117/12.2288193.short; venue=",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21780,
+        "key": "doi:10.1117/12.2288193.short",
+        "title": "Mode diversity coherent receiver with few-mode fiber-coupling for high-speed free-space optical communication under atmospheric turbulence",
+        "venue": ""
+      },
+      "canonical_id": "U055"
+    },
+    {
+      "identity_key": "doi:10.1117/12.2582415.short",
+      "title": "Recent trends in coherent free-space optical communications",
+      "doi": "10.1117/12.2582415.short",
+      "venue": "",
+      "year": 2021,
+      "origin_refs": [
+        "q3:L050"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "建议读",
+      "priority_inputs": [
+        "建议读"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1117/12.2582415.short; venue=",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 10757,
+        "key": "doi:10.1117/12.2582415.short",
+        "title": "Recent trends in coherent free-space optical communications",
+        "venue": ""
+      },
+      "canonical_id": "U056"
+    },
+    {
+      "identity_key": "doi:10.1140/epjp/s13360-026-07439-5",
+      "title": "Integrated resilience-enhanced ofdm-fso system with spatiotemporal equalization and beam steering compensation under atmospheric turbulence",
+      "doi": "10.1140/epjp/s13360-026-07439-5",
+      "venue": "",
+      "year": 2026,
+      "origin_refs": [
+        "q3:L036"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1140/epjp/s13360-026-07439-5; venue=",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 10743,
+        "key": "doi:10.1140/epjp/s13360-026-07439-5",
+        "title": "Integrated resilience-enhanced OFDM-FSO system with spatiotemporal equalization and beam steering compensation under atmospheric turbulence | The European Physical Journal Plus | Springer Nature Link",
+        "venue": "[journal]"
+      },
+      "canonical_id": "U057"
+    },
+    {
+      "identity_key": "doi:10.1186/s13634-020-00696-1",
+      "title": "A novel timing and frequency offset estimation algorithm for filtered OFDM system",
+      "doi": "10.1186/s13634-020-00696-1",
+      "venue": "EURASIP Journal on Advances in Signal Processing",
+      "year": 2020,
+      "origin_refs": [
+        "q6:L003"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "备选",
+      "priority_inputs": [
+        "备选"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1186/s13634-020-00696-1; venue=EURASIP Journal on Advances in Signal Processing",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21794,
+        "key": "doi:10.1186/s13634-020-00696-1",
+        "title": "A novel timing and frequency offset estimation algorithm for filtered OFDM system",
+        "venue": "EURASIP Journal on Advances in Signal Processing"
+      },
+      "canonical_id": "U058"
+    },
+    {
+      "identity_key": "doi:10.1364/fio.2023.fm5d.5",
+      "title": "Wavelength Diversity based Low Probability to Intercept (LPI) Free-Space Optical Communications in Strong Turbulence Regime",
+      "doi": "10.1364/fio.2023.fm5d.5",
+      "venue": "Frontiers in Optics + Laser Science 2023 (FiO, LS)",
+      "year": 2023,
+      "origin_refs": [
+        "q3:L047"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1364/fio.2023.fm5d.5; venue=Frontiers in Optics + Laser Science 2023 (FiO, LS)",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 16558,
+        "key": "doi:10.1364/fio.2023.fm5d.5",
+        "title": "Wavelength Diversity based Low Probability to Intercept (LPI) Free-Space Optical Communications in Strong Turbulence Regime",
+        "venue": "Frontiers in Optics + Laser Science 2023 (FiO, LS)"
+      },
+      "canonical_id": "U059"
+    },
+    {
+      "identity_key": "doi:10.1364/oe.505931",
+      "title": "Real-time low-complexity diversity combining algorithm for free space coherent optical communication systems over atmospheric turbulence channel.",
+      "doi": "10.1364/oe.505931",
+      "venue": "Optics Express",
+      "year": 2023,
+      "origin_refs": [
+        "q3:L011"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "必读",
+      "priority_inputs": [
+        "必读"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1364/oe.505931; venue=Optics Express",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 10858,
+        "key": "doi:10.1364/oe.505931",
+        "title": "Real-time low-complexity diversity combining algorithm for free space coherent optical communication systems over atmospheric turbulence channel.",
+        "venue": "Optics Express"
+      },
+      "canonical_id": "U060"
+    },
+    {
+      "identity_key": "doi:10.1364/oe.547978",
+      "title": "Low Probability of Intercept (LPI) Free-Space Optical Communication with Wavelength Diversity in Strong Atmospheric Turbulence Regime",
+      "doi": "10.1364/oe.547978",
+      "venue": "Optics Express",
+      "year": 2024,
+      "origin_refs": [
+        "q3:L040"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1364/oe.547978; venue=Optics Express",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21782,
+        "key": "doi:10.1364/oe.547978",
+        "title": "Low Probability of Intercept (LPI) Free-Space Optical Communication with Wavelength Diversity in Strong Atmospheric Turbulence Regime",
+        "venue": "Optics Express"
+      },
+      "canonical_id": "U061"
+    },
+    {
+      "identity_key": "doi:10.1364/oe.576157",
+      "title": "Spatial polarization phase shift keying for high-capacity coherent free-space optical communication.",
+      "doi": "10.1364/oe.576157",
+      "venue": "Optics Express",
+      "year": 2025,
+      "origin_refs": [
+        "q3:L034"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1364/oe.576157; venue=Optics Express",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 11030,
+        "key": "doi:10.1364/oe.576157",
+        "title": "Spatial polarization phase shift keying for high-capacity coherent free-space optical communication.",
+        "venue": "Optics Express"
+      },
+      "canonical_id": "U062"
+    },
+    {
+      "identity_key": "doi:10.1364/ofc.2024.w2a.31",
+      "title": "Experimental demonstration of robust spatial-diversity combining for coherent free-space optical transmission",
+      "doi": "10.1364/ofc.2024.w2a.31",
+      "venue": "Optical Fiber Communications Conference and Exhibition",
+      "year": 2024,
+      "origin_refs": [
+        "q3:L041"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "建议读",
+      "priority_inputs": [
+        "建议读"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1364/ofc.2024.w2a.31; venue=Optical Fiber Communications Conference and Exhibition",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 16243,
+        "key": "doi:10.1364/ofc.2024.w2a.31",
+        "title": "Experimental demonstration of robust spatial-diversity combining for coherent free-space optical transmission",
+        "venue": "Optical Fiber Communications Conference and Exhibition"
+      },
+      "canonical_id": "U063"
+    },
+    {
+      "identity_key": "doi:10.1364/optica.541823",
+      "title": "Automatic Mitigation of Dynamic Atmospheric Turbulence Using Optical Phase Conjugation for Coherent Free-Space Optical Communications",
+      "doi": "10.1364/optica.541823",
+      "venue": "Optica",
+      "year": 2024,
+      "origin_refs": [
+        "q3:L018"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1364/optica.541823; venue=Optica",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 11022,
+        "key": "doi:10.1364/optica.541823",
+        "title": "Automatic Mitigation of Dynamic Atmospheric Turbulence Using Optical Phase Conjugation for Coherent Free-Space Optical Communications",
+        "venue": "Optica"
+      },
+      "canonical_id": "U064"
+    },
+    {
+      "identity_key": "doi:10.1515/joc-2026-0232",
+      "title": "Design and performance evaluation of MIMO-assisted coherent optical spatial diversity system under atmospheric impairments",
+      "doi": "10.1515/joc-2026-0232",
+      "venue": "Journal of optical communications",
+      "year": 2026,
+      "origin_refs": [
+        "q3:L008"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "备选",
+      "priority_inputs": [
+        "备选"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.1515/joc-2026-0232; venue=Journal of optical communications",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21775,
+        "key": "doi:10.1515/joc-2026-0232",
+        "title": "Design and performance evaluation of MIMO-assisted coherent optical spatial diversity system under atmospheric impairments",
+        "venue": "Journal of optical communications"
+      },
+      "canonical_id": "U065"
+    },
+    {
+      "identity_key": "doi:10.3103/s0735272718040015",
+      "title": "Performance characterization of spatial diversity based optical wireless communication over atmospheric turbulence channels",
+      "doi": "10.3103/S0735272718040015",
+      "venue": "",
+      "year": 2018,
+      "origin_refs": [
+        "q3:L049"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.3103/S0735272718040015; venue=",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21786,
+        "key": "doi:10.3103/s0735272718040015",
+        "title": "Performance characterization of spatial diversity based optical wireless communication over atmospheric turbulence channels",
+        "venue": ""
+      },
+      "canonical_id": "U066"
+    },
+    {
+      "identity_key": "doi:10.3390/aerospace13070629",
+      "title": "A Method for Detection and Three-Dimensional Localization of Spacecraft Electrostatic Discharge Events",
+      "doi": "10.3390/aerospace13070629",
+      "venue": "Aerospace",
+      "year": 2026,
+      "origin_refs": [
+        "q3:L006"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.3390/aerospace13070629; venue=Aerospace",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 21774,
+        "key": "doi:10.3390/aerospace13070629",
+        "title": "A Method for Detection and Three-Dimensional Localization of Spacecraft Electrostatic Discharge Events",
+        "venue": "Aerospace"
+      },
+      "canonical_id": "U067"
+    },
+    {
+      "identity_key": "doi:10.3390/electronics10232942",
+      "title": "An Efficient Carrier Synchronization Scheme for Demodulation Systems",
+      "doi": "10.3390/electronics10232942",
+      "venue": "Electronics",
+      "year": 2021,
+      "origin_refs": [
+        "route-b:index-supplement"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "route-report local-index supplement absent as independent JSON identity",
+      "priority": "建议读",
+      "priority_inputs": [
+        "建议读"
+      ],
+      "published": true,
+      "published_basis": "published: route-b report + local index",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 19114,
+        "key": "doi:10.3390/electronics10232942",
+        "title": "An Efficient Carrier Synchronization Scheme for Demodulation Systems",
+        "venue": "Electronics"
+      },
+      "canonical_id": "U068"
+    },
+    {
+      "identity_key": "doi:10.3390/photonics12090867",
+      "title": "Design and Simulation of Cross-Medium Two-Hop Relaying Free-Space Optical Communication System Based on Multiple Diversity and Multiplexing Technologies",
+      "doi": "10.3390/photonics12090867",
+      "venue": "Photonics",
+      "year": 2025,
+      "origin_refs": [
+        "q3:L016"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.3390/photonics12090867; venue=Photonics",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 11046,
+        "key": "doi:10.3390/photonics12090867",
+        "title": "Design and Simulation of Cross-Medium Two-Hop Relaying Free-Space Optical Communication System Based on Multiple Diversity and Multiplexing Technologies",
+        "venue": "Photonics"
+      },
+      "canonical_id": "U069"
+    },
+    {
+      "identity_key": "doi:10.3390/s24248036",
+      "title": "Revolutionizing Free-Space Optics: A Survey of Enabling Technologies, Challenges, Trends, and Prospects of Beyond 5G Free-Space Optical (FSO) Communication Systems",
+      "doi": "10.3390/s24248036",
+      "venue": "Sensors",
+      "year": 2024,
+      "origin_refs": [
+        "q3:L030"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized DOI",
+      "priority": "备选",
+      "priority_inputs": [
+        "备选"
+      ],
+      "published": true,
+      "published_basis": "published: query metadata; DOI=10.3390/s24248036; venue=Sensors",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 10924,
+        "key": "doi:10.3390/s24248036",
+        "title": "Revolutionizing Free-Space Optics: A Survey of Enabling Technologies, Challenges, Trends, and Prospects of Beyond 5G Free-Space Optical (FSO) Communication Systems",
+        "venue": "Sensors"
+      },
+      "canonical_id": "U070"
+    },
+    {
+      "identity_key": "title:a novel minimum output variance estimator for carrier",
+      "title": "A Novel Minimum Output Variance Estimator for Carrier ...",
+      "doi": null,
+      "venue": "[web]",
+      "year": null,
+      "origin_refs": [
+        "q2:L022"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "备选",
+      "priority_inputs": [
+        "备选"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U071"
+    },
+    {
+      "identity_key": "title:assessing the role of arousal state in sensorimotor gating and memory consolidation",
+      "title": "Assessing the role of arousal state in sensorimotor gating and memory consolidation",
+      "doi": null,
+      "venue": null,
+      "year": 2020,
+      "origin_refs": [
+        "q1:L012"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U072"
+    },
+    {
+      "identity_key": "title:burst mode digital signal processing for coherent optical time division multiple access",
+      "title": "Burst-mode digital signal processing for coherent optical time-division multiple access",
+      "doi": null,
+      "venue": null,
+      "year": 2025,
+      "origin_refs": [
+        "q3:L022"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U073"
+    },
+    {
+      "identity_key": "title:carrier frequency offset and time synchronization estimation based on new autocorrelation over fading channel",
+      "title": "Carrier frequency offset and time synchronization estimation based on new autocorrelation over fading channel",
+      "doi": null,
+      "venue": null,
+      "year": 2009,
+      "origin_refs": [
+        "q6:L012"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "待确认",
+      "priority_inputs": [
+        "待确认"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U074"
+    },
+    {
+      "identity_key": "title:carrier frequency offset estimation in ofdm systems as a",
+      "title": "Carrier Frequency Offset Estimation in OFDM Systems as a ...",
+      "doi": null,
+      "venue": "[web]",
+      "year": null,
+      "origin_refs": [
+        "q2:L012"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "待确认",
+      "priority_inputs": [
+        "待确认"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U075"
+    },
+    {
+      "identity_key": "title:carrier frequency offset estimator based on unique word",
+      "title": "Carrier Frequency Offset Estimator Based on Unique Word ...",
+      "doi": null,
+      "venue": "[web]",
+      "year": null,
+      "origin_refs": [
+        "q2:L003"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "待确认",
+      "priority_inputs": [
+        "待确认"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U076"
+    },
+    {
+      "identity_key": "title:carrier synchronization method applied to orthogonal frequency division multiplexing system",
+      "title": "Carrier synchronization method applied to orthogonal frequency division multiplexing system",
+      "doi": null,
+      "venue": null,
+      "year": 2014,
+      "origin_refs": [
+        "q6:L017"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U077"
+    },
+    {
+      "identity_key": "title:challenges and opportunities in free space optical satellite communication",
+      "title": "Challenges and opportunities in free space optical satellite communication",
+      "doi": null,
+      "venue": null,
+      "year": 2025,
+      "origin_refs": [
+        "q3:L023"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "备选",
+      "priority_inputs": [
+        "备选"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U078"
+    },
+    {
+      "identity_key": "title:characterization and experimental validation of mode division multiplexing based receivers for free space optical systems with turbulent channels",
+      "title": "Characterization and Experimental Validation of Mode-Division-Multiplexing based receivers for Free-Space Optical systems with Turbulent Channels",
+      "doi": null,
+      "venue": null,
+      "year": 2025,
+      "origin_refs": [
+        "q3:L027"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "待确认",
+      "priority_inputs": [
+        "待确认"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U079"
+    },
+    {
+      "identity_key": "title:coherent free space optical communications opportunities and challenges",
+      "title": "Coherent free-space optical communications: Opportunities and challenges",
+      "doi": null,
+      "venue": null,
+      "year": 2022,
+      "origin_refs": [
+        "q3:L038"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "备选",
+      "priority_inputs": [
+        "备选"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U080"
+    },
+    {
+      "identity_key": "title:considering autocorrelation in predictive",
+      "title": "CONSIDERING AUTOCORRELATION IN PREDICTIVE ...",
+      "doi": null,
+      "venue": "[web]",
+      "year": null,
+      "origin_refs": [
+        "q2:L021"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U081"
+    },
+    {
+      "identity_key": "title:deep learning based carrier frequency offset estimation",
+      "title": "Deep-Learning-Based Carrier Frequency Offset Estimation ...",
+      "doi": null,
+      "venue": "[web]",
+      "year": null,
+      "origin_refs": [
+        "q2:L020"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "备选",
+      "priority_inputs": [
+        "备选"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U082"
+    },
+    {
+      "identity_key": "title:dependence aware lag resolved correlation analysis in multi sensor stochastic systems",
+      "title": "Dependence-Aware Lag-Resolved Correlation Analysis in Multi-Sensor Stochastic Systems",
+      "doi": null,
+      "venue": null,
+      "year": 2026,
+      "origin_refs": [
+        "q2:L002"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U083"
+    },
+    {
+      "identity_key": "title:discrete frft based frame and frequency synchronization for",
+      "title": "[PDF] Discrete FRFT-Based Frame and Frequency Synchronization for ...",
+      "doi": "10.1109/LPT.2017.2759584",
+      "venue": "IEEE Photonics Technology Letters",
+      "year": null,
+      "origin_refs": [
+        "q1:L007"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "备选",
+      "priority_inputs": [
+        "备选"
+      ],
+      "published": true,
+      "published_basis": "published: route-a report + local index; DOI=10.1109/LPT.2017.2759584; venue=IEEE Photonics Technology Letters",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 15321,
+        "key": "doi:10.1109/lpt.2017.2759584",
+        "title": "Discrete FRFT-Based Frame and Frequency Synchronization for Coherent Optical Systems",
+        "venue": "IEEE Photonics Technology Letters"
+      },
+      "canonical_id": "U084"
+    },
+    {
+      "identity_key": "title:ece 463 lab 7 carrier frequency offset estimation and",
+      "title": "ECE 463 Lab 7: Carrier Frequency Offset Estimation and ...",
+      "doi": null,
+      "venue": "[web]",
+      "year": null,
+      "origin_refs": [
+        "q1:L006"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U085"
+    },
+    {
+      "identity_key": "title:efficient preamble design and digital signal processing in upstream burst mode detection of 100g tdm coherent pon",
+      "title": "Efficient preamble design and digital signal processing in upstream burst-mode detection of 100G TDM coherent-PON",
+      "doi": null,
+      "venue": null,
+      "year": 2020,
+      "origin_refs": [
+        "q3:L043"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U086"
+    },
+    {
+      "identity_key": "title:enhanced frame synchronization and carrier recovery in coherent fso communication a pseudo random and cyclic qpsk approach",
+      "title": "Enhanced frame synchronization and carrier recovery in coherent FSO communication: a pseudo-random and cyclic QPSK approach",
+      "doi": "10.1364/OE.520452",
+      "venue": "Optics Express",
+      "year": 2024,
+      "origin_refs": [
+        "q3:L009"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "必读",
+      "priority_inputs": [
+        "必读"
+      ],
+      "published": true,
+      "published_basis": "published: route-a/route-c reports + local index; DOI=10.1364/OE.520452; venue=Optics Express",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 10848,
+        "key": "doi:10.1364/oe.520452",
+        "title": "Enhanced frame synchronization and carrier recovery in coherent FSO communication: a pseudo-random and cyclic QPSK approach.",
+        "venue": "Optics Express"
+      },
+      "canonical_id": "U087"
+    },
+    {
+      "identity_key": "title:fair train test split in machine learning mitigating spatial autocorrelation for improved prediction accuracy",
+      "title": "Fair train-test split in machine learning: Mitigating spatial autocorrelation for improved prediction accuracy",
+      "doi": null,
+      "venue": "[web]",
+      "year": null,
+      "origin_refs": [
+        "q2:L017"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U088"
+    },
+    {
+      "identity_key": "title:field demonstration of turbulence resilient self coherent free space optical communications",
+      "title": "Field demonstration of turbulence-resilient self-coherent free-space optical communications",
+      "doi": null,
+      "venue": null,
+      "year": 2025,
+      "origin_refs": [
+        "q3:L024"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "建议读",
+      "priority_inputs": [
+        "建议读"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U089"
+    },
+    {
+      "identity_key": "title:free space optical communication through atmospheric turbulence channels",
+      "title": "Free-space optical communication through atmospheric turbulence channels",
+      "doi": null,
+      "venue": null,
+      "year": 2002,
+      "origin_refs": [
+        "q3:L004"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "备选",
+      "priority_inputs": [
+        "备选"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U090"
+    },
+    {
+      "identity_key": "title:free space optical communications",
+      "title": "Free-space optical communications",
+      "doi": null,
+      "venue": null,
+      "year": 2006,
+      "origin_refs": [
+        "q3:L053"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "备选",
+      "priority_inputs": [
+        "备选"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U091"
+    },
+    {
+      "identity_key": "title:free space optical links for space communication networks",
+      "title": "Free-space optical links for space communication networks",
+      "doi": null,
+      "venue": null,
+      "year": 2012,
+      "origin_refs": [
+        "q3:L059"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U092"
+    },
+    {
+      "identity_key": "title:frequency estimation for single carrier and ofdm signals in",
+      "title": "[PDF] Frequency estimation for single-carrier and OFDM signals in ...",
+      "doi": null,
+      "venue": "[web]",
+      "year": null,
+      "origin_refs": [
+        "q2:L013"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "待确认",
+      "priority_inputs": [
+        "待确认"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U093"
+    },
+    {
+      "identity_key": "title:frequency estimator estimate carrier frequency offset cfo using open loop approach simulink",
+      "title": "Frequency Estimator - Estimate carrier frequency offset (CFO) using open-loop approach - Simulink",
+      "doi": null,
+      "venue": "[web]",
+      "year": null,
+      "origin_refs": [
+        "q1:L008"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U094"
+    },
+    {
+      "identity_key": "title:frequency sliding generalized cross correlation a sub band time delay estimation approach",
+      "title": "Frequency-sliding generalized cross-correlation: A sub-band time delay estimation approach",
+      "doi": null,
+      "venue": null,
+      "year": 2020,
+      "origin_refs": [
+        "q2:L008"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U095"
+    },
+    {
+      "identity_key": "title:geographically weighted regression model assisted gwrma",
+      "title": "Geographically weighted regression model-assisted (GWRMA ...",
+      "doi": null,
+      "venue": "[web]",
+      "year": null,
+      "origin_refs": [
+        "q2:L025"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U096"
+    },
+    {
+      "identity_key": "title:improved spectrum width estimator using multi lag correlation function in the alternate transmission mode for polarimetric weather radar",
+      "title": "Improved spectrum width estimator using multi-lag correlation function in the alternate transmission mode for polarimetric weather radar",
+      "doi": null,
+      "venue": null,
+      "year": 2024,
+      "origin_refs": [
+        "q2:L004"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "备选",
+      "priority_inputs": [
+        "备选"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U097"
+    },
+    {
+      "identity_key": "title:improvement of spatial autocorrelation kernel estimation and modeling methods by spatial standardization on distance",
+      "title": "Improvement of Spatial Autocorrelation, Kernel Estimation, and Modeling Methods by Spatial Standardization on Distance",
+      "doi": null,
+      "venue": "[web]",
+      "year": null,
+      "origin_refs": [
+        "q2:L024"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U098"
+    },
+    {
+      "identity_key": "title:improvement of spatial resolution and strain measurement range based on adaptive matrix block weighting method in long distance ofdr system",
+      "title": "Improvement of Spatial Resolution and Strain Measurement Range Based on Adaptive Matrix Block Weighting Method in Long-Distance OFDR System",
+      "doi": null,
+      "venue": "[web]",
+      "year": null,
+      "origin_refs": [
+        "q2:L027"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U099"
+    },
+    {
+      "identity_key": "title:investigation of free space optical connections",
+      "title": "Investigation of free space optical connections",
+      "doi": null,
+      "venue": null,
+      "year": 2026,
+      "origin_refs": [
+        "q3:L012"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "待确认",
+      "priority_inputs": [
+        "待确认"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U100"
+    },
+    {
+      "identity_key": "title:line of sight optical turbulence and wind profile monitoring during free space optical communication links",
+      "title": "Line-of-sight optical turbulence and wind profile monitoring during free-space optical communication links",
+      "doi": null,
+      "venue": null,
+      "year": 2026,
+      "origin_refs": [
+        "q3:L005"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U101"
+    },
+    {
+      "identity_key": "title:low complexity lora frame synchronization for ultra low power software defined radios",
+      "title": "Low complexity LoRa frame synchronization for ultra-low power software-defined radios",
+      "doi": null,
+      "venue": null,
+      "year": 2020,
+      "origin_refs": [
+        "q3:L042"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U102"
+    },
+    {
+      "identity_key": "title:matlab code for carrier frequency offset estimation using training",
+      "title": "matlab code for carrier frequency offset estimation using training ...",
+      "doi": null,
+      "venue": "[web]",
+      "year": null,
+      "origin_refs": [
+        "q1:L011"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U103"
+    },
+    {
+      "identity_key": "title:ml estimation of timing and frequency offsets using distinctive correlation characteristics of ofdm signals over dispersive fading channels",
+      "title": "ML estimation of timing and frequency offsets using distinctive correlation characteristics of OFDM signals over dispersive fading channels",
+      "doi": null,
+      "venue": null,
+      "year": 2010,
+      "origin_refs": [
+        "q2:L007"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "备选",
+      "priority_inputs": [
+        "备选"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U104"
+    },
+    {
+      "identity_key": "title:multi strategy combined ofdm orthogonal frequency division multiplexing frame synchronization method",
+      "title": "Multi-strategy-combined OFDM (Orthogonal Frequency Division Multiplexing) frame synchronization method",
+      "doi": null,
+      "venue": null,
+      "year": 2011,
+      "origin_refs": [
+        "q6:L019"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U105"
+    },
+    {
+      "identity_key": "title:optical communication in space challenges and mitigation techniques",
+      "title": "Optical communication in space: Challenges and mitigation techniques",
+      "doi": null,
+      "venue": null,
+      "year": 2016,
+      "origin_refs": [
+        "q3:L003"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "备选",
+      "priority_inputs": [
+        "备选"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U106"
+    },
+    {
+      "identity_key": "title:optical wireless links with spatial diversity over strong atmospheric turbulence channels",
+      "title": "Optical wireless links with spatial diversity over strong atmospheric turbulence channels",
+      "doi": null,
+      "venue": null,
+      "year": 2009,
+      "origin_refs": [
+        "q3:L052"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "备选",
+      "priority_inputs": [
+        "备选"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U107"
+    },
+    {
+      "identity_key": "title:performance analysis of atmospheric optical communication systems with spatial diversity affected by correlated turbulence",
+      "title": "Performance analysis of atmospheric optical communication systems with spatial diversity affected by correlated turbulence",
+      "doi": null,
+      "venue": null,
+      "year": 2022,
+      "origin_refs": [
+        "q3:L033"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "备选",
+      "priority_inputs": [
+        "备选"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U108"
+    },
+    {
+      "identity_key": "title:performance enhancement of free space optical communications under atmospheric turbulence using modes diversity coherent receipt",
+      "title": "Performance enhancement of free-space optical communications under atmospheric turbulence using modes diversity coherent receipt",
+      "doi": null,
+      "venue": null,
+      "year": 2018,
+      "origin_refs": [
+        "q3:L058"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "建议读",
+      "priority_inputs": [
+        "建议读"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U109"
+    },
+    {
+      "identity_key": "title:performance of improved mode diversity reception for free space optical communication under atmospheric turbulence",
+      "title": "Performance of improved mode diversity reception for free-space optical communication under atmospheric turbulence",
+      "doi": null,
+      "venue": null,
+      "year": 2022,
+      "origin_refs": [
+        "q3:L032"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "建议读",
+      "priority_inputs": [
+        "建议读"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U110"
+    },
+    {
+      "identity_key": "title:preamble design for joint frame synchronization frequency offset estimation and channel estimation in upstream burst mode detection of coherent pon",
+      "title": "Preamble design for joint frame synchronization, frequency offset estimation, and channel estimation in upstream burst-mode detection of coherent PON",
+      "doi": null,
+      "venue": null,
+      "year": 2025,
+      "origin_refs": [
+        "q3:L013"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U111"
+    },
+    {
+      "identity_key": "title:propagation of radio signals into and within multi storey buildings at 900 mhz and 1800 mhz",
+      "title": "Propagation of radio signals into and within multi-storey buildings at 900 MHz and 1800 MHz",
+      "doi": null,
+      "venue": null,
+      "year": 1997,
+      "origin_refs": [
+        "q1:L013"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U112"
+    },
+    {
+      "identity_key": "title:research on high precision time frequency phase synchronization transmission technology for free space optical communication systems on mobile",
+      "title": "Research on High-Precision Time–Frequency Phase-Synchronization Transmission Technology for Free-Space Optical Communication Systems on Mobile …",
+      "doi": null,
+      "venue": null,
+      "year": 2025,
+      "origin_refs": [
+        "q3:L028"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "待确认",
+      "priority_inputs": [
+        "待确认"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U113"
+    },
+    {
+      "identity_key": "title:robust synchronization schemes for preamble detection in burst mode coherent optical networks",
+      "title": "Robust synchronization schemes for preamble detection in burst-mode coherent optical networks",
+      "doi": null,
+      "venue": null,
+      "year": 2025,
+      "origin_refs": [
+        "q3:L025"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U114"
+    },
+    {
+      "identity_key": "title:symmetric training sequence based carrier frequency offset estimation scheme for coherent free space optical communication",
+      "title": "Symmetric training sequence-based carrier frequency offset estimation scheme for coherent free-space optical communication",
+      "doi": "10.1109/JPHOT.2022.3161795",
+      "venue": "IEEE Photonics Journal",
+      "year": 2022,
+      "origin_refs": [
+        "q1:L002"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "必读",
+      "priority_inputs": [
+        "必读"
+      ],
+      "published": true,
+      "published_basis": "published: route-a report + local index; DOI=10.1109/JPHOT.2022.3161795; venue=IEEE Photonics Journal",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 10860,
+        "key": "doi:10.1109/jphot.2022.3161795",
+        "title": "Symmetric Training Sequence-Based Carrier Frequency Offset Estimation Scheme for Coherent Free-Space Optical Communication",
+        "venue": "IEEE Photonics Journal"
+      },
+      "canonical_id": "U115"
+    },
+    {
+      "identity_key": "title:time and carrier frequency synchronization for coherent optical communication implementation considerations measurements and analysis",
+      "title": "Time and carrier frequency synchronization for coherent optical communication: Implementation considerations, measurements, and analysis",
+      "doi": null,
+      "venue": null,
+      "year": 2020,
+      "origin_refs": [
+        "q3:L045"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U116"
+    },
+    {
+      "identity_key": "title:timing and phase offset sensitivity of autocorrelation based frequency estimation in an fh ofdm system vtt s research information portal",
+      "title": "Timing and phase offset sensitivity of autocorrelation based frequency estimation in an FH-OFDM system\n      -  VTT's Research Information Portal",
+      "doi": null,
+      "venue": "[web]",
+      "year": null,
+      "origin_refs": [
+        "q2:L018"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "待确认",
+      "priority_inputs": [
+        "待确认"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U117"
+    },
+    {
+      "identity_key": "title:two dimensional autocorrelation method for ultrasound",
+      "title": "Two-dimensional autocorrelation method for ultrasound ...",
+      "doi": null,
+      "venue": "[web]",
+      "year": null,
+      "origin_refs": [
+        "q2:L026"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U118"
+    },
+    {
+      "identity_key": "title:unified training sequence joint carrier recovery for 200 gbps ftn coherent pon upstream",
+      "title": "Unified Training-Sequence Joint Carrier Recovery for 200 Gbps FTN Coherent PON Upstream",
+      "doi": "10.1109/ACCESS.2026.3701043",
+      "venue": "IEEE Access",
+      "year": 2026,
+      "origin_refs": [
+        "q1:L003"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "建议读",
+      "priority_inputs": [
+        "建议读"
+      ],
+      "published": true,
+      "published_basis": "published: route-a report + local index; DOI=10.1109/ACCESS.2026.3701043; venue=IEEE Access",
+      "local_index_pointer": {
+        "path": "search-archive/_index/all-papers.jsonl",
+        "line": 20666,
+        "key": "doi:10.1109/access.2026.3701043",
+        "title": "Unified Training-Sequence Joint Carrier Recovery for 200 Gbps FTN Coherent PON Upstream",
+        "venue": "IEEE Access"
+      },
+      "canonical_id": "U119"
+    },
+    {
+      "identity_key": "title:what is carrier frequency offset cfo and how it distorts the rx symbols wireless pi",
+      "title": "What is Carrier Frequency Offset (CFO) and How It Distorts the Rx Symbols | Wireless Pi",
+      "doi": null,
+      "venue": "[web]",
+      "year": null,
+      "origin_refs": [
+        "q1:L015"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "normalized title",
+      "priority": "排除",
+      "priority_inputs": [
+        "排除"
+      ],
+      "published": false,
+      "published_basis": "not counted published: no DOI/formal venue identity under conservative rule",
+      "local_index_pointer": null,
+      "canonical_id": "U120"
+    },
+    {
+      "identity_key": "title:wide range frequency offset estimation algorithm for optical coherent systems using training sequence",
+      "title": "Wide-Range Frequency Offset Estimation Algorithm for Optical Coherent Systems Using Training Sequence",
+      "doi": null,
+      "venue": null,
+      "year": 2012,
+      "origin_refs": [
+        "route-a:index-supplement"
+      ],
+      "input_record_count": 1,
+      "dedup_basis": "route-report local-index supplement absent as independent JSON identity",
+      "priority": "待确认",
+      "priority_inputs": [
+        "待确认"
+      ],
+      "published": false,
+      "published_basis": "not counted published: route-a report: identity incomplete",
+      "local_index_pointer": null,
+      "canonical_id": "U121"
+    }
+  ]
+}

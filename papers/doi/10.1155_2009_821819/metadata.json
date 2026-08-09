@@ -1,0 +1,16 @@
+{
+  "storage_version": 2,
+  "id": "S08",
+  "title": "A Practical Scheme for Frequency Offset Estimation in MIMO-OFDM Systems",
+  "doi": "10.1155/2009/821819",
+  "arxiv_id": null,
+  "download_status": "success",
+  "download_method": "unpaywall",
+  "content_type": "pdf",
+  "content_quality": "good",
+  "content_file": "content.md",
+  "downloaded_at": "2026-08-09T10:13:20.093776+08:00",
+  "real_title": "_Research Article_ A Practical Scheme for Frequency Offset Estimation in MIMO-OFDM Systems",
+  "title_check": "match",
+  "title_overlap": 0.8
+}

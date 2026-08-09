@@ -1,6 +1,6 @@
 # Topic Index: Ch4 参考方法扩展
 
-> 状态: active | 创建: 2026-08-08 | 最后更新: 2026-08-08（T003：RML-FSTS 独立 Groundwork Step 1–2 待派发）
+> 状态: dormant | 创建: 2026-08-08 | 最后更新: 2026-08-08（科学执行迁入独立 RML-FSTS Groundwork 专题）
 
 ## 专题信息
 
@@ -12,7 +12,7 @@
 
 **原始目标**：在星地相干 FSO 总伞下，为 Ch4 产出一个真实方法章；从可复现 reference baseline 出发，经 observed defect、one deployable action、fair comparator 与 bounded testbed，形成完整方法包。
 
-**当前范围**：terminal=`ONE_DEFECT_REPRODUCTION_ENTRY_READY_FOR_GW_STEP1`。T003 已准备：下一执行对话先查 registry，再创建独立 RML-FSTS Groundwork 专题，只运行正式 GW Step 1 与 Step 2，输出覆盖面缺口报告后停止等待用户确认。Step 3/3.5/4a、预注册 smoke、实现和仿真均不授权。
+**当前范围**：本专题转为 dormant 来源 owner，保留 D004/R002/H003 与 protected history；RML-FSTS 的正式 Groundwork 科学执行迁入 `.sessions/2026-08-08-rml-fsts-groundwork/`，当前只运行 Step 1–2 并在覆盖面报告后停止。Step 3/3.5/4a、预注册 smoke、实现和仿真均不授权。
 
 **明确不含**：
 
@@ -80,4 +80,4 @@
 
 ## 当前位置
 
-`T003_DISPATCH_READY`，current terminal=`ONE_DEFECT_REPRODUCTION_ENTRY_READY_FOR_GW_STEP1`，V003 PASS。下一执行对话只允许按 T003 新建独立专题并完成 GW Step 1–2；覆盖面报告后停止，禁止 Step 3 及任何 smoke/实现/仿真。
+`DORMANT_SOURCE_OWNER`，current terminal=`ONE_DEFECT_REPRODUCTION_ENTRY_READY_FOR_GW_STEP1`，V003 PASS。当前科学执行 owner 为 `.sessions/2026-08-08-rml-fsts-groundwork/`；本专题不再新增科学执行内容。

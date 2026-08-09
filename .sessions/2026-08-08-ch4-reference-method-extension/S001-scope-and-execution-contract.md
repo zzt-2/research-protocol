@@ -4,6 +4,7 @@
 > 2026-08-08 续接 | T001 回传纠偏 | T002 待派发
 > 2026-08-08 续接 | T002 回传 | 入口裁决完成，V003 PASS
 > 2026-08-08 续接 | H003 接收与 T003 准备 | T003 待派发
+> 2026-08-08 续接 | T003 回传 | 科学执行迁入独立专题，Step 2 READY
 
 ## 目标
 
@@ -29,6 +30,8 @@ H003 接收验证已完成：D004 的 terminal 与 `decisions.md` 一致；R002 
 
 T003 已准备。执行方必须先查 registry，再新建独立 `2026-08-08-rml-fsts-groundwork` 专题；单对话只运行正式 GW Step 1 与 Step 2，并在覆盖面报告交用户确认处停止。Step 3/3.5/4a、预注册 smoke、实现和仿真全部保持禁止。
 
+T003 已完成：独立执行 owner 为 `.sessions/2026-08-08-rml-fsts-groundwork/`；Step 1 PASS，Step 2 terminal=`STEP2_READY_FOR_USER_CONFIRMATION`。本专题转为 dormant 来源 owner，不再承载 RML-FSTS 科学执行。
+
 ## 决策引用
 
 - D001：冻结 Ch4 reference-method extension 执行合同（新建）。
@@ -36,12 +39,12 @@ T003 已准备。执行方必须先查 registry，再新建独立 `2026-08-08-rm
 - D003：入口审计不计对象失败，改设 defect-reproduction gate（新建）。
 - D004：选择 RML-FSTS 作为唯一 defect-reproduction Groundwork 入口（新建）。
 - V003：独立 verifier 初审 PARTIAL、修复后 PASS，P0/P1/P2=`0/0/0`。
-- T003：RML-FSTS 独立 Groundwork Step 1–2 自包含任务书（待派发）。
+- T003：RML-FSTS 独立 Groundwork Step 1–2 任务已回传；执行 owner 见 `.sessions/2026-08-08-rml-fsts-groundwork/`。
 
 ## 范围确认
 
-- 本轮是否在 scope boundary 内：是（T002 已完成；本次只接收 H003 并准备 T003，不进入 Groundwork 科学执行）。
+- 本轮是否在 scope boundary 内：是（T003 科学执行在独立专题完成；本专题只更新 current-view 交接）。
 
 ## 后续
 
-下一对话执行 T003：创建独立 RML-FSTS Groundwork 专题，只完成 GW Step 1 检索初筛与 Step 2 全文获取/覆盖面报告，然后等待用户确认。预注册 defect smoke 必须等 Step 1–3 完成并合法进入 Step 4a 后才能运行。
+本专题无科学执行后续；用户覆盖面确认只在 `.sessions/2026-08-08-rml-fsts-groundwork/` 处理。未确认前 Step 3 不得启动。

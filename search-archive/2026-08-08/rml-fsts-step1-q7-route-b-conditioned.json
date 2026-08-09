@@ -1,0 +1,57 @@
+{
+  "query": "carrier frequency offset correlation lag estimation range variance accuracy SNR modulation training length",
+  "timestamp": "2026-08-09T00:13:46.610309+08:00",
+  "sources": [
+    "s2"
+  ],
+  "total": 2,
+  "results": [
+    {
+      "title": "Joint Range Estimation Using Single Carrier Burst Signals for Networked UAVs",
+      "authors": [
+        "Xi Pan",
+        "Chaoxing Yan",
+        "Jiankang Zhang"
+      ],
+      "venue": "IEEE Access",
+      "year": 2021,
+      "doi": "10.1109/ACCESS.2021.3066415",
+      "arxiv_id": null,
+      "abstract": "The localization accuracy demand is ever growing in UAV communication networks. We propose a joint coarse and fine range estimation method using single carrier burst signals with two samples per symbol for UAV networks. The coarse estimation of our joint estimation method exploits multiple preamble symbols for flexible single-carrier frequency-domain equalization (SC-FDE) frame structures to calculate correlation metrics, which are insensitive to frequency offset due to the differential correlation operation. Then, we propose a fine range estimation method using only two samples per symbol with expectation relying on shaping or matched filter. Furthermore, we derive the performance bounds for the ranging system using both raised cosine (RC) and better than raised-cosine (BTRC) pulses. Finally, extensive simulations are conducted to validate the proposed method in terms of estimate bias and variance for different modulations, shaping filters, and fading channels. Our simulation results show that, the root mean square errors of proposed ranging method can reach the order of centimeter at medium-to-high signal-to-noise ratio (SNR) region, whereas the case using BTRC filter is capable of enhancing the ranging performance at low SNRs.",
+      "citation_count": 6,
+      "is_open_access": true,
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/6287639/9312710/09380148.pdf",
+      "source_api": "semantic_scholar",
+      "relevance_score": 0.769,
+      "_score": 0.5445,
+      "id": "L001",
+      "download": true,
+      "publication_status": "published",
+      "priority": "排除",
+      "priority_reason": "2021 IEEE Access 正式论文（DOI 10.1109/ACCESS.2021.3066415，6 引），摘要主题是 UAV single-carrier burst 的 coarse/fine range estimation；frequency offset 只作为差分相关需不敏感的干扰，不是 CFO estimator，更不研究 correlation-lag 条件化选择。"
+    },
+    {
+      "title": "Multiple Frequency Offset Estimation for the Downlink of Coordinated MIMO Systems",
+      "authors": [
+        "B. Zarikoff",
+        "J. Cavers"
+      ],
+      "venue": "IEEE Journal on Selected Areas in Communications",
+      "year": 2008,
+      "doi": "10.1109/JSAC.2008.080807",
+      "arxiv_id": null,
+      "abstract": null,
+      "citation_count": 30,
+      "is_open_access": false,
+      "pdf_url": "",
+      "source_api": "semantic_scholar",
+      "relevance_score": 0.231,
+      "_score": 0.4155,
+      "id": "L002",
+      "download": true,
+      "publication_status": "published",
+      "priority": "排除",
+      "priority_reason": "2008 IEEE JSAC 正式论文（DOI 10.1109/JSAC.2008.080807，30 引），题名是 coordinated MIMO downlink 的 multiple frequency offsets；无摘要，且 multiple offsets 不等于 multi-lag/conditioned single-lag，不能回答 lag 随 SNR/modulation/training length 变化的比较问题。"
+    }
+  ]
+}

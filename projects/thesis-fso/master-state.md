@@ -4,8 +4,8 @@ direction: 星地激光通信（FSO）——子地带由地勘（S003 方法论 
 method_type: 待定（精读后根据问题方法产出形态确定，见 glossary 判据 2）
 domain: comms
 created: 2026-06-21
-updated: 2026-08-07
-current_step: STRONG_TURBULENCE_CODED_BURST_STEP1_EVIDENCE_INSUFFICIENT（2026-08-07 D002；6/6 query 收口，无候选通过六项 reopen gate，Step 2 未执行。）
+updated: 2026-08-08
+current_step: RML_FSTS_STEP2_READY_FOR_USER_CONFIRMATION（2026-08-08；5 篇合格 CORE，C1–C4 齐全；覆盖报告后硬停止。）
 current_stage: GROUNDWORK
 ---
 
@@ -35,15 +35,23 @@ current_stage: GROUNDWORK
 
 ### 当前控制面桥接
 
-> **2026-08-07 当前入口：`STRONG_TURBULENCE_CODED_BURST_STEP1_EVIDENCE_INSUFFICIENT`**。用户已显式授权把物理条件 C
-> 从旧 4b#1 的“LEO 中弱湍流”改为有一手依据的“低仰角强湍流/outage 切片”，并要求另开正式
-> Groundwork 专题从 Step 1 开始。当前只开放最多 6 组定向检索、历史碰撞审计、物理来源分级、
-> outage-vs-burst 语义门和 P08-R2/Sionna 资产的只读 BOM。至少一张候选预卡同时通过六项 reopen gate
-> 才能进入 Step 2。6/6 query 已收口：target occurrence/AFD、recoverable cross-block span 与第二篇严格
-> 2019+ task-matched baseline 均未闭合，D002 选择 `STEP1_EVIDENCE_INSUFFICIENT`；V001/fresh verifier
-> `ACCEPT`、blocker=0；Step 2 未执行。
-> 禁止 coded-chain/MVE/Step 3/4a/Step 5/Contract/Execute。
-> oversampled-sync Q1、C3、P1、baseline-first batch 与 2026-08-02 dormant campaign均只作历史背景。
+> **2026-08-08 当前入口：`RML_FSTS_STEP2_READY_FOR_USER_CONFIRMATION`**。Ch4 reference-method extension D004/T003
+> 选择 Wang 2023 FSTS fixed-lag/`BL` condition-dependence 作为唯一独立 Groundwork research object。
+> Step 1 已用满 7/7 query：121 unique、4 actual sources、正式发表 58.68%、12 篇 shortlist，质量门 PASS。
+> Step 2 已获得 5 篇合格 CORE 并覆盖 C1–C4，coverage report 已生成；当前硬停止等待用户覆盖面确认。
+> 禁止 Step 3/3.5/4a、预注册 smoke、实现、仿真、MVE、Contract 或 Execute；object/package 计数仍为 0/0。
+
+- **RML-FSTS fixed-lag condition-dependence Groundwork（独立专题，2026-08-08）—— STEP 2 READY / USER CONFIRMATION REQUIRED**：
+  source-domain defect 与 target FSO crossover 严格分离；future action 只作背景；最强廉价替代保持为
+  dev-frozen modulation/TS/receiver-power-conditioned single-lag lookup。
+
+  | RML-FSTS GW Step | 状态 | 证据 | 下游门控 |
+  |---|---|---|---|
+  | 1 search | ✅ PASS | R001 + step1 receipt + 7 query JSON | 允许 Step 2 |
+  | 2 acquire | ✅ READY_FOR_USER_CONFIRMATION | 5 篇合格 CORE + R002 + coverage/receipt | 用户确认前禁止 Step 3 |
+  | 3 read | ⬜ NOT_STARTED | — | Step 2 用户确认前禁止 |
+  | 3.5 supplement | ⬜ NOT_STARTED | — | Step 3 未完成前禁止 |
+  | 4a feasibility | ⬜ NOT_STARTED | — | Step 3/3.5 未完成前禁止 |
 
 - **低仰角强湍流 coded-burst reliability Groundwork（独立专题，2026-08-07）—— CLOSED / STEP 1 EVIDENCE INSUFFICIENT**：
   原始目标、六项 reopen gate、outage-vs-burst terminal 与禁止项已在新专题 S001/D001/topic-index 冻结。
