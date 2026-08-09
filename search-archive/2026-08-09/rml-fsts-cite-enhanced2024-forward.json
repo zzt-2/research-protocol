@@ -1,0 +1,55 @@
+{
+  "query": "",
+  "timestamp": "2026-08-09T14:18:08.256560+08:00",
+  "sources": [
+    "citations_both"
+  ],
+  "total": 2,
+  "results": [
+    {
+      "title": "Enhancing FSO SISO links performance under adverse atmospheric conditions using CPPM-based DS-OCDMA: Simulation and experimental validation",
+      "authors": [
+        "Mohammed Amine Benbouzid",
+        "Nabil Belghachem",
+        "Abdelwahid BOUTEMEJET",
+        "Djamal TEGUIG"
+      ],
+      "venue": "Optik",
+      "year": 2025,
+      "doi": "10.1016/j.ijleo.2025.172318",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 3,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations+s2_citations",
+      "id": "L001",
+      "download": false,
+      "publication_status": "published"
+    },
+    {
+      "title": "基于分段式抛物线插值的空间相干光通信低复杂度相位估计方法",
+      "authors": [
+        "徐隆耀 Xu Longyao",
+        "李正璇 Li Zhengxuan",
+        "李豪 Li Hao",
+        "曲元哲 Qu Yuanzhe",
+        "宋英雄 Song Yingxiong",
+        "李迎春 Li Yingchun",
+        "王演祎 Wang Yanyi"
+      ],
+      "venue": "Acta Optica Sinica",
+      "year": 2025,
+      "doi": "10.3788/aos250716",
+      "arxiv_id": null,
+      "abstract": "随着空间相干光通信技术的快速发展，传统盲相位估计（BPS）算法因高计算复杂度难以满足硬件实现要求。提出一种基于分段式抛物线插值的低复杂度相位估计方法，通过优化相位测试角策略，在抑制误差累积的同时显著降低计算负载。实验结果表明：在室内相干光通信系统中，所提算法的相位测试角数量仅为传统BPS的63.5%，且系统灵敏度提升了0.5 dB；在29 km自由空间通信场景中，相同相位估计精度下相位测试角数量减少约90%，验证了所提算法对复杂信道的高适应性。该研究实现了相位估计精度与计算效率的有效平衡，为空间相干光通信系统提供了兼具高可靠性与低复杂度的处理解决方案。",
+      "citation_count": 1,
+      "is_open_access": true,
+      "pdf_url": "https://www.opticsjournal.net/Articles/GetArticlePDF/OJ66d0b2a033d8bbb3",
+      "source_api": "openalex_citations+s2_citations",
+      "id": "L002",
+      "download": true,
+      "publication_status": "published"
+    }
+  ]
+}

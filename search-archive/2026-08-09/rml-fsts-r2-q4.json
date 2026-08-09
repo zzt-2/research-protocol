@@ -1,0 +1,19 @@
+{
+  "schema_version": "rml-fsts-r2-query-error/v1",
+  "query_id": "Q4",
+  "query": "short-time spectrum coarse frequency offset FSO adaptive window correlation distance",
+  "date": "2026-08-09",
+  "status": "TIMEOUT",
+  "timeout_seconds": 120,
+  "auto_raw_path": null,
+  "actual_source_families": [],
+  "total": null,
+  "results": [],
+  "errors": [
+    {
+      "type": "BOUNDED_TIMEOUT",
+      "message": "bash tools/search exceeded the 120-second task bound; the exact query process and its bash/wsl descendants were terminated, and no automatic raw JSON had been written."
+    }
+  ],
+  "boundary": "This placeholder records an attempted frozen query, not a zero-result search and not evidence of saturation."
+}

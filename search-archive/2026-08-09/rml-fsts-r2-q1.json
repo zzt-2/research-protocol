@@ -1,0 +1,200 @@
+{
+  "query": "single-tone training sequence FSO frequency offset estimation lag block length adaptive",
+  "timestamp": "2026-08-09T14:41:34.471907+08:00",
+  "sources": [
+    "s2",
+    "openalex",
+    "serpapi",
+    "exa"
+  ],
+  "total": 8,
+  "results": [
+    {
+      "title": "Robust multifunctional single-tone training sequence for free-space optical communication in strong turbulence",
+      "authors": [
+        "K Liu",
+        "L Wang",
+        "M Chen"
+      ],
+      "venue": "",
+      "year": 2025,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "In free-space optical (FSO) communication, the received optical power will be significantly diminished in environments characterized by strong turbulence, making effective frequency offset (FO) estimation challenging and severely degrading signal quality. Additionally, to enhance receiver sensitivity, diversity reception is frequently employed at the receiving end. However, prior to combining the diversity branches, it is essential to perform phase correction between these branches. To address these two challenges, this paper proposes a robust frequency offset estimation (FOE) method and a low-overhead training sequence for phase correction with only one training sequence. Finally, a 10-Gbaud dual-polarization quadrature amplitude modulation (QAM) transceiver system is implemented, where data reception, demodulation, and digital signal processing (DSP) are performed in a simulated turbulent channel, demonstrating the effectiveness of the proposed algorithm.",
+      "citation_count": 2,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "serpapi_scholar",
+      "url": "https://opg.optica.org/abstract.cfm?uri=oe-33-10-21660",
+      "relevance_score": 0.667,
+      "_score": 0.5309193548387097,
+      "id": "L001",
+      "download": false,
+      "publication_status": "unknown"
+    },
+    {
+      "title": "Design and performance analysis of spectral-efficient hybrid CPDM-CO-OFDM FSO communication system under diverse weather conditions",
+      "authors": [
+        "R Chowdhury",
+        "AKMSJ Choyon"
+      ],
+      "venue": "",
+      "year": 2024,
+      "doi": "10.1515/joc-2021-0113/html",
+      "arxiv_id": null,
+      "abstract": "Abstract A comprehensive design is proposed for the free-space optical (FSO) communication system by hybridizing circular polarization division multiplexing (CPDM) with coherent optical orthogonal frequency division multiplexing (CO-OFDM) and its performance is investigated realistically under diverse turbulent weather conditions of Bangladesh. Here, we consider Gamma–Gamma distribution for the turbulent FSO channel model. Moreover, the proposed scheme presents an excellent performance since the CPDM technique not only maximizes the link capacity of the FSO system but also enhances the spectral efficiency of the system. Besides, multipath fading, which is appeared during the FSO transmission, is significantly mitigated by OFDM modulation. The outcomes from the simulation confirm the advantages of the proposed hybrid scheme and also it can serve as a reference for the FSO application even in turbulent weather conditions. Performance analysis of the proposed model is described in terms of the optical power spectrum, optical signal-to-noise ratio, bit error rate, Q factor, constellation diagrams, and eye diagrams.",
+      "citation_count": 31,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "serpapi_scholar",
+      "url": "https://www.degruyterbrill.com/document/doi/10.1515/joc-2021-0113/html",
+      "relevance_score": 0.167,
+      "_score": 0.5135000000000001,
+      "id": "L002",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Two efficient blind carrier frequency offset estimation algorithms for APSK signals",
+      "authors": [
+        "SP Lan",
+        "HC Lee",
+        "HL Tsai"
+      ],
+      "venue": "",
+      "year": 2024,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "This paper presents two methods for blind carrier frequency offset (CFO) estimation for amplitude phase shift keying (APSK) signals. The first approach carries out modulation removal using the outermost symbols of APSK and then utilizes an iterative parabolic interpolation technique to mitigate the bias of FFT-based CFO estimation. The second method conducts two-stage full modulation removal and aggregates symbols to reduce the FFT size for CFO estimation. In the symbol aggregation process, modulation-removed symbols are paired and weighted based on their reliability to achieve accurate estimation. The first method demonstrates better performance, particularly for high-precision requirements, while the second method offers a more adaptable trade-off between performance and complexity by adjusting the aggregation length. Both methods are more efficient and provide better mean square error (MSE) performance compared to existing ones. Moreover, numerical complexity analyses show the efficiency of the proposed algorithms.",
+      "citation_count": 4,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "serpapi_scholar",
+      "url": "https://ieeexplore.ieee.org/abstract/document/10577197/",
+      "relevance_score": 0.333,
+      "_score": 0.3613387096774194,
+      "id": "L003",
+      "download": false,
+      "publication_status": "unknown"
+    },
+    {
+      "title": "Using sequence-to-sequence models for carrier frequency offset estimation of short messages and chaotic maps",
+      "authors": [
+        "CP Davey",
+        "I Shakeel",
+        "RC Deo",
+        "S Salcedo-Sanz"
+      ],
+      "venue": "",
+      "year": 2022,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "Deep Learning methods have produced good carrier frequency offset estimations for short message sequences in comparison with methods based on the Fast Fourier Transform. However, these performance gains were observed for short ranges of frequency offsets, sequences with predefined pilot symbols and periodic modulation schemes. Chaotic modulation has an advantage over periodic signals in offering security through the continuous changes produced by parameterising the chaotic map function. However, synchronisation of chaotic map parameters in coherent receivers is dependent on the carrier recovery of phase and frequency which dramatically reduces the demodulation performance under high noise levels. This article presents a stacked sequence-to-sequence neural network architecture for blind carrier frequency offset estimation of both periodic and chaotic modulation schemes. The results obtained demonstrate better performance than conventional methods in low SNR for the Additive White Gaussian Noise channel. While this technique operates without feature engineering, the results demonstrate that data augmentation produces a higher degree of accuracy for such models, indicating the benefit of integration with conventional signal pre-processing steps as part of the deep learning pipeline. The proposed neural network architecture is shown to perform carrier frequency offset estimation, not only for the selected periodic modulations, but also in the case of highly non-linear chaotic maps. This suggests the applicability of deep learning methods for synchronisation in waveforms that employ chaotic modulation schemes for secure communication and for applications where short and sporadic messaging are required (e.g., Internet of Things).",
+      "citation_count": 5,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "serpapi_scholar",
+      "url": "https://research.usq.edu.au/download/e17a89f68f0e3bc505a430996e57695effbf003dfdd873b08b1bf11a779188a8/1897117/Using_Sequence-to-Sequence_Models_for_Carrier_Frequency_Offset_Estimation_of_Short_Messages_and_Chaotic_Maps.pdf",
+      "relevance_score": 0.333,
+      "_score": 0.3300483870967742,
+      "id": "L004",
+      "download": true,
+      "publication_status": "unknown"
+    },
+    {
+      "title": "Leverage the Duty Ratio of Frequency-Shift Wave to Design a Novel Amplitude Modulation for Backscatter Communications",
+      "authors": [
+        "L Yuan",
+        "H Cao",
+        "Y Ma",
+        "W Gong"
+      ],
+      "venue": "",
+      "year": 2025,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "6G and beyond will fulfill the requirements of a fully connected world and provide ubiquitous wireless connectivity for all. Transformative solutions are expected to drive the surge for accommodating a rapidly growing number of intelligent devices and services. Major technological breakthroughs to achieve connectivity goals within 6G include: (i) a network operating at the THz band with much wider spectrum resources, (ii) intelligent communication environments that enable a wireless propagation environment with active signal transmission and reception, (iii) pervasive artificial intelligence, (iv) large-scale network automation, (v) an all-spectrum reconfigurable front-end for dynamic spectrum access, (vi) ambient backscatter communications for energy savings, (vii) the Internet of Space Things enabled by CubeSats and UAVs, and (viii) cell-free massive MIMO communication networks. In this roadmap paper, use cases for these enabling techniques as well as recent advancements on related topics are highlighted, and open problems with possible solutions are discussed, followed by a development timeline outlining the worldwide efforts in the realization of 6G. Going beyond 6G, promising early-stage technologies such as the Internet of NanoThings, the Internet of BioNanoThings, and quantum communications, which are expected to have a far-reaching impact on wireless communications, have also been discussed at length in this paper.",
+      "citation_count": 0,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "serpapi_scholar",
+      "url": "https://ieeexplore.ieee.org/abstract/document/11141553/",
+      "relevance_score": 0.167,
+      "_score": 0.2635,
+      "id": "L005",
+      "download": false,
+      "publication_status": "unknown"
+    },
+    {
+      "title": "Simulation and experimental analysis of optical frequency comb generation methods and its application in high-capacity optical communication systems",
+      "authors": [
+        "N Rajaram"
+      ],
+      "venue": "",
+      "year": 2025,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "The quest towards the integration of ultra-fast, high-precision optical clocks is reflected in the large number of high-impact papers on the topic published in the last few years. This interest has been catalysed by the impact that high-precision optical frequency combs (OFCs) have had on metrology and spectroscopy in the last decade [ [1] , [2] , [3] , [4] , [5] ]. OFCs are often referred to as optical rulers: their spectra consist of a precise sequence of discrete and equally-spaced spectral lines that represent precise marks in frequency. Their importance was recognised worldwide with the 2005 Nobel Prize being awarded to T.W. Hänsch and J. Hall for their breakthrough in OFC science [ 5 ]. They demonstrated that a coherent OFC source with a large spectrum – covering at least one octave – can be stabilised with a self-referenced approach, where the frequency and the phase do not vary and are completely determined by the source physical parameters. These fully stabilised OFCs solved the challenge of directly measuring optical frequencies and are now exploited as the most accurate time references available, ready to replace the current standard for time. Very recent advancements in the fabrication technology of optical micro-cavities [ 6 ] are contributing to the development of OFC sources. These efforts may open up the way to realise ultra-fast and stable optical clocks and pulsed sources with extremely high repetition-rates, in the form of compact and integrated devices. Indeed, the fabrication of high-quality factor (high-Q) micro-resonators, capable of dramatically amplifying the optical field, can be considered a photonics breakthrough that has boosted not only the scientific investigation of OFC sources [ [8] , [13] , [11] , [12] , [10] , [7] , [9] ] but also of optical sensors and compact light modulators [ [14] , [6] ]. In this framework, the demonstration of planar high-Q resonators, compatible with silicon technology [ [14] , [13] , [11] , [12] , [10] ], has opened up a unique opportunity for these devices to provide entirely new capabilities for photonic-integrated technologies. Indeed, it is well acknowledged by the electronics industry that future generations of computer processing chips will inevitably require an extremely high density of copper-based interconnections, significantly increasing the chip power dissipation to beyond practical levels [ [15] , [16] , [17] ]; hence, conventional approaches to chip design must undergo radical changes. On-chip optical networks, or optical interconnects, can offer high speed and low energy per-transferred-bit, and micro-resonators are widely seen as a key component to interface the electronic world with photonics. Many information technology industries have recently focused on the development of integrated ring resonators to be employed for electrically-controlled light modulators [ [14] , [15] , [16] , [17] ], greatly advancing the maturity of micro-resonator technology as a whole. Recently [ [13] , [11] , [12] ], the demonstration of OFC sources in micro-resonators fabricated in electronic (i.e. in complementary metal oxide semiconductor (CMOS)) compatible platforms has given micro-cavities an additional appeal, with the possibility of exploiting them as light sources in microchips. This scenario is creating fierce competition in developing highly efficient OFC generators based on micro-cavities which can radically change the nature of information transport and processing. Even in telecommunications, perhaps a more conventional environment for optical technologies, novel time-division multiplexed optical systems will require extremely stable optical clocks at ultra-high pulse repetition-rates towards the THz scale. Furthermore, arbitrary pulse generators based on OFC [ [18] , [19] ] are seen as one of the most promising solutions for this next generation of high-capacity optical coherent communication systems. This review will summarise the recent exciting achievements in the field of micro-combs, namely optical frequency combs based on high-Q micro-resonators, with a perspective on both the potential of this technology, as well as the open questions and challenges that remain.",
+      "citation_count": 0,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "serpapi_scholar",
+      "url": "https://ruor.uottawa.ca/items/5760d7dd-d2c3-49c6-9f52-8a975c144d84",
+      "relevance_score": 0.167,
+      "_score": 0.2635,
+      "id": "L006",
+      "download": false,
+      "publication_status": "unknown"
+    },
+    {
+      "title": "Joint frame synchronization and frequency offset estimation for satellite-to-ground optical communication under low received optical power",
+      "authors": [
+        "K Liu",
+        "L Wang",
+        "T Yang",
+        "B Liu"
+      ],
+      "venue": "",
+      "year": null,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "Optical wireless communication (OWC) refers to transmission in unguided propagation media through the use of optical carriers, i.e., visible, infrared (IR), and ultraviolet (UV) bands. In this survey, we focus on outdoor terrestrial OWC links which operate in near IR band. These are widely referred to as free space optical (FSO) communication in the literature. FSO systems are used for high rate communication between two fixed points over distances up to several kilometers. In comparison to radio-frequency (RF) counterparts, FSO links have a very high optical bandwidth available, allowing much higher data rates. They are appealing for a wide range of applications such as metropolitan area network (MAN) extension, local area network (LAN)-to-LAN connectivity, fiber back-up, backhaul for wireless cellular networks, disaster recovery, high definition TV and medical image/video transmission, wireless video surveillance/monitoring, and quantum key distribution among others. Despite the major advantages of FSO technology and variety of its application areas, its widespread use has been hampered by its rather disappointing link reliability particularly in long ranges due to atmospheric turbulence-induced fading and sensitivity to weather conditions. In the last five years or so, there has been a surge of interest in FSO research to address these major technical challenges. Several innovative physical layer concepts, originally introduced in the context of RF systems, such as multiple-input multiple-output communication, cooperative diversity, and adaptive transmission have been recently explored for the design of next generation FSO systems. In this paper, we present an up-to-date survey on FSO communication systems. The first part describes FSO channel models and transmitter/receiver structures. In the second part, we provide details on information theoretical limits of FSO channels and algorithmic-level system design research activities to approach these limits. Specific topics include advances in modulation, channel coding, spatial/cooperative diversity techniques, adaptive transmission, and hybrid RF/FSO systems.",
+      "citation_count": 0,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "serpapi_scholar",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6293357",
+      "relevance_score": 0.417,
+      "_score": 0.2085,
+      "id": "L007",
+      "download": false,
+      "publication_status": "unknown"
+    },
+    {
+      "title": "Spatio-temporal mutualism enabled ultrashort pulse coherent FSO transmission for turbulent resilience",
+      "authors": [
+        "Z Yu",
+        "Y Liu",
+        "Y Zhu",
+        "K Liu",
+        "D Yan",
+        "L Guo"
+      ],
+      "venue": "",
+      "year": null,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "… to migrate temporal features into adaptive optics (AO) systems … than the maximum differential path delay 𝜏𝑚𝑎𝑥 (several to … In each independent single-tone realization, to accurately …",
+      "citation_count": 0,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "serpapi_scholar",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6868388",
+      "relevance_score": 0.333,
+      "_score": 0.1665,
+      "id": "L008",
+      "download": false,
+      "publication_status": "unknown"
+    }
+  ]
+}

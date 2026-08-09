@@ -1,0 +1,136 @@
+{
+  "schema_version": "rml-fsts-step3.5-r2-must-read-receipt/v1",
+  "date": "2026-08-09",
+  "task_brief": ".sessions/2026-08-08-rml-fsts-groundwork/T005-step3-5-r2-must-read.md",
+  "scope": "three R2 new-must-read acquisition and fulltext action adjudication only",
+  "records": [
+    {
+      "doi": "10.1364/OE.561252",
+      "title": "Robust multifunctional single-tone training sequence for free-space optical communication in strong turbulence",
+      "year": 2025,
+      "status": "FULLTEXT_UNAVAILABLE",
+      "identity": {
+        "result": "MATCH",
+        "crossref_url": "https://api.crossref.org/works/10.1364/OE.561252",
+        "publisher_resource": "https://opg.optica.org/abstract.cfm?URI=oe-33-10-21660",
+        "r1_evidence": "search-archive/2026-08-09/rml-fsts-step3-5-search-citation-receipt.json:131-134"
+      },
+      "attempts": [
+        {"channel": "tools/download wrapper", "result": "FAILED_BEFORE_NETWORK", "detail": "CRLF caused Bash parse errors at wrapper lines 32/35/39"},
+        {"channel": "equivalent tools/paper_download.py --doi", "result": "all_failed"},
+        {"channel": "Crossref publisher VOR link", "url": "https://opg.optica.org/viewmedia.cfm?URI=oe-33-10-21660&seq=0", "result": "JS challenge HTML, 553 bytes, not PDF"},
+        {"channel": "Optica /oe PDF link", "url": "https://opg.optica.org/oe/viewmedia.cfm?uri=oe-33-10-21660&seq=0", "result": "Radware CAPTCHA HTML, not PDF"},
+        {"channel": "in-app browser", "result": "UNAVAILABLE", "detail": "browser runtime reported no browser backend"}
+      ],
+      "source_path": null,
+      "sha256": null,
+      "bytes": null,
+      "fulltext_evidence_lines": [],
+      "action": {
+        "estimator_training_action": "UNKNOWN_FROM_QUALIFIED_FULLTEXT",
+        "information_source": "UNKNOWN_FROM_QUALIFIED_FULLTEXT",
+        "decision_granularity": "UNKNOWN",
+        "candidate_set": "UNKNOWN",
+        "selection_or_weighting_rule": "UNKNOWN",
+        "fixed_or_adaptive": "UNKNOWN",
+        "comparison_role": "UNKNOWN"
+      },
+      "classification": "UNRESOLVED_FULLTEXT_DEBT",
+      "exact_collision": "UNKNOWN",
+      "cheap_lookup_equivalent": "UNKNOWN",
+      "must_read_debt_closed": false
+    },
+    {
+      "doi": "10.1109/ACP/IPOC63121.2024.10809664",
+      "title": "Optimized Frequency Offset Estimation Scheme Using Short Symbol Block Based on Training Sequence for Coherent Free-Space Optical Communication",
+      "year": 2024,
+      "status": "FULLTEXT_UNAVAILABLE",
+      "identity": {
+        "result": "MATCH",
+        "crossref_url": "https://api.crossref.org/works/10.1109/ACP%2FIPOC63121.2024.10809664",
+        "publisher_resource": "https://ieeexplore.ieee.org/document/10809664/",
+        "r1_evidence": "search-archive/2026-08-09/rml-fsts-step3-5-search-citation-receipt.json:137-140"
+      },
+      "attempts": [
+        {"channel": "tools/download wrapper", "result": "FAILED_BEFORE_NETWORK", "detail": "CRLF caused Bash parse errors at wrapper lines 32/35/39"},
+        {"channel": "equivalent tools/paper_download.py --doi", "result": "all_failed"},
+        {"channel": "IEEE stampPDF", "url": "https://ieeexplore.ieee.org/stampPDF/getPDF.jsp?tp=&arnumber=10809664", "result": "HTTP 418"},
+        {"channel": "Crossref-listed staging VOR", "url": "http://xplorestaging.ieee.org/ielx8/10808183/10809365/10809664.pdf?arnumber=10809664", "result": "TLS handshake failure"},
+        {"channel": "IEEE direct PDF", "url": "https://ieeexplore.ieee.org/ielx8/10808183/10809365/10809664.pdf?arnumber=10809664", "result": "HTTP 418"},
+        {"channel": "author-copy search", "result": "NO_LEGAL_FULLTEXT_FOUND", "detail": "ResearchGate record exposed request-full-text only"}
+      ],
+      "source_path": null,
+      "sha256": null,
+      "bytes": null,
+      "fulltext_evidence_lines": [],
+      "action": {
+        "estimator_training_action": "UNKNOWN_FROM_QUALIFIED_FULLTEXT",
+        "information_source": "UNKNOWN_FROM_QUALIFIED_FULLTEXT",
+        "decision_granularity": "UNKNOWN",
+        "candidate_set": "UNKNOWN",
+        "selection_or_weighting_rule": "UNKNOWN",
+        "fixed_or_adaptive": "UNKNOWN",
+        "comparison_role": "UNKNOWN"
+      },
+      "classification": "UNRESOLVED_FULLTEXT_DEBT",
+      "exact_collision": "UNKNOWN",
+      "cheap_lookup_equivalent": "UNKNOWN",
+      "must_read_debt_closed": false
+    },
+    {
+      "doi": "10.2139/SSRN.6293357",
+      "title": "Joint frame synchronization and frequency offset estimation for satellite-to-ground optical communication under low received optical power",
+      "year": 2026,
+      "status": "FULLTEXT_UNAVAILABLE",
+      "identity": {
+        "result": "MATCH",
+        "crossref_url": "https://api.crossref.org/works/10.2139/SSRN.6293357",
+        "publisher_resource": "https://www.ssrn.com/abstract=6293357",
+        "r1_evidence": "search-archive/2026-08-09/rml-fsts-step3-5-search-citation-receipt.json:143-146"
+      },
+      "attempts": [
+        {"channel": "tools/download wrapper", "result": "FAILED_BEFORE_NETWORK", "detail": "CRLF caused Bash parse errors at wrapper lines 32/35/39"},
+        {"channel": "equivalent tools/paper_download.py --doi", "result": "all_failed"},
+        {"channel": "SSRN indexed delivery PDF", "url": "https://papers.ssrn.com/sol3/Delivery.cfm/90620f9d-3e65-4646-a99b-e37c9f997b78-MECA.pdf?abstractid=6293357&mirid=1", "result": "HTTP 403"},
+        {"channel": "SSRN Delivery.cfm abstractid", "url": "https://papers.ssrn.com/sol3/Delivery.cfm?abstractid=6293357", "result": "HTTP 403"},
+        {"channel": "SSRN alternate delivery endpoints", "result": "HTTP 403 or TLS failure"},
+        {"channel": "author/institution copy search", "result": "NO_LEGAL_ALTERNATE_FULLTEXT_FOUND"}
+      ],
+      "source_path": null,
+      "sha256": null,
+      "bytes": null,
+      "fulltext_evidence_lines": [],
+      "action": {
+        "estimator_training_action": "UNKNOWN_FROM_QUALIFIED_FULLTEXT",
+        "information_source": "UNKNOWN_FROM_QUALIFIED_FULLTEXT",
+        "decision_granularity": "UNKNOWN",
+        "candidate_set": "UNKNOWN",
+        "selection_or_weighting_rule": "UNKNOWN",
+        "fixed_or_adaptive": "UNKNOWN",
+        "comparison_role": "UNKNOWN"
+      },
+      "classification": "UNRESOLVED_FULLTEXT_DEBT",
+      "exact_collision": "UNKNOWN",
+      "cheap_lookup_equivalent": "UNKNOWN",
+      "must_read_debt_closed": false
+    }
+  ],
+  "summary": {
+    "qualified_read": 0,
+    "fulltext_unavailable": 3,
+    "identity_blocked": 0,
+    "must_read_debt_closed": 0,
+    "must_read_debt_open": 3,
+    "exact_collision_confirmed": false,
+    "cheap_lookup_equivalent_confirmed": false,
+    "r2_terminal": "BLOCKED_ON_FULLTEXT"
+  },
+  "boundary": {
+    "step4a_entered": false,
+    "numeric_performance_compared": false,
+    "method_designed": false,
+    "p05_or_pyc_touched": false,
+    "current_views_modified": false,
+    "abstract_used_as_fulltext": false
+  }
+}

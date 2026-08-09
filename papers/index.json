@@ -459,6 +459,26 @@
         "rml-fsts-step2-missing-shortlist"
       ],
       "title_check": "match"
+    },
+    "doi:10.1109/icait66450.2025.11353316": {
+      "path": "papers\\doi\\10.1109_icait66450.2025.11353316",
+      "doi": "10.1109/ICAIT66450.2025.11353316",
+      "title": "A coherent communication scheme characterized by low complexity and enhanced robustness",
+      "status": "success",
+      "batches": [
+        "rml-fsts-step3-5-r2-should-read"
+      ],
+      "title_check": "match"
+    },
+    "doi:10.1109/jlt.2021.3063251": {
+      "path": "papers\\doi\\10.1109_jlt.2021.3063251",
+      "doi": "10.1109/JLT.2021.3063251",
+      "title": "Joint OSNR and Frequency Offset Estimation Using Signal Spectrum Correlations",
+      "status": "success",
+      "batches": [
+        "rml-fsts-step3-5-r2-should-read"
+      ],
+      "title_check": "match"
     }
   }
 }

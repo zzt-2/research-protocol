@@ -1,6 +1,6 @@
 # Topic Index: RML-FSTS Groundwork
 
-> 状态: active | 创建: 2026-08-08 | 最后更新: 2026-08-09（D005/V003：Step 3 接收语义纠偏完成）
+> 状态: active | 创建: 2026-08-08 | 最后更新: 2026-08-09（R004/D007/V004：Step 3.5 证据阻塞已独立验收）
 
 ## 专题信息
 
@@ -12,9 +12,9 @@
 
 **原始目标**：验证 RML-FSTS fixed-lag condition-dependence 是否能经完整 Groundwork 成为 Ch4 方法入口。
 
-**当前范围**：Step 1–3 已完成；本执行任务已在 Step 3 边界停止。Step 3.5 尚未开始，只有新对话按框架执行才是下一合法动作。
+**当前范围**：Step 1–3 已完成；mandatory Step 3.5 已按三轮上限停止于证据阻塞，当前只允许独立验证、交接与一次统一提交。
 
-**明确不含**：Step 3.5、Step 4a、预注册 smoke、future action 设计/实现、仿真、MVE、Contract、Execute、METHOD_SIGNAL、Go/Kill；也不补跑新的 Step 1/2 检索或全文获取（Yu 2023 canonical path/title preflight 的字节一致适配除外）。
+**明确不含**：Step 4a、预注册 smoke、future action 设计/实现、仿真、MVE、Contract、Execute、METHOD_SIGNAL、Go/Kill；不复活 K01/B10/B3-Q2/C3/P09/P1/oversampled-Q1，不修改 dormant campaign、`common/`、`params.py` 或正式论文正文，不 push。
 
 **范围变更记录**：
 
@@ -22,6 +22,10 @@
   - 原因：D002 的用户覆盖面确认关口已满足，具备进入 `gw-read` 的最低全文输入。
   - 新范围：精读冻结的 5 篇 CORE，完成 Step 3 全部结构化产出后停止；禁止 Step 3.5+。
   - 影响的未决项：覆盖面确认项关闭；新增 T001 执行与 Step 3 完成/阻塞判定。
+- **2026-08-09 D006**：用户明确授权将当前范围从 Step 3 扩大到 mandatory Step 3.5。
+  - 原因：Step 3 已由 D005/V003/H003 验收，mandatory Step 3.5 是关闭 Q1 文献竞争边界的下一框架步骤。
+  - 新范围：仅执行 Step 3.5 关键词矩阵、多源检索、核心竞品双向引用链、必要全文处理、竞争闭包、独立验证与一次统一提交；到 canonical Step 3.5 terminal 停止。
+  - 影响的未决项：启动 Cheng 2020、两篇 Optica 直接竞品、Wang/Enhanced 引用链与 Tang/WiSEE provenance 债务裁决；Step 4a 继续排除。
 
 ## 已确认结论
 
@@ -48,11 +52,12 @@
 - **S002 / D003 / T001**：用户确认覆盖面后完成 scope change；Step 3 精读当前 5 篇 CORE 的自包含任务已派发就绪，继续禁止 Step 3.5+。
 - **R003 / D004 / V002 / H002**：5/5全文与结构化提取完成；canonical Q1 四判据4/4；Step 3=`✅ completed`，独立验证 PASS 后在边界停止。
 - **D005 / V003 / H003**：主控接收时修正 Q1 的 A 逻辑方向与 Wang venue 过度措辞；Step 3 completed 保留，Step 3.5 继续未授权。
+- **S003 / R004 / D006-D007 / T002-T010 / V004 / H004**：完成 scope change、仓库盘点、8-query R1、三类真实来源、Wang/Enhanced 双向引用链、R2/R3 止损与新增全文处理；Step 3.5 因 8 项关键全文不可得终止为证据阻塞，独立终验 10/10 PASS，未开放 Step 4a。
 
 ## 未决项
 
-- mandatory Step 3.5 能否补齐直接竞品债务并完成 novelty/competition closure？（本轮未执行）
+- 8 项关键一手全文能否取得并完成 action-level 裁决：Cheng 2020、OE.505931、OE.448956、Dong 2009、OE.561252、ACP/IPOC 10809664、SSRN 6293357、Optics Communications 130981。
 
 ## 当前位置
 
-Groundwork Step 3=`✅ completed`（当前 authority=D005/V003/H003）；Step 3.5=`⬜ NOT_STARTED`。本轮未进入 Step 3.5/4a，未运行 smoke、实现或仿真，object/package failure=`0/0`。下一合法动作仅为用户确认后在新对话执行 mandatory Step 3.5。
+Groundwork Step 3=`✅ completed`（authority=D005/V003/H003）；Step 3.5=`⛔ EVIDENCE_BLOCKED`（R004/D007/V004，独立终验 PASS）。Qualified evidence 中 exact collision/conditioned-lookup equivalent 均为 0 confirmed，但 competition boundary 未闭合；Step 4a=`⬜ NOT_STARTED / NO ENTRY`。未运行 smoke、实现、仿真或 MVE，object/package failure=`0/0`。

@@ -1,0 +1,216 @@
+{
+  "schema_version": "rml-fsts-step3.5-search-citation-receipt/v1",
+  "date": "2026-08-09",
+  "task_brief": ".sessions/2026-08-08-rml-fsts-groundwork/T003-step3-5-search-and-citation-chain.md",
+  "scope": "mandatory Step 3.5 R1 search matrix and two-seed bidirectional citation screening only",
+  "queries": [
+    {
+      "id": "Q1A",
+      "query": "FSTS fixed lag BL carrier frequency offset estimation coherent FSO training-aided FOE frame synchronization turbulence spatial diversity",
+      "raw_path": "search-archive/2026-08-09/rml-fsts-q1a.json",
+      "sha256": "5b2498caf75b532c8e5be9470df533601bdbdf238547e817930fd0aaad5b0694",
+      "result_count": 1,
+      "actual_source_families": ["serpapi", "s2"]
+    },
+    {
+      "id": "Q1B",
+      "query": "FSTS fixed lag BL carrier frequency offset estimation modulation training length received power branch phase reliability online selection lookup",
+      "raw_path": "search-archive/2026-08-09/rml-fsts-q1b.json",
+      "sha256": "5c2f9d7dfb713a271f3695c8b30892b517edd67451014f68a45f6af795f4e42e",
+      "result_count": 5,
+      "actual_source_families": ["serpapi"]
+    },
+    {
+      "id": "Q2A",
+      "query": "multi-lag CFO estimation correlation distance weighting coherent FSO training-aided FOE frame synchronization turbulence spatial diversity",
+      "raw_path": "search-archive/2026-08-09/rml-fsts-q2a.json",
+      "sha256": "39de75f96919b03366c291e0147e051eff2e404f0f259a2aed5534a1346a83d2",
+      "result_count": 0,
+      "actual_source_families": []
+    },
+    {
+      "id": "Q2B",
+      "query": "multi-lag CFO estimation correlation distance weighting modulation training length received power branch phase reliability online selection lookup",
+      "raw_path": "search-archive/2026-08-09/rml-fsts-q2b.json",
+      "sha256": "180eab6c06ec0e1bf8a212d034651f77a819200018870ee6b5d2f9e8a4e00670",
+      "result_count": 1,
+      "actual_source_families": ["serpapi"]
+    },
+    {
+      "id": "Q3A",
+      "query": "adaptive variable lag window correlation distance frequency offset coherent FSO training-aided FOE frame synchronization turbulence spatial diversity",
+      "raw_path": "search-archive/2026-08-09/rml-fsts-q3a.json",
+      "sha256": "2fe41b5aa620ff16e4f92896a42d597b5602e641f3c1d08b7205a7f3f1a0ce31",
+      "result_count": 1,
+      "actual_source_families": ["serpapi"]
+    },
+    {
+      "id": "Q3B",
+      "query": "adaptive variable lag window correlation distance frequency offset modulation training length received power branch phase reliability online selection lookup",
+      "raw_path": "search-archive/2026-08-09/rml-fsts-q3b.json",
+      "sha256": "78a3298b7230f967306cf0c3442784068919d987aa0ad9b0f2eff7ebc8a666e7",
+      "result_count": 19,
+      "actual_source_families": ["serpapi", "openalex"]
+    },
+    {
+      "id": "Q4A",
+      "query": "condition-aware reliability-weighted multi-lag carrier recovery coherent FSO training-aided FOE frame synchronization turbulence spatial diversity",
+      "raw_path": "search-archive/2026-08-09/rml-fsts-q4a.json",
+      "sha256": "8cef594966112cbb324393f7d5af2739c6026c73f52ff70c8d2f12593de117c0",
+      "result_count": 0,
+      "actual_source_families": []
+    },
+    {
+      "id": "Q4B",
+      "query": "condition-aware reliability-weighted multi-lag carrier recovery modulation training length received power branch phase reliability online selection lookup",
+      "raw_path": "search-archive/2026-08-09/rml-fsts-q4b.json",
+      "sha256": "044e1142162bb5f1c2d47f93a28ddecf4edabedd0a0da1893efc5b6890e654b9",
+      "result_count": 0,
+      "actual_source_families": []
+    }
+  ],
+  "actual_source_families": ["serpapi", "openalex", "s2"],
+  "citation_chains": [
+    {
+      "seed_doi": "10.1109/JPHOT.2023.3265847",
+      "direction": "forward",
+      "raw_path": "search-archive/2026-08-09/rml-fsts-cite-wang2023-forward.json",
+      "sha256": "42e3d3797fa6960d0d1822fae4e9f4f70c1abb9387a740e9cef3f22f560d1ae0",
+      "returned_after_tool_dedup": 8,
+      "screened": 8,
+      "openalex_provenance_count": 8,
+      "s2_provenance_count": 3,
+      "s2_only_count": 0
+    },
+    {
+      "seed_doi": "10.1109/JPHOT.2023.3265847",
+      "direction": "backward",
+      "raw_path": "search-archive/2026-08-09/rml-fsts-cite-wang2023-backward.json",
+      "sha256": "3789840bc1c12c707d4496eabea8ac48d7e1c90150de2d312a6accb304ef46ee",
+      "returned_after_tool_dedup": 30,
+      "screened": 30,
+      "openalex_provenance_count": 30,
+      "s2_provenance_count": 0,
+      "s2_only_count": 0,
+      "note": "tool skips S2 for backward direction"
+    },
+    {
+      "seed_doi": "10.1364/OE.520452",
+      "direction": "forward",
+      "raw_path": "search-archive/2026-08-09/rml-fsts-cite-enhanced2024-forward.json",
+      "sha256": "d2ac597d477c41f69b9a57b6527fac091a6d65cdf6e1395b286b821ed19155b1",
+      "returned_after_tool_dedup": 2,
+      "screened": 2,
+      "openalex_provenance_count": 2,
+      "s2_provenance_count": 2,
+      "s2_only_count": 0
+    },
+    {
+      "seed_doi": "10.1364/OE.520452",
+      "direction": "backward",
+      "raw_path": "search-archive/2026-08-09/rml-fsts-cite-enhanced2024-backward.json",
+      "sha256": "c90549b2cda648d977966577fcdc82aae4ab4c1db45e87f3d0ddee5e16786c7c",
+      "returned_after_tool_dedup": 23,
+      "screened": 23,
+      "openalex_provenance_count": 23,
+      "s2_provenance_count": 0,
+      "s2_only_count": 0,
+      "note": "tool skips S2 for backward direction"
+    }
+  ],
+  "screened_counts": {
+    "query_records": 27,
+    "citation_records": 63,
+    "citation_unique_by_doi_or_title": 51,
+    "all_records": 90,
+    "all_unique_by_doi_or_title": 78,
+    "candidate_count": 8
+  },
+  "candidates": [
+    {
+      "doi": "10.1364/OE.561252",
+      "title": "Robust multifunctional single-tone training sequence for free-space optical communication in strong turbulence",
+      "class": "architecture_adjacent",
+      "round1_priority": "new_must_read"
+    },
+    {
+      "doi": "10.1109/ACP/IPOC63121.2024.10809664",
+      "title": "Optimized Frequency Offset Estimation Scheme Using Short Symbol Block Based on Training Sequence for Coherent Free-Space Optical Communication",
+      "class": "offline_parameter_optimization",
+      "round1_priority": "new_must_read"
+    },
+    {
+      "doi": "10.2139/SSRN.6293357",
+      "title": "Joint frame synchronization and frequency offset estimation for satellite-to-ground optical communication under low received optical power",
+      "class": "exact_collision_candidate_unverified",
+      "round1_priority": "new_must_read"
+    },
+    {
+      "doi": "10.1016/J.OPTCOM.2024.130981",
+      "title": "Coarse frequency offset estimation and compensation based on short-time spectrum analysis in FSO communication system",
+      "class": "architecture_adjacent",
+      "round1_priority": "new_should_read"
+    },
+    {
+      "doi": "10.1109/ICAIT66450.2025.11353316",
+      "title": "A coherent communication scheme characterized by low complexity and enhanced robustness",
+      "class": "architecture_adjacent",
+      "round1_priority": "new_should_read"
+    },
+    {
+      "doi": "10.1109/JLT.2021.3063251",
+      "title": "Joint OSNR and Frequency Offset Estimation Using Signal Spectrum Correlations",
+      "class": "architecture_adjacent",
+      "round1_priority": "new_should_read"
+    },
+    {
+      "doi": "10.1016/J.OPTCOM.2020.126046",
+      "title": "Training-aided joint frame and frequency synchronization for free space optical communication signals with low OSNR",
+      "class": "architecture_adjacent_task_matched_debt",
+      "round1_priority": "known_debt_rehit"
+    },
+    {
+      "doi": "10.1109/CHINACOM.2009.5339877",
+      "title": "Implementation of training-sequence based carrier frequency offset estimator with multi-correlation-lag",
+      "class": "generic_multi_lag",
+      "round1_priority": "known_debt_rehit"
+    }
+  ],
+  "round1": {
+    "new_must_read_count": 3,
+    "new_should_read_count": 3,
+    "known_debt_rehit_count": 2,
+    "converged": false,
+    "next_required": "bounded R2 fulltext/DOI-abstract verification; no ninth semantic query in this task"
+  },
+  "errors": [
+    {
+      "channel": "exa",
+      "type": "HTTP_402_NO_MORE_CREDITS",
+      "effect": "keyword/neural Exa paths unavailable for the eight matrix queries"
+    },
+    {
+      "channel": "serpapi",
+      "type": "PARTIAL_KEY_FAILURE_OR_NO_RESULTS",
+      "effect": "several keys returned no results and one configured key was invalid; successful retained results remain in named raw JSON"
+    },
+    {
+      "channel": "s2_abstract_enrichment",
+      "type": "RATE_LIMIT",
+      "effect": "some matrix-result abstracts were not enriched; empty abstracts were treated as metadata-only"
+    },
+    {
+      "channel": "global_search_index",
+      "type": "CONCURRENT_TMP_RENAME_RACE",
+      "effect": "one automatic global-index update warned/faulted during parallel queries; named task raw JSON and hashes are unaffected"
+    }
+  ],
+  "boundary": {
+    "step3_5_terminal_claimed": false,
+    "exact_collision_confirmed": false,
+    "conditioned_lookup_equivalent_confirmed": false,
+    "step4a_entered": false,
+    "method_designed": false,
+    "abstract_used_for_terminal_judgment": false
+  }
+}

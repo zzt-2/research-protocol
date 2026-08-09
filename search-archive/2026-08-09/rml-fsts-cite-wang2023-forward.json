@@ -1,0 +1,178 @@
+{
+  "query": "",
+  "timestamp": "2026-08-09T14:18:08.696572+08:00",
+  "sources": [
+    "citations_both"
+  ],
+  "total": 8,
+  "results": [
+    {
+      "title": "Robust multifunctional single-tone training sequence for free-space optical communication in strong turbulence",
+      "authors": [
+        "Kunfeng Liu",
+        "Liqian Wang",
+        "Mengyao Chen"
+      ],
+      "venue": "Optics Express",
+      "year": 2025,
+      "doi": "10.1364/oe.561252",
+      "arxiv_id": null,
+      "abstract": "In free-space optical (FSO) communication, the received optical power will be significantly diminished in environments characterized by strong turbulence, making effective frequency offset (FO) estimation challenging and severely degrading signal quality. Additionally, to enhance receiver sensitivity, diversity reception is frequently employed at the receiving end. However, prior to combining the diversity branches, it is essential to perform phase correction between these branches. To address these two challenges, this paper proposes a robust frequency offset estimation (FOE) method and a low-overhead training sequence for phase correction with only one training sequence. Finally, a 10-Gbaud dual-polarization quadrature amplitude modulation (QAM) transceiver system is implemented, where data reception, demodulation, and digital signal processing (DSP) are performed in a simulated turbulent channel, demonstrating the effectiveness of the proposed algorithm.",
+      "citation_count": 3,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.1364/oe.561252",
+      "source_api": "openalex_citations",
+      "id": "L001",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Coarse frequency offset estimation and compensation based on short-time spectrum analysis in FSO communication system",
+      "authors": [
+        "Jiamin Fan",
+        "Cheng Ju",
+        "Na Liu",
+        "Qingsong Luo",
+        "Xiaodong Liang",
+        "Zhaoyun Li",
+        "Nan Feng",
+        "Dongxue Yan"
+      ],
+      "venue": "Optics Communications",
+      "year": 2024,
+      "doi": "10.1016/j.optcom.2024.130981",
+      "arxiv_id": null,
+      "abstract": null,
+      "citation_count": 4,
+      "is_open_access": false,
+      "pdf_url": "",
+      "source_api": "s2_citations+openalex_citations",
+      "expanded_from": "DOI:10.1109/JPHOT.2023.3265847",
+      "id": "L002",
+      "download": false,
+      "publication_status": "published"
+    },
+    {
+      "title": "Enhanced frame synchronization and carrier recovery in coherent FSO communication: a pseudo-random and cyclic QPSK approach",
+      "authors": [
+        "Liqian Wang",
+        "Kunfeng Liu",
+        "Siqi Zhang",
+        "Shuang Ding"
+      ],
+      "venue": "Optics Express",
+      "year": 2024,
+      "doi": "10.1364/oe.520452",
+      "arxiv_id": null,
+      "abstract": "To alleviate the impact of atmospheric turbulence on receiver carrier recovery in free-space optical communication, this study introduces a novel frame synchronization and carrier recovery method. This method employs a blend of pseudorandom sequences and specific cyclic quadrature phase shift keying (QPSK) training sequences, facilitating frame synchronization and frequency offset (FO) estimation. The research designs a time-series metric curve to counteract the effect of side peaks, enhancing the accuracy of frequency offset estimation via QPSK spectrum features. Furthermore, the method incorporates a two-stage frequency offset estimation process, utilizing the inherent sign characteristics of the x and y polarization states. Applied to the quadrature amplitude modulation system under atmospheric turbulence conditions, the proposed algorithm demonstrates high precision under both strong and weak turbulence conditions. Furthermore, we confirmed the universality of the algorithm across multiple modulation formats.",
+      "citation_count": 2,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.1364/oe.520452",
+      "source_api": "openalex_citations",
+      "id": "L003",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "2023 Index IEEE Photonics Journal Vol. 15",
+      "authors": [],
+      "venue": "IEEE photonics journal",
+      "year": 2023,
+      "doi": "10.1109/jphot.2023.3348660",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/4563994/10287870/10378978.pdf",
+      "source_api": "openalex_citations",
+      "id": "L004",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Optimized Frequency Offset Estimation Scheme Using Short Symbol Block Based on Training Sequence for Coherent Free-Space Optical Communication",
+      "authors": [
+        "Siqi Zhang",
+        "Liqian Wang",
+        "Kunfeng Liu",
+        "Shuang Ding"
+      ],
+      "venue": "",
+      "year": 2024,
+      "doi": "10.1109/acp/ipoc63121.2024.10809664",
+      "arxiv_id": null,
+      "abstract": "For training sequence, a frequency offset estimation (FOE) optimization scheme using a single short symbol block is proposed to accomplish FOE. The results show that the residual FOE complexity is about 17% of FSTS.",
+      "citation_count": 0,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations+s2_citations",
+      "id": "L005",
+      "download": false,
+      "publication_status": "published"
+    },
+    {
+      "title": "A coherent communication scheme characterized by low complexity and enhanced robustness",
+      "authors": [
+        "Kunfeng Liu",
+        "L. Ling-Chi Wang",
+        "Jialin You"
+      ],
+      "venue": "",
+      "year": 2025,
+      "doi": "10.1109/icait66450.2025.11353316",
+      "arxiv_id": null,
+      "abstract": "This study introduces a novel approach for frequency offset (FO) estimation in coherent communication systems utilizing specifically designed training sequences. The result of polarization multiplexed (PM) 10 G Baud QPSK Simulation outcomes demonstrate that the proposed algorithm exhibits both high robustness and low computational complexity Finally, the effectiveness of the algorithm in this paper was verified by building a 10 G PM QPSK free-space optical simulation platform. The results show that compared to the reference methods, the algorithm in this paper can improve the receiver sensitivity by approximately $\\mathbf{1. 9 ~ d B}$.",
+      "citation_count": 0,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations+s2_citations",
+      "id": "L006",
+      "download": false,
+      "publication_status": "published"
+    },
+    {
+      "title": "Joint frame synchronization and frequency offset estimation for satellite-to-ground optical communication under low received optical power",
+      "authors": [
+        "Kunfeng Liu",
+        "Liqian Wang",
+        "Tao Yang",
+        "Bingchen Liu"
+      ],
+      "venue": "SSRN Electronic Journal",
+      "year": 2026,
+      "doi": "10.2139/ssrn.6293357",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.2139/ssrn.6293357",
+      "source_api": "openalex_citations",
+      "id": "L007",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Variable-order QNSC with turbulence-induced perturbation for LEO-to-Earth secure laser communication",
+      "authors": [
+        "ziyan chen",
+        "yajie li",
+        "Shuang Wei",
+        "Kongni Zhu",
+        "Yongli Zhao",
+        "Jie M. Zhang"
+      ],
+      "venue": "Applied Optics",
+      "year": 2026,
+      "doi": "10.1364/ao.590529",
+      "arxiv_id": null,
+      "abstract": "This paper proposes a turbulence-induced perturbation (TIP) approach to address the security degradation of quantum noise stream cipher (QNSC) systems under high transmit power and introduces a variable-order quantum noise stream cipher (VO-QNSC) scheme to further enhance transmission performance. The TIP approach incorporates turbulence-induced perturbation to strengthen the physical-layer security of QNSC in high-power scenarios, while the VO-QNSC scheme significantly improves system performance without increasing algorithmic complexity or redundancy, making it suitable for deployment on satellite terminals with limited computational resources. Simulation results show that, after introducing TIP, the system detection failure probability (DFP) can exceed 99.97% and number of masked signals (NMS) is improved to the order of 10 3 , which effectively enhances the anti-eavesdropping ability of the system. For poor channel conditions, VO-QNSC can improve the receiver sensitivity by up to approximately 0.5 dB, which can meet the requirements of communication security and transmission performance in complex environments.",
+      "citation_count": 0,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L008",
+      "download": false,
+      "publication_status": "published"
+    }
+  ]
+}

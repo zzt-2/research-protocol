@@ -1,0 +1,111 @@
+{
+  "schema_version": "rml-fsts-step3.5-r2-should-read-receipt/v1",
+  "date": "2026-08-09",
+  "task_brief": ".sessions/2026-08-08-rml-fsts-groundwork/T006-step3-5-r2-should-read.md",
+  "scope": "three R1 should-read identity/acquisition/fulltext-action audits only",
+  "items": [
+    {
+      "doi": "10.1016/J.OPTCOM.2024.130981",
+      "title": "Coarse frequency offset estimation and compensation based on short-time spectrum analysis in FSO communication system",
+      "year": 2024,
+      "status": "FULLTEXT_UNAVAILABLE",
+      "attempts": [
+        {"channel": "bash tools/download --doi --force", "result": "WRAPPER_CRLF_ERROR_RC1"},
+        {"channel": "python tools/paper_download.py --doi --force", "result": "all_failed"},
+        {"channel": "Crossref", "result": "IDENTITY_PASS", "url": "https://doi.org/10.1016/j.optcom.2024.130981"},
+        {"channel": "OpenAlex", "result": "CLOSED_NO_OA_PDF", "id": "https://openalex.org/W4401610732"},
+        {"channel": "Semantic Scholar", "result": "CLOSED_NO_OA_PDF", "paper_id": "2b2f36e61edfc43afc2f8f7299a38f3a5e093daa"}
+      ],
+      "source": {"channel": "Crossref_identity_only", "url": "https://doi.org/10.1016/j.optcom.2024.130981"},
+      "paths": {"metadata": "papers/doi/10.1016_j.optcom.2024.130981/metadata.json", "source": null, "content": null, "read_note": null},
+      "sha256": {"source": null, "content": null},
+      "bytes": {"source": null, "content": null},
+      "action_fields": {
+        "method_action": "UNKNOWN",
+        "information_source": "UNKNOWN",
+        "decision_granularity": "UNKNOWN",
+        "lag_window_block_parameters": "UNKNOWN",
+        "fixed_adaptive": "UNKNOWN",
+        "condition_inputs": "UNKNOWN",
+        "online_offline": "UNKNOWN",
+        "comparators": "UNKNOWN"
+      },
+      "classification": "UNKNOWN_FULLTEXT_UNAVAILABLE",
+      "exact_collision": "unknown",
+      "cheap_lookup_equivalent": "unknown",
+      "blocker": "No lawful auditable full text; title/metadata cannot bear action classification."
+    },
+    {
+      "doi": "10.1109/ICAIT66450.2025.11353316",
+      "title": "A coherent communication scheme characterized by low complexity and enhanced robustness",
+      "year": 2025,
+      "status": "QUALIFIED_FULLTEXT",
+      "attempts": [
+        {"channel": "python tools/paper_download.py --doi --force", "result": "all_failed"},
+        {"channel": "python tools/blit.py --source ieee --download", "result": "PDF_WRITTEN_THEN_GBK_STATUS_PRINT_ERROR", "raw_path": "search-archive/2026-08-09/rml-fsts-r2-icait-blit.json", "raw_sha256": "88597a913b52bf98e78f73cfd3b3a19ee8ca36aeb1fe9c98bc9fbea0870eb328"},
+        {"channel": "tools/pdf_convert.py", "result": "PASS_222_LINES"}
+      ],
+      "source": {"channel": "blit-ieee", "url": "https://ieeexplore.ieee.org/document/11353316/", "direct_pdf_url": "https://ieeexplore.ieee.org/stampPDF/getPDF.jsp?arnumber=11353316"},
+      "paths": {"metadata": "papers/doi/10.1109_icait66450.2025.11353316/metadata.json", "source": "papers/doi/10.1109_icait66450.2025.11353316/source.pdf", "content": "papers/doi/10.1109_icait66450.2025.11353316/content.md", "read_note": "papers/_read_notes/10.1109_icait66450.2025.11353316.md"},
+      "sha256": {"source": "425afd5437b6fa0842b4e399aef6cfb8da68048721969ae71366f2bd69553077", "content": "a65fe9cd6a03483c7e5f1f5e9fb5f0eb40542041413661779a3c01ebd682dc30"},
+      "bytes": {"source": 1184672, "content": 36387},
+      "action_fields": {
+        "method_action": "fixed-training-spectrum FFT coarse FOE followed by training-arrangement differential-conjugate fine FOE",
+        "information_source": "frame-synchronized known QPSK training samples, spectral peak, adjacent-symbol phase difference",
+        "decision_granularity": "per-frame CFO scalar estimation and compensation",
+        "lag_window_block_parameters": "training length globally fixed at 960 after B2B sweep; no lag or B_L action",
+        "fixed_adaptive": "fixed estimator structure and training length",
+        "condition_inputs": "none; received power, SNR, and turbulence are evaluation strata only",
+        "online_offline": "feed-forward receiver estimator; experimental validation uses offline MATLAB DSP",
+        "comparators": "Wang 2023 FSTS [10]; Wu 2022 TS/FFT plus fourth-power FFT [12]"
+      },
+      "classification": "architecture_adjacent",
+      "exact_collision": false,
+      "cheap_lookup_equivalent": false
+    },
+    {
+      "doi": "10.1109/JLT.2021.3063251",
+      "title": "Joint OSNR and Frequency Offset Estimation Using Signal Spectrum Correlations",
+      "year": 2021,
+      "status": "QUALIFIED_FULLTEXT",
+      "attempts": [
+        {"channel": "python tools/paper_download.py --doi --force", "result": "all_failed"},
+        {"channel": "python tools/blit.py --source ieee --download", "result": "PDF_WRITTEN_THEN_GBK_STATUS_PRINT_ERROR", "raw_path": "search-archive/2026-08-09/rml-fsts-r2-jlt-blit.json", "raw_sha256": "085e3547244ae54c5057e8502ef2a75c6649b02488323773fc1eaf588d14d52e"},
+        {"channel": "tools/pdf_convert.py", "result": "PASS_352_LINES"}
+      ],
+      "source": {"channel": "blit-ieee", "url": "https://ieeexplore.ieee.org/document/9368984/", "direct_pdf_url": "https://ieeexplore.ieee.org/stampPDF/getPDF.jsp?arnumber=9368984"},
+      "paths": {"metadata": "papers/doi/10.1109_jlt.2021.3063251/metadata.json", "source": "papers/doi/10.1109_jlt.2021.3063251/source.pdf", "content": "papers/doi/10.1109_jlt.2021.3063251/content.md", "read_note": "papers/_read_notes/10.1109_jlt.2021.3063251.md"},
+      "sha256": {"source": "a9f39140238df3df2afffe785ffd1825da992f8284cc7eadce69a5efb2929bfd", "content": "65571b703b615d400c3ba9b3071aa818e6ce9f1ff46d8ea266569e7caa1a3346"},
+      "bytes": {"source": 1742567, "content": 48595},
+      "action_fields": {
+        "method_action": "FO sweep and upper/lower spectral-component SCDF curve fitting for coarse FOE/FOC, followed by downsampled fourth-power FFT fine FOE",
+        "information_source": "post-CDC received samples and upper/lower sideband spectral-component correlations",
+        "decision_granularity": "per-block CFO and OSNR estimates",
+        "lag_window_block_parameters": "100 MHz filters; fixed sweep +/-7.5 GHz, delta-F 1 GHz, threshold 0.4, q=14, fine FFT size 72",
+        "fixed_adaptive": "parameters globally optimized offline then fixed",
+        "condition_inputs": "none for parameter selection; OSNR and modulation formats are evaluation conditions",
+        "online_offline": "deterministic receiver DSP; experimental capture processed offline",
+        "comparators": "no FOC; perfect FOC; conventional FFT-FOE"
+      },
+      "classification": "architecture_adjacent",
+      "classification_note": "contains offline parameter optimization, but no target lag/B_L/window action",
+      "exact_collision": false,
+      "cheap_lookup_equivalent": false
+    }
+  ],
+  "summary": {
+    "identity_closed": 3,
+    "qualified_fulltext": 2,
+    "action_closed": 2,
+    "fulltext_blockers": 1,
+    "exact_collisions_confirmed": 0,
+    "cheap_lookup_equivalents_confirmed": 0
+  },
+  "boundaries": {
+    "step3_5_terminal_claimed": false,
+    "step4a_entered": false,
+    "method_designed": false,
+    "current_views_modified": false,
+    "p05_or_pyc_touched": false
+  }
+}

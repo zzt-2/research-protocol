@@ -1,0 +1,124 @@
+{
+  "query": "FSTS fixed lag BL carrier frequency offset estimation modulation training length received power branch phase reliability online selection lookup",
+  "timestamp": "2026-08-09T14:16:28.797000+08:00",
+  "sources": [
+    "s2",
+    "openalex",
+    "serpapi",
+    "exa"
+  ],
+  "total": 5,
+  "results": [
+    {
+      "title": "Blind carrier frequency offset estimation techniques for next-generation multicarrier communication systems: Challenges, comparative analysis, and future prospects",
+      "authors": [
+        "S Singh",
+        "S Kumar",
+        "S Majhi",
+        "U Satija"
+      ],
+      "venue": "",
+      "year": 2024,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "Frequency synchronization is essential to achieving the intended performance for single and multicarrier wireless systems. Blind techniques, which don’t require prior channel knowledge or pilot symbols, are crucial for dynamic environments where self-adaptive synchronization is needed. A key objective of this paper is to provide the readers as well as the industry’s professionals with a comprehensive understanding of the carrier frequency offset (CFO) problem in multicarrier communication systems like orthogonal frequency division multiplexing (OFDM), single carrier-frequency division multiple access (SC-FDMA), multiple input multiple output (MIMO)-OFDM, and MIMO-SC-FDMA. These waveforms are used in today’s and future wireless communication systems such as wireless-fidelity (Wi-Fi), fifth-generation, and sixth-generation. Moreover, this paper also develops a taxonomy of the available solutions to address the CFO issue. We study blind techniques for CFO estimation presented in the recent literature and give potential future directions. We summarize various statistical methods and deep learning algorithms for CFO estimation and emphasize their advantages and limitations. We also incorporate the CFO impact on next-generation wireless systems such as orthogonal time frequency space and reconfigurable intelligent surface-assisted communication systems and provide a broader and deeper knowledge of the area. We provide simulation results of some existing estimators and their performance comparison in terms of mean square error for better understanding. Therefore, this paper is perfectly adapted to provide a comprehensive information source on blind CFO estimation techniques.",
+      "citation_count": 33,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "serpapi_scholar",
+      "url": "https://ieeexplore.ieee.org/abstract/document/10702556/",
+      "relevance_score": 0.222,
+      "_score": 0.541,
+      "id": "L001",
+      "download": true,
+      "publication_status": "unknown"
+    },
+    {
+      "title": "Using sequence-to-sequence models for carrier frequency offset estimation of short messages and chaotic maps",
+      "authors": [
+        "CP Davey",
+        "I Shakeel",
+        "RC Deo",
+        "S Salcedo-Sanz"
+      ],
+      "venue": "",
+      "year": 2022,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "Deep Learning methods have produced good carrier frequency offset estimations for short message sequences in comparison with methods based on the Fast Fourier Transform. However, these performance gains were observed for short ranges of frequency offsets, sequences with predefined pilot symbols and periodic modulation schemes. Chaotic modulation has an advantage over periodic signals in offering security through the continuous changes produced by parameterising the chaotic map function. However, synchronisation of chaotic map parameters in coherent receivers is dependent on the carrier recovery of phase and frequency which dramatically reduces the demodulation performance under high noise levels. This article presents a stacked sequence-to-sequence neural network architecture for blind carrier frequency offset estimation of both periodic and chaotic modulation schemes. The results obtained demonstrate better performance than conventional methods in low SNR for the Additive White Gaussian Noise channel. While this technique operates without feature engineering, the results demonstrate that data augmentation produces a higher degree of accuracy for such models, indicating the benefit of integration with conventional signal pre-processing steps as part of the deep learning pipeline. The proposed neural network architecture is shown to perform carrier frequency offset estimation, not only for the selected periodic modulations, but also in the case of highly non-linear chaotic maps. This suggests the applicability of deep learning methods for synchronisation in waveforms that employ chaotic modulation schemes for secure communication and for applications where short and sporadic messaging are required (e.g., Internet of Things).",
+      "citation_count": 5,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "serpapi_scholar",
+      "url": "https://research.usq.edu.au/download/e17a89f68f0e3bc505a430996e57695effbf003dfdd873b08b1bf11a779188a8/1897117/Using_Sequence-to-Sequence_Models_for_Carrier_Frequency_Offset_Estimation_of_Short_Messages_and_Chaotic_Maps.pdf",
+      "relevance_score": 0.333,
+      "_score": 0.3274090909090909,
+      "id": "L002",
+      "download": true,
+      "publication_status": "unknown"
+    },
+    {
+      "title": "CHANNEL ESTIMATION TECHNIQUES FOR FASTER-THAN-NYQUIST SIGNALING",
+      "authors": [
+        "S Keykhosravi"
+      ],
+      "venue": "",
+      "year": 2025,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "The fifty-year progress of faster-than-Nyquist (FTN) signaling is surveyed. FTN signaling exploits non-orthogonal dense symbol packing in the time domain for the sake of increasing the data rate attained. After reviewing the system models of both the conventional Nyquist-based and FTN signaling transceivers, we survey the evolution of FTN techniques, including their low-complexity detection and channel estimation. Furthermore, in addition to the classic FTN signaling philosophy, we introduce the recent frequency-domain filtering and precoding aided schemes. When relying on precoding, the information rate of FTN signaling becomes related to the eigenvalues of an FTN-specific intersymbol interference matrix, which provides a unified framework for the associated information-theoretic analysis and simplifies the associated power allocation specifically designed for increasing the information rate attained. We show that the FTN signaling scheme combined with bespoke power allocation employing a realistic raised-cosine shaping filter achieves the Shannon capacity associated with ideal rectangular shaping filters.",
+      "citation_count": 0,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "serpapi_scholar",
+      "url": "https://harvest.usask.ca/items/94b891d8-0c59-4740-930d-fece77b9f436",
+      "relevance_score": 0.167,
+      "_score": 0.2635,
+      "id": "L003",
+      "download": false,
+      "publication_status": "unknown"
+    },
+    {
+      "title": "A MODEL FOR EARLY POWER ESTIMATION ON MULTIRATE DIGITAL SYSTEMS",
+      "authors": [
+        "G Battisti"
+      ],
+      "venue": "",
+      "year": 2022,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "Frequencies from 100 GHz to 3 THz are promising bands for the next generation of wireless communication systems because of the wide swaths of unused and unexplored spectrum. These frequencies also offer the potential for revolutionary applications that will be made possible by new thinking, and advances in devices, circuits, software, signal processing, and systems. This paper describes many of the technical challenges and opportunities for wireless communication and sensing applications above 100 GHz, and presents a number of promising discoveries, novel approaches, and recent results that will aid in the development and implementation of the sixth generation (6G) of wireless networks, and beyond. This paper shows recent regulatory and standard body rulings that are anticipating wireless products and services above 100 GHz and illustrates the viability of wireless cognition, hyper-accurate position location, sensing, and imaging. This paper also presents approaches and results that show how long distance mobile communications will be supported to above 800 GHz since the antenna gains are able to overcome air-induced attenuation, and present methods that reduce the computational complexity and simplify the signal processing used in adaptive antenna arrays, by exploiting the Special Theory of Relativity to create a cone of silence in over-sampled antenna arrays that improve performance for digital phased array antennas. Also, new results that give insights into power efficient beam steering algorithms, and new propagation and partition loss models above 100 GHz are given, and promising imaging, array processing, and position location results are presented. The implementation of spatial consistency at THz frequencies, an important component of channel modeling that considers minute changes and correlations over space, is also discussed. This paper offers the first in-depth look at the vast applications of THz wireless products and applications and provides approaches for how to reduce power and increase performance across several problem domains, giving early evidence that THz techniques are compelling and available for future wireless communications.",
+      "citation_count": 0,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "serpapi_scholar",
+      "url": "https://tesidottorato.depositolegale.it/handle/20.500.14242/93060",
+      "relevance_score": 0.167,
+      "_score": 0.20350000000000001,
+      "id": "L004",
+      "download": false,
+      "publication_status": "unknown"
+    },
+    {
+      "title": "Matrix Converter Control Employing Space Vector Modulation-Theory, Simulation and Implementation",
+      "authors": [
+        "C Liu"
+      ],
+      "venue": "",
+      "year": 2001,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "A key challenge of future mobile communication research is to strike an attractive compromise between wireless network's area spectral efficiency and energy efficiency. This necessitates a clean-slate approach to wireless system design, embracing the rich body of existing knowledge, especially on multiple-input-multiple-ouput (MIMO) technologies. This motivates the proposal of an emerging wireless communications concept conceived for single-radio-frequency (RF) large-scale MIMO communications, which is termed as SM. The concept of SM has established itself as a beneficial transmission paradigm, subsuming numerous members of the MIMO system family. The research of SM has reached sufficient maturity to motivate its comparison to state-of-the-art MIMO communications, as well as to inspire its application to other emerging wireless systems such as relay-aided, cooperative, small-cell, optical wireless, and power-efficient communications. Furthermore, it has received sufficient research attention to be implemented in testbeds, and it holds the promise of stimulating further vigorous interdisciplinary research in the years to come. This tutorial paper is intended to offer a comprehensive state-of-the-art survey on SM-MIMO research, to provide a critical appraisal of its potential advantages, and to promote the discussion of its beneficial application areas and their research challenges leading to the analysis of the technological issues associated with the implementation of SM-MIMO. The paper is concluded with the description of the world's first experimental activities in this vibrant research field.",
+      "citation_count": 0,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "serpapi_scholar",
+      "url": "https://search.proquest.com/openview/12e30465a48790c1891c3a035c0c9a65/1?pq-origsite=gscholar&cbl=2026366&diss=y",
+      "relevance_score": 0.222,
+      "_score": 0.111,
+      "id": "L005",
+      "download": false,
+      "publication_status": "unknown"
+    }
+  ]
+}

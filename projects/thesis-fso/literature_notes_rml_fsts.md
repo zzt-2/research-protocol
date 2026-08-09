@@ -2,7 +2,7 @@
 
 > 独立 owner：`.sessions/2026-08-08-rml-fsts-groundwork/`
 > 研究对象：Wang 2023 FSTS fixed-lag/`BL` condition-dependence
-> 当前记录 Step 1–3 已完成；Step 3 只形成 canonical 问题候选与证据边界，不含 novelty、Go/No-Go 或方法实现裁决。
+> 当前记录 Step 1–3 已完成；mandatory Step 3.5 在三轮上限后终止为证据阻塞并由 V004 独立验收，不含 Step 4a、Go/No-Go、METHOD_SIGNAL 或方法实现裁决。
 
 ## GW Progress
 
@@ -10,9 +10,9 @@
 |---|---|---|---|---|---|
 | 1 search | ✅ PASS | 2026-08-08 | `a52bb5d6` | R001 + `rml-fsts-step1-search-receipt.json` + 7 query JSON | 允许 Step 2 |
 | 2 acquire | ✅ USER_CONFIRMED | 2026-08-09 | `a52bb5d6` | 5 篇合格 CORE + R002 + coverage/receipt + D003 | 允许 Step 3 |
-| 3 read | ✅ completed | 2026-08-09 | 本次统一提交 | 5/5 fresh full-text read + R003 + V002 | 本轮停止；新对话才可执行 mandatory Step 3.5 |
-| 3.5 supplement | ⬜ NOT_STARTED | — | — | — | Step 3 未完成前禁止 |
-| 4a feasibility | ⬜ NOT_STARTED | — | — | — | Step 3/3.5 未完成前禁止 |
+| 3 read | ✅ completed | 2026-08-09 | `80c337aa` | 5/5 fresh full-text read + R003 + D005/V003 | D006 已授权 mandatory Step 3.5 |
+| 3.5 supplement | ⛔ EVIDENCE_BLOCKED | 2026-08-09 | V004 PASS | R004/D007/V004 + search/citation/acquisition receipts；三轮上限 | 关键全文不可得；不开放 Step 4a |
+| 4a feasibility | ⬜ NOT_STARTED / NO ENTRY | — | — | — | Step 3.5 未闭合，禁止 |
 
 ## Step 1 候选表
 
@@ -131,6 +131,33 @@
 | Q1 | Wang 2023 fixed-`B_L` FSTS two-stage FOE | 固定 modulation、TS length、receiver-power bin 内，不同 receiver-visible turbulence/branch/phase-reliability condition | M 隐含假设同一 `B_L` 仍近似最优；若 turbulence/branch/phase reliability 改变最优 lag 或 lag ranking，fixed 设计将不足 | condition-to-lag design rule / reusable performance-curve family（只定产出形态，不设计实现） | ✅ M-C-A 句子级、A 可证伪；不要求本轮已证伪 | ✅ 可复用 design rule/curve family | ✅ Wang 2023 exact recent M + Enhanced 2024 Optics Express task-matched 顶刊 comparator；由 L02 闭合项目 2019+ 顶刊门，不依赖 Wang venue 等级 | ✅ 以 CFO MSE、BER/sensitivity、range、complexity 对 Wang 与 1 个 conditioned lookup 比较 | **全过** | L01 `content.md:183,208,247-319`；L02 `content.md:404`；项目 venue authority：problem-driven D015、advisor-review topic-index:94；L04 C4 physics | FACT：fixed `B_L`/tradeoff/low-power degradation；INFERENCE：condition 可能违反同一 lag 近似最优假设；UNKNOWN：crossover/failure/headroom |
 
 Q1 通过只表示 Step 3 产生了可进入 mandatory Step 3.5 的问题候选；A 指 M 所依赖且可能在 C 下被违反的假设，不是“ranking 已稳定/cheap comparator 已足够”的结论。不表示 target A 已被证明、novelty 已闭合、cheap comparator 已失败或 Step 4a Go。
+
+## Step 3.5 竞争闭包更新
+
+### 检索与引用链规模
+
+- R1：8/8 keyword matrix，27 条；actual sources=SerpAPI/OpenAlex/S2。Wang/Enhanced forward+backward 四链 63 条→51 unique，`S2-only=0`。
+- R2：前三条新术语 query 63 条，known hit 15 次，48 个新标题全部 exclude，new must/should=`0/0`；第 4 条 120 s timeout。
+- R3：第 4 条只用 S2+OpenAlex 源限定补查仍 timeout；达到 3 轮上限，禁止 R4。详见 `R004` 与 Step 3.5 receipts。
+
+### Qualified action boundary
+
+| 论文 | content SHA / bytes | 动作与粒度 | 分类 | exact / cheap lookup |
+|---|---|---|---|---|
+| Tang 2022 | `DB526B...FB69` / 36,071 | 固定 STSB frame localization→FOE | fixed-training direct task | false / false |
+| WiSEE 2024 | `214343...14E` / 35,131 | 固定 header/pilot 的 frame/CFO/equalization/CPE | architecture adjacent | false / false |
+| ICAIT 2025 | `a65fe9...dc30` / 36,387 | 固定 960-symbol training-spectrum 两级 FOE | architecture adjacent | false / false |
+| JLT 2021 | `65571b...3346` / 48,595 | FO sweep+SCDF；参数离线统一优化后固定 | architecture adjacent | false / false |
+
+Morelli/Yu 继续占用 generic multi-lag/stepwise correlation prior art；Wang/Enhanced 是 offline fixed-parameter/length design。Qualified evidence 中没有确认 receiver-visible condition→lag/`B_L`/window selection，也没有确认 dev-frozen conditioned single-lag lookup 等价实现。
+
+### Unresolved primary evidence
+
+Cheng 2020、OE.505931、OE.448956、Dong 2009、OE.561252、ACP/IPOC 10809664、SSRN 6293357、Optics Communications 130981 共 8 项在 bounded 获取后仍无 qualified fulltext；动作、online/offline 与 exact/cheap-lookup 边界保持 UNKNOWN，不能用 abstract 排除。
+
+### Terminal 与 claim ceiling
+
+Step 3.5 canonical terminal=`证据阻塞`，已由 V004 fresh-context 独立终验 PASS。这不等于 Q1 新颖、存活闭包或被关闭；只表示检索/引用链/止损已执行，但关键一手全文不可得，competition boundary 不能诚实裁决。Conditioned single-lag lookup 继续作为 strongest cheap alternative；其胜负与 target crossover/headroom 仍属于 Step 4a，但当前无 Step 4a 入口。
 
 ## 五篇标准精读条目
 

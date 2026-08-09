@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "date": "2026-08-09",
+  "task": "T007-step3-5-critical-fulltext-hunt",
+  "limits": {
+    "max_attempts_per_item": 4,
+    "elapsed_budget_minutes": 15,
+    "researchgate_or_google_scholar_as_evidence": false
+  },
+  "items": [
+    {
+      "doi": "10.1016/J.OPTCOM.2020.126046",
+      "title": "Training-aided joint frame and frequency synchronization for free space optical communication signals with low OSNR",
+      "attempts_count": 4,
+      "source_families": ["exact_title_author_institution_web_discovery", "openalex_api", "unpaywall_api", "official_doi_elsevier_preview"],
+      "attempts": [
+        {"channel": "exact-title author/institution web discovery", "query": "exact title PDF; site:hust.edu.cn; Qian Cheng Sheng Cui Keji Zhou", "http_status": "SEARCH_OK", "primary": false, "lawful": true, "result": "NO_AUTHOR_OR_INSTITUTIONAL_PDF; publisher preview and ResearchGate request page only"},
+        {"channel": "OpenAlex API", "url": "https://api.openalex.org/works/https%3A%2F%2Fdoi.org%2F10.1016%2Fj.optcom.2020.126046", "http_status": 200, "primary": true, "lawful": true, "result": "OA_CLOSED_NO_REPOSITORY_NO_PDF"},
+        {"channel": "Unpaywall API", "url": "https://api.unpaywall.org/v2/10.1016%2Fj.optcom.2020.126046", "http_status": 200, "primary": true, "lawful": true, "result": "IS_OA_FALSE_ZERO_OA_LOCATIONS"},
+        {"channel": "official DOI / Elsevier publisher preview", "url": "https://doi.org/10.1016/J.OPTCOM.2020.126046", "http_status": 200, "primary": true, "lawful": true, "result": "ARTICLE_PREVIEW_AND_SECTION_SNIPPETS_ONLY; INSTITUTIONAL_ACCESS_REQUIRED; NOT_FULLTEXT"}
+      ],
+      "status": "FULLTEXT_UNAVAILABLE_AFTER_BOUNDED_HUNT",
+      "path": null,
+      "sha256": null,
+      "bytes": null,
+      "fulltext_action": {"estimator_action": null, "lag_window_block_definition": null, "condition_information": null, "decision_granularity": null, "online_offline": null, "selection_weighting_rule": null, "comparators": null, "evidence": "NO_QUALIFIED_FULLTEXT"},
+      "classification": "UNRESOLVED_TASK_MATCHED_METADATA_ONLY",
+      "can_bear_weight": false
+    },
+    {
+      "doi": "10.1364/OE.505931",
+      "title": "Real-time low-complexity diversity combining algorithm for free space coherent optical communication systems over atmospheric turbulence channel",
+      "attempts_count": 4,
+      "source_families": ["exact_title_author_institution_web_discovery", "openalex_api", "unpaywall_api", "official_doi_optica_delivery"],
+      "attempts": [
+        {"channel": "exact-title author/institution web discovery", "query": "exact title PDF; site:bupt.edu.cn; Kejia Xu Jian Wu", "http_status": "SEARCH_OK", "primary": false, "lawful": true, "result": "NO_AUTHOR_OR_INSTITUTIONAL_PDF; PubMed/ResearchGate/index pages only"},
+        {"channel": "OpenAlex API", "url": "https://api.openalex.org/works/https%3A%2F%2Fdoi.org%2F10.1364%2Foe.505931", "http_status": 200, "primary": true, "lawful": true, "result": "GOLD_OA; DOI_LANDING_ONLY; PUBMED_REPOSITORY_WITHOUT_PDF"},
+        {"channel": "Unpaywall API", "url": "https://api.unpaywall.org/v2/10.1364%2Foe.505931", "http_status": 200, "primary": true, "lawful": true, "result": "GOLD_OA; PUBLISHER_LANDING_ONLY; URL_FOR_PDF_NULL"},
+        {"channel": "official DOI / Optica OA delivery", "url": "https://doi.org/10.1364/OE.505931", "http_status": 200, "primary": true, "lawful": true, "content_type": "text/html", "bytes_received": 15064, "result": "RADWARE_CAPTCHA_HTML_NOT_PDF"}
+      ],
+      "status": "FULLTEXT_UNAVAILABLE_AFTER_BOUNDED_HUNT",
+      "path": null,
+      "sha256": null,
+      "bytes": null,
+      "fulltext_action": {"estimator_action": null, "lag_window_block_definition": null, "condition_information": null, "decision_granularity": null, "online_offline": null, "selection_weighting_rule": null, "comparators": null, "evidence": "NO_QUALIFIED_FULLTEXT"},
+      "classification": "ARCHITECTURE_ADJACENT_ABSTRACT_ONLY",
+      "can_bear_weight": false
+    },
+    {
+      "doi": "10.1364/OE.448956",
+      "title": "Performance analysis of a spatial diversity coherent free-space optical communication system based on optimal branch block phase correction",
+      "attempts_count": 4,
+      "source_families": ["exact_title_author_institution_web_discovery", "openalex_api", "unpaywall_api", "official_doi_optica_delivery"],
+      "attempts": [
+        {"channel": "exact-title author/institution web discovery", "query": "exact title PDF; site:bupt.edu.cn; Liqian Wang Xinyu Tang", "http_status": "SEARCH_OK", "primary": false, "lawful": true, "result": "NO_AUTHOR_OR_INSTITUTIONAL_PDF; PubMed/ResearchGate/citation pages only"},
+        {"channel": "OpenAlex API", "url": "https://api.openalex.org/works/https%3A%2F%2Fdoi.org%2F10.1364%2Foe.448956", "http_status": 200, "primary": true, "lawful": true, "result": "GOLD_OA; DOI_LANDING_ONLY; PUBMED_REPOSITORY_WITHOUT_PDF"},
+        {"channel": "Unpaywall API", "url": "https://api.unpaywall.org/v2/10.1364%2Foe.448956", "http_status": 200, "primary": true, "lawful": true, "result": "GOLD_OA; PUBLISHER_LANDING_ONLY; URL_FOR_PDF_NULL"},
+        {"channel": "official DOI / Optica OA delivery", "url": "https://doi.org/10.1364/OE.448956", "http_status": 200, "primary": true, "lawful": true, "content_type": "text/html", "bytes_received": 15062, "result": "RADWARE_CAPTCHA_HTML_NOT_PDF"}
+      ],
+      "status": "FULLTEXT_UNAVAILABLE_AFTER_BOUNDED_HUNT",
+      "path": null,
+      "sha256": null,
+      "bytes": null,
+      "fulltext_action": {"estimator_action": null, "lag_window_block_definition": null, "condition_information": null, "decision_granularity": null, "online_offline": null, "selection_weighting_rule": null, "comparators": null, "evidence": "NO_QUALIFIED_FULLTEXT"},
+      "classification": "ARCHITECTURE_ADJACENT_ABSTRACT_ONLY",
+      "can_bear_weight": false
+    },
+    {
+      "doi": "10.1109/CHINACOM.2009.5339877",
+      "title": "Implementation of training-sequence based carrier frequency offset estimator with multi-correlation-lag",
+      "attempts_count": 4,
+      "source_families": ["exact_title_author_institution_web_discovery", "openalex_api", "unpaywall_api", "official_doi_ieee_delivery"],
+      "attempts": [
+        {"channel": "exact-title author/institution web discovery", "query": "exact title PDF; Xue Dong Kewu Peng Jian Song", "http_status": "SEARCH_OK", "primary": false, "lawful": true, "result": "NO_AUTHOR_OR_INSTITUTIONAL_PDF; citation pages and ResearchGate profile/abstract only"},
+        {"channel": "OpenAlex API", "url": "https://api.openalex.org/works/https%3A%2F%2Fdoi.org%2F10.1109%2Fchinacom.2009.5339877", "http_status": 200, "primary": true, "lawful": true, "result": "OA_CLOSED_NO_REPOSITORY_NO_PDF"},
+        {"channel": "Unpaywall API", "url": "https://api.unpaywall.org/v2/10.1109%2Fchinacom.2009.5339877", "http_status": 200, "primary": true, "lawful": true, "result": "IS_OA_FALSE_ZERO_OA_LOCATIONS"},
+        {"channel": "official DOI / IEEE delivery", "url": "https://doi.org/10.1109/CHINACOM.2009.5339877", "http_status": 202, "primary": true, "lawful": true, "content_type": "text/html", "bytes_received": 2055, "result": "IEEE_LANDING_HTML_NO_PDF_MAGIC_OR_CITATION_PDF_URL"}
+      ],
+      "status": "FULLTEXT_UNAVAILABLE_AFTER_BOUNDED_HUNT",
+      "path": null,
+      "sha256": null,
+      "bytes": null,
+      "fulltext_action": {"estimator_action": null, "lag_window_block_definition": null, "condition_information": null, "decision_granularity": null, "online_offline": null, "selection_weighting_rule": null, "comparators": null, "evidence": "NO_QUALIFIED_FULLTEXT"},
+      "classification": "GENERIC_MULTI_LAG_IDENTITY_ONLY",
+      "can_bear_weight": false
+    }
+  ],
+  "summary": {
+    "items": 4,
+    "qualified_fulltext": 0,
+    "fulltext_unavailable_after_bounded_hunt": 4,
+    "attempts_per_item": [4, 4, 4, 4],
+    "claim_ceiling": "Identity/abstract-level roles only; no fulltext action, collision, or novelty conclusion. Absence of acquired fulltext is not evidence of absence of collision."
+  },
+  "boundaries": "No current-view/topic/literature/decision edits; no p05/pyc access; no Step 4a, simulation, MVE, numerical comparison, or method design."
+}

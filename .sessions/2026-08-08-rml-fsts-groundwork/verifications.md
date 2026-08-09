@@ -75,3 +75,27 @@ PASS。允许按 T001 一次性提交 Groundwork Step 3 产出与治理同步；
 ### 结论
 
 PASS。V002 的完整性/合同一致性结论保留；其 Q1 科学语义验收由 V003 修正。Step 3 completed 可维持，进入 Step 3.5 前置语义债已关闭。
+
+## V004: Groundwork Step 3.5 独立终验
+
+> status: PASS
+> date: 2026-08-09
+> 关联：S003 / R004 / D006-D007 / H004
+> verifier: fresh-context `/root/rml_step35_verifier`
+> 证据报告：`projects/thesis-fso/worker-logs/step-3-5-rml-independent-verifier.md`
+
+### 验证范围
+
+按 T010 独立检查 10 项：scope change 与禁区；R1 8-query matrix、实际来源和 R2/R3 轮次；Wang/Enhanced 双向引用链；qualified fulltext identity/path/SHA/bytes/action；竞品分类；conditioned single-lag cheap alternative；唯一合法 terminal；Step 4a 与禁止改动；current views 一致性；JSON/YAML/git/p05/cache 机械完整性。
+
+### 初审纠偏
+
+Verifier 一度将 5 个 `cpython-312.pyc` 的“存在”初判为 P1；独立复算确认它们是 HEAD 已跟踪基线，`git hash-object` 与 `HEAD:<path>` 5/5 一致且目录 status 为空，因此不是任务残留，撤回 P1。
+
+### 复核结果
+
+`PASS`，P0/P1/P2=`0/0/0`，10/10 gates PASS。19/19 receipt 引用 raw 存在且 SHA256 匹配；R1=`27`、引用链=`63→51 unique`、R2=`63=15+48`、R3 timeout 非零命中语义均可复算。四篇 qualified fulltext 的 identity/hash/bytes/action 与两条 `papers/index.json` success entry 一致；8 项缺全文保持 UNKNOWN。四个 `p05_run*.log` 的 size/mtime/SHA 与基线一致且未暂存。
+
+### 结论
+
+PASS。唯一证据支持的 Step 3.5 terminal 是 `EVIDENCE_BLOCKED`；Step 4a=`NO ENTRY`。允许把本轮预定证据、current views 与 verifier log 一次性提交；不得暂存四个 p05 日志，不得 push。下一科学动作仅限取得一个或多个未决一手全文后，重开 Step 3.5 action-level 裁决。

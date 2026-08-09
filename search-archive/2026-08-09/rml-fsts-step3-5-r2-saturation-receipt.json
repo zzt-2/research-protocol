@@ -1,0 +1,129 @@
+{
+  "schema_version": "rml-fsts-step3.5-r2-saturation-receipt/v1",
+  "date": "2026-08-09",
+  "task_brief": ".sessions/2026-08-08-rml-fsts-groundwork/T008-step3-5-r2-saturation-search.md",
+  "scope": "four frozen R2 queries plus known/new abstract-metadata screening only",
+  "queries": [
+    {
+      "id": "Q1",
+      "query": "single-tone training sequence FSO frequency offset estimation lag block length adaptive",
+      "raw_path": "search-archive/2026-08-09/rml-fsts-r2-q1.json",
+      "sha256": "f05030837dee4f68c9c257b77a4e1f860e2f27ee7cc2019d51d252752c573107",
+      "bytes": 18825,
+      "status": "COMPLETE",
+      "result_count": 8,
+      "actual_source_families": ["serpapi_scholar"],
+      "errors": ["EXA_HTTP_402_KEYWORD_AND_NEURAL", "S2_ABSTRACT_BATCH_HTTP_400"]
+    },
+    {
+      "id": "Q2",
+      "query": "short symbol block training sequence coherent FSO frequency offset adaptive length selection",
+      "raw_path": "search-archive/2026-08-09/rml-fsts-r2-q2.json",
+      "sha256": "439736e756bc631696efa8a871e2b283bed17162252a97b2c43a7c21b01ecc74",
+      "bytes": 59814,
+      "status": "COMPLETE",
+      "result_count": 25,
+      "actual_source_families": ["serpapi_scholar", "openalex", "semantic_scholar"],
+      "errors": ["EXA_HTTP_402_KEYWORD_AND_NEURAL", "S2_ABSTRACT_ENRICHMENT_RATE_LIMIT"]
+    },
+    {
+      "id": "Q3",
+      "query": "low received optical power joint frame frequency synchronization lag window selection satellite optical",
+      "raw_path": "search-archive/2026-08-09/rml-fsts-r2-q3.json",
+      "sha256": "b99d47943b9dd3d3a69785dab0ef3939b109f9713dd20eb1a69c67ab2d28651f",
+      "bytes": 43915,
+      "status": "COMPLETE",
+      "result_count": 30,
+      "actual_source_families": ["serpapi_scholar", "openalex"],
+      "errors": ["EXA_HTTP_402_KEYWORD_AND_NEURAL"]
+    },
+    {
+      "id": "Q4",
+      "query": "short-time spectrum coarse frequency offset FSO adaptive window correlation distance",
+      "raw_path": "search-archive/2026-08-09/rml-fsts-r2-q4.json",
+      "sha256": "c960dd0f4d8bf2cfebc69012fd46c602da73a966564b8393c54379aa0b47425a",
+      "bytes": 713,
+      "status": "TIMEOUT",
+      "result_count": null,
+      "actual_source_families": [],
+      "errors": ["BOUNDED_TIMEOUT_120_SECONDS_NO_AUTO_RAW"]
+    }
+  ],
+  "actual_source_families": ["serpapi_scholar", "openalex", "semantic_scholar"],
+  "known_guard_keys": {
+    "source_paths": [
+      "search-archive/2026-08-08/rml-fsts-step1-canonical-ledger.json",
+      "search-archive/2026-08-09/rml-fsts-step3-read-receipt.json",
+      "search-archive/2026-08-09/rml-fsts-step3-5-search-citation-receipt.json",
+      "search-archive/2026-08-09/rml-fsts-step3-5-acquisition-receipt.json",
+      "search-archive/2026-08-09/rml-fsts-step3-5-r2-must-read-receipt.json",
+      "search-archive/2026-08-09/rml-fsts-step3-5-r2-should-read-receipt.json",
+      "search-archive/2026-08-09/rml-fsts-step3-5-critical-fulltext-hunt-receipt.json"
+    ],
+    "normalization": "title lowercase then remove non-letter/non-digit characters; DOI lowercase",
+    "title_key_count": 128,
+    "doi_key_count": 77,
+    "sorted_title_key_set_sha256": "acb52d811c8c7e0c0a6c46245e749502bbdc54eee99d175619f1f73f7dd9b09a",
+    "sorted_doi_key_set_sha256": "bd8d6b542b9b84b5cb9e438e2f744a267e6f73b20ea1aba19c4accda28e6ecda",
+    "matched_title_keys": [
+      "a sparse wavelength aware learning framework for robust fso channel estimation",
+      "coarse frequency offset estimation and compensation based on short-time spectrum analysis in fso communication system",
+      "distributed satellite information networks architecture enabling technologies and trends",
+      "enhanced frame synchronization and carrier recovery in coherent fso communication a pseudo-random and cyclic qpsk approach",
+      "joint frame synchronization and frequency offset estimation for satellite-to-ground optical communication under low received optical power",
+      "joint physical layer frame optimization and carrier synchronization for satellite communications",
+      "optical communication in space challenges and mitigation techniques",
+      "optimized frequency offset estimation scheme using short symbol block based on training sequence for coherent free-space optical communication",
+      "review and analysis of digital signal processing algorithms for coherent optical satellite links",
+      "revolutionizing free-space optics a survey of enabling technologies challenges trends and prospects of beyond 5g free-space optical fso communication systems",
+      "robust multifunctional single-tone training sequence for free-space optical communication in strong turbulence",
+      "symmetric training sequence-based carrier frequency offset estimation scheme for coherent free-space optical communication"
+    ],
+    "matched_doi_keys": [
+      "10.1002/sat.1553",
+      "10.1007/s11432-024-4408-1",
+      "10.3390/s24248036"
+    ]
+  },
+  "screened_totals": {
+    "completed_query_records": 63,
+    "known_hit_occurrences": 15,
+    "known_unique_title_hits": 12,
+    "new_unique_titles": 48,
+    "new_must": 0,
+    "new_should": 0,
+    "new_exclude": 48
+  },
+  "new_candidate_list": [
+    {"title": "Two efficient blind carrier frequency offset estimation algorithms for APSK signals", "classification": "new_exclude", "reason": "generic APSK blind CFO; reliability-weighted aggregation is not a coherent-FSO condition-to-lag selector"},
+    {"title": "Spatio-temporal mutualism enabled ultrashort pulse coherent FSO transmission for turbulent resilience", "classification": "new_exclude", "reason": "ultrashort-pulse/AO architecture; no carrier-FOE lag/window action supported"},
+    {"title": "Frequency-domain 4N× 2 MIMO adaptive equalizer for multi-aperture coherent digital combining FSO communication", "classification": "new_exclude", "reason": "adaptive equalization/combining, not FOE lag or B_L selection"},
+    {"title": "Training sequence design for frequency offset and frequency-selective channel estimation", "classification": "new_exclude", "reason": "generic offline training-sequence design, not coherent FSO condition-aware selection"},
+    {"title": "Hybrid Time-Frequency Domain Frequency Offset Compensation Under GHz Doppler Shift for LEO Satellite-to-Ground Coherent Free-Space Optical Communication", "classification": "new_exclude", "reason": "task-adjacent title but mismatched enriched abstract; metadata does not support adaptive lag/window or cheap lookup"},
+    {"title": "High-capacity coherent FSO", "classification": "new_exclude", "reason": "adaptive transmitter symbol-rate and PCS, not receiver FOE lag/window"},
+    {"title": "Multi-aperture coherent digital combining based on complex-valued MIMO 2N× 2 adaptive equalizer for FSO communication", "classification": "new_exclude", "reason": "CMA combining/equalization, not target selector"},
+    {"title": "Timing synchronization and channel estimation in free-space optical OOK communication systems", "classification": "new_exclude", "reason": "IM/DD OOK timing/channel task, not coherent carrier FOE"},
+    {"title": "Synchronization for variable data rate LEO direct-to-earth optical links", "classification": "new_exclude", "reason": "variable-rate timing synchronization; no supported condition-to-FOE-lag action"},
+    {"title": "Flexible phase synchronization for wireless optical coherent communication system with adaptive fractionally-spaced blind equalization combined with adaptive …", "classification": "new_exclude", "reason": "phase synchronization and adaptive equalization, not training-aided FOE lag/B_L selection"}
+  ],
+  "new_must_count": 0,
+  "new_should_count": 0,
+  "new_exclude_count": 48,
+  "converged": false,
+  "convergence_reason": "Q3, the last completed query, added zero must/should, but Q4 timed out without an automatic raw result set; timeout is not a zero-result saturation observation.",
+  "next_required": "No automatic R3. Mainline may decide whether a separately authorized bounded Q4 retry is necessary.",
+  "errors": [
+    "Exa HTTP 402 on completed queries",
+    "S2 abstract enrichment degraded on Q1/Q2",
+    "Q4 bounded timeout at 120 seconds; no automatic raw JSON"
+  ],
+  "boundaries": {
+    "fulltext_downloaded": false,
+    "abstract_used_for_exact_action_judgment": false,
+    "step4a_entered": false,
+    "method_designed": false,
+    "current_views_modified": false,
+    "papers_index_modified_by_task": false,
+    "p05_or_pyc_touched": false
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "query": "FSTS fixed lag BL carrier frequency offset estimation coherent FSO training-aided FOE frame synchronization turbulence spatial diversity",
+  "timestamp": "2026-08-09T14:15:25.483635+08:00",
+  "sources": [
+    "s2",
+    "openalex",
+    "serpapi",
+    "exa"
+  ],
+  "total": 1,
+  "results": [
+    {
+      "title": "Carrier FOE scheme based on FSTS in spatial diversity PM coherent FSO communication",
+      "authors": [
+        "L Wang",
+        "J Wang",
+        "X Tang"
+      ],
+      "venue": "",
+      "year": 2023,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "The efficient and cost-effective suppression of atmospheric turbulence effects in free-space optical (FSO) communication poses a significant challenge. To address this challenge, a carrier frequency offset estimation (FOE) scheme based on frame-synchronous training sequence (FSTS) is proposed, which can be applied to spatial diversity polarization multiplexing (PM) coherent FSO communication system. The proposed scheme integrates the functions of frame synchronization (FS) and FOE by designing distinct training sequences for the X and Y polarizations. Specifically, the FOE scheme achieves high accuracy, wide range, low complexity, and multi-format versatility while maintaining FS accuracy. Simulation results for PM 4/16-quadrature amplitude modulation (QAM) demonstrate the feasibility and generality of the proposed scheme. Moreover, when combined with the spatial diversity reception under strong and weak turbulence conditions, the proposed algorithm exhibits higher receiver sensitivity compared to the conventional training sequence (TS)-based FOE algorithm. The advantages of this scheme make it highly promising for high-speed coherent FSO communications across multiple modulation formats.",
+      "citation_count": 7,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "serpapi_scholar+semantic_scholar",
+      "url": "https://ieeexplore.ieee.org/document/10097873/1000",
+      "relevance_score": 0.824,
+      "_score": 0.702,
+      "id": "L001",
+      "download": true,
+      "publication_status": "unknown"
+    }
+  ]
+}

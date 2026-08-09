@@ -5,7 +5,7 @@ method_type: 待定（精读后根据问题方法产出形态确定，见 glossa
 domain: comms
 created: 2026-06-21
 updated: 2026-08-09
-current_step: GROUNDWORK_STEP3（✅ completed；Step 3.5 ⬜ NOT_STARTED）
+current_step: GROUNDWORK_STEP3_5（⛔ EVIDENCE_BLOCKED；Step 4a NO ENTRY）
 current_stage: GROUNDWORK
 ---
 
@@ -35,13 +35,13 @@ current_stage: GROUNDWORK
 
 ### 当前控制面桥接
 
-> **2026-08-09 当前入口：Groundwork Step 3 `✅ completed`，Step 3.5 `⬜ NOT_STARTED`**。Ch4 reference-method extension D004/T003
+> **2026-08-09 当前入口：Groundwork Step 3 `✅ completed`，Step 3.5 `⛔ EVIDENCE_BLOCKED`（R004/D007/V004，独立终验 PASS）**。Ch4 reference-method extension D004/T003
 > 选择 Wang 2023 FSTS fixed-lag/`BL` condition-dependence 作为唯一独立 Groundwork research object。
 > Step 1 已用满 7/7 query：121 unique、4 actual sources、正式发表 58.68%、12 篇 shortlist，质量门 PASS。
 > Step 2 已获得 5 篇合格 CORE 并覆盖 C1–C4；T001 已完成5/5全文精读，canonical target Q1四判据4/4。D005/V003 已修正 A 的逻辑方向与近期 baseline 身份措辞。
-> 本执行在 Step 3 边界停止；Step 3.5/4a、预注册 smoke、实现、仿真、MVE、Contract 或 Execute未执行；object/package计数仍为0/0。
+> mandatory Step 3.5 已完成 8-query matrix、三类真实来源、Wang/Enhanced 双向引用链与三轮止损；qualified evidence 未确认 exact collision，但 8 项关键全文不可得，competition boundary 未闭合。Step 4a、预注册 smoke、实现、仿真、MVE、Contract 或 Execute继续禁止；object/package计数仍为0/0。
 
-- **RML-FSTS fixed-lag condition-dependence Groundwork（独立专题，2026-08-08）—— STEP 3 COMPLETED / STOPPED AT BOUNDARY**：
+- **RML-FSTS fixed-lag condition-dependence Groundwork（独立专题，2026-08-08）—— STEP 3.5 EVIDENCE BLOCKED / STOPPED**：
   source-domain defect 与 target FSO crossover 严格分离；future action 只作背景；最强廉价替代保持为
   dev-frozen modulation/TS/receiver-power-conditioned single-lag lookup。
 
@@ -50,8 +50,8 @@ current_stage: GROUNDWORK
   | 1 search | ✅ PASS | R001 + step1 receipt + 7 query JSON | 允许 Step 2 |
   | 2 acquire | ✅ USER_CONFIRMED | 5 篇合格 CORE + R002 + coverage/receipt + D003 | 允许 Step 3 |
   | 3 read | ✅ completed | 5篇 read-notes/read-log + R003/D005/V003/H003 + receipt；Q1=4/4 | 用户确认后新对话方可执行 mandatory Step 3.5 |
-  | 3.5 supplement | ⬜ NOT_STARTED | — | 用户未确认 scope change 前禁止；确认后可启动 |
-  | 4a feasibility | ⬜ NOT_STARTED | — | Step 3/3.5 未完成前禁止 |
+  | 3.5 supplement | ⛔ EVIDENCE_BLOCKED | R004/D007/V004 + search/citation/acquisition receipts；三轮上限 | 获得关键全文后仅重开 action-level closure |
+  | 4a feasibility | ⬜ NOT_STARTED / NO ENTRY | — | Step 3.5 未闭合，禁止 |
 
 - **低仰角强湍流 coded-burst reliability Groundwork（独立专题，2026-08-07）—— CLOSED / STEP 1 EVIDENCE INSUFFICIENT**：
   原始目标、六项 reopen gate、outage-vs-burst terminal 与禁止项已在新专题 S001/D001/topic-index 冻结。

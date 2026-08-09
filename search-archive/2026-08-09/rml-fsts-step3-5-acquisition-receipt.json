@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "date": "2026-08-09",
+  "task": "T004-step3-5-acquisition-and-provenance",
+  "items": [
+    {
+      "doi": "10.1016/J.OPTCOM.2020.126046",
+      "title": "Training-aided joint frame and frequency synchronization for free space optical communication signals with low OSNR",
+      "attempts": [
+        {"channel": "bash tools/download", "result": "WRAPPER_CRLF_ERROR_RC2"},
+        {"channel": "tools/paper_download.py --force --dry-run then --force", "result": "all_failed"},
+        {"channel": "Crossref Elsevier text-mining URL", "url": "https://api.elsevier.com/content/article/PII:S0030401820304636?httpAccept=text/plain", "result": "HTTP_400"}
+      ],
+      "source": {"channel": "Crossref_identity_only", "url": "https://doi.org/10.1016/j.optcom.2020.126046"},
+      "status": "FULLTEXT_UNAVAILABLE",
+      "paths": {"metadata": "papers/doi/10.1016_j.optcom.2020.126046/metadata.json"},
+      "sha256": null,
+      "bytes": null,
+      "title_doi_evidence": ["Crossref title and DOI identity checked 2026-08-09"],
+      "old_conflict": null,
+      "conclusion": "No lawful auditable full text acquired; metadata/abstract cannot support action classification.",
+      "can_bear_weight": false
+    },
+    {
+      "doi": "10.1364/OE.505931",
+      "title": "Real-time low-complexity diversity combining algorithm for free space coherent optical communication systems over atmospheric turbulence channel",
+      "attempts": [
+        {"channel": "bash tools/download", "result": "WRAPPER_CRLF_ERROR_RC2"},
+        {"channel": "tools/paper_download.py --force --dry-run then --force", "result": "all_failed"},
+        {"channel": "Semantic Scholar API", "result": "HTTP_429"},
+        {"channel": "Optica official viewmedia", "url": "https://opg.optica.org/viewmedia.cfm?URI=oe-31-24-40705&seq=0", "result": "HTTP_202_TEXT_HTML_553_BYTES_NOT_PDF"}
+      ],
+      "source": {"channel": "Crossref_identity_only", "url": "https://doi.org/10.1364/oe.505931"},
+      "status": "FULLTEXT_UNAVAILABLE",
+      "paths": {"metadata": "papers/doi/10.1364_oe.505931/metadata.json"},
+      "sha256": null,
+      "bytes": null,
+      "title_doi_evidence": ["Crossref title and DOI identity checked 2026-08-09"],
+      "old_conflict": null,
+      "conclusion": "Official URL did not return PDF bytes; abstract is not promoted to full-text evidence.",
+      "can_bear_weight": false
+    },
+    {
+      "doi": "10.1364/OE.448956",
+      "title": "Performance analysis of a spatial diversity coherent free-space optical communication system based on optimal branch block phase correction",
+      "attempts": [
+        {"channel": "bash tools/download", "result": "WRAPPER_CRLF_ERROR_RC2"},
+        {"channel": "tools/paper_download.py --force --dry-run then --force", "result": "all_failed"},
+        {"channel": "Semantic Scholar API", "result": "IDENTITY_PASS_GOLD_CCBY"},
+        {"channel": "Optica official viewmedia", "url": "https://opg.optica.org/viewmedia.cfm?URI=oe-30-5-7854&seq=0", "result": "RADWARE_HTML_15077_BYTES_NOT_PDF"}
+      ],
+      "source": {"channel": "S2_Crossref_identity_only", "url": "https://doi.org/10.1364/oe.448956"},
+      "status": "FULLTEXT_UNAVAILABLE",
+      "paths": {"metadata": "papers/doi/10.1364_oe.448956/metadata.json"},
+      "sha256": null,
+      "bytes": null,
+      "title_doi_evidence": ["Semantic Scholar external DOI and exact title", "Crossref title and DOI identity checked 2026-08-09"],
+      "old_conflict": null,
+      "conclusion": "OA identity exists but official delivery was bot-blocked; no auditable PDF acquired.",
+      "can_bear_weight": false
+    },
+    {
+      "doi": "10.1109/JPHOT.2022.3161795",
+      "title": "Symmetric Training Sequence-Based Carrier Frequency Offset Estimation Scheme for Coherent Free-Space Optical Communication",
+      "attempts": [
+        {"channel": "local source/content hash and PDF magic audit", "result": "PASS"},
+        {"channel": "historical acquisition receipt audit", "result": "PASS_BLIT_IEEE_2026_08_05"},
+        {"channel": "Crossref DOI identity", "result": "PASS"}
+      ],
+      "source": {"channel": "blit-ieee", "url": "https://doi.org/10.1109/JPHOT.2022.3161795", "direct_pdf_url_retained": false},
+      "status": "QUALIFIED_FULLTEXT",
+      "paths": {
+        "source": "papers/doi/10.1109_jphot.2022.3161795/source.pdf",
+        "content": "papers/doi/10.1109_jphot.2022.3161795/content.md",
+        "metadata": "papers/doi/10.1109_jphot.2022.3161795/metadata.json"
+      },
+      "sha256": {"source": "E7D281A30FC15EBFC4AD20AC80985FD627C7B3FCC70E40E7BAFB41231DDAD1CE", "content": "DB526BA5E1787EFBD05034BD7759E5CCC4DDCA34311C979A35464176DB40FB69", "metadata": "6BE20811A8E4844E5CA16AACD5475FC62D2A2E7A0A55BE67EC048CCC43B71E83"},
+      "bytes": {"source": 2413149, "content": 36071, "metadata": 1759},
+      "title_doi_evidence": ["content.md:5 exact title", "content.md:21 DOI", "Crossref identity", "search-archive/2026-08-05/_step2_receipt.json:146"],
+      "old_conflict": "metadata said failed/all_failed with empty content_file although unchanged PDF/content existed",
+      "conclusion": "Provenance repaired; fixed known training blocks drive frame localization and CFO, with no receiver-condition-to-lag/window selection.",
+      "can_bear_weight": true
+    },
+    {
+      "doi": "10.1109/WiSEE61249.2024.10850117",
+      "title": "Data-Aided Multi-Format DSP for Robust Free-Space Coherent Optical Communication",
+      "attempts": [
+        {"channel": "shared source/content hash and PDF magic audit", "result": "PASS"},
+        {"channel": "2026-07-10 session and read-log provenance audit", "result": "PASS_BLIT_IEEE_DOC_10850117"},
+        {"channel": "Crossref DOI identity", "result": "PASS"},
+        {"channel": "copy unchanged bytes to target canonical path", "result": "PASS_HASH_IDENTICAL"}
+      ],
+      "source": {"channel": "blit-ieee", "url": "https://ieeexplore.ieee.org/document/10850117", "direct_pdf_url": "https://ieeexplore.ieee.org/stampPDF/getPDF.jsp?arnumber=10850117"},
+      "status": "QUALIFIED_FULLTEXT",
+      "paths": {
+        "source": "papers/doi/10.1109_wisee61249.2024.10850117/source.pdf",
+        "content": "papers/doi/10.1109_wisee61249.2024.10850117/content.md",
+        "metadata": "papers/doi/10.1109_wisee61249.2024.10850117/metadata.json"
+      },
+      "sha256": {"source": "87222B75547F88C038C43739C616865853787CA5B4FE5336DE145C061DD340CE", "content": "214343F9705ADA66A469102BD72035761CD3CF235C1171EF7334946CE5ECC14E", "metadata": "61ABECA56EFFAF51765E899F9ED86517575D7BAB03EC782E31C4FC7343D1482A"},
+      "bytes": {"source": 1185870, "content": 35131, "metadata": 1794},
+      "title_doi_evidence": ["content.md:3 exact title", "Crossref DOI identity", "projects/thesis-fso/read-log.md:27", ".sessions/2026-07-10-dual-pol-osl-groundwork/S001-search-strategy-dual-pol-osl.md:206-208"],
+      "old_conflict": "shared metadata said failed/all_failed although blit-ieee PDF/content existed",
+      "conclusion": "Provenance repaired; fixed headers/pilot spacing drive frame/CFO/equalization/CPE and do not implement condition-aware lag/window selection.",
+      "can_bear_weight": true
+    }
+  ],
+  "summary": {"qualified_fulltext": 2, "fulltext_unavailable": 3, "identity_blocked": 0},
+  "boundaries": "No topic/literature/decision/current-view edits; no Step 4a, simulation, MVE, adaptive-lag design, p05 log access, common/ or params.py changes."
+}

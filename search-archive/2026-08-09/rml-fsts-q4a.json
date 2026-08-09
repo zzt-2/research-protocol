@@ -1,0 +1,12 @@
+{
+  "query": "condition-aware reliability-weighted multi-lag carrier recovery coherent FSO training-aided FOE frame synchronization turbulence spatial diversity",
+  "timestamp": "2026-08-09T14:17:37.627944+08:00",
+  "sources": [
+    "s2",
+    "openalex",
+    "serpapi",
+    "exa"
+  ],
+  "total": 0,
+  "results": []
+}

@@ -158,3 +158,67 @@ S002 / R003 / V002 / T001。
 ### 来源
 
 主控接收 T001 后的独立 scientific critic；R003/D004/V002。
+
+## D006: 仅将当前范围扩展到 mandatory Groundwork Step 3.5
+
+> status: active
+> date: 2026-08-09
+> 取代：无
+> 被取代：无
+> 依据：用户原话: `voice.md` 2026-08-09 + 框架: `stages/gw-supplement.md` + 验证: V003/H003
+
+### 决策
+
+在 D005/V003/H003 已验收 Step 3 的前提下，将当前范围只扩展到 mandatory Step 3.5 竞争闭包、独立验证与一次统一提交；在 Step 3.5 canonical terminal 处停止，不进入 Step 4a。
+
+### 理由
+
+用户已显式授权触及原“明确不含”的 Step 3.5，且 `stages/gw-supplement.md` 将其定义为 Step 3 精读后的必做步骤。Q1 当前只形成合法问题候选，Cheng 2020、两篇 Optica 直接竞品、Wang/Enhanced 引用链、Tang/WiSEE provenance 以及 conditioned single-lag cheap alternative 的竞争边界尚未闭合。
+
+### 排除的替代方案
+
+- 不把本次 scope change 扩大到 Step 4a、smoke、仿真、MVE、算法设计或实现。
+- 不把 Q1=4/4 当作 novelty、Go、METHOD_SIGNAL 或方法成立。
+- 不以“没有搜到”宣称首次或新颖；若关键一手全文不可得，允许终止为证据阻塞。
+- 不省略 dev-frozen modulation/TS-length/receiver-power-conditioned single-lag lookup，也不复活历史已排除方向。
+
+### 影响范围
+
+允许更新本专题 R/S/D/V/H、`literature_notes_rml_fsts.md`、检索/引用链 receipt、必要 read-notes、topic-index、master-state 与 registry；禁止修改 `common/`、`params.py`、正式论文正文、dormant campaign 和四个既有 `p05_run*.log`，禁止 push。
+
+### 来源
+
+S003 / 用户 2026-08-09 明确授权。
+
+## D007: Step 3.5 终止为证据阻塞且不开放 Step 4a
+
+> status: active
+> date: 2026-08-09
+> 取代：无
+> 被取代：无
+> 依据：调研: R004 + 检索/引用链 receipts: `search-archive/2026-08-09/rml-fsts-step3-5-*.json` + 全文证据: T004/T006 worker-logs + 独立验证: V004
+> 触发原话: 无（技术推导；用户的终态约束已记录于 `voice.md` 2026-08-09）
+
+### 决策
+
+mandatory Step 3.5 的 canonical terminal 记为 **证据阻塞**：qualified fulltext 中未确认 exact-action collision 或 conditioned single-lag lookup 等价，但关键一手全文不可得且检索已达三轮上限，不能诚实闭合竞争边界；Step 4a 不开放。
+
+### 理由
+
+R1 完成 8-query matrix、三类真实来源与 Wang/Enhanced 双向引用链，新增 must/should=`3/3`；R2 新术语检索的三个完成 query 未新增 must/should，但第 4 query 超时；R3 源限定重试仍超时并达到轮次上限。新增/旧债务共 8 项缺 qualified fulltext，包含 Cheng、short-block、low-power joint FS/FOE 与 STFT 直接动作候选。缺全文不能被解释成无碰撞。
+
+### 排除的替代方案
+
+- 不把“qualified evidence 中 exact collision=0”写成首次、新颖或 Q1 存活闭包。
+- 不把摘要级 architecture-adjacent 证据升级为全文排除。
+- 不因 R3 超时而开启 R4 或无限漫灌；按框架三轮上限停止。
+- 不把 conditioned single-lag cheap alternative 遗漏或包装成 adaptive method。
+- 不进入 Step 4a、smoke、仿真、MVE、设计或实现。
+
+### 影响范围
+
+Step 3.5 状态改为 `EVIDENCE_BLOCKED`；Q1 仍为 Step 3 合法问题候选，但没有 Step 4a 入口。未来只有在获得关键一手全文并完成 action-level read/receipt 后，才可重开 Step 3.5 terminal 裁决。object/package failure 保持 `0/0`。
+
+### 来源
+
+S003 / R004 / T002-T010 / V004。

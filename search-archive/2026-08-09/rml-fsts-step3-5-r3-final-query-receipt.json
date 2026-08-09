@@ -1,0 +1,38 @@
+{
+  "schema_version": "rml-fsts-step3.5-r3-final-query-receipt/v1",
+  "date": "2026-08-09",
+  "task_brief": ".sessions/2026-08-08-rml-fsts-groundwork/T009-step3-5-r3-final-query.md",
+  "query": "short-time spectrum coarse frequency offset FSO adaptive window correlation distance",
+  "raw_path": "search-archive/2026-08-09/rml-fsts-r3-final-query.json",
+  "raw_sha256": "b7e00af255af9a225200b7513668d3fd151434593f03ce62bb9d5ba24f88014e",
+  "raw_bytes": 1312,
+  "status": "TIMEOUT",
+  "result_count": null,
+  "result_count_semantics": "unknown_due_to_timeout_not_zero",
+  "requested_source_families": [
+    "semantic_scholar",
+    "openalex"
+  ],
+  "actual_source_families": [],
+  "known_hits": null,
+  "new_candidates": null,
+  "new_must_count": null,
+  "new_should_count": null,
+  "new_exclude_count": null,
+  "new_count_semantics": "unknown_due_to_timeout_not_zero",
+  "converged": false,
+  "round_limit_reached": true,
+  "next_round_authorized": false,
+  "errors": [
+    "BOUNDED_TIMEOUT_120_SECONDS_NO_AUTO_RAW"
+  ],
+  "boundaries": {
+    "r4_started": false,
+    "fulltext_downloaded": false,
+    "step4a_entered": false,
+    "current_views_modified": false,
+    "papers_index_modified_by_task": false,
+    "p05_modified_by_task": false,
+    "task_pyc_side_effects_removed": true
+  }
+}

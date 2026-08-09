@@ -1,0 +1,36 @@
+{
+  "query": "multi-lag CFO estimation correlation distance weighting modulation training length received power branch phase reliability online selection lookup",
+  "timestamp": "2026-08-09T14:15:25.253076+08:00",
+  "sources": [
+    "s2",
+    "openalex",
+    "serpapi",
+    "exa"
+  ],
+  "total": 1,
+  "results": [
+    {
+      "title": "Implementation of training-sequence based carrier frequency offset estimator with multi-correlation-lag",
+      "authors": [
+        "X Dong",
+        "K Peng",
+        "J Song"
+      ],
+      "venue": "",
+      "year": 2009,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "Implementation of a carrier frequency offset (CFO) estimator with multiple correlation lags is presented in this paper. The proposed implementation breaks through the length constraint of single training sequence, and reduces the hardware cost of the estimator. A newly designed Automatic Frequency Control (AFC) loop are also proposed to achieve better utilization of multiple estimates and better trade-off between convergence rate and estimation accuracy. Employing the proposed designs, a training-sequence based CFO estimator with multi-correlation-lag for TDS-OFDM system is implemented using field programmable gate array (FPGA). As shown in the results, the proposed implementation can substantially improve estimation performance and hardware efficiency.",
+      "citation_count": 2,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "serpapi_scholar",
+      "url": "https://ieeexplore.ieee.org/abstract/document/5339877/",
+      "relevance_score": 0.389,
+      "_score": 0.4645,
+      "id": "L001",
+      "download": false,
+      "publication_status": "unknown"
+    }
+  ]
+}
