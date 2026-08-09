@@ -10,3 +10,4 @@
 - “若无 ranking crossover：立即停止，不制造 controller。” → D009
 - “若 B2 已吸收：终态应为 conventional conditioned lookup resolved。” → D009
 - “只有 B2 后残差稳定、可观测、可行动，才继续 bounded MVE。” → D009
+- “你做吧” → D012

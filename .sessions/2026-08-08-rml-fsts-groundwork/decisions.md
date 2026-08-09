@@ -397,3 +397,124 @@ Wang Fig. 8/10/11/12 direct figure 因 IEEE 403 未取得，坐标/ticks/逐点�
 ### 来源
 
 S004 / T015–T019 / V006–V007。
+
+## D012: 受限重开 Step 4a 的 source-config 与 action-before 输入恢复
+
+> status: active
+> date: 2026-08-09
+> 取代：无；执行 D011 的重开条件，不取代 D011 scientific terminal
+> 被取代：D013（仅闭合本次 Probe；本条继续作为 scope-change authority）
+> 依据：用户原话: `voice.md` 2026-08-09 + D011/V007/H006 + `stages/gw-feasibility.md`
+> 触发原话: `voice.md` 2026-08-09
+
+### 决策
+
+把专题从 dormant 临时重开为一个有界 blocker-recovery Probe，只关闭 H006 的两项前置：
+
+1. 取得一手/作者/公开 source receiver+channel executable configuration；
+2. 冻结 receiver-visible、action-before、可沿 caller→callee 审计的 structural-FSTS protocol。
+
+两项未同时 PASS 前，D011/V007 的 `STEP4A_INCONCLUSIVE_INVALID_OR_BLOCKED_TESTBED` 保持现行 scientific terminal；不得运行 performance grid、diagnostic structural run、bounded MVE 或 C1。两项均 PASS 且 fresh-context verifier 接收后，才允许在 D009 边界内重冻结 semantic-smoke 合同；本决策本身不授权性能执行。
+
+### 理由
+
+用户在获知 H006 的唯一下一动作后明确回复“你做吧”，构成对旧 dormant/重开限制的显式 scope-change 授权。该动作不创建、比较或晋级方法，但它是下一次合法 B0/B1/B2/O1 scientific comparison 的必要条件：没有 source calibration 就不能解释 receiver-power/turbulence 数字，没有 action-before protocol 就不能把 receiver-visible B2 变成合法部署 comparator。当前是第一次针对 H006 精确输入的有界恢复，不是 D010 repair chain，也不改变 object/package failure=`0/0`。
+
+### 冻结输入合同
+
+#### SC1：source-config closure
+
+只有同时满足下列条件才记 `PASS`：
+
+- 一手/作者来源的本地可审计 artifact 明确给出可执行 phase-screen propagation、receiver aperture/SMF coupling 与 branch/statistical lifecycle；
+- 同一 source contract 明确 receiver optical-power reference plane、balanced coherent receiver noise terms、equivalent bandwidth/filter/sampling/ADC normalization，并能无结果拟合地计算 `P_rx[dBm] -> E[|w[k]|^2]`；
+- 参数有单位、数值、公式/代码位置、来源与 hash，且足以冻结 B0 source point、equation、tolerance；
+- 相似论文、典型 1550 nm 假设、moment-matched scalar GG、只恢复图轴/曲线或用本轮结果反标参数均不算闭合。
+
+若公开证据只闭合部分字段，记录字段级 `KNOWN/UNKNOWN` 与检索止损，判 `NOT_CLOSED`；不向作者发送消息或上传数据，除非用户另行授权外部沟通。
+
+#### AB1：action-before protocol closure
+
+协议必须明确并可审计：
+
+- `observation time < feedback/decision time < transmitter FSTS construction time`，当前 action-specific FSTS 样值不得决定当前 structural action；
+- receiver-visible observation、power estimator/window、feature normalization 与 action key，不能使用 truth SNR、true `h`、turbulence label、CFO truth、payload label或 per-action outcome；
+- feedback payload/ACK、时延与时钟、coherence/freshness 判据、state initialization/update/reset、stale/drop/fallback（固定回 B1）及 structural action signaling；
+- probe/previous-frame 所增加的 symbols、control bits、latency、duty-cycle/throughput cost，以及 paired-realization 的合法单位；
+- 最强廉价 comparator 仍是 dev-frozen `(modulation, TS length, receiver-power bin) -> single structural lag/B_L` lookup；该协议不得被包装成 C1 或新方法。
+
+允许 executor 比较 `previous-frame` 与 `action-independent common probe` 两种实现，但只能冻结一个最小、因果完整的 primary protocol；若 coherence/latency 或 measurement invariance 无法给出可证伪合同，则 `NOT_CLOSED`。
+
+### Probe 结果与继续规则
+
+- `REOPEN_INPUTS_READY`：SC1=`PASS` 且 AB1=`PASS`，两条证据链均经独立 verifier 接收。下一动作才是重冻结 semantic-smoke 合同；不得凭 ready 状态声称 Q1 Go/Kill/Resolved。
+- `REOPEN_INPUTS_NOT_CLOSED`：任一输入为 `NOT_CLOSED`、`INVALID` 或只有不可执行建议。立即停止本 Probe，恢复专题 dormant并保持 D011 terminal 5；不得开 performance 或 repair chain。
+
+不存在“部分闭合所以先跑 diagnostic”的第三种继续路径。恢复图像、拿到定性趋势、完成协议纸面设计或 oracle headroom均不能单独解锁性能执行。
+
+### 排除的替代方案
+
+- 不用公开证据缺失去猜测 1550 nm、网格、TIA/NEB 或 ADC 标度；
+- 不用 previous-frame truth power、当前 FSTS power proxy 或离线 condition label 冒充 runtime B2；
+- 不把 action-before feedback/probe 自身包装成 controller 或贡献；
+- 不联系作者、发邮件、提交表单或对外发布材料；这需要新的外部沟通授权；
+- 不修改 `common/`、`params.py`、旧 campaign、正式论文或四个 `p05_run*.log`，不 push。
+
+### 影响范围
+
+允许新增 S005、T020–T022、指定 worker logs/只读检索记录、必要的一手 source artifact与 protocol contract，并同步 topic/literature/master/registry/D/V/H。若确需下载论文/补充材料，必须走项目既有 `tools/download`/`tools/convert` 路径；不在根目录自建资料目录。
+
+### 来源
+
+S005；用户 2026-08-09 明确授权。
+
+## D013: 重开输入未闭合——保持 Step 4a terminal 5
+
+> status: active
+> date: 2026-08-09
+> 取代：D012 的 IN_PROGRESS recovery state；保留 D012 scope-change 记录
+> 被取代：无
+> 依据：T020-T022 worker logs + V008 + D012 reducer + `step4a-reopen-input-receipt.json`
+> 触发原话：无（D012 已登记用户授权；本条为证据 reducer）
+
+### 决策
+
+本次 blocker-recovery Probe 的 verified terminal 为 `REOPEN_INPUTS_NOT_CLOSED`。SC1=`SC1_NOT_CLOSED_PUBLIC_SOURCE_EXHAUSTED`，AB1=`AB1_NOT_CLOSED`；fresh-context V008 独立复核 `PASS, P0/P1/P2=0/0/0`。二者均未 PASS，因此 D011/V007 的唯一 scientific terminal `STEP4A_INCONCLUSIVE_INVALID_OR_BLOCKED_TESTBED` 保持不变。Q1=`INCONCLUSIVE`、`METHOD_SIGNAL=NONE`、贡献层级=`NONE`、object/package failure=`0/0`；B0/B1/B2/O1/C1、paired delta/CI 继续全部 `N/A (NOT_RUN)`。
+
+### 证据与机制
+
+#### SC1
+
+15 分钟有界恢复覆盖 publisher/DOI metadata、author identity/institutional、code/data repository 三类 surface。没有 exact supplement/code/dataset/source backend；SC1 必需字段 1–7 的 `EXACT_CLOSED=0/7`。现有一手材料只重复 10 GBaud、10 km、两档 `C_n^2`、0.2 m aperture、mean coupling、LO 15 dBm 与 responsivity 0.8 A/W，仍缺 wavelength/beam、phase-screen screens/grid/propagator、SMF overlap/joint lifecycle、received-power reference plane、BPD/TIA/NEB/filter/ADC 与唯一 `P_rx[dBm] -> E|w[k]|^2`。
+
+检索身份同时纠正：exact paper 的 IEEE document/arnumber 是 `10097873`，`10101698` 是 issue/media-path id，article sequence number=`7302313`。该修正不恢复 executable config。
+
+#### AB1
+
+Wang 的 structural `(B_N,B_L)` 在发射前进入 FSTS，receiver chain 没有 RSSI/power estimator、previous-frame state、common probe、feedback、ACK、action signaling 或 reconfiguration lifecycle。previous-frame 与 common-probe 都只能形成 causal skeleton：前者缺 action-invariant measurement region、frame cadence/time-series continuity和 feedback path；后者缺 probe waveform/length/MDE，并同样缺 feedback/coherence/cost。
+
+一般 atmospheric coherence `>1 ms` 只支持单短帧内慢变，不能自动证明 feedback freshness。相邻 JLT 2023 明确表明 earlier-frame receiver CSI受 processing+round-trip 限制：ground-to-ground强湍流约 10 km 是其边界，LEO例中 Greenwood time约 4 ms且 receiver-directed adaptive loading 不可用。故不能用零延迟或 generic slow-varying 假设补闭环。
+
+T021 parent executor 超过有界止损后被中断；其 fresh child 已完成 Wang 455 行全文精读。主控基于该 delegated read 与本地一手 line checks 合成 protocol worker log，并强制交给 T022 fresh-context verifier 独立审查；这不是把主控自审当 verification。
+
+### Reducer 与停止
+
+D012 明确不存在“部分闭合先跑 diagnostic”路径。SC1 与 AB1 均未闭合，所以当前只能：
+
+- 不恢复或重构 D010/T014；
+- 不运行 performance grid、diagnostic structural run、bounded MVE 或 C1；
+- 不评价 ranking crossover、B2 absorption、residual observability/actionability；
+- 不发 Q1 Kill/Resolved/Go，不增加 failure count；
+- V008 已接收本 recovery terminal；专题恢复 dormant。
+
+### 下一合法动作
+
+只有外部新增输入才可再次 scope-change：作者/source backend 提供同一 executable phase-screen/SMF 与 receiver-noise configuration，且同时存在可执行 feedback/time-series testbed，能冻结 action-independent observation、frame cadence、latency/freshness、overhead与 B1 fallback。若用户希望主控联系作者，须另行显式授权外部沟通；当前不发送邮件/表单。
+
+### 影响范围
+
+同步 S005、topic、literature/master、reopen receipt、registry、V008 与 H007。保持原 terminal receipt不可改写，四个 protected logs不修改/不暂存，不 push。
+
+### 来源
+
+S005；T020-T022；V008。

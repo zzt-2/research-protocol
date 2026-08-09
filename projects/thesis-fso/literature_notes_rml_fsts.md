@@ -2,7 +2,7 @@
 
 > 独立 owner：`.sessions/2026-08-08-rml-fsts-groundwork/`
 > 研究对象：Wang 2023 FSTS fixed-lag/`BL` condition-dependence
-> 当前记录 Step 1–3.5 已完成；D008/V005 将 Q1 修订为带全文限制的 provisional survivor。Step 4a 已在 validity/calibration 起飞门前终止为 `STEP4A_INCONCLUSIVE_INVALID_OR_BLOCKED_TESTBED`（D011/V007）；没有 Go/Kill/Resolved、METHOD_SIGNAL 或方法实现裁决。
+> 当前记录 Step 1–3.5 已完成；D008/V005 将 Q1 修订为带全文限制的 provisional survivor。Step 4a 已在 validity/calibration 起飞门前终止为 `STEP4A_INCONCLUSIVE_INVALID_OR_BLOCKED_TESTBED`（D011/V007）。D012 的受限重开输入恢复由 D013/V008 确认为 `REOPEN_INPUTS_NOT_CLOSED`；没有 Go/Kill/Resolved、METHOD_SIGNAL 或方法实现裁决。
 
 ## GW Progress
 
@@ -12,7 +12,7 @@
 | 2 acquire | ✅ USER_CONFIRMED | 2026-08-09 | `a52bb5d6` | 5 篇合格 CORE + R002 + coverage/receipt + D003 | 允许 Step 3 |
 | 3 read | ✅ completed | 2026-08-09 | `80c337aa` | 5/5 fresh full-text read + R003 + D005/V003 | D006 已授权 mandatory Step 3.5 |
 | 3.5 supplement | ✅ COMPLETE / PROVISIONAL SURVIVOR | 2026-08-09 | D008/V005 | R004 + search/citation receipts + shared 130981 fulltext；三轮上限 | 带全文限制开放 Step 4a 讨论入口 |
-| 4a feasibility | 🛑 INCONCLUSIVE / VERIFIED | 2026-08-09 | — | D009–D011/S004/V006–V007/T015–T019/H006 | terminal=`STEP4A_INCONCLUSIVE_INVALID_OR_BLOCKED_TESTBED`；performance grid/MVE 未运行；专题 dormant、下游禁止 |
+| 4a feasibility | 🛑 INCONCLUSIVE / VERIFIED; REOPEN INPUTS NOT CLOSED / VERIFIED | 2026-08-09 | — | D009–D013/S004–S005/V006–V008/T015–T022/H006–H007 | terminal 5保持；SC1/AB1均未闭合；performance grid/MVE未运行、专题dormant、下游禁止 |
 
 ## Step 1 候选表
 
@@ -168,6 +168,13 @@ Step 3.5 当前 terminal=`STEP3_5_COMPLETE_Q1_PROVISIONAL_SURVIVOR_WITH_FULLTEXT
 - execution facts：semantic-smoke performance grid=`NOT_RUN`；bounded MVE=`NOT_RUN`；scientific raw rows、paired delta/CI 均不存在；B0/B1/B2/O1/C1 performance 数字=`N/A (NOT_RUN)`。
 - 科学语义：Q1=`INCONCLUSIVE`、`METHOD_SIGNAL=NONE`、贡献层级=`NONE`；不发 Kill/Resolved/Go，不增加 object/package failure 计数（仍 `0/0`）。任何 structural diagnostic 只能 `DIAGNOSTIC_ONLY / TERMINAL_DISABLED`，本轮未运行。
 - 下游：专题 dormant；禁止 performance grid、MVE、Contract、Execute 与论文写作。科学重开只可在取得 authors/source receiver+channel config、显式定义 action-before protocol 后，经 scope-change 进行。
+
+### D012 重开输入 Probe（D013/V008 verified）
+
+- SC1：publisher/DOI、author/institution、code/data repository 三类公开 surface 止损；无 exact supplement/code/data/backend，必需字段 1–7 `EXACT_CLOSED=0/7`。IEEE exact document=`10097873`；`10101698` 是 issue/media id，不是 paper arnumber。
+- AB1：previous-frame/common-probe 均只能形成因果草案；缺 action-invariant power estimator/reference、frame time-series、feedback/ACK/action signaling、freshness/latency与可计算 overhead。generic atmospheric coherence `>1 ms` 不能替代 caller path；JLT 2023 给出 feedback round-trip/Greenwood 直接边界。
+- reducer：`REOPEN_INPUTS_NOT_CLOSED`；V008=`PASS, P0/P1/P2=0/0/0` 接收 recovery terminal。D011 terminal、Q1/信号/贡献/failure count 与全部 NOT_RUN 数字不变；未评价 ranking crossover、conditioned lookup absorption、residual或C1。
+- 下一外部输入：同一 executable source chain + 可执行 feedback/time-series testbed。联系作者需单独授权；当前不发送外部消息。
 
 ## 五篇标准精读条目
 

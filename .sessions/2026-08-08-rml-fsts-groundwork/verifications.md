@@ -179,3 +179,29 @@ FAIL 是合同验证失败，不是 Q1 scientific Kill/Resolved，也不计 sema
 ### 结论
 
 接收 D011：Groundwork Step 4a terminal=`STEP4A_INCONCLUSIVE_INVALID_OR_BLOCKED_TESTBED`；Q1=`INCONCLUSIVE`、`METHOD_SIGNAL=NONE`、贡献层级=`NONE`。这不是 Kill/Resolved/Go，也不构成性能结果。专题可转 dormant；只有取得 authors/source receiver+channel config并显式定义 action-before protocol、经 scope change 后，才可重开 Step 4a。Contract、Execute 与论文写作继续禁止。
+
+## V008: Step 4a 重开输入 fresh-context 独立终验
+
+> status: PASS
+> date: 2026-08-09
+> 关联：S005 / D012-D013 / T020-T022
+> verifier: fresh-context `/root/rml_reopen_input_verifier`
+> 证据报告：`projects/thesis-fso/worker-logs/step-4a-rml-fsts-reopen-input-verifier.md`
+
+### 验证范围
+
+独立重放四门：SC1 的三类 public-source surface、exact paper identity/hash 与字段 1–7；AB1 的 Wang structural pre-TX action、previous-frame/common-probe caller path及 Wang/Valjus/WiSEE/JLT 一手边界；D012 fail-closed reducer、D011 scientific terminal唯一性与 strongest cheap comparator；owner/receipt/JSON/YAML/path/hash/git/protected-log 机械完整性。未联网扩检索，未运行 estimator、performance grid、diagnostic structural run、C1 或 MVE，未修改 verifier log 以外文件，未 commit/push。
+
+### 结果
+
+`PASS`，P0/P1/P2=`0/0/0`，G1–G4 全部 PASS。verifier log SHA-256=`50bf4d208d9018874190e8b289616db57531a5802f47ea71112ec3203b9c3038`。
+
+- SC1：bounded search 覆盖 publisher/DOI、author/institutional、code/data repository，未扩大为全网不存在声称；IEEE document=`10097873`、issue id=`10101698`、article sequence=`7302313`。exact config fields 1–7 为 `0/7`，接收 `SC1_NOT_CLOSED_PUBLIC_SOURCE_EXHAUSTED`。
+- AB1：Wang `(B_N,B_L)` 在 transmitter FSTS construction 前冻结，正文无 previous-frame/common-probe/RSSI/feedback/ACK/action-signaling/lifecycle caller。两方案在 action-invariant observation、time-series、feedback/freshness、state/fallback、overhead或paired unit上均未闭合；接收 `AB1_NOT_CLOSED`，primary=`NONE`、applicable tests PASS=`0`。
+- reducer：SC1/AB1 任一未闭合即 `REOPEN_INPUTS_NOT_CLOSED`，不存在 partial diagnostic出口。D013只关闭 recovery Probe；D011/V007 scientific terminal保持唯一有效。
+- scientific boundary：Q1=`INCONCLUSIVE`、`METHOD_SIGNAL=NONE`、贡献=`NONE`、failure=`0/0`；B0/B1/B2/O1/C1与paired delta/CI均 `N/A (NOT_RUN)`，scientific raw rows=`0`。ranking crossover与conditioned-lookup absorption均 `NOT_EVALUATED`。
+- integrity：两份 recovery log hash 2/2、JSON/YAML/path、原 terminal receipt、protected logs 4/4、禁区 diff与空暂存区均 PASS。T021 master-synthesis provenance已显式降级并由本轮 fresh fulltext/primary-line read独立复核。
+
+### 结论
+
+接收 D013 recovery terminal=`REOPEN_INPUTS_NOT_CLOSED`。本 PASS 只确认 recovery reducer与证据边界，不是 scientific/performance/novelty PASS。专题恢复 dormant；下一次科学重开必须同时取得 executable phase-screen/SMF/receiver-noise source backend与 executable feedback/time-series testbed。联系作者或提交外部请求须另获用户授权；在此之前继续禁止 grid、diagnostic、MVE、C1与下游。

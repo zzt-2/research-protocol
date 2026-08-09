@@ -1,0 +1,103 @@
+{
+  "schema_version": "rml-fsts-step4a.reopen-input-receipt.v1",
+  "date": "2026-08-09",
+  "status": "VERIFIED",
+  "recovery_terminal": "REOPEN_INPUTS_NOT_CLOSED",
+  "recovery_authority": "D013_V008",
+  "scientific_terminal_unchanged": "STEP4A_INCONCLUSIVE_INVALID_OR_BLOCKED_TESTBED",
+  "scientific_terminal_authority": "D011_V007",
+  "source_config": {
+    "verdict": "SC1_NOT_CLOSED_PUBLIC_SOURCE_EXHAUSTED",
+    "independent_surfaces": [
+      "PUBLISHER_DOI_METADATA",
+      "AUTHOR_IDENTITY_INSTITUTIONAL",
+      "CODE_DATA_REPOSITORY"
+    ],
+    "required_fields_exact_closed": 0,
+    "required_fields_total": 7,
+    "exact_executable_artifact_found": false,
+    "exact_ieee_document_id": "10097873",
+    "corrected_non_document_id": "10101698",
+    "article_sequence_number": "7302313"
+  },
+  "action_before_protocol": {
+    "verdict": "AB1_NOT_CLOSED",
+    "previous_frame": "CAUSAL_SKELETON_ONLY_NOT_EXECUTABLE",
+    "common_probe": "CAUSAL_SKELETON_ONLY_NOT_EXECUTABLE",
+    "frozen_primary": "NONE",
+    "executable_semantic_tests_passed": 0,
+    "missing": [
+      "ACTION_INVARIANT_RECEIVER_POWER_ESTIMATOR_AND_REFERENCE",
+      "FRAME_TIME_SERIES_CHANNEL_LIFECYCLE",
+      "FEEDBACK_ACK_ACTION_SIGNALING_CALLER_PATH",
+      "NUMERIC_LATENCY_COHERENCE_FRESHNESS_GATE",
+      "COMPUTABLE_OVERHEAD_AND_B1_FALLBACK_TRACE"
+    ]
+  },
+  "execution": {
+    "semantic_smoke_performance_grid": "NOT_RUN",
+    "diagnostic_structural_run": "NOT_RUN_TERMINAL_DISABLED",
+    "bounded_mve": "NOT_RUN",
+    "scientific_raw_rows": 0,
+    "paired_delta_ci": "N/A (NOT_RUN)"
+  },
+  "performance_numerics": {
+    "B0": "N/A (NOT_RUN)",
+    "B1": "N/A (NOT_RUN)",
+    "B2": "N/A (NOT_RUN)",
+    "O1": "N/A (NOT_RUN)",
+    "C1": "N/A (NOT_RUN)"
+  },
+  "scientific_disposition": {
+    "q1": "INCONCLUSIVE",
+    "method_signal": "NONE",
+    "contribution_level": "NONE",
+    "ranking_crossover": "NOT_EVALUATED",
+    "conditioned_lookup_absorption": "NOT_EVALUATED",
+    "object_failure_count": 0,
+    "method_bearing_package_failure_count": 0
+  },
+  "evidence_logs": [
+    {
+      "path": "projects/thesis-fso/worker-logs/step-4a-rml-fsts-public-source-config-recovery.md",
+      "sha256": "44b0d098b3ae0debf02dd85c34ca612008fbba1f60aff02d10652c554451ed87",
+      "provenance": "FRESH_EXECUTOR_T020"
+    },
+    {
+      "path": "projects/thesis-fso/worker-logs/step-4a-rml-fsts-action-before-protocol.md",
+      "sha256": "57c07b80cde22c2f66b02235a63cfb8e91fc130ee0514b02da18aaa4ff80196d",
+      "provenance": "MASTER_SYNTHESIS_FROM_DELEGATED_FULLTEXT_READ_PLUS_PRIMARY_LINE_CHECKS_REQUIRES_V008"
+    }
+  ],
+  "protected_log_sha256": {
+    "projects/simulation/explore/cma-fade-divergence/p05_run.log": "7843b048a2a79755c95542a438a5344f8e89e791113f48913926c419fc2a4f11",
+    "projects/simulation/explore/cma-fade-divergence/p05_run2.log": "735e4650093d297e01a0e6dfe28f0431c149a2931fcbb7c08eecfa28f0aac38b",
+    "projects/simulation/explore/cma-fade-divergence/p05_run3.log": "c76887c6950aaac2b4c0dced7689517749322c44da868880915786c173b1344d",
+    "projects/simulation/explore/cma-fade-divergence/p05_run4.log": "95a1d184740a797b6d55d7f817008c898cb3754987ab6e1c1d00376f74a621de"
+  },
+  "next_legal_action": [
+    "OBTAIN_AUTHOR_OR_SOURCE_BACKEND_EXECUTABLE_PHASE_SCREEN_SMF_AND_RECEIVER_NOISE_CONFIGURATION",
+    "OBTAIN_EXECUTABLE_FEEDBACK_TIME_SERIES_TESTBED_WITH_ACTION_INVARIANT_OBSERVATION_LATENCY_FRESHNESS_OVERHEAD_AND_B1_FALLBACK",
+    "REQUEST_EXPLICIT_USER_AUTHORIZATION_BEFORE_CONTACTING_AUTHORS_OR_SUBMITTING_EXTERNAL_REQUESTS"
+  ],
+  "downstream_forbidden": [
+    "PERFORMANCE_GRID",
+    "DIAGNOSTIC_STRUCTURAL_RUN",
+    "BOUNDED_MVE",
+    "CONTRACT",
+    "EXECUTE",
+    "PAPER_WRITING"
+  ],
+  "verification": {
+    "id": "V008",
+    "status": "PASS",
+    "log_path": "projects/thesis-fso/worker-logs/step-4a-rml-fsts-reopen-input-verifier.md",
+    "log_sha256": "50bf4d208d9018874190e8b289616db57531a5802f47ea71112ec3203b9c3038",
+    "findings": {
+      "p0": 0,
+      "p1": 0,
+      "p2": 0,
+      "gates_passed": ["G1_SC1", "G2_AB1", "G3_REDUCER", "G4_OWNER_ARTIFACT"]
+    }
+  }
+}
