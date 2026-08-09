@@ -1,6 +1,6 @@
 # Topic Index: RML-FSTS Groundwork
 
-> 状态: active | 创建: 2026-08-08 | 最后更新: 2026-08-09（Step 3 completed，边界停止）
+> 状态: active | 创建: 2026-08-08 | 最后更新: 2026-08-09（D005/V003：Step 3 接收语义纠偏完成）
 
 ## 专题信息
 
@@ -47,6 +47,7 @@
 - **H001**：只交接覆盖面状态与用户确认动作。
 - **S002 / D003 / T001**：用户确认覆盖面后完成 scope change；Step 3 精读当前 5 篇 CORE 的自包含任务已派发就绪，继续禁止 Step 3.5+。
 - **R003 / D004 / V002 / H002**：5/5全文与结构化提取完成；canonical Q1 四判据4/4；Step 3=`✅ completed`，独立验证 PASS 后在边界停止。
+- **D005 / V003 / H003**：主控接收时修正 Q1 的 A 逻辑方向与 Wang venue 过度措辞；Step 3 completed 保留，Step 3.5 继续未授权。
 
 ## 未决项
 
@@ -54,4 +55,4 @@
 
 ## 当前位置
 
-Groundwork Step 3=`✅ completed`；Step 3.5=`⬜ NOT_STARTED`。本轮未进入 Step 3.5/4a，未运行 smoke、实现或仿真，object/package failure=`0/0`。下一合法动作仅为新对话执行 mandatory Step 3.5。
+Groundwork Step 3=`✅ completed`（当前 authority=D005/V003/H003）；Step 3.5=`⬜ NOT_STARTED`。本轮未进入 Step 3.5/4a，未运行 smoke、实现或仿真，object/package failure=`0/0`。下一合法动作仅为用户确认后在新对话执行 mandatory Step 3.5。

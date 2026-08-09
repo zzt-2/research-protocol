@@ -38,7 +38,7 @@ current_stage: GROUNDWORK
 > **2026-08-09 当前入口：Groundwork Step 3 `✅ completed`，Step 3.5 `⬜ NOT_STARTED`**。Ch4 reference-method extension D004/T003
 > 选择 Wang 2023 FSTS fixed-lag/`BL` condition-dependence 作为唯一独立 Groundwork research object。
 > Step 1 已用满 7/7 query：121 unique、4 actual sources、正式发表 58.68%、12 篇 shortlist，质量门 PASS。
-> Step 2 已获得 5 篇合格 CORE 并覆盖 C1–C4；T001 已完成5/5全文精读，canonical target Q1四判据4/4。
+> Step 2 已获得 5 篇合格 CORE 并覆盖 C1–C4；T001 已完成5/5全文精读，canonical target Q1四判据4/4。D005/V003 已修正 A 的逻辑方向与近期 baseline 身份措辞。
 > 本执行在 Step 3 边界停止；Step 3.5/4a、预注册 smoke、实现、仿真、MVE、Contract 或 Execute未执行；object/package计数仍为0/0。
 
 - **RML-FSTS fixed-lag condition-dependence Groundwork（独立专题，2026-08-08）—— STEP 3 COMPLETED / STOPPED AT BOUNDARY**：
@@ -49,8 +49,8 @@ current_stage: GROUNDWORK
   |---|---|---|---|
   | 1 search | ✅ PASS | R001 + step1 receipt + 7 query JSON | 允许 Step 2 |
   | 2 acquire | ✅ USER_CONFIRMED | 5 篇合格 CORE + R002 + coverage/receipt + D003 | 允许 Step 3 |
-  | 3 read | ✅ completed | 5篇 read-notes/read-log + R003/D004/V002/H002 + receipt；Q1=4/4 | 新对话方可执行 mandatory Step 3.5 |
-  | 3.5 supplement | ⬜ NOT_STARTED | — | Step 3 未完成前禁止 |
+  | 3 read | ✅ completed | 5篇 read-notes/read-log + R003/D005/V003/H003 + receipt；Q1=4/4 | 用户确认后新对话方可执行 mandatory Step 3.5 |
+  | 3.5 supplement | ⬜ NOT_STARTED | — | 用户未确认 scope change 前禁止；确认后可启动 |
   | 4a feasibility | ⬜ NOT_STARTED | — | Step 3/3.5 未完成前禁止 |
 
 - **低仰角强湍流 coded-burst reliability Groundwork（独立专题，2026-08-07）—— CLOSED / STEP 1 EVIDENCE INSUFFICIENT**：

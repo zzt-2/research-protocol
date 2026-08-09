@@ -54,3 +54,24 @@ PASS。允许按 T003 一次性提交 Step 1–2 与治理同步；不授权 Ste
 ### 结论
 
 PASS。允许按 T001 一次性提交 Groundwork Step 3 产出与治理同步；Step 3.5 保持 NOT_STARTED，不授权 Step 3.5/4a、smoke、实现、仿真或 MVE，不改变 research-object/method-package failure=`0/0`，不得 push。
+
+## V003: Step 3 主控接收语义纠偏复核
+
+> date: 2026-08-09
+> 关联：D005 / R003 / H003
+> verifier: fresh-context `/root/q1_semantic_critic` + `/root/step3_integrity_audit`
+
+### 验证项
+
+- [x] 完整性：5/5 receipt/path/SHA/bytes、read-notes/read-log/owner 与 22 文件提交范围 → PASS。
+- [x] Q1 A 方向：旧写法存在“稳定/足够=问题不存在”的 P1 歧义；改为 M 隐含依赖同一 lag 近似最优、该假设在 C 下被违反时 M 不足 → PASS。
+- [x] 判据 3：Wang 2023 能承担 exact recent M；Enhanced 2024 是 2024 Optics Express task-matched comparator；项目既有 authority 明列 Optics Express 为光通信顶刊/允许保留的顶会顶刊，因此由 L02 闭合 2019+ 顶刊门，不依赖 Wang venue 等级 → PASS。
+- [x] 阶段边界：A 仍 INFERENCE，crossover/failure/headroom 仍 UNKNOWN；Step 3.5/4a/实验均未启动 → PASS。
+
+### 证据
+
+`stages/glossary.md:18`；`projects/thesis-fso/master-state.md:190`；`.sessions/2026-06-20-problem-driven-redirection/decisions.md:983`；`.sessions/2026-06-04-advisor-review-revision/topic-index.md:94`；L01 `content.md:208,299`；L02 `content.md:404` 与 owner 的 L02 identity（Optics Express 32(15), 2024）；L04 `content.md:170`；critic 回执 `PARTIAL, P0/P1/P2=0/2/0`；integrity auditor 在 venue authority 闭合后的最终回执为 `PASS, P0/P1/P2=0/0/0`。修复后确定性 grep 显示 Q1 在 R003/owner/H003 同义，且未把 Wang venue 冒充顶刊。
+
+### 结论
+
+PASS。V002 的完整性/合同一致性结论保留；其 Q1 科学语义验收由 V003 修正。Step 3 completed 可维持，进入 Step 3.5 前置语义债已关闭。

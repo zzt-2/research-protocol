@@ -43,9 +43,9 @@ Wang 2023 是 target Q 的近期 M；Enhanced 2024 是 task-matched comparator�
 
 | Q# | M | C | A | 产出形态 | 判据1 | 判据2 | 判据3 | 判据4 | 结果 | 证据状态 |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Q1 | Wang 2023 fixed-`B_L` FSTS | 固定 modulation/TS/power bin 内不同 receiver-visible condition | single fixed lag 的 relative ranking 随 condition 保持稳定 | condition-to-lag design rule / reusable curve family | ✅ | ✅ | ✅ 2023顶刊 | ✅ MSE/BER/range/complexity | **4/4** | FACT+INFERENCE+UNKNOWN，A未由MVE证明也不要求本轮证明 |
+| Q1 | Wang 2023 fixed-`B_L` FSTS | 固定 modulation/TS/power bin 内不同 receiver-visible condition | M 隐含假设同一 `B_L` 仍近似最优；若 turbulence/branch/phase reliability 改变最优 lag 或 lag ranking，fixed 设计将不足 | condition-to-lag design rule / reusable curve family | ✅ | ✅ | ✅ Wang 2023 exact recent M + Enhanced 2024 Optics Express task-matched 顶刊 comparator | ✅ MSE/BER/range/complexity | **4/4** | FACT+INFERENCE+UNKNOWN，A未由MVE证明也不要求本轮证明；Optics Express venue 口径见项目 D015/导师审查专题 authority |
 
-Q1 通过只说明问题候选形成；novelty closure 属 Step 3.5，headroom/cheap comparator/oracle/MVE 属 Step 4a。
+Q1 通过只说明问题候选形成；A 是 M 所依赖、可能在 C 下被违反的假设，不是“问题不存在”的结论。novelty closure 属 Step 3.5，headroom/cheap comparator/oracle/MVE 属 Step 4a。
 
 ## Step 3 状态与理由
 

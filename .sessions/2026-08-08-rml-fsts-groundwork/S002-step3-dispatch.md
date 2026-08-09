@@ -2,6 +2,7 @@
 
 > 2026-08-09 | Groundwork Step 3 | DISPATCH_READY
 > 2026-08-09 续接 | Groundwork Step 3 | IN_PROGRESS
+> 2026-08-09 续接 | 主控接收纠偏 | COMPLETE
 
 ## 目标
 
@@ -37,3 +38,5 @@
 ## 后续
 
 T001 已执行：5/5 source preflight 与 fresh-context 全文读取完成；1 条 target-relevant Q# 通过 canonical 四判据；Step 3=`✅ completed`。产出见 R003/D004/V002/H002、literature owner、五篇 read-notes/read-log 与 Step 3 receipt。本轮在 Step 3 边界停止；下一合法动作仅为新对话执行 mandatory Step 3.5。
+
+主控接收时由独立 scientific critic 发现 Q1 的 A 旧写法存在逻辑歧义，并由 integrity auditor 确认其余 5/5 证据链完整。D005/V003 已用最小语义修复关闭：A 明确为 M 所依赖、可能在 C 下被违反的假设；Wang 降为 exact recent M，Enhanced 作为 recent task-matched comparator。Step 3 completed 保留，Step 3.5 仍未授权。

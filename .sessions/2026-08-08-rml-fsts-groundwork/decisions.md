@@ -127,3 +127,34 @@ Groundwork Step 3 标为 `✅ completed`：五篇冻结 CORE 全文完成，cano
 ### 来源
 
 S002 / R003 / V002 / T001。
+
+## D005: 修正 Q1 的 A 逻辑方向与近期 baseline 身份措辞
+
+> status: active
+> date: 2026-08-09
+> 取代：无（amends D004 的 Q1 A 与判据 3 措辞；不取代 Step 3 completed）
+> 被取代：无
+> 依据：critic 审查: `/root/q1_semantic_critic` + 官方定义: `stages/glossary.md` 研究问题定义 + 全文证据: L01/L02/L04 cited lines
+> 触发原话: 无（技术审查）
+
+### 决策
+
+保留 D004 的 Step 3=`✅ completed` 与 Q1 四判据 4/4，但把 Q1 的 A 明确为 **M 所依赖、可能在 C 下被违反的近似最优假设**。判据 3 分账为：Wang 2023 承担 exact recent M；Enhanced 2024（Optics Express）承担 2019+ task-matched 顶刊 comparator。项目既有 venue authority 已把 Optics Express 列为允许保留的光通信顶刊，因此不依赖 Wang venue 等级也能闭合项目参数。
+
+### 理由
+
+旧写法“ranking 保持稳定，因此 conditioned single-lag 足够”按字面是在说问题不存在，未显式连回“fixed-`B_L` 因该假设被违反而不足”。一手证据支持 `B_L` 的精度—范围折中及其 modulation/power/TS-length 依赖，但 target crossover、fixed 设计实际失效和 headroom 仍是 INFERENCE/UNKNOWN。该缺陷是任务示例与执行表述的语义歧义，不需要重读全文或运行实验。
+
+### 排除的替代方案
+
+- 不把 Step 3 退回 Step 2：五篇全文、结构化提取与 Q1 实质研究对象均保留。
+- 不提前宣布 target defect、cheap comparator 失败、novelty 或 Go。
+- 不因 Wang venue 标签证据不足而否定其作为 2023 exact M 的近期身份。
+
+### 影响范围
+
+修正 R003、literature owner、current view 与 handoff；V003 取代 V002 的 Q1 科学语义验收部分。判据 3 的项目级 venue 依据为 `.sessions/2026-06-20-problem-driven-redirection/decisions.md:983` 与 `.sessions/2026-06-04-advisor-review-revision/topic-index.md:94`。Step 3.5 仍未授权，object/package failure 保持 `0/0`。
+
+### 来源
+
+主控接收 T001 后的独立 scientific critic；R003/D004/V002。

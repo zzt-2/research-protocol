@@ -128,9 +128,9 @@
 
 | Q# | M（具体近期方法） | C（条件） | A（失效假设） | 方法产出形态 | 判据1 | 判据2 | 判据3 | 判据4 | 四判据 | 来源文献 | 证据状态 |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| Q1 | Wang 2023 fixed-`B_L` FSTS two-stage FOE | 固定 modulation、TS length、receiver-power bin 内，不同 receiver-visible turbulence/branch/phase-reliability condition | single fixed lag 的 relative quality/ranking 在这些 condition 下保持稳定，因此 conditioned single-lag 足够 | condition-to-lag design rule / reusable performance-curve family（只定产出形态，不设计实现） | ✅ M-C-A 句子级、A 可证伪；不要求本轮已证伪 | ✅ 可复用 design rule/curve family | ✅ Wang 2023 为 2019+ 顶刊方法 | ✅ 以 CFO MSE、BER/sensitivity、range、complexity 对 Wang 与 1 个 conditioned lookup 比较 | **全过** | L01 `content.md:183,208,247-319`；L02 `content.md:404`；L04 C4 physics | FACT：fixed `B_L`/tradeoff/low-power degradation；INFERENCE：condition 可能改变 ranking；UNKNOWN：crossover/failure/headroom |
+| Q1 | Wang 2023 fixed-`B_L` FSTS two-stage FOE | 固定 modulation、TS length、receiver-power bin 内，不同 receiver-visible turbulence/branch/phase-reliability condition | M 隐含假设同一 `B_L` 仍近似最优；若 turbulence/branch/phase reliability 改变最优 lag 或 lag ranking，fixed 设计将不足 | condition-to-lag design rule / reusable performance-curve family（只定产出形态，不设计实现） | ✅ M-C-A 句子级、A 可证伪；不要求本轮已证伪 | ✅ 可复用 design rule/curve family | ✅ Wang 2023 exact recent M + Enhanced 2024 Optics Express task-matched 顶刊 comparator；由 L02 闭合项目 2019+ 顶刊门，不依赖 Wang venue 等级 | ✅ 以 CFO MSE、BER/sensitivity、range、complexity 对 Wang 与 1 个 conditioned lookup 比较 | **全过** | L01 `content.md:183,208,247-319`；L02 `content.md:404`；项目 venue authority：problem-driven D015、advisor-review topic-index:94；L04 C4 physics | FACT：fixed `B_L`/tradeoff/low-power degradation；INFERENCE：condition 可能违反同一 lag 近似最优假设；UNKNOWN：crossover/failure/headroom |
 
-Q1 通过只表示 Step 3 产生了可进入 mandatory Step 3.5 的问题候选；不表示 target A 已被证明、novelty 已闭合、cheap comparator 已失败或 Step 4a Go。
+Q1 通过只表示 Step 3 产生了可进入 mandatory Step 3.5 的问题候选；A 指 M 所依赖且可能在 C 下被违反的假设，不是“ranking 已稳定/cheap comparator 已足够”的结论。不表示 target A 已被证明、novelty 已闭合、cheap comparator 已失败或 Step 4a Go。
 
 ## 五篇标准精读条目
 
