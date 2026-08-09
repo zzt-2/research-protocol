@@ -4,8 +4,8 @@ direction: 星地激光通信（FSO）——子地带由地勘（S003 方法论 
 method_type: 待定（精读后根据问题方法产出形态确定，见 glossary 判据 2）
 domain: comms
 created: 2026-06-21
-updated: 2026-08-08
-current_step: RML_FSTS_STEP2_READY_FOR_USER_CONFIRMATION（2026-08-08；5 篇合格 CORE，C1–C4 齐全；覆盖报告后硬停止。）
+updated: 2026-08-09
+current_step: RML_FSTS_STEP3_DISPATCH_READY（2026-08-09；用户接受当前 5 篇合格 CORE，T001 仅授权 Step 3。）
 current_stage: GROUNDWORK
 ---
 
@@ -35,21 +35,21 @@ current_stage: GROUNDWORK
 
 ### 当前控制面桥接
 
-> **2026-08-08 当前入口：`RML_FSTS_STEP2_READY_FOR_USER_CONFIRMATION`**。Ch4 reference-method extension D004/T003
+> **2026-08-09 当前入口：`RML_FSTS_STEP3_DISPATCH_READY`**。Ch4 reference-method extension D004/T003
 > 选择 Wang 2023 FSTS fixed-lag/`BL` condition-dependence 作为唯一独立 Groundwork research object。
 > Step 1 已用满 7/7 query：121 unique、4 actual sources、正式发表 58.68%、12 篇 shortlist，质量门 PASS。
-> Step 2 已获得 5 篇合格 CORE 并覆盖 C1–C4，coverage report 已生成；当前硬停止等待用户覆盖面确认。
-> 禁止 Step 3/3.5/4a、预注册 smoke、实现、仿真、MVE、Contract 或 Execute；object/package 计数仍为 0/0。
+> Step 2 已获得 5 篇合格 CORE 并覆盖 C1–C4；用户已接受该覆盖面，D003/T001 仅授权 Step 3 全文精读。
+> 禁止 Step 3.5/4a、预注册 smoke、实现、仿真、MVE、Contract 或 Execute；object/package 计数仍为 0/0。
 
-- **RML-FSTS fixed-lag condition-dependence Groundwork（独立专题，2026-08-08）—— STEP 2 READY / USER CONFIRMATION REQUIRED**：
+- **RML-FSTS fixed-lag condition-dependence Groundwork（独立专题，2026-08-08）—— STEP 3 DISPATCH READY**：
   source-domain defect 与 target FSO crossover 严格分离；future action 只作背景；最强廉价替代保持为
   dev-frozen modulation/TS/receiver-power-conditioned single-lag lookup。
 
   | RML-FSTS GW Step | 状态 | 证据 | 下游门控 |
   |---|---|---|---|
   | 1 search | ✅ PASS | R001 + step1 receipt + 7 query JSON | 允许 Step 2 |
-  | 2 acquire | ✅ READY_FOR_USER_CONFIRMATION | 5 篇合格 CORE + R002 + coverage/receipt | 用户确认前禁止 Step 3 |
-  | 3 read | ⬜ NOT_STARTED | — | Step 2 用户确认前禁止 |
+  | 2 acquire | ✅ USER_CONFIRMED | 5 篇合格 CORE + R002 + coverage/receipt + D003 | 允许 Step 3 |
+  | 3 read | 🟦 DISPATCH_READY | S002 + D003 + T001 | 只执行当前 5 篇 CORE；完成/阻塞后停止 |
   | 3.5 supplement | ⬜ NOT_STARTED | — | Step 3 未完成前禁止 |
   | 4a feasibility | ⬜ NOT_STARTED | — | Step 3/3.5 未完成前禁止 |
 

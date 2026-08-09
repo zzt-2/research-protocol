@@ -62,3 +62,36 @@ Step 1 的 7/7 query、121 unique、4 actual sources、58.68% 正式发表比例
 ### 来源
 
 S001 / R001 / R002 / coverage report / T003。
+
+## D003: 用户确认覆盖面后仅授权 Groundwork Step 3
+
+> status: active
+> date: 2026-08-09
+> 取代：无（执行 D002 用户确认关口通过后的合法分支；不改写 Step 1/2 历史事实）
+> 被取代：无
+> 依据：调研: R002 + 决策: D002 + 用户确认: 2026-08-09 对当前 5 篇 CORE 覆盖面回复“行”（零信息应答，按 voice 规范不收录）
+> 触发原话: 无（用户以零信息“行”确认覆盖面与进入 Step 3，按 voice 规范不收录）
+
+### 决策
+
+将本专题当前范围从正式 Groundwork Step 1–2 扩大到 **仅执行 Step 3**：以当前 5 篇合格 CORE 为冻结输入完成全文精读；到 Step 3 完成或阻塞状态停止，不进入 Step 3.5。
+
+### 理由
+
+D002 要求的 Step 2 用户覆盖面确认已经满足。当前五篇全文达到 Step 3 的最低数量门并覆盖 C1–C4；用户接受其已披露的谱系偏斜与缺失竞品债务，因此下一合法动作是按 `stages/gw-read.md` 完成事实提取和 canonical 问题清单，而不是补跑 smoke 或提前做 novelty/可行性裁决。
+
+### 排除的替代方案
+
+- 不把用户确认解释为 target lag-ranking crossover、conditioned single-lag failure、novelty、Q#、Go 或方法已成立。
+- 不在同一任务进入 Step 3.5、Step 4a、smoke、future action 设计/实现、仿真、MVE、Contract 或 Execute。
+- 不用 `problem_truth/actionability/novelty/thesis_fit` 取代 glossary canonical 四判据。
+- 不从缺失论文的标题/摘要推导公式、失效机制或实现细节；Tang/WiSEE provenance 修复前不计 CORE。
+- 不在无 canonical Q# 全过时自造 Step 3 terminal；保持 `BLOCKED/IN_PROGRESS` 并返回框架规定的搜索恢复路径。
+
+### 影响范围
+
+新建 S002/T001；更新本专题 topic-index、registry、`projects/thesis-fso/master-state.md` 与 `literature_notes_rml_fsts.md` 到 `STEP3_DISPATCH_READY`。不修改论文正文、科学代码、仿真参数、旧专题或四个 `p05_run*.log`。
+
+### 来源
+
+S002；用户在 Step 2 覆盖面确认关口的回复；R002/D002/coverage report。

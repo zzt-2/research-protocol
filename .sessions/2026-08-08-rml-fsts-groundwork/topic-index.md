@@ -1,6 +1,6 @@
 # Topic Index: RML-FSTS Groundwork
 
-> 状态: active | 创建: 2026-08-08 | 最后更新: 2026-08-08（Step 2 READY，等待用户覆盖面确认）
+> 状态: active | 创建: 2026-08-08 | 最后更新: 2026-08-09（用户确认覆盖面，Step 3 派发就绪）
 
 ## 专题信息
 
@@ -12,11 +12,16 @@
 
 **原始目标**：验证 RML-FSTS fixed-lag condition-dependence 是否能经完整 Groundwork 成为 Ch4 方法入口。
 
-**当前范围**：仅执行正式 Groundwork Step 1 检索与初筛、Step 2 全文获取与覆盖面缺口报告；在用户覆盖面确认关口硬停止。
+**当前范围**：Step 1–2 已完成且用户已接受当前 5 篇合格 CORE 覆盖面；当前仅授权正式 Groundwork Step 3 全文精读，并在 Step 3 完成或阻塞状态硬停止。
 
-**明确不含**：Step 3、Step 3.5、Step 4a、Q# 裁决、预注册 smoke、future action 设计/实现、仿真、MVE、Contract、Execute、METHOD_SIGNAL、Go/Kill。
+**明确不含**：Step 3.5、Step 4a、预注册 smoke、future action 设计/实现、仿真、MVE、Contract、Execute、METHOD_SIGNAL、Go/Kill；也不补跑新的 Step 1/2 检索或全文获取（Yu 2023 canonical path/title preflight 的字节一致适配除外）。
 
-**范围变更记录**：无。
+**范围变更记录**：
+
+- **2026-08-09 D003**：用户接受当前 5 篇合格 CORE 后，当前范围由 Step 1–2 扩大到仅执行 Step 3。
+  - 原因：D002 的用户覆盖面确认关口已满足，具备进入 `gw-read` 的最低全文输入。
+  - 新范围：精读冻结的 5 篇 CORE，完成 Step 3 全部结构化产出后停止；禁止 Step 3.5+。
+  - 影响的未决项：覆盖面确认项关闭；新增 T001 执行与 Step 3 完成/阻塞判定。
 
 ## 已确认结论
 
@@ -30,7 +35,8 @@
 ### 其他结论
 
 1. RML-FSTS 当前只是 research object，不是 Q#、Go、METHOD_SIGNAL、方法或章节贡献。
-2. `receiver-visible reliability-weighted multi-lag circular fusion` 仅是未来可能形态背景，本专题 Step 1–2 不设计、不实现、不验证、不宣称新颖。
+2. `receiver-visible reliability-weighted multi-lag circular fusion` 仅是未来可能形态背景，本专题 Step 1–3 不设计、不实现、不验证、不宣称新颖。
+3. 用户已接受当前 5 篇 CORE 作为 Step 3 输入边界；该确认不改变 C1/C2 的 Wang 谱系偏斜、C3 仅作 prior-art ceiling、C4 仅作 transfer physics 的证据限制。
 
 ## 进展线索
 
@@ -39,11 +45,13 @@
 - **R002 / D002**：5 篇合格 CORE 覆盖 C1–C4；Step 2 terminal=`STEP2_READY_FOR_USER_CONFIRMATION`，不授权 Step 3。
 - **V001**：独立终验初审唯一 P1 经 canonical ledger 最小补证后闭合；12 项回归 PASS，P0/P1/P2=`0/0/0`。
 - **H001**：只交接覆盖面状态与用户确认动作。
+- **S002 / D003 / T001**：用户确认覆盖面后完成 scope change；Step 3 精读当前 5 篇 CORE 的自包含任务已派发就绪，继续禁止 Step 3.5+。
 
 ## 未决项
 
-- 用户是否确认 Step 2 覆盖面？
+- T001 能否完成 5/5 title/identity/canonical-path preflight 与全部精读字段？
+- 综合分析能否形成至少 1 条 glossary canonical 四判据全过的 Q#？
 
 ## 当前位置
 
-`STEP2_READY_FOR_USER_CONFIRMATION`。已在覆盖面报告后硬停止；Step 3/3.5/4a、smoke、实现和仿真均未启动，object/package failure=`0/0`。
+`STEP3_DISPATCH_READY`。Step 2 覆盖面已由用户确认；T001 只授权 Step 3，尚未开始精读。Step 3.5/4a、smoke、实现和仿真仍未授权，object/package failure=`0/0`。
