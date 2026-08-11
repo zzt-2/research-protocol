@@ -254,3 +254,44 @@
 - terminal: `GROUNDWORK_STEP4A_D0_ENGINEERING_HARD_TERMINAL_VERIFIED`
 - next_action: `NONE`
 - reopen_condition: explicit scope change plus new non-workload-reducing evidence closing at least `3.819450931739858d` of the frozen budget gap
+
+## CP014 — thirteen-day scope change; S1 science opened
+
+> 2026-08-11 | D025 | user-authorized scope change
+
+- evidence: user quote in voice.md / D024/V019 complete workload receipt
+- total_budget_hard_cap: `13.0d`; projected D0=`10.819450931739858d`; post-D0 reserve=`2.0d`; contingency=`0.180549068260142d`
+- formal_science_disposition: `S1_NATURAL_OCCURRENCE_AUTHORIZED_AND_STARTING`; S2–S4=`NOT_AUTHORIZED_BEFORE_PRIOR_PASS`
+- mission_method_delta: `NONE`
+- thesis_method_disposition: `NONE`
+- allowed: `D0_S1_NATURAL_OCCURRENCE / ONE_BOUNDED_S1_RUNTIME_REPAIR_IF_REQUIRED`
+- forbidden: `BUDGET_REAUDIT / HMM_OPTIMIZATION / PLATFORM_GENERALIZATION / READINESS_PREFLIGHT / WORKLOAD_REDUCTION / METRIC_CHANGE / DEV_AS_TEST / NEW_RESEARCH_OBJECT`
+- next_action: run frozen S1 immediately; record first real occurrence number and PASS/FAIL
+
+## CP015 — S1 verified PASS; S2 damage/headroom opened
+
+> 2026-08-11 | D026/V020 | S1 final verified
+
+- evidence: step-201–202 / final S1 raw+summary+receipt
+- S1: `262/480=0.5458333333333333`; event seeds=`17`; event cells=`12`; verifier=`PASS 0/0/0`
+- formal_science_disposition: `S1_NATURAL_OCCURRENCE_ESTABLISHED / S2_DAMAGE_HEADROOM_AUTHORIZED`
+- mission_method_delta: `NONE`
+- thesis_method_disposition: `NONE`
+- allowed: `D0_S2_B1_DAMAGE_O1_HEADROOM / ONE_BOUNDED_S2_RUNTIME_REPAIR_IF_REQUIRED`
+- forbidden: `B2_BEFORE_S2_PASS / S3 / S4 / C1 / FAIR_COMPARISON_RUN / WORKLOAD_OR_METRIC_CHANGE`
+- next_action: run frozen S2 B1 damage and O1 recoverable headroom; fail-stop on either gate
+
+## CP016 — S2 verified FAIL; coded decoder-feedback C1 science terminal
+
+> 2026-08-11 | D027/V021 | S2 final verified
+
+- evidence: step-203–206 / final S2 raw+summary+receipt
+- damage: point=`0.06944444444444449`; CI=`[0.017361111111111122,0.13055555555555556]`; positive=`3/3`; gate=`FAIL_POINT_LT_0.10`
+- recoverability: point=`0.04008151917073723`; CI=`[-0.11234968338626876,0.19036462197308052]`; positive=`3/3`; gate=`FAIL_POINT_AND_CI`
+- verifier: evidence=`PASS 0/0/0`; science=`FAIL`
+- formal_science_disposition: `S2_DAMAGE_OR_HEADROOM_FAILED`
+- mission_method_delta: `NONE`
+- thesis_method_disposition: `NONE`
+- B2/S3/S4/C1/FAIR_COMPARISON_RUN: `NOT_RUN / FORBIDDEN_BY_FAIL_STOP`
+- terminal: `GROUNDWORK_STEP4A_S2_SCIENCE_TERMINAL_VERIFIED`
+- next_action: `NONE`

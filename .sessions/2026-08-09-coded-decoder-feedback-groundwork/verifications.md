@@ -741,3 +741,74 @@ SLICES_SHA256=2795428ba4a45acf952a7254d66c82201ea7688980d90ced91ddc190312065f4
 PASS
 
 正式 I20 是完整、可复算的 `GREATER_THAN_7D_HARD_BLOCKER`，不是 INCOMPLETE。D024/CP013 可据此关闭专题；S1–S4 与 FAIR_COMPARISON_RUN 保持 NOT_RUN。
+
+---
+
+## V020: D0 S1 natural-occurrence 独立终验
+
+> date: 2026-08-11
+> 关联：S001 / D025–D026 / T129–T130 / step-201–202 / CP014–CP015
+
+### 验证项
+
+- [x] raw 480 行、480 unique keys，精确覆盖 seeds `8100..8119` × 12 owner cells × `{X,Y}`
+- [x] fresh typed parse + `statistics.reduce_s1`：events=`262`，rate=`0.5458333333333333`，event seeds=`17`，event cells=`12`
+- [x] gate 原样复算：`262≥12`、`17≥4`、`12≥2`
+- [x] raw/checkpoint byte-identical；owner/source/raw/summary/receipt SHA 全一致
+- [x] persistent-transition 数学与 evaluator-only truth boundary 通过源码审查
+- [x] focused final bytes fresh `6 passed / 3.68s`
+- [x] runtime 缺失口径以 null 明示，未拿 final invocation 时间冒充完整 wall time
+- [x] owner/common/S2–S4/C1/p05/staging 均无本任务越界变更
+
+### 证据
+
+`projects/thesis-fso/worker-logs/step-201-d0-s1-natural-occurrence.md`
+
+`projects/thesis-fso/worker-logs/step-202-d0-s1-independent-verification.md`
+
+`projects/simulation/explore/coded-decoder-feedback/artifacts/science/s1-natural-occurrence/`
+
+```text
+VERDICT=PASS
+P0/P1/P2=0/0/0
+S1=262/480=0.5458333333333333
+EVENT_SEEDS=17
+EVENT_CELLS=12
+FRESH_TESTS=6 passed in 3.68s
+```
+
+### 结论
+
+PASS
+
+`formal_science_disposition=S1_NATURAL_OCCURRENCE_ESTABLISHED`；只开放 S2 damage/headroom。`mission_method_delta=NONE`，`thesis_method_disposition=NONE`。
+
+---
+
+## V021: D0 S2 damage/headroom 独立终验
+
+> date: 2026-08-11
+> 关联：S001 / D026–D027 / T131–T134 / step-203–206 / CP015–CP016
+
+### 验证项
+
+- [x] raw=`1620/1620` unique，exact seeds8150–8159 × 3 cells × X/Y × 27 B1/O1-only rows；B2 rows=`0`
+- [x] checkpoint/raw exact multiset；typed reducer fresh复算 cell integer counts、60 off computations与macro points
+- [x] damage bootstrap fresh 10k：point=`0.06944444444444449`，CI=`[0.017361111111111122,0.13055555555555556]`，positive=`3/3`
+- [x] recoverability bootstrap fresh 10k：point=`0.04008151917073723`，CI=`[-0.11234968338626876,0.19036462197308052]`，positive=`3/3`
+- [x] affected-CW 为 16×1024 per-CW any-error，B04/B08/B12 totals=`12/8/4`，违规=`0`
+- [x] focused final bytes fresh `8 passed`
+- [x] owner/source/raw/summary hashes、truth boundary、B2 NOT_RUN、保护与 staging 均通过
+
+### 结论
+
+```text
+VERDICT=PASS
+P0/P1/P2=0/0/0
+S2_SCIENCE_VERDICT=FAIL
+formal_science_disposition=S2_DAMAGE_OR_HEADROOM_FAILED
+mission_method_delta=NONE
+thesis_method_disposition=NONE
+```
+
+证据包可信，科学门失败。next action=`SCIENCE_TERMINAL`；禁止 B2 与后续方法构造。

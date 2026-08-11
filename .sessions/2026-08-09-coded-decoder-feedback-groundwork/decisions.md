@@ -1080,3 +1080,112 @@ I01–I19 的 truth-separated harness、receiver/BPS/B2/HMM kernels、typed arti
 ### 来源
 
 S001 / V019 / CP013 / step-191、198–200 / 官方 `benchmark-receipt.jsonl`。
+
+---
+
+## D025: 总授权上调至十三日，按冻结科学链直接重开 S1
+
+> status: active
+> date: 2026-08-11
+> 取代：D024 的 `7.0d` 预算上限、science 禁令与 closed terminal；不取代 D024/V019 的工程测量、冻结 workload 或 I01–I19 验收事实
+> 被取代：无
+> 依据：用户显式 scope change；D024/V019 完整 workload receipt
+
+### 决策
+
+总任务授权硬上限由 `7.0d` 上调为 `13.0d`，不得再次扩大。沿用 D024 的完整投影：已消耗 `4.0d`，冻结 D0 总投影 `10.819450931739858d`；预留 post-D0 C1/公平比较 `2.0d` 后，总投影 `12.819450931739858d`，预算余量 `0.180549068260142d`。因此 D024 的 `GREATER_THAN_7D_HARD_BLOCKER` 作为历史预算终态保留，但不再阻止当前科学执行。
+
+控制面进入 `GROUNDWORK_STEP4A_D0_S1_NATURAL_OCCURRENCE`。严格按 S1→S2→S3→S4 顺序运行：S1 测自然 slip occurrence；通过后才测 B1 damage/O1 headroom；再通过才测 B2 absorption；前三门通过后才测 decoder-information increment。任一门 FAIL 立即形成科学终态，不为跑完整链继续执行。四门全部 PASS 后才允许实现 C1，并在同一冻结合同下完成一次 `FAIR_COMPARISON_RUN` 与必要消融。
+
+I01–I19 原样复用。不得缩减 population/seed/cell/tuple/grid/fixture/candidate/gate，不换指标，不用 dev 冒充 test。除当前科学门的真实运行时阻断外，不再做预算审计、HMM 优化、底座泛化、治理扩写或 readiness/preflight；每个真实阻断最多一次 bounded repair，修完立即继续该门。
+
+`formal_science_disposition`、`mission_method_delta`、`thesis_method_disposition` 分开记录。取得 `FAIR_COMPARISON_RUN/METHOD_SIGNAL` 前，method delta 与 thesis contribution 均不得宣称。
+
+### 理由
+
+D024 已把科学链工程成本完整测量为 `10.819450931739858d`，超过旧 7 日上限但低于本次 13 日总授权；用户明确接受底座现状并要求直接找方法。因此不再重复工程优化或平台审查，当前唯一增加科学信息的动作是运行 S1。
+
+### 排除的替代方案
+
+- 再优化 HMM 或重审平台：不选；用户明确禁止，且 I01–I19 已由 V019 接收。
+- 为省时缩小冻结 workload：不选；会改变科学合同并使结果不可比较。
+- 并行或跳序运行 S2–S4：不选；后门依赖前门成立，失败后继续只会浪费预算。
+- 以底座 PASS 声称方法：不选；尚无 `FAIR_COMPARISON_RUN/METHOD_SIGNAL`。
+
+### 影响范围
+
+专题由 closed 重开为 active，control epoch 升至 14，checkpoint 为 CP014。当前只授权 S1；后续权限由每个科学门的正式 PASS 顺序释放。研究对象保持 coded decoder-feedback C1，不得转向其他对象。
+
+### 触发原话
+
+- "赶紧接着干？底座就这样了，赶紧去找方法？"
+
+### 来源
+
+用户 scope change / D024 / V019 / CP013 / 官方 `benchmark-receipt.jsonl`。
+
+---
+
+## D026: S1 自然 occurrence 成立，顺序开放 S2 damage/headroom
+
+> status: active
+> date: 2026-08-11
+> 取代：D025 中“当前只授权 S1”的临时执行权限；不取代 13 日硬上限、顺序 fail-stop 或任何冻结科学合同
+> 被取代：无
+> 依据：V020 / step-201–202 / S1 final raw artifacts
+
+### 决策
+
+冻结 S1 first stage 完成 480 个 polarization trajectories，检测到 `262` 个 persistent-slip events，event rate=`0.5458333333333333`；事件覆盖 `17/20` seed clusters 与 `12/12` physical cells。三个门槛 `262≥12`、`17≥4`、`12≥2` 全部通过，V020 独立终验为 `PASS 0/0/0`。
+
+正式 science disposition 为 `S1_NATURAL_OCCURRENCE_ESTABLISHED`。这只证明自然缺陷存在，不是方法增益或论文贡献；`mission_method_delta=NONE`、`thesis_method_disposition=NONE`。
+
+按 D025 顺序只开放 S2 的 B1 damage/O1 headroom。S2 任一 damage 或 recoverability 门 FAIL 即科学终止；均 PASS 后才开放 B2 absorption。不得提前运行 B2/S3/S4/C1。
+
+### 运行边界
+
+S1 runner 缺失是本门唯一 bounded repair；三次实跑暴露的 CLI import、Windows atomic replace 与 strict mapping order 都在同一入口修复内以 RED→GREEN 闭合。最终 raw/checkpoint 480 行 byte-identical，focused fresh=`6 passed`；完整跨 resume wall time 未捕获并明确记为 null，不以 finalization 时间冒充。
+
+### 触发原话
+
+无新原话；执行 D025 已登记的“赶紧接着干？底座就这样了，赶紧去找方法？”。
+
+### 来源
+
+`projects/thesis-fso/worker-logs/step-201-d0-s1-natural-occurrence.md`；`step-202-d0-s1-independent-verification.md`；S1 raw/summary/receipt。
+
+---
+
+## D027: S2 damage/headroom 双门失败，C1 科学链终止
+
+> status: active
+> date: 2026-08-11
+> 取代：D026 的 S2 执行中权限；不取代 D025 的顺序 fail-stop 与冻结科学合同
+> 被取代：无
+> 依据：V021 / step-203–206 / S2 final raw artifacts
+
+### 决策
+
+冻结 S2 exact workload 完成 `1620/1620` unique typed rows，B2 rows=`0`。B1 damage point=`0.06944444444444449`，10k seed-cluster CI=`[0.017361111111111122, 0.13055555555555556]`，positive cells=`3/3`；因 point `<0.10`，damage gate FAIL。O1 recoverability point=`0.04008151917073723`，CI=`[-0.11234968338626876, 0.19036462197308052]`，positive cells=`3/3`；因 point `<0.10` 且 CI lower `≤0`，headroom gate FAIL。
+
+V021 对 final raw、typed reduction、10k bootstrap、affected-CW 计数、truth boundary 与 hash 做独立复算，证据 verdict=`PASS 0/0/0`，science verdict=`FAIL`。因此按 D025 顺序门立即形成 `S2_DAMAGE_OR_HEADROOM_FAILED` 科学终态，不运行 B2 absorption、decoder-information increment、S4、C1、FAIR_COMPARISON_RUN 或消融。
+
+### 分离 disposition
+
+- `formal_science_disposition=S2_DAMAGE_OR_HEADROOM_FAILED`
+- `mission_method_delta=NONE`
+- `thesis_method_disposition=NONE`
+
+S1 occurrence PASS 继续是有效事实，但不足以建立可恢复、可成方法的 defect。I01–I19 与 S1/S2 artifacts 可复用为工程/负结果证据，不构成论文方法贡献。
+
+### 失败血缘
+
+T131 暴露旧 full reducer 把 B2 与 B1/O1 强耦合；T132 以等价窄 reducer关闭顺序接口。首个 S2 run 又暴露 bit-error 数误写 affected-CW count，T133 用 per-CW any-error TDD 修复并从零重跑；最终 1620 rows 无 errors-over-total。bool sort-key 只做本地 deterministic-key 修复并从完整 checkpoint finalization。上述工程失败不改变最终科学 FAIL 数字。
+
+### 触发原话
+
+无新原话；执行 D025 已登记的 scope-change 与 fail-stop纪律。
+
+### 来源
+
+`projects/thesis-fso/worker-logs/step-203-d0-s2-damage-headroom.md`；`step-204-d0-s2-sequential-reducer-repair-and-run.md`；`step-205-d0-s2-affected-cw-count-repair-rerun.md`；`step-206-d0-s2-independent-verification.md`；S2 raw/summary/receipt。

@@ -212,6 +212,10 @@ Q1 的具体 M-C-A、可复用完整动作链产出和 FER/goodput/cost 对标�
 23. I07/I08合并快验`25/25`后，I09–I17A按真实RED→GREEN完成receiver/BPS、ledger/S4、dev-freeze/HMM、B0/B1/O1、freeze chronology、B2、engineering benchmark与deployment seal；I18 aggregate=`133/133`。
 24. I19A/B/C独立审查发现7项P1并完成最小修复；I19D final integration=`189/189`、P0/P1=`0/0`。I20四类允许调整实测后，EB final=`36/36`。
 25. 正式I20仅运行一次，shell wall=`25.7s`、`incomplete_reasons=[]`；owner workload投影D0=`10.819450931739858d > 7.0d`。D024/V019/CP013裁为真实`GREATER_THAN_7D_HARD_BLOCKER`；S1–S4/FAIR_COMPARISON_RUN保持NOT_RUN，method signal=`NONE`。
+26. 用户显式 scope-change 接受现有底座并要求直接找方法。D025 将总授权冻结为 `13.0d`，保留 D024/V019 的 workload 事实但撤销旧 7 日 science 封锁；CP014 只开放 S1 natural occurrence，按 S1→S2→S3→S4 fail-stop。
+27. T129 完成 S1 480-row 正式执行：events=`262`、rate=`0.5458333333333333`、event seeds/cells=`17/12`；T130 fresh 独立终验 `PASS 0/0/0`。D026/V020/CP015 只开放 S2 damage/headroom，method/thesis delta 仍 NONE。
+28. T131 发现旧 full `reduce_s2` 强制 B2 与 B1/O1 同表，顺序门只能形成1620行；T132以窄 reducer + full-reducer metamorphic equivalence 关闭接口阻断，focused=`9 passed`。完整 S2 已由 PID `50036` 后台运行，首检81/1620 rows；B2保持NOT_RUN。
+29. T133 修复 affected-CW bit/count 混写后从零完成1620 rows；damage=`0.06944444444444449`、recoverability=`0.04008151917073723`均FAIL。T134/V021独立复算证据`PASS 0/0/0`、science=`FAIL`；D027/CP016按顺序门关闭专题，B2及后续NOT_RUN。
 
 ## 决策引用
 
@@ -239,6 +243,9 @@ Q1 的具体 M-C-A、可复用完整动作链产出和 FER/goodput/cost 对标�
 - D022：取消loader-only实现前阻塞；三代码片完成后一次性fresh验收loader+I05（新建）。
 - D023：FULL wrapper只消除已认证ordinary bundle的重复全量编译，public deep verifier与science权限保持不变（新建）。
 - D024：正式I20完整投影D0超过七日冻结上限，C1在science前硬终止；禁止缩减workload或把工程底座包装成方法（新建）。
+- D025：总授权上调为十三日硬上限，沿用完整 workload 直接按 S1→S4 顺序重开科学链（新建）。
+- D026：S1 occurrence 经独立终验成立，按顺序只开放 S2 damage/headroom（新建）。
+- D027：S2 damage/headroom 双门经独立终验确认失败，C1科学链fail-stop（新建）。
 
 ## 范围确认
 
@@ -246,4 +253,4 @@ Q1 的具体 M-C-A、可复用完整动作链产出和 FER/goodput/cost 对标�
 
 ## 后续
 
-D024/V019/CP013已接收正式I20真实hard terminal；无合法science/adapter/FAIR_COMPARISON_RUN下一步。未来只有显式scope change且有不缩减owner workload的新工程证据时可重开。
+D027/V021/CP016 已接收 S2 科学 FAIL；专题终止。B2、decoder-information、S4、C1与FAIR_COMPARISON_RUN均不得运行，method/thesis delta均NONE。

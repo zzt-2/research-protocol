@@ -1,21 +1,21 @@
 # Coded decoder-feedback 方法主线 Groundwork
 
-> 状态：closed | 创建：2026-08-09 | 当前阶段：Groundwork Step 4a D0 engineering hard terminal
+> 状态：closed | 创建：2026-08-09 | 当前阶段：Groundwork Step 4a S2 science terminal
 
 <!-- RDL-CONTROL:START -->
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 13
+  control_epoch: 16
   role: METHOD_PRODUCTION_GROUNDWORK
   mission: produce one thesis-usable Ch4 coded decoder-feedback method or a canonical evidence-backed terminal
-  active_lane: GROUNDWORK_STEP4A_D0_ENGINEERING_HARD_TERMINAL
+  active_lane: GROUNDWORK_STEP4A_S2_SCIENCE_TERMINAL
   authority_pointer: projects/thesis-fso/master-state.md
-  decision_gate: D024/V019 accept formal I20 as a complete GREATER_THAN_7D_HARD_BLOCKER; science and method construction remain unauthorized
+  decision_gate: D027/V021 verify S2 damage and recoverability FAIL; sequential science chain terminates
   allowed_actions: []
   forbidden_actions:
     - DEFECT_SMOKE
-    - D0_S1_S4_SCIENTIFIC_EXECUTION
+    - D0_B2_S4_SCIENTIFIC_EXECUTION
     - ADAPTER_IMPLEMENTATION
     - C1_POLICY_IMPLEMENTATION
     - MVE
@@ -25,8 +25,8 @@ rdl_control:
     - EXECUTE
     - THESIS_CLAIM
   mission_log_ref: .sessions/2026-08-09-coded-decoder-feedback-groundwork/mission-log.md
-  mission_checkpoint: CP013
-  next_legal_action: none; reopen only by explicit scope change with non-workload-reducing engineering evidence that closes the frozen budget gap
+  mission_checkpoint: CP016
+  next_legal_action: none; science terminal verified
 ```
 <!-- RDL-CONTROL:END -->
 
@@ -38,7 +38,7 @@ rdl_control:
 
 - Ch4 coded carrier-recovery / decoder-feedback 方法章槽位；最多保留两个机制不同候选。
 - receiver-local、因果合法的 decoder extrinsic、syndrome/CRC、iteration callback、bounded recovery/re-evaluation 所需最小接口。
-- 3–7 天量级 method-bearing testbed；只有 Step 3 合法 Q# 与 Step 4a problem gate 通过后才能建设。
+- 总任务授权硬上限 `13.0d`；冻结投影为 D0 `10.819450931739858d` + post-D0 C1/公平比较 `2.0d` = `12.819450931739858d`，不得再次扩大。
 - B0/B1/B2/O1/C1/C2 baseline ladder、defect smoke、paired fair comparison、机制消融和 fresh-context verifier。
 - C1 reference-method extension 可由 estimator extension、局部化、触发、调度、反馈策略或有界计算图构成；方法身份按完整 deployable action chain 判断，不要求全新动作原子。
 
@@ -63,6 +63,7 @@ rdl_control:
   - 新范围：固定 C1 为唯一主入口，允许在 Step 3/3.5/4a 依次通过后建设最小 decoder callback/recovery adapter；不要求发明新动作原子，C2 仅在 C1 hard terminal 后做一次入口裁决。
   - 影响的未决项：H001/CP005 的“必须出现不同 action 原子”重开条件失效；D004/V002 的 corpus、core collision 与 `NOT_EVALUATED_NO_Q_FORMED` 事实继续有效。
 - **[2026-08-09] [决策 D008]**：TVT ICE-CEM 全文闭合近期顶刊 baseline，Q1 冻结为 canonical 4/4；立即进入 mandatory Step 3.5，范围仍只限文献补检/全文裁决，adapter 与实验继续冻结。
+- **[2026-08-11] [决策 D025]**：用户接受现有底座并把总授权从 7 日上调为 13 日硬上限；D024/V019 的完整 workload 与工程验收事实保留，旧七日 science 封锁撤销。严格按 S1→S2→S3→S4 逐门 fail-stop，四门全过后才允许 C1 与 FAIR_COMPARISON_RUN；不缩 workload、不换指标、不做新 readiness/HMM 优化/平台泛化。
 
 ## 已确认结论
 
@@ -73,7 +74,7 @@ rdl_control:
 3. adapter 只提供方法所需接口；receiver-visible-only 信息边界、no-feedback identity、callback lifecycle、metamorphic test 和 raw receipt 必须可执行验证。
 4. oracle 只作 headroom/Kill；Go 对手是经独立调谐、任务匹配、同信息的 conventional comparator，且必须测试 strongest cheap alternative。
 5. 公平比较使用 fresh disjoint dev/test seeds、paired realizations、raw codeword/trajectory rows、cluster CI、固定标签 coded metrics、复杂度与迭代账本。
-6. `FAIR_COMPARISON_RUN` 是最低方法生产增量；只有问题不存在、传统 baseline 已解决、执行无效/证据不足或 3–7 天内无法解除的真实 hard blocker 可提前终止。
+6. `FAIR_COMPARISON_RUN` 是最低方法生产增量；只有科学门 FAIL、执行无效/证据不足或 `13.0d` 总硬上限内无法解除的真实当前门 blocker 可提前终止。D024 的旧 7 日预算门已被 D025 取代。
 
 ### 其他结论
 
@@ -146,22 +147,25 @@ rdl_control:
 - **S001 / V018 / T125 / step-171**：唯一fresh I05 batch实跑五文件`71 passed / 686.12s`、118项负向0错收/错拒；FULL incremental=`17.895242s`、authority精确。I05 implementation/unit正式接收，science仍NOT_RUN/NONE；当前进入I07/I08。
 - **S001 / T126–T128 / step-172–174 / H005**：I07 SS01–11 focused=`10/10`，I08 AC01–06+窄回归=`19/19`，author P0/P1/P2均0/0/0。下一对话一次合并focused verifier后直接I09/I11；禁止重复I05/readiness链。
 - **S001 / D024 / V019 / CP013 / step-175–200**：I07/I08合并快验后完成I09–I19；I19D=`189 passed / P0/P1=0/0`，EB=`36 passed`。正式I20的25个slice与artifact SHA完整，`incomplete_reasons=[]`，冻结workload投影D0=`10.819450931739858d > 7.0d`，裁为`GREATER_THAN_7D_HARD_BLOCKER`；science与FAIR_COMPARISON_RUN均NOT_RUN。
+- **S001 / D025 / CP014**：用户显式 scope-change 将总授权冻结为 `13.0d`，保留 D024/V019 全部测量事实但撤销旧 7 日 science 封锁；当前直接进入 S1 natural occurrence，后门按 PASS 顺序释放。
+- **S001 / D026 / V020 / CP015 / step-201–202**：S1 final raw=`480`，persistent events=`262`、rate=`0.5458333333333333`，覆盖17 seeds/12 cells；独立终验`PASS 0/0/0`，只开放 S2 damage/headroom。
+- **S001 / D027 / V021 / CP016 / step-203–206**：S2 exact 1620 rows；damage=`0.06944`、recoverability=`0.04008`均未过冻结门，证据独立终验`PASS 0/0/0`、science=`FAIL`。B2及后续全部NOT_RUN，专题科学终止。
 
 ## 当前状态
 
-- 当前模式：`closed / Groundwork Step 4a D0 engineering hard terminal / VERIFIED`。
+- 当前模式：`closed / Groundwork Step 4a S2 science terminal / VERIFIED`。
 - 当前 Q#：Q1 canonical 4/4；Step 3 与 Step 3.5 COMPLETE。local slip occurrence/observability/recoverability 与 strongest B2 absorption 仍是 UNKNOWN，只能由 Step 4a 分层闭合。
 - 当前 carrier：C1 reference-method extension；C1 原核心动作为 reference baseline M，不计本项目创新。
 - 当前 method delta：`NONE`；BER/goodput/method gain=`NOT_MEASURED`。
 - 历史 local/framework terminal：`STEP1_NO_METHOD_ACTION_SURVIVOR / STEP1_CANDIDATE_SET_EXHAUSTED`（V002 PASS，仅作 core-action collision 历史事实）。
 - 当前 problem disposition：`Q1_CANONICAL_STEP3_PASS / STEP3_5_VERIFIED_WITH_LIMITS / A0_VERIFIED_CONDITIONAL_PASS / GREATER_THAN_7D_HARD_BLOCKER`；D0 science=`NOT_RUN`。
-- 当前授权：无。`DEFECT_SMOKE`/S1–S4、C1 adapter/policy、MVE、held-out、FAIR_COMPARISON_RUN、Contract/Execute均禁止。
+- 当前授权：无。B2/S3/S4、C1、FAIR_COMPARISON_RUN 均因 S2 fail-stop 禁止。
 
 ## 未决项
 
-1. 无当前合法执行项。未来若重开，必须先显式改变scope，并提供不缩减owner workload且足以关闭`3.819450931739858d`预算差额的新工程证据。
-2. S1 occurrence、B1 damage/O1 headroom、B2 absorption与decoder-information increment均保持UNKNOWN/NOT_RUN，不得从工程终态推导科学结论。
+1. 无当前合法执行项。S1 occurrence 成立，但 S2 damage/headroom 双 FAIL，不能支持 C1 方法构造。
+2. B2 absorption、decoder-information increment、C1与FAIR_COMPARISON_RUN均保持NOT_RUN。
 
 ## 当前位置
 
-`CP013 / GROUNDWORK_STEP4A_D0_ENGINEERING_HARD_TERMINAL_VERIFIED`：正式I20完整投影D0=`10.819450931739858d`，超过冻结7日上限。专题closed；D0 science、S1–S4与FAIR_COMPARISON_RUN均`NOT_RUN`，`METHOD_SIGNAL=NONE`，next action=`NONE`。
+`CP016 / GROUNDWORK_STEP4A_S2_SCIENCE_TERMINAL_VERIFIED`：S1 occurrence PASS；S2 damage=`0.06944`、recoverability=`0.04008`双 FAIL，V021证据PASS。B2及后续NOT_RUN，`METHOD_SIGNAL=NONE`，next action=`NONE`。

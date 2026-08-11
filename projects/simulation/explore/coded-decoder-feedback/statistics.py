@@ -53,6 +53,15 @@ class S2Point:
 
 
 @dataclass(frozen=True, slots=True)
+class S2DamageHeadroomPoint:
+    cells: tuple[tuple[object, ...], ...]
+    damage: float
+    recoverability: float | None
+    terminals: tuple[str, ...]
+    physical_off_computations: int
+
+
+@dataclass(frozen=True, slots=True)
 class BootstrapCI:
     lower: float | None
     upper: float | None
@@ -211,6 +220,76 @@ def reduce_s2(rows: Sequence[S2MethodRow]) -> S2Point:
         None if any(value is None for value in recovery_values) else sum(recovery_values) / 3,
         None if any(value is None for value in coverage_values) else sum(coverage_values) / 3,
         tuple(terminals), len(physical_off_ids),
+    )
+
+
+def reduce_s2_damage_headroom(rows: Sequence[S2MethodRow]) -> S2DamageHeadroomPoint:
+    """Sequential S2 projection: exact B1-on/O1-on/B1-off rows, never B2."""
+    rows = tuple(rows)
+    if len(rows) != 1620 or any(type(row) is not S2MethodRow for row in rows):
+        _fail("S2 damage/headroom requires exactly 1620 typed rows")
+    seeds = tuple(sorted({row.seed for row in rows}))
+    cells = tuple(sorted({row.cell_id for row in rows}))
+    if len(seeds) != 10 or set(cells) != {"hard", "mid", "clean"}:
+        _fail("S2 damage/headroom seed/cell domains mismatch")
+    if {row.target_polarization for row in rows} != set(POL):
+        _fail("S2 damage/headroom polarization domain mismatch")
+    if any(row.method_id == S2_METHODS[1] for row in rows):
+        _fail("S2 damage/headroom forbids B2 rows")
+
+    groups: dict[tuple[int, str, str], list[S2MethodRow]] = {}
+    for row in rows:
+        groups.setdefault((row.seed, row.cell_id, row.target_polarization), []).append(row)
+    if set(groups) != set(product(seeds, cells, POL)):
+        _fail("S2 damage/headroom exact cluster coverage mismatch")
+    physical_off_ids: set[tuple[int, str, str, str]] = set()
+    for key, group in groups.items():
+        identities = [(r.fixture_id, r.jump_present, r.method_id) for r in group]
+        expected = {
+            *((fixture, True, method) for fixture in FIXTURES
+              for method in (S2_METHODS[0], S2_METHODS[2])),
+            *((fixture, False, S2_METHODS[0]) for fixture in FIXTURES),
+        }
+        if len(group) != 27 or len(set(identities)) != 27 or set(identities) != expected:
+            _fail("S2 damage/headroom group requires B1/O1 on and B1 off")
+        off = [row for row in group if not row.jump_present]
+        owners = {(r.physical_case_id, r.computation_id, r.result_receipt_sha256) for r in off}
+        if len(owners) != 1:
+            _fail("S2 damage/headroom nine off projections must share one owner")
+        physical_off_ids.add((*key, off[0].computation_id))
+
+    cell_points: list[tuple[object, ...]] = []
+    recoverability_values: list[float | None] = []
+    for cell in ("hard", "mid", "clean"):
+        selected = {
+            "b1_on": [r for r in rows if r.cell_id == cell and r.jump_present
+                      and r.method_id == S2_METHODS[0]],
+            "b1_off": [r for r in rows if r.cell_id == cell and not r.jump_present],
+            "o1_on": [r for r in rows if r.cell_id == cell and r.jump_present
+                      and r.method_id == S2_METHODS[2]],
+        }
+        sums = {
+            name: (sum(r.affected_cw_errors for r in values),
+                   sum(r.affected_cw_total for r in values))
+            for name, values in selected.items()
+        }
+        b1e, b1t = sums["b1_on"]
+        offe, offt = sums["b1_off"]
+        o1e, o1t = sums["o1_on"]
+        damage = _ratio(b1e, b1t) - _ratio(offe, offt)
+        recoverability = None if b1e <= 0 else (b1e - o1e) / b1e
+        cell_points.append((cell, b1e, b1t, offe, offt, o1e, o1t,
+                            damage, recoverability))
+        recoverability_values.append(recoverability)
+    terminals = (() if all(value is not None for value in recoverability_values)
+                 else ("ZERO_PRACTICAL_CODED_DAMAGE",))
+    return S2DamageHeadroomPoint(
+        tuple(cell_points),
+        sum(float(point[7]) for point in cell_points) / 3,
+        (None if any(value is None for value in recoverability_values)
+         else sum(float(value) for value in recoverability_values) / 3),
+        terminals,
+        len(physical_off_ids),
     )
 
 
@@ -380,6 +459,7 @@ def reduce_s3(test_rows: Sequence[S3CandidateRow], freeze: S3LambdaFreezeRow) ->
 
 __all__ = [
     "S1Point", "S2CellPoint", "S2Point", "BootstrapCI", "S3CasePoint",
-    "S3CellPoint", "S3Point", "reduce_s1", "reduce_s2", "bootstrap_paired",
+    "S3CellPoint", "S3Point", "S2DamageHeadroomPoint", "reduce_s1", "reduce_s2",
+    "reduce_s2_damage_headroom", "bootstrap_paired",
     "select_s3_lambda", "reduce_s3",
 ]

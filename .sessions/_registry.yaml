@@ -6,7 +6,7 @@ topics:
 
   - slug: framework-evolution
     title: 框架演进与问题追踪
-    status: active
+    status: closed
     created: "2026-05-15"
     last_updated: "2026-07-17"
     description: "跨项目长期专题。**2026-06-20 重新激活**——thesis-fso 5 次殊途同归 + agent 连犯 3 错暴露框架根本缺陷（未定义'问题/方法/空白'概念，contract.md L86-88 把空白当假设来源是制度性缺陷）。LOG-001 新建，三改造方案待执行（glossary.md 定义问题 + GW 问题清单产出 + master-state.md 强制化）。历史：2026-05-15~18 处理 20+ P0/P1/P2 issues。"
@@ -68,10 +68,10 @@ topics:
 
   - slug: 2026-08-09-coded-decoder-feedback-groundwork
     title: Coded decoder-feedback 方法主线 Groundwork
-    status: closed
+    status: active
     created: "2026-08-09"
-    last_updated: "2026-08-11（D024/V019/CP013：正式I20 >7日工程硬终态，专题关闭）"
-    description: "Ch4 coded decoder-feedback C1 reference-method extension。I01–I19实现与独立审查完成；正式I20完整投影D0=10.819450931739858日，超过冻结7日上限，终态GREATER_THAN_7D_HARD_BLOCKER。S1–S4、FAIR_COMPARISON_RUN均NOT_RUN，method signal NONE，专题closed。"
+    last_updated: "2026-08-11（D027/V021/CP016：S2科学FAIL终态）"
+    description: "Ch4 coded decoder-feedback C1 reference-method extension。S1 occurrence=262/480经验证PASS；S2 damage=0.06944、recoverability=0.04008均未过冻结门，证据PASS但science FAIL。B2/C1/FAIR_COMPARISON均NOT_RUN，method/thesis delta NONE，专题closed。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承 T010 C1/C2/C3 concept cards、D039-D040/V023、method-production 与 dead-end 证据

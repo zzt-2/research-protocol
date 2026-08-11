@@ -5,7 +5,7 @@ method_type: reference-method extension（非 ML；完整 deployable action chai
 domain: comms
 created: 2026-06-21
 updated: 2026-08-11
-current_step: GROUNDWORK_STEP4A_D0_ENGINEERING_HARD_TERMINAL（coded decoder-feedback）
+current_step: GROUNDWORK_STEP4A_S2_SCIENCE_TERMINAL（coded decoder-feedback）
 current_stage: GROUNDWORK
 ---
 
@@ -35,7 +35,7 @@ current_stage: GROUNDWORK
 
 ### 当前控制面桥接
 
-> **2026-08-11 正式终态：coded decoder-feedback C1 Step 4a D0 engineering hard terminal（D024/V019/CP013）**。I01–I19实现与独立审查已完成；I19D=`189 passed / P0/P1=0/0`，EB final=`36 passed`。正式I20仅运行一次，`incomplete_reasons=[]`，冻结owner workload投影D0=`10.819450931739858d > 7.0d`，终态=`GREATER_THAN_7D_HARD_BLOCKER`。D0 science、S1–S4、FAIR_COMPARISON_RUN均`NOT_RUN`，method signal=`NONE`；science/adapter/MVE/held-out/Contract/Execute全部关闭。
+> **2026-08-11 coded decoder-feedback C1 科学终态（D027/V021/CP016）**。S1 occurrence=`262/480` PASS；S2 exact 1620 rows 的 damage=`0.06944444444444449` 与 recoverability=`0.04008151917073723` 均未过冻结门。独立 verifier 对证据给出 `PASS 0/0/0`，science verdict=`FAIL`。按顺序 fail-stop，B2、decoder-information、S4、C1、FAIR_COMPARISON_RUN 全部 NOT_RUN；method signal/thesis contribution=`NONE`。
 
 | Coded decoder-feedback GW Step | 状态 | 证据 | 下游门控 |
 |---|---|---|---|
@@ -44,7 +44,7 @@ current_stage: GROUNDWORK
 | 2 acquire | ✅ COMPLETE | D006/CP007；5 篇合格全文 + 2 unresolved；step2 coverage + step-058–065 | 允许 Step 3；全文债保留 claim ceiling |
 | 3 read | ✅ COMPLETE / Q1 4/4 | D008/CP009；TVT read note + step-066 | 允许 mandatory Step 3.5；不等于 defect 已成立 |
 | 3.5 supplement | ✅ COMPLETE / VERIFIED WITH LIMITS | D009/V003；step-067–083；supplement report | bounded-slice 非碰撞，不等于 defect/贡献成立 |
-| 4a feasibility | 🛑 D0 ENGINEERING HARD TERMINAL / VERIFIED | D024/V019/CP013；step-175–200；official I20 artifacts | projected D0 10.81945d > 7d；S1–S4与FAIR_COMPARISON_RUN NOT_RUN，无下游授权 |
+| 4a feasibility | 🛑 S2 SCIENCE TERMINAL / VERIFIED | D027/V021/CP016；step-203–206；S1/S2 raw artifacts | S1 PASS；S2 damage/headroom双FAIL；B2及后续NOT_RUN |
 
 ### 上一 formal 轨迹（RML-FSTS，dormant）
 
