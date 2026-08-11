@@ -1,10 +1,10 @@
 # [R003] Step 2 acquisition receipt
 
-> 2026-08-11 | 关联：2026-08-11-dsp-outage-aware-multi-aperture-combining / D002
+> 2026-08-11 | 关联：2026-08-11-dsp-outage-aware-multi-aperture-combining / D002 / D003
 
 ## 调研问题
 
-为冻结九篇优先池提供可机械复核的 identity、provenance、source/content 路径、字节数、SHA-256、有效行数与 qualified 结论。
+为原冻结九篇优先池与 D003 replacement CORE（JLT 2023）提供可机械复核的 identity、provenance、source/content 路径、字节数、SHA-256、有效行数与 qualified 结论。
 
 ## 发现
 
@@ -16,6 +16,7 @@
 | optical CORE | *Carrier FOE Scheme Based on FSTS in Spatial Diversity PM Coherent FSO Communication*；Liqian Wang, Jichen Wang, Xinyu Tang；2023；IEEE Photonics Journal；`10.1109/JPHOT.2023.3265847` | shared-root existing `firecrawl_scrape` HTML fulltext；无保留 source；content-only | N/A / N/A | `D:/code/study/research-protocol/papers/doi/10.1109_jphot.2023.3265847/content.md` | 55,349 / 455（251）/ `e30a66fe650ff065c65746943b52cc48afc0476900f90421febd1f9b5d351a9f` | confirmed / YES |
 | RF comparator | *Reliability Analysis of MRC Diversity Reception System Based on LS and MMSE Channel Estimation*；Yongjian Yang, Hong Jiang, Ying Luo；2022；IEEE ICCC；`10.1109/ICCC56324.2022.10065885` | `tools/blit --source ieee`；`papers/doi/10.1109_iccc56324.2022.10065885/source.pdf` | 5,057,185 / `fa9a600aaa5719562832002f63882203bd2153c9db69a6584339e554b842dd28` | `papers/doi/10.1109_iccc56324.2022.10065885/content.md` | 25,920 / 267（113）/ `db204928db89aa7e0eb90b0dee609d6473d7dfd361fea504c5bba783abeb8403` | confirmed / YES |
 | optical neighbor | *Phase Alignment With Minimum Complexity for Equal Gain Combining in Multi-Aperture Free-Space Digital Coherent Optical Communication Receivers*；Yicong Tu, Sheng Cui, Keji Zhou, Deming Liu；2020；IEEE Photonics Journal；`10.1109/JPHOT.2020.2977955` | `tools/blit --source ieee`；`papers/doi/10.1109_jphot.2020.2977955/source.pdf` | 3,725,840 / `acf0182a4900401b7e3c8aa61847f546f48b81bf6fa3eab17c50ab7a19c7b5af` | `papers/doi/10.1109_jphot.2020.2977955/content.md` | 29,389 / 308（121）/ `c7e5af6f7279e50f13d01df7705c77acbfa4f64091cde3fae5915e26ed8353db` | confirmed / YES；39 个 replacement char 局限于公式符号 |
+| optical CORE | *Multi-Aperture Coherent Digital Combining Based on Complex-Valued MIMO 2N×2 Adaptive Equalizer for FSO Communication*；Na Liu, Cheng Ju, Dongdong Wang, Danshi Wang, Peng Xie；2023；Journal of Lightwave Technology；`10.1109/JLT.2023.3276637` | shared-root existing canonical PDF；metadata 残留 `all_failed`，但 source/content 实体与正文身份闭合 | 1,803,926 / `5fe81376e5ba14beaf9576cf4223316812dc98512d0cdd7daf1f573a2646acbc` | `D:/code/study/research-protocol/papers/doi/10.1109_jlt.2023.3276637/content.md` | 39,481 / 270（114）/ `6bb3451d37ec4c821ee357b5130004d19759b89cc55813a0d5bf147766bc31c8` | confirmed / YES |
 
 > 本轮 Windows worktree 的 `tools/convert` shell wrapper 含 CRLF，Git Bash 无法解析；未改工具代码，直接调用同一 wrapper 的 `tools/pdf_convert.py` backend 完成两份 PDF 转换，并在 metadata 中登记这一 bounded runtime fact。
 
@@ -39,8 +40,8 @@
 
 ## 结论
 
-九篇中 fulltext available/content qualified=`4/9`；冻结 optical CORE qualified=`2/5`。P0 fulltext unavailable。
+Step 2 qualified fulltext=`5`；其中 optical CORE=`3`。P0 fulltext unavailable，作为 2019 limitation 保留，不再单独阻断 Step 3。
 
 ## 对决策的影响
 
-支撑 R002 的 `STEP2_BLOCKED_CRITICAL_DIRECT_COMPETITOR_FULLTEXT`；不构成全文方法结论、collision verdict、Q#、Go/Kill 或 METHOD_SIGNAL。
+支撑 D003/R002 的 `STEP2_ACCEPTED_WITH_2019_FULLTEXT_LIMITATION`；不构成 Step 3 问题结论。

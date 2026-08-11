@@ -59,3 +59,36 @@
 ### 结论
 
 接受 Step 2 acquisition/coverage 终态。下一合法动作只有用户手动补 P0 后重跑 Step 2 gate，或用户显式接受 coverage/claim limitation 并另行授权 Step 3；当前不得继续。
+
+## V003：GW Step 2 repair 与 Step 3 全文综合终验
+
+- 日期：2026-08-11
+- 关联：S003 / D003 / D004 / R002–R004 / T007–T010
+- 验证方：independent fresh-context verifier（未参与本轮五篇精读与主线综合）
+- 状态：PASS
+- 严重度：critical/major/minor=`0/0/0`
+
+### 验证对象
+
+- JLT 2023 replacement CORE 的 identity/hash/lines 与 Step 2 qualified=5。
+- 五篇 title gate、15+字段、7结构段、通信参数、实验完备性与三篇写作架构。
+- direct-competitor action matrix、Q001 M-C-A/四判据、2019 exact-action limitation。
+- 五篇 read-note source/persistence/casing 链、read-log/topic/master/registry 与 scope。
+
+### 验证结果
+
+| 组 | 结论 | 独立证据 |
+|---|---|---|
+| A Step 2 repair | PASS | JLT source/content bytes、SHA、270/114 行与 R003 一致；五篇均为真实 qualified fulltext，2019 未计全文。 |
+| B read structure | PASS | 五篇各 title gate + 15/15 fields + 7/7 sections + communication params + completeness；Wang/Liu/Johst 有三份 writing architecture。 |
+| C action matrix | PASS | 2019 broad unknown、Liu estimator-changing、Johst hard discard、Tu known-OSNR admission、Yang pilot soft weight、Wang branch-local DSP→MRC 的位置边界一致。 |
+| D Q001/collision | PASS | Q001 收窄到 Wang 实证的 branch-local FS/phase-correction→MRC 边界后 4/4 PASS；完整 post-all-FS/CE/CPE 版本与 2019 exact action 留作 Step 3.5 debt。 |
+| E persistence/scope | PASS | 五篇 canonical notes 均在 `git ls-files`，五个 source path 均存在；diff checks 通过；scope violation=0。 |
+
+### 失败与修复血缘
+
+首验=`PARTIAL 0/2/0`：①把 Wang MRC 错写成所有独立 DSP 后，criterion 3 baseline 位置不匹配；②Wang source 指针无效，四个新 notes 尚未持久化。bounded repair 将 Q001 改到原文真实 pre-MRC branch-local 边界，把更宽 post-all-FS/CE/CPE 版本降为 Step 3.5 debt；同时修绝对 source path、统一 lowercase canonical note path并 force-add。repair verification=`PASS 0/0/0`。
+
+### 结论
+
+接受 terminal=`STEP3_Q_SURVIVES_READY_FOR_STEP3_5`，仅针对收窄的 branch-local Q001。这是 Step 3 problem-survival，不是 novelty closure、Go/Kill、METHOD_SIGNAL 或 Step 3.5 授权。

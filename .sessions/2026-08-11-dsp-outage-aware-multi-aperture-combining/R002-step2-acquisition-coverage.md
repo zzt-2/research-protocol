@@ -1,6 +1,6 @@
 # [R002] Step 2 acquisition 与 coverage gap
 
-> 2026-08-11 | 关联：2026-08-11-dsp-outage-aware-multi-aperture-combining / D002
+> 2026-08-11 | 关联：2026-08-11-dsp-outage-aware-multi-aperture-combining / D002 / D003
 
 ## 调研问题
 
@@ -10,11 +10,12 @@
 
 ### 获取结果
 
-- 成功复用或获取并通过内容质量门：4 篇。
+- 成功复用或获取并通过内容质量门：5 篇（D003 narrow repair 后）。
   - Johst et al., WiSEE 2024（现有 canonical PDF + Markdown）。
   - Wang et al., IEEE Photonics Journal 2023（共享根现有 HTML-derived fulltext）。
   - Yang et al., ICCC 2022（本轮 IEEE 专用通道获取 PDF 并转换）。
   - Tu et al., IEEE Photonics Journal 2020（本轮 IEEE 专用通道获取 PDF 并转换）。
+  - Liu et al., Journal of Lightwave Technology 2023（共享根现有 canonical PDF + Markdown；D003 replacement CORE）。
 - 内容质量不达标：0 篇。JPHOT 2020 有 39 个局部公式字形替换符，但正文、标题、DOI、图注与论述连续，未形成大面积乱码，仍判 qualified。
 - 全文不可得：5 篇。
   - Sun et al., Optics Communications 2019，DOI `10.1016/j.optcom.2019.03.069`（P0）。
@@ -31,23 +32,21 @@
 
 ### 覆盖面分析
 
-- 冻结 optical CORE 定义为 P0/P1 中直接支撑 reference M、defect 或 direct/hard competitor 的五篇：OptCom 2019、WiSEE 2024、Wang 2023、Geisler 2016、OFC 2024。
-- qualified optical CORE=`2/5`：WiSEE 2024、Wang 2023。
+- D003 repair 后 qualified fulltext=`5`；其中 qualified optical CORE=`3`：WiSEE 2024、Wang 2023、JLT 2023。
 - 其余 qualified 资产：JPHOT 2020 是 optical strong neighbor；ICCC 2022 是 RF comparator/neighbor。二者不得替代 optical CORE。
 - P0 是 Step 1 已识别的最近 direct competitor；其全文不可得，因此完整 action signature 与 exact-collision 问题均不能在本轮闭合。本句只描述覆盖缺口，不给 collision verdict。
-- 四篇 qualified 全部为正式发表，预印本=`0/4`；来源为本地 PDF/Markdown、共享根既有全文与 IEEE 专用获取，不存在 arXiv-only 偏差。
+- 五篇 qualified 全部为正式发表，预印本=`0/5`；来源为本地 PDF/Markdown、共享根既有全文与 IEEE 专用获取，不存在 arXiv-only 偏差。
 
 ## 结论
 
-`STEP2_BLOCKED_CRITICAL_DIRECT_COMPETITOR_FULLTEXT`。
+`STEP2_ACCEPTED_WITH_2019_FULLTEXT_LIMITATION`。
 
-P0 不可得是独立关键阻塞；同时 optical CORE `2/5 < 5`。Step 3 保持 `NOT_AUTHORIZED`，不得精读、提取完整动作签名或判断 exact collision。
+P0 仍不可得，但 D003 不再把它作为单独的绝对阻塞。JLT 2023 提供可读的更晚 strongest estimator-changing competitor；Step 3 已授权。2019 限制只在窄 Q# 存活时转为 Step 3.5 critical debt。
 
 ### 用户 coverage 选择
 
-- 手动提供 P0 合法全文，放入 `papers/manual/{slug}/` 并补 metadata；随后只重跑 Step 2 identity/content gate。
-- 或明确确认接受“P0 未精读、exact collision unresolved”的 claim limitation，并另行授权 Step 3；在确认前不得继续。
+- 已解决：主控选择接受“P0 未精读、exact collision unresolved”的 claim limitation，并以 JLT 2023 replacement CORE 授权 Step 3。
 
 ## 对决策的影响
 
-D002 的 Step 2 scope 已执行完毕，但 coverage blocking gate 未解除。没有形成 Q#、Go/Kill、METHOD_SIGNAL 或方法贡献判断。
+D003 取代 D002 的阻塞处置；下载失败事实不变。Step 2 accepted 不形成 Step 3 的问题结论。

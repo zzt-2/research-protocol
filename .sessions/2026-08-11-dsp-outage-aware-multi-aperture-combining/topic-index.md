@@ -1,6 +1,6 @@
 # DSP 失效感知的多孔径相干 FSO 可靠合并
 
-> 状态：active | 当前阶段：Groundwork Step 2 coverage blocked
+> 状态：active | 当前阶段：Groundwork Step 3 complete / awaiting Step 3.5 confirmation
 
 ## 范围边界
 
@@ -10,11 +10,11 @@
 
 ### 当前范围
 
-仅执行 GW Step 2：对冻结优先池做相关性筛选、已有资产复用、合法下载/转换、identity/content quality gate 与 coverage gap 报告。只允许输出 `fulltext available/unavailable / identity confirmed / content qualified`；所有条目继续保持 `HYPOTHESIS_ONLY`。
+最多执行两个相邻步骤：先用已有 JLT 2023 全文做 Step 2 narrow repair，再完成五篇 GW Step 3 全文精读、竞品动作综合与 canonical Q# 四判据裁决。2019 全文缺失保留为 novelty/claim limitation；只有窄 Q# 存活时才成为未授权 Step 3.5 的 critical debt。
 
 ### 明确不含
 
-- 不进入 Step 3 及以后；不做全文方法结论或完整动作签名提取。
+- 不进入 Step 3.5/4a 及以后；不新增搜索或下载。
 - 不实现、不仿真、不运行 smoke、不修 b3 代码。
 - 不把固定 SNR 阈值 branch-drop、SC/GSC 或 Johst 2024 已给出的 discard rule 当新方法。
 - 不重开 coded decoder-feedback C1；decoder/FEC flag 只可列为可选 receiver-visible feature。
@@ -27,6 +27,10 @@
   - 原因：V001 接受 Step 1，主控显式确认进入 acquisition。
   - 新范围：相关性筛选→资产复用→合法获取/转换→identity/content quality→coverage gap。
   - 影响的未决项：2019 P0 只判全文可得性；完整动作签名留给未授权 Step 3。
+- **[2026-08-11] D003**：撤销“2019 P0 缺失=绝对 hard blocker”，开放 Step 2 narrow repair + Step 3。
+  - 原因：共享根已有更晚、更强且可读的 JLT 2023 estimator-changing competitor；用户不接受继续把全部工作停在 coverage 行政门。
+  - 新范围：JLT 2023 CORE binding → Step 2 accepted with limitation → 五篇全文精读与 Q# 裁决。
+  - 影响的未决项：2019 缺失降为 claim limitation；仅当 Step 3 窄 Q# 存活时移交 Step 3.5。
 
 ## 进展线索
 
@@ -38,6 +42,8 @@
 - S002 / D002：主控确认 Step 2；开始 acquisition，Step 3=`NOT_AUTHORIZED`。
 - R002/R003：九篇冻结池中 4 篇 fulltext qualified；optical CORE=`2/5`。2019 P0 非 OA、无 arXiv/PDF URL且合法三轮获取失败，terminal=`STEP2_BLOCKED_CRITICAL_DIRECT_COMPETITOR_FULLTEXT`。
 - V002/H002：fresh verifier=`PASS 0/0/0`；coverage blocking terminal 被接受并交接主控，Step 3 仍未授权。
+- S003/D003：JLT 2023 source/content 身份、SHA、行数闭合；Step 2 修为 `STEP2_ACCEPTED_WITH_2019_FULLTEXT_LIMITATION`，Step 3 已授权并开始。
+- T007–T010/R004/D004/V003/H003：五篇全文完成；首验 PARTIAL 0/2/0 后，Q001 收窄到 Wang 真实 branch-local FS/phase-correction→MRC 边界并修 read-note 持久化链；终验 PASS 0/0/0。
 
 ## 已确认结论
 
@@ -50,13 +56,14 @@
 ### 其他结论
 
 1. 历史 b3 multi-aperture caller path 可作未来资产，但 truth-h 信息边界与 RNG/offset 是未来 Step 4a 债务，不在本轮修复。
-2. 当前冻结问题只是候选，不等于问题或方法已成立。
+2. Q001 仅在 branch-local FS/alignment+phase-correction→MRC 边界通过 Step 3 四判据；完整 post-all-FS/CE/CPE 位置仍未闭合。
+3. `STEP3_Q_SURVIVES_READY_FOR_STEP3_5` 只表示问题候选存活，不等于方法有效、新颖性闭合或论文贡献。
 
 ## 未决项
 
-1. 用户是否手动提供 2019 P0 合法全文，或显式接受 P0 未精读的 coverage/claim limitation。
-2. 在 coverage 阻塞未解除前，Step 3 不得授权。
+1. 主控是否授权 Step 3.5。
+2. Step 3.5 必须闭合 Sun 2019 exact action，并核真正 post-all-FS/CE/CPE task-matched baseline。
 
 ## 当前位置
 
-`GROUNDWORK_STEP2_BLOCKED_CRITICAL_DIRECT_COMPETITOR_FULLTEXT`：P0 unavailable，optical CORE 2/5；等待用户 coverage confirmation，Step 3=`NOT_AUTHORIZED`。
+`STEP3_Q_SURVIVES_READY_FOR_STEP3_5`：V003=`PASS 0/0/0`；等待主控确认，Step 3.5=`NOT_AUTHORIZED`。

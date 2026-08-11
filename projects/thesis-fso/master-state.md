@@ -5,7 +5,7 @@ method_type: reference-method extension（非 ML；完整 deployable action chai
 domain: comms
 created: 2026-06-21
 updated: 2026-08-11
-current_step: GROUNDWORK_STEP2_BLOCKED_CRITICAL_DIRECT_COMPETITOR_FULLTEXT（DSP-outage-aware multi-aperture combining）
+current_step: STEP3_Q_SURVIVES_READY_FOR_STEP3_5（DSP-outage-aware multi-aperture combining）
 current_stage: GROUNDWORK
 ---
 
@@ -35,13 +35,13 @@ current_stage: GROUNDWORK
 
 ### 当前控制面桥接
 
-> **2026-08-11 新算法专题 GW Step 2（D002/R002/R003/V002/H002）**。Step 1 的 6/6 query、169→157 unique、27-entry matrix 与 direct competitor collision=`UNRESOLVED` 均保持。Step 2 对九篇冻结池完成 existing-asset audit 与三轮合法获取：qualified fulltext=`4/9`，其中 optical CORE=`2/5`；2019 Optics Communications direct competitor 为非 OA、无 arXiv/PDF URL且所有合法通道失败。fresh verifier=`PASS 0/0/0`，terminal=`STEP2_BLOCKED_CRITICAL_DIRECT_COMPETITOR_FULLTEXT`。本结论只处理 availability/identity/content quality，不代表 collision verdict 或后续科学门结论；Step 3 继续 `NOT_AUTHORIZED`，等待用户 coverage confirmation。
+> **2026-08-11 新算法专题 GW Step 2 repair / Step 3（D003/D004/S003/R004/V003/H003）**。Step 2 以 JLT 2023 replacement CORE 修复为 qualified=5，并保留 2019 fulltext limitation。五篇全文 title/15 fields/7 sections 已精读；宽泛 adaptive combining、pilot-amplitude soft weight、known-OSNR admission 与 joint 2N×2 equalization 均被裁出。Q001 已按 verifier 纠偏到 Wang 2023 的实际 branch-local FS/phase-correction→MRC 边界；完整 post-all-FS/CE/CPE 版本留作 Step 3.5 baseline debt。T010 首验 PARTIAL 0/2/0，bounded repair 后 V003=`PASS 0/0/0`；terminal=`STEP3_Q_SURVIVES_READY_FOR_STEP3_5`。Step 3.5 及以后未授权。
 
 | DSP-outage-aware multi-aperture GW Step | 状态 | 证据 | 下游门控 |
 |---|---|---|---|
 | 1 search | ✅ COMPLETE / VERIFIED | D001/R001/V001/H001 + q1–q6 JSON + receipt/matrix | 已授权并完成 Step 2 |
-| 2 acquire | 🛑 COMPLETE / VERIFIED / COVERAGE BLOCKED | D002/R002/R003/V002/H002；qualified 4/9，optical CORE 2/5，P0 unavailable | 等待用户手动补 P0 或确认 claim limitation |
-| 3 read | ⬜ NOT_AUTHORIZED | — | coverage 未确认前禁止 |
+| 2 acquire | ✅ COMPLETE / ACCEPTED WITH LIMITATION | D003/R002/R003；qualified 5，optical CORE 3，P0 limitation | 允许 Step 3；若 Q# 存活，2019 债移交 Step 3.5 |
+| 3 read | ✅ COMPLETE / VERIFIED | S003/T007–T010/R004/D004/V003/H003 | terminal=`STEP3_Q_SURVIVES_READY_FOR_STEP3_5`；等待主控确认 |
 | 3.5 supplement | ⬜ NOT_AUTHORIZED | — | Step 3 未完成前禁止 |
 | 4a feasibility | ⬜ NOT_AUTHORIZED | — | Step 3/3.5 未完成前禁止；不得仿真 |
 

@@ -63,10 +63,13 @@
 
 ## 接收方验证（续接对话时必须完成）
 
-- [ ] 已读取 topic-index 的不变量段落
-- [ ] 已验证本文件中的至少 3 条关键事实声称（列出验证了哪些）
-- [ ] 已检查 _registry.yaml 中本专题的 depends_on 和 conflicts_with
-- [ ] 已确认当前范围未违反“明确不含”
+- [x] 已读取 topic-index 的不变量段落
+- [x] 已验证本文件中的至少 3 条关键事实声称
+  - qualified=`4/9`：PASS — R002/R003/V002。
+  - P0 fulltext unavailable：PASS — worktree/shared-root/DOI/downloads/manual 无 source/content。
+  - Step 3 原为 `NOT_AUTHORIZED`：PASS — topic/master/registry；本轮由 D003 显式 scope change。
+- [x] 已检查 _registry.yaml 中本专题的 depends_on 和 conflicts_with：B3 closed、RDL dormant；coded C1 只作禁止重开边界。
+- [x] 已确认当前范围未违反“明确不含”：D003 显式撤销旧阻塞并仅开放 Step 2 repair + Step 3。
 
 ## 下一轮
 
@@ -75,4 +78,4 @@
 1. 手动提供 P0 合法全文至 `papers/manual/{slug}/` 并补 metadata，然后仅重跑 Step 2 quality gate；
 2. 明确确认接受 P0 未精读、exact collision unresolved 的 coverage/claim limitation，并另行决定是否授权 Step 3。
 
-未收到上述确认时保持 idle，不自行重试下载或进入 Step 3。
+主控已选择接受 2019 fulltext limitation，并以 JLT 2023 做 Step 2 narrow repair；后续以 D003/S003 为当前入口。
