@@ -1,0 +1,146 @@
+{
+  "query": "post DSP branch reliability lock aware combining coherent optical diversity",
+  "timestamp": "2026-08-11T21:58:08.484574+08:00",
+  "sources": [
+    "s2",
+    "openalex"
+  ],
+  "total": 6,
+  "results": [
+    {
+      "title": "Toward Virtualized Optical-Wireless Heterogeneous Networks",
+      "authors": [
+        "Zoran Vujičić",
+        "María C. Santos",
+        "Rodrigo Méndez",
+        "Bleron Klaiqi",
+        "Jonathan Rodrı́guez",
+        "Xavier Gelabert",
+        "Md Arifur Rahman",
+        "Roberto Gaudino"
+      ],
+      "venue": "IEEE Access",
+      "year": 2024,
+      "doi": "10.1109/access.2024.3417358",
+      "arxiv_id": null,
+      "abstract": "Towards supporting a myriad of new services and applications under highly heterogeneous operating conditions, while dynamically adapting to capacity and quality-of-service (QoS) demands, the sixth generation (6G) communication systems are required to undergo significant advances. Along with the proliferation of devices, a multitude of challenges remain towards aspired performance, versatility, security, and cost-effectiveness of next generation networks. The aim of this work is to identify said challenges and promising approaches, within the scenario of dense and complex urban deployments enabled by optical-wireless coexistence. Towards enabling such operation scenario, our 6G vision focuses on various aspects of four main innovation paradigms. First, as future systems target network capacities beyond the capabilities of current technologies, the scientific trend of pursuing radio frequencies edging towards the THz domain continues. To ensure reliable and efficient deployment and mobility under the cell densification paradigm, particularly in complex urban environments, novel approaches are required to address the challenges as latency, signal blockages, and unreliable handovers. Second, towards enabling efficient operation under the heterogeneous scenario, we highlight the cooperative coexistence paradigm as a key feature of the underlying physical layer architecture. Third, joint and holistic resource optimization is required towards dynamically optimized support of mm-wave and sub-THz operation while retaining legacy coexistence, where we consider features that may benefit from the research paths proposed within the second paradigm. Fourth, network security is identified as critical towards the market adoption of technologies proposed within the first paradigm, where we highlight aspects unique to our scenario and network vision. We provide a comprehensive overview of promising state-of-the-art approaches and identify relevant research gaps while holistically addressing the four aforementioned innovation paradigms.",
+      "citation_count": 27,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.1109/access.2024.3417358",
+      "source_api": "openalex",
+      "relevance_score": 0.2,
+      "_score": 0.44000000000000006,
+      "id": "L001",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Combining techniques for the reception of signals from satellite constellations with path diversity at the User Terminals",
+      "authors": [
+        "Carlos Luis MARCOS ROJAS"
+      ],
+      "venue": "Open Repository and Bibliography (University of Luxembourg)",
+      "year": 2026,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "The large-scale deployment of non‑terrestrial networks (NTNs) based on non‑geostationary orbit (NGSO) satellite constellations is transforming the design paradigm of satellite communication systems. The availability of multiple simultaneously visible satellites at the user terminal (UT) enables the exploitation of spatial diversity through cooperative transmission. However, practical realization of such techniques is severely constrained by symbol‑level time misalignment caused by differential propagation delays, satellite motion, and heterogeneous onboard clocks. These impairments fundamentally challenge the applicability of classical transmit‑diversity techniques, such as space–time block coding (STBC), which rely on strict synchronization assumptions that are rarely satisfied in realistic satellite environments. This doctoral thesis investigates the feasibility of combining signals from distributed satellite transmitters at the user terminal under realistic timing, synchronization, and hardware constraints. The research focuses on UT‑assisted diversity combining strategies that do not rely on global channel state information at the gateway and that remain robust to symbol‑time misalignment. A comprehensive modeling framework is first developed to characterize waveform misalignment resulting from differential orbital dynamics and clock mismatch in low Earth orbit (LEO) constellations. Based on this model, a novel sample time misalignment estimation and distributed compensation architecture is proposed, combining coarse frame‑level synchronization with fine symbol‑time tracking using delay‑locked loop and Kalman‑filter‑based techniques for the estimation, and a distributed control loop between UT and satellite for the compensation. Building on this synchronization framework, the thesis introduces a low‑complexity UT receiver architecture capable of combining STBC‑encoded signals under imperfect symbol‑time alignment. The proposed approach explicitly incorporates time‑misalignment information into the diversity‑combining process, enabling effective mitigation of inter‑symbol interference induced by asynchronous waveform arrival. An analytical formulation of the combining scheme is presented, along with an efficient numerical implementation that exploits block‑circulant matrix structures and Fourier‑domain processing to significantly reduce computational complexity. The performance of the proposed algorithms is thoroughly evaluated through numerical simulations using DVB‑S2X waveforms under realistic satellite impairments, including Doppler shifts, power imbalance, and imperfect channel estimation. To validate practical feasibility, a real‑time hardware test-bed based on National Instruments (NI) universal software radio peripheral (USRP) platforms and field programmable gate array (FPGA) accelerated processing is developed. Experimental results demonstrate close agreement with theoretical and simulation outcomes, confirming that the proposed UT‑based diversity combining achieves stable signal‑to‑interference‑plus‑noise ratio (SINR) gains and robust operation even under symbol‑time misalignment. Overall, this thesis advances the state of the art in cooperative satellite communications by demonstrating that practical transmit diversity can be achieved at the UT without stringent synchronization requirements at the gateway. The proposed techniques contribute to scalable, resilient, and hardware‑validated solutions suitable for future non‑terrestrial networks.",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "https://orbilu.uni.lu/bitstream/10993/68637/1/COMBINING%20TECHNIQUES%20FOR%20THE%20RECEPTION%20OF%20SIGNALS%20FROM%20SATELLITE%20CONSTELLATIONS%20WITH%20PATH%20DIVERSITY%20AT%20THE%20USER%20TERMINALS.pdf",
+      "source_api": "openalex",
+      "relevance_score": 0.3,
+      "_score": 0.35,
+      "id": "L002",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Optical Network Automation: Enhancing Networks with Machine Learning, Digital Twins, and Advanced Technologies",
+      "authors": [
+        "Sergio Cruzes"
+      ],
+      "venue": "",
+      "year": 2025,
+      "doi": "10.36227/techrxiv.174140893.36394757/v3",
+      "arxiv_id": null,
+      "abstract": "Optical networks form the backbone of modern digital infrastructure, facing escalating demands for capacity, reliability, and dynamic service provisioning. Traditional manual management approaches are proving inadequate for operating these increasingly complex and heterogeneous systems. This tutorial-style survey provides a structured introduction to the principles, enabling technologies, and recent advances in optical network automation, driven by the convergence of machine learning (ML), digital twins (DTs), large language models (LLMs), and emerging agentic AI frameworks. In addition to reviewing state-of-the-art research, the paper offers step-by-step explanations of key concepts—ranging from optical impairments and signal processing to ML algorithms, DT architectures, and LLM operation—equipping readers with the foundational knowledge required to design next-generation automation frameworks. Special emphasis is placed on the foundational role of telemetry in enabling real-time data collection, network observability, and closed-loop control. By combining a pedagogical treatment of enabling methods with an overview of cutting-edge applications such as quality of transmission (QoT) estimation, resource optimization, and failure management, this work serves both as an educational resource and as a reference on current research directions. We conclude with open research challenges and a strategic roadmap toward scalable, self-optimizing, and resilient optical networks.",
+      "citation_count": 1,
+      "is_open_access": true,
+      "pdf_url": "https://www.techrxiv.org/doi/pdf/10.36227/techrxiv.174140893.36394757/v3",
+      "source_api": "openalex+openalex",
+      "relevance_score": 0.3,
+      "_score": 0.3355555555555556,
+      "id": "L003",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "MINIX 3: Status report and current research",
+      "authors": [
+        "Andrew S. Tanenbaum",
+        "Raja Appuswamy",
+        "Herbert Bos",
+        "Lorenzo Cavallaro",
+        "Cristiano Giuffrida",
+        "Tomas Hruby",
+        "Jorrit N. Herder",
+        "Erik van der Kouwe",
+        "David C. van Moolenbroek"
+      ],
+      "venue": "VU Research Portal",
+      "year": 2010,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "I n m y F e b r u a r y 2 0 1 0 c o l u m n [ 1 ] , ; L O G I N : J u N e 2 0 1 0 m u s I N G s 5related designs makes development and support (the compilers and libraries) cheaper.In the world of embedded systems, you can order systems-onchip (SoC) with just the processing and I/O support features your application requires.But there will be extra cost for anything customized.Volume manufacturing drives price down quickly.For now, I expect to see multicore CPUs with homogeneous cores.I don't expect to see cache-coherent systems with more than 16 cores (although you can already have quad-CPU systems with more than 16 cores).I say this because of the limitation on the amount of power available in single-die designs and the pressure on memory busses required by cache-coherency.Designs like the Intel Single Chip Cloud use much simpler CPUs and dispense with cache-coherency in exchange for message passing.If you read the MINIX 3 article in this issue or read about Barrelfish in the April 2010 issue, you will see that message passing appears to be the way forward for multicore systems. LineupAndrew Tanenbaum, with help from many co-authors, updates us on what is happening with MINIX 3. MINIX 3 is a modern operating system designed both as a platform for learning about OS design and as a real OS with a BSD-style license, with reliability, flexibility, and security highest on the feature list.I like what I read about the future directions of the MINIX 3 project.And where Linux (or Solaris or BSD) runs on every core in multicore CPUs, MINIX 3 not only has a much smaller code footprint but might someday require only some library code to run on each core, as Barrelfish does today (the dispatcher and CPU driver).Jim Sangwine writes another article that looks to the near future.Sangwine's current research focus is on the use of 3D in Web applications.In his article, Sangwine looks at the leading contenders, Flash with the PaperScript library, WebGL, and O3D, using history as well as sample applications written using each library to test for performance and ease of programming.Alva Couch takes us on a sociological safari into programming via ritual.Couch, like many of the older generation, tended to want to know everything about what they were doing-I certainly did.But today's programmers work much faster, taking advantage of Internet searches to find what works without needing to know why it works.Couch examines design patterns, examples, and rituals to distinguish these aids to programming, and he draws some conclusions about this new phenomenon.Andy Seely takes us on a different journey, one into the realm of DoD sysadmin.Seely works for SAIC, and their customer needed a secure, easyto-maintain (dead simple to maintain, really) and reliable replacement for a failed DNS server setup.Seely came up with a hardened Solaris VM that can be cloned, configured, and tested remotely, while being instantiated wherever needed just by using a VMware console.Matt Simmons journeys back in time to LISA '09.Simmons shares his experience of attending his first LISA, and may perhaps encourage those who have yet to attend to head to San Jose for LISA '10.Rudi van Drunen is back with a look at using small embedded systems.As an example, he focuses on Arduino, a small, inexpensive, open source platform that comes with an IDE for programming, lots of example code, and even plug-in modules (shields) for adding extensions to this simple processor.6 ; L O G I N : vO L . 3 5, N O. 3David Blank-Edelman has written about libraries useful for creating dummy data.The article is not dumb, or just full of stuff, but demonstrates how you can create various types of test data quickly.Peter Galvin shares his excitement about a new Sun/Oracle product, the Exadata V2.The Exadata V2 is both a database engine and a storage subsystem, but with a difference.Even the storage subsystem can carry out database operations, and the entire system can act as a transactional processing center and a data warehouse simultaneously-no mean feat.Delving into the hardware is part of what got me going about CPU futures (as did Tanenbaum's article).Dave Josephsen writes about the use of packet capture tools for monitoring.Josephsen describes useful tools for capturing packets, including combining many sources into single archives using standard formats (flows and pcap), as well as one of my own favorite analysis tools, Argus.Robert Ferrell covers his top five misconceptions about information security.In case you think he is just making this stuff up, he actually has special, super-secret techniques for collecting the information that becomes the ideas behind his columns.And no, he is not using Data::Generator.Our main book reviewer, Elizabeth Zwicky, is taking a vacation this time.However, we have two excellent book reviews, one from Brandon Ching about a book on how organizations can use Second Life, and the other from Sam Stover giving us an in-depth look at a \"short\" (in Stover's terms) book about cloud security.In conference reports, this issue covers FAST '10 and the SustainIT and TaPP workshops.As regular readers of \"Musings\" may have noted, I fully expect the future of computing to be distributed.In the larger sense, this already exists in the forms of clouds, Web apps, Hadoop, and new frameworks such as Microsoft's Midori and .NET projects.But I also believe that the days of the homogeneous core processors are numbered, and I can only muse upon the possible futures of computing, from small embedded systems such as smart phones all the way up to high-end servers.",
+      "citation_count": 14,
+      "is_open_access": true,
+      "pdf_url": "https://www.usenix.org/system/files/login/issues/login_june_2010.pdf",
+      "source_api": "openalex",
+      "relevance_score": 0.3,
+      "_score": 0.2433333333333333,
+      "id": "L004",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Nonlinearity Compensation for Next Generation Coherent Optical Fiber Communication Systems",
+      "authors": [
+        "Ali Bakhshali"
+      ],
+      "venue": "QSpace (Queen's University Library)",
+      "year": 2017,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "In this thesis, we focus on digital signal processing (DSP) solutions that can help to combat various sources of nonlinearity in fiber-optic communication systems. Fiber Kerr nonlinearities are widely known to constitute a fundamental limit on the capacity of long-haul optical transmission as they restrict the maximum launch power into the fiber. This effectively limits the maximum optical signal-to-noise ratio (OSNR) that can be achieved in the receiver which in-turn puts a cap on the transmission reach. However, cost-effective DSP-based fiber nonlinearity mitigation schemes for long-haul transmission are yet to be deployed. By employing Volterra analysis of an optical channel comprising multiple spans of single mode fiber (SMF), we develop two solutions to improve the complexity-performance trade-off of Volterra-based nonlinear&#13;\\nequalization (VNLE). First, we demonstrate that a significant portion of the VNLE filter coefficients are canceled out in the presence of a symmetric dispersion map.&#13;\\nAdditionally, we propose novel cascade structures for VNLE that are shown to provide substantial complexity reductions compared to the conventional VNLE with linear and nonlinear filters in parallel. Note that other sources of nonlinear distortions can also significantly impair system performance. Recent experiments on transmission&#13;\\nof high baud-rate optical signal revealed that the back-to-back performance of these systems are highly degraded by pattern-dependent distortion (PDD) which cannot be effectively compensated by linear filtering or static look-up-tables. In order to address these impairments, we developed a family of sequential detection strategies based on hidden Markov modeling of PDD. The proposed solutions are highly configurable to suit the target complexity constraints.",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "http://hdl.handle.net/1974/22822",
+      "source_api": "openalex",
+      "relevance_score": 0.3,
+      "_score": 0.16999999999999998,
+      "id": "L005",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Coherent optical short-reach communications",
+      "authors": [
+        "Di Che"
+      ],
+      "venue": "Minerva Access (University of Melbourne)",
+      "year": 2016,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "Driven primarily by cloud service and data-center applications, short-reach optical communication has become a key market segment and growing research area in recent years. Short-reach systems are characterized by direct detection-based receiver configurations and other low-cost and small form factor components that induce transmission impairments unforeseen in their coherent counterparts. Innovative signaling and digital signal processing (DSP) play a pivotal role in enabling these components to realize their ultimate potentials and meet data rate requirements in cost-effective manners. This paper presents an overview of recent DSP developments for short-reach communications systems and discusses future trends.",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "http://hdl.handle.net/11343/129708",
+      "source_api": "openalex",
+      "relevance_score": 0.3,
+      "_score": 0.15,
+      "id": "L006",
+      "download": true,
+      "publication_status": "published"
+    }
+  ]
+}

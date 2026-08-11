@@ -1,0 +1,76 @@
+{
+  "query": "robust MRC channel estimation outlier branch rejection generalized selection combining",
+  "timestamp": "2026-08-11T22:01:53.105429+08:00",
+  "sources": [
+    "s2",
+    "openalex"
+  ],
+  "total": 3,
+  "results": [
+    {
+      "title": "Inference of Coalescence Times and Variant Ages Using Convolutional Neural Networks",
+      "authors": [
+        "Juba Nait Saada",
+        "Zoi Tsangalidou",
+        "M. Stricker",
+        "Pier Francesco Palamara"
+      ],
+      "venue": "Molecular Biology and Evolution",
+      "year": 2023,
+      "doi": "10.1093/molbev/msad211",
+      "arxiv_id": null,
+      "abstract": "Accurate inference of the time to the most recent common ancestor (TMRCA) between pairs of individuals and of the age of genomic variants is key in several population genetic analyses. We developed a likelihood-free approach, called CoalNN, which uses a convolutional neural network to predict pairwise TMRCAs and allele ages from sequencing or SNP array data. CoalNN is trained through simulation and can be adapted to varying parameters, such as demographic history, using transfer learning. Across several simulated scenarios, CoalNN matched or outperformed the accuracy of model-based approaches for pairwise TMRCA and allele age prediction. We applied CoalNN to settings for which model-based approaches are under-developed and performed analyses to gain insights into the set of features it uses to perform TMRCA prediction. We next used CoalNN to analyze 2,504 samples from 26 populations in the 1,000 Genome Project data set, inferring the age of ∼80 million variants. We observed substantial variation across populations and for variants predicted to be pathogenic, reflecting heterogeneous demographic histories and the action of negative selection. We used CoalNN's predicted allele ages to construct genome-wide annotations capturing the signature of past negative selection. We performed LD-score regression analysis of heritability using summary association statistics from 63 independent complex traits and diseases (average N=314k), observing increased annotation-specific effects on heritability compared to a previous allele age annotation. These results highlight the effectiveness of using likelihood-free, simulation-trained models to infer properties of gene genealogies in large genomic data sets.",
+      "citation_count": 9,
+      "is_open_access": true,
+      "pdf_url": "https://academic.oup.com/mbe/advance-article-pdf/doi/10.1093/molbev/msad211/51712951/msad211.pdf",
+      "source_api": "openalex",
+      "relevance_score": 0.2,
+      "_score": 0.42000000000000004,
+      "id": "L001",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "A Sensor-Centric Survey of Autonomous Driving: Integrating Measurement Physics, Uncertainty Modeling, and Safety-Critical Multi-Sensor Fusion",
+      "authors": [
+        "Umar Iqbal",
+        "Ali Massoud",
+        "Aboelmagd Noureldin"
+      ],
+      "venue": "Sensors",
+      "year": 2026,
+      "doi": "10.3390/s26123801",
+      "arxiv_id": null,
+      "abstract": "Autonomous driving systems (ADSs) are reliable only when heterogeneous sensors, estimation algorithms, and safety mechanisms are engineered as a single coherent safety-critical measurement system rather than as loosely coupled modules. Production stacks integrate cameras, LiDAR, automotive radar, and GNSS/IMU, yet deployment remains constrained by modality-specific failure modes, calibration and synchronization drift, and out-of-distribution (OOD) conditions that violate modeling assumptions. These limitations induce overconfidence and downstream decision errors whenever planning assumes certainty sharper than sensing can justify. This survey introduces a sensor-centric framework linking measurement physics, uncertainty propagation, fusion integrity, safety assurance, and risk-aware planning and control. We formalize what each modality physically measures; unify probabilistic, evidential, and conformal uncertainty representations; analyze filtering, factor-graph, BEV, transformer, and state-space fusion architectures with an emphasis on robustness and graceful degradation; and generalize aviation-style integrity concepts (RAIM/ARAIM) to multi-modal autonomy. The distinctive contribution is a single sensor-to-assurance throughline in which every uncertainty representation is tied to its measurement physics, every fusion architecture is evaluated against an explicit integrity-monitoring requirement generalized from RAIM/ARAIM, and every safety-standard clause is mapped to a concrete architectural mechanism. We map these mechanisms onto ISO 26262, ISO 21448 (SOTIF), ISO/PAS 8800, ANSI/UL 4600, and the UNECE framework, and connect perception uncertainty to decision-making through chance-constrained MPC and formal safety filters (RSS, CBF). Industry case studies and emerging V2X and generative-simulation approaches close the loop to deployable safety arguments.",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.3390/s26123801",
+      "source_api": "openalex",
+      "relevance_score": 0.3,
+      "_score": 0.35,
+      "id": "L002",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Interference Robustness and Security of Impulse-Radio Ultra-Wide Band Networks",
+      "authors": [
+        "Manuel Flury"
+      ],
+      "venue": "Infoscience (Ecole Polytechnique Fédérale de Lausanne)",
+      "year": 2010,
+      "doi": "10.5075/epfl-thesis-4698",
+      "arxiv_id": null,
+      "abstract": "In this thesis we study Impulse-Radio Ultra-Wide Band (IR-UWB), a physical layer radio technology offering many features that make it a promising choice for future short-range wireless networks. The challenges in such networks are many, ranging from the cost-complexity constraints of devices, through the presence of interference created by other users, up to stringent security requirements imposed by sensitive applications. Our main goal is to understand and show how a low-complexity IR-UWB receiver can be designed such that it is able to cope with the difficult environment that it will face in such networks. Although IR-UWB systems promise to provide a solution for some of the above-mentioned challenges, IR-UWB is not a panacea: More often than not, it will be able to live up to its promises only if the entire system is carefully designed. One example is robustness to interference from concurrent users, which is the topic of the first part of this thesis. Short-range wireless networks are expected to be self-organized and uncoordinated rather than centrally organized. This in turn leads to uncontrolled interference due to concurrent transmissions from uncoordinated devices. Thanks to its large bandwidth, combined with low duty-cycle transmissions, IR-UWB should in theory be able to accommodate a large number of concurrent users while keeping multi-user interference (MUI) levels low. We show that, if not properly addressed, MUI can severely affect the performance of an IR-UWB receiver, making this benefit of IR-UWB void. This is especially true if low complexity architectures, such as the popular non-coherent energy-detection receiver, are used. Further, we show that MUI affects all aspects of physical layer packet reception and appropriate algorithms to deal with it are thus required at every level. The first crucial step to receive an IR-UWB data packet is signal acquisition. We present a robust and low-complexity algorithm that allows for reliable signal acquisition with an IR-UWB energy-detection receiver in the presence of MUI, even in near-far scenarios. After signal acquisition, the receiver performs a phase of channel estimation. Channel estimation is of particular importance for interference mitigation: it allows the receiver to distinguish the signal of the user of interest from MUI. In the case of energy-detection receivers that are compliant with the IR-UWB standard IEEE 802.15.4a, channel estimation is especially challenging because with this standard the signalling structure changes within a data packet. We introduce a novel receiver structure that takes this peculiarity into account and allows for the design of robust low-complexity receivers for IEEE 802.15.4a networks. The final step in receiving a data packet is demodulation and decoding of the payload. We show that an adaptive thresholding scheme that uses the channel state information, obtained during channel estimation, can yield very good robustness against MUI. We also introduce more sophisticated algorithms that are based on statistical interference modeling and show that they yield an additional increase in robustness against MUI. In the second part of this thesis we investigate clock-offset tracking for IR-UWB energy-detection receivers. Clock-offset tracking is needed because the oscillators driving the clocks of low-complexity receivers are of average quality at best. We show that the resulting desynchronization between transmitter and receiver may lead to a huge performance degradation in the case of adaptive energy-detection receivers. To overcome this sensitivity to clock offsets, we present a clock-offset tracking algorithm that is constructed around the Radon transform, an image processing tool traditionally used to detect line features in images. Our algorithm is fully compatible with the IEEE 802.15.4a standard, does not increase the hardware complexity of the receiver and reduces the performance loss due to clock offsets to a marginal level. In the third part of this thesis, we look at IR-UWB from the viewpoint of security. We evaluate to what extent IEEE 802.15.4a is vulnerable to distance-decreasing attacks on the physical layer. These attacks target the ranging mechanism that allows two wireless devices to estimate their mutual distance. Commonly, ranging is secured by secure ranging protocols employing cryptographic mechanisms that guarantee that the estimated distance is an upper-bound on the actual distance. However, a new breed of attacks bypasses these cryptographic mechanisms, introduced at higher communication layers, by directly attacking the physical layer. Understanding the impact of these attacks on IEEE 802.15.4a is of the utmost importance: its high precision ranging capabilities make IR-UWB a natural candidate for ranging applications, and IEEE 802.15.4a is the only wireless standard that has been specifically designed for ranging. Our analysis shows that IEEE 802.15.4a, does not automatically provide security against such attacks. We find that with the mandatory modes of the standard and no appropriate countermeasures in place, an external attacker can decrease the measured distance by more than one hundred meters with a very high probability.",
+      "citation_count": 6,
+      "is_open_access": true,
+      "pdf_url": "https://infoscience.epfl.ch/record/147968/files/EPFL_TH4698.pdf",
+      "source_api": "openalex",
+      "relevance_score": 0.3,
+      "_score": 0.26999999999999996,
+      "id": "L003",
+      "download": true,
+      "publication_status": "published"
+    }
+  ]
+}

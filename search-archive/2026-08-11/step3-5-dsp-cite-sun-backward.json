@@ -1,0 +1,491 @@
+{
+  "query": "",
+  "timestamp": "2026-08-11T21:58:15.768163+08:00",
+  "sources": [
+    "citations_openalex"
+  ],
+  "total": 24,
+  "results": [
+    {
+      "title": "Laser Beam Propagation through Random Media",
+      "authors": [
+        "Larry C. Andrews",
+        "Ronald L. Phillips"
+      ],
+      "venue": "SPIE eBooks",
+      "year": 2005,
+      "doi": "10.1117/3.626196",
+      "arxiv_id": null,
+      "abstract": "SPIE Press is the largest independent publisher of optics and photonics books - access our growing scientific eBook collection ranging from monographs, reference works, field guides, and tutorial texts.",
+      "citation_count": 4476,
+      "is_open_access": true,
+      "pdf_url": "https://stars.library.ucf.edu/scopus2000/3722",
+      "source_api": "openalex_citations",
+      "id": "L001",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Survey on Free Space Optical Communication: A Communication Theory Perspective",
+      "authors": [
+        "Mohammad‐Ali Khalighi",
+        "Murat Uysal"
+      ],
+      "venue": "IEEE Communications Surveys & Tutorials",
+      "year": 2014,
+      "doi": "10.1109/comst.2014.2329501",
+      "arxiv_id": null,
+      "abstract": "Optical wireless communication (OWC) refers to transmission in unguided propagation media through the use of optical carriers, i.e., visible, infrared (IR), and ultraviolet (UV) bands. In this survey, we focus on outdoor terrestrial OWC links which operate in near IR band. These are widely referred to as free space optical (FSO) communication in the literature. FSO systems are used for high rate communication between two fixed points over distances up to several kilometers. In comparison to radio-frequency (RF) counterparts, FSO links have a very high optical bandwidth available, allowing much higher data rates. They are appealing for a wide range of applications such as metropolitan area network (MAN) extension, local area network (LAN)-to-LAN connectivity, fiber back-up, backhaul for wireless cellular networks, disaster recovery, high definition TV and medical image/video transmission, wireless video surveillance/monitoring, and quantum key distribution among others. Despite the major advantages of FSO technology and variety of its application areas, its widespread use has been hampered by its rather disappointing link reliability particularly in long ranges due to atmospheric turbulence-induced fading and sensitivity to weather conditions. In the last five years or so, there has been a surge of interest in FSO research to address these major technical challenges. Several innovative physical layer concepts, originally introduced in the context of RF systems, such as multiple-input multiple-output communication, cooperative diversity, and adaptive transmission have been recently explored for the design of next generation FSO systems. In this paper, we present an up-to-date survey on FSO communication systems. The first part describes FSO channel models and transmitter/receiver structures. In the second part, we provide details on information theoretical limits of FSO channels and algorithmic-level system design research activities to approach these limits. Specific topics include advances in modulation, channel coding, spatial/cooperative diversity techniques, adaptive transmission, and hybrid RF/FSO systems.",
+      "citation_count": 2430,
+      "is_open_access": true,
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/9739/6963743/06844864.pdf",
+      "source_api": "openalex_citations",
+      "id": "L002",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Optical Communication in Space: Challenges and Mitigation Techniques",
+      "authors": [
+        "Hemani Kaushal",
+        "Georges Kaddoum"
+      ],
+      "venue": "IEEE Communications Surveys & Tutorials",
+      "year": 2016,
+      "doi": "10.1109/comst.2016.2603518",
+      "arxiv_id": null,
+      "abstract": "In recent years, free space optical (FSO) communication has gained significant importance owing to its unique features: large bandwidth, license free spectrum, high data rate, easy and quick deployability, less power, and low mass requirements. FSO communication uses optical carrier in the near infrared band to establish either terrestrial links within the Earth's atmosphere or inter-satellite/deep space links or ground-to-satellite/satellite-to-ground links. It also finds its applications in remote sensing, radio astronomy, military, disaster recovery, last mile access, backhaul for wireless cellular networks, and many more. However, despite of great potential of FSO communication, its performance is limited by the adverse effects (viz., absorption, scattering, and turbulence) of the atmospheric channel. Out of these three effects, the atmospheric turbulence is a major challenge that may lead to serious degradation in the bit error rate performance of the system and make the communication link infeasible. This paper presents a comprehensive survey on various challenges faced by FSO communication system for ground-to-satellite/satellite-to-ground and inter-satellite links. It also provides details of various performance mitigation techniques in order to have high link availability and reliability. The first part of this paper will focus on various types of impairments that pose a serious challenge to the performance of optical communication system for ground-to-satellite/satellite-to-ground and inter-satellite links. The latter part of this paper will provide the reader with an exhaustive review of various techniques both at physical layer as well as at the other layers (link, network, or transport layer) to combat the adverse effects of the atmosphere. It also uniquely presents a recently developed technique using orbital angular momentum for utilizing the high capacity advantage of optical carrier in case of space-based and near-Earth optical communication links. This survey provides the reader with comprehensive details on the use of space-based optical backhaul links in order to provide high capacity and low cost backhaul solutions.",
+      "citation_count": 1842,
+      "is_open_access": true,
+      "pdf_url": "https://arxiv.org/pdf/1705.10630",
+      "source_api": "openalex_citations",
+      "id": "L003",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Performance analysis of satellite-to-ground downlink coherent optical communications with spatial diversity over Gamma–Gamma atmospheric turbulence",
+      "authors": [
+        "Jing Ma",
+        "Kangning Li",
+        "Liying Tan",
+        "Siyuan Yu",
+        "Yubin Cao"
+      ],
+      "venue": "Applied Optics",
+      "year": 2015,
+      "doi": "10.1364/ao.54.007575",
+      "arxiv_id": null,
+      "abstract": "The performances of satellite-to-ground downlink optical communications over Gamma-Gamma distributed atmospheric turbulence are studied for a coherent detection receiving system with spatial diversity. Maximum ratio combining (MRC) and selection combining (SC) techniques are considered as practical schemes to mitigate the atmospheric turbulence. Bit-error rate (BER) performances for binary phase-shift keying modulated coherent detection and outage probabilities are analyzed and compared for SC diversity using analytical results and for MRC diversity through an approximation method with different numbers of receiving aperture each with the same aperture area. To show the net diversity gain of a multiple aperture receiver system, BER performances and outage probabilities of MRC and SC multiple aperture receiver systems are compared with a single monolithic aperture with the same total aperture area (same total average incident optical power) for satellite-to-ground downlink optical communications. All the numerical results are verified by Monte-Carlo simulations.",
+      "citation_count": 123,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L004",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Multi-aperture digital coherent combining for free-space optical communication receivers",
+      "authors": [
+        "David J. Geisler",
+        "Timothy M. Yarnall",
+        "Mark L. Stevens",
+        "Curt Schieler",
+        "Bryan S. Robinson",
+        "Scott A. Hamilton"
+      ],
+      "venue": "Optics Express",
+      "year": 2016,
+      "doi": "10.1364/oe.24.012661",
+      "arxiv_id": null,
+      "abstract": "Space-to-ground optical communication systems can benefit from reducing the size, weight, and power profiles of space terminals. One way of reducing the required power-aperture product on a space platform is to implement effective, but costly, single-aperture ground terminals with large collection areas. In contrast, we present a ground terminal receiver architecture in which many small less-expensive apertures are efficiently combined to create a large effective aperture while maintaining excellent receiver sensitivity. This is accomplished via coherent detection behind each aperture followed by digitization. The digitized signals are then combined in a digital signal processing chain. Experimental results demonstrate lossless coherent combining of four lasercom signals, at power levels below 0.1 photons/bit/aperture.",
+      "citation_count": 110,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.1364/oe.24.012661",
+      "source_api": "openalex_citations",
+      "id": "L005",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Free-Space Optical Communication Impaired by Angular Fluctuations",
+      "authors": [
+        "Shenjie Huang",
+        "Majid Safari"
+      ],
+      "venue": "IEEE Transactions on Wireless Communications",
+      "year": 2017,
+      "doi": "10.1109/twc.2017.2749219",
+      "arxiv_id": null,
+      "abstract": "In this paper, the impairments of free-space optical (FSO) communication systems caused by angular fluctuations including beam misalignment and angle-of-arrival (AOA) fluctuations are modeled in the presence of both atmospheric turbulence and transceiver vibrations. In particular, assuming FSO receivers with a limited field-of-view (FOV), the fading caused by AOA fluctuations is studied. The outage probability expressions for both coherent and direct detections are derived in both shot-noise-limited and thermal-noise-limited regimes. For direct detection, the optimal receiver FOV that achieves the minimum outage probability is considered. Furthermore, the issue of imperfect phasefront tracking in practical coherent receivers is investigated.",
+      "citation_count": 76,
+      "is_open_access": true,
+      "pdf_url": "https://www.pure.ed.ac.uk/ws/files/47286230/AOA_Final.pdf",
+      "source_api": "openalex_citations",
+      "id": "L006",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Performance Evaluation of Space Shift Keying in Free-Space Optical Communication",
+      "authors": [
+        "Anshul Jaiswal",
+        "Manav R. Bhatnagar",
+        "Virander Kumar Jain"
+      ],
+      "venue": "Journal of Optical Communications and Networking",
+      "year": 2017,
+      "doi": "10.1364/jocn.9.000149",
+      "arxiv_id": null,
+      "abstract": "In this paper, we study the performance of a space shift keying (SSK) scheme in a free-space optical (FSO) communication system under indoor and outdoor conditions. For the outdoor Nt&#x00D7;1 FSO-SSK system, where Nt is the number of transmitters (Txs), a novel closed-form mathematical expression for the probability density function (pdf) of the difference between two weighted gamma-gamma random variables is derived. Using this pdf, a new analytical expression is obtained for the tight upper bound of the average bit error rate (ABER) of this system. We also study the analytical bit error rate (BER) of an indoor Nt&#x00D7;1 FSO-SSK system experiencing a deterministic channel. For this system, optimized values of transmit power weights are obtained by minimizing the analytical BER; it is observed that the optimized nonuniform power distribution is better than the uniform power distribution. However, for the outdoor FSO-SSK system, the best error performance can be achieved by employing uniform transmit power. An asymptotic BER analysis of uniformly weighted general outdoor FSO-SSK with an arbitrary number of Tx and receiver (Rx) apertures is also performed. Furthermore, the analytical coding gain and diversity order of the considered system are found based on the derived analytical BER expression. An interesting result observed from the coding gain analysis is that the performance of the outdoor FSO-SSK system remains unaltered from a moderate to a strong atmospheric turbulence regime, which makes the considered system nearly independent of turbulence. In addition, it is found by simulation and analysis that the considered system performs more poorly under the weak turbulence regime as compared to the other (strong and moderate) turbulence regimes. Our analysis also shows that the diversity order of the outdoor FSO-SSK system is Nr/2, where Nr is the number of Rx apertures, irrespective of the number of optical sources and turbulence conditions. In addition, it is observed that the performance of the FSO-SSK system degrades with an increasing number of optical sources under both indoor and outdoor conditions. Therefore, a trade-off between spectral efficiency and ABER is observed.",
+      "citation_count": 65,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L007",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Modified constant modulus algorithm: blind equalization and carrier phase recovery algorithm",
+      "authors": [
+        "Kil Nam Oh",
+        "Yong Ohk Chin"
+      ],
+      "venue": "",
+      "year": 2002,
+      "doi": "10.1109/icc.1995.525219",
+      "arxiv_id": null,
+      "abstract": "The modified constant modulus algorithm (MCMA) that accomplishes blind equalization and carrier phase recovery simultaneously is proposed. Since the constant modulus algorithm (CMA) converges independently of carrier recovery, at convergence an output constellation has a phase error. With modification of the CMA, the proposed algorithm can solve this problem. Furthermore, the new algorithm results in the performance enhancement of convergence speed and residual ISI compared to the CMA. In addition, the proposed algorithm achieves a performance as good as that of a joint CMA and decision-directed (DD) phase recovery scheme with reduction in computational complexity. Simulation results confirm the effectiveness of the proposed algorithm in removing ISI and correcting carrier phase error at the same time.",
+      "citation_count": 207,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L008",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Performance analysis of optical receivers with space diversity reception",
+      "authors": [
+        "M.M. Ibrahim",
+        "A. Ibrahim"
+      ],
+      "venue": "IEE Proceedings - Communications",
+      "year": 1996,
+      "doi": "10.1049/ip-com:19960885",
+      "arxiv_id": null,
+      "abstract": "The performance of digital and analogue direct-detection optical receivers with space diversity reception is analysed. The cumulative probability distribution of the received signal is calculated for M-branch selection diversity and equal-gain combining diversity receivers. For a given probability of detection, the permissible threshold detection level is shown to increase with the number of diversity branches. The improvement in carrier-to-noise ratio (CNR) is shown to be higher for selection diversity compared to combining diversity detection. Optimum diversity array spacing is calculated; this shows the practicality of space diversity systems.",
+      "citation_count": 77,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L009",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Error Rate Analysis of M-ary Coherent Free-Space Optical Communication Systems with K-Distributed Turbulence",
+      "authors": [
+        "Mingbo Niu",
+        "Julian Cheng",
+        "Jonathan F. Holzman"
+      ],
+      "venue": "IEEE Transactions on Communications",
+      "year": 2011,
+      "doi": "10.1109/tcomm.2011.010411.090109",
+      "arxiv_id": null,
+      "abstract": "Coherent free-space optical (FSO) communications is analyzed for long-range, high turbulence FSO systems operating under K-distributed turbulence conditions. Exact error rates are presented for M-ary phase-shift keying (MPSK) and M-ary quadrature amplitude modulation (MQAM) using a closed-form moment generating function. Maximum ratio combining (MRC) reception is employed in the system with MPSK and MQAM to mitigate the turbulence effects, and asymptotic error rate analysis is presented for this MRC reception. The error rate performance degradation caused by phase compensation error is also studied, and it is found that the impact of phase compensation error on the error rate performance can be small when the standard deviation of the phase compensation error is kept below twenty degrees.",
+      "citation_count": 71,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L010",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Diversity–Multiplexing Trade-Off in Coherent Free-Space Optical Systems With Multiple Receivers",
+      "authors": [
+        "Sahar Molla Aghajanzadeh",
+        "Murat Uysal"
+      ],
+      "venue": "Journal of Optical Communications and Networking",
+      "year": 2010,
+      "doi": "10.1364/jocn.2.001087",
+      "arxiv_id": null,
+      "abstract": "In this paper, from an information theory point of view, we investigate the performance of a coherent free-space optical (FSO) communication system with multiple receive apertures over atmospheric turbulence channels. Our study builds on a recently introduced statistical model that characterizes the combined effects of turbulence-induced wavefront distortion and amplitude fluctuation in coherent receivers with phase compensation. We investigate the link reliability as quantified by “diversity gain” and the relationship between the link reliability and the spectral efficiency as quantified by “diversity–multiplexing trade-off (DMT).” Our results provide insight into the performance mechanisms of coherent FSO systems and demonstrate significant performance gains that can be obtained through the deployment of multiple receive apertures and phase compensation techniques.",
+      "citation_count": 67,
+      "is_open_access": true,
+      "pdf_url": "https://opg.optica.org/viewmedia.cfm?uri=jocn-2-12-1087&seq=0",
+      "source_api": "openalex_citations",
+      "id": "L011",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Free-Space Optical Communication With Spatial Modulation and Coherent Detection Over H-K Atmospheric Turbulence Channels",
+      "authors": [
+        "Kostas P. Peppas",
+        "P. Takis Mathiopoulos"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 2015,
+      "doi": "10.1109/jlt.2015.2465385",
+      "arxiv_id": null,
+      "abstract": "The use of optical spatial modulation (OSM) is proposed as a simple low-complexity means of achieving spatial diversity in coherent free-space optical (FSO) communication systems. In doing so, this paper presents a generic analytical framework for obtaining the average bit error probability (ABEP) of uncoded and coded OSM with coherent detection in the presence of turbulence-induced fading. Although the framework is general enough to accommodate any type of channel models based on turbulence scattering, the focus of the analysis is on the H-K distribution as such model is very general and valid over a wide range of atmospheric propagation conditions. Using this framework, it is shown that OSM can offer comparable performance with conventional coherent FSO schemes employing spatial diversity at the transmitter or the receiver only, while outperforming the latter in terms of spectral efficiency and hardware complexity. Furthermore, various numerical performance evaluation results are also presented and compared with equivalent results obtained by Monte Carlo simulations which verify the accuracy of the derived analytical expressions.",
+      "citation_count": 62,
+      "is_open_access": true,
+      "pdf_url": "https://arxiv.org/pdf/1503.02831",
+      "source_api": "openalex_citations",
+      "id": "L012",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Experimental demonstration of multi-aperture digital coherent combining over a 3.2-km free-space link",
+      "authors": [
+        "David J. Geisler",
+        "Timothy M. Yarnall",
+        "Curt Schieler",
+        "M. L. Stevens",
+        "Bryan S. Robinson",
+        "Scott A. Hamilton"
+      ],
+      "venue": "Proceedings of SPIE, the International Society for Optical Engineering/Proceedings of SPIE",
+      "year": 2017,
+      "doi": "10.1117/12.2256581",
+      "arxiv_id": null,
+      "abstract": "The next generation free-space optical communications infrastructure will need to support a wide variety of space-to-ground links. As a result of the limited size, weight, and power on space-borne assets, the ground terminals need to scale efficiently to large collection areas to support extremely long link distances or high data rates. Recent advances in integrated digital coherent receivers enable the coherent combining (i.e., full-field addition) of signals from several small apertures to synthesize an effective single large aperture. In this work, we experimentally demonstrate the coherent combining of signals received by four independent receive chains after propagation through a 3:2-km atmospheric channel. Measured results show the practicality of coherently combining the four received signals via digital signal processing after transmission through a turbulent atmosphere. In particular, near-lossless combining is demonstrated using the technique of maximal ratio combining.",
+      "citation_count": 33,
+      "is_open_access": true,
+      "pdf_url": "https://dspace.mit.edu/bitstreams/bf36deaf-daed-4edc-9511-82341c74548a/download",
+      "source_api": "openalex_citations",
+      "id": "L013",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Demonstration of intradyne BPSK optical free-space transmission in representative atmospheric turbulence conditions for geostationary uplink channel",
+      "authors": [
+        "Janis Surof",
+        "Juraj Poliak",
+        "Ramon Mata Calvo"
+      ],
+      "venue": "Optics Letters",
+      "year": 2017,
+      "doi": "10.1364/ol.42.002173",
+      "arxiv_id": null,
+      "abstract": "Binary phase-shift keying optical transmission in the C-band with coherent intradyne reception is demonstrated over a long-range (10.45 km) link through the atmosphere. The link emulates representative channel conditions for geostationary optical feeder uplinks in satellite communications. The digital signal processing used in recovering the transmitted data and the performed measurements are described. Finally, the bit error rate results for 10 Gbit/s, 20 Gbit/s, and 30 Gbit/s of the outdoor experiments are presented and compared with back-to-back measurements and theory.",
+      "citation_count": 33,
+      "is_open_access": true,
+      "pdf_url": "https://opg.optica.org/viewmedia.cfm?uri=ol-42-11-2173&seq=0",
+      "source_api": "openalex_citations",
+      "id": "L014",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Alamouti-Type STBC for Atmospheric Optical Communication Using Coherent Detection",
+      "authors": [
+        "Mingbo Niu",
+        "Julian Cheng",
+        "Jonathan F. Holzman"
+      ],
+      "venue": "IEEE photonics journal",
+      "year": 2014,
+      "doi": "10.1109/jphot.2014.2302807",
+      "arxiv_id": null,
+      "abstract": "Alamouti-type space-time block coding is studied for optical wireless communication systems using coherent detection over atmospheric turbulence channels. Atmospheric turbulence-induced fading and phase noise are known to impair the performance of coherent optical wireless systems. Two new Alamouti-type space-time coded architectures are proposed to overcome turbulence-induced fading and phase noise from transmitter lasers, receiver local oscillators, and turbulence channels. Their error rate performance is analyzed for a wide range of turbulence conditions. With developed analytical error rate expressions, the usefulness of the proposed Alamouti-type space-time block coding is demonstrated for coherent optical wireless communication systems. Numerical results confirm the performance improvements of the proposed systems over that of single-input-single-output systems.",
+      "citation_count": 23,
+      "is_open_access": true,
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/4563994/6689334/06725602.pdf",
+      "source_api": "openalex_citations",
+      "id": "L015",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Demonstration of 40  GBaud intradyne transmission through worst-case atmospheric turbulence conditions for geostationary satellite uplink",
+      "authors": [
+        "Philip Conroy",
+        "Janis Surof",
+        "Juraj Poliak",
+        "Ramon Mata Calvo"
+      ],
+      "venue": "Applied Optics",
+      "year": 2018,
+      "doi": "10.1364/ao.57.005095",
+      "arxiv_id": null,
+      "abstract": "An optical communications system employing intradyne reception and offline digital signal processing is tested over a 10.45 km link through the atmosphere. 40 GBaud transmission using binary phase-shift keying in the C-band is demonstrated and compared with laboratory measurements. Simultaneous photodetector measurements show that the turbulence in the atmospheric channel is representative for relevant and worst-case conditions in the geostationary satellite uplink scenario.",
+      "citation_count": 22,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L016",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Signal to noise ratio of free space homodyne coherent optical communication after adaptive optics compensation",
+      "authors": [
+        "Jian Huang",
+        "Haiping Mei",
+        "Ke Deng",
+        "Kang Li",
+        "Wenyue Zhu",
+        "Zhoushi Yao"
+      ],
+      "venue": "Optics Communications",
+      "year": 2015,
+      "doi": "10.1016/j.optcom.2015.08.061",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 20,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L017",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Asymptotic bit error rate analysis of free space optical systems using spatial diversity",
+      "authors": [
+        "Vineeth Palliyembil",
+        "Jagadeesh Vellakudiyan",
+        "Palanivel Muthuchidambaranathan"
+      ],
+      "venue": "Optics Communications",
+      "year": 2018,
+      "doi": "10.1016/j.optcom.2018.07.033",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 10,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L018",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Coherent free-space optical transmission with diversity combining for Gamma-Gamma atmospheric turbulence",
+      "authors": [
+        "Mingbo Niu",
+        "Julian Cheng",
+        "Jonathan F. Holzman",
+        "Robert Schober"
+      ],
+      "venue": "",
+      "year": 2010,
+      "doi": "10.1109/bsc.2010.5472924",
+      "arxiv_id": null,
+      "abstract": "The error rate performance of coherent free-space optical transmission is studied for Gamma-Gamma turbulent environments. The moment generating function of Gamma-Gamma distributed irradiance is obtained, along with a closed-form expression for the characteristic function for the square root of Gamma-Gamma distributed irradiance. Biterror rate expressions are presented for binary phase-shift keying multiple-input multiple-output free-space optical transmission with maximum ratio combining and equal gain combining receptions. These coherent optical systems are shown to greatly improve the system error rate performance.",
+      "citation_count": 10,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L019",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Optimal Combining for Optical Wireless Systems With Amplification: The $\\chi ^{2}$ Noise Regime",
+      "authors": [
+        "K. Yiannopoulos",
+        "Nikos C. Sagias",
+        "Anthony C. Boucouvalas",
+        "Kostas P. Peppas"
+      ],
+      "venue": "IEEE Photonics Technology Letters",
+      "year": 2017,
+      "doi": "10.1109/lpt.2017.2777908",
+      "arxiv_id": null,
+      "abstract": "We present novel analytical results on the optimal combiner (OC) for pre-amplified optical wireless receivers under chi-squared noise. The results show that the OC architecture that minimizes the average bit-error rate (BER) is determined by the level of the signal-spontaneous beating noise. Moreover, the OC provides increased gain to the diversity branches with the higher energies, up to the point where the beating noise becomes detrimental to the BER. The performance of the OC is simulated for practical receiver arrangements and it is shown that it performs better than the maximal-ratio and equal-gain combiners. The performance improvement amounts to an energy gain of less than 1 dB for implementations that utilize narrow optical filters and a modest number of diversity branches.",
+      "citation_count": 8,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L020",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Evaluation of Blind Diversity Combining of Severely Faded Signals for High-Speed Free-Space Optical Communication under Atmospheric Turbulence",
+      "authors": [
+        "Manabu Arikawa",
+        "Yoshimasa Ono",
+        "Toshiharu Ito"
+      ],
+      "venue": "",
+      "year": 2017,
+      "doi": "10.1109/ecoc.2017.8346154",
+      "arxiv_id": null,
+      "abstract": "We experimentally evaluated performance of a mode diversity receiver in severe fading channels of emulated LEO-to-ground link. Digital combining of three modes using adaptive filters tolerated to 10-kHz variation and relaxed the required power of 10-Gb/s QPSK by 9 dB.",
+      "citation_count": 7,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L021",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Optical ground terminals using multi-aperture digital coherent combining (Invited paper)",
+      "authors": [
+        "David J. Geisler",
+        "Timothy M. Yarnall",
+        "Curt Schieler",
+        "M. L. Stevens",
+        "Bryan S. Robinson",
+        "Scott A. Hamilton"
+      ],
+      "venue": "",
+      "year": 2017,
+      "doi": "10.1109/ipcon.2017.8116293",
+      "arxiv_id": null,
+      "abstract": "We discuss an optical ground terminal receiver architecture based on multi-aperture digital coherent combining. Experimental results using four receivers demonstrate lossless coherent combining in the laboratory at power levels below 0.1 photons/bit/receiver, and mitigation of scintillation through a 3.2-km free-space link due to spatial diversity.",
+      "citation_count": 2,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L022",
+      "download": false,
+      "publication_status": "published"
+    },
+    {
+      "title": "Proceedings IEEE International Conference on Communications ICC '95",
+      "authors": [],
+      "venue": "",
+      "year": 1995,
+      "doi": "10.1109/icc.1995",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 1127,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L023",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "2018 European Conference on Optical Communication (ECOC)",
+      "authors": [],
+      "venue": "",
+      "year": 2018,
+      "doi": "10.1109/ecoc43462.2018",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 211,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L024",
+      "download": true,
+      "publication_status": "published"
+    }
+  ]
+}

@@ -1,0 +1,202 @@
+{
+  "query": "DSP outage aware multi aperture coherent FSO combining",
+  "timestamp": "2026-08-11T22:00:50.015129+08:00",
+  "sources": [
+    "s2",
+    "openalex"
+  ],
+  "total": 8,
+  "results": [
+    {
+      "title": "Free-Space Optics Communications Employing Elliptical-Aperture Multimode Diversity Reception Under Anisotropic Turbulence",
+      "authors": [
+        "Yetian Huang",
+        "Hanzi Huang",
+        "Huifen. Chen",
+        "J. C. Alvarado",
+        "N. Fontaine",
+        "M. Mazur",
+        "Qianwu Zhang",
+        "R. Ryf",
+        "R. Amezcua-correa",
+        "Yingxiong Song",
+        "Yingchun Li",
+        "Wang Min"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 2022,
+      "doi": "10.1109/jlt.2021.3130250",
+      "arxiv_id": null,
+      "abstract": "We experimentally demonstrate an elliptical-aperture multimode diversity receiver to mitigate the impairment from anisotropic turbulence, which is emulated by employing an electrically-controlled heater. The anisotropy gradually decreases as the flow-level of the introduced airflow from fans increases. In contrast to circular-aperture reception, the elliptical-aperture multimode diversity receiver can effectively resist beam wander under anisotropic turbulence, reducing outage probability from 14.63% to 0.38% for detecting a dual-polarization 30-Gbaud QPSK signal. Without the aid of an adaptive optics system, this work demonstrates the feasibility of realizing an anisotropic-turbulence-resistant FSO link using multimode and multi-aperture diversity reception employing digital coherent combining techniques.",
+      "citation_count": 17,
+      "is_open_access": false,
+      "pdf_url": "",
+      "source_api": "semantic_scholar",
+      "relevance_score": 0.75,
+      "_score": 0.6035106382978723,
+      "id": "L001",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Free Space Optical Communication: An Enabling Backhaul Technology for 6G Non-Terrestrial Networks",
+      "authors": [
+        "Mohammed Elamassie",
+        "Murat Uysal"
+      ],
+      "venue": "Photonics",
+      "year": 2023,
+      "doi": "10.3390/photonics10111210",
+      "arxiv_id": null,
+      "abstract": "The deployment of non-terrestrial networks (NTNs) is envisioned to achieve global coverage for 6G and beyond. In addition to space nodes, aerial NTN nodes such as high-altitude platform stations (HAPSs) and rotary-wing unmanned aerial vehicles (UAVs) could be deployed, based on the intended coverage and operational altitude requirements. NTN nodes have the potential to support both wireless access and backhauling. While the onboard base station provides wireless access for the end users, the backhauling link connects the airborne/space-borne base station to the core network. With its high data transmission capability comparable to fiber optics and its ability to operate in the interference-free optical spectrum, free space optical (FSO) communication is ideally suited to backhauling requirements in NTNs. In this paper, we present a comprehensive tutorial on airborne FSO backhauling. We first delve into the fundamentals of FSO signal transmission and discuss aspects such as geometrical loss, atmospheric attenuation, turbulence-induced fading, and pointing errors, all of which are critical for determining received signal levels and related link budget calculations. Then, we discuss the requirements of airborne backhaul system architectures, based on use cases. While single-layer backhaul systems are sufficient for providing coverage in rural areas, multi-layer designs are typically required to establish connectivity in urban areas, where line of sight (LoS) links are harder to maintain. We review physical layer design principles for FSO-based airborne links, discussing both intensity modulation/direct detection (IM/DD) and coherent modulation/coherent demodulation (CM/CD). Another critical design criteria for airborne backhauling is self-sustainability, which is further discussed in our paper. We conclude the paper by discussing current challenges and future research directions. In this context, we discuss reconfigurable intelligent surfaces (RIS) and spatial division multiplexing (SDM), for improved performance and an extended transmission range. We emphasize the importance of advanced handover techniques and scalability issues for practical implementation. We also highlight the growing role of artificial intelligence/machine learning (AI/ML) and their potential applications in the design and optimization of future FSO-based NTNs.",
+      "citation_count": 47,
+      "is_open_access": true,
+      "pdf_url": "https://www.mdpi.com/2304-6732/10/11/1210/pdf?version=1698677593",
+      "source_api": "openalex",
+      "relevance_score": 0.375,
+      "_score": 0.5075,
+      "id": "L002",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Hybrid Time-Frequency Domain Frequency Offset Compensation Under GHz Doppler Shift for LEO Satellite-to-Ground Coherent Free-Space Optical Communication",
+      "authors": [
+        "Tiankuo Jiao",
+        "Hossein Kazemi",
+        "Harald Haas"
+      ],
+      "venue": "arXiv (Cornell University)",
+      "year": 2026,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "Coherent free-space optical (FSO) communication is a promising solution for low Earth orbit (LEO) satellite downlink transmission. However, high orbital velocity introduces multi-GHz Doppler shifts that appear as a rapidly time-varying carrier frequency offset (CFO), which is a major challenge for conventional coherent optical receivers. Narrow-range digital loops cannot acquire the initial offset, while wide-range feedforward or optical domain solutions either leave large residual errors or impose substantial implementation cost. In this paper, a Doppler-aware hybrid time-frequency frequency offset compensation (HTF-FOC) receiver architecture is proposed for coherent LEO satellite-to-ground FSO links using a cumulative time-varying random process model for the dynamic Doppler-induced phase shift. The proposed receiver implements a hybrid acquisition and tracking procedure to acquire and compensate for multi-GHz Doppler variations, including 4th-power FFT-based coarse CFO acquisition, residual CFO handover verification, and low-complexity decision-directed (DD) frequency-locked loop (FLL) tracking. The phase-averaged pairwise error probability (PEP) and union-bound symbol error rate (SER) expressions are derived and verified using Monte Carlo simulations. The results demonstrate that the proposed HTF-FOC method tracks Doppler shifts beyond $\\pm5$ GHz while keeping the residual CFO below $80$ MHz with a success rate of $100\\%$ for typical LEO altitudes of $400{\\!-\\!}800$ km and orbital speeds of $7.3{\\!-\\!}7.9$ km/s.",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "https://arxiv.org/pdf/2607.13904",
+      "source_api": "openalex",
+      "relevance_score": 0.5,
+      "_score": 0.45,
+      "id": "L003",
+      "download": true,
+      "publication_status": "preprint"
+    },
+    {
+      "title": "Review on Modulation Formats and Channel Coding in Free Space Optical Communication: Selection Criteria, Trade-offs, and Emerging Trends",
+      "authors": [
+        "Camellia S. Mouhammad",
+        "Ziyuan Shi",
+        "Mohamed-Slim Alouini"
+      ],
+      "venue": "",
+      "year": 2026,
+      "doi": "10.36227/techrxiv.177102188.82902634/v1",
+      "arxiv_id": null,
+      "abstract": "Free Space Optical (FSO) communication systems provide extremely large modulation bandwidths in the optical spectrum (hundreds of THz), enabling potential data rates from hundreds of Mbps to multiple Tbps, far exceeding congested radio frequency (RF) bands. In practical deployments, however, achievable throughput is limited by atmospheric impairments, including turbulence-induced fading, weather-dependent attenuation, beam divergence, and precise pointing requirements. Motivating the need for adaptive optics, hybrid FSO/RF architectures, advanced modulation techniques, and forward error correction coding to maintain reliable high-throughput communication. Nevertheless, FSO links can still provide substantially higher capacity than RF links, particularly in space, due to their much higher carrier frequencies and wider available spectrum. FSO systems span terrestrial, aerial, and space applications, with mitigation strategies tailored to factors such as system complexity, latency, supported applications, power constraints, and size/weight limitations. This survey presents a comprehensive analysis of modulation and channel coding schemes across these scenarios, providing quantitative comparisons previously unavailable. We review key channel impairments, system limitations from experimental studies, and evaluate trade-offs for modulation formats and coding schemes using metrics including bit error rate, outage probability, power and spectral efficiency, coding gain, and implementation complexity. Moreover, we discuss emerging trends and future directions, including AI-driven adaptive modulation and coding, orbital angular momentum multiplexing, and intelligent distributed multi-node systems. This survey serves as both a comprehensive reference and a practical design guide, offering actionable recommendations that map modulation and coding strategies to specific platforms, from terrestrial and UAV networks to high-altitude platforms, satellite, and deep-space systems",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "https://www.techrxiv.org/doi/pdf/10.36227/techrxiv.177102188.82902634",
+      "source_api": "openalex",
+      "relevance_score": 0.375,
+      "_score": 0.3875,
+      "id": "L004",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Model-free adaptive optics for free space optical communications: a comprehensive survey",
+      "authors": [
+        "Hebat Allah O. Selim",
+        "Rania M. Abdallah",
+        "Moustafa H. Aly",
+        "Islam E. Shaalan"
+      ],
+      "venue": "Journal of Optics",
+      "year": 2026,
+      "doi": "10.1007/s12596-025-03011-z",
+      "arxiv_id": null,
+      "abstract": "Abstract Adaptive Optics (AO) has become a cornerstone technology for mitigating atmospheric turbulence in Free Space Optical (FSO) communications, astronomical imaging, and quantum networks. Despite decades of progress, conventional AO architectures remain constrained by latency, scalability, and hardware cost, limiting their suitability for emerging 6G and quantum-secure infrastructures. This survey provides a comprehensive and structured review of recent AO advances across three interconnected research pillars: hardware-centric optimization, Machine Learning (ML)-driven intelligence, and model-free correction algorithms. By systematically comparing these approaches and showing how each addresses limitations of the others, the survey identifies several critical insights. High-density deformable mirrors (DMs) enhance correction fidelity but increase control complexity and cost. ML introduces predictive, low-latency control, yet depends heavily on realistic training datasets. Model-free strategies such as Stochastic Parallel Gradient Descent (SPGD) and Gerchberg–Saxton improve robustness in strong scintillation regimes, though at the expense of slower convergence and stability challenges. These findings underscore that no single AO paradigm is universally optimal; instead, hybrid frameworks combining hardware, AI, and blind correction represent the most resilient pathway forward. Ultimately, this survey integrates fragmented research into a unified perspective and outlines a roadmap for AO as an enabling technology for next-generation terrestrial FSO links, satellite-based internet, and global-scale quantum communication networks.",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "https://link.springer.com/content/pdf/10.1007/s12596-025-03011-z.pdf",
+      "source_api": "openalex",
+      "relevance_score": 0.25,
+      "_score": 0.325,
+      "id": "L005",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "When Future Communications Shift Toward Narrow Beams: A Forward Looking Survey on Pointing Errors and Alignment Limits",
+      "authors": [
+        "Meysam Ghanbari",
+        "Mohammad Taghi Dabiri",
+        "Osamah S. Badarneh",
+        "Mazen O. Hasna",
+        "Yazan H. Al-Badarneh",
+        "Mustafa K. Alshawaqfeh",
+        "Khalid Qaraqe"
+      ],
+      "venue": "arXiv (Cornell University)",
+      "year": 2025,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "Directional links in free-space optical (FSO), millimeter-wave (mmWave), and terahertz (THz) systems are a cornerstone of emerging 6G networks, yet their reliability is fundamentally limited by pointing errors and misalignment. Existing studies address this impairment using technology-specific definitions, models, and mitigation approaches, which hinders cross-domain comparison and transferable design insight. This survey provides a unified treatment of pointing errors across optical and high frequency wireless communications. We establish consistent terminology and a cross-technology taxonomy of pointing errors, review angular misalignment and statistical distribution models, and analyze their impact on system performance. Mitigation techniques are systematically surveyed with emphasis on optical systems and their connection to underlying pointing error models. The survey further provides a detailed examination of pointing-error effects in orbital angular momentum (OAM) links and quantum optical communications, and surveys the corresponding mitigation approaches tailored to mode-dependent impairments and quantum measurement constraints. The survey also outlines open challenges and future research directions. By consolidating fragmented literature into a coherent framework, this work supports consistent analysis and robust design of next generation directional communication systems.",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "https://arxiv.org/pdf/2512.20874",
+      "source_api": "openalex",
+      "relevance_score": 0.25,
+      "_score": 0.30500000000000005,
+      "id": "L006",
+      "download": true,
+      "publication_status": "preprint"
+    },
+    {
+      "title": "Recent developments towards high-capacity free space optical communication systems",
+      "authors": [
+        "A.D. Ellis",
+        "Yongjun Li",
+        "David M. Benton",
+        "Zhimeng Hu",
+        "M. S. Patel",
+        "Zhuo Chen",
+        "Martin P. J. Lavery"
+      ],
+      "venue": "IET conference proceedings.",
+      "year": 2023,
+      "doi": "10.1049/icp.2023.2109",
+      "arxiv_id": null,
+      "abstract": "Optical wireless communication (OWC) refers to transmission in unguided propagation media through the use of optical carriers, i.e., visible, infrared (IR), and ultraviolet (UV) bands. In this survey, we focus on outdoor terrestrial OWC links which operate in near IR band. These are widely referred to as free space optical (FSO) communication in the literature. FSO systems are used for high rate communication between two fixed points over distances up to several kilometers. In comparison to radio-frequency (RF) counterparts, FSO links have a very high optical bandwidth available, allowing much higher data rates. They are appealing for a wide range of applications such as metropolitan area network (MAN) extension, local area network (LAN)-to-LAN connectivity, fiber back-up, backhaul for wireless cellular networks, disaster recovery, high definition TV and medical image/video transmission, wireless video surveillance/monitoring, and quantum key distribution among others. Despite the major advantages of FSO technology and variety of its application areas, its widespread use has been hampered by its rather disappointing link reliability particularly in long ranges due to atmospheric turbulence-induced fading and sensitivity to weather conditions. In the last five years or so, there has been a surge of interest in FSO research to address these major technical challenges. Several innovative physical layer concepts, originally introduced in the context of RF systems, such as multiple-input multiple-output communication, cooperative diversity, and adaptive transmission have been recently explored for the design of next generation FSO systems. In this paper, we present an up-to-date survey on FSO communication systems. The first part describes FSO channel models and transmitter/receiver structures. In the second part, we provide details on information theoretical limits of FSO channels and algorithmic-level system design research activities to approach these limits. Specific topics include advances in modulation, channel coding, spatial/cooperative diversity techniques, adaptive transmission, and hybrid RF/FSO systems.",
+      "citation_count": 3,
+      "is_open_access": true,
+      "pdf_url": "https://eprints.gla.ac.uk/345875/1/345875.pdf",
+      "source_api": "openalex",
+      "relevance_score": 0.25,
+      "_score": 0.2764893617021277,
+      "id": "L007",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Diversity Techniques in Free-Space Optical Communications",
+      "authors": [
+        "Sahar Molla Aghajanzadeh"
+      ],
+      "venue": "",
+      "year": 2012,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "Optical wireless communication (OWC) refers to transmission in unguided propagation media through the use of optical carriers, i.e., visible, infrared (IR), and ultraviolet (UV) bands. In this survey, we focus on outdoor terrestrial OWC links which operate in near IR band. These are widely referred to as free space optical (FSO) communication in the literature. FSO systems are used for high rate communication between two fixed points over distances up to several kilometers. In comparison to radio-frequency (RF) counterparts, FSO links have a very high optical bandwidth available, allowing much higher data rates. They are appealing for a wide range of applications such as metropolitan area network (MAN) extension, local area network (LAN)-to-LAN connectivity, fiber back-up, backhaul for wireless cellular networks, disaster recovery, high definition TV and medical image/video transmission, wireless video surveillance/monitoring, and quantum key distribution among others. Despite the major advantages of FSO technology and variety of its application areas, its widespread use has been hampered by its rather disappointing link reliability particularly in long ranges due to atmospheric turbulence-induced fading and sensitivity to weather conditions. In the last five years or so, there has been a surge of interest in FSO research to address these major technical challenges. Several innovative physical layer concepts, originally introduced in the context of RF systems, such as multiple-input multiple-output communication, cooperative diversity, and adaptive transmission have been recently explored for the design of next generation FSO systems. In this paper, we present an up-to-date survey on FSO communication systems. The first part describes FSO channel models and transmitter/receiver structures. In the second part, we provide details on information theoretical limits of FSO channels and algorithmic-level system design research activities to approach these limits. Specific topics include advances in modulation, channel coding, spatial/cooperative diversity techniques, adaptive transmission, and hybrid RF/FSO systems.",
+      "citation_count": 1,
+      "is_open_access": false,
+      "pdf_url": "",
+      "source_api": "semantic_scholar",
+      "relevance_score": 0.25,
+      "_score": 0.13138297872340426,
+      "id": "L008",
+      "download": false,
+      "publication_status": "unknown"
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "query": "DSP outage receiver outage multi-aperture distributed aperture coherent combining",
+  "timestamp": "2026-08-11T22:11:45.837461+08:00",
+  "sources": [
+    "s2",
+    "openalex"
+  ],
+  "total": 3,
+  "results": [
+    {
+      "title": "Free-Space Optics Communications Employing Elliptical-Aperture Multimode Diversity Reception Under Anisotropic Turbulence",
+      "authors": [
+        "Yetian Huang",
+        "Hanzi Huang",
+        "Huifen. Chen",
+        "J. C. Alvarado",
+        "N. Fontaine",
+        "M. Mazur",
+        "Qianwu Zhang",
+        "R. Ryf",
+        "R. Amezcua-correa",
+        "Yingxiong Song",
+        "Yingchun Li",
+        "Wang Min"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 2022,
+      "doi": "10.1109/jlt.2021.3130250",
+      "arxiv_id": null,
+      "abstract": "We experimentally demonstrate an elliptical-aperture multimode diversity receiver to mitigate the impairment from anisotropic turbulence, which is emulated by employing an electrically-controlled heater. The anisotropy gradually decreases as the flow-level of the introduced airflow from fans increases. In contrast to circular-aperture reception, the elliptical-aperture multimode diversity receiver can effectively resist beam wander under anisotropic turbulence, reducing outage probability from 14.63% to 0.38% for detecting a dual-polarization 30-Gbaud QPSK signal. Without the aid of an adaptive optics system, this work demonstrates the feasibility of realizing an anisotropic-turbulence-resistant FSO link using multimode and multi-aperture diversity reception employing digital coherent combining techniques.",
+      "citation_count": 17,
+      "is_open_access": false,
+      "pdf_url": "",
+      "source_api": "semantic_scholar",
+      "relevance_score": 0.75,
+      "_score": 0.795,
+      "id": "L001",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Performance analysis of coherent DPSK SIMO laser-based satellite-to-ground communication link over weak-to-strong turbulence channels considering Kolmogorov and non-Kolmogorov spectrum models",
+      "authors": [
+        "A. E. Abouelez"
+      ],
+      "venue": "Optical and quantum electronics",
+      "year": 2023,
+      "doi": "10.1007/s11082-023-04630-1",
+      "arxiv_id": null,
+      "abstract": "The performance of satellite-to-ground laser-based communication links is highly affected by atmospheric turbulence. Coherent detection with spatial diversity at the ground station receiver can mitigate the scintillation effects caused by atmospheric turbulence. Traditionally, the scintillation effects are modeled based on the Kolmogorov spectrum model. However, the experiments have indicated that scintillation effects on the laser beam propagation have non-Kolmogorov properties. Our goal in the present work is to analyze the average bit error rate (BER), outage probability (OP), and ergodic capacity of the satellite-to-ground heterodyne optical communication system with receiver spatial diversity. A differential phase-shift keying modulation technique is considered in this work. The propagated laser signal from the satellite to the ground station is assumed to be subjected to Málaga-distributed atmospheric turbulence. The atmospheric turbulence statistics are carried out based on the conventional Kolmogorov spectrum model and the three-layer altitude (TLA) non-Kolmogorov spectrum model. The performance of popular diversity combining techniques, namely, maximum ratio combining (MRC) and equal gain combining (EGC) techniques are analyzed. The statistical models of the MRC technique under the Málaga-distributed atmospheric channel model are obtained in analytical form expressions. The statistical models of the EGC technique under the Málaga-distributed atmospheric channel model are obtained via the fast Fourier transform representation of the characteristic function method. Based on these statistical models, average BER, OP, and ergodic capacity expressions for each type of diversity combining technique are derived. For the communication system under investigation, the performance of MRC and EGC multiple aperture receiver systems are compared to a single aperture receiver with the same total aperture area. These comparisons are carried out under the same conditions in terms of zenith angle and signal-to-noise ratio. The obtained results show that the performance of the optical communication system under investigation with MRC and EGC receivers can be improved by increasing the order of diversity. In addition, it is found that the difference in the performance between Kolmogorov and TLA non-Kolmogorov spectrum models is not significant at low zenith angles, while this difference increases as the zenith angle increases. All numerical results are verified by Monte-Carlo simulations.",
+      "citation_count": 1,
+      "is_open_access": true,
+      "pdf_url": "https://link.springer.com/content/pdf/10.1007/s11082-023-04630-1.pdf",
+      "source_api": "semantic_scholar",
+      "relevance_score": 0.875,
+      "_score": 0.5951470588235294,
+      "id": "L002",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Review of key vertical-cavity laser and modulator advances enabled by advanced MBE technology",
+      "authors": [
+        "L. Coldren"
+      ],
+      "venue": "Journal of Vacuum Science and Technology",
+      "year": 2021,
+      "doi": "10.1116/6.0000574",
+      "arxiv_id": null,
+      "abstract": "—As datacenters continue to scale in size, energy efﬁ- ciency for short reach ( < 2 km) links is a major factor for networks that may connect hundreds of thousands of servers. We demon- strate that links based on analog coherent detection (ACD) offer a promising path to simultaneously achieving signiﬁcantly larger link budgets and improved link energy efﬁciency. A complete analysis is presented that considers the power consumption of all the photonic and electronic components necessary to realize an ACD link architecture based on 50 Gbaud (GBd) quadrature phase-shift keying (QPSK) signaling combined with polarization multiplexing to achieve 200 Gb/s/ λ . These links utilize receivers that incorporate an optical phase-locked loop (OPLL) to frequency- and phase- lock the local oscillator (LO) laser to the incoming signal. QPSK modulation offers compelling advantages both in achievable link budget and in energy efﬁciency. Indeed, low-complexity electronics based on limiting ampliﬁers can be used as opposed to the linear front-ends, A/D converters, and digital signal processing (DSP) required for higher-order QAM or PAM formats. Our analysis indicates that links with 13 dB of unallocated budget operating at error rates of < 10 − 12 can be achieved and is compatible with higher error rates that require forward error correction (FEC). We present a comparison of silicon and InP platforms and evaluate both traveling-wave and segmented modulator designs, providing an illustration of the wide design space before converging on the Abstract: A dual-laser indium phosphide photonic integrated circuit for precision spectroscopy lidar was designed and fabricated. A stabilization experiment demonstrated a twentyfold improvement in the long-term frequency stability of the master laser. optical Following characterization of the integrated photonic components, a stabilization experiment performed on master using external The long-term stability of a beat note frequency generated with the integrated PIC master laser and a stable bench-top external cavity laser (ECL) was measured with a frequency Over a the ABSTRACT In this special issue honoring Professor Arthur Gossard, I am delighted to be able to review a small segment of the work he has enabled while at UCSB on the subject of the title, but further limited to devices grown all-epitaxially. When he arrived in 1987 from Bell Labs, he had already been consulting on the installation of our new Gen-II MBE that we intended to use for vertical-cavity Fabry – Pérot modulators, devices somewhat similar to those he had grown at Bell Labs. However, within a couple of years, we obtained leading results on reflection modulators, moving the on/off contrast from prior values of less than 5:1 to more than 50:1 with insertion losses of less than 2 dB, required voltages in the 2 – 4 V range, and changes in reflection per volt to ∼ 20%/V. These had multiple-quantum-well (MQW) active regions to phase shift and partially absorb the resonant lightwaves within a cavity formed between two distributed-Bragg-reflector (DBR) mirrors all formed in the AlGaAs/GaAs system. Also in this same period, novel vertical-cavity surface-emitting laser (VCSEL) structures analogous to the modulators were developed. They had strained InGaAs/GaAs MQW actives and AlGaAs/GaAs DBRs and operated near 980 nm. The initial new idea was to place active quantum wells only at the maxima of the cavity E-field standing wave, which provides nearly a doubling of the modal gain they contribute. These designs quickly led to leading results in threshold current (<1 kA/cm 2 — 1990 and I th < 1 mA with P o > 1 mW — 1991), power out (up to 113 mW cw — 1993), and temperature stability with gain offset (constant output over 50 °C — 1993). Additional notable results in the 1990s included a selective oxidation of AlGaAs to form lens-like intra-cavity apertures for dramatic reduc-tions in optical cavity loss; the first strained layer InGaAlAs/GaAs 850 nm VCSELs; and an 8-wavelength division multiplexing VCSEL array integrated within a 60 μ m diameter for direct emission into a multimode fiber. In the 2000s, results included all-epitaxially grown 1310 nm and 1550 nm VCSELs that employed AlGaAsSb DBRs and AlGaInAs actives with tunnel junctions to enable two n-type contacts on InP for low thermal and electrical resistance; multi-terminal VCSELs for polarization modulation to double the information output on a single optical beam; and a novel high-speed, high-efficiency design that incorporated sophisticated bandgap engineering in the DBRs and carbon doping for low optical loss and electrical resistance, midlevel Al-content mirror layers near the cavity for deep oxidation to reduce capacitance, and a redesigned lens-like aperture for reduced mode volume. This latter design gave record modulation bandwidth and efficiency results then, and it is still being used around the world for the leading results today. In the most recent decade, InGaAsSb/AlGaAsSb/GaSb materials for VCSELs and photonic ICs have been studied for emission in the 2 – 4 μ m wavelength range.",
+      "citation_count": 6,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.1116/6.0000574",
+      "source_api": "semantic_scholar",
+      "relevance_score": 0.75,
+      "_score": 0.5808823529411765,
+      "id": "L003",
+      "download": true,
+      "publication_status": "published"
+    }
+  ]
+}

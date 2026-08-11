@@ -1,0 +1,105 @@
+{
+  "query": "confidence weighted coherent combining free space optical aperture branch",
+  "timestamp": "2026-08-11T22:03:41.375273+08:00",
+  "sources": [
+    "s2",
+    "openalex"
+  ],
+  "total": 4,
+  "results": [
+    {
+      "title": "Capacity of coherent free-space optical links using diversity-combining techniques.",
+      "authors": [
+        "A. Belmonte",
+        "J. Kahn"
+      ],
+      "venue": "Optics Express",
+      "year": 2009,
+      "doi": "10.1364/OE.17.012601",
+      "arxiv_id": null,
+      "abstract": "We study the performance of diversity combining techniques applied to synchronous laser communication through the turbulent atmosphere. We assume that a single information-bearing signal is transmitted over two or more statistically independent fading channels, and that the multiple replicas are combined at the receiver to improve detection efficiency. We consider the effects of log-normal amplitude fluctuations and Gaussian phase fluctuations, in addition to local oscillator shot noise. We study the effect of various parameters, including the ratio of receiver aperture diameter to wavefront coherence diameter, the scintillation index, and the number of independent diversity branches combined at the receiver. We consider both maximal-ratio combining (MRC) and selective combining (SC) diversity schemes. We derive expressions for the outage Shannon capacity, thus placing upper bounds on the spectral efficiency achievable using these techniques.",
+      "citation_count": 85,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.1364/oe.18.017748",
+      "source_api": "semantic_scholar",
+      "relevance_score": 0.778,
+      "_score": 0.6890000000000001,
+      "id": "L001",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Blind Gradient-Ascent Phase Alignment for Multi-Aperture Coherent Digital Combining Under Aperture-Dependent Phase Disturbance",
+      "authors": [
+        "Cheng Chen",
+        "Tongji Luo",
+        "Jiayin Xue",
+        "Siyu Gong",
+        "Qun Zhang",
+        "Linsheng Fan",
+        "Qi Wu",
+        "Yanfu Yang"
+      ],
+      "venue": "",
+      "year": 2026,
+      "doi": null,
+      "arxiv_id": "2606.21412",
+      "abstract": "Multi-aperture reception can provide spatial diversity in free-space optical (FSO) communication by collecting signal replicas at separate apertures. When the branches are accurately phase-aligned, their received optical fields can also be added constructively to obtain coherent-combining gain. In this paper, we propose blind gradient-ascent phase alignment (BGAPA), which iteratively adjusts one phase correction per aperture by directly maximizing the combined output power. Closed-form analytical gradients provide a deterministic update that requires no symbol decisions, unlike the stochastic perturbation-based estimate of SPGD or the decision-directed feedback of DD-LMS. To isolate phase-tracking capability, the numerical model includes independent aperture-dependent phase disturbance but excludes amplitude scintillation and polarization-dependent distortion. Under this controlled phase-only setting, BGAPA obtains an SNR improvement closer to the ideal 6.02~dB coherent-combining gain than block-wise cross-correlation, SPGD, DD-LMS, and CMA/RDE-based equalization when the aperture count is increased by a factor of four. In particular, increasing the aperture count from 64 to 256 yields an SNR improvement of about 5.7~dB. In a separate amplitude-tolerance test with $N=16$ and $f_{\\max}=1$~MHz, the first observed BGAPA trial above the HD-FEC threshold of $3.8\\times10^{-3}$ occurs at an actual phase RMS of approximately 278~rad, whereas DD-LMS becomes unreliable at substantially smaller phase excursions. The reported step size is optimized separately at each operating point. BGAPA is fully blind and updates its phase parameters directly from the received aperture fields without training symbols, pilots, or decision-directed feedback.",
+      "citation_count": 0,
+      "is_open_access": false,
+      "pdf_url": "",
+      "source_api": "semantic_scholar",
+      "relevance_score": 0.778,
+      "_score": 0.589,
+      "id": "L002",
+      "download": true,
+      "publication_status": "unknown"
+    },
+    {
+      "title": "Real-time demonstration of two-aperture coherent digital combining free-space optical transmission with a real-valued MIMO adaptive equalizer.",
+      "authors": [
+        "Cheng Ju",
+        "Na Liu",
+        "Dongdong Wang",
+        "Danshi Wang",
+        "Jingze Yu",
+        "Yue Qiu"
+      ],
+      "venue": "Optics Letters",
+      "year": 2024,
+      "doi": "10.1364/ol.511941",
+      "arxiv_id": null,
+      "abstract": "Compared with the single-aperture system, the multi-aperture coherent digital combining system has the technical advantage of the effective mitigation of deep fading under strong turbulence, ease of scalability, and potential higher collected optical power. However, the tricky problem of a multi-aperture system is to efficiently combine multiple branch signals with a static skew mismatch and with time-varying characteristics of received power scintillation. In this Letter, a real-valued massive array multiple-input multiple-output (MIMO) adaptive equalizer is proposed for the first time to our knowledge to realize multi-aperture channel equalization and combining, simultaneously. In the proof-of-principle system, the feasibility of the combining technique is verified based on a MIMO 4 × 2 equalizer in a 2.5-GBaud data rate QPSK modulation FPGA-based two-aperture coherent receiver with a dynamic turbulence simulator. The results show that no reduction in combining efficiency is observed under static turbulence conditions at the hard-decision forward error correction (HD-FEC) limit of 3.8 × 0-3, and combining efficiencies of 95% and 88% are obtained for the dynamic moderate and strong turbulence.",
+      "citation_count": 5,
+      "is_open_access": false,
+      "pdf_url": "",
+      "source_api": "semantic_scholar",
+      "relevance_score": 0.778,
+      "_score": 0.5666470588235295,
+      "id": "L003",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Performance analysis of atmospheric field conjugation adaptive arrays",
+      "authors": [
+        "A. Belmonte",
+        "J. Kahn"
+      ],
+      "venue": "LASE",
+      "year": 2011,
+      "doi": "10.1117/12.873056",
+      "arxiv_id": null,
+      "abstract": "System configurations based on single monolithic-apertures that are immune to atmospheric fluctuations are being developed. Main goal is the improvement of the performance achievable in coherent, free-space optical communication systems using atmospheric compensation techniques such as adaptive optics. As an alternative to a single monolithic-aperture coherent receiver with a full-size collecting area, a large effective aperture can be achieved by combining the output signal from an array of smaller receivers. We study the communication performance of field conjugation adaptive arrays applied in synchronous laser communication through the turbulent atmosphere. We assume that a single information-bearing signal is transmitted over the atmospheric fading channel, and that the adaptive array coherent receiver combines multiple dependent replicas to improve detection efficiency. We consider the effects of log-normal amplitude fluctuations and Gaussian phase fluctuations, in addition to local oscillator shot noise. We study the effect of various atmospheric parameters and the number of branches combined at the receiver.",
+      "citation_count": 1,
+      "is_open_access": true,
+      "pdf_url": "https://upcommons.upc.edu/bitstream/2117/12281/1/Belmonte.pdf",
+      "source_api": "semantic_scholar",
+      "relevance_score": 0.778,
+      "_score": 0.3925294117647059,
+      "id": "L004",
+      "download": true,
+      "publication_status": "published"
+    }
+  ]
+}

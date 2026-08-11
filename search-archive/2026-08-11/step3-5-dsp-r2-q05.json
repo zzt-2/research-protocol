@@ -1,0 +1,39 @@
+{
+  "query": "dynamic channel tracking distributed aperture MIMO coherent combining branch selection validity",
+  "timestamp": "2026-08-11T22:11:45.618838+08:00",
+  "sources": [
+    "s2",
+    "openalex"
+  ],
+  "total": 1,
+  "results": [
+    {
+      "title": "Dynamic channel tracking algorithm in satellite-to-ground distributed-aperture MIMO coherent digital combining system",
+      "authors": [
+        "Yue Qiu",
+        "Cheng Ju",
+        "Na Liu",
+        "Dongdong Wang",
+        "Danshi Wang",
+        "Honglong Gu",
+        "Shuolong Yang",
+        "Peining Zheng",
+        "Zongyuan Xu"
+      ],
+      "venue": "Optics Communications",
+      "year": 2026,
+      "doi": "10.1016/j.optcom.2025.132812",
+      "arxiv_id": null,
+      "abstract": null,
+      "citation_count": 0,
+      "is_open_access": false,
+      "pdf_url": "",
+      "source_api": "semantic_scholar",
+      "relevance_score": 0.727,
+      "_score": 0.5635,
+      "id": "L001",
+      "download": false,
+      "publication_status": "published"
+    }
+  ]
+}

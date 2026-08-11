@@ -1,6 +1,6 @@
 # DSP 失效感知的多孔径相干 FSO 可靠合并
 
-> 状态：active | 当前阶段：Groundwork Step 3 complete / awaiting Step 3.5 confirmation
+> 状态：dormant | 当前阶段：Groundwork Step 3.5 `EVIDENCE_BLOCKED`
 
 ## 范围边界
 
@@ -10,11 +10,11 @@
 
 ### 当前范围
 
-最多执行两个相邻步骤：先用已有 JLT 2023 全文做 Step 2 narrow repair，再完成五篇 GW Step 3 全文精读、竞品动作综合与 canonical Q# 四判据裁决。2019 全文缺失保留为 novelty/claim limitation；只有窄 Q# 存活时才成为未授权 Step 3.5 的 critical debt。
+仅执行 GW Step 3.5：围绕冻结 Q001 做矩阵化补检索、核心竞品双向引用链、Sun 2019 合法动作证据闭合、新高相关全文 acquire/read 与统一 exact-action collision 裁决。最多三轮，最后一轮 new must/should 必须为 0。
 
 ### 明确不含
 
-- 不进入 Step 3.5/4a 及以后；不新增搜索或下载。
+- 不进入 Step 4a 及以后；只允许 Step 3.5 合法检索、获取与精读。
 - 不实现、不仿真、不运行 smoke、不修 b3 代码。
 - 不把固定 SNR 阈值 branch-drop、SC/GSC 或 Johst 2024 已给出的 discard rule 当新方法。
 - 不重开 coded decoder-feedback C1；decoder/FEC flag 只可列为可选 receiver-visible feature。
@@ -31,6 +31,10 @@
   - 原因：共享根已有更晚、更强且可读的 JLT 2023 estimator-changing competitor；用户不接受继续把全部工作停在 coverage 行政门。
   - 新范围：JLT 2023 CORE binding → Step 2 accepted with limitation → 五篇全文精读与 Q# 裁决。
   - 影响的未决项：2019 缺失降为 claim limitation；仅当 Step 3 窄 Q# 存活时移交 Step 3.5。
+- **[2026-08-11] D005**：当前范围由 Step 3 扩展到 Step 3.5 exact-action closure。
+  - 原因：V003 接受 Q001 branch-local 4/4，但 Sun 2019 exact action 与定向 collision landscape 未闭合；主控显式授权。
+  - 新范围：query matrix → 核心竞品双向引用链 → Sun 2019/新高相关一手证据 → 统一动作签名 → 三选一 terminal。
+  - 影响的未决项：Step 4a 继续禁止；完整 post-all-FS/CE/CPE 版本仍 excluded/unresolved。
 
 ## 进展线索
 
@@ -44,6 +48,8 @@
 - V002/H002：fresh verifier=`PASS 0/0/0`；coverage blocking terminal 被接受并交接主控，Step 3 仍未授权。
 - S003/D003：JLT 2023 source/content 身份、SHA、行数闭合；Step 2 修为 `STEP2_ACCEPTED_WITH_2019_FULLTEXT_LIMITATION`，Step 3 已授权并开始。
 - T007–T010/R004/D004/V003/H003：五篇全文完成；首验 PARTIAL 0/2/0 后，Q001 收窄到 Wang 真实 branch-local FS/phase-correction→MRC 边界并修 read-note 持久化链；终验 PASS 0/0/0。
+- S004/D005：主控授权 Step 3.5；H003 接收核验 PASS，开始 exact-action closure。
+- T011–T016/R005/D006/V004/H004：两轮检索最后一轮 new MUST/SHOULD=0/0；Zhang 2023 为 estimator-changing neighbor；Sun/Xie/Qiu 等承重动作仍无一手全文。fresh verifier 首验 PARTIAL 0/1/2，bounded repair 后 final PASS 0/0/0；terminal=`EVIDENCE_BLOCKED`，无 Step 4a 入口。
 
 ## 已确认结论
 
@@ -58,12 +64,12 @@
 1. 历史 b3 multi-aperture caller path 可作未来资产，但 truth-h 信息边界与 RNG/offset 是未来 Step 4a 债务，不在本轮修复。
 2. Q001 仅在 branch-local FS/alignment+phase-correction→MRC 边界通过 Step 3 四判据；完整 post-all-FS/CE/CPE 位置仍未闭合。
 3. `STEP3_Q_SURVIVES_READY_FOR_STEP3_5` 只表示问题候选存活，不等于方法有效、新颖性闭合或论文贡献。
+4. Step 3.5 身份检索已收敛，但 direct-action evidence 不充分；`EVIDENCE_BLOCKED` 不是 exact collision 或 scientific Kill。
 
 ## 未决项
 
-1. 主控是否授权 Step 3.5。
-2. Step 3.5 必须闭合 Sun 2019 exact action，并核真正 post-all-FS/CE/CPE task-matched baseline。
+1. Sun/Xie/Qiu 的承重 primary fulltext 或等价后续一手完整动作证据能否取得。
 
 ## 当前位置
 
-`STEP3_Q_SURVIVES_READY_FOR_STEP3_5`：V003=`PASS 0/0/0`；等待主控确认，Step 3.5=`NOT_AUTHORIZED`。
+`GROUNDWORK_STEP3_5_EVIDENCE_BLOCKED`：D006 已截断；Step 4a=`NOT_AUTHORIZED`。等待新的承重一手证据，不重复搜索。

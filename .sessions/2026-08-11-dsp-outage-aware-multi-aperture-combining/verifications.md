@@ -92,3 +92,32 @@
 ### 结论
 
 接受 terminal=`STEP3_Q_SURVIVES_READY_FOR_STEP3_5`，仅针对收窄的 branch-local Q001。这是 Step 3 problem-survival，不是 novelty closure、Go/Kill、METHOD_SIGNAL 或 Step 3.5 授权。
+
+## V004：GW Step 3.5 exact-action closure 终验
+
+- 日期：2026-08-11
+- 关联：S004 / D005 / D006 / R005 / T011–T016
+- 验证方：independent fresh-context verifier（未参与检索、获取、全文精读或主线综合）
+- 初验状态：PARTIAL
+- 初验严重度：critical/major/minor=`0/1/2`
+
+### 初验结果
+
+| 组 | 结论 | 独立证据 |
+|---|---|---|
+| A counts/sources | PASS with minor | 8+7+6 official receipts 存在；45/121/4 unique 可复算；整体 S2+OpenAlex 实际贡献；provider-raw 115/6 仅存 worker stdout receipt 表。 |
+| B identity/action | PASS | Zhang title/DOI/SHA/lines 闭合且为 estimator-changing neighbor；Sun/Xie/Chen/Qiu/Li 无 primary fulltext，unknown 字段未被脑补。 |
+| C terminal | PASS | 无 confirmed exact collision，但 Xie/Qiu 等承重 direct action 未闭合；`EVIDENCE_BLOCKED` 符合 D005，非 Kill/novelty/METHOD_SIGNAL。 |
+| D scope | PASS | Step 4a/implementation/simulation/method design=0；broader post-all-FS/CE/CPE 保持 excluded。 |
+| E control plane | PARTIAL | V004 尚未形成是唯一 major；owner 有两处 Step 3 陈旧措辞。 |
+
+### Bounded repair
+
+- 创建本 V004，闭合 H004/控制面血缘。
+- R005 显式登记 provider-raw stdout-only 的可复现性限制，不把 46/4 retained JSON 冒充 115/6 provider raw。
+- literature owner 将“Step 3 未授权”修为 Step 3.5，并把 Sun-only limitation 扩为 Sun/Xie/Qiu bearing debts。
+- 未重开搜索、改变 terminal、进入 Step 4a 或修改代码。
+
+### Final check
+
+T016 fresh follow-up final verdict=`PASS`，critical/major/minor=`0/0/0`。三项 bounded repair 全部闭合；科学 terminal 保持 `EVIDENCE_BLOCKED`，Step 4a 继续 `NOT_AUTHORIZED`。本 PASS 只接收证据与治理闭合，不产生 collision/non-collision、novelty、Kill 或 METHOD_SIGNAL。

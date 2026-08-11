@@ -52,10 +52,10 @@ V001 已接受 `STEP1_PASS_READY_FOR_STEP2_CONFIRMATION`，且主控明确确认
 
 ## D003: 以 JLT 2023 修复 Step 2 coverage，并在 2019 全文限制下授权 Step 3
 
-> status: active
+> status: superseded
 > date: 2026-08-11
 > 取代：D002
-> 被取代：无
+> 被取代：D005
 > 依据：主控 scope decision + 调研 R002/R003 + 共享全文 `D:/code/study/research-protocol/papers/doi/10.1109_jlt.2023.3276637/content.md` + 用户原话 `voice.md` 2026-08-11
 
 ### 决策
@@ -83,10 +83,10 @@ S003；主控 scope decision。触发原话见 `voice.md`。
 
 ## D004: Q001 通过 Step 3 问题门，进入 Step 3.5 确认等待
 
-> status: active
+> status: superseded
 > date: 2026-08-11
 > 取代：无
-> 被取代：无
+> 被取代：D006
 > 依据：R004 + 五篇全文 read notes + T007–T009 worker logs
 
 ### 决策
@@ -111,3 +111,65 @@ Step 3.5 的唯一合法任务是补 2019 exact-action debt 并做窄 post-DSP/l
 ### 来源
 
 S003 / R004。触发原话：无（全文证据综合裁决）。
+
+## D005: 当前范围由 GW Step 3 变更为 Step 3.5 exact-action closure
+
+> status: active
+> date: 2026-08-11
+> 取代：D003
+> 被取代：无
+> 依据：验证 V003 + 主控显式授权（source thread `019fccc3-f9f2-7b52-938f-b2b1dda09b10`）+ 调研 R004
+
+### 决策
+
+授权本专题只执行 Groundwork Step 3.5：用系统 query matrix、至少两源检索、核心竞品双向引用链、Sun 2019 合法获取/后续一手证据和新高相关全文 exact-action extraction，闭合 Q001 collision。Step 4a 及以后继续禁止。
+
+### 理由
+
+V003 已确认 Q001 仅在 Wang 真实 branch-local FS/alignment+phase-correction→MRC 边界通过 Step 3 四判据；Sun 2019 exact action 与更宽 post-all-FS/CE/CPE baseline 仍 unresolved。gw-supplement 要求精读后基于新认知做矩阵化补检索、核心竞品双向引用链与收敛检查，正好是当前唯一承重债务。
+
+### 排除的替代方案
+
+- 不把 Sun 2019 全文缺失机械当 blocker，也不以摘要裁 exact action。
+- 不因“宽泛 adaptive combining 已被占”直接 Kill 窄 Q001；必须比较完整 input-trigger-action-output。
+- 不设计 validity feature fusion、weight formula、hysteresis 或 state machine。
+- 不进入 Step 4a、实现、仿真、修 b3 caller 或重开 coded C1。
+
+### 影响范围
+
+更新 topic/master/registry 到 Step 3.5；创建 S004、T011+、R005、V004、H004，并更新专题 literature owner/read-log。terminal 只能为 `SURVIVES_STEP3_5`、`EXACT_ACTION_COLLISION` 或 `EVIDENCE_BLOCKED`。
+
+### 来源
+
+S004；主控 Step 3.5 授权。触发原话：无（主控 delegation，非用户/导师原话）。
+
+## D006: Step 3.5 以承重一手动作证据不足截断
+
+> status: active
+> date: 2026-08-11
+> 取代：D004 的 `READY_FOR_STEP3_5` 暂态
+> 被取代：无
+> 依据：R005 + T011–T015 + Zhang 2023 定向全文 read note
+
+### 决策
+
+Q001 terminal=`EVIDENCE_BLOCKED`。两轮检索身份层已经收敛，所有可读一手竞品均未确认 exact collision；但 Xie 2023、Qiu 2025 等直接身份的完整动作仍因 primary fulltext unavailable 而承重不确定，不能据标题/摘要宣称 non-collision。因此 Q001 当前无 Step 4a 入口。
+
+### 理由
+
+Round 2 new MUST/SHOULD=`0/0` 只证明检索收敛，不证明现有 MUST 已完成动作裁决。Zhang 2023 全文确认的是 estimator-changing FSE/MEKF/AKF neighbor；Sun 后续一手只支持 modulus-normalized cost fragment。Xie/Qiu 的 input-trigger-action-output 仍无法一手闭合，未达到 `SURVIVES_STEP3_5` 的 evidence-sufficient 条件。
+
+### 排除的替代方案
+
+- 不把 fulltext unavailable 误写成 exact collision 或 scientific Kill。
+- 不把未发现撞车写成“首次/新颖/方法成立”。
+- 不为消除阻塞而扩到第四轮搜索、设计方法或运行 smoke。
+- 不把完整 post-all-FS/CE/CPE 版本并入当前 Q001。
+
+### 影响范围
+
+topic/master/registry 记录 Step 3.5 evidence-blocked；Step 4a 继续 `NOT_AUTHORIZED`。恢复仅接受承重 primary fulltext 或等价后续一手完整动作证据。
+
+### 来源
+
+S004/R005。触发原话：无（技术证据裁决）。

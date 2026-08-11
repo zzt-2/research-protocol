@@ -1,0 +1,115 @@
+{
+  "query": "phase validity cycle slip aware diversity combining branch selection",
+  "timestamp": "2026-08-11T22:00:23.315632+08:00",
+  "sources": [
+    "s2",
+    "openalex"
+  ],
+  "total": 4,
+  "results": [
+    {
+      "title": "PHYLOGENETIC SYSTEMATICS OF DART-POISON FROGS AND THEIR RELATIVES (AMPHIBIA: ATHESPHATANURA: DENDROBATIDAE)",
+      "authors": [
+        "Taran Grant",
+        "Darrel R. Frost",
+        "Janalee P. Caldwell",
+        "Ron Gagliardo",
+        "Célio F. B. Haddad",
+        "Philippe J. R. Kok",
+        "D. Bruce Means",
+        "Brice P. Noonan",
+        "Walter E. Schargel",
+        "Ward C. Wheeler"
+      ],
+      "venue": "Bulletin of the American Museum of Natural History",
+      "year": 2006,
+      "doi": "10.1206/0003-0090(2006)299[1:psodfa]2.0.co;2",
+      "arxiv_id": null,
+      "abstract": "Abstract The known diversity of dart-poison frog species has grown from 70 in the 1960s to 247 at present, with no sign that the discovery of new species will wane in the foreseeable future. Although this growth in knowledge of the diversity of this group has been accompanied by detailed investigations of many aspects of the biology of dendrobatids, their phylogenetic relationships remain poorly understood. This study was designed to test hypotheses of dendrobatid diversification by combining new and prior genotypic and phenotypic evidence in a total evidence analysis. DNA sequences were sampled for five mitochondrial and six nuclear loci (approximately 6,100 base pairs [bp]; x¯ = 3,740 bp per terminal; total dataset composed of approximately 1.55 million bp), and 174 phenotypic characters were scored from adult and larval morphology, alkaloid profiles, and behavior. These data were combined with relevant published DNA sequences. Ingroup sampling targeted several previously unsampled species, including Aromobates nocturnus, which was hypothesized previously to be the sister of all other dendrobatids. Undescribed and problematic species were sampled from multiple localities when possible. The final dataset consisted of 414 terminals: 367 ingroup terminals of 156 species and 47 outgroup terminals of 46 species. Direct optimization parsimony analysis of the equally weighted evidence resulted in 25,872 optimal trees. Forty nodes collapse in the strict consensus, with all conflict restricted to conspecific terminals. Dendrobatids were recovered as monophyletic, and their sister group consisted of Crossodactylus, Hylodes, and Megaelosia, recognized herein as Hylodidae. Among outgroup taxa, Centrolenidae was found to be the sister group of all athesphatanurans except Hylidae, Leptodactyidae was polyphyletic, Thoropa was nested within Cycloramphidae, and Ceratophryinae was paraphyletic with respect to Telmatobiinae. Among dendrobatids, the monophyly and content of Mannophryne and Phyllobates were corroborated. Aromobates nocturnus and Colostethus saltuensis were found to be nested within Nephelobates, and Minyobates was paraphyletic and nested within Dendrobates. Colostethus was shown to be rampantly nonmonophyletic, with most species falling into two unrelated cis- and trans-Andean clades. A morphologically and behaviorally diverse clade of median lingual process-possessing species was discovered. In light of these findings and the growth in knowledge of the diversity of this large clade over the past 40 years, we propose a new, monophyletic taxonomy for dendrobatids, recognizing the inclusive clade as a superfamily (Dendrobatoidea) composed of two families (one of which is new), six subfamilies (three new), and 16 genera (four new). Although poisonous frogs did not form a monophyletic group, the three poisonous lineages are all confined to the revised family Dendrobatidae, in keeping with the traditional application of this name. We also propose changes to achieve a monophyletic higher-level taxonomy for the athesphatanuran outgroup taxa. Analysis of character evolution revealed multiple origins of phytotelm-breeding, parental provisioning of nutritive oocytes for larval consumption (larval oophagy), and endotrophy. Available evidence indicates that transport of tadpoles on the dorsum of parent nurse frogs—a dendrobatid synapomorphy—is carried out primitively by male nurse frogs, with three independent origins of female transport and five independent origins of biparental transport. Reproductive amplexus is optimally explained as having been lost in the most recent common ancestor of Dendrobatoidea, with cephalic amplexus arising independently three times.",
+      "citation_count": 589,
+      "is_open_access": true,
+      "pdf_url": "https://bioone.org/journals/bulletin-of-the-american-museum-of-natural-history/volume-2006/issue-299/0003-0090_2006_299_1_PSODFA_2.0.CO_2/PHYLOGENETIC-SYSTEMATICS-OF-DART-POISON-FROGS-AND-THEIR-RELATIVES-AMPHIBIA/10.1206/0003-0090(2006)299[1:PSODFA]2.0.CO;2.pdf",
+      "source_api": "openalex",
+      "relevance_score": 0.222,
+      "_score": 0.291,
+      "id": "L001",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Enhanced GNSS Signal Tracking in Fading Environments Using Diversity Reception",
+      "authors": [
+        "Ranjeeth Kumar Siddakatte"
+      ],
+      "venue": "Libraries and Cultural Resources (University of Calgary)",
+      "year": 2016,
+      "doi": "10.11575/prism/25900",
+      "arxiv_id": null,
+      "abstract": "This research focuses on improving GNSS signal tracking performance in multipath fading environments through diversity combining. Despite the remarkable amount of research already reported in the literature, the concept of diversity combining at the correlator level to enhance tracking and measurement performance is not broadly discussed. To this end, two types of diversity combining, namely spatial and frequency diversity combining are investigated. The first phase of the research characterizes spatial diversity reception in harsh fading environments. The signal power, delay spread and Doppler spread characteristics of GNSS signals are investigated. As a consequence of exploiting the spatial diversity behavior, a closed-loop tracking architecture is proposed. The proposed method is tested on data collected in indoor static and urban kinematic scenarios. The carrier and code loop tracking errors between single antenna and dual antenna spatial diversity reception for different scenarios are compared. Results show improved performance in the latter case. In the second phase, the characteristics of frequency diversity reception with those of spatial diversity in a harsh fading environment are compared. The frequency diversity reception is characterized in terms of temporal C/N0 fluctuations, correlation coefficients and other metrics. The SNR enhancement obtained from frequency diversity combining is compared with that of spatial diversity combining. The correlation peak distortion reduction resulting from the two diversity combining methods is also investigated. By exploiting the frequency diversity behavior, the third phase proposes two closed-loop tracking approaches to enhance carrier and code tracking robustness in fading environments. The first approach is targeted to harsh fading environments. It performs carrier Doppler and code phase tracking using a dual-frequency diversity combined signal. The tracking and navigation solution performance evaluated in dense foliage and residential environments show reduced errors and improved continuity and availability of navigation solution. The second approach is targeted to moderate fading environments which achieves carrier phase tracking with PLLs using diversity combined signal. The proposed method is tested on data sets collected in static and kinematic scenarios in terms of reduction in carrier Doppler error and carrier phase cycle slips.",
+      "citation_count": 2,
+      "is_open_access": true,
+      "pdf_url": "http://hdl.handle.net/11023/3052",
+      "source_api": "openalex",
+      "relevance_score": 0.556,
+      "_score": 0.2786112054329372,
+      "id": "L002",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "25 Years of Self-Organized Criticality: Solar and Astrophysics",
+      "authors": [
+        "Markus J. Aschwanden",
+        "Norma B. Crosby",
+        "M. Dimitropoulou",
+        "Manolis K. Georgoulis",
+        "Stefan Hergarten",
+        "R. T. James McAteer",
+        "Alexander V. Milovanov",
+        "Shin Mineshige",
+        "Laura Morales",
+        "Naoto Nishizuka",
+        "Gunnar Pruessner",
+        "R. Sánchez",
+        "A. Surja Sharma",
+        "Antoine Strugarek",
+        "V. M. Uritsky"
+      ],
+      "venue": "Space Science Reviews",
+      "year": 2014,
+      "doi": "10.1007/s11214-014-0054-6",
+      "arxiv_id": null,
+      "abstract": "Shortly after the seminal paper “Self-Organized Criticality: An explanation of 1/fnoise” by Bak et al. (1987), the idea has been applied to solar physics, in “Avalanches and the Distribution of Solar Flares” by Lu and Hamilton (1991). In the following years, an inspiring cross-fertilization from complexity theory to solar and astrophysics took place, where the SOC concept was initially applied to solar flares, stellar flares, and magnetospheric substorms, and later extended to the radiation belt, the heliosphere, lunar craters, the asteroid belt, the Saturn ring, pulsar glitches, soft X-ray repeaters, blazars, black-hole objects, cosmic rays, and boson clouds. The application of SOC concepts has been performed by numerical cellular automaton simulations, by analytical calculations of statistical (powerlaw-like) distributions based on physical scaling laws, and by observational tests of theoretically predicted size distributions and waiting time distributions. Attempts have been undertaken to import physical models into the numerical SOC toy models, such as the discretization of magneto-hydrodynamics (MHD) processes. The novel applications stimulated also vigorous debates about the discrimination between SOC models, SOC-like, and non-SOC processes, such as phase transitions, turbulence, random-walk diffusion, percolation, branching processes, network theory, chaos theory, fractality, multi-scale, and other complexity phenomena. We review SOC studies from the last 25 years and highlight new trends, open questions, and future challenges, as discussed during two recent ISSI workshops on this theme.",
+      "citation_count": 240,
+      "is_open_access": true,
+      "pdf_url": "https://link.springer.com/content/pdf/10.1007/s11214-014-0054-6.pdf",
+      "source_api": "openalex",
+      "relevance_score": 0.222,
+      "_score": 0.1843446519524618,
+      "id": "L003",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Ethnographies in the Front End: Designing for Enhanced Customer Experiences<sup>*</sup>",
+      "authors": [
+        "Stephen R. Rosenthal",
+        "Mark Capper"
+      ],
+      "venue": "Journal of Product Innovation Management",
+      "year": 2006,
+      "doi": "10.1111/j.1540-5885.2006.00195.x",
+      "arxiv_id": null,
+      "abstract": "Ethnographic research, carefully planned and implemented, is an effective method for providing user‐centered perspectives early in the product innovation cycle. This article contributes operational perspectives on ethnographic inquiry in general and, in particular, on its effective integration in the front end of the product development process. It also explores issues of cost–benefit analysis in deciding when and how extensively to employ this mode of inquiry in the product innovation context. Based on a review of ethnographic approaches, in‐depth case descriptions of two projects of this type and a review of twelve other projects, this article addresses three questions: (1) What key process steps and alternative approaches lead to insightful identification of relevant customer experiences? (2) What critical dimensions of customer experience offer hidden opportunities for innovative product design? (3) How are ethnographic studies planned, executed, and leveraged in the front end of the product development process when defining new product concepts? An analysis of these projects and related literature suggests particular kinds of product insights expected to be achieved from ethnographic inquiry, along with lessons for planning, conducting, and leveraging ethnographies. A successful ethnography may call attention to design opportunities not obvious at the outset but arising instead through appreciation of unconscious concerns or desires of the consumer. Accepting the notion of initial ambiguity helps ensure that such studies incorporate a broad coverage of potential kinds of issues and provide time and opportunities for serendipitous learning. Successful planning for ethnographies calls for an open mind coupled with explicit procedures for screening for diversity in respondents, gaining access to the desired range of respondents, and selecting a suitable ethnography team. Ethnographies use multiple observation and inquiry techniques in the field, often in combination with other techniques traditionally used in marketing research. They require teamwork, capturing relevant visual accounts, flexible probing for insights when surprises arise, and skill in modifying the ethnographic guide as needed during the study. The findings from ethnographies in the front end may be leveraged through traditional market research, innovation workshops, and formal product concept development.",
+      "citation_count": 153,
+      "is_open_access": true,
+      "pdf_url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1111/j.1540-5885.2006.00195.x",
+      "source_api": "openalex",
+      "relevance_score": 0.222,
+      "_score": 0.1577572156196944,
+      "id": "L004",
+      "download": true,
+      "publication_status": "published"
+    }
+  ]
+}

@@ -62,10 +62,13 @@
 
 ## 接收方验证（续接对话时必须完成）
 
-- [ ] 已读取 topic-index 的不变量段落
-- [ ] 已验证本文件中的至少 3 条关键事实声称（列出验证了哪些）
-- [ ] 已检查 _registry.yaml 中本专题的 depends_on 和 conflicts_with
-- [ ] 已确认当前范围未违反“明确不含”
+- [x] 已读取 topic-index 的不变量段落。
+- [x] 已验证本文件中的至少 3 条关键事实声称：
+  - 五篇 canonical read notes 均存在且被 Git 跟踪：PASS。
+  - Q001 branch-local boundary 四判据 4/4：PASS — R004/V003。
+  - V003 final verifier=`PASS 0/0/0` 且 commit `0ae596a` 无代码改动：PASS。
+- [x] 已检查 _registry.yaml 中本专题的 depends_on 和 conflicts_with：B3 closed、RDL system dormant；coded C1 条目状态字段虽 active，但 description/science terminal 已关闭，本轮严格不使用 decoder/FEC validity。
+- [x] 已确认当前范围未违反“明确不含”：D005 显式开放 Step 3.5，并继续禁止 Step 4a/实现/仿真/coded reopen。
 
 ## 下一轮
 

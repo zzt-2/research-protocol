@@ -1,0 +1,315 @@
+{
+  "query": "",
+  "timestamp": "2026-08-11T21:58:15.772280+08:00",
+  "sources": [
+    "citations_openalex"
+  ],
+  "total": 14,
+  "results": [
+    {
+      "title": "Demonstration of a Real-Time 14 Tb/s Multi-Aperture Transmit Single-Aperture Receive FSO System With Class 1 Eye-Safe Transmit Intensity",
+      "authors": [
+        "Keisuke Matsuda",
+        "Masashi Binkai",
+        "Shota Koshikawa",
+        "Tsuyoshi Yoshida",
+        "Hayato Sano",
+        "Yoshiaki Konishi",
+        "Naoki Suzuki"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 2021,
+      "doi": "10.1109/jlt.2021.3132306",
+      "arxiv_id": null,
+      "abstract": "To achieve a link budget capable of supporting high capacity free space optical communication (FSO), a high transmit power is required. However, the transmitter can become potentially hazardous to the human eye. For a C-band transmitter to be classified as Class 1 eye-safe, the transmit intensity should be limited such that the optical power passing through a 24.5 mm diameter area is below 10 dBm. In this work we used a 9-aperture transmit, single-aperture receive FSO system to reduce the transmit intensity. Wavelength division multiplexed (WDM) signals were divided into 9 groups and transmitted through 9 apertures as separate beams. The apertures were arranged in a 3 x 3 array at a 25 mm pitch, and the transmit power from each aperture was set to 10 dBm. As a validation of the system by numerical simulation of propagation over 220 m, we showed that the additional free space loss due to pointing errors for the beams transmitted through the off-center apertures was less than 7.4 dB, and that using multiple apertures can significantly increase the transmission capacity. In the outdoor demonstration we transmitted 35 WDM 400 Gb/s dual-polarization probabilistically shaped 16-ary quadrature amplitude modulation signals over 220 m. By distributing the WDM channels across the 9 apertures to suit the transmission loss from their positions in the 3 x 3 array, we demonstrated error-free real-time transmission of a record capacity of 14 Tb/s, while satisfying the requirements of the Class 1 laser safety standard.",
+      "citation_count": 27,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L001",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Coherent combining of low-power optical signals based on optically amplified error feedback",
+      "authors": [
+        "Rasmus Larsson",
+        "Jochen Schröder",
+        "Magnus Karlsson",
+        "Peter A. Andrekson"
+      ],
+      "venue": "Optics Express",
+      "year": 2022,
+      "doi": "10.1364/oe.456188",
+      "arxiv_id": null,
+      "abstract": "In free-space optical communication links, the combining of optical signals from multiple apertures is a well-known method to collect more power for improved sensitivity or mitigation of atmospheric disturbances. However, for analog optical combining no detailed analysis has been made in cases when the optical signal power is very low (<-60 dBm) as would be the case in very long-haul free-space links. We present a theoretical and experimental study of analog coherent combining of noise-limited signals from multiple independent apertures by applying low frequency optical phase dithering to actively compensate the relative phases. It is experimentally demonstrated that a 97% combining efficiency of four 10 GBaud QPSK signals is possible with a signal power per aperture exceeding -80 dBm, in fair agreement with theory. We also discuss the scaling aspects to many apertures.",
+      "citation_count": 14,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.1364/oe.456188",
+      "source_api": "openalex_citations",
+      "id": "L002",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Performance Improvement of the Free-Space Optical Communication Link Using Spatial Diversity Reception-Assisted OFDM Signals",
+      "authors": [
+        "Yang Huang",
+        "Xinyi Zheng",
+        "Yufei Guo",
+        "Shiming Gao"
+      ],
+      "venue": "Applied Sciences",
+      "year": 2022,
+      "doi": "10.3390/app12146828",
+      "arxiv_id": null,
+      "abstract": "Orthogonal frequency division multiplexing (OFDM) technology is presented for use in free-space optical (FSO) communications accompanied by the spatial diversity reception. Using quadrature phase shift keying (QPSK) modulation formats, the OFDM signals show robustness to support high spectral efficiency and compatibility with the spatial diversity reception to improve receiver sensitivity. Compared with the single-carrier QPSK signal, the OFDM-QPSK signal with 64 sub-carriers can reduce the BER from 2.87 × 10−3 to 2.98 × 10−4 at the SNR of 6 dB. Using a two-aperture spatial diversity reception with OFDM, the BER can be reduced from 2.45 × 10−3 of a single receiver to 6.10 × 10−4 under moderate turbulence conditions. Under strong turbulence, the BER of the single receiver is 2.14 × 10−2. It can be improved to 1.16 × 10−3 by using four-aperture receivers, and even 6.87 × 10−4 by using six-aperture receivers. The optimized aperture number should be selected according to channel conditions.",
+      "citation_count": 6,
+      "is_open_access": true,
+      "pdf_url": "https://www.mdpi.com/2076-3417/12/14/6828/pdf?version=1657267583",
+      "source_api": "openalex_citations",
+      "id": "L003",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Flexible Phase Synchronization for Wireless Optical Coherent Communication System With Adaptive Fractionally-Spaced Blind Equalization Combined With Adaptive Kalman Filter",
+      "authors": [
+        "S.J. Zhang",
+        "Liying Tan",
+        "Jing Ma"
+      ],
+      "venue": "IEEE photonics journal",
+      "year": 2023,
+      "doi": "10.1109/jphot.2023.3328423",
+      "arxiv_id": null,
+      "abstract": "Wireless optical coherent communication can be used as the backbone supporting technology of air-space-spacesea-integrated network. In wireless optical coherent communication, the information can be demodulated from the carrier correctly only when the phase synchronization is accurate. Operating in different systems and diverse environments presents challenges for phase synchronization, especially lasers with different line-widths and atmospheric turbulence channels that cause scintillation and wave-front distortion. We propose a combination of adaptive fractionally-spaced blind equalization and adaptive kalman filter to realize phase synchronization under different line-widths and different scintillation and wave-front distortion. This combination which changed the limitation that the original settings of each part is not directly applicable to atmospheric channel combines spatial diversity in a natural way, jointly removes amplitude noise and phase noise more thoroughly with the optimal bandwidth, and can realize phase synchronization under time-varying conditions. The signal quality of the proposed scheme with constant parameter output can be improved 1-2dB in both mean square error (MSE) and symbol to error ratio (SER) compared to traditional equal gain combining (EGC) followed by Viterbi-Viterbi phase estimation (VVPE) and the proposed constant parameter scheme has more laser linewidth options. The proposed scheme with noise parameter corrected by Autoregressive method outperforms the constant parameter scheme 1-2dB at both MSE and SER and has higher and wider line-width selections. With this design, phase synchronization can be more flexible to adapt to dynamic changes, which will be more suitable for future applications of wireless optical networks with dynamic,noisy, diverse environment.",
+      "citation_count": 3,
+      "is_open_access": true,
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/4563994/4814557/10301506.pdf",
+      "source_api": "openalex_citations",
+      "id": "L004",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Research on coherent accumulation of multi-aperture receiver array based on FMCW coherent lidar",
+      "authors": [
+        "Hai Sheng Cong",
+        "Jianfeng Sun",
+        "Zhiyong Lu",
+        "Hongyu He",
+        "Ronglei Han",
+        "Weijie Ren",
+        "Longkun Zhang",
+        "Yuxin Jiang",
+        "Chaoyang Li"
+      ],
+      "venue": "",
+      "year": 2021,
+      "doi": "10.1117/12.2593908",
+      "arxiv_id": null,
+      "abstract": "This article mainly shows that coherent accumulation of multi-aperture receiver array based on frequency modulation continuous wave (FMCW) coherent lidar has an excellent performance for the weak signal detection of target which is far distance or moving with a high velocity. This method can improve the signal and noise ratio (SNR) and detection range accuracy by multi-aperture receiver array. In addition, the analysis done by simulation shows that phase fluctuation of atmospheric turbulence has a significant influence on the performance of coherent accumulation of multi-aperture receiver array. Stimulation result shows that while <i>&mu;<sub>x</sub></i> is equal to - &sigma;<sup>2</sup><sub>x</sub> , the amplitude fluctuation of signal could degrade the quality of coherent accumulation based on multi-aperture receiver array and its existence leads to the worse performance before non-amplitude fluctuation. Phase fluctuation of signal deteriorates the performance of coherent accumulation while its size is big or small.",
+      "citation_count": 2,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L005",
+      "download": false,
+      "publication_status": "published"
+    },
+    {
+      "title": "Research Progress and Fronts in Satellite-to-Ground Laser Communication",
+      "authors": [
+        "Zhao Yun",
+        "Han Wang",
+        "Binbin Dong",
+        "Junbo HAO",
+        "Zizhuo ZHANG",
+        "Shihan CHEN",
+        "Chen Yang",
+        "Qixiang GAO",
+        "Xing Zhong",
+        "Mao-sheng Chen"
+      ],
+      "venue": "Chinese Journal of Space Science",
+      "year": 2025,
+      "doi": "10.11728/cjss2025.02.2024-0148",
+      "arxiv_id": null,
+      "abstract": "激光通信技术突破了传统微波通信的带宽限制, 成为实现高速率、大容量星地通信的重要手段, 特别适用于海量空间科学数据的传输. 星地激光通信技术在空间科学中具有广泛的应用前景, 是实现空间科学数据高效、快速传输的关键技术之一. 本文系统梳理了国内外星地激光通信的系统组成及实验成果, 详细介绍了实现稳定可靠通信的关键技术, 例如捕获跟踪瞄准、星上激光器技术等. 针对大气湍流对激光信道的影响, 分析了自适应光学等有效的抑制方法, 并汇总了基于新型结构光场的激光通信技术发展现状. 结合空间科学对数据传输的需求, 对星地激光通信的研究现状进行了总结, 并展望了未来的发展方向, 强调了其在空间科学和深空探测中的重要应用潜力.",
+      "citation_count": 1,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.11728/cjss2025.02.2024-0148",
+      "source_api": "openalex_citations",
+      "id": "L006",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Parallelized and adaptive square-root unscented Kalman filter for carrier recovery in satellite-to-ground coherent optical communications",
+      "authors": [
+        "Jing Sun",
+        "Puming Huang",
+        "Zhoushi Yao",
+        "Jingzhong Guo"
+      ],
+      "venue": "Optics Communications",
+      "year": 2020,
+      "doi": "10.1016/j.optcom.2020.125697",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 6,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L007",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Low-complexity parallel real-valued weight adaptive digital combining algorithm for coherent FSO communications employing modes diversity reception under atmospheric turbulence channel",
+      "authors": [
+        "Yiming Bian",
+        "Yan Li",
+        "Donghao Zheng",
+        "Wei Li",
+        "Xiaobin Hong",
+        "Jifang Qiu",
+        "Jian Wu"
+      ],
+      "venue": "Optics Communications",
+      "year": 2020,
+      "doi": "10.1016/j.optcom.2020.126078",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 3,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L008",
+      "download": false,
+      "publication_status": "published"
+    },
+    {
+      "title": "Fiber-coupling Efficiency for Satellite-to-ground Laser Links with Angle-of-arrival Fluctuations",
+      "authors": [
+        "Jing Sun",
+        "Puming Huang",
+        "Zhoushi Yao"
+      ],
+      "venue": "",
+      "year": 2019,
+      "doi": "10.1109/icct46805.2019.8947272",
+      "arxiv_id": null,
+      "abstract": "In a satellite-to-ground laser communication system, the presence of atmospheric turbulence and residual angle of arrival fluctuations limit the efficiency with which the propagating beam is coupled into a single-mode fiber. Considering the influence of atmospheric turbulence and residual jitter of angle of arrive, the expression of mean-coupling efficiency is handled in the receiver aperture plane in this paper. The optimal design parameter α of the optical receiver system in the satellite-to-ground laser links can be obtained by maximize the fiber coupling efficiency. Corresponding numerical results based on the expression derived in this paper will be useful in parametric estimation and optimization of optical receiver system.",
+      "citation_count": 2,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L009",
+      "download": false,
+      "publication_status": "published"
+    },
+    {
+      "title": "Statistical Model of Combining Efficiency for Digital Phase Alignment in Multi-Aperture Free-Space Coherent Optical Receivers",
+      "authors": [
+        "Jingsong Xiang",
+        "Xinhao Lyu"
+      ],
+      "venue": "",
+      "year": 2021,
+      "doi": "10.1109/icece54449.2021.9674283",
+      "arxiv_id": null,
+      "abstract": "In order to eliminate the impact of atmospheric turbulence on the performance of free-space optical (FSO) communication systems, the multi-aperture receiving technique is wildly recognized as a powerful fading-mitigation technology. As one of the essential technologies in the multi-aperture receiver, digital coherent beam combining relies on the digital phase alignment algorithm to align the different versions of signals in phase. In this paper, the statistical model of combining efficiency for digital phase alignment is derived in multi-aperture FSO receivers by considering the phase alignment errors at each receiving aperture. It can be expressed as a linear function of chi-square distribution by Satterthwaite approximation. Based on this statistical model, we derive the exact expressions of the mean, variance, and probability density function of the combining efficiency. The simulation results show that this model is valuable and practical under the condition of the different number of aperture and signal-to-noise ratio combinations. Combining efficiency is also compared for equal gain combining diversity FSO systems with or without considering aperture selection.",
+      "citation_count": 1,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L010",
+      "download": false,
+      "publication_status": "published"
+    },
+    {
+      "title": "The BER of the New FSO Receiver Manufactured by RTCVD and Solar Cell Technology",
+      "authors": [
+        "HU Qing-gui",
+        "Long Wen-guang"
+      ],
+      "venue": "International Journal of Optics",
+      "year": 2020,
+      "doi": "10.1155/2020/4274870",
+      "arxiv_id": null,
+      "abstract": "In the free-space optical (FSO) communication system, alignment and coupling are key issues. In this work, we adopt a PIN photodiode board as the new receiver to address this question. Firstly, with rapid thermochemical vapor deposition (RTCVD) and solar cell technology, the PIN photodiode board is manufactured. Then, using scanning electron microscope (SEM) and transmission electron microscope (TEM), the microphotographs of the PIN photodiode are taken. After that, the PIN board is arranged as a new receiver in the FSO system to do a bit error rate (BER) experiment. In total, we have carried out 4 groups of experiments. The BERs of the ordinary receiver are as follows: (10−8.5, 10−8, 10−8, and 10−7.9) and that of the new receiver is (10−9.2, 10−9.1, 10−9.1, and 10−9), respectively. It means the BER of the new receiver is lower. In other words, the new receiver performs better.",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "https://downloads.hindawi.com/journals/ijo/2020/4274870.pdf",
+      "source_api": "openalex_citations",
+      "id": "L011",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Low-complexity joint transmit diversity and adaptive modulation schemes for OGS-satellite FSO uplink",
+      "authors": [
+        "Esmail Elsaidy",
+        "Tamer Rakia",
+        "M.E. Abdelaziz",
+        "Mohamed Hassan Abd El-Azeem"
+      ],
+      "venue": "Journal of Physics Conference Series",
+      "year": 2023,
+      "doi": "10.1088/1742-6596/2616/1/012043",
+      "arxiv_id": null,
+      "abstract": "Abstract In this paper, we present two novel low-complexity transmission schemes for optical ground station (OGS)-satellite free space optical (FSO) uplink. Specifically, the TCAM-scheme which is a joint dual-branch threshold combining and adaptive modulation scheme and the SCAM-scheme which is a joint dual-branch selection combining and adaptive modulation scheme. In both schemes, the data rate is adjusted according to the instantaneous received combined SNRs at the satellite. We analyze the performance of the proposed schemes in terms of the outage probability, the average spectral efficiency and average bit error rate, while considering both subcarrirer intensity modulation/direct detection (SIM/DD) and coherent FSO detection techniques. Numerical results show that both TCAM and SCAM schemes provide better performance as compared to a single FSO uplink, while SCAM scheme enjoys better performance than TCAM scheme. This comes at the expense of increased complexity of the SCAM scheme. Also, coherent FSO detection technique shows better performance than the SIM/DD FSO detection technique for both schemes. The choice of which scheme and which FSO detection technique to use is a compromise of required quality of service and complexity.",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "http://dx.doi.org/10.1088/1742-6596/2616/1/012043",
+      "source_api": "openalex_citations",
+      "id": "L012",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Modeling and performance analysis for few-mode free-space optical communication reception based on optical-domain coherent beam combining",
+      "authors": [
+        "Wenqi Ma",
+        "Fan Yang",
+        "Xiuquan Li",
+        "Haiyan Wang",
+        "Guijun Hu"
+      ],
+      "venue": "Optics Express",
+      "year": 2025,
+      "doi": "10.1364/oe.579218",
+      "arxiv_id": null,
+      "abstract": "This paper proposes a theoretical model for a few-mode free-space optical communication (FSOC) reception based on optical-domain coherent beam combining. By analyzing the coupling efficiency of few-mode fiber, the relationship between atmospheric turbulence and coherent beam combining is established. The bit error rate (BER) performance is quantitatively evaluated by incorporating device loss factors and combining efficiency, thereby constructing a comprehensive theoretical framework that encompasses turbulent disturbance, mode coupling, and optical-domain beam combining across the entire signal transmission chain. Simulation and experimental results demonstrate that at a BER of 3.8×10 −3 , the proposed scheme achieves a 1–3 dB improvement in receiver sensitivity compared to single-mode FSOC systems, while performing within 1 dB of systems utilizing mode diversity reception technology. Moreover, the scheme requires only a single local oscillator and a single high-speed detector, significantly reducing the hardware complexity and noise accumulation associated with multi-branch detection.",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.1364/oe.579218",
+      "source_api": "openalex_citations",
+      "id": "L013",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "水下可见光通信关键技术进展与展望（特邀）",
+      "authors": [
+        "迟楠 Chi Nan",
+        "卢芝蓝 Lu Zhilan",
+        "李甫杰 Li Fujie"
+      ],
+      "venue": "Acta Optica Sinica",
+      "year": 2026,
+      "doi": "10.3788/aos251786",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 0,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L014",
+      "download": false,
+      "publication_status": "published"
+    }
+  ]
+}

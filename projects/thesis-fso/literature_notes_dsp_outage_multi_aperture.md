@@ -1,7 +1,7 @@
 # Literature Notes — DSP-outage-aware multi-aperture combining
 
 > Owner: `.sessions/2026-08-11-dsp-outage-aware-multi-aperture-combining/`
-> Groundwork status: Step 1 complete; Step 2 accepted with 2019 fulltext limitation; Step 3 complete and independently verified.
+> Groundwork status: Step 3.5 complete; terminal=`EVIDENCE_BLOCKED`; Step 4a not authorized.
 
 ## Progress
 
@@ -10,7 +10,8 @@
 | 1 search | COMPLETE / VERIFIED | `R001-step1-synthesis.md`, V001 |
 | 2 acquire | ACCEPTED WITH LIMITATION | `R002-step2-acquisition-coverage.md`, `R003-step2-acquisition-receipt.md`, D003 |
 | 3 read | COMPLETE / VERIFIED | T007–T010 worker logs, five global read notes, R004, V003 |
-| 3.5+ | NOT AUTHORIZED | 2019 P0 debt only if Q001 survives verification |
+| 3.5 supplement | COMPLETE / EVIDENCE_BLOCKED | T011–T015, R005, D006; direct-action primary fulltexts unavailable |
+| 4a+ | NOT AUTHORIZED | no legal entry while D006 is active |
 
 ## Five fulltext reads
 
@@ -24,6 +25,12 @@
 
 All five passed title gates and contain 15 standard fields, seven structured sections, communication parameters and experimental-completeness audits. Extraction evidence is in `projects/thesis-fso/worker-logs/step-3-dsp-outage-read-l1-l2.md`, `step-3-dsp-outage-read-l3-l4.md`, and `step-3-dsp-outage-read-l5-p0-boundary.md`.
 
+## Step 3.5 targeted fulltext read
+
+| ID | Identity | Role | Full read note | Exact-action result |
+|---|---|---|---|---|
+| L6 | Zhang et al., JPHOT 2023, `10.1109/JPHOT.2023.3328423` | estimator-changing direct neighbor + later-primary Sun boundary | `papers/_read_notes/10.1109_jphot.2023.3328423.md` | joint FSE-MCMA+DD→MEKF/AKF; no branch-validity admission/abstention or no-valid flag; `neighbor` |
+
 ## Competitor action matrix
 
 | Method | Receiver-visible input | Trigger / action | Output | Coverage of current narrow action |
@@ -35,6 +42,8 @@ All five passed title gates and contain 15 standard fields, seven structured sec
 | Tu 2020 | ideal-time-aligned fields, OSNR, loss target | choose M; phase rotate; add only on positive net EGC gain | recursive EGC field | covers known-OSNR hard/conditional admission, not DSP validity |
 | Yang 2022 ICCC | pilots, attenuation `alpha`, LS/MMSE `Hhat` | attenuation-derived continuous `gamma` modifies MRC | weighted MRC decision stream | covers generic pilot-derived soft weight in RF, not multi-source post-DSP validity |
 | SC/GSC / fixed SNR discard | branch SNR/rank/threshold | select top/qualified branches | selected or combined stream | mandatory cheap comparators, not proposed contribution |
+| Zhang 2023 FSE/MEKF/AKF | four branches after frequency/timing recovery | MSE-switched adaptive taps + Kalman phase/noise updates | one recovered stream; no branch validity/no-valid flag | estimator-changing neighbor, not exact collision |
+| Xie/Qiu direct identities | primary fulltext and abstract unavailable | exact trigger/action unknown | exact output/no-valid unknown | unresolved bearing evidence; blocks non-collision claim |
 
 ## Canonical problem list
 
@@ -43,7 +52,7 @@ All five passed title gates and contain 15 standard fields, seven structured sec
 - **M**: Wang 2023's recent, actually evidenced ordering: per-branch FSTS frame synchronization/alignment and branch phase correction → MRC → shared polarization demultiplexing/FOE. Liu 2023 2N×2 CMA/RDE is the strongest estimator-changing alternative and must be reported beside it.
 - **C**: at that pre-MRC boundary, coherent-FSO branches have heterogeneous received power and branch-local FS/phase-correction validity; some are near or beyond a local DSP-outage state while others remain usable.
 - **A**: channel-amplitude/phase correction is not a validity test. Wang's MRC boundary has no admission variable and can give a nonzero contribution to a systematically invalid branch-local stream; Johst explicitly reports that outage branches can worsen combining and must be discarded. This is falsifiable: corrected MRC may show no harm, or fixed discard/SC/GSC may absorb all headroom.
-- **Method output shape only**: receiver-visible branch-local synchronization/phase/available estimation validity → bounded branch reliability/abstention action → combined sequence plus no-valid-branch flag. No formula, state machine or feature fusion is authorized in Step 3.
+- **Method output shape only**: receiver-visible branch-local synchronization/phase/available estimation validity → bounded branch reliability/abstention action → combined sequence plus no-valid-branch flag. Step 3.5 仍未授权任何公式、状态机或 feature fusion 设计。
 - **Claim boundary**: the broader action after all independent FS/CE/CPE stages is not yet baseline-aligned by the five-paper set and remains a Step 3.5 question, not part of Q001's current four-criterion PASS.
 
 | Glossary criterion | Result | Evidence |
@@ -59,7 +68,7 @@ All five passed title gates and contain 15 standard fields, seven structured sec
 - Pilot-amplitude soft weighting is already occupied by ICCC 2022 and is not claimed.
 - Known-OSNR phase-window adaptation and positive-gain branch admission are already occupied by Tu 2020 and are not claimed.
 - Joint raw-waveform adaptive equalization/combining is occupied by Liu 2023 and is not claimed.
-- The surviving Q001 is the narrower branch-local-DSP validity-to-bounded-weight/abstention action at Wang's evidenced pre-MRC position. Exact novelty remains limited by missing Sun 2019 fulltext; the broader post-all-FS/CE/CPE position is also a Step 3.5 baseline debt, not a Step 3 claim.
+- Q001 的窄边界仍是 Wang 已证据化 pre-MRC 位置上的 branch-local DSP validity→bounded weight/abstention；但当前不能宣称存活进入 Step 4a。Sun 2019、Xie 2023、Qiu 2025 的承重 exact action 均受 primary-fulltext 缺失限制；broader post-all-FS/CE/CPE 位置继续 excluded/unresolved。
 
 ## Experimental-completeness cross-check
 
@@ -77,8 +86,8 @@ All five passed title gates and contain 15 standard fields, seven structured sec
 2. **Liu 2023**: problem funnel → compact competitor paragraph → system/2N×2 equations → boundary figures → receiver sanity check → turbulence gain. Useful for separating mechanism from outcome.
 3. **Johst 2024**: frame/DSP chain → controlled impairment simulation → field setup → outage distribution/boundary → bounded operational conclusion. Useful for defect-to-deployment evidence, while avoiding an untested method claim.
 
-## Step 3 disposition
+## Step 3.5 disposition
 
-`STEP3_Q_SURVIVES_READY_FOR_STEP3_5`, independently verified after bounded repair. This is a problem-survival result only: no Go/Kill, METHOD_SIGNAL, algorithm design or experimental evidence has been produced.
+`EVIDENCE_BLOCKED`. Round 2 added zero new MUST/SHOULD, and no readable primary paper confirmed exact collision. However Xie/Qiu direct identities and Sun's full action remain unavailable at the input-trigger-action-output level, so Q001 cannot legally enter Step 4a. This is not a scientific Kill, novelty claim, METHOD_SIGNAL, algorithm design or experimental result.
 
-If verified, Step 3.5 search must target: `post-DSP branch reliability`, `lock-aware coherent combining`, `frame-sync confidence combining`, `channel-estimation residual MRC`, `cycle-slip metric branch admission`, `bounded/abstaining diversity combining`, plus primary retrieval of DOI `10.1016/j.optcom.2019.03.069`.
+Recovery is limited to new primary fulltext or an equivalent later-primary source that closes the complete action signature; repeating broad search is not authorized.

@@ -5,7 +5,7 @@ method_type: reference-method extension（非 ML；完整 deployable action chai
 domain: comms
 created: 2026-06-21
 updated: 2026-08-11
-current_step: STEP3_Q_SURVIVES_READY_FOR_STEP3_5（DSP-outage-aware multi-aperture combining）
+current_step: GROUNDWORK_STEP3_5_EVIDENCE_BLOCKED（DSP-outage-aware multi-aperture combining）
 current_stage: GROUNDWORK
 ---
 
@@ -35,15 +35,15 @@ current_stage: GROUNDWORK
 
 ### 当前控制面桥接
 
-> **2026-08-11 新算法专题 GW Step 2 repair / Step 3（D003/D004/S003/R004/V003/H003）**。Step 2 以 JLT 2023 replacement CORE 修复为 qualified=5，并保留 2019 fulltext limitation。五篇全文 title/15 fields/7 sections 已精读；宽泛 adaptive combining、pilot-amplitude soft weight、known-OSNR admission 与 joint 2N×2 equalization 均被裁出。Q001 已按 verifier 纠偏到 Wang 2023 的实际 branch-local FS/phase-correction→MRC 边界；完整 post-all-FS/CE/CPE 版本留作 Step 3.5 baseline debt。T010 首验 PARTIAL 0/2/0，bounded repair 后 V003=`PASS 0/0/0`；terminal=`STEP3_Q_SURVIVES_READY_FOR_STEP3_5`。Step 3.5 及以后未授权。
+> **2026-08-11 新算法专题 GW Step 3.5（D005/D006/S004/R005/V004/H004）**。Round 1=8 queries/45 unique，引用链=121 unique，Round 2=6 queries/4 unique 且 new MUST/SHOULD=0/0。Zhang 2023 全文为 estimator-changing neighbor；Sun/Xie/Qiu 等 direct-action primary evidence 仍不可得。fresh verifier 首验 PARTIAL 0/1/2，bounded repair 后 final PASS 0/0/0。terminal=`EVIDENCE_BLOCKED`，不是 collision/Kill；Step 4a 无入口。
 
 | DSP-outage-aware multi-aperture GW Step | 状态 | 证据 | 下游门控 |
 |---|---|---|---|
 | 1 search | ✅ COMPLETE / VERIFIED | D001/R001/V001/H001 + q1–q6 JSON + receipt/matrix | 已授权并完成 Step 2 |
 | 2 acquire | ✅ COMPLETE / ACCEPTED WITH LIMITATION | D003/R002/R003；qualified 5，optical CORE 3，P0 limitation | 允许 Step 3；若 Q# 存活，2019 债移交 Step 3.5 |
-| 3 read | ✅ COMPLETE / VERIFIED | S003/T007–T010/R004/D004/V003/H003 | terminal=`STEP3_Q_SURVIVES_READY_FOR_STEP3_5`；等待主控确认 |
-| 3.5 supplement | ⬜ NOT_AUTHORIZED | — | Step 3 未完成前禁止 |
-| 4a feasibility | ⬜ NOT_AUTHORIZED | — | Step 3/3.5 未完成前禁止；不得仿真 |
+| 3 read | ✅ COMPLETE / VERIFIED | S003/T007–T010/R004/D004/V003/H003 | terminal=`STEP3_Q_SURVIVES_READY_FOR_STEP3_5` |
+| 3.5 supplement | ⛔ EVIDENCE_BLOCKED / VERIFIED | D005/D006/S004/T011–T016/R005/V004/H004 | direct action debt 未闭合；不是 scientific Kill |
+| 4a feasibility | ⬜ NOT_AUTHORIZED | — | D006 active 时无合法入口；不得仿真 |
 
 > **2026-08-11 coded decoder-feedback C1 科学终态（D027/V021/CP016）**。S1 occurrence=`262/480` PASS；S2 exact 1620 rows 的 damage=`0.06944444444444449` 与 recoverability=`0.04008151917073723` 均未过冻结门。独立 verifier 对证据给出 `PASS 0/0/0`，science verdict=`FAIL`。按顺序 fail-stop，B2、decoder-information、S4、C1、FAIR_COMPARISON_RUN 全部 NOT_RUN；method signal/thesis contribution=`NONE`。
 
