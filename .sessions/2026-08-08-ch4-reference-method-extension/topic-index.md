@@ -1,6 +1,6 @@
 # Topic Index: Ch4 参考方法扩展
 
-> 状态: dormant | 创建: 2026-08-08 | 最后更新: 2026-08-08（科学执行迁入独立 RML-FSTS Groundwork 专题）
+> 状态: dormant | 创建: 2026-08-08 | 最后更新: 2026-08-11（K2/K3 入口重裁无 survivor）
 
 ## 专题信息
 
@@ -12,7 +12,7 @@
 
 **原始目标**：在星地相干 FSO 总伞下，为 Ch4 产出一个真实方法章；从可复现 reference baseline 出发，经 observed defect、one deployable action、fair comparator 与 bounded testbed，形成完整方法包。
 
-**当前范围**：本专题转为 dormant 来源 owner，保留 D004/R002/H003 与 protected history；RML-FSTS 的正式 Groundwork 科学执行迁入 `.sessions/2026-08-08-rml-fsts-groundwork/`，当前只运行 Step 1–2 并在覆盖面报告后停止。Step 3/3.5/4a、预注册 smoke、实现和仿真均不授权。
+**当前范围**：本专题为 dormant reference-entry source owner。2026-08-11 的 K2/K3 bounded re-adjudication 已以 `NO_ENTRY_SURVIVOR_STRATEGIC_SHORTAGE` 收口；不再承载科学执行，不创建新 Groundwork 专题。K1 保持可恢复 `EVIDENCE_BLOCKED`，K4 保持 exact collision；只有新的 candidate source 或不同 research object 经显式 scope-change 才能恢复入口裁决。
 
 **明确不含**：
 
@@ -30,6 +30,10 @@
   - 原因：T001 G3 在禁止实验时要求目标场景 defect 已成立，且把入口审计误算为对象包失败，造成方法构造前过早停止。
   - 新范围：允许一次有界检索/本地索引复用；入口可凭外部 defect、FSO 迁移机制与 0.5–1 天 smoke 合同准备就绪。
   - 影响的未决项：取消“是否立即换领域”的当前阻断；先执行 T002，仍不授权 smoke/GW/实现/仿真；胜者后续从 GW Step 1 开始。
+- **[2026-08-11] D005**：从 dormant source owner 临时扩为一次 K2/K3 bounded entry re-adjudication。
+  - 原因：K1/Q001 以 `EVIDENCE_BLOCKED` 合法收口，需按 RDL 自动轮换裁决原四卡剩余候选。
+  - 新范围：只读重裁 E1–E8 与 strongest cheap alternative；恰有一个 survivor 才允许新建专题并运行 GW Step 1。
+  - 影响的未决项：R003 证明两卡均失败，未触发新专题或 Step 1；D006 后恢复 dormant。
 
 ## 已确认结论
 
@@ -45,6 +49,7 @@
    - 它是否是最小构造前不可缺的步骤？
    - 是否已触发“每对象 2 包 / 两对象失败”的停止条件？
 7. defect-reproduction 入口不要求目标 FSO defect 预先成立；最低证据合同是外部已发表 defect、明确的 FSO 迁移物理机制、0.5–1 天可证伪 smoke 设计。该合同只授权进入 GW Step 1，不等于 defect 成立或方法成立。
+8. “published defect 存在”不等于“拟议 action 是方法”；若 strongest cheap alternative 已吸收动作、完整 action 未唯一化或 task-matched defect 缺失，入口必须停止。
 
 ### 其他结论
 
@@ -55,6 +60,7 @@
 5. RML-FSTS 入口的 source defect 仅是 fixed lag/`BL` 对调制、训练长度和低功率条件的依赖；目标星地 lag-ranking crossover 仍为待证伪假设，不能写成已观察事实。
 6. C2 BUM-CMA 的 weak-branch gradient pollution 缺 published defect 与 faithful smoke，不得并行启动或用物理推断补 E2。
 7. RML-FSTS future smoke 的最强廉价替代是 dev-frozen modulation/TS/receiver-power-conditioned single-lag lookup；论文 fixed `BL` 或较弱 global lag 单独失败不能过门，conditioned lookup 若在 MDE 内解决问题则退出。
+8. K2 suffix pollution 是 published defect，但三假设 action 未过唯一化/高风险强邻居/章节/预算门；K3 缺 task-matched fixed-JP published defect。两者均为 entry rejection，不是 family scientific Kill。
 
 ## 进展线索
 
@@ -71,13 +77,14 @@
 - **H003**：交接下一对话先重读 `stages/groundwork.md`，只从 RML-FSTS research object 的 GW Step 1 启动；禁止直接跑 smoke。
 - **V003**：fresh-context verifier 初审 PARTIAL（0/1/2），修复 strongest cheap comparator、receipt 与 prior-art identity 后复核 PASS（P0/P1/P2=`0/0/0`）。
 - **T003**：自包含授权独立 RML-FSTS Groundwork 专题的 Step 1 检索初筛与 Step 2 全文获取；覆盖面报告后硬停止，不进 Step 3。
+- **R003 / D005–D006**：恢复原 K2/K3 动作签名并逐门重裁；K2 面对 order-2/3 mixture tracker 高风险强邻居且动作/预算未闭合，K3 缺 published fixed-JP defect且 collision debt 未闭合；terminal=`NO_ENTRY_SURVIVOR_STRATEGIC_SHORTAGE`。
+- **H004 / V004**：交接战略短缺与恢复条件；fresh-context verifier 经修正后 final PASS，Critical/Major/Minor=`0/0/0`。
 
 ## 未决项
 
-- GW Step 1–2 能否形成 ≥5 篇合格 CORE 全文并覆盖 source defect、直接竞品/传统 baseline、FSO 迁移物理三类证据？
-- 用户是否接受 Step 2 覆盖面及关键全文缺口，从而授权未来 Step 3？
-- 若合法进入 Step 4a，0.5–1 天 faithful FSTS defect smoke 是否观察到预注册 lag-ranking crossover / fixed-lag regret？
+- 新的 candidate source 或不同 research object 能否同时提供 task-matched 2019+ reference、明确 published defect、一个完整 action 与已闭合 strongest cheap comparator？
+- K1/Q001 的 direct-action primary evidence 是否未来可合法获得；未获得前不得重开。
 
 ## 当前位置
 
-`DORMANT_SOURCE_OWNER`，current terminal=`ONE_DEFECT_REPRODUCTION_ENTRY_READY_FOR_GW_STEP1`，V003 PASS。当前科学执行 owner 为 `.sessions/2026-08-08-rml-fsts-groundwork/`；本专题不再新增科学执行内容。
+`DORMANT_STRATEGIC_SHORTAGE`，current terminal=`NO_ENTRY_SURVIVOR_STRATEGIC_SHORTAGE`。K2/K3 没有 GW Step 1 入口；K1/Q001 仍由独立专题保持 `EVIDENCE_BLOCKED`，不是 scientific failure。当前 `mission_method_delta=NONE`。

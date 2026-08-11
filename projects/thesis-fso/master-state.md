@@ -37,6 +37,8 @@ current_stage: GROUNDWORK
 
 > **2026-08-11 新算法专题 GW Step 3.5（D005/D006/S004/R005/V004/H004）**。Round 1=8 queries/45 unique，引用链=121 unique，Round 2=6 queries/4 unique 且 new MUST/SHOULD=0/0。Zhang 2023 全文为 estimator-changing neighbor；Sun/Xie/Qiu 等 direct-action primary evidence 仍不可得。fresh verifier 首验 PARTIAL 0/1/2，bounded repair 后 final PASS 0/0/0。terminal=`EVIDENCE_BLOCKED`，不是 collision/Kill；Step 4a 无入口。
 
+> **2026-08-11 K2/K3 reference-entry 自动轮换（Ch4 source owner D005–D006/R003/V004/H004，fresh verifier PASS 0/0/0）**。K2 的 suffix pollution 为 published defect，但 future action 未唯一化，order-2/3 Tikhonov mixture/sequence tracker 只构成 `UNRESOLVED_HIGH_RISK / STRONG_NEIGHBOR`，不声称 exact collision 或已完全吸收；完整比较预计 5–9 天。K3 缺 task-matched fixed-JP unequal-reliability published defect，且 Weighted/RW-BPS/unequal-SNR CPR 仅形成待全文闭合的 collision debt。terminal=`NO_ENTRY_SURVIVOR_STRATEGIC_SHORTAGE`；未创建新 GW 专题、未执行 Step 1，`mission_method_delta=NONE`。K1/Q001 继续保持上段 `EVIDENCE_BLOCKED`，不是 scientific failure。
+
 | DSP-outage-aware multi-aperture GW Step | 状态 | 证据 | 下游门控 |
 |---|---|---|---|
 | 1 search | ✅ COMPLETE / VERIFIED | D001/R001/V001/H001 + q1–q6 JSON + receipt/matrix | 已授权并完成 Step 2 |

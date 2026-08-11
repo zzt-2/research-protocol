@@ -5,6 +5,7 @@
 > 2026-08-08 续接 | T002 回传 | 入口裁决完成，V003 PASS
 > 2026-08-08 续接 | H003 接收与 T003 准备 | T003 待派发
 > 2026-08-08 续接 | T003 回传 | 科学执行迁入独立专题，Step 2 READY
+> 2026-08-11 续接 | K1 blocked 后自动轮换 | K2/K3 入口重裁完成，无 survivor
 
 ## 目标
 
@@ -32,6 +33,10 @@ T003 已准备。执行方必须先查 registry，再新建独立 `2026-08-08-rm
 
 T003 已完成：独立执行 owner 为 `.sessions/2026-08-08-rml-fsts-groundwork/`；Step 1 PASS，Step 2 terminal=`STEP2_READY_FOR_USER_CONFIRMATION`。本专题转为 dormant 来源 owner，不再承载 RML-FSTS 科学执行。
 
+2026-08-11 主控在 K1/Q001 以 `EVIDENCE_BLOCKED` 收口后授权一次 bounded auto-rotation，只重裁原四卡剩余的 K2/K3。接收核验确认 topic-index 不变量与 registry 血缘未变；D005 临时扩大当前范围，但不授权实验、下载或新全文精读。原四卡 action signature 从执行对话 JSONL 恢复后，全部重新锚定到仓内 primary/source，不以聊天记忆作为证据。
+
+两个 fresh-context science agent 分别审计 K2/K3。K2 的 suffix pollution 为 TSP 2022 明确 published defect，但 future action 未唯一化，且 TCOM 2016 order-2/3 mixture tracker 对多轨迹/likelihood/merge-prune/confidence 构成高风险强邻居；因 task/target 不同，不声称 exact collision 或已完全吸收。K3 缺 task-matched published fixed-JP failure，原 JP-V&V 反而报告 fixed coupling 可 near-optimal。R003/D006 因此给出 terminal=`NO_ENTRY_SURVIVOR_STRATEGIC_SHORTAGE`。未创建新专题、未运行 GW Step 1、未实现或仿真；入口拒绝不计 research-object failure。
+
 ## 决策引用
 
 - D001：冻结 Ch4 reference-method extension 执行合同（新建）。
@@ -40,6 +45,9 @@ T003 已完成：独立执行 owner 为 `.sessions/2026-08-08-rml-fsts-groundwor
 - D004：选择 RML-FSTS 作为唯一 defect-reproduction Groundwork 入口（新建）。
 - V003：独立 verifier 初审 PARTIAL、修复后 PASS，P0/P1/P2=`0/0/0`。
 - T003：RML-FSTS 独立 Groundwork Step 1–2 任务已回传；执行 owner 见 `.sessions/2026-08-08-rml-fsts-groundwork/`。
+- D005：临时恢复 dormant owner，只做 K2/K3 bounded entry re-adjudication（新建）。
+- D006：K2/K3 均无入口 survivor，terminal=`NO_ENTRY_SURVIVOR_STRATEGIC_SHORTAGE`（新建）。
+- V004：fresh-context verifier 经三轮措辞修复后 final PASS，Critical/Major/Minor=`0/0/0`。
 
 ## 范围确认
 
@@ -47,4 +55,4 @@ T003 已完成：独立执行 owner 为 `.sessions/2026-08-08-rml-fsts-groundwor
 
 ## 后续
 
-本专题无科学执行后续；用户覆盖面确认只在 `.sessions/2026-08-08-rml-fsts-groundwork/` 处理。未确认前 Step 3 不得启动。
+本专题恢复 dormant，无自动科学执行后续。下一次只有新的 candidate source 或不同 research object，同时带入 task-matched 2019+ reference、published defect 和已闭合的 strongest cheap comparator，才可显式 scope-change；不得自动续 K1/K2/K3/K4。

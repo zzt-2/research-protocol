@@ -134,3 +134,66 @@ C1 有具体 2023 主流 reference、本地全文精读证据、可证伪的 FSO
 ### 来源
 
 S001 / T002 / R002；两个 fresh-context science agent 的独立 source 与机制审查。
+
+## D005: 临时恢复 dormant owner 以重裁 K2/K3 入口
+
+> status: active
+> date: 2026-08-11
+> 取代：无
+> 被取代：无
+> 依据：主控 scope delegation + S001 续接记录
+> 触发原话: 无（主控任务授权，不是用户/导师原话）
+
+### 决策
+
+在不重开 K1、K4 或其他 closed axes 的前提下，将本专题的当前范围从 dormant source owner 临时扩为一次 K2/K3 bounded entry re-adjudication；若且仅若恰有一个候选通过 E1–E8 与 strongest-cheap-alternative absorption gate，才创建唯一新专题并执行 GW Step 1。
+
+### 理由
+
+K1/Q001 已在独立专题以 `EVIDENCE_BLOCKED` 合法收口，继续围绕缺失全文空转不产生方法；原四卡中的 K2/K3 尚未按完整入口门重裁。该动作属于 reference-candidate 自动轮换，不改变 D001 的原始 Ch4 方法目标，也不把入口审计算作 scientific failure。
+
+### 排除的替代方案
+
+- 不重开 K1/Q001、coded C1、K4 syndrome early-stop、P1/C3/AMC、fixed-point/selector 旧轴。
+- 不在 A 阶段下载、精读新全文、实现或仿真。
+- 不在两卡均失败时制造第三个弱候选。
+
+### 影响范围
+
+只授权 R003 的只读入口裁决和必要治理更新。由于最终没有 survivor，未触发新专题或 Groundwork Step 1。
+
+### 来源
+
+S001（2026-08-11 续接）；主控 delegation。
+
+## D006: K2/K3 无入口 survivor，确认 reference-entry 战略短缺
+
+> status: active
+> date: 2026-08-11
+> 取代：无
+> 被取代：无
+> 依据：调研: R003 + critic: 两个 fresh-context science agent 独立审查 + 验证: V004
+> 触发原话: 无（技术裁决）
+
+### 决策
+
+terminal=`NO_ENTRY_SURVIVOR_STRATEGIC_SHORTAGE`。K2 因动作未唯一化、bounded-order mixture/sequence tracker 构成高风险强邻居、章节区分与预算门未闭合而拒绝入口；K3 因 2019+ task-matched baseline 与 published defect 缺失、prior-action 风险未闭合而拒绝入口。没有新 Groundwork Step 1 入口，`mission_method_delta=NONE`。
+
+### 理由
+
+K2 的 suffix pollution 是真实 published defect，但 defect 事实不自动产生方法；当候选动作只剩“三分支 + likelihood 选轨”时，bounded-order Tikhonov mixture 构成高风险强邻居，而 task/target 不同使 absorption 仍未闭合；完整公平比较预计 5–9 天。K3 的 primary 只证明 joint phase information 有益，并在高 XPM 时报告 fixed coupling 可 near-optimal；它不支持承重的 unequal-reliability fixed-JP failure。
+
+### 排除的替代方案
+
+- 不以 K2 的真实 defect 掩盖 E5/E6/E7/E8 失败，不先建 topic 再补动作。
+- 不把 K3 的 generic window/phase-set tradeoff 替换成未发表的 fixed-JP defect。
+- 不把 entry rejection 写成 K2/K3 family scientific Kill；两卡仍可作为证据资产，只有新 source/action 才能重议。
+- 不制造第三张候选以维持推进表象。
+
+### 影响范围
+
+本专题恢复 dormant。K1 保持 recoverable `EVIDENCE_BLOCKED`，K4 保持 exact collision；当前 Ch4 算法方法槽位仍无新增方法。下一轮必须改变 candidate source 或 research object，且不得自动续当前两卡。
+
+### 来源
+
+S001（2026-08-11 续接）/ R003 / V004。

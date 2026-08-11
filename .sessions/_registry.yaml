@@ -55,8 +55,8 @@ topics:
     title: Ch4 参考方法扩展
     status: dormant
     created: "2026-08-08"
-    last_updated: "2026-08-08（RML-FSTS 科学执行迁入独立 Groundwork 专题）"
-    description: "Ch4 参考方法扩展的历史控制 owner。D004/V003 选择 RML-FSTS fixed-lag/BL condition-dependence 为唯一 defect-reproduction GW 入口；科学执行已迁入 2026-08-08-rml-fsts-groundwork，本专题转 dormant，保留 D004/R002/H003 来源与 protected history。"
+    last_updated: "2026-08-11（K2/K3 bounded entry re-adjudication 无 survivor）"
+    description: "Ch4 reference-entry source owner。K1/Q001 保持 recoverable EVIDENCE_BLOCKED；K2 三假设 unwrapping 与 K3 可靠度 JP-BPS 均未通过入口门，terminal=NO_ENTRY_SURVIVOR_STRATEGIC_SHORTAGE，mission_method_delta=NONE；无新 GW 专题。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承方法生产教训、dead-end inventory、章节槽位规则与历史证据

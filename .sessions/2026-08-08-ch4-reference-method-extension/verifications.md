@@ -136,3 +136,46 @@ p05_run4.log length=1430 sha256=95A1D184... mtime=2026-07-30T14:39:58.3099005Z
 ### 结论
 
 PASS。P0/P1/P2=`0/0/0`。接受 terminal=`ONE_DEFECT_REPRODUCTION_ENTRY_READY_FOR_GW_STEP1` 与唯一 RML-FSTS 入口；该入口不是 defect、Q#、Go、METHOD_SIGNAL 或方法，下一动作只能从 GW Step 1 开始。
+
+## V004: K2/K3 入口重裁独立验收
+
+> date: 2026-08-11
+> 关联：S001 / R003 / D005–D006 / H004
+
+### 验证项
+
+- [x] K2 evidence strength：[三轮 fresh-context verifier 对照 TSP 2022、TCOM 2016 与全套 current views] → suffix pollution 为 published defect；mixture tracker 只裁为 `UNRESOLVED_HIGH_RISK / STRONG_NEIGHBOR`，没有 exact collision 或 complete absorption 声称。
+- [x] K3 defect/collision：[对照 JLT 2009 与本地 prior metadata] → E2 published fixed-JP unequal-reliability defect 缺失；E6 只保留未闭合 collision debt，拒绝不依赖 imagined exact prior。
+- [x] terminal consistency：[逐文件检查 R003/D006/S001/topic/H004/registry/master-state] → terminal=`NO_ENTRY_SURVIVOR_STRATEGIC_SHORTAGE`，`mission_method_delta=NONE`；K1=`EVIDENCE_BLOCKED`、K4=exact collision。
+- [x] scope/governance：[核编号、scope-change、H anchors、registry lineage] → D005/D006、R003、H004 连续；status=dormant，depends_on 均存在，`conflicts_with=[]`。
+- [x] authorization boundary：[查 registry、Git 与 scoped files] → 没有 K2/K3 新 GW 专题、Step 1、query、download、实现或仿真产物。
+- [x] Git isolation：[scoped diff + cached diff + diff-check] → scoped cached diff 为空；`git diff --check` exit 0；unrelated paper/index/pyc/p05/coded dirty 未纳入本包。
+
+### 证据
+
+```text
+fresh verifier initial: PARTIAL, critical/major/minor=0/3/2
+  - 修正 K2 “已吸收”过强措辞为 UNRESOLVED_HIGH_RISK / STRONG_NEIGHBOR
+  - 修正 K3 metadata-level prior 为 collision debt
+  - 撤销 V004 预声明，修正 D005 chronology，补 H anchors
+
+fresh verifier round 2: PARTIAL, critical/major/minor=0/1/1
+  - 修正 H004 残留 absorption 断言与悬空 V004 必读指针
+
+fresh verifier round 3: ACCEPT WITH MINOR RESIDUAL, critical/major/minor=0/0/1
+  - 统一 H004 K2 E6=UNRESOLVED_HIGH_RISK
+
+fresh verifier final follow-up:
+PASS — Critical/Major/Minor = 0/0/0
+
+registry_parse=PASS
+registry_status=dormant
+depends_exist=True
+conflicts=[]
+new_candidate_topics=0
+git diff --check -> exit 0
+```
+
+### 结论
+
+PASS。Critical/Major/Minor=`0/0/0`。接受 terminal=`NO_ENTRY_SURVIVOR_STRATEGIC_SHORTAGE`；该 terminal 是 entry strategic shortage，不是 K2/K3 scientific Kill，也没有形成方法或 Groundwork Step 1 入口。
