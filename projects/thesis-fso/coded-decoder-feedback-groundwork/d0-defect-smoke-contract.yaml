@@ -1,0 +1,2563 @@
+schema_version: coded_decoder_feedback.d0.v3
+status: verified_frozen_for_d0_implementation_and_unit_test
+date: "2026-08-10"
+control:
+  topic: .sessions/2026-08-09-coded-decoder-feedback-groundwork
+  epoch: 12
+  checkpoint: CP012
+  action_class: D0_TESTBED_IMPLEMENTATION
+  decision: D011
+  verification: V005
+  implementation_authorized: true
+  unit_test_authorized: true
+  engineering_benchmark_authorized: true
+  execution_authorized: false
+  scientific_experiment_authorized: false
+  pending_reason: scientific_execution_requires_implementation_unit_independent_code_review_benchmark_and_new_governance_transfer
+
+purpose:
+  question: >-
+    Does a legal coherent-FSO coded slice contain a persistent within-frame
+    pi/2 symmetry slip that damages the global reference B1, remains
+    recoverable, is not absorbed by a frozen cheap B2, and is distinguishable
+    by receiver-visible decoder evidence?
+  not_mve: true
+  not_c1_extension: true
+  result_ceiling: conditional_entry_or_hard_terminal
+
+invariants:
+  - Natural occurrence and controlled injection are separate strata and are never pooled.
+  - Natural events establish occurrence only; they do not supply a matched damage counterfactual.
+  - All deployable scores use ReceiverView only; TruthView is evaluator-only after outputs freeze.
+  - Changed LLRs always enter a full decoder restart with empty message state.
+  - The diagnostic slice has no trigger, accept/reject threshold, fallback, or applied C1 action.
+  - The four p05_run*.log files remain unmodified and unstaged.
+
+views:
+  ReceiverView:
+    allowed:
+      - received_and_equalized_samples
+      - common_cpr_phase_trace
+      - known_prefix_and_periodic_pilots
+      - prefix_or_pilot_noise_estimate
+      - frozen_code_layout_and_decoder_parameters
+      - dev_frozen_b2_parameters
+    forbidden:
+      - tx_payload_or_information_bits
+      - transmitted_coded_bits_or_data_symbols
+      - true_phase_cfo_channel_snr_or_fade
+      - true_slip_boundary_rotation_or_final_correctness
+  TruthView:
+    evaluator_only:
+      - transmitted_bits_and_symbols
+      - true_phase_channel_fade_and_noise_receipt
+      - injected_or_natural_event_label
+      - final_codeword_correctness
+
+population:
+  modulation: gray_square_16qam
+  polarizations: [X, Y]
+  code:
+    family: 5g_ldpc_bg2
+    information_bits_per_cw: 1024
+    transmitted_bits_per_cw: 1536
+    codewords_per_polarization: 16
+    data_symbols_per_cw: 384
+    data_symbols_per_polarization: 6144
+    decoder_iterations: 20
+  physical:
+    symbol_rate_baud: 2.5e9
+    snr_db: [10, 14, 18, 22]
+    linewidth_hz: [10000, 20000, 80000]
+    residual_cfo_hz_primary: 0
+    gamma_gamma: {regime: uplink_strong, alpha: 1.0, beta: 0.7}
+    phase_process_shared_across_polarizations: true
+    gamma_gamma_fade_shared_across_polarizations: true
+    awgn_independent_across_polarizations: true
+    cpr_runs_independently_per_polarization: true
+  provenance:
+    symbol_rate_linewidth_snr_gamma_gamma: projects/simulation/explore/adaptive-phase-window/source-closure.yaml
+    code_and_mapping: projects/simulation/explore/nda-awgn-tracking-sandbox/p08r2_chain.py
+    transfer_label: "[外推] source-grounded FSO envelope + coded 16QAM chain; no turbulence-to-slip causal claim"
+
+physical_realization:
+  schema_version: coded_decoder_feedback.d0.physical.v1
+  model_id: supplied_waveform_flat_dual_pol_v1
+  constructor_policy: all_fields_explicit_no_silent_source_defaults
+  symbol_rate_baud: 2.5e9
+  symbol_period_s: 4.0e-10
+  waveform:
+    prefix:
+      id: p08_calibration_prefix_gray16qam_v1
+      length: 32
+      generator: numpy_Generator_PCG64_987654321_integers_int64_then_uint8
+      bit_order: [b0, b1, b2, b3]
+      gray_axis: [-3, -1, 3, 1]
+      x_y_relation: identical_by_contract_but_separately_receipted
+      canonical_encoding: uint8_C_order_for_bits_and_labels_complex_as_re_im_little_endian_float64_C_order
+      bits_sha256: 1168a4cce1eef1403b4c609f0d2d15541ffd1cdfd175ca809da6701ad81c6d85
+      labels_sha256: 31c73fa861c3c9f27bbcb0d8cfcba7fcfccfc59f5e12429946d3720e196616b0
+      symbols_sha256: 69989be842342bf388cf2603be0a260f637da876dc912ed74deaed22ff9123c0
+      even_state_selection_subset_sha256: 81350b996fcc3f6ef91b05b83957c85b182f4df6bf1e31be48a0f31cca89a4bc
+      odd_residual_subset_sha256: 436cdb61597776f8dc045b0d8465265a3978ca089cdf41f1b50893a86a7e062a
+      sample_mean_energy: 1.025
+    periodic_pilot:
+      id: deterministic_unit_energy_qpsk_cycle_v1
+      cycle_sign_pairs: [[1, 1], [1, -1], [-1, 1], [-1, -1]]
+      normalization: one_over_sqrt_2
+      x_y_relation: identical_by_contract_but_separately_receipted
+      canonical_encoding: complex_as_re_im_little_endian_float64_C_order
+      cycle_sha256: db860e05d78202f159e28f16fbe26c8e060fc8c65c4b872c8bb3f7fc5915071e
+      expanded_sha256_by_N:
+        10: 2c58efb90b9b4a82b676db4e219f21094cc0a546f54c126b1010764fc68375bd
+        20: 1d14610847c0023475cb03ff7a932fddc1202f02c2a7ca4c25d0fb544504af82
+        100: 17bdb8755470902084e9f1331fb6e36633332f9e2392a7d247e061ec1b0a810c
+        200: 0d515c32e1447d3d8b1a55d367b53feacafbee792989697fd4114161ca2357d4
+    layout_formula_id: d0_extended_pilot_frame_v1
+    data_symbols_preserved: 6144
+    data_time_map: bijective_data_rank_to_absolute_time_with_known_samples_mapped_minus_one
+  gamma_gamma:
+    alpha: 1.0
+    beta: 0.7
+    f_G_hz: 100.0
+    selection_role: canonical_project_design_choice_not_paper_unique
+    tau_c_rule: one_over_2pi_f_G
+    tau_c_s: 0.0015915494309189533
+    block_symbols: 100
+    method: gar
+    rho_block: 0.999974867574596
+    channel_field_multiplier: sqrt_intensity
+    shared_across_polarizations: true
+  carrier_phase:
+    linewidth_values_hz: [10000, 20000, 80000]
+    numeric_provenance: adaptive_source_closure_sweep_values
+    semantic_projection: effective_combined_residual_phase_process_linewidth
+    endpoint_decomposition: not_modeled
+    no_tx_lo_redoubling: true
+    innovation_variance_rule: 2pi_effective_linewidth_times_symbol_period
+    innovation_variance_rad2_by_linewidth_hz:
+      10000: 2.5132741228718347e-05
+      20000: 5.0265482457436690e-05
+      80000: 2.0106192982974677e-04
+    initial_state_rule: phase_zero_before_symbol0_then_first_innovation_sets_theta0
+    residual_cfo_hz: 0
+    shared_across_polarizations: true
+  polarization:
+    sop_model: identity_no_cross_pol_mixing
+    sop_parameters: {}
+    two_by_two_ls_api_reachable: false
+  awgn:
+    per_real_variance_rule: one_over_2gamma
+    complex_power_rule: one_over_gamma
+    applied_after_fade_and_phase: true
+    independent_across_polarizations: true
+  rng:
+    algorithm: numpy_SeedSequence_spawn_then_PCG64
+    root_seed: seed_plan_entry
+    named_spawn_order: [payload_x, payload_y, gamma_gamma, wiener, awgn_x, awgn_y]
+    dynamic_receipt_fields: [root_entropy, numpy_version, child_spawn_key, pool_size, child_generate_state_4_uint32]
+    reuse_rule: paired_methods_bps_grid_b2_tuple_and_no_jump_twin_reuse_materialized_arrays
+    fixture_rule: controlled_jump_is_copy_on_write_after_common_bps
+  receiver_front_end:
+    id: scalar_per_pol_receiver_only_v1
+    truth_inputs_forbidden: [h, snr, phase, payload, coded_bits, final_correctness]
+    pre_equalization_calibration:
+      estimator: known_prefix_one_complex_parameter_least_squares
+      gain_formula: sum_conj_x_times_r_over_sum_abs_x_squared
+      residual_power_complex_formula: sum_abs_r_minus_gx_squared_over_31
+      residual_power_name: C_pre_cplx
+      production_requirement: C_pre_cplx_gt_zero
+      noiseless_branch: C_pre_zero_uses_pure_inverse_sqrt_visible_signal_power
+    scalar_equalizer:
+      absolute_time_block_symbols: 100
+      observed_power_formula: mean_abs_r_squared_per_block
+      visible_signal_power_formula: max_observed_power_minus_C_pre_cplx_zero
+      mmse_formula: r_times_sqrt_visible_signal_power_over_visible_signal_power_plus_C_pre_cplx
+      amplitude_limit: 3.0
+      separately_per_polarization: true
+      visible_signal_power_is_not_claimed_as_true_h: true
+    bps:
+      implementation: projects/simulation/common/_recovery.py::bps_cpr
+      modulation: qam16
+      phase_hypotheses_B: [32, 64]
+      window_symbols_Nw: [31, 61, 127]
+      edge_rule: numpy_convolve_same_zero_padding_full_Nw_denominator
+    global_symmetry_resolution:
+      candidate_states: [0, 1, 2, 3]
+      state_selection_samples: even_prefix_indices_0_through_30
+      objective: minimize_known_prefix_squared_residual_after_negative_state_rotation
+      tie_break: lower_state
+      action: apply_selected_negative_pi_over_2_rotation_to_entire_polarization_waveform
+    post_bps_residual:
+      samples: odd_prefix_indices_1_through_31
+      formula: mean_abs_resolved_sample_minus_known_prefix_squared
+      residual_power_name: C_post_cplx
+      role: shared_B0_B1_B2_demapper_and_B2_moment_split
+      feedback_to_equalizer_forbidden: true
+  controlled_fixture:
+    injection_stage: after_common_bps_and_global_symmetry_resolution
+    boundary_reference: data_rank_then_map_to_absolute_time
+    suffix_scope: all_target_pol_absolute_times_from_boundary_including_later_pilots
+    sentinel_polarization: byte_identical
+    paired_off_rule: same_materialized_waveform_fade_phase_noise_and_front_end
+  dynamic_receipt_required:
+    - resolved_contract_and_source_hashes
+    - waveform_prefix_pilot_and_data_time_map_hashes
+    - gamma_gamma_tau_rho_and_method
+    - linewidth_semantic_identity_and_innovation_variance
+    - polarization_and_sharing_matrix
+    - physical_and_receiver_variance_units
+    - root_and_named_rng_child_receipts
+    - equalizer_bps_and_phase_trace_receipts
+    - controlled_fixture_target_boundary_rotation_and_suffix_scope
+
+seed_plan:
+  common_cpr_and_b2_dev: {first: 8000, last: 8009}
+  observability_fusion_dev: {first: 8050, last: 8059}
+  natural_occurrence: {first_stage: [8100, 8119], maximum: [8100, 8149]}
+  controlled_damage_recovery: {first: 8150, last: 8159}
+  controlled_observability: {first: 8160, last: 8169}
+  clean_diagnostic: {first: 8170, last: 8179}
+  post_d0_c1_dev: {first: 8200, last: 8219}
+  post_d0_fresh_heldout: {first: 8300, last: 8349}
+  disjointness: all_ranges_pairwise_disjoint
+
+common_front_end:
+  id: QAM16_BPS_DEV_FROZEN
+  implementation_asset: projects/simulation/common/_recovery.py::bps_cpr
+  source_role: conventional_square_qam_cpr
+  dev_grid:
+    phase_hypotheses_B: [32, 64]
+    window_symbols_Nw: [31, 61, 127]
+  selection:
+    cells: all_12_population_cells_equal_weight
+    independence_rule: >-
+      For each legal B2 waveform tuple, select BPS parameters using B1 macro
+      net goodput only; do not use B2 outcomes. After B2 selects its tuple,
+      freeze the BPS pair associated with that tuple.
+    objective: maximize_B1_macro_net_goodput
+    tie_break: [lower_full_frame_cw_error_rate, lower_B, lower_Nw]
+    authoritative_estimand_ref: statistical_contract_repair.dev_freeze_artifact_contract.common_bps
+  frozen_before_any_d0_evaluator_seed: true
+  forbidden_reuse: existing_resolve_qam16_eight_pi_over_four_rotation_helper
+  legal_symmetry_states_only: [0, 1, 2, 3]
+  note: Existing defaults are assumptions and are not reused without this dev freeze.
+
+b2_primary:
+  id: OFC17_16QAM_EXTFRAME_V1
+  identity: adapted_pilot_4state_soft_llr_then_one_way_ldpc
+  source:
+    paper: papers/doi/10.1364_ofc.2017.w2a.56/7937400.md
+    source_facts:
+      - QPSK fourth-power CPE with L=31
+      - inputs include pilots, slip probability p_s, and residual phase variance sigma_e2
+      - four-state Markov transition with q=1-sqrt(1-p_s)
+      - M nearest pilots propagate state probabilities to parallel LLR refinement
+      - one downstream FEC decode and no decision feedback
+    explicit_transfers:
+      - common front end changes from source fourth-power QPSK CPE to dev-frozen square-16QAM BPS
+      - QPSK bit likelihood changes to four-rotation square-16QAM Gaussian-mixture LLR
+      - optical-fiber AWGN/Wiener source changes to the factorized FSO population above
+      - dual-polarization processing is independent after the shared physical phase process
+  legal_tuples_M_N:
+    - [2, 100]
+    - [3, 10]
+    - [3, 20]
+    - [3, 100]
+    - [3, 200]
+  waveform:
+    prefix_symbols: 32
+    coded_data_symbols: 6144
+    periodic_schedule: one_known_pilot_followed_by_N_minus_1_data_symbols
+    terminal_pilot: true
+    pilot_count_formula: 1_plus_ceil_6144_over_N_minus_1
+    pilot_counts_by_N: {10: 684, 20: 325, 100: 64, 200: 32}
+    mode: extend_frame_without_replacing_or_puncturing_coded_symbols
+    sharing: >-
+      After the tuple freezes, B0/B1/B2/O1 and any later C1 use the same
+      extended waveform, phase/noise realization, pilot mask, payload, and
+      symbol-time support. B0/B1 do not consume the B2 state posterior.
+  receiver_visible_statistics:
+    pilot_emission: >-
+      For each pilot and state s in {0,1,2,3}, use the known-pilot Gaussian
+      likelihood after the common CPE under rotation s*pi/2.
+    p_s_and_sigma_e2: >-
+      Jointly select one population-wide pair on dev only by four-state HMM
+      pilot log-likelihood; p_s grid is {0} union logspace(1e-7,1e-1,121),
+      sigma_e2 grid is {0,1e-5,1e-4,1e-3,1e-2,1e-1}; ties choose smaller
+      p_s then smaller sigma_e2. Test frames never re-fit them.
+    state_posterior: >-
+      Use T(q)^distance and the M nearest pilots; equal-distance ties choose
+      the earlier pilot. Normalize in log space.
+    llr: >-
+      Use exact log-sum-exp over the four rotation-state posterior and the
+      P08 max-log rule inside each state/bit subset, with the dev-frozen
+      residual-variance model. Output sign follows the P08 demapper, then clip
+      at 30 and clamp decoder input at 20. The implementation_contract below
+      is authoritative for complex/per-real units and zero-variance behavior.
+  implementation_contract:
+    schema_version: coded_decoder_feedback.d0.b2.ofc17_transfer.v2
+    source_identity: known_pilots_to_four_state_markov_posterior_to_parallel_soft_llr_to_one_way_ldpc
+    state:
+      labels: [0, 1, 2, 3]
+      rotation_rule: r_s_equals_exp_positive_j_pi_s_over_2
+      observation_model: y_equals_mu_times_r_s_times_x_plus_complex_residual
+    transition:
+      q_rule: q_equals_one_minus_sqrt_one_minus_p_s
+      first_row: [(1-q)^2, q(1-q), q^2, q(1-q)]
+      orientation: row_is_previous_state_column_is_next_state
+      distance_rule: use_extended_absolute_symbol_time_difference
+      power_rule: q_d_equals_one_minus_one_minus_2q_to_power_d_all_over_2
+      p_s_zero_rule: exact_identity_matrix_with_off_diagonal_log_probability_negative_infinity
+      epsilon_forbidden: true
+    variance_semantics:
+      prefix_residual_power_name: C_post_cplx
+      prefix_residual_power_units: complex_power
+      phase_parameter_name: sigma_e2
+      mu_rule: exp_negative_sigma_e2_over_2
+      calibration_energy_name: E_cal
+      calibration_energy_rule: mean_known_odd_prefix_symbol_energy
+      noise_power_complex_name: N0_hat_cplx
+      noise_power_complex_rule: max_zero_C_post_cplx_minus_2_times_one_minus_mu_times_E_cal
+      noise_variance_real_name: noise_var_real
+      noise_variance_real_rule: N0_hat_cplx_over_2
+      symbol_metric_variance_name: V_x
+      symbol_metric_variance_rule: N0_hat_cplx_plus_abs_x_squared_times_one_minus_mu_squared
+      bare_sigma2_name_forbidden: true
+      phase_contribution_double_count_forbidden: true
+    emission:
+      positive_variance_log_density: negative_abs_y_minus_mu_r_s_x_squared_over_V_x_minus_log_pi_V_x
+      zero_variance_branch: matching_mean_weight_zero_nonmatching_weight_negative_infinity
+      unregistered_epsilon_forbidden: true
+    statistic_fit:
+      state_prior: uniform_one_quarter
+      likelihood: full_pilot_forward_log_likelihood_normalized_per_pilot
+      aggregation: >-
+        Within each stratum, cell, and polarization, average canonical per-trajectory
+        normalized negative log likelihood over complete seeds/fixtures; then equal-mean
+        X and Y, equal-mean the 12 cells, and combine clean and controlled-target with
+        weights 0.5 and 0.5. Controlled sentinels are scored and receipted but excluded
+        from this objective.
+      grids: inherit_receiver_visible_statistics_p_s_and_sigma_e2
+      tie_break: [smaller_p_s, smaller_sigma_e2]
+      fit_on_dev_only: true
+      authoritative_artifact_ref: statistical_contract_repair.dev_freeze_artifact_contract.b2_statistic
+    local_posterior:
+      pilot_selection: nearest_M_by_absolute_distance_then_earlier_time
+      graph: selected_pilots_and_query_sorted_in_extended_absolute_time
+      inference: log_domain_forward_backward_with_transition_power_between_adjacent_nodes
+      payload_decoder_or_truth_inputs_forbidden: true
+    data_llr:
+      bit_order: [b0, b1, b2, b3]
+      convention: log_probability_bit1_minus_log_probability_bit0
+      inner_bit_set_rule: max_over_constellation_points_using_emission_metric
+      state_rule: exact_logsumexp_over_four_state_posterior
+      preclip_formula: A_k_1_minus_A_k_0
+      output_clip: 30.0
+      decoder_input_clamp: 20.0
+    mandatory_identities:
+      - single_state_sigma_e2_zero_preclip_equals_P08_maxlog_with_sigma2_argument_N0_hat_cplx_over_2
+      - wrong_P08_sigma2_argument_N0_hat_cplx_has_exact_half_magnitude_negative_control
+      - state_permutation_reorders_posterior_but_preserves_marginalized_llr
+      - received_only_global_pi_over_2_rotation_requires_inverse_state_label_shift
+      - coordinate_system_rotation_moves_received_known_references_and_constellation_without_state_shift
+      - uniform_state_requires_b0_and_b2_llr_zero_and_b1_equals_b3_not_generally_zero
+      - p_s_zero_and_Dirac_branches_use_no_truth_and_no_epsilon
+    supersedes_implementation_choices:
+      - step095_IC02_per_real_naming
+      - step095_IC03_unsplit_prefix_residual
+      - step095_IC06_exact_inner_symbol_logsumexp
+      - step095_double_transformed_global_rotation_test
+      - step095_all_four_bits_uniform_state_null_test
+  decoder_interaction:
+    calls_per_method_frame: 2
+    codewords_per_call: 16
+    iterations_per_cw: 20
+    decision_feedback: false
+    decoder_state_reuse: false
+  dev_selection:
+    seeds: common_cpr_and_b2_dev
+    cells: all_12_population_cells_equal_weight
+    strata_weight: {clean: 0.5, controlled_three_boundaries_three_rotations: 0.5}
+    objective: maximize_macro_net_goodput_per_total_transmitted_symbol
+    tie_break:
+      - lower_pilot_fraction
+      - lower_controlled_affected_cw_error_rate
+      - lower_M
+      - legal_tuple_order_above
+    output: exactly_one_frozen_tuple_and_statistic_pair
+    independence_from_B1: B1/BPS parameters are selected by the common-front-end rule above before B2 outcomes are scored.
+    test_time_best_of_forbidden: true
+    objective_rows:
+      clean: both_polarizations
+      controlled: target_polarization_only
+      controlled_sentinel: executed_receipted_and_costed_but_objective_excluded
+    aggregation: ratio_of_integer_sums_within_stratum_cell_pol_then_equal_pol_equal_12_cells_then_half_clean_half_controlled_target
+    authoritative_artifact_ref: statistical_contract_repair.dev_freeze_artifact_contract.b2_tuple
+
+baselines:
+  B0:
+    id: COMMON_BPS_PLUS_ONE_LDPC
+    input: shared_extended_waveform
+    periodic_pilot_state_consumed: false
+  B1:
+    id: GLOBAL_FOUR_ROTATION_DECODER_SELECTION
+    candidates: [0, 1, 2, 3]
+    action: one_rotation_for_all_6144_data_symbols
+    selection_score: full_frame_normalized_reencode_nll
+    llr_convention: positive_means_bit_one
+    normalized_reencode_nll_formula: "mean(softplus((1-2*c_hat)*L_channel)) over the same evaluated coded bits"
+    candidate_tie_break: lower_rotation_k
+    decoder_calls_per_dual_pol_method_frame: 8
+    decoder_message_state_reuse: false
+    periodic_pilot_state_consumed: false
+  B2:
+    id: OFC17_16QAM_EXTFRAME_V1
+  O1:
+    id: TRUTH_BOUNDARY_ROTATION_CORRECTION
+    evaluator_only: true
+  C1_ext:
+    status: forbidden_until_all_d0_gates_pass_and_new_control_decision
+
+event_definition:
+  unit: polarization_trajectory
+  state: "argmin_m |wrap(theta_true[n]-phi_hat_pol[n]-m*pi/2)|, m in {0,1,2,3}"
+  persistent_transition:
+    window_symbols_each_side: 32
+    minimum_same_state_samples_each_window: 28
+    states_must_differ: true
+    merge_transitions_within_symbols: 32
+  ownership:
+    X_and_Y_scored_separately: true
+    cluster_for_uncertainty: seed
+    multi_transition_natural_frames: occurrence_only_not_ranking
+  evaluator_only: true
+
+controlled_fixture:
+  cells:
+    hard: {snr_db: 10, linewidth_hz: 80000}
+    mid: {snr_db: 14, linewidth_hz: 20000}
+    clean: {snr_db: 22, linewidth_hz: 10000}
+  boundary_after_cw_index: [4, 8, 12]
+  boundary_after_data_symbol: [1536, 3072, 4608]
+  rotations_k: [1, 2, 3]
+  injection_point: frozen_common_cpr_output
+  common_random_twin: same_bits_fade_phase_and_noise_with_no_jump
+  one_target_polarization_at_a_time: true
+  other_polarization_role: clean_sentinel
+
+statistics:
+  primary_error_metric: affected_codeword_error_rate
+  raw_row_required_fields:
+    - stratum
+    - seed
+    - cell_id
+    - target_polarization
+    - fixture_id
+    - boundary_after_cw
+    - rotation_k
+    - jump_present
+    - method_id
+    - affected_cw_errors
+    - affected_cw_total
+    - information_bit_errors
+    - information_bit_total
+    - total_transmitted_symbols
+    - decode_calls
+    - cw_decodes
+    - bp_iterations
+    - wall_latency_ms
+  cluster_key: seed
+  cluster_block: >-
+    When a seed is sampled, include all three cells, both target polarizations,
+    all nine injected fixtures, and their cached no-jump twins for that seed.
+    Repeated sampled seeds repeat the entire block.
+  cell_estimands:
+    damage: acwer_B1_on_minus_acwer_B1_off
+    recoverability: (errors_B1_on-errors_O1_on)/errors_B1_on
+    coverage: (errors_B1_on-errors_B2_on)/(errors_B1_on-errors_O1_on)
+  macro_aggregation: compute_each_cell_estimand_from_pooled_cw_counts_then_equal_weight_the_three_cells
+  uncertainty:
+    method: seed_cluster_bootstrap_percentile
+    replicates: 10000
+    rng_algorithm: numpy_PCG64
+    rng_seed: 2026081001
+    ci: two_sided_95_percent_percentile_2_5_97_5
+    resampling: sample_the_ten_seed_cluster_blocks_with_replacement
+    recompute_inside_each_replicate: cell_counts_cell_estimands_and_equal_cell_macro
+  zero_denominator:
+    b1_on_affected_errors_zero: ZERO_PRACTICAL_CODED_DAMAGE
+    b1_minus_o1_headroom_nonpositive: ZERO_RECOVERABLE_HEADROOM
+    invalid_replicate_definition:
+      recoverability: any_cell_errors_B1_on_nonpositive
+      coverage: any_cell_errors_B1_on_minus_errors_O1_on_nonpositive
+    invalid_replicate_handling: retain_as_NA_never_impute_zero_or_one
+    maximum_invalid_fraction: 0.05
+    minimum_valid_replicates: 9500
+    terminal_if_limit_exceeded:
+      recoverability: UNSTABLE_DAMAGE_DENOMINATOR
+      coverage: UNSTABLE_HEADROOM
+    ci_denominator: valid_replicates_only_after_the_limits_above_pass
+  coverage:
+    raw_formula: compute_per_cell_from_pooled_affected_cw_error_counts_then_equal_cell_macro
+    clipping: display_only_to_0_1
+    ci_uses_unclipped_ratio: true
+
+statistical_contract_repair:
+  schema_version: coded_decoder_feedback.d0.statistics.v2
+  supersedes:
+    - statistics.raw_row_required_fields
+    - statistics.cluster_block
+    - strata.S1_natural_occurrence.uncertainty
+    - strata.S2_controlled_damage_recoverability_absorption.cached_no_jump_twins
+    - strata.S3_controlled_observability.full_restart_cw_decodes_per_case
+  scientific_threshold_seed_and_gate_change: none
+  serialization:
+    format: jsonl_utf8
+    strict_types: true
+    extra_fields: forbid
+    json_nan_and_infinity: forbid
+    internal_missing_value: typed_none
+    serialized_missing_value: null
+    numeric_finiteness: required_unless_summary_status_is_NA
+    canonical_json: {sort_keys: true, separators: [",", ":"], allow_nan: false}
+  enums:
+    polarization: [X, Y]
+    fixture_id: [B04_K1, B04_K2, B04_K3, B08_K1, B08_K2, B08_K3, B12_K1, B12_K2, B12_K3]
+    candidate_id: [NOOP, B04_K1, B04_K2, B04_K3, B08_K1, B08_K2, B08_K3, B12_K1, B12_K2, B12_K3]
+    s2_method_id: [GLOBAL_FOUR_ROTATION_DECODER_SELECTION, OFC17_16QAM_EXTFRAME_V1, TRUTH_BOUNDARY_ROTATION_CORRECTION]
+    s4_check_id:
+      - no_slip_noiseless_B0_B1_O1_identity
+      - all_rotation_boundary_noiseless_O1_zero_error
+      - mapping_rotation_truth_metamorphic_pass
+      - candidate_isolation_and_empty_decoder_state_pass
+      - all_scores_finite_and_deterministic
+      - no_truth_field_reaches_receiver_view
+      - diagnostic_cost_ledger_complete
+  foreign_keys:
+    cell_id: population_manifest.cell_id
+    seed:
+      S1_TRAJECTORY: seed_plan.natural_occurrence
+      S2_METHOD: seed_plan.controlled_damage_recovery
+      S3_CANDIDATE_DEV: seed_plan.observability_fusion_dev
+      S3_CANDIDATE_TEST: seed_plan.controlled_observability
+      S4_CHECK: seed_plan.clean_diagnostic
+  tables:
+    s1_trajectory:
+      record_type: {type: string, const: S1_TRAJECTORY, nullable: false}
+      primary_key: [record_type, seed, cell_id, target_polarization]
+      fields:
+        seed: {type: int64, minimum: 0, nullable: false}
+        cell_id: {type: string, min_length: 1, nullable: false}
+        target_polarization: {type: string, enum_ref: polarization, nullable: false}
+        persistent_transition_count: {type: int64, minimum: 0, nullable: false}
+        persistent_transition_after_symbol: {type: array_int64, minimum_item: 0, nullable: false}
+        event_present: {type: boolean, nullable: false}
+        trajectory_receipt_sha256: {type: sha256_lower_hex, nullable: false}
+      invariants:
+        - event_present_equals_persistent_transition_count_gt_zero
+        - array_length_equals_persistent_transition_count
+        - boundary_rotation_jump_and_method_fields_absent_not_null
+    s2_method:
+      record_type: {type: string, const: S2_METHOD, nullable: false}
+      primary_key: [record_type, seed, cell_id, target_polarization, fixture_id, jump_present, method_id]
+      fields:
+        seed: {type: int64, minimum: 0, nullable: false}
+        cell_id: {type: string, enum: [hard, mid, clean], nullable: false}
+        target_polarization: {type: string, enum_ref: polarization, nullable: false}
+        fixture_id: {type: string, enum_ref: fixture_id, nullable: false}
+        boundary_after_cw: {type: int64, enum: [4, 8, 12], nullable: false}
+        rotation_k: {type: int64, enum: [1, 2, 3], nullable: false}
+        jump_present: {type: boolean, nullable: false}
+        projection_role: {type: string, enum: [DIRECT_ON, CACHED_OFF_PROJECTION], nullable: false}
+        physical_case_id: {type: string, min_length: 1, nullable: false}
+        computation_id: {type: string, min_length: 1, nullable: false}
+        method_id: {type: string, enum_ref: s2_method_id, nullable: false}
+        affected_cw_errors: {type: int64, minimum: 0, nullable: false}
+        affected_cw_total: {type: int64, enum: [4, 8, 12], nullable: false}
+        information_bit_errors: {type: int64, minimum: 0, nullable: false}
+        information_bit_total: {type: int64, const: 16384, nullable: false}
+        total_transmitted_symbols_per_polarization: {type: int64, minimum: 6208, nullable: false}
+        result_receipt_sha256: {type: sha256_lower_hex, nullable: false}
+      invariants:
+        - affected_cw_errors_lte_affected_cw_total
+        - information_bit_errors_lte_information_bit_total
+        - affected_cw_total_equals_16_minus_boundary_after_cw
+        - fixture_id_bijection_with_boundary_after_cw_and_rotation_k
+        - total_transmitted_symbols_matches_frozen_tuple_manifest
+        - DIRECT_ON_iff_jump_present_true
+        - CACHED_OFF_PROJECTION_iff_jump_present_false
+        - on_rows_methods_exactly_B1_B2_O1
+        - off_rows_method_exactly_B1
+        - each_off_target_pol_branch_has_nine_fixture_projections_and_one_computation_id
+    s3_candidate:
+      record_type: {type: string, enum: [S3_CANDIDATE_DEV, S3_CANDIDATE_TEST], nullable: false}
+      primary_key: [record_type, seed, cell_id, target_polarization, fixture_id, candidate_id]
+      fields:
+        seed: {type: int64, minimum: 0, nullable: false}
+        cell_id: {type: string, enum: [hard, mid, clean], nullable: false}
+        target_polarization: {type: string, enum_ref: polarization, nullable: false}
+        fixture_id: {type: string, enum_ref: fixture_id, nullable: false}
+        truth_candidate_id: {type: string, enum_ref: fixture_id, nullable: false}
+        candidate_id: {type: string, enum_ref: candidate_id, nullable: false}
+        pilot_score: {type: float64, finite: true, nullable: false}
+        decoder_score: {type: float64, finite: true, nullable: false}
+        computation_id: {type: string, min_length: 1, nullable: false}
+        changed_cw_decodes: {type: int64, enum: [4, 8, 12, 16], nullable: false}
+        cached_unchanged_cw_nll_reads: {type: int64, enum: [0, 4, 8, 12], nullable: false}
+        result_receipt_sha256: {type: sha256_lower_hex, nullable: false}
+      invariants:
+        - truth_candidate_id_equals_fixture_id
+        - truth_candidate_written_only_after_all_candidate_scores_freeze
+        - exactly_ten_candidate_rows_per_case
+        - NOOP_has_changed16_cached0
+        - B04_candidates_have_changed12_cached4
+        - B08_candidates_have_changed8_cached8
+        - B12_candidates_have_changed4_cached12
+        - rank_top1_rr_and_fused_score_are_derived_not_raw
+    s3_lambda_freeze:
+      record_type: {type: string, const: S3_LAMBDA_FREEZE, nullable: false}
+      primary_key: [record_type]
+      fields:
+        lambda_frozen: {type: float64, enum: [0.25, 0.5, 1.0, 2.0, 4.0], nullable: false}
+        dev_rows_sha256: {type: sha256_lower_hex, nullable: false}
+        objective: {type: string, const: macro_MRR_then_macro_top1_then_smaller_lambda, nullable: false}
+        test_rows_read_during_selection: {type: boolean, const: false, nullable: false}
+        freeze_receipt_sha256: {type: sha256_lower_hex, nullable: false}
+    s4_check:
+      record_type: {type: string, const: S4_CHECK, nullable: false}
+      primary_key: [record_type, check_id]
+      fields:
+        check_id: {type: string, enum_ref: s4_check_id, nullable: false}
+        tested_instances: {type: int64, minimum: 1, nullable: false}
+        failed_instances: {type: int64, minimum: 0, nullable: false}
+        passed: {type: boolean, nullable: false}
+        evidence_sha256: {type: sha256_lower_hex, nullable: false}
+      invariants:
+        - failed_instances_lte_tested_instances
+        - passed_iff_failed_instances_equals_zero
+        - seed_cell_boundary_rotation_fields_absent_not_null
+    computation_ledger:
+      record_type: {type: string, const: COMPUTATION, nullable: false}
+      primary_key: [computation_id]
+      fields:
+        computation_id: {type: string, min_length: 1, nullable: false}
+        phase: {type: string, enum: [BPS_DEV, B2_DEV, S2, S3_DEV, S3_TEST, S4], nullable: false}
+        operation: {type: string, enum: [B1_DECODE, B2_DECODE, O1_DECODE, CANDIDATE_DECODE, HMM_GRID_SCORE, OTHER_S4_CHECK], nullable: false}
+        physical_case_id: {type: string, min_length: 1, nullable: false}
+        cost_scope: {type: string, enum: [DUAL_POL_METHOD_FRAME, TARGET_POL_INCREMENTAL, NON_DECODER], nullable: false}
+        cache_status: {type: string, enum: [EXECUTED, CACHE_READ], nullable: false}
+        source_computation_id: {type: string, nullable: true}
+        content_sha256: {type: sha256_lower_hex, nullable: false}
+        logical_decoder_batches: {type: int64, minimum: 0, nullable: false}
+        logical_cw_decodes: {type: int64, minimum: 0, nullable: false}
+        logical_bp_iterations: {type: int64, minimum: 0, nullable: false}
+        materialized_decoder_batches: {type: int64, minimum: 0, nullable: false}
+        materialized_cw_decodes: {type: int64, minimum: 0, nullable: false}
+        materialized_bp_iterations: {type: int64, minimum: 0, nullable: false}
+        physical_api_invocations: {type: int64, minimum: 0, nullable: false}
+        api_batch_cw_count: {type: int64, minimum: 0, nullable: false}
+        hmm_dual_pol_frame_parameter_pair_scores: {type: int64, minimum: 0, nullable: false}
+        hmm_primitive_pol_trajectory_parameter_pair_scores: {type: int64, minimum: 0, nullable: false}
+        selected_pair_symbol_state_evaluations: {type: int64, minimum: 0, nullable: false}
+        wall_latency_ms: {type: float64, finite: true, minimum: 0.0, nullable: false}
+      invariants:
+        - EXECUTED_implies_source_computation_id_is_null
+        - CACHE_READ_implies_source_computation_id_is_nonnull_and_all_materialized_cost_counts_zero
+        - source_and_cache_read_content_sha256_match
+        - logical_bp_iterations_equals_20_times_logical_cw_decodes
+        - materialized_bp_iterations_equals_20_times_materialized_cw_decodes
+        - materialized_totals_sum_EXECUTED_unique_computation_id_only
+        - logical_projection_rows_never_duplicate_materialized_cost
+        - vectorized_physical_api_invocations_do_not_change_logical_method_cost
+  cached_twin_contract:
+    unique_channel_realizations: 30
+    target_pol_off_branches: 60
+    logical_off_projections: 540
+    projections_per_target_pol_off_branch: 9
+    alignment_key: [seed, cell_id, target_polarization, fixture_id]
+    target_pol_off_key: [seed, cell_id, target_polarization]
+    channel_key: [seed, cell_id]
+    canonical_computation_owner_projection: B04_K1
+    pairing: every_on_fixture_pairs_to_exactly_one_fixture_aligned_off_projection
+    random_receipt: same_bits_fade_phase_noise_and_common_front_end
+    cost_rule: nine_off_rows_reference_one_B1_off_computation_and_charge_materialized_cost_once
+  uncertainty:
+    common:
+      method: seed_cluster_bootstrap_percentile
+      replicates: 10000
+      rng_algorithm: numpy_PCG64
+      rng_seed: 2026081001
+      rng_scope: reinitialize_an_independent_generator_per_stratum
+      percentile: [2.5, 97.5]
+      numpy_percentile_method: linear
+    S1:
+      gate_uses_ci: false
+      point: event_trajectories_divided_by_all_observed_trajectories
+      observed_seed_block_size: 24
+      resample_block_count: actual_unique_seed_count
+      allowed_actual_unique_seed_counts: [20, 50]
+      first_stage: sample_20_blocks_with_replacement_size_20
+      escalated: sample_all_50_blocks_with_replacement_size_50
+    S2:
+      resample_block_count: 10
+      seed_block_contains: 3_cells_x_2_target_polarizations_x_9_on_fixtures_x_fixture_aligned_off
+      recompute_order: pooled_affected_cw_counts_per_cell_then_cell_estimand_then_equal_three_cell_macro
+      invalid_replicates_and_valid_only_ci: inherit_statistics_zero_denominator
+    S3_TEST:
+      resample_block_count: 10
+      seed_block_contains: 3_cells_x_2_target_polarizations_x_9_cases
+      recompute_order: per_case_then_per_cell_mean_then_equal_three_cell_macro
+      invalid_replicates: none
+  s3_estimands:
+    deterministic_candidate_order_for_exact_score_ties: [NOOP, B04_K1, B04_K2, B04_K3, B08_K1, B08_K2, B08_K3, B12_K1, B12_K2, B12_K3]
+    rank_direction: descending_score_rank_one_is_best
+    per_case:
+      pilot_rank_truth: rank_of_truth_candidate_by_pilot_score
+      fused_score: pilot_score_plus_lambda_frozen_times_decoder_score
+      fused_rank_truth: rank_of_truth_candidate_by_fused_score
+      pilot_rr: one_divided_by_pilot_rank_truth
+      fused_rr: one_divided_by_fused_rank_truth
+      pilot_top1: indicator_pilot_rank_truth_equals_one
+      fused_top1: indicator_fused_rank_truth_equals_one
+      paired_rr_delta: fused_rr_minus_pilot_rr
+    per_cell:
+      cases: 10_seeds_x_2_polarizations_x_9_fixtures_equals_180
+      fused_top1: arithmetic_mean_of_180_per_case_fused_top1
+      pilot_mrr: arithmetic_mean_of_180_per_case_pilot_rr
+      fused_mrr: arithmetic_mean_of_180_per_case_fused_rr
+      paired_rr_delta: arithmetic_mean_of_180_per_case_paired_rr_delta
+    macro:
+      fused_top1: equal_mean_of_hard_mid_clean_cell_points
+      paired_rr_delta: equal_mean_of_hard_mid_clean_cell_points
+    dev_lambda_selection:
+      input: S3_CANDIDATE_DEV_only
+      evaluate_all_lambda_grid_values: true
+      lexicographic: [maximize_macro_fused_MRR, maximize_macro_fused_top1, choose_smaller_lambda]
+      output: exactly_one_s3_lambda_freeze_record_before_test
+    test_gate_inputs:
+      absolute: [macro_fused_top1_point, macro_fused_top1_seed_cluster_CI]
+      incremental: [macro_paired_rr_delta_point, macro_paired_rr_delta_seed_cluster_CI, positive_cell_points]
+  dev_exposure_and_cost:
+    common_bps_freeze:
+      seeds: 10
+      cells: 12
+      logical_tuple_waveform_views: 600
+      unique_N_values: [10, 20, 100, 200]
+      unique_channel_waveform_realizations: 480
+      bps_grid_pairs: 6
+      logical_B1_dual_pol_method_frames: 3600
+      materialized_B1_dual_pol_method_frames_upper_bound: 2880
+      logical_per_frame: {decoder_batches: 8, cw_decodes: 128, bp_iterations: 2560}
+      logical_total: {decoder_batches: 28800, cw_decodes: 460800, bp_iterations: 9216000}
+      materialized_upper_bound: {decoder_batches: 23040, cw_decodes: 368640, bp_iterations: 7372800}
+      duplicate_N_cache: M2_N100_and_M3_N100_share_waveform_and_BPS_grid_but_keep_logical_rows
+    b2_freeze:
+      per_tuple_clean_dual_pol_frames: 120
+      per_tuple_controlled_dual_pol_frames: 2160
+      per_tuple_total_dual_pol_frames: 2280
+      legal_tuple_count: 5
+      logical_B2_dual_pol_method_frames: 11400
+      logical_per_frame: {decoder_batches: 2, cw_decodes: 32, bp_iterations: 640}
+      logical_total: {decoder_batches: 22800, cw_decodes: 364800, bp_iterations: 7296000}
+      materialized_upper_bound: {decoder_batches: 12000, cw_decodes: 192000, bp_iterations: 3840000}
+      ps_grid_size: 122
+      sigma_e2_grid_size: 6
+      statistic_pairs_per_tuple: 732
+      logical_dual_pol_frame_parameter_pair_scores: 8344800
+      logical_primitive_pol_trajectory_parameter_pair_scores: 16689600
+      materialized_primitive_pol_trajectory_parameter_pair_scores_upper_bound: 7027200
+      selected_pair_symbol_state_work: record_actual_in_computation_ledger
+  expected_cardinality_and_cost:
+    S1_first_stage:
+      physical_dual_pol_frames: 240
+      logical_polarization_trajectories: 480
+      raw_s1_rows: 480
+      decoder_cost: {logical_batches: 0, logical_cw_decodes: 0, logical_bp_iterations: 0}
+    S1_maximum:
+      physical_dual_pol_frames: 600
+      logical_polarization_trajectories: 1200
+      raw_s1_rows: 1200
+      decoder_cost: {logical_batches: 0, logical_cw_decodes: 0, logical_bp_iterations: 0}
+    S2:
+      unique_channel_realizations: 30
+      physical_on_target_pol_cases: 540
+      target_pol_off_branches: 60
+      logical_on_cases: 540
+      logical_off_projections: 540
+      raw_method_rows: 2160
+      logical_unique_method_computations_before_content_cache: 1680
+      logical_total: {decoder_batches: 6960, cw_decodes: 111360, bp_iterations: 2227200}
+      materialized_upper_bound: {decoder_batches: 3060, cw_decodes: 48960, bp_iterations: 979200}
+      cache_precondition: O1_all_boundary_all_rotation_byte_identity_and_clean_sentinel_content_hash_pass
+    S3_DEV:
+      unique_channel_realizations: 30
+      physical_cases: 540
+      truth_cases: 540
+      raw_candidate_rows: 5400
+      per_case_target_pol_logical: {decoder_batches: 10, cw_decodes: 88, bp_iterations: 1760, cached_unchanged_cw_nll_reads: 72}
+      logical_total: {decoder_batches: 5400, cw_decodes: 47520, bp_iterations: 950400, cached_unchanged_cw_nll_reads: 38880}
+      materialized_total: same_as_logical_no_cross_candidate_or_case_cost_reduction
+    S3_TEST:
+      unique_channel_realizations: 30
+      physical_cases: 540
+      truth_cases: 540
+      raw_candidate_rows: 5400
+      per_case_target_pol_logical: {decoder_batches: 10, cw_decodes: 88, bp_iterations: 1760, cached_unchanged_cw_nll_reads: 72}
+      logical_total: {decoder_batches: 5400, cw_decodes: 47520, bp_iterations: 950400, cached_unchanged_cw_nll_reads: 38880}
+      materialized_total: same_as_logical_no_cross_candidate_or_case_cost_reduction
+    S4:
+      physical_dual_pol_frames: 30
+      logical_polarization_trajectories: 60
+      raw_check_rows: 7
+      decoder_cost: sum_actual_EXECUTED_computation_ledger_rows_no_invented_prefixed_total
+    pre_S4_logical_exposure_total:
+      includes: [common_bps_freeze, b2_freeze, S2, S3_DEV, S3_TEST]
+      decoder_batches: 69360
+      cw_decodes: 1032000
+      bp_iterations: 20640000
+      interpretation: nominal_method_work_and_raw_exposure_not_unique_physical_execution
+    pre_S4_unique_materialization_upper_bound:
+      includes: [common_bps_freeze, b2_freeze, S2, S3_DEV, S3_TEST]
+      decoder_batches: 48900
+      cw_decodes: 704640
+      bp_iterations: 14092800
+      interpretation: content_addressed_execution_upper_bound_without_scientific_exposure_reduction
+    exclusions_from_both_prefixed_totals: [S4_actual, common_CPR_nondecoder_work, selected_pair_symbol_state_work, IO, cache_reads]
+  dev_freeze_artifact_contract:
+    schema_version: coded_decoder_feedback.d0.dev_freeze_artifacts.v1
+    supersedes:
+      - common_front_end.selection.tie_break.lower_affected_cw_error_rate
+      - statistical_contract_repair.artifact_contract.required_files
+    scientific_contract_change: none
+    selection_order: [common_bps_by_tuple, b2_statistic_by_tuple, final_b2_tuple]
+    tuple_ids_in_legal_order: [M2_N100, M3_N10, M3_N20, M3_N100, M3_N200]
+    B_values: [32, 64]
+    Nw_values: [31, 61, 127]
+    delivered_bit_and_symbol_definition:
+      successful_cw: all_1024_decoded_information_bits_equal_truth
+      delivered_information_bits: 1024_times_successful_cw_count
+      full_frame_cw_errors: 16_minus_successful_cw_count
+      total_transmitted_symbols_per_polarization: 32_plus_6144_plus_periodic_pilot_count_for_N
+      periodic_pilot_fraction: periodic_pilot_count_divided_by_total_transmitted_symbols_per_polarization
+      information_total_minus_information_errors_is_not_goodput: true
+    aggregation:
+      missing_primary_key_rows: fail_closed_without_renormalization
+      goodput_and_cwer_within_stratum_cell_pol: ratio_of_integer_sums
+      polarization: equal_mean_X_and_Y_after_complete_coverage
+      cells: equal_mean_12_cells
+      strata: {clean: 0.5, controlled_target: 0.5}
+      clean_rows: both_polarizations
+      controlled_objective_rows: target_polarization_only
+      controlled_sentinel:
+        objective_included: false
+        score_output_receipt_and_cost_ledger_required: true
+    tables:
+      bps_dev_score:
+        record_type: {type: string, const: BPS_DEV_SCORE, nullable: false}
+        primary_key: [record_type, tuple_id, B, Nw, seed, cell_id, polarization]
+        exact_cardinality: 7200
+        fields:
+          tuple_id: {type: string, enum: [M2_N100, M3_N10, M3_N20, M3_N100, M3_N200], nullable: false}
+          M: {type: int64, enum: [2, 3], nullable: false}
+          N: {type: int64, enum: [10, 20, 100, 200], nullable: false}
+          B: {type: int64, enum: [32, 64], nullable: false}
+          Nw: {type: int64, enum: [31, 61, 127], nullable: false}
+          seed: {type: int64, minimum: 0, nullable: false}
+          cell_id: {type: string, min_length: 1, nullable: false}
+          polarization: {type: string, enum: [X, Y], nullable: false}
+          method_id: {type: string, const: GLOBAL_FOUR_ROTATION_DECODER_SELECTION, nullable: false}
+          selected_global_rotation_k: {type: int64, enum: [0, 1, 2, 3], nullable: false}
+          selected_normalized_reencode_nll: {type: float64, finite: true, nullable: false}
+          successful_cw_count: {type: int64, minimum: 0, maximum: 16, nullable: false}
+          delivered_information_bits: {type: int64, minimum: 0, maximum: 16384, nullable: false}
+          full_frame_cw_errors: {type: int64, minimum: 0, maximum: 16, nullable: false}
+          full_frame_cw_total: {type: int64, const: 16, nullable: false}
+          information_bit_errors: {type: int64, minimum: 0, maximum: 16384, nullable: false}
+          information_bit_total: {type: int64, const: 16384, nullable: false}
+          total_transmitted_symbols_per_polarization: {type: int64, enum: [6208, 6240, 6501, 6860], nullable: false}
+          computation_id: {type: string, min_length: 1, nullable: false}
+          cache_status: {type: string, enum: [EXECUTED, CACHE_READ], nullable: false}
+          source_computation_id: {type: string, nullable: true}
+          result_receipt_sha256: {type: sha256_lower_hex, nullable: false}
+        invariants:
+          - tuple_id_bijection_with_M_and_N
+          - delivered_information_bits_equals_1024_times_successful_cw_count
+          - full_frame_cw_errors_equals_16_minus_successful_cw_count
+          - tuple_grid_seed_cell_pol_exact_coverage
+          - M2_N100_and_M3_N100_may_share_content_but_keep_both_logical_rows
+          - boundary_rotation_and_affected_fields_absent_not_null
+      b2_hmm_grid_chunk:
+        record_type: {type: string, const: B2_HMM_GRID_CHUNK, nullable: false}
+        primary_key: [record_type, tuple_id, p_s_index, sigma_e2_index, stratum_role, cell_id, polarization, chunk_id]
+        fields:
+          tuple_id: {type: string, enum: [M2_N100, M3_N10, M3_N20, M3_N100, M3_N200], nullable: false}
+          M: {type: int64, enum: [2, 3], nullable: false}
+          N: {type: int64, enum: [10, 20, 100, 200], nullable: false}
+          p_s_index: {type: int64, minimum: 0, maximum: 121, nullable: false}
+          p_s_float64_hex: {type: string, min_length: 1, nullable: false}
+          sigma_e2_index: {type: int64, minimum: 0, maximum: 5, nullable: false}
+          sigma_e2_float64_hex: {type: string, min_length: 1, nullable: false}
+          stratum_role: {type: string, enum: [CLEAN_INCLUDED, CONTROLLED_TARGET_INCLUDED, CONTROLLED_SENTINEL_EXCLUDED], nullable: false}
+          cell_id: {type: string, min_length: 1, nullable: false}
+          polarization: {type: string, enum: [X, Y], nullable: false}
+          chunk_id: {type: string, min_length: 1, nullable: false}
+          pilot_count: {type: int64, enum: [32, 64, 325, 684], nullable: false}
+          member_count: {type: int64, minimum: 1, nullable: false}
+          member_key_manifest_sha256: {type: sha256_lower_hex, nullable: false}
+          normalized_nll_exact_sum_numerator_decimal: {type: string, decimal_integer: true, nullable: false}
+          normalized_nll_exact_sum_denominator_power2: {type: int64, minimum: 0, nullable: false}
+          objective_included: {type: boolean, nullable: false}
+          computation_ids_manifest_sha256: {type: sha256_lower_hex, nullable: false}
+          content_sha256: {type: sha256_lower_hex, nullable: false}
+        invariants:
+          - tuple_id_bijection_with_M_and_N
+          - grid_indices_biject_to_dev_manifest_float64_hex_values
+          - every_trajectory_is_normalized_by_its_pilot_count_before_exact_sum
+          - exact_sum_is_lossless_sum_of_canonical_binary64_trajectory_values
+          - ordinary_order_dependent_float_chunk_sum_forbidden
+          - member_keys_complete_disjoint_and_exactly_once
+          - controlled_sentinel_objective_included_false_all_other_roles_true
+        membership_per_tuple_stat_pair_cell_pol:
+          CLEAN_INCLUDED: 10
+          CONTROLLED_TARGET_INCLUDED: 90
+          CONTROLLED_SENTINEL_EXCLUDED: 90
+      b2_tuple_clean_dev:
+        record_type: {type: string, const: B2_TUPLE_CLEAN_DEV, nullable: false}
+        primary_key: [record_type, tuple_id, seed, cell_id, polarization]
+        exact_cardinality: 1200
+        fields:
+          tuple_id: {type: string, enum: [M2_N100, M3_N10, M3_N20, M3_N100, M3_N200], nullable: false}
+          seed: {type: int64, minimum: 0, nullable: false}
+          cell_id: {type: string, min_length: 1, nullable: false}
+          polarization: {type: string, enum: [X, Y], nullable: false}
+          bps_freeze_ref: {type: string, min_length: 1, nullable: false}
+          statistic_freeze_ref: {type: string, min_length: 1, nullable: false}
+          successful_cw_count: {type: int64, minimum: 0, maximum: 16, nullable: false}
+          delivered_information_bits: {type: int64, minimum: 0, maximum: 16384, nullable: false}
+          full_frame_cw_errors: {type: int64, minimum: 0, maximum: 16, nullable: false}
+          information_bit_errors: {type: int64, minimum: 0, maximum: 16384, nullable: false}
+          total_transmitted_symbols_per_polarization: {type: int64, enum: [6208, 6240, 6501, 6860], nullable: false}
+          computation_id: {type: string, min_length: 1, nullable: false}
+          result_receipt_sha256: {type: sha256_lower_hex, nullable: false}
+        invariants:
+          - delivered_information_bits_equals_1024_times_successful_cw_count
+          - full_frame_cw_errors_equals_16_minus_successful_cw_count
+          - both_per_tuple_freeze_refs_exist_before_decode
+          - tuple_seed_cell_both_pol_exact_coverage
+          - controlled_fixture_fields_absent_not_null
+      b2_tuple_controlled_dev:
+        record_type: {type: string, const: B2_TUPLE_CONTROLLED_DEV, nullable: false}
+        primary_key: [record_type, tuple_id, seed, cell_id, target_polarization, fixture_id, row_polarization]
+        exact_cardinality: 21600
+        fields:
+          tuple_id: {type: string, enum: [M2_N100, M3_N10, M3_N20, M3_N100, M3_N200], nullable: false}
+          seed: {type: int64, minimum: 0, nullable: false}
+          cell_id: {type: string, min_length: 1, nullable: false}
+          target_polarization: {type: string, enum: [X, Y], nullable: false}
+          row_polarization: {type: string, enum: [X, Y], nullable: false}
+          row_role: {type: string, enum: [TARGET_INCLUDED, SENTINEL_EXCLUDED], nullable: false}
+          fixture_id: {type: string, enum_ref: fixture_id, nullable: false}
+          boundary_after_cw: {type: int64, enum: [4, 8, 12], nullable: false}
+          rotation_k: {type: int64, enum: [1, 2, 3], nullable: false}
+          bps_freeze_ref: {type: string, min_length: 1, nullable: false}
+          statistic_freeze_ref: {type: string, min_length: 1, nullable: false}
+          successful_cw_count: {type: int64, minimum: 0, maximum: 16, nullable: false}
+          delivered_information_bits: {type: int64, minimum: 0, maximum: 16384, nullable: false}
+          full_frame_cw_errors: {type: int64, minimum: 0, maximum: 16, nullable: false}
+          affected_cw_errors: {type: int64, minimum: 0, maximum: 12, nullable: false}
+          affected_cw_total: {type: int64, enum: [4, 8, 12], nullable: false}
+          total_transmitted_symbols_per_polarization: {type: int64, enum: [6208, 6240, 6501, 6860], nullable: false}
+          computation_id: {type: string, min_length: 1, nullable: false}
+          cache_status: {type: string, enum: [EXECUTED, CACHE_READ], nullable: false}
+          source_computation_id: {type: string, nullable: true}
+          result_receipt_sha256: {type: sha256_lower_hex, nullable: false}
+        invariants:
+          - target_row_iff_row_polarization_equals_target_polarization
+          - sentinel_row_iff_row_polarization_differs_from_target_polarization
+          - target_rows_objective_included_and_sentinel_rows_objective_excluded
+          - every_fixture_has_exactly_one_target_and_one_sentinel_row
+          - delivered_information_bits_equals_1024_times_successful_cw_count
+          - full_frame_cw_errors_equals_16_minus_successful_cw_count
+          - affected_counts_only_consumed_from_target_rows
+          - sentinel_content_matches_bound_clean_source_computation
+          - both_per_tuple_freeze_refs_exist_before_decode
+    common_bps:
+      table: bps_dev_score
+      population: clean_no_controlled_injection
+      exact_rows: 7200
+      reduction: ratio_of_integer_sums_within_cell_pol_then_equal_pol_then_equal_12_cells
+      lexicographic: [maximize_macro_net_goodput, minimize_macro_full_frame_cwer, lower_B, lower_Nw]
+      output: exactly_one_B_Nw_pair_per_tuple
+    b2_statistic:
+      table: b2_hmm_grid_chunk
+      value: canonical_float64_negative_forward_loglikelihood_per_pilot
+      storage: lossless_binary64_exact_sum_and_count_by_chunk
+      ordinary_float_chunk_sum_forbidden: true
+      logical_primitive_scores_preserved: 16689600
+      objective_included_primitive_scores: 8784000
+      logical_controlled_sentinel_scores_excluded_from_objective: 7905600
+      reduction: per_stratum_cell_pol_mean_then_equal_pol_then_equal_12_cells_then_half_clean_half_controlled_target
+      lexicographic: [minimize_combined_normalized_nll, smaller_p_s, smaller_sigma_e2]
+      output: exactly_one_p_s_sigma_e2_pair_per_tuple
+    b2_tuple:
+      tables: [b2_tuple_clean_dev, b2_tuple_controlled_dev]
+      exact_rows: {clean: 1200, controlled_all_pol: 21600, controlled_objective_target: 10800, controlled_sentinel_excluded: 10800}
+      reduction: ratio_of_integer_sums_per_stratum_cell_pol_then_equal_pol_equal_12_cells_then_half_clean_half_controlled_target
+      periodic_pilot_fraction_by_tuple:
+        M2_N100: {numerator: 64, denominator: 6240}
+        M3_N10: {numerator: 684, denominator: 6860}
+        M3_N20: {numerator: 325, denominator: 6501}
+        M3_N100: {numerator: 64, denominator: 6240}
+        M3_N200: {numerator: 32, denominator: 6208}
+      lexicographic: [maximize_combined_macro_net_goodput, lower_periodic_pilot_fraction, lower_macro_controlled_target_affected_cwer, lower_M, earlier_legal_tuple_order]
+      output: exactly_one_final_tuple_with_bound_BPS_and_statistic_refs
+    freeze:
+      file: dev_freeze.json
+      schema_version: coded_decoder_feedback.d0.dev_freeze.v1
+      output: exactly_five_BPS_pairs_five_statistic_pairs_and_one_final_tuple
+      store_each_candidate_objective_and_exact_lexicographic_key: true
+      raw_hash_bindings_required: true
+      test_rows_read: false
+      test_refit_forbidden: true
+      test_runner_requires_resolved_freeze: true
+      test_runner_fit_call_graph_reachable: false
+    dev_manifest:
+      file: dev_manifest.json
+      required_content:
+        - exact_dev_seed_list
+        - twelve_cell_ids_and_physical_values
+        - tuple_ids_values_and_legal_order
+        - six_BPS_pairs
+        - all_p_s_and_sigma_e2_indices_with_float64_hex
+        - polarization_stratum_fixture_enums
+        - expected_primary_keys_and_cardinalities
+        - logical_and_materialized_exposure
+    chronology_lock:
+      test_runner_input_type: ResolvedDevFreeze
+      all_S1_S2_S3dev_S3test_S4_receipts_require_same_dev_freeze_sha256: true
+      fit_functions_forbidden_from_test_runner_call_graph: [fit_common_bps, fit_b2_statistics, select_b2_tuple]
+      BPS_and_B2_fit_accepts_only_seed_range: common_cpr_and_b2_dev
+      observability_fusion_dev_uses_resolved_BPS_B2_freeze_without_refit: true
+      evaluator_seed_ranges_forbidden_from_any_fit_function: [natural_occurrence, controlled_damage_recovery, controlled_observability, clean_diagnostic, post_d0_c1_dev, post_d0_fresh_heldout]
+    artifact_contract_add_required_files:
+      - dev_manifest.json
+      - raw_bps_dev.jsonl
+      - hmm_grid_dev_chunks.jsonl
+      - raw_b2_tuple_clean_dev.jsonl
+      - raw_b2_tuple_controlled_dev.jsonl
+      - dev_freeze.json
+      - dev_freeze_receipt.json
+    receipt_hashes_add:
+      - dev_manifest_sha256
+      - raw_bps_dev_sha256
+      - hmm_grid_dev_chunks_sha256
+      - raw_b2_tuple_clean_dev_sha256
+      - raw_b2_tuple_controlled_dev_sha256
+      - dev_freeze_sha256
+      - selection_code_sha256
+  artifact_contract:
+    required_files: [dev_manifest.json, raw_bps_dev.jsonl, hmm_grid_dev_chunks.jsonl, raw_b2_tuple_clean_dev.jsonl, raw_b2_tuple_controlled_dev.jsonl, dev_freeze.json, dev_freeze_receipt.json, raw_s1.jsonl, raw_s2.jsonl, raw_s3_dev.jsonl, s3_lambda_freeze.json, raw_s3_test.jsonl, raw_s4.jsonl, computation_ledger.jsonl, summary.json, receipt.json]
+    validate_before_write: [strict_schema, primary_key_unique, foreign_keys, exact_cardinality, complete_seed_manifest, finite_values, raw_to_summary_recompute]
+    write_protocol: same_directory_temp_then_flush_file_fsync_os_replace_then_directory_fsync_if_supported
+    directory_fsync_support_recorded: true
+    receipt_hashes: [contract_sha256, source_bundle_sha256, code_bundle_sha256, dev_manifest_sha256, each_dev_raw_or_chunk_file_sha256, dev_freeze_sha256, selection_code_sha256, seed_manifest_sha256, each_scientific_raw_file_sha256, summary_sha256, computation_ledger_sha256]
+
+identity_binding_contract:
+  schema_version: coded_decoder_feedback.d0.identity_binding.v1
+  decision_ref: D015
+  scientific_contract_change: none
+  canonical_serialization:
+    encoding: UTF-8
+    canonical_json:
+      sort_keys: true
+      separators:
+      - ','
+      - ':'
+      ensure_ascii: false
+      allow_nan: false
+    trailing_newline: forbidden
+    hash: lowercase_sha256_of_exact_canonical_bytes
+    json_float: forbidden_in_every_identity_payload
+    structural_domain_fields: schema_phase_operation_kind_table_and_enum_tags_are_exact_strings
+    typed_atom:
+      exact_object_field_order:
+      - type
+      - value
+      allowed_types:
+      - str
+      - int
+      - bool
+      - none
+      - float64_hex
+      str_value: exact_unicode_string
+      int_value: exact_Python_int_or_int64_semantics_without_bool_coercion
+      bool_value: exact_JSON_boolean
+      none_value: exact_JSON_null
+      float64_hex_value: exact_canonical_Python_float_hex_string_only
+      reject:
+      - JSON_float
+      - alternative_float_hex_spelling
+      - negative_zero
+      - NaN
+      - positive_infinity
+      - negative_infinity
+      - unknown_type
+      - extra_atom_field
+    ordered_field_entry:
+      exact_object_field_order:
+      - name
+      - atom
+      name: exact_schema_field_name
+      atom: typed_atom_above
+  grid_authority:
+    runtime_authority: owner_literal_payloads_and_frozen_roots_below
+    runtime_recomputation: forbidden
+    generation_provenance:
+      purpose: one_time_literal_generation_and_independent_audit_only
+      python: '3.11'
+      numpy: 2.4.3
+      dtype: numpy.float64
+      p_s_expression: concatenate(array([0.0],float64),logspace(-7.0,-1.0,121,endpoint=True,base=10.0,dtype=float64))
+      sigma_e2_expression: array([0.0,1e-5,1e-4,1e-3,1e-2,1e-1],dtype=float64)
+    literal_rules:
+    - indices_are_zero_based_contiguous_and_in_payload_order
+    - float64_hex_equals_float_fromhex_then_hex_canonical_roundtrip
+    - first_value_is_positive_zero_0x0.0p+0
+    - all_following_values_are_finite_strictly_increasing_and_positive
+    - negative_zero_and_duplicate_binary64_values_are_forbidden
+    p_s:
+      count: 122
+      anchors:
+        0: 0x0.0p+0
+        1: 0x1.ad7f29abcaf48p-24
+        61: 0x1.a36e2eb1c432dp-14
+        121: 0x1.999999999999ap-4
+      standalone_payload: &id001
+        schema: coded_decoder_feedback.d0.float64_grid.v1
+        name: p_s
+        values:
+        - index: 0
+          float64_hex: 0x0.0p+0
+        - index: 1
+          float64_hex: 0x1.ad7f29abcaf48p-24
+        - index: 2
+          float64_hex: 0x1.e1e73bd450bfbp-24
+        - index: 3
+          float64_hex: 0x1.0e5a280c5ad1dp-23
+        - index: 4
+          float64_hex: 0x1.2f57129fb01a5p-23
+        - index: 5
+          float64_hex: 0x1.545a6cb8cabbcp-23
+        - index: 6
+          float64_hex: 0x1.7de1f1c6bac2cp-23
+        - index: 7
+          float64_hex: 0x1.ac7ab4ae8f688p-23
+        - index: 8
+          float64_hex: 0x1.e0c2ff045ab07p-23
+        - index: 9
+          float64_hex: 0x1.0db6355ec7054p-22
+        - index: 10
+          float64_hex: 0x1.2e9f1ebf9cab2p-22
+        - index: 11
+          float64_hex: 0x1.538c06c4ca610p-22
+        - index: 12
+          float64_hex: 0x1.7cfa5c9e27506p-22
+        - index: 13
+          float64_hex: 0x1.ab76dda3d53fdp-22
+        - index: 14
+          float64_hex: 0x1.df9f736ca7852p-22
+        - index: 15
+          float64_hex: 0x1.0d12a61d3698cp-21
+        - index: 16
+          float64_hex: 0x1.2de79a6d2a218p-21
+        - index: 17
+          float64_hex: 0x1.52be1dfaf9b08p-21
+        - index: 18
+          float64_hex: 0x1.7c1353e58077ep-21
+        - index: 19
+          float64_hex: 0x1.aa73a42bd40a5p-21
+        - index: 20
+          float64_hex: 0x1.de7c98a1bed83p-21
+        - index: 21
+          float64_hex: 0x1.0c6f7a0b5ed8dp-20
+        - index: 22
+          float64_hex: 0x1.2d308564b277dp-20
+        - index: 23
+          float64_hex: 0x1.51f0b20f71864p-20
+        - index: 24
+          float64_hex: 0x1.7b2cd7479c20ep-20
+        - index: 25
+          float64_hex: 0x1.a97107e6fd6abp-20
+        - index: 26
+          float64_hex: 0x1.dd5a6e3869738p-20
+        - index: 27
+          float64_hex: 0x1.0bccb0ed19a15p-19
+        - index: 28
+          float64_hex: 0x1.2c79df62b8ae4p-19
+        - index: 29
+          float64_hex: 0x1.5123c2b678c69p-19
+        - index: 30
+          float64_hex: 0x1.7a46e66f83d5fp-19
+        - index: 31
+          float64_hex: 0x1.a86f0875fcf94p-19
+        - index: 32
+          float64_hex: 0x1.dc38f3c5b1247p-19
+        - index: 33
+          float64_hex: 0x1.0b2a4a866547ep-18
+        - index: 34
+          float64_hex: 0x1.2bc3a823e8b33p-18
+        - index: 35
+          float64_hex: 0x1.50574fa4843efp-18
+        - index: 36
+          float64_hex: 0x1.7961810874a9fp-18
+        - index: 37
+          float64_hex: 0x1.a76da579b81cap-18
+        - index: 38
+          float64_hex: 0x1.db1828dee095dp-18
+        - index: 39
+          float64_hex: 0x1.0a88469b64867p-17
+        - index: 40
+          float64_hex: 0x1.2b0ddf6517472p-17
+        - index: 41
+          float64_hex: 0x1.4f8b588e368f1p-17
+        - index: 42
+          float64_hex: 0x1.787ca6bddf169p-17
+        - index: 43
+          float64_hex: 0x1.a66cde934de7dp-17
+        - index: 44
+          float64_hex: 0x1.d9f80d1983292p-17
+        - index: 45
+          float64_hex: 0x1.09e6a4f05e62bp-16
+        - index: 46
+          float64_hex: 0x1.2a5884e341e83p-16
+        - index: 47
+          float64_hex: 0x1.4ebfdd28600a7p-16
+        - index: 48
+          float64_hex: 0x1.7798573b66d9ep-16
+        - index: 49
+          float64_hex: 0x1.a56cb36416f83p-16
+        - index: 50
+          float64_hex: 0x1.d8d8a00b64cb6p-16
+        - index: 51
+          float64_hex: 0x1.09456549be1bdp-15
+        - index: 52
+          float64_hex: 0x1.29a3985b8eb77p-15
+        - index: 53
+          float64_hex: 0x1.4df4dd27fe99ep-15
+        - index: 54
+          float64_hex: 0x1.76b4922ce2e00p-15
+        - index: 55
+          float64_hex: 0x1.a46d238da54ebp-15
+        - index: 56
+          float64_hex: 0x1.d7b9e14a91d46p-15
+        - index: 57
+          float64_hex: 0x1.08a4876c13128p-14
+        - index: 58
+          float64_hex: 0x1.28ef198b4c5dap-14
+        - index: 59
+          float64_hex: 0x1.4d2a58423da81p-14
+        - index: 60
+          float64_hex: 0x1.75d1573e5d18ep-14
+        - index: 61
+          float64_hex: 0x1.a36e2eb1c432dp-14
+        - index: 62
+          float64_hex: 0x1.d69bd06d56dbbp-14
+        - index: 63
+          float64_hex: 0x1.08040b1c10b13p-13
+        - index: 64
+          float64_hex: 0x1.283b082ff1f9bp-13
+        - index: 65
+          float64_hex: 0x1.4c604e2c75fb6p-13
+        - index: 66
+          float64_hex: 0x1.74eea61c12623p-13
+        - index: 67
+          float64_hex: 0x1.a26fd472780c9p-13
+        - index: 68
+          float64_hex: 0x1.d57e6d0a4090dp-13
+        - index: 69
+          float64_hex: 0x1.0763f01e8e5b2p-12
+        - index: 70
+          float64_hex: 0x1.278764071eff2p-12
+        - index: 71
+          float64_hex: 0x1.4b96be9c2da2cp-12
+        - index: 72
+          float64_hex: 0x1.740c7e727264fp-12
+        - index: 73
+          float64_hex: 0x1.a1721471fe40dp-12
+        - index: 74
+          float64_hex: 0x1.d461b6b81b980p-12
+        - index: 75
+          float64_hex: 0x1.06c4363887513p-11
+        - index: 76
+          float64_hex: 0x1.26d42cce9b24cp-11
+        - index: 77
+          float64_hex: 0x1.4acda94717d6cp-11
+        - index: 78
+          float64_hex: 0x1.732adfee1f757p-11
+        - index: 79
+          float64_hex: 0x1.a074ee52cd121p-11
+        - index: 80
+          float64_hex: 0x1.d345ad0df45f2p-11
+        - index: 81
+          float64_hex: 0x1.0624dd2f1a9fcp-10
+        - index: 82
+          float64_hex: 0x1.2621624456490p-10
+        - index: 83
+          float64_hex: 0x1.4a050de314ddep-10
+        - index: 84
+          float64_hex: 0x1.7249ca3bee782p-10
+        - index: 85
+          float64_hex: 0x1.9f7861b7937a3p-10
+        - index: 86
+          float64_hex: 0x1.d22a4fa316facp-10
+        - index: 87
+          float64_hex: 0x1.0585e4c78b079p-9
+        - index: 88
+          float64_hex: 0x1.256f0426685aep-9
+        - index: 89
+          float64_hex: 0x1.493cec2631f1ep-9
+        - index: 90
+          float64_hex: 0x1.71693d08e6beep-9
+        - index: 91
+          float64_hex: 0x1.9e7c6e43390b7p-9
+        - index: 92
+          float64_hex: 0x1.d10f9e0f0efdap-9
+        - index: 93
+          float64_hex: 0x1.04e74cc73ee8dp-8
+        - index: 94
+          float64_hex: 0x1.24bd1233113f0p-8
+        - index: 95
+          float64_hex: 0x1.487543c6a9257p-8
+        - index: 96
+          float64_hex: 0x1.7089380241edfp-8
+        - index: 97
+          float64_hex: 0x1.9d811398ddccep-8
+        - index: 98
+          float64_hex: 0x1.cff597e9a7536p-8
+        - index: 99
+          float64_hex: 0x1.044914f3c02b4p-7
+        - index: 100
+          float64_hex: 0x1.240b8c28b8bb7p-7
+        - index: 101
+          float64_hex: 0x1.47ae147ae147bp-7
+        - index: 102
+          float64_hex: 0x1.6fa9bad56bdc1p-7
+        - index: 103
+          float64_hex: 0x1.9c86515bda155p-7
+        - index: 104
+          float64_hex: 0x1.cedc3ccaea162p-7
+        - index: 105
+          float64_hex: 0x1.03ab3d12bc2c6p-6
+        - index: 106
+          float64_hex: 0x1.235a71c5ee5ccp-6
+        - index: 107
+          float64_hex: 0x1.46e75df96dca3p-6
+        - index: 108
+          float64_hex: 0x1.6ecac53002719p-6
+        - index: 109
+          float64_hex: 0x1.9b8c272fbe6e6p-6
+        - index: 110
+          float64_hex: 0x1.cdc38c4b206eap-6
+        - index: 111
+          float64_hex: 0x1.030dc4ea03a72p-5
+        - index: 112
+          float64_hex: 0x1.22a9c2c9695f3p-5
+        - index: 113
+          float64_hex: 0x1.46211ff90ea30p-5
+        - index: 114
+          float64_hex: 0x1.6dec56bfd58ecp-5
+        - index: 115
+          float64_hex: 0x1.9a9294b8536edp-5
+        - index: 116
+          float64_hex: 0x1.ccab8602d2697p-5
+        - index: 117
+          float64_hex: 0x1.0270ac3f8aa01p-4
+        - index: 118
+          float64_hex: 0x1.21f97ef208941p-4
+        - index: 119
+          float64_hex: 0x1.455b5a30b0362p-4
+        - index: 120
+          float64_hex: 0x1.6d0e6f32e6ea5p-4
+        - index: 121
+          float64_hex: 0x1.999999999999ap-4
+      sha256: bfc3cef2c8e6fc800b6a40f9da778ab98b666ec57e5e12ae1f0c8b9f25b78864
+    sigma_e2:
+      count: 6
+      standalone_payload: &id002
+        schema: coded_decoder_feedback.d0.float64_grid.v1
+        name: sigma_e2
+        values:
+        - index: 0
+          float64_hex: 0x0.0p+0
+        - index: 1
+          float64_hex: 0x1.4f8b588e368f1p-17
+        - index: 2
+          float64_hex: 0x1.a36e2eb1c432dp-14
+        - index: 3
+          float64_hex: 0x1.0624dd2f1a9fcp-10
+        - index: 4
+          float64_hex: 0x1.47ae147ae147bp-7
+        - index: 5
+          float64_hex: 0x1.999999999999ap-4
+      sha256: 0f37cdf467a04283bbf03792c5654545947ce759c052ed11e98c20c2618401ca
+    combined:
+      payload:
+        schema: coded_decoder_feedback.d0.hmm_grid_commitment.v1
+        p_s: *id001
+        sigma_e2: *id002
+      sha256: 0cdb5e547e31997cd931a97f97f681ff5eeae28c372810eb12f593f4dca99fdf
+      deep_equality_rule: combined.p_s_and_sigma_e2_must_deep_equal_the_two_standalone_payloads
+  payload_schemas:
+    global_rule: every_payload_has_the_exact_version_below_and_hashes_lowercase_SHA256_of_canonical_bytes
+    consumer_primary_key:
+      version: coded_decoder_feedback.d0.consumer_primary_key.v1
+      exact_object_field_order:
+      - schema
+      - table
+      - fields
+      fields_order: exact_owner_table_primary_key_order
+      field_entry_order:
+      - name
+      - atom
+    typed_work_key:
+      version: coded_decoder_feedback.d0.typed_work_key.v1
+      exact_object_field_order:
+      - schema
+      - kind
+      - fields
+      fields_order: exact_projection_order_declared_by_consumer_bindings
+      field_entry_order:
+      - name
+      - atom
+    hmm_group_identity:
+      version: coded_decoder_feedback.d0.hmm_group_identity.v1
+      exact_object_field_order:
+      - schema
+      - kind
+      - fields
+      kind: HMM_GRID_CHUNK_GROUP
+      fields_order:
+      - tuple_id
+      - p_s_index
+      - p_s_float64_hex
+      - sigma_e2_index
+      - sigma_e2_float64_hex
+      - stratum_role
+      - cell_id
+      - polarization
+      - pilot_count
+    hmm_member_key_manifest:
+      version: coded_decoder_feedback.d0.hmm_member_key_manifest.v1
+      exact_object_field_order:
+      - schema
+      - consumer_primary_key
+      - members
+      member_entry_order:
+      - ordinal
+      - member_primary_key
+    hmm_computation_binding:
+      version: coded_decoder_feedback.d0.hmm_computation_binding.v1
+      exact_object_field_order:
+      - schema
+      - ordinal
+      - member_primary_key
+      - computation_id
+      - cache_status
+      - source_computation_id
+    logical_computation_identity:
+      version: coded_decoder_feedback.d0.logical_computation_identity.v1
+      exact_object_field_order:
+      - schema
+      - phase
+      - operation
+      - work_key
+      id_rule: d0c1_dash_plus_lowercase_sha256_of_this_payload
+    computation_id_manifest:
+      version: coded_decoder_feedback.d0.computation_id_manifest.v1
+      exact_object_field_order:
+      - schema
+      - group
+      - aggregate
+      - bindings
+      group_entry_order:
+      - group_identity
+      - chunk_id
+      - consumer_primary_key
+      - pilot_count
+      aggregate_entry_order:
+      - algorithm
+      - member_count
+      bindings_order: same_ordinal_order_as_member_key_manifest
+    consumer_binding_manifest:
+      version: coded_decoder_feedback.d0.consumer_binding_manifest.v1
+      exact_binding_kind: LOGICAL_COMPUTATION_ID
+      exact_object_field_order:
+      - schema
+      - binding_kind
+      - bindings
+      binding_entry_order:
+      - consumer_primary_key
+      - logical_computation_id
+    decoder_hard_output:
+      version: coded_decoder_feedback.d0.decoder_hard_output.v1
+      exact_object_field_order: [schema, cw_count, information_bits_per_cw, cw_order, bit_packing, decoded_information_bits_base64]
+      constants:
+        cw_count: 16
+        information_bits_per_cw: 1024
+        cw_order: TRANSMITTED_CW_INDEX_0_THROUGH_15
+        bit_packing: CW_MAJOR_MSB_FIRST_RFC4648_BASE64
+      total_information_bits: 16384
+      decoded_bytes: 2048
+      base64: {alphabet: RFC4648_standard, encoded_length: 2732, padding: exactly_one_equals, whitespace: forbidden, round_trip: exact}
+    decoder_hard_output_store_record:
+      version: coded_decoder_feedback.d0.decoder_hard_output_store_record.v1
+      exact_object_field_order: [schema, decoder_hard_output_sha256, payload]
+      root_rule: decoder_hard_output_sha256_is_lowercase_SHA256_of_canonical_payload_only
+    consumer_output_S2_off:
+      version: coded_decoder_feedback.d0.consumer_output.s2_off.v1
+      exact_object_field_order: [schema, decoder_hard_output_sha256]
+    consumer_output_S2_on:
+      version: coded_decoder_feedback.d0.consumer_output.s2_on.v1
+      exact_object_field_order: [schema, decoder_hard_output_sha256]
+    consumer_output_S3:
+      version: coded_decoder_feedback.d0.consumer_output.s3.v1
+      exact_object_field_order: [schema, decoder_hard_output_sha256, pilot_score_float64_hex, decoder_score_float64_hex]
+    consumer_output_BPS:
+      version: coded_decoder_feedback.d0.consumer_output.bps.v1
+      exact_object_field_order: [schema, decoder_hard_output_sha256, selected_global_rotation_k, selected_normalized_reencode_nll_float64_hex]
+    consumer_output_B2_clean:
+      version: coded_decoder_feedback.d0.consumer_output.b2_clean.v1
+      exact_object_field_order: [schema, decoder_hard_output_sha256]
+    consumer_output_B2_controlled:
+      version: coded_decoder_feedback.d0.consumer_output.b2_controlled.v1
+      exact_object_field_order: [schema, decoder_hard_output_sha256]
+    consumer_output_S4:
+      version: coded_decoder_feedback.d0.consumer_output.s4.v1
+      exact_object_field_order: [schema, tested_instances, failed_instances, passed, evidence_sha256]
+    ordinary_consumer_provenance:
+      version: coded_decoder_feedback.d0.ordinary_consumer_provenance.v1
+      exact_object_field_order: [schema, logical_computation_id, entries]
+      entry_exact_object_field_order: [ordinal, consumer_primary_key, consumer_output, cache_status, source_computation_id, source_consumer_primary_key]
+    ordinary_consumer_provenance_store_record:
+      version: coded_decoder_feedback.d0.ordinary_consumer_provenance_store_record.v1
+      exact_object_field_order: [schema, ordinary_consumer_provenance_manifest_sha256, payload]
+      root_rule: ordinary_consumer_provenance_manifest_sha256_is_lowercase_SHA256_of_canonical_payload_only
+    runtime_aggregate_content:
+      version: coded_decoder_feedback.d0.hmm_runtime_aggregate_content.v1
+      exact_object_field_order:
+      - schema
+      - computation_ids_manifest_sha256
+      - resolved_member_contents
+      - normalized_nll_exact_sum_numerator_decimal
+      - normalized_nll_exact_sum_denominator_power2
+      - member_count
+      resolved_content_entry_order:
+      - ordinal
+      - content_sha256
+  hmm_authority:
+    tuple_legal_order:
+    - M2_N100
+    - M3_N10
+    - M3_N20
+    - M3_N100
+    - M3_N200
+    pilot_count_by_tuple:
+      M2_N100: 64
+      M3_N10: 684
+      M3_N20: 325
+      M3_N100: 64
+      M3_N200: 32
+    grid_join: each_group_binds_exact_p_s_index_and_hex_and_sigma_e2_index_and_hex
+    chunk_id_rule: hmmg1_dash_plus_sha256_of_canonical_hmm_group_identity_payload
+    chunk_primary_key_order:
+    - record_type
+    - tuple_id
+    - p_s_index
+    - sigma_e2_index
+    - stratum_role
+    - cell_id
+    - polarization
+    - chunk_id
+    chunk_envelope_required:
+    - group_identity
+    - computed_chunk_id
+    - typed_chunk_primary_key
+    - pilot_count
+    roles:
+      CLEAN_INCLUDED:
+        raw_table: b2_tuple_clean_dev
+        raw_primary_key_order:
+        - record_type
+        - tuple_id
+        - seed
+        - cell_id
+        - polarization
+        member_axis_order:
+        - seed
+        member_count: 10
+      CONTROLLED_TARGET_INCLUDED:
+        raw_table: b2_tuple_controlled_dev
+        raw_primary_key_order:
+        - record_type
+        - tuple_id
+        - seed
+        - cell_id
+        - target_polarization
+        - fixture_id
+        - row_polarization
+        row_relation: target_polarization_equals_row_polarization_equals_group_polarization
+        member_axis_order:
+        - seed
+        - fixture_owner_legal_order
+        member_count: 90
+      CONTROLLED_SENTINEL_EXCLUDED:
+        raw_table: b2_tuple_controlled_dev
+        raw_primary_key_order:
+        - record_type
+        - tuple_id
+        - seed
+        - cell_id
+        - target_polarization
+        - fixture_id
+        - row_polarization
+        row_relation: row_polarization_equals_group_polarization_and_target_polarization_is_opposite
+        member_axis_order:
+        - seed
+        - fixture_owner_legal_order
+        member_count: 90
+    seed_axis:
+      first: 8000
+      last: 8009
+      count: 10
+    fixture_owner_legal_order:
+    - B04_K1
+    - B04_K2
+    - B04_K3
+    - B08_K1
+    - B08_K2
+    - B08_K3
+    - B12_K1
+    - B12_K2
+    - B12_K3
+    manifest_rules:
+    - ordinal_is_zero_based_contiguous_and_matches_owner_axis_order
+    - multiplicity_is_preserved_before_hashing_and_no_deduplication_is_permitted
+    - member_primary_keys_are_also_validated_as_a_unique_exact_expected_set
+    - member_count_matches_role_exactly
+    - member_and_computation_manifests_bind_the_full_typed_chunk_primary_key
+    - group_identity_and_chunk_id_are_recomputed_so_the_same_members_cannot_move_across_grid_role_cell_or_polarization
+    logical_computation:
+      phase: B2_DEV
+      operation: HMM_GRID_SCORE
+      work_key_kind: HMM_TRAJECTORY_FULL_122_BY_6_GRID
+      scope: one_per_pol_trajectory_over_all_732_grid_points
+      clean_work_key_order:
+      - tuple_id
+      - stratum_role
+      - seed
+      - cell_id
+      - polarization
+      controlled_work_key_order:
+      - tuple_id
+      - stratum_role
+      - seed
+      - cell_id
+      - polarization
+      - target_polarization
+      - fixture_id
+    exact_sum_algorithm: CANONICAL_BINARY64_EXACT_RATIONAL_SUM_V1
+  ledger_accounting:
+    granularity: one_per_pol_trajectory_full_122_by_6_grid_logical_computation
+    chunk_is_aggregate_receipt_not_ledger_row: true
+    cost_bearing_group_aggregate_row: forbidden
+    parameter_pair_ledger_row: forbidden
+    formulas:
+      chunks:
+        formula: 5*122*6*3*12*2
+        expected: 263520
+      logical_trajectory_rows:
+        formula: 5*10*12*2*(1+9+9)
+        expected: 22800
+      logical_primitive_scores:
+        formula: 22800*732
+        expected: 16689600
+      executed_trajectory_rows:
+        formula: 4*10*12*2*(1+9)
+        expected: 9600
+      materialized_primitive_scores:
+        formula: 9600*732
+        expected: 7027200
+      cache_trajectory_rows:
+        formula: 22800-9600
+        expected: 13200
+    per_logical_trajectory:
+      hmm_primitive_pol_trajectory_parameter_pair_scores: 732
+      materialized_primitive_scores: 732_only_for_EXECUTED_and_zero_for_CACHE_READ
+    dual_pol_pair_charge:
+      owner_polarization: X
+      X_hmm_dual_pol_frame_parameter_pair_scores: 732
+      Y_hmm_dual_pol_frame_parameter_pair_scores: 0
+      paired_row_requirement: X_and_Y_exact_physical_case_pair
+      logical_pair_owner_rows: 11400
+      expected_total: 8344800
+    materialized_totals: sum_EXECUTED_unique_computation_id_only
+  cache_source:
+    canonical_N100_executed_owner: M2_N100
+    M3_N100_rule: logical_rows_are_CACHE_READ_directly_to_content_identical_M2_N100_EXECUTED_rows
+    sentinel_normalization_order:
+    - same_seed_cell_row_polarization_clean_physical_content
+    - then_N100_tuple_normalization
+    M3_N100_sentinel_rule: directly_source_M2_N100_clean_EXECUTED_computation
+    source_requirements:
+    - source_computation_id_exists
+    - source_cache_status_is_EXECUTED
+    - source_source_computation_id_is_null
+    - cache_chain_is_forbidden
+    - logical_computation_id_is_preserved_and_never_replaced_by_source_id
+    - CACHE_READ_and_source_content_sha256_are_equal
+    - all_CACHE_READ_materialized_cost_fields_are_zero
+    physical_content_key:
+      exclude:
+      - M
+      - logical_tuple_label
+      - sentinel_fixture_label
+      retain_common:
+      - N
+      - seed
+      - cell_id
+      - row_polarization
+      retain_controlled_target:
+      - target_polarization
+      - fixture_id
+    reuse_scope:
+      allowed:
+      - content_identical_waveform
+      - content_identical_BPS
+      - content_identical_HMM_GRID_SCORE
+      forbidden:
+      - cross_M_downstream_B2_DECODE
+  consumer_bindings:
+    rule:
+      ordinary: each_raw_consumer_exact_typed_primary_key_maps_to_one_declared_logical_computation_id
+      HMM_chunk: each_HMM_chunk_exact_typed_primary_key_maps_to_one_computation_ids_manifest_sha256
+    projections:
+      S2_off:
+        exact_binding_kind: LOGICAL_COMPUTATION_ID
+        table: s2_method
+        consumer_pk_order:
+        - record_type
+        - seed
+        - cell_id
+        - target_polarization
+        - fixture_id
+        - jump_present
+        - method_id
+        consumer_pk_fields:
+        - {name: record_type, source: raw.record_type, atom_type: str}
+        - {name: seed, source: raw.seed, atom_type: int}
+        - {name: cell_id, source: raw.cell_id, atom_type: str}
+        - {name: target_polarization, source: raw.target_polarization, atom_type: str}
+        - {name: fixture_id, source: raw.fixture_id, atom_type: str}
+        - {name: jump_present, source: raw.jump_present, atom_type: bool}
+        - {name: method_id, source: raw.method_id, atom_type: str}
+        phase_rule: {kind: literal, value: S2}
+        operation_rule: {kind: literal, value: B1_DECODE}
+        work_key_kind: S2_B1_OFF_CANONICAL_B04
+        work_key_order:
+        - seed
+        - cell_id
+        - target_polarization
+        - jump_present
+        - method_id
+        - canonical_owner_fixture_id
+        work_key_fields:
+        - {name: seed, source: raw.seed, atom_type: int}
+        - {name: cell_id, source: raw.cell_id, atom_type: str}
+        - {name: target_polarization, source: raw.target_polarization, atom_type: str}
+        - {name: jump_present, source: raw.jump_present, atom_type: bool}
+        - {name: method_id, source: raw.method_id, atom_type: str}
+        - {name: canonical_owner_fixture_id, source: literal.B04_K1, atom_type: str}
+        omitted:
+        - fixture_id
+        canonical_owner_fixture_id: B04_K1
+        cardinality: nine_fixture_rows_to_one_logical_id
+      S2_on:
+        exact_binding_kind: LOGICAL_COMPUTATION_ID
+        table: s2_method
+        consumer_pk_fields:
+        - {name: record_type, source: raw.record_type, atom_type: str}
+        - {name: seed, source: raw.seed, atom_type: int}
+        - {name: cell_id, source: raw.cell_id, atom_type: str}
+        - {name: target_polarization, source: raw.target_polarization, atom_type: str}
+        - {name: fixture_id, source: raw.fixture_id, atom_type: str}
+        - {name: jump_present, source: raw.jump_present, atom_type: bool}
+        - {name: method_id, source: raw.method_id, atom_type: str}
+        phase_rule: {kind: literal, value: S2}
+        operation_rule:
+          kind: enum_map
+          source: raw.method_id
+          values:
+            GLOBAL_FOUR_ROTATION_DECODER_SELECTION: B1_DECODE
+            OFC17_16QAM_EXTFRAME_V1: B2_DECODE
+            TRUTH_BOUNDARY_ROTATION_CORRECTION: O1_DECODE
+        work_key_kind: S2_ON_METHOD_DECODE
+        work_key_order:
+        - seed
+        - cell_id
+        - target_polarization
+        - fixture_id
+        - jump_present
+        - method_id
+        work_key_fields:
+        - {name: seed, source: raw.seed, atom_type: int}
+        - {name: cell_id, source: raw.cell_id, atom_type: str}
+        - {name: target_polarization, source: raw.target_polarization, atom_type: str}
+        - {name: fixture_id, source: raw.fixture_id, atom_type: str}
+        - {name: jump_present, source: raw.jump_present, atom_type: bool}
+        - {name: method_id, source: raw.method_id, atom_type: str}
+        preserved:
+        - fixture_id
+        - method_id
+      S3:
+        exact_binding_kind: LOGICAL_COMPUTATION_ID
+        table: s3_candidate
+        consumer_pk_fields:
+        - {name: record_type, source: raw.record_type, atom_type: str}
+        - {name: seed, source: raw.seed, atom_type: int}
+        - {name: cell_id, source: raw.cell_id, atom_type: str}
+        - {name: target_polarization, source: raw.target_polarization, atom_type: str}
+        - {name: fixture_id, source: raw.fixture_id, atom_type: str}
+        - {name: candidate_id, source: raw.candidate_id, atom_type: str}
+        phase_rule:
+          kind: enum_map
+          source: raw.record_type
+          values:
+            S3_CANDIDATE_DEV: S3_DEV
+            S3_CANDIDATE_TEST: S3_TEST
+        operation_rule: {kind: literal, value: CANDIDATE_DECODE}
+        work_key_kind: S3_CANDIDATE_DECODE
+        work_key_order:
+        - record_type_as_split
+        - seed
+        - cell_id
+        - target_polarization
+        - fixture_id
+        - candidate_id
+        work_key_fields:
+        - {name: record_type_as_split, source: raw.record_type, atom_type: str}
+        - {name: seed, source: raw.seed, atom_type: int}
+        - {name: cell_id, source: raw.cell_id, atom_type: str}
+        - {name: target_polarization, source: raw.target_polarization, atom_type: str}
+        - {name: fixture_id, source: raw.fixture_id, atom_type: str}
+        - {name: candidate_id, source: raw.candidate_id, atom_type: str}
+        preserved:
+        - split
+        - seed
+        - cell_id
+        - target_polarization
+        - fixture_id
+        - candidate_id
+      BPS:
+        exact_binding_kind: LOGICAL_COMPUTATION_ID
+        table: bps_dev_score
+        consumer_pk_fields:
+        - {name: record_type, source: raw.record_type, atom_type: str}
+        - {name: tuple_id, source: raw.tuple_id, atom_type: str}
+        - {name: B, source: raw.B, atom_type: int}
+        - {name: Nw, source: raw.Nw, atom_type: int}
+        - {name: seed, source: raw.seed, atom_type: int}
+        - {name: cell_id, source: raw.cell_id, atom_type: str}
+        - {name: polarization, source: raw.polarization, atom_type: str}
+        phase_rule: {kind: literal, value: BPS_DEV}
+        operation_rule: {kind: literal, value: B1_DECODE}
+        work_key_kind: BPS_DUAL_POL_SHARED
+        work_key_order:
+        - tuple_id
+        - B
+        - Nw
+        - seed
+        - cell_id
+        work_key_fields:
+        - {name: tuple_id, source: raw.tuple_id, atom_type: str}
+        - {name: B, source: raw.B, atom_type: int}
+        - {name: Nw, source: raw.Nw, atom_type: int}
+        - {name: seed, source: raw.seed, atom_type: int}
+        - {name: cell_id, source: raw.cell_id, atom_type: str}
+        omitted:
+        - polarization
+      B2_clean:
+        exact_binding_kind: LOGICAL_COMPUTATION_ID
+        table: b2_tuple_clean_dev
+        consumer_pk_fields:
+        - {name: record_type, source: raw.record_type, atom_type: str}
+        - {name: tuple_id, source: raw.tuple_id, atom_type: str}
+        - {name: seed, source: raw.seed, atom_type: int}
+        - {name: cell_id, source: raw.cell_id, atom_type: str}
+        - {name: polarization, source: raw.polarization, atom_type: str}
+        phase_rule: {kind: literal, value: B2_DEV}
+        operation_rule: {kind: literal, value: B2_DECODE}
+        work_key_kind: B2_CLEAN_DUAL_POL_SHARED
+        work_key_order:
+        - tuple_id
+        - seed
+        - cell_id
+        work_key_fields:
+        - {name: tuple_id, source: raw.tuple_id, atom_type: str}
+        - {name: seed, source: raw.seed, atom_type: int}
+        - {name: cell_id, source: raw.cell_id, atom_type: str}
+        omitted:
+        - polarization
+      B2_controlled:
+        exact_binding_kind: LOGICAL_COMPUTATION_ID
+        table: b2_tuple_controlled_dev
+        consumer_pk_fields:
+        - {name: record_type, source: raw.record_type, atom_type: str}
+        - {name: tuple_id, source: raw.tuple_id, atom_type: str}
+        - {name: seed, source: raw.seed, atom_type: int}
+        - {name: cell_id, source: raw.cell_id, atom_type: str}
+        - {name: target_polarization, source: raw.target_polarization, atom_type: str}
+        - {name: fixture_id, source: raw.fixture_id, atom_type: str}
+        - {name: row_polarization, source: raw.row_polarization, atom_type: str}
+        phase_rule: {kind: literal, value: B2_DEV}
+        operation_rule: {kind: literal, value: B2_DECODE}
+        work_key_kind: B2_CONTROLLED_DUAL_POL_SHARED
+        work_key_order:
+        - tuple_id
+        - seed
+        - cell_id
+        - target_polarization
+        - fixture_id
+        work_key_fields:
+        - {name: tuple_id, source: raw.tuple_id, atom_type: str}
+        - {name: seed, source: raw.seed, atom_type: int}
+        - {name: cell_id, source: raw.cell_id, atom_type: str}
+        - {name: target_polarization, source: raw.target_polarization, atom_type: str}
+        - {name: fixture_id, source: raw.fixture_id, atom_type: str}
+        omitted:
+        - row_polarization
+      HMM_chunk:
+        table: b2_hmm_grid_chunk
+        consumer_pk_order:
+        - record_type
+        - tuple_id
+        - p_s_index
+        - sigma_e2_index
+        - stratum_role
+        - cell_id
+        - polarization
+        - chunk_id
+        consumer_pk_fields:
+        - {name: record_type, source: raw.record_type, atom_type: str}
+        - {name: tuple_id, source: raw.tuple_id, atom_type: str}
+        - {name: p_s_index, source: raw.p_s_index, atom_type: int}
+        - {name: sigma_e2_index, source: raw.sigma_e2_index, atom_type: int}
+        - {name: stratum_role, source: raw.stratum_role, atom_type: str}
+        - {name: cell_id, source: raw.cell_id, atom_type: str}
+        - {name: polarization, source: raw.polarization, atom_type: str}
+        - {name: chunk_id, source: raw.chunk_id, atom_type: str}
+        binding: exact_typed_chunk_primary_key_to_computation_ids_manifest_sha256
+        reference:
+          kind: COMPUTATION_IDS_MANIFEST_SHA256
+          raw_field: computation_ids_manifest_sha256
+          payload_schema: coded_decoder_feedback.d0.computation_id_manifest.v1
+          rule: exact_typed_chunk_primary_key_equals_group_consumer_primary_key
+          logical_member_authority: hmm_authority.logical_computation
+      S4:
+        exact_binding_kind: LOGICAL_COMPUTATION_ID
+        table: s4_check
+        consumer_pk_fields:
+        - {name: record_type, source: raw.record_type, atom_type: str}
+        - {name: check_id, source: raw.check_id, atom_type: str}
+        phase_rule: {kind: literal, value: S4}
+        operation_rule: {kind: literal, value: OTHER_S4_CHECK}
+        work_key_kind: S4_STANDALONE_CHECK
+        work_key_fields:
+        - {name: check_id, source: raw.check_id, atom_type: str}
+        exact_check_ids:
+        - no_slip_noiseless_B0_B1_O1_identity
+        - all_rotation_boundary_noiseless_O1_zero_error
+        - mapping_rotation_truth_metamorphic_pass
+        - candidate_isolation_and_empty_decoder_state_pass
+        - all_scores_finite_and_deterministic
+        - no_truth_field_reaches_receiver_view
+        - diagnostic_cost_ledger_complete
+        binding: explicit_standalone_plan_per_exact_check_primary_key
+        implicit_or_prefixed_plan: forbidden
+    coverage:
+    - forward_every_consumer_has_exact_binding
+    - reverse_every_planned_logical_computation_has_expected_consumer_or_HMM_member
+    - no_orphan_no_extra_no_duplicate_binding
+    - same_phase_computation_exchange_is_rejected
+    - ledger_phase_operation_work_key_cache_source_and_content_are_exact
+    - source_and_CACHE_READ_content_are_equal
+    - ordinary_and_HMM_binding_targets_are_separate
+    - all_consumer_primary_key_descriptors_exact_typed_and_ordered
+    - all_ordinary_phase_operation_work_key_descriptors_exact
+    - S4_exact_check_id_set_and_order
+  runtime_content:
+    preexecution_identity_excludes:
+    - resolved_member_content_sha256
+    - exact_sum_numerator
+    - exact_sum_denominator_power2
+    content_root_payload_schema: coded_decoder_feedback.d0.hmm_runtime_aggregate_content.v1
+    binds:
+    - computation_ids_manifest_sha256
+    - ordered_resolved_member_content_sha256_with_ordinals
+    - normalized_nll_exact_sum_numerator_decimal
+    - normalized_nll_exact_sum_denominator_power2
+    - member_count
+    resolved_content_rule: CACHE_READ_uses_the_direct_EXECUTED_source_content_sha256_but_keeps_the_logical_binding
+    summation: lossless_binary64_to_exact_rational_sum_after_each_trajectory_is_normalized_by_pilot_count
+    ordinary_order_dependent_float_sum: forbidden
+    member_count_and_ordinals: must_exactly_match_both_preexecution_manifests
+    ordinary_decoder_hard_output:
+      payload_schema: coded_decoder_feedback.d0.decoder_hard_output.v1
+      store_record_schema: coded_decoder_feedback.d0.decoder_hard_output_store_record.v1
+      filename: decoder_hard_outputs.jsonl
+      typed_ref_factory: D0Codec.decode_fresh_binary_bits_immediately_canonicalized
+      arbitrary_hash_string_input: forbidden
+      record_sort: decoder_hard_output_sha256_lowercase_lexicographic
+      record_encoding: canonical_JSON_then_exact_LF_including_final_record
+      cardinality: distinct_referenced_decoder_hard_output_sha256
+      forward_FK: every_non_S4_consumer_output_root_exists_exactly_once
+      reverse_FK: every_store_root_is_referenced
+    ordinary_consumer_provenance:
+      payload_schema: coded_decoder_feedback.d0.ordinary_consumer_provenance.v1
+      store_record_schema: coded_decoder_feedback.d0.ordinary_consumer_provenance_store_record.v1
+      filename: ordinary_consumer_provenance.jsonl
+      one_record_per_logical_computation_id: true
+      record_sort: logical_computation_id_lowercase_lexicographic
+      record_encoding: canonical_JSON_then_exact_LF_including_final_record
+      entry_ordinals: zero_based_contiguous_in_exact_group_order
+      output_forbidden_fields: [consumer_primary_key, receipt, truth, cost, ledger, provenance_root]
+      groups:
+        S2_off:
+          entry_order: [B04_K1, B04_K2, B04_K3, B08_K1, B08_K2, B08_K3, B12_K1, B12_K2, B12_K3]
+          B04_K1: {cache_status: EXECUTED, source_computation_id: null, source_consumer_primary_key: null}
+          other_eight: direct_CACHE_READ_to_same_logical_id_B04_K1_PK
+        S2_on: {entry_order: singleton, cache_status: EXECUTED}
+        S3: {entry_order: singleton, cache_status: EXECUTED}
+        BPS:
+          entry_order: [X, Y]
+          M3_N100: direct_CACHE_READ_to_M2_N100_same_polarization
+          all_other_tuples: EXECUTED
+        B2_clean: {entry_order: [X, Y], cache_status: EXECUTED}
+        B2_controlled:
+          entry_order: [TARGET_INCLUDED, SENTINEL_EXCLUDED]
+          TARGET_INCLUDED: {row_relation: row_polarization_equals_target_polarization, cache_status: EXECUTED}
+          SENTINEL_EXCLUDED: {row_relation: row_polarization_is_opposite_target_polarization, cache_status: CACHE_READ, direct_source: same_tuple_seed_cell_row_polarization_B2_clean_PK}
+        S4: {entry_order: singleton, cache_status: EXECUTED}
+      source_gate:
+        direction: CACHE_READ_consumer_to_direct_EXECUTED_source
+        source_leaf: EXECUTED_with_both_source_fields_null
+        source_computation_id_and_consumer_primary_key: exact
+        consumer_output: canonical_deep_equal_to_source_output
+        cache_chain: forbidden
+    ordinary_aggregate_ledger:
+      row_per_logical_computation_id: exactly_one
+      any_entry_EXECUTED: {cache_status: EXECUTED, source_computation_id: null}
+      all_entries_CACHE_READ_one_unique_source: {cache_status: CACHE_READ, source_computation_id: unique_source}
+      mixed_or_multiple_cache_sources_without_execution: reject
+      content_sha256: ordinary_consumer_provenance_payload_root
+      HMM_path: separate_manifest_without_this_sidecar
+    ordinary_static_counts:
+      manifests_and_ledger_rows: 27487
+      entries: 42967
+      executed_entries: 30247
+      cache_read_entries: 12720
+      cache_edges: {S2_off: 480, BPS_M3_N100: 1440, B2_controlled_sentinel: 10800, total: 12720}
+      groups: {singleton: 12427, nine_entry: 60, two_entry: 15000}
+      group_equation: 12427_plus_60_times_9_plus_15000_times_2_equals_42967
+      aggregate_ledger: {EXECUTED: 26767, CACHE_READ: 720, total: 27487}
+      ordinary_plus_HMM_total_ledger_rows: 50287
+      non_S4_entries_with_hard_output_FK: 42960
+    ordinary_sidecars:
+      required_files: [decoder_hard_outputs.jsonl, ordinary_consumer_provenance.jsonl]
+      final_receipt_required_hash_fields: [decoder_hard_outputs_sha256, ordinary_consumer_provenance_sha256]
+      final_receipt_also_binds: [owner_sha256, source_bundle_sha256, code_bundle_sha256, dev_freeze_sha256, seed_manifest_sha256, every_raw_file_sha256, computation_ledger_sha256]
+      provenance_forward_reverse: all_42967_consumer_PKs_exactly_once_no_orphan
+      hard_output_forward_reverse: all_42960_non_S4_entries_resolve_and_no_store_orphan
+    ordinary_write_anchor:
+      exact_order: [hard_output_temp, provenance_raw_ledger_temp, full_bundle_validation, unified_atomic_publish, final_receipt]
+      partial_publish: forbidden
+      partial_artifact_cannot_be_FULL: true
+  golden_vectors:
+    canonical_encoder: canonical_serialization_above
+    shared_hmm_inputs:
+      cell_id: snr_10db__linewidth_10000hz
+      seeds:
+        first: 8000
+        last: 8009
+      fixture_order:
+      - B04_K1
+      - B04_K2
+      - B04_K3
+      - B08_K1
+      - B08_K2
+      - B08_K3
+      - B12_K1
+      - B12_K2
+      - B12_K3
+      p_s:
+        index: 0
+        float64_hex: 0x0.0p+0
+      sigma_e2:
+        index: 0
+        float64_hex: 0x0.0p+0
+      member_and_binding_generation: use_hmm_authority_exact_PK_axis_order_logical_identity_and_direct_source_rules
+    grid_commitments:
+      p_s_sha256: bfc3cef2c8e6fc800b6a40f9da778ab98b666ec57e5e12ae1f0c8b9f25b78864
+      sigma_e2_sha256: 0f37cdf467a04283bbf03792c5654545947ce759c052ed11e98c20c2618401ca
+      combined_sha256: 0cdb5e547e31997cd931a97f97f681ff5eeae28c372810eb12f593f4dca99fdf
+      p_s_anchors:
+        0: 0x0.0p+0
+        1: 0x1.ad7f29abcaf48p-24
+        61: 0x1.a36e2eb1c432dp-14
+        121: 0x1.999999999999ap-4
+    clean10:
+      inputs:
+        tuple_id: M2_N100
+        role: CLEAN_INCLUDED
+        polarization: X
+        pilot_count: 64
+        members: 10_seeds_in_order
+        cache_status: EXECUTED
+      chunk_id: hmmg1-ef75e1c081e29d33adf328a333cc269c46b58698e81f1e90ca41589d80915da0
+      member_key_manifest_sha256: 28ec8468b13e959c80bdd07fd7b4a3fbd62064ce873d43b779e5c7a90a80b445
+      computation_ids_manifest_sha256: d6efb6ebf5f4ac5765c2a118f6af17dcbe1cb104a537935584df63cbcab3c1c7
+      first_logical_computation_id: d0c1-b7c6e86ec95ae755ded80a401bb02d8437ee8f48efb3710336209a5a60762d54
+    target90:
+      inputs:
+        tuple_id: M2_N100
+        role: CONTROLLED_TARGET_INCLUDED
+        polarization: X
+        pilot_count: 64
+        members: seed_then_fixture_owner_legal_order
+        cache_status: EXECUTED
+      chunk_id: hmmg1-5ef6ab9a3614fb1f211a8a9b18d5ef6f5f18b5290eb9a7b1cc254b82f9ead906
+      member_key_manifest_sha256: ec280254d60d1f163628a30de21b9bdd74adb019b9a9ae971968d0367a4de648
+      computation_ids_manifest_sha256: 4721d075fea7694197385ef5d184a21da09891ec2ad1cf7d98229282e20879e9
+      first_logical_computation_id: d0c1-c48d9f290f7e563c3bfa544a95cbd3009ad3b2ae171acc204d0e9c4e6e69ec86
+    sentinel90_to_clean:
+      inputs:
+        tuple_id: M2_N100
+        role: CONTROLLED_SENTINEL_EXCLUDED
+        polarization: Y
+        target_polarization: X
+        pilot_count: 64
+        members: seed_then_fixture_owner_legal_order
+        cache_status: CACHE_READ
+        direct_source: same_tuple_seed_cell_row_pol_CLEAN_INCLUDED
+      chunk_id: hmmg1-e3cd9e98ff368516a97264e7d587028a31a6c8a744c98ea1f789e52b5109f84d
+      member_key_manifest_sha256: 3960d6a79f4f27112d9cdbbe66eb8051d7cae50ae5e29e33929948a0102e2514
+      computation_ids_manifest_sha256: 25aaaa4e27eb87cde8410a00b8a024660aada636830748411283222106594dd7
+      first_logical_computation_id: d0c1-f19c58642469f83d4411c5361ea649242d8f67f2ec91a9ac50d90e808c0da227
+      first_source_computation_id: d0c1-25bb03a6b39535beecce8bcd29b93aff1ab7208d90acdcba6bfbc9601ce338e1
+    M3_N100_direct_to_M2:
+      inputs:
+        tuple_id: M3_N100
+        role: CLEAN_INCLUDED
+        polarization: X
+        pilot_count: 64
+        members: 10_seeds_in_order
+        cache_status: CACHE_READ
+        direct_source: corresponding_M2_N100_CLEAN_INCLUDED_EXECUTED
+      chunk_id: hmmg1-3971674a9bde6883f225236dd4a3ec9c1e7f0b2226565194c2dff589b2867eda
+      member_key_manifest_sha256: 72d5c53f1afc89fb8b3db4d2d2ce44d0066751f1c5ec8b1a99cd543d8c68b5fd
+      computation_ids_manifest_sha256: 0e204f9bebdf4dc4664058540bbb054c0a88ef6e574f10d6b29584aff5169eef
+      first_logical_computation_id: d0c1-11759e3ff29100d56b54dcf5c88091a4bd7198eb4847aaa0fffd43ebfc07ff0b
+      first_source_computation_id: d0c1-b7c6e86ec95ae755ded80a401bb02d8437ee8f48efb3710336209a5a60762d54
+    S2_off_nine_to_one:
+      inputs:
+        binding_kind: LOGICAL_COMPUTATION_ID
+        seed: 8150
+        cell_id: hard
+        target_polarization: X
+        jump_present: false
+        method_id: GLOBAL_FOUR_ROTATION_DECODER_SELECTION
+        consumer_fixtures: all_nine_in_owner_order
+        projected_owner_fixture_id: B04_K1
+      shared_logical_computation_id: d0c1-c9cedfe83204c8f37286e0f8b81d1bb35ed21bf22d9ff36a69191c157dc1197c
+      consumer_binding_manifest_sha256: ed1a72137f1b0bea3208ed46f482206c88ba101bc718cc69faec9246c58607b6
+      consumer_count: 9
+      unique_logical_id_count: 1
+    BPS_dual_pol_shared:
+      inputs:
+        binding_kind: LOGICAL_COMPUTATION_ID
+        tuple_id: M2_N100
+        B: 32
+        Nw: 31
+        seed: 8000
+        cell_id: snr_10db__linewidth_10000hz
+        consumer_polarizations:
+        - X
+        - Y
+      shared_logical_computation_id: d0c1-35432848c9e7397e0ba59c5e816b7d2c7764dc403856fb692589a2305444e1cb
+      consumer_binding_manifest_sha256: 51d43e149ceaa6467b97d94b6e7631591d1e049546d2ace03c1b2228f27c0a1f
+      consumer_count: 2
+      unique_logical_id_count: 1
+    runtime_clean10_synthetic_exact_sum:
+      inputs:
+        computation_ids_manifest_sha256: d6efb6ebf5f4ac5765c2a118f6af17dcbe1cb104a537935584df63cbcab3c1c7
+        resolved_content_rule: sha256_UTF8_of_resolved-member-content-v1_colon_ordinal_for_ordinals_0_through_9
+        normalized_nll_exact_sum_numerator_decimal: '123456789'
+        normalized_nll_exact_sum_denominator_power2: 42
+        member_count: 10
+      first_resolved_content_sha256: e73fa9f65f96c38fc9478db0d0e1019e224066e4de5eacae2201a3f6d4d3100e
+      last_resolved_content_sha256: 38bb47dc149b706f6ce9251bcfac52c35f82d1081a216017e8d5a3c1b81656c1
+      content_sha256: 9cf9e195032aea53840d164ac36c7c455cfcf997202867c0e6d38864a5b1a0c2
+    ordinary_hard_output_zero:
+      inputs:
+        canonical_payload_json: '{"bit_packing":"CW_MAJOR_MSB_FIRST_RFC4648_BASE64","cw_count":16,"cw_order":"TRANSMITTED_CW_INDEX_0_THROUGH_15","decoded_information_bits_base64":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=","information_bits_per_cw":1024,"schema":"coded_decoder_feedback.d0.decoder_hard_output.v1"}'
+      decoder_hard_output_sha256: 1c04a714a23a42c1d32f0b1bab3c1ff5469b5c1f2183f57c3afcaf5407299960
+    ordinary_hard_output_first_bit:
+      inputs:
+        canonical_payload_json: '{"bit_packing":"CW_MAJOR_MSB_FIRST_RFC4648_BASE64","cw_count":16,"cw_order":"TRANSMITTED_CW_INDEX_0_THROUGH_15","decoded_information_bits_base64":"gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=","information_bits_per_cw":1024,"schema":"coded_decoder_feedback.d0.decoder_hard_output.v1"}'
+      decoder_hard_output_sha256: 9668fc189c6a3678df8b88d3a1effa221d4fa2968d5e884e6a8f85c36e837a0e
+    ordinary_S2_off_nine_to_one:
+      inputs:
+        raw_shared: {record_type: S2_METHOD, seed: 8150, cell_id: hard, target_polarization: X, jump_present: false, method_id: GLOBAL_FOUR_ROTATION_DECODER_SELECTION}
+        fixture_entry_order: [B04_K1, B04_K2, B04_K3, B08_K1, B08_K2, B08_K3, B12_K1, B12_K2, B12_K3]
+        logical_computation_id: d0c1-c9cedfe83204c8f37286e0f8b81d1bb35ed21bf22d9ff36a69191c157dc1197c
+        entry_statuses: [EXECUTED, CACHE_READ, CACHE_READ, CACHE_READ, CACHE_READ, CACHE_READ, CACHE_READ, CACHE_READ, CACHE_READ]
+        cache_source_consumer_fixture: [null, B04_K1, B04_K1, B04_K1, B04_K1, B04_K1, B04_K1, B04_K1, B04_K1]
+        consumer_output: {schema: coded_decoder_feedback.d0.consumer_output.s2_off.v1, decoder_hard_output_sha256: 1c04a714a23a42c1d32f0b1bab3c1ff5469b5c1f2183f57c3afcaf5407299960}
+      ordinary_consumer_provenance_manifest_sha256: e8ca16c947e87e35313907beb207fb1d0f913955f60279dff24b07c505f0ee06
+    ordinary_S2_on_singleton:
+      inputs:
+        raw: {record_type: S2_METHOD, seed: 8150, cell_id: hard, target_polarization: X, fixture_id: B04_K1, jump_present: true, method_id: GLOBAL_FOUR_ROTATION_DECODER_SELECTION}
+        logical_computation_id: d0c1-bc7a3fa786ae125635dde06ae2987ebb9ab9936ea31522ad3acac44f50e113bb
+        entry_statuses: [EXECUTED]
+        consumer_output: {schema: coded_decoder_feedback.d0.consumer_output.s2_on.v1, decoder_hard_output_sha256: 1c04a714a23a42c1d32f0b1bab3c1ff5469b5c1f2183f57c3afcaf5407299960}
+      ordinary_consumer_provenance_manifest_sha256: ee5f608c2a166fa2859c1db4badd4262376de7080d27c54e0eea37f8ce83e71a
+    ordinary_S3_singleton:
+      inputs:
+        raw: {record_type: S3_CANDIDATE_DEV, seed: 8050, cell_id: hard, target_polarization: X, fixture_id: B04_K1, candidate_id: NOOP}
+        logical_computation_id: d0c1-42693a3970da884f507e8ab1a38233976978d326ef7e03cf07dc0c46a4451794
+        entry_statuses: [EXECUTED]
+        consumer_output: {schema: coded_decoder_feedback.d0.consumer_output.s3.v1, decoder_hard_output_sha256: 1c04a714a23a42c1d32f0b1bab3c1ff5469b5c1f2183f57c3afcaf5407299960, pilot_score_float64_hex: 0x0.0p+0, decoder_score_float64_hex: 0x0.0p+0}
+      ordinary_consumer_provenance_manifest_sha256: 8caf721a1f822b2beccab3e44c060a1c076fa1be05c47dc49e72af5ec388e61d
+    ordinary_BPS_M2_source:
+      inputs:
+        raw_shared: {record_type: BPS_DEV_SCORE, tuple_id: M2_N100, B: 32, Nw: 31, seed: 8000, cell_id: snr_10db__linewidth_10000hz}
+        polarization_entry_order: [X, Y]
+        logical_computation_id: d0c1-35432848c9e7397e0ba59c5e816b7d2c7764dc403856fb692589a2305444e1cb
+        entry_statuses: [EXECUTED, EXECUTED]
+        output_hardroots: [1c04a714a23a42c1d32f0b1bab3c1ff5469b5c1f2183f57c3afcaf5407299960, 9668fc189c6a3678df8b88d3a1effa221d4fa2968d5e884e6a8f85c36e837a0e]
+        output_shared: {schema: coded_decoder_feedback.d0.consumer_output.bps.v1, selected_global_rotation_k: 0, selected_normalized_reencode_nll_float64_hex: 0x0.0p+0}
+      ordinary_consumer_provenance_manifest_sha256: bb50e568db252417ec5542136f5ea8280edd816dee2c065e3c49d32228460145
+    ordinary_BPS_M3_cache:
+      inputs:
+        raw_shared: {record_type: BPS_DEV_SCORE, tuple_id: M3_N100, B: 32, Nw: 31, seed: 8000, cell_id: snr_10db__linewidth_10000hz}
+        polarization_entry_order: [X, Y]
+        logical_computation_id: d0c1-7703ccf594fb2612e265b2f91204f437a8ce3bb87f97667e0f634b236839f797
+        entry_statuses: [CACHE_READ, CACHE_READ]
+        source_logical_computation_id: d0c1-35432848c9e7397e0ba59c5e816b7d2c7764dc403856fb692589a2305444e1cb
+        source_raw_tuple_id: M2_N100
+        source_polarization_order: [X, Y]
+        output_hardroots: [1c04a714a23a42c1d32f0b1bab3c1ff5469b5c1f2183f57c3afcaf5407299960, 9668fc189c6a3678df8b88d3a1effa221d4fa2968d5e884e6a8f85c36e837a0e]
+        output_shared: {schema: coded_decoder_feedback.d0.consumer_output.bps.v1, selected_global_rotation_k: 0, selected_normalized_reencode_nll_float64_hex: 0x0.0p+0}
+      ordinary_consumer_provenance_manifest_sha256: 580d6d10ced5455e48945c57c109e2345e3281678943b55c514fa8d8fd4670bd
+    ordinary_B2_clean:
+      inputs:
+        raw_shared: {record_type: B2_TUPLE_CLEAN_DEV, tuple_id: M2_N100, seed: 8000, cell_id: snr_10db__linewidth_10000hz}
+        polarization_entry_order: [X, Y]
+        logical_computation_id: d0c1-8f3f427b58e7b955a479f5364d3dd41dd2adde5e11fffff0730a8145bfdefd76
+        entry_statuses: [EXECUTED, EXECUTED]
+        output_schema: coded_decoder_feedback.d0.consumer_output.b2_clean.v1
+        output_hardroots: [1c04a714a23a42c1d32f0b1bab3c1ff5469b5c1f2183f57c3afcaf5407299960, 9668fc189c6a3678df8b88d3a1effa221d4fa2968d5e884e6a8f85c36e837a0e]
+      ordinary_consumer_provenance_manifest_sha256: 5ab4e4d9b4dd7e249a8eb6ee6a2608de1e76d7dff1ef36cb74df11c81c3cba18
+    ordinary_B2_controlled_target_and_sentinel:
+      inputs:
+        raw_shared: {record_type: B2_TUPLE_CONTROLLED_DEV, tuple_id: M2_N100, seed: 8000, cell_id: snr_10db__linewidth_10000hz, target_polarization: X, fixture_id: B04_K1}
+        entry_order: [TARGET_INCLUDED, SENTINEL_EXCLUDED]
+        row_polarization_order: [X, Y]
+        logical_computation_id: d0c1-90218d05d733f0813ee9f5cd068c59af07c06d3ef970bb058673e860e24034ba
+        entry_statuses: [EXECUTED, CACHE_READ]
+        source_logical_computation_ids: [null, d0c1-8f3f427b58e7b955a479f5364d3dd41dd2adde5e11fffff0730a8145bfdefd76]
+        sentinel_source_raw: {record_type: B2_TUPLE_CLEAN_DEV, tuple_id: M2_N100, seed: 8000, cell_id: snr_10db__linewidth_10000hz, polarization: Y}
+        output_schema: coded_decoder_feedback.d0.consumer_output.b2_controlled.v1
+        output_hardroots: [1c04a714a23a42c1d32f0b1bab3c1ff5469b5c1f2183f57c3afcaf5407299960, 9668fc189c6a3678df8b88d3a1effa221d4fa2968d5e884e6a8f85c36e837a0e]
+      ordinary_consumer_provenance_manifest_sha256: 25966bd9ae311efd0b7c22aa90965f7b9833877c92da7dfccda075282d7dc553
+    ordinary_S4_singleton:
+      inputs:
+        raw: {record_type: S4_CHECK, check_id: no_slip_noiseless_B0_B1_O1_identity}
+        logical_computation_id: d0c1-3a242617007121cf1e2e7b5f4a34d8330525b42236eb6b5f7ef8d5da5511ffe7
+        entry_statuses: [EXECUTED]
+        consumer_output: {schema: coded_decoder_feedback.d0.consumer_output.s4.v1, tested_instances: 1, failed_instances: 0, passed: true, evidence_sha256: 69b9dd696310d530323e4e23dc50c4f98663f3f0c8cbc490e795717f8ed164f7}
+      ordinary_consumer_provenance_manifest_sha256: cbe018c55b8d850546ae7ac5e2ff239dabacff168c2f134404db956daa1dccc5
+  validator_obligations:
+    required:
+    - strict_duplicate_key_yaml_parse
+    - exact_top_level_schema_decision_and_scientific_change
+    - exact_canonical_serialization_options_and_no_trailing_newline
+    - typed_atom_exact_fields_types_and_value_semantics
+    - identity_payloads_contain_no_JSON_float
+    - all_122_p_s_literals_indexed_canonical_unique_strictly_increasing
+    - all_6_sigma_literals_indexed_canonical_unique_strictly_increasing
+    - positive_zero_and_no_negative_zero
+    - all_four_p_s_anchors_exact
+    - standalone_grid_payloads_and_roots_exact
+    - combined_payload_nested_deep_equal_and_root_exact
+    - all_payload_domain_versions_and_field_orders_exact
+    - all_hashes_lowercase_SHA256_of_canonical_bytes
+    - chunk_group_envelope_and_chunk_id_recompute_exact
+    - clean_target_sentinel_member_orders_and_counts_exact
+    - member_ordinals_multiplicity_unique_exact_set
+    - member_and_computation_manifest_roots_recomputed
+    - logical_computation_identity_is_full_grid_per_pol_trajectory
+    - chunk_receipt_has_no_cost_bearing_group_ledger_row
+    - no_parameter_pair_ledger_rows
+    - all_six_count_formulas_exact
+    - X_pair_charge_732_Y_zero_and_XY_pairs_complete
+    - every_logical_trajectory_primitive_count_732
+    - materialized_primitive_counts_only_EXECUTED
+    - M2_N100_is_canonical_executed_owner
+    - M3_N100_direct_sources_M2_N100
+    - sentinel_direct_sources_normalized_clean_EXECUTED
+    - M3_N100_sentinel_direct_sources_M2_N100_clean
+    - source_exists_is_EXECUTED_has_null_source_and_matching_content
+    - cache_chain_forbidden_and_logical_id_preserved
+    - cross_M_reuse_limited_to_content_identical_waveform_BPS_HMM
+    - cross_M_downstream_B2_decode_reuse_forbidden
+    - all_consumer_projection_field_orders_exact
+    - S2_off_nine_to_one_and_B04_owner_exact
+    - S2_on_fixture_method_preserved
+    - S3_split_seed_cell_target_fixture_candidate_preserved
+    - BPS_polarization_omitted_and_XY_shared
+    - B2_clean_polarization_omitted
+    - B2_controlled_row_polarization_omitted
+    - HMM_chunk_exact_PK_maps_manifest_root
+    - S4_only_explicit_standalone_plan
+    - ordinary_consumer_identity_rules_and_typed_descriptors_exact
+    - HMM_chunk_manifest_reference_exact_and_not_logical_id_binding
+    - S4_exact_check_id_set_and_order
+    - forward_reverse_coverage_no_orphan_extra_duplicate
+    - same_phase_computation_exchange_rejected
+    - preexecution_identity_excludes_runtime_content
+    - runtime_content_root_manifest_ordered_content_exact_sum_and_count_exact
+    - ordinary_order_dependent_float_sum_forbidden
+    - all_golden_vectors_recomputed_from_saved_inputs
+    - scientific_projection_deep_equal_after_removing_this_block
+    - hard_output_bits_base64_roundtrip_exact
+    - hard_output_store_root_and_bidirectional_FK
+    - consumer_output_variant_exact
+    - provenance_entry_order_and_ordinals_exact
+    - ordinary_cache_source_direction_PK_leaf_and_content_exact
+    - ordinary_manifest_root_recomputed_after_mutation
+    - ordinary_group_source_rules_and_static_counts_exact
+    - ordinary_aggregate_ledger_status_source_and_content_root_exact
+    - ordinary_sidecars_bundle_write_anchor_and_receipt_exact
+    - partial_artifact_cannot_masquerade_as_FULL
+    reject_mutations:
+    - equal_count_member_replacement
+    - member_duplicate_or_omission
+    - member_ordinal_exchange
+    - group_role_cell_polarization_or_grid_exchange
+    - p_s_or_sigma_index_hex_exchange
+    - source_direction_reversal
+    - CACHE_READ_to_CACHE_READ_chain
+    - source_or_cache_content_mismatch
+    - logical_computation_id_replaced_by_source_id
+    - same_phase_consumer_computation_exchange
+    - public_digest_or_coverage_recomputed_after_forgery
+    - extra_or_missing_HMM_logical_computation
+    - ordinary_binding_kind_mutation
+    - ordinary_phase_map_mutation
+    - ordinary_operation_map_mutation
+    - ordinary_work_key_kind_mutation
+    - ordinary_same_type_source_swap
+    - ordinary_atom_type_drift
+    - S2_off_B04_literal_mutation
+    - ordinary_consumer_PK_order_mutation
+    - ordinary_consumer_PK_atom_mutation
+    - S4_check_id_order_or_substitution
+    - HMM_reference_kind_mutation
+    - HMM_reference_raw_field_mutation
+    - HMM_reference_payload_schema_mutation
+    - hard_output_bit_or_base64_mutation
+    - hard_output_store_orphan_or_extra
+    - hard_output_store_root_reseal_after_payload_mutation
+    - consumer_output_variant_mutation
+    - consumer_output_forbidden_metadata_injection
+    - provenance_entry_order_or_ordinal_mutation
+    - provenance_entry_duplicate_or_omission
+    - ordinary_cache_status_source_or_chain_mutation
+    - ordinary_source_consumer_primary_key_mutation
+    - ordinary_source_direction_reversal
+    - ordinary_source_leaf_or_output_equality_mutation
+    - ordinary_S2_off_B04_source_mutation
+    - ordinary_BPS_M3_same_polarization_source_mutation
+    - ordinary_B2_controlled_target_sentinel_order_mutation
+    - ordinary_B2_controlled_clean_source_PK_mutation
+    - ordinary_aggregate_status_or_unique_source_mutation
+    - ordinary_aggregate_content_root_mutation
+    - ordinary_manifest_reseal_after_forgery
+    - ordinary_static_count_mutation
+    - ordinary_sidecar_bundle_receipt_or_partial_FULL_mutation
+    failure_policy: fail_closed_before_artifact_write_or_scientific_execution
+
+strata:
+  S1_natural_occurrence:
+    injection: none
+    first_stage_frames: 240
+    maximum_dual_pol_frames: 600
+    maximum_polarization_trajectories: 1200
+    methods_before_event_filter: common_cpr_only
+    gate:
+      event_polarization_trajectories_min: 12
+      distinct_seed_clusters_min: 4
+      distinct_physical_cells_min: 2
+    uncertainty: seed_cluster_bootstrap_rate_reported_descriptively_not_used_for_gate
+    fail: NATURAL_DEFECT_NOT_ESTABLISHED
+
+  S2_controlled_damage_recoverability_absorption:
+    seeds: controlled_damage_recovery
+    base_seed_cell_target_pol_clusters: 60
+    injected_cases_per_cluster: 9
+    maximum_injected_cases: 540
+    cached_no_jump_twins: 60
+    natural_rows_used: false
+    damage_estimand: macro_mean_acwer_B1_on_minus_B1_off
+    damage_gate:
+      point_min: 0.10
+      lower_ci_gt: 0
+      positive_cell_points_min: 2
+      fail: ZERO_PRACTICAL_CODED_DAMAGE
+    recoverability_estimand: ratio_of_sums_errors_B1_on_minus_O1_on_over_errors_B1_on
+    recoverability_gate:
+      point_min: 0.10
+      lower_ci_gt: 0
+      positive_cell_points_min: 2
+      fail: ZERO_RECOVERABLE_HEADROOM
+    b2_absorption_gate:
+      kill_if_coverage_lower_ci_gte: 0.95
+      nonabsorbed_if_coverage_upper_ci_lt: 0.90
+      grey_zone: >-
+        Continue only with a pre-frozen later signal of at least 5 percent net
+        goodput or at least 25 percent calls/latency at noninferior FER; otherwise Kill.
+
+  S3_controlled_observability:
+    dev_seeds: observability_fusion_dev
+    test_seeds: controlled_observability
+    candidates: 3_boundaries_times_3_rotations_plus_noop
+    candidate_count: 10
+    test_cases: 540
+    full_restart_cw_decodes_per_case: 88
+    maximum_test_cw_decodes: 47520
+    pilot_only_score: >-
+      For candidate c, define its no-op or one-transition four-state path over
+      the ten registered actions. Sum known-pilot log emissions plus the
+      log transition probabilities T(q)^distance between consecutive pilots,
+      then divide by the number of pilot observations. Higher is better.
+    decoder_score: >-
+      Negative of (changed-CW re-encode NLL plus cached unchanged-CW NLL)
+      divided by the same total evaluated coded bits for every candidate.
+      Higher is better; raw touched-CW sums are forbidden.
+    fusion:
+      formula: pilot_score_plus_lambda_times_decoder_score
+      lambda_grid: [0.25, 0.5, 1, 2, 4]
+      lambda_selected_on_dev_only: true
+      dev_aggregation: compute_MRR_and_top1_per_cell_then_equal_weight_the_three_cells
+      dev_objective_lexicographic:
+        - maximize_fused_macro_mean_reciprocal_rank
+        - maximize_fused_macro_top1_rate
+        - choose_smaller_lambda
+      output: exactly_one_lambda_before_test
+    deterministic_rank_tie_break: [noop, earlier_boundary, lower_rotation_k]
+    unknown_data_maxlog_score:
+      role: analytic_symmetry_null_only
+      acceptance_role: none
+    absolute_gate:
+      combined_top1_point_min: 0.25
+      combined_top1_lower_ci_gt: 0.10
+    incremental_gate:
+      combined_minus_pilot_mean_mrr_point_min: 0.10
+      combined_minus_pilot_mean_mrr_lower_ci_gt: 0
+      positive_cell_points_min: 2
+    fail: NO_DECODER_INFORMATION_INCREMENT
+
+  S4_clean_diagnostic:
+    seeds: clean_diagnostic
+    trajectories: 60
+    applied_action_policy: none
+    required:
+      - no_slip_noiseless_B0_B1_O1_identity
+      - all_rotation_boundary_noiseless_O1_zero_error
+      - mapping_rotation_truth_metamorphic_pass
+      - candidate_isolation_and_empty_decoder_state_pass
+      - all_scores_finite_and_deterministic
+      - no_truth_field_reaches_receiver_view
+      - diagnostic_cost_ledger_complete
+    false_action_and_fallback_gate: moved_to_post_d0_after_c1_policy_freeze
+    fail: IDENTITY_INFORMATION_OR_COST_BLOCKER
+
+gate_conjunction:
+  pass_requires:
+    - S1_natural_occurrence
+    - S2_damage
+    - S2_recoverability
+    - S2_b2_nonabsorption_or_preregistered_grey_zone_signal
+    - S3_absolute_observability
+    - S3_incremental_observability
+    - S4_clean_diagnostic
+  pooling_across_strata_forbidden: true
+  pass_result: CONDITIONAL_ENTRY_TO_POST_D0_C1_CONTRACT_ONLY
+  fail_result: C1_HARD_TERMINAL_WITH_NAMED_GATE
+
+post_d0_boundary:
+  only_after_new_decision:
+    - trigger_and_abstain_policy
+    - applied_local_suffix_action
+    - B1_or_B2_fallback
+    - clean_false_action_and_goodput_gate
+    - localization_trigger_repair_ablations
+    - c1_dev_freeze
+    - fresh_heldout_fair_comparison
+  dev_and_heldout_must_use_seed_plan_above: true
+  soft_decoder_callback_or_message_state: out_of_minimum_route
+
+engineering_budget_days:
+  D0:
+    contract_source_and_asset_closure: 0.25
+    receiver_truth_views_and_carrier_realization: 0.75
+    B0_B1_O1_mapping_and_controlled_fixture: 0.50
+    source_explicit_B2_adaptation_and_dev_freeze: 2.00
+    strata_tests_statistics_and_cost_ledger: 0.50
+    bounded_runs_raw_rows_ci_and_receipts: 0.50
+    subtotal: 4.50
+  post_D0_C1:
+    hard_reencode_selector_trigger_local_action_and_fallback: 0.75
+    identity_truth_clean_safety_ablation_and_cost_tests: 0.50
+    disjoint_dev_freeze_heldout_run_ci_and_report: 0.75
+    subtotal: 2.00
+  base_total: 6.50
+  contingency:
+    days: 0.50
+    may_cover: any_underestimated_required_line_item
+    may_not_cover: deleting_identity_truth_safety_baseline_or_heldout_work
+  hard_ceiling_total: 7.00
+  blocker_if:
+    - common_carrier_or_b2_requires_source_native_reproduction_beyond_the_explicit_adaptation
+    - custom_unpruned_decoder_or_crc_is_required
+    - required_work_plus_consumed_contingency_exceeds_7_days
+    - shrink_would_remove_a_gate_or_complete_chain_identity
+  runtime_gate:
+    status: required_after_implementation_and_unit_gates_before_any_scientific_seed
+    class: bounded_non_scientific_engineering_throughput_benchmark
+    watchdog_minutes: 12
+    required_decoder_batch_cw_sizes: [4, 8, 12, 16]
+    required_slices:
+      - one_unique_waveform_all_six_BPS_grid_pairs
+      - one_B2_tuple_ten_unique_polarization_views
+      - one_HMM_grid_chunk_with_primitive_and_aggregate_units
+      - representative_atomic_JSONL_and_receipt_write
+    record: [device, dependency_versions, physical_api_invocations, logical_batches, cache_hits, wall_time, peak_memory, projected_full_D0_time]
+    allowed_adjustments: [vectorization, batch_size, content_addressed_cache, checkpoint_chunk_size]
+    forbidden_adjustments: [drop_seed, drop_cell, drop_tuple, drop_grid, drop_fixture, drop_candidate, change_gate, reuse_decoder_message_state]
+    pass: projected_required_work_plus_recorded_engineering_time_within_7_day_hard_ceiling
+    fail: GREATER_THAN_7D_HARD_BLOCKER
+  budget_class: BUDGET_RISK_REQUIRES_BOUNDED_BENCHMARK
+  greater_than_7d_hard_blocker_established: false
+  status: asset_preflight_verified_runtime_benchmark_pending

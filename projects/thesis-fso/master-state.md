@@ -1,11 +1,11 @@
 ---
 project: thesis-fso
 direction: 星地激光通信（FSO）——子地带由地勘（S003 方法论 Step 0）全景表分类后选定，不预设
-method_type: 待定（精读后根据问题方法产出形态确定，见 glossary 判据 2）
+method_type: reference-method extension（非 ML；完整 deployable action chain，最终形态待 Step 3/4a）
 domain: comms
 created: 2026-06-21
-updated: 2026-08-09
-current_step: GROUNDWORK_STEP1_CANDIDATE_SET_EXHAUSTED_VERIFIED（coded decoder-feedback）
+updated: 2026-08-11
+current_step: GROUNDWORK_STEP4A_D0_ENGINEERING_HARD_TERMINAL（coded decoder-feedback）
 current_stage: GROUNDWORK
 ---
 
@@ -35,16 +35,16 @@ current_stage: GROUNDWORK
 
 ### 当前控制面桥接
 
-> **2026-08-09 当前终态：coded decoder-feedback Groundwork Step 1 candidate-set exhausted / verified（D004/V002/H001/CP005）**。Integrated v2.1=93 annotated→66 unique、50/66 published、6 must-read、7 sources、R2 C1/C2=`2/2`；C1/C2 core action exact collision，replacement=0。local terminal=`STEP1_NO_METHOD_ACTION_SURVIVOR`，framework disposition=`STEP1_CANDIDATE_SET_EXHAUSTED`，`canonical_mapping=null`；因未进入 Step 2/3、未形成 canonical M-C-A Q#，problem disposition=`NOT_EVALUATED_NO_Q_FORMED`。T011 fresh verifier A/B/C/D 全 PASS、P0/P1/P2=`0/0/0`，最终复查 `00:04:08.356`；HEAD/staging 与 p05 4/4 保护边界无漂移。survivor=0、method delta/贡献=`NONE`；Step 2/3/3.5/4a、adapter、fair comparison、MVE、Contract、Execute、实验与论文方法声称均 `NOT_RUN / NOT_AUTHORIZED`。专题 closed；只有不同 carrier action 新证据加显式 scope change 可重开。权威入口为 `.sessions/2026-08-09-coded-decoder-feedback-groundwork/topic-index.md`。
+> **2026-08-11 正式终态：coded decoder-feedback C1 Step 4a D0 engineering hard terminal（D024/V019/CP013）**。I01–I19实现与独立审查已完成；I19D=`189 passed / P0/P1=0/0`，EB final=`36 passed`。正式I20仅运行一次，`incomplete_reasons=[]`，冻结owner workload投影D0=`10.819450931739858d > 7.0d`，终态=`GREATER_THAN_7D_HARD_BLOCKER`。D0 science、S1–S4、FAIR_COMPARISON_RUN均`NOT_RUN`，method signal=`NONE`；science/adapter/MVE/held-out/Contract/Execute全部关闭。
 
 | Coded decoder-feedback GW Step | 状态 | 证据 | 下游门控 |
 |---|---|---|---|
 | 0 recover / candidate converge | ✅ COMPLETE | S001/D001–D002/CP001–CP002；step-047–049；主控 source 核证 | C2/C1 两张机制不同预卡 |
-| 1 search | 🛑 CANDIDATE SET EXHAUSTED / VERIFIED | step-050–057；D003–D004/V001(PARTIAL)–V002(PASS)/H001；integrated v2.1=93→66、50 published；C1/C2 exact collision、replacement=0；T011 PASS | 不授权 Step 2；topic closed |
-| 2 acquire | ⬜ FORBIDDEN | D004 | Step 1 无 method-action survivor；problem 未评估 |
-| 3 read | ⬜ FORBIDDEN | — | Step 2 用户确认与全文获取未完成 |
-| 3.5 supplement | ⬜ FORBIDDEN | — | Step 3 Q# 未形成 |
-| 4a feasibility | ⬜ FORBIDDEN | — | Step 3/必要 3.5 未完成；不得建设 adapter |
+| 1 search | ✅ PASS / C1 REFERENCE BASELINE ENTRY | D003–D005/V002；integrated v2.1=93→66；C1 core action exact 但由 D005 降为 baseline M | 允许固定 shortlist Step 2；不重做 broad search |
+| 2 acquire | ✅ COMPLETE | D006/CP007；5 篇合格全文 + 2 unresolved；step2 coverage + step-058–065 | 允许 Step 3；全文债保留 claim ceiling |
+| 3 read | ✅ COMPLETE / Q1 4/4 | D008/CP009；TVT read note + step-066 | 允许 mandatory Step 3.5；不等于 defect 已成立 |
+| 3.5 supplement | ✅ COMPLETE / VERIFIED WITH LIMITS | D009/V003；step-067–083；supplement report | bounded-slice 非碰撞，不等于 defect/贡献成立 |
+| 4a feasibility | 🛑 D0 ENGINEERING HARD TERMINAL / VERIFIED | D024/V019/CP013；step-175–200；official I20 artifacts | projected D0 10.81945d > 7d；S1–S4与FAIR_COMPARISON_RUN NOT_RUN，无下游授权 |
 
 ### 上一 formal 轨迹（RML-FSTS，dormant）
 
