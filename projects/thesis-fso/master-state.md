@@ -5,7 +5,7 @@ method_type: reference-method extension（非 ML；完整 deployable action chai
 domain: comms
 created: 2026-06-21
 updated: 2026-08-11
-current_step: GROUNDWORK_STEP1_VERIFIED_READY_FOR_STEP2_CONFIRMATION（DSP-outage-aware multi-aperture combining）
+current_step: GROUNDWORK_STEP2_BLOCKED_CRITICAL_DIRECT_COMPETITOR_FULLTEXT（DSP-outage-aware multi-aperture combining）
 current_stage: GROUNDWORK
 ---
 
@@ -35,13 +35,13 @@ current_stage: GROUNDWORK
 
 ### 当前控制面桥接
 
-> **2026-08-11 新算法专题 GW Step 1（D001/R001/V001/H001）**。`2026-08-11-dsp-outage-aware-multi-aperture-combining` 已完成 6/6 query、两轮检索：169 rows→157 DOI/title unique，Semantic Scholar/OpenAlex/Tavily 三贡献源；27-entry semantic matrix 中 24 formal（88.89%）、8 must-read。hard SC/GSC/threshold admission 已归传统 comparator；ICCC 2022 已占宽泛 pilot-reliability soft MRC。最近 direct competitor 为 Optics Communications 2019 adaptive digital combining，其 trigger/weight 摘要未披露，exact collision=`UNRESOLVED`。第二个 fresh verifier=`PASS 0/0/0`，terminal=`STEP1_PASS_READY_FOR_STEP2_CONFIRMATION`，不代表 Q#/Go/METHOD_SIGNAL。Step 2 及以后均 `NOT_AUTHORIZED`。
+> **2026-08-11 新算法专题 GW Step 2（D002/R002/R003/V002/H002）**。Step 1 的 6/6 query、169→157 unique、27-entry matrix 与 direct competitor collision=`UNRESOLVED` 均保持。Step 2 对九篇冻结池完成 existing-asset audit 与三轮合法获取：qualified fulltext=`4/9`，其中 optical CORE=`2/5`；2019 Optics Communications direct competitor 为非 OA、无 arXiv/PDF URL且所有合法通道失败。fresh verifier=`PASS 0/0/0`，terminal=`STEP2_BLOCKED_CRITICAL_DIRECT_COMPETITOR_FULLTEXT`。本结论只处理 availability/identity/content quality，不代表 collision verdict 或后续科学门结论；Step 3 继续 `NOT_AUTHORIZED`，等待用户 coverage confirmation。
 
 | DSP-outage-aware multi-aperture GW Step | 状态 | 证据 | 下游门控 |
 |---|---|---|---|
-| 1 search | ✅ COMPLETE / VERIFIED | D001/R001/V001/H001 + q1–q6 JSON + receipt/matrix | 等待主控确认 Step 2 |
-| 2 acquire | ⬜ NOT_AUTHORIZED | — | 禁止下载/全文获取 |
-| 3 read | ⬜ NOT_AUTHORIZED | — | Step 2 未确认前禁止 |
+| 1 search | ✅ COMPLETE / VERIFIED | D001/R001/V001/H001 + q1–q6 JSON + receipt/matrix | 已授权并完成 Step 2 |
+| 2 acquire | 🛑 COMPLETE / VERIFIED / COVERAGE BLOCKED | D002/R002/R003/V002/H002；qualified 4/9，optical CORE 2/5，P0 unavailable | 等待用户手动补 P0 或确认 claim limitation |
+| 3 read | ⬜ NOT_AUTHORIZED | — | coverage 未确认前禁止 |
 | 3.5 supplement | ⬜ NOT_AUTHORIZED | — | Step 3 未完成前禁止 |
 | 4a feasibility | ⬜ NOT_AUTHORIZED | — | Step 3/3.5 未完成前禁止；不得仿真 |
 

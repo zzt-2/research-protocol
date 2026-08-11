@@ -1,6 +1,6 @@
 # DSP 失效感知的多孔径相干 FSO 可靠合并
 
-> 状态：active | 当前阶段：Groundwork Step 1 verified，等待主控确认 Step 2
+> 状态：active | 当前阶段：Groundwork Step 2 coverage blocked
 
 ## 范围边界
 
@@ -10,11 +10,11 @@
 
 ### 当前范围
 
-仅执行 GW Step 1：最多 6 组 query、两轮结构化检索；形成问题证据、传统 comparator、潜在 soft/hysteretic extension 与 exact-collision 初筛。所有条目保持 `HYPOTHESIS_ONLY`。
+仅执行 GW Step 2：对冻结优先池做相关性筛选、已有资产复用、合法下载/转换、identity/content quality gate 与 coverage gap 报告。只允许输出 `fulltext available/unavailable / identity confirmed / content qualified`；所有条目继续保持 `HYPOTHESIS_ONLY`。
 
 ### 明确不含
 
-- 不下载或全文精读新论文；不进入 Step 2 及以后。
+- 不进入 Step 3 及以后；不做全文方法结论或完整动作签名提取。
 - 不实现、不仿真、不运行 smoke、不修 b3 代码。
 - 不把固定 SNR 阈值 branch-drop、SC/GSC 或 Johst 2024 已给出的 discard rule 当新方法。
 - 不重开 coded decoder-feedback C1；decoder/FEC flag 只可列为可选 receiver-visible feature。
@@ -23,6 +23,10 @@
 ### 范围变更记录
 
 - 2026-08-11，D001：主控验收 K1 后授权新专题仅执行 GW Step 1；原因是 coded C1 科学关闭后需寻找不同算法研究对象。
+- **[2026-08-11] D002**：当前范围由 Step 1 扩展到 Step 2 acquisition。
+  - 原因：V001 接受 Step 1，主控显式确认进入 acquisition。
+  - 新范围：相关性筛选→资产复用→合法获取/转换→identity/content quality→coverage gap。
+  - 影响的未决项：2019 P0 只判全文可得性；完整动作签名留给未授权 Step 3。
 
 ## 进展线索
 
@@ -31,6 +35,9 @@
 - R001：hard route 已归 comparator；宽泛 soft weighting 有 RF 先例；2019 optical direct competitor collision 未闭合，provisional terminal=`STEP1_PASS_READY_FOR_STEP2_CONFIRMATION`。
 - T003 首验：`FAIL 0/1/1`；计数/scope PASS，identity/provenance binding 与 26→27 残字需窄修。`step1-provenance-receipt.md` 已绑定既有全局索引的 2019/Geisler S2+OpenAlex 条目，等待第二次 fresh 终验。
 - V001 / H001：第二个 fresh verifier `PASS 0/0/0`；terminal=`STEP1_PASS_READY_FOR_STEP2_CONFIRMATION`，Step 2=`NOT_AUTHORIZED`。
+- S002 / D002：主控确认 Step 2；开始 acquisition，Step 3=`NOT_AUTHORIZED`。
+- R002/R003：九篇冻结池中 4 篇 fulltext qualified；optical CORE=`2/5`。2019 P0 非 OA、无 arXiv/PDF URL且合法三轮获取失败，terminal=`STEP2_BLOCKED_CRITICAL_DIRECT_COMPETITOR_FULLTEXT`。
+- V002/H002：fresh verifier=`PASS 0/0/0`；coverage blocking terminal 被接受并交接主控，Step 3 仍未授权。
 
 ## 已确认结论
 
@@ -47,8 +54,9 @@
 
 ## 未决项
 
-1. 主控是否确认进入 Step 2；确认前不得下载或精读。
+1. 用户是否手动提供 2019 P0 合法全文，或显式接受 P0 未精读的 coverage/claim limitation。
+2. 在 coverage 阻塞未解除前，Step 3 不得授权。
 
 ## 当前位置
 
-`GROUNDWORK_STEP1_VERIFIED_READY_FOR_STEP2_CONFIRMATION`：V001=`PASS 0/0/0`；Step 2=`NOT_AUTHORIZED`。
+`GROUNDWORK_STEP2_BLOCKED_CRITICAL_DIRECT_COMPETITOR_FULLTEXT`：P0 unavailable，optical CORE 2/5；等待用户 coverage confirmation，Step 3=`NOT_AUTHORIZED`。

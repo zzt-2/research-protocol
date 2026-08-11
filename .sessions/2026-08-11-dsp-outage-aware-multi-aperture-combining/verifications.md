@@ -30,3 +30,32 @@
 ### 结论
 
 `STEP1_PASS_READY_FOR_STEP2_CONFIRMATION`。该结论只接收 Step 1 检索质量和后续获取必要性；Q#、Go/Kill、METHOD_SIGNAL、method/thesis delta 均未产生。
+
+## V002：GW Step 2 acquisition 与 coverage 终验
+
+- 日期：2026-08-11
+- 关联：S002 / D002 / R002 / R003 / T006
+- 验证方：fresh-context child verifier（与获取/转换执行分离）
+- 状态：PASS
+- 严重度：P0/P1/P2=`0/0/0`
+
+### 验证对象
+
+- 四篇 claimed qualified 的 canonical/shared-root source/content 与 metadata。
+- 五篇 claimed unavailable 在 worktree、共享根、canonical DOI、downloads/manual 的可验证资产。
+- R002/R003/topic-index/master-state/registry 的 coverage 数字、terminal 与 scope。
+- 本轮 diff、git staging 与 unrelated dirty files 的隔离。
+
+### 验证结果
+
+| 组 | 结论 | 独立证据 |
+|---|---|---|
+| A identity/hash/lines | PASS | WiSEE 2024、Wang 2023、ICCC 2022、JPHOT 2020 的 bytes/SHA/总行/非空有效行与 R003 全部一致；标题/DOI 闭合。 |
+| B content quality | PASS | 四篇反爬文本命中 0；前三篇 U+FFFD=0；JPHOT 2020 的 39 个替换符仅分布在 18 行公式符号，未构成大面积乱码。 |
+| C unavailable/coverage | PASS | 五篇均无 target source/content；P0 仍 unavailable。targeted qualified=`4/9`，optical CORE=`2/5`，ICCC/JPHOT 2020 未被计入 CORE。 |
+| D terminal/control plane | PASS | R002/R003/topic/master/registry 一致：`STEP2_BLOCKED_CRITICAL_DIRECT_COMPETITOR_FULLTEXT`；Step 3=`NOT_AUTHORIZED`。 |
+| E scope/diff | PASS | 无正向动作签名、碰撞裁决或后续科学门产出；无实现/仿真/b3 repair；staging 为空，unrelated dirty files 未纳入。 |
+
+### 结论
+
+接受 Step 2 acquisition/coverage 终态。下一合法动作只有用户手动补 P0 后重跑 Step 2 gate，或用户显式接受 coverage/claim limitation 并另行授权 Step 3；当前不得继续。

@@ -52,10 +52,13 @@
 
 ## 接收方验证（续接对话时必须完成）
 
-- [ ] 已读取 topic-index 的不变量段落
-- [ ] 已验证本文件中的至少 3 条关键事实声称（列出验证了哪些）
-- [ ] 已检查 _registry.yaml 中本专题的 depends_on 和 conflicts_with
-- [ ] 已确认当前范围未违反“明确不含”
+- [x] 已读取 topic-index 的不变量段落
+- [x] 已验证本文件中的至少 3 条关键事实声称
+  - Step1 terminal=`STEP1_PASS_READY_FOR_STEP2_CONFIRMATION`：PASS — R001/V001。
+  - 169→157、27 candidates/24 formal/8 must-read：PASS — receipt/matrix/V001。
+  - 2019 exact collision=`UNRESOLVED` 且 Step2 原为未授权：PASS — R001/master-state；本轮由 D002 显式改变授权。
+- [x] 已检查 _registry.yaml 中本专题的 depends_on 和 conflicts_with：B3 closed、RDL dormant；coded conflict 仅作为禁止重开边界。
+- [x] 已确认当前范围未违反“明确不含”：D002 显式 scope change 只开放 Step 2 acquisition。
 
 ## 下一轮
 

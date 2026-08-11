@@ -89,8 +89,8 @@ topics:
     title: DSP 失效感知的多孔径相干 FSO 可靠合并
     status: active
     created: "2026-08-11"
-    last_updated: "2026-08-11（D001/V001/H001：Step 1 verified PASS）"
-    description: "新的算法 Groundwork 专题。GW Step 1 已以 STEP1_PASS_READY_FOR_STEP2_CONFIRMATION 终验：6/6 query、169→157 unique、3贡献源、27 semantic candidates、24 formal、8 must-read；hard admission 与宽泛 soft MRC 已归 comparator/neighbor，2019 optical direct competitor exact collision=UNRESOLVED。Step 2 及以后未授权。"
+    last_updated: "2026-08-11（D002/R002/R003/V002/H002：Step 2 critical coverage blocked / verified）"
+    description: "新的算法 Groundwork 专题。Step 1 verified PASS；Step 2 九篇冻结池 fulltext qualified 4/9、optical CORE 2/5。2019 Optics Communications direct competitor 非 OA、无 arXiv/PDF URL且三轮合法获取失败；V002 fresh verifier PASS 0/0/0，terminal=STEP2_BLOCKED_CRITICAL_DIRECT_COMPETITOR_FULLTEXT。Step 3 未授权，等待用户 coverage confirmation。"
     depends_on:
       - slug: 2026-07-08-b3-joint-estimation
         reason: 复用历史 multi-aperture receiver、MRC caller-path 与 truth-h/RNG 债务边界证据，不继承其方法 verdict
