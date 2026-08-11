@@ -85,6 +85,29 @@ topics:
       - projects/thesis-fso/coded-decoder-feedback-groundwork/
       - projects/simulation/explore/coded-decoder-feedback/
 
+  - slug: 2026-08-11-dsp-outage-aware-multi-aperture-combining
+    title: DSP 失效感知的多孔径相干 FSO 可靠合并
+    status: active
+    created: "2026-08-11"
+    last_updated: "2026-08-11（D001/V001/H001：Step 1 verified PASS）"
+    description: "新的算法 Groundwork 专题。GW Step 1 已以 STEP1_PASS_READY_FOR_STEP2_CONFIRMATION 终验：6/6 query、169→157 unique、3贡献源、27 semantic candidates、24 formal、8 must-read；hard admission 与宽泛 soft MRC 已归 comparator/neighbor，2019 optical direct competitor exact collision=UNRESOLVED。Step 2 及以后未授权。"
+    depends_on:
+      - slug: 2026-07-08-b3-joint-estimation
+        reason: 复用历史 multi-aperture receiver、MRC caller-path 与 truth-h/RNG 债务边界证据，不继承其方法 verdict
+      - slug: 2026-07-20-research-direction-lab-system
+        reason: 继承 method-production、dead-end inventory 与 reference-method-extension 入口纪律
+    conflicts_with:
+      - slug: 2026-08-09-coded-decoder-feedback-groundwork
+        reason: 禁止借 decoder/FEC validity 特征重开已科学关闭的 coded C1；decoder 仅可作可选接收端信息源
+    produces:
+      - .sessions/2026-08-11-dsp-outage-aware-multi-aperture-combining/
+      - search-archive/2026-08-11/dsp-outage-multi-aperture-q1.json
+      - search-archive/2026-08-11/dsp-outage-multi-aperture-q2.json
+      - search-archive/2026-08-11/dsp-outage-multi-aperture-q3.json
+      - search-archive/2026-08-11/dsp-outage-multi-aperture-q4.json
+      - search-archive/2026-08-11/dsp-outage-multi-aperture-q5.json
+      - search-archive/2026-08-11/dsp-outage-multi-aperture-q6.json
+
   - slug: 2026-08-08-rml-fsts-groundwork
     title: RML-FSTS fixed-lag condition-dependence Groundwork
     status: dormant

@@ -5,7 +5,7 @@ method_type: reference-method extension（非 ML；完整 deployable action chai
 domain: comms
 created: 2026-06-21
 updated: 2026-08-11
-current_step: GROUNDWORK_STEP4A_S2_SCIENCE_TERMINAL（coded decoder-feedback）
+current_step: GROUNDWORK_STEP1_VERIFIED_READY_FOR_STEP2_CONFIRMATION（DSP-outage-aware multi-aperture combining）
 current_stage: GROUNDWORK
 ---
 
@@ -34,6 +34,16 @@ current_stage: GROUNDWORK
 > 也不授权 fixed-point、硬件综合或新物理场景。
 
 ### 当前控制面桥接
+
+> **2026-08-11 新算法专题 GW Step 1（D001/R001/V001/H001）**。`2026-08-11-dsp-outage-aware-multi-aperture-combining` 已完成 6/6 query、两轮检索：169 rows→157 DOI/title unique，Semantic Scholar/OpenAlex/Tavily 三贡献源；27-entry semantic matrix 中 24 formal（88.89%）、8 must-read。hard SC/GSC/threshold admission 已归传统 comparator；ICCC 2022 已占宽泛 pilot-reliability soft MRC。最近 direct competitor 为 Optics Communications 2019 adaptive digital combining，其 trigger/weight 摘要未披露，exact collision=`UNRESOLVED`。第二个 fresh verifier=`PASS 0/0/0`，terminal=`STEP1_PASS_READY_FOR_STEP2_CONFIRMATION`，不代表 Q#/Go/METHOD_SIGNAL。Step 2 及以后均 `NOT_AUTHORIZED`。
+
+| DSP-outage-aware multi-aperture GW Step | 状态 | 证据 | 下游门控 |
+|---|---|---|---|
+| 1 search | ✅ COMPLETE / VERIFIED | D001/R001/V001/H001 + q1–q6 JSON + receipt/matrix | 等待主控确认 Step 2 |
+| 2 acquire | ⬜ NOT_AUTHORIZED | — | 禁止下载/全文获取 |
+| 3 read | ⬜ NOT_AUTHORIZED | — | Step 2 未确认前禁止 |
+| 3.5 supplement | ⬜ NOT_AUTHORIZED | — | Step 3 未完成前禁止 |
+| 4a feasibility | ⬜ NOT_AUTHORIZED | — | Step 3/3.5 未完成前禁止；不得仿真 |
 
 > **2026-08-11 coded decoder-feedback C1 科学终态（D027/V021/CP016）**。S1 occurrence=`262/480` PASS；S2 exact 1620 rows 的 damage=`0.06944444444444449` 与 recoverability=`0.04008151917073723` 均未过冻结门。独立 verifier 对证据给出 `PASS 0/0/0`，science verdict=`FAIL`。按顺序 fail-stop，B2、decoder-information、S4、C1、FAIR_COMPARISON_RUN 全部 NOT_RUN；method signal/thesis contribution=`NONE`。
 
