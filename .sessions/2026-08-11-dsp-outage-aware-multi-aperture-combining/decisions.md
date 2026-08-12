@@ -173,3 +173,37 @@ topic/master/registry 记录 Step 3.5 evidence-blocked；Step 4a 继续 `NOT_AUT
 ### 来源
 
 S004/R005。触发原话：无（技术证据裁决）。
+
+## D007: 保留 novelty debt，开放 feasibility-first defect smoke
+
+> status: active
+> date: 2026-08-11
+> 取代：无；D006 保持 active
+> 被取代：无
+> 依据：用户原话 `voice.md` 2026-08-11 + 主控 scope decision + R004/R005 + V004
+
+### 决策
+
+只放宽“Step 3.5 novelty debt 阻止任何科学 smoke”这一处流程处置：Q001 可进入一次 0.5–1 天的 Groundwork Step 4a feasibility-first defect smoke。D006 的 `EVIDENCE_BLOCKED`、Sun/Xie/Qiu exact-action debt 与 non-collision 禁止项全部保留。
+
+若 G1–G4 全过，terminal 只能为 `DEFECT_SMOKE_PASS_WITH_NOVELTY_DEBT`，并将 Q001 恢复为 `PROBLEM_BEARING_CANDIDATE_WITH_NOVELTY_DEBT`；这不是方法、新颖性、Go、Contract 入口或 `METHOD_SIGNAL`。任一核心门失败则按冻结 terminal 立即停止 Q001。
+
+### 理由
+
+Johst 2024 已给出 invalid post-DSP stream 可能伤害合并的 defect 形状，Wang 2023 给出真实 branch-local FS/phase-correction→MRC baseline；当前未知的是 defect 在配对、receiver-visible、tuned cheap-comparator 合同下是否实际存在，而不是能否从缺失全文推出新颖性。一次小型可失败 smoke 能直接裁这项科学前提，且失败可立即截断。
+
+### 排除的替代方案
+
+- 不撤销或改写 D006，不把“未确认 collision”写成 non-collision。
+- 不先实现 soft reliability、abstention、hysteresis 或任何 C1。
+- 不用 oracle 作 Go；O1 只诊断 headroom/inclusion label。
+- 不以 stress-only 人工事件替代自然 primary 事件，不在 test 后修改阈值、MDE、grid 或 seeds。
+- 不因 smoke PASS 进入 Contract/正式 fair comparison；必须先回到 novelty debt 与后续显式授权。
+
+### 影响范围
+
+专题状态恢复 active；允许新增独立 `projects/simulation/explore/dsp-outage-aware-combining/` sandbox、Step 4a 报告、freeze receipt、raw/aggregate 与 worker log。历史 b3、`common/`、`params.py`、正式论文、coded C1 与其他方向保持冻结。
+
+### 来源
+
+S005；用户原话：“行。不过这咋这么难呢？别人都咋弄出来的啊？？”

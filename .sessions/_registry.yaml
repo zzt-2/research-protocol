@@ -13,7 +13,7 @@ topics:
 
   - slug: 2026-07-17-direction-lab-governance-pilot
     title: Direction Lab 可遵守性与控制器试运行
-    status: dormant
+    status: active
     created: "2026-07-17"
     last_updated: "2026-07-18（S010/D013：控制面与重复编号收口；研究状态回归项目目录；恢复阈值覆盖仍 PARTIAL，专题转 dormant）"
     description: "受控 Direction Lab governance pilot，依 D004 扩展为双偏振星地 OSL 真实地基 sandbox 运行；v2 Candidate Universe→Map→Queue、B002 与独立 synthesis 已闭环，正式 Groundwork 与论文晋级继续阻断。"
@@ -89,8 +89,8 @@ topics:
     title: DSP 失效感知的多孔径相干 FSO 可靠合并
     status: dormant
     created: "2026-08-11"
-    last_updated: "2026-08-11（D006/R005/H004：Step 3.5 EVIDENCE_BLOCKED）"
-    description: "Step 3.5 两轮检索已收敛（最后一轮 new MUST/SHOULD=0/0），Zhang 2023 全文为 estimator-changing neighbor；但 Sun/Xie/Qiu 等 direct-action primary evidence 仍不可得，terminal=EVIDENCE_BLOCKED。不是 collision/Kill；Step 4a 无入口。仅新承重一手全文可恢复。"
+    last_updated: "2026-08-11（D007：Step 4a defect smoke active，novelty debt 保留）"
+    description: "D006/R005 的 EVIDENCE_BLOCKED 与 Sun/Xie/Qiu exact-action debt 保留；D007 仅开放一次 feasibility-first defect smoke，验证 G1–G4，不实现方法。PASS 也只恢复 problem-bearing candidate with novelty debt。"
     depends_on:
       - slug: 2026-07-08-b3-joint-estimation
         reason: 复用历史 multi-aperture receiver、MRC caller-path 与 truth-h/RNG 债务边界证据，不继承其方法 verdict

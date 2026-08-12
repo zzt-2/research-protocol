@@ -1,6 +1,6 @@
 # DSP 失效感知的多孔径相干 FSO 可靠合并
 
-> 状态：dormant | 当前阶段：Groundwork Step 3.5 `EVIDENCE_BLOCKED`
+> 状态：active | 当前阶段：Groundwork Step 4a feasibility-first defect smoke（novelty debt 保留）
 
 ## 范围边界
 
@@ -10,12 +10,12 @@
 
 ### 当前范围
 
-仅执行 GW Step 3.5：围绕冻结 Q001 做矩阵化补检索、核心竞品双向引用链、Sun 2019 合法动作证据闭合、新高相关全文 acquire/read 与统一 exact-action collision 裁决。最多三轮，最后一轮 new must/should 必须为 0。
+仅执行 D007 授权的 GW Step 4a feasibility-first defect smoke：先按 A0→A′→A/B 复核冻结 Q001，再仅验证自然条件下 occurrence、invalid-branch damage、tuned hard discard/SC-GSC 后的 residual room，以及 receiver-visible validity observability。D006 的 `EVIDENCE_BLOCKED` 与 Sun/Xie/Qiu exact-action debt 原样保留；本轮不能形成 non-collision、新颖性、方法或 Go。
 
 ### 明确不含
 
-- 不进入 Step 4a 及以后；只允许 Step 3.5 合法检索、获取与精读。
-- 不实现、不仿真、不运行 smoke、不修 b3 代码。
+- 不实现 soft weighting/abstention/C1，不进入 Contract、正式 fair comparison 或论文方法声称。
+- 不修改 `common/`、`params.py`、正式论文或历史 b3 文件；只允许独立 explore sandbox 的 bounded defect smoke 与最多一次绑定当前 smoke 的最小 testbed repair。
 - 不把固定 SNR 阈值 branch-drop、SC/GSC 或 Johst 2024 已给出的 discard rule 当新方法。
 - 不重开 coded decoder-feedback C1；decoder/FEC flag 只可列为可选 receiver-visible feature。
 - 不输出 Go/Kill、METHOD_SIGNAL、方法成立或论文贡献。
@@ -35,6 +35,10 @@
   - 原因：V003 接受 Q001 branch-local 4/4，但 Sun 2019 exact action 与定向 collision landscape 未闭合；主控显式授权。
   - 新范围：query matrix → 核心竞品双向引用链 → Sun 2019/新高相关一手证据 → 统一动作签名 → 三选一 terminal。
   - 影响的未决项：Step 4a 继续禁止；完整 post-all-FS/CE/CPE 版本仍 excluded/unresolved。
+- **[2026-08-11] D007**：在不撤销 D006 的前提下，临时开放 Step 4a feasibility-first defect smoke。
+  - 原因：用户显式接受 exact-action prior-art debt 暂未闭合，授权先用 0.5–1 天只验证科学前提。
+  - 新范围：A0→A′→A/B 分析门；若无新科学致命项，则在 receiver-visible/paired/held-out 合同下验证 G1–G4。
+  - 影响的未决项：正结果至多恢复 `PROBLEM_BEARING_CANDIDATE_WITH_NOVELTY_DEBT`；负结果按对应科学 terminal 立即停止 Q001。Step 3.5 novelty debt 不因 smoke 结果消失。
 
 ## 进展线索
 
@@ -50,6 +54,8 @@
 - T007–T010/R004/D004/V003/H003：五篇全文完成；首验 PARTIAL 0/2/0 后，Q001 收窄到 Wang 真实 branch-local FS/phase-correction→MRC 边界并修 read-note 持久化链；终验 PASS 0/0/0。
 - S004/D005：主控授权 Step 3.5；H003 接收核验 PASS，开始 exact-action closure。
 - T011–T016/R005/D006/V004/H004：两轮检索最后一轮 new MUST/SHOULD=0/0；Zhang 2023 为 estimator-changing neighbor；Sun/Xie/Qiu 等承重动作仍无一手全文。fresh verifier 首验 PARTIAL 0/1/2，bounded repair 后 final PASS 0/0/0；terminal=`EVIDENCE_BLOCKED`，无 Step 4a 入口。
+- S005/D007：主控依据用户原话授权一次 feasibility-first 例外；`EVIDENCE_BLOCKED` 不撤销，只开放 defect-only Step 4a，禁止实现候选方法。
+- S005/Step4a pre-test freeze：独立 sandbox 经多轮 fresh review 修闭 receiver truth firewall、Park/FSTS proxy、correct MRC、paired RNG、递归 AST、raw/receipt/schema/bootstrap；最终 reviewer PASS。dev=`20×18`、6480 raw rows；冻结 B1=`-8 dB`、B2=`L=K`、strongest cheap=`B2`，receipt=`test_started=false`。dev 数字不是科学终态，held-out 尚未开始。
 
 ## 已确认结论
 
@@ -65,11 +71,13 @@
 2. Q001 仅在 branch-local FS/alignment+phase-correction→MRC 边界通过 Step 3 四判据；完整 post-all-FS/CE/CPE 位置仍未闭合。
 3. `STEP3_Q_SURVIVES_READY_FOR_STEP3_5` 只表示问题候选存活，不等于方法有效、新颖性闭合或论文贡献。
 4. Step 3.5 身份检索已收敛，但 direct-action evidence 不充分；`EVIDENCE_BLOCKED` 不是 exact collision 或 scientific Kill。
+5. D007 只改变“novelty debt 是否阻止任何 smoke”的流程处置，不改变 Q001 的 exact-action 证据等级与 claim ceiling。
 
 ## 未决项
 
 1. Sun/Xie/Qiu 的承重 primary fulltext 或等价后续一手完整动作证据能否取得。
+2. G1–G4 是否在冻结 primary 物理 grid 与 held-out seeds 上同时成立。
 
 ## 当前位置
 
-`GROUNDWORK_STEP3_5_EVIDENCE_BLOCKED`：D006 已截断；Step 4a=`NOT_AUTHORIZED`。等待新的承重一手证据，不重复搜索。
+`GROUNDWORK_STEP4A_DEFECT_SMOKE_PRETEST_FROZEN`：A0→A′→A/B 与 testbed/freeze review 已通过；chronology Commit 1 后仅可运行 receipt 冻结的 held-out seeds。不得构造 C1 或把任一 PASS 写成方法/新颖性/Go。
