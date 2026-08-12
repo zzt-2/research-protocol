@@ -317,7 +317,7 @@ rdl_control:
 - **S015 / R005 / D021 / V015**：长程效果与同行包装审计确认剩余缺口是正常包收尾缺少独立章节能力检查；结构 RED、盲测 GREEN 与独立终验均已闭合。
 - **D022 / T004 / T005 / V016**：用户授权两个隔离对话各执行一个 bounded closure；任务合同独立终验 PASS，正面结果不预设，但必须闭合到可用 terminal disposition。
 - **R006 / D023**：三路只读审计和用户逐段确认后，采用轻量概念方法构造与正式科学晋级双车道；复用现有 inventory 做动作/dead-end 碰撞，不新建 registry。
-- **R007**：结合 coded C1、Q001 与 K2 三条近期终态及同门经验，重新区分“期刊级独立机制”与“硕士级参考方法场景化扩展”；建议把 exact/neighbor collision 和其他场景的更强方法主要用于限制 claim ceiling，不再要求候选全局最优；同时区分“内部必查廉价解释”与“正文必须展示的 comparator”。当前只记录，待用户确认后再决定是否修 Skill。
+- **R007**：结合 coded C1、Q001 与 K2 三条近期终态及同门经验，重新区分“期刊级独立机制”与“硕士级参考方法场景化扩展”；建议把 exact/neighbor collision 和其他场景的更强方法主要用于限制 claim ceiling，不再要求候选全局最优；同时区分“内部必查廉价解释”与“正文必须展示的 comparator”。下一优先动作是对旧资产做一次可包装/小补证/支撑/永久无效四档只读 remap，而非继续盲找。
 - **CP001**：新 mission-log 从 D023 设计转向开始，不回填 T004/T005 历史细节；method delta=`NONE`，当前只允许 R006 审阅和 Skill RED 设计。
 - **V017**：轻量双车道设计独立终验 PASS；P0/P1=0，首个任务前所需 streak 字段已在 CP001 以零值补齐。
 - **CP002**：最小 Skill patch 完成；旧规则的两项顺序 RED 均失败，GREEN 2/2、全套 113 passed/1 skipped，个人运行副本 99/99 文件一致。
@@ -382,4 +382,4 @@ formal owner 未变。
 `.sessions/2026-08-08-ch4-reference-method-extension/H001-reference-method-entry-selection.md`；旧专题只读，
 不再新增 S###、检索、进入 GW、实现或仿真。
 
-**2026-08-12 方法论速记**：R007 已记录硕士级 reference-method extension 的放行边界。该记录不恢复本专题科学执行权限；下一步先由用户确认“场景迁移 + 具体适配动作 + 诚实 baseline 梯子”的标准，再决定是否对 Skill 做一次最小修订。
+**2026-08-12 方法论速记**：R007 已记录硕士级 reference-method extension 的放行边界。该记录不恢复本专题科学执行权限；用户已确认应从旧资产中回收硕士级可用项，下一步只做历史资产 remap，不直接实验或启动新 GW。
