@@ -30,8 +30,8 @@ topics:
     title: Research Direction Lab 完整体系设计
     status: dormant
     created: "2026-07-20"
-    last_updated: "2026-08-08（CP024/D041：旧system专题转dormant，Ch4方法生产迁入独立reference-method extension专题）"
-    description: "长期研究探索体系历史与方法论 owner，现已 dormant。Task 1-10、长程复盘、CCISP/Ch5 authority、T010 blocker 与全部 dead-end 证据保留；不再新增 S### 或承载科学执行。Ch4 现行入口已迁入 2026-08-08-ch4-reference-method-extension。"
+    last_updated: "2026-08-12（R007：记录硕士级参考方法场景化扩展标准再校准；专题仍 dormant）"
+    description: "长期研究探索体系历史与方法论 owner，现已 dormant。Task 1-10、长程复盘、CCISP/Ch5 authority、T010 blocker 与全部 dead-end 证据保留；R007 记录硕士级 reference-method extension 的候选放行边界，但不恢复科学执行。"
     depends_on:
       - slug: framework-evolution
         reason: 继承 R002 Direction Lab 设计和唯一拥有者原则
