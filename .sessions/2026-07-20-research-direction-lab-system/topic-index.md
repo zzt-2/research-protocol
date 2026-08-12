@@ -317,7 +317,7 @@ rdl_control:
 - **S015 / R005 / D021 / V015**：长程效果与同行包装审计确认剩余缺口是正常包收尾缺少独立章节能力检查；结构 RED、盲测 GREEN 与独立终验均已闭合。
 - **D022 / T004 / T005 / V016**：用户授权两个隔离对话各执行一个 bounded closure；任务合同独立终验 PASS，正面结果不预设，但必须闭合到可用 terminal disposition。
 - **R006 / D023**：三路只读审计和用户逐段确认后，采用轻量概念方法构造与正式科学晋级双车道；复用现有 inventory 做动作/dead-end 碰撞，不新建 registry。
-- **R007**：结合 coded C1、Q001 与 K2 三条近期终态及同门经验，重新区分“期刊级独立机制”与“硕士级参考方法场景化扩展”；建议把 exact/neighbor collision 主要用于限制 claim ceiling，仅在同任务同条件同动作且无适配 delta 时直接关闭，并区分“内部必查廉价解释”与“正文必须展示的 comparator”。当前只记录，待用户确认后再决定是否修 Skill。
+- **R007**：结合 coded C1、Q001 与 K2 三条近期终态及同门经验，重新区分“期刊级独立机制”与“硕士级参考方法场景化扩展”；建议把 exact/neighbor collision 和其他场景的更强方法主要用于限制 claim ceiling，不再要求候选全局最优；同时区分“内部必查廉价解释”与“正文必须展示的 comparator”。当前只记录，待用户确认后再决定是否修 Skill。
 - **CP001**：新 mission-log 从 D023 设计转向开始，不回填 T004/T005 历史细节；method delta=`NONE`，当前只允许 R006 审阅和 Skill RED 设计。
 - **V017**：轻量双车道设计独立终验 PASS；P0/P1=0，首个任务前所需 streak 字段已在 CP001 以零值补齐。
 - **CP002**：最小 Skill patch 完成；旧规则的两项顺序 RED 均失败，GREEN 2/2、全套 113 passed/1 skipped，个人运行副本 99/99 文件一致。
