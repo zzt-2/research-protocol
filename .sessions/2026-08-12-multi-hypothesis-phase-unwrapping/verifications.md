@@ -72,3 +72,38 @@ PASS。P0/P1/P2=`0/0/0`。允许恢复 Step 1 `VERIFIED` 与唯一 terminal=`STE
 ### 结论
 
 PASS。P0/P1/P2=`0/0/0`。terminal=`STEP2_READY_FOR_USER_CONFIRMATION`；只确认全文/身份/内容质量/coverage，不构成 collision、Q#、Go、方法、METHOD_SIGNAL 或论文贡献，Step 3 保持 `NOT_AUTHORIZED`。
+
+## V003: Groundwork Step 3 fulltext read 独立验收
+
+> date: 2026-08-12
+> 关联：D004–D005/S003/R005/owner/canonical read notes/read-log
+
+### 初审与有界修复（保留）
+
+初审 `PARTIAL`：科学/source spot-check PASS，但 owner 的辅助七表未使用 gw-read canonical schema，实验完备性与写作架构过度压缩，且 current view 预声明 VERIFIED。按同一 Step 3 范围完成一次 bounded documentation repair：
+
+- 新增 9/9 `状态空间/动作空间/奖励函数/建模假设/网络架构/适配性/问题提取` 横向七表；
+- 新增 9/9 communication parameter/source 四列表；
+- 扩展 5 篇实验完备性并给 aggregate；扩展 C01/C02/C12 写作架构 A–H；
+- 将验证状态恢复为 pending，并清理 topic 已裁未决项。
+
+### Final fresh verifier
+
+```text
+PASS, P0/P1/P2=0/0/0
+HEAD=5a1ef98
+owner paper sections/title gates=9/9
+gw-read canonical tables=7 × 9 rows
+communication parameter rows=9
+experiment completeness=5 papers + aggregate
+writing architecture=3 papers × A-H = 24 items
+canonical read notes=9/9
+read-log Step3 rows=9
+tracked simulation diff=0
+```
+
+Source spot checks PASS：C01 suffix propagation/failed-run discard；C02 decoder soft+forward/backward+L=1/2/3 且 source TeX 无 fixed-lag；C09 `δ`+suffix correction；C10 every-m+adaptive-Q；C12 feedback/feedforward+N64+4K/67K。Q001 四判据与 C02 “primitive full-general / task-contract neighbor”措辞均有界；D2 只作 motivation/component-level absorption，不称 exact collision。
+
+### 结论
+
+PASS。P0/P1/P2=`0/0/0`。允许 terminal=`STEP3_Q_SURVIVES_READY_FOR_STEP3_5`；只表示存在 Step 3.5 exact-action/claim closure 入口，不授权 Step 3.5/4a/实现/仿真，不构成 Go、方法、METHOD_SIGNAL 或论文贡献。

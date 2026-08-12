@@ -70,8 +70,8 @@ topics:
     title: coherent FSO 有界多假设固定滞后相位解缠 Groundwork
     status: active
     created: "2026-08-12"
-    last_updated: "2026-08-12（R004/V002/H002：Step 2 ready for confirmation）"
-    description: "唯一 K2 Groundwork owner。Step1=PASS/VERIFIED；Step2审计12篇，9 qualified/8 CORE，A/B/C三路线及P0 reference/full-mixture闭合，C06/C07/C13为全文限制。terminal=STEP2_READY_FOR_USER_CONFIRMATION；Step3未授权，无collision/Q#/Go/方法/METHOD_SIGNAL。"
+    last_updated: "2026-08-12（V003/H003：Step 3 verified）"
+    description: "唯一 K2 Groundwork owner。Step1/2已验收；Step3 9/9全文精读并经V003 PASS，D2降为可选组件，D1-shaped Q001四判据4/4，terminal=STEP3_Q_SURVIVES_READY_FOR_STEP3_5。Step3.5/4a/实现/仿真未授权，无Go/方法/METHOD_SIGNAL。"
     depends_on:
       - slug: 2026-08-08-ch4-reference-method-extension
         reason: 继承 K2 published defect、D007 candidate-source/research-object scope change 与 mandatory comparator 边界

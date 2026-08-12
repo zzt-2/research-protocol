@@ -67,7 +67,7 @@ R001–R003；V001。
 > status: active
 > date: 2026-08-12
 > 取代：D002 的 `Step 2 NOT_AUTHORIZED` operational gate
-> 被取代：无
+> 被取代：D004 的 `Step 3 NOT_AUTHORIZED` operational gate
 > 依据：验证: V001 + 调研: R001–R003 + 主控明确授权
 > 触发原话: [转述]“本轮只做Step2，完成后停，不进Step3。”
 
@@ -93,3 +93,65 @@ H001 接收核验确认 Step 1 corpus、mandatory comparator 边界与 registry 
 ### 来源
 
 主控 delegation；S002 handoff reception；V001/R001–R003。
+
+## D004: 接受 Step 2 coverage，只授权 Groundwork Step 3 全文精读
+
+> status: active
+> date: 2026-08-12
+> 取代：D003 的 `Step 3 NOT_AUTHORIZED` operational gate
+> 被取代：D005 的 Step 3 terminal 与后续 gate
+> 依据：H002/R004/V002/machine receipt + 主控明确授权
+> 触发原话: [转述]“本轮只做Step3，完成后停；不得进Step3.5/4a、实现或仿真。”
+
+### 决策
+
+接受 commit `5a1ef98` 的 Step 2 coverage，当前范围扩为只执行 Groundwork Step 3：对 9 篇 qualified 全文完成结构化精读，闭合 exact action/complexity contract，并按 glossary 四判据形成或否决 canonical Q001。Step 3.5、Step 4a、实现和仿真继续 `NOT_AUTHORIZED`。
+
+### 理由
+
+H002 接收核验确认 12 篇审计中 9 篇 qualified、8 篇 CORE，A/B/C 三路线及 P0 reference/full-mixture 已闭合；当前承重问题从“是否有全文”转为“全文动作、复杂度和任务边界如何”。按 gw-read 由 fresh 子 agent 精读、主线程统一综合，可以在不提前实验的条件下裁 TCOM 2016 与 D1/D2 的边界。
+
+### 排除的替代方案
+
+- 不凭摘要、标题或旧聊天记忆裁 exact collision。
+- 不把 Step 3 的可证伪问题判断写成 Step 4a 的实验证据。
+- 不设计算法、跑 smoke、实现或进入 Step 3.5。
+
+### 影响范围
+
+新增 S003、Step 3 research/read-note/read-log、V003、H003，并同步 topic/master/registry/voice；不修改旧 Q001/coded/p05 或 unrelated dirty 文件。
+
+### 来源
+
+主控 delegation；H002/R004/V002；gw-read/glossary/templates。
+
+## D005: Step 3 只保留 D1-shaped Q001，D2 降为可选组件
+
+> status: active
+> date: 2026-08-12
+> 取代：D004 的 Step 3 in-progress operational state
+> 被取代：无
+> 依据：R005 + 9 篇 fulltext read + V003 PASS
+> 触发原话: 无（技术裁决）
+
+### 决策
+
+terminal=`STEP3_Q_SURVIVES_READY_FOR_STEP3_5`。保留唯一 Q001：decoder-free single-tone 下的 bounded discrete-wrap hypotheses 与 fixed-lag commit；D2 reliability-triggered expansion 不作为第二 Q，只可在后续成为 Q001 的可选 average-cost component/ablation。
+
+### 理由
+
+Q001 glossary 四判据 4/4。TCOM 2016 在 primitive capability 上是 full-general superset，但完整 input/state/schedule/output/resource contract 与 Q001 不同；C09/C10/C11/C12 已分块吸收 D2 的 trigger/adaptation/fade robustness/slip-suppression 动机，强保 D2 会退化为包装。
+
+### 排除的替代方案
+
+- 不把 H=3、fixed lag、confidence、merge/prune 任一原子声称为新颖。
+- 不把 Step 3 literature support 写成 FSO defect occurrence、Go 或方法成立。
+- 不跳过 Step 3.5 进入 Step 4a/实现/仿真。
+
+### 影响范围
+
+更新 owner/R005/topic/master/registry 与 handoff。下一合法动作仅 Step 3.5 exact-action/claim closure，需新授权。
+
+### 来源
+
+R005；canonical read notes；gw-read/glossary。

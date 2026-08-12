@@ -5,7 +5,7 @@ method_type: reference-method extension（非 ML；完整 deployable action chai
 domain: comms
 created: 2026-06-21
 updated: 2026-08-12
-current_step: STEP2_READY_FOR_USER_CONFIRMATION（K2 bounded multi-hypothesis unwrap）
+current_step: STEP3_Q_SURVIVES_READY_FOR_STEP3_5（K2 bounded multi-hypothesis unwrap）
 current_stage: GROUNDWORK
 ---
 
@@ -41,13 +41,17 @@ current_stage: GROUNDWORK
 
 > **2026-08-12 K2 GW Step 2 收口（R004/V002/H002）**。在授权的 8–12 篇范围内审计 12 篇：9 qualified、8 CORE，正式身份 12/12、2019+ 10/12、合格全文 preprint-source 2/9。A reference/unwrap、B full mixture/fixed-order、C recent coherent optical/FSO 三路线均有全文；P0 C01/C02 闭合。C06/C07/C13 保留全文 limitation。terminal=`STEP2_READY_FOR_USER_CONFIRMATION`；Step 3 未授权。
 
+> **2026-08-12 K2 GW Step 3 启动（D004/S003）**。主控接受 Step 2 coverage，只开放 9 篇 qualified 全文的结构化精读、exact action/complexity contract、comparator ladder 与 canonical Q001 四判据；Step 3.5/4a/实现/仿真保持未授权。
+
+> **2026-08-12 K2 GW Step 3 收口（R005/D005）**。9/9 fulltext read；C02 在 primitive capability 上是 full-general superset、在 Q001 task contract 上是 strong neighbor，非 exact collision。D2 被 C09/C10/C11/C12 分块吸收并降为可选 component；唯一 D1-shaped Q001 四判据 4/4。terminal=`STEP3_Q_SURVIVES_READY_FOR_STEP3_5`，只表示存在 Step 3.5 入口；无 Go/方法/METHOD_SIGNAL。
+
 | Bounded multi-hypothesis unwrap GW Step | 状态 | 证据 | 下游门控 |
 |---|---|---|---|
 | 1 search | ✅ COMPLETE / VERIFIED | upstream D007/R004；new D001–D002/S001/R001–R003/V001/H001 + 11 JSON | terminal=`STEP1_PASS_READY_FOR_STEP2_CONFIRMATION` |
-| 2 acquire | ✅ COMPLETE / PENDING CONFIRMATION | D003/S002/R004/V002/H002 + machine receipt | terminal=`STEP2_READY_FOR_USER_CONFIRMATION`；Step 3 未授权 |
-| 3 read | ⬜ FORBIDDEN | — | Step 2 未完成前禁止 |
-| 3.5 supplement | ⬜ FORBIDDEN | — | Step 3 未完成前禁止 |
-| 4a feasibility | ⬜ FORBIDDEN | — | 无 Q#；禁止实现/仿真 |
+| 2 acquire | ✅ COMPLETE / ACCEPTED | D003/S002/R004/V002/H002 + machine receipt | coverage 已由 D004 接受 |
+| 3 read | ✅ COMPLETE / VERIFIED | D004–D005/S003/R005/V003/H003 + owner/read-log | terminal=`STEP3_Q_SURVIVES_READY_FOR_STEP3_5`；Step 3.5 未授权 |
+| 3.5 supplement | ⏸ NOT AUTHORIZED | Q001 exact-action/claim closure入口已存在 | 需主控另行授权 |
+| 4a feasibility | ⬜ FORBIDDEN | — | Step 3.5 未完成；禁止实现/仿真 |
 
 > **2026-08-11 新算法专题 GW Step 3.5（D005/D006/S004/R005/V004/H004）**。Round 1=8 queries/45 unique，引用链=121 unique，Round 2=6 queries/4 unique 且 new MUST/SHOULD=0/0。Zhang 2023 全文为 estimator-changing neighbor；Sun/Xie/Qiu 等 direct-action primary evidence 仍不可得。fresh verifier 首验 PARTIAL 0/1/2，bounded repair 后 final PASS 0/0/0。terminal=`EVIDENCE_BLOCKED`，不是 collision/Kill；Step 4a 无入口。
 
