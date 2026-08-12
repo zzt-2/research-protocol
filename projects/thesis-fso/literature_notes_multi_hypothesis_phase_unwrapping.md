@@ -1,7 +1,7 @@
 # Literature Notes — bounded multi-hypothesis phase unwrapping
 
 > Owner: `.sessions/2026-08-12-multi-hypothesis-phase-unwrapping/`
-> Groundwork status: Step 3 complete; terminal=`STEP3_Q_SURVIVES_READY_FOR_STEP3_5`; Step 3.5/4a not authorized.
+> Groundwork status: Step 3.5 complete/verified; terminal=`EXACT_ACTION_COLLISION_OR_CHEAP_ABSORPTION` (cheap absorption); Step 4a forbidden.
 
 ## Progress
 
@@ -10,8 +10,8 @@
 | 1 search | COMPLETE / VERIFIED | R001–R003；V001 PASS |
 | 2 acquire | COMPLETE / ACCEPTED | R004；V002 PASS；9 qualified/8 CORE |
 | 3 read | COMPLETE / VERIFIED | 本文件；R005；V003；9/9 fulltext read |
-| 3.5 supplement | NOT AUTHORIZED | Q001 exact-action closure 待授权 |
-| 4a+ | FORBIDDEN | Step 3.5 未完成 |
+| 3.5 supplement | COMPLETE / VERIFIED | D006/R006–R007/V004；terminal=`EXACT_ACTION_COLLISION_OR_CHEAP_ABSORPTION` |
+| 4a+ | FORBIDDEN | Q001 prior-art gate failed |
 
 ## Corpus 与 title gate
 
@@ -504,3 +504,11 @@ Step 3 只说明问题可证伪且 comparator 边界可辨；不证明目标 FSO
 `STEP3_Q_SURVIVES_READY_FOR_STEP3_5`。
 
 理由：Q001 四判据 4/4；D1完整 action/resource/output contract 与 C02 full tracker、C09/C10/C11/C12 cheap alternatives 可区分；D2 已合并/降为可选组件。下一合法动作仅为 Step 3.5 exact-action/claim closure，需另行授权。
+
+## Step 3.5 supplement
+
+三轮检索的 new MUST/SHOULD=`5/5 → 4/8 → 0/0`，实际筛查 60 条 citation records；新增 9 篇 primary fulltext 动作核验。完整 receipt 与 action matrix 见 R006 和 `projects/thesis-fso/multi-hypothesis-phase-unwrapping/step3-5-search-receipt.json`。
+
+承重更新为 Ulvog et al., ICASSP 2023：`wrapped single tone → integer-cycle Viterbi paths → causal LMMSE/Gaussian branch score → fixed S survivor cap → iterative GLS → unwrapped sequence`。它未逐字覆盖 D1 的 fixed-lag commit/confidence/fallback，但已占据承重机制；H=3 是既有 S cap 的参数选择，fixed lag 是 standard Viterbi traceback truncation。当前没有新 score/commit/fallback 或可区分 performance–complexity mechanism，故按 D006 冻结 gate 判 `CHEAP_ABSORPTION`。
+
+Step 3.5 唯一 terminal=`EXACT_ACTION_COLLISION_OR_CHEAP_ABSORPTION`。D005 的问题证据仍是历史有效结论，但 Q001 无 Step 4a 入口；不得实现、仿真、冻结参数或输出 Go/方法/METHOD_SIGNAL。

@@ -68,10 +68,10 @@ topics:
 
   - slug: 2026-08-12-multi-hypothesis-phase-unwrapping
     title: coherent FSO 有界多假设固定滞后相位解缠 Groundwork
-    status: active
+    status: closed
     created: "2026-08-12"
-    last_updated: "2026-08-12（V003/H003：Step 3 verified）"
-    description: "唯一 K2 Groundwork owner。Step1/2已验收；Step3 9/9全文精读并经V003 PASS，D2降为可选组件，D1-shaped Q001四判据4/4，terminal=STEP3_Q_SURVIVES_READY_FOR_STEP3_5。Step3.5/4a/实现/仿真未授权，无Go/方法/METHOD_SIGNAL。"
+    last_updated: "2026-08-12（R006–R007/V004/H004：Step 3.5 cheap absorption terminal verified）"
+    description: "唯一 K2 Groundwork owner。Step3.5三轮检索收敛；ICASSP 2023 primary fulltext占据single-tone integer-wrap path/likelihood/fixed-survivor/unwrapped-output承重机制，H=3/fixed-lag仅属参数化/标准截断。terminal=EXACT_ACTION_COLLISION_OR_CHEAP_ABSORPTION；Q001 closed，无Step4a/方法/METHOD_SIGNAL。"
     depends_on:
       - slug: 2026-08-08-ch4-reference-method-extension
         reason: 继承 K2 published defect、D007 candidate-source/research-object scope change 与 mandatory comparator 边界

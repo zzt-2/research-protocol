@@ -1,6 +1,6 @@
 # Topic Index: 有界多假设固定滞后相位解缠 Groundwork
 
-> 状态: active | 创建: 2026-08-12 | 最后更新: 2026-08-12（V003 PASS，GW Step 3 verified）
+> 状态: closed | 创建: 2026-08-12 | 最后更新: 2026-08-12（R006，GW Step 3.5 cheap absorption terminal）
 
 ## 专题信息
 
@@ -15,11 +15,11 @@
 
 **原始目标**：以 Wang TSP 2022 single-tone joint ML/MAP 为成熟 reference method，研究其 phase-unwrapping suffix-pollution defect 在 coherent FSO residual CFO + laser Wiener phase noise 条件下的低复杂度、任务适配扩展；目标研究形态是 bounded multi-hypothesis phase-unwrapping / fixed-lag commit，并以 full Tikhonov-mixture tracker 和 fixed order-2/3 tracker 为强对手做性能—复杂度比较。
 
-**当前范围**：D005 已收口 Groundwork Step 3：9 篇 qualified 全文精读、exact action/complexity contract、comparator ladder 与 canonical Q001 四判据均已完成；等待 fresh verifier 后停在 Step 3 terminal。
+**当前范围**：D006/R006 已完成 Groundwork Step 3.5 并科学收口；只保留检索、primary action matrix、comparator 与 claim-ceiling 资产，不再推进 Q001。
 
 **明确不含**：
 
-- 不进入 Step 3.5/4a；Step 3 只做全文精读、问题提取和动作/复杂度边界裁决。
+- 不进入 Step 4a；Step 3.5 只做补充检索、引用链、primary action evidence 与 claim closure。
 - 不实现、不仿真、不运行 defect smoke 或公平比较。
 - 不声称首次提出 multi-hypothesis、Q#、Go、METHOD_SIGNAL、方法或论文贡献。
 - 不把 atmospheric turbulence phase 直接等同为 Wiener laser phase noise。
@@ -43,6 +43,11 @@
   - 原因：Q001 四判据 4/4；C02 task contract 非 exact；C09/C10/C11/C12 已分块吸收 D2 动机。
   - 新范围：停在 `STEP3_Q_SURVIVES_READY_FOR_STEP3_5`，不自动开放下游。
   - 影响的未决项：Step 3.5 需关闭 exact-action/claim debt；Step 4a/实现/仿真仍禁止。
+- **[2026-08-12] D006**：接受 Step 3 terminal，从授权门扩到只执行 Step 3.5 mandatory supplement。
+  - 原因：9/9 fulltext、Q001 四判据与 V003 已闭合，剩余承重问题为完整动作合同是否 exact/cheap/full absorption。
+  - 新范围：四类系统检索、C01/C02/C09/C12 双向引用链、承重全文动作矩阵与最多三轮收敛。
+  - 影响的未决项：Step 4a/实现/仿真/参数冻结继续禁止；Step 3.5 不判断 FSO defect occurrence。
+  - 收口：三轮检索收敛；ICASSP 2023 占据 D1 承重机制，terminal=`EXACT_ACTION_COLLISION_OR_CHEAP_ABSORPTION`，无 Step 4a 入口。
 
 ## 已确认结论
 
@@ -53,6 +58,7 @@
 3. Shayovitz–Raphaeli TCOM 2016 full mixture 与 fixed order 2/3 是 mandatory comparator；多轨迹、likelihood、merge/prune、bounded order、pilot recovery 均不是可独占动作原子。
 4. 未来可区分 delta 只可落在 task-adapted bounded contract：decoder-free single-tone input、固定 hypothesis/lag/内存/最坏时延、unwrapped sequence 输出，以及可选 receiver-visible trigger。
 5. 单方向公平比较预计 5–9 天只是在后续合法通过时可接受；本轮未授权消耗该预算。
+6. ICASSP 2023 已占 single-tone integer-wrap paths、likelihood score、fixed survivor pruning 与 unwrapped-sequence output；H=3/fixed-lag standard traceback 不能作为本专题可区分 delta。
 
 ### 其他结论
 
@@ -69,8 +75,8 @@
 | 1 search | ✅ COMPLETE / VERIFIED | 2026-08-12 | S001/R001–R003/D002/V001/H001 + 11 JSON | terminal=`STEP1_PASS_READY_FOR_STEP2_CONFIRMATION` |
 | 2 acquire | ✅ COMPLETE / ACCEPTED | 2026-08-12 | D003/S002/R004/V002/H002 + machine receipt | terminal=`STEP2_READY_FOR_USER_CONFIRMATION`；coverage 已由 D004 接受 |
 | 3 read | ✅ COMPLETE / VERIFIED | 2026-08-12 | D004–D005/S003/R005/V003/H003 + owner/read-log | terminal=`STEP3_Q_SURVIVES_READY_FOR_STEP3_5` |
-| 3.5 supplement | ⏸ NOT AUTHORIZED | — | Q001 exact-action/claim closure入口已存在 | 需主控另行授权 |
-| 4a feasibility | ⬜ FORBIDDEN | — | — | Step 3.5 未完成前禁止 |
+| 3.5 supplement | 🛑 COMPLETE / VERIFIED / CHEAP ABSORPTION | 2026-08-12 | D006/S004/R006–R007/V004/H004/receipt | terminal=`EXACT_ACTION_COLLISION_OR_CHEAP_ABSORPTION` |
+| 4a feasibility | ❌ FORBIDDEN | — | — | Q001 在 Step 3.5 被 prior-art gate 截断 |
 
 ## 进展线索
 
@@ -82,13 +88,15 @@
 - **S003 / D004**：完成 H002 接收核验；主控接受 coverage，只开放 Step 3 全文精读，Step 3.5/4a/实现/仿真保持禁止。
 - **R005 / D005**：9/9 全文精读；D2 降为可选组件，唯一 Q001 四判据 4/4；C02 仅 primitive 轴 full-general、task contract strong neighbor。
 - **V003 / H003**：初审文档schema缺口经一次 bounded repair 后，final fresh verifier PASS 0/0/0；Step 3 verified并停止。
+- **S004 / D006**：完成 H003 接收核验；只开放 Step 3.5 mandatory supplement，Step 4a/实现/仿真继续禁止。
+- **R006 / receipt**：三轮 new MUST/SHOULD=`5/5→4/8→0/0`；60 条 citation records；ICASSP 2023 direct same-action family 使 D1 落入 cheap absorption terminal。
+- **R007 / V004 / H004**：60-row semantic ledger 与 Round1 alias arithmetic 经 bounded repair 后，fresh verifier final PASS 0/0/0；专题 closed。
 
 ## 未决项
 
-- Step 3.5 需对 Q001 的完整 `input→state/score→merge-prune→fixed-lag commit→output/resource` 合同做 exact-action/claim closure。
-- H ceiling、lag、score、merge/prune、fallback 的具体算法仍未冻结；这些属于后续证据/设计，不得由 Step 3 脑补。
-- coherent FSO 目标条件下 defect occurrence/headroom 仍是未来 Step 4a 问题，当前没有实验结论。
+- Access 2026 fulltext 仍不可得，但不承担 terminal；保留为 claim limitation，不构成重开理由。
+- 若未来由新的 published defect 导出非平凡 commit/fallback 机制，必须作为新 research object 重新过入口；不得在本专题补字段重开。
 
 ## 当前位置
 
-`STEP3_Q_SURVIVES_READY_FOR_STEP3_5`（V003 verified）。仅存在 Step 3.5 入口；没有 defect occurrence、Go、方法、METHOD_SIGNAL 或论文贡献。Step 3.5/4a 未授权。
+`EXACT_ACTION_COLLISION_OR_CHEAP_ABSORPTION`（D006/R006，具体为 cheap absorption）。Q001 closed；没有 Step 4a 入口、Go、方法、METHOD_SIGNAL 或论文贡献。

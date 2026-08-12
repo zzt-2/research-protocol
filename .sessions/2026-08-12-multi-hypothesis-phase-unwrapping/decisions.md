@@ -130,7 +130,7 @@ H002 接收核验确认 12 篇审计中 9 篇 qualified、8 篇 CORE，A/B/C 三
 > status: active
 > date: 2026-08-12
 > 取代：D004 的 Step 3 in-progress operational state
-> 被取代：无
+> 被取代：D006 的 Step 3.5 operational gate（科学结论继续有效）
 > 依据：R005 + 9 篇 fulltext read + V003 PASS
 > 触发原话: 无（技术裁决）
 
@@ -155,3 +155,39 @@ Q001 glossary 四判据 4/4。TCOM 2016 在 primitive capability 上是 full-gen
 ### 来源
 
 R005；canonical read notes；gw-read/glossary。
+
+## D006: 只授权 Groundwork Step 3.5 exact-action 与 claim-ceiling 闭合
+
+> status: active
+> date: 2026-08-12
+> 取代：D005 的 `Step 3.5 需新授权` operational gate
+> 被取代：无
+> 依据：H003/R005/V003 + 主控明确授权
+> 触发原话: [转述]“本轮只做Step3.5，完成后停；不得进Step4a、实现、仿真或冻结算法参数。”
+
+### 决策
+
+接受 commit `095f9cb` 的 Step 3 终态，只执行 Groundwork Step 3.5 mandatory supplement。冻结唯一 Q001 与 D1 输出合同，系统检索 multi-hypothesis、fixed-lag、mixture/sequence tracker、coherent optical/FSO carrier-recovery 四类方法，完成指定核心论文的双向引用链、承重全文动作核验和收敛审计。D2 仅可作为可选 component/ablation，不重开第二 Q。
+
+### 理由
+
+H003 接收核验确认 9/9 fulltext read、Q001 四判据 4/4、C02 primitive/full-task 双层裁决和 registry 血缘一致；当前承重问题只剩完整 `input→state/score→merge-prune→fixed-lag commit→output/resource` 合同是否被 exact/cheap/full prior 吸收，以及 claim ceiling 能否安全限定。该问题属于 gw-supplement，不应提前转成 Step 4a occurrence 实验或算法设计。
+
+### 排除的替代方案
+
+- 不把 H≤3、fixed lag、multi-hypothesis、merge/prune 等动作原子当作可独占贡献。
+- 不凭 metadata/abstract 裁承重 exact action；全文不可得时只记录 evidence debt。
+- 不进入 Step 4a、实现、仿真、公平比较或参数冻结。
+- 不写 first、novel、method、Go、METHOD_SIGNAL。
+
+### 影响范围
+
+新增 S004/R006/machine receipt/V004/H004；如出现新 MUST/SHOULD，只做合法 acquisition 与最小必要 read-note/read-log；同步 owner/topic/master/registry/voice。一个统一 commit，不 push。
+
+### 来源
+
+主控 delegation；H003/R005/V003；`stages/gw-supplement.md`。
+
+### Step 3.5 收口
+
+terminal=`EXACT_ACTION_COLLISION_OR_CHEAP_ABSORPTION`，具体为 `CHEAP_ABSORPTION`。R006 的三轮检索已收敛；ICASSP 2023 primary fulltext 已占 single-tone integer-wrap hypotheses、likelihood scoring、fixed survivor pruning 与 unwrapped-sequence output。将 survivor cap 设为 3、采用 standard fixed-lag Viterbi traceback，不构成新的 score/commit/fallback 或性能—复杂度机制。Q001 无 Step 4a 入口。

@@ -5,7 +5,7 @@ method_type: reference-method extension（非 ML；完整 deployable action chai
 domain: comms
 created: 2026-06-21
 updated: 2026-08-12
-current_step: STEP3_Q_SURVIVES_READY_FOR_STEP3_5（K2 bounded multi-hypothesis unwrap）
+current_step: STEP3_5_EXACT_ACTION_COLLISION_OR_CHEAP_ABSORPTION（K2 closed）
 current_stage: GROUNDWORK
 ---
 
@@ -45,13 +45,17 @@ current_stage: GROUNDWORK
 
 > **2026-08-12 K2 GW Step 3 收口（R005/D005）**。9/9 fulltext read；C02 在 primitive capability 上是 full-general superset、在 Q001 task contract 上是 strong neighbor，非 exact collision。D2 被 C09/C10/C11/C12 分块吸收并降为可选 component；唯一 D1-shaped Q001 四判据 4/4。terminal=`STEP3_Q_SURVIVES_READY_FOR_STEP3_5`，只表示存在 Step 3.5 入口；无 Go/方法/METHOD_SIGNAL。
 
+> **2026-08-12 K2 GW Step 3.5 启动（D006/S004）**。主控只开放 Q001 exact-action/claim closure：四类方法 query matrix、C01/C02/C09/C12 双向引用链、承重全文动作核验与最多三轮收敛。Step 4a/实现/仿真/算法参数冻结继续禁止。
+
+> **2026-08-12 K2 GW Step 3.5 收口（R006–R007/D006/V004/H004）**。三轮 new MUST/SHOULD=`5/5→4/8→0/0`，实际筛查 60 条 citation records，新读 9 篇 primary fulltext。ICASSP 2023 已包含 single-tone integer-wrap Viterbi paths、likelihood score、fixed survivor cap 与 unwrapped-sequence output；D1 的 H=3/fixed-lag 只剩参数选择与 standard traceback truncation，未形成新 score/commit/fallback mechanism。60-row ledger/alias arithmetic 经 bounded repair 后 fresh verifier PASS 0/0/0。terminal=`EXACT_ACTION_COLLISION_OR_CHEAP_ABSORPTION`（具体 cheap absorption）；Q001 closed，Step 4a 无入口。
+
 | Bounded multi-hypothesis unwrap GW Step | 状态 | 证据 | 下游门控 |
 |---|---|---|---|
 | 1 search | ✅ COMPLETE / VERIFIED | upstream D007/R004；new D001–D002/S001/R001–R003/V001/H001 + 11 JSON | terminal=`STEP1_PASS_READY_FOR_STEP2_CONFIRMATION` |
 | 2 acquire | ✅ COMPLETE / ACCEPTED | D003/S002/R004/V002/H002 + machine receipt | coverage 已由 D004 接受 |
 | 3 read | ✅ COMPLETE / VERIFIED | D004–D005/S003/R005/V003/H003 + owner/read-log | terminal=`STEP3_Q_SURVIVES_READY_FOR_STEP3_5`；Step 3.5 未授权 |
-| 3.5 supplement | ⏸ NOT AUTHORIZED | Q001 exact-action/claim closure入口已存在 | 需主控另行授权 |
-| 4a feasibility | ⬜ FORBIDDEN | — | Step 3.5 未完成；禁止实现/仿真 |
+| 3.5 supplement | 🛑 COMPLETE / VERIFIED / CHEAP ABSORPTION | D006/S004/R006–R007/V004/H004/receipt | terminal=`EXACT_ACTION_COLLISION_OR_CHEAP_ABSORPTION` |
+| 4a feasibility | ❌ FORBIDDEN | — | Q001 prior-art gate failed；禁止实现/仿真 |
 
 > **2026-08-11 新算法专题 GW Step 3.5（D005/D006/S004/R005/V004/H004）**。Round 1=8 queries/45 unique，引用链=121 unique，Round 2=6 queries/4 unique 且 new MUST/SHOULD=0/0。Zhang 2023 全文为 estimator-changing neighbor；Sun/Xie/Qiu 等 direct-action primary evidence 仍不可得。fresh verifier 首验 PARTIAL 0/1/2，bounded repair 后 final PASS 0/0/0。terminal=`EVIDENCE_BLOCKED`，不是 collision/Kill；Step 4a 无入口。
 

@@ -1,0 +1,77 @@
+{
+  "topic": "2026-08-12-multi-hypothesis-phase-unwrapping",
+  "step": "GW_STEP3_5",
+  "date": "2026-08-12",
+  "scope_decision": "D006",
+  "frozen_q": "Q001",
+  "queries": {
+    "round1": [
+      "multi-hypothesis phase unwrapping carrier frequency offset Wiener phase noise",
+      "M-best phase unwrapping fixed lag carrier phase tracking",
+      "multiple model phase unwrapping cycle slip coherent optical",
+      "delayed decision phase unwrapping cycle slip correction",
+      "Tikhonov mixture sequence phase tracker pruning fixed lag carrier",
+      "Gaussian mixture carrier phase tracking phase unwrap pruning M-best",
+      "Viterbi M-best particle mixture fixed-lag carrier phase tracking cycle slip",
+      "coherent optical feedforward carrier phase estimator phase unwrap cycle slip",
+      "free space optical coherent carrier recovery cycle slip residual frequency offset laser phase noise",
+      "non-data-aided pilot-free decoder-free single-tone frequency phase estimation fixed latency real time memory"
+    ],
+    "round3_exact_contract": "Viterbi phase unwrapping fixed traceback/fixed lag M-best single tone Wiener phase noise"
+  },
+  "query_matrix_coverage": [
+    {"method_variant":"multi-hypothesis / multiple-model / M-best unwrap","scenario_resource_terms":["single-tone CFO + Wiener PN","coherent optical cycle slip","fixed-lag / fixed-memory"]},
+    {"method_variant":"fixed-lag / delayed-decision / bounded-memory unwrap","scenario_resource_terms":["carrier phase tracking","cycle-slip correction","real-time latency"]},
+    {"method_variant":"Tikhonov / Gaussian mixture / sequence tracker with pruning","scenario_resource_terms":["fixed-lag carrier","M-best/Viterbi/particle","decoder-free single-tone"]},
+    {"method_variant":"coherent optical/FSO feedforward CPR","scenario_resource_terms":["phase unwrap/cycle slip","residual CFO + laser PN","NDA/pilot-free real-time memory"]}
+  ],
+  "sources": {
+    "actual_contributors": ["Semantic Scholar", "SerpAPI Scholar", "OpenAlex"],
+    "round1_query_contribution": {"Semantic Scholar": 15, "SerpAPI Scholar": 20, "OpenAlex": 0},
+    "citation_note": "OpenAlex contributed Round3 forward citations; Round2 forward records were Semantic Scholar. Empty/timeout calls are not counted as contribution."
+  },
+  "rounds": [
+    {"round": 1, "queries": 10, "raw": 36, "unique": 35, "citation_screened": 21, "new_must": 5, "new_should": 5},
+    {"round": 2, "query_type": "directed citation closure", "citation_screened": 26, "new_must": 4, "new_should": 8},
+    {"round": 3, "query_type": "four-MUST forward chains + exact-contract query", "raw": 14, "unique": 13, "citation_screened": 13, "new_must": 0, "new_should": 0}
+  ],
+  "citation_chains": {
+    "C02_forward": {"records": 21, "source": "Semantic Scholar"},
+    "C01_forward": {"records": 18, "source": "Semantic Scholar"},
+    "C09_forward": {"records": 6, "source": "Semantic Scholar"},
+    "C12_forward": {"records": 2, "source": "Semantic Scholar"},
+    "round3_four_must_forward": {"raw": 14, "unique": 13, "source": "OpenAlex"},
+    "backward": "API returned legal empty results; local primary reference lists were used for lineage checks. No claim of exhaustive backward coverage."
+  },
+  "primary_fulltext_reads": [
+    {"id": "10.1109/ICASSP49357.2023.10095456", "status": "FULLTEXT_READ", "disposition": "DIRECT_SAME_ACTION_FAMILY/CHEAP_ABSORPTION"},
+    {"id": "10.1109/LSP.2024.3432048", "status": "FULLTEXT_READ", "disposition": "CHEAP_ALTERNATIVE/STRONG_NEIGHBOR"},
+    {"id": "10.1109/TCOMM.2025.3538847", "status": "FULLTEXT_READ", "disposition": "FULL_GENERAL_COMPARATOR"},
+    {"id": "10.1109/GLOBECOM48099.2022.10001274", "status": "FULLTEXT_READ", "disposition": "FULL_GENERAL_BENCHMARK"},
+    {"id": "arXiv:2005.01844", "status": "FULLTEXT_READ", "disposition": "STRONG_NEIGHBOR"},
+    {"id": "10.3390/app9132749", "status": "FULLTEXT_READ", "disposition": "PILOT_CHEAP_ALTERNATIVE"},
+    {"id": "10.1109/TSP.2024.3421374", "status": "FULLTEXT_READ", "disposition": "ESTIMATOR_NEIGHBOR"},
+    {"id": "10.1109/WCNC57260.2024.10570836", "status": "FULLTEXT_READ", "disposition": "ORACLE_UNWRAP_REFERENCE"},
+    {"id": "10.1016/j.optcom.2024.130326", "status": "FULLTEXT_READ", "disposition": "CHEAP_ESTIMATOR_CHANGING_NEIGHBOR"},
+    {"id": "10.1109/ACCESS.2026.3701043", "status": "FULLTEXT_UNAVAILABLE", "disposition": "UNRESOLVED_NON_BEARING"}
+  ],
+  "action_matrix": [
+    {"id":"C01_Wang2022","input":"single-tone complex samples","state_hypothesis":"H=1 cumulative unwrap","score":"none","merge_prune":"none","lag_commit":"lag0 greedy","trigger_fallback_reset":"none","causality":"causal primitive / block estimator","output":"unwrapped sequence + ML/MAP parameters","dependency":"decoder-free,pilot-free","ops_memory_latency":"O(1) recursion for selected statistics; full vector cost not fixed","task":"single-tone CFO+Wiener PN","disposition":"REFERENCE_M"},
+    {"id":"C02_TCOM2016","input":"coded MPSK+pilots+decoder soft","state_hypothesis":"Tikhonov mixture L=1/2/3/adaptive","score":"symbol likelihood","merge_prune":"KL+CMVM+hard L","lag_commit":"block forward/backward; no commit","trigger_fallback_reset":"pilot retained-mass recovery","causality":"bidirectional","output":"LLR","dependency":"pilot+decoder","ops_memory_latency":"O(M L^2)/symbol/iteration; block latency","task":"coded MPSK PN","disposition":"FULL_GENERAL_COMPARATOR"},
+    {"id":"Ulvog_ICASSP2023","input":"single-tone/lidar wrapped phase","state_hypothesis":"integer cycles; C-memory; fixed S survivors","score":"causal LMMSE Gaussian branch metric + cumulative path","merge_prune":"fixed survivor cap; no merge","lag_commit":"batch Viterbi/GLS; traceback depth unspecified","trigger_fallback_reset":"stop when score no longer drops; no fallback/reset","causality":"causal metric, batch endpoint","output":"unwrapped sequence+frequency/phase/depth","dependency":"receiver likelihood; known covariance","ops_memory_latency":"N,C,S,M,iterations; no fixed worst bound","task":"FMCW lidar, communication-adjacent","disposition":"DIRECT_SAME_ACTION_FAMILY/CHEAP_ABSORPTION"},
+    {"id":"LSP2024_TikhonovPLL","input":"pure carrier or pilot BPSK","state_hypothesis":"single Tikhonov H=1","score":"recursive circular update","merge_prune":"none","lag_commit":"per-symbol forward","trigger_fallback_reset":"none","causality":"causal","output":"wrapped phase/corrected symbols/optional LLR","dependency":"decoder-free pure-carrier mode","ops_memory_latency":"constant state; exact count not reported","task":"strong-PN tracking","disposition":"CHEAP_ALTERNATIVE"},
+    {"id":"EP2020","input":"QAM block+pilots","state_hypothesis":"temporary M modes projected to one Tikhonov","score":"symbol prior+likelihood","merge_prune":"circular moment matching","lag_commit":"full-block forward/backward","trigger_fallback_reset":"smoothing only","causality":"bidirectional","output":"symbol log-probabilities/LLR","dependency":"pilots; decoder optional","ops_memory_latency":"M-scaled CMM and block messages","task":"coded QAM PN","disposition":"STRONG_NEIGHBOR"},
+    {"id":"TCOM2025_EP","input":"coded M-ary block+pilots","state_hypothesis":"local M modes projected to one","score":"extrinsic+likelihood","merge_prune":"moment projection","lag_commit":"block fwd/bwd","trigger_fallback_reset":"observation rejection+damping","causality":"bidirectional","output":"phase marginal+extrinsic","dependency":"pilots/decoder","ops_memory_latency":"linear M; block memory/latency","task":"strong PN symbol detection","disposition":"FULL_GENERAL_COMPARATOR"},
+    {"id":"BCJR2022","input":"oversampled M-ary block","state_hypothesis":"L wrapped phase grid","score":"wrapped-Gaussian branch likelihood","merge_prune":"BCJR marginalization; no top-H","lag_commit":"full-block fwd/bwd","trigger_fallback_reset":"none","causality":"bidirectional","output":"APP/extrinsic","dependency":"pilots/decoder prior","ops_memory_latency":"O(N M L^2 eta), block","task":"oversampled PN channel","disposition":"FULL_GENERAL_BENCHMARK"},
+    {"id":"PAPU2019","input":"QPSK+periodic pilots","state_hypothesis":"single VVPE/pilot phase path","score":"pilot reference; details omitted","merge_prune":"none","lag_commit":"forward interpolation; exact lag absent","trigger_fallback_reset":"pilot slip correction; details omitted","causality":"feedforward","output":"corrected QPSK","dependency":"pilots required; decoder downstream","ops_memory_latency":"not reported","task":"coherent optical cycle slip","disposition":"PILOT_CHEAP_ALTERNATIVE"},
+    {"id":"C09_CSSC2019","input":"QPSK CPE phase","state_hypothesis":"single phase+quadrant offset","score":"two-segment delta","merge_prune":"none","lag_commit":"centered finite window then suffix correction","trigger_fallback_reset":"hard +/- thresholds","causality":"buffered feedforward","output":"corrected phase/symbol stream","dependency":"decoder-free,pilot-free","ops_memory_latency":"rolling O(1), O(N+L) buffer","task":"coherent WOC cycle slip","disposition":"CHEAP_ALTERNATIVE"},
+    {"id":"C10_KF2021","input":"16QAM+pilots/DD","state_hypothesis":"one Gaussian phase/CFO state","score":"innovation","merge_prune":"none","lag_commit":"fixed m endpoint interpolation","trigger_fallback_reset":"DA-to-DD; adaptive Q; no reset","causality":"finite lookahead","output":"corrected symbols","dependency":"pilots/DD, no decoder","ops_memory_latency":"exact RA/RM/LUT; O(m) buffer","task":"fiber coherent CPR","disposition":"FIXED_LAG_NEIGHBOR"},
+    {"id":"C11_OPLL2023","input":"QPSK I/Q","state_hypothesis":"single loop","score":"atan2 of fourth-power MAF","merge_prune":"none","lag_commit":"MAF+30/35ns feedback","trigger_fallback_reset":"none","causality":"causal loop","output":"VCO/data","dependency":"decoder-free","ops_memory_latency":"O(L) memory; measured loop delay","task":"satellite optical downlink","disposition":"CHEAP_ALTERNATIVE"},
+    {"id":"C12_Hu2025","input":"QPSK I/Q","state_hypothesis":"single feedback+block residual","score":"phase detector+fourth-power mean","merge_prune":"none","lag_commit":"causal loop+N64 block","trigger_fallback_reset":"none","causality":"hybrid","output":"corrected symbols","dependency":"decoder-free CPR","ops_memory_latency":"4K mult+67K add; block memory","task":"inter-satellite optical","disposition":"CHEAP_ALTERNATIVE"},
+    {"id":"OptCom2024","input":"DP-64QAM","state_hypothesis":"ring/orientation candidates, not trajectories","score":"window modulus distance","merge_prune":"threshold candidate filtering","lag_commit":"centered 2N+1 window then ordinary unwrap","trigger_fallback_reset":"no fallback/no-valid","causality":"future lookahead","output":"corrected high-order symbols","dependency":"decoder-free","ops_memory_latency":"7M+B/symbol; exact memory/latency absent","task":"fiber optical CPR","disposition":"CHEAP_ESTIMATOR_CHANGING_NEIGHBOR"}
+  ],
+  "action_matrix_fields": ["input", "state_hypothesis", "score", "merge_prune", "lag_commit", "trigger_fallback_reset", "causality", "output", "dependency", "ops_memory_latency", "task", "disposition"],
+  "convergence": {"last_round_new_must": 0, "last_round_new_should": 0, "status": "CONVERGED"},
+  "terminal": "EXACT_ACTION_COLLISION_OR_CHEAP_ABSORPTION",
+  "terminal_basis": "ICASSP 2023 primary fulltext already contains single-tone integer-wrap paths, likelihood scoring, fixed survivor pruning and unwrapped-sequence output; H=3 and fixed-lag Viterbi truncation are not a substantive mechanism delta."
+}

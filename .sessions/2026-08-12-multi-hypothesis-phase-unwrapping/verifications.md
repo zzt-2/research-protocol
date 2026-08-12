@@ -107,3 +107,41 @@ Source spot checks PASS：C01 suffix propagation/failed-run discard；C02 decode
 ### 结论
 
 PASS。P0/P1/P2=`0/0/0`。允许 terminal=`STEP3_Q_SURVIVES_READY_FOR_STEP3_5`；只表示存在 Step 3.5 exact-action/claim closure 入口，不授权 Step 3.5/4a/实现/仿真，不构成 Go、方法、METHOD_SIGNAL 或论文贡献。
+
+## V004: Groundwork Step 3.5 exact-action closure 独立验收
+
+> date: 2026-08-12
+> 关联：D006/S004/R006–R007/machine receipt/primary fulltexts
+
+### 初审与有界修复（保留）
+
+初审 `PARTIAL`，P0/P1/P2=`0/2/1`：60 条 citation records 可复算数量，但缺逐条 semantic ledger；current view 在 verifier 前后状态不一致；最终 staging 尚需证明排除 unrelated dirty。只做文档级 bounded repair：
+
+- 新增 R007 60-row ledger，逐条记录 round/title/identity/decision/reason；Round 3 13 条补 exact DOI/OpenAlex ID。
+- 明确 R1-05 arXiv:2404.05344 是 R1-02/TCOMM 2025 preprint lineage，identity alias-dedup、贡献 0 new SHOULD，关闭 `5/5` 算术。
+- machine receipt 补 4×≥2 query-matrix coverage 与 13×12-field action matrix。
+- 未新增检索、未改变 primary action verdict 或 terminal。
+
+### Final fresh verifier
+
+```text
+PASS, P0/P1/P2=0/0/0
+H003 reception facts/dependencies=PASS
+Round1 query matrix=10 queries, 4 variants × >=3 scenario/resource terms
+actual contributing sources=S2, SerpAPI, OpenAlex
+citation ledger=60/60 rows with decision+reason
+round new MUST/SHOULD=5/5 -> 4/8 -> 0/0
+primary fulltext reads=9; Access26=UNRESOLVED_NON_BEARING
+action matrix=13 rows × 12 required fields
+Ulvog primary=same-action family; exact-collision overclaim=NO
+terminal basis=CHEAP_ABSORPTION under frozen truncation gate
+Step4a/implementation/simulation/parameter-freeze=NOT_RUN/FORBIDDEN
+```
+
+Source spot-check：`10095456.md:115–147` 明确 integer-cycle Viterbi、causal LMMSE/Gaussian likelihood、fixed `S` survivors 与 unwrapped sequence；R006 明确承认缺 fixed traceback/commit/confidence/fallback，不冒充 exact collision。R007 修复后 Round 1 unique arithmetic 为 MUST `3+2=5`、SHOULD `4+1=5`，Round 3 13/13 EXCLUDE。
+
+### 结论
+
+PASS。P0/P1/P2=`0/0/0`。唯一 terminal=`EXACT_ACTION_COLLISION_OR_CHEAP_ABSORPTION`，具体为 `CHEAP_ABSORPTION`。Q001 无 Step 4a 入口；不得实现、仿真、冻结参数或输出 Go/方法/METHOD_SIGNAL。
+
+最终提交必须使用显式 allowlist，并以 cached diff 证明排除 `.sessions/profile.md`、旧 JLT read-note、`papers/index.json` 的既有无关部分、全部 pycache、p05/coded artifacts。
