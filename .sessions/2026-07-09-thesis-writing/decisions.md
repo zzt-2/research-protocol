@@ -926,10 +926,10 @@ S018；T002–T010；用户 2026-08-03 “每章至少都得有方法”主控�
 
 ## D027: 先按硕士级标准重裁历史资产，再决定唯一 Ch4 包
 
-> status: active
+> status: superseded
 > date: 2026-08-12
 > 取代：D026
-> 被取代：无
+> 被取代：D028
 > 依据: 调研 `.sessions/2026-07-20-research-direction-lab-system/R007-thesis-grade-reference-extension-recalibration.md` + 对照 `packaging-recipe-library.md` 的 12 篇硕士方法章样本 + 用户原话 `voice.md` 2026-08-12
 > 触发原话：见 `voice.md` 2026-08-12
 
@@ -962,3 +962,45 @@ D026 的候选标准仍混入了“动作独立性、强近邻闭包和全局竞
 ### 来源
 
 R007；S019；用户 2026-08-12 连续三次对硕士方法、baseline 选择和旧资产回收标准的确认。
+
+## D028: 接受历史资产四档重裁，唯一下一包为 P01 校准鲁棒确认
+
+> status: active
+> date: 2026-08-12
+> 取代：D027
+> 被取代：无
+> 依据: 调研 projects/thesis-fso/direction-lab/harvest/historical-assets-thesis-grade-remap.md + 机器映射 historical-assets-thesis-grade-remap.yaml + verifier V014
+> 触发原话：无（T012 只读证据重裁的技术推导）
+
+### 决策
+
+接受 T012 对 26 个独立历史资产的四档重裁：READY_FOR_THESIS_PACKAGING=2、NEEDS_ONE_BOUNDED_CONFIRMATION=2、SUPPORTING_ONLY=11、PERMANENTLY_INVALID=11，terminal=THESIS_GRADE_CANDIDATE_AVAILABLE。
+
+Ch3 继续使用 CCISP；Ch5 使用 select-before-execute 单分支执行方法。Ch4 唯一下一包冻结为 P01 receiver-visible pilot-SNR calibration adapter 的 bounded cross-grid confirmation。P11 complex-LS Butterfly FIR 作为第二顺位候选，不与 P01 并行执行。
+
+永久无效理由采用白名单：truth/privileged leakage、scale/metric/cost artifact、不可复现或 chronology 无合法证据、物理自由度不存在、problem absent、明确 scientific/headroom gate FAIL。更强邻居、full-general 方法、未证明 SOTA 或贡献粒度较小只降低 claim ceiling，不单独构成永久无效。
+
+### 理由
+
+T012 将“科学无效”与“只未达到期刊级独立机制或全局竞争力”拆开后，发现 P01 已有真实配置失配损害和 4/5 recovery，动作链与现成 testbed 完整，只缺一次单对话可裁决的 bounded confirmation；P11 也有完整 reference-extension 形态，但历史 SNR 标签未实际注入且存在 CMA 吸收风险，故列第二。
+
+CCISP 与 select-before-execute 已有合法数字、输入—动作—输出链和 baseline，不需要新科学实验。G1、P09、P07、C3、oversampled Q1、coded C1、Q001 等则有明确 artifact/problem-absent/gate-FAIL 证据，不能因包装标准放宽而恢复。
+
+### 排除的替代方案
+
+- 继续无边界搜索新方向：现有 P01 已满足唯一 bounded candidate 条件，先收敛历史资产更高效。
+- 直接恢复历史复合 2A：P01、P02 与 T004 的 authority 已拆分；P02 只是全局标量 retune，T004 无合法 held-out。
+- 把 P11 作为第一优先：必须先修复 true-SNR 注入并面对 blind CMA，风险和工作量均高于 P01。
+- 把 supporting/invalid 项改名包装：没有合法 action/result chain 或存在科学无效证据，违反 T012 边界。
+- 本轮直接执行 P01：T012 明确只读，不授权仿真。
+
+### 影响范围
+
+- 形成 historical-assets-thesis-grade-remap.md/yaml 两个 owner。
+- S019 转 COMPLETE；topic-index 与 registry 指向 D028/V014。
+- D026/D027 保留历史，D027 被本决策取代。
+- 不恢复 active carrier 或 METHOD_SIGNAL，不修改 Skill、common、params、正式论文，不自动授权 P01 实验。
+
+### 来源
+
+S019；T012；historical-assets-thesis-grade-remap.md/yaml；V014。

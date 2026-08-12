@@ -384,3 +384,41 @@ PASS（13/13）。D026 的唯一推荐是条件式规划合同：Ch3 READY，Ch4
 ### 后续
 
 另开执行对话，先遵循 sim-preflight 与所属 GW gate，只执行 2A calibration-aware cross-grid bounded package；2A 通过后再单独处理 2B formal cost/latency+float-Q package。
+
+## V014: T012 历史资产硕士级重裁独立终验
+
+> date: 2026-08-12
+> 关联：S019 / D028 / T012
+
+### 验证项
+
+- [x] A/B 全查：CCISP、select-before-execute、P01、P11 逐项沿 owner/worker/D/V 核对 → 2 个 A 与 2 个 B 均有 reference、动作链、baseline、数字或唯一 bounded gap；P11 只限实际 20 dB，必须修 gamma 注入并面对 blind CMA。
+- [x] C 档抽查：P02、P03、P1、K2、RML-FSTS、AMC Q-A/Q-B → 均只具调参、组件、竞争边界或 testbed/action-contract 价值，没有被“强邻居存在”误记为永久无效。
+- [x] D 档抽查：P04、P07、G1、P09、C3、oversampled Q1、coded C1、Q001 → 分别有 problem-absent、scale/cost/truth artifact、物理前提不足、exact-equivalence 或显式 scientific gate FAIL，未因 thesis-grade 放宽而错误复活。
+- [x] 全量映射：解析 YAML 并与 Markdown 表逐 ID 对照 → 26 个独立 ID，无重复；A/B/C/D=2/2/11/11；4 个 aliases 均 counts_toward_total=false。
+- [x] 证据闭包：遍历 YAML evidence → 41/41 路径存在；K2 路径已在预检中修正为 R006-step3-5-exact-action-closure.md。
+- [x] 推荐闭包：priority_order 与正文一致 → P01 唯一 Ch4 下一包，P11 第二顺位，branch_route_b 只需论文整合。
+- [x] current-view：D027 superseded→D028 active；S019 COMPLETE；topic-index/registry terminal、计数、唯一推荐一致 → PASS。
+- [x] 范围与 dirty 隔离：git diff --check PASS；T012 allowlist 为 4 个治理文件 + verifications.md + 2 个新 owner；既有 papers/index/__pycache__/p05/coded logs 未纳入任务改动。
+
+### 证据
+
+独立 fresh-context verifier 初判：内容映射通过，但 V014 尚未落盘，导致 D028/topic-index/registry 的 V014 指针悬空；初判 P0/P1/P2=0/1/0，PARTIAL。
+
+确定性重算：
+
+- terminal=THESIS_GRADE_CANDIDATE_AVAILABLE
+- counts={READY_FOR_THESIS_PACKAGING:2, NEEDS_ONE_BOUNDED_CONFIRMATION:2, SUPPORTING_ONLY:11, PERMANENTLY_INVALID:11, independent_total:26}
+- yaml assets=26，duplicate IDs=[]，aliases=4
+- evidence_refs=41，missing=[]
+- D027 status=superseded，D027 被取代=D028，D028 active
+- S019 COMPLETE；topic/current registry 均指向 D028/V014
+- git diff --check: empty output
+
+本条即为 bounded repair；没有修改历史 V001–V013。
+
+### 结论
+
+PASS
+
+P0/P1/P2 = 0/0/0。

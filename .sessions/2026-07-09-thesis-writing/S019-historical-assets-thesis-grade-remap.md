@@ -1,12 +1,23 @@
 # [S019] 历史资产硕士级重裁
 
-> 2026-08-12 | 方法包装再校准 | READY_TO_DISPATCH
+> 2026-08-12 | 方法包装再校准 | COMPLETE
 
 ## 目标
 
 在不检索、不实验、不启动新 Groundwork 的前提下，按“硕士方法不要求全局最优，其他场景强方法主要限制 claim ceiling”的新标准，一次性重裁既有全部方法资产，找出能直接包装或只差一个 bounded confirmation 的 Ch4 候选。
 
 ## 记录
+
+### T012 完成（2026-08-12）
+
+只读重裁覆盖 26 个独立资产及 4 个历史复合别名。结果为 A/B/C/D = 2/2/11/11，terminal=THESIS_GRADE_CANDIDATE_AVAILABLE。A 档为 CCISP 与 select-before-execute；B 档为 P01 receiver-visible SNR adapter 与 P11 complex-LS Butterfly FIR。唯一推荐下一包是 P01 bounded cross-grid confirmation，本轮未执行。
+
+主产出：
+
+- projects/thesis-fso/direction-lab/harvest/historical-assets-thesis-grade-remap.md
+- projects/thesis-fso/direction-lab/harvest/historical-assets-thesis-grade-remap.yaml
+
+科学无效项未复活；P1/K2/RML/AMC blocker 等仅因竞争力或基础设施不足关闭的资产保留为 SUPPORTING_ONLY。
 
 RDL 系统专题 R007 已记录三项纠偏：场景化 reference-method extension 可以成为硕士方法；正文不必展示全部内部 sanity comparator；存在性能更强的方法不等于当前方法失效。过去大量 terminal 同时混合了科学无效与期刊级 novelty/competitiveness 不足，不能继续一概按永久 dead end 处理。
 
@@ -16,7 +27,8 @@ RDL 系统专题 R007 已记录三项纠偏：场景化 reference-method extensi
 
 ## 决策引用
 
-- D027：先做历史资产 thesis-grade remap，暂停新方向搜索与旧标准下的自动 Kill（新建）。
+- D027：先做历史资产 thesis-grade remap，暂停新方向搜索与旧标准下的自动 Kill。
+- D028：接受 T012 四档重裁与唯一 P01 下一包（新建）。
 
 ## 范围确认
 
@@ -24,4 +36,4 @@ RDL 系统专题 R007 已记录三项纠偏：场景化 reference-method extensi
 
 ## 后续
 
-执行 T012。只有 `READY_FOR_THESIS_PACKAGING` 或 `NEEDS_ONE_BOUNDED_CONFIRMATION` 非空时，才为唯一优先项准备后续包装/实验任务；本轮不执行该后续任务。
+等待主控接收 T012。若后续显式授权，只为 P01 准备 bounded confirmation；P11 保持第二顺位，本轮不执行任何实验。
