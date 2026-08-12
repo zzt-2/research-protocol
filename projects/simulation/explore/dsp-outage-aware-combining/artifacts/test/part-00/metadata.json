@@ -1,0 +1,45 @@
+{
+  "audit_evidence": {
+    "audit_deployable_information_boundary": [],
+    "freeze_hash_entries_validated": 7,
+    "raw_schema_validation": "PASS_STRICT",
+    "strict_tests": "43 passed in 0.66s"
+  },
+  "end_utc": "2026-08-12T01:56:25.3321952Z",
+  "head": "cbb8a2df7ad5151c4c1a15d3a5e4c4237f20da33",
+  "raw": {
+    "branch_rows": 1080,
+    "bytes": 646055,
+    "cells": 18,
+    "method_rows": 1440,
+    "pairs": 360,
+    "receiver_hashes": 360,
+    "rows": 2520,
+    "sha256": "71f6a787345f215595d3b4601d902421637dafa53401a89f7063f8fe1f9ee7d1"
+  },
+  "receipt_sha256": "5d958f8bc64320f0010937c1011d3fb5165d2194bded62f0ad81526e7a95242e",
+  "scientific_interpretation": "NOT_PERFORMED",
+  "seed_list": [
+    10000,
+    10001,
+    10002,
+    10003,
+    10004,
+    10005,
+    10006,
+    10007,
+    10008,
+    10009,
+    10010,
+    10011,
+    10012,
+    10013,
+    10014,
+    10015,
+    10016,
+    10017,
+    10018,
+    10019
+  ],
+  "start_utc": "2026-08-12T01:56:14.3217505Z"
+}

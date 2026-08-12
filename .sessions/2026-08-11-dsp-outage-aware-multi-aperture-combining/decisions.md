@@ -179,7 +179,7 @@ S004/R005。触发原话：无（技术证据裁决）。
 > status: active
 > date: 2026-08-11
 > 取代：无；D006 保持 active
-> 被取代：无
+> 被取代：D008
 > 依据：用户原话 `voice.md` 2026-08-11 + 主控 scope decision + R004/R005 + V004
 
 ### 决策
@@ -207,3 +207,37 @@ Johst 2024 已给出 invalid post-DSP stream 可能伤害合并的 defect 形状
 ### 来源
 
 S005；用户原话：“行。不过这咋这么难呢？别人都咋弄出来的啊？？”
+
+## D008: Q001 因自然 occurrence 与 damage 均过小而科学终止
+
+> status: active
+> date: 2026-08-12
+> 取代：D007 的 Step 4a 临时执行授权
+> 被取代：无
+> 依据：冻结 receipt + held-out raw/aggregate + R006 + V005
+
+### 决策
+
+Q001 唯一科学 terminal=`PROBLEM_ABSENT_OR_TOO_SMALL`，专题关闭。冻结 held-out 中 G1 occurrence=`56/1800=3.1111%`，95% seed-cluster CI=`[2.3333%,3.9444%]`，低于 10% 门；G2 B0 相对 O1 的 BER regret=`0.1114%`，CI=`[-0.3785%,0.4947%]`，outage excess=`0`，亦未证明 damage。按 fail-stop 不恢复 problem-bearing candidate，不实现 reliability/abstention，不进入 fair comparison/Contract。
+
+### 理由
+
+D007 只授权验证科学前提，并预先规定 G1/G2 任一失败即停止。dev/test seeds、18 cells、B1/B2、diagnostic coefficients、G1–G4 和 2000 次 seed-cluster bootstrap 均在 held-out 前由 commit `cbb8a2d` 冻结。五批 test raw 合并为 100 seeds×18 cells=`1800` paired frames；独立 verifier 从 raw 重算并确认相同数字，critical/major/minor=`0/0/1`。
+
+### 排除的替代方案
+
+- 不因 14 个 cell 出现过事件而忽略整体 occurrence 只有 3.1111%。
+- 不用 G4 的绝对 AUC≈0.993 包装信息增量；其相对 power-only delta 仅 `0.000464`，CI 跨 0。
+- 不在 test 后调整 SNR、GG、offset、事件定义、门槛或 diagnostic feature 以“救方向”。
+- 不把 negative smoke 写成 exact collision、新颖性结论或底座失败；Sun/Xie/Qiu debt 保留为历史 claim limitation，但不再提供 Q001 恢复入口。
+
+### 影响范围
+
+- formal science disposition：`PROBLEM_ABSENT_OR_TOO_SMALL`。
+- mission_method_delta：`NONE`。
+- thesis_method_disposition：`NO_METHOD / NO_CH4_CONTRIBUTION`。
+- Q001、C1、fair comparison、Contract 与论文方法写作全部 `NOT_RUN/FORBIDDEN`；专题 lifecycle=`closed`。
+
+### 来源
+
+S005/R006/V005；`projects/simulation/explore/dsp-outage-aware-combining/artifacts/test/`。

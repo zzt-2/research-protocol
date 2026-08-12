@@ -87,10 +87,10 @@ topics:
 
   - slug: 2026-08-11-dsp-outage-aware-multi-aperture-combining
     title: DSP 失效感知的多孔径相干 FSO 可靠合并
-    status: dormant
+    status: closed
     created: "2026-08-11"
-    last_updated: "2026-08-11（D007：Step 4a defect smoke active，novelty debt 保留）"
-    description: "D006/R005 的 EVIDENCE_BLOCKED 与 Sun/Xie/Qiu exact-action debt 保留；D007 仅开放一次 feasibility-first defect smoke，验证 G1–G4，不实现方法。PASS 也只恢复 problem-bearing candidate with novelty debt。"
+    last_updated: "2026-08-12（D008/V005/H005：Step 4a PROBLEM_ABSENT_OR_TOO_SMALL，专题关闭）"
+    description: "D007 defect-only smoke 的冻结 held-out：G1 occurrence=3.1111%<10%，G2 damage=0.1114%且CI跨0；terminal=PROBLEM_ABSENT_OR_TOO_SMALL。无方法、无fair comparison、mission_method_delta=NONE。"
     depends_on:
       - slug: 2026-07-08-b3-joint-estimation
         reason: 复用历史 multi-aperture receiver、MRC caller-path 与 truth-h/RNG 债务边界证据，不继承其方法 verdict
@@ -107,6 +107,7 @@ topics:
       - search-archive/2026-08-11/dsp-outage-multi-aperture-q4.json
       - search-archive/2026-08-11/dsp-outage-multi-aperture-q5.json
       - search-archive/2026-08-11/dsp-outage-multi-aperture-q6.json
+      - projects/simulation/explore/dsp-outage-aware-combining/
 
   - slug: 2026-08-08-rml-fsts-groundwork
     title: RML-FSTS fixed-lag condition-dependence Groundwork

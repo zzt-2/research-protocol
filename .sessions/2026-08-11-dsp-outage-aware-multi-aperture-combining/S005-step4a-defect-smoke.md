@@ -1,6 +1,6 @@
 # [S005] Step 4a feasibility-first defect smoke
 
-> 2026-08-11 | Groundwork Step 4a | active
+> 2026-08-11–2026-08-12 | Groundwork Step 4a | closed
 
 ## 目标
 
@@ -18,10 +18,14 @@
 - 统计管线 reviewer 两轮抓出可伪造 receipt、dev/test/schema 不 fail-closed、O1 非 truth-weight、event-only bootstrap、异方差噪声与 equal-noise MRC 不一致等问题。最终统一为同方差接收噪声、信号增益表达 H1/H2，B0/O1 分别用 estimated/truth channel 的同模型 MRC；raw/receipt/hash/grid/seed/candidate/重采样均 fail-closed。fresh final review=`PASS`，全测=`42 passed`；运行时 generator-exhaustion 回归修复后=`43 passed`。
 - dev 只运行一次：20 seeds × 18 cells=`360` paired realizations，`6480` raw rows。第一次 strict tune 因 cell generator 被笛卡尔积耗尽而 fail-closed；物化 tuple 后复用同一 raw 完成冻结，未重跑。
 - 冻结值：B1 `tau=-8 dB`；B2 `K2→L2/K4→L4`；strongest cheap=`B2`。dev-only AUC power=`0.9926801`、multi=`0.9960666`、delta=`0.0033864`，仅作冻结诊断，不是 test/science 结论。`freeze_receipt.json` 已写 `test_started=false`，七项 hash 独立一致；held-out 尚未开始。
+- chronology Commit 1=`cbb8a2d` 后，held-out 按五个 20-seed batch 运行；每批 360 pairs/2520 rows，receipt/hash/schema 均通过。merged raw=`12600` rows、`1800` pairs。
+- 冻结门结果：G1=`3.1111% [2.3333%,3.9444%]` FAIL；G2 relative BER regret=`0.1114% [-0.3785%,0.4947%]`、outage excess=`0` FAIL。G3/G4 仅诊断：B2 regret 同为 `0.1114%`；multi-source AUC delta over power-only=`0.000464`，CI=`[-0.000675,0.001692]`。
+- independent verifier 从 raw 重算一致，V005=`PASS 0/0/1`。D008 依 fail-stop 裁 terminal=`PROBLEM_ABSENT_OR_TOO_SMALL`，不恢复 problem-bearing candidate；专题关闭。
 
 ## 决策引用
 
 - D007：保留 novelty debt，开放一次 feasibility-first defect smoke（新建）。
+- D008：G1/G2 negative，Q001 scientific termination（新建）。
 
 ## 范围确认
 
@@ -29,4 +33,4 @@
 
 ## 后续
 
-先提交包含源码、dev raw/aggregate 和 immutable `test_started=false` receipt 的 chronology Commit 1；只有该提交成功后才可运行 held-out seeds `10000..10099`。
+无。Q001 已按 D008 scientific fail-stop 关闭；不得重调、构造方法、fair comparison 或以另一组参数复活。

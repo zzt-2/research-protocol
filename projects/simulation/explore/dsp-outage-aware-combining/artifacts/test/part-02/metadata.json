@@ -1,0 +1,59 @@
+{
+  "schema": "q001-defect-smoke-test-part-v1",
+  "part": "part-02",
+  "split": "test",
+  "seed_list": [
+    10040,
+    10041,
+    10042,
+    10043,
+    10044,
+    10045,
+    10046,
+    10047,
+    10048,
+    10049,
+    10050,
+    10051,
+    10052,
+    10053,
+    10054,
+    10055,
+    10056,
+    10057,
+    10058,
+    10059
+  ],
+  "raw": {
+    "path": "artifacts/test/part-02/raw.csv",
+    "rows": 2520,
+    "seed_cell_pairs": 360,
+    "branch_rows": 1080,
+    "method_rows": 1440,
+    "bytes": 646027,
+    "sha256": "0dc3ba04e00e4bbe87883a3efcb4fd72c5f0cb29a707bd62df4cb602576b5d9e"
+  },
+  "freeze_receipt_sha256": "5d958f8bc64320f0010937c1011d3fb5165d2194bded62f0ad81526e7a95242e",
+  "head": "cbb8a2df7ad5151c4c1a15d3a5e4c4237f20da33",
+  "preflight": {
+    "strict_tests": "43 passed in 0.59s",
+    "deployable_information_boundary_audit": [],
+    "freeze_receipt_test_started": false,
+    "freeze_receipt_hashed_files_current": 7
+  },
+  "validation": {
+    "canonical_cells": 18,
+    "receiver_hashes": 360,
+    "method_signatures": {
+      "B0=all": 360,
+      "B1=-8.0": 360,
+      "B2=2": 180,
+      "B2=4": 180,
+      "O1=oracle": 360
+    }
+  },
+  "started_utc": "2026-08-12T01:56:54.079591+00:00",
+  "ended_utc": "2026-08-12T01:57:03.960242+00:00",
+  "elapsed_seconds": 9.881270,
+  "scientific_interpretation": "NOT_PERFORMED"
+}

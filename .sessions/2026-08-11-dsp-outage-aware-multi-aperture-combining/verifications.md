@@ -121,3 +121,29 @@
 ### Final check
 
 T016 fresh follow-up final verdict=`PASS`，critical/major/minor=`0/0/0`。三项 bounded repair 全部闭合；科学 terminal 保持 `EVIDENCE_BLOCKED`，Step 4a 继续 `NOT_AUTHORIZED`。本 PASS 只接收证据与治理闭合，不产生 collision/non-collision、novelty、Kill 或 METHOD_SIGNAL。
+
+## V005：GW Step 4a defect smoke 独立终验
+
+- 日期：2026-08-12
+- 关联：S005 / D007 / D008 / R006 / commit `cbb8a2d`
+- 验证方：independent fresh-context verifier（未参与 test 分批运行、合并或主线裁决）
+- 状态：PASS
+- 严重度：critical/major/minor=`0/0/1`
+
+### 独立验证结果
+
+| 组 | 结论 | 独立证据 |
+|---|---|---|
+| chronology/freeze | PASS | Commit 1=`cbb8a2d` 在首个 held-out batch 前；receipt=`test_started=false`，七项 hash 与冻结源码/dev 资产一致；test 后未调参。 |
+| raw/schema/pairing | PASS | 五 part hash 与 metadata 一致；merged raw SHA=`eb964eee...`，12600 rows=`5400 branch+7200 method`，100 seeds×18 cells=`1800` exact pair/hash；仅 B0/B1=-8/B2=L=K/O1。 |
+| information boundary | PASS | 43 tests；递归 AST reachable clean；固定 RX 翻转全部 truth 字段后 B0/B1/B2 features/subset/no-valid/complex output bit-exact。 |
+| raw recomputation | PASS | G1=`3.1111% [2.3333%,3.9444%]`；G2 regret=`0.1114% [-0.3785%,0.4947%]`、outage=`0`；G3/G4 与发布 aggregate 一致。 |
+| terminal/claim | PASS | first fail-stop=`PROBLEM_ABSENT_OR_TOO_SMALL`；不恢复 problem-bearing candidate，novelty debt preserved，无 soft method/METHOD_SIGNAL。 |
+
+### Minor limitation
+
+冻结源码的 direct strict aggregate caller 把 `expected_cells` 作为 one-shot generator 传入，导致 coverage validator 在第一 seed 后耗尽。官方聚合仅用 process-local adapter 将 iterable 物化为 tuple；未改 raw、frozen、metric、bootstrap、源码或 receipt。独立 verifier 以同一 raw 独立重算完全吻合。该复现限制记录在案，不为修复它改写已冻结合同或 scientific result。
+
+### 结论
+
+接受 D008 与唯一 terminal。此次 PASS 是证据接收 PASS，不是科学门 PASS；Q001 scientific result 为 negative，`mission_method_delta=NONE`。

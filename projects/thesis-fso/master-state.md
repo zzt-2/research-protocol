@@ -5,7 +5,7 @@ method_type: reference-method extension（非 ML；完整 deployable action chai
 domain: comms
 created: 2026-06-21
 updated: 2026-08-11
-current_step: GROUNDWORK_STEP4A_DEFECT_SMOKE_PRETEST_FROZEN（novelty debt 保留）
+current_step: GROUNDWORK_STEP4A_PROBLEM_ABSENT_OR_TOO_SMALL（DSP-outage Q001 closed）
 current_stage: GROUNDWORK
 ---
 
@@ -39,6 +39,8 @@ current_stage: GROUNDWORK
 
 > **2026-08-12 D007 feasibility-first Step 4a 例外（S005，pre-test freeze）**。不撤销上段 novelty debt，只允许 defect smoke。A0/A′/A/B 允许执行；历史 b3 因 truth-h/RNG/offset/FSTS/MRC 债务不复用端到端。独立 sandbox 经 fresh review 修闭 receiver firewall、单偏振 Park/FSTS proxy、equal-noise corrected MRC、paired RNG、递归 AST、strict raw/receipt/grid/schema 与 all-seed bootstrap。dev 仅运行一次：20×18=360 pairs、6480 rows；冻结 B1=`-8 dB`、B2=`K2→L2/K4→L4`、strongest cheap=`B2`，receipt=`test_started=false`。dev AUC delta=`0.0033864` 只作 NON-TEST 诊断。held-out=`NOT_STARTED`；本状态不是方法、Go 或 scientific terminal。
 
+> **2026-08-12 D008/V005/R006/H005 Q001 scientific terminal**。Commit 1=`cbb8a2d` 后五批 held-out=100 seeds×18 cells=1800 pairs/12600 rows。G1 occurrence=`3.1111%`、CI=`[2.3333%,3.9444%]`，低于10%；G2 B0 regret=`0.1114%`、CI=`[-0.3785%,0.4947%]`，outage excess=0。G3/G4 诊断亦不支持：B2 regret=`0.1114%`；multi-vs-power AUC delta=`0.000464`、CI跨0。fresh raw verifier=`PASS 0/0/1`。唯一 terminal=`PROBLEM_ABSENT_OR_TOO_SMALL`，Q001 closed；formal science disposition 与 mission/thesis method disposition 分别为该 terminal、`NONE`、`NO_METHOD / NO_CH4_CONTRIBUTION`。
+
 > **2026-08-11 K2/K3 reference-entry 自动轮换（Ch4 source owner D005–D006/R003/V004/H004，fresh verifier PASS 0/0/0）**。K2 的 suffix pollution 为 published defect，但 future action 未唯一化，order-2/3 Tikhonov mixture/sequence tracker 只构成 `UNRESOLVED_HIGH_RISK / STRONG_NEIGHBOR`，不声称 exact collision 或已完全吸收；完整比较预计 5–9 天。K3 缺 task-matched fixed-JP unequal-reliability published defect，且 Weighted/RW-BPS/unequal-SNR CPR 仅形成待全文闭合的 collision debt。terminal=`NO_ENTRY_SURVIVOR_STRATEGIC_SHORTAGE`；未创建新 GW 专题、未执行 Step 1，`mission_method_delta=NONE`。K1/Q001 继续保持上段 `EVIDENCE_BLOCKED`，不是 scientific failure。
 
 | DSP-outage-aware multi-aperture GW Step | 状态 | 证据 | 下游门控 |
@@ -47,7 +49,7 @@ current_stage: GROUNDWORK
 | 2 acquire | ✅ COMPLETE / ACCEPTED WITH LIMITATION | D003/R002/R003；qualified 5，optical CORE 3，P0 limitation | 允许 Step 3；若 Q# 存活，2019 债移交 Step 3.5 |
 | 3 read | ✅ COMPLETE / VERIFIED | S003/T007–T010/R004/D004/V003/H003 | terminal=`STEP3_Q_SURVIVES_READY_FOR_STEP3_5` |
 | 3.5 supplement | ⛔ EVIDENCE_BLOCKED / VERIFIED | D005/D006/S004/T011–T016/R005/V004/H004 | direct action debt 未闭合；不是 scientific Kill |
-| 4a feasibility | 🔄 PRETEST FROZEN / D007 EXCEPTION | S005 + independent reviews + sandbox dev raw/aggregate + immutable receipt | chronology Commit 1 后仅运行冻结 held-out；仍无 Contract/method 入口 |
+| 4a feasibility | ❌ COMPLETE / PROBLEM_ABSENT_OR_TOO_SMALL | D008/R006/V005/H005 + test raw/aggregate；verifier PASS 0/0/1 | Q001 closed；Contract/method/fair comparison forbidden |
 
 > **2026-08-11 coded decoder-feedback C1 科学终态（D027/V021/CP016）**。S1 occurrence=`262/480` PASS；S2 exact 1620 rows 的 damage=`0.06944444444444449` 与 recoverability=`0.04008151917073723` 均未过冻结门。独立 verifier 对证据给出 `PASS 0/0/0`，science verdict=`FAIL`。按顺序 fail-stop，B2、decoder-information、S4、C1、FAIR_COMPARISON_RUN 全部 NOT_RUN；method signal/thesis contribution=`NONE`。
 

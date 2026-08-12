@@ -1,6 +1,6 @@
 # DSP 失效感知的多孔径相干 FSO 可靠合并
 
-> 状态：active | 当前阶段：Groundwork Step 4a feasibility-first defect smoke（novelty debt 保留）
+> 状态：closed | 当前阶段：Groundwork Step 4a scientific termination
 
 ## 范围边界
 
@@ -10,7 +10,7 @@
 
 ### 当前范围
 
-仅执行 D007 授权的 GW Step 4a feasibility-first defect smoke：先按 A0→A′→A/B 复核冻结 Q001，再仅验证自然条件下 occurrence、invalid-branch damage、tuned hard discard/SC-GSC 后的 residual room，以及 receiver-visible validity observability。D006 的 `EVIDENCE_BLOCKED` 与 Sun/Xie/Qiu exact-action debt 原样保留；本轮不能形成 non-collision、新颖性、方法或 Go。
+D007 授权的 GW Step 4a defect smoke 已由 D008 收口：冻结 held-out 的 occurrence 与 damage 均未成立，terminal=`PROBLEM_ABSENT_OR_TOO_SMALL`。专题关闭；Sun/Xie/Qiu debt 仅保留为历史 claim limitation，不再构成 Q001 恢复入口。
 
 ### 明确不含
 
@@ -56,6 +56,7 @@
 - T011–T016/R005/D006/V004/H004：两轮检索最后一轮 new MUST/SHOULD=0/0；Zhang 2023 为 estimator-changing neighbor；Sun/Xie/Qiu 等承重动作仍无一手全文。fresh verifier 首验 PARTIAL 0/1/2，bounded repair 后 final PASS 0/0/0；terminal=`EVIDENCE_BLOCKED`，无 Step 4a 入口。
 - S005/D007：主控依据用户原话授权一次 feasibility-first 例外；`EVIDENCE_BLOCKED` 不撤销，只开放 defect-only Step 4a，禁止实现候选方法。
 - S005/Step4a pre-test freeze：独立 sandbox 经多轮 fresh review 修闭 receiver truth firewall、Park/FSTS proxy、correct MRC、paired RNG、递归 AST、raw/receipt/schema/bootstrap；最终 reviewer PASS。dev=`20×18`、6480 raw rows；冻结 B1=`-8 dB`、B2=`L=K`、strongest cheap=`B2`，receipt=`test_started=false`。dev 数字不是科学终态，held-out 尚未开始。
+- R006/D008/V005/H005：五批 held-out 合并为 1800 pairs/12600 rows；G1=3.1111% FAIL、G2 regret=0.1114%且 CI 跨0 FAIL；fresh raw verifier PASS 0/0/1。terminal=`PROBLEM_ABSENT_OR_TOO_SMALL`，mission_method_delta=`NONE`，专题 closed。
 
 ## 已确认结论
 
@@ -72,12 +73,12 @@
 3. `STEP3_Q_SURVIVES_READY_FOR_STEP3_5` 只表示问题候选存活，不等于方法有效、新颖性闭合或论文贡献。
 4. Step 3.5 身份检索已收敛，但 direct-action evidence 不充分；`EVIDENCE_BLOCKED` 不是 exact collision 或 scientific Kill。
 5. D007 只改变“novelty debt 是否阻止任何 smoke”的流程处置，不改变 Q001 的 exact-action 证据等级与 claim ceiling。
+6. D008 已以冻结科学数字终止 Q001；verifier PASS 只接收证据，不代表 science PASS。
 
 ## 未决项
 
-1. Sun/Xie/Qiu 的承重 primary fulltext 或等价后续一手完整动作证据能否取得。
-2. G1–G4 是否在冻结 primary 物理 grid 与 held-out seeds 上同时成立。
+无。历史 Sun/Xie/Qiu fulltext debt不再提供 Q001 恢复入口。
 
 ## 当前位置
 
-`GROUNDWORK_STEP4A_DEFECT_SMOKE_PRETEST_FROZEN`：A0→A′→A/B 与 testbed/freeze review 已通过；chronology Commit 1 后仅可运行 receipt 冻结的 held-out seeds。不得构造 C1 或把任一 PASS 写成方法/新颖性/Go。
+`CLOSED / PROBLEM_ABSENT_OR_TOO_SMALL`：G1/G2 negative；不得重调、复活 Q001、构造 C1、fair comparison、Contract 或论文方法声称。
