@@ -882,10 +882,10 @@ S018；用户 2026-08-03 主控纠偏。
 
 ## D026: 唯一推荐 thesis spine = CCISP 主方法 + 校准鲁棒方法 + 低复杂度部署方法
 
-> status: active
+> status: superseded
 > date: 2026-08-03
 > 取代：D025
-> 被取代：无
+> 被取代：D027
 > 依据: 调研 peer-thesis-method-packaging-audit.md + internal-method-kernel-inventory.yaml + packaging-recipe-library.md（12 篇硕士、每篇至少两个核心技术/方法章）+ thesis-method-spines.md + 独立交叉审查 T010 + 用户原话 voice.md 2026-08-03
 
 ### 决策
@@ -923,3 +923,42 @@ S018；用户 2026-08-03 主控纠偏。
 ### 来源
 
 S018；T002–T010；用户 2026-08-03 “每章至少都得有方法”主控要求。
+
+## D027: 先按硕士级标准重裁历史资产，再决定唯一 Ch4 包
+
+> status: active
+> date: 2026-08-12
+> 取代：D026
+> 被取代：无
+> 依据: 调研 `.sessions/2026-07-20-research-direction-lab-system/R007-thesis-grade-reference-extension-recalibration.md` + 对照 `packaging-recipe-library.md` 的 12 篇硕士方法章样本 + 用户原话 `voice.md` 2026-08-12
+> 触发原话：见 `voice.md` 2026-08-12
+
+### 决策
+
+暂停继续检索新方向。先执行 T012，对全部历史方法资产做一次只读 thesis-grade remap，统一分为 `READY_FOR_THESIS_PACKAGING`、`NEEDS_ONE_BOUNDED_CONFIRMATION`、`SUPPORTING_ONLY`、`PERMANENTLY_INVALID`。
+
+硕士方法不要求全局最优，也不要求击败所有近期强方法。其他场景、更一般或性能更强的方法默认只限制 claim ceiling；只有同任务、同条件、同信息、同动作输出且没有场景特定适配 delta 时才构成 direct collision。主实验可以只比较 reference/经典 baseline；显而易见廉价解释必须内部检查，但不自动进入正文主表。
+
+科学无效项不因标准放宽而恢复。truth leakage、scale/metric/cost artifact、物理前提不存在、problem absent、明确 damage/headroom/gate FAIL 继续永久关闭。
+
+T012 最多推荐 3 个候选，并给出唯一下一包；本轮不运行该包。只有 remap 得到 A/B 档候选，才允许准备后续包装或 bounded confirmation。
+
+### 理由
+
+D026 的候选标准仍混入了“动作独立性、强近邻闭包和全局竞争力”要求。随后 2A/2B authority 纠偏及多轮 Groundwork 进一步证明，流程擅长证伪，却会把硕士级 reference extension 按近期期刊 novelty 标准提前淘汰。12 篇硕士论文样本表明，较小增量、经典 baseline、工程化适配和非全局最优方法均可成章，只要动作链、实验和边界完整。
+
+### 明确不含
+
+- 不直接恢复任何旧 active carrier、METHOD_SIGNAL 或 Go；
+- 不检索、下载全文、实现、仿真或启动 Groundwork；
+- 不修改 Skill/controller/common/params/正式论文；
+- 不把 supporting/invalid 资产只改名字后晋级；
+- 不要求 remap 预先凑满候选。
+
+### 影响范围
+
+新增 S019/T012，并更新 thesis-writing 当前入口。D026 保留为历史 spine，但其“2A/2B 各跑 bounded package”的自动入口停止；Ch3 CCISP 与 RDL D036 的 Ch5 工程方法身份不变。
+
+### 来源
+
+R007；S019；用户 2026-08-12 连续三次对硕士方法、baseline 选择和旧资产回收标准的确认。

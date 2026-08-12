@@ -604,8 +604,8 @@ topics:
     title: 论文写作专题（自适应 CPR 方向）
     status: active
     created: "2026-07-09"
-    last_updated: "2026-08-07（RDL D036/V020：Ch5 CCISP scheduling-only 方法就绪）"
-    description: "自适应载波相位恢复方向的论文写作准备专题。RDL D036/V020 已取代 D026 中 Ch5 的复合 2B pending 投影：Ch5 当前为 CCISP select-before-execute single-branch receiver architecture，canonical tier=THESIS_ENGINEERING_COMPONENT，task-local terminal=THESIS_ENGINEERING_METHOD_READY；Q(8,6) fixed-point 继续 SUPPORTING_ONLY 且不进入正文。Ch4/2A 独立终态不在本轮改写；不跑新实验。"
+    last_updated: "2026-08-12（D027/T012：历史资产硕士级重裁待执行）"
+    description: "自适应 CPR 论文写作与全项目方法包装专题。Ch3 CCISP 主方法、Ch5 select-before-execute 工程方法事实保持；D027 暂停 D026 的旧 2A 自动入口，当前只读执行 T012，把历史资产按硕士级 reference-method extension 标准分为可直接包装、只差一次补证、支持材料和永久无效四档，再决定唯一 Ch4 包。不检索、不实验、不改 Skill 或正式论文。"
     depends_on:
       - slug: 2026-07-06-step4a-mve-execution
         reason: 继承 A4 数据（30seed fair_gain + A4 切换 CI）+ baseline 池（D-010 五条 + DA/NDA/DPLL/VV/BPS）+ R001 调研（baseline 组织/参数/叙述惯例 + 合法性背书矩阵）+ 简报 ADVISOR_BRIEFING_2026-07-09
