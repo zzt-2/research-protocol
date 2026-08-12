@@ -1,6 +1,6 @@
 # Topic Index: Ch4 参考方法扩展
 
-> 状态: dormant | 创建: 2026-08-08 | 最后更新: 2026-08-11（K2/K3 入口重裁无 survivor）
+> 状态: dormant | 创建: 2026-08-08 | 最后更新: 2026-08-12（D007 唯一恢复 K2 Step 1 入口）
 
 ## 专题信息
 
@@ -12,7 +12,7 @@
 
 **原始目标**：在星地相干 FSO 总伞下，为 Ch4 产出一个真实方法章；从可复现 reference baseline 出发，经 observed defect、one deployable action、fair comparator 与 bounded testbed，形成完整方法包。
 
-**当前范围**：本专题为 dormant reference-entry source owner。2026-08-11 的 K2/K3 bounded re-adjudication 已以 `NO_ENTRY_SURVIVOR_STRATEGIC_SHORTAGE` 收口；不再承载科学执行，不创建新 Groundwork 专题。K1 保持可恢复 `EVIDENCE_BLOCKED`，K4 保持 exact collision；只有新的 candidate source 或不同 research object 经显式 scope-change 才能恢复入口裁决。
+**当前范围**：本专题为 dormant reference-entry source owner。D007 已显式改变 candidate source / research object 与预算，唯一把 K2 移交新的 `2026-08-12-multi-hypothesis-phase-unwrapping` Groundwork 专题；本专题不承载其 Step 1 以后科学执行。Q001 已科学关闭，K3/K4/K1 与其他旧轴均不在当前范围。
 
 **明确不含**：
 
@@ -34,6 +34,10 @@
   - 原因：K1/Q001 以 `EVIDENCE_BLOCKED` 合法收口，需按 RDL 自动轮换裁决原四卡剩余候选。
   - 新范围：只读重裁 E1–E8 与 strongest cheap alternative；恰有一个 survivor 才允许新建专题并运行 GW Step 1。
   - 影响的未决项：R003 证明两卡均失败，未触发新专题或 Step 1；D006 后恢复 dormant。
+- **[2026-08-12] D007**：改变 candidate source / research object 与预算，唯一恢复 K2 Groundwork 入口。
+  - 原因：Q001 已用 defect smoke 在一天内关闭；旧 K2 拒绝依赖 Step 1 前过严 E5/E7 与原 7 天预算，TCOM 2016 从未被确认为 exact collision。
+  - 新范围：成熟 reference method 的低复杂度任务适配扩展；单方向 fair comparison 预计 5–9 天可接受，本轮只执行入口和解与新专题 Step 1。
+  - 影响的未决项：K2 的 exact/near collision、固定 hypothesis/lag/复杂度合同由新专题 Step 1–3 继续闭合；本专题保持 dormant。
 
 ## 已确认结论
 
@@ -41,7 +45,7 @@
 
 1. 候选必须从可复现的外部或权威 reference baseline 与可观察/可复现的具体缺陷出发，不从内部 supporting leftovers 反推方法名。
 2. 每个方法包只增加一个可部署动作；廉价替代默认进入公平 comparator/实验，除非已有证据证明 exact existing-action collision，不得在概念期凭想象预杀。
-3. 基础设施工作量是投资预算，不是科学否决理由；只有入口门通过的单一胜者可获 3–7 天最小 testbed 预算。
+3. 基础设施工作量是投资预算，不是科学否决理由；预算必须由显式 scope decision 冻结。一般入口沿用 3–7 天，D007 对唯一 K2 单方向把公平比较预计预算改为 5–9 天。
 4. 每个 research object 最多执行 2 个 method-bearing package；两个机制不同对象真正完成已授权 defect smoke 或 method-bearing package 后仍无方法增量，才必须回用户做战略范围决策。entry screening 不计数。
 5. `SUPPORTING_ONLY` / `REJECT` 不关闭 Ch4 方法槽位，也不允许继续消耗包装轮次。
 6. 每轮恢复先回答防偏三问：
@@ -50,6 +54,7 @@
    - 是否已触发“每对象 2 包 / 两对象失败”的停止条件？
 7. defect-reproduction 入口不要求目标 FSO defect 预先成立；最低证据合同是外部已发表 defect、明确的 FSO 迁移物理机制、0.5–1 天可证伪 smoke 设计。该合同只授权进入 GW Step 1，不等于 defect 成立或方法成立。
 8. “published defect 存在”不等于“拟议 action 是方法”；若 strongest cheap alternative 已吸收动作、完整 action 未唯一化或 task-matched defect 缺失，入口必须停止。
+9. TCOM 2016 已占据多轨迹、likelihood、merge/prune、bounded order 与 pilot recovery 的宽泛能力；K2 只能主张待验证的 decoder-free、fixed-hypothesis/fixed-lag、确定复杂度/时延任务适配差异。
 
 ### 其他结论
 
@@ -61,6 +66,7 @@
 6. C2 BUM-CMA 的 weak-branch gradient pollution 缺 published defect 与 faithful smoke，不得并行启动或用物理推断补 E2。
 7. RML-FSTS future smoke 的最强廉价替代是 dev-frozen modulation/TS/receiver-power-conditioned single-lag lookup；论文 fixed `BL` 或较弱 global lag 单独失败不能过门，conditioned lookup 若在 MDE 内解决问题则退出。
 8. K2 suffix pollution 是 published defect，但三假设 action 未过唯一化/高风险强邻居/章节/预算门；K3 缺 task-matched fixed-JP published defect。两者均为 entry rejection，不是 family scientific Kill。
+9. D007 取代 D006 的 current operational terminal，但不改写 D006 历史：新门槛下 K2=`A_PASS_NO_FATAL_ENTRY_BLOCKER`，只允许进入 Step 1，不是方法或非碰撞结论。
 
 ## 进展线索
 
@@ -79,12 +85,13 @@
 - **T003**：自包含授权独立 RML-FSTS Groundwork 专题的 Step 1 检索初筛与 Step 2 全文获取；覆盖面报告后硬停止，不进 Step 3。
 - **R003 / D005–D006**：恢复原 K2/K3 动作签名并逐门重裁；K2 面对 order-2/3 mixture tracker 高风险强邻居且动作/预算未闭合，K3 缺 published fixed-JP defect且 collision debt 未闭合；terminal=`NO_ENTRY_SURVIVOR_STRATEGIC_SHORTAGE`。
 - **H004 / V004**：交接战略短缺与恢复条件；fresh-context verifier 经修正后 final PASS，Critical/Major/Minor=`0/0/0`。
+- **R004 / D007**：Q001 关闭后改变 candidate source / research object；TCOM 2016 裁为 mandatory full-general comparator、非 exact same action，K2 唯一恢复 Step 1 入口。
 
 ## 未决项
 
-- 新的 candidate source 或不同 research object 能否同时提供 task-matched 2019+ reference、明确 published defect、一个完整 action 与已闭合 strongest cheap comparator？
-- K1/Q001 的 direct-action primary evidence 是否未来可合法获得；未获得前不得重开。
+- K2 Step 1 是否找到 exact action collision；若未碰撞，哪些 task-specific bounded delta 值得进入 Step 2 获取。
+- fixed order-2/3 Tikhonov mixture、original/improved unwrap、LMMSE-WPA 与 pilot reset 的 comparator 身份和动作边界。
 
 ## 当前位置
 
-`DORMANT_STRATEGIC_SHORTAGE`，current terminal=`NO_ENTRY_SURVIVOR_STRATEGIC_SHORTAGE`。K2/K3 没有 GW Step 1 入口；K1/Q001 仍由独立专题保持 `EVIDENCE_BLOCKED`，不是 scientific failure。当前 `mission_method_delta=NONE`。
+`DORMANT_SOURCE_OWNER / K2_HANDOFF_TO_GW_STEP1`。D006 保留历史，D007 为 current scope decision；K2 科学状态只看独立新专题。当前仍没有 Q#、Go、METHOD_SIGNAL 或 Ch4 方法贡献。

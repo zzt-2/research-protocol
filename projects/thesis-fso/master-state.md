@@ -4,8 +4,8 @@ direction: 星地激光通信（FSO）——子地带由地勘（S003 方法论 
 method_type: reference-method extension（非 ML；完整 deployable action chain，最终形态待 Step 3/4a）
 domain: comms
 created: 2026-06-21
-updated: 2026-08-11
-current_step: GROUNDWORK_STEP4A_PROBLEM_ABSENT_OR_TOO_SMALL（DSP-outage Q001 closed）
+updated: 2026-08-12
+current_step: GROUNDWORK_STEP1_PASS_READY_FOR_STEP2_CONFIRMATION（K2 bounded multi-hypothesis unwrap）
 current_stage: GROUNDWORK
 ---
 
@@ -34,6 +34,16 @@ current_stage: GROUNDWORK
 > 也不授权 fixed-point、硬件综合或新物理场景。
 
 ### 当前控制面桥接
+
+> **2026-08-12 K2 candidate-source / research-object scope change 与 GW Step 1（source D007/R004；new owner D001–D002/S001/R001–R003/V001/H001）**。Q001 保持 `PROBLEM_ABSENT_OR_TOO_SMALL` closed，不调参重跑、不计 Ch4 材料。唯一新对象为 Wang TSP 2022 suffix-pollution 的 bounded multi-hypothesis/fixed-lag task adaptation；预计后续公平比较 5–9 天可接受。Step 1 两轮 11 query：278 raw→242 title-dedup→138 semantic，98 formal=`71.01%`，12 must-read，S2/OA/SerpAPI Scholar 三贡献源。TCOM 2016 裁为 full-general mandatory comparator、非 confirmed exact action；D1/D2 仅是待审设计形态。V001 初审 PARTIAL 0/3/1 的 formal 归并、编号和预声明已修，final fresh verifier PASS 0/0/0；terminal=`STEP1_PASS_READY_FOR_STEP2_CONFIRMATION`，Step 2 未授权，无 Q#/Go/方法/METHOD_SIGNAL。
+
+| Bounded multi-hypothesis unwrap GW Step | 状态 | 证据 | 下游门控 |
+|---|---|---|---|
+| 1 search | ✅ COMPLETE / VERIFIED | upstream D007/R004；new D001–D002/S001/R001–R003/V001/H001 + 11 JSON | terminal=`STEP1_PASS_READY_FOR_STEP2_CONFIRMATION` |
+| 2 acquire | NOT_AUTHORIZED | D002 | 未确认前禁止下载/精读 |
+| 3 read | ⬜ FORBIDDEN | — | Step 2 未完成前禁止 |
+| 3.5 supplement | ⬜ FORBIDDEN | — | Step 3 未完成前禁止 |
+| 4a feasibility | ⬜ FORBIDDEN | — | 无 Q#；禁止实现/仿真 |
 
 > **2026-08-11 新算法专题 GW Step 3.5（D005/D006/S004/R005/V004/H004）**。Round 1=8 queries/45 unique，引用链=121 unique，Round 2=6 queries/4 unique 且 new MUST/SHOULD=0/0。Zhang 2023 全文为 estimator-changing neighbor；Sun/Xie/Qiu 等 direct-action primary evidence 仍不可得。fresh verifier 首验 PARTIAL 0/1/2，bounded repair 后 final PASS 0/0/0。terminal=`EVIDENCE_BLOCKED`，不是 collision/Kill；Step 4a 无入口。
 

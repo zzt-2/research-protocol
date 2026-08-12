@@ -6,6 +6,7 @@
 > 2026-08-08 续接 | H003 接收与 T003 准备 | T003 待派发
 > 2026-08-08 续接 | T003 回传 | 科学执行迁入独立专题，Step 2 READY
 > 2026-08-11 续接 | K1 blocked 后自动轮换 | K2/K3 入口重裁完成，无 survivor
+> 2026-08-12 续接 | candidate-source / research-object scope change | K2 唯一恢复 Step 1 入口
 
 ## 目标
 
@@ -37,6 +38,8 @@ T003 已完成：独立执行 owner 为 `.sessions/2026-08-08-rml-fsts-groundwor
 
 两个 fresh-context science agent 分别审计 K2/K3。K2 的 suffix pollution 为 TSP 2022 明确 published defect，但 future action 未唯一化，且 TCOM 2016 order-2/3 mixture tracker 对多轨迹/likelihood/merge-prune/confidence 构成高风险强邻居；因 task/target 不同，不声称 exact collision 或已完全吸收。K3 缺 task-matched published fixed-JP failure，原 JP-V&V 反而报告 fixed coupling 可 near-optimal。R003/D006 因此给出 terminal=`NO_ENTRY_SURVIVOR_STRATEGIC_SHORTAGE`。未创建新专题、未运行 GW Step 1、未实现或仿真；入口拒绝不计 research-object failure。
 
+2026-08-12 Q001 用一天内 defect smoke 证明问题不存在或过小后关闭；不再调参重跑或作为 Ch4 材料。主控据用户对较大单方向预算的既有接受，显式改变 candidate source 与 research object：停止接收链微缺陷枚举，唯一恢复 K2。R004 重新逐字段审计 TCOM 2016，结论为 mandatory full-general comparator 而非 exact same action。D007 纠正旧 E5/E7 的 Step 1 前置过严门，并把单方向 fair comparison 预算上调为预计 5–9 天；本轮仍只授权新专题 Step 1，不授权下载、实现或仿真。
+
 ## 决策引用
 
 - D001：冻结 Ch4 reference-method extension 执行合同（新建）。
@@ -48,6 +51,7 @@ T003 已完成：独立执行 owner 为 `.sessions/2026-08-08-rml-fsts-groundwor
 - D005：临时恢复 dormant owner，只做 K2/K3 bounded entry re-adjudication（新建）。
 - D006：K2/K3 均无入口 survivor，terminal=`NO_ENTRY_SURVIVOR_STRATEGIC_SHORTAGE`（新建）。
 - V004：fresh-context verifier 经三轮措辞修复后 final PASS，Critical/Major/Minor=`0/0/0`。
+- D007：改变 candidate source / research object 与预算；唯一恢复 K2 Groundwork Step 1 入口（新建）。
 
 ## 范围确认
 
@@ -55,4 +59,4 @@ T003 已完成：独立执行 owner 为 `.sessions/2026-08-08-rml-fsts-groundwor
 
 ## 后续
 
-本专题恢复 dormant，无自动科学执行后续。下一次只有新的 candidate source 或不同 research object，同时带入 task-matched 2019+ reference、published defect 和已闭合的 strongest cheap comparator，才可显式 scope-change；不得自动续 K1/K2/K3/K4。
+本专题仍是 dormant source owner。K2 科学执行迁到独立 `2026-08-12-multi-hypothesis-phase-unwrapping` 专题；本文件不承载 Step 1 以后动作。

@@ -55,8 +55,8 @@ topics:
     title: Ch4 参考方法扩展
     status: dormant
     created: "2026-08-08"
-    last_updated: "2026-08-11（K2/K3 bounded entry re-adjudication 无 survivor）"
-    description: "Ch4 reference-entry source owner。K1/Q001 保持 recoverable EVIDENCE_BLOCKED；K2 三假设 unwrapping 与 K3 可靠度 JP-BPS 均未通过入口门，terminal=NO_ENTRY_SURVIVOR_STRATEGIC_SHORTAGE，mission_method_delta=NONE；无新 GW 专题。"
+    last_updated: "2026-08-12（D007/R004：candidate-source/research-object 改变，K2 唯一移交新 GW Step 1）"
+    description: "Ch4 reference-entry source owner。D006 保留旧门槛/预算下的战略短缺历史；D007 在 Q001 关闭后改变 candidate source、research object 与 5–9 天预算，K2 作为唯一对象移交 2026-08-12-multi-hypothesis-phase-unwrapping。source owner 继续 dormant，不承载科学执行。"
     depends_on:
       - slug: 2026-07-20-research-direction-lab-system
         reason: 继承方法生产教训、dead-end inventory、章节槽位规则与历史证据
@@ -65,6 +65,33 @@ topics:
     conflicts_with: []
     produces:
       - .sessions/2026-08-08-ch4-reference-method-extension/
+
+  - slug: 2026-08-12-multi-hypothesis-phase-unwrapping
+    title: coherent FSO 有界多假设固定滞后相位解缠 Groundwork
+    status: active
+    created: "2026-08-12"
+    last_updated: "2026-08-12（D002/V001/H001：GW Step 1 PASS，等待 Step 2 confirmation）"
+    description: "唯一 K2 Groundwork owner。以 Wang TSP 2022 suffix-pollution defect 为 reference，面向 coherent FSO residual CFO+laser Wiener PN 审查 bounded H=3 fixed-lag unwrap 与 receiver-visible reliability-triggered expansion。Step1=PASS/VERIFIED；TCOM 2016 为 full-general mandatory comparator，未确认 exact action collision；无Q#/Go/方法/METHOD_SIGNAL，Step2未授权。"
+    depends_on:
+      - slug: 2026-08-08-ch4-reference-method-extension
+        reason: 继承 K2 published defect、D007 candidate-source/research-object scope change 与 mandatory comparator 边界
+      - slug: 2026-07-09-thesis-writing
+        reason: 继承 Ch4 方法章槽位、章节 authority 与 claim ceiling
+    conflicts_with: []
+    produces:
+      - .sessions/2026-08-12-multi-hypothesis-phase-unwrapping/
+      - projects/thesis-fso/literature_notes_multi_hypothesis_phase_unwrapping.md
+      - search-archive/2026-08-12/k2-unwrap-error-propagation-r1.json
+      - search-archive/2026-08-12/k2-unwrap-multihypothesis-r1.json
+      - search-archive/2026-08-12/k2-mixture-fixedlag-r1.json
+      - search-archive/2026-08-12/k2-unwrap-optical-cycle-slip-r2.json
+      - search-archive/2026-08-12/k2-unwrap-wang-directed-r2.json
+      - search-archive/2026-08-12/k2-mixture-tikhonov-directed-r2.json
+      - search-archive/2026-08-12/k2-optical-carrier-estimation.json
+      - search-archive/2026-08-12/k2-optical-fixed-lag.json
+      - search-archive/2026-08-12/k2-optical-fso-cycle-slip.json
+      - search-archive/2026-08-12/k2-optical-r2-intersatellite.json
+      - search-archive/2026-08-12/k2-optical-r2-joint-cfo-pn.json
 
   - slug: 2026-08-09-coded-decoder-feedback-groundwork
     title: Coded decoder-feedback 方法主线 Groundwork

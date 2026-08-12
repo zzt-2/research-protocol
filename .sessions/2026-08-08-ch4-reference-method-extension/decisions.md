@@ -197,3 +197,37 @@ K2 的 suffix pollution 是真实 published defect，但 defect 事实不自动�
 ### 来源
 
 S001（2026-08-11 续接）/ R003 / V004。
+
+## D007: 改变 candidate source / research object，唯一恢复 K2 Groundwork 入口
+
+> status: active
+> date: 2026-08-12
+> 取代：D006 的 current operational terminal（不改写 D006 历史事实）
+> 被取代：无
+> 依据：调研: R004 + 主控 scope delegation
+> 触发原话: [转述]“稍微大一些也可以”
+
+### 决策
+
+Q001 已以 `PROBLEM_ABSENT_OR_TOO_SMALL` 关闭，不调参重跑、不保留为 Ch4 材料。candidate source 从“接收链微缺陷枚举”改为“成熟 reference method 的低复杂度任务适配扩展”，research object 唯一改为 K2：Wang TSP 2022 single-tone joint ML/MAP 的 phase-unwrapping suffix pollution。接受该单方向公平比较预计 5–9 天；本轮仅允许入口和解与新的 Groundwork Step 1。
+
+纠正旧 E5/E7：动作细节、章节图表和完整设计空间不再是进入 Step 1 前的硬门，留给 Step 1–3 闭合。真正入口硬门为 published defect、FSO transfer 可证伪、近期 baseline、可形成完整 action、strong comparator 存在和预算可接受。
+
+### 理由
+
+R004 的一手动作审计确认 TCOM 2016 是 multi-trajectory / likelihood / merge-prune / bounded-order 的 full-general capability superset 与 mandatory comparator，但不是 K2 的完整同一 input→decision→action→output：它依赖 coded MPSK、pilots 与 LDPC soft symbols，执行全序列双向 mixture tracking 并输出 phase posterior/LLR；K2 当前研究形态是 decoder-free single-tone phase-unwrapping front-end、固定 hypothesis/lag/内存/最坏时延，并把 unwrapped sequence 交回 Wang estimator。故入口没有 confirmed exact collision；不据此声称非碰撞、新颖性或方法成立。
+
+### 排除的替代方案
+
+- 不比较或制造 K3/K4/K1 及其他候选。
+- 不把“multi-hypothesis”“三分支”“merge/prune”动作原子包装成首创。
+- 不在 Step 1 下载、全文精读、实现、仿真或运行 defect smoke。
+- 不把 5–9 天预算视为当前已授权实验；只有后续 Groundwork 合法通过才可进入公平比较。
+
+### 影响范围
+
+允许创建唯一 `2026-08-12-multi-hypothesis-phase-unwrapping` Groundwork 专题并完成 Step 1；本 source owner 继续只保存候选来源与血缘。D006 保留为 2026-08-11 在旧门槛和旧预算下的历史裁决。
+
+### 来源
+
+R004；主控 delegation；用户既有预算偏好转述。
