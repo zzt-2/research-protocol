@@ -70,8 +70,8 @@ topics:
     title: coherent FSO 有界多假设固定滞后相位解缠 Groundwork
     status: active
     created: "2026-08-12"
-    last_updated: "2026-08-12（D002/V001/H001：GW Step 1 PASS，等待 Step 2 confirmation）"
-    description: "唯一 K2 Groundwork owner。以 Wang TSP 2022 suffix-pollution defect 为 reference，面向 coherent FSO residual CFO+laser Wiener PN 审查 bounded H=3 fixed-lag unwrap 与 receiver-visible reliability-triggered expansion。Step1=PASS/VERIFIED；TCOM 2016 为 full-general mandatory comparator，未确认 exact action collision；无Q#/Go/方法/METHOD_SIGNAL，Step2未授权。"
+    last_updated: "2026-08-12（R004/V002/H002：Step 2 ready for confirmation）"
+    description: "唯一 K2 Groundwork owner。Step1=PASS/VERIFIED；Step2审计12篇，9 qualified/8 CORE，A/B/C三路线及P0 reference/full-mixture闭合，C06/C07/C13为全文限制。terminal=STEP2_READY_FOR_USER_CONFIRMATION；Step3未授权，无collision/Q#/Go/方法/METHOD_SIGNAL。"
     depends_on:
       - slug: 2026-08-08-ch4-reference-method-extension
         reason: 继承 K2 published defect、D007 candidate-source/research-object scope change 与 mandatory comparator 边界

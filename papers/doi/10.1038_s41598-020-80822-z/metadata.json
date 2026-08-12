@@ -1,0 +1,19 @@
+{
+  "storage_version": 2,
+  "id": "L021",
+  "title": "Reduced sampling rate Kalman filters for carrier phase and frequency offset tracking in 200 Gbps 16 QAM coherent communication system",
+  "doi": "10.1038/s41598-020-80822-z",
+  "arxiv_id": null,
+  "authors": ["Srishti Sharma", "Pradeep Kumar Krishnamurthy"],
+  "year": 2021,
+  "venue": "Scientific Reports",
+  "download_status": "success",
+  "download_method": "oa_pdf_then_tools_convert_fast",
+  "content_type": "pdf",
+  "content_quality": "good",
+  "content_file": "content.md",
+  "downloaded_at": "2026-08-12T11:33:42.226664+08:00",
+  "real_title": "Reduced sampling rate Kalman filters for carrier phase and frequency offset tracking in 200 Gbps 16 QAM coherent communication system",
+  "title_check": "pass",
+  "title_overlap": 1.0
+}

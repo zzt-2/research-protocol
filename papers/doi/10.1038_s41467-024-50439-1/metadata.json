@@ -1,0 +1,19 @@
+{
+  "storage_version": 2,
+  "id": "L003",
+  "title": "Overcoming laser phase noise for low-cost coherent optical communication",
+  "doi": "10.1038/s41467-024-50439-1",
+  "arxiv_id": null,
+  "authors": ["Xiansong Fang", "Yixiao Zhu", "Xiang Cai", "Weisheng Hu", "Zhixue He", "Shaohua Yu", "Fan Zhang"],
+  "year": 2024,
+  "venue": "Nature Communications",
+  "download_status": "success",
+  "download_method": "oa_pdf_then_tools_convert_fast",
+  "content_type": "pdf",
+  "content_quality": "good",
+  "content_file": "content.md",
+  "downloaded_at": "2026-08-12T11:33:23.342807+08:00",
+  "real_title": "Overcoming laser phase noise for low-cost coherent optical communication",
+  "title_check": "pass",
+  "title_overlap": 1.0
+}

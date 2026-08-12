@@ -1,0 +1,19 @@
+{
+  "storage_version": 2,
+  "id": "10.1109/TIT.2013.2238604",
+  "title": "Phase-Based, Time-Domain Estimation of the Frequency and Phase of a Single Sinusoid in AWGN—The Role and Applications of the Additive Observation Phase Noise Model",
+  "doi": "10.1109/TIT.2013.2238604",
+  "arxiv_id": null,
+  "authors": ["Hua Fu", "Pooi-Yuen Kam"],
+  "year": 2013,
+  "venue": "IEEE Transactions on Information Theory",
+  "download_status": "success",
+  "download_method": "blit_ieee",
+  "content_type": "pdf",
+  "content_quality": "good",
+  "content_file": "content.md",
+  "downloaded_at": "2026-08-12T11:35:54+08:00",
+  "real_title": "Phase-Based, Time-Domain Estimation of the Frequency and Phase of a Single Sinusoid in AWGN—The Role and Applications of the Additive Observation Phase Noise Model",
+  "title_check": "pass",
+  "title_overlap": 1.0
+}

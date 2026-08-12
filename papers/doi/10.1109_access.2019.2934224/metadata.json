@@ -1,0 +1,19 @@
+{
+  "storage_version": 2,
+  "id": "L002",
+  "title": "Non-Data-Aided Cycle Slip Self-Correcting Carrier Phase Estimation for QPSK Modulation Format of Coherent Wireless Optical Communication System",
+  "doi": "10.1109/ACCESS.2019.2934224",
+  "arxiv_id": null,
+  "authors": ["Ye Wang", "Zhiyong Wu", "Xueliang Li", "Tianwen Geng", "Shuang Ma", "Lin Li", "Shijie Gao", "Yatian Li"],
+  "year": 2019,
+  "venue": "IEEE Access",
+  "download_status": "success",
+  "download_method": "blit_ieee",
+  "content_type": "pdf",
+  "content_quality": "good",
+  "content_file": "content.md",
+  "downloaded_at": "2026-08-12T11:34:44+08:00",
+  "real_title": "Non-Data-Aided Cycle Slip Self-Correcting Carrier Phase Estimation for QPSK Modulation Format of Coherent Wireless Optical Communication System",
+  "title_check": "pass",
+  "title_overlap": 1.0
+}

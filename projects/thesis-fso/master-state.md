@@ -5,7 +5,7 @@ method_type: reference-method extension（非 ML；完整 deployable action chai
 domain: comms
 created: 2026-06-21
 updated: 2026-08-12
-current_step: GROUNDWORK_STEP1_PASS_READY_FOR_STEP2_CONFIRMATION（K2 bounded multi-hypothesis unwrap）
+current_step: STEP2_READY_FOR_USER_CONFIRMATION（K2 bounded multi-hypothesis unwrap）
 current_stage: GROUNDWORK
 ---
 
@@ -37,10 +37,14 @@ current_stage: GROUNDWORK
 
 > **2026-08-12 K2 candidate-source / research-object scope change 与 GW Step 1（source D007/R004；new owner D001–D002/S001/R001–R003/V001/H001）**。Q001 保持 `PROBLEM_ABSENT_OR_TOO_SMALL` closed，不调参重跑、不计 Ch4 材料。唯一新对象为 Wang TSP 2022 suffix-pollution 的 bounded multi-hypothesis/fixed-lag task adaptation；预计后续公平比较 5–9 天可接受。Step 1 两轮 11 query：278 raw→242 title-dedup→138 semantic，98 formal=`71.01%`，12 must-read，S2/OA/SerpAPI Scholar 三贡献源。TCOM 2016 裁为 full-general mandatory comparator、非 confirmed exact action；D1/D2 仅是待审设计形态。V001 初审 PARTIAL 0/3/1 的 formal 归并、编号和预声明已修，final fresh verifier PASS 0/0/0；terminal=`STEP1_PASS_READY_FOR_STEP2_CONFIRMATION`，Step 2 未授权，无 Q#/Go/方法/METHOD_SIGNAL。
 
+> **2026-08-12 K2 GW Step 2 acquisition（D003/S002）**。主控接受 Step 1 coverage，只开放 10 篇 P0/P1 pool 的 canonical reuse、合法获取、identity/hash/content quality 与三路线 coverage。Step 2=`AUTHORIZED / IN_PROGRESS`；动作级精读、collision/Q#/方法裁决及 Step 3 全部未授权。
+
+> **2026-08-12 K2 GW Step 2 收口（R004/V002/H002）**。在授权的 8–12 篇范围内审计 12 篇：9 qualified、8 CORE，正式身份 12/12、2019+ 10/12、合格全文 preprint-source 2/9。A reference/unwrap、B full mixture/fixed-order、C recent coherent optical/FSO 三路线均有全文；P0 C01/C02 闭合。C06/C07/C13 保留全文 limitation。terminal=`STEP2_READY_FOR_USER_CONFIRMATION`；Step 3 未授权。
+
 | Bounded multi-hypothesis unwrap GW Step | 状态 | 证据 | 下游门控 |
 |---|---|---|---|
 | 1 search | ✅ COMPLETE / VERIFIED | upstream D007/R004；new D001–D002/S001/R001–R003/V001/H001 + 11 JSON | terminal=`STEP1_PASS_READY_FOR_STEP2_CONFIRMATION` |
-| 2 acquire | NOT_AUTHORIZED | D002 | 未确认前禁止下载/精读 |
+| 2 acquire | ✅ COMPLETE / PENDING CONFIRMATION | D003/S002/R004/V002/H002 + machine receipt | terminal=`STEP2_READY_FOR_USER_CONFIRMATION`；Step 3 未授权 |
 | 3 read | ⬜ FORBIDDEN | — | Step 2 未完成前禁止 |
 | 3.5 supplement | ⬜ FORBIDDEN | — | Step 3 未完成前禁止 |
 | 4a feasibility | ⬜ FORBIDDEN | — | 无 Q#；禁止实现/仿真 |

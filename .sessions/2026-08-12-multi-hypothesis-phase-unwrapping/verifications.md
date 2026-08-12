@@ -46,3 +46,29 @@ git_diff_check=0
 ### 结论
 
 PASS。P0/P1/P2=`0/0/0`。允许恢复 Step 1 `VERIFIED` 与唯一 terminal=`STEP1_PASS_READY_FOR_STEP2_CONFIRMATION`；该 terminal 仍不是 Q#、Go、方法、METHOD_SIGNAL 或论文贡献，Step 2 保持 `NOT_AUTHORIZED`。
+
+## V002: Groundwork Step 2 acquisition 独立验收
+
+> date: 2026-08-12
+> 关联：D003/S002/R004/H002/machine receipt
+
+### 初审（保留）
+
+`PARTIAL`，P0/P1/P2=`0/2/2`。
+
+- P1：topic/master/registry 预声明 V002/H002，但当时 V002 与 H002 尚未落盘。
+- P1：全 worktree diff 含 profile、JLT read-note、papers index、pycache 与 p05/coded logs；必须用精确 allowlist 暂存，不能把它们并入本轮 commit。
+- P2：C12 receipt 作者使用检索元数据变体，与 source 首页不一致。
+- P2：topic 顶部 last-update 与 S002 状态仍停在 Step 1/进行中。
+
+### 修复与复核
+
+- 已补本 V002 与 H002，消除 current-view 前置引用。
+- C12 作者按 source PDF 首页修为 `Chunyuan Hu / Ruolin Yang`。
+- topic 顶部更新为 V002/Step 2，S002 更新为“完成，等待 coverage confirmation”。
+- commit 使用显式 allowlist；profile、JLT read-note、papers index、pycache、p05/coded/Q001 artifacts 不暂存。
+- fresh verifier 复算 machine receipt：12 selected / 9 qualified / 8 CORE；formal=12/12，2019+=10/12，preprint-source=C02+C08=`2/9=22.22%`。9/9 qualified 的 canonical/source/content bytes、SHA 与有效行数一致（153–634 行）；A/B/C qualified coverage=`3/1/6`；C06/C07/C13 为 metadata-only、0 fulltext，未计 qualified。
+
+### 结论
+
+PASS。P0/P1/P2=`0/0/0`。terminal=`STEP2_READY_FOR_USER_CONFIRMATION`；只确认全文/身份/内容质量/coverage，不构成 collision、Q#、Go、方法、METHOD_SIGNAL 或论文贡献，Step 3 保持 `NOT_AUTHORIZED`。
