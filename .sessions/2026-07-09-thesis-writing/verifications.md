@@ -422,3 +422,27 @@ PASS（13/13）。D026 的唯一推荐是条件式规划合同：Ch3 READY，Ch4
 PASS
 
 P0/P1/P2 = 0/0/0。
+
+## V015: 九个具体方法逐项只读审计验证
+
+> status: PASS
+> date: 2026-08-13
+> 关联：S023 / D032 / D033 / T019–T027 / R025
+
+### 验证项
+
+- [x] 九个对象均由独立单方法 subagent 回传，未在一个汇总对话中替代逐项判断。
+- [x] 全程未运行实验/复算脚本，未联网检索或下载论文，未补 Groundwork，未新建候选，未修改 Skill/controller/仿真代码/论文正文。
+- [x] P11 已保持 corrected confirmation=`NOT_RUN`、CMA absorption=`UNRESOLVED`，未误写为科学失败。
+- [x] P05 已按实际动作链纠正为独立在线 CMA 接收机，不再称 Butterfly continuation。
+- [x] P03 已纠正 Q(64,40) bypass identity 与 Q(8,6) 部署候选的混写；历史 R023 已加显式纠错。
+- [x] CCISP 仅使用 9 dB、三档 downlink GG、fixed NDA、common-payload BER-ratio `0.832–1.496 dB` 的 canonical headline。
+- [x] 所有方法均按 D032 判断；经典动作、参数差别、场景迁移、廉价替代或强邻居未被当作自动否决。
+- [x] P06 因实际输入为 truth-scored SER，仅限离线预测；这是四条真实性底线的限制，不是期刊级 novelty gate。
+- [x] 九项外部完全重复状态均明确为 `NOT_CHECKED_IN_THIS_READ_ONLY_AUDIT`，没有伪装成已完成文献查重。
+
+### 结论
+
+PASS。九项逐项审计完成，八项具有可命名具体 recipe，P06 仅具离线预测身份。该验证只确认本地证据解释与审计纪律，不代表外部 exact-duplicate 检索已完成，也不授权恢复执行。
+
+独立只读 verifier 按 T028 八项逐条复核：8/8 PASS，P0/P1/P2=`0/0/0`；未参与 R025 编写，未修改文件。

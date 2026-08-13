@@ -1,7 +1,7 @@
 # Topic Index: 论文写作专题（自适应 CPR 方向）
 
 > slug: 2026-07-09-thesis-writing
-> status: active | created 2026-07-09 | last_updated 2026-08-13（D032/S022：具体方法 recipe 优先；完全相同才构成碰撞）
+> status: active | created 2026-07-09 | last_updated 2026-08-13（D033/S023/R025/V015：九个具体方法逐项审计完成）
 
 ## 专题定位（一句话）
 
@@ -28,6 +28,7 @@
 材料盘点 + 缺口识别 + 数据稳定性验证 + 论点审查 + 简报完善。守 FR-22（不跳框架）+ D005 务实路线 + D-010 baseline 标准。
 
 ### 当前范围
+- D033 九项逐项只读审计已经完成；当前等待用户讨论并确认 thesis spine，在确认前不恢复检索、实验或 Groundwork
 - 按 D032 直接盘点具体方法 recipe：相对正确经典 baseline 有真实改善，且完整 recipe 非完全相同即可；场景差异、估计量、阈值、参数、调度或数值格式差异均可构成硕士级 extension
 - 按 D031 的毕业优先有限主张标准，目标至少两个可命名方法；已知廉价/更强替代不自动否决方法，也不强制进入正文，只限制 claim ceiling
 - 在恢复执行前，对历史候选、worker/results、工程/硬件资产做一次全量只读普查；从最窄真实命题重判，不继承旧 Go/Kill 标签
@@ -45,6 +46,9 @@
 - ❌ 不做消融实验（跨块 KF / BPS 迁移等是 step4a 的债务，不在写作专题跑）
 
 ### 范围变更记录
+- **[2026-08-13] D033**：逐项只读审计 P01/P11/P05/P08-R2/P02/P06/select-before-execute/P03/CCISP。
+  - 每项独立对话，只核本地事实、数字、baseline、真实性和最小差别。
+  - 外部 exact duplicate 本轮不查；不实验、不补 Groundwork、不修改任何研究资产。
 - **[2026-08-13] D032**：取代 D031 的“承重对象/动作血缘分层”作为方法入口，改为具体 recipe 优先。
   - 原因：全量扫描后主线程仍汇报资产类别，没有回答“具体有哪些方法”，继续残留期刊级独立性 gate。
   - 新标准：正确经典 baseline + 明确场景真实改善 + 完整 recipe 非完全重复；任何可准确陈述的场景/步骤/参数/调度差别均可构成 extension。
@@ -136,14 +140,14 @@
 2. **strong/uplink 子图纵轴范围**：H002 建议收窄到 1e-4~1e-1（不硬凑 1e-5），待跟老师确认。
 3. **S002 原悬而未决**（图表清单 / fair_gain 呈现 / 主图子图数）：H002 把图 2 数据备齐，等老师反馈后定稿。
 4. **Fig.1/2 文字联动**：两图 draw.io 编辑源均已形成，Fig.1 v4 与 Fig.2 分别通过独立门控；caption、正文图号联动及投稿前检查仍未执行。
-5. **P11 最后一次补证**：等待 T015。成功则评估章节落位；非成功则停止自动推进，另开战略讨论对话。
-6. **独立 Ch5 方法仍未闭合**：select-before-execute 只作为 CCISP 内部执行优化资产；其软件等价、调用和 timing 证据保留，但不能替代行业双算问题或 RTL/HLS/PPA 证据。
+5. **论文 spine 尚未拍板**：R025 推荐 Ch3 CCISP、Ch4 P01+P02、Ch5 select-before-execute+P03；等待用户确认或选择 P11/P05 作为更独立备选。
+6. **外部完全重复尚未检查**：九项均为 `NOT_CHECKED_IN_THIS_READ_ONLY_AUDIT`；只有用户明确恢复检索后，才对最终承重对象做 bounded exact-recipe collision check。
 
 ## 当前位置
 
-**🟢 S020 / D030（2026-08-13）：P11 最后一次 bounded confirmation 准备派发。** PAIG-KF 已在 Step 2 证据门停止；CVL-BPS 已被固定 B=3 廉价方案吸收。T015 只允许修正 P11 的 true-SNR 注入、冻结公平比较并跑一次 held-out；任何非成功终态后不得继续派新候选。
+**🟢 S023 / D032 / D033 / R025 / V015（2026-08-13）：九个具体方法逐项只读审计完成，等待战略拍板。** 九项中八项有可命名 recipe；P06 仅限离线预测。当前推荐 Ch3 CCISP、Ch4 P01+P02、Ch5 select-before-execute+P03；P11/P05 为更独立但证据较弱的备选。P11 corrected confirmation 仍为 `NOT_RUN`，不是科学失败。
 
-**✅ Ch3 冻结；P11 是 Ch4/独立 Ch5 当前唯一获准补证对象。** Ch3 仍以 CCISP adaptive CPR 为主方法。select-before-execute 降回 CCISP 内部执行优化资产；P01 保留候选但不得在 P11 后自动运行。
+**⏸️ 所有执行继续暂停。** 未获用户明确确认前，不检索、下载、仿真、补 Groundwork、开候选或修改 Skill/controller/代码/论文正文。
 
 ---
 
@@ -283,3 +287,5 @@ F001 完成 F1（R010 20 条力度基准逐条对照**全对齐** + 8 条已知�
 - **S020 续接** P11 最后一次 bounded confirmation（2026-08-13，D030/T015）。吸收 PAIG-KF evidence terminal 与 CVL-BPS cheap-absorption 结果；P11 非成功即停转战略讨论。
 - **S021 / R024 / D031 / T016–T018** 毕业优先标准与全量历史资产普查（2026-08-13）。废止“已知廉价替代/CMA 吸收即自动否决方法”的包装门；目标至少两个可命名方法。三路只读扫描覆盖 250 份 worker log、438 个 direction-lab 文件、30 个结果目录及必要 git 历史，恢复约 59 个命名身份并去重为约 41 条动作血缘。主线程分层：4 个当前 thesis 承重对象（CCISP/P01/P11/select-before-execute）、5 类真实数字章节资产、十余条未裁决动作库存、15 条以上明确无效项。终态 `READ_ONLY_CENSUS_COMPLETE`；不授权仿真、Groundwork、检索或代码/论文修改。
 - **S022 / D032** 具体方法 recipe 标准纠偏（2026-08-13）。用户指出 R024 后仍以承重对象/动作血缘代替具体方法。新入口只问：是否比正确经典 baseline 好、完整 recipe 是否非完全相同；场景或任何可陈述小差别均可形成 extension。后续必须直接列方法名、步骤、baseline、改善和差异点，不再先用 supporting/组件标签过滤。
+- **S023 / D033 / T019–T028** 九个具体方法逐项只读审计与独立终验（2026-08-13）。一种方法一个独立对话，三批并发；只读本地证据，不实验、不检索、不补 Groundwork。T028 终验 8/8 PASS，P0/P1/P2=0/0/0。
+- **R025 / V015** 九方法综合与验证（2026-08-13）。九项中八项有可命名具体 recipe；P06 仅限离线预测。推荐 Ch3 CCISP、Ch4 P01+P02、Ch5 select-before-execute+P03；P11/P05 为更独立但较弱备选。纠正 P05 动作链与 P03 Q(64,40)/Q(8,6) identity 混写。

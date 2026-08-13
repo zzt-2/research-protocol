@@ -604,8 +604,8 @@ topics:
     title: 论文写作专题（自适应 CPR 方向）
     status: active
     created: "2026-07-09"
-    last_updated: "2026-08-13（D032/S022：具体方法 recipe 优先；完整重复才构成碰撞）"
-    description: "自适应 CPR 论文写作与全项目方法包装专题。当前暂停仿真、Groundwork、文献补全和新候选生成。D032 冻结具体方法优先标准：相对正确经典 baseline 有真实改善，且算法步骤、输入输出、场景和关键配置不完全相同即可作为硕士级迁移/扩展；场景或微小动作差异均有效。后续直接列方法 recipe，不再以承重对象/动作血缘分类代替方法清单。"
+    last_updated: "2026-08-13（D033/S023/R025/V015：九方法逐项审计完成）"
+    description: "自适应 CPR 论文写作与全项目方法包装专题。D032 冻结具体方法优先标准；D033 九项逐项只读审计完成：八项有可命名 recipe，P06 仅限离线预测。推荐 Ch3 CCISP、Ch4 P01+P02、Ch5 select-before-execute+P03；仍暂停仿真、Groundwork、文献检索和研究资产修改。"
     depends_on:
       - slug: 2026-07-06-step4a-mve-execution
         reason: 继承 A4 数据（30seed fair_gain + A4 切换 CI）+ baseline 池（D-010 五条 + DA/NDA/DPLL/VV/BPS）+ R001 调研（baseline 组织/参数/叙述惯例 + 合法性背书矩阵）+ 简报 ADVISOR_BRIEFING_2026-07-09

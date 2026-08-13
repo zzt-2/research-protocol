@@ -31,7 +31,7 @@ problem/baseline/method action/information source/core mechanism/primary metric/
 - P1（SNR 失配）：P01 5-cell 0.32–0.70 dB 损害，adapter 恢复 4/5，`NO_DIAGNOSTIC_SIGNAL`（D040 A-family 封顶）。
 - P2（连续 GG）：P04 held-out pooled +0.146 dB < MDE 0.15，**非 OOD-specific**，`ABSENT_ON_CONTINUOUS_GG`（D042 C-family 首包）。
 - P3（先选后跑）：branch-routing 990/990 bit-exact（V011 旧参 + V015 formal）；74.6% 单条件不可写；non-genie BLOCKED。
-- P4（定点）：P03 Q(8,6) 0/132000 identity，gain-bearing regret +0.027 dB < MDE；**无 FPGA 数据，无 float-vs-Q BER**。
+- P4（定点）：P03 gain-bearing regret 约 +0.027 dB < MDE；**无 FPGA 数据，无 float-vs-Q 端到端 BER**。`2026-08-13 D033 纠错`：0/132000 identity 属于 Q(64,40) float-bypass，不属于 Q(8,6)；Q(8,6) 不得写逐窗 identity。
 - P5（coded）：P08-R2 完整工具链但 chronology PARTIAL（D051 无 freeze receipt）；通用验证设施非主线。
 
 ### Phase C 四包装评估 + 唯一推荐（见 journal-extension-readiness.md）
