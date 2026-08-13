@@ -1219,3 +1219,42 @@ S022；用户 2026-08-13 再次纠偏。
 ### 来源
 
 S023；用户 2026-08-13 明确要求“派新对话，逐个看看”。
+
+## D034: 会议代号与方法名分离，核心方法须跨技术对象
+
+> status: active
+> date: 2026-08-13
+> 取代：无（纠正 R025 的术语和推荐 spine）
+> 被取代：无
+> 依据: 官方稿件源 `projects/simulation/paper/ccisp2026/main.tex` + `sections/method.tex` + 用户原话 `voice.md` 2026-08-13
+> 触发原话：见 `voice.md` 2026-08-13
+
+### 决策
+
+`CCISP 2026` 只表示目标会议/投稿工程，不再作为方法名。会议稿内的方法正式称为 **Received-Power-Aware Adaptive Carrier Phase Recovery**（基于接收功率感知的自适应载波相位恢复）；后续讨论不得再写“CCISP 方法”或把会议代号与算法身份混用。
+
+学位论文至少两个承重方法不仅要各有 recipe，还应尽量作用于不同技术对象。围绕同一个自适应 CPR 内核的 P01、P02、select-before-execute 和 P03 可分别作为鲁棒适配、执行调度或数值实现子方法，但在论文总体方法计数中只构成同一 CPR 方法族，不能虚算为四个彼此独立的核心方法。
+
+撤回 R025 的“Ch3 自适应 CPR / Ch4 P01+P02 / Ch5 select-before-execute+P03”推荐 spine。下一轮只讨论跨对象组合：载波相位恢复、双偏振均衡、编码接收/硬件实现等；在用户拍板前不形成新的唯一推荐。
+
+### 理由
+
+`main.tex` 的论文标题是 `Adaptive Carrier Phase Recovery for Turbulent Satellite--Ground FSO Links`，`method.tex` 的方法节标题是 `Received-Power-Aware Adaptive Carrier Phase Recovery`；`CCISP 2026` 出现在投稿工程和会议约束材料中。把 CCISP 写成方法名是历史内部 shorthand 漂移，不是论文中的算法命名。
+
+D032 允许小差别形成硕士级具体 recipe，但“能分别命名”不等于“适合分别承重 Ch3–Ch5”。论文整体仍需避免三个核心技术章全部围绕同一 selector 做校准、调度和量化，造成方法独立性观感不足。
+
+### 排除的替代方案
+
+- **继续把 CCISP 当算法缩写**：与稿件事实不符，排除。
+- **把 P01/P02/select-before-execute/P03 分别计为四个独立核心方法**：recipe 层成立，但章节独立性不足，排除。
+- **立即从 P11/P05/P08-R2 中拍板新 spine**：尚需先按技术对象和证据量重排，当前只讨论不拍板。
+
+### 影响范围
+
+- D032 的硕士级 recipe 放行标准不变；D033 的九项本地审计事实保留。
+- R025 与 S023 增加纠正说明；topic-index、profile 和 registry 同步。
+- 继续暂停检索、实验、Groundwork、Skill/controller/代码/论文正文修改。
+
+### 来源
+
+S023 续接；用户 2026-08-13 纠正“CCISP 是会议名字”并要求核心方法不要过于接近。

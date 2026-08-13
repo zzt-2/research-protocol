@@ -1,7 +1,7 @@
 # Topic Index: 论文写作专题（自适应 CPR 方向）
 
 > slug: 2026-07-09-thesis-writing
-> status: active | created 2026-07-09 | last_updated 2026-08-13（D033/S023/R025/V015：九个具体方法逐项审计完成）
+> status: active | created 2026-07-09 | last_updated 2026-08-13（D034：会议代号纠正；核心方法须跨技术对象）
 
 ## 专题定位（一句话）
 
@@ -140,12 +140,12 @@
 2. **strong/uplink 子图纵轴范围**：H002 建议收窄到 1e-4~1e-1（不硬凑 1e-5），待跟老师确认。
 3. **S002 原悬而未决**（图表清单 / fair_gain 呈现 / 主图子图数）：H002 把图 2 数据备齐，等老师反馈后定稿。
 4. **Fig.1/2 文字联动**：两图 draw.io 编辑源均已形成，Fig.1 v4 与 Fig.2 分别通过独立门控；caption、正文图号联动及投稿前检查仍未执行。
-5. **论文 spine 尚未拍板**：R025 推荐 Ch3 CCISP、Ch4 P01+P02、Ch5 select-before-execute+P03；等待用户确认或选择 P11/P05 作为更独立备选。
+5. **论文 spine 尚未拍板**：R025 原同族 spine 已被 D034 撤回；至少两个承重方法需尽量跨技术对象，下一轮只讨论 CPR / 双偏振均衡 / coded receiver 或硬件系统的组合。
 6. **外部完全重复尚未检查**：九项均为 `NOT_CHECKED_IN_THIS_READ_ONLY_AUDIT`；只有用户明确恢复检索后，才对最终承重对象做 bounded exact-recipe collision check。
 
 ## 当前位置
 
-**🟢 S023 / D032 / D033 / R025 / V015（2026-08-13）：九个具体方法逐项只读审计完成，等待战略拍板。** 九项中八项有可命名 recipe；P06 仅限离线预测。当前推荐 Ch3 CCISP、Ch4 P01+P02、Ch5 select-before-execute+P03；P11/P05 为更独立但证据较弱的备选。P11 corrected confirmation 仍为 `NOT_RUN`，不是科学失败。
+**🟢 S023 / D034（2026-08-13）：术语与章节独立性纠正，等待战略拍板。** CCISP 是会议/投稿工程代号，方法正式名为 Received-Power-Aware Adaptive Carrier Phase Recovery。P01/P02/select-before-execute/P03 同属该 CPR 方法族，不能虚算为多个独立核心方法；R025 原推荐 spine 已撤回。P11 corrected confirmation 仍为 `NOT_RUN`，不是科学失败。
 
 **⏸️ 所有执行继续暂停。** 未获用户明确确认前，不检索、下载、仿真、补 Groundwork、开候选或修改 Skill/controller/代码/论文正文。
 
@@ -288,4 +288,4 @@ F001 完成 F1（R010 20 条力度基准逐条对照**全对齐** + 8 条已知�
 - **S021 / R024 / D031 / T016–T018** 毕业优先标准与全量历史资产普查（2026-08-13）。废止“已知廉价替代/CMA 吸收即自动否决方法”的包装门；目标至少两个可命名方法。三路只读扫描覆盖 250 份 worker log、438 个 direction-lab 文件、30 个结果目录及必要 git 历史，恢复约 59 个命名身份并去重为约 41 条动作血缘。主线程分层：4 个当前 thesis 承重对象（CCISP/P01/P11/select-before-execute）、5 类真实数字章节资产、十余条未裁决动作库存、15 条以上明确无效项。终态 `READ_ONLY_CENSUS_COMPLETE`；不授权仿真、Groundwork、检索或代码/论文修改。
 - **S022 / D032** 具体方法 recipe 标准纠偏（2026-08-13）。用户指出 R024 后仍以承重对象/动作血缘代替具体方法。新入口只问：是否比正确经典 baseline 好、完整 recipe 是否非完全相同；场景或任何可陈述小差别均可形成 extension。后续必须直接列方法名、步骤、baseline、改善和差异点，不再先用 supporting/组件标签过滤。
 - **S023 / D033 / T019–T028** 九个具体方法逐项只读审计与独立终验（2026-08-13）。一种方法一个独立对话，三批并发；只读本地证据，不实验、不检索、不补 Groundwork。T028 终验 8/8 PASS，P0/P1/P2=0/0/0。
-- **R025 / V015** 九方法综合与验证（2026-08-13）。九项中八项有可命名具体 recipe；P06 仅限离线预测。推荐 Ch3 CCISP、Ch4 P01+P02、Ch5 select-before-execute+P03；P11/P05 为更独立但较弱备选。纠正 P05 动作链与 P03 Q(64,40)/Q(8,6) identity 混写。
+- **R025 / V015 / D034 / V016** 九方法综合、验证与术语纠正（2026-08-13）。九项 recipe 事实保留；CCISP 纠正为会议代号，主方法正式名为 Received-Power-Aware Adaptive Carrier Phase Recovery。V016 源码核验 PASS。原同族 Ch3–Ch5 推荐撤回，后续按跨技术对象重排。P05 动作链与 P03 Q(64,40)/Q(8,6) identity 纠错继续有效。

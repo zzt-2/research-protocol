@@ -604,8 +604,8 @@ topics:
     title: 论文写作专题（自适应 CPR 方向）
     status: active
     created: "2026-07-09"
-    last_updated: "2026-08-13（D033/S023/R025/V015：九方法逐项审计完成）"
-    description: "自适应 CPR 论文写作与全项目方法包装专题。D032 冻结具体方法优先标准；D033 九项逐项只读审计完成：八项有可命名 recipe，P06 仅限离线预测。推荐 Ch3 CCISP、Ch4 P01+P02、Ch5 select-before-execute+P03；仍暂停仿真、Groundwork、文献检索和研究资产修改。"
+    last_updated: "2026-08-13（D034：会议代号纠正；核心方法须跨技术对象）"
+    description: "自适应 CPR 论文写作与全项目方法包装专题。D032 的具体 recipe 标准与 D033 九项审计事实保留；D034 纠正 CCISP 为会议/投稿工程代号，方法正式名为 Received-Power-Aware Adaptive Carrier Phase Recovery，并撤回同一 CPR 方法族承重 Ch3–Ch5 的推荐。后续至少两个核心方法需尽量跨技术对象；仍暂停仿真、Groundwork、文献检索和研究资产修改。"
     depends_on:
       - slug: 2026-07-06-step4a-mve-execution
         reason: 继承 A4 数据（30seed fair_gain + A4 切换 CI）+ baseline 池（D-010 五条 + DA/NDA/DPLL/VV/BPS）+ R001 调研（baseline 组织/参数/叙述惯例 + 合法性背书矩阵）+ 简报 ADVISOR_BRIEFING_2026-07-09

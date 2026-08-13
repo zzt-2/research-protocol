@@ -446,3 +446,20 @@ P0/P1/P2 = 0/0/0。
 PASS。九项逐项审计完成，八项具有可命名具体 recipe，P06 仅具离线预测身份。该验证只确认本地证据解释与审计纪律，不代表外部 exact-duplicate 检索已完成，也不授权恢复执行。
 
 独立只读 verifier 按 T028 八项逐条复核：8/8 PASS，P0/P1/P2=`0/0/0`；未参与 R025 编写，未修改文件。
+
+## V016: CCISP 会议代号与方法正式名称核验
+
+> status: PASS
+> date: 2026-08-13
+> 关联：D034 / S023 / R025
+
+### 验证项
+
+- [x] `projects/simulation/paper/ccisp2026/main.tex` 的论文标题为 `Adaptive Carrier Phase Recovery for Turbulent Satellite--Ground FSO Links`。
+- [x] `projects/simulation/paper/ccisp2026/sections/method.tex` 的方法节标题为 `Received-Power-Aware Adaptive Carrier Phase Recovery`。
+- [x] `CCISP 2026` 在本地资料中用于会议投稿计划、投稿工程、官方模板和会议约束，不是上述方法的正式名称或已定义算法缩写。
+- [x] P01、P02、select-before-execute 与 P03 均复用同一 received-power-aware adaptive CPR 内核的 selector、分支或实现合同，适合计为一个 CPR 方法族的子方法，不宜在论文总体上计为四个彼此独立的核心方法。
+
+### 结论
+
+PASS。D034 的术语纠正有源码证据；R025 原同族 spine 推荐撤回合理。本验证不决定 P11/P05/P08-R2 谁承重，也不授权执行。
