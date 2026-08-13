@@ -1,7 +1,7 @@
 # Topic Index: 论文写作专题（自适应 CPR 方向）
 
 > slug: 2026-07-09-thesis-writing
-> status: active | created 2026-07-09 | last_updated 2026-08-13（D035/S024/R026：三条跨对象方法均可有限包装）
+> status: active | created 2026-07-09 | last_updated 2026-08-13（D036/S025：三条既有方法进入独立全面补强）
 
 ## 专题定位（一句话）
 
@@ -28,7 +28,8 @@
 材料盘点 + 缺口识别 + 数据稳定性验证 + 论点审查 + 简报完善。守 FR-22（不跳框架）+ D005 务实路线 + D-010 baseline 标准。
 
 ### 当前范围
-- D033 九项逐项只读审计已经完成；当前等待用户讨论并确认 thesis spine，在确认前不恢复检索、实验或 Groundwork
+- D033/D035 的只读审计已经完成；按 D036 仅对 P05、P11、P08-R2 开放三个独立 worktree 任务做既有 recipe 的 bounded strengthening
+- 允许方法专属的真相修复、预注册正式确认、小范围场景扫描、paired statistics、必要消融/复杂度，以及冻结 recipe 的窄范围 exact-duplicate 检索；不恢复开放式候选搜索
 - 按 D032 直接盘点具体方法 recipe：相对正确经典 baseline 有真实改善，且完整 recipe 非完全相同即可；场景差异、估计量、阈值、参数、调度或数值格式差异均可构成硕士级 extension
 - 按 D031 的毕业优先有限主张标准，目标至少两个可命名方法；已知廉价/更强替代不自动否决方法，也不强制进入正文，只限制 claim ceiling
 - 在恢复执行前，对历史候选、worker/results、工程/硬件资产做一次全量只读普查；从最窄真实命题重判，不继承旧 Go/Kill 标签
@@ -40,12 +41,16 @@
 - 若内部资产仍不足，只定义 method-shaped search target 与下一轮提示词，本轮不执行检索后的新方法实验
 
 ### 明确不含
-- ❌ 不跑新实验 / 不进 Contract / 不写正式论文章节（FR-22）
+- ❌ 除 D036 三条预注册既有方法补强外，不跑新实验 / 不进新候选 Contract / 不写正式论文章节（FR-22）
 - ❌ 不推翻 A4 PASS 的 Go 判定（那是 step4a 专题的事）
 - ❌ 不改框架文件（守"先测不改协议"）
 - ❌ 不做消融实验（跨块 KF / BPS 迁移等是 step4a 的债务，不在写作专题跑）
 
 ### 范围变更记录
+- **[2026-08-13] D036**：为 P05、P11、P08-R2 创建三个真正的新任务和独立 worktree，全面补强既有 recipe。
+  - 允许：方法专属代码/口径真相修复、正式确认、小 SNR/场景扫描、paired statistics、必要消融/复杂度和窄范围 exact-recipe collision 检查。
+  - 仍禁止：新候选、开放式 Groundwork/泛搜、Skill/controller/正式论文正文修改、单项失败后自动换题。
+  - 停机：每项最多两轮主实验循环；artifact/truth leakage/不公平 baseline 立即停，第二轮仍无合法改善则降级。
 - **[2026-08-13] D033**：逐项只读审计 P01/P11/P05/P08-R2/P02/P06/select-before-execute/P03/CCISP。
   - 每项独立对话，只核本地事实、数字、baseline、真实性和最小差别。
   - 外部 exact duplicate 本轮不查；不实验、不补 Groundwork、不修改任何研究资产。
@@ -291,3 +296,4 @@ F001 完成 F1（R010 20 条力度基准逐条对照**全对齐** + 8 条已知�
 - **R025 / V015 / D034 / V016** 九方法综合、验证与术语纠正（2026-08-13）。九项 recipe 事实保留；CCISP 纠正为会议代号，主方法正式名为 Received-Power-Aware Adaptive Carrier Phase Recovery。V016 源码核验 PASS。原同族 Ch3–Ch5 推荐撤回，后续按跨技术对象重排。P05 动作链与 P03 Q(64,40)/Q(8,6) identity 纠错继续有效。
 - **S024 / D035 / T029–T031** 跨技术对象深挖（2026-08-13）。P11、P05、P08-R2 各由独立对话追到 `PACKAGEABLE_NOW / PACKAGEABLE_AFTER_ONE_BOUNDED_STEP / CANNOT_PACKAGE_HONESTLY`；首轮只读，缺口须具体化后回主线程拍板。
 - **R026 / V017** 跨对象方法章 dossier 综合与终验（2026-08-13）。P11/P05/P08-R2 首轮均错误地把理想补强抬成准入门；复审后均为 `PACKAGEABLE_NOW_WITH_LIMITS`。V017 7/7 PASS、P0/P1/P2=0/0/0。候选组合为 CPR＋P05或P11（二选一均衡）＋P08-R2 coded receiver，但尚未拍 thesis spine。
+- **S025 / D036 / T033–T035** 三条既有方法独立全面补强（2026-08-13）。创建用户可见 Codex 新任务而非 subagent；P05/P11/P08-R2 各在独立 worktree 中补真相、正式确认、覆盖度、统计、消融、复杂度和窄范围完全重复检查。主线程等待回传后统一验收与选章。
