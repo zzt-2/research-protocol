@@ -604,8 +604,8 @@ topics:
     title: 论文写作专题（自适应 CPR 方向）
     status: active
     created: "2026-07-09"
-    last_updated: "2026-08-13（D030/S020：P11 最后一次 bounded confirmation；非成功即停转战略讨论）"
-    description: "自适应 CPR 论文写作与全项目方法包装专题。Ch3 CCISP 保持；T013/T014 候选生成完成后，PAIG-KF 停于 Step 2 证据门，CVL-BPS 被固定 B=3 廉价方案吸收。D030 只开放一次 P11 complex-LS Butterfly FIR corrected bounded confirmation；authority 不足、失败、同任务 CMA 吸收或执行无效后，暂停自动方法搜索并等待战略讨论。"
+    last_updated: "2026-08-13（D031/S021：毕业优先有限主张标准；全量历史资产只读普查）"
+    description: "自适应 CPR 论文写作与全项目方法包装专题。当前暂停仿真、Groundwork、文献补全和新候选生成。D031 冻结至少两个可命名方法的毕业目标：正确经典 baseline、限定场景真实增益和 receiver-visible 动作链构成最低合同；已知廉价/更强替代只限制 claim，不自动否决或强制进正文。T016-T018 对历史候选、worker/results、工程/硬件资产做全量只读普查。"
     depends_on:
       - slug: 2026-07-06-step4a-mve-execution
         reason: 继承 A4 数据（30seed fair_gain + A4 切换 CI）+ baseline 池（D-010 五条 + DA/NDA/DPLL/VV/BPS）+ R001 调研（baseline 组织/参数/叙述惯例 + 合法性背书矩阵）+ 简报 ADVISOR_BRIEFING_2026-07-09
@@ -617,6 +617,7 @@ topics:
       - projects/thesis-fso/direction-lab/harvest/thesis-method-spines.md
       - projects/thesis-fso/direction-lab/harvest/historical-assets-thesis-grade-remap.md
       - projects/thesis-fso/direction-lab/harvest/historical-assets-thesis-grade-remap.yaml
+      - .sessions/2026-07-09-thesis-writing/R024-graduation-first-full-asset-census.md
 
   - slug: 2026-06-20-problem-driven-redirection
     title: 问题驱动方法论首次实战验证（批评汇总 → 地勘前置迭代 → 地勘执行 → Step 3 精读 → 综合分析 → 判地专项）

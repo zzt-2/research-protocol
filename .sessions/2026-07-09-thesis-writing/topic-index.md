@@ -1,7 +1,7 @@
 # Topic Index: 论文写作专题（自适应 CPR 方向）
 
 > slug: 2026-07-09-thesis-writing
-> status: active | created 2026-07-09 | last_updated 2026-08-13（D030/S020：P11 最后一次 bounded 方法补证；失败即停转战略讨论）
+> status: active | created 2026-07-09 | last_updated 2026-08-13（D031/S021：毕业优先标准冻结；全量历史资产只读普查）
 
 ## 专题定位（一句话）
 
@@ -28,6 +28,8 @@
 材料盘点 + 缺口识别 + 数据稳定性验证 + 论点审查 + 简报完善。守 FR-22（不跳框架）+ D005 务实路线 + D-010 baseline 标准。
 
 ### 当前范围
+- 按 D031 的毕业优先有限主张标准，目标至少两个可命名方法；已知廉价/更强替代不自动否决方法，也不强制进入正文，只限制 claim ceiling
+- 在恢复执行前，对历史候选、worker/results、工程/硬件资产做一次全量只读普查；从最窄真实命题重判，不继承旧 Go/Kill 标签
 - 按硕士学位论文的 reference-method extension 标准，重裁全部历史方法资产；区分科学无效与仅欠缺期刊级新颖性/全局竞争力
 - 复盘此前“看别人怎么包装”工作的证据深度与失败根因
 - 盘点全项目历史资产中的 deployable method kernel，禁止复活 invalidated claim
@@ -42,6 +44,11 @@
 - ❌ 不做消融实验（跨块 KF / BPS 迁移等是 step4a 的债务，不在写作专题跑）
 
 ### 范围变更记录
+- **[2026-08-13] D031**：废止 D030 中“已知廉价替代/CMA 完全吸收即否决方法”的包装门，冻结毕业优先有限主张标准并启动全量只读资产普查。
+  - 原因：旧流程把内部风险发现和期刊级竞争闭包升级为硕士方法硬否决，导致真实但有限的场景迁移、校准和工程增量长期无法成为方法。
+  - 新范围：目标至少两个可命名方法；正确经典 baseline、真实限定场景增益和 receiver-visible 动作链构成最低方法合同。廉价/更强替代只限制 claim，不自动 Kill，也不强制写入正文。
+  - 真实性底线：无伪造/artifact、无 receiver 不可见真值冒充部署、无故意错误 baseline、无明知虚假命题。
+  - 明确不含：不恢复仿真、Groundwork、文献检索/下载或新候选生成；不修改 Skill/controller/代码/论文正文。
 - **[2026-08-13] D030**：一次性开放 P11 corrected bounded confirmation；任何非成功终态后暂停自动方法搜索。
   - 原因：PAIG-KF 停在 Step 2 证据门，CVL-BPS 被固定 B=3 廉价方案吸收；用户要求若下一次仍不行就停止执行、另开对话讨论总体路线。
   - 新范围：仅允许 P11 authority reconciliation、sim-preflight、true-SNR 注入修复、预注册 frozen receipt、一次 paired held-out confirmation 与独立验证。
@@ -269,3 +276,4 @@ F001 完成 F1（R010 20 条力度基准逐条对照**全对齐** + 8 条已知�
 - **S019** 历史方法资产硕士级重裁（2026-08-12，D027→D028/T012/V014）。26 个独立资产四档结果 A/B/C/D=2/2/11/11；唯一 Ch4 下一包=P01，P11 第二顺位；不检索、不实验、不改 Skill/论文正文。
 - **S020** 双线 reference-extension 候选生成（2026-08-13，D029/T013/T014）。纠正 select-before-execute 独立 Ch5 与 P01 唯一入口；两条执行线分别从历史资产和新经典 reference 生成完整方法卡，待主控统一比较。
 - **S020 续接** P11 最后一次 bounded confirmation（2026-08-13，D030/T015）。吸收 PAIG-KF evidence terminal 与 CVL-BPS cheap-absorption 结果；P11 非成功即停转战略讨论。
+- **S021 / R024 / D031 / T016–T018** 毕业优先标准与全量历史资产普查（2026-08-13）。废止“已知廉价替代/CMA 吸收即自动否决方法”的包装门；目标至少两个可命名方法。三路只读扫描覆盖 250 份 worker log、438 个 direction-lab 文件、30 个结果目录及必要 git 历史，恢复约 59 个命名身份并去重为约 41 条动作血缘。主线程分层：4 个当前 thesis 承重对象（CCISP/P01/P11/select-before-execute）、5 类真实数字章节资产、十余条未裁决动作库存、15 条以上明确无效项。终态 `READ_ONLY_CENSUS_COMPLETE`；不授权仿真、Groundwork、检索或代码/论文修改。
