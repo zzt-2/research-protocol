@@ -463,3 +463,23 @@ PASS。九项逐项审计完成，八项具有可命名具体 recipe，P06 仅�
 ### 结论
 
 PASS。D034 的术语纠正有源码证据；R025 原同族 spine 推荐撤回合理。本验证不决定 P11/P05/P08-R2 谁承重，也不授权执行。
+
+## V017: 跨技术对象章级包装独立终验
+
+> status: PASS
+> date: 2026-08-13
+> 关联：D035 / S024 / T029–T032 / R026
+
+### 验证项
+
+- [x] P11、P05、P08-R2 的动作链与 baseline 身份准确。
+- [x] P11 仅使用实际固定 20 dB、X-output、runner-defined BER 与 goodput proxy；BER CI 跨零，CMA=`UNRESOLVED`。
+- [x] P05 明确为原始 RX 上独立运行的 CMA receiver；baseline 为 15-epoch frozen supervised Butterfly FIR；改善仅落在 fixed-label BER。
+- [x] P08-R2 新增动作仅为冻结 `alpha=.875, offset=.1`；prefix calibration 是共享底座，clip 贡献已删除。
+- [x] “无需补实验即可有限包装”只基于现有局部命题真实、baseline 公平，并未取消真实性底线。
+- [x] CPR、双偏振均衡、coded receiver 分组合理；P11/P05 同属均衡对象，没有重复计数。
+- [x] 未授权实验、检索、Groundwork 或正文写作；外部 exact recipe 仍为 `NOT_CHECKED`。
+
+### 结论
+
+PASS，7/7；P0/P1/P2=`0/0/0`。R026 可作为下一轮战略取舍的只读事实底座，不代表 thesis spine 已拍板。

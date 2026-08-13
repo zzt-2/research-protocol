@@ -1,7 +1,7 @@
 # Topic Index: 论文写作专题（自适应 CPR 方向）
 
 > slug: 2026-07-09-thesis-writing
-> status: active | created 2026-07-09 | last_updated 2026-08-13（D034：会议代号纠正；核心方法须跨技术对象）
+> status: active | created 2026-07-09 | last_updated 2026-08-13（D035/S024/R026：三条跨对象方法均可有限包装）
 
 ## 专题定位（一句话）
 
@@ -140,12 +140,12 @@
 2. **strong/uplink 子图纵轴范围**：H002 建议收窄到 1e-4~1e-1（不硬凑 1e-5），待跟老师确认。
 3. **S002 原悬而未决**（图表清单 / fair_gain 呈现 / 主图子图数）：H002 把图 2 数据备齐，等老师反馈后定稿。
 4. **Fig.1/2 文字联动**：两图 draw.io 编辑源均已形成，Fig.1 v4 与 Fig.2 分别通过独立门控；caption、正文图号联动及投稿前检查仍未执行。
-5. **论文 spine 尚未拍板**：R025 原同族 spine 已被 D034 撤回；至少两个承重方法需尽量跨技术对象，下一轮只讨论 CPR / 双偏振均衡 / coded receiver 或硬件系统的组合。
+5. **论文 spine 尚未拍板**：R026 已确认 P11/P05/P08-R2 均可有限包装；需讨论 P05/P11 二选一的均衡章身份，以及 P08-R2 是否承担 coded-receiver 小方法章。
 6. **外部完全重复尚未检查**：九项均为 `NOT_CHECKED_IN_THIS_READ_ONLY_AUDIT`；只有用户明确恢复检索后，才对最终承重对象做 bounded exact-recipe collision check。
 
 ## 当前位置
 
-**🟢 S023 / D034（2026-08-13）：术语与章节独立性纠正，等待战略拍板。** CCISP 是会议/投稿工程代号，方法正式名为 Received-Power-Aware Adaptive Carrier Phase Recovery。P01/P02/select-before-execute/P03 同属该 CPR 方法族，不能虚算为多个独立核心方法；R025 原推荐 spine 已撤回。P11 corrected confirmation 仍为 `NOT_RUN`，不是科学失败。
+**🟢 S024 / D035 / R026（2026-08-13）：三条跨技术对象方法深挖完成。** P11、P05、P08-R2 经最低合同复审均为 `PACKAGEABLE_NOW_WITH_LIMITS`；补实验只增强证据，不再作为方法准入门。P11 corrected confirmation 仍为 `NOT_RUN`，不是科学失败。
 
 **⏸️ 所有执行继续暂停。** 未获用户明确确认前，不检索、下载、仿真、补 Groundwork、开候选或修改 Skill/controller/代码/论文正文。
 
@@ -289,3 +289,5 @@ F001 完成 F1（R010 20 条力度基准逐条对照**全对齐** + 8 条已知�
 - **S022 / D032** 具体方法 recipe 标准纠偏（2026-08-13）。用户指出 R024 后仍以承重对象/动作血缘代替具体方法。新入口只问：是否比正确经典 baseline 好、完整 recipe 是否非完全相同；场景或任何可陈述小差别均可形成 extension。后续必须直接列方法名、步骤、baseline、改善和差异点，不再先用 supporting/组件标签过滤。
 - **S023 / D033 / T019–T028** 九个具体方法逐项只读审计与独立终验（2026-08-13）。一种方法一个独立对话，三批并发；只读本地证据，不实验、不检索、不补 Groundwork。T028 终验 8/8 PASS，P0/P1/P2=0/0/0。
 - **R025 / V015 / D034 / V016** 九方法综合、验证与术语纠正（2026-08-13）。九项 recipe 事实保留；CCISP 纠正为会议代号，主方法正式名为 Received-Power-Aware Adaptive Carrier Phase Recovery。V016 源码核验 PASS。原同族 Ch3–Ch5 推荐撤回，后续按跨技术对象重排。P05 动作链与 P03 Q(64,40)/Q(8,6) identity 纠错继续有效。
+- **S024 / D035 / T029–T031** 跨技术对象深挖（2026-08-13）。P11、P05、P08-R2 各由独立对话追到 `PACKAGEABLE_NOW / PACKAGEABLE_AFTER_ONE_BOUNDED_STEP / CANNOT_PACKAGE_HONESTLY`；首轮只读，缺口须具体化后回主线程拍板。
+- **R026 / V017** 跨对象方法章 dossier 综合与终验（2026-08-13）。P11/P05/P08-R2 首轮均错误地把理想补强抬成准入门；复审后均为 `PACKAGEABLE_NOW_WITH_LIMITS`。V017 7/7 PASS、P0/P1/P2=0/0/0。候选组合为 CPR＋P05或P11（二选一均衡）＋P08-R2 coded receiver，但尚未拍 thesis spine。
