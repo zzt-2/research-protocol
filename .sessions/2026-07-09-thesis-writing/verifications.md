@@ -483,3 +483,41 @@ PASS。D034 的术语纠正有源码证据；R025 原同族 spine 推荐撤回�
 ### 结论
 
 PASS，7/7；P0/P1/P2=`0/0/0`。R026 可作为下一轮战略取舍的只读事实底座，不代表 thesis spine 已拍板。
+
+## V018: 三条方法补强 handoff 接收与主线程复验
+
+> date: 2026-08-13
+> 关联：S025 / D036 / D037 / H017–H019
+
+### 验证项
+
+- [x] P05 commit 血缘与范围：`fae3c69` 的 parent 为 `b9072d0`，`11dbafa` 只修 H017/唯一报告裁决文字；worktree clean，累计 diff-check PASS。
+- [x] P05 结果重算：`verification.v1.json` 为 PASS，30 rows/6 cells/每格5 seeds；两个 20 dB 绑定格 CMA mean=`0.09763616/0.09935064`，6/6 cells 每格 5/5 wins，truth audit 三项为 0。
+- [x] P05 fresh test：`python -m pytest projects/simulation/tests/test_p05_online_cma_strengthening.py -q --disable-warnings --maxfail=1` → `10 passed in 2.97s`。
+- [x] P11 commit 血缘与范围：`ad18050` 的 parent 为 `b9072d0`，`d50c619` 只清理三份报告 whitespace；worktree clean，累计 diff-check PASS。
+- [x] P11 结果重算：analysis terminal=`P11_STRENGTHENED`；LS−Adam pooled BER=`−7.7164391e-7`、95% CI=`[-1.9641845e-6,0]`；goodput delta=`391905.026 bit/frame`、95% CI=`[391763.140,392000]`；独立 verifier `ACCEPT`、P0/P1=`0/0`。
+- [x] P11 fresh test：`python -m pytest projects/simulation/explore/p11-pilot-efficient-butterfly-fir/test_p11_strengthening.py -q --disable-warnings --maxfail=1` → `8 passed in 4.12s`。
+- [x] P08-R2 commit 血缘与范围：`c9bb440` 的 parent 为 `b9072d0`，`b160f6a` 只清理 preregistration EOF whitespace；worktree clean，累计 diff-check PASS。
+- [x] P08-R2 结果重算：terminal=`CONFIRMED_LOCAL_IMPROVEMENT`、primary gate=true；12 dB B0/full FER=`0.143125/0.1390625`、差=`0.0040625`、95% CI=`[0.001875,0.00671875]`；verification=`19/19 PASS`。
+- [x] P08-R2 fresh test：`python -m pytest projects/simulation/tests/test_p08r2_strengthening.py -q --disable-warnings --maxfail=1` → `8 passed in 4.57s`。
+- [x] Handoff 治理：每份 H 至少三条事实已对 raw/aggregate/verification/code diff 核验；registry `conflicts_with=[]`，依赖未改变；三任务未生成新候选、未改 Skill/controller/正式论文正文。
+
+### 证据
+
+```text
+P05: 10 passed in 2.97s
+P11: 8 passed in 4.12s
+P08: 8 passed in 4.57s
+
+P05 cumulative git diff --check: exit=0
+P11 cumulative git diff --check: exit=0
+P08 cumulative git diff --check: exit=0
+
+P05 commits: fae3c694e71414d3f47b075d3dd4fa5eaad69746 + 11dbafa
+P11 commits: ad180508308e288ac74bdd9a4b745d1cb03f3266 + d50c619
+P08 commits: c9bb440189b11217f2e91ea74e9a971914c70813 + b160f6a
+```
+
+### 结论
+
+PASS。三份独立任务的实现、结果、claim boundary、提交血缘和 handoff 均可接收；P05 的原始包装裁决已按 D032 分层纠正。该 PASS 表示证据包可以进入主线选择与受控集成，不表示三个提交已经合并，也不表示最终 thesis spine 已获用户确认。

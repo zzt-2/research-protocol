@@ -1,7 +1,7 @@
 # Topic Index: 论文写作专题（自适应 CPR 方向）
 
 > slug: 2026-07-09-thesis-writing
-> status: active | created 2026-07-09 | last_updated 2026-08-13（D036/S025：三条既有方法进入独立全面补强）
+> status: active | created 2026-07-09 | last_updated 2026-08-13（D037/V018：三条补强完成并形成当前排序）
 
 ## 专题定位（一句话）
 
@@ -28,8 +28,8 @@
 材料盘点 + 缺口识别 + 数据稳定性验证 + 论点审查 + 简报完善。守 FR-22（不跳框架）+ D005 务实路线 + D-010 baseline 标准。
 
 ### 当前范围
-- D033/D035 的只读审计已经完成；按 D036 仅对 P05、P11、P08-R2 开放三个独立 worktree 任务做既有 recipe 的 bounded strengthening
-- 允许方法专属的真相修复、预注册正式确认、小范围场景扫描、paired statistics、必要消融/复杂度，以及冻结 recipe 的窄范围 exact-duplicate 检索；不恢复开放式候选搜索
+- D036 的 P05、P11、P08-R2 三个独立 worktree 补强任务已经完成并通过 V018 主线程接收；当前等待用户确认是否采用 D037 推荐结构及是否受控集成三个提交
+- P11 为首选均衡方法章候选，P08-R2 为技术对象独立的局部 coded-receiver 方法候选；P05 的固定身份可靠性强门失败，但按 D032 仍有限可包装，当前不优先单独承重
 - 按 D032 直接盘点具体方法 recipe：相对正确经典 baseline 有真实改善，且完整 recipe 非完全相同即可；场景差异、估计量、阈值、参数、调度或数值格式差异均可构成硕士级 extension
 - 按 D031 的毕业优先有限主张标准，目标至少两个可命名方法；已知廉价/更强替代不自动否决方法，也不强制进入正文，只限制 claim ceiling
 - 在恢复执行前，对历史候选、worker/results、工程/硬件资产做一次全量只读普查；从最窄真实命题重判，不继承旧 Go/Kill 标签
@@ -297,3 +297,4 @@ F001 完成 F1（R010 20 条力度基准逐条对照**全对齐** + 8 条已知�
 - **S024 / D035 / T029–T031** 跨技术对象深挖（2026-08-13）。P11、P05、P08-R2 各由独立对话追到 `PACKAGEABLE_NOW / PACKAGEABLE_AFTER_ONE_BOUNDED_STEP / CANNOT_PACKAGE_HONESTLY`；首轮只读，缺口须具体化后回主线程拍板。
 - **R026 / V017** 跨对象方法章 dossier 综合与终验（2026-08-13）。P11/P05/P08-R2 首轮均错误地把理想补强抬成准入门；复审后均为 `PACKAGEABLE_NOW_WITH_LIMITS`。V017 7/7 PASS、P0/P1/P2=0/0/0。候选组合为 CPR＋P05或P11（二选一均衡）＋P08-R2 coded receiver，但尚未拍 thesis spine。
 - **S025 / D036 / T033–T035** 三条既有方法独立全面补强（2026-08-13）。创建用户可见 Codex 新任务而非 subagent；P05/P11/P08-R2 各在独立 worktree 中补真相、正式确认、覆盖度、统计、消融、复杂度和窄范围完全重复检查。主线程等待回传后统一验收与选章。
+- **S025 续接 / D037 / V018 / H017–H019** 三条补强回收与排序（2026-08-13）。P11=`P11_STRENGTHENED`，P08-R2=`CONFIRMED_LOCAL_IMPROVEMENT`；P05 拆分为固定身份可靠性强门 FAIL 与 D032 `PACKAGEABLE_WITH_LIMITS`，不再被额外绝对门一票否决。三条 fresh focused tests 为 10/8/8 passed，累计 diff-check 全 PASS；当前推荐 Ch3 adaptive CPR / Ch4 P11 / Ch5 P08-R2，P05 并入 Ch4 对照，但尚待用户拍板且未合并提交。

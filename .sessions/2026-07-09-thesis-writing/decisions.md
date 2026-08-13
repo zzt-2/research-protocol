@@ -1334,3 +1334,44 @@ R026 已表明三个方法都能在严格限定下包装，但证据仍分别存
 ### 来源
 
 S025；用户 2026-08-13 明确要求“开新对话（session不是subagent），去每个都补强，尽量让它更全面”。
+
+## D037: 三条补强结果分层与当前方法排序
+
+> status: active
+> date: 2026-08-13
+> 取代：无（执行 D032/D034/D036；纠正 P05 子任务对 D032 的过度门控）
+> 被取代：无
+> 依据: 验证 V018 + P05/P11/P08-R2 三份章级补强报告与 H017–H019
+> 触发原话: 无（技术推导）
+
+### 决策
+
+三条既有方法的论文包装终态与当前排序为：
+
+1. **P11 = 首选均衡方法章候选**。1% 分布式 pilots 的 2×2、11-tap Butterfly complex-LS 在 18–22 dB、12 个 held-out seed clusters 下相对 50% 标签 Adam 达到 payload-only BER 非劣，并获得约 `1.98×` pilot-adjusted goodput proxy；完整 recipe 的限界检索未发现完全重复。终态 `P11_STRENGTHENED`。
+2. **P08-R2 = 技术对象独立的第三方法候选**。冻结 `(alpha,offset)=(0.875,0.1)` 的 normalized-offset min-sum 联合配置在 11–13 dB 三点均取得小幅正 FER 改善且 CI 下界为正；prefix calibration 属于共同 B0，clip 不计功，O2 仅 oracle。终态 `CONFIRMED_LOCAL_IMPROVEMENT`。
+3. **P05 = 有限可包装但当前不优先承重**。预注册 `CMA fixed-label BER<0.05` 的强可靠性门失败，说明标准 CMA 不能保证每 seed 固定输出身份；但 6/6 cells 均优于正确 frozen supervised Butterfly baseline、每格 5/5 paired wins，真实性/公平性审计通过且限界检索未发现完整重复。因此实验强门为 `P05_FIXED_LABEL_RELIABILITY_GATE_FAILED`，D032 包装终态仍为 `PACKAGEABLE_WITH_LIMITS`。它与 P11 同属均衡对象，当前排序为 `NOT_PREFERRED_CORE`，适合作为 P11 章节中的 receiver-replacement 对照与 permutation-ambiguity 边界材料。
+
+据此，当前唯一推荐但尚待用户拍板的现实结构是：Ch3 `Received-Power-Aware Adaptive Carrier Phase Recovery`；Ch4 P11 少导频 Complex-LS Butterfly FIR；Ch5 P08-R2 operating-point normalized-offset min-sum coded receiver；P05 并入 Ch4 的对照/边界部分。
+
+### 理由
+
+P11 同时具备明确动作链、训练开销问题、跨三个 SNR 的 held-out 数据、双偏振 payload-only 指标和接近 2 倍 goodput proxy，是三项中最完整、最像独立方法章的一项。P08-R2 的绝对 FER 改善较小且大量 tie，但它作用于编码接收对象，与 CPR/均衡在技术对象上独立，足以按 D032 的局部配置方法承重。P05 的强固定身份目标没有完全成立，但 D032 从未要求方法达到任意自设绝对 BER 门；将该强门失败升级为方法包装失败，会重演用户已明确反对的“给自己添堵”。
+
+### 排除的替代方案
+
+- **接受 P05 子任务的原始一票否决**：把额外绝对可靠性门误当 D032 最低合同，已由 `11dbafa` 修正。
+- **把 P05 与 P11 同时算两个独立核心方法**：二者同属双偏振均衡对象，论文整体独立性观感不足，排除。
+- **因 P08-R2 增益小而自动否决**：其 baseline 正确、三点改善方向一致、CI 下界为正且无额外结构成本；小效应只限制 claim ceiling，不触发 D032 Kill。
+- **现在立即合并并写论文**：三个提交仍在独立 worktree，最终 spine 尚待用户确认；当前不自动执行。
+
+### 影响范围
+
+- S025 完成，V018 记录三份 handoff 接收与 fresh verification。
+- D035/R026 的 `PACKAGEABLE_NOW_WITH_LIMITS` 历史判断被新实验细化，不删除：P11/P08 得到正式正确认，P05 拆成强门 FAIL 与 D032 有限包装 PASS。
+- 三个方法提交暂不 cherry-pick；Skill/controller/正式论文正文不修改。
+- 用户确认结构后，再做一次受控集成、冲突处理和统一论文写作计划。
+
+### 来源
+
+S025；V018；H017–H019；三个独立方法 worktree 的正式结果与验证回执。

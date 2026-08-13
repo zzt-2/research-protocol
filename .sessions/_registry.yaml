@@ -604,8 +604,8 @@ topics:
     title: 论文写作专题（自适应 CPR 方向）
     status: active
     created: "2026-07-09"
-    last_updated: "2026-08-13（D036/S025：三个独立 worktree 任务全面补强既有方法）"
-    description: "自适应 CPR 论文写作与全项目方法包装专题。D034 要求核心方法跨技术对象；D035/R026 已将 P11 双偏振 LS、P05 在线 CMA、P08-R2 coded receiver 深挖到有限可包装。D036 现仅对这三个既有 recipe 开放独立 worktree 补强：真相修复、正式确认、覆盖度、统计、消融、复杂度和窄范围完全重复检查；仍禁止新候选、开放式自动找方法、Skill/controller/正式论文正文修改。"
+    last_updated: "2026-08-13（D037/V018：三条方法补强完成、复验通过并形成当前排序）"
+    description: "自适应 CPR 论文写作与全项目方法包装专题。D036 三个独立 worktree 补强已完成并经 V018 接收：P11 为首选均衡方法章候选，P08-R2 为技术对象独立的局部 coded-receiver 候选；P05 的固定身份可靠性强门失败，但按 D032 仍为 PACKAGEABLE_WITH_LIMITS，当前不优先单独承重。推荐结构尚待用户确认，三个方法提交尚未合并；仍禁止开放式新候选、Skill/controller/正式论文正文自动修改。"
     depends_on:
       - slug: 2026-07-06-step4a-mve-execution
         reason: 继承 A4 数据（30seed fair_gain + A4 切换 CI）+ baseline 池（D-010 五条 + DA/NDA/DPLL/VV/BPS）+ R001 调研（baseline 组织/参数/叙述惯例 + 合法性背书矩阵）+ 简报 ADVISOR_BRIEFING_2026-07-09

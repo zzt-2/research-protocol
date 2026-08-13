@@ -1,6 +1,7 @@
 # [S025] 三条既有方法的独立全面补强
 
-> 2026-08-13 | 从战略讨论转入有限执行 | IN PROGRESS
+> 2026-08-13 | 从战略讨论转入有限执行 | COMPLETE
+> 2026-08-13 续接：三项回传、主线程接收核验与裁决分层完成
 
 ## 目标
 
@@ -52,4 +53,26 @@
 
 ## 后续
 
-等待三个新任务分别交付唯一报告、handoff 和 commit。主线程随后做交叉验收、统一合并与 Ch3–Ch5 结构讨论；未验收前不修改 Skill/controller 或正式论文正文。
+三个新任务均已交付唯一报告、handoff、结果和独立验证：
+
+- P05：`fae3c69` 完成正式证据包，`11dbafa` 修正裁决层级。实验强门为 `P05_FIXED_LABEL_RELIABILITY_GATE_FAILED`，但按 D032 仍为 `PACKAGEABLE_WITH_LIMITS`；因与 P11 同属均衡对象且证据/叙事较弱，当前为 `NOT_PREFERRED_CORE`。
+- P11：`ad18050` 完成少导频 LS 证据包，`d50c619` 清理格式。终态 `P11_STRENGTHENED`，可作为首选均衡方法章候选。
+- P08-R2：`c9bb440` 完成 coded receiver 证据包，`b160f6a` 清理格式。终态 `CONFIRMED_LOCAL_IMPROVEMENT`，可作为技术对象独立但效应较小的第三方法候选。
+
+### Handoff Verification
+
+Verified claims:
+
+- H017 claim 1（30/30 formal grid 与 raw receipt）：PASS — `verification.v1.json` 给出 rows=30、cells=6、每格 5 paired seeds、receipt=PASS。
+- H017 claim 2（两个绑定格仅因绝对 CMA mean 门失败）：PASS — 30/100 Hz、20 dB 的 CMA mean 分别为 `0.09763616/0.09935064`，其余 delta/CI/wins 门通过；该强门不再被错误升级为 D032 包装否决。
+- H017 claim 3（无 sent truth/Butterfly weights/reset）：PASS — truth audit 三项均为 0；fresh focused pytest `10 passed`。
+- H018 claim 1（1% LS BER 非劣）：PASS — LS−Adam pooled BER `−7.7164391e-7`，95% CI `[-1.9641845e-6,0]`。
+- H018 claim 2（goodput 改善）：PASS — paired delta `391905.026 bit/frame`，95% CI `[391763.140,392000]`；fresh focused pytest `8 passed`。
+- H018 claim 3（180 个 held-out 组合与真相链）：PASS — 独立 verifier 记录 `180/180` unique、true-SNR/shared-realization/metric 均 PASS。
+- H019 claim 1（冻结 recipe）：PASS — `(alpha,offset,clip)=(0.875,0.1,30)`。
+- H019 claim 2（12 dB FER 改善）：PASS — B0/full=`0.143125/0.1390625`，差 `0.0040625`，95% CI `[0.001875,0.00671875]`。
+- H019 claim 3（clip 不计功与 oracle 边界）：PASS — 开发网格 clip20/30 `360/360` 等价，O2 独占 `oracle_payload_truth`；verification `19/19 PASS`，fresh focused pytest `8 passed`。
+
+三个 worktree 均干净；四个 follow-up 后累计 `git diff --check b9072d0..HEAD` 均 PASS。`_registry.yaml` 中本专题 `conflicts_with=[]`，依赖仍为 step4a 既有证据；D036 的三条 bounded strengthening 没有扩成新候选或修改 Skill/controller/正式论文正文。
+
+主线程当前只完成接收和排序，尚未 cherry-pick 三个方法提交，也未拍板最终 thesis spine。下一步应先由用户确认是否采用“Ch3 adaptive CPR / Ch4 P11 / Ch5 P08-R2，P05 作为 Ch4 对照边界”这一现实结构，再做合并与论文整合。
