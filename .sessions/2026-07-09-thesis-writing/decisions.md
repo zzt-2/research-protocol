@@ -965,10 +965,10 @@ R007；S019；用户 2026-08-12 连续三次对硕士方法、baseline 选择和
 
 ## D028: 接受历史资产四档重裁，唯一下一包为 P01 校准鲁棒确认
 
-> status: active
+> status: superseded
 > date: 2026-08-12
 > 取代：D027
-> 被取代：无
+> 被取代：D029
 > 依据: 调研 projects/thesis-fso/direction-lab/harvest/historical-assets-thesis-grade-remap.md + 机器映射 historical-assets-thesis-grade-remap.yaml + verifier V014
 > 触发原话：无（T012 只读证据重裁的技术推导）
 
@@ -1004,3 +1004,46 @@ CCISP 与 select-before-execute 已有合法数字、输入—动作—输出链
 ### 来源
 
 S019；T012；historical-assets-thesis-grade-remap.md/yaml；V014。
+
+## D029: 双线重新生成硕士级 reference-extension 候选
+
+> status: active
+> date: 2026-08-13
+> 取代：D028
+> 被取代：无
+> 依据: 用户原话 voice.md 2026-08-13 + 调研 historical-assets-thesis-grade-remap.md + 历史连续候选关闭链
+
+### 决策
+
+暂停执行 D028 的 P01 唯一下一包，改为并行启动两条仅生成候选、不跑实验的设计线：T013 从历史资产中恢复被过严新颖性标准误杀的 reference-extension 方法候选；T014 从经典方法出发，在本项目真实可支持场景中重新生成方法候选。
+
+两条线统一采用硕士级方法标准：经典 baseline 实现正确；所提方法在目标场景下有可验证增益；具有完整 receiver-visible 输入—动作—输出链；不要求击败全部近期强方法；不声称 SOTA、最佳或全面领先。近期强邻居和 full-general 方法默认限制 claim ceiling，不自动 Kill；只有同任务/条件/信息/动作的 exact collision、科学无效或目标场景无增益才构成硬否决。
+
+Ch3 CCISP 保持不变。Ch4 与独立 Ch5 方法槽重新开放，待 T013/T014 回传后由主控统一比较，最多选择 1–2 个进入后续 bounded confirmation 或 Groundwork。P01 降为普通候选，不再预选唯一优先项。
+
+Select-before-execute 仅作为 CCISP 方法内部的执行优化资产，不作为独立 Ch5 方法：它已有软件 caller 语义、逐窗等价、调用量与软件 timing 证据，但未证明行业实现通常先并行计算两套 CPR，也没有 RTL/HLS/PPA 证据证明独立硬件问题和资源增量。
+
+### 理由
+
+此前流程长期把“不是首次”“存在更强邻居”“full-general 方法覆盖能力更大”“近期 baseline 不够贴合”混同为方法不可写，导致候选生成阶段被期刊级 novelty closure 主导，流程擅长关闭方向而不擅长形成硕士论文可用的 reference extension。T012 又把 select-before-execute 误当成独立 Ch5 方法，并过早把 P01 冻成唯一下一包，仍没有回答“还有哪些完整方法链可写”。
+
+本次把候选生成和科学确认分开：先要求两条线给出完整方法卡、场景差值、baseline、主图、消融和 claim ceiling；主控比较后才授权最小验证。这样既不复活真实无效结果，也不因存在更强方法而提前丢弃能诚实包装的硕士级工作。
+
+### 排除的替代方案
+
+- 直接执行 P01：会在候选池尚未重建时过早收敛，重复“有一个就往下跑”的旧问题。
+- 继续按“必须找 exact novelty gap/击败最强近期方法”筛选：这正是长期零产出的主要流程偏差。
+- 完全不查碰撞或隐瞒明显强方法：论文中可以不做全领域 SOTA 比较，但内部必须知道 claim ceiling；exact collision 仍须否决。
+- 将 select-before-execute 继续作为独立 Ch5：缺行业双算问题证据与硬件 PPA，不足以独立成章。
+- 两条线直接跑实验：本轮只生成和比较候选，避免候选尚未定形就投入长实验。
+
+### 影响范围
+
+- 新建 S020、T013、T014；两个执行对话各自产出候选卡并自动回传主控。
+- D028 被取代；其四档历史事实保留，但“Ch5 独立方法已就绪”“P01 唯一下一包”失效。
+- Ch4/Ch5 的下一科学动作在两条线结果统一比较前保持未授权。
+- 不修改 Skill、common、params 或正式论文；不恢复任何已证实 artifact/problem-absent/gate-FAIL 的科学 claim。
+
+### 来源
+
+S020；用户 2026-08-13 纠偏；T013；T014。

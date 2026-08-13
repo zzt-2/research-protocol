@@ -1,7 +1,7 @@
 # Topic Index: 论文写作专题（自适应 CPR 方向）
 
 > slug: 2026-07-09-thesis-writing
-> status: active | created 2026-07-09 | last_updated 2026-08-12（D028/V014：T012 四档重裁完成，唯一下一包=P01）
+> status: active | created 2026-07-09 | last_updated 2026-08-13（D029/S020：双线重新生成硕士级 reference-extension 候选）
 
 ## 专题定位（一句话）
 
@@ -42,6 +42,10 @@
 - ❌ 不做消融实验（跨块 KF / BPS 迁移等是 step4a 的债务，不在写作专题跑）
 
 ### 范围变更记录
+- **[2026-08-13] D029**：暂停 P01 唯一下一包与 select-before-execute 独立 Ch5 投影，派发 T013 历史恢复线和 T014 新候选生成线。
+  - 原因：长期流程将强邻居、full-general、非首次和 recent-baseline debt 当成候选硬否决，候选生成被期刊级 novelty closure 主导；T012 又过早选定唯一 P01，并把 CCISP 内部执行优化误作独立 Ch5 方法。
+  - 新范围：两条线只生成完整方法卡；采用“正确经典 baseline + 目标场景增益 + 完整动作链 + 有限 claim”标准。强邻居只限制 claim ceiling，exact collision/科学无效/目标场景无增益才硬否决。
+  - 明确不含：本轮不跑实验、不进入 GW/Contract/Execute、不修改 Skill/common/params/正式论文；两线回传前不预选赢家。
 - **[2026-08-12] D027**：D026 的当前执行入口被暂停，先执行历史资产硕士级重裁，再决定唯一 Ch4 包。
 - **[2026-08-12] D028**：T012 重裁 26 个独立资产，A/B/C/D=2/2/11/11；Ch3=CCISP，Ch5=select-before-execute，Ch4 唯一下一包=P01 receiver-visible SNR adapter。
   - 原因：后续 Groundwork 多次用强近邻、full-general 方法或未证明全局最优提前关闭候选，流程更擅长证伪而非回收可写的硕士级 reference extension；用户要求先判断过去的大量资产中是否已有可诚实包装的方法。
@@ -106,7 +110,8 @@
 - D022：Fig.2 保留三泳道、并行候选、raw bypass 和用户微调后的非控制连线，只把旧单层控制带升级为 CV gate → blind-h/effective-SNR → fixed 13 dB → branch command。
 - D026：已被 D027 取代其当前执行入口；原条件式 spine 仅作历史。Ch5“2B branch-route+fixed-point pending”投影已被 RDL D036/V020 部分取代：当前 Ch5=CCISP select-before-execute single-branch receiver architecture（canonical tier=`THESIS_ENGINEERING_COMPONENT`，task-local terminal=`THESIS_ENGINEERING_METHOD_READY`）；Q(8,6) 继续 SUPPORTING_ONLY。
 - D027：已由 D028 取代；保留其 thesis-grade remap 标准。
-- D028：接受 T012 四档结果与唯一 P01 下一包；P11 为第二顺位，不并行。
+- D028：已由 D029 取代其“select-before-execute 独立 Ch5 / P01 唯一下一包”结论；四档历史事实保留。
+- D029：派发 T013 历史资产恢复线与 T014 新 reference-extension 生成线；两线只产方法卡，回传后统一选择 1–2 个最小验证入口。
 
 ## 悬而未决
 
@@ -114,19 +119,14 @@
 2. **strong/uplink 子图纵轴范围**：H002 建议收窄到 1e-4~1e-1（不硬凑 1e-5），待跟老师确认。
 3. **S002 原悬而未决**（图表清单 / fair_gain 呈现 / 主图子图数）：H002 把图 2 数据备齐，等老师反馈后定稿。
 4. **Fig.1/2 文字联动**：两图 draw.io 编辑源均已形成，Fig.1 v4 与 Fig.2 分别通过独立门控；caption、正文图号联动及投稿前检查仍未执行。
-5. **Ch4 唯一方法包**：T012 已完成；若用户另行授权，只执行 P01 receiver-visible SNR calibration bounded confirmation。
-6. ~~**2B 方法闭合**~~：已由 RDL D036/V020 拆分并关闭。scheduling-only Ch5 已具备 full-grid identity、
-   cluster timing 与 typed-operation 证据；fixed-point 和真实综合不进入该方法。下一步仅为 Ch5 文本/图表整合。
+5. **Ch4/Ch5 候选统一比较**：等待 T013/T014 回传。P01 只是普通候选，不再唯一预选；主控最多晋级 1–2 项。
+6. **独立 Ch5 方法仍未闭合**：select-before-execute 只作为 CCISP 内部执行优化资产；其软件等价、调用和 timing 证据保留，但不能替代行业双算问题或 RTL/HLS/PPA 证据。
 
 ## 当前位置
 
-**🟢 S019 / D028 / V014（2026-08-12）：历史资产硕士级重裁完成。** 当前不继续新方向搜索，
-也不自动执行旧 2A 包。T012 只读既有 inventory、harvest、D/V 与必要原始证据，将全部资产分成
-四档，最多推荐 3 个并给出唯一 Ch4 优先项；不检索、不实验、不修改 Skill 或论文正文。
+**🟢 S020 / D029（2026-08-13）：双线 reference-extension 候选生成已准备派发。** T013 从历史资产恢复被过严 novelty 标准误杀的完整方法候选；T014 从经典 baseline 在现有真实场景中重新生成候选。两线只做方法卡和 bounded collision check，不实验、不自行选主线。
 
-**✅ 已冻结的两端事实不变。** Ch3 仍以 CCISP adaptive CPR 为主方法；RDL D036/V020 已闭合
-Ch5 select-before-execute single-branch receiver architecture，terminal=`THESIS_ENGINEERING_METHOD_READY`。
-Q(8,6) fixed-point 继续 SUPPORTING_ONLY。Ch4 已选 P01 receiver-visible SNR adapter 为唯一 bounded 下一包；P11 为第二顺位。
+**✅ Ch3 冻结，Ch4/独立 Ch5 重新开放。** Ch3 仍以 CCISP adaptive CPR 为主方法。select-before-execute 降回 CCISP 内部执行优化资产；独立 Ch5 仍待方法候选。P01 与 P11 进入统一候选比较，不再预先排序。
 
 ---
 
@@ -262,3 +262,4 @@ F001 完成 F1（R010 20 条力度基准逐条对照**全对齐** + 8 条已知�
 - **R023** CCISP→学位论文 extension packaging 诊断（2026-08-03，用户 brief 全流程任务，paper-writing DIAGNOSE/PROPOSE，只诊断不进 WRITE）。以 CCISP 会议稿为 Ch3 主锚，把 campaign 资产映射为鲁棒性/部署实现/可信验证扩展。**Phase A** contribution contract + conference_claim→thesis_extension_question→asset→missing_evidence 映射。**Phase B** 按 P0–P5 问题链重聚类（P1 SNR 失配/P2 连续 GG/P3 先选后跑/P4 定点/P5 coded）。**Phase C** 四包装评估：**Package A（学位论文扩展）= 唯一推荐**，Package B（journal extension，venue=N/A，当前不足）/C（engineering note）/D（边界论文）均不独立成稿归入 A。**Phase D** 唯一 blueprint Ch1–Ch6（Ch4 鲁棒性边界贡献成立非新算法 / Ch5 实现贡献成立限定实现可行性 / **不产第二算法**）。**Phase E** gap-to-package map 五级分类。**Phase F** 唯一小包 = 统一鲁棒性表（P01 adapter + P04 continuous GG）。**关键交叉验证**：(1) 投稿状态 = `CONFERENCE_MANUSCRIPT_COMPLETE / SUBMISSION_STATUS_UNKNOWN`（无投稿编号/回执/录用）；(2) tracked main.pdf 是旧 7/8 页构建非权威，权威 = LaTeX 源 + V026–V028（5 页）；(3) full-grid branch-compute timing **仅在 OLD-params 诊断 JSON（无 authority）**，formal B JSON 无 timing 字段 → full-grid formal timing 需新跑；(4) headline 数字 machine-checkable（selector_a JSON 每 cell 含 selected/fixed_nda errors + n_bits=768，G_C 一行确定性复算 0.8–1.5 dB）。**守纪律**：不改 CCISP tex/正式 thesis/仿真代码/results/Skill/dormant campaigns，不复活旧口径（26/29/uplink/1.2–1.9/3.1 dB）。产出 5 dossier 文件 `projects/thesis-fso/direction-lab/harvest/` + R023 + D023（唯一 blueprint）+ D024（唯一小包）+ voice.md 登记 + topic-index 更新。本轮 commit 一次不 push。）
 - **S018** 硕士论文方法包装逆向工程与本项目方法内核重审（2026-08-03，D025→D026，paper-writing INTAKE/DIAGNOSE/PROPOSE）。T002 证据化复盘旧 34/32 篇混合口径；T003 盘点全部方法 kernel；T004–T009 对 12 篇真实硕士逐篇精读至少两个方法/技术章并用统一 baseline→actual-delta 模板抽取；T010 独立交叉映射；T011/V013 fresh-context 独立终验 13/13 PASS、零 Critical/Important/Minor。产出 `peer-thesis-method-packaging-audit.md`、`internal-method-kernel-inventory.yaml`、`packaging-recipe-library.md`、`thesis-method-spines.md`。终态：R1–R5 有 ≥2 篇真实实例，R6=0/12 不硬贴；唯一推荐 Spine S1 = Ch3 CCISP / Ch4 2A / Ch5 2B，grade B−/CONDITIONAL；2A/2B 各差一个 bounded package，Phase G 不触发，不建 missing-method-search-target。本轮未写正式正文、未跑实验、未改 Skill、未触碰 p05 logs。
 - **S019** 历史方法资产硕士级重裁（2026-08-12，D027→D028/T012/V014）。26 个独立资产四档结果 A/B/C/D=2/2/11/11；唯一 Ch4 下一包=P01，P11 第二顺位；不检索、不实验、不改 Skill/论文正文。
+- **S020** 双线 reference-extension 候选生成（2026-08-13，D029/T013/T014）。纠正 select-before-execute 独立 Ch5 与 P01 唯一入口；两条执行线分别从历史资产和新经典 reference 生成完整方法卡，待主控统一比较。
