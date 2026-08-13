@@ -1,7 +1,7 @@
 # Topic Index: 论文写作专题（自适应 CPR 方向）
 
 > slug: 2026-07-09-thesis-writing
-> status: active | created 2026-07-09 | last_updated 2026-08-13（D029/S020：双线重新生成硕士级 reference-extension 候选）
+> status: active | created 2026-07-09 | last_updated 2026-08-13（D030/S020：P11 最后一次 bounded 方法补证；失败即停转战略讨论）
 
 ## 专题定位（一句话）
 
@@ -42,6 +42,10 @@
 - ❌ 不做消融实验（跨块 KF / BPS 迁移等是 step4a 的债务，不在写作专题跑）
 
 ### 范围变更记录
+- **[2026-08-13] D030**：一次性开放 P11 corrected bounded confirmation；任何非成功终态后暂停自动方法搜索。
+  - 原因：PAIG-KF 停在 Step 2 证据门，CVL-BPS 被固定 B=3 廉价方案吸收；用户要求若下一次仍不行就停止执行、另开对话讨论总体路线。
+  - 新范围：仅允许 P11 authority reconciliation、sim-preflight、true-SNR 注入修复、预注册 frozen receipt、一次 paired held-out confirmation 与独立验证。
+  - 影响的未决项：P11 成功才进入章节包装；authority 不足、失败、CMA 同任务吸收或执行无效均触发 `METHOD_SEARCH_PAUSED_FOR_STRATEGIC_DISCUSSION`，不得自动轮换 P01 或新候选。
 - **[2026-08-13] D029**：暂停 P01 唯一下一包与 select-before-execute 独立 Ch5 投影，派发 T013 历史恢复线和 T014 新候选生成线。
   - 原因：长期流程将强邻居、full-general、非首次和 recent-baseline debt 当成候选硬否决，候选生成被期刊级 novelty closure 主导；T012 又过早选定唯一 P01，并把 CCISP 内部执行优化误作独立 Ch5 方法。
   - 新范围：两条线只生成完整方法卡；采用“正确经典 baseline + 目标场景增益 + 完整动作链 + 有限 claim”标准。强邻居只限制 claim ceiling，exact collision/科学无效/目标场景无增益才硬否决。
@@ -111,7 +115,8 @@
 - D026：已被 D027 取代其当前执行入口；原条件式 spine 仅作历史。Ch5“2B branch-route+fixed-point pending”投影已被 RDL D036/V020 部分取代：当前 Ch5=CCISP select-before-execute single-branch receiver architecture（canonical tier=`THESIS_ENGINEERING_COMPONENT`，task-local terminal=`THESIS_ENGINEERING_METHOD_READY`）；Q(8,6) 继续 SUPPORTING_ONLY。
 - D027：已由 D028 取代；保留其 thesis-grade remap 标准。
 - D028：已由 D029 取代其“select-before-execute 独立 Ch5 / P01 唯一下一包”结论；四档历史事实保留。
-- D029：派发 T013 历史资产恢复线与 T014 新 reference-extension 生成线；两线只产方法卡，回传后统一选择 1–2 个最小验证入口。
+- D029：已由 D030 取代下一动作；其 T013/T014 候选生成结果保留。
+- D030：P11 是最后一次 bounded 方法补证；任何非成功终态后停止自动方法搜索并转入战略讨论。
 
 ## 悬而未决
 
@@ -119,14 +124,14 @@
 2. **strong/uplink 子图纵轴范围**：H002 建议收窄到 1e-4~1e-1（不硬凑 1e-5），待跟老师确认。
 3. **S002 原悬而未决**（图表清单 / fair_gain 呈现 / 主图子图数）：H002 把图 2 数据备齐，等老师反馈后定稿。
 4. **Fig.1/2 文字联动**：两图 draw.io 编辑源均已形成，Fig.1 v4 与 Fig.2 分别通过独立门控；caption、正文图号联动及投稿前检查仍未执行。
-5. **Ch4/Ch5 候选统一比较**：等待 T013/T014 回传。P01 只是普通候选，不再唯一预选；主控最多晋级 1–2 项。
+5. **P11 最后一次补证**：等待 T015。成功则评估章节落位；非成功则停止自动推进，另开战略讨论对话。
 6. **独立 Ch5 方法仍未闭合**：select-before-execute 只作为 CCISP 内部执行优化资产；其软件等价、调用和 timing 证据保留，但不能替代行业双算问题或 RTL/HLS/PPA 证据。
 
 ## 当前位置
 
-**🟢 S020 / D029（2026-08-13）：双线 reference-extension 候选生成已准备派发。** T013 从历史资产恢复被过严 novelty 标准误杀的完整方法候选；T014 从经典 baseline 在现有真实场景中重新生成候选。两线只做方法卡和 bounded collision check，不实验、不自行选主线。
+**🟢 S020 / D030（2026-08-13）：P11 最后一次 bounded confirmation 准备派发。** PAIG-KF 已在 Step 2 证据门停止；CVL-BPS 已被固定 B=3 廉价方案吸收。T015 只允许修正 P11 的 true-SNR 注入、冻结公平比较并跑一次 held-out；任何非成功终态后不得继续派新候选。
 
-**✅ Ch3 冻结，Ch4/独立 Ch5 重新开放。** Ch3 仍以 CCISP adaptive CPR 为主方法。select-before-execute 降回 CCISP 内部执行优化资产；独立 Ch5 仍待方法候选。P01 与 P11 进入统一候选比较，不再预先排序。
+**✅ Ch3 冻结；P11 是 Ch4/独立 Ch5 当前唯一获准补证对象。** Ch3 仍以 CCISP adaptive CPR 为主方法。select-before-execute 降回 CCISP 内部执行优化资产；P01 保留候选但不得在 P11 后自动运行。
 
 ---
 
@@ -263,3 +268,4 @@ F001 完成 F1（R010 20 条力度基准逐条对照**全对齐** + 8 条已知�
 - **S018** 硕士论文方法包装逆向工程与本项目方法内核重审（2026-08-03，D025→D026，paper-writing INTAKE/DIAGNOSE/PROPOSE）。T002 证据化复盘旧 34/32 篇混合口径；T003 盘点全部方法 kernel；T004–T009 对 12 篇真实硕士逐篇精读至少两个方法/技术章并用统一 baseline→actual-delta 模板抽取；T010 独立交叉映射；T011/V013 fresh-context 独立终验 13/13 PASS、零 Critical/Important/Minor。产出 `peer-thesis-method-packaging-audit.md`、`internal-method-kernel-inventory.yaml`、`packaging-recipe-library.md`、`thesis-method-spines.md`。终态：R1–R5 有 ≥2 篇真实实例，R6=0/12 不硬贴；唯一推荐 Spine S1 = Ch3 CCISP / Ch4 2A / Ch5 2B，grade B−/CONDITIONAL；2A/2B 各差一个 bounded package，Phase G 不触发，不建 missing-method-search-target。本轮未写正式正文、未跑实验、未改 Skill、未触碰 p05 logs。
 - **S019** 历史方法资产硕士级重裁（2026-08-12，D027→D028/T012/V014）。26 个独立资产四档结果 A/B/C/D=2/2/11/11；唯一 Ch4 下一包=P01，P11 第二顺位；不检索、不实验、不改 Skill/论文正文。
 - **S020** 双线 reference-extension 候选生成（2026-08-13，D029/T013/T014）。纠正 select-before-execute 独立 Ch5 与 P01 唯一入口；两条执行线分别从历史资产和新经典 reference 生成完整方法卡，待主控统一比较。
+- **S020 续接** P11 最后一次 bounded confirmation（2026-08-13，D030/T015）。吸收 PAIG-KF evidence terminal 与 CVL-BPS cheap-absorption 结果；P11 非成功即停转战略讨论。

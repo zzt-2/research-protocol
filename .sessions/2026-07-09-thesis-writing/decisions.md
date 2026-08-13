@@ -1007,10 +1007,10 @@ S019；T012；historical-assets-thesis-grade-remap.md/yaml；V014。
 
 ## D029: 双线重新生成硕士级 reference-extension 候选
 
-> status: active
+> status: superseded
 > date: 2026-08-13
 > 取代：D028
-> 被取代：无
+> 被取代：D030
 > 依据: 用户原话 voice.md 2026-08-13 + 调研 historical-assets-thesis-grade-remap.md + 历史连续候选关闭链
 
 ### 决策
@@ -1047,3 +1047,46 @@ Select-before-execute 仅作为 CCISP 方法内部的执行优化资产，不作
 ### 来源
 
 S020；用户 2026-08-13 纠偏；T013；T014。
+
+## D030: P11 为最后一次 bounded 方法尝试，失败后暂停自动方法搜索
+
+> status: active
+> date: 2026-08-13
+> 取代：D029
+> 被取代：无
+> 依据: 用户原话 voice.md 2026-08-13 + 调研 historical-assets-thesis-grade-remap.md + PAIG-KF Step 2 evidence terminal + CVL-BPS Step 4a cheap-absorption terminal
+> 触发原话：见 `voice.md` 2026-08-13
+
+### 决策
+
+在 T013/T014 候选池及两条优先独立线收口后，只执行一次 **P11 Pilot-Efficient Complex-LS Calibration for Linear Butterfly FIR** bounded confirmation。P11 是本轮最后一个自动推进的方法候选，不再并行或串行开启 P01、P1-M0、P10、PAIG-KF、CVL-BPS 或任何新候选。
+
+P11 必须先完成 authority/语义定位：确认已有历史证据能否合法续接到 GW Step 4a 或等价有界补证；修正 true-SNR 注入并用运行时 sentinel 证明 SNR 真正进入信道；冻结 full-label Adam、complex LS、pilot RLS 与同任务 blind CMA 的身份、信息边界、held-out cells/seeds、主指标和 PASS/FAIL，再运行一次 corrected confirmation。
+
+只有当 complex LS 在预注册 true-SNR grid 上对 full-label Adam 非劣、保留显著 pilot/goodput 优势，并且至少一个预注册且机制连贯的目标切片未被**同任务、同输出合同**的 CMA 完全吸收时，才可晋级硕士级工程/校准方法。CMA 若任务合同不同，只限制 claim ceiling，不得机械 Kill；若其在同任务同 fixed-label 输出上以零 pilot 全面吸收，则 P11 降为 SUPPORTING_ONLY。
+
+P11 出现 authority 不足、物理条件需临时发明、corrected grid 失败、同任务 CMA 完全吸收、execution invalid 或 verifier 不通过中的任一项，即进入 `METHOD_SEARCH_PAUSED_FOR_STRATEGIC_DISCUSSION`：停止自动检索、Groundwork、仿真和候选轮换，等待用户另开对话讨论总体路线。
+
+### 理由
+
+PAIG-KF 只有 4 篇 CORE，当前卡在证据覆盖；CVL-BPS 的 bounded smoke 已被 B=3 固定小网格以更低 BER 和约 21 倍更低评估量吸收。继续轮换新候选会重复“先干很久、后讨论路线”的模式。
+
+P11 与 CCISP selector 路线相对独立，历史代码和结果已存在，所需补证可以压缩成一次 corrected package；它既有完成 Ch4/Ch5 方法链的现实可能，也能在失败时明确关闭，而不需要新的多日基础设施。用户已明确表示若这次仍不行，应先停下来讨论，而非继续机械执行。
+
+### 排除的替代方案
+
+- **立即继续 PAIG-KF**：承重 primary fulltext 不足，补文献未必转化为方法，当前决策价值低。
+- **继续修 CVL-BPS**：Step 4a 已证明 miss 近乎处处发生且固定 B=3 更便宜、更好，改名重开无意义。
+- **P11 失败后自动跑 P01 或第三个新候选**：违反用户停机条件，也会延续没有战略复盘的串行消耗。
+- **只凭历史 20 dB P11 数字直接包装**：旧 9/11/13/15 dB 标签未真实注入，且 CMA 身份/吸收关系未闭合，证据不足。
+
+### 影响范围
+
+- 新建 T015，允许仅一个 P11 bounded package 触及仿真；原写作专题“禁新实验”边界对此作一次性 scope change。
+- D029 的候选生成结果保留，但“最多选择 1–2 项”的自动入口停止。
+- P11 非成功终态后，本专题进入战略讨论等待态；执行 agent 无权派下一候选。
+- 不修改正式论文正文、Skill/controller；不 push；不触碰无关 dirty 文件和四个 `p05_run*.log`。
+
+### 来源
+
+S020 续接；用户 2026-08-13 停机条件；PAIG-KF/CVL-BPS 跨对话回执。
