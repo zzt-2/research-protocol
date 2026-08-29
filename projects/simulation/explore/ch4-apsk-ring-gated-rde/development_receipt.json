@@ -1,0 +1,24 @@
+{
+  "schema_version": "ch4.gated-rde.development-receipt.v1",
+  "verdict_ceiling": "PROVISIONAL",
+  "manifest_sha256": "ff5419eeb11e3553f3ad8b1084552c92abe41fe96d80f23e5a97d7e41effacdd",
+  "core_sha256": "6dbe14d0d7cd6eb8cf34286a2e8767eb4d0842a5c5339f74195c4c7af8239db2",
+  "driver_sha256": "1e8309e0d1c1d3b1de89046136ccdd14e2ab6699a9276a05bbc38d33fd058f10",
+  "round2_run": false,
+  "winner": "none",
+  "provisional_grade": "D/STOP_NO_METHOD_SIGNAL",
+  "confirmation_seed_floor": 54301,
+  "max_generated_seed": 54206,
+  "elapsed_s": 314.6356240000023,
+  "raw_path": "projects\\simulation\\explore\\ch4-apsk-ring-gated-rde\\development_raw.json",
+  "aggregate_path": "projects\\simulation\\explore\\ch4-apsk-ring-gated-rde\\development_aggregate.json",
+  "_meta": {
+    "script": "t059_ch4_gated_rde_development_receipt_refresh",
+    "common_md5": "49acdfa4",
+    "git_commit": "399bf6f",
+    "timestamp": "2026-08-30T04:30:21"
+  },
+  "test_sha256": "187c100c0c6c1d7d6f0d2cf8d5bfe1bafbe9a5189c21ba3f05525ee41f4beced",
+  "report_sha256": "fd70a1ce27dd419a32705857bd85e89eb47a46ff8c4b361c97cd0ffa287980dd",
+  "independent_scientific_verification": "T062_PENDING"
+}

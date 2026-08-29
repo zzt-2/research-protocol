@@ -1,0 +1,329 @@
+Bit-Interleaved LDPC-Coded Modulation with
+       Iterative Demapping and Decoding
+
+                            Qiuliang Xie, Kewu Peng, Jian Song and Zhixing Yang
+                  Tsinghua National Laboratory for Information Science and Technology (TNList)
+                 Department of Electronic Engineering, Tsinghua University, Beijing 100084, China
+
+                                              Email: xql06@mails.tsinghua.edu.cn
+
+   Abstract— Bit-interleaved coded modulation (BICM) is a sub-     is employed. However, only pseudo-Gray mapping exists for
+optimal scheme from the average mutual information (AMI)           APSK constellations. Therefore, BICM schemes with APSK
+point of view due to independent demapping. However, this AMI      lead to more AMI loss than those with traditional MPSK
+loss can be neglected for signal constellations with Gray mapping  or MQAM. Fortunately such AMI loss can be regained via
+at high coding rates. AMI of amplitude-phase shift keying          iterative demapping and decoding.
+(APSK) constrained additive white Gaussian noise (AWGN)
+channel is provided in this paper, which shows that the BICM          BILCM-ID is different from traditional BICM-ID with
+scheme has considerable loss with APSK constellations since no     convolutional codes. The later treats the constellation mapping
+Gray mapping exists. Bit-interleaved low-density parity-check      as the inner code and expects it to transfer more information
+(LDPC) coded modulation (BILCM) is an excellent scheme and         between bits within the same symbol, and hence Gray mapping
+has been employed in many broadcasting and communication           becomes the worst one. The former, however, expects to
+systems, however, such scheme also suffers from the independent    regain the AMI loss due to independent demapping, and Gray
+demapping loss. Therefore, BILCM with iterative demapping and      mapping maximize the AMI in the ﬁrst iteration, therefore it
+decoding (BILCM-ID) is proposed in this paper to overcome          is the best one, again. Such Gray mapping has one additional
+such loss. Simulation results show that the BILCM-ID scheme        advantage that the receiver can treat the system both as BILCM
+outweighs BILCM scheme by about 0.5 and 0.3 dB over AWGN           or BILCM-ID, and thereby only Gray or pseudo-Gray mapping
+channel for 32-APSK constellation at coding rates 2/3 and 4/5,     is considered in this paper.
+respectively.
+                                                                      The rest of this paper is organized as follows. Section II
+                          I. INTRODUCTION                          gives the system model describing how BILCM-ID works.
+                                                                   Section III discusses the AMI of constellation-constrained
+   Bit-interleaved coded modulation (BICM), which consists         AWGN channel, where APSK-constrained AMIs for both
+of a coding, bit-wise interleaving and constellation mapping,      BICM and BICM-ID are provided. Section IV deals with
+was ﬁrst proposed by Zehavi [1]. Studies show that BICM is         BILCM-ID system, where the iterative demapping algorithm
+much better than trellis coded modulation (TCM) and symbol-        and simulation results are presented. Finally, conclusions are
+interleaved coded modulation (SICM) under fading channels,         drawn in Section V.
+but a little worse than TCM under additive white Gaussian
+noise (AWGN) channel [1]. BICM with iterative decoding                                      II. SYSTEM MODEL
+(BICM-ID) was ﬁrst described by Li et al. [2], [3], and
+Brink [4] who named it iterative demapping independently.             The transmitter and receiver modules of BILCM-ID are
+This BICM-ID scheme can approach the performance of                depicted in Fig. 1. The transmitter of BILCM-ID is the same
+Turbo-TCM over AWGN channel, but it mainly employs tra-            as that of BILCM, where the source bits sk are encoded,
+ditional convolutional codes and focuses on the constellation      interleaved and mapped (with Gray or pseudo-Gray mapping)
+mapping (also often called labeling), which greatly affects        to constellation symbols xk, which are then transmitted to
+the error performance [3], [5]–[7]. However, such BICM-ID          the channel. However, unlike in the receiver of BILCM, the
+systems have high error ﬂoor and do not take advantages over       decoder’s soft output is fed back to the soft demapper in the
+BICM with excellent channel codes from the viewpoint of            receiver of BILCM-ID to achieve the iterative demapping and
+error performance or implementation complexity.                    decoding gain.
+
+   Low-density parity-check (LDPC) codes were ﬁrst de-                              III. AMI OF BICM-ID SYSTEM
+scribed by Gallager [8], and re-discovered by Mackay [9].
+In this paper, bit-interleaved LDPC-coded modulation with             An information-theoretical view of BICM-ID system is
+iterative demapping and decoding (BILCM-ID) is studied             given in this section. First, the AMI of constellation-
+using amplitude-phase shift keying (APSK) constellations,          constrained AWGN channel and the deﬁnition of APSK con-
+which have been employed by DVB-S2 [10]. As pointed                stellation are presented. Then the AMI of APSK-constrained
+out by Goff [11] and Caire [12], there is very little average      AWGN channel is obtained via numerical calculation, based
+mutual information (AMI) loss for traditional M phase shift        on which quantitative AMI loss due to independent demapping
+keying (M-PSK) or M quadrature-amplitude modulation (M-            in BICM system can be obtained.
+QAM) constellations in BICM systems, when Gray mapping
+
+Authorized licensed use limited to: BEIJING INSTITUTE O9F78TE-1C-H4N24O4L-O2G5Y1.7D-4o/w0n9lo/$a2de0d.0o0n ©Au2g0u0s9t 2I9E,2E0E26 at 17:56:25 UTC from IEEE Xplore. Restrictions apply. 1
+sk LDPC                      bk Constellaion               xk
+       Encoder                         Mapping
+
+                              noise channel
+
+sˆk  LDPC Lk                  Soft
+                              Demapper
+     Decoder
+
+                                                a priori
+
+                                               L-value
+
+     Fig. 1. Transmitter and receiver modules of BILCM-ID.
+
+A. AMI of Constellation-Constrained AWGN Channel
+
+   We now consider the discrete-time memoryless complex          Fig. 2. (4+12)16APSK and (4+12+16)32APSK constellation with pseudo-
+AWGN channel modeled as y = x + n, where x denotes               Gray mapping. Mapping for (4+12)16APSK in brackets ().
+the input complex signal, n denotes the complex Gaussian
+noise with zero mean and variance of σ2/2 = N0/2 for                                                      TABLE I
+each real and imaginary part, and y denotes the corresponding         PARAMETERS OF 16 AND 32-APSK CONSIDERED IN THIS PAPER.
+
+output. Following the deﬁnitions given in [13], AMI of AWGN
+channel when the input signals x are constrained by a speciﬁc
+elementary constellation χ (assuming x takes on χ with equal
+
+probability), can be evaluated as (e.g., [12], [13])
+
+                              z∈χ p(y|z)                            Constellation                r2/r1 r3/r1 θ1  θ2      θ2
+                              p(y|x)                                (4+12) 16APSK
+     C = m − Ex,y log2                    ,                 (1)     (4+12+16) 32APSK                 2.7 N/A π/4 π/12 N/A
+
+                                                                                                     2.8       5.3 π/4 π/12 π/16
+
+where E denotes expectation, and m = log2(|χ|) where |χ|            An M -APSK constellation consists nR concentric rings,
+denotes the size of signal set χ. The AMI C deﬁned in (1)        each with uniformly spaced PSK points [14]. The signal set
+is called Coded Modulation (CM) Capacity in [12] since it is
+the maximum transmission rate (in bits/channel use), at which    is given by
+error-free transmission is possible with such signal set.
+                                                                       ⎧                         2π
+   In a BICM system, however, since each bit level is                  ⎪⎪⎪⎪⎪⎪⎪⎪⎨⎪                n1
+demapped independently, the AMI is reduced to [12]                                 r1  exp    j      i  +  θ1   i = 0, · · · , n1 + 1
+                                                                                   r2  exp    j                 i = 0, · · · , n2 − 1 (3)
+                        m      z∈χ p(y|z) ,                 (2)                                  2π  i  +  θ2  i = 0, · · · , nnR − 1,
+                              z∈χ(ib) p(y|z)                                                  j  n2
+     Cˆ = m − Eb,y log2                                          χ  =
+
+                       i=1
+
+where χ(ib) denotes the subset of χ whose corresponding i-th           ⎩⎪⎪⎪⎪⎪⎪⎪⎪⎪     ·  ··      2π
+bit is b (b ∈ {0, 1}). Similar to the deﬁnition above, we call                     rnR   exp     nnR i + θnR
+
+the AMI deﬁned in (2) the BICM Capacity.
+
+   According to the data-processing theorem in information       where nl, rl and θl denote the number of points, the radius
+theory, it can be easily proved that Cˆ ≤ C which shows          and the phase shift of the l-th ring, respectively.
+
+the sub-optimality of BICM schemes. However, BICM-ID             The 16 and 32-APSK constellations with pseudo-Gray
+
+schemes are optimal because the bit-levels are not demapped      mapping are depicted in Fig. 2, and parameters of them are
+
+independently but are fed back to assist demapping other bits    listed in Table I. The optimal parameters of such constellations
+
+within the same symbol.                                          vary with different coding rates [14], but in this paper, such
+
+B. APSK Constellations                                           parameters are ﬁxed for the simplicity of discussions.
+
+   Since the AMIs of traditional constellations such as 8PSK,    C. Numerical Results
+16QAM and 64QAM have already been discussed carefully
+in many literatures [11], [12], with which BICM only lose           The BICM and CM capacities of 8PSK under AWGN
+just a little when Gray mapping is employed, we will mainly      channel are depicted in Fig. 3, and those of 16 and 32-APSK
+focus our attentions on the constellations that Gray mapping     with parameters listed in Table I are shown in Fig. 4. From
+does not exist, e.g., 16APSK and 32APSK. For the reason of       these two ﬁgures we can see that the gap between BICM
+comparison, 8PSK with Gray mapping is also discussed in this     and CM capacities varies with different coding rates and
+paper.                                                           constellation orders. For example, such gap is less than 0.02
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:56:25 UTC from IEEE Xplore. Restrictions apply. 2
+                                                                       LDPC                                         check node
+                                                                                                                             bit node
+                                                                          girth-4
+                                                                                                                symbol node
+                                                                       BICM-ID
+
+                                                                       Fig. 5. Tanner Graph of BILCM-ID where bit-interleaving is restricted within
+                                                                       one LDPC codeword.
+
+Fig. 3. BICM and CM capacity versus signal-to-noise ratio (SNR, SNR =     In BICM-ID systems, the soft output (usually the log-
+Es/σ2 = Es/N0) for 8PSK over AWGN channel.                             likelihood ratio (LLR) of each bit) from the soft decoder is
+                                                                       fed back to assist demapping. The soft demapping algorithm
+Fig. 4. BICM and CM capacity versus SNR for 16 and 32APSK over AWGN    with LLR values feedback can be simply derived as follows,
+channel.
+                                                                       LLR(Bi)=Δ       log  P  (Bi  =  0|y)
+dB when coding rate is 0.8 (at the capacity of 2.4 bits/channel                             P  (Bi  =  1|y)
+use) for 8PSK, but about 0.3 dB when coding rate is 0.4 (at
+the capacity of 1.2 bits/channel use). On the other side, at the       = log  α∈χ(i0) P (X = α|y)
+coding rate of 0.8, the gap for 8PSK is less than 0.02 dB,                    α∈χi(1) P (X = α|y)
+while it is about 0.18 dB for 16APSK (at the capacity of 3.2
+bits/channel use) and 0.41 dB for 32APSK (at the capacity of           = log α∈χi(0) p(y|X = α)P (X = α)
+4 bits/channel use). Therefore, it can be concluded that such                 α∈χ(i1) p(y|X = α)P (X = α)                              (4)
+gap decreases as the coding rate increases, and increases as the
+constellation order increases, and Gray mapping makes such                                                   m
+gap ignorable at high coding rates.
+                                                                                   p(y|X = α) exp               G(f (α, j))L(Bj)
+                      IV. BILCM-ID SYSTEM
+A. Soft Demapping with a Priori Knowledge                              = log α∈χ(i0)                   j=1,j=i                    ,
+                                                                                                           m
+   Since the gaps between CM and BICM capacities can not
+be neglected for APSK constellations, iterative demapping is                       p(y|X = α) exp               G(f (α, j))L(Bj)
+presented here to regain such loss.
+                                                                              α∈χ(i1)                  j=1,j=i
+
+                                                                       where f (β, j) denotes the j-th bit (j = 1, · · · , m) correspond-
+                                                                       ing to symbol β, L(Bj) = log(P (Bj = 0)/P (Bj = 1))
+                                                                       denotes the LLR metric of the j-th bit, p(y|X = β) denotes
+
+                                                                       the probability density function (PDF) of the received signal
+                                                                       Y with transmitted symbol β, and
+
+                                                                                       G(bj) =      1        if bj = 0                 (5)
+                                                                                                    −1       if bj = 1.
+
+                                                                          It is notable that the demapping algorithm expressed in (4)
+                                                                       is exactly the same as that derived by [4], while here the
+                                                                       derivation of (4) is much more straightforward and reveals
+                                                                       physical insights. Assuming L(bj) = 0, which denotes that
+                                                                       no priori information is used, then (4) degenerates to the
+                                                                       traditional independent demapping algorithm.
+
+                                                                       B. The Tanner Graph of BILCM-ID
+
+                                                                          It is well-known that an LDPC code can be represented
+                                                                       by a Tanner Graph. Similarly, since bits corresponding to the
+                                                                       same symbol also have some constraints, BICM-ID also can be
+                                                                       represented by a Tanner Graph. Therefore, BILCM-ID can be
+                                                                       represented by Fig. 5, and the iterative demapping procedure
+                                                                       can be regarded as the message passing between the bit nodes
+                                                                       and symbol nodes back and forth.
+
+                                                                          It can be observed from this Tanner Graph that there are
+                                                                       no cycles between the symbol nodes and the bit nodes since
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:56:25 UTC from IEEE Xplore. Restrictions apply. 3
+Fig. 6. BER of BILCM and BILCM-ID 8PSK with 2/5 and 4/5 coding rates. Fig. 8. BER of BILCM and BILCM-ID 32APSK with 2/5 and 4/5 coding
+
+AWGN channel.                                                     rates. AWGN channel.
+
+Fig. 7. BER of BILCM and BILCM-ID 16APSK with 2/5 and 4/5 coding  of BILCM and the Shannon limits for these constellation
+rates. AWGN channel.                                              mappings are also provided as the references. Here LDPC
+                                                                  codes of rate 2/5 and 4/5 length 64800 bits from DVB-S2 are
+each symbol node connects to different bit nodes, however,        employed. In this simulation, there are totally 8 demapping
+there will be some short girth (the minimum length of the         iterations each iteration the LDPC decoder iterates 50 times,
+cycles) such as girth-4 in the BILCM-ID system at a large         and BILCM system only takes 50 iterative decoding using
+probability if the interleaver is restricted within one LDPC      the standard LLR-BP algorithm. Bit-interleaving is restricted
+codeword. Just as the performance is affected by short cycles     within one LDPC codeword. The Shannon limits are obtained
+in an LDPC code, these short cycles in BILCM-ID will also         based on the AMIs shown in Fig. 3 and 4, which are named
+affect the error performance, especially at low coding rates      CM or BICM-ID limit for BILCM-ID system and BICM limit
+where there are more check nodes and hence easier to form         for BILCM system.
+cycles. On the other hand, by observing (4), the LLR values
+of each bits corresponding to the same symbol are assumed            According to these ﬁgures, there are some iterative gain for
+to be independent, while in practice the cycles will make         any constellation any coding rate. Except for 8PSK with 4/5
+them related to each other and affect the error performance       coding rate where both the capacity gap and iterative gain can
+consequently.                                                     be neglected because of the Gray mapping and high coding
+                                                                  rate, for other constellations or coding rates, there are about
+C. Simulation Results                                             0.15 to 0.2 dB iterative gains, while the corresponding gaps
+                                                                  between the CM limits and BICM limits are much larger
+   The bit error rate (BER) performance of BILCM-ID over          than 0.2 dB. For example, although there is about a 0.74
+AWGN channel are depicted from Fig. 6 to Fig. 8 for 8PSK,         dB gap between CM limit and BICM limit for 32APSK
+16APSK and 32APSK, respectively. The BER performance              2/5 coding rate, a 0.41 dB gap between them for 32APSK
+                                                                  4/5 coding rate, there are still only about 0.15 to 0.2 dB
+                                                                  iterative gains. A possible reason for this phenomenon is that
+                                                                  the short cycles greatly affect the error performance, which
+                                                                  makes the L(Bj)s in (4) not independent. Therefore, since
+                                                                  bit-interleaving between multiple codewords and high coding
+                                                                  rates can reduce the short cycles in a large probability, better
+                                                                  error performance can be expected.
+
+                                                                     The BER performances of 32APSK coding rate 2/3 and 4/5
+                                                                  with different interleaving size are shown in Fig. 9 and Fig. 10.
+                                                                  From these ﬁgures, we can see that another 0.1 to 0.15 dB
+                                                                  can be gained compared with that bit-interleaving restricted
+                                                                  within one codeword. Comparing with the original BILCM
+                                                                  32APSK system, BILCM-ID can obtain about 0.5 and 0.3 dB
+                                                                  over AWGN channel at coding rate 2/3 and 4/5, respectively,
+                                                                  when the interleaving size is increased to 8-codeword.
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:56:25 UTC from IEEE Xplore. Restrictions apply. 4
+                                                                            BILCM system, BILCM-ID system can obtain considerable
+                                                                            iterative gain in the case of large constellation and long
+                                                                            interleaving size. For instance, for 32APSK and 8-codeword
+                                                                            interleaving, BILCM-ID system can obtain about 0.5 and 0.3
+                                                                            dB over AWGN channel compared with BILCM system at
+                                                                            coding rates 2/3 and 4/5, respectively.
+
+                                                                               Another advantage of BILCM-ID is that the transmitter in
+                                                                            it is exactly the same with that in BILCM because they both
+                                                                            employ Gray or pseudo-Gray mapping, and therefore BILCM-
+                                                                            ID is compatible with the existed BILCM system. That is,
+                                                                            better error performance can be achieved by increasing the
+                                                                            complexity of the detection algorithm. However, since the
+                                                                            algorithm provided in this paper is much more complicated
+                                                                            than that of BILCM system, some simpliﬁcation work still
+                                                                            needs to be done.
+
+Fig. 9. BER of BILCM and BILCM-ID 32APSK with 2/3 coding rate,                                      ACKNOWLEDGMENT
+where BILCM-ID(m) denotes that the bit-interleaving is restricted within m
+codewords. AWGN channel.                                                       This work was supported by “Multistandard integrated
+                                                                            network convergence for global mobile and broadcast tech-
+                                                                            nologies” (MING-T, FP6 STREP Contract Nr.045461).
+
+Fig. 10. BER of BILCM and BILCM-ID 32APSK with 4/5 coding rate,                                          REFERENCES
+where BILCM-ID(m) denotes that the bit-interleaving is restricted within m
+codewords. AWGN channel.                                                     [1] E. Zehavi, “8-PSK trellis codes for a Rayleigh channel,” IEEE Trans.
+                                                                                  Commun., vol. 40, no. 5, pp. 873–884, May 1992.
+                          V. CONCLUSIONS
+                                                                             [2] X. Li and J. A. Ritcey, “Bit-interleaved coded modulation with iterative
+   The AMI of constellation-constrained AWGN channel is                           decoding using soft feedback,” Electronics Letters, vol. 34, no. 10, pp.
+discussed in this paper, especially for APSK constellations that                  942–943, May 1998.
+have been employed by DVB-S2 but without Gray mapping
+exist. Analysis show that the gaps between BICM capacities                   [3] X. Li, A. Chindapol, and J. A. Ritcey, “Bit-interleaved coded modulation
+and CM capacities can not be neglected for 16 or 32 APSK                          with iterative decoding and 8PSK signaling,” IEEE Trans. Commun.,
+constellations with pseudo-Gray mapping. Numerical results                        vol. 50, no. 8, pp. 1250–1257, 2002.
+show that at 4/5 coding rate, such gap is about 0.18 dB for
+16APSK and about 0.41 dB for 32APSK. For 32APSK, such                        [4] S. T. Brink, J. Speidel, and R.-H. Yan, “Iterative demapping and
+gap is up to 0.6 dB at 2/3 coding rate and 0.71 dB at 2/5 coding                  decoding for multilevel modulation,” in Globecom ’98, 1998, pp. 579–
+rate. Therefore, although the combination of low coding rate                      584.
+and large constellation may not be used in practice, the gap
+for high coding rate and high order constellation can not be                 [5] A. Chindapol and J. A. Ritcey, “Design, analysis, and performance
+neglected, either.                                                                evaluation for BICM-ID with square QAM constellations in Rayleigh
+                                                                                  fading channels,” IEEE J. Select. Areas Commun., vol. 19, pp. 944–957,
+   To regain the capacity loss due to independent demapping,                      May 2001.
+BILCM-ID system is proposed in this paper. Comparing with
+                                                                             [6] X. Qi, S. Zhou, M. Zhao, and J. Wang, “Design of constellation
+                                                                                  labelling maps for iteratively demapped modulation schemes based on
+                                                                                  the assumption of hard-decision virtual channels,” IEE Proc.-Commun.,
+                                                                                  vol. 152, no. 6, pp. 1139–1148, Dec. 2005.
+
+                                                                             [7] N. H. Tran and H. H. Nguyen, “Signal mappings of 8-ary constellations
+                                                                                  for bit interleaved coded modulation with iterative decoding,” IEEE
+                                                                                  Trans. on Broadcasting, vol. 52, no. 1, pp. 92–99, Mar. 2006.
+
+                                                                             [8] R. G. Gallager, “Low-density parity-check codes,” IRE Trans. Inform.
+                                                                                  Theory, no. 18, pp. 21–28, Jan. 1962.
+
+                                                                             [9] D. J. C. MacKay, “Good error correcting codes based on very sparse
+                                                                                  matrices,” IEEE Trans. Inform. Theory, vol. 45, pp. 399–431, Mar. 1999.
+
+                                                                            [10] Digital Video Broadcasting (DVB); Second generation framing structure,
+                                                                                  channel coding and modulation systems for Broadcasting, Interactive
+                                                                                  Services, News Gathering and other broadband satellite applications,
+                                                                                  ETSI Std. EN 302 307, V1.1.2, 2006.
+
+                                                                            [11] S. Y. Goff, “Signal constellations for bit-interleaved coded modulation,”
+                                                                                  IEEE Trans. Inform. Theory, vol. 49, no. 1, pp. 307–313, Jan. 2003.
+
+                                                                            [12] G. Caire, G. Taricco, and E. Biglieri, “Bit-interleaved coded modula-
+                                                                                  tion,” IEEE Trans. Inform. Theory, vol. 44, no. 3, pp. 927–946, May
+                                                                                  1998.
+
+                                                                            [13] E. Biglieri, Coding for Wireless Channels. Springer Science+Business
+                                                                                  Media, Inc., 2005.
+
+                                                                            [14] R. D. Gaudenzi, A. G. i Fabregas, and A. Martinez, “Performance
+                                                                                  analysis of Turbo-coded APSK modulations over nonlinear satellite
+                                                                                  channels,” IEEE Trans. Wireless Commun., vol. 5, no. 9, pp. 2396–2407,
+                                                                                  Sept. 2006.
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:56:25 UTC from IEEE Xplore. Restrictions apply. 5
+

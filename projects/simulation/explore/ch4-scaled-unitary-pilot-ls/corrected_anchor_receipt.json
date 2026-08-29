@@ -1,0 +1,56 @@
+{
+  "schema_version": "t085.corrected-anchor-receipt.v1",
+  "authority": "T085/D064/V039",
+  "base_commit": "5ec190ad8c8da14b5dba3b353bd23977b7429d8a",
+  "control_epoch": 26,
+  "mission_checkpoint": "CP026",
+  "checks": {
+    "raw_only_reduction": "PASS",
+    "schema_and_counts": "PASS",
+    "shared_latent_pairing": "PASS",
+    "pooled_np2_64_clusters": "PASS",
+    "truth_firewall": "PASS",
+    "raw_and_frozen_code_hash_binding": "PASS",
+    "reproducible_generation_binding": "PARTIAL",
+    "post_run_runner_change_scope": "AUTHORITY_VALIDATION_ONLY"
+  },
+  "census": {
+    "latents": 64,
+    "cell_rows": 256,
+    "arm_rows": 1280
+  },
+  "bootstrap": {
+    "rng": "PCG64",
+    "seed": 2026083006,
+    "resamples": 5000,
+    "confidence": 0.95,
+    "stream_rule": "reset seed for each named paired comparison",
+    "pooled_np2_cluster": "64 latent IDs; each resample carries both 14 and 18 dB rows"
+  },
+  "decision": {
+    "terminal": "CHEAP_COMPARATOR_NOT_CLEARED",
+    "strict_comparators": [
+      "B2",
+      "B3_PSC"
+    ]
+  },
+  "hashes": {
+    "manifest_sha256": "d3ed6c7d887a7127850e310e2a6887eed5c99ec957f1a4b577282e1fbc518fde",
+    "raw_sha256": "4ef32e16d4ce252634686e8e3dc6e0f94dbff4daad18ef12691b491c875e33ed",
+    "aggregate_sha256": "8d2b21c59adc58c5e5a9ccdbb7f59986954ee1a86de1b43d3d6921cf24a2b46f",
+    "actual_generator_runner_sha256": "871ec566744cc678eb83c13aaf472609ecc0b77ce8f8e131ac2eaa063d30e91b",
+    "post_run_validation_runner_sha256": "934bf414e63121c20a2c4b27b91eaf8b691bc531f122039130ca1081223bbc0d",
+    "reducer_core_sha256": "0a18afe3696a13b47afbdc007f024dd8f6cc2e1a1ccae470b1fd813770afb201",
+    "reducer_entry_sha256": "adcc6b76f18c11eada72c57f3e5f97930ae4056ca97bc57da499c3a6488ef0df",
+    "tests_sha256": "3f5e7bc30c72cfaa715ef6bd9e1fe12fe7f6d2f721e350694cc396b6d67bc04f",
+    "production_core_sha256": "c78d5303a38f3d6c3562ec5b4f0337cdaba6a2cb07330f31cdfbad3538827e60",
+    "common_demapper_sha256": "bff9873d10e5b68f1262fddcc24788e23630792e82a23a308f8eb5c48f431a10",
+    "scaled_unitary_sha256": "868780505b55da7df979c75fe07f132bf52b8b8904c4ec88961fbbe38b052fd2"
+  },
+  "_meta": {
+    "script": "t085_corrected_anchor_receipt",
+    "common_md5": "49acdfa4",
+    "git_commit": "5ec190a",
+    "timestamp": "2026-08-30T14:21:13"
+  }
+}

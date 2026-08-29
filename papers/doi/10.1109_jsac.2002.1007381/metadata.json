@@ -1,0 +1,18 @@
+{
+  "storage_version": 2,
+  "id": "10.1109/JSAC.2002.1007381",
+  "title": "The Multimodulus Blind Equalization and Its Generalized Algorithms",
+  "doi": "10.1109/jsac.2002.1007381",
+  "arxiv_id": null,
+  "download_status": "success",
+  "download_method": "ieee_blit",
+  "content_type": "pdf",
+  "content_quality": "good",
+  "conversion_quality": "fast",
+  "content_file": "content.md",
+  "downloaded_at": "2026-08-30T01:59:11+08:00",
+  "real_title": "The Multimodulus Blind Equalization and Its Generalized Algorithms",
+  "title_check": "match",
+  "title_check_source": "converted_content_heading",
+  "title_overlap": 1.0
+}

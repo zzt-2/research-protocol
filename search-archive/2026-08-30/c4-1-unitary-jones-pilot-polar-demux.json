@@ -1,0 +1,31 @@
+{
+  "query": "unitary Jones matrix estimation pilots coherent optical polarization demultiplexing polar decomposition",
+  "timestamp": "2026-08-30T04:57:07.964516+08:00",
+  "sources": [
+    "s2",
+    "openalex",
+    "arxiv"
+  ],
+  "total": 1,
+  "results": [
+    {
+      "title": "Modeling and Compensation of Polarization Effects in Fiber-Optic Communication Systems",
+      "authors": [
+        "Cristian B. Czegledi"
+      ],
+      "venue": "Chalmers Research (Chalmers University of Technology)",
+      "year": 2018,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "Optical communication systems that exploit the orthogonality between two polarizations of light convey information over optical fibers by modulating data over the two polarizations. In an idealized scenario, the two polarizations propagate through the fiber without interfering. However, this is not the case for practical fibers, which suffer from various imperfections that lead to polarization-related interference between the two polarizations. This thesis is concerned with polarization effects that arise in communication systems over optical fibers. In particular, we consider modeling and compensation of such effects, and their impact on and improvement of nonlinearity mitigation algorithms.The impact of an impairment on the performance of a transmission system can be understood via a channel model, which should describe the behavior of the channel as accurately as possible. A theoretical framework is introduced to model the stochastic nature of the state of polarization during transmission. The model generalizes the one-dimensional carrier phase noise random walk to higher dimensions, modeling the phase noise and state of polarization drift jointly as rotations of the electric field and it has been successfully verified using experimental data. Thereafter, the model is extended to account for polarization-mode dispersion and its temporal random fluctuations. Such models will be increasingly important in simulating and optimizing future systems, where sophisticated digital signal processing will be natural parts.The typical digital signal processing solution to mitigate phase noise and drift of the state of polarization consists of two separate blocks that track each phenomenon independently and have been developed without taking into account mathematical models describing the impairments. Based on the proposed model for the state of polarization, we study a blind tracking algorithm to compensate for these impairments. The algorithm dynamically recovers the carrier phase and state of polarization jointly for an arbitrary modulation format. Simulation results show the effectiveness of the proposed algorithm, having a fast convergence rate and an excellent tolerance to phase and polarization noise.The optical fiber is a nonlinear medium with respect to the intensity of the incident light. This effect leads to nonlinear interference as the intensity of light increases, which made nonlinear interference mitigation techniques to be an intensively studied topic. Typically, these techniques do not take into account polarization-mode dispersion, which becomes detrimental as the nonlinear effects interact with polarization-mode dispersion. We study digital-domain nonlinear interference mitigation algorithms that take into account polarization-mode dispersion by i) reversing the polarization effects concurrently with reversing the nonlinear effects and by ii) mitigating only the polarization-insensitive nonlinear contributions. These algorithms will be increasingly important in future optical systems capable of performing large bandwidth nonlinear interference mitigation, where even small amounts of polarization-mode dispersion become a limiting factor.",
+      "citation_count": 4,
+      "is_open_access": true,
+      "pdf_url": "https://research.chalmers.se/en/publication/500733",
+      "source_api": "openalex",
+      "relevance_score": 0.273,
+      "id": "L001",
+      "download": true,
+      "publication_status": "published"
+    }
+  ]
+}

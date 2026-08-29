@@ -1,0 +1,91 @@
+{
+  "query": "complex orthogonal Procrustes unitary matrix least squares",
+  "timestamp": "2026-08-30T04:57:48.504673+08:00",
+  "sources": [
+    "openalex",
+    "arxiv",
+    "serpapi"
+  ],
+  "total": 4,
+  "results": [
+    {
+      "title": "The Normal Procrustes Problem: A Riemannian Optimization Approach",
+      "authors": [
+        "Kyle Bierly"
+      ],
+      "venue": "arXiv (math.NA, math.OC)",
+      "year": 2026,
+      "doi": null,
+      "arxiv_id": "2608.19513v1",
+      "abstract": "For given $m \\times n$ data matrices $X, Y$, we investigate the Normal Procrustes Problem---the least squares optimization problem that aims to minimize $\\|AX-Y\\|_F^2$, where $A$ is constrained to be a normal $m \\times m$ matrix. As far as the author of this article is aware, no other method that attempts to solve the Normal Procrustes Problem exists in the literature; we thus propose what is, to our knowledge, the first such method. We, furthermore, adapt our approach to address the Real Normal Procrustes Problem, where $A$ must be real. In our treatment of these problems, we first reduce our complex and real objective functions to be purely optimizable over the Riemannian manifolds of the unitary and real orthogonal matrices, respectively. This reduction enables us to apply techniques in Riemannian manifold optimization to approximate solutions to both. The Closest Normal Matrix and Real Closest Normal Matrix Problems are both special cases of their respective Procrustes Problems and have been previously studied in the literature. Our approach thus recovers a novel Riemannian optimization method for approximating solutions to both these problems. We further numerically test the performance of our method across all such problems (including against previously developed algorithms on the Closest Normal Matrix Problems) and obtain competitive residuals and favorable scaling in wall-clock time.",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "https://arxiv.org/pdf/2608.19513v1",
+      "source_api": "arxiv",
+      "relevance_score": 1.0,
+      "id": "L001",
+      "download": true,
+      "publication_status": "preprint"
+    },
+    {
+      "title": "Approximating the little Grothendieck problem over the orthogonal and unitary groups",
+      "authors": [
+        "Afonso S. Bandeira",
+        "Christopher Kennedy",
+        "Amit Singer"
+      ],
+      "venue": "Mathematical Programming",
+      "year": 2016,
+      "doi": "10.1007/s10107-016-0993-7",
+      "arxiv_id": null,
+      "abstract": "The little Grothendieck problem consists of maximizing $\\sum_{ij}C_{ij}x_ix_j$ over binary variables $x_i\\in\\{\\pm1\\}$, where C is a positive semidefinite matrix. In this paper we focus on a natural generalization of this problem, the little Grothendieck problem over the orthogonal group. Given C a dn x dn positive semidefinite matrix, the objective is to maximize $\\sum_{ij}Tr (C_{ij}^TO_iO_j^T)$ restricting $O_i$ to take values in the group of orthogonal matrices, where $C_{ij}$ denotes the (ij)-th d x d block of C. We propose an approximation algorithm, which we refer to as Orthogonal-Cut, to solve this problem and show a constant approximation ratio. Our method is based on semidefinite programming. For a given $d\\geq 1$, we show a constant approximation ratio of $α_{R}(d)^2$, where $α_{R}(d)$ is the expected average singular value of a d x d matrix with random Gaussian $N(0,1/d)$ i.i.d. entries. For d=1 we recover the known $α_{R}(1)^2=2/π$ approximation guarantee for the classical little Grothendieck problem. Our algorithm and analysis naturally extends to the complex valued case also providing a constant approximation ratio for the analogous problem over the Unitary Group. Orthogonal-Cut also serves as an approximation algorithm for several applications, including the Procrustes problem where it improves over the best previously known approximation ratio of~$\\frac1{2\\sqrt{2}}$. The little Grothendieck problem falls under the class of problems approximated by a recent algorithm proposed in the context of the non-commutative Grothendieck inequality. Nonetheless, our approach is simpler and it provides a more efficient algorithm with better approximation ratios and matching integrality gaps. Finally, we also provide an improved approximation algorithm for the more general little Grothendieck problem over the orthogonal (or unitary) group with rank constraints.",
+      "citation_count": 34,
+      "is_open_access": true,
+      "pdf_url": "https://link.springer.com/content/pdf/10.1007/s10107-016-0993-7.pdf",
+      "source_api": "openalex+openalex",
+      "relevance_score": 0.714,
+      "id": "L002",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Least-squares inner product shaping",
+      "authors": [
+        "Yonina C. Eldar"
+      ],
+      "venue": "Linear Algebra and its Applications",
+      "year": 2002,
+      "doi": "10.1016/s0024-3795(01)00575-4",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 26,
+      "is_open_access": true,
+      "pdf_url": "https://www.sciencedirect.com/science/article/pii/S0024379501005754/pdf",
+      "source_api": "openalex",
+      "relevance_score": 0.286,
+      "id": "L003",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Linear Dimensionality Reduction: Survey, Insights, and Generalizations",
+      "authors": [
+        "John P. Cunningham",
+        "Zoubin Ghahramani"
+      ],
+      "venue": "arXiv (Cornell University)",
+      "year": 2014,
+      "doi": "10.48550/arxiv.1406.0873",
+      "arxiv_id": null,
+      "abstract": "Linear dimensionality reduction methods are a cornerstone of analyzing high dimensional data, due to their simple geometric interpretations and typically attractive computational properties. These methods capture many data features of interest, such as covariance, dynamical structure, correlation between data sets, input-output relationships, and margin between data classes. Methods have been developed with a variety of names and motivations in many fields, and perhaps as a result the connections between all these methods have not been highlighted. Here we survey methods from this disparate literature as optimization programs over matrix manifolds. We discuss principal component analysis, factor analysis, linear multidimensional scaling, Fisher's linear discriminant analysis, canonical correlations analysis, maximum autocorrelation factors, slow feature analysis, sufficient dimensionality reduction, undercomplete independent component analysis, linear regression, distance metric learning, and more. This optimization framework gives insight to some rarely discussed shortcomings of well-known methods, such as the suboptimality of certain eigenvector solutions. Modern techniques for optimization over matrix manifolds enable a generic linear dimensionality reduction solver, which accepts as input data and an objective to be optimized, and returns, as output, an optimal low-dimensional projection of the data. This simple optimization framework further allows straightforward generalizations and novel variants of classical methods, which we demonstrate here by creating an orthogonal-projection canonical correlations analysis. More broadly, this survey and generic solver suggest that linear dimensionality reduction can move toward becoming a blackbox, objective-agnostic numerical technology.",
+      "citation_count": 382,
+      "is_open_access": true,
+      "pdf_url": "https://arxiv.org/pdf/1406.0873",
+      "source_api": "openalex+openalex",
+      "relevance_score": 0.286,
+      "id": "L004",
+      "download": true,
+      "publication_status": "preprint"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "storage_version": 2,
+  "id": "L002",
+  "title": "Reliability-List-Based Check-Belief Propagation Decoding of LDPC Codes",
+  "doi": "10.1587/transfun.2024eal2080",
+  "arxiv_id": null,
+  "download_status": "success",
+  "download_method": "oa_pdf",
+  "content_type": "pdf",
+  "content_quality": "good",
+  "content_file": "content.md",
+  "downloaded_at": "2026-08-30T10:45:43.017518+08:00",
+  "real_title": "Reliability-List-Based Check-Belief Propagation Decoding of LDPC Codes<sup>∗</sup>",
+  "title_check": "match",
+  "title_overlap": 0.8888888888888888
+}

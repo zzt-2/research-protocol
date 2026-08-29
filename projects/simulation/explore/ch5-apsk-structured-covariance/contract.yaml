@@ -1,0 +1,29 @@
+schema_version: t054.correctness-contract.v1
+authority: D045
+action_class: GW_STEP4A_D_IMPLEMENTATION_SMOKE
+scope:
+  - CORRECTNESS_ONLY
+  - SYNTHETIC_RESIDUAL
+  - NO_TARGET_OCCURRENCE_OR_METHOD_SIGNAL
+arms:
+  B1: per-ring scalar covariance
+  B2: per-ring radial/tangential hard pooling
+  B3: per-point full 2x2 covariance with generic shrinkage and shared floor
+  C1: per-point radial/tangential hierarchical shrinkage
+frozen_relations:
+  lambda: kappa / (n_k + kappa)
+  kappa_zero: point-local radial/tangential covariance
+  kappa_large: B2 hard-pooled ring target
+truth_firewall:
+  allowed: [known_pilots, received_pilot_samples, constellation_geometry]
+  forbidden: [evaluation_bits, payload_labels, transmitted_residual_truth, future_samples]
+cross_polarization_sample_pooling: false
+modulation_identity_source: common._modulation.m16apsk_mod table fingerprint
+fairness_shared:
+  - pilot samples and labels
+  - point-centroid mean rule
+  - numerical eigenvalue floor
+  - APSK bit labeling and positive-means-bit-1 LLR convention
+  - LLR clipping
+performance_grid_authorized: false
+ldpc_performance_authorized: false

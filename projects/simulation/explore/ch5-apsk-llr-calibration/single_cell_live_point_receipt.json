@@ -1,0 +1,16 @@
+{
+  "schema_version": "t077.c5-0-single-cell.live-point.receipt.v1",
+  "manifest_hash": "14ff14de3d0094f135c3a07d3fb395455e81035f6b6d1b014704177587ed3782",
+  "completed_frames": 1,
+  "seed": 2900,
+  "codec": "TargetApskCodec",
+  "fresh_live_decode": "PASS",
+  "physical_pair_hash": "PASS",
+  "scientific_use": false,
+  "_meta": {
+    "script": "t077:live-point-receipt",
+    "common_md5": "49acdfa4",
+    "git_commit": "cde31b9",
+    "timestamp": "2026-08-30T09:45:58"
+  }
+}

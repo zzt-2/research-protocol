@@ -1,0 +1,197 @@
+{
+  "query": "decision confidence weighted LMS coherent receiver",
+  "timestamp": "2026-08-30T02:51:53.682079+08:00",
+  "sources": [
+    "s2",
+    "openalex",
+    "arxiv"
+  ],
+  "total": 8,
+  "results": [
+    {
+      "title": "Uncertainty Quantification and Confidence Calibration in Large Language Models: A Survey",
+      "authors": [
+        "Xiaoou Liu",
+        "Tiejin Chen",
+        "Longchao Da",
+        "Chacha Chen",
+        "Zhen Lin",
+        "Hua Wei"
+      ],
+      "venue": "",
+      "year": 2025,
+      "doi": "10.1145/3711896.3736569",
+      "arxiv_id": null,
+      "abstract": "Uncertainty quantification (UQ) enhances the reliability of Large Language Models (LLMs) by estimating confidence in outputs, enabling risk mitigation and selective prediction. However, traditional UQ methods struggle with LLMs due to computational constraints and decoding inconsistencies. Moreover, LLMs introduce unique uncertainty sources, such as input ambiguity, reasoning path divergence, and decoding stochasticity, that extend beyond classical aleatoric and epistemic uncertainty. To address this, we introduce a new taxonomy that categorizes UQ methods based on computational efficiency and uncertainty dimensions, including input, reasoning, parameter, and prediction uncertainty. We evaluate existing techniques, summarize existing benchmarks and metrics for UQ, assess their real-world applicability, and identify open challenges, emphasizing the need for scalable, interpretable, and robust UQ approaches to enhance LLM reliability.",
+      "citation_count": 36,
+      "is_open_access": true,
+      "pdf_url": "https://dl.acm.org/doi/pdf/10.1145/3711896.3736569",
+      "source_api": "openalex",
+      "relevance_score": 0.333,
+      "_score": 0.40540909090909094,
+      "id": "L001",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Breast Cancer Detection Using Mammogram Images with Improved Multi-Fractal Dimension Approach and Feature Fusion",
+      "authors": [
+        "Dilovan Asaad Zebari",
+        "Dheyaa Ahmed Ibrahim",
+        "Diyar Qader Zeebaree",
+        "Mazin Abed Mohammed",
+        "Habibollah Haron",
+        "Nechirvan Asaad Zebari",
+        "Robertas Damaševičius",
+        "Rytis Maskeliūnas"
+      ],
+      "venue": "Applied Sciences",
+      "year": 2021,
+      "doi": "10.3390/app112412122",
+      "arxiv_id": null,
+      "abstract": "Breast cancer detection using mammogram images at an early stage is an important step in disease diagnostics. We propose a new method for the classification of benign or malignant breast cancer from mammogram images. Hybrid thresholding and the machine learning method are used to derive the region of interest (ROI). The derived ROI is then separated into five different blocks. The wavelet transform is applied to suppress noise from each produced block based on BayesShrink soft thresholding by capturing high and low frequencies within different sub-bands. An improved fractal dimension (FD) approach, called multi-FD (M-FD), is proposed to extract multiple features from each denoised block. The number of features extracted is then reduced by a genetic algorithm. Five classifiers are trained and used with the artificial neural network (ANN) to classify the extracted features from each block. Lastly, the fusion process is performed on the results of five blocks to obtain the final decision. The proposed approach is tested and evaluated on four benchmark mammogram image datasets (MIAS, DDSM, INbreast, and BCDR). We present the results of single- and double-dataset evaluations. Only one dataset is used for training and testing in the single-dataset evaluation, whereas two datasets (one for training, and one for testing) are used in the double-dataset evaluation. The experiment results show that the proposed method yields better results on the INbreast dataset in the single-dataset evaluation, whilst better results are obtained on the remaining datasets in the double-dataset evaluation. The proposed approach outperforms other state-of-the-art models on the Mini-MIAS dataset.",
+      "citation_count": 110,
+      "is_open_access": true,
+      "pdf_url": "https://www.mdpi.com/2076-3417/11/24/12122/pdf?version=1639988391",
+      "source_api": "openalex",
+      "relevance_score": 0.167,
+      "_score": 0.36350000000000005,
+      "id": "L002",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "A Survey on the Use of Large Language Models (LLMs) in Fake News",
+      "authors": [
+        "Eleftheria Papageorgiou",
+        "Christos Chronis",
+        "Iraklis Varlamis",
+        "Yassine Himeur"
+      ],
+      "venue": "Future Internet",
+      "year": 2024,
+      "doi": "10.3390/fi16080298",
+      "arxiv_id": null,
+      "abstract": "The proliferation of fake news and fake profiles on social media platforms poses significant threats to information integrity and societal trust. Traditional detection methods, including rule-based approaches, metadata analysis, and human fact-checking, have been employed to combat disinformation, but these methods often fall short in the face of increasingly sophisticated fake content. This review article explores the emerging role of Large Language Models (LLMs) in enhancing the detection of fake news and fake profiles. We provide a comprehensive overview of the nature and spread of disinformation, followed by an examination of existing detection methodologies. The article delves into the capabilities of LLMs in generating both fake news and fake profiles, highlighting their dual role as both a tool for disinformation and a powerful means of detection. We discuss the various applications of LLMs in text classification, fact-checking, verification, and contextual analysis, demonstrating how these models surpass traditional methods in accuracy and efficiency. Additionally, the article covers LLM-based detection of fake profiles through profile attribute analysis, network analysis, and behavior pattern recognition. Through comparative analysis, we showcase the advantages of LLMs over conventional techniques and present case studies that illustrate practical applications. Despite their potential, LLMs face challenges such as computational demands and ethical concerns, which we discuss in more detail. The review concludes with future directions for research and development in LLM-based fake news and fake profile detection, underscoring the importance of continued innovation to safeguard the authenticity of online information.",
+      "citation_count": 59,
+      "is_open_access": true,
+      "pdf_url": "https://www.mdpi.com/1999-5903/16/8/298/pdf?version=1724308927",
+      "source_api": "openalex",
+      "relevance_score": 0.167,
+      "_score": 0.3400454545454546,
+      "id": "L003",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Machine Learning Applications for Short Reach Optical Communication",
+      "authors": [
+        "Yapeng Xie",
+        "Yitong Wang",
+        "Sithamparanathan Kandeepan",
+        "Ke Wang"
+      ],
+      "venue": "Photonics",
+      "year": 2022,
+      "doi": "10.3390/photonics9010030",
+      "arxiv_id": null,
+      "abstract": "With the rapid development of optical communication systems, more advanced techniques conventionally used in long-haul transmissions have gradually entered systems covering shorter distances below 100 km, where higher-speed connections are required in various applications, such as the optical access networks, inter- and intra-data center interconnects, mobile fronthaul, and in-building and indoor communications. One of the techniques that has attracted intensive interests in short-reach optical communications is machine learning (ML). Due to its robust problem-solving, decision-making, and pattern recognition capabilities, ML techniques have become an essential solution for many challenging aspects. In particular, taking advantage of their high accuracy, adaptability, and implementation efficiency, ML has been widely studied in short-reach optical communications for optical performance monitoring (OPM), modulation format identification (MFI), signal processing and in-building/indoor optical wireless communications. Compared with long-reach communications, the ML techniques used in short-reach communications have more stringent complexity and cost requirements, and also need to be more sensitive. In this paper, a comprehensive review of various ML methods and their applications in short-reach optical communications are presented and discussed, focusing on existing and potential advantages, limitations and prospective trends.",
+      "citation_count": 45,
+      "is_open_access": true,
+      "pdf_url": "https://www.mdpi.com/2304-6732/9/1/30/pdf?version=1641288873",
+      "source_api": "openalex",
+      "relevance_score": 0.167,
+      "_score": 0.2771363636363636,
+      "id": "L004",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "A Survey on LLM-Generated Text Detection: Necessity, Methods, and Future Directions",
+      "authors": [
+        "Junchao Wu",
+        "Shu Yang",
+        "Runzhe Zhan",
+        "Yulin Yuan",
+        "Derek F. Wong",
+        "Lidia S. Chao"
+      ],
+      "venue": "arXiv (Cornell University)",
+      "year": 2023,
+      "doi": "10.48550/arxiv.2310.14724",
+      "arxiv_id": null,
+      "abstract": "The powerful ability to understand, follow, and generate complex language emerging from large language models (LLMs) makes LLM-generated text flood many areas of our daily lives at an incredible speed and is widely accepted by humans. As LLMs continue to expand, there is an imperative need to develop detectors that can detect LLM-generated text. This is crucial to mitigate potential misuse of LLMs and safeguard realms like artistic expression and social networks from harmful influence of LLM-generated content. The LLM-generated text detection aims to discern if a piece of text was produced by an LLM, which is essentially a binary classification task. The detector techniques have witnessed notable advancements recently, propelled by innovations in watermarking techniques, statistics-based detectors, neural-base detectors, and human-assisted methods. In this survey, we collate recent research breakthroughs in this area and underscore the pressing need to bolster detector research. We also delve into prevalent datasets, elucidating their limitations and developmental requirements. Furthermore, we analyze various LLM-generated text detection paradigms, shedding light on challenges like out-of-distribution problems, potential attacks, real-world data issues and the lack of effective evaluation framework. Conclusively, we highlight interesting directions for future research in LLM-generated text detection to advance the implementation of responsible artificial intelligence (AI). Our aim with this survey is to provide a clear and comprehensive introduction for newcomers while also offering seasoned researchers a valuable update in the field of LLM-generated text detection. The useful resources are publicly available at: https://github.com/NLP2CT/LLM-generated-Text-Detection.",
+      "citation_count": 30,
+      "is_open_access": true,
+      "pdf_url": "https://arxiv.org/pdf/2310.14724",
+      "source_api": "openalex",
+      "relevance_score": 0.167,
+      "_score": 0.2725909090909091,
+      "id": "L005",
+      "download": true,
+      "publication_status": "preprint"
+    },
+    {
+      "title": "Emotion Aware AI for Learning and Organizations: An Affective Computing Framework for Adaptive Human AI Interaction",
+      "authors": [
+        "Arun Raju Chinna Raju"
+      ],
+      "venue": "International Journal of Engineering Development and Research",
+      "year": 2025,
+      "doi": "10.56975/ijedr.v13i4.302939",
+      "arxiv_id": null,
+      "abstract": "Artificial Intelligence is dramatically changing how we learn at school and work. While many artificial intelligence applications exist today, none can sense or react to the emotional and motivational states that underlie all human learning, engagement and decision-making. This study formally defines Emotion-Aware and Affective AI Systems as a new paradigm for personalized Human – AI Interaction and Adaptive Experience Intelligence in Digital Ecosystems. Drawing on Constructivist Theory, Sociocultural Theory, Experiential Learning Theory, Self-Determination Theory, Cognitive Load Theory, and Flow Theory, the framework views emotions as an active agent in shaping meaning-making, engagement and knowledge-building. To develop emotion-aware AI as a strategic organizational capability, these pedagogical theories are strategically combined with Resource-Based View, Dynamic Capabilities Theory, Knowledge-Based View, Transaction Cost Economics, Technology Acceptance Model, and Theory of Planned Behavior. The proposed Emotion-Aware Learning and Decision Framework (EALDF) is a layered architecture designed to enable: Perception; Cognitive Interpretation; Adaptive Decisions; and Experience Modulation Layers. To achieve this, the proposed framework processes multimodal signals (textual, vocal, facial, behavioral and contextual) using transformer based language models (e.g., BERT and RoBERTA), Convolutional and Recurrent Neural Networks (CNN/RNN), Speech Emotion Models (MFCC-LSTM Pipelines), and Multimodal Fusion Architectures (Cross-Attention Network and Graph Neural Network). Using Multidimensional Valence-Arousal-Dominance Vectors Embedded Within Markov Decision Processes and Partially Observable MDPs, emotional dynamics are mathematically modeled. Reinforcement Learning Algorithms (Deep Q-Networks, Proximal Policy Optimization, and Actor-Critic) govern adaptive responses to user emotional states. This framework has been situated within Adaptive Learning Systems, Intelligent Tutoring Platforms, Leadership Development Tools, and Digital Enterprise Environments, to provide Real-Time Personalization, Enhanced Engagement and Optimize Decision Outcomes. In addition, the study establishes Quantitative and Qualitative Evaluation Models to address Bias, Transparency, Governance and Ethical Constraints. Overall, this study introduces a Theoretically Grounded, Computationally Robust and Strategically Scalable Blueprint for Next Generation Emotion Aware AI Systems, which will enhance both Educational Practice and Organizational Intelligence.",
+      "citation_count": 2,
+      "is_open_access": true,
+      "pdf_url": "https://rjwave.org/ijedr/papers/IJEDRTH00009.pdf",
+      "source_api": "openalex",
+      "relevance_score": 0.167,
+      "_score": 0.2667727272727273,
+      "id": "L006",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "A review on principles, performance and complexity of linear estimation and detection techniques for MIMO systems",
+      "authors": [
+        "Danilo Gaspar",
+        "Luciano Leonel Mendes",
+        "Tales Cleber Pimenta"
+      ],
+      "venue": "Frontiers in Communications and Networks",
+      "year": 2023,
+      "doi": "10.3389/frcmn.2023.968370",
+      "arxiv_id": null,
+      "abstract": "The advent of the fifth generation (5G) of mobile networks has introduced several new use cases that are pushing mobile networks in environments that are typically supported by wired technologies. The initial discussions around the sixth generation (6G) of mobile networks signalizes that different approaches are needed to address all contrasting requirements, where multiple-input multiple-output (MIMO) technique stands as a key technology for most future wireless systems. In this review, we present an introduction on classical linear estimators and coherent detectors along with an innovative and accurate complexity formulation within a common framework, allowing a fair comparison and providing an initial guideline for researchers that are looking for a general view of the main techniques available for spatial multiplexing (SM)-MIMO detection and estimation.",
+      "citation_count": 11,
+      "is_open_access": true,
+      "pdf_url": "https://www.frontiersin.org/articles/10.3389/frcmn.2023.968370/pdf",
+      "source_api": "openalex",
+      "relevance_score": 0.167,
+      "_score": 0.2415,
+      "id": "L007",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Anti-Jam GPS Controlled Reception Pattern Antennas for Man-Portable Applications",
+      "authors": [
+        "Jeffrey A. Maloney"
+      ],
+      "venue": "ScholarWorks@UMassAmherst (University of Massachusetts Amherst)",
+      "year": 2021,
+      "doi": "10.7275/15998807",
+      "arxiv_id": null,
+      "abstract": "Military GPS receivers provide crucial information to soldiers in the field, however, the performance of these devices is degraded by in band RF interference, making GPS susceptible to jamming. Anti-jam techniques for aircraft and vehicular platforms have been developed, but at present there is no system for dismounted soldiers. There is a need for an anti-jam system which meets the demands of a dismounted soldier and conforms to the size, weight, and power requirements of a portable device. A controlled reception pattern antenna, or CRPA, is a potential solution for jammer mitigation. These devices work by steering reception pattern nulls toward the jammer direction, reducing the jammer power which reaches the GPS receiver. Prior CRPA realizations have been designed for use on vehicular and aircraft applications, however, these platforms do not suffer from the same limitations as a man-portable CRPA. Three considerations which are more pertinent for man-portable designs than prior work are (i) distributed antenna element positions and orientations dynamically change during use changing the reception pattern characteristics, (ii) the user is lower to the ground and moves through the environment meaning that multipath propagation can have a greater effect on CRPA performance, and (iii) the size weight and power constraints for a portable system limit the number of antenna elements reducing the degrees of freedom that can be used for cancellation. To address these challenges, a framework for man-portable CRPA modeling is presented. This includes development of efficient modeling methods which enable investigations into element perturbations to address the dynamic orientation problem. These and other methods are presented in Chapter 3, along with a discussion of the relative strengths and weaknesses of each. Additionally, a mixed scattering channel model is applied to the CRPA reception patterns, combining diffuse and specular reflection in Chapter 4. Discussion of this model centers around the eigenvalues of the signal covariance matrix and the effect of coherence between multipath components. Following this, Chapter 5 examines the performance of polarimetric CRPAs and space-time adaptive processing for man-portable CRPAs with limited degrees of freedom.",
+      "citation_count": 2,
+      "is_open_access": true,
+      "pdf_url": "https://scholarworks.umass.edu/dissertations_2/1853",
+      "source_api": "openalex",
+      "relevance_score": 0.167,
+      "_score": 0.18677272727272728,
+      "id": "L008",
+      "download": true,
+      "publication_status": "published"
+    }
+  ]
+}

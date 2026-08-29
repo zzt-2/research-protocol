@@ -1,0 +1,56 @@
+{
+  "schema_version": "t085.corrected-anchor.v1",
+  "authority": "T085/D064/V039",
+  "action_class": "CH4_PRODUCTION_SEAM_BRIDGE",
+  "mission_checkpoint": "CP026",
+  "control_epoch": 26,
+  "base_commit": "5ec190ad8c8da14b5dba3b353bd23977b7429d8a",
+  "purpose": "non-thesis A2 production-seam bridge stop gate",
+  "scene": {
+    "name": "moderate",
+    "alpha": 4.0,
+    "beta": 1.9,
+    "authority": "projects/simulation/params.py::SimulationConfig().turbulence"
+  },
+  "cells": [
+    {"cell_id": "snr14_np2", "snr_db": 14.0, "pilot_symbols_per_polarization": 2},
+    {"cell_id": "snr14_np4", "snr_db": 14.0, "pilot_symbols_per_polarization": 4},
+    {"cell_id": "snr18_np2", "snr_db": 18.0, "pilot_symbols_per_polarization": 2},
+    {"cell_id": "snr18_np4", "snr_db": 18.0, "pilot_symbols_per_polarization": 4}
+  ],
+  "population": {
+    "windows_per_cell": 64,
+    "canonical_latent_ids": {"start": 20000, "stop_inclusive": 20063},
+    "smoke_latent_id": 19999,
+    "shared_across_cells": true
+  },
+  "payload_symbols_per_polarization": 4096,
+  "max_pilots": 4,
+  "arms": {
+    "B0": {"parameter": null, "access": "receiver-visible"},
+    "B2": {"parameter": 1.0, "access": "receiver-visible"},
+    "B3_PSC": {"parameter": 1.0, "access": "receiver-visible pilots only"},
+    "C4": {"parameter": null, "access": "receiver-visible"},
+    "O1": {"parameter": null, "access": "truth-only runner path; never receiver_action"}
+  },
+  "bootstrap": {
+    "rng": "PCG64",
+    "seed": 2026083006,
+    "resamples": 5000,
+    "confidence": 0.95,
+    "stream_rule": "reset seed for each named paired comparison",
+    "pooled_np2_cluster": "64 latent IDs; each resample carries both 14 and 18 dB rows"
+  },
+  "code_hashes": {
+    "production_core.py": "c78d5303a38f3d6c3562ec5b4f0337cdaba6a2cb07330f31cdfbad3538827e60",
+    "common/_modulation.py": "bff9873d10e5b68f1262fddcc24788e23630792e82a23a308f8eb5c48f431a10",
+    "scaled_unitary.py": "868780505b55da7df979c75fe07f132bf52b8b8904c4ec88961fbbe38b052fd2"
+  },
+  "gate": {
+    "difference": "BER_C4 minus BER_comparator",
+    "pooled_np2_comparators": ["B2", "B3_PSC"],
+    "pooled_np2_ci_upper": "<0",
+    "each_np4_comparator_ci_lower": "<=0"
+  },
+  "forbidden": ["grid_override", "seed_override", "arm_override", "tau_override", "adaptive_samples", "result_dependent_manifest_change", "task5", "formal_production"]
+}

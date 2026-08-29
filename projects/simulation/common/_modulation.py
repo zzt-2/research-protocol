@@ -222,11 +222,9 @@ def m16apsk_mod(bits):
 def m16apsk_demod(s):
     """(8,8)-16APSK demodulation: 最近星座点（欧氏距离最小）, 向量化。
 
-    先用半径判环（|s| 阈值 (r1+r2)/2）选 b0, 再环内 8 点相位最近选 b1b2b3。
+    对内外环全部 16 个点求距离，全局最近点决定 Gray label。
     """
     s = np.atleast_1d(s)
-    thr = 0.5 * (_R1_16 + _R2_16)
-    is_outer = np.abs(s) > thr
     # 每符号到内/外环 8 点的距离
     d_inner = np.abs(s[:, np.newaxis] - _INNER16[np.newaxis, :]) ** 2
     d_outer = np.abs(s[:, np.newaxis] - _OUTER16[np.newaxis, :]) ** 2
@@ -235,7 +233,7 @@ def m16apsk_demod(s):
     # 用整体最小距离决定环（避免半径模糊区误判）
     d_inner_min = d_inner[np.arange(len(s)), k_inner]
     d_outer_min = d_outer[np.arange(len(s)), k_outer]
-    pick_outer = (d_outer_min < d_inner_min) | is_outer
+    pick_outer = d_outer_min < d_inner_min
     # 环内 Gray 标签 b1b2b3（与 8PSK 相同的 Gray 序）
     gray3 = _APSK8_GRAY
     b1 = np.zeros(len(s), dtype=int)

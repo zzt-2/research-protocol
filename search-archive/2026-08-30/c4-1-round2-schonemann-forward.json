@@ -1,0 +1,1011 @@
+{
+  "query": "",
+  "timestamp": "2026-08-30T05:00:53.413049+08:00",
+  "sources": [
+    "citations_openalex"
+  ],
+  "total": 50,
+  "results": [
+    {
+      "title": "A method for registration of 3-D shapes",
+      "authors": [
+        "Paul J. Besl",
+        "Neil David McKay"
+      ],
+      "venue": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
+      "year": 1992,
+      "doi": "10.1109/34.121791",
+      "arxiv_id": null,
+      "abstract": "The authors describe a general-purpose, representation-independent method for the accurate and computationally efficient registration of 3-D shapes including free-form curves and surfaces. The method handles the full six degrees of freedom and is based on the iterative closest point (ICP) algorithm, which requires only a procedure to find the closest point on a geometric entity to a given point. The ICP algorithm always converges monotonically to the nearest local minimum of a mean-square distance metric, and the rate of convergence is rapid during the first few iterations. Therefore, given an adequate set of initial rotations and translations for a particular class of objects with a certain level of 'shape complexity', one can globally minimize the mean-square distance metric over all six degrees of freedom by testing each initial registration. One important application of this method is to register sensed data from unfixtured rigid objects with an ideal geometric model, prior to shape inspection. Experimental results show the capabilities of the registration algorithm on point sets, curves, and surfaces.>",
+      "citation_count": 18220,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L001",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Four ways five factors are basic",
+      "authors": [
+        "Paul T. Costa",
+        "Robert R. McCrae"
+      ],
+      "venue": "Personality and Individual Differences",
+      "year": 1992,
+      "doi": "10.1016/0191-8869(92)90236-i",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 3386,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L002",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Medical image registration",
+      "authors": [
+        "David Hill",
+        "Philipp G. Batchelor",
+        "Mark P. Holden",
+        "David J. Hawkes"
+      ],
+      "venue": "Physics in Medicine and Biology",
+      "year": 2001,
+      "doi": "10.1088/0031-9155/46/3/201",
+      "arxiv_id": null,
+      "abstract": "Radiological images are increasingly being used in healthcare and medical research. There is, consequently, widespread interest in accurately relating information in the different images for diagnosis, treatment and basic science. This article reviews registration techniques used to solve this problem, and describes the wide variety of applications to which these techniques are applied. Applications of image registration include combining images of the same subject from different modalities, aligning temporal sequences of images to compensate for motion of the subject between scans, image guidance during interventions and aligning images from multiple subjects in cohort studies. Current registration algorithms can, in many cases, automatically register images that are related by a rigid body transformation (i.e. where tissue deformation can be ignored). There has also been substantial progress in non-rigid registration algorithms that can compensate for tissue deformation, or align images from different subjects. Nevertheless many registration problems remain unsolved, and this is likely to continue to be an active field of research in the future.",
+      "citation_count": 2088,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L003",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Iterative Quantization: A Procrustean Approach to Learning Binary Codes for Large-Scale Image Retrieval",
+      "authors": [
+        "Yunchao Gong",
+        "Svetlana Lazebnik",
+        "Albert Gordo",
+        "Florent Perronnin"
+      ],
+      "venue": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
+      "year": 2012,
+      "doi": "10.1109/tpami.2012.193",
+      "arxiv_id": null,
+      "abstract": "This paper addresses the problem of learning similarity-preserving binary codes for efficient similarity search in large-scale image collections. We formulate this problem in terms of finding a rotation of zero-centered data so as to minimize the quantization error of mapping this data to the vertices of a zero-centered binary hypercube, and propose a simple and efficient alternating minimization algorithm to accomplish this task. This algorithm, dubbed iterative quantization (ITQ), has connections to multiclass spectral clustering and to the orthogonal Procrustes problem, and it can be used both with unsupervised data embeddings such as PCA and supervised embeddings such as canonical correlation analysis (CCA). The resulting binary codes significantly outperform several other state-of-the-art methods. We also show that further performance improvements can result from transforming the data with a nonlinear kernel mapping prior to PCA or CCA. Finally, we demonstrate an application of ITQ to learning binary attributes or \"classemes\" on the ImageNet data set.",
+      "citation_count": 1934,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L004",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Rotation of principal components",
+      "authors": [
+        "Michael B. Richman"
+      ],
+      "venue": "Journal of Climatology",
+      "year": 1986,
+      "doi": "10.1002/joc.3370060305",
+      "arxiv_id": null,
+      "abstract": "Abstract Recent research has pointed to a number of inherent disadvantages of unrotated principal components and empirical orthogonal functions when these techniques are used to depict individual modes of variation of data matrices in exploratory analyses. The various pitfalls are outlined and illustrated with an alternative method introduced to minimize these problems via available linear transformations known as simple structure rotations. The rationale and theory behind simple structure rotation and Procrustes target rotation is examined in the context of meteorological/climatological applications. This includes a discussion of the six unique ways to decompose a rotated data set in order to maximize the physical interpretability of the rotated results. The various analytic simple structure rotations available are compared by a Monte Carlo simulation, which is a modification of a similar technique developed by Tucker (1983), revealing that the DAPPFR and Promax k = 2 rotations are the most accurate in recovering the input structure of the modes of variation over a wide range of conditions. Additionally, these results allow the investigator the opportunity to check the accuracy of the unrotated or rotated solution for specific types of data. This is important because, in the past, the decision of whether or not to apply a specific rotation has been a ‘blind decision’. In response to this, a methodology is presented herein by which the researcher can assess the degree of simple structure embedded within any meteorological data set and then apply known information about the data to the Monte Carlo results to optimize the likelihood of achieving physically meaningful results from a principal component analysis.",
+      "citation_count": 1790,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L005",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Motivation and cognitive abilities: An integrative/aptitude-treatment interaction approach to skill acquisition.",
+      "authors": [
+        "Ruth Kanfer",
+        "Phillip L. Ackerman"
+      ],
+      "venue": "Journal of Applied Psychology",
+      "year": 1989,
+      "doi": "10.1037/0021-9010.74.4.657",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 1770,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L006",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Highly accurate inverse consistent registration: A robust approach",
+      "authors": [
+        "Martin Reuter",
+        "H. Diana Rosas",
+        "Bruce Fischl"
+      ],
+      "venue": "NeuroImage",
+      "year": 2010,
+      "doi": "10.1016/j.neuroimage.2010.07.020",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 1492,
+      "is_open_access": true,
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/2946852",
+      "source_api": "openalex_citations",
+      "id": "L007",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Facet Scales for Agreeableness and Conscientiousness: A Revision of the NEO Personality Inventory",
+      "authors": [
+        "Paul T. Costa",
+        "Robert R. McCrae",
+        "David Dye"
+      ],
+      "venue": "Personality and Individual Differences",
+      "year": 1991,
+      "doi": "10.1016/0191-8869(91)90177-d",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 1307,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L008",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Closed-form solution of absolute orientation using orthonormal matrices",
+      "authors": [
+        "Berthold K. P. Horn",
+        "Hugh M. Hilden",
+        "S. Negahdaripour"
+      ],
+      "venue": "Journal of the Optical Society of America A",
+      "year": 1988,
+      "doi": "10.1364/josaa.5.001127",
+      "arxiv_id": null,
+      "abstract": "Finding the relationship between two coordinate systems by using pairs of measurements of the coordinates of a number of points in both systems is a classic photogrammetric task. The solution has applications in stereophotogrammetry and in robotics. We present here a closed-form solution to the least-squares problem for three or more points. Currently, various empirical, graphical, and numerical iterative methods are in use. Derivation of a closed-form solution can be simplified by using unit quaternions to represent rotation, as was shown in an earlier paper [ J. Opt. Soc. Am. A4, 629 ( 1987)]. Since orthonormal matrices are used more widely to represent rotation, we now present a solution in which 3 × 3 matrices are used. Our method requires the computation of the square root of a symmetric matrix. We compare the new result with that obtained by an alternative method in which orthonormality is not directly enforced. In this other method a best-fit linear transformation is found, and then the nearest orthonormal matrix is chosen for the rotation. We note that the best translational offset is the difference between the centroid of the coordinates in one system and the rotated and scaled centroid of the coordinates in the other system. The best scale is equal to the ratio of the root-mean-square deviations of the coordinates in the two systems from their respective centroids. These exact results are to be preferred to approximate methods based on measurements of a few selected points.",
+      "citation_count": 1153,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L009",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Iterative quantization: A procrustean approach to learning binary codes",
+      "authors": [
+        "Yunchao Gong",
+        "Svetlana Lazebnik"
+      ],
+      "venue": "",
+      "year": 2011,
+      "doi": "10.1109/cvpr.2011.5995432",
+      "arxiv_id": null,
+      "abstract": "This paper addresses the problem of learning similarity-preserving binary codes for efficient retrieval in large-scale image collections. We propose a simple and efficient alternating minimization scheme for finding a rotation of zero-centered data so as to minimize the quantization error of mapping this data to the vertices of a zero-centered binary hypercube. This method, dubbed iterative quantization (ITQ), has connections to multi-class spectral clustering and to the orthogonal Procrustes problem, and it can be used both with unsupervised data embeddings such as PCA and supervised embeddings such as canonical correlation analysis (CCA). Our experiments show that the resulting binary coding schemes decisively outperform several other state-of-the-art methods.",
+      "citation_count": 1097,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L010",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Predicting error in rigid-body point-based registration",
+      "authors": [
+        "J. Michael Fitzpatrick",
+        "Jay B. West",
+        "Calvin R. Maurer"
+      ],
+      "venue": "IEEE Transactions on Medical Imaging",
+      "year": 1998,
+      "doi": "10.1109/42.736021",
+      "arxiv_id": null,
+      "abstract": "Guidance systems designed for neurosurgery, hip surgery, and spine surgery, and for approaches to other anatomy that is relatively rigid can use rigid-body transformations to accomplish image registration. These systems often rely on point-based registration to determine the transformation, and many such systems use attached fiducial markers to establish accurate fiducial points for the registration, the points being established by some fiducial localization process. Accuracy is important to these systems, as is knowledge of the level of that accuracy. An advantage of marker-based systems, particularly those in which the markers are bone-implanted, is that registration error depends only on the fiducial localization error (FLE) and is thus to a large extent independent of the particular object being registered. Thus, it should be possible to predict the clinical accuracy of marker-based systems on the basis of experimental measurements made with phantoms or previous patients. This paper presents two new expressions for estimating registration accuracy of such systems and points out a danger in using a traditional measure of registration accuracy. The new expressions represent fundamental theoretical results with regard to the relationship between localization error and registration error in rigid-body, point-based registration. Rigid-body, point-based registration is achieved by finding the rigid transformation that minimizes \"fiducial registration error\" (FRE), which is the root mean square distance between homologous fiducials after registration. Closed form solutions have been known since 1966. The expected value (FRE2) depends on the number N of fiducials and expected squared value of FLE, (FLE-2, but in 1979 it was shown that (FRE2) is approximately independent of the fiducial configuration C. The importance of this surprising result seems not yet to have been appreciated by the registration community: Poor registrations caused by poor fiducial configurations may appear to be good due to a small FRE value. A more critical and direct measure of registration error is the \"target registration error\" (TRE), which is the distance between homologous points other than the centroids of fiducials. Efforts to characterize its behavior have been made since 1989. Published numerical simulations have shown that (TRE2) is roughly proportional to (FLE2)/N and, unlike (FRE2), does depend in some way on C. Thus, FRE, which is often used as feedback to the surgeon using a point-based guidance system, is in fact an unreliable indicator of registration-accuracy. In this work we derive approximate expressions for (TRE2), and for the expected squared alignment error of an individual fiducial. We validate both approximations through numerical simulations. The former expression can be used to provide reliable feedback to the surgeon during surgery and to guide the placement of markers before surgery, or at least to warn the surgeon of potentially dangerous fiducial placements; the latter expression leads to a surprising conclusion: Expected registration accuracy (TRE) is worst near the fiducials that are most closely aligned! This revelation should be of particular concern to surgeons who may at present be relying on fiducial alignment as an indicator of the accuracy of their point-based guidance systems.",
+      "citation_count": 1016,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L011",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "On the Early History of the Singular Value Decomposition",
+      "authors": [
+        "G. W. Stewart"
+      ],
+      "venue": "SIAM Review",
+      "year": 1993,
+      "doi": "10.1137/1035134",
+      "arxiv_id": null,
+      "abstract": "This paper surveys the contributions of five mathematicians—Eugenio Beltrami (1835–1899), Camille Jordan (1838–1921), James Joseph Sylvester (1814–1897), Erhard Schmidt (1876–1959), and Hermann Weyl (1885–1955)—who were responsible for establishing the existence of the singular value decomposition and developing its theory.",
+      "citation_count": 988,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L012",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Affects of variable and subject sampling on factor pattern recovery.",
+      "authors": [
+        "Wayne F. Velicer",
+        "Joseph L. Fava"
+      ],
+      "venue": "Psychological Methods",
+      "year": 1998,
+      "doi": "10.1037/1082-989x.3.2.231",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 963,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L013",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "A Unified Algebraic Approach To Control Design",
+      "authors": [
+        "Dimitri E. Grigoriadis"
+      ],
+      "venue": "",
+      "year": 2017,
+      "doi": "10.1201/9781315136523",
+      "arxiv_id": null,
+      "abstract": "This text deals with the most fundamental deficiency of modern theory control: the lack of an easily applicable method for the design of low order controllers. It shows that solutions to many different problems in control all reduce to the same linear algebra problem. It employs matrix equalities and matrix inequalities in the solutions of fixed order control and also provides computational algorithms.",
+      "citation_count": 935,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L014",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Determinants of individual differences during skill acquisition: Cognitive abilities and information processing.",
+      "authors": [
+        "Phillip L. Ackerman"
+      ],
+      "venue": "Journal of Experimental Psychology General",
+      "year": 1988,
+      "doi": "10.1037/0096-3445.117.3.288",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 874,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L015",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "TEASER: Fast and Certifiable Point Cloud Registration",
+      "authors": [
+        "Heng Yang",
+        "Jingnan Shi",
+        "Luca Carlone"
+      ],
+      "venue": "IEEE Transactions on Robotics",
+      "year": 2020,
+      "doi": "10.1109/tro.2020.3033695",
+      "arxiv_id": null,
+      "abstract": "We propose the first fast and certifiable algorithm for the registration of two sets of three-dimensional (3-D) points in the presence of large amounts of outlier correspondences. Acertifiable algorithmis one that attempts to solve an intractable optimization problem (e.g., robust estimation with outliers) and provides readily checkable conditions to verify if the returned solution is optimal (e.g., if the algorithm produced the most accurate estimate in the face of outliers) or bound its suboptimality or accuracy. Toward this goal, we first reformulate the registration problem using atruncated least squares(TLS) cost that makes the estimation insensitive to a large fraction of spurious correspondences. Then, we provide a general graph-theoretic framework to decouple scale, rotation, and translation estimation, which allows solving in cascade for the three transformations. Despite the fact that each subproblem (scale, rotation, and translation estimation) is still nonconvex and combinatorial in nature, we show that 1) TLS scale and (component-wise) translation estimation can be solved in polynomial time via anadaptive votingscheme, 2) TLS rotation estimation can be relaxed to a semidefinite program (SDP) and the relaxation is tight, even in the presence of extreme outlier rates, and 3) the graph-theoretic framework allows drastic pruning of outliers by finding the maximum clique. We name the resulting algorithm TEASER (Truncated least squares Estimation And SEmidefinite Relaxation). While solving large SDP relaxations is typically slow, we develop a second fast and certifiable algorithm, named TEASER++, that usesgraduated nonconvexityto solve the rotation subproblem and leveragesDouglas-Rachford Splittingto efficiently certify global optimality. For both algorithms, we provide theoretical bounds on the estimation errors, which are the first of their kind for robust registration problems. Moreover, we test their performance on standard benchmarks, object detection datasets, and the3DMatchscan matching dataset, and show that 1) both algorithms dominate the state-of-the-art (e.g., RANSAC, branch-&-bound, heuristics) and are robust to more than$\\text{99}\\%$outliers when the scale is known, 2) TEASER++ can run in milliseconds and it is currently the fastest robust registration algorithm, and 3) TEASER++ is so robust it can also solve problems without correspondences (e.g., hypothesizing all-to-all correspondences), where it largely outperforms ICP and it is more accurate than Go-ICP while being orders of magnitude faster. We release a fast open-source C++ implementation of TEASER++.",
+      "citation_count": 872,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L016",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Diachronic Word Embeddings Reveal Statistical Laws of Semantic Change",
+      "authors": [
+        "William L. Hamilton",
+        "Jure Leskovec",
+        "Dan Jurafsky"
+      ],
+      "venue": "",
+      "year": 2016,
+      "doi": "10.18653/v1/p16-1141",
+      "arxiv_id": null,
+      "abstract": "Understanding how words change their meanings over time is key to models of language and cultural evolution, but historical data on meaning is scarce, making theories hard to develop and test. Word embeddings show promise as a diachronic tool, but have not been carefully evaluated. We develop a robust methodology for quantifying semantic change by evaluating word embeddings (PPMI, SVD, word2vec) against known historical changes. We then use this methodology to reveal statistical laws of semantic evolution. Using six historical corpora spanning four languages and two centuries, we propose two quantitative laws of semantic change: (i) the law of conformity-the rate of semantic change scales with an inverse power-law of word frequency; (ii) the law of innovation-independent of frequency, words that are more polysemous have higher rates of semantic change.",
+      "citation_count": 871,
+      "is_open_access": true,
+      "pdf_url": "https://www.aclweb.org/anthology/P16-1141.pdf",
+      "source_api": "openalex_citations",
+      "id": "L017",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Decoding Neural Representational Spaces Using Multivariate Pattern Analysis",
+      "authors": [
+        "James V. Haxby",
+        "Andrew C. Connolly",
+        "J. Swaroop Guntupalli"
+      ],
+      "venue": "Annual Review of Neuroscience",
+      "year": 2014,
+      "doi": "10.1146/annurev-neuro-062012-170325",
+      "arxiv_id": null,
+      "abstract": "A major challenge for systems neuroscience is to break the neural code. Computational algorithms for encoding information into neural activity and extracting information from measured activity afford understanding of how percepts, memories, thought, and knowledge are represented in patterns of brain activity. The past decade and a half has seen significant advances in the development of methods for decoding human neural activity, such as multivariate pattern classification, representational similarity analysis, hyperalignment, and stimulus-model-based encoding and decoding. This article reviews these advances and integrates neural decoding methods into a common framework organized around the concept of high-dimensional representational spaces.",
+      "citation_count": 833,
+      "is_open_access": true,
+      "pdf_url": "https://www.annualreviews.org/doi/pdf/10.1146/annurev-neuro-062012-170325",
+      "source_api": "openalex_citations",
+      "id": "L018",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Sustained helping without obligation: Motivation, longevity of service, and perceived attitude change among AIDS volunteers.",
+      "authors": [
+        "Allen M. Omoto",
+        "Mark Snyder"
+      ],
+      "venue": "Journal of Personality and Social Psychology",
+      "year": 1995,
+      "doi": "10.1037//0022-3514.68.4.671",
+      "arxiv_id": null,
+      "abstract": "A conceptual framework that identifies psychological and behavioral features associated with antecedents, experiences, and consequences of volunteerism is presented, and an inventory that measures 5 specific motivations for AIDS volunteerism is developed and cross-validated. Then a field study of 116 AIDS volunteers is presented in which a helping disposition, volunteer motivations, and social support (as antecedents), and personal satisfaction and organizational integration (as experiences) are used to predict duration of service over 2 1/2 years. Structural equation analyses indicate that dispositional helping influences satisfaction and integration but not duration of service, whereas greater motivation and less social support predict longer active volunteer service. The model is generalized to the prediction of perceived attitude change. Implications for conceptualizations of motivation, theoretical issues in helping, and practical concerns of volunteer organizations are discussed.",
+      "citation_count": 812,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L019",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Issues and Advances in Segmentation Research",
+      "authors": [
+        "Yoram Wind"
+      ],
+      "venue": "Journal of Marketing Research",
+      "year": 1978,
+      "doi": "10.1177/002224377801500302",
+      "arxiv_id": null,
+      "abstract": "The author reviews the current status and recent advances in segmentation research, covering segmentation problem definition, research design considerations, data collection approaches, data analysis procedures, and data interpretation and implementation. Areas for future research are identified.",
+      "citation_count": 803,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L020",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Estimating 3-D rigid body transformations: a comparison of four major algorithms",
+      "authors": [
+        "Daniel Eggert",
+        "Adele Lorusso",
+        "Robert B. Fisher"
+      ],
+      "venue": "Machine Vision and Applications",
+      "year": 1997,
+      "doi": "10.1007/s001380050048",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 801,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L021",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Evaluating replicability of factors in the Revised NEO Personality Inventory: Confirmatory factor analysis versus Procrustes rotation.",
+      "authors": [
+        "Robert R. McCrae",
+        "Alan B. Zonderman",
+        "Paul T. Costa",
+        "Michael Harris Bond",
+        "Sampo V. Paunonen"
+      ],
+      "venue": "Journal of Personality and Social Psychology",
+      "year": 1996,
+      "doi": "10.1037/0022-3514.70.3.552",
+      "arxiv_id": null,
+      "abstract": "Despite the empirical robustness of the 5-factor model of personality, recent confirmatory factor analyses (CFAs) of NEO Personality Inventory (NEO-PI) data suggest they do not fit the hypothesized model. In a replication study of 229 adults, a series ofCFAs showed that Revised NEO-PI scales are not simple-structured but do approximate the normative 5-factor structure. CFA goodness-of-fit indices, however, were not high. Comparability analyses showed that no more than 5 factors were replicable, which calls into question some assumptions underlying the use of CFA. An alternative method that uses targeted rotation was presented and illustrated with data from Chinese and Japanese versions of the Revised NEO-PI that clearly replicated the 5-factor structure.",
+      "citation_count": 798,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L022",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "A Common, High-Dimensional Model of the Representational Space in Human Ventral Temporal Cortex",
+      "authors": [
+        "James V. Haxby",
+        "J. Swaroop Guntupalli",
+        "Andrew C. Connolly",
+        "Yaroslav O. Halchenko",
+        "Bryan Conroy",
+        "M. Ida Gobbini",
+        "Michael Hanke",
+        "Peter J. Ramadge"
+      ],
+      "venue": "Neuron",
+      "year": 2011,
+      "doi": "10.1016/j.neuron.2011.08.026",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 732,
+      "is_open_access": true,
+      "pdf_url": "http://www.cell.com/article/S0896627311007811/pdf",
+      "source_api": "openalex_citations",
+      "id": "L023",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Determining the movements of the skeleton using well-configured markers",
+      "authors": [
+        "Inge Söderkvist",
+        "Per-Åke Wedin"
+      ],
+      "venue": "Journal of Biomechanics",
+      "year": 1993,
+      "doi": "10.1016/0021-9290(93)90098-y",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 732,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L024",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "MRI segmentation: Methods and applications",
+      "authors": [
+        "Laurence P. Clarke",
+        "Robert P. Velthuizen",
+        "Marc A. Camacho",
+        "John Heine",
+        "Mohan Vaidyanathan",
+        "Lawrence Hall",
+        "Robert W. Thatcher",
+        "M.L. Silbiger"
+      ],
+      "venue": "Magnetic Resonance Imaging",
+      "year": 1995,
+      "doi": "10.1016/0730-725x(94)00124-l",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 696,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L025",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Review and analysis of solutions of the three point perspective pose estimation problem",
+      "authors": [
+        "Bert M. Haralick",
+        "Chung‐Nan Lee",
+        "Karsten Ottenberg",
+        "Michael Nölle"
+      ],
+      "venue": "International Journal of Computer Vision",
+      "year": 1994,
+      "doi": "10.1007/bf02028352",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 620,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L026",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Psychometric Properties of the HEXACO-100",
+      "authors": [
+        "Kibeom Lee",
+        "Michael C. Ashton"
+      ],
+      "venue": "Assessment",
+      "year": 2016,
+      "doi": "10.1177/1073191116659134",
+      "arxiv_id": null,
+      "abstract": "Psychometric properties of the 100-item English-language HEXACO Personality Inventory-Revised (HEXACO-PI-R) were examined using samples of online respondents ( N = 100,318 self-reports) and of undergraduate students ( N = 2,868 self- and observer reports). The results were as follows: First, the hierarchical structure of the HEXACO-100 was clearly supported in two principal components analyses: each of the six factors was defined by its constituent facets and each of the 25 facets was defined by its constituent items. Second, the HEXACO-100 factor scales showed fairly low intercorrelations, with only one pair of scales (Honesty-Humility and Agreeableness) having an absolute correlation above .20 in self-report data. Third, the factor and facet scales showed strong self/observer convergent correlations, which far exceeded the self/observer discriminant correlations.",
+      "citation_count": 589,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L027",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Registration of head volume images using implantable fiducial markers",
+      "authors": [
+        "Calvin R. Maurer",
+        "J. Michael Fitzpatrick",
+        "M.Y. Wang",
+        "Robert L. Galloway",
+        "Robert J. Maciunas",
+        "G. S. Allen"
+      ],
+      "venue": "IEEE Transactions on Medical Imaging",
+      "year": 1997,
+      "doi": "10.1109/42.611354",
+      "arxiv_id": null,
+      "abstract": "In this paper, we describe an extrinsic-point-based, interactive image-guided neurosurgical system designed at Vanderbilt University, Nashville, TN, as part of a collaborative effort among the Departments of Neurological Surgery, Computer Science, and Biomedical Engineering. Multimodal image-to-image (II) and image-to-physical (IP) registration is accomplished using implantable markers. Physical space tracking is accomplished with optical triangulation. We investigate the theoretical accuracy of point-based registration using numerical simulations, the experimental accuracy of our system using data obtained with a phantom, and the clinical accuracy of our system using data acquired in a prospective clinical trial by six neurosurgeons at four medical centers from 158 patients undergoing craniotomies to resect cerebral lesions. We can determine the position of our markers with an error of approximately 0.4 mm in X-ray computed tomography (CT) and magnetic resonance (MR) images and 0.3 mm in physical space. The theoretical registration error using four such markers distributed around the head in a configuration that is clinically practical is approximately 0.5-0.6 mm. The mean CT-physical registration error for the phantom experiments is 0.5 mm and for the clinical data obtained with rigid head fixation during scanning is 0.7 mm. The mean CT-MR registration error for the clinical data obtained without rigid head fixation during scanning is 1.4 mm, which is the highest mean error that we observed. These theoretical and experimental findings indicate that this system is an accurate navigational aid that can provide real-time feedback to the surgeon about anatomical structures encountered in the surgical field.",
+      "citation_count": 570,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L028",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "GANerated Hands for Real-Time 3D Hand Tracking from Monocular RGB",
+      "authors": [
+        "Franziska Mueller",
+        "Florian Bernard",
+        "Oleksandr Sotnychenko",
+        "Dushyant Mehta",
+        "Srinath Sridhar",
+        "Dan Casas",
+        "Christian Theobalt"
+      ],
+      "venue": "",
+      "year": 2018,
+      "doi": "10.1109/cvpr.2018.00013",
+      "arxiv_id": null,
+      "abstract": "We address the highly challenging problem of real-time 3D hand tracking based on a monocular RGB-only sequence. Our tracking method combines a convolutional neural network with a kinematic 3D hand model, such that it generalizes well to unseen data, is robust to occlusions and varying camera viewpoints, and leads to anatomically plausible as well as temporally smooth hand motions. For training our CNN we propose a novel approach for the synthetic generation of training data that is based on a geometrically consistent image-to-image translation network. To be more specific, we use a neural network that translates synthetic images to \"real\" images, such that the so-generated images follow the same statistical distribution as real-world hand images. For training this translation network we combine an adversarial loss and a cycle-consistency loss with a geometric consistency loss in order to preserve geometric properties (such as hand pose) during translation. We demonstrate that our hand tracking system outperforms the current state-of-the-art on challenging RGB-only footage.",
+      "citation_count": 552,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L029",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Least squares 3D surface and curve matching",
+      "authors": [
+        "Armin Gruen",
+        "Devrim Akça"
+      ],
+      "venue": "ISPRS Journal of Photogrammetry and Remote Sensing",
+      "year": 2005,
+      "doi": "10.1016/j.isprsjprs.2005.02.006",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 543,
+      "is_open_access": true,
+      "pdf_url": "http://hdl.handle.net/20.500.11850/149042",
+      "source_api": "openalex_citations",
+      "id": "L030",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Multivariate Analysis of Ecological Data Using CANOCO",
+      "authors": [],
+      "venue": "Bulletin of the Ecological Society of America",
+      "year": 2005,
+      "doi": "10.1890/0012-9623(2005)86[201:maoedu]2.0.co;2",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 542,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L031",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Designing structured tight frames via an alternating projection method",
+      "authors": [
+        "Joel A. Tropp",
+        "Inderjit S. Dhillon",
+        "Robert W. Heath",
+        "Thomas Strohmer"
+      ],
+      "venue": "IEEE Transactions on Information Theory",
+      "year": 2005,
+      "doi": "10.1109/tit.2004.839492",
+      "arxiv_id": null,
+      "abstract": "Tight frames, also known as general Welch-bound- equality sequences, generalize orthonormal systems. Numerous applications - including communications, coding, and sparse approximation- require finite-dimensional tight frames that possess additional structural properties. This paper proposes an alternating projection method that is versatile enough to solve a huge class of inverse eigenvalue problems (IEPs), which includes the frame design problem. To apply this method, one needs only to solve a matrix nearness problem that arises naturally from the design specifications. Therefore, it is the fast and easy to develop versions of the algorithm that target new design problems. Alternating projection will often succeed even if algebraic constructions are unavailable. To demonstrate that alternating projection is an effective tool for frame design, the paper studies some important structural properties in detail. First, it addresses the most basic design problem: constructing tight frames with prescribed vector norms. Then, it discusses equiangular tight frames, which are natural dictionaries for sparse approximation. Finally, it examines tight frames whose individual vectors have low peak-to-average-power ratio (PAR), which is a valuable property for code-division multiple-access (CDMA) applications. Numerical experiments show that the proposed algorithm succeeds in each of these three cases. The appendices investigate the convergence properties of the algorithm.",
+      "citation_count": 502,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L032",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Recovering a Basic Space From a Set of Issue Scales",
+      "authors": [
+        "Keith T. Poole"
+      ],
+      "venue": "American Journal of Political Science",
+      "year": 1998,
+      "doi": "10.2307/2991737",
+      "arxiv_id": null,
+      "abstract": "This paper develops a procedure for estimating the basic dimensions underlying a set of issue or attribute scales. A simple Hinich-Ordeshook spatial theory of voting is used to model Converse's fundamental insight that individuals' positions on issues are bundled together, and the knowledge of one or two issue positions makes the remaining positions very predictable. The model assumes that individuals' positions on a set issue or attribute dimensions are determined by the individuals' positions on a small number of underlying evaluative or basic dimensions. The procedure developed in this paper for estimating these basic dimensions is, in effect, a method of performing singular value decomposition of a matrix with missing elements. Monte Carlo testing shows that the procedure reliably reproduces the missing elements. Because of this reliability, the estimation procedure can be used to produce Eckart-Young matrix lower rank approximations. A number of applications to political data are...",
+      "citation_count": 486,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L033",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Objective analysis of the topological organization of the primate cortical visual system",
+      "authors": [
+        "Malcolm P. Young"
+      ],
+      "venue": "Nature",
+      "year": 1992,
+      "doi": "10.1038/358152a0",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 473,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L034",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Personality-intelligence relations: Assessment of typical intellectual engagement.",
+      "authors": [
+        "Maynard Goff",
+        "Phillip L. Ackerman"
+      ],
+      "venue": "Journal of Educational Psychology",
+      "year": 1992,
+      "doi": "10.1037/0022-0663.84.4.537",
+      "arxiv_id": null,
+      "abstract": "Relations between personality and intelligence were investigated in the context or the distinction between intelligence as typical engagement and intelligence as maximal engagement. The traditional approach to investigating the association between intelligence as maximal performance and personality was reviewed, and suggestions were made, including the suggestion that intelligence as typical engagement results in clearer understanding or personality-intelligence relations. Thirteen personality/interest constructs hypothesized to surround a core construct or typical intellectual engagement and related to typical intellectual performance were operationalized",
+      "citation_count": 467,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L035",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "The distribution of target registration error in rigid-body point-based registration",
+      "authors": [
+        "J. Michael Fitzpatrick",
+        "Jay B. West"
+      ],
+      "venue": "IEEE Transactions on Medical Imaging",
+      "year": 2001,
+      "doi": "10.1109/42.952729",
+      "arxiv_id": null,
+      "abstract": "Guidance systems designed for neurosurgery, hip surgery, spine surgery and for approaches to other anatomy that is relatively rigid can use rigid-body transformations to accomplish image registration. These systems often rely on point-based registration to determine the transformation and many such systems use attached fiducial markers to establish accurate fiducial points for the registration, the points being established by some fiducial localization process. Accuracy is important to these systems, as is knowledge of the level of that accuracy. An advantage of marker-based systems, particularly those in which the markers are bone-implanted, is that registration error depends only on the fiducial localization and is, thus, to a large extent independent of the particular object being registered. Thus, it should be possible to predict the clinical accuracy of marker-based systems on the basis of experimental measurements made with phantoms or previous patients. For most registration tasks, the most important error measure is target registration error (TRE), which is the distance after registration between corresponding points not used in calculating the registration transform. In this paper, we derive an approximation to the distribution of TRE; this is an extension of previous work that gave the expected squared value of TRE. We show the distribution of the squared magnitude of TRE and that of the component of TRE in an arbitrary direction. Using numerical simulations, we show that our theoretical results are a close match to the simulated ones.",
+      "citation_count": 459,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L036",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "The HEXACO Personality Factors in the Indigenous Personality Lexicons of English and 11 Other Languages",
+      "authors": [
+        "Kibeom Lee",
+        "Michael C. Ashton"
+      ],
+      "venue": "Journal of Personality",
+      "year": 2008,
+      "doi": "10.1111/j.1467-6494.2008.00512.x",
+      "arxiv_id": null,
+      "abstract": "Two studies tested the correspondence between six dimensions obtained in lexical studies of personality structure and the proposed HEXACO personality framework. Study 1 examined the English personality lexicon using 449 adjectives selected according to rated frequency of use in personality description. Six validimax-rotated factors derived from adjective self-ratings showed strong convergent and weak discriminant correlations with questionnaire markers of the HEXACO factors; the six adjective dimensions were also recovered from peer ratings. In Study 2, lay judges rated the conceptual similarity between HEXACO factor descriptions and adjective lists summarizing the six indigenous lexical personality factors of each of 12 languages. Across languages, a pattern of strong convergent and weak discriminant similarity ratings was observed; similarity ratings for the English factors of Study 1 were comparable to those for other languages' factors. Results indicate that the six dimensions of the HEXACO framework are recovered from the personality lexicons of various languages.",
+      "citation_count": 444,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L037",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "The IIP‐32: A short version of the Inventory of Interpersonal Problems",
+      "authors": [
+        "Michael Barkham",
+        "Gillian E. Hardy",
+        "Mike Startup"
+      ],
+      "venue": "British Journal of Clinical Psychology",
+      "year": 1996,
+      "doi": "10.1111/j.2044-8260.1996.tb01159.x",
+      "arxiv_id": null,
+      "abstract": "Three related studies are presented focusing on the development of a short 32-item version of the Inventory of Interpersonal Problems (IIP). Study 1 presents the procedures for item selection on the IIP short version; Study 2 presents a confirmatory analysis of the IIP short version on an independent sample; and Study 3 provides preliminary normative (general population and out-patient) data and additional evidence of the psychometric properties of the IIP short form. The results suggest that the short version sacrifices little compared to the original 127-item version in terms of its psychometric properties while being considerably more convenient for routine clinical practice.",
+      "citation_count": 436,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L038",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Computing the Polar Decomposition—with Applications",
+      "authors": [
+        "Nicholas J. Higham"
+      ],
+      "venue": "SIAM Journal on Scientific and Statistical Computing",
+      "year": 1986,
+      "doi": "10.1137/0907079",
+      "arxiv_id": null,
+      "abstract": "A quadratically convergent Newton method for computing the polar decomposition of a full-rank matrix is presented and analysed. Acceleration parameters are introduced so as to enhance the initial rate of convergence and it is shown how reliable estimates of the optimal parameters may be computed in practice. To add to the known best approximation property of the unitary polar factor, the Hermitian polar factor H of a nonsingular Hermitian matrix A is shown to be a good positive definite approximation to Aand $\\frac{1}{2}(A + H)$ is shown to be a best Hermitian positive semi-definite approximation to A. Perturbation bounds for the polar factors are derived. Applications of the polar decomposition to factor analysis, aerospace computations and optimisation are outlined; and a new method is derived for computing the square root of a symmetric positive definite matrix.",
+      "citation_count": 433,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L039",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Optimized Product Quantization for Approximate Nearest Neighbor Search",
+      "authors": [
+        "Tiezheng Ge",
+        "Kaiming He",
+        "Qifa Ke",
+        "Jian Sun"
+      ],
+      "venue": "",
+      "year": 2013,
+      "doi": "10.1109/cvpr.2013.379",
+      "arxiv_id": null,
+      "abstract": "Product quantization is an effective vector quantization approach to compactly encode high-dimensional vectors for fast approximate nearest neighbor (ANN) search. The essence of product quantization is to decompose the original high-dimensional space into the Cartesian product of a finite number of low-dimensional subspaces that are then quantized separately. Optimal space decomposition is important for the performance of ANN search, but still remains unaddressed. In this paper, we optimize product quantization by minimizing quantization distortions w.r.t. the space decomposition and the quantization codebooks. We present two novel methods for optimization: a non-parametric method that alternatively solves two smaller sub-problems, and a parametric method that is guaranteed to achieve the optimal solution if the input data follows some Gaussian distribution. We show by experiments that our optimized approach substantially improves the accuracy of product quantization for ANN search.",
+      "citation_count": 405,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L040",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Fitting One Matrix to Another Under Choice of a Central Dilation and a Rigid Motion",
+      "authors": [
+        "Peter H. Schönemann",
+        "Robert M. Carroll"
+      ],
+      "venue": "Psychometrika",
+      "year": 1970,
+      "doi": "10.1007/bf02291266",
+      "arxiv_id": null,
+      "abstract": "A least squares method is presented for fitting a given matrix A to another given matrix B under choice of an unknown rotation, an unknown translation, and an unknown central dilation. The procedure may be useful to investigators who wish to compare results obtained with nonmetric scaling techniques across samples or who wish to compare such results with those obtained by conventional factor analytic techniques on the same sample.",
+      "citation_count": 403,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L041",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Prediction of psychosis across protocols and risk cohorts using automated language analysis",
+      "authors": [
+        "Cheryl M. Corcoran",
+        "Facundo Carrillo",
+        "Diego Fernández Slezak",
+        "Gillinder Bedi",
+        "Casimir Klim",
+        "Daniel C. Javitt",
+        "Carrie E. Bearden",
+        "Guillermo Cecchi"
+      ],
+      "venue": "World Psychiatry",
+      "year": 2018,
+      "doi": "10.1002/wps.20491",
+      "arxiv_id": null,
+      "abstract": "Language and speech are the primary source of data for psychiatrists to diagnose and treat mental disorders. In psychosis, the very structure of language can be disturbed, including semantic coherence (e.g., derailment and tangentiality) and syntactic complexity (e.g., concreteness). Subtle disturbances in language are evident in schizophrenia even prior to first psychosis onset, during prodromal stages. Using computer-based natural language processing analyses, we previously showed that, among English-speaking clinical (e.g., ultra) high-risk youths, baseline reduction in semantic coherence (the flow of meaning in speech) and in syntactic complexity could predict subsequent psychosis onset with high accuracy. Herein, we aimed to cross-validate these automated linguistic analytic methods in a second larger risk cohort, also English-speaking, and to discriminate speech in psychosis from normal speech. We identified an automated machine-learning speech classifier - comprising decreased semantic coherence, greater variance in that coherence, and reduced usage of possessive pronouns - that had an 83% accuracy in predicting psychosis onset (intra-protocol), a cross-validated accuracy of 79% of psychosis onset prediction in the original risk cohort (cross-protocol), and a 72% accuracy in discriminating the speech of recent-onset psychosis patients from that of healthy individuals. The classifier was highly correlated with previously identified manual linguistic predictors. Our findings support the utility and validity of automated natural language processing methods to characterize disturbances in semantics and syntax across stages of psychotic disorder. The next steps will be to apply these methods in larger risk cohorts to further test reproducibility, also in languages other than English, and identify sources of variability. This technology has the potential to improve prediction of psychosis outcome among at-risk youths and identify linguistic targets for remediation and preventive intervention. More broadly, automated linguistic analysis can be a powerful tool for diagnosis and treatment across neuropsychiatry.",
+      "citation_count": 399,
+      "is_open_access": true,
+      "pdf_url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/wps.20491",
+      "source_api": "openalex_citations",
+      "id": "L042",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Spatial Models of Parliamentary Voting",
+      "authors": [
+        "Keith T. Poole"
+      ],
+      "venue": "Cambridge University Press eBooks",
+      "year": 2005,
+      "doi": "10.1017/cbo9780511614644",
+      "arxiv_id": null,
+      "abstract": "This book presents a simple geometric model of voting as a tool to analyze parliamentary roll call data. Each legislator is represented by one point and each roll call is represented by two points that correspond to the policy consequences of voting Yea or Nay. On every roll call each legislator votes for the closer outcome point, at least probabilistically. These points form a spatial map that summarizes the roll calls. In this sense a spatial map is much like a road map because it visually depicts the political world of a legislature. The closeness of two legislators on the map shows how similar their voting records are, and the distribution of legislators shows what the dimensions are. These maps can be used to study a wide variety of topics including how political parties evolve over time, the existence of sophisticated voting and how an executive influences legislative outcomes.",
+      "citation_count": 393,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L043",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "The structure of the color space in naming and memory for two languages",
+      "authors": [
+        "Eleanor R. Heider",
+        "Donald Olivier"
+      ],
+      "venue": "Cognitive Psychology",
+      "year": 1972,
+      "doi": "10.1016/0010-0285(72)90011-4",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 393,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L044",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Optimized Product Quantization",
+      "authors": [
+        "Tiezheng Ge",
+        "Kaiming He",
+        "Qifa Ke",
+        "Jian Sun"
+      ],
+      "venue": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
+      "year": 2014,
+      "doi": "10.1109/tpami.2013.240",
+      "arxiv_id": null,
+      "abstract": "Product quantization (PQ) is an effective vector quantization method. A product quantizer can generate an exponentially large codebook at very low memory/time cost. The essence of PQ is to decompose the high-dimensional vector space into the Cartesian product of subspaces and then quantize these subspaces separately. The optimal space decomposition is important for the PQ performance, but still remains an unaddressed issue. In this paper, we optimize PQ by minimizing quantization distortions w.r.t the space decomposition and the quantization codebooks. We present two novel solutions to this challenging optimization problem. The first solution iteratively solves two simpler sub-problems. The second solution is based on a Gaussian assumption and provides theoretical analysis of the optimality. We evaluate our optimized product quantizers in three applications: (i) compact encoding for exhaustive ranking [1], (ii) building inverted multi-indexing for non-exhaustive search [2], and (iii) compacting image representations for image retrieval [3]. In all applications our optimized product quantizers outperform existing solutions.",
+      "citation_count": 393,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L045",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Is the genetic structure of human personality universal? A cross-cultural twin study from North America, Europe, and Asia.",
+      "authors": [
+        "Shinji Yamagata",
+        "Atsunobu Suzuki",
+        "Juko Ando",
+        "Yutaka Ono",
+        "Nobuhiko Kijima",
+        "Kimio Yoshimura",
+        "Fritz Ostendorf",
+        "Alois Angleitner",
+        "Rainer Riemann",
+        "Frank M. Spinath",
+        "W. John Livesley",
+        "Kerry L. Jang"
+      ],
+      "venue": "Journal of Personality and Social Psychology",
+      "year": 2006,
+      "doi": "10.1037/0022-3514.90.6.987",
+      "arxiv_id": null,
+      "abstract": "This study examined whether universality of the 5-factor model (FFM) of personality operationalized by the Revised NEO Personality Inventory is due to genetic influences that are invariant across diverse nations. Factor analyses were conducted on matrices of phenotypic, genetic, and environmental correlations estimated in a sample of 1,209 monozygotic and 701 dizygotic twin pairs from Canada, Germany, and Japan. Five genetic and environmental factors were extracted for each sample. High congruence coefficients were observed when phenotypic, genetic, and environmental factors were compared in each sample as well as when each factor was compared across samples. These results suggest that the FFM has a solid biological basis and may represent a common heritage of the human species.",
+      "citation_count": 381,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L046",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Using quaternions to calculate RMSD",
+      "authors": [
+        "Evangelos A. Coutsias",
+        "Chaok Seok",
+        "Ken A. Dill"
+      ],
+      "venue": "Journal of Computational Chemistry",
+      "year": 2004,
+      "doi": "10.1002/jcc.20110",
+      "arxiv_id": null,
+      "abstract": "A widely used way to compare the structures of biomolecules or solid bodies is to translate and rotate one structure with respect to the other to minimize the root-mean-square deviation (RMSD). We present a simple derivation, based on quaternions, for the optimal solid body transformation (rotation-translation) that minimizes the RMSD between two sets of vectors. We prove that the quaternion method is equivalent to the well-known formula due to Kabsch. We analyze the various cases that may arise, and give a complete enumeration of the special cases in terms of the arrangement of the eigenvalues of a traceless, 4 x 4 symmetric matrix. A key result here is an expression for the gradient of the RMSD as a function of model parameters. This can be useful, for example, in finding the minimum energy path of a reaction using the elastic band methods or in optimizing model parameters to best fit a target structure.",
+      "citation_count": 375,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L047",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Learnable latent embeddings for joint behavioural and neural analysis",
+      "authors": [
+        "Steffen Schneider",
+        "Jin Hwa Lee",
+        "Mackenzie Weygandt Mathis"
+      ],
+      "venue": "Nature",
+      "year": 2023,
+      "doi": "10.1038/s41586-023-06031-6",
+      "arxiv_id": null,
+      "abstract": "Abstract Mapping behavioural actions to neural activity is a fundamental goal of neuroscience. As our ability to record large neural and behavioural data increases, there is growing interest in modelling neural dynamics during adaptive behaviours to probe neural representations 1–3 . In particular, although neural latent embeddings can reveal underlying correlates of behaviour, we lack nonlinear techniques that can explicitly and flexibly leverage joint behaviour and neural data to uncover neural dynamics 3–5 . Here, we fill this gap with a new encoding method, CEBRA, that jointly uses behavioural and neural data in a (supervised) hypothesis- or (self-supervised) discovery-driven manner to produce both consistent and high-performance latent spaces. We show that consistency can be used as a metric for uncovering meaningful differences, and the inferred latents can be used for decoding. We validate its accuracy and demonstrate our tool’s utility for both calcium and electrophysiology datasets, across sensory and motor tasks and in simple or complex behaviours across species. It allows leverage of single- and multi-session datasets for hypothesis testing or can be used label free. Lastly, we show that CEBRA can be used for the mapping of space, uncovering complex kinematic features, for the production of consistent latent spaces across two-photon and Neuropixels data, and can provide rapid, high-accuracy decoding of natural videos from visual cortex.",
+      "citation_count": 360,
+      "is_open_access": true,
+      "pdf_url": "https://www.nature.com/articles/s41586-023-06031-6.pdf",
+      "source_api": "openalex_citations",
+      "id": "L048",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Orthogonal Procrustes Rotation for Two or More Matrices",
+      "authors": [
+        "Jos M. F. ten Berge"
+      ],
+      "venue": "Psychometrika",
+      "year": 1977,
+      "doi": "10.1007/bf02294053",
+      "arxiv_id": null,
+      "abstract": "Necessary and sufficient conditions for rotating matrices to maximal agreement in the least-squares sense are discussed. A theorem by Fischer and Roppert, which solves the case of two matrices, is given a more straightforward proof. A sufficient condition for a best least-squares fit for more than two matrices is formulated and shown to be not necessary. In addition, necessary conditions suggested by Kristof and Wingersky are shown to be not sufficient. A rotation procedure that is an alternative to the one by Kristof and Wingersky is presented. Upper bounds are derived for determining the extent to which the procedure falls short of attaining the best least-squares fit. The problem of scaling matrices to maximal agreement is discussed. Modifications of Gower’s method of generalized Procrustes analysis are suggested.",
+      "citation_count": 327,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L049",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Reconstructing 3D Human Pose from 2D Image Landmarks",
+      "authors": [
+        "Varun Ramakrishna",
+        "Takeo Kanade",
+        "Yaser Sheikh"
+      ],
+      "venue": "Lecture notes in computer science",
+      "year": 2012,
+      "doi": "10.1007/978-3-642-33765-9_41",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 324,
+      "is_open_access": true,
+      "pdf_url": "https://figshare.com/articles/journal_contribution/Reconstructing_3D_Human_Pose_from_2D_Image_Landmarks/6560621",
+      "source_api": "openalex_citations",
+      "id": "L050",
+      "download": true,
+      "publication_status": "published"
+    }
+  ]
+}

@@ -1,0 +1,345 @@
+                                                                                                                                                                                  2022 IEEE International Conference on Space Optical Systems and Applications (ICSOS)
+
+                                                                                                                                                                      Low-power-consumption coherent receiver
+                                                                                                                                                                          architecture for satellite optical links
+
+                                                                                                                                                                                                                       A.W. Bernini, M. J. Fice, K. Balakier
+                                                                                                                                                                                                              Department of Electronic and Electrical Engineering
+
+                                                                                                                                                                                                                        University College London (UCL)
+                                                                                                                                                                                                                          London, United Kingdom (UK)
+                                                                                                                                                                                                                                Alexis.bernini.19@ucl.ac.uk
+
+2022 IEEE International Conference on Space Optical Systems and Applications (ICSOS) | 978-1-6654-3439-3/22/$31.00 ¬©2022 IEEE | DOI: 10.1109/ICSOS53063.2022.9749703      Abstract‚Äî As the demand for satellite data transmission            drawing elements in the whole communication chain [7]. In
+                                                                                                                                                                      increases, higher capacity optical links need to be developed to       order to recover the signal in a fibre link, the elements of the
+                                                                                                                                                                      allow satellites to be connected directly to ground stations           DSP are the following: chromatic dispersion (CD)
+                                                                                                                                                                      (GST). The advantages of Low Earth Orbit (LEO) direct-to-              compensation, timing recovery, polarisation mode dispersion
+                                                                                                                                                                      Earth links are smaller latency when compared to relay systems         (PMD) compensation, carrier recovery, and decoding [7], [8].
+                                                                                                                                                                      using Geostationary Orbit (GEO) satellites, i.e. LEO-to-GEO            All of these processes are carried out in the digital domain,
+                                                                                                                                                                      and GEO-to-GST, and an increased available bandwidth                   hence analogue-to-digital converters (ADC) need to be in
+                                                                                                                                                                      offered by the optical spectrum with respect to radio frequency        place per quadrature and per polarisation. For a full dual-
+                                                                                                                                                                      (RF) which allows for much higher link capacity. The increase          polarisation (DP), in-phase and quadrature decoder (IQ
+                                                                                                                                                                      in data rate of optical satellite to ground links towards 100 Gbps     decoder), four ADCs are required. The key reason why the
+                                                                                                                                                                      will require implementing optical coherent transceivers with           DSP block consumes a high amount of power, approximately
+                                                                                                                                                                      capability to compensate for Doppler shift and atmospheric             420 mW/Gbit/s [9], is that the power is linearly dependent on
+                                                                                                                                                                      channel impairments. An important figure of merit which needs          the energy per bit (for each IC technological node), hence, a
+                                                                                                                                                                      to be carefully considered in a satellite system is the equipment      higher data rate translates linearly into a higher power
+                                                                                                                                                                      power consumption. The power consumption of coherent                   consumption of the DSP block.
+                                                                                                                                                                      receivers used for terrestrial applications is closely related to the  The aim of this paper is to provide a concept for a power-
+                                                                                                                                                                      bit rate, with a receiver back-end digital signal processing being     efficient satellite communication system. Satellite links are
+                                                                                                                                                                      responsible for the vast majority of the power consumed.               not subject to some of the distortions experienced in optical
+                                                                                                                                                                                                                                             fibre systems. Namely, CD and PMD effects are negligible,
+                                                                                                                                                                          In this paper we propose a hybrid approach to signal               which allows the DSP block to be simplified [10], [11]. In
+                                                                                                                                                                      processing consisting of simplified digital and analogue elements      order to further reduce the complexity of the DSP block we
+                                                                                                                                                                      allowing for significant power reduction. Moreover, one of the         are investigating an analogue Optical Injection Phase-Lock
+                                                                                                                                                                      attractive aspects of the proposed approach is that it does not        Loop (OIPLL) [12] to operate in place of the digital carrier
+                                                                                                                                                                      require an increased complexity for an increase in baud rate. It       recovery component. The advantage of an analogue approach
+                                                                                                                                                                      will be discussed that the analogue approach to the frequency          to signal processing (phase and frequency recovery) is that
+                                                                                                                                                                      and phase recovery would allow a saving of approximately 40%           the power consumption does not depend on data rate as long
+                                                                                                                                                                      to 50% of power on the overall DSP block at baud rates between         as the used modulation format allows for a residual reference
+                                                                                                                                                                      10 Gbaud and 100 Gbaud.                                                tone required by the OIPLL. It will be demonstrated that even
+                                                                                                                                                                                                                                             after simplifying the DSP block, the OIPLL-based system
+                                                                                                                                                                          Keywords‚Äîdigital signal processing, optical injection phase-       allows a significant amount of power to be saved. In the next
+                                                                                                                                                                      lock loop (OIPLL), power consumption, low-earth orbit (LEO)            sections, the Doppler shift effect on the signal will be
+                                                                                                                                                                      satellites, coherent detection                                         discussed, followed by an analysis of the power consuming
+                                                                                                                                                                                                                                             elements in OIPLL and DSP systems respectively.
+                                                                                                                                                                                               I. INTRODUCTION
+                                                                                                                                                                                                                                                                      II. DOPPLER SHIFT
+                                                                                                                                                                      Power consumption is one of the key aspects to consider
+                                                                                                                                                                      when designing a communication system, and has been                    The Doppler shift consists of a frequency change in a
+                                                                                                                                                                      subject to multiple studies which aim to reduce the impact of          received signal due to the relative velocity between two
+                                                                                                                                                                      active components in the communication link [1]‚Äì[4]. The               objects. In satellite free-space coherent communications this
+                                                                                                                                                                      amount of power that these consume influences the choices              has a strong impact on performance, as, ideally, the receiver
+                                                                                                                                                                      that are made throughout the design, such as the modulation            local oscillator should operate at the same frequency as the
+                                                                                                                                                                      format, baud rate, and constellation size [5]. Satellite systems       incoming signal. The LEO-to-Ground link adds another
+                                                                                                                                                                      are under significant pressure when it comes to power                  element of complexity to the system, as the satellite‚Äôs position
+                                                                                                                                                                      consumption, especially when dealing with small platforms              with respect to the ground station is varying.
+                                                                                                                                                                      in the LEO orbit. The current satellite optical communication          The Doppler shift for various LEO scenarios has been studied
+                                                                                                                                                                      systems rely on analogue amplitude modulation to simplify              in several publications. For the purposes of this discussion,
+                                                                                                                                                                      the receiver end as much as possible. Employing a coherent             the findings from [13] will be considered.
+                                                                                                                                                                      detection system would introduce more complexity, but can              As shown in Figure 1, and summarized in Table I, the
+                                                                                                                                                                      also allow an increase in the number of bits transmitted per           Doppler shift range for LEO satellites does not significantly
+                                                                                                                                                                      symbol. With the advent of coherent detection, transceivers            change with the orbit height. For a satellite orbiting at 160 km
+                                                                                                                                                                      have been able to transmit both in-phase and quadrature
+                                                                                                                                                                      components, therefore the available throughput is
+                                                                                                                                                                      significantly increased, allowing much higher spectral
+                                                                                                                                                                      efficiencies to be reached [6]. This approach has been used in
+                                                                                                                                                                      long-reach and data-centre optical fibre communications. The
+                                                                                                                                                                      key element which allows complex constellations to be
+                                                                                                                                                                      decoded is the digital signal processing (DSP) at the receiver
+                                                                                                                                                                      end, which unfortunately becomes one of the main power
+
+                                                                                                                                                                      Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:52:24 UTC from IEEE Xplore. Restrictions apply.
+
+                                                                                                                                                                      978-1-6654-3439-3/22/$31.00 ¬©2022 IEEE  149
+              2022 IEEE International Conference on Space Optical Systems and Applications (ICSOS)
+
+              Figure 1 -Doppler Shift (a) and Rate of Change (b) over time for multiple LEO orbit heights
+
+from Earth, the Doppler shift is ¬±4.89 GHz, whereas for a         purposes of power calculations these will be omitted, as
+1000 km orbit it is ¬±4.08 GHz.                                    ideally the OIPLL would be integrated on a photonic
+On the other hand, when considering the rate of change of         integrated circuit (PIC) for deployment, removing the need
+frequency, at 1000 km orbit height the maximum rate is            for the fibre path-length control.
+29 MHz/s, whereas at 160 km it is 237 MHz/s, an eight times       The complexity added to the receiver due to the analogue
+faster rate of change.                                            feedback loop only comes from the loop filter and optical
+                                                                  circulator. This assumption can be made as the other elements
+Table I. Doppler shift parameters for various orbit heights       composing the receiver would be there in case of analogue or
+                                                                  digital receiver, for instance, the LO laser, 90-degree hybrid,
+Orbit Velocity View time Max Doppler Max Rate                     and electrical amplifiers.
+                                                                  The loop filter power consuming elements are mainly the
+height (m/s)  (min)  Shift (GHz) of Change                        operational amplifiers which compose it. The supply voltage
+                                                                  for those, in our implementation, is ¬±15V, and the current
+(km)                          (MHz/s)                             draw for the two supply rails has been measured in a worst
+                                                                  case scenario, i.e. when the control signal coming from the
+160 7341      6.180  ¬±4.862   237.2                               PLL filter is at its
+
+500 7090      12.84  ¬±4.4081  55.6
+
+1000 6882     17.60  ¬±4.0535  29.8
+
+    III. POWER CONSUMPTION OF DIGITAL AND HYBRID                                        Figure 2 - OIPLL architecture
+                       COHERENT RECEIVER
+                                                                  maximum correction. Depending on the polarity of the
+In order to compensate for the Doppler shift at the receiver      feedback signal, one of the supplies would experience a
+side, analogue and digital approaches can be used. For the        current draw of 28.5 mA, whereas the other rail would
+analogue compensation, an Optical Injection Phase-Lock            experience a current draw of 17.2 mA. The power for the two
+Loop (OIPLL) will be considered, whereas for the DSP              is then calculated to be 0.685 W. As discussed in [13], [14],
+approach, a pilot aided and a data-based algorithm will be        the Doppler shift in a satellite link can be compensated by an
+discussed.                                                        OIPLL. Their calculations show that the doppler shift they
+                                                                  manage to compensate is ¬±7.5GHz, which is more than the
+A. Hybrid Coherent Receiver                                       maximum ¬±5.5GHz calculated for the LEO-to-ground system
+                                                                  discussed in the previous section.
+The OIPLL combines an Optical Phase Lock Loop (OPLL)              Another important observation is that given its analogue
+with Optical Injection Locking (OIL), providing the               construction, the OIPLL‚Äôs power consumption is not
+frequency tracking and phase locking of the OPLL together         dependent on the data rate being transmitted; increasing or
+with the narrow linewidth and phase noise figure of OIL [13].
+The configuration for the OIPLL which is going to be
+considered for this application has been explained in detail in
+[12] and is shown in Figure 2. The current receiver
+breadboard was designed based on discrete components
+without low power consumption as a feature, hence, by
+designing the OIPLL in more integrated form an improved
+power consumption figure could be achieved. Moreover, as
+the OIPLL in our current experimental setup is not integrated:
+additional circuitry is inserted into the design to maintain the
+fibre paths in the two arms of the receiver at the same length;
+the path length control is represented with dashed lines to
+distinguish it from the OIPLL in dotted lines. For the
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:52:24 UTC from IEEE Xplore. Restrictions apply.
+
+                                                                          150
+2022 IEEE International Conference on Space Optical Systems and Applications (ICSOS)
+
+decreasing the transmitted information would consume the              between -Fs/2 and +Fs/2, where Fs is the sample rate of the
+same amount of power at the receiver side.                            ADCs employed at the receiver.
+                                                                      The FOE algorithm discussed in [18] is constructed by taking
+B. Digital Coherent Receiver                                          into consideration spectral asymmetry. This is the shift of the
+                                                                      spectrum with respect to baseband due to the up-conversion
+As discussed in [7], DSP is the main power consuming                  to the Doppler shift frequency. This is performed by taking
+element in the communication chain; this becomes an issue             the FFT of the incoming signal and calculating the power of
+when deploying a coherent communication system. For                   the spectrum above and below zero. This method allows to
+ground links, it has been shown that the power consumption            estimate the Doppler shift up to 1GHz of precision, allowing
+increases with distance, mainly due to chromatic dispersion           for coarse correction of the Doppler shift. This approach
+and polarisation mode dispersion compensation [6]. In                 needs to be combined with a carrier recovery algorithm to
+satellite communications, none of fibre dispersion                    correct for the remaining shift. The length of the FFT used to
+compensations are required. The atmosphere‚Äôs effect on an             compensate for the shift was set to 128 bits.
+optical carrier is very different than the one of a fibre optic       The common element in these two algorithms is the need for
+cable [15].                                                           a carrier recovery block further down the DSP line. This
+In [7], a thorough analysis of the power consumption of the           block would take care of multiplying the signal by the carrier
+various elements composing a ground fibre optic link is               offset, practically down-converting it to its baseband
+described, considering both QPSK and 16-QAM modulation                equivalent. If a numeric controlled oscillator (NCO) was to
+formats, and for various fibre distances. It has been shown           be used, these two methods would become similar to a CD
+that the main power-hungry component in the whole physical            compensation algorithm, as discussed in the next section.
+communication chain is the digital signal processing chip.            Therefore, the power consumed by the above could be
+For example, in a 2,400 km dual-polarisation QPSK (DP-                approximated to the one being consumed by CD
+QPSK) system, the DSP consumes 56.3% of the energy per                compensation.
+bit of the whole system (transmitter, link amplifiers, and
+receiver). This quantity translates to power by multiplying it          2) CD Power Consumption
+by the data rate of the link. It is therefore intuitive that, as the  The basic element of the FOE algorithms discussed in the
+trend of communications is to increase the possible data rate,        previous section is the FFT. The FFT is defined by two main
+this quantity can become an enormous issue.                           parameters: the block size and sampling rate. These together
+The various elements which compose the DSP are: encoding              allow to identify the frequency bandwidth of the DSP, and the
+(at the transmitter), pulse shaping, chromatic dispersion             resolution.
+compensation, timing recovery, polarisation mode dispersion           Depending on the implementation of the FFT, the platform
+compensation, carrier recovery, and decoding. The two most            and technology on which it is deployed ‚Äì i.e. FPGA, ASIC,
+power-consuming components, as discussed by [7], are                  etc. -, and other specific details, the power consumed is not
+chromatic dispersion compensation and polarisation mode               trivial to calculate. A thorough calculation element by
+dispersion compensation [16]. As discussed before, these are          element of the FFT power is beyond of the scope of this
+not a factor in satellite communication, hence, these two can         paper; instead, the aim here is to obtain an estimate of the
+be directly cut out of the DSP, saving about 57% of the energy        power consumption, rather than a value for a specific
+consumed by the DSP block.                                            implementation.
+                                                                      In [7], the FFT algorithm was designed to minimise power
+  1) Frequency Offset Estimation Algorithms                           consumption for a specific FIR filter response, composed of
+Any Frequency Offset Estimation (FOE) algorithm would be              approximately 1100 taps. In their findings, it was estimated
+required to compensate for the Doppler shift caused by the            that the energy per bit for CD compensation on a 2400 km,
+movement of the satellite with respect to the OGS. The                PM-QPSK system would consume 162 pJ/bit for a 40 nm
+maximum shift they should be able to compensate is                    ASIC, and 81 pJ/bit for a 20 nm. This value is generated from
+¬±4.9GHz.                                                              equation (1):
+There are multiple algorithms that have been shown to allow
+for carrier recovery in the DSP block. For the purposes of this       Ì†µÌ∞∏Ì†µÌ∞∂Ì†µÌ∞∑  =  Ì†µÌ±õÌ†µÌ±†Ì†µÌ±é ‚àëÌ†µÌ±ê Ì†µÌ∞∏Ì†µÌ±úÌ†µÌ±ù,Ì†µÌ±êÌ†µÌ±ÅÌ†µÌ±úÌ†µÌ±ù,Ì†µÌ±ê  ,  (1)
+discussion, only the ones with a bandwidth large enough to                         Ì†µÌ±ÖÌ†µÌ±ÅÌ†µÌ±õÌ†µÌ±ôÌ†µÌ±úÌ†µÌ±î2(Ì†µÌ±Ä)
+accommodate the full Doppler shift will be considered. The
+two algorithms selected for this discussion are described in          where, nsa is the oversampling ratio, ‚àëÌ†µÌ±ê Ì†µÌ∞∏Ì†µÌ±úÌ†µÌ±ù,Ì†µÌ±êÌ†µÌ±ÅÌ†µÌ±úÌ†µÌ±ù,Ì†µÌ±ê represents
+detail in [17], [18].                                                 the energy consumption estimate from the operations carried
+It should be noted that these algorithms operate for intradyne        out in the DSP element for CD, R is the rate of the code being
+Doppler shift, that is, for Doppler shift which is smaller than       used, in this case 0.83 LPDC code, Nn is the number of
+the signal bandwidth. This is mainly because of the sampling          multiplexed lines going into the FFT block, and M is the
+frequency of the ADCs. Hence, the transmit signal baudrate            constellation size.
+should be more than 5 Gbaud for those to work.                        This energy-per-bit values for PM-QPSK can therefore be
+The power consumption of the above algorithms could not be            corrected for a DP-BPSK transmission system by multiplying
+found in the literature, hence, an estimation based on the Fast-      the value by 2, as can be seen from (1). The energy
+Fourier Transform (FFT) and other DSP operations has been             consumption for DP-BPSK would then be 324 pJ/bit,
+made.                                                                 translating to an approximate power consumption of 3.24 W
+The estimation range of the method presented in [17] is               at 10 Gbit/s. The FFT size for the above calculations is set to
+dependent on the sampling rate, covering the frequency span           give a minimum power consumption given the number of
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:52:24 UTC from IEEE Xplore. Restrictions apply.
+
+                                                                          151
+                                   2022 IEEE International Conference on Space Optical Systems and Applications (ICSOS)
+
+taps on the FIR filter. More recent technology in
+semiconductor manufacturing allows to reduce the minimum
+feature size from the discussed 40 nm down to 5 nm, with
+associated reduction in power consumption.
+
+                          IV. DISCUSSION                               Figure 4 - Comparison of power consumption between ground link
+                                                                          (blue), satellite link with DSP (orange), and satellite link with
+Figure 3 represents a comparison between the power                                              analogue OIPLL (yellow)
+consumed by the DSP-based 40nm CMOS and the OIPLL-
+based hybrid satellite coherent receiver systems. The                  Another element which can be compensated in analogue
+dependency on the data rate comes from the inclusion of the            domain is timing recovery. This is not a feature of the OIPLL,
+carrier and timing recovery algorithms in the receiver. For the        but it could be implemented together with the latter [19],
+purposes of the calculations, the energy per bit consumption           removing the need for any DSP if the link budget was to be
+for the various elements of the DSP are the ones calculated            strong enough as to remove the need for FEC.
+by [7], and summarised in Table II. In order to allow a
+comparison between the OIPLL power consumption and that                     Table II - Energy Per Bit Consumption
+of the DSP, the power consumed by the former has been
+divided by the 10 Gbit/s data rate, so that the result would be        DSP Element                  Energy per Bit ‚Äì 40nm
+the energy consumed per bit. It can be seen that the OIPLL                                          CMOS [pJ/Bit]
+would allow a saving of approximately 40% of the power                 CD Compensation for 2400 km
+when compared to the DSP approach at 10 Gbit/s. Following              Timing Recovery              324
+the same calculations, the power savings at 100 Gbit/s would           Decoding                     104
+be 49%. The DSP approach could still be less power hungry              PMD Compensation             172
+at low data rates. Figure 4 represents a comparison between            Carrier Recovery             246
+the power consumption of a ground fibre link, a satellite link                                      46
+with DSP, and the satellite link with the OIPLL. Here the
+power consumed by the OIPLL is calculated as previously
+discussed, resulting in a non-zero intercept on the power axis.
+It can be seen that for data rates below 2.2 Gbit/s, the DSP
+approach would consume less power. It should be noted that
+this graph does not take into consideration an eventual
+flattening of the curve to a minimum power consumption that
+the platform on which the DSP was built might have.
+
+                         Energy per bit consumed at                                              V. CONCLUSION
+                                    10Gbit/s
+                                                                       The power consumption of a satellite optical coherent
+Energy per bit [pJ/bit]  1000                                          receiver is of great importance in the power budget. A
+                          800                                          comparison between analogue (OIPLL based) and digital
+                          600                                          (DSP based) signal processing has been presented. At baud
+                          400                                          rates greater than 2.2 Gbaud, the analogue approach would
+                          200                                          consume a smaller amount of power. At 10 Gbaud and
+                             0                                         100 Gbaud, the analogue-based system would allow savings
+                                                                       at the receiver of respectively 40% and 49% of power for a
+                                DSP DP-BPSK DSP DP-BPSK OIPLL DP-BPSK  DP-BPSK system. Moreover, an increase in data rate or
+                                                                       different constellation sizes would not require a redesign of
+                                               satellite  satellite    the frequency and phase recovery subsystems if those were to
+                                                                       be implemented using an OIPLL, as long as a reference tone
+                                                                       is present.
+
+                         CD Compensation       PMD compensation
+
+                         Timing recovery       Carrier recovery                                      ACKNOWLEDGMENT
+
+                         Decoding              OIPLL                   This research work has been supported by the UK
+                                                                       Engineering and Physical Sciences Research Council
+                         Doppler Compensation                          (EPSRC) through Doctoral Training Partnerships (DTP)
+                                                                       (EPSRC Reference: EP/R513143/1) and PICSat (EPSRC
+                         Figure 3 - Energy per bit of DSP and OIPLL    Reference: EP/S000976/1).
+
+                                                                            REFERENCES
+
+                                                                       [1]  A. Simsek et al., ‚ÄúEvolution of Chip-Scale Heterodyne Optical
+
+                                                                            Phase-Locked Loops Toward Watt Level Power Consumption,‚Äù J.
+
+                                                                            Light. Technol., vol. 36, no. 2, pp. 258‚Äì264, 2018, doi:
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:52:24 UTC from IEEE Xplore. Restrictions apply.
+
+                                                                          152
+      2022 IEEE International Conference on Space Optical Systems and Applications (ICSOS)
+
+      10.1109/JLT.2017.2758744.                                             [12] M. J. Fice, A. Chiuchiarelli, E. Ciaramella, and A. J. Seeds,
+
+[2]   J. L. Wei, Q. Cheng, R. V Penty, I. H. White, and D. G.                     ‚ÄúHomodyne coherent optical receiver using an optical injection
+                                                                                  phase-lock loop,‚Äù J. Light. Technol., vol. 29, no. 8, pp. 1152‚Äì1164,
+      Cunningham, ‚ÄúAnalysis of complexity and power consumption in                2011, doi: 10.1109/JLT.2011.2115993.
+
+      DSP-based optical modulation formats,‚Äù Advanced Photonics for
+
+      Communications, 2014, doi: 10.1364/sppcom.2014.sm2d.5.                [13] Y. Shoji, M. J. Fice, Y. Takayama, and A. J. Seeds, ‚ÄúA pilot-carrier
+
+[3]   E. Cianca et al., ‚ÄúSoftwarization and Virtualization as Enablers for        coherent LEO-to-ground downlink system using an optical
+                                                                                  injection phase lock loop (OIPLL) technique,‚Äù J. Light. Technol.,
+      Future EHF/FSO High Throughput Satellites,‚Äù 2018 IEEE Glob.                 vol. 30, no. 16, pp. 2696‚Äì2706, 2012, doi:
+                                                                                  10.1109/JLT.2012.2204037.
+      Commun. Conf. GLOBECOM 2018 - Proc., 2018, doi:
+
+      10.1109/GLOCOM.2018.8647698.
+
+[4]   T. Kupfer, A. Bisplinghof, T. Duthel, C. Fludger, and S. [14] T. Ando, E. Haraguchi, K. Tajima, Y. Hirano, T. Hanada, and S.
+                                                                                  Yamakawa, ‚ÄúOptical homodyne BPSK receiver with Doppler shift
+      Langenbach, ‚ÄúOptimizing power consumption of a coherent DSP
+                                                                                  compensation for LEO-GEO optical communication,‚Äù Pacific Rim
+      for metro and data center interconnects,‚Äù 2017 Optical Fiber
+                                                                                  Conf. Lasers Electro-Optics, CLEO - Tech. Dig., pp. 59‚Äì60, 2013,
+      Communications Conferencce and Exhibition, OFC 2017 -
+                                                                                  doi: 10.1109/CLEOPR.2013.6600348.
+      Pocceedings, 2017.
+
+[5]   C. Christopoulos and A. Wright, ‚ÄúDigital communications,‚Äù in [15] H. Kaushal and G. Kaddoum, ‚ÄúOptical Communication in Space:
+                                                                                  Challenges and Mitigation Techniques,‚Äù IEEE Communications
+      Electrical Power System Protection, McGraw-Hill, 2008.
+                                                                                  Surveys  and  Tutorials.           2017,  doi:
+[6]   K. Kikuchi, ‚ÄúFundamentals of coherent optical fiber
+                                                                                  10.1109/COMST.2016.2603518.
+      communications,‚Äù J. Light. Technol., vol. 34, no. 1, pp. 157‚Äì179,
+                                                                            [16] A. A. M. Saleh, ‚ÄúAn Investigation of Laser Wave Depolarization
+      2016, doi: 10.1109/JLT.2015.2463719.
+
+[7]   B. S. G. Pillai et al., ‚ÄúEnd-to-end energy modeling and analysis of         Due to Atmospheric Transmission,‚Äù IEEE J. Quantum Electron.,
+                                                                                  vol. 3, no. 11, pp. 540‚Äì543, 1967, doi:
+      long-haul coherent transmission systems,‚Äù J. Light. Technol., vol.          10.1109/JQE.1967.1074404.
+
+      32, no. 18, pp. 3093‚Äì3111, Sep. 2014, doi:                            [17] D. Zhao, L. Xi, X. Tang, W. Zhang, Y. Qiao, and X. Zhang,
+
+      10.1109/JLT.2014.2331086.                                                   ‚ÄúDigital pilot aided carrier frequency offset estimation for coherent
+                                                                                  optical transmission systems,‚Äù Opt. Express, vol. 23, no. 19, p.
+[8]   S. J. Savory, ‚ÄúDigital coherent optical receivers: Algorithms and           24822, 2015, doi: 10.1364/oe.23.024822.
+
+      subsystems,‚Äù IEEE J. Sel. Top. Quantum Electron., vol. 16, no. 5,
+
+      pp. 1164‚Äì1179, Sep. 2010, doi: 10.1109/JSTQE.2010.2044751.
+
+[9]   X. Zhang, X. Yi, X. Liu, and P. J. Winzer, ‚Äú100G transport            [18]  J. C. M. Diniz et al., ‚ÄúSimple feed-forward wide-range frequency
+      systems: technology bench-mark testing in China and evolution to            offset estimator for optical coherent receivers,‚Äù Opt. InfoBase
+      Terabit/s interfaces,‚Äù China Commun., vol. 10, no. 4, pp. 19‚Äì30,            Conf. Pap., vol. 19, no. 26, pp. 323‚Äì328, 2011, doi:
+      2013, doi: 10.1109/CC.2013.6506925.                                         10.1364/oe.19.00b323.
+
+[10]  K. Elayoubi, ‚ÄúStudy of communications channels for optical links      [19]  R. Kamran et al., ‚ÄúDemonstration of a low-power, local-oscillator-
+      through the atmosphere,‚Äù Ph.D dissertation, Universit√© de                   less, and DSP-free coherent receiver for data center interconnects,‚Äù
+      Toulouse, 2019.                                                             Appl. Opt., vol. 59, no. 7, p. 2031, Mar. 2020, doi:
+                                                                                  10.1364/ao.383185.
+[11] S. F. Clifford, ‚ÄúPolarization and Angle-of -Arrival Fluctuations,‚Äù
+
+      IEEE Transacctions on Antennas and Propagation, Vol.. 15, no.
+
+      3, pp. 416-421, 1967.
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:52:24 UTC from IEEE Xplore. Restrictions apply.
+
+                                                                          153
+

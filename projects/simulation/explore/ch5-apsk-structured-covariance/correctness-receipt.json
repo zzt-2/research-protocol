@@ -1,0 +1,38 @@
+{
+  "schema_version": "t054.correctness-receipt.v1",
+  "scope": [
+    "CORRECTNESS_ONLY",
+    "SYNTHETIC_RESIDUAL",
+    "NO_TARGET_OCCURRENCE_OR_METHOD_SIGNAL"
+  ],
+  "seed": 54,
+  "realization_hash": "63d3f7f29f36563ed67e1edef6cdb3992885472bbcacbe86dead2cc492b5c6d0",
+  "constellation_id": "common._modulation.m16apsk_mod:symbols:684fa7045c351f81",
+  "labeling_id": "common._modulation.m16apsk_mod:bits:684fa7045c351f81",
+  "arms": [
+    "B1",
+    "B2",
+    "B3",
+    "C1"
+  ],
+  "shared_pilot_mean_object": true,
+  "label_roundtrip_bit_errors": 0,
+  "minimum_covariance_eigenvalue": 4.515432790811458e-05,
+  "circular_b2_scalar_gap": 2.3468894485873016e-19,
+  "circular_c1_scalar_gap": 2.3455919207502133e-19,
+  "rotation_equivariance_max_abs_error": 1.951563910473908e-18,
+  "kappa_zero_local_max_abs_error": 0.0,
+  "kappa_large_b2_max_abs_error": 3.144186300207963e-18,
+  "gmi_correct": 3.9999999881055355,
+  "gmi_zero": 0.0,
+  "gmi_flipped": 0.0,
+  "scientific_verdict": "NOT_AUTHORIZED",
+  "target_occurrence": "NOT_TESTED",
+  "method_signal": "NOT_TESTED",
+  "_meta": {
+    "script": "t054_ch5_structured_covariance_correctness",
+    "common_md5": "49acdfa4",
+    "git_commit": "44643c9",
+    "timestamp": "2026-08-30T03:38:20"
+  }
+}

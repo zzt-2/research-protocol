@@ -1,0 +1,39 @@
+{
+  "task": "T050",
+  "formal_step": "GW Step 3.5",
+  "question": "Q-C4-2",
+  "date": "2026-08-30",
+  "task_control": {
+    "validator": "C:\\Users\\zzt\\.agents\\skills\\research-direction-lab\\scripts\\validate_task_control.py",
+    "verdict": "PASS",
+    "control_epoch": 5,
+    "mission_checkpoint": "CP005",
+    "action_class": "TARGETED_SUPPLEMENT_SEARCH"
+  },
+  "rounds": [
+    {"round": 1, "archive_count": 6, "raw": 29, "unique": 27, "recent_2019_plus_raw": 29, "recent_2019_plus_unique": 27, "new_must": 0, "new_should": 1},
+    {"round": 2, "archive_count": 6, "raw": 286, "unique": 269, "recent_2019_plus_raw": 118, "recent_2019_plus_unique": 108, "new_must": 0, "new_should": 3},
+    {"round": 3, "archive_count": 3, "raw": 13, "unique": 13, "recent_2019_plus_raw": 5, "recent_2019_plus_unique": 5, "new_must": 0, "new_should": 0, "stop": "SATURATION"}
+  ],
+  "totals": {"archive_count": 15, "raw": 328, "unique": 305, "recent_2019_plus_raw": 152, "recent_2019_plus_unique": 140, "new_fulltext": 0, "new_read_notes": 0},
+  "archives": [
+    {"path": "search-archive/2026-08-30/t050-pilot-initialized-reliability-gated-apsk.json", "sha256": "b31ef3e05f9236204d885a7a28c31e085f11faa7e14b3258c1e1b54f61e8dcf8"},
+    {"path": "search-archive/2026-08-30/t050-ring-aware-weighted-rde-apsk.json", "sha256": "5aebf4bf355bd40bdb930dfd88ec1b5d763e95d10d0db2a4be08f13c169be6a5"},
+    {"path": "search-archive/2026-08-30/t050-soft-decision-gated-blind-equalization-apsk.json", "sha256": "ba68163b6cd435c4df5161c24825fb02e3f08134873e8f43211536bb8def3a1d"},
+    {"path": "search-archive/2026-08-30/t050-semi-blind-dual-polarization-apsk-equalizer.json", "sha256": "8914d643557c3fb0f0f865f1b052b1bd19cd57689c57462e0ab9e594d0569885"},
+    {"path": "search-archive/2026-08-30/t050-decision-confidence-weighted-lms-coherent-receiver.json", "sha256": "1d51a798994df7866b298bf34a0635a454b45d05ce76dad12a39dc11d879374b"},
+    {"path": "search-archive/2026-08-30/t050-pilot-aided-radius-directed-equalization.json", "sha256": "fd01153d47c08ffb0fa9d88e8f6b3c275900e0f940a2acfa1bd38867b6637f3b"},
+    {"path": "search-archive/2026-08-30/t050-citations-lbs-rde-forward-s2.json", "sha256": "6c8840d5081645bd1583f21b135cdb95bbba3348b1e68442602167e3515c5299"},
+    {"path": "search-archive/2026-08-30/t050-citations-lbs-rde-backward-openalex.json", "sha256": "bfa232ea333ac15491495e5cbe9979c8d86fb458485ef54a099eb8eed085c6e9"},
+    {"path": "search-archive/2026-08-30/t050-citations-rde-canonical-forward-s2.json", "sha256": "ebb93e87cbc159fb302060996af4fe46eb225ecb9e20934c16f161ca4aaa5002"},
+    {"path": "search-archive/2026-08-30/t050-citations-fatadin-forward-s2.json", "sha256": "f9bbc03d7e2cfee8a442f6e44888f9699c405944d750191df51be39cec40fe2a"},
+    {"path": "search-archive/2026-08-30/t050-citations-baldi-apsk-forward-s2.json", "sha256": "a96acc51e304eafafbf4149bf1c950c995acb6578c3f33d28919afe3aa30ae4b"},
+    {"path": "search-archive/2026-08-30/t050-citations-roudas-forward-s2.json", "sha256": "670590b83c814ea87e24de1a9bf9a0b06b92ad67217024bd7b842054c0700783"},
+    {"path": "search-archive/2026-08-30/t050-r3-fec-soft-rde-backward.json", "sha256": "e8eb0437a5f75d0777b4eb09fa3749d4644037a019d414e90a16e51b03d57d3b"},
+    {"path": "search-archive/2026-08-30/t050-r3-mapsk-outer-ring-backward.json", "sha256": "9347be7f34f3183615d2aca104ff189236b6da5e1bd32f714b28626008491f74"},
+    {"path": "search-archive/2026-08-30/t050-r3-ml-em-rsop-backward.json", "sha256": "f78ed618c73693f6376cc4bb38b3da1eac93507d4cf4816583da0b8e0db143f5"}
+  ],
+  "fulltext": {"attempted": 1, "downloaded": 0, "doi": "10.1109/JLT.2021.3098220", "result": "all_failed", "papers_index_restored": true},
+  "verdict": "Q-C4-2 SURVIVES",
+  "blocker": "FULLTEXT_UNAVAILABLE_DI_ROSA_2021"
+}

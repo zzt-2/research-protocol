@@ -1,0 +1,391 @@
+2021 13th International Conference on Wireless Communications and Signal Processing (WCSP) | 978-1-6654-0785-4/21/$31.00 ©2021 IEEE | DOI: 10.1109/WCSP52459.2021.9613326  Lowering the Error Floor of Quantized NR LDPC
+                                                                                                                                                                            Decoders by a Post-Processing on Trapping Sets
+
+                                                                                                                                                                                                         Hai He1, Ming Jiang1,2, Mingyang Zhu1, Chunming Zhao1,2
+                                                                                                                                                                               1National Mobile Communications Research Laboratory, Southeast University, Nanjing 210096, China
+
+                                                                                                                                                                                                               2The Purple Mountain Laboratories, Nanjing, China
+                                                                                                                                                                                                    Email: {haihe seu, jiang ming, zhumingyang, cmzhao}@seu.edu.cn
+
+                                                                                                                                                                              Abstract—This paper presents a novel two-stage quantized         extrinsic message degree values. Low error-ﬂoor irregular QC-
+                                                                                                                                                                           iterative decoder to lower the error ﬂoor for new radio low-        LDPC codes are constructed in [7] through the proper selection
+                                                                                                                                                                           density parity-check (NR LDPC) codes. In the ﬁrst stage, quan-      of cyclic permutation shifts within the exponent matrix to
+                                                                                                                                                                           tized normalized min-sum (NMS) decoding algorithm is used           avoid any instance of leaﬂess elementary trapping sets within a
+                                                                                                                                                                           to guarantee the performance of waterfall region. The second        targeted set of structures. However, for an existing LDPC code
+                                                                                                                                                                           stage is executed if the syndrome reaches the speciﬁc criterion     such as the LDPC code in 5G standard, we can not modify
+                                                                                                                                                                           about the number of unsatisﬁed check constraints. The cyclic-       its structure thus the only way to lower the error ﬂoor is to
+                                                                                                                                                                           shifting CRC detection (CSCD) and syndrome assistant CSCD           improve the decoding algorithm for speciﬁc TSs.
+                                                                                                                                                                           (SA-CSCD) algorithm designed to ﬂip the error bits in possible
+                                                                                                                                                                           positions based on the error patterns and the base graph (BG) to       Apart from designing LDPC codes, many improved decod-
+                                                                                                                                                                           lower the error ﬂoor. Simulation results show that the proposed     ing algorithms have been proposed to lower the error ﬂoor.
+                                                                                                                                                                           algorithm can effectively lower the error ﬂoor of NR LDPC while     An iterative decoding algorithm based on backtracking and
+                                                                                                                                                                           maintaining an acceptable complexity.                               a post-processing algorithm using message biasing scheme
+                                                                                                                                                                                                                                               are introduced in [8] and [9] which boost the reliabilities of
+                                                                                                                                                                              Index Terms—LDPC codes, error ﬂoor, quantized decoder,           messages from unsatisﬁed checks and weakens the reliabilities
+                                                                                                                                                                           min-sum algorithm                                                   of messages from the satisﬁed checks. Another effective error
+                                                                                                                                                                                                                                               ﬂoor lowering technique for QC-LDPC codes was proposed
+                                                                                                                                                                                                     I. INTRODUCTION                           in [10], where a post-processing is performed on speciﬁcally
+                                                                                                                                                                                                                                               attenuated soft information when the decoding fails.
+                                                                                                                                                                              Low-density parity-check (LDPC) codes, proposed by
+                                                                                                                                                                           Robert. G. Gallager in early 1960s’ [1] and later rediscovered         In this paper, we propose a two-stage quantized decoding
+                                                                                                                                                                           by D. J. C. Mackay [2], have been widely used in communi-           algorithm to lower the error ﬂoor for NR LDPC codes with
+                                                                                                                                                                           cation systems. Due to the sparsity of parity-check matrices,       base graph (BG) 2, which usually supports short-blocklength
+                                                                                                                                                                           belief propagation (BP) has been proposed to achieve capacity-      LDPC codes with relatively low code rates. In the ﬁrst
+                                                                                                                                                                           approaching performance for LDPC codes. The normalized              stage, a conventional quantized NMS decoding scheme is
+                                                                                                                                                                           min-sum (NMS) and offset min-sum (OMS), as reduced-                 used to guarantee the performance in waterfall region. If the
+                                                                                                                                                                           complexity approximate versions for the BP algorithm, are           decoder declares a failure, the cyclic-shifting CRC detection
+                                                                                                                                                                           hardware-friendly algorithms achieving ultra-high throughput.       (CSCD) and syndrome assistant CSCD (SA-CSCD) algorithm,
+                                                                                                                                                                           Due to their capacity-approaching performance and high-             designed to ﬂip the bits in speciﬁc positions based on the error
+                                                                                                                                                                           throughput implementation, quasi-cyclic (QC) LDPC codes             patterns, will be carried out as a post-processing in the second
+                                                                                                                                                                           [3], which have the architectures of block-parallel, have been      stage to lower the error ﬂoor. Here, the error patterns are
+                                                                                                                                                                           accepted by 3GPP as the channel coding scheme for the 5G            collected by Monte-Carlo simulations and analyzed according
+                                                                                                                                                                           new radio [4] (NR) uplink and downlink shared channels.             to their TS structures. Due to the consideration of complexity,
+                                                                                                                                                                                                                                               we set a criterion based on the number of unsatisﬁed parity-
+                                                                                                                                                                              However, the performance degradation of LDPC codes in            check equations which enables the implementation of the
+                                                                                                                                                                           the high SNR region, called error ﬂoor, limits the applications     second stage. The simulation results show that our approach
+                                                                                                                                                                           of LDPC codes in high-speed and ultra-reliability scenarios.        can signiﬁcantly lower the error ﬂoor by about one order with
+                                                                                                                                                                           Richardson used the notion of trapping sets (TSs) [5], deﬁned       a reasonable complexity.
+                                                                                                                                                                           as the relatively small set of variable nodes leading to the error
+                                                                                                                                                                           ﬂoor, to explain the phenomenon. The TS structures depend on                  II. NR LDPC CODES AND TRAPPING SETS
+                                                                                                                                                                           not only transmission channels but also decoding algorithms.
+                                                                                                                                                                           In practice, the quantizers used for the channel output and the        An LDPC code can be deﬁned by a sparse parity-check
+                                                                                                                                                                           message passing in the iterative decoders degrade error ﬂoor.       matrix (PCM) denoted by H which has N columns and M
+                                                                                                                                                                                                                                               rows corresponding to N coded bits and M parity-check
+                                                                                                                                                                              Several research efforts about the design of LDPC codes          constraints, respectively. In most practical applications, QC-
+                                                                                                                                                                           have been devoted to lower the error ﬂoor. In [6], QC               LDPC codes can be constructed by base matrices (BMs) or
+                                                                                                                                                                           protograph codes are constructed by the careful selection of        BGs, and are very efﬁcient for encoder/decoder hardware
+                                                                                                                                                                           edge permutation shifts for the vulnerable subgraphs of the
+                                                                                                                                                                           protograph whose inverse image can be short cycles with low
+
+                                                                                                                                                                                                                                                 978-1-6654-0785-4/21/$31.00 ©2021 IEEE
+
+                                                                                                                                                                           Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:55:41 UTC from IEEE Xplore. Restrictions apply.
+2                                                                               100
+                                                                                                                                      NR LDPC,NMS
+
+                                                                                                       NR LDPC,NMS,TS groups
+
+4                                                                               10−1                   WiMAX LDPC,NMS
+
+6                                                                               10−2
+
+7
+
+8
+
+                                                                           FER  10−3
+
+                                                                                10−4
+
+   6  16 17 18                                                                  10−5
+
+Fig. 1. The partial structure of BG2 for a rate-1/2 short LDPC code, nb =                     10−16.00 1.25 1.50 1.75 2.00 2.25 2.50 2.75 3.00
+22 (circle marked) and mb = 12 (square marked).                                                                                       Eb/N0(dB)
+
+implementations. Each non-empty entry in a BG is substituted               Fig. 2. FER performances of NMS decoder for (22, 12, 96) NR LDPC code
+by a square Z × Z cyclic permutation matrix (CPM) with a                   (black line) and (24, 12, 80) WiMAX LDPC code (red line). The blue line is
+speciﬁc shifting value, while each empty entry is replaced by              the error rate caused by the considering TS groups of NR LDPC code.
+a zero matrix (ZM).
+                                                                                                                   TABLE I
+   NR LDPC codes, which are QC-LDPC codes described by                     STATISTIC OF ERROR PATTERNS AND OFFSET PATTERNS FOR (22, 12, 96)
+BG1 and BG2 in NR standard, consist of a highest-rate part
+and an incremental redundancy part. For example, the numbers                                                  NR LDPC CODE
+of rows and columns of BG2 are mb = 42 and nb = 52,
+respectively, while those of highest-rate part in BG2 are only 4                      error pattern Ψ  offset pattern P  number
+and 14, where the number of columns for information bits is kb                              [3]               [0]           13
+= 6∼10. The numbers of coded bits, parity-check constraints                                 [6]               [0]           61
+and information bits of an NR LDPC code can be calculated                                   [8]               [0]           16
+by the parameters of BG and the lifting size Z, M = mb × Z,
+N = nb×Z and K = kb×Z. Fig. 1 shows the partial structure                     A TS [5] is deﬁned as a small set of variable nodes
+of BG2 for a rate-1/2 short LDPC code as an example, nb =
+22 and mb = 12, where dark blue sub-blocks and the light blue              associated with the error bits, which makes the decoder be
+ones are correspond to the non-empty CPMs in highest-rate
+part and incremental redundancy part, respectively. Here, we               “trapped” and can no longer correct these error bits. From the
+use circles and squares to represent variable nodes (columns)              perspective of BG, a typical (a, b) TS is a set of a variable
+and check nodes (rows) of BG2, where the number in circle or               nodes from a columns and b ≥ 0 odd-degree check nodes from
+square represents the index of column or row. In the following             b rows neighboring in the subgraph of BG. Speciﬁcally, the
+discussion, we focus on the NR LDPC codes given by BG2                     TSs with small size a give major contributions to error ﬂoors.
+denoted by (nb, mb, Z), which are suitable candidates for low-             For QC-LDPC codes, if an (a, b) TS is identiﬁed, other Z − 1
+rate and short blocklength transmission in uRLLC scenario.                 isomorphic TSs can be found by cyclically shifting the variable
+
+   Considering the (22, 12, 96) NR LDPC code as an example,                nodes in the TS. In later, a TS group is used to represent these
+we carry out simulations over additive white Gaussian noise                Z isomorphic TSs constructed by cyclic shifting.
+(AWGN) channel with quantized NMS decoding. The cyclic
+redundancy check (CRC) codes are used for error detection in                  Most of decoding errors we collected at high SNR can be
+NR and a decoding success is declared only when the decoded
+information bits satisfy the CRC constraint. The maximum                   classiﬁed into several major TS groups and the positions of
+number of iterations is set to 100 and the normalized factor is
+optimized to guarantee good waterfall performance. Moreover,               error information bits can be derived according to the indices
+the layered schedule is employed to speed up the convergence.
+In addition, a (24, 12, 80) LDPC code in WiMAX standard                    of unsatisﬁed parity-checks and the structures of TS groups.
+is selected for comparison. The simulation results in Fig. 2
+show that the NR LDPC code performs not well in high-                      To describe the relationship between TS groups and decoding
+SNR regions and an error ﬂoor is exhibited. At the Eb/N0 of                error ﬂoor, we deﬁne the error pattern Ψ = [Ψ0, Ψ1, ..., ΨV−1]
+3.4 dB, we obtain one hundred decoding errors selected from                of size V, which records the indices of the columns corre-
+1.82 × 108 decoding trials, where the FER is 5.47 × 10−7. The              sponding to error information bits in the BG, and the offset
+patterns of most decoding failures only consist of few error               pattern P = [P0, P1, ..., PV−1], where Pi is the relative error
+bits and can be regarded as dominant TSs.                                  positions in 0∼Z - 1 for the variable node Ψi. Further, we
+                                                                           deﬁne the check node error pattern Φ = [Φ0, Φ1, ..., ΦC−1] for
+                                                                           a TS group, where C is the size of Φ, recording the indices
+                                                                           of error check nodes in highest-rate part of BG, and the offset
+                                                                           pattern Q = [Q0, Q1, ..., QC−1] from check node perspective,
+                                                                           where Qi is the relative unsatisﬁed position in 0∼Z - 1 for the
+                                                                           check node Φi. We can calculate one set of possible positions
+                                                                           of error information bits R = [R0, R1, ..., RV−1] by
+
+                                                                                Rj = (Ψj − 1) × Z + Pj, j = 0, ..., V − 1                          (1)
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:55:41 UTC from IEEE Xplore. Restrictions apply.
+       2                                                           zero and variance σ2. The sequence cˆ = [cˆ0, cˆ0, ..., cˆN−1] and
+                                                                   bˆ = [ˆb0, ˆb0, ..., ˆbK−1] are the output of a quantized NMS
+4             8 18                                                 decoder of LDPC codes and the decoded information bits
+                                                                   including CRC bits, respectively. In our simulations, a 5-bit
+       6                                                           uniformly quantized layered NMS decoder is implemented.
+
+   6      7                                                           The ﬁrst stage of our scheme is just the conventional
+                                                                   NMS decoding. If the decoded information bits bˆ satisfy
+   16     17                                                       the CRC test, the iterative decoding will be early stopped
+                                                                   and a decoding success is declared. Otherwise, the second-
+Fig. 3. A (4, 2) TS group of (22, 12, 96) NR LDPC code             stage post-processing is employed, where the syndrome s is
+                                                                   calculated by s = HcˆT . Then we get the number of the
+A TS group consists of Z isomorphic TSs thus Ψ (or Φ)              unsatisﬁed check nodes as ||s||, where ||·|| is the norm of
+contains Z positions of error information bits (or check equa-     a vector. Since we only consider the decoding errors caused
+tions), where other Z − 1 positions can be obtained by cyclic      by the small TS groups that are the most harmful errors in
+shifting. In particular, if the offset pattern P corresponding to  the error ﬂoor region, the decoding errors with ||s|| > 10 are
+one TS group only has one entry, the value of this entry can       discarded.
+be set in range of 0∼Z − 1 with same mean and is set as 0
+in this paper.                                                        In the second stage, a simple post-processing scheme called
+                                                                   CSCD is applied. The error patterns Ψ s and offset patterns Ps
+   We can correct decoding errors according to the error pat-      have been collected by Monte-Carlo simulations. Total v TS
+terns and offset patterns. Ri Analyzing one hundred decoding       groups are considered to be corrected and {R0, ..., Rv−1} are
+errors of (22, 12, 96) NR LDPC code and counting the error         used to describe different sets of possible error information
+patterns and offset patterns as shown in Table I, we ﬁnd that      bits’ positions which belong to different error patterns. Each
+the error information bits mainly locate at the 3rd, 6th and 8th   set of possible positions Ri of size Vi is calculated by Eq.
+variable nodes in BG2. For example, Fig. 3 shows a (4, 2) TS       (1). We ﬂip the bits at these positions by
+group which is high related to the 6th variable node, where
+red circles (squares) represent the variable nodes (check nodes)       ˆb′Ri,j = 1 − ˆbRi,j , i = 0, ..., v − 1, j = 0, ..., Vi − 1 (2)
+contain error information bits (unsatisﬁed parity-checks) and
+the blue circles (squares) represent no error bits (all satisﬁed   where bˆ is the output sequence of decoded information bits
+parity-checks). According to our deﬁnition, the TS group           from the ﬁrst stage. Because each error pattern represents a
+is related to Ψ = [6] and P = [0] and one set of the               TS group, we can get other sets of possible error information
+possible positions of error information bits can be calculated     bits’ positions R′ by cyclic shifting the values of R for total
+by R = [R0] = [(Ψ0−1)×Z+P0] = [(6−1)×96+0] = [480],                Z times and
+while other sets of possible error positions can be obtained by
+cyclic shifting of R in the range of (480, 575].                   Ri′,j,z = (Ψi,j − 1) × Z + (Pi,j + z) mod Z  (3)
+
+   From Fig. 1, we ﬁnd that three information variable nodes       where z = 1, .., Z − 1, i = 0, .., v − 1 and j = 0, ..., Vi − 1.
+shown in Table I only have two ’1’ entries in the highest-         These estimated information sequences are tested by CRC and
+rate part, while other information variable nodes are at least     the second stage will stop early if one sequence satisﬁes CRC
+with degree three. We also show the FER performance which          test. The CSCD algorithm is described in detail by Algorithm
+only considers the decoding errors caused by these three TS        1. Although Algorithm 1 has triple loops, the number of the
+groups in Fig. 2. It can be seen that these three TS groups        error patterns v is limited and the speciﬁc criterion is used to
+almost determine the error ﬂoor.                                   guarantee a controllable complexity.
+
+   The error patterns in Table I can be identiﬁed by the parity-      Further, most decoding errors collected in the error ﬂoor
+check constraints. Moreover, some error patterns satisfying all    region do not satisfy the parity-check of the LDPC code,
+parity-check equations can be detected through the CRC test.       thus we can directly correct some decoding errors by their
+For example, we ﬁnd that the error pattern [1, 2, 3, 6, 7, 8]      syndromes. When the decoded sequence only has one error bit
+is a valid codeword in the simulation of the (17, 7, 224) NR       in the related variable node of TS, the syndrome is signiﬁcantly
+LDPC code.                                                         inﬂuenced by the error bit. Combining the syndrome and
+                                                                   BG structure, we can accurately locate to the position of the
+   III. AN EFFICIENT POST PROCESSING ON TS GROUP                   error bit but need more storage resource to record the error
+                                                                   patterns Φs and offset patterns Qs of check nodes. Obviously
+   Consider the binary phase shift keying (BPSK) transmission      the numbers of check node error patterns and offset patterns
+over an AWGN channel. A codeword c = [c0, c1, ...cN−1] is          are both equal to v. Simulation results show that most of
+mapped to x = [x0, x1, ..., xN−1] by xi = 1 − 2ci. y =             decoded sequences have one error bit in highest-rate part at
+[y0, y1, ..., yN−1] is the received sequence, where yi = xi + ni   high SNR region. More error bits cause the larger number of
+and ni is an independent Gaussian random variable with mean        unsatisﬁed parity-checks, so our proposed criterion can ignore
+                                                                   this complex scenario.
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:55:41 UTC from IEEE Xplore. Restrictions apply.
+Algorithm 1 cyclic-shifting CRC detection (CSCD).                              Algorithm 2 syndrome assistant CSCD (SA-CSCD).
+
+Input :                                                                        Input :
+    bˆ = [ˆb0, ˆb1, ..., ˆbK−1]                                                    bˆ = [ˆb0, ˆb1, ..., ˆbK−1]
+
+    Ψ i = [Ψi,0, ..., Ψi,Vi−1], i = 0, ..., v − 1                                  Ψ i = [Ψi,0], i = 0, ..., v − 1
+    Pi = [Pi,0, ..., Pi,Vi−1], i = 0, ..., v − 1
+                                                                                   Pi = [Pi,0], i = 0, ..., v − 1
+Output :
+    bˆ′ = [ˆb′0, ˆb′1, ..., ˆbK′ −1]                                               Φi = [Φi,0, ..., Φi,Ci−1], i = 0, ..., v − 1
+                                                                                   Qi = [Qi,0, ..., Qi,Ci−1], i = 0, ..., v − 1
+1: for i = 0, ..., v − 1 do                                                        S = [S0, ..., SC−1]
+
+2: for z = 0, ..., Z − 1 do                                                    Output :
+                                                                                   bˆ′ = [ˆb′0, ˆb′1, ..., ˆbK′ −1]
+3:      for j = 0, ..., Vi − 1 do
+                                                                               1: Φˆk = Sk | Z + 1, k = 0, ..., C − 1
+4:              Ri,j,z = (Ψi,j − 1) × Z + (Pi,j + z) mod Z                     2: Qˆk = Sk mod Z + 1, k = 0, ..., C − 1
+
+5:              ˆb′         =  1 − ˆbRi,j,z
+
+                  Ri,j,z
+
+6:      end for                                                                3: for i = 0, ..., v − 1 do
+        if bˆ′ satisﬁes CRC test then
+7:                                                                             4: if Φˆ equals Φi then
+
+8:              go to line 12                                                  5:  R0 = (Ψi,0 − 1) × Z + (Pi,0 + Qˆ0 − Qi,0 + Z) mod Z
+
+9:      end if                                                                 6:  ˆbR′ 0 = 1 − ˆbR0
+
+10: end for                                                                    7:  go to line 10
+
+11: end for                                                                    8: end if
+12: return bˆ′
+                                                                                9: end for
+                                                                                                                ′
+
+                                                                               10: return ˆb
+
+                                        TABLE II                                                                      TABLE III
+ERROR PATTERNS AND OFFSET PATTERNS OF CSCD FOR NR LDPC WITH                    ERROR PATTERNS AND OFFSET PATTERNS OF SA-CSCD FOR NR LDPC
+
+                           K = 3840, RATE = 1/4,1/2,2/3                                              WITH K = 3840, RATE = 1/4,1/2,2/3
+
+                               variable nodes
+
+        error pattern       offset pattern error pattern  offset pattern           variable nodes                               check nodes
+            [3,8]                                         [103,0,8,95]
+            [3,8]              [0,8]         [3,6,7,8]    [34,0,323,46]            error pattern offset pattern           error pattern offset pattern
+            [3,8]
+            [3,6]              [57,0]        [3,6,7,8]          [0]                [3]                             [193]  [1,4]  [27,18]
+            [3,6]                                               [0]
+            [3,6]              [0,12]        [3]                [0]                [6]                             [170]  [2,4]  [78,98]
+           [3,6,7]                                            [0,46]
+           [3,6,7]             [103,0]       [6]              [0,95]               [8]                             [15]   [2,4]  [212,281]
+                                                           [0,232,327]
+                               [34,0]        [8]
+
+                               [74,0]        [6,8]
+
+                               [0,350,289]   [6,8]
+
+                               [103,0,8]     [3,6,8]                                                               IV. RESULTS
+
+   After the ﬁrst stage, the syndrome can be calculated by                        In this section, we give some simulations on our proposed
+HcˆT , where cˆ represents the decoded sequence of the ﬁrst                    method including CSCD and SA-CSCD for NR LDPC codes.
+                                                                               We present simulation results of different NR LDPC codes
+stage decoding. Then non-zero elements of syndrome which                       which have different lengths of information bits (including
+                                                                               3840, 1440 and 960) and different rates (including rate-2/3,
+belong to highest-rate part are deﬁned as error check positions                rate-1/2 and rate-1/4). We discuss the simulation results of
+denoted by S = {i|si > 0}. Calculate indices of rows Φˆ =                      BP decoding, quantized NMS decoding and our proposed
+[Φˆ0, Φˆ1, ..., ΦˆC] and offset Qˆ = [Qˆ0, Qˆ1, ..., QˆC] of S by              two-stage quantized decoding. The BP decoding, quantized
+                                                                               NMS decoding and the ﬁrst stage of our algorithm are carried
+                Φˆk = Sk | Z + 1, k = 0, ..., C − 1                       (4)  out by layered scheduling, where the maximum number of
+                                                                               iterations is set to 100. The 5-bit uniform quantization scheme
+                Qˆk = Sk mod Z + 1, k = 0, ..., C − 1                     (5)  is implemented, and the saturation level of the quantization
+                                                                               scheme is optimized by Monte-Carlo simulations.
+If Φˆ is equal to one of the collected syndrome patterns Φs,
+    ′                                                                             Fig. 4 shows the simulation results of NR LDPC with
+                                                                               K = 3840. For rate-1/4, rate-1/2 and rate-1/3, the normalized
+Φ , we can directly get the position of the error bit according                factors are set as 0.875, 0.875 and 0.9375, respectively. The
+                     ′                                                         error patterns and offset patterns are provided in Table II
+to  Qˆ  and             by                                                     and Table III. This table lists all TS groups, but we can
+                Q                                                              choose part of these to simulate according to code rates.
+                                                                               Simulation results show that the gap between BP decoding
+    R0 = (Ψ0′ − 1) × Z + (P0′ + Qˆ0 − Q′0 + Z) mod Z (6)                       and quantized NMS decoding decreases with the increasing of
+                                                                               rate and the gap is about 0.1∼0.4dB at the waterfall region.
+             ′              ′                             ′                    But the performances of error ﬂoor don’t have signiﬁcant
+where Ψ and P are corresponding to Φ . We call the
+
+method as SA-CSCD which is described in Algorithm 2.
+
+SA-CSCD can be thought as the supplement of CSCD and
+
+signiﬁcantly reduce the complexity of CSCD by using small
+
+storage resource.
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:55:41 UTC from IEEE Xplore. Restrictions apply.
+     100                                                                      waterfall performance, lower error ﬂoor about 1/2∼1/10 and
+                                                                              the performance substantially improves with the increase of
+     10−1                                                                     code rate.
+
+     10−2                                                                        Fig. 5 compares the FER of three different decoding
+                                                                              schemes for NR LDPC codes with K = 1440. The error
+     10−3                                                                     ﬂoors of the these codes all occur at FER of 10−3 with
+                                                                              quantized NMS decoding. And our proposed post-processing
+FER                                                                           can efﬁciently lower the error ﬂoor to FER of 10−4. At low
+                                                                              FER, two-stage decoder can achieve about 0.3 dB gain over
+     10−4                                                                     the quantized NMS algorithm. Fig. 6 plots results of different
+                                                                              decoders for NR LDPC with K = 960. Similar to the results
+     10−5                                                                     of longer NR LDPC codes, our method can noticeably lower
+                                                                              the error ﬂoor by an order of magnitude.
+     10−6    (17,7,384),rate-2/3
+             (22,12,384),rate-1/2
+
+             (42,32,384),rate-1/4
+
+     10−−71.0 −0.5 0.0 0.5 1.0 1.5 2.0 2.5 3.0
+                                      Eb/N0(dB)
+
+Fig. 4. FER performance of BP decoding (red line), quantized NMS decoding                                V. CONCLUSION
+(black line) and quantized NMS decoding with our post-processing (blue line)
+for the (nb, mb, 384) NR LDPC with information length K = 3840.                  In this paper, a TS-based post-processing for quantized
+                                                                              iterative decoder is proposed to lower the error ﬂoor of NR
+     100                                                                      LDPC codes. The TS information for quantized decoding are
+                                                                              collected by Monte-Carlo simulations and analyzed according
+     10−1                                                                     to the BG structure. Our proposed post-processing will be
+                                                                              performed when the ﬁrst-stage decoding fails. Two simple
+     10−2                                                                     methods, CSCD and SA-CSCD, can be used in the post-
+                                                                              processing. The provided simulation results show that our
+     10−3                                                                     proposed scheme can efﬁciently lower the error ﬂoor of
+                                                                              quantized decoders for NR LDPC codes.
+FER
+                                                                                                   ACKNOWLEDGEMENT
+     10−4
+                                                                                 This work was supported by the National Natural Science
+     10−5                                                                     Foundation of China under Grant 61771133 and the Jiangsu
+                                                                              Province Basic Research Project under Grant BK20192002.
+     10−6    (17,7,144),rate-2/3
+
+             (22,12,144),rate-1/2
+
+             (42,32,144),rate-1/4
+     10−−71.0 −0.5 0.0 0.5 1.0 1.5 2.0 2.5 3.0 3.5
+                                      Eb/N0(dB)
+
+Fig. 5. FER performance of BP decoding (red line), quantized NMS decoding                                  REFERENCES
+(black line) and quantized NMS decoding with our post-processing (blue line)
+for the (nb, mb, 144) NR LDPC with information length K = 1440.                [1] R. G. Gallager, “Low density parity-check codes,” IRE Trans. Inf.
+                                                                                    Theory, vol. IT-8, no. 1, pp. 21–28, Jan. 1962.
+     100                                            (17,7,96),rate-2/3
+                                                    (22,12,96),rate-1/2        [2] D. J. C. MacKay, “Good error-correcting codes based on very sparse
+     10−1                                           (42,32,96),rate-1/4             matrices,” IEEE Trans. Inf. Theory, vol. 45, no. 2, pp. 399–431, Mar.
+                                                                                    1999.
+     10−2
+                                                                               [3] Y. Kou, S. Lin and M. P. C. Fossorier, “Low-density parity-check codes
+     10−3                                                                           based on ﬁnite geometries: a rediscovery and new results,” IEEE Trans.
+                                                                                    Inf. Theory, vol. 47, no. 7, pp. 2711–2736, Nov. 2001.
+FER
+                                                                               [4] 3GPP, “3rd generation partnership pProject; Technical speciﬁcation
+     10−4                                                                           group radio access network; NR; Multiplexing and channel coding
+                                                                                    (Release 15),” 3GPP TS 38.212 V15.5.0, Mar. 2019.
+     10−5
+                                                                               [5] T. Richardson, “Error ﬂoors of LDPC codes,” in Proc. 2003 Annu.
+     10−6                                                                           Allerton Conf., pp. 1426—1435.
+
+     10−7−1  0                     1  Eb/N0(dB)  2  3                    4     [6] R. Asvadi, A. H. Banihashemi and M. Ahmadian-Attari, “Design of
+                                                                                    ﬁnite-length irregular protograph codes with low error ﬂoors over
+Fig. 6. FER performance of BP decoding (red line), quantized NMS decoding           the binary-input AWGN channel using cyclic liftings,” IEEE Trans.
+(black line) and quantized NMS decoding with our post-processing (blue line)        Commun., vol. 60, no. 4, pp. 902–907, April 2012.
+for the (nb, mb, 96) NR LDPC with information length K = 960.
+                                                                               [7] B. Karimi and A. H. Banihashemi, “Construction of irregular
+relation with rate, where the rate-1/2 NR LDPC code has                             protograph-based QC-LDPC codes with low error ﬂoor,” IEEE Trans.
+                                                                                    Commun., vol. 69, no. 1, pp. 3–18, Jan. 2021.
+the worst error ﬂoor. The error ﬂoor of quantized NMS
+decoding is about FER of 10−3∼10−4. Our proposed methods,                      [8] J. Kang, Q. Huang, S. Lin and K. Abdel-Ghaffar, “An iterative decoding
+which are post-processing methods and don’t inﬂuence the                            algorithm with backtracking to lower the error-ﬂoors of LDPC codes,”
+                                                                                    IEEE Trans. Commun., vol. 59, no. 1, pp. 64–73, January 2011.
+
+                                                                               [9] Z. Zhang, L. Dolecek, B. Nikolic, V. Anantharam and M. J. Wainwright,
+                                                                                    “Lowering LDPC error ﬂoors by postprocessing,” in proc. 2008 IEEE
+                                                                                    Globecom Conf., pp. 1–6.
+
+                                                                              [10] H. Lee, P. Chou and Y. Ueng, “An effective low-complexity error-
+                                                                                    ﬂoor lowering technique for high-rate QC-LDPC codes,” IEEE Commun.
+                                                                                    Lett., vol. 22, no. 10, pp. 1988–1991, Oct. 2018.
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:55:41 UTC from IEEE Xplore. Restrictions apply.
+

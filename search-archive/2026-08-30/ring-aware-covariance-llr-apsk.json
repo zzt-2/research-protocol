@@ -1,0 +1,34 @@
+{
+  "query": "ring aware covariance LLR APSK",
+  "timestamp": "2026-08-30T02:33:26.575067+08:00",
+  "sources": [
+    "s2",
+    "openalex",
+    "serpapi",
+    "exa"
+  ],
+  "total": 1,
+  "results": [
+    {
+      "title": "Orbital Detection",
+      "authors": [
+        "Kuranage Roche Rayan Ranasinghe",
+        "Giuseppe Thadeu Freitas de Abreu"
+      ],
+      "venue": "arXiv (Cornell University)",
+      "year": 2026,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "We introduce orbital detection (OD), a framework for designing asymptotically optimal, low-complexity message passing (MP) receivers for digitally modulated multiple-input multiple-output (MIMO) systems, based on relaxing the discrete symbol prior into a mixed discrete-continuous density. The resulting orbital prior factors each symbol's distribution into a discrete radial component, supported on only the \\(L << M\\) amplitude rings of an arbitrary constellation \\(\\mathcal{M}\\) of cardinality \\(M = |\\mathcal{M}|\\), and a continuous, maximum-entropy phase density on each ring. This compresses the propagated posterior mean and variance losslessly into \\(3L\\) real scalars, and collapses the optimal \\(\\mathcal{O}(M)\\)-complexity denoiser into a closed-form hierarchy whose per-symbol cost falls to \\(\\mathcal{O}(L)\\) and ultimately \\(\\mathcal{O}(1)\\): the orbital Bessel denoiser (OBD), its Bessel-free variant the orbital Gaussian denoiser (OGD), and the orbital phase denoiser (OPD), proved irreducible on the ring manifold. A Jacobi-Anger ladder recovers the exact detector with geometrically vanishing error. Five information-theoretic results follow. First, the OBD, OGD, and OPD share an identical leading-order state evolution (SE) fixed point. Second, the sole price is a change in the high-SNR error-decay law, from exponential to linear, which never hardens into an error floor. Third, for any underloaded system the induced rate loss vanishes exponentially in SNR, so every level is asymptotically capacity-achieving in the constellation-constrained sense, attaining \\(\\log_2 M\\). Fourth, OD attains a minimum mean square error (MMSE) dimension \\(d=1/2\\), halfway between the \\(d=0\\) Bayes-optimal denoiser (BOD) and the \\(d=1\\) linear receiver. Fifth, a non-asymptotic optimal-transport bound in Wasserstein distance links constellation ring geometry directly to the achievable rate.",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "https://arxiv.org/pdf/2608.09362",
+      "source_api": "openalex",
+      "relevance_score": 0.2,
+      "_score": 0.30000000000000004,
+      "id": "L001",
+      "download": true,
+      "publication_status": "preprint"
+    }
+  ]
+}

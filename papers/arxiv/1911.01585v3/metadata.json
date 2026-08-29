@@ -1,0 +1,16 @@
+{
+  "storage_version": 2,
+  "id": "L001",
+  "title": "Post-FEC BER Benchmarking for Bit-Interleaved Coded Modulation with Probabilistic Shaping",
+  "doi": "10.1109/JLT.2020.2990620",
+  "arxiv_id": "1911.01585v3",
+  "download_status": "success",
+  "download_method": "arxiv_html",
+  "content_type": "html",
+  "content_quality": "good",
+  "content_file": "content.md",
+  "downloaded_at": "2026-08-30T06:25:38.553538+08:00",
+  "real_title": "[I ][Introduction]",
+  "title_check": "unverifiable",
+  "title_overlap": null
+}

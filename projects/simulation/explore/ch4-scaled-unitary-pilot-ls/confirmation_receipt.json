@@ -1,0 +1,59 @@
+{
+  "schema_version": "t071.scaled-unitary-confirmation-receipt.v1",
+  "authority": "T071/D050/V025",
+  "base_commit": "3203d0b01a69c113c84a0f159ac2c89b0d1b8d12",
+  "control_epoch": 12,
+  "mission_checkpoint": "CP012",
+  "checks": {
+    "raw_only_reduction": "PASS",
+    "frozen_development_hashes": "PASS",
+    "manifest_hash": "PASS",
+    "confirmation_only_split": "PASS",
+    "seed_arithmetic_and_nonoverlap": "PASS",
+    "paired_realization_hashes": "PASS",
+    "paired_observation_hashes": "PASS",
+    "fixed_arm_parameters": "PASS",
+    "finiteness": "PASS",
+    "truth_firewall": "PASS (deployable API has no truth input)"
+  },
+  "population": {
+    "cells": 4,
+    "windows_per_cell": 64,
+    "confirmation_windows": 256
+  },
+  "bootstrap": {
+    "rng": "PCG64",
+    "seed": 2026083004,
+    "resamples": 2000,
+    "confidence": 0.95,
+    "stream_rule": "reset seed for each named paired comparison"
+  },
+  "decision": {
+    "terminal": "C4_CONFIRMED_STRUCTURED_SIGNAL",
+    "claim_ceiling": "common-scale estimation evidence only; not a new polarization rotation",
+    "primary_comparator": "B2 tau=1.0",
+    "next_step": "independent raw recomputation in another context"
+  },
+  "hashes": {
+    "manifest_sha256": "18c93796ff3e7e0ebf0bf05ee71c94bfd4027218b31a60d0d917d26581aa8a65",
+    "raw_sha256": "55c31e36b7d11e5d0b9e8225805596e0f0f7b127cde26874c7b0b217b0e23101",
+    "aggregate_sha256": "78e6795b17b1cfcbe5ee297c001e6e92bd81a6576c54ed317aeda526acbd17c9",
+    "runner_sha256": "474ee92a760edff3b935e8f8e838b96f03d1f420616876953c600a7ee2b9c554",
+    "reducer_sha256": "55920463ef66ba9e5f74f10bb71d0e91e1761b2627580af5b47bbc7d2f37739f",
+    "reducer_cli_sha256": "997fe86a324b3df64c78495730d8a530d85da22ffc0ad9f75fa3a3333f069002",
+    "tests_sha256": "6f8f38c49a11ce13753cf668753b0b3e6a6429fe0761776691a4cb4cc31e90f7",
+    "frozen_development_hashes": {
+      "correctness_receipt.json": "82ef5637582b96621ce6e27c11cce001bb4817b3b90df809f2eee61d110968d2",
+      "development_aggregate.json": "9c236830edc29c96edbe6698a048c910c4d6775486bc51ec2d82b460a2cc2ccb",
+      "development_manifest.json": "ad8361f7624a6fed66b8954bcba92efcbdd4dfff1f844746bd2d70feb33ea2b2",
+      "development_raw.json": "cee1a881c26e20d90f1412cb886d8b67300dcf1e22d7d98bc6c59c6189f8bf0b",
+      "development_receipt.json": "047a37277bc9a02ed1f0d73a2f95ba8e0e87f497d0010d9b032f048dd0f4432c"
+    }
+  },
+  "_meta": {
+    "script": "t071_scaled_unitary_confirmation_receipt",
+    "common_md5": "49acdfa4",
+    "git_commit": "3203d0b",
+    "timestamp": "2026-08-30T07:03:06"
+  }
+}

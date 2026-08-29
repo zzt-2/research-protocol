@@ -1,0 +1,208 @@
+{
+  "schema_version": "t077.c5-0-single-cell.calibration.receipt.v1",
+  "authority": "T077/D056/V031/CP018",
+  "manifest_hash": "14ff14de3d0094f135c3a07d3fb395455e81035f6b6d1b014704177587ed3782",
+  "codec": "TargetApskCodec",
+  "live_backend": true,
+  "completed_frames": 64,
+  "seeds": [
+    3000,
+    3001,
+    3002,
+    3003,
+    3004,
+    3005,
+    3006,
+    3007,
+    3008,
+    3009,
+    3010,
+    3011,
+    3012,
+    3013,
+    3014,
+    3015,
+    3016,
+    3017,
+    3018,
+    3019,
+    3020,
+    3021,
+    3022,
+    3023,
+    3024,
+    3025,
+    3026,
+    3027,
+    3028,
+    3029,
+    3030,
+    3031,
+    3032,
+    3033,
+    3034,
+    3035,
+    3036,
+    3037,
+    3038,
+    3039,
+    3040,
+    3041,
+    3042,
+    3043,
+    3044,
+    3045,
+    3046,
+    3047,
+    3048,
+    3049,
+    3050,
+    3051,
+    3052,
+    3053,
+    3054,
+    3055,
+    3056,
+    3057,
+    3058,
+    3059,
+    3060,
+    3061,
+    3062,
+    3063
+  ],
+  "aggregate": [
+    {
+      "scalar": 0.0625,
+      "bit_errors": 4909,
+      "fer": 18,
+      "ber_rate": 0.0749053955078125,
+      "fer_rate": 0.28125
+    },
+    {
+      "scalar": 0.08838834764831845,
+      "bit_errors": 4909,
+      "fer": 18,
+      "ber_rate": 0.0749053955078125,
+      "fer_rate": 0.28125
+    },
+    {
+      "scalar": 0.125,
+      "bit_errors": 4909,
+      "fer": 18,
+      "ber_rate": 0.0749053955078125,
+      "fer_rate": 0.28125
+    },
+    {
+      "scalar": 0.1767766952966369,
+      "bit_errors": 4909,
+      "fer": 18,
+      "ber_rate": 0.0749053955078125,
+      "fer_rate": 0.28125
+    },
+    {
+      "scalar": 0.25,
+      "bit_errors": 4909,
+      "fer": 18,
+      "ber_rate": 0.0749053955078125,
+      "fer_rate": 0.28125
+    },
+    {
+      "scalar": 0.3535533905932738,
+      "bit_errors": 4909,
+      "fer": 18,
+      "ber_rate": 0.0749053955078125,
+      "fer_rate": 0.28125
+    },
+    {
+      "scalar": 0.5,
+      "bit_errors": 4909,
+      "fer": 18,
+      "ber_rate": 0.0749053955078125,
+      "fer_rate": 0.28125
+    },
+    {
+      "scalar": 0.7071067811865476,
+      "bit_errors": 4925,
+      "fer": 18,
+      "ber_rate": 0.0751495361328125,
+      "fer_rate": 0.28125
+    },
+    {
+      "scalar": 1.0,
+      "bit_errors": 4893,
+      "fer": 18,
+      "ber_rate": 0.0746612548828125,
+      "fer_rate": 0.28125
+    },
+    {
+      "scalar": 1.4142135623730951,
+      "bit_errors": 4910,
+      "fer": 19,
+      "ber_rate": 0.074920654296875,
+      "fer_rate": 0.296875
+    },
+    {
+      "scalar": 2.0,
+      "bit_errors": 4943,
+      "fer": 20,
+      "ber_rate": 0.0754241943359375,
+      "fer_rate": 0.3125
+    },
+    {
+      "scalar": 2.8284271247461903,
+      "bit_errors": 5141,
+      "fer": 20,
+      "ber_rate": 0.0784454345703125,
+      "fer_rate": 0.3125
+    },
+    {
+      "scalar": 4.0,
+      "bit_errors": 5194,
+      "fer": 23,
+      "ber_rate": 0.079254150390625,
+      "fer_rate": 0.359375
+    },
+    {
+      "scalar": 5.656854249492381,
+      "bit_errors": 5257,
+      "fer": 25,
+      "ber_rate": 0.0802154541015625,
+      "fer_rate": 0.390625
+    },
+    {
+      "scalar": 8.0,
+      "bit_errors": 5357,
+      "fer": 28,
+      "ber_rate": 0.0817413330078125,
+      "fer_rate": 0.4375
+    }
+  ],
+  "b1_frozen_scalar": 1.0,
+  "selected": {
+    "scalar": 1.0,
+    "bit_errors": 4893,
+    "fer": 18,
+    "ber_rate": 0.0746612548828125,
+    "fer_rate": 0.28125,
+    "tie_break": [
+      "fer",
+      "ber",
+      "abs_log_scalar",
+      "scalar"
+    ]
+  },
+  "tie_break": [
+    "fer",
+    "ber",
+    "abs_log_scalar",
+    "scalar"
+  ],
+  "scientific_use": "calibration_only",
+  "_meta": {
+    "script": "t077:calibration-receipt",
+    "common_md5": "49acdfa4",
+    "git_commit": "cde31b9",
+    "timestamp": "2026-08-30T09:50:07"
+  }
+}

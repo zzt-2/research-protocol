@@ -1,0 +1,108 @@
+{
+  "query": "pilot initialized reliability gated APSK equalization",
+  "timestamp": "2026-08-30T02:51:22.102834+08:00",
+  "sources": [
+    "s2",
+    "openalex",
+    "arxiv"
+  ],
+  "total": 4,
+  "results": [
+    {
+      "title": "Sixty Years of Coherent Versus Non-Coherent Tradeoffs and the Road From 5G to Wireless Futures",
+      "authors": [
+        "Chao Xu",
+        "Naoki Ishikawa",
+        "Rakshith Rajashekar",
+        "Shinya Sugiura",
+        "Robert G. Maunder",
+        "Zhaocheng Wang",
+        "Lie‐Liang Yang",
+        "Lajos Hanzo"
+      ],
+      "venue": "IEEE Access",
+      "year": 2019,
+      "doi": "10.1109/access.2019.2957706",
+      "arxiv_id": null,
+      "abstract": "Sixty years of coherent versus non-coherent tradeoff as well as the twenty years of coherent versus non-coherent tradeoff in Multiple-Input Multiple-Output (MIMO) systems are surveyed. Furthermore, the advantages of adaptivity are discussed. More explicitly, in order to support the diverse communication requirements of different applications in a unified platform, the 5G New Radio (NR) offers unprecendented adaptivity, abeit at the cost of a substantial amount of signalling overhead that consumes both power and the valuable spectral resources. Striking a beneficial coherent versus non-coherent tradeoff is capable of reducing the pilot overheads of channel estimation, whilst relying on low-complexity detectors, especially in high-mobility scenarios. Furthermore, since energy-efficiency is of salient importance both in the operational and future networks, following the powerful Index Modulation (IM) pholosophy, we conceive a holistic adaptive pholosophy striking the most appropriate coherent/non-coherent, single-/multiple-antenna and diversity/multiplexing tradeoffs, where the number of RF chains, the Peak-to-Average Power Ratio (PAPR) of signal transmission and the maximum amount of interference tolerated by signal detection are all taken into account. We demonstrate that this intelligent tripple-fold adaptivity offers significant benefits in next-generation applications of mmWave and Terahertz solutions, in space-air-ground integrated networks, in full-duplex techniques and in other sophisticated channel coding assisted system designs, where powerful machine learning algorithms are expected to make autonomous decisions concerning the best mode of operation with minimal human intervention.",
+      "citation_count": 92,
+      "is_open_access": true,
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/6287639/8600701/08922634.pdf",
+      "source_api": "openalex",
+      "relevance_score": 0.167,
+      "_score": 0.3235,
+      "id": "L001",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Sparse Code Multiple Access: Potentials and Challenges",
+      "authors": [
+        "Manel Rebhi",
+        "Kaïs Hassan",
+        "Kosai Raoof",
+        "Pascal Chargé"
+      ],
+      "venue": "IEEE Open Journal of the Communications Society",
+      "year": 2021,
+      "doi": "10.1109/ojcoms.2021.3081166",
+      "arxiv_id": null,
+      "abstract": "The massive connectivity is among other unprecedented requirements which are expected to be satisfied in order to follow the perpetual increase of connected devices in the era of Internet of Things. In contrast to the family of conventional orthogonal multiple access schemes, the key distinguishing feature of non-orthogonal multiple access (NOMA) is its capacity to support the massive connectivity. Sparse code multiple access (SCMA) is one of the powerful schemes of code-domain NOMA (CD-NOMA) and is among the promising candidates of multiple access techniques to be employed in future generations of wireless communication systems thanks to the sparsity pattern of its codebooks. This technique has been actively investigated in recent years. In this paper, we provide a comprehensive survey of the state-of-the-art of SCMA. First, we will pinpoint SCMA place in the NOMA landscape including power-domain NOMA and CD-NOMA with the aim of justifying why SCMA is prominent. Then, its system architecture is highlighted and its basic principles are presented, afterwards a review of exiting codebook designs and available SCMA detectors is provided, before showing how resources are expected to be assigned, and how SCMA can be combined with other existing and emerging technologies. Finally, we present a range of future research trends and challenging open issues that should be addressed to optimize SCMA performance.",
+      "citation_count": 55,
+      "is_open_access": true,
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/8782661/9309127/09432947.pdf",
+      "source_api": "openalex",
+      "relevance_score": 0.167,
+      "_score": 0.2911086956521739,
+      "id": "L002",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "AI Empowered Communication and Radar Modulation Recognition: A Survey",
+      "authors": [
+        "Wei Huang",
+        "Pengfei Zhang",
+        "Huai Qin",
+        "Jixuan Zhou",
+        "Hao Zhang",
+        "Kaitao Meng",
+        "Christos Masouros"
+      ],
+      "venue": "arXiv (Cornell University)",
+      "year": 2026,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "Automatic modulation recognition (AMR) is of vital importance for ensuring communication and radar reliability, efficient spectrum utilization and resistance to electronic interference. The development of artificial intelligence (AI) technology is reshaping the technological paradigm of AMR, promoting its transition from traditional modes relying on manual features to data-driven intelligent recognition. This change is not only reflected in the significant improvement of recognition accuracy, but also injects strong momentum into the intelligent evolution of both communication and radar systems through algorithm innovation, architecture optimization, and scenario expansion. In order to clarify the current development status and bottlenecks of AMR, and to find breakthrough directions, we make a comprehensive survey of recent AI-based technologies for AMR in this paper, including model-based machine learning (ML) methods and data-driven deep learning (DL) methods. We first investigate the modulation types used in current communication and radar systems. Next, we summarize the typically used features in the field of AMR, and discuss their inherent advantages and disadvantages. Then, we introduce the basic AI models for AMR and conduct a hierarchical investigation of AMR methods for communication and radar. Finally, based on existing research works, we highlight open issues and propose future research directions for AMR.",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "https://arxiv.org/pdf/2607.23014",
+      "source_api": "openalex",
+      "relevance_score": 0.167,
+      "_score": 0.28350000000000003,
+      "id": "L003",
+      "download": true,
+      "publication_status": "preprint"
+    },
+    {
+      "title": "Spatial modulation schemes and modem architectures for millimeter wave radio systems",
+      "authors": [
+        "Ahmed Raafat"
+      ],
+      "venue": "LA Referencia (Red Federada de Repositorios Institucionales de Publicaciones Científicas)",
+      "year": 2020,
+      "doi": "10.5821/dissertation-2117-328432",
+      "arxiv_id": null,
+      "abstract": "The rapid growth of wireless industry opens the door to several use cases such as internet of things and device-to-device communications, which require boosting the reliability and the spectral efficiency of the wireless access network, while reducing the energy consumption at the terminals. The vast spectrum available in millimeter-wave (mmWave) frequency band is one of the most promising candidates to achieve high-speed communications. However, the propagation of the radio signals at high carrier frequencies suffers from severe path-loss which reduces the coverage area. Fortunately, the small wavelengths of the mmWave signals allow packing a large number of antennas not only at the base station (BS) but also at the user terminal (UT). These massive antenna arrays can be exploited to attain high beamforming and combining gains and overcome the path-loss associated with the mmWave propagation. In conventional (fully digital) multiple-input-multiple-output (MIMO) transceivers, each antenna is connected to a specific radio-frequency (RF) chain and high resolution analog-to-digital-converter. Unfortunately, these devices are expensive and power hungry especially at mmWave frequency band and when operating in large bandwidths. Having this in mind, several MIMO transceiver architectures have been proposed with the purpose of reducing the hardware cost and the energy consumption. Fully connected hybrid analog and digital precoding schemes were proposed in with the aim of replacing some of the conventional RF chains by energy efficient analog devices. These fully connected mapping requires many analog devices that leads to non-negligible energy consumption. Partially connected hybrid architectures have been proposed to improve the energy efficiency of the fully connected transceivers by reducing the number of analog devices. Simplifying the transceiver’s architecture to reduce the power consumption results in a degradation of the attained spectral efficiency. In this PhD dissertation, we propose novel modulation schemes and massive MIMO transceiver design to combat the challenges at the mmWave cellular systems. The structure of the doctoral manuscript can be expressed as In Chapter 1, we introduce the transceiver design challenges at mmWave cellular communications. Then, we illustrate several state of the art architectures and highlight their limitations. After that, we propose scheme that attains high-energy efficiency and spectrum efficiency. In chapter 2, first, we mathematically describe the state of the art of the SM and highlight the main challenges with these schemes when applied at mmWave frequency band. In order to combat these challenges (for example, high cost and high power consumption), we propose novel SM schemes specifically designed for mmWave massive MIMO systems. After that, we explain how these schemes can be exploited in attaining energy efficient UT architecture. Finally, we present the channel model, systems assumptions and the transceiver devices power consumption models. In chapter 3, we consider single user SM system. First, we propose downlink (DL) receive SM (RSM) scheme where the UT can be implemented with single or multiple radio-frequency chains and the BS can be fully digital or hybrid architecture. Moreover, we consider different precoders at the BS and propose low complexity and efficient antenna selection schemes for narrowband and wideband transmissions. After that, we propose joint uplink-downlink SM scheme where we consider RSM in the DL and transmit SM (TSM) in the UL based on energy efficient hybrid UT architecture. In chapter 4, we extend the SM system to the multi-user case. Specifically, we develop joint multi-user power allocation, user selection and antenna selection algorithms for the broadcast and the multiple access channels. Chapter 5 is presented for concluding the thesis and proposing future research directions. Considerando los altos requerimientos de los servicios de nueva generación, las infraestructuras de red actual se han visto obligadas a evolucionar en la forma de manejar los diferentes recursos de red y computación. Con este fin, nuevas tecnologías han surgido para soportar las funcionalidades necesarias para esta evolución, significando también un gran cambio de paradigma en el diseño de arquitecturas para la futura implementación de redes.En este sentido, este documento de tesis doctoral presenta un análisis sobre estas tecnologías, enfocado en el caso de redes inter/intra Data Centre. Por consiguiente, la introducción de tecnologías basadas en redes ópticas ha sido estudiada, con el fin de identificar problemas actuales que puedan llegar a ser solucionados mediante el diseño y aplicación de nuevas técnicas, asimismo como a través del desarrollo o la extensión de los componentes de arquitectura de red.Con este propósito, se han definido una serie de propuestas relacionadas con aspectos cruciales, así como el control de dispositivos ópticos por SDN para habilitar el manejo de redes híbridas, la necesidad de definir un mecanismo de descubrimiento de topologías ópticas capaz de exponer información precisa, y el analizar las brechas existentes para la definición de una arquitectura común en fin de soportar las comunicaciones 5G.Para validar estas propuestas, se han presentado una serie de validaciones experimentales por medio de escenarios de prueba específicos, demostrando los avances en control, orquestación, virtualización y manejo de recursos con el fin de optimizar su utilización. Los resultados expuestos, además de corroborar la correcta operación de los métodos y componentes propuestos, abre el camino hacia nuevas formas de adaptar los actuales despliegues de red respecto a los desafíos definidos en el inicio de una nueva era de las telecomunicaciones.",
+      "citation_count": 0,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex+openalex",
+      "relevance_score": 0.167,
+      "_score": 0.16350000000000003,
+      "id": "L004",
+      "download": false,
+      "publication_status": "published"
+    }
+  ]
+}

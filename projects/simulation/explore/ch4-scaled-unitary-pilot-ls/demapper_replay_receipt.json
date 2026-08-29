@@ -1,0 +1,52 @@
+{
+  "schema_version": "t083.demapper-replay-receipt.v1",
+  "authority": "T083/D062/V037",
+  "base_commit": "60e2abfeb9411952f714ee9d0628fc4830714b23",
+  "control_epoch": 24,
+  "mission_checkpoint": "CP024",
+  "checks": {
+    "raw_only_reduction": "PASS",
+    "source_hashes": "PASS",
+    "identity_256_of_256": "PASS",
+    "mechanism_identity_1280_of_1280": "PASS",
+    "schema_and_counts": "PASS",
+    "truth_firewall": "PASS"
+  },
+  "identity_census": {
+    "expected_windows": 256,
+    "matched_seeds": 256,
+    "matched_gains": 256,
+    "matched_realization_hashes": 256,
+    "matched_observation_hashes": 256,
+    "matched_payload_bits": 256,
+    "matched_mechanism_rows": 1280
+  },
+  "bootstrap": {
+    "rng": "PCG64",
+    "seed": 2026083005,
+    "resamples": 5000,
+    "confidence": 0.95,
+    "stream_rule": "reset seed for each named paired comparison"
+  },
+  "decision": {
+    "terminal": "DEMAPPER_REPLAY_PASS",
+    "difference": "BER_C4_minus_BER_B2",
+    "next_step": "independent raw recomputation"
+  },
+  "hashes": {
+    "manifest_sha256": "0a51d3604121d47d52383377ec445a4f57531d0bd5564c49d5e9da433b4ae081",
+    "source_manifest_sha256": "18c93796ff3e7e0ebf0bf05ee71c94bfd4027218b31a60d0d917d26581aa8a65",
+    "source_raw_sha256": "55c31e36b7d11e5d0b9e8225805596e0f0f7b127cde26874c7b0b217b0e23101",
+    "raw_sha256": "2330b61b5988c2467c720976bb757efade719247ef287271f756c5e73bd069d5",
+    "aggregate_sha256": "6053422c2e904ff6d8b8479de504d92edd70a3af67586ef466a51379b334d6c1",
+    "runner_sha256": "d5054f85f92deaaa08e59e7e0a8a26568f8a166420360b80545fd6e39856de1d",
+    "reducer_sha256": "e24b47714e0875a412fb93b9c43a0f7a616caf30f7285311c9f76725097c95cb",
+    "tests_sha256": "04d3ab67dd8630ac22a59749b3e6f85259b926d369f912b5daa07e4859118478"
+  },
+  "_meta": {
+    "script": "t083_demapper_replay_receipt",
+    "common_md5": "49acdfa4",
+    "git_commit": "60e2abf",
+    "timestamp": "2026-08-30T13:26:13"
+  }
+}

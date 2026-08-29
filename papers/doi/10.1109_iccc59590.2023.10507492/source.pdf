@@ -1,0 +1,416 @@
+2023 9th International Conference on Computer and Communications (ICCC) | 979-8-3503-1725-1/23/$31.00 ©2023 IEEE | DOI: 10.1109/ICCC59590.2023.10507492                                   2023 9th International Conference on Computer and Communications
+
+                                                                                                                                                         An Improved Syndrome Bit Flipping Decoder with
+                                                                                                                                                               Narrowed Flipping Set for LDPC Codes
+
+                                                                                                                                                                                               Wenlin Zhao1∗, Jie Zhang2 Li Li1, Haitong Jiang3
+                                                                                                                                                                         1School of Information Science and Technology, Southwest Jiaotong University, Chengdu, China
+
+                                                                                                                                                                                             2State Grid Sichuan Electric Research Institute, Chengdu, China
+                                                                                                                                                                                              3State Grid Shenwang LBS(Beijing) Co. Ltd. , Beijing, China
+                                                                                                                                                              Email: 804134979zwl@my.swjtu.edu.cn, zhangjie2093@163.com, ll5e08@home.swjtu.edu.cn, 42830068@qq.com
+
+                                                                                                                                                            Abstract—In this paper, we propose an improved Syndrome             due to the incorporation of noise perturbations into the energy
+                                                                                                                                                         Bit Flipping (SBF) decoding algorithm that utilizes narrowed           function. Based on the GDBF and NGDBF algorithms, several
+                                                                                                                                                         flipping set. The narrowed flipping set is prone to contain all error  enhanced algorithms [5–7] have been proposed, some of which
+                                                                                                                                                         bit positions with high probability. To construct the narrowed         are close to the BP algorithm in terms of BER performance.
+                                                                                                                                                         flipping set, part of its elements are selected according to channel
+                                                                                                                                                         information, and the rest are constructed by random selections.           Recently, a novel algorithm named Syndrome Bit Flipping
+                                                                                                                                                         The narrowed flipping set mitigates possible error propagation         (SBF) was proposed in [8], which is similar to Mulit-Threshold
+                                                                                                                                                         by avoiding some non-error bits being unnessary flipped, thereby       Bit Flipping (MTBF) presented in [9]. SBF exhibits a concise
+                                                                                                                                                         further improving the decoding performance of the original             design in both algorithmic structure and hardware architecture.
+                                                                                                                                                         SBF algorithm. The simulation results show that the proposed           Consequently, SBF decoder is suitable to serve as a post-
+                                                                                                                                                         algorithm can achieve about 1.2 dB bit error rate gain compared        processing decoder for other algorithms. During the iterative
+                                                                                                                                                         with the original SBF algorithm, with a modest increase in             process of the SBF algorithm, bits with energy functions
+                                                                                                                                                         computational complexity.                                              greater than threshold sequence value are flipped. However,
+                                                                                                                                                                                                                                when the values within the threshold sequence are very small,
+                                                                                                                                                            Index Terms—Low-density parity-check codes, syndrome bit            such flipping may lead to the bit-flipping of some non-error
+                                                                                                                                                         flipping, narrowed flipping set, error propagation                     bits, causing error propagation. Consequently, this undermines
+                                                                                                                                                                                                                                the error-correcting performance of the SBF algorithm.
+                                                                                                                                                                                   I. INTRODUCTION
+                                                                                                                                                                                                                                   To handle this problem and further improve the performance
+                                                                                                                                                            As an exemplary class of channel coding techniques, low-            of SBF algorithm, narrowed flipping set are employed in the
+                                                                                                                                                         density parity-check (LDPC) code has shown excellent per-              SBF iteration. The narrowed flipping set successfully avoids
+                                                                                                                                                         formance in low SNR regions, where the bit-error rate (BER)            some non-error bits being unnessary flipped, resulting in a
+                                                                                                                                                         performance can exponentially decrease with the increase in            considerable BER gain. The primary contributions of this
+                                                                                                                                                         SNR. However, in high SNR regions, the BER often ceases                paper are summarized as follows: 1. In the SBF algorithm, the
+                                                                                                                                                         to decrease exponentially after reaching approximately 10−7,           narrowed flipping set is introduced to constraint the flipping
+                                                                                                                                                         manifesting a phenomenon known as the error floor [1].                 set found by the original SBF algorithm. 2. Determining the
+                                                                                                                                                         To achieve enhanced decoding performance of LDPC codes,                optimal method for selecting narrowed flipping set.
+                                                                                                                                                         various decoding algorithms have been extensively studied.
+                                                                                                                                                         The two primary categories are the Sum-Product Algorithm                                        II. PRELIMINARIES
+                                                                                                                                                         (SPA) [2] and Bit Flipping (BF). SPA is sometimes referred
+                                                                                                                                                         to as belief propagation (BP) decoding algorithm, it is based          A. Notation
+                                                                                                                                                         on soft decision, and achieves excellent BER performance.
+                                                                                                                                                         However, it also demands substantial computational resources              We denote the LDPC binary m × n parity-check matrix
+                                                                                                                                                         in its calculation process.                                            as H, where n > m ≥ 1 and {m, n} ∈ Z+. Accordingly,
+                                                                                                                                                                                                                                the binary code associated with H is defined by C ≜ {c ∈
+                                                                                                                                                            The BF algorithms have lower algorithmic and hardware               F2n : Hc = 0}, where F2 represents the binary Galois field.
+                                                                                                                                                         complexity compared to SPA algorithm, while the trade-off is           The bipolar codewords Cˆ corresponding to C are generated
+                                                                                                                                                         that the BER performance is far from optimal. Over the years,          by Cˆ ≜ {(1 − 2c1, 1 − 2c2, . . . , 1 − 2cn) : c ∈ C}, i.e. Cˆ ≜
+                                                                                                                                                         various BF algorithms were proposed for making a balance               cˆ ∈ {−1, +1}n. In Additive White Gaussian Noise (AWGN)
+                                                                                                                                                         between BER performance and decoding complexity, among                 channel transmission, the received vector at the receiver is
+                                                                                                                                                         which the Gradient Descent Bit Flipping (GDBF) algorithm is            defined as ⃗y = cˆ + ⃗z, where ⃗z is a random variable following
+                                                                                                                                                         a landmark BF algorithm [3]. The performance of the GDBF               N (0, σ2), and σ2 is the noise variance. We then we define the
+                                                                                                                                                         algorithm outperforms most previously proposed BF algo-                bipolar decision vector xˆk = sign(yk), k = 1, 2, . . . , n, and
+                                                                                                                                                         rithms. Moreover, a variant of the GDBF algorithm, known as            the codeword vector ⃗x = (1 − xˆ)/2. Thus, the syndrome is
+                                                                                                                                                         NGDBF algorithm [4], further improves the BER performance              computed as ⃗s = H⃗x mod 2.
+
+                                                                                                                                                            This work was supported by the NSFC under Grant 62071394.
+
+                                                                                                                                                         979-8-3503-1725-1/23/$31.00 ©2023 IEEE  777
+                                                                                                                                                         Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:55:13 UTC from IEEE Xplore. Restrictions apply.
+   When ⃗x is a valid codeword, all the parity checks will be        variable nodes connected with v = {vj}j∈N (c)\v¯ have E = 1.
+satisfied, and ⃗s = ⃗0. LDPC iterative decoders typically use this   According to the condition E > θ(ℓ), both the v with E = 1
+condition as the basis for successful decoding. If all the parity    and v¯ are flipped, which causing the error propagation. It is
+checks are satisfied at iteration l, then ⃗x(l) is declared a valid  clear that flipping v is unnessary. This phenomenon leads to
+codeword and decoding process is terminated. Unsuccessful            the question of how to effectively constrain the flipping set
+frames are terminated after reaching the maximum number of           found by SBF algorithm to reduce the number of non-error
+iterations.                                                          bits being unnessary flipped.
+
+   Additionally, M(j) and N (i) is defined by H, M(j) =                 The preceding analysis of the effects of error propagation
+{i : hij = 1} is the set of parity checks adjacent to variable       caused by unnessary bit flipping instructs us to construct
+node vj, and N (i) = {j : hij = 1} is the set of variable nodes      a flipping set S that includes the positions of all error bit
+adjacent to parity check node ci.                                    positions Serr and another n non-error bits, and we use S to
+                                                                     constrain the flipping set SSBF. Essentially, the original SBF
+B. Brief Review of SBF Algorithm                                     algorithm can be viewed as a circumstance where S contains
+                                                                     all the bits in the codeword, then as n decreases, the flipping
+   Before reviewing Syndrome Bit Flipping, we begin with a           set SSBF becomes increasingly constrained by S. We use IEEE
+concise review of the Gradient Descent Bit Flipping algorithm.       802.3an LDPC code [10] with code length N = 2048 and
+The goal of GDBF is to maximize the objective function :             code rate R = 0.8413 as an illustration, Fig. 1 shows that
+                                                                     constraning SSBF resulting in a notable BER gain compared
+                      n                  m                           to the SBF algorithm, and BER gain increases as n decreases.
+                                                                     Thus constraning SSBF is a viable strategy to optimize the SBF
+             f (x) = xˆkyk + si.                        (1)          algorithm.
+
+                      k=1         i=1                                                                 IEEE 802.3an LDPC codes
+                                                                            10-2
+The GDBF energy function is computed as
+
+             Ek(GDBF) = xˆkyk +               si.       (2)
+
+                                  i∈M(k)
+
+In the NGDBF algorithm’s energy function
+
+             Ek(NGDBF) = xˆkyk +              si + qk,  (3)                     SBF
+
+                                  i∈M(k)                                        n=1500
+
+additive Gaussian white noise qk ∼ N (0, η2N0/2) is added,                10-4  n=1000
+where 0 < η ≤ 1, and N0 is the noise spectral density.                          n=600
+
+                                                                     BER        n=200
+
+In the single-bit GDBF (S-GDBF) and single-bit NGDBF                            n=50
+
+(S-NGDBF) algorithm, bits with most negative Ek values
+
+are flipped. In the multi-bit GDBF (M-GDBF) and multi-bit                 10-6
+
+NGDBF (M-NGDBF) algorithm, bits satisfying Ek > θ are
+flipped, where θ is preset threshold value. The value of the
+
+objective function in formula (1) can be increased through
+
+flipping processes until it reaches the maximum f (x) value at            10-8
+
+the correct codeword or ceases to change after the maximum                3.5         4  4.5  5     5.5  6
+
+number of iteration.                                                                     Eb/N0(dB)
+
+The SBF algorithm is a variant of the GDBF algorithm that            Figure 1. BER performance comparisons among SBF algorithm and SBF
+                                                                     constrained by S(n = 1500, 1000, 600, 200, 50). The simulation is over the
+ignores the channel information. The energy function for SBF         AWGN channel.
+
+is given by
+
+                      Ek(SBF) =          si.            (4)
+
+                                 i∈M(k)                              B. SBF Decoding Algorithm with Narrowed Flipping Set
+
+Bits are flipped by comparing whether Ek > θ(ℓ), where                  Inspired by the above observation, we can construct a
+threshold sequence θ is found through trapping set analysis.         narrowed flipping set S to constrain the SSBF. It is essential
+And it satisfies 0 ≤ θ(ℓ) ≤ max(dv) generally.                       for S to satisify the condition Serr ⊆ S, as neglecting
+                                                                     any one of error bit positions would lead to the decoding
+           III. SBF WITH NARROWED FLIPPING SET                       failure. Furthermore, the shorter the length of S, the better
+A. Error Propagation in SBF                                          performance SBF constrain by S will be.
+
+   In the SBF algorithm, the flipping set is constructed by             Firstly, the channel information is used to identify the
+SSBF = {n ∈ {1 . . . N }; Evn > θk(ℓ)}. However, when the            majority of error bits. Bits with lowest magnitude of |⃗y| are
+threshold sequence value is small, such as when θ(ℓ) = 0,            considered as unreliable bits. We select the top T1 unreliable
+and there is only one wrong ’1’ variable node v¯ in the              bits to constitute the subset S1 as first part of S. And based
+codeword, the existence of v¯i results in adjacent check nodes       on observation of Fig. 2, ( Pn is defined as the ratio of the
+c = {cj}j∈M(i) being non-satisfied checks. Consequently the          number of error bits in the top-n unreliable bits to the total
+
+                                                                                    778
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:55:13 UTC from IEEE Xplore. Restrictions apply.
+                         IEEE 802.3an LDPC codes                                Algorithm 1 SBF decoding with narrowed flipping set
+    1
+
+    0.9                                                                         Input: ⃗y = (y1, . . . , yN ) ∈ RN                        ▷ received word
+                                                                                          Θk = {θk(ℓ)}ℓ=1...Nk                     ▷ threshold sequences
+                                                                                                                                   ▷ estimated codeword
+                                                                                Output: ⃗x = (x1, . . . , xN ) ∈ {0, 1}N
+                                                                                Parameters: γ, T1, T2
+
+    0.8                                                                         1: m = 0; ⃗x = (1 − sign(⃗y))/2;
+
+Pn                                                                              2: ⃗x0 = ⃗x; ⃗s0 = H⃗x0 mod 2;                            ▷ initialization
+                                                                                3: S1 ← T1 smallest |⃗y| bit positions;
+
+    0.7                                                                         4: while m < γ and ⃗s ≠ ⃗0 do                         ▷ iteration loop
+
+                                                  n=100                         5: k = 0; m = m + 1;
+
+                                                  n=200                         6: S2 ← random select T2 bit positions from ⃗y \ S1;
+                                                                                7: S ← S1 ∪ S2;
+    0.6                                           n=300                         8: if m = 2 then
+
+                                                  n=400
+
+                                                  n=500                         9:          Θ = Θ(1);                ▷ reduce computational complexity
+
+    0.5  3  3.5  4       4.5           5          5.5    6                      10: end if
+                                                                                11: while k < size(Θ) and ⃗s ̸= ⃗0 do ▷ SBF iteration loop
+                         Eb/N0(dB)
+                                                                                12:         ℓ = 0; k = k + 1; ⃗s = ⃗s0; ⃗x = ⃗x0;
+
+Figure 2. Monte Carlo simulation of the average ratio of the number of error    13:         while ℓ < Nk and ⃗s ≠ ⃗0 do
+bits contained withinin the top-n unreliable bits to the total number of error
+bits.                                                                           14:            ℓ = ℓ + 1;
+
+                                                                                15:            E = HT ⃗s;                          ▷ energy computation
+
+                                                                                16:            SSBF ← {n ∈ {1 . . . N }; En > θk(ℓ)};
+
+number of error bits.), we find that as T1 approaches to N ,                    17:            if m = 1 then
+the value of Pn approaches to 100%. However, Serr ⊆ S1
+is not usually satisfied unless T1 = N , which contradicts our                  18:                   ∀n ∈ SSBF : xn = 1 − xn;                  ▷ SBF
+intention to narrow down the flipping set. Then secondly, S2 is
+constructed by randomly selecting T2 bits from all bit positions                19:            else
+excluding those in S1. And the final narrowed flipping set S
+is a combination of S1 and S2. It is acceptable if S does                       20:                   ∀n ∈ SSBF ∩ S : xn = 1 − xn;           ▷ NFS-SBF
+not include Serr in a single iteration, because we do multiple
+random selection of S2 trials during iterations.                                21:            end if
+
+   The SBF decoding with narrowed flipping set, denotes as                      22:            ⃗s = H⃗x mod 2;
+NFS-SBF, is described in Algorithm 1. The decoder parame-
+ters include T1, T2 and γ (maximum number of search trials                      23:         end while
+for S). The algorithm is divided into two stages. In the
+first stage, SBF is implemented. If SBF decoding does not                       24: end while
+converge to the correct codeword, the second stage employs
+the narrowed flipping set S to narrow the SSBF found by the                     25: end while
+SBF algorithm. To reduce the complexity, only one single
+threshold sequence is used in the second stage, as a successful                 26: if ⃗s ̸= ⃗0 then
+SBF decoding process usually end at first threshold sequence.
+                                                                                27: ⃗x = ⃗x0;
+
+                                                                                28: end if
+
+                                                                                does not support decimal calculations, here we can employ
+                                                                                the generalized binomial coefficient for computation:
+
+                                                                                                      n  =           Γ(n + 1)          .             (6)
+
+                                                                                                      k Γ(k + 1)Γ(n − k + 1)
+
+                                                                                It is defined by the gamma function Γ(z) =             ∞  xz−1  e−x  dx,
+                                                                                                                                       0
+
+                                                                                and for integer n: Γ(n) = (n − 1)!. Then the equation (5) can
+
+                                                                                be reformulated and simplified as
+
+                                                                                            p  =      Γ(N  −  T1  −  Nr  +  1)Γ(T2  +  1)            (7)
+                                                                                                                                          .
+                                                                                                      Γ(T2 − Nr + 1)Γ(N − T1 + 1)
+C. Mathmatical Analysis
+
+   A mathmatical analysis can be made to determine the                          Then the probability that S contains all error bits at least once
+feasibility of the proposed algorithm. After selecting top-T1                   over γ extraction trials is Pγ = 1 − (1 − p)γ.
+unreliable bits, the remaining number of error bits Nr =
+N · Pe · (1 − Pn), where Pe denotes the channel bit error rate.                    As an example, we observe the circumstance when
+The T2 bits are extracted from N − T1 remaining bits, the
+probability p that of (Serr ⊆ S) in one single T1, T2 extraction                Eb/N0 = 4.5 dB for PEGReg504x1008 code, the relationship
+trial can be computed by                                                        between Nr and T1 can be exponentially fitted to Nr =
+                                                                                22.77 · exp(−0.01686 · T1) + 26.05 · exp(−0.008272 · T1).
+                                                                                Using equation (7), we can generate a surface plot, as depicted
+
+                         N −T1−Nr                                               in Fig. 3, to guide the selection of optimal T1, T2 values. It
+                                                                                can be observed that p increases with the growth of T1 and
+                 p=      T2 −Nr     .                       (5)                 T2. The benefit of p derived from an increase in T1 is more
+                         N −T1                                                  than those from an increase in T2. Simultaneously, the sum of
+                                                                                T1 + T2 is expected as low as possible, as we want S to filter
+                         T2                                                     out as many non-error bits as possible. As a balance, setting
+
+   As Nr represents a statistical average number of rest error                  (T1, T2) = (400, 200) is one of feasible options considers both
+bits after picking out top-T1 unreliable bits, the resulting value              p and sum of T1 + T2.
+is usually non-integer. The standard combinatorial formula
+
+                                                                                    779
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:55:13 UTC from IEEE Xplore. Restrictions apply.
+                                                                                                   IEEE 802.3an LDPC codes
+
+                                                                           0.6       10-2                                   SBF(200)
+                                                                           0.5
+          0.8                                                              0.4                                              NFS-SBF .=10
+                                                                           0.3
+                                                                           0.2                                              NFS-SBF .=20
+                                                                 400 0.1
+                                                                                                                            NFS-SBF .=50
+
+          0.6  X 200                                                                                                        NFS-SBF .=100
+
+               Y 400                                                                 10-4                                   M-GDBF(100)
+                                                                                                                            S-NGDBF(50)
+p values       Z 0.336651
+
+          0.4
+
+                                                                                BER
+
+          0.2
+
+   0                                                                                 10-6
+400
+
+               300
+
+                    T1       200                           300
+                           values
+                                   100 100  200                                      10-8
+                                            T2 values
+                                                                                           4  4.5     5       5.5           6                           6.5
+
+               Figure 3. p values for different T1 and T2.                                               Eb/N0(dB)
+
+                                                                                Figure 4. Bit error rate of SBF, NFS-SBF with γ = 10, 20, 50, 100 and
+
+                 IV. RESULTS AND DISCUSSION                                     (T1, T2) = (300, 400) for a LDPC code of length N = 2048 and R =
+                                                                                0.8413. The number in the () is maximum number of iterations.
+A. BER Performance Comparison
+                                                                                     10-1          PEGReg504x1008
+   The simulation results are based on LDPC codes (code
+1: IEEE 802.3an LDPC codes, code 2: PEGReg504×1008                                                                  SBF(200)
+code from Mackay’s LDPC database [11]). In our simulations,
+we always consider AWGN channels and employ BPSK                                     10-2                           NFS-SBF .=10
+modulation, and maximum iteration number is set at 200 for                                                          NFS-SBF .=20
+SBF. The threshold sequences for code 1 is the same as [8],
+while the threshold sequences for code 2 can be found in                                                            NFS-SBF .=50
+the Appendix. (T1, T2) = (300, 400) is applied on code 1
+and (T1, T2) = (400, 200) is applied on code 2. Meanwhile,                           10-3                           NFS-SBF .=100
+M-GDBF and S-NGDBF are included as benchmarks. The                                                                  M-GDBF(100)
+parameters for code 1 are M-GDBF with θ = −3.8 and S-
+NGDBF with w = 1/6, η = 0.9, for code 2 are M-GDBF                              BER                                                       S-NGDBF(100)
+with θ = −0.6 and S-NGDBF with w = 0.75, η = 0.95.                                   10-4
+
+   In Fig. 4 , we can observe that NFS-SBF with γ = 10                               10-5
+already leads to a gain of more than one order of magnitude
+in terms of BER at Eb/N0 = 5.5 dB. At the target BER of                              10-6
+10−6, around 0.7 dB gain is achieved by NFS-SBF decoding
+algorithm compared to the original SBF decoding algorithm.                           10-7  4  4.5  5     5.5        6          6.5                      7
+Also The BER performance of NFS-SBF with γ = 10 overall
+surpasses that of M-GDBF, while NFS-SBF with γ = 100                                                     Eb/N0(dB)
+underperforms S-NGDBF by approximately 0.25 dB. For code
+2, the BER gain is still evident as shown in Fig. 5. Specifically,              Figure 5. Bit error rate of SBF, NFS-SBF with γ = 10, 20, 50, 100 and
+at BER = 10−6, the NFS-SBF algorithm with γ = 50 achieves                       (T1, T2) = (400, 200) for a LDPC code of length N = 1008 and R = 0.5.
+a 1.2 dB gain compared to the original SBF algorithm, while
+it is inferior to the S-NGDBF by 0.3 dB.                                           In this subsection, we analyze the complexity for algorithms
+                                                                                mentioned in the simulation. In this paper, two regular LDPC
+B. Complexity Analysis                                                          codes with constant column weight dv and row weight dc are
+                                                                                considered. As shown in Table I, compared to SBF, NFS-SBF
+                                           Table I                              has one O(n log n) sorting operation at the initialization, and
+COMPUTATION COMPLEXITY PER ITERATION FOR DIFFERENT                              one additional O(t log t) intersection operation at the decoding
+                                                                                stage two per iteration. Due to the simplicity of the SBF
+                                    ALGORITHMS                                  decoding architecture, NFS-SBF owns lower complexity than
+                                                                                both M-GDBF and S-NGDBF.
+Algorithm           Number of      Number of     Number of       Number of
+                     additions        XORs      multiplications  comparisons       The average computational complexity of proposed algo-
+                                                                                rithm is depicted in Fig. 6. For γ = 100 at low SNR, the
+S-NGDBF              ndv + n       m (dc − 1)          n            n−1         average computational complexity is approximately 8 times
+M-GDBF         ndv + n + m − 2     m (dc − 1)  n + mdc + m       n+m+2          larger than that of SBF, primarily due to more trials required
+                                   m (dc − 1)                                   to search for narrowed flipping set that include all error bits.
+   SBF                   0         m (dc − 1)          0               n        However, as SNR increases, the average complexity decreases
+NFS-SBF                                                0         n + t log t*   rapidly. The reason is that as the underlying channel becomes
+                         0                                                      more reliable, the set of unreliable channel bits, S1, tends to
+
+* t = T1 + T2 < n
+
+                                                                                    780
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:55:13 UTC from IEEE Xplore. Restrictions apply.
+                               8                     SBF(200)             advanced BF algorithms. The simulation results show that
+                                                                          our algorithm outperforms the SBF algorithm, with a modest
+Average Normalized Complexity  7                     NFS-SBF .=10         complexity increasing.
+
+                                                     NFS-SBF .=20                                        APPENDIX
+
+                               6                     NFS-SBF .=50            The threshold sequence for code2 : PEGReg504×1008.
+                                                     NFS-SBF .=100           Θ1 = {2212121212120212121212};
+                                                                             Θ2 = {222121212121022121212121};
+                               5                                             Θ3 = {222122122121212021212121};
+                                                                             Θ4 = {2212121212102122212121};
+                               4                                             Θ5 = {2212121212210222121212};
+                                                                             Θ6 = {22121212121022212121212};
+                               3                                             Θ7 = {22112121212102122122121};
+                                                                             Θ8 = {22112121212102221212121221};
+                               2
+                                                                                                       REFERENCES
+                               1
+                                                                           [1] T. Richardson, “Error floors of LDPC codes,” in Proceed-
+                               4.5  4.75  5          5.25           5.5         ings of the annual Allerton conference on communication
+                                                                                control and computing, vol. 41, no. 3. The University;
+                                          Eb/N0(dB)                             1998, 2003, pp. 1426–1435.
+
+Figure 6. Average complexity of proposed algorithm normalized by the SBF   [2] F. R. Kschischang, B. J. Frey, and H.-A. Loeliger, “Factor
+decoding.                                                                       graphs and the sum-product algorithm,” IEEE Transac-
+                                                                                tions on information theory, vol. 47, no. 2, pp. 498–519,
+include all error bits with higher probability. Hence narrowed                  2001.
+flipping set S becomes more effective in narrowing the bit-
+flipping range for the SBF. And it is clear that as γ increases,           [3] T. Wadayama, K. Nakamura, M. Yagita, Y. Funahashi,
+the average computational complexity of the algorithm also                      S. Usami, and I. Takumi, “Gradient descent bit flipping
+rises. However, the gain it brings exhibits diminishing marginal                algorithms for decoding LDPC codes,” IEEE Transac-
+returns, hence for taking balance between decoding perfor-                      tions on Communications, vol. 58, no. 6, pp. 1610–1614,
+mance and complexity, it’s more appropriate to take γ = 20.                     2010.
+
+C. More Heuristics                                                         [4] G. Sundararajan, C. Winstead, and E. Boutillon, “Noisy
+                                                                                gradient descent bit-flip decoding for LDPC codes,”
+   Moreover, we discovered that the mechanism of narrowed                       IEEE Transactions on Communications, vol. 62, no. 10,
+flipping set is not only applicable to SBF, but also to other                   pp. 3385–3400, 2014.
+multi-bit flipping algorithm based on threshold comparisons,
+such as MTBF, M-GDBF and M-NGDBF. These algorithms                         [5] T. Tithi, C. Winstead, and G. Sundararajan, “Decoding
+share the same characteristic that during the multi-bit flipping                LDPC codes via noisy gradient descent bit-flipping with
+processes, some non-error bits are flipped together with error                  re-decoding,” arxiv:1503.08913, 2015.
+bits. And varying degrees of BER performance gains can
+be observed when the NFS mechanism is applied to these                     [6] B. Dai, R. Liu, C. Gao, and Z. Mei, “Noisy gradient
+algorithms. The NFS mechanism is a cross-validation mecha-                      descent bit-flipping decoder based on adjustment factor
+nism - the flipping set is first identified by multi-bit flipping               for LDPC codes,” IEEE Communications Letters, vol. 22,
+algorithm, then narrowed flipping set filters out some non-                     no. 6, pp. 1152–1155, 2018.
+error bits that do not need to flipped. Thereby this mechanism
+constrains the route of bit flipping, and enhances the decoding            [7] V. Savin, “Gradient descent bit-flipping decoding with
+performance. However, one limitation of NFS is that at lower                    momentum,” in 2021 11th International Symposium on
+SNR, we cannot narrow down the flipping set by selecting the                    Topics in Coding (ISTC), 2021, pp. 1–5.
+top-n unreliable bit positions, as the distribution of error bit
+positions in the LDPC code is chaotic under this circumstance.             [8] E. Boutillon, C. Winstead, and F. Ghaffari, “The syn-
+If there exists a method more effective than using channel                      drome bit flipping algorithm for LDPC codes,” IEEE
+information to select unreliable bit positions, we believe that                 Communications Letters, 2023.
+the decoding performance of NFS could be further improved.
+                                                                           [9] Y.-h. Liu, X.-l. Niu, and M.-l. Zhang, “Multi-threshold bit
+                           V. CONCLUSION                                        flipping algorithm for decoding structured LDPC codes,”
+                                                                                IEEE Communications Letters, vol. 19, no. 2, pp. 127–
+   In this paper, we proposed an improve SBF algorithm based                    130.
+on narrowed flipping set. Narrowed flipping set is found based
+on channel information and random selection, and it narrowed              [10] “IEEE Standard for Ethernet.” IEEE Std. 802.3-2015,
+the range for bit-flipping in SBF, therefore suppresses error                   2016.
+propagation effectively. The NFS-SBF decoding algorithm
+has been compared with the SBF algorithm and some other                   [11] D. J. MacKay, “Encyclopedia of sparse graph codes,”
+                                                                                2005. [Online]. Available: http://www.inference.phy.cam.
+                                                                                ac.uk/mackay/codes/data.html
+
+                                                                                    781
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:55:13 UTC from IEEE Xplore. Restrictions apply.
+

@@ -1,0 +1,995 @@
+{
+  "query": "",
+  "timestamp": "2026-08-30T05:00:53.390506+08:00",
+  "sources": [
+    "citations_openalex"
+  ],
+  "total": 50,
+  "results": [
+    {
+      "title": "Computing a nearest symmetric positive semidefinite matrix",
+      "authors": [
+        "Nicholas J. Higham"
+      ],
+      "venue": "Linear Algebra and its Applications",
+      "year": 1988,
+      "doi": "10.1016/0024-3795(88)90223-6",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 712,
+      "is_open_access": true,
+      "pdf_url": "https://www.sciencedirect.com/science/article/pii/0024379588902236/pdf",
+      "source_api": "openalex_citations",
+      "id": "L001",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Designing structured tight frames via an alternating projection method",
+      "authors": [
+        "Joel A. Tropp",
+        "Inderjit S. Dhillon",
+        "Robert W. Heath",
+        "Thomas Strohmer"
+      ],
+      "venue": "IEEE Transactions on Information Theory",
+      "year": 2005,
+      "doi": "10.1109/tit.2004.839492",
+      "arxiv_id": null,
+      "abstract": "Tight frames, also known as general Welch-bound- equality sequences, generalize orthonormal systems. Numerous applications - including communications, coding, and sparse approximation- require finite-dimensional tight frames that possess additional structural properties. This paper proposes an alternating projection method that is versatile enough to solve a huge class of inverse eigenvalue problems (IEPs), which includes the frame design problem. To apply this method, one needs only to solve a matrix nearness problem that arises naturally from the design specifications. Therefore, it is the fast and easy to develop versions of the algorithm that target new design problems. Alternating projection will often succeed even if algebraic constructions are unavailable. To demonstrate that alternating projection is an effective tool for frame design, the paper studies some important structural properties in detail. First, it addresses the most basic design problem: constructing tight frames with prescribed vector norms. Then, it discusses equiangular tight frames, which are natural dictionaries for sparse approximation. Finally, it examines tight frames whose individual vectors have low peak-to-average-power ratio (PAR), which is a valuable property for code-division multiple-access (CDMA) applications. Numerical experiments show that the proposed algorithm succeeds in each of these three cases. The appendices investigate the convergence properties of the algorithm.",
+      "citation_count": 502,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L002",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Reconstruction of Personalized 3D Face Rigs from Monocular Video",
+      "authors": [
+        "Pablo Garrido",
+        "Michael Zollhöfer",
+        "Dan Casas",
+        "Levi Valgaerts",
+        "Kiran Varanasi",
+        "Patrick Pérez",
+        "Christian Theobalt"
+      ],
+      "venue": "ACM Transactions on Graphics",
+      "year": 2016,
+      "doi": "10.1145/2890493",
+      "arxiv_id": null,
+      "abstract": "We present a novel approach for the automatic creation of a personalized high-quality 3D face rig of an actor from just monocular video data (e.g., vintage movies). Our rig is based on three distinct layers that allow us to model the actor’s facial shape as well as capture his person-specific expression characteristics at high fidelity, ranging from coarse-scale geometry to fine-scale static and transient detail on the scale of folds and wrinkles. At the heart of our approach is a parametric shape prior that encodes the plausible subspace of facial identity and expression variations. Based on this prior, a coarse-scale reconstruction is obtained by means of a novel variational fitting approach. We represent person-specific idiosyncrasies, which cannot be represented in the restricted shape and expression space, by learning a set of medium-scale corrective shapes. Fine-scale skin detail, such as wrinkles, are captured from video via shading-based refinement, and a generative detail formation model is learned. Both the medium- and fine-scale detail layers are coupled with the parametric prior by means of a novel sparse linear regression formulation. Once reconstructed, all layers of the face rig can be conveniently controlled by a low number of blendshape expression parameters, as widely used by animation artists. We show captured face rigs and their motions for several actors filmed in different monocular video formats, including legacy footage from YouTube, and demonstrate how they can be used for 3D animation and 2D video editing. Finally, we evaluate our approach qualitatively and quantitatively and compare to related state-of-the-art methods.",
+      "citation_count": 277,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L003",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Vector diffusion maps and the connection Laplacian",
+      "authors": [
+        "Amit Singer",
+        "Hau‐Tieng Wu"
+      ],
+      "venue": "Communications on Pure and Applied Mathematics",
+      "year": 2012,
+      "doi": "10.1002/cpa.21395",
+      "arxiv_id": null,
+      "abstract": "Abstract We introduce vector diffusion maps (VDM), a new mathematical framework for organizing and analyzing massive high‐dimensional data sets, images, and shapes. VDMis a mathematical and algorithmic generalization of diffusion maps and other nonlinear dimensionality reduction methods, such as LLE, ISOMAP, and Laplacian eigenmaps. While existing methods are either directly or indirectly related to the heat kernel for functions over the data, VDM is based on the heat kernel for vector fields. VDM provides tools for organizing complex data sets, embedding them in a low‐dimensional space, and interpolating and regressing vector fields over the data. In particular, it equips the data with a metric, which we refer to as the vector diffusion distance. In the manifold learning setup, where the data set is distributed on a low‐dimensional manifold ${\\cal M}^d$ embedded in $\\font\\open=msbm10 at 10pt\\def\\R{\\hbox{\\open R}}\\R^p$ , we prove the relation between VDM and the connection Laplacian operator for vector fields over the manifold. © 2012 Wiley Periodicals, Inc.",
+      "citation_count": 262,
+      "is_open_access": true,
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/3886882",
+      "source_api": "openalex_citations",
+      "id": "L004",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "A simple geometric model for elastic deformations",
+      "authors": [
+        "Isaac Chao",
+        "Ulrich Pinkall",
+        "Patrick Sanan",
+        "Peter Schröder"
+      ],
+      "venue": "ACM Transactions on Graphics",
+      "year": 2010,
+      "doi": "10.1145/1778765.1778775",
+      "arxiv_id": null,
+      "abstract": "We advocate a simple geometric model for elasticity: distance between the differential of a deformation and the rotation group . It comes with rigorous differential geometric underpinnings, both smooth and discrete, and is computationally almost as simple and efficient as linear elasticity. Owing to its geometric non-linearity, though, it does not suffer from the usual linearization artifacts. A material model with standard elastic moduli (Lamé parameters) falls out naturally, and a minimizer for static problems is easily augmented to construct a fully variational 2 nd order time integrator. It has excellent conservation properties even for very coarse simulations, making it very robust. Our analysis was motivated by a number of heuristic, physics-like algorithms from geometry processing (editing, morphing, parameterization, and simulation). Starting with a continuous energy formulation and taking the underlying geometry into account, we simplify and accelerate these algorithms while avoiding common pitfalls. Through the connection with the Biot strain of mechanics, the intuition of previous work that these ideas are \"like\" elasticity is shown to be spot on.",
+      "citation_count": 237,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L005",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "MATRIX NEARNESS PROBLEMS AND APPLICATIONS",
+      "authors": [
+        "Nicholas J. Higham"
+      ],
+      "venue": "Research Explorer (The University of Manchester)",
+      "year": 1989,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "A matrix nearness problem consists of finding, for an arbitrary matrix A, a nearest member of some given class of matrices, where distance is measured in a matrix norm. A survey of nearness problems is given, with particular emphasis on the fundamental properties of symmetry, positive definiteness, orthogonality, normality, rank-deficiency and instability. Theoretical results and computational methods are described. Applications of nearness problems in areas including control theory, numerical analysis and statistics are outlined. Key words. matrix nearness problem, matrix approximation, symmetry, positive definiteness, orthogonality, normality, rank-deficiency, instability. AMS subject classifications. Primary 65F30, 15A57. 1 Introduction Consider the distance function (1:1) d(A) = min \\\\Phi kEk : A + E 2 S has property P \\\\Psi ; A 2 S; where S denotes C m\\\\Thetan or R m\\\\Thetan , k \\\\Delta k is a matrix norm on S, and P is a matrix property which defines a subspace or compact sub...",
+      "citation_count": 227,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L006",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Exact and stable recovery of rotations for robust synchronization",
+      "authors": [
+        "Lei Wang",
+        "Amit Singer"
+      ],
+      "venue": "Information and Inference A Journal of the IMA",
+      "year": 2013,
+      "doi": "10.1093/imaiai/iat005",
+      "arxiv_id": null,
+      "abstract": "The synchronization problem over the special orthogonal group SO(d) consists of estimating a set of unknown rotations from noisy measurements of a subset of their pairwise ratios ⁠. The problem has found applications in computer vision, computer graphics and sensor network localization, among others. Its least squares solution can be approximated by either spectral relaxation or semidefinite programming followed by a rounding procedure, analogous to the approximation algorithms of Max-Cut. The contribution of this paper is three-fold: first, we introduce a robust penalty function involving the sum of unsquared deviations and derive a relaxation that leads to a convex optimization problem; secondly, we apply the alternating direction method to minimize the penalty function. Finally, under a specific model of the measurement noise and for both complete and random measurement graphs, we prove that the rotations are exactly and stably recovered, exhibiting a phase transition behavior in terms of the proportion of noisy measurements. Numerical simulations confirm the phase transition behavior for our method as well as its improved accuracy compared with existing methods.",
+      "citation_count": 190,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L007",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Complete Linear Attitude-Independent Magnetometer Calibration",
+      "authors": [
+        "Roberto Alonso",
+        "Malcolm D. Shuster"
+      ],
+      "venue": "The Journal of the Astronautical Sciences",
+      "year": 2002,
+      "doi": "10.1007/bf03546249",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 172,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L008",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "A DCT Approximation for Image Compression",
+      "authors": [
+        "Renato J. Cintra",
+        "Fábio M. Bayer"
+      ],
+      "venue": "IEEE Signal Processing Letters",
+      "year": 2011,
+      "doi": "10.1109/lsp.2011.2163394",
+      "arxiv_id": null,
+      "abstract": "An orthogonal approximation for the 8-point discrete cosine transform (DCT) is introduced. The proposed transformation matrix contains only zeros and ones; multiplications and bit-shift operations are absent. Close spectral behavior relative to the DCT was adopted as design criterion. The proposed algorithm is superior to the signed discrete cosine transform. It could also outperform state-of-the-art algorithms in low and high image compression scenarios, exhibiting at the same time a comparable computational complexity.",
+      "citation_count": 160,
+      "is_open_access": true,
+      "pdf_url": "https://arxiv.org/pdf/1402.6034",
+      "source_api": "openalex_citations",
+      "id": "L009",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Mixed precision algorithms in numerical linear algebra",
+      "authors": [
+        "Nicholas J. Higham",
+        "Théo Mary"
+      ],
+      "venue": "Acta Numerica",
+      "year": 2022,
+      "doi": "10.1017/s0962492922000022",
+      "arxiv_id": null,
+      "abstract": "Today’s floating-point arithmetic landscape is broader than ever. While scientific computing has traditionally used single precision and double precision floating-point arithmetics, half precision is increasingly available in hardware and quadruple precision is supported in software. Lower precision arithmetic brings increased speed and reduced communication and energy costs, but it produces results of correspondingly low accuracy. Higher precisions are more expensive but can potentially provide great benefits, even if used sparingly. A variety of mixed precision algorithms have been developed that combine the superior performance of lower precisions with the better accuracy of higher precisions. Some of these algorithms aim to provide results of the same quality as algorithms running in a fixed precision but at a much lower cost; others use a little higher precision to improve the accuracy of an algorithm. This survey treats a broad range of mixed precision algorithms in numerical linear algebra, both direct and iterative, for problems including matrix multiplication, matrix factorization, linear systems, least squares, eigenvalue decomposition and singular value decomposition. We identify key algorithmic ideas, such as iterative refinement, adapting the precision to the data, and exploiting mixed precision block fused multiply–add operations. We also describe the possible performance benefits and explain what is known about the numerical stability of the algorithms. This survey should be useful to a wide community of researchers and practitioners who wish to develop or benefit from mixed precision numerical linear algebra algorithms.",
+      "citation_count": 132,
+      "is_open_access": true,
+      "pdf_url": "https://www.cambridge.org/core/services/aop-cambridge-core/content/view/43CA701BA29251B5790C653E66F46197/S0962492922000022a.pdf/div-class-title-mixed-precision-algorithms-in-numerical-linear-algebra-div.pdf",
+      "source_api": "openalex_citations",
+      "id": "L010",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "A Cheeger Inequality for the Graph Connection Laplacian",
+      "authors": [
+        "Afonso S. Bandeira",
+        "Amit Singer",
+        "Daniel A. Spielman"
+      ],
+      "venue": "SIAM Journal on Matrix Analysis and Applications",
+      "year": 2013,
+      "doi": "10.1137/120875338",
+      "arxiv_id": null,
+      "abstract": "The $O(d)$ synchronization problem consists of estimating a set of $n$ unknown orthogonal $d\\times d$ matrices $O_1,\\ldots,O_n$ from noisy measurements of a subset of the pairwise ratios $O_iO_j^{-1}$. We formulate and prove a Cheeger-type inequality that relates a measure of how well it is possible to solve the $O(d)$ synchronization problem with the spectra of an operator, the graph connection Laplacian. We also show how this inequality provides a worst-case performance guarantee for a spectral method to solve this problem.",
+      "citation_count": 131,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L011",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Euclidean Distance Matrices and Applications",
+      "authors": [
+        "Nathan Krislock",
+        "Henry Wolkowicz"
+      ],
+      "venue": "International series in management science/operations research/International series in operations research & management science",
+      "year": 2011,
+      "doi": "10.1007/978-1-4614-0769-0_30",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 110,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L012",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Uncertainty estimation in robot kinematic calibration",
+      "authors": [
+        "Jorge Santolaria",
+        "Manuel Ginés"
+      ],
+      "venue": "Robotics and Computer-Integrated Manufacturing",
+      "year": 2012,
+      "doi": "10.1016/j.rcim.2012.09.007",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 101,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L013",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Local Log-Euclidean Multivariate Gaussian Descriptor and Its Application to Image Classification",
+      "authors": [
+        "Peihua Li",
+        "Qilong Wang",
+        "Hui Zeng",
+        "Lei Zhang"
+      ],
+      "venue": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
+      "year": 2016,
+      "doi": "10.1109/tpami.2016.2560816",
+      "arxiv_id": null,
+      "abstract": "This paper presents a novel image descriptor to effectively characterize the local, high-order image statistics. Our work is inspired by the Diffusion Tensor Imaging and the structure tensor method (or covariance descriptor), and motivated by popular distribution-based descriptors such as SIFT and HoG. Our idea is to associate one pixel with a multivariate Gaussian distribution estimated in the neighborhood. The challenge lies in that the space of Gaussians is not a linear space but a Riemannian manifold. We show, for the first time to our knowledge, that the space of Gaussians can be equipped with a Lie group structure by defining a multiplication operation on this manifold, and that it is isomorphic to a subgroup of the upper triangular matrix group. Furthermore, we propose methods to embed this matrix group in the linear space, which enables us to handle Gaussians with Euclidean operations rather than complicated Riemannian operations. The resulting descriptor, called Local Log-Euclidean Multivariate Gaussian (L2EMG) descriptor, works well with low-dimensional and high-dimensional raw features. Moreover, our descriptor is a continuous function of features without quantization, which can model the first- and second-order statistics. Extensive experiments were conducted to evaluate thoroughly L2EMG, and the results showed that L2EMG is very competitive with state-of-the-art descriptors in image classification.",
+      "citation_count": 76,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L014",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Polar Decomposition and Matrix Sign Function Condition Estimates",
+      "authors": [
+        "Charles Kenney",
+        "Alan J. Laub"
+      ],
+      "venue": "SIAM Journal on Scientific and Statistical Computing",
+      "year": 1991,
+      "doi": "10.1137/0912027",
+      "arxiv_id": null,
+      "abstract": "This paper presents reliable condition estimation procedures, based on Fréchet derivatives, for polar decomposition and the matrix sign function. For polar decomposition, the condition number for complex matrices is equal to the reciprocal of the smallest singular value, and rather surprisingly, for real matrices it is equal to the reciprocal of the average of the two smallest singular values. By using inverse power methods, both of these condition numbers can be evaluated at a fraction of the cost of finding the polar decomposition. Except for special cases, such as for normal matrices, the condition number of the matrix sign function does not have such a precise characterization. However, accurate condition estimates can be obtained by using explicit forms of the Fréchet derivative, or its finite-difference approximation, with a matricial inverse power method. These methods typically require two extra sign function evaluations, and it is an open problem whether accurate estimates can be obtained for a fraction of a function evaluation, as is the case for the polar decomposition. Related results for the stable Lyapunov equation and Newton’s method for the matrix square root problem are discussed.",
+      "citation_count": 70,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L015",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Variational Quantum Singular Value Decomposition",
+      "authors": [
+        "Xin Wang",
+        "Zhixin Song",
+        "Youle Wang"
+      ],
+      "venue": "Quantum",
+      "year": 2021,
+      "doi": "10.22331/q-2021-06-29-483",
+      "arxiv_id": null,
+      "abstract": "Singular value decomposition is central to many problems in engineering and scientific fields. Several quantum algorithms have been proposed to determine the singular values and their associated singular vectors of a given matrix. Although these algorithms are promising, the required quantum subroutines and resources are too costly on near-term quantum devices. In this work, we propose a variational quantum algorithm for singular value decomposition (VQSVD). By exploiting the variational principles for singular values and the Ky Fan Theorem, we design a novel loss function such that two quantum neural networks (or parameterized quantum circuits) could be trained to learn the singular vectors and output the corresponding singular values. Furthermore, we conduct numerical simulations of VQSVD for random matrices as well as its applications in image compression of handwritten digits. Finally, we discuss the applications of our algorithm in recommendation systems and polar decomposition. Our work explores new avenues for quantum information processing beyond the conventional protocols that only works for Hermitian data, and reveals the capability of matrix decomposition on near-term quantum devices.",
+      "citation_count": 70,
+      "is_open_access": true,
+      "pdf_url": "https://quantum-journal.org/papers/q-2021-06-29-483/pdf/",
+      "source_api": "openalex_citations",
+      "id": "L016",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "L1-Norm Principal-Component Analysis of Complex Data",
+      "authors": [
+        "Nicholas Tsagkarakis",
+        "Panos P. Markopoulos",
+        "George Sklivanitis",
+        "Dimitris A. Pados"
+      ],
+      "venue": "IEEE Transactions on Signal Processing",
+      "year": 2018,
+      "doi": "10.1109/tsp.2018.2821641",
+      "arxiv_id": null,
+      "abstract": "L1-norm Principal-Component Analysis (L1-PCA) of real-valued data has attracted significant research interest over the past decade. L1-PCA of complex-valued data remains to date unexplored despite the many possible applications (in communication systems, for example). In this paper, we establish theoretical and algorithmic foundations of L1-PCA of complex-valued data matrices. Specifically, we first show that, in contrast to the real-valued case for which an optimal polynomial-cost algorithm was recently reported by Markopoulos, Karystinos, and Pados, complex L1-PCA is formally NP-hard. Then, casting complex L1-PCA as a unimodular optimization problem, we present the first two suboptimal algorithms in the literature for its solution. Extensive experimental studies included in this paper illustrate the sturdy resistance of complex L1-PCA against faulty measurements/outliers in the processed data.",
+      "citation_count": 69,
+      "is_open_access": true,
+      "pdf_url": "https://arxiv.org/pdf/1708.01249",
+      "source_api": "openalex_citations",
+      "id": "L017",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Simple, direct and efficient multi-way spectral clustering",
+      "authors": [
+        "Anil Damle",
+        "Victor Minden",
+        "Lexing Ying"
+      ],
+      "venue": "Information and Inference A Journal of the IMA",
+      "year": 2018,
+      "doi": "10.1093/imaiai/iay008",
+      "arxiv_id": null,
+      "abstract": "Abstract We present a new algorithm for spectral clustering based on a column-pivoted QR factorization that may be directly used for cluster assignment or to provide an initial guess for k-means. Our algorithm is simple to implement, direct and requires no initial guess. Furthermore, it scales linearly in the number of nodes of the graph and a randomized variant provides significant computational gains. Provided the subspace spanned by the eigenvectors used for clustering contains a basis that resembles the set of indicator vectors on the clusters, we prove that both our deterministic and randomized algorithms recover a basis close to the indicators in Frobenius norm. We also experimentally demonstrate that the performance of our algorithm tracks recent information theoretic bounds for exact recovery in the stochastic block model. Finally, we explore the performance of our algorithm when applied to a real-world graph.",
+      "citation_count": 63,
+      "is_open_access": true,
+      "pdf_url": "https://www.osti.gov/biblio/1457488",
+      "source_api": "openalex_citations",
+      "id": "L018",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Geometrical calibration of a 6-axis robotic arm for high accuracy manufacturing task",
+      "authors": [
+        "Luca Lattanzi",
+        "Cristina Cristalli",
+        "Daniele Massa",
+        "Sébastien Boria",
+        "P Lépine",
+        "Marcello Pellicciari"
+      ],
+      "venue": "The International Journal of Advanced Manufacturing Technology",
+      "year": 2020,
+      "doi": "10.1007/s00170-020-06179-9",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 50,
+      "is_open_access": true,
+      "pdf_url": "http://hdl.handle.net/11380/1222223",
+      "source_api": "openalex_citations",
+      "id": "L019",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Advances in Optical Visual Information Security: A Comprehensive Review",
+      "authors": [
+        "Sachin Sachin",
+        "Sachin",
+        "Ravi Kumar",
+        "Sakshi",
+        "Sakshi",
+        "Raman Yadav",
+        "Salla Gangi Reddy",
+        "Anil Kumar Yadav",
+        "Phool Singh"
+      ],
+      "venue": "Photonics",
+      "year": 2024,
+      "doi": "10.3390/photonics11010099",
+      "arxiv_id": null,
+      "abstract": "In the modern era, the secure transmission and storage of information are among the utmost priorities. Optical security protocols have demonstrated significant advantages over digital counterparts, i.e., a high speed, a complex degree of freedom, physical parameters as keys (i.e., phase, wavelength, polarization, quantum properties of photons, multiplexing, etc.) and multi-dimension processing capabilities. This paper provides a comprehensive overview of optical cryptosystems developed over the years. We have also analyzed the trend in the growth of optical image encryption methods since their inception in 1995 based on the data collected from various literature libraries such as Google Scholar, IEEE Library and Science Direct Database. The security algorithms developed in the literature are focused on two major aspects, i.e., symmetric and asymmetric cryptosystems. A summary of state-of-the-art works is described based on these two aspects. Current challenges and future perspectives of the field are also discussed.",
+      "citation_count": 35,
+      "is_open_access": true,
+      "pdf_url": "https://www.mdpi.com/2304-6732/11/1/99/pdf?version=1705916978",
+      "source_api": "openalex_citations",
+      "id": "L020",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Solving the algebraic Riccati equation with the matrix sign function",
+      "authors": [
+        "Ralph Byers"
+      ],
+      "venue": "Linear Algebra and its Applications",
+      "year": 1987,
+      "doi": "10.1016/0024-3795(87)90222-9",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 204,
+      "is_open_access": true,
+      "pdf_url": "https://www.sciencedirect.com/science/article/pii/0024379587902229/pdf",
+      "source_api": "openalex_citations",
+      "id": "L021",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "The matrix sign function",
+      "authors": [
+        "Charles Kenney",
+        "Alan J. Laub"
+      ],
+      "venue": "IEEE Transactions on Automatic Control",
+      "year": 1995,
+      "doi": "10.1109/9.402226",
+      "arxiv_id": null,
+      "abstract": "A survey of the matrix sign function is presented including some historical background, definitions and properties, approximation theory and computational methods, and condition theory and estimation procedures, Applications to areas such as control theory, eigendecompositions, and roots of matrices are outlined, and some new theoretical results are also given.>",
+      "citation_count": 203,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L022",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Computing real square roots of a real matrix",
+      "authors": [
+        "Nicholas J. Higham"
+      ],
+      "venue": "Linear Algebra and its Applications",
+      "year": 1987,
+      "doi": "10.1016/0024-3795(87)90118-2",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 202,
+      "is_open_access": true,
+      "pdf_url": "https://www.sciencedirect.com/science/article/pii/0024379587901182/pdf",
+      "source_api": "openalex_citations",
+      "id": "L023",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Stable iterations for the matrix square root",
+      "authors": [
+        "Nicholas J. Higham"
+      ],
+      "venue": "Numerical Algorithms",
+      "year": 1997,
+      "doi": "10.1023/a:1019150005407",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 190,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L024",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Matrix animation and polar decomposition",
+      "authors": [
+        "Ken Shoemake",
+        "Tom Duff"
+      ],
+      "venue": "",
+      "year": 1992,
+      "doi": "10.20380/gi1992.30",
+      "arxiv_id": null,
+      "abstract": "General 3×3 linear or 4×4 homogenous matrices can be formed by composing primitive matrices for translation, rotation, scale, shear, and perspective. Current 3-D computer graphics systems manipulate and interpolate parametric forms of these primitives to generate scenes and motion. For this and other reasons, decomposing a composite matrix in a meaningful way has been a longstanding challenge. This paper presents a theory and method for doing so, proposing that the central issue is rotation extraction, and that the best way to do that is Polar Decomposition. This method also is useful for renormalizing a rotation matrix containing excessive error. Résumé Des matrices correspondant à des transformations linéaires en 3 dimensions, ou bien à des transformations homogènes en 4 dimensions, peuvent être construites en composant des matrices qui décrivent des transformations élémentaires: déplacement, rotation, homothétie, glissement, et perspective. Les systèmes actuels de visualisation grap...",
+      "citation_count": 168,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.20380/gi1992.30",
+      "source_api": "openalex_citations",
+      "id": "L025",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Rational Iterative Methods for the Matrix Sign Function",
+      "authors": [
+        "Charles Kenney",
+        "Alan J. Laub"
+      ],
+      "venue": "SIAM Journal on Matrix Analysis and Applications",
+      "year": 1991,
+      "doi": "10.1137/0612020",
+      "arxiv_id": null,
+      "abstract": "In this paper an analysis of rational iterations for the matrix sign function is presented. This analysis is based on Padé approximations of a certain hypergeometric function and it is shown that local convergence results for “multiplication-rich” polynomial iterations also apply to these rational methods. Multiplication-rich methods are of particular interest for many parallel and vector computing environments. The main diagonal Padé recursions, which include Newton’s and Halley’s methods as special cases, are globally convergent and can be implemented in a multiplication-rich fashion which is computationally competitive with the polynomial recursions (which are not globally convergent). Other rational iteration schemes are also discussed, including Laurent approximations, Cayley power methods, and globally convergent eigenvalue assignment methods.",
+      "citation_count": 152,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L026",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Optimal tight frames and quantum measurement",
+      "authors": [
+        "Yonina C. Eldar",
+        "G. David Forney"
+      ],
+      "venue": "IEEE Transactions on Information Theory",
+      "year": 2002,
+      "doi": "10.1109/18.985949",
+      "arxiv_id": null,
+      "abstract": "Tight frames and rank-one quantum measurements are shown to be intimately related. In fact, the family of normalized tight frames for the space in which a quantum-mechanical system lies is precisely the family of rank-one generalized quantum measurements on that space. Using this relationship, frame-theoretical analogs of various quantum-mechanical concepts and results are developed. The analog of a least-squares quantum measurement is a tight frame that is closest in a least-squares sense to a given set of vectors. The least-squares tight frame is found for both the case in which the scaling of the frame is specified (constrained least-squares frame (CLSF)) and the case in which the scaling is chosen to minimize the least-squares error (unconstrained least-squares frame (ULSF)). The well-known canonical frame is shown to be proportional to the ULSF and to coincide with the CLSF with a certain scaling.",
+      "citation_count": 148,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L027",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "An inverse free parallel spectral divide and conquer algorithm for nonsymmetric eigenproblems",
+      "authors": [
+        "Zhaojun Bai",
+        "James Demmel",
+        "Ming Gu"
+      ],
+      "venue": "Numerische Mathematik",
+      "year": 1997,
+      "doi": "10.1007/s002110050264",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 145,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L028",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Newton's Method for the Matrix Square Root",
+      "authors": [
+        "Nicholas J. Higham"
+      ],
+      "venue": "Mathematics of Computation",
+      "year": 1986,
+      "doi": "10.2307/2007992",
+      "arxiv_id": null,
+      "abstract": "One approach to computing a square root of a matrix A is to apply Newton's method to the quadratic matrix equation F(X) ≡X2 - A = 0. Two widely-quoted matrix square root iterations obtained by rewriting this Newton iteration are shown to have excellent mathematical convergence properties. However, by means of a perturbation analysis and supportive numerical examples, it is shown that these simplified iterations are numerically unstable. A further variant of Newton's method for the matrix square root, recently proposed in the literature, is shown to be, for practical purposes, numerically stable.",
+      "citation_count": 140,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L029",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "J -Orthogonal Matrices: Properties and Generation",
+      "authors": [
+        "Nicholas J. Higham"
+      ],
+      "venue": "SIAM Review",
+      "year": 2003,
+      "doi": "10.1137/s0036144502414930",
+      "arxiv_id": null,
+      "abstract": "A real, square matrix Q is J-orthogonal if Q T JQ = J, where the signature matrix $J = \\diag(\\pm 1)$. J-orthogonal matrices arise in the analysis and numerical solution of various matrix problems involving indefinite inner products, including, in particular, the downdating of Cholesky factorizations. We present techniques and tools useful in the analysis, application, and construction of these matrices, giving a self-contained treatment that provides new insights. First, we define and explore the properties of the exchange operator, which maps J-orthogonal matrices to orthogonal matrices and vice versa. Then we show how the exchange operator can be used to obtain a hyperbolic CS decomposition of a J-orthogonal matrix directly from the usual CS decomposition of an orthogonal matrix. We employ the decomposition to derive an algorithm for constructing random J-orthogonal matrices with specified norm and condition number. We also give a short proof of the fact that J-orthogonal matrices are optimally scaled under two-sided diagonal scalings. We introduce the indefinite polar decomposition and investigate two iterations for computing the J-orthogonal polar factor: a Newton iteration involving only matrix inversion and a Schulz iteration involving only matrix multiplication. We show that these iterations can be used to J-orthogonalize a matrix that is not too far from being J-orthogonal.",
+      "citation_count": 108,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L030",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Computing matrix functions",
+      "authors": [
+        "Nicholas J. Higham",
+        "Awad H. Al-Mohy"
+      ],
+      "venue": "Acta Numerica",
+      "year": 2010,
+      "doi": "10.1017/s0962492910000036",
+      "arxiv_id": null,
+      "abstract": "The need to evaluate a function f(A) ∈ ℂ n × n of a matrix A ∈ ℂ n × n arises in a wide and growing number of applications, ranging from the numerical solution of differential equations to measures of the complexity of networks. We give a survey of numerical methods for evaluating matrix functions, along with a brief treatment of the underlying theory and a description of two recent applications. The survey is organized by classes of methods, which are broadly those based on similarity transformations, those employing approximation by polynomial or rational functions, and matrix iterations. Computation of the Fréchet derivative, which is important for condition number estimation, is also treated, along with the problem of computing f(A)b without computing f(A) . A summary of available software completes the survey.",
+      "citation_count": 107,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L031",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "On Scaling Newton’s Method for Polar Decomposition and the Matrix Sign Function",
+      "authors": [
+        "Charles Kenney",
+        "Alan J. Laub"
+      ],
+      "venue": "SIAM Journal on Matrix Analysis and Applications",
+      "year": 1992,
+      "doi": "10.1137/0613044",
+      "arxiv_id": null,
+      "abstract": "A tight bound is given on the speed of convergence of Newton’s method with optimal scaling for the polar decomposition of a nonsingular complex matrix. Necessary and sufficient conditions are then derived that tell when an approximation to the optimal scaling value will give better results than the unscaled Newton method. For the related matrix sign problem, it is shown that optimal scaling requires complete knowledge of the eigenvalues of the original matrix. Because this is impractical, a family of scaling methods that are optimal with respect to partial eigenvalue information is derived. This family includes optimal scaling as well as a “semioptimal” scaling method based on the dominant eigenvalues of the matrix and its inverse. Semioptimal scaling can be implemented using the power method and it gives nearly optimal performance on a set of test problems. These test problems also show that a variety of other commonly used scaling strategies, including spectral scaling, determinantal scaling, and 2-norm scaling, can result in unduly slow convergence.",
+      "citation_count": 99,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L032",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Stable and Efficient Spectral Divide and Conquer Algorithms for the Symmetric Eigenvalue Decomposition and the SVD",
+      "authors": [
+        "Yuji Nakatsukasa",
+        "Nicholas J. Higham"
+      ],
+      "venue": "SIAM Journal on Scientific Computing",
+      "year": 2013,
+      "doi": "10.1137/120876605",
+      "arxiv_id": null,
+      "abstract": "Spectral divide and conquer algorithms solve the eigenvalue problem for all the eigenvalues and eigenvectors by recursively computing an invariant subspace for a subset of the spectrum and using it to decouple the problem into two smaller subproblems. A number of such algorithms have been developed over the last 40 years, often motivated by parallel computing and, most recently, with the aim of achieving minimal communication costs. However, none of the existing algorithms has been proved to be backward stable, and they all have a significantly higher arithmetic cost than the standard algorithms currently used. We present new spectral divide and conquer algorithms for the symmetric eigenvalue problem and the singular value decomposition that are backward stable, achieve lower bounds on communication costs recently derived by Ballard, Demmel, Holtz, and Schwartz, and have operation counts within a small constant factor of those for the standard algorithms. The new algorithms are built on the polar decomposition and exploit the recently developed QR-based dynamically weighted Halley algorithm of Nakatsukasa, Bai, and Gygi, which computes the polar decomposition using a cubically convergent iteration based on the building blocks of QR factorization and matrix multiplication. The algorithms have great potential for efficient, numerically stable computations in situations where the cost of communication dominates the cost of arithmetic.",
+      "citation_count": 98,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.1137/120876605",
+      "source_api": "openalex_citations",
+      "id": "L033",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "A real-time multigrid finite hexahedra method for elasticity simulation using CUDA",
+      "authors": [
+        "Christian Dick",
+        "Joachim Georgii",
+        "Rüdiger Westermann"
+      ],
+      "venue": "Simulation Modelling Practice and Theory",
+      "year": 2010,
+      "doi": "10.1016/j.simpat.2010.11.005",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 91,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L034",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "The On-Line Direct Kinematics of Parallel Manipulators Under Joint-Sensor Redundancy",
+      "authors": [
+        "Luc Baron",
+        "Jorge Angeles"
+      ],
+      "venue": "",
+      "year": 1998,
+      "doi": "10.1007/978-94-015-9064-8_13",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 89,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L035",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "The matrix sign decomposition and its relation to the polar decomposition",
+      "authors": [
+        "Nicholas J. Higham"
+      ],
+      "venue": "Linear Algebra and its Applications",
+      "year": 1994,
+      "doi": "10.1016/0024-3795(94)90393-x",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 88,
+      "is_open_access": true,
+      "pdf_url": "https://www.sciencedirect.com/science/article/pii/002437959490393X/pdf",
+      "source_api": "openalex_citations",
+      "id": "L036",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Localization of wideband signals using least-squares and total least-squares approaches",
+      "authors": [
+        "Shahrokh Valaee",
+        "Benoı̂t Champagne",
+        "P. Kabal"
+      ],
+      "venue": "IEEE Transactions on Signal Processing",
+      "year": 1999,
+      "doi": "10.1109/78.757209",
+      "arxiv_id": null,
+      "abstract": "In this paper, we introduce a new focusing technique for localization of wideband signals. Relaxing the unitary assumption for the focusing matrices, we formulate the least-square (LS) and the total least-square (TLS) coherent signal-subspace methods. The TLS is an alternative to the conventional LS and uses the fact that errors can exist both in the focusing location matrix as well as in the estimated location matrix at a given frequency bin. To prevent the focusing loss, we use a class of focusing matrices that are constant under multiplication by their Hermitian transpose. The class of unitary matrices comports with this property. We then develop a new focusing technique based on a modification to the TLS (MTLS). It is shown that the computational complexity of the new technique is significantly lower than that for the rotational signal subspace method (RSS). The focusing gain of the new technique is also larger than the focusing gain of the RSS algorithm. The simulation study shows that, compared with the RSS, the new algorithm has a smaller resolution signal to-noise ratio (SNR).",
+      "citation_count": 85,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L037",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "A Schur–Newton Method for the Matrix \\lowercase{\\boldmath p }th Root and its Inverse",
+      "authors": [
+        "Chun‐Hua Guo",
+        "Nicholas J. Higham"
+      ],
+      "venue": "SIAM Journal on Matrix Analysis and Applications",
+      "year": 2006,
+      "doi": "10.1137/050643374",
+      "arxiv_id": null,
+      "abstract": "Newton’s method for the inverse matrix pth root, $A^{-1/p}$, has the attraction that it involves only matrix multiplication. We show that if the starting matrix is $c^{-1}I$ for $c\\in\\mathbb{R}^+$ then the iteration converges quadratically to $A^{-1/p}$ if the eigenvalues of A lie in a wedge‐shaped convex set containing the disc $\\{z: |z-c^p| < c^p\\}$. We derive an optimal choice of c for the case where A has real, positive eigenvalues. An application is described to roots of transition matrices from Markov models, in which for certain problems the convergence condition is satisfied with $c=1$. Although the basic Newton iteration is numerically unstable, a coupled version is stable and a simple modification of it provides a new coupled iteration for the matrix pth root. For general matrices we develop a hybrid algorithm that computes a Schur decomposition, takes square roots of the upper (quasi‐) triangular factor, and applies the coupled Newton iteration to a matrix for which fast convergence is guaranteed. The new algorithm can be used to compute either $A^{1/p}$ or $A^{-1/p}$, and for large p that are not highly composite it is more efficient than the method of Smith based entirely on the Schur decomposition.",
+      "citation_count": 81,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L038",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Empirical Arithmetic Averaging Over the Compact Stiefel Manifold",
+      "authors": [
+        "Tetsuya Kaneko",
+        "Simone Fiori",
+        "Toshihisa Tanaka"
+      ],
+      "venue": "IEEE Transactions on Signal Processing",
+      "year": 2012,
+      "doi": "10.1109/tsp.2012.2226167",
+      "arxiv_id": null,
+      "abstract": "The aim of the present research work is to investigate algorithms to compute empirical averages of finite sets of sample-points over the Stiefel manifold by extending the notion of Pythagoras' arithmetic averaging over the real line to a curved manifold. The idea underlying the developed algorithms is that sample-points on the Stiefel manifold get mapped onto a tangent space, where the average is taken, and then the average point on the tangent space is brought back to the Stiefel manifold, via appropriate maps. Numerical experimental results are shown and commented on in order to illustrate the numerical behaviour of the proposed procedure. The obtained numerical results confirm that the developed algorithms converge steadily and in a few iterations and that they are able to cope with relatively large-size problems.",
+      "citation_count": 80,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L039",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Stability of Methods for Matrix Inversion",
+      "authors": [
+        "J. J. Du Croz",
+        "Nicholas J. Higham"
+      ],
+      "venue": "IMA Journal of Numerical Analysis",
+      "year": 1992,
+      "doi": "10.1093/imanum/12.1.1",
+      "arxiv_id": null,
+      "abstract": "Inversion of a triangular matrix can be accomplished in several ways. The standard methods are characterized by the loop ordering, whether matrix-vector multiplication, solution of a triangular system, or a rank-1 update is done inside the outer loop, and whether the method is blocked or unblocked. The numerical stability properties of these methods are investigated. It is shown that unblocked methods satisfy pleasing bounds on the left or right residual. However, for one of the block methods it is necessary to convert a matrix multiplication into the solution of a multiple right-hand side triangular system in order to have an acceptable residual bound. The inversion of a full matrix given a factorization PA = LU is also considered, including the special cases of symmetric indefinite and symmetric positive definite matrices. Three popular methods are shown to possess satisfactory residual bounds, subject to a certain requirement on the implementation, and an attractive new method is described. This work was motivated by the question of what inversion methods should be used in LAPACK.",
+      "citation_count": 79,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L040",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Fast randomized Singular Value Thresholding for Nuclear Norm Minimization",
+      "authors": [
+        "Tae-Hyun Oh",
+        "Yasuyuki Matsushita",
+        "Yu‐Wing Tai",
+        "In So Kweon"
+      ],
+      "venue": "",
+      "year": 2015,
+      "doi": "10.1109/cvpr.2015.7299078",
+      "arxiv_id": null,
+      "abstract": "Rank minimization problem can be boiled down to either Nuclear Norm Minimization (NNM) or Weighted NNM (WNNM) problem. The problems related to NNM (or WNNM) can be solved iteratively by applying a closed-form proximal operator, called Singular Value Thresholding (SVT) (or Weighted SVT), but they suffer from high computational cost to compute a Singular Value Decomposition (SVD) at each iteration. In this paper, we propose an accurate and fast approximation method for SVT, called fast randomized SVT (FRSVT), where we avoid direct computation of SVD. The key idea is to extract an approximate basis for the range of a matrix from its compressed matrix. Given the basis, we compute the partial singular values of the original matrix from a small factored matrix. While the basis approximation is the bottleneck, our method is already severalfold faster than thin SVD. By adopting a range propagation technique, we can further avoid one of the bottleneck at each iteration. Our theoretical analysis provides a stepping stone between the approximation bound of SVD and its effect to NNM via SVT. Along with the analysis, our empirical results on both quantitative and qualitative studies show our approximation rarely harms the convergence behavior of the host algorithms. We apply it and validate the efficiency of our method on various vision problems, e.g. subspace clustering, weather artifact removal, simultaneous multi-image alignment and rectification.",
+      "citation_count": 73,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L041",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "The direct kinematics of parallel manipulators under joint-sensor redundancy",
+      "authors": [
+        "Luc Baron",
+        "Jorge Angeles"
+      ],
+      "venue": "IEEE Transactions on Robotics and Automation",
+      "year": 2000,
+      "doi": "10.1109/70.833183",
+      "arxiv_id": null,
+      "abstract": "We study, for each of the possible joint-sensor layouts, the subspaces into which the motion of the hip-attachment points of parallel manipulators are completely measured. The projection of the motion of these points onto their subspaces allows us to write the underlying direct kinematics as a linear algebraic system constrained by the proper orthogonality of the rotation matrix. Although the solution of this problem requires a nonlinear technique, we propose a linear procedure that provides what we term a polar least square estimate. The resulting procedure is fast, robust to measurement noise, and produces estimates with about the same accuracy as a nonlinear procedure.",
+      "citation_count": 73,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L042",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Contact-State Segmentation Using Particle Filters for Programming by Human Demonstration in Compliant-Motion Tasks",
+      "authors": [
+        "Wim Meeussen",
+        "Johan Rutgeerts",
+        "Klaas Gadeyne",
+        "Herman Bruyninckx",
+        "Joris De Schutter"
+      ],
+      "venue": "IEEE Transactions on Robotics",
+      "year": 2007,
+      "doi": "10.1109/tro.2007.892227",
+      "arxiv_id": null,
+      "abstract": "This paper presents a contribution to programming by human demonstration, in the context of compliant-motion task specification for sensor-controlled robot systems that physically interact with the environment. One wants to learn about the geometric parameters of the task and segment the total motion executed by the human into subtasks for the robot, that can each be executed with simple compliant-motion task specifications. The motion of the human demonstration tool is sensed with a 3-D camera, and the interaction with the environment is sensed with a force sensor in the human demonstration tool. Both measurements are uncertain, and do not give direct information about the geometric parameters of the contacting surfaces, or about the contact formations (CFs) encountered during the human demonstration. The paper uses a Bayesian sequential Monte Carlo method (also known as a particle filter) to do the simultaneous estimation of the CF (discrete information) and the geometric parameters (continuous information). The simultaneous CF segmentation and the geometric parameter estimation are helped by the availability of a contact state graph of all possible CFs. The presented approach applies to all compliant-motion tasks involving polyhedral objects with a known geometry, where the uncertain geometric parameters are the poses of the objects. This work improves the state of the art by scaling the contact estimation to all possible contacts, by presenting a prediction step based on the topological information of a contact state graph, and by presenting efficient algorithms that allow the estimation to operate in real time. In real-world experiments, it is shown that the approach is able to discriminate in real time between some 250 different CFs in the graph",
+      "citation_count": 72,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L043",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Functions Preserving Matrix Groups and Iterations for the Matrix Square Root",
+      "authors": [
+        "Nicholas J. Higham",
+        "D. Steven Mackey",
+        "Niloufer Mackey",
+        "Françoise Tisseur"
+      ],
+      "venue": "SIAM Journal on Matrix Analysis and Applications",
+      "year": 2005,
+      "doi": "10.1137/s0895479804442218",
+      "arxiv_id": null,
+      "abstract": "For which functions f does $A\\in\\mathbb{G} \\Rightarrow f(A)\\in\\mathbb{G}$ when $\\mathbb{G}$ is the matrix automorphism group associated with a bilinear or sesquilinear form? For example, if A is symplectic when is $f(A)$ symplectic? We show that group structure is preserved precisely when $f(A^{-1}) = f(A)^{-1}$ for bilinear forms and when $f(A^{-*}) = f(A)^{-*}$ for sesquilinear forms. Meromorphic functions that satisfy each of these conditions are characterized. Related to structure preservation is the condition $f(\\overline{A}) = \\overline{f(A)}$, and analytic functions and rational functions satisfying this condition are also characterized. These results enable us to characterize all meromorphic functions that map every $\\mathbb{G}$ into itself as the ratio of a polynomial and its ``reversal,' up to a monomial factor and conjugation. The principal square root is an important example of a function that preserves every automorphism group $\\mathbb{G}$. By exploiting the matrix sign function, a new family of coupled iterations for the matrix square root is derived. Some of these iterations preserve every $\\mathbb{G}$; all of them are shown, via a novel Fréchet derivative-based analysis, to be numerically stable. A rewritten form of Newton's method for the square root of $A\\in\\mathbb{G}$ is also derived. Unlike the original method, this new form has good numerical stability properties, and we argue that it is the iterative method of choice for computing $A^{1/2}$ when $A\\in\\mathbb{G}$. Our tools include a formula for the sign of a certain block $2\\times 2$ matrix, the generalized polar decomposition along with a wide class of iterations for computing it, and a connection between the generalized polar decomposition of $I+A$ and the square root of $A\\in\\mathbb{G}$.",
+      "citation_count": 71,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L044",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Learning skeletons for shape and pose",
+      "authors": [
+        "Nils Hasler",
+        "Thorsten Thormählen",
+        "Bodo Rosenhahn",
+        "Hans-Peter Seidel"
+      ],
+      "venue": "",
+      "year": 2010,
+      "doi": "10.1145/1730804.1730809",
+      "arxiv_id": null,
+      "abstract": "In this paper a method for estimating a rigid skeleton, including skinning weights, skeleton connectivity, and joint positions, given a sparse set of example poses is presented. In contrast to other methods, we are able to simultaneously take examples of different subjects into account, which improves the robustness of the estimation. It is additionally possible to generate a skeleton that primarily describes variations in body shape instead of pose. The shape skeleton can then be combined with a regular pose varying skeleton. That way pose and body shape can be controlled simultaneously but separately. As this skeleton is technically still just a skinned rigid skeleton, compatibility with major modelling packages and game engines is retained. We further present an approach for synthesizing a suitable bind shape that additionally improves the accuracy of the generated model.",
+      "citation_count": 67,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L045",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Fast singular value thresholding without singular value decomposition",
+      "authors": [
+        "Jian‐Feng Cai",
+        "Stanley Osher"
+      ],
+      "venue": "Methods and Applications of Analysis",
+      "year": 2013,
+      "doi": "10.4310/maa.2013.v20.n4.a2",
+      "arxiv_id": null,
+      "abstract": "Singular value thresholding (SVT) is a basic subroutine in many popular numerical schemes for solving nuclear norm minimization that arises from low-rank matrix recovery problems such as matrix completion. The conventional approach for SVT is first to find the singular value decomposition (SVD) and then to shrink the singular values. However, such an approach is time-consuming under some circumstances, especially when the rank of the resulting matrix is not significantly low compared to its dimension. In this paper, we propose a fast algorithm for directly computing SVT for general dense matrices without using SVDs. Our algorithm is based on matrix Newton iteration for matrix functions, and the convergence is theoretically guaranteed. Numerical experiments show that our proposed algorithm is more efficient than the SVD-based approaches for general dense matrices.",
+      "citation_count": 65,
+      "is_open_access": true,
+      "pdf_url": "https://www.intlpress.com/site/pub/files/_fulltext/journals/maa/2013/0020/0004/MAA-2013-0020-0004-a002.pdf",
+      "source_api": "openalex_citations",
+      "id": "L046",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Factorized Solution of Lyapunov Equations Based on Hierarchical Matrix Arithmetic",
+      "authors": [
+        "Ulrike Baur",
+        "Peter Benner"
+      ],
+      "venue": "Computing",
+      "year": 2006,
+      "doi": "10.1007/s00607-006-0178-y",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 65,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L047",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "A Novel Geometric Framework on Gram Matrix Trajectories for Human Behavior Understanding",
+      "authors": [
+        "Anis Kacem",
+        "Mohamed Daoudi",
+        "Boulbaba Ben Amor",
+        "Stefano Berretti",
+        "Juan Carlos Alvarez-Paiva"
+      ],
+      "venue": "IEEE Transactions on Pattern Analysis and Machine Intelligence",
+      "year": 2018,
+      "doi": "10.1109/tpami.2018.2872564",
+      "arxiv_id": null,
+      "abstract": "In this paper, we propose a novel space-time geometric representation of human landmark configurations and derive tools for comparison and classification. We model the temporal evolution of landmarks as parametrized trajectories on the Riemannian manifold of positive semidefinite matrices of fixed-rank. Our representation has the benefit to bring naturally a second desirable quantity when comparing shapes-the spatial covariance-in addition to the conventional affine-shape representation. We derived then geometric and computational tools for rate-invariant analysis and adaptive re-sampling of trajectories, grounding on the Riemannian geometry of the underlying manifold. Specifically, our approach involves three steps: (1) landmarks are first mapped into the Riemannian manifold of positive semidefinite matrices of fixed-rank to build time-parameterized trajectories; (2) a temporal warping is performed on the trajectories, providing a geometry-aware (dis-)similarity measure between them; (3) finally, a pairwise proximity function SVM is used to classify them, incorporating the (dis-)similarity measure into the kernel function. We show that such representation and metric achieve competitive results in applications as action recognition and emotion recognition from 3D skeletal data, and facial expression recognition from videos. Experiments have been conducted on several publicly available up-to-date benchmarks.",
+      "citation_count": 65,
+      "is_open_access": true,
+      "pdf_url": "https://hal.science/hal-01883247",
+      "source_api": "openalex_citations",
+      "id": "L048",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Optimizing Halley's Iteration for Computing the Matrix Polar Decomposition",
+      "authors": [
+        "Yuji Nakatsukasa",
+        "Zhaojun Bai",
+        "François Gygi"
+      ],
+      "venue": "SIAM Journal on Matrix Analysis and Applications",
+      "year": 2010,
+      "doi": "10.1137/090774999",
+      "arxiv_id": null,
+      "abstract": "We introduce a dynamically weighted Halley (DWH) iteration for computing the polar decomposition of a matrix, and we prove that the new method is globally and asymptotically cubically convergent. For matrices with condition number no greater than $10^{16}$, the DWH method needs at most six iterations for convergence with the tolerance $10^{-16}$. The Halley iteration can be implemented via QR decompositions without explicit matrix inversions. Therefore, it is an inverse free communication friendly algorithm for the emerging multicore and hybrid high performance computing systems.",
+      "citation_count": 58,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L049",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Perturbation Bounds for the Polar Decomposition",
+      "authors": [
+        "Roy Mathias"
+      ],
+      "venue": "SIAM Journal on Matrix Analysis and Applications",
+      "year": 1993,
+      "doi": "10.1137/0614041",
+      "arxiv_id": null,
+      "abstract": "Let $M_n ( F )$ denote the space of matrices over the field F. Given $A \\in M_n ( F )$ define $| A | \\equiv ( A^ * A )^{1/2} $ and $U( A ) \\equiv A | A |^{ - 1} $ assuming A is nonsingular. Let $\\sigma _1 ( A ) \\geq \\sigma _2 ( A ) \\geq \\cdots \\sigma _n ( A ) \\geq 0$ denote the ordered singular values of A. Majorization results are obtained relating the singular values of $U ( A + \\Delta A ) - U ( A )$ and those of A and $\\Delta A$. In particular, it is shown that if $A,\\,\\Delta A \\in M_n ( R )$ and $\\sigma _1 ( \\Delta A ) < \\sigma _n ( A )$, then for any unitarily invariant norm $\\| \\cdot \\|, \\| U ( A + \\Delta A ) - U ( A ) \\| \\leq 2 [ \\sigma_{n - 1} ( A ) + \\sigma_{n} ( A )]^{ - 1} \\| \\Delta A \\|$. Similar results are obtained for matrices with complex entries. Also considered is the unitary Procrustes problem: $\\min \\{ \\| A - UB \\|:U \\in M_n ( C ),U^ * U = I \\}$ where $A,B \\in M_n ( C )$, and a unitarily invariant norm $\\| \\cdot \\|$ are given. It was conjectured that if U is unitary and $U^ * BA^ * $ is positive semidefinite then U must be a solution to the unitary Procrustes problem for all unitarily invariant norms. The conjecture is shown to be false.",
+      "citation_count": 56,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L050",
+      "download": true,
+      "publication_status": "published"
+    }
+  ]
+}

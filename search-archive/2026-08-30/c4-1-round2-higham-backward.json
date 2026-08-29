@@ -1,0 +1,569 @@
+{
+  "query": "",
+  "timestamp": "2026-08-30T05:00:54.304234+08:00",
+  "sources": [
+    "citations_openalex"
+  ],
+  "total": 30,
+  "results": [
+    {
+      "title": "The Theory of Matrices",
+      "authors": [
+        "Felix R. Gantmacher"
+      ],
+      "venue": "",
+      "year": 1984,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "Volume 2: XI. Complex symmetric, skew-symmetric, and orthogonal matrices: 1. Some formulas for complex orthogonal and unitary matrices 2. Polar decomposition of a complex matrix 3. The normal form of a complex symmetric matrix 4. The normal form of a complex skew-symmetric matrix 5. The normal form of a complex orthogonal matrix XII. Singular pencils of matrices: 1. Introduction 2. Regular pencils of matrices 3. Singular pencils. The reduction theorem 4. The canonical form of a singular pencil of matrices 5. The minimal indices of a pencil. Criterion for strong equivalence of pencils 6. Singular pencils of quadratic forms 7. Application to differential equations XIII. Matrices with non-negative elements: 1. General properties 2. Spectral properties of irreducible non-negative matrices 3. Reducible matrices 4. The normal form of a reducible matrix 5. Primitive and imprimitive matrices 6. Stochastic matrices 7. Limiting probabilities for a homogeneous Markov chain with a finite number of states 8. Totally non-negative matrices 9. Oscillatory matrices XIV. Applications of the theory of matrices to the investigation of systems of linear differential equations: 1. Systems of linear differential equations with variable coefficients. General concepts 2. Lyapunov transformations 3. Reducible systems 4. The canonical form of a reducible system. Erugin's theorem 5. The matricant 6. The multiplicative integral. The infinitesimal calculus of Volterra 7. Differential systems in a complex domain. General properties 8. The multiplicative integral in a complex domain 9. Isolated singular points 10. Regular singularities 11. Reducible analytic systems 12. Analytic functions of several matrices and their application to the investigation of differential systems. The papers of Lappo-Danilevskii XV. The problem of Routh-Hurwitz and related questions: 1. Introduction 2. Cauchy indices 3. Routh's algorithm 4. The singular case. Examples 5. Lyapunov's theorem 6. The theorem of Routh-Hurwitz 7. Orlando's formula 8. Singular cases in the Routh-Hurwitz theorem 9. The method of quadratic forms. Determination of the number of distinct real roots of a polynomial 10. Infinite Hankel matrices of finite rank 11. Determination of the index of an arbitrary rational fraction by the coefficients of numerator and denominator 12. Another proof of the Routh-Hurwitz theorem 13. Some supplements to the Routh-Hurwitz theorem. Stability criterion of Lienard and Chipart 14. Some properties of Hurwitz polynomials. Stieltjes' theorem. Representation of Hurwitz polynomials by continued fractions 15. Domain of stability. Markov parameters 16. Connection with the problem of moments 17. Theorems of Markov and Chebyshev 18. The generalized Routh-Hurwitz problem Bibliography Index.",
+      "citation_count": 8629,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L001",
+      "download": true,
+      "publication_status": "unknown"
+    },
+    {
+      "title": "A Generalized Solution of the Orthogonal Procrustes Problem",
+      "authors": [
+        "Peter H. Schönemann"
+      ],
+      "venue": "Psychometrika",
+      "year": 1966,
+      "doi": "10.1007/bf02289451",
+      "arxiv_id": null,
+      "abstract": "A solution T of the least-squares problem AT = B + E , given A and B so that trace ( E′E )= minimum and T′T = I is presented. It is compared with a less general solution of the same problem which was given by Green [5]. The present solution, in contrast to Green's, is applicable to matrices A and B which are of less than full column rank. Some technical suggestions for the numerical computation of T and an illustrative example are given.",
+      "citation_count": 2093,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L002",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "LINPACK Users' Guide",
+      "authors": [
+        "Jack Dongarra",
+        "C Moler",
+        "James R. Bunch",
+        "G. W. Stewart"
+      ],
+      "venue": "Society for Industrial and Applied Mathematics eBooks",
+      "year": 1979,
+      "doi": "10.1137/1.9781611971811",
+      "arxiv_id": null,
+      "abstract": "General matrices Band matrices Positive definite matrices Positive definite band matrices Symmetric Indefinite Matrices Triangular matrices Tridiagonal matrices The Cholesky decomposition The QR decomposition Updating QR and Cholesky decompositions The singular value decomposition References Basic linear algebra subprograms Timing data Program listings BLA Listings.",
+      "citation_count": 1736,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L003",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "A Least Squares Estimate of Satellite Attitude",
+      "authors": [
+        "Grace Wahba"
+      ],
+      "venue": "SIAM Review",
+      "year": 1965,
+      "doi": "10.1137/1007077",
+      "arxiv_id": null,
+      "abstract": "Previous article Next article A Least Squares Estimate of Satellite AttitudeGrace WahbaGrace Wahbahttps://doi.org/10.1137/1007077PDFBibTexSections ToolsAdd to favoritesExport CitationTrack CitationsEmail SectionsAbout\"A Least Squares Estimate of Satellite Attitude.\" SIAM Review, 7(3), p. 409 Previous article Next article FiguresRelatedReferencesCited byDetails Multi-view clustering with orthogonal mapping and binary graphExpert Systems with Applications, Vol. 213 Cross Ref Rotational State Determination16 April 2022 Cross Ref Discrete-Time Rigid Body Pose Estimation Based on Lagrange–d’Alembert Principle14 September 2022 | Journal of Nonlinear Science, Vol. 32, No. 6 Cross Ref Attitude estimation of connected drones based on extended Kalman filter under real outdoor environments27 October 2022 | Advanced Robotics, Vol. 73 Cross Ref Numerical strategies for recursive least squares solutions to the matrix equation AX = B21 October 2022 | International Journal of Computer Mathematics, Vol. 162 Cross Ref Probing disorder in 2CzPN using core and valence states1 January 2022 | Physical Chemistry Chemical Physics, Vol. 24, No. 38 Cross Ref Direct measurement of vorticity using tracer particles with internal markers13 October 2022 | Experiments in Fluids, Vol. 63, No. 10 Cross Ref Best-fit constraint equations for coupling mixed-dimension simulation models with wide flange cross sectionsFinite Elements in Analysis and Design, Vol. 208 Cross Ref Optimization-Based Strapdown Attitude Alignment for High-Accuracy Systems: Covariance Analysis With ApplicationsIEEE Transactions on Aerospace and Electronic Systems, Vol. 58, No. 5 Cross Ref Partially latent factors based multi‐view subspace learning23 June 2022 | Computational Intelligence, Vol. 38, No. 5 Cross Ref Attitude Estimation and Control30 September 2022 Cross Ref References26 August 2022 Cross Ref A linear surrogate for optimising functions of an orthogonal matrix with applications in wave function theory26 September 2022 | Molecular Physics Cross Ref Research on Algorithms for Multi-Vector Attitude DeterminationMathematical Problems in Engineering, Vol. 2022 Cross Ref A high-accuracy initial alignment method based on backtracking process for strapdown inertial navigation systemMeasurement, Vol. 201 Cross Ref Absolute Triangulation Algorithms for Space Exploration1 September 2022 | Journal of Guidance, Control, and Dynamics, Vol. 3 Cross Ref Observability of the relative motion from inertial data in kinematic chainsControl Engineering Practice, Vol. 125 Cross Ref Robust Hybrid Attitude and Gyro-Bias Observer on QuaternionsIEEE Transactions on Industrial Electronics, Vol. 69, No. 8 Cross Ref A Gyroless Attitude Estimation for Ground Vehicle Under Severe Dynamic ConditionsIEEE Transactions on Intelligent Transportation Systems, Vol. 23, No. 8 Cross Ref Research on Gradient-Descent Extended Kalman Attitude Estimation Method for Low-Cost MARG9 August 2022 | Micromachines, Vol. 13, No. 8 Cross Ref Review of Calibration Methods for Asteroid Optical Cameras Cross Ref Low-cost Raspberry Pi star sensor for small satellitesJournal of Astronomical Telescopes, Instruments, and Systems, Vol. 8, No. 03 Cross Ref The role of ball backspin alignment and variability in basketball shooting accuracy25 May 2022 | Journal of Sports Sciences, Vol. 40, No. 12 Cross Ref QUEST Aided EKF for Attitude and Rate Estimation Using Modified Rodrigues Parameters16 June 2022 | WSEAS TRANSACTIONS ON SYSTEMS AND CONTROL, Vol. 17 Cross Ref Design and analysis of attitude observers based on the Lagrange-d’Alembert principle applied to constrained three-vehicle formationsAdvances in Space Research, Vol. 69, No. 11 Cross Ref ARCS: Accurate Rotation and Correspondence Search Cross Ref On-Orbit Geometric Distortion Correction on Star Images through 2D Legendre Neural Network11 June 2022 | Remote Sensing, Vol. 14, No. 12 Cross Ref Implementation Features of Attitude Determination Algorithm for the SamSat-ION Nanosatellite Cross Ref Comparison of TRIAD+EKF and TRIAD+UKF Algorithms for Nanosatellite Attitude Estimation4 May 2022 | WSEAS TRANSACTIONS ON SYSTEMS AND CONTROL, Vol. 17 Cross Ref Attitude estimation for artillery shells using magnetometers and frequency detection of accelerometersControl Engineering Practice, Vol. 122 Cross Ref Alignment and integration of spatial transcriptomics data16 May 2022 | Nature Methods, Vol. 19, No. 5 Cross Ref Attitude Uncertainty Analysis of a Three-Vehicle Constrained Formation20 May 2022 | Sensors, Vol. 22, No. 10 Cross Ref Canonical Face EmbeddingsIEEE Transactions on Biometrics, Behavior, and Identity Science, Vol. 4, No. 2 Cross Ref Robust optimal attitude determination using interval analysisAdvances in Space Research, Vol. 69, No. 6 Cross Ref Applications of a Single-Vector Inertial Aiding Scheme for 3U CubeSatsJournal of Spacecraft and Rockets, Vol. 59, No. 2 Cross Ref A Spacecraft Attitude Determination and Control Algorithm for Solar Arrays Pointing Leveraging Sun Angle and Angular Rates Measurements18 January 2022 | Algorithms, Vol. 15, No. 2 Cross Ref Fault Tolerant Attitude and Orbit Determination System for Small Satellite Platforms19 January 2022 | Aerospace, Vol. 9, No. 2 Cross Ref A Factor Graph-Based Attitude Determination Approach for Microsatellite with Star Sensor and Gyros18 January 2022 Cross Ref Regression Models for Directional Variables16 June 2022 Cross Ref Modelling the Movement of Magnetic North16 June 2022 Cross Ref Feasibility Study of Neural Network in Satellite Attitude Determination6 July 2022 Cross Ref Combined Attitude Determination for Real-Time Geomagnetic NavigationIEEE Magnetics Letters, Vol. 13 Cross Ref RANSIC: Fast and Highly Robust Estimation for Rotation Search and Point Cloud Registration Using Invariant CompatibilityIEEE Robotics and Automation Letters, Vol. 7, No. 1 Cross Ref An Improved In-flight Alignment Method Based on Backtracking Navigation for GPS-aided Low Cost SINS With Short EnduranceIEEE Robotics and Automation Letters, Vol. 7, No. 1 Cross Ref Joint Estimation of Stellar Atmospheric Refraction and Star Tracker AttitudeIEEE Transactions on Instrumentation and Measurement, Vol. 71 Cross Ref A New Instantaneous Method for Attitude Determination Using GPS Phase MeasurementIEEE Transactions on Instrumentation and Measurement, Vol. 71 Cross Ref Constrained Wrapped Least Squares: A Tool for High-Accuracy GNSS Attitude DeterminationIEEE Transactions on Instrumentation and Measurement, Vol. 71 Cross Ref Adaptive Attitude Estimation Using a Hybrid Model-Learning ApproachIEEE Transactions on Instrumentation and Measurement, Vol. 71 Cross Ref IEEE Transactions on Network Science and Engineering, Vol. 9, No. 4 Cross Ref Asymptotically stable optimal multi-rate rigid body attitude estimation based on lagrange-d'alembert principleJournal of Geometric Mechanics, Vol. 15, No. 1 Cross Ref Statistical confidence domain data driven based fast in-flight alignment methodMeasurement, Vol. 188 Cross Ref Nonlinear Attitude Estimation Using Intermittent Linear Velocity and Vector Measurements Cross Ref Variational Symplectic Accelerated Optimization on Lie Groups Cross Ref Global exponential angular velocity estimation of rigid-body spacecraft from quaternion and vector measurementsAerospace Science and Technology, Vol. 119 Cross Ref Multiplicative-modified-Rodrigues-parameters-based strong tracking unscented Kalman filter for satellite attitude estimation3 November 2021 | Measurement Science and Technology Cross Ref Planet–Sun Sensor RevisitedJournal of Spacecraft and Rockets, Vol. 58, No. 6 Cross Ref Assessments of bilateral asymmetry with application in human skull analysis6 October 2021 | PLOS ONE, Vol. 16, No. 10 Cross Ref Finite-time stable estimator for attitude motion in the presence of bias in angular velocity measurementsAutomatica, Vol. 132 Cross Ref Lessons Learned: Consider the ContextJournal of Applied Biomechanics, Vol. 37, No. 5 Cross Ref A Fast and Robust Rotation Search and Point Cloud Registration Method for 2D Stitching and 3D Object Localization19 October 2021 | Applied Sciences, Vol. 11, No. 20 Cross Ref Static Attitude Determination Using Convolutional Neural Networks26 September 2021 | Sensors, Vol. 21, No. 19 Cross Ref Attitude Estimation of SINS on Dynamic Base With Decoupling Gravity VectorIEEE Sensors Journal, Vol. 21, No. 18 Cross Ref Evaluation of Gradient Descent Algorithm for Attitude Estimation Cross Ref A super-fast optimal attitude matrix in attitude determination7 June 2021 | Measurement Science and Technology, Vol. 32, No. 9 Cross Ref Passive and Explicit Attitude and Gyro-Bias Observers Using Inertial MeasurementsIEEE Transactions on Industrial Electronics, Vol. 68, No. 9 Cross Ref Interlaced Attitude Estimation for Spacecraft Using Vector Observations19 October 2021 | Guidance, Navigation and Control, Vol. 01, No. 03 Cross Ref Robust and efficient forward, differential, and inverse kinematics using dual quaternions20 July 2020 | The International Journal of Robotics Research, Vol. 40, No. 10-11 Cross Ref High Update Rate Attitude Measurement Method of Star Sensors Based on Star Point Correction of Rolling Shutter Exposure25 August 2021 | Sensors, Vol. 21, No. 17 Cross Ref Bibliography7 May 2021 Cross Ref Fault-tolerant control of flexible satellite with magnetic actuation and reaction wheel24 August 2021 | Proceedings of the Institution of Mechanical Engineers, Part G: Journal of Aerospace Engineering, Vol. 105592 Cross Ref Attitude estimation for ground vehicles using low-cost sensors with in-vehicle calibration Cross Ref Stereo Vision-Based Relative Position and Attitude Estimation of Non-Cooperative Spacecraft20 August 2021 | Aerospace, Vol. 8, No. 8 Cross Ref The package: nonparametric regression using local rotation matrices in8 April 2021 | Journal of Statistical Computation and Simulation, Vol. 91, No. 11 Cross Ref Multi-view subspace clustering with consistent and view-specific latent factors and coefficient matrices Cross Ref Lightweight Extended Kalman Filter for MARG Sensors Attitude EstimationIEEE Sensors Journal, Vol. 21, No. 13 Cross Ref Systematic Errors of Starry Sky Simulators Using Raster Screens12 January 2022 | Optoelectronics, Instrumentation and Data Processing, Vol. 57, No. 4 Cross Ref A Compressed and High-Accuracy Star Tracker with On-Orbit Deployable Baffle for Remote Sensing CubeSats26 June 2021 | Remote Sensing, Vol. 13, No. 13 Cross Ref Characterization of Degenerate Configurations in Attitude Determination of Three-Vehicle Heterogeneous Formations6 July 2021 | Sensors, Vol. 21, No. 14 Cross Ref Performance Enhancement of Consumer-Grade MEMS Sensors through Geometrical Redundancy16 July 2021 | Sensors, Vol. 21, No. 14 Cross Ref Attitude observers for three-vehicle heterogeneous formations based on the Lagrange-d’Alembert principle Cross Ref Estimation of Attitude Using Robust Adaptive Kalman Filter Cross Ref Recursive optimal linear attitude estimator based on star sensor and gyro22 March 2021 | Aerospace Systems, Vol. 4, No. 2 Cross Ref A geometric framework for rigid body attitude estimationAutomatica, Vol. 128 Cross Ref Anti-swaying self-alignment method based on observation vector inertia for SINS under latitude uncertaintyMeasurement, Vol. 177 Cross Ref Spatiotemporal Registration for Event-based Visual Odometry Cross Ref Coarse alignment of marine strapdown inertial navigation system using the location of fitted parametric circle of gravity movement5 March 2021 | Journal of Navigation, Vol. 74, No. 3 Cross Ref Spherical calibration and quality control of ground and UAV vector magnetometer dataThe Leading Edge, Vol. 40, No. 5 Cross Ref 40 years of sensor fusion for orientation tracking via magnetic and inertial measurement units: Methods, lessons learned, and future challengesInformation Fusion, Vol. 68 Cross Ref TEASER: Fast and Certifiable Point Cloud RegistrationIEEE Transactions on Robotics, Vol. 37, No. 2 Cross Ref Finite transformation rigid motion mesh morpher; A grid deformation approach7 October 2020 | International Journal for Numerical Methods in Fluids, Vol. 93, No. 3 Cross Ref Research on initial alignment method of vehicle-mounted SINS based on reverse navigationJournal of Physics: Conference Series, Vol. 1846, No. 1 Cross Ref Error Analysis of Accelerometer- and Magnetometer-Based Stationary Alignment14 March 2021 | Sensors, Vol. 21, No. 6 Cross Ref Spacecraft Attitude Determination4 August 2021 Cross Ref Kinematics9 December 2020 Cross Ref On Selection and Extraction of Biometric Features of Human Motor Activity from Data Obtained from Inertial Measurement Units16 July 2021 Cross Ref Conditional equivalence between Extended Kalman filter and complementary filter for two-vector gyro-aided attitude determinationMeasurement, Vol. 168 Cross Ref A Tutorial on Horizon-Based Optical Navigation and Attitude Determination With Space Imaging SystemsIEEE Access, Vol. 9 Cross Ref Star Identification and Attitude Determination With Projective CamerasIEEE Access, Vol. 9 Cross Ref Planning With AttitudeIEEE Robotics and Automation Letters Cross Ref The Fast Attitude Estimation Method Based on Quaternion and Generalized MultivectorsIEEE Transactions on Instrumentation and Measurement, Vol. 70 Cross Ref A Unified Method for Robust Self-Calibration of 3-D Field Sensor ArraysIEEE Transactions on Instrumentation and Measurement, Vol. 70 Cross Ref Attitude Estimation Method of High-Spinning Body Through Onboard Sensor Fusion Under Uniaxial Gyroscope Saturation EnvironmentIEEE Transactions on Instrumentation and Measurement, Vol. 70 Cross Ref Nonlinear Error Model Based on Quaternion for the INS: Analysis and ComparisonIEEE Transactions on Vehicular Technology, Vol. 70, No. 1 Cross Ref A systematic review of augmented reality tourism research: What is now and what is next?23 July 2020 | Tourism and Hospitality Research, Vol. 21, No. 1 Cross Ref Low-Rank Representation Algorithm Based on Latent Feature SpaceComputer Science and Application, Vol. 11, No. 04 Cross Ref Attitude Estimation with Albedo Interference on Sun Sensor MeasurementsJournal of Spacecraft and Rockets, Vol. 58, No. 1 Cross Ref Rigid Body Geometric Attitude Estimator using Multi-rate Sensors Cross Ref Attitude observers aided by implicit measurements of the Earth angular velocity Cross Ref Observers Design for Inertial Navigation Systems: A Brief Tutorial Cross Ref Quaternions as a solution to determining the angular kinematics of human movement23 March 2020 | BMC Biomedical Engineering, Vol. 2, No. 1 Cross Ref Applying Neural Networks in Aerial Vehicle Guidance to Simplify Navigation Systems11 December 2020 | Algorithms, Vol. 13, No. 12 Cross Ref Statistical Methods for Three-Axis Attitude Determination Cross Ref Attitude determination improvement in accelerated motions for maneuvering underwater vehiclesApplied Ocean Research, Vol. 104 Cross Ref Constrained Kalman filter for uncooperative spacecraft estimation by stereovisionAerospace Science and Technology, Vol. 106 Cross Ref A New Quaternion-Based Kalman Filter for Human Body Motion Tracking Using the Second Estimator of the Optimal Quaternion Algorithm and the Joint Angle Constraint Method with Inertial and Magnetic Sensors23 October 2020 | Sensors, Vol. 20, No. 21 Cross Ref MAV quaternion attitude determination for accelerometer-magnetometer combination: Internal analysis4 July 2020 | tm - Technisches Messen, Vol. 87, No. 10 Cross Ref Pose localization of leader–follower networks with direction measurementsAutomatica, Vol. 120 Cross Ref MARG Attitude Estimation Using Gradient-Descent Linear Kalman FilterIEEE Transactions on Automation Science and Engineering, Vol. 17, No. 4 Cross Ref In-Motion Alignment for Doppler Velocity Log-Aided SINS Based on Initial Velocity Error EstimationIEEE Transactions on Instrumentation and Measurement, Vol. 69, No. 10 Cross Ref Attitude Angles Determination by Vectors Observations in Airplane Free Spin Investigation19 February 2021 | Gyroscopy and Navigation, Vol. 11, No. 4 Cross Ref Does the Position of Foot-Mounted IMU Sensors Influence the Accuracy of Spatio-Temporal Parameters in Endurance Running?7 October 2020 | Sensors, Vol. 20, No. 19 Cross Ref Point-wise weighted solution for the similarity transformation parameters26 May 2020 | Applied Geomatics, Vol. 12, No. 3 Cross Ref CoBe - Coded Beacons for Localization, Object Tracking, and SLAM Augmentation Cross Ref Multi-view classifier based on Probabilistic Collaborative Representation and Latent Representation Cross Ref Adaptive Complementary Filtering Algorithm for IMU Based on MEMS Cross Ref TWOLATE: Total Registration of Point-Clouds Using a Weighted Optimal Linear Attitude and Translation Estimator Cross Ref A Wearable Magnetometer-Free Motion Capture System: Innovative Solutions for Real-World ApplicationsIEEE Sensors Journal, Vol. 20, No. 15 Cross Ref Limitation of Rayleigh sky model for bioinspired polarized skylight navigation in three-dimensional attitude determination19 May 2020 | Bioinspiration & Biomimetics, Vol. 15, No. 4 Cross Ref An Improved Algorithm for Universal Sensor Registration Cross Ref Fast AHRS Filter for Accelerometer, Magnetometer, and Gyroscope Combination with Separated Sensor Corrections9 July 2020 | Sensors, Vol. 20, No. 14 Cross Ref Special Cases in the Attitude Determination of Three-Vehicle Heterogeneous Formations Cross Ref In-Flight Calibration and Performance of the OSIRIS-REx Touch And Go Camera System (TAGCAMS)10 June 2020 | Space Science Reviews, Vol. 216, No. 4 Cross Ref Linear geometric algebra rotor estimator for efficient mesh deformation18 January 2021 | IET Cyber-Systems and Robotics, Vol. 2, No. 2 Cross Ref Novel Noniterative Orientation Estimation for Wearable Motion Sensor Units Acquiring Accelerometer, Gyroscope, and Magnetometer MeasurementsIEEE Transactions on Instrumentation and Measurement, Vol. 69, No. 6 Cross Ref Hand-Eye Calibration: 4-D Procrustes Analysis ApproachIEEE Transactions on Instrumentation and Measurement, Vol. 69, No. 6 Cross Ref Autonomous Toy Drone via Coresets for Pose Estimation27 May 2020 | Sensors, Vol. 20, No. 11 Cross Ref Flexibilities of wavelets as a computational basis set for large-scale electronic structure calculationsThe Journal of Chemical Physics, Vol. 152, No. 19 Cross Ref Matrix Method for Determining the Body Attitude14 November 2020 | International Applied Mechanics, Vol. 56, No. 3 Cross Ref A Conversation with Grace WahbaStatistical Science, Vol. 35, No. 2 Cross Ref Partially error-affected point-wise weighted closed-form solution to the similarity transformation and its variantsJournal of Applied Geodesy, Vol. 14, No. 2 Cross Ref Procrustes analysis for the virtual trial assembly of large-size elementsRobotics and Computer-Integrated Manufacturing, Vol. 62 Cross Ref A fast in-motion alignment based on inertial frame and reverse navigation Cross Ref Deeply Integrated GNSS/Gyro Attitude Determination System13 April 2020 | Sensors, Vol. 20, No. 8 Cross Ref Optimal Linear Orbit DeterminationJournal of Guidance, Control, and Dynamics, Vol. 43, No. 3 Cross Ref A Novel GNSS Attitude Determination Method Based on Primary Baseline Switching for A Multi-Antenna Platform25 February 2020 | Remote Sensing, Vol. 12, No. 5 Cross Ref Kalman Filter Cascade for Attitude Estimation on Rotating EarthIEEE/ASME Transactions on Mechatronics, Vol. 25, No. 1 Cross Ref A Novel Fuzzy-Adaptive Extended Kalman Filter for Real-Time Attitude Estimation of Mobile Robots1 February 2020 | Sensors, Vol. 20, No. 3 Cross Ref A linear computationally efficient Kalman filter for robust attitude estimation from horizon measurements and GNSS observationsSensor Review, Vol. 40, No. 2 Cross Ref A Simplified Method to Determine Gravity Vector Through Aerodynamic Coefficients and its Applications in Attitude Determination18 April 2019 Cross Ref Enhancing the Flexibility of First Principles Simulations of Materials via Wavelets14 February 2020 Cross Ref A Constrained Kalman Filter for Rigid Body Systems with Frictional Contact8 May 2020 Cross Ref Practical Exponential Coordinates Using Implicit Dual Quaternions8 May 2020 Cross Ref Morphological Modelling and Simulation of Crystallization Processes21 June 2020 Cross Ref LEO satellite active FTC with aerodynamic disturbance decoupled fault diagnosisEuropean Journal of Control, Vol. 51 Cross Ref An accuracy of better than 200 m in positioning using a portable star trackerNew Astronomy, Vol. 74 Cross Ref Hybrid RRT: A Semi-dual-tree RRT-based Motion PlannerIEEE Access Cross Ref Informed RRT*-Connect: An Asymptotically Optimal Single-Query Path Planning MethodIEEE Access, Vol. 8 Cross Ref GNSS-Based Attitude Determination Techniques—A Comprehensive Literature SurveyIEEE Access, Vol. 8 Cross Ref Relative Pose Estimation Based on With to Access, Vol. 8 Cross Ref Rigid 3D A Method Free of and Transactions on Instrumentation and Measurement Cross Ref Generalized Latent Transactions on Analysis and Intelligence, Vol. No. 1 Cross Ref of Spacecraft and Rockets, Vol. 57, No. 1 Cross Ref A Attitude Determination for Small Design of the Algorithm and January 2020 | Aerospace, Vol. 7, No. 1 Cross Ref Attitude Sensor from A Numerical and January 2020 | Sensors, Vol. 20, No. 2 Cross Ref A New In-Flight Alignment Method with an to the Low-Cost Integrated Navigation January 2020 | Sensors, Vol. 20, No. 2 Cross Ref A Observer for Relative Attitude Estimation Cross Ref Observer and filter based attitude estimation for rigid to Cross Ref Attitude Fusion Based on EKF for Cross Ref Attitude estimation using Engineering Practice, Vol. Cross Ref A Fast and Robust Algorithm for Orientation Estimation Using Inertial Letters, Vol. No. 11 Cross Ref A solution for the attitude determination of three-vehicle heterogeneous Science and Technology, Vol. Cross Ref Fast orthogonal networks a for orthogonal Processing, Vol. Cross Ref An Improved Algorithm for Intelligent Cross Ref A Quaternion-Based Optimal to the With Cross Ref Human and Inertial Measurements to Quaternion-Based September 2019 | Sensors, Vol. 19, No. 19 Cross Ref A robust and fast self-alignment method for strapdown inertial navigation system in Engineering, Vol. Cross Ref Attitude Filtering with and Measurement Covariance of Aerospace Engineering, Vol. 32, No. 5 Cross Ref Gradient Descent Optimization-Based Method for Stationary Transactions on Instrumentation and Measurement, Vol. 68, No. 9 Cross Ref Nonlinear Attitude on the Special and Transactions on Systems, and Systems, Vol. No. 9 Cross Ref Constrained Attitude Determination from Vector and September 2019 | Aerospace, Vol. No. 9 Cross Ref for extended from April 2019 | Journal of Physics: Vol. No. Cross Ref Direct and Transactions on Vol. 38, No. 4 Cross Ref EKF attitude estimation with measurement November | Journal of Control, Vol. 21, No. 4 Cross Ref stable attitude with Earth velocity March 2019 | Journal of Control, Vol. 21, No. 4 Cross Ref Finite stable attitude estimation of rigid with April 2019 | Journal of Control, Vol. 21, No. 4 Cross Ref observation to attitude estimation in Space Research, Vol. No. 1 Cross Ref Calibration Using Estimation Approach Cross Ref Generalized Linear Quaternion Complementary Filter for Attitude Estimation An Optimization ApproachIEEE Transactions on Automation Science and Engineering, Vol. 16, No. 3 Cross Ref the Scheme of Initial Attitude Estimation Using Low Accuracy December 2019 | Vol. No. 3 Cross Ref Finite Attitude and Angular Velocity Estimation for Rigid With Cross Ref Sensing and Estimation of Spacecraft Cross Ref Nonlinear and attitude filter on the Special of the Vol. No. Cross Ref Study the of star sensor by of sensor Cross Ref GNSS Integrated With MEMS for and Attitude Determination in Sensors Journal, Vol. 19, No. 9 Cross Ref Attitude determination sensor for Earth satellite based on May | Proceedings of the Institution of Mechanical Engineers, Part G: Journal of Aerospace Engineering, Vol. No. 6 Cross Ref and Robust and Scheme Using Weighted Least Journal, Vol. 57, No. 5 Cross Ref Attitude on the orthogonal with Earth velocity & Control Letters, Vol. Cross Ref Analysis of Optimization of Attitude Determination from Vector Observations Cross Ref Nonlinear Observer on for Attitude Estimation on Rotating Earth Using Vector MeasurementsIEEE Control Systems Letters, Vol. No. 2 Cross Ref A on the Computation of Quaternions Rotation March 2019 | Journal of and Robotics, Vol. 11, No. 2 Cross Ref of the Method of for Determining the Orientation of a Body in April 2019 | Automation and Remote Control, Vol. No. 4 Cross Ref Generalized Attitude Determination with Vector of Guidance, Control, and Dynamics, Vol. No. 4 Cross Ref of GNSS detection based on for December | Space Journal, Vol. 11, No. 1 Cross Ref A solution to the navigation satellite system attitude determination December | Proceedings of the Institution of Mechanical Engineers, Part G: Journal of Aerospace Engineering, Vol. No. 3 Cross Ref magnetic disturbance determination for vehicles via gravity and navigation satellite system January 2019 | Measurement Science and Technology, Vol. No. 2 Cross Ref attitude with inertial measurement and applications of GNSS to the January 2019 | Measurement Science and Technology, Vol. No. 2 Cross Ref Kalman Filtering for Estimation of Attitude and Gyroscope Transactions on Mechatronics, Vol. 24, No. 1 Cross Ref Estimation for Attitude and Systems Under Sensors Journal, Vol. 19, No. 2 Cross Ref A Total Estimate for Attitude Determination6 January 2019 Cross Ref Analysis of the Total Least Squares with January 2019 Cross Ref for July | Journal of the Statistical Vol. No. Cross Ref Spacecraft Attitude October 2019 Cross Ref Procrustes March 2019 Cross Ref Procrustes March 2019 Cross Ref 3D Using Quaternions for Orientation and in September 2019 Cross Ref Adaptive Attitude Determination Method Using Low-Cost MARG Sensors23 November 2019 Cross Ref Finite Rigid Motion September Cross Ref Improved attitude determination by of by of and Vol. Cross Ref A Factor Approach for Attitude Estimation of Spacecraft Using a Stellar Access, Vol. Cross Ref In-Motion Attitude and Position Alignment for SINS Based on Backtracking Access, Vol. Cross Ref Pose Estimation for Ground Transactions on Automation Science and Engineering, Vol. 16, No. 1 Cross Ref Spacecraft attitude estimation based on matrix Kalman filter and recursive Kalman August | Proceedings of the Institution of Mechanical Engineers, Part G: Journal of Aerospace Engineering, Vol. No. Cross Ref attitude determination February | International Journal of Vol. No. 4 Cross Ref in models using rigid body transformation estimation and February | in Engineering, Vol. No. 1 Cross Ref Simplified Attitude Determination Algorithm Using and Magnetometer with Low of Sensors,",
+      "citation_count": 1125,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L004",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Elements of Numerical Analysis",
+      "authors": [
+        "R. W. Hamming",
+        "Peter Henrici"
+      ],
+      "venue": "Mathematics of Computation",
+      "year": 1965,
+      "doi": "10.2307/2003710",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 663,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L005",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Linear model reduction and solution of the algebraic Riccati equation by use of the sign function†",
+      "authors": [
+        "Jeffrey Roberts"
+      ],
+      "venue": "International Journal of Control",
+      "year": 1980,
+      "doi": "10.1080/00207178008922881",
+      "arxiv_id": null,
+      "abstract": "The sign function of a square matrix can be defined in terms of a contour integral or as the result of an iterated map $. Application of this function enables a matrix to be decomposed into two components whose spectra lie on opposite sides of the imaginary axis. This has application in reduction of linear systems to lower order models and in the solution of the matrix Lyapunov and algebraic Riccati equations.",
+      "citation_count": 423,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L006",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "The matrix sign function and computations in systems",
+      "authors": [
+        "Eugene D. Denman",
+        "Alex N. Beavers"
+      ],
+      "venue": "Applied Mathematics and Computation",
+      "year": 1976,
+      "doi": "10.1016/0096-3003(76)90020-5",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 265,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L007",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "The numerical solution of A'Q+QA = -C",
+      "authors": [
+        "W. D. Hoskins",
+        "D.S. Meek",
+        "D. J. Walton"
+      ],
+      "venue": "IEEE Transactions on Automatic Control",
+      "year": 1977,
+      "doi": "10.1109/tac.1977.1101627",
+      "arxiv_id": null,
+      "abstract": "A rapidly convergent algorithm is given which will solveA'Q + QA = -CforQwhenAis a stable matrix. The algorithm proposed requires only4n^{2}words of memory (for largen) and converges in approximately17n^{3} \\mus where μ is the multiplication time of the computer andnis the order of the matrixA.",
+      "citation_count": 199,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L008",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "An Iterative Algorithm for Computing the Best Estimate of an Orthogonal Matrix",
+      "authors": [
+        "Åke Björck",
+        "C. Bowie"
+      ],
+      "venue": "SIAM Journal on Numerical Analysis",
+      "year": 1971,
+      "doi": "10.1137/0708036",
+      "arxiv_id": null,
+      "abstract": "The closest unitary matrix, measured in Euclidean norm, to a given rectangular matrix A is known to be the unitary factor in the polar decomposition of A. The paper gives a family of iterative methods of order of convergence $p + 1,\\, p = 1,2,3, \\cdots $, for computing this matrix. The methods are especially efficient when the columns of A are not too far from being orthonormal. The choice of order of convergence to minimize the amount of computation is discussed. Global convergence properties for the methods of order $ \\leqq 4$ are studied and sufficient conditions for convergence in terms of $\\| {I - A^H A} \\|$ are given.",
+      "citation_count": 88,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L009",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Some metric inequalities in the space of matrices",
+      "authors": [
+        "Ky Fan",
+        "Alan J. Hoffman"
+      ],
+      "venue": "Proceedings of the American Mathematical Society",
+      "year": 1955,
+      "doi": "10.1090/s0002-9939-1955-0067841-7",
+      "arxiv_id": null,
+      "abstract": "Following von Neumann, a gauge function * (in the sense of Minkowski) is called symmetric if *(= ±1 and for any permutation (ji,jt, • ■ • ,jn) of (1, 2, • • • , n).For general properties of symmetric gauge functions, see [4, pp.84-92].",
+      "citation_count": 249,
+      "is_open_access": true,
+      "pdf_url": "https://www.ams.org/proc/1955-006-01/S0002-9939-1955-0067841-7/S0002-9939-1955-0067841-7.pdf",
+      "source_api": "openalex_citations",
+      "id": "L010",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "The Orthogonal Approximation of an Oblique Structure in Factor Analysis",
+      "authors": [
+        "Bert F. Green"
+      ],
+      "venue": "Psychometrika",
+      "year": 1952,
+      "doi": "10.1007/bf02288918",
+      "arxiv_id": null,
+      "abstract": "A procedure is derived for obtaining an orthogonal transformation which most nearly transforms one given matrix into another given matrix, according to some least-squares criterion of fit. From this procedure, three analytic methods are derived for obtaining an orthogonal factor matrix which closely approximates a given oblique factor matrix. The case is considered of approximating a specified subset of oblique vectors by orthogonal vectors.",
+      "citation_count": 234,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L011",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Computing real square roots of a real matrix",
+      "authors": [
+        "Nicholas J. Higham"
+      ],
+      "venue": "Linear Algebra and its Applications",
+      "year": 1987,
+      "doi": "10.1016/0024-3795(87)90118-2",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 202,
+      "is_open_access": true,
+      "pdf_url": "https://www.sciencedirect.com/science/article/pii/0024379587901182/pdf",
+      "source_api": "openalex_citations",
+      "id": "L012",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Introduction to Linear Algebra",
+      "authors": [
+        "A. S. H.",
+        "Marvin Marcus",
+        "Henryk Minc"
+      ],
+      "venue": "Mathematics of Computation",
+      "year": 1966,
+      "doi": "10.2307/2003521",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 170,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L013",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "A Schur method for the square root of a matrix",
+      "authors": [
+        "Åke Björck",
+        "Sven Hammarling"
+      ],
+      "venue": "Linear Algebra and its Applications",
+      "year": 1983,
+      "doi": "10.1016/0024-3795(83)80010-x",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 149,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L014",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Elements of Numerical Analysis.",
+      "authors": [
+        "T. K. Harrison",
+        "Peter Henrici"
+      ],
+      "venue": "Journal of the Royal Statistical Society Series D (The Statistician)",
+      "year": 1965,
+      "doi": "10.2307/2986934",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 119,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L015",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Optimal matrices describing linear systems.",
+      "authors": [
+        "J. E. Brock"
+      ],
+      "venue": "AIAA Journal",
+      "year": 1968,
+      "doi": "10.2514/3.4736",
+      "arxiv_id": null,
+      "abstract": "If it is postulated that vector pairs (uy, vi) are related by the equation Xtii = t?j, where X is a matrix of suitable dimensions which also satisfies other stipulated conditions (for example, orthogonal or symmetric positive-definite), an experimental program, yielding approximations for the vector pairs, may be undertaken for the purpose of determining the matrix A. This paper considers the problem of making an optimal determination of X, several criteria of optimality being considered. A general methodology is shown. The problem has applications to all systems which can be modeled by such a matrix X. Two such applications are to the determination of spacecraft attitudes and to the determination of the stiffness matrix or the compliance matrix of an elastic structure.",
+      "citation_count": 97,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L016",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Least squares, singular values and matrix approximations",
+      "authors": [
+        "Gene H. Golub"
+      ],
+      "venue": "Applications of Mathematics",
+      "year": 1968,
+      "doi": "10.21136/am.1968.103138",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 89,
+      "is_open_access": true,
+      "pdf_url": "http://dml.cz/bitstream/handle/10338.dmlcz/103138/AplMat_13-1968-1_5.pdf",
+      "source_api": "openalex_citations",
+      "id": "L017",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Closest Unitary, Orthogonal and Hermitian Operators to a Given Operator",
+      "authors": [
+        "Joseph B. Keller"
+      ],
+      "venue": "Mathematics Magazine",
+      "year": 1975,
+      "doi": "10.1080/0025570x.1975.11976482",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 50,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L018",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Sur les groupes linéaires, réels et orthogonaux",
+      "authors": [
+        "L. Autonne"
+      ],
+      "venue": "Bulletin de la Société mathématique de France",
+      "year": 1902,
+      "doi": "10.24033/bsmf.665",
+      "arxiv_id": null,
+      "abstract": "impression de ce fichier doit contenir la présente mention de copyright.",
+      "citation_count": 43,
+      "is_open_access": true,
+      "pdf_url": "http://www.numdam.org/item/10.24033/bsmf.665.pdf",
+      "source_api": "openalex_citations",
+      "id": "L019",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Closest Unitary, Orthogonal and Hermitian Operators to a Given Operator",
+      "authors": [
+        "Joseph B. Keller"
+      ],
+      "venue": "Mathematics Magazine",
+      "year": 1975,
+      "doi": "10.2307/2690338",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 22,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L020",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Positive Approximants of Operators",
+      "authors": [
+        "Paul R. Halmos"
+      ],
+      "venue": "",
+      "year": 1983,
+      "doi": "10.1007/978-1-4613-8208-9_30",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 58,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L021",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Iterative Optimal Orthogonalization of the Strapdown Matrix",
+      "authors": [
+        "Itzhack Y. Bar‐Itzhack"
+      ],
+      "venue": "IEEE Transactions on Aerospace and Electronic Systems",
+      "year": 1975,
+      "doi": "10.1109/taes.1975.308025",
+      "arxiv_id": null,
+      "abstract": "This paper treats the problem of finding an orthogonal matrix which is the closest, in the Forbenius norm, to a given nonorthogonal matrix. This nonorthogonal matrix is the result of a fast but rather inaccurate computation of the well-known direction cosine matrix (DCM) of a strapdown inertial navigation system. The known closed-form solution to this problem is rederived using the directional derivative method, and the conditions for minimum distance are derived and discussed. A new iterative technique for solving this problem is derived as a result of the application of the gradient projection technique and the directional derivative method. The practical computational problems involved in this technique are discussed. The new technique is demonstrated by three examples. Although particular attention is given to the 3 X 3 direction cosine matrix, the conclusions are nonetheless valid higher order matries.",
+      "citation_count": 43,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L022",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Orthogonalization Techniques of a Direction Cosine Matrix",
+      "authors": [
+        "Itzhack Y. Bar‐Itzhack",
+        "K. A. Fegley"
+      ],
+      "venue": "IEEE Transactions on Aerospace and Electronic Systems",
+      "year": 1969,
+      "doi": "10.1109/taes.1969.309878",
+      "arxiv_id": null,
+      "abstract": "Three orthogonalization techniques to correct errors in the computeddirection cosine matrix are introduced. One of these techniques is avectorial technique based on the fact that the three rows of a directioncosine matrix constitute an orthonormal set of vectors in aree-threedimensional space. The other two iterative techniques are based onthe fact that the inverse and transpose of an orthogonal matrix areequal. In computing a time-varying direction cosine matrix computationalional errors are accompanied by the loss of the orthogonaliterty prop-rty of the matrix. When one of these three techniques is useo re-restore the orthogonality of the matrix, the computational errors arealso corrected. These techniques were tested experimentally and theresults, given in this paper, were compared with a method used by the Honeywell Corporation.",
+      "citation_count": 42,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L023",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "On the Convergence of Iterative Orthogonalization Processes",
+      "authors": [
+        "Itzhack Y. Bar‐Itzhack",
+        "Jeffrey Meyer"
+      ],
+      "venue": "IEEE Transactions on Aerospace and Electronic Systems",
+      "year": 1976,
+      "doi": "10.1109/taes.1976.308289",
+      "arxiv_id": null,
+      "abstract": "Polar decomposition of matrices is used here to investigate the convergence properties of iterative orthogonalization processes. It is shown that, applying this decomposition, the investigation of a general iterative process of a certain form can be reduced to the investigation of a scalar iterative process which is simple. Three known iterative orthogonalization processes, which are special cases of the general process, are analyzed, their convergence rate (order) is determined, and their range of convergence is established in terms of the spectral radius of the modulus of the matrix which is being orthogonalyzed.",
+      "citation_count": 41,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L024",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "A faster, more stable method for computing the pth roots of positive definite matrices",
+      "authors": [
+        "W. D. Hoskins",
+        "D. J. Walton"
+      ],
+      "venue": "Linear Algebra and its Applications",
+      "year": 1979,
+      "doi": "10.1016/0024-3795(79)90176-9",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 38,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L025",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Strapdown Matrix Orthogonalization: The Dual Iterative Algorithm",
+      "authors": [
+        "L.y. Bar-Itzhackmber",
+        "Jeffrey Meyer",
+        "Paul A. Fuhrmann"
+      ],
+      "venue": "IEEE Transactions on Aerospace and Electronic Systems",
+      "year": 1976,
+      "doi": "10.1109/taes.1976.308212",
+      "arxiv_id": null,
+      "abstract": "There exist several algorithms for the optimal orthogonalization of the Direction Cosine Matrix used in navigation, control and simulation One of these recursive algorithms is shown to be derived from a dual solution to the optimal orthogonalization problem. The duality of the algorithm is demonstrated and its convergence properties are investigated Quadratic convergence is proven and the condition for convergence is determined and illustrated with numerical examples.",
+      "citation_count": 19,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L026",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Practical Comparison of Iterative Matrix Orthogonalization Algorithms",
+      "authors": [
+        "Jeffrey Meyer",
+        "Itzhack Y. Bar‐Itzhack"
+      ],
+      "venue": "IEEE Transactions on Aerospace and Electronic Systems",
+      "year": 1977,
+      "doi": "10.1109/taes.1977.308390",
+      "arxiv_id": null,
+      "abstract": "In previous work several algorithms for orthogonalizing the direction cosine matrix were introduced and their convergence rate and range were theoretically investigated. Three of the most promising algorithms are examined in this paper. lt is shown that the so-called Dual Algorithm is by far superior to the other two from the point of view of speed, computer memory, accuracy, and convergence rate. lt is therefore recommended that whenever the direction cosine matrix is computed by simple numerical integration of a matrix differential equation, the Dual Algorithm be used to orthogonalize the resultant matrix.",
+      "citation_count": 12,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L027",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Practical optimization",
+      "authors": [
+        "Reuven R. Levary"
+      ],
+      "venue": "European Journal of Operational Research",
+      "year": 1982,
+      "doi": "10.1016/0377-2217(82)90093-5",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 4171,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L028",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "",
+      "authors": [
+        "Paul R. Halmos"
+      ],
+      "venue": "Indiana University Mathematics Journal",
+      "year": 1972,
+      "doi": "10.1512/iumj.1972.21.21076",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 68,
+      "is_open_access": true,
+      "pdf_url": "http://www.iumj.indiana.edu/IUMJ/FTDLOAD/1972/21/21076/pdf",
+      "source_api": "openalex_citations",
+      "id": "L029",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "A unidimensional convergence test for matrix iterative processes applied to Strapdown Navigation",
+      "authors": [
+        "Itzhack Y. Bar‐Itzhack"
+      ],
+      "venue": "International Journal for Numerical Methods in Engineering",
+      "year": 1977,
+      "doi": "10.1002/nme.1620110112",
+      "arxiv_id": null,
+      "abstract": "Abstract The investigation of the convergence properties of matrix iterative processes usually involves test matrices of high order. This fact may prohibit an analytic approach to the problem. In this paper a method is presented which converts the multidimensional test procedure into a scalar one. The method is presented in conjunction with the problem of matrix orthogonalization which exists in Strapdown Inertial Navigation. Three examples are presented in which the convergence of matrix orthogonalization techniques is investigated. The examples demonstrate the use of the unidimensional convergence test in determining the order of the processes and in finding sufficient conditions for convergence. Numerical results are presented.",
+      "citation_count": 5,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L030",
+      "download": true,
+      "publication_status": "published"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "schema_version": "t077.c5-0-single-cell.gate1.receipt.v1",
+  "authority": "T077/D056/V031/CP018",
+  "manifest_hash": "14ff14de3d0094f135c3a07d3fb395455e81035f6b6d1b014704177587ed3782",
+  "completed_frames": 128,
+  "decoded_arms": [],
+  "metrics": {
+    "frames": 128,
+    "rho": 0.98566540010987,
+    "ci_one_sided_lower": 0.9758980391761476,
+    "bootstrap_finite": 10000,
+    "bootstrap_resamples": 10000,
+    "bootstrap_seed": 2026083007,
+    "log_ratio_median": 0.017144522606823934,
+    "log_ratio_iqr": [
+      -0.06705041487444206,
+      0.10236627286429097
+    ],
+    "log_ratio_mae": 0.11087618786449432,
+    "pass": true
+  },
+  "gate1": "PASS",
+  "terminal": null,
+  "next_stage": "append_same_manifest_to_512_and_decode_B0_O1",
+  "_meta": {
+    "script": "t077:gate1-receipt",
+    "common_md5": "49acdfa4",
+    "git_commit": "cde31b9",
+    "timestamp": "2026-08-30T09:53:40"
+  }
+}

@@ -1,0 +1,1190 @@
+JOURNAL OF LIGHTWAVE TECHNOLOGY, VOL. 28, NO. 7, APRIL 1, 2010                     1121
+
+ Optimal Polarization Demultiplexing for Coherent
+           Optical Communications Systems
+
+Ioannis Roudas, Athanasios Vgenis, Constantinos S. Petrou, Dimitris Toumpakaris, Jason Hurley, Michael Sauer,
+                                     John Downie, Yihong Mauro, and Srikanth Raghavan
+
+   Abstract—Spectrally-efﬁcient optical communications systems                                                I. INTRODUCTION
+employ polarization division multiplexing (PDM) as a practical
+solution, in order to double the capacity of a ﬁber link. Polar-                   R ECENT progress in fast data acquisition, in combination
+ization demultiplexing can be performed electronically, using                             with the decreasing cost of high-speed digital electronics,
+polarization-diversity coherent optical receivers. The primary                     is currently rendering the digital implementation of coherent
+goal of this paper is the optimal design, using the maximum-likeli-                optical receiver functionalities commercially viable at symbol
+hood criterion, of polarization-diversity coherent optical receivers               rates equal to 10 GBd and beyond [1]. A growing number of re-
+for polarization-multiplexed optical signals, in the absence of                    search papers focuses on the evaluation of the performance of
+polarization mode dispersion (PMD). It is shown that simulta-                      digital signal processing (DSP) algorithms, which can success-
+neous joint estimation of the symbols, over the two received states                fully counteract various transmission impairments that typically
+of polarization, yields optimal performance, in the absence of                     affect the performance of coherent optical receivers (see tuto-
+phase noise and intermediate frequency offset. In contrast, the                    rials [2], [3], and references therein).
+commonly used zero-forcing polarization demultiplexer, followed
+by individual demodulation of the polarization-multiplexed trib-                      Among all transmission impairments, it would be difﬁcult to
+utaries, exhibits inferior performance, and becomes optimal only                   overstate the importance of the impact of polarization effects
+if the channel transfer matrix is unitary, e.g., in the absence of                 on the performance of coherent optical receivers. For instance,
+polarization dependent loss (PDL), and if the noise components at                  random polarization rotations, caused by the birefringence of
+the polarization diversity branches have equal variances. In this                  optical ﬁbers, can be detrimental, since the states of polariza-
+special case, the zero-forcing polarization demultiplexer can be                   tion (SOPs) of the received optical signal and the local oscil-
+implemented by a 2 2 lattice adaptive ﬁlter, which is controlled                   lator are not identical, as required. Polarization diversity [2], [3]
+by only two independent real parameters. These parameters                          is a practical means to detect all signal power, independent of
+can be computed recursively using the constant modulus algo-                       the received SOP, by using a coherent optical receiver with two
+rithm (CMA). We evaluate, by simulation, the performance of                        identical branches, one for the - and one for the -polariza-
+the aforementioned zero-forcing polarization demultiplexer in                      tion component, respectively. The photocurrents at the output
+coherent optical communication systems using PDM quadrature                        of the receiver branches must be appropriately combined using
+phase shift keying (QPSK) signals. We show that it is, by far,                     a two-input/one-output adaptive ﬁlter (electronic polarization
+superior, in terms of convergence accuracy and speed, compared                     combiner) [3], in order to retrieve all the information carried by
+to conventional CMA-based polarization demultiplexers. Finally,                    the received signal.
+we experimentally test the robustness of the proposed constrained
+CMA polarization demultiplexer to realistic imperfections of                          The increased complexity and cost of polarization-diversity
+polarization-diversity coherent optical receivers. The PMD and                     coherent optical receivers can be better justiﬁed when simulta-
+PDL tolerance of the proposed demultiplexer can be used as a                       neous polarization division multiplexing (PDM) is used at the
+benchmark in order to compare the performance of more sophis-                      transmitter, in order to double the spectral efﬁciency of the op-
+ticated adaptive electronic PMD/PDL equalizers.                                    tical communications system. In this case, the electronic polar-
+                                                                                   ization combiner, used in the single-channel case, is replaced
+   Index Terms—Coherent communications, polarization demulti-                      by a two-input/two-output adaptive ﬁlter, which separates the
+plexing, constant modulus algorithm.                                               PDM channels into their respective outputs (electronic polar-
+                                                                                   ization demultiplexer) [4]–[12]. In addition, by increasing the
+   Manuscript received January 30, 2009; revised May 27, 2009, July 12, 2009.      number of adaptive ﬁlter coefﬁcients, the polarization demulti-
+First published November 03, 2009; current version published March 12, 2010.       plexer can also perform equalization of the intersymbol inter-
+This work was supported in part by the European Social Fund and in part by the     ference caused by polarization mode dispersion (PMD), polar-
+Greek Ministry of Development-GSRT.                                                ization dependent loss (PDL), residual chromatic dispersion and
+                                                                                   other effects [13]–[17].
+   I. Roudas, A. Vgenis, C. S. Petrou, and D. Toumpakaris are with the
+Department of Electrical and Computer Engineering, University of Patras,              There is no unanimous agreement in the optical commu-
+Rio 26500, Greece (e-mail: roudas@ece.upatras.gr; vgenis@ece.upatras.gr;           nications community regarding the merit of different DSP
+petrou@ece.upatras.gr; dtouba@ece.upatras.gr).                                     algorithms for electronic polarization demultiplexing and
+                                                                                   equalization. For example, depending on their operating mode,
+   J. Hurley, M. Sauer, J. Downie, Y. Mauro, and S. Raghavan are with Corning      proposed algorithms can be distinguished into two categories:
+Inc., Corning, NY 14831 USA (e-mail: RaghavanS@corning.com).                       i) Data-aided (requiring a training sequence to achieve con-
+                                                                                   vergence, e.g., [8]); and ii) Blind, either decision-directed
+   Color versions of one or more of the ﬁgures in this paper are available online
+at http://ieeexplore.ieee.org.
+
+   Digital Object Identiﬁer 10.1109/JLT.2009.2035526
+
+                                                                             0733-8724/$26.00 © 2010 IEEE
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:52:55 UTC from IEEE Xplore. Restrictions apply.
+1122                                                                  JOURNAL OF LIGHTWAVE TECHNOLOGY, VOL. 28, NO. 7, APRIL 1, 2010
+
+(employing estimates of the received symbols for adaptation,             It is worth mentioning at this point that our polarization de-
+e.g., [13]) or based on other attributes of the received optical      multiplexer is almost identical to the one proposed by Kikuchi in
+signal, which are affected by intersymbol interference, without       a recent paper [11]. The latter came to our attention only after
+attempting to recover the data. In the latter category, the constant  the submission of our manuscript to the Journal of Lightwave
+modulus algorithm (CMA) [18]–[21] has been proposed for               Technology, by one of the reviewers. Despite their similarities,
+blind adaptive feed-forward polarization demultiplexers [10],         the two papers approach the issue of polarization demultiplexing
+[11] and equalizers [15]. The popularity of these CMA-based           from different angles. Kikuchi’s main goal was to elucidate the
+modules [22]–[24] is due to their low computational complexity        physics behind the operation of the CMA-based polarization de-
+and their robustness in the presence of intermediate frequency        multiplexers. In contrast, in our paper, we ﬁrst derive the op-
+(IF) offsets and laser phase noise. The second feature allows         timal polarization demultiplexer’s structure, based on the max-
+for decoupling between polarization demultiplexing and carrier        imum-likelihood criterion. Then, we prove that the performance
+frequency/phase recovery, so the latter two impairments can           of a zero-forcing polarization demultiplexer, in the absence of
+be addressed by separate DSP modules. A disadvantage of               PMD and PDL, is optimal. Finally, we express the transfer ma-
+CMA-based modules is their possible erroneous convergence             trix of the zero-forcing polarization demultiplexer, in the ab-
+to the same PDM channel [11], [12].                                   sence of PMD and PDL, as a function of only two real parame-
+                                                                      ters (as opposed to two complex parameters in [11]), which are
+   This article focuses on the issue of optimal polarization de-      subsequently computed recursively using the CMA.
+multiplexing exclusively, in the absence of PMD. The purpose
+of the present study is the optimal design, using the maximum-           The rest of this paper is divided into three major sec-
+likelihood criterion [25]–[27], of polarization-diversity coherent    tions, namely, theoretical model (Section II), simulation
+optical receivers, for the detection of polarization-multiplexed      results and discussion (Section III), and experimental vali-
+optical signals with orthogonal, albeit unknown, SOPs. In the         dation (Section IV). In Section II, we develop an equivalent,
+absence of laser phase noise and IF offset, it is shown that simul-   discrete-time model of a representative coherent optical com-
+taneous joint estimation of the symbols, over the two received        munications system, using matrix formulation. Then, we
+orthogonal SOPs, yields optimal performance. In contrast, the         apply the maximum-likelihood criterion, in order to derive
+commonly used zero-forcing polarization demultiplexer usually         an optimal decision metric for the joint estimation of the
+yields sub-optimal performance [26], [27]. The latter ﬁrst em-        symbols, over both received SOPs. Based on the optimal de-
+ploys an electronic polarization demultiplexer, in order to fully     cision metric, it is shown that, under certain ideal conditions,
+invert the Jones matrix of the optical ﬁber, followed by indi-        a zero-forcing linear receiver yields optimal performance. The
+vidual demodulation of the polarization-multiplexed tributaries.      ﬁnal part of Section II is devoted to the proposed constrained
+Jones matrix inversion can be achieved using a lattice adaptive       polarization demultiplexer and the application of CMA for
+ﬁlter with four complex taps [4]–[12]. Similar to [4], [11] we        the blind adaptive estimation of its adjustable parameters. In
+introduce constraints between the taps, in order to avoid conver-     Section III, we evaluate, by simulation, the performance of
+gence into the same PDM channel. The constraints take advan-          the proposed constrained CMA polarization demultiplexer,
+tage of the fact that polarization rotations in optical ﬁbers can     in terms of convergence properties and error probability. Fi-
+be represented by unitary transformations. Then, the transfer         nally, in Section IV, we experimentally test the capability of
+matrix of the adaptive ﬁlter, in the absence of PMD and PDL,          the proposed constrained CMA polarization demultiplexer in
+is expressed as a function of only two independent real pa-           separating 2 GBd PDM QPSK optical signals. The details of
+rameters. These parameters can be estimated using either data-        the theoretical calculations are presented in the Appendices.
+aided or blind channel estimation techniques. For their estima-
+tion, we use the CMA. We evaluate, by simulation, the per-            II. THEORETICAL MODEL
+formance of the proposed constrained CMA polarization de-
+multiplexer in coherent optical communication systems using           A. System Description
+PDM quadrature phase shift keying (QPSK) signals. We show
+that it is, by far, superior, in terms of convergence accuracy and    Fig. 1 shows the block diagram of a PDM QPSK optical
+speed, compared to previously proposed, conventional CMA-
+based polarization demultiplexers [10]. A salient feature of the      communications system with a polarization- and phase-di-
+proposed constrained CMA polarization demultiplexer is that
+convergence is always guaranteed. Finally, we experimentally          versity coherent optical receiver. The modules of the optical
+test the tolerance of the proposed constrained CMA polariza-
+tion demultiplexer to realistic imperfections of polarization-di-     transmitter are shown in detail in Fig. 1(a). The optical signal
+versity coherent optical receivers.
+                                                                      from a CW semiconductor laser diode (SLD) is equally split
+   Despite its apparent simplicity, the proposed constrained
+CMA electronic demultiplexer, can be used as a benchmark              and fed into two parallel quadrature modulators (QM). Two
+in order to compare the performance of more sophisticated
+adaptive electronic equalizers in the presence of PMD and             independent pseudo-random bit sequences (PRBS), at a bit rate
+PDL. Since it does not possess any PMD/PDL compensation
+capabilities, it can be used as a reference for the PMD and PDL       each, are differentially encoded (DE) and transformed into
+tolerance of uncompensated coherent optical systems.
+                                                                      pulse sequences, which, in turn, change the driving voltage of
+
+                                                                      each QM. Two optical, differentially-encoded QPSK signals
+
+                                                                      are generated, at a symbol rate  each, at the output of
+
+                                                                      the QMs. The two optical QPSK signals are superimposed with
+
+                                                                      orthogonal SOPs, using two polarization controllers (PC) and
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:52:55 UTC from IEEE Xplore. Restrictions apply.
+ROUDAS et al.: OPTIMAL POLARIZATION DEMULTIPLEXING                                                                      1123
+
+Fig. 1. Block diagram of a representative coherent optical system. (a) PDM QPSK transmitter (Symbols: PRBS: Pseudo-random bit sequence, DE: Differential
+encoding and pulse shaping, SLD: Semiconductor laser diode, CPL: 3-dB coupler, QM: Quadrature modulator, PC: Polarization controller, PBC: Polarization beam
+combiner.); (b) Polarization- and phase-diversity coherent optical receiver (Symbols: OA: Optical preampliﬁer, BPF: Optical bandpass ﬁlter, PBS: Polarization
+beam splitter, LO: Local oscillator, BPD: Balanced photodetectors, LPF: Lowpass ﬁlter, ADC: Analog-to-digital converter, ASIC: application speciﬁc integrated
+circuit.); (c) ASIC architecture (Symbols: QI comp.: Quadrature imbalance estimation and compensation, Pol. DMUX: Polarization demultiplexer, DD: Differen-
+
+tial decoding, Demod.: Demodulation, BER: Bit error rate counter.); (d) Proposed constrained polarization demultiplexer (Symbols: x (n): input photocurrents,
+y (n): output photocurrents, w ; k; l = 1; 2: Complex taps, f^(n); "^(n)g: Estimated azimuth and ellipticity).
+
+a polarization beam combiner (PBC), to form a PDM QPSK quadratures are then combined, via complex addition, to form
+
+signal, which is transmitted through an optical ﬁber.   discrete-time, scaled replicas of the received complex electric
+
+The block diagram of an optical polarization- and phase-di- ﬁeld vectors at the - and -polarizations, respectively. Sub-
+
+versity digital coherent homodyne synchronous receiver is sequently, polarization demultiplexing is performed [4]–[12],
+
+shown in Fig. 1(b). The optical receiver front-end is com- possibly combined with transmission impairments equalization
+
+posed of an optical preampliﬁer (OA), an optical bandpass [13]–[17]. The block diagram of the proposed constrained
+
+ﬁlter (BPF), a laser diode, acting as a local oscillator (LO), CMA polarization demultiplexer is shown in Fig. 1(d). The
+
+two polarization beam splitters (PBSs) with aligned principal polarization demultiplexer attempts to counteract the channel
+
+axes, two 2 4 90 optical hybrids, and four balanced pho- effect by forming a linear superposition of the photocurrents.
+
+todetectors (BPDs). The received optical signal is optically It has two inputs and two outputs and is composed of four
+
+preampliﬁed and ﬁltered by the optical BPF, in order to reject complex multipliers  which are connected in
+
+the out-of-band ampliﬁed spontaneous emission (ASE) noise. a butterﬂy structure. The multipliers are iteratively adjusted,
+
+The - and -polarization components of the received optical using the CMA. The rationale behind the structure of the
+
+signal and the local oscillator are separately combined and de- proposed polarization demultiplexer is explained in detail in
+
+tected by two identical phase-diversity receivers composed of a Section II-C.
+
+2 4 90 optical hybrid and two BPDs each, at the upper and Referring back to Fig. 1(c), after polarization demultiplexing,
+
+lower polarization branches, respectively. The photocurrents at the complex envelopes of the electric ﬁelds of the PDM QPSK
+
+the output of the four balanced detectors are low-pass ﬁltered tributaries are recovered separately, at the upper and lower
+
+(LPF), sampled at integer multiples of the symbol period , branches of the ASIC. The non-zero IF offset, due to the carrier
+
+using an analog-to-digital converter (ADC), and fed to an frequency difference between the transmitter and the local
+
+application speciﬁc integrated circuit (ASIC) for DSP.  oscillator lasers, is estimated and removed, using a feed-for-
+
+Fig. 1(c) shows the ASIC’s architecture. The four sampled ward carrier recovery algorithm [32], [33]. A feed-forward
+
+photocurrents are processed in pairs. Each pair corresponds to phase noise removal circuit estimates and removes laser phase
+
+the in-phase and quadrature components of the coherent beating noise, e.g., [34]. Subsequently, the two waveforms are demodu-
+
+between the received signal and the signal of the LO. Initially, lated independently. Each symbol sequence is recovered using
+
+the quadrature imbalance (QI) occurring at each phase-diver- a decision circuit, is differentially decoded and transformed
+
+sity receiver is estimated and corrected [28]–[31]. The two into two bit sequences, which are used for error counting.
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:52:55 UTC from IEEE Xplore. Restrictions apply.
+1124                                                                JOURNAL OF LIGHTWAVE TECHNOLOGY, VOL. 28, NO. 7, APRIL 1, 2010
+
+B. Mathematical Formulation                                         and phase-diversity coherent optical receiver, which, in the ab-
+                                                                    sence of phase noise, can be written as
+   In this subsection, an equivalent, discrete-time model of the
+coherent optical system of Fig. 1 is derived.                                                                  (5)
+
+   For mathematical convenience, an equivalent baseband repre-      where    is the array of the two sampled modulating signals
+sentation [25] of the optical signals and components is used. In
+addition, the following notations are adopted: (i) To distinguish   scaled by a multiplication factor,    is the array of the total
+vectors from scalars, we identify vector quantities with bold-
+face type; (ii) Matrices are also denoted by boldface type (the     photocurrent noises, and    is the transfer function of the
+distinction should be clear from the context); and (iii) Dirac’s
+bra and ket vectors denote normalized Jones vectors [35].           transmission channel
+
+   It is assumed that the electric ﬁelds of the two QPSK mod-                                                  (6)
+ulated waveforms, at the output of the QM, have orthogonal
+polarizations and , respectively. It is also assumed that           The mean and covariance matrices of the sampled modulating
+the optical ﬁber induces arbitrary, random, time-varying polar-
+ization rotations but maintains the orthogonality between the       signals  are
+SOPs of the polarization multiplexed signals. After transmis-
+sion through the optical ﬁber, at the output of the optical BPF,                                                                            (7)
+the electric ﬁeld of the optical PDM QPSK signal can be written,    and
+in equivalent baseband notation, as
+                                                                                                                                            (8)
+
+                                                                    respectively, where denotes expectation,   denotes
+
+                                                         (1)        a diagonal matrix, dagger denotes the adjoint, i.e., conjugate
+
+                                                                    transpose, matrix, and      are the signal amplitudes at each
+
+where       are the complex envelopes of the pream-                 receiver branch.
+
+pliﬁed optical signals contaminated with ASE noise, and             The mean and covariance matrices of the total photocurrent
+
+            are the corresponding slowly-varying, nor-              noises   are given by
+
+malized, Jones vectors along two arbitrary orthogonal SOPs,                                                                                 (9)
+                                                                    and
+denoted by . Based on the assumption of SOP orthogonality,
+                                                                                                                                           (10)
+the inner product of the two Jones vectors must vanish, i.e.,
+
+            where is Kronecker’s delta.
+
+The complex envelopes of the electric ﬁelds in (1) can be
+
+written as                                                          respectively, where         are the variances of the photocurrent
+
+                                                                    noise components at each receiver branch.
+
+                                                                    It is straightforward to verify that  belongs to the special
+
+                                                         (2)        unitary group SU(2), i.e.,
+
+                                                                    where denotes the 2 2 unit matrix, and
+
+where       are the average optical powers at each SOP,             where the operator        denotes the determinant of a matrix.
+
+            are the modulating signals, is the angular fre-         C. Optimal Receiver
+
+quency offset from the channel’s nominal frequency, and                In Appendix B, using the maximum-likelihood criterion
+                                                                    [25]–[27], we derive the decision metric of the optimal receiver
+is the phase noise of the received signal. The terms                for joint detection of PDM QPSK signals transmitted over the
+                                                                    memoryless, discrete-time, two-input two-output (TITO) linear
+represent independent, identically distributed, complex ASE         channel described by (5).
+
+noise components in the two orthogonal SOPs, which follow              It is shown that a sufﬁcient statistic for estimating the trans-
+                                                                    mitted symbols is the following (see (57) in Appendix B)
+Gaussian distribution with zero mean and variance .
+
+The normalized Jones vectors                          can be ex-
+
+pressed in rectangular coordinates as [36]
+
+                                                         (3)
+
+and                                                                                                            (11)
+
+                                                                    where denotes real part and is the joint, complex-symbol
+
+                                                                alphabet. We have dropped the time dependence of all matrices
+                                                         (4) in order to avoid clutter.
+
+where and are the angles corresponding to the s-SOP’s                  From (11), we observe that, prior to decision, the optimal re-
+                                                                    ceiver must form a linear superposition of the complex pho-
+azimuth and ellipticity [36], respectively, and take values in the  tocurrents
+
+intervals                     [36].
+
+In Appendix A, it is shown that an array of two complex pho-
+
+tocurrents  is generated at the output of the polarization-                                                    (12)
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:52:55 UTC from IEEE Xplore. Restrictions apply.
+ROUDAS et al.: OPTIMAL POLARIZATION DEMULTIPLEXING                                                                                  1125
+
+where is the transfer matrix of a spatial electronic ﬁlter                   maximum likelihood detection, since the noises at the output
+                                                                       (13)  branches of the polarization demultiplexer would be correlated
+                                                                             (19) [27].
+   Substitution of (12) into (11) leads to the concise decision
+rule                                                                            As shown in Appendix B, the decision rule (15) can be fur-
+                                                                             ther reduced so that each element of can be individually
+                                                                       (14)  estimated at each branch of the polarization-diversity receiver.
+                                                                             Furthermore, the in-phase and quadrature components of are
+We conclude that, in the general case, when the total pho-                   independently retrieved, by comparison to a zero threshold.
+
+tocurrent noise is not spatially white, i.e.,       , the optimal               Polarization demultiplexing, followed by separate detection
+                                                                             of the two PDM channels, is a special case of a well-known re-
+receiver should perform the following steps: (i) spatial noise               ceiver structure in the context of multiuser systems with space
+                                                                             diversity, called zero-forcing linear receiver, interference nuller,
+pre-whitening, i.e., multiplication by         (ii) projection to            or decorrelator [27]. It is worth noting that the proposed re-
+                                                                             ceiver is a direct extension to two dimensions of the maximal
+     and (iii) joint maximum-likelihood vector symbol                        ratio combiner, used in single channel communications systems,
+                                                                             with polarization-diversity coherent receivers [3]. In addition,
+estimation using the concise metric (14). This receiver is called            the proposed polarization demultiplexer transfer matrix is the
+                                                                             exact 2 2 equivalent of the matched ﬁlter transfer function
+the linear minimum mean squared error (MMSE) receiver [27].                  [27], [11].
+
+D. Zero-Forcing Receiver                                                     E. Estimation of Channel Transfer Matrix
+
+   In the special case when the noises at the two branches of the            The zero-forcing receiver must calculate an estimate
+polarization diversity receiver have the same variance (i.e., the
+photocurrent noise is spatially white), the optimal receiver may
+use the simpliﬁed decision rule (see (61) in Appendix B)
+
+                                                    (15)                     of the channel transfer matrix in (5) and set          .
+
+                                                                             From (3)–(4) and (6), we observe that the elements of  are
+
+where the spatial electronic ﬁlter transfer matrix is now reduced            functions of only two independent parameters           and .
+to
+                                                                             Therefore, one simply needs to calculate the estimates of the
+
+                                                                             angles  . Below, we show that this can be achieved
+
+                                                    (16)                     blindly using the CMA. Its application on optical channel pa-
+
+                                                                             rameters estimation is a novel idea. Its adequacy, compared to
+
+The above relationship indicates that the optimal receiver                   other estimators [37], lies out of the scope of the present study.
+
+must use an electronic polarization demultiplexer, in order to               No claims about its optimality are made. Its adoption, as an ap-
+
+fully invert the ﬁber Jones matrix.                                          propriate scheme for the estimation of         and     can be
+
+It would be instructive to gain some insight into why (16) is                justiﬁed by its tolerance to intermediate frequency offsets and
+
+optimal. Assume that the receiver has perfect knowledge of the               laser phase noise, and its excellent bit error rate (BER) perfor-
+
+channel transfer matrix. According to (16), the receiver should              mance shown in Fig. 5(c).
+
+set            . Then, the output of the polarization demultiplexer          The instantaneous error function is deﬁned as
+
+is written as                                                                                                                       (20)
+
+                                                    (17)                     where the operator denotes the Hadamard matrix product [39],
+                                                                             deﬁned as the component-wise multiplication of two matrices
+Since the multiplication with a matrix is a linear operation, the
+                                                                                                                                                    (21)
+resulting noise                         is a complex Gaussian                and
+
+random vector. Using (9) and (10), for              , we can
+
+calculate the mean and covariance matrices of
+
+                                                    (18)                                                                            (22)
+
+and                                                                          where   are the total signal and noise powers at
+
+                                                                       (19)  each branch of the polarization-diversity receiver.
+
+   We observe that the photocurrent noise statistics are pre-                The cost function, which we seek to minimize, can be deﬁned
+served after the proposed polarization demultiplexer. This
+indicates that polarization demultiplexing can be achieved                   as the total mean-squared error
+without penalty. However, were it not for the equality of
+the total photocurrent noise variances and the unitarity of                                                                         (23)
+the channel transfer matrix, the performance of the linear
+zero-forcing receiver would be suboptimal, compared to joint                    The instantaneous cost function can then be expressed in
+                                                                             terms of as
+
+                                                                                                                                    (24)
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:52:55 UTC from IEEE Xplore. Restrictions apply.
+1126                                                                         JOURNAL OF LIGHTWAVE TECHNOLOGY, VOL. 28, NO. 7, APRIL 1, 2010
+
+   We deﬁne the auxiliary column vector     with elements
+equal to the independent parameters
+
+                                                                       (25)
+
+   Taking the derivative of the instantaneous cost function with
+respect to and using the chain rule, one ﬁnally obtains ana-
+lytical expressions for
+
+                                            (26)
+
+   We deﬁne the gradient of the instantaneous cost function in
+the space of the independent variables
+
+                                                                       (27)  Fig. 2. Constellation diagrams for the x-polarization, at the output of the polar-
+
+   The stochastic gradient algorithm for updating the adaptive               ization diversity receiver, in the absence ((a), (b), (c)) and in the presence ((d),
+ﬁlter coefﬁcients is written [21], [25]
+                                                                             = = 0 (e), (f)) of IF offset. (Conditions: Received SOP parameters: (a), (d)  " ,
+                                                                             = 3 = 0 = = 3 (b), (e)  = ; " , and (c), (f)  " = ).
+
+                                            (28) phases, i.e., training and tracking. During the training phase, a
+                                                    short training sequence, in conjunction with the least squares
+
+where is a positive real constant (step-size parameter).                     method [37], can be used to estimate . This method asymp-
+Using periodic boundary conditions, the parameters                           totically yields the best linear unbiased estimate [37]. During
+and in (28) are conﬁned within a unit cell, delimited by                     the time intervals between transmitting consecutive training se-
+                                                                             quences, a blind estimation algorithm, e.g., [38], can be used
+                          .                                                  for tracking and continuously updating the values of the ad-
+   It should be stressed that both the proposed constrained                  justable parameters. The values provided by the training phase
+CMA polarization demultiplexer and its conventional counter-                 can be used as initial guesses for the recursion of the tracking
+part suffer from output permutation and rotation ambiguities.                algorithm.
+The ﬁrst type of ambiguity means that PDM channel ordering
+
+at the polarization demultiplexer outputs is unpredictable. The
+
+second type of ambiguity means that the recovered constel-                              III. SIMULATION RESULTS AND DISCUSSION
+lations might exhibit arbitrary rotations from their nominal
+position. In other words, both polarization demultiplexers                      In order to theoretically evaluate the performance of the pro-
+cannot distinguish between the desired solution (in the absence              posed constrained CMA polarization demultiplexer and com-
+of noise)                                                                    pare it with its conventional counterpart [10], we perform com-
+                                                                             puter simulations of the coherent optical communication system
+
+                                            (29) shown in Fig. 1. We use ideal non-return-to-zero (NRZ) QPSK
+                                                    signals. The optical ﬁber is modeled simply as a polarization
+
+and the undesired solution                                                   rotator with transfer matrix . The optical hybrids are con-
+                                                                             sidered ideal and all photodiodes are identical. All simulations
+
+                                            (30) are performed with initial guesses
+                                                              for the proposed constrained CMA polarization demul-
+
+where , and are arbitrary phase rotations.                                   tiplexer and  for its conventional counterpart.
+
+The output permutation ambiguity can be addressed, for Initially, the impact of polarization rotations on the constella-
+
+instance, by periodically transmitting channel identiﬁcation tion of received sampled complex photocurrents is investigated.
+
+training symbols (pilots) and by using a tracking scheme for We distinguish two cases, in the absence and in the presence of
+
+their detection.                                                             phase noise and IF offset, respectively. First, the ideal constella-
+
+The rotation ambiguity can be readily unraveled by the feed- tion is shown as a reference (Fig. 2(a), black (red) crosses). Due
+
+forward laser phase noise estimation circuit [34], which is as- to cross-polarization interference, received constellations con-
+
+sisted by differential coding and decoding of the transmitted sist of 16 points, Fig. 2(b), (c). This occurs because the mixing
+
+symbols [3].                                                                 matrix        creates all possible combinations of two constel-
+
+It is worth mentioning that a combination of data-aided and lations of four points each. Depending on the speciﬁc values
+
+blind estimation of can be performed, as well. Since polar- of , some of the constellation points may overlap. In the
+
+ization rotations, due to ﬁber birefringence, are slow, in compar- presence of IF offset, constellation points rotate either clock-
+
+ison with the symbol rate, they can be considered a quasi-static wise or counterclockwise, producing up to four concentric cir-
+
+effect. Estimation of quasi-static effects can be performed in two cles with unequal radii, as shown in Fig. 2(e)–(f).
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:52:55 UTC from IEEE Xplore. Restrictions apply.
+ROUDAS et al.: OPTIMAL POLARIZATION DEMULTIPLEXING                                                             1127
+
+Fig. 3. (a) Three-dimensional plot of the cost function vs. estimated azimuth     Fig. 4. (a) Trajectory of the estimated SOP at the output of the proposed con-
+
+and ellipticity ^; "^. (Symbols: A, B: Global minima within the unit cell, Rec-  strained polarization demultiplexer. (Conditions: Received SOP parameters:
+
+tangle: Unit cell), (b) Corresponding contour plot of the cost function on the     = " = =6, BPF bandwidth= 32R , LPF 3-dB bandwidth: B = 0:8R ,
+Poincaré sphere for the proposed constrained polarization demultiplexer. (Sym-    LPF equivalent noise bandwidth: B = 1:04B , phase averaging block
+
+bols: White (red) point (A): Minimum at ^ = "^ = =6). (Conditions: Re-          size = 10 symbols), (Symbols: Black (unmarked) line: Absence of noise, Red
+ceived SOP parameters:  = " = =6). (Color coding: Black (blue) areas:           line (open circles): OSNR = 9 dB and, Blue line (crosses): OSNR = 7
+
+Small values of the cost function, White (red) areas: Large values of the cost    dB) (b) Time evolution of the MSE for the x polarization for the proposed
+function).
+                                                                                  constrained (dotted line), and the conventional CMA-based (solid line), polar-
+   We proceed with exploring the performance surface
+                            as a function of the proposed demul-                   ization demultiplexers, for the optimum step size  = 0:1. Averaging over 500
+
+tiplexer adjustable parameters. Fig. 3(a), (b) show three-di-                     experiments is performed. (Conditions: Received SOP parameters:  =4
+mensional and Poincaré sphere-contour plots, respectively, of                     and " = 0).
+
+the instantaneous cost function vs. , in the absence of
+
+noise, for                 . Time averaging of the cost function
+
+, over 500 consecutive symbols, is performed instead of
+
+ensemble averaging. In Fig. 3(a), we observe that, within the
+
+limits of the unit cell, denoted by a rectangle, there are two
+
+global minima . In Fig. 3(b), these minima correspond to
+
+two antipodal points on the Poincaré sphere. The minimum at
+
+the point                    (also denoted by a (white)
+
+red point on the Poincaré sphere), corresponds to the correct
+
+ordering of the output signals, whereas the other minimum at
+
+the point                    (not shown on                                        Fig. 5. Representative constellations of the received (blue (gray) points), equal-
+
+the Poincaré sphere), results in a permutation of the output                      ized (red (black) points) and ideal ((green) crosses) signals for the x polariza-
+
+channels. Bisecting the line connecting the two minima on the                     tion, using (a) the proposed constrained polarization demultiplexer, and (b) the
+                                                                                  conventional CMA-based polarization demultiplexer; (c) BER vs. OSNR for the
+Poincaré sphere with a perpendicular plane, divides the sphere                    ideal (i.e., distortionless) case (blue (thick black) curve), and using the proposed
+                                                                                  constrained ((red) triangles), and the conventional CMA-based ((black) circles),
+into two hemispheres. The intersection of the plane, with the                     polarization demultiplexer. Quadratic polynomial ﬁtting is used, drawn as a
+                                                                                  dotted line (in red) for the proposed constrained and as a thin solid line (in black)
+surface of the sphere, creates a rotated equator line, which                      for the conventional CMA-based polarization demultiplexer. (Conditions: Re-
+
+corresponds to the ridge within the unit cell of Fig. 3(a). The                   ceived SOP parameters:  = =6 and " = =12, BPF bandwidth = 32R ,
+                                                                                  LPF 3-dB bandwidth: B = 0:8R , 4th-order Bessel LPF equivalent noise
+hemisphere of each minimum in Fig. 3(b) corresponds to a                          bandwidth: B = 1:04B , phase averaging block size = 10 symbols).
+
+valley within the unit cell of Fig. 3(a). The constrained CMA
+
+converges to the minimum lying in the same hemisphere as the
+
+initialization point         . If the initial point lies exactly
+
+on the equator, in the presence of noise, the algorithm may coincides with the transmitted one, whereas, as the OSNR is
+
+converge to either minimum.                                                       reduced, the restored SOP ﬂuctuates more signiﬁcantly around
+
+Subsequently, we study the impact of ASE noise on the the initially transmitted SOP.
+
+convergence behavior of the proposed constrained CMA In Fig. 4(b), we compare the decay time of the error
+
+polarization demultiplexer. We assume that the transmitted magnitude for the proposed constrained CMA polarization
+
+orthogonal SOPs are          , corresponding to the Stokes demultiplexer (dotted line), and the conventional one (solid
+
+vectors               and    , respectively. We also line) [10]. More speciﬁcally, for both demultiplexer types, we
+
+assume that the received SOPs have been rotated due to ﬁber plot the time evolution of the mean-squared error  ,
+
+birefrigence in relation to the transmitted ones, such that the for the -polarization, for the optimal value of the step-size
+
+s-SOP angles are             . The polarization demultiplexer parameter . We choose a maximal initial perturbation; that is
+
+iteratively estimates the angles and restores the SOPs of the to say, the initial point is selected adjacent to the rotated equator
+
+PDM QPSK signals back to their initial values. Fig. 4(a) shows and within the appropriate hemisphere, in order to prevent
+
+the trajectories followed on the Poincaré sphere during restora- output reversal. Ensemble averaging over 500 simulation runs
+
+tion from to , both in the absence (black (unmarked) is performed. The optimum step-size parameter is          for
+
+line) and in the presence of ASE noise (for two different values both polarization and demultiplexers, providing fast conver-
+
+of the optical signal-to-noise ration (OSNR)). We observe gence and negligible residual mean squared error (MSE). The
+
+that, in the absence of ASE noise, the restored SOP eventually constrained CMA polarization demultiplexer clearly exhibits
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:52:55 UTC from IEEE Xplore. Restrictions apply.
+1128                                                                 JOURNAL OF LIGHTWAVE TECHNOLOGY, VOL. 28, NO. 7, APRIL 1, 2010
+
+Fig. 6. (a) Block diagram of the experimental setup (Symbols: ECL: External cavity laser, QM: Quadrature modulator, CPL: 3-dB coupler, PC: Polarization
+controller, PRBS: Pseudo-random binary sequence, RF Amp: Radio frequency ampliﬁer, OF: Optical ﬁber, PBC: Polarization beam combiner, VOA: Variable
+optical attenuator, OA: Optical ampliﬁer, Rx: Polarization- and phase-diversity coherent optical receiver, BPD: Balanced photodetector, DSO: Digital storage
+oscilloscope.); (b) Block diagram of the DSP modules used to analyze the experimental results. (Symbols: Sync. & Resampling: Quadrature and polarization time
+synchronization and resampling, SE dist: Single-ended distortion mitigation, FFFE: Feed-forward frequency estimation and removal, FFPE: Feed-forward phase
+estimation and removal, BER: Bit error rate tester.).
+
+superior performance, in terms of convergence speed. For             PRBSs. The optical signal at the output of the QM is split into
+                                                                     two equal amplitude components, using a 3-dB coupler. One
+example, for        , the constrained CMA polarization de-           of the two components is delayed using approximately 8 m of
+                                                                     optical ﬁber. Their SOPs are adjusted, using two PCs, so that
+multiplexer requires less than 20 symbol intervals to minimize       they become aligned with the principal axes of the PBC. The
+                                                                     PDM QPSK signal, at the output of the PBC, is ampliﬁed using a
+the MSE, whereas its conventional counterpart [10] requires          booster optical ampliﬁer (OA1) and is subsequently transmitted
+                                                                     through 100 km of LEAF® optical ﬁber. The latter, at 2 GBd,
+more than 60 symbol intervals, i.e., it is more than three times     simply acts as a polarization rotator and attenuator. The received
+                                                                     optical signal is preampliﬁed and ﬁltered in two stages, using
+slower.                                                              two tunable ﬁber Bragg grating (FBG) ﬁlters. The ﬁrst FBG
+                                                                     ﬁlter has 0.6 nm bandwidth, in order to emulate a WDM DMUX.
+Fig. 5(a), (b) show representative input/output constellation        The second FBG ﬁlter has 0.25 nm bandwidth, in order to emu-
+                                                                     late the ASE noise-limiting ﬁlter, typically used after the optical
+diagrams, with ASE noise and zero IF offset, obtained by             preampliﬁer. As the optical ﬁeld reaches the polarization- and
+                                                                     phase-diversity coherent optical receiver, it is split using a PBS.
+using the constrained CMA polarization demultiplexer and the         The two polarization components are combined with the light of
+                                                                     an ECL, acting as a LO. Local-oscillator-to-signal power ratio
+conventional one, respectively. We assume that the received          (LOSPR) was kept small due to limitations of the lasers used at
+                                                                     the experiment. Two different optical hybrid technologies were
+SOPs correspond to               . We see that both                  used, namely, a bulk-component, 2 2 90 optical hybrid [40],
+                                                                     and a commercially-available, integrated 2 4 90 optical hy-
+polarization demultiplexers are able to transform the received       brid [6]. At the output of the 2 2 90 optical hybrid, two, al-
+                                                                     most identical, 10-GHz bandwidth PDs are used. The integrated
+spiral constellation (blue (gray) points) into four approximately    2 4 90 optical hybrid is followed by two pairs of 40-GHz
+                                                                     bandwidth BPDs. Finally, an 8-GHz electrical bandwidth, 40
+circular points (in red (black)) that approach the transmitted       GSa/s, real-time, sampling oscilloscope samples the photocur-
+                                                                     rents and stores the signals for off-line processing. An electrical
+constellation (green crosses).                                       spectrum analyzer, not shown in Fig. 6(a), is used for the manual
+                                                                     adjustment of the transmitter and LO frequencies within
+Fig. 5(c) shows BER curves, as a function of the OSNR, mea-          MHz from each other. The duration of a single measurement is
+                                                                     equal to 51.25 s.
+sured in a resolution bandwidth              , (e.g., OSNR
+                                                                        Fig. 6(b) shows the block diagram of the DSP modules used
+measured in 0.1 nm resolution bandwidth for  GBd) for                to analyze the experimental results. First, we ﬁlter the translated
+                                                                     spectrum using an LPF, in order to remove out-of-band noise.
+both polarization demultiplexers. The BER is calculated using
+
+Monte Carlo simulation. The red triangles correspond to the pro-
+
+posed constrained CMA polarization demultiplexer, the black
+
+circles correspond to the conventional CMA polarization de-
+
+multiplexer, and the blue (thick black) curve corresponds to the
+
+ideal case, with no polarization rotations [2], [3]. Obviously,
+
+both polarization demultiplexers exhibit almost identical perfor-
+
+mance, with a negligible penalty relative to the ideal case at high
+
+OSNRs.
+
+                  IV. EXPERIMENTAL VALIDATION
+
+   In order to test the validity of the simplifying assumptions of
+the theoretical model presented in Section II, we performed a
+series of PDM QPSK experiments. The experimental set-up is
+shown in Fig. 6(a).
+
+   Light from an external cavity laser (ECL), acting as a trans-
+mitter, is QPSK modulated using a QM, driven by two 2 Gb/s
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:52:55 UTC from IEEE Xplore. Restrictions apply.
+ROUDAS et al.: OPTIMAL POLARIZATION DEMULTIPLEXING                                   1129
+
+Timing recovery is manually performed, in order to remove any       Fig. 7. Typical constellation diagrams in the x polarization (upper row) and
+differential delays between the signals, which are caused by op-    the y polarization (lower row). (a), (b) after synchronization and downsampling;
+tical and electrical path differences. Subsequently, signals are
+resampled to one sample per symbol.                                 (c), (d) after QI compensation; (e), (f) at the output of the proposed polarization
+
+   Distortion due to small LOSPR and single-ended detection at      = 2 demultiplexer; (g), (h) after the IF and phase noise removing circuits. (Condi-
+the 2 2 90 optical hybrid is ﬁrst partly removed [41]. Inaccu-      tions: R  GBd).
+racies in the bias voltages of the 2 4 90 optical hybrid, as well
+as non-optimal setting of the four PCs within the 2 2 90 op-        ﬁnal - and -polarization constellations is primarily attributed
+tical hybrid, in conjunction with differences in the responsivity   to polarization imbalance (not to be confused with QI) due to
+of the PDs, cause QI [29]. QI is a slowly varying impairment,       gain and phase differences between the two branches of the
+essentially constant over the duration of a single measurement.     polarization-diversity receiver (see analysis in Appendix C).
+Several methods have been proposed for QI estimation and com-       In addition, the two polarization tributaries that are combined
+pensation, both in optical communications [28]–[31], and in         at the PBC, may have slightly unequal average powers due to
+digital communications, e.g., [42]. Here we use the algorithm       maladjustment of the PCs or the non-ideal power splitting ratio
+described in [29], [31]. After QI compensation, the PDM QPSK        of the 3-dB coupler. Fig. 7(g), (h) show the ﬁnal constellations.
+signals are fed into the proposed electronic polarization demul-    The impact of polarization imbalance is obvious since the
+tiplexer. After polarization demultiplexing, any residual IF is     recovered constellations have unequal radii. No errors occur
+estimated and removed using a feed-forward frequency estima-        during a single measurement (i.e., 100 000 symbols) in both
+tion algorithm [32], [33]. A feed-forward phase noise removal       branches of the polarization diversity receiver.
+circuit estimates and removes laser phase noise [34]. Finally, the
+signal corresponding to each quadrature passes through a deci-         Fig. 8(a) illustrates the time evolution of the estimates of the
+sion circuit. The symbol sequence for each PDM QPSK signal is       azimuth and ellipticity . A variable step-size is used. In
+recovered and is differentially decoded. Then, it is transformed    order to bring the operating point near the optimum quickly we
+into two bit sequences, which are compared to the transmitted       start with a relatively large value of . The value of is halved
+ones in order to perform error counting.                            after 100 symbols and again after another 200 symbols, to avoid
+                                                                    large baseline wander. We can see that while the ellipticity angle
+   It is important to note that all DSP algorithms based on the
+assumption of the envelope constancy of QPSK signals, (i.e.,          approaches its ﬁnal value after fewer than 100 symbols, the
+[32]–[34]), cannot be applied prior to polarization demulti-        azimuth requires around 200 symbols to do the same. The
+plexing. Otherwise, symbol errors occur due to the presence         azimuth and ellipticity remain stable over the rest of the mea-
+of multiple signal levels, caused by cross-polarization inter-      surement, conﬁrming that polarization rotations are a slowly
+ference, as shown in Fig. 2. Therefore, residual IF estimation      varying effect. Fig. 8(b) shows the time evolution of the in-
+and phase noise estimation should be performed only after the       stantaneous squared error function for the -polarization ,
+proposed constrained CMA polarization demultiplexer. The            for both the proposed constrained CMA polarization demulti-
+latter is insensitive to IF offset and laser phase noise, so their  plexer and the conventional one. Curves have been smoothed
+presence does not affect the correct estimation of the ﬁber         by moving averaging for illustration purposes. The theoretically
+transfer matrix parameters .                                        observed three-fold increase in convergence speed is hereby
+                                                                    qualitatively conﬁrmed, although the absolute time scales are
+   Fig. 7 shows typical constellations for the -polariza-           different compared to Fig. 4(b).
+tion (upper row) and -polarization (lower row), respec-
+tively, immediately after synchronization and downsampling                                       V. SUMMARY
+(Fig. 7(a), (b)), at the input of the proposed polarization
+demultiplexer (Fig. 7(c), (d)), at the output of the proposed          This article addressed the optimal design, using the
+polarization demultiplexer (Fig. 7(e), (f)), and after the IF and   maximum-likelihood criterion, of polarization-diversity
+phase noise removing circuits (Fig. 7(g), (h)). The scale of        coherent optical receivers, for the detection of orthogonal
+constellations (a)–(d) is different from the scale of constel-      polarization-multiplexed optical signals in the absence of PMD
+lations (e)–(g) because the samples are normalized to unit          and PDL. It was shown that a zero-forcing linear receiver,
+magnitude at the input of the polarization demultiplexer. The       performing polarization demultiplexing and individual demod-
+initial constellations shown in Fig. 7(a), (b) contain QI, as wit-  ulation of the demultiplexed tributaries, yields, under certain
+nessed by their elliptical shape. The constellation of Fig. 7(a),   conditions, optimal performance. We showed that polarization
+corresponding to the 2 2 90 optical hybrid, has the form            demultiplexing can be performed using a lattice adaptive ﬁlter
+of eccentric ellipses, a shape due to the distortion introduced     with four complex, mutually-dependent taps in the absence
+by single-ended detection, combined with small LOSPR. The           of PMD and PDL. The taps can be expressed as a function of
+QI compensated constellations of Fig. 7(c), (d), resemble the
+ones plotted in Fig. 7(e), (f). Concentric circles with unequal
+radii are a tell-tale sign of cross-polarization interference
+between the two PDM QPSK signals. Due to the presence
+of ASE noise, circles are transformed into thick rings, whose
+circumferences may overlap. The constellations at the output
+of the polarization demultiplexer, seen in Fig. 7(e), (f), are
+single circles, indicating that ﬁber transfer matrix inversion was
+successfully performed. The difference in sizes between the
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:52:55 UTC from IEEE Xplore. Restrictions apply.
+1130                                                                     JOURNAL OF LIGHTWAVE TECHNOLOGY, VOL. 28, NO. 7, APRIL 1, 2010
+
+only two, independently-controlled real parameters. For their            where                         . In (35), are the responsivi-
+estimation, we used the CMA. We studied, by simulation, the
+performance of the proposed polarization demultiplexer in                ties of the photodiodes and the dagger denotes the adjoint, i.e.,
+coherent optical communication systems, using PDM QPSK
+signals. We showed that it was, by far, superior, in terms of            conjugate transpose, matrix.
+convergence speed, compared to a conventional, CMA-based
+polarization demultiplexer [10]. Apart from this difference,             By substitution of (34) into (35), we obtain
+both polarization demultiplexers exhibited almost identical
+performance. Nevertheless, a salient feature of the proposed                                                                     (36)
+constrained CMA polarization demultiplexer is that it always
+achieves convergence, unlike its conventional counterpart,               where             and         denote the real and imaginary
+which occasionally gets caught in singularities. Both the pro-
+posed constrained CMA polarization demultiplexer and the                 parts, respectively.
+conventional one suffer from output permutation and rotation
+ambiguities, but these problems can be remedied by other DSP             In the case of identical photodiodes with responsivity equal
+techniques. Finally, we experimentally tested the tolerance
+of the proposed constrained CMA polarization demultiplexer               to at the outputs of the balanced receivers, we obtain
+to realistic imperfections of polarization-diversity coherent
+optical receivers.
+
+                              APPENDIX A
+
+In this Appendix, we model the polarization- and phase-di-
+
+versity coherent receiver and derive the matrix equation (5). Our                                                                (37)
+
+analysis is similar to the one by [2], [3] and is reported here for      where          .
+
+completeness. Relationship (1) is used as a starting point.              After sampling at integer multiples of the symbol period ,
+
+The polarization-diversity coherent optical receiver splits the          we can form the discrete-time complex photocurrents via com-
+
+received complex electric ﬁeld vector into its - and -po-                plex addition
+
+larization components        and  using a PBS with prin-
+
+cipal axes
+
+                                                                                                                                 (38)
+
+                                                             (31) where                 .
+
+                                                                         By substitution of (31) and (32) into (38), we obtain
+
+The SOP at the output of the LO is assumed to be linear 45 .
+
+After a PBS with principal axes   , at the input of each
+
+hybrid, the electric ﬁeld of the LO can be written, in equivalent
+
+baseband notation, as                                                                                                            (39)
+
+                                                                   (32)  where                  and the superscript denotes complex
+                             is the complex envelope of the local
+                                                                         conjugation.
+                                                                   (33)
+where       and                                                          We can deﬁne the column-vectors of the photocurrents ,
+
+oscillator given by                                                      the modulating signals        and the total photocurrent noise
+
+                                                                                as
+
+In (33), is the average optical power of the local oscillator,
+
+      is the local oscillator’s angular frequency offset from the
+
+channel’s nominal frequency, and  is the phase noise of                                                                          (40)
+
+the local oscillator.
+
+At the four outputs of an ideal, lossless, polarization-inde-            where                  include the contribution of ASE, shot, and
+
+pendent, 90 optical hybrid, we obtain (omitting the time de-             thermal noises, and the superscript T denotes transposition.
+
+pendence, for brevity) [43]                                              From (2), (39), we observe that the ﬁber-induced polarization
+
+                                                             (34)        rotation and the optoelectronic conversion, at the polarization-
+
+                                                                         and phase-diversity coherent optical receiver, can be described
+
+                                                                         as a matrix equation
+
+where       .
+
+Neglecting, for the moment, the contribution of shot and                                                                         (41)
+
+thermal noises, which will be taken into account later on, the
+
+photocurrents, at the output of the photodiodes, are given by            where is a multiplicative factor
+
+                                                             (35)                                                                (42)
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:52:55 UTC from IEEE Xplore. Restrictions apply.
+ROUDAS et al.: OPTIMAL POLARIZATION DEMULTIPLEXING                                                                                       1131
+
+                                                                                 respectively, where is the variance of the total photocurrent
+                                                                                 noise components at the two receiver branches.
+
+                                                                                    In the general case, when the modulating signal amplitudes
+                                                                                 and the noise variances at the two receiver branches are not iden-
+                                                                                 tical, (41) can be rewritten, with some abuse of notation, as
+
+                                                                                                                                         (48)
+
+                                                                                 where we scale                 so that
+
+                                                                                                                                                        (49)
+                                                                                 and
+
+                                                                                                                                                        (50)
+
+                                                                                 where           denotes diagonal matrix,  are the modu-
+
+                                                                                 lating signal amplitudes, and           are the total photocurrent
+
+                                                                                 noise variances at the two branches of the polarization diversity
+
+                                                                                 receiver, respectively.
+
+Fig. 8. (a) Time evolution of the estimates of the s-SOP angles ^ and "^ com-                                 APPENDIX B
+
+puted by the proposed constrained polarization demultiplexer. For visualization     This Appendix provides a detailed derivation of the optimal
+                                                                                 receiver for joint detection of PDM QPSK signals transmitted
+purposes, we have removed the unit cell angle restrictions. (b) Time evolution   over a memoryless, discrete-time, two-input two-output (TITO)
+                                                                                 linear channel, based on the maximum-likelihood criterion
+of the squared error function for the x-polarization e (n); for the proposed     [25]–[27].
+
+polarization demultiplexer and the conventional CMA-based one. Curves are           As a starting point for the derivation, we use the matrix equa-
+                                                                                 tion (48)
+smoothed by two hundred-points moving averaging. (Symbols: Dotted lines:
+
+Initial convergence step  = 0:05, Solid lines: Initial convergence step  =
+0:5).
+
+In the above,                    is the IF offset and                                                                                                   (51)
+
+               is the total laser phase noise.                                   The optimal maximum-likelihood receiver estimates the vector
+                                                                                        by maximizing the metric [26],
+In (41), we also deﬁned the transfer function of the transmis-
+
+sion channel as a 2 2 matrix
+
+                                                       (43)                                                                              (52)
+
+It is straightforward to verify that  belongs to the special                     where           is the conditional probability of the observed
+
+unitary group SU(2), i.e.,                             and                       vector given that the transmitted vector was and is the
+
+               , where denotes the 2 2 unit matrix and the                       joint, complex-symbol alphabet. We have dropped the time de-
+
+operator       denotes the determinant of a matrix.                              pendence of all matrices in order to avoid clutter.
+
+For ideal NRZ QPSK modulation, the sampled modulating                            Using (51), the above relationship can be rewritten as
+
+signals                     take equiprobable discrete com-                                                                              (53)
+
+plex values                                     where
+
+               .                                                                 where  is the joint probability density function (pdf) of
+
+Consequently, the mean and covariance matrices of the                            the complex Gaussian random variables     , with zero mean
+
+modulating signals          are                                                  given by (46) and covariance matrix given by (50) [25], [26]
+
+                                                       (44)                                                                              (54)
+
+and
+
+                                                                       (45)      Since  is a decreasing function of the argument of the ex-
+
+respectively, where denotes expectation.                                         ponential, the maximization in (53) is equivalent to minimizing
+   From the properties of ASE, shot, and thermal noises, the
+                                                                                 the Euclidean distance
+mean and covariance matrices of the total photocurrent noise
+       are given by                                                                                                                      (55)
+
+                                                       (46) Expanding the distance metric yields
+
+and
+
+                                                       (47)                                                                              (56)
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:52:55 UTC from IEEE Xplore. Restrictions apply.
+1132                                                                         JOURNAL OF LIGHTWAVE TECHNOLOGY, VOL. 28, NO. 7, APRIL 1, 2010
+
+The ﬁrst term is independent of and, can be ignored. Thus, a                                       APPENDIX C
+sufﬁcient statistic for estimating the transmitted symbols is the
+following                                                                    In this Appendix, we examine how the equivalent channel
+
+                                                                       (57)  formalism can be modiﬁed, in order to accommodate PDL and
+In the special case when the noises at the two branches of the
+polarization diversity receiver have the same variance (i.e.,                polarization imbalance at the polarization-diversity receiver. It
+the photocurrent noise is spatially white), the covariance matrix
+of the total photocurrent noise is given by (47). By substitution            is shown that both effects result in a perturbation transfer matrix
+of (47) into (56), and taking into account that is unitary, the
+distance metric is simpliﬁed                                                 that creates additional cross-polarization interference.
+
+                                                                       (58)  Consider a partial polarizer with eigenaxes in Jones space de-
+
+or, equivalently,                                                            noted by the vectors           . The corresponding eigenaxes
+
+                                                                       (59)  in Stokes space are denoted by . The transmittances associ-
+
+where we have deﬁned                                                         ated with these eigenaxes are            , respectively. Both the
+
+                                                                       (60)  eigenaxes and the transmittances are independent of frequency.
+
+Since only the ﬁrst term of (59) depends on the candidate                    PDL is deﬁned in dB units as                              .
+symbol vector the optimal receiver simply needs to mini-
+mize the metric                                                              The Jones matrix of the partial polarizer, in the absence of
+
+                                                                       (61)  birefringence, is written as [44], [45]
+
+                                                                                                                                          (64)
+
+                                                                             Using the expansion of the projection coefﬁcient in Pauli spin
+                                                                             matrices (relation [3.9] of [35]), the Jones matrix of the partial
+                                                                             polarizer can be expressed in the alternative form
+
+                                                                                                                                          (65)
+
+                                                                             where is the 2 2 identity matrix, is the Pauli spin vector
+                                                                             [35], and we deﬁned the average amplitude attenuation coefﬁ-
+                                                                             cient and the differential amplitude attenuation coefﬁcient
+                                                                             as
+
+                                                                                                                                          (66)
+                                                                                                                                          (67)
+
+We observe that it is sufﬁcient to estimate each element of                     The electric ﬁeld of the optical PDM QPSK signal at the input
+   individually, at each branch of the polarization-diversity re-            of the PDL is given by relationship (1). The electric ﬁeld of the
+                                                                             optical PDM QPSK signal at the output of the partial polarizer
+ceiver, using the metric                                                     can be written, in the absence of noise, as
+
+                                                                       (62)                                                                         (68)
+
+where is the complex symbol alphabet of each polarization-                      Then (41) can be rewritten, in the absence of noise, as
+multiplexed tributary. Furthermore, expanding the above rela-                                                                                       (69)
+tionship into its quadrature components, it follows that it is suf-
+ﬁcient to choose the real and imaginary parts of each symbol                 where we deﬁned the perturbation transfer matrix
+independently at each branch of the phase-diversity receiver, in                                                                                    (70)
+order to minimize the metric
+
+                                                                       (63)
+
+                                                                             As a sanity check, we observe that the second term of (69)
+
+To summarize, the above analysis indicates that the optimal becomes negligible for                          , i.e., when               .
+
+receiver is reduced to a zero-forcing linear receiver [26], [27]. The zero-forcing polarization demultiplexer must calculate
+
+The latter ﬁrst uses an electronic polarization demultiplexer with an estimate  of the total channel transfer matrix
+
+transfer matrix  . Subsequently, the in-phase and                               and set                     . The independent parame-
+
+quadrature components of the symbols, at the two outputs of ters of             are the azimuth and the ellipticity of the input SOP
+
+the polarization demultiplexer, can be independently detected,               , the azimuth and the ellipticity of the PDL eigenaxis ,
+
+by comparing each individual quadrature component to a zero and the PDL parameters .
+
+threshold.                                                                   In summary, the description of the perturbation matrix would
+
+In conclusion, the proposed constrained CMA polarization require four additional control parameters. The total channel
+
+demultiplexer is optimal, when the photocurrent noise is spa- matrix requires six independent control parameters. Still, the
+
+tially white. In this case, the joint maximum-likelihood receiver current approach is advantageous compared to the CMA,
+
+and the zero-forcing linear receiver are equivalent.                         which requires control of eight independent real parameters
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:52:55 UTC from IEEE Xplore. Restrictions apply.
+ROUDAS et al.: OPTIMAL POLARIZATION DEMULTIPLEXING                                                                                 1133
+
+for polarization demultiplexing. Increasing the dimensionality               The ﬁrst term in (75) indicates that the polarization tribu-
+of the independent parameter space will obviously slow down
+the search for the global optimum of the transfer function. On               taries can be essentially recovered but they are distorted (i.e.,
+the other hand, conventional CMA-based demultiplexers are
+not only slow but also suffer from singularities. Their large                the constellations have different size, differing by  in
+number of independent parameters increases the number of
+degrees of freedom and the effects that can be accommodated,                 radius). This distortion is an artifact induced by the assumption
+at the expense of execution speed and perhaps convergence
+altogether.                                                                  of the unitarity of the polarization demultiplexer’s transfer ma-
+
+   It is instructive to estimate the impact of PDL and of po-                trix. The second term in (75) indicates that there is a residual
+larization imbalance on the performance of the proposed con-
+strained polarization demultiplexer, which possesses a unitary               cross-polarization interference due to the anti-diagonal transfer
+transfer matrix. Since the addition of two unitary matrices is
+not a unitary matrix, the total channel transfer matrix                      matrix in (76). This interference term is relatively small since
+
+               is not unitary. As a result, the product of the total         its magnitude depends on the differential amplitude attenuation
+channel transfer matrix with the unitary transfer matrix of the
+proposed constrained polarization demultiplexer is not a unit                coefﬁcient .
+matrix. Consequently, the transmitted constellations cannot be
+not fully detangled.                                                         Finally, it is worth noting that the polarization imbalance
+
+   The output of the polarization demultiplexer can be written,              at the polarization-diversity receiver is the electronic domain
+in the absence of noise, as
+                                                                             equivalent of using a partial polarizer in the optical domain.
+
+                                                                             Its impact can be accounted for by substituting the polarizer’s
+
+                                                                             transmission parameters              with the photodiode
+
+                                                                             responsivities and the polarizer eigenaxis in Stokes space by
+
+                                                                             .
+
+                                                    (71)                                              ACKNOWLEDGMENT
+
+where                    are the transfer matrices of the                       The authors would like to thank Prof. G. Moustakides and
+                                                                             Mr. V. U. Prabhu, Department of Electrical and Computer En-
+channel and the perturbation after polarization demultiplexing,              gineering, University of Patras, Greece, for stimulating discus-
+                                                                             sions on estimation theory, and the anonymous reviewers for
+                                                                             their helpful comments and suggestions.
+
+which can be written
+
+                                                                                                      REFERENCES
+
+                                                    (72)                      [1] H. Sun, K.-T. Wu, and K. Roberts, “Real-time measurements of a 40
+                                                                                   Gb/s coherent system,” Opt. Exp., vol. 16, no. 2, pp. 873–879, Jan.
+The action of the polarization demultiplexer is to rotate the                      2008.
+
+principal axes of the receiver PBS           in order to match                [2] E. Ip, A. P. T. Lau, D. J. F. Barros, and J. M. Kahn, “Coherent detection
+                                                                                   in optical ﬁber systems,” Opt. Exp., vol. 16, no. 2, pp. 753–791, Jan.
+the Jones vectors of the received polarization tributaries. It is                  2008.
+
+straightforward to show that                                                  [3] K. Kikuchi, “Coherent optical communication systems,” in Optical
+                                                                                   Fiber Telecommunications, I. P. Kaminow, T. Li, and A. E. Willner,
+                                                                       (73)        Eds. San Diego, CA: Academic, 2008, pp. 95–129, vol. VB, ch. 3.
+and
+                                                                              [4] M. Tseytlin, O. Ritterbush, and A. Salamon, “Digital, endless polariza-
+                                                    (74)                           tion control for polarization multiplexed ﬁber-optic communications,”
+                                                                                   in Proc. OFC 2003, Atlanta, GA, Mar. 2003, paper MF83.
+where                 are estimates of the Jones vectors of the
+                                                                              [5] S. Calabro, T. Dullweber, E. Gottwald, N. Hecker-Denschlag, E.
+received polarization tributaries.                                                 Mullner, B. Opitz, G. Sebald, E. Schmidt, B. Spinnler, C. Weiske, and
+                                                                                   H. Zech, “An electrical polarization-state controller and demultiplexer
+Assuming that the presence of the perturbation transfer                            for polarization multiplexed optical signals,” in Proc. 29th Eur. Conf.
+                                                                                   Optical Communication (ECOC), Rimini, Italy, Sept. 2003, vol. 4, pp.
+matrix  does not drastically change the esti-                                      950–951.
+
+mate of CMA, we can postulate that after convergence,                         [6] R. Noé, “Phase noise tolerant synchronous QPSK/BPSK baseband-
+                                                                                   type intradyne receiver concept with feedforward carrier recovery,” J.
+                                    . Since                                        Lightw. Technol., vol. 23, no. 2, pp. 802–808, Feb. 2005.
+
+and                                 [35], where is the Stokes                 [7] R. Noé, “PLL-free synchronous QPSK polarization multiplex/diver-
+                                                                                   sity receiver concept with digital I & Q baseband processing,” IEEE
+vector of the s-SOP and             are a right handed orthogonal                  Photon. Technol. Lett., vol. 17, no. 4, pp. 887–889, Apr. 2005.
+
+set in Stokes space,                                                          [8] Y. Han and G. Li, “Coherent optical communication using polariza-
+                                                                                   tion multiple-input-multiple-output,” Opt. Exp., vol. 13, no. 19, pp.
+                                                                       (75)        7527–7534, Sept. 2005.
+where
+                                                                              [9] M. T. Core, “Cross polarization interference cancellation for ﬁber optic
+                                                                       (76)        systems,” J. Lightw. Technol., vol. 24, no. 1, pp. 305–312, Jan. 2006.
+
+                                                                             [10] A. Leven, N. Kaneda, and Y.-K. Chen, “A real-time CMA-based 10
+                                                                                   Gb/s polarization demultiplexing coherent receiver implemented in an
+                                                                                   FPGA,” in Proc. OFC/NFOEC 2008, Anaheim, CA, Feb. 2008, paper
+                                                                                   OTuO2.
+
+                                                                             [11] K. Kikuchi, “Polarization-demultiplexing algorithm in the digital co-
+                                                                                   herent receiver,” in Proc. IEEE LEOS Summer Topicals, Acapulco,
+                                                                                   Mexico, Jul. 2008, paper MC2.2.
+
+                                                                             [12] H. Zhang, Z. Tao, L. Liu, S. Oda, T. Hoshida, and J. C. Rasmussen, “Po-
+                                                                                   larization demultiplexing based on independent component analysis in
+                                                                                   optical coherent receivers,” in Proc. 34th Eur. Conf. Optical Commu-
+                                                                                   nication (ECOC), Brussels, Belgium, Sept. 2008, paper Mo.3.D.5.
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:52:55 UTC from IEEE Xplore. Restrictions apply.
+1134                                                                             JOURNAL OF LIGHTWAVE TECHNOLOGY, VOL. 28, NO. 7, APRIL 1, 2010
+
+[13] D. E. Crivelli, H. S. Carter, and M. R. Hueda, “Adaptive digital                [37] S. M. Kay, Fundamentals of Statistical Signal Processing: Estimation
+      equalization in the presence of chromatic dispersion, PMD, and                       Theory. Englewood Cliffs, NJ: Prentice Hall, 1993.
+      phase noise in coherent ﬁber optic systems,” in Proc. IEEE Global
+      Telecommun. Conf. (GLOBECOM), Dallas, TX, Nov. 2004, vol. 4, pp.               [38] E. Karami, “Tracking performance of least squares MIMO channel
+      2545–2551.                                                                           estimation algorithm,” IEEE Trans. Commun., vol. 55, no. 11, pp.
+                                                                                           2201–2209, Nov. 2007.
+[14] E. Ip and J. M. Kahn, “Digital equalization of chromatic dispersion and
+      polarization mode dispersion,” J. Lightw. Technol., vol. 25, no. 8, pp.        [39] R. A. Horn and C. R. Johnson, Topics in Matrix Analysis. Cambridge,
+      2033–2043, Aug. 2007.                                                                U.K.: Cambridge Univ. Press, 1991, ch. 5.
+
+[15] S. J. Savory, “Digital ﬁlters for coherent optical receivers,” Opt. Exp.,       [40] L. G. Kazovsky, L. Curtis, W. C. Young, and N. K. Cheung, “All-ﬁber
+      vol. 16, no. 2, pp. 804–817, Jan. 2008.                                              90 optical hybrid for coherent communications,” Appl. Opt., vol. 26,
+                                                                                           no. 3, pp. 437–439, Feb. 1987.
+[16] C. Laperle, B. Villeneuve, Z. Zhan, D. McGhan, H. Sun, and M. O’Sul-
+      livan, “WDM performance and PMD tolerance of a coherent 40 Gbit/s              [41] X. Zhou, J. Yu, D. Qian, T. Wang, G. Zhang, and P. D. Magill,
+      dual-polarization QPSK transceiver,” J. Lightw. Technol., vol. 26, no.               “High-spectral-efﬁciency 114-Gb/s transmission using PolMux-RZ-
+      1, pp. 168–175, Jan. 2008.                                                           8PSK modulation format and single-ended digital coherent detection
+                                                                                           technique,” J. Lightw. Technol., vol. 27, no. 3, pp. 146–152, Feb. 2009.
+[17] C. R. S. Fludger, T. Duthel, D. van den Borne, C. Schulien, E. D.
+      Schmidt, T. Wuth, J. Geyer, E. De Man, G. D. Khoe, and H. de Waardt,           [42] M. Valkama, M. Renfors, and V. Koivunen, “Advanced methods for I/Q
+      “Coherent equalization and POLMUX-RZ-DQPSK for robust 100-GE                         imbalance compensation in communication receivers,” IEEE Trans.
+      transmission,” J. Lightw. Technol., vol. 26, no. 1, pp. 64–72, Jan. 2008.            Signal Proc., vol. 49, no. 10, pp. 2335–2344, Oct. 1998.
+
+[18] D. Godard, “Self-recovering equalization and carrier tracking in two            [43] D. Hoffmann, H. Heidrich, G. Wenke, R. Langenhorst, and N. K.
+      dimensional data communication systems,” IEEE Trans. Comm., vol.                     Cheung, “Integrated opticseight-port 90 hybrid on LiNbO ,” J.
+      28, no. 11, pp. 1867–1875, Nov. 1980.                                                Lightw. Technol., vol. 7, no. 5, pp. 794–798, May 1989.
+
+[19] J. R. Treichler and M. G. Larimore, “New processing techniques based            [44] N. Gisin, “Statistics of polarization dependent losses,” Opt. Commun.,
+      on the constant modulus adaptive algorithm,” IEEE Trans. Acoust.,                    vol. 114, no. 5–6, pp. 399–405, 1995.
+      Speech, Signal Process., vol. ASSP-33, no. 2, pp. 420–431, Apr. 1985.
+                                                                                     [45] I. Roudas and N. Antoniades, “Performance outages in CWDM optical
+[20] C. R. Johnson Jr., P. Schniter, T. J. Edres, J. D. Behm, D. R. Brown, and             networks due to the polarization-dependent gain of semiconductor op-
+      R. A. Casas, “Blind equalization using the constant modulus criterion:               tical ampliﬁers,” IEEE Photon. Technol. Lett., vol. 18, no. 1, pp. 48–50,
+      A review,” Proc. IEEE, vol. 86, no. 10, pp. 1927–1950, Oct. 1998.                    Jan. 2007.
+
+[21] S. Haykin, Adaptive Filter Theory, 3rd ed. Englewood Cliffs, NJ:            Ioannis Roudas, photograph and biography not available at the time of
+      Prentice-Hall, 1996.                                                       publication.
+
+[22] J. Renaudier, G. Charlet, M. Salsi, O. B. Pardo, H. Mardoyan, P.            Athanasios Vgenis, photograph and biography not available at the time of
+      Tran, and S. Bigo, “Linear ﬁber impairments mitigation of 40-Gbit/s        publication.
+      polarization-multiplexed QPSK by digital processing in a coherent
+                                                                                 Constantinos S. Petrou, photograph and biography not available at the time of
+   2 receiver,” J. Lightw. Technol., vol. 26, no. 1, pp. 36–42, Jan. 2008.       publication.
+
+[23] X. Zhou, J. Yu, D. Qian, T. Wang, G. Zhang, and P. Magill, “8 114           Dimitris Toumpakaris, photograph and biography not available at the time of
+      Gb/s, 25-GHz-spaced, polmux-RZ-8PSK transmission over 640 km of            publication.
+      SSMF employing digital coherent detection and EDFA-only ampliﬁ-
+      cation,” in Proc. OFC 2008, San Diego, CA, Feb. 2008, paper PDP6.          Jason Hurley, photograph and biography not available at the time of
+                                                                                 publication.
+[24] P. J. Winzer and A. J. Gnauck, “112-Gb/s polarization-multiplexed
+      16-QAM on a 25-GHz WDM grid,” in Proc. 34th Eur. Conf. Op-                 Michael Sauer, photograph and biography not available at the time of
+      tical Communication (ECOC), Brussels, Belgium, Sept. 2008, paper           publication.
+      Th.3.E.5.
+                                                                                 John Downie, photograph and biography not available at the time of
+[25] J. Proakis, Digital Communications, 4th ed. New York: McGraw-               publication.
+      Hill, 2000, pp. 177–178.
+                                                                                 Yihong Mauro, photograph and biography not available at the time of
+[26] J. R. Barry, E. A. Lee, and D. G. Messerschmitt, Digital Communica-         publication.
+      tion, 3rd ed. Norwell, MA: Kluwer, 2003.
+                                                                                 Srikanth Raghavan, photograph and biography not available at the time of
+[27] D. Tse and P. Viswanath, Fundamentals of Wireless Communication.            publication.
+      Cambridge, U.K.: Cambridge Univ. Press, 2005, Section 3.3.3.
+
+[28] H. Sun and K.-T. Wu, “Method for Quadrature Phase Angle Correc-
+      tion in a Coherent Receiver of a Dual-Polarization Optical Transport
+      System,” U.S. Patent 6 917 031, Jul. 12, 2005.
+
+[29] I. Roudas, M. Sauer, J. Hurley, Y. Mauro, and S. Raghavan, “Com-
+      pensation of coherent DQPSK receiver imperfections,” in Proc. IEEE
+      LEOS Summer Topicals, Portland, OR, July 2007, paper MA3.4.
+
+[30] I. Fatadin, S. Savory, and D. Ives, “Compensation of quadrature im-
+      balance in an optical QPSK coherent receiver,” IEEE Photon. Technol.
+      Lett., vol. 20, no. 20, pp. 1733–1735, Oct. 2008.
+
+[31] C. S. Petrou, A. Vgenis, A. Kiourti, I. Roudas, J. Hurley, M. Sauer,
+      J. Downie, Y. Mauro, and S. Raghavan, “Impact of transmitter and
+      receiver imperfections on the performance of coherent optical QPSK
+      communication systems,” in Proc. LEOS 2008, Newport Beach, CA,
+      Nov. 2008, paper TuFF3.
+
+[32] H. Meyr, M. Moeneclaey, and S. Fechtel, Digital Communication
+      Receivers: Channel Estimation and Signal Processing. New York:
+      Wiley, 1998, ch. 8.
+
+[33] M. Morelli and U. Mengali, “Feedforward frequency estimation for
+      PSK: A tutorial review,” Eur. Trans. Telecommun., vol. 9, no. 2, pp.
+      103–116, Mar./Apr. 1998.
+
+[34] A. Viterbi and A. Viterbi, “Nonlinear estimation of PSK-modulated
+      carrier phase with application to burst digital transmission,” IEEE
+      Trans. Inf. Theory, vol. IT-29, no. 4, pp. 543–551, Jul. 1983.
+
+[35] J. P. Gordon and H. Kogelnik, “PMD fundamentals: Polarization mode
+      dispersion in optical ﬁbers,” PNAS, vol. 97, no. 9, pp. 4541–4550, Apr.
+      2000.
+
+[36] S. Huard, Polarization of Light. New York, NY: Wiley, 1997.
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:52:55 UTC from IEEE Xplore. Restrictions apply.
+

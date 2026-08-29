@@ -1,0 +1,18 @@
+{
+  "storage_version": 2,
+  "id": "10.1109/ICASSP.1990.115806",
+  "title": "Blind Equalization Based on Radius Directed Adaptation",
+  "doi": "10.1109/icassp.1990.115806",
+  "arxiv_id": null,
+  "download_status": "success",
+  "download_method": "ieee_blit",
+  "content_type": "pdf",
+  "content_quality": "good",
+  "conversion_quality": "standard",
+  "content_file": "content.md",
+  "downloaded_at": "2026-08-30T01:59:36+08:00",
+  "real_title": "Blind Equalization Based on Radius Directed Adaptation",
+  "title_check": "match",
+  "title_check_source": "converted_content_heading",
+  "title_overlap": 1.0
+}

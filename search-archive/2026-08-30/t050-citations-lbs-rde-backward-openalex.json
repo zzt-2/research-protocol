@@ -1,0 +1,563 @@
+{
+  "query": "",
+  "timestamp": "2026-08-30T02:54:01.662933+08:00",
+  "sources": [
+    "citations_openalex"
+  ],
+  "total": 26,
+  "results": [
+    {
+      "title": "Digital Coherent Optical Receivers: Algorithms and Subsystems",
+      "authors": [
+        "Seb J. Savory"
+      ],
+      "venue": "IEEE Journal of Selected Topics in Quantum Electronics",
+      "year": 2010,
+      "doi": "10.1109/jstqe.2010.2044751",
+      "arxiv_id": null,
+      "abstract": "Digital coherent receivers have caused a revolution in the design of optical transmission systems, due to the subsystems and algorithms embedded within such a receiver. After giving a high-level overview of the subsystems, the optical front end, the analog-to-digital converter (ADC) and the digital signal processing (DSP) algorithms, which relax the tolerances on these subsystems are discussed. Attention is then turned to the compensation of transmission impairments, both static and dynamic. The discussion of dynamic-channel equalization, which forms a significant part of the paper, includes a theoretical analysis of the dual-polarization constant modulus algorithm, where the control surfaces several different equalizer algorithms are derived, including the constant modulus, decision-directed, trained, and the radially directed equalizer for both polarization division multiplexed quadriphase shift keyed (PDM-QPSK) and 16 level quadrature amplitude modulation (PDM-16-QAM). Synchronization algorithms employed to recover the timing and carrier phase information are then examined, after which the data may be recovered. The paper concludes with a discussion of the challenges for future coherent optical transmission systems.",
+      "citation_count": 832,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L001",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Rate Adaptation and Reach Increase by Probabilistically Shaped 64-QAM: An Experimental Demonstration",
+      "authors": [
+        "Fred Buchali",
+        "Fabian Steiner",
+        "Georg Böcherer",
+        "Laurent Schmalen",
+        "Patrick Schulte",
+        "W. Idler"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 2015,
+      "doi": "10.1109/jlt.2015.2510034",
+      "arxiv_id": null,
+      "abstract": "A transmission system with adjustable data rate for single-carrier coherent optical transmission is proposed, which enables high-speed transmission close to the Shannon limit. The proposed system is based on probabilistically shaped 64-QAM modulation formats. Adjustable shaping is combined with a fixed-QAM modulation and a fixed forward-error correction code to realize a system with adjustable net data rate that can operate over a large reach range. At the transmitter, an adjustable distribution matcher performs the shaping. At the receiver, an inverse distribution matcher is used. Probabilistic shaping is implemented into a coherent optical transmission system for 64-QAM at 32 Gbaud to realize adjustable operation modes for net data rates ranging from 200 to 300 Gb/s. It is experimentally demonstrated that the optical transmission of probabilistically shaped 64-QAM signals outperforms the transmission reach of regular 16-QAM and regular 64-QAM signals by more than 40% in the transmission reach.",
+      "citation_count": 626,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L002",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Optimal nonuniform signaling for Gaussian channels",
+      "authors": [
+        "Frank R. Kschischang",
+        "S. Pasupathy"
+      ],
+      "venue": "IEEE Transactions on Information Theory",
+      "year": 1993,
+      "doi": "10.1109/18.256499",
+      "arxiv_id": null,
+      "abstract": "Variable-rate data transmission schemes in which constellation points are selected according to a nonuniform probability distribution are studied. When the criterion is one of minimizing the average transmitted energy for a given average bit rate, the best possible distribution with which to select constellations points is a Maxwell-Boltzmann distribution. In principle, when constellation points are selected according to a Maxwell-Boltzmann distribution, the ultimate shaping gain ( pi e/6 or 1.53 dB) can be achieved in any dimension. Nonuniform signaling schemes can be designed by mapping simple variable-length prefix codes onto the constellation. Using the Huffman procedure, prefix codes can be designed that approach the optimal performance. These schemes provide a fixed-rate primary channel and a variable-rate secondary channel, and are easily incorporated into standard lattice-type coded modulation schemes.>",
+      "citation_count": 513,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L003",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "On Probabilistic Shaping of Quadrature Amplitude Modulation for the Nonlinear Fiber Channel",
+      "authors": [
+        "Tobias Fehenberger",
+        "Alex Alvarado",
+        "Georg Böcherer",
+        "Norbert Hanik"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 2016,
+      "doi": "10.1109/jlt.2016.2594271",
+      "arxiv_id": null,
+      "abstract": "Different aspects of probabilistic shaping for a multispan optical communication system are studied. First, a numerical analysis of the additive white Gaussian noise (AWGN) channel investigates the effect of using a small number of input probability mass functions (PMFs) for a range of signal-to-noise ratios (SNRs), instead of optimizing the constellation shaping for each SNR. It is shown that if a small penalty of at most 0.1 dB SNR to the full shaping gain is acceptable, just two shaped PMFs are required per quadrature amplitude modulation (QAM) over a large SNR range. For a multispan wavelength division multiplexing optical fiber system with 64QAM input, it is shown that just one PMF is required to achieve large gains over uniform input for distances from 1400 to 3000 km. Using recently developed theoretical models that extend the Gaussian noise (GN) model and full-field split-step simulations, we illustrate the ramifications of probabilistic shaping on the effective SNR after fiber propagation. Our results show that, for a fixed average optical launch power, a shaping gain is obtained for the noise contributions from fiber amplifiers and modulation-independent nonlinear interference (NLI), whereas shaping simultaneously causes a penalty as it leads to an increased NLI. However, this nonlinear shaping loss is found to have a relatively minor impact, and optimizing the shaped PMF with a modulation-dependent GN model confirms that the PMF found for AWGN is also a good choice for a multi-span fiber system.",
+      "citation_count": 376,
+      "is_open_access": true,
+      "pdf_url": "https://arxiv.org/pdf/1606.04073",
+      "source_api": "openalex_citations",
+      "id": "L004",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Blind Equalization and Carrier Phase Recovery in a 16-QAM Optical Coherent System",
+      "authors": [
+        "Irshaad Fatadin",
+        "D. J. G. Ives",
+        "Seb J. Savory"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 2009,
+      "doi": "10.1109/jlt.2009.2021961",
+      "arxiv_id": null,
+      "abstract": "Blind equalization and carrier phase recovery in a simulated 14 Gbaud 16-QAM optical coherent system are investigated. Equalization techniques to compensate for linear transmission impairments are presented using the constant modulus algorithm (CMA), the recursive least-squares (RLS)-CMA, and the radius directed equalization (RDE). With 7 T/2-spaced taps, the RDE and the RLS-CMA can compensate up to 1000 ps/nm of CD in the 16-QAM coherent system with performances comparable to the decision-directed (DD) equalizer. We show that the RDE is a promising technique for blind equalization in a 16-QAM coherent system with lower complexity than the RLS-CMA. Blind carrier phase recovery is investigated in a decision-directed-mode. We show that the blind carrier phase recovery algorithm can recover the Square-16-QAM constellation for laser beat linewidths of DeltanuTs~ 10-4in a polarization-multiplexed (POLMUX) 16-QAM coherent system with the RDE algorithm giving better overall performance than the CMA when compensating for CD and differential group delay (DGD). Finally, the dynamical characteristics of the equalizers to track endless polarization rotations are discussed. With the adaptation parameters optimized, the equalizers can track angular rate of rotation ~ 105rad/s.",
+      "citation_count": 287,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L005",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Digital Signal Processing for Coherent Transceivers Employing Multilevel Formats",
+      "authors": [
+        "Md. Saifuddin Faruk",
+        "Seb J. Savory"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 2017,
+      "doi": "10.1109/jlt.2017.2662319",
+      "arxiv_id": null,
+      "abstract": "Digital coherent transceivers have revolutionized optical fiber communications due to their superior performance offered compared to intensity modulation and direct detection based alternatives. As systems employing digital coherent transceivers seek to approach their information theoretic capacity, the use of multilevel modulation formats combined with appropriate forward error correction becomes essential. Given this context, in this tutorial paper, we, therefore, explore the digital signal processing (DSP) utilized in a coherent transceiver with a focus on multilevel modulation formats. By way of an introduction, we open by discussing the photonic technology required to realize a coherent transceiver. After discussing this interface between the analog optical channel and the digital domain, the rest of the paper is focused on DSP. We begin by discussing algorithms that correct for imperfections in the optical to digital conversion, including IQ imbalance and timing skew. Next, we discuss channel equalization including means for their realization for both quasi-static and dynamic channel impairments. Synchronization algorithms that correct for the difference between the transmitter and receiver oscillators both optical and electrical are then discussed and issues associated with symbol decoding highlighted. For most of the cases, we start with polarization division multiplexed quadrature phase-shift keying format as a basis and then discuss the extension to allow for high-order multilevel formats. Finally, we conclude by discussing some of the open research challenges in the field.",
+      "citation_count": 284,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.17863/cam.8992",
+      "source_api": "openalex_citations",
+      "id": "L006",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Achievable Information Rates for Fiber Optics: Applications and Computations",
+      "authors": [
+        "Alex Alvarado",
+        "Tobias Fehenberger",
+        "Bin Chen",
+        "Frans M. J. Willems"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 2017,
+      "doi": "10.1109/jlt.2017.2786351",
+      "arxiv_id": null,
+      "abstract": "In this paper, achievable information rates (AIR) for fiber optical communications are discussed. It is shown that AIRs such as the mutual information and generalized mutual information are good design metrics for coded optical systems. The theoretical predictions of AIRs are compared to the performance of modern codes including low-parity density check and polar codes. Two different computation methods for these AIRs are also discussed: Monte-Carlo integration and Gauss-Hermite quadrature. Closed-form ready-to-use approximations for such computations are provided for arbitrary constellations and the multidimensional AWGN channel. The computation of AIRs in optical experiments and simulations is also discussed.",
+      "citation_count": 187,
+      "is_open_access": true,
+      "pdf_url": "https://arxiv.org/pdf/1709.10393",
+      "source_api": "openalex_citations",
+      "id": "L007",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Normalized Generalized Mutual Information as a Forward Error Correction Threshold for Probabilistically Shaped QAM",
+      "authors": [
+        "Junho Cho",
+        "Laurent Schmalen",
+        "Peter J. Winzer"
+      ],
+      "venue": "",
+      "year": 2017,
+      "doi": "10.1109/ecoc.2017.8345872",
+      "arxiv_id": null,
+      "abstract": "We show that the normalized generalized mutual information represents an excellent forward error correction (FEC) threshold for uniform as well as for probabilistically shaped QAM and hence allows to accurately predict post-FEC performance from measured pre-FEC data.",
+      "citation_count": 179,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L008",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Data-Aided Versus Blind Single-Carrier Coherent Receivers",
+      "authors": [
+        "Maxim Kuschnerov",
+        "Mohamed Chouayakh",
+        "K. Piyawanno",
+        "Bernhard Spinnler",
+        "E. De Man",
+        "Peter Kainzmaier",
+        "M. S. Alfiad",
+        "Antonio Napoli",
+        "Berthold Lankl"
+      ],
+      "venue": "IEEE photonics journal",
+      "year": 2010,
+      "doi": "10.1109/jphot.2010.2048308",
+      "arxiv_id": null,
+      "abstract": "Fiber-optic research in signal processing for the first generation of coherent communication systems was dominated by receivers with blind adaptation. Next-generation systems will require a scalable and modular design for higher order modulation formats. Due to the nature of the fiber channel and the required parallelization in high-speed receivers, data-aided and blind algorithms call for a general reassessment when used in coherent optic receivers employing higher order modulation formats. In this paper, blind and data-aided receivers are compared for coherent single-carrier optical systems in terms of complexity, tracking ability, and convergence speed. Methods for equalization are discussed for time-domain- and frequency-domain-based receivers covering the most important algorithms. The general superiority of data-aided frequency-domain equalization is demonstrated.",
+      "citation_count": 134,
+      "is_open_access": true,
+      "pdf_url": "https://doaj.org/article/39ea539ae00b4b38a5aee33d8b65669f",
+      "source_api": "openalex_citations",
+      "id": "L009",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Field measurements of SOP transients in OPGW, with time and location correlation to lightning strikes",
+      "authors": [
+        "D. Charlton",
+        "Steven Clarke",
+        "David Doucet",
+        "Maurice O’Sullivan",
+        "Daniel L. Peterson",
+        "Darryl D. Wilson",
+        "Glenn A. Wellbrock",
+        "Michel Bélanger"
+      ],
+      "venue": "Optics Express",
+      "year": 2017,
+      "doi": "10.1364/oe.25.009689",
+      "arxiv_id": null,
+      "abstract": "We monitored the state of polarization (SOP) of polarized light in an optical ground wire (OPGW) link located in North America using a test method and apparatus that measured Stokes space angular velocity and geographic location of SOP transients. We observed transients up to 5.1 Mrad/s and were able to correlate these events in both time and location to lightning strikes documented by the United States Precision Lightning Network (USPLN).",
+      "citation_count": 130,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.1364/oe.25.009689",
+      "source_api": "openalex_citations",
+      "id": "L010",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Transceiver Imbalances Compensation and Monitoring by Receiver DSP",
+      "authors": [
+        "Junpeng Liang",
+        "Yangyang Fan",
+        "Zhenning Tao",
+        "Xiaofei Su",
+        "Hisao Nakashima"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 2019,
+      "doi": "10.1109/jlt.2019.2944830",
+      "arxiv_id": null,
+      "abstract": "In-phase and quadrature (IQ) imbalances in optical transceiver, such as amplitude imbalance, phase imbalance, and IQ skew, can cause serious system performance degradation, especially when high order modulation formats are used. In this work, we present a method to isolate and separately monitor these various impairments from received signals by coherent digital signal processing (DSP). Receiver amplitude and phase imbalances could be compensated and monitored by Gram-Schmidt orthogonalization procedure (GSOP) and receiver skew could be compensated and monitored by a 4 x 4 or 4 x 2 multiple-input and multiple-output (MIMO) equalizer. Transmitter imperfections compensation and monitoring take place behind the residual frequency offset compensation and carrier phase recovery by a 4 x 4 MIMO equalizer based on minimal mean square error (MMSE) criterion. By these methods, we analyze and investigate the interaction of transceiver's impairments impact on each monitor numerically. After that, we conduct an experiment to verify the feasibility of the proposed method. All of these results show that each monitor could operate very robust even when multiple co-exist.",
+      "citation_count": 67,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L011",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Blind equalization based on radius directed adaptation",
+      "authors": [
+        "M.J. Ready",
+        "R.P. Gooch"
+      ],
+      "venue": "International Conference on Acoustics, Speech, and Signal Processing",
+      "year": 2002,
+      "doi": "10.1109/icassp.1990.115806",
+      "arxiv_id": null,
+      "abstract": "A blind equalization algorithm, termed radius directed equalization (RDE), for quadrature amplitude modulation (QAM) signals based on the known modulus of the constellation symbol radii is described. For example, 16 QAM has three radii and 32 QAM has five radii. The algorithm uses the error between the equalizer output modulus and the nearest symbol radius to update the equalizer weights. The RDE algorithm provides faster convergence than the constant modulus algorithm (CMA) for QAM signals and is independent of the carrier offset. The algorithm is described in the context of blind carrier and baud clock recovery schemes.>",
+      "citation_count": 104,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L012",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Blind Receiver Skew Compensation and Estimation for Long-Haul Non-Dispersion Managed Systems Using Adaptive Equalizer",
+      "authors": [
+        "Rafael Rios-Müller",
+        "Jérémie Renaudier",
+        "Gabriel Charlet"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 2014,
+      "doi": "10.1109/jlt.2014.2377582",
+      "arxiv_id": null,
+      "abstract": "Imbalances between the four sampling channels of a coherent detector with polarization diversity can rapidly degrade system performance. One of these imbalances, namely the receiver skew, becomes increasingly important when higher symbol rates, higher modulation orders, and low roll-off pulse shapes are used. Here, we evaluate the performance of receiver skew compensation based on a complex-valued multiple-input multiple-output 4 × 2 adaptive equalizer that is tolerant to large residual chromatic dispersion. In addition, we derive skew estimation from converged equalizer taps. Both the adaptive equalizer and the derived estimator are validated experimentally with offline processing through long-haul transmission of 46 Gbaud signal over a non-dispersion-managed test bed. The transmitted signal is Nyquist pulse shaped with a root-raised-cosine filter with 0.1 roll-off factor, polarization division multiplexed, and modulated with 16-ary quadrature amplitude modulation.",
+      "citation_count": 96,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L013",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Demanding response time requirements on coherent receivers due to fast polarization rotations caused by lightning events",
+      "authors": [
+        "Peter M. Krummrich",
+        "David Ronnenberg",
+        "Wolfgang Schairer",
+        "Daniel Wienold",
+        "Frank Jenau",
+        "Maximilian Herrmann"
+      ],
+      "venue": "Optics Express",
+      "year": 2016,
+      "doi": "10.1364/oe.24.012442",
+      "arxiv_id": null,
+      "abstract": "Lightning events can cause fast polarization rotations and phase changes in optical transmission fibers due to strong electrical currents and magnetic fields. Whereas these are unlikely to affect legacy transmission systems with direct detection, different mechanisms have to be considered in systems with local oscillator based coherent receivers and digital signal processing. A theoretical analysis reveals that lightning events can result in polarization rotations with speeds as fast as a few hundred kRad/s. We discuss possible mechanisms how such lightning events can affect coherent receivers with digital signal processing. In experimental investigations with a high current pulse generator and transponder prototypes, we observed post FEC errors after polarization rotation events which can be expected from lightning strikes.",
+      "citation_count": 91,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.1364/oe.24.012442",
+      "source_api": "openalex_citations",
+      "id": "L014",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Blind Carrier Frequency Offset Estimation in Coherent Optical Communication Systems With Probabilistically Shaped M-QAM",
+      "authors": [
+        "Qifeng Yan",
+        "Liu Liu",
+        "Xuezhi Hong"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 2019,
+      "doi": "10.1109/jlt.2019.2940770",
+      "arxiv_id": null,
+      "abstract": "We find that the conventional 4th power and circular harmonic expansion (CHE) algorithms, which are originally devised for blind frequency offset estimation (FOE) in the uniform M-quadrature amplitude modulation (MQAM) systems, cannot work properly for probabilistically shaped (PS)-MQAM under moderate or strong shaping. To solve this issue, two novel blind FOE algorithms, namely the radius directed (RD)-4th power algorithm and the generalized circular harmonic expansion (GCHE) algorithm, are proposed. The former one adopts QPSK-selection based on a radius threshold optimized for a specific constellation entropy; while the later one conducts maximum likelihood (ML) estimation with a theoretically derived nonlinear radius transfer function in the GCHE. Several issues related to the practical implementation, including the optimization of the radius threshold in the RD-4th power algorithm, the impact of SNR-mismatch in the GCHE algorithm, and the computational complexities of the proposed algorithms, are analyzed. The Monte-Carlo simulation results show that: (1) the RD-4th power algorithm works properly in most of the cases except for very weak shaping, whereas the GCHE algorithm offers robust performance regardless of the shaping strength and outperforms the RD-4th power algorithm in all cases; (2) the performance gap between the two algorithms, which have the same computational complexity, enlarges for a larger constellation entropy. These observations indicate that the GCHE algorithm is a promising blind FOE algorithm, in terms of high estimation accuracy and robust performance, for applications that leverage the rate adaptability of the PS-MQAM, such as flexible optical networks.",
+      "citation_count": 56,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L015",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Phase and Frequency Recovery Algorithms for Probabilistically Shaped Transmission",
+      "authors": [
+        "Fabio A. Barbosa",
+        "Sandro Rossi",
+        "Darli A. A. Mello"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 2019,
+      "doi": "10.1109/jlt.2019.2959395",
+      "arxiv_id": null,
+      "abstract": "In additive white Gaussian noise (AWGN) channels, probabilistic shaping (PS) approaches the information-theoretical capacity using typical square M-ary quadrature amplitude modulation (M-QAM) constellations with nonuniform a priori probabilities. However, shaped constellations may have a detrimental impact on the chain of digital signal processing algorithms of typical coherent receivers, reducing or even eliminating the expected shaping gains. In this article, we evaluate carrier phase recovery (CPR) and carrier frequency recovery (CFR) algorithms for probabilistically shaped transmission. The results are obtained by offline processing of experimental data with laser imperfections and additive noise loading. We investigate an existing two-stage CPR, where the first stage is based on pilots with 3.1% overhead, and the second stage uses the blind phase search (BPS) algorithm. We show that the BPS stage is severely impaired by PS at moderate and low SNRs. These impairments can be partially compensated using extremely long noise rejection windows, which may be undesirable from a computational complexity standpoint. Conversely, using only the pilot-based stage exhibits penalties at high SNRs, as phase noise dominates over additive noise. In order to obtain a suitable performance over the full range of SNRs, we propose to detune the PS factor (with respect to the AWGN-optimized value) to optimize the BPS stage. In scenarios with relatively low phase noise and low modulation orders, we show that an equivalent performance can be obtained without shaping factor detuning by operating with the two-stage approach at high SNRs and switching off the BPS stage at moderate and low SNRs. We also show that typical blind CFR based on the 4thpower algorithm is severely affected by PS at moderate block lengths, but its expected performance can be recovered using very long block lengths. Alternatively, a pilot-based algorithm with 3.1% overhead (employing the same pilots used for the first stage of the two-stage CPR algorithm) achieves a suitable performance in all the investigated scenarios.",
+      "citation_count": 44,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L016",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Blind Polarization Demultiplexing and Equalization of Probabilistically Shaped QAM",
+      "authors": [
+        "Stefanos Dris",
+        "Saleem Alreesh",
+        "André Richter"
+      ],
+      "venue": "",
+      "year": 2019,
+      "doi": "10.1364/ofc.2019.w1d.2",
+      "arxiv_id": null,
+      "abstract": "A novel, two-stage algorithm for polarization demultiplexing and equalization of probabilistically shaped QAM is presented. It operates blindly, requiring no knowledge of the channel or transmitted sequence. Performance is validated under realistic PMD conditions.",
+      "citation_count": 29,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L017",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Spectrally-Efficient Single-Carrier 400G Transmission Enabled by Probabilistic Shaping",
+      "authors": [
+        "Yanjun Zhu",
+        "An Li",
+        "Wei-Ren Peng",
+        "C. Kan",
+        "Zhihong Li",
+        "Samina Chowdhury",
+        "Yan Cui",
+        "Yusheng Bai"
+      ],
+      "venue": "Optical Fiber Communication Conference",
+      "year": 2017,
+      "doi": "10.1364/ofc.2017.m3c.1",
+      "arxiv_id": null,
+      "abstract": "We report experimental results of Probabilistically Shaped 64QAM (PS-64QAM) Single-Carrier 400G transmission over SSMF, in a 50 GHz wavelength grid. Up to 300% reach enhancement over regular 64QAM is achieved, thanks to probabilistic shaping.",
+      "citation_count": 26,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L018",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Viterbi and Viterbi Algorithm based Phase Recovery for Probabilistically Shaped Signals",
+      "authors": [
+        "Qiulin Zhang",
+        "Chester Shu"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 2020,
+      "doi": "10.1109/jlt.2020.3035643",
+      "arxiv_id": null,
+      "abstract": "Unlike the scenario in traditional high-order QAM signals, Viterbi and Viterbi (V&V) algorithm becomes more powerful for carrier phase recovery (CPR) in probabilistically shaped (PS) signals. The reason relies on that the PS signals assign much higher probability to the innermost 4 constellation points, which are qualified for V&V algorithm. In this article, we compare the performance of V&V algorithm to that of blind phase search (BPS) algorithm for PS-64 QAM and PS-256 QAM in the aspects of window size and signal to noise ratio under the constraint of different laser linewidths. Besides, the impact of signal entropy on both algorithms is investigated. The computational complexity and running time for both algorithms are also summarized. Results show that the two algorithms perform similarly for PS-64 QAM signals when the linewidth is less than 1 MHz while the running time of BPS algorithm is at least 45 times longer than that of V&V algorithm. Finally, we conduct a coherent detection based optical back-to-back experiment where the laser linewidths of both transmitter laser and local oscillator are 100 kHz. For PS-64 QAM, both V&V and BPS algorithms show negligible penalty compared to the performance of homodyne detection, verifying the feasibility of applying V&V algorithm in the CPR of PS-64 QAM.",
+      "citation_count": 26,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L019",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Experimental analysis of pilot-based equalization for probabilistically shaped WDM systems with 256QAM/1024QAM",
+      "authors": [
+        "Metodi P. Yankov",
+        "Edson Porto da Silva",
+        "Francesco Da Ros",
+        "Darko Zibar"
+      ],
+      "venue": "Optical Fiber Communication Conference",
+      "year": 2017,
+      "doi": "10.1364/ofc.2017.w2a.48",
+      "arxiv_id": null,
+      "abstract": "Pilot based equalization is studied in a 5×10 GBaud WDM transmission experiment. The equalization is independent of the modulation format and is demonstrated for 256/1024QAM with uniform and probabilistically optimized distribution using an optimized pilot insertion rate of 2–5%.",
+      "citation_count": 20,
+      "is_open_access": true,
+      "pdf_url": "https://orbit.dtu.dk/en/publications/5a4d5598-9618-4b6f-8fab-9dc03e6a512f",
+      "source_api": "openalex_citations",
+      "id": "L020",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Real-time fast polarization tracking based on polarization phase locking least mean square algorithm",
+      "authors": [
+        "Jie Li",
+        "Tao Zeng",
+        "Xiang Li",
+        "Lingheng Meng",
+        "Ming Luo",
+        "Zhixue He",
+        "Shaohua Yu"
+      ],
+      "venue": "Optics Express",
+      "year": 2019,
+      "doi": "10.1364/oe.27.022116",
+      "arxiv_id": null,
+      "abstract": "We propose a fast polarization tracking scheme based on polarization phase locking least mean square (LMS) algorithm and experimentally demonstrate it in real-time implementation with a quasi-feed-forward digital signal processing (DSP) architecture. It has the advantages of no frequency/phase offset feedback requirement from the carrier recovery stage. The tracking performance of the proposed algorithm is verified in both simulation and real-time coherent transmission systems. It can track the state of polarization (SOP) variations up to 12 Mrad/s and 3.3 Mrad/s in 100-Gb/s QPSK and 400-Gb/s 16QAM simulation system, and can track 2.5 Mrad/s in 10-Gb/s QPSK real-time experiment, which has great improvement over conventional LMS algorithm.",
+      "citation_count": 19,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.1364/oe.27.022116",
+      "source_api": "openalex_citations",
+      "id": "L021",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Low Complexity Blind Carrier Phase Recovery for Probabilistically Shaped QAM",
+      "authors": [
+        "Gabriele Di Rosa",
+        "André Richter"
+      ],
+      "venue": "IEEE Photonics Technology Letters",
+      "year": 2020,
+      "doi": "10.1109/lpt.2020.3012970",
+      "arxiv_id": null,
+      "abstract": "We propose a novel two-stage blind carrier phase recovery scheme tailored for probabilistically shaped QAM. Our algorithm is based on modifying the classic Viterbi&Viterbi (V&V) and maximum likelihood (ML) phase estimators by optimizing the blind decisions over the received symbols taking into account the probability distribution of the received signal. Our technique improves the standard V&V + ML in all conditions and outperforms the state-of-the-art blind phase search (BPS) algorithm for a constellation entropy ≤4. At the same time our implementation preserves the low complexity of standard V&V + ML. This results in a remarkable reduction in complexity of up to a factor thirty compared to BPS.",
+      "citation_count": 15,
+      "is_open_access": true,
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/68/9151250/09153012.pdf",
+      "source_api": "openalex_citations",
+      "id": "L022",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Performance of momentum-based frequency-domain MIMO equalizer in the presence of feedback delay",
+      "authors": [
+        "Wenting Yi",
+        "Eric Sillekens",
+        "Domaniç Lavery",
+        "Hubert Dzieciol",
+        "Sujie Zhou",
+        "Kevin Law",
+        "Jack Chen",
+        "Polina Bayvel",
+        "Robert I. Killey"
+      ],
+      "venue": "Optics Express",
+      "year": 2020,
+      "doi": "10.1364/oe.394304",
+      "arxiv_id": null,
+      "abstract": "A frequency-domain multiple-input multiple-output (FD-MIMO) equalizer employing a momentum-based gradient descent update algorithm is proposed for polarization multiplexing coherent receivers. Its performance in operation with dynamically varying optical channels is investigated and the impact of filter update delays, arising from the latency of the fast Fourier transforms (FFTs) and other digital signal processing (DSP) operations in the feedback loop, is assessed. We show that the proposed momentum-based gradient descent algorithm used to control the equalizer response has significantly greater tolerance to feedback delay than the conventional gradient descent algorithm. We considered a 92 Gbaud dual-polarization 64 QAM receiver, with DSP operating at two samples per symbol, and with the equalizer operating on blocks of 512 and 1024 samples (i.e., 512/1024-point FFT). We found that at an optical signal-to-noise power ratio (OSNR) of 35 dB, the momentum-based gradient descent algorithm can successfully track state-of-polarization (SOP) rotation at frequencies of up to 50 kHz and with filter update delays of up to 14 blocks (39 ns). In comparison, using the conventional gradient descent algorithm in an otherwise identical receiver, the equalizer performance starts to deteriorate at SOP rotation frequencies above 20 kHz.",
+      "citation_count": 9,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.1364/oe.394304",
+      "source_api": "openalex_citations",
+      "id": "L023",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Blind Radius Directed Equalizer with Likelihood-based Selection for Probabilistically Shaped and High Order QAM",
+      "authors": [
+        "Gabriele Di Rosa",
+        "André Richter"
+      ],
+      "venue": "",
+      "year": 2020,
+      "doi": "10.1109/ecoc48923.2020.9333378",
+      "arxiv_id": null,
+      "abstract": "We propose a novel equalization algorithm for high order and shaped M-QAM. Our blind RDE utilizes conditional filter updates based on the assignment likelihood of amplitude levels. Compared to traditional RDE we demonstrate a convergence rate of > 99% for up to 93% higher DGD.",
+      "citation_count": 5,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L024",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Investigation of CAZAC Sequences for Data-Aided Channel Estimation Considering Nonlinear Optical Transmission",
+      "authors": [
+        "Markus Nölle",
+        "Felix Frey",
+        "Robert Elschner",
+        "Carsten Schmidt‐Langhorst",
+        "Johannes Fischer",
+        "Colja Schubert"
+      ],
+      "venue": "Optical Fiber Communication Conference",
+      "year": 2015,
+      "doi": "10.1364/ofc.2015.th3g.2",
+      "arxiv_id": null,
+      "abstract": "We investigate CAZAC sequences with positive and negative chirp for the use as training sequences in data-aided channel estimation. While both sequences show the same linear performance, the right choice of chirp is critical in case of nonlinear transmission. A performance difference of up to 2 dBQ was experimentally verified.",
+      "citation_count": 4,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L025",
+      "download": false,
+      "publication_status": "published"
+    },
+    {
+      "title": "Achievable information rates for fiber optics : applications and computations",
+      "authors": [
+        "Alvarado, A Alex",
+        "Fehenberger, T",
+        "Chen, B",
+        "Willems, FMJ Frans"
+      ],
+      "venue": "TU/e Research Portal",
+      "year": 2017,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "In this paper, achievable information rates (AIR) for fiber optical communications are discussed. It is shown that AIRs such as the mutual information and generalized mutual information are good design metrics for coded optical systems. The theoretical predictions of AIRs are compared to the performance of modern codes including low-parity density check and polar codes. Two different computation methods for these AIRs are also discussed: Monte-Carlo integration and Gauss-Hermite quadrature. Closed-form ready-to-use approximations for such computations are provided for arbitrary constellations and the multidimensional AWGN channel. The computation of AIRs in optical experiments and simulations is also discussed.",
+      "citation_count": 167,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L026",
+      "download": true,
+      "publication_status": "published"
+    }
+  ]
+}

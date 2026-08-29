@@ -1,0 +1,18 @@
+{
+  "storage_version": 2,
+  "id": "L001",
+  "title": "Space-Ground Coherent Optical Links: Ground Receiver Performance With Adaptive Optics and Digital Phase-Locked Loop",
+  "doi": "10.1109/JLT.2020.3003561",
+  "arxiv_id": "1911.11851",
+  "download_status": "success",
+  "download_method": "arxiv_html",
+  "content_type": "html",
+  "content_quality": "good",
+  "content_file": "content.md",
+  "downloaded_at": "2026-08-30T01:51:29.665097+08:00",
+  "real_title": "Space-Ground Coherent Optical Links: Ground Receiver Performance With Adaptive Optics and Digital Phase-Locked Loop",
+  "title_check": "match",
+  "title_overlap": 1.0,
+  "source_sha256": "604b64521b92f7f14a90248a8680832da2f4502af5b2e53b1244c8a0857c7c55",
+  "content_sha256": "0eae338e641f20553ef62b2ba8aa80e632de2e14a93a8ad598e05e0862762f16"
+}

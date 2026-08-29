@@ -1,0 +1,86 @@
+{
+  "schema_version": "t077.c5-0-single-cell.gate2.receipt.v1",
+  "authority": "T077/D056/V031/CP018",
+  "manifest_hash": "14ff14de3d0094f135c3a07d3fb395455e81035f6b6d1b014704177587ed3782",
+  "completed_frames": 512,
+  "decoded_arms": [
+    "B0",
+    "O1"
+  ],
+  "replayed_gate1_frames": 128,
+  "all_replay_hash_checks": true,
+  "decision": {
+    "frames": 512,
+    "arms": {
+      "B0": {
+        "bit_errors": 25844,
+        "ber": 0.04929351806640625,
+        "frame_errors": 132,
+        "fer": 0.2578125
+      },
+      "O1": {
+        "bit_errors": 27965,
+        "ber": 0.05333900451660156,
+        "frame_errors": 131,
+        "fer": 0.255859375
+      }
+    },
+    "ber_difference_B0_minus_O1": {
+      "point": -0.0040454864501953125,
+      "ci_lower": -0.005561971664428711,
+      "ci_upper": -0.002660703659057618,
+      "cluster": "physical_frame",
+      "frames": 512,
+      "bootstrap_resamples": 10000,
+      "bootstrap_seed": 2026083007,
+      "discordant_frames": 128,
+      "first_better_frames": 87,
+      "second_better_frames": 41
+    },
+    "fer_difference_B0_minus_O1": {
+      "point": 0.001953125,
+      "ci_lower": 0.0,
+      "ci_upper": 0.005859375,
+      "cluster": "physical_frame",
+      "frames": 512,
+      "bootstrap_resamples": 10000,
+      "bootstrap_seed": 2026083007,
+      "discordant_frames": 1,
+      "first_better_frames": 0,
+      "second_better_frames": 1
+    },
+    "stronger_fer_headroom": false,
+    "gate2": "FAIL",
+    "terminal": "SINGLE_CELL_NO_HEADROOM"
+  },
+  "gate2": "FAIL",
+  "terminal": "SINGLE_CELL_NO_HEADROOM",
+  "next_stage": null,
+  "audit_pair_receipts": {
+    "frames": 512,
+    "unique_hashes": 512,
+    "field_order": [
+      "manifest_hash",
+      "frame_index",
+      "seed",
+      "info_bits_sha256",
+      "coded_bits_sha256",
+      "mapping_sha256",
+      "physical.codeword_sha256",
+      "physical.mapping_sha256",
+      "physical.receiver_input_sha256",
+      "physical.received_observation_sha256",
+      "realization_hash",
+      "bundle_hash",
+      "pair_hash"
+    ],
+    "raw_only_recomputable": true,
+    "scope": "persisted_summary_integrity_not_underlying_array_reconstruction"
+  },
+  "_meta": {
+    "script": "t077:gate2-receipt-audit-pair",
+    "common_md5": "49acdfa4",
+    "git_commit": "cde31b9",
+    "timestamp": "2026-08-30T10:04:59"
+  }
+}

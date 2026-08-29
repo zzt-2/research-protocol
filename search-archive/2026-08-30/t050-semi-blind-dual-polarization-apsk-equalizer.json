@@ -1,0 +1,35 @@
+{
+  "query": "semi blind dual polarization APSK equalizer",
+  "timestamp": "2026-08-30T02:51:42.469115+08:00",
+  "sources": [
+    "s2",
+    "openalex",
+    "arxiv"
+  ],
+  "total": 1,
+  "results": [
+    {
+      "title": "Pre-Equalized Interference Cancellation for Faster-Than-Nyquist Signaling",
+      "authors": [
+        "Qiang Li",
+        "Fengkui Gong",
+        "Peiyang Song",
+        "Shenghua Zhai"
+      ],
+      "venue": "IEEE Access",
+      "year": 2019,
+      "doi": "10.1109/access.2019.2920733",
+      "arxiv_id": null,
+      "abstract": "An affine projection (AP)-based equalizer (APE) is introduced to eliminate the inter-symbol interference (ISI) for faster-than-Nyquist (FTN) signaling. Based on the APE, a pre-equalized interference cancellation (PIC) algorithm is proposed to eliminate the ISI for FTN signaling. By utilizing interference factors in the FTN system and low complexity APE, the computational complexity of the proposed PIC algorithm is much lower than the most existing block-based estimation algorithms, which makes it more practical for implementation. Besides, the proposed PIC algorithm has higher estimation accuracy by comparison with most existing algorithms. The simulation results show that the APE has a satisfactory bit error rate (BER) performance in the moderate ISI cases. In uncoded FTN systems, for all the modulation types adopted in digital video broadcasting-satellite-second generation extension (DVB-S2X), the proposed PIC algorithm can approximate the BER performance of the ISI-free Nyquist signaling when the time acceleration parameter and rolling factor equal to 0.8 and 0.3, respectively, which is beyond the performance of the most existing low-complexity algorithms. Even for 256-amplitude phase shift keying (APSK), the BER performance degradation is no more than 0.05 dB when the BER is 10-5. Furthermore, compared with the state-of-the-art frequency-domain equalization algorithm, the proposed PIC algorithm performs well in coded FTN systems.",
+      "citation_count": 14,
+      "is_open_access": true,
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/6287639/8600701/08730329.pdf",
+      "source_api": "openalex",
+      "relevance_score": 0.333,
+      "_score": 0.40650000000000003,
+      "id": "L001",
+      "download": true,
+      "publication_status": "published"
+    }
+  ]
+}

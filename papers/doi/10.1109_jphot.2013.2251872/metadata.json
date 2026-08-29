@@ -1,0 +1,18 @@
+{
+  "storage_version": 2,
+  "id": "L035",
+  "title": "Compensation for In-Phase/Quadrature Imbalance in Coherent-Receiver Front End for Optical Quadrature Amplitude Modulation",
+  "doi": "10.1109/JPHOT.2013.2251872",
+  "arxiv_id": null,
+  "download_status": "success",
+  "download_method": "blit_ieee_pdf+pdf_convert_standard",
+  "content_type": "pdf",
+  "content_quality": "good",
+  "content_file": "content.md",
+  "downloaded_at": "2026-08-30T01:52:51+08:00",
+  "real_title": "Compensation for In-Phase/Quadrature Imbalance in Coherent-Receiver Front End for Optical Quadrature Amplitude Modulation",
+  "title_check": "match",
+  "title_overlap": 1.0,
+  "source_sha256": "c9bf40590a8e642846f744a71eb54c64046803f953cf1a69fcce9c8e536ef08b",
+  "content_sha256": "7f9091d6bab0d0a379902b7d36b0cdde4ebc0a3eb918aba9d52ed9798daa57fd"
+}

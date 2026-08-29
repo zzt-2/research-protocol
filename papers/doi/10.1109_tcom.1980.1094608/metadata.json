@@ -1,0 +1,18 @@
+{
+  "storage_version": 2,
+  "id": "T040-006",
+  "title": "Self-Recovering Equalization and Carrier Tracking in Two-Dimensional Data Communication Systems",
+  "doi": "10.1109/tcom.1980.1094608",
+  "arxiv_id": null,
+  "download_status": "success",
+  "download_method": "ieee_blit",
+  "content_type": "pdf",
+  "content_quality": "good",
+  "conversion_quality": "standard",
+  "content_file": "content.md",
+  "downloaded_at": "2026-08-30T01:58:43+08:00",
+  "real_title": "Self-Recovering Equalization and Carrier Tracking in Two-Dimensional Data Communication Systems",
+  "title_check": "match",
+  "title_check_source": "converted_content_heading",
+  "title_overlap": 1.0
+}

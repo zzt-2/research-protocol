@@ -1,0 +1,250 @@
+{
+  "schema_version": "t067.structured-covariance-development.aggregate.v1",
+  "authority": "T067/D048/V022",
+  "round1_windows": 64,
+  "tune_windows": 32,
+  "evaluation_windows": 32,
+  "tuning": {
+    "C1_kappa": 64.0,
+    "B3_shrinkage": 1.0
+  },
+  "arms": {
+    "B1": {
+      "mean_gmi": 2.8071407006853812,
+      "mean_ber": 0.10335286458333333,
+      "held_out_nll": 2.252253168411694,
+      "payload_bits": 49152,
+      "bit_errors": 5080,
+      "condition_max": 1.0,
+      "floor_rate": 0.0,
+      "runtime_s": 0.36650559999179677
+    },
+    "B2": {
+      "mean_gmi": 2.8055749298571335,
+      "mean_ber": 0.10300699869791667,
+      "held_out_nll": 2.3464706648253495,
+      "payload_bits": 49152,
+      "bit_errors": 5063,
+      "condition_max": 24.045119258875186,
+      "floor_rate": 0.0,
+      "runtime_s": 0.3648839000015869
+    },
+    "B3": {
+      "mean_gmi": 2.5267912890850672,
+      "mean_ber": 0.10784912109375,
+      "held_out_nll": 1.6284560821374003,
+      "payload_bits": 49152,
+      "bit_errors": 5301,
+      "condition_max": 1.0,
+      "floor_rate": 0.0,
+      "runtime_s": 0.3520102000074985
+    },
+    "C1": {
+      "mean_gmi": 2.8044384291787914,
+      "mean_ber": 0.10306803385416667,
+      "held_out_nll": 2.215728573458658,
+      "payload_bits": 49152,
+      "bit_errors": 5066,
+      "condition_max": 34.80994460757929,
+      "floor_rate": 0.0,
+      "runtime_s": 0.3668945000063104
+    }
+  },
+  "comparisons": {
+    "B2_vs_B1": {
+      "gmi": {
+        "mean_diff": -0.0015657708282480476,
+        "ci": [
+          -0.014340186218379689,
+          0.011192107780936104
+        ],
+        "wins": 15,
+        "clusters": 32
+      },
+      "ber": {
+        "mean_diff": -0.00034586588541666555,
+        "ci": [
+          -0.001424662272135419,
+          0.0006103515625000024
+        ],
+        "wins": 11,
+        "clusters": 32
+      }
+    },
+    "B3_vs_B1": {
+      "gmi": {
+        "mean_diff": -0.2803494116003141,
+        "ci": [
+          -0.3949681425625397,
+          -0.18366149615961266
+        ],
+        "wins": 1,
+        "clusters": 32
+      },
+      "ber": {
+        "mean_diff": 0.004496256510416665,
+        "ci": [
+          0.0007522583007812484,
+          0.008138529459635415
+        ],
+        "wins": 8,
+        "clusters": 32
+      }
+    },
+    "C1_vs_B1": {
+      "gmi": {
+        "mean_diff": -0.002702271506589693,
+        "ci": [
+          -0.014313994006934365,
+          0.008312362285902998
+        ],
+        "wins": 12,
+        "clusters": 32
+      },
+      "ber": {
+        "mean_diff": -0.0002848307291666661,
+        "ci": [
+          -0.0015055338541666687,
+          0.0008138020833333342
+        ],
+        "wins": 12,
+        "clusters": 32
+      }
+    },
+    "C1_vs_B2": {
+      "gmi": {
+        "mean_diff": -0.0011365006783416454,
+        "ci": [
+          -0.007379093854194009,
+          0.003706982986984085
+        ],
+        "wins": 15,
+        "clusters": 32
+      },
+      "ber": {
+        "mean_diff": 6.1035156249999404e-05,
+        "ci": [
+          -0.00040690104166666853,
+          0.0005289713541666658
+        ],
+        "wins": 9,
+        "clusters": 32
+      }
+    },
+    "C1_vs_B3": {
+      "gmi": {
+        "mean_diff": 0.27764714009372443,
+        "ci": [
+          0.17970757334865647,
+          0.3933846863744888
+        ],
+        "wins": 31,
+        "clusters": 32
+      },
+      "ber": {
+        "mean_diff": -0.004781087239583332,
+        "ci": [
+          -0.00848388671875,
+          -0.001220703124999997
+        ],
+        "wins": 25,
+        "clusters": 32
+      }
+    }
+  },
+  "strongest_comparator": "B2",
+  "terminal": "NO_METHOD_SIGNAL",
+  "winner": null,
+  "round2_authorized": false,
+  "bootstrap": {
+    "cluster": "evaluation_window",
+    "rng": "PCG64",
+    "seed": 2026083002,
+    "resamples": 2000,
+    "confidence": 0.95
+  },
+  "split": {
+    "tune_window_ids": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31
+    ],
+    "evaluation_window_ids": [
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62,
+      63
+    ],
+    "disjoint": true
+  },
+  "hashes": {
+    "unique_config_hashes": 1,
+    "unique_realization_hashes": 64,
+    "unique_bundle_hashes": 64
+  },
+  "manifest_hash": "5c79b5faaa0bcb0291a866d7cf1a5ff0df8d493c346d2da02f4bb465a6b4b8e1",
+  "provisional_grade": "D",
+  "_meta": {
+    "script": "run_development:t067-round1-aggregate",
+    "common_md5": "49acdfa4",
+    "git_commit": "b700d99",
+    "timestamp": "2026-08-30T05:51:24"
+  }
+}

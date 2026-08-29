@@ -1,0 +1,32 @@
+{
+  "schema_version": "t077.c5-0-single-cell.smoke.receipt.v1",
+  "authority": "T077/D056/V031/CP018",
+  "manifest_hash": "14ff14de3d0094f135c3a07d3fb395455e81035f6b6d1b014704177587ed3782",
+  "codec": "TargetApskCodec",
+  "live_backend": true,
+  "completed_frames": 8,
+  "seeds": [
+    2900,
+    2901,
+    2902,
+    2903,
+    2904,
+    2905,
+    2906,
+    2907
+  ],
+  "mapping_firewall": "PASS",
+  "receiver_api_truth_exclusion": "PASS",
+  "truth_exclusion_evidence": "receiver_api_signature_and_identical_input_replay",
+  "paired_hashes": "PASS",
+  "fresh_decode_lifecycle": "PASS",
+  "unique_pair_hashes": 8,
+  "scientific_use": false,
+  "receipt_hash": "e023aed7358ac50246835284555d1960603ea0c4d988cb835e91b4e1c1de7fcf",
+  "_meta": {
+    "script": "t077:smoke-receipt",
+    "common_md5": "49acdfa4",
+    "git_commit": "cde31b9",
+    "timestamp": "2026-08-30T09:49:11"
+  }
+}

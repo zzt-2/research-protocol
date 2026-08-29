@@ -1,0 +1,73 @@
+{
+  "schema_version": "t077.c5-0-single-cell.live-point.raw.v1",
+  "manifest_hash": "14ff14de3d0094f135c3a07d3fb395455e81035f6b6d1b014704177587ed3782",
+  "frames": [
+    {
+      "seed": 2900,
+      "physical": {
+        "seed": 2900,
+        "preamble_symbols": 4,
+        "observation_symbols_per_polarization": 256,
+        "continuous_total_symbols": 260,
+        "gamma_gamma_block": 256,
+        "observation_first_block_symbols": 252,
+        "observation_next_block_symbols": 4,
+        "receiver_input_sha256": "ff827515f26e33b260a1fdeb8120c56756371c5fefc8a0d773d46e8d490eff3d",
+        "received_observation_sha256": "9fee3b44ddc4a3104b376fe6a6bcc07fd36e11baa7cf7f6ed285b413ae29c166",
+        "codeword_sha256": "afa668288e92906a3f71e6c87c790ce0d5e7a02875dc659212f9902d7b9511a2",
+        "mapping_sha256": "57222e03e8a6b0b0c85e233e64710756e603d92979d7c08c5dd6209238ac508a",
+        "gg_sha256": "e55d01d0d0d2fc0ce0eaa68163e1983c4301f232b24b02e28987e714ebfe4def",
+        "phase_sha256": "3ffc14a5dfe5567ce0dcb9d028ef53d937a79274787f298fbeeb7617327e5b42"
+      },
+      "pair_hash": "f344c7a229e76aa4454b8221c898183de2245719b9bd40d6031e42bca50366c4",
+      "arms": {
+        "B0": {
+          "pair_hash": "f344c7a229e76aa4454b8221c898183de2245719b9bd40d6031e42bca50366c4",
+          "decoder_input_sha256": "53b148d21769d1920ee9e1bc050302661ff0d4c64249849a097aa1007c242ebf",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "B1": {
+          "pair_hash": "f344c7a229e76aa4454b8221c898183de2245719b9bd40d6031e42bca50366c4",
+          "decoder_input_sha256": "53b148d21769d1920ee9e1bc050302661ff0d4c64249849a097aa1007c242ebf",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "B2": {
+          "pair_hash": "f344c7a229e76aa4454b8221c898183de2245719b9bd40d6031e42bca50366c4",
+          "decoder_input_sha256": "79abee6c0573b0fec56aaa84164d088c4ac49f3b7a18954e66f21dd17dc4a7e8",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "B3": {
+          "pair_hash": "f344c7a229e76aa4454b8221c898183de2245719b9bd40d6031e42bca50366c4",
+          "decoder_input_sha256": "705e6cd1788f1438c252cfe3f789af71355427cc1f0a8b56e320d8eee4d426b4",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "O1": {
+          "pair_hash": "f344c7a229e76aa4454b8221c898183de2245719b9bd40d6031e42bca50366c4",
+          "decoder_input_sha256": "b92ec6e2040fcefa552cd0c8bccf06fcc1a79340d04087035d485f49928609a9",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        }
+      }
+    }
+  ],
+  "_meta": {
+    "script": "t077:live-point-raw",
+    "common_md5": "49acdfa4",
+    "git_commit": "cde31b9",
+    "timestamp": "2026-08-30T09:45:58"
+  }
+}

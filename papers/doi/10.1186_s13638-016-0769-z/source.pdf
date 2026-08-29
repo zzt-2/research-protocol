@@ -1,0 +1,1005 @@
+Baldi et al. EURASIP Journal on Wireless Communications and
+Networking (2016) 2016:272
+DOI 10.1186/s13638-016-0769-z
+
+RESEARCH                                                                     Open Access
+
+On the use of ordered statistics decoders
+for low-density parity-check codes in space
+telecommand links
+
+Marco Baldi1,2* , Nicola Maturo1,2, Enrico Paolini3 and Franco Chiaraluce1,2
+
+Abstract
+
+The performance of short low-density parity-check (LDPC) codes that will be included in the standard for
+next-generation space telecommanding is analyzed. The paper is focused on the use of a famous ordered statistics
+decoder known as most reliable basis (MRB) algorithm. Despite its complexity may appear prohibitive in space
+applications, this algorithm is shown to actually represent a realistic option for short LDPC codes, enabling significant
+gains over more conventional iterative algorithms. This is possible by a hybrid approach which combines the MRB
+decoder with an iterative decoding procedure in a sequential manner. The effect of quantization is also addressed, by
+considering two different quantization laws and comparing their performance. Finally, the impact of limited memory
+availability onboard of spacecrafts is analyzed and some solutions are proposed for efficient processing, towards a
+practical onboard decoder implementation.
+
+Keywords: Low-density parity-check codes, Most reliable basis algorithm, Ordered statistics decoding, Space
+missions, Telecommand links
+
+1 Introduction                                                                 A TC link, in turn, is used to initiate, modify, or termi-
+Wireless communication links in space missions exten-                        nate equipment functions onboard (O/B) of space objects.
+sively use error-correcting codes in order to improve                        From the communication viewpoint, TCs have a number
+transmission reliability [1–4]. There are two types of space                 of distinctive features. Among them,
+links: telemetry (TM) links from space to ground and
+telecommand (TC) links from ground to space. The pur-                          • the data rates (measured in bits/s) are usually very
+pose of a TM link is to reliably and transparently convey                          low compared with TM links,
+remote measurement information to users located on
+Earth. For such a purpose, several coding schemes are                          • TCs are originated and assembled on the ground.
+employed. In particular,
+                                                                               The first above feature implies milder requirements for
+  • convolutional codes,                                                     the error-correcting code. Similarly, because of the sec-
+  • Reed–Solomon codes,                                                      ond feature, fewer limits and constraints are imposed on
+  • parallel turbo codes,                                                    the available transmitted power. Recommendations for
+  • low-density parity-check (LDPC) codes.                                   TC space links are issued traditionally by two organiza-
+                                                                             tions: the Consultative Committee for Space Data Systems
+  A comprehensive description of all these families of                       (CCSDS) and the European Cooperation for Space Stan-
+codes can be found, for example, in [5].                                     dardization (ECSS). The only error-correcting code so
+                                                                             far included in these recommendations [6, 7] is a Bose–
+*Correspondence: m.baldi@univpm.it                                           Chaudhuri–Hocquenghem (BCH) code. This linear block
+1Dipartimento di Ingegneria dell’Informazione, Università Politecnica delle  code is characterized by a codeword length n = 63 bits,
+Marche, Ancona, Italy                                                        an information block length k = 56 bits and is typically
+2Consorzio Nazionale Interuniversitario per le Telecomunicazioni (CNIT),     decoded O/B via hard-decision decoding.
+Parma, Italy
+Full list of author information is available at the end of the article
+
+          © The Author(s). 2016 Open Access This article is distributed under the terms of the Creative Commons Attribution 4.0
+          International License (http://creativecommons.org/licenses/by/4.0/), which permits unrestricted use, distribution, and
+          reproduction in any medium, provided you give appropriate credit to the original author(s) and the source, provide a link to the
+          Creative Commons license, and indicate if changes were made.
+Baldi et al. EURASIP Journal on Wireless Communications and Networking (2016) 2016:272  Page 2 of 15
+
+  Reliable space telecommanding is of fundamental             LDPC codes with IAs, the coding gain is larger than
+importance as the success of a mission may be com-            with the BCH code, although the performance remains
+promised because of an error corrupting a TC message.         relatively far from the theoretical limits.
+This imposes strict constraints on the maximum tolerable
+error rates. In particular, the codeword error rate (CER)       More substantial improvements can result from the
+is defined as the ratio of the number of decoding failures    adoption of algorithms based on ordered statistics decod-
+to the total number of received codewords. Requirements       ing (OSD) [13]. In this paper, in particular, we consider
+are often specified in terms of average CER, and a typical    the well-known most reliable basis (MRB) algorithm [14].
+value is CER ≤ 10−5.                                          MRB is a non-iterative soft-decision decoding algorithm
+                                                              able to approach the performance of a maximum likeli-
+  TC links are currently evolving to include new and more     hood (ML) decoder. The latter is optimal, in the sense
+challenging mission profiles, characterized by much more      of minimizing the decoding error probability. The main
+demanding requirements. Compliance with these new             drawback of MRB is represented by its complexity, which
+requirements imposes the use of more advanced coding          makes its use problematic in TC links where decoding
+techniques than the BCH(63, 56) code. In space telecom-       is performed O/B with very limited computational and
+manding, it is always of fundamental importance to ensure     memory resources. As mentioned, however, the length of
+the integrity of very short emergency commands, with a        the TC LDPC codes is small, namely, n = 128 bits and
+very low data rate and limited latency. Such constraints      n = 512 bits, which makes MRB a potential candidate
+impose the adoption of short codes.                           especially for the shorter code.
+
+  The mentioned BCH code is short enough, but its per-          Complexity can be reduced by resorting to a hybrid
+formance is far from meeting the requirements of next         solution, which combines MRB with IAs. More pre-
+generation missions. In the following analysis, we will       cisely, the hybrid approach consists of performing low-
+refer to a classical binary phase shift keying (BPSK) mod-    complexity decoding through an IA, at first, and invok-
+ulation over an additive white Gaussian noise (AWGN)          ing the MRB algorithm only when the IA is not able
+channel. This model is particularly suitable to describe      to find any valid codeword (detected error). The hybrid
+deep-space communications. Using the standard BCH(63,         decoder has recently been used to decode also LDPC
+56) code with hard-decision decoding, the signal-to-noise     codes constructed on non-binary finite fields [15], which
+ratio required to achieve CER ≈ 10−5 is Eb/N0 ≈ 9.1 dB,       represent another option for space TC links [16, 17].
+where Eb is the energy per information bit and N0 the         Due to their higher decoding complexity, however, non-
+one-sided noise power spectral density. This value of         binary LDPC codes are less attractive than their binary
+Eb/N0 can be reduced, so improving performance, by            counterparts.
+applying soft-decision decoding. For example, by using a
+decoder based on the BCJR algorithm [8], a gain of about        For the LDPC codes analyzed in this paper, the hybrid
+2.1 dB with respect to the hard-decision decoder can be       decoder outperforms the IA or the MRB algorithm when
+achieved. These Eb/N0 values, however, remain too large       used individually. A qualitative explanation of this favor-
+for space missions of next generation. These missions shall   able behavior is as follows. The IA decoders here con-
+be characterized by a significant increase of the supported   sidered are not bounded-distance decoders: Therefore,
+data rate and/or maximum distance with respect to the         they may be able to successfully decode soft-decision
+present scenarios. Both these factors degrade the signal-     sequences from the channel even if they have rela-
+to-noise ratio and impose to achieve the target CER over      tively large Euclidean distances from the BPSK-modulated
+a worse channel.                                              transmitted codeword and, at the same time, they may
+                                                              fail to decode soft-decision sequences at relatively small
+  In order to achieve higher coding gains, new advanced       Euclidean distances from it. The MRB decoder instead
+coding schemes have been designed and evaluated [9].          works in a completely different way: Once having fixed
+After a long campaign of simulations and comparisons,         its order i, it is able to correct all the error patterns
+two short binary LDPC codes have emerged as the most          involving i errors or less in the most reliable basis. Then,
+attractive candidates. Most of the steps necessary for their  the two decoders complement one each other, this way
+inclusion in the standard for space TC have already been      improving the individual performances. On the other
+completed, so that they will certainly be employed in         hand, it is evident that in case the IA is characterized
+next-generation missions.                                     by a high undetected codeword error rate (UCER), the
+                                                              MRB algorithm is not invoked in many times where it
+  LDPC codes can be decoded through classical soft-           could correct and the performance of the plain MRB is
+decision iterative algorithms (IAs), such as the sum-         better than that of the hybrid approach. This event does
+product algorithm (SPA) [10] or its simplified versions,      not occur for the considered codes that, by design, are
+e.g., min-sum (MS) [11] or normalized min-sum (NMS)           characterized by values of UCER which are orders of mag-
+[12]. As regards SPA, throughout this paper, we will refer    nitude lower than the CER. As an example, while the
+to its log-likelihood ratio (LLR) implementation. By using
+Baldi et al. EURASIP Journal on Wireless Communications and Networking (2016) 2016:272  Page 3 of 15
+
+CER value at the working point must be at least as low         limited memory and to the latency evaluation. Concluding
+as 10−5, the UCER value at the same point must be at           remarks are given in Section 6.
+least as low as 10−9 [18]. Consequently, the MRB decoder
+is not invoked in a very few number of cases where it          2 LDPC codes for space telecommand links
+should be, and the advantage offered by the SPA-LLR to         The two considered LDPC codes are described in detail
+sporadically correct a (relatively) large number of errors     in [16]. The first code has information block length k =
+dominates.                                                     64 bits and codeword length n = 128 bits. The sec-
+                                                               ond code has information block length k = 256 bits and
+  While ensuring excellent error rate performance, the         codeword length n = 512 bits. Hence, both codes have
+hybrid decoder is characterized by a significantly lower       code rate Rc = k/n = 1/2. A short overview of their
+average complexity than MRB decoding used alone. More-         main features is reported in the following. In particular,
+over, such a performance is not seriously affected by prac-    in Section 2.1, their structure is described, by specifying
+tical issues like, for example, quantization, on condition     their parity-check matrices, while in Section 2.2, their
+that suitable quantization rules are applied.                  weight spectrum properties are addressed.
+
+  Motivated by the above considerations, in this paper, a      2.1 Parity-check and generator matrices
+thorough analysis of the performance of the MRB algo-          For the codes we consider, the parity-check matrix H is an
+rithm, used individually or in hybrid form, is developed       array of M × M square submatrices, where M = k/4 =
+with reference to space TC applications. While a pre-          n/8. This is specified, for both codes, in Fig. 1.
+liminary version of this analysis has been considered in
+[19], the study is here deepened by addressing all tech-         In the figure, IM and 0M denote the M × M identity and
+nical issues in a more complete way. Among them, we            zero matrices, respectively, and is the first right circular
+investigate the impact of limited memory availability (a       shift of IM. This means that has a non-zero entry at row
+typically very stringent constraint in O/B processing),        i and column j if and only if j = (i + 1) mod M. Moreover,
+with the aim to discuss also the problems arising in
+practical implementations. In fact, while the presence           2 represents the second right circular shift of IM, that is,
+of enough O/B memory would help fast convergence of              2 has a non-zero entry at row i and column j if and only
+the decoding algorithm, memories are usually considered        if j = (i + 2) mod M, and so on. The ⊕ operator indicates
+not reliable in hostile environments like the one charac-      element-wise modulo-2 addition.
+terizing space missions, so that their usage is generally        As an alternative representation, a k × n generator
+minimized. As a consequence, “on-the-fly” computations         matrix G can be obtained from the parity-check matrix
+are preferred to memory accesses. Therefore, we extend         H. The length-n codeword c corresponding to a length-
+the analysis in [19] by addressing both the case of a lim-     k information block u can be then generated as c = u G.
+ited amount of memory and the case of total absence            The matrices G for the two considered codes are reported
+of memory. We also study a parallel implementation for         in [16].
+controlling other important variables, like the decoding
+latency.                                                       2.2 Weight distribution properties
+                                                               The Hamming weight of a codeword is defined as the
+  The organization of the paper is as follows. In Section 2,   number of its nonzero elements. The performance of a
+the considered error-correcting codes are described. In        linear block code under optimum ML decoding is gov-
+Section 3, the various decoding procedures are presented       erned by its weight spectrum, that is the number of
+and expressions for computing their complexities are pro-      codewords of Hamming weight w for all integer 0 ≤
+vided. The performance of these schemes is then assessed       w ≤ n. Unfortunately, even when the weight spectrum
+in Section 4, also taking into account the quantization        is perfectly known (which is a very favorable condition,
+issues. Section 5 is devoted to the analysis of the impact of
+
+Fig. 1 Parity-check matrices of the considered LDPC codes
+Baldi et al. EURASIP Journal on Wireless Communications and Networking (2016) 2016:272                           Page 4 of 15
+
+normally unverified for LDPC codes), it is not possible        A(x)|256×512 = 64x40 + 704x42 + 6336x44           (3)
+to find an exact analytical expression of the error rate                       + 44736x46 + . . .
+achieved by the ML decoder, even for very simple commu-
+nication channel models. Thus, it is a common practice           The multiplicities A40 and A42 appear to be exact, while
+resorting to analytical bounds, an example of which is rep-    A44 and A46 are approximate and, in general, there is not
+resented by the union bound, that establishes an upper         yet sufficient confidence on the reliability of the estimate,
+bound on the error rate of the considered code under ML        even as regards the value of dmin. This does not allow to
+decoding [20].                                                 draw a sufficiently reliable union bound for the LDPC(512,
+                                                               256) code.
+  For a binary linear block code over the AWGN channel
+and BPSK modulation, let us denote by Aw the multiplicity      3 Decoding algorithms
+of the weight-w codewords and by dmin the code mini-           As decoding algorithms we consider one OSD (the MRB
+mum distance. Then, the expression of the union bound          algorithm) and three IAs (SPA, MS, and NMS). We inves-
+for the CER is [21]                                            tigate their performance when used alone or combined in
+                                                               the aforementioned hybrid decoding scheme.
+         n       1              Eb
+                 2 Awerfc       N0
+CERUB =                    wRc      .              (1)
+
+         w=dmin                                                3.1 MRB decoder
+
+  The first term of the sum, corresponding to w = dmin,        Let us denote by 1 the length-n vector with all coordi-
+is also known as the “error floor.” For sufficiently high      nates equal to 1. Then, let c = (c0, c1, . . . , cn−1) and x =
+values of Eb/N0, the error floor provides an excellent         (x0, x1, . . . , xn−1) = 1−2 c ∈ {−1, +1}n be the transmitted
+approximation of the performance of ML decoding. In            codeword and its baseband BPSK-modulated version (that
+this sense, it represents a first benchmark for any sub-       is, before being modulated with the carrier frequency),
+optimum decoding algorithm: the closer the error rate          respectively. Moreover, let y = (y0, y1, . . . , yn−1) ∈ Rn
+offered by the decoding algorithm to the error floor, the      be the corresponding received vector of soft values after
+smaller the gap between the sub-optimum decoder and            transmission over the AWGN channel and BPSK demod-
+the optimum ML decoder. As from (1), the computation           ulation. The MRB decoder relies on a transformation from
+of CERUB requires the knowledge of the complete weight         the original generator matrix, G, to a new matrix, G ,
+spectrum of the code. It is known that for LDPC codes          based on the k most reliable independent bits correspond-
+this may be a non-trivial task. For the considered codes,      ing to y. Upon reception of y, the reliability of a bit is
+however, much work has been done to overcome this              measured in terms of the magnitude of its a priori LLR.
+issue.                                                         More specifically, the a priori LLR for the ith codeword bit
+                                                               is defined as
+  In particular, the first and most significant terms of the
+weight distribution for the LDPC(128, 64) code have been       L(ci)  =  log            Pr(ci  =  0|yi)  =  2yi
+specified as                                                                            Pr(ci  =  1|yi)     σ2
+
+A(x)|64×128 = 16x14 + 528x16 + 5632x18 + 35968x20  (2)         where σ 2 is the variance of the Gaussian thermal noise.
+                                                               The reliability of bit ci is then defined as |L(ci)|.
+         + 123888x22 + 364944x24 + . . .
+                                                                 The MRB algorithm of order i may be summarized as
+where the presence of the term Aw xw means that there are      follows:
+Aw codewords with Hamming weight w. The multiplici-
+ties A14, A16 and A18 are exact [22]; this part of the weight    • Upon receiving the signal from the AWGN channel
+spectrum has been obtained through computer searches                 and demodulating it into the sequence y, find the k
+using a carefully tuned “error impulse” technique [23]. The          most reliable received bits and collect them in a
+other multiplicities are lower bounds on the actual values           length-k vector v .
+and have been obtained by using the approach proposed
+in [24]. The overall estimate is anyway sufficiently stable      • Perform Gauss-Jordan elimination on the matrix G,
+and allows to draw a reliable union bound, as will be done           with respect to the positions of the k most reliable
+in Section 4.                                                        bits, to obtain a systematic generator matrix G
+                                                                     corresponding to such bits.1
+  The most accurate evaluation, at least till now, of the
+weight distribution of the LDPC(512, 256) code has been          • Encode v to obtain a candidate codeword c = v G .
+reported in [22], where the estimated first terms of the         • Consider all (or an appropriate subset of) test error
+spectrum have been specified as
+                                                                     patterns (TEPs). By definition, a TEP, noted by e, is a
+                                                                     binary vector of length k and Hamming weight w ≤ i.
+                                                                 • For each TEP e:
+Baldi et al. EURASIP Journal on Wireless Communications and Networking (2016) 2016:272  Page 5 of 15
+
+Calculate v˜ = v + e.                                          computing the corresponding codeword requires to sum
+Encode v˜ to obtain a codeword c˜ = v˜ G .                     a small number of rows of G , thus reducing the com-
+If the Euclidean distance between x˜ = 1 − 2 c˜                putational burden. The procedure can be, obviously,
+                                                               iterated.
+and y is smaller than the one between
+x = 1 − 2 c and y, then update the candidate                   3.2 Hybrid decoder
+codeword as c ← c˜.                                            The complexity of the MRB(i) algorithm, with an order i
+                                                               that allows to achieve good performance, may result too
+At the end of the process, the algorithm delivers the          high for practical implementation. In this case, it is possi-
+                                                               ble to resort to a hybrid approach, which consists of apply-
+codeword c which minimizes the Euclidean distance              ing the MRB decoder downstream the iterative decoder,
+                                                               by invoking it only when the iterative decoder terminates
+from y, limited to the codeword set associated with the        reporting a failure, as it was not able to find any codeword
+                                                               [26]. The procedure is summarized by the flow-chart in
+considered TEP set.                                            Fig. 2. We note that two possible error events characterize
+                                                               an iterative LDPC decoding algorithm, namely, detected
+Hereafter, we denote by MRB(i) an instance of the algo-        error and undetected error. A detected error occurs when
+                                                               the decoder reaches the maximum number of iterations
+rithm with order i. Clearly, MRB(k) coincides with ML          without converging to any valid codeword. On the other
+                                                               hand, an undetected error occurs when the decoder con-
+decoding, which is intractable in practice. Actually, the      verges to a codeword different from the transmitted
+                                                               one. Note also that every failure of the MRB decoder
+maximum number of TEPs to be tested, for each received         yields an undetected error, since a codeword is always
+                                                               found by this decoder (i.e., the MRB decoder is com-
+sequence y, is equal to NTmEaPx =  i    k  ,  and  this  num-  plete, as opposed to LDPC iterative decoders which are
+                                   w=0  w                      incomplete).
+
+ber tends to become very large even for i k. So, in              As from Fig. 2, contrary to similar proposals appeared
+                                                               in previous literature, the MRB decoder is applied on
+practice, only very small values of i can be considered.       the received sequence y and not on the output of
+                                                               the IA decoder. This permits us to circumvent the
+There exist several possible strategies to reduce the          effects of the deteriorated soft values after a failure of
+                                                               the IA.
+complexity of the MRB(i) decoder. Among them, our
+
+simulations confirm the effectiveness of the following
+
+sub-optimal strategies to stop the TEP analysis before it
+reaches NTmEaPx:
+
+1. The number of patterns to be tested is reduced by
+   properly choosing a reliability threshold A such that,
+   if the distance between the current candidate
+   codeword and y is lower than A, then the decoding
+   algorithm outputs the candidate codeword without
+   testing the remaining TEPs.
+
+2. The TEPs are commonly generated in ascending
+   weight order. However, it is possible to precompute a
+   list of most likely TEPs [25], that is, a list containing
+   the TEPs ordered according to the probability to
+   yield codewords at small distances from y, regardless
+   of their weight w ≤ i. The threshold criterion at the
+   previous point can then be applied to the ordered list.
+
+  One or both approaches allow to test an average number       Fig. 2 Flow-chart for the hybrid algorithm (Y means “yes” and N
+of patterns, denoted by NTEP in the following, signifi-        means “no”)
+cantly smaller than NTmEaPx. As we will see in Section 3.3,
+this may have a significant impact on the decoding
+complexity.
+
+  There are also other tricks that may be used to reduce
+the MRB decoder implementation complexity. A very
+effective one is based on the observation that a large
+number of TEPs have overlapping supports, where the
+support of a TEP is defined as the set of its nonzero
+coordinates. Due to the code linearity, we can compute
+the XOR of two TEPs and encode it through G . The
+resulting vector can then be added to the test code-
+word corresponding to the first TEP, in order to obtain
+the codeword corresponding to the second TEP. Since,
+for the small values of the order i we consider, the
+XOR of the two TEPs has a small Hamming weight,
+Baldi et al. EURASIP Journal on Wireless Communications and Networking (2016) 2016:272                Page 6 of 15
+
+3.3 Decoding complexity                                        of the hybrid decoder in Fig. 2, it should be noted that the
+As mentioned in the previous sections, besides the error       rate of calls to the MRB decoder equals the detected error
+rate, another fundamental parameter for measuring the          rate of the IA. In fact, when an undetected error occurs for
+efficiency of a decoding algorithm is complexity. In case of   the IA, decoding terminates unsuccessfully without any
+the MRB algorithm, it is even the factor conditioning the      call to MRB. So, in principle, α is different from the CER,
+applicability of the method.                                   as the latter captures both detected and undetected errors.
+                                                               However, since the undetected error rate of an IA is usu-
+  A possible definition of complexity is in terms of the       ally orders of magnitude smaller than the detected one
+average number of binary operations required for decod-        (unless the minimum distance of the code is very poor—
+ing a single codeword. More practical issues, like chip        this is not the case for the codes considered in this paper),
+area requirements, power consumption, number of look-          we can assume α ≈ CER, this way making a negligible
+up tables, number of flip-flops, and memory occupation,        error.
+should be considered as well. These factors, however,
+are strongly dependent on the hardware architecture and          The expression of CIA in (5) depends on the adopted IA
+design choices, while we aim at performing a more gen-         and can easily be obtained from the algorithm specifica-
+eral complexity assessment, for which the number of            tion (details are omitted for saving space). For SPA, MS,
+operations turns out to be a suitable metric.                  and NMS, we have
+
+  The average number of binary operations required by          CSPA = Iaven q (8dv + 12Rc − 11) + dv     (6)
+the MRB algorithm can be expressed by the following
+formula                                                        CMS = Iaven q (3dv + 2Rc) + 2dv − 1 + Rc  (7)
+
+                     k  3                 n  −  k     nk       CNMS = CMS + Iavenq (2dv + 1)             (8)
+                     2                   q
+CMRB = q n log2 n +      + NTEP  2qi  +      2     +  2   .
+                                                               respectively, where Iave is the average number of iterations
+                                                      (4)      and dv is the average column weight of the parity-check
+                                                               matrix. The considered codes are both characterized by
+In (4), we have taken into account that some of the oper-      dv = 4. Finally, it must be noted that, starting from the
+ations are performed on real values; so, q is the number       previous expressions, the corresponding decoding com-
+of quantization bits used to represent a real number. As       plexities per information bit can be obtained by dividing
+we can see, the third term on the right-hand side (r.h.s.) is  the r.h.s. of (4)–(8) by k.
+proportional to the number of TEPs; therefore, using NTEP
+instead of NTmEaPx, as permitted by the application of the     4 Error rate versus complexity tradeoff evaluation
+speed-up procedures described in Section 3.1, can yield a      In this section, the CER/complexity tradeoff offered by
+significant advantage.                                         each of the decoding algorithms considered in Section 3
+                                                               is assessed, when used to decode the two LDPC codes
+  Equation (4) results from the evaluation of the computa-     described in Section 2. As previously stated, the modu-
+tional effort required by the steps described in Section 3.1.  lation format is BPSK. Moreover, a maximum number of
+In detail, the basic MRB decoding algorithm needs              iterations Imax = 100 has been used for each iterative
+                                                               algorithm. This value has been determined, from sim-
+• To order n real values.                                      ulations, for the considered codes, as capable to obtain
+• To perform Gauss-Jordan elimination on the k × n             the best possible performance from the adopted IAs.
+                                                               This means that no significant extra gain is achievable
+   original generator matrix G to obtain the generator         by using a value of Imax larger than 100. An explicit
+                                                               example will be presented in Section 4.2. On the other
+   matrix G in systematic form, in which the                   hand, by using (6), (7), and (8), but with Imax in place of
+                                                               Iave, we see that the complexity in the worst case (that
+   information bits coincide with v .                          is, when the decoder reaches the maximum number of
+• To perform the vector-matrix multiplication v G .            iterations) grows linearly with Imax. As we will show in
+• To generate, on average, NTEP TEPs and perform the           Section 5, the worst case complexity determines the worst
+                                                               case latency, the latter quantity being another design
+   relevant calculations.                                      parameter that must be properly limited. As another argu-
+                                                               ment to justify the limited gain induced by an increase
+  Next, the average complexity of the hybrid approach          in the maximum number of iterations, we can observe
+results in                                                     that in the region of medium/low error rates, Iave is
+                                                               usually much lower than Imax, thus confirming that the
+CHybrid = CIA + α CMRB                                (5)      maximum number of iterations is rarely reached (but it
+
+where CIA is the complexity of the IA preceding the
+(possible) MRB decoding attempt, while α represents the
+fraction of decoding instances in which MRB is invoked,
+i.e., the rate of the calls to MRB. This is because, in the
+hybrid approach, the MRB algorithm is invoked only when
+the IA fails. To be more precise, looking at the flow-chart
+Baldi et al. EURASIP Journal on Wireless Communications and Networking (2016) 2016:272  Page 7 of 15
+
+determines the maximum latency in the sense specified           While the linear quantization law is obvious, some expla-
+above).                                                         nations and comments about the logarithmic one are
+                                                                reported in the Appendix. Further details can be found in
+4.1 LDPC (128, 64) code                                         [27]. Due to the large number of possible combinations
+The CER curves for the LDPC(128, 64) code are shown             of IA, quantization law, and number of quantization bits,
+in Fig. 3 in the ideal case in which all involved soft reli-    we do not report the simulation curves for all considered
+ability values are unquantized, i.e., are represented with      decoding algorithms.
+a very high precision (e.g., 32-bit floating point for each
+reliability value). The best performance is exhibited by the      In Fig. 5, the impact of quantization is shown for q ∈
+MRB algorithm with order i = 4, either employed alone           {4, 5, 6} when using the hybrid algorithm, based on the
+or in hybrid form. For the latter, we observe that perfor-      SPA + MRB combination. The corresponding curves for
+mance is practically independent of the adopted IA; in          the NMS algorithm are reported in Fig. 6. Looking at the
+fact, the CER curves by using SPA + MRB(4) or NMS +             figures, it is possible to conclude that q = 6 is suffi-
+MRB(4) are superposed in the region of interest. The use        cient to reach practically the same CER of the ideal (i.e.,
+of MRB allows to achieve a gain in the order of 1.6 dB          unquantized) case. If q < 6, the NMS algorithm exhibits
+at CER = 10−5, over the IAs. Moreover, the gap to the           a slightly lower sensitivity to quantization than the hybrid
+union bound is very limited, in the order of 0.5 dB. The        algorithm. This reflects into a smaller performance degra-
+union bound has been plotted making use of (1) and (2)          dation: looking at Fig. 6 only the linear law with q = 4
+(i.e., including the terms up to weight 24).                    shows a significant loss while, for example, assuming q =
+                                                                5 with the linear law or q = 4 with the logarithmic law
+  To confirm the goodness of the hybrid algorithm, we           does not cause any loss. In Fig. 5, in contrast, the same
+have realized a further experiment, by simulating the per-      choices yield a limited, yet visible, loss (in the order of
+formance of a mixed (purely theoretical and impractical)        0.15 dB). We can conclude that adopting the logarithmic
+decoder that feeds the received sequence to the inputs of       law instead of the linear one allows, for hybrid decoding,
+both decoders but keeps only the output of the success-         to achieve the same CER but saving one quantization bit.
+ful decoder. We have verified that the CER performance
+of this “ideal” decoder is practically coincident with that       As mentioned previously, another fundamental issue to
+of the “real” hybrid decoder over the whole range of error      be addressed is complexity. Figure 7 shows the average
+rate values of interest.                                        number of operations required by the various decoding
+                                                                algorithms by assuming q = 6. These curves have been
+  To analyze the impact of quantization on the perfor-          obtained by using the expressions reported in Section 3.3.
+mance curves shown in Fig. 3, two quantization rules have       For better evidence, the figure illustrates the dependence
+been adopted, namely, a linear rule and a logarithmic rule.     on both the signal-to-noise ratio Eb/N0 and the CER.
+The input/output characteristics of these two quantizers        As expected, the MS algorithm exhibits the lowest com-
+are shown, with an example, in Fig. 4a, b, respectively.        plexity, followed by the NMS algorithm and the SPA. On
+                                                                the opposite, the MRB algorithm is characterized by the
+     100                                                        highest complexity.
+
+   10-1                                                           The hybrid algorithm, which invokes MRB only upon
+                                                                a detected IA failure, has a complexity comparable with
+10-2                                                            that of the plain MRB algorithm in the low Eb/N0 regime
+                                                                (or, equivalently, in the high CER regime). By increas-
+CER10-3                                                         ing Eb/N0 (or, equivalently, by decreasing the CER), its
+                                                                complexity is gradually reduced, until it becomes com-
+   10-4      SPA                                                parable with that of the IA alone, in the high Eb/N0
+             MS                                                 regime. At CER = 10−5, the average number of oper-
+                                                                ations required by the hybrid algorithm is still about
+             NMS                                                one order of magnitude larger than that of the corre-
+                                                                sponding IA alone. Such a higher complexity, however,
+             MRB(4)                                             is compensated by the extra-gain ensured by the hybrid
+                                                                approach.
+10-5         Hybrid [SPA+MRB(4)]
+                                                                4.2 LDPC (512, 256) code
+             Hybrid [NMS+MRB(4)]                                The CER curves for the LDPC(512, 256) code, for unquan-
+                                                                tized soft reliability values, are reported in Fig. 8. Coher-
+             Union Bound                                        ently with the rest of the paper, for the IA decoding
+                                                                algorithms Imax = 100 has been set. This is because
+   10-6
+
+          0       1       2       3     4  5                 6
+
+                             E /N [dB]
+                               b0
+
+Fig. 3 Performance comparison among the considered decoding
+algorithms for the LDPC(128, 64) code: unquantized case
+Baldi et al. EURASIP Journal on Wireless Communications and Networking (2016) 2016:272                                                Page 8 of 15
+
+                               (a)                                                                                   (b)
+
+Fig. 4 Examples of a linear and b logarithmic quantization laws; q = 4
+
+such a value gives the best trade-off between perfor-                   manage for k = 256 and n = 512. This limited MRB
+                                                                        order has a negative impact on the error rate performance,
+mance and complexity. Actually, Fig. 9 shows the impact                 which turns out to be unsatisfactory. On the contrary,
+of this parameter for some values of Imax ∈ [100, 500],                 when the MRB algorithm is employed in the framework
+by assuming the SPA for decoding. From the figure, we                   of the hybrid decoder, it is possible to increase its order
+                                                                        up to i = 4 with beneficial effects in terms of CER. Con-
+see that a very limited addional gain (less than 0.1 dB at              sequently, the performance of the hybrid decoder (here
+CER = 10−5) is achieved by moving from Imax = 100 to                    implemented with the SPA) reveals to be the best one,
+Imax = 200. No significant further gain results instead                 although the gain over the SPA or the NMS algorithms
+from the adoption of Imax > 200. On the other hand,                     used alone is much less remarkable than for the short
+as mentioned above, doubling the maximum number of                      code—being now in the order of 0.15 dB.
+iterations the latency in the worst case is doubled as well
+                                                                          Similarly to Figs. 5 and 6, in Figs. 10 and 11, the CER
+and, taking into account typical design constraints (see                curves for the LDPC(512, 256) code are shown for a finite
+Section 5 for details), the disadvantage is more significant            number of quantization bits. Specifically, Fig. 10 is rel-
+than the advantage.                                                     evant to the hybrid algorithm and Fig. 11 to the NMS
+                                                                        algorithm, respectively. In both figures, results are shown
+  As regards the MRB algorithm, the simulations have
+been performed with an order i = 3, when the algorithm
+is used alone, as a larger order becomes too complex to
+
+100                                                                                    100
+
+10-1                                                                    10-1
+
+10-2                                                                    10-2
+
+10-3CER                                                                              10-3
+                                                                                  CER
+
+10-4     Unquantized                                                                 10-4      Unquantized
+
+         Log-Quantized 6 Bits                                                                  Log-Quantized 6 Bits
+
+         Log-Quantized 5 Bits                                                                  Log-Quantized 5 Bits
+
+10-5     Log-Quantized 4 Bits                                           10-5                   Log-Quantized 4 Bits
+
+         Lin-Quantized 6 Bits                                                                  Lin-Quantized 6 Bits
+
+         Lin-Quantized 5 Bits                                                                  Lin-Quantized 5 Bits
+
+         Lin-Quantized 4 Bits                                                                  Lin-Quantized 4 Bits
+
+10-6                                                                                 10-6
+
+      0  1                     2          3                     4                           0  1            2             3     4  5  6
+
+                               E /N [dB]                                                                             E /N [dB]
+                                 b0                                                                                    b0
+
+Fig. 5 Impact of quantization on the performance of the hybrid          Fig. 6 Impact of quantization on the performance of the NMS
+algorithm (SPA + MRB(4)) for the LDPC(128, 64) code                     algorithm for the LDPC(128, 64) code
+Baldi et al. EURASIP Journal on Wireless Communications and Networking (2016) 2016:272                                               Page 9 of 15
+
+            109                                                                         100
+
+            108                                                 SPA
+
+                                                                MS
+
+            107                                                 NMS                     10-1
+                                                                MRB(4)
+
+            106                                                 Hybrid [SPA+MRB(4)]
+
+                                                                Hybrid [NMS+MRB(4)]     10-2
+
+            105
+
+            104
+
+Complexity  103                                                                         10-3     Imax=100
+
+                 0        1           2     3                4           5           6
+
+                                         E /N [dB]                                      10-4     Imax=200
+                                            b0
+
+            109                                                                                  Imax=300
+
+            108                                                                                  Imax=400
+                                                                                                 Imax=500
+            107                                                                         10-5
+
+            106                                                                         10-6
+                                                                                            0.0 0.5 1.0 1.5 2.0 2.5 3.0 3.5 4.0
+            105
+
+            104                                                                                                       E /N [dB]
+                                                                                                                                              b0
+            103     10-1                 10-3CER 10-4  10-5                 10-7  10-8
+            100                 10-2                            10-6                    Fig. 9 CER for the LDPC(512, 256) code, with SPA decoding in the
+                                                                                        unquantized case, by assuming different values of the maximum
+Fig. 7 Average number of binary operations per decoding attempt                         number of iterations Imax
+for the LDPC(128, 64) code in the case q = 6
+
+for the two considered quantization laws with q ∈ {4, 5, 6}.                            also in this case, but it is relatively less evident. In par-
+The conclusions we can draw from this analysis are simi-                                ticular, at CER = 10−5, the hybrid algorithm and the SPA
+lar to those valid for the LDPC(128, 64) code. In this case,                            need almost the same average number of binary opera-
+however, the loss resulting from the adoption of the lin-                               tions. At low Eb/N0 (or, equivalently, high CER), the MRB
+ear law with q = 4 is more pronounced (in the order of                                  algorithm used alone is less complex than the hybrid algo-
+0.8 dB). Hence, using q = 4 is not advisable in this case,                              rithm. This is because, for the LDPC(512, 256) code, the
+while q ≥ 5 is enough to ensure a negligible loss. We also                              plain MRB decoder uses order 3 while the hybrid decoder,
+note that the NMS algorithm exhibits a sensitivity on the                               for which the MRB algorithm is invoked more intensively
+number of quantization bits that is slightly more evident                               when the channel quality is poor, uses order 4.
+than for the LDPC(128, 64) code.
+                                                                                        5 Impact of limited memory
+  The complexity curves for the LDPC(512, 256) code,                                    The results presented in Section 4 have been obtained
+by assuming q = 6, are illustrated in Fig. 12. The gap                                  under the assumption that no constraints are put on the
+between the hybrid algorithm and the IAs obviously exist
+
+            100                                                                         100
+
+10-1                                                                                    10-1
+
+10-2                                                                                    10-2
+
+10-3CER                                                                                 10-3
+                                                                                  CER
+
+10-4                                                                                    10-4     Unquantized
+                                                                                                 Log-Quantized 6 Bits
+
+                    SPA                                                                          Log-Quantized 5 Bits
+
+10-5                MS                                                                           Log-Quantized 4 Bits
+
+                    NMS                                                                 10-5     Lin-Quantized 6 Bits
+
+                    MRB(3)                                                                       Lin-Quantized 5 Bits
+
+                    Hybrid [SPA+MRB(4)]                                                          Lin-Quantized 4 Bits
+
+10-6                                                                                    10-6
+
+                 0           1           2             3              4              5        0  1                     2          3                       4
+
+                                         E /N [dB]                                                                     E /N [dB]
+                                           b0                                                                            b0
+
+Fig. 8 Performance comparison among the considered decoding                             Fig. 10 Impact of quantization on the performance of the hybrid
+algorithms for the LDPC(512, 256) code: unquantized case                                algorithm (SPA + MRB(4)) for the LDPC(512, 256) code
+Baldi et al. EURASIP Journal on Wireless Communications and Networking (2016) 2016:272                                          Page 10 of 15
+
+     100                                                                             of paramount importance to investigate the performance
+                                                                                     degradation resulting from:
+     10-1
+                                                                                       • the adoption of a non-ordered list (that occurs when
+     10-2                                                                                  the TEP list is generated on-the-fly, rather than
+                                                                                           storing it in a memory);
+     10-3
+                                                                                       • the adoption of an incomplete list (that occurs when
+CER  10-4                                                                                  only part of the list can be stored).
+
+     10-5     Unquantized                                                              In the following, we consider the hybrid decoding algo-
+              Log-Quantized 6 Bits                                                   rithm, as it is more suitable (than plain MRB) in view of
+                                                                                     practical implementation. For the sake of simplicity, the
+              Log-Quantized 5 Bits                                                   numerical analysis is focused on the LDPC(128, 64) code
+                                                                                     under the assumption of using an MRB decoder of order
+     10-6     Log-Quantized 4 Bits                                                   i = 4. Moreover, according to the sub-optimal mecha-
+                                                                                     nisms described in Section 3.1, we use a stopping thresh-
+              Lin-Quantized 6 Bits                                                   old A = 24.5. Such a value of A has been heuristically
+                                                                                     optimized for the considered code.
+              Lin-Quantized 5 Bits
+                                                                                       As first step of the analysis, we investigate the tradeoff
+                   Lin-Quantized 4 Bits                                              between performance and complexity with and without
+     10-7                                                                            the ordered TEP list. This is done in Fig. 13, by neglect-
+                                                                                     ing the impact of quantization, by considering the NMS +
+           0           1                       2          3              4           MRB(4) hybrid algorithm, and by assuming that all TEPs
+                                                                                     can potentially be tested. It is clear from the figure that
+                                         E /N [dB]                                   ordering has no impact on the performance if all the TEPs
+                                           b0                                        can be considered as possible candidates. This is because
+                                                                                     the order of the TEPs in the ordered TEP list turns out to
+Fig. 11 Impact of quantization on the performance of the NMS                         be not substantially different from the order in which they
+algorithm for the LDPC(512, 256) code                                                are generated on-the-fly. More precisely, generating the
+                                                                                     TEPs on-the-fly, they are typically organized in “ascend-
+O/B available memory. Actually, in the optimal imple-                                ing weight,” that is from the smallest weight to the highest
+mentation of the MRB algorithm, an ordered TEP list                                  weight. Ordering, instead, looks at the TEPs probability to
+is required. The size of this list can be very large, as it                          be chosen, organizing them from the highest probability
+depends on the maximum number of TEPs that for the
+LDPC(128, 64) code and i = 4, for example, results in
+NTmEaPx = 679, 121. Such a large number of TEPs requires
+the availability of more than 2.7 MB of memory (thanks to
+the sparse character of the TEPs, it is convenient to store
+only the positions of the set bits). This value may be signif-
+icantly larger than the memory available for decoding O/B
+of a spacecraft: looking at recent missions, a typical size
+of the O/B memory is in fact 0.5 MB. For this reason, it is
+
+1013                                                                                   100
+1012
+1011                                                                                   10-1
+1010
+109                                                                                    10-2
+108
+Complexity107                                                                          10-3
+106
+                                                                                  CER105
+                    1                    2 E /N [dB] 3          4                 5
+     0
+                                         b0                                            10-4
+1013
+1012                                                         SPA                       10-5
+1011                                                         MS
+1010                                                         NMS                                   With TEP list
+109                                                          MRB(3)
+108                                                          Hybrid [SPA+MRB(4)]
+107
+106                                                                                    10-6     Without TEP list
+105
+                                                                                       10-7
+    100
+                                                                                             0  1                 2          3  4
+
+              10-1        10-2           10-3  CER  10-4  10-5     10-6     10-7                                  E /N [dB]
+                                                                                                                    b0
+
+Fig. 12 Average number of binary operations per decoding attempt                     Fig. 13 CER performance of the hybrid NMS + MRB(4) algorithm for
+for the LDPC(512, 256) code in the case q = 6                                        the LDPC(128, 64) code with and without an ordered complete TEP list
+Baldi et al. EURASIP Journal on Wireless Communications and Networking (2016) 2016:272                                         Page 11 of 15
+
+to the lowest probability. The procedure for doing this is                 109                                              With TEP List
+reported in [25].                                                          108                                              Without TEP list
+                                                                           107
+  In practice, ordering can be seen as a perturbation          Complexity  106                1              2              3                 4
+of the ascending weight rule that can cause some TEPs                      105
+of weight j + z, with z integer greater than 0, but                        104                         E /N [dB]
+with a higher probability, to be processed before some                     103                            b0
+TEPs of weight j. An explicative example is reported
+below.                                                                         0
+
+  Example 1 In case of i = 4, the ordered TEP list is a                    109
+collection of vectors with length 4, whose nonzero elements
+represent the positions of the symbols 1 in each TEP. Let us               108
+suppose that a portion of the ordered TEP list is
+                                                                           107
+                                   ....
+                                                                           106
+                              10 0 0 0
+                                                                           105
+                             63 64 0 0
+                                                                           104
+                                9000
+                                                                           103          10-1     10-2                          10-6           10-7
+                             62 64 0 0                                     100                         10-3     10-4  10-5
+                                                                                                           CER
+                             62 63 0 0
+                                                               Fig. 14 Average number of binary operations per decoding attempt
+                             61 64 0 0                         for the LDPC(128, 64) code in the case q = 6 with and without
+                                                               ordered TEP list; the NMS + MRB(4) algorithm is used for decoding
+                             61 63 0 0
+                                                               each clock cycle a vector of q bits is simultaneously pro-
+                             60 64 0 0                         cessed. The first two terms in the resulting equation are
+                                                               due to the received word sorting and G computing; as
+                                8000                           such, they are performed only once per decoding attempt.
+                                                               We call these terms the “fixed cost.” The third term,
+                                   ....                        instead, depends on the number of TEPs and may be dif-
+                                                               ferent for each decoding operation. We call this term the
+  We see that patterns of weight 2, that is, with two nonzero  “variable cost.” As variable cost operations have to be per-
+coordinates, are intermingled with those of weight 1. For      formed for each TEP, they can be parallelized by assuming
+example, the pattern (63 64 0 0) is considered before the      the availability of a number, noted by NTeu, of different
+pattern (9 0 0 0). Similarly, the weight-1 pattern (8 0 0 0)   “TEP evaluation units.” This way, the average number of
+is considered after some weight-2 patterns.                    vector operations to be performed at each unit results in
+
+  The result shown in Fig. 13 is not surprising since,         OPeu = n log2 n +                 k     3     NTEP     2i + n − k + nk
+when the complete TEP list is considered, the perturba-                                                      NTeu
+tion induced by ordering does not affect the error rate                                          2      +                      2              2
+performance (the assumption is that, potentially, all TEPs
+can be tested both with and without ordering). However,                                                                                          (9)
+it may have an impact on the complexity. The latter state-
+ment is confirmed in Fig. 14, where the curve without TEP      where · represents the ceiling function. Denoting by
+list ordering exhibits complexity values higher than those     fclock the clock frequency, the average latency can be
+in the presence of ordering.                                   estimated as
+
+  Related with the complexity issue, it is also interesting    L = OPeu .                                                                     (10)
+to have a preliminary evaluation of the latency due to the                        fclock
+MRB decoder. Latency is a measure of the time required
+for decoding and its value is normally subjected to restric-     Examples of average latency estimates are reported in
+tions, which are expected to be particularly severe when       Table 1, assuming fclock = 100 MHz, for three differ-
+the TC link is used in emergency conditions.                   ent values of Eb/N0. From the last column we see that at
+                                                               Eb/N0 = 3.5 dB (which, according to Fig. 5, is sufficient
+  To have a first estimate of the average latency, let us      to ensure CER ≈ 10−5 for the case of q = 6), a clock fre-
+consider (4), which provides the average complexity for
+the MRB algorithm, and remove from it the parameter q          quency equal to 100 MHz and a number of TEP evaluation
+(number of quantization bits). This is because we realis-
+tically suppose that, in hardware implementation, during       units equal to 100 yield an average latency in the order of
+
+                                                               3 ms. Note that both these values of fclock and NTeu are
+Baldi et al. EURASIP Journal on Wireless Communications and Networking (2016) 2016:272                                                                                                                     Page 12 of 15
+
+Table 1 Average latency (in seconds) due to the MRB decoding                                                                                               100
+process, by assuming fclock = 100 MHz
+
+NTeu                                                                     Eb/N0 = 1 dB     Eb/N0 = 2 dB  Eb/N0 = 3.5 dB
+
+1                                                                        4.05             2.21          2.45 · 10−1                                        10-1
+
+10                                                                       4.05 · 10−1      2.21 · 10−1   2.48 · 10−2                                        10-2
+
+100                                                                      4.09 · 10−2      2.24 · 10−2   2.77 · 10−3
+
+1000                                                                     4.41 · 10−3      2.54 · 10−3   5.60 · 10−4                                                       All (679121)
+
+10,000                                                          CER      7.53 · 10−4      5.81 · 10−4   3.35 · 10−4                                        10-3           10K
+                                                                                                                                                  CER                     17.5K
+
+                                                                                                                                                                          25K
+
+                                                                                                                                                           10-4           50K
+
+                                                                                                                                                                          75K
+
+                                                                                                                                                                          100K
+
+feasible in a field-programmable gate array (FPGA) imple-                                                                                                                 150K
+mentation. In absence of parallelization, i.e., NTeu = 1, the
+average latency is about two orders of magnitude larger.                                                                                                   10-5           200K
+                                                                                                                                                                          300K
+  As previously pointed out, another case that deserves
+investigation is the one where we have a reduced number                                                                                                                   400K
+of TEPs. Even in this case, it is interesting to distinguish
+the case when we use an ordered list stored in memory                                                                                                      10-6
+from the case when the TEPs are progressively generated,
+starting from the ones with the lowest weight. Figure 15                                                                                                         0              1       2  3            4              5
+shows the CER, under hybrid decoding (NMS + MRB(4)),
+when exploiting the ordering; Fig. 16 illustrates the corre-                                                                                                                               E /N [dB]
+sponding results in the absence of ordering. The number                                                                                                                                      b0
+of TEPs is assumed to be variable between 10,000 and
+NTmEaPx = 679, 121. As expected, while the performance is                                                                                               Fig. 16 CER performance of the LDPC(128, 64) code with hybrid
+independent of ordering when the complete list is con-                                                                                                  decoding for different numbers of non-ordered TEPs (K = 103)
+sidered (as shown in Fig. 13) this is no longer true for a
+reduced list size. More precisely, when an ordered TEP list                                                                                            The maximum number of TEPs can be used, in turn,
+is adopted, considering 200,000 TEPs is enough to ensure                                                                                             to estimate the maximum latency (i.e., the latency in the
+that practically no loss occurs. On the contrary, if the list is                                                                                     worst case), according to the method described before. In
+non-ordered, the same result is achieved by using 400,000                                                                                            this case, there is no dependence on the Eb/N0 value, as
+TEPs or more, whereas if the maximum number of TEPs is                                                                                               the worst-case latency occurs when all TEPs are needed
+set equal to 200,000, there is a loss in the order of 0.25 dB.                                                                                       for a single decoding operation. Table 2 reports the max-
+                                                                                                                                                     imum latency, considering fclock = 100 MHz, for both
+                                                                100                                                                                  the cases with and without ordering, by assuming 200,000
+                                                                10-1                                                                                 TEPs and 400,000 TEPs respectively.
+                                                                10-2
+                                                                                                                                                       For NTeu = 100, when the list is ordered the latency is
+                                                                                                                                                     at most about 84 ms while, when the list is non-ordered, it
+                                                                                                                                                     is at most about 170 ms. By tolerating a maximum latency
+                                                                                                                                                     of this size, it is possible to generate the TEPs on-the-fly
+                                                                                                                                                     with a minimum impact on the performance.
+
+                                                                                                                                                       In Table 2, the worst-case latency has been determined
+                                                                                                                                                     by considering the MRB algorithm only. In the hybrid
+                                                                                                                                                     approach, the latency due to the IA must be taken into
+                                                                                                                                                     account as well. For fixing the ideas, in the following we
+                                                                                                                                                     suppose to apply the SPA but, obviously, the analysis can
+                                                                                                                                                     be repeated for any other IA.
+
+                                                                10-3     All (679121)
+
+                                                                         10K
+
+                                                                         17.5K                                                                       Table 2 Worst-case latency (in seconds) due to the MRB
+                                                                                                                                                     decoding process, with and without ordered list, by assuming
+                                                                10-4     25K                                                                         fclock = 100 MHz and a reduced number of TEPs
+
+                                                                         50K
+
+                                                                         75K
+
+                                                                         100K
+
+                                                                10-5     150K                                                                        NTeu           Ordered list - 200,000 TEPs Non-ordered list - 400,000 TEPs
+                                                                         200K
+
+                                                                         400K                                                                        1              8.40                   16.79
+
+                                                                10-6                                                                                 10             8.40 · 10−1            1.68
+
+                                                                      0        1       2        3       4            5
+
+                                                                                       E /N [dB]                                                     100            8.43 · 10−2            1.68 · 10−1
+                                                                                         b0
+
+   Fig. 15 CER performance of the LDPC(128, 64) code with hybrid                                                                                     1000           8.73 · 10−3            1.71 · 10−2
+   decoding for different sizes of the ordered TEP list (K = 103)
+                                                                                                                                                     10,000 1.17 · 10−3                    2.01 · 10−3
+Baldi et al. EURASIP Journal on Wireless Communications and Networking (2016) 2016:272                           Page 13 of 15
+
+  Combining (9) with (6), where a generic number of                           The degrees of freedom offered by the choice of I and
+iterations I (i.e., not necessarily the average value) is con-              NTEP, for a given value of NTeu, can be used to optimize
+sidered and the number q of quantization bits is omitted,                   the error rate performance. In other words, we can search
+for the reasons explained above, the total latency results in               for the combination which allows obtaining the minimum
+                                                                            value of Eb/N0 for a given target CER. An example is
+LTOT    =  LIA +LMRB      =     1     {[In  (9dv  +  12Rc  −    11)]        reported next.
+                              fclock
+                                                                              Example 3 As in Example 2, let us assume Lmax = 10−2
+           +      n log2 n +  k3                                      (11)  seconds. Moreover, we fix CER = 10−5. Table 3 reports
+                              2                                             the minimum values of Eb/N0 we have found, through a
+                                                                            numerical search, for the case of NTeu = 1 and NTeu =
+           + NTEP            2i + n − k + nk                                100, respectively, together with the corresponding optimal
+                NTeu                  2           2                         choice of I and NTEP. The choice of using SPA alone is also
+                                                                            reported for the sake of reference.
+where LIA represents the contribution due to the IA and
+                                                                              From the table, we see that the usage of the hybrid algo-
+LMRB the contribution due to the MRB algorithm.                             rithm is advantageous with respect to the SPA used alone
+  Let us denote the worst-case latency by LTwOT and let us                  for both the considered cases, with a gain in the order of
+                                                                            0.35 dB when NTeu = 1 and more than 1 dB when NTeu =
+suppose that, because of mission constraints, it is forced                  100.
+
+to not exceed a maximum value Lmax, i.e.,                                   6 Conclusions
+                                                                            We have investigated the advantages resulting from the
+LTwOT ≤ Lmax.                                                         (12)  application of the MRB algorithm, used alone or in hybrid
+                                                                            form, to the new short LDPC codes for TC space links.
+  When SPA is used alone, (12) is satisfied by assuming                     We have discussed the impact of quantization, showing
+the maximum admissible number of iterations, even larger                    that rather small numbers of quantization bits are neces-
+than Imax = 100, although in Section 4.2 we have shown                      sary to obtain performance very close to that of the ideal,
+this may yield a negligible improvement. For the hybrid                     unquantized case.
+algorithm, instead, in order to satisfy (12), besides I we
+can choose the value of NTEP as well as the parallelization                   Special attention has been devoted to the evaluation of
+parameter NTeu. A numerical example is reported next.                       the complexity, expressed as the average number of binary
+                                                                            operations required per each decoded codeword. Closed
+  Example 2 Let us assume Lmax = 10−2 seconds and                           form expressions have been adopted for such a purpose.
+NTeu = 100. Figure 17 shows the trade-off between I and                     Our investigation has revealed that, as opposed to the
+NTEP which allows to have LwTOT ≈ Lmax. The maximum                         common belief, the hybrid algorithm is a realistic and
+admissible number of iterations, for the assigned value of                  appealing option, and that it allows achieving, for both
+                                                                            codes, the best known performance with an acceptable
+Lmax, is I = 244 which corresponds to apply only the IA,                    complexity.
+since no margin exists for invoking MRB. According to (11),
+                                                                              An optimal implementation of the MRB algorithm
+Fig. 17 can be used also for different NTeu’s by properly                   would require the availability of an ordered TEP list and
+scaling the values of NTEP.                                                 a rather large memory, which may be unavailable O/B.
+                                                                            Therefore, we have also investigated the implications of
+N       25000                                                               using a non-ordered list and/or an incomplete list. We
+   TEP  20000                                                               have shown that an “on-the-fly” implementation is even
+        15000                                                               possible with limited loss and estimated the required
+        10000                                                               decoding latency.
+
+        5000                                                                Table 3 Values of Eb/N0 required to achieve CER = 10−5 for
+                                                                            different decoder configurations
+
+           0                                                                            NTeu = 1  NTeu = 100  SPA used alone
+
+               0      50      100              150         200        250   Eb/N0 [dB]  4.75      4.09        5.10
+
+                                            I
+
+Fig. 17 Combinations I − NTEP which allows to have LwTOT ≈ 10−2             I           170       20          244
+seconds
+                                                                            NTEP        70        21,125      -
+Baldi et al. EURASIP Journal on Wireless Communications and Networking (2016) 2016:272  Page 14 of 15
+
+  Although the proposed analysis refers to a very spe-                       Author details
+cific application, that is, space TC links, many findings                    1Dipartimento di Ingegneria dell’Informazione, Università Politecnica delle
+are usual in a wider sense, e.g., for the application of                     Marche, Ancona, Italy. 2Consorzio Nazionale Interuniversitario per le
+short codes to machine-to-machine communication or for                       Telecomunicazioni (CNIT), Parma, Italy. 3Department of Electrical, Electronic,
+ultra-reliable communication with short codes.                               and Information Engineering “G. Marconi,” University of Bologna, Cesena, Italy.
+
+Endnote                                                                      Received: 16 April 2016 Accepted: 9 November 2016
+  1 Since G is a full rank matrix by definition, its k rows
+                                                                             References
+being linearly independent vectors of length n > k, the                      1. JL Massey, in Advanced Methods for Satellite and Deep Space
+Gauss-Jordan elimination always succeeds. However, in
+case the k columns of G corresponding to the initial k                            Communications (Ed. J. Hagenauer), Lecture Notes in Control and
+most reliable positions are not linearly independent, it                          Information Science, ed. by J Hagenauer. Deep-space communications
+may be necessary to replace some of the most reliable bits                        and coding: a marriage made in heaven, vol. 182 (Springer, Heidelberg
+in v with some other bit outside the initial set.                                 and New York, 1992), pp. 1–17
+                                                                             2. GP Calzolari, M Chiani, F Chiaraluce, R Garello, E Paolini, Channel coding
+Appendix                                                                          for future space missions: new requirements and trends. Proc. IEEE.
+Given a real number x, its logarithmic quantization is                            95(11), 2157–2170 (2007)
+performed by using the following rule                                        3. T de Cola, E Paolini, G Liva, GP Calzolari, Reliability options for data
+                                                                                  communications in the future deep-space missions. Proc. IEEE. 99(11),
+            exp  Qu(x , q, T )  −1                   (13)                         2056–2074 (2011)
+xnuq = xs              F                                                     4. F Chiaraluce, in Proc. 22nd Conference on Software, Telecommunications
+                                                                                  and Computer Networks (SoftCOM 2014). Error correcting codes in
+where F is the so-called log-quantization factor. In our                          telecommand and telemetry for European Space Agency missions: an
+simulations, we have set F = 0.67. Moreover                                       overview and new perspectives, (Split, 2014)
+                                                                             5. TK Moon, Error Correction Coding: Mathematical Methods and Algorithms.
+xs = sign(x)                                                                      (Wiley, Hoboken, 2005)
+                                                                             6. CCSDS, TC synchronization and channel coding. Blue Book. CCSDS
+x = ln(1 + Fx)                                       (14)                         231.0-B-2 (2010)
+                                                                             7. ECSS, Space data links—telecommand protocols, synchronization and
+T = ⎧ln(1 + FT)                        if x ≤ −T                                  channel coding. ECSS-E-ST-50-04C (2008)
+                 ⎨ −T                                                        8. LR Bahl, J Cocke, F Jelinek, J Raviv, Optimal decoding of linear codes for
+                 x     1                                                          minimizing symbol error rate. IEEE Trans. Inf. Theory. IT-20(2), 284–287
+Qu(x, q, T) = ⎩  d  +  2        d  if  − T < x < −T                               (1974)
+                                                                             9. M Baldi, F Chiaraluce, R Garello, N Maturo, I Aguilar Sanchez, S Cioni,
+                    T                  if x ≥ T                                   Analysis and performance evaluation of new coding options for space
+                                                                                  telecommand links—Part I: AWGN channels. Int. J. Sat. Commun. Netw.
+being T the clipping threshold (i.e., the maximum value                           33(6), 509–525 (2015)
+admitted) and d the quantization step. Both T and d are                      10. J Hagenauer, E Offer, L Papke, Iterative decoding of binary block and
+related to the number of quantization bits, q. The main                           convolutional codes. IEEE Trans. Inf. Theory. 42(2), 429–445 (1996)
+advantage of the logarithmic rule, against the uniform one,                  11. M Fossorier, M Mihaljevic, H Imai, Reduced complexity iterative decoding
+is in the fact that the quantization levels are denser for                        of low-density parity check codes based on belief propagation. IEEE
+small input values. Since the LLR values close to 0 are                           Trans. Commun. 47(5), 673–680 (1999)
+responsible for maximum decoder uncertainty, it is evi-                      12. J Chen, MP Fossorier, Near optimum universal belief propagation based
+dent that reducing the quantization error on these values                         decoding of low-density parity check codes. IEEE Trans. Commun. 50(3),
+allows to reduce the decoding errors. Further details can                         406–414 (2002)
+be found in [27].                                                            13. M Fossorier, S Lin, Soft-decision decoding of linear block codes based on
+                                                                                  ordered statistics. IEEE Trans. Inf. Theory. 41(5), 1379–1396 (1995)
+Acknowledgements                                                             14. Y Wu, CN Hadjicostis, Soft-decision decoding using ordered recodings on
+The authors wish to thank Dr. Kenneth Andrews for helpful discussion on the       the most reliable basis. IEEE Trans. Inf. Theory. 53(2), 829–836 (2007)
+weight spectrum estimation. They also wish to thank Prof. Ioannis            15. M Baldi, F Chiaraluce, N Maturo, G Liva, E Paolini, A hybrid decoding
+Chatzigeorgiou for having suggested the test with the ideal decoder.              scheme for short non-binary LDPC codes. IEEE Commun. Lett. 18(12),
+This work was supported in part by the European Space Agency (ESA/ ESTEC)         2093–2096 (2014)
+under the contract 4000111690/14/NL/FE “Next Generation of Uplink Coding     16. CCSDS, Short block length LDPC codes for TC synchronization and
+Techniques – NEXCODE”. The final goal of the NEXCODE Project is the               channel coding. Orange Book CCSDS 231.1–O–1 (2015)
+hardware and software implementation of LDPC decoding schemes for TC.        17. M Baldi, M Bianchi, F Chiaraluce, R Garello, I Aguilar Sanchez, S Cioni, in
+                                                                                  Proc. IEEE 78th Vehicular Technology Conference (VTC Fall 2013). Advanced
+Competing interests                                                               channel coding for space mission telecommand links, (Las Vegas, 2013)
+The authors declare that they have no competing interests.                   18. M Baldi, N Maturo, G Ricciutelli, F Chiaraluce, in IEEE 21st IEEE Symposium
+                                                                                  on Computer and Communications (ISCC 2016). On the error detection
+                                                                                  capability of combined LDPC and CRC codes for space telecommand
+                                                                                  transmissions, (Messina, 2016), pp. 1105–1112
+                                                                             19. M Baldi, N Maturo, F Chiaraluce, E Paolini, in Proc. 6th International
+                                                                                  Conference on Information and Communication Systems (ICICS 2015). On
+                                                                                  the applicability of the most reliable basis algorithm for LDPC decoding in
+                                                                                  telecommand links, (Amman, 2015)
+                                                                             20. I Sason, S Shamai, Performance analysis of linear codes under
+                                                                                  maximum-likelihood decoding: a tutorial. Found. Trends Commun. Inf.
+                                                                                  Theory. 3(1–2), 1–225 (2006)
+Baldi et al. EURASIP Journal on Wireless Communications and Networking (2016) 2016:272  Page 15 of 15
+
+21. GC Clark, JB Cain, Error Correction Coding for Digital Communications.
+     (Plenum Press, New York, 1981)
+
+22. K Andrews, Weight enumerators for LDPC codes. CCSDS 2015 spring
+     meetings presentation, Pasadena (2015)
+
+23. D Declercq, M Fossorier, in Proc. IEEE International Symposium on
+     Information Theory (ISIT 2008). Improved impulse method to evaluate the
+     low weight profile of sparse binary linear codes, (Toronto, 2008),
+     pp. 1963–1967
+
+24. X-Y Hu, MPC Fossorier, E Eleftheriou, in Proc. 2004 IEEE International
+     Conference on Communications (ICC 2004). On the computation of the
+     minimum distance of low-density parity-check codes, vol. 2, (Paris, 2004),
+     pp. 767–771
+
+25. A Kabat, F Guilloud, R Pyndiah, in Proc. IEEE Global Telecommunications
+     Conference (GLOBECOM ’07). New approach to order statistics decoding of
+     long linear block codes, (Washington, 2007), pp. 1467–1471
+
+26. M Fossorier, Iterative reliability-based decoding of low-density parity
+     check codes. IEEE J. Select. Areas Commun. 19(5), 908–917 (2001)
+
+27. M Baldi, F Chiaraluce, G Cancellieri, Finite-precision analysis of demappers
+     and decoders for LDPC-coded M-QAM systems. IEEE Trans. Broadcast.
+     55(2), 239–250 (2009)
+
+Submit your manuscript to a
+journal and beneﬁt from:
+
+7 Convenient online submission
+7 Rigorous peer review
+7 Immediate publication on acceptance
+7 Open access: articles freely available online
+7 High visibility within the ﬁeld
+7 Retaining the copyright to your article
+
+  Submit your next manuscript at 7 springeropen.com
+

@@ -1,0 +1,46 @@
+{
+  "schema_version": "t083.demapper-replay.v1",
+  "authority": "T083/D062/V037",
+  "action_class": "CH4_HISTORICAL_DEMAPPER_REPLAY",
+  "mission_checkpoint": "CP024",
+  "control_epoch": 24,
+  "source": {
+    "manifest": "confirmation_manifest.json",
+    "raw": "confirmation_raw.json",
+    "manifest_sha256": "18c93796ff3e7e0ebf0bf05ee71c94bfd4027218b31a60d0d917d26581aa8a65",
+    "raw_sha256": "55c31e36b7d11e5d0b9e8225805596e0f0f7b127cde26874c7b0b217b0e23101"
+  },
+  "corrected_code_hashes": {
+    "common/_modulation.py": "bff9873d10e5b68f1262fddcc24788e23630792e82a23a308f8eb5c48f431a10",
+    "development.py": "ce51432728b745faf8b9845058dc355cf616fdcadf5652d6e050b92fb5ef1339",
+    "scaled_unitary.py": "868780505b55da7df979c75fe07f132bf52b8b8904c4ec88961fbbe38b052fd2"
+  },
+  "cells": [
+    {"cell_id": "snr14_np2", "snr_db": 14.0, "pilot_symbols_per_polarization": 2, "seed_base": 7000, "b1_eta": 0.01, "b2_tau": 1.0},
+    {"cell_id": "snr14_np4", "snr_db": 14.0, "pilot_symbols_per_polarization": 4, "seed_base": 7100, "b1_eta": 0.001, "b2_tau": 1.0},
+    {"cell_id": "snr18_np2", "snr_db": 18.0, "pilot_symbols_per_polarization": 2, "seed_base": 7200, "b1_eta": 0.001, "b2_tau": 1.0},
+    {"cell_id": "snr18_np4", "snr_db": 18.0, "pilot_symbols_per_polarization": 4, "seed_base": 7300, "b1_eta": 0.01, "b2_tau": 1.0}
+  ],
+  "population": {"windows_per_cell": 64, "split": "confirmation"},
+  "payload_symbols_per_polarization": 4096,
+  "arms": {
+    "B0": {"recipe": "plain unconstrained LS", "parameter": null},
+    "B1": {"recipe": "normalized ridge LS", "parameter_source": "frozen T069 tune winner per cell"},
+    "B2": {"recipe": "singular-value floor inverse", "parameter": 1.0},
+    "C4": {"recipe": "mean-singular scaled-unitary projection", "parameter": null},
+    "O1": {"recipe": "true channel inverse oracle", "parameter": null}
+  },
+  "bootstrap": {
+    "rng": "PCG64",
+    "seed": 2026083005,
+    "resamples": 5000,
+    "confidence": 0.95,
+    "stream_rule": "reset seed for each named paired comparison"
+  },
+  "gate": {
+    "difference": "window BER_C4 minus BER_B2",
+    "pooled_np2_ci_upper": "<0",
+    "each_np4_ci_lower": "<=0"
+  },
+  "forbidden": ["grid_override", "seed_override", "arm_override", "new_rng", "B3_PSC", "A2", "smoke", "production"]
+}

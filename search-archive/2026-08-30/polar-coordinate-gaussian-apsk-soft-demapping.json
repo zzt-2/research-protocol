@@ -1,0 +1,171 @@
+{
+  "query": "polar coordinate Gaussian APSK soft demapping",
+  "timestamp": "2026-08-30T02:33:11.243451+08:00",
+  "sources": [
+    "s2",
+    "openalex",
+    "serpapi",
+    "exa"
+  ],
+  "total": 7,
+  "results": [
+    {
+      "title": "Trends in Channel Coding for 6G",
+      "authors": [
+        "Sisi Miao",
+        "Claus Kestel",
+        "Lucas Johannsen",
+        "Marvin Geiselhart",
+        "Laurent Schmalen",
+        "Alexios Balatsoukas‐Stimming",
+        "Gianluigi Liva",
+        "Norbert Wehn",
+        "Stephan ten Brink"
+      ],
+      "venue": "Proceedings of the IEEE",
+      "year": 2024,
+      "doi": "10.1109/jproc.2024.3416050",
+      "arxiv_id": null,
+      "abstract": "Error correction coding (i.e., channel coding) is a key ingredient of any digital communications system. In mobile wireless communications, channel codes have evolved from simple convolutional codes in Global System for Mobile Communications (GSM) (2G), parallel concatenated (turbo) codes in Universal Mobile Telecommunications Service (UMTS) (3G), and long-term evolution (LTE) (4G), to carefully designed multirate/multilength low-density parity-check (LDPC) codes in 5G, combined with polar codes for short messages on the synchronization channel. Based on this rich history, and by accounting for the technological advances in very large-scale integration, this article will outline some recent trends in channel coding as they may be applied in 6G systems, ranging from novel approaches for short blocklengths such as automorphism ensemble decoding, via ideas of coding for multiple access, to concepts for unified coding schemes that may simplify encoding/decoding hardware at competitive error-correcting performance.",
+      "citation_count": 38,
+      "is_open_access": true,
+      "pdf_url": "https://pure.tue.nl/ws/files/354716241/Trends_in_Channel_Coding_for_6G.pdf",
+      "source_api": "openalex",
+      "relevance_score": 0.167,
+      "_score": 0.42350000000000004,
+      "id": "L001",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Analysis of Gaussian phase noise effects in DFT-s-OFDM systems for sub-THz transmissions",
+      "authors": [
+        "Yaya Bello",
+        "Jean‐Baptiste Doré",
+        "David Demmer"
+      ],
+      "venue": "EURASIP Journal on Wireless Communications and Networking",
+      "year": 2024,
+      "doi": "10.1186/s13638-024-02350-y",
+      "arxiv_id": null,
+      "abstract": "Abstract The future generations of communication technologies envision the transmission of signals across the millimeter wave and sub-THz spectrums. However, the characteristics of the propagation channel at such high frequencies differ from what is observed in the conventional low-frequency spectrum with for instance, the apparition of stronger phase noise (PN) induced by the Radio Frequency (RF) transceivers and more especially by the oscillators. That is why there is growing interest in evaluating and adapting the 5G new radio (5G-NR) physical layer to the presence of PN. This article is dedicated to the study of discrete Fourier transform-spread-Orthogonal Frequency Division Multiplexing (DFT-s-OFDM) under uncorrelated Gaussian PN (GPN) impairments. We show that the presence of GPN induces two distortions: (i) a frequency-dependent random rotation of data, namely the subcarrier phase error (SPE) and (ii) a frequency-dependent intercarrier interference (ICI) that are analytically expressed. Then, we investigate the design of the adapted and optimal detection criterion according to the baseband model we derived in this paper. We demonstrate that (i) the proposed polar detector outperforms the conventional Euclidean detector and (ii) contrary to legacy OFDM, DFT-s-OFDM is a promising solution when strong GPN is involved.",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "https://jwcn-eurasipjournals.springeropen.com/counter/pdf/10.1186/s13638-024-02350-y",
+      "source_api": "openalex",
+      "relevance_score": 0.333,
+      "_score": 0.3265,
+      "id": "L002",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Orbital Detection",
+      "authors": [
+        "Kuranage Roche Rayan Ranasinghe",
+        "Giuseppe Thadeu Freitas de Abreu"
+      ],
+      "venue": "arXiv (Cornell University)",
+      "year": 2026,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "We introduce orbital detection (OD), a framework for designing asymptotically optimal, low-complexity message passing (MP) receivers for digitally modulated multiple-input multiple-output (MIMO) systems, based on relaxing the discrete symbol prior into a mixed discrete-continuous density. The resulting orbital prior factors each symbol's distribution into a discrete radial component, supported on only the \\(L << M\\) amplitude rings of an arbitrary constellation \\(\\mathcal{M}\\) of cardinality \\(M = |\\mathcal{M}|\\), and a continuous, maximum-entropy phase density on each ring. This compresses the propagated posterior mean and variance losslessly into \\(3L\\) real scalars, and collapses the optimal \\(\\mathcal{O}(M)\\)-complexity denoiser into a closed-form hierarchy whose per-symbol cost falls to \\(\\mathcal{O}(L)\\) and ultimately \\(\\mathcal{O}(1)\\): the orbital Bessel denoiser (OBD), its Bessel-free variant the orbital Gaussian denoiser (OGD), and the orbital phase denoiser (OPD), proved irreducible on the ring manifold. A Jacobi-Anger ladder recovers the exact detector with geometrically vanishing error. Five information-theoretic results follow. First, the OBD, OGD, and OPD share an identical leading-order state evolution (SE) fixed point. Second, the sole price is a change in the high-SNR error-decay law, from exponential to linear, which never hardens into an error floor. Third, for any underloaded system the induced rate loss vanishes exponentially in SNR, so every level is asymptotically capacity-achieving in the constellation-constrained sense, attaining \\(\\log_2 M\\). Fourth, OD attains a minimum mean square error (MMSE) dimension \\(d=1/2\\), halfway between the \\(d=0\\) Bayes-optimal denoiser (BOD) and the \\(d=1\\) linear receiver. Fifth, a non-asymptotic optimal-transport bound in Wasserstein distance links constellation ring geometry directly to the achievable rate.",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "https://arxiv.org/pdf/2608.09362",
+      "source_api": "openalex",
+      "relevance_score": 0.167,
+      "_score": 0.28350000000000003,
+      "id": "L003",
+      "download": true,
+      "publication_status": "preprint"
+    },
+    {
+      "title": "Polar Decomposition of Mutual Information over Complex-Valued Channels",
+      "authors": [
+        "Qiuliang Xie",
+        "Zhaocheng Wang",
+        "Zhixing Yang"
+      ],
+      "venue": "arXiv (Cornell University)",
+      "year": 2013,
+      "doi": "10.48550/arxiv.1304.0260",
+      "arxiv_id": null,
+      "abstract": "A polar decomposition of mutual information between a complex-valued channel's input and output is proposed for a input whose amplitude and phase are independent of each other. The mutual information is symmetrically decomposed into three terms: an amplitude term, a phase term, and a cross term, whereby the cross term is negligible at high signal-to-noise ratio. Theoretical bounds of the amplitude and phase terms are derived for additive white Gaussian noise channels with Gaussian inputs. This decomposition is then applied to the recently proposed amplitude phase shift keying with product constellation (product-APSK) inputs. It shows from an information theoretical perspective that coded modulation schemes using product-APSK are able to outperform those using conventional quadrature amplitude modulation (QAM), meanwhile maintain a low complexity.",
+      "citation_count": 1,
+      "is_open_access": true,
+      "pdf_url": "https://arxiv.org/pdf/1304.0260",
+      "source_api": "openalex",
+      "relevance_score": 0.5,
+      "_score": 0.25473684210526315,
+      "id": "L004",
+      "download": true,
+      "publication_status": "preprint"
+    },
+    {
+      "title": "Conception de schémas de modulation codés basés sur des codes LDPC non binaires",
+      "authors": [
+        "Asma Maalaoui"
+      ],
+      "venue": "HAL (Le Centre pour la Communication Scientifique Directe)",
+      "year": 2023,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "Cette thèse aborde le schéma de modulation codée (CM) basé sur la signalisation de modulation d'amplitude en quadrature (QAM) et le codage de canal à contrôle de parité à faible densité (LDPC). Il se concentre également sur la signalisation non uniforme invariante dans le temps en combinaison avec la mise en forme d'amplitude probabiliste (PAS) et les modulations QAM circulaires (CQAM). Tout d'abord, la thèse décrit les principaux composants de transmission de l'émetteur au récepteur sur le canal physique. Ensuite, certaines notions utilisées comme métriques pour l'évaluation des performances sont analysées, et on note typiquement l'information mutuelle (IM). En outre, des documents de référence pertinents sur les techniques de mise en forme et les codes LDPC sont présentés. Deuxièmement, la thèse porte sur les canaux de perte dépendant de la polarisation (PDL) des réseaux optiques. Deux techniques de précodage précédentes, SB et NSB, sont révisées et analysées pour les capacités CM et CM entrelacées de bits (BICM). Nous étudions également la combinaison du canal PDL précodé et du codage de mise en forme probabiliste (PS) pour améliorer les performances du système. Par ailleurs, deux nouvelles approches basées sur le traitement de l'information non binaire ont été testées ; la conception de codes protographes non binaires dans le cadre du NSB et la création d'un CM entrelacé de symboles (SICM) basé sur des codes LDPC protographes non binaires. Ensuite, la thèse analyse les schémas de mise en forme géométrique (GS) existants sur le plan complexe. Nous proposons la construction de constellations CQAM (c,p) avec une signalisation équiprobable pouvant approcher la capacité gaussienne. De plus, nous concevons des codes LDPC de protographe non binaires simples pour les constellations GS afin de montrer que nous pouvons opérer à proximité de la capacité du canal. Enfin, en déployant la nouvelle conception des constellations CQAM, nous proposons comment combiner des codes LDPC non binaires avec PAS. Par rapport à la signalisation uniforme, des gains de performances significatifs sont obtenus sur le canal AWGN pour les longueurs de bloc courtes.",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "https://theses.hal.science/tel-04207433/document",
+      "source_api": "openalex",
+      "relevance_score": 0.167,
+      "_score": 0.22349999999999998,
+      "id": "L005",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Capacity-Approaching Superposition Coding for Optical Fiber Links",
+      "authors": [
+        "José Estarán",
+        "Darko Zibar",
+        "Idelfonso Tafur Monroy"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 2014,
+      "doi": "10.1109/jlt.2014.2333235",
+      "arxiv_id": null,
+      "abstract": "We report on the first experimental demonstration of superposition coded modulation (SCM) for polarization-multiplexed coherent-detection optical fiber links. The proposed coded modulation scheme is combined with phase-shifted bit-to-symbol mapping (PSM) in order to achieve geometric and passive shaping of the signal's waveform. The output constellations in SCM-PSM exhibit nonbijective quasi-Gaussian statistical distributions that asymptotically reach the Shannon capacity limit, showing up to 0.7 dB sensitivity improvement for 256-ary SCM-PSM with respect to 256-ary quadrature amplitude modulation (QAM). The characteristic wave formation based on superposition of antipodal symbols and the lack of need for additional encoders for signal shaping, greatly reduces the transmitter and receiver processing complexity in comparison to conventional alternatives. Single-level coding strategy (SL-SCM) is employed in the framework of bit-interleaved coded modulation with iterative decoding (BICM-ID) for forward error correction. The fiber transmission system is characterized in terms of signal-to-noise ratio for back-to-back case and correlated with simulated results for ideal transmission over additive white Gaussian noise channel. Thereafter, successful demodulation and decoding after dispersion-unmanaged transmission over 240-km standard single mode fiber of dual-polarization 6-Gbaud 16-, 32- and 64-ary SCM-PSM is experimentally demonstrated.",
+      "citation_count": 5,
+      "is_open_access": true,
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/50/6874616/06843879.pdf",
+      "source_api": "openalex",
+      "relevance_score": 0.333,
+      "_score": 0.1901842105263158,
+      "id": "L006",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Low‐complexity de‐mapping algorithms for 64‐ APSK signals",
+      "authors": [
+        "Junwei Bao",
+        "Dazhuan Xu",
+        "Xiaofei Zhang",
+        "Hao Luo"
+      ],
+      "venue": "ETRI Journal",
+      "year": 2019,
+      "doi": "10.4218/etrij.2017-0266",
+      "arxiv_id": null,
+      "abstract": "Due to its high spectrum efficiency, 64-amplitude phase-shift keying (64-APSK) is one of the primary technologies used in deep space communications and digital video broadcasting through satellite-second generation. However, 64-APSK suffers from considerable computational complexity because of the de-mapping method that it employs. In this study, a low-complexity de-mapping method for (4 + 12 + 20 + 28) 64-APSK is proposed in which we take full advantage of the symmetric characteristics of each symbol mapping. Moreover, we map the detected symbol to the first quadrant and then divide the region in this first quadrant into several partitions to simplify the formula. Theoretical analysis shows that the proposed method requires no operation of exponents and logarithms and involves only multiplication, addition, subtraction, and judgment. Simulation results validate that the time consumption is dramatically decreased with limited degradation of bit error rate performance.",
+      "citation_count": 5,
+      "is_open_access": true,
+      "pdf_url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.4218/etrij.2017-0266",
+      "source_api": "openalex",
+      "relevance_score": 0.167,
+      "_score": 0.1671842105263158,
+      "id": "L007",
+      "download": true,
+      "publication_status": "published"
+    }
+  ]
+}

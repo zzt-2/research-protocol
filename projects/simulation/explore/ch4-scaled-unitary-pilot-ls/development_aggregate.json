@@ -1,0 +1,446 @@
+{
+  "schema_version": "t069.scaled-unitary-aggregate.v1",
+  "authority": "T069/D049/T068/V023",
+  "manifest_sha256": "ad8361f7624a6fed66b8954bcba92efcbdd4dfff1f844746bd2d70feb33ea2b2",
+  "raw_schema_version": "t069.scaled-unitary-raw.v1",
+  "cells": [
+    {
+      "cell_id": "snr14_np2",
+      "snr_db": 14.0,
+      "pilot_symbols_per_polarization": 2,
+      "evaluation_windows": 32,
+      "tuned_parameters": {
+        "B1": 0.01,
+        "B2": 1.0
+      },
+      "strongest_B1_B2": "B2",
+      "arms": {
+        "B0": {
+          "bit_errors": 111816,
+          "payload_bits": 1048576,
+          "ber": 0.10663604736328125,
+          "channel_nmse": 0.11387840846042968,
+          "inverse_residual": 0.1593896855775745,
+          "rho": 1.4361132055831485,
+          "runtime_ms": 7.4963,
+          "oracle_headroom": 0.04141521453857422
+        },
+        "B1": {
+          "bit_errors": 111874,
+          "payload_bits": 1048576,
+          "ber": 0.10669136047363281,
+          "channel_nmse": 0.1122892836353524,
+          "inverse_residual": 0.16287130800638777,
+          "rho": 1.4361132055831485,
+          "runtime_ms": 8.8777,
+          "oracle_headroom": 0.04147052764892578
+        },
+        "B2": {
+          "bit_errors": 104678,
+          "payload_bits": 1048576,
+          "ber": 0.09982872009277344,
+          "channel_nmse": 0.1292895544043253,
+          "inverse_residual": 0.09251791734553488,
+          "rho": 1.4361132055831485,
+          "runtime_ms": 8.3463,
+          "oracle_headroom": 0.034607887268066406
+        },
+        "C4": {
+          "bit_errors": 99048,
+          "payload_bits": 1048576,
+          "ber": 0.09445953369140625,
+          "channel_nmse": 0.07942523205984309,
+          "inverse_residual": 0.09410115348551204,
+          "rho": 1.4361132055831483,
+          "runtime_ms": 9.6119,
+          "oracle_headroom": 0.02923870086669922
+        },
+        "O1": {
+          "bit_errors": 68389,
+          "payload_bits": 1048576,
+          "ber": 0.06522083282470703,
+          "channel_nmse": 0.0,
+          "inverse_residual": 2.1663313043081754e-32,
+          "rho": 1.0,
+          "runtime_ms": 2.9678,
+          "oracle_headroom": 0.0
+        }
+      },
+      "comparisons": {
+        "C4_vs_B0": {
+          "mean_diff": -0.012176513671875,
+          "ci_lower": -0.015386176109313966,
+          "ci_upper": -0.009237933158874513,
+          "clusters": 32,
+          "candidate_window_wins": 32
+        },
+        "C4_vs_B1": {
+          "mean_diff": -0.012231826782226562,
+          "ci_lower": -0.015503287315368652,
+          "ci_upper": -0.009250426292419435,
+          "clusters": 32,
+          "candidate_window_wins": 32
+        },
+        "C4_vs_B2": {
+          "mean_diff": -0.0053691864013671875,
+          "ci_lower": -0.010637474060058594,
+          "ci_upper": -0.000400519371032715,
+          "clusters": 32,
+          "candidate_window_wins": 23
+        },
+        "B1_vs_B0": {
+          "mean_diff": 5.53131103515625e-05,
+          "ci_lower": -0.00012972354888916016,
+          "ci_upper": 0.000247955322265625,
+          "clusters": 32,
+          "candidate_window_wins": 16
+        },
+        "B2_vs_B0": {
+          "mean_diff": -0.0068073272705078125,
+          "ci_lower": -0.01253368854522705,
+          "ci_upper": -0.0015764236450195312,
+          "clusters": 32,
+          "candidate_window_wins": 21
+        },
+        "C4_vs_strongest": {
+          "mean_diff": -0.0053691864013671875,
+          "ci_lower": -0.010637474060058594,
+          "ci_upper": -0.000400519371032715,
+          "clusters": 32,
+          "candidate_window_wins": 23,
+          "baseline": "B2"
+        }
+      }
+    },
+    {
+      "cell_id": "snr14_np4",
+      "snr_db": 14.0,
+      "pilot_symbols_per_polarization": 4,
+      "evaluation_windows": 32,
+      "tuned_parameters": {
+        "B1": 0.001,
+        "B2": 1.0
+      },
+      "strongest_B1_B2": "B2",
+      "arms": {
+        "B0": {
+          "bit_errors": 80018,
+          "payload_bits": 1048576,
+          "ber": 0.07631111145019531,
+          "channel_nmse": 0.04531256583132121,
+          "inverse_residual": 0.03930940104568416,
+          "rho": 1.223956826840375,
+          "runtime_ms": 7.0149,
+          "oracle_headroom": 0.017778396606445312
+        },
+        "B1": {
+          "bit_errors": 80037,
+          "payload_bits": 1048576,
+          "ber": 0.07632923126220703,
+          "channel_nmse": 0.04518873409639523,
+          "inverse_residual": 0.03934766545053722,
+          "rho": 1.223956826840375,
+          "runtime_ms": 9.0398,
+          "oracle_headroom": 0.01779651641845703
+        },
+        "B2": {
+          "bit_errors": 74807,
+          "payload_bits": 1048576,
+          "ber": 0.07134151458740234,
+          "channel_nmse": 0.05879940057101875,
+          "inverse_residual": 0.035803061777723966,
+          "rho": 1.223956826840375,
+          "runtime_ms": 7.9314,
+          "oracle_headroom": 0.012808799743652344
+        },
+        "C4": {
+          "bit_errors": 72688,
+          "payload_bits": 1048576,
+          "ber": 0.0693206787109375,
+          "channel_nmse": 0.031408779358591946,
+          "inverse_residual": 0.025831934082168356,
+          "rho": 1.223956826840375,
+          "runtime_ms": 9.6528,
+          "oracle_headroom": 0.0107879638671875
+        },
+        "O1": {
+          "bit_errors": 61376,
+          "payload_bits": 1048576,
+          "ber": 0.05853271484375,
+          "channel_nmse": 0.0,
+          "inverse_residual": 1.747224009797931e-32,
+          "rho": 1.0,
+          "runtime_ms": 2.9729,
+          "oracle_headroom": 0.0
+        }
+      },
+      "comparisons": {
+        "C4_vs_B0": {
+          "mean_diff": -0.0069904327392578125,
+          "ci_lower": -0.010116124153137207,
+          "ci_upper": -0.004316067695617677,
+          "clusters": 32,
+          "candidate_window_wins": 31
+        },
+        "C4_vs_B1": {
+          "mean_diff": -0.007008552551269531,
+          "ci_lower": -0.010136032104492187,
+          "ci_upper": -0.0043286561965942385,
+          "clusters": 32,
+          "candidate_window_wins": 31
+        },
+        "C4_vs_B2": {
+          "mean_diff": -0.0020208358764648438,
+          "ci_lower": -0.0038831949234008787,
+          "ci_upper": -0.00032601356506347734,
+          "clusters": 32,
+          "candidate_window_wins": 18
+        },
+        "B1_vs_B0": {
+          "mean_diff": 1.811981201171875e-05,
+          "ci_lower": -1.9073486328125e-06,
+          "ci_upper": 3.719329833984375e-05,
+          "clusters": 32,
+          "candidate_window_wins": 8
+        },
+        "B2_vs_B0": {
+          "mean_diff": -0.004969596862792969,
+          "ci_lower": -0.00882878303527832,
+          "ci_upper": -0.0020188093185424813,
+          "clusters": 32,
+          "candidate_window_wins": 27
+        },
+        "C4_vs_strongest": {
+          "mean_diff": -0.0020208358764648438,
+          "ci_lower": -0.0038831949234008787,
+          "ci_upper": -0.00032601356506347734,
+          "clusters": 32,
+          "candidate_window_wins": 18,
+          "baseline": "B2"
+        }
+      }
+    },
+    {
+      "cell_id": "snr18_np2",
+      "snr_db": 18.0,
+      "pilot_symbols_per_polarization": 2,
+      "evaluation_windows": 32,
+      "tuned_parameters": {
+        "B1": 0.001,
+        "B2": 1.0
+      },
+      "strongest_B1_B2": "B2",
+      "arms": {
+        "B0": {
+          "bit_errors": 72304,
+          "payload_bits": 1048576,
+          "ber": 0.0689544677734375,
+          "channel_nmse": 0.13148410892193568,
+          "inverse_residual": 0.18152670514136,
+          "rho": 1.4155262264842956,
+          "runtime_ms": 6.8278,
+          "oracle_headroom": 0.025824546813964844
+        },
+        "B1": {
+          "bit_errors": 72307,
+          "payload_bits": 1048576,
+          "ber": 0.06895732879638672,
+          "channel_nmse": 0.13125450650936377,
+          "inverse_residual": 0.18191306749336572,
+          "rho": 1.4155262264842956,
+          "runtime_ms": 8.172,
+          "oracle_headroom": 0.025827407836914062
+        },
+        "B2": {
+          "bit_errors": 62979,
+          "payload_bits": 1048576,
+          "ber": 0.06006145477294922,
+          "channel_nmse": 0.17334650273601493,
+          "inverse_residual": 0.06575734091272492,
+          "rho": 1.4155262264842956,
+          "runtime_ms": 8.2369,
+          "oracle_headroom": 0.016931533813476562
+        },
+        "C4": {
+          "bit_errors": 59999,
+          "payload_bits": 1048576,
+          "ber": 0.057219505310058594,
+          "channel_nmse": 0.08157084711548296,
+          "inverse_residual": 0.06315162079582043,
+          "rho": 1.4155262264842956,
+          "runtime_ms": 9.1009,
+          "oracle_headroom": 0.014089584350585938
+        },
+        "O1": {
+          "bit_errors": 45225,
+          "payload_bits": 1048576,
+          "ber": 0.043129920959472656,
+          "channel_nmse": 0.0,
+          "inverse_residual": 1.985174924389878e-32,
+          "rho": 1.0,
+          "runtime_ms": 2.9659,
+          "oracle_headroom": 0.0
+        }
+      },
+      "comparisons": {
+        "C4_vs_B0": {
+          "mean_diff": -0.011734962463378906,
+          "ci_lower": -0.020336842536926268,
+          "ci_upper": -0.0048847436904907275,
+          "clusters": 32,
+          "candidate_window_wins": 30
+        },
+        "C4_vs_B1": {
+          "mean_diff": -0.011737823486328125,
+          "ci_lower": -0.02034749984741211,
+          "ci_upper": -0.004872512817382817,
+          "clusters": 32,
+          "candidate_window_wins": 30
+        },
+        "C4_vs_B2": {
+          "mean_diff": -0.002841949462890625,
+          "ci_lower": -0.006312751770019531,
+          "ci_upper": -6.914138793959624e-07,
+          "clusters": 32,
+          "candidate_window_wins": 15
+        },
+        "B1_vs_B0": {
+          "mean_diff": 2.86102294921875e-06,
+          "ci_lower": -1.71661376953125e-05,
+          "ci_upper": 2.1004676818847526e-05,
+          "clusters": 32,
+          "candidate_window_wins": 4
+        },
+        "B2_vs_B0": {
+          "mean_diff": -0.008893013000488281,
+          "ci_lower": -0.018364953994750976,
+          "ci_upper": -0.0013474702835083012,
+          "clusters": 32,
+          "candidate_window_wins": 26
+        },
+        "C4_vs_strongest": {
+          "mean_diff": -0.002841949462890625,
+          "ci_lower": -0.006312751770019531,
+          "ci_upper": -6.914138793959624e-07,
+          "clusters": 32,
+          "candidate_window_wins": 15,
+          "baseline": "B2"
+        }
+      }
+    },
+    {
+      "cell_id": "snr18_np4",
+      "snr_db": 18.0,
+      "pilot_symbols_per_polarization": 4,
+      "evaluation_windows": 32,
+      "tuned_parameters": {
+        "B1": 0.01,
+        "B2": 1.0
+      },
+      "strongest_B1_B2": "B2",
+      "arms": {
+        "B0": {
+          "bit_errors": 36659,
+          "payload_bits": 1048576,
+          "ber": 0.03496074676513672,
+          "channel_nmse": 0.02237517520013685,
+          "inverse_residual": 0.030096502566954036,
+          "rho": 1.1880231621850412,
+          "runtime_ms": 7.1681,
+          "oracle_headroom": 0.013477325439453125
+        },
+        "B1": {
+          "bit_errors": 36842,
+          "payload_bits": 1048576,
+          "ber": 0.03513526916503906,
+          "channel_nmse": 0.02234993183599067,
+          "inverse_residual": 0.03120399161226447,
+          "rho": 1.1880231621850412,
+          "runtime_ms": 8.5523,
+          "oracle_headroom": 0.013651847839355469
+        },
+        "B2": {
+          "bit_errors": 29605,
+          "payload_bits": 1048576,
+          "ber": 0.02823352813720703,
+          "channel_nmse": 0.01948760742871414,
+          "inverse_residual": 0.01623511817417742,
+          "rho": 1.1880231621850412,
+          "runtime_ms": 7.6265,
+          "oracle_headroom": 0.0067501068115234375
+        },
+        "C4": {
+          "bit_errors": 29827,
+          "payload_bits": 1048576,
+          "ber": 0.02844524383544922,
+          "channel_nmse": 0.013155031148738644,
+          "inverse_residual": 0.014056708745405995,
+          "rho": 1.1880231621850414,
+          "runtime_ms": 8.8748,
+          "oracle_headroom": 0.006961822509765625
+        },
+        "O1": {
+          "bit_errors": 22527,
+          "payload_bits": 1048576,
+          "ber": 0.021483421325683594,
+          "channel_nmse": 0.0,
+          "inverse_residual": 1.8152350772061178e-32,
+          "rho": 1.0,
+          "runtime_ms": 2.8135,
+          "oracle_headroom": 0.0
+        }
+      },
+      "comparisons": {
+        "C4_vs_B0": {
+          "mean_diff": -0.0065155029296875,
+          "ci_lower": -0.011663985252380372,
+          "ci_upper": -0.00273873805999756,
+          "clusters": 32,
+          "candidate_window_wins": 30
+        },
+        "C4_vs_B1": {
+          "mean_diff": -0.006690025329589844,
+          "ci_lower": -0.011916613578796387,
+          "ci_upper": -0.002890467643737799,
+          "clusters": 32,
+          "candidate_window_wins": 30
+        },
+        "C4_vs_B2": {
+          "mean_diff": 0.0002117156982421875,
+          "ci_lower": -0.0007823705673217773,
+          "ci_upper": 0.0011769771575927727,
+          "clusters": 32,
+          "candidate_window_wins": 9
+        },
+        "B1_vs_B0": {
+          "mean_diff": 0.00017452239990234375,
+          "ci_lower": 7.627010345458984e-05,
+          "ci_upper": 0.00027751922607421875,
+          "clusters": 32,
+          "candidate_window_wins": 2
+        },
+        "B2_vs_B0": {
+          "mean_diff": -0.0067272186279296875,
+          "ci_lower": -0.011850380897521972,
+          "ci_upper": -0.0029294490814208997,
+          "clusters": 32,
+          "candidate_window_wins": 29
+        },
+        "C4_vs_strongest": {
+          "mean_diff": 0.0002117156982421875,
+          "ci_lower": -0.0007823705673217773,
+          "ci_upper": 0.0011769771575927727,
+          "clusters": 32,
+          "candidate_window_wins": 9,
+          "baseline": "B2"
+        }
+      }
+    }
+  ],
+  "decision": {
+    "terminal": "C4_STRUCTURED_SIGNAL",
+    "grade": "PROVISIONAL_A",
+    "winner": "C4",
+    "only_next_step": "fresh confirmation of frozen C4 recipe"
+  }
+}

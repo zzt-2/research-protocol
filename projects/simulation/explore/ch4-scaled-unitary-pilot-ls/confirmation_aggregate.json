@@ -1,0 +1,327 @@
+{
+  "schema_version": "t071.scaled-unitary-confirmation-aggregate.v1",
+  "authority": "T071/D050/V025",
+  "manifest_sha256": "18c93796ff3e7e0ebf0bf05ee71c94bfd4027218b31a60d0d917d26581aa8a65",
+  "raw_schema_version": "t071.scaled-unitary-confirmation-raw.v1",
+  "cells": [
+    {
+      "cell_id": "snr14_np2",
+      "snr_db": 14.0,
+      "pilot_symbols_per_polarization": 2,
+      "confirmation_windows": 64,
+      "parameters": {
+        "B1": 0.01,
+        "B2": 1.0
+      },
+      "arms": {
+        "B0": {
+          "bit_errors": 184404,
+          "payload_bits": 2097152,
+          "ber": 0.08793067932128906,
+          "channel_nmse": 0.09860979697699263,
+          "inverse_residual": 0.10754919639898426,
+          "rho": 1.3702824993180758,
+          "runtime_ms": 13.2188,
+          "oracle_headroom": 0.035198211669921875
+        },
+        "B1": {
+          "bit_errors": 184599,
+          "payload_bits": 2097152,
+          "ber": 0.08802366256713867,
+          "channel_nmse": 0.09656986744175672,
+          "inverse_residual": 0.10939438524329634,
+          "rho": 1.3702824993180758,
+          "runtime_ms": 15.249,
+          "oracle_headroom": 0.035291194915771484
+        },
+        "B2": {
+          "bit_errors": 173582,
+          "payload_bits": 2097152,
+          "ber": 0.08277034759521484,
+          "channel_nmse": 0.13006805227629922,
+          "inverse_residual": 0.06934376499847228,
+          "rho": 1.3702824993180758,
+          "runtime_ms": 14.3662,
+          "oracle_headroom": 0.030037879943847656
+        },
+        "C4": {
+          "bit_errors": 160791,
+          "payload_bits": 2097152,
+          "ber": 0.07667112350463867,
+          "channel_nmse": 0.06825498925958196,
+          "inverse_residual": 0.05779851733212005,
+          "rho": 1.3702824993180758,
+          "runtime_ms": 17.1426,
+          "oracle_headroom": 0.023938655853271484
+        },
+        "O1": {
+          "bit_errors": 110588,
+          "payload_bits": 2097152,
+          "ber": 0.05273246765136719,
+          "channel_nmse": 0.0,
+          "inverse_residual": 2.2443294126780288e-32,
+          "rho": 1.0,
+          "runtime_ms": 5.3412,
+          "oracle_headroom": 0.0
+        }
+      },
+      "comparisons": {
+        "C4_vs_B2": {
+          "mean_diff": -0.006099224090576172,
+          "ci_lower": -0.00954737663269043,
+          "ci_upper": -0.0030616760253906255,
+          "clusters": 64,
+          "candidate_window_wins": 47
+        }
+      },
+      "development_direction": {
+        "development_mean_diff": -0.0053691864013671875,
+        "same_sign": true
+      }
+    },
+    {
+      "cell_id": "snr14_np4",
+      "snr_db": 14.0,
+      "pilot_symbols_per_polarization": 4,
+      "confirmation_windows": 64,
+      "parameters": {
+        "B1": 0.001,
+        "B2": 1.0
+      },
+      "arms": {
+        "B0": {
+          "bit_errors": 166281,
+          "payload_bits": 2097152,
+          "ber": 0.07928895950317383,
+          "channel_nmse": 0.0692230533618031,
+          "inverse_residual": 0.13293110465869798,
+          "rho": 1.3543922342936956,
+          "runtime_ms": 13.3898,
+          "oracle_headroom": 0.02203369140625
+        },
+        "B1": {
+          "bit_errors": 166329,
+          "payload_bits": 2097152,
+          "ber": 0.07931184768676758,
+          "channel_nmse": 0.06911449340551565,
+          "inverse_residual": 0.13324258390901678,
+          "rho": 1.3543922342936956,
+          "runtime_ms": 15.2032,
+          "oracle_headroom": 0.02205657958984375
+        },
+        "B2": {
+          "bit_errors": 150549,
+          "payload_bits": 2097152,
+          "ber": 0.07178735733032227,
+          "channel_nmse": 0.08029882945528846,
+          "inverse_residual": 0.0438967307443749,
+          "rho": 1.3543922342936956,
+          "runtime_ms": 14.2913,
+          "oracle_headroom": 0.014532089233398438
+        },
+        "C4": {
+          "bit_errors": 146599,
+          "payload_bits": 2097152,
+          "ber": 0.06990385055541992,
+          "channel_nmse": 0.040020391960825435,
+          "inverse_residual": 0.040375414176205084,
+          "rho": 1.3543922342936956,
+          "runtime_ms": 17.0208,
+          "oracle_headroom": 0.012648582458496094
+        },
+        "O1": {
+          "bit_errors": 120073,
+          "payload_bits": 2097152,
+          "ber": 0.05725526809692383,
+          "channel_nmse": 0.0,
+          "inverse_residual": 2.0600737705583975e-32,
+          "rho": 1.0,
+          "runtime_ms": 5.4805,
+          "oracle_headroom": 0.0
+        }
+      },
+      "comparisons": {
+        "C4_vs_B2": {
+          "mean_diff": -0.0018835067749023438,
+          "ci_lower": -0.003540635108947754,
+          "ci_upper": -0.0001981735229492198,
+          "clusters": 64,
+          "candidate_window_wins": 38
+        }
+      },
+      "development_direction": {
+        "development_mean_diff": -0.0020208358764648438,
+        "same_sign": true
+      }
+    },
+    {
+      "cell_id": "snr18_np2",
+      "snr_db": 18.0,
+      "pilot_symbols_per_polarization": 2,
+      "confirmation_windows": 64,
+      "parameters": {
+        "B1": 0.001,
+        "B2": 1.0
+      },
+      "arms": {
+        "B0": {
+          "bit_errors": 90302,
+          "payload_bits": 2097152,
+          "ber": 0.043059349060058594,
+          "channel_nmse": 0.04137826324089839,
+          "inverse_residual": 0.04272367204876721,
+          "rho": 1.2257179915891927,
+          "runtime_ms": 12.9767,
+          "oracle_headroom": 0.021026134490966797
+        },
+        "B1": {
+          "bit_errors": 90308,
+          "payload_bits": 2097152,
+          "ber": 0.04306221008300781,
+          "channel_nmse": 0.04129027672623972,
+          "inverse_residual": 0.04279143970778988,
+          "rho": 1.2257179915891927,
+          "runtime_ms": 14.6879,
+          "oracle_headroom": 0.021028995513916016
+        },
+        "B2": {
+          "bit_errors": 81270,
+          "payload_bits": 2097152,
+          "ber": 0.03875255584716797,
+          "channel_nmse": 0.04861737854278734,
+          "inverse_residual": 0.03462649300076648,
+          "rho": 1.2257179915891927,
+          "runtime_ms": 13.9208,
+          "oracle_headroom": 0.016719341278076172
+        },
+        "C4": {
+          "bit_errors": 74460,
+          "payload_bits": 2097152,
+          "ber": 0.03550529479980469,
+          "channel_nmse": 0.02764477465333527,
+          "inverse_residual": 0.026997055103101096,
+          "rho": 1.225717991589193,
+          "runtime_ms": 16.6949,
+          "oracle_headroom": 0.01347208023071289
+        },
+        "O1": {
+          "bit_errors": 46207,
+          "payload_bits": 2097152,
+          "ber": 0.022033214569091797,
+          "channel_nmse": 0.0,
+          "inverse_residual": 2.167524884722264e-32,
+          "rho": 1.0,
+          "runtime_ms": 5.1555,
+          "oracle_headroom": 0.0
+        }
+      },
+      "comparisons": {
+        "C4_vs_B2": {
+          "mean_diff": -0.0032472610473632812,
+          "ci_lower": -0.005480527877807617,
+          "ci_upper": -0.0014351606369018561,
+          "clusters": 64,
+          "candidate_window_wins": 28
+        }
+      },
+      "development_direction": {
+        "development_mean_diff": -0.002841949462890625,
+        "same_sign": true
+      }
+    },
+    {
+      "cell_id": "snr18_np4",
+      "snr_db": 18.0,
+      "pilot_symbols_per_polarization": 4,
+      "confirmation_windows": 64,
+      "parameters": {
+        "B1": 0.01,
+        "B2": 1.0
+      },
+      "arms": {
+        "B0": {
+          "bit_errors": 50490,
+          "payload_bits": 2097152,
+          "ber": 0.02407550811767578,
+          "channel_nmse": 0.014083933878911306,
+          "inverse_residual": 0.014040054704863303,
+          "rho": 1.1345961300346104,
+          "runtime_ms": 13.2838,
+          "oracle_headroom": 0.006806373596191406
+        },
+        "B1": {
+          "bit_errors": 50584,
+          "payload_bits": 2097152,
+          "ber": 0.024120330810546875,
+          "channel_nmse": 0.013880773131016003,
+          "inverse_residual": 0.014399145293145576,
+          "rho": 1.1345961300346104,
+          "runtime_ms": 16.0847,
+          "oracle_headroom": 0.0068511962890625
+        },
+        "B2": {
+          "bit_errors": 46485,
+          "payload_bits": 2097152,
+          "ber": 0.022165775299072266,
+          "channel_nmse": 0.016118499334861272,
+          "inverse_residual": 0.012490256441363447,
+          "rho": 1.1345961300346104,
+          "runtime_ms": 14.5112,
+          "oracle_headroom": 0.004896640777587891
+        },
+        "C4": {
+          "bit_errors": 44131,
+          "payload_bits": 2097152,
+          "ber": 0.02104330062866211,
+          "channel_nmse": 0.00864210662659332,
+          "inverse_residual": 0.008412061593369153,
+          "rho": 1.1345961300346104,
+          "runtime_ms": 16.9971,
+          "oracle_headroom": 0.0037741661071777344
+        },
+        "O1": {
+          "bit_errors": 36216,
+          "payload_bits": 2097152,
+          "ber": 0.017269134521484375,
+          "channel_nmse": 0.0,
+          "inverse_residual": 1.876525831675469e-32,
+          "rho": 1.0,
+          "runtime_ms": 5.3047,
+          "oracle_headroom": 0.0
+        }
+      },
+      "comparisons": {
+        "C4_vs_B2": {
+          "mean_diff": -0.0011224746704101562,
+          "ci_lower": -0.0021610617637634276,
+          "ci_upper": -0.0002641439437866212,
+          "clusters": 64,
+          "candidate_window_wins": 20
+        }
+      },
+      "development_direction": {
+        "development_mean_diff": 0.0002117156982421875,
+        "same_sign": false
+      }
+    }
+  ],
+  "pooled_np2": {
+    "mean_diff": -0.0046732425689697266,
+    "ci_lower": -0.006863850355148316,
+    "ci_upper": -0.0028266131877899173,
+    "clusters": 128,
+    "candidate_window_wins": 75
+  },
+  "decision": {
+    "terminal": "C4_CONFIRMED_STRUCTURED_SIGNAL",
+    "claim_ceiling": "common-scale estimation evidence only; not a new polarization rotation",
+    "primary_comparator": "B2 tau=1.0",
+    "next_step": "independent raw recomputation in another context"
+  },
+  "_meta": {
+    "script": "t071_scaled_unitary_confirmation_raw_only_reducer",
+    "common_md5": "49acdfa4",
+    "git_commit": "3203d0b",
+    "timestamp": "2026-08-30T07:03:06"
+  }
+}

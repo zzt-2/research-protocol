@@ -1,0 +1,128 @@
+{
+  "schema_version": "t069.scaled-unitary-bounded-development.v1",
+  "authority": "T069/D049/T068/V023",
+  "action_class": "C4_SCALED_UNITARY_CORRECTNESS_AND_BOUNDED_HEADROOM",
+  "mission_checkpoint": "CP011",
+  "control_epoch": 11,
+  "verdict_ceiling": "PROVISIONAL",
+  "scope": {
+    "purpose": "bounded research-design development, not source reproduction",
+    "seam": "projects/simulation/explore/ch4-scaled-unitary-pilot-ls",
+    "forbidden": [
+      "post_result_parameter_tuning",
+      "additional_SNR_or_pilot_cells",
+      "new_impairments",
+      "comparator_deletion",
+      "common_or_params_change",
+      "skill_or_controller_change",
+      "thesis_body_change",
+      "FINAL_claim"
+    ]
+  },
+  "signal_model": {
+    "modulation": "DP-(8,8)-16APSK",
+    "constellation_source": "projects.simulation.common._modulation.m16apsk_mod/m16apsk_demod",
+    "constellation_radius_ratio": 2.57,
+    "polarizations": 2,
+    "payload_symbols_per_polarization": 4096,
+    "jones": "static_random_Haar_U(2)_per_window",
+    "turbulence": {
+      "model": "Gamma-Gamma common scalar irradiance per window",
+      "alpha": 4.0,
+      "beta": 1.9,
+      "gain": "g=sqrt(I)"
+    },
+    "noise": "equal-branch circular complex AWGN",
+    "snr_definition": "average transmit symbol energy divided by complex AWGN variance per polarization",
+    "post_fading_renormalization": false,
+    "disabled": ["PDL", "PMD", "FIR", "IQ", "time_varying_SOP", "CFO", "CPR", "LDPC"]
+  },
+  "pilots": {
+    "budgets": [2, 4],
+    "constraint": "Xp Xp^H = Np I_2",
+    "matrices": {
+      "2": [["1", "1"], ["1", "-1"]],
+      "4": [["1", "1", "1", "1"], ["1", "1j", "-1", "-1j"]]
+    }
+  },
+  "cells": [
+    {"cell_id": "snr14_np2", "snr_db": 14.0, "pilot_symbols_per_polarization": 2, "seed_base": 6000},
+    {"cell_id": "snr14_np4", "snr_db": 14.0, "pilot_symbols_per_polarization": 4, "seed_base": 6100},
+    {"cell_id": "snr18_np2", "snr_db": 18.0, "pilot_symbols_per_polarization": 2, "seed_base": 6200},
+    {"cell_id": "snr18_np4", "snr_db": 18.0, "pilot_symbols_per_polarization": 4, "seed_base": 6300}
+  ],
+  "population": {
+    "windows_per_cell": 64,
+    "tune_offsets": [0, 31],
+    "evaluation_offsets": [32, 63],
+    "pairing": ["Q", "g", "pilot_noise", "payload_noise", "pilots", "payload"]
+  },
+  "arms": {
+    "B0": {"recipe": "plain unconstrained LS"},
+    "B1": {
+      "recipe": "normalized ridge LS",
+      "eta_grid": [0.0, 0.001, 0.01, 0.1, 1.0],
+      "regularizer": "eta * trace(Xp Xp^H) / 2"
+    },
+    "B2": {
+      "recipe": "singular-value floor inverse",
+      "tau_grid": [0.0, 0.25, 0.5, 0.75, 1.0],
+      "floor": "s_i_prime=max(s_i,tau*s_max)"
+    },
+    "C4": {"recipe": "mean-singular scaled-unitary projection"},
+    "O1": {"recipe": "true channel inverse oracle"}
+  },
+  "tuning": {
+    "data": "tune windows only",
+    "objective": "pooled payload BER",
+    "tie_tolerance": 0.0,
+    "tie_break": "larger parameter (stronger regularization)"
+  },
+  "metrics": {
+    "primary": "payload BER = total bit errors / total payload bits",
+    "bootstrap_unit": "evaluation window BER difference",
+    "channel_nmse": "||Hhat-H||_F^2 / ||H||_F^2",
+    "inverse_residual": "||W H-I_2||_F^2 / 2",
+    "rho": "s1(H_LS)/s2(H_LS), diagnostic only",
+    "oracle_headroom": "deployable BER minus O1 BER",
+    "runtime": "perf_counter_ns per arm/window"
+  },
+  "bootstrap": {
+    "rng": "PCG64",
+    "seed": 2026083003,
+    "resamples": 2000,
+    "confidence": 0.95,
+    "stream_rule": "reset the preregistered PCG64 seed for each named paired comparison"
+  },
+  "correctness": {
+    "gates": ["C0", "C1", "C2", "C3", "C4", "C5"],
+    "required": "all PASS before BER",
+    "maximum_local_repair_rounds": 2,
+    "failure_terminal": "INVALID_TESTBED"
+  },
+  "terminal_rules": {
+    "difference_sign": "candidate BER minus baseline BER; lower is better",
+    "clear_improvement": "bootstrap CI upper < 0",
+    "not_significantly_worse": "bootstrap CI lower <= 0",
+    "significant_regression": "bootstrap CI lower > 0",
+    "strongest_B1_B2": "lower evaluation pooled BER; exact tie chooses B1 as simpler recipe",
+    "C4_STRUCTURED_SIGNAL": "C4 vs strongest(B1,B2) clears improvement in at least one Np=2 cell, is not significantly worse in the other Np=2 cell, has no significant Np=4 regression, and all four cells are finite/correct",
+    "SIMPLE_ROBUST_LS_SIGNAL": "if C4 rule fails, B1 or B2 vs B0 satisfies the same Np=2 improvement/non-regression and Np=4 no-regression gate; choose lower evaluation BER across four cells, exact tie B1",
+    "LOCAL_ONLY": "some Np=2 deployable arm has negative mean BER difference without a closed improvement CI, or any candidate/simple arm has significant Np=4 regression",
+    "NO_METHOD_SIGNAL": "no stable deployable BER signal, or O1 has no positive pooled BER headroom over the strongest deployable arm",
+    "grade_map": {
+      "C4_STRUCTURED_SIGNAL": "PROVISIONAL_A",
+      "SIMPLE_ROBUST_LS_SIGNAL": "PROVISIONAL_B",
+      "LOCAL_ONLY": "PROVISIONAL_C",
+      "NO_METHOD_SIGNAL": "PROVISIONAL_D",
+      "INVALID_TESTBED": "INVALID_TESTBED"
+    },
+    "only_next_step": {
+      "C4_STRUCTURED_SIGNAL": "fresh confirmation of frozen C4 recipe",
+      "SIMPLE_ROBUST_LS_SIGNAL": "fresh confirmation of frozen simple robust-LS winner",
+      "LOCAL_ONLY": "record supporting evidence only; no confirmation authorization",
+      "NO_METHOD_SIGNAL": "close this short-pilot structure family; return only to C4-0",
+      "INVALID_TESTBED": "repair testbed under a separately authorized task"
+    }
+  }
+}

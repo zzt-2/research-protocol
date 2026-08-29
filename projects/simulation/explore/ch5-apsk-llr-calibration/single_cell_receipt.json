@@ -1,0 +1,35 @@
+{
+  "schema_version": "t077.c5-0-single-cell.receipt.v1",
+  "authority": "T077/D056/V031/CP018",
+  "manifest_hash": "14ff14de3d0094f135c3a07d3fb395455e81035f6b6d1b014704177587ed3782",
+  "terminal": "SINGLE_CELL_NO_HEADROOM",
+  "gate1": "PASS",
+  "gate2": "FAIL",
+  "gate3": "NOT_OPENED",
+  "completed_evaluation_frames": 512,
+  "decoded_arms": [
+    "B0",
+    "O1"
+  ],
+  "unopened_arms": [
+    "B1",
+    "B2",
+    "B3"
+  ],
+  "all_replay_hash_checks": true,
+  "independent_review": {
+    "status": "PASS",
+    "P0": 0,
+    "P1": 0,
+    "P2": 3,
+    "scope": "raw_only_bypassed_project_reducer",
+    "audit_pair_recomputed_frames": 512,
+    "audit_scope": "persisted_summary_integrity_not_underlying_array_reconstruction"
+  },
+  "_meta": {
+    "script": "t077:receipt",
+    "common_md5": "49acdfa4",
+    "git_commit": "cde31b9",
+    "timestamp": "2026-08-30T10:07:36"
+  }
+}

@@ -1,0 +1,944 @@
+{
+  "query": "",
+  "timestamp": "2026-08-30T05:00:53.912440+08:00",
+  "sources": [
+    "citations_openalex"
+  ],
+  "total": 47,
+  "results": [
+    {
+      "title": "Digital communications",
+      "authors": [
+        "Owen Bishop"
+      ],
+      "venue": "",
+      "year": 2007,
+      "doi": "10.4324/9780080477527-64",
+      "arxiv_id": null,
+      "abstract": "In computers and other data processing devices, data is usually handled in bytes. Eight parallel lines carry one bit each. However, setting up eight separate transmission channels between a transmitter and a distant receiver is not practicable.",
+      "citation_count": 25096,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L001",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Fundamentals of Wireless Communication",
+      "authors": [
+        "David Tse",
+        "Pramod Viswanath"
+      ],
+      "venue": "Cambridge University Press eBooks",
+      "year": 2005,
+      "doi": "10.1017/cbo9780511807213",
+      "arxiv_id": null,
+      "abstract": "The past decade has seen many advances in physical layer wireless communication theory and their implementation in wireless systems. This textbook takes a unified view of the fundamentals of wireless communication and explains the web of concepts underpinning these advances at a level accessible to an audience with a basic background in probability and digital communication. Topics covered include MIMO (multi-input, multi-output) communication, space-time coding, opportunistic communication, OFDM and CDMA. The concepts are illustrated using many examples from real wireless systems such as GSM, IS-95 (CDMA), IS-856 (1 x EV-DO), Flash OFDM and UWB (ultra-wideband). Particular emphasis is placed on the interplay between concepts and their implementation in real systems. An abundant supply of exercises and figures reinforce the material in the text. This book is intended for use on graduate courses in electrical and computer engineering and will also be of great interest to practising engineers.",
+      "citation_count": 13393,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L002",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Fundamentals of Statistical Signal Processing: Estimation Theory",
+      "authors": [
+        "Sailes K. Sengijpta"
+      ],
+      "venue": "Technometrics",
+      "year": 1995,
+      "doi": "10.1080/00401706.1995.10484391",
+      "arxiv_id": null,
+      "abstract": "\"Fundamentals of Statistical Signal Processing: Estimation Theory.\" Technometrics, 37(4), pp. 465–466",
+      "citation_count": 11273,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L003",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Topics in Matrix Analysis",
+      "authors": [
+        "Roger A. Horn",
+        "Charles R. Johnson"
+      ],
+      "venue": "Cambridge University Press eBooks",
+      "year": 1991,
+      "doi": "10.1017/cbo9780511840371",
+      "arxiv_id": null,
+      "abstract": "Building on the foundations of its predecessor volume, Matrix Analysis, this book treats in detail several topics in matrix theory not included in the previous volume, but with important applications and of special mathematical interest. As with the previous volume, the authors assume a background knowledge of elementary linear algebra and rudimentary analytical concepts. Many examples and exercises of varying difficulty are included.",
+      "citation_count": 9539,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L004",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Digital communications",
+      "authors": [
+        "C. Christopoulos",
+        "A. Wright"
+      ],
+      "venue": "",
+      "year": 1999,
+      "doi": "10.1007/978-1-4757-5065-2_13",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 2752,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L005",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Self-Recovering Equalization and Carrier Tracking in Two-Dimensional Data Communication Systems",
+      "authors": [
+        "D. Godard"
+      ],
+      "venue": "IRE Transactions on Communications Systems",
+      "year": 1980,
+      "doi": "10.1109/tcom.1980.1094608",
+      "arxiv_id": null,
+      "abstract": "Conventional equalization and carrier recovery algorithms for minimizing mean-square error in digital communication systems generally require an initial training period during which a known data sequence is transmitted and properly synchronized at the receiver. This paper solves the general problem of adaptive channel equalization without resorting to a known training sequence or to conditions of limited distortion. The criterion for equalizer adaptation is the minimization of a new class of nonconvex cost functions which are shown to characterize intersymbol interference independently of carrier phase and of the data symbol constellation used in the transmission system. Equalizer convergence does not require carrier recovery, so that carrier phase tracking can be carried out at the equalizer output in a decision-directed mode. The convergence properties of the self-recovering algorithms are analyzed mathematically and confirmed by computer simulation.",
+      "citation_count": 2527,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L006",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Adaptive filter theory (2nd ed.)",
+      "authors": [
+        "S. Haykin"
+      ],
+      "venue": "Prentice-Hall, Inc eBooks",
+      "year": 1991,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 1906,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L007",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Digital filters for coherent optical receivers",
+      "authors": [
+        "Seb J. Savory"
+      ],
+      "venue": "Optics Express",
+      "year": 2008,
+      "doi": "10.1364/oe.16.000804",
+      "arxiv_id": null,
+      "abstract": "Digital filters underpin the performance of coherent optical receivers which exploit digital signal processing (DSP) to mitigate transmission impairments. We outline the principles of such receivers and review our experimental investigations into compensation of polarization mode dispersion. We then consider the details of the digital filtering employed and present an analytical solution to the design of a chromatic dispersion compensating filter. Using the analytical solution an upper bound on the number of taps required to compensate chromatic dispersion is obtained, with simulation revealing an improved bound of 2.2 taps per 1000ps/nm for 10.7GBaud data. Finally the principles of digital polarization tracking are outlined and through simulation, it is demonstrated that 100krad/s polarization rotations could be tracked using DSP with a clock frequency of less than 500MHz.",
+      "citation_count": 1217,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.1364/oe.16.000804",
+      "source_api": "openalex_citations",
+      "id": "L008",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Digital Communication Receivers: Synchronization, Channel Estimation, and Signal Processing",
+      "authors": [
+        "H. Meyr",
+        "Marc Moeneclaey",
+        "Stefan A. Fechtel"
+      ],
+      "venue": "",
+      "year": 2001,
+      "doi": "10.1002/0471200573",
+      "arxiv_id": null,
+      "abstract": "From the Publisher:\r\nDigital Communication Receivers offers a complete treatment on the theoretical and practical aspects of synchronization and channel estimation from the standpoint of digital signal processing. The focus on these increasingly important topics, the systematic approach to algorithm development, and the linked algorithm-architecture methodology in digital receiver design are unique features of this book. The material is structured according to different classes of transmission channels. In Part C, baseband transmission over wire or optical fiber is addressed. Part D covers passband transmission over satellite or terrestrial wireless channels. Part E deals with transmission over fading channels. Designed for the practicing communication engineer and the graduate student, the book places considerable emphasis on helpful examples, summaries, illustrations, and bibliographies. Contents include basic material, baseband communications, passband transmission, receiver structure for PAM signals, synthesis of synchronization algorithms, performance analysis of synchronizers, bit error degradation caused by random tracking errors, frequency estimation, timing adjustment by interpolation, DSP system implementation, characterization, modeling, and simulation of linear fading channels, detection and parameter synchronization on fading channels, receiver structures for fading channels, parameter synchronization for flat fading channels, and parameter synchronization for selective fading channels.",
+      "citation_count": 1034,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L009",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Nonlinear estimation of PSK-modulated carrier phase with application to burst digital transmission",
+      "authors": [
+        "Andrew J. Viterbi",
+        "A.M. Viterbi"
+      ],
+      "venue": "IEEE Transactions on Information Theory",
+      "year": 1983,
+      "doi": "10.1109/tit.1983.1056713",
+      "arxiv_id": null,
+      "abstract": "Burst transmission of digital data and voice has become commonplace, particularly in satellite communication systems employing time-division multiple-access (TI)MA) and packet demand-assignment multiple-access (DAMA) techniques. In TDMA systems particularly, phase estimation on each successive burst is a requirement, while bit timing and carrier frequency can be accurately tracked between bursts. A class of nonlinear estimation algorithms is described to estimate the unknown phase of a carrier which is fully modulated bym-ary PSK modulation. Performance of the method is determined in closed form and compared to the Cramér-Rao lower bound for the variance of the estimation error in the phase of an unmodulated carrier. Results are also obtained when the carrier frequency is imprecisely known. Finally, the effect of quantization and finite read-only-memory (ROM) implementation of the nonlinearity are determined by computer simulation.",
+      "citation_count": 1025,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L010",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Coherent detection in optical fiber systems",
+      "authors": [
+        "Ezra Ip",
+        "Alan Pak Tao Lau",
+        "Daniel J. F. Barros",
+        "Joseph M. Kahn"
+      ],
+      "venue": "Optics Express",
+      "year": 2008,
+      "doi": "10.1364/oe.16.000753",
+      "arxiv_id": null,
+      "abstract": "The drive for higher performance in optical fiber systems has renewed interest in coherent detection. We review detection methods, including noncoherent, differentially coherent, and coherent detection, as well as a hybrid method. We compare modulation methods encoding information in various degrees of freedom (DOF). Polarization-multiplexed quadrature-amplitude modulation maximizes spectral efficiency and power efficiency, by utilizing all four available DOF, the two field quadratures in the two polarizations. Dual-polarization homodyne or heterodyne downconversion are linear processes that can fully recover the received signal field in these four DOF. When downconverted signals are sampled at the Nyquist rate, compensation of transmission impairments can be performed using digital signal processing (DSP). Linear impairments, including chromatic dispersion and polarization-mode dispersion, can be compensated quasi-exactly using finite impulse response filters. Some nonlinear impairments, such as intra-channel four-wave mixing and nonlinear phase noise, can be compensated partially. Carrier phase recovery can be performed using feedforward methods, even when phase-locked loops may fail due to delay constraints. DSP-based compensation enables a receiver to adapt to time-varying impairments, and facilitates use of advanced forward-error-correction codes. We discuss both single- and multi-carrier system implementations. For a given modulation format, using coherent detection, they offer fundamentally the same spectral efficiency and power efficiency, but may differ in practice, because of different impairments and implementation details. With anticipated advances in analog-to-digital converters and integrated circuit technology, DSP-based coherent receivers at bit rates up to 100 Gbit/s should become practical within the next few years.",
+      "citation_count": 900,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.1364/oe.16.000753",
+      "source_api": "openalex_citations",
+      "id": "L011",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Blind equalization using the constant modulus criterion: a review",
+      "authors": [
+        "Roger D. Johnson",
+        "Philip Schniter",
+        "T.J. Endres",
+        "J.D. Behm",
+        "Donald R. Brown",
+        "R.A. Casas"
+      ],
+      "venue": "Proceedings of the IEEE",
+      "year": 1998,
+      "doi": "10.1109/5.720246",
+      "arxiv_id": null,
+      "abstract": "This paper provides a tutorial introduction to the constant modulus (CM) criterion for blind fractionally spaced equalizer (FSE) design via a (stochastic) gradient descent algorithm such as the constant modulus algorithm (CMA). The topical decisions utilized in this tutorial can be used to help catalog the emerging literature on the CM criterion and on the behavior of (stochastic) gradient descent algorithms used to minimize it.",
+      "citation_count": 862,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L012",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "PMD fundamentals: Polarization mode dispersion in optical fibers",
+      "authors": [
+        "J. P. Gordon",
+        "H. Kogelnik"
+      ],
+      "venue": "Proceedings of the National Academy of Sciences",
+      "year": 2000,
+      "doi": "10.1073/pnas.97.9.4541",
+      "arxiv_id": null,
+      "abstract": "This paper reviews the fundamental concepts and basic theory of polarization mode dispersion (PMD) in optical fibers. It introduces a unified notation and methodology to link the various views and concepts in Jones space and Stokes space. The discussion includes the relation between Jones vectors and Stokes vectors, rotation matrices, the definition and representation of PMD vectors, the laws of infinitesimal rotation, and the rules for PMD vector concatenation.",
+      "citation_count": 811,
+      "is_open_access": true,
+      "pdf_url": "https://www.ncbi.nlm.nih.gov/pmc/articles/34323",
+      "source_api": "openalex_citations",
+      "id": "L013",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Advanced methods for I/Q imbalance compensation in communication receivers",
+      "authors": [
+        "Mikko Valkama",
+        "Markku Renfors",
+        "V. Koivunen"
+      ],
+      "venue": "IEEE Transactions on Signal Processing",
+      "year": 2001,
+      "doi": "10.1109/78.950789",
+      "arxiv_id": null,
+      "abstract": "I/Q signal processing is widely utilized in today's communication receivers. However, all I/Q processing receiver structures, such as the low-IF receiver, face a common problem of matching the amplitudes and phases of the I and Q branches. In practice, imbalances are unavoidable in the analog front-end, which results in finite and usually insufficient rejection of the image frequency band. This causes the image signal to appear as interference on top of the desired signal. We carry out general signal analysis of an imbalanced I/Q processing receiver and propose novel methods for I/Q imbalance compensation using baseband digital signal processing. A simple structure for compensation is derived, based on a traditional adaptive interference canceller. Improved image rejection can also be obtained by using more advanced blind source separation techniques. Theoretical analysis of the performance of the proposed imbalance compensation structures is presented. In addition, some simulation results are provided in order to further evaluate the performance of the proposed methods. The results indicate that the I/Q imbalance can be effectively compensated during the normal operation of the receiver even in the rapidly changing case, as long as a linear system model for the imbalance is valid.",
+      "citation_count": 470,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L014",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Real-time measurements of a 40 Gb/s coherent system",
+      "authors": [
+        "Han Sun",
+        "Kuang-Tsan Wu",
+        "Kim Roberts"
+      ],
+      "venue": "Optics Express",
+      "year": 2008,
+      "doi": "10.1364/oe.16.000873",
+      "arxiv_id": null,
+      "abstract": "Continuous real-time measurements are shown from a coherent 40 Gb/s transmission system that uses Dual-Polarization Quadrature Phase Shift Keying (DP-QPSK) modulation. Digital compensation is used for dispersion and polarization effects, with little performance degradation created by 150 ps of rapidly varying 1st-order PMD.",
+      "citation_count": 429,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.1364/oe.16.000873",
+      "source_api": "openalex_citations",
+      "id": "L015",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Coherent Equalization and POLMUX-RZ-DQPSK for Robust 100-GE Transmission",
+      "authors": [
+        "C.R.S. Fludger",
+        "T. Duthel",
+        "D. van den Borne",
+        "C. Schulien",
+        "E.-D. Schmidt",
+        "T. Wuth",
+        "J.C. Geyer",
+        "E. De Man",
+        "Khoe Giok-Djan",
+        "H. de Waardt"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 2008,
+      "doi": "10.1109/jlt.2007.912128",
+      "arxiv_id": null,
+      "abstract": "We discuss the use of a coherent digital receiver for the compensation of linear transmission impairments and polarization demultiplexing in a transmission system compatible with a future 100-Gb/s Ethernet standard. We present experimental results on the transmission performance of 111 Gbit/s POLMUX-RZ-DQPSK. For a dense WDM setup with channels carrying 111 Gbit/s with a 50 GHz channel spacing (2.0 bits/s/Hz), we show the feasibility of 2375 km transmission. This is enabled through coherent detection which results in excellent noise performance, and subsequent electronic equalization which provides the high tolerance to polarization mode dispersion and chromatic dispersion (CD). Furthermore, we discuss the impact of sampling and digital signal processing with either 1 or 2 samples/bit. We show that when combined with low-pass electrical filtering, 1 sample/bit signal processing is sufficient to obtain a large tolerance towards CD. The proposed modulation and detection techniques enable 111 Gbit/s transmission that is directly compatible with the existing 10 Gbit/s infrastructure.",
+      "citation_count": 398,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L016",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Digital Equalization of Chromatic Dispersion and Polarization Mode Dispersion",
+      "authors": [
+        "Ezra Ip",
+        "Joseph M. Kahn"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 2007,
+      "doi": "10.1109/jlt.2007.900889",
+      "arxiv_id": null,
+      "abstract": "In this paper, we consider a fractionally spaced equalizer (FSE) for electronic compensation of chromatic dispersion (CD) and polarization-mode dispersion (PMD) in a dually polarized (polarization-multiplexed) coherent optical communications system. Our results show that the FSE can compensate any arbitrary amount of CD and first-order PMD distortion, provided that the oversampling rate is at least 3/2 and that a sufficient number of equalizer taps are used. In contrast, the amount of CD and PMD that can be corrected by a symbol-rate equalizer only approaches an asymptotic limit, and increasing the number of taps has no effect on performance due to aliasing that causes signal cancellation and noise enhancement.",
+      "citation_count": 318,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L017",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Compensation of Quadrature Imbalance in an Optical QPSK Coherent Receiver",
+      "authors": [
+        "Irshaad Fatadin",
+        "Seb J. Savory",
+        "D. J. G. Ives"
+      ],
+      "venue": "IEEE Photonics Technology Letters",
+      "year": 2008,
+      "doi": "10.1109/lpt.2008.2004630",
+      "arxiv_id": null,
+      "abstract": "This letter explores the Gram-Schmidt orthogonalization procedure (GSOP) for compensation of quadrature imbalance in an optical 90deghybrid. We present computer simulations for an optical QPSK communication system using a digital coherent receiver and investigate the impact of quadrature imbalance on the required optical signal-to-noise ratio for the receiver and the frequency estimation algorithm. We then demonstrate the improvement which can be achieved using the GSOP, including the impact of quantization in the digital coherent receiver. Finally, we show that the GSOP can equally be applied to polarization-division multiplexed systems, applying the GSOP in conjunction with the constant modulus algorithm to demultiplex a PDM-QPSK signal.",
+      "citation_count": 283,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L018",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Coherent optical communication using polarization multiple-input-multiple-output",
+      "authors": [
+        "Yan Han",
+        "Guifang Li"
+      ],
+      "venue": "Optics Express",
+      "year": 2005,
+      "doi": "10.1364/opex.13.007527",
+      "arxiv_id": null,
+      "abstract": "Polarization-division multiplexed (PDM) optical signals can potentially be demultiplexed by coherent detection and digital signal processing without using optical dynamic polarization control at the receiver. In this paper, we show that optical communications using PDM is analogous to wireless communications using multiple-input-multiple-output (MIMO) antennae and thus algorithms for channel estimation in wireless MIMO can be ready applied to optical polarization MIMO (PMIMO). Combined with frequency offset and phase estimation algorithms, simulations show that PDM quadrature phase-shift keying signals can be coherently detected by the proposed scheme using commercial semiconductor lasers while no optical phase locking and polarization control are required. This analogy further suggests the potential application of space-time coding in wireless communications to optical polarization MIMO systems and relates the problem of polarization-mode dispersion in fiber transmission to the multi-path propagation in wireless communications.",
+      "citation_count": 245,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.1364/opex.13.007527",
+      "source_api": "openalex_citations",
+      "id": "L019",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Feedforward frequency estimation for PSK: A tutorial review",
+      "authors": [
+        "Michele Morelli",
+        "U. Mengali"
+      ],
+      "venue": "European Transactions on Telecommunications",
+      "year": 1998,
+      "doi": "10.1002/ett.4460090203",
+      "arxiv_id": null,
+      "abstract": "Abstract This paper considers feedforward carrier frequency estimation methods in burst‐mode digital transmission, with tutorial objectives foremost. Assuming PSK modulation, two scenarios are envisaged in which frequency estimates are derived either from a preamble appended to the data block, or directly from the modulated signal. Several estimation algorithms are considered with different and somewhat contrasting characteristics. The characteristics we focus on are: estimation accuracy, estimation range, minimum operating signal‐to‐noise ratio (threshold), and implementation complexity. They provide a framework within which current estimation methods can be evaluated. The paper reviews and compares some prominent algorithms proposed in literature, trying to single out the best ones for a given application.",
+      "citation_count": 199,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L020",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Performance analyses of polarization demultiplexing based on constant-modulus algorithm in digital coherent optical receivers",
+      "authors": [
+        "K. Kikuchi"
+      ],
+      "venue": "Optics Express",
+      "year": 2011,
+      "doi": "10.1364/oe.19.009868",
+      "arxiv_id": null,
+      "abstract": "In the digital coherent optical receiver, we can achieve polarization demultiplexing in the digital domain, using a two-by-two matrix controlled by the constant-modulus algorithm (CMA). In this paper, after elucidating the physics behind CMA for polarization demultiplexing, we discuss the performance limit of CMA-based polarization demultiplexing through computer simulations. The method of improving its performance is also demonstrated.",
+      "citation_count": 102,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.1364/oe.19.009868",
+      "source_api": "openalex_citations",
+      "id": "L021",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "New processing techniques based on the constant modulus adaptive algorithm",
+      "authors": [
+        "J Treichler",
+        "M. Larimore"
+      ],
+      "venue": "IEEE Transactions on Acoustics Speech and Signal Processing",
+      "year": 1985,
+      "doi": "10.1109/tassp.1985.1164567",
+      "arxiv_id": null,
+      "abstract": "This paper presents three extensions of the constant modulus algorithm (CMA) introduced in an earlier paper as a means of correcting degradations in constant enyelope waveforms. As originally formulated, the CMA employs an FIR filter with complex coefficients and accepts complex (quadrature) input data. In this paper, first a real input, real coefficient version of the algorithm is shown to perform arbitrarily close to the fully complex version. Secondly, the algorithm is extended for the enhancement of signals having a nonconstant but known envelope, as might arise in data signals with pulse shaping. Lastly, a multichannel version of CMA, wherein several observations are linearly combined, is presented for joint adaptation of multiple filters. This approach can be used, for example, as a means of spatial or polarization \"beamsteering\" to reject additive interferers and compensate for channel-induced polarization rotation.",
+      "citation_count": 256,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L022",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Polarization of Light",
+      "authors": [
+        "Serge J. Huard"
+      ],
+      "venue": "CERN Document Server (European Organization for Nuclear Research)",
+      "year": 1997,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "Polarized Optical Waves. Light Propagation in an Anisotropic Dielectric Medium. Propagation of the States of Polarization in Optical Devices. Stress--Induced or Stress--Modified Anisotropy. Components and Devices Used in the Context of Optical Anisotropy. Polarization Phenomena in the Fied of Guided Waves. Appendices. Bibliography. Index.",
+      "citation_count": 212,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L023",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "PLL-free synchronous QPSK polarization multiplex/diversity receiver concept with digital I&Q baseband processing",
+      "authors": [
+        "R. Noé"
+      ],
+      "venue": "IEEE Photonics Technology Letters",
+      "year": 2005,
+      "doi": "10.1109/lpt.2004.842795",
+      "arxiv_id": null,
+      "abstract": "This synchronous quadrature-phase-shift keying (QPSK) receiver concept allows us to process signals in parallel after electronic demultiplexing. An automatic electronic polarization control with a control time constant in the low microsecond range is provided. It is followed by a phase-locked loop free carrier recovery. An intermediate frequency linewidth tolerance of up to 10/sup -3/ times the QPSK symbol rate is expected. Commercially available distributed feedback lasers shall, therefore, suffice.",
+      "citation_count": 164,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L024",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Phase noise-tolerant synchronous QPSK/BPSK baseband-type intradyne receiver concept with feedforward carrier recovery",
+      "authors": [
+        "R. Noé"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 2005,
+      "doi": "10.1109/jlt.2004.838818",
+      "arxiv_id": null,
+      "abstract": "Quadrature phase-shift keying (QPSK) is attractive to increase transmission lengths and capacity, especially when it is combined with polarization division multiplex. Baseband processing at the symbol rate allows to keep the required electronic bandwidth low. So far, external cavity lasers seemed to be indispensable for such transmission systems due to linewidth requirements. We propose a feedforward carrier recovery scheme based on regenerative intradyne frequency dividers, i.e., the well-known regenerative frequency divider is extended to process baseband in-phase and quadrature (I and Q) signals. An IF linewidth tolerance of up to 0.001 times the QPSK symbol rate is predicted, 2 decades more than for an optical phase locked loop with a realistic loop delay. This means that commercially available DFB lasers shall suffice for synchronous optical QPSK/BPSK transmission.",
+      "citation_count": 152,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L025",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Linear Fiber Impairments Mitigation of 40-Gbit/s Polarization-Multiplexed QPSK by Digital Processing in a Coherent Receiver",
+      "authors": [
+        "Jérémie Renaudier",
+        "Gabriel Charlet",
+        "M. Salsi",
+        "Oriol Bertran Pardo",
+        "H. Mardoyan",
+        "P. Tran",
+        "S. Bigo"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 2008,
+      "doi": "10.1109/jlt.2007.911893",
+      "arxiv_id": null,
+      "abstract": "To provide higher capacity networks, 40-Gb/s transmission systems are under active development and their cost is on the way to be competitive with the one of 410 Gb/s. However, their lower tolerance to linear and nonlinear fiber impairments remains a major drawback for field deployment. To address the issue of linear impairments, coherent detection of multilevel formats with polarization division multiplexing appears as a promising solution by reducing the symbol rate to 10 Gbaud. Indeed, such coherent based systems have already demonstrated an improved tolerance to optical noise and an interesting capability to compensate for large amount of chromatic dispersion. In this paper, the tolerances to narrow optical filtering, chromatic dispersion, and polarization mode dispersion are investigated with coherent detection of 10-Gbaud quadrature phase shift keying (QPSK) with and without polarization division multiplexing. Moreover, the efficient mitigation of these linear impairments by digital processing in a coherent receiver is demonstrated in an ultralong haul transmission (4080 km) of 40-Gb/s QPSK polarization multiplexed data.",
+      "citation_count": 97,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L026",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Statistics of polarization dependent losses",
+      "authors": [
+        "Nicolas Gisin"
+      ],
+      "venue": "Optics Communications",
+      "year": 1995,
+      "doi": "10.1016/0030-4018(95)00687-4",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 87,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L027",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Tracking Performance of Least Squares MIMO Channel Estimation Algorithm",
+      "authors": [
+        "Ebrahim Karami"
+      ],
+      "venue": "IEEE Transactions on Communications",
+      "year": 2007,
+      "doi": "10.1109/tcomm.2007.908549",
+      "arxiv_id": null,
+      "abstract": "In this paper, the tracking performance analysis of the least squares (LS) multiple-input multiple-output (MIMO) channel estimation and tracking algorithm is presented. MIMO channel estimation is a novel application of the LS algorithm that presents near-optimum performance by Karami and Shiva in 2003 and 2006. In this paper, the mean square error (MSE) of tracking of the LS MIMO channel estimator algorithm is derived as a closed-form function of the Doppler shift, forgetting factor, channel rank, and the length of training sequences. In the analysis, all training symbols are considered as randomly generated equal-power vectors on the unit circle, or in other words, phase-shift keying (PSK) signaling. By evaluating this function, some insights into the tracking behavior of the LS MIMO channel estimator are achieved. Then, the calculated tracking error is compared with the tracking error derived from Monte Carlo simulation for quaternary-PSK-based training signals to verify the validation of the presented analysis. Finally, the optimum forgetting factor is derived to minimize the error function, and it is shown that the optimum forgetting factor is highly dependent on the training length, Doppler shift, and Eb/No. Also, it is concluded that in low Eb/Novalues, the number of transmitter antennas has negligible effect on the optimal value of the forgetting factor.",
+      "citation_count": 72,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L028",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Polarization-demultiplexing algorithm in the digital coherent receiver",
+      "authors": [
+        "K. Kikuchi"
+      ],
+      "venue": "",
+      "year": 2008,
+      "doi": "10.1109/leosst.2008.4590509",
+      "arxiv_id": null,
+      "abstract": "The constant-modulus algorithm has been widely applied to demultiplexing of dual polarizations with a digital coherent receiver. This paper elucidates the physics behind this algorithm, and proposes a modified method of assuring proper polarization demultiplexing.",
+      "citation_count": 68,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L029",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Coherent optical communication systems",
+      "authors": [
+        "K. Kikuchi"
+      ],
+      "venue": "Elsevier eBooks",
+      "year": 2008,
+      "doi": "10.1016/b978-0-12-374172-1.00003-5",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 58,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L030",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "High-Spectral-Efficiency 114-Gb/s Transmission Using PolMux-RZ-8PSK Modulation Format and Single-Ended Digital Coherent Detection Technique",
+      "authors": [
+        "Xiang Zhou",
+        "Jianjun Yu",
+        "Dayou Qian",
+        "Ting Wang",
+        "Guodong Zhang",
+        "Peter Magill"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 2009,
+      "doi": "10.1109/jlt.2008.2008661",
+      "arxiv_id": null,
+      "abstract": "Employing spectrally efficient PolMux-RZ-8PSK modulation format and single-ended digital coherent detection technique, we demonstrate 8 times 114-Gb/s DWDM transmission over 640 km of SSMF on a 25-GHz grid with record spectral efficiency of 4.2 bit/s/Hz, utilizing no optical dispersion compensation or Raman amplification. We show that the distortion caused by the direct square-law detection of the signal component with single-ended photo detection can be effectively mitigated by a novel DSP algorithm.",
+      "citation_count": 36,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L031",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "WDM Performance and PMD Tolerance of a Coherent 40-Gbit/s Dual-Polarization QPSK Transceiver",
+      "authors": [
+        "Charles Laperle",
+        "B. Villeneuve",
+        "Zhuhong Zhang",
+        "D. McGhan",
+        "Han Sun",
+        "Maurice O’Sullivan"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 2008,
+      "doi": "10.1109/jlt.2007.913071",
+      "arxiv_id": null,
+      "abstract": "We report the measured wavelength-division-multiplexing (WDM) performance and polarization-mode dispersion (PMD) tolerance of a coherent 40-Gbit/s dual-polarization quadrature phase shift keying (DP-QPSK) transceiver at 50-GHz minimum channel spacing in a 40-channel 40-span test bed comprised of 3200 km of uncompensated G.652 fiber. We also evaluate the impact of polarization-dependent loss (PDL) on system performance and present the measured tolerance to frequency misalignment between the transmitter and a multiplexer/demultiplexer filter pair.",
+      "citation_count": 70,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L032",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "112-Gb/s polarization-multiplexed 16-QAM on a 25-GHz WDM grid",
+      "authors": [
+        "Peter J. Winzer",
+        "A.H. Gnauck"
+      ],
+      "venue": "",
+      "year": 2008,
+      "doi": "10.1109/ecoc.2008.4729573",
+      "arxiv_id": null,
+      "abstract": "We demonstrate intradyne detection of 112-Gb/s 16-QAM (14-Gbaud, polarization-multiplexed) in a 10-channel WDM environment on a 25-GHz grid. We show the robustness of a central channel to multiple add/drop filtering and transmission over 315 km.",
+      "citation_count": 63,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L033",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "A real-time CMA-based 10 Gb/s polarization demultiplexing coherent receiver implemented in an FPGA",
+      "authors": [
+        "A. Leven",
+        "Noriaki Kaneda",
+        "Young-Kai Chen"
+      ],
+      "venue": "",
+      "year": 2008,
+      "doi": "10.1109/ofc.2008.4528649",
+      "arxiv_id": null,
+      "abstract": "One advantage of signal-processing based coherent receivers is the ability to polarization-demultiplex in the digital domain. In this paper, we report on an FPGA-based-real-time implementation of a 10 Gb/s receiver with a CMA-based demultiplexer.",
+      "citation_count": 51,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L034",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Polarization demultiplexing based on independent component analysis in optical coherent receivers",
+      "authors": [
+        "H. Zhang",
+        "Zhenning Tao",
+        "Long Liu",
+        "Shunri Oda",
+        "Takeshi Hoshida",
+        "Jens C. Rasmussen"
+      ],
+      "venue": "",
+      "year": 2008,
+      "doi": "10.1109/ecoc.2008.4729129",
+      "arxiv_id": null,
+      "abstract": "A novel independent component analysis based algorithm is proposed for polarization demultiplexing. It solves the converge-to-same-source problem of constant modulus algorithm while possesses similar polarization tracking capability.",
+      "citation_count": 44,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L035",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Adaptive digital equalization in the presence of chromatic dispersion, PMD, and phase noise in coherent fiber optic systems",
+      "authors": [
+        "D.E. Crivelli",
+        "Hugo S. Carrer",
+        "Mario R. Hueda"
+      ],
+      "venue": "",
+      "year": 2005,
+      "doi": "10.1109/glocom.2004.1378465",
+      "arxiv_id": null,
+      "abstract": "Chromatic dispersion (CD) and polarization mode dispersion (PMD) severely limit the performance of optical transmission systems operating at and above 10 Gb/s. Electrical equalization techniques have been proposed to compensate dispersion in both coherent and intensity modulation/direct-detection (IM/DD) systems. We investigate the combined adaptive digital equalization of all-order PMD, CD, and laser phase noise in high-speed coherent optical transmission systems. Simultaneous equalization of these impairments has not been reported previously and is particularly important in modulation systems that exploit polarization to increase modulation efficiency. We propose a novel 4-dimensional equalizer structure for joint polarization modulation and M-ary differential phase shift keying (JPMDPSK) systems. The specific example considered is 40 Gb/s transmission with a 10 GBaud symbol rate, using DQPSK modulation on each axis of polarization. Our results show that the new four-dimensional equalizer can compensate channel dispersion of up to 1000 km of standard single-mode fiber, with less than 3 dB penalty in signal-to-noise ratio (SNR). This is a dramatic improvement over 40 Gb/s IM/DD systems. The feasibility of the very large scale integration (VLSI) of coherent receivers in current technology is also discussed.",
+      "citation_count": 41,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L036",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Integrated optics eight-port 90 degrees hybrid on LiNbO/sub 3/",
+      "authors": [
+        "D. Hoffman",
+        "H. Heidrich",
+        "G. Wenke",
+        "R. Langenhorst",
+        "E. Dietrich"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 1989,
+      "doi": "10.1109/50.19116",
+      "arxiv_id": null,
+      "abstract": "The design, fabrication, and characterization of an integrated optical eight-port 90 degrees hybrid in LiNbO/sub 3/ are discussed. The hybrid is realized as a bridge circuit comprising four directional couplers and two phase shifters, each of the devices being electrooptically tunable. The electrodes are fabricated as combined indium-tin-oxide/gold multilayers. The component provides the desired phase pattern of the intermediate frequency. Measurements on the phase stability of the integrated bridge show phase fluctuations of>",
+      "citation_count": 66,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L037",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "All-fiber 90° optical hybrid for coherent communications",
+      "authors": [
+        "L.G. Kazovsky",
+        "L. Curtis",
+        "William C. Young",
+        "Nim Cheung"
+      ],
+      "venue": "Applied Optics",
+      "year": 1987,
+      "doi": "10.1364/ao.26.000437",
+      "arxiv_id": null,
+      "abstract": "A 90 degrees optical hybrid is a four-port optical device with two inputs and two outputs. The two output signals are proportional to E(1) + E(2) and E(1) + E(2) exp(j90 degrees ), respectively, where E(1) and E(2) are the complex amplitudes of the two input signals. The 90 degrees hybrids are needed in many applications, including homodyne optical receivers in both phase-locked and phase-diversity configurations. In this paper, the principle of operation of an all-fiber 90 degrees hybrid is described, and an experimental unit using connectorized in-line single-mode fiber components is reported.",
+      "citation_count": 59,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L038",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Cross polarization interference cancellation for fiber optic systems",
+      "authors": [
+        "M.T. Core"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 2006,
+      "doi": "10.1109/jlt.2005.859828",
+      "arxiv_id": null,
+      "abstract": "One method of improving the bandwidth efficiency of a fiber optic communication system is to use polarization multiplexing, where independent signals are transmitted with orthogonal polarizations. A receiver can reconstruct both signals without interference by tracking their polarizations as long as they remain orthogonal. Since orthogonality is lost to some extent during propagation through an optical fiber, a polarization tracking system will incur a signal crosstalk penalty. A new and practical method using cross polarization interference cancellation (XPIC) is proposed to correct for the loss of orthogonality incurred during propagation through an optical fiber. The system optimally reconstructs both signals at the receiver and eliminates the need for conventional polarization tracking. XPI cancellation uses fewer lasers than conventional polarization interleave multiplexing and can also mitigate effects that currently limit link performance such as chromatic and polarization mode dispersion (PMD).",
+      "citation_count": 21,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L039",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "8×114 Gb/s, 25-GHz-spaced, PolMux-RZ-8PSK transmission over 640 km of SSMF employing digital coherent detection and EDFA-only amplification",
+      "authors": [
+        "Xiang Zhou",
+        "Jianjun Yu",
+        "Dayou Qian",
+        "Ting Wang",
+        "Guodong Zhang",
+        "Peter Magill"
+      ],
+      "venue": "Medical Entomology and Zoology",
+      "year": 2008,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "Employing PolMux-RZ-8PSK modulation format and coherent detection, we demonstrate 8×114Gb/s DWDM transmission over 640km of SSMF on a 25GHz grid with record spectral efficiency of 4.2bit/s/Hz, utilizing no optical dispersion compensation or Raman amplification.",
+      "citation_count": 53,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L040",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Compensation of coherent DQPSK receiver imperfections",
+      "authors": [
+        "I. Roudas",
+        "M. Sauer",
+        "Jason E. Hurley",
+        "Yihong Mauro",
+        "S. Raghavan"
+      ],
+      "venue": "LEOS 1993 Summer Topical Meeting Digest on Optical Microwave Interactions/Visible Semiconductor Lasers/Impact of Fiber Nonlinearities on Lightwave Systems/Hybrid Optoelectronic Integration and Packagi",
+      "year": 2007,
+      "doi": "10.1109/leosst.2007.4288310",
+      "arxiv_id": null,
+      "abstract": "This paper studies the impact of imperfections and impairments on the performance of a coherent phase-diversity DQPSK receiver. Experiments demonstrate that quadrature imbalance can be corrected by ellipse fitting and Gram-Schmidt-like orthogonalization. In addition, it is shown that intermediate frequency offset can be estimated using low complexity, feed-forward, least-square-error based algorithms.",
+      "citation_count": 9,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L041",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Digital, endless polarization control for polarization multiplexed fiber-optic communications",
+      "authors": [
+        "M. Tseytlin",
+        "O. Ritterbush",
+        "Á. Salamon"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 2004,
+      "doi": "10.1109/ofc.2003.1247523",
+      "arxiv_id": null,
+      "abstract": "A novel digital polarization controller with endless polarization compensation using discrete time processing is presented and its performance is modeled numerically. The design solves the problem of endless control for arbitrary input state of polarization (SOP) compensation.",
+      "citation_count": 14,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L042",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Impact of transmitter and receiver imperfections on the performance of coherent optical QPSK communication systems",
+      "authors": [
+        "C. S. Petrou",
+        "Athanasios Vgenis",
+        "Asimina Kiourti",
+        "I. Roudas",
+        "Jason E. Hurley",
+        "M. Sauer",
+        "John D. Downie",
+        "Yihong Mauro",
+        "S. Raghavan"
+      ],
+      "venue": "",
+      "year": 2008,
+      "doi": "10.1109/leos.2008.4688664",
+      "arxiv_id": null,
+      "abstract": "We investigate transmitter and receiver imperfections in coherent QPSK systems, and how their impact can be mitigated using DSP algorithms. Quadrature imbalance was found to be a particularly significant effect that will require compensation.",
+      "citation_count": 9,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L043",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Adaptive filter theory",
+      "authors": [
+        "Steven C. Rogers"
+      ],
+      "venue": "Control Engineering Practice",
+      "year": 1996,
+      "doi": "10.1016/0967-0661(96)82838-3",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 9312,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L044",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Fundamentals of statistical signal processing: Estimation theory",
+      "authors": [
+        "Kislaya Prasad"
+      ],
+      "venue": "Control Engineering Practice",
+      "year": 1994,
+      "doi": "10.1016/0967-0661(94)90195-3",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 7939,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L045",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Digital Communication",
+      "authors": [
+        "Robert W. Heath",
+        "A.A. Salvekar"
+      ],
+      "venue": "The Internet Encyclopedia",
+      "year": 2004,
+      "doi": "10.1002/047148296x.tie040",
+      "arxiv_id": null,
+      "abstract": "Abstract Digital communication is the broad area that deals with the transmission and reception of binary information across analog channels. Digital communication empowers the Internet since it is the primary mechanism for conveying information across the diverse media employed including optical fiber, copper wire, and air. This chapter summarizes the fundamental concepts of digital communication in an exposition that is independent of the transmission medium. The basic principles of digital communication are described, important concepts are highlighted, and the primary performance metrics and system constraints are summarized. Supplemental references to more complete treatments of digital communication systems are given.",
+      "citation_count": 240,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L046",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Performance Outages in CWDM Optical Networks due to the Polarization-Dependent Gain of Semiconductor Optical Amplifiers",
+      "authors": [
+        "I. Roudas",
+        "N. Antoniades"
+      ],
+      "venue": "IEEE Photonics Technology Letters",
+      "year": 2006,
+      "doi": "10.1109/lpt.2006.888038",
+      "arxiv_id": null,
+      "abstract": "This letter presents, for the first time, the derivation of analytical formulae for the probability density function and the cumulative density function (cdf) of the optical signal-to-noise ratio variation in optical local and metropolitan area networks employing coarse wavelength-division multiplexing due to the weak polarization-dependent gain (PDG) of cascaded semiconductor optical amplifiers (SOAs). The cdf is used to calculate the outage probability and to derive specifications for the maximum allowable value of PDG per SOA in order to achieve a given network size.",
+      "citation_count": 1,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L047",
+      "download": false,
+      "publication_status": "published"
+    }
+  ]
+}

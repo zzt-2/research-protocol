@@ -1,0 +1,32 @@
+{
+  "query": "10.1186/s13638-018-1136-z",
+  "timestamp": "2026-08-30T02:33:45.249166+08:00",
+  "sources": [
+    "citations_both"
+  ],
+  "total": 1,
+  "results": [
+    {
+      "title": "Geometric Shaping of 2-D Constellations in the Presence of Laser Phase Noise",
+      "authors": [
+        "Hubert Dzieciol",
+        "Gabriele Liga",
+        "Eric Sillekens",
+        "Polina Bayvel",
+        "Domaniç Lavery"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 2020,
+      "doi": "10.1109/jlt.2020.3031017",
+      "arxiv_id": null,
+      "abstract": "In this article, we propose a geometric shaping (GS) strategy to design 8, 16, 32, and 64 -ary modulation formats for the optical fibre channel impaired by both additive white Gaussian (AWGN) and phase noise. The constellations were optimised to maximise generalised mutual information (GMI) using a mismatched channel model. The presented formats demonstrate an enhanced signal-to-noise ratio (SNR) tolerance in high phase noise regimes when compared with their quadrature amplitude modulation (QAM) or AWGN-optimised counterparts. By putting the optimisation results in the context of the 400ZR implementation agreement, we show that GS alone can either relax the laser linewidth (LW) or carrier phase estimation (CPE) requirements of 400 Gbit/s transmission links and beyond. Following the GMI validation, the performance of the presented formats was examined in terms of post forward error correction (FEC) bit-error-rate (BER) for a soft decision (SD) extended Hamming code (128, 120), implemented as per the 400ZR implementation agreement. We demonstrate gains of up to 1.2 dB when compared to the 64 -ary AWGN shaped formats.",
+      "citation_count": 37,
+      "is_open_access": true,
+      "pdf_url": "https://arxiv.org/pdf/2007.10473",
+      "source_api": "openalex_citations+openalex_citations+s2_citations",
+      "id": "L001",
+      "download": true,
+      "publication_status": "published"
+    }
+  ]
+}

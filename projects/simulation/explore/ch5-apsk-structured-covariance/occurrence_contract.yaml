@@ -1,0 +1,47 @@
+schema_version: t063.receiver-residual-bridge.v2
+authority: D046/T060/T063
+scope: [BRIDGE_CORRECTNESS_ONLY, TARGET_OCCURRENCE_NOT_RUN, NO_METHOD_SIGNAL]
+physical_order:
+  - one continuous Ch4 acquisition preamble + observation realization
+  - shared scalar GG/CFO/Wiener, then one unitary Jones, then circular AWGN
+  - Ch4 demux/RDE with caller-injected frozen arm
+  - per-polarization Ch3 DA CPR
+  - pilot-only minimum-SSE selection over 8 APSK rotations
+  - known-pilot residual e = z_pilot - x_pilot
+truth_firewall:
+  deployable_allowed: [received_samples, known_pilots, pilot_indices, pilot_labels, frozen_ch4_config]
+  offline_only: [payload_labels, payload_bits, true_jones, true_phase, true_snr]
+  cross_polarization_pooling: false
+bundle_required:
+  - z_pilot
+  - x_pilot
+  - e
+  - pilot_indices
+  - point_labels
+  - ring_labels
+  - per_pol_point_counts
+  - per_point_counts
+  - known_mask
+  - cpr_mode
+  - estimated_phase
+  - estimated_frequency_hz
+  - ambiguity_index
+  - ch4_arm
+  - frozen_ch4_snapshot
+  - ch4_W
+  - ch4_gate_summary
+  - realization_timing
+  - cell_id
+  - seed
+  - window_id
+  - config_id
+  - source_id
+  - realization_hash
+  - bundle_hash
+authorization:
+  frozen_ch4_arm_required: true
+  frozen_ch4_snapshot_required: [arm_id, mode, mu, ring_threshold, decision_threshold]
+  natural_occurrence: false
+  performance_grid: false
+  parameter_tuning: false
+  new_impairments: false

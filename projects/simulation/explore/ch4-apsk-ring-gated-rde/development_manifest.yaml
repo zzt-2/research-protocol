@@ -1,0 +1,38 @@
+schema_version: ch4.gated-rde.development.v1
+authority: .sessions/2026-07-09-thesis-writing/T059-ch4-bounded-gated-rde-development.md
+verdict_ceiling: PROVISIONAL
+payload_symbols: 8192
+block_symbols: 256
+tune_seeds: [54101, 54102, 54103]
+eval_seeds: [54201, 54202, 54203, 54204, 54205, 54206]
+confirmation_seeds_reserved: [54301]
+round1_cells:
+  - {id: D1, snr_db: 14, pilots: 2}
+  - {id: D2, snr_db: 18, pilots: 2}
+  - {id: D3, snr_db: 14, pilots: 8}
+round2_cells:
+  - {id: D4, snr_db: 14, pilots: 4}
+  - {id: D5, snr_db: 18, pilots: 4}
+  - {id: D6, snr_db: 18, pilots: 8}
+tuning:
+  plain_oracle_mu: [0.00001, 0.0000177827941, 0.0000316227766, 0.0000562341325, 0.0001, 0.000177827941, 0.000316227766, 0.000562341325, 0.001]
+  gated_mu: [0.0000316, 0.0001, 0.000316]
+  thresholds: [0.05, 0.2, 0.8]
+  objective: mean_log10_jeffreys_ber_across_9_tune_realizations
+  tie_break: within_1pct_geometric_ber_then_higher_accepted_fraction_then_smaller_mu
+round1_gate:
+  relative_ber_gain: 0.10
+  paired_wins_of_6: 5
+  oracle_gap_recovery: 0.20
+  auc_for_gap_route: 0.60
+  stop_auc: 0.55
+  stop_oracle_headroom: 0.10
+underpowered_error_count: 100
+bootstrap_replicates: 2000
+bootstrap_seed: 20260830
+physical_slice:
+  constellation: DP-(8,8)-16APSK
+  jones: fixed memoryless unitary SU(2)
+  noise: equal circular AWGN
+  pilots: finite orthogonal prefix
+  disabled: [GG, CFO, phase_noise, time_varying_SOP, IQ, filtering, FIR, PDL, PMD, CD, LDPC]

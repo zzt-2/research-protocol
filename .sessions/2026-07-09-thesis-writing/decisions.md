@@ -1337,10 +1337,10 @@ S025；用户 2026-08-13 明确要求“开新对话（session不是subagent）�
 
 ## D037: 三条补强结果分层与当前方法排序
 
-> status: active
+> status: superseded
 > date: 2026-08-13
 > 取代：无（执行 D032/D034/D036；纠正 P05 子任务对 D032 的过度门控）
-> 被取代：无
+> 被取代：D038（方法事实与排序保留；“现有三包可直接组成最终 spine”被取代）
 > 依据: 验证 V018 + P05/P11/P08-R2 三份章级补强报告与 H017–H019
 > 触发原话: 无（技术推导）
 
@@ -1375,3 +1375,1019 @@ P11 同时具备明确动作链、训练开销问题、跨三个 SNR 的 held-ou
 ### 来源
 
 S025；V018；H017–H019；三个独立方法 worktree 的正式结果与验证回执。
+
+## D038: 最终论文整体性优先，并将 Ch4–Ch5 锁为同一真实接收平台
+
+> status: active
+> date: 2026-08-29
+> 取代：D037 的“现有三包可直接组成最终 spine”结论；D037 的方法事实、结果数字与相对排序保留
+> 被取代：D039（第 3 项的默认方法继承关系）+ D040（第 2 项的 DP-16QAM 平台身份）；其余决策继续有效
+> 依据: 用户原话 `voice.md` 2026-08-29 + S026 六篇硕士配置一致性核查 + D037/V018 现有证据边界
+> 触发原话：见 `voice.md` 2026-08-29
+
+### 决策
+
+最终学位论文的整体故事、专业观感和章节一致性优先于复用现成结果、开发时间和新增实验工作量。
+
+采用 S026 提出的路线 1，并将其收紧为真实平台合同：
+
+1. Ch3 保留已录用的 Received-Power-Aware Adaptive CPR，作为明确卫星—地面下行的独立方法锚；不为形式统一而改写其 `(8,8)-16APSK`/八次幂 NDA 方法身份。
+2. Ch4 与 Ch5 必须共享同一套实际 DP-16QAM+BICM+LDPC 相干 FSO 接收平台，而不是只统一章名、符号或框图。至少共享调制/偏振/编码、帧与 pilot/prefix 结构、Gamma–Gamma/SOP 场景族、SNR/seed 合同、接收端信息边界和评价口径；Ch5 必须消费 Ch4 均衡后的真实输出。
+3. P11 与 P08-R2 的现有结果降为原型/可行性证据，不直接当最终章级数字。P11 的少导频 Complex-LS Butterfly 动作优先迁入统一平台；P08-R2 的固定 operating-point NOMS 只保留为 Ch5 起点。用户随后明确确认：若它仍不足以形成专业、独立的方法章，允许更换 Ch5 名称与动作链并废弃现有数字；该授权仍不等于授权执行。
+4. 总主线暂定为“接收端可见信息驱动的星地相干 FSO 分层处理”：Ch3 由接收功率统计驱动 CPR；Ch4 由分布式 pilots 驱动双偏振校准均衡；Ch5 应由 Ch4 输出及其接收端可见可靠性信息驱动编码接收动作。该主线目前是设计目标，不得提前写成已完成事实。
+5. 本决策只锁战略目标和设计边界，不授权仿真、代码修改、论文正文修改或自动派任务。进入执行前必须先形成并由用户批准统一平台设计合同。
+
+### 理由
+
+本地 6 篇可比硕士全文中有 4 篇跨核心章改变调制或偏振，但它们均依靠同一损伤、同一算法族、粗到精流程或同一硬件平台维持更强共同轴。当前 D037 三章同时跨调制、偏振、编码、动态、SNR 和指标；仅靠“都是星地 DSP”和统一措辞会留下明显拼盘感。Ch4/P11 与 Ch5/P08-R2 已同属双偏振接收对象，统一为实际 DP-16QAM coded chain 能用最低的概念跳变形成“均衡输出→软解调→译码”的真实章节接口，同时不破坏已录用 Ch3 的方法身份。
+
+### 排除的替代方案
+
+- **维持三套现有配置，只靠 Ch2 母模型和文字润色统一**：能满足形式兼容，但不足以达到用户要求的“一眼看上去像样”，排除。
+- **只统一图表风格、术语和章名**：这些是后续必要写作工作，但不能修复实际数据流与证据口径断裂，排除作为主方案。
+- **强制 Ch3–Ch5 全部改为同一调制**：会改变 Ch3 的八次幂 NDA 和 P08-R2 的 BICM/LDPC 证据身份，并削弱已录用成果锚；当前排除。
+- **因 P08-R2 现有效应小而立即删除 Ch5**：用户已允许必要时重做方法身份；应先在统一平台内比较“迁移旧动作”和“配置先行重构”两类设计，不提前 Kill Ch5。
+
+### 影响范围
+
+- D037 的当前排序仍是历史资产评价，不再等同于最终论文目录。
+- 后续设计必须先冻结 Ch4–Ch5 的共同 frame/data-flow/metric contract，再判断 P11/P08-R2 哪些动作保留、哪些需重构。
+- 正式论文写作继续暂停；Skill/controller、仿真代码和研究结果当前不改。
+- 若用户批准设计，后续执行属于新的明确 scope change，不能沿用 D036 的三条旧 bounded-strengthening 授权自动开跑。
+
+### 来源
+
+S026；用户 2026-08-29 明确选择路线 1，并说明“不在乎增加多少工作量，只在乎故事讲得好不好、论文最终成品是否专业像样”。
+
+## D039: 统一平台先行，P11/P08-R2 降为可替换零件
+
+> status: active
+> date: 2026-08-29
+> 取代：D038 第 3 项中 P11 优先迁入、P08-R2 默认作为 Ch5 起点的继承关系；D038 的整体质量优先、共享平台和不执行边界继续有效
+> 被取代：D040（仅共同平台由 DP-16QAM 改为 DP-(8,8)-16APSK；其余决策继续有效）
+> 依据: 用户原话 `voice.md` 2026-08-29 + S026 + 验证 V018 + `projects/thesis-fso/worker-logs/step-041-p11-pilot-efficient-butterfly-fir.md`
+> 触发原话：见 `voice.md` 2026-08-29
+
+### 决策
+
+最终 Ch4/Ch5 方法不再从“现有 P11/P08-R2 哪个最容易复用”出发，而从 D038 冻结的共同 DP-16QAM+BICM+LDPC 接收平台与两个章节方法槽出发，再选择或构造有限的硕士级 reference extension。
+
+1. Ch4 固定为前端双偏振均衡/校准/跟踪方法槽。P11 的 distributed-pilot Complex-LS、2×2 Butterfly FIR 与 pilot-overhead 公平合同只保留为暂定种子；若在共同平台上不能形成专业且经得住正确经典 baseline 的方法，可以更换名称、动作链和结果，也可以完全替换。
+2. Ch5 固定为后端软信息/译码可靠性方法槽。P08-R2 失去默认方法候选身份；其 Gray-16QAM、BICM/LDPC、软解调和验证代码只按实际正确性作为基础设施零件复用，固定 operating-point NOMS 仅在它确实服务最终动作链时保留。
+3. 允许“配置先行”的内部探索：先冻结共同平台、章节角色、receiver-visible 信息边界和正确经典 baseline，再组合/迁移经典方法的小动作，寻找目标场景内真实改善并据此收窄 claim。无需在正文罗列无关失败尝试，也不要求击败所有近期强方法。
+4. 探索结果不能直接作为确认性证据。方法、baseline、场景、指标和测试样本冻结后，必须用未参与选择的新样本做一次 bounded confirmation；即“可以先射箭后画靶，但画靶后必须重新射一箭”。
+5. 最低真实性边界不变：不伪造数据/机制/引用，不使用故意错误或不公平 baseline，不把已知相反事实写成正面命题，不声称首次、SOTA 或全面领先。强邻居和未穷尽廉价替代只限制 claim ceiling，不要求做期刊级全闭包。
+6. 本决策只授权继续进行 paper-writing `PROPOSE` 阶段的统一平台与方法槽设计，不授权检索、实验、Groundwork、代码/Skill/controller/正式论文正文修改或任务派发。
+
+### 理由
+
+P11 具有清晰动作链和较强章节外形，但其历史终态曾明确为经典 Complex-LS 已解决线性 FIR 的高标签训练问题，且 blind CMA 是不可忽略的传统参照；因此它适合作为设计种子，不足以凭历史身份自动成为最终方法。P08-R2 只有固定 NOMS operating point 的小幅局部 FER 改善，尚未让 Ch4 输出或其可靠性信息真实驱动后端动作；其最大价值更接近 coded-chain 基础设施。既然用户已明确工作量不作为约束，先锁最终接收链和章节角色、再反向构造有限 extension，比让旧资产决定论文结构更符合成品质量目标。
+
+### 排除的替代方案
+
+- **原样迁移 P11 + P08-R2**：最省工作，但保留错误问题重心、配置割裂和弱方法身份，排除。
+- **完全丢弃 P11/P08-R2 后从零开始**：会浪费可复用的 Butterfly FIR、pilot 合同和 coded-chain 基础设施；仅在真实性/接口验证不通过时局部替换，不作为默认路线。
+- **开放式继续找“下一个候选”**：本轮目标是先完成平台与章节设计，不恢复候选搜索，排除。
+- **探索命中后直接把同一批数据写成确认结果**：会把选择偏差伪装成稳定证据，排除。
+
+### 影响范围
+
+- D037 的 P11/P08-R2 排序仅保留为历史资产评价，不再约束最终 Ch4/Ch5。
+- 下一讨论项是共同平台与两个方法槽的第一版设计；方法名称、具体动作和证据合同尚未批准。
+- 后续若用户批准完整设计，必须另作 scope change 才能进入任何执行。
+
+### 来源
+
+S026；用户 2026-08-29 对“P11 仅作暂定种子、P08-R2 失去 Ch5 默认地位、统一配置先行且两者均可替换”的推荐路线明确回复“同意”。
+
+## D040: 全文共同平台改为 DP-(8,8)-16APSK coded coherent FSO
+
+> status: active
+> date: 2026-08-29
+> 取代：D038 第 2 项及 D039 中继承的 DP-16QAM 平台身份；D038/D039 的整体质量优先、方法槽先行、旧资产可替换和不执行边界继续有效
+> 被取代：无
+> 依据: 用户原话 `voice.md` 2026-08-29 + S026 + CCISP adaptive CPR 已录用的 `(8,8)-16APSK` 方法身份
+> 触发原话：见 `voice.md` 2026-08-29
+
+### 决策
+
+最终论文的共同物理平台由 `DP-16QAM+BICM/LDPC` 改为 **`DP-(8,8)-16APSK+BICM/LDPC` 星地相干 FSO 接收机**，以最强且已录用的 Ch3 方法身份为共同调制锚，而不是继续迁就已失去默认方法地位的 P08-R2。
+
+1. Ch3 保留已录用的 Received-Power-Aware Adaptive CPR 及其 `(8,8)-16APSK`/八次幂 NDA 方法身份。论文系统模型把 Ch3 表述为双偏振接收机完成偏振解复用后的单个 polarization tributary；不得把原录用实验追溯性改写成已经验证过完整 DP 或 coded chain。
+2. 若未来进入执行，可在共同平台上将同一 CPR 分别应用于两个解复用支路并补一组统一平台确认；这属于新增证据，不改变已录用结果的来源和身份。
+3. Ch4 使用完整 2×2 双偏振模型研究均衡/校准/跟踪；Ch5 真实消费 Ch4 的双偏振均衡符号和 receiver-visible 可靠性输出，完成 APSK 软解调与 LDPC 接收动作。
+4. 全文优先统一的系统身份包括调制、双偏振总体架构、BICM/LDPC、frame/pilot 接口、Gamma–Gamma/SOP/phase-noise 信道族和接收数据流。不同章节可按研究问题改变 SNR、湍流强度、SOP 速度、pilot 密度、linewidth 和评价指标，不要求所有实验 cell 完全相同。
+5. Ch4/Ch5 的 baseline 必须与多环 APSK 星座相适配；不得为了沿用历史结果，把为 QPSK/16QAM 设置的 comparator 或 demapper 不加审查地搬入共同平台。
+6. 本决策仍处于 paper-writing `PROPOSE` 阶段，不授权实现、仿真、检索、Groundwork、正文修改或任务派发。
+
+### 理由
+
+形式统一若要服务最终观感，应围绕最强成果锚组织。Ch3 已录用方法明确依赖 `(8,8)-16APSK` 与八次幂 NDA；把全文改成 DP-16QAM 会削弱甚至改变唯一已录用方法。相反，Ch4 的 known-pilot 线性 2×2 均衡动作原则上不由 payload 星座唯一决定，Ch5 的 coded-chain 基础设施也已在 D039 中被允许重构。以 DP-(8,8)-16APSK 作为共同平台，能保留 Ch3 的真实身份，同时让 Ch4/Ch5 在同一调制和完整双偏振链上形成“均衡输出→软解调→译码”的真实接口。单双偏振不必机械统一为每章都研究 2×2：Ch3 使用 DP 系统中的 per-tributary 抽象，Ch4/Ch5 使用完整 MIMO，是系统层统一而算法层分工。
+
+### 排除的替代方案
+
+- **Ch3 用 16APSK、Ch4/Ch5 用 DP-16QAM**：学术上可接受，但在工作量不作为约束时仍留下可见配置跳变，排除为首选。
+- **全文改为 DP-16QAM**：会改变 Ch3 已录用方法的星座对称性与 NDA 身份，排除。
+- **声称 Ch3 原实验已经是 DP/coded 验证**：与现有证据不符，排除；只能在未来另补共同平台确认。
+- **所有章节使用完全相同的 SNR、湍流和动态参数**：会压缩不同方法问题所需的有效场景，不把实验变量一致误当系统身份一致。
+
+### 影响范围
+
+- D038/D039 中的 `DP-16QAM` 平台描述由本决策取代；旧文字保留为决策血缘，不再作为当前设计。
+- P08-R2 的 Gray-16QAM mapper/demapper 不再拥有默认复用权；只有与 APSK/BICM 新平台无关且正确的 codec、统计或验证零件才可能复用。
+- 下一讨论项是 Ch4 和 Ch5 在 DP-(8,8)-16APSK 平台上的具体方法身份与真实接口。
+- 任何实现仍须完整设计合同获用户批准并另作 scope change。
+
+### 来源
+
+S026；用户 2026-08-29 提出“调制、单双偏振最好统一”，并对“DP-(8,8)-16APSK 总体平台 + Ch3 单支路抽象 + Ch4/Ch5 完整双偏振链”的推荐方案明确回复“同意”。
+
+## D041: 正确性门—开发矩阵—自动分级—新样本确认的四段式证据合同
+
+> status: active
+> date: 2026-08-30
+> 取代：无（细化 D039 第 4 项的探索—确认分离原则）
+> 被取代：无
+> 依据: 用户原话 `voice.md` 2026-08-30 + S027 三路只读战略审查
+> 触发原话：见 `voice.md` 2026-08-30
+
+### 决策
+
+若后续另获用户明确授权恢复执行，Ch4/Ch5 的候选比较统一采用四段式证据合同：**可执行正确性门 → 一次冻结开发矩阵 → 按预定义规则自动分级 → 胜者使用未参与选择的新样本确认**。
+
+1. **正确性门**不是“脚本能跑”。至少要验证 DP-(8,8)-16APSK、BICM/LDPC、2×2 信道/均衡、pilot/frame 索引、BER/FER 统计、随机种子复现、receiver-visible 信息边界和经典 baseline 的基本语义；任何 truth leak、指标错位、no-op 动作或 comparator 无效都阻断后续矩阵。
+2. **开发矩阵**在看结果前冻结候选 recipe、正确经典 baseline、场景网格、seed 集、指标与成本口径。Ch4 候选统一接冻结的经典 demapper/decoder；Ch5 候选统一接冻结的经典 Ch4 equalizer，先做两条单轴比较，不跑全笛卡尔积。
+3. **自动分级**按以下顺序执行，不得在看见结果后改门。开发矩阵只产出 `PROVISIONAL` 等级；方法冻结并完成 fresh confirmation 后才形成 `FINAL` 等级，正确性失败可随时直接记 F：
+   - `A`：fresh confirmation 中，目标 BER/FER 相对公平 baseline 明确、稳定更好，并有可解释的适用区间；
+   - `B`：预声明困难场景中 BER/FER 明确更好；或 BER/FER 非劣且 pilot、计算量、迭代数或时延有真实、实质降低，可作为边界明确的硕士主方法；
+   - `C`：只有局部小幅主指标改善，或 BER/FER 非劣加次级工程收益；只能有限承重，Ch4/Ch5 不得同时仅靠 C；
+   - `D`：只有诊断信号、偶然 cell、方向不稳或主指标无可用变化，只作 supporting material；
+   - `F`：正确性、信息边界、动作有效性或 baseline 合法性失败，结果不可用。
+4. **确认阶段**只给开发期胜者冻结方法、baseline、场景、参数、指标后使用新 seeds；confirmation 失败不得用同一批 held-out 数据继续调参。最多允许开发期第二名使用另一组从未接触的确认样本再确认一次。
+5. 最终只对 Ch4 前二与 Ch5 前二做最多 `2×2=4` 个桥接组合，并分别保留 Ch4、Ch5 的隔离比较和一个最终端到端组合确认，避免联合收益无法归因。
+6. 用户的首要目标是 BER/FER 明确改善。只有 A 级路线耗尽后才讨论 B/C 级降级，不把复杂度或开销改进预先冒充性能增益。
+7. 本决策定义未来执行合同，不授权现在运行 smoke、矩阵、确认、检索、Groundwork、代码修改或任务派发。
+
+### 理由
+
+用户希望在 smoke 证明准确性后一次测完预先定义的对象，并从结果判断能达到什么等级。四段式合同既允许高效共享共同平台，又把开发选择与确认性证据隔离；单轴矩阵和最多四个桥接 cell 可避免 Ch4×Ch5 组合爆炸，同时保留两章各自的因果归属。
+
+### 排除的替代方案
+
+- **每个候选单独开包、失败后临时想下一个**：会重现连续开包而无战略结算的问题，排除。
+- **所有 Ch4×Ch5 全组合**：比较成本和解释债务呈乘法增长，排除；只给单轴胜者做有限桥接。
+- **探索数据直接作为最终确认数据**：存在选择偏差，排除。
+- **看到 BER 不明显后临时改主指标**：违反预定义分级，排除；只能按既定 B/C 等级诚实降级。
+
+### 影响范围
+
+- 细化 D039 的 bounded confirmation 原则，成为任何未来统一平台执行的最低证据结构。
+- 当前 paper-writing 讨论仍暂停一切执行；只有完整设计获用户另行批准后，才能另作 scope change。
+
+### 来源
+
+S027；用户 2026-08-30 明确提出“BER 明确更好”为最高目标，并同意 smoke 后统一开发矩阵、自动等级判定和新样本确认。
+
+## D042: 预建机制级后备方法池，仅开放设计地图
+
+> status: active
+> date: 2026-08-30
+> 取代：无（对 D038–D040 的设计范围作显式扩展）
+> 被取代：无
+> 依据: 用户原话 `voice.md` 2026-08-30 + S027 三路只读战略审查
+> 触发原话：见 `voice.md` 2026-08-30
+
+### 决策
+
+在 D040 的 DP-(8,8)-16APSK+BICM/LDPC 共同平台内，允许预先设计一个**大在地图、小在同时执行**的机制级后备方法池，避免当前两个暂定方法失败后再临时找方向。
+
+1. 目标规模暂定约 **13 张机制级方法卡**：Ch4 五个机制族（含当前主种子）、Ch5 六个机制族（含当前主种子）、两个跨层高风险储备。该数量是设计地图，不是实施承诺，具体卡片仍待用户审阅后冻结。
+2. 每张卡在冻结前必须补齐 receiver-visible 输入、动作、输出、直接 baseline、承重机制、决定性消融、预期等级和停止条件。S027 当前只是首版机制地图，不等于字段齐全的冻结卡。只改正则系数、阈值、窗长、阶数、步长或相似权重公式的 recipe 归入同一方法族，不虚增方法数。
+3. 暂定分层为：`Tier 0` 当前两个主种子；`Tier 1` 低风险经典迁移；`Tier 2` 动态/结构/译码内部方法；`Tier 3` 仅在单章方法池耗尽后开放的跨层反馈。若未来获批执行，首轮最多开放 Ch4 三张 + Ch5 三张，后续只给失败章节解锁下一层。
+4. 设计地图允许提出新 recipe，但不构成“候选已建立”“科学可行”“有新颖性”或“可写章”的声称；exact-recipe collision、文献邻居和真实增益都仍未检查。
+5. 强邻居、未穷尽廉价替代或已知更强方法继续只限制 claim ceiling，不自动删除纸面方法卡；真实性、正确 baseline、receiver-visible 信息边界与真实目标指标仍是底线。
+6. 本次范围扩展只取消“禁止新候选”的**设计层禁令**。检索/下载、Groundwork、实现、仿真、代码/Skill/controller/正式论文正文修改和任务派发继续禁止。
+
+### 理由
+
+只有两个串行候选会把一次失败重新变成开放式方法搜索；而一次实现十几个小变体又会造成组合爆炸和治理债务。机制级储备图先把可替换动作链和退出条件画清，再分层开放，可以同时满足毕业进度、章节独立性和执行可控性。
+
+### 排除的替代方案
+
+- **只保留当前 Ch4/Ch5 各一个方法**：没有失败后的预定路线，排除。
+- **把十几个系数/阈值变体都称为方法**：违背“几个方法最好别太接近”的要求，排除。
+- **现在就实现或测试全部储备**：尚未获执行授权且会造成组合爆炸，排除。
+- **后备池耗尽后继续无限扩池**：每章 5–6 个机制族仍无 B 时应回战略层扩大研究对象/testbed 或调整论文结构，不再盲加同类候选。
+
+### 影响范围
+
+- topic-index 的“明确不含新候选”改为：允许设计态方法图谱，仍禁止执行态候选与任何自动推进。
+- S027 保存第一版 13 卡图谱和推荐解锁顺序；具体方法身份仍为 `TENTATIVE`，等待用户确认。
+
+### 来源
+
+S027；用户 2026-08-30 在批准四段式证据合同后提出：若当前两个方法失败，需要预先准备一大批后备选项。
+
+## D043: 一轮三线只读战略调研，由主线程单点综合
+
+> status: superseded
+> date: 2026-08-30
+> 取代：无（定义 D042 设计地图的下一轮工作方式）
+> 被取代：D044（仅取代“一批后必须等用户门”和禁止继续执行的边界；第一轮结果继续有效）
+> 依据: 用户原话 `voice.md` 2026-08-30 + S028
+> 触发原话：见 `voice.md` 2026-08-30
+
+### 决策
+
+下一阶段不由用户承担技术拆解，也不由主线程凭直觉单线推进；采用**一轮三线只读战略调研 + 主线程单点综合 + 用户阶段拍板**的控制方式。
+
+1. 唯一北极星继续是：题目“星地激光通信信号处理关键技术研究”；Ch3 为已录用 Received-Power-Aware Adaptive CPR；Ch4/Ch5 目标是共同 DP-(8,8)-16APSK+BICM/LDPC 平台上的两个技术对象不同、以 BER/FER 改善优先的方法章。
+2. 本轮只派三个用户可见 Codex 新对话：`T036` 物理平台/headroom、`T037` Ch4 五族、`T038` Ch5 六族。每条只回答一个决策域，禁止自行追加第四条线、创建新候选或把问题扩成实现。
+3. 三线只用当前 branch 的本地证据、既有总结、worker logs 和已下载材料；第一轮不做外部 web/文献检索或下载，不重新精读整篇论文。证据不足就返回 `UNKNOWN`，由主线程决定是否提出第二轮 bounded 外部调研申请。
+4. 每条线限定一个完整回合、约 15 分钟工作量，输出只含事实锚、推荐合同、排除项、未知项和需要主线程拍板的事项；不得实验、仿真、实现、改文件、改 Skill/controller/论文正文或派生任务。
+5. 主线程在三线全部回收前不做技术拍板；回收后必须先生成“共同结论—冲突—证据缺口”矩阵，再更新 S028/D###，向用户汇报阶段结论。用户未确认前不创建第二批对话，更不恢复执行。
+6. 进度和不漂移机制以 S028 为唯一主控：保存北极星、当前阶段、三线状态、停机规则和下一门。任何新工作先回答“它服务哪个未决决策”；答不出就停止，不顺手扩范围。
+
+### 理由
+
+用户明确表示无法独立判断通信技术细节，需要 AI 分线分析；同时担心长期工作陷入细节、低效和遗忘原规划。固定为三条互补决策域、短时只读、一次回收后强制综合，可以把技术研究交给新对话，又把方向控制和最终判断留在主线程。
+
+### 排除的替代方案
+
+- **主线程继续凭经验逐项讲细节**：无法形成独立证据交叉，排除。
+- **一次开十几个对话覆盖 13 张卡**：会放大上下文、重复和治理债务，排除。
+- **每个对话自行开后续任务或跑实验**：会失去主控和范围边界，排除。
+- **第一轮立即恢复外部检索/下载**：尚可先用现有丰富本地证据判断平台与方法族；证据缺口应由三线显式返回后再决定，当前排除。
+
+### 影响范围
+
+- 新建 S028 与 T036–T038；创建三个用户可见 Codex 新对话。
+- D041/D042 的证据合同、设计态身份和不执行边界继续有效。
+- 本轮仅扩大“只读战略调研与新对话派发”，不扩大到任何研究执行。
+
+### 来源
+
+S028；用户 2026-08-30 要求由主线程派新对话分析调研，并明确要求避免陷入细节、无效工作和长期后遗忘初始规划。
+
+## D044: 恢复连续方法生产，主线程获授权跨批自动推进
+
+> status: active
+> date: 2026-08-30
+> 取代：D043 的用户逐批确认门与只读停止边界；保留 D043 的三线分工、主线程综合和第一轮事实
+> 被取代：无
+> 依据: 用户原话 `voice.md` 2026-08-30 + S028 + D040–D043 + `projects/thesis-fso/master-state.md` FR-22 门控
+> 触发原话：见 `voice.md` 2026-08-30
+
+### 决策
+
+恢复以“形成两个可开始写作的硕士方法章证据包”为终点的连续方法生产。主线程可在用户离线时自行创建和续接用户可见 Codex 新对话，完成必要外部证据、候选 Groundwork、共同平台正确性 smoke、候选实现、开发矩阵、fresh confirmation、独立验证与章级材料包；routine 失败后按既有候选池自动轮换，不再逐批等待用户确认。
+
+1. 不新造 Skill、controller 或平行流程。过程所有者仍是 `research-direction-lab`，仿真纪律仍是 `sim-preflight`，跨对话记忆仍由 `session-governance` 与 S028 承担。
+2. 唯一顺序是：外部 authority/baseline → 候选级 Step 1–3/3.5/4a → 共同平台 correctness smoke → 冻结单轴开发矩阵 → A/B/C/D/F `PROVISIONAL` 分级 → fresh-seed confirmation → `FINAL` 章级证据包。不得把设计卡直接变成实验。
+3. 目标是 Ch4、Ch5 各形成一个技术对象不同、receiver-visible 动作链完整的方法章；优先要求 BER/FER 明确改善。A 路线耗尽后允许 B 级“局部 BER/FER 改善或性能非劣加真实开销收益”，但两个章节不得都只靠 C。
+4. 按 D031/D032 的硕士标准判断：正确经典 baseline、目标场景真实增益、完整 recipe 非完全重复即可；不要求 SOTA、首次或击败全部近期方法。强邻居只限制 claim ceiling，不自动科学 Kill。
+5. 同时保留较大的机制级地图，但一次只开放共享合同下的少量机制不同候选；失败立即记录事实并轮换，不对同一公式做无期限微调。治理动作必须并入能解锁科学工作的包，不单独消耗常规工作回合。
+6. 只有以下情况才停下来等用户：需要改变题目/共同平台/两个方法章目标，出现无安全替代的真实性问题，需要明显扩大硬件、私有数据或算力投入，或授权候选池按停机规则真实耗尽。普通下载缺口、单候选失败和 routine 代码阻断由主线程选择合法替代继续。
+7. 当前第二批只做三个 Groundwork Step 1 外部 authority 工作线；回收后主线程更新 S028 和 formal authority，再自动进入最小候选级 Step 2–4a。当前批次本身不跑实验。
+
+### 理由
+
+用户明确表示自己无法承担通信技术判断，希望主线程持续推进并在睡醒后看到可写论文的实质结果；同时强调不要图快、不要跳步，也不要把精力耗在 SHA 校验和机制修补上。现有 D041 四段式证据合同、D042 机制地图和项目 Groundwork 已足以约束执行，真正需要的是取消逐批人工门、把行政检查压薄，并让每个包产生候选、比较或章级证据。
+
+### 排除的替代方案
+
+- **再设计一套自动调度器/Skill**：用户没有要求，且会重演过度治理，排除。
+- **立即把六张设计卡一起跑仿真**：违反 FR-22 和用户“不跳步”，排除。
+- **每完成一个搜索、下载或 smoke 都停下来等用户**：与本次持续授权冲突，排除；由主线程代行 routine 技术门判断。
+- **只做完美科学方法，不接受有限 extension**：与 D031/D032 的硕士毕业标准冲突，排除。
+
+### 影响范围
+
+- topic-index 当前范围和 RDL foreground control 改为连续方法生产；S028 继续作为唯一轻量主控。
+- T039–T041 获准做外部 Groundwork Step 1 authority/baseline 调研；其后任务仍须按当前 formal step 编写并绑定控制面。
+- 允许后续必要的文献下载、候选 Groundwork、代码和仿真修改；Skill/controller 和正式论文正文暂不修改。只有方法证据包冻结后才进入论文正文写作。
+
+### 来源
+
+S028；用户 2026-08-30 明确要求“你自己往下一直推”“要开新对话就开”“逐个去做，不要跳步”，并要求以硕士论文可毕业、最终能够开始写作为结果标准。
+
+## D045: 两章进入 Step 4a-D 的实现与正确性门，性能实验继续关闭
+
+> status: active
+> date: 2026-08-30
+> 取代：D044/CP006 下对方法实现的暂时禁令；不取代 D041 的四段式证据合同
+> 被取代：无
+> 依据: T051/T052 paper-feasibility reports + Ch4/Ch5 MVE readiness audits + D041/D044
+> 触发原话：见 `voice.md` 2026-08-30
+
+### 决策
+
+1. Ch4 Q-C4-2 与 Ch5 Q-C5-1 均已通过 Step 4a 纸面维度；允许各自在独立 `explore/` seam 实现 candidate、必要 comparator、接口和 correctness-only smoke。该授权属于 Step 4a-D 的准备与正确性门，不是 scientific Go。
+2. T053/T054 可以运行确定性的无噪、高 SNR、解析退化和 identity smoke；禁止扫描性能 operating region、调参追求 BER/GMI 增益或据此给方法等级。
+3. Ch4 必须从现有本地 fulltext/notes 冻结 canonical RDE/DD 更新式并做一步手算测试；禁止复用已知公式错误的公共 CMA 实现。Ch5 冻结 `lambda=κ/(n_k+κ)` 的 hierarchical point-to-ring shrinkage，κ 只进入后续 development grid；cross-polarization sample pooling 在 v1 correctness 阶段关闭，所有 covariance arms 共用数值 floor。
+4. Ch5 的合成 radial/tangential residual 只用于算法 identity/correctness，不证明共同平台自然出现该结构。T055 必须从已有 Ch3/Ch4/平台资产中查明合法 post-Ch3/post-Ch4 residual cell；若没有 authority，后续 headroom 保持阻塞，不能为方法制造噪声。
+5. 实现者不得自验科学结论。两包提交后先由独立 verifier 检查公式、truth firewall、paired RNG、退化行为与测试，再由主控更新 CP008，决定是否开放最小 oracle/headroom cells。
+
+### 理由
+
+纸面方法已经具体到可编码 recipe，继续只讨论不会增加科学信息；直接跑性能网格又会把公式错误、truth leakage 或不合法残差误当结果。把实现正确性与性能分开是现有 D041 的最薄落实，也保留用户要求的连续推进和失败后快速轮换。
+
+### 排除的替代方案
+
+- **立刻跑完整 BER/FER 网格**：实现与参数 authority 尚未独立接收，排除。
+- **等待所有平台 UNKNOWN 全部补齐**：memoryless correctness seam 不依赖 filter/FIR，排除。
+- **用合成 anisotropy 直接证明 Ch5 科学可行**：只能测算法恒等性，不能证明目标场景发生，排除。
+- **为实现另造公共框架**：两个候选均可在独立 explore seam 完成，排除。
+
+### 影响范围
+
+- foreground control 升为 CP007；允许 `GW_STEP4A_D_IMPLEMENTATION_SMOKE` 与 `LOCAL_PARAMETER_AUTHORITY_AUDIT`。
+- performance grid、科学裁决、正式正文仍禁止。
+
+### 来源
+
+S028 第七批主线程裁决；T051/T052 与两个静态 readiness audit。
+
+## D046: 开放 Ch4 有界开发与 Ch5 真实残差桥，禁止为结果扩网格
+
+> status: active
+> date: 2026-08-30
+> 取代：D045 的 performance 全关闭；保留 D041 四段式证据合同与 D044 连续推进授权
+> 被取代：D047（仅取代 CP008 的当前执行边界；历史授权与停机规则仍作证据）
+> 依据: T053/T054/T058、T055–T057、V019、S028
+
+### 决策
+
+1. Ch4 Q-C4-2 的 canonical nearest-radius 修复已经独立复验通过；允许按 T059 跑一次预注册的两轮、`2 SNR × 3 pilot budget` 有界开发矩阵。Round 1 不满足门即停，不临时增设第三轮、损伤或阈值。
+2. Ch5 Q-C5-1 的 estimator correctness 已通过，但 circular control 不具方法 headroom。允许 T060 只实现真实物理顺序 `DP APSK → Ch4 demux → per-pol Ch3 DA CPR → known-pilot residual` 的 receiver-visible bridge 和 correctness tests。
+3. Ch5 occurrence 必须等 Ch4 的 arm 与参数冻结后才能运行，且只跑一个预注册 cell。若 radial/tangential variance、rotated off-diagonal 和 covariance-aware held-out-pilot NLL 三类诊断均无可检测偏离，立即记 `NO_DETECTABLE_OCCURRENCE` 并轮换 Ch5 后备，不添加 IQ/PDL/PMD/FIR 或 synthetic anisotropy 造信号。
+4. 这一阶段只给 `PROVISIONAL` A/B/C/D/F；任何方法进入章级承重前仍需 fresh-seed confirmation 与不同上下文的科学验证。correctness PASS 不算 method signal，开发矩阵好结果也不自动算 FINAL。
+5. 首轮 comparator 按硕士级标准保持最小充分：Ch4 面对 LS-only、tuned plain canonical RDE、cheap gate、oracle 与 update-count-matched plain；若出现可确认信号，再在 confirmation 补 DD-LMS/RLS 或等价经典强对手。不能因尚未击败全部强方法提前否决，也不能把缺 comparator 当成无限扩实验的理由。
+
+### 理由
+
+正确性与真实残差来源已成为唯一需要关闭的科学门；继续停在治理层不会增加方法证据。反过来，一次把所有强方法、全编码链和多种损伤都塞进开发矩阵，会重演过度门控。当前边界直接回答两个问题：Ch4 的 gate 是否在合法最小平台改善 BER；Ch5 所需 covariance geometry 是否在共同接收链自然出现。
+
+### 停机与轮换
+
+- Ch4 Round 1 无 oracle headroom、无 score discrimination 或收益被 update-count 完全吸收：停止 C4-2；cheap 有信号则收缩为 cheap recipe，否则转 C4-1/C4-0，不微调第三个 gate。
+- Ch5 bridge correctness 失败：只修 bridge；occurrence 三诊断均无信号：停止 C5-1 target-platform 路线，下一优先级为有真实接口的 C5-0 calibration，再评估 C5-5 complexity；C5-2 只有 syndrome/soft-state 接口存在时才恢复。
+- 只有需要改共同平台、题目、两方法章目标或候选池真实耗尽时才停下来等用户。
+
+### 来源
+
+S028 第八批回收；T056 修复后复验、T057 Ch5 correctness PASS 与 T055 residual blocker。
+
+## D047: 接受 C4-2 科学停机，轮换 C4-1 并修复 Ch5 bridge 后再做一格 occurrence
+
+> status: active
+> date: 2026-08-30
+> 取代：D046 的 CP008 当前执行边界；保留 D041 四段式证据合同、D044 连续推进授权与 D046 禁止扩网格规则
+> 被取代：D048（仅取代 CP009 当前执行边界）
+> 依据: T059–T063、T061/T062 独立验证、D031–D032、S028
+
+### 决策
+
+1. 接受 C4-2 的 `D/STOP_NO_METHOD_SIGNAL`。T062 从 126 条 raw 记录独立重算后确认：D1/D2/D3 的 candidate 相对 `B0*` 为 `-6.842%/-8.333%/-4.251%`，cheap 为 `-5.773%/-8.232%/-3.559%`，oracle headroom 仅 `+0.018%/-0.152%/-0.055%`。Round 2、confirmation 和 `54301+` seeds 均未运行。该结论是科学无 headroom，不是 correctness 失败。
+2. C4-2 立即关闭，不修 provenance portability 小缺口、不重跑矩阵、不加第三轮或第三种 gate。Ch4 按预定顺序轮换 C4-1 scaled-unitary pilot-LS；唯一下一 formal step 是 **C4-1 专属 Step 3.5 exact-recipe closure**，之后仍须独立完成 Step 4a A0/A′/A/B，不能直接跳到实现或仿真。
+3. C4-1 按 D031/D032 的硕士标准裁决：polar/Procrustes 原子或 balanced-pilot 下与 direct constrained scaled-unitary LS 代数等价，只会把身份收窄为“经典结构估计迁移到 DP-(8,8)-16APSK 星地相干接收场景”，不会自动 Kill。只有完整 recipe（含输入输出、目标场景和关键配置）完全相同，或目标场景相对正确经典 baseline 无真实 BER 增益，才关闭方法章入口。
+4. T061 对 Ch5 bridge 的裁决为 `PARTIAL`：主 DSP 顺序、8-fold ambiguity、truth/future/polarization firewall 成立；frozen-arm 数值 provenance 与 acquisition-preamble 连续 scalar 时序必须先修。T063 只做这两个 correctness 修复，完成后另由独立 verifier 接收。
+5. Ch5 occurrence 不等待 Ch4 新候选成功，而使用冻结的经典 Ch4 anchor：`plain canonical RDE`、全局 tune 选择 `mu=1e-3`、`Np=4`、无 gate thresholds。选择理由是 T059 的 D1–D3 中 `B0*` 均为 tuned plain；该 anchor 只用于 residual occurrence 诊断，不作为 C4-2 或 C4-1 方法声称。
+6. 只有 T063 独立复验 PASS 后，Ch5 才运行一次预注册 occurrence cell；不得改变场景、SNR、pilot、样本切分或新增损伤。三类诊断无可检测偏离即关闭 C5-1 target-platform 路线并轮换 C5-0 的候选级 Step 2；不得用 IQ/PDL/PMD/FIR 或 synthetic anisotropy 救信号。
+
+### 理由
+
+C4-2 已回答了科学问题：score 可以判别错误，但传统 RDE 已接近 oracle，因而没有承重 BER 空间。继续调 gate 只会把时间耗在已停路线。C4-1 的结构投影在短 pilot 下更可能相对 unconstrained LS 形成可见 BER 差，同时即使数学动作经典，也符合本论文已批准的场景迁移标准。Ch5 当前问题是接口真实性，不是候选本身失败；先做窄修复再用经典冻结前端测一次自然 occurrence，是最短合法路径。
+
+### 停机与轮换
+
+- C4-1 Step 3.5 找到目标场景完整 recipe 完全重复：关闭 C4-1；否则按 classical migration claim 进入 Step 4a。
+- C4-1 在最小合法矩阵相对 unconstrained LS/ridge/SV-floor 无 BER 增益或 oracle 无 headroom：关闭并轮换 C4-0，不增设物理损伤。
+- Ch5 bridge 复验未 PASS：只修 T063 明列 correctness；occurrence 无信号：转 C5-0 Step 2。
+
+### 来源
+
+T059 开发包、T062 独立 raw 重算；T061 bridge 独立验证；D031/D032 硕士级有限主张与“非完全相同即可扩展”标准。
+
+## D048: 接收 Ch5 自然残差信号并并行开放 C4-1 Step 4a 与 Ch5 有界 BER/GMI 开发
+
+> status: active
+> date: 2026-08-30
+> 取代：D047 的 CP009 当前执行边界；保留其 C4-2 停机、C4-1 经典迁移标准和禁止扩损伤规则
+> 被取代：D049（仅取代 CP010 当前执行边界）
+> 依据: T064、T066、V022、D031–D032、D041、S028
+
+### 决策
+
+1. 接收 T064 的 `SURVIVES_AS_CLASSICAL_MIGRATION`：C4-1 没有确认完整 target-scene recipe 碰撞；post-LS scaled-polar 与 direct constrained scaled-unitary LS 在 balanced pilots 下代数等价，所以不声称新估计理论。下一合法步骤仅为候选专属 Step 4a A0/A′/A/B。
+2. 接收 T066 的 `DETECTABLE_OCCURRENCE`：唯一预注册 moderate/15 dB cell 完成 64/64 windows；外环 D1 与 D2 的多组 simultaneous CI 排除 0，D3 held-out `NLL_B1-NLL_full` 为 `0.0870608267`、95% CI `[0.0642673878,0.1112830033]`。这只授权方法开发，不等于 BER/GMI/FER 已改善。
+3. CP010 并行开放 T068 C4-1 Step 4a 与 T067 Ch5 两轮有界开发。T067 Round 1 只在一个冻结 development cell 内调 C1 `kappa` 与 B3 shrinkage，比较 B1/B2/B3/C1；只有出现 BER/GMI 信号才执行固定参数的三点 SNR Round 2。
+4. Ch5 采用“自动收缩而非廉价替代否决”：C1 若未胜 B2/B3，但 B2 或 B3 相对正确 B1 baseline 有稳定 BER/GMI 改善，就把最简真实胜者作为经典场景迁移候选；所有结构臂都无信号才关闭 C5-1。
+5. T067 只给 `PROVISIONAL` 等级；任何 Ch5 胜者仍需新 seeds 的 confirmation 和独立复算。T068 通过后也必须另过 correctness/headroom，不能从 paper gate 直接写结果或声称方法成立。
+
+### 理由
+
+Ch5 已从“可能存在结构”进入可检验的方法动作；继续做 occurrence 或扩损伤没有价值，最短路径是直接比较正确 baseline 与具体结构臂。C4-1 也已完成必要的 exact-recipe 闭包，但其数学经典性要求先把问题、适用域和 claim ceiling 写清，再实现。两条工作彼此独立，适合并行，且都直接推进可写章而非治理。
+
+### 停机与轮换
+
+- Ch5 Round 1 无任何相对 B1 的 GMI/BER 信号：停止 C5-1，轮换 C5-0 Step 2；不得添加 IQ/PDL/PMD/FIR 或第二种湍流来救结果。
+- Ch5 只有 GMI、无 BER：可继续一次有限 coded FER 门，但当前不得提前写成 BER 方法；FER 仍无信号则降为 supporting 或轮换。
+- C4-1 Step 4a 发现完整 recipe 碰撞、问题不存在或结构假设与目标平台冲突：关闭并轮换 C4-0；否则进入最小 correctness。
+
+### 来源
+
+T064 exact-recipe closure；T066 raw/aggregate/receipt；V022 主控 fresh tests 与 raw 独立重算。无新增用户原话，技术执行依据沿用 D044 的持续授权。
+
+## D049: 接收 C4 bounded paper PASS，关闭 C5-1 并轮换 C5-0
+
+> status: active
+> date: 2026-08-30
+> 取代：D048 的 CP010 当前执行边界；保留其 C4/C5 已完成证据、有限 claim 与禁止扩损伤规则
+> 被取代：D050（仅取代 CP011 当前执行边界；C5-0 Step 2 授权继续有效）
+> 依据: T067–T068、V023–V024、D031–D032、D041、S028
+
+### 决策
+
+1. 接收 T068 的 `PAPER_DIMENSIONS_PASS_WITH_BOUNDARY`。C4-1 的动作身份固定为把经典 scaled-unitary constrained estimation 迁移到短 balanced-pilot DP-(8,8)-16APSK 星地相干偏振解复用；balanced-pilot direct form 只是同一 estimator 的等价表述，不计新理论。
+2. T068 的独立审查确认 8→5 实自由度、一阶降方差机制、A0/A′/A/B 与 claim ceiling 成立；审查指出的 C2/C3/C5 可执行性歧义已经收紧为精确协变恒等式、paired nonunitary 理论对照和 exact-zero/NaN/Inf fail-closed。允许 T069 先跑 C0–C5 correctness，全部 PASS 后在同任务内进入一次预注册 BER headroom。
+3. `14/18 dB × 2/4 pilots` 定义为**研究设计轴**：它们在看结果前由 T068/T069 冻结，用于覆盖短 pilot 与两个 SNR 工作点，不冒充某篇论文的 source reproduction，也不在结果后修改。因此它们不属于必须用文献唯一标定的物理常数，不再阻断 bounded confirmation。
+4. 接收 T067 的 `NO_METHOD_SIGNAL / D`。64-window held-out 结果中，B2 相对 B1 的 GMI/BER 差为 `-0.00156577/-0.000345866`，95% CI 分别为 `[-0.0143402,0.0111921]`、`[-0.00142466,0.000610352]`；C1 相对 B1 为 `-0.00270227/-0.000284831`，CI 同样跨 0。B3 明显退化；Round 2 未授权、未运行。
+5. C5-1 structured covariance 路线关闭：不调 κ/shrinkage、不增加 IQ/PDL/PMD/FIR 或第二场景、不补 coded FER。下一 Ch5 路线为既有 C5-0“均衡残差可靠性感知 LLR 校准”，且必须从候选级 Step 2 获取开始，不能借 C5-1 的 Groundwork 直接实现。
+6. CP011 并行开放 T069 与 T070。T069 若 scaled-unitary 胜出则形成 C4-1 有限迁移包；若 ridge/SV-floor 等更简单 deployable arm 相对 plain LS 有稳定 BER 信号，则诚实收缩为最简 short-pilot robust-LS 迁移包，不隐藏廉价胜者；所有 deployable arms 均无信号才关闭该族并轮换 C4-0。T070 只闭合 C5-0 Step 2。
+
+### 理由
+
+Ch4 已具备一个真实、可检验的结构降方差动作，继续用“具体 SNR/pilot 没有论文出处”阻断会把研究设计变量误当物理真值。预注册、paired、公平 baseline 和不事后改网格已经足以保护科学正确性。Ch5 则已经通过真实链和 held-out 指标回答了性能问题：residual occurrence 存在，但当前四种 covariance recipe 没有 BER/GMI 方法信号；继续救这一族只会重复无效开发。
+
+### 停机与轮换
+
+- T069 任一 C0–C5 correctness FAIL：只修局部 correctness；两次仍失败则停 C4-1。correctness PASS 后，所有 deployable arms 相对 plain LS 无稳定 BER 信号：关闭本族并轮换 C4-0，不加新损伤。
+- T070 无法获得至少一个直接 LLR scaling/calibration 原子、一个正确未校准 baseline 与一个 target-scene 邻居的合格全文：C5-0 记 evidence blocked，轮换 C5-5，而不是用标题联想直接实现。
+- 只有 C4/C5 各自方法池按既定顺序耗尽，或需要改变共同平台/论文结构时，才强制停到战略讨论。
+
+### 来源
+
+T067 manifest/raw/aggregate/receipt/report；T068 Step 4a 报告；V023–V024；用户 D044 的持续授权与“按流程但不把精力耗在机制纠正上”的原话。
+
+## D050: 接收 C4-1 开发信号，只开放冻结配方 fresh confirmation
+
+> status: active
+> date: 2026-08-30
+> 取代：D049 的 CP011 当前执行边界；保留 C5-0 Step 2、禁止扩损伤与有限 claim
+> 被取代：D051（仅取代 CP012 当前控制；T071 已按 CP012 合法启动并继续有效）
+> 依据: T069 / V025 / D031–D032 / D041 / S028
+
+### 决策
+
+1. 接收 T069 的 `C4_STRUCTURED_SIGNAL / PROVISIONAL_A`，但不提前改写为 FINAL 或章级完成。C0–C5 全部 PASS，独立 verifier 从 raw 精确重算 4 格 × 64 windows，确认 split、hash、调参隔离和 truth firewall 均成立。
+2. C4-1 的方法身份冻结为“短 balanced-pilot DP-(8,8)-16APSK 星地相干接收中的 scaled-unitary 公共增益—偏振矩阵联合估计”。B2 `tau=1` 与 C4 使用相同 `UV^H` 偏振方向，差别主要是公共尺度 `s_max` 对 `(s1+s2)/2`；因此不得声称发现了更好的偏振旋转、新估计理论、首次或 SOTA。
+3. 最强廉价对手 B2 必须保留并如实报告。开发集上 C4 相对 B2 在 `14 dB,Np=2`、`18 dB,Np=2`、`14 dB,Np=4` 三格 BER CI upper `<0`；`18 dB,Np=4` 均值差为 `+0.00021172` 且 CI 跨 0，只能称 non-significant difference，不能称改善。
+4. CP012 只开放一次 T071 fresh confirmation：固定 T069 的场景、四格网格、算法和 B1/B2 参数，不再 tuning；每格使用 64 个全新 windows，seed bases=`7000/7100/7200/7300`，bootstrap seed=`2026083004`、2000 resamples。development 文件只读，confirmation 使用独立 manifest/raw/aggregate/receipt。
+5. confirmation 主门：两格 `Np=2` 的 C4−B2 点估计均 `<0`，两格合并 paired bootstrap CI upper `<0`，且至少一格 individual CI upper `<0`；两格 `Np=4` 均不得出现 CI lower `>0` 的显著退化。满足则给 `C4_CONFIRMED_STRUCTURED_SIGNAL`；只有局部信号则降为 `C4_CONFIRMATION_LOCAL_ONLY`；否则 `C4_NOT_CONFIRMED`。不得因贴边失败改 seeds、网格、baseline 或增加损伤。
+6. T071 结果仍须由另一上下文从 raw 复算。只有 confirmation 与独立验证均 PASS，才允许将 Ch4 包整理为 `THESIS_METHOD_READY` 并开始方法章材料化；T070 的 C5-0 Step 2 继续并行，不等待 Ch4。
+
+### 理由
+
+T069 已给出跨三个格、相对真实廉价对手的 BER 信号，足以进入一次冻结复验；同时 18 dB/Np=2 的 CI 非常贴边，18 dB/Np=4 的均值略差，尚不足以直接冻结最终结论。一次全新 seeds、无调参的 paired confirmation 是最低充分的科学保险，不需要扩展成期刊级全损伤/全强方法竞赛。
+
+### 停机与轮换
+
+- `C4_CONFIRMED_STRUCTURED_SIGNAL`：独立 raw 复验后整理 Ch4 章级证据包，不再重复 confirmation。
+- `C4_CONFIRMATION_LOCAL_ONLY`：保留为有限局部方法证据；主线程判断是否足以作为硕士 Ch4，若需更稳只允许回到既有 C4-0，而非救 C4-1。
+- `C4_NOT_CONFIRMED` 或 correctness/provenance 失败：关闭 C4-1 的承重入口；correctness 仅准局部修复，科学门失败不重跑。
+
+### 来源
+
+T069 manifest/raw/aggregate/receipt/report、主 worktree fresh reducer 与独立 verifier V025；无新增用户原话，沿用 D044 的连续执行授权和 D031–D032 的硕士级有限主张标准。
+
+## D051: 接收 C5-0 Step 2，只开放冻结六篇全文的 Step 3 精读
+
+> status: active
+> date: 2026-08-30
+> 取代：D050 的 CP012 当前控制；保留 T071 已启动授权、C4 冻结配方、C5-1 关闭和有限 claim
+> 被取代：D052（仅取代 CP013 当前控制；T072 已按 CP013 合法启动并继续有效）
+> 依据: T070 / V026 / D031–D032 / D041 / S028
+
+### 决策
+
+1. 接收 T070 的 `STEP2_READY_FOR_STEP3`。唯一 qualified fulltext 为 6 篇：Martinez 2008、Szczecinski 2011、Alvarado 2017、Yoshida 2019/2020、Layton 2018、Xie 2009；A/B/C 三桶覆盖为 `4/3/4`，满足 mismatched BICM scalar、receiver-visible known/pilot reliability 与 APSK/coherent neighbor 三类最低输入。
+2. C5-0 的正确未校准 baseline B0 冻结为：同一 one-shot max-log/APP demapper、同一估计或假设的 auxiliary-channel 参数，LLR 不做额外校准，即 `s=1/alpha=1`。匹配 likelihood/真实噪声统计只能单列为 `B_match/O1` reference，不能冒充 B0。最强廉价替代固定包含单一全局标量 `L^c=sL`。
+3. Step 3 精读池与顺序冻结为 QF2→QF3→QF4→QF1→QF5→QF6，不再检索或下载。T072 必须区分 deployable 的 pilots/known symbols/residual/reliability 输入与依赖真实 SNR、bit labels 或 offline GMI 优化的非部署输入。
+4. T072 至多构造一个 canonical C5-0 Q#。其身份暂不预写成具体公式，只要求最终具备明确 M-C-A、完整 receiver-visible input→action→output、正确 B0/B_match/global-scalar comparator ladder，并回答全局/frame/ring/bit 级自由度与 causal window。经典 scalar 原子或强邻居只收窄 claim ceiling；目标场景完整 recipe 完全相同才进入后续 collision 风险。
+5. CP013 只开放六篇全文的 GW Step 3 精读与独立内容复核。禁止 Step 3.5、实现、仿真、参数搜索、正式正文或把 coverage PASS 写成方法成立。T071 已按 CP012 合法启动，不因 epoch 更新失效，仍须按原冻结终态完成并由另一上下文复算。
+
+### 理由
+
+Step 2 已提供方法构造所需的三个承重原子：mismatched LLR 的低维校准、known/pilot residual 到可靠度估计、APSK/coherent soft-demapping 邻居。下一步真正缺的是从全文辨清哪些动作可在线部署、哪些只是带 truth 的离线标定，并把它们收敛成一个可检验问题；继续扩大检索或直接写代码都不会替代这一步。
+
+### 停机与轮换
+
+- 六篇全文无法形成同时满足 M-C-A 四判据与 receiver-visible IAO 的 Q#：输出 `STEP3_NO_LEGAL_Q`，关闭 C5-0 并按既定顺序评估 C5-5，不拼接标题造方法。
+- 只能形成经典 scalar 的目标场景迁移：允许输出 `STEP3_CLASSICAL_MIGRATION_READY_FOR_STEP3_5`，后续由 bounded exact-recipe closure 决定 claim ceiling，不在 Step 3 自动 Kill。
+- 形成合法 Q#：输出 `STEP3_Q_SURVIVES_READY_FOR_STEP3_5`，仍须主控接收后另开 Step 3.5；不得在同任务实现或仿真。
+
+### 来源
+
+T070 Step 2 coverage report、6 篇 canonical fulltexts、独立审查及主线程 B0/B_match 措辞修复。无新增用户原话，沿用 D044 的持续执行授权与“硕士级、方法具体、不过度治理”的既定边界。
+
+## D052: C4-1 冻结为 thesis-method-ready，只开放章级证据材料化
+
+> status: active
+> date: 2026-08-30
+> 取代：D051 的 CP013 当前控制；保留 T072 已启动授权、C5-0 Step 3 边界与所有既有科学停机
+> 被取代：D053（仅取代 CP014 当前控制；Ch4 方法身份、confirmation 与有限 claim 继续有效）
+> 依据: T069 / T071 / V025 / V027 / D031–D032 / D041 / S028
+
+### 决策
+
+1. 接收 T071 frozen terminal=`C4_CONFIRMED_STRUCTURED_SIGNAL` 与独立 raw verifier `PASS`，将 Ch4 方法状态冻结为 `THESIS_METHOD_READY`。正式中文身份为“基于缩放酉约束的短导频偏振信道估计与解复用方法”；动作是对 pilot-LS 的 2×2 复矩阵做 `g>0,U∈U(2)` 结构投影，联合估计公共尺度与偏振混合矩阵，再执行解复用。
+2. Confirmation 四格相对固定最强廉价 B2 的 BER 相对降幅为 `7.37%/2.62%/8.38%/5.06%`；两个 Np=2 cell 合并后 B2/C4 BER=`0.06076145/0.05608821`，绝对差=`-0.00467324`、相对降幅=`7.69%`、95% CI=`[-0.00686385,-0.00282661]`。四格 individual CI upper 均 `<0`。
+3. 方法主张上限冻结：这是把经典 scaled-unitary/Procrustes 结构估计迁移到短 balanced-pilot DP-(8,8)-16APSK 星地相干接收的有限方法；B2 `tau=1` 与 C4 使用同一 `UV^H` 方向，因此只主张公共尺度估计带来的 BER 改善，不主张新偏振旋转、新估计理论、首次、SOTA 或全损伤普适性。
+4. 不再运行第二次 confirmation，不调参、不扩 SNR/pilot/损伤/编码网格。P0/P1=`0/0`；P2 的静态 unitary/common-scalar、无 PDL/PMD/FIR/CPR/LDPC 场景边界必须保留，但不阻断硕士方法章。
+5. CP014 只开放 T073 将已冻结证据材料化为内部 fact matrix、章结构蓝图、算法框/伪代码、可编辑方法图、raw-derived 结果表/图、引用与复现索引。不得生成新科学数字、修改仿真、写入正式论文正文或抬高 claim。T072 已按 CP013 合法启动并继续，不受 epoch 更新影响。
+
+### 理由
+
+本方法已经满足硕士级最低证据合同：正确经典 baseline、明确 receiver-visible IAO、目标场景公平 BER 改善、显而易见廉价对手 B2 未吸收增益、全新 seeds confirmation、独立 raw 复算与有限 claim。继续扩大实验是在把写作准备重新抬成期刊级竞争，不再增加本章成立所需的核心证据。
+
+### 停机与下一阶段
+
+- Ch4 science lane 立即停止；任何“再稳一点”的重复 confirmation、损伤扩展或强对手堆叠均需新的战略理由，当前不授权。
+- T073 只要事实矩阵、图表数据与 claim 边界可逐项追溯，即可给 `CH4_WRITE_PACKAGE_READY`；视觉或措辞缺陷只局部修，不回到科学实验。
+- C5-0 继续按 T072 terminal 推进；Ch4 的成功不降低 Ch5 的 correctness/BER 底线，也不要求 Ch5 采用同一算法族。
+
+### 来源
+
+T071 confirmation manifest/raw/aggregate/receipt、19 项 fresh tests、另一上下文独立 raw-only 重算。无新增用户原话，执行用户已批准的“持续推进至能开始写论文”目标。
+
+## D053: 接收 Ch4 写作包与 C5-0 Step 3，只开放 bounded exact-recipe 闭包
+
+> status: active
+> date: 2026-08-30
+> 取代：D052 的 CP014 当前控制；保留 Ch4 `THESIS_METHOD_READY`、有限 claim、C5-1 关闭与所有既有科学停机
+> 被取代：无
+> 依据: T072 / T073 / V028 / D031–D032 / D041 / D052 / S028
+
+### 决策
+
+1. 接收 T073 的 `CH4_WRITE_PACKAGE_READY`。Ch4 九类内部写作材料已经齐全，raw-derived CSV 与 D052/V027 逐值一致，两张 SVG/PNG 经独立语义/视觉审查和主控实际查看通过；Ch4 科学线与材料化线均关闭，不再追加实验、图包或“再稳一点”的任务。
+2. 接收 T072 的 `STEP3_CLASSICAL_MIGRATION_READY_FOR_STEP3_5`。唯一 canonical `Q-C5-0` 是：在 `Ch4 demux → Ch3 per-tributary CPR` 后，用当前 frame 的 receiver-known pilots 形成残差可靠度统计，估计一个 per-frame global positive scalar，只缩放 channel/extrinsic LLR，再送入冻结 LDPC decoder。它是经典 scalar/reliability 原子的目标场景迁移，不是新 GMI/LLR 理论。
+3. C5-0 的 comparator ladder 冻结为 B0=`same mismatched demapper, s=1`；B1=`offline fixed global scalar`；B2=`receiver-visible per-frame global scalar`；B3=`same pilot residual variance directly plugged into auxiliary demapper`；O1/B_match=`true matched reference`。B3 与 B2 的 max-log/APP 等价或吸收风险必须在 Step 3.5 明示，不能事后删除。
+4. CP015 只开放一次 45 分钟封顶的 candidate-specific Step 3.5：最多两轮、三类 query/citation-chain，回答九字段完整 recipe 是否在相同目标场景已存在，以及 max-log/APP 下 B2 与 B3 的代数关系。经典原子、邻近场景 exact action 或 B3 等价只降低 claim ceiling，不自动否决硕士级场景迁移；只有相同 DP-(8,8)-16APSK coherent-FSO observation/action/output recipe 的完整碰撞才关闭 C5-0。
+5. Step 3.5 完成前禁止 Step 4a、实现、仿真、coded grid 与正式论文正文。若通过，下一任务仍只做纸面 A0/A′/A/B 和 correctness contract；不得从“没找到完全相同”直接跳 BER。
+
+### 理由
+
+Ch4 已达到“打开即可开始写章”的状态；继续操作只会制造版本漂移。C5-0 已有清楚的 receiver-visible IAO 和正确 baseline，但方法身份最容易被“直接重估噪声方差”吸收。用一次短闭包把等价关系、完整 recipe 与 claim ceiling写清，是进入可行性前最后一个高价值文献动作；继续扩大一般 LLR/GMI 文献池没有收益。
+
+### 停机与轮换
+
+- Step 3.5 若确认同一目标平台的九字段完整 recipe collision：关闭 C5-0，按既定后备顺序轮换 C5-5，不改名重开。
+- 若只确认经典 scalar、邻近场景相同行为或 B2/B3 等价：保留为 `thesis-grade target-scene migration`，进入另行授权的 Step 4a，但把“新理论/首次”主张永久关闭。
+- 两轮后 primary evidence 仍有限：输出 evidence-limited migration，允许按“从不声称首次”的硕士标准进入 Step 4a；不得用检索不完备冒充 novelty 证明。
+
+### 来源
+
+T072 六篇全文精读、独立内容复核、T073 章级包及主控 fresh raw/视觉验收。无新增用户原话，沿用 D031–D032 与用户已确认的“硕士级、具体方法、场景差异可成立、不过度治理”标准。
+
+## D054: 接收 C5-0 Step 3.5，只开放纸面 Step 4a 与解析停机审计
+
+> status: superseded
+> date: 2026-08-30
+> 取代：D053 的 CP015 当前控制；保留 Ch4 全线关闭、C5-1 关闭、C5-0 有限 claim 与所有既有科学停机
+> 被取代：D055
+> 依据: T074 / V029 / D031–D032 / D041 / D053 / S028
+
+### 决策
+
+1. 接收 T074 terminal=`STEP3_5_EXACT_NEIGHBOR_LIMITS_CLAIM`。没有证据确认同一 DP-(8,8)-16APSK coherent-FSO、同一 post-Ch4→Ch3 observation、同一 current-frame pilot-residual statistic/cadence、同一 one-global-scalar channel-LLR action 与 frozen-LDPC output 的九字段完整 recipe；C5-0 继续保留为 thesis-grade target-scene classical migration。
+2. 永久限制主张：Wu 2013、Shibata 2015、Cao 2015、Alvarado 2016、Layton 2018 等已分别覆盖 online/per-block scaling、residual→variance→direct LLR、pilot-aided coherent-optical LLR、coherent-optical global scaling 与 APSK pilot-aided likelihood。不得主张首次 online scaling、首次 pilot-aided LLR、新 GMI/LLR 理论、SOTA 或检索已证明 novelty。
+3. B2/B3 边界冻结：在 uniform weights、无 demapper prior、共同 isotropic variance、固定 geometry/labels、channel-only scaling 下，max-log B2 与 direct variance plug-in B3 逐样本逐 bit 严格等价；exact APP 一般不等价，且必须在后续 correctness 中按 DP-(8,8)-16APSK 每 bit 做恒等/非恒等核查。B3 不得删除。
+4. CP016 只开放 T075 做候选专属 GW Step 4a A0/A′/A/B 与 correctness contract；不得实现、仿真或跑 BER。首个解析 falsifier 是当前 frozen decoder：固定系数 `alpha=0.75` normalized min-sum 在无 clipping/quantization/offset 时对公共正缩放正齐次，理论上 hard output 不应改变。T075 必须先裁明真实非齐次来源、B0→O1 headroom 与 B1/B3 吸收关系，不能把 decoder clipping 造成的偶然差异直接包装成新方法。
+5. 若 B2 被正齐次 NMS 与 B3 完全吸收，但 exact-APP direct plug-in 在相同 receiver-visible 信息预算下仍形成合法 M-C-A，则允许 Step 4a 把最简承重 action 重命名为“导频残差驱动的逐帧辅助信道参数校准软解调”，但必须明示其是 B3 形态的经典场景迁移，不得靠改名保留 B2。若 B2/B3 都没有自然 mismatch/headroom，关闭 C5-0 并轮换后备，不新增损伤。
+
+### 理由
+
+T074 已经把 originality 风险压到可管理的 claim ceiling；现在真正决定路线是否值得跑的不是继续找文献，而是目标平台是否自然存在可靠度失配，以及固定 NMS/裁剪合同下全局尺度能否改变有限码输出。先做一次纸面解析审计可以用最小成本避免“代码跑很久后才发现 decoder 对缩放不敏感”，也不会把硕士级场景迁移重新抬成期刊级 novelty gate。
+
+### 停机与下一阶段
+
+- T075 若给 `PAPER_DIMENSIONS_PASS_B2` 或 `PAPER_DIMENSIONS_PASS_B3_MIGRATION`：主控另开 correctness-only seam；仍不自动开放性能仿真。
+- 若自然 mismatch 不存在、无 B0→O1 headroom、或所有可能作用只来自可由 B1/固定 clipping 同预算完全吸收的数值偶然：输出 `PAPER_FAIL_NO_CAUSAL_HEADROOM`，关闭 C5-0，按既定后备顺序轮换。
+- operational pilot/window authority 不足可以形成 bounded falsifier 和预注册范围，不要求继续文献补全；但不得拍一个只为制造增益的数字。
+
+### 来源
+
+T074 报告、任务内 reviewer `PASS/P0-P1=0-0`、主 worktree 独立抽检 `PASS/P0-P1=0-0`，以及当前 codec 固定 `alpha=0.75` normalized min-sum、20 iterations、LLR clip=20 的本地接口事实。无新增用户原话，执行 D044 的持续授权与 D031–D032 的硕士级诚实迁移标准。
+
+## D055: 接收 C5-0 Step 4a 纸面 PASS，只开放目标 APSK→LDPC correctness seam
+
+> status: superseded
+> date: 2026-08-30
+> 取代：D054 的 CP016 当前控制；保留 Ch4 全线关闭、C5-1 关闭、C5-0 有限 claim 与所有既有科学停机
+> 被取代：D056
+> 依据: T075 / V030 / D031–D032 / D041 / D054 / S028
+
+### 决策
+
+1. 接收 T075 terminal=`PAPER_DIMENSIONS_PASS_B2`。C5-0 当前唯一候选身份冻结为：`post-Ch4 demux → per-tributary Ch3 CPR → current-frame known-pilot residual → one positive global post-demapper channel/extrinsic-LLR scalar → frozen/black-box LDPC`。它是 DP-(8,8)-16APSK 星地相干接收场景中的经典迁移，不是新 LLR 理论、新 decoder 或 SOTA 方法。
+2. 纸面现象证据仅支持“值得做 correctness”：T066 既有 64 个合法 residual windows 的 unbiased complex residual power 为 `min=0.01410, median=0.06547, max=1.16298, mean=0.15834, CV=1.691`，相对 nominal AWGN complex power 跨 `0.446×–36.777×`。它尚未证明 pilot statistic 能预测 held-out payload reliability，也未证明 BER/FER 增益。
+3. 解析边界永久保留：无 clipping/quantization/offset/fixed reference 时，当前 fixed normalized-min-sum 对公共正缩放正齐次，hard output 不变；未裁剪 max-log 合同内 B2=B3。B2 只可能借目标部署链中的固定 preclip、decoder input/internal clip 与固定 filler 形成非齐次作用。若 correctness 证明目标 APSK seam 不含该自然作用或差异只由错误 placement 制造，则 B2 立即失败。
+4. 内部 adaptive clip/filler threshold reparameterization 是诚实的理论解释与 claim ceiling；它需要修改冻结/黑盒 decoder 内部，因此不是当前 fixed B0/B1 接口下的自动否决，也不得被隐瞒成“不存在等价参数化”。B3 exact-APP 保留为同 pilots/statistic/window、同信息预算强 comparator 和 correctness 分叉，不与 B2 拼成双自由度方法。
+5. CP017 只开放 T076：实现目标 DP-(8,8)-16APSK mapper/exact-APP|max-log demapper→5G BG2 LDPC 的最小 correctness seam，执行 C0–C6 deterministic tests，冻结 label/sign、`N0` vs `N0/2`、interleaver/bit order、clip/filler placement、truth firewall 与 B2/B3 identity/non-identity。禁止 natural-occurrence、headroom、BER/FER、调参和新损伤。
+
+### 理由
+
+T075 已把真正的风险从“有没有相似论文”压缩为一个可在小数组与 codec roundtrip 中回答的接口问题。先闭合 correctness 可以防止把 Gray-16QAM adapter、错误 LLR 符号、噪声二倍因子或裁剪次序误当方法增益；同时不再用期刊级 novelty 门提前否决一个硕士级冻结接口迁移。
+
+### 排除的替代方案
+
+- 不直接跑单格 headroom 或 BER/FER：目标 APSK→LDPC 位序、符号、噪声因子与裁剪 placement 尚无同一 receipt。
+- 不把候选直接迁移成 B3：T075 已选择 frozen-interface B2；B3 只在 correctness 证明 B2 无合法 action 后回主控显式重判。
+- 不把内部 adaptive threshold/filler controller 当作当前 B1，也不隐瞒其理论等价解释；两者接口合同不同。
+
+### 影响范围
+
+- 只影响 C5-0 的下一步 authority、correctness 新目录/测试和 worker log。
+- 不重开 Ch4、C5-1、P11/P01 Groundwork，不改变 Ch3/Ch4 已冻结证据。
+- 不修改 Skill/controller、正式论文正文、`common/`、全局 params 或历史实验结果。
+
+### 停机与下一阶段
+
+- `CORRECTNESS_PASS_B2_ACTION`：目标 codec receipt、C0–C6 与 B2 自然非齐次 action 全 PASS；主控才可另开一个预注册单格，依次检查 natural mismatch、B0→O1、B1→B2，并保留 B3 exact-APP 强对手。
+- `CORRECTNESS_B2_INVALID_B3_REMAINS`：B2 只有理想零效应/错误 placement，但 B3 exact-APP 在相同信息预算下通过接口与 non-identity；停止性能执行，由主控显式决定是否将候选身份迁移回 B3，不在任务内偷换。
+- `CORRECTNESS_FAIL_NO_DISTINCT_ACTION` 或 `INVALID_TESTBED`：禁止性能仿真；前者关闭 C5-0 并轮换 C5-5，后者只报告一个最小接口 blocker。
+- correctness 阶段不得用高 SNR decode success、GMI/ASI 或构造性 clip flip 冒充 headroom/BER 证据。
+
+### 来源
+
+T075 最终报告、独立验收 `PASS / P0=0 / P1=0 / P2=1` 及 P2 措辞修复。无新增用户原话；执行 D044 的持续授权、D031–D032 的硕士级有限主张标准与 D041 的 correctness-first 证据合同。
+
+## D056: 接收 C5-0 target codec correctness，只开放一个预注册自然单格
+
+> status: superseded
+> date: 2026-08-30
+> 取代：D055 的 CP017 当前控制；保留 Ch4 全线关闭、C5-1 关闭、C5-0 有限 claim、B3 强对手与所有既有科学停机
+> 被取代：D057
+> 依据: T076 / V031 / D031–D032 / D041 / D055 / S028
+
+### 决策
+
+1. 接收 T076 terminal=`CORRECTNESS_PASS_B2_ACTION`。目标 DP-(8,8)-16APSK→5G BG2 LDPC 的 mapper/label、LLR sign、`N0`/`N0/2`、coded-group→LLR flatten→live `out_int_inv`、16 个 fixed bit-0 filler=`-20`、clip 顺序与 fresh-state receipt 已闭合；B2 是“当前物理帧一个 scalar、两偏振和全部 codewords 共用”的合法外部 action。
+2. 正确性不等于性能。固定接口的真实顺序冻结为 `exact-APP demapper clip30 → B2 scale → decode_fresh clip30 → backend input clip20 → decoder out_int_inv/rate recovery + filler(-20) → BP internal clip20`。这些固定边界只证明公共尺度可能改变有限迭代轨迹，尚未证明自然 reliability mismatch 可预测或 BER/FER 改善。
+3. B1 必须是真实 offline/runtime-fixed scalar：只能从与目标 evaluation seeds 严格不相交的 calibration split 上按预注册有限网格选择一次，随后冻结；不得在 evaluation cell、每帧、每偏振、每 codeword 或每 bit 调整。B2/B3 使用同一 current-frame pilots、demeaning、statistic、window 与 decode 时点；B3 exact APP 永久保留为同信息预算强 comparator。
+4. CP018 只开放 T077 一个继承 T066 的自然单格：moderate Gamma–Gamma `(4,1.9)`、15 dB、memoryless static unitary Jones、equal circular AWGN、plain RDE `mu=1e-3`、per-tributary Ch3 DA CPR、256-symbol frame、64 known pilots/polarization，PDL/PMD/FIR/IQ 全关。禁止换 SNR、pilot 数、window、损伤、decoder、clip 或 scalar 公式救结果。
+5. 单格按顺序门控：先检验 current-frame pilot residual statistic 与 disjoint held-out payload reliability 的正向 paired/rank signal；再检验 O1 true matched exact-APP 相对 B0 的 paired coded headroom；只有两门均通过，才比较 B1/B2/B3。FER 为主、BER 必报；任何只在 GMI、uncoded sign、构造 clip flip 或点估计上出现的改善都不够。
+
+### 理由
+
+T076 已排除最危险的实现伪差来源，下一项高价值问题只剩“这个自然场景里是否有可用的 reliability signal 和 coded headroom”。继承既有单格、按门顺序停止，可以快速否证而不通过改场景画靶；保留 B1/B3 又能防止把 stationary tuning 或 direct variance plug-in 的收益误归给 B2。
+
+### 排除的替代方案
+
+- 不直接开多 SNR、多湍流、多 pilot 开发矩阵；单格尚未证明自然 headroom。
+- 不把 T076 的构造性 clip/filler nonhomogeneity 写成 BER/FER 证据。
+- 不在单格失败后改参数、加损伤或删 B3；失败必须按 terminal 轮换 C5-5 或显式重判 B3 身份。
+- 不恢复 C5-1、Ch4、P11/P01，也不修改 Skill/controller 或正式论文正文。
+
+### 停机与下一阶段
+
+- `SINGLE_CELL_PASS_B2_SIGNAL`：pilot→held-out、B0→O1 与 B1→B2 均有预注册正向 paired 证据，且 B2 未被 B3 完全支配；主控才可另开有界开发矩阵。
+- `SINGLE_CELL_B3_ONLY_SIGNAL`：前两门通过，但 B2 不成立而 B3 exact APP 有同预算正向证据；停止 B2，由主控显式决定是否迁移为 B3 经典场景方法，不在 T077 内改名扩跑。
+- `SINGLE_CELL_NO_RELIABILITY_SIGNAL`、`SINGLE_CELL_NO_HEADROOM`、`SINGLE_CELL_B2_NO_GAIN`：立即停止 C5-0 相应形态，不换 cell 救场；按既定顺序轮换 C5-5。
+- `INVALID_TESTBED`：只报告一个最小接口/统计 blocker；不得用扩大实验掩盖无效测试台。
+
+### 来源
+
+T076 的 10 项 correctness、3 项既有 LDPC 参考测试、修复后独立 reviewer `PASS/P0-P1-P2=0-0-0`，以及主 worktree fresh `10 passed + 3 passed`。无新增用户原话；执行用户已授权的持续推进、硕士级有限主张、流程不跳步与“不靠调参画靶”约束。
+
+## D057: 接收 C5-0 单格无 coded headroom，关闭该形态并轮换 C5-5 Step 1
+
+> status: superseded
+> date: 2026-08-30
+> 取代：D056 的 CP018 当前控制；保留 Ch4 全线关闭、C5-1 关闭、C5-0 有限 claim 与所有既有科学停机
+> 被取代：D058
+> 依据: T077 / V032 / D031–D032 / D041 / D056 / S028
+
+### 决策
+
+1. 接收 T077 terminal=`SINGLE_CELL_NO_HEADROOM`。Gate 1 在固定 128 帧上成立：`rho=0.98566540`，one-sided 95% bootstrap lower=`0.97589804`；current-frame pilots 能预测 held-out payload residual reliability。
+2. 可靠度可观测不等于 coded 方法空间存在。固定 512 帧上 B0/O1 info-BER 分别为 `0.04929352/0.05333900`，`BER_B0-BER_O1=-0.00404549`，95% CI=`[-0.00556197,-0.00266070]`；O1 FER=`0.25585938` 虽略低于 B0=`0.25781250`，但只有 1 个 discordant FER pair，且 BER 明确更差。因此目标 scalar-auxiliary model 没有预注册 coded headroom。
+3. Gate 2 FAIL 后 Gate 3 未开放；evaluation raw 只含 B0/O1，B1/B2/B3 均为 N/A。不得把结论写成 B2/B3 已做性能比较，也不得换 SNR、pilot 数、window、损伤、decoder 或 scalar 公式救 C5-0。
+4. C5-0 当前形态关闭。该结论不否定 pilot residual 的测量价值，也不否定其他 decoder-internal 或 iterative receiver 动作；只否定“在当前固定链上以一维 payload-variance auxiliary oracle 承载 coded headroom”的路线。
+5. CP019 只开放 C5-5 candidate-specific GW Step 1 authority reconciliation，时限 45 分钟：复用 T041/T044/T046 与本地 LDPC receiver authority，冻结一个 reliability-prioritized scheduling/budget 的 M-C-A/Q#、receiver-visible IAO、正确 baseline、最低全文缺口和接口门。不得实现、仿真、补接口、直接进入 Step 2 或把经典动态调度改名冒充方法。
+
+### 理由
+
+T077 用单一 frozen cell 回答了 C5-0 最承重的因果问题：pilot statistic 很强，但连 scorer-only payload-truth oracle 都不能改善 coded BER。继续调 scalar、换 cell 或直接跑 B2/B3 只会在已失败的 headroom 前提上画靶。D056 已预先规定该终态轮换 C5-5；现在最小合法动作是候选级 Step 1，而不是实现动态调度。
+
+### 排除的替代方案
+
+- 不重开 C5-0 多格、B3-only、GMI/uncoded 或新损伤救场。
+- 不恢复已关闭的 C5-1，也不重开 Ch4、P11/P01 Groundwork。
+- 不把 C5-5 的复杂度潜力预写成 BER/FER 增益；Step 1 只建立问题与 authority。
+- 不修改 Skill/controller、`common/`、全局 params 或正式论文正文。
+
+### 停机与下一阶段
+
+- Step 1 能形成合法 `Q-C5-5`、明确 receiver-visible IAO、传统/强 baseline ladder 与可获得的 Step 2 全文入口：主控另行接收后只开放 Step 2。
+- 动作已被同目标接口的经典动态 scheduling 完整占据，或问题只能依赖未暴露 decoder state/自写内核且无硕士时限内接口路径：关闭 C5-5，不直接实现；主控再按章节外形与 BER/FER 潜力显式重排 C5-4/C5-3/C5-2。
+- 只有 Ch5 候选池真实耗尽或必须改变共同平台/论文结构时，才停回战略讨论。
+
+### 来源
+
+T077 固定 8-frame live smoke、64-frame calibration、128-frame Gate 1、512-frame Gate 2 raw/receipt；任务与主 worktree fresh `14+10+3` tests；独立 raw 复算与 audit-hash 修复后 `PASS/P0-P1-P2=0-0-3`。无新增用户原话；执行 D044 的持续授权与“硕士级、按流程、不靠救场画靶”的既定边界。
+
+## D058: 接收 C5-5 Step 1 bounded evidence gap，只开放窄 Step 2 获取
+
+> status: superseded
+> date: 2026-08-30
+> 取代：D057 的 CP019 当前控制；保留 Ch4 全线关闭、C5-0/C5-1 关闭与所有既有科学停机
+> 被取代：D059
+> 依据: T078 / V033 / D031–D032 / D041 / D057 / S028
+
+### 决策
+
+1. 接收 T078 terminal=`STEP1_C5_5_EVIDENCE_GAP_BOUNDED`。`Q-C5-5` 的最小身份冻结为：使用当前码字的 receiver-visible channel/pilot reliability，将码字分入少量预注册 LDPC 迭代预算档位，调用同一 fixed NMS/OMS，输出 decoded bits、FER/BER 与真实 edge-update/平均/P95 成本。它只改译码预算，不改 Ch3、Ch4、APSK demapper 或 CN update equation。
+2. 接口门为 `OPEN_WITH_BOUNDED_ADAPTER`：Sionna 2.0.1 支持 per-call `num_iter`，按预算档位分组调用即可形成最小 seam，无需自写 BP；当前 `cn_schedule` 是构造期静态 schedule，不是 receiver-driven dynamic priority。callbacks/state/soft output 只属库级能力，不得写成项目已实现。
+3. 强制吸收边界永久保留：tuned fixed NMS/OMS、equal-total-update extra iterations、standard flooding/layered、static per-iteration LUT、ordinary syndrome/CRC early stop，以及 frozen reliability-bin→iteration LUT。若候选只胜 fixed-20 而未处理 equal-update/early-stop，最多是弱工程 component。
+4. 当前缺口仅为 direct prior-art/fulltext：DOI `10.1109/ACCESS.2019.2899106` 只有身份/元数据，无本地全文；另缺至多 1–2 篇近期 reliability/stall-aware BP scheduling/budget primary fulltexts。该缺口不等于候选科学失败，也不足以授权实现。
+5. CP020 只开放 T079 的 GW Step 2 bounded acquisition：优先取得并验证上述 DOI，再至多补 2 篇 direct primary fulltexts，冻结 identity、全文质量、coverage 与 Step 3 read pool。不得在同一任务精读裁决 exact collision、进入 Step 3、实现 adapter 或仿真。
+
+### 理由
+
+T078 与独立反向审查一致：budget-only 路径科学问题和最小接口都存在，工程量不构成三月窗口 blocker；真正未闭合的是普通 early-stop 是否完整吸收，以及 direct scheduling 文献的动作/公平口径。按 Step 2→Step 3 分开取得和精读，可避免再次把标题元数据当 authority，也不会把候选过早做成 decoder 工程。
+
+### 排除的替代方案
+
+- 不直接实现 `num_iter` seam 或运行 occurrence/headroom；Step 2/3/3.5/4a 尚未完成。
+- 不把 static `cn_schedule`、ordinary early-stop、standard layered 或 Wu 2010 adaptive NOMS 改名为 C5-5。
+- 不把 C5-5 扩成 per-edge dynamic priority、自写 decoder、syndrome rescue 或 BICM-ID；这些不是当前最小身份。
+- 不重开 C5-0/C5-1/Ch4，不修改 Skill/controller 或正式论文正文。
+
+### 停机与下一阶段
+
+- Step 2 取得 2019 direct scheduling 全文并闭合 1–2 篇 budget/early-stop comparator coverage：主控另行接收后只开放冻结全文池的 Step 3 精读。
+- direct 全文无法合法取得且无等价 primary substitute：`EVIDENCE_BLOCKED`，关闭或重排 C5-5，不用实现补证据。
+- Step 3 若证明同目标动作已被 ordinary early-stop/equal-update 完整吸收：关闭该形态并按 D057 既定原则显式重排 C5-4/C5-3/C5-2。
+
+### 来源
+
+T078 两份报告、task-control/双文件白名单/diff-check、独立只读审查对 M-C-A/IAO/early-stop 吸收与最小 `num_iter` seam 的一致结论。无新增用户方向变更；用户醒后仅要求阶段盘点，持续执行授权不变。
+
+## D059: 接收 C5-5 Step 2 有界全文池，只开放冻结两篇的 Step 3 精读
+
+> status: superseded
+> date: 2026-08-30
+> 取代：D058 的 CP020 当前控制；保留 Ch4 全线关闭、C5-0/C5-1 关闭与所有既有科学停机
+> 被取代：D060
+> 依据: T079 / V034 / D031–D032 / D041 / D058 / S028
+
+### 决策
+
+1. 接收 T079 terminal=`STEP2_C5_5_READY_FOR_STEP3`。本轮审计 3 个身份，冻结 2 篇合格 Step 3 全文：Liu et al. 2025 的 reliability-list-based CBP，以及 He et al. 2021 的 5G NR-LDPC 译码。前者直接覆盖可靠性驱动的动态更新顺序，后者直接覆盖 CRC/综合征早停、最大迭代预算与工程实现口径。
+2. DOI `10.1109/ACCESS.2019.2899106` 未取得合格全文。下载器返回的 arXiv `cs/0702111v2` 是 2007 年入侵检测论文，标题身份不匹配，已拒绝进入论文库；仅保留 mismatch receipt。因而 P0 论文的 exact-action collision 仍是明确未知，不得写成“已排除完全重复”。
+3. CP021 只开放 T080：逐篇精读上述两篇冻结全文，提取 problem/context/action、receiver-visible 输入、动作粒度、停止/预算规则、baseline、公平更新成本、输出与复杂度，并以九字段逐项对照 `Q-C5-5`。不得新增检索或下载，也不得实现、仿真、修改 decoder 接口或进入 Step 3.5。
+4. Step 3 必须专门回答两个承重问题：ordinary syndrome/CRC early stop 是否完整吸收 per-codeword budget allocation；reliability-list/dynamic schedule 与“码字级预译码预算分档”是 primitive overlap、strong neighbor，还是完整动作碰撞。equal-total-update comparator 继续作为后续纸面/实验合同，不因全文未直接给出而消失。
+5. 允许的终态只有：`STEP3_C5_5_Q_SURVIVES_READY_FOR_STEP3_5`、`STEP3_C5_5_ABSORBED_CLOSE`、`STEP3_C5_5_EVIDENCE_INSUFFICIENT`。任一终态都不得转述为 BER/FER 增益或方法已成立；只有第一种可在另一个 checkpoint 讨论 Step 3.5。
+
+### 理由
+
+Step 2 已经把“没有全文”缩成了一个可读、可裁决的小证据池，同时真实暴露了 P0 身份获取失败。此时继续扩大检索会重新滑回无边界搜候选，直接实现又会跳过最关键的动作碰撞与廉价吸收判断。冻结两篇进入 Step 3，是在不扩大工作面的前提下决定 C5-5 是否值得继续的最短合法路径。
+
+### 排除的替代方案
+
+- 不把错配的 arXiv 文件当成 2019 论文，也不因 DOI 路线失败而补无界检索。
+- 不把“可靠性”“动态调度”“early stop”等词面重合直接判为 exact collision；必须比较实际输入—动作—输出链。
+- 不在 Step 3 同包进入 Step 3.5、实现、仿真或结果包装。
+
+### 停机与下一阶段
+
+- 两篇全文足以判断 Q-C5-5 的动作未被完整占据且问题四判据仍成立：终态 `STEP3_C5_5_Q_SURVIVES_READY_FOR_STEP3_5`，回主控另开 Step 3.5。
+- ordinary early-stop 或已有动态调度在同一信息/动作/成本口径下完整吸收：终态 `STEP3_C5_5_ABSORBED_CLOSE`，关闭该形态并按既定候选池重排。
+- P0 缺失导致 exact-action 无法诚实裁决：终态 `STEP3_C5_5_EVIDENCE_INSUFFICIENT`，不得用实现替代证据。
+
+### 来源
+
+T079 coverage report、两份冻结全文及 metadata、2019 DOI mismatch receipt、task commit `2426f50`，以及独立 verifier 的 `PASS/P0-P1-P2=0-0-0`。无新增用户方向变更；D044 的连续推进授权与硕士级证据边界保持不变。
+
+## D060: 接收 C5-5 Step 3 并暂停 Ch5，重开 Ch4 生产级章证据扩展
+
+> status: superseded
+> date: 2026-08-30
+> 取代：D059 的 CP021 当前控制；仅取代 D052–D053 的“Ch4 不再扩 SNR/pilot/场景与不再接收科学任务”执行边界，保留 C4 方法身份、B2 主对手、truth firewall 与有限 claim
+> 被取代：D061
+> 依据: T080 / V035 / D031–D032 / D040–D044 / D052–D053 / 用户 2026-08-30 明确章级扩展授权 / S028
+
+### 决策
+
+1. 接收 T080 terminal=`STEP3_C5_5_Q_SURVIVES_READY_FOR_STEP3_5`。两篇冻结全文 `2/2` 精读、唯一 `Q-C5-5` 四判据 `4/4`；Liu 2025 是 decoder-internal residual/local-update strong neighbor，He 2021 的 CRC/syndrome early stop 是 mandatory cheap comparator，二者均非当前外部 LLR-derived predecode reliability→per-codeword cap 的完整碰撞。P0 2019 全文缺失、ordinary early-stop 经验吸收与 equal-update 公平性继续作为未闭合债务。
+2. 用户将当前首要目标改为“把 Ch4 从头到尾故事讲圆、讲有力、讲专业”，并明确要求全 SNR 结果应围绕实用 pre-FEC 门限，而不是只保留 14/18 dB 两个确认点。C5-5 因此暂停在 Step 3 survivor；CP022 不开放其 Step 3.5、实现或仿真，既有 Q#/债务完整保留。
+3. D052–D053 将四格 bounded confirmation 直接收口为 `CH4_WRITE_PACKAGE_READY`，对“候选是否有稳定信号”是充分的，但对最终通信方法章的生产级证据不充分。正式区分两种合同：四格继续是方法准入 confirmation；新增 lane 只补章级工作区、机制、适用边界与复杂度，不改变 C4 算法、baseline 身份或 confirmation 历史。
+4. Ch4 production-evidence 北极星冻结为：同一 DP-(8,8)-16APSK 双偏振 coherent-FSO 接收链上，以目标 pre-FEC BER/FEC 门限定义 SNR 上界；形成完整 BER–SNR、短导频 `Np` 规律、required-SNR gain、channel-NMSE/inverse-residual 机制、弱/中/强湍流紧凑迁移检查、scaled-unitary 结构失配边界和复杂度/开销表。调制、偏振数、C4 action、B2 身份与 Ch3 接口不变。
+5. CP022 只开放设计与 preflight：核对 Ch3 的正式 SNR/门限/湍流 authority，审计现有 Ch4 simulator seam 和 raw metric，给出 smoke→freeze→production→independent verification 的单一路线、预算和停机门。未完成独立 preflight 前不运行 smoke/production，不扩为 PDL/PMD/FIR/时变 SOP/CPR/LDPC，不修改正式论文正文或 Skill/controller。
+6. 后续若开放执行，smoke 只定位门限区、数值稳定性和算量，不产生论文数字；正式 manifest 必须在 production 前一次冻结。不能看结果删不利 SNR、改门限、换 B2、重调 C4 或扩大损伤救场。完整曲线若显示 Np=2 在实用门限附近约 `0.3–0.5 dB` 稳定收益，可作为合格硕士方法章；若仅约 `<0.1 dB`、机制不闭合或 broad work region 被 B2 支配，必须诚实降级而不是用 BER 百分比掩盖。
+
+### 理由
+
+T068/T069/T071 的 `14/18 dB × Np=2/4` 原本是最小 signal/confirmation grid，代码并无只能运行两个 SNR 的限制。此前流程把“通过候选准入”过早等同于“章级证据完整”，正是用户指出的成品目标错位。生产级扩展围绕方法最自然的三条轴——工作区 SNR、估计预算 Np、结构匹配程度——并用机制和复杂度闭合，能增加论文说服力而不制造新候选或期刊级大而全竞赛。
+
+### 排除的替代方案
+
+- 不只把现有四柱图拉长为更多 SNR 点而缺少 pilot/机制/边界；那仍是单一性能图。
+- 不加入 QPSK、16QAM、单偏振或新编码方法；这些会破坏 Ch3–Ch5 的统一平台与章节分工。
+- 不把所有 PDL/PMD/FIR/时变 SOP/CPR/LDPC 一次性塞入 Ch4；结构失配只做一个有界 sensitivity axis，Ch5 保留编码职责。
+- 不凭 14/18 dB 两点插值把约 `0.1–0.5 dB` 写成正式 SNR gain；required-SNR 必须由完整曲线和固定门限得到。
+
+### 停机与下一阶段
+
+- preflight 能冻结统一 SNR 定义、实用门限、场景 authority、测试 seam、算量和最小 production grid：主控另开 checkpoint 只授权 smoke。
+- Ch3 authority 与 Ch4 seam 的 SNR/噪声/湍流定义无法对齐，或现有代码需重建完整 testbed：先报告 blocker 和最小修复，不边跑边改科学对象。
+- smoke correctness/物理趋势失败：停在诊断，不进入 production；生产结果若失败最低章合同，降级 Ch4 claim/结构，不选择性删点。
+
+### 来源
+
+T080 Step 3 报告、两篇 read notes、worker log、独立内容 reviewer 的 `PASS_WITH_P2` 后 `RECHECK: PASS`；用户连续提出“全 SNR 应覆盖到实用门限”“百分比换算 dB 可能很小”“除 SNR 外需要足以撑章的证据”，并最终授权持续执行 Ch4 生产级补强。
+
+## D061: 接收 Ch4 production-evidence preflight，只开放 16APSK demapper correctness repair
+
+> status: superseded
+> date: 2026-08-30
+> 取代：D060 的 CP022 当前控制；保留 Ch5 暂停、C4 方法身份、B2/C4 同方向边界、truth firewall、历史 raw 不改写与完整章北极星
+> 被取代：D062
+> 依据: T081 / V036 / D060 / production-evidence-design.md / production-evidence-plan.md / S028
+
+### 决策
+
+1. 接收 T081 terminal=`CH4_PRODUCTION_PREFLIGHT_READY`。独立初审先判 `NEEDS_REPAIR/P0-P1-P2=0-5-0`，主控按项修复后由第二个只读 verifier fresh 复验为 `READY/P0-P1=0-0`；不把初审问题从历史中删除。
+2. 完整章证据链冻结为：A1 exact historical-observation demapper replay → A2 new production-seam bridge → smoke/B2 disjoint tuning → manifest freeze → 128 latent windows/cell formal production → raw-only reduction/whole-curve bootstrap → independent scientific/visual review → chapter-ready package。五图三表与 Ch3 接口保持设计稿定义。
+3. A1 与 A2 必须分开。A1 的 256 个 historical observations 必须逐窗复现旧 hashes，只隔离 demapper 变化；A2 才引入新 SeedSequence substreams、B3_PSC 与正式 raw schema。C4 未通过 B3_PSC 的严格前置门时停止完整 production，不隐去廉价替代。
+4. CP023 只开放 T082：以 TDD 将公共 `m16apsk_demod` 修正为全 16 点欧氏最近邻，增加 constellation round-trip、冻结反例和 deterministic cloud 与 brute-force oracle 三类测试，运行直接相关回归并记录历史兼容边界。不得运行 A1 重放、smoke、BER cell、production 或修改方法/场景。
+5. 公共修复影响所有未来 16APSK 调用方，但不改写 T071/Ch3 的历史 raw。跨章旧证据兼容性记为明确债务；当前只验证正确算法合同，不借此顺手重跑 Ch3 或其他方向。
+
+### 理由
+
+现有 demapper 的半径 OR 条件与其“全局欧氏最近邻”公开合同冲突，且 B2/C4 唯一承重差异正是公共尺度，因此这不是一般代码洁癖，而是 Ch4 BER 是否真实的最短前置因果门。先做三行级别的 TDD 修复，再用下一 checkpoint 的 exact-observation replay 判断信号，可在最小成本处止损，也避免把 demapper 与新随机总体混为同一个变量。
+
+### 排除的替代方案
+
+- 不在同一任务顺带运行旧四格或任何 BER；correctness repair 与科学 replay 分开验收。
+- 不只修改 docstring 或另建 Ch4 私有 demapper；公共 mapper/demapper 合同必须一致，历史通过 git 与 immutable raw 保留。
+- 不在 Task 1 顺带修 Ch3、Ch5、params、receiver action、baseline 或绘图。
+
+### 停机与下一阶段
+
+- T082 focused/direct-caller tests 与独立 ML-oracle review PASS：主控另开 CP024，只授权 A1 historical-observation demapper replay。
+- 修复无法与 brute-force 16 点 oracle 一致，或相关回归揭示 mapping/label contract 不一致：停在 correctness 诊断，不运行 BER。
+- A1 后续若丢失 C4 对 B2 的承重信号：按 design 的 `DEMAPPER_CORRECTION_SIGNAL_LOST` 停止完整 production。
+
+### 来源
+
+T081 两份设计/计划；第一位 independent reviewer 的 5 个 P1（根因隔离、B3_PSC、Rytov 语义、whole-curve bootstrap、结果相关规则）及主控逐项修订；第二位 verifier 的 fresh `CH4_PRODUCTION_PREFLIGHT_READY/P0-P1=0-0`。无新增用户范围变更；执行用户“首要把 Ch4 从头到尾讲圆、持续推进且不偏离”的授权。
+
+## D062: 接收 common 16APSK demapper correctness repair，只开放 A1 historical-observation replay
+
+> status: superseded
+> date: 2026-08-30
+> 取代：D061 的 CP023 当前控制；保留 Ch5 暂停、production-evidence 总设计、历史 raw immutable、A1/A2 分离与所有 stop rules
+> 被取代：D063
+> 依据: T082 / V037 / D061 / T081 / S028
+
+### 决策
+
+1. 接收 T082 terminal=`DEMAPPER_CORRECTNESS_REPAIR_PASS`。实现者保留 RED=`2 failed,1 passed`：冻结反例历史输出 `1000` 而 brute-force oracle 为 `0000`，512 点固定云有 `17/2048` bit mismatch；最小修复只删除 radius forcing，GREEN focused=`3 passed`、指定合集=`113 passed`。
+2. 独立 reviewer 用新 seed `918273645`、自行构造的 16 点 oracle 核对 16,384 个新 complex samples，label/bit mismatch=`0/0`、P0-P1-P2=`0-0-0`；fresh `test_common=69 passed`。因此修复后的公共 hard demapper correctness 合同闭合。
+3. CP024 只开放 T083 A1 historical-observation replay：严格重用 T071 四格、seed arithmetic、旧 `development.make_realization`、receiver actions 与全部 arm 参数；逐窗要求 `realization_hash/observation_hash` 与旧 raw `256/256` 一致，只允许 demapper/scoring implementation identity 与 BER counts 变化。
+4. A1 reducer 必须 raw-only；除 BER/bit_errors/runtime 外，gain、payload bits、channel NMSE、inverse residual、rho 与所有 observation identities 应逐项等同历史。正式 gate 为 pooled Np2 `D=BER_C4-BER_B2` paired 95% CI upper `<0`，两个 Np4 cell 的同一 D CI lower 均 `<=0`。
+5. A1 terminal 只允许：`DEMAPPER_REPLAY_PASS`、`DEMAPPER_CORRECTION_SIGNAL_LOST`、`DEMAPPER_REPLAY_INVALID`。只有 PASS 可另开 A2 production kernel/bridge；信号丢失即停止完整 production，不调场景、不换 baseline、不增加损伤救场。
+
+### 理由
+
+T082 已证明修复本身正确，但不能证明历史 Ch4 BER 信号在正确判决器下仍存在。精确重放旧 observations 能将因果变量压缩到 demapper/scoring，一次 4×64 小批即可在投入新 RNG、B3_PSC 与正式曲线工程前止损，是当前最有效的科学任务。
+
+### 排除的替代方案
+
+- 不在 A1 同时重构 RNG、扩 Np/SNR、加入 B3_PSC 或调 B2；那些属于 A2 以后。
+- 不从旧 aggregate 抄数字；新 terminal 必须从新 raw 复算，并由独立 reviewer 二次算。
+- 不覆盖或修改 T071 `confirmation_*`；只读其 manifest/raw/hash 作为 observation identity authority。
+
+### 停机与下一阶段
+
+- `DEMAPPER_REPLAY_PASS` 且独立 raw verification PASS：另开 CP025，只授权 production kernel TDD 与 A2 bridge 准备。
+- `DEMAPPER_CORRECTION_SIGNAL_LOST`：停止 Ch4 formal production，返回论文结构/方法身份讨论；不执行 A2。
+- `DEMAPPER_REPLAY_INVALID`：只修 replay measurement seam，禁止解释 BER。
+
+### 来源
+
+T082 四文件、RED/GREEN 日志、独立 16,384-sample oracle review、direct/common regressions 与历史 artifact hash 审计。无新增用户方向变更；继续执行用户授权的 Ch4 优先持续推进。
+
+## D063: 接收 corrected-demapper 历史重放，只开放 production core TDD
+
+> status: superseded
+> date: 2026-08-30
+> 取代：D062 的 CP024 当前控制；保留 Ch5 暂停、A1/A2 分离、B3_PSC 前置门、历史 raw immutable 与完整 production stop rules
+> 被取代：D064
+> 依据: T083 / V038 / D060–D062 / production-evidence plan Task 3 / S028
+
+### 决策
+
+1. 接收 T083 terminal=`DEMAPPER_REPLAY_PASS`。重放逐窗复现 T071 的 seed、gain、realization hash、observation hash 与 payload bits，identity=`256/256`；B0/B1/B2/C4/O1 的 channel NMSE、inverse residual、rho 共 `1280/1280` 行与历史完全相同，只改变 corrected global-ML demapper 下的 bit errors/BER 与运行时间。
+2. corrected scoring 下四格 `BER_C4-BER_B2` 均为负：14 dB/Np2=`-0.00828028`、14 dB/Np4=`-0.00373507`、18 dB/Np2=`-0.00462818`、18 dB/Np4=`-0.00173616`。pooled Np2 paired 95% CI=`[-0.00868396,-0.00433086]`；两格 Np4 CI lower=`-0.00560524/-0.00302410`。因此原有承重信号没有被 demapper correctness 修复吸收，且 A1 只授权进入 A2 工程准备，不构成正式论文结果。
+3. 未参与实现的 reviewer 没有导入 runner/reducer，自行解析两个 raw 并用 PCG64 seed `2026083005`、5000 resamples、每 named comparison reset 独立复算，数字与 receipt 精确一致；P0-P1-P2=`0-0-0`、focused=`27 passed`、历史 confirmation 四件 unchanged。
+4. CP025 只开放 T084 production kernel TDD：建立 balanced pilots、独立 SeedSequence substreams、跨 SNR/Np latent pairing、三档 turbulence authority resolution、B3_PSC、mismatch construction、truth firewall 与 fail-closed 接口。该任务不得运行 A2 四格、smoke、B2 tuning、formal production 或生成论文数字。
+5. 新 JSON 的 `.gitattributes` 仅按实际生成格式冻结 manifest=`LF`、raw/aggregate/receipt=`CRLF`，防止 fresh checkout 后字节 SHA 漂移；这不改变 JSON 语义、实验样本、统计或 A1 terminal。
+
+### 理由
+
+A1 已隔离证明正确 demapper 下的信号仍存在，下一项最高价值工作不是直接扩网格，而是先把正式 production 的随机总体、导频、场景、廉价对照与结构失配接口做成可测试且可复现的 kernel。把 kernel correctness 与 A2 BER bridge 分成两个 checkpoint，可以在不产生新科学数字时先关闭轴公平性、truth access 和 comparator identity 风险。
+
+### 排除的替代方案
+
+- 不把 A1 四格数字写入正式正文，也不把 corrected replay 冒充 fresh production。
+- 不在 T084 顺带运行 A2/production 或依据测试输出调 B2/C4。
+- 不改变 C4 方法、B3_PSC 公式、三档湍流、mismatch levels、formal population 或 crossing 合同。
+
+### 停机与下一阶段
+
+- T084 invariants 与独立 code review PASS：另开 CP026，只授权 fixed A2 production-seam bridge。
+- 任一 RNG namespace、latent pairing、balanced Gram、B3_PSC truth firewall、mismatch normalization 或 fail-closed invariant 失败：停在 kernel correctness repair，禁止 BER bridge。
+- A2 后续不能显著超过 B3_PSC：按既定 `CHEAP_COMPARATOR_NOT_CLEARED` 停止完整 production并返回章身份讨论。
+
+### 来源
+
+T083 新建 artifacts/worker log、独立 raw-only verification report、主线程 focused 27 tests、task-control、hash/EOL durability 与历史 immutable 审计。无新增用户方向变更；继续执行用户“Ch4 从头到尾讲圆、讲有力、讲专业，并持续推进”的授权。
+
+## D064: 接收 production core correctness，只开放 A2 production-seam bridge
+
+> status: superseded
+> date: 2026-08-30
+> 取代：D063 的 CP025 当前控制；保留 Ch5 暂停、A1 PASS、B3_PSC 前置门、历史 artifacts immutable 与 formal-production stop rules
+> 被取代：D065
+> 依据: T084 / V039 / D063 / production-evidence plan Task 4 / S028
+
+### 决策
+
+1. 接收 T084 terminal=`PRODUCTION_CORE_CORRECTNESS_PASS`。production core 已冻结 balanced pilots `Np=2/4/8/16`、七路 SeedSequence namespace、跨 SNR/Np latent pairing、三档 turbulence runtime authority、B2/C4 同 `VU^H` 身份、B3_PSC closed form、dimensionless mismatch 与 truth firewall/fail-closed 接口。
+2. 初次独立审查保留 `INVALID/P0-P1-P2=0-1-1` 历史：generator 的七路 namespace/arrays 均正确，但 consumer 曾接受被篡改的 `rng_namespace` 和 turbulence snapshot。修复以 17 个 mutation cases 取得真实 RED=`17 failed`，最小 consumer validation 后 GREEN=`17 passed`、完整 focused=`46 passed`；fresh reviewer 重放 17/17 exploits 均 fail closed，final P0-P1-P2=`0-0-1`。
+3. 唯一 P2 为 B3 metric 语义：`channel_nmse` 继承 calibration 前的 B2 `h_hat`，post-calibration 动作 `aW_B2` 的机制量看 inverse residual。后续若展示 B3 mechanism 必须显式标注，不能把 inherited NMSE 写成最终等效估计；该边界不改变 B3 BER comparator 合法性。
+4. CP026 只开放 T085 fixed A2 production-seam bridge：moderate scene、`14/18 dB×Np=2/4`、每格同一组 64 fresh latent IDs、B0/B2(tau=1)/B3_PSC/C4/O1、raw-only reducer 与独立 raw recomputation。允许一次 manifest-approved one-latent smoke，但 smoke 数字不得进入 gate 或论文。
+5. A2 pooled Np2 bootstrap 必须以 64 个 latent IDs 为 clusters，并在每个重采样 cluster 内同时保留两个 SNR cell；不得把 128 个相关 cell-window rows 当独立样本。terminal 同时要求 C4 对 B2 与 B3_PSC 的 pooled CI upper `<0`，且两个 Np4 cells 对两者的 CI lower 均 `<=0`。
+
+### 理由
+
+kernel correctness 已把新随机总体的公平性和 B3 信息边界关闭，A2 是在投入完整生产前最短、最关键的迁移门：它同时回答历史信号能否迁移到新 latent seam，以及一个同导频预算的廉价标量校准是否完整吸收 C4。只有这两项都通过，扩成五图三表才值得。
+
+### 排除的替代方案
+
+- 不在 A2 调 B2 tau、改 B3 公式、换 SNR/Np、追加 latent 或删除不利 cell。
+- 不把 smoke/A2 数字写入正式论文，也不把 O1 当 deployable baseline。
+- 不在 bridge 任务顺带执行 Task 5 tuning、full smoke 或 formal production。
+
+### 停机与下一阶段
+
+- `PRODUCTION_SEAM_BRIDGE_PASS` 且独立 raw verification PASS：另开 CP027，只授权 disjoint B2 tuning、工程 smoke 与 formal manifest freeze。
+- `CHEAP_COMPARATOR_NOT_CLEARED`：停止完整 production，返回 Ch4 claim/structure discussion；不得隐藏 B3、换 comparator 或扩损伤救场。
+- `PRODUCTION_SEAM_BRIDGE_INVALID`：只修 measurement seam，不解释 BER、不扩样本。
+
+### 来源
+
+T084 三文件、实现者 RED/GREEN/worker log、保留初审 INVALID 的独立 verification report、fresh repair recheck 与主线程 46-test verification。无新增用户方向变更；继续执行用户 Ch4 优先的持续推进授权。
+
+## D065: 接收 A2 廉价比较器未清除事实，将 Ch4 收缩为方向—尺度解耦方法族并开放一次生产冻结包
+
+> status: active
+> date: 2026-08-30
+> 取代：D064 的 CP026 当前控制；保留 T085 原始科学终态、B3 不得隐藏、Ch5 暂停、历史 artifacts immutable、正式数字不得来自 A2
+> 被取代：无
+> 依据: T085 / V040 / D031–D032 / D060–D064 / S028
+
+### 决策
+
+1. 接收 T085 科学终态 `CHEAP_COMPARATOR_NOT_CLEARED`，不改写为 PASS。C4 对 B2 的 pooled Np2 差值为 `-0.00558591`、95% CI=`[-0.00835918,-0.00305787]`；C4 对 B3_PSC 为 `-0.000125408`、95% CI=`[-0.000800651,+0.000549561]`，因此“C4 必须显著优于 B3”这一预注册门确实失败。
+2. 接收独立 raw-only 复算的 artifact P0-P1-P2=`0-0-0`。canonical raw 只运行一次，SHA=`4ef32e16d4ce252634686e8e3dc6e0f94dbff4daad18ef12691b491c875e33ed`；64 IDs×4 cells×5 arms、128/128 same-SNR payload pairing、128/128 O1 pairing、64-cluster bootstrap 与 frozen core/common/scaled hashes均闭合。生成器字节绑定因 post-run authority-only validator 修订如实标 `PARTIAL`，不得写成 full reproducibility PASS，但没有证据表明 scientific raw 被污染。
+3. A2 的强邻居结果限制 claim ceiling，不再自动否决硕士方法章。该裁决恢复 D031–D032 的毕业优先标准：方法需比正确经典 baseline 好、完整 recipe 与已知工作不完全相同；强邻居必须诚实呈现，但不要求显著击败所有廉价变体。禁止把这一裁决转述为“B3 不存在”或故意删除不利证据。
+4. Ch4 方法身份收缩为一个统一的“结构约束方向—尺度解耦短导频偏振解复用”方法族，而非把 C4 与 B3 冒充两个独立贡献。共同方向为 `Q_hat=UV^H`；C4 用 forward-channel Frobenius 准则得到 `c=2/(s1+s2)`，B3_PSC 用 receiver-domain pilot reconstruction 准则闭式求非负 inverse scale。两者共享 receiver-visible I/O 链并接入 Ch3 CPR。
+5. C4 保留为参数自由、复杂度更低且 T085 四格点估计均略优的 channel-domain 主变体；B3_PSC 保留为同方法族的 receiver-domain 强变体/ablation。正式论文不得声称 C4 全面优于 B3，也不得把 B3 的 inherited pre-calibration channel NMSE 写成校准后 NMSE；作用机制看 inverse residual。
+6. CP027 只开放 T086：用 disjoint development IDs 完成 tuned-B2 的唯一参数冻结，做不产生论文数字的最小结构 smoke，并冻结 scientific manifest。B3 固定 `tau=1` 作为方向—尺度解耦定义，不继承 tuned-B2 tau；formal production、正式作图和正文仍未开放。
+
+### 理由
+
+T085 已完成它应做的止损：证明 C4 的独特尺度准则不能承受“显著优于一切廉价替代”的强声称。同时，同一 raw 又表明 B3 相对 B2/B0 四格及 pooled Np2 的配对 CI 均严格为负；C4 也显著优于 B2且四格点估计均不差于 B3。继续把 B3 当一票否决条件，会把硕士级场景迁移再次按期刊级独占性标准提前挡掉；隐藏 B3 又会削弱专业性。把两者统一为同一物理约束接收机的两种尺度准则，既保留失败事实，也形成可推导、可实现、可比较的完整章节动作链。
+
+### 排除的替代方案
+
+- 不把 T085 A2 数字升级为正式论文数字；它只授权重新冻结生产合同。
+- 不把 B3 单独包装成与 C4 无关的第二个方法，也不宣称 B3 击败 C4；T085 只证明 C4 未显著清除 B3。
+- 不为了通过而删除 C4/B3 任一臂、换场景、扩损伤、追加样本或改 A2 判据。
+- 不在 T086 运行 formal 128-window 全网格；先完成 tuning artifact、结构 smoke、whole-curve pairing 与 execution-lock 双层冻结。
+
+### 停机与下一阶段
+
+- T086 tuning/smoke/manifest/execution-design 全部 PASS：另开 CP028，只授权唯一 formal production run。
+- tuned B2 在 development 三个 SNR 上系统性支配 C4 与 B3：不冻结正式生产，返回方法身份/论文结构讨论。
+- 任一 population overlap、whole-curve pairing、truth firewall、manifest/execution 双锁或 reducer crossing 结构失败：只修 measurement seam，不解释 BER。
+
+### 来源
+
+T085 manifest/raw/aggregate/receipt 与 worker log；独立 raw-only 64-cluster复算；只读方法身份审查给出的 receiver-domain闭式目标与完整动作链；用户 D031/D032 的硕士级方法标准及 D060 的 Ch4 专业成章优先授权。

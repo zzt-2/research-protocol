@@ -1,18 +1,51 @@
 # Topic Index: 论文写作专题（自适应 CPR 方向）
 
 > slug: 2026-07-09-thesis-writing
-> status: active | created 2026-07-09 | last_updated 2026-08-13（D037/V018：三条补强完成并形成当前排序）
+> status: active | created 2026-07-09 | last_updated 2026-08-30（D065/V040：A2 强邻居门失败，开放方法族生产冻结）
+
+<!-- RDL-CONTROL:START -->
+```yaml
+rdl_control:
+  schema_version: rdl.foreground-control.v2
+  control_epoch: 27
+  role: THESIS_METHOD_PRODUCTION
+  mission: close Ch4 and Ch5 with two evidence-valid thesis method packages on the shared coherent FSO platform
+  active_lane: CH4_DIRECTION_SCALE_FAMILY_FREEZE
+  authority_pointer: projects/thesis-fso/master-state.md
+  decision_gate: A2 artifact passed independent raw verification but C4 did not significantly clear B3_PSC; D065 retains the failure and re-scopes C4/B3 as one thesis-grade direction-scale family whose strong neighbor limits claim rather than vetoes the chapter
+  allowed_actions:
+    - CH4_DIRECTION_SCALE_FAMILY_FREEZE
+    - INDEPENDENT_TUNING_VERIFICATION
+  forbidden_actions:
+    - UNBOUNDED_PARAMETER_SEARCH
+    - NEW_IMPAIRMENT_INTRODUCTION
+    - FULL_CODED_PERFORMANCE_GRID
+    - CH5_STRUCTURED_COVARIANCE_REOPEN
+    - CH4_NEW_METHOD_FAMILY_OR_ALGORITHM_CHANGE
+    - CH4_NEW_RNG_SEAM_BEFORE_REPLAY_ACCEPTANCE
+    - CH4_SMOKE_OR_PRODUCTION_RUN_BEFORE_BRIDGE_ACCEPTANCE
+    - C5_LLR_MULTI_CELL_DEVELOPMENT
+    - C5_5_IMPLEMENTATION_OR_SIMULATION
+    - C5_5_STEP2_ACQUISITION_EXTENSION
+    - C5_5_STEP3_5_OR_LATER
+    - FINAL_METHOD_CLAIM
+    - FORMAL_THESIS_PROSE
+  mission_log_ref: .sessions/2026-07-09-thesis-writing/S028-three-lane-strategic-research-controller.md
+  mission_checkpoint: CP027
+  next_legal_action: execute T086 only - freeze disjoint tuned-B2 development, run non-thesis structural smoke, and freeze the scientific manifest plus future execution-lock interface; formal production remains forbidden
+```
+<!-- RDL-CONTROL:END -->
 
 ## 专题定位（一句话）
 
-自适应载波相位恢复（A4 per-block 有效 SNR 驱动 DA/NDA 切换）方向的**论文写作准备专题**——在 GW Step 4a 维度 D（A4 PASS 待 Go）阶段内，做材料盘点、缺口识别、数据稳定性验证、论点合理性审查、简报/论文材料完善。**是写作准备，不是进 Contract/Execute，不跑新实验，不写正式论文章节**。
+原始身份是自适应 CPR 的论文写作准备专题；D044 已把当前范围扩展为围绕共同星地相干平台补齐 Ch4/Ch5 两个方法章的连续方法生产。正式论文正文仍等证据冻结后再写。
 
 ## 专题定位边界（FR-22 守门）
 
-- **当前在 GW Step 4a 维度 D**（A4 PASS，待 Go 决策）。本专题是 step4a-mve-execution 的下游"材料整理 + 发简报"环节
-- **不做的事**（会跳框架）：跑新 MVE 实验 / 进 Contract 阶段 / 写正式论文章节 / 定稿投稿
-- **做的事**（GW 内合法）：盘点已有材料 / 验证数据稳定性 / 审查论点 / 完善简报 / 补写作所需的图/表/文献溯源
-- step4a-mve-execution 保持 active（Go 决策 + 后续消融仍回那里），本专题只管写作准备
+- **当前控制**：以本页 `RDL-CONTROL` 和 `projects/thesis-fso/master-state.md` 为双重入口；D065/V040 已接收 T085 的强邻居门失败并继续暂停 C5-5。CP027 唯一开放动作是 T086 direction-scale family freeze；只允许 disjoint tuned-B2 development、非论文结构 smoke 与 scientific manifest/execution-lock 接口冻结，禁止 formal production、正式正文和 Skill/controller 修改。
+- **不做的事**：把设计卡直接跑成 MVE、跳过候选级 Step 1–3/3.5/4a、证据冻结前写正式论文章节、修改 Skill/controller。
+- **做的事**：按 D044 连续完成外部证据、候选 Groundwork、正确性 smoke、开发矩阵、fresh confirmation 和章级证据包；每次阶段转换先更新 formal authority。
+- step4a-mve-execution 保持历史依赖；新 Ch4/Ch5 候选不得借用 A4 的旧 GW 进度冒充自己的候选级授权。
 
 ## 原始目标（冻结，不可修改）
 
@@ -28,8 +61,17 @@
 材料盘点 + 缺口识别 + 数据稳定性验证 + 论点审查 + 简报完善。守 FR-22（不跳框架）+ D005 务实路线 + D-010 baseline 标准。
 
 ### 当前范围
-- D036 的 P05、P11、P08-R2 三个独立 worktree 补强任务已经完成并通过 V018 主线程接收；当前等待用户确认是否采用 D037 推荐结构及是否受控集成三个提交
-- P11 为首选均衡方法章候选，P08-R2 为技术对象独立的局部 coded-receiver 方法候选；P05 的固定身份可靠性强门失败，但按 D032 仍有限可包装，当前不优先单独承重
+- D044 已取代 D043 的逐批用户门与只读停止边界：主线程获授权持续创建/续接新对话，按外部 authority→候选 Groundwork→correctness smoke→开发矩阵→fresh confirmation→章级证据包推进；不新造 Skill/controller，不把设计卡直接变成实验
+- D038 已取代 D037“现有三包可直接组成最终 spine”的结论：其“Ch4/Ch5 共享真实 coded receiver 平台”原则继续有效；原 DP-16QAM 身份已被 D040 的 DP-(8,8)-16APSK 取代，现有 P11/P08-R2 结果只作原型证据；D038 的只讨论边界已由 D044 取代
+- D039 已进一步解除 P11/P08-R2 的默认章节身份：共同平台和前端/后端方法槽先行，P11 只作可替换 Ch4 种子，P08-R2 主要作为 coded-chain 基础设施；允许内部配置先行探索，但冻结后必须使用新样本确认
+- D040 已将当前共同平台从 DP-16QAM 改为 DP-(8,8)-16APSK+BICM/LDPC：Ch3 保留录用方法并作为 DP 接收机的单支路 CPR 抽象，Ch4/Ch5 使用完整 2×2 链；不得把原 Ch3 证据追溯改写为 DP/coded 验证
+- D041 已冻结四段式证据合同：正确性门、冻结开发矩阵、A/B/C/D/F 自动分级、胜者 fresh-seed confirmation；D044 已恢复执行，但须按候选级 Groundwork 门依次到达
+- D042 只在设计层开放约 13 张机制级后备方法卡，首轮暂定 Ch4 三张 + Ch5 三张；具体卡片仍为 `TENTATIVE`，不构成候选已建立或科学可行声称
+- D043 的第一轮三个只读新对话已完成；其主线程单点综合方式继续保留，逐批用户门与禁止第二批已由 D044 取代
+- S026 已确认当前正式题目为“星地激光通信信号处理关键技术研究”；D037 三方法结构的题目适配为 PASS，但配置一致性同行核查后，整体细化为 `TITLE_FIT_PASS / STORY_COHESION_CONDITIONAL`
+- CCISP 是会议名，不是方法名；对应 adaptive CPR 论文已由 CCISP canonical 专题 S004/V030 归档为 Accept（13 项全 Yes），可作为 Ch3 已录用成果锚
+- D036 的 P05、P11、P08-R2 三个独立 worktree 补强任务已经完成并通过 V018 主线程接收；其结果现按 D039 降为可替换种子/基础设施，不再决定最终章节身份
+- P11 只保留为 Ch4 第一批种子，P08-R2 只保留 coded-chain 基础设施与局部历史证据；P05 按 D032 有限可包装但不作为当前核心章候选
 - 按 D032 直接盘点具体方法 recipe：相对正确经典 baseline 有真实改善，且完整 recipe 非完全相同即可；场景差异、估计量、阈值、参数、调度或数值格式差异均可构成硕士级 extension
 - 按 D031 的毕业优先有限主张标准，目标至少两个可命名方法；已知廉价/更强替代不自动否决方法，也不强制进入正文，只限制 claim ceiling
 - 在恢复执行前，对历史候选、worker/results、工程/硬件资产做一次全量只读普查；从最窄真实命题重判，不继承旧 Go/Kill 标签
@@ -41,12 +83,43 @@
 - 若内部资产仍不足，只定义 method-shaped search target 与下一轮提示词，本轮不执行检索后的新方法实验
 
 ### 明确不含
-- ❌ 除 D036 三条预注册既有方法补强外，不跑新实验 / 不进新候选 Contract / 不写正式论文章节（FR-22）
+- ❌ 不把 D042 设计态方法卡直接当执行态候选；每个候选仍须补齐候选级 Step 1–3/3.5/4a（FR-22）
+- ❌ 方法证据包冻结前不写正式论文章节；不修改 Skill/controller 或另造平行流程
 - ❌ 不推翻 A4 PASS 的 Go 判定（那是 step4a 专题的事）
 - ❌ 不改框架文件（守"先测不改协议"）
 - ❌ 不做消融实验（跨块 KF / BPS 迁移等是 step4a 的债务，不在写作专题跑）
 
 ### 范围变更记录
+- **[2026-08-30] D064**：T084 经 provenance P1 修复和 fresh review 通过；范围推进到 fixed A2 production-seam bridge。原因：kernel 的轴公平性、B3 信息预算与 truth firewall 已闭合，现在用最小 fresh batch 判断信号能否迁移且不被廉价标量校准吸收。
+- **[2026-08-30] D063**：T083 以 256/256 observation identity、1280/1280 mechanism identity 和独立 bootstrap 通过 A1；范围推进到 production core correctness，但继续禁止 A2 BER bridge、smoke/tuning/production。原因：先把新随机总体和廉价对照做成可验证 seam，再产生 fresh 科学数字。
+- **[2026-08-30] D062**：T082 demapper correctness 经 16,384-sample 独立 oracle 验收；范围推进到 A1 historical-observation replay，但继续禁止 A2/new RNG/smoke/production。原因：用唯一变量重放先判断旧 Ch4 BER 信号在正确判决下是否存在。
+- **[2026-08-30] D061**：T081 preflight 经一轮问题修复和第二位独立 reviewer 验收；当前范围从 design/preflight 收窄到 demapper correctness repair，A1 historical replay 继续等待下一 checkpoint。原因：先隔离决定 BER 有效性的公共判决器错误，再产生任何新科学数字。
+- **[2026-08-30] D060**：暂停 C5-5 Step 3.5，重开 Ch4 production-evidence lane。
+  - 原因：用户指出 14/18 dB 四格只够候选 confirmation，不足以形成完整、专业的通信方法章；要求 SNR 扫描由实用 pre-FEC 门限决定，并补 pilot、机制、星地场景、结构边界与复杂度证据。
+  - 新范围：保留 C4 算法、B2 主对手、DP-(8,8)-16APSK 双偏振共同平台与有限 claim；先做统一配置/preflight，再分 checkpoint 运行 smoke、冻结 production manifest、执行与独立复算。
+  - 影响的未决项：C5-5 保留 Step 3 survivor 与全部债务但暂停；D052–D053 的“Ch4 不扩格”执行边界被取代，旧 confirmation 事实不改写。
+- **[2026-08-30] D046**：从 correctness-only 门进入有界开发门。
+  - 原因：Ch4 canonical-RDE 修复和 Ch5 structured-covariance seam 均已通过独立正确性复核；Ch5 的真实 blocker 被压缩为 receiver-visible post-Ch4→per-pol Ch3 residual artifact。
+  - 新范围：允许 Ch4 一次预注册两轮开发矩阵；并行实现 Ch5 residual bridge correctness；Ch4 arm/参数冻结后，才允许一格自然 occurrence smoke。
+  - 影响的未决项：方法信号、confirmation 和正文仍未获授权；任何一线失败按既定停机规则转后备，不扩网格补结果。
+- **[2026-08-30] D044**：从“一轮只读战略调研后等待用户门”扩大为连续方法生产。
+  - 原因：用户明确授权主线程在其离线时持续创建新对话、调研、逐个构造和验证候选，目标是睡醒后看到可开始写论文的实质结果。
+  - 新范围：允许外部检索/必要下载、候选级 Groundwork、共同平台 correctness smoke、候选实现与仿真、开发矩阵、fresh confirmation、独立验证和章级证据包；routine 阶段由主线程代行技术判断。
+  - 影响的未决项：当前先跑 T039–T041 三条 Step 1 authority 线；其后必须按 formal step 自动推进，不得直接跑六张设计卡。正式论文正文与 Skill/controller 修改仍不含。
+- **[2026-08-30] D043**：允许主线程创建三个用户可见 Codex 新对话，做一次性只读战略调研。
+  - 原因：用户无法独立判断技术细节，要求 AI 分线分析，同时要求有效、不过度下钻且长期不遗忘初始规划。
+  - 新范围：T036 共同平台/headroom、T037 Ch4 五族、T038 Ch5 六族；本地主控 S028 保存北极星、状态、停机和回收门。
+  - 影响的未决项：三线回收后先做矛盾矩阵和唯一推荐；当前仍禁止外部检索/下载、实验、Groundwork、实现、代码/Skill/controller/正式论文正文修改和派生任务。
+- **[2026-08-30] D041–D042**：从两个暂定方法的设计扩展到未来四段式证据合同与机制级后备池设计。
+  - 原因：用户要求 smoke 正确后统一比较并自动分级，同时避免当前两方法失败后再临时找方向。
+  - 新范围：允许在 D040 平台内设计约 13 张方法卡、分层优先级和停止条件；允许定义未来正确性门、开发矩阵、分级和 fresh confirmation 结构。
+  - 影响的未决项：具体卡片与首轮六张仍待用户批准；仍禁止检索、Groundwork、实验、实现、代码/Skill/controller/正式论文正文修改和执行任务派发。
+- **[2026-08-29] D040**：共同平台由 DP-16QAM 改为 DP-(8,8)-16APSK，统一调制与双偏振总体架构。
+  - 允许：在设计层定义 Ch3 per-tributary 抽象与 Ch4/Ch5 完整 2×2 接口。
+  - 仍禁止：把原 Ch3 证据改写为 DP/coded 验证，以及任何新增实验或实现。
+- **[2026-08-29] D038–D039**：从“现有三包能否直接组成 spine”的诊断扩展到统一平台与两个方法槽的设计讨论。
+  - 允许：保留 Ch3 录用锚，设计 Ch4–Ch5 共同 DP-16QAM+BICM+LDPC 接收链，重判/替换 P11 与 P08-R2 的最终方法身份，定义探索—确认分离的最低证据合同。
+  - 仍禁止：实验、检索/下载、Groundwork、代码/Skill/controller/正式论文正文修改、候选执行和任务派发。
 - **[2026-08-13] D036**：为 P05、P11、P08-R2 创建三个真正的新任务和独立 worktree，全面补强既有 recipe。
   - 允许：方法专属代码/口径真相修复、正式确认、小 SNR/场景扫描、paired statistics、必要消融/复杂度和窄范围 exact-recipe collision 检查。
   - 仍禁止：新候选、开放式 Groundwork/泛搜、Skill/controller/正式论文正文修改、单项失败后自动换题。
@@ -102,7 +175,7 @@
 ## 不变量（动任何一条必须重新讨论）
 
 1. **继承 step4a-mve-execution 全部不变量**（D005 务实路线 / FR-22 GW 门控 / FR-25 Go/Kill 分离 / D-006 红线 / D-010 baseline 五条 / TL-26 参数溯源 / TL-20 理论预期 / 核查机制中性双向）
-2. **写作专题定位 = GW 阶段写作准备辅助**：不跳框架，不跑新实验。任何"跑新方法/新实验"的动作必须回 step4a 专题回答"在 GW 哪一步"
+2. **研究推进仍受 GW formal step 约束**：D044 已取代旧“写作准备辅助/不跑新实验”边界，允许连续方法生产；任何实现或实验仍必须指出候选自己的 GW Step。CP007 当前只开放 Step 4a-D correctness smoke 与独立 correctness verification，不开放性能网格。
 3. **A4 数据的诚实标注**：底层分析诚实（不伪造、不 cherry-pick、不藏 CI 重叠）是研究底线必须守；**正文呈现=选择性只报有利结果**（D007，2026-07-12 修正）——弱湍流归零数字（0.09/0.18/0.19）不进正文，不利场景连定性都不提（导师原话"只说自己行的"+用户原话"不利的提都不提"）。边界：不利数字直接影响核心声称成立性时才必须报。~~旧版"叙事是两段趋势非严格单调"作废（源自 R002§C 第 6 条 agent 自创结论，来源错误已废，详见 D007）~~。30seed 基准配置 ✓ 但其他配置仍 3seed（债务）
 4. **简报未发状态**：ADVISOR_BRIEFING_2026-07-09 写完未发老师，发前需确认数据最新 + 图是 30seed（债务③）
 5. **deep fade 正确表征**（S003 修正，动它要重新讨论）：deep fade = **BER 曲线斜率显著变缓**（衰减率从轻湍流 ~3×/2dB 降到 ~1.4×/2dB），**不是 BER 卡死/伪地板**。H002 补点实测推翻了原"strong/uplink 有错误地板"预判（违反 TL-22 的太早结论）。论文/简报里不准用"伪地板"叙事，会被审稿人质疑
@@ -145,14 +218,20 @@
 2. **strong/uplink 子图纵轴范围**：H002 建议收窄到 1e-4~1e-1（不硬凑 1e-5），待跟老师确认。
 3. **S002 原悬而未决**（图表清单 / fair_gain 呈现 / 主图子图数）：H002 把图 2 数据备齐，等老师反馈后定稿。
 4. **Fig.1/2 文字联动**：两图 draw.io 编辑源均已形成，Fig.1 v4 与 Fig.2 分别通过独立门控；caption、正文图号联动及投稿前检查仍未执行。
-5. **论文 spine 尚未拍板**：R026 已确认 P11/P05/P08-R2 均可有限包装；需讨论 P05/P11 二选一的均衡章身份，以及 P08-R2 是否承担 coded-receiver 小方法章。
-6. **外部完全重复尚未检查**：九项均为 `NOT_CHECKED_IN_THIS_READ_ONLY_AUDIT`；只有用户明确恢复检索后，才对最终承重对象做 bounded exact-recipe collision check。
+5. **Ch4 已可直接开写、Ch5 仍在 Groundwork**：Ch4 已由 D052/D053 冻结为“基于缩放酉约束的短导频偏振信道估计与解复用方法”，terminal=`THESIS_METHOD_READY / CH4_WRITE_PACKAGE_READY`；Ch5 C5-1=`NO_METHOD_SIGNAL`、C5-0=`SINGLE_CELL_NO_HEADROOM` 均已关闭。C5-5 已冻结两篇 Step 3 全文，下一步只判断 per-codeword reliability-driven iteration-budget allocation 是否被已有动态调度或 ordinary early-stop 完整吸收，尚不是方法。
+6. **外部完全重复尚未检查**：九项旧资产均为 `NOT_CHECKED_IN_THIS_READ_ONLY_AUDIT`；D044 已恢复检索，只对进入承重 shortlist 的 recipe 做 bounded exact-recipe collision check。
 
 ## 当前位置
 
+**🟢 S028 / D065 / V040（2026-08-30）：当前 CP027=Ch5 Step 3 survivor 暂停 + Ch4 direction-scale family production freeze。** T085 artifact 经独立 raw-only 复算为 P0-P1-P2=`0-0-0`，科学终态保持 `CHEAP_COMPARATOR_NOT_CLEARED`，生成器字节绑定保持 PARTIAL。C4/B3 现是同一方法族的两种尺度准则；当前只允许 T086 的 disjoint tuned-B2 development、非论文 smoke 与 scientific manifest freeze，不得运行 formal production。
+
+**🟡 S027 / D041–D042（2026-08-30）：四段式证据合同已批准，13 张设计态后备图谱进入只读审查。** 当前暂定第一批为 Ch4 的时序正则 LS / scaled-unitary 约束 LS / APSK 环感知半盲均衡，以及 Ch5 的残差 LLR 校准 / APSK 几何软解调 / syndrome 引导失败码字救援。它们只是 `DESIGN_ONLY / TENTATIVE`，不得写成方法已成立。
+
+**🟢 S026 / D038–D040（2026-08-29）：题目与共同平台已锁。** 题目适配 PASS；共同平台锁为 DP-(8,8)-16APSK+BICM/LDPC，Ch3 保留录用锚并作 per-tributary CPR，Ch4/Ch5 使用完整 2×2 链。P11/P08-R2 仅是可替换零件。
+
 **🟢 S024 / D035 / R026（2026-08-13）：三条跨技术对象方法深挖完成。** P11、P05、P08-R2 经最低合同复审均为 `PACKAGEABLE_NOW_WITH_LIMITS`；补实验只增强证据，不再作为方法准入门。P11 corrected confirmation 仍为 `NOT_RUN`，不是科学失败。
 
-**⏸️ 所有执行继续暂停。** 未获用户明确确认前，不检索、下载、仿真、补 Groundwork、开候选或修改 Skill/controller/代码/论文正文。
+**历史状态（已被 D044/D045/D060–D065 取代）**：D042 时曾暂停检索、Groundwork、仿真和任务派发；CP001/CP002 分别只授权过外部 authority 与全文获取。当前唯一有效控制是页首 CP027；Skill/controller 与正式论文正文仍不修改。
 
 ---
 
@@ -298,3 +377,25 @@ F001 完成 F1（R010 20 条力度基准逐条对照**全对齐** + 8 条已知�
 - **R026 / V017** 跨对象方法章 dossier 综合与终验（2026-08-13）。P11/P05/P08-R2 首轮均错误地把理想补强抬成准入门；复审后均为 `PACKAGEABLE_NOW_WITH_LIMITS`。V017 7/7 PASS、P0/P1/P2=0/0/0。候选组合为 CPR＋P05或P11（二选一均衡）＋P08-R2 coded receiver，但尚未拍 thesis spine。
 - **S025 / D036 / T033–T035** 三条既有方法独立全面补强（2026-08-13）。创建用户可见 Codex 新任务而非 subagent；P05/P11/P08-R2 各在独立 worktree 中补真相、正式确认、覆盖度、统计、消融、复杂度和窄范围完全重复检查。主线程等待回传后统一验收与选章。
 - **S025 续接 / D037 / V018 / H017–H019** 三条补强回收与排序（2026-08-13）。P11=`P11_STRENGTHENED`，P08-R2=`CONFIRMED_LOCAL_IMPROVEMENT`；P05 拆分为固定身份可靠性强门 FAIL 与 D032 `PACKAGEABLE_WITH_LIMITS`，不再被额外绝对门一票否决。三条 fresh focused tests 为 10/8/8 passed，累计 diff-check 全 PASS；当前推荐 Ch3 adaptive CPR / Ch4 P11 / Ch5 P08-R2，P05 并入 Ch4 对照，但尚待用户拍板且未合并提交。
+- **S026 / D038–D040** 题目适配、同行配置核查与共同平台设计（2026-08-29）。锁定最终整体性优先和 DP-(8,8)-16APSK+BICM/LDPC 共同平台；Ch3 为录用锚，P11/P08-R2 降为可替换零件。
+- **S027 / D041–D042** 统一批次证据合同与后备方法池设计（2026-08-30）。冻结正确性门→开发矩阵→A/B/C/D/F 分级→fresh confirmation；建立 5 个 Ch4 机制族、6 个 Ch5 机制族和 2 个跨层储备的设计图，首轮暂定只开放六张。仍不授权执行。
+- **S028 / D043 / T036–T038** 三线只读战略调研主控与第一轮回收（2026-08-30）。三线分别用 198.8/235.7/210.2 秒完成本地证据审查；主线程交叉修正了“强经典对手吸收即科学 Kill”的回退风险，并给出唯一第二轮建议：只查物理平台、APSK 经典对手和编码接收 authority，不实验。
+- **S028 / D044 / T039–T041** 连续方法生产恢复（2026-08-30）。沿用既有流程与轻量主控，取消 routine 用户逐批确认门；当前只派发三条 GW Step 1 authority 线，后续按候选级 Step 1–4a→正确性 smoke→开发矩阵→fresh confirmation 推进。
+- **S028 / D045–D046 / V019 / T053–T060** 正确性门关闭并进入有界开发（2026-08-30）。Ch4 canonical-radius 缺陷经修复与独立复验 PASS，Ch5 estimator correctness PASS；CP008 只开放 Ch4 预注册两轮 development 与 Ch5 receiver-residual bridge correctness，禁止无界扩网格或提前写正文。
+- **S028 / D047 / V020–V021 / T059–T066** C4-2 科学停机与合法轮换（2026-08-30）。T062 独立重算确认 C4-2 无 oracle headroom，按预注册规则停止且不重跑；Ch4 轮换至 C4-1 专属 Step 3.5。Ch5 bridge 的 frozen-arm provenance、连续 scalar 时序与旧 firewall 已由 T065 独立复验 PASS，现只放行 T066 一个冻结 occurrence cell。
+- **S028 / D048 / V022 / T064–T068** 两条正向方法线（2026-08-30）。C4-1 未发现九字段完整 recipe 碰撞，按经典 scaled-unitary 结构迁移进入 Step 4a；Ch5 的 64-window 单格 residual occurrence 经主控从 raw 独立重算为 `DETECTABLE_OCCURRENCE`，现并行开放 C4 纸面可行性与 Ch5 有界 BER/GMI 开发。
+- **S028 / D049 / V023–V024 / T067–T070** 受控轮换（2026-08-30）。C4-1 纸面维度成立并进入 correctness→有界 BER；Ch5 C5-1 的 64-window held-out 开发为 `NO_METHOD_SIGNAL / D`，Round 2 未运行，路线关闭并按既定组合轮换 C5-0 Step 2。
+- **S028 / D050–D051 / V025–V026 / T069–T072** C4 确认与 C5-0 精读（2026-08-30）。C4 开发 raw 独立复算 PASS，冻结配方 confirmation 在途；C5-0 Step 2 以 6 篇合格全文闭合，baseline 身份修正后只开放 Step 3，不从覆盖度直接跳实现。
+- **S028 / D052 / V027 / T071–T073** 首个新增方法章闭合（2026-08-30）。C4 全新 seeds 四格确认与独立 raw 复算 PASS，按有限 classical-migration claim 标记 `THESIS_METHOD_READY`；后续只做内部章级证据包、可编辑方法图和 raw-derived 结果图，不再扩实验。
+- **S028 / D054 / V029 / T074–T075** C5-0 exact-recipe 门闭合并转入纸面可行性（2026-08-30）。强邻居永久压低 claim，max-log B2=B3 条件冻结；主树独立核查无 P0/P1。CP016 只开放 A0/A′/A/B 与解析 correctness contract，不从“没找到完全相同”直接跳实现。
+- **S028 / D055 / V030 / T075–T076** C5-0 纸面可行性闭合并转入 target codec correctness（2026-08-30）。B2 只以冻结/黑盒 LDPC 外部 current-frame calibration 存活；B3 exact APP 为同预算强 comparator。独立复核无 P0/P1；CP017 只开放 APSK→5G LDPC C0–C6 与 action selection，性能仍关闭。
+- **S028 / D056 / V031 / T076–T077** C5-0 target codec correctness 闭合并转入单格自然 headroom（2026-08-30）。T076 的 10 项 correctness 与 3 项既有 codec 回归在主 evidence worktree fresh PASS，首轮外审的 B1/decoder-order 两个 P1 已 RED→GREEN 修复。CP018 只开放继承 T066 的一个 frozen cell，按 pilot reliability、O1 headroom、B1/B2/B3 顺序停止；多格开发仍关闭。
+- **S028 / D057 / V032 / T077** C5-0 单格 headroom 否证与合法轮换（2026-08-30）。Gate 1 `rho=0.9857`、单侧下界 `0.9759`，但 512-frame `BER_B0-BER_O1=-0.00404549`、95% CI 全负；Gate 3 未开放，C5-0 关闭。CP019 只开放 C5-5 candidate-specific GW Step 1 authority reconciliation。
+- **S028 / D058 / V033 / T078** C5-5 Step 1 authority reconciliation（2026-08-30）。候选收缩为 per-codeword reliability-driven iteration-budget allocation；最小 `num_iter` seam 有界，无需自写 BP。direct scheduling/budget fulltext 与 early-stop/equal-update collision 未闭合，terminal=`STEP1_C5_5_EVIDENCE_GAP_BOUNDED`；CP020 只开放最多 3 篇的 Step 2 acquisition。
+- **S028 / D059 / V034 / T079** C5-5 Step 2 bounded acquisition（2026-08-30）。审计 3 个身份、冻结 2 篇 qualified fulltexts；2019 P0 的错误 arXiv 身份已拒绝并保留 mismatch receipt，未伪造 coverage。terminal=`STEP2_C5_5_READY_FOR_STEP3`；CP021 只开放冻结两篇的 Step 3 精读与吸收裁决。
+- **S028 / D060 / V035 / T080** C5-5 Step 3 accepted + Ch4 production-evidence scope change（2026-08-30）。两篇 frozen fulltexts 使 Q-C5-5 以 `STEP3_C5_5_Q_SURVIVES_READY_FOR_STEP3_5` 存活；用户优先级将其暂停。Ch4 从 four-cell confirmation 升级为待设计的完整工作区/短导频/机制/边界/复杂度证据 lane；CP022 只开放 preflight，不运行仿真。
+- **S028 / D061 / V036 / T081** Ch4 production-evidence preflight accepted（2026-08-30）。十任务设计将旧 confirmation、新 demapper replay、新 RNG bridge 与 formal production 分层；whole-curve bootstrap、B3_PSC、Rytov/threshold/mismatch/tuning 规则全部预冻结。CP023 只开放 T082 correctness repair，A1 replay 尚未授权。
+- **S028 / D062 / V037 / T082** common 16APSK demapper correctness accepted（2026-08-30）。历史 radius forcing 由冻结反例和 fixed cloud 证明错误；最小修复经 113-test implementation suite、69-test common suite 与独立 16,384-point oracle 零差异验收。CP024 只开放 T083 A1 replay。
+- **S028 / D063 / V038 / T083** corrected-demapper historical replay accepted（2026-08-30）。256/256 observation identities 与 1280/1280 mechanism rows 保持历史一致；四格 C4−B2 均为负，pooled Np2 95% CI 全负，独立 raw parser/bootstrap 精确复算。CP025 只开放 T084 production core TDD。
+- **S028 / D064 / V039 / T084** production core correctness accepted（2026-08-30）。balanced pilots、七路 SeedSequence、跨轴 pairing、B3_PSC、mismatch 与 truth firewall 闭合；初审 provenance P1 经 17-case repair，fresh final PASS。CP026 只开放 T085 fixed A2 bridge。
+- **S028 / D065 / V040 / T085** A2 强邻居门如实失败并完成方法身份重判（2026-08-30）。独立 raw-only 复算确认 artifact P0/P1/P2=0/0/0、C4 显著优于 B2但未显著清除 B3；生成器字节绑定保留 PARTIAL。按 D031/D032 的硕士级标准，C4/B3 收缩为同一方向—尺度解耦方法族的两种尺度准则，B3 不隐藏且只限制 claim ceiling。CP027 只开放 tuned-B2 development、非论文 smoke 与 scientific manifest freeze。

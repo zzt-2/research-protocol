@@ -1,0 +1,67 @@
+{
+  "blockers": [],
+  "cells": {
+    "high_snr_correctness": {
+      "accepted_updates": {
+        "candidate": 506,
+        "cheap": 506,
+        "oracle": 512,
+        "plain": 512
+      },
+      "finite_outputs": true,
+      "paired_arm_hashes": {
+        "candidate": "815ed95330f7452a1863168514cd520ca0596ae92bad558e259769f6583b879a",
+        "cheap": "815ed95330f7452a1863168514cd520ca0596ae92bad558e259769f6583b879a",
+        "oracle": "815ed95330f7452a1863168514cd520ca0596ae92bad558e259769f6583b879a",
+        "plain": "815ed95330f7452a1863168514cd520ca0596ae92bad558e259769f6583b879a"
+      },
+      "realization_hash": "815ed95330f7452a1863168514cd520ca0596ae92bad558e259769f6583b879a",
+      "seed": 53002,
+      "snr_db": 30.0
+    },
+    "identity_noiseless": {
+      "ls_max_abs_error": 0.0,
+      "realization_hash": "1e962539c04a4fb155996da6706f277fe3a95bda64bb98c038ff0de913d21672",
+      "seed": 53002
+    },
+    "random_J_noiseless": {
+      "ls_max_abs_error": 2.289170737184863e-16,
+      "realization_hash": "32ccf750d28d4317c8a54dc952cef2362e7a53f67255201577aee6cbfe5f88e0",
+      "seed": 53003
+    }
+  },
+  "formula_authority": {
+    "origin": "Ready-Gooch ICASSP 1990 Section 3",
+    "primary": "Di Rosa-Richter JLT 2021 Section II-A Eq.(1)-(3)",
+    "status": "VERIFIED_BY_T056"
+  },
+  "git_state": {
+    "head": "174f36dc0e75bba6f904105198899550a1ceaa52",
+    "status_short": [
+      "A  projects/simulation/explore/ch4-apsk-ring-gated-rde/development_aggregate.json",
+      "A  projects/simulation/explore/ch4-apsk-ring-gated-rde/development_manifest.yaml",
+      "A  projects/simulation/explore/ch4-apsk-ring-gated-rde/development_raw.json",
+      "A  projects/simulation/explore/ch4-apsk-ring-gated-rde/development_receipt.json",
+      "A  projects/simulation/explore/ch4-apsk-ring-gated-rde/development_report.md",
+      "A  projects/simulation/explore/ch4-apsk-ring-gated-rde/run_development.py",
+      "M  projects/simulation/explore/ch4-apsk-ring-gated-rde/smoke_receipt.json"
+    ]
+  },
+  "method_signal": "NO_METHOD_SIGNAL",
+  "parameters": {
+    "decision_threshold": 0.2,
+    "high_snr_db": 30.0,
+    "mu": 0.0001,
+    "n_payload": 256,
+    "n_pilots": 16,
+    "ring_threshold": 0.2,
+    "seed": 53002
+  },
+  "pytest": {
+    "command": "C:\\Users\\zzt\\scoop\\apps\\python311\\current\\python.exe -m pytest projects\\simulation\\tests\\test_ch4_apsk_ring_gated_rde.py -q",
+    "returncode": 0,
+    "stdout": ".......                                                                  [100%]\n7 passed in 0.33s"
+  },
+  "schema_version": "ch4.gated-rde.smoke-receipt.v1",
+  "verdict": "CORRECTNESS_ONLY"
+}

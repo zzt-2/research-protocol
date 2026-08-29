@@ -1,0 +1,292 @@
+IEEE COMMUNICATIONS LETTERS, VOL. 14, NO. 7, JULY 2010                                                                                                   667
+
+Adaptive-Normalized/Offset Min-Sum Algorithm
+
+           Xiaofu Wu, Yue Song, Ming Jiang, and Chunming Zhao
+
+   Abstract‚ÄîAn adaptive-normalized/offset min-sum (AN-/AO-                    modulated, and further transmitted over an additive white
+MS) algorithm for decoding low-density parity-check (LDPC)                    Gaussian noise (AWGN) channel. Let c = (Ì†µÌ±ê1, Ì†µÌ±ê2, ‚ãÖ ‚ãÖ ‚ãÖ , Ì†µÌ±êÌ†µÌ±Å )Ì†µÌ±á
+codes is proposed. Unlike the normalized/offset min-sum                       be a column vector of size Ì†µÌ±Å , which denotes a codeword of
+(NMS/OMS) algorithm, the normalization/offset factor is adap-                 Ì†µÌ∞∂. It is mapped to x = (Ì†µÌ±•1, Ì†µÌ±•2, ‚ãÖ ‚ãÖ ‚ãÖ , Ì†µÌ±•Ì†µÌ±Å )Ì†µÌ±á by Ì†µÌ±•Ì†µÌ±õ = 2Ì†µÌ±êÌ†µÌ±õ ‚àí 1
+tively adjusted according to the state of check nodes in each
+iteration. Simulation results show that the proposed AN-/AO-                  before transmission. At the receiver, we get the received vector
+MS algorithm can perform better than the NMS/OMS algorithm                    y = (Ì†µÌ±¶1, Ì†µÌ±¶2, ‚ãÖ ‚ãÖ ‚ãÖ , Ì†µÌ±¶Ì†µÌ±Å )Ì†µÌ±á , where
+while still preserving the low complexity of the min-sum algo-
+rithm.                                                                        Ì†µÌ±¶Ì†µÌ±õ = Ì†µÌ±•Ì†µÌ±õ + Ì†µÌ±£Ì†µÌ±õ, Ì†µÌ±õ = 1, 2, ‚ãÖ ‚ãÖ ‚ãÖ , Ì†µÌ±Å,                                 (1)
+
+   Index Terms‚ÄîDecoding, min-sum algorithm, low-density                       and Ì†µÌ±£Ì†µÌ±õ is the additive white Gaussian noise with zero mean
+parity-check (LDPC) codes.                                                    and variance Ì†µÌºé2 = (2Ì†µÌ±ÖÌ†µÌ±êÌ†µÌ∞∏Ì†µÌ±è/Ì†µÌ±Å0)‚àí1.
+
+                          I. INTRODUCTION                                        We denote the set of bits that participate in check Ì†µÌ±ö by
+                                                                              Ì†µÌ≤© (Ì†µÌ±ö) = {Ì†µÌ±õ : ‚ÑéÌ†µÌ±ö,Ì†µÌ±õ = 1}. Similarly, we denote the set of
+I TERATIVE decoding of low-density parity-check (LDPC)                        checks in which bit Ì†µÌ±õ participates as ‚Ñ≥(Ì†µÌ±õ) = {Ì†µÌ±ö : ‚ÑéÌ†µÌ±ö,Ì†µÌ±õ =
+   codes has received much attention in recent years ( [1]‚Äì                   1}. We denote by Ì†µÌ≤© (Ì†µÌ±ö)‚àñÌ†µÌ±õ as the set Ì†µÌ≤© (Ì†µÌ±ö) with bit Ì†µÌ±õ
+[5], and references therein). The standard sum-product (SP)                   excluded and by ‚Ñ≥(Ì†µÌ±õ)‚àñÌ†µÌ±ö as the set ‚Ñ≥(Ì†µÌ±õ) with check Ì†µÌ±ö
+algorithm can achieve excellent performance but often with                    excluded. The row vectors of the parity-check matrix Ì†µÌ∞ª can
+heavy implementation complexity [1]. In particular, the SP                    be enumerated as hÌ†µÌ†µÌ±áÌ±ö = (‚ÑéÌ†µÌ±ö,1, ‚ãÖ ‚ãÖ ‚ãÖ , ‚ÑéÌ†µÌ±ö,Ì†µÌ±Å ), Ì†µÌ±ö = 1, 2, ‚ãÖ ‚ãÖ ‚ãÖ , Ì†µÌ±Ä .
+algorithm requires to estimate the signal-to-noise ratio (SNR),
+which is undesirable in practice. The min-sum (MS) algorithm                     The rest of the letter is organized as follows. In section-
+, as an approximation to the SP algorithm, performs worse
+than the SP algorithm. However, the MS algorithm has the                      II, the AN-MS/AO-MS algorithm is presented. Section-III
+advantage of both low implementation complexity and no
+requirement for SNR estimation.                                               discusses the simulation results and Section-IV concludes the
+
+   The sub-optimality of the MS algorithm in performance                      letter.
+comes from the overestimation of the message at check nodes.
+Therefore, the improvement can be achieved with a normaliza-                         II. ADAPTIVE-NORMALIZED/OFFSET MIN-SUM
+tion or offset operation at check nodes. The resulted algorithm                                             ALGORITHM
+is the normalized MS (NMS) or the offset MS (OMS) algo-
+rithm [3], [5], which has received much interest in practice.                 A. Motivation
+In this paper, we propose an adaptive-normalized/offset min-
+sum (AN-MS/AO-MS) algorithm, which can further improve                           In this section, we based on the NMS/OMS algorithm to
+the performance of the NMS/OMS algorithm.                                     make a further improvement. We notice that the decoding
+                                                                              iteration can terminate immediately if all the checks are
+   Let Ì†µÌ∞∂ be a (Ì†µÌ±Å, Ì†µÌ∞æ) LDPC code of block length Ì†µÌ±Å and                      satisÔ¨Åed. However, if this is not the case, there should be some
+dimension Ì†µÌ∞æ, which has a parity-check matrix Ì†µÌ∞ª = [‚ÑéÌ†µÌ±ö,Ì†µÌ±õ]                   check nodes which are checked in error. For a check node
+of Ì†µÌ±Ä rows, and Ì†µÌ±Å columns. Let Ì†µÌ±ÖÌ†µÌ±ê = Ì†µÌ∞æ/Ì†µÌ±Å denote its                       which is checked in error, there must exist at least one variable
+code rate. Consider now that the LDPC coded bits are BPSK                     node which passes the wrong message to this check node. By
+                                                                              the rule of min-sum algorithm, the messages updated at this
+   Manuscript received March 30, 2010. The associate editor coordinating the  check node are not reliable and preferable to be suppressed.
+review of this letter and approving it for publication was V. Stankovic.
+                                                                                 Based on this observation, we propose an adaptive-
+   This work was supported in part by the National High Technology            normalized/offset min-sum algorithm. For this new
+Research and Development Program (863 program) of China under Grant           NMS/OMS algorithm, the normalization/offset factor at
+2009AA01Z235, by the National Science Foundation of China under Grant         a check node can be adjusted according to the state of this
+60972060, and by the Research Fund of National Mobile Communications          check node in each iteration. Here, the state of a check node
+Research Laboratory, Southeast University (No. 2010A10).                      is deÔ¨Åned as the check-sum of the incoming messages.
+
+   X. Wu is with the Nanjing Institute of Communications Engineering, PLA        The following notations concern message-passing algo-
+Univ.of Sci. & Tech., Nanjing 210007, China. He is also with the National     rithms running on the Tanner graph of an LDPC code, and
+Mobile Commun. Research Lab., Southeast Univ., Nanjing 210096 (e-mail:        will be used throughout the paper.
+xfuwu@ieee.org).
+                                                                                 Ì†µÌªæÌ†µÌ±õ : a priori information of the variable node Ì†µÌ±õ in the form
+   Y. Song is with the PLA Univ. of Sci. & Tech., Nanjing 210007, China               of log-likelihood ratio (LLR),
+(e-mail: echoyuesong@163.com).
+                                                                                 Ì†µÀúÌªæÌ†µÌ±õ : a posteriori information (LLR) of the variable node Ì†µÌ±õ,
+   M. Jiang and C. Zhao are with the National Mobile Commun. Research         Ì†µÌªºÌ†µÌ±õ,Ì†µÌ±ö : the variable-to-check message from Ì†µÌ±õ to Ì†µÌ±ö,
+Lab., Southeast University, Nanjing 210096, China (e-mail: {jiang ming,       Ì†µÌªΩÌ†µÌ±ö,Ì†µÌ±õ : the check-to-variable message from Ì†µÌ±ö to Ì†µÌ±õ,
+cmzhao5}@seu.edu.cn).
+                                                                                  Ì†µÌºá : the normalized factor at check node, 0 < Ì†µÌºá < 1,
+   Digital Object IdentiÔ¨Åer 10.1109/LCOMM.2010.07.100508
+
+                                                                                1089-7798/10$25.00 ‚Éùc 2010 IEEE
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:56:00 UTC from IEEE Xplore. Restrictions apply.
+668                                                                                   IEEE COMMUNICATIONS LETTERS, VOL. 14, NO. 7, JULY 2010
+
+     Ì†µÌºÇ : the suppressed factor at check node, 0 < Ì†µÌºÇ < 1,             C. AO-MS Algorithm
+     Ì†µÌºñ : the offset value at check node, Ì†µÌºñ > 0,
+     Ì†µÌºö : the multiplicative factor relative to the offset value,      The AO-MS algorithm is almost the same as that of the
+
+        0 < Ì†µÌºö < 1.                                                    AN-MS algorithm except the check node processing in steps
+
+                                                                       S3) and S4), which can be stated as follows. If (hÌ†µÌ†µÌ±áÌ±ö ‚ãÖ z == 0
+
+                                                                       mod 2), the message at check node Ì†µÌ±ö is updated as
+                                                                                                       ‚àè
+                                                                                Ì†µÌªΩÌ†µÌ±ö,Ì†µÌ±õ =                         sgn(Ì†µÌªºÌ†µÌ±õ‚Ä≤,Ì†µÌ±ö)
+B. AN-MS Algorithm
+                                                                                                 Ì†µÌ±õ‚Ä≤‚ààÌ†µÌ≤© (Ì†µ{Ì±ö)‚àñÌ†µÌ±õ                           }
+ S1: Initialization:
+                                                                                                 ‚ãÖ max min ‚à£Ì†µÌªºÌ†µÌ±ö,Ì†µÌ±õ‚Ä≤ ‚à£ ‚àí Ì†µÌºñ, 0 . (7)
+         Ì†µÌ∞º1 : A priori information
+             Ì†µÌªæÌ†µÌ±õ = Ì†µÌ±¶Ì†µÌ±õ, Ì†µÀúÌªæÌ†µÌ±õ = Ì†µÌ±¶Ì†µÌ±õ;                                                                       Ì†µÌ±õ‚Ä≤‚ààÌ†µÌ≤© (Ì†µÌ±ö)‚àñÌ†µÌ±õ
+
+         Ì†µÌ∞º2 : Variable-to-check messages initialization               However, if (hÌ†µÌ†µÌ±áÌ±ö ‚ãÖ z == 1 mod 2), the offset factor Ì†µÌºñ in (7)
+             Ì†µÌªºÌ†µÌ±õ,Ì†µÌ±ö = Ì†µÌªæÌ†µÌ±õ.                                           is replaced by Ì†µÌºç = (1 + Ì†µÌºö) ‚ãÖ Ì†µÌºñ with Ì†µÌºö denoting a suppression
+
+ S2: Hard decision:                                                    factor.
+
+                                  z = sgn(Ì†µÀúÌº∏);                        Compared to the NMS algorithm, the main shortage of the
+
+                                                                       OMS algorithm is the difÔ¨Åculty in determining the value of
+
+     If (Ì†µÌ∞ªz == 0)                                                     offset Ì†µÌºñ, which depends on the practical channel model and
+           output z and terminate the decoding;
+                                                                       often requires the estimation of signal amplitude and noise
+S3: Check node processing:
+                                                                       variance. The density evolution approach for determining the
+
+                     ‚àè                                                 offset value shown in [5] assumes that the channel model takes
+
+     Ì†µÌªΩÌ†µÌ±ö,Ì†µÌ±õ = Ì†µÌºá ‚ãÖ                  sgn(Ì†µÌªºÌ†µÌ±õ‚Ä≤,Ì†µÌ±ö) ‚ãÖ min ‚à£Ì†µÌªºÌ†µÌ±ö,Ì†µÌ±õ‚Ä≤ ‚à£;  the  form  of   2   Ì†µÌ±¶Ì†µÌ±õ  with  respect    to  the  channel  model  (1),  which,
+                                                                                      Ì†µÌºé2
+
+                     Ì†µÌ±õ‚Ä≤‚ààÌ†µÌ≤© (Ì†µÌ±ö)‚àñÌ†µÌ±õ            Ì†µÌ±õ‚Ä≤‚ààÌ†µÌ≤© (Ì†µÌ±ö)‚àñÌ†µÌ±õ          in fact, requires to estimate the ratio of signal amplitude to
+
+                                                               (2)     noise variance.
+
+S4: Message suppression:                                               For the proposed AO-MS algorithm, the optimal value of Ì†µÌºñ
+     If (hÌ†µÌ†µÌ±áÌ±ö ‚ãÖ z == 1 mod 2)
+                                                                       depends on the channel model just like the OMS algorithm.
+
+                                                                       However, it is shown by extensive simulations that the optimal
+
+                                Ì†µÌªΩÌ†µÌ±ö,Ì†µÌ±õ = Ì†µÌºÇ ‚ãÖ Ì†µÌªΩÌ†µÌ±ö,Ì†µÌ±õ.        (3)     value of Ì†µÌºö is independent of the channel model.
+
+S5: A posteriori information:                                          D. Computational Complexity
+
+                     Ì†µÀúÌªæÌ†µÌ±õ = Ì†µÌªæÌ†µÌ±õ +  ‚àë         Ì†µÌªΩÌ†µÌ±ö,Ì†µÌ±õ;                  Compared to the NMS/OMS algorithm, increase in com-
+                                                               (4) putational complexity for the AN-/AO-MS algorithm can be
+                                     Ì†µÌ±ö‚àà‚Ñ≥(Ì†µÌ±õ)
+                                                                      well expected. In general, there are two aspects for additional
+                                                                      complexity. One of which is the decision of the state of check
+
+S6: Variable node processing:                                          nodes, and the other is the use of two normalization/offset
+                                                                       factors, i.e., (Ì†µÌºá, Ì†µÌºà) or (Ì†µÌºñ, Ì†µÌºç).
+
+                     Ì†µÌªºÌ†µÌ±õ,Ì†µÌ±ö = Ì†µÀúÌªæÌ†µÌ±õ ‚àí Ì†µÌªΩÌ†µÌ±ö,Ì†µÌ±õ;                (5) For deciding the state of check nodes, it requires to compute
+                                                                      the check-sum for each check node. Clearly, the amount of
+
+                                                                       XOR operations for computing all check-sums is Ô¨Ånally equal
+
+     Go to step S2.                                                    to the number of 1‚Äôs in Ì†µÌ∞ª minus the number of rows in Ì†µÌ∞ª.
+                                                                          If the dynamic early termination of decoding as shown in
+In practice, the decoding is often forced to terminate if
+                                                                       Step S2) is used for both the NMS/OMS and the AN-MS/AO-
+the maximum allowable number of decoding iterations is                 MS algorithms, the decision of the state of check nodes should
+                                                                       be performed at each iteration for both algorithms. Hence,
+completed. By combining (2) and (3), the update rule for the           the check-sum operation at each iteration incur no additional
+                                                                       implementation complexity. Therefore, the use of two normal-
+check node which is checked in error can be written as                 ization/offset factors dominates the additional computational
+                                                                       complexity.
+Ì†µÌªΩÌ†µÌ±ö,Ì†µÌ±õ = Ì†µÌºà ‚ãÖ  ‚àè               sgn(Ì†µÌªºÌ†µÌ±õ‚Ä≤,Ì†µÌ±ö) ‚ãÖ min ‚à£Ì†µÌªºÌ†µÌ±ö,Ì†µÌ±õ‚Ä≤ ‚à£, (6)
+                                                                          For an ASIC implementation of the AN-/AO-MS algorithm,
+                Ì†µÌ±õ‚Ä≤‚ààÌ†µÌ≤© (Ì†µÌ±ö)‚àñÌ†µÌ±õ       Ì†µÌ±õ‚Ä≤‚ààÌ†µÌ≤© (Ì†µÌ±ö)‚àñÌ†µÌ±õ                    we argue that the adaptive use of two kinds of normaliza-
+                                                                       tion/offset factors does not incur much more computational
+where Ì†µÌºà = Ì†µÌºá ‚ãÖ Ì†µÌºÇ. For ease of implementation, it is natural to
+employ two normalization factors at check nodes, one is Ì†µÌºá
+and the other is Ì†µÌºà = Ì†µÌºá ‚ãÖ Ì†µÌºÇ.
+
+Compared to the original NMS algorithm [5], the step S4) complexity. In fact, the multiplicative operation can be equiv-
+
+is new. It should be mentioned that the normalization factor alently implemented as the series of both addition and shift
+
+appears multiplying while it appears dividing in [3], [5]. The operations. For example, the multiplication of Ì†µÌ±• with 0.875
+
+use of multiplying factors may facilitate the implementation. can be implemented as 0.875 √ó Ì†µÌ±• = Ì†µÌ±•/2 + Ì†µÌ±•/4 + Ì†µÌ±•/8, which
+
+Furthermore, the normalization factors may vary with the includes three shift operations and two additions. Hence, when
+
+iteration number as commented in [5] and for simplicity we the value of the normalization factor switches from one to
+
+keep them Ô¨Åxed. For choice of normalization factors Ì†µÌºá and Ì†µÌºà, another, the group of shift coefÔ¨Åcients changes accordingly
+
+there is unfortunately no analytical results currently. Hence, in implementation. Therefore, the AN-MS algorithm requires
+
+we have to resort to tedious simulations.                              two groups of shift coefÔ¨Åcients, which are adaptively switched
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:56:00 UTC from IEEE Xplore. Restrictions apply.
+WU et al.: ADAPTIVE-NORMALIZED/OFFSET MIN-SUM ALGORITHM                                                                                                                                                                              669
+
+                10‚àí1                                                                                                                                        implementation of various iterative decoders, both the received
+
+                                                                                        NMS
+
+                                                                                        AN‚àíMS                                                               samples and the passing messages along edges are quantized to
+
+                                                                                        OMS
+
+                10‚àí2                                                                    AO‚àíMS                                                               8 bits and two-phase decoding is employed. The SP algorithm
+                                                                                        SP
+
+                                                                                                                                                            with Ô¨Çoating-point simulations is also shown. With 8-bit
+
+                10‚àí3                                                                                                                                        quantization, we observe little performance loss compared to
+
+                                                                                                                                                            the Ô¨Çoating-point simulations. The normalization factor for the
+
+Bit Error Rate                                                                                                                                              NMS algorithm is 27/32 = 1/2 + 1/4 + 1/16 + 1/32. The
+
+                10‚àí4                                                                                                                                        normalizer factors (Ì†µÌºá, Ì†µÌºà) are set to be (27/32, 3/4) for the
+
+                                                                                                                                                            AN-MS algorithm. The offset factor for the OMS algorithm is
+
+                10‚àí5                                                                                                                                        8/50 and the offset factors (Ì†µÌºñ, Ì†µÌºç) = (8/50, 12/50) for the AO-
+
+                                                                                                                                                            MS algorithm. With a scaling factor of 50 for multiplying the
+
+                                                                                                                                                            channel model of (1), the offset factors can be well represented
+
+                10‚àí6                                                                                                                                        as integers in Ô¨Åxed-point environments. It is shown that the
+
+                                                                                                                                                            AN-MS algorithm has about 0.15 dB improvement compared
+
+                10‚àí7  0.8        0.85        0.9  0.95       1                                 1.15                                                         to the NMS algorithm while the the AO-MS algorithm has
+                0.75                                                    1.05       1.1
+                                                                                                                                                            about 0.1 dB improvement compared to the OMS algorithm.
+                                                  Eb/N0, dB
+
+                                                                                                                                                            Both the AN- and AO-MS algorithms have about 0.1 dB loss
+
+Fig. 1. Bit error rate of the rate-1/2 DVB-S2 LDPC code with various                                                                                        compared to the SP algorithm. This improvement is observed
+decodings.                                                                                                                                                  at the BER of about 10‚àí6.
+
+                10‚àí1                                                                                                                                        We also consider a rate-3/4 irregular quasi-cyclic LDPC
+                                                                                                                                                NMS
+                                                                                                                                                AN‚àíMS       code of codeword length 8064. The degree proÔ¨Åle of rate-3/4
+                                                                                                                                                OMS
+                                                                                                                                                AO‚àíMS       LDPC code can be described as Ì†µÌºÜ(Ì†µÌ±•)   =   5   Ì†µÌ±•+  7   Ì†µÌ±•2  +  7   Ì†µÌ±•6  and
+                                                                                                                                                SP          Ì†µÌºå(Ì†µÌ±•) = Ì†µÌ±•14. The size of sub-matrix  is  12       24          24       the
+
+                10‚àí2                                                                                                                                                                                   112. Fig. 2 shows
+
+                                                                                                                                                            BER performance under various decodings. The normalization
+
+                                                                                                                                                            factors for the NMS and the AN-MS algorithms take the same
+
+Bit Error Rate  10‚àí3                                                                                                                                        values as that employed in DVB-S2 LDPC codes. The offset
+
+                                                                                                                                                            factor for the OMS algorithm is 4/50 and the offset factors
+
+                                                                                                                                                            (Ì†µÌºñ, Ì†µÌºç) = (4/50, 6/50) for the AO-MS algorithm. The number
+
+                10‚àí4                                                                                                                                        of maximum decoding iterations is set to be 60. It is shown
+
+                                                                                                                                                            in Fig. 2 that the proposed AN-/AO-MS algorithm performs
+
+                                                                                                                                                            very close to the SP algorithm.
+
+                10‚àí5                                                                                                                                        Finally, it should be noted that various normalization/offset
+
+                                                                                                                                                            factors are determined by limited simulations and there are
+
+                                                                                                                                                            still room for optimizing them by extensive simulations.
+
+                10‚àí6                         2.3  2.35       2.4  2.45        2.5  2.55                                                                2.6
+                2.1   2.15  2.2        2.25
+
+                                                  Eb/N0, dB                                                                                                                           IV. CONCLUSION
+
+Fig. 2. Bit error rate of the rate-3/4 LDPC code with various decodings.                                                                                       We have proposed an adaptive-normalized/offset min-sum
+                                                                                                                                                            decoding algorithm for LDPC codes. Compared to the
+according to the state of check nodes. Hence, there is minor in-                                                                                            NMS/OMS decoding, the proposed AN-/AO-MS decoding can
+crease in memory and control logic for the AN-MS algorithm                                                                                                  achieve better performance with a minor increase in com-
+compared to the NMS algorithm. For the AO-MS algorithm,                                                                                                     plexity. Therefore, we can expect that it is very competitive
+two offset factors (Ì†µÌºñ, Ì†µÌºç) are also adaptively switched according                                                                                          in practice. Compared to the AO-MS algorithm, the AN-MS
+to the value of check-sum at each check node, and the amount                                                                                                algorithm does not require to estimate the signal-to-noise ratio
+of increase in complexity is also minor compared to the OMS                                                                                                 for parameter optimization, which is welcome in practice.
+algorithm.
+                                                                                                                                                            REFERENCES
+
+                    III. SIMULATION RESULTS                                                                                                                 [1] Y. Kou, S. Lin, and M. Fossorier, ‚ÄúLow-density parity-check codes based
+                                                                                                                                                                 on Ô¨Ånite geometries: a rediscovery and more,‚Äù IEEE Trans. Inf. Theory,
+   To show the potential use of the AN-/AO-MS algorithm,                                                                                                         vol. 47, pp. 2711‚Äì2736, Nov. 2001.
+we consider a long rate-1/2 LDPC code employed in digital
+video broadcasting standard for the second generation satellite                                                                                             [2] M. Fossorier, M. Mihaljevic, and H. Imai, ‚ÄúReduced complexity iterative
+applications (DVB-S2). For this long DVB-S2 LDPC code,                                                                                                           decoding of low density parity check codes based on belief propagation,‚Äù
+its codeword length is 64800 and its performance can be                                                                                                          IEEE Trans. Commun., vol. 47, pp. 673‚Äì680, May 1999.
+very close to the Shannon limit (0.18 dB). The bit-error-rate
+(BER) performance of the DVB-S2 LDPC code under the                                                                                                         [3] J. Chen and M. P. Fossorier, ‚ÄúNear optimum universal belief propaga-
+NMS, the OMS, the AN-MS and the AO-MS decodings is                                                                                                               tion based decoding of low density parity check codes,‚Äù IEEE Trans.
+shown in Fig. 1 with Ô¨Åxed-point simulations. The number of                                                                                                       Commun., vol. 50, pp. 406‚Äì414, Mar. 2002.
+maximum allowable decoding iterations is 50. For Ô¨Åxed-point
+                                                                                                                                                            [4] M. R. Yazdani, S. Hemati, and A. H. Banihashemi, ‚ÄúImproving belief
+                                                                                                                                                                 propagation on graphs with cycles,‚Äù IEEE Commun. Lett., vol. 8, pp.
+                                                                                                                                                                 57‚Äì59, Jan. 2004.
+
+                                                                                                                                                            [5] J. Chen and M. P. Fossorier, ‚ÄúDensity evolution for two improved bp-
+                                                                                                                                                                 based decoding algorithms of LDPC codes,‚Äù IEEE Commun. Lett., vol. 6,
+                                                                                                                                                                 pp. 208‚Äì210, May 2002.
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:56:00 UTC from IEEE Xplore. Restrictions apply.
+

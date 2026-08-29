@@ -1,0 +1,45 @@
+{
+  "schema_version": "t063.bridge-correctness-receipt.v2",
+  "scope": [
+    "BRIDGE_CORRECTNESS_ONLY",
+    "TARGET_OCCURRENCE_NOT_RUN",
+    "NO_METHOD_SIGNAL"
+  ],
+  "physical_order": "continuous acquisition+observation -> shared scalar GG/CFO/Wiener -> unitary Jones -> circular AWGN -> Ch4 demux/RDE -> per-pol Ch3 DA CPR -> pilot-only ambiguity -> residual",
+  "truth_firewall": "PASS",
+  "eight_rotation_pilot_only_resolution": "PASS",
+  "polarization_swap_equivariance": "PASS",
+  "per_polarization_cpr": true,
+  "cross_polarization_pooling": false,
+  "observation_window_causal": true,
+  "bundle_fields_complete": true,
+  "covariance_identity": "PASS",
+  "minimum_covariance_eigenvalue": 5.763181124669633e-07,
+  "circular_control_max_gap": 6.683698138529319e-19,
+  "same_input_hash_stable": true,
+  "receiver_visible_change_changes_hash": true,
+  "frozen_ch4_snapshot": {
+    "arm_id": "fixture-plain-mu0",
+    "mode": "plain",
+    "mu": 0.0,
+    "ring_threshold": null,
+    "decision_threshold": null
+  },
+  "continuous_realization_timing": {
+    "continuous_scalar": true,
+    "preamble_length": 16,
+    "observation_length": 160,
+    "observation_start": 16,
+    "total_length": 176
+  },
+  "realization_hash": "ae581a28e62c92c9932f88ee9ab64bc2c48cdfc878ec576d187cae7d9f5dadab",
+  "bundle_hash": "cdeec988502fd25b8224373f28f2ecc5d36e8b5329170a6b8bf8d7b4164e79bd",
+  "unique_blocker": "Awaiting independent re-verification; target occurrence remains prohibited",
+  "receipt_hash": "95e64795ce92ab7d4004262ab82ee1a5b22af40dd1849473ecaf8eac0dc898fc",
+  "_meta": {
+    "script": "run_occurrence_smoke:correctness",
+    "common_md5": "49acdfa4",
+    "git_commit": "e5e7cdc",
+    "timestamp": "2026-08-30T05:18:21"
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "task": "T049",
+  "date": "2026-08-30",
+  "question": "Q-C5-1",
+  "scope": "GW Step 3.5 exact-recipe closure only",
+  "control_validation": "PASS",
+  "target_recipe": "known APSK ring/angle plus current/past pilot residuals -> radial/tangential covariance parameterization -> same-ring/cross-polarization statistical-strength shrinkage pooling -> positive-definite structured covariance -> Mahalanobis/log-det bit LLR",
+  "rounds": [
+    {
+      "round": 1,
+      "kind": "preregistered_query_matrix",
+      "query_count": 6,
+      "raw_records": 28,
+      "cross_query_unique_records": 25,
+      "new_must": 0,
+      "new_should": 2,
+      "should_candidates": [
+        "Analysis of Gaussian phase noise effects in DFT-s-OFDM systems for sub-THz transmissions",
+        "Orbital Detection"
+      ]
+    },
+    {
+      "round": 2,
+      "kind": "Layton_2018_bidirectional_citation_chain_and_alias_screen",
+      "forward_records": 1,
+      "backward_records": 37,
+      "raw_records": 38,
+      "new_must": 0,
+      "new_should": 0,
+      "converged": true
+    },
+    {
+      "round": 3,
+      "kind": "not_started",
+      "reason": "Round 2 new MUST/SHOULD was zero"
+    }
+  ],
+  "totals": {
+    "query_count": 6,
+    "citation_chain_count": 2,
+    "raw_records": 66,
+    "cross_archive_unique_records": 63,
+    "new_fulltexts": 0,
+    "new_read_notes": 0
+  },
+  "source_boundary": {
+    "effective_sources": [
+      "OpenAlex",
+      "Semantic Scholar"
+    ],
+    "limitations": [
+      "SerpAPI and Exa keys were unavailable",
+      "Semantic Scholar was rate-limited on several query calls",
+      "OpenAlex supplied most query recall",
+      "S2-only citation records were not used as collision evidence"
+    ]
+  },
+  "archives": [
+    {
+      "path": "search-archive/2026-08-30/apsk-radial-tangential-covariance-demapper.json",
+      "sha256": "fef506f41ef9d6d2c3ab6ee5916a22a174560197acda6fe44154cc5c1453abfc"
+    },
+    {
+      "path": "search-archive/2026-08-30/polar-coordinate-gaussian-apsk-soft-demapping.json",
+      "sha256": "9382b840152e15ef164e35c2df6a22f10db1064f6778e4882b8751c3198e47a3"
+    },
+    {
+      "path": "search-archive/2026-08-30/pilot-aided-structured-covariance-shrinkage-demodulation.json",
+      "sha256": "a8d6409e6e38f27e0dc577a0761f1bd45e6f64e3a5326dba121d1a89cec49b4c"
+    },
+    {
+      "path": "search-archive/2026-08-30/small-sample-covariance-regularized-soft-demapper.json",
+      "sha256": "0cd70f315a6b216860426fdea9dd1542a17ca1f0c2711599914fd4ad1322b8e2"
+    },
+    {
+      "path": "search-archive/2026-08-30/ring-aware-covariance-llr-apsk.json",
+      "sha256": "cb777a007ad10f75c68b398d691a4fa19491e6704094b45bcbb11159f18ba737"
+    },
+    {
+      "path": "search-archive/2026-08-30/dual-polarization-apsk-covariance-pooling.json",
+      "sha256": "2ed8101845603e58c0a9c1fc8f92becf2a79238c332c747b015d04eaafa36da7"
+    },
+    {
+      "path": "search-archive/2026-08-30/doi-10-1186-s13638-018-1136-z.json",
+      "direction": "forward",
+      "sha256": "9b0d29d66112e73e670c9d6b40bf2c3a012b93e1de87db3c957d4dcc35e6dcf3"
+    },
+    {
+      "path": "search-archive/2026-08-30/2026-08-30-doi-10-1186-s13638-018-1136-z-1.json",
+      "direction": "backward",
+      "sha256": "919f3905bb795afd257b26fd1e8ac29143c8b81c5bce8c03e03a83edcaf02d92"
+    }
+  ],
+  "verdict": "Q-C5-1 SURVIVES",
+  "exact_recipe_collision": false,
+  "strongest_neighbor": "Layton et al. 2018, DOI 10.1186/s13638-018-1136-z",
+  "blocker": "NONE_FOR_STEP3_5; external recall is bounded by unavailable SerpAPI/Exa and partial S2 rate limits, so no first/SOTA claim is authorized"
+}

@@ -479,6 +479,26 @@
         "rml-fsts-step3-5-r2-should-read"
       ],
       "title_check": "match"
+    },
+    "doi:10.1109/access.2019.2899106": {
+      "path": "papers\\doi\\10.1109_access.2019.2899106",
+      "doi": "10.1109/access.2019.2899106",
+      "title": "Residual-Decaying-Based Informed Dynamic Scheduling for Belief-Propagation Decoding of LDPC Codes",
+      "status": "failed_identity_mismatch",
+      "batches": [
+        "t041-ldpc-receiver-authority"
+      ],
+      "title_check": "mismatch"
+    },
+    "doi:10.1587/transfun.2024eal2080": {
+      "path": "papers\\doi\\10.1587_transfun.2024eal2080",
+      "doi": "10.1587/transfun.2024eal2080",
+      "title": "Reliability-List-Based Check-Belief Propagation Decoding of LDPC Codes",
+      "status": "success",
+      "batches": [
+        "t079-c5-5-p0-exact"
+      ],
+      "title_check": "match"
     }
   }
 }

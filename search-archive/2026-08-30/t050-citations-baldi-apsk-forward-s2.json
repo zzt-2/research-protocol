@@ -1,0 +1,33 @@
+{
+  "query": "",
+  "timestamp": "2026-08-30T02:53:21.319447+08:00",
+  "sources": [
+    "citations_s2"
+  ],
+  "total": 1,
+  "results": [
+    {
+      "title": "A comparison between APSK and QAM in wireless tactical scenarios for land mobile systems",
+      "authors": [
+        "M. Baldi",
+        "F. Chiaraluce",
+        "A. Angelis",
+        "R. Marchesani",
+        "Sebastiano Schillaci"
+      ],
+      "venue": "EURASIP Journal on Wireless Communications and Networking",
+      "year": 2012,
+      "doi": "10.1186/1687-1499-2012-317",
+      "arxiv_id": null,
+      "abstract": "AbstractWe evaluate the performance of APSK modulation for wireless systems and compare it with the performance of more conventional QAM systems. In previous literature, the analysis of APSK has been mainly focused on the AWGN channel. This channel model provides useful insights when APSK is used in satellite systems, while it is important to consider more complex channel models for its use in terrestrial wireless applications. In particular, we consider wireless tactical scenarios for land mobile systems, that are of interest for military applications, and provide several numerical examples. First, we explore the effects on the total degradation of the reduced PAPR, typical of APSK, also taking into account the nonlinearity of HPAs and the need to use adaptive predistortion. Then, the bit error rate performance is assessed by simulation, for some typical multipath scenarios with decision feedback equalization, also including the presence of turbo channel coding. Our analysis shows that APSK can be a valid alternative to QAM in all cases in which the nonlinear effects due to HPAs cannot be neglected.",
+      "citation_count": 26,
+      "is_open_access": true,
+      "pdf_url": "https://jwcn-eurasipjournals.springeropen.com/counter/pdf/10.1186/1687-1499-2012-317",
+      "source_api": "s2_citations",
+      "expanded_from": "DOI:10.1186/1687-1499-2012-317",
+      "id": "L001",
+      "download": true,
+      "publication_status": "published"
+    }
+  ]
+}

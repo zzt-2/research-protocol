@@ -1,0 +1,18 @@
+{
+  "storage_version": 2,
+  "id": "T041-003",
+  "title": "Residual-Decaying-Based Informed Dynamic Scheduling for Belief-Propagation Decoding of LDPC Codes",
+  "doi": "10.1109/access.2019.2899106",
+  "arxiv_id": "cs/0702111v2",
+  "download_status": "failed",
+  "download_method": "identity_mismatch_arxiv_enrichment",
+  "content_type": "",
+  "content_quality": "rejected_identity_mismatch",
+  "content_file": "",
+  "downloaded_at": "2026-08-30T10:40:54.618889+08:00",
+  "real_title": "Informed Dynamic Scheduling for Belief-Propagation Decoding of LDPC Codes[[[[Thanks: ]This work was supported by the state of California and ST Microelectronics through UC discovery grant COM 03-10142.]]]",
+  "title_check": "mismatch",
+  "title_overlap": 0.3333333333333333,
+  "rejected_source_sha256": "EA651C233342A61EB63C64CD77FB8F7A0D432EA8D9CC4EEDB6F29DFFA5026564",
+  "rejected_content_sha256": "9105D56A9A7C7E0C4CA46F3E8AE5C1281834C442A5265859C09818C7FCEE3A4D"
+}

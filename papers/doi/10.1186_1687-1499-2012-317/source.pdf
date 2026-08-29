@@ -1,0 +1,1005 @@
+Baldi et al. EURASIP Journal on Wireless Communications and Networking 2012, 2012:317
+http://jwcn.eurasipjournals.com/content/2012/1/317
+
+RESEARCH                                                                               Open Access
+
+A comparison between APSK and QAM in
+wireless tactical scenarios for land mobile
+systems
+
+Marco Baldi1*, Franco Chiaraluce1, Antonio de Angelis2, Rossano Marchesani2 and Sebastiano Schillaci2
+
+Abstract
+
+We evaluate the performance of APSK modulation for wireless systems and compare it with the performance of more
+conventional QAM systems. In previous literature, the analysis of APSK has been mainly focused on the AWGN
+channel. This channel model provides useful insights when APSK is used in satellite systems, while it is important to
+consider more complex channel models for its use in terrestrial wireless applications. In particular, we consider
+wireless tactical scenarios for land mobile systems, that are of interest for military applications, and provide several
+numerical examples. First, we explore the eﬀects on the total degradation of the reduced PAPR, typical of APSK, also
+taking into account the nonlinearity of HPAs and the need to use adaptive predistortion. Then, the bit error rate
+performance is assessed by simulation, for some typical multipath scenarios with decision feedback equalization, also
+including the presence of turbo channel coding. Our analysis shows that APSK can be a valid alternative to QAM in all
+cases in which the nonlinear eﬀects due to HPAs cannot be neglected.
+
+Introduction                                                                  of M = 16 and M = 64. Mutual information pro-
+Mobile radio systems require highly bandwidth-eﬃcient                         vides the maximum transmission rate (in bits per channel
+modulation schemes, because of the limited resources of                       use) at which error-free transmission is possible with a
+the available radio spectrum. Such a requirement becomes                      given signal set. Therefore, maximization of the channel
+particularly stringent in tactical scenarios needing high                     mutual information is a very eﬀective criterion to opti-
+capacity communication links.                                                 mize the APSK constellation for any signal-to-noise ratio
+                                                                              (SNR) operating point. Following such a criterion, some
+  Since a long time, quadrature amplitude modulation                          optimized APSK signal sets were presented in [5], with
+(QAM) and amplitude-phase shift keying (APSK) mod-                            error performance close to QAM. Diﬀerential amplitude-
+ulation [1] have been considered valuable candidates for                      phase shift keying (DAPSK) has also been proposed to
+saving bandwidth while preserving good error rate perfor-                     simplify demodulation. The performance of DAPSK has
+mance [2]. The beneﬁts and drawbacks of APSK and QAM                          been determined [6], also over frequency-selective Rician
+have already been assessed and compared, but only focus-                      fading channels [7], and in comparison with QAM [8].
+ing on additive white Gaussian noise (AWGN) and fading
+channels. In [3], for example, by assuming a modulation                         Whilst it seems rather diﬃcult to claim that APSK
+order M = 16 (that is a typical value we consider too), it                    outperforms QAM in ideal conditions, the scenario can
+was veriﬁed analytically that QAM can outperform APSK                         change when considering the impact of nonlinearities. In
+under Rayleigh fading conditions. On the other hand, in                       fact, in this case, APSK can beneﬁt of its low peak-to-
+[4] it was shown that, in peak power limited Gaussian                         average power ratio (PAPR): a modulation with low PAPR
+complex channels, APSK considerably outperforms QAM                           is more suitable for transmission when using power ampli-
+in terms of mutual information, particularly for the cases                    ﬁers with nonlinear characteristic, like traveling wave tube
+                                                                              ampliﬁers (TWTAs), onboard of satellites, or solid state
+*Correspondence: m.baldi@univpm.it                                            power ampliﬁers (SSPAs), on handheld devices for tac-
+1Dipartimento di Ingegneria dell’Informazione, Universita` Politecnica delle  tical applications. In particular, this feature allows oper-
+Marche, via Brecce Bianche 12, 60131 Ancona, Italy                            ating with a smaller back-oﬀ, thus increasing the energy
+Full list of author information is available at the end of the article
+
+          © 2012 Baldi et al.; licensee Springer. This is an Open Access article distributed under the terms of the Creative Commons
+          Attribution License (http://creativecommons.org/licenses/by/2.0), which permits unrestricted use, distribution, and reproduction
+          in any medium, provided the original work is properly cited.
+Baldi et al. EURASIP Journal on Wireless Communications and Networking 2012, 2012:317  Page 2 of 14
+http://jwcn.eurasipjournals.com/content/2012/1/317
+
+eﬃciency of the system [9]. Dually, once having ﬁxed            Starting from these premises, the object of this arti-
+the working point on the ampliﬁer characteristic, the         cle is to discuss the performance of single carrier APSK
+low PAPR allows minimizing many eﬀects of nonlinear           modulation in land mobile systems and to compare it
+distortion, like warping, clustering and spectral regrow-     with that of a QAM having the same value of M. In
+ing, which is caused by intermodulation products and is       particular, we deepen and extend some results recently
+responsible for adjacent channel interference (ACI) [10].     presented in [15]. As a favorite testbed, we consider the
+                                                              possible use of APSK in handheld high capacity tacti-
+  Many techniques, often adaptive [11], have been pro-        cal radio systems. This has guided the choice of some
+posed in the past to compensate for nonlinear eﬀects. In      simulation variables, in particular: channel parameters,
+order to assess the best solution, an important issue con-    such as the maximum Doppler shift and the power
+cerns complexity. Among the most eﬃcient schemes, an          delay proﬁle (PDP), and code parameters, such as the
+approach with very low complexity is the adaptive mem-        code rate R. Our starting point is the analysis car-
+oryless predistortion of the constellation. This method       ried out for the satellite channel, but performance is
+exploits a feedback mechanism between the ampliﬁer            then assessed in land mobile scenarios. We discuss the
+output and the modulator, whose goal is to make the con-      additional problems caused by these channels, includ-
+stellation actually transmitted as close as possible to the   ing techniques to solve them. The multipath fading, in
+ideal constellation. On the other hand, in the presence       particular, is compensated by using robust equalization
+of high power ampliﬁers (HPAs) and square root raised         at the receiver side, e.g., decision feedback equaliza-
+cosine (SRRC) ﬁlters, the AWGN channel can be modeled         tion with ﬁlter coeﬃcients adapted using a least mean
+in the aggregate as a nonlinear channel with memory. So,      square (LMS) algorithm. This algorithm has low compu-
+a memoryless approach can compensate for warping but          tational complexity, which makes it suitable for imple-
+not for clustering, i.e., there is residual nonlinear inter-  mentation on resource-limited handheld tactical devices.
+symbol interference (ISI). Other approaches are available     We also estimate the degradation due to a typical SSPA
+that, taking into account the channel memory, also reduce     with nonlinear characteristic, in the presence of adaptive
+the nonlinear ISI. However, they are based on the solu-       predistortion.
+tion of M2Q+1 equations, where Q is the ﬁnite number
+of symbols considered for approximating the memory of           The performance analysis is most developed by simu-
+the channel (for memoryless systems Q = 0). So, even          lations. This is a rather classical approach for this kind
+for very small values of M and Q, the complexity of these     of problems, where the theoretical framework usually
+methods becomes rapidly too high [12], most of all for        relies on a number of previous results (concerning mod-
+the implementation on low-power resource-limited ﬁeld         eling of the channel and the devices) that are suitably
+programmable gate arrays (FPGA).                              combined to describe the speciﬁc scenario. Our aim is
+                                                              to apply such consolidated models taking into account
+  Recently, APSK has been proposed in the framework of        the peculiarities of the tactical radio scenarios, most of
+the DVB-S2 standard [13] and its performance has been         them being relevant to the used range of frequencies
+widely investigated over the AWGN channel, by consid-         (in the VHF/UHF band). Our analysis aims at showing
+ering typical satellite scenarios, also in the presence of    that, in this context, APSK can be advantageous with
+HPAs. Moreover, several diﬀerent adaptive techniques to       respect to more conventional modulation schemes, like
+compensate for nonlinear eﬀects have been studied, and        QAM.
+the improvements achievable by adding turbo channel
+codes have also been estimated [11,14].                         The article is organized as follows. In Section ‘Overview
+                                                              of tactical scenarios’, a short overview of the concept
+  On the contrary, the performance of APSK over mul-          of tactical scenario is given. In Section ‘System model’,
+tipath wireless channels, in the presence of typical HPAs     we describe the model adopted for the analysis and
+for handheld devices, has not been assessed yet. In the       the system components (transmitter, channel, receiver).
+considered scenario, modulations like Gaussian minimum        In Section ‘PAPR and adaptive predistortion’, we dis-
+shift keying (GMSK) and quadrature phase shift key-           cuss the PAPR and the eﬀects of adaptive predistortion
+ing (QPSK), that are used for cellular systems (GSM           on the warping and clustering phenomena. In Section
+and UMTS), exhibit spectral eﬃciencies that are gener-        ‘Performance of APSK in multipath scenarios ’, several
+ally unsatisfactory to realize high capacity links. Some      simulation results are provided and discussed, for time-
+recent standards, like 3GPP long term evolution (LTE) or      invariant channels as well as in the presence of fading,
+WiMax, exploit multi-carrier modulations, like orthogo-       also considering the performance improvement due to the
+nal frequency-division multiplexing (OFDM) or orthogo-        inclusion of a turbo channel code. In Section ‘Combined
+nal frequency-division multiple access (OFDMA), which         eﬀect of multipath and nonlinearity’, the two threats are
+are robust against multipaths but show high PAPR,             jointly considered. Finally, Section ‘Conclusion’ reports
+and hence low energy eﬃciency in the presence of              some conclusive remarks.
+nonlinear ampliﬁers.
+Baldi et al. EURASIP Journal on Wireless Communications and Networking 2012, 2012:317  Page 3 of 14
+http://jwcn.eurasipjournals.com/content/2012/1/317
+
+Overview of tactical scenarios                                 The whole network is moving and no base stations are
+Tactical scenarios are of interest in military missions, and   deployed. An example of OTM network may be military
+are characterized by some peculiarities, which distinguish     units (e.g., battalions) moving from an area to another.
+them from conventional civil scenarios. Some of these          During the movement, troops can communicate within
+peculiarities are discussed next. Although many of them        the OTM network. When a unit arrives at the opera-
+are not essential for the subsequent analysis, all they help   tion area, ATH networks are deployed, which also involve
+to understand the complexity of the considered commu-          semi-ﬁxed or ﬁxed nodes. Connections can be done
+nication system, and justify the need for more and more        through radio access points (RAP) exploiting high-gain
+eﬃcient solutions.                                             mast antennas.
+
+  The usual frequency band for communications in tacti-          As mentioned, OTM scenarios are characterized by the
+cal scenarios is the 225–400 MHz band, reserved for mili-      fact that nodes are mobile. This mobility results in the
+tary use. At these frequencies, it is diﬃcult to achieve data  following general requirements:
+rates higher than 1 Mbps. A further feature of tactical sce-
+narios is the presence of a hierarchical organization of the     • dynamic network topology maintenance (fast
+nodes. Since tactical scenarios reﬂect tactical operations,          network splitting/merging);
+nodes are often organized in squads, platoons, compa-
+nies, battalions and brigades. Each hierarchical level can       • automatic and rapid attachment/detachment to the
+be characterized diﬀerently in terms of mobility and link            network;
+capacity, thus leading to rather heterogeneous networks.
+                                                                 • dynamic radio resource allocation (whatever traﬃc
+  There are two main tactical scenarios which are                    source is constant or variable);
+used as a reference: on the move (OTM) and at the
+halt (ATH). In OTM scenarios the operation mode                  • dynamic intra/inter network routing.
+is that of a multi-hop ad-hoc network that is self-
+organizing and self-healing, and where nodes are mobile.       An example of OTM scenario is shown in Figure 1; in
+                                                               this case, the network fulﬁlls squads, platoons and compa-
+                                                               nies communication needs. Obviously, similar scenarios
+
+Figure 1 Example of OTM scenario.
+Baldi et al. EURASIP Journal on Wireless Communications and Networking 2012, 2012:317                                                                   Page 4 of 14
+http://jwcn.eurasipjournals.com/content/2012/1/317
+
+  Packet                        FEC Turbo  Symbol             Complex                             Up-sampling                      SRRC Filter
+Generator                         encoder  mapping            Modulator                                                                HPA
+
+                                                              Adaptive Pre-                                                          Channel
+                                                                Distortion                                                         SRRC Filter
+
+   BER                          FEC Turbo   Soft bit          DFE                                       Down-
+Evaluation                        decoder  detection                                                   sampling
+                                  (BCJR)
+
+Figure 2 System block diagram.
+
+can also involve battalions and brigades, that represent the  The constellation is deﬁned as:
+highest hierarchical level.                                                              ⎧
+                                                                                         ⎪⎪⎪⎪⎪⎪⎨  r1  ej(ϑ1  +  2π  k)     for k = 0, 1, . . . , n1 − 1,
+  These scenarios lead to diﬀerent coverage require-                                              r2  ej(ϑ2  +  n1  k)     for k = 0, 1, . . . , n2 − 1,
+ments as well as diﬀerent network conﬁgurations. The
+class of services is also dependent on the speciﬁc sce-                                                         2π
+nario. Concerning mobility, there are two main models                                                           n2
+used in tactical scenarios: the Gaussian Markov mobility
+(GMM) and group mobility. Speeds have a very vari-            X                       =  ⎪⎪⎪⎩⎪⎪⎪  ...                      ...                                (1)
+able range since we can consider both soldiers mov-                                               rN                       for
+ing by foot and vehicles moving on the ground. The                                                     ej(ϑN+     2π    )       k  =  0, 1, . . . , nN  − 1,
+choice of the model is of great importance, since it                                                             nN k
+is possible to verify that performance can drastically
+change as a result of changing the mobility model             where N is the number of concentric rings (N = 2 for the
+simulated [16].                                               4+12-APSK shown in Figure 3), ni is the number of points
+                                                              in the ith PSK (i = 1, 2, . . . , N), ri2 is the energy of the ith
+  This wide set of possibilities and requirements demands     subset of signals, and ϑi its phase oﬀset.
+for suitable transmission techniques to be implemented
+in land mobile systems. Simple solutions are impor-             In comparison with a QAM constellation having the
+tant for coping with the resource-limited hardware and        same number, M, of symbols, APSK is characterized by
+assuring high reliability. On the other hand, achiev-         a smaller number of amplitude levels, and this allows
+ing a high link capacity and, at the same time,
+a high bandwidth eﬃciency becomes a mandatory                                                                              1010        0010
+requirement.
+                                                                                                           1110                           C1            0110
+  A futher requirement is obviously transmission secu-                                            1111                                                          0111
+rity, which falls outside the scope of this paper. However,   Quadrature (Q-Channel)                                               C2
+a careful choice of the transmission technique may also be
+useful from the security standpoint [17].                                                                                  1011        0011
+
+System model                                                                          0                                    1001                               0101
+A schematic representation of the communication system                                           1101
+we consider is shown in Figure 2. This scheme will be used
+in the following for the performance assessment; this jus-                                                                             0001
+tiﬁes the presence of the block for the bit error rate (BER)
+evaluation. The role of the other blocks will be explained                                             1100                                             0100
+next.
+                                                                                                                           1000
+  The APSK constellation consists of the superposition of
+two concentric PSK constellations, that are characterized                                                                              0000
+by diﬀerent energy. An example, referred to the DVB-S2
+standard, is shown in Figure 3.                                                                              0
+                                                                                                 In-Phase (I-Channel)
+
+                                                              Figure 3 Example of APSK constellation.
+Baldi et al. EURASIP Journal on Wireless Communications and Networking 2012, 2012:317                                         Page 5 of 14
+http://jwcn.eurasipjournals.com/content/2012/1/317
+
+achieving a lower PAPR. For a ﬁxed value of M, the con-       for AM/AM and AM/PM, respectively. The four param-
+stellation can be optimized through the minimization of       eters appearing in Equations (3) and (4) (i.e., γ , δ, αp and
+a suitably deﬁned cost function, or, equivalently, through    βp) are determined from measured AM/AM and AM/PM
+the maximization of a quantity related to the cost func-      curves, taken from a real 1 W SSPA used for handheld
+tion. Common criteria for this purpose consist in max-        devices. In particular, following a best ﬁt approach which
+imizing the minimum Euclidean distance (MED) or the           minimizes the mean squared error (MSE) between the
+mutual information [14].                                      analytical and measured data, one ﬁnds: γ = 1.99, δ =
+                                                              2.15, αp = 0.14 and βp = 0 [21]. The correspond-
+  As an example of practical interest, in this article we     ing AM/AM and AM/PM characteristics are shown in
+consider the 4 + 12-APSK constellation suggested in [13],     Figure 4, where the mean input and output powers are
+whose parameters are optimized under the MED criterion        normalized to the corresponding saturation levels. As it is
+(r2/r1 = 2.7, ϑ2 − ϑ1 = 0). We remind that the choice of      expected for SSPAs, even near saturation, phase degrada-
+having a larger number of points in the outer ring allows     tion is rather small, while the main distortion aﬀects the
+maximizing the conversion eﬃciency of the HPA, since          amplitude.
+the mean transmitted power tends to be close to the peak
+level. In this article, a pseudo-Gray labeling, of the type     The output of the HPA is then given as input to the
+shown in Figure 3, is used for the 4 + 12-APSK constella-     adaptive predistortion block. This has been implemented
+tion. The 16-QAM constellation we compare with adopts         by following the memoryless approach proposed in [11];
+a Gray labeling. As well known, these mapping strategies      details are omitted for the sake of brevity, but can be found
+minimize the bit error rate for a given value of the sym-     in the quoted reference.
+bol error rate. However, it must be said that the discussion
+about optimal mapping, as well as de-mapping (that has          In order to describe the eﬀects of the multipath fading,
+an impact on the computational complexity) is still open,     we have considered the discrete paths model whose chan-
+and some variants have been proposed in the literature        nel impulse response (baseband equivalent) can be written
+(see [18,19], for example).                                   as:
+
+  At the transmitter (TX) side, an SRRC ﬁlter is adopted,                              P−1
+with a roll-oﬀ factor ρ. The complex envelope of the signal
+can be written as:                                            h(t, τ ) = α˜ i(t, τ )δ(τ − τi(t)).                                 (5)
+
+                                                                                       i=0
+
+        +∞                                                      In (5), P is the number of paths and τi(t) is the propaga-
+                                                              tion delay along the ith path; moreover:
+
+s(t) =        anp(t − nTs),               (2)
+
+        n=−∞                                                  α˜ i(t, τ ) = αi(t, τ )e−j(2πfcτi(t)−ϕi(t,τ )) = αi(t, τ )ejψi(t,τ ),
+                                                                                                                              (6)
+where an ∈ C is the nth transmitted symbol and p(t)
+determines the pulse shape. Ts is the symbol duration,        where αi(t, τ ) is the attenuation along the ith path (that
+whose inverse is the symbol rate Rs. Before entering          can be described through a statistical distribution, as Rice
+the channel, s(t) is ampliﬁed by the HPA, which makes         or Rayleigh), ϕi(t, τ ) is a random phase shift, and fc is
+the overall channel nonlinear. For simulation purposes,       the carrier frequency. The channel has been simulated
+the latter is modeled through a memoryless nonlinear-
+ity described by the so-called amplitude modulation to        0                                                               15
+amplitude modulation (AM/AM) and amplitude modula-
+tion to phase modulation (AM/PM) conversion functions         -5                                                              10
+[20]. The output of the nonlinearity is then expressed
+as sHPA(t) = F(|s(t)|)ej(∠s(t)+ (|s(t)|)), where, following   -10                                                             5
+[21], we have deﬁned F(A) and (A) as the AM/AM and
+AM/PM characteristics of the ampliﬁer for a signal with
+instantaneous signal amplitude A. Common expressions
+for F(A) and (A) can be found in the literature [22,23]. In
+particular, for a typical SSPA equipping handheld devices,
+we have ﬁxed:
+
+              F(A) =         γA           (3)                 -15                                                             0
+                                      1,
+                      1 + (γ A)2δ 2δ                               -20 -18 -16 -14 -12 -10 -8 -6 -4 -2 0 2
+
+                                                                                            normalized mean input power [dB]
+
+              (A)  =  π  (1  αpA2     ,   (4)                 Figure 4 AM/AM and AM/PM characteristics for the considered
+                      3      + βpA2)                          SSPA.
+Baldi et al. EURASIP Journal on Wireless Communications and Networking 2012, 2012:317                    Page 6 of 14
+http://jwcn.eurasipjournals.com/content/2012/1/317
+
+by using the statistical model based on the sum of sinu-              5.0SRRC
+soids (SoS) [24], which derives from the well-known Jakes
+model. Before entering the receiver section, white Gaus-              4.5
+sian thermal noise is added, characterized by a two-sided
+power spectral density equal to N0/2.                                 4.0
+
+  At the receiver (RX) side, we have an SRRC ﬁlter equal to           3.5
+that at the TX. Perfect carrier synchronization is assumed
+to allow ideal coherent demodulation. Very eﬃcient algo-              3.0
+rithms have been proposed in the past for such purpose                    0.0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1.0
+[25]. The output of the RX ﬁlter is sampled at the sym-                                                                ρ
+bol time and then sent to a decision feedback equal-
+izer (DFE) [26]. The coeﬃcients of the DFE are adapted         Figure 5 Contribution of the SRRC to the PAPR, for diﬀerent
+through the LMS algorithm. According to the proposed           values of the roll-oﬀ factor.
+solution, equalization is performed in the time domain.
+Alternatively, frequency domain equalizers, e.g., itera-       of four samples per symbol. The assumption of a so short
+tive block decision feedback equalizers, could be used as      ﬁlter is justiﬁed by the need to ensure an acceptable com-
+well, with some expected advantage in terms of reduced         plexity on board of a low-power handheld radio with high
+complexity [27].                                               capacity (1 Mbps). As a drawback, the behavior of such a
+                                                               ﬁlter can be rather poor at small values of ρ, but this can
+  According to Figure 2, forward error correction (FEC)        be compensated, for example by adding further ﬁltering at
+can also be included. Actually, in Section ‘Performance        the analog front-end.
+of APSK in multipath scenarios’, simulations consider-
+ing the use of turbo channel codes [28] will be pre-             The contribution of the SRRC ﬁlter to the PAPR is
+sented. In such case, the encoder of a binary turbo code       shown in Figure 5. The total PAPR can be obtained from
+is added at the TX, before the bit to symbol mapping           this ﬁgure by adding 1.05 dB, for the APSK, and 2.55 dB,
+(i.e., according to a “pragmatic” approach), while, at the     for the QAM, that are the constant contributions due
+RX, a decoder based on the BCJR algorithm is inserted          to the constellation. Some numerical values are reported
+after the decision device. The turbo code we consider          in Table 1. It must be said that a further reduction in
+is that included in the UMTS standard [29]. It is com-         the PAPR value could be achieved, at least in princi-
+posed of two recursive systematic convolutional (RSC)          ple, by using peak envelope control algorithms, like trellis
+encoders with constraint length 4, concatenated in par-        shaping (TS) [32] or magnitude modulation (MM) [33].
+allel. The feedforward generator is 15 and the feedback        These techniques, however, introduce additional com-
+generator is 13 (in octal notation). The code bits for         plexity that, particularly for TS, may be unacceptable for
+the two encoders are alternatively punctured to achieve        the considered applications.
+the desired code rate R = 1/2. Decoding has been
+implemented in Matlab©, by using the algorithm pre-              The parameter chosen to evaluate the performance in
+sented in [30]. The UMTS code is worldwide, and its            the presence of nonlinear eﬀects is the total degradation
+performance has been widely investigated. So, in our           (TD). Given the output back-oﬀ (OBO) of the system (that
+opinion, it is a valid candidate for the use in tactical       is, the reduction in the transmitted power that is necessary
+radio systems.                                                 to minimize the eﬀect of the intermodulation products),
+                                                               the TD is deﬁned, in dB, as:
+PAPR and adaptive predistortion
+By observing the modulated signal (2) within the ﬁnite
+interval [ 0, T], the PAPR is deﬁned as follows [9]:
+
+PAPR  =  maxt∈[0,T] |s(t)|2  .  (7)
+
+         1  T  |s(t)|2dt                                       TD = (Eb/N0)OBO − (Eb/N0)lin + OBO,                   (8)
+         T  0
+
+  We have chosen an observation time corresponding to          Table 1 PAPR in 4 + 12-APSK and 16-QAM, for diﬀerent
+a frame of 1024 modulated symbols, that is a reason-           values of the roll-oﬀ factor
+able value for the applications of interest, and considered
+SRRC ﬁlters with diﬀerent values of the roll-oﬀ factor. It is  Modulation              ρ = 0.1  ρ = 0.3  ρ = 0.5
+known [31] that the roll-oﬀ factor has a signiﬁcant impact
+on the PAPR value. In our simulation, we have considered       16-QAM                  7.2 dB   6.3 dB   5.7 dB
+a ﬁlter with 17 fractionally spaced taps, at a sampling rate
+                                                               4+12-APSK               5.7 dB   4.8 dB   4.2 dB
+Baldi et al. EURASIP Journal on Wireless Communications and Networking 2012, 2012:317                                                                           Page 7 of 14
+http://jwcn.eurasipjournals.com/content/2012/1/317
+
+9                                                                                                                     The eﬀect of a nonlinear power ampliﬁer on the trans-
+                                                                                                                    mitted constellation is essentially described by the warp-
+8                                                                                                                   ing and clustering phenomena observed at the output of
+                                                                                                                    the ampliﬁcation process [21].
+7
+                                                                                                                      The constellation warping, which is due to the gain com-
+6                                                                                                                   pression of the ampliﬁer operated near saturation, refers
+                                                                                                                    to the situation where the points on the inner ring, i.e. with
+5                                                                                                                   lower energy, are more ampliﬁed than the points on the
+                                                                                                                    outer ring, which have higher energy (an example is shown
+4                                                                                                                   in Figure 8): as a result, the constellation collapses towards
+                                                                                                                    the outer ring, and this is due to the AM/AM characteris-
+3                                                                                                                   tic. Moreover, the outer ring is phase shifted with respect
+                                           4+12-APSK, (E /N ) = 10.95 dB                                            to the inner ring, because of the AM/PM distortion, and
+                                                                                                                    the performance can be severely degraded.
+                                                                                                        b 0 lin
+                                                                                                                      In addition, as we see from Figure 8, each point is spread
+2                    16-QAM, (E /N ) = 10.50 dB                                                                     in a cloud centered around the eﬀective “warped” con-
+                                              b 0 lin                                                               stellation: we refer to this eﬀect as clustering, and it is
+                                                                                                                    equivalent to have ISI in the received signal. This phe-
+1                                                                                                                   nomenon is essentially due to the memory eﬀect of the
+                                                                                                                    overall nonlinear channel composed by the pulse shap-
+   1     2     3  4  5         6  7        8                                                                     9  ing ﬁlter, the memoryless nonlinearity and the matched
+                                                                                                                    ﬁlter at the receiver, as the presence of the nonlinearity,
+                     OBO [dB]                                                                                       although instantaneousa, makes the cascade between the
+                                                                                                                    pulse shaping ﬁlter and the matched receiver to be not
+Figure 6 Total degradation with 4 + 12-APSK and 16-QAM,                                                             compliant with the Nyquist ISI criterion. For such rea-
+assuming ρ = 0.3 and BER = 10-3.                                                                                    son, we deﬁne this type of interference in the received
+                                                                                                                    signal as nonlinear ISI. Modeling the power ampliﬁer
+where (Eb/N0)OBO is the signal-to-noise ratio per bit                                                               as a pure nonlinearity without memory implies that the
+required to achieve a desired BER value in the real sys-                                                            ampliﬁer behavior is frequency independent, i.e., it does
+tem, while (Eb/N0)lin is the signal-to-noise ratio per bit                                                          not exhibit a ﬁltering action on the ampliﬁed signal.
+required to have the same performance in an ideal (lin-                                                             This assumption is realistic when dealing with SSPAs
+ear) system. The simulated TD in the case of ρ = 0.3 is                                                             whose passband is much larger than the modulated sig-
+shown in Figure 6, for BER = 10−3, and in Figure 7, for                                                             nal bandwidth. However, since the required transmission
+BER = 10−5. The optimal working point corresponds to                                                                rates are continuously increasing (so that the signal band-
+the minimum of each curve and, from the ﬁgures, we see                                                              width becomes larger and larger as well), improved HPA
+
+that the minimum is lower for the APSK system than for
+
+the QAM system. Such result is not surprising since, for
+
+both systems, the TD value depends on the PAPR value: a
+
+smaller PAPR corresponds to a smaller TD. Moreover, the
+
+optimal working point of APSK corresponds to a smaller
+
+back-oﬀ, which allows improving the energy eﬃciency of
+
+the system.
+
+10                                                                                                                              1.5
+
+   9                                                                                                                            1
+
+   8
+
+   7                                                                                                                            0.5
+
+   6                                                                                                                Quadrature  0
+
+   5
+
+   4                                                                                                                            -0.5
+
+   3                 4+12-APSK, (E /N ) = 14 dB
+
+                                  b 0 lin                                                                                       -1
+
+   2                 16-QAM, (E /N ) = 13.4 dB
+                                              b 0 lin
+
+   1                                                                                                                            -1.5
+
+      1     2  3  4  5         6  7        8                                                                     9              -1.5 -1 -0.5  0         0.5  1                  1.5
+
+                     OBO [dB]                                                                                                                 In-Phase
+
+Figure 7 Total degradation with 4 + 12-APSK and 16-QAM,                                                             Figure 8 Eﬀect of saturation on APSK constellation without
+assuming ρ = 0.3 and BER = 10−5.                                                                                    predistortion.
+Baldi et al. EURASIP Journal on Wireless Communications and Networking 2012, 2012:317                                                                                    Page 8 of 14
+http://jwcn.eurasipjournals.com/content/2012/1/317
+
+models are needed, which also take into account the                                                                               IBO = 0 dB                           IBO = 3 dB
+memory eﬀect of the ampliﬁer itself [21].                                                                             2                                    2
+
+  There is another important phenomenon in the fre-                                                       Quadrature  1                        Quadrature  1
+quency domain that is due to the presence of nonlinear
+ampliﬁcation: the output signal spectrum is aﬀected by                                                                0                                    0
+the so-called “spectral regrowth” eﬀect [21].
+                                                                                                                      -1                                   -1
+  This phenomenon is shown in Figure 9, for diﬀerent
+values of the input back-oﬀ (IBO); it must be noted that                                                              -2                                   -2
+IBO → ∞ corresponds to the linear behavior. Spectral                                                                  -2 -1 0 1 2                          -2 -1 0 1 2
+regrowth is due to the intermodulation products associ-
+ated to the nonlinearity, i.e., to the fact that the output                                                                  In-Phase                          In-Phase
+signal spectrum contains frequency components which
+are absent in the original input signal spectrum, out-                                                                       IBO = 6 dB                        IBO = 12 dB
+side of its original bandwidth. This kind of distortion
+brings to the adjacent channel interference, an undesired                                                             2                                    2
+eﬀect which degrades the transmission of other users on
+adjacent channel bandwidths.                                                                              Quadrature  1                        Quadrature  1
+
+  Digital memoryless (or static) symbol time predistortion                                                            0                                    0
+is a method for reducing the undesired eﬀects of nonlinear
+ampliﬁcation. Since it considers only the current symbol,                                                             -1                                   -1
+it does not compensate for clustering (due to the mem-
+ory eﬀect) but only for warping. On the other hand, it has                                                            -2                                   -2
+signiﬁcantly lower computational complexity with respect                                                              -2 -1 0 1 2                          -2 -1 0 1 2
+to methods with memory, or dynamic; the latter, in fact,
+are commonly based on the solution of M2Q+1 equations,                                                                       In-Phase                          In-Phase
+so that their complexity increases exponentially with the
+memory Q of the predistortion process.                                                                    Figure 10 APSK constellation with predistortion.
+
+  The considered approach works on the downsampled                                                        In fact, changing only the constellation points positions
+signal at the symbol time, rather than at the digital-to-                                                 does not modify the shape of the power spectral density
+analog converter (DAC) sample rate, that is, at the lowest                                                of the modulated signal, which is [34]:
+possible sampling rate within the receiver chain. On the
+other hand, working on the downsampled, i.e., aliased,                                                    Pss(f )         =  1   σa2  P(f ) 2                                      (9)
+signal, it is not possible to control the entire transmit-                                                                   Ts
+ted spectrum, that prevents from reducing the spurious
+frequency components originated from the nonlinearity.                                                    where P(f ) is the Fourier transform of the pulse shape
+
+                                                                                                          and σa2 is the variance of the information sequence {an}.
+                                                                                                          As a consequence, to change the constellation points posi-
+
+                                                                                                          tions does not compensate for the frequency nonlinear
+
+                                                                                                          distortion induced by the ampliﬁer. Figures 9 and 10 (the
+
+                                                                                                          latter to be compared with Figure 11, where predistor-
+
+                                                                                                          tion has not been applied) conﬁrm that the memoryless
+
+                                                                                                          approach compensates only for the warping of the con-
+
+                                                                                                          stellation points, and the residual nonlinear ISI degrades
+
+                                                                                                          performance near saturation.
+
+             0                                                                                                                    IBO = 0 dB                           IBO = 3 dB
+                                                                                                                      2                                    2
+                                                                                          IBO = 0 dB
+
+                                            IBO = 1 dB
+
+             -10                            IBO = 3 dB                                                    Quadrature  1                        Quadrature  1
+
+                                            IBO = 6 dB
+
+                                            IBO = 12 dB                                                               0                                    0
+
+             -20                            IBO → ∞
+
+PSD [dB/Hz]                                                                                                           -1                                   -1
+
+             -30                                                                                                      -2                                   -2
+
+                                                                                                                      -2 -1 0 1 2                          -2 -1 0 1 2
+
+             -40                                                                                                             In-Phase                          In-Phase
+
+                                                                                                                             IBO = 6 dB                        IBO → ∞
+
+                                                                                                                      2                                    2
+
+             -50                                                                                          Quadrature  1                        Quadrature  1
+
+             -60                                                                                                      0                                    0
+
+                                                                                                                      -1                                   -1
+
+             -70  -10              0                                                                                  -2                                   -2
+             -20                        10                                                            20
+                                                                                                                      -2 -1 0 1 2                          -2 -1 0 1 2
+                       Frequency [MHz]
+                                                                                                                             In-Phase                          In-Phase
+
+Figure 9 Spectral regrowth eﬀect.                                                                         Figure 11 APSK constellation without predistortion.
+Baldi et al. EURASIP Journal on Wireless Communications and Networking 2012, 2012:317                                                              Page 9 of 14
+http://jwcn.eurasipjournals.com/content/2012/1/317
+
+  The adaptive predistortion method can be implemented          sensitivity of the system on rare or unexpected multipath
+oﬀ-line through an iterative LMS algorithm [25]. More           components that, as such, have not been considered, in
+precisely, S blocks of W symbols are observed at the out-       advance, in the design. More precisely, in (5), we have set:
+put of the matched ﬁlter and, for each of them, the center      τ0 = 0, τ1 = Ts, τ2 = 2Ts, τ3 = 8Ts. As the eﬀect of the
+cn of the cluster In (for the nth constellation point) is       HPA nonlinearity can be taken into account through the
+computed according to the following expression:                 TD parameter, with the aim to study separately the phe-
+                                                                nomena, fading eﬀects are investigated by assuming that
+cn  =    1        sk                                      (10)  the ampliﬁer works in linear regime. The way to use TD
+                                                                in the complete system (i.e., in the presence of multipath
+         Mn  sk ∈In                                             and nonlinearity) will be discussed in Section ‘Combined
+                                                                eﬀect of multipath and nonlinearity’.
+where Mn is the number of symbols, in the sth block,
+(s = 1, . . . , S) belonging to In. Then, denoting by apnre(s)  Channel without fading
+the predistorted nth constellation point at step s, the         Let us suppose that the channel is time-invariant. We
+following equations are applied:                                wish to study the robustness of the DFE against multi-
+                                                                paths within the span of the feedback ﬁlter; so, we have
+            anpre(s + 1) = apnre(s) + μ · en(s),          (11)  set P = 3. Assuming the power on the ﬁrst path as a
+                                                                reference, the power on the other paths has been progres-
+             en(s) = cn − an,                             (12)  sively increased. Some examples of PDPs are considered
+                                                                in Figure 13, which shows the channel transfer functions
+where an is the ideal constellation point, μ is the LMS step    within the Nyquist interval (only positive frequencies are
+size parameter and en(s) is the error signal at the end of the  plotted). We see that, for increasing power levels, the
+sth block. As we see from Figure 12, this type of predistor-    transfer function tends to have, as expected, a null in the
+                                                                frequency range of interest. As it is known, this is the
+tion allows transmitting at saturation without the warping      situation where the DFE outperforms classical equaliza-
+                                                                tion approaches based on the inversion of the equivalent
+eﬀect.                                                          channel ﬁlter (like zero-forcing equalizers). The BER per-
+                                                                formance achievable with APSK, in comparison with that
+Performance of APSK in multipath scenarios                      of QAM, is shown in Figure 14 for the considered power
+ In this section, we introduce the eﬀects of multipath          delay proﬁles. Although the BER curves could be plot-
+fading. It is intuitively reasonable that the BER perfor-       ted as functions of the classical signal-to-noise ratio (i.e.,
+mance in this kind of scenario depends on the PDP, that         the ratio between the transmitted power and the noise
+is, the distribution of the power levels among the paths.       power), we prefer to use the signal-to-noise ratio per bit,
+Performance is also aﬀected by the ability of the LMS algo-     since it is more meaningful and coherent with the deﬁni-
+rithm, used for computing the DFE coeﬃcients, to track          tion (8) of total degradation. From the ﬁgure, we see that
+the channel variations.
+  In our analysis, the number of DFE coeﬃcients has been
+set equal to 15, for the feedforward ﬁlter, and to 7, for the
+feedback ﬁlter. The number, P, of channel paths simulated
+is three and four. In the latter case, the fourth path is out-
+side the span of the DFE, thus allowing to evaluate the
+
+    1.5                                                                                                 5
+
+    1                                                                                                   0
+
+    0.5
+Quadrature
+                                                                                            Power [dB]0 -5
+
+-0.5                                                                                                          PDP = [0 -20 -20]
+
+                                                                                                        -10   PDP = [0 -10 -20]
+                                                                                                              PDP = [0 -6 -12]
+
+    -1                                                                                                        PDP = [0 -3 -6]
+
+                                                                                                              PDP = [0 -2 -4]
+
+-1.5                                                                                                    -150  0.1  0.2           0.3          0.4  0.5
+
+    -1.5 -1 -0.5      0         0.5               1       1.5                                                      Nyquist interval (f × Ts)
+
+                      In-Phase
+
+Figure 12 Eﬀect of saturation on APSK constellation with        Figure 13 Multipath channel transfer functions for diﬀerent
+predistortion.                                                  power levels.
+Baldi et al. EURASIP Journal on Wireless Communications and Networking 2012, 2012:317                              Page 10 of 14
+http://jwcn.eurasipjournals.com/content/2012/1/317
+
+         0                                                              0
+
+     10                                                             10
+
+         -1                                                             -1
+
+     10                                                             10
+
+         -2
+
+     10
+
+         -3    4+12-APSK PDP=[0 -20 -20]                                -2
+               16-QAM PDP=[0 -20 -20]
+     10        4+12-APSK PDP=[0 -10 -20]                            10
+               16-QAM PDP=[0 -10 -20]
+BER      -4    4+12-APSK PDP=[0 -6 -12]                        BER      -3               4+12-APSK 4th: -20 dB
+               16-QAM PDP=[0 -6 -12]                                                     16-QAM 4th: -20 dB
+     10        4+12-APSK PDP=[0 -3 -6]                              10                   4+12-APSK 4th: -18 dB
+               16-QAM PDP=[0 -3 -6]                                                      16-QAM 4th: -18 dB
+         -5    4+12-APSK PDP=[0 -2 -4]                                  -4               4+12-APSK 4th: -16 dB
+               16-QAM PDP=[0 -2 -4]                                                      16-QAM 4th: -16 dB
+     10                                                             10                   4+12-APSK 4th: -14 dB
+             2 4 6 8 10 12 14 16 18 20                                                   16-QAM 4th: -14 dB
+         -6                       Eb/N0 [dB]                            -5
+                                                                                       2 4 6 8 10 12 14 16 18 20
+     10                                                             10                                      Eb/N0 [dB]
+                                                                        0
+         -7
+
+     10
+
+         -8
+
+     10
+         0
+
+Figure 14 Simulated BER performance of APSK and QAM in         Figure 15 Simulated BER performance of APSK and QAM for
+multipath channels with diﬀerent power levels.                 diﬀerent power levels of the fourth path.
+
+the APSK modulation shows a loss of about 0.5 dB, at BER       is about 0.04 s. In high capacity networks, it is reasonable
+= 10−5, with respect to QAM. Thanks to the presence of         to assume slow fading, i.e., the channel remains in static
+the DFE, the performance remains acceptable even for the       conditions for several consecutive symbols, which implies
+most critical channel (at BER = 10−5, the gap between the      to have a normalized fade rate due to terminals motion
+curves is smaller than 4 dB), and no error ﬂoor appears,       fDTs << 1. More precisely, we set fDTs = 5 · 10−6. This
+which could be due to irreducible ISI.                         yields an uncoded bit rate equal to 20 Mbps, which means
+                                                               to have 10 Mbps information bit rate when a rate-1/2
+  The situation is rather diﬀerent in the presence of          turbo code is applied. Both these cases will be consid-
+the fourth path, that is out-of-span and, hence, unex-         ered in the following. By assuming a roll-oﬀ ρ = 0.3, the
+pected. In Figure 15, we have ﬁxed a very small power          required bandwidth at radio frequency equals 6.5 MHz.
+in the second and third paths (−20 dB, with respect to
+the ﬁrst path), while the power on the fourth path has           A ﬁrst goal is to estimate the impact of applying the
+been progressively increased by steps of 2 dB. Through         UMTS punctured turbo code (but other coding options
+a comparison with Figure 14, we see that, even for a           are obviously acceptable). Figure 16 shows the average
+power of −20 dB, at BER = 10−3, there is a loss of about       BER, with and without channel coding, in a single path
+1.5 dB with respect to the ideal condition (i.e., the case     scenario where a line of sight (LOS), unfaded component
+with three paths). The curves for a power of −14 dB
+exhibit a BER ﬂoor just in the neighborhood of 10−3,                    0
+and, for signal-to-noise ratios greater than about 20 dB,
+the performance signiﬁcantly degrades. These results                10
+conﬁrm the need to properly model the channel, in
+such a way as to avoid the appearance of unexpected                     -1
+path contributions.
+                                                                    10
+Channel with fading
+In the previous section, the channel was assumed to be                  -2
+time-invariant. Obviously, this condition does not apply to
+mobile systems, so it will be removed in this section.              10
+
+  Since we are studying mobile scenarios, it is necessary      BER      -3
+to take into account the Doppler shift. By considering a
+VHF/UHF carrier at 400 MHz (which is a typical value in             10
+the considered wireless tactical applications) and a relative
+speed between TX and RX of about 80 km/h, i.e., a moder-                -4
+ate vehicular velocity, the maximum Doppler shift fD is in
+the order of 25 Hz. Correspondingly, the coherence time             10
+
+                                                                      -5               4+12-APSK uncoded
+
+                                                                    10                 16-QAM uncoded
+
+                                                                                       4+12-APSK Turbo coded
+
+                                                                    10-6               16-QAM Turbo coded
+
+                                                                           0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+
+                                                                                                       Eb/N0 [dB]
+
+                                                               Figure 16 Average BER on a single path fading channel with LOS
+                                                               (Rice fading), with and without the application of a turbo code.
+Baldi et al. EURASIP Journal on Wireless Communications and Networking 2012, 2012:317                                                Page 11 of 14
+http://jwcn.eurasipjournals.com/content/2012/1/317
+
+exists between TX and RX, as it can occur in a rural                      0
+area with no obstacles. In this case, |α˜0(t, τ )| has a Rice
+distribution with parameter K, set equal to 10 dB in the              10
+simulations, which represents the power ratio between the
+unfaded (LOS) component and the faded components in                                                                          4+12-APSK PDP = [0 -10 -20]
+that path. In this ﬁgure, and the following ones of the same
+type, averaging has been done within a typical observation                                                                     16-QAM PDP = [0 -10 -20]
+time of 1 s. This obviously limits the minimum simulated
+BER to values that, however, are signiﬁcant enough for the                                                                     4+12-APSK PDP = [0 -6 -12]
+considered tactical radio applications.
+                                                                                                                               16-QAM PDP = [0 -6 -12]
+  Figure 16 evidences the improvement achievable by
+using the turbo code: at BER = 10−3, the simulated cod-                                                      -1                4+12-APSK PDP = [0 -3 -6]
+ing gain is about 4 dB for QAM and about 4.8 dB for
+APSK. In this scenario, an error ﬂoor eﬀect appears in                10                                                       16-QAM PDP = [0 -3 -6]
+the BER curves, due to the random frequency modulation
+caused by the Doppler spread [26]. Obviously, the channel        BER
+code cannot eliminate such BER ﬂoor, which depends on
+the value of fD and appears, for the considered example,                  -2
+around BER = 10−5.
+                                                                      10
+  As expected, the situation is more critical in the pres-
+ence of multipaths: Figure 17 shows the average BER, for                         -3
+the APSK and QAM systems, by considering, for the ﬁrst
+path, the same Rice fading as in Figure 16, but with the                10
+addition of the second and third paths, for which |α˜i(t, τ )|,              0 2 4 6 8 10 12 14 16 18
+i = 1, 2, has a Rayleigh distribution. Diﬀerent PDPs are                                                    Eb/N0
+also considered, and no channel code is applied. In this
+scenario, the error ﬂoor due to the random frequency               Figure 18 Average BER on a three-path fading channel without
+modulation caused by the Doppler spread is around 10−4             LOS (Rayleigh fading).
+for the most favorable case and around 10−3 for the least
+favorable case (among the considered ones).                      function (CDF) of the BER: it expresses the probability
+                                                                 that the BER is smaller than a preﬁxed value BER0, for a
+  Now let us consider the ﬁrst path without the unfaded          given signal-to-noise ratio. The BER is evaluated over a
+component, i.e., without LOS visibility between TX and           set of frames during which the channel can be assumed
+RX. The BER curves are shown in Figure 18. In this case,         to be static, that is, within a time interval not longer than
+it is more meaningful to plot the cumulative distribution        the channel coherence time, and its probability distribu-
+                                                                 tion is determined. This performance measure is directly
+                                                                 related to the outage probability, expressing the proba-
+                                                                 bility that the channel shows a deep fade which severely
+                                                                 degrades the BER performance [35]. The CDF for PDP =
+                                                                 [ 0, −3, −6] dB, considering diﬀerent values of the signal-
+                                                                 to-noise ratio, is shown in Figure 19: the probability to
+                                                                 have BER < BER0 = 10−3, at Eb/N0 = 14 dB, is about
+                                                                 0.35 for QAM and about 0.28 for APSK, while it becomes
+                                                                 greater than 0.56, for both systems, at Eb/N0 = 20 dB.
+                                                                 Similar evaluations for PDP =[ 0, −20, −20] dB (i.e., the
+
+    0                                                                                                        1
+
+10
+
+    -1                                                                                                       0.9
+
+10                                                                                                           0.8
+
+BER                                                                                                          0.7
+                                                                                             Pr(BER < BER0)
+    -2                                                                                                       0.6               16-QAM Eb/N0=10 dB
+                                                                                                             0.5
+10                                                                                                           0.4
+                                                                                                             0.3
+                                                                                                             0.2               4+12-APSK Eb/N0=10 dB
+                                                                                                             0.1
+    -3                                                                                                       0 -3              16-QAM Eb/N0=12 dB
+
+10       4+12-APSK PDP = [0 -10 -20]                                                                           10              4+12-APSK Eb/N0=12 dB
+         16-QAM PDP = [0 -10 -20]
+    -4   4+12-APSK PDP = [0 -6 -12]                                                                                            16-QAM Eb/N0=14 dB
+         16-QAM PDP = [0 -6 -12]
+10       4+12-APSK PDP = [0 -3 -6]                                                                                             4+12-APSK Eb/N0=14 dB
+         16-QAM PDP = [0 -3 -6]
+    -5                                                                                                                         16-QAM Eb/N0=20 dB
+        2 4 6 8 10 12 14 16 18
+10                             Eb/N0                                                                                           4+12-APSK Eb/N0=20 dB
+    0
+                                                                                                                   10-2        10-1                       100
+
+                                                                                                                         BER0
+
+Figure 17 Average BER on a three-path fading channel with LOS    Figure 19 CDF of the BER for the Rayleigh fading with
+along the ﬁrst path (Rice fading).                               PDP = [ 0, −3, −6] dB.
+Baldi et al. EURASIP Journal on Wireless Communications and Networking 2012, 2012:317                                           Page 12 of 14
+http://jwcn.eurasipjournals.com/content/2012/1/317
+
+channel is much less disturbed) would provide a probabil-                                            0
+ity in the order of 0.9 for Eb/N0 = 14 dB and a greater
+value for Eb/N0 = 20 dB. Hence, the CDF permits us to                                            10
+verify explicitly the expected result, i.e., that the probabil-
+ity of a fade is greater for the more disturbed channel. To                                          -1
+draw the same conclusion from the average BER curves of
+Figure 18 is not possible.                                                                       10
+
+  The fade probability can be signiﬁcantly reduced by                                                -2
+using the turbo code. Figure 20 shows the CDF for
+the least disturbed scenario (among those we have con-                                           10
+sidered), assuming Eb/N0 = 8 dB. At such signal-to-
+noise ratio, the probability that the uncoded system has         BER                                 -3    4+12-APSK 4th: -30 dB
+BER < 10−3 is negligible, while it grows up to nearly 0.9                                                  16-QAM 4th: -30 dB
+after using the turbo code, that is a strong performance                                         10        4+12-APSK 4th: -20 dB
+improvement.                                                                                               16-QAM 4th: -20 dB
+                                                                                                     -4    4+12-APSK 4th: -15 dB
+  Similarly to Section ‘Channel without fading’, another                                                   16-QAM 4th: -15 dB
+topic we discuss is the sensitivity of the equalization pro-                                     10        4+12-APSK 4th: -10 dB
+cess on the presence of multipath components that are                                                      16-QAM 4th: -10 dB
+out of the span of the feedback ﬁlter in the DFE. In                                                 -5
+Figure 21, the mean transmitted power along the second                                                   2 4 6 8 10 12 14 16 18 20
+and third paths have been set to −20 dB, while that on the                                       10                           Eb/N0 [dB]
+fourth path has been progressively increased. We observe                                             0
+that, when the power on the fourth path changes from
+−30 dB to −20 dB, the BER ﬂoor grows from about 10−5             Figure 21 Simulated BER performance for diﬀerent power levels
+to about 10−3. Further increasing the unequalized path           of the fourth path.
+power makes the system useless. Even adding the turbo
+code is not eﬀective in this case: as shown in Figure 22, the    this modulation scheme in multipath fading channels in
+signal-to-noise ratios involved are smaller but, for a non-      place of the square QAM scheme. Taking into account the
+negligible power level on the unexpected path (i.e., −10 dB      beneﬁts shown by the APSK system, for example in terms
+and −15 dB), a high BER ﬂoor remains.                            of total degradation, this suggests that APSK represents
+                                                                 an eﬃcient solution for the use in the considered tactical
+  At the end of this section, we observe that, in all our        radio framework.
+simulations, the BER performance of the 4+12-APSK sys-
+tem is quite similar to that of the 16-QAM system. So, we        Combined eﬀect of multipath and nonlinearity
+can conclude that no signiﬁcant loss appears when using          The object of this section is twofold. On one hand, we pro-
+                                                                 vide an example of simulation of the entire system, i.e.,
+                                                                 in the presence of both nonlinearity and multipath. On
+                                                                 the other hand, we show how the previous analysis, that
+                                                                 considered these impairments separately, can be used to
+                                                                 provide a meaningful estimate of the whole performance.
+
+1                                                                                                    0
+
+                                                                                                 10
+
+0.9
+
+0.8                                                                                                  -1
+
+0.7                                                                                              10
+
+0.6Pr(BER < BER0)                                                                                    -2
+                                                                                            BER
+0.5                                                                                              10
+
+0.4                                                                                                -3    4+12-APSK 4th: -30 dB
+
+0.3                                                                                              10      16-QAM 4th: -30 dB
+0.2
+0.1                                                                                                      4+12-APSK 4th: -20 dB
+0 -3
+                  4+12-APSK uncoded                                                                      16-QAM 4th: -20 dB
+  10
+                  16-QAM uncoded                                                                     -4  4+12-APSK 4th: -15 dB
+
+                  4+12-APSK turbo coded                                                          10
+
+                                                                                                         16-QAM 4th: -15 dB
+
+                  16-QAM turbo coded                                                                     4+12-APSK 4th: -10 dB
+
+      10-2        10-1                                  100                                        -5    16-QAM 4th: -10 dB
+
+            BER0                                                                                 10     0 1 2 3 4 5 6 7 8 9 10
+
+Figure 20 CDF of the BER for the Rayleigh fading with                                                    Eb/N0 [dB]
+PDP =[ 0, −20, −20] dB, at Eb/N0 = 8 dB, including the
+presence of the turbo code.                                      Figure 22 Simulated BER performance for diﬀerent power levels
+                                                                 of the fourth path in the presence of the turbo code.
+Baldi et al. EURASIP Journal on Wireless Communications and Networking 2012, 2012:317  Page 13 of 14
+http://jwcn.eurasipjournals.com/content/2012/1/317
+
+It must be said that the following considerations hold                    From Figure 14, we know that the loss due to mul-
+under the assumptions to be far away from the error ﬂoor                tipath is about 3 dB at BER = 10−3. From Figure 23,
+and that both the residual nonlinearity and multipath are               we see that the total loss of the system when both
+not negligible. If these hypotheses are not satisﬁed, a more            the nonlinearity and the multipath are present is about
+involved analysis is necessary that, however, is outside the            5 dB; we observe that this total penalty can be obtained
+goals of this article.                                                  by linearly summing the loss due to the residual non-
+                                                                        linearity and the multipath. Explicitly, in fact, we have
+  Let us suppose that the target BER is 10−3, such that                 10 log10 101/10 + 103/10 = 5.12 dB for the 4 + 12-
+the optimal working point for the HPA can be obtained                   APSK and 10 log10 100.7/10 + 103/10 = 5.01 dB for the
+from Figure 6, that is, OBO = 2 dB for 4 + 12-APSK and                  16-QAM, respectively.
+OBO ≈ 3.1 dB for 16-QAM. First of all, we wish to check
+that the DFE is basically ineﬀective against the residual                 Based on this and other simulations we have developed
+nonlinearity, and, hence, the latter can be obtained from               in similar conditions, we can conjecture that the residual
+Figure 6, as the diﬀerence TD − OBO. For this purpose,                  nonlinearity and multipath can be considered indepen-
+we have simulated the linear system and the nonlinear                   dent, and a reliable approximation of the total loss can
+one in the presence of the DFE with ρ = 0.3. The results                be obtained by linearly summing the two contributions.
+are reported in Figure 23. Obviously, the considered val-               A formal demonstration of this result could be obtained
+ues of OBO are optimal for the case of BER = 10−3,                      by studying the distribution of the residual nonlinearity (a
+while they should be changed for diﬀerent BER values (see               uniform distribution is expected, but this shall be proved).
+Figure 7 for BER = 10−5). From the ﬁgure we see that,                   On the contrary, we have veriﬁed that the approximation
+as expected, in spite of the optimization, the curve for the            cannot be used neither when the BER is close to the error
+nonlinear system exhibits a penalty of about 1 dB for the               ﬂoor, as expected, nor when one of the two contributions
+4 + 12-APSK constellation and about 0.7 dB for the 16-                  is very small, as obvious. In the latter case, in fact, only one
+QAM constellation. These values correspond, with very                   loss is relevant, and there is no need to combine them.
+good approximation, to the gap between the value of TD
+and the point TD = OBO in Figure 6. Hence, it is con-                   Conclusion
+ﬁrmed that such residual nonlinearity is well estimated                 This article provides a performance assessment of the
+through the TD analysis, while it remains the same after                APSK modulation in high data rate wireless tactical net-
+introduction of the DFE.                                                works for land mobile scenarios, and a comparison with
+                                                                        conventional square QAM. Assuming a modulation order
+  Then, the simulation has been repeated by introducing                 of 16 as a test case, we have compared 4+12-APSK and 16-
+a three paths proﬁle with PDP =[ 0, −3, −6] dB. This way,               QAM, in terms of both average and instantaneous BER,
+the system simultaneously includes nonlinearity and mul-                in a number of diﬀerent conditions: in time-invariant and
+tipath. The performance of the complete system is also                  slow fading channels, with and without the application
+shown in Figure 23.                                                     of a turbo channel code, in land mobile scenarios with
+                                                                        and without a LOS component. Attention has also been
+100   4+12-APSK, lin.                                                   devoted to the impact of unexpected paths, that are not
+10-1  16-QAM, lin.                                                      taken into account in the equalizer design.
+10-2  4+12-APSK, nonlin. only
+      16-QAM, nonlin. only                                                In general, the APSK solution has shown a very limited
+      4+12-APSK, nonlin. + mp                                           power loss with respect to QAM, and even some advan-
+      16-QAM, nonlin. + mp                                              tage, in the considered scenarios, when turbo coding is
+                                                                        used. This can make 4 + 12-APSK preferable to 16-QAM
+10-3                                                                    when the nonlinearities due to HPAs, e.g., typical SSPAs
+                                                                        for handheld devices, are taken into account. In particular,
+    10-4                                                                we have shown that, when using adaptive predistortion,
+         0 2 4 6 8 10 12 14 16 18 20                                    APSK allows reducing the output back-oﬀ, at the optimal
+                                                                        working point, by about 1 dB, with a similar improvement
+                                      E /N [dB]                         on the total degradation.
+                                                                   b0
+                                                                          Obviously, high order modulation schemes are much
+Figure 23 Performance in the presence of nonlinearity, with and         more sensitive to channel conditions, especially when
+without multipath, by assuming the optimum OBO value at BER             aﬀected by fading. However, when a LOS component
+= 10-3. A DFE with ρ = 0.3 is applied. The linear channel is used as a  is present, these modulation schemes are advantageous
+reference.                                                              because they allow to reach higher bit rates, thus increas-
+                                                                        ing the number of applications. So, a possible use of
+                                                                        APSK in land mobile tactical scenarios is for vehicular
+Baldi et al. EURASIP Journal on Wireless Communications and Networking 2012, 2012:317  Page 14 of 14
+http://jwcn.eurasipjournals.com/content/2012/1/317
+
+applications, where more favorable propagation condi-                             14. R de Gaudenzi, A Guille´n i Fa`bregas, A Martinez, Turbo coded APSK
+tions (in particular, a high probability to have the LOS                               modulations design for satellite broadband communications. Int. J.
+component) can make the improvement achievable even                                    Satellite Commun. Network. 24, 261–281 (2006)
+greater than for handheld devices.
+                                                                                  15. M Baldi, F Chiaraluce, A de Angelis, R Marchesani, S Schillaci, in Proc. 16th
+  Further study will concern the implementation of this                                IEEE Symposium on Computers and Communications (ISCC’11).
+system on an FPGA hardware architecture, in such a way                                 Performance of APSK modulation in wireless tactical scenarios for land
+as to evaluate the complexity issues as well.                                          mobile systems, (Corfu, Greece, 2011) pp. 591–596
+
+Endnote                                                                           16. T Camp, J Boleng, V Davies, A survey of mobility models for ad hoc
+aMore precisely, a pure memoryless nonlinearity cannot                                 network research. Wirel. Commun. Mob. Comput. 2(5), 483–502 (2002)
+introduce distortion in the phase of the input signal: for
+this reason, in the literature, when describing an HPA                            17. M Baldi, M Bianchi, F Chiaraluce, in Proc. IEEE Information Theory Workshop
+with AM/AM and AM/PM curves, the model is said to be                                   (ITW 2010). Non-systematic codes for physical layer security, (Dublin,
+quasi-memoryless [20].                                                                 Ireland, 2010) pp. 1–5
+
+Competing interests                                                               18. JH Kim, CS Sin, SU Lee, JH Kim, in Proc 6th International Conference on
+The authors declare that they have no competing interests.                             Information Communication and Signal Processing (ICICS 2007). Improved
+                                                                                       performance of APSK modulation scheme for satellite system, (Singapore,
+Acknowledgements                                                                       2007)
+This study was supported in part by the MIUR project “ESCAPADE” (Grant
+RBFR105NLC) under the “FIRB - Futuro in Ricerca 2010” funding program.            19. P Ali, F Hussain, J Jeong, in Proc. 3th International Conference on
+                                                                                       Convergence and Hybrid Information Technology (ICCIT 2008). A new
+Author details                                                                         demapping technique for 16-APSK modulation for digital video
+1Dipartimento di Ingegneria dell’Informazione, Universita` Politecnica delle           broadcasting in AWGN channel, (Busan, South Korea, 2008). pp. 9–12
+Marche, via Brecce Bianche 12, 60131 Ancona, Italy. 2Thales Italia, Via Enrico
+Mattei 20, 66100 Chieti Scalo, Italy.                                             20. MC Jeruchim, P Balaban, KS Shanmugan, Simulation of Communication
+                                                                                       Systems: modeling, methodology and techniques, 2nd edn. (Kluwer
+Received: 11 April 2012 Accepted: 1 October 2012                                       Academic Press, New York,2002)
+Published: 19 October 2012
+                                                                                  21. G Albertazzi, GE Corazza, A Vanelli-Coralli, S Cioni, M Iubatti, M Neri, R
+References                                                                             Pedone, M Villanti, Performance evaluation of APSK modems. Tech. rep.
+1. MC Thomas, MY Weidner, SH Durrani, Digital amplitude-phase keying                   ARCES - Thales Italia Partnership (2003)
+
+     with M-ary alphabets. IEEE Trans. Commun. 22(2), 168–180 (1974)              22. C Rapp, in 2nd European Conference on Satellite Communications. Eﬀects of
+2. M Baldi, F Chiaraluce, G Cancellieri, Finite-Precision Analysis of                  HPA - Nonlinearity on a 4-DPSK/OFDM signal for a digital sound
+                                                                                       broadcasting system, (Lie`ge, Belgium, 1991) pp. 179–184
+     Demappers and Decoders for LDPC-coded M-QAM Systems. IEEE Trans.
+     Broadcast. 55(2), 239–250 (2009)                                             23. AA Saleh, Frequency - independent and frequency - dependent nonlinear
+3. F Adachi, M Sawahashi, Performance analysis of various 16 level                     models of TWT ampliﬁers. IEEE Trans. Commun. 29(11), 1715–1720 (1981)
+     modulation schemes under Rayleigh fading. Electron Lett. 28(17),
+     1579–1581 (1992)                                                             24. YR Zheng, C Xiao, Simulation models with correct statistical properties for
+4. RR Mu¨ ller, U Wachsmann, JB Huber, in Proc. IEEE International Symposium           Rayleigh fading channels. IEEE Trans. Commun. 51(6), 920–928 (2003)
+     on Information Theory (ISIT 1997). Multilevel coding for peak power limited
+     complex Gaussian channels, (Ulm, Germany, 1997) p. 103                       25. R De Gaudenzi, A Guille´n i Fa`bregas, A Martinez, Performance analysis of
+5. KP Liolis, R De Gaudenzi, N Alagha, A Martinez, A Guille´n i Fa`bregas,             turbo-coded APSK modulations over nonlinear satellite channels. IEEE
+     Amplitude Phase Shift Keying Constellation Design and its Applications to         Trans. Wirel. Commun. 5(9), 2396–2407 (2006)
+     Satellite Digital Video Broadcasting, (2010). http://www.intechopen.com
+6. YC Adachi, AR Nix, JP McGeehan, Analysis of 16-APSK modulation in              26. TS Rappaport, Wireless Communications. (Prentice Hall, Upper Saddle
+     AWGN and Rayleigh fading channel. Electron Lett. 28(17), 1608–1610                River,2001)
+     (1992)
+7. TT Tjhung, F Adachi, KH Tan, On the diversity reception of narrowband 16       27. N Benvenuto, S Tomasin, Block iterative DFE for single carrier modulation.
+     star-QAM in fast Rician fading. IEEE Trans. Veh. Technol. 46(4), 923–932          Electron Lett. 38(19), 1144–1145 (2002)
+     (1997)
+8. Y Ma, QT Zhang, R Schober, S Pasupathy, Diversity reception of DAPSK           28. C Berrou, A Glavieux, Near optimum error correcting coding and
+     over generalized fading channels. IEEE Trans. Wirel. Commun. 4(4),                decoding: Turbo-codes. IEEE Trans. Commun. 44(10), 1261–1271 (1996)
+     1834–1846 (2005)
+9. HG Myung, DJ Goodman, Single Carrier FDMA: a New Air Interface for Long        29. 3GPP: 3GPP TS 25.212; 3rd Generation Partnership Project; Technical
+     Term Evolution. (Wiley, New York,2008)                                            Speciﬁcation Group Radio Access Network; Multiplexing and Channel
+10. GE Corazza, Digital Satellite Communications. (Springer, New York,2007)            Coding (FDD). 9.1.0 (2009)
+11. L Giugno, M Luise, V Lottici, Adaptive pre- and post-compensation of
+     nonlinear distortions for high-level data modulations. IEEE Trans. Wirel.    30. MC Valenti, J Sun, The UMTS turbo code and eﬃcient decoder
+     Commun. 3(5), 1490–1495 (2004)                                                    implementation suitable for software-deﬁned radios. Int. J. Wirel. Inf.
+12. G Karam, H Sari, A data predistortion technique with memory for QAM                Netws. 8(4), 203–215 (2002)
+     radio systems. IEEE Trans. Commun. 39(2), 336–344 (1991)
+13. ETSI EN 302 307 V121: Digital Video Broadcasting (DVB); Second                31. S Daumont, B Rihawi, Y Lout, in Proc. 3rd International Symposium on
+     Generation Framing Structure, Channel Coding, and Modulation Systems              Communications, Control, and Signal Processing (ISCCSP 2008). Root-raised
+     for Broadcasting, Interactive Services, News Gathering and Other                  cosine ﬁlter inﬂuences on PAPR distribution of single-carrier signals,
+     Broadband Satellite Applications (2009)                                           (Malta, 2008). pp. 841–845
+
+                                                                                  32. M Tanahashi, H Ochiai, Near constant envelope trellis shaping for PSK
+                                                                                       signaling. IEEE Trans. Commun. 57(2), 450–458 (2009)
+
+                                                                                  33. M Gomes, V Silva, F Cercas, M Tomlinson, in Proc. IEEE International
+                                                                                       Conference on Communications (ICC 2010). Analytical analysis of polyphase
+                                                                                       magnitude modulation method’s performance, (Cape Town, South
+                                                                                       Africa, 2010)
+
+                                                                                  34. JG Proakis, M Salehi, Communication Systems Engineering. (Prentice Hall,
+                                                                                       Upper Saddle River,2002)
+
+                                                                                  35. N Benvenuto, G Cherubini, Algorithms for communication systems and their
+                                                                                       applications. (Wiley, New York,2002)
+
+                                                                                    doi:10.1186/1687-1499-2012-317
+                                                                                    Cite this article as: Baldi et al.: A comparison between APSK and QAM
+                                                                                    in wireless tactical scenarios for land mobile systems. EURASIP Journal on
+                                                                                    Wireless Communications and Networking 2012 2012:317.
+

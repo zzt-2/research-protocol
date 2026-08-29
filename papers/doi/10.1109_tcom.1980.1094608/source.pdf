@@ -1,0 +1,696 @@
+IEEE TRANSACTICOONMSMONUNICATIONS,                    VOL. CNOM. -28, 11, NOVEMBER 1980                                     1867
+
+Self-Recovering Equalizationand Carrier Tracking in
+    Two-Dimensional Data Communication Systems
+
+                                                      DOMINIQUE N. GODARD, MEMBER,IEEE
+
+Absrracrxonventional equalization and carreiecrovery                                     Control
+
+                                                                                         - TX ~lDdePl
+
+algorithmsforminimizingmean-squareerror in digitalcommuni-                - - CPU
+                                                                       7-7
+
+cationsystemsgenerallyrequire an initialtrainingperiodduring              CONTROL        - - RX              T
+                                                                           UNIT
+whichaknowndatasequence       is transmittedandproperlysyn-
+                                                                                                          I
+chronized at the receiver.
+   Thipsapesrolvetshgeeneraplroblemoafdaptivcehannel
+
+equalizationwithoutresortingtoaknowntrainingsequenceorto                                          TX R X  TX RX    Tributary
+                                                                                                                      Modems
+conditions of limited distortion. The criterion for equalizer adaptation                          It      tt
+                                                                                                              DTE  nata Terminal
+is the minimization of a new class of nonconvex cost functions which                                 DTE               Equipments
+
+are shown to characterize intersymbol interference independently of
+
+carrierphaseandofthedatasymbocl onstellation          usedin the
+
+transmission system. Equalizer convergence does not require carrier       Fig. 1. Typicalmultipoint network.
+
+recovery, so thatcarrierphasetrackingcan be carried out atthe
+
+equalizeorutpuitnadecision-directedmodeT. hceonvergence                tributarytocontrolstationoften being short,the effective
+propertiesoftheself-recoveringalgorithmsareanalyzedmathe-              data throughput is, t o a large degree, dependent on the startup
+matically and confirmed by computer simulation.                        time of thecontrolmodem which, ateachreturn message,
+
+                                                                       mustadapttothe particular channelandtransmitterfrom
+
+                   I. INTRODUCTION                                     which data are received. There is therefore considerable inter-
+
+APPLICATION of digital processing techniquesin the de- estinequalizer adjustment algorithms that converge much
+sign of data communications equipment, and particularly faster thatnhceonventional                estimated-gradienatlgorithm
+
+theadvent in recentyearsofmicroprocessor-based modems, [11-[31*
+resulted in improved reliability and performance of communi- A second problem peculiar to multipoint networks is that
+cations systems. In addition to the execution of usualtrans- of retraininga tributary receiver which, because ofdrastic
+mitter and receiver tasks, the high flexibility of microproces- changes in channel characteristics or simply because it was not
+sor-based modems enables them to provide a variety of func- powered-on during initial network synchronization, is not able
+tions such as self-diagnostics, the gathering of information on t o recognize data and polling messages. Since lines are shared,
+line quality, or automatic switching to and from full and fall- thecontrolmodem has tointerruptdata transmission and
+back speeds, and thus to contribute to network management. initiate anewsynchronizing procedure generally causing all
+The computing power available alsomakespractical the im- tributaries to retrain [4]. It is clear that, particularly forlarge
+plementation of recent advances in signal theory. These signi- or heavily loaded multipoint systems, ilata throughput is in-
+
+ficant features of microprocessor modems are of great interest creased andnetworkmonitoring is made easier by giving
+withthe growing use of multipointnetworksforcomputer tributary receivers the capability to acheve complete adapta-
+communications applications, where trends to data throughput tionwithouthecooperation             of thecontrolstation,and
+
+enhancement give rise to newproblems,particularlyinthe                 therefore without disrupting normal data transmission to other
+
+field of automatic equalization.                                       terminals. The purpose of thispaper is the design of processing
+
+Typicallya,daptiveequalizers        neeadn initiatrlaining             algorithms which will allow for receiver synchronization with-
+
+period in which a particular data sequence, known and avail- out requiring the transmission of a known training sequence.
+able in proper synchronism at the receiver, is transmitted. In a While the subject of fast startupequalization is a well-
+multipoint network, the basic architecture of which is shown covered topic (see for instance the references given in [2] and
+in Fig. 1, the problem of fast startup equalization is of para- .[6]), the communications literature is very poor with respect
+                                                      usually operates in tothe problem of self-recovering equalizationand carrier
+mountimportance.Thecontrolstation
+
+carrier-on mode, and tributary terminals are allowed t o trans- tracking which is dealt with in this paper. As a matter of fact,
+
+mit only whenpolledby the control modem. Messages from we are only awareof one paper [5] where thisproblem is
+
+                                                                       considered in the context of amplitude-modulated data trans-
+
+Paperapproved by theEditorforCommunicationTheory of the                mission systems. In [SI, the multilevel signal is treated by the
+                                                                       equalizer as a binary signal, that is its polarity, the remaining
+IEEE Communications Society for publication after presentation at the  signal being considered as random noise. This approach cannot
+                                                                       be readily extended to combined amplitude anpdhase modula-
+NinthAnnualCommunicationTheoryWorkshop,               TrabucoCanyon,   tion systems, in particular since the problem of carrier phase
+                                                                       recovery is superimposed to that of equalization.
+CA,April 1979. Manuscriptreceived July 20, 1979; revised June 23,
+
+1980.
+
+The authoris with the IBM Centre d'Etudes et RecherchesF, -06610,
+
+La Gaude, France.
+
+                                                      0090-6778/80/1100-1867$00.75 0 1980 IEEE
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:58:42 UTC from IEEE Xplore. Restrictions apply.
+1868                                     IEEE TRANSACTIONS ON COMMUNICATIONS, VOL. COM-28N, O. 11, NOVEMBER 1980
+
+In this paper, we shall place ourselves in the context of two-
+
+dimensional modulation schemes generally used in high-speed
+
+voice-band modems, and which we describe in Section 11. A                      II           II
+new variety of cost functions for equalizer adjustment, inde-
+                                                                       exp jZnf,t  exp-jZnf“nT
+
+pendent of carrier phase and of the symbol constellation en-           Fig. 2. Twmdimensional transmissionsystem.
+coding thedata is presented and discussed in Section 111.
+
+Equalization algorithms, requiring the same computing power
+
+as the estimated-gradientalgorithmminimizing the equalized an u(t) is complex fdtered noise. Although we considera
+
+mean-squared error, are given in Section IV, and their conver- tapped delay-line equalizer having a tap spacing equal to T , the
+
+gence properties are addressedin Section V. The costfunc- analyses which will be developed also apply to the case of
+
+tions to be minimized are shown to be nonconvex, but means fractionally spaced equalizers [9] .
+
+for circumventing this difficulty are suggested. Finally,com-          Not shown onthe receiver block-diagramof Fig. 2, but
+
+puter simulations, conducted in the presence of noise and necessary in actualmodems,aretheautomatic gain control
+
+severe distortions, confirm theeffectiveness of the approach. (AGC), timing recovery circuit, and descrambler. Timing con-
+
+11. TWO-DIMENSIONALMODULATION SCHEME                                   troland AGC donot requireknowledgeof thetransmitted
+                                                                       data [lo] and descramblerus suallyareself-synchronizing.
+
+We considear synchronous double-sideband quadrature Therefore, as far as receiver self-adaptation is concerned, it is
+
+amplitude modulated data transmission system of the general sufficient t o concentrateonlyonequalizationand             carrier
+
+form shown in Fig. 2. The binary message t o be transmitted is tracking problems.
+
+usually scrambled and converted bysome coding law into data Using complex vector notation, the equalizer output signal
+
+symbols {a,} taken from a two-dimensional constellation, and z , at time t = nT can be writtenas
+
+the two components are transmitted by amplitude-modulating
+
+two quadrature carrier waves. Such a modulation scheme can
+
+betreated inaconcise mannerby combiningin-phase and
+
+quadrature components into complex-valued signals. Denoting            where y n is the vector of tap-output signals and c, the tap-
+by go(t) the baseband real signal element, the symbol interval
+T , and the carrier frequency fo, the transmitted signal is of the     gain vector at time nT, both being N-dimensional. Throughout
+form
+                                                                       the paper, a prime (I) denotes the transpose of a vector. The
+
+                                                                       equalizer output sample is rotatedbyanestimated  carrier
+
+                                                                       phase Cpa^n,d presented to thedecision circuit.
+
+u(t) = Re ango(t -nT) exp @nfot.         (1)                           Conventionally, the criterion for adjusting c, and & is the
+
+          n                                                            minimization of the mean-squared error
+
+Assuming a dispersive transmission medium with additive noise
+w(t), the receiver input signal can be expressed as
+
+x x(t) = Re ang(t - nT) expj(2nfot + cp(t))+ w(t), (2)                 where E indicates expectation over all possible noise and data
+                  n                                                    sequences. Derivation of ( 6 ) with respect to c and (p leads to
+                                                                       the classical stochastic gradient algorithms
+
+where g(t) is a generally complex baseband signal element [7]          hc and,,A, beingpositivereal,possiblytime-varyingstep-size
+and cp(t)is a time-varying phase shift due t o frequency offset
+and phase jitter.                                                      parameters, and the superscript * denoting complex conjugate.
+
+   At the receiver, the conceptof carrier trackingafter equaliza-         At this point,several remarks can be made.
+tion is employed. This is motivated by the fact that a proper             1) Equation (8) describes theoperation ofa first-order
+design of the carrier tracking loop allows removal of relatively       phase-locked loop. In the presence of frequency offset, a sec-
+                                                                       ond-order loop is necessary to lock with a zero-mean steady-
+high-frequency phase jitter [8]. The real-valued signal x ( t ) first  state phase error.
+                                                                          2) Asis obvious from (5) and (6), if a combination (c, (p)
+enters a phase splitter whose complex transfer function r(t)           minimizes the mean-squared errort,henanycombination
+is usually matched to the transmittedsignal element, i.e.,
+                                                                       (c exp jiL, 5,+ $) is also optimum. Later we shall take advan-
+r(t) =gd-t) exp i2nfo t ,                (3)
+                                                                       tage of this“taprotation”property ofpassbandequalizers
+and, for thesake of simplicity,we shall assume that demodula-
+tion by a local carrier with frequency fo is carried out before
+equalization, so that the equalizer has essentially to process a
+complex baseband signal of the general form
+
+~ ( t=) anh(t -nT) e x p j d t ) + Mt),  (4)                              3) It is important to note that (7) and (8) show a coupling
+                                                                       between equalizer updatingand carrier tracking loops. If a
+      fl                                                               decision-directed approach (a, replacedin (7) and (8) by
+                                                                       receiver’s decisions 5,) is employed for receiver training, suc-
+where h(t) is the overall baseband equivalent impulse response
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:58:42 UTC from IEEE Xplore. Restrictions apply.
+GODARD: TWO-DIMENSIONAL DATA COMMUNICATION SYSTEM                                                               1869
+
+cessful adaptation requires that c and (p be simultaneously        ..
+close enough t o their optimum values.
+                                                                           0
+   At datarates of 9600 or 12 000 bits/s, even without as-
+
+suming severe channel distortions, the probability of symbol
+error in unequalized transmission systems is very close to 1. It
+is generally observed that decision-directedrecovery fails to
+converge when theerrorprobability is in theorder of 0.1,
+except in the case of purephase modulation.
+
+   This exception has not been well understood so far, andwe
+throw some light on this subject in the next section.
+
+111. COST FUNCTIONS FOR EQUALIZER ADAPTATION
+
+The primary goal of our self-recovering equalizationand
+
+carrier tracking technique will be to reduce the effects of chan-  It should be noted here that, for purephase modulation, chan-
+nel distortions so thatthe receiver’s decisions become safe        nel .‘distortions can simply be equalized by constraining the
+enough t o use the conventionadl ecision-directedgradient          equalizer output signal to have constantmagnitude. This is
+algorithms. Intersymbolinterference (ISI) being onactual           achieved by the decision-directedgradientalgorithm even in
+channels of much greater importance than noise, it will be as-     the presenceof decision errors, whichexplains why its con-
+sumed throughout the theoretical analyses that the noise term      vergence is generally observed.
+in (4) can be neglected.
+                                                                      The minimization of G ( p ) leads to the minimizationof IS1
+   Itnhe suppressed-carrier transmissiosnystems we are             in a sense which we now specify. Formathematicalcon-
+dealing with, carrier phase recovery fromthe received data         venience, we shall consider p = 2. The datasymbolcon-
+signal requires thatthe system be equalized. Furthermore,          stellation is assumed to have symmetries so that
+even in the absence of phase jitter and frequency offset, the
+
+receiver’s initial decisions are not safe enough estimates of the
+
+transmitted symbols to allow equalizer adaptation. Thegeneral
+
+problem of self-recovering equalization can therefore be stated Data symbols being stationary and uncorrelated
+
+as follows: find a cost function that characterizes the amount     Ean*am = E l a n l2 6 n m ,                  (1 3)
+of intersymbol interference at the equalizer output independ-
+
+ently of the data symbol constellation andof carrier phase.        one has from (1 l), using (12) and (13)
+
+   Ourcriterion will be the minimizationof functions
+
+called dispersion of order p (p integer >O), defined by
+
+.D(P) = E( I Z ~ I - P ~ p ) ~ ,                             (9)
+
+with the R , being positive real constants which we shall dis-
+cuss later.
+
+   The rationale for such a choice will become clear by com-
+paring the dispersion functions with cost functions
+
+G(P)=E( 12, IP- Ia n IP)2,                               (1 0 )
+
+for which only independence from carrier phase is achieved.        where
+   Let { s k } be the samples at the rate 1/T Hz of the overall
+                                                                    x’
+transmission system impulse response, including the equalizer.
+The equalizer output signal is then of the general form                  k
+
+zn =     an-kSk expi$,,                                  (1 1)     indicates summation with deletion of thek = 0 term.
+                                                                      It follows from (14) and (15) that, for p = 2, (10) may be
+
+                                                                   written as
+
+      k
+
+J/, where is the phase shift due to frequency offset andphase
+
+jitter.Theeyepatterns observed forpure phase modulation
+and combined amplitude and phase modulation examples, in
+the case where only one IS1 term is nonzero, are pictured in
+Fig. 3. The transmitted symbols are marked by circles and re-
+ceived points by dots. It is clear that there exists no IS1 term
+able to produce only phase errors whichare not “seen” by
+(lo), and therefore that minimizing G(P),i.e., equalizing only
+the amplitude of z,, wilI lead t o a small mean-squared error.
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:58:42 UTC from IEEE Xplore. Restrictions apply.
+showing that G(’) has a minimum when I so 1’ is close t o          must assume that the equalizer gains are not identically zero.
+unity and IS1 terms { s k } , k f 0, have small magnitude.         It can easily be shown that
+
+   The same type of computation can be carried out for the         a
+dispersion of order 2, theevaluation of which does not require     - ac lYn’C I =Yn*Yn’C IYn’C I- 1 ,
+the knowledge of the transmitted datasequence. One obtains                                                                                               (20)
+
+                                                                   from which we obtain
+
+          -     t: la, I’ISk1’ +R2’.       (17 )
+
+                k                                                  AS is usually done when minimizing the mean-squared error,
+                                                                   one can drop the expectation term in (21) and transform (19)
+In the next section, itis demonstrated that R, mustbe chosen       into the stochastic approximationalgorithm
+equal t o El a, 14/Ela, 1.’ It is then easy to show that (17)
+may be written under theparticular form
+
+                                                                   C,+1 =c, - A ~ Y , * z , I Z,       Iz, ’I -Rp),                                      (22)
+
+                                        k                          where X, is a positive and small enough step-size parameter.
+                                                                      Now we can define the values oftheconstants R,. It
+             k
+                                                                   should be noted that, from(21), changing R, into &,(a >O),
+Comparing (16) and (18), it is seen that, apart from an addi-      will result in changing the steady-state solutions c‘ of (22), as-
+                                                                   suming that they exist, into ol‘/Pc‘. The value ofR, then only
+tive constant, d 2 ) and .o”) have very similar expressions, pro-  controls equalizeramplification. Naturally, we requirethat
+                                                                   tap-gain increments (21) be zero when perfect equalization is
+vided that hedatasymbolconstellation       is wchthatthe           achieved. This condition will define the constantsR,.
+
+quantity                                                              Limiting ourselves to the case where the phase shift q(t)in
+                                                                   (4) is of the form
+4 ( ~ I a ,I 2 y Is0 l2 - 2 E I a , 14
+                                                                   where cpo is a constant and Af the frequency offset, the sys-
+                                                                   tem is perfectly equalized when the equalizer output signal is
+                                                                   given by
+
+is positive when I so 1’ is close to unity.                        + z , = a, exp j ( $ 2nAfnn,                                                          (24)
+   It may then be concluded that the dispersion has at least a
+                                                                   $ being anyconstant phase shift, owing to thetap-rotation
+local minimum t o which corresponds a small mean-squared           property of passband equalizers.
+error, defined in the absence of noise by
+                                                                      Using (4) for expressing the components ofy,, substituting
+Theexistence of other minima will bestudied indetail in            (24) into (21) and noting that data symbols are uncorrelated,
+Section V. Now we present equalizer adjustment algorithms          the gradient of the dispersion of order p with respect t o c is
+and show that, for an infinite lengthequalizer, perfect equaliz-   zero forR, given by
+ation is one steady-state solutionof the adaptation process.
+
+ IV. SELF-REXOVERING EQUALIZATION ALGORITHMS                       Fromthedefinition     of the dispersion andfrom (22),
+   Equalizertap-gainsare adjusted according to the classical
+                                                                   equalizer adaptation does not requirecarrierecovery. If,
+steepest descent algorithm
+                                                                   therefore, convergence t o idealtap-gainsettings is obtained,
+In order to take the derivative of (9) with respect t o c , one
+                                                                   i.e., when (24) becomes a good approximation to the equalizer
+
+                                                                   output signal, carrier tracking can be carried out in the deci-
+
+                                                                   sion-directed mode, provided that the loop gain X, in (8) is
+
+                                                                   large enough to handle frequency offsets at most equal to k7
+
+                                                                   Hz according to CCITT recommendations V27 and V29. T h e
+
+                                                                   phase ambiguity in the receiver’s decisions inherent in sup-
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:58:42 UTC from IEEE Xplore. Restrictions apply.
+GODARD: TWO-DIMENSIONAL DATA COMMUNICATION SYSTEM                                                                          1871
+
+pressed-carrier systems withsymmetric signal constellations                                            h
+will be removedbydifferential phase encoding at the trans-
+mitter, so that an absolute phase reference is not necessary.      YWJ                   2 neciszinoenxp-i$n               A, a
+The block diagram of Fig. 4 shows the principle of operation                + Equalizer  If
+of the self-recovering technique.
+                                                                                                                  Circuit
+   We conclude this section by discussing the influence of p .
+In (22), the signal                                                                              1                I
+
+                                                                   Fig. 4. Structure of the self-recovering technique.
+
+en = Z n IZn             IZn 'I - R p )                    (26)
+
+replaces the usual error signal in the leastmean-square algo-      We were not successful in deriving thesolutions t o (29)
+rithm; Note first that, except for pure phase modulation, E ,      directly in terms of c. We shall therefore consider the much
+is not small even when equalization is perfect, and itsdynamic     simpler problem which, from (1l), consists of expressing the
+range is an increasing function of p . Therefore, theselection of  dispersion under the form
+the step-size X, for ensuring convergence and reasonably small
+tap-gain fluctuations becomes increasingly difficult with p .      and solving
+Furthermoret,hecomputation of the equalizer-coefficient
+increments in (22) in a digital implementationwith finite
+length arithmetic wouldsuffer from precision or overflow
+problems for large p [ 121. This limits the practicalapplica-
+tions of $') to p = 1 or 2. For p = 1, (22) becomes
+
+                                                                   To begin with, letus consider p = 2 . One has
+                                                           (27)
+
+with
+
+                                                                                                                                       (30)
+                                                                   Using (12) and (13) and after some manipulations, one obtains
+
+But choosing p = 2 leads to the algorithm
+
+C,+ 1 = C, -             *z,( IZ, I2 - R 2 )
+
+with                                                               =o, Vl.                                                 (31)
+
+      E I ~ ,l4
+R2 =------                                    of           set Tnhuinsmfibneirtean ehqausations                      . oTfhesogluentieornasl
+      Elan l2                                                   which we shall denote by S,
+                                                                                                    M = 0, 1,
+
+                                                                   solution s, can be defined as followss:amples           { s k } are
+which is remarkably simple tiomplement mianicroprocessor-          equal to zero, except of them. The                  samples
+
+based receiver. The speedsof convergence ofadaptation have equal squared magnitude uM2 defined by
+
+algorithms (27)and (28) will be comparedinthecomputer
+
+simulation section.                                                = E I a , I4{E)a, l4 + 2(M- l ) ( E ( a , 12)2}-1.      (32)
+
+                V. CONVERGENCE PROPERTIES                          Note that S1 is the ideal case of zero IS1 at the equalizer out-
+                                                                   put and that solution So, for which the equalizer coefficients
+   In this section, we analyze the convexity of the dispersion.    are identically zero, must be discarded. For each solution S,
+We show that the dispersion is not a convex function, but that     it is now possible to compute thevalues of the energy E, and
+its absolute minimum is reached for zero IS1 at the equalizer
+output. The problem raised by the existence of local minima is     of the dispersion DM(') atthe equalizer output. Using (32)
+also shown t o be soluble by simple initialization of the equal-
+izer referencetap-gain. Our analysis will be limited t o p = 1     and thestatistical properties of the datasymbols, one has
+and 2 for the reasons mentioned above. The equalizer will also
+                                                                      E, =ME la, 1 4 l a~, 1 2 { ~la, 14 + 2 ( ~ 1- )(Ela, l 2 ~ 2 ) - 1 ,
+
+be assumed of infinite length.
+
+prosbolleumtions Ourthe  is to find                                                                                        (33)
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:58:42 UTC from IEEE Xplore. Restrictions apply.
+1872                                             IEEE TRACNOSMACOMTNUIONNICSATIONS,       VOL. CNOOM. -28, 1 1 , NOVEMBER 1980
+
+From (33) and (34), it is easy to show that, if the data symbol which is zero for any1if
+constellation satisfies the condition
+
+E l a n l4 <2(EIan 12)',                         (35)
+
+then
+
+< v M ( ~ ) v M + ~(2 ) ,                        (36)
+
+   EM EM+^, M Z O .                                                         As is the case for (31), this set of equations has an infinite
+                                                                            number of solutions SM','M = 0,1 -, that can be defined.as
+The absolute minimum of the dispersion is therefore reached                 follows: all samples {sk) are equal to zero, exceptM of them.
+in the case of zero IS1 and solution S1 is that for which the               Owing t o the stationarity of the data sequence, theM nonzero
+energy is the largest.                                                      samples all have equal magnitudeOM' given by
+
+   This gives afirst indication as to how the equalizer gains                                                          , M 2 1 . (41)
+must be initialized: they must be such that the energy at the
+equalizer output be sufficiently large, at least greater than E 2 .         Clearly, solution S1' corresponds t o zero ISI.
+A second, generally more restrictive condition is given by in-                 There 1s no simple expression for the values of the disper-
+spection of the expressionof @2) when writtenunderthe
+particular form (18). The existenceofa minimumcorre-                        sion and of the energy at the equalizer output corresponding
+sponding t o zero IS1 appearsobviousonly if thequantity                     to each solution SM'. However, (41) can be evaluated for any
+multiplying sk I2 in (18) is positive,whichimposes                          given symbol constellation ona computer. Such computations
+
+                                                                      (37)  showed that solution S1' is that for which the energy is the
+
+Denoting by ho thechannel impluse response sample having                    largest and the dispersion is minimized, which imposes on the
+the largest magnitude, condition (37) is met by initializing all            equalizerreference gain initialization the same type of con-
+equalizer gains tozeroexceptthe reference tap-gain which                    straints as in the case for p = 2 .
+must be such that
+                                                                               This is confirmedbycomputersimulationinthenext
+                                                                            section.
+
+Computer simulations will show that (38) is in fact a sufficient                             VI. COMPUTER SIMULATIONS
+
+but nonnecessary condition for convergence.                                    In the theoretical analysis, an infinite length equalizer and
+                                                                            the absenceof noise had to be assumed: We now check the
+Throughout this analysis, we were led t o impose two con-                   validity of the theory by presenting equalizer convergence re-
+                                                                            sults obtained with the stochastic adaptatioalngorithms
+
+ditionsonthedatasymbocl onstellationC. ondition  (12)
+
+impliessome kind of symmetry in theconstellation.Such
+
+' symmetries appear when, as we assumed, data arephase-
+
+differentially encoded. It should be noted, however, that our
+
+self-recovering technique does not apply to thecase of biphase
+
+modulation where Ea,' is not zero.                                          and
+
+Condition (35) expresses the fact that the signal constella-
+
+tion must be sufficiently compact and is met for all constella-
+
+tions of practical interest, since they are selected so that their
+
+peak t o average energy ratio isreasonably small (of order of 2)            corresponding t o p = 1and 2, respectively.
+
+for good noise immunity [131'.                                              The channels considered in the simulations are defined by
+
+The analysis of the dispersion of order 1 is more difficult t o             the amplitude and group-delay characteristics shown in Fig. 5.
+
+carry out. However, .O(l) may be shown to have the same kind                We assumed a transmission speed of 2400 bauds with the car-
+
+of general properties as I%')'. For p = 1 , one obtains insteadof           rier located at 1700 Hz, and an equalizer with 30 complex tap
+
+(30)                                                                        gains. The four data symbol constellationsgiven in Fig. 6 were
+
+                                                                            tested, corresponding to bit rates of 7200, 9600, and 12 000
+
+                                                                            bits/s.Forbothchannels,thebinaryeye          is closed and we
+
+                                                                            checked the failureofdecision-directed' attempts to achieve
+
+                                                                            equalizertraining, except in the case ofthe 8-phase con-
+
+                                                 (39)                       stellation.
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:58:42 UTC from IEEE Xplore. Restrictions apply.
+GODARD: TWO-DIMENSIONALDATA COMMUNICATION SYSTEMS                                                                     1873
+
+                                                                                                      : :I: :   .  .
+                                                                                                      :    :I.     .
+         dB                                                          'I.
+      16                  Attenuation  I
+      1%                                                                 8-PHASE
+                                       !                                                              1 6 - P O I N T RECTANGULAR
+        8
+       4                                                                                                  *I* '
+        0
+
+      ms                                                             16-POINT V 2 9                   32-POINT RECTANGULAR
+
+                                                                     Fig. 6. Data symbol constellations.
+
+             S O20 9 0 0   1700                                         Two simulation programs have been written. The first one,
+                                                                     for a given channel, calculates the sample values of the wave-
+                          (a)
+                                                                     form h(t), normalizes the energy E, I h(rz7') I2 to unity, and
+
+                                                                     determines theoptimum (in the sense of minimummean-
+                                                                     squared error) equalizercoefficients Copt and theminimum
+                                                                     attainable mean-squared error Emin*. It also rotates the copt
+                                                                     vector components so that the imaginary part of the optimum
+                                                                     referencecoefficient is equaltozero.The secondprogram
+                                                                     generatesa random data signal with a frequency offset of 8
+                                                                     Hz, adds white noise to it and simulates the equalizer adapta-
+                                                                     tion algorithms and a second-order carrier-phase tracking loop
+                                                                     operating indecision-directed mode. Since,in fact, we are
+                                                                     interested in reducing the mean-squared error, the actual MSE
+                                                                     is periodically calculated according to
+
+                                                                     + En2 = (Copt - E,)*'A(cop,-E,)  Em&
+
+             ms                                                      where A is thechannelcorrelationmatrixand E, is derived
+                                                                     fromactual gains c, by rotatingthem so thatthe reference
+                                                                     tap-coefficient is real.
+
+                                                                        Denotinbgy ho thoeptimum step-size proposed by
+                                                                     Ungerboeck [I41 when thedata sequence is knownatthe
+                                                                     receiver
+
+1700             500                   2900                          hl and h2 in (27) and (28) were initiallychosen equal t o
+                                                                     X0/5 and X0/200, respectively, and divided by 2 each 10 000
+                                 (b)                                 iterationsinthe course of the convergence process. These
+                                                                     choices were found appropriate a posteriori from simulation
+Fig. 5 . (a) Channel 1. Amplitude anddelay distortions. (b) Channel  results. When choosing hl and h2 greater than indicated, the
+                     2. Amplitude and delay distortions.             squalizer comes close t o instability.
+
+                                                                        Equalizer gains were initially settozero,except Co, the
+                                                                     initial value of which was a variable parameter in the simula-
+                                                                     tion program.
+
+                                                                        For p = 1, reliable convergence was obtained when taking
+
+                                                                     co > 0.8 for channel 1 and co > 1.2 for channel 2 whose dis-
+
+                                                                     tortions are extremely severe. For p = 2, onehad to take
+
+                                                                     co > 1.3 for channel 1 and co > 2 for channel 2.
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:58:42 UTC from IEEE Xplore. Restrictions apply.
+ MSE (dB)                                                        MSE (dB)
+51                                                              5.
+
+                                                                                                    Line 2
+                                                                                                    p= 1
+                                                                                                    SIJR=30AB
+
+                                                                                                    32-POINT RECTXIGULAR
+
+                                                                -20 .
+
+                                                                                                    tine in synhnl intervals
+
+   MSE (dB)                                                                      MIi E              Line 2
+                                                                                                    p= 2
+ 51                                                                                5                RNR=3fldR
+                          Line ?
+  0                       p=2
+                          SNR=26dB
+-5
+-10
+
+-1 5
+
+-20
+
+                                                                                                    Tine in svmhol intervals
+
+             1 noon       2nnnn  3nonn                                                  10000       2nnnn      ~
+
+                                                                                                                     3nnon
+
+                     (C)                                                                       (dl
+
+                     Fig. 7. (a) Speed of convergence-Line 1, p = . 1. (b) Speed of con-
+
+                          vergence-Line 2, p = 1. (c) Speed of convergence-Line 1 , p = 2.
+
+                          (d) Speed of convergence-Line 2, p = 2.
+
+   In the case of the V/29 constellation, for which the ratio   Itshould also benotedthathe                equalizer coefficients
+
+Ela, 14/(Ela, 12) is the largest, condition (38) imposes to     minimizing the dispersion functions closely approximate those
+
+choose co > 1.4 for channel 1 and co >2.4 for channel2. The     which minimize the mean-squared error.
+
+results obtained by simulations are thereforein good agree-     The eye is open when the MSE approaches -15 dB. At that
+ment with theanalysis of Section V.
+                                                                point, convergence couldbe speeded upby switching the
+   The speed of convergence ofalgorithms (27) and (28) is
+illustrated bytheplots of Fig. 7 where each curve was           equalizer into decision-directed mode. One may therefore con-
+obtained by averaging five computerunswithdifferent
+initializations of,noise and data sources. The convergence for  sider that the timeto adapt the equalizer is of order of 10 s.
+p = 2 appears to be faster thanfor p = 1.
+                                                                It rnust be notedthatno difficulties were encountered
+
+                                                                when updatingthecarrier. phase estimate & using the re-
+
+                                                                ceiver’s decisions from the beginning of equalizer adjustment.
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:58:42 UTC from IEEE Xplore. Restrictions apply.
+GODARD: TWO-DIMENSIONAL DATA COMMUNICATION SYSTEMS                                                                  1875
+
+   Finally, we also tested the convergence properties of the           communication,” Bell Sysf. Tech. J . . vol. 54, pp. 370-406, Feb.
+dispersion of order 3. Convergence in that case is much slower         1975.
+andrequires thathe step-size parameter be smaller than                 D. N . Godard, “Channel equalization using a Kalman filter for fast
+10-4X0. Such a small value is not practical to implement with          data transmission,” IBM J . Res. Develop.. vol. 18, pp. 267-273,
+fixed-point arithmetic.                                                May 1974.
+
+              VII. SUMMARY AND CONCLUSIONS                            .R. D. Gitlin and F. R. Magee,”Self-orthogonalizing adaptive
+
+   We have introduced in this paper a new class of cost func-         ’equalizationalgorithms,” IEEE Trans.Comrnun., vol. COM-25,
+tionsand algorithms forautomatic equalizationin data re-               pp. 666-672, July 1977.
+ceivers employintgwo-dimensional modulation. Equalizer                 G. D. Forney, S . U . H.Qureshi, and C. K . Miller, “Multipoint
+adaptation does not require the knowledge of the transmitted           networks: Advances in modem design and control,” presented at
+data sequence nor carrier phase recovery and is also, apart            the Nat. Telecommun. Conf.. Dallas, TX, Nov. 1976.
+from a constant multiplier in final tapgain settings, inde-            Y . Sato, “A method of self-recovering equalization for multilevel
+pendent of thedatasymbol constellation used in thetrans-               amplitude-modulatiosnystems,” IEEE TranCs.omrnun., vol.
+mission system.                                                        COM-23. pp. 679-682, June 1975.
+                                                                       R. W. Lucky, “A survey of the communication theory literature:
+   The costfunctionsto be minimizedare notconvex,but                   1968-1973,” IEEE Trans.Inform.Theory, vol. IT-19,pp. 725-
+convergence tooptimal gains can be ensuredby employing                 739. Nov. 1973.
+small step-size parameters in adaptation loops and initializing        L. E. Franks, Signal Theory. Englewood Cliffs, NJ: Prentice-Hall,
+the equalizer reference gain t o any large enough value, typi-         1969, pp. 79-87.
+cally in the orderof 2 when the equalizer input energy is              D. D. Falconer, “Jointly adaptive equalization and carrier recovery
+normalized to that of thedatasymbolconstellation. Practi-              in two-dimensional digital communication systems,” BellSyst.
+cally, data receivers are usually equippedwith an automatic            Tech. J . , vol. 55, pp. 316-334, Mar. 1976.
+gain control circuit, so that equalizer initialization should not      G. Ungerboeck, “Fractional tap-spacing equalizer and conse-
+be a critical problem.                                                 quencefsor clock recovery in datma odems,“ IEEE Trans.
+                                                                       Comrnun., vol. COM-24,pp. 856-864, Aug. 1976.
+   Simulations have shown that the self-recovering algorithms          D. N. Godard, “Passband timing recovery in an all-digital modem
+are extemely robust with respect to channel distortions.               receiver,” IEEE Trans. Comrnun., vol.COM-25, pp. 517-523,
+                                                                       May 1978.
+   As expected, since data symbols are not known at the re-            R . D. Gitlin, E. Y . Ho, and J. E. Mazo, “Passband equalization of
+ceiver, equalizer convergence is slow, of the order of 10 s for        differentially phase-modulated data signals,” Bell Syst. Tech. J . ,
+transmission at 2400 bauds over severely distorting lines. How-        vol.52,pp. 219-238, Feb. 1973.
+ever, forthe purposeofretraining a tributaryreceiver in                R . D. Gitlin and S . B . Weinstein, “On the required tap-weight
+multipointnetworkswithout disrupting normaldatatrans-                  precision for digitally implemented, adaptive, mean-squared
+mission, speedof convergence is not of paramountimpor-                 equalizers,” BellSyst. Tech. J . , vol. 5 8 , pp. 302-321, Feb. 1979.
+tance. For thisreason, noattempts were madeto define                   G. J . Foschini, R. D. Gitlin, and S . B . Weinstein, “On the
+theoretically the step-size parameters which should be used,           selection of a two-dimensional signal constellation in the presence
+and to evaluate the influence of the number of taps on the             of phase jitter and Gaussian noise,” BellSyst. Tech.J . , vol. 52, pp,
+speed of convergence.                                                  927-965, July-Aug. 1973.
+                                                                       G . Ungerboeck, “Theory on the speed of convergence in adaptative
+   Thealgorithmswhich we have proposeddonot require                    equalizers for digital communication,” IBM J . Res. Develop., vol.
+more computing power thanthe conventionalgradient algo-                16. pp.546-555,NOV. 1972.
+rithmfor minimization ofthe mean-squared error, which
+makes their implementation easy, and therefore attractive, in                    *
+microprocessor-based data receivers.
+                                                                                              Dominique N. Ward (”80) was born in Lyon,
+                            REFERENCES
+ [ I ] K. H.Mueller and D. A. Spaulding,“Cyclic equalization-A new                            France, on December 29, 1947. He received the
+
+        rapidlyconvergingequalization technique for synchronous data                          Mastership degree i n physics from the University
+
+                                                                                              of Lyon,France, in 1971, the Elaborate Study
+
+                                                                                              degree in electronics from the University of Paris
+
+                                                                                              in 1972, and the Ph.D. degree in electrical
+
+                                                                                              engineering in 1974.
+
+                                                                                              Sin1ce974,  he has been employed by
+
+                                                                                              Compagnie IBM France, La Gaude Laboratory,
+
+                                                                                              France, where heis a member ofthe Advanced
+
+                                                                                              Technology Department. His present interests
+
+                                                                      cover data transmissionI systems, digital signal processing, and detection
+
+                                                                      and estimation theory.
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:58:42 UTC from IEEE Xplore. Restrictions apply.
+

@@ -1,0 +1,256 @@
+                                    D11.16
+
+BLIND EQUALIZATION BASED ON RADIUS DIRECTED ADAPTATION
+
+Michael J. Ready and Richard P. Gooch
+
+     Applied Signal Technology, Inc.
+      160 Sobrante Way
+      Sunnyvale, Ca. 94086
+
+                               ABSTRACT                           This paper describes a demodulation architecture and
+                                                                  algorithms that perform both blind equalization and blind
+This paper describes a blind equalization algorithm, termed       carrier recovery. Section 2 describes this architecture. The
+radius directed equalization (RDE), for QAM signals based on
+the known modulus of the constellation symbol radii. For          structure is applicable to both low data rate modems ( ~ 2 4 0 0
+example, 16 QAM has three radii, 32 QAM has 5 radii. The          baud) as well as modems with data rates exceeding 1
+algorithm uses the error between the equalizer output             megabaud. Section 3 describes the radius directed
+modulus and the nearest symbol radius to update the
+equalizer weights. The RDE algorithm provides faster              equalization algorithm. Section 4 describes the blind carrier
+convergence than the CMA algorithm for QAM signals and is         recovery algorithm. Section 5 compares the performance of
+independent of the carrier offset. The algorithm is described
+in the context of blind carrier and baud clock recovery           the RDE algorithm with the constant modulus algorithm
+schemes.                                                          (CMA) for a specific example.
+
+                           1. INTRODUCTION                                                     2. EQUALIZER ARCHITECTURE
+
+In point-to-point data communications systems, the receiving      Blind acquisition of data from a digitally modulated signal
+modem is adapted to the optimal equalizer during the              requires that the demodulator have algorithms for blind carrier
+transmission of a predetermined training signal. No               acquisition, baud clock recovery and equalization. In general,
+information data is transmitted during the training period. In    the blind recovery modem must be adaptive to acquire and
+multidrop systems where multiple receivers listen to the same     compensate for different channel conditions and track slowly
+transmitter, the data throughput would suffer if the system       time varying characteristics. Additionally, to be useful, it is
+had to retrain every time a new receiver came on line. Blind      important that the system acquire the signal quickly.
+equalization refers to the problem of adaptively mitigating the
+dispersive effects of a transmission channel on a digitally       One possible architecture is shown in figure 1. The received
+modulated communications signal without knowledge of the
+channel response or transmitted data signal.                      signal is quadrature downconverted by the nominal carrier
+
+Sato [I] reported one of the earliest blind equalization          frequency. The quadrature signal is then digitized baud
+
+algorithms for multilevel PAM signals. The basic concept has      synchronously using a baud clock recovery algorithm. (This
+been further generalized to multilevel QAM signals [2,3].In
+these approaches, the demodulator adaptively equalizes the        algorithm is the subject of a future paper.) Next, any carrier
+signal using an error criterion based on E{ly(n)lp-K}q,where
+p,q are usually restricted to (l,l),(1,2),(2,i)and (2,2);y(n) is  offset is removed by passing the signal through a nonlinearity
+the equalizer output and K is a known, fixed constant. This
+algorithm, commonly known as the Constant Modulus                 (usually 4th or 8th power) and using a PLL to lock onto a
+Algorithm (CMA), has been successfully implemented for blind
+equalization of QAM and PSK signals. While the CMA error          tone generated at the carrier offset frequency. Following this,
+criterion is optimal for PSK signals, it is not optimal for QAM
+signals, such as 16 QAM, in the sense that the error does         the signal is equalized. An error signal is generated from the
+not go to zero when the equalizer has fully converged. The
+RDE algorithm presented in this paper is a generalization of      equalized signal which is used to update the equalizer
+the CMA algorithm and is optimal for QAM signals. An
+important property of both CMA and RDE is their                   weights.
+
+independence of carrier offset because the error slgnai IS        OD(YIIINOCiOl TNYEi mE lTEi                             n
+based only on the equalizer output modulus. This is important
+                                                                                                                                                                                                      06iSll
+in most applications because the carrier offset is generally
+                                                                  Figure 1. One architecture for a blind demodulator.
+unknown. Recently, another paper derived two algorithms
+based on radius directed equalization (RDE) 151. The RDE          This system has one major disadvantage: the signal
+algorithm described in this paper is identical to the decision-   component generated by the nonlinearity for carrier recovery
+adjusted-modulus-algorithm presented in [5].The work in [5]       must be heavily filtered to eliminate the noise generated by
+was not evaluated in the context of channel distortion or blind   passing the signal through the nonlinearity. The noise consist
+carrier recovery schemes. The Stop-and-Go algorithm is            of three components: a self-noise component due to the
+another approach to blind equalization [4] but requires carrier   signal mixing with itself, a component due to additive noise
+lock.                                                             mixing with itself, and a component due to cross products
+                                                                  between the signal and the additive noise. Generally, for
+                                                                  QAM signals, the self-noise is the dominant component. The
+                                                                  heavy filtering leads to sluggish carrier acquisition and
+                                                                  tracking. Rapid carrier tracking can be very important. For
+                                                                  example, it may be necessary for the carrier tracking
+
+1699
+
+                                                                                               CH2847-2/90/0000-1699$1.00 0 1990 IEEE
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:59:37 UTC from IEEE Xplore. Restrictions apply.
+algorithm to compensate for periodic phase noise [SI in voice                                                                                                                                                                       decision directed error is used to maintain the optimal
+grade modems. For higher rate modems, it may be necessary                                                                                                                                                                           equalizer response, even if the channel changes slowly. For
+to track an FM service channel modulating the carrier.                                                                                                                                                                              blind equalization, the desired response is not known.
+                                                                                                                                                                                                                                    Consequently, other error criterion must be used.
+An alternative architecture that provides a faster carrier
+tracking loop is shown in figure 2. The signal is qaudrature                                                                                                                                                                        The constant modulus algorithm (CMA) is a common blind
+downconverted by the nominal carrier frequency. The                                                                                                                                                                                 equalization method that is very robust under many channel
+quadrature downconverter here does not acquire the exact                                                                                                                                                                            conditions [2]. The error criterion for CMA is given by:
+carrier offset. Instead, the exact carrier is acquired from the
+equalized signal.                                                                                                                                                                                                                               = Ilv(n)l’ - KJq
+
+                                                                                                                                                                                                                            .eJ,OL  where K is a constant. This algorithm minimizes the error
+                                                                                                                                                                                                                                    power between the equalizer output and a constant. Clearly
+Figure 2. A better architecture for a blind demodulator.                                                                                                                                                                            for PSK signals, this criterion is optimum in the sense that for
+                                                                                                                                                                                                                                    perfect equalization (and no noise), the error e(n) = 0
+This system operates as follows. Assume that the equalizer                                                                                                                                                                          because the symbols all lie on a ring. (It is interesting to point
+has converged, the carrier has been acquired and that the                                                                                                                                                                           out that PSK signals are only constant modulus at the
+system is operating in decision directed mode. (Blind carrier                                                                                                                                                                       maximum eye opening. The signal at other times is not
+acquisition and equalization will be described later.) In the                                                                                                                                                                       constant and even goes through zero.) Note that the CMA
+absence of any carrier offset, the equalizer output is an                                                                                                                                                                           algorithm is independent on the carrier offset. For QAM
+estimate of the constellation symbols. However, when there is                                                                                                                                                                       constellations, the CMA error criterion is not optimal, in the
+offset, the symbols will be spinning at the carrier offset rate.                                                                                                                                                                    sense that when the signal is perfectly equalized, the error
+The mixer after the equalizer rotates the symbols to stop the                                                                                                                                                                       does not go to zero.
+spinning. The ‘despun’ symbols are then sliced to get the
+actual constellation point. To compute the error for updating                                                                                                                                                                       For QAM signals, an alternative error criterion is based on the
+the carrier tracking loop and equalizer weights, the actual                                                                                                                                                                         error between the equalizer output and the nearest
+constellation symbols are ‘respun’ (note the conjugation                                                                                                                                                                            constellation radius:
+operation in the second mixer) and compared to the equalizer
+output. Denoting the equalizer output as y(n) and the respun                                                                                                                                                                        where KXn) is the radii of the nearest constellation symbol for
+constellation symbols as y’(n), the carrier is tracked by                                                                                                                                                                           each equalizer output. We term this the radius directed error.
+measuring the phase error between y(n) and y’(n) and using                                                                                                                                                                          This algorithm, termed RDE, is independent of the carrier
+this error to drive a PLL. The phase error is computed by
+                                                                                                                                                                                                                                    offset like CMA and is optimal for QAM signals in the sense
+calculating the phase of y(n)(y’(n))’, where (f indicates the
+                                                                                                                                                                                                                                    that the error is zero when the signal is perfectly equalized.
+complex conjugate. The carrier is locked when the phase                                                                                                                                                                             Common values of (p,q) are (l,l), (1,2), (2,l) and (2,2). Note
+error is zero. This type of carrier recoveryhracking loop is                                                                                                                                                                        that RDE reduces to CMA for PSK signals.
+called decision-aided carrier recovery. The decision directed
+error used for updating the equalizer coefficients is computed                                                                                                                                                                            4. BLIND CARRIER ACQUISITION
+from e(n) = y(n) - y’(n). If the carrier is acquired and the
+signal is fully equalized, then the decision directed error will                                                                                                                                                                    Before illustrating the performance of RDE, a blind carrier
+be zero (ignoring additive noise).
+                                                                                                                                                                                                                                    acquisition algorithm for QAM and PSK signals is described.
+This decision-aided carrier recovery approach is faster acting
+than carrier acquisition/tracking based on the nonlinearity                                                                                                                                                                         Figure 3 shows several common constellations. The table
+approach because the noise is minimized by the equalizer                                                                                                                                                                            1 -$- below describes a phase error discriminator used for acquiring
+and there is no self-noise generated. Consequently, the
+carrier tracking loop filtering does not have to be so heavily                                                                                                                                                                      the carrier offset for each constellation.
+filtered which allows for a wider tracking bandwidth.                                                                                                                                                                                     BPSK                       29;)ZW BPs
+
+             3. RADIUS DIRECTED EQUALIZATION                                                                                                                                                                                                                  *
+
+The radius directed equalization (RDE) method is similar to                                                                                                                                                                               11;WSK         :    (-T-JBI mM
+LMS in that the equalizer can be viewed as a filter with
+adaptive weights. The weights are updated by computing an                                                                                                                                                                                                     X”*Z
+error which is minimized using some criterion. For LMS, the
+weights are updated using the formula:                                                                                                                                                                                                                        - OAM       -1114
+
+       w(n+l) = w(n) + 2ux’(n)e(n)                                                                                                                                                                                                              - P S I
+
+where w(n) are the filter weights, x(n) is the filter (or equalizer                                                                                                                                                                 Figure 3. Common symbol constellations for data modems.
+in this case) input and e(n) is the error between the filter
+output and desired response. For traditional equalizers, the                                                                                                                                                                              Constellation       Phase Error Discriminator
+weights are initialized by using a training sequence before
+data is transmitted. Once the equalizer has converged, the                                                                                                                                                                                         BPSK                Method 1
+                                                                                                                                                                                                                                                   QPSK                Method 1
+                                                                                                                                                                                                                                                   8-PSK               Method 1
+                                                                                                                                                                                                                                                   1B-QAM              Method 2
+                                                                                                                                                                                                                                                   V.29-7200           Method 2
+                                                                                                                                                                                                                                                   V.29-9600           Method 3
+
+                                                                                                                                                                                                                                    1700
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:59:37 UTC from IEEE Xplore. Restrictions apply.
+where               Phase error = phase error between             Two points of caution are in order. First, there are
+         Method 1:  despun equalizer output and nearest           circumstances where RDE does not converge. The obvious
+                    constellation point
+                                                                  example is when the initial equalizer gain is incorrect. Another
+Method 2:           If (nearest constellation point is outside
+                    circle) then                                  case is when the equalizer was initialized to an allpass filter.
+                                                                  CMA, however, does converge for both these cases.
+                             phase error = method 1               Secondly, its not clear that RDE will extend easily and
+                                                                  converge for higher order constellations such as 64 and 256
+                    else                                          QAM. More extensive investigations, and possibly different
+                             phase error = 0                      algorithms, are required for fast acquisition of these signals.
+
+Method 3:           If (nearest constellation point is inside                                6. CONCLUSIONS
+                    circle) then
+                                                                  Blind demodulators require both blind equalization and blind
+                             phase error = method 1               carrier recovery schemes. CMA is one popular method that
+                    else                                          has works for QAM constellations but is not optimal. RDE is
+                                                                  an generalization of CMA that is optimal for QAM
+                             phase error = 0                      constellation and, in simulations, converges to a more optimal
+                                                                  response than CMA. For the blind carrier recovery scheme
+The circles are defined for each constellation as shown in        presented, RDE allows faster carrier recovery than CMA for
+figure 3. The exact value is not too crucial. The key here is     QAM signals. Computationally, RDE is not very much more
+that the phase error for the carrier recovery lock loop updates   expensive than CMA for blind equalization.
+only when we are sure that the phase error is correct. Using
+                                                                                                REFERENCES
+16 QAM as an example, the PLL is updated only when the
+equalizer output is determined to be an outside constellation    111 Y. Sato, "A method of self recovering equalization for
+                                                                  multi-level amplitude modulation systems," IEEE Trans.
+point. The inside samples are ignored because the equalizer,     Comm., Vol COM-23, pp 679-682, June 1975.
+in blind mode, may not have converged so that making             [2] J. R. Treichler and B. G> Agee, "A new approach to
+                                                                  multipath correction of constant modulus signals," IEEE Trans
+decisions on the inside constellation points may not be the      ASSP, Vol. ASSP-31, pp 349-472, Apr. 1983.
+correct thing to do. We have found that this algorithm works      [3] D. N. Godard, "Self recovering equalization and carrier
+                                                                 tracking in tow dimensional data communication systems,"
+for both voice grade modems and digital radio modems.             IEEE Trans Comm., Vol. COM-28, pp 1867-1875, Nov. 1980.
+                                                                 14) G. Picchi and G. Prati, "Blind equalization and carrier
+5. PERFORMANCE EXAMPLE                                           recovery using a "Stop-and-GO decision directed algorithm,"
+                                                                  IEEE Trans. Comm, Vol COM-35, pp 877-887, Sept. 1987.
+The performance of the system is illustrated by an example.      [5]W. A. Sethares, G. A. Rey and C. R. Johnson, "Approach
+For this example, a V.29 signal (2400 baud) was passed           to blind equalization of signals with multiple modulus," IEEE
+through a worst case CClTT M.1020 channel and distorted by        ICASSP, pp 972-975, Apr. 1989.
+additive noise so that the SNR = 26 dB. The M.1020 channel       (61 R. P. Gooch and M. J. Ready, "An adaptive phase lock
+attenautes the band edges of the modem signal.                   loop for phase jitter tracking," Twenty Second Asilomar Conf.
+Consequently, the equalizer should compensate for this           on Signals, Systems and Computers, Nov. 1987.
+attenuation by boosting its response near the band edges.
+                                                                                                               CMA
+The carrier offset was adjusted to be 10 Hz off nominal (1710
+                                                                              CA I"
+Hz). The initial equalizer response was set to a 50% square
+                                                                         2-
+root raised cosine.
+                                                                        an -
+Figure 4 shows plots of the equalizer output radii as a
+function of time for RDE and CMA blind equalization                             LT
+algorithms using the same blind carrier recovery scheme.
+Notice that the four radii start to become more distinct after             cn"
+about 8 seconds when using RDE. When using CMA, the
+equalizer converges after about 9-10 seconds but the radii               2-
+are not as distinct as they are for RDE. This is because CMA
+is not an optimal criterion for 16 QAM. The blind carrier                 n
+acquisition was also started at time = 0. The system cannot
+be switched into decision directed mode until after the carrier          a-
+has locked. Figure 5 shows the carrier offset frequency as a
+function of time. Before the equalizer converges, the carrier                  LT
+hovers about its initial value. Once the equalizer has
+converged, the carrier recovery acquires very quickly when       Figure 4. Equalizer output modulus versus time when using
+using RDE. The carrier is also acquired when using CMA but       the RDE and CMA algorithms for blind equalization.
+
+not as quickly. Carrier lock is determined by measuring the
+phase error power. Figure 6 shows the phase error power for
+carrier recovery loop using both RDE and CMA. For RDE, the
+error power drops from about 22.5 degrees to about 9
+degrees. For CMA, differentiation between unlock and lock is
+much less distinct, only about a degree. This is again due to
+the fact that the RDE is an optimal criterion for QAM signals
+and CMA, although it works, is not. Figure 7 shows the
+equalizer responses for both RDE and CMA. The RDE
+equalizer response did not change once the equalizer was
+switched into decision directed mode. For CMA, however, the
+equalizer response converges to the same shape as the RDE
+equalizer once switched into decision directed mode.
+
+                                                                 1701
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:59:37 UTC from IEEE Xplore. Restrictions apply.
+                              TIME ISECONDS I                  FREQUENCY
+
+Figure 5. Carrier offset as a function of time when using RDE
+and CMA algorithms for blind equalization.
+
+                                                                                                                                                     FREQUENCY
+
+                                                                                       Figure 7. Converged equalizer responses for RDE and CMA.
+
+                               T I M E [ SECONDS I
+
+Figure 6. Phase error power as a function of time when using
+RDE and CMA algorithms for blind equalization.
+
+                                                                                           1702
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:59:37 UTC from IEEE Xplore. Restrictions apply.
+

@@ -1,0 +1,16 @@
+{
+  "storage_version": 2,
+  "id": "T044-S01",
+  "title": "An Improved Syndrome Bit Flipping Decoder with Narrowed Flipping Set for LDPC Codes",
+  "doi": "10.1109/ICCC59590.2023.10507492",
+  "arxiv_id": null,
+  "download_status": "success",
+  "download_method": "ieee_blit_pdf",
+  "content_type": "pdf",
+  "content_quality": "good",
+  "content_file": "content.md",
+  "downloaded_at": "2026-08-30",
+  "real_title": "An Improved Syndrome Bit Flipping Decoder with Narrowed Flipping Set for LDPC Codes",
+  "title_check": "match",
+  "title_overlap": 1.0
+}

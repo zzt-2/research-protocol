@@ -1,0 +1,16 @@
+{
+  "storage_version": 2,
+  "id": "L002",
+  "title": "Linear Correction of Mismatched L-values in BICM receivers",
+  "doi": null,
+  "arxiv_id": "1111.7265v1",
+  "download_status": "success",
+  "download_method": "arxiv_html",
+  "content_type": "html",
+  "content_quality": "good",
+  "content_file": "content.md",
+  "downloaded_at": "2026-08-30T06:25:47.312961+08:00",
+  "real_title": "Linear Correction of Mismatched L-values in BICM receivers[[[[Thanks: ]The work was supported by the government of Quebec, under grant #PSR-SIIRI-435. Parts of this work have been submitted to IEEE International Conference on Communications 2012.]]]",
+  "title_check": "match",
+  "title_overlap": 0.25
+}

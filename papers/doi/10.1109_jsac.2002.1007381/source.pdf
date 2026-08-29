@@ -1,0 +1,1366 @@
+IEEE JOURNAL ON SELECTED AREAS IN COMMUNICATIONS, VOL. 20, NO. 5, JUNE 2002                   997
+
+The Multimodulus Blind Equalization and Its
+             Generalized Algorithms
+
+ Jian Yang, Member, IEEE, Jean-Jacques Werner, Fellow, IEEE, and Guy A. Dumont, Fellow, IEEE
+
+    Abstract—This paper presents a new blind equalization algo-                 transmission. A simplified diagram showing the signal flow in
+rithm called multimodulus algorithm (MMA). This algorithm                       the downstream direction is shown on the bottom right in the
+combines the benefits of the well-known reduced constellation                   figure. Assume now, for example, that the two set-top boxes are
+algorithm (RCA) and constant modulus algorithm (CMA). In ad-                    operational and that the PC is suddenly turned on. The 16-CAP
+dition, MMA provides more flexibility than RCA and CMA, and                     receiver in the PC needs to be trained before it can deliver valid
+is better suited to take advantage of the symbol statistics of certain          data. Conceptually, this can be done in a variety of ways.
+types of signal constellations, such as nonsquare constellations,
+very dense constellations, and some wrong solutions.                               1) The transmitter in the ONU could interrupt its transmis-
+                                                                                       sion of data to the set-top boxes for some time interval
+   Index Terms—Adaptive equalizer, blind equalization, carrier-                        and transmit instead a known training sequence for the
+less amplitude and phase modulation, least mean square methods,                        receiver in the PC. Such an interruption of data transmis-
+quadrature amplitude modulation.                                                       sion to the set-top boxes is obviously not desirable.
+
+                           I. INTRODUCTION                                         2) The transmitter in the ONU could send a periodic training
+                                                                                       sequence, as is done in some broadcast applications, such
+T HE CONCEPT of blind equalization has been known                                      as high definition television (HDTV). However, the over-
+      since the publication of Sato’s original work on this                            head incurred with such an approach cannot be justified
+subject, in 1975 [1]. Sato’s algorithm was subsequently gener-                         for the FTTC application considered here because of the
+alized, and other types of blind equalization algorithms were                          small number of termination points in the home.
+proposed and analyzed [2]–[11]. In spite of all these early
+contributions of significance, until recently, blind equalization                  3) The best solution is to blindly train the receiver that is
+had only found limited applications. The renewed interest in                           being turned on. That is, the receiver is trained without
+this topic has been triggered by applications such as asyn-                            the help of a known training sequence and uses instead
+chronous transfer mode (ATM) local area network (LAN) and                              the (unknown) sequence of data that is being sent to the
+broadband access on copper in fiber-to-the-curb (FTTC) and                             other termination points in the home.
+very high-rate digital subscriber line (VDSL) networks, for
+which blind equalization provides major benefits [12]–[14].                        The most complex and time-consuming task during blind
+                                                                                startup of a receiver is the convergence of the equalizer, which
+   We now briefly discuss one of these applications. The                        is done with a blind tap updating algorithm. The two best
+point-to-multipoint arrangement shown in Fig. 1 is used                         known blind equalization algorithms for two-dimensional
+in FTTC networks, which provide broadband access to the                         modulation schemes, such as quadrature amplitude modulation
+home using standard unshielded twisted pair (UTP) telephone                     (QAM) and CAP, are the reduced constellation algorithm
+wiring in the network and coaxial cable, or UTP wiring in the                   (RCA) and the constant modulus algorithm (CMA). RCA
+home. Details on the characteristics of the communication link                  is very simple to implement, but does not provide reliable
+between the optical network unit (ONU) in the cable plant                       initial convergence. CMA provides reliable convergence, but
+and the various set-top boxes and personal computers (PCs)                      increases the complexity of implementation of the receiver in
+in the home are given in [14] and will not be repeated here.                    steady-state operation because of the need to add a rotator at
+The downstream channel, from the ONU to the home, uses                          the output of the equalizer.
+a 51.84 Mb/s 16-carrierless amplitude and phase modulation
+(CAP) signal, which is broadcast to the various termination                        The multimodulus algorithm (MMA) presented here com-
+points inside the home. The upstream channel, from the home                     bines the benefits of RCA and CMA. It provides reliable ini-
+to the ONU, uses a 1.62 Mb/s quadrature phase-shift keying                      tial convergence and does not need the addition of a rotator in
+(QPSK) burst modem. Our interest here is in downstream                          steady-state operation. The latter property seems to have been
+                                                                                discovered independently in [15] and [16], [17]. In addition,
+   Manuscript received March 30, 2001; revised December 17, 2001. The work      MMA provides much more flexibility than RCA and CMA and
+of J. Yang and J.-J. Werner was supported by Bell Laboratories. This paper was  is better suited to take advantage of the symbol statistics of cer-
+presented in part at DSP97, Santorini, Greece, 1997.                            tain types of signal constellations, such as nonsquare and very
+                                                                                dense constellations [16]–[18]. RCA and CMA are not very ef-
+   J. Yang is with Bell Laboratories, Holmdel, NJ 07733 USA (e-mail:            fective in handling these types of signal constellations. MMA
+yangj@lucent.com).                                                              also suitable for CAP–QAM dual mode reception [19].
+
+   J.-J. Werner (deceased) was with Bell Laboratories, Holmdel, NJ 07733 USA.      The rest of the material is organized as follows. A brief
+   G. A. Dumont is with the University of British Columbia, Vancouver, BC       review of CAP transceivers and equalizer structures is provided
+V6T 1Z4, Canada (e-mail: guyd@ppc.ubc.ca).                                      in the next section. Various commonly used cost functions
+   Publisher Item Identifier S 0733-8716(02)05381-7.
+
+                                                                        0733-8716/02$17.00 © 2002 IEEE
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:59:09 UTC from IEEE Xplore. Restrictions apply.
+998                                                IEEE JOURNAL ON SELECTED AREAS IN COMMUNICATIONS, VOL. 20, NO. 5, JUNE 2002
+
+Fig. 1. Broadband access on copper in FTTC networks.
+
+and tap updating algorithms are discussed in Section III.
+In Section IV, we introduce the basic MMA algorithm for
+square signal constellations, and show how it can be mod-
+ified to accommodate nonsquare constellations. Section V
+presents a generalized MMA (GMMA) algorithm, which is
+well suited to very dense signal constellations. The combined
+CMA–MMA and dual-mode CAP–QAM receiver will be
+presented in Sections VI and VII separately. The issue of con-
+vergence to wrong solutions during blind startup is discussed
+in Section VIII. Then experimental results obtained in the
+laboratory with a 51.84 Mb/s 16-CAP and other DSP setup
+are presented in Section IX. Finally, we summarize paper in
+Section X.
+
+     II. CARRIERLESS AM/PM MODULATION TRANSCEIVER
+
+A. Transceiver Structure
+
+CAP is a bandwidth-efficient two-dimensional passband              Fig. 2. A communication link using a CAP transceiver. (a) Transmitter
+                                                                   structure. (b) Receiver structure.
+transmission scheme, which is closely related to the more
+                                                                      The signal at the output of the CAP transmitter in Fig. 2 can
+familiar QAM transmission scheme. The block diagram of a           be written as
+
+digital CAP transmitter is shown on the top of Fig. 2. The bit                                                                           (2.1)
+
+stream to be transmitted is first passed through a scrambler
+
+(not shown in the figure). The scrambled bits are then fed to
+
+an encoder, which maps blocks of bits into one of
+
+different complex symbols         . A CAP line
+
+code that uses different complex symbols is called a -CAP
+
+line code. The two-dimensional display of the discrete values      where is the symbol period, and are discrete multilevel
+
+assumed by the symbols and is called a signal constella-           symbols, which are sent in symbol period , and and
+
+tion. Examples of 16-CAP and 32-CAP signal constellations          are the impulse responses of in-phase and quadrature passband
+
+are shown in Fig. 3. After the encoder, the symbols and            shaping filters, respectively, and form a Hilbert pair. Details on
+
+are fed to digital shaping filters. The outputs of the filter are  the design of the shaping filters can be found in [17].
+
+subtracted and the result is passed through a digital-to-analog    The structure of a digital CAP receiver is shown on the bottom
+
+(D/A) converter, which is followed by an interpolating low-pass    of Fig. 2. It consists of an analog-to-digital (A/D) converter fol-
+
+filter (LPF). The digital shaping filters and the D/A operate at   lowed by an adaptive equalizer. Examples of adaptive equalizer
+
+a sampling rate            where  is a suitably chosen             structures are given in the next section. The A/D operates at a
+
+integer and is the symbol rate.                                    sampling rate  , which is typically the same as the
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:59:09 UTC from IEEE Xplore. Restrictions apply.
+YANG et al.: THE MULTIMODULUS BLIND EQUALIZATION AND ITS GENERALIZED ALGORITHMS                                                   999
+
+                                                                                      vector of quadrature phase tap coefficients (2.5)
+
+                                                                               where the superscript denotes vector transpose, and the sub-
+
+                                                                               script is a short notation for the symbol period . With
+
+                                                                                      , we have                . The outputs and of the
+
+                                                                               digital filters can then be written as
+
+                                                                                                                                  (2.6)
+
+(a)                                 (b)                                        If we define the following complex equalizer output and
+                                                                               complex tap vector :
+Fig. 3. (a) 16-point signal constellation. (b) 32-point signal constellation.
+                                                                                                                                                     (2.7)
+sampling rate used for the D/A at the transmitter. The two out-                We can rewrite (2.6) in the more compact complex form
+puts of the adaptive equalizers are sampled at the symbol rate
+                                                                                                                                                     (2.8)
+      and, in steady-state operation, the results are fed to a de-
+cision device followed by a decoder, which maps the symbols                       III. COST FUNCTIONS AND TAP UPDATING ALGORITHMS
+into bits. Let be the impulse response of the channel and let                     In most practical applications, the tap coefficients of an adap-
+                                                                               tive equalizer are adjusted by using a stochastic gradient algo-
+     be some noise added to the CAP signal in the channel. The                 rithm, i.e., the complex tap vector is updated according to
+signal at the input of the CAP receiver can then be written as
+
+                                                           (2.2)                                                                                     (3.1)
+
+where denotes convolution, and                             and                 where is a small number called step size and is the gra-
+                                                                               dient of some cost function ( ) with respect to the tap vector
+     . It should be pointed out that and
+                                                                                   . The subscript refers to the th tap updating iteration. For a
+still form a Hilbert pair. Thus, the distortion introduced by the              convex cost function, the tap updating algorithm has converged
+                                                                               when the gradient is zero, that is
+channel does not affect the generic form of the expression for a
+                                                                                                                                                     (3.2)
+CAP signal that is given in (2.1).
+                                                                               Two main types of cost functions are used in practice. In one
+B. Adaptive Equalizer Structures                                               case, they are functions of the symbols used in the signal
+                                                                               constellation, and in the other case they are functions of statistics
+A great variety of adaptive equalizer structures can be used                   of the symbols . These two cases are discussed in the next
+                                                                               two sections. In the last section, we show how some of these
+for CAP signals. For example, all the types of equalizers that                 algorithms can be used in a blind startup.
+
+are used for QAM can be used for CAP as well. The differ-
+
+ence between CAP and QAM is the way to implement. QAM
+
+requires a modulator/demodulator which is explicitly used in                   A. Tap Updating Algorithms Based on Symbol Values
+
+CAP within the passband shaping filters. CAP does not require
+
+the phase-recovery circuit that is usually used at the output of the           Many modems use a known training sequence during initial
+
+equalizer in a QAM receiver. In this paper, we will only consider              startup, so that the receiver knows a priori what sequence of
+
+linear adaptive equalizers. Blind convergence of decision-feed-                complex symbols                         is sent by the transmitter.
+
+back equalizers will be discussed in a forthcoming paper.                      The adaptive equalizer can then be converged with a so-called
+
+A fractionally spaced linear equalizer (FSLE) that is par-                     ideal reference. In this case, the cost function that is usually used
+
+ticularly well suited to the applications considered here is the               is the mean squared error (MSE) defined as
+
+phase-splitting equalizer shown in Fig. 4 [20]. It consists of a                                                                  (3.3)
+
+parallel arrangement of two adaptive digital filters, which take
+
+their inputs directly from the A/D at the sampling rate and                    where is the complex output of the equalizers and de-
+                                                                               notes expectation. The tap updating algorithm in (3.1) then be-
+are implemented as finite-impulse-response (FIR) filters. In the               comes the least-mean-square (LMS) algorithm. Practical imple-
+                                                                               mentations usually use the unaveraged gradient, so that the LMS
+steady-state mode of operation, the two outputs of the filters are             algorithm for the two equalizers in Fig. 4 can be written as
+
+sampled at the symbol rate , and are then fed to a decision
+
+device (slicer). Normally,          is held.
+
+We now make the following definitions with respect to Fig. 4:                                                                     (3.4)
+
+vector of A/D samples in delay line                        (2.3)               where             , and                                   is the
+vector of in-phase tap coefficients                                                                            , as shown in Fig. 5. Let
+                                                                               complex error in symbol period
+
+                                                                               be the complex noise sample at the output of the equalizer after
+
+                                                           (2.4) convergence, so that                                  and        .
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:59:09 UTC from IEEE Xplore. Restrictions apply.
+1000                                                              IEEE JOURNAL ON SELECTED AREAS IN COMMUNICATIONS, VOL. 20, NO. 5, JUNE 2002
+
+Fig. 4. Structure of phase-splitting FSLE with decision devices.
+
+                                                                         For this reason, most blind equalization algorithms have cost
+                                                                         functions which use cyclostationary second or higher order sta-
+                                                                         tistics (HOS) of the signals. However, the second-order cyclo-
+                                                                         stationarity is extensively used in blind equalization just because
+                                                                         of the convergence problems and larger variance associated with
+                                                                         HOS.
+
+                                                                         B. Tap Updating Algorithms Based on Symbol Statistics
+
+Fig. 5. Error used for various types of tap updating algorithms.            During initial convergence of an adaptive equalizer, it usu-
+                                                                         ally is not possible to use a decision-directed tap updating algo-
+Thus, after convergence of the equalizer, the MSE in (3.3) is            rithm, because the slicers make too many errors. If no training
+simply equal to the variance of the noise . Note that the above          sequence is available, then the equalizer has to be converged
+equalizer convergence is applied for a linear channel with re-           under so-called “blind” conditions. In this case, the cost func-
+quired whiteness of source data. In addition, due to the limi-           tion that is minimized does not depend on known or estimated
+tation of some factors such as FIR filter length and adaptation          symbols and , but on known statistics of the symbols .
+parameters, the convergence of an adaptive equalizer always ex-
+ists certain amount of excess mean square error and some mis-               The simplest blind tap updating algorithm is the so-called re-
+adjustment.                                                              duced constellation algorithm (RCA). The cost function mini-
+                                                                         mized by RCA is the MSE with respect to a reduced number
+   In the steady-state mode of operation, the slicers in Fig. 4          of symbol values, which usually are not a subset of the symbol
+make the right decisions most of the time by selecting the               values used in the signal constellation. When four symbol values
+symbol which is the closest in Euclidean distance to the                 are used, the cost function for RCA can be written as
+received sample . In this case, the known symbols can be
+replaced with the estimated (or sliced) symbols . The cost                                                                            (3.6)
+function that is then minimized is given by
+                                                                         where  is the complex signum
+
+                                                                         function, and the constant is a function of the statistics of
+
+                                                                         the symbols in the signal constellation. Closed-form expressions
+
+                                                                         for are given in Appendix A. The quantity  minimized
+
+                                                                         by the RCA cost function is shown in Figs. 5 and 6(a). The tap
+
+                                                                         updating algorithm for the equalizers in Fig. 4 is given by
+
+                                                                                                                                      (3.7)
+
+                                                                  (3.5)  Another well-known blind equalization algorithm is the con-
+                                                                         stant modulus algorithm (CMA), which minimizes the disper-
+and the tap updating algorithms are the same as in (3.4) except          sion of the equalizer’s output samples around a circle, as
+                                                                         shown in Fig. 6(b). The cost function for CMA is given by
+
+that  replaces  , as shown in                                                                                                         (3.8)
+
+Fig. 5. When these algorithms are used, the equalizer is said to
+
+be adapted in the decision-directed mode [21]. With this algo-           Notice that this cost function uses fourth-order statistics of the
+                                                                         signals. The corresponding tap updating algorithm for the two
+rithm, the MSE reduces again to the variance of the noise at the         equalizers in Fig. 4 is given by
+
+output of the equalizer in the steady-state mode of operation.
+
+The MSE in (3.3) and (3.5) uses second-order statistics of                                                                            (3.9)
+
+the equalizer’s output samples. It can be shown that the use of
+
+second-order statistics only is generally not sufficient for the         Expressions relating the constant to the statistics of the sym-
+                                                                         bols are given in Appendix A.
+blind deconvolution of nonminimum-phase channels [22], [23].
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:59:09 UTC from IEEE Xplore. Restrictions apply.
+YANG et al.: THE MULTIMODULUS BLIND EQUALIZATION AND ITS GENERALIZED ALGORITHMS                                                    1001
+
+(a)                                                                          (b)                                 (c)
+
+Fig. 6. Principles of (a) RCA, (b) CMA, and (c) MMA.
+
+   It is shown in [24] that the CMA cost functions in (3.8) is               error is not suitable, we observe experimentally and manually
+minimized when the channel is perfectly equalized (and noise-                switch the equalizer from blind startup to LMS algorithm.
+less) and the kurtosis of the complex symbols is negative, that is
+                                                                                  IV. BASIC MMA
+              and
+                                                                                  In this section, we discuss the simplest version of the MMA
+                                                                     (3.10)
+                                                                             and its application to small and medium-sized (       ) square
+The condition on the right is satisfied for all signal constella-
+tions of practical interest. It should be pointed out that, even in          and nonsquare signal constellations. The generalization of the
+the absence of noise, the minimum of the cost function is gen-
+erally not equal to zero, except for 4-CAP. Closed-form expres-              algorithm to dense constellations and other applications are pre-
+sions for the minimum values of the RCA, CMA, and MMA
+cost functions are derived in Appendix B.                                    sented in the next three sections.
+
+   Both RCA and CMA are used in practice. However, these two                 A. Square Constellations
+blind equalization algorithms do not fully take advantage of the
+statistics of the set of symbols used in certain signal constel-                We first consider square constellations. The cost function
+lations, such as nonsquare and very dense constellations. The                minimized by MMA is then given by
+MMA algorithm described in the following sections is much
+more flexible in this regard. In addition, it is quite efficient in                                                                (4.1)
+reducing occurrence of wrong solutions. This issue is discussed
+in detail in Section VIII.                                                   where is a positive integer. In practice, a value     usually
+
+C. Blind Startup                                                             provides the best compromise between performance and com-
+
+   We now briefly discuss how the various tap updating algo-                 plexity of implementation. This cost function is similar to the
+rithms can be incorporated in a typical blind startup of a receiver.
+Illustration of the procedure will be given in Section IX when               cost function for CMA in (3.8), except that the term
+we discuss experimental results. A typical blind startup of a re-
+ceiver consists of the following three main sequential steps.                is missing. As a result, the MMA cost function is not a truly
+
+   1) Adjust the automatic gain control (AGC) and acquire                    two-dimensional cost function. It can be considered as the sum
+       timing (synchronize the receiver’s clock to the clock of
+       the far-end transmitter).                                             of two one-dimensional cost functions, which minimize the dis-
+
+   2) Adapt the tap coefficients of the equalizer with a blind               persion of the output samples and of the equalizer around
+       equalization algorithm until the “eye” of the signal con-
+       stellation is open.                                                   separate straight contours (or moduli), as shown in Fig. 6(c).
+
+   3) Switch to a decision-directed tap updating algorithm                   This should be more obvious if we rewrite (4.1) as
+       when the eye is open.
+                                                                                                                                   (4.2)
+   The eye of the signal constellation is considered to be open
+when the slicer makes the right decisions “most of the time” or,             where is the cost function for the in-phase samples and
+equivalently, when the MSE measured across the slicer is small                      is the cost function for the quadrature samples . It is
+enough. A probability of symbol error of 10 is usually con-
+sidered acceptable to guarantee a safe switch between the blind              shown in Appendix C that a condition similar to (3.10) applies
+equalization and decision-directed tap updating algorithms. In               to the minimum of the MMA cost function, except that the con-
+real-time DSP prototype, when the measure of MSE or symbol                   dition applies independently to the real and imaginary symbols.
+                                                                             For the symbols we have
+
+                                                                                  and                                              (4.3)
+
+                                                                             We now consider the phase-splitting equalizer in Fig. 4. Taking
+                                                                             the gradient of and with respect to the tap vectors
+                                                                             and , respectively, we get
+
+                                                                                                                                   (4.4)
+
+                                                                                                                                   (4.5)
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:59:09 UTC from IEEE Xplore. Restrictions apply.
+1002                                                    IEEE JOURNAL ON SELECTED AREAS IN COMMUNICATIONS, VOL. 20, NO. 5, JUNE 2002
+
+                                                                             nonsquare constellations, rather than the straight contours used
+                                                                             for square constellations [see Fig. 6(c)]. The piecewise linear
+                                                                             contours used for the 128-point constellation are shown on the
+                                                                             left in Fig. 7. The dotted lines are used for the in-phase dimen-
+                                                                             sion and the solid lines are used for the quadrature dimension.
+
+                                                                                The in-phase and quadrature cost functions for square con-
+                                                                             stellations in (4.2) are modified as follows for nonsquare con-
+                                                                             stellations having two different sets of statistics along each di-
+                                                                             mension:
+
+                                                                                                                    if
+
+                                                                                                                    if           (4.12)
+
+Fig. 7. MMA moduli for 128-point signal constellation.                                                              if
+
+   The derivation of the expression for the constant    is pro-                                                     if           (4.13)
+vided in Appendix A, where it is shown that
+
+                                                                      (4.6)  where is a constant that is a function of the signal constellation
+
+   The equality on the right in (4.6) holds in the usual case where          under consideration. Generalization to the case where there are
+the symbols and have the same statistics. The stochastic
+gradient tap updating algorithms for the tap vectors and                     more than two sets of statistics along each dimension is straight-
+are given by the following expressions:
+                                                                             forward. Notice that two different constants are used in (4.12)
+                                                                      (4.7)
+                                                                      (4.8)  and (4.13). We now show how these constants are computed for
+
+where we have incorporated the factor in the step size . For                 the 128-point constellation.
+        , we get
+                                                                             The constants are always evaluated from the expression
+                                                                      (4.9)
+                                                                     (4.10)  in (4.11), which requires the computation of the second- and
+
+                                                                     (4.11)  fourth-order moments of the symbols. We now show how to
+
+                                                                             compute  , for example. We can compute this moment by
+
+                                                                             considering the first quadrant only. Consider the subset of 24
+
+                                                                             complex symbols in this quadrant that applies to in Fig. 7.
+
+                                                                             For these symbols 1, 3, 5, 7, 9, 11 and 1, 3, 5, 7 so that
+
+                                                                             each value of occurs with probability 4/24 1/6. Similarly,
+
+                                                                             the subset has 8 symbols for which 1, 3, 5, 7 and
+
+                                                                             9, 11 so that each value of occurs with probability 2/8 1/4.
+
+                                                                             Thus, the variance of the symbols becomes
+
+Similar to the conditions required for an adaptive updating al-                                            for                   (4.14)
+gorithm, MMA is applied for a linear channel and requires the
+whiteness of the source data.                                                                         for                        (4.15)
+
+B. Nonsquare Constellations                                                  Other moments for the symbols are computed in a similar
+
+   We now show how the MMA algorithm can be modified to                      fashion, and we find that the two moduli for the 128-point con-
+take advantage of the statistics of the symbols used in non-
+square constellations. Fig. 7 shows a 128-point signal constel-              stellation are given by       9.2 and      6.1. The separate
+lation, which is used to transmit blocks of 128 7 bits.
+This constellation is obtained from a square constellation with              constant moduli for 32-CAP and 128-CAP are listed in Table II.
+12 12 144 points by removing the four outer points in each
+corner. We will assume that the symbol levels used along each                A single modulus could also be used, but this would increase
+dimension are taken from the set 1, 3, 5, 7, 9, 11
+and that all the 128 complex symbols are sent with the same                  the probability of converging to the so-called 144-point wrong
+probability 1/128. In this case, the discrete values taken by the
+real and imaginary symbols and do not all have the same                      solution, which will be discussed in Section VIII.
+probability of occurrence. Specifically, the largest values 9,
+                                                                                             V. GENERALIZED MMA (GMMA)
+  11 occur less often than the smaller values 1, 3, 5, and
+  7. Thus, the statistics of the symbols and vary along                         The RCA and CMA blind equalization algorithms discussed
+their respective dimensions.                                                 previously are not very effective in providing a good eye
+   MMA takes advantage of the variation of statistics along each             opening when the number of different symbols in the signal
+dimension by using piecewise linear contours (or moduli) for                 constellation becomes very large. The basic MMA algorithm
+                                                                             also has difficulties with very dense constellations, but, because
+                                                                             of its flexibility, it can be modified to ease the eye opening of
+                                                                             these constellations. This is achieved by dividing the complex
+                                                                             plane of in-phase and quadrature output samples of the equal-
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:59:09 UTC from IEEE Xplore. Restrictions apply.
+YANG et al.: THE MULTIMODULUS BLIND EQUALIZATION AND ITS GENERALIZED ALGORITHMS                                                 1003
+
+izer into several disjoint regions, which all have their own cost
+functions and moduli. This modified MMA algorithm is called
+generalized MMA (GMMA).
+
+A. The Problem With Dense Constellations
+
+   In this section, we provide a brief intuitive explanation of
+why RCA, CMA, and basic MMA have difficulties in opening
+the eye of very large signal constellations. From (3.7), (3.9),
+(4.7), and (4.8) we see that the stochastic gradient tap updating
+algorithms used for the phase-splitting equalizer, for example,
+all have the following generic form:
+
+(5.1)
+
+where depends on the type of algorithm that is being used.
+Assume now that we are in steady-state and that the complex
+tap vector has converged in the mean, so that
+
+(5.2) Fig. 8. GMMA sample subsets and moduli for 256-point signal constellation.
+
+Thus, in steady-state the mean of the correction term               has its own MMA cost function and modulus. With such an ap-
+in the tap updating algorithm is zero, but its variance is gen-     proach, the variance of and the corresponding tap adaptation
+erally not equal to zero. This results in tap fluctuations, which   noise remain manageable when the number of points in the main
+contribute tap adaptation noise to the output signal of the equal-  signal constellation increases.
+izer. When a decision-directed algorithm is used in steady-state
+operation, the quantity in the correction term becomes the          B. Principle of GMMA
+error across the slicer, which is also equal to the noise at
+the output of the equalizer, as was shown in Section III-A. The     The principle of GMMA will be discussed with respect to
+magnitude of this noise is comparable to the magnitude of the
+additive noise in the channel, and is small compared with the       the 256-point signal constellation shown in Fig. 8, where, for
+spacing between the points in the signal constellation. Multipli-
+cation by the small step size further decreases the variance of     simplicity of notation, we are showing the in-phase dimension
+the correction term. As a result, the tap fluctuations due to the
+adaptation algorithm are very small and do not contribute sig-      ( ) along the vertical axis and the quadrature dimension ( )
+nificantly to the MSE at the output of the equalizer.
+                                                                    along the horizontal axis. We will again treat the in-phase and
+   Assume now that we use RCA, for example. The quantity
+    used in the correction term is then the error with respect to   quadrature dimensions independently, as was done for the basic
+
+one of four points, as shown in Fig. 7. It should be apparent       MMA. The dotted lines in the figure represent boundaries for
+from the figure that this error cannot become small in steady-
+state operation, even in the absence of noise. It should also be    various subsets of in-phase output samples of the equalizer.
+apparent that the variance of increases compared with the
+squared distance between symbols when the number of points          In this example, there are three subsets (1), (2), and (3), which
+
+  in the signal constellation is increased. This increases the tap  include the symbol levels 1, 3, 5, 7 , 9, 11 , and
+fluctuations and associated tap adaptation noise, and makes it
+increasingly difficult to open the eye. The only way to keep the    13, 15 , respectively. The solid lines represent the moduli,
+tap fluctuation noise low when is increased is to decrease the
+step size . However, this decreases the speed of convergence        which are used for each subset, and we have          6.08,
+of the equalizer. In addition, finite precision effects become a
+factor in a practical implementation if is too small. It has been   10.25, and       14.17. Similar subsets and moduli are also
+found that, for the applications discussed here, RCA, CMA, and
+basic MMA become impractical when 64, 128, and                      defined for the quadrature samples . Multiple moduli (but not
+
+      256, respectively.                                            multiple sample subsets) had previously been used in [26] for a
+   Rather than decreasing the step size when is increased,
+one can, instead, try to keep the variance of the correction term   different cost function than the one proposed here.
+
+         small by keeping small. This is the approach that          We now describe the GMMA tap updating algorithm as it ap-
+is used for GMMA. The idea is to divide the complex plane
+of equalizer output samples into smaller regions, which contain     plies to the in-phase tap vector of the phase-splitting equal-
+subsets of symbols of the main constellation. Each subset is then
+treated as a constellation with a reduced number of symbols, and    izer shown in Fig. 4. The equation used for updating the tap
+
+                                                                    vector is always the one given in (4.9). However, the value
+
+                                                                    of the constant use in the computation is a function of the
+
+                                                                    value of the in-phase sample . For example, if 8            12
+
+                                                                    in Fig. 8, then the modulus corresponding to this subset has to be
+
+                                                                    utilized, i.e.,       10.25. Similarly, when belongs to
+
+                                                                    another subset, then the corresponding modulus has to be used
+
+                                                                    in the computation of the tap updating algorithm in (4.9).
+
+                                                                    C. Computation of the GMMA Design Parameters
+
+                                                                       The definition of the various subsets of equalizer output sam-
+                                                                    ples and corresponding moduli used by GMMA is not straight-
+                                                                    forward, and has to be made carefully if one wants to get the ben-
+                                                                    efits provided by this algorithm. Here, to address this problem,
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:59:09 UTC from IEEE Xplore. Restrictions apply.
+1004                                                      IEEE JOURNAL ON SELECTED AREAS IN COMMUNICATIONS, VOL. 20, NO. 5, JUNE 2002
+
+we present an iterative algorithm, which uses an equal energy               sample subset . Specializing (B-9) to the second
+                                                                            sample subset, we get
+type of principle and leads to a good choice of subsets of equal-
+
+izer output samples and corresponding moduli.
+
+An ideal choice of sample subsets and moduli would guar-
+
+antee that the tap fluctuation noise introduced by each subset
+
+is the same and is as low as possible. Practical designs, such                                                   (5.5)
+
+as the one described below, can only approximate this ideal de-
+
+sign. Rather than dealing directly with tap fluctuation noise, we           There are two different ways to use this equation
+
+will instead use a closely related quantity, which is the minimum           to find . One approach is to compute the cost
+
+of the MMA cost function. The main idea behind the iterative                function for various values of . The value of
+
+algorithm is to design sample subsets in such a way that this               the cost function that is closest to the targeted
+
+minimum is (roughly) the same for all the subsets. Assume now                               592 is obtained for  6, so
+
+that we have in-phase subsets and that         represents the               that the design parameters for the second sample
+
+th sample subset, which includes the subset of symbols    .                 subset are
+
+The cost function minimization is done with respect to each
+
+sample subset        , i.e., we minimize                                                                         (5.6)
+
+                                                                            The try-and-choose approach used above to deter-
+
+                                                          (5.3)             mine the value of the parameter (or in gen-
+
+                                                                            eral) is adequate for most practical applications, but
+
+The minimum of this cost function is again obtained when                    is not very rigorous. A more systematic and math-
+
+or                . If the minimum value of the cost function               ematically pleasing approach is to replace the cost
+
+is the same for all the sample subsets, then the cost function of           function on the left in 5.5 with its targeted value of
+
+the dense constellation has the same minimum value.                         592 and then solve the equation for . This can
+
+For simplicity, we will restrict our discussion of the itera-               be done with commercially available software pack-
+
+tive algorithm to square constellations, but it can also be used            ages. We find that the only solution that is in the de-
+
+for nonsquare constellations. We will assume that the symbols               sired range is  6.24, which has to be rounded
+
+and take values 1 3                       2 1 , so that the                 to the closest integer, i.e., 6, for a practical imple-
+
+maximum number of symbol levels (in magnitude) is . The                     mentation.
+
+expressions for the modulus and minimum of the MMA cost            Step 3:  To get the design parameters for the third subset of
+
+function for sample subset are the same as the ones used for                samples,        , we again use the procedure given
+
+basic MMA, except that they are only evaluated over the subset              in Step 2, except that the subscripts 2 and 3 replace
+
+of symbols        . The three main steps of the iterative algo-             the subscripts 1 and 2 in (B-9), respectively. We
+
+rithm are given below.                                                      find that the design parameters for the third sample
+
+Step 1:     We first choose a targeted value for the minimum                subset are
+
+            of the GMMA cost function, and we choose it in                                                       (5.7)
+
+            such a way that it corresponds to the minimum of a
+
+            square constellation that is easily handled by basic            The same procedure is then iterated until the com-
+                                                                            puted is larger than the number of symbol
+            MMA. For the 256-point constellation in Fig. 8,                 levels used by the main constellation. For 256-CAP,
+                                                                            this number is eight and the iterative algorithm stops
+            we have chosen                     592, which is                after three subsets of samples have been defined.
+
+            the minimum value of the MMA cost function for
+
+            a 64-point constellation, as computed from (B-3)
+
+            with        4. This choice also defines the design
+
+            parameters for the first sample subset        and                                 VI. CMA–MMA
+
+            we have                                                   Another generalized MMA is proposed in this paper, called
+                                                                   CMA–MMA. Rather than to create new cost functions, the
+                                                          (5.4)    CMA–MMA jointly uses the two cost functions of CMA and
+                                                                   MMA for in-phase and quadrature phase filters separately in a
+Step 2:     We now outline the procedure used to find the          phase-splitting filter structure shown in Fig. 4.
+
+            design parameters of the second subset of samples         The main aspect of the algorithm of CMA–MMA introduces
+                                                                   asymmetry into the tap updating algorithm of an equalizer,
+                  . First, we define a square constellation        whereas other blind equalization algorithms use symmetrical
+                                                                   algorithms for the two-filter equalizer. Referring to Fig. 4, the
+            using a number of symbol levels               .        cost functions of CMA–MMA are proposed as
+
+            This signal constellation is obtained from the                                                                               (6.1)
+
+            64-point constellation by adding              new                                                                            (6.2)
+
+            symbol values, so that the symbols            in
+
+            the second subset take the following values
+
+                                                          .
+
+            Equation (B-9) in Appendix B gives a general
+
+            expression for the minimum of the cost function of
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:59:09 UTC from IEEE Xplore. Restrictions apply.
+YANG et al.: THE MULTIMODULUS BLIND EQUALIZATION AND ITS GENERALIZED ALGORITHMS                                   1005
+
+The gradients of the cost functions derived from (6.1) and (6.2)
+as follows:
+
+                                                      (6.3)
+                                                      (6.4)
+
+Then we have the following stochastic gradient tap updating
+algorithms:
+
+                                                      (6.5)                  Fig. 9. Dual-mode CAP–QAM receiver.
+                                                      (6.6)
+
+Note that the constants are different for two filters. For in-               So that (6.7) becomes
+
+stance with 16-CAP, we use           3.6 for CMA and                                                                                              (6.12)
+
+2.86 for MMA.                                                                The quantity emphasized above is the negative of the so-called
+                                                                             kurtosis. It can be shown that the kurtosis is always negative
+CMA–MMA algorithm jointly uses the CMA and MMA cost                          for typical signal constellation, so that this quantity is always
+                                                                             positive, so that (6.8) is satisfied for any .
+functions. Now we compare CMA–MMA and CMA. CMA is
+                                                                                CMA–MMA takes advantages of the strength of both CMA
+a truly two-dimensional (2-D) algorithm and CMA–MMA is a                     and MMA. CMA cannot rotate a constellation and MMA may
+                                                                             converge to some wrong solutions. Without an additional cost,
+pseudo (2-D) algorithm. Due to the two-dimensional feature,                  the new algorithm achieves more reliable convergence during
+                                                                             initial startup.
+both algorithms do not converge to diagonal solutions, which
+                                                                                         VII. DUAL MODE CAP–QAM RECEIVER
+will be discussed in Section VIII. However, CMA–MMA ro-
+                                                                                Recently, in some broadband excess standards require that the
+tates a constellation in a right position, but CMA remains the               transmitter can use either CAP or QAM line codes [28]. The
+                                                                             receiver, on the other hand, must accommodate both line codes,
+phase offset of the constellation. This means that CMA requires              blindly startup, then blindly deciding which line code was sent,
+                                                                             and finally decoding the sent symbols. In a straight forward way,
+a rotator at blind startup and remains in steady-state, which re-            we can use a parallel receiver, separately using CAP or QAM
+                                                                             that may increase complexity. Another way to implement it is to
+sults in an increase of complexity.                                          start in CAP mode and switch to QAM mode if CAP mode does
+                                                                             not produce satisfactory results. Now, we propose a dual-mode
+The reason why CMA cannot rotate the constellation is dis-                   CAP–QAM receiver capable of demodulating both CAP and
+                                                                             QAM-modulated data by using a single equalizer. In particular,
+cussed in [17]. Now, we show why CMA–MMA can rotate the                      this receiver applies to xDSL-type channels where no frequency
+                                                                             offset is introduced.
+constellations. Assume a rotated constellation by some angle ,
+                                                                                The detailed CAP and QAM transmitter can be found in [19].
+so that                     . The in-phase cost function is                  The receiver structure of the dual-mode CAP–QAM is illus-
+                                                                             trated in Fig. 9. Now we propose a dual-mode CAP–QAM re-
+then given as                                                                ceiver for MMA. The MMA cost function for a CAP receiver is
+                                                                             given as
+                                                                      (6.7)
+We want to show that this cost function takes its minimum value
+for
+
+                                                                      (6.8)
+
+This is equivalent to the following in (6.7):
+
+                                                      (6.9)                                                       (7.1)
+
+and
+                                                                                If (7.1) is applied to the QAM signal in Fig. 3, the cost function
+
+                                                                     (6.10) needs to be adjusted as
+
+It is clear that the condition in (6.10) is true for any . We now                                                                                  (7.2)
+simplify the conditions in (6.9). Equation (6.9) can be written
+                                                                             We see from (7.2) that the constant needs to be computed
+                                                                     (6.11)  for QAM receiver. Note that the computation of for the cost
+                                                                             function in (7.1) with a CAP receiver can be found in Section IV
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:59:09 UTC from IEEE Xplore. Restrictions apply.
+1006                                             IEEE JOURNAL ON SELECTED AREAS IN COMMUNICATIONS, VOL. 20, NO. 5, JUNE 2002
+
+and Appendix A. Now we derive the constant for QAM. The             From (7.8), we see that is a function of and with
+partial derivative of (7.2) for the in-phase dimension is given by
+                                                                                               , this leads (7.8) become
+
+                                                                          , which is the same as for MMA with a CAP
+
+                                                                    receiver, see Appendix A.
+
+                                                                    The constant can be computed from either (7.6) or (7.8),
+
+                                                 (7.3)              Because is dependent on , can be different even for
+
+                                                                    the same constellation. For instance, for 16-QAM
+
+where is the carrier frequency and is the symbol period.            with  15.55 MHz and        25.92 MHz, we obtain
+
+With perfect equalization,        or             , (7.3) be-                                   . The following example computes
+
+comes                                                               the constant from (7.8)
+
+                                                 (7.4)                                                                    (7.9)
+
+Setting (7.4) to zero, we obtain                                    Above shows a basic dual-mode CAP–QAM blind equalizer.
+                                                                    More developed algorithms of this type equalizer can be found
+                                                 (7.5)              in [19]. RCA and CMA can be also applied for CAP–QAM re-
+                                                                    ception. However, for some applications, MMA achieves better
+With the assumptions of               ,          and                performance.
+
+                 , seeing in [17], (7.5) can be simplified in the   VIII. CONVERGENCE TO WRONG SOLUTIONS AND INCOMPLETE
+                                                                                                   SOLUTIONS
+steps shown in (7.6) at the bottom of the page.
+                                                                       One of the major problems with blind equalization is the pos-
+From (7.6), we see that for a QAM receiver, the constant            sibility to converge the equalizer to so-called “wrong solutions.”
+                                                                    These wrong solutions should be distinguished from the local
+is not only a function of the transmitted symbols, but also of      minima discussed in [26]. When the equalizer converges to a
+                                                                    local minimum, the cost function of the blind equalization al-
+the angle        . Then the constant can be numerically             gorithm is not minimized. Wrong solutions, on the other hand,
+                                                                    can, potentially, minimize the cost function, as will be shown
+computed from (7.6). It can also be expressed as a function of      later.
+
+the symbol level number . The expression of for a standard             The probability of converging to a wrong solution during
+                                                                    blind startup is a function of the type of blind equalization al-
+MMA for CAP constellation can be found in Appendix A. We            gorithm and equalizer structure being used. The characteristics
+                                                                    of the channel can also be a major factor. Fig. 10 shows some
+can rewrite (7.6) in as shown in (7.7) at the bottom of the page.
+
+Defining                                         , (7.7) can
+
+be rewritten as
+
+                                                 (7.8)
+
+                                                                                                                          (7.6)
+
+                                                                                                                                                   (7.7)
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:59:09 UTC from IEEE Xplore. Restrictions apply.
+YANG et al.: THE MULTIMODULUS BLIND EQUALIZATION AND ITS GENERALIZED ALGORITHMS                                             1007
+
+                                                                             Fig. 11. Rotated solutions obtained with CMA.
+
+Fig. 10. Wrong solutions obtained with RCA.                                  of the equalizer’s output samples can be obtained by rotating
+
+wrong solutions, which were obtained in the laboratory with a                the complex tap vector , as should be apparent from (2.8).
+phase-splitting equalizer when it was converged with RCA.
+                                                                             Thus, if the tap vector minimizes the CMA cost function
+   In Fig. 10, the two solutions on the top were obtained with
+a 16-CAP transceiver using the 16-point constellation shown in               when  , then all its rotated versions          also
+Fig. 3(a) and the two solutions on the bottom were obtained with
+a 32-CAP transceiver using the 32-point constellation shown                  minimize the cost function and                 . RCA and
+in Fig. 3(b). The diagonal solution for 16-CAP that is shown
+on the top left is the most frequently observed wrong solution               MMA cannot produce rotated solutions with an arbitrary angle
+when RCA is used to blindly converge a phase-splitting equal-
+izer. This solution occurs when the in-phase and quadrature fil-             . However, they can, occasionally, produce the 45 rotation
+ters of the equalizer synthesize the same transfer function. It
+should be pointed out that convergence to the diagonal solution              shown in Fig. 10.
+is not possible with a cross-coupled equalizer. The two wrong
+solutions shown on the right produce signal constellations which             We conclude with one last type of wrong solution, which is
+are rotated by 45 with respect to the original constellation. This
+type of wrong solution can also be observed with the cross-cou-              the so-called offset solution. This wrong solution is peculiar to
+pled equalizer. Finally, the wrong solutions shown in Fig. 10 can
+also be obtained with MMA, but much less frequently than with                the phase-splitting equalizer and can be observed with RCA,
+RCA.
+                                                                             CMA, and MMA. It occurs when the in-phase and quadrature
+   CMA cannot converge a phase-splitting equalizer to the diag-
+onal solutions shown on the left in Fig. 10. However, it systemat-           filters synthesize tap vectors which are offset in time by an in-
+ically produces rotated solutions, as shown in Fig. 11. This type
+of incomplete solution can be obtained with both phase-splitting             teger number of symbol periods. Fig. 12 shows the effect of such
+and cross-coupled equalizers, or any other type of equalizer that
+uses CMA during blind startup. The use of differential coding                a solution on a 128-point signal constellation. In this example,
+can only correct 90 phase ambiguity wrong solutions, but it
+cannot converge an equalizer with arbitrary phase offset intro-              the transmitter uses the nonsquare 128-point signal constella-
+duced in the channel.
+                                                                             tion shown in Fig. 7. The signal constellation obtained at the
+   CMA produces these rotated solutions because it cannot com-
+pensate for a fixed phase offset introduced by the channel.                  output of the equalizer is shown in Fig. 12. This constellation is
+Consider the CMA cost function in (3.8) and assume that the
+equalizer’s complex output samples are rotated by an angle                   square and has 144 points instead of 128 points. To understand
+
+ . The cost function can then be written as                                  how this can happen, assume, for example, that the following
+
+                                                                             successive real and imaginary symbols have been transmitted:
+
+                                                                                                and                         . If the
+
+                                                                             equalizer had converged to the right solution, the complex out-
+
+                                                                             puts of the equalizer would be
+
+                                                                             and
+
+                                                                                                                                                   (8.2)
+
+                                                                             which correspond to valid points in the 128-point constella-
+                                                                             tion. Assume now that the quadrature filter of the phase-split-
+                                                                             ting equalizer introduces a propagation delay that is one symbol
+                                                                             period larger than the delay introduced by the in-phase filter.
+                                                                             The complex output of the equalizer in symbol period will
+                                                                             then be
+
+                                                                      (8.1)                                                                        (8.3)
+Thus, the value of the CMA cost function is not affected by a
+rotation of the equalizer’s complex output samples . As a                    This is a corner point of the 144-point constellation and is not a
+result, CMA cannot compensate for such a rotation. A rotation                valid symbol of the 128-point constellation. Offset solutions are
+                                                                             easily detected with nonsquare constellations by simply looking
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:59:09 UTC from IEEE Xplore. Restrictions apply.
+1008                                             IEEE JOURNAL ON SELECTED AREAS IN COMMUNICATIONS, VOL. 20, NO. 5, JUNE 2002
+
+                                                                    ture, this leads to the following conditions on the tap vectors
+                                                                    and :
+
+                                                                    and                                                  (8.4)
+
+                                                                    We now make the following definitions:
+
+                                                                         and                                             (8.5)
+
+                                                                    These quantities can be used to modify either the RCA, CMA,
+
+                                                                    or MMA cost functions. For example, the MMA cost function
+
+                                                                    in (4.1) is modified in the following way (with  ):
+
+                                                                                                                                          (8.6)
+                                                                    and the tap updating algorithms in (4.9) and (4.10) become
+
+                                                                                                                         (8.7)
+
+Fig. 12. 144-point offset solution for 128-CAP.                                                                          (8.8)
+
+at the signal constellation at the output of the equalizer. How-    where , , and are different step sizes, which are best deter-
+ever, such a detection scheme is not possible when the signal       mined empirically.
+constellation used at the transmitter is square.
+                                                                       Another way to handle wrong solutions is to use the
+   Coping With Wrong Solutions: There are many techniques           CMA–MMA algorithm which is proposed in Section VI. In-
+that can be used to handle wrong solutions during initial startup.  stead of modifying the cost functions, we simply use CMA for
+One possibility is to monitor the bit stream at a higher layer and  one channel and MMA for the other. This combined algorithm
+send a signal to the receiver if no valid data (such as ATM cells)  takes advantages of both CMA and MMA, where the former
+are detected after a certain amount of time. The receiver can       does not converge to diagonal solutions and the latter rotates
+then initiate another blind startup of the equalizer with a new     the constellation to the right positions.
+set of initial tap coefficients, for example. This process is re-
+peated until proper convergence is achieved. This approach has                          IX. EXPERIMENTAL RESULTS
+been found useful in the applications discussed in [12] and [13],
+which have to deal with mild channel characteristics. The tech-        The experimental results presented in this paper were ob-
+nique is somewhat less effective when the channel introduces        tained in the laboratory with the setup pictured in Fig. 13. The
+very severe linear distortion.                                      transceiver prototype used in the experiments was initially de-
+                                                                    veloped to implement the 51.84 Mb/s 16-CAP transceivers used
+   The rotated solutions obtained with CMA can be handled by        in the ATM LAN, and FTTC applications described in [12] and
+using a rotator at the output of the equalizer. This rotator can    [14]. It has since been enhanced to accommodate other appli-
+be implemented as a carrier recovery loop of the type used for      cations, such as the various CAP transceivers considered for
+voiceband modems, for example [4], [19], and [27]. However,         VDSL and the 64-CAP transceiver specified for ATM LAN at
+with such an approach, the rotator must be used all the time        155.52 Mb/s [13]. The performance of the CAP transceivers has
+and must operate at the symbol rate in steady-state operation.      been evaluated in the laboratory with a variety of communica-
+This adds unnecessary complexity to the steady-state operation      tion links using actual cables and connecting hardware. An ex-
+of the receiver when the rotator is not required for other pur-     ample of such a cabling arrangement is the FTTC broadband
+poses, such as tracking of frequency offset and carrier fluctu-     access network shown in Fig. 1.
+ations introduced by the channel. The applications considered
+here do not have to deal with this kind of channel impairment.         The CAP receiver implemented in the prototype uses the
+                                                                    phase-splitting equalizer shown in Fig. 4. This equalizer pro-
+   One way to handle wrong solutions is to modify the basic cost    vides the best trade-off between complexity and performance
+functions given in previous sections, and incorporate some con-     in steady-state operation for the type of applications considered
+straints which do not allow the occurrence of wrong solutions.      here. However, it is more prone to convergence to wrong
+We provide one example here, which has been found to be effec-      solutions than some other equalizers, as was discussed in the
+tive in preventing the convergence of the phase-splitting equal-    previous section. The equalizer consists of three main hardware
+izer to various wrong solutions, such as the diagonal solution.     components, a FIFO that collects blocks of A/D samples, fast
+The constraint that is used is based on the fact that the impulse   FIR filters that compute the equalizer outputs at the symbol
+responses of the in-phase and quadrature filters of a phase-split-  rate , and a programmable digital signal processor (DSP)
+ting equalizer form a Hilbert pair after convergence to the right   chip that can implement any of the tap updating algorithms
+solution. It is well known that functions that form a Hilbert pair  discussed here. The tap updating algorithms are iterated in the
+are orthogonal and have the same energy. For a passband struc-      DSP at a rate lower than . New tap coefficients are down-
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:59:09 UTC from IEEE Xplore. Restrictions apply.
+YANG et al.: THE MULTIMODULUS BLIND EQUALIZATION AND ITS GENERALIZED ALGORITHMS                                         1009
+
+Fig. 13. Laboratory experimental setup.
+
+                                                                     Fig. 15. Main steps of a blind startup using MMA.
+
+                                                                     Fig. 16. 32-CAP and 36-point constellations.
+
+Fig. 14. CAP spectrum at the input and output of the channel.        thousand tap updating iterations with MMA is shown on the
+                                                                     top right. In real-time DSP setup, we just manually control the
+loaded from the DSP to the fast FIR filters when computation         switch with observation. The picture on the bottom left shows
+of the tap updating algorithm is completed.                          the eye opening after about ten seconds. Note that due to the
+                                                                     limitation of the DSP implementation, we can only record lab-
+   We now describe some experimental results obtained with the       oratory results within a few second duration. This eye opening
+51.84 Mb/s 16-CAP transceiver described in [14]. The upper           is good enough to allow the receiver to switch from MMA to
+trace in Fig. 14 shows the spectrum of the 16-CAP signal at the      the LMS algorithm, which is done at this point. The LMS al-
+output of the transmitter. The lower trace shows the spectrum        gorithm quickly tightens the dots and produces the steady-state
+of the signal at the output of a VDSL communication link con-        signal constellation shown on the bottom right in the figure.
+sisting of a 700 UTP loop with a 14 bridged tap. The deep
+notch in the spectrum is due to the bridged tap. RCA cannot             We tested MMA with different lengths of equalizer. A min-
+blindly converge the equalizer in a reliable fashion with this type  imum number of taps is required for a blind equalizer to obtain
+of channel impairment. Both CMA and MMA are much more                eye opening depending the applications. The equalizer used for
+effective in opening the eye. However, as was mentioned pre-         16-CAP may not long enough for 256-CAP. Initially, a blind
+viously, CMA requires a rotator operating at the symbol rate at      equalizer can converge faster with fewer taps, but with higher
+the output of the fast FIR filters in Fig. 13. Such a rotator has    error rate. After initial equalization, taps can be added to im-
+not been implemented in the prototype.                               prove error performance. Using longer equalizer during blind
+                                                                     startup will generate meaningless values for the extreme end
+   For the equalizer with DSP setup shown in Fig. 13, we use         taps.
+48 taps and initialize filter taps with the shaping filters of the
+transmitter. Fig. 15 shows the various steps of a blind startup         Fig. 16 shows the convergence for 32-point nonsquare
+obtained with MMA over a VDSL channel. The picture on the            constellation. Using piecewise multiple moduli in separate data
+top left shows the signal constellation at the output of the equal-  spaces, MMA achieves better performance in terms of avoiding
+izer before any tap adaptation has started, but after the AGC        converging to wrong mapping solutions. The picture on the left
+has settled. The signal constellation obtained after a couple of     shows the 32-point convergence when two moduli are used in
+                                                                     MMA, and the picture on the right shows 36-point solution for
+                                                                     32-CAP.
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:59:09 UTC from IEEE Xplore. Restrictions apply.
+1010  IEEE JOURNAL ON SELECTED AREAS IN COMMUNICATIONS, VOL. 20, NO. 5, JUNE 2002
+
+Fig. 17. Convergence performance with MMA and GMMA for 256-CAP.
+
+                                                                                          TABLE I
+                                                              MINIMUM VALUES OF THE COST FUNCTION FOR GMMA
+
+   Fig. 17 shows that the simulation results of comparing MMA          Fig. 18. Convergence of MMA–CMA algorithm.
+and GMMA with the dense constellation of 256-CAP. As dis-
+cussed in Section V, the use of multiple moduli gives better eye       convergence to diagonal solutions. At this point, CMA–MMA
+opening. Table I shows minimum values of the cost functions for        algorithm is more reliable than RCA and MMA.
+256 CAP when the separate data spaces are used. We see that the
+use of two moduli does not significantly reduce minimum cost              Experimental results for CAP–QAM are not covered in this
+functions. We use three moduli in this application. The com-           paper. Interested readers can find detailed information in [19].
+putation of the three moduli can be found in Section V-C and
+illustrated in Fig. 8. Note that the subspace is divided after the                                  X. SUMMARY
+AGC converges, i.e., with normalized gain. The picture on the
+left side shows the convergence with MMA and the picture on               In this paper, the multimodulus blind equalization algo-
+the right side shows that with GMMA. As shown in Fig. 17,              rithm and its generalized algorithms are presented. MMA
+GMMA exhibits better eye opening than MMA. By dividing                 combines the benefits of RCA and CMA algorithms that are
+complex plane into smaller regions, GMMA may increase the              used extensively in practical applications. MMA provides
+rate of wrong decisions if the decision which region to use is not     more flexibility than RCA and CMA. Along with GMMA
+correct. It is true that the equalizer will not converge if the prob-  and CMA–MMA, MMA exhibits the capability to handle
+ability of wrong decision is high. As discussed in Section III, the    nonsquare constellation, dense constellation and certain wrong
+eye of the signal constellations is considered to be open when
+the slicer makes right decisions “most of time,” or when the
+MSE measured across the slicer is small enough. If subspaces
+are properly divided, the reduction of the minimum cost func-
+tion helps equalizer decrease MSE. Simulation results show that
+with properly chosen parameters, GMMA can achieve better eye
+opening than MMA, particularly for some noisy channels.
+
+   The various steps of blind startup with CMMA–MMA are il-
+lustrated in Fig. 18. CMA–MMA first converges to a constel-
+lation with a phase-offset, and then rotates to the right posi-
+tion. In this case, the convergence rate to a diagonal solution is
+tremendously reduced. In the laboratory experimental work, we
+tested CMA–MMA with various channel lengths of 20 ft, 150 ft,
+300 ft, and 700 ft which introduce different phase-offset to the
+channel. A few hundreds of tests with those channels show no
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:59:09 UTC from IEEE Xplore. Restrictions apply.
+YANG et al.: THE MULTIMODULUS BLIND EQUALIZATION AND ITS GENERALIZED ALGORITHMS                    1011
+
+solutions. MMA is also suitable in dual-mode CAP–QAM                    Using the same method, we obtain the following expression for
+receiver.                                                               the constant used for CMA:
+
+   Computer simulations and laboratory experimental results                                        (A-6)
+are provided. The results support the theoretical analysis for
+MMA. MMA shows reduced rate of convergence to wrong                     and for RCA, we get
+mapping solutions. In addition, for 256-CAP, GMMA exhibits
+good eye opening due to the reduction of minimum value of                                          (A-7)
+the cost function. Without additional cost, CMA–MMA can be
+reliably used to avoid convergence to diagonal solutions.               Square Constellations: The expressions derived previously
+
+   In the appendices, we calculate the constant modulus . The           for the constants are functions of the moments of the symbols
+results provide a useful tool to analyze the cost function and
+performance.                                                            and . These moments can be computed on an individual
+
+                              APPENDIX A                                basis, although this can be tedious. For the usual case where
+               COMPUTATION OF THE CONSTANTS
+                                                                        the symbols have odd integer values it is possible to derive
+   This appendix presents the derivation of closed-form expres-
+sions for the various constants used in the RCA, CMA, and               simple closed-form expressions for the constants as a function
+MMA algorithms. As will be shown, these expressions can be
+conveniently expressed as a function of the number of symbol            of the number of symbol levels. We will assume that the symbols
+levels (in magnitude) used along each dimension of the signal
+constellation.                                                          take the following values                                    ,
+
+   The general approach used to compute the constant will be            where indicates the number of symbol levels (in magnitude).
+explained for the MMA algorithm. The MMA cost function is
+given by                                                                The following summations can be found in [29], for example:
+
+                                                                                                   (A-8)
+
+                                                                                                   (A-9)
+
+                                                     (A-1)                                         (A-10)
+
+where and represent the equalizer’s output samples, and
+
+is a positive integer. For two-dimensional CAP systems,                                                                                     (A-11)
+
+and represent the transmitted symbols for the in-phase and              These summations do not apply directly to sums of powers of
+                                                                        odd integer, but can be used to derive closed-form expressions
+quadrature phase channels, respectively. When an equalizer              for these types of summations. For example, we can write
+
+converges,            and     , and the cost function                                                                                       (A-12)
+
+becomes                                                                 where the two sums in the middle have been evaluated from
+                                                                        (A-8). Similar summation manipulations can be used for other
+                                                     (A-2)              sums of powers of odd integers, and we get
+
+Assuming the same statistics for and , we have                                                                                              (A-13)
+                         . In the following, only the analysis for the
+
+in-phase channel will be provided. The same analysis applies to
+the quadrature phase channel. For the in-phase dimension, the
+gradient of the cost function with respect to the real tap vector
+was previously given in (4.4) as
+
+                                                     (A-3)
+
+The constant can now be evaluated by assuming perfect                                              (A-14)
+                                                                                                   (A-15)
+equalization, i.e.,   , and by setting the gradient
+
+to zero [2]–[4]. Also, if we assume that symbols in different
+
+symbol periods are uncorrelated, we get                  ,
+
+where is a fixed vector whose entries are a function of the
+
+channel. We then get
+
+Solving for in (A-4), we get                                                                                                       (A-16)
+
+                                                     (A-4) For square constellations, the probability of occurrence of each
+                                                               symbol level is the same, i.e., , so that the moments of the
+                                                               symbol levels become
+
+                                                     (A-5)                                         (A-17)
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:59:09 UTC from IEEE Xplore. Restrictions apply.
+1012                                                       IEEE JOURNAL ON SELECTED AREAS IN COMMUNICATIONS, VOL. 20, NO. 5, JUNE 2002
+
+                                         R TABLE II
+
+                             THE CONSTANT FOR BLIND EQUALIZATION ALGORITHMS
+
+For CMA, the constant is a function of the moments of the We can compute the minima of the CMA and RCA in a similar
+complex symbols . Assuming that the symbols and are fashion, and we get
+uncorrelated, it is easily verified that
+
+                             (A-18)                                                                                          (B-4)
+
+Using the above results and  , the constants for the three
+
+blind algorithms can be expressed in the following simple ways                                                               (B-5)
+
+as a function of :
+
+                                                                            It should be pointed out that the CMA cost function in (B-4) is
+
+                             (A-19)                                         for both dimensions and that the MMA and RCA cost functions
+
+                                                                            in (B-3) and (B-5) apply to one dimension only. Notice that the
+
+                             (A-20)                                         minimum of all three cost functions is zero for  1, which
+
+                                                                            corresponds to 4-CAP. However, the minimum is nonzero when
+
+                                                                                   1.
+
+                                                                    (A-21)  The expressions for the modulus and cost function of the th
+
+   For nonsquare constellations, MMA uses several moduli                    in-phase sample subset  used by GMMA are given by
+along each dimension. The various constants are then com-
+puted by evaluating the summations in (A-14) and (A-16) for                                                                  (B-6)
+various symbol subsets rather than the whole set of symbols.
+An example of the procedure is given in Section IV-B.                                                                        (B-7)
+
+   The values of the constants for the RCA, MMA, and CMA
+are listed in Table II for square and nonsquare CAP applications.
+
+                              APPENDIX B                                    where           is the subset of symbols belonging to sample
+          MINIMUM VALUES OF THE COST FUNCTIONS
+                                                                            subset          . These expressions are functions of the moments
+   In this appendix, we derive closed-form expressions for the
+minimum values of the various cost functions. We will only                             and  , which can be written
+consider square constellations. For the in-phase cost function
+of MMA, for example, we have
+
+                             (B-1)                                                                                           (B-8)
+
+Using the value of in (A-19), we can rewrite the minimum                    where and       are the number of symbol levels in the
+of the cost function as follows:
+                                                                            square constellations corresponding to sample subsets and
+                                                                     (B-2)
+                                                                            , respectively. Using the results in (A-14) and (A-16) we get
+
+Using the results in (A-16), (A-17), and (A-19) we then get
+
+                             (B-3)                                                                                           (B-9)
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:59:09 UTC from IEEE Xplore. Restrictions apply.
+YANG et al.: THE MULTIMODULUS BLIND EQUALIZATION AND ITS GENERALIZED ALGORITHMS                                            1013
+
+                           APPENDIX C                                       when the gain of AGC and the initial values of the equalizer are
+                 ISI OPTIMIZATION FOR MMA                                   properly chosen. It is easily verified that, with the constraint in
+                                                                            (C-8), the following holds:
+The input and channel vectors are defined as follows:
+
+                                                       (C-1)                                                               (C-9)
+
+                                                       (C-2)
+
+where  is the number of samples. So the second-order                        and the equal sign holds if and only if the channel vector satisfies
+                                                                            the ISI free condition in (C-5).
+expectation of the sample  is
+                                                                               The condition in (C-6) can be written as
+
+                                                                                                                           (C-10)
+
+                                                                     (C-3)                                                                      (C-11)
+
+With the assumption that different symbols are uncorrelated we              Replacing by its value and using (C-4) in (C-11), we can
+obtain                                                                      further simplify the equation to
+
+                                                       (C-4)
+
+                                                                                                                           (C-12)
+
+With a perfectly equalized channel and no ISI at the input of the
+
+slicer, the channel vector has only one nonzero entry equal to
+
+one and can be written as                                                   From the inequality in (C-9), we then have
+
+                                                       (C-5)
+
+                                                                                                                           (C-13)
+
+In order to show that minimization of the cost function results             and equality can only hold if and only if the channel vector sat-
+in zero ISI, we can show that                                               isfies the ISI free condition in (C-5).
+
+                                                                     (C-6)     Unconstrained Problem: We now remove the constraint in
+                                                                            (C-8) of keeping one entry of the channel vector equal to one.
+and that the minimum is achieved when the channel vector                    Using results given in [24], it is possible to show that
+satisfies (C-5). We now provide two such proofs, one for a con-
+strained problem and one for a nonconstrained problem. A result                                                                                 (C-14)
+which will be useful in the following analysis is:
+                                                                                                                                                (C-15)
+
+                                                                            where  and           are called the kurtosis of the equalizer
+
+                                                       (C-7) output samples and symbols, respectively. We can use (C-4) and
+                                                                            (C-15) to solve for  in (C-14), and we obtain
+
+Equality in (C-7) holds if and only if one the terms is nonzero                                                            (C-16)
+and all the other terms are zero.
+
+   Constrained Problem: In this scenario, we assume that the
+channel vector can be written as
+
+                                                       (C-8)
+                                                                 Using (C-7) on the right side in (C-16), we obtain
+
+That is, one of the entries of the vector is constrained to remain                                                         (C-17)
+equal to one, and the other entries can take any value. This as-
+sumption is a good approximation of what is done in practice
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:59:09 UTC from IEEE Xplore. Restrictions apply.
+1014                                             IEEE JOURNAL ON SELECTED AREAS IN COMMUNICATIONS, VOL. 20, NO. 5, JUNE 2002
+
+Replacing by its value and using (C-15), the one-dimensional in Appendix A. The second- and fourth-order moments of the
+
+cost function of MMA in (4.7) can be written as                             symbols are obtained from (A-14) and (A-16). Then, we have
+
+                                                 (C-18)
+
+Using (C-17) in (C-18), we get
+
+                                                                                                          (C-23)
+
+                                                                            It is obvious that the values in the brackets are always larger than
+
+                                                                            zero for  . As a result
+
+                                                                                                     for  (C-24)
+
+                                                 (C-19)                     This completes the proof that minimization of the MMA cost
+                                                                            function leads to ISI free output samples of the equalizer [17].
+
+Replacing          in the above equation by its value on the right                                   ACKNOWLEDGMENT
+
+in (C-7), we have                                                              The authors would like to thank V. Lawrence for his support
+                                                                            of this work, D. Harman and R. L. Cupo for their help with the
+                                                                            experimental results, and L. M. Garth and K. Balemarthy for
+                                                                            many useful comments on the material in this paper.
+
+                                                                                      REFERENCES
+
+                                                                    (C-20)   [1] Y. Sato, “A method of self-recovering equalization for multilevel am-
+From (C-20), we conclude that the following holds:                                plitude modulation systems,” IEEE Trans. Commun., pp. 679–682, June
+                                                                                  1975.
+                                                                    (C-21)
+if                                                                           [2] R. D. Gitlin and J. J. Werner, “A “blind” equalizer tap adjustment al-
+                                                                                  gorithm for quadrature-amplitude modulation data transmission,” Bell
+                           and                                                    Laboratories Engineer’s Notes, Oct. 19, 1979.
+
+                                                 (C-22)                      [3] D. N. Godard and P. E. Thirion, “Method device for training an adaptive
+                                                                                  equalizer by means of an unknown data signal in a QAM transmission
+The left condition in (C-22) is always true. The right condition                  system,” U.S. Patent 4 227 152, Oct. 7, 1980.
+
+says that the kurtosis of the symbols has to be always negative.             [4] D. N. Godard, “Self-recovering equalization carrier tracking in two-di-
+                                                                                  mensional data communications systems,” IEEE Trans. Commun., vol.
+Equality can only hold if       and              in (C-20).                       28, pp. 1867–1875, Nov. 1980.
+
+From (C-7), this implies that only one can be nonzero and                    [5] A. Benveniste, M. Goursat, and G. Ruget, “Robust identification of a
+                                                                                  nonminimum phase system: Blind adjustment of a linear equalizer in
+           implies that the nonzero term has to be one, so                        data communications,” IEEE Trans. Automat. Contr., vol. AC-25, pp.
+                                                                                  385–399, Mar., 1980.
+that the channel vector has to have the ISI free form given in
+                                                                             [6] J. R. Treichler and B. G. Agee, “A new approach to multipath correction
+(C-5).                                                                            of constant modulus signals,” IEEE Trans. Acoustics, Speech, and Signal
+                                                                                  Processing, vol. ASSP-28, pp. 459–472, Apr. 1983.
+To show that the kurtosis of the symbols used in typical signal
+                                                                             [7] A. Benveniste and M. Goursat, “Blind equalizers,” IEEE Trans.
+constellation is always negative we can use the results obtained                  Commun., vol. 32, pp. 871–883, Aug. 1984.
+
+                                                                             [8] L. Hanzo, W. Webb, and T. Keller, Single- and Multicarrier Quadrature
+                                                                                  Amplitude Modulation. New York: Wiley , 2000.
+
+                                                                             [9] C. R. Johnson, P. Schniter, T. J. Endres, J. D. Behm, D. Brown, and R.
+                                                                                  A. Casas, “Blind equalization using the constant modulus criterion: A
+                                                                                  review,” Proc. IEEE, vol. 86, pp. 1927–1950, Oct. 1998.
+
+                                                                            [10] O. Shalvi and E. Weinstein, “Super-exponential methods for blind de-
+                                                                                  convolution,” IEEE Trans. Inform. Theory, vol. 39, pp. 504–519, Mar.
+                                                                                  1993.
+
+                                                                            [11] B. Jelonnek, D. Boss, and K. D. Kammeyer, “Generalized eigenvector
+                                                                                  algorithm for blind equalization,” Elsevier Signal Processing, vol. 61,
+                                                                                  pp. 237–264, Sept. 1997.
+
+                                                                            [12] G.-H. Im, D. D. Harman, G. Huang, A. V. Mandzik, M.-H. Nguyen, and
+                                                                                  J. J. Werner, “51.84 Mb/s 16-CAP ATM-LN standard,” IEEE J. Select.
+                                                                                  Areas Commun., vol. 13, pp. 620–632, May 1995.
+
+                                                                            [13] G.-H. Im and J. J. Werner, “Bandwidth-efficient digital transmission
+                                                                                  over unshielded twisted pair wiring,” IEEE J. Select. Areas Commun.,
+                                                                                  vol. 13, pp. 1643–1655, Dec. 1995.
+
+                                                                            [14] D. D. Harman, G. Huang, G.-H. Im, M.-H. Nguyen, J. J. Werner, and M.
+                                                                                  K. Wong, “Local distribution for IMIV,” IEEE Multimedia, vol. 2, pp.
+                                                                                  14–23, Fall 1995.
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:59:09 UTC from IEEE Xplore. Restrictions apply.
+YANG et al.: THE MULTIMODULUS BLIND EQUALIZATION AND ITS GENERALIZED ALGORITHMS        1015
+
+  [15] K. N. Oh and Y. O. Chin, “Modified constant modulus algorithm: Blind                                           Jean-Jacques Werner (F’92) was born on February
+         equalization and carrier phase recovery algorithm,” in Proc. ICC ’95,                                        9, 1943, in Rountzheim in the Alsace region of
+         Seattle, WA, June 18–22, 1995, pp. 498–502.                                                                  France, and grew up in the nearby village of
+                                                                                                                      Hageneau. He received the engineering degree in
+  [16] J. Yang, J. J. Werner, and G. A. Dumont, “The multimodulus blind equal-                                        electronics from the Institut National des Sciences
+         ization algorithm,” in in Proc. 13th Int. Conf. Digital Signal Processing,                                   Appliquees, Lyon, in 1965. He immigrated to
+         Santorini, Greece, July 2–4, 1997.                                                                           Canada and received the Master’s degree, in 1967,
+                                                                                                                      from Laval University, Quebec, Canada. He subse-
+  [17] J. Yang, “Multimodulus algorithms for blind equalization,” Ph.D. dis-                                          quently moved to the United States and received the
+         sertation, University of British Columbia, Aug. 1997.                                                        Sc.D. from Columbia University, NY, in 1973.
+
+  [18] J. J. Werner, J. Yang, and G. A. Dumont, “Blind equalization for broad-                                           He joined Bell Labs, Lucent Technologies (former
+         band acess,” IEEE Commun. Mag., vol. 37, pp. 87–93, Apr. 1999.                AT&T), Holmdel, NJ, in 1973, where he immediately began making his notable
+                                                                                       contributions to both the theory and implementation of voiceband modems. He
+  [19] L. Garth, J. Yang, and J. J. Werner, “Blind equalization algorithms for         pioneered the use of software for real-time digital processing and conducted re-
+         dual-mode CAP–QAM reception,” IEEE Trans. Commun., vol. 49, pp.               search in general areas of data communication, digital signal processing, and
+         455–466, Mar. 2001.                                                           broadband access. His most outstanding contribution was the successful devel-
+                                                                                       opment of echo cancellation for full-duplex operation as is used in V.32 and
+  [20] K. H. Mueller and J. J. Werner, “A hardware efficient passband equalizer        V.34 modems. Over the course of his career, he has published extensively in
+         structure for data transmission,” IEEE Trans. Commun., vol. COM-30,           archived journals and conferences and has been issued 45 patents. In addition,
+         pp. 538–541, Mar. 1982.                                                       he has made several key contributions in areas of voice-band modems, DSL,
+                                                                                       and home-networks at various standards organizations.
+  [21] R. D. Gitlin, J. F. Hayes, and S. B. Weinstein, Data Communications
+         Principles. New York: Plenum Press, 1992.                                        Dr. Werner, in recognition of his work, became a Fellow of the IEEE in 1992,
+                                                                                       and a Bell Labs Fellow in 1995. He was corecepient of two best paper awards,
+  [22] J. K. Tugnait, “Identification of linear stochastic systems via second and      the 1996 Leonard G. Abraham Prize Paper Award and the best paper award at
+         fourth-order cumulant matching,” IEEE Trans. Inform. Theory, vol. 33,         Interface 1984.
+         pp. 393–407, May 1987.
+                                                                                                                      Guy A. Dumont (M’78–SM’84–F’99) received the
+  [23] S. Haykin, Blind Deconvolution. Englewood Cliffs, NJ: Prentice-Hall,                                           Diplôme d’Ingénieur from ENSAM, Paris, France, in
+         1994.                                                                                                        1973, and the Ph.D. degree in electrical engineering
+                                                                                                                      from McGill University, Montreal, Canada, in 1977.
+  [24] O. Shalvi and E. Weinstein, “New criteria for blind deconvolution of
+         nonminimum phase systems (channels),” IEEE Trans. Inform. Theory,                                               From 1973 to 1974, and then again from 1977 to
+         vol. 36, pp. 313–320, Mar. 1990.                                                                             1979, he worked for Tioxide France. From 1979 to
+                                                                                                                      1989, he was with Paprican where he headed the Con-
+  [25] W. A. Sethares, G. A. Rey, and C. R. Johnson, Jr., “Approaches to                                              trol Engineering Section, first in Montreal and then in
+         blind equalization of signals with multiple modulus,” in Proc. IEEE Int.                                     Vancouver, BC, Canada. In 1989, he joined the De-
+         Conf. Acoustics, Speech, and Signal Processing, Glasgow, Scotland,                                           partment of Electrical and Computer Engineering at
+         May 23–26, 1989, pp. 972–975.                                                                                the University of British Columbia, Vancouver, BC,
+                                                                                       Canada, where he is a Professor and leads the Process Control Group, and is cur-
+  [26] Y. Li, J. K. Liu, and Z. Ding, “Length- and cost-dependent local minima         rently Associate Dean of Applied Science. His current research interests are in
+         of unconstrained blind channel equalizers,” IEEE Trans. Signal Pro-           adaptive control and filtering, distributed parameter system control, control loop
+         cessing, vol. 44, pp. 2726–2735, Nov. 1996.                                   performance monitoring, predictive control, with applications to the process in-
+                                                                                       dustries, mainly pulp and paper, and more recently to biomedical engineering.
+  [27] N. K. Jablon, “Joint blind equalization, carrier recovery, and timing re-          Dr. Dumont was awarded the 1979 IEEE TRANSACTIONS ON AUTOMATIC
+         covery for high-order QAM signal constellations,” IEEE Trans. Signal          CONTROL Honorable Paper Award; the 1985 Paprican Presidential Citation; the
+         Processing, vol. 40, pp. 1383–1398, June 1992.                                1990 UBC Killam research Prize; the 1995 CPPA Weldon Medal; the 1998 Uni-
+                                                                                       versal Dynamics Prize for Leadership in Process Control Technology; and the
+  [28] V. Oksman, Ed., VDSL Draft Specification, June 1998, ANSI Standards             IEEE Control Systems Society 1998 Control Systems Technology Award. He is
+         Contribution T1E1.4/98 045R1.                                                 a Fellow of the BC Advanced Systems Institute, Vancouver, BC, Canada.
+
+  [29] I. S. Gradshteyn and I. M. Ryzhik, Table of Integrals, Series, and Prod-
+         ucts. New York: Academic, 1994.
+
+                               Jian Yang (M’98) received the M.S. and Ph.D. de-
+                               grees in the department of electrical engineering from
+                               the University of British Columbia, Vancouver, BC,
+                               Canada, in 1992 and 1997, respectively.
+
+                                  In 1995, she joined Bell Laboratories of Lucent
+                               Technologies, Holmdel, NJ, where she is currently
+                               a Member of the Technical Staff. From 1995 to
+                               1999, she worked on the theory and practice of
+                               digital signal processing for communications, with
+                               applications to single and multicarrier (DMT)
+                               modulation, particularly using blind equalization
+techniques. Her research interests also include carrier detection, carrier and
+timing recovery, echo cancellation, and single/multirate adaptive filtering.
+She holds eight patents, mostly on blind equalization algorithms. She is
+currently working on wireless and fiber-optical communications, focusing on
+modulation, equalization, and echo cancellation.
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 17:59:09 UTC from IEEE Xplore. Restrictions apply.
+

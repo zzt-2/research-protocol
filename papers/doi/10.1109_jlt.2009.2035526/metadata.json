@@ -1,0 +1,18 @@
+{
+  "storage_version": 2,
+  "id": "L047",
+  "title": "Optimal Polarization Demultiplexing for Coherent Optical Communications Systems",
+  "doi": "10.1109/JLT.2009.2035526",
+  "arxiv_id": null,
+  "download_status": "success",
+  "download_method": "blit_ieee_pdf+pdf_convert_fast",
+  "content_type": "pdf",
+  "content_quality": "good",
+  "content_file": "content.md",
+  "downloaded_at": "2026-08-30T01:52:50+08:00",
+  "real_title": "Optimal Polarization Demultiplexing for Coherent Optical Communications Systems",
+  "title_check": "match",
+  "title_overlap": 1.0,
+  "source_sha256": "060e8108b0407819d23487f13358960baeaa342199262cf31703183129ce7dc5",
+  "content_sha256": "bd1c1dcd9813dd3f1c058250158b3dc1fc74ef5566202b97bb4042b5fec35b76"
+}

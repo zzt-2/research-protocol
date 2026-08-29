@@ -1,0 +1,46 @@
+schema_version: ch4.gated-rde.correctness.v1
+verdict_ceiling: CORRECTNESS_ONLY
+method_signal: NO_METHOD_SIGNAL
+authorization:
+  decision: .sessions/2026-07-09-thesis-writing/decisions.md#D045
+  task: .sessions/2026-07-09-thesis-writing/T053-ch4-gated-rde-correctness-smoke.md
+  repair_task: .sessions/2026-07-09-thesis-writing/T058-repair-ch4-canonical-rde-radius-target.md
+  action_class: GW_STEP4A_D_IMPLEMENTATION_SMOKE
+formula_authority:
+  status: VERIFIED_BY_T056
+  primary:
+    work: Di Rosa and Richter, JLT 2021
+    verification: projects/thesis-fso/apsk-front-end-groundwork/step4a-correctness-verification.md
+    page: 6108
+    equation: Section II-A, Eq. (1)-(3)
+  origin:
+    work: Ready and Gooch, ICASSP 1990
+    local_fulltext: papers/doi/10.1109_icassp.1990.115806/content.md
+    location: Section 3, Radius Directed Equalization
+  implementation_transcription: >-
+    z = W y; R_i = argmin_r ||z_i|^2-r^2|;
+    W_i <- W_i + mu g_i z_i (R_i^2 - |z_i|^2) y^H.
+gate_residuals:
+  cheap: canonical nearest-radius normalized residual
+  candidate: nearest-point ring normalized residual plus decision distance
+truth_firewall:
+  deployable_arms: [plain, cheap, candidate]
+  deployable_inputs: [payload_rx, W0, mu, receiver_visible_thresholds]
+  forbidden_deployable_inputs: [tx_symbols, true_J, true_SNR, BER, oracle_labels]
+  truth_bearing_arm: oracle
+frozen_slice:
+  constellation: DP-(8,8)-16APSK
+  channel: memoryless single-tap J in SU(2)
+  noise: equal-variance circular AWGN on two branches
+  pilots: finite two-row orthogonal Walsh prefix
+  impairments_closed: [GG, time_varying_SOP, CFO, CPE, linewidth, filter, IQ_skew, PDL, PMD, FIR, LDPC, quantization]
+preregistered_smoke:
+  seed: 53002
+  n_payload: 256
+  n_pilots: 16
+  high_snr_db: 30.0
+  mu: 0.0001
+  ring_threshold: 0.2
+  decision_threshold: 0.2
+  cells: [identity_noiseless, random_J_noiseless, high_snr_correctness]
+  forbidden: [SNR_grid, pilot_grid, threshold_search, gain_tuning, BER_verdict]

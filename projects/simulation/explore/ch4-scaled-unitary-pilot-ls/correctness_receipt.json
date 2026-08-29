@@ -1,0 +1,42 @@
+{
+  "schema_version": "t069.correctness-receipt.v1",
+  "created_utc": "2026-08-29T22:21:27.083251+00:00",
+  "authority": "T069/T068/V023",
+  "base_commit": "9a31d5d73e87c37417840a66767a20d8df0f8e36",
+  "control_epoch": 11,
+  "mission_checkpoint": "CP011",
+  "repair_rounds_used": 0,
+  "gates": {
+    "C0": {
+      "status": "PASS"
+    },
+    "C1": {
+      "status": "PASS"
+    },
+    "C2": {
+      "status": "PASS"
+    },
+    "C3": {
+      "status": "PASS"
+    },
+    "C4": {
+      "status": "PASS"
+    },
+    "C5": {
+      "status": "PASS"
+    }
+  },
+  "all_pass": true,
+  "terminal": "CORRECTNESS_PASS",
+  "hashes": {
+    "manifest_sha256": "ad8361f7624a6fed66b8954bcba92efcbdd4dfff1f844746bd2d70feb33ea2b2",
+    "implementation_sha256": "868780505b55da7df979c75fe07f132bf52b8b8904c4ec88961fbbe38b052fd2",
+    "tests_sha256": "870135342627ed44871e83b823b1ef0d0c9e7bab15db15ea44bcd55991241e79"
+  },
+  "environment": {
+    "python": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+    "python_executable": "C:\\Users\\zzt\\.venvs\\torch\\Scripts\\python.exe",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "numpy": "2.5.1"
+  }
+}

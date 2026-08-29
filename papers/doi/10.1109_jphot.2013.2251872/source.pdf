@@ -1,0 +1,542 @@
+Compensation for In-Phase/Quadrature
+Imbalance in Coherent-Receiver Front End for
+Optical Quadrature Amplitude Modulation
+
+Volume 5, Number 2, April 2013
+
+Md. Saifuddin Faruk
+Kazuro Kikuchi, Fellow, IEEE
+
+DOI: 10.1109/JPHOT.2013.2251872
+1943-0655/$31.00 Ó2013 IEEE
+IEEE Photonics Journal     Compensation for IQ Imbalance in Receivers
+
+  Compensation for In-Phase/Quadrature
+       Imbalance in Coherent-Receiver
+      Front End for Optical Quadrature
+              Amplitude Modulation
+
+             Md. Saifuddin Faruk1 and Kazuro Kikuchi,2 Fellow, IEEE
+
+       1Department of Electrical and Electronic Engineering, Dhaka University of Engineering and
+                                         Technology, Gazipur 1700, Bangladesh
+
+        2Department of Electrical Engineering and Information Systems, The University of Tokyo,
+                                           Bunkyo-Ku, Tokyo 113-8656, Japan
+
+                                           DOI: 10.1109/JPHOT.2013.2251872
+                                               1943-0655/$31.00 Ó2013 IEEE
+
+Manuscript received January 11, 2013; revised February 26, 2013; accepted March 5, 2013. Date of
+publication March 13, 2013; date of current version March 22, 2013. Corresponding author: K. Kikuchi
+(e-mail: kikuchi@ginjo.t.u-tokyo.ac.jp).
+
+            Abstract: We propose a novel method of compensation for imbalance between in-phase (I)
+            and quadrature (Q) channels in the front-end circuit of digital coherent optical receivers.
+            Adaptive finite-impulse-response (FIR) filters in the butterfly configuration, which are com-
+            monly used for signal equalization and polarization demultiplexing, are modified so as to
+            allow for adjustment of any imbalance between the IQ channels. IQ imbalances under
+            consideration include the gain mismatch, the phase mismatch, and the timing-delay skew.
+            Computer simulations for the dual-polarization quadrature-amplitude-modulation (QAM)
+            format up to an order of 256 show that such IQ imbalances can severely degrade the system
+            performance, especially for higher order QAM; however, using the proposed scheme, we
+            can compensate for them without any significant penalty over a wide range of imbalances.
+
+            Index Terms: Coherent optical receivers, in-phase/quadrature imbalance, digital signal
+            processing.
+
+1. Introduction
+
+The recent development of digital coherent optical receivers has brought the 100-Gbit/s dual-
+polarization quadrature phase-shift keying (QPSK) system into practical use [1]. For further in-
+crease in the bit rate of optical fiber transmission systems, quadrature amplitude modulation (QAM),
+where both of the in-phase (I) and quadrature (Q) components of an optical carrier are modulated in
+a multilevel manner, is the best candidate among various modulation formats [2]. However, when
+higher order QAM formats are employed, their performances are seriously impaired by imperfec-
+tions of the systems, such as phase noise of the transmitter laser and the local oscillator [3], fiber
+nonlinearity [4], and imbalance between the IQ channels in the front end of coherent optical re-
+ceivers [5]. In this paper, we focus on the impact of the imbalance between the IQ channels on QAM
+signals. We propose a novel IQ-imbalance compensation scheme, where the conventional adaptive
+finite-impulse-response (FIR) filters in the butterfly configuration are modified so as to allow for
+adjustment of any imbalance between the IQ channels.
+
+   The front end of coherent receivers employing phase and polarization diversities converts com-
+plex amplitudes of the incoming dual-polarization optical signal into the electrical domain by means
+of homodyne detection with a free-running local oscillator. It provides four outputs, namely, IQ
+
+Vol. 5, No. 2, April 2013  7800110
+IEEE Photonics Journal     Compensation for IQ Imbalance in Receivers
+
+             Fig. 1. Block diagram of the digital coherent receiver comprising phase and polarization diversities. LO:
+             local oscillator, PBS: polarization-beam splitter, TIA: transimpedance amplifier, ADC: analog-to-digital
+             converter, and DSP: digital signal-processing circuit.
+
+components of the complex amplitudes for horizontal and vertical polarizations [6]. Fig. 1 shows the
+configuration of the front end composed of polarization-beam splitters (PBSs), 90 optical hybrids,
+balanced photodiodes, and transimpedance amplifiers (TIAs). The four outputs from TIAs are sent
+to analog-to-digital converters (ADCs) followed by a digital signal-processing (DSP) circuit.
+
+   Imperfection in any of the 90 optical hybrids, balanced photodiodes, and TIAs in the front end
+may introduce IQ imbalance stemming from the mismatch of the gain and/or the phase between the
+IQ ports [7]. In addition, timing mismatch between the IQ ports may also be induced by the dif-
+ference in the physical path length of the circuit trace, which is known as the IQ delay skew [8].
+These IQ imbalances degrade the system performance severely if they are left uncompensated in
+the DSP unit of the receiver.
+
+   Several methods of IQ-imbalance compensation in the digital domain have been reported so far
+[9]–[11]. In [9], the Gram–Schmidt orthogonalization procedure (GSOP) is investigated for the
+QPSK signal; however, when higher order QAM formats are employed, computational complexity is
+increased and very high ADC resolution is required. In [10], the compensation is done by the
+ellipse-correction method, which is neither applicable to higher order QAM signals nor effective
+when the optical signal-to-noise ratio (OSNR) is low. The IQ-imbalance equalizer based on the
+constant-modulus algorithm (CMA) is demonstrated for the QPSK signal in [11]; however, such an
+approach is again not applicable to higher order QAM signals. It should be also noted that none of
+the methods mentioned above can compensate for the IQ delay skew and that all of them need to
+use dedicated DSP circuits for IQ-imbalance compensation.
+
+   On the other hand, in this paper, we propose a novel scheme, which can overcome the difficulties
+of the previous schemes: First, our scheme can be applied to any modulation formats. Second, it
+can compensate for the IQ gain mismatch, IQ phase mismatch, and IQ delay skew all at once.
+Third, it can be implemented as a part of the conventional two-by-two butterfly-structured FIR filters,
+which have been commonly used for signal equalization and polarization demultiplexing.
+
+   In fact, our proposed scheme modifies the configuration of the conventional adaptive FIR filters in
+such a way that each of the complex-valued FIR filters is replaced with four real-valued FIR filters in
+an inner two-by-two butterfly structure. Then, our scheme has two input ports for each polarization,
+corresponding to the IQ outputs from the front end. Tap coefficients of the sixteen real-valued FIR
+filters can be updated using any stochastic-gradient-decent-based adaptation algorithm such as the
+decision-directed least-mean-square (DD-LMS) algorithm [12] and the CMA [13]. The initial con-
+vergence speed and the steady-state performance of the equalizer depend on the employed
+
+Vol. 5, No. 2, April 2013  7800110
+IEEE Photonics Journal                                  Compensation for IQ Imbalance in Receivers
+
+adaptation algorithm. In this paper, we use the DD-LMS algorithm with the training mode. The
+training mode ensures fast and reliable initial convergence and then switched to the decision-
+directed mode. Such adaptation procedure provides the optimal steady-state performance for high-
+order QAM formats. By the proposed filter modifications, our scheme performs compensation for IQ
+gain/phase mismatch and IQ delay skew simultaneously, along with other conventional tasks of
+adaptive FIR filters such as sampling-phase adjustment [14], polarization demultiplexing [15], and
+compensation for polarization-mode dispersion (PMD) [16].
+
+   With intensive computer simulations using the 10-Gsymbol/s dual-polarization 4-, 16-, 64-, and
+256-QAM formats, we find that the system performance severely degrades if we use the conven-
+tional FIR-filter structure in the presence of IQ imbalance; however, our scheme can fully compensate
+for IQ imbalance generated in the receiver front end over a wide range.
+
+   The organization of our paper is as follows: Section 2 presents the formulation of front-end IQ
+imbalance based on the transfer-function matrix. In Section 3, we propose the novel scheme for IQ-
+imbalance compensation together with the tap-adaptation algorithm. Section 4 deals with intensive
+computer simulations on higher order QAM signals, and we conclude our paper in Section 5.
+
+2. Formulation of the Problem
+
+Let rxÀI ðt Þ and rxÀQðt Þ respectively be received signals from the I and Q ports of the front-end circuit
+for the x -polarization component, when IQ imbalances are not present. Similarly, let ryÀI ðt Þ and
+ryÀQðt Þ be those for the y -polarization component. Then, the complex amplitude of the optical signal
+is reconstructed as
+
+                             rx;y ðt Þ ¼ rxÀI;yÀI ðt Þ þ jrxÀQ;yÀQ ðt Þ:                      (1)
+
+   First, we consider the case that the IQ phase mismatch is included in the front end. In such a
+case, the I and Q axes in the complex plane are rotated by angles of xÀI and xÀQ, respectively, for
+the x -polarization component. Similarly, those angles for the y -polarization component are denoted
+as yÀI and yÀQ . IQ phase mismatches are given as xÀI À xÀQ and yÀI À yÀQ for x - and
+y -polarization components, respectively, which represent the offset from the correct angle of 90.
+Using xÀI , xÀQ, yÀI , and yÀQ , the real and imaginary parts of the received complex amplitude
+rxp;y ðt Þ are expressed as
+
+rxpÀI;yÀI ðt Þ ¼ cosðxÀI;yÀI ÞrxÀI;yÀI ðt Þ þ sinðxÀI;yÀI ÞrxÀQ;yÀQ ðt Þ                    (2)
+
+rxpÀQ;yÀQ ðt Þ ¼ À sinðxÀQ;yÀQ ÞrxÀI;yÀI ðt Þ þ cosðxÀQ;yÀQ ÞrxÀQ;yÀQ ðt Þ:                 (3)
+
+When we define the transfer matrix Px;y stemming from the IQ phase mismatch as
+
+                                     "   cosðxÀI;yÀI Þ   sinðxÀI;yÀI Þ     #
+                                        ÀsinðxÀQ;yÀQ Þ  cosðxÀQ;yÀQ Þ
+                             Px;y ¼                                                           (4)
+
+equations (2) and (3) yield
+
+h                            rxpÀQ;y    ÀQ  ðt   iT  ¼       Â               rxÀQ;yÀQ ðt ÞÃT  (5)
+ rxpÀI;yÀI ðt Þ;                                Þ       Px;y rxÀI;yÀI ðt Þ;
+
+which expresses the mutual coupling of real and imaginary parts of the complex amplitude.
+   Second, we consider the case that only the IQ gain mismatch is involved in the front end. In such
+
+a case, we can express the received complex amplitude as
+
+rxg;y ðt Þ ¼ xÀI;yÀI rxÀI;yÀI ðt Þ þ j xÀI;yÀI rxÀQ;yÀQ ðt Þ:                               (6)
+
+In (6), xÀI and xÀQ are the gains of the I and Q ports, respectively, for the x -polarization com-
+ponent. Similarly, those values for the y -polarization component are yÀI and yÀQ. In case that
+xÀI 6¼ xÀQ, the IQ gain mismatch exists in the x -polarization port and it does in the y -polarization
+port when yÀI ¼6 yÀQ. The gain mismatching factor is defined as xÀI =xÀQ and xÀI =xÀQ for the
+
+Vol. 5, No. 2, April 2013                                                                     7800110
+IEEE Photonics Journal                                         Compensation for IQ Imbalance in Receivers
+
+x - and y - polarization components, respectively. Equations (1) and (6) yield the transfer matrix for
+
+the IQ gain mismatch Gx;y as
+
+                                                       x ÀI;yÀI           0                   !
+                                                           0          x ÀQ ;y ÀQ
+                                      Gx;y ¼                                                                                 (7)
+
+which leads to
+
+                h                     rxgÀQ;y  ÀQ  ðt   iT  ¼  Gx ;y  Â                        rxÀQ;yÀQ ðt ÞÃT     :         (8)
+                 rxgÀI;yÀI ðt Þ;                       Þ               rxÀI;yÀI ðt Þ;
+
+   Third, we consider the case that only the IQ delay skew is involved between the I and Q ports of
+
+the front end. When time delays in the four output ports of the front end are given as xÀI , xÀQ, yÀI ,
+and yÀQ, the complex amplitude reconstructed from the front-end outputs can be expressed as
+
+                rxd;y ðt Þ ¼ rxÀI;yÀI ðt À xÀI;yÀI Þ þ jrxÀQ;yÀQ ðt À xÀQ;yÀQ Þ:                                           (9)
+
+In case that xÀI 6¼ xÀQ, the IQ delay skew exists in the x -polarization component, whereas in case
+that yÀI 6¼ yÀQ , it does in the y -polarization component. We transform (9) into the frequency
+domain as
+
+                h                RxdÀQ;y   ÀQ      iT  ¼     Dx  ;y      Â          ÀI;y  ÀI   ð!Þ;  Rx  ÀQ;y  ÀQ  ð!ÞÃT     (10)
+                 RxdÀI;yÀI ð!Þ;                ð!Þ                   ð!Þ Rx
+
+where ! is the angular frequency of the optical signal measured from the carrier frequency;
+
+RxdÀI;yÀI ð!Þ, RxdÀQ;yÀQ ð!Þ, RxÀI;yÀI ð!Þ, and RxÀQ;yÀQ ð!Þ are Fourier transforms of rxdÀI;yÀI ðt Þ,
+rxdÀI;yÀI ðt Þ, rxÀI;yÀI ðt Þ, and rxÀI;yÀI ðt Þ, respectively; and the transfer matrix Dx;y ð!Þ is given as
+                                                                                                         !
+                                           expðj !xÀI;yÀI Þ                   0
+                Dx;y ð!Þ ¼                         0                  expðj !xÀQ;yÀQ Þ :                                    (11)
+
+On the other hand, frequency-domain expressions for Px;y and Gx;y are the same as Px;y and Gx;y ,
+since they are time independent. Therefore, the overall transfer function expressing the three kinds
+of IQ imbalances can be written in the frequency domain as
+
+                                           Qx;y ð!Þ ¼ Px;y Gx;y Dx;y ð!Þ:                                                    (12)
+
+Using (12), we find that the complex amplitude including the front-end IQ imbalances is mea-
+
+sured as
+
+                h                RxeÀQ;y   ÀQ      iT  ¼    Qx ;y        Â                           RxÀQ;yÀQ ð!ÞÃT          (13)
+                 RxeÀI;yÀI ð!Þ;                ð!Þ                   ð!Þ RxÀI;yÀI ð!Þ;
+
+in the frequency domain. To compensate for the IQ imbalances, we need to find the inverse
+matrix QxÀ;1y ð!Þ, which eliminates the IQ phase mismatch, the IQ gain imbalance, and the IQ
+
+delay skew, as shown by
+
+                Â               RxÀQ;yÀQ ð!ÞÃT         ¼             h                            RxeÀQ;y   ÀQ      iT    :  (14)
+                 RxÀI;yÀI ð!Þ;                              QÀx;1y ð!Þ RxeÀI;yÀI ð!Þ;                           ð!Þ
+
+3. Proposed IQ Compensation Scheme
+
+This section discusses how we can generate the inverse matrix QÀx;1y ð!Þ using adaptive FIR filters.
+We assume that the linear transfer-function matrix of the link is given as Hf ð!Þ in the absence of IQ
+imbalances. It is a two-by-two matrix including polarization-mode coupling. Fig. 2(a) shows the
+
+conventional adaptive FIR filters in the two-by-two butterfly structure. The discrete Fourier transform
+
+(DFT) of tap-coefficient vectors in Fig. 2(a) is defined as
+
+                                 hij  ðnÞ  ¼   Â             hij ;1 ðn Þ;  .  .  .  ;  hij ;N  ðnÞÃT                         (15)
+                                                hij ;0 ðnÞ;
+
+Vol. 5, No. 2, April 2013                                                                                                    7800110
+IEEE Photonics Journal                         Compensation for IQ Imbalance in Receivers
+
+Fig. 2. Adaptive FIR-filter configurations used in digital coherent receivers. (a) Conventional configu-
+ration with four complex-valued FIR filters. (b) Our proposed configuration with sixteen real-valued FIR
+filters to enable IQ-imbalance compensation.
+
+where ði; jÞ ¼ ðx ; y Þ, n denotes the index of the data sequence, and N is the tap length. As
+discussed in [17], it can generate the inverse transfer function HÀf 1ð!Þ in an adaptive manner. Since
+HÀf 1ð!Þ is a two-by-two matrix with four complex elements, four butterfly-structured complex-valued
+
+FIR filters shown in Fig. 2(a) are capable of generating such matrix.
+
+   However, in order to compensate for IQ imbalances, tap-coefficient vectors hxx ðnÞ and hyx ðnÞ
+should generate QxÀ1ð!Þ because the input vector ux ðnÞ for them includes the IQ imbalances from
+the x -polarization channel. Similarly, hxy ðnÞ and hyy ðnÞ should generate QÀy 1ð!Þ to adjust the IQ
+imbalances of the y -polarization channel that is included in their common input vector uy ðnÞ. Since
+QxÀ;1y ð!Þ is a two-by-two matrix that contains four independent elements, it is evident that the
+conventional FIR-filtering approach shown in Fig. 2(a) cannot generate QxÀ;1y ð!Þ.
+
+   On the other hand, Fig. 2(b) shows the proposed configuration, where each complex-valued FIR
+
+filter is replaced by four real-valued FIR filters in an inner two-by-two butterfly structure. Our scheme
+
+works on two inputs corresponding to real and imaginary parts of the input complex amplitude. In
+
+the following, subscripts ðÃÞr and ðÃÞi correspond to the real and imaginary parts of a variable,
+respectively. With an optimum tap-adaptation algorithm, such a configuration ensures that
+
+                                "              hxxÀri ðnÞ  #
+                                   hxxÀrr ðnÞ  hxxÀii ðnÞ
+                                                              ’ QxÀ1ð!ÞH11ð!Þ                             (16)
+                           DFT                                                                            (17)
+                                   hxxÀir ðnÞ  hxyÀri ðnÞ  #
+                                               hxyÀii ðnÞ
+                                "                             ’ QyÀ1ð!ÞH12ð!Þ
+                                   hxyÀrr ðnÞ
+
+                           DFT
+                                   hxyÀir ðnÞ
+
+Vol. 5, No. 2, April 2013                                                      7800110
+IEEE Photonics Journal                            Compensation for IQ Imbalance in Receivers
+
+                                "              hyxÀri ðnÞ        #
+                                   hyxÀrr ðnÞ  hyxÀii ðnÞ
+                                                                    ’ QÀx 1ð!ÞH21ð!Þ                                        (18)
+                           DFT                                                                                              (19)
+                                   hyxÀir ðnÞ  hyyÀri ðnÞ        #
+                                               hyyÀii ðnÞ
+                                "                                   ’ QyÀ1ð!ÞH22ð!Þ
+                                   hyyÀrr ðnÞ
+
+                           DFT
+                                   hyyÀir ðnÞ
+
+where four matrix elements of HÀf 1ð!Þ, i.e., H11ð!Þ, H12ð!Þ, H21ð!Þ, and H22ð!Þ, are transformed into
+
+two-by-two matrices Hmnð!Þ ððm; nÞ ¼ ð1; 2ÞÞ as
+
+                                               "                                                  #
+                                                  ReðHmn ð!ÞÞ                   ÀImðHmn ð!ÞÞ
+Hmnð!Þ ! Hmnð!Þ ¼                                 ImðHmn ð!ÞÞ                                      :                        (20)
+
+                                                                                ReðHmn ð!ÞÞ
+
+Equation (20) is the transfer matrix for implementing a complex multiplication with well-known
+
+procedure of using four real multiplications. With such a modification, the matrix can be multiplied
+
+with a column vector consisting of the real and imaginary parts of the complex amplitude.
+   For the proposed configuration, four input column vectors are given by
+
+uðx;yÞÀðr ;iÞðnÞ  ¼        Â                   uðx;y ÞÀðr ;iÞðn  À  1Þ;      .  .  .  ;  uðx;yÞÀðr ;iÞðn  À  N  À  1ÞÃT     (21)
+                            uðx;yÞÀðr ;iÞðnÞ;
+
+and sixteen filter tap-coefficient vectors hpqÀabðnÞ, where pq ¼ xx ; xy ; yx , or yy and ab ¼ rr ; ri; ir , or
+ii are written as
+
+hpq Àab ðnÞ                ¼  Â                hpq Àab ðn  À  1Þ;   .  .  .  ;  hpq Àab ðn  À  N  À       1ÞÃT  :           (22)
+                               hpq Àab ðnÞ;
+
+The output signal vpqðnÞ is expressed as
+
+vxx ðnÞ ¼ hxxÀrr ðnÞuxÀr ðnÞ þ hxxÀri ðnÞuxÀi ðnÞ þ j fhxxÀir ðnÞuxÀr ðnÞ þ hxxÀii ðnÞuxÀi ðnÞg                             (23)
+                                                                                                                            (24)
+                                                                 È                                                       É  (25)
+vxy ðnÞ ¼ hxyÀrr ðnÞuyÀr ðnÞ þ hxyÀri ðnÞuyÀi ðnÞ þ j hxyÀir ðnÞuyÀr ðnÞ þ hxyÀii ðnÞuyÀi ðnÞ                               (26)
+
+                                                                 È                                                       É
+vyx ðnÞ ¼ hyxÀrr ðnÞuxÀr ðnÞ þ hyxÀri ðnÞuxÀi ðnÞ þ j hyxÀir ðnÞuxÀr ðnÞ þ hyxÀii ðnÞuxÀi ðnÞ
+
+                                                                 È                                                       É
+vyy ðnÞ ¼ hyyÀrr ðnÞuyÀr ðnÞ þ hyyÀri ðnÞuyÀi ðnÞ þ j hyyÀir ðnÞuyÀr ðnÞ þ hyyÀii ðnÞuyÀi ðnÞ :
+
+Then, the final outputs from the FIR-filter configuration, i.e., vx ðnÞ and vy ðnÞ, are computed as
+
+                              vx ðnÞ ¼ vxx ðnÞ þ vxy ðnÞ                                                                    (27)
+
+                              vy ðnÞ ¼ vyx ðnÞ þ vyy ðnÞ:                                                                   (28)
+
+The error signal for updating the tap coefficients using the DD-LMS algorithm is calculated as
+
+                              ex;y ðnÞ ¼ dx;y ðnÞ À vx;y ðnÞ                                                                (29)
+
+where dx;y ðnÞ is either the training symbol in the training mode or the symbol decoded from vx;y ðnÞ
+in the tracking mode.
+
+   Finally, based on the DD-LMS algorithm, the filter tap coefficients are updated as
+
+                           hpqÀrr ðn þ 1Þ ¼ hpqÀrr ðnÞ þ epÀr ðnÞuqÀr ðnÞ                                                  (30)
+                           hpqÀri ðn þ 1Þ ¼ hpqÀri ðnÞ þ epÀr ðnÞuqÀi ðnÞ                                                  (31)
+                           hpqÀir ðn þ 1Þ ¼ hpqÀir ðnÞ þ epÀi ðnÞuqÀr ðnÞ                                                  (32)
+                           hpqÀii ðn þ 1Þ ¼ hpqÀii ðnÞ þ epÀi ðnÞuqÀi ðnÞ                                                  (33)
+
+where  is the step-size parameter, and exÀr;yÀr ðnÞ and exÀi;yÀi ðnÞ are the real and imaginary parts
+of ex;y ðnÞ, respectively.
+
+Vol. 5, No. 2, April 2013                                                                                                7800110
+IEEE Photonics Journal     Compensation for IQ Imbalance in Receivers
+
+             Fig. 3. Eb=N0 penalty at BER of 10À3 as a function of the IQ phase mismatch when neither IQ gain
+             mismatch nor IQ delay skew is included. (a) 4-QAM. (b) 16-QAM. (c) 64-QAM. (d) 256-QAM. Red and
+             blue curves represent the penalty when the conventional configuration and the proposed configuration
+             are used, respectively.
+
+4. Simulation Results and Discussions
+
+To validate the proposed scheme, we conduct simulations on 10-Gsymbol/s dual-polarization 4-,
+16-, 64-, and 256-QAM coherent systems. In the transmitter, the signal is band limited by a root-
+raised-cosine filter with a roll-off factor of 0.5. The signal is then impaired by phase noise of the
+transmitter laser and passes through a 100-km-long standard single-mode fiber (SSMF), whose
+transfer function consists of a chromatic-dispersion value of 1700 ps/nm and a Jones matrix for
+fiber birefringence. Additive white Gaussian noise (AWGN) from a preamplifier and phase noise
+from LO are then given to the signal. The 3-dB linewidths of lasers for the transmitter and LO are
+500 kHz, 100 kHz, 10 kHz, and 1 kHz for 4-, 16-, 64-, and 256-QAM systems, respectively. To
+obtain the optimal performance, the signal is subsequently filtered by another root-raised-cosine
+filter to match the signal waveform shaped at the transmitter. After that, we intentionally introduce
+IQ imbalances. Identical amounts of IQ imbalances are added to both of the x - and y -polarization
+ports. The signal is then sampled at twice the symbol rate and fed into the adaptive FIR filters
+configured as either in the conventional manner [see Fig. 2(a)] or in the proposed way [see
+Fig. 2(b)]. The delay-tap spacing is T =2, where T is the symbol duration. Such FIR filters simul-
+taneously perform clock recovery, equalization of linear impairments, polarization demultiplexing,
+and IQ-imbalance compensation. The step-size parameter for the LMS algorithm is optimized so
+that bit-error rate (BER) is minimized. Next, carrier phase estimation based on the decision-directed
+LMS algorithm [18], symbol decoding, and BER calculations is done in this order. For the
+performance evaluation of different modulation formats, we calculate the penalty for the energy-per-
+bit-to-noise spectral-power-density ratio, i.e., Eb=N0, at BER of 10À3. In the following, results for the
+x -polarization tributary are presented; however, similar results are found for the y -polarization
+tributary.
+
+   Fig. 3 shows the Eb=N0 penalty for different IQ phase mismatches when neither IQ gain mismatch
+nor IQ delay skew is included. In the simulation, we assume that xÀI ¼ yÀI ¼ 0 and vary the
+rotation angle of the Q axis xÀQ ¼ yÀQ to generate the IQ phase mismatch. In the conventional
+configuration, tolerances for the IQ phase mismatch are about 25, 10, 5, and 2.5 for 4-, 16-, 64-,
+and 256-QAM formats, respectively, when the Eb=N0 penalty is less than 2 dB. However, no
+notable penalty is found over a wide range when the proposed scheme is used.
+
+Vol. 5, No. 2, April 2013  7800110
+IEEE Photonics Journal     Compensation for IQ Imbalance in Receivers
+
+Fig. 4. Eb=N0 penalty at BER of 10À3 as a function of the IQ gain mismatch when neither IQ phase
+mismatch nor IQ delay skew is included. (a) 4-QAM. (b) 16-QAM. (c) 64-QAM. (d) 256-QAM. Red and
+blue curves represent the penalty when the conventional configuration and the proposed configuration
+are used, respectively.
+
+Fig. 5. Eb=N0 penalty at BER of 10À3 as a function of the IQ delay skew when neither IQ phase nor IQ
+gain mismatch is included. (a) 4-QAM. (b) 16-QAM. (c) 64-QAM. (d) 256-QAM. Red and blue curves
+represent the penalty when the conventional configuration and the proposed configuration are used,
+respectively.
+
+   The Eb=N0 penalty as a function of the IQ gain mismatch is shown in Fig. 4 when neither IQ
+phase mismatch nor IQ delay skew is included. We set the gain of the I port as a reference such that
+
+xÀI ¼ 1 and yÀI ¼ 1 and vary xÀQ and yÀQ to introduce the IQ gain mismatch. As far as the
+Eb=N0 penalty is less than 2 dB, tolerances of the conventional configuration are about 4 dB,
+1.75 dB, 0.75 dB, and 0.4 dB for 4-, 16-, 64-, and 256-QAM formats, respectively. However, with the
+proposed scheme, no significant penalty is observed over a wide range of the IQ gain mismatch.
+
+   Next, we calculate the Eb=N0 penalty due to the IQ delay skew when neither IQ gain nor IQ phase
+mismatch is involved. As shown in Fig. 5, we find that the conventional FIR-filtering scheme is very
+
+Vol. 5, No. 2, April 2013  7800110
+IEEE Photonics Journal     Compensation for IQ Imbalance in Receivers
+
+Fig. 6. Constellation diagrams of the recovered signal for (a) 4-QAM, (b) 16-QAM, (c) 64-QAM, and
+(d) 256-QAM formats. Upper diagrams show constellation maps when the conventional FIR-filter con-
+figuration is used and any IQ imbalance is not included. Middle diagrams are those with the conventional
+FIR-filter configuration when IQ imbalances given in Table 1 are involved. Lower diagrams are
+constellation maps calculated with the proposed scheme when the same IQ imbalances are included.
+
+                                                              TABLE 1
+Values of IQ imbalances used in che Calculation of constellation maps shown in Fig. 6
+
+sensitive to the IQ delay skew and the tolerance drastically decreases with the increase in the level
+of modulation; however, the proposed method has a very wide range of tolerance to such IQ delay
+skew. In fact, a quasi-continuous delay can be generated even by using T =2-spaced FIR filters, as
+shown in [14]. Therefore, any amount of delay skew can be compensated for with T =2-spaced FIR
+filters having a sufficient number of delay taps.
+
+   Finally, we investigate the combined effect of all of the IQ imbalances. Fig. 6 shows constellation
+diagrams for different modulation formats. In the simulation, Eb=N0 for each polarization are 10 dB,
+14 dB, 18 dB, and 23 dB for 4-, 16-, 64-, and 256-QAM formats, respectively. Upper diagrams show
+constellation maps calculated with the conventional FIR-filter configuration when any IQ imbalances
+are not included. Middle and lower diagrams are calculated with the conventional and proposed
+schemes, respectively, when IQ imbalances listed in Table 1 are included. As shown in the middle
+diagrams, the conventional approach fails to compensate for the IQ imbalances. However, the
+lower constellations are as clear as the upper constellations, showing that the proposed method
+can perfectly compensate for those IQ imbalances.
+
+   In our simulations, we do not include the effect of the limited ADC resolution. However, we
+generally need ADCs with higher bit resolution as the increase in the IQ imbalance. This situation is
+similar to other IQ-imbalance compensation methods.
+
+Vol. 5, No. 2, April 2013  7800110
+IEEE Photonics Journal     Compensation for IQ Imbalance in Receivers
+
+   It is also important to mention the computational complexity of the proposed scheme compared
+with that of the conventional FIR-filter scheme. The hardware-implementation complexity for a
+multiplier is much higher than that of an adder. Hence, if we evaluate the computational complexity
+in terms of the number of real multiplications, the conventional FIR-filter configuration and the
+proposed configuration have the same computational cost. This is because a complex-number
+multiplication in the DSP circuit is realized by using four real-number multiplications.
+
+5. Conclusion
+
+We have proposed a novel FIR-filter configuration, which can compensate for IQ imbalances
+generated in the front-end circuit of coherent optical receivers. With intensive computer simulations,
+we have evaluated the impact of IQ imbalances on the performance of dual-polarization 4-, 16-, 64-,
+and 256-QAM systems and verified that the proposed scheme can effectively compensate for them.
+
+References
+
+ [1] E. Yamazaki, S. Yamanaka, Y. Kisaka, T. Nakagawa, K. Murata, E. Yoshida, T. Sakano, M. Tomizawa, Y. Miyamoto,
+
+      S. Matsuoka, J. Matsui, A. Shibayama, J. Abe, Y. Nakamura, H. Noguchi, K. Fukuchi, H. Onaka, K. Fukumitsu,
+
+      K. Komaki, O. Takeuchi, Y. Sakamoto, H. Nakashima, T. Mizuochi, K. Kubo, Y. Miyata, H. Nishimoto, S. Hirano, and
+
+      K. Onohara, BFast optical channel recovery in field demonstration of 100-Gbit/s Ethernet over OTN using real-time
+      DSP,[ Opt. Exp., vol. 19, no. 14, pp. 13 139–13 184, Jul. 2011.
+ [2] P. J. Winzer and R.-J. Essiambre, BAdvanced optical modulation formats,[ in Optical Fiber Telecommunication,
+      V. B. I. P. Kaminow, T. Li, and A. E. Willner, Eds. Amsterdam, The Netherlands: Elsevier, 2008.
+
+ [3] M. Seimetz, BLaser linewidth limitations for optical systems with high-order modulation employing feed forward digital
+      carrier phase estimation,[ presented at the Opt. Fiber Commun. Conf., San Diego, CA, USA, Mar. 2008, Paper OTuM2.
+
+ [4] K. Kikuchi, BAnalyses of wavelength- and polarization-division multiplexed transmission characteristics of optical
+      quadrature-amplitude-modulation signals,[ Opt. Exp., vol. 19, no. 19, pp. 17 985–17 995, Sep. 2011.
+
+ [5] Md. S. Faruk and K. Kikuchi, BFront-end IQ-error compensation in coherent optical receivers,[ presented at the Opto-
+      Electron. Commun. Conf., Busan, Korea, Jul. 2012, Paper 4B2_5.
+
+ [6] K. Kikuchi, BCoherent optical communications: Historical perspectives and future directions,[ in High Spectral Density
+      Optical Communication Technology, M. Nakazawa, K. Kikuchi, and T. Miyazaki, Eds. New York, NY, USA: Springer-
+
+      Verlag, 2010.
+
+ [7] S. J. Savory, BDigital coherent optical receivers: Algorithms and subsystems,[ IEEE J. Sel. Topics Quantum Electron.,
+      vol. 16, no. 5, pp. 1164–1179, Sep./Oct. 2010.
+
+ [8] T. Tanimura, S. Oda, T. Tanaka, T. Hoshida, Z. Tao, and J. C. Rasmussen, BA simple digital skew compensator for
+      coherent receiver,[ presented at the Eur. Conf. Opt. Commun., Vienna, Austria, Sep. 2009, Paper 7.3.2.
+
+ [9] I. Fatadin, S. J. Savory, and D. Ives, BCompensation of quadrature imbalance in an optical QPSK coherent receiver,[
+      IEEE Photon. Technol. Lett., vol. 20, no. 20, pp. 1733–1735, Oct. 2008.
+
+[10] S. H. Chang, H. S. Chung, and K. Kim, BImpact of quadrature imbalance in optical coherent QPSK receiver,[ IEEE
+      Photon. Technol. Lett., vol. 21, no. 11, pp. 709–711, Jun. 2009.
+
+[11] C. S. Petrou, A. Vgenis, I. Roudas, and L. Raptis, BQuadrature imbalance compensation for PDM QPSK coherent
+      optical systems,[ IEEE Photon. Technol. Lett., vol. 21, no. 24, pp. 1876–1878, Dec. 2009.
+
+[12] S. Haykin, Adaptive Filter Theory, 4th ed. Englewood Cliffs, NJ, USA: Prentice-Hall, 2001.
+
+[13] D. N. Godard, BSelf-recovering equalization and carrier tracking in two-dimensional data communication systems,[
+      IEEE Trans. Commun., vol. COM-28, no. 11, pp. 1867–1875, Nov. 1980.
+
+[14] K. Kikuchi, BClock recovering characteristics of adaptive finite-impulse-response filters in digital coherent optical
+      receivers,[ Opt. Exp., vol. 19, no. 6, pp. 5611–5619, Mar. 2011.
+
+[15] K. Kikuchi, BPerformance analyses of polarization demultiplexing based on constant-modulus algorithm in digital co-
+      herent optical receivers,[ Opt. Exp., vol. 19, no. 10, pp. 9868–9880, May 2011.
+
+[16] S. J. Savory, BDigital filters for coherent optical receivers,[ Opt. Exp., vol. 16, no. 2, pp. 804–817, Jan. 2008.
+[17] Md. S. Faruk, Y. Mori, C. Zhang, K. Igarashi, and K. Kikuchi, BMulti-impairment monitoring from adaptive finite-impulse-
+
+      response filters in a digital coherent receiver,[ Opt. Exp., vol. 18, no. 26, pp. 26 929–26 936, Dec. 2010.
+[18] Y. Mori, C. Zhang, and K. Kikuchi, BNovel configuration of finite-impulse-response filters tolerant to carrier-phase
+
+      fluctuations in digital coherent optical receivers for higher-order quadrature amplitude modulation signals,[ Opt. Exp.,
+      vol. 20, no. 24, pp. 26 236–26 251, Nov. 2012.
+
+Vol. 5, No. 2, April 2013  7800110
+

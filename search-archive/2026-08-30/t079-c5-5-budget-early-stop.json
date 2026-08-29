@@ -1,0 +1,119 @@
+{
+  "query": "LDPC adaptive maximum iterations reliability-aware early termination iteration budget decoding",
+  "timestamp": "2026-08-30T10:45:04.712575+08:00",
+  "sources": [
+    "s2",
+    "openalex",
+    "arxiv",
+    "serpapi"
+  ],
+  "total": 4,
+  "results": [
+    {
+      "title": "Six Times to Spare: Characterizing GPU-Accelerated 5G LDPC Decoding for Edge-RSU Communications",
+      "authors": [
+        "Ryan Barker",
+        "Julia Boone",
+        "Tolunay Seyfi",
+        "Alireza Ebrahimi Dorcheh",
+        "Fatemeh Afghah",
+        "Joseph Boccuzzi"
+      ],
+      "venue": "arXiv (Cornell University)",
+      "year": 2026,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "Ultra-reliable low-latency vehicular communications (URLLC) require sufficient physical-layer (PHY) compute headroom at the network edge, where roadside units (RSUs) and compact next-generation base stations (gNBs) must meet strict timing constraints while co-hosting higher-layer services. In 5G New Radio (5G NR), low-density parity-check code (LDPC) decoding is a latency-sensitive iterative PHY workload whose cost scales with both workload parallelism and decoder iteration budget, making it a potential bottleneck on general-purpose central processing units (CPUs). This paper presents a reproducible, telemetry-backed microbenchmark derived from the Sionna LDPC5G baseline to characterize the compute headroom obtained through graphics processing unit (GPU) offload on compact heterogeneous edge platforms. We evaluate decoder behavior across multiple processor architectures and a wide range of batch sizes and iteration counts, with emphasis on dense operating regimes relevant to edge provisioning. Results show that GPU acceleration substantially increases LDPC throughput, reduces amortized decode service time, and shifts compute pressure away from the CPU, thereby improving the feasibility of meeting edge-RSU timing budgets under heavy parallel workloads. These findings indicate that GPU offload can provide substantial spare PHY compute margin for compact vehicular edge platforms, making dense decode workloads more practical within realistic edge power and timing constraints.",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "https://arxiv.org/pdf/2602.04652",
+      "source_api": "openalex",
+      "relevance_score": 0.364,
+      "id": "L001",
+      "download": true,
+      "publication_status": "preprint"
+    },
+    {
+      "title": "Joint Source-Channel Coding System for 6G Communication: Design, Prototype and Future Directions",
+      "authors": [
+        "Xinchao Zhong",
+        "Chiu‐Wing Sham",
+        "Longyu Ma",
+        "Hong-fu Chou",
+        "Arsham Mostaani",
+        "Thang X. Vu",
+        "Symeon Chatzinotas"
+      ],
+      "venue": "IEEE Access",
+      "year": 2024,
+      "doi": "10.1109/access.2024.3360003",
+      "arxiv_id": null,
+      "abstract": "The emergence of the AI era signifies a shift in the future landscape of global communication networks, wherein robots are expected to play a more prominent role compared to humans. The establishment of a novel paradigm for the development of next-generation 6G communication is of utmost importance for semantics task-oriented empowered communications. The goal of semantic communication lies in the integration of collaborative efforts between the intelligence of the transmission source and the joint design of source coding and channel coding. This characteristic represents a significant benefit of joint source-channel coding (JSCC), as it enables the generation of source alphabets with diverse lengths and achieves a code rate of unity. Therefore, we leverage not only quasi-cyclic (QC) characteristics to facilitate the utilization of flexible structural hardware design but also Unequal Error Protection (UEP) to ensure the recovery of semantic importance. In this study, the feasibility of using a semantic encoder/decoder that is aware of UEP can be explored based on the existing JSCC system. This approach is aimed at protecting the significance of semantic task-oriented information. Additionally, the deployment of a JSCC system can be facilitated by employing QC-Low-Density Parity-Check (LDPC) codes on a reconfigurable device. The QC-LDPC layered decoding technique, which has been specifically optimized for hardware parallelism and tailored for channel decoding applications, can be suitably adapted to accommodate the JSCC system. The performance of the proposed system is evaluated by conducting BER measurements using both floating-point and 6-bit quantization. This is done to assess the extent of performance deterioration in a fair manner. The fixed-point system is synthesized and subsequently used as a semantic feature transmission and reception system across a noisy channel, with the aim of presenting a prototype for semantic communications. This study concludes with some insights and potential research avenues for the JSCC prototype in the context of future communication.",
+      "citation_count": 26,
+      "is_open_access": true,
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/6287639/6514899/10416847.pdf",
+      "source_api": "openalex",
+      "relevance_score": 0.273,
+      "id": "L002",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Semantic-Aided Iterative Decoding for Uplink Non-Orthogonal Transmission",
+      "authors": [
+        "W.L. Wei",
+        "Chentao Yue",
+        "Branka Vucetic",
+        "Yonghui Li"
+      ],
+      "venue": "arXiv (Cornell University)",
+      "year": 2026,
+      "doi": "10.48550/arxiv.2608.07897",
+      "arxiv_id": null,
+      "abstract": "This paper proposes semantic-aided iterative decoding (Sem-IR) for uplink non-orthogonal transmission of a shared natural-language source. K users each hold one segment of a common sentence and superimpose low-density parity-check (LDPC) coded transmissions over an additive white Gaussian noise (AWGN) channel. At the base station, an iterative elementary signal estimator (ESE) and K parallel LDPC decoders progressively cancel inter-user interference. As high-power users pass both parity and language-plausibility checks earlier, their decoded bytes form a reliable linguistic prefix for the remaining users; a fine-tuned ByT5 byte-level language model exploits this prefix to predict byte posteriors for the unconverged user. The byte posteriors are marginalized to bit-level log-likelihood ratios and convex-combined with the LDPC posteriors inside the iterative loop. The resulting feedback closes the loop between the language model and the physical-layer iteration. Simulations show that Sem-IR outperforms orthogonal time-division access (TDMA) and the same NOMA receiver without semantic feedback in block error rate (BLER), yielding an order-of-magnitude reduction over NOMA at 8 dB.",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "https://arxiv.org/pdf/2608.07897",
+      "source_api": "openalex",
+      "relevance_score": 0.273,
+      "id": "L003",
+      "download": true,
+      "publication_status": "preprint"
+    },
+    {
+      "title": "DAEMON Deliverable 3.2: Refined design of real-time control and VNF intelligence mechanisms",
+      "authors": [
+        "Andrés García‐Saavedra",
+        "Josep Xavier Salvat",
+        "Danny De Vleeschauwer",
+        "Chia‐Yu Chang",
+        "Lidia Fuentes",
+        "Daniel-Jesús Munoz",
+        "Andra Lutu",
+        "Michele Gucciardo",
+        "Marco Fiore",
+        "Livia Elena Chatzieleftheriou",
+        "Nina Slamnik–Kriještorac",
+        "Paola Soto",
+        "Miguel Camelo",
+        "Marco Gramaglia",
+        "Ginés García-Avilés",
+        "Esteban Municio",
+        "Naram Mhaisen"
+      ],
+      "venue": "Zenodo (CERN European Organization for Nuclear Research)",
+      "year": 2022,
+      "doi": "10.5281/zenodo.7525876",
+      "arxiv_id": null,
+      "abstract": "D3.2 is the second deliverable of DAEMON’s WP3, which builds on D3.1, and presents the detailed solutions to the research problems identified in the latter. WP3 focuses on near-real-time, real-time and in-network functionalities, and partially covers Objective 2 (Developing specialized NI-assisted network functionalities for B5G systems) and several KPIs in Objective 4 (Demonstrating the viability and performance of NI-native B5G networks), namely: (K1) VNF energy consumption reduction, (K2) Saving of computational resources at the edge, (K3) Response time of AI-based NI algorithms, (K4) OPEX saving, (K5) Reliability, or (K6) wireless capacity increase. For that purpose, this deliverable describes 13 NI solutions, two of which address two new problems (undisclosed in D3.1, grouped across the four tasks in the WP: (1) Compute-aware radio scheduling, (2) Multi-timescale edge resource management, (3) Reconfigurable Intelligent Surfaces, and (4) In-backhaul support for service intelligence. In this document, we first provide a high-level overview of their goals, how they fit into the global DAEMON architecture proposed in WP2 and how experiments planned in WP5 (which will be reported in D5.2) will validate their goals. Subsequently, each of these NI solutions is discussed in detail, including a mapping of WP2 requirements and architectural details. Finally, conclusions are drawn and future directions are described.",
+      "citation_count": 2,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.5281/zenodo.7525876",
+      "source_api": "openalex",
+      "relevance_score": 0.182,
+      "id": "L004",
+      "download": true,
+      "publication_status": "published"
+    }
+  ]
+}

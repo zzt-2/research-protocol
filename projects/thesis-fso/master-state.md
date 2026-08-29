@@ -4,8 +4,8 @@ direction: 星地激光通信（FSO）——子地带由地勘（S003 方法论 
 method_type: reference-method extension（非 ML；完整 deployable action chain，最终形态待 Step 3/4a）
 domain: comms
 created: 2026-06-21
-updated: 2026-08-12
-current_step: STEP3_5_EXACT_ACTION_COLLISION_OR_CHEAP_ABSORPTION（K2 closed）
+updated: 2026-08-30
+current_step: THESIS_METHOD_PRODUCTION_CP027_CH4_DIRECTION_SCALE_FAMILY_FREEZE
 current_stage: GROUNDWORK
 ---
 
@@ -34,6 +34,96 @@ current_stage: GROUNDWORK
 > 也不授权 fixed-point、硬件综合或新物理场景。
 
 ### 当前控制面桥接
+
+> **2026-08-30 D065 / V040 / S028（当前最高 authority）**。T085 immutable raw 经独立 raw-only 复算为
+> artifact P0-P1-P2=`0-0-0`，但预注册 C4-vs-B3 pooled Np2 CI 跨 0，科学 terminal 保持
+> `CHEAP_COMPARATOR_NOT_CLEARED`；生成器字节复现绑定如实为 `PARTIAL`。按 D031/D032 的硕士级标准，
+> 强邻居不再自动否决章节，也不得隐藏。Ch4 现收缩为统一的方向—尺度解耦短导频偏振解复用方法族：C4
+> 为 channel-domain 无参数主变体，B3_PSC 为 receiver-domain pilot-calibrated 强变体/ablation。CP027 只开放
+> T086 disjoint tuned-B2 development、非论文结构 smoke 与 scientific manifest/execution-lock 设计冻结；
+> formal production、作图与正文仍禁止。
+
+> **2026-08-30 D064 / V039 / S028 thesis method production bridge（只读背景）**。T084 已冻结
+> balanced pilots、七路 SeedSequence namespace、跨 SNR/Np latent pairing、三档 runtime authority、B3_PSC、
+> mismatch 与 truth firewall。初审 consumer provenance `INVALID/P0-P1-P2=0-1-1` 由 17-case RED→GREEN 修复，
+> fresh final=`PRODUCTION_CORE_CORRECTNESS_PASS/P0-P1-P2=0-0-1`；P2 仅限制 B3 mechanism metric 标签。
+> CP026 唯一开放 T085 fixed A2 bridge：moderate `14/18 dB×Np2/4×64 shared latents`，C4 必须同时越过
+> B2 与 B3_PSC；禁止 Task 5 tuning/full smoke、formal production 与正式正文。
+>
+> **D061 / V036 及之前 bridge（只读背景）**。T081 已完成
+> Ch4 production-evidence preflight；第一轮独立审查的 5 个 P1 与第二轮的 3 个 P1 已逐项修复，fresh terminal=
+> `CH4_PRODUCTION_PREFLIGHT_READY/P0-P1=0-0`。完整路线冻结为 A1 exact historical-observation demapper replay→
+> A2 new production-seam bridge→smoke/B2 disjoint tuning→manifest freeze→128-window formal production→
+> raw-only/whole-curve bootstrap→独立验证→章包。C5-5 继续暂停。CP023 唯一开放 T082：以 TDD 修正公共
+> `m16apsk_demod` 为全 16 点欧氏最近邻并运行直接相关回归；禁止 historical replay、smoke、BER grid、
+> production、算法身份变化与正式正文。旧 T071/Ch3 raw 保持 immutable，跨章兼容债务单列。
+>
+> **D060 / V035 及之前 bridge（只读背景）**。T080 已完成
+> C5-5 两篇冻结全文的 Step 3：唯一 Q-C5-5 四判据 4/4，ordinary CRC/syndrome early stop 是 mandatory
+> cheap comparator、非完整动作吸收；P0 2019 exact-collision/provenance debt 仍保留。按用户新的明确优先级，
+> C5-5 暂停在 `STEP3_C5_5_Q_SURVIVES_READY_FOR_STEP3_5`，CP022 不开放 Step 3.5、实现或仿真。当前唯一
+> foreground 是 Ch4 production-evidence preflight：把既有 `14/18 dB × Np=2/4` four-cell confirmation
+> 与最终章级合同分开，统一 Ch3 的实用 pre-FEC BER/FEC 门限、SNR/湍流口径，审计现有 simulator seam，
+> 冻结完整 BER–SNR、pilot 规律、required-SNR gain、NMSE/inverse-residual 机制、紧凑星地场景迁移、
+> scaled-unitary mismatch boundary 与复杂度证据。preflight 独立接收前禁止 smoke/production；C4 action、
+> B2 主对手、DP-(8,8)-16APSK 双偏振平台、truth firewall 和有限 claim 不变。
+>
+> **D059/V034 及之前 production history（只读背景）**。目标是在共同
+> DP-(8,8)-16APSK+BICM/LDPC coherent FSO 平台上为 Ch4/Ch5 形成两个证据有效的方法章包。
+> T039–T041 已完成新一轮 GW Step 1：共同平台默认 `single-tap 2×2 Jones`；多 tap FIR 只有在
+> receiver filter/IQ timing-skew 等直接 authority 下才开放；Ch4 主候选为 C4-2 ring-aware
+> semi-blind refinement 与 C4-1 scaled-unitary pilot-LS；Ch5 主候选为 C5-1 structured
+> APSK covariance demapper，C5-2 syndrome rescue 因当前 adapter 只返回 hard information bits 而
+> 先作接口后备。T042–T044 已完成：共同平台 6 篇全文、Ch5 6 篇全文均由主控按 D044
+> 接受 bounded limitation；Ch4 已有 5 篇经典全文，但缺 APSK 直接均衡全文，仍停在 Step 2。
+> T045 已用 Baldi 2012 direct APSK DFE/LMS 全文闭合 Ch4 Step 2；T046 已完成 Ch5 六篇精读，
+> Q-C5-1=`4/4`、`NOT_EXACT_COLLISION / STRONG_PRIMITIVE_COLLISION`；T047 已冻结 6 个平台项并
+> 将 filter/FIR 口径保留为 conditional UNKNOWN。T048 已完成 Ch4 七篇精读：Q-C4-2
+> `SURVIVES / NOT_EXACT_COLLISION`，Q-C4-1 只作 bounded backup；T049 已完成 Ch5 Step 3.5，
+> 63 个去重记录未确认完整 recipe 碰撞。T050 又以 15 个 archive、305 个去重记录闭合 Ch4
+> Step 3.5，Q-C4-2=`SURVIVES`，最强邻居是摘要级 Di Rosa–Richter 2021；T051 判定 Ch5
+> `PAPER_DIMENSIONS_PASS` 并冻结 candidate v1、B2/B3 强对手与 pre-MVE 停机条件。当前
+> T052 已判定 Ch4 `PAPER_DIMENSIONS_PASS`。T053 的 canonical-radius 缺陷经 T058 修复并由 T056
+> 独立复验 `PASS`（7 tests）；T054 也由 T057 独立复验 `PASS`（13 tests）。T055 进一步证明 circular
+> control 不能冒充 Ch5 target residual，当前唯一合法前进路径是 `Ch4 demux → per-pol Ch3 DA CPR →
+> known-pilot residual` 的 receiver-visible bridge。当前 checkpoint=`CP008`：允许 T059 运行预注册的
+> Ch4 两轮有界开发，并允许 T060 只做 Ch5 bridge correctness；只有 Ch4 arm/参数冻结后才开放一格
+> occurrence smoke。T059 随后按预注册门停止 C4-2：独立重算确认 candidate/cheap 均劣于 tuned plain，
+> oracle headroom 约为零；该路线不再修复或重跑。C4-1 的 candidate-specific Step 3.5 已完成，未发现完整
+> target-scene recipe 碰撞，但 balanced-pilot 等价将其身份收窄为经典 scaled-unitary 结构迁移。Ch5 的 T063/T065
+> bridge 已接收，T066 唯一 occurrence cell 完成 `64/64`，主控从 raw 独立重算 terminal 为
+> `DETECTABLE_OCCURRENCE`。T068 随后将 C4-1 裁为 `PAPER_DIMENSIONS_PASS_WITH_BOUNDARY`；T067 在
+> 64-window held-out 开发中得到 `NO_METHOD_SIGNAL / D`，Round 2 未运行，C5-1 已关闭。T069 已通过 C0–C5，
+> 并在 `14/18 dB × Np=2/4` 四格中相对最强廉价 B2 得到三格显著 BER 改善、一格不显著轻微退化；独立
+> raw verifier 为 PASS，方法身份收窄为 scaled-unitary 公共增益—偏振矩阵联合估计；T071 已按 CP012 合法启动
+> 固定配方 fresh-seed confirmation。T070 又以 6 篇 qualified fulltexts 闭合 C5-0 Step 2：A/B/C 三桶为
+> `4/3/4`，B0 是同一 mismatched demapper 的 `s=1/alpha=1`，matched statistics 单列 `B_match/O1`。
+> T071 已完成全新 seeds confirmation，另一上下文从 raw 重算四格与 pooled CI、19 项 fresh tests、256 seeds/hashes、
+> truth firewall 和固定参数，结论 `PASS`。T073 又把该证据材料化为事实矩阵、章蓝图、算法框、claim ledger、
+> raw-derived CSV/结果图和可编辑方法图，独立审查与主控视觉复核均 PASS，Ch4 terminal=`CH4_WRITE_PACKAGE_READY`，
+> 不再开放任何科学或材料化任务。T072 完成 C5-0 六篇 Step 3，唯一 `Q-C5-0` 为 post-Ch4→Ch3 known-pilot
+> residual 驱动的 per-frame global channel-LLR calibration，terminal=`STEP3_CLASSICAL_MIGRATION_READY_FOR_STEP3_5`。
+> T074 已完成 bounded Step 3.5，未发现同一目标平台九字段完整 recipe；强邻居与 max-log B2=B3 只把
+> claim 压到 target-scene classical migration。T075 随后以 `PAPER_DIMENSIONS_PASS_B2` 收口：只保留冻结/黑盒
+> LDPC 外部的 current-frame global LLR calibration，内部 adaptive threshold reparameterization 限制 claim，
+> B3 exact APP 是同信息预算强 comparator。T076 随后以 10 项 correctness 和 3 项既有 codec 回归闭合
+> target DP-(8,8)-16APSK demapper→5G BG2 LDPC；mapper/label、LLR sign、`N0`/`N0/2`、live
+> `out_int_inv`、16 filler、clip 顺序、one-frame-one-scalar 与 fresh lifecycle 均通过，修复后独立 reviewer
+> 为 `PASS/P0-P1-P2=0-0-0`。T077 随后在固定 128-frame Gate 1 得到 `rho=0.9856654`、单侧下界
+> `0.9758980`，但完整 512 frames 上 B0/O1 BER=`0.0492935/0.0533390`，`B0-O1` paired CI 全负；
+> terminal=`SINGLE_CELL_NO_HEADROOM`，Gate 3 未开放，C5-0 关闭。T078 随后把 C5-5 收缩为
+> per-codeword reliability-driven iteration-budget allocation；Q#/IAO 与最小 per-call `num_iter` seam 成立，
+> 但 direct scheduling fulltext 和 ordinary early-stop/equal-update collision 尚未闭合，terminal=
+> `STEP1_C5_5_EVIDENCE_GAP_BOUNDED`。T079 随后审计 3 个身份并冻结 Liu et al. 2025 reliability-list
+> CBP 与 He et al. 2021 NR-LDPC 两篇 qualified fulltexts；DOI `10.1109/ACCESS.2019.2899106` 的下载
+> 候选被核为错误的 2007 arXiv 身份，已安全拒绝，P0 exact collision 仍为 UNKNOWN。terminal=
+> `STEP2_C5_5_READY_FOR_STEP3`。CP021 随 T080 完成而履行；该历史 checkpoint 不再授权新动作。
+
+| Thesis method production packet | Step 1 | Step 2 | 下游门控 |
+|---|---|---|---|
+| Shared coherent FSO platform | COMPLETE / T039 | COMPLETE / T042（6 qualified） | T047 parameter authority COMPLETE；默认 memoryless single-tap，finite FIR conditional |
+| Ch4 APSK front-end (C4-2/C4-1) | COMPLETE / T040 | COMPLETE / T043+T045（6 qualified，含 direct APSK） | C4-2 scientific STOP；C4-1 preflight+demapper correctness+A1+core PASS；fixed A2 bridge active / D064+CP026 |
+| Ch5 APSK receiver (C5-0/C5-1/C5-5) | C5-0/C5-1/C5-5 COMPLETE / T040–T041+T078 | C5-1 COMPLETE / T044；C5-0 COMPLETE / T070；C5-5 COMPLETE / T079（2 qualified，1 identity mismatch） | C5-1 closed；C5-0 `SINGLE_CELL_NO_HEADROOM` closed / T077；C5-5 Step 3 survivor paused / T080+D060 |
 
 > **2026-08-12 K2 candidate-source / research-object scope change 与 GW Step 1（source D007/R004；new owner D001–D002/S001/R001–R003/V001/H001）**。Q001 保持 `PROBLEM_ABSENT_OR_TOO_SMALL` closed，不调参重跑、不计 Ch4 材料。唯一新对象为 Wang TSP 2022 suffix-pollution 的 bounded multi-hypothesis/fixed-lag task adaptation；预计后续公平比较 5–9 天可接受。Step 1 两轮 11 query：278 raw→242 title-dedup→138 semantic，98 formal=`71.01%`，12 must-read，S2/OA/SerpAPI Scholar 三贡献源。TCOM 2016 裁为 full-general mandatory comparator、非 confirmed exact action；D1/D2 仅是待审设计形态。V001 初审 PARTIAL 0/3/1 的 formal 归并、编号和预声明已修，final fresh verifier PASS 0/0/0；terminal=`STEP1_PASS_READY_FOR_STEP2_CONFIRMATION`，Step 2 未授权，无 Q#/Go/方法/METHOD_SIGNAL。
 

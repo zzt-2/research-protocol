@@ -1,0 +1,234 @@
+{
+  "query": "small sample covariance regularized soft demapper",
+  "timestamp": "2026-08-30T02:33:22.069879+08:00",
+  "sources": [
+    "s2",
+    "openalex",
+    "serpapi",
+    "exa"
+  ],
+  "total": 10,
+  "results": [
+    {
+      "title": "EqDeepRx: Learning a Scalable and Interference Mitigating MIMO Receiver",
+      "authors": [
+        "Mikko Honkala",
+        "Dani Korpi",
+        "Elias Raninen",
+        "Janne M. J. Huttunen"
+      ],
+      "venue": "arXiv (Cornell University)",
+      "year": 2026,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "While machine learning (ML)-based receiver algorithms have received a great deal of attention in the recent literature, they often suffer from poor scaling with increasing spatial multiplexing order and lack of explainability and generalization. This paper presents EqDeepRx, a practical deep-learning-aided multiple-input multiple-output (MIMO) receiver, which is built by augmenting linear receiver processing with carefully engineered ML blocks. At the core of the receiver model is a shared-weight DetectorNN that operates independently on each spatial stream or layer, enabling near-linear complexity scaling with respect to multiplexing order. To ensure better explainability and generalization, EqDeepRx retains conventional channel estimation and augments it with a lightweight DenoiseNN that learns frequency-domain smoothing. To reduce the dimensionality of the DetectorNN inputs, the receiver utilizes two linear equalizers in parallel: a linear minimum mean-square error (LMMSE) equalizer with interference-plus-noise covariance estimation and a regularized zero-forcing (RZF) equalizer. The parallel equalized streams are jointly consumed by the DetectorNN, after which a compact DemapperNN produces bit log-likelihood ratios for channel decoding. 5G/6G-compliant end-to-end simulations across multiple channel scenarios, pilot patterns, and inter-cell interference conditions show improved error rate and spectral efficiency over a conventional baseline, while maintaining low-complexity inference and support for different MIMO configurations without retraining.",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "https://arxiv.org/pdf/2602.11834",
+      "source_api": "openalex",
+      "relevance_score": 0.5,
+      "_score": 0.45,
+      "id": "L001",
+      "download": true,
+      "publication_status": "preprint"
+    },
+    {
+      "title": "Deep Learning for Joint Narrowband Interference Cancellation and Soft Demodulation in OFDM Systems",
+      "authors": [
+        "E. Kavvousanos",
+        "Francky Catthoor",
+        "Vassilis Paliouras"
+      ],
+      "venue": "arXiv (Cornell University)",
+      "year": 2026,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "Narrowband interference (NBI) severely degrades orthogonal frequency-division multiplexing (OFDM) systems by corrupting subcarriers and rendering classical soft demodulation ineffective. Conventional compressed-sensing (CS) mitigation exhibits high sequential latency and leaves structured, non-Gaussian residuals that cause log-likelihood ratio (LLR) unreliability, decoder saturation, and severe error floors when employing classical Gaussian demappers. We resolve this pipeline mismatch using a unified deep learning framework for joint NBI cancellation and robust soft demodulation. First, NBI-CNet employs a physics-informed convolutional architecture to estimate NBI parameters and remove multi-tone interference in a single forward pass. Without requiring prior knowledge of the active interferer count, NBI-CNet reduces computational complexity by up to 60% ($N{=}2048, Q{=}64$) compared to the state-of-the-art EOMP-IDS algorithm. Second, LLR-CNet acts as a structural whitener by mapping non-Gaussian post-mitigation residuals onto well-calibrated soft metrics. Simulations demonstrate that this joint framework eliminates the error floors inherent to traditional baselines across dense grids. Under severe interference ($\\text{SIR}{=}{-}10$ dB), the pipeline operates within a $0.2$ to $0.5$ dB SNR margin of the optimal iterative baseline at a target block error rate (BLER) of $10^{-4}$. Under mild interference ($\\text{SIR}{=}10$ dB) with heavy spectral overlap ($Q{=}12$), where classical greedy algorithms erroneously subtract valid data components and corrupt the payload, NBI-CNet avoids signal-peak confusion to deliver a coding gain exceeding $3$ dB. Finally, the architecture circumvents the $2{\\times}10^{-4}$ error floor triggered by interferer-estimation errors, while its scale-invariant design enables robust generalization across arbitrary FFT sizes without retraining.",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "https://arxiv.org/pdf/2607.08717",
+      "source_api": "openalex",
+      "relevance_score": 0.333,
+      "_score": 0.36650000000000005,
+      "id": "L002",
+      "download": true,
+      "publication_status": "preprint"
+    },
+    {
+      "title": "Overview of Precoding Techniques for Massive MIMO",
+      "authors": [
+        "Mahmoud A. Albreem",
+        "Alaa Alhabbash",
+        "Ammar M. Abu‐Hudrouss",
+        "Salama Ikki"
+      ],
+      "venue": "IEEE Access",
+      "year": 2021,
+      "doi": "10.1109/access.2021.3073325",
+      "arxiv_id": null,
+      "abstract": "Massive multiple-input multiple-output (MIMO) is playing a crucial role in the fifth generation (5G) and beyond 5G (B5G) communication systems. Unfortunately, the complexity of massive MIMO systems is tremendously increased when a large number of antennas and radio frequency chains (RF) are utilized. Therefore, a plethora of research efforts has been conducted to find the optimal precoding algorithm with lowest complexity. The main aim of this paper is to provide insights on such precoding algorithms to a generalist of wireless communications. The added value of this paper is that the classification of massive MIMO precoding algorithms is provided with easily distinguishable classes of precoding solutions. This paper covers linear precoding algorithms starting with precoders based on approximate matrix inversion methods such as the truncated polynomial expansion (TPE), the Neumann series approximation (NSA), the Newton iteration (NI), and the Chebyshev iteration (CI) algorithms. The paper also presents the fixed-point iteration-based linear precoding algorithms such as the Gauss-Seidel (GS) algorithm, the successive over relaxation (SOR) algorithm, the conjugate gradient (CG) algorithm, and the Jacobi iteration (JI) algorithm. In addition, the paper reviews the direct matrix decomposition based linear precoding algorithms such as the QR decomposition and Cholesky decomposition (CD). The non-linear precoders are also presented which include the dirty-paper coding (DPC), Tomlinson-Harashima (TH), vector perturbation (VP), and lattice reduction aided (LR) algorithms. Due to the necessity to deal with a high consuming power by the base station (BS) with a large number of antennas in massive MIMO systems, a special subsection is included to describe the characteristics of the peak-to-average power ratio precoding (PAPR) algorithms such as the constant envelope (CE) algorithm, approximate message passing (AMP), and quantized precoding (QP) algorithms. This paper also reviews the machine learning role in precoding techniques. Although many precoding techniques are essentially proposed for a small-scale MIMO, they have been exploited in massive MIMO networks. Therefore, this paper presents the application of small-scale MIMO precoding techniques for massive MIMO. This paper demonstrates the precoding schemes in promising multiple antenna technologies such as the cell-free massive MIMO (CF-M-MIMO), beamspace massive MIMO, and intelligent reflecting surfaces (IRSs). In-depth discussion on the pros and cons, performance-complexity profile, and implementation solidity is provided. This paper also provides a discussion on the channel estimation and energy efficiency. This paper also presents potential future directions in massive MIMO precoding algorithms.",
+      "citation_count": 156,
+      "is_open_access": true,
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/6287639/9312710/09404152.pdf",
+      "source_api": "openalex",
+      "relevance_score": 0.167,
+      "_score": 0.36350000000000005,
+      "id": "L003",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Learning Perturbations for Soft-Output Linear MIMO Demappers",
+      "authors": [
+        "Daniel E. Worrall",
+        "Markus F. Peschl",
+        "Arash Behboodi",
+        "Roberto Bondesan"
+      ],
+      "venue": "arXiv (Cornell University)",
+      "year": 2022,
+      "doi": "10.48550/arxiv.2209.00529",
+      "arxiv_id": null,
+      "abstract": "Tree-based demappers for multiple-input multiple-output (MIMO) detection such as the sphere decoder can achieve near-optimal performance but incur high computational cost due to their sequential nature. In this paper, we propose the perturbed linear demapper (PLM), which is a novel data-driven model for computing soft outputs in parallel. To achieve this, the PLM learns a distribution centered on an initial linear estimate and a log-likelihood ratio clipping parameter using end-to-end Bayesian optimization. Furthermore, we show that lattice-reduction can be naturally incorporated into the PLM pipeline, which allows to trade off computational cost against coded block error rate reduction. We find that the optimized PLM can achieve near maximum-likelihood (ML) performance in Rayleigh channels, making it an efficient alternative to tree-based demappers.",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "https://arxiv.org/pdf/2209.00529",
+      "source_api": "openalex",
+      "relevance_score": 0.333,
+      "_score": 0.2865,
+      "id": "L004",
+      "download": true,
+      "publication_status": "preprint"
+    },
+    {
+      "title": "Deep Neural Network-Aided Soft-Demapping in Coherent Optical Systems: Regression Versus Classification",
+      "authors": [
+        "Pedro J. Freire",
+        "Jaroslaw E. Prilepsky",
+        "Yevhenii Osadchuk",
+        "Sergei K. Turitsyn",
+        "Vahid Aref"
+      ],
+      "venue": "IEEE Transactions on Communications",
+      "year": 2022,
+      "doi": "10.1109/tcomm.2022.3213284",
+      "arxiv_id": null,
+      "abstract": "We examine here what type of predictive modelling, classification, or regression, using neural networks (NN), fits better the task of soft-demapping based post-processing in coherent optical communications, where the transmission channel is nonlinear and dispersive. For the first time, we present possible drawbacks in using each type of predictive task in a machine learning context, considering the nonlinear coherent optical channel equalization/soft-demapping problem. We study two types of equalizers based on the feed-forward and recurrent NNs, for several transmission scenarios, in linear and nonlinear regimes of the optical channel. We point out that even though from the information theory perspective the cross-entropy loss (classification) is the most suitable option for our problem, the NN models based on the cross-entropy loss function can severely suffer from learning problems. The latter translates into the fact that regression-based learning is typically superior in terms of delivering higher Q-factor and achievable information rates. In short, we show by empirical evidence that loss functions based on cross-entropy may not be necessarily the most suitable option for training communication systems in practical scenarios when overfitting- and vanishing gradients-related problems come into play.",
+      "citation_count": 24,
+      "is_open_access": true,
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/26/9989518/09915441.pdf",
+      "source_api": "openalex",
+      "relevance_score": 0.167,
+      "_score": 0.2311923076923077,
+      "id": "L005",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Hardware and software design methodologies for portability, flexibility and versatility in multi-standard MIMO baseband processing",
+      "authors": [
+        "Daniel Günther"
+      ],
+      "venue": "RWTH Publications (RWTH Aachen)",
+      "year": 2017,
+      "doi": "10.18154/rwth-2017-07440",
+      "arxiv_id": null,
+      "abstract": "In modern wireless communications, the amount of communication standards that have to be implemented by a communication device rises along with exponentially increasing data rates. Therefore, the software-defined radio (SDR) concept envisions a flexible, mostly programmable communication platform that can be adapted to newstandards by means of software updates. The conflict between flexibility and versatility on the one hand, and efficiency on the other hand is a significant challenge for this approach. This is because flexibility and versatility often come at the expense of increased energy consumption and silicon area. Minimizing this trade-off is a centraltopic of this thesis. To this end, design paradigms for flexible programmable processors and versatile non-programmable circuits, both with high efficiency, are developed and demonstrated by case studies. Another crucial aspect of SDR is ensuring software portability while maintaining high efficiency, since efficient software is often highly tailored to its target architecture. In response, this work presents concepts for the development of efficient portable baseband software, accompanied by implementation case studies.To investigate software portability, the receiver baseband signal processing of IEEE 802.11n wireless LAN and the cellular LTE standard was implemented on two commercial SDR architectures. The target applications were analyzed on an algorithmic level and decomposed into their computationally complex kernels (Nuclei). For thesekernels, highly optimized, platform-specific implementations (Flavors) were developed on both target architectures. The function interface of these Flavors on the other hand remains generic, so that the target application can be composed by calls from a platform-independent frame code that represents the control flow of the application.By doing so, a new communication standard can be implemented by adapting the frame code and potentially adding missing Flavors.Application-specific instruction set processors (ASIPs) are often used to overcome the efficiency-flexibility gap between specialized circuits and generic programmable processors. Typical baseband ASIPs commonly exhibit a high degree of complexity to compete with tailored, non-programmable circuits which leads to poor flexibility andprogrammability. Therefore, this work pursues an alternative concept called the lean design method. This method aims to identify the simplest architecture for a given task and then make this architecture as efficient as possible. A slim and easily programmable vector processor was developed as a case study to meet the requirementsof multi-antenna baseband processing. To improve ease-of-use and to avoid costly numerical stabilization, the processor uses efficient floating-point arithmetic. A data path with a flexible routing and permutation network and efficient bypassing ensures high utilization of the functional units. The data path can also be adapted to thenumerical requirements of the target application at runtime by masking the floating-point mantissa. The processor was layouted for a 90 nm CMOS technology to verify the promised efficiency gain.In case a flexible architecture does not provide sufficient performance for a certain application domain, the aspect of programmability often has to be given up. Linear multi-antenna precoding based on singular value decomposition (SVD) for IEEE 802.11ac with up to eight transmit antennas was selected as an exemplary use case for such a situation. A versatile precoding architecture has to support the maximum use case as well as smaller antenna configurations. Therefore, the cyclic Jacobi algorithm for SVD was adapted so it can decompose bigger size matrices entirely based on 2 × 2 vector arithmetic. Additionally, a number of numerical parameters can be adapted to the requirements of the use case at hand. The resulting precoder was layouted for a 90 nm CMOS technology and benchmarked with respect to silicon area and energy efficiency. Finally, the efficiency of the precoder was evaluated in the context of a MAC layer application based on IEEE 802.11ac. The resulting multi-dimensional design space includes antenna configurations, modulation schemes, etc., as well as several numerical parameters. Within this design space, the system was optimized with regard to different criteria (e.g., spectral efficiency, energy efficiency, latency). The versatility of the precoder architecture with respect to efficient support for the entire design space was instrumental to achieve the different optimization goals.",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "http://publications.rwth-aachen.de/record/698053/files/698053.pdf",
+      "source_api": "openalex",
+      "relevance_score": 0.333,
+      "_score": 0.1865,
+      "id": "L006",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Deep Neural Network-aided Soft-Demapping in Optical Coherent Systems: Regression versus Classification",
+      "authors": [
+        "Pedro J. Freire",
+        "Jaroslaw E. Prilepsky",
+        "Yevhenii Osadchuk",
+        "Sergei K. Turitsyn",
+        "Vahid Aref"
+      ],
+      "venue": "arXiv (Cornell University)",
+      "year": 2021,
+      "doi": "10.48550/arxiv.2109.13843",
+      "arxiv_id": null,
+      "abstract": "We examine here what type of predictive modelling, classification, or regression, using neural networks (NN), fits better the task of soft-demapping based post-processing in coherent optical communications, where the transmission channel is nonlinear and dispersive. For the first time, we present possible drawbacks in using each type of predictive task in a machine learning context, considering the nonlinear coherent optical channel equalization/soft-demapping problem. We study two types of equalizers based on the feed-forward and recurrent NNs, for several transmission scenarios, in linear and nonlinear regimes of the optical channel. We point out that even though from the information theory perspective the cross-entropy loss (classification) is the most suitable option for our problem, the NN models based on the cross-entropy loss function can severely suffer from learning problems. The latter translates into the fact that regression-based learning is typically superior in terms of delivering higher Q-factor and achievable information rates. In short, we show by empirical evidence that loss functions based on cross-entropy may not be necessarily the most suitable option for training communication systems in practical scenarios when overfitting- and vanishing gradients-related problems come into play.",
+      "citation_count": 1,
+      "is_open_access": true,
+      "pdf_url": "https://arxiv.org/pdf/2109.13843",
+      "source_api": "openalex",
+      "relevance_score": 0.167,
+      "_score": 0.18465384615384617,
+      "id": "L007",
+      "download": true,
+      "publication_status": "preprint"
+    },
+    {
+      "title": "Soft-Decision-Driven Sparse Channel Estimation and Turbo Equalization for MIMO Underwater Acoustic Communications",
+      "authors": [
+        "Youwen Zhang",
+        "Yuriy Zakharov",
+        "Jianghui Li"
+      ],
+      "venue": "IEEE Access",
+      "year": 2018,
+      "doi": "10.1109/access.2018.2794455",
+      "arxiv_id": null,
+      "abstract": "Multi-input multi-output (MIMO) detection based on turbo principle has been shown to provide a great enhancement in the throughput and reliability of underwater acoustic (UWA) communication systems. Benefits of the iterative detection in MIMO systems, however, can be obtained only when a high quality channel estimation is ensured. In this paper, we develop a new soft-decision-driven sparse channel estimation and turbo equalization scheme in the triply selective MIMO UWA. First, the Homotopy recursive least square dichotomous coordinate descent (Homotopy RLS-DCD) adaptive algorithm, recently proposed for sparse single-input single-output system identification, is extended to adaptively estimate rapid time-varying MIMO sparse channels. Next, the more reliable a posteriori soft-decision symbols, instead of the hard decision symbols or the a priori soft-decision symbols, at the equalizer output, are not only feedback to the Homotopy RLS-DCD-based channel estimator but also to the minimum mean-square-error (MMSE) equalizer. As the turbo iterations progress, the accuracy of channel estimation and the quality of the MMSE equalizer are improved gradually, leading to the enhancement in the turbo equalization performance. This also allows the reduction in pilot overhead. The proposed receiver has been tested by using the data collected from the SHLake2013 experiment. The performance of the receiver is evaluated for various modulation schemes, channel estimators, and MIMO sizes. Experimental results demonstrate that the proposed a posteriori soft-decision-driven sparse channel estimation based on the Homotopy RLS-DCD algorithm and turbo equalization offer considerable improvement in system performance over other turbo equalization schemes.",
+      "citation_count": 43,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.1109/access.2018.2794455",
+      "source_api": "openalex",
+      "relevance_score": 0.167,
+      "_score": 0.17311538461538462,
+      "id": "L008",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "End-to-end Signal Processing Algorithms for Precoded Satellite Communications",
+      "authors": [
+        "Jevgenij Krivochiza"
+      ],
+      "venue": "Open Repository and Bibliography (University of Luxembourg)",
+      "year": 2020,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "The benefits of full frequency reuse in satellite communications consist of increased spectral efficiency, physical layer security, enhanced coverage, and improved Quality of Service. This is possible due to novel digital signal processing techniques for interference mitigation as well as signal predistortion in non-linear high-performance amplifiers. Advanced linear precoding and symbol-level precoding can jointly address the signal processing demands in the next-generation satellite communications. The real-time signal precoding increases the computational complexity handled at the gateway, thus requiring low-complexity high-performance algorithms to be developed. Additionally, extensive in-lab and field tests are required to increase the technology readiness level and industrial adaption rate. In this thesis, we focus on low-complexity precoding design and in-lab validations. We study the state-of-the-art linear and symbol-level precoding techniques and multi-user MIMO test-beds available in the literature. First, we present a novel low-complexity algorithm for sum power minimization precoding design. This technique allows to reduce transmitted power in a multi-beam satellite system and improves the quality of the received signal at user terminals. Next, we demonstrate an FPGA accelerated high-throughput precoding design. The FPGA precoding design is scalable for a different number of beams in the systems and operates in a real-time processing regime using a commercially available software defined radio platform. One of the highlights of this research is the creation of a real-time in-lab precoding test-bed. The test-bed consists of a DVB-S2X precoding enabled gateway prototype, a MIMO channel emulator, and user terminals. By using the radio frequency for transmitting and receiving the precoded signals, we can test the performance of different precoding techniques in realistic scenarios and channel impairments. We demonstrate an end-to-end symbol-level precoded real-time transmission, in which user terminals can acquire and decode the precoded signals showing an increase in performance and throughput. The in-lab validations confirm numerical results conducted alongside in this work.",
+      "citation_count": 1,
+      "is_open_access": true,
+      "pdf_url": "http://orbilu.uni.lu/handle/10993/44739",
+      "source_api": "openalex",
+      "relevance_score": 0.167,
+      "_score": 0.16465384615384618,
+      "id": "L009",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Search Based Software Design for Communication Receivers",
+      "authors": [
+        "Andreas Ibing"
+      ],
+      "venue": "mediaTUM – the media and publications repository of the Technical University Munich (Technical University Munich)",
+      "year": 2011,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "Zusammenfassung Die vorliegende Dissertation bearbeitet das Problem des Designs von Software der Bitübertragungsschicht für auf einer homogenen Mehrkern-Prozessorarchitektur basierende Kommunikationsempfänger. Dies beinhaltet die Auswahl von Komponentenalgorithmen sowie eines Berechnungs-Schedules, unter Beachtung von Möglichkeiten der iterativen Verarbeitung und Parallelisierung.Die Arbeit verfolgt einen Ansatz zur automatischen suchbasierten Optimierung unter Ausnutzung der speziellen Problemstruktur.Das Kriterium der Empfängeroptimierung ist dabei flexibel und kann als Utility-Funktion der Performanz-Parameter Übertragungsmodus, Signal-zu-Störverhältnis, Bitfehlerrate, Komplexität, Verzögerung sowie Durchsatz angegeben werden.Die Arbeit beginnt mit einer Betrachtung von Standardempfängerarchitektur und -algorithmen für Turbo-kodierte MIMO-OFDMA Übertragung.Danach wird in Abhängigkeit des Übertragungsmodus die generische Empfängerarchitektur aus bedingten Unabhängigkeiten der Übertragungsvariablen hergeleitet.Die Zerlegung in Empfängerkomponenten folgt aus der mathematischen Problemstruktur der stochastischen Inferenz.Zur praktischen Implementierung werden approximative Algorithmen zur Realisierung der verschiedenen Empfängerkomponenten betrachtet.Bei iterativer Verarbeitung wird jeweils Information aus den anderen Empfängerkomponenten als a priori Wissen verwendet.Die Zusammensetzung eines kompletten Empfängers aus Komponenten wird formal beschrieben und im Hinblick auf die Performanz-Parameter untersucht.Eine Möglichkeit der schnellen Prädiktion wird aufgezeigt, wobei eine Monte-Carlo Simulation des gesamten Empfängers nicht nötig ist.Darauf aufbauend folgt die automatische Suche im Empfänger-Entwurfsraum mittels Graphenalgorithmen.Im Vergleich zur Standardempfängerarchitektur ermöglichen die optimierten Empfänger einen Empfang bei signifikant geringerem SNR bzw.eine Komplexitätsreduktion im niedrigen SNR Bereich.Weiter wird die Wechselwirkung zwischen der Leistungsfähigkeit der physikalischen Schicht und der Ressourcenzuteilung betrachtet und eine Empfängerbewertung auf Netzwerkschicht in Abhängigkeit von Protokollkriterien ermöglicht.Abschliessend wird beispielhaft die Implementierung eines SDR Testbetts beschrieben, wobei Testbett-Parameter zur Veranschaulichung des Optimierungsverfahrens genutzt werden.Die vorliegende Arbeit basiert auf den auf Seite 191 folgende aufgelisteten Publikationen.",
+      "citation_count": 1,
+      "is_open_access": true,
+      "pdf_url": "http://nbn-resolving.de/urn/resolver.pl?urn:nbn:de:bvb:91-diss-20110916-1072003-1-9",
+      "source_api": "openalex",
+      "relevance_score": 0.167,
+      "_score": 0.08465384615384616,
+      "id": "L010",
+      "download": true,
+      "publication_status": "published"
+    }
+  ]
+}

@@ -1,0 +1,264 @@
+{
+  "query": "",
+  "timestamp": "2026-08-30T05:00:53.718032+08:00",
+  "sources": [
+    "citations_openalex"
+  ],
+  "total": 14,
+  "results": [
+    {
+      "title": "The Approximation of One Matrix by Another of Lower Rank",
+      "authors": [
+        "Carl Eckart",
+        "Gale Young"
+      ],
+      "venue": "Psychometrika",
+      "year": 1936,
+      "doi": "10.1007/bf02288367",
+      "arxiv_id": null,
+      "abstract": "The mathematical problem of approximating one matrix by another of lower rank is closely related to the fundamental postulate of factor-theory. When formulated as a least-squares problem, the normal equations cannot be immediately written down, since the elements of the approximate matrix are not independent of one another. The solution of the problem is simplified by first expressing the matrices in a canonic form. It is found that the problem always has a solution which is usually unique. Several conclusions can be drawn from the form of this solution. A hypothetical interpretation of the canonic components of a score matrix is discussed.",
+      "citation_count": 3851,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L001",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Introduction to Matrix Analysis",
+      "authors": [
+        "Richard Bellman"
+      ],
+      "venue": "",
+      "year": 1960,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "Foreword Preface to the Second Edition Preface 1. Maximization, Minimization, and Motivation 2. Vectors and Matrices 3. Diagonalization and Canonical Forms for Symmetric Matrices 4. Reduction of General Symmetric Matrices to Diagonal Form 5. Constrained Maxima 6. Functions of Matrices 7. Variational Description of Characteristic Roots 8. Inequalities 9. Dynamic Programming 10. Matrices and Differential Equations 11. Explicit Solutions and Canonical Forms 12. Symmetric Function, Kronecker Products and Circulants 13. Stability Theory 14. Markoff Matrices and Probability Theory 15. Stochastic Matrices 16. Positive Matrices, Perron's Theorem, and Mathematical Economics 17. Control Processes 18. Invariant Imbedding 19. Numerical Inversion of the Laplace Transform and Tychonov Regularization Appendix A. Linear Equations and Rank Appendix B. The Quadratic Form of Selberg Appendix C. A Method of Hermite Appendix D. Moments and Quadratic Forms Index.",
+      "citation_count": 2977,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L002",
+      "download": true,
+      "publication_status": "unknown"
+    },
+    {
+      "title": "Introduction to matrix analysis",
+      "authors": [
+        "Henri Amar"
+      ],
+      "venue": "Journal of the Franklin Institute",
+      "year": 1960,
+      "doi": "10.1016/0016-0032(60)90904-2",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 2337,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L003",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Multiple factor analysis.",
+      "authors": [
+        "Paul Horst"
+      ],
+      "venue": "Psychological Bulletin",
+      "year": 1948,
+      "doi": "10.1037/h0052785",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 1563,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L004",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "The Development of Hierarchical Factor Solutions",
+      "authors": [
+        "John Schmid",
+        "John M. Leiman"
+      ],
+      "venue": "Psychometrika",
+      "year": 1957,
+      "doi": "10.1007/bf02289209",
+      "arxiv_id": null,
+      "abstract": "Although simple structure has proved to be a valuable principle for rotation of axes in factor analysis, an oblique factor solution often tends to confound the resulting interpretation. A model is presented here which transforms the oblique factor solution so as to preserve simple structure and, in addition, to provide orthogonal reference axes. Furthermore, this model makes explicit the hierarchical ordering of factors above the first-order domain.",
+      "citation_count": 1111,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L005",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "The procrustes program: Producing direct rotation to test a hypothesized factor structure",
+      "authors": [
+        "John R. Hurley",
+        "Raymond B. Cattell"
+      ],
+      "venue": "Systems Research and Behavioral Science",
+      "year": 2007,
+      "doi": "10.1002/bs.3830070216",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 353,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L006",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "The Orthogonal Approximation of an Oblique Structure in Factor Analysis",
+      "authors": [
+        "Bert F. Green"
+      ],
+      "venue": "Psychometrika",
+      "year": 1952,
+      "doi": "10.1007/bf02288918",
+      "arxiv_id": null,
+      "abstract": "A procedure is derived for obtaining an orthogonal transformation which most nearly transforms one given matrix into another given matrix, according to some least-squares criterion of fit. From this procedure, three analytic methods are derived for obtaining an orthogonal factor matrix which closely approximates a given oblique factor matrix. The case is considered of approximating a specified subset of oblique vectors by orthogonal vectors.",
+      "citation_count": 234,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L007",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "THE ORTHOGONAL APPROXIMATION OF AN OBLIQUE STRUCTURE IN FACTOR ANALYSIS",
+      "authors": [
+        "Bert F. Green"
+      ],
+      "venue": "ETS Research Bulletin Series",
+      "year": 1951,
+      "doi": "10.1002/j.2333-8504.1951.tb00218.x",
+      "arxiv_id": null,
+      "abstract": ".or Intero 'fice CIl'CU ation.",
+      "citation_count": 206,
+      "is_open_access": true,
+      "pdf_url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.1002/j.2333-8504.1951.tb00218.x",
+      "source_api": "openalex_citations",
+      "id": "L008",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Determining a Simple Structure When Loadings for Certain Tests are Known",
+      "authors": [
+        "Charles I. Mosier"
+      ],
+      "venue": "Psychometrika",
+      "year": 1939,
+      "doi": "10.1007/bf02288493",
+      "arxiv_id": null,
+      "abstract": "A rigorous and an approximate solution are found for the problem: Given a primary trait matrix for n tests and r 1 traits, and a matrix for the same n tests and r 2 reference axes, to discover the transformation which will transform the second matrix into the first, or primary trait matrix. Formulas for determining the limits of the effect of using the approximate solution are presented. The method is applied to a set of twenty hypothetical tests, defined by their loadings on four orthogonal primary traits. After factoring the inter-correlations of these variables by Thurstone's centroid method, approximating the diagonals, the original hypothetical matrix is reproduced with a root mean square discrepancy of .014 by assuming as known the primary trait loadings of only the first eight tests. The method is applied to the results of factoring two batteries of 14 tests, having 8 tests in common, to give the factor loadings of the two batteries on the same reference axes. The method provides a means of comparing directly and quantitatively the results of two different factor studies, provided they have tests in common, and of testing the stability of simple structure under changes in the battery. The relations of the method here developed to certain problems in multiple correlation are shown.",
+      "citation_count": 112,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L009",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "On a Theorem Stated by Eckart and Young",
+      "authors": [
+        "Richard M. Johnson"
+      ],
+      "venue": "Psychometrika",
+      "year": 1963,
+      "doi": "10.1007/bf02289573",
+      "arxiv_id": null,
+      "abstract": "Proof is given for a theorem stated but not proved by Eckart and Young in 1936, which has assumed considerable importance in the theory of lower-rank approximations to matrices, particularly in factor analysis.",
+      "citation_count": 106,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L010",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Introduction To Matrix Analysis By Richard Bellman, New York, 1960",
+      "authors": [
+        "Richard Bellman"
+      ],
+      "venue": "",
+      "year": 1960,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 125,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L011",
+      "download": true,
+      "publication_status": "unknown"
+    },
+    {
+      "title": "Symbolic Matrix Derivatives",
+      "authors": [
+        "Paul S. Dwyer",
+        "M. S. Macphail"
+      ],
+      "venue": "The Annals of Mathematical Statistics",
+      "year": 1948,
+      "doi": "10.1214/aoms/1177730148",
+      "arxiv_id": null,
+      "abstract": "Let $X$ be the matrix $\\lbrack x_{mn}\\rbrack, t$ a scalar, and let $\\partial X/\\partial t, \\partial t/\\partial X$ denote the matrices $\\lbrack\\partial x_{mn}/\\partial t\\rbrack, \\lbrack\\partial t/\\partial x_{mn}\\rbrack$ respectively. Let $Y = \\lbrack y_{pq}\\rbrack$ be any matrix product involving $X, X'$ and independent matrices, for example $Y = AXBX'C$. Consider the matrix derivatives $\\partial Y/\\partial x_{mn}, \\partial y_{pq}/\\partial X$. Our purpose is to devise a systematic method for calculating these derivatives. Thus if $Y = AX$, we find that $\\partial Y/\\partial x_{mn} = AJ_{mn}, \\partial y_{pq}/\\partial X = A'K_{pq}$, where $J_{mn}$ is a matrix of the same dimensions as $X$, with all elements zero except for a unit in the $m$-th row and $n$-th column, and $K_{pq}$ is similarly defined with respect to $Y$. We consider also the derivatives of sums, differences, powers, the inverse matrix and the function of a function, thus setting up a matrix analogue of elementary differential calculus. This is designed for application to statistics, and gives a concise and suggestive method for treating such topics as multiple regression and canonical correlation.",
+      "citation_count": 102,
+      "is_open_access": true,
+      "pdf_url": "https://projecteuclid.org/journals/annals-of-mathematical-statistics/volume-19/issue-4/Symbolic-Matrix-Derivatives/10.1214/aoms/1177730148.pdf",
+      "source_api": "openalex_citations",
+      "id": "L012",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "On the Least-Squares Orthogonalization of an Oblique Transformation",
+      "authors": [
+        "Walker Gibson"
+      ],
+      "venue": "Psychometrika",
+      "year": 1962,
+      "doi": "10.1007/bf02289637",
+      "arxiv_id": null,
+      "abstract": "After proving a special case of a theorem stated by Eckart and Young, namely, that an oblique transformation G is the product of two different orthogonal transformations and an intervening diagonal, this note shows that the best fitting orthogonal approximation to G is obtained simply by replacing the intervening diagonal by the identity matrix. This result is shown to be identical with two earlier orthogonalizing procedures when G is of full rank. A multiplicity of solutions is shown for the case of a singular G .",
+      "citation_count": 31,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L013",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Multiple Factor Analysis",
+      "authors": [],
+      "venue": "Encyclopedia of Measurement and Statistics",
+      "year": 2007,
+      "doi": "10.4135/9781412952644.n300",
+      "arxiv_id": null,
+      "abstract": "The purpose af factor analysis i s t o i d e n t i e the dimensions or factors by whicha variety of ghenmepa within a domain are related.Factorial methods were originally developed for the purpose of identifying the pr.hcipal dimensions or categories of mentality; bzrt the methods are general, so t h a t they.have been found useful .forother psychological -problem and i n other sciences as w e l l .Factor analS.sisi s not restricted by assumptions regarding the nature of the factors, whether they be .physiologicalor social, elemental or complex, correlqted or uncorrelated.Thu~, three programs W e been written which' factor analyze a s e t of measurements i n order that the underlying factors which r e l a t e the measurements ma;r be identified.These pxdgrams .",
+      "citation_count": 2601,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L014",
+      "download": true,
+      "publication_status": "published"
+    }
+  ]
+}

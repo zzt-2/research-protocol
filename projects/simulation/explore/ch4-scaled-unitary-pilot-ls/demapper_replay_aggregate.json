@@ -1,0 +1,255 @@
+{
+  "schema_version": "t083.demapper-replay-aggregate.v1",
+  "authority": "T083/D062/V037",
+  "manifest_sha256": "0a51d3604121d47d52383377ec445a4f57531d0bd5564c49d5e9da433b4ae081",
+  "raw_schema_version": "t083.demapper-replay-raw.v1",
+  "identity_census": {
+    "expected_windows": 256,
+    "matched_seeds": 256,
+    "matched_gains": 256,
+    "matched_realization_hashes": 256,
+    "matched_observation_hashes": 256,
+    "matched_payload_bits": 256,
+    "matched_mechanism_rows": 1280
+  },
+  "cells": [
+    {
+      "cell_id": "snr14_np2",
+      "snr_db": 14.0,
+      "pilot_symbols_per_polarization": 2,
+      "windows": 64,
+      "arms": {
+        "B0": {
+          "bit_errors": 184071,
+          "payload_bits": 2097152,
+          "ber": 0.08777189254760742,
+          "channel_nmse": 0.09860979697699263,
+          "inverse_residual": 0.10754919639898426,
+          "rho": 1.3702824993180758
+        },
+        "B1": {
+          "bit_errors": 183883,
+          "payload_bits": 2097152,
+          "ber": 0.08768224716186523,
+          "channel_nmse": 0.09656986744175672,
+          "inverse_residual": 0.10939438524329634,
+          "rho": 1.3702824993180758
+        },
+        "B2": {
+          "bit_errors": 178610,
+          "payload_bits": 2097152,
+          "ber": 0.08516788482666016,
+          "channel_nmse": 0.13006805227629922,
+          "inverse_residual": 0.06934376499847228,
+          "rho": 1.3702824993180758
+        },
+        "C4": {
+          "bit_errors": 161245,
+          "payload_bits": 2097152,
+          "ber": 0.07688760757446289,
+          "channel_nmse": 0.06825498925958196,
+          "inverse_residual": 0.05779851733212005,
+          "rho": 1.3702824993180758
+        },
+        "O1": {
+          "bit_errors": 109421,
+          "payload_bits": 2097152,
+          "ber": 0.05217599868774414,
+          "channel_nmse": 0.0,
+          "inverse_residual": 2.2443294126780288e-32,
+          "rho": 1.0
+        }
+      },
+      "comparison": {
+        "mean_diff": -0.008280277252197266,
+        "ci_lower": -0.012124645709991454,
+        "ci_upper": -0.004954528808593754,
+        "clusters": 64,
+        "candidate_window_wins": 51
+      }
+    },
+    {
+      "cell_id": "snr14_np4",
+      "snr_db": 14.0,
+      "pilot_symbols_per_polarization": 4,
+      "windows": 64,
+      "arms": {
+        "B0": {
+          "bit_errors": 164918,
+          "payload_bits": 2097152,
+          "ber": 0.07863903045654297,
+          "channel_nmse": 0.0692230533618031,
+          "inverse_residual": 0.13293110465869798,
+          "rho": 1.3543922342936956
+        },
+        "B1": {
+          "bit_errors": 164938,
+          "payload_bits": 2097152,
+          "ber": 0.07864856719970703,
+          "channel_nmse": 0.06911449340551565,
+          "inverse_residual": 0.13324258390901678,
+          "rho": 1.3543922342936956
+        },
+        "B2": {
+          "bit_errors": 153540,
+          "payload_bits": 2097152,
+          "ber": 0.07321357727050781,
+          "channel_nmse": 0.08029882945528846,
+          "inverse_residual": 0.0438967307443749,
+          "rho": 1.3543922342936956
+        },
+        "C4": {
+          "bit_errors": 145707,
+          "payload_bits": 2097152,
+          "ber": 0.06947851181030273,
+          "channel_nmse": 0.040020391960825435,
+          "inverse_residual": 0.040375414176205084,
+          "rho": 1.3543922342936956
+        },
+        "O1": {
+          "bit_errors": 118821,
+          "payload_bits": 2097152,
+          "ber": 0.056658267974853516,
+          "channel_nmse": 0.0,
+          "inverse_residual": 2.0600737705583975e-32,
+          "rho": 1.0
+        }
+      },
+      "comparison": {
+        "mean_diff": -0.003735065460205078,
+        "ci_lower": -0.005605244636535644,
+        "ci_upper": -0.0019459724426269531,
+        "clusters": 64,
+        "candidate_window_wins": 46
+      }
+    },
+    {
+      "cell_id": "snr18_np2",
+      "snr_db": 18.0,
+      "pilot_symbols_per_polarization": 2,
+      "windows": 64,
+      "arms": {
+        "B0": {
+          "bit_errors": 90205,
+          "payload_bits": 2097152,
+          "ber": 0.04301309585571289,
+          "channel_nmse": 0.04137826324089839,
+          "inverse_residual": 0.04272367204876721,
+          "rho": 1.2257179915891927
+        },
+        "B1": {
+          "bit_errors": 90186,
+          "payload_bits": 2097152,
+          "ber": 0.04300403594970703,
+          "channel_nmse": 0.04129027672623972,
+          "inverse_residual": 0.04279143970778988,
+          "rho": 1.2257179915891927
+        },
+        "B2": {
+          "bit_errors": 84450,
+          "payload_bits": 2097152,
+          "ber": 0.040268898010253906,
+          "channel_nmse": 0.04861737854278734,
+          "inverse_residual": 0.03462649300076648,
+          "rho": 1.2257179915891927
+        },
+        "C4": {
+          "bit_errors": 74744,
+          "payload_bits": 2097152,
+          "ber": 0.035640716552734375,
+          "channel_nmse": 0.02764477465333527,
+          "inverse_residual": 0.026997055103101096,
+          "rho": 1.225717991589193
+        },
+        "O1": {
+          "bit_errors": 45768,
+          "payload_bits": 2097152,
+          "ber": 0.021823883056640625,
+          "channel_nmse": 0.0,
+          "inverse_residual": 2.167524884722264e-32,
+          "rho": 1.0
+        }
+      },
+      "comparison": {
+        "mean_diff": -0.004628181457519531,
+        "ci_lower": -0.007245659828186035,
+        "ci_upper": -0.0023582816123962425,
+        "clusters": 64,
+        "candidate_window_wins": 35
+      }
+    },
+    {
+      "cell_id": "snr18_np4",
+      "snr_db": 18.0,
+      "pilot_symbols_per_polarization": 4,
+      "windows": 64,
+      "arms": {
+        "B0": {
+          "bit_errors": 50212,
+          "payload_bits": 2097152,
+          "ber": 0.023942947387695312,
+          "channel_nmse": 0.014083933878911306,
+          "inverse_residual": 0.014040054704863303,
+          "rho": 1.1345961300346104
+        },
+        "B1": {
+          "bit_errors": 50199,
+          "payload_bits": 2097152,
+          "ber": 0.023936748504638672,
+          "channel_nmse": 0.013880773131016003,
+          "inverse_residual": 0.014399145293145576,
+          "rho": 1.1345961300346104
+        },
+        "B2": {
+          "bit_errors": 47812,
+          "payload_bits": 2097152,
+          "ber": 0.022798538208007812,
+          "channel_nmse": 0.016118499334861272,
+          "inverse_residual": 0.012490256441363447,
+          "rho": 1.1345961300346104
+        },
+        "C4": {
+          "bit_errors": 44171,
+          "payload_bits": 2097152,
+          "ber": 0.021062374114990234,
+          "channel_nmse": 0.00864210662659332,
+          "inverse_residual": 0.008412061593369153,
+          "rho": 1.1345961300346104
+        },
+        "O1": {
+          "bit_errors": 35785,
+          "payload_bits": 2097152,
+          "ber": 0.017063617706298828,
+          "channel_nmse": 0.0,
+          "inverse_residual": 1.876525831675469e-32,
+          "rho": 1.0
+        }
+      },
+      "comparison": {
+        "mean_diff": -0.0017361640930175781,
+        "ci_lower": -0.0030241012573242188,
+        "ci_upper": -0.0006393551826477063,
+        "clusters": 64,
+        "candidate_window_wins": 28
+      }
+    }
+  ],
+  "pooled_np2": {
+    "mean_diff": -0.0064542293548583984,
+    "ci_lower": -0.008683961629867554,
+    "ci_upper": -0.004330861568450928,
+    "clusters": 128,
+    "candidate_window_wins": 86
+  },
+  "decision": {
+    "terminal": "DEMAPPER_REPLAY_PASS",
+    "difference": "BER_C4_minus_BER_B2",
+    "next_step": "independent raw recomputation"
+  },
+  "_meta": {
+    "script": "t083_demapper_replay_raw_only_reducer",
+    "common_md5": "49acdfa4",
+    "git_commit": "60e2abf",
+    "timestamp": "2026-08-30T13:26:13"
+  }
+}

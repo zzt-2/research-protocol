@@ -1,0 +1,106 @@
+schema_version: t077.c5-0-single-cell-natural-headroom.v1
+authority: T077/D056/V031/CP018
+action_class: C5_LLR_SINGLE_CELL_NATURAL_HEADROOM
+
+cell:
+  cell_id: t077-dp16apsk-moderate-gg-15db
+  modulation: DP-(8,8)-16APSK
+  polarization_count: 2
+  observation_symbols_per_polarization: 256
+  ch4_preamble_symbols: 4
+  continuous_total_symbols: 260
+  gamma_gamma_block: 256
+  observation_symbols_in_first_gg_block: 252
+  observation_symbols_in_next_gg_block: 4
+  turbulence_alpha: 4.0
+  turbulence_beta: 1.9
+  residual_frequency_hz: 1000000.0
+  frequency_slope_hz_per_s: 150000000.0
+  linewidth_hz: 10000.0
+  snr_db: 15.0
+  jones: static_random_memoryless_unitary_per_frame
+  pdl: false
+  pmd: false
+  fir: false
+  iq_imbalance: false
+  awgn: equal_variance_circular_after_jones
+
+ch4:
+  acquisition_pilots: 4
+  arm_id: plain-canonical-rde-mu1e-3
+  mode: plain
+  mu: 0.001
+
+ch3:
+  mode: DA
+  pilot_indices: [0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72, 76, 80, 84, 88, 92, 96, 100, 104, 108, 112, 116, 120, 124, 128, 132, 136, 140, 144, 148, 152, 156, 160, 164, 168, 172, 176, 180, 184, 188, 192, 196, 200, 204, 208, 212, 216, 220, 224, 228, 232, 236, 240, 244, 248, 252]
+  pilots_per_polarization: 64
+  polarization_1_label_shift: 3
+
+codeword:
+  family: 5g_ldpc_bg2
+  information_bits: 1024
+  transmitted_bits: 1536
+  bits_per_symbol: 4
+  apsk_symbols: 384
+  codewords_per_physical_frame: 1
+  nonpilot_slots_per_polarization: 192
+  mapping: pol_major_pol0_then_pol1
+  decoder_iterations: 20
+  demapper_clip: 30.0
+  decode_fresh_clip: 30.0
+  backend_input_clip: 20.0
+
+splits:
+  smoke:
+    count: 8
+    seeds: {start: 2900, stop_inclusive: 2907}
+    scientific_use: false
+  calibration:
+    count: 64
+    seeds: {start: 3000, stop_inclusive: 3063}
+    scalar_exponent_grid: {start: -8, stop_inclusive: 6, step: 1, formula: "2^(k/2)"}
+    tie_break: [fer, ber, abs_log_scalar, scalar]
+  evaluation:
+    evaluation_frames: 512
+    gate1_count: 128
+    gate1_seeds: {start: 4000, stop_inclusive: 4127}
+    fixed_count: 512
+    fixed_seeds: {start: 4000, stop_inclusive: 4511}
+    append_only: true
+
+bootstrap:
+  cluster: physical_frame
+  rng: PCG64
+  seed: 2026083007
+  resamples: 10000
+  confidence: 0.95
+  spearman_one_sided_lower_quantile: 0.05
+  paired_two_sided_quantiles: [0.025, 0.975]
+
+arms:
+  B0: {auxiliary_n0: nominal_15db, scalar: 1.0}
+  B1: {auxiliary_n0: nominal_15db, scalar: calibration_frozen_global}
+  B2: {auxiliary_n0: nominal_15db, scalar: nominal_n0_over_current_frame_pilot_n0}
+  B3: {auxiliary_n0: current_frame_pilot_n0, scalar: 1.0}
+  O1: {auxiliary_n0: scorer_only_current_frame_payload_n0, scalar: 1.0}
+
+terminals:
+  - SINGLE_CELL_PASS_B2_SIGNAL
+  - SINGLE_CELL_B3_ONLY_SIGNAL
+  - SINGLE_CELL_NO_RELIABILITY_SIGNAL
+  - SINGLE_CELL_NO_HEADROOM
+  - SINGLE_CELL_B2_NO_GAIN
+  - SINGLE_CELL_INSUFFICIENT_SENSITIVITY
+  - INVALID_TESTBED
+
+forbidden:
+  - second_cell
+  - parameter_or_formula_tuning
+  - additional_frames
+  - new_impairment
+  - gmi_or_uncoded_substitute
+  - common_or_global_params_change
+  - coded_decoder_feedback_change
+  - c5_1_or_ch3_or_ch4_change
+  - skill_controller_or_thesis_body_change

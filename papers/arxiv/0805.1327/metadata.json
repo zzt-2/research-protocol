@@ -1,0 +1,16 @@
+{
+  "storage_version": 2,
+  "id": "0805.1327",
+  "title": "",
+  "doi": null,
+  "arxiv_id": "0805.1327",
+  "download_status": "success",
+  "download_method": "arxiv_html",
+  "content_type": "html",
+  "content_quality": "good",
+  "content_file": "content.md",
+  "downloaded_at": "2026-08-30T06:36:05.349643+08:00",
+  "real_title": "Bit-Interleaved Coded Modulation Revisited: A Mismatched Decoding Perspective",
+  "title_check": "unverifiable",
+  "title_overlap": null
+}

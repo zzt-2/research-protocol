@@ -1,0 +1,735 @@
+{
+  "query": "10.1186/s13638-018-1136-z",
+  "timestamp": "2026-08-30T02:33:48.223838+08:00",
+  "sources": [
+    "citations_both"
+  ],
+  "total": 37,
+  "results": [
+    {
+      "title": "Maximum Likelihood from Incomplete Data Via the EM Algorithm",
+      "authors": [
+        "A. P. Dempster",
+        "N. M. Laird",
+        "Donald B. Rubin"
+      ],
+      "venue": "Journal of the Royal Statistical Society Series B (Statistical Methodology)",
+      "year": 1977,
+      "doi": "10.1111/j.2517-6161.1977.tb01600.x",
+      "arxiv_id": null,
+      "abstract": "Summary A broadly applicable algorithm for computing maximum likelihood estimates from incomplete data is presented at various levels of generality. Theory showing the monotone behaviour of the likelihood and convergence of the algorithm is derived. Many examples are sketched, including missing value situations, applications to grouped, censored or truncated data, finite mixture models, variance component estimation, hyperparameter estimation, iteratively reweighted least squares and factor analysis.",
+      "citation_count": 49864,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L001",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Model Selection and Multimodel Inference: A Practical Information-Theoretic Approach",
+      "authors": [
+        "Fred S. Guthery",
+        "Kenneth P. Burnham",
+        "David Anderson"
+      ],
+      "venue": "Journal of Wildlife Management",
+      "year": 2003,
+      "doi": "10.2307/3802723",
+      "arxiv_id": null,
+      "abstract": "Introduction * Information and Likelihood Theory: A Basis for Model Selection and Inference * Basic Use of the Information-Theoretic Approach * Formal Inference From More Than One Model: Multi-Model Inference (MMI) * Monte Carlo Insights and Extended Examples * Statistical Theory and Numerical Results * Summary",
+      "citation_count": 42183,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.2307/3802723",
+      "source_api": "openalex_citations",
+      "id": "L002",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Pattern Recognition and Machine Learning",
+      "authors": [
+        "Nasser M. Nasrabadi"
+      ],
+      "venue": "Journal of Electronic Imaging",
+      "year": 2007,
+      "doi": "10.1117/1.2819119",
+      "arxiv_id": null,
+      "abstract": "The Journal of Electronic Imaging (JEI), copublished bimonthly with the Society for Imaging Science and Technology, publishes peer-reviewed papers that cover research and applications in all areas of electronic imaging science and technology.",
+      "citation_count": 22083,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations+openalex_citations",
+      "id": "L003",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Fading channels: information-theoretic and communications aspects",
+      "authors": [
+        "E. Biglieri",
+        "J.G. Proakis",
+        "Shlomo Shamai"
+      ],
+      "venue": "IEEE Transactions on Information Theory",
+      "year": 1998,
+      "doi": "10.1109/18.720551",
+      "arxiv_id": null,
+      "abstract": "In this paper we review the most peculiar and interesting information-theoretic and communications features of fading channels. We first describe the statistical models of fading channels which are frequently used in the analysis and design of communication systems. Next, we focus on the information theory of fading channels, by emphasizing capacity as the most important performance measure. Both single-user and multiuser transmission are examined. Further, we describe how the structure of fading channels impacts code design, and finally overview equalization of fading multipath channels.",
+      "citation_count": 1960,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L004",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "A Shrinkage Approach to Large-Scale Covariance Matrix Estimation and Implications for Functional Genomics",
+      "authors": [
+        "Juliane Schäfer",
+        "Korbinian Strimmer"
+      ],
+      "venue": "Statistical Applications in Genetics and Molecular Biology",
+      "year": 2005,
+      "doi": "10.2202/1544-6115.1175",
+      "arxiv_id": null,
+      "abstract": "Inferring large-scale covariance matrices from sparse genomic data is an ubiquitous problem in bioinformatics. Clearly, the widely used standard covariance and correlation estimators are ill-suited for this purpose. As statistically efficient and computationally fast alternative we propose a novel shrinkage covariance estimator that exploits the Ledoit-Wolf (2003) lemma for analytic calculation of the optimal shrinkage intensity. Subsequently, we apply this improved covariance estimator (which has guaranteed minimum mean squared error, is well-conditioned, and is always positive definite even for small sample sizes) to the problem of inferring large-scale gene association networks. We show that it performs very favorably compared to competing approaches both in simulations as well as in application to real expression data.",
+      "citation_count": 1625,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L005",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "A Robust Digital Baseband Predistorter Constructed Using Memory Polynomials",
+      "authors": [
+        "Lei Ding",
+        "G. Tong Zhou",
+        "Dennis R. Morgan",
+        "Zhen Ma",
+        "J.S. Kenney",
+        "J. Kim",
+        "Charles R. Giardina"
+      ],
+      "venue": "IEEE Transactions on Communications",
+      "year": 2004,
+      "doi": "10.1109/tcomm.2003.822188",
+      "arxiv_id": null,
+      "abstract": "Power amplifiers (PAs) are inherently nonlinear devices and are used in virtually all communications systems. Digital baseband predistortion is a highly cost-effective way to linearize PAs, but most existing architectures assume that the PA has a memoryless nonlinearity. For wider bandwidth applications such as wideband code-division multiple access (WCDMA) or wideband orthogonal frequency-division multiplexing (W-OFDM), PA memory effects can no longer be ignored, and memoryless predistortion has limited effectiveness. In this paper, instead of focusing on a particular PA model and building a corresponding predistorter, we focus directly on the predistorter structure. In particular, we propose a memory polynomial model for the predistorter and implement it using an indirect learning architecture. Linearization performance is demonstrated on a three-carrier WCDMA signal.",
+      "citation_count": 1263,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L006",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Extrinsic information transfer functions: model and erasure channel properties",
+      "authors": [
+        "Alexei Ashikhmin",
+        "Gerhard Kramer",
+        "Stephan ten Brink"
+      ],
+      "venue": "IEEE Transactions on Information Theory",
+      "year": 2004,
+      "doi": "10.1109/tit.2004.836693",
+      "arxiv_id": null,
+      "abstract": "Extrinsic information transfer (EXIT) charts are a tool for predicting the convergence behavior of iterative processors for a variety of communication problems. A model is introduced that applies to decoding problems, including the iterative decoding of parallel concatenated (turbo) codes, serially concatenated codes, low-density parity-check (LDPC) codes, and repeat-accumulate (RA) codes. EXIT functions are defined using the model, and several properties of such functions are proved for erasure channels. One property expresses the area under an EXIT function in terms of a conditional entropy. A useful consequence of this result is that the design of capacity-approaching codes reduces to a curve-fitting problem for all the aforementioned codes. A second property relates the EXIT function of a code to its Helleseth-Klove-Levenshtein information functions, and thereby to the support weights of its subcodes. The relation is via a refinement of information functions called split information functions, and via a refinement of support weights called split support weights. Split information functions are used to prove a third property that relates the EXIT function of a linear code to the EXIT function of its dual.",
+      "citation_count": 774,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L007",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Convergence of iterative decoding",
+      "authors": [
+        "Stephan ten Brink"
+      ],
+      "venue": "Electronics Letters",
+      "year": 1999,
+      "doi": "10.1049/el:19990555",
+      "arxiv_id": null,
+      "abstract": "A novel method for visualising the convergence behaviour of iterative decoding schemes is proposed. Each constituent decoder is represented by a mutual information transfer characteristic which describes the flow of extrinsic information through the soft in/soft out decoder. The exchange of extrinsic information between constituent decoders is plotted in an extrinsic information transfer chart. The concepts are illustrated for an iterative demapping and decoding scheme.",
+      "citation_count": 581,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L008",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "A new Volterra predistorter based on the indirect learning architecture",
+      "authors": [
+        "Changsoo Eun",
+        "E.J. Powers"
+      ],
+      "venue": "IEEE Transactions on Signal Processing",
+      "year": 1997,
+      "doi": "10.1109/78.552219",
+      "arxiv_id": null,
+      "abstract": "Nonlinear compensation techniques are becoming increasingly important. We present a new Volterra-based predistorter, which utilizes the indirect learning architecture to circumvent a classical problem associated with predistorters, namely that the desired output is not known in advance. We utilize the indirect learning architecture and the recursive least square (RLS) algorithm. Specifically, we propose an indirect Volterra series model predistorter which is independent of a specific nonlinear model for the system to be compensated. Both 16-phase shift keying (PSK) and 16-quadrature amplitude modulation (QAM) are used to demonstrate the efficacy of the new approach.",
+      "citation_count": 552,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L009",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Discrete simulation of colored noise and stochastic processes and 1/f/sup α/ power law noise generation",
+      "authors": [
+        "N. Jeremy Kasdin"
+      ],
+      "venue": "Proceedings of the IEEE",
+      "year": 1995,
+      "doi": "10.1109/5.381848",
+      "arxiv_id": null,
+      "abstract": "This paper discusses techniques for generating digital sequences of noise which simulate processes with certain known properties or describing equations. Part I of the paper presents a review of stochastic processes and spectral estimation (with some new results) and a tutorial on simulating continuous noise processes with a known autospectral density or autocorrelation function. In defining these techniques for computer generating sequences, it also defines the necessary accuracy criteria. These methods are compared to some of the common techniques for noise generation and the problems, or advantages, of each are discussed. Finally, Part I presents results on simulating stochastic differential equations. A Runge-Kutta (RK) method is presented for numerically solving these equations. Part II of the paper discusses power law, or 1/f/sup /spl alpha//, noises. Such noise processes occur frequently in nature and, in many cases, with nonintegral values for /spl alpha/. A review of 1/f noises in devices and systems is followed by a discussion of the most common continuous 1/f noise models. The paper then presents a new digital model for power law noises. This model allows for very accurate and efficient computer generation of 1/f/sup /spl alpha// noises for any /spl alpha/. Many of the statistical properties of this model are discussed and compared to the previous continuous models. Lastly, a number of approximate techniques for generating power law noises are presented for rapid or real time simulation.>",
+      "citation_count": 527,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L010",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Principles of Digital Communication",
+      "authors": [
+        "Robert G. Gallager"
+      ],
+      "venue": "Cambridge University Press eBooks",
+      "year": 2008,
+      "doi": "10.1017/cbo9780511813498",
+      "arxiv_id": null,
+      "abstract": "The renowned communications theorist Robert Gallager brings his lucid writing style to the study of the fundamental system aspects of digital communication for a one-semester course for graduate students. With the clarity and insight that have characterized his teaching and earlier textbooks, he develops a simple framework and then combines this with careful proofs to help the reader understand modern systems and simplified models in an intuitive yet precise way. A strong narrative and links between theory and practice reinforce this concise, practical presentation. The book begins with data compression for arbitrary sources. Gallager then describes how to modulate the resulting binary data for transmission over wires, cables, optical fibers, and wireless channels. Analysis and intuitive interpretations are developed for channel noise models, followed by coverage of the principles of detection, coding, and decoding. The various concepts covered are brought together in a description of wireless communication, using CDMA as a case study.",
+      "citation_count": 465,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L011",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Advances in smart antennas - MIMO-OFDM wireless systems: basics, perspectives, and challenges",
+      "authors": [
+        "Helmut Bölcskei"
+      ],
+      "venue": "IEEE Wireless Communications",
+      "year": 2006,
+      "doi": "10.1109/mwc.2006.1678163",
+      "arxiv_id": null,
+      "abstract": "Multiple-input multiple-output (MIMO) wireless technology in combination with orthogonal frequency division multiplexing (MIMO-OFDM) is an attractive air-interface solution for next-generation wireless local area networks (WLANs), wireless metropolitan area networks (WMANs), and fourth-generation mobile cellular wireless systems. This article provides an overview of the basics of MIMO-OFDM technology and focuses on space-frequency signaling, receiver design, multiuser systems, and hardware implementation aspects. We conclude with a discussion of relevant open areas for further research",
+      "citation_count": 413,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L012",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Iterative demapping and decoding for multilevel modulation",
+      "authors": [
+        "Stephan ten Brink",
+        "Joachim Speidel",
+        "Ran-Hong Yan"
+      ],
+      "venue": "",
+      "year": 2002,
+      "doi": "10.1109/glocom.1998.775793",
+      "arxiv_id": null,
+      "abstract": "Iterative decoding algorithms for spectrally efficient modulation have become a vital field of research in digital communications. We show how iterative demapping reduces the bit error rate in conventional communication systems applying multilevel modulation combined with simple channel coding. For this the soft demapping has to be modified in order to accept a priori information. The system can be regarded as a serially concatenated iterative decoding scheme whereby the inner decoder is replaced by the soft demapping device. A design rule based on mutual information to find the 'best' mapping is proposed. Numerical results are presented for 4-PAM and 16-QAM examples.",
+      "citation_count": 403,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L013",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Algorithms for iterative decoding in the presence of strong phase noise",
+      "authors": [
+        "Giulio Colavolpe",
+        "Alan Barbieri",
+        "Giuseppe Caire"
+      ],
+      "venue": "IEEE Journal on Selected Areas in Communications",
+      "year": 2005,
+      "doi": "10.1109/jsac.2005.853813",
+      "arxiv_id": null,
+      "abstract": "We present two new iterative decoding algorithms for channels affected by strong phase noise and compare them with the best existing algorithms proposed in the literature. The proposed algorithms are obtained as an application of the sum-product algorithm to the factor graph representing the joint a posteriori probability mass function of the information bits given the channel output. In order to overcome the problems due to the presence in the factor graph of continuous random variables, we apply the method of canonical distributions . Several choices of canonical distributions have been considered in the literature. Well-known approaches consist of discretizing continuous variables or treating them as jointly Gaussian, thus obtaining a Kalman estimator. Our first new approach, based on the Fourier series expansion of the phase probability density function, yields better complexity/performance tradeoff with respect to the usual discretized-phase method. Our second new approach, based on the Tikhonov canonical distribution, yields near-optimal performance at very low complexity and is shown to be much more robust than the Kalman method to the placement of pilot symbols in the coded frame. We present numerical results for binary LDPC codes and LDPC-coded modulation, with particular reference to some phase-noise models and coded-modulation formats standardized in the next-generation satellite Digital Video Broadcasting (DVB-S2). These results show that our algorithms achieve near-coherent performance at very low complexity without requiring any change to the existing DVB-S2 standard.",
+      "citation_count": 282,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L014",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Optimization of symbol mappings for bit-interleaved coded Modulation with iterative decoding",
+      "authors": [
+        "F. Schreckenbach",
+        "N. Görtz",
+        "J. Hagenauer",
+        "Gerhard Bauch"
+      ],
+      "venue": "IEEE Communications Letters",
+      "year": 2003,
+      "doi": "10.1109/lcomm.2003.821325",
+      "arxiv_id": null,
+      "abstract": "We investigate bit-interleaved coded modulation with iterative decoding (BICM-ID) for bandwidth efficient transmission, where the bit error rate is reduced through iterations between a multilevel demapper and a simple channel decoder. In order to achieve a significant turbo-gain, the assignment strategy of the binary indices to signal points is crucial. We address the problem of finding the most suitable index assignments to arbitrary, high order signal constellations. A new method based on the binary switching algorithm is proposed that finds optimized mappings outperforming previously known ones.",
+      "citation_count": 277,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L015",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "DVB‐S2 modem algorithms design and performance over typical satellite channels",
+      "authors": [
+        "Enrico Casini",
+        "Riccardo De Gaudenzi",
+        "Alberto Ginesi"
+      ],
+      "venue": "International Journal of Satellite Communications and Networking",
+      "year": 2004,
+      "doi": "10.1002/sat.791",
+      "arxiv_id": null,
+      "abstract": "Abstract In this paper we propose a design of the main modulation and demodulation units of a modem compliant with the new DVB‐S2 standard (Int. J. Satellite Commun. 2004; 22:249–268). A typical satellite channel model consistent with the targeted applications of the aforementioned standard is assumed. In particular, non‐linear pre‐compensation as well as synchronization techniques are described in detail and their performance assessed by means of analysis and computer simulations. The proposed algorithms are shown to provide a good trade‐off between complexity and performance and they apply to both the broadcast and the unicast profiles, the latter allowing the exploitation of adaptive coding and modulation (ACM) (Proceedings of the 20th AIAA Satellite Communication Systems Conference, Montreal, AIAA‐paper 2002‐1863, May 2002). Finally, end‐to‐end system performances in term of BER versus the signal‐to‐noise ratio are shown as a result of extensive computer simulations. The whole communication chain is modelled in these simulations, including the BCH and LDPC coder, the modulator with the pre‐distortion techniques, the satellite transponder model with its typical impairments, the downlink chain inclusive of the RF‐front‐end phase noise, the demodulator with the synchronization sub‐system units and finally the LDPC and BCH decoders. Copyright © 2004 John Wiley & Sons, Ltd.",
+      "citation_count": 255,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L016",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "On entropy approximation for Gaussian mixture random vectors",
+      "authors": [
+        "Marco F. Huber",
+        "Tim Bailey",
+        "Hugh Durrant‐Whyte",
+        "Uwe D. Hanebeck"
+      ],
+      "venue": "",
+      "year": 2008,
+      "doi": "10.1109/mfi.2008.4648062",
+      "arxiv_id": null,
+      "abstract": "For many practical probability density representations such as for the widely used Gaussian mixture densities, an analytic evaluation of the differential entropy is not possible and thus, approximate calculations are inevitable. For this purpose, the first contribution of this paper deals with a novel entropy approximation method for Gaussian mixture random vectors, which is based on a component-wise Taylor-series expansion of the logarithm of a Gaussian mixture and on a splitting method of Gaussian mixture components. The employed order of the Taylor-series expansion and the number of components used for splitting allows balancing between accuracy and computational demand. The second contribution is the determination of meaningful and efficiently to calculate lower and upper bounds of the entropy, which can be also used for approximation purposes. In addition, a refinement method for the more important upper bound is proposed in order to approach the true entropy value.",
+      "citation_count": 246,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.5445/ir/1000034848",
+      "source_api": "openalex_citations",
+      "id": "L017",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Bit-interleaved coded modulation withiterative decoding using soft feedback",
+      "authors": [
+        "Xiaogdong Li",
+        "James A. Ritcey"
+      ],
+      "venue": "Electronics Letters",
+      "year": 1998,
+      "doi": "10.1049/el:19980651",
+      "arxiv_id": null,
+      "abstract": "A new iterative decoding (ID) scheme is suggested for bit-interleaved coded modulation (BICM). The bit-metric generation at the demodulator is optimised with the soft-output feedback from the convolutional decoder. Computer simulation results indicate that BICM-ID, with a few iterations, significantly outperforms conventional trellis coded modulation and is therefore another promising technique to achieve large coding gain without bandwidth expansion.",
+      "citation_count": 215,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L018",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Compensation of Phase Noise in OFDM Wireless Systems",
+      "authors": [
+        "Qiyue Zou",
+        "A. Tarighat",
+        "Ali H. Sayed"
+      ],
+      "venue": "IEEE Transactions on Signal Processing",
+      "year": 2007,
+      "doi": "10.1109/tsp.2007.899583",
+      "arxiv_id": null,
+      "abstract": "Phase noise causes significant degradation in the performance of orthogonal frequency division multiplexing (OFDM)-based wireless communication systems. The presence of phase noise can reduce the effective signal-to-noise ratio (SNR) at the receiver, and consequently, limit the bit error rate (BER) and data rate. In this paper, the effect of phase noise on OFDM wireless systems is studied, and a compensation scheme is proposed to mitigate the common phase error and intercarrier interference (ICI) caused by phase noise. In the proposed scheme, the communication between the transmitter and receiver blocks consists of two stages. In the first stage, block-type pilot symbols are transmitted and the channel coefficients are jointly estimated with the phase noise in the time domain. In the second stage, comb-type OFDM symbols are transmitted such that the receiver can jointly estimate the data symbols and the phase noise. It is shown both by theory and computer simulations that the proposed scheme can effectively mitigate the ICI caused by phase noise and improve the BER of OFDM systems. Another benefit of the proposed scheme is that the sensitivity of OFDM receivers to phase noise can be significantly lowered, which helps simplify the oscillator and circuitry design in terms of implementation cost and power consumption.",
+      "citation_count": 157,
+      "is_open_access": true,
+      "pdf_url": "http://infoscience.epfl.ch/record/233079",
+      "source_api": "openalex_citations",
+      "id": "L019",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Behavioral Modeling and Predistortion of Wideband Wireless Transmitters",
+      "authors": [
+        "Fadhel M. Ghannouchi",
+        "Oualid Hammi",
+        "Mohamed Helaoui"
+      ],
+      "venue": "",
+      "year": 2015,
+      "doi": "10.1002/9781119004424",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 157,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L020",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "A data predistortion technique with memory for QAM radio systems",
+      "authors": [
+        "G. Karam",
+        "Hikmet Sari"
+      ],
+      "venue": "IEEE Transactions on Communications",
+      "year": 1991,
+      "doi": "10.1109/26.76471",
+      "arxiv_id": null,
+      "abstract": "The authors present an efficient data predistortion technique with memory for compensation of high-power amplifier (HPA) nonlinearities in digital microwave radio systems employing quadrature amplitude modulation (QAM) signal formats. A practical implementation method is described which trades off performance against complexity and which makes it possible to implement this kind of predistorter in 256-QAM, and higher-level QAM systems. Using the 16-, 64-, and 256-QAM signal constellations, it is shown that the proposed technique achieves a considerably higher performance than that of conventional memoryless data predistortion of the predistortion technique with memory based on finite-order inverses of nonlinear systems. Specifically, numerical results show that the proposed technique achieves a gain that is in excess of 2 dB over conventional memoryless data predistortion.>",
+      "citation_count": 166,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L021",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Electronic Compensation Technique to Mitigate Nonlinear Phase Noise",
+      "authors": [
+        "K.-P. Ho",
+        "Joseph M. Kahn"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 2004,
+      "doi": "10.1109/jlt.2004.825792",
+      "arxiv_id": null,
+      "abstract": "Nonlinear phase noise, often called the Gordon-Mollenauer effect, can be compensated electronically by subtracting from the received phase a correction proportional to the received intensity. The optimal scaling factor is derived analytically and found to be approximately equal to half of the ratio of mean nonlinear phase noise and the mean received intensity. Using optimal compensation, the standard deviation of residual phase noise is halved, doubling the transmission distance in systems limited by nonlinear phase noise.",
+      "citation_count": 140,
+      "is_open_access": true,
+      "pdf_url": "https://arxiv.org/pdf/physics/0211097",
+      "source_api": "openalex_citations",
+      "id": "L022",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Iterative demodulation and decoding of turbo-coded M-ary noncoherent orthogonal modulation",
+      "authors": [
+        "Matthew C. Valenti",
+        "Shi Cheng"
+      ],
+      "venue": "IEEE Journal on Selected Areas in Communications",
+      "year": 2005,
+      "doi": "10.1109/jsac.2005.853794",
+      "arxiv_id": null,
+      "abstract": "This paper considers bit-interleaved coded modulation (BICM) with a turbo channel code and M-ary orthogonal modulation. The BICM signal is iteratively demodulated and decoded in a noncoherent fashion. A soft demodulator suitable for noncoherent orthogonal modulation is presented, and the convergence of the iterative receiver is analyzed through extrinsic information transfer charts. The demodulator can work either with or without fading amplitude estimates. Extensive simulation results are presented for the well-known cdma-2000 turbo code, and the results are compared with the corresponding channel capacities, which are computed using a Monte Carlo technique. The results indicate gains of up to 1 dB relative to noniterative BICM can be achieved with the iterative receiver.",
+      "citation_count": 120,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L023",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Turbo frequency domain equalization for single-carrier broadband wireless systems",
+      "authors": [
+        "Benjamin K. Ng",
+        "Chan–Tong Lam",
+        "David Falco"
+      ],
+      "venue": "IEEE Transactions on Wireless Communications",
+      "year": 2007,
+      "doi": "10.1109/twc.2007.05439",
+      "arxiv_id": null,
+      "abstract": "In this paper, a new class of equalization and channel estimation techniques, using the turbo frequency domain equalization (TFDE), is presented as a promising low-complexity detection method for single-carrier broadband wireless transmissions. Serial modulation (SM), being a direct counterpart of the well-known OFDM modulation, is receiving considerable attention recently, owing to the fact that it delivers comparable performance as OFDM while avoiding the problem of high peak-to-average power ratio. When frequency domain equalization (FDE) is applied, the complexity requirement is low and it becomes feasible to employ iterative processing which relies on decision feedback. This paper considers the turbo principle applied jointly to FDE, channel decoding and channel estimation. The result of this work is a set of effective iterative algorithms which may bring about 2-3 dB improvement over the linear FDE method. Furthermore, it is shown that they can provide performance comparable to the time-domain turbo equalization methods but with lower complexity. We then reach the conclusion that SM-based transmission with TFDE is a suitable technology for next generation wireless systems",
+      "citation_count": 108,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L024",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "The effect of solid state power amplifiers (SSPAs) nonlinearities on MPSK and M-QAM signal transmission",
+      "authors": [
+        "Ayaz Ghorbani",
+        "M. Sheikhan"
+      ],
+      "venue": "",
+      "year": 1991,
+      "doi": null,
+      "arxiv_id": null,
+      "abstract": "Simple four-parameter formulas model are presented for solid state power amplifiers (SSPAs) exhibiting both amplitude nonlinearity (AM/AM) and amplitude modulation to phase modulation conversion (AM/PM). Based on these models closed form expressions of symbol error probability for M-PSK and M-QAM signals transmitted through nonlinear SSPA in the presence of white additive Gaussian noise for a terrestrial link with a coherent receiver are calculated. Also the optimum values for the decision threshold levels and phase shift are calculated in order to minimise the error probability. The effect of SSPA input back off from the saturation point on M-QAM and M-PSK system performance are studied.",
+      "citation_count": 89,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L025",
+      "download": true,
+      "publication_status": "unknown"
+    },
+    {
+      "title": "Estimating Information-Theoretical nand Flash Memory Storage Capacity and its Implication to Memory System Design Space Exploration",
+      "authors": [
+        "Guiqiang Dong",
+        "Yangyang Pan",
+        "Ningde Xie",
+        "C. Varanasi",
+        "Tong Zhang"
+      ],
+      "venue": "IEEE Transactions on Very Large Scale Integration (VLSI) Systems",
+      "year": 2011,
+      "doi": "10.1109/tvlsi.2011.2160747",
+      "arxiv_id": null,
+      "abstract": "Today and future NAND flash memory will heavily rely on system-level fault-tolerance techniques such as error correction code (ECC) to ensure the overall system storage integrity. Since ECC demands the storage of coding redundancy and hence degrades effective cell storage efficiency, it is highly desirable to use more powerful coding solutions that can maintain the system storage reliability at less coding redundancy. This has motivated a growing interest in the industry to search for alternatives to BCH code being used in today. Regardless to specific ECCs, it is of great practical importance to know the theoretical limit on the achievable cell storage efficiency, which motivates this work. We first develop an approximate NAND flash memory channel model that explicitly incorporates program/erase (P/E) cycling effects and cell-to-cell interference, based on which we then develop strategies for estimating the information-theoretical bounds on cell storage efficiency. We show that it can readily reveal the tradeoffs among cell storage efficiency, P/E cycling endurance, and retention limit, which can provide important insights for system designers. Finally, motivated by the dynamics of P/E cycling effect revealed by the information-theoretical study, we propose two memory system design techniques that can improve the average NAND flash memory programming speed and increase the total amount of user data that can be stored in NAND flash cell over its entire lifetime.",
+      "citation_count": 65,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L026",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Simplified Soft Demapper for APSK with Product Constellation Labeling",
+      "authors": [
+        "Qiuliang Xie",
+        "Zhaocheng Wang",
+        "Zhixing Yang"
+      ],
+      "venue": "IEEE Transactions on Wireless Communications",
+      "year": 2012,
+      "doi": "10.1109/twc.2012.051412.112055",
+      "arxiv_id": null,
+      "abstract": "Amplitude phase shift keying (APSK) constellation is capable of outperforming quadrature amplitude modulation (QAM) in terms of both the mutual information and the error-control performance. However, the lack of simplified demapper prevents its potential applications due to the inherent high computation complexity. In this paper, the concept of APSK using product constellation labeling is introduced, and two simplified demappers are proposed. Theoretical analysis and simulations show that the performance degradation caused by these simplified demappers is negligible, while the complexity is significantly reduced, compared to the traditional Max-Log-MAP demapper.",
+      "citation_count": 46,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L027",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "How to achieve the capacity of asymmetric channels",
+      "authors": [
+        "Marco Mondelli",
+        "Rüdiger Urbanke",
+        "S. Hamed Hassani"
+      ],
+      "venue": "",
+      "year": 2014,
+      "doi": "10.1109/allerton.2014.7028535",
+      "arxiv_id": null,
+      "abstract": "We describe coding techniques that achieve the capacity of a discrete memoryless asymmetric channel. To do so, we discuss how recent advances in coding for symmetric channels yield more efficient solutions also for the asymmetric case. In more detail, we consider three basic approaches. The first one is Gallager's scheme that concatenates a linear code with a non-linear mapper, in order to bias the input distribution. We explicitly show that both polar codes and spatially coupled codes can be employed in this scenario. Further, we derive a scaling law between the gap to capacity, the cardinality of channel input and output alphabets, and the required size of the mapper. The second one is an integrated approach in which the coding scheme is used both for source coding, in order to create codewords with the capacity-achieving distribution, and for channel coding, in order to provide error protection. Such a technique has been recently introduced by Honda and Yamamoto in the context of polar codes, and we show how to apply it also to the design of sparse graph codes. The third approach is based on an idea due to Böcherer and Mathar and separates completely the two tasks of source coding and channel coding by “chaining” together several codewords. We prove that we can combine any suitable source code with any suitable channel code in order to provide optimal schemes for asymmetric channels. In particular, polar codes and spatially coupled codes fulfill the required conditions.",
+      "citation_count": 30,
+      "is_open_access": true,
+      "pdf_url": "https://arxiv.org/pdf/1406.7373",
+      "source_api": "openalex_citations",
+      "id": "L028",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Efficient optical wireless communication in the presence of signal-dependent noise",
+      "authors": [
+        "Majid Safari"
+      ],
+      "venue": "",
+      "year": 2015,
+      "doi": "10.1109/iccw.2015.7247372",
+      "arxiv_id": null,
+      "abstract": "This work investigates the problem of efficient signalling for optical wireless communication systems in the presence of signal-dependent noise. We propose a novel scheme based on signalling in the square-root domain (as defined by a square-root transform) where the optical channel originally distorted by signal-dependent noise is transformed into a stationary white Gaussian noise channel. The bit error rate (BER) of the proposed scheme is derived and compared with the BER performance of the conventional signalling in time domain. As an alternative solution, signalling in frequency domain is analyzed in the presence of signal-dependent noise.",
+      "citation_count": 35,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L029",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Optimization of LDPC Codes for Receiver Frontends",
+      "authors": [
+        "Gottfried Lechner",
+        "Jossy Sayir",
+        "Ingmar Land"
+      ],
+      "venue": "",
+      "year": 2006,
+      "doi": "10.1109/isit.2006.262016",
+      "arxiv_id": null,
+      "abstract": "The degree distribution of low-density parity-check (LDPC) codes is optimized for systems that iterate over the receiver frontend, e.g., soft detector, demodulator, equalizer, etc., and the LDPC decoder. The overall extrinsic information transfer (EXIT) function of an iterative LDPC decoder is computed, based on the code's own EXIT chart, under the Gaussian assumption. While the optimization of the variable node distribution is a nonlinear problem, the optimization of the check node distribution is shown to be a linear problem. This fact is exploited to design codes where both the variable and the check node distributions are optimized, resulting in more robust constructions. The technique presented requires only knowledge of the measured EXIT function of the receiver frontend",
+      "citation_count": 28,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L030",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Bandwidth-constrained digital pre-compensation technique for multi-carrier satellite communications",
+      "authors": [
+        "Noel Kelly",
+        "Michel Allegue‐Martínez",
+        "Pantelis‐Daniel Arapoglou",
+        "Anding Zhu"
+      ],
+      "venue": "International Journal of Satellite Communications and Networking",
+      "year": 2015,
+      "doi": "10.1002/sat.1106",
+      "arxiv_id": null,
+      "abstract": "A wide variety of imperfections impact end-to-end performance in multiple-carrier per transponder transparent satellite links. Analysis of the link architecture leads to the identification of the sources and characteristics of distortion experienced by a typical multi-carrier signal. This paper introduces a new remote pre-compensation technique that takes this analysis into account to compensate for the specific distortion that occurs in the satellite channel. The proposed technique succeeds in compensating both linear and nonlinear channel distortions while overcoming the numerous challenges associated with remote waveform predistortion. Excellent linearisation performance has been observed across a wide range of link scenarios, even for high power amplifiers already linearised in the analogue domain. In addition, through an extensive end-to-end simulation campaign and a field programmable gate array implementation of the new algorithms, feasibility of the technique has been verified. Copyright © 2015 John Wiley & Sons, Ltd.",
+      "citation_count": 19,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L031",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Analysis and design of an all-digital demodulator for trellis coded 16-QAM transmission over a nonlinear satellite channel",
+      "authors": [
+        "Riccardo De Gaudenzi",
+        "Marco Luise"
+      ],
+      "venue": "IEEE Transactions on Communications",
+      "year": 1995,
+      "doi": "10.1109/26.380085",
+      "arxiv_id": null,
+      "abstract": "Although providing high spectral efficiency, sixteen-level quadrature amplitude modulation (16-QAM) is customarily considered a power-inefficient transmission technique for satellite communication systems, due to the considerable output back-off (OBO) of the optimum operating point of the nonlinear amplifier. The authors present a technique for the compensation of nonlinear distortions in the received signal constellation in an all-digital demodulator for rate-3/4 16-state trellis coded (TC) 16-QAM. They show that, by simple modifications to the metric computer in the Viterbi decoder, the optimum operating point of the amplifier can be moved much closer to saturation than in the conventional case, without any need for on-board amplifier linearization. The simulation results demonstrate a BER of 10/sup -5/ with a power saving of roughly 3.5 dB in a typical nonlinear channel, when compared to conventional uncoded 8-PSK. This figure includes all of the impairments produced by increased satellite amplifier OBO and by the presence of the subsystems for symbol timing recovery, carrier phase estimation and automatic gain control.>",
+      "citation_count": 41,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L032",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Approximate Centroid Estimation with Constellation Grid Segmentation for Blind M-QAM Classification",
+      "authors": [
+        "Zhechen Zhu",
+        "Asoke K. Nandi",
+        "Muhammad Waqar Aslam"
+      ],
+      "venue": "",
+      "year": 2013,
+      "doi": "10.1109/milcom.2013.17",
+      "arxiv_id": null,
+      "abstract": "This paper solves the problem of Automatic Modulation Classification (AMC) without the knowledge of some key signal parameters. The main achievement is the estimation of signal centroids in a non-cooperative environment. The estimation is based on an approximate distribution theory and implemented with automatic constellation grid segmentation. The classification decision is made by finding the modulation candidates which provides the highest density at estimated centroids. The simulation results show that the proposed blind AMC classifier is able to achieve good accuracy in most cases while outperforming stateof-the-art methods under imperfect channel conditions.",
+      "citation_count": 8,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L033",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Channel capacity and maximum-likelihood detection for atmospherically disturbed binary photocounting communications (Corresp.)",
+      "authors": [
+        "Rainfield Y. Yen",
+        "Paul Diament",
+        "Malvin C. Teich"
+      ],
+      "venue": "IEEE Transactions on Information Theory",
+      "year": 1972,
+      "doi": "10.1109/tit.1972.1054781",
+      "arxiv_id": null,
+      "abstract": "A binary optical communication system, consisting of a laser transmitter, a log-normal atmospheric channel, a photocounting detector, and a likelihood-ratio decision box has been investigated. Background radiation and dark current have been taken into account. Curves are presented for the probability of error and the mutual information for varying levels of atmospheric turbulence. It was ascertained that optical preamplification could be useful in improving system performance.",
+      "citation_count": 9,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L034",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Nonlinear distortion of 16QAM constellations in intradyne coherent receiver",
+      "authors": [
+        "Takahide Sakamoto",
+        "Akito Chiba",
+        "Tetsuya Kawanishi"
+      ],
+      "venue": "",
+      "year": 2011,
+      "doi": "10.1109/cleoe.2011.5943130",
+      "arxiv_id": null,
+      "abstract": "We investigate nonlinear distortions of constellations revealed in intradyne receivers for 16QAM signal reception. It is shown that symbols of constellations are circularly spread by impairments of balanced detectors and amplifiers, increasing excess bit errors.",
+      "citation_count": 1,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L035",
+      "download": false,
+      "publication_status": "published"
+    },
+    {
+      "title": "2021 IEEE Global Communications Conference (GLOBECOM)",
+      "authors": [],
+      "venue": "",
+      "year": 2021,
+      "doi": "10.1109/globecom46510.2021",
+      "arxiv_id": null,
+      "abstract": "",
+      "citation_count": 82,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L036",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Dynamic Nonlinear Systems",
+      "authors": [
+        "Fadhel M. Ghannouchi",
+        "Oualid Hammi",
+        "Mohamed Helaoui"
+      ],
+      "venue": "",
+      "year": 2015,
+      "doi": "10.1002/9781119004424.ch2",
+      "arxiv_id": null,
+      "abstract": "This chapter discusses the impact of the presence of memory effects on the behavior of nonlinear systems. The different types of memory effects are discussed and models to describe systems with memory are covered.",
+      "citation_count": 52,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L037",
+      "download": true,
+      "publication_status": "published"
+    }
+  ]
+}

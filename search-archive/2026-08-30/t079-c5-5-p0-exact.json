@@ -1,0 +1,57 @@
+{
+  "query": "Residual-Decaying-Based Informed Dynamic Scheduling belief-propagation LDPC 10.1109/ACCESS.2019.2899106",
+  "timestamp": "2026-08-30T10:40:30.588445+08:00",
+  "sources": [
+    "s2",
+    "openalex",
+    "arxiv",
+    "exa"
+  ],
+  "total": 2,
+  "results": [
+    {
+      "title": "Improved Decoding Algorithms of LDPC Codes Based on Reliability Metrics of Variable Nodes",
+      "authors": [
+        "Xingcheng Liu",
+        "Li'e Zi",
+        "Dong Yang",
+        "Zhongfeng Wang"
+      ],
+      "venue": "IEEE Access",
+      "year": 2019,
+      "doi": "10.1109/access.2019.2904173",
+      "arxiv_id": null,
+      "abstract": "The informed dynamic scheduling (IDS) strategies for decoding of low-density parity-check codes obtained superior performance in error correction performance and convergence speed. However, there are still two problems existing in the current IDS algorithms. The first is that the current IDS algorithms only preferentially update the selected unreliable messages, but they do not guarantee the updating is performed with reliable information. In this paper, a two-step message selecting strategy is introduced. On the basis of the two reliability metrics and two types of variable node residuals, the residual belief propagation (BP) decoding algorithm, short for TRM-TVRBP, is proposed. With the algorithm, the reliability of the updating-messages can be improved. The second is the greediness problem, prevalently existed in the IDS-like algorithms. The problem arises mainly from the fact that the major computing resources are allocated to or concentrated on some nodes and edges. To overcome the problem, the reliability metric-based RBP algorithm (RM-RBP) is proposed, which can force every variable node to contribute its intrinsic information to the iterative decoding. At the same time, the algorithm can force the related variable nodes to be updated, and make every edge have an equal opportunity of being updated. The simulation results show that both the TRM-TVRBP and the RM-RBP have appealing convergence rate and error-correcting performance compared with the previous IDS decoders over the white Gaussian noise (AWGN) channel.",
+      "citation_count": 13,
+      "is_open_access": true,
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/6287639/8600701/08664167.pdf",
+      "source_api": "openalex",
+      "relevance_score": 0.778,
+      "id": "L001",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Reliability-List-Based Check-Belief Propagation Decoding of LDPC Codes",
+      "authors": [
+        "Zhe Liu",
+        "Wu Guan",
+        "Ziqin Yan",
+        "Liping Liang"
+      ],
+      "venue": "IEICE Transactions on Fundamentals of Electronics Communications and Computer Sciences",
+      "year": 2024,
+      "doi": "10.1587/transfun.2024eal2080",
+      "arxiv_id": null,
+      "abstract": "Reliability-based belief propagation (RBP) decoding algorithms are used to decode low-density parity-check (LDPC) codes. However, due to the reliability of comparing and sorting in traditional algorithms, conventional RBP decoders significantly lose in resource consumption. This letter presents an enhanced reliability list-based check-belief propagation (RL-CBP) algorithm. The RL-CBP algorithm reduces computational complexity by scheduling a concise list of check-beliefs. Moreover, the list is applied for comparisons and selections of check-beliefs. The selected check-belief transforms the decoding message between edges; all check-beliefs are iteratively enlarged according to the reliabilities, and high-performance decoding will be achieved. The simulation results and analyses show that the proposed method achieves a reliability-list gain compared with the check-belief propagation (CBP) algorithm but consumes much fewer calculations than the traditional RBP algorithm.",
+      "citation_count": 1,
+      "is_open_access": true,
+      "pdf_url": "https://www.jstage.jst.go.jp/article/transfun/E108.A/6/E108.A_2024EAL2080/_pdf",
+      "source_api": "openalex",
+      "relevance_score": 0.444,
+      "id": "L002",
+      "download": true,
+      "publication_status": "published"
+    }
+  ]
+}

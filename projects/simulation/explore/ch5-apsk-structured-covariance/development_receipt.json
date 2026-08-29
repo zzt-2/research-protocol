@@ -1,0 +1,35 @@
+{
+  "schema_version": "t067.structured-covariance-development.receipt.v1",
+  "authority": "T067/D048/V022",
+  "manifest_hash": "5c79b5faaa0bcb0291a866d7cf1a5ff0df8d493c346d2da02f4bb465a6b4b8e1",
+  "completed_round1_windows": 64,
+  "completed_round2_windows": 0,
+  "terminal": "NO_METHOD_SIGNAL",
+  "winner": null,
+  "provisional_grade": "D",
+  "round2_authorized": false,
+  "split_firewall": "PASS",
+  "finite_metrics": true,
+  "unique_config_hashes": 1,
+  "unique_realization_hashes": 64,
+  "unique_bundle_hashes": 64,
+  "unique_next_step": "Close C5-1 and return to C5-0 Groundwork Step 2.",
+  "forbidden_not_run": [
+    "LDPC_or_FER_grid",
+    "new_impairment",
+    "third_round",
+    "expanded_kappa_shrinkage_SNR_or_seed_grid",
+    "comparator_deletion",
+    "common_or_params_change",
+    "skill_or_controller_change",
+    "thesis_body_change",
+    "FINAL_claim"
+  ],
+  "receipt_hash": "e664a9429bb724b36870e3dc562438ecb615518d99b9b69fe5128958dec5ec6c",
+  "_meta": {
+    "script": "run_development:t067-round1-receipt",
+    "common_md5": "49acdfa4",
+    "git_commit": "b700d99",
+    "timestamp": "2026-08-30T05:51:24"
+  }
+}

@@ -1,0 +1,95 @@
+schema_version: t066.target-residual-occurrence.v1
+authority: T066/D047/V021
+action_class: TARGET_RESIDUAL_BRIDGE_OCCURRENCE_SMOKE
+scope:
+  - SINGLE_PREREGISTERED_CELL
+  - OCCURRENCE_ONLY
+  - NO_METHOD_OR_PERFORMANCE_CLAIM
+
+cell:
+  cell_id: t066-dp16apsk-moderate-gg-15db
+  modulation: DP-(8,8)-16APSK
+  polarization_count: 2
+  symbol_rate_hz: 2500000000.0
+  symbol_period_s: 4.0e-10
+  observation_symbols: 256
+  gamma_gamma_block: 256
+  turbulence_alpha: 4.0
+  turbulence_beta: 1.9
+  residual_frequency_hz: 1000000.0
+  frequency_slope_hz_per_s: 150000000.0
+  linewidth_hz: 10000.0
+  snr_db: 15.0
+  jones: static_random_memoryless_unitary_per_window
+  pdl: false
+  pmd: false
+  fir: false
+  awgn: equal_variance_circular_after_jones
+
+ch4:
+  acquisition_pilots: 4
+  arm_id: plain-canonical-rde-mu1e-3
+  mode: plain
+  mu: 0.001
+  ring_threshold: null
+  decision_threshold: null
+
+ch3:
+  mode: DA
+  pilot_spacing: 4
+  pilot_indices: [0, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64, 68, 72, 76, 80, 84, 88, 92, 96, 100, 104, 108, 112, 116, 120, 124, 128, 132, 136, 140, 144, 148, 152, 156, 160, 164, 168, 172, 176, 180, 184, 188, 192, 196, 200, 204, 208, 212, 216, 220, 224, 228, 232, 236, 240, 244, 248, 252]
+  pilots_per_polarization: 64
+  labels: 16
+  occurrences_per_label_per_polarization: 4
+  polarization_1_label_shift: 3
+
+windows:
+  count: 64
+  seeds: {start: 2000, stop_inclusive: 2063}
+  calibration: {start: 0, stop_inclusive: 31}
+  evaluation: {start: 32, stop_inclusive: 63}
+  independent_windows: true
+  continuous_acquisition_observation_within_window: true
+
+diagnostics:
+  covariance_floor: 1.0e-10
+  groups: [pol0_inner, pol0_outer, pol1_inner, pol1_outer]
+  d1:
+    statistic: log(var(radial)/var(tangential))
+    simultaneous_ci_quantiles: [0.00625, 0.99375]
+  d2:
+    statistic: cov(radial,tangential)/sqrt(var(radial)*var(tangential))
+    simultaneous_ci_quantiles: [0.00625, 0.99375]
+  d3:
+    statistic: mean_evaluation_window_nll_b1_minus_nll_full
+    calibration_only_fit: true
+    b1: zero_mean_per_polarization_per_ring_scalar_covariance
+    full: zero_mean_per_polarization_per_point_full_2x2_covariance
+    ci_quantiles: [0.025, 0.975]
+
+bootstrap:
+  cluster: evaluation_window
+  evaluation_clusters: 32
+  rng: PCG64
+  seed: 2026083001
+  resamples: 2000
+  confidence: 0.95
+
+terminal:
+  detectable_occurrence: any_d1_or_d2_group_ci_excludes_zero_or_d3_lower_gt_zero
+  no_detectable_occurrence: all_d1_and_d2_group_cis_include_zero_and_d3_lower_le_zero
+  invalid_testbed: correctness_firewall_split_hash_or_finiteness_failure
+  bounded_development_allowed_only_if: DETECTABLE_OCCURRENCE
+  next_if_detectable: main_controller_may_dispatch_C5-1_bounded_development
+  next_if_not_detectable: C5-0_candidate_level_GW_Step_2
+  next_if_invalid: minimum_correctness_repair_only
+
+forbidden:
+  - second_cell
+  - parameter_tuning
+  - new_impairment
+  - ldpc_or_fer
+  - performance_grid
+  - C5-1_method_conclusion
+  - skill_or_controller_change
+  - thesis_body_change

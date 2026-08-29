@@ -1,0 +1,16 @@
+{
+  "storage_version": 2,
+  "id": "T041-002",
+  "title": "Lowering the Error Floor of Quantized NR LDPC Decoders by a Post-Processing on Trapping Sets",
+  "doi": "10.1109/WCSP52459.2021.9613326",
+  "arxiv_id": null,
+  "download_status": "success",
+  "download_method": "ieee_blit_pdf",
+  "content_type": "pdf",
+  "content_quality": "good",
+  "content_file": "content.md",
+  "downloaded_at": "2026-08-30",
+  "real_title": "Lowering the Error Floor of Quantized NR LDPC Decoders by a Post-Processing on Trapping Sets",
+  "title_check": "match",
+  "title_overlap": 1.0
+}

@@ -1,0 +1,18 @@
+{
+  "storage_version": 2,
+  "id": "T040-005",
+  "title": "Blind Equalization and Carrier Phase Recovery in a 16-QAM Optical Coherent System",
+  "doi": "10.1109/jlt.2009.2021961",
+  "arxiv_id": null,
+  "download_status": "success",
+  "download_method": "ieee_blit",
+  "content_type": "pdf",
+  "content_quality": "good",
+  "conversion_quality": "fast",
+  "content_file": "content.md",
+  "downloaded_at": "2026-08-30T02:00:16+08:00",
+  "real_title": "Blind Equalization and Carrier Phase Recovery in a 16-QAM Optical Coherent System",
+  "title_check": "match",
+  "title_check_source": "converted_content_heading",
+  "title_overlap": 1.0
+}

@@ -1,0 +1,153 @@
+{
+  "query": "",
+  "timestamp": "2026-08-30T02:57:13.882716+08:00",
+  "sources": [
+    "citations_openalex"
+  ],
+  "total": 7,
+  "results": [
+    {
+      "title": "Modulation, coding and signal processing for wireless communications - MHOMS: high-speed ACM modem for satellite applications",
+      "authors": [
+        "Sergio Benedetto",
+        "Roberto Garello",
+        "G. Montorsi",
+        "Claude Berrou",
+        "Catherine Douillard",
+        "D. Giancristofaro",
+        "Alenia Spazio",
+        "Alberto Ginesi",
+        "Luca Giugno",
+        "Marco Luise"
+      ],
+      "venue": "IEEE Wireless Communications",
+      "year": 2005,
+      "doi": "10.1109/mwc.2005.1421930",
+      "arxiv_id": null,
+      "abstract": "This article presents the novel FPGA-based 1 Gb/s near-Shannon-limit ACM modem developed within the MHOMS program with particular focus on the advanced modem algorithm solutions devised. A number of powerful FEC schemes have been analyzed as possible candidates for the MHOMS modem, and the final selection is justified in terms of the best tradeoff between complexity and performance. State-of-the-art modulation and demodulation algorithms are also presented, including nonlinearity dynamic precompensation techniques and innovative synchronization strategies required by the selected powerful modulation and coding schemes. Overall modem performances are also shown for a variety of spectral efficiencies.",
+      "citation_count": 79,
+      "is_open_access": true,
+      "pdf_url": "https://hal.science/hal-02137104",
+      "source_api": "openalex_citations",
+      "id": "L001",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Sliced Multi-modulus Blind Equalization Algorithm",
+      "authors": [
+        "Shafayat Abrar",
+        "Jr. Axford Roy A."
+      ],
+      "venue": "ETRI Journal",
+      "year": 2005,
+      "doi": "10.4218/etrij.05.0104.0027",
+      "arxiv_id": null,
+      "abstract": "Many multi-modulus blind equalization algorithms (MMA) have been presented in the past to overcome the undesirable high misadjustment exhibited by the well-known constant modulus algorithm. Some of these MMA schemes, specifically tailored for quadrature amplitude modulation (QAM) constellations, have also been proved to fix the phase offset error without needing any rotator at the end of the equalizer stage. In this paper, a new multi-modulus algorithm is presented for QAM signals. The contribution lies in the technique to incorporate the sliced symbols (outcomes of decision device) in the multi-modulus-based weight adaptation process. The convergence characteristics of the proposed sliced multi-modulus algorithm (S-MMA) is demonstrated by way of simulations, and it is shown that it gives better steady-state performance in terms of residual inter-symbol interference and symbol-error rate. It has also been shown that the proposed algorithm exhibits lesser steady-state misadjustment compared to the best reported MMA.",
+      "citation_count": 38,
+      "is_open_access": true,
+      "pdf_url": "https://onlinelibrary.wiley.com/doi/pdfdirect/10.4218/etrij.05.0104.0027",
+      "source_api": "openalex_citations",
+      "id": "L002",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Subband image coding using entropy-coded quantization over noisy channels",
+      "authors": [
+        "Naoto Tanabe",
+        "N. Farvardin"
+      ],
+      "venue": "International Conference on Acoustics, Speech, and Signal Processing",
+      "year": 2002,
+      "doi": "10.1109/icassp.1990.115947",
+      "arxiv_id": null,
+      "abstract": "The design and performance of two entropy-coded subband image coding schemes are studied. The difference between these schemes is the procedure used for encoding the lowest-frequency subband; predictive coding is used in one system and transform coding in the other. Other subbands are encoded using zero-memory quantization. It is shown that, in the absence of channel noise, both schemes perform better than other subband coding methods. The unacceptable sensitivity of these schemes to transmission noise is demonstrated, and a combined source/channel coding scheme in which rate-compatible punctured convolutional codes are used to provide protection against channel noise is developed. In the presence of channel noise, these channel-optimized schemes offer dramatic performance improvements over schemes designed based on a noiseless-channel assumption.>",
+      "citation_count": 20,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L003",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Research of Blind Equalization Technology of Coherent Optical Communication Based on Decidion Optimization",
+      "authors": [
+        "Zicheng Wu",
+        "Zhiping Huang",
+        "Ze Wang"
+      ],
+      "venue": "",
+      "year": 2021,
+      "doi": "10.1109/ictc51749.2021.9441548",
+      "arxiv_id": null,
+      "abstract": "In order to improve the equalization performance of the coherent optical communication system. Improve the problems of Godard blind equalization algorithm under non-cooperative communication such as large steady-state error and weak convergence. A decision optimized blind equalization method based on modified constant modulus algorithm (MCMA) and variable step size direct decision least mean square (VSSDDLMS) algorithm is proposed. Use different functional modules to implement the MCMA and VSSDDLMS algorithms. The new algorithm combines the characteristics of MCMA algorithm stability and DDLMS algorithm with small steady-state errors, and introduces the autocorrelation estimation of the error function to control the step size update. Experimental results show that the constellation diagram of the new algorithm converges tightly and the steady-state error is small, the bit error rata is low. The algorithm effectively improves the anti-jamming capability of the communication system, and can be applied to the fields of optical communication, satellite communication, radar and other fields.",
+      "citation_count": 3,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L004",
+      "download": false,
+      "publication_status": "published"
+    },
+    {
+      "title": "QAM Signal Demodulator with One and a Half Symbol Per Sample",
+      "authors": [
+        "A. P. Zhuravlev",
+        "T. A. Chadov"
+      ],
+      "venue": "",
+      "year": 2023,
+      "doi": "10.1109/ieeeconf56737.2023.10092125",
+      "arxiv_id": null,
+      "abstract": "The article discusses a new QAM signal demodulation algorithm operating at a clock speed of 1.5 sample per symbol. The demodulation algorithm implements a modified adaptive equalizer scheme that allows clock synchronization recovery and detecting a signal at a rate of 2 modulation symbols per 3 signal samples without loss of quality. The basic version of the demodulation scheme is presented in the continuous signal processing variant. In this case, the algorithm of adaptive clock synchronization recovery is used a modification of adaptive \"blind\" equalization. The presented algorithm can also be effectively used for block signal demodulation. In this case, a scheme is presented using the adjustment of the equalizer coefficients on the unique word and pilot symbols. The developed algorithm, in comparison with classical demodulation schemes, has a lower computational complexity and, without reducing the noise immunity, operates with an input signal sampling rate corresponding to 1.5 samples per modulation symbol. The conducted research relates to the development of receiving devices of communication systems using PAK/QAM signal modulation in their channels. The results obtained can be used in the development of demodulation schemes for satellite, radio relay and optical communication systems.",
+      "citation_count": 2,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L005",
+      "download": false,
+      "publication_status": "published"
+    },
+    {
+      "title": "Sorting Batch Decision Nonlinear Blind Equalization Algorithm Based on Clustering and Amplifier Characteristics",
+      "authors": [
+        "Zhaoyang Xi",
+        "Jinshu Chen"
+      ],
+      "venue": "",
+      "year": 2021,
+      "doi": "10.1109/wccct52091.2021.00020",
+      "arxiv_id": null,
+      "abstract": "In satellite communication, the signal will be affected by the nonlinearity brought by the high-power amplifier (HPA) and the inter-code crosstalk brought by the communication system, resulting in signal distortion. This paper proposes a nonlinear blind equalization algorithm and its application framework based on clustering algorithm and amplifier characteristics in the constellation symbol point domain aims to eliminate these effects. Firstly, clustering center of constellation points. Secondly, correcting the nonlinearity by sorting batch decision. Finally, linear adaptive equalizer eliminates the inter-code crosstalk which mainly uses FIR structure and LMS optimization algorithm. We perform algorithm simulation on the data generated by the actual modulator and demodulator, and the implementation shows that this algorithm can effectively reduce the time complexity of the algorithm, expand the range of symbols phase distortion and be simply applied.",
+      "citation_count": 1,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L006",
+      "download": false,
+      "publication_status": "published"
+    },
+    {
+      "title": "Blind Constellation Identification for MQAM in Hybrid Satellite-Terrestrial Networks",
+      "authors": [
+        "Mingqian Liu",
+        "Nan Qu",
+        "Bingbing Li"
+      ],
+      "venue": "",
+      "year": 2021,
+      "doi": "10.1109/iwcmc51323.2021.9498603",
+      "arxiv_id": null,
+      "abstract": "In hybrid satellite-terrestrial networks (HSTNs), frequency-selective fading can severely deteriorate the quality of transmitted signal by generating undesired and disordered constellation diagrams due to scatters in the mutipath channels. In this paper, we propose a low-overhead blind constellation identification method to combat frequency-selective fading in HSTNs. Specifically, a pre-equalization method is proposed based on a constant modulus algorithm to restore the contour of the constellation diagram. Moreover, the similarity measure function and the difference measure function are derived using template matching to identify the constellation of M-ary quadrature amplitude modulation (MQAM). The proposed method requires less information and no training sequences and pilots. Simulation results show that the proposed method is able to accurately identify the constellation type of MQAM signal, and these features are extremely useful in HSTNs.",
+      "citation_count": 1,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L007",
+      "download": false,
+      "publication_status": "published"
+    }
+  ]
+}

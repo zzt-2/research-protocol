@@ -1,0 +1,53 @@
+{
+  "query": "mismatched L-values",
+  "timestamp": "2026-08-30T06:24:45.951010+08:00",
+  "sources": [
+    "arxiv"
+  ],
+  "total": 2,
+  "results": [
+    {
+      "title": "Post-FEC BER Benchmarking for Bit-Interleaved Coded Modulation with Probabilistic Shaping",
+      "authors": [
+        "Tsuyoshi Yoshida",
+        "Alex Alvarado",
+        "Magnus Karlsson",
+        "Erik Agrell"
+      ],
+      "venue": "arXiv (eess.SP, cs.IT)",
+      "year": 2019,
+      "doi": "10.1109/JLT.2020.2990620",
+      "arxiv_id": "1911.01585v3",
+      "abstract": "Accurate performance benchmarking after forward error correction (FEC) decoding is essential for system design in optical fiber communications. Generalized mutual information (GMI) has been shown to be successful at benchmarking the bit-error rate (BER) after FEC decoding (post-FEC BER) for systems with soft-decision (SD) FEC without probabilistic shaping (PS). However, GMI is not relevant to benchmark post-FEC BER for systems with SD-FEC and PS. For such systems, normalized GMI (NGMI), asymmetric information (ASI), and achievable FEC rate have been proposed instead. They are good at benchmarking post-FEC BER or to give an FEC limit in bit-interleaved coded modulation (BICM) with PS, but their relation has not been clearly explained so far. In this paper, we define generalized L-values under mismatched decoding, which are connected to the GMI and ASI. We then show that NGMI, ASI, and achievable FEC rate are theoretically equal under matched decoding but not under mismatched decoding. We also examine BER before FEC decoding (pre-FEC BER) and ASI over Gaussian and nonlinear fiber-optic channels with approximately matched decoding. ASI always shows better correlation with post-FEC BER than pre-FEC BER for BICM with PS. On the other hand, post-FEC BER can differ at a given ASI when we change the bit mapping, which describes how each bit in a codeword is assigned to a bit tributary.",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "https://arxiv.org/pdf/1911.01585v3",
+      "source_api": "arxiv",
+      "relevance_score": 1.0,
+      "_score": 0.56,
+      "id": "L001",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Linear Correction of Mismatched L-values in BICM receivers",
+      "authors": [
+        "Szczecinski Leszek"
+      ],
+      "venue": "arXiv (cs.IT)",
+      "year": 2011,
+      "doi": null,
+      "arxiv_id": "1111.7265v1",
+      "abstract": "In this work we analyze the problem of linear correction of the reliability metrics (L-values) in BICM receivers. We want to find the correction factors that minimize the probability of error of a maximum likelihood decoder that uses the corrected L-values. To this end, we use the efficient approximation of the pairwise error probability in the domain of the cumulant generating functions (CGF) of the L-values and conclude that the optimal correction factors are equal to the twice of the saddlepoint of the CGF. We provide a simple numerical example of transmission in the presence of interference where we demonstrate a notable improvement attainable with the proposed method. The proposed method is compared with the one based on the maximization of generalized mutual information.",
+      "citation_count": 0,
+      "is_open_access": true,
+      "pdf_url": "https://arxiv.org/pdf/1111.7265v1",
+      "source_api": "arxiv",
+      "relevance_score": 1.0,
+      "_score": 0.5,
+      "id": "L002",
+      "download": true,
+      "publication_status": "preprint"
+    }
+  ]
+}

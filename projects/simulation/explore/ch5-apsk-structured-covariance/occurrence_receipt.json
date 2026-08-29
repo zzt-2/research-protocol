@@ -1,0 +1,37 @@
+{
+  "schema_version": "t066.target-residual-occurrence.receipt.v1",
+  "authority": "T066/D047/V021",
+  "scope": [
+    "SINGLE_PREREGISTERED_CELL",
+    "OCCURRENCE_ONLY",
+    "NO_METHOD_OR_PERFORMANCE_CLAIM"
+  ],
+  "completed_windows": 64,
+  "manifest_hash": "561a828b2480aed9bde8c9101302f8e67076857c2f0928250bc7d437a4117ec1",
+  "config_hash": "6f57c57b865561ce4703377237a106fb9d07e542aa3864727c4f14c26339d256",
+  "unique_config_hashes": 1,
+  "unique_realization_hashes": 64,
+  "unique_bundle_hashes": 64,
+  "split_firewall": "PASS",
+  "finite_residuals": true,
+  "terminal": "DETECTABLE_OCCURRENCE",
+  "bounded_development_allowed": true,
+  "unique_next_step": "Main controller may dispatch C5-1 bounded development.",
+  "forbidden_not_run": [
+    "second_cell",
+    "parameter_tuning",
+    "new_impairment",
+    "ldpc_or_fer",
+    "performance_grid",
+    "C5-1_method_conclusion",
+    "skill_or_controller_change",
+    "thesis_body_change"
+  ],
+  "receipt_hash": "0c18bf5f123a2b9c95ad9be7248031d36c54cf09277f655ff4d0bc6e5df00ad1",
+  "_meta": {
+    "script": "run_occurrence_smoke:t066-receipt",
+    "common_md5": "49acdfa4",
+    "git_commit": "e5e7cdc",
+    "timestamp": "2026-08-30T05:18:43"
+  }
+}

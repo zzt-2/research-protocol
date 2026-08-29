@@ -1,0 +1,628 @@
+3042                                                                          JOURNAL OF LIGHTWAVE TECHNOLOGY, VOL. 27, NO. 15, AUGUST 1, 2009
+
+    Blind Equalization and Carrier Phase Recovery in a
+              16-QAM Optical Coherent System
+
+                        Irshaad Fatadin, Member, IEEE, David Ives, and Seb J. Savory, Member, IEEE
+
+    Abstract—Blind equalization and carrier phase recovery in a               to operate as a polarization demultiplexer to separate the convo-
+
+simulated 14 Gbaud 16-QAM optical coherent system are inves-                  luted signals that were transmitted in the two orthogonal po-
+
+tigated. Equalization techniques to compensate for linear trans-              larization orientations. A fractionally spaced equalizer (FSE)
+
+mission impairments are presented using the constant modulus                  can compensate for an arbitrary amount of chromatic disper-
+
+algorithm (CMA), the recursive least-squares (RLS)-CMA, and                   sion (CD) and polarization-mode dispersion (PMD) in an op-
+
+the radius directed equalization (RDE). With 7 T/2-spaced taps,
+
+the RDE and the RLS-CMA can compensate up to 1000 ps/nm of                    tical coherent system provided sampling is performed above
+
+CD in the 16-QAM coherent system with performances compa-                     the Nyquist rate [5]. Among the many equalization techniques
+
+rable to the decision-directed (DD) equalizer. We show that the               proposed in the literature beginning with Sato [6], the constant
+
+RDE is a promising technique for blind equalization in a 16-QAM               modulus algorithm (CMA) [7] is a well-known algorithm for
+
+coherent system with lower complexity than the RLS-CMA. Blind                 blind equalization in wireless communication that does not re-
+
+carrier phase recovery is investigated in a decision-directed-mode.
+
+We show that the blind carrier phase recovery algorithm can re-               quire any training sequence for the start-up period or restarting
+
+1 10 cover the Square-16-QAM constellation for laser beat linewidths          after system breakdown.
+of    4 in a polarization-multiplexed (POLMUX)
+                                                                              Blind equalization using the CMA can be applied in 16-QAM
+16-QAM coherent system with the RDE algorithm giving better
+                                                                              optical coherent system to compensate for linear transmission
+overall performance than the CMA when compensating for CD
+                                                                              impairments. While the CMA error criterion is optimal for PSK
+and differential group delay (DGD). Finally, the dynamical char-
+
+acteristics of the equalizers to track endless polarization rotations         signals, it may not be optimal for Square-16-QAM constella-
+
+10 are discussed. With the adaptation parameters optimized, the               tions in the sense that the error is not minimized even when
+equalizers can track angular rate of rotation  5 rad/s.
+                                                                              the equalizer has fully converged [8]. This can lead to noise
+
+   Index Terms—Blind equalization, carrier phase recovery, co-                enhancement after equalization even in the absence of distor-
+herent communications, QAM.
+                                                                              tions [9]. In practice, after initial convergence, when the “eye
+
+                                                                              is open,” the CMA-based equalizer can be switched to the clas-
+
+                           I. INTRODUCTION                                    sical decision directed (DD) mode to improve performance of
+
+T HE limitations of spectrum allocation have renewed                          the system. In this work, we investigate the performance of the
+       interest in the spectrally efﬁcient quadrature amplitude
+modulation (QAM) format. Optical multilevel modulation                        radius directed equalization (RDE) [8] when compensating up
+[1]–[3] can signiﬁcantly increase spectral efﬁciency by re-
+ducing the symbol rate. However, the performance of -ary                      to 1000 ps/nm of CD in a 16-QAM coherent system. Equal-
+QAM can seriously be degraded due to intersymbol interfer-
+ence (ISI) as the number of levels increases. The effect of ISI               ization using the recursive least-squares (RLS)-CMA is also
+is to cause the eye to close, thereby reducing the margin for
+ampliﬁed spontaneous emission (ASE) noise to cause errors.                    investigated when compensating for CD and is shown to out-
+Equalization to suppress ISI in multilevel modulation should,
+therefore, be performed to achieve reliable performance [4].                  perform the performance of the CMA equalizer. The RDE and
+
+   Coherent demodulation gives a representation of the optical                the DD algorithms were found to give similar performances as
+ﬁeld in the electrical domain. This allows electronic equaliza-
+tion to compensate for linear transmission impairments and also               the RLS-CMA algorithm with lower computational complexi-
+
+                                                                              ties when compensating up to 1000 ps/nm of CD in the 16-QAM
+
+                                                                              coherent system. The RDE presented in this paper is a general-
+
+                                                                              ization of the CMA algorithm for QAM signals and was found
+
+                                                                              to outperform the CMA in the 16-QAM coherent system which
+
+                                                                              does not present a constant modulus.
+
+                                                                              High performance carrier recovery is also an essential part
+
+                                                                              of any coherent QAM receiver. In contrast to -PSK modu-
+
+                                                                              lation where the phases are equally spaced and the modulation
+
+                                                                              can be removed by taking the th power, the phase distances
+
+                                                                              for Square-16-QAM are not equal and, hence, alternative ap-
+
+   Manuscript received December 02, 2008; revised March 10, 2009. First pub-  proaches are required. In [10], carrier phase estimation (CPE)
+lished May 05, 2009; current version published July 22, 2009. This work was
+supported by the U.K. Government Department for Innovation, Universities and  for laser beat linewidths of          was performed
+Skills (DIUS).
+                                                                              by partitioning the constellation points into different groups. A
+   I. Fatadin and D. Ives are with the National Physical Laboratory, Ted-
+dington, Middlesex, TW11 0LW, U.K. (e-mail: irshaad.fatadin@npl.co.uk;        similar technique has also been applied to estimate frequency
+david.ives@npl.co.uk).
+                                                                              offset [11] for Square-16-QAM constellations. However, this
+   S. J. Savory is with the Optical Networks Group, UCL Electronic and
+Electrical Engineering, University College London, Torrington Place, London,  approach neglects symbols on the middle ring of the constella-
+WC1E 7JE, U.K. (e-mail: ssavory@ee.ucl.ac.uk).
+                                                                              tion for Square-16-QAM and hence requires large block lengths.
+   Digital Object Identiﬁer 10.1109/JLT.2009.2021961
+                                                                              As such, the required linewidths of the transmit laser and the
+
+                                                                             0733-8724/$26.00 © 2009 IEEE
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 18:00:03 UTC from IEEE Xplore. Restrictions apply.
+FATADIN et al.: BLIND EQUALIZATION AND CARRIER PHASE RECOVERY IN A 16-QAM OPTICAL COHERENT SYSTEM                3043
+
+LO are still stringent. In [12], CPE for                                                           TABLE I
+                                                                                           RLS-CMA ALGORITHM
+was achieved with a decision-directed soft-decision phase es-
+
+timator employed. In [9] an improved algorithm for CPE in
+
+16-QAM has been reported by modifying the approach in [10].
+
+The linewidths of the laser and the LO were 1 MHz in a 100
+
+Gbit/s 16-QAM coherent system. In this paper, we discuss a
+
+digital phase estimation appropriate for 16-QAM constellation
+
+using a blind carrier recovery algorithm. We show that the tech-
+
+nique can estimate phase ﬂuctuations for laser beat linewidths
+
+of                   in a polarization-multiplexed (POLMUX)
+
+16-QAM coherent system.
+
+    The paper is organized as follows. Blind equalization using
+
+the CMA, RLS-CMA, DD and the RDE are discussed in Sec-
+
+tion II. Compensation of CD using 7 T/2-spaced taps is dis-
+
+cussed in Section III. Simulation results conﬁrmed that the RDE     where is the step size parameter and      is the error signal
+                                                                    given by
+leads to enhanced performance compared to the CMA. Blind
+
+carrier phase recovery in a decision-directed-mode is discussed
+
+in Section IV. Equalization in a POLMUX-16-QAM system is                                                         (5)
+
+presented in Section V. The dynamical characteristics of the
+
+equalizers to track endless polarization rotations are also pre-    The CMA algorithm minimizes the error power between the
+
+sented. We conclude our work in Section VI.                         equalizer output and a constant. Clearly, for PSK signals, this
+
+                                                                    criterion is optimal in the sense that for perfect equalization, the
+
+                      II. BLIND EQUALIZATION                        error,  , as the symbols all lie on a ring.
+
+A. CMA Algorithm                                                    B. RLS-CMA Algorithm
+
+   Amongst a number of blind equalizer schemes that have               The RLS-CMA optimization technique is discussed in this
+been introduced, the CMA algorithm proposed by Godard [13],         section. It is well known that adaptation algorithms based on the
+also developed independently by Treichler et al. [14], is now       RLS technique generally have faster convergence rate than sto-
+well accepted and has been proposed for many applications,          chastic gradient descent (SGD) algorithms [15]. The cost func-
+including the equalization of QAM systems. The cost-function        tion for the RLS-CMA algorithm is given by [16]
+of the CMA is of the form
+
+                                                               (1)
+
+                                                                                                                 (6)
+
+where  indicates statistical expectation and  is the
+
+equalizer output. is the constant depending only on the             where is the forgetting factor, and       . The derivation
+
+input data symbol, . It is deﬁned as [13]                           of the cost function for the RLS-CMA assumes a stationary or
+
+                                                                    slowly varying environments and its performance to track end-
+
+                                                               (2)  less polarization rotations will be discussed in Section V. The
+
+                                                                    RLS-CMA algorithm is updated according to the set of equa-
+
+   The CMA is a blind algorithm that adapts the ﬁlter coefﬁ-        tions given in Table I where denotes complex conjugate and
+cients of the equalizer to reduce ISI of the received signal. Let
+                                                                    is the complex conjugate transpose. As discussed in [16], the
+   denote the impulse response of the equalizer, we obtain the
+equalizer output as                                                 RLS-CMA with           offers the best convergence property and
+
+                                                                    is the value chosen in our simulation. The output of the equal-
+
+                                                                    izer is then given by
+
+                                                               (3)                                               (7)
+
+where                                     is the equalizer tap where is the equalizer tap weights vector and     is the
+
+weights vector, and                                                 equalizer input data vector.
+
+is the equalizer input data vector. is the length of the equalizer
+
+tap weights, superscript stands for the transpose of a vector C. DD and RDE
+
+and is the complex conjugate transpose. The tap weights Since the 16-QAM constellation does not present a constant
+vector is adapted using the stochastic gradient algorithm [7]
+                                                                    modulus as shown in the inset of Fig. 1, we discuss the DD
+
+                                                                    and the RDE as alternative algorithms to CMA-based equalizers
+
+                                                                    that can improve the steady-state performance. Whilst the DD
+
+                                                               (4) is based on the symbol position closest to the equalizer output
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 18:00:03 UTC from IEEE Xplore. Restrictions apply.
+3044                                                                         JOURNAL OF LIGHTWAVE TECHNOLOGY, VOL. 27, NO. 15, AUGUST 1, 2009
+
+Fig. 1. Simulation setup for 16-QAM optical coherent system. PSF: Pulse shaping ﬁlter. DSP: Digital Signal Processor.
+
+to update the equalizer weights, the RDE is based on the nearest
+symbol radius where the 16-QAM constellation presents three
+possible radii.
+
+   1) Decision-Directed: The error signal in the CMA equal-
+izer after convergence can be minimized by switching over to
+a conventional DD algorithm to improve the steady-state per-
+formance, i.e., convergence speed and output error levels, when
+the eye pattern of the equalizer output is opened to some ex-
+tent by the equalizer. According to Macchi and Eweda [17], an
+open-eye condition can be expressed as
+
+                                         (8)
+
+where is the minimum distance between the symbols in the                     Fig. 2. Simulated back-to-back performance of 16-QAM coherent system
+constellation. In this work, we investigated equalization on the             compared with theory.
+detected 16-QAM signals using the DD without preconvergence
+with the CMA when compensating for CD up to 1000 ps/nm.
+The tap weights for the decision directed least-mean-square
+(DD-LMS) algorithm are updated as [15]
+
+                                                                        (9)
+
+where           , with being the decision value                              electrical signals to give equally spaced constellation points for
+                                                                             the 16-QAM optical coherent system. Since, rectangular pulses
+using a standard rectilinear grid of decision regions in the                 have a very broad frequency spectrum, due to the sharp tran-
+                                                                             sitions at the pulse edges, we considered a truncated Nyquist
+constellation.                                                               pulse using raised-cosine ﬁltering to reduce the bandwidth
+                                                                             of the pulse in the simulation. The in-phase (I) and quadra-
+2) Radius Directed Equalization: For QAM signals, an al-                     ture (Q) signals were ﬁltered using square-root raised cosine
+                                                                             pulse shaping. The 16-QAM data was then transmitted over
+ternative error criterion is based on the error between the equal-           the ﬁber and subsequently ASE noise was loaded before the
+                                                                             detector with a 50-GHz optical ﬁlter. We split the task of the
+izer output and the nearest constellation radius. Compared to the            pulse shaping equally between the transmitter and the receiver
+
+CMA equalizer, the RDE also improved the steady-state per-
+
+formance for the 16-QAM signals as discussed in Section III.
+
+The RDE optimization is based on the equalizer output and the
+
+nearest constellation radius. The error criterion for the RDE is
+
+deﬁned as
+
+                                                                             with the roll-off factor,                 . We, therefore, employed the
+                                         (10) square-root of the raised-cosine ﬁlter response at both the trans-
+
+where is the radius of the nearest constellation symbol for                  mitter and the receiver. The product of the two ﬁlter responses
+each equalizer output. The tap weights for the RDE are then                  led to an overall raised-cosine response having low ISI. At the
+updated as given in (9) for the DD-LMS algorithm.                            receiving end, the in-phase and quadrature signals detected at
+                                                                             the coherent receiver were analog-to-digital (A/D) converted
+
+                III. COMPENSATION OF CD                                      with 6-bit resolution and then processed by the equalizers with
+                                                                             7 T/2-spaced taps. A 5th order low pass Bessel ﬁlter with a
+
+Blind equalization using the algorithms presented in Sec- 3-dB bandwidth of 80% the symbol-rate was also included in
+
+tion II to compensate for CD in a 14 Gbaud 16-QAM optical the simulation as the antialiasing ﬁlter [5].
+
+coherent system is discussed below. The simulation setup for The back-to-back performance of our simulated 16-QAM
+
+the coherent system under investigation is shown in Fig. 1. The transmission system with Gray coding is shown in Fig. 2 along
+
+16-QAM constellation diagram was obtained using four-level with the expected theoretical curve. Fig. 3 shows the OSNR
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 18:00:03 UTC from IEEE Xplore. Restrictions apply.
+FATADIN et al.: BLIND EQUALIZATION AND CARRIER PHASE RECOVERY IN A 16-QAM OPTICAL COHERENT SYSTEM                                 3045
+
+Fig. 3. Compensation of CD using the CMA, RLS-CMA, DD, and the RDE.
+
+Fig. 4. BER performance with different number of bits resolution in A/D.
+(OSNR = 18 dB).
+
+penalty at a BER of                                                               Fig. 5. Time to convergence of the different equalizers for 500 ps/nm of CD.
+
+                     when compensating up to 1000 ps/nm (a) OSNR = 18 dB and (b) OSNR = 20 dB.
+
+of CD using the CMA, RLS-CMA, DD and RDE. Improved
+
+performance was obtained with the RLS-CMA over the CMA
+
+equalizer which can achieve lower mean square error (MSE)
+
+than the CMA in the steady-state at the expense of an increased
+
+computational overhead needed to solve the RLS step at each
+
+iteration shown in Table I. The BER performance for different
+
+number of bits resolution in the A/D is shown in Fig. 4 for the
+
+case of the RLS equalizer. A resolution of 6 bits was found to
+
+be sufﬁcient to give reliable estimation of the BER performance           Fig. 6. Decision-directed (DD) carrier phase recovery.
+
+for the equalizers considered in this paper.
+
+We also investigated the performance improvement that can
+
+be achieved by applying the DD and the RDE algorithms. The                          IV. CARRIER PHASE RECOVERY ALGORITHM
+
+RDE uses the error between the equalizer output modulus and                  High performance carrier recovery is an essential part of any
+                                                                          coherent QAM receiver. A carrier phase recovery algorithm
+the nearest symbol radius to update the equalizer tap weights.            suitable for Square-16-QAM constellations is investigated
+                                                                          below. The block diagram of combined blind equalization and
+Fig. 3 shows the OSNR penalty when using the DD and the RDE               DD carrier tracking is illustrated in Fig. 6. The DD carrier
+                                                                          recovery loop uses the error between the output of the equalizer
+to compensate up to 1000 ps/nm of CD. Similarly, the DD and               and the corresponding decision. The phase updating rule is
+                                                                          given by [18]
+the RDE optimization processes gave better performances than
+
+the CMA for the 16-QAM constellation. Performances compa-
+
+rable to the RLS-CMA were obtained for DD and RDE algo-
+
+rithms as seen in Fig. 3. For the RLS-CMA algorithm the com-
+
+putational complexity was of the order of     compared to
+
+        for the other equalizers, where is the length of the                                                                      (11)
+equalizer tap weights. The time to convergence (TTC) for the
+
+different equalizers are shown in Fig. 5(a) and (b), at an OSNR where is the step-size parameter and                              is the error signal
+of 18 and 20 dB, respectively, with 500 ps/nm of CD. Better given by
+steady-state performances were obtained for the RLS-CMA,
+
+RDE and the DD as opposed to the CMA.                                                                                             (12)
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 18:00:03 UTC from IEEE Xplore. Restrictions apply.
+3046                                                                         JOURNAL OF LIGHTWAVE TECHNOLOGY, VOL. 27, NO. 15, AUGUST 1, 2009
+
+Fig. 7. Phase error standard deviation for different values of  . (OSNR =
+
+18 dB).
+
+                                                                                                    Fig. 9. (a) Carrier phase ﬂuctuations and (b) recovered carrier phase for
+
+                                                                             1T = 10 . (OSNR = 18 dB).
+
+Fig. 8. Performance of carrier phase estimation with  = 0:1 for different
+values of 1T . 1 is the combined linewidths of the transmit laser and the
+
+LO.
+
+where                          is the equalized output with
+
+phase error correction and is the estimation of by a
+
+decision device. The laser phase noise in our simulation was
+
+modeled as the Wiener process
+
+                                        (13)                                 Fig. 10. (a) Carrier phase ﬂuctuations and (b) recovered carrier phase for
+
+                                                                             1T = 10 . (OSNR = 18 dB).
+
+where  is the instantaneous phase and   is the fre-                          . Fig. 8 shows the BER performance when
+
+quency noise. In Fig. 7, we investigated the standard deviation using the carrier phase recovery algorithm discussed above with
+
+of the phase error between the actual carrier phase ﬂuctuations              to compensate for different values of  . The
+
+and the recovered phase for different values of and laser OSNR penalty was found to be less than 2 dB at a BER =
+
+beat linewidths,  , where is the combined linewidths with                    . Fig. 8 shows an error ﬂoor for
+
+of the transmit laser and the LO. With  , the car-                           . The phase ﬂuctuations and the recovered carrier phase
+
+rier phase recovery algorithm can recover beat linewidths of for laser beat linewidths of and are shown in Figs. 9
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 18:00:03 UTC from IEEE Xplore. Restrictions apply.
+FATADIN et al.: BLIND EQUALIZATION AND CARRIER PHASE RECOVERY IN A 16-QAM OPTICAL COHERENT SYSTEM                                                           3047
+
+Fig. 11. Computational framework for the carrier phase recovery algorithm.
+
+                                                                                             Fig. 13. Equalizer for POLMUX-16-QAM optical coherent system.
+
+1 = 10 (OSNR = 22 ) Fig. 12. Convergence for CMA and RDE algorithms with CD = 500 ps/nm andT.
+       dB .
+
+and 10, respectively. Fig. 9 shows that the estimated carrier
+
+phase using algorithm (11) closely tracked the expected phase
+
+ﬂuctuations due to the laser phase noise. It is interesting to
+
+note that in (11) no nonlinear operation is required as with the
+
+th-power scheme [9], [10]. Also, no phase unwrapping was
+
+performed when using the above DD carrier tracking algorithm.
+
+However, the above technique was found to be inappropriate to
+
+track phase ﬂuctuations for               as seen in Fig. 10.
+
+The computational framework for the carrier phase recovery al-                               Fig. 14. (a) Unequalized output in a POLMUX-16-QAM optical coherent
+
+gorithm which is based on the feed-forward control scheme is                                 (OSNR = 22 ) system. (b) Equalization with RDE before carrier phase recovery. Recovered
+                                                                                             signals for (c) X- and (d) Y -Polarizations.  dB .
+shown in Fig. 11. We also investigated the performance of com-
+
+bined blind equalization and DD carrier tracking as shown in
+
+Fig. 12 with the CD set to 500 ps/nm and              . Fig. 12                              structure as shown in Fig. 13 to reproduce the inverse Jones
+                                                                                             matrix [20]. The outputs of the equalizer are given by
+compares the performance of the system at an OSNR of 22 dB
+
+when using the CMA and the RDE algorithms for blind equal-
+
+ization. The RDE was found to outperform the CMA due to its
+
+better steady-state performance and lower ISI at convergence
+
+consistent with the results obtained in Section III.                                                                                                        (14)
+
+    V. EQUALIZATION IN A POLMUX-16-QAM                                                       for the - and the -polarizations, respectively. The ﬁlter co-
+                   COHERENT SYSTEM                                                           efﬁcients can then be adapted as discussed in Section II to com-
+                                                                                             pensate for linear transmission impairments and to recover the
+
+With a symbol rate of 14 Gbaud, a POLMUX-16-QAM polarization multiplexed data. An example where the RDE blind
+
+optical coherent system allows transmission at a data rate of algorithm has been applied to a POLMUX-16-QAM optical co-
+
+112-Gb/s [19] which is appropriate for 100-Gb/s Ethernet herent system to compensate for CD and differential group delay
+
+(100 GE) with the necessary overheads for forward error (DGD) is shown in Fig. 14. The taps of the FIR ﬁlter were
+
+correction (FEC). Equalization in a POLMUX system can be T/2-spaced and 7 taps were implemented in the simulation. The
+
+accomplished by a bank of FIR ﬁlters arranged in a butterﬂy gain coefﬁcients of the taps were initialized with the center taps
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 18:00:03 UTC from IEEE Xplore. Restrictions apply.
+3048                                                                                               JOURNAL OF LIGHTWAVE TECHNOLOGY, VOL. 27, NO. 15, AUGUST 1, 2009
+
+Fig. 15. Compensation              = 45 = of CD using CMA and,R5D0Episn  1 = 10 a POLMUX-16-QAM
+                                   with                                  and T                .
+o(OptSicNalRco=her2e2ntdBsy)s.tem
+
+of and set to unity and updated accordingly. The fre-
+quency response of the ﬁber with CD and DGD was included in
+the simulation using
+
+                                                                                  (15)
+
+where and are the GVD parameter and the length of the
+
+ﬁber, respectively, is the angle between the reference polar-
+
+ization and the principal states of polarization (PSP) of the ﬁber,
+
+and is the DGD between the PSPs. Fig. 14(a) shows the un-
+
+equalized constellation diagram of the received signals with a                                     = 100 OSNR = 20 Fig. 16. Tracking performance for different equalizers with the adaptation pa-
+
+CD of 500 ps/nm,                           (worst case), and a DGD of 50 ps                        rameters (a)  and (b) . (!  krad=s and  dB).
+
+where the eye is completely closed. The laser beat linewidths,
+
+      , was set to                         in the POLMUX-16-QAM coherent
+
+system. Fig. 14(b) shows the recovered signal after convergence
+
+at an OSNR of 22 dB with the RDE algorithm before carrier
+
+phase recovery. Fig. 14(c) and (d) shows the derotated symbols
+
+after employing the carrier-recovery algorithm (11) for the -
+
+and the -polarizations, respectively. Carrier phase recovery
+
+can, thus, successfully be achieved in a POLMUX-16-QAM co-
+
+herent system with                         . The performance of the RDE
+
+algorithm is compared with the CMA in Fig. 15 for different
+
+amount of accumulated CD. As it can be seen, the RDE was
+
+found to outperform the CMA when compensating for CD and
+
+DGD in the presence of phase noise.
+
+Finally, we investigated the dynamical characteristics for dif-
+
+ferent equalizers by simulating an endless polarization rotations
+
+with the Jones matrix
+
+                                                                                                   Fig. 17. Dynamic response for different equalizers with endless polarization
+                                                                                  (OSNR = 20 ) (16)
+                                                                                                   rotations.     dB .
+
+where is the angular rate of rotation. Fig. 16 shows the
+
+tracking performance for different equalizers with the adap- rad/s. The performance for the CMA was found to be better
+
+tation parameters and at an OSNR of 20 dB and set than the RLS-CMA for                                                           krad s. This could be due to
+
+to 100 krad/s. Fig. 17 shows the dynamical characteristics of the derivation of the RLS-CMA cost function [16] being based
+
+the different equalizers with 3 taps in the butterﬂy FIR ﬁlter. on the assumption of a stationary or slowly varying signal
+
+The algorithms were able to track angular frequencies                                              environments.
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 18:00:03 UTC from IEEE Xplore. Restrictions apply.
+FATADIN et al.: BLIND EQUALIZATION AND CARRIER PHASE RECOVERY IN A 16-QAM OPTICAL COHERENT SYSTEM  3049
+
+VI. CONCLUSION                                                                     [15] J. G. Proakis, Digital Communications, 4th ed. New York: McGraw-
+                                                                                         Hill, 2001.
+Blind equalization and carrier phase recovery in a simulated
+                                                                                   [16] Y. Chen, T. Le-Ngoc, B. Champagne, and X. Changjiang, “Recur-
+14 Gbaud 16-QAM coherent system have been investigated.                                  sive least squares constant modulus algorithm for blind adaptive array,”
+                                                                                         IEEE Trans. Signal Process., vol. 52, no. 5, pp. 1452–1456, May 2004.
+Equalization to suppress ISI in multilevel modulation for-
+                                                                                   [17] O. Macchi and E. Eweda, “Convergence analysis of self-adaptive
+mats is necessary to improve performance of the transmission                             equalizers,” IEEE Trans. Inf. Theory, vol. 30, no. 3, pp. 161–176, Mar.
+                                                                                         1984.
+system together with a high performance carrier recovery. The
+                                                                                   [18] G. Picchi and G. Prati, “Stop-and-go decision-directed algorithm,”
+CMA, RLS-CMA, DD and the RDE equalization techniques                                     IEEE Trans. Commun., vol. 35, no. 9, pp. 877–887, Sep. 1987.
+
+to compensate up to 1000 ps/nm of CD have been investigated                        [19] P. J. Winzer and A. H. Gnauck, “112-Gb/s polarization-multiplexed
+                                                                                         16-QAM on a 25-GHz WDM grid,” presented at the ECOC, Brussels,
+in the 16-QAM coherent system. The RLS-CMA can achieve                                   Belgium, 2008, paper Th.3.E.5.
+
+lower MSE than the CMA in the steady-state at the expense                          [20] S. J. Savory, “Digital ﬁlters for coherent optical receivers,” Opt. Exp.,
+                                                                                         vol. 16, no. 2, pp. 804–817, 2008.
+of an increased computational complexity. The RDE can give
+                                                                                                              Irshaad Fatadin (M’02) received the B.Sc. degree
+similar performance as the RLS-CMA with lower complexity.                                                     (hons.) in physics from the University of Delhi,
+                                                                                                              Delhi, India, in 2000, and the M.Phil. degree in
+Blind carrier phase recovery has also been investigated in a                                                  microelectronic engineering and semiconductor
+                                                                                                              physics from the University of Cambridge, Cam-
+decision-directed-mode for a Square-16-QAM constellation.                                                     bridge, U.K., in 2002.
+
+We showed that the carrier phase recovery algorithm can                                                          He joined the National Physical Laboratory, Mid-
+                                                                                                              dlesex, U.K., in 2002. His research and development
+successfully recover laser beat linewidths of  in                                                             interests include the areas of coherent optical com-
+                                                                                                              munication systems, advanced modulation formats,
+a POLMUX-16-QAM optical coherent system with the RDE                                                          optical waveguides, photonic integration, and numer-
+                                                                               ical simulation of optoelectronic devices.
+being a promising equalization technique to compensate for                        Mr. Fatadin is a Chartered Engineer and member of the IOP and IEEE Lasers
+                                                                               and Electro-Optics Society.
+linear transmission impairments. Finally, the dynamical char-
+
+acteristics for different equalizers to track endless polarization
+
+rotations were compared.
+
+                           REFERENCES                                                              David Ives was born in Burnham-on-Crouch, U.K.,
+                                                                                                   in 1967. He received the B.Sc. degree in physics from
+ [1] S. Walklin and J. Conradi, “Multilevel signaling for increasing the                           Birmingham University, Birmingham, U.K., in 1988.
+      reach of 10 Gb/s lightwave systems,” J. Lightw. Technol., vol. 17, no.
+      11, pp. 2235–2248, Nov. 1999.                                                                   He is a Senior Research Scientist in the Photonics
+                                                                                                   Group at the National Physical Laboratory, Mid-
+ [2] J. Kahn and K.-P. Ho, “Spectral efﬁciency limits and modulation/de-                           dlesex, U.K. His research and development interests
+      tection techniques for DWDM systems,” IEEE J. Sel. Topics Quant.                             include the areas of optical ﬁber measurement
+      Electron., vol. 10, pp. 259–272, 2004.                                                       and characterization, optical ﬁber test equipment
+                                                                                                   characterization, and numerical simulation of optical
+ [3] N. Kikuchi, K. Sekine, and S. Sasaki, Multilevel Signalling for High-                         communication systems.
+      Speed Optical Transmission, 2006, paper Tu3.2.1.
+                                                                                                      Mr. Ives is a Chartered Physicist, U.K., and
+ [4] N. Kikuchi, “Intersymbol interference (ISI) suppression technique for
+      optical binary and multilevel signal generation,” J. Lightw. Technol.,   member of the IOP.
+      vol. 25, no. 8, pp. 2060–2068, Aug. 2007.
+                                                                                                              Seb J. Savory (M’07) received the M.A., M.Eng.,
+ [5] E. Ip and J. M. Kahn, “Digital equalization of chromatic dispersion and                                  and Ph.D. degrees in engineering from the Univer-
+      polarization mode dispersion,” J. Lightw. Technol., vol. 25, no. 8, pp.                                 sity of Cambridge, Cambridge, U.K. and the M.Sc.
+      2033–2043, Aug. 2007.                                                                                   (Maths) degree from the Open University, U.K.
+
+ [6] Y. Sato, “A method of self-recovering equalization for multilevel am-                                       His interest in optical communications began in
+      plitude-modulation systems,” IEEE Trans. Commun., vol. COM-23,                                          1991, when he joined Standard Telecommunications
+      no. 6, pp. 679–682, Jun. 1975.                                                                          Laboratories, Harlow, U.K. (now Nortel), prior
+                                                                                                              to being sponsored though his undergraduate and
+ [7] C. R. Johnson, P. Schniter, T. J. Endres, J. D. Behm, D. R. Brown, and                                   postgraduate studies by Nortel. On completion of the
+      R. A. Casas, “Blind equalization using the constant modulus criterion:                                  Ph.D. degree in 2000, he joined Nortel’s Laborato-
+      A review,” Proc. IEEE, vol. 86, no. 10, pp. 1927–1950, Oct. 1998.                                       ries as a full-time Senior Research Engineer, working
+                                                                               on digital signal processing and advanced optical transmission systems. In
+ [8] M. J. Ready and R. P. Gooch, “Blind equalization based on radius di-      2005, he joined the Optical Networks Group at University College London
+      rected adaptation,” in Proc. ICASSP, Apr. 1990, vol. 3, pp. 1699–1702.   (UCL), U.K., where he held a Leverhulme Trust Early Career Fellowship from
+                                                                               2005–2007, being appointed to a lectureship in 2007. His current research is
+ [9] H. Louchet, K. Kuzmin, and A. Richter, “Improved DSP algorithms for       focused on advanced optical transmission systems including digital coherent
+      coherent 16-QAM transmission,” presented at the ECOC 2008, Brus-         transmission systems and advanced modulation formats.
+      sels, Belgium, 2008, paper Tu.1.E.6.                                        Dr. Savory is a Chartered Engineer and member of the Institute of En-
+                                                                               gineering and Technology, U.K. He is a member of the Photonics Society
+[10] M. Seimetz, “Laser linewidth limitations for optical systems with high-   and the Signal Processing Society, an Associate Editor for IEEE PHOTONICS
+      order modulation employing feed forward digital carrier phase estima-    TECHNOLOGY LETTERS, and serves on the technical program committee of
+      tion,” presented at the OFC/NFOEC, 2008, paper OTuM2.                    OFC/NFOEC, ECOC, and the IEEE LEOS annual meeting.
+
+[11] M. Seimetz, “Performance of coherent optical square-16-QAM-sys-
+      tems based on IQ-transmitters and homodyne receivers with digital
+      phase estimation,” presented at the Nat. Fiber Optic Engineers Conf.,
+      Anaheim, CA, 2006, paper NWA4.
+
+[12] E. Ip and J. M. Kahn, “Feedforward carrier recovery for coherent
+      optical communications,” J. Lightw. Technol., vol. 25, no. 9, pp.
+      2675–2692, Sep. 2007.
+
+[13] D. Godard, “Self-recovering equalization and carrier tracking
+      in two-dimensional data communication systems,” IEEE Trans.
+      Commun., vol. 28, no. 11, pp. 1867–1875, Nov. 1980.
+
+[14] J. R. Treichler and B. G. Agee, “A new approach to multipath correc-
+      tion of constant modulus signals,” IEEE Trans. Acoust., Speech, Signal
+      Process., vol. ASSP-31, no. 4, pp. 459–472, Apr. 1983.
+
+Authorized licensed use limited to: BEIJING INSTITUTE OF TECHNOLOGY. Downloaded on August 29,2026 at 18:00:03 UTC from IEEE Xplore. Restrictions apply.
+

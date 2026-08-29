@@ -604,8 +604,8 @@ topics:
     title: 论文写作专题（自适应 CPR 方向）
     status: active
     created: "2026-07-09"
-    last_updated: "2026-08-13（D037/V018：三条方法补强完成、复验通过并形成当前排序）"
-    description: "自适应 CPR 论文写作与全项目方法包装专题。D036 三个独立 worktree 补强已完成并经 V018 接收：P11 为首选均衡方法章候选，P08-R2 为技术对象独立的局部 coded-receiver 候选；P05 的固定身份可靠性强门失败，但按 D032 仍为 PACKAGEABLE_WITH_LIMITS，当前不优先单独承重。推荐结构尚待用户确认，三个方法提交尚未合并；仍禁止开放式新候选、Skill/controller/正式论文正文自动修改。"
+    last_updated: "2026-08-30（D064/V039：production core PASS，CP026 只开放 fixed A2 bridge）"
+    description: "自适应 CPR 论文写作与全项目方法包装专题。共同平台冻结为 DP-(8,8)-16APSK+BICM/LDPC coherent FSO；Ch3 为已录用 CPR。Ch4 五图三表路线已冻结，A1 与 production core correctness 均 PASS；C5-5 Step 3 survivor 继续暂停。CP026 只开放 `14/18 dB×Np2/4×64 shared latents` 的 A2 bridge 与 one-latent smoke，C4 必须同时清除 B2/B3_PSC；禁止 Task 5 tuning/full smoke、formal production、正式正文和 Skill/controller 修改。"
     depends_on:
       - slug: 2026-07-06-step4a-mve-execution
         reason: 继承 A4 数据（30seed fair_gain + A4 切换 CI）+ baseline 池（D-010 五条 + DA/NDA/DPLL/VV/BPS）+ R001 调研（baseline 组织/参数/叙述惯例 + 合法性背书矩阵）+ 简报 ADVISOR_BRIEFING_2026-07-09
@@ -692,8 +692,8 @@ topics:
     title: CCISP 2026 论文整稿闭环
     status: active
     created: "2026-07-14"
-    last_updated: "2026-07-17（S003：导师批注证据归档与 Skill 修改规划前置；待用户复核）"
-    description: "CCISP 2026 唯一 active/canonical 论文专题，统一管理投稿工程、内容与结果闭环、图文返工和最终验证；历史投稿/字体专题只读归档。"
+    last_updated: "2026-08-20（S004-S005/V030-V031：论文录用、camera-ready 与 doc/pdf 派生闭环）"
+    description: "CCISP 2026 唯一 active/canonical 论文专题。S004/V030 已归档评审结论 Accept（13 项全 Yes）及 camera-ready 闭环；S005/V031 已完成 doc/pdf 派生与交付边界。历史投稿/字体专题只读归档。"
     depends_on:
       - slug: 2026-07-09-thesis-writing
         reason: 继承 R010/R013/R014/R015/R016、benchmark-paper-set、D007 数据呈现边界及论文事实材料

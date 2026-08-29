@@ -1,0 +1,18 @@
+{
+  "storage_version": 2,
+  "id": "L010",
+  "title": "Low-power-consumption coherent receiver architecture for satellite optical links",
+  "doi": "10.1109/ICSOS53063.2022.9749703",
+  "arxiv_id": null,
+  "download_status": "success",
+  "download_method": "blit_ieee_pdf+pdf_convert_fast",
+  "content_type": "pdf",
+  "content_quality": "good",
+  "content_file": "content.md",
+  "downloaded_at": "2026-08-30T01:52:24+08:00",
+  "real_title": "Low-power-consumption coherent receiver architecture for satellite optical links",
+  "title_check": "match",
+  "title_overlap": 1.0,
+  "source_sha256": "046b7d180ea663e38d9db895275f047a1cb062cb5d49da33245dd6abb480e7a3",
+  "content_sha256": "d131dcb04ef750d7b42cd0252623333f1d14aaa93cba988b9979274fdd62c90c"
+}

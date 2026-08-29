@@ -1,0 +1,623 @@
+{
+  "schema_version": "t077.c5-0-single-cell.smoke.raw.v1",
+  "authority": "T077/D056/V031/CP018",
+  "manifest_hash": "14ff14de3d0094f135c3a07d3fb395455e81035f6b6d1b014704177587ed3782",
+  "codec": "TargetApskCodec",
+  "live_backend": true,
+  "frames": [
+    {
+      "frame_index": 0,
+      "seed": 2900,
+      "manifest_hash": "14ff14de3d0094f135c3a07d3fb395455e81035f6b6d1b014704177587ed3782",
+      "mapping": {
+        "coded_bits": 1536,
+        "apsk_symbols": 384,
+        "pilot_slots": 128,
+        "nonpilot_slots": 384,
+        "mapping": "pol-major:pol0[192],pol1[192]",
+        "mapping_sha256": "57222e03e8a6b0b0c85e233e64710756e603d92979d7c08c5dd6209238ac508a"
+      },
+      "physical": {
+        "seed": 2900,
+        "preamble_symbols": 4,
+        "observation_symbols_per_polarization": 256,
+        "continuous_total_symbols": 260,
+        "gamma_gamma_block": 256,
+        "observation_first_block_symbols": 252,
+        "observation_next_block_symbols": 4,
+        "receiver_input_sha256": "ff827515f26e33b260a1fdeb8120c56756371c5fefc8a0d773d46e8d490eff3d",
+        "received_observation_sha256": "9fee3b44ddc4a3104b376fe6a6bcc07fd36e11baa7cf7f6ed285b413ae29c166",
+        "codeword_sha256": "afa668288e92906a3f71e6c87c790ce0d5e7a02875dc659212f9902d7b9511a2",
+        "mapping_sha256": "57222e03e8a6b0b0c85e233e64710756e603d92979d7c08c5dd6209238ac508a",
+        "gg_sha256": "e55d01d0d0d2fc0ce0eaa68163e1983c4301f232b24b02e28987e714ebfe4def",
+        "phase_sha256": "3ffc14a5dfe5567ce0dcb9d028ef53d937a79274787f298fbeeb7617327e5b42"
+      },
+      "realization_hash": "dafd4c36cb18c556631975955e1731b1c74fd9b8c632538d60f8e97f00397765",
+      "bundle_hash": "ac3d70fe7a8ea562841f1a53ad379fafca3fc593bb8826a85a8c0cf1a297e1b2",
+      "pair_hash": "f344c7a229e76aa4454b8221c898183de2245719b9bd40d6031e42bca50366c4",
+      "estimated_n0_pilot": 0.0395612561457229,
+      "estimated_n0_payload": 0.03962650689215401,
+      "b2_scalar": 0.799337020169483,
+      "arms": {
+        "B0": {
+          "pair_hash": "f344c7a229e76aa4454b8221c898183de2245719b9bd40d6031e42bca50366c4",
+          "decoder_input_sha256": "53b148d21769d1920ee9e1bc050302661ff0d4c64249849a097aa1007c242ebf",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "B1": {
+          "pair_hash": "f344c7a229e76aa4454b8221c898183de2245719b9bd40d6031e42bca50366c4",
+          "decoder_input_sha256": "53b148d21769d1920ee9e1bc050302661ff0d4c64249849a097aa1007c242ebf",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "B2": {
+          "pair_hash": "f344c7a229e76aa4454b8221c898183de2245719b9bd40d6031e42bca50366c4",
+          "decoder_input_sha256": "79abee6c0573b0fec56aaa84164d088c4ac49f3b7a18954e66f21dd17dc4a7e8",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "B3": {
+          "pair_hash": "f344c7a229e76aa4454b8221c898183de2245719b9bd40d6031e42bca50366c4",
+          "decoder_input_sha256": "705e6cd1788f1438c252cfe3f789af71355427cc1f0a8b56e320d8eee4d426b4",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "O1": {
+          "pair_hash": "f344c7a229e76aa4454b8221c898183de2245719b9bd40d6031e42bca50366c4",
+          "decoder_input_sha256": "b92ec6e2040fcefa552cd0c8bccf06fcc1a79340d04087035d485f49928609a9",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        }
+      }
+    },
+    {
+      "frame_index": 1,
+      "seed": 2901,
+      "manifest_hash": "14ff14de3d0094f135c3a07d3fb395455e81035f6b6d1b014704177587ed3782",
+      "mapping": {
+        "coded_bits": 1536,
+        "apsk_symbols": 384,
+        "pilot_slots": 128,
+        "nonpilot_slots": 384,
+        "mapping": "pol-major:pol0[192],pol1[192]",
+        "mapping_sha256": "21b49eab2c59dedb83c62a4d686a3d2719607f0aed8274dd0a3a069d985ed3d1"
+      },
+      "physical": {
+        "seed": 2901,
+        "preamble_symbols": 4,
+        "observation_symbols_per_polarization": 256,
+        "continuous_total_symbols": 260,
+        "gamma_gamma_block": 256,
+        "observation_first_block_symbols": 252,
+        "observation_next_block_symbols": 4,
+        "receiver_input_sha256": "e542653ff667d1d00c77ca31347efaf5f49415f8d6eb3d0fa383565640e37c03",
+        "received_observation_sha256": "515c8d1ab9830dbb6b3edeb924970a4de9b3491adc2d2edf08b62ef54e7f9e08",
+        "codeword_sha256": "61c7886f8aa0cb4684dd8c4671b426f291e8b6fd5d4aa6d43664c3f963f2e78a",
+        "mapping_sha256": "21b49eab2c59dedb83c62a4d686a3d2719607f0aed8274dd0a3a069d985ed3d1",
+        "gg_sha256": "9a325d199b691dce90436e221c79216f14ceef7db723a20ee4059cd38ecd01ae",
+        "phase_sha256": "158c7bcf7bc00065c2fe8a858b6c32a2c7655c1a3c708dfaa1dec69396a541de"
+      },
+      "realization_hash": "db3300661d11ab72eb29235487f1ac756a030e8bab62b143367fa4fead340abc",
+      "bundle_hash": "1d49c52d08421e202925e34a4a9da5defa2f194e8a5c34a5e9d4909ea3063ecc",
+      "pair_hash": "4247da1af8f9dc252b0206f606f95b501fb1f95811632ca8d1bc1fab4e5b18eb",
+      "estimated_n0_pilot": 0.04003879867630737,
+      "estimated_n0_payload": 0.03640316094452993,
+      "b2_scalar": 0.7898033319465279,
+      "arms": {
+        "B0": {
+          "pair_hash": "4247da1af8f9dc252b0206f606f95b501fb1f95811632ca8d1bc1fab4e5b18eb",
+          "decoder_input_sha256": "70545590f14f32cb2a75f6d27a60da20e7b08160d71814bb75f4135b728b5d9d",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "B1": {
+          "pair_hash": "4247da1af8f9dc252b0206f606f95b501fb1f95811632ca8d1bc1fab4e5b18eb",
+          "decoder_input_sha256": "70545590f14f32cb2a75f6d27a60da20e7b08160d71814bb75f4135b728b5d9d",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "B2": {
+          "pair_hash": "4247da1af8f9dc252b0206f606f95b501fb1f95811632ca8d1bc1fab4e5b18eb",
+          "decoder_input_sha256": "fdfe3ad1093acd3cc0834c52524002243c0de9d5dc793ea617a69b0c3dd49b84",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "B3": {
+          "pair_hash": "4247da1af8f9dc252b0206f606f95b501fb1f95811632ca8d1bc1fab4e5b18eb",
+          "decoder_input_sha256": "5b78b72a36189a52dfbe52e6bf398a741a0bfc5516662e48c83235477b7ad4fa",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "O1": {
+          "pair_hash": "4247da1af8f9dc252b0206f606f95b501fb1f95811632ca8d1bc1fab4e5b18eb",
+          "decoder_input_sha256": "2d5adcb674482b706f3b6cd5a85760c53cb8584b9e7f5cd61ceca2ee6fe0f919",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        }
+      }
+    },
+    {
+      "frame_index": 2,
+      "seed": 2902,
+      "manifest_hash": "14ff14de3d0094f135c3a07d3fb395455e81035f6b6d1b014704177587ed3782",
+      "mapping": {
+        "coded_bits": 1536,
+        "apsk_symbols": 384,
+        "pilot_slots": 128,
+        "nonpilot_slots": 384,
+        "mapping": "pol-major:pol0[192],pol1[192]",
+        "mapping_sha256": "eb04fffcec5f2cfdaf5e3a3f84af97e06ff50c06a9a3623d8465c04fd5d50f72"
+      },
+      "physical": {
+        "seed": 2902,
+        "preamble_symbols": 4,
+        "observation_symbols_per_polarization": 256,
+        "continuous_total_symbols": 260,
+        "gamma_gamma_block": 256,
+        "observation_first_block_symbols": 252,
+        "observation_next_block_symbols": 4,
+        "receiver_input_sha256": "1b33276dcb16a6871bcae4a5e0978c1f2441dcf34bf903e1ac583ca6813bcdd1",
+        "received_observation_sha256": "ec9e35785404f91cd6ca1070e26dadc8e1c67898360e035fe0f1a6ae9086ac06",
+        "codeword_sha256": "3ee742dcf83ddddd6b1ce350953e1f2192d214cb5d7b6026d16c4da027bf2601",
+        "mapping_sha256": "eb04fffcec5f2cfdaf5e3a3f84af97e06ff50c06a9a3623d8465c04fd5d50f72",
+        "gg_sha256": "9a389a10584ff70bd80fdf957910fb85ed5d3285d6909e357afb38773d9e4dfc",
+        "phase_sha256": "066c77be06fa59e4aafb972de5ef64cf91d364767750185a89c1b83b27466e26"
+      },
+      "realization_hash": "a8007dee291684f7846ea25ccb5b46ec8bc041ac49a2e9e950d491aa6592728e",
+      "bundle_hash": "cba8b0bbe3902330cad2d39b306d0966a2fc21bbee163f4b06802493191c38be",
+      "pair_hash": "f0b815bfadc6fc7383b9e4585d1d17c0b9ba096546e1e4305613e090d81b0249",
+      "estimated_n0_pilot": 1.6859685473824813,
+      "estimated_n0_payload": 0.905735380971994,
+      "b2_scalar": 0.018756445160723275,
+      "arms": {
+        "B0": {
+          "pair_hash": "f0b815bfadc6fc7383b9e4585d1d17c0b9ba096546e1e4305613e090d81b0249",
+          "decoder_input_sha256": "244c0676c1b4484c4d3ede2ba30c29f35f5900e5003dc02e5b74dc40b40e0de7",
+          "bit_errors": 303,
+          "fer": 1,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "B1": {
+          "pair_hash": "f0b815bfadc6fc7383b9e4585d1d17c0b9ba096546e1e4305613e090d81b0249",
+          "decoder_input_sha256": "244c0676c1b4484c4d3ede2ba30c29f35f5900e5003dc02e5b74dc40b40e0de7",
+          "bit_errors": 303,
+          "fer": 1,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "B2": {
+          "pair_hash": "f0b815bfadc6fc7383b9e4585d1d17c0b9ba096546e1e4305613e090d81b0249",
+          "decoder_input_sha256": "91daf2ac14f7e586803b59b75abdfedcbe518f2320f796089cb8d54d84a7799c",
+          "bit_errors": 310,
+          "fer": 1,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "B3": {
+          "pair_hash": "f0b815bfadc6fc7383b9e4585d1d17c0b9ba096546e1e4305613e090d81b0249",
+          "decoder_input_sha256": "acdab8707b721ee9f5ba3de037f30040353ad28dbb90ed84388c481e6d831352",
+          "bit_errors": 311,
+          "fer": 1,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "O1": {
+          "pair_hash": "f0b815bfadc6fc7383b9e4585d1d17c0b9ba096546e1e4305613e090d81b0249",
+          "decoder_input_sha256": "481b0105064c376971cc140cabb0210226fe61cc115cce61020398b5f0a296f3",
+          "bit_errors": 319,
+          "fer": 1,
+          "restart": true,
+          "configured_iterations": 20
+        }
+      }
+    },
+    {
+      "frame_index": 3,
+      "seed": 2903,
+      "manifest_hash": "14ff14de3d0094f135c3a07d3fb395455e81035f6b6d1b014704177587ed3782",
+      "mapping": {
+        "coded_bits": 1536,
+        "apsk_symbols": 384,
+        "pilot_slots": 128,
+        "nonpilot_slots": 384,
+        "mapping": "pol-major:pol0[192],pol1[192]",
+        "mapping_sha256": "fac4e10601927406151ac38454e89c94cef73b922a1a2b705b8ac8b633991224"
+      },
+      "physical": {
+        "seed": 2903,
+        "preamble_symbols": 4,
+        "observation_symbols_per_polarization": 256,
+        "continuous_total_symbols": 260,
+        "gamma_gamma_block": 256,
+        "observation_first_block_symbols": 252,
+        "observation_next_block_symbols": 4,
+        "receiver_input_sha256": "db98494ac314e3760a9bb2913f64519d9e578423fc6a4d7934620cc067fea86e",
+        "received_observation_sha256": "bc767d95f0eb5afe03444b9fe26472f0572ae36bffc41e36108afe3c2c4507ac",
+        "codeword_sha256": "89f818575db4bd12173ba5a40cde9d48b4a00157b5715fb1b0b5c905ff4bc527",
+        "mapping_sha256": "fac4e10601927406151ac38454e89c94cef73b922a1a2b705b8ac8b633991224",
+        "gg_sha256": "03172fcc4de59a76a7bb00be217e9d9cd4bc565403f244e847cbe788a40c9b27",
+        "phase_sha256": "547ffa060a50e0c51fe6a4ff1a71a97b04e8b281ccac9daabef999a0a015bc39"
+      },
+      "realization_hash": "5473e285c5a1a6b86639a276cbaf7b427dbbb3036c514cc2c890d434aca68ccf",
+      "bundle_hash": "8bbdccf17a08b943abf0ae793728d4df2f495c376f93db711b77182bb0bb7a51",
+      "pair_hash": "2fe05fcec1da2a1d7c4895fd85ecdb06660b03fb56d8550580036da85b582e03",
+      "estimated_n0_pilot": 0.032841957366948546,
+      "estimated_n0_payload": 0.03172158455775594,
+      "b2_scalar": 0.9628773415773412,
+      "arms": {
+        "B0": {
+          "pair_hash": "2fe05fcec1da2a1d7c4895fd85ecdb06660b03fb56d8550580036da85b582e03",
+          "decoder_input_sha256": "f5d8ea3095c854aae51f71919d084a116669bb2c0c5b7f3c8a1b554a01074734",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "B1": {
+          "pair_hash": "2fe05fcec1da2a1d7c4895fd85ecdb06660b03fb56d8550580036da85b582e03",
+          "decoder_input_sha256": "f5d8ea3095c854aae51f71919d084a116669bb2c0c5b7f3c8a1b554a01074734",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "B2": {
+          "pair_hash": "2fe05fcec1da2a1d7c4895fd85ecdb06660b03fb56d8550580036da85b582e03",
+          "decoder_input_sha256": "d298483d1291efc0c75802d5600b6002730ed7f449f56e0711b19a6218e66353",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "B3": {
+          "pair_hash": "2fe05fcec1da2a1d7c4895fd85ecdb06660b03fb56d8550580036da85b582e03",
+          "decoder_input_sha256": "166473bfb6a0538312e9df210a904d3fe3212294600f1c4dd45bb777b51972f5",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "O1": {
+          "pair_hash": "2fe05fcec1da2a1d7c4895fd85ecdb06660b03fb56d8550580036da85b582e03",
+          "decoder_input_sha256": "b69282ec737fbf2e60b8952130098b474c1ad3fb0c8bbe5bffbd99d5db6dfe95",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        }
+      }
+    },
+    {
+      "frame_index": 4,
+      "seed": 2904,
+      "manifest_hash": "14ff14de3d0094f135c3a07d3fb395455e81035f6b6d1b014704177587ed3782",
+      "mapping": {
+        "coded_bits": 1536,
+        "apsk_symbols": 384,
+        "pilot_slots": 128,
+        "nonpilot_slots": 384,
+        "mapping": "pol-major:pol0[192],pol1[192]",
+        "mapping_sha256": "67b9274b659a41eaf1ed9b3880f550e66fb38cb453fee4954e5613ac6c2e6a4f"
+      },
+      "physical": {
+        "seed": 2904,
+        "preamble_symbols": 4,
+        "observation_symbols_per_polarization": 256,
+        "continuous_total_symbols": 260,
+        "gamma_gamma_block": 256,
+        "observation_first_block_symbols": 252,
+        "observation_next_block_symbols": 4,
+        "receiver_input_sha256": "d47c1dd11779dfd9f315acadae330ae48ac8b8353b7e49f2ad80414f9a0ccfaa",
+        "received_observation_sha256": "f1e5246a2eb712bb1c5b610eb8950c28d9d1b0a049e95a75c34531b66e66984b",
+        "codeword_sha256": "8aa68a502be55968719a8a93d1d47422f6497f0d00cfa66f7d8c03dce6b45b8e",
+        "mapping_sha256": "67b9274b659a41eaf1ed9b3880f550e66fb38cb453fee4954e5613ac6c2e6a4f",
+        "gg_sha256": "6d31e961c4d8a7e3d9fb0a6698ccdf370cc68dfb4daab5a18f218ee2adb7d94f",
+        "phase_sha256": "67e94562e0c1788605fe962d7820c95ba215ad36c00a5b17ec120db396712f8a"
+      },
+      "realization_hash": "8a15ce997bf32b03813b7a5e57860649a1c54dac119a1e1d68c8001eaa7b5028",
+      "bundle_hash": "2aec524e902c945c84dcb261f04cb15571b57e208ee3b332561d3053b4e0cef9",
+      "pair_hash": "31f71a483535c3d39cc48d5cde8bb720ac472f7bc2f3cfd8835da62056fc8b85",
+      "estimated_n0_pilot": 0.04236672056208485,
+      "estimated_n0_payload": 0.04250671321648848,
+      "b2_scalar": 0.746406051309619,
+      "arms": {
+        "B0": {
+          "pair_hash": "31f71a483535c3d39cc48d5cde8bb720ac472f7bc2f3cfd8835da62056fc8b85",
+          "decoder_input_sha256": "57d4cbe001248db68533184df64027191a9546425e47ce4b930e1e68826a1bb7",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "B1": {
+          "pair_hash": "31f71a483535c3d39cc48d5cde8bb720ac472f7bc2f3cfd8835da62056fc8b85",
+          "decoder_input_sha256": "57d4cbe001248db68533184df64027191a9546425e47ce4b930e1e68826a1bb7",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "B2": {
+          "pair_hash": "31f71a483535c3d39cc48d5cde8bb720ac472f7bc2f3cfd8835da62056fc8b85",
+          "decoder_input_sha256": "2c60eb9e43e3d25af9343dd5bcdc5b49fff3414cacc4f81ff78587bf8f4633a9",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "B3": {
+          "pair_hash": "31f71a483535c3d39cc48d5cde8bb720ac472f7bc2f3cfd8835da62056fc8b85",
+          "decoder_input_sha256": "b93a9c98b92b4bd67a4c32f45e5e5893a455ed5b78b452cc75bb5ace560e16f6",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "O1": {
+          "pair_hash": "31f71a483535c3d39cc48d5cde8bb720ac472f7bc2f3cfd8835da62056fc8b85",
+          "decoder_input_sha256": "ac824b1f0664d03c09f7ae5a62c8d928e2c0fd4fb6827f4f717c6e957eb8e298",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        }
+      }
+    },
+    {
+      "frame_index": 5,
+      "seed": 2905,
+      "manifest_hash": "14ff14de3d0094f135c3a07d3fb395455e81035f6b6d1b014704177587ed3782",
+      "mapping": {
+        "coded_bits": 1536,
+        "apsk_symbols": 384,
+        "pilot_slots": 128,
+        "nonpilot_slots": 384,
+        "mapping": "pol-major:pol0[192],pol1[192]",
+        "mapping_sha256": "d3c812721c81c1a76ca31fc688ce2397ea57712b0214b2ae1e5eb9f92cd2ec3a"
+      },
+      "physical": {
+        "seed": 2905,
+        "preamble_symbols": 4,
+        "observation_symbols_per_polarization": 256,
+        "continuous_total_symbols": 260,
+        "gamma_gamma_block": 256,
+        "observation_first_block_symbols": 252,
+        "observation_next_block_symbols": 4,
+        "receiver_input_sha256": "0c6f74c3a25e52d7f6645257afa6d48b3e9849d1cfedf2405e83ddb3b37bea76",
+        "received_observation_sha256": "8f984be0aea5ebe5050e6093a831d4f9c401da50ca8e0d8d7f6876252ce7bcc8",
+        "codeword_sha256": "a298a1bccea67d67db4ffeb5f273a369852b233e82aa1a984a6c6cf17381cfc4",
+        "mapping_sha256": "d3c812721c81c1a76ca31fc688ce2397ea57712b0214b2ae1e5eb9f92cd2ec3a",
+        "gg_sha256": "87186d9fe91201aef94a80d08bcf8755e0ff71b69674dcd0cb8b63ac0743688d",
+        "phase_sha256": "f47ec61ebf7f2ef5321d891e869cc467faa6bb37f13ef2b8adb3b4f28ab2bc48"
+      },
+      "realization_hash": "42b8d8cd613b129525c982b602b9f0c0d0cf82149c25ab9e6db802653f8f96f0",
+      "bundle_hash": "e147edf96e5e0b77e24ba789ce722f73d6432f03872bf67df75226554657ea11",
+      "pair_hash": "bbd58ca3a5b39a342196745179adb107832110bd7b017037f6d2812e8ae31cad",
+      "estimated_n0_pilot": 0.25503431574675783,
+      "estimated_n0_payload": 0.19528318559321795,
+      "b2_scalar": 0.1239942025412939,
+      "arms": {
+        "B0": {
+          "pair_hash": "bbd58ca3a5b39a342196745179adb107832110bd7b017037f6d2812e8ae31cad",
+          "decoder_input_sha256": "c26acbe7105d38c8ba4320a219929c78d4699a608d29721f6bbbf954b8a84dcb",
+          "bit_errors": 166,
+          "fer": 1,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "B1": {
+          "pair_hash": "bbd58ca3a5b39a342196745179adb107832110bd7b017037f6d2812e8ae31cad",
+          "decoder_input_sha256": "c26acbe7105d38c8ba4320a219929c78d4699a608d29721f6bbbf954b8a84dcb",
+          "bit_errors": 166,
+          "fer": 1,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "B2": {
+          "pair_hash": "bbd58ca3a5b39a342196745179adb107832110bd7b017037f6d2812e8ae31cad",
+          "decoder_input_sha256": "5419c5adee600cb6c5bd3b32f76c803ce892a7d38ea33796b8333117fa3b6d8a",
+          "bit_errors": 176,
+          "fer": 1,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "B3": {
+          "pair_hash": "bbd58ca3a5b39a342196745179adb107832110bd7b017037f6d2812e8ae31cad",
+          "decoder_input_sha256": "ff2cdb7da75e0a6218ecc3f82f6514e2d06333e6ff8153d810e2b234087f5e01",
+          "bit_errors": 163,
+          "fer": 1,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "O1": {
+          "pair_hash": "bbd58ca3a5b39a342196745179adb107832110bd7b017037f6d2812e8ae31cad",
+          "decoder_input_sha256": "7c9b4dd21ca7d71119f53666b8bddcf33c993a0b28589325c9663b77153ec9eb",
+          "bit_errors": 162,
+          "fer": 1,
+          "restart": true,
+          "configured_iterations": 20
+        }
+      }
+    },
+    {
+      "frame_index": 6,
+      "seed": 2906,
+      "manifest_hash": "14ff14de3d0094f135c3a07d3fb395455e81035f6b6d1b014704177587ed3782",
+      "mapping": {
+        "coded_bits": 1536,
+        "apsk_symbols": 384,
+        "pilot_slots": 128,
+        "nonpilot_slots": 384,
+        "mapping": "pol-major:pol0[192],pol1[192]",
+        "mapping_sha256": "859e4507b68b7a9644f4b83c128110aaff4c86fdd3a7d3195600cd69bc531b0e"
+      },
+      "physical": {
+        "seed": 2906,
+        "preamble_symbols": 4,
+        "observation_symbols_per_polarization": 256,
+        "continuous_total_symbols": 260,
+        "gamma_gamma_block": 256,
+        "observation_first_block_symbols": 252,
+        "observation_next_block_symbols": 4,
+        "receiver_input_sha256": "491bf89fbcaad78e99084e98d84f32ec102dfcf93c024e1a04eae2f7e2b650ed",
+        "received_observation_sha256": "d184a7d977a437ab714bb43e2fef308c4eac73f4d7009a3bbe4f5c196def694c",
+        "codeword_sha256": "d0d229320a7da184cb46f6c18fbb8d8b774c49ae2e082c9c32d7613c178eb106",
+        "mapping_sha256": "859e4507b68b7a9644f4b83c128110aaff4c86fdd3a7d3195600cd69bc531b0e",
+        "gg_sha256": "3d8442c5697981a5ef047b809d48ad2eacbcec58a48fce7b6fd27f989c23027c",
+        "phase_sha256": "7ea862167a11735dba5cd75d66fd0a4bbafbe28d37ab16434cc7e49ffc3c4550"
+      },
+      "realization_hash": "fe4ca6625ce291925e8e3519b2eac267166158981b6d13623c264ce05e09260e",
+      "bundle_hash": "cb1982b46d143787fde7a9ad2730079c3963b2aca0d8be9c403aaff0ae2edb88",
+      "pair_hash": "6231e3022c097bd88aeb498760a7a12936be5845ec7134cd6a7f059eccc4d794",
+      "estimated_n0_pilot": 0.019563207592056826,
+      "estimated_n0_payload": 0.012834785408944152,
+      "b2_scalar": 1.6164412943470203,
+      "arms": {
+        "B0": {
+          "pair_hash": "6231e3022c097bd88aeb498760a7a12936be5845ec7134cd6a7f059eccc4d794",
+          "decoder_input_sha256": "54d29ac803af74bf047b84d6f3465f20c89598af9e74ada4cda7419bf2e723c9",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "B1": {
+          "pair_hash": "6231e3022c097bd88aeb498760a7a12936be5845ec7134cd6a7f059eccc4d794",
+          "decoder_input_sha256": "54d29ac803af74bf047b84d6f3465f20c89598af9e74ada4cda7419bf2e723c9",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "B2": {
+          "pair_hash": "6231e3022c097bd88aeb498760a7a12936be5845ec7134cd6a7f059eccc4d794",
+          "decoder_input_sha256": "acba2b5c176bd6a920572f85883d3c2b3ea7f833e400287604cc4e9811f69f27",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "B3": {
+          "pair_hash": "6231e3022c097bd88aeb498760a7a12936be5845ec7134cd6a7f059eccc4d794",
+          "decoder_input_sha256": "a3499a1d1db886448aaf530458fdac5e096d3c87fb52614c1eae832a220422f8",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "O1": {
+          "pair_hash": "6231e3022c097bd88aeb498760a7a12936be5845ec7134cd6a7f059eccc4d794",
+          "decoder_input_sha256": "3a3ed8ddafedb350c93adf3d2e3792b11a2c03defb95b6e8c59be9ca51075341",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        }
+      }
+    },
+    {
+      "frame_index": 7,
+      "seed": 2907,
+      "manifest_hash": "14ff14de3d0094f135c3a07d3fb395455e81035f6b6d1b014704177587ed3782",
+      "mapping": {
+        "coded_bits": 1536,
+        "apsk_symbols": 384,
+        "pilot_slots": 128,
+        "nonpilot_slots": 384,
+        "mapping": "pol-major:pol0[192],pol1[192]",
+        "mapping_sha256": "546d1f52708520471e91b41ef2506d91090d830211170aa350b66b087f945b55"
+      },
+      "physical": {
+        "seed": 2907,
+        "preamble_symbols": 4,
+        "observation_symbols_per_polarization": 256,
+        "continuous_total_symbols": 260,
+        "gamma_gamma_block": 256,
+        "observation_first_block_symbols": 252,
+        "observation_next_block_symbols": 4,
+        "receiver_input_sha256": "b61b3f99604ac459e11655ff6512ab859c733c9217df2acfea8ccc89dbe54446",
+        "received_observation_sha256": "c11be26253d2301f3c2b0d1ddc569dc5684e7354ba5a2e22fc9de15b6f1e53bd",
+        "codeword_sha256": "ff093fbdf5fcbfcfc5e31dcacaf01fdb2e6e1258625b862f6dd16e20a70b3399",
+        "mapping_sha256": "546d1f52708520471e91b41ef2506d91090d830211170aa350b66b087f945b55",
+        "gg_sha256": "29d4dede7f071f42d03ad847d20c3d2bcabeb23287f9b11fa29196bb5d9d9974",
+        "phase_sha256": "73f6c3369f8f4a40e1773bfc66b003237996c198782054d85c00ade70a55771f"
+      },
+      "realization_hash": "ac681bd69055fc51e2937339439368338299fbb1633f2940ec83a6570b36a317",
+      "bundle_hash": "94ec54e2c0fad24deb6dc5239211af639747c302d34f63e41d0bc31282f9e344",
+      "pair_hash": "82e9585ad2fc6feb56a3e2f16fecb6e2b26b9224c57e6bf89aa684850b3e77a9",
+      "estimated_n0_pilot": 0.012351068065521985,
+      "estimated_n0_payload": 0.013274155092623512,
+      "b2_scalar": 2.560327287804266,
+      "arms": {
+        "B0": {
+          "pair_hash": "82e9585ad2fc6feb56a3e2f16fecb6e2b26b9224c57e6bf89aa684850b3e77a9",
+          "decoder_input_sha256": "3330a8590c2371031054c31f394c522f20270044e66192e948dc221b1e5104a7",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "B1": {
+          "pair_hash": "82e9585ad2fc6feb56a3e2f16fecb6e2b26b9224c57e6bf89aa684850b3e77a9",
+          "decoder_input_sha256": "3330a8590c2371031054c31f394c522f20270044e66192e948dc221b1e5104a7",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "B2": {
+          "pair_hash": "82e9585ad2fc6feb56a3e2f16fecb6e2b26b9224c57e6bf89aa684850b3e77a9",
+          "decoder_input_sha256": "b1cb629e537bb348810144abd2f17a0ad628f5751f0f7145689b36a99197c2d2",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "B3": {
+          "pair_hash": "82e9585ad2fc6feb56a3e2f16fecb6e2b26b9224c57e6bf89aa684850b3e77a9",
+          "decoder_input_sha256": "20baf9b9a3547fca0a0b4ad5cf66087c338b446a776d1d24c7195e6ccb8e78e4",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        },
+        "O1": {
+          "pair_hash": "82e9585ad2fc6feb56a3e2f16fecb6e2b26b9224c57e6bf89aa684850b3e77a9",
+          "decoder_input_sha256": "75fb5eb3aaf8c6f92925ab05ffeba47ce43b545ea1d054a98553847e559e5535",
+          "bit_errors": 0,
+          "fer": 0,
+          "restart": true,
+          "configured_iterations": 20
+        }
+      }
+    }
+  ],
+  "_meta": {
+    "script": "t077:smoke-raw",
+    "common_md5": "49acdfa4",
+    "git_commit": "cde31b9",
+    "timestamp": "2026-08-30T09:49:11"
+  }
+}

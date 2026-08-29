@@ -1,0 +1,99 @@
+schema_version: t067.structured-covariance-development.v1
+authority: T067/D048/V022
+action_class: CH5_STRUCTURED_COVARIANCE_BOUNDED_DEVELOPMENT
+verdict_ceiling: PROVISIONAL
+
+shared_chain:
+  modulation: DP-(8,8)-16APSK
+  polarization_count: 2
+  symbol_rate_hz: 2500000000.0
+  symbol_period_s: 4.0e-10
+  observation_symbols: 256
+  pilot_spacing: 4
+  pilots_per_polarization: 64
+  payload_symbols_per_polarization: 192
+  occurrences_per_label_per_polarization: 4
+  jones: static_random_memoryless_unitary_per_window
+  turbulence: {model: gamma-gamma, alpha: 4.0, beta: 1.9, block: 256}
+  residual_frequency_hz: 1000000.0
+  frequency_slope_hz_per_s: 150000000.0
+  linewidth_hz: 10000.0
+  ch4: {arm_id: plain-canonical-rde-mu1e-3, mode: plain, mu: 0.001, acquisition_pilots: 4, ring_threshold: null, decision_threshold: null}
+  ch3: {mode: DA, pilot_spacing: 4}
+  disabled: [PDL, PMD, FIR, IQ, cross_polarization_sample_pooling]
+
+fairness:
+  shared: [pilots, pilot_estimated_means, payload, realization, bootstrap_clusters]
+  covariance_floor: 1.0e-10
+  llr_clip: 30.0
+  estimator_input: current_window_known_pilots_only
+  payload_truth_use: offline_BER_and_GMI_only
+
+arms:
+  B1: per-ring scalar
+  B2: per-ring radial-tangential hard pooling
+  B3: per-point full 2x2 real-IQ with generic isotropic shrinkage
+  C1: per-point radial-tangential with lambda=kappa/(n_k+kappa)
+
+round1:
+  cell_id: t067-dp16apsk-moderate-gg-15db
+  snr_db: 15.0
+  windows: 64
+  seeds: {start: 3000, stop_inclusive: 3063}
+  tune_window_ids: {start: 0, stop_inclusive: 31}
+  evaluation_window_ids: {start: 32, stop_inclusive: 63}
+  tuning:
+    C1_kappa: [0, 1, 4, 16, 64]
+    B3_shrinkage: [0, 0.25, 0.5, 0.75, 1]
+    objective: mean_tune_window_payload_GMI
+    tie_tolerance: 1.0e-12
+    tie_break: larger_value_stronger_shrinkage
+
+bootstrap:
+  cluster: evaluation_window
+  rng: PCG64
+  seed: 2026083002
+  resamples: 2000
+  confidence: 0.95
+
+round1_terminal:
+  C1_SIGNAL: C1_vs_strongest_B2_B3.GMI.ci_lower_gt_0_and_BER.ci_upper_le_0
+  SIMPLE_MIGRATION_SIGNAL: B2_or_B3_vs_B1.GMI.ci_lower_gt_0_and_BER.ci_upper_le_0
+  GMI_ONLY_SIGNAL: any_structured_vs_B1.GMI.ci_lower_gt_0_without_BER_noninferiority
+  NO_METHOD_SIGNAL: no_structured_arm_has_preregistered_GMI_or_BER_signal
+  INVALID_TESTBED: correctness_firewall_hash_split_or_finiteness_failure
+  simple_winner_rule: choose_B2_if_B2_is_not_worse_than_B3_on_mean_GMI_and_mean_BER_else_choose_stronger_mean_GMI_then_lower_mean_BER
+
+round2:
+  authorized_only_after: [C1_SIGNAL, SIMPLE_MIGRATION_SIGNAL]
+  freeze_round1_winner_and_hyperparameters: true
+  cells:
+    - {snr_db: 14.0, windows: 32, seeds: {start: 4000, stop_inclusive: 4031}}
+    - {snr_db: 15.0, windows: 32, seeds: {start: 4100, stop_inclusive: 4131}}
+    - {snr_db: 16.0, windows: 32, seeds: {start: 4200, stop_inclusive: 4231}}
+  arms: [B1, B2, tuned_B3, frozen_winner]
+  grade:
+    PROVISIONAL_A/B: winner_has_BER_ci_upper_lt_0_at_least_2_of_3_and_GMI_noninferior
+    PROVISIONAL_C: local_BER_or_GMI_only
+    D: unstable_or_no_signal
+  required_snr: only_when_three_points_support_legal_interpolation
+
+failure_predicates:
+  - correctness_or_receiver_visible_firewall_failure
+  - nonfinite_metric_or_covariance
+  - config_realization_bundle_hash_mismatch
+  - tune_evaluation_overlap_or_evaluation_used_for_tuning
+  - payload_truth_used_by_estimator_or_receiver
+  - cross_polarization_sample_pooling
+  - unregistered_round_cell_seed_hyperparameter_or_comparator
+
+forbidden:
+  - LDPC_or_FER_grid
+  - new_impairment
+  - third_round
+  - expanded_kappa_shrinkage_SNR_or_seed_grid
+  - comparator_deletion
+  - common_or_params_change
+  - skill_or_controller_change
+  - thesis_body_change
+  - FINAL_claim

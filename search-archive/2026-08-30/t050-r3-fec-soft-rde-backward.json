@@ -1,0 +1,132 @@
+{
+  "query": "",
+  "timestamp": "2026-08-30T02:57:09.673566+08:00",
+  "sources": [
+    "citations_openalex"
+  ],
+  "total": 6,
+  "results": [
+    {
+      "title": "Blind Equalization and Carrier Phase Recovery in a 16-QAM Optical Coherent System",
+      "authors": [
+        "Irshaad Fatadin",
+        "D. J. G. Ives",
+        "Seb J. Savory"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 2009,
+      "doi": "10.1109/jlt.2009.2021961",
+      "arxiv_id": null,
+      "abstract": "Blind equalization and carrier phase recovery in a simulated 14 Gbaud 16-QAM optical coherent system are investigated. Equalization techniques to compensate for linear transmission impairments are presented using the constant modulus algorithm (CMA), the recursive least-squares (RLS)-CMA, and the radius directed equalization (RDE). With 7 T/2-spaced taps, the RDE and the RLS-CMA can compensate up to 1000 ps/nm of CD in the 16-QAM coherent system with performances comparable to the decision-directed (DD) equalizer. We show that the RDE is a promising technique for blind equalization in a 16-QAM coherent system with lower complexity than the RLS-CMA. Blind carrier phase recovery is investigated in a decision-directed-mode. We show that the blind carrier phase recovery algorithm can recover the Square-16-QAM constellation for laser beat linewidths of DeltanuTs~ 10-4in a polarization-multiplexed (POLMUX) 16-QAM coherent system with the RDE algorithm giving better overall performance than the CMA when compensating for CD and differential group delay (DGD). Finally, the dynamical characteristics of the equalizers to track endless polarization rotations are discussed. With the adaptation parameters optimized, the equalizers can track angular rate of rotation ~ 105rad/s.",
+      "citation_count": 287,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L001",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Digital Signal Processing for Coherent Transceivers Employing Multilevel Formats",
+      "authors": [
+        "Md. Saifuddin Faruk",
+        "Seb J. Savory"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 2017,
+      "doi": "10.1109/jlt.2017.2662319",
+      "arxiv_id": null,
+      "abstract": "Digital coherent transceivers have revolutionized optical fiber communications due to their superior performance offered compared to intensity modulation and direct detection based alternatives. As systems employing digital coherent transceivers seek to approach their information theoretic capacity, the use of multilevel modulation formats combined with appropriate forward error correction becomes essential. Given this context, in this tutorial paper, we, therefore, explore the digital signal processing (DSP) utilized in a coherent transceiver with a focus on multilevel modulation formats. By way of an introduction, we open by discussing the photonic technology required to realize a coherent transceiver. After discussing this interface between the analog optical channel and the digital domain, the rest of the paper is focused on DSP. We begin by discussing algorithms that correct for imperfections in the optical to digital conversion, including IQ imbalance and timing skew. Next, we discuss channel equalization including means for their realization for both quasi-static and dynamic channel impairments. Synchronization algorithms that correct for the difference between the transmitter and receiver oscillators both optical and electrical are then discussed and issues associated with symbol decoding highlighted. For most of the cases, we start with polarization division multiplexed quadrature phase-shift keying format as a basis and then discuss the extension to allow for high-order multilevel formats. Finally, we conclude by discussing some of the open research challenges in the field.",
+      "citation_count": 284,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.17863/cam.8992",
+      "source_api": "openalex_citations",
+      "id": "L002",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Analysis of a reset-free polarization controller for fast automatic polarization stabilization in fiber-optic transmission systems",
+      "authors": [
+        "F. Heismann"
+      ],
+      "venue": "Journal of Lightwave Technology",
+      "year": 1994,
+      "doi": "10.1109/50.285366",
+      "arxiv_id": null,
+      "abstract": "We analyze the operation of a reset-free polarization controller comprising three endlessly rotatable wave plates: a first quarter-wave plate followed by a half-wave plate and a second quarter-wave plate, which is rotated synchronously with the first quarter-wave plate. We show that for any arbitrary angular offset between the two quarter-wave plates; the controller allows continuous, reset-free transformations from any varying general input state of polarization into any general output state. An integrated-optic realization of this scheme on z-propagation LiNbO/sub 3/ offers control speeds that well exceed the speed of natural polarization fluctuations in standard single-mode fibers, thus allowing fast automatic polarization stabilization in fiber-optic transmission systems.>",
+      "citation_count": 133,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L003",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Recursive Least Squares Constant Modulus Algorithm for Blind Adaptive Array",
+      "authors": [
+        "YangQuan Chen",
+        "Tho Le‐Ngoc",
+        "Benoı̂t Champagne",
+        "Xu Chen"
+      ],
+      "venue": "IEEE Transactions on Signal Processing",
+      "year": 2004,
+      "doi": "10.1109/tsp.2004.826167",
+      "arxiv_id": null,
+      "abstract": "We consider the problem of blind adaptive signal separation with an antenna array, based on the constant modulus (CM) criterion. An approximation to the CM cost function is proposed, which allows the use of the recursive least squares (RLS) optimization technique. A novel RLS constant modulus algorithm (RLS-CMA) is derived, where the modulus power of the array output can take on arbitrary positive real values (i.e., fractional values allowed). Simulations are performed to compare the performance of the proposed RLS-CMA to other well-known algorithms for blind adaptive beamforming. Results indicate that the RLS-CMA has a significantly faster convergence rate and better tracking ability.",
+      "citation_count": 133,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L004",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Blind equalization based on radius directed adaptation",
+      "authors": [
+        "M.J. Ready",
+        "R.P. Gooch"
+      ],
+      "venue": "International Conference on Acoustics, Speech, and Signal Processing",
+      "year": 2002,
+      "doi": "10.1109/icassp.1990.115806",
+      "arxiv_id": null,
+      "abstract": "A blind equalization algorithm, termed radius directed equalization (RDE), for quadrature amplitude modulation (QAM) signals based on the known modulus of the constellation symbol radii is described. For example, 16 QAM has three radii and 32 QAM has five radii. The algorithm uses the error between the equalizer output modulus and the nearest symbol radius to update the equalizer weights. The RDE algorithm provides faster convergence than the constant modulus algorithm (CMA) for QAM signals and is independent of the carrier offset. The algorithm is described in the context of blind carrier and baud clock recovery schemes.>",
+      "citation_count": 104,
+      "is_open_access": false,
+      "pdf_url": null,
+      "source_api": "openalex_citations",
+      "id": "L005",
+      "download": true,
+      "publication_status": "published"
+    },
+    {
+      "title": "Hybrid integration of FEC and channel equalization for ultra-high bandwidth efficient coherent optical interconnection",
+      "authors": [
+        "Junyuan Song",
+        "Shaonan Liu",
+        "Jun Ming",
+        "Chenchen Wang",
+        "Hailian He",
+        "Yujia Mu",
+        "Xiangjun Xin",
+        "Ze Dong"
+      ],
+      "venue": "Optics Express",
+      "year": 2025,
+      "doi": "10.1364/oe.564077",
+      "arxiv_id": null,
+      "abstract": "To fully address the inter-symbol interference (ISI) for ultra-high bandwidth efficiency (BE) application, a hybrid integrated forward error correction (FEC) equalization (IFE) scheme is proposed and experimentally demonstrated in a coherent optical interconnection system. The estimation for the channel response affected with severe ISI is realized by an adaptive linear minimum mean square error (LMMSE) equalizer, assisted with soft-input soft-output (SISO) a posteriori information by low density parity check (LDPC) decoder, allowing simultaneously accurate ISI deduction and reliable FEC decoding. The proof-of-concept experiments are investigated in a 60 GBaud polarization division multiplexed 16 quadrature amplitude modulation system within a 5-GHz ultra-narrow bandwidth receiver. The results show that the proposed IFE scheme successfully obtains more than 3-dB optical signal-to-noise ratio (OSNR) gain compared with the serial, independent structure of the equalizer and the FEC decoder at the BER threshold of 1??10 ?2 . The validity comparison of ISI reduction ability between traditional soft-decision maximum likelihood sequence estimation (MLSE) and the proposed IFE scheme has been experimentally investigated, with the proposed scheme demonstrating greater robustness.",
+      "citation_count": 2,
+      "is_open_access": true,
+      "pdf_url": "https://doi.org/10.1364/oe.564077",
+      "source_api": "openalex_citations",
+      "id": "L006",
+      "download": true,
+      "publication_status": "published"
+    }
+  ]
+}
