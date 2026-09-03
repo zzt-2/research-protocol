@@ -604,8 +604,8 @@ topics:
     title: 论文写作专题（自适应 CPR 方向）
     status: active
     created: "2026-07-09"
-    last_updated: "2026-08-30（D064/V039：production core PASS，CP026 只开放 fixed A2 bridge）"
-    description: "自适应 CPR 论文写作与全项目方法包装专题。共同平台冻结为 DP-(8,8)-16APSK+BICM/LDPC coherent FSO；Ch3 为已录用 CPR。Ch4 五图三表路线已冻结，A1 与 production core correctness 均 PASS；C5-5 Step 3 survivor 继续暂停。CP026 只开放 `14/18 dB×Np2/4×64 shared latents` 的 A2 bridge 与 one-latent smoke，C4 必须同时清除 B2/B3_PSC；禁止 Task 5 tuning/full smoke、formal production、正式正文和 Skill/controller 修改。"
+    last_updated: "2026-08-30（D074/CP036：一级章名锁定；导师无图文字版拆入独立专题）"
+    description: "自适应 CPR 论文写作与全项目方法包装专题。Ch3 已获 CCISP 录用，Ch4 作者材料包独立终验 P0/P1/P2=0/0/0；D074 锁定六个一级章名。导师无图文字版的结构、方法强度请示与生成门控已拆入 2026-08-30-thesis-advisor-text-outline；Ch5、完整正文、仿真、检索与 Skill/controller 仍暂停。"
     depends_on:
       - slug: 2026-07-06-step4a-mve-execution
         reason: 继承 A4 数据（30seed fair_gain + A4 切换 CI）+ baseline 池（D-010 五条 + DA/NDA/DPLL/VV/BPS）+ R001 调研（baseline 组织/参数/叙述惯例 + 合法性背书矩阵）+ 简报 ADVISOR_BRIEFING_2026-07-09
@@ -751,6 +751,22 @@ topics:
       - projects/simulation/figures/ccisp_fig2_ber.pdf
       - projects/simulation/figures/ccisp_fig4_crossover.pdf
       - projects/simulation/figures/ccisp_fig3_gain.pdf
+
+  - slug: 2026-08-30-thesis-advisor-text-outline
+    title: 学位论文导师文字版结构与方法强度请示
+    status: active
+    created: "2026-08-30"
+    last_updated: "2026-09-03（D014/T003：T002 执行完毕+三轮用户反馈落地，全稿和谐化批次批准并派发）"
+    description: "面向导师预审的独立文字版专题。有限样稿路线经用户验收失败后，已扩大为现有证据支持范围内的全质量章节稿：逐节范文与事实合同、分章写作、独立审查和最终组装。继续请导师判断 Ch3/Ch4 方法强度、章序和 Ch5 FPGA 深度。"
+    depends_on:
+      - slug: 2026-07-09-thesis-writing
+        reason: 继承 D074 一级章名、Ch3/Ch4 方法事实、Ch5 状态与论文主线约束
+      - slug: 2026-05-31-thesis-writing-prep
+        reason: 继承开题时期的写作规范、导师批注和章节组织材料
+    conflicts_with: []
+    produces:
+      - .sessions/2026-08-30-thesis-advisor-text-outline/
+      - 毕设/论文/导师讨论稿/论文整体思路与章节内容说明.md
 
   - slug: 2026-07-20-direction-lab-science-scout
     title: Direction Lab 首轮 SCIENCE_SCOUT 正式科学探索
