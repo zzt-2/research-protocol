@@ -544,3 +544,12 @@ E 批已执行（D021）并通过独立复查与确定性复查；1.1 用户朗�
 - **扩容防返工机制（2026-09-06 续2）**：应用户"不要扩完再磨好几遍"约束，expansion-plan-R1.md 增补 §6 三道闸（规范包前置+批内增量语言层复查+存量 diff=0 锚点）与 P0—P5 全流程排程；登记 D029。主线下一步=出 E1 提示词（PROMPT-011），并催 P0 基线确认三项（PDF 版式翻阅/长跑朗读+存疑 9 条/Ch6 排法）。
 
 - **组装 PDF 编号修复（2026-09-06 续3）**：用户反馈"参考文献序号都是 0"。定位：非缓存问题（清 aux 全量重编仍 0），根因 = biblatex `defernumbers=true` 与 2_reference.tex `resetnumbers=true` 组合导致标签未分配；注释 defernumbers 后编号 1..30 正常（88 页）。债务：成果清单（4_pub）填入真实题录后需复查编号（defernumbers 本为 pub 清单分离编号而设）。修复版在 `毕设/正文/latex/main_v2.pdf`（原 main.pdf 被用户阅读器锁定，关闭后 `cp main_v2.pdf main.pdf` 即可）。V018 补记见 verifications.md。
+
+### 文献批长跑（2026-09-06 续3，用户授权"一直干活直到凑齐"）
+
+- 文档体系落地：`毕设/写作材料/bib-logs/`（L001-L004 分批日志 + VA/VB/D1-D6 工作文件 + backup-R1）+ `ledger.md` 总台账（一行一键永不删行，状态机 cited/candidate/keep/drop，主题标签支持拼拆互换）。
+- Phase A（VA/VB）：19 高危键全 FIXABLE（DOI 全占位但真实文献存在，真实书目逐条核定）；4 缺键全核定高置信。petkovic2022（正文已引）作者名单半编造已定位。
+- Phase B：references.bib 141→134（+4 新增/−11 删/29 条修字段），备份 backup-R1；确定性对账 PASS（无重复键、正文 34 键全在库）。
+- Phase D 两波 6 方向 104 条新检索全 Crossref 核实入库（库 134→238，d1-d6 前缀）；候选池 183 ≥ 对标档需求 ~145。**凑齐**。
+- commit：cf9cc47（A+B）、e494409（D）。
+- 剩余：等扩容 E1-E5 + 组装重转后 Phase C 落位（TODO 占位替换+候选圈选+终选裁剪至 170-180）；中文工程进展 2 处需人工补原始出处。
