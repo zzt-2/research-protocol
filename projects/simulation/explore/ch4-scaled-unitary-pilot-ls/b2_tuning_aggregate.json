@@ -1,0 +1,196 @@
+{
+  "schema_version": "t086.b2-tuning-aggregate.v1",
+  "authority": "T086/D065/V040",
+  "purpose": "canonical_tuning_non_thesis_raw_only_reduction",
+  "base_commit": "d3d98c6fc92642e4d6b964d086c1f3bea2018d1d",
+  "control_epoch": 27,
+  "mission_checkpoint": "CP027",
+  "manifest_sha256": "e35c418d176904b4048fe1b83fe22865e01223f51017953a6443776b8a6a312a",
+  "census": {
+    "scene_latents": 96,
+    "observation_cells": 1152,
+    "arm_rows": 8064
+  },
+  "selected_tau_by_scene_np": {
+    "weak_np2": 1.0,
+    "weak_np4": 1.0,
+    "weak_np8": 1.0,
+    "weak_np16": 1.0,
+    "moderate_np2": 0.5,
+    "moderate_np4": 1.0,
+    "moderate_np8": 1.0,
+    "moderate_np16": 1.0,
+    "strong_np2": 1.0,
+    "strong_np4": 1.0,
+    "strong_np8": 1.0,
+    "strong_np16": 1.0
+  },
+  "cell_objectives": {
+    "weak_np2": {
+      "selected_tau": 1.0,
+      "b2_candidate_objectives": {
+        "0.0": -3.7521861018021245,
+        "0.25": -3.7521861018021245,
+        "0.5": -3.7521861018021245,
+        "0.75": -3.7568969686783036,
+        "1.0": -3.862594254852992
+      },
+      "selected_b2_objective": -3.862594254852992,
+      "c4_fwd_objective": -3.8866442427652657,
+      "b3_psc_objective": -3.8851131004552486
+    },
+    "weak_np4": {
+      "selected_tau": 1.0,
+      "b2_candidate_objectives": {
+        "0.0": -4.080720410982511,
+        "0.25": -4.080720410982511,
+        "0.5": -4.080720410982511,
+        "0.75": -4.080720410982511,
+        "1.0": -4.206552483765228
+      },
+      "selected_b2_objective": -4.206552483765228,
+      "c4_fwd_objective": -4.220525291795245,
+      "b3_psc_objective": -4.21853889532677
+    },
+    "weak_np8": {
+      "selected_tau": 1.0,
+      "b2_candidate_objectives": {
+        "0.0": -4.18684958742579,
+        "0.25": -4.18684958742579,
+        "0.5": -4.18684958742579,
+        "0.75": -4.18684958742579,
+        "1.0": -4.234620695894134
+      },
+      "selected_b2_objective": -4.234620695894134,
+      "c4_fwd_objective": -4.237739157172615,
+      "b3_psc_objective": -4.236503060186579
+    },
+    "weak_np16": {
+      "selected_tau": 1.0,
+      "b2_candidate_objectives": {
+        "0.0": -4.273316000510307,
+        "0.25": -4.273316000510307,
+        "0.5": -4.273316000510307,
+        "0.75": -4.273316000510307,
+        "1.0": -4.3249210320516935
+      },
+      "selected_b2_objective": -4.3249210320516935,
+      "c4_fwd_objective": -4.328117861614394,
+      "b3_psc_objective": -4.325165592327986
+    },
+    "moderate_np2": {
+      "selected_tau": 0.5,
+      "b2_candidate_objectives": {
+        "0.0": -2.083550515659121,
+        "0.25": -2.083550515659121,
+        "0.5": -2.0839960238911783,
+        "0.75": -2.081041210382068,
+        "1.0": -2.068612837233511
+      },
+      "selected_b2_objective": -2.0839960238911783,
+      "c4_fwd_objective": -2.1522458566306746,
+      "b3_psc_objective": -2.1414270301057696
+    },
+    "moderate_np4": {
+      "selected_tau": 1.0,
+      "b2_candidate_objectives": {
+        "0.0": -2.1453496021377,
+        "0.25": -2.145467797614762,
+        "0.5": -2.1478461914445215,
+        "0.75": -2.158656884895313,
+        "1.0": -2.179982302102522
+      },
+      "selected_b2_objective": -2.179982302102522,
+      "c4_fwd_objective": -2.2021462058123666,
+      "b3_psc_objective": -2.197638287318901
+    },
+    "moderate_np8": {
+      "selected_tau": 1.0,
+      "b2_candidate_objectives": {
+        "0.0": -2.201842125289882,
+        "0.25": -2.201842125289882,
+        "0.5": -2.2022865339558177,
+        "0.75": -2.2045316792015366,
+        "1.0": -2.2218189901491403
+      },
+      "selected_b2_objective": -2.2218189901491403,
+      "c4_fwd_objective": -2.226436887445549,
+      "b3_psc_objective": -2.216172509663345
+    },
+    "moderate_np16": {
+      "selected_tau": 1.0,
+      "b2_candidate_objectives": {
+        "0.0": -2.2398691563412974,
+        "0.25": -2.2398691563412974,
+        "0.5": -2.2398691563412974,
+        "0.75": -2.2409689191051125,
+        "1.0": -2.2517065458731937
+      },
+      "selected_b2_objective": -2.2517065458731937,
+      "c4_fwd_objective": -2.258543499644406,
+      "b3_psc_objective": -2.2373569386015006
+    },
+    "strong_np2": {
+      "selected_tau": 1.0,
+      "b2_candidate_objectives": {
+        "0.0": -2.0152818835524235,
+        "0.25": -2.0158667254575597,
+        "0.5": -2.0163574677540015,
+        "0.75": -2.028853884979936,
+        "1.0": -2.073009051480383
+      },
+      "selected_b2_objective": -2.073009051480383,
+      "c4_fwd_objective": -2.0904773080153434,
+      "b3_psc_objective": -2.0903562171952905
+    },
+    "strong_np4": {
+      "selected_tau": 1.0,
+      "b2_candidate_objectives": {
+        "0.0": -2.0585246046703936,
+        "0.25": -2.0587008434270904,
+        "0.5": -2.060872554789755,
+        "0.75": -2.088482864385258,
+        "1.0": -2.1959604529820287
+      },
+      "selected_b2_objective": -2.1959604529820287,
+      "c4_fwd_objective": -2.192471388246964,
+      "b3_psc_objective": -2.1996111881144755
+    },
+    "strong_np8": {
+      "selected_tau": 1.0,
+      "b2_candidate_objectives": {
+        "0.0": -2.1233144300245774,
+        "0.25": -2.1243507895678637,
+        "0.5": -2.1273095483697477,
+        "0.75": -2.1510343933740415,
+        "1.0": -2.256830161232957
+      },
+      "selected_b2_objective": -2.256830161232957,
+      "c4_fwd_objective": -2.2688676319940266,
+      "b3_psc_objective": -2.257478995893733
+    },
+    "strong_np16": {
+      "selected_tau": 1.0,
+      "b2_candidate_objectives": {
+        "0.0": -2.2032967336631804,
+        "0.25": -2.2032967336631804,
+        "0.5": -2.20372793847481,
+        "0.75": -2.207883758499871,
+        "1.0": -2.2508102220754043
+      },
+      "selected_b2_objective": -2.2508102220754043,
+      "c4_fwd_objective": -2.2604195123207718,
+      "b3_psc_objective": -2.241495395569302
+    }
+  },
+  "decision": {
+    "terminal": "CH4_FAMILY_PRODUCTION_FREEZE_READY",
+    "development_numbers_are_thesis_evidence": false
+  },
+  "_meta": {
+    "script": "t086_b2_tuning_raw_only_aggregate",
+    "common_md5": "49acdfa4",
+    "git_commit": "d3d98c6",
+    "timestamp": "2026-08-30T15:13:04"
+  }
+}

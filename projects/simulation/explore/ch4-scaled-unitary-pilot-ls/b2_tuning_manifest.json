@@ -1,0 +1,80 @@
+{
+  "schema_version": "t086.b2-tuning-manifest.v1",
+  "authority": "T086/D065/V040",
+  "action_class": "CH4_DIRECTION_SCALE_FAMILY_FREEZE",
+  "mission_checkpoint": "CP027",
+  "control_epoch": 27,
+  "base_commit": "d3d98c6fc92642e4d6b964d086c1f3bea2018d1d",
+  "purpose": "non-thesis disjoint development tuning for B2_TUNED",
+  "population": {
+    "tuning_preflight_smoke_id": 20999,
+    "canonical_tuning_ids": {"start": 21000, "stop_inclusive": 21031},
+    "formal_structure_smoke_id": 21999,
+    "formal_ids": {"start": 30000, "stop_inclusive": 30127},
+    "t085_ids": [19999, {"start": 20000, "stop_inclusive": 20063}],
+    "shared_within_scene_across_all_snr_np_tau": true,
+    "all_partitions_disjoint": true
+  },
+  "resolved_scenes": {
+    "weak": {"alpha": 11.6, "beta": 10.1},
+    "moderate": {"alpha": 4.0, "beta": 1.9},
+    "strong": {"alpha": 4.2, "beta": 1.4}
+  },
+  "turbulence_authority": "projects/simulation/params.py::SimulationConfig().turbulence",
+  "grid": {
+    "scenes": ["weak", "moderate", "strong"],
+    "pilot_symbols_per_polarization": [2, 4, 8, 16],
+    "snr_db": [15.0, 25.0, 35.0],
+    "tau_candidates": [0.0, 0.25, 0.5, 0.75, 1.0],
+    "windows_per_scene": 32,
+    "payload_symbols_per_polarization": 4096,
+    "max_pilots": 16
+  },
+  "runtime_roles": {
+    "B0": {"runtime_arm": "B0", "parameter": null, "access": "receiver-visible"},
+    "B2_TUNED": {"runtime_arm": "B2", "parameter": "selected_tau_by_scene_np", "access": "receiver-visible"},
+    "C4_FWD": {"runtime_arm": "C4", "parameter": null, "access": "receiver-visible"},
+    "B3_PSC": {"runtime_arm": "B3_PSC", "parameter": 1.0, "access": "receiver-visible pilots only"},
+    "O1": {"runtime_arm": "O1_TRUTH_ONLY", "parameter": null, "access": "truth-only separate runner path"}
+  },
+  "tuning_rows": {
+    "B2_TUNED_CANDIDATES": {"runtime_arm": "B2", "parameters": [0.0, 0.25, 0.5, 0.75, 1.0]},
+    "C4_FWD": {"runtime_arm": "C4", "parameter": null},
+    "B3_PSC": {"runtime_arm": "B3_PSC", "parameter": 1.0}
+  },
+  "selection": {
+    "cell_aggregation": "sum bit_errors and payload_bits over 32 latent windows",
+    "jeffreys_ber": "(total_bit_errors + 0.5) / (total_payload_bits + 1)",
+    "objective": "equal-weight mean over SNR=15/25/35 of log10(Jeffreys BER)",
+    "selection_scope": "one independent tau for every scene x Np",
+    "tie_rule": "exact objective tie selects numerically smaller tau",
+    "invalid_policy": "any missing invalid nonfinite or bits-inconsistent row invalidates the whole artifact"
+  },
+  "development_stop": {
+    "terminal": "TUNED_BASELINE_DOMINATES_DEVELOPMENT",
+    "rule": "for all 12 scene x Np cells selected-B2 objective <= both C4_FWD and B3_PSC objectives, with at least one strict comparison"
+  },
+  "code_hashes": {
+    "production_core.py": "c78d5303a38f3d6c3562ec5b4f0337cdaba6a2cb07330f31cdfbad3538827e60",
+    "common/_modulation.py": "bff9873d10e5b68f1262fddcc24788e23630792e82a23a308f8eb5c48f431a10",
+    "scaled_unitary.py": "868780505b55da7df979c75fe07f132bf52b8b8904c4ec88961fbbe38b052fd2"
+  },
+  "t085_bindings": {
+    "manifest_sha256": "d3ed6c7d887a7127850e310e2a6887eed5c99ec957f1a4b577282e1fbc518fde",
+    "raw_sha256": "4ef32e16d4ce252634686e8e3dc6e0f94dbff4daad18ef12691b491c875e33ed",
+    "receipt_sha256": "7ad0d5b872bbe5e6d91f7b8ff59b95e1e49cf4debc65fb5d18a92fbac4691c36",
+    "terminal": "CHEAP_COMPARATOR_NOT_CLEARED",
+    "artifact_verification": "PASS",
+    "reproducible_generation_binding": "PARTIAL"
+  },
+  "forbidden": [
+    "formal_production",
+    "per_snr_tau",
+    "global_tau_fallback",
+    "result_dependent_grid_change",
+    "invalid_row_drop",
+    "public_role_passed_as_runtime_arm",
+    "B3_inherits_tuned_B2_tau",
+    "truth_in_deployable_receiver"
+  ]
+}

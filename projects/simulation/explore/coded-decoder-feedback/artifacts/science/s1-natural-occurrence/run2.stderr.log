@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "D:\code\study\research-protocol\.worktrees\rdl-method-production-v2\projects\simulation\explore\coded-decoder-feedback\science.py", line 258, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "D:\code\study\research-protocol\.worktrees\rdl-method-production-v2\projects\simulation\explore\coded-decoder-feedback\science.py", line 253, in main
+    print(json.dumps(run_s1(contract_path=args.contract, output=args.output), sort_keys=True))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\code\study\research-protocol\.worktrees\rdl-method-production-v2\projects\simulation\explore\coded-decoder-feedback\science.py", line 207, in run_s1
+    typed = tuple(schemas.row_from_mapping("s1_trajectory", row) for row in mappings)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\code\study\research-protocol\.worktrees\rdl-method-production-v2\projects\simulation\explore\coded-decoder-feedback\science.py", line 207, in <genexpr>
+    typed = tuple(schemas.row_from_mapping("s1_trajectory", row) for row in mappings)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\code\study\research-protocol\.worktrees\rdl-method-production-v2\projects\simulation\explore\coded-decoder-feedback\schemas.py", line 611, in row_from_mapping
+    _fail(table, f"exact fields/order required; missing={sorted(missing)} extra={sorted(extra)}")
+  File "D:\code\study\research-protocol\.worktrees\rdl-method-production-v2\projects\simulation\explore\coded-decoder-feedback\schemas.py", line 458, in _fail
+    raise SchemaError(f"{scope}: {message}")
+schemas.SchemaError: s1_trajectory: exact fields/order required; missing=[] extra=[]

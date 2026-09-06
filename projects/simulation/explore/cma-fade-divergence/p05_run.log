@@ -1,0 +1,10 @@
+
+======================================================================
+Phase A: fresh problem-bearing gate
+======================================================================
+  [anchor_N5M_fg30_20dB] ML-CMA PI_late = +0.00055 CI=[-0.00025,+0.00134] wins_ml_worse=2/5 cma_div_frac=0.0 gate=False
+  [N5M_fg100_20dB] ML-CMA PI_late = -0.00018 CI=[-0.00075,+0.00039] wins_ml_worse=1/5 cma_div_frac=0.0 gate=False
+
+[TERMINAL] PROBLEM_ABSENT_WITH_CORRECTED_BASELINE
+  -> D:\code\study\research-protocol\.worktrees\rdl-method-production-v2\projects\simulation\results\cma-fade-divergence\p05_ood_online_adaptation.json
+  elapsed 485s

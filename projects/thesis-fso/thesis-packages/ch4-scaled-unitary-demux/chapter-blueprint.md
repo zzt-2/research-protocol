@@ -1,153 +1,95 @@
-# Chapter blueprint — 基于缩放酉约束的短导频偏振信道估计与解复用
+# 第四章材料地图与组织清单
 
-> 形态：内部写作蓝图，不是正式论文段落。
-> 建议净篇幅：约 14–18 页（随学校模板和与 Ch3/系统模型的复用程度调整）；不以凑页数为目标。
+> 形态：4.1–4.7 的作者取材卡。不得直接拼接成连续正文。
 
-## 4.1 问题与目标场景（1.5–2 页）
+## 4.1 目标场景与问题定义
 
-### 4.1.1 章间接口与接收信号
+| 卡项 | 内容 |
+|---|---|
+| 要回答的问题 | 短导频下为什么需要对 2×2 pilot-LS 引入结构约束？ |
+| 可写事实 | 目标切片满足 $H\approx gQ$；普通 2×2 complex LS 保留模型外自由度；解复用需要稳定求逆 |
+| 核心公式 | $Y_p=HX_p+N_p$；$\hat H_{LS}=Y_pX_p^H(X_pX_p^H)^{-1}$；$H\approx gQ$ |
+| 图表入口 | `figures/ch4-method-flow.svg`；`tables/ch4-formal-configuration.md` |
+| 解释顺序 | 双偏振观测 → 短导频 LS → 结构先验 → 逆矩阵误差传播 |
+| 必须披露 | static single-tap、公共尺度、equal circular AWGN、DP-(8,8)-16APSK |
+| 禁止外推 | PDL/PMD/FIR/时变 SOP/CFO/CPR/LDPC 已验证 |
 
-- **承重句**：Ch4 接收双偏振短导频与载荷观测，任务是在进入 Ch3 两路 CPR 前估计静态 2×2 偏振混合并完成解复用。
-- **公式/图**：`y=Hx+n`；Fig. `figures/ch4-method-flow.svg`。
-- **证据**：T068 frozen scene；`confirmation_manifest.json`。
-- **写作纪律**：CPR 只作为下游接口，不写成本 confirmation 已启用的损伤。
+## 4.2 公平基线与方法族身份
 
-### 4.1.2 冻结目标验证场景
+| 卡项 | 内容 |
+|---|---|
+| 要回答的问题 | 与谁比较？两种尺度判据是否是两个独立方法？ |
+| 可写事实 | 普通 LS 是基础基线；调参奇异值下限是主对比基线；两种结构变体共享 $Q=UV^H$ |
+| 核心公式 | $\tilde s_i=\max(s_i,\tau s_1)$；$W_\tau=V\operatorname{diag}(1/\tilde s_i)U^H$ |
+| 图表入口 | `tables/ch4-method-role-comparison.md`；`algorithm-box.md` |
+| 解释顺序 | 普通 LS → 调参 floor → 共同方向 → 两种尺度准则 → 理想 CSI 参考 |
+| 必须披露 | 中等湍流 $N_p=2$ 的 $\tau=0.5$；其余 formal slice 为 1.0；理想 CSI 非部署方法 |
+| 禁止外推 | “全局 $\tau=1$，因此所有 baseline 仅差尺度”；“两个独立核心贡献” |
 
-- **承重句**：本章验证 slice 为 `H=gQ`、`g>0,Q∈U(2)` 的 memoryless static single-tap 模型，并叠加 common scalar Gamma–Gamma 与 equal circular AWGN。
-- **表**：场景边界表（DP-(8,8)-16APSK、Np=2/4、14/18 dB、无 PDL/PMD/FIR/时变 SOP/CFO/CPR/LDPC）。
-- **证据**：T071 frozen recipe；D052-4；fact matrix B01。
-- **引用**：Kikuchi 2011 用于 Jones/PDL/PMD 背景；不能让背景引用扩大验证范围。
+## 4.3 方向—尺度解耦方法推导
 
-### 4.1.3 短导频下的问题定义
+| 卡项 | 内容 |
+|---|---|
+| 要回答的问题 | 共同方向、前向误差尺度和导频重构尺度怎样闭式获得？ |
+| 可写事实 | SVD 给出共享方向；主变体在信道域取奇异值均值；强变体在输出域逐观测标定基准逆矩阵 |
+| 核心公式 | $\hat Q=UV^H$；$\hat g_F=(s_1+s_2)/2$；$W_F=\hat Q^H/\hat g_F$；$\hat a=\max(0,\operatorname{Re}\langle W_0Y_p,X_p\rangle_F/\|W_0Y_p\|_F^2)$ |
+| 图表入口 | `algorithm-box.md`；`figures/ch4-method-flow.svg` |
+| 解释顺序 | LS → SVD → 共享方向 → 主变体 → 强变体 → 三支路公平比较 |
+| 必须披露 | $\hat a$ 逐观测变化；强变体 `h_hat` 为校准前继承量；$\rho$ 不驱动分支 |
+| 禁止外推 | 发明 polar/Procrustes；导频重构尺度固定为 1.0；已实现在线 selector |
 
-- **承重句**：一般 2×2 complex LS 有 8 个实自由度，而 `gU(2)` 只有 5 个；在结构真实且导频短时，未约束 LS 保留 3 个法向噪声自由度并把估计扰动传入逆矩阵。
-- **公式**：`dim_R C^{2×2}=8`，`1+dim_R U(2)=5`。
-- **证据**：Step4a paper feasibility `:89-112`。
-- **边界**：5/8 一阶局部比例是解析预测，不是 BER/NMSE 实测值。
+## 4.4 正式实验配置与统计口径
 
-## 4.2 Baseline 与公平比较（1.5–2 页）
+| 卡项 | 内容 |
+|---|---|
+| 要回答的问题 | 完整曲线、随机总体、BER 和 required-SNR 怎样定义？ |
+| 可写事实 | 128 paired latent clusters；5–41 dB/2 dB 网格；每 pooled 点 4,194,304 bit；Jeffreys BER；门限插值 |
+| 核心公式 | $\hat p_J=(e+0.5)/(n+1)$；$SNR_{gain}=SNR_{req,baseline}-SNR_{req,variant}$ |
+| 图表入口 | `tables/ch4-formal-configuration.md`；`data/ch4-formal-ber-curves.csv`；`data/ch4-formal-required-snr.csv` |
+| 解释顺序 | 场景 → pilot/SNR 网格 → 配对总体 → BER → 门限交点 → 簇级置信区间 |
+| 必须披露 | BER 为 post-demux/pre-CPR、uncoded pre-FEC；工程参考为 $3.8\times10^{-3}$ |
+| 禁止外推 | 同 SNR BER 差冒充 dB 增益；旧四格与 formal 曲线混合 |
 
-### 4.2.1 B0：unconstrained pilot-LS
+## 4.5 主结果
 
-- **承重句**：B0 在相同 balanced pilots 上计算 `H_LS=Y_pX_p^H(X_pX_p^H)^{-1}`，再直接求逆。
-- **代码指针**：`scaled_unitary.py:32-48`、`development.py:140-145`。
+| 卡项 | 内容 |
+|---|---|
+| 要回答的问题 | 在最关键的 $N_p=2/4$ 下，方法族相对调参基线提高多少？ |
+| 可写事实 | 主变体增益 0.870/0.121 dB；强变体 0.875/0.108 dB；四项 CI lower 均为正 |
+| 核心公式 | 见 `tables/ch4-formal-headline-results.md` |
+| 图表入口 | `figures/ch4-formal-ber-curves.svg`；`figures/ch4-formal-required-snr-gain.svg`；headline 表 |
+| 解释顺序 | 完整 BER 曲线 → 工程门限 → 绝对 required SNR → 增益/CI → 两变体近等效 |
+| 必须披露 | $N_p=4$ 是小幅优势；理想 CSI 仅显示余量；强变体不能隐藏 |
+| 禁止外推 | 主变体胜强变体；0.12 dB 是“大幅提升”；全面优于近期强方法 |
 
-### 4.2.2 B1/B2 与 O1
+## 4.6 导频敏感性、机理与适用边界
 
-- **承重句**：B1 是 normalized ridge，B2 是 full-SVD singular-value floor；O1 使用真实信道逆，只量化 oracle headroom。
-- **重点披露**：confirmation 的 primary comparator 固定为 B2 `tau=1`。
-- **代码指针**：`development.py:145-169,185-189`。
-- **禁止**：不把 O1 写成 deployable baseline。
+| 卡项 | 内容 |
+|---|---|
+| 要回答的问题 | 增益为何集中在短导频？结构失配时会怎样？ |
+| 可写事实 | pilot 增大后差距缩小；主变体直接 NMSE 更低；两结构变体求逆残差接近；$\delta\ge0.1$ 时排序反转 |
+| 核心公式 | channel NMSE；inverse residual；结构失配 adapter 只作为冻结数据定义 |
+| 图表入口 | `figures/ch4-formal-pilot-sensitivity.svg`；`figures/ch4-formal-mechanism.svg`；`figures/ch4-formal-robustness-boundary.svg` |
+| 解释顺序 | pilot sensitivity → matched mechanism → scene-local comparison → mismatch reversal |
+| 必须披露 | 强变体 channel NMSE 不适用；$\delta$ 不是 PDL dB；各场景内同条件比较 |
+| 禁止外推 | 混合均值因果；全场景鲁棒领先；隐藏 $\delta\ge0.1$ 反转 |
 
-### 4.2.3 B2 与 C4 的同方向身份
+## 4.7 跨章接口与章末收束材料
 
-- **承重句**：`tau=1` 时 B2 与 C4 都采用 `UV^H`，只在公共尺度 `s1` 与 `(s1+s2)/2` 上不同。
-- **表/框**：将 B2/C4 两行公式并列；引用 `algorithm-box.md` 的 B2 身份审计。
-- **结论上限**：后续 BER 差异只支持公共尺度估计作用，不支持“新偏振旋转”。
+| 卡项 | 内容 |
+|---|---|
+| 要回答的问题 | Ch4 如何接入 Ch3？本章贡献上限是什么？ |
+| 可写事实 | Ch4 输出两路 post-demux/pre-CPR 复符号；Ch3 可按每偏振支路处理；现有证据未联合运行 |
+| 核心公式 | $Z=WY=[z_x,z_y]^T$；后续接口 $z_x\to CPR_x$、$z_y\to CPR_y$ |
+| 图表入口 | `figures/ch4-method-flow.svg`；`thesis-spine-integration-notes.md` |
+| 解释顺序 | 模块输出 → 物理处理顺序 → 共同母模型 → 未联合验证 → 有界贡献 |
+| 必须披露 | 逆幅度归一化可能改变第三章 selector 的 $|r|^2$ 统计；不得沿用联合 BER |
+| 禁止外推 | 端到端联合性能、第三章证据已是 DP/coded、旧总纲仍有效 |
 
-## 4.3 缩放酉约束方法推导（2.5–3.5 页）
+## 作者使用检查
 
-### 4.3.1 Pilot-LS 与 balanced-pilot 等价性
-
-- **承重句**：先得到 unconstrained `H_LS`；在 exact balanced pilots 下，post-LS projection 与 direct constrained scaled-unitary LS 代数等价。
-- **公式**：LS normal equation；balanced Gram `X_pX_p^H=cI`。
-- **证据**：Step4a report `:49-81`；correctness C1。
-- **禁止**：不把两种表述写成两种 estimator。
-
-### 4.3.2 Frobenius scaled-unitary projection
-
-- **承重句**：对 `H_LS=Udiag(s1,s2)V^H`，nearest scaled-unitary 解为 `Q*=UV^H`、`g*=(s1+s2)/2`。
-- **推导顺序**：固定 `Q` 的 trace 形式 → Procrustes/polar 方向 → 对公共尺度求导 → 闭式解。
-- **引用**：Schönemann/Higham 经典原子；正式排版前核对 exact bibliographic claim。
-
-### 4.3.3 解复用矩阵与可见诊断
-
-- **承重句**：`W=(g_hat UV^H)^{-1}=VU^H/g_hat`，`z=Wy`；`rho=s1/s2` 只报告 applicability。
-- **证据**：`scaled_unitary.py:50-88`。
-- **边界**：不定义 `rho` threshold，不把它写成 action。
-
-### 4.3.4 为什么可能改善 BER
-
-- **承重句**：在 strict model 内，投影删除 LS 的法向估计噪声并保留公共尺度与酉混合的切空间分量，从而可能减少逆矩阵对估计误差的传播。
-- **证据链**：Step4a local variance argument → confirmation BER；中间不把解析 prediction 冒充实测 NMSE。
-- **反事实**：结构失配时投影可能有偏，因此结论不外推 nonunitary truth。
-
-## 4.4 算法流程、有效性与复杂度（1.5–2 页）
-
-### 4.4.1 算法框
-
-- **承重句**：按 `algorithm-box.md` 的 13 步冻结输入、SVD、投影、逆矩阵、输出与 invalid 路径。
-- **图**：`figures/ch4-method-flow.svg`。
-
-### 4.4.2 Fail-closed 条件
-
-- **承重句**：exact rank deficiency、zero singular value 和 NaN/Inf 触发 invalid，而不是产生伪 inverse。
-- **证据**：`scaled_unitary.py:20-29,32-76`。
-- **披露**：near-zero tolerance 与自动 fallback 未冻结。
-
-### 4.4.3 复杂度
-
-- **承重句**：附加成本是固定 2×2 SVD；payload 主成本仍为 2×2 矩阵对 `N` 个双偏振符号的乘法。
-- **写法**：报告 `O(N_p)+O(N)` 与固定小矩阵操作；不从 Python runtime 推断硬件时延。
-
-## 4.5 Confirmation 设置与复现合同（1.5–2 页）
-
-### 4.5.1 四格设计
-
-- **承重句**：采用预冻结 `14/18 dB × Np=2/4` 四格，每格 64 个 fresh paired windows；四臂/五臂共用 realization。
-- **表**：cell、seed base、B1 eta、B2 tau、windows、payload bits。
-- **证据**：`confirmation_manifest.json`；T071。
-
-### 4.5.2 Metric signature
-
-- **承重句**：cell BER 为总错误 bit/总 payload bits；paired CI 对逐 window `BER_C4−BER_B2` 做 PCG64 bootstrap。
-- **参数**：seed `2026083004`，2000 resamples。
-- **复现**：`python plot_ch4_results.py --check-only`。
-
-### 4.5.3 Truth firewall 与 state lifecycle
-
-- **承重句**：deployable arms 不读取 `H_true` 或 transmitted bits；truth 只用于 O1/scorer；每个 static window 独立重置。
-- **代码**：`development.py:125-213`、`run_confirmation.py:31-80`。
-- **禁止**：不支持 cross-window tracking claim。
-
-## 4.6 Confirmation 结果（2–3 页）
-
-### 4.6.1 四格 BER 全量展示
-
-- **承重句**：四格 C4 相对 B2 的 BER 相对降幅为 7.37%、2.62%、8.38%、5.06%，individual paired CI upper 均小于 0。
-- **图**：`figures/ch4-ber-comparison.svg`；纵轴从 0 起。
-- **表**：`data/ch4-confirmation-summary.csv` 的四个 cell rows。
-- **解释顺序**：先说明 B2/C4，再用 B0/O1 提供普通 LS 与 oracle 上下文；不选择性删小增益格。
-
-### 4.6.2 Pooled Np=2 结果
-
-- **承重句**：两个 Np=2 cell 合并 128 windows 后，B2/C4=`0.06076145/0.05608821`，相对降幅 7.69%，CI=`[-0.00686385,-0.00282661]`。
-- **表**：CSV `pooled_np2` row。
-- **纪律**：pooled 是预注册 secondary aggregation，不作为第五个独立 cell。
-
-### 4.6.3 有界解释
-
-- **承重句**：结果支持 strict target slice 中公共尺度估计的有限 BER 改善；不支持新旋转、SOTA 或全损伤普适性。
-- **必须回扣**：B2/C4 同 `UV^H`；O1 仍有正 headroom。
-
-## 4.7 适用边界与章末小结（1–1.5 页）
-
-### 4.7.1 已验证与未验证边界
-
-- **表**：已验证（static unitary/common scalar/equal AWGN/短 balanced pilots）与未验证（PDL/PMD/FIR/时变 SOP/CFO/CPR/LDPC）。
-- **承重句**：P2 只限制外推，不否定冻结 slice 内证据。
-
-### 4.7.2 章末小结
-
-- **承重句 1**：本章给出从 pilot-LS 到 scaled-unitary projection、闭式解复用及 Ch3 CPR 接口的完整 receiver recipe。
-- **承重句 2**：fresh confirmation 相对正确且廉价的 B2 显示有限但一致的 BER 改善。
-- **承重句 3**：贡献定位是经典结构估计在特定星地相干短导频场景的有界迁移。
-- **禁止**：不新增摘要式“首次/领先”措辞。
-
-## 写作前逐节门
-
-- 任何数字先查 `fact-matrix.md` 与 CSV；无 pointer 不写。
-- 任何方法公式先查 `algorithm-box.md` 与实现；不凭记忆补符号。
-- 引用候选在正式落 bib 前核对全文/metadata；摘要级来源不得承重 exact formula。
-- 图、caption 与正文首次出现顺序中必须解释 B2、C4、O1 和 `rho` 身份。
+- [ ] 每节至少引用一项正式图/表或公式卡。
+- [ ] 每个数字能回到正式 CSV。
+- [ ] 每个方法动词能回到 `production_core.py`/`scaled_unitary.py`。
+- [ ] 每节同时写入“必须披露”，不只摘有利数字。
+- [ ] 不从本文件复制成长段；按学校模板自行组织句子。

@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "D:\code\study\research-protocol\.worktrees\rdl-method-production-v2\projects\simulation\explore\coded-decoder-feedback\science.py", line 509, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "D:\code\study\research-protocol\.worktrees\rdl-method-production-v2\projects\simulation\explore\coded-decoder-feedback\science.py", line 504, in main
+    print(json.dumps(runner(contract_path=args.contract, output=args.output), sort_keys=True))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\code\study\research-protocol\.worktrees\rdl-method-production-v2\projects\simulation\explore\coded-decoder-feedback\science.py", line 458, in run_s2
+    raw_receipt = artifacts.write_jsonl_atomic(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\code\study\research-protocol\.worktrees\rdl-method-production-v2\projects\simulation\explore\coded-decoder-feedback\artifacts.py", line 388, in write_jsonl_atomic
+    payload, materialized = _prepare_jsonl(rows, sort_key=sort_key, schema=schema)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\code\study\research-protocol\.worktrees\rdl-method-production-v2\projects\simulation\explore\coded-decoder-feedback\artifacts.py", line 288, in _prepare_jsonl
+    key = tuple(_sortable_atom(_field_at(row, field)) for field in keys)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\code\study\research-protocol\.worktrees\rdl-method-production-v2\projects\simulation\explore\coded-decoder-feedback\artifacts.py", line 288, in <genexpr>
+    key = tuple(_sortable_atom(_field_at(row, field)) for field in keys)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\code\study\research-protocol\.worktrees\rdl-method-production-v2\projects\simulation\explore\coded-decoder-feedback\artifacts.py", line 226, in _sortable_atom
+    raise ArtifactError("sort-key atoms must be finite string/int/float scalars")
+artifacts.ArtifactError: sort-key atoms must be finite string/int/float scalars

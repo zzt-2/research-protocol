@@ -1,0 +1,30 @@
+
+======================================================================
+Phase A: fresh problem-bearing gate
+======================================================================
+  [anchor_N5M_fg30_20dB] FIXED-LABEL ML-CMA = +0.4990 CI=[+0.4983,+0.4997] wins=3/3 | PI(secondary) = +0.00055 | cma_div_frac=0.0 gate=True
+  [N5M_fg100_20dB] FIXED-LABEL ML-CMA = +0.4981 CI=[+0.4948,+0.5013] wins=3/3 | PI(secondary) = -0.00018 | cma_div_frac=0.0 gate=True
+
+======================================================================
+Phase B: conventional online comparator
+======================================================================
+Traceback (most recent call last):
+  File "D:\code\study\research-protocol\.worktrees\rdl-method-production-v2\projects\simulation\explore\cma-fade-divergence\p05_ood_online_adaptation.py", line 652, in <module>
+    main()
+  File "D:\code\study\research-protocol\.worktrees\rdl-method-production-v2\projects\simulation\explore\cma-fade-divergence\p05_ood_online_adaptation.py", line 634, in main
+    vb, db = phase_b(da["problem_cells"], da["cells"])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\code\study\research-protocol\.worktrees\rdl-method-production-v2\projects\simulation\explore\cma-fade-divergence\p05_ood_online_adaptation.py", line 365, in phase_b
+    pzX, pzY, pupd, ploss = periodic_pilot_finetune(rX, rY, sX, sY, state)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\code\study\research-protocol\.worktrees\rdl-method-production-v2\projects\simulation\explore\cma-fade-divergence\p05_ood_online_adaptation.py", line 319, in periodic_pilot_finetune
+    loss.backward(); opt.step()
+    ^^^^^^^^^^^^^^^
+  File "C:\Users\zzt\scoop\apps\python311\current\Lib\site-packages\torch\_tensor.py", line 626, in backward
+    torch.autograd.backward(
+  File "C:\Users\zzt\scoop\apps\python311\current\Lib\site-packages\torch\autograd\__init__.py", line 347, in backward
+    _engine_run_backward(
+  File "C:\Users\zzt\scoop\apps\python311\current\Lib\site-packages\torch\autograd\graph.py", line 823, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Found dtype Double but expected Float

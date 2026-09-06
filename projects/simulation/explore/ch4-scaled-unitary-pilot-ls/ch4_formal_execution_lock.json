@@ -1,0 +1,41 @@
+{
+  "schema_version": "t087.ch4-formal-execution-lock.v1",
+  "authority": "T087/D066/V041",
+  "action_class": "CH4_FORMAL_EXECUTION_SEAM",
+  "mission_checkpoint": "CP028",
+  "control_epoch": 28,
+  "base_commit": "d3d98c6fc92642e4d6b964d086c1f3bea2018d1d",
+  "scientific_manifest_sha256": "417f334844f9092b02bab5d6478381ae7a57e2ff9b4a385ba37707f601521079",
+  "execution_hashes": {
+    "formal_runner_sha256": "ad0cd1df63b9c715e3073027dffdb6767984661ebfce556093949d62b3f21784",
+    "formal_reducer_sha256": "f7a3049e98e2039d38771aa3c48f893049dc146f707957ba895476afab81c327",
+    "formal_reducer_entry_sha256": "da1a6db75d5912de9b10c4eb656f7a0d4a073395392aaebc72e306c1c111e4a0",
+    "formal_tests_sha256": "cfdba30dc8ef3f12be43667dc298e325f4cf15f0f6c94a031c599c4e613eb3c1"
+  },
+  "frozen_dependency_hashes": {
+    "production_core.py": "c78d5303a38f3d6c3562ec5b4f0337cdaba6a2cb07330f31cdfbad3538827e60",
+    "common/_modulation.py": "bff9873d10e5b68f1262fddcc24788e23630792e82a23a308f8eb5c48f431a10",
+    "scaled_unitary.py": "868780505b55da7df979c75fe07f132bf52b8b8904c4ec88961fbbe38b052fd2",
+    "projects/simulation/params.py": "0e87c53364461478eddcd81426d8e04646270c3ea7aa717e3c3b28c5dd2a99e9"
+  },
+  "environment_snapshot": {
+    "python": "3.11.9",
+    "numpy": "2.4.3",
+    "platform": "Windows-10-10.0.26200-SP0"
+  },
+  "allowed_populations": {
+    "smoke": [
+      29999
+    ],
+    "formal": {
+      "start": 30000,
+      "stop_inclusive": 30127
+    }
+  },
+  "_meta": {
+    "script": "t087_ch4_formal_execution_lock_freeze",
+    "common_md5": "49acdfa4",
+    "git_commit": "d3d98c6",
+    "timestamp": "2026-08-30T16:32:48"
+  }
+}

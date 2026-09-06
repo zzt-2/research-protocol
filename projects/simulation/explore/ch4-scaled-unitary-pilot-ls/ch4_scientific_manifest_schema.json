@@ -1,0 +1,124 @@
+{
+  "schema_version": "t086.ch4-scientific-manifest-schema.v1",
+  "authority": "T086/D065/V040",
+  "action_class": "CH4_DIRECTION_SCALE_FAMILY_FREEZE",
+  "mission_checkpoint": "CP027",
+  "control_epoch": 27,
+  "base_commit": "d3d98c6fc92642e4d6b964d086c1f3bea2018d1d",
+  "frozen_code_hashes": {
+    "production_core.py": "c78d5303a38f3d6c3562ec5b4f0337cdaba6a2cb07330f31cdfbad3538827e60",
+    "common/_modulation.py": "bff9873d10e5b68f1262fddcc24788e23630792e82a23a308f8eb5c48f431a10",
+    "scaled_unitary.py": "868780505b55da7df979c75fe07f132bf52b8b8904c4ec88961fbbe38b052fd2"
+  },
+  "params_authority": {
+    "path": "projects/simulation/params.py",
+    "sha256": "0e87c53364461478eddcd81426d8e04646270c3ea7aa717e3c3b28c5dd2a99e9",
+    "resolved_scenes": {
+      "weak": {"alpha": 11.6, "beta": 10.1},
+      "moderate": {"alpha": 4.0, "beta": 1.9},
+      "strong": {"alpha": 4.2, "beta": 1.4}
+    },
+    "runtime_values_must_match": true
+  },
+  "artifact_role": "pre-tuning static contract; not an executable scientific manifest",
+  "final_manifest_name": "ch4_scientific_manifest.json",
+  "formal_population": {
+    "latent_ids": {"start": 30000, "stop_inclusive": 30127},
+    "clusters": 128,
+    "cluster_key": "latent_id",
+    "shared_across_all_slices_snr_np_and_mismatch": true
+  },
+  "signal": {
+    "payload_symbols_per_polarization": 4096,
+    "modulation": "DP-(8,8)-16APSK",
+    "ber_semantics": "post-demux / pre-Ch3-CPR / uncoded pre-FEC",
+    "snr_axis": "per-polarization pre-fading data-symbol Es/N0",
+    "engineering_reference_ber": 0.0038,
+    "engineering_reference_label": "uncoded pre-FEC engineering reference; not post-FEC performance"
+  },
+  "runtime_roles": {
+    "B0": {"runtime_arm": "B0", "parameter": null},
+    "B2_TUNED": {"runtime_arm": "B2", "parameter": "selected_tau_by_scene_np"},
+    "C4_FWD": {"runtime_arm": "C4", "parameter": null},
+    "B3_PSC": {"runtime_arm": "B3_PSC", "parameter": 1.0},
+    "O1": {"runtime_arm": "O1_TRUTH_ONLY", "parameter": null}
+  },
+  "snr_grid_db": [5.0, 7.0, 9.0, 11.0, 13.0, 15.0, 17.0, 19.0, 21.0, 23.0, 25.0, 27.0, 29.0, 31.0, 33.0, 35.0, 37.0, 39.0, 41.0],
+  "slices": {
+    "moderate_full_curve_np": [2, 4, 8, 16],
+    "weak_full_curve_np": [2],
+    "strong_full_curve_np": [2],
+    "mismatch": {
+      "scene": "moderate",
+      "pilot_symbols_per_polarization": 2,
+      "snr_db": 25.0,
+      "delta": [0.0, 0.05, 0.1, 0.2, 0.3, 0.4],
+      "delta_zero_storage": "exact reference to moderate/Np2/25dB primary cell; no duplicate observations or rows",
+      "adapter": "H_delta = g Q R D_delta R^H; D_delta=diag(1+delta,1-delta)/sqrt(1+delta^2)",
+      "component_usage": {"Q": "channel_q", "R": "mismatch_right", "gain": "gg_gain", "unused_but_retained": "mismatch_left"}
+    }
+  },
+  "crossing": {
+    "curve": "raw total counts converted to Jeffreys BER",
+    "interpolation": "linear in SNR versus log10(Jeffreys BER)",
+    "below_range": "lowest grid SNR is already <= threshold",
+    "unreached": "highest grid SNR remains > threshold",
+    "exact_hit": "take the lowest exactly hitting grid SNR",
+    "stable": "first unique transition from > threshold to <= threshold",
+    "unstable": "any post-crossing upward transition or multiple downward crossings"
+  },
+  "headline": {
+    "comparisons": ["C4_FWD_vs_B2_TUNED", "B3_PSC_vs_B2_TUNED"],
+    "gain_sign": "SNR_required(B2_TUNED) - SNR_required(variant); positive means variant better",
+    "c4_vs_b3_role": "scale-criterion ablation only; never an admission gate"
+  },
+  "whole_curve_bootstrap": {
+    "rng": "PCG64",
+    "seed": 2026083007,
+    "resamples": 5000,
+    "confidence": 0.95,
+    "stream_rule": "reset seed for each named comparison",
+    "cluster_rule": "one sampled latent_id carries the complete slice SNR curve",
+    "valid_gain_replicates_minimum": 4500
+  },
+  "cell_level_bootstrap": {
+    "rng": "PCG64",
+    "seed": 2026083008,
+    "resamples": 5000,
+    "confidence": 0.95,
+    "stream_rule": "reset seed for each named (scene,Np,SNR,variant) comparison",
+    "cluster_rule": "128 paired latent_id clusters within one (scene,Np) slice",
+    "estimand": "per-latent BER_variant minus BER_B2_TUNED",
+    "scope": "grade C only; never pooled across scene"
+  },
+  "grade": {
+    "A": "at least one pre-named variant has required-SNR gain CI lower >0 at both moderate Np2 and Np4",
+    "B": "no A; same variant has lower >0 at one moderate Np and stable point gain >=0 with CI containing 0 at the other",
+    "C": "no A/B; at least one variant has paired BER-difference CI upper <0 in any moderate Np2/Np4 grid cell",
+    "F": "artifact valid but no A/B/C condition",
+    "invalid": "artifact/provenance/schema failure is CH4_FORMAL_INVALID, not scientific F",
+    "chapter_gate": "only A/B enters chapter finalization; C/F returns to thesis-structure discussion"
+  },
+  "execution_lock_interface": {
+    "status": "PENDING_T087_IMPLEMENTATION",
+    "required_bindings_before_first_formal_cell": [
+      "scientific_manifest_sha256",
+      "formal_runner_sha256",
+      "formal_reducer_sha256",
+      "formal_tests_sha256",
+      "base_commit",
+      "environment_snapshot"
+    ],
+    "future_code_hash_values": null,
+    "mismatch_policy": "either scientific manifest or execution-lock mismatch fails closed"
+  },
+  "forbidden": [
+    "adaptive_snr_extension",
+    "duplicate_delta_zero_cell",
+    "AUC_substitution_for_crossing",
+    "representative_BER_substitution_for_crossing",
+    "mechanism_or_boundary_changes_grade",
+    "T087_hashes_before_T087_exists",
+    "formal_run_in_T086"
+  ]
+}

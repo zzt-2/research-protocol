@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "D:\code\study\research-protocol\.worktrees\rdl-method-production-v2\projects\simulation\explore\coded-decoder-feedback\science.py", line 251, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "D:\code\study\research-protocol\.worktrees\rdl-method-production-v2\projects\simulation\explore\coded-decoder-feedback\science.py", line 246, in main
+    print(json.dumps(run_s1(contract_path=args.contract, output=args.output), sort_keys=True))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\code\study\research-protocol\.worktrees\rdl-method-production-v2\projects\simulation\explore\coded-decoder-feedback\science.py", line 198, in run_s1
+    append_checkpoint_frame(checkpoint, _run_frame(seed, cell, owner, built, streams))
+  File "D:\code\study\research-protocol\.worktrees\rdl-method-production-v2\projects\simulation\explore\coded-decoder-feedback\science.py", line 129, in append_checkpoint_frame
+    _atomic_bytes(target, payload)
+  File "D:\code\study\research-protocol\.worktrees\rdl-method-production-v2\projects\simulation\explore\coded-decoder-feedback\science.py", line 102, in _atomic_bytes
+    os.replace(temp, path)
+PermissionError: [WinError 5] ¾Ü¾ø·ÃÎÊ¡£: 'projects\\simulation\\explore\\coded-decoder-feedback\\artifacts\\science\\s1-natural-occurrence\\checkpoint.jsonl.tmp.50632' -> 'projects\\simulation\\explore\\coded-decoder-feedback\\artifacts\\science\\s1-natural-occurrence\\checkpoint.jsonl'

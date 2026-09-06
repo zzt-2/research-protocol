@@ -1,0 +1,62 @@
+{
+  "schema_version": "t086.b2-tuning-receipt.v1",
+  "authority": "T086/D065/V040",
+  "base_commit": "d3d98c6fc92642e4d6b964d086c1f3bea2018d1d",
+  "control_epoch": 27,
+  "mission_checkpoint": "CP027",
+  "purpose": "non-thesis development tuning acceptance",
+  "terminal": "CH4_B2_TUNING_ACCEPTED",
+  "development_stop": {
+    "terminal": "CH4_FAMILY_PRODUCTION_FREEZE_READY",
+    "development_numbers_are_thesis_evidence": false
+  },
+  "selected_tau_by_scene_np": {
+    "weak_np2": 1.0,
+    "weak_np4": 1.0,
+    "weak_np8": 1.0,
+    "weak_np16": 1.0,
+    "moderate_np2": 0.5,
+    "moderate_np4": 1.0,
+    "moderate_np8": 1.0,
+    "moderate_np16": 1.0,
+    "strong_np2": 1.0,
+    "strong_np4": 1.0,
+    "strong_np8": 1.0,
+    "strong_np16": 1.0
+  },
+  "checks": {
+    "raw_only_reduction": "PASS",
+    "full_96_1152_8064_census": "PASS",
+    "shared_within_scene_pairing": "PASS",
+    "cross_scene_pooling_absent": "PASS",
+    "all_rows_valid_finite_equal_bits": "PASS",
+    "truth_firewall": "PASS",
+    "manifest_runner_core_params_hash_binding": "PASS",
+    "development_numbers_are_thesis_evidence": false
+  },
+  "census": {
+    "scene_latents": 96,
+    "observation_cells": 1152,
+    "arm_rows": 8064
+  },
+  "artifact_hashes": {
+    "manifest_sha256": "e35c418d176904b4048fe1b83fe22865e01223f51017953a6443776b8a6a312a",
+    "raw_sha256": "00161c4838a7543878fb191b667935608a242bbdc8ba2849dec4d324113fa315",
+    "aggregate_sha256": "9af3b3af134656863b6a39f8e2d927274d9a82fe0548c95e4dd49429da531378",
+    "receipt_inputs_sha256": "d0f96818ddd3afefec2da10713edb3719114d92ab11e63c6dbf78cbf53ba99c4",
+    "generator_runner_sha256": "b818b17028aba7d00bfa1f924b81d397a36fdf04153879c89bfd2920e38d26ca",
+    "reducer_core_sha256": "2d7513beff50190b6104feed43d9daf2baca9ac89e1e8b7dd94ae73b89d7e33b",
+    "reducer_entry_sha256": "9f9eebed2f61859e52d8fdf7be31a7e042b232d688ffaf11bd40bbeb9d222105",
+    "tests_sha256": "f0171ac05a2c5e81d357168051266c82f7441f7fc66e18d8bf452b31546bc182",
+    "params_sha256": "0e87c53364461478eddcd81426d8e04646270c3ea7aa717e3c3b28c5dd2a99e9",
+    "frozen_production_core.py": "c78d5303a38f3d6c3562ec5b4f0337cdaba6a2cb07330f31cdfbad3538827e60",
+    "frozen_common/_modulation.py": "bff9873d10e5b68f1262fddcc24788e23630792e82a23a308f8eb5c48f431a10",
+    "frozen_scaled_unitary.py": "868780505b55da7df979c75fe07f132bf52b8b8904c4ec88961fbbe38b052fd2"
+  },
+  "_meta": {
+    "script": "t086_b2_tuning_acceptance_receipt_reissue_same_immutable_raw",
+    "common_md5": "49acdfa4",
+    "git_commit": "d3d98c6",
+    "timestamp": "2026-08-30T15:20:38"
+  }
+}

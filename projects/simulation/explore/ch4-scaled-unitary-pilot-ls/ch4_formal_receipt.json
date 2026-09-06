@@ -1,0 +1,38 @@
+{
+  "schema_version": "t087.ch4-formal-receipt.v1",
+  "authority": "T087/D066/V041",
+  "base_commit": "d3d98c6fc92642e4d6b964d086c1f3bea2018d1d",
+  "control_epoch": 28,
+  "mission_checkpoint": "CP028",
+  "terminal": "CH4_FORMAL_REDUCTION_ACCEPTED",
+  "grade": "A",
+  "chapter_gate": true,
+  "checks": {
+    "raw_only_reduction": "PASS",
+    "dual_lock_actual_hashes": "PASS",
+    "full_128_384_15232_76160_census": "PASS",
+    "scene_local_pairing": "PASS",
+    "delta_zero_no_duplicate_rows": "PASS",
+    "truth_firewall": "PASS",
+    "crossing_and_bootstrap_contract": "PASS"
+  },
+  "census": {
+    "top_level_latents": 128,
+    "scene_latents": 384,
+    "actual_cells": 15232,
+    "arm_rows": 76160,
+    "delta_zero_references": 128
+  },
+  "artifact_hashes": {
+    "scientific_manifest_sha256": "417f334844f9092b02bab5d6478381ae7a57e2ff9b4a385ba37707f601521079",
+    "execution_lock_sha256": "095dc989ffee8618484778cb8c0c4454b65b503e22f7db18fbea5cf083227987",
+    "formal_raw_sha256": "642c7ae9eb260526ae77c1c2c7c903590cb5cf19813c5f9b8b4d529b98a72c5b",
+    "formal_aggregate_sha256": "916c4ba5f75703a5a63bc40931e74d161ad3e61ac0b72baa918b77de95c55602"
+  },
+  "_meta": {
+    "script": "t087_ch4_formal_acceptance_receipt",
+    "common_md5": "49acdfa4",
+    "git_commit": "d3d98c6",
+    "timestamp": "2026-08-30T17:14:20"
+  }
+}

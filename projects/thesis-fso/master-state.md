@@ -5,7 +5,7 @@ method_type: reference-method extension（非 ML；完整 deployable action chai
 domain: comms
 created: 2026-06-21
 updated: 2026-08-30
-current_step: THESIS_METHOD_PRODUCTION_CP027_CH4_DIRECTION_SCALE_FAMILY_FREEZE
+current_step: THESIS_METHOD_PRODUCTION_CP035_CH4_AUTHOR_MATERIAL_PACKAGE_READY
 current_stage: GROUNDWORK
 ---
 
@@ -35,7 +35,50 @@ current_stage: GROUNDWORK
 
 ### 当前控制面桥接
 
-> **2026-08-30 D065 / V040 / S028（当前最高 authority）**。T085 immutable raw 经独立 raw-only 复算为
+> **2026-08-30 D073 / V048 / S028（当前最高 authority）**。Ch4 作者材料包已由 T096 独立终验；两项编辑级 P2
+> 最小修复后 P0/P1/P2=`0/0/0`，terminal=`CH4_AUTHOR_MATERIAL_PACKAGE_PASS`。CP035 状态为
+> `CH4_AUTHOR_MATERIALS_READY` 并停机等待用户；禁止自动执行 T093、总纲改写、Ch5、仿真、检索或新方法。
+
+> **2026-08-30 D072 / S028（只读背景）**。用户明确暂停完整正文，要求先准备可由作者慢慢组织的材料。
+> T093=`PAUSED_NOT_EXECUTED`；T094/V047 已以 814 行逐字段最大差 `0.0`、P0/P1/P2=`0/0/3` 独立验收图表。
+> CP034 当前只开放 T095 formal fact/method/claim/citation cards、方法图、作者素材索引与跨章接口说明，随后独立审查并停机。
+> 禁止 `chapter-draft.md`、总纲/Word改写、新增仿真、重归约或恢复 Ch5。
+
+> **2026-08-30 D071 / V046 / S028（只读背景）**。T091 canonical publication exit=0；
+> aggregate SHA=`916c4ba5...5602`、receipt SHA=`0fac1304...e697`。独立 reviewer 从 immutable raw 重算
+> 570 pooled BER、76 paired cells、4 whole-curve comparisons 与 grade，757 个节点最大绝对差=`0.0`，
+> grade=`A`、chapter gate=`true`、P0-P1-P2=`0-0-3`。CP033 只开放 Ch4 formal 图表/表格、完整章节草稿与
+> 独立论文审查；禁止新增仿真、重归约、改科学 artifacts、恢复 Ch5 或开启新方法。
+
+> **2026-08-30 D070 / V045 / S028（只读背景）**。T090 direct reducer在内存完成后、首次publication
+> import处因空PYTHONPATH报`No module named projects`，exit1且无aggregate/receipt/tmp；raw与11项authority bytes
+> 均exact。独立无写入probe确认显式`PYTHONPATH=repo;simulation;seam`可闭合import且environment不变。CP032
+> 只开放T091同一entry一次corrected publication attempt与独立raw-only统计复算；禁止改bound code或重跑formal。
+
+> **2026-08-30 D069 / V044 / S028（只读背景）**。T089唯一formal进程exit=0，canonical raw
+> SHA=`642c7ae9...a72c5b`、size=`89,419,500` bytes、census=`128/384/15232/76160/ref128`；独立
+> reviewer对namespace、hash、pairing、truth与delta0穷举复核为P0-P1-P2=`0-0-3`，且未读取BER/grade。
+> CP031只开放T090 canonical reducer一次与独立raw-only统计复算；作图、正文与Ch5仍关闭。
+
+> **2026-08-30 D068 / V043 / S028（只读背景）**。T088让focused suite在lock absent/present两态
+> 均`19/19`，replacement lock唯一生成并独立终验为SHA=`095dc989...227987`、P0-P1-P2=`0-0-3`；
+> manifest、runner/reducer/entry/tests、deps、HEAD与environment actual match。CP030只开放T089 exact `--formal`
+> 一次生成128-latent canonical raw；成功后先独立raw-only复核，禁止提前reduction、grade、作图或正文。
+
+> **2026-08-30 D067 / V042 / S028（只读背景）**。T087 runner/reducer/entry与唯一ID29999
+> OS-temp smoke均通过，census=`1/3/119/595/ref1`；但首个tracked lock SHA=`3942883a...a45a492`
+> 生成后的fresh suite仅`17/19`，两项pre-freeze测试永久要求canonical lock不存在，故该lock终态FAIL且formal
+> IDs继续禁止。CP029只开放T088：删除exact invalid lock、把测试改为final-state safe、保持runner/reducer/entry
+> 字节不变并生成/独立复核replacement lock；禁止重跑smoke、formal production、作图或正文。
+
+> **2026-08-30 D066 / V041 / S028（只读背景）**。T086 canonical tuning经独立raw-only复算12个
+> objective最大差0，ID20999/21999 structure smoke PASS；stale-test receipt以同一immutable raw修复。
+> scientific manifest唯一冻结为SHA `417f334844f9092b02bab5d6478381ae7a57e2ff9b4a385ba37707f601521079`，
+> 固定formal IDs、5:2:41网格、三scene/Np、mismatch、bootstrap、grade与tau lineage。CP028只开放T087
+> formal runner/reducer/tests TDD、OS-temp ID29999全网格单latent smoke与唯一execution lock；禁止运行
+> IDs `30000..30127`、作图或正文。
+
+> **2026-08-30 D065 / V040 / S028（只读背景）**。T085 immutable raw 经独立 raw-only 复算为
 > artifact P0-P1-P2=`0-0-0`，但预注册 C4-vs-B3 pooled Np2 CI 跨 0，科学 terminal 保持
 > `CHEAP_COMPARATOR_NOT_CLEARED`；生成器字节复现绑定如实为 `PARTIAL`。按 D031/D032 的硕士级标准，
 > 强邻居不再自动否决章节，也不得隐藏。Ch4 现收缩为统一的方向—尺度解耦短导频偏振解复用方法族：C4

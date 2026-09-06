@@ -1,0 +1,20 @@
+
+======================================================================
+Phase A: fresh problem-bearing gate
+======================================================================
+  [anchor_N5M_fg30_20dB] FIXED-LABEL ML-CMA = +0.4990 CI=[+0.4983,+0.4997] wins=3/3 | PI(secondary) = +0.00055 | cma_div_frac=0.0 gate=True
+  [N5M_fg100_20dB] FIXED-LABEL ML-CMA = +0.4981 CI=[+0.4948,+0.5013] wins=3/3 | PI(secondary) = -0.00018 | cma_div_frac=0.0 gate=True
+
+======================================================================
+Phase B: conventional online comparator
+======================================================================
+  [anchor_N5M_fg30_20dB] standard-CMA-continuation: mean_PI=0.00018 ML-comp=+0.49901 recovered=True
+  [anchor_N5M_fg30_20dB] DD-LMS: mean_PI=0.45325 ML-comp=+0.04594 recovered=False
+  [anchor_N5M_fg30_20dB] periodic-pilot-finetune: mean_PI=0.49919 ML-comp=+0.00000 recovered=False
+  [N5M_fg100_20dB] standard-CMA-continuation: mean_PI=0.00117 ML-comp=+0.49806 recovered=True
+  [N5M_fg100_20dB] DD-LMS: mean_PI=0.44850 ML-comp=+0.05072 recovered=False
+  [N5M_fg100_20dB] periodic-pilot-finetune: mean_PI=0.49922 ML-comp=+0.00000 recovered=False
+
+[TERMINAL] PROBLEM_RESOLVED_BY_CONVENTIONAL_ONLINE_EQUALIZER
+  -> D:\code\study\research-protocol\.worktrees\rdl-method-production-v2\projects\simulation\results\cma-fade-divergence\p05_ood_online_adaptation.json
+  elapsed 1012s

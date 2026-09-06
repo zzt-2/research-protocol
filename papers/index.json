@@ -480,6 +480,268 @@
       ],
       "title_check": "match"
     },
+    "doi:10.1117/12.3107192": {
+      "path": "papers/doi/10.1117_12.3107192",
+      "doi": "10.1117/12.3107192",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1109/tsp.2006.874844": {
+      "path": "papers/doi/10.1109_tsp.2006.874844",
+      "doi": "10.1109/TSP.2006.874844",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "arxiv:2511.21340": {
+      "path": "papers/arxiv/2511.21340",
+      "doi": null,
+      "title": "",
+      "status": "success",
+      "batches": [],
+      "title_check": "unverifiable"
+    },
+    "doi:10.1109/iwcmc58020.2023.10182805": {
+      "path": "papers/doi/10.1109_iwcmc58020.2023.10182805",
+      "doi": "10.1109/IWCMC58020.2023.10182805",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1109/twc.2004.837407": {
+      "path": "papers/doi/10.1109_twc.2004.837407",
+      "doi": "10.1109/TWC.2004.837407",
+      "title": "",
+      "status": "success",
+      "batches": [],
+      "title_check": "unverifiable"
+    },
+    "doi:10.1109/access.2026.3653159": {
+      "path": "papers\\doi\\10.1109_access.2026.3653159",
+      "doi": "10.1109/ACCESS.2026.3653159",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "arxiv:2309.12828": {
+      "path": "papers/arxiv/2309.12828",
+      "doi": null,
+      "title": "",
+      "status": "success",
+      "batches": [],
+      "title_check": "unverifiable"
+    },
+    "doi:10.1109/access.2019.2934224": {
+      "path": "papers\\doi\\10.1109_access.2019.2934224",
+      "doi": "10.1109/ACCESS.2019.2934224",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1364/oe.22.031167": {
+      "path": "papers\\doi\\10.1364_oe.22.031167",
+      "doi": "10.1364/OE.22.031167",
+      "title": "Non-data-aided and universal cycle slip detection and correction for coherent communication systems",
+      "status": "failed",
+      "batches": [
+        "coded-decoder-c1-step3_5-universal-crossref-vor"
+      ],
+      "title_check": null
+    },
+    "doi:10.1364/ofc.2014.m3a.3": {
+      "path": "papers/doi/10.1364_ofc.2014.m3a.3",
+      "doi": "10.1364/OFC.2014.M3A.3",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "arxiv:1306.3693": {
+      "path": "papers/arxiv/1306.3693",
+      "doi": null,
+      "title": "",
+      "status": "success",
+      "batches": [],
+      "title_check": "unverifiable"
+    },
+    "arxiv:1204.2660": {
+      "path": "papers\\arxiv\\1204.2660",
+      "doi": null,
+      "title": "",
+      "status": "success",
+      "batches": [],
+      "title_check": "unverifiable"
+    },
+    "arxiv:1704.04618": {
+      "path": "papers\\arxiv\\1704.04618",
+      "doi": null,
+      "title": "",
+      "status": "success",
+      "batches": [],
+      "title_check": "unverifiable"
+    },
+    "doi:10.1364/ofc.2015.th3e.6": {
+      "path": "papers\\doi\\10.1364_ofc.2015.th3e.6",
+      "doi": "10.1364/OFC.2015.TH3E.6",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "arxiv:2604.07004": {
+      "path": "papers/arxiv/2604.07004",
+      "doi": null,
+      "title": "",
+      "status": "success",
+      "batches": [],
+      "title_check": "unverifiable"
+    },
+    "doi:10.1364/ofc.2017.w2a.56": {
+      "path": "papers/doi/10.1364_ofc.2017.w2a.56",
+      "doi": "10.1364/OFC.2017.W2A.56",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1016/j.optcom.2019.03.069": {
+      "path": "papers\\doi\\10.1016_j.optcom.2019.03.069",
+      "doi": "10.1016/j.optcom.2019.03.069",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1364/oe.24.012661": {
+      "path": "papers\\doi\\10.1364_oe.24.012661",
+      "doi": "10.1364/OE.24.012661",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1109/iccc56324.2022.10065885": {
+      "path": "papers\\doi\\10.1109_iccc56324.2022.10065885",
+      "doi": "10.1109/ICCC56324.2022.10065885",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1364/ofc.2024.w2a.31": {
+      "path": "papers\\doi\\10.1364_ofc.2024.w2a.31",
+      "doi": "10.1364/OFC.2024.W2A.31",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1109/jphot.2020.2977955": {
+      "path": "papers\\doi\\10.1109_jphot.2020.2977955",
+      "doi": "10.1109/jphot.2020.2977955",
+      "title": "Phase Alignment With Minimum Complexity for Equal Gain Combining in Multi-Aperture Free-Space Digital Coherent Optical Communication Receivers",
+      "status": "failed",
+      "batches": [
+        "dsp-outage-multi-aperture-q6"
+      ],
+      "title_check": null
+    },
+    "doi:10.1109/access.2020.3035748": {
+      "path": "papers\\doi\\10.1109_access.2020.3035748",
+      "doi": "10.1109/access.2020.3035748",
+      "title": "Toward Practical Digital Phase Alignment for Coherent Beam Combining in Multi-Aperture Free Space Coherent Optical Receivers",
+      "status": "failed",
+      "batches": [
+        "dsp-outage-multi-aperture-q6"
+      ],
+      "title_check": null
+    },
+    "doi:10.1364/ol.511941": {
+      "path": "papers\\doi\\10.1364_ol.511941",
+      "doi": "10.1364/OL.511941",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1016/j.optcom.2023.129722": {
+      "path": "papers/doi/10.1016_j.optcom.2023.129722",
+      "doi": "10.1016/j.optcom.2023.129722",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1016/j.optlastec.2025.113235": {
+      "path": "papers/doi/10.1016_j.optlastec.2025.113235",
+      "doi": "10.1016/j.optlastec.2025.113235",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1016/j.optcom.2025.132812": {
+      "path": "papers/doi/10.1016_j.optcom.2025.132812",
+      "doi": "10.1016/j.optcom.2025.132812",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1016/j.optcom.2026.133153": {
+      "path": "papers/doi/10.1016_j.optcom.2026.133153",
+      "doi": "10.1016/j.optcom.2026.133153",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1109/lsp.2024.3432048": {
+      "path": "papers\\doi\\10.1109_lsp.2024.3432048",
+      "doi": "10.1109/LSP.2024.3432048",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "arxiv:2005.01844": {
+      "path": "papers/arxiv/2005.01844",
+      "doi": null,
+      "title": "",
+      "status": "success",
+      "batches": [],
+      "title_check": "unverifiable"
+    },
+    "doi:10.1109/access.2026.3701043": {
+      "path": "papers/doi/10.1109_access.2026.3701043",
+      "doi": "10.1109/ACCESS.2026.3701043",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1109/icassp49357.2023.10095456": {
+      "path": "papers/doi/10.1109_icassp49357.2023.10095456",
+      "doi": "10.1109/ICASSP49357.2023.10095456",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1109/tsp.2024.3421374": {
+      "path": "papers/doi/10.1109_tsp.2024.3421374",
+      "doi": "10.1109/TSP.2024.3421374",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
     "doi:10.1109/access.2019.2899106": {
       "path": "papers\\doi\\10.1109_access.2019.2899106",
       "doi": "10.1109/access.2019.2899106",
