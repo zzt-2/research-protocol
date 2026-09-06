@@ -475,6 +475,102 @@
 | T085 independent review | raw census/pairing/bootstrap/hash/terminal + exploratory B3 signal | independent science verification | COMPLETE / artifact PASS / science gate FAIL / P0-P1-P2=`0/0/0` |
 | T086 | tuned-B2 development、minimal smoke、scientific manifest freeze | thesis-grade family production preparation | READY / CP027 |
 
+### 第二十九批主线程裁决与工作线
+
+1. T086 canonical tuning只运行一次，独立raw-only复算12个objective最大差0；moderate/Np2选择tau=.5，其余11格tau=1。tuned B2未触发12/12 dominance stop。
+2. ID20999 tuning smoke与ID21999 formal-structure smoke均在所有worktree外运行；delta0 H/observations exact引用与positive-delta同噪声构造闭合。
+3. receipt stale-test P1以同一immutable raw重归约修复；raw/aggregate不变。scientific manifest唯一冻结，SHA=`417f3348...21079`，future T087 hashes保持null。
+4. D066/CP028只开放T087 formal execution seam TDD、ID29999全网格单latent smoke与唯一execution lock；128 formal IDs继续禁止。
+
+| 任务 | 唯一决策域 | formal step | 状态 |
+|---|---|---|---|
+| T086 | tuned baseline、structure smoke、scientific manifest | production freeze | COMPLETE / `CH4_FAMILY_PRODUCTION_FREEZE_READY` |
+| T086 independent reviews | 12 tau raw复算、receipt/hash、manifest、tests | independent verification | COMPLETE / PASS / P0-P1-P2=`0/0/3` |
+| T087 | formal runner/reducer/tests、ID29999 smoke、execution lock | formal execution seam | READY / CP028 |
+
+### 第三十批主线程裁决与工作线
+
+1. T087 runner/reducer/entry 完成 TDD 与多轮独立静态修复；唯一 ID29999 OS-temp smoke 返回 `FORMAL_SMOKE_STRUCTURAL_PASS`，独立 raw-only census=`1/3/119/595/ref1`，未产生论文数字。
+2. 首个 tracked lock SHA=`3942883a...a45a492` 的所有内容绑定均正确，但 lock 存在后的 fresh focused suite 仅 `17/19`：两项pre-freeze测试永久断言canonical lock不存在。独立终态=`CH4_FORMAL_EXECUTION_SEAM_INVALID/P0-P1-P2=0-1-3`，formal IDs未开放。
+3. D067/CP029只开放T088 final-state self-consistency repair：保留runner/reducer/entry与smoke，修测试的absent/present双态语义，exact删除无效lock并生成一个replacement lock；不重跑smoke、不改scientific manifest、不运行formal IDs。
+
+| 任务 | 唯一决策域 | formal step | 状态 |
+|---|---|---|---|
+| T087 | runner/reducer/tests、ID29999 smoke、首个tracked lock | formal execution seam | COMPLETE / smoke PASS / final lock INVALID |
+| T087 independent review | temp raw复算、lock binding、post-lock fresh tests | independent verification | COMPLETE / `0/1/3` / NO-GO |
+| T088 | final-state-safe tests、invalid lock replacement | execution-lock repair | READY / CP029 |
+
+### 第三十一批主线程裁决与工作线
+
+1. T088在旧invalid lock存在态复现`17/19`并修至`19/19`；旧lock exact删除后absent态、新replacement lock present态同一suite均`19/19`，没有skip/xfail。
+2. replacement lock唯一生成，SHA=`095dc989...227987`，独立final P0-P1-P2=`0-0-3`；manifest、runner/reducer/entry/tests、deps、HEAD、environment与population actual match。
+3. D068/CP030只开放T089 exact `--formal`一次生成canonical raw并停机；reduction、grade、作图与正文继续关闭。
+
+| 任务 | 唯一决策域 | formal step | 状态 |
+|---|---|---|---|
+| T088 | final-state-safe tests与replacement lock | execution-lock repair | COMPLETE / READY / P0-P1-P2=`0/0/3` |
+| T089 | frozen 128-latent no-override raw | canonical formal production | READY / CP030 |
+
+### 第三十二批主线程裁决与工作线
+
+1. T089唯一exact formal进程exit=0、wall409.5s，raw SHA=`642c7ae9...a72c5b`、size=89,419,500 bytes，checkpoint成功清除。
+2. 独立reviewer未导入runner/reducer，穷举namespace、cell-latent、H/observation/action hashes、cross-Np pairing、truth与delta0；terminal=`CH4_CANONICAL_FORMAL_RAW_READY/P0-P1-P2=0-0-3`。
+3. D069/CP031只开放T090 canonical reducer一次与独立raw-only统计复算；尚未接收任何正式BER、grade或图表结论。
+
+| 任务 | 唯一决策域 | formal step | 状态 |
+|---|---|---|---|
+| T089 | frozen 128-latent canonical raw | formal production | COMPLETE / RAW READY / `0/0/3` |
+| T090 | crossing/bootstrap/grade与独立raw复算 | formal reduction | READY / CP031 |
+
+### 第三十三批主线程裁决与工作线
+
+1. T090 pre-run门全PASS，但direct entry在内存reduce完成后、首次publication import处因空PYTHONPATH失败，exit1、无aggregate/receipt/tmp；不能称pre-statistics。
+2. raw/manifest/lock与11项authority bytes保持exact。独立无写入probe确认显式`PYTHONPATH=repo;simulation;seam`可闭合import且environment不变。
+3. D070/CP032只开放T091一次corrected publication attempt与独立raw-only统计复算；不改bound code、不重跑formal。
+
+| 任务 | 唯一决策域 | formal step | 状态 |
+|---|---|---|---|
+| T090 | direct canonical reducer | formal reduction | COMPLETE / `FAILED_PRE_WRITE_IMPORT_PATH` / no artifacts |
+| T091 | explicit-environment canonical publication + independent stats | reduction repair | READY / CP032 |
+
+### 第三十四批主线程裁决与工作线
+
+1. T091 corrected publication 只执行一次并返回 grade A；aggregate/receipt 与 raw/双锁绑定 exact，无 tmp。
+2. 独立 reviewer 直接从 immutable raw 重算全部正式统计；757 个科学节点最大绝对差 `0.0`，C4 在 moderate Np2/Np4 相对 tuned B2 的 required-SNR gain 均有 95% CI lower `>0`，chapter gate=true。
+3. D071/CP033 将唯一前台切到 Ch4 论文材料化：先生成完整 formal figures/tables 并独立核数，再写完整第四章并由不同 reviewer 做论文级审查。禁止新增实验、改科学口径或恢复 Ch5。
+
+| 任务 | 唯一决策域 | formal step | 状态 |
+|---|---|---|---|
+| T091 | canonical publication + raw-only statistics | formal reduction | COMPLETE / GRADE A / `0/0/3` |
+| T092 | canonical figures, tables and traceable plot data | chapter materialization | READY / CP033 |
+| T093 | complete Ch4 draft and independent paper-level review | thesis writing | WAIT T092 |
+
+### 第三十五批主线程裁决与工作线
+
+1. 用户明确收窄目标为“先准备材料，正文以后自行组织”；T093 未启动并冻结为 `PAUSED_NOT_EXECUTED`。
+2. T092 已生成五组 formal 结果图、三张正文候选表、五份 CSV 与确定性脚本；主线程已做第一轮视觉审查并修正图例重叠、strong 场景裁轴、误差棒标签和 B3 标量语义。
+3. D072/CP034 只允许独立核数/核图与作者素材卡更新；材料包 ready 后停机，不自动进入正文或总纲。
+
+| 任务 | 唯一决策域 | formal step | 状态 |
+|---|---|---|---|
+| T092 | figures/tables/CSV/scripts | author materialization | COMPLETE / T094 PASS |
+| T093 | complete chapter prose | thesis writing | PAUSED_NOT_EXECUTED / D072 |
+| T094 | independent full-data/visual/semantic audit | material verification | COMPLETE / V047 / `0/0/3` |
+| T095 | formal facts/method/claim/figure/material-index cards | author material finalization | COMPLETE / T096 PASS |
+| T096 | independent author-material package review | material verification | COMPLETE / V048 / `0/0/0` |
+
+### 第三十六批主线程裁决与工作线
+
+1. 用户确认六章一级标题采用“两个具体方法章 + 一个共享 FPGA 实现章”的命名，不再沿用开题阶段宽口径的“……方法研究”标题。
+2. D074/CP036 只开放无图导师文字版的内容合同讨论；目标是先让导师判断题目、章节、方法身份和工程闭环，不在结构获认可前加入图件或展开完整正文。
+3. Ch3/Ch4 证据边界保持不变，尚未联合验证；第五章只有在形成真实级联 FPGA 信号处理链时才能保留“信号处理链”的章名。
+
+| 工作项 | 当前状态 | 下一门 |
+|---|---|---|
+| 六章一级标题 | LOCKED / D074 | 导师反馈后再调整 |
+| 无图导师文字版 | PROPOSE / NOT DRAFTED | 用户批准内容合同 |
+| 二级标题、图件、正式正文 | PAUSED | 结构与文字版范围确认 |
+
 ## 决策引用
 
 - D040：共同 DP-(8,8)-16APSK coded coherent FSO 平台。
@@ -503,11 +599,20 @@
 - D063：接收 corrected-demapper 历史重放，只开放 production core TDD（新建）。
 - D064：接收 production core correctness，只开放 A2 production-seam bridge（新建）。
 - D065：接收 A2 廉价比较器未清除事实，将 Ch4 收缩为方向—尺度解耦方法族并开放一次生产冻结包（新建）。
+- D066：接收方向—尺度方法族 production freeze，只开放 formal execution seam（新建）。
+- D067：T087 科学执行链保留、首个 tracked lock 作废，只开放终态自洽修复（新建）。
+- D068：接收 replacement execution lock，只开放一次 canonical formal raw production（新建）。
+- D069：接收唯一 canonical formal raw，只开放一次归约与独立统计复算（新建）。
+- D070：T090 pre-publication import failure，不改bound code并开放一次显式环境归约（新建）。
+- D071：接收 Ch4 Grade A 正式证据，只开放图表与完整章节材料化（新建）。
+- D072：Ch4 暂不写完整正文，只闭合可供作者组织的正式材料包（新建）。
+- D073：接收 Ch4 作者材料包并停在可组织状态（新建）。
+- D074：锁定学位论文一级章名并转入无图导师文字版讨论（新建）。
 
 ## 范围确认
 
-- 本轮是否在 scope boundary 内：是。D065 接收 T085 失败事实并按既有硕士级标准完成章身份重判；CP027 只开放 tuned-B2 development、非论文 smoke 与 scientific manifest freeze。formal production、作图、正文、Skill/controller、Ch5 与新方向仍不在当前范围。
+- 本轮是否在 scope boundary 内：是。D074 已按用户显式确认登记范围变更；当前只讨论无图导师文字版的内容合同，完整正文、图件、Skill/controller、Ch5与新实验均不在当前范围。
 
 ## 后续
 
-执行 T086：冻结 direction-scale family 的 tuned comparator、whole-curve pairing、最小 smoke 与 scientific/execution 双锁；通过后才另开唯一 formal production。C5-5 保持暂停。
+Ch4 作者材料包已由 T096 独立终验，P0/P1/P2=`0/0/0`。无图导师文字版的内容、篇幅、方法强度请示与生成门控已按用户要求拆入 `2026-08-30-thesis-advisor-text-outline`；本专题不再起草该稿，T093/C5-5 保持暂停。

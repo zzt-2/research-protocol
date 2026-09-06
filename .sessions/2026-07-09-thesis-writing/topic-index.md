@@ -1,21 +1,22 @@
 # Topic Index: 论文写作专题（自适应 CPR 方向）
 
 > slug: 2026-07-09-thesis-writing
-> status: active | created 2026-07-09 | last_updated 2026-08-30（D065/V040：A2 强邻居门失败，开放方法族生产冻结）
+> status: active | created 2026-07-09 | last_updated 2026-08-30（D074：一级章名锁定；导师文字版已拆入独立专题）
 
 <!-- RDL-CONTROL:START -->
 ```yaml
 rdl_control:
   schema_version: rdl.foreground-control.v2
-  control_epoch: 27
-  role: THESIS_METHOD_PRODUCTION
-  mission: close Ch4 and Ch5 with two evidence-valid thesis method packages on the shared coherent FSO platform
-  active_lane: CH4_DIRECTION_SCALE_FAMILY_FREEZE
-  authority_pointer: projects/thesis-fso/master-state.md
-  decision_gate: A2 artifact passed independent raw verification but C4 did not significantly clear B3_PSC; D065 retains the failure and re-scopes C4/B3 as one thesis-grade direction-scale family whose strong neighbor limits claim rather than vetoes the chapter
+  control_epoch: 36
+  role: THESIS_WRITING_STRATEGY
+  mission: prepare an advisor-facing text-only thesis outline around two named methods and one shared FPGA implementation chapter
+  active_lane: ADVISOR_TEXT_VERSION_DISCUSSION
+  authority_pointer: .sessions/2026-07-09-thesis-writing/decisions.md#d074-锁定学位论文一级章名并转入无图导师文字版讨论
+  decision_gate: six first-level chapter titles are locked as the discussion baseline; second-level structure and prose contract still require user approval
   allowed_actions:
-    - CH4_DIRECTION_SCALE_FAMILY_FREEZE
-    - INDEPENDENT_TUNING_VERIFICATION
+    - ADVISOR_TEXT_VERSION_SCOPE_DISCUSSION
+    - SECOND_LEVEL_OUTLINE_PROPOSAL
+    - EXISTING_EVIDENCE_READ_ONLY_MAPPING
   forbidden_actions:
     - UNBOUNDED_PARAMETER_SEARCH
     - NEW_IMPAIRMENT_INTRODUCTION
@@ -29,10 +30,15 @@ rdl_control:
     - C5_5_STEP2_ACQUISITION_EXTENSION
     - C5_5_STEP3_5_OR_LATER
     - FINAL_METHOD_CLAIM
-    - FORMAL_THESIS_PROSE
+    - CH4_NEW_SIMULATION_OR_REDUCTION
+    - CH5_EXECUTION_OR_DRAFTING
+    - CH4_FULL_CHAPTER_DRAFTING
+    - THESIS_FRAMEWORK_REWRITE
+    - ADVISOR_TEXT_DRAFTING_BEFORE_CONTENT_CONTRACT
+    - FIGURE_INSERTION
   mission_log_ref: .sessions/2026-07-09-thesis-writing/S028-three-lane-strategic-research-controller.md
-  mission_checkpoint: CP027
-  next_legal_action: execute T086 only - freeze disjoint tuned-B2 development, run non-thesis structural smoke, and freeze the scientific manifest plus future execution-lock interface; formal production remains forbidden
+  mission_checkpoint: CP036
+  next_legal_action: discuss the purpose, length and evidence boundary of the text-only advisor version; draft only after the user approves a concrete content contract
 ```
 <!-- RDL-CONTROL:END -->
 
@@ -42,7 +48,7 @@ rdl_control:
 
 ## 专题定位边界（FR-22 守门）
 
-- **当前控制**：以本页 `RDL-CONTROL` 和 `projects/thesis-fso/master-state.md` 为双重入口；D065/V040 已接收 T085 的强邻居门失败并继续暂停 C5-5。CP027 唯一开放动作是 T086 direction-scale family freeze；只允许 disjoint tuned-B2 development、非论文结构 smoke 与 scientific manifest/execution-lock 接口冻结，禁止 formal production、正式正文和 Skill/controller 修改。
+- **当前控制**：D074/CP036 已锁定六章一级标题；无图导师文字版的结构、方法强度请示和生成门控已转交 `2026-08-30-thesis-advisor-text-outline`。本专题不再继续起草，不插图、不改正式正文、不新增仿真或恢复 Ch5。
 - **不做的事**：把设计卡直接跑成 MVE、跳过候选级 Step 1–3/3.5/4a、证据冻结前写正式论文章节、修改 Skill/controller。
 - **做的事**：按 D044 连续完成外部证据、候选 Groundwork、正确性 smoke、开发矩阵、fresh confirmation 和章级证据包；每次阶段转换先更新 formal authority。
 - step4a-mve-execution 保持历史依赖；新 Ch4/Ch5 候选不得借用 A4 的旧 GW 进度冒充自己的候选级授权。
@@ -61,6 +67,7 @@ rdl_control:
 材料盘点 + 缺口识别 + 数据稳定性验证 + 论点审查 + 简报完善。守 FR-22（不跳框架）+ D005 务实路线 + D-010 baseline 标准。
 
 ### 当前范围
+- D074 已将六章一级章名锁为后续讨论基线；无图导师文字版的内容合同讨论随后按用户要求拆入 `2026-08-30-thesis-advisor-text-outline`，二级标题与正文仍未批准
 - D044 已取代 D043 的逐批用户门与只读停止边界：主线程获授权持续创建/续接新对话，按外部 authority→候选 Groundwork→correctness smoke→开发矩阵→fresh confirmation→章级证据包推进；不新造 Skill/controller，不把设计卡直接变成实验
 - D038 已取代 D037“现有三包可直接组成最终 spine”的结论：其“Ch4/Ch5 共享真实 coded receiver 平台”原则继续有效；原 DP-16QAM 身份已被 D040 的 DP-(8,8)-16APSK 取代，现有 P11/P08-R2 结果只作原型证据；D038 的只讨论边界已由 D044 取代
 - D039 已进一步解除 P11/P08-R2 的默认章节身份：共同平台和前端/后端方法槽先行，P11 只作可替换 Ch4 种子，P08-R2 主要作为 coded-chain 基础设施；允许内部配置先行探索，但冻结后必须使用新样本确认
@@ -90,6 +97,22 @@ rdl_control:
 - ❌ 不做消融实验（跨块 KF / BPS 迁移等是 step4a 的债务，不在写作专题跑）
 
 ### 范围变更记录
+- **[2026-08-30] D074**：锁定学位论文一级章名，开放无图导师文字版的讨论与方案设计。
+  - 原因：用户确认章名并计划先以纯文字向导师核对整体结构，希望在插图和正式写作前先把主线讲清。
+  - 新范围：只讨论文字版的读者、篇幅、章节职责、方法身份、证据边界和请导师拍板的问题；获用户批准内容合同后才可起草。
+  - 影响的未决项：二级标题、文字版篇幅与详细内容尚未锁定；Ch5、实验、检索、图件和正式正文继续暂停。
+- **[2026-08-30] D072**：从“图表后自动写完整第四章”收窄为“只准备作者可自行组织的正式材料包”。
+  - 原因：用户明确表示正文不急且不会直接使用自动成稿，希望先把材料做全、做稳。
+  - 新范围：图表独立复核、formal fact/method/claim/citation cards、图注和作者素材索引。
+  - 影响的未决项：T093 暂停且未执行；总纲、Word正文与 Ch5 继续不动。
+- **[2026-08-30] D073**：接收经独立终审的 Ch4 作者材料包并进入停机等待。
+  - 原因：T096 对数字、方法、引用、图件与作者可用性终验，编辑级 P2 修复后为 `0/0/0`。
+  - 新范围：只允许用户以后按索引取材或显式讨论下一阶段，不自动执行。
+  - 影响的未决项：T093、总纲改写、Ch5 与新增实验继续暂停。
+- **[2026-08-30] D071**：从 canonical reduction repair 转入 Ch4 正式章节材料化。
+  - 原因：T091 canonical publication 与独立 raw-only 复算 P0/P1=0，grade A、chapter gate=true，完整 5–41 dB 曲线与门限增益证据已冻结。
+  - 新范围：生成 formal figures/tables、完整第四章 markdown 草稿与独立论文级审查；不再产生新科学数据。
+  - 影响的未决项：Ch5 继续暂停；总论文整合等待 Ch4 独立审查通过后另行裁决。
 - **[2026-08-30] D064**：T084 经 provenance P1 修复和 fresh review 通过；范围推进到 fixed A2 production-seam bridge。原因：kernel 的轴公平性、B3 信息预算与 truth firewall 已闭合，现在用最小 fresh batch 判断信号能否迁移且不被廉价标量校准吸收。
 - **[2026-08-30] D063**：T083 以 256/256 observation identity、1280/1280 mechanism identity 和独立 bootstrap 通过 A1；范围推进到 production core correctness，但继续禁止 A2 BER bridge、smoke/tuning/production。原因：先把新随机总体和廉价对照做成可验证 seam，再产生 fresh 科学数字。
 - **[2026-08-30] D062**：T082 demapper correctness 经 16,384-sample 独立 oracle 验收；范围推进到 A1 historical-observation replay，但继续禁止 A2/new RNG/smoke/production。原因：用唯一变量重放先判断旧 Ch4 BER 信号在正确判决下是否存在。
@@ -223,7 +246,9 @@ rdl_control:
 
 ## 当前位置
 
-**🟢 S028 / D065 / V040（2026-08-30）：当前 CP027=Ch5 Step 3 survivor 暂停 + Ch4 direction-scale family production freeze。** T085 artifact 经独立 raw-only 复算为 P0-P1-P2=`0-0-0`，科学终态保持 `CHEAP_COMPARATOR_NOT_CLEARED`，生成器字节绑定保持 PARTIAL。C4/B3 现是同一方法族的两种尺度准则；当前只允许 T086 的 disjoint tuned-B2 development、非论文 smoke 与 scientific manifest freeze，不得运行 formal production。
+**🟢 S028 / D074（2026-08-30）：当前 CP036=六章一级标题已锁；导师文字版已拆入独立专题。** Ch3 为基于接收功率感知的自适应载波相位恢复方法，Ch4 为基于结构约束的短导频双偏振解复用方法，Ch5 目标为接收端信号处理链的 FPGA 设计与实现。后续内容合同与有限样稿仅在 `2026-08-30-thesis-advisor-text-outline` 推进；本专题保持正文、Ch5 和实验停机。
+
+**已完成科学材料状态**：Ch3 录用锚保持；Ch4 作者材料包经 V048 终验为 P0/P1/P2=`0/0/0`；Ch3/Ch4 尚未联合验证，第五章仍是待实施目标而非已完成事实。
 
 **🟡 S027 / D041–D042（2026-08-30）：四段式证据合同已批准，13 张设计态后备图谱进入只读审查。** 当前暂定第一批为 Ch4 的时序正则 LS / scaled-unitary 约束 LS / APSK 环感知半盲均衡，以及 Ch5 的残差 LLR 校准 / APSK 几何软解调 / syndrome 引导失败码字救援。它们只是 `DESIGN_ONLY / TENTATIVE`，不得写成方法已成立。
 
@@ -231,7 +256,7 @@ rdl_control:
 
 **🟢 S024 / D035 / R026（2026-08-13）：三条跨技术对象方法深挖完成。** P11、P05、P08-R2 经最低合同复审均为 `PACKAGEABLE_NOW_WITH_LIMITS`；补实验只增强证据，不再作为方法准入门。P11 corrected confirmation 仍为 `NOT_RUN`，不是科学失败。
 
-**历史状态（已被 D044/D045/D060–D065 取代）**：D042 时曾暂停检索、Groundwork、仿真和任务派发；CP001/CP002 分别只授权过外部 authority 与全文获取。当前唯一有效控制是页首 CP027；Skill/controller 与正式论文正文仍不修改。
+**历史状态（已被 D044/D045/D060–D066 取代）**：D042 时曾暂停检索、Groundwork、仿真和任务派发；CP001/CP002 分别只授权过外部 authority 与全文获取。当前唯一有效控制是页首 CP028；Skill/controller 与正式论文正文仍不修改。
 
 ---
 
@@ -399,3 +424,6 @@ F001 完成 F1（R010 20 条力度基准逐条对照**全对齐** + 8 条已知�
 - **S028 / D063 / V038 / T083** corrected-demapper historical replay accepted（2026-08-30）。256/256 observation identities 与 1280/1280 mechanism rows 保持历史一致；四格 C4−B2 均为负，pooled Np2 95% CI 全负，独立 raw parser/bootstrap 精确复算。CP025 只开放 T084 production core TDD。
 - **S028 / D064 / V039 / T084** production core correctness accepted（2026-08-30）。balanced pilots、七路 SeedSequence、跨轴 pairing、B3_PSC、mismatch 与 truth firewall 闭合；初审 provenance P1 经 17-case repair，fresh final PASS。CP026 只开放 T085 fixed A2 bridge。
 - **S028 / D065 / V040 / T085** A2 强邻居门如实失败并完成方法身份重判（2026-08-30）。独立 raw-only 复算确认 artifact P0/P1/P2=0/0/0、C4 显著优于 B2但未显著清除 B3；生成器字节绑定保留 PARTIAL。按 D031/D032 的硕士级标准，C4/B3 收缩为同一方向—尺度解耦方法族的两种尺度准则，B3 不隐藏且只限制 claim ceiling。CP027 只开放 tuned-B2 development、非论文 smoke 与 scientific manifest freeze。
+- **S028 / D066 / V041 / T086** direction-scale family production freeze accepted（2026-08-30）。独立raw-only复算12个tau objective差0，ID20999/21999结构smoke通过，stale-test receipt经同raw修复；scientific manifest唯一冻结为SHA `417f3348...21079`。CP028只开放formal runner/reducer/execution-lock seam与ID29999 smoke，formal IDs仍关闭。
+- **S028 / D067–D072 / V042–V047 / T087–T095** Ch4 canonical evidence 与作者材料化（2026-08-30）。formal raw/aggregate/receipt 经独立全量复算后为 Grade A；五份正式 CSV、五组图和三张表再由 T094 从 immutable raw 全量核数，814 行逐字段最大差 `0.0`，P0/P1/P2=`0/0/3`。用户冻结完整正文，CP034 当前只执行 T095 作者可组织材料卡，完成并独立审查后停机。
+- **S028 / D073 / V048 / T095–T096** Ch4 作者材料包终验就绪（2026-08-30）。事实/算法/主张/章节地图、作者总索引、16个评阅问题卡、跨章接口卡和方法图全部闭合；独立终验及两项编辑修复后 P0/P1/P2=`0/0/0`。CP035 停机等待用户取材，正文/总纲/Ch5/实验不自动恢复。

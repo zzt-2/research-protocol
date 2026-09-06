@@ -2356,10 +2356,10 @@ T084 三文件、实现者 RED/GREEN/worker log、保留初审 INVALID 的独立
 
 ## D065: 接收 A2 廉价比较器未清除事实，将 Ch4 收缩为方向—尺度解耦方法族并开放一次生产冻结包
 
-> status: active
+> status: superseded
 > date: 2026-08-30
 > 取代：D064 的 CP026 当前控制；保留 T085 原始科学终态、B3 不得隐藏、Ch5 暂停、历史 artifacts immutable、正式数字不得来自 A2
-> 被取代：无
+> 被取代：D066
 > 依据: T085 / V040 / D031–D032 / D060–D064 / S028
 
 ### 决策
@@ -2391,3 +2391,301 @@ T085 已完成它应做的止损：证明 C4 的独特尺度准则不能承受�
 ### 来源
 
 T085 manifest/raw/aggregate/receipt 与 worker log；独立 raw-only 64-cluster复算；只读方法身份审查给出的 receiver-domain闭式目标与完整动作链；用户 D031/D032 的硕士级方法标准及 D060 的 Ch4 专业成章优先授权。
+
+## D066: 接收方向—尺度方法族生产冻结，只开放 formal execution seam TDD 与全网格单 latent smoke
+
+> status: superseded
+> date: 2026-08-30
+> 取代：D065 的 CP027 当前控制；保留 T085 强邻居失败、C4/B3 单一方法族身份、B3 不隐藏、T086 development 数字 non-thesis、formal manifest immutable、Ch5 暂停
+> 被取代：D067
+> 依据: T086 / V041 / D065 / S028
+
+### 决策
+
+1. 接收 T086 terminal=`CH4_FAMILY_PRODUCTION_FREEZE_READY`。canonical tuning raw 恰为 96 scene-latents、1152 observation cells、8064 arm rows；独立 raw-only reviewer 对 12 个 tau objective 的最大绝对差为 `0.0`，map 为 moderate/Np2=`0.5`、其余 11 格=`1.0`，且不满足 tuned-B2 12/12 dominance stop。
+2. 接收两道 non-thesis smoke：ID20999 tuning smoke=`TUNING_SMOKE_STRUCTURAL_PASS`；ID21999 formal-structure smoke=`STRUCTURE_SMOKE_PASS`，mismatch delta0 的 H 与三类 observation hashes 均与 moderate/Np2/25dB 主 cell exact identity，positive delta 共用 Q/R/g/bits/base noise。
+3. receipt 初版 test-hash stale 的 P1 已在 code/tests 冻结后用同一 immutable raw 重归约修复；raw SHA=`00161c4838a7543878fb191b667935608a242bbdc8ba2849dec4d324113fa315`、aggregate SHA=`9af3b3af134656863b6a39f8e2d927274d9a82fe0548c95e4dd49429da531378` 均未变，新 receipt SHA=`afa9189499501a59d65fc549546dd7b88985555c38918cc9cc6b85dba147e2fc`，actual tests/runner/reducers/core/params hashes 全匹配。
+4. scientific manifest 已唯一冻结，SHA=`417f334844f9092b02bab5d6478381ae7a57e2ff9b4a385ba37707f601521079`。它固定 IDs `30000..30127`、SNR `5:2:41 dB`、三档 scene、moderate Np2/4/8/16、weak/strong Np2、六档 mismatch、required-SNR/cell bootstrap、A/B/C/F grade 与四 artifact tuning lineage。
+5. 独立最终验收 fresh 27 tests、py_compile、task-control、manifest/lineage、不可变核心/T085 与 diff-check 全 PASS，final P0-P1-P2=`0-0-3`。P2 仅为 freeze CLI 未二次核 receipt 辅助 hashes、smoke guard 未自动枚举所有 sibling worktrees、aggregate/receipt 双发布恢复性；本次均由独立现场核对或 OS temp 执行闭合，不改变 scientific manifest。
+6. CP028 只开放 T087 formal execution seam：实现 formal runner/reducer/tests、全网格 one-latent ID29999 OS-temp smoke，并在代码/测试冻结后唯一生成 execution lock。T087 禁止运行 formal IDs `30000..30127`、生成 thesis结果或修改 scientific manifest。
+
+### 理由
+
+T086 已把最容易引入事后选择的 tuned baseline、SNR轴、失配连续性、crossing、bootstrap和grade全部冻结。下一项最高价值工作不是直接起跑 76,160 arm rows，而是用同一 frozen manifest 让 formal runner/reducer 在一个 latent 上贯通全部119个实际cells，并把科学设计与执行代码分成双锁。该 seam 通过后才能在不改口径的前提下唯一运行128 latents。
+
+### 排除的替代方案
+
+- 不在 T087 改 tau、SNR、Np、scene、mismatch、threshold、bootstrap、grade 或方法身份。
+- 不把 tuning/objective 或 smoke 数字写进论文，也不从它们挑 representative cell。
+- 不在 execution lock 生成后继续修改 runner/reducer/tests；如 smoke 暴露错误，作废临时 lock，修复后重新从 TDD 开始，tracked formal lock仍只生成一次。
+- 不在本 checkpoint 顺带运行 canonical formal production、作图或正文。
+
+### 停机与下一阶段
+
+- T087 full-grid one-latent smoke、formal reducer synthetic crossing、truth/hash/census 与 execution lock 独立 PASS：另开 CP029，只授权唯一 formal 128-latent production run。
+- 任一 formal cell census、delta0 identity、whole-curve pairing、O1 separation、crossing状态、grade键域或 execution binding失败：只修 seam，不运行 formal IDs。
+- scientific manifest 发生任何字节变化：T087 立即 `CH4_FORMAL_EXECUTION_SEAM_INVALID`，返回 D066 重新讨论，禁止自动重冻。
+
+### 来源
+
+T086 tuning四件套、scientific manifest、两次 OS-temp smoke、step-086 worker log、独立 raw-only tau复算与最终 freeze verification。
+
+## D067: T087 科学执行链保留、首个 tracked lock 作废，只开放终态自洽修复
+
+> status: superseded
+> date: 2026-08-30
+> 取代：D066 的 CP028 当前控制；保留 scientific manifest、T087 runner/reducer/entry、唯一 ID29999 smoke 与 formal IDs 禁令
+> 被取代：D068
+> 依据: T087 / V042 / S028
+
+### 决策
+
+1. 接收 T087 的实现与唯一 ID29999 OS-temp smoke：runner/reducer/entry 经过 15-case initial RED、四项静态 P1 与一次 freezer CLI P1 的逐项 RED→GREEN；smoke 仅运行一次且返回 `FORMAL_SMOKE_STRUCTURAL_PASS`，census=`1/3/119/595/ref1`，delta0 的 H 与三项 observation hashes exact identity，grade=`null`、scientific numbers未报告。
+2. 不接收首个 tracked execution lock 为有效终态。该文件 SHA=`3942883a128f0e38b85d3785be570dc139c3a70c4e21b8986f98a3873a45a492`；生成后 fresh focused tests 为 `17/19`，因为两项 pre-freeze 测试永久断言 canonical lock 不存在。其 manifest、runner、reducer、entry、tests、dependency、HEAD 与 environment bindings 本身未发现错误，但最终仓库不能自洽复验，故 V042=`FAIL`、formal production继续禁止。
+3. CP029 只开放 T088 终态自洽修复：先以 exact SHA 识别并删除该无效 canonical lock；把两项测试改为在 lock 缺失和存在两种状态下都验证“纯 builder/被拦截 CLI 不改 canonical lock 字节、不给 `.tmp` 残留”，取得真实 RED→GREEN；不得修改 runner/reducer/entry/scientific manifest/core。
+4. T088 不重跑 ID29999。独立审查已确认通过烟测的 runner/reducer/entry 三个 SHA 在 freezer/test-only 修复前后保持 exact；测试语义修复不改变 119-cell 生成或 raw-only reduction。重复相同 smoke 不增加科学证据，反而违反唯一 smoke 约束。
+5. 修复后 fresh focused suite、py_compile、task-control 与 actual hash 全 PASS，才可生成一个新的 canonical execution lock；新 lock 必须绑定新 tests SHA，并由独立 reviewer 在 lock 存在的最终状态重新运行同一 focused suite。只有 final P0/P1=0 才另开 formal production checkpoint。
+
+### 排除的替代方案
+
+- 不把 `17/19` 解释成“锁生成前测试已通过所以无所谓”，也不带着失败测试运行 formal IDs。
+- 不覆盖或重签旧 lock 而不留下其 SHA 与 FAIL 血缘；删除动作只针对 exact 已登记 SHA 的未提交无效 artifact。
+- 不改 scientific manifest、SNR/Np/scene/tau/bootstrap/grade，不重跑 smoke，不运行 formal IDs，不作图或写论文正文。
+
+### 停机与下一阶段
+
+- T088 final-state fresh tests、actual bindings 与独立 lock review 全 PASS：另开 CP030，只授权唯一 formal 128-latent production。
+- runner/reducer/entry 任一字节变化：T088 立即停止，必须回到 smoke 影响审查；不得沿当前豁免直接重签。
+- 新 lock 生成后任一 bound 文件变化或 focused suite非全绿：terminal=`CH4_FORMAL_EXECUTION_LOCK_REPAIR_INVALID`，formal IDs继续禁止。
+
+### 来源
+
+T087 worker log、ID29999 OS-temp raw/lock独立复核、tracked lock SHA现场核验、post-lock fresh `17/19` 与独立 final review。无新增科学路线、方法或实验范围。
+
+## D068: 接收 replacement execution lock，只开放一次 canonical formal raw production
+
+> status: superseded
+> date: 2026-08-30
+> 取代：D067 的 CP029 当前控制；保留scientific manifest、唯一ID29999 smoke、首个lock FAIL血缘与formal结果尚未产生事实
+> 被取代：D069
+> 依据: T088 / V043 / D067 / S028
+
+### 决策
+
+1. 接收 T088 terminal=`CH4_FORMAL_EXECUTION_LOCK_REPAIR_READY`。两项终态测试在invalid lock存在时真实由`17/19`修至`19/19`；同一focused suite在旧lock删除后的absent状态、新replacement lock生成后的present状态均为`19/19`，没有skip/xfail或删覆盖。
+2. 首个invalid lock仅在删除前SHA exact=`3942883a128f0e38b85d3785be570dc139c3a70c4e21b8986f98a3873a45a492`时删除。replacement lock唯一生成，SHA=`095dc989ffee8618484778cb8c0c4454b65b503e22f7db18fbea5cf083227987`，tests binding=`cfdba30dc8ef3f12be43667dc298e325f4cf15f0f6c94a031c599c4e613eb3c1`。
+3. 独立final验收 P0-P1-P2=`0-0-3`：replacement lock的manifest、runner、reducer、entry、tests、四项frozen dependencies、HEAD、Python/NumPy/platform与allowed populations全部actual match；lock-present fresh=`19/19`，无`.tmp`、checkpoint或formal artifacts。
+4. CP030只开放T089一次canonical formal raw production。执行前不得再改任何bound code/tests/manifest/lock；exact命令为`python projects/simulation/explore/ch4-scaled-unitary-pilot-ls/run_ch4_formal_production.py --formal`，不得加output、lock、ID、grid、arm或参数override。
+5. T089只生成raw，不在同一执行上下文运行canonical reducer、判grade、作图或解释科学结果。成功census预期为128 top-level latents、384 scene-latents、15232 actual cells、76160 arm rows、128 delta0 references；成功后checkpoint必须消失，raw保持immutable等待独立raw-only复核。
+
+### 排除的替代方案
+
+- 不因T088只是测试修复而跳过新checkpoint；formal运行是首个真正论文总体，单独授权和审查。
+- 不在看到partial checkpoint或stdout后改参数、停止不利区间或追加seed；同一logical attempt只允许按exact binding恢复未完成latents。
+- 不在raw独立复核前运行canonical reducer、选择representative curve、写结果段或作图。
+- 不运行第二份formal raw，不改replacement lock或任何bound文件。
+
+### 停机与下一阶段
+
+- runner exit=0、raw exact census/hash/provenance与独立raw-only结构复核全部PASS：另开CP031，只授权canonical reduction与独立统计复算。
+- code/lock/manifest/environment mismatch、duplicate/missing cell、truth/pairing/namespace/delta0失败：terminal=`CH4_FORMAL_RAW_INVALID`，禁止重跑或解释BER，返回D068讨论。
+- 外部中断但checkpoint binding/self-hash完整：只可在独立确认后恢复同一logical attempt；不得删除checkpoint从头重跑。
+
+### 来源
+
+T088 absent/present两态focused evidence、replacement lock、step-088 worker log与independent final verification。无新增方法、参数、场景或claim。
+
+## D069: 接收唯一 canonical formal raw，只开放一次归约与独立统计复算
+
+> status: superseded
+> date: 2026-08-30
+> 取代：D068 的 CP030 当前控制；保留raw immutable、双锁、唯一formal运行与grade尚未知事实
+> 被取代：D070
+> 依据: T089 / V044 / D068 / S028
+
+### 决策
+
+1. 接收 T089 terminal=`CH4_CANONICAL_FORMAL_RAW_READY`。唯一exact `--formal`进程exit=0、wall=`409.5s`、stdout=`CH4_FORMAL_PRODUCTION_COMPLETE`；raw SHA=`642c7ae9eb260526ae77c1c2c7c903590cb5cf19813c5f9b8b4d529b98a72c5b`，size=`89,419,500` bytes，checkpoint成功后消失。
+2. 独立reviewer未导入runner/reducer，对raw逐项核过2688 namespaces、2688 scene-latent hashes、106624 cell-latent关系、15232 H hashes、45696 observation hashes、76160 action hashes、2432 moderate cross-Np pairing groups与128 delta0 exact/no-row；census=`128/384/15232/76160/ref128`，P0-P1-P2=`0-0-3`。
+3. post-run manifest、replacement lock、runner/reducer/entry/tests/dependencies/HEAD/environment hashes保持exact；fresh focused=`19/19`、pycompile、task-control、diff-check PASS；aggregate/receipt及所有tmp均不存在。raw现冻结为immutable科学输入，不得重跑或编辑。
+4. CP031只开放T090 canonical reduction与独立统计复算。canonical entry只运行一次`python projects/simulation/explore/ch4-scaled-unitary-pilot-ls/reduce_ch4_formal_production.py`；不得修改raw、reducer、manifest、lock或任何bound文件。
+5. 独立reviewer必须不导入runner/reducer，从raw重新计算headline required-SNR/crossing、whole-curve bootstrap、moderate Np2/Np4 cell bootstrap、A/B/C/F grade与机制/场景/导频/失配summary，核对aggregate/receipt与artifact hashes。正式科学结论只在该复算P0/P1=0后接收。
+
+### 排除的替代方案
+
+- 不在归约前查看/挑选partial BER，不改门限、SNR网格、bootstrap seed/resamples、grade或比较对象。
+- 不用aggregate自证aggregate；独立复算以immutable raw counts为唯一科学输入。
+- 不把C4-vs-B3当入章门；grade只看两variant各自相对tuned-B2的预注册条件。
+- 不在T090作图、写正文、补实验或恢复Ch5。
+
+### 停机与下一阶段
+
+- canonical reducer exit=0、aggregate/receipt hashes与独立统计复算P0/P1=0：按冻结grade接收结果；A/B另开CP032图表与Ch4成章，C/F返回论文结构讨论。
+- reduction schema/hash/census/crossing/bootstrap/grade任一不一致：terminal=`CH4_FORMAL_REDUCTION_INVALID`，禁止重跑、作图或解释性能。
+- reducer外部中断留下tmp：停机独立审查，不删除tmp后重跑。
+
+### 来源
+
+T089 canonical raw、step-089 worker log与independent raw-only verification。尚未读取或接收任何正式BER/grade。
+
+## D070: T090 pre-publication import failure，不改bound code并开放一次显式环境归约
+
+> status: superseded
+> date: 2026-08-30
+> 取代：D069 的 CP031 当前控制；保留raw immutable、统计口径、双锁与尚无canonical artifact事实
+> 被取代：D071
+> 依据: T090 / V045 / D069 / S028
+
+### 决策
+
+1. 接收 T090 terminal=`FAILED_PRE_WRITE_IMPORT_PATH`。唯一direct reducer命令exit=1、wall=`4.1s`；`reduce_raw()`已在内存完成，失败发生在`_save_temp()`首次导入`projects.simulation.common.save_results`，故只可称pre-write/pre-publication，不能称pre-statistics。
+2. 失败后aggregate、receipt及二者`.tmp`全部不存在，没有可接收数字或artifact。raw仍为SHA=`642c7ae9...a72c5b`、size=`89,419,500`；manifest、lock与八项bound/dependency bytes共11项全部exact，未改代码、未重跑formal。
+3. 根因是direct-script进程`PYTHONPATH`为空：seam可解析top-level reducer module，却不能解析repo-root package `projects`。不修改bound entry/code，因为任何字节变化都会破坏replacement lock与raw execution binding。
+4. CP032只开放T091一次显式环境canonical publication attempt：在同一PowerShell进程把repo root、`projects/simulation`与seam按确定顺序加入`PYTHONPATH`，随后运行同一entry，不增加科学参数。无写入import probe已独立PASS且environment snapshot仍与lock exact。
+5. T091成功后仍需独立reviewer从immutable raw重算全部headline statistics/grade；T090内存计算不作为证据，不参与对比，也不得与T091结果做挑选。
+
+### 排除的替代方案
+
+- 不改`reduce_ch4_formal_production.py`、freezer或lock，不重跑formal raw。
+- 不把失败称为“完全没算过”，也不从stderr/内存恢复数字；canonical科学输入仍只有raw。
+- 不通过手工写JSON、导入entry后直接调内部函数或绕过provenance生成artifact。
+- 不在T091作图、写正文、补实验或改grade。
+
+### 停机与下一阶段
+
+- T091 corrected invocation exit=0、canonical artifacts与独立raw-only统计P0/P1=0：按frozen grade接收并进入后续裁决。
+- corrected invocation非0、留下tmp或hash/environment变化：terminal=`CH4_CANONICAL_REDUCTION_PUBLICATION_INVALID`，禁止再次尝试、作图或解释结果。
+
+### 来源
+
+T090 stderr/worker log、失败后artifact census与11项hash、独立无写入PYTHONPATH import probe。无科学结果被接收。
+
+## D071: 接收 Ch4 Grade A 正式证据，只开放图表与完整章节材料化
+
+> status: superseded
+> date: 2026-08-30
+> 取代：D070 的 CP032 当前控制；保留 immutable raw、双锁、唯一 formal 运行、T090 失败血缘与 Ch5 暂停
+> 被取代：D072
+> 依据: T091 / V046 / D070 / S028
+
+### 决策
+
+1. 接收 T091 terminal=`CH4_CANONICAL_FORMAL_STATISTICS_READY`。corrected publication 只执行一次，exit=0；aggregate SHA=`916c4ba5f75703a5a63bc40931e74d161ad3e61ac0b72baa918b77de95c55602`，receipt SHA=`0fac1304f9aa8a4a4463c14ed5a43059a04b5c1de031b69c1d7fa9f03376e697`。独立 reviewer 未导入 runner/reducer，直接从 immutable raw 重算 570 个 pooled BER、76 个 paired cells、4 个 whole-curve comparisons 与 grade；757 个结构/数值节点最大绝对差为 `0.0`，P0-P1-P2=`0-0-3`。
+2. 正式接收 grade=`A`、chapter gate=`true`。工程参考 BER=`3.8e-3`；moderate Np2 上 C4_FWD 相对 B2_TUNED required-SNR gain=`0.870474 dB`、95% CI=`[0.618162,1.088274] dB`，Np4 为 `0.120949 dB`、95% CI=`[0.018893,0.239227] dB`。两项 crossing 均 STABLE，5000/5000 bootstrap valid。
+3. Ch4 的论文身份冻结为“面向短导频相干星地链路的结构约束方向—尺度解耦偏振解复用方法”。C4_FWD 是无调参主变体；B3_PSC 是接收端可见的重构尺度变体/强消融；B2_TUNED 是强可部署基线；O1 只作 truth-only headroom。B3 与 C4 结果接近，因此不得声称 C4 优于 B3，也不得隐藏 B3。
+4. CP033 只开放 Ch4 formal 证据的论文材料化：从 canonical raw/aggregate 生成可追溯数据表、完整 BER–SNR 图、required-SNR/pilot 图、matched-cell 机理与边界图；随后据此写出可直接并入学位论文的完整第四章草稿并做独立内容审查。
+5. 正文使用面向导师/评阅人的外部语言，不出现 D/T/CP、Grade A、P0/P1、SHA、内部 arm code 或“门禁”等项目治理词。结果段遵循“现象—公平对比—解释—边界”，Np4 只能写成统计稳定的小幅优势；混合 scene/pilot/mismatch 均值不得承担因果主张。
+
+### 排除的替代方案
+
+- 不再运行任何 Ch4 仿真、reducer、bootstrap 或 formal 命令，不改 raw/aggregate/receipt/manifest/lock/bound code。
+- 不挑选局部 SNR 点替代完整曲线，不把内部 development/smoke 数字混入正式图表。
+- 不把 B3 包装成第二个独立贡献，也不把 O1 称为可部署基线。
+- 不在 CP033 恢复 Ch5、检索新方法、修改 Skill/controller 或改写 Ch3 已录用事实。
+
+### 停机与下一阶段
+
+- 图表数据必须能逐字段回溯 canonical raw/aggregate；任何曲线、门限或 CI 与 V046 不一致，立即停止章节结果写作，先修材料化脚本或标签，不重跑科学实验。
+- 图表与表格通过独立复核后才允许冻结结果段；完整章节再由不同 reviewer 检查方法身份、数学定义、图文一致性、claim ceiling 与跨章接口。
+- 若完整章节审查 P0/P1=0，则 Ch4 进入 `THESIS_CHAPTER_DRAFT_READY`；此后是否整合到总论文或恢复 Ch5 另行裁决。
+
+### 来源
+
+T091 canonical aggregate/receipt、immutable raw、step-091 worker log、`canonical-formal-statistics-independent-verification.md` 与 D060 的“五图三表、完整专业成章”北极星。
+
+## D072: Ch4 暂不写完整正文，只闭合可供作者组织的正式材料包
+
+> status: superseded
+> date: 2026-08-30
+> 取代：D071 的 CP033 当前控制；保留 Grade A 正式证据、方法身份、图表材料化、Ch5 暂停与所有 claim ceiling
+> 被取代：D073
+> 依据: 用户 2026-08-30 明确指令 / T092 当前产物 / D071 / S028
+
+### 决策
+
+1. 用户明确表示“正文完全不急着写”“肯定是用材料慢慢自己组织”。因此 T093 完整章节草稿保持 `PAUSED_NOT_EXECUTED`；不创建 `chapter-draft.md`，不把现有图表自动串成正文。
+2. CP034 的唯一目标是闭合作者可自行组织的 Ch4 正式材料包：可追溯 CSV、专业图件、正文候选表、方法推导卡、formal fact matrix、claim/citation ledger、图注、章节素材索引、跨章接口说明与独立材料审查。
+3. T092 已生成的 formal 图表/表格/脚本继续有效，但必须完成独立 raw/CSV/图表/语义复核后才能标记材料包 ready。旧 confirmation 资产保留历史，显式标为被 formal 证据取代，不删除。
+4. 材料应按作者使用场景组织，而不是写成连续论文段落：每项包含“可写事实、推荐表述、数字/图表入口、必须披露、禁止外推”。
+5. 继续保留两项已发现的专业边界：formal tuned baseline 在 moderate/Np2 为 `tau=0.5`；Ch4 解复用与 Ch3 selector 尚未端到端联调。材料包不得让作者误用旧全局 `tau=1` 口径或联合验证叙事。
+
+### 排除的替代方案
+
+- 不执行 T093，不写完整 4.1–4.7 正文，不更新整篇 thesis framework 或 Word 文稿。
+- 不为“材料更丰富”新增仿真、重归约、检索文献、扩场景或恢复 Ch5。
+- 不用内部治理报告替代作者可读材料；SHA/Grade/P0 等只留在 verification，不进入作者写作卡。
+
+### 停机与下一阶段
+
+- 独立材料审查发现数字、标签或图意 P1：只修派生脚本/图表/材料表述，不重跑科学实验。
+- 材料包 P0/P1=0 后进入 `CH4_AUTHOR_MATERIALS_READY` 并停机；是否写正文、改总纲或恢复 Ch5，等待用户另行指令。
+
+### 来源
+
+用户原话：“正文完全不急着写。我们先准备材料。你现在写完了我也不会用的，我肯定是用材料慢慢自己组织”。
+
+## D073: 接收 Ch4 作者材料包并停在可组织状态
+
+> status: superseded
+> date: 2026-08-30
+> 取代：D072 的 CP034 当前控制；保留完整正文暂停、Ch5暂停、科学冻结与全部 claim ceiling
+> 被取代：D074
+> 依据: T092 / T094–T096 / V047–V048 / S028
+
+### 决策
+
+1. 接收 Ch4 作者材料包：五份 formal CSV、五组正式结果图、方法流程图、三张正式表，以及事实、算法、主张/引用、4.1–4.7 材料地图、作者总索引、16 个评阅问题卡和跨章接口卡均已就位。
+2. T094 从 immutable raw 全量核对五份 CSV 共 814 行，逐字段最大差 `0.0`；T096 独立终审覆盖数字、方法身份、引用层级、图件、历史材料隔离、科学冻结和作者可用性。两项编辑级 P2 经最小修复后复核为 P0/P1/P2=`0/0/0`，terminal=`CH4_AUTHOR_MATERIAL_PACKAGE_PASS`。
+3. Ch4 状态更新为 `CH4_AUTHOR_MATERIALS_READY`。作者入口固定为 `README.md` 与 `author-material-index.md`；旧 14/18 dB confirmation 只作历史追溯，内部 verification 不作为论文语言。
+4. CP035 为等待用户取材/讨论状态，不自动继续 T093，不改论文总纲，不恢复 Ch5，不新增实验、检索或方法方向。
+
+### 停机与下一阶段
+
+- 当前工作到此停机。以后若用户要自己组织某一小节，可按作者索引只读取材；若要写正文、重做总纲或恢复 Ch5，必须先形成新的显式范围决定。
+- 任何后续写作不得改写冻结科学数字、把两种尺度准则拆成两个独立核心贡献，或声称 Ch3/Ch4 已联合验证。
+
+### 来源
+
+T095 作者材料实现回执、T096 独立终审及两项 P2 的最小修复复核。
+
+## D074: 锁定学位论文一级章名并转入无图导师文字版讨论
+
+> status: active
+> date: 2026-08-30
+> 取代：D073 的 CP035 停机等待；保留 Ch4 作者材料就绪、Ch5/实验暂停、完整正文不自动起草
+> 被取代：无
+> 依据: 用户原话: voice.md 2026-08-30 + 对照: 毕设/开题报告/kaiti-report.md + S026/S028
+
+### 决策
+
+1. 学位论文题目保持“星地激光通信信号处理关键技术研究”。一级章名暂定并作为后续讨论基线：
+   - 第一章 绪论；
+   - 第二章 星地激光通信系统与信道模型；
+   - 第三章 基于接收功率感知的自适应载波相位恢复方法；
+   - 第四章 基于结构约束的短导频双偏振解复用方法；
+   - 第五章 接收端信号处理链的FPGA设计与实现；
+   - 第六章 总结与展望。
+2. 两个方法章采用“基于X的Y方法”命名，不再沿用开题阶段宽口径的“……方法研究”；第五章明确 FPGA 身份，验证作为二级内容，不在章名中堆叠“关键技术实现与验证”。
+3. 下一阶段只讨论一份交导师预审的无图文字版：用于说明论文主线、各章职责、两个方法身份与第五章工程闭环。二级标题、篇幅、数字、公式和具体段落尚未锁定。
+4. 当前仍处于 paper-writing `PROPOSE`：用户批准无图文字版的内容合同前，不起草完整文字稿，不插图，不改论文正文，不恢复 Ch5、仿真、检索或新方法工作。
+
+### 理由
+
+- 章名延续开题报告的简洁名词短语风格，同时把已经形成的方法身份写清，避免继续使用任务式、占位式标题。
+- 无图文字版适合先让导师判断“题目—章节—贡献—工程实现”是否成立；图、公式和具体实验结果在结构获认可前加入，会提高修改成本并分散导师注意力。
+
+### 排除的替代方案
+
+- 不继续使用“大气湍流信道估计与接收性能分析”“湍流下相干接收端信号处理方法研究”等开题阶段宽口径章名：它们不能准确对应现有两种具体方法。
+- 不使用“接收端信号处理链关键技术实现与验证”：未点明 FPGA，且与论文总题目的“关键技术”重复。
+- 不在本阶段展开三级目录、插图或直接写完整章节正文：本轮目标是让导师先判断结构与方法身份。
+
+### 影响范围
+
+- 更新 `topic-index.md` 的当前控制、范围和当前位置；后续导师文字版必须以本章名基线为入口。
+- 不改变 Ch3 已录用证据、Ch4 正式材料包及其 claim ceiling；不把 Ch3/Ch4 写成已经端到端联合验证。
+- 第五章章名按“形成真实级联 FPGA 信号处理链”的目标命名；若后续只能完成两个独立模块而没有级联，必须重新讨论并降为“接收端关键算法的FPGA设计与实现”。
+
+### 来源
+
+S028 续接讨论；用户 2026-08-30 明确表示“那我们先定下来”，并提出先形成无图文字版交导师查看。

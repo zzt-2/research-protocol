@@ -958,3 +958,158 @@ PASS。production kernel 的随机总体、authority、廉价对照和结构边�
 ### 结论
 
 PARTIAL。A2 artifact 与科学复算有效，但“C4 显著清除 B3”科学门失败且生成器字节复现绑定仅 PARTIAL。D065 不把该失败涂成 PASS；它只依据既有硕士级标准把强邻居从自动否决门降为 claim-ceiling/ablation，并开放一次不含 formal production 的 tuning+smoke+manifest freeze。
+
+## V041: Ch4 方向—尺度方法族 production freeze 验收
+
+> date: 2026-08-30
+> status: PASS
+> 关联: D065–D066 / T086 / S028
+
+### 验证项
+
+- [x] canonical tuning census=`96/1152/8064`，IDs=`21000..21031` 与 T085/smoke/formal 全部零重叠；每 cell 恰有五个 B2 tau、C4 与固定 tau=1 B3，equal bits/pairing/truth firewall PASS。
+- [x] 独立 reviewer 未导入 runner/reducer，从 raw 以 pooled-count Jeffreys→三SNR等权mean-log10复算全部12个选择，objective最大绝对差=`0.0`；moderate/Np2=`0.5`，其余=`1.0`，独立 terminal=`CH4_FAMILY_PRODUCTION_FREEZE_READY`。
+- [x] tuned B2 不满足全12格同时支配 C4/B3；development objective只作 baseline freeze，不升级为论文数字或 formal 方法结论。
+- [x] ID20999与ID21999均只在所有Git worktree外的OS temp运行；后者核10 actual+1 delta0 reference、H/observation exact identity、positive-delta共享base noise与O1 truth separation。
+- [x] stale tests SHA P1 已在 code/tests冻结后重签 receipt；immutable raw/aggregate hashes保持 `00161c...fa315`/`9af3b3...31378`，新receipt=`afa918...e2fc`，11项actual hashes现场全匹配。
+- [x] scientific manifest SHA=`417f334844f9092b02bab5d6478381ae7a57e2ff9b4a385ba37707f601521079`；formal IDs、5:2:41网格、scene/Np/mismatch、两套bootstrap、crossing、A/B/C/F、tau lineage 与future execution interface均冻结，T087 hashes仍为null。
+- [x] 实现者与独立 verifier fresh focused tests=`27/27`，六文件py_compile、task-control、不可变core/common/scaled/T085、scope与diff-check PASS。
+
+### 结论
+
+PASS，final P0-P1-P2=`0-0-3`。三个P2只限制辅助hash复核、temp guard自动枚举与双文件发布恢复性，不改变 tuning raw、scientific manifest或T087入口。CP028只开放 formal execution seam TDD、ID29999全网格单latent smoke和tracked execution lock；formal IDs仍禁止运行。
+
+## V042: Ch4 formal execution seam 首个 tracked lock 终态验收
+
+> date: 2026-08-30
+> status: FAIL
+> 关联: D066–D067 / T087 / S028
+
+### 验证项
+
+- [x] T087 initial RED=`15 failed`；四项 runner/reducer P1 与 freezer direct-CLI P1 均以真实 RED→GREEN 修复，pre-lock focused suite最终=`19/19 PASS`，五文件py_compile与task-control PASS。
+- [x] 唯一 ID29999 OS-temp smoke exit=0、耗时约3.03s；独立 raw-only复核 census=`1/3/119/595/ref1`、scene cells=`19/81/19`、五臂/τ/truth/RNG namespace/cross-Np pairing/delta0 identity全部PASS；grade=`null`、未报告科学数字。
+- [x] 首个 tracked lock SHA=`3942883a128f0e38b85d3785be570dc139c3a70c4e21b8986f98a3873a45a492`，scientific manifest、runner/reducer/entry/tests、四项frozen dependency、HEAD、Python/NumPy/platform与formal ID域绑定均现场一致；无 formal raw/aggregate/receipt。
+- [ ] lock生成后的 fresh focused suite 仅 `17/19`：builder 与 direct-CLI 两项测试把“canonical lock不存在”写成永久断言，导致预冻结测试不能在合法终态复验。
+- [x] 独立 reviewer 未修改 code/tests/lock、未运行 formal ID，并在 post-lock failure 后立即 NO-GO。
+
+### 结论
+
+FAIL。T087 的科学设计、runner/reducer/entry 与唯一 smoke 证据继续有效，但 SHA=`3942883a...a45a492` 的首个 canonical lock 不能作为 formal authority。D067/CP029只开放测试终态语义与lock重冻修复；formal IDs `30000..30127`继续禁止。
+
+## V043: Ch4 replacement execution lock 终态自洽验收
+
+> date: 2026-08-30
+> status: PASS
+> 关联: D067–D068 / T088 / S028
+
+### 验证项
+
+- [x] invalid lock存在态先复现`17/19`；两项测试最小修复后独立与主线程fresh均=`19/19`，无skip/xfail、collected仍为19。
+- [x] 旧lock只在1674 bytes且SHA exact=`3942883a...a45a492`时删除；lock absent态focused=`19/19`，五文件pycompile、task-control与不可变SHA均PASS。
+- [x] freezer direct CLI只成功运行一次；replacement lock SHA=`095dc989ffee8618484778cb8c0c4454b65b503e22f7db18fbea5cf083227987`，tests SHA=`cfdba30dc8ef3f12be43667dc298e325f4cf15f0f6c94a031c599c4e613eb3c1`。
+- [x] lock present态实现者、主线程与独立reviewer fresh均=`19/19`；runner/reducer/entry、manifest、四项dependency、HEAD、environment与populations actual match。
+- [x] 两项修复分别验证pure builder与受控direct-CLI不会改变canonical lock bytes、不会留下`.tmp`；独立reviewer另复放受控缺锁分支2/2 PASS。
+- [x] 无`.tmp`、checkpoint、formal raw/aggregate/receipt；未重跑ID29999或任何formal ID。
+
+### 结论
+
+PASS，terminal=`CH4_FORMAL_EXECUTION_LOCK_REPAIR_READY`，final P0-P1-P2=`0-0-3`。CP030只开放一次canonical formal raw production；formal reduction、grade、作图与正文仍未授权。
+
+## V044: Ch4 canonical formal raw 独立结构验收
+
+> date: 2026-08-30
+> status: PASS
+> 关联: D068–D069 / T089 / S028
+
+### 验证项
+
+- [x] pre-run independent gate P0/P1=`0/0`：fresh focused=`19/19`、pycompile5、双锁/HEAD/environment/bound hashes、truth firewall、empty artifact门全部PASS。
+- [x] exact `--formal`仅运行一次，exit=0、wall=`409.5s`、stdout=`CH4_FORMAL_PRODUCTION_COMPLETE`；raw SHA=`642c7ae9eb260526ae77c1c2c7c903590cb5cf19813c5f9b8b4d529b98a72c5b`、size=`89,419,500` bytes。
+- [x] 独立标准库扫描确认IDs=`30000..30127`、census=`128/384/15232/76160/ref128`，roles/runtime/tau/bits/truth marker exact。
+- [x] 2688 namespace、2688 scene-latent hashes、106624 cell-latent关系、15232 H、45696 observation、76160 action hashes、2432 cross-Np groups与128 delta0 exact/no-row全部PASS。
+- [x] post-run raw/manifest/lock/bound files SHA前后exact；fresh focused=`19/19`、pycompile5、task-control/diff-check PASS；checkpoint/aggregate/receipt/tmp absent。
+- [x] 实现者与reviewer均未运行reducer、未汇总BER/grade、未运行第二次formal。
+
+### 结论
+
+PASS，terminal=`CH4_CANONICAL_FORMAL_RAW_READY`，final P0-P1-P2=`0-0-3`。CP031只开放一次canonical reduction与独立raw-only统计复算；图表、正文和Ch5仍关闭。
+
+## V045: Ch4 首次 canonical reducer 入口验收
+
+> date: 2026-08-30
+> status: FAIL
+> 关联: D069–D070 / T090 / S028
+
+### 验证项
+
+- [x] pre-run P0/P1=`0/0`，fresh focused=`19/19`、pycompile5、raw/双锁/bound hashes与empty artifact门全部PASS。
+- [x] direct reducer只运行一次，exit=1、wall=`4.1s`；失败栈位于`_save_temp()`首次import `projects.simulation.common.save_results`。
+- [x] `reduce_raw()`在失败前已于内存完成，故不将其错误标为pre-statistics；没有stdout terminal或canonical artifact。
+- [x] aggregate、receipt及二者tmp均absent；raw/manifest/lock与八项bound/dependency共11项hash保持exact。
+- [x] 独立无写入probe确认显式`PYTHONPATH=repo;simulation;seam`可import common/core/entry，environment与lock exact，且不改变11项bytes或artifact census。
+- [x] 未修改bound code、未重跑reducer/formal、未读取或接收内存统计。
+
+### 结论
+
+FAIL，terminal=`FAILED_PRE_WRITE_IMPORT_PATH`。失败不否定raw或统计合同，但T090未产生canonical artifacts。D070/CP032只开放一次显式PYTHONPATH publication attempt；图表、正文与再次formal仍禁止。
+
+## V046: Ch4 canonical formal statistics 与章节准入验收
+
+> date: 2026-08-30
+> status: PASS
+> 关联: D070–D071 / T091 / S028
+
+### 验证项
+
+- [x] corrected publication 只执行一次，exit=0、wall=`5.0s`、terminal=`CH4_FORMAL_REDUCTION_ACCEPTED`；aggregate/receipt terminal 与 grade 均合法。
+- [x] raw/manifest/execution-lock/aggregate/receipt 五项现场 SHA exact，receipt 内四项 artifact binding exact；无 `.tmp` 残留。
+- [x] 独立 reviewer 不导入 runner/reducer，从 raw 重算 570 pooled groups、76 paired-cell comparisons、4 whole-curve comparisons、grade 与 descriptive summaries。
+- [x] 与 aggregate/receipt 的 757 个结构/数值节点全部一致，最大绝对数值差=`0.0`；census=`128/384/15232/76160/ref128`。
+- [x] C4_FWD 相对 B2_TUNED 的 moderate Np2/Np4 required-SNR gains 分别为 `0.870474 dB` 与 `0.120949 dB`，95% CI lower 均 `>0`；四项 crossing 均 STABLE，whole-curve bootstrap 均 `5000/5000` valid。
+- [x] grade=`A`、chapter gate=`true`；fresh focused tests=`19/19`、pycompile、task-control、13 项 bound hashes 与无 tmp 检查全部 PASS。
+- [x] 三项 P2 已转为写作 claim ceiling：Np4 小幅、B3 强邻居近等效、混合 summary 不作因果承重。
+
+### 结论
+
+PASS，terminal=`CH4_CANONICAL_FORMAL_STATISTICS_READY`，P0-P1-P2=`0-0-3`。D071/CP033 允许只读提取 canonical 证据并生成正式图表、表格和完整第四章草稿；禁止新增实验、改科学 artifacts 或恢复 Ch5。
+
+## V047: Ch4 formal 图表材料独立验收
+
+> date: 2026-08-30
+> status: PASS
+> 关联: D072 / T092–T094 / S028
+
+### 验证项
+
+- [x] 独立 reviewer 未导入提取/绘图/runner/reducer，直接遍历 immutable raw 的 `128/15232/76160` 层级并核对 128 个 delta0 exact references。
+- [x] 五份 CSV 行数为 `570/4/20/190/30`，共 814 行；key coverage 全，逐字段最大绝对差均 `0.0`，first mismatch 均无。
+- [x] B2 formal tau map exact；B3 的 15,232 个逐观测尺度均非固定 1，channel-NMSE semantics 全部为 `pre_calibration_inherited`。
+- [x] 提取/绘图 check-only、pycompile、临时目录两次确定性绘图、SVG XML/文本与 PNG 尺寸/非空检查均 PASS；十份图 hash 两次稳定且与 worktree exact。
+- [x] raw/aggregate/receipt/manifest/execution-lock 五项 SHA 与 V046 exact；无 simulation tmp/partial/checkpoint。
+- [x] 五图、README 与三表的 O1、Np4 小幅、B3、mismatch、Ch3 接口和 B2 参数语义均 PASS。
+- [x] 三项 P2 仅为视觉余量、标题限定和两个 `__pycache__` 清理，不改变数字、方法身份或 claim ceiling，已交 T095 收口。
+
+### 结论
+
+PASS，terminal=`CH4_FORMAL_MATERIALS_AUDIT_PASS`，P0-P1-P2=`0-0-3`。允许 T095 更新作者可组织材料卡；继续禁止完整章节正文、总纲改写、新仿真、重归约与 Ch5。
+
+## V048: Ch4 作者可组织材料包终验
+
+> date: 2026-08-30
+> status: PASS
+> 关联: D072–D073 / T095–T096 / S028
+
+### 验证项
+
+- [x] README 与作者总索引形成双入口；4.1–4.7 每节均有问题、事实、公式、图表、披露和禁止外推项，材料保持卡片/表格/公式/清单形态而非连续正文。
+- [x] formal CSV check-only、绘图 check-only、三个生成脚本 pycompile、两个临时目录重复生成、SVG XML、PNG 非空与三张关键图人工视觉检查均 PASS；12 个图文件 byte-stable。
+- [x] 四项 headline gain/CI、5–41 dB 网格、工程参考 BER、128 配对簇、导频敏感性、机理与失配反转边界均与 V046/V047 exact。
+- [x] 方法角色、B2 tau map、B3 逐观测尺度、O1 truth-only、Np4 小幅、Ch3模块接口/未联合验证和引用层级全部正确。
+- [x] 旧 14/18 dB 资产明确标为 historical；作者入口无 Grade/gate/SHA/P0/P1/D/T/CP 或内部 arm code；五项科学 artifact hashes 与 V046 exact。
+- [x] T096 两项 P2 已最小修复：主方法短名统一为“前向误差尺度”，Q12 指针改为 M07/E08；独立定向复核无新问题。
+- [x] 两个指定 scientific `__pycache__` 已精确删除；无 simulation tmp/checkpoint；未运行仿真、reducer、bootstrap 或文献检索。
+
+### 结论
+
+PASS，terminal=`CH4_AUTHOR_MATERIAL_PACKAGE_PASS`，final P0-P1-P2=`0-0-0`。Ch4 可标记 `CH4_AUTHOR_MATERIALS_READY`；按 D073 停机并等待用户以后取材或另行改变范围。

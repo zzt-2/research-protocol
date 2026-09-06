@@ -49,6 +49,7 @@ C4/B3 是一个方法族的两个 scale criteria，不作彼此 Kill gate；正�
 - 每个 scene×Np 必须独立冻结一个 tau，不设 global fallback、不按 SNR 调参、不用 A2/smoke/formal 数字调参；
 - `TUNED_BASELINE_DOMINATES_DEVELOPMENT` 的唯一定义：对全部 12 个 scene×Np，所选 B2 tau 的三 SNR 等权 mean-log10-Jeffreys objective 都同时 `<=` C4 与 B3 的同口径 objective，且至少一个比较严格 `<`；除此以外不得使用“系统性支配”终态；
 - tuning receipt 必须 raw-only 复算 objective、ID census、零重叠、hash/truth firewall；development 数字明确 non-thesis。
+- canonical tuning 支持唯一任务专属 checkpoint/resume：checkpoint 必须绑定 tuning manifest、runner、frozen core/common/scaled、params authority 与 base commit；已完成 latent 需确定性重建/校验后才可复用，重复不得复制。崩溃后只允许继续同一 frozen run，不得生成第二套 IDs/manifest；成功原子写 raw 后清理 checkpoint。任何 binding/record mismatch 均为 `CH4_FAMILY_FREEZE_INVALID`。
 
 ## 最小结构 smoke 与顺序
 
@@ -71,13 +72,16 @@ C4/B3 是一个方法族的两个 scale criteria，不作彼此 Kill gate；正�
 - required-SNR gain 符号固定为 `SNR_required(B2_TUNED) - SNR_required(variant)`，正值表示 family variant 更好；
 - crossing 由 raw total counts 的 Jeffreys BER 做 log-BER 线性插值。若最低 SNR 已 `<=threshold`，标 `BELOW_RANGE`；最高仍 `>threshold`，标 `UNREACHED`；恰好命中取最低命中 grid SNR；正常 crossing 取首个由 `>threshold` 到 `<=threshold` 的相邻区间。首个 crossing 后若再次上穿，或存在多个 downward crossings，标 `CROSSING_UNSTABLE`。这些状态都不得用 AUC/representative BER 事后替代；
 - required-SNR uncertainty 使用整条曲线 joint-latent PCG64 bootstrap（scientific manifest 固定 seed=`2026083007`、5000 resamples、每 named comparison reset）；每次重采样同一 latent cluster必须携带该 slice 全 SNR rows。只在 baseline 与 variant 均为单一 stable crossing 的 replicate 上形成 gain；有效 replicates `>=4500/5000` 才计算 95% CI，否则 comparison=`CROSSING_UNSTABLE` 且不得进入 A/B grade；
+- cell-level paired BER difference 固定为每个 latent 的 `BER_variant-BER_B2_TUNED`（每 window payload bits必须相等），PCG64 seed=`2026083008`、5000 resamples、每个 named `(scene,Np,SNR,variant)` comparison重置，以该 `(scene,Np)` slice 的128个 latent IDs为 paired clusters；其 CI 仅用于 grade C。不得用 total-count binomial CI 或跨cell独立样本替代；
+- whole-curve与cell bootstrap的 pairing只在同一 `(scene,Np)` slice 内成立。不同 scene 由不同 scenario-code substreams生成，禁止跨 scene paired/pooled CI；scene summary逐 scene 报告，不合并伪造一个总增益；
 - grade gate 必须穷尽且只读 formal raw：A=至少一个预先命名 variant 在 moderate Np2 与 Np4 的 required-SNR gain 95% CI lower都 `>0`；B=无A，但至少一个预先命名 variant 在其中一个 Np 的 lower `>0`，且同一 variant 在另一个 Np 为 stable crossing、point gain `>=0`、CI包含0；C=无A/B，但至少一个 variant 在任一 moderate Np2/4 grid cell 相对 tuned B2 的 paired BER-difference 95% CI upper `<0`；F=artifact valid但不满足A/B/C。Artifact/provenance/schema无效单列 `CH4_FORMAL_INVALID`，不得混入科学F。A/B 才进入章节定稿，C/F 返回论文结构讨论；机制图或边界图不得改变grade。
 
 ## Scientific manifest 与 execution lock 双锁
 
 1. 本任务只冻结 scientific manifest：cells、IDs、params、methods、metrics、statistics、grade/stop rules 与 frozen core/common/scaled hashes。
-2. 后续 formal runner/reducer/tests 在独立 T087 先 TDD 完成；首个 formal cell 前生成 execution lock，绑定 scientific manifest、runner、reducer、tests、base commit 与环境快照。
-3. 两层任一不匹配 fail closed；不得把尚不存在的 T087 code hash伪写进 T086 scientific manifest。
+2. scientific manifest 必须写入 accepted tuning lineage：`b2_tuning_manifest/raw/aggregate/receipt` 四个 SHA256、receipt terminal=`CH4_B2_TUNING_ACCEPTED` 与完整 12-entry selected-tau map；formal B2_TUNED 只能读取这张 map，不能重算或覆盖。manifest 同时绑定 `projects/simulation/params.py` SHA 与 weak/moderate/strong resolved `(alpha,beta)` snapshot；后续执行必须同时核 current hash 与 runtime-resolved values。
+3. 后续 formal runner/reducer/tests 在独立 T087 先 TDD 完成；首个 formal cell 前生成 execution lock，首先绑定 scientific-manifest SHA，再绑定 runner、reducer、tests、base commit 与环境快照。
+4. 两层任一不匹配 fail closed；不得把尚不存在的 T087 code hash伪写进 T086 scientific manifest。
 
 ## 允许修改
 
