@@ -1410,3 +1410,23 @@ CP016 生成的 1.1 虽通过确定性、语言和证据 agent 审查，但用�
 ### 来源
 
 - S016 / V033 / PROMPT-022 / CONVERSION-SPEC.md
+
+## D045: 前置件填充批执行裁量（摘要/封面/成果清单）
+
+> status: active
+> date: 2026-09-07
+> 取代：无（部分推翻 main.tex 中 PROMPT-009 的 defernumbers 注释结论，见决策 3）
+> 被取代：无
+> 依据：用户指令（voice 2026-09-07 续6/续7）+ 夏兆宇论文摘要原文（papers/downloads/2026-05-14/北理工-夏兆宇-专硕学位论文.md:143-175）+ BIThesis 官方手册（成果清单 printbibliography 用法，web 核验）+ 编译实测
+> 触发原话：voice.md 2026-09-07（续6/续7）
+
+### 决策
+
+1. **摘要按夏兆宇摘要句式骨架重写**（中英同构）：背景四句式→"为此，本文围绕三环节…主要工作和创新性成果包括："→（1）（2）（3）固定句式，无收尾段；FPGA 项计划态以"奠定基础"收，不设实验结果句；数字沿用第六章冻结口径并带对照对象与边界。第一版未查夏文的自组织版本作废（违反动笔前必查纪律，用户纠偏）。
+2. **封面字段带出**：题目候选=开题登记题；作者/学院/导师英文名取自 CCISP 论文署名（Zhetong Zhang / School of Information and Electronics / Hao Wu）；导师中文名不臆写（Hao Wu 对应中文写法待用户确认）。
+3. **成果清单独立编号机制**：defernumbers=true 解禁 + \printbibliography[heading=none,category=mypub,resetnumbers=true]。v1"编号全 0"教训修订：该问题是 resetnumbers 挂在主列表打印时的组合效应；本次主列表（notcategory=mypub）不带 resetnumbers，实测主文献 1..135 与正文引用编号完好。**前提**：后续若改 2_reference.tex 加 resetnumbers 会复现全 0，禁止。
+4. 摘要/题目/关键词/成果题录均为**草案**，待用户审改；未填字段清单见 S016 续节。
+
+### 来源
+
+- S016（续）/ 夏兆宇论文摘要 / BIThesis 官方手册 / main.log 实测
