@@ -1326,3 +1326,30 @@ CP016 生成的 1.1 虽通过确定性、语言和证据 agent 审查，但用�
 ### 来源
 
 - S014 / 扩容日志-F2.md / PROMPT-019 / V027
+
+## D042: C 落位批执行——96 处引用落位、103 白名单新增与结构性缺口登记
+
+> status: active
+> date: 2026-09-07
+> 取代：无（落实 D037 C 批 / bib-phaseC 落位报告 §1—§6 的执行决策）
+> 被取代：无
+> 依据：C 批任务书（用户 2026-09-07 原话）+ bib-logs/L005 + ledger Phase C 节 + V028 全 PASS
+> 触发原话：voice.md 2026-09-07（续3）
+
+### 决策
+
+1. **落位结果**：96 处插入（Ch1 56 / Ch2 14 / Ch3 9 / Ch4 17），46 处 [@TODO-主题] 清零；全稿引用 34→137 唯一键（Ch1 122 / Ch2 24 / Ch3 20 / Ch4 20 / Ch5 0 / Ch6 0）；方法章 20–30 目标全达标，Ch5 计划态红线保持（0 引用）。
+2. **纪律优先于数量**：核实:未 候选全禁用（含主题高度贴合的 oezbilgin2025），可用池 129 → 理论上限 163 < 170–180；实际落位 137，缺口 33–43 为结构性，登记待拍板（可选项：二次核实批 / 接受 / 增写 1.1 解锁 d1×16）。**不注水凑数**（同 D040 拒开 F1c 先例）。
+3. **近似对号 5 处显式登记**（谱系最近邻非精确出处，待拍板）：johst2024（dd-pilot）、torbatian2022（mimo-cpr-order）、d4-xie2010pdl（矩阵扰动分析）、d4-yi2014stokespdl（谱正则化）、d4-kaneda2009（cma 奇异点并挂）。
+4. **1.1 冻结区例外**：本批在 1.1 插入 10 处引用标记（零文字改动，剥离 [@…] 后逐字相同），突破历批"1.1 diff 空"惯例；依据 = C 批授权为全稿引用落位且 1.1 原有 14 键本就在引用体系内；.bak-C 可一键回退，登记待拍板。
+5. **DOI 同文双键发现**：d1-esa-ogs-ao≡d3-berkefeld2010、d1-lcrd-initial-operations≡israel2024lcrd-char，各只引其一、另一键留库；建议文献批后续注释（petkovic 先例）。
+6. petkovic2022 按用户指令原样保留；d2-jignesh2016ukf 作者字段缺损与 d5-dong2026jlt 卷期复核登记为 L003 式 TODO 交文献批，本批 references.bib 零改动。
+
+### 影响范围
+
+- worktree 四章 md + .bak-C×4 + .verify-c/（不跟踪）+ 扩容日志-C.md + S015/V028/D042/voice/topic-index；主仓 ledger.md + bib-logs/L005-phaseC-placement.md。
+- F3 图批解锁（串行约束解除）；P4' 组装重转时 references.bib→main.bib 同步 137 键。
+
+### 来源
+
+- S015 / bib-phaseC-落位任务报告.md / bib-logs/L005 / V028
