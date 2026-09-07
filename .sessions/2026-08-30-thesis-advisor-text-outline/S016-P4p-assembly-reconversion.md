@@ -58,3 +58,10 @@
 ## 决策引用（续）
 
 - D045：新建（前置件填充批执行裁量：摘要夏式草案/封面带出/成果清单编号机制/defernumbers 解禁）
+
+> 2026-09-07 续接2 | 前置件填充批第二轮（用户提供题目/导师/学号/学位领域 + 导师简报）
+
+- 封面按用户口径落定：题目=星地湍流信道激光通信处理技术研究（取代开题题候选；titleEn 草案 Research on Laser Communication Processing Technology for Satellite--Ground Turbulent Channels 待确认）、导师=林玉洁/Yujie Lin（注：CCISP 论文署名 Hao Wu 为论文作者列表，封面导师栏按用户口径填林玉洁，两处并存不冲突）、学号 3220241091、学位领域=通信工程（含宽带网络、移动通信等）/Communication Engineering（EN 草案）。
+- **main.pdf 被阅读器锁定**（dvipdfmx fwrite Invalid argument，MiKTeX log 实证 15:45）→ 按 PROMPT-022 预案走 -jobname=main_v3 出 main_v3.pdf（132 页零 error 零 undefined，封面四项新信息渲染验证通过）。用户关闭阅读器后下次编译即恢复 main.pdf。
+- 导师简报草案落 毕设/论文/导师讨论稿/导师简报-初稿请示.md（用户三关注点：大章结构可行性+题目取舍+图表状态说明；图=占位/表=版式未打磨/FPGA=方案态均如实标注；全稿实测 60,146 汉字）。
+- 仍待用户提供：分类号/UDC（建议咨询教务或图书馆，不代填）、申请类别 degree（专硕如"电子信息"）、行业导师有无、答辩主席（可后填）、CCISP 会议全称、致谢、摘要与关键词审改。
