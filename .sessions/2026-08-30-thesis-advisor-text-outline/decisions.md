@@ -1378,3 +1378,35 @@ CP016 生成的 1.1 虽通过确定性、语言和证据 agent 审查，但用�
 ### 来源
 
 - S015（C 修正批续接节）/ V029 / V031 / ledger Phase C 修正批节
+
+## D044: P4' 组装重转批执行裁量（PROMPT-022，扩容+加密后六章→BIThesis 全量重转）
+
+> status: active
+> date: 2026-09-07
+> 取代：无（沿用并扩充 D027 组装裁量先例；D027 全部条款继续有效）
+> 被取代：无
+> 依据：PROMPT-022 + CONVERSION-SPEC.md（v1 规范）+ verify.py 80 项全 PASS（V033）+ main.log 23 处 Overfull 实测
+> 触发原话：voice.md 2026-09-07（续5）
+
+### 决策
+
+1. **确定性脚本转换而非逐字手抄**：convert.py 按 CONVERSION-SPEC 机械化转换，verify.py 独立解析 tex/md 双侧做"剥离逐字同"机器证明（六章 451 段+两算法+全部表体题注）。heredoc 反斜杠折叠坑（D041-4）执行中复现一次，即改脚本文件收口。
+2. **公式结构裁量四项**：(a) a/b 组行切分只认"紧跟 \tag 的 \\\\"，bmatrix 内换行不切；(b) 同一 aligned 两组 a/b（2-6+2-7）拆两个相邻 subequations；(c) 跨段 a/b 组（5-4）合并 subequations+\intertext 保衔接句与编号，无 & 行用 gather；(d) 长式 aligned 原样照搬防溢出，仍溢出的记台账。
+3. **形态调整裁量**：≥4 列表自动 \small；ch3 软换行段（无空行相连的两整句）按 v1 先例拆两段；Ch1 点号→连字符全章正则替换（含 F2 新表 1.1—1.6）。
+4. **main.bib 重抽 135 键**：与 references.bib 条目本体逐字相同；DOI 双键只收被引键；biber 4 条 name-comma WARN（主库原有）不修；misc/0_symbols.tex 保持 20 项不动。
+5. **Overfull 23 处记台账不修**（Ch1×4/Ch2×4/Ch3×5/Ch4×5/Ch5×4/Ch6×1；19 宽表 + 4 长行内数学；最大 Ch6 表 6-1 溢 422pt）——修复触碰排版/文字，留用户配合改版式时定。
+6. **待拍板项**：①符号表更新独立小批（F1 新符号入 0_symbols）；②Ch6 conclusion 排法（沿用 D027 编号章先例）；③宽表溢出的版式治理优先级（\small 已用仍溢的 19 处，可选项 tabularx/改竖排/用户定）；④intertext/gather 两处新体例是否合导师口味；⑤main.pdf 本轮未被锁，无需 main_v3。
+
+### 排除的替代方案
+
+- 逐处补丁增量更新 v1 tex：md 增量 ~2.4 万字/71 公式实例/14 表/101 键，补丁比重转贵且易漏，否决（PROMPT-022 已裁定）。
+- 修 Overfull（压缩表格列宽/断长式）：触碰照搬纪律与版式决策权，否决（D027-5 先例）。
+
+### 影响范围
+
+- 主仓 `毕设/正文/latex/`：chapters/chapter1—6.tex 重写、reference/main.bib 重抽、main.pdf 重编译（129 页）；.verify-p4p/ 不入库（gitignore）。
+- 下一轮 F3 图批后需再来一次重转回填正式图（届时 convert.py 可复用）。
+
+### 来源
+
+- S016 / V033 / PROMPT-022 / CONVERSION-SPEC.md
