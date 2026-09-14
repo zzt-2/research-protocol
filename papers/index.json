@@ -761,6 +761,70 @@
         "t079-c5-5-p0-exact"
       ],
       "title_check": "match"
+    },
+    "doi:10.1186/s13638-023-02285-w": {
+      "path": "papers\\doi\\10.1186_s13638-023-02285-w",
+      "doi": "10.1186/s13638-023-02285-w",
+      "title": "",
+      "status": "success",
+      "batches": [],
+      "title_check": "unverifiable"
+    },
+    "doi:10.1109/access.2021.3116081": {
+      "path": "papers\\doi\\10.1109_access.2021.3116081",
+      "doi": "10.1109/ACCESS.2021.3116081",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1109/lwc.2022.3192518": {
+      "path": "papers\\doi\\10.1109_lwc.2022.3192518",
+      "doi": "10.1109/LWC.2022.3192518",
+      "title": "",
+      "status": "failed",
+      "batches": [],
+      "title_check": null
+    },
+    "doi:10.1109/iccc62609.2024.10942076": {
+      "path": "papers\\doi\\10.1109_iccc62609.2024.10942076",
+      "doi": "10.1109/ICCC62609.2024.10942076",
+      "title": "Soft-Aided Error-and-Erasure Decoding of BCH-SPC Product Codes with Bit Marking",
+      "status": "failed",
+      "batches": [
+        "t004-gw2-priority-batch"
+      ],
+      "title_check": null
+    },
+    "doi:10.1109/jphot.2023.3328423": {
+      "path": "papers\\doi\\10.1109_jphot.2023.3328423",
+      "doi": "10.1109/JPHOT.2023.3328423",
+      "title": "Flexible Phase Synchronization for Wireless Optical Coherent Communication Systems Based on Adaptive Fractionally-Spaced Blind Equalization Combined With Adaptive Kalman Filter",
+      "status": "failed",
+      "batches": [
+        "t004-gw2-priority-batch"
+      ],
+      "title_check": null
+    },
+    "doi:10.1109/lcomm.2022.3224910": {
+      "path": "papers\\doi\\10.1109_lcomm.2022.3224910",
+      "doi": "10.1109/LCOMM.2022.3224910",
+      "title": "Block-Based Kalman Channel Tracking for LEO Satellite Communication With Robust Initial Value Selection",
+      "status": "failed",
+      "batches": [
+        "t004-gw2-priority-batch"
+      ],
+      "title_check": null
+    },
+    "doi:10.1109/icct59356.2023.10419669": {
+      "path": "papers\\doi\\10.1109_icct59356.2023.10419669",
+      "doi": "10.1109/ICCT59356.2023.10419669",
+      "title": "Decoding-Aided Channel Tracking in Time-Varying MIMO Systems: Short or Long Codes",
+      "status": "failed",
+      "batches": [
+        "t004-gw2-priority-batch"
+      ],
+      "title_check": null
     }
   }
 }
