@@ -756,7 +756,7 @@ topics:
     title: 学位论文导师文字版结构与方法强度请示
     status: active
     created: "2026-08-30"
-    last_updated: "2026-09-07"（P4' 组装重转批完成：六章全量重转 BIThesis 零 error 129 页、main.bib 重抽 135 键零缺键、对账 80/80 PASS 含剥离逐字同证明、Overfull 23 处台账，S016/D044/V033；停机等用户翻阅 PDF 挑版式；队列 F3 图批）"
+    last_updated: "2026-09-14"（导师反馈接收 S017/D046：骨架 1+2+1 认可、Ch4 偏了要信号处理化重定向；双线编排 PROMPT-023 方法批 + PROMPT-024 文字盘点批，等用户放批注 PDF 后开跑）
     description: "面向导师预审的独立文字版专题。有限样稿路线经用户验收失败后，已扩大为现有证据支持范围内的全质量章节稿：逐节范文与事实合同、分章写作、独立审查和最终组装。继续请导师判断 Ch3/Ch4 方法强度、章序和 Ch5 FPGA 深度。"
     depends_on:
       - slug: 2026-07-09-thesis-writing
