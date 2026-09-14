@@ -632,3 +632,56 @@ PASS（修复批可收；组装决策项全部落地，剩余债务 = Ch1 图表
 - 渲染抽查：中文摘要首段/关键词、英文摘要总起句、封面题目+作者+学院、成果清单 "[1] Zhang Z, Wu H … (已录用.)" 均在位。
 - 编号完整性：正文首引用 [1]=tarhouni2025fsoMesh、主文献表 [1]/[135] 首末正确、成果清单独立 [1]。
 - Overfull 24 处=原 23 + abstract.tex:33-34（1.0pt，英摘 (3) 段，可忽略）。
+
+## V035: 方法历史资产盘点与导师反馈判读独立审查
+
+> date: 2026-09-14
+> 关联：S018 / D047
+> 结论：PASS（本轮文档与证据判读；不是替代方法可行性或论文成章通过）
+
+### 验证项
+
+- [x] 历史要求：独立审查S018对照thesis-writing D032、voice及后续补强，未以经典/廉价替代/低新颖性自动否决方法。
+- [x] 导师裁定：仅接收当前第四章不写、标题具体专业学术；未扩大为所有估计/偏振方法禁用，也未默认仅改标题可救旧章。
+- [x] 三包实物：独立`git show`读取P11 `d50c619`、P05 `11dbafa`、P08 `b160f6a`报告与机器结果；确认并非当前普通目录内文件。
+- [x] 关键结果：P11 BER非劣/uncoded goodput proxy/无卷积ISI；P05新均值约0.1与输出交换、6/6 cells及每格5/5有限胜出；P08旧16QAM/BG2、11/12/13dB三点、一次pristine confirmation，均与历史实物相符。
+- [x] 正负状态：C5-1无方法信号，C5-0只到B0/O1且Gate3未跑，C5-5仅Step3，K2为旧独立性/cheap-absorption终止；没有把未运行臂判实验失败。
+- [x] 选项与范围：工作量明确为估计；A/B未完成当前APSK迁移，C没有方法实现；最终方法、正文和实验均未授权推进。
+- [x] 引用：初审发现T066数字行号覆盖和同目录省略路径两项P2，修正后fresh复核关闭；P05正收益平衡句同时核实。
+- [x] 零正文改动：`git diff --numstat -- 毕设 projects reference`无输出；章节md、latex、仿真和方法包tracked diff为空。起始即存在`.verify-f2/`、章节稿`.verify-c/`未跟踪文件，本轮未动；不宣称整个worktree干净。
+
+### 新鲜证据
+
+独立审查初审原回执：
+
+```text
+PASS（附非阻断 P2）；P0=0、P1=0。
+P11 analysis JSON：BER delta=-7.71643910186277e-7；goodput delta=391905.0260675343。
+P05：.09763616/.09935064；seed 22004六格输出交换。
+P08：旧Gray16QAM/BG2、三个SNR、仅一次pristine confirmation。
+章节正文md、latex、仿真及方法包targeted diff均空；git diff --check通过。
+```
+
+修订后独立回执：
+
+```text
+Fresh 复核 PASS，原 P2 全部关闭。
+S018:119覆盖T066的S028:243；:121–130引用展开且文件存在；
+:90 P05 6/6 cells、每格5/5 paired wins与历史报告一致。
+未运行实验或改文件，原审查其他结论保持。
+```
+
+主线程确定性检查（登记V035前）：
+
+```text
+git diff --check                       exit=0
+protected_tracked_diff_count=0
+preexisting_staged_count=0
+S018_count=1
+D047_count=1
+V035_count=0                           本次在空闲编号上新建
+```
+
+### 结论的范围
+
+PASS只证明S018的历史恢复、证据引用、判读及零正文边界通过本轮审查。未重新运行历史实验、未补外部完全重复检索、未证明新平台的性能、未代替导师裁定方案A/B/C。
