@@ -2,11 +2,20 @@
 
 > T046｜2026-08-30｜精读 6 篇既有 qualified full text。
 > T049｜2026-08-30｜Q-C5-1 Step 3.5 bounded exact-recipe closure 完成；未进入 Step 4a、实现或实验。
+> R029/D051｜2026-09-20｜Q-C5-2 条件重绑定为 Q-C5-2r（T077 自然格失败），Step 3.5 补充消化完成，Step 4a 以"诊断证据记录、Go/No-Go 留用户"方式执行（decode-failure-rescue 合同）；本条不改动 Q-C5-1 终态。
 
 ## 概况与进度
 
 - title 自检：6/6 PASS；完整精读：6/6。
-- Step 1/2：上游 T040–T044 COMPLETE；Step 3：COMPLETE；Step 3.5：COMPLETE（T049）；Step 4a：NOT ENTERED。
+- Step 1/2：上游 T040–T044 COMPLETE；Step 3：COMPLETE；Step 3.5：COMPLETE（T049；Q-C5-2r 补充消化 2026-09-20 见 R029 发现四）；Step 4a：Q-C5-2r 诊断证据记录中（D051 授权轮），Go/No-Go 未决。
+
+## Q-C5-2r 条件重绑定（2026-09-20，R029）
+
+| Q# | M | C | A | 产出 | 判据1 | 判据2 | 判据3 | 判据4 | verdict | 来源 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Q-C5-2r | NOMS(0.75,0) 20迭代失败终止（T077 B0） | T077 冻结自然格：DP-16APSK 中湍流(4.0,1.9) 15dB，FER≈0.258 | 失败终止不区分停滞型/混乱型失败，丢弃译码内部轨迹/校验状态信息，不做第二次有界尝试 | 门控局部救援 recipe（触发判据+动作+预算分账） | ✅ | ✅ | ✅（B0+同预算延长，按 D048/D032 对标现行链） | ✅（配对 FER/BER+触发率+迭代成本） | **进入 4a 诊断**（D051；合同 decode-failure-rescue/contract.yaml） | L03–L06 + EURASIP 2023 消化（R029 发现四：五篇收益全在低错误率区、FER 0.1–0.3 无数据、NO_COLLISION 两处部分重叠） |
+
+重绑定说明：Q-C5-2 原 C"量化高SNR floor"按 R028 #6 纪律不整借闭包；动作族文献覆盖不变（L03–L06 救援族），条件适用性由 2026-09-20 补充消化（R029 发现四）+ 诊断实验共同回答。原 Q-C5-2 行"条件未过：当前 adapter 无接口"保留为历史；接口缺口由 decode-failure-rescue 模块的仪器化译码器补（不动历史 adapter）。
 
 | L# | 论文 | 角色 | read note |
 |---|---|---|---|

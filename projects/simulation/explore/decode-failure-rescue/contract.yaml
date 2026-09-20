@@ -1,0 +1,100 @@
+schema_version: dfr-rescue-diagnostic.v1
+authority: R029 / D051 / topic-2026-08-30-thesis-advisor-text-outline
+action_class: DECODE_FAILURE_RESCUE_DIAGNOSTIC
+created: 2026-09-20
+status: FROZEN_BEFORE_EXECUTION
+amendment_v1_1: >
+  2026-09-20 执行前增补（科学臂未跑）：Step 3.5 补充显示救援文献收益全部在
+  极低错误率区（R029 发现四），单 15dB 点负结果解释歧义大（"本格不行"vs
+  "本链不行"）。增补 diag17 split：同一链仅 snr_db 15→17 的诊断点，仅用于
+  失败结构/救援率随 SNR 的趋势对比，不进入部署结论；预算不足时跳过并登记。
+
+# ============================================================
+# 门控局部救援诊断（GW Step 4a-D 有界实验）
+# 问题 A（R029）：20 迭代 NOMS 失败码字的门控第二次译码尝试
+# ============================================================
+
+cell_inheritance:
+  owner_module: ../ch5-apsk-llr-calibration
+  manifest: ../ch5-apsk-llr-calibration/single_cell_manifest.yaml
+  cell_id: t077-dp16apsk-moderate-gg-15db
+  inheritance_rule: >
+    全部物理/译码参数从上述冻结 manifest 单一来源读取（snr_db=15.0,
+    turbulence alpha=4.0 beta=1.9, GG block=256, residual_frequency_hz=1e6,
+    frequency_slope_hz_per_s=1.5e8, linewidth_hz=1e4, ch4 plain RDE mu=1e-3,
+    ch3 DA pilots, 5g_ldpc_bg2 (1024,1536), Z=104, decoder_iterations=20,
+    demapper_clip=30.0, backend_input_clip=20.0）。
+    本模块零新增物理参数、零修改被继承模块（不改 ch5-apsk-llr-calibration/
+    与 coded-decoder-feedback/ 任何文件）。
+
+splits:
+  smoke:  {count: 8,   seeds: {start: 2900, stop_inclusive: 2907}, purpose: "identity/一致性点检（同 T077 smoke 种子）"}
+  dev:    {count: 64,  seeds: {start: 5000, stop_inclusive: 5063}, purpose: "开发集：R2 的 k 选择与门控阈值；全新种子防污染"}
+  eval:   {count: 512, seeds: {start: 4000, stop_inclusive: 4511}, purpose: "确认集：同 T077 评估种子保可比；冻结臂集一次性运行，不在其上调参"}
+  diag17: {count: 512, seeds: {start: 4000, stop_inclusive: 4511}, snr_db_override: 17.0, purpose: "诊断-only SNR 趋势点（amendment v1.1）：同链同种子仅 SNR 15→17；只报告失败结构/救援率趋势，不进部署结论；预算不足可跳过并登记"}
+
+llr_cache:
+  policy: generate_once_decode_many
+  per_frame_fields: [llr_float32_1536, truth_info_bits_1024, truth_coded_bits_1536, llr_sha256, seed, frame_index]
+  sharing_rule: 所有臂严格共享同一逐帧 LLR 字节（TL-13 最强形式：同输入重放）
+  consistency_anchor: >
+    重生成 eval 512 帧 + B0 (Sionna num_iter=20) 解码后，BER/FER 必须复现
+    T077 日志数值（BER=0.04929351806640625, FER=132/512）。允许 bit 级完全一致
+    （确定性链）；若不一致立即停，记录差异，不得进入科学臂。
+
+decoder:
+  backend_pin: sionna==2.0.1 (assert), torch cpu
+  route_decision: >
+    优先探测 Sionna LDPC5GDecoder 的 return_state / 单迭代步进 / 内部 pcm 访问
+    能力：若可用状态单迭代步进（每步可取全码字硬判），用它构建仪器化路径；
+    否则自实现 flooding NOMS 镜像译码器（必须复用 sionna.phy.fec.ldpc 的
+    cn_update_offset_minsum 与 encoder.out_int/out_int_inv，H 从 decoder/encoder
+    内部构造提取，调度按 Sionna 源码逐行核对）。两条路线都必须过 correctness 门。
+  correctness_gates:
+    - "B0 终判（信息位+码字位）与 Sionna num_iter=20 单次调用 bit 级一致：smoke 8 + dev 抽 32 + eval 抽 32 共 ≥72 码字，0 容忍失配"
+    - "热续跑等价：任取 ≥32 码字，20+20(热) 与 fresh 40 迭代终判 bit 级一致"
+    - "R3 配置臂：(0.875,0.1) 全程 40 迭代 fresh 与 Sionna cn_update 替换构造一致（抽 ≥8 码字）"
+  trajectory_logging: 每迭代记录 syndrome 权重 ||s_t||（H 对当次全码字硬判）与最终 LLR/硬判；失败帧加记未满足校验相连变量集
+
+arms:
+  B0:       {desc: "Sionna 标准 20 迭代 NOMS(0.75,0.0)，基线", stage2: none}
+  R1_EXT:   {desc: "B0 失败(syndrome≠0)后同配置热续 +20 迭代（常规替代对照，必设）", stage2: continue_same_config}
+  R2_ERASE: {desc: "B0 失败后：未满足校验相连变量中 |LLR| 最小 k 个位置 LLR 置 0，热续 +20；k 从 {8,16,32} 仅在 dev 选，dev 无显著差异时取中值 16", stage2: targeted_erase_then_continue}
+  R3_CONF:  {desc: "B0 失败后热续 +20 迭代但配置切为 (0.875,0.1)（P08 开发冻结配方，alpha 乘 cn_update_offset_minsum(offset=0.1)）", stage2: continue_switched_config}
+  O1_ORACLE:{desc: "诊断专用：B0 失败后把最终硬判与真值码字不同的位置 LLR 置 0，热续 +20（genie；仅 headroom，非部署、非全族上界）", stage2: truth_reset_then_continue, information_access: genie_diagnostic_only}
+  trigger_rule: "第二阶段仅对 B0 syndrome≠0 帧触发（接收端合法，无真值）；门控变体（仅停滞类触发等）由逐帧 raw 事后切窗，不重跑"
+  acceptance: "第二阶段输出被接受当且仅当 syndrome=0；无 CRC，rescued-to-correct 与 rescued-to-wrong 分账报告"
+
+failure_classification:  # Phase 1 诊断输出（定义冻结，事后由轨迹判）
+  converged_wrong: "20 迭代内 syndrome 曾到 0 但最终输出信息位≠真值"
+  stagnated: "s_16..s_20 全相等且 >0"
+  oscillating: "末 8 迭代 syndrome 权重在不重复趋势的环上（非全等非单调）"
+  descending: "末 8 迭代严格下降但终值 >0"
+  other: 其余
+
+metrics:
+  primary: {name: paired_FER_diff_vs_R1, scope: eval 512, stats: "帧级 seed-cluster bootstrap 95% CI（10k 重采样，PCG64 seed=20260920）", arms: [R2_ERASE, R3_CONF]}
+  secondary: [paired_BER_diff_vs_R1, FER_BER_vs_B0, per_class_rescue_rate, rescued_to_correct, rescued_to_wrong, trigger_rate, mean_p95_extra_iterations]
+  oracle_reporting: O1 仅报 headroom 数字，不参与部署比较
+
+cost_accounting:
+  extra_iterations: "每臂记录逐帧第二阶段实际迭代（接受/syndrome=0 早停即停）"
+  fairness: R2/R3 与 R1 严格同触发集、同 +20 上限；部署视角另报 vs B0
+
+info_access_triple:   # sim-preflight C4
+  information_access: "R1/R2/R3=online known（译码器内部信号）；O1=genie（仅诊断）；真值仅用于评分（FER/BER 分子）与 O1 扰动，绝不进入 R1–R3 触发/动作"
+  metric_signature: "FER=信息位≠真值帧数/512；BER=信息位错误数/(512*1024)；无排除位；聚合=逐帧配对+bootstrap"
+  state_lifecycle: "每帧每臂 fresh B0 20 迭代；第二阶段热续同帧译码状态（R2/R3 在边界处改输入 LLR/配置）；帧间零状态传递"
+
+budget_and_stops:
+  frame_budget: "smoke 8 + dev 64 + eval 512 = 584 帧生成，一次性缓存"
+  loop_budget: "至多一轮设计—运行—诊断 + 一轮有界修复；正确性门两轮修不过 → 停并如实记录"
+  generation_time_rule: "先在 smoke 8 帧测单帧生成耗时并外推；单次子 agent 运行 ≤15 分钟，超限则按 seed 前缀分批 checkpoint"
+  no_tuning_on_eval: eval 只跑冻结臂集一次
+  known_gap_single_point: "结论限冻结 15dB 格；SNR/湍流扫描未执行（登记为缺口，不当失败）"
+
+interpretation_gates:  # 解释边界，非 Go/Kill
+  if_R1_absorbs: "R1≈R2≈R3（CI 跨零且点估计近零）→ 本格延长迭代吸收可救性，救援逻辑无增量；记录为该格负倾向，非全族 Kill"
+  if_rescue_wins: "R2 或 R3 vs R1 CI 下界>0 → 局部正信号；连同效应幅度、代价、分类结构升级用户/导师"
+  if_oracle_dead: "O1 亦无 headroom → 本格失败偏混乱（远离码字），救援族在此格 unlikely；记录"
+  scope: 全部结论限本格本合同；不外推其他 SNR/湍流/码配置

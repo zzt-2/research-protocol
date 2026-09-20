@@ -1,0 +1,204 @@
+{
+ "gate": "gate1_eval_supplement",
+ "date": "2026-09-20",
+ "n": 32,
+ "info_mismatch": 0,
+ "coded_mismatch": 0,
+ "coded_reference": "sionna return_infobits=False full coded hard output",
+ "first_attempt_note": "\u521d\u6b21\u8865\u4e01\u7528\u518d\u7f16\u7801\u5bf9\u7167\uff0c9 \u5904'\u5931\u914d'\u5168\u843d\u5728\u975e\u6536\u655b\u5e27\uff08\u6821\u9a8c\u4f4d\u786c\u5224!=\u518d\u7f16\u7801\uff0c\u68c0\u67e5\u65b9\u6cd5\u9519\u8bef\u5df2\u5e9f\u5f03\uff09",
+ "note": "reviewer V036 finding 2 repair: contract required >=72 codewords incl. eval-32; combined with prior smoke8+dev32=40 -> 72/72 total, 0 mismatch (info+coded)",
+ "frames": [
+  {
+   "seed": 4000,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": true
+  },
+  {
+   "seed": 4001,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": true
+  },
+  {
+   "seed": 4002,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": true
+  },
+  {
+   "seed": 4003,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": true
+  },
+  {
+   "seed": 4004,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": true
+  },
+  {
+   "seed": 4005,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": true
+  },
+  {
+   "seed": 4006,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": true
+  },
+  {
+   "seed": 4007,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": true
+  },
+  {
+   "seed": 4008,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": true
+  },
+  {
+   "seed": 4009,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": false
+  },
+  {
+   "seed": 4010,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": true
+  },
+  {
+   "seed": 4011,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": true
+  },
+  {
+   "seed": 4012,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": true
+  },
+  {
+   "seed": 4013,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": true
+  },
+  {
+   "seed": 4014,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": true
+  },
+  {
+   "seed": 4015,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": true
+  },
+  {
+   "seed": 4016,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": true
+  },
+  {
+   "seed": 4017,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": false
+  },
+  {
+   "seed": 4018,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": true
+  },
+  {
+   "seed": 4019,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": true
+  },
+  {
+   "seed": 4020,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": true
+  },
+  {
+   "seed": 4021,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": false
+  },
+  {
+   "seed": 4022,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": true
+  },
+  {
+   "seed": 4023,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": true
+  },
+  {
+   "seed": 4024,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": false
+  },
+  {
+   "seed": 4025,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": false
+  },
+  {
+   "seed": 4026,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": false
+  },
+  {
+   "seed": 4027,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": true
+  },
+  {
+   "seed": 4028,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": false
+  },
+  {
+   "seed": 4029,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": false
+  },
+  {
+   "seed": 4030,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": true
+  },
+  {
+   "seed": 4031,
+   "ok_info": true,
+   "ok_coded": true,
+   "converged": false
+  }
+ ]
+}

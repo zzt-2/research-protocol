@@ -1,0 +1,77 @@
+{
+  "schema_version": "dfr.summary.v1",
+  "split": "dev",
+  "frames": 64,
+  "B0": {
+    "fer": 0.234375,
+    "fer_info": 0.21875,
+    "ber": 0.043609619140625,
+    "class_counts": {
+      "clean": 49,
+      "other": 13,
+      "descending": 1,
+      "stagnated": 1
+    }
+  },
+  "O1_ORACLE": {
+    "triggered": 15,
+    "accepted": 8,
+    "rescued_to_correct": 8,
+    "rescued_to_wrong": 0,
+    "rescue_rate_on_trigger": 0.5333333333333333,
+    "mean_extra_iterations": 12.666666666666666,
+    "p95_extra_iterations": 20.0,
+    "is_oracle_headroom_only": true
+  },
+  "R1_EXT": {
+    "triggered": 15,
+    "accepted": 2,
+    "rescued_to_correct": 2,
+    "rescued_to_wrong": 0,
+    "rescue_rate_on_trigger": 0.13333333333333333,
+    "mean_extra_iterations": 17.866666666666667,
+    "p95_extra_iterations": 20.0,
+    "is_oracle_headroom_only": false
+  },
+  "R2_ERASE_k16": {
+    "triggered": 15,
+    "accepted": 2,
+    "rescued_to_correct": 2,
+    "rescued_to_wrong": 0,
+    "rescue_rate_on_trigger": 0.13333333333333333,
+    "mean_extra_iterations": 17.866666666666667,
+    "p95_extra_iterations": 20.0,
+    "is_oracle_headroom_only": false
+  },
+  "R2_ERASE_k32": {
+    "triggered": 15,
+    "accepted": 3,
+    "rescued_to_correct": 3,
+    "rescued_to_wrong": 0,
+    "rescue_rate_on_trigger": 0.2,
+    "mean_extra_iterations": 17.6,
+    "p95_extra_iterations": 20.0,
+    "is_oracle_headroom_only": false
+  },
+  "R2_ERASE_k8": {
+    "triggered": 15,
+    "accepted": 2,
+    "rescued_to_correct": 2,
+    "rescued_to_wrong": 0,
+    "rescue_rate_on_trigger": 0.13333333333333333,
+    "mean_extra_iterations": 17.866666666666667,
+    "p95_extra_iterations": 20.0,
+    "is_oracle_headroom_only": false
+  },
+  "R3_CONF": {
+    "triggered": 15,
+    "accepted": 3,
+    "rescued_to_correct": 3,
+    "rescued_to_wrong": 0,
+    "rescue_rate_on_trigger": 0.2,
+    "mean_extra_iterations": 16.4,
+    "p95_extra_iterations": 20.0,
+    "is_oracle_headroom_only": false
+  },
+  "decode_wall_seconds": 4.8373699999647215
+}

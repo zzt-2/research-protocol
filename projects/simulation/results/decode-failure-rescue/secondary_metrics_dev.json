@@ -1,0 +1,252 @@
+{
+ "tag": "dev",
+ "n": 64,
+ "triggered": 15,
+ "B0_ber": 0.043609619140625,
+ "B0_fer_info": 0.21875,
+ "arms": {
+  "O1_ORACLE": {
+   "final_fer_info": 0.109375,
+   "final_ber": 0.021514892578125,
+   "fer_diff_vs_B0": -0.109375,
+   "ber_diff_vs_B0": -0.0220947265625,
+   "paired_fer_diff_vs_R1": {
+    "point": -0.0625,
+    "ci95": [
+     -0.125,
+     -0.015625
+    ]
+   },
+   "paired_ber_diff_vs_R1": {
+    "point": -0.0223846435546875,
+    "ci95": [
+     -0.035308837890625,
+     -0.011046981811523443
+    ]
+   }
+  },
+  "R1_EXT": {
+   "final_fer_info": 0.171875,
+   "final_ber": 0.0438995361328125,
+   "fer_diff_vs_B0": -0.046875,
+   "ber_diff_vs_B0": 0.0002899169921875
+  },
+  "R2_ERASE_k16": {
+   "final_fer_info": 0.171875,
+   "final_ber": 0.043548583984375,
+   "fer_diff_vs_B0": -0.046875,
+   "ber_diff_vs_B0": -6.103515625e-05,
+   "paired_fer_diff_vs_R1": {
+    "point": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ]
+   },
+   "paired_ber_diff_vs_R1": {
+    "point": -0.0003509521484375,
+    "ci95": [
+     -0.0014190673828125,
+     0.000625991821289057
+    ]
+   }
+  },
+  "R2_ERASE_k32": {
+   "final_fer_info": 0.171875,
+   "final_ber": 0.0438385009765625,
+   "fer_diff_vs_B0": -0.046875,
+   "ber_diff_vs_B0": 0.0002288818359375,
+   "paired_fer_diff_vs_R1": {
+    "point": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ]
+   },
+   "paired_ber_diff_vs_R1": {
+    "point": -6.103515625e-05,
+    "ci95": [
+     -0.0009769439697265622,
+     0.0008392333984375
+    ]
+   }
+  },
+  "R2_ERASE_k8": {
+   "final_fer_info": 0.171875,
+   "final_ber": 0.0442657470703125,
+   "fer_diff_vs_B0": -0.046875,
+   "ber_diff_vs_B0": 0.0006561279296875,
+   "paired_fer_diff_vs_R1": {
+    "point": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ]
+   },
+   "paired_ber_diff_vs_R1": {
+    "point": 0.0003662109375,
+    "ci95": [
+     -0.0001068115234375,
+     0.000885009765625
+    ]
+   }
+  },
+  "R3_CONF": {
+   "final_fer_info": 0.171875,
+   "final_ber": 0.044830322265625,
+   "fer_diff_vs_B0": -0.046875,
+   "ber_diff_vs_B0": 0.001220703125,
+   "paired_fer_diff_vs_R1": {
+    "point": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ]
+   },
+   "paired_ber_diff_vs_R1": {
+    "point": 0.0009307861328125,
+    "ci95": [
+     -0.0004730224609375,
+     0.002593994140625
+    ]
+   }
+  }
+ },
+ "failure_structure": {
+  "final_syndrome_weight": {
+   "median": 217.0,
+   "iqr": [
+    65.5,
+    263.0
+   ],
+   "min": 1,
+   "max": 310
+  },
+  "min_syndrome_weight_over_traj": {
+   "median": 177.0,
+   "iqr": [
+    52.0,
+    208.0
+   ]
+  },
+  "coded_hard_errors": {
+   "median": 187.0,
+   "iqr": [
+    68.5,
+    470.0
+   ],
+   "min": 1,
+   "max": 680
+  },
+  "info_errors": {
+   "median": 172.0,
+   "iqr": [
+    47.5,
+    315.5
+   ]
+  },
+  "converged_wrong_frames": 0,
+  "info_correct_among_triggered": 1
+ },
+ "per_class": {
+  "descending": {
+   "n": 1,
+   "O1_ORACLE": {
+    "accepted": 1,
+    "rescued_to_correct": 1,
+    "rescued_to_wrong": 0
+   },
+   "R1_EXT": {
+    "accepted": 0,
+    "rescued_to_correct": 0,
+    "rescued_to_wrong": 0
+   },
+   "R2_ERASE_k16": {
+    "accepted": 0,
+    "rescued_to_correct": 0,
+    "rescued_to_wrong": 0
+   },
+   "R2_ERASE_k32": {
+    "accepted": 1,
+    "rescued_to_correct": 1,
+    "rescued_to_wrong": 0
+   },
+   "R2_ERASE_k8": {
+    "accepted": 0,
+    "rescued_to_correct": 0,
+    "rescued_to_wrong": 0
+   },
+   "R3_CONF": {
+    "accepted": 0,
+    "rescued_to_correct": 0,
+    "rescued_to_wrong": 0
+   }
+  },
+  "other": {
+   "n": 13,
+   "O1_ORACLE": {
+    "accepted": 6,
+    "rescued_to_correct": 6,
+    "rescued_to_wrong": 0
+   },
+   "R1_EXT": {
+    "accepted": 2,
+    "rescued_to_correct": 2,
+    "rescued_to_wrong": 0
+   },
+   "R2_ERASE_k16": {
+    "accepted": 2,
+    "rescued_to_correct": 2,
+    "rescued_to_wrong": 0
+   },
+   "R2_ERASE_k32": {
+    "accepted": 2,
+    "rescued_to_correct": 2,
+    "rescued_to_wrong": 0
+   },
+   "R2_ERASE_k8": {
+    "accepted": 2,
+    "rescued_to_correct": 2,
+    "rescued_to_wrong": 0
+   },
+   "R3_CONF": {
+    "accepted": 2,
+    "rescued_to_correct": 2,
+    "rescued_to_wrong": 0
+   }
+  },
+  "stagnated": {
+   "n": 1,
+   "O1_ORACLE": {
+    "accepted": 1,
+    "rescued_to_correct": 1,
+    "rescued_to_wrong": 0
+   },
+   "R1_EXT": {
+    "accepted": 0,
+    "rescued_to_correct": 0,
+    "rescued_to_wrong": 0
+   },
+   "R2_ERASE_k16": {
+    "accepted": 0,
+    "rescued_to_correct": 0,
+    "rescued_to_wrong": 0
+   },
+   "R2_ERASE_k32": {
+    "accepted": 0,
+    "rescued_to_correct": 0,
+    "rescued_to_wrong": 0
+   },
+   "R2_ERASE_k8": {
+    "accepted": 0,
+    "rescued_to_correct": 0,
+    "rescued_to_wrong": 0
+   },
+   "R3_CONF": {
+    "accepted": 1,
+    "rescued_to_correct": 1,
+    "rescued_to_wrong": 0
+   }
+  }
+ }
+}

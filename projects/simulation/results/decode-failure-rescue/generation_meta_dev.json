@@ -1,0 +1,63 @@
+{
+  "schema_version": "dfr.llr-cache.generation-meta.v1",
+  "split": "dev",
+  "snr_db_override": null,
+  "cache_dir": "D:\\code\\study\\research-protocol\\.worktrees\\rdl-method-production-v2\\projects\\simulation\\results\\decode-failure-rescue\\llr_cache\\dev",
+  "seeds": {
+    "start": 5000,
+    "stop_inclusive": 5063,
+    "count": 64
+  },
+  "generated": 32,
+  "skipped_existing": 32,
+  "per_frame_seconds": [
+    3.896490199957043,
+    0.03499870002269745,
+    0.03177740005776286,
+    0.03130350005812943,
+    0.03094349999446422,
+    0.03551419998984784,
+    0.036079099983908236,
+    0.03442510007880628,
+    0.03181880002375692,
+    0.03223440004512668,
+    0.0362682999111712,
+    0.035270199994556606,
+    0.03449190000537783,
+    0.035278999945148826,
+    0.039349299971945584,
+    0.03626480000093579,
+    0.03455499990377575,
+    0.035104200011119246,
+    0.03493169997818768,
+    0.0299612000817433,
+    0.03240249992813915,
+    0.03571520000696182,
+    0.03188969998154789,
+    0.035132299992255867,
+    0.0332425000378862,
+    0.029133199946954846,
+    0.029771000030450523,
+    0.034766400000080466,
+    0.03617079998366535,
+    0.034968100022524595,
+    0.035539699951186776,
+    0.031631399993784726
+  ],
+  "mean_frame_seconds": 0.15460697812159196,
+  "versions": {
+    "python": "3.14.2",
+    "sionna": "2.0.1",
+    "torch": "2.13.0+cpu",
+    "numpy": "2.5.1"
+  },
+  "source_refs": {
+    "info_bits_rule": "ch5-apsk-llr-calibration/single_cell.py:518-519,617-618,1107-1108",
+    "encode": "ch5-apsk-llr-calibration/correctness.py:339-351",
+    "physical_frame": "ch5-apsk-llr-calibration/single_cell.py:208-310",
+    "receiver": "ch5-apsk-llr-calibration/single_cell.py:313-326",
+    "nominal_n0_rule": "ch5-apsk-llr-calibration/single_cell.py:523,615,1079",
+    "b0_llr": "ch5-apsk-llr-calibration/single_cell.py:381-401",
+    "snr_override_copy": "ch5-apsk-llr-calibration/single_cell.py:208-310 (replicated with single snr_db field replaced)"
+  }
+}

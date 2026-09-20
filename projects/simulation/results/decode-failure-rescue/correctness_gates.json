@@ -1,0 +1,44 @@
+{
+  "schema_version": "dfr.correctness-gates.v1",
+  "versions": {
+    "python": "3.14.2",
+    "sionna": "2.0.1",
+    "torch": "2.13.0+cpu",
+    "numpy": "2.5.1"
+  },
+  "gate1_b0_vs_sionna20": {
+    "n_codewords": 40,
+    "info_bit_mismatches": 0,
+    "coded_bit_mismatches": 0,
+    "pass": true
+  },
+  "gate2_hot_20_20_vs_fresh40": {
+    "n_codewords": 32,
+    "hot_vs_instrumented_fresh_mismatches": 0,
+    "instrumented_fresh_vs_sionna_fresh_mismatches": 0,
+    "pass": true
+  },
+  "gate3_r3config_vs_sionna_construct": {
+    "n_codewords": 8,
+    "bit_mismatches": 0,
+    "pass": true
+  },
+  "timing": {
+    "mean_frame_generation_seconds_smoke_warmup_inclusive": 1.363425699979416,
+    "steady_state_frame_generation_seconds": 0.03365689996696476,
+    "per_codeword_b0_20it_seconds": 0.0036435999973036814,
+    "per_codeword_b0_40it_seconds": 0.005580706249020295,
+    "extrapolation": {
+      "dev64": {
+        "frames": 64,
+        "total_seconds_estimate": 7.645745417521876,
+        "total_minutes_estimate": 0.12742909029203128
+      },
+      "eval512": {
+        "frames": 512,
+        "total_seconds_estimate": 26.16596334017501,
+        "total_minutes_estimate": 0.43609938900291684
+      }
+    }
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "schema_version": "dfr.summary.v1",
+  "split": "eval",
+  "frames": 512,
+  "B0": {
+    "fer": 0.267578125,
+    "fer_info": 0.2578125,
+    "ber": 0.04929351806640625,
+    "class_counts": {
+      "clean": 375,
+      "other": 129,
+      "stagnated": 4,
+      "descending": 3,
+      "oscillating": 1
+    }
+  },
+  "O1_ORACLE": {
+    "triggered": 137,
+    "accepted": 86,
+    "rescued_to_correct": 86,
+    "rescued_to_wrong": 0,
+    "rescue_rate_on_trigger": 0.6277372262773723,
+    "mean_extra_iterations": 13.788321167883211,
+    "p95_extra_iterations": 20.0,
+    "is_oracle_headroom_only": true
+  },
+  "R1_EXT": {
+    "triggered": 137,
+    "accepted": 4,
+    "rescued_to_correct": 4,
+    "rescued_to_wrong": 0,
+    "rescue_rate_on_trigger": 0.029197080291970802,
+    "mean_extra_iterations": 19.554744525547445,
+    "p95_extra_iterations": 20.0,
+    "is_oracle_headroom_only": false
+  },
+  "R2_ERASE_k16": {
+    "triggered": 137,
+    "accepted": 4,
+    "rescued_to_correct": 4,
+    "rescued_to_wrong": 0,
+    "rescue_rate_on_trigger": 0.029197080291970802,
+    "mean_extra_iterations": 19.54014598540146,
+    "p95_extra_iterations": 20.0,
+    "is_oracle_headroom_only": false
+  },
+  "R3_CONF": {
+    "triggered": 137,
+    "accepted": 11,
+    "rescued_to_correct": 11,
+    "rescued_to_wrong": 0,
+    "rescue_rate_on_trigger": 0.08029197080291971,
+    "mean_extra_iterations": 18.861313868613138,
+    "p95_extra_iterations": 20.0,
+    "is_oracle_headroom_only": false
+  },
+  "decode_wall_seconds": 33.594704500050284,
+  "paired_bootstrap": {
+    "R2_ERASE_k16_vs_R1_EXT": {
+      "arm_a": "R2_ERASE_k16",
+      "arm_b": "R1_EXT",
+      "n": 137,
+      "point_estimate": -0.007299270072992692,
+      "ci95": [
+        -0.021897810218978186,
+        0.0
+      ],
+      "resamples": 10000,
+      "seed": 20260920
+    },
+    "R3_CONF_vs_R1_EXT": {
+      "arm_a": "R3_CONF",
+      "arm_b": "R1_EXT",
+      "n": 137,
+      "point_estimate": -0.029197080291970767,
+      "ci95": [
+        -0.058394160583941646,
+        -0.007299270072992692
+      ],
+      "resamples": 10000,
+      "seed": 20260920
+    }
+  }
+}

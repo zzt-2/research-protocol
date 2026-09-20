@@ -1,0 +1,83 @@
+{
+  "schema_version": "dfr.summary.v1",
+  "split": "eval_snr17",
+  "frames": 512,
+  "B0": {
+    "fer": 0.201171875,
+    "fer_info": 0.15234375,
+    "ber": 0.025302886962890625,
+    "class_counts": {
+      "clean": 409,
+      "other": 77,
+      "stagnated": 22,
+      "oscillating": 4
+    }
+  },
+  "O1_ORACLE": {
+    "triggered": 103,
+    "accepted": 75,
+    "rescued_to_correct": 75,
+    "rescued_to_wrong": 0,
+    "rescue_rate_on_trigger": 0.7281553398058253,
+    "mean_extra_iterations": 9.757281553398059,
+    "p95_extra_iterations": 20.0,
+    "is_oracle_headroom_only": true
+  },
+  "R1_EXT": {
+    "triggered": 103,
+    "accepted": 1,
+    "rescued_to_correct": 1,
+    "rescued_to_wrong": 0,
+    "rescue_rate_on_trigger": 0.009708737864077669,
+    "mean_extra_iterations": 19.815533980582526,
+    "p95_extra_iterations": 20.0,
+    "is_oracle_headroom_only": false
+  },
+  "R2_ERASE_k16": {
+    "triggered": 103,
+    "accepted": 1,
+    "rescued_to_correct": 1,
+    "rescued_to_wrong": 0,
+    "rescue_rate_on_trigger": 0.009708737864077669,
+    "mean_extra_iterations": 19.815533980582526,
+    "p95_extra_iterations": 20.0,
+    "is_oracle_headroom_only": false
+  },
+  "R3_CONF": {
+    "triggered": 103,
+    "accepted": 10,
+    "rescued_to_correct": 10,
+    "rescued_to_wrong": 0,
+    "rescue_rate_on_trigger": 0.0970873786407767,
+    "mean_extra_iterations": 18.368932038834952,
+    "p95_extra_iterations": 20.0,
+    "is_oracle_headroom_only": false
+  },
+  "decode_wall_seconds": 29.52675650001038,
+  "paired_bootstrap": {
+    "R2_ERASE_k16_vs_R1_EXT": {
+      "arm_a": "R2_ERASE_k16",
+      "arm_b": "R1_EXT",
+      "n": 103,
+      "point_estimate": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "resamples": 10000,
+      "seed": 20260920
+    },
+    "R3_CONF_vs_R1_EXT": {
+      "arm_a": "R3_CONF",
+      "arm_b": "R1_EXT",
+      "n": 103,
+      "point_estimate": -0.03883495145631066,
+      "ci95": [
+        -0.07766990291262132,
+        -0.009708737864077666
+      ],
+      "resamples": 10000,
+      "seed": 20260920
+    }
+  }
+}
