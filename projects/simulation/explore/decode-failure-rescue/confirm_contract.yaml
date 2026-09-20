@@ -1,0 +1,85 @@
+schema_version: dfr-rescue-confirm.v1
+authority: >
+  用户 2026-09-20 提示词（译码失败救援一轮有限纠错与确认）/ R030 / V037 /
+  D051 / 专题 2026-08-30-thesis-advisor-text-outline。
+action_class: DECODE_FAILURE_RESCUE_CONFIRM_ROUND
+created: 2026-09-20
+status: FROZEN_BEFORE_EXECUTION
+
+# ============================================================
+# 确认轮：R030 审查后的有限纠错 + 新样本确认
+# 关系：旧合同 contract.yaml（diagnostic 轮）保持不变；旧 raw/summary/
+# llr_cache 全部保留不改写。本轮产物全部放 confirm2048/ 子目录与新文件。
+# ============================================================
+
+fixes_this_round:           # 只修影响方法身份/比较公平性/主要数字的硬问题
+  R2_index_mapping: >
+    rescue_decoder.internal_positions_to_tx 原返回 x_short raw 下标（去交织
+    缓冲序），run_experiment 将其直接当传输序下标用于 |LLR| 排序与置零，
+    缺 out_int_inv 复合（R030 #2）。本轮修复为 internal -> raw -> tx =
+    out_int_inv[internal_to_tx[internal]]，并以下述单元断言验证；R2 不进入
+    本轮确认臂（用户指令：R2 只修索引并验证映射正确，不扩展科学实验）。
+  output_rule_unified: >
+    R030 #3：旧统计把未接受的二阶段末输出直接计分。本轮统一最终输出规则
+    （arms.output_rule），所有臂同一规则，最终指标一律按最终输出计算。
+
+unified_rules:
+  shared_input: 所有臂共用同一逐帧缓存 LLR 字节与信息边界（同 contract.yaml llr_cache.sharing_rule）。
+  trigger: 第二阶段仅在首阶段 syndrome != 0 时触发（各臂用自己的首阶段输出；R1/R3 首阶段 = B0）。
+  output_rule: >
+    二阶段通过校验（syndrome==0，含早停接受的那一步迭代）→ 采用二阶段
+    输出；未通过 → 保留首阶段输出，并保留失败标志。真值不参与触发/选位/
+    接受/输出选择，只用于评分与事后分账。
+  early_stop: 二阶段每步检查 syndrome，首个 0 即停并接受该步输出。
+  truth_access: 评分专用（FER/BER 分子、accepted_but_wrong 分账）。
+
+splits:
+  confirm2048:
+    count: 2048
+    seeds: {start: 30000, stop_inclusive: 32047}
+    snr_db: 15.0            # 冻结 cell 原值，无 override
+    purpose: >
+      全新确认样本，一次生成一次运行，固定总量不追加。seed 块与历史全部
+      使用无重叠（占用清单见 seed_isolation）。与旧 T077 eval(4000-4511)、
+      旧救援 dev(5000-5063)/smoke(2900-2907)、P08(6000-6019/7000-7039)、
+      P08R2(8000-8039/9000-9019)、T077 calibration(3000-3063)、
+      structured-covariance(0-63/2000-2063/4xxx 子块)、dsp-outage(10000-10099)、
+      b10(13xxxx) 均不相交。
+  dev64_regression:         # 不生成新帧，用旧缓存 dev 64 帧做实现回归
+    source: llr_cache/dev（旧文件只读）
+    expectation: 新 runner 的 B0 与 R1/R3/O1 二阶段逐帧记录与 raw_dev.json bit 级一致（解码逻辑未动）；R2 因映射修复允许不同，只记录差异计数不做科学解读。
+
+arms:
+  B0:  {stage1: "NOMS(0.75,0) 20 it", stage2: none}
+  R1:  {stage1: B0, stage2: "同配置热续 +20 it 早停", output_rule: unified}
+  R3:  {stage1: B0, stage2: "切换 (0.875,0.1) 热续 +20 it 早停", output_rule: unified}
+  F:   {stage1: "fresh NOMS(0.875,0.1) 20 it（全帧运行，首阶段结果单独落盘）", stage2: "同配置热续 +20 it 早停", output_rule: unified}
+  not_run_this_round: [R2_ERASE, O1_ORACLE, SNR 扫描, 其他 k, 门控变体]
+
+metrics:                    # 全部按最终输出（unified output rule）计算
+  primary:
+    - paired frame-level FER diff R3 vs R1（胜/负/并列计数 + exact 两侧二项检验 + 10k 帧级 bootstrap CI，PCG64 seed=20260921）
+  secondary:
+    - 各臂 info FER / info BER（错误信息 bit 总数 / (N*1024)）
+    - 各臂最终输出校验失败率（syndrome!=0 占比）
+    - accepted_but_wrong（接受但信息位仍错，无 CRC undetected error 分账）
+    - 配对 F vs R1、R3 vs F（同 primary 方法，回答问题 B）
+    - F 首阶段（20 it）单独 FER/BER vs B0（配置本身的 20-it 效应）
+    - 迭代代价：逐帧总迭代数（stage1 20 + stage2 实际步数），报均值与 P95；未测墙钟时间，不把迭代比说成总计算开销
+  reporting: >
+    直接报原始错误帧/bit 数、绝对差、相对变化、配对胜/负与区间；稀疏配对
+    事件必须报 exact 检验，不单凭 bootstrap 区间下结论。不设统一 dB/百分比
+    门槛；区分“本样本有无改善 / 证据是否足以确认 / 是否值得继续整理成章”。
+
+budget_and_stops:
+  - confirm2048 生成 + 四臂解码 + 统计一次完成；分批仅限进程级 checkpoint，不依结果追加样本。
+  - 单次子 agent ≤15 分钟（AGENTS.md）；超限记录已完成边界，不加码。
+  - 本轮结束即收口，不自动开新参数/新工况/下一批。
+
+versioning:
+  old_artifacts_untouched: [contract.yaml, run_experiment.py, raw_dev.json, raw_eval.json, raw_eval_snr17.json, summary_*, llr_cache/{smoke,dev,eval,eval_snr17}, correctness_gates*.json]
+  new_artifacts: >
+    confirm_contract.yaml（本文件）、run_confirm.py、
+    results/decode-failure-rescue/llr_cache/confirm2048/（帧缓存，沿用 tag 目录约定）、
+    results/decode-failure-rescue/{generation_meta_confirm2048.json, raw_confirm2048.json,
+    summary_confirm2048.json, confirm_regress_dev.json}。旧文件零覆盖。

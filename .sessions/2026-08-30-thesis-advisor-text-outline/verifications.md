@@ -776,3 +776,73 @@ protected_tracked_diff_count=0
 ### 结论
 
 **PASS（修正后）**：核心配对结论（R3 vs R1 CI 不含 0 的小正增量、R2 无显著差异、BER 权衡、零 rescued_to_wrong、真值隔离）在审查与主线 V5 双重复核下成立；口径与门样本两处缺陷已修复并以净额口径统一全部文档。审查不构成方法选定或 Go 判据（仍留用户/导师）。
+
+## V037: f2bc6e0回传独立统计、实现与证据审计
+
+> date: 2026-09-20
+> 关联：R030 / R029 / S018§17 / D051 / V036
+
+### 验证项
+
+- [x] 两格raw由独立统计员及主线程分别直接重算，未复用runner/reducer；FER/BER/4胜0负一致。
+- [x] 统计员复现预注册bootstrap；另作exact McNemar敏感性检查。两格各双侧p=.125，不替换预注册判据，不认定全族失败。
+- [x] 独立源码reviewer核R2坐标和已安装Sionna排列式，确认缺out_int_inv；核R3热续、状态无原地污染、真值隔离及输出语义。
+- [x] 独立文献/来源reviewer核三篇承重全文、split及原T049闭包，收窄“全低错误率/独立确认/GW3.5全闭合”声称。
+- [ ] 未运行修复、解码或新增科学试验；R2正确机制性能、R3新样本效果与门控独立价值未确认。
+
+### 证据
+
+主线程PowerShell直接读取raw输出（原始计数）：
+
+```text
+eval: B0 frames=512 error_frames=132 bit_errors=25844
+eval: R1 error_frames=127 bit_errors=25615
+eval: R2 error_frames=126 bit_errors=25594
+eval: R3 error_frames=123 bit_errors=26523
+eval: O1 error_frames=51 bit_errors=8539
+eval: R3_vs_R1_wins=4 losses=0
+eval_snr17: B0 frames=512 error_frames=78 bit_errors=13266
+eval_snr17: R1 error_frames=74 bit_errors=13199
+eval_snr17: R2 error_frames=74 bit_errors=13151
+eval_snr17: R3 error_frames=70 bit_errors=13749
+eval_snr17: O1 error_frames=28 bit_errors=4359
+eval_snr17: R3_vs_R1_wins=4 losses=0
+independent bootstrap95=[-0.015625,-0.001953125]
+exact two-sided p=0.125; one-sided p=0.0625
+R2 index example: internal VN209 -> q1 -> correct tx4; actual tx1 -> q384 -> VN592
+git diff --check: exit 0（仅LF/CRLF提示）
+protected_tracked_diff_count=0
+staged_count=0
+```
+
+### 结论
+
+PARTIAL。原数字可复算，R3有合法实现与局部样本优势；V036未覆盖的R2映射、最终接受策略、稀疏统计和O1解释问题尚未修复。V036保留历史记录，不再被解读为上述方法结论全部有效。
+
+### 后续
+
+详见R030。先修正方法解释与必要实现，再考虑明确对照和新种子验证；当前只审计，不扩大SNR扫描、不改旧raw。本对话此前已提交一次，本续接不重复commit。
+
+## V038: 确认轮正确性链与独立复核（R030 纠错落地 + confirm2048）
+
+> 2026-09-20 | 关联：D052 / S018§18 / step-208 / confirm_contract.yaml / R030 / V037
+
+### 验证项
+
+- [x] 映射修复验证（run_confirm.py --verify-mapping）：out_int/out_int_inv 互逆、R030 闭式 (t%4)*384+t//4、R030 实例 VN209→raw1→信道4（旧代码错用1）、8 个端到端置零探针——PASS。
+- [x] 生成锚点：eval seed 4000 现场重生成 llr_sha256 与缓存逐位一致（同解释器 3.14.2/torch2.13.0+cpu/sionna2.0.1/numpy2.5.1）——PASS。
+- [x] dev64 回归（confirm_regress_dev.json）：B0/R1/R3/O1 与 raw_dev.json 逐帧零失配；R2 k16 因映射修复 13/15 触发帧变化（仅计数）——PASS。
+- [x] 独立 agent 复核（只读，全项 PASS）：raw_confirm2048 全量重算与 summary 零偏差（各臂错帧/bit/校验失败/接受后仍错/迭代全表 + 四组配对胜负 + exact p + BER 配对差）；bootstrap 换种子（777/1234/42）CI 稳健；实现 vs 合同逐条核对（触发=s首阶段syndrome≠0、接受=stage2 syndrome=0 含早停步、回退=首阶段输出+失败标志、迭代口径）；真值隔离（含天然反例帧 30035：R1 二阶段信息位全对但 syndrome=1 被拒收回退）；4+2 帧现场重解码与 raw 逐字段 bit-identical；git status 确认旧产物零覆盖（仅 rescue_decoder.py 修复 + 2 新文件为预期项）。
+- [x] seed 隔离核对：confirm2048（30000–32047）与 smoke/calibration/T077 eval/救援 dev/P08/P08R2/structured-cov/dsp-outage/b10 全部历史 seed 块零重叠（step-208 §4）。
+
+### 证据
+
+头条数字（final 口径，2048 帧）：B0/R1/R3/F 错帧 501/481/465/469、错 bit 104832/104675/104493/108559、接受后仍错 0/0/0/0、均值迭代 20.00/25.07/24.85/24.87。配对：R3 vs R1 16胜0负 exact p=3.0517578125e-05 CI[−0.01172,−0.00439]；F vs R1 14/2 p=0.0042；R3 vs F 6/2 p=0.289；F1 vs B0 10/2 p=0.039；BER：R3−R1=−182 bit（CI 不含 0）、F−R1=+3884 bit。完整表：step-208 §5；原始数据 raw_confirm2048.json。
+
+### 结论
+
+PASS。R030 判定的两个硬问题（R2 映射、输出语义）已修复并验证；R3 vs R1 的 FER 优势在全新独立样本上确认；门控相对纯配置的 FER 增量不显著（R3 vs F p=0.289），方法身份按 D052 收窄。旧轮结果按 R030/V037 修正口径保留。
+
+### 后续
+
+本轮收口。未执行（缺口非失败）：SNR 扫描、R2 科学重评、oracle、门控变体、正文写作——授权与优先级待用户/导师。

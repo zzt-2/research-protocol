@@ -252,10 +252,18 @@ class RescueDecoder:
         return out
 
     def internal_positions_to_tx(self, internal: np.ndarray) -> np.ndarray:
-        """Map internal VN positions to transmitted (de-interleaved) indices."""
+        """Map internal VN positions to transmitted (channel-order) indices.
+
+        internal -> x_short raw index q via ``_internal_to_tx``; the transmitted
+        stream is ``x_short[:, out_int]``, so raw position q is carried at
+        channel index ``out_int_inv[q]``.  The out_int_inv composition is the
+        R030 fix: returning q directly made R2 rank/erase channel positions
+        that belong to unrelated variables.
+        """
         pos = np.asarray(internal, dtype=np.int64)
-        tx = self._internal_to_tx[pos]
-        return tx[tx >= 0]
+        raw = self._internal_to_tx[pos]
+        raw = raw[raw >= 0]
+        return self._out_int_inv[raw]
 
     # ------------------------------------------------------------------ #
     # main API

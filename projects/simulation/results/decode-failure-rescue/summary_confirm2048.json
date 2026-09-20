@@ -1,0 +1,149 @@
+{
+  "schema_version": "dfr.confirm.summary.v1",
+  "split": "confirm2048",
+  "frames": 2048,
+  "metric_note": "all metrics on FINAL outputs (unified rule); check_fail = final syndrome!=0; accepted_but_wrong = final syndrome==0 yet info bits wrong",
+  "stage1": {
+    "B0": {
+      "info_error_frames": 501,
+      "bit_errors": 104832,
+      "fer": 0.24462890625,
+      "ber": 0.04998779296875,
+      "syndrome_fail_frames": 534
+    },
+    "F1": {
+      "info_error_frames": 493,
+      "bit_errors": 108921,
+      "fer": 0.24072265625,
+      "ber": 0.05193758010864258,
+      "syndrome_fail_frames": 518
+    }
+  },
+  "arms": {
+    "B0": {
+      "info_error_frames": 501,
+      "fer": 0.24462890625,
+      "bit_errors": 104832,
+      "ber": 0.04998779296875,
+      "check_fail_frames": 534,
+      "check_fail_rate": 0.2607421875,
+      "accepted_but_wrong_frames": 0,
+      "triggered_frames": 534,
+      "mean_total_iterations": 20.0,
+      "p95_total_iterations": 20.0,
+      "mean_stage2_iterations_on_triggered": null
+    },
+    "R1": {
+      "info_error_frames": 481,
+      "fer": 0.23486328125,
+      "bit_errors": 104675,
+      "ber": 0.04991292953491211,
+      "check_fail_frames": 512,
+      "check_fail_rate": 0.25,
+      "accepted_but_wrong_frames": 0,
+      "triggered_frames": 534,
+      "mean_total_iterations": 25.07177734375,
+      "p95_total_iterations": 40.0,
+      "mean_stage2_iterations_on_triggered": 19.45131086142322
+    },
+    "R3": {
+      "info_error_frames": 465,
+      "fer": 0.22705078125,
+      "bit_errors": 104493,
+      "ber": 0.04982614517211914,
+      "check_fail_frames": 485,
+      "check_fail_rate": 0.23681640625,
+      "accepted_but_wrong_frames": 0,
+      "triggered_frames": 534,
+      "mean_total_iterations": 24.84814453125,
+      "p95_total_iterations": 40.0,
+      "mean_stage2_iterations_on_triggered": 18.593632958801496
+    },
+    "F": {
+      "info_error_frames": 469,
+      "fer": 0.22900390625,
+      "bit_errors": 108559,
+      "ber": 0.05176496505737305,
+      "check_fail_frames": 491,
+      "check_fail_rate": 0.23974609375,
+      "accepted_but_wrong_frames": 0,
+      "triggered_frames": 518,
+      "mean_total_iterations": 24.87451171875,
+      "p95_total_iterations": 40.0,
+      "mean_stage2_iterations_on_triggered": 19.272200772200772
+    }
+  },
+  "paired": {
+    "R3_vs_R1": {
+      "arm_a": "R3",
+      "arm_b": "R1",
+      "n": 2048,
+      "point_estimate": -0.0078125,
+      "ci95": [
+        -0.01171875,
+        -0.00439453125
+      ],
+      "wins_a": 16,
+      "losses_a": 0,
+      "discordant": 16,
+      "exact_two_sided_p": 3.0517578125e-05,
+      "exact_one_sided_p": 1.52587890625e-05,
+      "resamples": 10000,
+      "seed": 20260921
+    },
+    "F_vs_R1": {
+      "arm_a": "F",
+      "arm_b": "R1",
+      "n": 2048,
+      "point_estimate": -0.005859375,
+      "ci95": [
+        -0.009765625,
+        -0.00244140625
+      ],
+      "wins_a": 14,
+      "losses_a": 2,
+      "discordant": 16,
+      "exact_two_sided_p": 0.004180908203125,
+      "exact_one_sided_p": 0.0020904541015625,
+      "resamples": 10000,
+      "seed": 20260921
+    },
+    "R3_vs_F": {
+      "arm_a": "R3",
+      "arm_b": "F",
+      "n": 2048,
+      "point_estimate": -0.001953125,
+      "ci95": [
+        -0.0048828125,
+        0.00048828125
+      ],
+      "wins_a": 6,
+      "losses_a": 2,
+      "discordant": 8,
+      "exact_two_sided_p": 0.2890625,
+      "exact_one_sided_p": 0.14453125,
+      "resamples": 10000,
+      "seed": 20260921
+    },
+    "F1_vs_B0_stage1only": {
+      "arm_a": "F1",
+      "arm_b": "B0",
+      "n": 2048,
+      "point_estimate": -0.00390625,
+      "wins_a": 10,
+      "losses_a": 2,
+      "discordant": 12,
+      "exact_two_sided_p": 0.03857421875,
+      "exact_one_sided_p": 0.019287109375
+    }
+  },
+  "paired_ber_R3_vs_R1": {
+    "point_bit_diff": -182,
+    "point_ber_diff": -8.678436279296875e-05,
+    "ci95_ber_diff": [
+      -0.00016069412231445312,
+      -2.9087066650390625e-05
+    ]
+  },
+  "decode_wall_seconds": 193.8265428999439
+}

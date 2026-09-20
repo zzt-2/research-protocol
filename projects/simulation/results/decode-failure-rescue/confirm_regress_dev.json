@@ -1,0 +1,261 @@
+{
+  "schema_version": "dfr.confirm.regress-dev.v1",
+  "frames": 64,
+  "b0_mismatch_frames": 0,
+  "arm_mismatch": {
+    "R1_EXT": 0,
+    "R3_CONF": 0,
+    "O1_ORACLE": 0
+  },
+  "r2_k16_changed_frames": 13,
+  "r2_k16_changed_detail": [
+    {
+      "seed": 5002,
+      "old": {
+        "iterations_run": 20,
+        "final_syndrome": 244,
+        "accepted": false,
+        "info_errors": 141,
+        "rescued_to_correct": false,
+        "rescued_to_wrong": false
+      },
+      "new": {
+        "iterations_run": 20,
+        "final_syndrome": 216,
+        "accepted": false,
+        "info_errors": 140,
+        "rescued_to_correct": false,
+        "rescued_to_wrong": false
+      }
+    },
+    {
+      "seed": 5005,
+      "old": {
+        "iterations_run": 20,
+        "final_syndrome": 273,
+        "accepted": false,
+        "info_errors": 244,
+        "rescued_to_correct": false,
+        "rescued_to_wrong": false
+      },
+      "new": {
+        "iterations_run": 20,
+        "final_syndrome": 264,
+        "accepted": false,
+        "info_errors": 246,
+        "rescued_to_correct": false,
+        "rescued_to_wrong": false
+      }
+    },
+    {
+      "seed": 5023,
+      "old": {
+        "iterations_run": 6,
+        "final_syndrome": 0,
+        "accepted": true,
+        "info_errors": 0,
+        "rescued_to_correct": true,
+        "rescued_to_wrong": false
+      },
+      "new": {
+        "iterations_run": 7,
+        "final_syndrome": 0,
+        "accepted": true,
+        "info_errors": 0,
+        "rescued_to_correct": true,
+        "rescued_to_wrong": false
+      }
+    },
+    {
+      "seed": 5029,
+      "old": {
+        "iterations_run": 20,
+        "final_syndrome": 1,
+        "accepted": false,
+        "info_errors": 0,
+        "rescued_to_correct": false,
+        "rescued_to_wrong": false
+      },
+      "new": {
+        "iterations_run": 1,
+        "final_syndrome": 0,
+        "accepted": true,
+        "info_errors": 0,
+        "rescued_to_correct": true,
+        "rescued_to_wrong": false
+      }
+    },
+    {
+      "seed": 5030,
+      "old": {
+        "iterations_run": 20,
+        "final_syndrome": 306,
+        "accepted": false,
+        "info_errors": 205,
+        "rescued_to_correct": false,
+        "rescued_to_wrong": false
+      },
+      "new": {
+        "iterations_run": 20,
+        "final_syndrome": 301,
+        "accepted": false,
+        "info_errors": 203,
+        "rescued_to_correct": false,
+        "rescued_to_wrong": false
+      }
+    },
+    {
+      "seed": 5033,
+      "old": {
+        "iterations_run": 20,
+        "final_syndrome": 275,
+        "accepted": false,
+        "info_errors": 429,
+        "rescued_to_correct": false,
+        "rescued_to_wrong": false
+      },
+      "new": {
+        "iterations_run": 20,
+        "final_syndrome": 258,
+        "accepted": false,
+        "info_errors": 435,
+        "rescued_to_correct": false,
+        "rescued_to_wrong": false
+      }
+    },
+    {
+      "seed": 5037,
+      "old": {
+        "iterations_run": 20,
+        "final_syndrome": 185,
+        "accepted": false,
+        "info_errors": 163,
+        "rescued_to_correct": false,
+        "rescued_to_wrong": false
+      },
+      "new": {
+        "iterations_run": 20,
+        "final_syndrome": 203,
+        "accepted": false,
+        "info_errors": 166,
+        "rescued_to_correct": false,
+        "rescued_to_wrong": false
+      }
+    },
+    {
+      "seed": 5039,
+      "old": {
+        "iterations_run": 20,
+        "final_syndrome": 144,
+        "accepted": false,
+        "info_errors": 93,
+        "rescued_to_correct": false,
+        "rescued_to_wrong": false
+      },
+      "new": {
+        "iterations_run": 20,
+        "final_syndrome": 144,
+        "accepted": false,
+        "info_errors": 92,
+        "rescued_to_correct": false,
+        "rescued_to_wrong": false
+      }
+    },
+    {
+      "seed": 5042,
+      "old": {
+        "iterations_run": 20,
+        "final_syndrome": 274,
+        "accepted": false,
+        "info_errors": 361,
+        "rescued_to_correct": false,
+        "rescued_to_wrong": false
+      },
+      "new": {
+        "iterations_run": 20,
+        "final_syndrome": 261,
+        "accepted": false,
+        "info_errors": 361,
+        "rescued_to_correct": false,
+        "rescued_to_wrong": false
+      }
+    },
+    {
+      "seed": 5043,
+      "old": {
+        "iterations_run": 20,
+        "final_syndrome": 244,
+        "accepted": false,
+        "info_errors": 378,
+        "rescued_to_correct": false,
+        "rescued_to_wrong": false
+      },
+      "new": {
+        "iterations_run": 20,
+        "final_syndrome": 277,
+        "accepted": false,
+        "info_errors": 381,
+        "rescued_to_correct": false,
+        "rescued_to_wrong": false
+      }
+    },
+    {
+      "seed": 5051,
+      "old": {
+        "iterations_run": 20,
+        "final_syndrome": 225,
+        "accepted": false,
+        "info_errors": 416,
+        "rescued_to_correct": false,
+        "rescued_to_wrong": false
+      },
+      "new": {
+        "iterations_run": 20,
+        "final_syndrome": 271,
+        "accepted": false,
+        "info_errors": 417,
+        "rescued_to_correct": false,
+        "rescued_to_wrong": false
+      }
+    },
+    {
+      "seed": 5054,
+      "old": {
+        "iterations_run": 20,
+        "final_syndrome": 215,
+        "accepted": false,
+        "info_errors": 118,
+        "rescued_to_correct": false,
+        "rescued_to_wrong": false
+      },
+      "new": {
+        "iterations_run": 20,
+        "final_syndrome": 201,
+        "accepted": false,
+        "info_errors": 117,
+        "rescued_to_correct": false,
+        "rescued_to_wrong": false
+      }
+    },
+    {
+      "seed": 5059,
+      "old": {
+        "iterations_run": 20,
+        "final_syndrome": 271,
+        "accepted": false,
+        "info_errors": 306,
+        "rescued_to_correct": false,
+        "rescued_to_wrong": false
+      },
+      "new": {
+        "iterations_run": 20,
+        "final_syndrome": 331,
+        "accepted": false,
+        "info_errors": 289,
+        "rescued_to_correct": false,
+        "rescued_to_wrong": false
+      }
+    }
+  ],
+  "pass": true
+}
