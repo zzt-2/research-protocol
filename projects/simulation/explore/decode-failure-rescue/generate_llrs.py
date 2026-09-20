@@ -28,8 +28,21 @@ single_cell.py:263 and the nominal LLR noise power :523).  Cache directory
 gets a ``_snrX`` suffix; npz metadata records the override and the copied
 source line ranges.
 
+Turbulence override (conditions round, conditions_contract.yaml): same
+replicated construction path with the Gamma-Gamma shape fields
+``turbulence_alpha`` / ``turbulence_beta`` additionally replaced
+(sourced levels from params.py TurbulenceParams: weak (11.6,10.1) /
+moderate (4.0,1.9) / strong (4.2,1.4), Gu et al. 2022
+doi:10.3390/app12073331 p.5, Al-Habash 2001).  alpha/beta are
+distribution parameters of ``common._channel.gg_block`` (two fixed-count
+gamma draws per block); changing their values does not change the number
+or order of RNG consumptions, so the override is a pure parameter
+substitution on the real signal-generation chain.  Cache directory gets
+an additional ``_turbAxB`` suffix.
+
 Usage:
     python generate_llrs.py --split smoke|dev|eval [--snr-db-override 17.0]
+                            [--turb-alpha-override 11.6 --turb-beta-override 10.1]
                             [--limit N] [--force]
 """
 
@@ -89,12 +102,17 @@ def _array_sha256(value: np.ndarray) -> str:
     return digest.hexdigest()
 
 
-def _generate_physical_frame_snr_override(sc, *, seed: int, coded_bits: np.ndarray,
-                                          snr_db_override: float) -> dict[str, Any]:
-    """Copy of single_cell.generate_coded_physical_frame (:208-310), one field overridden.
+def _generate_physical_frame_snr_override(
+    sc, *, seed: int, coded_bits: np.ndarray,
+    snr_db_override: float,
+    turb_alpha_override: float | None = None,
+    turb_beta_override: float | None = None,
+) -> dict[str, Any]:
+    """Copy of single_cell.generate_coded_physical_frame (:208-310), fields overridden.
 
     Every config field is read from the same frozen manifest; only
-    ``snr_db`` takes the override value.  RNG ownership and call order are
+    ``snr_db`` (always) and ``turbulence_alpha``/``turbulence_beta`` (when
+    given) take the override values.  RNG ownership and call order are
     preserved verbatim (legacy global seed for GG/CFO/Wiener, PCG64 for
     Jones/circular AWGN).
     """
@@ -104,13 +122,17 @@ def _generate_physical_frame_snr_override(sc, *, seed: int, coded_bits: np.ndarr
     ch4 = manifest["ch4"]
     bridge = sc._bridge()
     mapping = sc.build_dp_symbol_frame(coded_bits)
+    turbulence_alpha = (cell["turbulence_alpha"] if turb_alpha_override is None
+                        else float(turb_alpha_override))
+    turbulence_beta = (cell["turbulence_beta"] if turb_beta_override is None
+                       else float(turb_beta_override))
     config = bridge.BridgeConfig.correctness_fixture(
         seed=int(seed),
         n_symbols=cell["observation_symbols_per_polarization"],
         observation_stop=cell["observation_symbols_per_polarization"],
-        snr_db=float(snr_db_override),  # <-- the single overridden field
-        turbulence_alpha=cell["turbulence_alpha"],
-        turbulence_beta=cell["turbulence_beta"],
+        snr_db=float(snr_db_override),  # <-- overridden field
+        turbulence_alpha=turbulence_alpha,   # <-- overridden when given
+        turbulence_beta=turbulence_beta,     # <-- overridden when given
         gamma_gamma_block=cell["gamma_gamma_block"],
         f_residual_hz=cell["residual_frequency_hz"],
         f_dot_hz_per_s=cell["frequency_slope_hz_per_s"],
@@ -166,7 +188,9 @@ def _generate_physical_frame_snr_override(sc, *, seed: int, coded_bits: np.ndarr
     return {"receiver": receiver, "mapping": mapping}
 
 
-def build_frame(sc, codec, *, seed: int, snr_db_override: float | None):
+def build_frame(sc, codec, *, seed: int, snr_db_override: float | None,
+                turb_alpha_override: float | None = None,
+                turb_beta_override: float | None = None):
     """One full frame -> (llr, truth_info, truth_coded, receipt)."""
     info_rng = np.random.default_rng(np.random.SeedSequence([seed, 77, 5]))
     info = info_rng.integers(0, 2, size=(1, 1024), dtype=np.uint8)
@@ -176,7 +200,9 @@ def build_frame(sc, codec, *, seed: int, snr_db_override: float | None):
         receiver = physical["receiver"]
     else:
         physical = _generate_physical_frame_snr_override(
-            sc, seed=seed, coded_bits=coded[0], snr_db_override=snr_db_override
+            sc, seed=seed, coded_bits=coded[0], snr_db_override=snr_db_override,
+            turb_alpha_override=turb_alpha_override,
+            turb_beta_override=turb_beta_override,
         )
         receiver = physical["receiver"]
     receiver_result = sc.run_coded_receiver(receiver)
@@ -203,8 +229,14 @@ def build_frame(sc, codec, *, seed: int, snr_db_override: float | None):
     }
 
 
-def cache_dir(split: str, snr_db_override: float | None) -> Path:
-    tag = split if snr_db_override is None else f"{split}_snr{snr_db_override:g}"
+def cache_dir(split: str, snr_db_override: float | None,
+              turb_alpha_override: float | None = None,
+              turb_beta_override: float | None = None) -> Path:
+    tag = split
+    if snr_db_override is not None:
+        tag += f"_snr{snr_db_override:g}"
+    if turb_alpha_override is not None and turb_beta_override is not None:
+        tag += f"_turb{turb_alpha_override:g}x{turb_beta_override:g}"
     return RESULTS_ROOT / "llr_cache" / tag
 
 
@@ -212,16 +244,22 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--split", required=True, choices=sorted(SPLITS))
     parser.add_argument("--snr-db-override", type=float, default=None)
+    parser.add_argument("--turb-alpha-override", type=float, default=None)
+    parser.add_argument("--turb-beta-override", type=float, default=None)
     parser.add_argument("--limit", type=int, default=None,
                         help="generate only the first N frames of the split")
     parser.add_argument("--force", action="store_true",
                         help="regenerate frames even if the npz exists")
     args = parser.parse_args()
+    if (args.turb_alpha_override is None) != (args.turb_beta_override is None):
+        raise SystemExit("--turb-alpha-override and --turb-beta-override must be given together")
 
     sc = _load_single_cell()
     codec = sc._correctness().TargetApskCodec()
     manifest = sc.load_manifest()
     manifest_snr = float(manifest["cell"]["snr_db"])
+    manifest_alpha = float(manifest["cell"]["turbulence_alpha"])
+    manifest_beta = float(manifest["cell"]["turbulence_beta"])
 
     seeds = list(
         range(SPLITS[args.split]["start"], SPLITS[args.split]["stop_inclusive"] + 1)
@@ -229,7 +267,8 @@ def main() -> int:
     if args.limit is not None:
         seeds = seeds[: args.limit]
 
-    target = cache_dir(args.split, args.snr_db_override)
+    target = cache_dir(args.split, args.snr_db_override,
+                       args.turb_alpha_override, args.turb_beta_override)
     target.mkdir(parents=True, exist_ok=True)
     meta_path = RESULTS_ROOT / f"generation_meta_{target.name}.json"
 
@@ -242,7 +281,9 @@ def main() -> int:
             continue
         t0 = time.perf_counter()
         frame = build_frame(
-            sc, codec, seed=seed, snr_db_override=args.snr_db_override
+            sc, codec, seed=seed, snr_db_override=args.snr_db_override,
+            turb_alpha_override=args.turb_alpha_override,
+            turb_beta_override=args.turb_beta_override,
         )
         elapsed = time.perf_counter() - t0
         timings.append(elapsed)
@@ -261,6 +302,18 @@ def main() -> int:
             snr_db_manifest=manifest_snr,
             snr_db_override=(np.float64(args.snr_db_override)
                              if args.snr_db_override is not None else np.float64(np.nan)),
+            turbulence_alpha=(manifest_alpha if args.turb_alpha_override is None
+                              else float(args.turb_alpha_override)),
+            turbulence_beta=(manifest_beta if args.turb_beta_override is None
+                             else float(args.turb_beta_override)),
+            turbulence_alpha_manifest=manifest_alpha,
+            turbulence_beta_manifest=manifest_beta,
+            turbulence_alpha_override=(np.float64(args.turb_alpha_override)
+                                       if args.turb_alpha_override is not None
+                                       else np.float64(np.nan)),
+            turbulence_beta_override=(np.float64(args.turb_beta_override)
+                                      if args.turb_beta_override is not None
+                                      else np.float64(np.nan)),
             source_refs=json.dumps(SOURCE_REFS),
         )
         generated += 1
@@ -273,6 +326,12 @@ def main() -> int:
         "schema_version": "dfr.llr-cache.generation-meta.v1",
         "split": args.split,
         "snr_db_override": args.snr_db_override,
+        "turbulence_alpha_override": args.turb_alpha_override,
+        "turbulence_beta_override": args.turb_beta_override,
+        "turbulence_alpha_used": (manifest_alpha if args.turb_alpha_override is None
+                                  else float(args.turb_alpha_override)),
+        "turbulence_beta_used": (manifest_beta if args.turb_beta_override is None
+                                 else float(args.turb_beta_override)),
         "cache_dir": str(target),
         "seeds": {"start": seeds[0], "stop_inclusive": seeds[-1], "count": len(seeds)},
         "generated": generated,

@@ -1,0 +1,39 @@
+{
+  "schema_version": "dfr.llr-cache.generation-meta.v1",
+  "split": "smoke_W13",
+  "snr_db_override": 13.0,
+  "turbulence_alpha_override": 11.6,
+  "turbulence_beta_override": 10.1,
+  "turbulence_alpha_used": 11.6,
+  "turbulence_beta_used": 10.1,
+  "cache_dir": "D:\\code\\study\\research-protocol\\.worktrees\\rdl-method-production-v2\\projects\\simulation\\results\\decode-failure-rescue\\llr_cache\\smoke_W13_snr13_turb11.6x10.1",
+  "seeds": {
+    "start": 39900,
+    "stop_inclusive": 39903,
+    "count": 4
+  },
+  "generated": 4,
+  "skipped_existing": 0,
+  "per_frame_seconds": [
+    3.9084820999996737,
+    0.02664830000139773,
+    0.022475000005215406,
+    0.0253993000369519
+  ],
+  "mean_frame_seconds": 0.9957511750108097,
+  "versions": {
+    "python": "3.14.2",
+    "sionna": "2.0.1",
+    "torch": "2.13.0+cpu",
+    "numpy": "2.5.1"
+  },
+  "source_refs": {
+    "info_bits_rule": "ch5-apsk-llr-calibration/single_cell.py:518-519,617-618,1107-1108",
+    "encode": "ch5-apsk-llr-calibration/correctness.py:339-351",
+    "physical_frame": "ch5-apsk-llr-calibration/single_cell.py:208-310",
+    "receiver": "ch5-apsk-llr-calibration/single_cell.py:313-326",
+    "nominal_n0_rule": "ch5-apsk-llr-calibration/single_cell.py:523,615,1079",
+    "b0_llr": "ch5-apsk-llr-calibration/single_cell.py:381-401",
+    "snr_override_copy": "ch5-apsk-llr-calibration/single_cell.py:208-310 (replicated with single snr_db field replaced)"
+  }
+}

@@ -1,0 +1,136 @@
+schema_version: dfr-rescue-conditions.v1
+authority: >
+  用户 2026-09-20 提示词（适用条件探索轮：查清哪些合理工作条件可能放大现有
+  方法的实际收益，并完成一轮有界验证）/ D051 / D052 / step-208 / S018§20 /
+  confirm_contract.yaml（臂与统一规则继承）。
+action_class: DECODE_FAILURE_RESCUE_CONDITION_EXPLORATION
+created: 2026-09-20
+status: EXECUTED   # 批1前冻结；执行轨迹见 dev_batches_log 与 conditions_confirm.yaml
+
+# ============================================================
+# 本轮问题：R3 相对 R1 的 FER 收益（15dB 锚点 −0.78pp / −3.3% 相对）在哪些
+# 合理工作条件下会更大？条件 = SNR 档 × 有文献来源的 Gamma-Gamma 湍流档。
+# 不改：码（5G LDPC BG2 z=104, 1024/1536）、调制（DP-16APSK）、交织、臂配置、
+# 迭代上限（20+20）、统一输出规则、接收链。只经真实信号生成链换条件。
+# ============================================================
+
+step1_established_mechanism:   # 全部来自已有产物，未跑新实验
+  source: results/decode-failure-rescue/{raw_confirm2048.json, analysis_confirm2048_features.json}
+  findings:
+    - 救援仅发生在信道硬判错误（ch_hd_errors，真值解释量，非部署信号）
+      ≈[100,140) 的边际带：15dB 锚点 501 个 B0 失败帧中，带内 63 帧，
+      R1 救 19（30%）、R3 救 34（54%）；R3 全部 16 个净胜帧均在带内且全部
+      通过校验真接受（零错收）。
+    - 译码悬崖在 ch_hd_errors≈140-160：≥160 的 380 帧（占失败 76%）任何臂
+      零救援；[140,160) 58 帧仅 R1 1 / R3 2。
+    - 可救帧与双失败帧在接收端可观测代理上仅弱可分（frac|LLR|<1 中位
+      0.038 vs 0.043），区分主要靠真值解释量——机制解释用，不部署。
+    - 17dB 旧 eval（同种子、统一规则重算）：边际带绝对数 17→15、净差 4→2、
+      深衰落帧（ch_err>320）仍有 24 帧——升 SNR 不消除衰落尾，不放大收益。
+    - 三档湍流衰落分布（GG 幅度衰落，40 万样本蒙特卡洛）：
+      weak(11.6,10.1) P(<-6dB)=0.37% P(<-10dB)≈0；
+      moderate(4.0,1.9) P(<-6dB)=15.7% P(<-10dB)=4.0%；
+      strong(4.2,1.4) P(<-6dB)=20.2% P(<-10dB)=6.9%。
+
+hypotheses:
+  H1_weak_turb_matched_fer:   # 主假设
+    statement: 弱湍流(11.6,10.1)+SNR 下调至 B0 FER≈0.15-0.35 的匹配工作点
+    mechanism: >
+      去掉深衰落尾后，失败帧不再由灾难性整帧深衰落主导，而集中于译码悬崖
+      附近（边际带占失败的比例从 ~13-19% 大幅上升）。R3 的带内条件优势
+      （54% vs 31% 救援率）作用于大得多的带，绝对与相对 FER 收益都可能放大。
+    risk: >
+      弱湍流下错误由噪声散布而非衰落突发构成，R3 的带内优势可能不保留；
+      dev 直接回答。
+    provenance: 湍流档 Gu et al. 2022 doi:10.3390/app12073331 p.5（params.py
+      TurbulenceParams，audit OK，与冻结合同 moderate 档同源）。
+  H2_moderate_snr_down:       # 次假设（机制对照）
+    statement: 中等湍流(4.0,1.9) SNR 下行（15→14 或 13dB）
+    mechanism: >
+      健康模态向悬崖平移，边际带绝对数上升 → 绝对救回数可能上升；但灾难
+      帧同时膨胀（分母变大），相对%未必升。与 H1 构成"进带"的两种不同
+      途径对照（H1 去灾难尾 vs H2 增灾难尾）。
+  H3_strong_turb:             # 稀释对照（预期负结果，作 bracket）
+    statement: 强湍流(4.2,1.4) @ SNR 调至 FER≈0.2-0.35
+    mechanism: 灾难尾更重 → 边际带占比更低 → 预期收益稀释。
+  H4_finite_word_length: 后备，本轮不执行（用户指令：不新建定点译码器）。
+
+unified_rules: 继承 confirm_contract.yaml 全部（共享逐帧 LLR、触发、统一输出
+  规则、早停、真值只评分、四臂 B0/R1/R3/F、迭代 20+20）。
+
+dev_plan:
+  budget: 最多 6 个新条件，每条件 512 帧开发样本。
+  batch1:   # 依据：三档湍流各探一点 + 弱湍流双点夹住目标 FER 窗
+    - {tag: dev_W13, seeds: 40000-40511, snr_db: 13.0, turb: [11.6, 10.1]}
+    - {tag: dev_W12, seeds: 41000-41511, snr_db: 12.0, turb: [11.6, 10.1]}
+    - {tag: dev_M14, seeds: 42000-42511, snr_db: 14.0, turb: [4.0, 1.9]}
+    - {tag: dev_S16, seeds: 43000-43511, snr_db: 16.0, turb: [4.2, 1.4]}
+  adaptive_rule: >
+    批 1 后最多再加 2 个条件（dev_seed 池 44000-44511 / 45000-45511），
+    每批开跑前在本文件 dev_batches_log 登记依据（预期目标 FER 窗 0.10-0.40，
+    优先把最有希望的条件调进窗）。若某条件 B0 FER<0.05：记"未判定"，
+    不追加样本找显著性。
+  seed_isolation: >
+    全部新 seed 块与历史零重叠（历史占用：0-63/2000-2063/2900-2907/
+    3000-3063/4000-4511/5000-5063/6000-6019/7000-7039/8000-8039/9000-9019/
+    10000-10099/13xxxx/30000-32047）。
+
+confirm_selection_rule:   # 看任何确认结果之前冻结
+  eligibility: dev 条件 B0 FER ∈ [0.10, 0.40]（512 帧上 ≥51 个失败帧，
+    事件量足以支撑 2048 帧确认）。
+  ranking: 主排序 = 配对绝对 FER 差（R3−R1，pp，按点估计）；并列时按
+    相对百分比。
+  selection: >
+    最多选 2 个条件进确认：(a) 排名第 1 的条件；(b) 若排名第 2 及以后的
+    条件中存在与 (a) 不同假设族（H1/H2/H3）且配对差 >0 且 exact 单侧
+    p<0.10 者，选其中排名最高者；否则只确认 1 个；全部不达标则 0 个。
+  confirm_params: >
+    每选定条件 2048 帧全新样本一次生成一次运行；seed 块 50000-52047 与
+    53000-55047（按选定顺序分配）；臂/规则/指标与确认轮完全一致；
+    15dB 锚点（confirm2048）保留为独立批次，不同批次不混算配对统计。
+    选定条件、参数、样本量在运行前写入 conditions_confirm.yaml（冻结件）。
+  stop_after_confirm: 本轮确认后即收口，不自动加参数/工况/新方法搜索。
+
+metrics: 继承 confirm_contract.yaml metrics 全部（primary=配对帧级 FER 差
+  +exact+bootstrap；secondary=BER/校验失败率/接受后仍错/迭代代价/F 对照），
+  另加：composition 边际带表（解释用，ch_hd_errors 为真值解释量）。
+reporting_rules:
+  - 所有探索条件如实全列，不只展示最佳点。
+  - 条件内救援率提高 ≠ 全样本效果更大；相对%变大 ≠ 绝对收益变大——两种
+    情况都报告（绝对 pp、相对%、净胜帧数并列）。
+  - 单点不换算等 FER 的 SNR 差；仅当曲线覆盖同 FER 且可插值时才报 dB 差。
+  - 统计显著 ≠ 指标漂亮：效应幅度与成本并列。
+  - 若 F（从头切换配置）同样好或更好，据实收窄 R3 价值。
+
+versioning:
+  old_artifacts_untouched: 继承 confirm_contract.yaml 全部旧产物清单；
+    generate_llrs.py 仅追加 override 参数（默认 None 走原路径，回归以
+    run_confirm.py --anchor 验证逐位一致）。
+  new_artifacts: >
+    conditions_contract.yaml（本文件）、run_conditions.py、
+    analyze_confirm_features.py、results/decode-failure-rescue/
+    llr_cache/{dev_*,confirm_*}/、generation_meta_{tag}.json、
+    raw_{tag}.json、summary_{tag}.json、analysis_confirm2048_features.json、
+    conditions_confirm.yaml（确认前冻结件）。
+
+dev_batches_log:   # 每批开跑前登记（追加，不删改）
+  - batch: 1
+    date: 2026-09-20
+    conditions: [dev_W13, dev_W12, dev_M14, dev_S16]
+    rationale: >
+      三档湍流各探一点 + 弱湍流 12/13dB 双点夹目标窗。W15 弃选：弱湍流
+      15dB 帧有效率 SNR 几乎全 ≥9dB 且中位 -0.3dB 衰落，FER 预计 <0.02，
+      必然"未判定"，不占预算。M14 而非 M13：15dB 已有 FER 0.245 锚点，
+      -1dB 步长先探；若 FER 仍 <0.40 再考虑 M13（自适应槽）。S16 而非
+      S15：强湍流 15dB 预计 FER >0.35 偏高，+1dB 更接近匹配窗。
+    pre_run_probe: >
+      批前冒烟（非条件样本，seed 39700-39715 内存内弃置）：4 帧 override
+      探针 + 16帧×4档 B0 FER 探针 W13≈0.19/W12≈0.25/W11≈0.38/W10≈0.50，
+      修正"W13 必然样本不足"的单帧误判，批 1 选点维持原冻结。
+    outcome: >
+      全部完成：W13 −2/512（2/0，p=0.50）边际带 0.114；W12 −6/512
+      （6/0，p=0.031）边际带 0.189；M14 −1/512（1/0，p=1.0）边际带 0.068
+      （H2 否）；S16 −4/512（4/0，p=0.125）边际带 0.151（H3 未稀释）。
+      自适应槽不使用（避免条件钓鱼）；按冻结论选规则选 dev_W12（第 1 名，
+      H1 族）与 dev_S16（不同族 + 单侧 p=0.0625<0.10）进确认，
+      见 conditions_confirm.yaml。

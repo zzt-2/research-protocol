@@ -1,0 +1,206 @@
+{
+  "schema_version": "dfr.confirm.summary.v1",
+  "split": "dev_W12",
+  "frames": 512,
+  "metric_note": "all metrics on FINAL outputs (unified rule); check_fail = final syndrome!=0; accepted_but_wrong = final syndrome==0 yet info bits wrong",
+  "stage1": {
+    "B0": {
+      "info_error_frames": 169,
+      "bit_errors": 26432,
+      "fer": 0.330078125,
+      "ber": 0.0504150390625,
+      "syndrome_fail_frames": 174
+    },
+    "F1": {
+      "info_error_frames": 167,
+      "bit_errors": 27751,
+      "fer": 0.326171875,
+      "ber": 0.05293083190917969,
+      "syndrome_fail_frames": 169
+    }
+  },
+  "arms": {
+    "B0": {
+      "info_error_frames": 169,
+      "fer": 0.330078125,
+      "bit_errors": 26432,
+      "ber": 0.0504150390625,
+      "check_fail_frames": 174,
+      "check_fail_rate": 0.33984375,
+      "accepted_but_wrong_frames": 0,
+      "triggered_frames": 174,
+      "mean_total_iterations": 20.0,
+      "p95_total_iterations": 20.0,
+      "mean_stage2_iterations_on_triggered": null
+    },
+    "R1": {
+      "info_error_frames": 155,
+      "fer": 0.302734375,
+      "bit_errors": 26303,
+      "ber": 0.05016899108886719,
+      "check_fail_frames": 155,
+      "check_fail_rate": 0.302734375,
+      "accepted_but_wrong_frames": 0,
+      "triggered_frames": 174,
+      "mean_total_iterations": 26.25390625,
+      "p95_total_iterations": 40.0,
+      "mean_stage2_iterations_on_triggered": 18.402298850574713
+    },
+    "R3": {
+      "info_error_frames": 149,
+      "fer": 0.291015625,
+      "bit_errors": 26183,
+      "ber": 0.04994010925292969,
+      "check_fail_frames": 149,
+      "check_fail_rate": 0.291015625,
+      "accepted_but_wrong_frames": 0,
+      "triggered_frames": 174,
+      "mean_total_iterations": 26.109375,
+      "p95_total_iterations": 40.0,
+      "mean_stage2_iterations_on_triggered": 17.977011494252874
+    },
+    "F": {
+      "info_error_frames": 151,
+      "fer": 0.294921875,
+      "bit_errors": 27475,
+      "ber": 0.05240440368652344,
+      "check_fail_frames": 151,
+      "check_fail_rate": 0.294921875,
+      "accepted_but_wrong_frames": 0,
+      "triggered_frames": 169,
+      "mean_total_iterations": 26.1484375,
+      "p95_total_iterations": 40.0,
+      "mean_stage2_iterations_on_triggered": 18.62721893491124
+    }
+  },
+  "paired": {
+    "R3_vs_R1": {
+      "arm_a": "R3",
+      "arm_b": "R1",
+      "n": 512,
+      "point_estimate": -0.01171875,
+      "ci95": [
+        -0.021484375,
+        -0.00390625
+      ],
+      "wins_a": 6,
+      "losses_a": 0,
+      "discordant": 6,
+      "exact_two_sided_p": 0.03125,
+      "exact_one_sided_p": 0.015625,
+      "resamples": 10000,
+      "seed": 20260921
+    },
+    "F_vs_R1": {
+      "arm_a": "F",
+      "arm_b": "R1",
+      "n": 512,
+      "point_estimate": -0.0078125,
+      "ci95": [
+        -0.015625,
+        -0.001953125
+      ],
+      "wins_a": 4,
+      "losses_a": 0,
+      "discordant": 4,
+      "exact_two_sided_p": 0.125,
+      "exact_one_sided_p": 0.0625,
+      "resamples": 10000,
+      "seed": 20260921
+    },
+    "R3_vs_F": {
+      "arm_a": "R3",
+      "arm_b": "F",
+      "n": 512,
+      "point_estimate": -0.00390625,
+      "ci95": [
+        -0.01171875,
+        0.00390625
+      ],
+      "wins_a": 3,
+      "losses_a": 1,
+      "discordant": 4,
+      "exact_two_sided_p": 0.625,
+      "exact_one_sided_p": 0.3125,
+      "resamples": 10000,
+      "seed": 20260921
+    },
+    "F1_vs_B0_stage1only": {
+      "arm_a": "F1",
+      "arm_b": "B0",
+      "n": 512,
+      "point_estimate": -0.00390625,
+      "wins_a": 3,
+      "losses_a": 1,
+      "discordant": 4,
+      "exact_two_sided_p": 0.625,
+      "exact_one_sided_p": 0.3125
+    }
+  },
+  "paired_ber_R3_vs_R1": {
+    "point_bit_diff": -120,
+    "point_ber_diff": -0.0002288818359375,
+    "ci95_ber_diff": [
+      -0.00045018196105957027,
+      -4.9591064453125e-05
+    ]
+  },
+  "condition": {
+    "tag": "dev_W12",
+    "snr_db": 12.0,
+    "turbulence_alpha": 11.6,
+    "turbulence_beta": 10.1,
+    "seeds": {
+      "start": 41000,
+      "stop_inclusive": 41511,
+      "count": 512
+    }
+  },
+  "composition": {
+    "b0_failed": 169,
+    "ch_hd_err_quantiles": {
+      "10": 133.0,
+      "25": 150.0,
+      "50": 174.0,
+      "75": 311.0
+    },
+    "bands": {
+      "[0,100)": {
+        "n": 0,
+        "r1_rescued": 0,
+        "r3_rescued": 0
+      },
+      "[100,140)": {
+        "n": 32,
+        "r1_rescued": 13,
+        "r3_rescued": 17
+      },
+      "[140,160)": {
+        "n": 25,
+        "r1_rescued": 1,
+        "r3_rescued": 3
+      },
+      "[160,220)": {
+        "n": 55,
+        "r1_rescued": 0,
+        "r3_rescued": 0
+      },
+      "[220,320)": {
+        "n": 16,
+        "r1_rescued": 0,
+        "r3_rescued": 0
+      },
+      "[320,inf)": {
+        "n": 41,
+        "r1_rescued": 0,
+        "r3_rescued": 0
+      }
+    },
+    "marginal_band_fraction_of_failures": 0.1893491124260355,
+    "note": "ch_hd_errors is truth-based, explanation only"
+  },
+  "wall_seconds": {
+    "generate": 15.396114399889484,
+    "decode": 50.06202780001331
+  }
+}

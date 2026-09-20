@@ -1,0 +1,47 @@
+schema_version: dfr-rescue-conditions-confirm.v1
+authority: >
+  conditions_contract.yaml confirm_selection_rule（看任何确认结果之前冻结）。
+action_class: DECODE_FAILURE_RESCUE_CONDITION_CONFIRM
+created: 2026-09-20
+status: EXECUTED   # 运行前冻结；结果见 step-209 与 summary_confirm_{W12,S16}.json
+
+# ============================================================
+# 依冻结论选规则从开发批 1（4 条件，全部完成并解读后）选出 2 个确认条件。
+# 选点依据（开发批 1 实测，512 帧开发者样本）：
+#   排名（配对绝对 FER 差 R3−R1）：dev_W12 −0.0117 > dev_S16 −0.0078 >
+#   dev_W13 −0.0039 > dev_M14 −0.0020；全部 B0 FER ∈ [0.10,0.40] 资格窗。
+#   (a) 第 1 名 dev_W12（H1 弱湍流族）。
+#   (b) 不同假设族 + 配对改善>0 + exact 单侧 p<0.10：dev_S16（H3 强湍流族，
+#       4 胜 0 负，单侧 p=0.0625）入选；dev_W13 与 dev_W12 同族排除，
+#       dev_M14 p=1.0 排除。
+# ============================================================
+
+confirm_conditions:
+  - tag: confirm_W12
+    from_dev: dev_W12
+    hypothesis_family: H1_weak_turb_matched_fer
+    params: {snr_db: 12.0, turbulence_alpha: 11.6, turbulence_beta: 10.1}
+    seeds: {start: 50000, stop_inclusive: 52047, count: 2048}
+    expectation_from_dev: >
+      开发点 −6/512（−1.17pp，相对 3.9%，6/0，p=0.031）；若速率保持，
+      2048 帧预计 −20 至 −28 帧。这是本轮"放大"判定的主判据点：相对锚点
+      （−0.78pp/−3.3%）是否出现更有分量且可复现的收益。
+  - tag: confirm_S16
+    from_dev: dev_S16
+    hypothesis_family: H3_strong_turb
+    params: {snr_db: 16.0, turbulence_alpha: 4.2, turbulence_beta: 1.4}
+    seeds: {start: 53000, stop_inclusive: 55047, count: 2048}
+    expectation_from_dev: >
+      开发点 −4/512（−0.78pp，4/0，p=0.125）与锚点同速率；确认它回答
+      效应在强湍流匹配 FER 工作点是否复现（工作区间问题），不预期放大。
+
+rules: 继承 confirm_contract.yaml 全部统一规则与四臂（B0/R1/R3/F，20+20，
+  统一输出，真值只评分）；每条件一次生成一次运行，固定总量不追加。
+seed_isolation: 50000-52047 与 53000-55047 与全部历史及开发批零重叠。
+analysis_plan:
+  - 主判据：confirm_W12 配对 R3 vs R1 绝对 FER 差与相对%，对照锚点
+    confirm2048（−16/2048，−0.78pp，−3.3%）；不同批次不混算配对统计。
+  - 次判据：R3 vs F（门控增量）、BER 四臂、迭代代价、接受后仍错、
+    composition 边际带表（解释用）。
+  - 停止点：两个确认条件运行+复核完成后本轮收口；不追加条件/参数/
+    SNR 扫描/新方法搜索。

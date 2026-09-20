@@ -1,0 +1,206 @@
+{
+  "schema_version": "dfr.confirm.summary.v1",
+  "split": "confirm_W12",
+  "frames": 2048,
+  "metric_note": "all metrics on FINAL outputs (unified rule); check_fail = final syndrome!=0; accepted_but_wrong = final syndrome==0 yet info bits wrong",
+  "stage1": {
+    "B0": {
+      "info_error_frames": 577,
+      "bit_errors": 85056,
+      "fer": 0.28173828125,
+      "ber": 0.040557861328125,
+      "syndrome_fail_frames": 588
+    },
+    "F1": {
+      "info_error_frames": 570,
+      "bit_errors": 90123,
+      "fer": 0.2783203125,
+      "ber": 0.042973995208740234,
+      "syndrome_fail_frames": 576
+    }
+  },
+  "arms": {
+    "B0": {
+      "info_error_frames": 577,
+      "fer": 0.28173828125,
+      "bit_errors": 85056,
+      "ber": 0.040557861328125,
+      "check_fail_frames": 588,
+      "check_fail_rate": 0.287109375,
+      "accepted_but_wrong_frames": 0,
+      "triggered_frames": 588,
+      "mean_total_iterations": 20.0,
+      "p95_total_iterations": 20.0,
+      "mean_stage2_iterations_on_triggered": null
+    },
+    "R1": {
+      "info_error_frames": 515,
+      "fer": 0.25146484375,
+      "bit_errors": 84411,
+      "ber": 0.040250301361083984,
+      "check_fail_frames": 515,
+      "check_fail_rate": 0.25146484375,
+      "accepted_but_wrong_frames": 0,
+      "triggered_frames": 588,
+      "mean_total_iterations": 25.322265625,
+      "p95_total_iterations": 40.0,
+      "mean_stage2_iterations_on_triggered": 18.537414965986393
+    },
+    "R3": {
+      "info_error_frames": 502,
+      "fer": 0.2451171875,
+      "bit_errors": 84079,
+      "ber": 0.04009199142456055,
+      "check_fail_frames": 502,
+      "check_fail_rate": 0.2451171875,
+      "accepted_but_wrong_frames": 0,
+      "triggered_frames": 588,
+      "mean_total_iterations": 25.17919921875,
+      "p95_total_iterations": 40.0,
+      "mean_stage2_iterations_on_triggered": 18.039115646258505
+    },
+    "F": {
+      "info_error_frames": 513,
+      "fer": 0.25048828125,
+      "bit_errors": 89295,
+      "ber": 0.04257917404174805,
+      "check_fail_frames": 513,
+      "check_fail_rate": 0.25048828125,
+      "accepted_but_wrong_frames": 0,
+      "triggered_frames": 576,
+      "mean_total_iterations": 25.2158203125,
+      "p95_total_iterations": 40.0,
+      "mean_stage2_iterations_on_triggered": 18.54513888888889
+    }
+  },
+  "paired": {
+    "R3_vs_R1": {
+      "arm_a": "R3",
+      "arm_b": "R1",
+      "n": 2048,
+      "point_estimate": -0.00634765625,
+      "ci95": [
+        -0.01025390625,
+        -0.0029296875
+      ],
+      "wins_a": 13,
+      "losses_a": 0,
+      "discordant": 13,
+      "exact_two_sided_p": 0.000244140625,
+      "exact_one_sided_p": 0.0001220703125,
+      "resamples": 10000,
+      "seed": 20260921
+    },
+    "F_vs_R1": {
+      "arm_a": "F",
+      "arm_b": "R1",
+      "n": 2048,
+      "point_estimate": -0.0009765625,
+      "ci95": [
+        -0.00390625,
+        0.00146484375
+      ],
+      "wins_a": 5,
+      "losses_a": 3,
+      "discordant": 8,
+      "exact_two_sided_p": 0.7265625,
+      "exact_one_sided_p": 0.36328125,
+      "resamples": 10000,
+      "seed": 20260921
+    },
+    "R3_vs_F": {
+      "arm_a": "R3",
+      "arm_b": "F",
+      "n": 2048,
+      "point_estimate": -0.00537109375,
+      "ci95": [
+        -0.0087890625,
+        -0.00244140625
+      ],
+      "wins_a": 11,
+      "losses_a": 0,
+      "discordant": 11,
+      "exact_two_sided_p": 0.0009765625,
+      "exact_one_sided_p": 0.00048828125,
+      "resamples": 10000,
+      "seed": 20260921
+    },
+    "F1_vs_B0_stage1only": {
+      "arm_a": "F1",
+      "arm_b": "B0",
+      "n": 2048,
+      "point_estimate": -0.00341796875,
+      "wins_a": 13,
+      "losses_a": 6,
+      "discordant": 19,
+      "exact_two_sided_p": 0.1670684814453125,
+      "exact_one_sided_p": 0.08353424072265625
+    }
+  },
+  "paired_ber_R3_vs_R1": {
+    "point_bit_diff": -332,
+    "point_ber_diff": -0.0001583099365234375,
+    "ci95_ber_diff": [
+      -0.0002770543098449707,
+      -6.532669067382812e-05
+    ]
+  },
+  "condition": {
+    "tag": "confirm_W12",
+    "snr_db": 12.0,
+    "turbulence_alpha": 11.6,
+    "turbulence_beta": 10.1,
+    "seeds": {
+      "start": 50000,
+      "stop_inclusive": 52047,
+      "count": 2048
+    }
+  },
+  "composition": {
+    "b0_failed": 577,
+    "ch_hd_err_quantiles": {
+      "10": 131.0,
+      "25": 144.0,
+      "50": 173.0,
+      "75": 258.0
+    },
+    "bands": {
+      "[0,100)": {
+        "n": 1,
+        "r1_rescued": 1,
+        "r3_rescued": 1
+      },
+      "[100,140)": {
+        "n": 117,
+        "r1_rescued": 55,
+        "r3_rescued": 66
+      },
+      "[140,160)": {
+        "n": 106,
+        "r1_rescued": 6,
+        "r3_rescued": 8
+      },
+      "[160,220)": {
+        "n": 179,
+        "r1_rescued": 0,
+        "r3_rescued": 0
+      },
+      "[220,320)": {
+        "n": 64,
+        "r1_rescued": 0,
+        "r3_rescued": 0
+      },
+      "[320,inf)": {
+        "n": 110,
+        "r1_rescued": 0,
+        "r3_rescued": 0
+      }
+    },
+    "marginal_band_fraction_of_failures": 0.2027729636048527,
+    "note": "ch_hd_errors is truth-based, explanation only"
+  },
+  "wall_seconds": {
+    "generate": 151.3550186000066,
+    "decode": 586.1542812000262
+  }
+}

@@ -846,3 +846,17 @@ PASS。R030 判定的两个硬问题（R2 映射、输出语义）已修复并�
 ### 后续
 
 本轮收口。未执行（缺口非失败）：SNR 扫描、R2 科学重评、oracle、门控变体、正文写作——授权与优先级待用户/导师。
+
+## V039: 适用条件探索轮独立复核（confirm_W12 / confirm_S16）
+
+> 关联：S018§21 / D053 / step-209 / conditions_confirm.yaml | 2026-09-20 | PASS
+
+独立 agent 从 raw_confirm_{W12,S16}.json 与 llr_cache npz 全量重算（verify_tmp.py 保留于 results 目录）：
+
+1. **计数与配对统计**：四臂错帧/错 bit、R3 vs R1 / R3 vs F / F vs R1 的 wins/losses/点估计/exact 双侧 p/bootstrap CI（PCG64 seed=20260921）、paired BER、accepted_but_wrong（全 0）——与 summary 零偏差。PASS
+2. **统一输出规则**：代码审查（触发/接受/输出选择均不含真值，run_confirm.py L304/L98/L313-331）+ 全量数据校验（2048帧×3臂×2条件 trigger/accepted/final 来源一致性零违例）+ 每条件 3 帧重解码逐字段一致。PASS
+3. **种子隔离**：confirm_W12={50000..52047}、confirm_S16={53000..55047} 各 2048、互不相交、与 17 个历史占用块（含 dev 批与 confirm2048）零重叠。PASS
+4. **共享输入与条件参数**：50 帧 llr_sha256 抽查一致 + 每条件首末帧走完整真实信号链重生成（llr/truth/sha 位级一致；澄清 npz 的 sha 覆盖 float64 链路输出而非 float32 存储 cast）；全量 npz 的 snr/turbulence 字段与条件参数一致、manifest 冻结值（4.0/1.9）未被改写。PASS
+5. **构成表**：ch_hd_errors 带表（6 带 + 分位数 + 边际占比）与 summary composition 零偏差。PASS
+
+25/25 全项 PASS。结论：确认批 headline 数字可复算、对照公平（四臂同输入同规则、真值只评分）、条件经真实信号链生成、种子隔离成立。
