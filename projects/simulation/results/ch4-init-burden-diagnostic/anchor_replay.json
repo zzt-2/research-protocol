@@ -1,0 +1,3096 @@
+{
+  "schema_version": "init-burden-diagnostic.anchor-replay.v1",
+  "manifest_hash": "f9a8e5b11008d1b4883671045eb442617c9db8372ef4a537371d27db35094f3f",
+  "seeds": [
+    4000,
+    4511
+  ],
+  "frames": [
+    {
+      "seed": 4000,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4001,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4002,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4003,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4004,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4005,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4006,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4007,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4008,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4009,
+      "bit_errors": 95,
+      "t077_bit_errors": 95,
+      "match": true
+    },
+    {
+      "seed": 4010,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4011,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4012,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4013,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4014,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4015,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4016,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4017,
+      "bit_errors": 208,
+      "t077_bit_errors": 208,
+      "match": true
+    },
+    {
+      "seed": 4018,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4019,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4020,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4021,
+      "bit_errors": 187,
+      "t077_bit_errors": 187,
+      "match": true
+    },
+    {
+      "seed": 4022,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4023,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4024,
+      "bit_errors": 154,
+      "t077_bit_errors": 154,
+      "match": true
+    },
+    {
+      "seed": 4025,
+      "bit_errors": 124,
+      "t077_bit_errors": 124,
+      "match": true
+    },
+    {
+      "seed": 4026,
+      "bit_errors": 124,
+      "t077_bit_errors": 124,
+      "match": true
+    },
+    {
+      "seed": 4027,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4028,
+      "bit_errors": 344,
+      "t077_bit_errors": 344,
+      "match": true
+    },
+    {
+      "seed": 4029,
+      "bit_errors": 240,
+      "t077_bit_errors": 240,
+      "match": true
+    },
+    {
+      "seed": 4030,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4031,
+      "bit_errors": 318,
+      "t077_bit_errors": 318,
+      "match": true
+    },
+    {
+      "seed": 4032,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4033,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4034,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4035,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4036,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4037,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4038,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4039,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4040,
+      "bit_errors": 157,
+      "t077_bit_errors": 157,
+      "match": true
+    },
+    {
+      "seed": 4041,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4042,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4043,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4044,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4045,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4046,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4047,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4048,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4049,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4050,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4051,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4052,
+      "bit_errors": 473,
+      "t077_bit_errors": 473,
+      "match": true
+    },
+    {
+      "seed": 4053,
+      "bit_errors": 210,
+      "t077_bit_errors": 210,
+      "match": true
+    },
+    {
+      "seed": 4054,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4055,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4056,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4057,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4058,
+      "bit_errors": 142,
+      "t077_bit_errors": 142,
+      "match": true
+    },
+    {
+      "seed": 4059,
+      "bit_errors": 132,
+      "t077_bit_errors": 132,
+      "match": true
+    },
+    {
+      "seed": 4060,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4061,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4062,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4063,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4064,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4065,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4066,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4067,
+      "bit_errors": 16,
+      "t077_bit_errors": 16,
+      "match": true
+    },
+    {
+      "seed": 4068,
+      "bit_errors": 266,
+      "t077_bit_errors": 266,
+      "match": true
+    },
+    {
+      "seed": 4069,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4070,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4071,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4072,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4073,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4074,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4075,
+      "bit_errors": 133,
+      "t077_bit_errors": 133,
+      "match": true
+    },
+    {
+      "seed": 4076,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4077,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4078,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4079,
+      "bit_errors": 38,
+      "t077_bit_errors": 38,
+      "match": true
+    },
+    {
+      "seed": 4080,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4081,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4082,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4083,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4084,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4085,
+      "bit_errors": 293,
+      "t077_bit_errors": 293,
+      "match": true
+    },
+    {
+      "seed": 4086,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4087,
+      "bit_errors": 315,
+      "t077_bit_errors": 315,
+      "match": true
+    },
+    {
+      "seed": 4088,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4089,
+      "bit_errors": 49,
+      "t077_bit_errors": 49,
+      "match": true
+    },
+    {
+      "seed": 4090,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4091,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4092,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4093,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4094,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4095,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4096,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4097,
+      "bit_errors": 44,
+      "t077_bit_errors": 44,
+      "match": true
+    },
+    {
+      "seed": 4098,
+      "bit_errors": 396,
+      "t077_bit_errors": 396,
+      "match": true
+    },
+    {
+      "seed": 4099,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4100,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4101,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4102,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4103,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4104,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4105,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4106,
+      "bit_errors": 124,
+      "t077_bit_errors": 124,
+      "match": true
+    },
+    {
+      "seed": 4107,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4108,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4109,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4110,
+      "bit_errors": 357,
+      "t077_bit_errors": 357,
+      "match": true
+    },
+    {
+      "seed": 4111,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4112,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4113,
+      "bit_errors": 240,
+      "t077_bit_errors": 240,
+      "match": true
+    },
+    {
+      "seed": 4114,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4115,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4116,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4117,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4118,
+      "bit_errors": 94,
+      "t077_bit_errors": 94,
+      "match": true
+    },
+    {
+      "seed": 4119,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4120,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4121,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4122,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4123,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4124,
+      "bit_errors": 30,
+      "t077_bit_errors": 30,
+      "match": true
+    },
+    {
+      "seed": 4125,
+      "bit_errors": 271,
+      "t077_bit_errors": 271,
+      "match": true
+    },
+    {
+      "seed": 4126,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4127,
+      "bit_errors": 267,
+      "t077_bit_errors": 267,
+      "match": true
+    },
+    {
+      "seed": 4128,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4129,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4130,
+      "bit_errors": 161,
+      "t077_bit_errors": 161,
+      "match": true
+    },
+    {
+      "seed": 4131,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4132,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4133,
+      "bit_errors": 128,
+      "t077_bit_errors": 128,
+      "match": true
+    },
+    {
+      "seed": 4134,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4135,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4136,
+      "bit_errors": 353,
+      "t077_bit_errors": 353,
+      "match": true
+    },
+    {
+      "seed": 4137,
+      "bit_errors": 295,
+      "t077_bit_errors": 295,
+      "match": true
+    },
+    {
+      "seed": 4138,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4139,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4140,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4141,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4142,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4143,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4144,
+      "bit_errors": 162,
+      "t077_bit_errors": 162,
+      "match": true
+    },
+    {
+      "seed": 4145,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4146,
+      "bit_errors": 38,
+      "t077_bit_errors": 38,
+      "match": true
+    },
+    {
+      "seed": 4147,
+      "bit_errors": 71,
+      "t077_bit_errors": 71,
+      "match": true
+    },
+    {
+      "seed": 4148,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4149,
+      "bit_errors": 176,
+      "t077_bit_errors": 176,
+      "match": true
+    },
+    {
+      "seed": 4150,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4151,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4152,
+      "bit_errors": 199,
+      "t077_bit_errors": 199,
+      "match": true
+    },
+    {
+      "seed": 4153,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4154,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4155,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4156,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4157,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4158,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4159,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4160,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4161,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4162,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4163,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4164,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4165,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4166,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4167,
+      "bit_errors": 104,
+      "t077_bit_errors": 104,
+      "match": true
+    },
+    {
+      "seed": 4168,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4169,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4170,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4171,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4172,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4173,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4174,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4175,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4176,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4177,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4178,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4179,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4180,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4181,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4182,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4183,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4184,
+      "bit_errors": 201,
+      "t077_bit_errors": 201,
+      "match": true
+    },
+    {
+      "seed": 4185,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4186,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4187,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4188,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4189,
+      "bit_errors": 192,
+      "t077_bit_errors": 192,
+      "match": true
+    },
+    {
+      "seed": 4190,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4191,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4192,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4193,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4194,
+      "bit_errors": 23,
+      "t077_bit_errors": 23,
+      "match": true
+    },
+    {
+      "seed": 4195,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4196,
+      "bit_errors": 213,
+      "t077_bit_errors": 213,
+      "match": true
+    },
+    {
+      "seed": 4197,
+      "bit_errors": 290,
+      "t077_bit_errors": 290,
+      "match": true
+    },
+    {
+      "seed": 4198,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4199,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4200,
+      "bit_errors": 290,
+      "t077_bit_errors": 290,
+      "match": true
+    },
+    {
+      "seed": 4201,
+      "bit_errors": 162,
+      "t077_bit_errors": 162,
+      "match": true
+    },
+    {
+      "seed": 4202,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4203,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4204,
+      "bit_errors": 236,
+      "t077_bit_errors": 236,
+      "match": true
+    },
+    {
+      "seed": 4205,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4206,
+      "bit_errors": 179,
+      "t077_bit_errors": 179,
+      "match": true
+    },
+    {
+      "seed": 4207,
+      "bit_errors": 125,
+      "t077_bit_errors": 125,
+      "match": true
+    },
+    {
+      "seed": 4208,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4209,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4210,
+      "bit_errors": 219,
+      "t077_bit_errors": 219,
+      "match": true
+    },
+    {
+      "seed": 4211,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4212,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4213,
+      "bit_errors": 186,
+      "t077_bit_errors": 186,
+      "match": true
+    },
+    {
+      "seed": 4214,
+      "bit_errors": 203,
+      "t077_bit_errors": 203,
+      "match": true
+    },
+    {
+      "seed": 4215,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4216,
+      "bit_errors": 287,
+      "t077_bit_errors": 287,
+      "match": true
+    },
+    {
+      "seed": 4217,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4218,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4219,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4220,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4221,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4222,
+      "bit_errors": 268,
+      "t077_bit_errors": 268,
+      "match": true
+    },
+    {
+      "seed": 4223,
+      "bit_errors": 306,
+      "t077_bit_errors": 306,
+      "match": true
+    },
+    {
+      "seed": 4224,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4225,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4226,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4227,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4228,
+      "bit_errors": 300,
+      "t077_bit_errors": 300,
+      "match": true
+    },
+    {
+      "seed": 4229,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4230,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4231,
+      "bit_errors": 378,
+      "t077_bit_errors": 378,
+      "match": true
+    },
+    {
+      "seed": 4232,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4233,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4234,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4235,
+      "bit_errors": 415,
+      "t077_bit_errors": 415,
+      "match": true
+    },
+    {
+      "seed": 4236,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4237,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4238,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4239,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4240,
+      "bit_errors": 208,
+      "t077_bit_errors": 208,
+      "match": true
+    },
+    {
+      "seed": 4241,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4242,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4243,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4244,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4245,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4246,
+      "bit_errors": 1,
+      "t077_bit_errors": 1,
+      "match": true
+    },
+    {
+      "seed": 4247,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4248,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4249,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4250,
+      "bit_errors": 337,
+      "t077_bit_errors": 337,
+      "match": true
+    },
+    {
+      "seed": 4251,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4252,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4253,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4254,
+      "bit_errors": 1,
+      "t077_bit_errors": 1,
+      "match": true
+    },
+    {
+      "seed": 4255,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4256,
+      "bit_errors": 214,
+      "t077_bit_errors": 214,
+      "match": true
+    },
+    {
+      "seed": 4257,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4258,
+      "bit_errors": 240,
+      "t077_bit_errors": 240,
+      "match": true
+    },
+    {
+      "seed": 4259,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4260,
+      "bit_errors": 161,
+      "t077_bit_errors": 161,
+      "match": true
+    },
+    {
+      "seed": 4261,
+      "bit_errors": 160,
+      "t077_bit_errors": 160,
+      "match": true
+    },
+    {
+      "seed": 4262,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4263,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4264,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4265,
+      "bit_errors": 214,
+      "t077_bit_errors": 214,
+      "match": true
+    },
+    {
+      "seed": 4266,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4267,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4268,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4269,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4270,
+      "bit_errors": 208,
+      "t077_bit_errors": 208,
+      "match": true
+    },
+    {
+      "seed": 4271,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4272,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4273,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4274,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4275,
+      "bit_errors": 241,
+      "t077_bit_errors": 241,
+      "match": true
+    },
+    {
+      "seed": 4276,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4277,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4278,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4279,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4280,
+      "bit_errors": 257,
+      "t077_bit_errors": 257,
+      "match": true
+    },
+    {
+      "seed": 4281,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4282,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4283,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4284,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4285,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4286,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4287,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4288,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4289,
+      "bit_errors": 172,
+      "t077_bit_errors": 172,
+      "match": true
+    },
+    {
+      "seed": 4290,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4291,
+      "bit_errors": 177,
+      "t077_bit_errors": 177,
+      "match": true
+    },
+    {
+      "seed": 4292,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4293,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4294,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4295,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4296,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4297,
+      "bit_errors": 189,
+      "t077_bit_errors": 189,
+      "match": true
+    },
+    {
+      "seed": 4298,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4299,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4300,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4301,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4302,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4303,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4304,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4305,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4306,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4307,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4308,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4309,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4310,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4311,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4312,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4313,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4314,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4315,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4316,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4317,
+      "bit_errors": 219,
+      "t077_bit_errors": 219,
+      "match": true
+    },
+    {
+      "seed": 4318,
+      "bit_errors": 232,
+      "t077_bit_errors": 232,
+      "match": true
+    },
+    {
+      "seed": 4319,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4320,
+      "bit_errors": 208,
+      "t077_bit_errors": 208,
+      "match": true
+    },
+    {
+      "seed": 4321,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4322,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4323,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4324,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4325,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4326,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4327,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4328,
+      "bit_errors": 141,
+      "t077_bit_errors": 141,
+      "match": true
+    },
+    {
+      "seed": 4329,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4330,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4331,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4332,
+      "bit_errors": 434,
+      "t077_bit_errors": 434,
+      "match": true
+    },
+    {
+      "seed": 4333,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4334,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4335,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4336,
+      "bit_errors": 148,
+      "t077_bit_errors": 148,
+      "match": true
+    },
+    {
+      "seed": 4337,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4338,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4339,
+      "bit_errors": 1,
+      "t077_bit_errors": 1,
+      "match": true
+    },
+    {
+      "seed": 4340,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4341,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4342,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4343,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4344,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4345,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4346,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4347,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4348,
+      "bit_errors": 300,
+      "t077_bit_errors": 300,
+      "match": true
+    },
+    {
+      "seed": 4349,
+      "bit_errors": 222,
+      "t077_bit_errors": 222,
+      "match": true
+    },
+    {
+      "seed": 4350,
+      "bit_errors": 176,
+      "t077_bit_errors": 176,
+      "match": true
+    },
+    {
+      "seed": 4351,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4352,
+      "bit_errors": 14,
+      "t077_bit_errors": 14,
+      "match": true
+    },
+    {
+      "seed": 4353,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4354,
+      "bit_errors": 170,
+      "t077_bit_errors": 170,
+      "match": true
+    },
+    {
+      "seed": 4355,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4356,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4357,
+      "bit_errors": 129,
+      "t077_bit_errors": 129,
+      "match": true
+    },
+    {
+      "seed": 4358,
+      "bit_errors": 170,
+      "t077_bit_errors": 170,
+      "match": true
+    },
+    {
+      "seed": 4359,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4360,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4361,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4362,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4363,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4364,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4365,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4366,
+      "bit_errors": 215,
+      "t077_bit_errors": 215,
+      "match": true
+    },
+    {
+      "seed": 4367,
+      "bit_errors": 152,
+      "t077_bit_errors": 152,
+      "match": true
+    },
+    {
+      "seed": 4368,
+      "bit_errors": 170,
+      "t077_bit_errors": 170,
+      "match": true
+    },
+    {
+      "seed": 4369,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4370,
+      "bit_errors": 237,
+      "t077_bit_errors": 237,
+      "match": true
+    },
+    {
+      "seed": 4371,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4372,
+      "bit_errors": 3,
+      "t077_bit_errors": 3,
+      "match": true
+    },
+    {
+      "seed": 4373,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4374,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4375,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4376,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4377,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4378,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4379,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4380,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4381,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4382,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4383,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4384,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4385,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4386,
+      "bit_errors": 167,
+      "t077_bit_errors": 167,
+      "match": true
+    },
+    {
+      "seed": 4387,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4388,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4389,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4390,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4391,
+      "bit_errors": 135,
+      "t077_bit_errors": 135,
+      "match": true
+    },
+    {
+      "seed": 4392,
+      "bit_errors": 141,
+      "t077_bit_errors": 141,
+      "match": true
+    },
+    {
+      "seed": 4393,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4394,
+      "bit_errors": 399,
+      "t077_bit_errors": 399,
+      "match": true
+    },
+    {
+      "seed": 4395,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4396,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4397,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4398,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4399,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4400,
+      "bit_errors": 306,
+      "t077_bit_errors": 306,
+      "match": true
+    },
+    {
+      "seed": 4401,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4402,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4403,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4404,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4405,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4406,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4407,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4408,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4409,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4410,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4411,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4412,
+      "bit_errors": 169,
+      "t077_bit_errors": 169,
+      "match": true
+    },
+    {
+      "seed": 4413,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4414,
+      "bit_errors": 429,
+      "t077_bit_errors": 429,
+      "match": true
+    },
+    {
+      "seed": 4415,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4416,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4417,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4418,
+      "bit_errors": 228,
+      "t077_bit_errors": 228,
+      "match": true
+    },
+    {
+      "seed": 4419,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4420,
+      "bit_errors": 122,
+      "t077_bit_errors": 122,
+      "match": true
+    },
+    {
+      "seed": 4421,
+      "bit_errors": 284,
+      "t077_bit_errors": 284,
+      "match": true
+    },
+    {
+      "seed": 4422,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4423,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4424,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4425,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4426,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4427,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4428,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4429,
+      "bit_errors": 265,
+      "t077_bit_errors": 265,
+      "match": true
+    },
+    {
+      "seed": 4430,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4431,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4432,
+      "bit_errors": 277,
+      "t077_bit_errors": 277,
+      "match": true
+    },
+    {
+      "seed": 4433,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4434,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4435,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4436,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4437,
+      "bit_errors": 199,
+      "t077_bit_errors": 199,
+      "match": true
+    },
+    {
+      "seed": 4438,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4439,
+      "bit_errors": 199,
+      "t077_bit_errors": 199,
+      "match": true
+    },
+    {
+      "seed": 4440,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4441,
+      "bit_errors": 136,
+      "t077_bit_errors": 136,
+      "match": true
+    },
+    {
+      "seed": 4442,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4443,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4444,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4445,
+      "bit_errors": 150,
+      "t077_bit_errors": 150,
+      "match": true
+    },
+    {
+      "seed": 4446,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4447,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4448,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4449,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4450,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4451,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4452,
+      "bit_errors": 79,
+      "t077_bit_errors": 79,
+      "match": true
+    },
+    {
+      "seed": 4453,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4454,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4455,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4456,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4457,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4458,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4459,
+      "bit_errors": 38,
+      "t077_bit_errors": 38,
+      "match": true
+    },
+    {
+      "seed": 4460,
+      "bit_errors": 149,
+      "t077_bit_errors": 149,
+      "match": true
+    },
+    {
+      "seed": 4461,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4462,
+      "bit_errors": 285,
+      "t077_bit_errors": 285,
+      "match": true
+    },
+    {
+      "seed": 4463,
+      "bit_errors": 16,
+      "t077_bit_errors": 16,
+      "match": true
+    },
+    {
+      "seed": 4464,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4465,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4466,
+      "bit_errors": 109,
+      "t077_bit_errors": 109,
+      "match": true
+    },
+    {
+      "seed": 4467,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4468,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4469,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4470,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4471,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4472,
+      "bit_errors": 249,
+      "t077_bit_errors": 249,
+      "match": true
+    },
+    {
+      "seed": 4473,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4474,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4475,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4476,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4477,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4478,
+      "bit_errors": 221,
+      "t077_bit_errors": 221,
+      "match": true
+    },
+    {
+      "seed": 4479,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4480,
+      "bit_errors": 262,
+      "t077_bit_errors": 262,
+      "match": true
+    },
+    {
+      "seed": 4481,
+      "bit_errors": 45,
+      "t077_bit_errors": 45,
+      "match": true
+    },
+    {
+      "seed": 4482,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4483,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4484,
+      "bit_errors": 345,
+      "t077_bit_errors": 345,
+      "match": true
+    },
+    {
+      "seed": 4485,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4486,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4487,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4488,
+      "bit_errors": 264,
+      "t077_bit_errors": 264,
+      "match": true
+    },
+    {
+      "seed": 4489,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4490,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4491,
+      "bit_errors": 252,
+      "t077_bit_errors": 252,
+      "match": true
+    },
+    {
+      "seed": 4492,
+      "bit_errors": 161,
+      "t077_bit_errors": 161,
+      "match": true
+    },
+    {
+      "seed": 4493,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4494,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4495,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4496,
+      "bit_errors": 292,
+      "t077_bit_errors": 292,
+      "match": true
+    },
+    {
+      "seed": 4497,
+      "bit_errors": 44,
+      "t077_bit_errors": 44,
+      "match": true
+    },
+    {
+      "seed": 4498,
+      "bit_errors": 342,
+      "t077_bit_errors": 342,
+      "match": true
+    },
+    {
+      "seed": 4499,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4500,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4501,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4502,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4503,
+      "bit_errors": 79,
+      "t077_bit_errors": 79,
+      "match": true
+    },
+    {
+      "seed": 4504,
+      "bit_errors": 252,
+      "t077_bit_errors": 252,
+      "match": true
+    },
+    {
+      "seed": 4505,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4506,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4507,
+      "bit_errors": 90,
+      "t077_bit_errors": 90,
+      "match": true
+    },
+    {
+      "seed": 4508,
+      "bit_errors": 0,
+      "t077_bit_errors": 0,
+      "match": true
+    },
+    {
+      "seed": 4509,
+      "bit_errors": 4,
+      "t077_bit_errors": 4,
+      "match": true
+    },
+    {
+      "seed": 4510,
+      "bit_errors": 114,
+      "t077_bit_errors": 114,
+      "match": true
+    },
+    {
+      "seed": 4511,
+      "bit_errors": 424,
+      "t077_bit_errors": 424,
+      "match": true
+    }
+  ],
+  "aggregate": {
+    "frames": 512,
+    "matched": 512,
+    "fer_this_run": 0.2578125,
+    "fer_t077_anchor": 0.2578125,
+    "elapsed_s": 25.328633308410645
+  },
+  "gate": "PASS",
+  "_meta": {
+    "script": "init-burden-diagnostic:anchor_replay.json",
+    "common_md5": "49acdfa4",
+    "git_commit": "9222bb4",
+    "timestamp": "2026-09-23T23:26:05"
+  }
+}

@@ -877,3 +877,24 @@ PASS。R030 判定的两个硬问题（R2 映射、输出语义）已修复并�
 ### 结论
 
 **接受需小修**：必修 1 项（P05 消融口径降格+披露）+ 建议 4 项（排除清单自足化/RDE 步长调优承诺/C12-F4 行/Jones-相位分工备忘）。全部修正已回写 R031（起草主线执行）；修正后 R031 可作 D055 落账依据。
+
+## V041: R033 两级承重性诊断独立复核
+
+> 2026-09-23 | 关联：R033 / D057 / D058 / contract(.yaml, _phase2.yaml v1.3) / step-210
+> 复核人：独立 agent（与执行对话不同上下文）；重算脚本放系统临时目录用后即删，零仓库写入
+
+### 检查项与裁定
+
+1. **raw 重算：PASS**。eval512 抽 4 帧（seed 60000/60099/60299/60511）全部 4 臂 bit_errors 逐位复现（帧 300 非退化帧 94/365/0/0）；anchor seed 4000/4511 重算 = anchor_replay.json = T077 raw 三方一致；附加严格校验——extract_truth 返回值重建 pre_noise+noise 与冻结 received 的 array_equal 在 6 seed 全 BIT_EXACT。
+2. **锚点与统计：PASS**。anchor 512/512、FER=132/512；eval/confirm/phase2 全部臂计数、wins/losses、种子化 bootstrap CI（PCG64 2026092301/10000）逐位复现（B0−O1S CI=[0.060546875, 0.111328125]）。
+3. **真值隔离：PASS（附必修①）**。真值仅进 O1/O1S/O2 初始化与度量、ORC 上一帧先验、评分层；B0/DA CPR/歧义消解/LLR/译码行号级确认无真值。缺陷：run_diagnostic.py:113 真值逐帧验证为自比较空转（array_equal(recon, recon)），合同承诺的 bit 级门未实际执行——存量数字由锚点门+本次外部重放双重证实，执行对话已修复代码。
+4. **实现与合同：PASS（附必修②）**。git status 确认冻结链零修改；CONTRACT_SPLITS/LAYOUTS/判读规则/超参冻结链（tuning→eval→sens 时间戳与数值）全过。缺陷：run_phase2.py RLS 求解共轭错（厄米 R 下 solve(R,P.T).T=P·conj(R⁻¹)≠合同 P·R⁻¹；随机复矩阵数值验证：正确式残差 5e-16、实现式 0.095）。修复只会强化 Gate B 判定。
+5. **数值抽查：5a PASS / 5b 部分 FAIL**。B0−O1S wins=46/losses=2 复现；traj81001 RLS FER=1/32 ≠ 声称的 0——即必修②的实例（修复重跑后 RLS=131/512，traj81001 FER=0，差异消解）。
+
+### 修复闭环（执行对话，合同 v1.3）
+
+必修①②代码已修；RLS 网格单独重调（λ=0.99 仍选中，dev 0.0469→0.0312），eval+sens30+sens300 重跑三批判读全部不变（IDENTITY_COLLAPSE）；带缺陷旧 raw 留档 results/ch4-init-burden-diagnostic/rls_conjugate_bug/。建议两项（R033 轨迹叙事 4/10/2 勘误、frozen_pre_confirm CI 转写笔误 erratum）已落实。
+
+### 结论
+
+**PASS with notes**：阶段一 ALIVE（B0−O1S +8.59pp CI[6.05,11.13]、锚点 512/512）与阶段二 IDENTITY_COLLAPSE 核心结论链在独立重算下全部成立；两处必修均为代码级缺陷且不影响任何已存头条数字与门控裁定。

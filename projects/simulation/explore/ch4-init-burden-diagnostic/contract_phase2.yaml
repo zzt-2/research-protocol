@@ -1,0 +1,147 @@
+# ch4-init-burden-diagnostic — 第二方法主选块阶段二：连续轨迹合同 + 跨窗跟踪臂对照
+# R031 §六任务③④ | D055/D056 | 阶段一 ALIVE（O1S +8.6pp CI 不含 0）后条件启动
+# 本合同在阶段二任何帧运行之前冻结；执行后不改，修订走新版本。
+
+schema_version: continuous-tracking.phase2.v1.3
+authority: R031-task3-4/D055/D056/PROMPT-025
+action_class: GW_4A_D_TWO_LEVEL_MVE_SECOND_STAGE
+status: FROZEN_BEFORE_EXECUTION
+
+# ── 修订 v1.3（2026-09-23，V041 复核强制；修复后重跑）──
+# V041 发现 RLS 臂求解共轭错：R 厄米时 solve(R, P.T).T 数值上等于 P·conj(R^{-1})，
+# 不等于本合同 W_t = P_t R_t^{-1}（正确式 solve(R.T, P.T).T，同 C40/冻结
+# pilot_ls_demux 模式）。修复代码后仅重调 RLS 网格（λ=0.99 仍选中，dev
+# 0.0469→0.0312 更强），μ*/β/λ_C40 不动，重跑 eval+sens30+sens300：
+# 三批判读全部不变（IDENTITY_COLLAPSE），RLS 修复后 131/512 与 EMA/ORC 同
+# 触顶。带缺陷旧 raw 留档 results/.../rls_conjugate_bug/。
+# 同批修复（阶段一）：run_diagnostic.py 真值逐帧验证自比较空转
+# （array_equal(recon, recon)→array_equal(recon, received)）；存量数字由
+# 锚点门 512/512 + V041 外部严格重放（6 seed BIT_EXACT）双重证实为真。
+
+# ── 修订 v1.2（2026-09-23，第 2 设计-运行-诊断轮落盘；eval 未运行）──
+# 第 1 轮 dev 调参诊断出跟踪臂实现缺陷：EMA/RLS/C40 全网格 FER 0.69-0.93
+# 塌缩，而 B0*（0.12）与弱正则 C40 λ_r=0.5（0.13）不受影响。机制：连续相位
+# 合同下公共相位每帧推进 2π·1e6·260·0.4ns ≈ 0.653 rad，对带旋转相位的 demux
+# 矩阵做跨帧平均/累积（EMA 的 W 平均、RLS 的 P 累积、C40 的强正则拉回）使
+# 幅度塌缩。RDE 更新严格径向（z_i' = z_i(1+mu·g_i(R_i^2-|z_i|^2)||y||^2)，
+# 帧内相位不变），DA CPR 消常数每偏振相位——单先验臂（ORC 型）不受影响。
+# 修复：跨帧组合的**每帧输入项**先做公共相位规范化——EMA 平均 canon(w0)、
+# RLS 累积 canon(X Y^H)、C40 正则解 (canon(X Y^H)+λ_r·W_{t-1})(Y Y^H+λ_r·I)^{-1}
+# （W·exp(-j·angle(det W)/2)，det 变正实——注意符号：w~e^{-jφ}U ⇒ 因子
+# e^{+jφ}=exp(-0.5j·angle(det W))；实现首版写成 +0.5j 曾把相位翻倍）；
+# 半角只剩 ±1 分支，det 相位每帧推进 ~1.31 rad 跨 ±π 回卷时规范化矩阵翻号，
+# 需对运行参考（上一帧规范化 w0）做 Frobenius 内积符号对齐。Jones/幅度结构
+# 不变；规范化域与 Jones-相位分工合同一致：相位归 Ch3。
+# B0* 不动（冻结路径语义）；ORC 先验规范化（使用侧相位盲，度量侧对齐）；
+# 初始化误差度量在对齐规范化域。
+# 第 1 轮调参结果作废留档（phase2_tuning_round1_diagnosis.json），不用于 eval。
+# 第 1 轮调参结果作废留档（phase2_tuning_round1_diagnosis.json），不用于 eval。
+
+# ── 修订 v1.1（2026-09-23，评估臂未运行时落盘；属"回归门不过→修实现"路径）──
+# v1.0 的 GG 块链按全局 256 符号网格平铺，块边界在 260 符号帧内漂移。rho-check
+# 实现探针（f_G=1e7, traj81010-f14）暴露：深块(0.065)→强块(8.6)帧中跳变给
+# 前导 LS 增益(~3.9)留下 60 个强符号，冻结 plain RDE 径向动力学
+# z<-z(1+mu(R^2-|z|^2)||y||^2) 增益过冲翻号 → 发散（符号 204 起非有限）。
+# 对照实证：冻结 T077 生成器 3000 帧 0 发散（含 111 个 block1<0.1 深帧）——
+# 因 gg_block(260) 每帧固定把块边界放在符号 256（第二块仅覆盖末 4 符号）。
+# 修订：块链仍按 256 符号步长 AR(1)，但帧内对齐 T077 约定（帧 t 用链条目
+# 2t/2t+1 分别覆盖前 256/后 4 符号）。rho=0 时分布上精确等价冻结布局；
+# 物理档 rho≈1 时 A_t≈B_t≈A_{t+1} 平滑演化。附带机制登记（非科学声称）：
+# 深→强帧内 GG 跳变 + >=60 强符号会发散冻结 plain RDE（Q-CMA-FADE 家族
+# 跳变触发变体，实现探针观察）。
+
+# ── 连续轨迹合同（把真实帧间相关性按溯源参数建进模型，D055 待拍板项②由 D056 授权）──
+continuous_contract:
+  gg_evolution:
+    model: common/_gg_time.gg_time_envelope（gar 法，块内恒定/块间 AR(1)，2026-07-11 已验证）
+    params: {alpha: 4.0, beta: 1.9, block: 256, t_s: 1/2.5e9}
+    tau_c: 1/(2*pi*f_G)（Conan 1995）
+    f_G_default_hz: 100.0        # 溯源 arxiv 2208.00836 L51（WARNING 单篇，待补证维持 R031 §七-4）
+    f_G_sensitivity_hz: [30.0, 300.0]  # 只作敏感性；超参不重调、不调快追正
+  sop_evolution:
+    model: J(t) = expm(1j*theta(t)*A) @ J_0，A=每轨迹随机无迹厄米（||A||_F=1），J_0=Haar SU(2)
+    theta_rate: 4.0e-7 rad/symbol  # ≈1 krad/s，sat.1553 §6.3 溯源
+    note: 轨迹内 Jones 演化 ~1e-4 rad/帧（准静态），跨轨迹独立
+  common_phase: 连续 doppler_phase 全轨迹（f_res=1MHz, f_dot=150MHz/s, lw=10kHz，同 T077 参数；帧边界不再重启）
+  noise: 每帧 (2,260) 复高林，方差=10^(-15/10)（同 T077 语义：噪声固定、信号受衰落）
+  receiver_chain: 与 T077 完全一致（4 前导 LS/DA CPR/歧义消解/LLR/20 迭代译码，零改动冻结模块）
+  regression_gates:
+    delegation: >
+      mode=independent 直接调用冻结生成器 single_cell.generate_coded_physical_frame
+      ——bit 级等价 T077 由阶段一 anchor_replay PASS（512/512）证明，复用不再重跑。
+    statistical: >
+      连续生成器 f_G=1e7 Hz（rho≈0.0017）+ sop_rate=0：512 帧 B0 FER ∈ [0.20, 0.36]
+      且 gg 边缘均值 ∈ [0.9, 1.1]（历史两独立 512 帧块 0.258/0.309 定带宽）。
+      不过 -> 修实现再跑臂。
+
+# ── 轨迹布局与 seed（与全部历史块及阶段一零重叠）──────────────
+trajectory_layout:
+  dev:  {n_traj: 8,  frames_per_traj: 32, info_seeds: [70000, 70255], traj_seeds: [80000, 80007], purpose: "μ* 与各臂超参调优（仅此用）"}
+  eval: {n_traj: 16, frames_per_traj: 32, info_seeds: [71000, 71511], traj_seeds: [81000, 81015], purpose: "阶段二主评估，冻超参一次性运行"}
+  sensitivity_30hz:  {reuse: eval seeds, f_G: 30.0}
+  sensitivity_300hz: {reuse: eval seeds, f_G: 300.0}
+  rho_check: {reuse: eval seeds, f_G: 1.0e7, sop_rate: 0.0}
+  trajectory_rng_streams: >
+    gg 用 gg_time_envelope(seed=traj_seed)（内部独立 PCG64）；
+    Jones_0/A/相位 Wiener/噪声 用 default_rng(traj_seed+90000)。
+    info bits 每帧 SeedSequence([info_seed,77,5])（同 T077 规则）。
+
+# ── 臂定义（同帧配对；帧 0 全臂冷启动=前导 LS）────────────────
+arms:
+  B0star:
+    desc: 逐帧独立 baseline——前导 LS 初始化 + plain RDE(μ*)；μ* 在 dev 网格 {5e-4,1e-3,3e-3,1e-2} 按 FER 调优后冻结（C4-2 B0* 口径，防弱化对照）
+    truth_access: none
+  ORC:
+    desc: 跨窗真值先验 oracle——帧 t 初始化 = 帧 t-1 的真值理想 demux（pilot_ls_demux(J_{t-1} @ (X_pre·scalar_{t-1}[:4]), X_pre)，含公共尺度，阶段一 O1/O1S 教训）；RDE(μ*)
+    truth_access: oracle_only_init_previous_frame
+  EMA:
+    desc: 廉价对手——Ŵ_t = β·Ŵ_{t-1} + (1-β)·w0_t（w0_t=当前帧前导 LS），初始化 RDE(μ*)；β dev 网格 {0.5,0.8,0.9,0.95,0.98}
+    truth_access: none
+  RLS:
+    desc: 廉价对手——固定遗忘因子递推 R_t=λR_{t-1}+YY^H, P_t=λP_{t-1}+XY^H, W_t=P_t R_t^{-1}（前导流上），初始化 RDE(μ*)；λ dev 网格 {0.9,0.95,0.99,0.995,0.999}
+    truth_access: none
+  C40:
+    desc: 部署臂（C4-0 时域正则化 LS）——W_t=(X Y^H + λ_r W_{t-1})(Y Y^H + λ_r I)^{-1}，初始化 RDE(μ*)；λ_r dev 网格 {0.5,2,8,32}
+    truth_access: none
+  EMA0:
+    desc: 简化探针——EMA 矩阵直接 demux（无 RDE），β 同 EMA；检验"好初始化下 RDE 可省"（阶段一 O2≈O1S 的部署侧对偶）
+    truth_access: none
+
+# ── 调优协议（防条件钓鱼）────────────────────────────────────
+tuning_protocol:
+  order: 先 μ*（仅 B0star 网格），再各臂超参（μ* 冻结后逐臂网格）；全部在 dev 256 帧上选 FER 最小者，tie 取更简单/更接近现行值
+  freeze: eval 前全部冻结并写入结果 JSON；敏感性批（30/300Hz）不重调超参
+  no_second_look: eval 看过结果后不改任何超参/臂/阈值
+
+# ── 判读（三道门，冻结）──────────────────────────────────────
+decision_rules:
+  gate_A_time_axis: >
+    B0star−ORC 配对 FER：flat（CI95 含 0 且点估计<0.005）→ 时间轴信息不兑现，
+    阶段二即停（记录负结果，主选块按两级诊断规则 Kill）。
+  gate_B_identity: >
+    C40 必须对 EMA 与 RLS 双双 CI95 下界>0 才保住方法身份；
+    C40 对任一廉价对手 flat 或更差 → 方法身份塌缩为"调遗忘因子"，
+    停（可收窄为边界材料记录），不自动转方法生产。
+  gate_C_magnitude: >
+    过 B 门后：如实记录 C40 vs B0* 幅度与 vs ORC 天花板比例、计算代价
+    （矩阵运算量级对比），交用户/导师拍板；不自动扩成方法生产。
+  simplification_report: EMA0 vs EMA 只作"RDE 是否可省"叙事，不参与门控。
+  stratification: 同阶段一（帧级 gg 四分位分层）用于机制归因。
+
+# ── 统计（同阶段一口径）──────────────────────────────────────
+stats:
+  paired_fer: {bootstrap: {resamples: 10000, rng: PCG64, seed: 2026092302, ci: 95}, exact: discordant two-sided binomial}
+  paired_ber: 同 bootstrap
+  cluster: physical_frame（配对差本身帧级）
+
+# ── 预算与边界（硬纪律）──────────────────────────────────────
+budget:
+  design_run_diagnose_rounds_max: 2   # dev 调优+eval+敏感性=第1轮；实现性修复才允许第2轮
+forbidden:
+  - 修改任何冻结模块（ch5/ch4/common/params.py/Ch3 代码与口径）
+  - 相位跟踪进 Ch3 领域（跟踪对象止于 Jones+幅度+公共尺度，相位残余仍走 DA CPR）
+  - eval 后调参/加臂/换 seed 重跑
+  - f_G 调快追正（30/300 只报告）
+outputs:
+  results_dir: projects/simulation/results/ch4-init-burden-diagnostic/（phase2_* 前缀）
+  worker_log: projects/thesis-fso/worker-logs/step-210-init-burden-diagnostic.md

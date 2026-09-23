@@ -1,0 +1,23 @@
+{
+  "schema_version": "continuous-tracking.rho-check.v1",
+  "f_g_hz": 10000000.0,
+  "sop_rate": 0.0,
+  "n_frames": 512,
+  "B0star_fer": 0.23828125,
+  "gg_obs_mean": 1.0391567757784208,
+  "accept_fer_band": [
+    0.2,
+    0.36
+  ],
+  "accept_gg_band": [
+    0.9,
+    1.1
+  ],
+  "gate": "PASS",
+  "_meta": {
+    "script": "init-burden-diagnostic:phase2_rho_check.json",
+    "common_md5": "49acdfa4",
+    "git_commit": "9222bb4",
+    "timestamp": "2026-09-23T23:47:05"
+  }
+}

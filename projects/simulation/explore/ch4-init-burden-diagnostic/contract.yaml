@@ -1,0 +1,132 @@
+# ch4-init-burden-diagnostic — 第二方法主选块阶段一：前端初始化承重性诊断
+# R031 §六任务② | D055/D056 授权（PROMPT-025 夜间自主执行轮）
+# 权威链：R031（主报告）→ D055（两级 oracle 诊断前置，Kill 工具用法）→ D056（诊断先于导师拍板）
+# 本合同在 eval/confirm 任何帧运行之前冻结；执行后不改，修订走新版本。
+
+schema_version: init-burden-diagnostic.phase1.v1
+authority: R031-task2/D055/D056/PROMPT-025
+action_class: GW_4A_D_ORACLE_KILL_DIAGNOSTIC
+status: FROZEN_BEFORE_EXECUTION
+
+# ── 冻结格（与 T077 完全一致，零场景变更）──────────────────────
+cell:
+  inherit: ch5-apsk-llr-calibration/single_cell_manifest.yaml
+  cell_id: t077-dp16apsk-moderate-gg-15db
+  snr_db: 15.0
+  turbulence: {alpha: 4.0, beta: 1.9}   # 中湍流
+  modulation: DP-(8,8)-16APSK
+  codeword: 5g_ldpc_bg2(1024,1536), NOMS(0.75,0), 20 iterations
+  frontend_frozen: 4 Walsh 前导 LS 估 Jones + plain RDE mu=1e-3, 逐帧独立
+  anchor_expectation: {seeds: [4000, 4511], B0_FER: 132/512 = 0.2578}
+
+# ── 研究问题（预注册）────────────────────────────────────────
+question: >
+  把当前链前端的初始化（4 前导 LS 估 Jones，噪声污染）换成真值初始化，
+  全链 FER/BER 是否改善、幅度多少？——即"前端估计误差"在当前链是否承重。
+  若真值初始化无益，则跨窗跟踪的两种机制（方差缩减/热启动暂态消除）同死
+  （完美先验都无益则不完全先验更不会有益），主选块阶段一即 Kill。
+
+# ── 臂定义（同帧配对：共享物理帧、信息比特、噪声、随机性）────
+arms:
+  B0:
+    desc: 现行前端 = 冻结链逐位复现（pilot_ls_demux 初始化 + plain RDE mu=1e-3 + DA CPR + 8 歧义消解 + nominal-n0 exact-APP LLR + 20 迭代译码）
+    truth_access: none
+    implementation: single_cell.run_coded_receiver（冻结路径，零改动）
+  O1:
+    desc: 真值 Jones 初始化（字面口径，主门控臂）——w0 = J^H（真值 Jones 的酉逆），其余与 B0 逐位相同（同 RDE/同 DA/同 LLR/同译码）
+    truth_access: oracle_only_init
+    implementation: bridge.run_bridge_with_observation + 自定义 ch4_runner（忽略传入 w0，用 J^H 起动 plain RDE）
+  O1S:
+    desc: 真值初始化含公共尺度（阶段二机制忠实探针）——w0 = pilot_ls_demux(J @ (X_pre * scalar_true[:4]), X_pre)，即 B0 估计器的无噪理想值（Jones+前导处公共增益/相位全真）
+    truth_access: oracle_only_init
+    rationale: R031 阶段二边界明确跟踪对象="Jones/幅度与公共尺度"（相位残余归 Ch3）；跨窗跟踪交付的理想热启动 = 上一窗真值 (1/c)J^{-1}，O1S 是其当前帧近似
+  O2:
+    desc: 纯真值 demux 无 RDE——W 固定 = O1S 的 w0（理想 demux），z = W @ rx 全帧不更新；其后 DA CPR/歧义消解/LLR/译码与 B0 相同
+    truth_access: oracle_only_fixed_W
+    role: 分离"初始化误差"（B0−O1S）与"RDE 残差"（O1S−O2）两条来源
+
+# ── 真值提取与隔离（实现纪律）────────────────────────────────
+truth_extraction:
+  method: >
+    冻结生成器 RNG 流重播：np.random.seed(seed) 后按 gg_block -> doppler_phase
+    （legacy 全局 RNG）与 default_rng(seed) 后按 random_su2 -> noise（PCG64）的
+    固定次序重抽，恢复 jones/gg/phase/scalar。零改动冻结文件。
+  per_frame_verification: >
+    每帧 bit 级重建验证：jones @ (transmitted * scalar) + noise 必须 array_equal
+    冻结生成器返回的 received。任一帧验证失败 -> INVALID_TESTBED 停机。
+  truth_isolation: >
+    真值只进 O1/O1S/O2 的 demux 矩阵（初始化/冻结）与评分层；
+    不进 B0、不进 DA CPR、不进 LLR、不进译码。评分层真值（info bits）与
+    T077 口径一致（decoder 输出 vs info 硬比对）。
+
+# ── 样本（seed 与全部历史块零重叠）────────────────────────────
+splits:
+  smoke: {count: 8, seeds: [2900, 2907], purpose: "实现健全性 + 单帧耗时测量（同 T077 smoke 种子，无科学用途）"}
+  anchor_replay: {count: 512, seeds: [4000, 4511], purpose: "实现门：B0 逐帧 bit_errors 必须与 T077 raw 完全一致（512/512），否则修实现再跑臂", arms: [B0]}
+  eval: {count: 512, seeds: [60000, 60511], purpose: "阶段一主评估（全新 seed 块）", arms: [B0, O1, O1S, O2]}
+  confirm: {count: 2048, seeds: [61000, 63047], purpose: "GRAY 带确认批 / ALIVE 幅度确认（确认前冻结论选）", arms: [B0, O1, O1S, O2], conditional: true}
+
+historical_seed_blocks_excluded: [
+  [2900,2907], [3000,3063], [4000,4511], [5000,5063],          # T077 + rescue smoke/dev/eval
+  [30000,32047],                                               # rescue confirm2048
+  [39900,39903], [40000,40511], [41000,41511], [42000,42511], [43000,43511],  # conditions dev
+  [50000,52047], [53000,55047]                                 # conditions confirm
+]
+
+# ── 指标与统计（预注册）──────────────────────────────────────
+metrics:
+  per_frame: [fer, bit_errors, decoder_input_sha256, jones_init_frob_errors, final_W_frob_errors, gg_obs_mean, gg_block1, gg_block2, abs_scalar_preamble_mean]
+  paired_contrasts:
+    - {name: B0_minus_O1,   kind: primary_gate,      question: 真值 Jones 初始化是否改善}
+    - {name: B0_minus_O1S,  kind: primary_gate,      question: 真值初始化(含公共尺度)是否改善}
+    - {name: B0_minus_O2,   kind: mechanism,         question: 前端总贡献(初始化误差+RDE残差)}
+    - {name: O1S_minus_O2,  kind: mechanism,         question: RDE 残差贡献(给定理想初始化)}
+    - {name: O1_minus_O1S,  kind: mechanism,         question: 公共尺度真值的边际}
+  ffer_stats: &paired_stats
+    bootstrap: {resamples: 10000, rng: PCG64, seed: 2026092301, ci: 95, cluster: physical_frame}
+    exact_test: discordant-pair two-sided binomial
+    also_ber: true  # 逐帧 bit_errors 配对差 + 同 bootstrap
+  stratification:
+    by: frame_mean_obs_gg (gg[4:] 均值) 四分位
+    report: per-stratum per-arm FER + B0−O1 / B0−O1S 配对差
+    purpose: 深衰落分位（Q1=最深衰落）是否集中承载增益（连接 Q-CMA-FADE 机制）
+
+# ── 判读规则（冻结；不套统一 dB/百分比门槛，口径=配对 FER 差）──
+decision_rules:
+  implementation_gate: >
+    anchor_replay 512/512 帧逐帧 bit_errors 与 T077 raw 完全一致且聚合 FER=132/512；
+    任一失配 -> 修实现后重跑（不算设计轮次）。
+  definitions: >
+    Δ(arm) = FER_B0 − FER_arm（正值 = 该臂改善）。CI95 = 帧级 cluster bootstrap。
+    flat(arm) := CI95 含 0 且 点估计 Δ < 0.005。
+    alive(arm) := CI95 下界 > 0。
+  DEAD: >
+    O1 与 O1S 双双 flat —— 前端估计误差不承重（Jones 轴与含公共尺度轴同死），
+    方差与暂态两机制同死。记有效负结果，收口停机，不进阶段二。
+  ALIVE: >
+    O1 或 O1S 任一 alive —— 进阶段二（连续轨迹合同 + 跨窗 oracle + EMA/RLS）。
+  GRAY: >
+    非 DEAD 非 ALIVE（如 CI 含 0 但点估计 ≥ 0.005）—— 跑 confirm 2048（全新 seed，
+    确认前冻结论选），confirm 单独套用同规则；confirm 仍 GRAY -> 按 DEAD 收口（保守，
+    不条件钓鱼）。ALIVE 后 confirm 批用于幅度确认，不因 confirm 缩水推翻 ALIVE
+    （缩水如实记录并降级为"幅度存疑"交用户/导师）。
+  mechanism_only: O2/O1−O1S 只作机制归因与叙事，不参与门控。
+  jones_axis_report: 每臂记录 ||w0−理想||_F 类度量，与 FER 结果联合判读。
+
+# ── 预算与轮次（硬纪律）──────────────────────────────────────
+budget:
+  design_run_diagnose_rounds_max: 2   # 阶段一上限（confirm 批属第 2 轮）
+  no_tuning: mu=1e-3 不调（B0* 调优属阶段二对照口径）；看结果后不加臂、不改阈值、不换 seed 重跑
+  time_rule: smoke 8 帧测耗时外推；单批预计 >90 分钟则分批 checkpoint 续跑
+
+# ── 边界（硬纪律）────────────────────────────────────────────
+forbidden:
+  - 修改 ch5-apsk-llr-calibration / ch5-apsk-structured-covariance / ch4-apsk-ring-gated-rde / common / params.py 任何文件
+  - 修改任何历史 raw / 冻结队列 / 论文正文
+  - 复用旧 LLR 缓存（前端变了 LLR 必变，从物理帧层重新生成）
+  - 场景/码型/迭代数/收发架构变更
+  - 诊断结果自动扩成方法生产（阳性也只记录幅度，交用户/导师）
+outputs:
+  results_dir: projects/simulation/results/ch4-init-burden-diagnostic/
+  worker_log: projects/thesis-fso/worker-logs/step-210-init-burden-diagnostic.md
+  session: .sessions/2026-08-30-thesis-advisor-text-outline/ (R033/V041/D057+/S018§29)

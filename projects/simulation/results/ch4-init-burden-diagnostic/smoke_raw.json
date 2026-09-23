@@ -1,0 +1,396 @@
+{
+  "schema_version": "init-burden-diagnostic.smoke.raw.v1",
+  "contract": "explore/ch4-init-burden-diagnostic/contract.yaml (FROZEN_BEFORE_EXECUTION)",
+  "manifest_hash": "f9a8e5b11008d1b4883671045eb442617c9db8372ef4a537371d27db35094f3f",
+  "batch": "smoke",
+  "arms": [
+    "B0",
+    "O1",
+    "O1S",
+    "O2"
+  ],
+  "frames": [
+    {
+      "frame_index": 0,
+      "seed": 2900,
+      "arms": {
+        "B0": {
+          "bit_errors": 0,
+          "fer": 0,
+          "decoder_input_sha256": "53b148d21769d1920ee9e1bc050302661ff0d4c64249849a097aa1007c242ebf"
+        },
+        "O1": {
+          "bit_errors": 0,
+          "fer": 0,
+          "decoder_input_sha256": "5a71e512386d13042dd0434bf3958e9b93d87d04d9f378cabab6c46cf3902507"
+        },
+        "O1S": {
+          "bit_errors": 0,
+          "fer": 0,
+          "decoder_input_sha256": "0c2f6e7f23fbd554e2d822046fc8b46f9db01307fac416dddd375d28ad932213"
+        },
+        "O2": {
+          "bit_errors": 0,
+          "fer": 0,
+          "decoder_input_sha256": "299f39d6c019ff1a5ee418b9a06dceb07e1e98c24f3550ef62ddda7dcdac5922"
+        }
+      },
+      "jones_metrics": {
+        "frob_w0_b0_vs_ideal": 0.1577430594285253,
+        "frob_w0_b0_vs_jonesH": 0.10844630602796936,
+        "frob_ideal_vs_jonesH": 0.09148558205726401,
+        "frob_Wfin_B0_vs_ideal": 0.07466345406631779,
+        "frob_Wfin_O1_vs_ideal": 0.016894543403228508,
+        "frob_Wfin_O1_vs_jonesH": 0.09549752444638594,
+        "frob_Wfin_O1S_vs_ideal": 0.03743864155004039,
+        "frob_Wfin_O2_vs_ideal": 0.0
+      },
+      "gg_stats": {
+        "obs_mean": 1.142451007654358,
+        "block1": 1.1418467492720121,
+        "block2": 1.1805192857421196,
+        "abs_scalar_pre_mean": 1.0685722948270802
+      },
+      "physical": {
+        "received_observation_sha256": "9fee3b44ddc4a3104b376fe6a6bcc07fd36e11baa7cf7f6ed285b413ae29c166",
+        "codeword_sha256": "afa668288e92906a3f71e6c87c790ce0d5e7a02875dc659212f9902d7b9511a2"
+      },
+      "truth_verified": true
+    },
+    {
+      "frame_index": 1,
+      "seed": 2901,
+      "arms": {
+        "B0": {
+          "bit_errors": 0,
+          "fer": 0,
+          "decoder_input_sha256": "70545590f14f32cb2a75f6d27a60da20e7b08160d71814bb75f4135b728b5d9d"
+        },
+        "O1": {
+          "bit_errors": 0,
+          "fer": 0,
+          "decoder_input_sha256": "86d4c71fced70f1637db7ccf4c59b79144a735b8345c505552db9c3dc0cabb00"
+        },
+        "O1S": {
+          "bit_errors": 0,
+          "fer": 0,
+          "decoder_input_sha256": "dc514f28f015c60642edf6ccadfc7363ae2687ab4897069b519944037149e40b"
+        },
+        "O2": {
+          "bit_errors": 0,
+          "fer": 0,
+          "decoder_input_sha256": "99a39bb2e7c96e67ef894800c1c870cb936ddfd8cac6255e64b747f1a88a630f"
+        }
+      },
+      "jones_metrics": {
+        "frob_w0_b0_vs_ideal": 0.1596755072206546,
+        "frob_w0_b0_vs_jonesH": 0.17216502324894212,
+        "frob_ideal_vs_jonesH": 0.08850523989369895,
+        "frob_Wfin_B0_vs_ideal": 0.06738661227322718,
+        "frob_Wfin_O1_vs_ideal": 0.023918864812414134,
+        "frob_Wfin_O1_vs_jonesH": 0.08545955954982655,
+        "frob_Wfin_O1S_vs_ideal": 0.03022755515937513,
+        "frob_Wfin_O2_vs_ideal": 0.0
+      },
+      "gg_stats": {
+        "obs_mean": 1.13395515264062,
+        "block1": 1.1346498506263385,
+        "block2": 1.0901891795403549,
+        "abs_scalar_pre_mean": 1.0651994417133062
+      },
+      "physical": {
+        "received_observation_sha256": "515c8d1ab9830dbb6b3edeb924970a4de9b3491adc2d2edf08b62ef54e7f9e08",
+        "codeword_sha256": "61c7886f8aa0cb4684dd8c4671b426f291e8b6fd5d4aa6d43664c3f963f2e78a"
+      },
+      "truth_verified": true
+    },
+    {
+      "frame_index": 2,
+      "seed": 2902,
+      "arms": {
+        "B0": {
+          "bit_errors": 303,
+          "fer": 1,
+          "decoder_input_sha256": "244c0676c1b4484c4d3ede2ba30c29f35f5900e5003dc02e5b74dc40b40e0de7"
+        },
+        "O1": {
+          "bit_errors": 438,
+          "fer": 1,
+          "decoder_input_sha256": "f32195947ef39492460867357104557e2046161a00beb4a35f30fab39ad8bfb6"
+        },
+        "O1S": {
+          "bit_errors": 336,
+          "fer": 1,
+          "decoder_input_sha256": "de5e7b81de314ba38bcfb868e51380e0c887db7afb25b8d075e8b8f742eeca8b"
+        },
+        "O2": {
+          "bit_errors": 347,
+          "fer": 1,
+          "decoder_input_sha256": "21b4de0a2d259f39c1511ec507cdf6807090b58a49db924b1239af568501f264"
+        }
+      },
+      "jones_metrics": {
+        "frob_w0_b0_vs_ideal": 4.058356890897104,
+        "frob_w0_b0_vs_jonesH": 5.5776573700237275,
+        "frob_ideal_vs_jonesH": 4.403516711689879,
+        "frob_Wfin_B0_vs_ideal": 3.3966519181458894,
+        "frob_Wfin_O1_vs_ideal": 4.414091860053377,
+        "frob_Wfin_O1_vs_jonesH": 0.014286831789233836,
+        "frob_Wfin_O1S_vs_ideal": 1.8278781388736467,
+        "frob_Wfin_O2_vs_ideal": 0.0
+      },
+      "gg_stats": {
+        "obs_mean": 0.08386187335379794,
+        "block1": 0.05908993858323116,
+        "block2": 1.6444937638995045,
+        "abs_scalar_pre_mean": 0.24308422117289133
+      },
+      "physical": {
+        "received_observation_sha256": "ec9e35785404f91cd6ca1070e26dadc8e1c67898360e035fe0f1a6ae9086ac06",
+        "codeword_sha256": "3ee742dcf83ddddd6b1ce350953e1f2192d214cb5d7b6026d16c4da027bf2601"
+      },
+      "truth_verified": true
+    },
+    {
+      "frame_index": 3,
+      "seed": 2903,
+      "arms": {
+        "B0": {
+          "bit_errors": 0,
+          "fer": 0,
+          "decoder_input_sha256": "f5d8ea3095c854aae51f71919d084a116669bb2c0c5b7f3c8a1b554a01074734"
+        },
+        "O1": {
+          "bit_errors": 0,
+          "fer": 0,
+          "decoder_input_sha256": "11ac669d8163c8f92fd7c8655e0517931e91a68dbae0552898e1a4f5f9469943"
+        },
+        "O1S": {
+          "bit_errors": 0,
+          "fer": 0,
+          "decoder_input_sha256": "ac635116c71f7dd3cda2e7a86c1730fe7705732714cc6a9db7a539f77a8f6ca1"
+        },
+        "O2": {
+          "bit_errors": 0,
+          "fer": 0,
+          "decoder_input_sha256": "cbd7d95e844500a285c72c85693e5f4300022ea8e533fa0ebd3fd1ea79f4e20b"
+        }
+      },
+      "jones_metrics": {
+        "frob_w0_b0_vs_ideal": 0.10103392437179275,
+        "frob_w0_b0_vs_jonesH": 0.2892838991674361,
+        "frob_ideal_vs_jonesH": 0.24775359375483175,
+        "frob_Wfin_B0_vs_ideal": 0.07744922376552973,
+        "frob_Wfin_O1_vs_ideal": 0.05123058873874067,
+        "frob_Wfin_O1_vs_jonesH": 0.19821084314394535,
+        "frob_Wfin_O1S_vs_ideal": 0.012631111703651776,
+        "frob_Wfin_O2_vs_ideal": 0.0
+      },
+      "gg_stats": {
+        "obs_mean": 1.453506689973731,
+        "block1": 1.4697123831569987,
+        "block2": 0.43254801942787485,
+        "abs_scalar_pre_mean": 1.2123169483088978
+      },
+      "physical": {
+        "received_observation_sha256": "bc767d95f0eb5afe03444b9fe26472f0572ae36bffc41e36108afe3c2c4507ac",
+        "codeword_sha256": "89f818575db4bd12173ba5a40cde9d48b4a00157b5715fb1b0b5c905ff4bc527"
+      },
+      "truth_verified": true
+    },
+    {
+      "frame_index": 4,
+      "seed": 2904,
+      "arms": {
+        "B0": {
+          "bit_errors": 0,
+          "fer": 0,
+          "decoder_input_sha256": "57d4cbe001248db68533184df64027191a9546425e47ce4b930e1e68826a1bb7"
+        },
+        "O1": {
+          "bit_errors": 0,
+          "fer": 0,
+          "decoder_input_sha256": "6c0957c9b5af94ef87e5187848fbef6960b6858cda3fed730ed0a02c9fe3dd42"
+        },
+        "O1S": {
+          "bit_errors": 0,
+          "fer": 0,
+          "decoder_input_sha256": "7fa599faa0dd3832910b95403d475e52efe4a58b49ad5b79660f13062e13d1e7"
+        },
+        "O2": {
+          "bit_errors": 0,
+          "fer": 0,
+          "decoder_input_sha256": "bf95c67d86ecaf682de74351919a6f95e30935845ebc2395b1e3787fa1a9ebbd"
+        }
+      },
+      "jones_metrics": {
+        "frob_w0_b0_vs_ideal": 0.13838999256219048,
+        "frob_w0_b0_vs_jonesH": 0.18676702569153783,
+        "frob_ideal_vs_jonesH": 0.09886192857190806,
+        "frob_Wfin_B0_vs_ideal": 0.11242396130227876,
+        "frob_Wfin_O1_vs_ideal": 0.01856470180121675,
+        "frob_Wfin_O1_vs_jonesH": 0.08825896792146269,
+        "frob_Wfin_O1S_vs_ideal": 0.026656871148619973,
+        "frob_Wfin_O2_vs_ideal": 0.0
+      },
+      "gg_stats": {
+        "obs_mean": 1.1423985151389462,
+        "block1": 1.1557480935904483,
+        "block2": 0.3013750726943105,
+        "abs_scalar_pre_mean": 1.0750572513082493
+      },
+      "physical": {
+        "received_observation_sha256": "f1e5246a2eb712bb1c5b610eb8950c28d9d1b0a049e95a75c34531b66e66984b",
+        "codeword_sha256": "8aa68a502be55968719a8a93d1d47422f6497f0d00cfa66f7d8c03dce6b45b8e"
+      },
+      "truth_verified": true
+    },
+    {
+      "frame_index": 5,
+      "seed": 2905,
+      "arms": {
+        "B0": {
+          "bit_errors": 166,
+          "fer": 1,
+          "decoder_input_sha256": "c26acbe7105d38c8ba4320a219929c78d4699a608d29721f6bbbf954b8a84dcb"
+        },
+        "O1": {
+          "bit_errors": 366,
+          "fer": 1,
+          "decoder_input_sha256": "ee80f02cbaad9477fb87ec174e215b5a149ea4bbaec1fc4d577f5799933f74bf"
+        },
+        "O1S": {
+          "bit_errors": 0,
+          "fer": 0,
+          "decoder_input_sha256": "99a8c46f830fc9642fb3e94ad7576c05a773d5bf0d73993fec1b3dc3552f9493"
+        },
+        "O2": {
+          "bit_errors": 0,
+          "fer": 0,
+          "decoder_input_sha256": "5b661d351ac2dbbab03302c70a9356a3dd7e395b38c6154abc1ddd223149cb5f"
+        }
+      },
+      "jones_metrics": {
+        "frob_w0_b0_vs_ideal": 0.8777490976313018,
+        "frob_w0_b0_vs_jonesH": 1.5887936302910588,
+        "frob_ideal_vs_jonesH": 1.1537185254772457,
+        "frob_Wfin_B0_vs_ideal": 0.7695061756532997,
+        "frob_Wfin_O1_vs_ideal": 1.1814653175670342,
+        "frob_Wfin_O1_vs_jonesH": 0.02789903457378462,
+        "frob_Wfin_O1S_vs_ideal": 0.11567760288440923,
+        "frob_Wfin_O2_vs_ideal": 0.0
+      },
+      "gg_stats": {
+        "obs_mean": 0.31616440503479254,
+        "block1": 0.3033060402742866,
+        "block2": 1.126241384946671,
+        "abs_scalar_pre_mean": 0.5507322764050484
+      },
+      "physical": {
+        "received_observation_sha256": "8f984be0aea5ebe5050e6093a831d4f9c401da50ca8e0d8d7f6876252ce7bcc8",
+        "codeword_sha256": "a298a1bccea67d67db4ffeb5f273a369852b233e82aa1a984a6c6cf17381cfc4"
+      },
+      "truth_verified": true
+    },
+    {
+      "frame_index": 6,
+      "seed": 2906,
+      "arms": {
+        "B0": {
+          "bit_errors": 0,
+          "fer": 0,
+          "decoder_input_sha256": "54d29ac803af74bf047b84d6f3465f20c89598af9e74ada4cda7419bf2e723c9"
+        },
+        "O1": {
+          "bit_errors": 0,
+          "fer": 0,
+          "decoder_input_sha256": "eca46e2de7410eb87eeb0797a5879967437c255bd5067a8a9ffd8a39cde7bef6"
+        },
+        "O1S": {
+          "bit_errors": 0,
+          "fer": 0,
+          "decoder_input_sha256": "389e5a28cfeeff6b4b7508e23901ef1cdaf8231391776a95be5dc747a62b37a0"
+        },
+        "O2": {
+          "bit_errors": 0,
+          "fer": 0,
+          "decoder_input_sha256": "9d38ccf3eb638d818d405b81bf3b28938658424520d2a07582c0519488b57f02"
+        }
+      },
+      "jones_metrics": {
+        "frob_w0_b0_vs_ideal": 0.03339124603083287,
+        "frob_w0_b0_vs_jonesH": 0.8473137192803349,
+        "frob_ideal_vs_jonesH": 0.8588696440616621,
+        "frob_Wfin_B0_vs_ideal": 0.014975788274574985,
+        "frob_Wfin_O1_vs_ideal": 0.03037972805495611,
+        "frob_Wfin_O1_vs_jonesH": 0.8628841118194401,
+        "frob_Wfin_O1S_vs_ideal": 0.00371106894643986,
+        "frob_Wfin_O2_vs_ideal": 0.0
+      },
+      "gg_stats": {
+        "obs_mean": 6.388514006550562,
+        "block1": 6.484737700192145,
+        "block2": 0.32642130713096135,
+        "abs_scalar_pre_mean": 2.546514814445843
+      },
+      "physical": {
+        "received_observation_sha256": "d184a7d977a437ab714bb43e2fef308c4eac73f4d7009a3bbe4f5c196def694c",
+        "codeword_sha256": "d0d229320a7da184cb46f6c18fbb8d8b774c49ae2e082c9c32d7613c178eb106"
+      },
+      "truth_verified": true
+    },
+    {
+      "frame_index": 7,
+      "seed": 2907,
+      "arms": {
+        "B0": {
+          "bit_errors": 0,
+          "fer": 0,
+          "decoder_input_sha256": "3330a8590c2371031054c31f394c522f20270044e66192e948dc221b1e5104a7"
+        },
+        "O1": {
+          "bit_errors": 0,
+          "fer": 0,
+          "decoder_input_sha256": "b635ac527453b6817e1914e4e635e9a8e93b7d42c36fb62fdb2f691244b2b6bb"
+        },
+        "O1S": {
+          "bit_errors": 0,
+          "fer": 0,
+          "decoder_input_sha256": "e1d5fc375b4f605806755aee5f1ec189fabc37b12dd5715e4cc8227b1e9e0c44"
+        },
+        "O2": {
+          "bit_errors": 0,
+          "fer": 0,
+          "decoder_input_sha256": "fc12c5bc22acbf02b92786ad5f86402084cea6255030ae3b41b4bea64a6d28c6"
+        }
+      },
+      "jones_metrics": {
+        "frob_w0_b0_vs_ideal": 0.05870138283625959,
+        "frob_w0_b0_vs_jonesH": 0.5914901526328701,
+        "frob_ideal_vs_jonesH": 0.5907671849897093,
+        "frob_Wfin_B0_vs_ideal": 0.027442131105647024,
+        "frob_Wfin_O1_vs_ideal": 0.02186044257627321,
+        "frob_Wfin_O1_vs_jonesH": 0.5832409067133275,
+        "frob_Wfin_O1S_vs_ideal": 0.016336378572399092,
+        "frob_Wfin_O2_vs_ideal": 0.0
+      },
+      "gg_stats": {
+        "obs_mean": 2.952892135550427,
+        "block1": 2.949318071130233,
+        "block2": 3.1780581940226025,
+        "abs_scalar_pre_mean": 1.7173578750890082
+      },
+      "physical": {
+        "received_observation_sha256": "c11be26253d2301f3c2b0d1ddc569dc5684e7354ba5a2e22fc9de15b6f1e53bd",
+        "codeword_sha256": "ff093fbdf5fcbfcfc5e31dcacaf01fdb2e6e1258625b862f6dd16e20a70b3399"
+      },
+      "truth_verified": true
+    }
+  ],
+  "_meta": {
+    "script": "init-burden-diagnostic:smoke_raw.json",
+    "common_md5": "49acdfa4",
+    "git_commit": "9222bb4",
+    "timestamp": "2026-09-23T23:25:25"
+  }
+}

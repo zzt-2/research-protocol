@@ -1,0 +1,166 @@
+{
+  "schema_version": "continuous-tracking.tuning.v1",
+  "protocol": "dev 256 frames, FER then bit_errors then first-in-grid; frozen before eval",
+  "mu_star": {
+    "grid": "mu_star",
+    "rows": [
+      {
+        "mu": 0.0005,
+        "fer": 0.140625,
+        "bit_errors": 3621
+      },
+      {
+        "mu": 0.001,
+        "fer": 0.140625,
+        "bit_errors": 3508
+      },
+      {
+        "mu": 0.003,
+        "fer": 0.13671875,
+        "bit_errors": 3313
+      },
+      {
+        "mu": 0.01,
+        "fer": 0.12109375,
+        "bit_errors": 3272
+      }
+    ],
+    "selected": {
+      "mu": 0.01,
+      "fer": 0.12109375,
+      "bit_errors": 3272
+    },
+    "tie_break": [
+      "fer",
+      "bit_errors",
+      "first_in_grid"
+    ]
+  },
+  "beta": {
+    "grid": "beta",
+    "rows": [
+      {
+        "beta": 0.5,
+        "fer": 0.78125,
+        "bit_errors": 49583
+      },
+      {
+        "beta": 0.8,
+        "fer": 0.921875,
+        "bit_errors": 80257
+      },
+      {
+        "beta": 0.9,
+        "fer": 0.90625,
+        "bit_errors": 79565
+      },
+      {
+        "beta": 0.95,
+        "fer": 0.8828125,
+        "bit_errors": 74527
+      },
+      {
+        "beta": 0.98,
+        "fer": 0.6875,
+        "bit_errors": 49453
+      }
+    ],
+    "selected": {
+      "beta": 0.98,
+      "fer": 0.6875,
+      "bit_errors": 49453
+    },
+    "tie_break": [
+      "fer",
+      "bit_errors",
+      "first_in_grid"
+    ]
+  },
+  "lam_rls": {
+    "grid": "lam_rls",
+    "rows": [
+      {
+        "lam_rls": 0.9,
+        "fer": 0.921875,
+        "bit_errors": 79838
+      },
+      {
+        "lam_rls": 0.95,
+        "fer": 0.92578125,
+        "bit_errors": 81491
+      },
+      {
+        "lam_rls": 0.99,
+        "fer": 0.92578125,
+        "bit_errors": 83259
+      },
+      {
+        "lam_rls": 0.995,
+        "fer": 0.92578125,
+        "bit_errors": 83494
+      },
+      {
+        "lam_rls": 0.999,
+        "fer": 0.92578125,
+        "bit_errors": 83506
+      }
+    ],
+    "selected": {
+      "lam_rls": 0.9,
+      "fer": 0.921875,
+      "bit_errors": 79838
+    },
+    "tie_break": [
+      "fer",
+      "bit_errors",
+      "first_in_grid"
+    ]
+  },
+  "lam_c40": {
+    "grid": "lam_c40",
+    "rows": [
+      {
+        "lam_c40": 0.5,
+        "fer": 0.1328125,
+        "bit_errors": 4000
+      },
+      {
+        "lam_c40": 2.0,
+        "fer": 0.3515625,
+        "bit_errors": 24531
+      },
+      {
+        "lam_c40": 8.0,
+        "fer": 0.6640625,
+        "bit_errors": 57048
+      },
+      {
+        "lam_c40": 32.0,
+        "fer": 0.91015625,
+        "bit_errors": 77598
+      }
+    ],
+    "selected": {
+      "lam_c40": 0.5,
+      "fer": 0.1328125,
+      "bit_errors": 4000
+    },
+    "tie_break": [
+      "fer",
+      "bit_errors",
+      "first_in_grid"
+    ]
+  },
+  "frozen_hypers": {
+    "mu": 0.01,
+    "beta": 0.98,
+    "lam_rls": 0.9,
+    "lam_c40": 0.5
+  },
+  "_meta": {
+    "script": "init-burden-diagnostic:phase2_tuning.json",
+    "common_md5": "49acdfa4",
+    "git_commit": "9222bb4",
+    "timestamp": "2026-09-23T23:49:44"
+  }
+}

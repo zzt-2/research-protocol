@@ -1,0 +1,44 @@
+{
+  "schema_version": "init-burden-diagnostic.phase1.frozen-pre-confirm.v1",
+  "written_before": "confirm2048 execution",
+  "verdict": "ALIVE",
+  "rule": "contract.yaml decision_rules (frozen before any run)",
+  "primary_evidence": {
+    "B0_minus_O1S": {
+      "point": 0.0859375,
+      "ci95": [
+        0.060546875,
+        0.111328125
+      ],
+      "wins": 46,
+      "losses": 2,
+      "exact_p": 8.36e-12
+    },
+    "B0_minus_O1": {
+      "point": -0.10546875,
+      "ci95": [
+        -0.1328125,
+        -0.078125
+      ],
+      "classification": "significantly_worse"
+    },
+    "O1S_minus_O2": {
+      "point": 0.00390625,
+      "ci95": [
+        0.0,
+        0.009765625
+      ],
+      "discordant": 2
+    }
+  },
+  "arm_rates": {
+    "B0": 0.30859375,
+    "O1": 0.4140625,
+    "O1S": 0.22265625,
+    "O2": 0.21875
+  },
+  "mechanism": "gain concentrated in Q2 marginal band (gg 0.32-0.72): B0 FER 0.242 -> O1S 0.039; Q1 deep fade mostly unrecoverable; Q3/Q4 clean",
+  "confirm_expectation": "direction and magnitude reproduced within CI on fresh 2048 seeds 61000-63047",
+  "phase2_go": true,
+  "erratum_v041": "B0_minus_O1 ci95 upper bound -0.078125 was a transcription typo; reproducible value is -0.0800293 (both <0, judgment unaffected). Corrected per V041 recommendation; see eval512_summary.json for authoritative values."
+}

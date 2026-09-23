@@ -1,0 +1,274 @@
+{
+  "batch": "smoke",
+  "n_frames": 8,
+  "arm_rates": {
+    "B0": {
+      "fer": 0.25,
+      "fer_count": 2,
+      "bit_errors": 469,
+      "ber": 0.0572509765625
+    },
+    "O1": {
+      "fer": 0.25,
+      "fer_count": 2,
+      "bit_errors": 804,
+      "ber": 0.09814453125
+    },
+    "O1S": {
+      "fer": 0.125,
+      "fer_count": 1,
+      "bit_errors": 336,
+      "ber": 0.041015625
+    },
+    "O2": {
+      "fer": 0.125,
+      "fer_count": 1,
+      "bit_errors": 347,
+      "ber": 0.0423583984375
+    }
+  },
+  "fer_contrasts": {
+    "B0_minus_O1": {
+      "contrast": "B0_minus_O1",
+      "n": 8,
+      "point": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "wins_hi": 0,
+      "losses_hi": 0,
+      "discordant": 0,
+      "exact_two_sided_p": 1.0,
+      "exact_one_sided_p": 1.0,
+      "resamples": 10000,
+      "seed": 2026092301
+    },
+    "B0_minus_O1S": {
+      "contrast": "B0_minus_O1S",
+      "n": 8,
+      "point": 0.125,
+      "ci95": [
+        0.0,
+        0.375
+      ],
+      "wins_hi": 1,
+      "losses_hi": 0,
+      "discordant": 1,
+      "exact_two_sided_p": 1.0,
+      "exact_one_sided_p": 0.5,
+      "resamples": 10000,
+      "seed": 2026092301
+    },
+    "B0_minus_O2": {
+      "contrast": "B0_minus_O2",
+      "n": 8,
+      "point": 0.125,
+      "ci95": [
+        0.0,
+        0.375
+      ],
+      "wins_hi": 1,
+      "losses_hi": 0,
+      "discordant": 1,
+      "exact_two_sided_p": 1.0,
+      "exact_one_sided_p": 0.5,
+      "resamples": 10000,
+      "seed": 2026092301
+    },
+    "O1S_minus_O2": {
+      "contrast": "O1S_minus_O2",
+      "n": 8,
+      "point": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "wins_hi": 0,
+      "losses_hi": 0,
+      "discordant": 0,
+      "exact_two_sided_p": 1.0,
+      "exact_one_sided_p": 1.0,
+      "resamples": 10000,
+      "seed": 2026092301
+    },
+    "O1S_minus_O1": {
+      "contrast": "O1S_minus_O1",
+      "n": 8,
+      "point": -0.125,
+      "ci95": [
+        -0.375,
+        0.0
+      ],
+      "wins_hi": 0,
+      "losses_hi": 1,
+      "discordant": 1,
+      "exact_two_sided_p": 1.0,
+      "exact_one_sided_p": 0.5,
+      "resamples": 10000,
+      "seed": 2026092301
+    }
+  },
+  "ber_contrasts": {
+    "B0_minus_O1": {
+      "contrast": "B0_minus_O1",
+      "n": 8,
+      "point_ber_diff": -0.0408935546875,
+      "bit_diff_total": -335,
+      "ci95": [
+        -0.09765625,
+        0.0
+      ],
+      "resamples": 10000,
+      "seed": 2026092301
+    },
+    "B0_minus_O1S": {
+      "contrast": "B0_minus_O1S",
+      "n": 8,
+      "point_ber_diff": 0.0162353515625,
+      "bit_diff_total": 133,
+      "ci95": [
+        -0.0120849609375,
+        0.060791015625
+      ],
+      "resamples": 10000,
+      "seed": 2026092301
+    },
+    "B0_minus_O2": {
+      "contrast": "B0_minus_O2",
+      "n": 8,
+      "point_ber_diff": 0.014892578125,
+      "bit_diff_total": 122,
+      "ci95": [
+        -0.01611328125,
+        0.060791015625
+      ],
+      "resamples": 10000,
+      "seed": 2026092301
+    },
+    "O1S_minus_O2": {
+      "contrast": "O1S_minus_O2",
+      "n": 8,
+      "point_ber_diff": -0.0013427734375,
+      "bit_diff_total": -11,
+      "ci95": [
+        -0.0040283203125,
+        0.0
+      ],
+      "resamples": 10000,
+      "seed": 2026092301
+    }
+  },
+  "stratified": {
+    "quantile_edges": [
+      0.9295074657391631,
+      1.142424761396652,
+      1.828353051367905
+    ],
+    "strata": [
+      {
+        "stratum": "Q1_deep_to_shallow",
+        "n": 2,
+        "gg_range": [
+          0.08386187335379794,
+          0.31616440503479254
+        ],
+        "fer_B0": 1.0,
+        "fer_O1": 1.0,
+        "fer_O1S": 0.5,
+        "fer_O2": 0.5
+      },
+      {
+        "stratum": "Q2_deep_to_shallow",
+        "n": 2,
+        "gg_range": [
+          1.13395515264062,
+          1.1423985151389462
+        ],
+        "fer_B0": 0.0,
+        "fer_O1": 0.0,
+        "fer_O1S": 0.0,
+        "fer_O2": 0.0
+      },
+      {
+        "stratum": "Q3_deep_to_shallow",
+        "n": 2,
+        "gg_range": [
+          1.142451007654358,
+          1.453506689973731
+        ],
+        "fer_B0": 0.0,
+        "fer_O1": 0.0,
+        "fer_O1S": 0.0,
+        "fer_O2": 0.0
+      },
+      {
+        "stratum": "Q4_deep_to_shallow",
+        "n": 2,
+        "gg_range": [
+          2.952892135550427,
+          6.388514006550562
+        ],
+        "fer_B0": 0.0,
+        "fer_O1": 0.0,
+        "fer_O1S": 0.0,
+        "fer_O2": 0.0
+      }
+    ]
+  },
+  "jones_error_summary": {
+    "frob_w0_b0_vs_ideal": {
+      "mean": 0.6981301376223328,
+      "median": 0.14806652599535788,
+      "q90": 1.8319314356110419
+    },
+    "frob_w0_b0_vs_jonesH": {
+      "mean": 1.1702396407954845,
+      "median": 0.4403870259001531,
+      "q90": 2.7854527522108588
+    },
+    "frob_ideal_vs_jonesH": {
+      "mean": 0.9416848013120249,
+      "median": 0.4192603893722705,
+      "q90": 2.128657981341035
+    },
+    "frob_Wfin_B0_vs_ideal": {
+      "mean": 0.5675624080733456,
+      "median": 0.07605633891592375,
+      "q90": 1.5576498984010763
+    },
+    "frob_Wfin_O1_vs_ideal": {
+      "mean": 0.7198007558759051,
+      "median": 0.027149296433685122,
+      "q90": 2.1512532803129365
+    },
+    "frob_Wfin_O1_vs_jonesH": {
+      "mean": 0.24446722249467584,
+      "median": 0.09187824618392432,
+      "q90": 0.6671338682451613
+    },
+    "frob_Wfin_O1S_vs_ideal": {
+      "mean": 0.25881967110482273,
+      "median": 0.02844221315399755,
+      "q90": 0.6293377636811801
+    },
+    "frob_Wfin_O2_vs_ideal": {
+      "mean": 0.0,
+      "median": 0.0,
+      "q90": 0.0
+    }
+  },
+  "preregistered_decision": {
+    "verdict": "GRAY",
+    "O1_status": "flat",
+    "O1S_status": "gray",
+    "rule": "DEAD iff both flat (CI95 contains 0 and point<0.005); ALIVE iff either CI95 lower bound>0; else GRAY->confirm batch, same rule, gray again->DEAD"
+  },
+  "manifest_hash": "f9a8e5b11008d1b4883671045eb442617c9db8372ef4a537371d27db35094f3f",
+  "_meta": {
+    "script": "init-burden-diagnostic:smoke_summary.json",
+    "common_md5": "49acdfa4",
+    "git_commit": "9222bb4",
+    "timestamp": "2026-09-23T23:25:25"
+  }
+}
