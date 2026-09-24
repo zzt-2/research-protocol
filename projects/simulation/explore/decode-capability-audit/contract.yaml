@@ -1,0 +1,127 @@
+# decode-capability-audit 合同（PROMPT-026 任务二 / R036 诊断）
+# 状态: FROZEN_BEFORE_EXECUTION（2026-09-24，运行前冻结；运行后仅可追加 amend 注记）
+schema_version: decode-capability-audit.contract.v1
+# amend v1.1 (2026-09-24, V042): inputs.llr_cache.conditions.S16.seeds 标签由
+#   "52000-54047" 勘误为 "53000-55047"（npz 文件名/generation_meta/raw_confirm_S16
+#   四处自洽为 53000-55047，仅本合同标签笔误；全部 join 为 seed 键控，不影响计算）。
+
+purpose: >
+  在 decode-failure-rescue 冻结 LLR 缓存（三个独立确认批，共 6144 帧）上量掉
+  译码块两个从未测过的算法轴：(A) 译码算法能力轴（SPA/BP vs NOMS）；
+  (B) NOMS 配置空间轴（目前只摸过 2 个点）。全部为缓存上纯译码实验，
+  不重放物理链，不改 decode-failure-rescue/ 任何原文件。
+
+inputs:
+  llr_cache:
+    root: results/decode-failure-rescue/llr_cache
+    conditions:
+      M15: {dir: confirm2048,                      snr_db: 15.0, turb: [4.0, 1.9],   seeds: 30000-32047, frames: 2048, label: 中湍流15dB锚点}
+      W12: {dir: confirm_W12_snr12_turb11.6x10.1,  snr_db: 12.0, turb: [11.6, 10.1], seeds: 50000-52047, frames: 2048, label: 弱湍流12dB}
+      S16: {dir: confirm_S16_snr16_turb4.2x1.4,    snr_db: 16.0, turb: [4.2, 1.4],   seeds: 53000-55047, frames: 2048, label: 强湍流16dB}  # seeds 标签 v1.1 勘误
+    frame_fields: [llr(1536 float32), truth_info(1024), truth_coded(1536)]
+  raw_anchor:
+    files: [raw_confirm2048.json, raw_confirm_W12.json, raw_confirm_S16.json]
+    use: B0 每帧 info_errors 锚点复现门
+  truth_access: >
+    真值只进评分与分层（post-hoc 分析层）；任何译码臂内部不接触真值。
+    无 RNG、无早停、无救援、无状态延续——全部为单发 fresh 译码。
+
+engines:
+  nomos: >
+    复用 decode-failure-rescue/rescue_decoder.py 的 RescueDecoder
+    （只读 import，零改动）：alpha * cn_update_offset_minsum(offset=beta)，
+    llr_max=20，输入 clip ±20，5G LDPC BG2 z=104 k=1024 n=1536。
+  spa: >
+    同一 LDPC5GDecoder 构造（llr_max=20, return_state=True, 同一 encoder），
+    cn_update=Sionna 2.0.1 cn_update_phi（数值稳定 boxplus/phi 精确和积更新，
+    无 alpha 缩放）——与 NOMS 唯一差异是校验节点更新规则。
+
+arms:
+  diagnostic_A_capability:
+    B0:      {cn: nomos, alpha: 0.75,  beta: 0.0, iters: 20}    # 冻结基线=锚点门
+    SPA20:   {cn: spa,   iters: 20}
+    SPA50:   {cn: spa,   iters: 50}
+    SPA200:  {cn: spa,   iters: 200}
+    NOMS50:  {cn: nomos, alpha: 0.75, beta: 0.0, iters: 50}     # 迭代轴对照
+    NOMS200: {cn: nomos, alpha: 0.75, beta: 0.0, iters: 200}    # 迭代轴对照
+  diagnostic_B_grid:
+    family: nomos alpha x beta, iters=20 fresh
+    alpha: [0.75, 0.8125, 0.875, 0.9375]
+    beta: [0.0, 0.05, 0.1, 0.15]
+    note: 16 配置含 B0(0.75,0) 与 R3 切换目标(0.875,0.1)；网格外不加点。
+
+gates:
+  implementation_gate: >
+    B0×20 在全部 6144 帧上 info_errors 与 raw_confirm*.json 逐帧 bit 级一致
+    （6144/6144）。任何失配 → 停止，修实现，不得读任何 SPA/网格结果。
+  spa_sanity_gate: >
+    SPA200 在 confirm2048 前 4 帧（raw 中 B0 均 0 错）info_errors 必须为 0。
+    失配 → 停止查引擎构造。
+
+primary_metrics:
+  - FER = info_error_frames / 2048（info_bits != truth_info 任意位）
+  - 配对 ΔFER = FER(B0) − FER(arm)（同缓存同帧全配对）
+  - BER（参考，不作门控）
+  - converged_at 分布（诊断 A 成本参考；syndrome==0 首次迭代）
+
+statistics:
+  pairing: 同条件内帧级全配对（同一缓存 LLR）
+  ci: 帧级配对 bootstrap，10000 重采样，CI95（分位数法）
+  significance: 精确双侧二项符号检验（win/loss 计数）
+  independence_note: >
+    T077 合同 Jones/GG/噪声逐帧独立抽取，帧级 iid 成立；
+    R033 阶段二的轨迹聚类方差问题在本数据集不适用（那是连续轨迹合同）。
+  honest_reporting: >
+    p 值不替代效应幅度（voice 2026-09-20 原话）；相对百分比必须与绝对
+    pp 并报；分母变化要讲清（D053 报告规则）。
+
+stratification_preregistered:
+  definition: >
+    e0 = 每帧 pre-decode 硬判决错误数 = #{i: sign(llr[i]) != truth_coded[i]}
+    （exact-APP LLR 硬判决，未译码）。这是解调器输出质量的直接代理，
+    单调对应信道实现好坏（深衰帧 LLR 幅度小 → 硬错多）。
+  bands: 每条件内按 e0 四分位分层: Q4(e0 最高 25%=深衰带), Q3(边际带), Q1+Q2(好带)
+  use: 诊断 A 主分层读数（SPA 增益住在哪一带）；诊断 B 复用同分层。
+
+verdict_rules_preregistered:
+  A_decoder_capability:
+    primary_comparison: ΔFER(B0 − SPA200) per condition
+    CLOSED_rule: 三条件全部满足 CI95 上界 < +0.005（0.5pp 绝对）
+      → 判定译码算法能力轴闭死：NOMS-20 已贴 BP 家族能力上缘，
+        "深衰=信息丢失"从推断升级为测量结论（限 BP 家族、限本工作点）。
+    ALIVE_rule: 任一条件 CI95 下界 > +0.005 → 轴量活，报幅度+分层+有界后续设计。
+    decomposition: ΔFER(B0−NOMS200) 分离迭代轴；(NOMS200−SPA200) 分离算法轴。
+  B_noms_config:
+    per_condition_best: 网格内逐条件最优（in-sample 选择=适应性 oracle 上界，须标注）
+    global_best: 三条件单一最优配置（in-sample 选择，16 配置选择偏差声明：可忽略量级）
+    headrooms:
+      - H1 = FER(B0) − FER(per_condition_best)   # 逐条件 oracle headroom
+      - H2 = FER(B0) − FER(global_best)          # 全局固定配置 headroom
+      - H3 = FER(global_best) − FER(per_condition_best)  # 适应性 margin
+    CLOSED_rule: 三条件全部 CI95 上界(H1) < +0.005 → 配置空间轴闭死
+      （配置切换收益=R3 已确认的整个故事，无更多配置 headroom）。
+    ALIVE_rule: 任一条件 CI95 下界(H1) > +0.005 → 量活，报幅度。
+    boundary: >
+      本网格量的是"固定配置之间的 FER 差"；帧级触发式选择（R3 门控身份）
+      已由 decode-failure-rescue 三确认批覆盖，不在本网格重做。
+
+budget_and_discipline:
+  max_rounds: 每诊断最多 2 轮设计—运行—诊断
+  no_posthoc_extension: 不看结果后扩网格/换 seed/加条件
+  no_failure_tuning: 失败不调参追正
+  oracle_usage: SPA200 只作 Kill 工具与 headroom 度量（FR-21/TL-32），不作 Go 判据
+  scope: 结论限所跑合同（三条件缓存、BG2 z=104、exact-APP LLR 前端）
+
+outputs:
+  dir: results/decode-capability-audit/
+  files:
+    - raw_capability.json     # 诊断 A 每帧每臂 info_errors/converged_at
+    - raw_grid.json           # 诊断 B 每帧每配置 info_errors
+    - summary.json            # 全部汇总指标+CI+p+分层（save_results 元数据注入）
+    - stratification.json     # 分层明细表
+
+provenance:
+  cache_generation: decode-failure-rescue/generate_llrs.py（T077 冻结链逐帧重放，
+    SNR/湍流覆盖值源自 params.py TurbulenceParams，Gu 2022 / Al-Habash 2001）
+  decoder: sionna 2.0.1（版本运行时校验，rescue_decoder.make_encoder 强制）
+  module_origin: PROMPT-026 任务二 / 审计报告 R036

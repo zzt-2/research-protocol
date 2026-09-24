@@ -898,3 +898,29 @@ PASS。R030 判定的两个硬问题（R2 映射、输出语义）已修复并�
 ### 结论
 
 **PASS with notes**：阶段一 ALIVE（B0−O1S +8.59pp CI[6.05,11.13]、锚点 512/512）与阶段二 IDENTITY_COLLAPSE 核心结论链在独立重算下全部成立；两处必修均为代码级缺陷且不影响任何已存头条数字与门控裁定。
+
+## V042: R036 全链未测轴审计与译码能力/配置诊断独立复核
+
+> 2026-09-24 | 关联：R036 / D059 / decode-capability-audit contract v1(+amend v1.1) / PROMPT-026
+> 复核人：独立 agent（与执行对话不同上下文）；抽样重算+全量核对，零仓库写入
+
+### 检查项与裁定
+
+1. **锚点门：PASS**。raw_capability 的 B0.info_errors 与 raw_confirm{2048,W12,S16} 全量 6144 帧逐帧 0 失配；converged_at 轨迹附加验证亦 0 失配（"bit 级复现"声称由此坐实）。
+2. **主表数字：PARTIAL（报告文本勘误项）**。18 个 FER 全部由 raw 重算一致；R036 §三表 M15 NOMS200 帧数 462→实际 461（off-by-one 及派生数字，已勘误归档）；S16 seeds 实际 53000-55047（合同标签笔误，amend v1.1 已修）。
+3. **配对统计：PASS**。M15 B0−NOMS200 delta=0.01953125、w/l=40/0 精确复现；bootstrap CI 独立重算两端差 ≤0.0005。
+4. **分层定义：PASS**。全量 2048 帧/条件重算 e0 四分位边精确复现 [22,52,118]/[61,91,134]/[16,46,122]；Q4 门槛 ≈118-134 声称成立。
+5. **网格判读：PASS**。逐条件最优 a0.8125_b{0.1,0.15,0.05}、H1/H2/H3、全局最优 a0.8125_b0.1（帧错误总和 1557 vs B0 1593）全部复现；grid a0.75_b0 与 capability B0 逐帧全等。
+6. **Pareto 表：PARTIAL（勘误项）**。mean_it cap50=16.62/18.94/17.35 复现；NOMS50 BER 三条件与 summary 全等且低于 B0/R3——R036 原"B0/R3 BER 引用数字"三处笔误（85037→85056 等），方向性结论不变，已勘误。
+7. **救援线对账：PASS**。R1@M15=481、R3=465/502/485、R3 mean_it 24.85/25.18/25.24 与 summary_confirm*.json 精确一致；迭代曲线 20:501/40:481/50:466/200:461 单调一致。
+8. **零改动：PASS**。git diff 两救援目录为空；新增仅 explore/decode-capability-audit（4 文件）与 results/decode-capability-audit（3 文件，命中既有 results gitignore 规则）。
+9. **报告一致性：PASS（约 40 个抽查，勘误 5 处已修）**。§三配对表/分层表、§四 H1-H3、§五 Pareto、converged_wrong=0×3、ES 比例全部一致。
+10. **合同纪律：PASS**。FROZEN_BEFORE_EXECUTION 在案；16 配置与合同一致；SPA=cn_update_phi/llr_max=20 与代码一致；真值隔离代码级确认（decode 路径不接触 truth，truth 仅进评分与 e0 分层）。
+
+### 修复闭环（执行对话，同轮完成）
+
+R036 五处勘误（461 off-by-one 族、BER 引用、"全臂最优"→"优于全部救援线臂"、S16 seeds 标签）+ 合同 amend v1.1 全部落地；summary.json 本身零错误、无需重跑。
+
+### 结论
+
+**PASS with notes**：R036 全部核心声称（轴生死判定、配对统计、分层、网格、Pareto、零改动、真值隔离）在独立重算下成立；问题仅限报告文本勘误且已闭环，不改任何 verdict。
