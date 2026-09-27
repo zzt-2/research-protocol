@@ -63,9 +63,11 @@
     "doi:10.1109/tvt.2019.2916843": {
       "path": "papers\\doi\\10.1109_tvt.2019.2916843",
       "doi": "10.1109/tvt.2019.2916843",
-      "title": "",
+      "title": "Adaptive Channel Coding and Power Control for Practical FSO Communication Systems Under Channel Estimation Error",
       "status": "failed",
-      "batches": [],
+      "batches": [
+        "p027-neighbor-download-batch"
+      ],
       "title_check": null
     },
     "doi:10.1109/ojcoms.2024.011100": {
@@ -781,9 +783,11 @@
     "doi:10.1109/lwc.2022.3192518": {
       "path": "papers\\doi\\10.1109_lwc.2022.3192518",
       "doi": "10.1109/LWC.2022.3192518",
-      "title": "",
+      "title": "Improved Layered Normalized Min-Sum Algorithm for 5G NR LDPC",
       "status": "failed",
-      "batches": [],
+      "batches": [
+        "p027-neighbor-download-batch"
+      ],
       "title_check": null
     },
     "doi:10.1109/iccc62609.2024.10942076": {
@@ -823,6 +827,86 @@
       "status": "failed",
       "batches": [
         "t004-gw2-priority-batch"
+      ],
+      "title_check": null
+    },
+    "doi:10.3390/s24216893": {
+      "path": "papers\\doi\\10.3390_s24216893",
+      "doi": "10.3390/s24216893",
+      "title": "Two-Phase Globally Coupled Low-Density Parity Check Decoding Aided with Early Termination and Forced Convergence",
+      "status": "failed",
+      "batches": [
+        "p027-neighbor-download-batch"
+      ],
+      "title_check": null
+    },
+    "doi:10.1364/oe.494078": {
+      "path": "papers\\doi\\10.1364_oe.494078",
+      "doi": "10.1364/oe.494078",
+      "title": "High-speed information reconciliation with syndrome-based early termination for continuous-variable quantum key distribution.",
+      "status": "failed",
+      "batches": [
+        "p027-neighbor-download-batch"
+      ],
+      "title_check": null
+    },
+    "doi:10.1364/oe.581729": {
+      "path": "papers\\doi\\10.1364_oe.581729",
+      "doi": "10.1364/oe.581729",
+      "title": "High-speed reconciliation with convergence-based early termination for CV-QKD using SC-LDPC codes.",
+      "status": "failed",
+      "batches": [
+        "p027-neighbor-download-batch"
+      ],
+      "title_check": null
+    },
+    "doi:10.1155/acis/4082392": {
+      "path": "papers\\doi\\10.1155_acis_4082392",
+      "doi": "10.1155/acis/4082392",
+      "title": "Adaptive Offset Min‐Sum Decoder for 5G‐NR BG2 LDPC Codes Using Genetic Algorithm",
+      "status": "failed",
+      "batches": [
+        "p027-neighbor-download-batch"
+      ],
+      "title_check": null
+    },
+    "doi:10.1145/3502208": {
+      "path": "papers\\doi\\10.1145_3502208",
+      "doi": "10.1145/3502208",
+      "title": "Joint Source-Channel Decoding of Polar Codes for HEVC-Based Video Streaming",
+      "status": "success",
+      "batches": [
+        "p027-neighbor-download-batch"
+      ],
+      "title_check": "match"
+    },
+    "doi:10.6092/polito/porto/2544356": {
+      "path": "papers\\doi\\10.6092_polito_porto_2544356",
+      "doi": "10.6092/polito/porto/2544356",
+      "title": "VLSI decoding architectures: flexibility, robustness and performance",
+      "status": "failed",
+      "batches": [
+        "p027-neighbor-download-batch"
+      ],
+      "title_check": null
+    },
+    "doi:10.1109/ceccc68691.2025.00008": {
+      "path": "papers\\doi\\10.1109_ceccc68691.2025.00008",
+      "doi": "10.1109/ceccc68691.2025.00008",
+      "title": "Adaptive Layered Enhanced Min-Sum Decoding for Short-Block LDPC Codes in Low-SNR and Burst-Prone Communication Systems",
+      "status": "failed",
+      "batches": [
+        "p027-neighbor-download-batch"
+      ],
+      "title_check": null
+    },
+    "doi:10.1109/iccc65529.2025.11149292": {
+      "path": "papers\\doi\\10.1109_iccc65529.2025.11149292",
+      "doi": "10.1109/iccc65529.2025.11149292",
+      "title": "Adaptive Normalized Min-Sum Decoding Algorithm For LDPC Codes in Flash Memory",
+      "status": "failed",
+      "batches": [
+        "p027-neighbor-download-batch"
       ],
       "title_check": null
     }
