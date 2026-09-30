@@ -1,0 +1,138 @@
+# decode-budget-rule 第二轮+成章实验合同（D063 授权 / R039）
+# 状态: FROZEN_BEFORE_EXECUTION（2026-09-30，生成任何新缓存前冻结；运行后仅可追加 amend 注记）
+schema_version: decode-budget-rule.contract-r2.v1
+
+purpose: >
+  判决规则第二轮（特征升级 + 新种子无偏确认）+ 成章实验（SNR 全扫描 + 文献判据
+  消融 + 预算池跨帧变体）。判准按 D063 用户拍板：主判据=现行基线锚（FER 相对
+  B0 固定 20 不升且省算 CI>0）；cap200 保持 0.2pp 严格门作为诚实边界并报；
+  cap50 教科书点作为"赢最强简单配置"读数并报。
+
+design_input_disclosure: >
+  本轮特征族设计输入=第一轮 dev 池 + 第一轮确认批诊断（W12 磨帧群画像：s_20
+  高瞬态 120-208 后 49-106 轮收敛）+ 第一轮事后 oracle 扫描（RD 族迁移最好，
+  标注为非部署证据的设计输入）。第一轮确认批因此对本轮特征族"已烧毁"——本轮
+  一切 verdict 读数只用新种子确认批；第一轮确认批上本轮规则数字只作参考附录并
+  标注污染。
+
+inputs:
+  new_caches:   # 全部经 generate_llrs.build_frame（冻结 T077 链，只读 import）生成
+    root: results/decode-budget-rule/llr_cache
+    dev2_W12: {cond: [12.0, 11.6, 10.1], seeds: 46000-47023, frames: 1024, role: dev扩容（锐化W12磨帧率估计）}
+    c2_M15:   {cond: [15.0, 4.0, 1.9],   seeds: 60000-62047, frames: 2048, role: 新确认批}
+    c2_W12:   {cond: [12.0, 11.6, 10.1], seeds: 70000-72047, frames: 2048, role: 新确认批}
+    c2_S16:   {cond: [16.0, 4.2, 1.4],   seeds: 80000-82047, frames: 2048, role: 新确认批}
+    sweep:    # 14 新点（M15/W12/S16 三锚点复用既有批与 c2 批）；seeds 90000+3000k 递进
+      moderate_4x1.9:  {snr_db: [11, 12, 13, 14, 16, 17]}   # 15dB=c2_M15 既有
+      weak_11.6x10.1:  {snr_db: [10, 11, 13, 14]}           # 12dB=c2_W12 既有
+      strong_4.2x1.4:  {snr_db: [14, 15, 17, 18]}           # 16dB=c2_S16 既有
+  reused:
+    dev_pool: 第一轮 raw_traj_dev.json（dev/dev_M14/dev_W12/dev_S16，1600 帧）
+    round1_confirm: raw_traj_confirm.json + raw_iterates_confirm.json（参考附录用，标注污染）
+  seed_disjointness: 新 seeds 与既有全部批次（5000-5063/4000-4511/2900-2907/
+    30000-55047/41000-43511）零重叠；sweep 各点间间隔 3000 零重叠。
+
+engine: 同第一轮（RescueDecoder NOMS(0.75,0) cap200 全轨迹；只读 import；零改动冻结模块）。
+
+rule_family_r2_preregistered:
+  semantics: 同第一轮三态（s_t==0 接受停；检查点判无望即砍；否则烧满 200）。
+    检查点集 CP={20,30,50,100} 不变；窗口 k=8 不变。
+  deployable_families:   # 冻结规则只从这三族选
+    F1_RD:          {criterion: 任一检查点 red=s_c/max(s_1,1) >= tau, tau: [0.55, 0.65, 0.75]}
+    F2_persist_lvl: {criterion: 检查点对 (30: s20>=ta 且 s30>=tb; 50: s30>=ta 且 s50>=tb; 100: s50>=ta 且 s100>=tb), (ta,tb) in {100,120,140}^2}
+    F3_persist_red: {criterion: 检查点对 (30: red20>=tau 且 red30>=tau; 50: red30>=tau 且 red50>=tau; 100: red50>=tau 且 red100>=tau), tau: [0.5, 0.6, 0.7]}
+  ablation_families:   # 文献判据对照，dev 同准则校准阈值，只评分不参与冻结
+    A1_gclrpc1: >
+      GC-LDPC C1 型（Sensors 2024 ET-1，读笔记 L10-14）：v1=1-s_t/720，
+      l>=l1_min=20 起逐迭代：v1 < v1_min（等价 s_t > 720*(1-v1_min)）或
+      v1 连续 T 次不严格增（等价 s 连续 T 次不严格降）→ 中止。
+      网格 s_thr x {100,120,140} x T x {5,8}，dev 上按 W=0/max-saving 选。
+    A2_osc3: >
+      N04 bootstrapped 3-移位寄存器振荡停（EURASIP JWCN 2023）：l>=l_min 起
+      s_t==s_{t-2} 且 s_t>0 → 中止。l_min x {10,20,30}，dev 同准则选。
+  selection_criterion: >
+    dev 池 = 第一轮 1600 + dev2_W12 1024 = 2624 帧。在 pooled W=0（零错砍）
+    的 deployable 候选中取 pooled 平均迭代节省最大者；并列依次：W 更小 →
+    简单性 F1>F3>F2（参数少者优先）→ tau/阈值更大（更保守）。无 W=0 候选时
+    fallback W<=1 并显式登记风险（第一轮教训：dev→confirm 错砍迁移 ~2.5x）。
+  multiple_comparison_note: 15 deployable 候选 in-sample 选择；无偏检验=新确认批单次。
+
+verdict_rules_preregistered:
+  evaluation_scope: 仅 c2_M15/c2_W12/c2_S16（各 2048 帧，单次运行只评分）。
+  PRIMARY_user_criterion_D063: >
+    三条件全部：FER_a(rule) <= FER_a(B0 固定 20)（点估计）且
+    省算 (20 - mean_it_rule) 的帧级配对 bootstrap CI95 下界 > 0
+    → 判"部署成立"（同时报 BER 与吞吐换算）。
+  STRICT_cap200_parity: >
+    三条件全部：FER 损失 vs cap200-ES <= 0.2pp 且省算 CI 下界 > 0（第一轮
+    严格门的延续，作诚实边界并报，不作本轮生死门）。
+  textbook_cap50_reading: >
+    逐条件报告 FER(rule) vs FER(cap50-ES) 与成本差 CI（"赢最强简单配置"读数，
+    无门）。
+  no_failure_tuning: 确认批结果不理想不调参追正；sweep 点无门（地形描述）。
+
+pool_variant_exploratory:   # "跨帧"锚点的第一个实例化，标注 exploratory
+  design: >
+    块=32 帧（按 seed 顺序切），预算池 B=32*c，c in {15,20,25}。逐帧译码，
+    接受/砍帧释放预算；检查点处检查剩余预算：若不足以让全部活跃帧续到下一
+    检查点，按 s_c 从高到低停帧（输出停点迭代代）。预算仅在块内跨帧共享。
+  metrics: FER_a / mean_it / 预算遵守（mean_it<=c）/ vs 固定 cap-c-ES 与
+    无预算约束规则点。只报读数无门；实现为离线仿真（停点均在检查点，ie 提取
+    覆盖 {10,15,20,30,50,100}）。
+
+sweep_protocol: >
+  14 新点各 2048 帧：轨迹 + ie@{10,15,20,30,50,100} 提取 + 冻结规则/消融/
+  ES 固定点评分。主图口径：FER-SNR 与 mean_it-SNR 曲线族（B0 固定20 / B0+ES
+  cap20 / NOMS+ES cap50 / cap200 / 规则 / 消融），逐点报 bootstrap CI。
+  高 SNR 区规则增益趋零属预期，如实呈现（D063-3 用户口径：全场景覆盖）。
+  R3 救援线只在三锚点引用 R036 数字（救援管线不在本轮重放范围）。
+
+gates:   # 实现门（只验实现正确性，不验结果倾向）
+  GN1_meta: 每新缓存目录帧数/seeds/npz 字段/meta json 与合同一致。
+  GN2_determinism: 每批抽 32 帧（每 64 帧取 1）：B0x20 重跑两次 bit 级一致；
+    cap200 轨迹前 20 迭代 syndrome 与 fresh 20 迭代 run 逐位一致（stepped==
+    fresh，镜像 rescue_decoder 正确性门 2）。
+  GN3_report_only: >
+    c2 批 B0x20 FER 与第一轮同条件批差异 ±25% 内——仅报告项非门（防止结果
+    倾向门被滥用弃数据）；越界则登记并继续（条件实现不变，物理种子差异是
+    合理解释空间）。
+
+statistics: 同第一轮（帧级配对 bootstrap 10k CI95 + 精确符号检验；种子
+  20260930；口径 a 主 / 口径 b 并报）。
+
+budget_and_discipline:
+  compute_budget: 生成 ~96min + 轨迹 ~107min + 提取 ~25min（单线程顺序，可恢复）
+  max_rounds: 本合同一轮（特征族已按第一轮诊断设计；确认批结果不触发第二轮调参）
+  confirm_single_run: c2 三批各跑一次轨迹采集只评分一次
+  scope: 结论限所跑合同（BG2 z=104、exact-APP LLR、NOMS(0.75,0)、cap200、
+    CP/窗口不变、15 deployable + 9 ablation 候选、3 新确认批 + 14 sweep 点）
+
+outputs:
+  dir: results/decode-budget-rule/
+  files:
+    - llr_cache/{dev2_W12,c2_*,sw_*}/ + generation_meta_r2.json
+    - raw_traj_r2_dev.json        # dev2_W12 轨迹（G-N 门报告）
+    - frozen_rule_r2.json         # 三族 15 候选选择表 + 消融校准记录
+    - raw_traj_r2_confirm.json    # c2 三批轨迹（G-N 门报告）
+    - raw_traj_r2_sweep.json      # 14 sweep 点轨迹
+    - raw_iterates_r2.json        # ie@{10,15,20,30,50,100} + 各规则砍帧停点
+    - summary_r2.json             # verdict + Pareto + 消融表 + 预算池（save_results）
+    - sweep_summary_r2.json       # 全扫描地形（save_results）
+
+expected_outcome_preregistered:   # TL-20
+  mechanism: 持续性/降幅特征应砍掉与第一轮相当的死帧比例（84-98%@cp20）；
+    W12 磨帧因需两个检查点确认或降幅条件，预期 dev W=0 可达且 confirm 错砍
+    显著低于第一轮（目标 <=4 帧/条件）。规则点预期 mean_it 15-20、FER_a
+    介于 cap50 与 cap200 之间偏 cap200 侧。主判据（vs B0）预期大幅通过。
+  main_risk: 持续性条件把砍帧推迟到 cp30/50 → 死帧成本上升（mean_it +2-5），
+    节省缩水但仍远大于门；W12 磨帧若在 cp30 仍高水平（真横盘），persist 族
+    也砍错——此时如实报 W 数并按 fallback 纪律处理。
+  deviation_check: dev2_W12 上磨帧率若 <0.2%（<2 帧/1024），W=0 约束过松风险
+    登记（选择功效不足），照常冻结并在报告标注。
+
+provenance:
+  upstream: D063（授权与判准）/ R038+D062（第一轮）/ R037 §五（消融建议与
+    判据形态）/ papers/_read_notes/10.3390_s24216893.md（C1 精读）
+  cache_generation: decode-failure-rescue/generate_llrs.build_frame（只读 import，
+    冻结 T077 链逐帧重放，SNR/turb 覆盖机制与第一轮 conditions 批同源）
+  decoder: sionna 2.0.1（make_encoder 强制校验）

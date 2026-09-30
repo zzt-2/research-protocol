@@ -1,0 +1,25 @@
+{
+  "schema_version": "decode-budget-rule.llr-cache.gen-r2.v1",
+  "batch": "sw_mod_11",
+  "role": "sweep",
+  "snr_db": 11.0,
+  "turbulence": [
+    4.0,
+    1.9
+  ],
+  "seeds": {
+    "start": 90000,
+    "stop_inclusive": 92047,
+    "count": 2048
+  },
+  "generated": 2048,
+  "skipped_existing": 0,
+  "mean_frame_seconds": 0.029518406593751934,
+  "contract": "explore/decode-budget-rule/contract_r2.yaml (v1, frozen)",
+  "versions": {
+    "python": "3.14.2",
+    "sionna": "2.0.1",
+    "torch": "2.13.0+cpu",
+    "numpy": "2.5.1"
+  }
+}

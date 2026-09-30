@@ -43,3 +43,25 @@ verdict = **KILL**（双口径一致）：FER 损失 +0.24/+0.49/+0.34pp 三条�
 
 本模块零改动 `decode-failure-rescue/`、`decode-capability-audit/` 与一切旧
 raw/冻结模块：只读 import `rescue_decoder`，只读 llr_cache npz 与锚点 JSON。
+
+## 第二轮+成章实验（D063 授权，contract_r2.yaml 冻结 2026-09-30）
+
+```bash
+python gen_batches.py                    # 35840 帧新缓存（dev2_W12/c2 三批/14 sweep 点）
+python run_trajectory_r2.py --role dev2  # dev2 轨迹（G-N 门）
+python select_rule_r2.py                 # 2624 帧 dev 池选择 -> frozen_rule_r2.json
+python run_trajectory_r2.py --role confirm   # c2 三批冻结后单次
+python extract_iterates_r2.py --role confirm # ie@{10,15,30,50,100}+消融停点
+python score_r2.py                       # verdict+Pareto+消融+预算池 -> summary_r2.json
+python run_trajectory_r2.py --role sweep     # 14 点轨迹
+python extract_iterates_r2.py --role sweep
+python sweep_score_r2.py                 # 全地形 -> sweep_summary_r2.json
+```
+
+第二轮要点（R039）：dev 池 2624 帧无 W=0 候选（错砍集中于新 dev2_W12，坐实
+W12 磨帧群），fallback 冻结 RD_0.75（W=1）。c2 新种子确认批：冻结规则过
+严格 cap200 保持门（+0.00/+0.20/+0.05pp，错砍 0/4/1）但成本≈B0（主判据
+成本腿不过）；**预算池变体 POOL_c20（块 32 帧、检查点预算卫兵）双门全过**：
+vs B0 FER −2.2/−3.8/−1.3pp + 成本 −19~21%（CI 下界 2.4+）+ BER 降；vs
+cap50 教科书点 FER 更好且更便宜（Pareto 支配）。消融：C1 型/振荡停在
+同准则校准下错砍 2.5-5 倍（5/14/2 与 5/22/5 vs 规则 0/4/1）。

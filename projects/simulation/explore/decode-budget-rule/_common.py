@@ -128,3 +128,161 @@ def candidate_key(spec: dict) -> str:
     if spec["family"] == "RE":
         return f"RE_o{spec['tau_o']}_m{spec['tau_m']}"
     return f"{spec['family']}_{spec['tau']:g}"
+
+
+# --------------------------------------------------------------------- #
+# round-2 extensions (contract_r2.yaml, frozen 2026-09-30)
+# --------------------------------------------------------------------- #
+# checkpoint pairs for persistence families: (cut_cp, reference_cp)
+PAIR_CP = {30: 20, 50: 30, 100: 50}
+
+
+def criterion_mask_r2(stats: dict, c: int, spec: dict) -> np.ndarray:
+    """Round-2 deployable families (checkpoint-pair persistence)."""
+    fam = spec["family"]
+    if c not in PAIR_CP:
+        return np.zeros(stats[c]["level"].shape, dtype=bool)  # cp20: no pair yet
+    st, stp = stats[c], stats[PAIR_CP[c]]
+    if fam == "PL":  # F2 persist-level
+        return (stp["level"] >= spec["ta"]) & (st["level"] >= spec["tb"])
+    if fam == "PR":  # F3 persist-red
+        return (stp["red"] >= spec["tau"]) & (st["red"] >= spec["tau"])
+    raise ValueError(fam)
+
+
+def simulate_rule_r2(sw: np.ndarray, conv: np.ndarray, spec: dict):
+    """Dispatch: round-1 families + r2 checkpoint families + r2 per-iteration
+    ablations (C1/OSC). Returns (stop_iter, outcome) like simulate_rule."""
+    fam = spec["family"]
+    if fam == "C1":
+        return _simulate_c1(sw, conv, spec)
+    if fam == "OSC":
+        return _simulate_osc(sw, conv, spec)
+    if fam in ("PL", "PR"):
+        n = sw.shape[0]
+        stats = window_stats(sw)
+        aborted_at = np.full(n, -1, dtype=np.int64)
+        for c in CP:
+            if c not in PAIR_CP:
+                continue
+            m = criterion_mask_r2(stats, c, spec)
+            elig = m & ((conv == -1) | (conv > c))
+            fresh = elig & (aborted_at == -1)
+            aborted_at[fresh] = c
+        stop = np.where(aborted_at > 0, aborted_at,
+                        np.where(conv > 0, conv, CAP))
+        outcome = np.full(n, EXHAUST, dtype=np.int64)
+        outcome[(aborted_at > 0) & (conv == -1)] = CUT_CORRECT
+        outcome[(aborted_at > 0) & (conv > 0)] = CUT_WRONG
+        outcome[(aborted_at < 0) & (conv > 0)] = ACCEPT
+        return stop, outcome
+    return simulate_rule(sw, conv, spec)  # round-1 families (RA/RC/RD/RB/RE)
+
+
+def _simulate_c1(sw: np.ndarray, conv: np.ndarray, spec: dict):
+    """GC-LDPC C1-type: from l1_min, per-iteration abort if s_t > s_thr OR
+    s failed to strictly decrease T consecutive steps (v1 non-increase)."""
+    n, cap = sw.shape[0], sw.shape[1]
+    l1_min = spec.get("l1_min", 20)
+    thr, T = spec["s_thr"], spec["T"]
+    aborted_at = np.full(n, -1, dtype=np.int64)
+    stag = np.zeros(n, dtype=np.int64)
+    for t in range(1, cap + 1):
+        idx = t - 1
+        if t >= 2:
+            nondec = sw[:, idx] >= sw[:, idx - 1]
+            # stagnation observations counted only for t > l1_min (paper
+            # reading: "v1 non-increase T consecutive times while l > l1_min")
+            stag = np.where(nondec, stag + 1, 0) if t > l1_min else 0
+        if t <= l1_min:
+            continue
+        trig = (sw[:, idx] > thr) | (stag >= T)
+        # accept priority: frames with conv == t accepted before any check
+        elig = trig & (aborted_at < 0) & ((conv == -1) | (conv > t))
+        aborted_at[elig] = t
+    stop = np.where(aborted_at > 0, aborted_at, np.where(conv > 0, conv, CAP))
+    outcome = np.full(n, EXHAUST, dtype=np.int64)
+    outcome[(aborted_at > 0) & (conv == -1)] = CUT_CORRECT
+    outcome[(aborted_at > 0) & (conv > 0)] = CUT_WRONG
+    outcome[(aborted_at < 0) & (conv > 0)] = ACCEPT
+    return stop, outcome
+
+
+def _simulate_osc(sw: np.ndarray, conv: np.ndarray, spec: dict):
+    """N04 bootstrapped 3-shift-register oscillation stop: from l_min,
+    s_t == s_{t-2} and s_t > 0 -> abort."""
+    n, cap = sw.shape[0], sw.shape[1]
+    l_min = spec["l_min"]
+    aborted_at = np.full(n, -1, dtype=np.int64)
+    for t in range(max(l_min, 3), cap + 1):
+        trig = (sw[:, t - 1] == sw[:, t - 3]) & (sw[:, t - 1] > 0)
+        elig = trig & (aborted_at < 0) & ((conv == -1) | (conv > t))
+        aborted_at[elig] = t
+    stop = np.where(aborted_at > 0, aborted_at, np.where(conv > 0, conv, CAP))
+    outcome = np.full(n, EXHAUST, dtype=np.int64)
+    outcome[(aborted_at > 0) & (conv == -1)] = CUT_CORRECT
+    outcome[(aborted_at > 0) & (conv > 0)] = CUT_WRONG
+    outcome[(aborted_at < 0) & (conv > 0)] = ACCEPT
+    return stop, outcome
+
+
+def pool_simulate(sw: np.ndarray, conv: np.ndarray, spec: dict, *,
+                  block: int = 32, budget_per_frame: float = 20.0):
+    """Exploratory cross-frame budget pool (contract_r2).
+
+    Blocks of `block` frames (seed order) share budget B = block * c.
+    Decisions happen only at checkpoints (deployable semantics): frames that
+    hit syndrome-0 stop at conv; the frozen rule's cut criterion fires at
+    checkpoints; after cuts, if the remaining budget cannot carry all active
+    frames to the next checkpoint, frames are stopped at c in decreasing s_c
+    order. Segment commitment already made may overshoot the pool (flagged);
+    actual mean_it is what gets reported.
+    Returns (stop_iter, outcome, per-block overshoot flags).
+    """
+    n = sw.shape[0]
+    stop = np.full(n, CAP, dtype=np.int64)
+    outcome = np.full(n, EXHAUST, dtype=np.int64)
+    stats = window_stats(sw)
+    use_r1 = spec["family"] in ("RA", "RC", "RD", "RB", "RE")
+    overshoot = []
+    cps = [0] + CP + [CAP]
+    for b0 in range(0, n, block):
+        idx = list(range(b0, min(b0 + block, n)))
+        budget = len(idx) * budget_per_frame
+        active = list(idx)
+        for k in range(1, len(cps)):
+            c_prev, c = cps[k - 1], cps[k]
+            seg = c - c_prev
+            # acceptance inside the segment: exact per-frame cost up to conv
+            still = []
+            for i in active:
+                if 0 < conv[i] <= c:
+                    stop[i] = conv[i]
+                    outcome[i] = ACCEPT
+                    budget -= max(conv[i] - c_prev, 0)
+                else:
+                    still.append(i)
+            # all remaining frames ran the full segment to reach checkpoint c
+            budget -= len(still) * seg
+            if c in CP and still:
+                m = (criterion_mask(stats, c, spec) if use_r1
+                     else criterion_mask_r2(stats, c, spec))
+                cut = [i for i in still
+                       if m[i] and (conv[i] == -1 or conv[i] > c)]
+                for i in cut:
+                    stop[i] = c
+                    outcome[i] = CUT_CORRECT if conv[i] == -1 else CUT_WRONG
+                still = [i for i in still if i not in set(cut)]
+            # budget guard: afford carrying actives to the next checkpoint
+            if k + 1 < len(cps) and still:
+                nxt = cps[k + 1]
+                need = len(still) * (nxt - c)
+                while still and budget < need:
+                    worst = max(still, key=lambda i: sw[i, c - 1])
+                    still.remove(worst)
+                    stop[worst] = c
+                    outcome[worst] = EXHAUST  # budget-stopped at checkpoint
+                    need = len(still) * (nxt - c)
+            active = still
+        overshoot.append(budget < 0)
+    return stop, outcome, overshoot

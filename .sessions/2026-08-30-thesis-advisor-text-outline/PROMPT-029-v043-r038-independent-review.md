@@ -48,3 +48,9 @@
 - 引用常量是 4 位小数舍入（0.2251 vs 461/2048=0.225098），对账容差 5e-5。
 - summary.json 的 p_sign 对全同对（wins+losses=0）为 1.0 属正常。
 - 结论限所跑合同（BG2 z=104、exact-APP LLR、NOMS(0.75,0)、cap200）；不要外推评判。
+
+---
+
+## 附注（2026-09-30，范围扩展）
+
+第二轮+成章实验已完成（R039/D064，D063 授权）：新模块文件 gen_batches.py / run_trajectory_r2.py / select_rule_r2.py / extract_iterates_r2.py / score_r2.py / sweep_score_r2.py / contract_r2.yaml / _common.py 扩展；新数据 results/decode-budget-rule/{raw_traj_r2_dev,raw_traj_r2_confirm,raw_traj_r2_sweep,raw_iterates_r2,frozen_rule_r2,summary_r2,sweep_summary_r2}.json 与 llr_cache/{dev2_W12,c2_*,sw_*}。**V043 复核范围扩至 R039**：上述第一轮 12 项不变，另加（13）c2 verdict 复算（RD_0.75 三条件 FER/mean_it/错砍，期望 0.2466/19.35/0、0.2573/19.00/4、0.2383/20.26/1）；（14）POOL_c20 复算（独立实现块预算卫兵语义，期望 mean_it 15.80/16.15/16.11、FER 0.2471/0.2573/0.2388、块超支 0）；（15）GN2 抽验任一新批（cap200 轨迹前 20 vs B0×20 独立运行逐位一致）；（16）sweep 抽一点（如 sw_mod_13）复算 B0/规则/cap50 FER；（17）R039 报告数字与 summary_r2/sweep_summary_r2 对账。
