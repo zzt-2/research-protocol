@@ -1,0 +1,625 @@
+{
+  "schema_version": "decode-budget-rule.summary.v2",
+  "contract": "explore/decode-budget-rule/contract.yaml (v1 frozen + amend v1.1)",
+  "frozen_rule": {
+    "key": "RC_120",
+    "family": "RC",
+    "tau": 120
+  },
+  "frozen_at": "2026-09-27 14:54:34",
+  "fallback_selection_used": false,
+  "gates": {
+    "M15": {
+      "G1_first20_mismatch": 0,
+      "G2_nomos200_mismatch": 0
+    },
+    "W12": {
+      "G1_first20_mismatch": 0,
+      "G2_nomos200_mismatch": 0
+    },
+    "S16": {
+      "G1_first20_mismatch": 0,
+      "G2_nomos200_mismatch": 0
+    }
+  },
+  "fer_semantics": {
+    "a_primary": "stop-iterate output semantics (cut frames output the abort iterate; same definition as R036 fixed-cap FER)",
+    "b_conservative": "acceptance semantics (every cut counts as failure; FER-loss upper bound)"
+  },
+  "per_condition": {
+    "M15": {
+      "n": 2048,
+      "rule": {
+        "fer_a": 0.2275390625,
+        "fer_b": 0.24853515625,
+        "mean_it": 15.02001953125,
+        "outcome_counts": {
+          "accept": 1539,
+          "cut_correct": 440,
+          "cut_wrong": 3,
+          "exhaust": 66
+        },
+        "accepted_wrong": 0,
+        "cut_frames_with_correct_info_at_cut": 0,
+        "wrong_cut_detail": [
+          {
+            "seed": 30760,
+            "cut_at": 30,
+            "s_at_cut": 122,
+            "would_converge_at": 113,
+            "ie_at_cut": 77,
+            "ie_at_200": 0
+          },
+          {
+            "seed": 31241,
+            "cut_at": 20,
+            "s_at_cut": 142,
+            "would_converge_at": 78,
+            "ie_at_cut": 60,
+            "ie_at_200": 0
+          },
+          {
+            "seed": 31332,
+            "cut_at": 20,
+            "s_at_cut": 130,
+            "would_converge_at": 165,
+            "ie_at_cut": 48,
+            "ie_at_200": 0
+          }
+        ]
+      },
+      "es_points": {
+        "10": {
+          "fer_a": 0.283203125,
+          "fer_b": 0.302734375,
+          "mean_it": 6.2802734375
+        },
+        "15": {
+          "fer_a": 0.25390625,
+          "fer_b": 0.2705078125,
+          "mean_it": 7.7177734375
+        },
+        "20": {
+          "fer_b": 0.2607421875,
+          "mean_it": 9.04931640625,
+          "fer_a": 0.2446
+        },
+        "50": {
+          "fer_b": 0.2490234375,
+          "mean_it": 16.6162109375,
+          "fer_a": 0.2275
+        },
+        "200": {
+          "fer_b": 0.2470703125,
+          "mean_it": 53.77783203125,
+          "fer_a": 0.2251
+        }
+      },
+      "branchA": {
+        "iter_saving_cap200es": {
+          "mean": 38.7578125,
+          "ci95": [
+            35.54881591796875,
+            41.99122314453125
+          ],
+          "wins": 443,
+          "losses": 0,
+          "p_sign": 8.805254571710335e-134
+        },
+        "fer_loss_a": {
+          "mean": 0.00244140625,
+          "ci95": [
+            0.00048828125,
+            0.0048828125
+          ],
+          "wins": 5,
+          "losses": 0,
+          "p_sign": 0.0625,
+          "point": 0.00244140625
+        },
+        "fer_loss_b": {
+          "mean": 0.00146484375,
+          "ci95": [
+            0.0,
+            0.00341796875
+          ],
+          "wins": 3,
+          "losses": 0,
+          "p_sign": 0.25,
+          "point": 0.00146484375
+        }
+      },
+      "branchB": {
+        "fer_rule_minus_cap50_a": 3.906249999999223e-05,
+        "fer_rule_minus_cap50_b": -0.00048828125,
+        "iter_saving_vs_cap50": {
+          "mean": 1.59619140625,
+          "ci95": [
+            0.234375,
+            2.900390625
+          ],
+          "wins": 442,
+          "losses": 68,
+          "p_sign": 3.4402664072679176e-68
+        }
+      }
+    },
+    "W12": {
+      "n": 2048,
+      "rule": {
+        "fer_a": 0.2392578125,
+        "fer_b": 0.24072265625,
+        "mean_it": 14.5869140625,
+        "outcome_counts": {
+          "accept": 1555,
+          "cut_correct": 454,
+          "cut_wrong": 10,
+          "exhaust": 29
+        },
+        "accepted_wrong": 0,
+        "cut_frames_with_correct_info_at_cut": 0,
+        "wrong_cut_detail": [
+          {
+            "seed": 50019,
+            "cut_at": 20,
+            "s_at_cut": 160,
+            "would_converge_at": 86,
+            "ie_at_cut": 70,
+            "ie_at_200": 0
+          },
+          {
+            "seed": 50023,
+            "cut_at": 20,
+            "s_at_cut": 129,
+            "would_converge_at": 79,
+            "ie_at_cut": 62,
+            "ie_at_200": 0
+          },
+          {
+            "seed": 50108,
+            "cut_at": 20,
+            "s_at_cut": 148,
+            "would_converge_at": 51,
+            "ie_at_cut": 58,
+            "ie_at_200": 0
+          },
+          {
+            "seed": 50754,
+            "cut_at": 20,
+            "s_at_cut": 124,
+            "would_converge_at": 49,
+            "ie_at_cut": 49,
+            "ie_at_200": 0
+          },
+          {
+            "seed": 51077,
+            "cut_at": 20,
+            "s_at_cut": 208,
+            "would_converge_at": 73,
+            "ie_at_cut": 85,
+            "ie_at_200": 0
+          },
+          {
+            "seed": 51375,
+            "cut_at": 20,
+            "s_at_cut": 137,
+            "would_converge_at": 50,
+            "ie_at_cut": 56,
+            "ie_at_200": 0
+          },
+          {
+            "seed": 51454,
+            "cut_at": 20,
+            "s_at_cut": 178,
+            "would_converge_at": 89,
+            "ie_at_cut": 70,
+            "ie_at_200": 0
+          },
+          {
+            "seed": 51733,
+            "cut_at": 20,
+            "s_at_cut": 190,
+            "would_converge_at": 52,
+            "ie_at_cut": 78,
+            "ie_at_200": 0
+          },
+          {
+            "seed": 51790,
+            "cut_at": 20,
+            "s_at_cut": 179,
+            "would_converge_at": 106,
+            "ie_at_cut": 83,
+            "ie_at_200": 0
+          },
+          {
+            "seed": 51856,
+            "cut_at": 20,
+            "s_at_cut": 120,
+            "would_converge_at": 59,
+            "ie_at_cut": 46,
+            "ie_at_200": 0
+          }
+        ]
+      },
+      "es_points": {
+        "10": {
+          "fer_a": 0.3798828125,
+          "fer_b": 0.41357421875,
+          "mean_it": 7.77294921875
+        },
+        "15": {
+          "fer_a": 0.3076171875,
+          "fer_b": 0.31396484375,
+          "mean_it": 9.59765625
+        },
+        "20": {
+          "fer_b": 0.287109375,
+          "mean_it": 11.10986328125,
+          "fer_a": 0.2817
+        },
+        "50": {
+          "fer_b": 0.24755859375,
+          "mean_it": 18.93701171875,
+          "fer_a": 0.2441
+        },
+        "200": {
+          "fer_b": 0.23583984375,
+          "mean_it": 54.65234375,
+          "fer_a": 0.2344
+        }
+      },
+      "branchA": {
+        "iter_saving_cap200es": {
+          "mean": 40.0654296875,
+          "ci95": [
+            36.9037109375,
+            43.28717041015625
+          ],
+          "wins": 464,
+          "losses": 0,
+          "p_sign": 4.1986725672294305e-140
+        },
+        "fer_loss_a": {
+          "mean": 0.0048828125,
+          "ci95": [
+            0.001953125,
+            0.00830078125
+          ],
+          "wins": 10,
+          "losses": 0,
+          "p_sign": 0.001953125,
+          "point": 0.0048828125
+        },
+        "fer_loss_b": {
+          "mean": 0.0048828125,
+          "ci95": [
+            0.001953125,
+            0.00830078125
+          ],
+          "wins": 10,
+          "losses": 0,
+          "p_sign": 0.001953125,
+          "point": 0.0048828125
+        }
+      },
+      "branchB": {
+        "fer_rule_minus_cap50_a": -0.004842187500000011,
+        "fer_rule_minus_cap50_b": -0.0068359375,
+        "iter_saving_vs_cap50": {
+          "mean": 4.35009765625,
+          "ci95": [
+            3.35836181640625,
+            5.3310791015625
+          ],
+          "wins": 460,
+          "losses": 45,
+          "p_sign": 1.0425730012178969e-87
+        }
+      }
+    },
+    "S16": {
+      "n": 2048,
+      "rule": {
+        "fer_a": 0.2353515625,
+        "fer_b": 0.2744140625,
+        "mean_it": 18.20751953125,
+        "outcome_counts": {
+          "accept": 1486,
+          "cut_correct": 455,
+          "cut_wrong": 4,
+          "exhaust": 103
+        },
+        "accepted_wrong": 0,
+        "cut_frames_with_correct_info_at_cut": 0,
+        "wrong_cut_detail": [
+          {
+            "seed": 53108,
+            "cut_at": 20,
+            "s_at_cut": 129,
+            "would_converge_at": 55,
+            "ie_at_cut": 49,
+            "ie_at_200": 0
+          },
+          {
+            "seed": 54394,
+            "cut_at": 20,
+            "s_at_cut": 127,
+            "would_converge_at": 63,
+            "ie_at_cut": 48,
+            "ie_at_200": 0
+          },
+          {
+            "seed": 54634,
+            "cut_at": 20,
+            "s_at_cut": 206,
+            "would_converge_at": 59,
+            "ie_at_cut": 69,
+            "ie_at_200": 0
+          },
+          {
+            "seed": 55032,
+            "cut_at": 20,
+            "s_at_cut": 169,
+            "would_converge_at": 111,
+            "ie_at_cut": 63,
+            "ie_at_200": 0
+          }
+        ]
+      },
+      "es_points": {
+        "10": {
+          "fer_a": 0.283203125,
+          "fer_b": 0.30419921875,
+          "mean_it": 6.12646484375
+        },
+        "15": {
+          "fer_a": 0.25927734375,
+          "fer_b": 0.2890625,
+          "mean_it": 7.60693359375
+        },
+        "20": {
+          "fer_b": 0.2822265625,
+          "mean_it": 9.0341796875,
+          "fer_a": 0.2515
+        },
+        "50": {
+          "fer_b": 0.27587890625,
+          "mean_it": 17.3505859375,
+          "fer_a": 0.2373
+        },
+        "200": {
+          "fer_b": 0.2724609375,
+          "mean_it": 58.29443359375,
+          "fer_a": 0.2319
+        }
+      },
+      "branchA": {
+        "iter_saving_cap200es": {
+          "mean": 40.0869140625,
+          "ci95": [
+            36.9208251953125,
+            43.3760498046875
+          ],
+          "wins": 459,
+          "losses": 0,
+          "p_sign": 1.3435752215134178e-138
+        },
+        "fer_loss_a": {
+          "mean": 0.00341796875,
+          "ci95": [
+            0.0009765625,
+            0.00634765625
+          ],
+          "wins": 7,
+          "losses": 0,
+          "p_sign": 0.015625,
+          "point": 0.00341796875
+        },
+        "fer_loss_b": {
+          "mean": 0.001953125,
+          "ci95": [
+            0.00048828125,
+            0.00390625
+          ],
+          "wins": 4,
+          "losses": 0,
+          "p_sign": 0.125,
+          "point": 0.001953125
+        }
+      },
+      "branchB": {
+        "fer_rule_minus_cap50_a": -0.001948437500000011,
+        "fer_rule_minus_cap50_b": -0.00146484375,
+        "iter_saving_vs_cap50": {
+          "mean": -0.85693359375,
+          "ci95": [
+            -2.4468505859375,
+            0.6636474609374989
+          ],
+          "wins": 459,
+          "losses": 106,
+          "p_sign": 2.6202227536884357e-53
+        }
+      }
+    }
+  },
+  "verdict": {
+    "verdict_semantics_a": "KILL",
+    "verdict_semantics_b": "KILL",
+    "final_verdict": "KILL",
+    "gate": "ALIVE iff saving CI95 lower>0 AND FER loss<=0.2pp vs same-cap fixed point in all conditions (branch B: same-FER cost below cap50); final verdict requires BOTH semantics ALIVE",
+    "branchA_A_ok_semantics_a": [
+      false,
+      false,
+      false
+    ],
+    "branchB_B_ok_semantics_a": [
+      false,
+      true,
+      false
+    ],
+    "branchA_A_ok_semantics_b": [
+      true,
+      false,
+      true
+    ],
+    "branchB_B_ok_semantics_b": [
+      true,
+      true,
+      false
+    ]
+  },
+  "pareto_fer_vs_mean_it": {
+    "M15": {
+      "B0_fix20": {
+        "fer": 0.2446,
+        "mean_it": 20.0,
+        "source": "R036 cited"
+      },
+      "B0_ES_cap20": {
+        "fer": 0.2446,
+        "mean_it": 9.04931640625,
+        "source": "R036 fer / this-run it"
+      },
+      "NOMS_ES_cap10": {
+        "fer": 0.283203125,
+        "fer_b": 0.302734375,
+        "mean_it": 6.2802734375,
+        "source": "this run"
+      },
+      "NOMS_ES_cap15": {
+        "fer": 0.25390625,
+        "fer_b": 0.2705078125,
+        "mean_it": 7.7177734375,
+        "source": "this run"
+      },
+      "NOMS_ES_cap50": {
+        "fer": 0.2275,
+        "fer_b": 0.2490234375,
+        "mean_it": 16.6162109375,
+        "source": "R036 fer / this-run it"
+      },
+      "NOMS_ES_cap200": {
+        "fer": 0.2251,
+        "fer_b": 0.2470703125,
+        "mean_it": 53.77783203125,
+        "source": "R036 fer / this-run it"
+      },
+      "R3_rescue": {
+        "fer": 0.2271,
+        "mean_it": 24.85,
+        "source": "R036 cited"
+      },
+      "RULE_frozen_RC120": {
+        "fer": 0.2275390625,
+        "fer_b": 0.24853515625,
+        "mean_it": 15.02001953125,
+        "source": "this run"
+      }
+    },
+    "W12": {
+      "B0_fix20": {
+        "fer": 0.2817,
+        "mean_it": 20.0,
+        "source": "R036 cited"
+      },
+      "B0_ES_cap20": {
+        "fer": 0.2817,
+        "mean_it": 11.10986328125,
+        "source": "R036 fer / this-run it"
+      },
+      "NOMS_ES_cap10": {
+        "fer": 0.3798828125,
+        "fer_b": 0.41357421875,
+        "mean_it": 7.77294921875,
+        "source": "this run"
+      },
+      "NOMS_ES_cap15": {
+        "fer": 0.3076171875,
+        "fer_b": 0.31396484375,
+        "mean_it": 9.59765625,
+        "source": "this run"
+      },
+      "NOMS_ES_cap50": {
+        "fer": 0.2441,
+        "fer_b": 0.24755859375,
+        "mean_it": 18.93701171875,
+        "source": "R036 fer / this-run it"
+      },
+      "NOMS_ES_cap200": {
+        "fer": 0.2344,
+        "fer_b": 0.23583984375,
+        "mean_it": 54.65234375,
+        "source": "R036 fer / this-run it"
+      },
+      "R3_rescue": {
+        "fer": 0.2451,
+        "mean_it": 25.18,
+        "source": "R036 cited"
+      },
+      "RULE_frozen_RC120": {
+        "fer": 0.2392578125,
+        "fer_b": 0.24072265625,
+        "mean_it": 14.5869140625,
+        "source": "this run"
+      }
+    },
+    "S16": {
+      "B0_fix20": {
+        "fer": 0.2515,
+        "mean_it": 20.0,
+        "source": "R036 cited"
+      },
+      "B0_ES_cap20": {
+        "fer": 0.2515,
+        "mean_it": 9.0341796875,
+        "source": "R036 fer / this-run it"
+      },
+      "NOMS_ES_cap10": {
+        "fer": 0.283203125,
+        "fer_b": 0.30419921875,
+        "mean_it": 6.12646484375,
+        "source": "this run"
+      },
+      "NOMS_ES_cap15": {
+        "fer": 0.25927734375,
+        "fer_b": 0.2890625,
+        "mean_it": 7.60693359375,
+        "source": "this run"
+      },
+      "NOMS_ES_cap50": {
+        "fer": 0.2373,
+        "fer_b": 0.27587890625,
+        "mean_it": 17.3505859375,
+        "source": "R036 fer / this-run it"
+      },
+      "NOMS_ES_cap200": {
+        "fer": 0.2319,
+        "fer_b": 0.2724609375,
+        "mean_it": 58.29443359375,
+        "source": "R036 fer / this-run it"
+      },
+      "R3_rescue": {
+        "fer": 0.2368,
+        "mean_it": 25.24,
+        "source": "R036 cited"
+      },
+      "RULE_frozen_RC120": {
+        "fer": 0.2353515625,
+        "fer_b": 0.2744140625,
+        "mean_it": 18.20751953125,
+        "source": "this run"
+      }
+    }
+  },
+  "notes": {
+    "r3_cited": "R036 §五 same-cache coordinates, cited not re-run",
+    "mean_it_crosscheck": "cap50-ES / cap200-ES mean_it recomputed from this round's G2-anchored trajectories; expected to match R036's 16.6-18.9 / 53.8-58.3"
+  },
+  "_meta": {
+    "script": "decode-budget-rule",
+    "common_md5": "49acdfa4",
+    "git_commit": "905cde6",
+    "timestamp": "2026-09-27T15:17:56"
+  }
+}

@@ -1,0 +1,1004 @@
+{
+ "schema_version": "decode-budget-rule.frozen-rule.v1",
+ "contract": "explore/decode-budget-rule/contract.yaml (v1, frozen)",
+ "selected_rule": {
+  "key": "RC_120",
+  "family": "RC",
+  "tau": 120
+ },
+ "selection_criterion": {
+  "constraint": "pooled_W <= 2 AND per-batch W <= 1; maximize pooled mean-it saving vs dev cap200-ES; tie-break smaller pooled W -> simplicity RA>RC>RD>RB>RE -> larger tau",
+  "fallback": "no feasible candidate -> min pooled_W (tie: larger saving); expected confirm KILL risk",
+  "fallback_used": false
+ },
+ "chosen_dev_diagnostics": {
+  "key": "RC_120",
+  "spec": {
+   "family": "RC",
+   "tau": 120
+  },
+  "pooled_W": 2,
+  "per_batch": {
+   "dev": {
+    "W": 0,
+    "fer": 0.203125,
+    "mean_it": 14.4375
+   },
+   "dev_M14": {
+    "W": 1,
+    "fer": 0.326171875,
+    "mean_it": 12.56640625
+   },
+   "dev_W12": {
+    "W": 1,
+    "fer": 0.294921875,
+    "mean_it": 16.263671875
+   },
+   "dev_S16": {
+    "W": 0,
+    "fer": 0.22265625,
+    "mean_it": 14.470703125
+   }
+  },
+  "pooled_mean_it": 14.43375,
+  "pooled_saving_vs_cap200es": 42.6453515625,
+  "feasible": true
+ },
+ "dev_baselines_cap200es": {
+  "dev": {
+   "fer_cap200es": 0.203125,
+   "mean_it_cap200es": 45.375,
+   "converged_wrong": 0
+  },
+  "dev_M14": {
+   "fer_cap200es": 0.32421875,
+   "mean_it_cap200es": 69.599609375,
+   "converged_wrong": 0
+  },
+  "dev_W12": {
+   "fer_cap200es": 0.29296875,
+   "mean_it_cap200es": 65.1796875,
+   "converged_wrong": 0
+  },
+  "dev_S16": {
+   "fer_cap200es": 0.22265625,
+   "mean_it_cap200es": 48.162109375,
+   "converged_wrong": 0
+  }
+ },
+ "dev_pool_mean_it_cap200es": 57.0791015625,
+ "candidate_table": [
+  {
+   "key": "RA_40",
+   "spec": {
+    "family": "RA",
+    "tau": 40
+   },
+   "pooled_W": 25,
+   "per_batch": {
+    "dev": {
+     "W": 0,
+     "fer": 0.203125,
+     "mean_it": 14.4375
+    },
+    "dev_M14": {
+     "W": 8,
+     "fer": 0.33984375,
+     "mean_it": 11.9921875
+    },
+    "dev_W12": {
+     "W": 16,
+     "fer": 0.32421875,
+     "mean_it": 12.580078125
+    },
+    "dev_S16": {
+     "W": 1,
+     "fer": 0.224609375,
+     "mean_it": 14.021484375
+    }
+   },
+   "pooled_mean_it": 12.9275,
+   "pooled_saving_vs_cap200es": 44.1516015625,
+   "feasible": false
+  },
+  {
+   "key": "RA_60",
+   "spec": {
+    "family": "RA",
+    "tau": 60
+   },
+   "pooled_W": 16,
+   "per_batch": {
+    "dev": {
+     "W": 0,
+     "fer": 0.203125,
+     "mean_it": 14.4375
+    },
+    "dev_M14": {
+     "W": 7,
+     "fer": 0.337890625,
+     "mean_it": 12.001953125
+    },
+    "dev_W12": {
+     "W": 8,
+     "fer": 0.30859375,
+     "mean_it": 13.7734375
+    },
+    "dev_S16": {
+     "W": 1,
+     "fer": 0.224609375,
+     "mean_it": 14.021484375
+    }
+   },
+   "pooled_mean_it": 13.3125,
+   "pooled_saving_vs_cap200es": 43.7666015625,
+   "feasible": false
+  },
+  {
+   "key": "RA_80",
+   "spec": {
+    "family": "RA",
+    "tau": 80
+   },
+   "pooled_W": 10,
+   "per_batch": {
+    "dev": {
+     "W": 0,
+     "fer": 0.203125,
+     "mean_it": 14.4375
+    },
+    "dev_M14": {
+     "W": 5,
+     "fer": 0.333984375,
+     "mean_it": 12.060546875
+    },
+    "dev_W12": {
+     "W": 5,
+     "fer": 0.302734375,
+     "mean_it": 14.701171875
+    },
+    "dev_S16": {
+     "W": 0,
+     "fer": 0.22265625,
+     "mean_it": 14.060546875
+    }
+   },
+   "pooled_mean_it": 13.640625,
+   "pooled_saving_vs_cap200es": 43.4384765625,
+   "feasible": false
+  },
+  {
+   "key": "RA_100",
+   "spec": {
+    "family": "RA",
+    "tau": 100
+   },
+   "pooled_W": 6,
+   "per_batch": {
+    "dev": {
+     "W": 0,
+     "fer": 0.203125,
+     "mean_it": 14.4375
+    },
+    "dev_M14": {
+     "W": 4,
+     "fer": 0.33203125,
+     "mean_it": 12.087890625
+    },
+    "dev_W12": {
+     "W": 2,
+     "fer": 0.296875,
+     "mean_it": 15.1640625
+    },
+    "dev_S16": {
+     "W": 0,
+     "fer": 0.22265625,
+     "mean_it": 14.060546875
+    }
+   },
+   "pooled_mean_it": 13.7975,
+   "pooled_saving_vs_cap200es": 43.2816015625,
+   "feasible": false
+  },
+  {
+   "key": "RA_120",
+   "spec": {
+    "family": "RA",
+    "tau": 120
+   },
+   "pooled_W": 4,
+   "per_batch": {
+    "dev": {
+     "W": 0,
+     "fer": 0.203125,
+     "mean_it": 14.59375
+    },
+    "dev_M14": {
+     "W": 3,
+     "fer": 0.330078125,
+     "mean_it": 12.49609375
+    },
+    "dev_W12": {
+     "W": 1,
+     "fer": 0.294921875,
+     "mean_it": 15.892578125
+    },
+    "dev_S16": {
+     "W": 0,
+     "fer": 0.22265625,
+     "mean_it": 14.412109375
+    }
+   },
+   "pooled_mean_it": 14.28,
+   "pooled_saving_vs_cap200es": 42.7991015625,
+   "feasible": false
+  },
+  {
+   "key": "RA_140",
+   "spec": {
+    "family": "RA",
+    "tau": 140
+   },
+   "pooled_W": 3,
+   "per_batch": {
+    "dev": {
+     "W": 0,
+     "fer": 0.203125,
+     "mean_it": 17.25
+    },
+    "dev_M14": {
+     "W": 2,
+     "fer": 0.328125,
+     "mean_it": 12.595703125
+    },
+    "dev_W12": {
+     "W": 1,
+     "fer": 0.294921875,
+     "mean_it": 17.474609375
+    },
+    "dev_S16": {
+     "W": 0,
+     "fer": 0.22265625,
+     "mean_it": 14.470703125
+    }
+   },
+   "pooled_mean_it": 14.943125,
+   "pooled_saving_vs_cap200es": 42.1359765625,
+   "feasible": false
+  },
+  {
+   "key": "RC_60",
+   "spec": {
+    "family": "RC",
+    "tau": 60
+   },
+   "pooled_W": 7,
+   "per_batch": {
+    "dev": {
+     "W": 0,
+     "fer": 0.203125,
+     "mean_it": 14.4375
+    },
+    "dev_M14": {
+     "W": 5,
+     "fer": 0.333984375,
+     "mean_it": 12.0625
+    },
+    "dev_W12": {
+     "W": 2,
+     "fer": 0.296875,
+     "mean_it": 13.81640625
+    },
+    "dev_S16": {
+     "W": 0,
+     "fer": 0.22265625,
+     "mean_it": 14.060546875
+    }
+   },
+   "pooled_mean_it": 13.358125,
+   "pooled_saving_vs_cap200es": 43.7209765625,
+   "feasible": false
+  },
+  {
+   "key": "RC_80",
+   "spec": {
+    "family": "RC",
+    "tau": 80
+   },
+   "pooled_W": 5,
+   "per_batch": {
+    "dev": {
+     "W": 0,
+     "fer": 0.203125,
+     "mean_it": 14.4375
+    },
+    "dev_M14": {
+     "W": 4,
+     "fer": 0.33203125,
+     "mean_it": 12.087890625
+    },
+    "dev_W12": {
+     "W": 1,
+     "fer": 0.294921875,
+     "mean_it": 15.189453125
+    },
+    "dev_S16": {
+     "W": 0,
+     "fer": 0.22265625,
+     "mean_it": 14.412109375
+    }
+   },
+   "pooled_mean_it": 13.918125,
+   "pooled_saving_vs_cap200es": 43.1609765625,
+   "feasible": false
+  },
+  {
+   "key": "RC_100",
+   "spec": {
+    "family": "RC",
+    "tau": 100
+   },
+   "pooled_W": 3,
+   "per_batch": {
+    "dev": {
+     "W": 0,
+     "fer": 0.203125,
+     "mean_it": 14.4375
+    },
+    "dev_M14": {
+     "W": 2,
+     "fer": 0.328125,
+     "mean_it": 12.515625
+    },
+    "dev_W12": {
+     "W": 1,
+     "fer": 0.294921875,
+     "mean_it": 15.912109375
+    },
+    "dev_S16": {
+     "W": 0,
+     "fer": 0.22265625,
+     "mean_it": 14.412109375
+    }
+   },
+   "pooled_mean_it": 14.28625,
+   "pooled_saving_vs_cap200es": 42.7928515625,
+   "feasible": false
+  },
+  {
+   "key": "RC_120",
+   "spec": {
+    "family": "RC",
+    "tau": 120
+   },
+   "pooled_W": 2,
+   "per_batch": {
+    "dev": {
+     "W": 0,
+     "fer": 0.203125,
+     "mean_it": 14.4375
+    },
+    "dev_M14": {
+     "W": 1,
+     "fer": 0.326171875,
+     "mean_it": 12.56640625
+    },
+    "dev_W12": {
+     "W": 1,
+     "fer": 0.294921875,
+     "mean_it": 16.263671875
+    },
+    "dev_S16": {
+     "W": 0,
+     "fer": 0.22265625,
+     "mean_it": 14.470703125
+    }
+   },
+   "pooled_mean_it": 14.43375,
+   "pooled_saving_vs_cap200es": 42.6453515625,
+   "feasible": true
+  },
+  {
+   "key": "RC_140",
+   "spec": {
+    "family": "RC",
+    "tau": 140
+   },
+   "pooled_W": 0,
+   "per_batch": {
+    "dev": {
+     "W": 0,
+     "fer": 0.203125,
+     "mean_it": 15.6875
+    },
+    "dev_M14": {
+     "W": 0,
+     "fer": 0.32421875,
+     "mean_it": 12.705078125
+    },
+    "dev_W12": {
+     "W": 0,
+     "fer": 0.29296875,
+     "mean_it": 17.328125
+    },
+    "dev_S16": {
+     "W": 0,
+     "fer": 0.22265625,
+     "mean_it": 14.568359375
+    }
+   },
+   "pooled_mean_it": 14.9,
+   "pooled_saving_vs_cap200es": 42.1791015625,
+   "feasible": true
+  },
+  {
+   "key": "RC_160",
+   "spec": {
+    "family": "RC",
+    "tau": 160
+   },
+   "pooled_W": 0,
+   "per_batch": {
+    "dev": {
+     "W": 0,
+     "fer": 0.203125,
+     "mean_it": 15.6875
+    },
+    "dev_M14": {
+     "W": 0,
+     "fer": 0.32421875,
+     "mean_it": 13.447265625
+    },
+    "dev_W12": {
+     "W": 0,
+     "fer": 0.29296875,
+     "mean_it": 18.734375
+    },
+    "dev_S16": {
+     "W": 0,
+     "fer": 0.22265625,
+     "mean_it": 15.115234375
+    }
+   },
+   "pooled_mean_it": 15.7625,
+   "pooled_saving_vs_cap200es": 41.3166015625,
+   "feasible": true
+  },
+  {
+   "key": "RD_0.35",
+   "spec": {
+    "family": "RD",
+    "tau": 0.35
+   },
+   "pooled_W": 5,
+   "per_batch": {
+    "dev": {
+     "W": 0,
+     "fer": 0.203125,
+     "mean_it": 14.4375
+    },
+    "dev_M14": {
+     "W": 4,
+     "fer": 0.33203125,
+     "mean_it": 12.087890625
+    },
+    "dev_W12": {
+     "W": 1,
+     "fer": 0.294921875,
+     "mean_it": 15.248046875
+    },
+    "dev_S16": {
+     "W": 0,
+     "fer": 0.22265625,
+     "mean_it": 14.412109375
+    }
+   },
+   "pooled_mean_it": 13.936875,
+   "pooled_saving_vs_cap200es": 43.1422265625,
+   "feasible": false
+  },
+  {
+   "key": "RD_0.45",
+   "spec": {
+    "family": "RD",
+    "tau": 0.45
+   },
+   "pooled_W": 3,
+   "per_batch": {
+    "dev": {
+     "W": 0,
+     "fer": 0.203125,
+     "mean_it": 14.4375
+    },
+    "dev_M14": {
+     "W": 2,
+     "fer": 0.328125,
+     "mean_it": 12.53515625
+    },
+    "dev_W12": {
+     "W": 1,
+     "fer": 0.294921875,
+     "mean_it": 15.912109375
+    },
+    "dev_S16": {
+     "W": 0,
+     "fer": 0.22265625,
+     "mean_it": 14.412109375
+    }
+   },
+   "pooled_mean_it": 14.2925,
+   "pooled_saving_vs_cap200es": 42.786601562499996,
+   "feasible": false
+  },
+  {
+   "key": "RD_0.55",
+   "spec": {
+    "family": "RD",
+    "tau": 0.55
+   },
+   "pooled_W": 0,
+   "per_batch": {
+    "dev": {
+     "W": 0,
+     "fer": 0.203125,
+     "mean_it": 15.6875
+    },
+    "dev_M14": {
+     "W": 0,
+     "fer": 0.32421875,
+     "mean_it": 12.666015625
+    },
+    "dev_W12": {
+     "W": 0,
+     "fer": 0.29296875,
+     "mean_it": 17.19140625
+    },
+    "dev_S16": {
+     "W": 0,
+     "fer": 0.22265625,
+     "mean_it": 14.763671875
+    }
+   },
+   "pooled_mean_it": 14.90625,
+   "pooled_saving_vs_cap200es": 42.1728515625,
+   "feasible": true
+  },
+  {
+   "key": "RD_0.65",
+   "spec": {
+    "family": "RD",
+    "tau": 0.65
+   },
+   "pooled_W": 0,
+   "per_batch": {
+    "dev": {
+     "W": 0,
+     "fer": 0.203125,
+     "mean_it": 17.25
+    },
+    "dev_M14": {
+     "W": 0,
+     "fer": 0.32421875,
+     "mean_it": 13.251953125
+    },
+    "dev_W12": {
+     "W": 0,
+     "fer": 0.29296875,
+     "mean_it": 17.69921875
+    },
+    "dev_S16": {
+     "W": 0,
+     "fer": 0.22265625,
+     "mean_it": 15.115234375
+    }
+   },
+   "pooled_mean_it": 15.43125,
+   "pooled_saving_vs_cap200es": 41.6478515625,
+   "feasible": true
+  },
+  {
+   "key": "RD_0.75",
+   "spec": {
+    "family": "RD",
+    "tau": 0.75
+   },
+   "pooled_W": 0,
+   "per_batch": {
+    "dev": {
+     "W": 0,
+     "fer": 0.203125,
+     "mean_it": 17.40625
+    },
+    "dev_M14": {
+     "W": 0,
+     "fer": 0.32421875,
+     "mean_it": 15.673828125
+    },
+    "dev_W12": {
+     "W": 0,
+     "fer": 0.29296875,
+     "mean_it": 20.0625
+    },
+    "dev_S16": {
+     "W": 0,
+     "fer": 0.22265625,
+     "mean_it": 15.994140625
+    }
+   },
+   "pooled_mean_it": 17.25,
+   "pooled_saving_vs_cap200es": 39.8291015625,
+   "feasible": true
+  },
+  {
+   "key": "RB_40",
+   "spec": {
+    "family": "RB",
+    "tau": 40
+   },
+   "pooled_W": 1,
+   "per_batch": {
+    "dev": {
+     "W": 0,
+     "fer": 0.203125,
+     "mean_it": 20.21875
+    },
+    "dev_M14": {
+     "W": 1,
+     "fer": 0.326171875,
+     "mean_it": 19.63671875
+    },
+    "dev_W12": {
+     "W": 0,
+     "fer": 0.29296875,
+     "mean_it": 21.21484375
+    },
+    "dev_S16": {
+     "W": 0,
+     "fer": 0.22265625,
+     "mean_it": 18.865234375
+    }
+   },
+   "pooled_mean_it": 19.918125,
+   "pooled_saving_vs_cap200es": 37.1609765625,
+   "feasible": true
+  },
+  {
+   "key": "RB_60",
+   "spec": {
+    "family": "RB",
+    "tau": 60
+   },
+   "pooled_W": 1,
+   "per_batch": {
+    "dev": {
+     "W": 0,
+     "fer": 0.203125,
+     "mean_it": 20.21875
+    },
+    "dev_M14": {
+     "W": 1,
+     "fer": 0.326171875,
+     "mean_it": 19.63671875
+    },
+    "dev_W12": {
+     "W": 0,
+     "fer": 0.29296875,
+     "mean_it": 22.15234375
+    },
+    "dev_S16": {
+     "W": 0,
+     "fer": 0.22265625,
+     "mean_it": 18.865234375
+    }
+   },
+   "pooled_mean_it": 20.218125,
+   "pooled_saving_vs_cap200es": 36.8609765625,
+   "feasible": true
+  },
+  {
+   "key": "RB_80",
+   "spec": {
+    "family": "RB",
+    "tau": 80
+   },
+   "pooled_W": 1,
+   "per_batch": {
+    "dev": {
+     "W": 0,
+     "fer": 0.203125,
+     "mean_it": 20.21875
+    },
+    "dev_M14": {
+     "W": 1,
+     "fer": 0.326171875,
+     "mean_it": 19.63671875
+    },
+    "dev_W12": {
+     "W": 0,
+     "fer": 0.29296875,
+     "mean_it": 22.19140625
+    },
+    "dev_S16": {
+     "W": 0,
+     "fer": 0.22265625,
+     "mean_it": 18.865234375
+    }
+   },
+   "pooled_mean_it": 20.230625,
+   "pooled_saving_vs_cap200es": 36.8484765625,
+   "feasible": true
+  },
+  {
+   "key": "RB_100",
+   "spec": {
+    "family": "RB",
+    "tau": 100
+   },
+   "pooled_W": 1,
+   "per_batch": {
+    "dev": {
+     "W": 0,
+     "fer": 0.203125,
+     "mean_it": 20.21875
+    },
+    "dev_M14": {
+     "W": 1,
+     "fer": 0.326171875,
+     "mean_it": 19.63671875
+    },
+    "dev_W12": {
+     "W": 0,
+     "fer": 0.29296875,
+     "mean_it": 22.58203125
+    },
+    "dev_S16": {
+     "W": 0,
+     "fer": 0.22265625,
+     "mean_it": 18.865234375
+    }
+   },
+   "pooled_mean_it": 20.355625,
+   "pooled_saving_vs_cap200es": 36.7234765625,
+   "feasible": true
+  },
+  {
+   "key": "RB_120",
+   "spec": {
+    "family": "RB",
+    "tau": 120
+   },
+   "pooled_W": 1,
+   "per_batch": {
+    "dev": {
+     "W": 0,
+     "fer": 0.203125,
+     "mean_it": 20.375
+    },
+    "dev_M14": {
+     "W": 1,
+     "fer": 0.326171875,
+     "mean_it": 19.9296875
+    },
+    "dev_W12": {
+     "W": 0,
+     "fer": 0.29296875,
+     "mean_it": 23.36328125
+    },
+    "dev_S16": {
+     "W": 0,
+     "fer": 0.22265625,
+     "mean_it": 18.865234375
+    }
+   },
+   "pooled_mean_it": 20.705625,
+   "pooled_saving_vs_cap200es": 36.3734765625,
+   "feasible": true
+  },
+  {
+   "key": "RE_o4_m60",
+   "spec": {
+    "family": "RE",
+    "tau_o": 4,
+    "tau_m": 60
+   },
+   "pooled_W": 4,
+   "per_batch": {
+    "dev": {
+     "W": 0,
+     "fer": 0.203125,
+     "mean_it": 18.1875
+    },
+    "dev_M14": {
+     "W": 4,
+     "fer": 0.33203125,
+     "mean_it": 21.927734375
+    },
+    "dev_W12": {
+     "W": 0,
+     "fer": 0.29296875,
+     "mean_it": 21.09765625
+    },
+    "dev_S16": {
+     "W": 0,
+     "fer": 0.22265625,
+     "mean_it": 19.119140625
+    }
+   },
+   "pooled_mean_it": 20.61375,
+   "pooled_saving_vs_cap200es": 36.465351562500004,
+   "feasible": false
+  },
+  {
+   "key": "RE_o4_m80",
+   "spec": {
+    "family": "RE",
+    "tau_o": 4,
+    "tau_m": 80
+   },
+   "pooled_W": 2,
+   "per_batch": {
+    "dev": {
+     "W": 0,
+     "fer": 0.203125,
+     "mean_it": 18.1875
+    },
+    "dev_M14": {
+     "W": 2,
+     "fer": 0.328125,
+     "mean_it": 21.97265625
+    },
+    "dev_W12": {
+     "W": 0,
+     "fer": 0.29296875,
+     "mean_it": 21.8203125
+    },
+    "dev_S16": {
+     "W": 0,
+     "fer": 0.22265625,
+     "mean_it": 19.119140625
+    }
+   },
+   "pooled_mean_it": 20.859375,
+   "pooled_saving_vs_cap200es": 36.2197265625,
+   "feasible": false
+  },
+  {
+   "key": "RE_o4_m100",
+   "spec": {
+    "family": "RE",
+    "tau_o": 4,
+    "tau_m": 100
+   },
+   "pooled_W": 1,
+   "per_batch": {
+    "dev": {
+     "W": 0,
+     "fer": 0.203125,
+     "mean_it": 18.1875
+    },
+    "dev_M14": {
+     "W": 1,
+     "fer": 0.326171875,
+     "mean_it": 22.0
+    },
+    "dev_W12": {
+     "W": 0,
+     "fer": 0.29296875,
+     "mean_it": 22.796875
+    },
+    "dev_S16": {
+     "W": 0,
+     "fer": 0.22265625,
+     "mean_it": 19.119140625
+    }
+   },
+   "pooled_mean_it": 21.180625,
+   "pooled_saving_vs_cap200es": 35.8984765625,
+   "feasible": true
+  },
+  {
+   "key": "RE_o5_m60",
+   "spec": {
+    "family": "RE",
+    "tau_o": 5,
+    "tau_m": 60
+   },
+   "pooled_W": 2,
+   "per_batch": {
+    "dev": {
+     "W": 0,
+     "fer": 0.203125,
+     "mean_it": 31.625
+    },
+    "dev_M14": {
+     "W": 2,
+     "fer": 0.328125,
+     "mean_it": 41.955078125
+    },
+    "dev_W12": {
+     "W": 0,
+     "fer": 0.29296875,
+     "mean_it": 39.7109375
+    },
+    "dev_S16": {
+     "W": 0,
+     "fer": 0.22265625,
+     "mean_it": 32.341796875
+    }
+   },
+   "pooled_mean_it": 37.7475,
+   "pooled_saving_vs_cap200es": 19.331601562499998,
+   "feasible": false
+  },
+  {
+   "key": "RE_o5_m80",
+   "spec": {
+    "family": "RE",
+    "tau_o": 5,
+    "tau_m": 80
+   },
+   "pooled_W": 1,
+   "per_batch": {
+    "dev": {
+     "W": 0,
+     "fer": 0.203125,
+     "mean_it": 31.625
+    },
+    "dev_M14": {
+     "W": 1,
+     "fer": 0.326171875,
+     "mean_it": 41.98046875
+    },
+    "dev_W12": {
+     "W": 0,
+     "fer": 0.29296875,
+     "mean_it": 40.04296875
+    },
+    "dev_S16": {
+     "W": 0,
+     "fer": 0.22265625,
+     "mean_it": 32.341796875
+    }
+   },
+   "pooled_mean_it": 37.861875,
+   "pooled_saving_vs_cap200es": 19.217226562500002,
+   "feasible": true
+  },
+  {
+   "key": "RE_o5_m100",
+   "spec": {
+    "family": "RE",
+    "tau_o": 5,
+    "tau_m": 100
+   },
+   "pooled_W": 1,
+   "per_batch": {
+    "dev": {
+     "W": 0,
+     "fer": 0.203125,
+     "mean_it": 31.625
+    },
+    "dev_M14": {
+     "W": 1,
+     "fer": 0.326171875,
+     "mean_it": 42.17578125
+    },
+    "dev_W12": {
+     "W": 0,
+     "fer": 0.29296875,
+     "mean_it": 40.375
+    },
+    "dev_S16": {
+     "W": 0,
+     "fer": 0.22265625,
+     "mean_it": 32.341796875
+    }
+   },
+   "pooled_mean_it": 38.030625,
+   "pooled_saving_vs_cap200es": 19.0484765625,
+   "feasible": true
+  }
+ ],
+ "n_dev_frames": 1600,
+ "frozen_at": "2026-09-27 14:54:34"
+}

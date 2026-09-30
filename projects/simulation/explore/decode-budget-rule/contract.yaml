@@ -1,0 +1,180 @@
+# decode-budget-rule 合同（PROMPT-028 任务一+任务二 / R038）
+# 状态: FROZEN_BEFORE_EXECUTION（2026-09-27，运行任何轨迹采集前冻结；运行后仅可追加 amend 注记）
+schema_version: decode-budget-rule.contract.v1
+# amend v1.1 (2026-09-27, 首轮评分后发现并澄清 FER 口径，规则零改动):
+#   合同原文"N6 已证首 syndrome-0 早停与固定迭代 FER 逐帧等价"不精确——N6 证的是
+#   converged_wrong=0（收敛帧输出等价）；"从未校验通过但末迭代信息位全对"帧群
+#   （S16@200 达 84/2048）使接受语义 FER 高于固定迭代语义 FER。裁定：
+#   (a) 主口径 = 停点迭代代输出语义（砍帧帧取砍点迭代代的硬判决输出，与
+#       R036 固定点 FER 同定义，预注册对比"同 cap 固定点"按此读）；
+#   (b) 保守口径 = 接受语义（砍帧一律计失败）并报，作 FER 损失上界。
+#   为 (a) 补一次迭代代提取跑（ie@{10,15} 全帧 + 砍帧帧 ie@停点）：属任务二
+#   授权的固定迭代补点 + 度量补全，规则/阈值/检查点零改动，确认批数据不回流
+#   任何设计决策（两口径 verdict 并报，规则不再改动）。
+
+purpose: >
+  迭代预算判决规则的第一轮有界验证：能否用接收可见的校验（syndrome）轨迹
+  提前区分"真死帧"（cap200 内永不收敛）与"差时间的边际帧"（20<t<=200 收敛），
+  在 cap=200 下把平均迭代压向 cap50 档（16~19 it/帧），FER 保持 cap200 档
+  （损失 <=0.2pp）。规则无论活死均为导师会面材料（活=方法成立证据，
+  死=此路不通的实测证据）。
+
+inputs:
+  llr_cache:
+    root: results/decode-failure-rescue/llr_cache
+    dev_batches:   # 规则设计与阈值选择唯一数据源（合并 1600 帧为开发池）
+      dev:     {dir: dev,                          snr_db: 15.0, turb: [4.0, 1.9],   seeds: 5000-5063,   frames: 64,  label: M15条件开发批}
+      dev_M14: {dir: dev_M14_snr14_turb4x1.9,     snr_db: 14.0, turb: [4.0, 1.9],   seeds: 42000-42511, frames: 512, label: 中湍流14dB开发批}
+      dev_W12: {dir: dev_W12_snr12_turb11.6x10.1, snr_db: 12.0, turb: [11.6, 10.1], seeds: 41000-41511, frames: 512, label: 弱湍流12dB开发批}
+      dev_S16: {dir: dev_S16_snr16_turb4.2x1.4,   snr_db: 16.0, turb: [4.2, 1.4],   seeds: 43000-43511, frames: 512, label: 强湍流16dB开发批}
+    confirm_batches:   # 规则冻结后单次运行只评分
+      M15: {dir: confirm2048,                     snr_db: 15.0, turb: [4.0, 1.9],   seeds: 30000-32047, frames: 2048, label: 中湍流15dB锚点}
+      W12: {dir: confirm_W12_snr12_turb11.6x10.1, snr_db: 12.0, turb: [11.6, 10.1], seeds: 50000-52047, frames: 2048, label: 弱湍流12dB}
+      S16: {dir: confirm_S16_snr16_turb4.2x1.4,   snr_db: 16.0, turb: [4.2, 1.4],   seeds: 53000-55047, frames: 2048, label: 强湍流16dB}
+    seed_disjointness: dev 池 seeds（5000-5063/41000-42511/43000-43511）与三确认批
+      （30000-32047/50000-52047/53000-55047）零重叠，已由区间核对。
+    frame_fields: [llr(1536 float32), truth_info(1024), truth_coded(1536)]
+  raw_anchors:
+    first20_syndrome:   # G1 门数据源：全部 7 批的 B0 20 迭代 syndrome 轨迹
+      dev: raw_dev.json
+      dev_M14: raw_dev_M14.json
+      dev_W12: raw_dev_W12.json
+      dev_S16: raw_dev_S16.json
+      M15: raw_confirm2048.json
+      W12: raw_confirm_W12.json
+      S16: raw_confirm_S16.json
+    nomos200: results/decode-capability-audit/raw_capability.json 的 NOMS200 臂
+      （info_errors + converged_at，6144 帧）——G2 门数据源（仅三确认批）。
+  truth_access: >
+    真值只进评分（info_errors、FER、BER 不作门控）与开发标签构造
+    （converged_at 为接收可见量，标签"晚收敛/永不收敛"由 NOMS200 结局定义，
+    不接触 truth）。判决规则的特征原料=当前帧自己的 syndrome 轨迹（接收可见）。
+
+engine:
+  spec: >
+    RescueDecoder（decode-failure-rescue/rescue_decoder.py，只读 import，
+    零改动）：NOMS alpha=0.75 offset=0.0（与 B0/NOMS50/NOMS200 锚点同配置，
+    保证与 R036 Pareto 点同底座可比），llr_max=20，输入 clip ±20，
+    5G LDPC BG2 z=104 k=1024 n=1536，CPU flooding。
+  trajectory_run: >
+    每帧单发 fresh decode(num_iter=200, trajectory=True)——逐迭代 syndrome
+    计数 s_1..s_200（pruned pcm 720 校验中未满足数，接收可见）+ 第 200 迭代
+    最终信息输出（info_errors 对 truth 评分，仅入 raw 供 FER 统计）。
+    flooding 无状态性（rescue_decoder 头注 probe 实证）保证"先烧到 t 再决定"
+    与"在 t 决定砍"的轨迹前缀逐位相同，故离线规则仿真=部署语义精确等价。
+  no_config_upgrade: >
+    (0.8125,0.1) 配置升级属 R036 §五-② 独立后续，本轮不混入（混入会破坏
+    与 R036 全部锚点的可比性）。
+
+rule_family_preregistered:
+  semantics: >
+    三态动作，逐迭代执行（部署语义）：若 s_t==0 → 接受该码字并停（成本=t，
+    N6 已证首 syndrome-0 早停与固定迭代 FER 逐帧等价）；若 t ∈ 检查点集
+    CP={20,30,50,100} 且无望判据触发 → 中止（成本=t，标失败）；否则续到
+    cap=200。接受优先于砍（s_t==0 的检查点不评估砍判据）。
+  window: 特征窗口 k=8（与 classify_failure 尾窗同宽）。
+  features_at_checkpoint_c:   # 全部接收可见
+    mean8: mean(s_{c-7..c})
+    slope8: 最近 8 点 OLS 斜率（对迭代序号）
+    osc8: 最近 8 点一阶差分符号变化次数（0..7）
+    level: s_c
+    red: s_c / max(s_1,1)（相对首轮降幅比）
+  candidates:   # 5 族 × 阈值网格，共 28 个候选，全部离线在轨迹日志上仿真
+    RA_mean:      {criterion: mean8 >= tau,               tau: [40, 60, 80, 100, 120, 140]}
+    RC_level:     {criterion: level >= tau,                tau: [60, 80, 100, 120, 140, 160]}
+    RD_reduction: {criterion: red >= tau,                  tau: [0.35, 0.45, 0.55, 0.65, 0.75]}
+    RB_mean_slope:{criterion: mean8 >= tau AND slope8 >= 0, tau: [40, 60, 80, 100, 120]}
+    RE_osc_mean:  {criterion: osc8 >= tau_o AND mean8 >= tau_m, grid: tau_o x {4,5} x tau_m x {60,80,100}}
+  selection_criterion_dev_only: >
+    在开发池（4 批合并 1600 帧）上逐候选计算：W=错砍数（被中止但 NOMS200
+    标签收敛于 (t_abort, 200] 的帧）、逐批 W、FER 损失=W/批帧数（接受帧
+    converged_wrong 实测计损）、平均迭代节省=mean_it(cap200-ES)−mean_it(rule)。
+    选择规则：在 (W_pooled <= 2) 且 (每批 W <= 1) 的候选中取开发池平均迭代
+    节省最大者；并列时依次按 W_pooled 更小 → 简单性序 RA>RC>RD>RB>RE →
+    阈值更大（更保守）决出。若无候选满足约束：冻结 W_pooled 最小者
+    （并列取节省更大），并在冻结记录中标注预期 FER 风险（预计确认批 KILL，
+    如实落账，不调参追正）。
+  multiple_comparison_note: 28 候选在 1600 帧上的 in-sample 选择；确认批单次
+    运行是唯一无偏检验，选择偏差由确认批承担。
+
+gates:   # 读任何分析结果前必须全过，失配即停修实现
+  G1_first20_anchor: >
+    每批（dev×4 + confirm×3）每帧：本轨迹 s_1..s_20 与 raw_*{batch}.json 的
+    B0.syndrome_weights 逐位一致（7 批全帧，0 容忍失配）。
+  G2_nomos200_anchor: >
+    三确认批每帧：本轨迹的 converged_at（200 内首 syndrome-0，未收敛=-1）与
+    第 200 迭代 info_errors 与 raw_capability.json NOMS200 臂逐帧一致
+    （6144/6144，0 容忍失配）。
+  gate_scope: G1 在两 split 的轨迹采集中即验；G2 在确认批采集时验。
+    任何门失配 → 停止、修实现、重跑该 split，不得读取下游任何结果。
+
+primary_metrics:
+  - 规则点 FER 与 mean_it（逐确认条件）
+  - FER 损失 = FER(rule) − FER(cap200-ES)，pp，逐条件（点估计门控 + CI 并报）
+  - 迭代节省 = mean_it(cap200-ES) − mean_it(rule)，帧级配对 bootstrap CI95
+  - Pareto 表：B0 固定20 / B0+ES cap20 / NOMS+ES cap{10,15,50,200} / R3
+    （R3 三确认批坐标直接引用 R036 §五）+ 规则点
+  - converged_wrong（首 syndrome-0 接受但信息错）实测计数（期望 0，>0 如实计入规则 FER）
+
+statistics:
+  pairing: 同条件内帧级全配对（同一缓存同一轨迹日志）
+  ci: 帧级配对 bootstrap，10000 重采样，CI95（分位数法，种子固定 20260927）
+  significance: 精确双侧二项符号检验（win/loss 计数）
+  honest_reporting: p 值不替代效应幅度；相对百分比与绝对 pp 并报。
+
+verdict_rules_preregistered:
+  evaluation_scope: 仅三确认批（dev 只做选择）。
+  ALIVE_branch_A_same_cap: >
+    三条件全部满足：迭代节省 CI95 下界 > 0 且 FER 损失点估计 <= 0.2pp
+    （相对同 cap 固定点 NOMS+ES cap200）。
+  ALIVE_branch_B_same_fer: >
+    三条件全部满足：FER(rule) <= FER(NOMS+ES cap50)（点估计）且
+    mean_it(cap50) − mean_it(rule) 的 CI95 下界 > 0。
+  KILL: >
+    任一条件 FER 损失点估计 > 0.2pp，或任一条件相对 cap200-ES 的迭代节省
+    CI95 含 0 → 规则 Kill，如实落账（有效产出：此路不通实测证据）。
+  两分支任一成立即 ALIVE；都失败才 KILL。分支 B 为次分支（cap50 的 mean_it
+  16.6-18.9 已很低，预期分支 A 为主通路）。
+
+task2_pareto_fill: >
+  固定迭代 {10, 15} 两点（NOMS+ES cap10/cap15，Pareto 左半支）从同一轨迹
+  日志离线读出（min(converged_at, cap) 语义），零额外译码；可选 cap100 中点
+  同法。同缓存同配对。若任务一占满预算则降级为建议（本轮预期不占满——离线）。
+
+budget_and_discipline:
+  max_rounds: <= 2 轮设计—运行—诊断（实现级失败才启用第 2 轮）
+  no_failure_tuning: 确认批结果不理想不调参追正、不换 seed、不扩候选族
+  confirm_single_run: 规则冻结后三确认批各跑一次轨迹采集，只评分一次；
+    确认批数据不回流任何设计决策
+  oracle_usage: dev 标签（NOMS200 结局）只用于 dev 选择；oracle 只作 Kill/
+    风险标注工具，不作 Go 判据（FR-21/TL-32 口径）
+  scope: 结论限所跑合同（dev 4 批 + 三确认批缓存、BG2 z=104、exact-APP LLR、
+    NOMS(0.75,0)、cap=200、CP={20,30,50,100}、k=8、28 候选族）
+
+outputs:
+  dir: results/decode-budget-rule/
+  files:
+    - raw_traj_dev.json       # 4 dev 批每帧 s_1..s_200 / converged_at / ie200 + G1 门报告
+    - raw_traj_confirm.json   # 3 确认批同构 + G1+G2 门报告
+    - frozen_rule.json        # 冻结规则规格 + dev 选择表（28 候选全记录）
+    - summary.json            # 确认批评分 + Pareto + 判读（save_results 元数据注入）
+
+expected_outcome_preregistered:   # TL-20 理论预期，运行前写下
+  mechanism_estimate: >
+    cap200-ES 下每确认批 461-480 个永不收敛帧各烧满 200 迭代（贡献 ~45
+    it/帧均值），晚收敛帧每批约 100 个；若在检查点 20-30 砍掉大部分死帧且
+    错砍 <=2，规则点预期落在 mean_it ~14-25、FER 损失 <=0.1pp。
+  main_risk: >
+    晚收敛帧与死帧在检查点处的 syndrome 水平可能不可分（救援线经验：接收可
+    见代理弱可分）——保守阈值下错砍趋零但砍掉的死帧也少（节省缩水），
+    激进阈值反之。dev 选择取保守侧；确认批见真章。
+  deviation_check: 若 dev 上最保守候选（各族最大阈值）仍 W_pooled > 4，
+    或砍帧率 < 10%（节省不足以越过 KILL 线），直接按预注册规则冻结最保守
+    候选并预期 KILL，不扩族。
+
+provenance:
+  upstream: R036/D059（迭代轴量活 + Pareto 锚点）/ R035（早停 headroom）/
+    D060/PROMPT-028（授权与边界）
+  cache_generation: decode-failure-rescue/generate_llrs.py（T077 冻结链）
+  decoder: sionna 2.0.1（make_encoder 强制校验）
+  module_origin: PROMPT-028 / 实验报告 R038
